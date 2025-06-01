@@ -1,0 +1,37 @@
+# --- CONSCIOUSNESS LEVEL COLOR MAPPING ---
+# 0: Gray (0.5,0.5,0.5,0.5)
+# 1: White (1,1,1,0.5)
+# 2: Cyan (0,1,1,0.7)
+# 3: Green (0,1,0,0.8)
+# 4: Yellow (1,1,0,0.9)
+# 5: Magenta (1,0,1,1)
+# 6+: Red (1,0,0,1)
+# -----------------------------------------
+[gd_scene load_steps=3 format=3]
+
+[node name="UniversalButton" type="Button"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="AuraParticles" type="CPUParticles2D" parent="."]
+position = Vector2(64, 32)
+emitting = true
+amount = 64
+lifetime = 1.2
+one_shot = false
+preprocess = 0.0
+explosiveness = 0.0
+randomness = 0.2
+visibility_rect = Rect2(-64, -64, 192, 192)
+texture = ExtResource( 1 )
+modulate = Color(1, 1, 1, 0.5) # Default: White, will be set dynamically in script
+scale = Vector2(2, 2)
+
+[node name="ConsciousnessLabel" type="Label" parent="."]
+position = Vector2(8, 8)
+text = "1"
+custom_colors/font_color = Color(1, 1, 1, 1)
+
+[ext_resource path="res://assets/aura_glow.png" type="Texture" id=1] 

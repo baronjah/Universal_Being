@@ -1,0 +1,21 @@
+<!-- Minimalist SVG for 6-AI Pentagon Constellation Icon/Logo -->
+<svg viewBox="0 0 200 200" width="200" height="200" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Pentagon Points (AIs) -->
+  <circle id="ai1" cx="100" cy="30" r="8" stroke="#333" stroke-width="2" fill="#fff" />
+  <circle id="ai2" cx="170" cy="72" r="8" stroke="#333" stroke-width="2" fill="#fff" />
+  <circle id="ai3" cx="146" cy="155" r="8" stroke="#333" stroke-width="2" fill="#fff" />
+  <circle id="ai4" cx="54" cy="155" r="8" stroke="#333" stroke-width="2" fill="#fff" />
+  <circle id="ai5" cx="30" cy="72" r="8" stroke="#333" stroke-width="2" fill="#fff" />
+  <!-- Center (Player/Origin) -->
+  <circle id="center" cx="100" cy="100" r="12" stroke="#333" stroke-width="3" fill="#eee" />
+  <!-- Lines: Pentagon Edges -->
+  <polyline points="100,30 170,72 146,155 54,155 30,72 100,30" stroke="#888" stroke-width="2" fill="none" />
+  <!-- Lines: Each AI connects to center -->
+  <line x1="100" y1="100" x2="100" y2="30"   stroke="#bbb" stroke-width="1.5" />
+  <line x1="100" y1="100" x2="170" y2="72"   stroke="#bbb" stroke-width="1.5" />
+  <line x1="100" y1="100" x2="146" y2="155"  stroke="#bbb" stroke-width="1.5" />
+  <line x1="100" y1="100" x2="54" y2="155"   stroke="#bbb" stroke-width="1.5" />
+  <line x1="100" y1="100" x2="30" y2="72"    stroke="#bbb" stroke-width="1.5" />
+  <!-- (Optional: Subtle center dot for style) -->
+  <circle cx="100" cy="100" r="2" fill="#333" />
+</svg>

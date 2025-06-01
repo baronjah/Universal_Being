@@ -1,0 +1,161 @@
+[gd_scene load_steps=4 format=3 uid="uid://cc8v7hqk3x2dub"]
+
+[ext_resource type="Script" path="res://scenes/console/universal_console_controller.gd" id="1_console"]
+
+[sub_resource type="Environment" id="Environment_1"]
+background_mode = 1
+background_color = Color(0.05, 0.05, 0.15, 1)
+ambient_light_source = 2
+ambient_light_color = Color(0.2, 0.4, 0.8, 1)
+ambient_light_energy = 0.3
+
+[sub_resource type="StyleBoxFlat" id="StyleBox_1"]
+bg_color = Color(0.1, 0.1, 0.2, 0.9)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0, 1, 1, 0.8)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[node name="UniversalConsole" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_console")
+
+[node name="Background" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.7)
+mouse_filter = 2
+
+[node name="ConsolePanel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -400.0
+offset_top = -250.0
+offset_right = 400.0
+offset_bottom = 250.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBox_1")
+
+[node name="VBox" type="VBoxContainer" parent="ConsolePanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = 10.0
+offset_right = -10.0
+offset_bottom = -10.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Header" type="HBoxContainer" parent="ConsolePanel/VBox"]
+layout_mode = 2
+size_flags_vertical = 0
+
+[node name="Title" type="Label" parent="ConsolePanel/VBox/Header"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0, 1, 1, 1)
+theme_override_font_sizes/font_size = 24
+text = "🖥️ Universal Console"
+
+[node name="CloseButton" type="Button" parent="ConsolePanel/VBox/Header"]
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_colors/font_color = Color(1, 0.3, 0.3, 1)
+theme_override_font_sizes/font_size = 20
+text = "×"
+
+[node name="HSeparator" type="HSeparator" parent="ConsolePanel/VBox"]
+layout_mode = 2
+theme_override_colors/separator = Color(0, 1, 1, 0.5)
+
+[node name="OutputContainer" type="VBoxContainer" parent="ConsolePanel/VBox"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="OutputScroll" type="ScrollContainer" parent="ConsolePanel/VBox/OutputContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="OutputLabel" type="RichTextLabel" parent="ConsolePanel/VBox/OutputContainer/OutputScroll"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_colors/default_color = Color(0.9, 0.9, 1, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.5)
+theme_override_constants/shadow_offset_x = 1
+theme_override_constants/shadow_offset_y = 1
+theme_override_font_sizes/normal_font_size = 14
+bbcode_enabled = true
+text = "[color=#4488ff]🌟 Universal Console Initialized[/color]
+[color=#00ffff]🤖 AI Collaboration System Ready[/color]
+[color=#88ff88]🎭 Pentagon of Creation Standing By[/color]
+[color=#ffff00]✨ Type commands to interact with Universal Beings...[/color]"
+fit_content = true
+scroll_following = true
+
+[node name="HSeparator2" type="HSeparator" parent="ConsolePanel/VBox"]
+layout_mode = 2
+theme_override_colors/separator = Color(0, 1, 1, 0.5)
+
+[node name="InputContainer" type="HBoxContainer" parent="ConsolePanel/VBox"]
+layout_mode = 2
+size_flags_vertical = 0
+
+[node name="Prompt" type="Label" parent="ConsolePanel/VBox/InputContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_colors/font_color = Color(0, 1, 1, 1)
+theme_override_font_sizes/font_size = 16
+text = "🎮>"
+
+[node name="InputField" type="LineEdit" parent="ConsolePanel/VBox/InputContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_selected_color = Color(0, 0, 0, 1)
+theme_override_colors/selection_color = Color(0, 1, 1, 0.5)
+theme_override_colors/caret_color = Color(0, 1, 1, 1)
+theme_override_font_sizes/font_size = 16
+placeholder_text = "Enter command... (help for commands)"
+
+[node name="ParticleBackground" type="CPUParticles2D" parent="ConsolePanel"]
+position = Vector2(400, 250)
+emitting = true
+amount = 50
+lifetime = 5.0
+emission_shape = 3
+emission_rect_extents = Vector2(400, 250)
+direction = Vector2(0, -1)
+initial_velocity_min = 10.0
+initial_velocity_max = 30.0
+gravity = Vector2(0, -20)
+scale_amount_min = 0.1
+scale_amount_max = 0.3
+color = Color(0, 1, 1, 0.3)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+autoplay = "console_idle"
+
+[connection signal="pressed" from="ConsolePanel/VBox/Header/CloseButton" to="." method="_on_close_button_pressed"]
+[connection signal="text_submitted" from="ConsolePanel/VBox/InputContainer/InputField" to="." method="_on_input_field_text_submitted"]

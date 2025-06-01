@@ -1,0 +1,42 @@
+[gd_scene load_steps=3 format=3]
+
+[node name="AIPentagonConstellation" type="Panel"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+# --- CENTER NODE ---
+[node name="OvermindLabel" type="Label" parent="."]
+position = Vector2(288, 256)
+text = "Overmind"
+custom_colors/font_color = Color(1, 1, 1, 1)
+
+# --- PENTAGON AI NODES ---
+[node name="AI1_Memory" type="Label" parent="."]
+position = Vector2(288, 64)
+text = "AI1: Memory"
+custom_colors/font_color = Color(0.7, 0.9, 1, 1)
+
+[node name="AI2_Logic" type="Label" parent="."]
+position = Vector2(480, 160)
+text = "AI2: Logic"
+custom_colors/font_color = Color(0.8, 1, 0.7, 1)
+
+[node name="AI3_Creation" type="Label" parent="."]
+position = Vector2(416, 384)
+text = "AI3: Creation"
+custom_colors/font_color = Color(1, 0.8, 0.7, 1)
+
+[node name="AI4_Adaptation" type="Label" parent="."]
+position = Vector2(160, 384)
+text = "AI4: Adaptation"
+custom_colors/font_color = Color(0.7, 1, 0.9, 1)
+
+[node name="AI5_World" type="Label" parent="."]
+position = Vector2(96, 160)
+text = "AI5: World"
+custom_colors/font_color = Color(1, 1, 0.7, 1)
+
+# --- CONNECTION LINES ---
+[node name="ConstellationLines" type="Node2D" parent="."] 

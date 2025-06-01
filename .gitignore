@@ -1,0 +1,47 @@
+# Godot 4+ specific ignores
+.godot/
+*.tmp
+
+# Godot import directory
+.import/
+
+# AI Model files - TOO LARGE FOR GITHUB!
+ai_models/gamma/*.gguf
+ai_models/**/*.gguf
+ai_models/**/*.ggml
+ai_models/**/*.bin
+ai_models/**/*.safetensors
+ai_models/**/*.pt
+ai_models/**/*.pth
+
+# Large addon files
+addons/nobodywho/*.pdb
+addons/nobodywho/*debug*
+# Keep the release versions, they're under 50MB
+# addons/nobodywho/*release*
+
+# System files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Logs
+logs/
+*.log
+
+# Backup files
+*.backup
+*.bak
+*_backup/
+
+# Build outputs
+build/
+dist/
+export/
+export_presets.cfg

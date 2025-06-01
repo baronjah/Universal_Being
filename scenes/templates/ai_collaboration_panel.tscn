@@ -1,0 +1,41 @@
+[gd_scene load_steps=3 format=3]
+
+[node name="AICollaborationPanel" type="Panel"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+# --- AI ICONS ---
+[node name="GemmaIcon" type="Label" parent="."]
+position = Vector2(256, 32)
+text = "Gemma"
+custom_colors/font_color = Color(0.2, 1, 1, 1)
+
+[node name="ClaudeCodeIcon" type="Label" parent="."]
+position = Vector2(448, 96)
+text = "Claude Code"
+custom_colors/font_color = Color(0.8, 0.8, 1, 1)
+
+[node name="CursorIcon" type="Label" parent="."]
+position = Vector2(512, 256)
+text = "Cursor"
+custom_colors/font_color = Color(0.2, 1, 0.6, 1)
+
+[node name="ClaudeDesktopIcon" type="Label" parent="."]
+position = Vector2(448, 416)
+text = "Claude Desktop"
+custom_colors/font_color = Color(1, 0.8, 0.2, 1)
+
+[node name="ChatGPTIcon" type="Label" parent="."]
+position = Vector2(256, 480)
+text = "ChatGPT"
+custom_colors/font_color = Color(0.2, 1, 0.2, 1)
+
+[node name="GeminiIcon" type="Label" parent="."]
+position = Vector2(64, 416)
+text = "Gemini"
+custom_colors/font_color = Color(1, 0.2, 1, 1)
+
+# --- CONNECTION LINES ---
+[node name="ConnectionLines" type="Node2D" parent="."] 

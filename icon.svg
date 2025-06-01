@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="128" height="128" viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg">
+  <circle cx="64" cy="64" r="60" fill="#4A90E2" stroke="#2C5F99" stroke-width="4"/>
+  <circle cx="64" cy="64" r="40" fill="#87CEEB" opacity="0.8"/>
+  <circle cx="64" cy="64" r="20" fill="#FFD700" opacity="0.9"/>
+  <text x="64" y="74" text-anchor="middle" fill="white" font-family="Arial" font-size="16" font-weight="bold">UB</text>
+</svg>

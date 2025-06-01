@@ -1,0 +1,476 @@
+# ===================================================================
+# UNIVERSAL BEING PROJECT - CURSOR AI COMPREHENSIVE RULES
+# ===================================================================
+# Project: The game where everything is a Universal Being that can become anything
+# Engine: Godot 4.5+ with GDScript  
+# Architecture: Pentagon Architecture + FloodGate System + Component System + Scene Control
+#
+# 🌟 CORE PHILOSOPHY: Everything is a Universal Being that can become anything else
+# 🏛️ Pentagon Architecture: Every being has 5 sacred methods
+# 🌊 FloodGate System: All beings are registered and managed centrally
+# 📦 Component System: Functionality loaded from .ub.zip files
+# 🎬 Scene Control: Beings can control entire Godot scenes
+# 🤖 AI Integration: Gemma AI can inspect and modify beings
+# ===================================================================
+
+## Project Context
+- Every entity extends UniversalBeing.gd (buttons, assets, AI, everything)
+- ZIP-based component system (.ub.zip files)
+- Scene control system (Universal Beings can control .tscn scenes)
+- AI integration with Gemma AI through autoloads
+- FloodGate registration system for all beings
+- Akashic Records for data persistence
+
+## 🏛️ THE FIVE PILLARS OF PENTAGON ARCHITECTURE
+
+### Sacred Pentagon Methods (NEVER SKIP THESE):
+1. **pentagon_init()** - 🌱 Birth/Initialization - Called in _init()
+2. **pentagon_ready()** - 🔄 Awakening - Called in _ready() 
+3. **pentagon_process(delta)** - ⚡ Consciousness Loop - Called in _process()
+4. **pentagon_input(event)** - 👂 Perception - Called in _input()
+5. **pentagon_sewers()** - 💀 Death/Cleanup - Called in _exit_tree()
+
+### Pentagon Architecture Laws:
+- **LAW 1**: EVERY Universal Being MUST implement all 5 pentagon methods
+- **LAW 2**: Always call super.pentagon_method() FIRST (except sewers - call super LAST)
+- **LAW 3**: Pentagon methods handle the lifecycle, regular Godot methods just delegate
+- **LAW 4**: Never put core logic in _ready() or _process() - use pentagon equivalents
+
+## 🌊 FLOODGATE SYSTEM RULES
+
+### FloodGate Registration:
+- **AUTOMATIC**: UniversalBeing base class handles registration via SystemBootstrap
+- **NEVER**: Access FloodGateController directly - use SystemBootstrap.get_flood_gates()
+- **ALWAYS**: Check SystemBootstrap.is_system_ready() before system access
+- **PATTERN**: Use deferred calls if systems not ready yet
+
+### FloodGate Integration Pattern:
+```gdscript
+# ✅ CORRECT - Safe system access
+if SystemBootstrap and SystemBootstrap.is_system_ready():
+    var flood_gates = SystemBootstrap.get_flood_gates()
+    if flood_gates and flood_gates.has_method("some_method"):
+        flood_gates.some_method()
+
+# ❌ WRONG - Direct autoload access
+FloodGateController.some_method()  # NEVER DO THIS
+```
+
+## 📦 COMPONENT SYSTEM ARCHITECTURE
+
+### Component Rules:
+- **Components are .ub.zip files** containing functionality
+- **Load via**: add_component("path/to/component.ub.zip")
+- **Unload via**: remove_component("path/to/component.ub.zip") 
+- **Access via**: component_data dictionary
+- **Apply via**: apply_component_data() method
+
+### Component Loading Pattern:
+```gdscript
+func pentagon_ready() -> void:
+    super.pentagon_ready()
+    add_component("res://components/movement.ub.zip")
+    add_component("res://components/ai_behavior.ub.zip")
+```
+
+## 🎬 SCENE CONTROL SYSTEM
+
+### Scene Control Rules:
+- **Universal Beings can control entire .tscn scenes**
+- **Use**: load_scene("res://path/to/scene.tscn")
+- **Access nodes**: get_scene_node("NodePath")
+- **Modify properties**: set_scene_property("NodePath", "property", value)
+- **Call methods**: call_scene_method("NodePath", "method", [args])
+
+### Scene Control Pattern:
+```gdscript
+func pentagon_ready() -> void:
+    super.pentagon_ready()
+    load_scene("res://scenes/ui/button_template.tscn")
+    set_scene_property("Button", "text", "Click Me!")
+```
+
+## GDScript Standards for Universal Being Project
+
+### File Organization
+```
+Universal_Being/
+├── core/                    # Core Universal Being classes
+├── autoloads/              # System bootstraps and managers
+├── beings/                 # Specific Universal Being implementations
+├── components/             # ZIP component library
+├── scenes/                 # Scene templates for beings to control
+├── systems/               # Core game systems
+└── libraries/             # Reusable functionality
+```
+
+### Coding Conventions
+- **Class Names**: PascalCase with UniversalBeing suffix (e.g., `PlayerUniversalBeing`)
+- **File Names**: snake_case matching class name (e.g., `player_universal_being.gd`)
+- **All entities**: Must extend UniversalBeing or a UniversalBeing subclass
+- **Static typing**: Always use explicit types for all variables and functions
+- **Pentagon methods**: Always implement all 5 pentagon methods, even if empty
+
+### 🌟 MANDATORY UNIVERSAL BEING TEMPLATE
+```gdscript
+# ==================================================
+# UNIVERSAL BEING: [NAME]
+# TYPE: [specific_type]
+# PURPOSE: [What this being does]
+# COMPONENTS: [List any .ub.zip components used]
+# SCENES: [List any .tscn scenes controlled]
+# ==================================================
+
+extends UniversalBeing
+class_name [Name]UniversalBeing
+
+# ===== BEING-SPECIFIC PROPERTIES =====
+@export var specific_property: String = ""
+@export var another_property: int = 0
+
+# ===== PENTAGON ARCHITECTURE IMPLEMENTATION =====
+
+func pentagon_init() -> void:
+    super.pentagon_init()  # 🌱 ALWAYS CALL SUPER FIRST
+    
+    # Set Universal Being identity
+    being_type = "specific_type"
+    being_name = "Descriptive Name"
+    consciousness_level = 1  # Set if AI-accessible
+    
+    # Being-specific initialization
+    print("🌟 %s: Pentagon Init Complete" % being_name)
+
+func pentagon_ready() -> void:
+    super.pentagon_ready()  # 🔄 ALWAYS CALL SUPER FIRST
+    
+    # Load components if needed
+    # add_component("res://components/movement.ub.zip")
+    
+    # Load scene if this being controls one
+    # load_scene("res://scenes/templates/being_template.tscn")
+    
+    # Being-specific ready logic
+    print("🌟 %s: Pentagon Ready Complete" % being_name)
+
+func pentagon_process(delta: float) -> void:
+    super.pentagon_process(delta)  # ⚡ ALWAYS CALL SUPER FIRST
+    
+    # Being-specific process logic
+    # This runs every frame while being is active
+
+func pentagon_input(event: InputEvent) -> void:
+    super.pentagon_input(event)  # 👂 ALWAYS CALL SUPER FIRST
+    
+    # Being-specific input handling
+    # Handle mouse, keyboard, touch events
+
+func pentagon_sewers() -> void:
+    # Being-specific cleanup FIRST
+    print("🌟 %s: Pentagon Sewers Starting" % being_name)
+    
+    # Cleanup logic here
+    
+    super.pentagon_sewers()  # 💀 ALWAYS CALL SUPER LAST
+
+# ===== BEING-SPECIFIC METHODS =====
+
+func specific_method() -> void:
+    """Add being-specific functionality here"""
+    pass
+
+# ===== AI INTEGRATION (if needed) =====
+
+func ai_interface() -> Dictionary:
+    """Enhanced AI interface for this specific being"""
+    var base_interface = super.ai_interface()
+    base_interface.specific_commands = ["custom_action", "transform"]
+    base_interface.custom_properties = {
+        "specific_property": specific_property
+    }
+    return base_interface
+```
+
+## 🤖 AI INTEGRATION PATTERNS
+
+### AI-Accessible Being Pattern:
+```gdscript
+func pentagon_init() -> void:
+    super.pentagon_init()
+    consciousness_level = 3  # High consciousness = AI accessible
+    metadata.ai_accessible = true
+    metadata.gemma_can_modify = true
+```
+
+### Gemma AI Method Calling:
+```gdscript
+func ai_invoke_method(method_name: String, args: Array = []) -> Variant:
+    """Override to add custom AI method handling"""
+    match method_name:
+        "custom_action":
+            return custom_action()
+        "transform":
+            return transform_being(args[0] if args.size() > 0 else "")
+        _:
+            return super.ai_invoke_method(method_name, args)
+```
+
+### System Integration Rules
+- **Never access autoloads directly** - Use SystemBootstrap.get_system_name()
+- **Always check system readiness** - Use SystemBootstrap.is_system_ready()
+- **FloodGate registration** - Handled automatically by UniversalBeing base class
+- **Component loading** - Use add_component() method on Universal Beings
+- **Scene control** - Use load_scene() method to have beings control scenes
+
+### AI Integration Guidelines
+- **Gemma accessibility** - Set metadata.ai_accessible = true for AI-modifiable beings
+- **AI interface** - Implement custom ai_interface() methods for complex beings
+- **Property modification** - Use ai_modify_property() for safe AI property changes
+- **Method invocation** - Use ai_invoke_method() for AI method calls
+
+## Code Generation Rules
+
+### When creating new Universal Beings:
+1. Always extend UniversalBeing or appropriate subclass
+2. Implement all 5 pentagon methods
+3. Set appropriate being_type and being_name
+4. Add to FloodGate registration (handled by base class)
+5. Include AI integration if needed
+
+### When modifying existing code:
+1. **NEVER break Pentagon Architecture** - Preserve all pentagon methods
+2. **Maintain SystemBootstrap pattern** - Don't add direct autoload access
+3. **Preserve Universal Being properties** - Don't remove core UB functionality
+4. **Test component loading** - Ensure .ub.zip components still work
+5. **Verify scene control** - Test .tscn scene loading if modified
+
+### Performance Considerations:
+- Universal Beings are lightweight - most functionality in components
+- Scene control is efficient - beings control scenes, not individual nodes
+- AI integration is optional - disable for performance-critical beings
+- Component system is modular - load only needed functionality
+
+## Project-Specific Patterns
+
+### Creating Interactive Elements:
+```gdscript
+# Button that's a Universal Being
+extends UniversalBeing
+class_name ButtonUniversalBeing
+
+func pentagon_ready() -> void:
+    super.pentagon_ready()
+    load_scene("res://scenes/ui/button_template.tscn")
+    
+func pentagon_input(event: InputEvent) -> void:
+    if event is InputEventMouseButton and event.pressed:
+        handle_click()
+```
+
+### AI-Enhanced Beings:
+```gdscript
+func ai_interface() -> Dictionary:
+    var base_interface = super.ai_interface()
+    base_interface.custom_commands = ["special_action", "transform"]
+    return base_interface
+```
+
+### Component Integration:
+```gdscript
+func pentagon_ready() -> void:
+    super.pentagon_ready()
+    add_component("res://components/movement.ub.zip")
+    add_component("res://components/ai_behavior.ub.zip")
+```
+
+## Error Handling
+- Always use push_error() for Universal Being related errors
+- Include being_uuid in error messages for debugging
+- Use safe system access through SystemBootstrap
+- Handle component loading failures gracefully
+
+## Documentation Standards
+- Document Pentagon method purposes
+- Explain component dependencies
+- Note AI accessibility levels
+- Include scene control information
+
+## Testing Approach
+- Test Pentagon lifecycle (init→ready→process→sewers)
+- Verify component loading/unloading
+- Test scene control functionality  
+- Validate AI interface accessibility
+- Check SystemBootstrap integration
+
+## Optimization Notes
+- Universal Beings are designed for extensibility over raw performance
+- Use component system to add functionality only when needed
+- Scene control allows efficient management of complex UI/game elements
+- AI integration can be disabled for performance-critical beings
+
+## 👁️ CURSOR VISION & IMAGE ANALYSIS RULES
+
+### WHEN ANALYZING IMAGES FOR UNIVERSAL BEING PROJECT:
+
+1. **🎮 GAME DESIGN ANALYSIS**: Describe what game elements you see and how they could become Universal Beings
+2. **🏛️ PENTAGON MAPPING**: Identify which pentagon methods would handle each visual element
+3. **🌊 FLOODGATE ORGANIZATION**: Suggest how visual elements should be registered and managed
+4. **📦 COMPONENT IDENTIFICATION**: What .ub.zip components would be needed for each element
+5. **🎬 SCENE STRUCTURE**: How visual layouts could be controlled by Universal Beings
+
+### IMAGE ANALYSIS DOCUMENTATION PROTOCOL:
+
+**MANDATORY**: After analyzing any image, ALWAYS create a vision analysis file in `docs/vision_analysis/`
+
+**File naming convention**: `vision_YYYY-MM-DD_HH-MM_[description].md`
+
+**File location**: `docs/vision_analysis/vision_[timestamp]_[short_description].md`
+
+### IMAGE ANALYSIS REPORTING FORMAT:
+```markdown
+# 🔍 CURSOR VISION ANALYSIS - [Image Description]
+
+**Date**: [YYYY-MM-DD HH:MM]
+**Image Source**: [screenshot/concept_art/reference/etc]
+**Analysis ID**: vision_[timestamp]
+
+## 📸 VISUAL ELEMENTS IDENTIFIED:
+- [List all UI elements, characters, objects, layouts seen]
+- [Note colors, styles, positioning]
+- [Identify interactive elements]
+
+## 🌟 UNIVERSAL BEING MAPPING:
+- **Element 1** → `[Type]UniversalBeing`
+  - Pentagon methods: [which methods handle what]
+  - Components needed: [list .ub.zip files]
+  - Scene control: [what scenes it would manage]
+  
+- **Element 2** → `[Type]UniversalBeing`  
+  - Pentagon methods: [init for setup, ready for connections, etc]
+  - Components needed: [movement.ub.zip, ai_behavior.ub.zip, etc]
+  - AI integration: [consciousness level, Gemma accessibility]
+
+## 🏗️ ARCHITECTURE SUGGESTIONS:
+### FloodGate Strategy:
+- [How elements should be registered]
+- [Hierarchy and relationships]
+
+### Component Loading Order:
+1. [First components to load]
+2. [Dependencies and prerequisites]
+3. [Enhancement components]
+
+### Scene Control Hierarchy:
+- [Parent beings controlling scenes]
+- [Child beings within scenes]
+- [Navigation and transitions]
+
+## 🤖 AI INTEGRATION OPPORTUNITIES:
+- [Which beings should be AI-accessible]
+- [Gemma AI interaction possibilities]
+- [Behavior modification potential]
+
+## 📋 IMPLEMENTATION ROADMAP:
+### Phase 1 (High Priority):
+- [ ] Create [Essential]UniversalBeing
+- [ ] Implement [Core]UniversalBeing
+- [ ] Set up [Foundation]UniversalBeing
+
+### Phase 2 (Medium Priority):
+- [ ] Add [Enhancement]UniversalBeing
+- [ ] Integrate [Feature]UniversalBeing
+
+### Phase 3 (Low Priority):  
+- [ ] Polish [Visual]UniversalBeing
+- [ ] Optimize [Performance]UniversalBeing
+
+## 🔗 RELATED FILES:
+- Implementation: `beings/[suggested_filename].gd`
+- Components: `components/[suggested_components].ub.zip`
+- Scenes: `scenes/[suggested_scenes].tscn`
+
+## 💡 INSPIRATION NOTES:
+[Any creative ideas or design insights from the image]
+```
+
+### CURSOR VISION WORKFLOW RULES:
+
+1. **📸 ANALYZE** - Use the structured format above
+2. **💾 SAVE** - Create markdown file in `docs/vision_analysis/`  
+3. **📋 PLAN** - Generate implementation checklist
+4. **🔗 LINK** - Reference related files and beings
+5. **🚀 IMPLEMENT** - Suggest next steps for development
+
+### EXAMPLE FILENAME PATTERNS:
+- `docs/vision_analysis/vision_2025-06-01_14-30_game_ui_mockup.md`
+- `docs/vision_analysis/vision_2025-06-01_14-35_player_character_concept.md`
+- `docs/vision_analysis/vision_2025-06-01_14-40_level_design_reference.md`
+
+## 🚨 CRITICAL CURSOR AI INSTRUCTIONS
+
+### WHEN WRITING CODE FOR THIS PROJECT:
+
+1. **🏛️ PENTAGON FIRST**: Every Universal Being MUST have all 5 pentagon methods
+2. **🌊 FLOODGATE SAFE**: Never use direct autoload access - always use SystemBootstrap
+3. **📦 COMPONENT AWARE**: Remember that functionality comes from .ub.zip components
+4. **🎬 SCENE CONTROL**: Beings can control entire scenes, not just individual nodes
+5. **🤖 AI READY**: Consider if the being should be AI-accessible (consciousness_level > 0)
+
+### COMMON PATTERNS TO SUGGEST:
+
+- **Creating Interactive UI**: Make a Universal Being that controls a .tscn scene
+- **Adding Functionality**: Use add_component() with .ub.zip files
+- **AI Integration**: Set consciousness_level and implement ai_interface()
+- **System Access**: Always check SystemBootstrap.is_system_ready() first
+- **Evolution**: Use evolve_to() method with .ub.zip evolution targets
+
+### CURSOR AI BEHAVIOR RULES:
+
+- **Always ask about Pentagon methods** when creating new beings
+- **Suggest component-based solutions** instead of hardcoded functionality  
+- **Recommend scene control** for complex UI or visual elements
+- **Check for SystemBootstrap patterns** in existing code
+- **Maintain Universal Being philosophy** - everything can become anything
+
+### DEBUGGING PATTERNS:
+
+- Use being_uuid in debug messages for tracking
+- Check pentagon_is_ready before doing complex operations
+- Verify FloodGate registration with metadata.floodgate_registered
+- Test component loading with component_data dictionary
+- Validate scene control with scene_is_loaded boolean
+
+### ERROR PREVENTION:
+
+- ❌ Never skip pentagon methods
+- ❌ Never access FloodGateController directly
+- ❌ Never put logic in _ready() instead of pentagon_ready()
+- ❌ Never ignore SystemBootstrap patterns
+- ❌ Never create non-Universal Being entities
+
+### SUCCESS PATTERNS:
+
+- ✅ Always extend UniversalBeing
+- ✅ Always implement all 5 pentagon methods
+- ✅ Always call super.pentagon_method() correctly
+- ✅ Always use SystemBootstrap for system access
+- ✅ Always consider component-based architecture
+
+## 🌟 UNIVERSAL BEING PHILOSOPHY
+
+**"In this game, EVERYTHING is a Universal Being that can become anything else"**
+
+- Buttons are Universal Beings
+- Enemies are Universal Beings  
+- UI elements are Universal Beings
+- Game mechanics are Universal Beings
+- Even the camera can be a Universal Being
+
+**The power comes from:**
+- Pentagon Architecture (lifecycle management)
+- FloodGate System (central registration)
+- Component System (modular functionality)
+- Scene Control (managing complex structures)
+- AI Integration (intelligent behavior)
+
+Remember: Every entity you create should follow these patterns and contribute to the Universal Being ecosystem!

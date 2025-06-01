@@ -1,0 +1,41 @@
+[gd_scene load_steps=2 format=3 uid="uid://b2v7hqk3x2dub"]
+
+[ext_resource type="Script" uid="uid://bq40a6pgcikqx" path="res://main.gd" id="1_vf1jh"]
+
+[node name="Main" type="Node"]
+script = ExtResource("1_vf1jh")
+
+[node name="UI" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Title" type="Label" parent="UI"]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = -60.0
+offset_right = 400.0
+offset_bottom = -40.0
+grow_vertical = 0
+theme_override_font_sizes/font_size = 18
+text = "Universal Being Engine - Ready!"
+
+[node name="Instructions" type="Label" parent="UI"]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = -80.0
+offset_right = 600.0
+offset_bottom = -40.0
+grow_vertical = 0
+theme_override_font_sizes/font_size = 12
+text = "~ console, Ctrl+N create, Ctrl+I inspect, F4 camera (AUTO), F5 Universal Console, F6 sync ZIP, F7 cursor (AUTO)"
