@@ -18,6 +18,7 @@ class_name ButtonUniversalBeing
 var button_node: Button = null
 var original_color: Color
 var is_hovered: bool = false
+var scene_instance: Node = null
 
 # ===== PENTAGON ARCHITECTURE IMPLEMENTATION =====
 

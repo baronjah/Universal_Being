@@ -6,7 +6,7 @@ extends SceneTree
 
 func _init():
 	print("\n🚀 Universal Being Test Suite")
-	print("=" * 60)
+	print("=".repeat(60))
 	
 	var total_tests = 0
 	var total_passed = 0
@@ -27,9 +27,9 @@ func _init():
 		total_failed += results.failed
 	
 	# Summary
-	print("\n" + "=" * 60)
+	print("\n" + "=".repeat(60))
 	print("📊 OVERALL TEST SUMMARY")
-	print("=" * 60)
+	print("=".repeat(60))
 	print("Total Tests Run: %d" % total_tests)
 	print("✅ Total Passed: %d" % total_passed)
 	print("❌ Total Failed: %d" % total_failed)

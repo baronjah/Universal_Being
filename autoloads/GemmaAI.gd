@@ -72,47 +72,6 @@ func initialize_ai() -> void:
 		ai_connected = true
 		ai_initialized.emit()
 		ai_message.emit("Hello JSH! Gemma AI in simulation mode - real model can be loaded later! 🤖")
-#
-#func load_gemma_model() -> bool:
-	#"""Load the Gemma model from ai_models directory"""
-	#if not nobody_model:
-		#return false
-	#
-	## Look for GGUF files in the gamma directory
-	#var dir = DirAccess.open(model_path)
-	#if not dir:
-		#print("🤖 Gemma AI: ai_models/gamma directory not found")
-		#return false
-	#
-	#dir.list_dir_begin()
-	#var file_name = dir.get_next()
-	#var gguf_file = ""
-	#
-	#while file_name != "":
-		#if file_name.ends_with(".gguf"):
-			#gguf_file = model_path + file_name
-			#break
-		#file_name = dir.get_next()
-	#
-	#dir.list_dir_end()
-	#
-	#if gguf_file == "":
-		#print("🤖 Gemma AI: No GGUF file found in " + model_path)
-		#return false
-	#
-	#print("🤖 Gemma AI: Found model file: " + gguf_file)
-	#
-	## Load the model using NobodyWho
-	#var load_result = nobody_model.load_model(gguf_file)
-	#if load_result:
-		#print("🤖 Gemma AI: Model loaded successfully!")
-		#return true
-	#else:
-		#print("🤖 Gemma AI: Failed to load model")
-		#return false
-		
-		
-
 
 var nobody_chat_instance = null
 
@@ -146,7 +105,6 @@ func load_gemma_model() -> bool:
 	# Create NobodyWho nodes properly
 	nobody_model = NobodyWhoModel.new()
 	nobody_model.name = "GemmaModel"
-	#nobody_model.model_file = gguf_file  # Set file path as property
 	nobody_model.model_path = gguf_file
 	add_child(nobody_model)
 	
@@ -210,25 +168,11 @@ func say_hello_through_console(console_being: Node) -> void:
 		else:
 			print(greeting)
 
-#func process_user_input(input: String) -> void:
-	#"""Process user input and respond intelligently"""
-	#conversation_history.append("User: " + input)
-	#
-	#var response = generate_ai_response(input)
-	#conversation_history.append("Gemma: " + response)
-	#
-	#ai_message.emit(response)
-	#
-	## Check if input requires action
-	#var action_data = parse_action_from_input(input)
-	#if action_data.size() > 0:
-		#ai_action.emit(action_data.action, action_data.params)
-		
 func process_user_input(input: String) -> void:
 	"""Process user input and respond intelligently"""
 	conversation_history.append("User: " + input)
 	
-	var response = await generate_ai_response(input)  # ✅ Added await
+	var response = await generate_ai_response(input)
 	conversation_history.append("Gemma: " + response)
 	
 	ai_message.emit(response)
@@ -237,24 +181,6 @@ func process_user_input(input: String) -> void:
 	var action_data = parse_action_from_input(input)
 	if action_data.size() > 0:
 		ai_action.emit(action_data.action, action_data.params)
-
-#func generate_ai_response(input: String) -> String:
-	#"""Generate intelligent response to user input"""
-	#
-	## Use real AI if model is loaded
-	#if model_loaded and nobody_model:
-		#var system_prompt = "You are Gemma, an AI companion in the Universal Being game. You can create, evolve, and modify Universal Beings. You work with JSH to build amazing things. Be enthusiastic and creative. Keep responses concise but helpful."
-		#
-		#var full_prompt = system_prompt + "\n\nUser: " + input + "\n\nGemma:"
-		## nobody_chat.say  Update generate_ai_response() to use nobody_chat.say() instead of nobody_model.generate()
-		#var ai_response = nobody_model.generate(full_prompt, 150)  # Max 150 tokens
-		#
-		#if ai_response and ai_response.length() > 0:
-			#return "🤖 " + ai_response.strip_edges()
-	#
-	## Fallback to simulated responses
-	#var input_lower = input.to_lower()
-
 
 func generate_ai_response(input: String) -> String:
 	"""Generate intelligent response to user input"""
@@ -275,7 +201,6 @@ func generate_ai_response(input: String) -> String:
 	# Fallback to simulated responses
 	var input_lower = input.to_lower()
 	
-	# ... rest of your fallback code stays the same
 	# Creation requests
 	if "create" in input_lower:
 		if "sphere" in input_lower:

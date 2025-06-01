@@ -112,9 +112,8 @@ func configure_particle_material(material: ParticleProcessMaterial) -> void:
     """Configure particle system for consciousness visualization"""
     
     # Emission
-    material.emission = ParticleProcessMaterial.EMISSION_RING
-    material.emission_ring_radius = aura_radius
-    material.emission_ring_inner_radius = aura_radius * 0.8
+    material.emission_shape = ParticleProcessMaterial.EMISSION_SHAPE_SPHERE
+    material.emission_sphere_radius = aura_radius
     
     # Direction and spread
     material.direction = Vector3(0, -1, 0)
@@ -131,19 +130,21 @@ func configure_particle_material(material: ParticleProcessMaterial) -> void:
     # Scale animation
     material.scale_min = 0.1
     material.scale_max = 0.3
-    material.scale_curve = create_scale_curve()
+    # Note: scale_curve would need a CurveTexture, not a Curve
+    # material.scale_curve = create_scale_curve_texture()
     
     # Color animation
     material.color = get_consciousness_color()
-    material.color_ramp = create_color_ramp()
+    # Note: color_ramp would need a GradientTexture1D, not a Gradient
+    # material.color_ramp = create_color_ramp_texture()
 
 func create_scale_curve() -> Curve:
     """Create scale animation curve for particles"""
     var curve = Curve.new()
-    curve.add_point(0.0, 0.0)  # Start small
-    curve.add_point(0.3, 1.0)  # Grow quickly
-    curve.add_point(0.7, 1.0)  # Stay large
-    curve.add_point(1.0, 0.0)  # Fade out
+    curve.add_point(Vector2(0.0, 0.0))  # Start small
+    curve.add_point(Vector2(0.3, 1.0))  # Grow quickly
+    curve.add_point(Vector2(0.7, 1.0))  # Stay large
+    curve.add_point(Vector2(1.0, 0.0))  # Fade out
     return curve
 
 func create_color_ramp() -> Gradient:
@@ -151,10 +152,15 @@ func create_color_ramp() -> Gradient:
     var gradient = Gradient.new()
     var base_color = get_consciousness_color()
     
-    gradient.add_point(0.0, Color(base_color.r, base_color.g, base_color.b, 0.0))
-    gradient.add_point(0.2, base_color)
-    gradient.add_point(0.8, base_color)
-    gradient.add_point(1.0, Color(base_color.r, base_color.g, base_color.b, 0.0))
+    # In Godot 4, use set_offset and set_color
+    gradient.set_offset(0, 0.0)
+    gradient.set_color(0, Color(base_color.r, base_color.g, base_color.b, 0.0))
+    gradient.add_point(0.2)
+    gradient.set_color(1, base_color)
+    gradient.add_point(0.8)
+    gradient.set_color(2, base_color)
+    gradient.add_point(1.0)
+    gradient.set_color(3, Color(base_color.r, base_color.g, base_color.b, 0.0))
     
     return gradient
 

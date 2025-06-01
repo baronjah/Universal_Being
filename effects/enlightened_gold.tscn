@@ -1,0 +1,17 @@
+[gd_scene load_steps=2 format=3]
+
+[node name="EnlightenedGoldEffect" type="CPUParticles2D"]
+position = Vector2(0, 0)
+emitting = true
+amount = 56
+lifetime = 0.9
+one_shot = false
+preprocess = 0.0
+explosiveness = 0.2
+randomness = 0.3
+visibility_rect = Rect2(-56, -56, 112, 112)
+texture = ExtResource( 1 )
+modulate = Color(1, 1, 0, 0.9)
+scale = Vector2(1.9, 1.9)
+
+[ext_resource path="res://assets/aura_glow.png" type="Texture" id=1] 

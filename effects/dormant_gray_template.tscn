@@ -1,0 +1,20 @@
+[gd_scene load_steps=2 format=3]
+
+[sub_resource type="Gradient" id="Gradient_1"]
+colors = PackedColorArray(0.5, 0.5, 0.5, 1, 0.5, 0.5, 0.5, 0)
+
+[node name="DormantGrayEffect" type="CPUParticles2D"]
+amount = 10
+lifetime = 2.0
+preprocess = 0.5
+texture = null
+emission_shape = 1
+emission_sphere_radius = 20.0
+direction = Vector2(0, -1)
+spread = 45.0
+initial_velocity_min = 10.0
+initial_velocity_max = 30.0
+gravity = Vector2(0, 0)
+scale_amount_min = 0.5
+scale_amount_max = 1.5
+color_ramp = SubResource("Gradient_1")

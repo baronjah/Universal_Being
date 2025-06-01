@@ -30,7 +30,7 @@ static func test_being(being_class: Script) -> Dictionary:
 
 func run_test_suite(being: UniversalBeing):
 	print("\n🧪 Testing Universal Being: %s" % being.get_class())
-	print("=" * 50)
+	print("=".repeat(50))
 	
 	# Core Tests
 	test_pentagon_lifecycle(being)

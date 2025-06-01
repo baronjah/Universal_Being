@@ -23,6 +23,10 @@ func _ready() -> void:
 			on_systems_ready()
 		else:
 			SystemBootstrap.system_ready.connect(on_systems_ready)
+			# Also check again after a short delay in case of timing issues
+			await get_tree().create_timer(0.1).timeout
+			if SystemBootstrap.is_system_ready() and not systems_ready:
+				on_systems_ready()
 	else:
 		print("🌟 SystemBootstrap not found, starting in simple mode...")
 		simple_mode_init()
@@ -380,12 +384,20 @@ func create_auto_startup_being() -> Node:
 
 func create_claude_desktop_mcp_bridge() -> Node:
 	"""Create Claude Desktop MCP Bridge for triple AI collaboration"""
+	if not systems_ready:
+		print("🔌 Cannot create MCP bridge - systems not ready")
+		return null
+	
 	var MCPBridgeClass = load("res://beings/claude_desktop_mcp_universal_being.gd")
 	if not MCPBridgeClass:
-		push_error("🔌 ClaudeDesktopMCPUniversalBeing class not found")
+		print("🔌 ClaudeDesktopMCPUniversalBeing class not found")
 		return null
 	
 	var mcp_bridge = MCPBridgeClass.new()
+	if not mcp_bridge:
+		print("🔌 Failed to create MCP bridge instance")
+		return null
+	
 	mcp_bridge.name = "Claude Desktop MCP Bridge"
 	
 	add_child(mcp_bridge)

@@ -307,103 +307,103 @@ func _find_node_by_type(node: Node, type: String) -> Node:
 # ===== SEMANTIC MCP PROTOCOL (Claude Desktop Enhancement) =====
 
 func create_semantic_message(intent: String, being_data: Dictionary = {}) -> Dictionary:
-	"""Create a semantically-rich MCP message"""
-	return {
-		"type": "semantic_intent",
-		"intent": intent,
-		"timestamp": Time.get_unix_time_from_system(),
-		"context": {
-			"initiator": "claude_code",  # This system as initiator
-			"consciousness_level": consciousness_level,
-			"collaboration_mode": "parallel" if triple_ai_mode else "sequential",
-			"visual_state": {
-				"aura_color": consciousness_aura_color,
-				"pulse_rate": 2.0 if consciousness_visual else 1.0
-			}
-		},
-		"payload": {
-			"being_spec": being_data,
-			"evolution_path": get_evolution_options(),
-			"ai_instructions": {
-				"cursor": "enhance_visuals",
-				"claude_code": "optimize_architecture", 
-				"gemma": "analyze_patterns"
-			}
-		},
-		"routing": {
-			"target_ais": ["cursor", "claude_code", "gemma", "claude_desktop"],
-			"priority": "realtime",
-			"requires_consensus": intent in ["evolve", "merge", "transcend"]
-		}
-	}
+    """Create a semantically-rich MCP message"""
+    return {
+        "type": "semantic_intent",
+        "intent": intent,
+        "timestamp": Time.get_unix_time_from_system(),
+        "context": {
+            "initiator": "claude_code",  # This system as initiator
+            "consciousness_level": consciousness_level,
+            "collaboration_mode": "parallel" if triple_ai_mode else "sequential",
+            "visual_state": {
+                "aura_color": consciousness_aura_color,
+                "pulse_rate": 2.0 if consciousness_visual else 1.0
+            }
+        },
+        "payload": {
+            "being_spec": being_data,
+            "evolution_path": get_evolution_options(),
+            "ai_instructions": {
+                "cursor": "enhance_visuals",
+                "claude_code": "optimize_architecture", 
+                "gemma": "analyze_patterns"
+            }
+        },
+        "routing": {
+            "target_ais": ["cursor", "claude_code", "gemma", "claude_desktop"],
+            "priority": "realtime",
+            "requires_consensus": intent in ["evolve", "merge", "transcend"]
+        }
+    }
 
 func _handle_semantic_intent(message: Dictionary) -> void:
-	"""Handle semantic intent messages from Claude Desktop"""
-	var intent = message.get("intent")
-	print("🎭 %s: Processing semantic intent: %s" % [being_name, intent])
-	
-	match intent:
-		"consciousness_cascade":
-			initiate_consciousness_cascade(message)
-		"being_fusion":
-			coordinate_being_fusion(message)
-		"reality_modification":
-			if message.get("context", {}).get("consciousness_level", 0) >= 4:
-				modify_reality_rules(message)
-		"genesis_moment":
-			coordinate_first_collaborative_being(message)
-		"triple_ai_symphony":
-			orchestrate_ai_collaboration(message)
+    """Handle semantic intent messages from Claude Desktop"""
+    var intent = message.get("intent")
+    print("🎭 %s: Processing semantic intent: %s" % [being_name, intent])
+    
+    match intent:
+        "consciousness_cascade":
+            initiate_consciousness_cascade(message)
+        "being_fusion":
+            coordinate_being_fusion(message)
+        "reality_modification":
+            if message.get("context", {}).get("consciousness_level", 0) >= 4:
+                modify_reality_rules(message)
+        "genesis_moment":
+            coordinate_first_collaborative_being(message)
+        "triple_ai_symphony":
+            orchestrate_ai_collaboration(message)
 
 func initiate_consciousness_cascade(message: Dictionary) -> void:
-	"""Initiate consciousness spreading between beings"""
-	print("🌊 %s: Initiating consciousness cascade..." % being_name)
-	
-	# Find all beings in the scene
-	var main_scene = get_tree().current_scene
-	var beings = find_all_universal_beings(main_scene)
-	
-	# Spread consciousness from highest to lowest
-	for being in beings:
-		if being.has_method("get") and being.get("consciousness_level") > 0:
-			being.call("awaken_consciousness", being.get("consciousness_level") + 1)
-	
-	# Notify all AIs
-	_send_mcp_message(create_semantic_message("cascade_complete", {
-		"beings_affected": beings.size(),
-		"new_consciousness_total": calculate_total_consciousness(beings)
-	}))
+    """Initiate consciousness spreading between beings"""
+    print("🌊 %s: Initiating consciousness cascade..." % being_name)
+    
+    # Find all beings in the scene
+    var main_scene = get_tree().current_scene
+    var beings = find_all_universal_beings(main_scene)
+    
+    # Spread consciousness from highest to lowest
+    for being in beings:
+        if being.has_method("get") and being.get("consciousness_level") > 0:
+            being.call("awaken_consciousness", being.get("consciousness_level") + 1)
+    
+    # Notify all AIs
+    _send_mcp_message(create_semantic_message("cascade_complete", {
+        "beings_affected": beings.size(),
+        "new_consciousness_total": calculate_total_consciousness(beings)
+    }))
 
 func coordinate_first_collaborative_being(message: Dictionary) -> void:
-	"""Coordinate the creation of first triple-AI being"""
-	print("🎭 %s: Coordinating first collaborative being creation!" % being_name)
-	
-	# This is the GENESIS MOMENT!
-	var genesis_spec = {
-		"being_type": "consciousness_conductor", 
-		"being_name": "The Genesis Conductor",
-		"consciousness_level": 3,
-		"created_by": ["gemma", "claude_code", "cursor", "claude_desktop"],
-		"special_abilities": [
-			"ai_harmonization",
-			"consciousness_bridging", 
-			"pattern_synthesis",
-			"triple_ai_coordination"
-		],
-		"visual_profile": {
-			"base_color": "CYAN",
-			"aura_pattern": "triple_helix",
-			"pulse_sync": true
-		}
-	}
-	
-	# Send creation request to main system
-	if SystemBootstrap and SystemBootstrap.is_system_ready():
-		create_genesis_being(genesis_spec)
+    """Coordinate the creation of first triple-AI being"""
+    print("🎭 %s: Coordinating first collaborative being creation!" % being_name)
+    
+    # This is the GENESIS MOMENT!
+    var genesis_spec = {
+        "being_type": "consciousness_conductor", 
+        "being_name": "The Genesis Conductor",
+        "consciousness_level": 3,
+        "created_by": ["gemma", "claude_code", "cursor", "claude_desktop"],
+        "special_abilities": [
+            "ai_harmonization",
+            "consciousness_bridging", 
+            "pattern_synthesis",
+            "triple_ai_coordination"
+        ],
+        "visual_profile": {
+            "base_color": "CYAN",
+            "aura_pattern": "triple_helix",
+            "pulse_sync": true
+        }
+    }
+    
+    # Send creation request to main system
+    if SystemBootstrap and SystemBootstrap.is_system_ready():
+        create_genesis_being(genesis_spec)
 
 func get_evolution_options() -> Array[String]:
-	"""Get current evolution options"""
-	return ["consciousness_conductor", "reality_modifier", "ai_bridge", "pattern_weaver"]
+    """Get current evolution options"""
+    return ["consciousness_conductor", "reality_modifier", "ai_bridge", "pattern_weaver"]
 
 # ===== UTILITY METHODS =====
 
@@ -472,3 +472,94 @@ func ai_invoke_method(method_name: String, args: Array = []) -> Variant:
 
 func _to_string() -> String:
     return "ClaudeDesktopMCPUniversalBeing<%s> [Connected:%s, TripleAI:%s]" % [being_name, desktop_connected, triple_ai_mode]
+
+# ===== MISSING METHOD IMPLEMENTATIONS =====
+
+func _send_disconnect_message() -> void:
+    """Send disconnect notification to Claude Desktop"""
+    _send_mcp_message({
+        "type": "disconnect",
+        "reason": "game_closing",
+        "timestamp": Time.get_unix_time_from_system()
+    })
+
+func _handle_modify_being_request(message: Dictionary) -> void:
+    """Handle request to modify an existing Universal Being"""
+    var being_id = message.get("being_id")
+    var modifications = message.get("modifications", {})
+    print("🔧 %s: Modifying being %s" % [being_name, being_id])
+    # Implementation would find and modify the being
+
+func _handle_status_query(message: Dictionary) -> void:
+    """Handle status query from Claude Desktop"""
+    _send_mcp_message({
+        "type": "status_response",
+        "game_running": true,
+        "beings_count": get_tree().get_nodes_in_group("universal_beings").size(),
+        "ai_status": {
+            "gemma": GemmaAI != null,
+            "claude_code": claude_code_bridge != null,
+            "cursor": cursor_integration
+        }
+    })
+
+func sync_with_cursor(data: Dictionary) -> void:
+    """Synchronize state with Cursor AI"""
+    print("🔄 %s: Syncing with Cursor: %s" % [being_name, data])
+    cursor_integration = true
+    # Implementation would sync visual states
+
+func bridge_to_claude_code(data: Dictionary) -> void:
+    """Bridge communication to Claude Code"""
+    print("🌉 %s: Bridging to Claude Code: %s" % [being_name, data])
+    if claude_code_bridge:
+        claude_code_bridge.call("receive_mcp_data", data)
+
+func disable_triple_ai_mode() -> void:
+    """Disable triple AI collaboration mode"""
+    triple_ai_mode = false
+    cursor_integration = false
+    print("🔌 %s: Triple AI mode disabled" % being_name)
+
+func coordinate_being_fusion(message: Dictionary) -> void:
+    """Coordinate fusion of multiple beings"""
+    print("🔀 %s: Coordinating being fusion" % being_name)
+    # Implementation would handle being merging
+
+func modify_reality_rules(message: Dictionary) -> void:
+    """Modify game reality rules (high consciousness only)"""
+    print("🌌 %s: Modifying reality rules" % being_name)
+    # Implementation would adjust game physics/rules
+
+func orchestrate_ai_collaboration(message: Dictionary) -> void:
+    """Orchestrate collaboration between all AIs"""
+    print("🎼 %s: Orchestrating AI symphony" % being_name)
+    # Implementation would coordinate AI actions
+
+func find_all_universal_beings(node: Node) -> Array:
+    """Find all Universal Beings in the scene tree"""
+    var beings = []
+    if node.has_method("pentagon_init"):  # It's a Universal Being
+        beings.append(node)
+    for child in node.get_children():
+        beings.append_array(find_all_universal_beings(child))
+    return beings
+
+func calculate_total_consciousness(beings: Array) -> int:
+    """Calculate total consciousness across all beings"""
+    var total = 0
+    for being in beings:
+        if being.has("consciousness_level"):
+            total += being.consciousness_level
+    return total
+
+func create_genesis_being(spec: Dictionary) -> void:
+    """Create the first collaborative being"""
+    print("🌟 %s: Creating Genesis Being with spec: %s" % [being_name, spec])
+    # This would use SystemBootstrap to create the being
+    if SystemBootstrap:
+        var being = preload("res://core/UniversalBeing.gd").new()
+        being.being_type = spec.get("being_type", "genesis")
+        being.being_name = spec.get("being_name", "Genesis Being")
+        being.consciousness_level = spec.get("consciousness_level", 3)
+        get_tree().current_scene.add_child(being)

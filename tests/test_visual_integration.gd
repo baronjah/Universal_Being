@@ -22,10 +22,10 @@ const CONSCIOUSNESS_COLORS = {
 
 func _ready():
 	print("\n🎨 VISUAL INTEGRATION TEST")
-	print("=" * 60)
+	print("=".repeat(60))
 	print("Testing ButtonUniversalBeing with button_template.tscn")
 	print("Cycling through consciousness levels 0-6...")
-	print("=" * 60 + "\n")
+	print("=".repeat(60) + "\n")
 	
 	# Create the button being
 	button_being = preload("res://beings/button_universal_being.gd").new()

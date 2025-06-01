@@ -159,8 +159,8 @@ func create_new_component(args: Array):
 		print("Error: Please provide a component name")
 		return
 	
-	var component_name = args[0]
-	var output_path = "res://components/%s.ub.zip" % component_name
+	var component_name: String = args[0]
+	var output_path: String = "res://components/%s.ub.zip" % component_name
 	
 	ComponentLoader.create_component_template(output_path, component_name)
 
