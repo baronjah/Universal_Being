@@ -1,11 +1,10 @@
-# Godot 4+ specific ignores
+# ===== GODOT ENGINE =====
 .godot/
 *.tmp
-
-# Godot import directory
 .import/
+export_presets.cfg
 
-# AI Model files - TOO LARGE FOR GITHUB!
+# ===== AI MODEL FILES (TOO LARGE FOR GITHUB) =====
 ai_models/gamma/*.gguf
 ai_models/**/*.gguf
 ai_models/**/*.ggml
@@ -14,34 +13,91 @@ ai_models/**/*.safetensors
 ai_models/**/*.pt
 ai_models/**/*.pth
 
-# Large addon files
+# ===== LARGE ADDON FILES =====
 addons/nobodywho/*.pdb
 addons/nobodywho/*debug*
-# Keep the release versions, they're under 50MB
-# addons/nobodywho/*release*
+addons/nobodywho/~*
 
-# System files
+# ===== DOCUMENTATION CLUTTER (MOVED TO docs/) =====
+# Too many status files in root - keep clean!
+AI_*.md
+STATUS_*.md
+PARSE_*.md
+QUICK_*.md
+READY_*.md
+PROJECT_STATUS*.md
+SESSION_*.md
+URGENT_*.md
+IMMEDIATE_*.md
+NOW_*.md
+FIX_*.md
+LAUNCH_*.md
+CURSOR_TASKS*.md
+GEMINI_TASKS*.md
+LUMINUS_TASKS*.md
+TASKS_*.md
+BOOTSTRAP_*.md
+CLEAN_*.md
+FIXED_*.md
+SYNC_*.md
+TODAYS_*.md
+cursor_*.md
+gemini_*.md
+luno_*.md
+marching_*.md
+parallel_*.md
+ready_*.md
+what_*.md
+constellation_*.md
+
+# ===== KAMISAMA COPY PASTES (DEVELOPMENT NOTES) =====
+kamisama_copy_pastes/
+
+# ===== TEST FILES =====
+basic_test.gd*
+console_test.gd*
+package_test.gd*
+test_*.gd*
+*_test.gd*
+
+# ===== TEMP/BACKUP SYSTEM FILES =====
+*.backup
+*.bak
+*_backup/
+main_complex.gd.backup
+
+# ===== DEVELOPMENT FOLDERS =====
+saves/
+scenarios/
+collaboration/
+project_sync/
+ai_coordination_prompt.md
+
+# ===== SYSTEM FILES =====
 .DS_Store
 Thumbs.db
 desktop.ini
 
-# IDE files
+# ===== IDE FILES =====
 .vscode/
 .idea/
 *.swp
 *.swo
 
-# Logs
+# ===== LOGS =====
 logs/
 *.log
 
-# Backup files
-*.backup
-*.bak
-*_backup/
-
-# Build outputs
+# ===== BUILD OUTPUTS =====
 build/
 dist/
 export/
-export_presets.cfg
+
+# ===== SHELL SCRIPTS (DEVELOPMENT ONLY) =====
+*.bat
+*.sh
+ub
+
+# ===== USER DATA =====
+user://
+saves/

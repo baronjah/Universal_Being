@@ -1,5 +1,7 @@
 shader_type canvas_item;
 
+uniform sampler2D SCREEN_TEXTURE : hint_screen_texture, filter_linear_mipmap;
+
 // Reality distortion parameters
 uniform float distortion_strength : hint_range(0.0, 0.1) = 0.02;
 uniform float wave_frequency : hint_range(1.0, 10.0) = 3.0;

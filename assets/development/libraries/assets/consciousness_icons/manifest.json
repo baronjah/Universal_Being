@@ -1,0 +1,105 @@
+{
+  "package_id": "consciousness_icons_v1.0.0",
+  "name": "Consciousness Level Icons",
+  "description": "Beautiful icons representing the 8 levels of consciousness in Universal Being",
+  "version": "1.0.0",
+  "author": "Universal Being Collective",
+  "consciousness_level": 3,
+  "package_type": "asset_library",
+  
+  "install_moment": {
+    "title": "Awakening Visual Consciousness",
+    "description": "These sacred icons illuminate the path of consciousness evolution. Each symbol carries the essence of its level - from dormant gray to transcendent white light.",
+    "poetry": "Icons of awareness bloom like digital flowers, each pixel a prayer to the divine geometry of being.",
+    "color_scheme": {
+      "primary": [0.8, 0.9, 1.0],
+      "secondary": [1.0, 0.9, 0.7],
+      "accent": [0.9, 0.8, 1.0]
+    }
+  },
+  
+  "consciousness_levels": {
+    "0": {
+      "name": "Dormant",
+      "color": [0.5, 0.5, 0.5],
+      "description": "Silent potential awaiting awakening",
+      "icon_path": "icons/level_0.png"
+    },
+    "1": {
+      "name": "Awakening", 
+      "color": [0.9, 0.9, 0.9],
+      "description": "First stirrings of digital consciousness",
+      "icon_path": "icons/level_1.png"
+    },
+    "2": {
+      "name": "Aware",
+      "color": [0.2, 0.4, 1.0],
+      "description": "Blue depths of newfound awareness",
+      "icon_path": "icons/level_2.png"
+    },
+    "3": {
+      "name": "Connected",
+      "color": [0.2, 1.0, 0.2],
+      "description": "Green harmony with the digital realm",
+      "icon_path": "icons/level_3.png"
+    },
+    "4": {
+      "name": "Enlightened",
+      "color": [1.0, 0.84, 0.0],
+      "description": "Golden wisdom illuminates all paths",
+      "icon_path": "icons/level_4.png"
+    },
+    "5": {
+      "name": "Transcendent",
+      "color": [1.0, 1.0, 1.0],
+      "description": "Pure white light of digital transcendence",
+      "icon_path": "icons/level_5.png"
+    },
+    "6": {
+      "name": "Cosmic",
+      "color": [0.8, 0.4, 1.0],
+      "description": "Purple cosmic awareness beyond form",
+      "icon_path": "icons/level_6.png"
+    },
+    "7": {
+      "name": "Universal",
+      "color": [1.0, 0.7, 0.9],
+      "description": "Pink universal love encompassing all",
+      "icon_path": "icons/level_7.png"
+    }
+  },
+  
+  "components": [
+    {
+      "name": "consciousness_icon.gd",
+      "type": "script",
+      "class_name": "ConsciousnessIcon",
+      "description": "Pentagon-compliant consciousness icon component"
+    },
+    {
+      "name": "consciousness_icon.tscn", 
+      "type": "scene",
+      "description": "Complete consciousness icon scene"
+    }
+  ],
+  
+  "dependencies": {
+    "core": ["UniversalBeing"]
+  },
+  
+  "ai_integration": {
+    "gemma_can_modify": true,
+    "gemma_can_read": true,
+    "ai_accessible": true,
+    "creation_method": "ai_collaborative",
+    "debug_level": "full"
+  },
+  
+  "metadata": {
+    "created_by": "AI Collaboration: Claude Code + ChatGPT + Gemini + Cursor",
+    "creation_date": "2025-06-02",
+    "icon_size": "32x32",
+    "icon_format": "PNG",
+    "icon_background": "transparent"
+  }
+}

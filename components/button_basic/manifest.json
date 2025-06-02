@@ -1,0 +1,39 @@
+{
+    "name": "Button Basic",
+    "description": "A basic Universal Being button component with standard UI interactions",
+    "version": "1.0.0",
+    "author": "Universal Being Project",
+    "consciousness_level": 2,
+    "install_moment": "ready",
+    "dependencies": [],
+    "compatible_components": [
+        "ui_base",
+        "interaction_base"
+    ],
+    "files": {
+        "scripts": [
+            "button_basic.gd"
+        ],
+        "scenes": [
+            "button_basic.tscn"
+        ],
+        "assets": [
+            "button_normal.png",
+            "button_hover.png",
+            "button_pressed.png"
+        ]
+    },
+    "metadata": {
+        "category": "ui",
+        "tags": ["button", "interaction", "ui"],
+        "min_engine_version": "4.5.0",
+        "max_engine_version": "4.9.0",
+        "ai_accessible": true,
+        "gemma_can_modify": true
+    },
+    "performance": {
+        "estimated_memory_mb": 2.5,
+        "estimated_load_time_ms": 50,
+        "estimated_frame_impact_ms": 0.1
+    }
+} 

@@ -216,7 +216,7 @@ func set_consciousness_level(level: int) -> void:
     
     # Trigger consciousness change
     if camera_being.has_method("_on_consciousness_changed"):
-        camera_being._on_consciousness_changed(old_level, level)
+        camera_being._on_consciousness_changed(level)
     
     update_ui()
     

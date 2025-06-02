@@ -7,14 +7,14 @@
 extends UniversalBeing
 class_name CameraEffectsTest
 
-const CameraEffectsComponent = preload("res://components/camera_effects/camera_effects.gd")
+const SimpleCameraEffects = preload("res://components/simple_camera_effects.gd")
 
 # ===== TEST PROPERTIES =====
 @export var auto_evolve: bool = false
 @export var evolution_interval: float = 3.0
 
 # ===== INTERNAL STATE =====
-var _camera_effects: CameraEffectsComponent
+var _camera_effects: SimpleCameraEffects
 var _current_level: int = 0
 var _evolution_timer: float = 0.0
 var _test_scene: Node
@@ -38,7 +38,7 @@ func pentagon_ready() -> void:
     _create_test_scene()
     
     # Initialize camera effects
-    _camera_effects = CameraEffectsComponent.new()
+    _camera_effects = SimpleCameraEffects.new()
     add_child(_camera_effects)
     _camera_effects.initialize(self)
     

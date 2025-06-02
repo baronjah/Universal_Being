@@ -1,0 +1,128 @@
+{
+  "camera_levels": [
+    {
+      "level": 0,
+      "name": "Dormant",
+      "poetic": "The eye sleeps, unseeing...",
+      "achievement": "Awakened the camera's ancient silence.",
+      "tooltip": "No perception. All is darkness."
+    },
+    {
+      "level": 1,
+      "name": "Awakening",
+      "poetic": "First light touches the lens of perception...",
+      "achievement": "Caught the first glimmer of vision.",
+      "tooltip": "Bare awareness. Faint shapes stir in shadow."
+    },
+    {
+      "level": 2,
+      "name": "Aware",
+      "poetic": "Depth emerges from flatness. The world begins to take shape.",
+      "achievement": "Stepped into focus. The scene finds its dimension.",
+      "tooltip": "Basic vision. Depth and form become known."
+    },
+    {
+      "level": 3,
+      "name": "Insight",
+      "poetic": "Movement weaves meaning into sight. Clarity sharpens.",
+      "achievement": "The camera flows. You sense purpose in each motion.",
+      "tooltip": "Perspective shifts, revealing hidden stories."
+    },
+    {
+      "level": 4,
+      "name": "Lucid",
+      "poetic": "All is illuminated—color, shape, and shadow. The lens becomes the world's memory.",
+      "achievement": "Achieved lucidity—vision guides creation.",
+      "tooltip": "Vivid, adaptive view. The world is alive in your gaze."
+    },
+    {
+      "level": 5,
+      "name": "Transcendent",
+      "poetic": "The camera dances with time. Reality bends, new truths emerge.",
+      "achievement": "Crossed the threshold—beyond sight, you shape reality.",
+      "tooltip": "See beyond surfaces. Camera is muse and mirror."
+    },
+    {
+      "level": 6,
+      "name": "Infinite",
+      "poetic": "Every angle is possible. The eye dreams as the world remakes itself.",
+      "achievement": "Touched infinity—limitless view unlocked.",
+      "tooltip": "All perspectives at once. The cosmos is your camera."
+    }
+  ],
+
+  "camera_quotes": [
+    "To look is human; to see is divine.",
+    "Every frame is a memory. Every memory, a universe.",
+    "The camera sleeps, and the world is lost. It wakes, and all is found.",
+    "Perspective is the soul's fingerprint.",
+    "A single pan can change a story.",
+    "Depth is a promise: there is always more.",
+    "What you focus on becomes real.",
+    "To tilt is to question gravity itself.",
+    "Through the lens, light reveals secrets.",
+    "Sometimes, the camera blinks. Sometimes, it dreams.",
+    "What's hidden in shadow waits to be seen.",
+    "Zoom out to find context. Zoom in to find meaning.",
+    "The lens is never truly empty.",
+    "Your gaze carves space into place.",
+    "Every cut is a choice. Every choice, a new path.",
+    "Let the camera wander—you may follow.",
+    "To see from above is to become the sky.",
+    "The bravest view is the first.",
+    "Where the eye cannot go, imagination leads.",
+    "Focus is not always about clarity—sometimes it is about intention."
+  ],
+
+  "camera_achievements": [
+    {
+      "level": 0,
+      "title": "Dreaming in Darkness",
+      "description": "You have found the hidden silence before vision stirs."
+    },
+    {
+      "level": 1,
+      "title": "Blink of Dawn",
+      "description": "You witnessed the camera's awakening—a world waits beyond."
+    },
+    {
+      "level": 2,
+      "title": "Sightfinder",
+      "description": "Depth and shape returned to your field of view."
+    },
+    {
+      "level": 3,
+      "title": "Focus Weaver",
+      "description": "You followed the movement, capturing the story between frames."
+    },
+    {
+      "level": 4,
+      "title": "Lucid Lens",
+      "description": "You achieved full lucidity—see as creation itself sees."
+    },
+    {
+      "level": 5,
+      "title": "Reality Bender",
+      "description": "You transcended the usual—your vision shapes the scene."
+    },
+    {
+      "level": 6,
+      "title": "Infinite Gaze",
+      "description": "The cosmos flows through your lens. All views, all at once."
+    }
+  ],
+
+  "tutorial": {
+    "intro": "Welcome to the Camera Consciousness System. Here, your view evolves as your awareness deepens.",
+    "how_it_works": "Each consciousness level unlocks new camera abilities—sharper focus, wider angles, dynamic movement, and even world-bending vision.",
+    "tips": [
+      "Look for subtle changes in color and clarity as you progress.",
+      "Your camera's consciousness determines how much of the world you can perceive—and shape.",
+      "Level up by exploring, observing, and interacting with new perspectives.",
+      "Achievements reward bold, creative use of the camera.",
+      "Use <kbd>Tab</kbd> or <kbd>G</kbd> to shift awareness—try every level!",
+      "Read loading tips for poetic insight and camera mastery.",
+      "You can always review your current level and abilities in the Camera menu."
+    ]
+  }
+}

@@ -59,24 +59,24 @@ func load_core_classes() -> void:
 	}
 	
 	# Load each class
-	for class_name in class_configs:
-		var config = class_configs[class_name]
+	for class_name_key in ["UniversalBeing", "FloodGates", "AkashicRecords"]:
+		var config = class_configs[class_name_key]
 		var loaded = false
 		
 		for path in config.paths:
 			if ResourceLoader.exists(path):
 				var resource = load(path)
 				if resource:
-					match class_name:
+					match class_name_key:
 						"UniversalBeing": UniversalBeingClass = resource
 						"FloodGates": FloodGatesClass = resource
 						"AkashicRecords": AkashicRecordsClass = resource
-					print("   ✓ Loaded %s from %s" % [class_name, path])
+					print("   ✓ Loaded %s from %s" % [class_name_key, path])
 					loaded = true
 					break
 		
 		if not loaded and config.required:
-			var error = "Failed to load required class: " + class_name
+			var error = "Failed to load required class: " + class_name_key
 			initialization_errors.append(error)
 			push_error("🚀 SystemBootstrap: " + error)
 	
@@ -161,28 +161,26 @@ func get_system_status() -> Dictionary:
 
 # ===== CONVENIENCE FUNCTIONS =====
 
-static func add_being_to_scene(being: Node, parent: Node) -> bool:
+func add_being_to_scene(being: Node, parent: Node) -> bool:
 	"""Static function to add being to scene through FloodGates"""
 	if not being or not parent:
 		push_error("SystemBootstrap: Invalid being or parent")
 		return false
 		
-	var bootstrap = get_node_or_null("/root/SystemBootstrap")
-	if bootstrap and bootstrap.flood_gates_instance:
-		return bootstrap.flood_gates_instance.add_being(being, parent)
+	if flood_gates_instance:
+		return flood_gates_instance.add_being(being, parent)
 	else:
 		push_warning("SystemBootstrap: Using fallback add_child - FloodGates not ready")
 		parent.add_child(being)
 		return true
 
-static func load_being_data(path: String) -> Dictionary:
+func load_being_data(path: String) -> Dictionary:
 	"""Static function to load being data from Akashic Records"""
-	var bootstrap = get_node_or_null("/root/SystemBootstrap")
-	if bootstrap and bootstrap.akashic_records_instance:
-		return bootstrap.akashic_records_instance.load_being_from_zip(path)
+	if akashic_records_instance:
+		return akashic_records_instance.load_being_from_zip(path)
 	push_error("SystemBootstrap: AkashicRecords not available")
 	return {}
 
-static func get_bootstrap_instance():
+func get_bootstrap_instance():
 	"""Get the bootstrap instance"""
-	return get_node_or_null("/root/SystemBootstrap")
+	return self

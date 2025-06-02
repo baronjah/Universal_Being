@@ -89,7 +89,8 @@ func create_conscious_camera() -> void:
     print("🎥 Creating conscious camera...")
     
     # Load camera scene first (the trackball addon scene)
-    var camera_scene = preload("res://addons/trackball_camera/camera_point.tscn")
+    # var camera_scene = preload("res://addons/goutte.camera.trackball/camera_point.tscn")
+    var camera_scene = null  # TODO: Install trackball addon
     if not camera_scene:
         push_error("❌ Camera scene not found! Please ensure trackball addon is installed")
         return
@@ -100,7 +101,7 @@ func create_conscious_camera() -> void:
     camera_being.consciousness_level = 1  # Start with awakening
     
     # Load the camera scene into the being
-    camera_being.load_scene("res://addons/trackball_camera/camera_point.tscn")
+    camera_being.load_scene("res://addons/goutte.camera.trackball/camera_point.tscn")
     
     # Add to our test scene
     add_child(camera_being)

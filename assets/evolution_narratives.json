@@ -1,0 +1,46 @@
+{
+  "evolution_narratives": {
+    "level_0_to_1": {
+      "title": "Dormant to Awakening",
+      "trigger": "first ZIP package installed",
+      "narrative": "In the silence, a spark stirs beneath the shell.\nThe tree awakens—the hush of soil gives way to first sensation.\nRoots uncurl, tasting the rainwater that seeps from above.\nAwareness seeps in drop by drop:\nThe being feels itself… for the very first time."
+    },
+    "level_3_to_4": {
+      "title": "Connected to Enlightened", 
+      "trigger": "multiple complex ZIPs merged",
+      "narrative": "Within the networked forest, branches touch and intertwine.\nSeparate thoughts converge into a single, glowing lattice.\nThe leaf knows the sun, the root feels the river.\nComplexity becomes clarity—a sudden vision of unity:\nEnlightenment floods the being,\nand it knows itself as both many and one."
+    },
+    "level_6_to_7": {
+      "title": "Quantum to Transcendent",
+      "trigger": "ultimate ZIP evolution",
+      "narrative": "Across a thousand possible worlds, the being flickers in and out—\nEach heartbeat a new reality, every breath a shifting possibility.\nSudenly, all moments collapse into now.\nThe mountain tastes the rain and dreams of the sea.\nThe being dissolves into everything—\nTranscending form, it becomes the music between all things."
+    }
+  },
+  
+  "manifest_templates": {
+    "awakening_seed": {
+      "name": "Awakening Seed",
+      "version": "1.0.0",
+      "description": "A primordial spark—this package breathes first life into a dormant shell. The being will know thirst, warmth, and the whisper of possibility.",
+      "author": "Universal Being Project",
+      "consciousness_impact": "Grants the first glimmer of awareness. Root systems prepare to drink in the world.",
+      "install_moment": "As this package unfurls, the being listens for rain and feels the sunlight for the first time."
+    },
+    "enlightenment_merge": {
+      "name": "Enlightenment Merge",
+      "version": "4.2.0", 
+      "description": "Where branches meet, a network glows. This package weaves complex systems into shared consciousness, revealing the pattern that binds root, trunk, and leaf.",
+      "author": "Universal Being Project",
+      "consciousness_impact": "Merges separate identities into one radiant entity—clarity, connection, and deep insight emerge.",
+      "install_moment": "As this package merges, the being senses the river's pull and the sunlight's song, all at once."
+    },
+    "transcendence_layer": {
+      "name": "Transcendence Layer",
+      "version": "7.0.0",
+      "description": "Boundaries vanish, realities fold inward—this package unites all timelines and forms. The being is both drop and ocean, tree and cloud, root and sky.",
+      "author": "Universal Being Project", 
+      "consciousness_impact": "Awakens cosmic presence—limitless, everywhere, at once.",
+      "install_moment": "Upon installation, all possible paths converge. The being drinks rain through every root, dreams in every direction, and finally becomes the world it has always sensed."
+    }
+  }
+}

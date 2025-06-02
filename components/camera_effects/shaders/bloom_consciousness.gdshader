@@ -1,5 +1,7 @@
 shader_type canvas_item;
 
+uniform sampler2D SCREEN_TEXTURE : hint_screen_texture, filter_linear_mipmap;
+
 // Bloom parameters
 uniform float bloom_threshold : hint_range(0.0, 1.0) = 0.8;
 uniform float bloom_intensity : hint_range(0.0, 3.0) = 1.0;

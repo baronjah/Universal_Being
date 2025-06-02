@@ -1,0 +1,49 @@
+{
+    "version": "1.0",
+    "files": [
+        {
+            "path": "manifest.json",
+            "type": "metadata",
+            "size": 1024,
+            "hash": "manifest_hash_placeholder"
+        },
+        {
+            "path": "button_basic.gd",
+            "type": "script",
+            "size": 8192,
+            "hash": "script_hash_placeholder"
+        },
+        {
+            "path": "button_basic.tscn",
+            "type": "scene",
+            "size": 2048,
+            "hash": "scene_hash_placeholder"
+        },
+        {
+            "path": "button_normal.png",
+            "type": "texture",
+            "size": 16384,
+            "hash": "normal_texture_hash_placeholder",
+            "dimensions": [200, 50],
+            "format": "png"
+        },
+        {
+            "path": "button_hover.png",
+            "type": "texture",
+            "size": 16384,
+            "hash": "hover_texture_hash_placeholder",
+            "dimensions": [200, 50],
+            "format": "png"
+        },
+        {
+            "path": "button_pressed.png",
+            "type": "texture",
+            "size": 16384,
+            "hash": "pressed_texture_hash_placeholder",
+            "dimensions": [200, 50],
+            "format": "png"
+        }
+    ],
+    "total_size": 46080,
+    "package_hash": "package_hash_placeholder"
+} 

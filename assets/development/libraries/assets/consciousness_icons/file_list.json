@@ -1,0 +1,97 @@
+{
+  "files": [
+    {
+      "name": "manifest.json",
+      "type": "manifest",
+      "size_bytes": 2847,
+      "required": true,
+      "description": "Package manifest with consciousness level definitions"
+    },
+    {
+      "name": "consciousness_icon.gd", 
+      "type": "script",
+      "size_bytes": 8924,
+      "required": true,
+      "description": "Pentagon-compliant consciousness icon component"
+    },
+    {
+      "name": "consciousness_icon.tscn",
+      "type": "scene", 
+      "size_bytes": 2156,
+      "required": true,
+      "description": "Complete consciousness icon scene with animations"
+    },
+    {
+      "name": "file_list.json",
+      "type": "metadata",
+      "size_bytes": 1284,
+      "required": true,
+      "description": "Package file listing for validation"
+    },
+    {
+      "name": "icons/level_0.png",
+      "type": "texture",
+      "size_bytes": 512,
+      "required": true,
+      "description": "Dormant consciousness level icon (32x32)"
+    },
+    {
+      "name": "icons/level_1.png", 
+      "type": "texture",
+      "size_bytes": 498,
+      "required": true,
+      "description": "Awakening consciousness level icon (32x32)"
+    },
+    {
+      "name": "icons/level_2.png",
+      "type": "texture", 
+      "size_bytes": 534,
+      "required": true,
+      "description": "Aware consciousness level icon (32x32)"
+    },
+    {
+      "name": "icons/level_3.png",
+      "type": "texture",
+      "size_bytes": 501,
+      "required": true, 
+      "description": "Connected consciousness level icon (32x32)"
+    },
+    {
+      "name": "icons/level_4.png",
+      "type": "texture",
+      "size_bytes": 489,
+      "required": true,
+      "description": "Enlightened consciousness level icon (32x32)"
+    },
+    {
+      "name": "icons/level_5.png",
+      "type": "texture",
+      "size_bytes": 467,
+      "required": true,
+      "description": "Transcendent consciousness level icon (32x32)"
+    },
+    {
+      "name": "icons/level_6.png",
+      "type": "texture",
+      "size_bytes": 523,
+      "required": true,
+      "description": "Cosmic consciousness level icon (32x32)"
+    },
+    {
+      "name": "icons/level_7.png",
+      "type": "texture",
+      "size_bytes": 456,
+      "required": true,
+      "description": "Universal consciousness level icon (32x32)"
+    }
+  ],
+  "total_files": 12,
+  "total_size_bytes": 18191,
+  "package_type": "asset_library",
+  "validation_rules": {
+    "required_files": ["manifest.json", "consciousness_icon.gd", "consciousness_icon.tscn"],
+    "icon_format": "PNG",
+    "icon_size": "32x32",
+    "transparency": "required"
+  }
+}

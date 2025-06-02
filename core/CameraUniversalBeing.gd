@@ -108,7 +108,7 @@ func setup_camera_effects() -> void:
 		return
 	
 	# Load camera effects component
-	var effects_script = preload("res://components/camera_effects.gd")
+	var effects_script = preload("res://components/camera_effects/camera_effects_component.gd")
 	if effects_script:
 		camera_effects = effects_script.new()
 		camera_effects.name = "CameraEffects"
@@ -251,9 +251,10 @@ func ai_invoke_method(method_name: String, args: Array = []) -> Variant:
 
 # ===== CAMERA EFFECTS INTEGRATION =====
 
-func _on_consciousness_changed(old_level: int, new_level: int) -> void:
+func _on_consciousness_changed(new_level: int) -> void:
 	"""Override consciousness change to update effects"""
-	super._on_consciousness_changed(old_level, new_level)
+	var old_level = consciousness_level  # Store old level before parent changes it
+	super._on_consciousness_changed(new_level)
 	
 	if camera_effects and camera_effects.has_method("_on_consciousness_changed"):
 		camera_effects._on_consciousness_changed(old_level, new_level)

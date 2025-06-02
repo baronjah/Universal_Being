@@ -1,5 +1,7 @@
 shader_type canvas_item;
 
+uniform sampler2D SCREEN_TEXTURE : hint_screen_texture, filter_linear_mipmap;
+
 // Chromatic aberration parameters
 uniform float aberration_amount : hint_range(0.0, 0.01) = 0.003;
 uniform vec2 aberration_center = vec2(0.5, 0.5);

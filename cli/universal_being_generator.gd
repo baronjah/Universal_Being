@@ -1,204 +1,287 @@
 #!/usr/bin/env -S godot --headless --script
 extends SceneTree
 
-# Universal Being Generator CLI
-# Usage: godot --headless --script universal_being_generator.gd -- <command> [options]
+# ==================================================
+# UNIVERSAL BEING: Universal Being Generator CLI
+# TYPE: system
+# PURPOSE: Command-line tool for generating Universal Beings
+# COMPONENTS: []
+# SCENES: []
+# ==================================================
+
+# This is a CLI tool, not a Universal Being
+# It uses the Universal Being architecture for consistency
+
+# ===== COMMAND DEFINITIONS =====
 
 const COMMANDS = {
-	"new": "Create a new Universal Being",
-	"component": "Create a new component template",
-	"list": "List all Universal Beings",
-	"test": "Run tests on a Universal Being",
-	"help": "Show this help message"
+	"new": {
+		"description": "Create a new Universal Being",
+		"usage": "new <name> <type> [purpose] [components] [scenes]",
+		"example": "new Player player \"Player character\" \"movement.ub.zip,combat.ub.zip\" \"player.tscn\""
+	},
+	"component": {
+		"description": "Create a new component",
+		"usage": "component <name> [description]",
+		"example": "component movement \"Movement component for Universal Beings\""
+	},
+	"list": {
+		"description": "List available beings or components",
+		"usage": "list [beings|components]",
+		"example": "list beings"
+	},
+	"test": {
+		"description": "Test a Universal Being",
+		"usage": "test <name>",
+		"example": "test Player"
+	}
 }
 
-func _init():
+# ===== INITIALIZATION =====
+
+func _init() -> void:
+	# Parse command line arguments
 	var args = OS.get_cmdline_args()
-	var script_args = []
-	var found_separator = false
-	
-	for arg in args:
-		if found_separator:
-			script_args.append(arg)
-		elif arg == "--":
-			found_separator = true
-	
-	if script_args.is_empty():
+	if args.size() > 0:
+		process_command(args)
+	else:
 		print_help()
-		quit()
-		return
-	
-	var command = script_args[0]
-	var command_args = script_args.slice(1)
+
+# ===== COMMAND PROCESSING =====
+
+func process_command(args: Array) -> void:
+	var command = args[0]
+	var command_args = args.slice(1)
 	
 	match command:
 		"new":
+			if command_args.size() < 2:
+				print_usage("new")
+				return
 			create_new_being(command_args)
 		"component":
+			if command_args.size() < 1:
+				print_usage("component")
+				return
 			create_new_component(command_args)
 		"list":
-			list_beings()
+			list_items(command_args)
 		"test":
-			test_being(command_args)
-		"help":
-			print_help()
+			if command_args.size() < 1:
+				print_usage("test")
+				return
+			test_being(command_args[0])
 		_:
 			print("Unknown command: %s" % command)
 			print_help()
-	
-	quit()
 
-func print_help():
-	print("Universal Being Generator v1.0")
-	print("Usage: godot --headless --script universal_being_generator.gd -- <command> [options]\n")
-	print("Commands:")
+func print_help() -> void:
+	print("Universal Being Generator - CLI Tool")
+	print("Usage: ubg <command> [args]")
+	print("\nAvailable commands:")
 	for cmd in COMMANDS:
-		print("  %-12s %s" % [cmd, COMMANDS[cmd]])
-	print("\nExamples:")
-	print("  godot --headless --script universal_being_generator.gd -- new player_being")
-	print("  godot --headless --script universal_being_generator.gd -- component ui_behavior")
+		var info = COMMANDS[cmd]
+		print("\n  %s - %s" % [cmd, info.description])
+		print("  Usage: %s" % info.usage)
+		print("  Example: %s" % info.example)
 
-func create_new_being(args: Array):
-	if args.is_empty():
-		print("Error: Please provide a being name")
+func print_usage(command: String) -> void:
+	if COMMANDS.has(command):
+		var info = COMMANDS[command]
+		print("Usage: %s" % info.usage)
+		print("Example: %s" % info.example)
+	else:
+		print("Unknown command: %s" % command)
+
+# ===== BEING GENERATION =====
+
+func create_new_being(args: Array) -> void:
+	var being_name: String = args[0]
+	var being_type: String = args[1]
+	var purpose: String = args[2] if args.size() > 2 else ""
+	var components: String = args[3] if args.size() > 3 else ""
+	var scenes: String = args[4] if args.size() > 4 else ""
+	
+	# Generate class name and file name
+	var class_name: String = being_name.capitalize() + "UniversalBeing"
+	var file_name: String = being_name.to_snake_case() + "_universal_being.gd"
+	var file_path: String = "beings/" + file_name
+	
+	# Load template
+	var template_path = "res://cli/templates/universal_being_template.gd"
+	var template_file = FileAccess.open(template_path, FileAccess.READ)
+	if not template_file:
+		push_error("Failed to load template file: %s" % template_path)
 		return
 	
-	var being_name = args[0]
-	var being_type = args[1] if args.size() > 1 else being_name.to_lower()
-	var class_name = to_pascal_case(being_name) + "UniversalBeing"
+	var template = template_file.get_as_text()
+	template_file.close()
+	
+	# Replace template placeholders
+	var replacements = {
+		"{being_name}": being_name,
+		"{being_type}": being_type,
+		"{purpose}": purpose,
+		"{components}": components,
+		"{scenes}": scenes,
+		"{class_name}": class_name,
+		"{consciousness_level}": "1",  # Default consciousness level
+		"{properties}": "# Add your properties here",
+		"{component_loading}": "# Add component loading here",
+		"{scene_loading}": "# Add scene loading here",
+		"{process_logic}": "# Add process logic here",
+		"{input_logic}": "# Add input handling here",
+		"{cleanup_logic}": "# Add cleanup logic here",
+		"{methods}": "# Add your methods here",
+		"{capabilities}": "\"basic_being\"" if components.is_empty() else "\"basic_being\", \"component_aware\"",
+		"{ai_methods}": "# Add AI methods here"
+	}
+	
+	for placeholder in replacements:
+		template = template.replace(placeholder, replacements[placeholder])
+	
+	# Create file
+	var file = FileAccess.open(file_path, FileAccess.WRITE)
+	if not file:
+		push_error("Failed to create file: %s" % file_path)
+		return
+	
+	file.store_string(template)
+	file.close()
+	
+	print("Created new Universal Being: %s" % file_path)
+	print("Class: %s" % class_name)
+	print("Type: %s" % being_type)
+	if not purpose.is_empty():
+		print("Purpose: %s" % purpose)
+	if not components.is_empty():
+		print("Components: %s" % components)
+	if not scenes.is_empty():
+		print("Scenes: %s" % scenes)
+
+# ===== COMPONENT GENERATION =====
+
+func create_new_component(args: Array) -> void:
+	var component_name: String = args[0]
+	var description: String = args[1] if args.size() > 1 else ""
+	
+	ComponentLoader.create_component_template("res://components/" + component_name + ".ub.zip", component_name)
+
+# ===== LISTING =====
+
+func list_items(args: Array) -> void:
+	var type = args[0] if args.size() > 0 else "beings"
+	
+	match type:
+		"beings":
+			list_beings()
+		"components":
+			list_components()
+		_:
+			print("Unknown list type: %s" % type)
+			print("Available types: beings, components")
+
+func list_beings() -> void:
+	var dir = DirAccess.open("res://beings")
+	if not dir:
+		push_error("Failed to open beings directory")
+		return
+	
+	dir.list_dir_begin()
+	var file_name = dir.get_next()
+	
+	print("\nAvailable Universal Beings:")
+	while file_name != "":
+		if file_name.ends_with("_universal_being.gd"):
+			var being_name = file_name.replace("_universal_being.gd", "").replace("_", " ").capitalize()
+			print("  - %s" % being_name)
+		file_name = dir.get_next()
+
+func list_components() -> void:
+	var dir = DirAccess.open("res://components")
+	if not dir:
+		push_error("Failed to open components directory")
+		return
+	
+	dir.list_dir_begin()
+	var file_name = dir.get_next()
+	
+	print("\nAvailable Components:")
+	while file_name != "":
+		if file_name.ends_with(".ub.zip"):
+			var component_name = file_name.replace(".ub.zip", "").replace("_", " ").capitalize()
+			print("  - %s" % component_name)
+		file_name = dir.get_next()
+
+# ===== TESTING =====
+
+func test_being(being_name: String) -> void:
 	var file_name = being_name.to_snake_case() + "_universal_being.gd"
 	var file_path = "res://beings/" + file_name
 	
-	var template = """# ==================================================
-# UNIVERSAL BEING: %s
-# TYPE: %s
-# PURPOSE: [Add purpose here]
-# COMPONENTS: [List components]
-# SCENES: [List scenes]
-# ==================================================
-
-extends UniversalBeing
-class_name %s
-
-# ===== BEING-SPECIFIC PROPERTIES =====
-# Add your exported properties here
-
-# ===== PENTAGON ARCHITECTURE IMPLEMENTATION =====
-
-func pentagon_init() -> void:
-	super.pentagon_init()
+	if not FileAccess.file_exists(file_path):
+		push_error("Being not found: %s" % being_name)
+		return
 	
-	being_type = "%s"
-	being_name = "%s"
-	consciousness_level = 1
+	print("Testing being: %s" % being_name)
 	
-	evolution_state.can_become = [
-		# Add evolution paths
-	]
+	# Load and instantiate being
+	var script = load(file_path)
+	if not script:
+		push_error("Failed to load being script")
+		return
 	
-	print("🌟 %%s: Pentagon Init Complete" %% being_name)
+	var being = script.new()
+	if not being:
+		push_error("Failed to instantiate being")
+		return
+	
+	# Run basic tests
+	print("\nRunning tests...")
+	
+	# Test Pentagon methods
+	print("  Testing Pentagon methods...")
+	being.pentagon_init()
+	being.pentagon_ready()
+	being.pentagon_process(0.0)
+	being.pentagon_input(null)
+	being.pentagon_sewers()
+	
+	# Test AI interface
+	print("  Testing AI interface...")
+	var ai_interface = being.ai_interface()
+	print("    Type: %s" % ai_interface.get("being_info", {}).get("type", "unknown"))
+	print("    Name: %s" % ai_interface.get("being_info", {}).get("name", "unknown"))
+	print("    Consciousness: %d" % ai_interface.get("being_info", {}).get("consciousness", 0))
+	print("    Capabilities: %s" % str(ai_interface.get("capabilities", [])))
+	
+	print("\nTests completed!")
 
-func pentagon_ready() -> void:
-	super.pentagon_ready()
-	
-	# Load scenes and components
-	# load_scene("res://scenes/...")
-	# add_component("res://components/...")
-	
-	print("🌟 %%s: Pentagon Ready Complete" %% being_name)
+# ===== COMPONENT LOADER =====
 
-func pentagon_process(delta: float) -> void:
-	super.pentagon_process(delta)
-	
-	# Process logic here
-
-func pentagon_input(event: InputEvent) -> void:
-	super.pentagon_input(event)
-	
-	# Input handling here
-
-func pentagon_sewers() -> void:
-	print("🌟 %%s: Pentagon Sewers" %% being_name)
-	
-	# Cleanup here
-	
-	super.pentagon_sewers()
-
-# ===== AI INTEGRATION =====
-
-func ai_interface() -> Dictionary:
-	var base = super.ai_interface()
-	base.custom_commands = [
-		# Add custom AI commands
-	]
-	return base
-
-func ai_invoke_method(method_name: String, args: Array = []) -> Variant:
-	match method_name:
-		# Add custom command handlers
-		_:
-			return super.ai_invoke_method(method_name, args)
-
-func _to_string() -> String:
-	return "%s<%%s>" %% being_name
-""" % [being_name.capitalize(), being_type, class_name, being_type, being_name.capitalize(), class_name]
-	
-	# Create the file
-	var file = FileAccess.open(file_path, FileAccess.WRITE)
-	if file:
-		file.store_string(template)
+class ComponentLoader:
+	static func create_component_template(output_path: String, component_name: String) -> void:
+		# Create manifest
+		var manifest = {
+			"name": component_name,
+			"version": "1.0.0",
+			"description": "Universal Being component for " + component_name,
+			"author": "Universal Being Generator",
+			"created_at": Time.get_unix_time_from_system(),
+			"files": []
+		}
+		
+		# Save manifest
+		var json = JSON.stringify(manifest, "  ")
+		var file = FileAccess.open(output_path, FileAccess.WRITE)
+		if not file:
+			push_error("Failed to create component file: %s" % output_path)
+			return
+		
+		file.store_string(json)
 		file.close()
-		print("✨ Created new Universal Being: %s" % file_path)
-		print("   Class name: %s" % class_name)
-		print("   Being type: %s" % being_type)
-	else:
-		print("❌ Error: Could not create file: %s" % file_path)
-
-func create_new_component(args: Array):
-	if args.is_empty():
-		print("Error: Please provide a component name")
-		return
-	
-	var component_name: String = args[0]
-	var output_path: String = "res://components/%s.ub.zip" % component_name
-	
-	ComponentLoader.create_component_template(output_path, component_name)
-
-func list_beings():
-	print("📋 Universal Beings in project:\n")
-	
-	var dir = DirAccess.open("res://beings")
-	if dir:
-		dir.list_dir_begin()
-		var file_name = dir.get_next()
-		var count = 0
 		
-		while file_name != "":
-			if file_name.ends_with(".gd"):
-				count += 1
-				var being_name = file_name.trim_suffix("_universal_being.gd")
-				print("  %d. %s" % [count, being_name])
-			file_name = dir.get_next()
-		
-		if count == 0:
-			print("  No Universal Beings found")
-		else:
-			print("\nTotal: %d Universal Beings" % count)
-	else:
-		print("  Error: Could not access beings directory")
-
-func test_being(args: Array):
-	if args.is_empty():
-		print("Error: Please provide a being name to test")
-		return
-	
-	var being_name = args[0]
-	print("🧪 Testing Universal Being: %s" % being_name)
-	print("   [Test implementation pending]")
-
-func to_pascal_case(text: String) -> String:
-	var words = text.split("_")
-	var result = ""
-	for word in words:
-		result += word.capitalize()
-	return result
+		print("Created new component: %s" % output_path)
+		print("Name: %s" % component_name)
+		print("Version: %s" % manifest.version)
+		print("Description: %s" % manifest.description)

@@ -1,0 +1,46 @@
+[gd_scene load_steps=2 format=3 uid="uid://bdm0cogg7f327"]
+
+[ext_resource type="Script" path="res://beings/ConsoleTextLayer.gd" id="1_2k4m3"]
+
+[node name="ConsoleTextLayer" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_2k4m3")
+
+[node name="ConsoleOutput" type="RichTextLabel" parent="."]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_bottom = -40.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/normal_font_size = 14
+bbcode_enabled = true
+scroll_following = true
+context_menu_enabled = true
+shortcut_keys_enabled = true
+selecting_enabled = true
+deselect_on_focus_loss_enabled = false
+drag_and_drop_selection_enabled = true
+
+[node name="CommandInput" type="LineEdit" parent="."]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -40.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_font_sizes/font_size = 14
+placeholder_text = "Enter command..."
+clear_button_enabled = true
+shortcut_keys_enabled = true
+selecting_enabled = true
+deselect_on_focus_loss_enabled = false
+drag_and_drop_selection_enabled = true 

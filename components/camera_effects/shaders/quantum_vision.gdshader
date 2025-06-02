@@ -1,5 +1,7 @@
 shader_type canvas_item;
 
+uniform sampler2D SCREEN_TEXTURE : hint_screen_texture, filter_linear_mipmap;
+
 // Quantum vision parameters
 uniform int reality_layers : hint_range(2, 8) = 4;
 uniform float layer_offset : hint_range(0.001, 0.02) = 0.005;

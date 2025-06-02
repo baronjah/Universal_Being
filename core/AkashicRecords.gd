@@ -38,7 +38,7 @@ var session_evolutions: Array[Dictionary] = []  # Evolution history
 var session_interactions: Array[Dictionary] = []  # Interaction logs
 
 ## Compact System
-var compact_system: AkashicCompactSystem = null
+var compact_system = null  # Will be AkashicCompactSystem when implemented
 var active_compacts: Dictionary = {}  # id -> Compact
 var compact_chains: Dictionary = {}  # being_id -> [compact_ids]
 
@@ -142,16 +142,16 @@ func save_being_to_zip(being: Node, zip_path: String) -> bool:
 				"resource_cost": 1
 			},
 			"ai_integration": {
-				"gemma_can_modify": being.get("metadata", {}).get("gemma_can_modify", true),
-				"gemma_can_read": being.get("metadata", {}).get("ai_accessible", true),
+				"gemma_can_modify": being.get("metadata", {}).get("gemma_can_modify") if being.get("metadata", {}).has("gemma_can_modify") else true,
+				"gemma_can_read": being.get("metadata", {}).get("ai_accessible") if being.get("metadata", {}).has("ai_accessible") else true,
 				"debug_level": "full"
 			}
 		},
 		"properties": being.call("get_all_properties") if being.has_method("get_all_properties") else {},
-		"components": being.get("components", []),
-		"evolution_state": being.get("evolution_state", {}),
-		"consciousness_level": being.get("consciousness_level", 0),
-		"metadata": being.get("metadata", {})
+		"components": being.get("components") if being.has("components") else [],
+		"evolution_state": being.get("evolution_state") if being.has("evolution_state") else {},
+		"consciousness_level": being.get("consciousness_level") if being.has("consciousness_level") else 0,
+		"metadata": being.get("metadata") if being.has("metadata") else {}
 	}
 	
 	# Ensure directory exists

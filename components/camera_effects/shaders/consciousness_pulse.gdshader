@@ -1,5 +1,7 @@
 shader_type canvas_item;
 
+uniform sampler2D SCREEN_TEXTURE : hint_screen_texture, filter_linear_mipmap;
+
 // Master consciousness parameters
 uniform float consciousness_level : hint_range(0.0, 7.0) = 7.0;
 uniform float consciousness_pulse : hint_range(0.0, 1.0) = 1.0;

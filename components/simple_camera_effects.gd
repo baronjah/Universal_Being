@@ -337,10 +337,12 @@ func ai_invoke_method(method_name: String, args: Array = []) -> Variant:
 			if args.size() > 0:
 				set_effects_enabled(args[0])
 				return "Effects enabled: %s" % str(args[0])
+			return "Error: Missing argument for set_effects_enabled"
 		"force_level":
 			if args.size() > 0:
 				_on_consciousness_changed(current_consciousness_level, args[0])
 				return "Forced to level: %d" % args[0]
+			return "Error: Missing argument for force_level"
 		"cleanup_effects":
 			cleanup_all_effects()
 			return "All effects cleaned up"
