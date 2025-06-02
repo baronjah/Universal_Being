@@ -59,6 +59,9 @@ func create_demo_beings() -> void:
 	# Create Auto Startup Universal Being first
 	create_auto_startup_being()
 	
+	# Create first Universe for testing
+	create_universe_universal_being()
+	
 	# Create a simple Universal Being
 	var demo_being = SystemBootstrap.create_universal_being()
 	if demo_being:
@@ -114,6 +117,8 @@ func _input(event: InputEvent) -> void:
 					create_google_gemini_premium_bridge()
 				KEY_P:  # Ctrl+P for Pentagon AI mode
 					toggle_pentagon_ai_mode()
+				KEY_V:  # Ctrl+V for uniVerse creation
+					create_universe_universal_being()
 		elif event.alt_pressed:
 			match event.keycode:
 				KEY_G:  # Alt+G for Genesis conductor
@@ -164,6 +169,7 @@ func show_help() -> void:
 	print("  Ctrl+B - Create Biblical Bridge (ChatGPT)")
 	print("  Ctrl+G - Create Gemini Bridge")
 	print("  Ctrl+P - Toggle Pentagon AI Mode (6-AI Collaboration)")
+	print("  Ctrl+V - Create UniVerse (recursive reality)")
 	print("  Alt+G - Create Genesis Conductor")
 	print("")
 	print("🎥 Camera Controls (when camera being is active):")
@@ -597,3 +603,68 @@ func get_status_info() -> Dictionary:
 		"bootstrap_ready": SystemBootstrap != null and SystemBootstrap.is_system_ready(),
 		"ai_ready": GemmaAI != null and GemmaAI.ai_ready
 	}
+
+func create_universe_universal_being() -> Node:
+	"""Create a Universe Universal Being - a container for entire universes"""
+	if not systems_ready:
+		print("🌌 Cannot create universe - systems not ready")
+		return null
+	
+	var UniverseClass = load("res://beings/UniverseUniversalBeing.gd")
+	if not UniverseClass:
+		push_error("🌌 UniverseUniversalBeing class not found")
+		return null
+	
+	var universe_being = UniverseClass.new()
+	universe_being.universe_name = "Universe_%d" % (demo_beings.size() + 1)
+	universe_being.universe_seed = randi()
+	
+	add_child(universe_being)
+	demo_beings.append(universe_being)
+	
+	print("🌌 ✨ UNIVERSE CREATED: %s" % universe_being.universe_name)
+	print("🌌 A new reality breathes into existence!")
+	print("🌌 Controls: Enter universe with portals, edit rules from within")
+	
+	# Get Akashic Library to chronicle this moment
+	var akashic = SystemBootstrap.get_akashic_library()
+	if akashic:
+		akashic.inscribe_genesis("🌌 The Universe '%s' sparked into being, infinite potential awakening..." % universe_being.universe_name)
+	
+	# Notify AIs
+	if GemmaAI and GemmaAI.has_method("ai_message"):
+		GemmaAI.ai_message.emit("🌌 ✨ NEW UNIVERSE BORN: %s! A cosmos of infinite possibility!" % universe_being.universe_name)
+	
+	return universe_being
+
+func create_portal_between_universes() -> Node:
+	"""Create a portal to connect universes"""
+	if demo_beings.size() < 2:
+		print("🌀 Need at least 2 universes to create a portal")
+		return null
+	
+	# Find universes
+	var universes = []
+	for being in demo_beings:
+		if being.has_method("get") and being.get("being_type") == "universe":
+			universes.append(being)
+	
+	if universes.size() < 2:
+		print("🌀 Not enough universes found for portal creation")
+		return null
+	
+	var PortalClass = load("res://beings/PortalUniversalBeing.gd")
+	if not PortalClass:
+		push_error("🌀 PortalUniversalBeing class not found")
+		return null
+	
+	var portal = PortalClass.new()
+	portal.portal_name = "Portal_%d" % randi()
+	portal.activate_portal(universes[0], universes[1])
+	
+	# Add portal to first universe
+	universes[0].add_being_to_universe(portal)
+	
+	print("🌀 ✨ PORTAL CREATED between %s and %s!" % [universes[0].universe_name, universes[1].universe_name])
+	
+	return portal

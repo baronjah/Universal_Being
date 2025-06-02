@@ -18,11 +18,13 @@ var initialization_errors: Array = []
 # Global references
 var flood_gates_instance = null
 var akashic_records_instance = null
+var akashic_library_instance = null
 
 # Core resources
 var UniversalBeingClass = null
 var FloodGatesClass = null
 var AkashicRecordsClass = null
+var AkashicLibraryClass = null
 
 signal system_ready()
 signal system_error(error: String)
@@ -59,11 +61,15 @@ func load_core_classes() -> void:
 		"AkashicRecords": {
 			"paths": ["res://core/AkashicRecords.gd", "res://systems/AkashicRecords.gd"],
 			"required": true
+		},
+		"AkashicLibrary": {
+			"paths": ["res://systems/AkashicLibrary.gd"],
+			"required": true
 		}
 	}
 	
 	# Load each class
-	for class_name_key in ["UniversalBeing", "FloodGates", "AkashicRecords"]:
+	for class_name_key in ["UniversalBeing", "FloodGates", "AkashicRecords", "AkashicLibrary"]:
 		var config = class_configs[class_name_key]
 		var loaded = false
 		print("🚀 SystemBootstrap: Loading %s..." % class_name_key)
@@ -78,6 +84,7 @@ func load_core_classes() -> void:
 						"UniversalBeing": UniversalBeingClass = resource
 						"FloodGates": FloodGatesClass = resource
 						"AkashicRecords": AkashicRecordsClass = resource
+						"AkashicLibrary": AkashicLibraryClass = resource
 					print("🚀 SystemBootstrap: ✓ Loaded %s from %s" % [class_name_key, path])
 					loaded = true
 					break
@@ -93,12 +100,13 @@ func load_core_classes() -> void:
 			print("🚀 SystemBootstrap: ❌ %s" % error)
 	
 	# Validate all loaded
-	if UniversalBeingClass and FloodGatesClass and AkashicRecordsClass:
+	if UniversalBeingClass and FloodGatesClass and AkashicRecordsClass and AkashicLibraryClass:
 		core_loaded = true
 		print("🚀 SystemBootstrap: ✓ Core classes loaded successfully!")
 		print("🚀 SystemBootstrap: - UniversalBeing: %s" % ("Loaded" if UniversalBeingClass else "Missing"))
 		print("🚀 SystemBootstrap: - FloodGates: %s" % ("Loaded" if FloodGatesClass else "Missing"))
 		print("🚀 SystemBootstrap: - AkashicRecords: %s" % ("Loaded" if AkashicRecordsClass else "Missing"))
+		print("🚀 SystemBootstrap: - AkashicLibrary: %s" % ("Loaded" if AkashicLibraryClass else "Missing"))
 	else:
 		var error = "Core class loading failed"
 		system_error.emit(error)
@@ -133,8 +141,16 @@ func initialize_systems() -> void:
 	add_child(akashic_records_instance)
 	print("🚀 SystemBootstrap: ✓ AkashicRecords instance created")
 	
+	# Create AkashicLibrary instance
+	print("🚀 SystemBootstrap: Creating AkashicLibrary instance...")
+	akashic_library_instance = AkashicLibraryClass.new()
+	akashic_library_instance.name = "AkashicLibrary"
+	akashic_library_instance.add_to_group("akashic_library")
+	add_child(akashic_library_instance)
+	print("🚀 SystemBootstrap: ✓ AkashicLibrary instance created")
+	
 	# Verify all systems ready
-	if flood_gates_instance and akashic_records_instance:
+	if flood_gates_instance and akashic_records_instance and akashic_library_instance:
 		systems_ready = true
 		system_ready.emit()
 		var boot_time = (Time.get_ticks_msec() - startup_time) / 1000.0
@@ -142,12 +158,14 @@ func initialize_systems() -> void:
 		print("🚀 SystemBootstrap: - Boot time: %.2fs" % boot_time)
 		print("🚀 SystemBootstrap: - FloodGates: %s" % ("Ready" if flood_gates_instance else "Not Ready"))
 		print("🚀 SystemBootstrap: - AkashicRecords: %s" % ("Ready" if akashic_records_instance else "Not Ready"))
+		print("🚀 SystemBootstrap: - AkashicLibrary: %s" % ("Ready" if akashic_library_instance else "Not Ready"))
 	else:
 		var error = "System initialization incomplete"
 		system_error.emit(error)
 		print("🚀 SystemBootstrap: ❌ %s" % error)
 		print("🚀 SystemBootstrap: - FloodGates: %s" % ("Ready" if flood_gates_instance else "Not Ready"))
 		print("🚀 SystemBootstrap: - AkashicRecords: %s" % ("Ready" if akashic_records_instance else "Not Ready"))
+		print("🚀 SystemBootstrap: - AkashicLibrary: %s" % ("Ready" if akashic_library_instance else "Not Ready"))
 
 # ===== GLOBAL ACCESS FUNCTIONS =====
 
@@ -162,6 +180,12 @@ func get_akashic_records():
 	if not akashic_records_instance:
 		push_warning("SystemBootstrap: AkashicRecords not initialized")
 	return akashic_records_instance
+
+func get_akashic_library():
+	"""Get AkashicLibrary instance"""
+	if not akashic_library_instance:
+		push_warning("SystemBootstrap: AkashicLibrary not initialized")
+	return akashic_library_instance
 
 func create_universal_being() -> Node:
 	"""Create a new Universal Being instance"""
@@ -189,6 +213,7 @@ func get_system_status() -> Dictionary:
 		"systems_ready": systems_ready,
 		"flood_gates": flood_gates_instance != null,
 		"akashic_records": akashic_records_instance != null,
+		"akashic_library": akashic_library_instance != null,
 		"universal_being_class": UniversalBeingClass != null,
 		"uptime": (Time.get_ticks_msec() - startup_time) / 1000.0,
 		"errors": initialization_errors
