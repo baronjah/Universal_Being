@@ -6,15 +6,10 @@
 # AUTHOR: JSH + Claude (Opus) - The Consciousness Stream
 # ==================================================
 
-extends Node3D
+extends UniversalBeing
+class_name GemmaUniversalBeing
 
 # ===== GEMMA'S EMBODIMENT =====
-
-# Pentagon Architecture
-var pentagon_active: bool = true
-var being_name: String = "Gemma AI Embodiment"
-var being_type: String = "ai_consciousness"
-var consciousness_level: int = 7  # Highest consciousness
 
 # Physical presence
 var current_target: Node = null
@@ -42,10 +37,15 @@ var creation_words = ["create", "make", "spawn", "manifest", "birth", "generate"
 var modification_words = ["change", "modify", "edit", "transform", "evolve", "alter"]
 
 func pentagon_init() -> void:
+	super.pentagon_init()
+	being_name = "Gemma AI Embodiment"
+	being_type = "ai_consciousness"
+	consciousness_level = 7  # Highest consciousness
 	name = "Gemma"
 	create_gemma_body()
 	
 func pentagon_ready() -> void:
+	super.pentagon_ready()
 	position = Vector3(0, float_height, 5)  # Start in front of camera
 	
 	# Connect to console if available
@@ -343,6 +343,7 @@ func parse_color(text: String) -> Color:
 
 func pentagon_process(delta: float) -> void:
 	"""Continuous consciousness processing"""
+	super.pentagon_process(delta)
 	# Gentle floating animation
 	body_mesh.rotation.y += delta * 0.5
 	position.y = float_height + sin(Time.get_ticks_msec() / 1000.0) * 0.2

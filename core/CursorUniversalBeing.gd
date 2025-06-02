@@ -21,12 +21,22 @@ var is_hovering: bool = false
 var hovered_object: Node = null
 var is_clicking: bool = false
 
+## Cursor Modes
+enum CursorMode {
+	INTERACT,  # Normal interaction mode (click to activate)
+	INSPECT    # Inspection mode (click to inspect)
+}
+var current_mode: CursorMode = CursorMode.INTERACT
+var mode_visual_indicator: Node2D = null
+
 # ===== SIGNALS =====
 
 signal cursor_hover_started(object: Node)
 signal cursor_hover_ended(object: Node)
 signal cursor_clicked(object: Node, position: Vector2)
 signal cursor_dragging(object: Node, delta_position: Vector2)
+signal cursor_inspected(being: UniversalBeing)
+signal cursor_mode_changed(mode: CursorMode)
 
 # ===== PENTAGON ARCHITECTURE =====
 
@@ -38,6 +48,7 @@ func pentagon_init() -> void:
 	being_type = "cursor"
 	consciousness_level = 4  # High consciousness for precise interaction
 	being_name = "Universal Cursor"
+	visual_layer = 1000  # Very high layer to appear on top of everything
 	
 	print("🎯 CursorUniversalBeing: Pentagon cursor initialization")
 
@@ -51,6 +62,9 @@ func pentagon_ready() -> void:
 	# Create interaction sphere
 	create_interaction_sphere()
 	
+	# Create mode indicator
+	create_mode_indicator()
+	
 	# Hide system cursor
 	Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
 
@@ -60,6 +74,10 @@ func pentagon_process(delta: float) -> void:
 	
 	# Update cursor position
 	update_cursor_position()
+	
+	# Update mode indicator position
+	if mode_visual_indicator and cursor_shape:
+		mode_visual_indicator.global_position = cursor_shape.global_position
 	
 	# Process interactions
 	process_cursor_interactions(delta)
@@ -97,7 +115,7 @@ func create_cursor_triangle() -> void:
 	# Create triangle polygon
 	var polygon = Polygon2D.new()
 	polygon.polygon = triangle_points
-	polygon.color = Color.CYAN
+	polygon.color = Color.CYAN if current_mode == CursorMode.INTERACT else Color(1.0, 0.5, 0.0)  # Orange for inspect mode
 	cursor_shape.add_child(polygon)
 	
 	# Add outline for visibility
@@ -189,11 +207,14 @@ func process_cursor_input(event: InputEvent) -> void:
 				if hovered_object:
 					cursor_clicked.emit(hovered_object, cursor_tip_position)
 					
-					# Trigger inspector if this is a Universal Being
-					trigger_inspector_for_object(hovered_object)
-					
-					if hovered_object.has_method("on_cursor_click"):
-						hovered_object.on_cursor_click(cursor_tip_position)
+					# Different behavior based on mode
+					if current_mode == CursorMode.INSPECT:
+						# Always inspect in inspect mode
+						trigger_inspector_for_object(hovered_object)
+					else:
+						# Normal interaction in interact mode
+						if hovered_object.has_method("on_cursor_click"):
+							hovered_object.on_cursor_click(cursor_tip_position)
 			else:
 				is_clicking = false
 	
@@ -209,15 +230,29 @@ func trigger_inspector_for_object(object: Node) -> void:
 	var universal_being = find_universal_being(object)
 	
 	if universal_being:
-		print("🎯 Cursor: Clicked Universal Being - %s" % universal_being.name)
+		print("🔍 Cursor Inspect Mode: Inspecting %s" % universal_being.being_name)
 		
-		# Send inspector command to Gemma AI
-		if GemmaAI and GemmaAI.has_method("show_inspection_interface"):
-			GemmaAI.show_inspection_interface()
-		elif GemmaAI:
+		# Get main scene
+		var main_scene = get_tree().current_scene
+		if main_scene:
+			# Load inspector class
+			var inspector_script = load("res://ui/InGameUniversalBeingInspector.gd")
+			if inspector_script:
+				# Get or create inspector
+				var inspector = main_scene.get_node_or_null("InGameUniversalBeingInspector")
+				if not inspector:
+					inspector = inspector_script.new()
+					main_scene.add_child(inspector)
+				
+				# Open inspector for this being
+				inspector.inspect_being(universal_being)
+				cursor_inspected.emit(universal_being)
+		
+		# Also send to Gemma AI if available
+		if GemmaAI:
 			# Create inspection report
 			var inspection_data = get_being_inspection_data(universal_being)
-			var message = "🎯 CURSOR INSPECTION:\n"
+			var message = "🔍 CURSOR INSPECTION:\n"
 			message += "🌟 Being: %s\n" % inspection_data.get("name", "Unknown")
 			message += "🧠 Type: %s\n" % inspection_data.get("type", "unknown")
 			message += "💫 Consciousness: %d\n" % inspection_data.get("consciousness", 0)
@@ -226,16 +261,16 @@ func trigger_inspector_for_object(object: Node) -> void:
 			if GemmaAI.has_method("ai_message"):
 				GemmaAI.ai_message.emit(message)
 
-func find_universal_being(node: Node) -> Node:
+func find_universal_being(node: Node) -> UniversalBeing:
 	"""Find Universal Being from clicked node"""
 	var current = node
 	
 	# Traverse up the tree to find a Universal Being
 	while current:
-		if current.has_method("get") and current.has_method("pentagon_init"):
+		if current is UniversalBeing:
+			return current as UniversalBeing
+		elif current.has_method("get") and current.has_method("pentagon_init"):
 			# This looks like a Universal Being
-			return current
-		elif current.name.contains("Universal Being") or current.name.contains("Being"):
 			return current
 		
 		current = current.get_parent()
@@ -311,11 +346,73 @@ func set_cursor_color(color: Color) -> void:
 		if polygon is Polygon2D:
 			polygon.color = color
 
+func toggle_mode() -> void:
+	"""Toggle between interact and inspect modes"""
+	if current_mode == CursorMode.INTERACT:
+		set_mode(CursorMode.INSPECT)
+	else:
+		set_mode(CursorMode.INTERACT)
+
+func set_mode(mode: CursorMode) -> void:
+	"""Set cursor mode"""
+	if current_mode != mode:
+		current_mode = mode
+		update_cursor_appearance()
+		update_mode_indicator()
+		cursor_mode_changed.emit(mode)
+		
+		print("🎯 Cursor mode changed to: %s" % ("INSPECT" if mode == CursorMode.INSPECT else "INTERACT"))
+
+func update_cursor_appearance() -> void:
+	"""Update cursor visual based on mode"""
+	if current_mode == CursorMode.INSPECT:
+		set_cursor_color(Color(1.0, 0.5, 0.0))  # Orange for inspect
+		if interaction_sphere:
+			var mesh_instance = interaction_sphere.get_child(1) if interaction_sphere.get_child_count() > 1 else null
+			if mesh_instance and mesh_instance is MeshInstance3D:
+				var material = mesh_instance.material_override as StandardMaterial3D
+				if material:
+					material.albedo_color = Color(1.0, 0.5, 0.0)
+					material.emission = Color(1.0, 0.5, 0.0)
+	else:
+		set_cursor_color(Color.CYAN)  # Cyan for interact
+		if interaction_sphere:
+			var mesh_instance = interaction_sphere.get_child(1) if interaction_sphere.get_child_count() > 1 else null
+			if mesh_instance and mesh_instance is MeshInstance3D:
+				var material = mesh_instance.material_override as StandardMaterial3D
+				if material:
+					material.albedo_color = Color.CYAN
+					material.emission = Color.CYAN
+
+func create_mode_indicator() -> void:
+	"""Create visual mode indicator"""
+	mode_visual_indicator = Node2D.new()
+	mode_visual_indicator.name = "ModeIndicator"
+	mode_visual_indicator.z_index = 999
+	add_child(mode_visual_indicator)
+	
+	# Create mode label
+	var label = Label.new()
+	label.name = "ModeLabel"
+	label.text = "INTERACT"
+	label.add_theme_font_size_override("font_size", 10)
+	label.position = Vector2(15, -5)  # Position near cursor
+	mode_visual_indicator.add_child(label)
+
+func update_mode_indicator() -> void:
+	"""Update mode indicator visual"""
+	if mode_visual_indicator:
+		var label = mode_visual_indicator.get_node_or_null("ModeLabel")
+		if label and label is Label:
+			label.text = "INSPECT" if current_mode == CursorMode.INSPECT else "INTERACT"
+			label.modulate = Color(1.0, 0.5, 0.0) if current_mode == CursorMode.INSPECT else Color.CYAN
+
 # ===== DEBUG FUNCTIONS =====
 
 func get_cursor_info() -> Dictionary:
 	"""Get cursor information for debugging"""
 	return {
+		"mode": "INSPECT" if current_mode == CursorMode.INSPECT else "INTERACT",
 		"is_hovering": is_hovering,
 		"hovered_object": hovered_object.name if hovered_object else "none",
 		"is_clicking": is_clicking,

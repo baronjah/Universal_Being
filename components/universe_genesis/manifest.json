@@ -1,0 +1,46 @@
+{
+	"name": "Universe Genesis Console",
+	"version": "1.0.0",
+	"type": "universe_genesis",
+	"author": "Claude Desktop + Universal Being Evolution",
+	"description": "Advanced universe creation, management, and recursive exploration system with DNA inheritance, time dilation, and visual debugging",
+	"main_script": "UniverseGenesisComponent.gd",
+	"tags": ["console", "universe", "creation", "ai_compatible", "genesis", "recursive"],
+	"dependencies": [
+		"res://beings/universe_universal_being.gd",
+		"res://systems/AkashicLibrary.gd"
+	],
+	"socket_types": ["script", "interface"],
+	"provides": {
+		"commands": [
+			"universe template",
+			"universe recursive", 
+			"universe dna",
+			"universe evolve",
+			"universe merge",
+			"universe split",
+			"universe debug",
+			"universe time",
+			"universe simulate"
+		],
+		"features": [
+			"universe_templates",
+			"universe_dna_system",
+			"recursive_creation",
+			"time_dilation",
+			"visual_debugger"
+		]
+	},
+	"ai_capabilities": {
+		"can_create_universes": true,
+		"can_modify_dna": true,
+		"can_control_time": true,
+		"supports_recursive_creation": true
+	},
+	"signals": [
+		"universe_created",
+		"universe_evolved", 
+		"dna_mutated",
+		"time_dilated"
+	]
+}

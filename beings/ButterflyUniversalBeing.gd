@@ -1,13 +1,8 @@
 # ButterflyUniversalBeing.gd
 # A beautiful flying creature for the Universal Being ecosystem
 
-extends Node2D
-
-# Pentagon Architecture
-var pentagon_active: bool = true
-var being_name: String = "Blue Butterfly"
-var being_type: String = "butterfly"
-var consciousness_level: int = 3
+extends UniversalBeing
+class_name ButterflyUniversalBeing
 
 # Butterfly properties
 var flight_speed: float = 200.0
@@ -23,11 +18,16 @@ var wing_right: Polygon2D
 var body: Polygon2D
 
 func pentagon_init() -> void:
+	super.pentagon_init()
+	being_name = "Blue Butterfly"
+	being_type = "butterfly"
+	consciousness_level = 3
 	name = being_name
 	create_butterfly_visuals()
 	base_position = position
 	
 func pentagon_ready() -> void:
+	super.pentagon_ready()
 	# Add consciousness glow
 	var glow = PointLight2D.new()
 	glow.texture = preload("res://icon.svg") if preload("res://icon.svg") else null
@@ -39,6 +39,7 @@ func pentagon_ready() -> void:
 	print("🦋 %s awakened with consciousness level %d!" % [being_name, consciousness_level])
 
 func pentagon_process(delta: float) -> void:
+	super.pentagon_process(delta)
 	time_passed += delta
 	
 	# Flutter animation

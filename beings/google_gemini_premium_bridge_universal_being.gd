@@ -422,8 +422,9 @@ func gather_visual_context() -> String:
 	for being in beings:
 		if being.has_method("get"):
 			var level = being.get("consciousness_level")
-			var color = get_consciousness_color_name(level)
-			consciousness_colors.append("%s (Level %d)" % [color, level])
+			var safe_level = int(level) if level != null else 0
+			var color = get_consciousness_color_name(safe_level)
+			consciousness_colors.append("%s (Level %d)" % [color, safe_level])
 	
 	if consciousness_colors.size() > 0:
 		context_parts.append("Consciousness Auras: " + ", ".join(consciousness_colors))

@@ -1,0 +1,28 @@
+{
+  "name": "Basic Interaction Component",
+  "version": "1.0.0",
+  "description": "Enables basic click and hover interactions for Universal Beings",
+  "type": "component",
+  "author": "Claude Code + Universal Being System",
+  "created": "2025-06-03",
+  "main_script": "basic_interaction.gd",
+  "socket_types": ["action", "interface"],
+  "dependencies": [],
+  "files": [
+    "basic_interaction.gd"
+  ],
+  "properties": {
+    "click_enabled": true,
+    "hover_enabled": true,
+    "double_click_enabled": false,
+    "interaction_range": 100.0
+  },
+  "signals": [
+    "interaction_started",
+    "interaction_ended",
+    "clicked",
+    "double_clicked",
+    "hover_entered",
+    "hover_exited"
+  ]
+}

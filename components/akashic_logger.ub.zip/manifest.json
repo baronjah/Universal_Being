@@ -1,0 +1,19 @@
+{
+  "name": "Akashic Logger Component",
+  "version": "1.0.0", 
+  "description": "Logs actions and events to the Akashic Records",
+  "type": "component",
+  "author": "Claude Code + Universal Being System",
+  "created": "2025-06-03",
+  "main_script": "akashic_logger.gd",
+  "socket_types": ["memory", "interface"],
+  "dependencies": [],
+  "files": [
+    "akashic_logger.gd"
+  ],
+  "properties": {
+    "log_level": "all",
+    "max_entries": 1000,
+    "auto_log": true
+  }
+}

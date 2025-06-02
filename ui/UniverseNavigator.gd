@@ -120,7 +120,7 @@ func _create_universe_node(universe: Node, index: int) -> GraphNode:
 	
 	# Set node color based on type
 	if universe == current_universe:
-		node.overlay = GraphNode.OVERLAY_POSITION
+		node.modulate = Color(0.2, 0.8, 0.2)  # Use a green tint for active
 	
 	# Add content
 	var content = VBoxContainer.new()

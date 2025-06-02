@@ -6,7 +6,7 @@
 # AUTHOR: JSH + Claude (Opus 4) - Weavers of Reality
 # ==================================================
 
-extends "res://core/UniversalBeing.gd"
+extends UniversalBeing
 class_name PortalUniversalBeing
 
 # ===== PORTAL PROPERTIES =====

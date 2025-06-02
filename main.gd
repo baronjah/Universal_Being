@@ -42,6 +42,10 @@ func on_systems_ready() -> void:
 	# Connect to AI
 	if GemmaAI:
 		GemmaAI.ai_message.connect(on_ai_message)
+	
+	# Add console test for debugging
+	var console_test = load("res://debug/test_unified_console.gd").new()
+	add_child(console_test)
 
 func simple_mode_init() -> void:
 	"""Initialize in simple mode without full systems"""
@@ -73,6 +77,12 @@ func create_demo_beings() -> void:
 		
 		add_child(demo_being)
 		demo_beings.append(demo_being)
+		
+		# Add interaction component to make it clickable
+		if demo_being.has_method("add_component"):
+			demo_being.add_component("res://components/basic_interaction.ub.zip")
+			print("🎯 Added interaction component to %s" % demo_being.name)
+		
 		print("🌟 Created: %s" % demo_being.name)
 		
 		# Notify AI if available
@@ -89,11 +99,13 @@ func _input(event: InputEvent) -> void:
 		toggle_console()
 	elif event.is_action_pressed("create_being"):
 		create_test_being()
-	elif event.is_action_pressed("inspect_being"):
-		show_inspection_interface()
+	# Removed old inspect_being action - now handled by KEY_I below
 	elif event is InputEventKey and event.pressed:
+		# Handle F9 for Layer Debug
+		if event.keycode == KEY_F9:
+			toggle_layer_debug()
 		# Normal keyboard shortcuts (no F-keys except F1)
-		if event.ctrl_pressed:
+		elif event.ctrl_pressed:
 			match event.keycode:
 				KEY_H:  # Ctrl+H for Help
 					show_help()
@@ -121,6 +133,10 @@ func _input(event: InputEvent) -> void:
 					create_universe_universal_being()
 				KEY_N:  # Ctrl+N for universe Navigator
 					toggle_universe_navigator()
+				KEY_I:  # Ctrl+I for Visual Inspector
+					open_visual_inspector()
+				KEY_O:  # Ctrl+O for Universe Simulator (Observe)
+					open_universe_simulator()
 		elif event.alt_pressed:
 			match event.keycode:
 				KEY_G:  # Alt+G for Genesis conductor
@@ -135,18 +151,21 @@ func toggle_console() -> void:
 	"""Toggle Universal Console (~ key)"""
 	print("🌟 Console toggle requested (~ key)")
 	
-	# Find existing Universal Console or create one
+	# Find existing Console or create one
 	var console_being = find_console_being()
 	if console_being:
 		# Toggle existing console
-		if console_being.has_method("toggle_console"):
-			console_being.toggle_console()
-			print("🖥️ Universal Console toggled!")
+		if console_being.has_method("toggle_console_visibility"):
+			console_being.toggle_console_visibility()
+			print("🖥️ Console visibility toggled!")
+		elif console_being.has_method("focus_input"):
+			console_being.focus_input()
+			print("🖥️ Console focused!")
 		else:
 			print("🖥️ Console being found but no toggle method")
 	else:
-		# Create new Universal Console if none exists
-		print("🖥️ No console found, creating new Universal Console...")
+		# Create new Console if none exists
+		print("🖥️ No console found, creating new Conversational Console...")
 		create_console_universal_being()
 	
 	if GemmaAI:
@@ -156,8 +175,10 @@ func show_help() -> void:
 	"""Show help information"""
 	print("🌟 Universal Being Engine - Help:")
 	print("  ~ - Toggle Universal Console")
-	print("  Ctrl+N - Create new Universal Being")
-	print("  Ctrl+I - Inspect Universal Beings")
+	print("  F9 - Toggle Layer Debug Overlay")
+	print("  Ctrl+I - Open Visual Inspector (click beings to inspect)")
+	print("  Ctrl+O - Open Universe Simulator (Observe recursive realities)")
+	print("  Click beings - Open Inspector for that being")
 	print("")
 	print("🔑 Creation Commands:")
 	print("  Ctrl+H - Show Help (this screen)")
@@ -180,8 +201,15 @@ func show_help() -> void:
 	print("  Q/E - Barrel roll left/right")
 	print("  Middle mouse + drag - Orbit around target")
 	print("")
+	print("🔍 Debug Tools:")
+	print("  F9 - Toggle Layer Debug Overlay (visual layer system)")
+	print("")
 	print("🌌 Universe Console Commands:")
 	print("  universe create <name> - Create new universe")
+	print("  universe template <n> - Create from template (sandbox/narrative/quantum/paradise)")
+	print("  universe recursive <depth> - Create nested universes")
+	print("  universe dna - Show universe DNA traits")
+	print("  universe time <speed> - Set time dilation")
 	print("  enter <universe> - Enter a universe")
 	print("  exit - Exit current universe")
 	print("  portal <target> - Create portal to another universe")
@@ -223,6 +251,81 @@ func show_inspection_interface() -> void:
 			var consciousness = being.get("consciousness_level") if being.has_method("get") else 0
 			print("  %d. %s (%s) - Consciousness: %d" % [i+1, name, type, consciousness])
 
+func open_visual_inspector() -> void:
+	"""Open visual inspector for the first available being"""
+	print("🔍 Visual Inspector requested (Ctrl+I)")
+	
+	if demo_beings.is_empty():
+		print("❌ No beings available to inspect")
+		return
+	
+	# Find first being with interaction component or use first available
+	var target_being = null
+	for being in demo_beings:
+		if being.has_method("get_component_info"):
+			target_being = being
+			break
+	
+	if not target_being:
+		target_being = demo_beings[0]
+	
+	# Load and create inspector
+	var inspector_script = load("res://ui/InGameUniversalBeingInspector.gd")
+	if not inspector_script:
+		print("❌ Cannot load InGameUniversalBeingInspector script")
+		return
+	
+	# Get or create inspector
+	var inspector = get_node_or_null("InGameUniversalBeingInspector")
+	if not inspector:
+		inspector = inspector_script.new()
+		add_child(inspector)
+	
+	# Open inspector for target being
+	inspector.inspect_being(target_being)
+	print("🔍 Visual Inspector opened for: %s" % target_being.being_name)
+
+func open_universe_simulator() -> void:
+	"""Open the Universe Simulator interface"""
+	print("🌌 Universe Simulator requested (Ctrl+O)")
+	
+	# Check if simulator window already exists
+	var existing_simulator = get_node_or_null("UniverseSimulatorWindow")
+	if existing_simulator:
+		existing_simulator.show()
+		return
+	
+	# Create simulator window
+	var simulator_window = Window.new()
+	simulator_window.name = "UniverseSimulatorWindow"
+	simulator_window.title = "🌌 Universal Being - Universe Simulator"
+	simulator_window.size = Vector2(1200, 800)
+	simulator_window.position = Vector2(100, 100)
+	
+	# Load simulator UI
+	var SimulatorClass = load("res://ui/universe_simulator/UniverseSimulator.gd")
+	if not SimulatorClass:
+		print("❌ Cannot load UniverseSimulator script")
+		return
+	
+	var simulator = SimulatorClass.new()
+	simulator_window.add_child(simulator)
+	
+	# Add to scene
+	get_tree().root.add_child(simulator_window)
+	
+	# Load first universe if available
+	for being in demo_beings:
+		if being is UniverseUniversalBeing:
+			simulator.load_universe(being)
+			break
+	
+	print("🌌 Universe Simulator opened - explore infinite realities!")
+	
+	# Notify AI
+	if GemmaAI:
+		GemmaAI.ai_message.emit("🌌 Universe Simulator activated - visual exploration of recursive realities!")
+
 func create_test_being() -> void:
 	"""Create a test Universal Being"""
 	if not systems_ready:
@@ -240,6 +343,12 @@ func create_test_being() -> void:
 		
 		add_child(test_being)
 		demo_beings.append(test_being)
+		
+		# Add interaction component to make it clickable
+		if test_being.has_method("add_component"):
+			test_being.add_component("res://components/basic_interaction.ub.zip")
+			print("🎯 Added interaction component to %s" % test_being.name)
+		
 		print("🌟 Created test being: %s" % test_being.name)
 		
 		# Load test scene for regular test beings
@@ -289,7 +398,7 @@ func create_camera_universal_being(being: Node = null) -> Node:
 	return camera_being
 
 func create_console_universal_being() -> Node:
-	"""Create a Universal Console with socket system"""
+	"""Create a Unified Console with universe command integration"""
 	if not systems_ready:
 		print("🌟 Cannot create console - systems not ready")
 		return null
@@ -297,32 +406,29 @@ func create_console_universal_being() -> Node:
 	# Check if console already exists
 	var existing_console = find_console_being()
 	if existing_console:
-		print("🖥️ Console already exists, toggling it instead")
-		if existing_console.has_method("toggle_console"):
-			existing_console.toggle_console()
+		print("🖥️ Console already exists, toggling visibility")
+		if existing_console.has_method("toggle_console_visibility"):
+			existing_console.toggle_console_visibility()
+		elif existing_console.has_method("focus_input"):
+			existing_console.focus_input()
 		return existing_console
 	
-	# Create console using SystemBootstrap for proper class loading
-	var console_being = SystemBootstrap.create_console_universal_being()
-	if not console_being:
-		push_error("🖥️ Failed to create ConsoleUniversalBeing")
+	# Create conversational console
+	var ConversationalConsoleClass = load("res://beings/conversational_console_being.gd")
+	if not ConversationalConsoleClass:
+		push_error("🖥️ ConversationalConsoleBeing class not found")
 		return null
-	console_being.name = "Universal Console"
+	
+	var console_being = ConversationalConsoleClass.new()
+	console_being.name = "Conversational Console"
 	console_being.add_to_group("console_beings")
 	
 	add_child(console_being)
 	demo_beings.append(console_being)
 	
-	print("🖥️ Universal Console created!")
-	print("🖥️ Revolutionary interface with socket system activated!")
-	print("🖥️ Every interface element is a conscious Universal Being!")
-	
-	# Integrate universe console commands
-	var integration = preload("res://beings/universe_console_integration.gd").new()
-	add_child(integration)
-	
-	# Show the console immediately
-	console_being.toggle_console()
+	print("🖥️ Conversational Console created!")
+	print("🖥️ Natural language AI conversation interface activated!")
+	print("🖥️ Talk to Gemma AI about Universal Beings and universes!")
 	
 	# Notify Gemma AI
 	if GemmaAI and GemmaAI.has_method("notify_being_created"):
@@ -395,10 +501,12 @@ func create_cursor_universal_being() -> Node:
 	return cursor_being
 
 func find_console_being() -> Node:
-	"""Find existing Universal Console being"""
+	"""Find existing Console being"""
 	for being in demo_beings:
-		if being.has_method("get") and being.get("being_type") == "console":
-			return being
+		if being.has_method("get"):
+			var being_type = being.get("being_type")
+			if being_type in ["console", "ai_console", "unified_console"]:
+				return being
 		elif being.name.contains("Console"):
 			return being
 	return null
@@ -628,14 +736,23 @@ func create_universe_universal_being() -> Node:
 		print("🌌 Cannot create universe - systems not ready")
 		return null
 	
-	var UniverseClass = load("res://beings/UniverseUniversalBeing.gd")
+	# Load the UniverseUniversalBeing class
+	var UniverseClass = load("res://beings/universe_universal_being.gd")
 	if not UniverseClass:
 		push_error("🌌 UniverseUniversalBeing class not found")
 		return null
 	
+	# Create universe being directly
 	var universe_being = UniverseClass.new()
+	if not universe_being:
+		push_error("🌌 Failed to create Universe Universal Being")
+		return null
+	
+	# Configure universe properties
 	universe_being.universe_name = "Universe_%d" % (demo_beings.size() + 1)
-	universe_being.universe_seed = randi()
+	universe_being.physics_scale = 1.0
+	universe_being.time_scale = 1.0
+	universe_being.lod_level = 1
 	
 	add_child(universe_being)
 	demo_beings.append(universe_being)
@@ -645,9 +762,18 @@ func create_universe_universal_being() -> Node:
 	print("🌌 Controls: Enter universe with portals, edit rules from within")
 	
 	# Get Akashic Library to chronicle this moment
-	var akashic = SystemBootstrap.get_akashic_library()
-	if akashic:
-		akashic.inscribe_genesis("🌌 The Universe '%s' sparked into being, infinite potential awakening..." % universe_being.universe_name)
+	if SystemBootstrap and SystemBootstrap.is_system_ready():
+		var akashic = SystemBootstrap.get_akashic_library()
+		if akashic:
+			akashic.log_universe_event("creation", 
+				"🌌 The Universe '%s' sparked into being, infinite potential awakening..." % universe_being.universe_name,
+				{
+					"universe_name": universe_being.universe_name,
+					"physics_scale": universe_being.physics_scale,
+					"time_scale": universe_being.time_scale,
+					"lod_level": universe_being.lod_level
+				}
+			)
 	
 	# Notify AIs
 	if GemmaAI and GemmaAI.has_method("ai_message"):
@@ -702,3 +828,28 @@ func toggle_universe_navigator() -> void:
 	# Notify AI
 	if GemmaAI:
 		GemmaAI.ai_message.emit("🌌 Universe Navigator activated - visual map of infinite realities!")
+
+func toggle_layer_debug() -> void:
+	"""Toggle the Layer Debug overlay (F9)"""
+	print("🔍 Layer Debug toggle requested (F9)")
+	
+	# Find existing overlay or create one
+	var overlay = get_node_or_null("LayerDebugOverlay")
+	if not overlay:
+		# Create new overlay
+		var LayerDebugClass = load("res://ui/LayerDebugOverlay.gd")
+		if LayerDebugClass:
+			overlay = LayerDebugClass.new()
+			add_child(overlay)
+			print("🔍 Layer Debug Overlay created!")
+		else:
+			print("❌ LayerDebugOverlay.gd not found")
+			return
+	
+	# Toggle visibility
+	if overlay.has_method("toggle_visibility"):
+		overlay.toggle_visibility()
+	
+	# Notify AI
+	if GemmaAI:
+		GemmaAI.ai_message.emit("🔍 Layer Debug Overlay toggled - visual layer system inspection activated!")

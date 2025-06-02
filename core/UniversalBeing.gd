@@ -6,7 +6,7 @@
 # AUTHOR: JSH + Claude Code + Luminus + Alpha
 # ==================================================
 
-extends Node
+extends Node3D
 class_name UniversalBeing
 
 # ===== CORE UNIVERSAL BEING PROPERTIES =====
@@ -16,6 +16,10 @@ class_name UniversalBeing
 @export var being_name: String = "Unknown Being"
 @export var being_type: String = "basic"
 @export var consciousness_level: int = 0
+@export var visual_layer: int = 0 : set = set_visual_layer
+
+#@export var visual_layer: int = 0 setget set_visual_layer # Universal draw/sort order (see docs: Universal Being Layer System)
+# "The visual_layer property controls the draw/sort order of this being in 2D, 3D, and UI. Higher = in front. Never affects visual aspect."
 
 ## Visual Consciousness System (added for Cursor collaboration)
 var consciousness_visual: Node = null  # Visual effect for consciousness level
@@ -42,6 +46,10 @@ var scene_nodes: Dictionary = {}  # Quick access to scene nodes
 var scene_properties: Dictionary = {}  # Scene-specific properties
 var scene_is_loaded: bool = false
 
+## Socket System - Modular Component Architecture
+var socket_manager: UniversalBeingSocketManager = null
+var socket_hot_swap_enabled: bool = true
+
 ## Pentagon Architecture State
 var pentagon_initialized: bool = false
 var pentagon_is_ready: bool = false
@@ -56,6 +64,11 @@ var metadata: Dictionary = {
 	"gemma_can_modify": true
 }
 
+# ===== CONSCIOUSNESS AURA VISUAL SYSTEM =====
+
+var aura_node: Node2D = null
+var aura_animation_timer: float = 0.0
+
 # ===== CORE SIGNALS =====
 
 signal consciousness_awakened(level: int)
@@ -67,6 +80,7 @@ signal being_destroyed()
 signal scene_loaded(scene_node: Node)
 signal scene_unloaded()
 signal scene_node_accessed(node_name: String, node: Node)
+signal layer_changed(new_layer: int)
 
 # ===== PENTAGON ARCHITECTURE =====
 
@@ -74,6 +88,8 @@ func _init() -> void:
 	pentagon_init()
 
 func _ready() -> void:
+	if not (self is UniversalBeing):
+		push_warning("Node is not a UniversalBeing! All scene elements must extend UniversalBeing.")
 	pentagon_ready()
 
 func _process(delta: float) -> void:
@@ -88,33 +104,53 @@ func _exit_tree() -> void:
 	pentagon_sewers()
 
 # Pentagon Functions - Override in subclasses
-#func pentagon_init() -> void:
-	## Initialize Universal Being core
-	#if being_uuid.is_empty():
-		#being_uuid = generate_uuid()
-	#metadata.created_at = Time.get_ticks_msec()
-	#pentagon_initialized = true
-	#
-	## Register with FloodGate
-	#if FloodGateController:
-		#FloodGateController.register_being(self)
-		
+
 func pentagon_init() -> void:
-	# Initialize Universal Being core
+	"""Initialize Universal Being core - ALWAYS CALL SUPER FIRST in subclasses"""
 	if being_uuid.is_empty():
 		being_uuid = generate_uuid()
 	metadata.created_at = Time.get_ticks_msec()
 	pentagon_initialized = true
 	
-	# Register with FloodGate through SystemBootstrap (safe approach)
+	# Register with FloodGate system
 	if SystemBootstrap and SystemBootstrap.is_system_ready():
 		var flood_gates = SystemBootstrap.get_flood_gates()
-		if flood_gates and flood_gates.has_method("register_being"):
+		if flood_gates:
 			flood_gates.register_being(self)
-			metadata.floodgate_registered = true
-	else:
-		# Systems not ready yet - defer registration
-		call_deferred("_attempt_delayed_registration")
+	
+	# Create consciousness visual
+	create_consciousness_visual()
+	
+	# Initialize socket system
+	_initialize_socket_system()
+
+func pentagon_ready() -> void:
+	"""Ready phase - ALWAYS CALL SUPER FIRST in subclasses"""
+	pentagon_is_ready = true
+	consciousness_awakened.emit(consciousness_level)
+	update_visual_layer_order()
+
+func pentagon_process(delta: float) -> void:
+	"""Process phase - ALWAYS CALL SUPER FIRST in subclasses"""
+	update_consciousness_visual()
+
+func pentagon_input(event: InputEvent) -> void:
+	"""Input phase - ALWAYS CALL SUPER FIRST in subclasses"""
+	pass
+
+func pentagon_sewers() -> void:
+	"""Cleanup phase - ALWAYS CALL SUPER LAST in subclasses"""
+	being_destroyed.emit()
+	
+	# Unregister from FloodGate
+	if SystemBootstrap and SystemBootstrap.is_system_ready():
+		var flood_gates = SystemBootstrap.get_flood_gates()
+		if flood_gates:
+			flood_gates.unregister_being(self)
+	
+	# Cleanup consciousness visual
+	if consciousness_visual:
+		consciousness_visual.queue_free()
 
 func _attempt_delayed_registration() -> void:
 	"""Try to register again when systems are ready"""
@@ -124,46 +160,266 @@ func _attempt_delayed_registration() -> void:
 			flood_gates.register_being(self)
 			metadata.floodgate_registered = true
 
-func pentagon_ready() -> void:
-	# Setup Universal Being after scene ready
-	metadata.modified_at = Time.get_ticks_msec()
-	pentagon_is_ready = true
-	
-	# Create consciousness visual representation
-	create_consciousness_visual()
-	
-	# Load components if any
-	if components.size() > 0:
-		for component_path in components:
-			load_component(component_path)
+# ===== CONSCIOUSNESS VISUAL SYSTEM =====
 
-func pentagon_process(delta: float) -> void:
-	# Process Universal Being consciousness
-	if consciousness_level > 0:
-		update_consciousness(delta)
+class AuraNode2D extends Node2D:
+	var aura_color: Color = Color.WHITE
+	var aura_radius: float = 32.0
+	var aura_opacity: float = 0.3
+	func _draw() -> void:
+		var color_with_alpha = aura_color
+		color_with_alpha.a = aura_opacity
+		draw_circle(Vector2.ZERO, aura_radius, color_with_alpha)
 
-func pentagon_input(event: InputEvent) -> void:
-	# Handle Universal Being input
+func create_consciousness_visual() -> void:
+	if aura_node:
+		aura_node.queue_free()
+	aura_node = AuraNode2D.new()
+	aura_node.name = "ConsciousnessAura"
+	add_child(aura_node)
+	_update_aura_visual()
+	print("🧠 %s: Animated consciousness aura created (level %d)" % [being_name, consciousness_level])
+	log_action("visual_update", "🧠 %s: Aura visual created for consciousness level %d" % [being_name, consciousness_level])
+
+func update_consciousness_visual() -> void:
+	aura_animation_timer += get_process_delta_time()
+	_update_aura_visual()
+
+func _update_aura_visual() -> void:
+	if not aura_node:
+		return
+	var aura_color = _get_consciousness_color()
+	var pulse = 0.7 + 0.3 * sin(aura_animation_timer * (1.0 + consciousness_level))
+	var socket_count = 0
+	if socket_manager:
+		socket_count = socket_manager.sockets.size()
+	var aura_radius = 32 + 8 * consciousness_level + 4 * socket_count
+	var aura_opacity = 0.3 + 0.1 * consciousness_level
+	aura_node.aura_color = aura_color
+	aura_node.aura_radius = aura_radius * pulse
+	aura_node.aura_opacity = aura_opacity
+	aura_node.queue_redraw()
+
+func _get_consciousness_color() -> Color:
+	"""Get color for consciousness level"""
+	match consciousness_level:
+		0: return Color(0.7451, 0.7451, 0.7451, 1.0)  # Gray - Dormant
+		1: return Color(1.0, 1.0, 1.0, 1.0)           # White - Awakening  
+		2: return Color(0.0, 1.0, 1.0, 1.0)           # Cyan - Aware
+		3: return Color(0.0, 1.0, 0.0, 1.0)           # Green - Connected
+		4: return Color(1.0, 1.0, 0.0, 1.0)           # Yellow - Enlightened
+		5: return Color(1.0, 0.0, 1.0, 1.0)           # Magenta - Transcendent
+		6: return Color(1.0, 0.0, 0.0, 1.0)           # Red - Beyond
+		7: return Color(1.0, 1.0, 1.0, 1.0)           # Pure White - Ultimate
+		_: return Color.WHITE
+
+# ===== UTILITY METHODS =====
+
+func generate_uuid() -> String:
+	"""Generate a unique ID for this being"""
+	return "ub_%d_%d" % [Time.get_ticks_msec(), randi()]
+
+# ===== SOCKET SYSTEM =====
+
+func _initialize_socket_system() -> void:
+	"""Initialize the modular socket system"""
+	socket_manager = UniversalBeingSocketManager.new(self)
+	
+	# Connect socket signals
+	socket_manager.component_mounted.connect(_on_socket_component_mounted)
+	socket_manager.component_unmounted.connect(_on_socket_component_unmounted)
+	socket_manager.socket_configuration_changed.connect(_on_socket_configuration_changed)
+	
+	print("🔌 Socket system initialized for %s with %d sockets" % [being_name, socket_manager.sockets.size()])
+
+func get_socket(socket_id: String) -> UniversalBeingSocket:
+	"""Get socket by ID"""
+	if not socket_manager:
+		return null
+	return socket_manager.get_socket(socket_id)
+
+func get_sockets_by_type(socket_type: UniversalBeingSocket.SocketType) -> Array[UniversalBeingSocket]:
+	"""Get all sockets of specific type"""
+	if not socket_manager:
+		return []
+	return socket_manager.get_sockets_by_type(socket_type)
+
+func mount_component(socket_id: String, component: Resource, force: bool = false) -> bool:
+	"""Mount component to socket"""
+	if not socket_manager:
+		push_error("Socket system not initialized")
+		return false
+	return socket_manager.mount_component_to_socket(socket_id, component, force)
+
+func mount_component_by_type(socket_type: UniversalBeingSocket.SocketType, component: Resource, socket_name: String = "") -> bool:
+	"""Mount component to first available socket of type"""
+	if not socket_manager:
+		push_error("Socket system not initialized")
+		return false
+	return socket_manager.mount_component_by_type(socket_type, component, socket_name)
+
+func unmount_component(socket_id: String) -> bool:
+	"""Unmount component from socket"""
+	if not socket_manager:
+		return false
+	return socket_manager.unmount_component_from_socket(socket_id)
+
+func hot_swap_component(socket_id: String, new_component: Resource) -> bool:
+	"""Hot-swap component in socket"""
+	if not socket_manager or not socket_hot_swap_enabled:
+		return false
+	return socket_manager.hot_swap_component(socket_id, new_component)
+
+func get_socket_configuration() -> Dictionary:
+	"""Get complete socket configuration"""
+	if not socket_manager:
+		return {}
+	return socket_manager.get_socket_configuration()
+
+func get_inspector_data() -> Dictionary:
+	"""Get data for inspector/editor interface"""
+	if not socket_manager:
+		return {"error": "Socket system not initialized"}
+	return socket_manager.get_inspector_data()
+
+# ===== SOCKET SIGNAL HANDLERS =====
+
+func _on_socket_component_mounted(socket: UniversalBeingSocket, component: Resource) -> void:
+	"""Handle component mounted to socket"""
+	print("🔌 Component mounted: %s -> %s" % [component.get_class(), socket.socket_name])
+	
+	# Apply component based on socket type
+	match socket.socket_type:
+		UniversalBeingSocket.SocketType.VISUAL:
+			_apply_visual_component(socket, component)
+		UniversalBeingSocket.SocketType.SCRIPT:
+			_apply_script_component(socket, component)
+		UniversalBeingSocket.SocketType.SHADER:
+			_apply_shader_component(socket, component)
+		UniversalBeingSocket.SocketType.ACTION:
+			_apply_action_component(socket, component)
+		UniversalBeingSocket.SocketType.MEMORY:
+			_apply_memory_component(socket, component)
+		UniversalBeingSocket.SocketType.INTERFACE:
+			_apply_interface_component(socket, component)
+
+func _on_socket_component_unmounted(socket: UniversalBeingSocket, component: Resource) -> void:
+	"""Handle component unmounted from socket"""
+	print("🔌 Component unmounted: %s <- %s" % [component.get_class(), socket.socket_name])
+	
+	# Remove component effects based on socket type
+	match socket.socket_type:
+		UniversalBeingSocket.SocketType.VISUAL:
+			_remove_visual_component(socket, component)
+		UniversalBeingSocket.SocketType.SCRIPT:
+			_remove_script_component(socket, component)
+		UniversalBeingSocket.SocketType.SHADER:
+			_remove_shader_component(socket, component)
+		UniversalBeingSocket.SocketType.ACTION:
+			_remove_action_component(socket, component)
+		UniversalBeingSocket.SocketType.MEMORY:
+			_remove_memory_component(socket, component)
+		UniversalBeingSocket.SocketType.INTERFACE:
+			_remove_interface_component(socket, component)
+
+func _on_socket_configuration_changed() -> void:
+	"""Handle socket configuration changes"""
+	# Update visual representation
+	update_consciousness_visual()
+	
+	# Notify inspector if connected
+	if has_signal("socket_configuration_changed"):
+		emit_signal("socket_configuration_changed")
+
+func _on_socket_hot_swapped(socket: UniversalBeingSocket, new_component: Resource) -> void:
+	"""Handle hot-swap completion"""
+	print("🔄 Hot-swap completed: %s in %s socket" % [new_component.get_class(), socket.socket_name])
+	
+	# Refresh being state
+	_refresh_being_state()
+
+# ===== COMPONENT APPLICATION METHODS =====
+
+func _apply_visual_component(socket: UniversalBeingSocket, component: Resource) -> void:
+	"""Apply visual component to being"""
+	# Override in subclasses for specific visual handling
+	if component.has_method("apply_to_being"):
+		component.apply_to_being(self)
+
+func _apply_script_component(socket: UniversalBeingSocket, component: Resource) -> void:
+	"""Apply script component to being"""
+	# Override in subclasses for specific script handling
+	if component.has_method("attach_to_being"):
+		component.attach_to_being(self)
+
+func _apply_shader_component(socket: UniversalBeingSocket, component: Resource) -> void:
+	"""Apply shader component to being"""
+	# Override in subclasses for specific shader handling
+	if component is Material:
+		# Apply material to visual nodes
+		pass
+
+func _apply_action_component(socket: UniversalBeingSocket, component: Resource) -> void:
+	"""Apply action component to being"""
+	# Override in subclasses for specific action handling
+	if component.has_method("register_actions"):
+		component.register_actions(self)
+
+func _apply_memory_component(socket: UniversalBeingSocket, component: Resource) -> void:
+	"""Apply memory component to being"""
+	# Override in subclasses for specific memory handling
+	if component.has_method("initialize_memory"):
+		component.initialize_memory(self)
+
+func _apply_interface_component(socket: UniversalBeingSocket, component: Resource) -> void:
+	"""Apply interface component to being"""
+	# Override in subclasses for specific interface handling
+	if component.has_method("create_interface"):
+		component.create_interface(self)
+
+# ===== COMPONENT REMOVAL METHODS =====
+
+func _remove_visual_component(socket: UniversalBeingSocket, component: Resource) -> void:
+	"""Remove visual component effects"""
+	if component.has_method("remove_from_being"):
+		component.remove_from_being(self)
+
+func _remove_script_component(socket: UniversalBeingSocket, component: Resource) -> void:
+	"""Remove script component effects"""
+	if component.has_method("detach_from_being"):
+		component.detach_from_being(self)
+
+func _remove_shader_component(socket: UniversalBeingSocket, component: Resource) -> void:
+	"""Remove shader component effects"""
+	# Reset materials to default
 	pass
 
-#func pentagon_sewers() -> void:
-	## Cleanup Universal Being
-	#being_destroyed.emit()
-	#if FloodGateController:
-		#FloodGateController.unregister_being(self)
+func _remove_action_component(socket: UniversalBeingSocket, component: Resource) -> void:
+	"""Remove action component effects"""
+	if component.has_method("unregister_actions"):
+		component.unregister_actions(self)
 
-func pentagon_sewers() -> void:
-	# Cleanup Universal Being
-	being_destroyed.emit()
+func _remove_memory_component(socket: UniversalBeingSocket, component: Resource) -> void:
+	"""Remove memory component effects"""
+	if component.has_method("cleanup_memory"):
+		component.cleanup_memory(self)
+
+func _remove_interface_component(socket: UniversalBeingSocket, component: Resource) -> void:
+	"""Remove interface component effects"""
+	if component.has_method("destroy_interface"):
+		component.destroy_interface(self)
+
+# ===== UTILITY METHODS =====
+
+func _refresh_being_state() -> void:
+	"""Refresh being state after socket changes"""
+	# Update consciousness visual
+	update_consciousness_visual()
 	
-	# Unregister from FloodGate through SystemBootstrap
-	if SystemBootstrap and SystemBootstrap.is_system_ready():
-		var flood_gates = SystemBootstrap.get_flood_gates()
-		if flood_gates and flood_gates.has_method("unregister_being"):
-			flood_gates.unregister_being(self)
-			metadata.floodgate_registered = false
-	# Note: During shutdown, systems might not be available - that's okay
-
+	# Refresh scene if loaded
+	if scene_is_loaded and controlled_scene:
+		# Trigger scene refresh
+		pass
 
 # ===== COMPONENT SYSTEM =====
 
@@ -189,14 +445,6 @@ func remove_component(component_path: String) -> bool:
 	component_removed.emit(component_path)
 	return true
 
-#func load_component(component_path: String) -> void:
-	## Load component from ZIP file through Akashic Records
-	#if AkashicInterface:
-		#var component_data_loaded = AkashicInterface.load_component(component_path)
-		#if component_data_loaded:
-			#component_data[component_path] = component_data_loaded
-			#apply_component_data(component_path, component_data_loaded)
-
 func load_component(component_path: String) -> void:
 	# Load component from ZIP file through Akashic Records via SystemBootstrap
 	if SystemBootstrap and SystemBootstrap.is_system_ready():
@@ -219,7 +467,6 @@ func _attempt_delayed_component_load(component_path: String) -> void:
 	else:
 		push_warning("🌟 UniversalBeing: Component loading deferred - systems not ready: " + component_path)
 
-
 func unload_component(component_path: String) -> void:
 	if component_path in component_data:
 		component_data.erase(component_path)
@@ -230,25 +477,15 @@ func apply_component_data(component_path: String, data: Dictionary) -> void:
 		for prop in data.properties:
 			if prop in self:
 				set(prop, data.properties[prop])
+	
+	# If this is an interaction component, load it directly
+	if component_path.contains("basic_interaction"):
+		_load_basic_interaction_component()
 
 # ===== EVOLUTION SYSTEM =====
 
 func can_evolve_to(new_form: String) -> bool:
 	return new_form in evolution_state.can_become
-
-#func evolve_to(new_form_path: String) -> UniversalBeing:
-	#if not new_form_path.ends_with(".ub.zip"):
-		#push_error("Invalid evolution target: " + new_form_path)
-		#return null
-		#
-	#evolution_initiated.emit(evolution_state.current_form, new_form_path)
-	#
-	## Create new being through FloodGate
-	#var new_being = FloodGateController.evolve_being(self, new_form_path)
-	#if new_being:
-		#evolution_completed.emit(new_being)
-		#
-	#return new_being
 
 func evolve_to(new_form_path: String) -> Node:  # Changed return type for compatibility
 	if not new_form_path.ends_with(".ub.zip"):
@@ -276,8 +513,6 @@ func evolve_to(new_form_path: String) -> Node:  # Changed return type for compat
 		push_error("🌟 UniversalBeing: Evolution failed for %s" % being_name)
 		
 	return new_being
-
-
 
 func add_evolution_option(form_path: String) -> void:
 	if form_path not in evolution_state.can_become:
@@ -307,24 +542,6 @@ func update_consciousness(delta: float) -> void:
 	# Consciousness update logic - override in subclasses
 	update_consciousness_visual_animation(delta)
 
-func update_consciousness_visual() -> void:
-	"""Update visual representation of consciousness level"""
-	# Set aura color based on consciousness level
-	match consciousness_level:
-		0: consciousness_aura_color = Color.GRAY
-		1: consciousness_aura_color = Color.WHITE
-		2: consciousness_aura_color = Color.CYAN  
-		3: consciousness_aura_color = Color.GREEN
-		4: consciousness_aura_color = Color.YELLOW
-		5: consciousness_aura_color = Color.MAGENTA
-		_: consciousness_aura_color = Color.RED  # Super consciousness
-	
-	# If visual node exists, update it
-	if consciousness_visual and consciousness_visual.has_method("modulate"):
-		consciousness_visual.modulate = consciousness_aura_color
-	
-	print("🧠 %s: Consciousness visual updated - Level %d (%s)" % [being_name, consciousness_level, consciousness_aura_color])
-
 func update_consciousness_visual_animation(delta: float) -> void:
 	"""Animate consciousness visual effects"""
 	if consciousness_visual and consciousness_level > 0:
@@ -335,17 +552,6 @@ func update_consciousness_visual_animation(delta: float) -> void:
 			var pulsed_color = consciousness_aura_color * pulse_intensity
 			pulsed_color.a = pulse_intensity
 			consciousness_visual.modulate = pulsed_color
-
-func create_consciousness_visual() -> void:
-	"""Create visual representation for consciousness (to be implemented by Cursor)"""
-	# This will be enhanced by Cursor's consciousness aura system
-	if not consciousness_visual:
-		# Placeholder - Cursor will replace with proper visual effects
-		consciousness_visual = Node2D.new()
-		consciousness_visual.name = "ConsciousnessAura"
-		add_child(consciousness_visual)
-		update_consciousness_visual()
-		print("🧠 %s: Consciousness visual created (placeholder)" % being_name)
 
 # ===== AI INTEGRATION =====
 
@@ -387,12 +593,6 @@ func ai_invoke_method(method_name: String, args: Array = []) -> Variant:
 
 # ===== UTILITY FUNCTIONS =====
 
-func generate_uuid() -> String:
-	"""Generate unique identifier for this being"""
-	var time = Time.get_ticks_msec()
-	var random = randi()
-	return "ub_%s_%s" % [time, random]
-
 func get_all_properties() -> Dictionary:
 	"""Get all properties for AI inspection"""
 	var props = {}
@@ -427,12 +627,6 @@ func clone_being() -> UniversalBeing:
 	
 	return clone
 
-#func save_to_zip(file_path: String) -> bool:
-	#"""Save this being as a .ub.zip file"""
-	#if AkashicInterface:
-		#return AkashicInterface.save_being_to_zip(self, file_path)
-	#return false
-
 func save_to_zip(file_path: String) -> bool:
 	"""Save this being as a .ub.zip file"""
 	if SystemBootstrap and SystemBootstrap.is_system_ready():
@@ -451,53 +645,7 @@ func save_to_zip(file_path: String) -> bool:
 	
 	return false
 
-
-
 # ===== SCENE CONTROL SYSTEM =====
-
-#func load_scene(tscn_path: String) -> bool:
-	#"""Load and control a Godot .tscn scene"""
-	#if not FileAccess.file_exists(tscn_path):
-		#push_error("🌟 UniversalBeing: Scene file not found: " + tscn_path)
-		#return false
-	#
-	## Unload existing scene if any
-	#if controlled_scene:
-		#unload_scene()
-	#
-	## Load the scene
-	#var scene_resource = load(tscn_path)
-	#if not scene_resource:
-		#push_error("🌟 UniversalBeing: Failed to load scene: " + tscn_path)
-		#return false
-	#
-	## Instantiate the scene
-	#controlled_scene = scene_resource.instantiate()
-	#if not controlled_scene:
-		#push_error("🌟 UniversalBeing: Failed to instantiate scene: " + tscn_path)
-		#return false
-	#
-	## Store scene information
-	#scene_path = tscn_path
-	#scene_is_loaded = true
-	#being_type = "scene"  # Update being type
-	#
-	## Add scene as child using FloodGate
-	#if FloodGateController:
-		#FloodGateController.add_being_to_scene(controlled_scene, self, true)
-	#else:
-		#add_child(controlled_scene)
-	#
-	## Map all nodes for quick access
-	#map_scene_nodes(controlled_scene)
-	#
-	## Update metadata
-	#metadata.modified_at = Time.get_ticks_msec()
-	#metadata.scene_path = tscn_path
-	#
-	#scene_loaded.emit(controlled_scene)
-	#print("🌟 UniversalBeing: Scene loaded - %s controls %s" % [being_name, tscn_path])
-	#return true
 
 func load_scene(tscn_path: String) -> bool:
 	"""Load and control a Godot .tscn scene"""
@@ -540,7 +688,6 @@ func load_scene(tscn_path: String) -> bool:
 	scene_loaded.emit(controlled_scene)
 	print("🌟 UniversalBeing: Scene loaded - %s controls %s" % [being_name, tscn_path])
 	return true
-
 
 func unload_scene() -> bool:
 	"""Unload the currently controlled scene"""
@@ -691,3 +838,103 @@ func debug_info() -> String:
 
 func _to_string() -> String:
 	return "UniversalBeing<%s:%s>" % [being_type, being_name]
+
+# ===== AKASHIC LOGGING INTERFACE =====
+
+func log_action(event_type: String, message: String = "", data: Dictionary = {}) -> void:
+	if component_data.has("akashic_logger"):
+		component_data.akashic_logger.log_action(event_type, message, data)
+	else:
+		push_error("AkashicLoggerComponent not found on this being!")
+
+func set_visual_layer(value: int) -> void:
+	visual_layer = value
+	update_visual_layer_order()
+	emit_signal("layer_changed", visual_layer)
+
+func update_visual_layer_order() -> void:
+	"""Update draw/sort order for this being based on visual_layer (2D: z_index, 3D: custom, UI: CanvasLayer/Control)"""
+	# Handle visual layer for different node types
+	# Note: UniversalBeing extends Node3D, so we need special handling for UI elements
+	
+	# Check if we have UI children that need layer management
+	_update_child_ui_layers()
+	
+	# For Node3D (which UniversalBeing extends), we can use position.z or custom sorting
+	if self is Node3D:
+		# For 3D beings, we can adjust the z position slightly for layering
+		# This is a subtle effect - higher layer = slightly forward in 3D space
+		var layer_offset = visual_layer * 0.01  # Small offset to avoid major position changes
+		if abs(position.z - layer_offset) > 0.001:  # Avoid unnecessary updates
+			position.z = layer_offset
+			
+	# Log layer change to Akashic Library
+	_log_layer_change_to_akashic()
+
+func _update_child_ui_layers() -> void:
+	"""Update visual layers for any UI children (Control, CanvasLayer nodes)"""
+	for child in get_children():
+		if child is Control:
+			# Type-safe handling of Control nodes
+			if child.has_method("get_visual_layer"):
+				# If child has visual layer method, respect it
+				var child_layer = child.call("get_visual_layer")
+				_move_control_to_layer(child, child_layer)
+			else:
+				# Use parent's visual layer
+				_move_control_to_layer(child, visual_layer)
+		elif child is CanvasLayer:
+			# Type-safe handling of CanvasLayer nodes
+			child.layer = visual_layer
+
+func _move_control_to_layer(control_node: Node, layer: int) -> void:
+	"""Move a Control node to the appropriate layer"""
+	if not control_node or not control_node.get_parent():
+		return
+	
+	# Ensure we're actually working with a Control node
+	if not control_node is Control:
+		return
+	
+	# Type-safe operations for Control node ordering
+	var siblings_with_layers = []
+	
+	for sibling in control_node.get_parent().get_children():
+		if sibling != control_node and sibling is Control and sibling.has_method("get_visual_layer"):
+			var sibling_layer = sibling.call("get_visual_layer")
+			siblings_with_layers.append({"node": sibling, "layer": sibling_layer})
+	
+	# Sort siblings by layer
+	siblings_with_layers.sort_custom(func(a, b): return a.layer < b.layer)
+	
+	# Find where this control should be positioned
+	var target_index = control_node.get_index()
+	for i in range(siblings_with_layers.size()):
+		if siblings_with_layers[i].layer > layer:
+			target_index = siblings_with_layers[i].node.get_index()
+			break
+		else:
+			target_index = siblings_with_layers[i].node.get_index() + 1
+	
+	# Move to correct position if needed
+	if target_index != control_node.get_index():
+		control_node.get_parent().move_child(control_node, target_index)
+
+func get_visual_layer() -> int:
+	return visual_layer
+
+
+func _log_layer_change_to_akashic() -> void:
+	"""Log layer changes to the Akashic Library in poetic style"""
+	if not SystemBootstrap or not SystemBootstrap.is_system_ready():
+		return
+		
+	var akashic = SystemBootstrap.get_akashic_library()
+	if akashic:
+		var poetic_message = "🌟 The %s shifted through the dimensional layers, ascending to stratum %d of existence..." % [being_name, visual_layer]
+		akashic.log_universal_being_event("layer_change", poetic_message, {
+			"being_uuid": being_uuid,
+			"being_name": being_name,
+			"new_layer": visual_layer,
+			"timestamp": Time.get_ticks_msec()
+		})

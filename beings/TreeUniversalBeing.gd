@@ -5,13 +5,8 @@
 # CREATED: 2025-12-01
 # ==================================================
 
-extends Node2D
-
-# Pentagon Architecture
-var pentagon_active: bool = true
-var being_name: String = "Sacred Tree"
-var being_type: String = "tree"
-var consciousness_level: int = 2
+extends UniversalBeing
+class_name TreeUniversalBeing
 
 # Tree properties
 var growth_stage: int = 0  # 0-5 stages
@@ -28,19 +23,25 @@ var branches: Array[Line2D] = []
 var leaves: Array[Polygon2D] = []
 
 func pentagon_init() -> void:
+	super.pentagon_init()
+	being_name = "Sacred Tree"
+	being_type = "tree"
+	consciousness_level = 2
 	name = being_name
-	position = Vector2(0, 0)  # Anchor at ground level
+	position = Vector3(0, 0, 0)  # Anchor at ground level
 
 func pentagon_ready() -> void:
+	super.pentagon_ready()
 	create_tree_structure()
 	print("🌳 %s planted with consciousness level %d!" % [being_name, consciousness_level])
 
 func pentagon_process(delta: float) -> void:
+	super.pentagon_process(delta)
 	time_passed += delta
 	
 	# Gentle swaying
 	sway_amount = sin(time_passed * 0.5) * 0.02
-	rotation = sway_amount
+	rotation.z = sway_amount
 	
 	# Grow over time
 	if growth_stage < 5 and time_passed > growth_stage * 10.0:
