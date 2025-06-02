@@ -20,6 +20,10 @@ var camera_target: Node3D = null
 var pentagon_camera_active: bool = true
 var camera_input_enabled: bool = true
 
+## Consciousness Effects
+var camera_effects: Node = null
+var effects_enabled: bool = true
+
 # ===== PENTAGON ARCHITECTURE OVERRIDE =====
 
 func pentagon_init() -> void:
@@ -38,6 +42,10 @@ func pentagon_ready() -> void:
 	
 	# Find and setup trackball camera
 	setup_trackball_camera()
+	
+	# Setup camera effects after camera is ready
+	await get_tree().process_frame
+	setup_camera_effects()
 
 func pentagon_process(delta: float) -> void:
 	# Call parent process
@@ -92,6 +100,24 @@ func setup_trackball_camera() -> void:
 		print("🎥 Controls: Mouse wheel (zoom), Q/E (roll), Middle mouse (orbit)")
 	else:
 		push_error("🎥 CameraUniversalBeing: No trackball camera found in scene")
+
+func setup_camera_effects() -> void:
+	"""Setup consciousness-based camera effects"""
+	if not effects_enabled:
+		print("🎥 CameraUniversalBeing: Effects disabled, skipping setup")
+		return
+	
+	# Load camera effects component
+	var effects_script = preload("res://components/camera_effects.gd")
+	if effects_script:
+		camera_effects = effects_script.new()
+		camera_effects.name = "CameraEffects"
+		add_child(camera_effects)
+		
+		print("🎥 CameraUniversalBeing: Camera effects component loaded")
+		print("🎥 Effects will activate based on consciousness level (%d)" % consciousness_level)
+	else:
+		push_warning("🎥 CameraUniversalBeing: Camera effects component not found")
 
 func find_trackball_camera_recursive(node: Node) -> Camera3D:
 	"""Recursively find trackball camera in scene"""
@@ -191,10 +217,60 @@ func ai_interface() -> Dictionary:
 		"Trackball orbit",
 		"Zoom control", 
 		"Barrel roll",
-		"Target tracking"
+		"Target tracking",
+		"Consciousness effects"
 	]
 	
+	# Add effects information
+	if camera_effects:
+		base_interface["effects_info"] = camera_effects.ai_interface()
+	
 	return base_interface
+
+func ai_invoke_method(method_name: String, args: Array = []) -> Variant:
+	"""AI method invocation for camera"""
+	match method_name:
+		"set_consciousness":
+			if args.size() > 0:
+				consciousness_level = args[0]
+				print("🎥 AI set camera consciousness to: %d" % consciousness_level)
+				return "Camera consciousness: %d" % consciousness_level
+		"toggle_effects":
+			effects_enabled = !effects_enabled
+			if camera_effects:
+				camera_effects.set_effects_enabled(effects_enabled)
+			return "Camera effects: %s" % ("enabled" if effects_enabled else "disabled")
+		"reset_camera":
+			reset_camera_position()
+			return "Camera position reset"
+		_:
+			# Forward to effects component if available
+			if camera_effects and camera_effects.has_method("ai_invoke_method"):
+				return camera_effects.ai_invoke_method(method_name, args)
+			return super.ai_invoke_method(method_name, args)
+
+# ===== CAMERA EFFECTS INTEGRATION =====
+
+func _on_consciousness_changed(old_level: int, new_level: int) -> void:
+	"""Override consciousness change to update effects"""
+	super._on_consciousness_changed(old_level, new_level)
+	
+	if camera_effects and camera_effects.has_method("_on_consciousness_changed"):
+		camera_effects._on_consciousness_changed(old_level, new_level)
+
+func set_effects_enabled(enabled: bool) -> void:
+	"""Enable/disable camera effects"""
+	effects_enabled = enabled
+	if camera_effects:
+		camera_effects.set_effects_enabled(enabled)
+	print("🎥 Camera effects: %s" % ("enabled" if enabled else "disabled"))
+
+func reset_camera_position() -> void:
+	"""Reset camera to default position"""
+	if trackball_camera:
+		trackball_camera.position = Vector3(0, 0, 10)
+		trackball_camera.rotation = Vector3.ZERO
+		print("🎥 Camera position reset")
 
 # ===== DEBUG FUNCTIONS =====
 

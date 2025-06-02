@@ -1,0 +1,309 @@
+#!/usr/bin/env python3
+"""
+Compact Evolution System - Proof of Concept
+A simple demonstration of conversation compacting and evolution
+"""
+
+import json
+import hashlib
+import datetime
+from typing import List, Dict, Optional
+from dataclasses import dataclass, asdict
+import re
+
+@dataclass
+class CodeArtifact:
+    name: str
+    language: str
+    summary: str
+    hash: str
+    
+@dataclass
+class Compact:
+    id: str
+    title: str
+    created_at: str
+    ai_model: str
+    context_percentage: int
+    tags: List[str]
+    summary: str
+    concepts: Dict[str, str]
+    code_artifacts: List[CodeArtifact]
+    decisions: List[str]
+    parent_ids: List[str] = None
+    
+    def to_json(self):
+        return json.dumps(asdict(self), indent=2)
+    
+    @classmethod
+    def from_json(cls, json_str):
+        data = json.loads(json_str)
+        data['code_artifacts'] = [CodeArtifact(**ca) for ca in data['code_artifacts']]
+        return cls(**data)
+
+class CompactManager:
+    def __init__(self):
+        self.compacts: Dict[str, Compact] = {}
+        
+    def create_compact_from_conversation(self, 
+                                       conversation_text: str,
+                                       title: str,
+                                       ai_model: str = "claude-3",
+                                       context_percentage: int = 0) -> Compact:
+        """Extract key information from a conversation and create a compact"""
+        
+        # Generate unique ID
+        compact_id = hashlib.md5(f"{title}{datetime.datetime.now()}".encode()).hexdigest()[:8]
+        
+        # Extract concepts (simple pattern matching for demo)
+        concepts = self._extract_concepts(conversation_text)
+        
+        # Extract code artifacts
+        code_artifacts = self._extract_code_artifacts(conversation_text)
+        
+        # Extract decisions
+        decisions = self._extract_decisions(conversation_text)
+        
+        # Extract tags
+        tags = self._extract_tags(conversation_text)
+        
+        # Generate summary
+        summary = self._generate_summary(conversation_text, concepts, len(code_artifacts))
+        
+        compact = Compact(
+            id=compact_id,
+            title=title,
+            created_at=datetime.datetime.now().isoformat(),
+            ai_model=ai_model,
+            context_percentage=context_percentage,
+            tags=tags,
+            summary=summary,
+            concepts=concepts,
+            code_artifacts=code_artifacts,
+            decisions=decisions
+        )
+        
+        self.compacts[compact_id] = compact
+        return compact
+    
+    def merge_compacts(self, compact_ids: List[str], new_title: str) -> Compact:
+        """Merge multiple compacts into a new evolved compact"""
+        
+        if not all(cid in self.compacts for cid in compact_ids):
+            raise ValueError("Invalid compact IDs")
+        
+        # Combine all data
+        merged_concepts = {}
+        merged_artifacts = []
+        merged_decisions = []
+        merged_tags = set()
+        
+        for cid in compact_ids:
+            compact = self.compacts[cid]
+            merged_concepts.update(compact.concepts)
+            merged_artifacts.extend(compact.code_artifacts)
+            merged_decisions.extend(compact.decisions)
+            merged_tags.update(compact.tags)
+        
+        # Remove duplicates
+        merged_artifacts = list({a.hash: a for a in merged_artifacts}.values())
+        merged_decisions = list(dict.fromkeys(merged_decisions))
+        
+        # Calculate new context percentage (optimistic estimate)
+        avg_context = sum(self.compacts[cid].context_percentage for cid in compact_ids) // len(compact_ids)
+        new_context = max(15, avg_context - 10)  # Assume 10% reduction from deduplication
+        
+        # Create new compact
+        merged_compact = Compact(
+            id=hashlib.md5(f"{new_title}{datetime.datetime.now()}".encode()).hexdigest()[:8],
+            title=new_title,
+            created_at=datetime.datetime.now().isoformat(),
+            ai_model="merged",
+            context_percentage=new_context,
+            tags=list(merged_tags),
+            summary=f"Merged from {len(compact_ids)} compacts",
+            concepts=merged_concepts,
+            code_artifacts=merged_artifacts,
+            decisions=merged_decisions,
+            parent_ids=compact_ids
+        )
+        
+        self.compacts[merged_compact.id] = merged_compact
+        return merged_compact
+    
+    def export_for_ai(self, compact_id: str, format: str = "claude") -> str:
+        """Export a compact formatted for a specific AI"""
+        
+        compact = self.compacts.get(compact_id)
+        if not compact:
+            raise ValueError("Compact not found")
+        
+        if format == "claude":
+            return self._format_for_claude(compact)
+        elif format == "gpt":
+            return self._format_for_gpt(compact)
+        else:
+            return compact.to_json()
+    
+    def _extract_concepts(self, text: str) -> Dict[str, str]:
+        """Extract key concepts from conversation"""
+        concepts = {}
+        
+        # Look for definition patterns
+        definition_patterns = [
+            r"(\w+[\w\s]*) is (?:a |an )?([^.]+)\.",
+            r"(\w+[\w\s]*): ([^.]+)\.",
+        ]
+        
+        for pattern in definition_patterns:
+            matches = re.findall(pattern, text, re.IGNORECASE)
+            for match in matches[:5]:  # Limit to 5 concepts
+                concepts[match[0].strip()] = match[1].strip()
+        
+        return concepts
+    
+    def _extract_code_artifacts(self, text: str) -> List[CodeArtifact]:
+        """Extract code artifacts mentioned in conversation"""
+        artifacts = []
+        
+        # Look for file names
+        file_pattern = r"(\w+\.(?:gd|py|js|gdshader|tscn|tres))"
+        matches = re.findall(file_pattern, text)
+        
+        for match in set(matches[:10]):  # Limit and deduplicate
+            artifacts.append(CodeArtifact(
+                name=match,
+                language=match.split('.')[-1],
+                summary=f"File mentioned in conversation",
+                hash=hashlib.md5(match.encode()).hexdigest()[:8]
+            ))
+        
+        return artifacts
+    
+    def _extract_decisions(self, text: str) -> List[str]:
+        """Extract key decisions from conversation"""
+        decisions = []
+        
+        # Look for decision patterns
+        decision_patterns = [
+            r"decided to ([^.]+)\.",
+            r"should ([^.]+)\.",
+            r"will ([^.]+)\.",
+            r"going to ([^.]+)\.",
+        ]
+        
+        for pattern in decision_patterns:
+            matches = re.findall(pattern, text, re.IGNORECASE)
+            decisions.extend(match.strip() for match in matches[:3])
+        
+        return decisions[:10]  # Limit to 10 decisions
+    
+    def _extract_tags(self, text: str) -> List[str]:
+        """Extract relevant tags from conversation"""
+        # Simple keyword extraction for demo
+        keywords = ["godot", "camera", "shader", "consciousness", "pentagon", 
+                   "universal being", "ai", "integration", "effects", "component"]
+        
+        tags = []
+        text_lower = text.lower()
+        for keyword in keywords:
+            if keyword in text_lower:
+                tags.append(keyword.replace(" ", "_"))
+        
+        return tags
+    
+    def _generate_summary(self, text: str, concepts: Dict, artifact_count: int) -> str:
+        """Generate a summary of the conversation"""
+        word_count = len(text.split())
+        concept_count = len(concepts)
+        
+        return (f"Conversation covering {concept_count} key concepts "
+                f"with {artifact_count} code artifacts. "
+                f"Approximately {word_count} words of discussion.")
+    
+    def _format_for_claude(self, compact: Compact) -> str:
+        """Format compact for Claude AI"""
+        output = f"""# Context Summary: {compact.title}
+
+## Previous Discussion Summary
+{compact.summary}
+
+## Key Concepts Established
+"""
+        for concept, definition in compact.concepts.items():
+            output += f"- **{concept}**: {definition}\n"
+        
+        output += "\n## Code Artifacts Referenced\n"
+        for artifact in compact.code_artifacts:
+            output += f"- `{artifact.name}` - {artifact.summary}\n"
+        
+        output += "\n## Key Decisions Made\n"
+        for decision in compact.decisions:
+            output += f"- {decision}\n"
+        
+        output += f"\n## Context Usage: {compact.context_percentage}%\n"
+        output += f"Tags: {', '.join(compact.tags)}\n"
+        
+        return output
+    
+    def _format_for_gpt(self, compact: Compact) -> str:
+        """Format compact for GPT models"""
+        # Similar but adjusted for GPT's preferences
+        return self._format_for_claude(compact)  # For now
+
+# Example usage
+if __name__ == "__main__":
+    # Create manager
+    manager = CompactManager()
+    
+    # Simulate a conversation about camera effects
+    conversation1 = """
+    We're building a camera system for Universal Being. 
+    CameraUniversalBeing is a Pentagon Architecture wrapper for cameras.
+    We decided to implement consciousness-based visual effects.
+    The file camera_effects.gd will handle the effects.
+    Components should extend Node, not UniversalBeing.
+    We'll start with simple shaders like vignette_soft.gdshader.
+    """
+    
+    # Create a compact
+    compact1 = manager.create_compact_from_conversation(
+        conversation1,
+        "Camera System Development",
+        "claude-3",
+        29
+    )
+    
+    print("Created Compact 1:")
+    print(compact1.to_json())
+    print("\n" + "="*50 + "\n")
+    
+    # Simulate another conversation
+    conversation2 = """
+    Working on shader implementation for Universal Being.
+    Created bloom_consciousness.gdshader for level 3 effects.
+    Also implemented chromatic_aberration.gdshader.
+    Decided to use fallback colors for missing shaders.
+    Performance is important, should maintain 60 FPS.
+    """
+    
+    compact2 = manager.create_compact_from_conversation(
+        conversation2,
+        "Shader Effects Implementation", 
+        "cursor",
+        35
+    )
+    
+    # Merge compacts
+    merged = manager.merge_compacts(
+        [compact1.id, compact2.id],
+        "Complete Camera Effects System"
+    )
+    
+    print("Merged Compact:")
+    print(merged.to_json())
+    print("\n" + "="*50 + "\n")
+    
+    # Export for Claude
+    print("Export for Claude:")
+    print(manager.export_for_ai(merged.id, "claude"))

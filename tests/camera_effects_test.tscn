@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://c8q7v0j6y5n3q"]
+
+[ext_resource type="Script" path="res://tests/camera_effects_test.gd" id="1_script"]
+
+[node name="CameraEffectsTest" type="Node"]
+script = ExtResource("1_script")
+auto_evolve = false
+evolution_interval = 3.0 

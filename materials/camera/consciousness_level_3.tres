@@ -1,0 +1,13 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3]
+
+[ext_resource type="Shader" path="res://components/camera_effects/shaders/bloom_consciousness.gdshader" id="1_shader"]
+
+[resource]
+shader = ExtResource("1_shader")
+shader_parameter/bloom_threshold = 0.8
+shader_parameter/bloom_intensity = 1.2
+shader_parameter/bloom_color = Color(0.2, 1.0, 0.2, 1.0)
+shader_parameter/consciousness_level = 3.0
+shader_parameter/consciousness_pulse = 0.0
+shader_parameter/blur_samples = 8
+shader_parameter/blur_radius = 0.5 

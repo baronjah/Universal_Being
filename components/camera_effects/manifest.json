@@ -1,0 +1,86 @@
+{
+    "name": "camera_effects",
+    "version": "1.0.0",
+    "type": "component",
+    "description": "Consciousness-based visual effects for camera Universal Beings",
+    "author": "Universal Being Consciousness System",
+    "min_consciousness": 0,
+    "max_consciousness": 7,
+    
+    "scripts": [
+        "camera_effects.gd"
+    ],
+    
+    "shaders": [
+        "shaders/vignette_soft.gdshader",
+        "shaders/depth_of_field.gdshader",
+        "shaders/bloom_consciousness.gdshader",
+        "shaders/chromatic_aberration.gdshader",
+        "shaders/reality_distortion.gdshader",
+        "shaders/quantum_vision.gdshader",
+        "shaders/consciousness_pulse.gdshader"
+    ],
+    
+    "effects": {
+        "0": {
+            "name": "Dormant",
+            "description": "No effects - basic camera view",
+            "shader": null,
+            "color": [0.5, 0.5, 0.5, 1.0]
+        },
+        "1": {
+            "name": "Awakening",
+            "description": "Subtle vignette at screen edges",
+            "shader": "vignette_soft.gdshader",
+            "color": [0.9, 0.9, 0.9, 1.0]
+        },
+        "2": {
+            "name": "Aware",
+            "description": "Depth of field blur",
+            "shader": "depth_of_field.gdshader",
+            "color": [0.2, 0.4, 1.0, 1.0]
+        },
+        "3": {
+            "name": "Conscious",
+            "description": "Consciousness glow on beings",
+            "shader": "bloom_consciousness.gdshader",
+            "color": [0.2, 1.0, 0.2, 1.0]
+        },
+        "4": {
+            "name": "Enlightened",
+            "description": "Reality splits into color channels",
+            "shader": "chromatic_aberration.gdshader",
+            "color": [1.0, 0.84, 0.0, 1.0]
+        },
+        "5": {
+            "name": "Transcendent",
+            "description": "Space-time warps around consciousness",
+            "shader": "reality_distortion.gdshader",
+            "color": [1.0, 1.0, 1.0, 1.0]
+        },
+        "6": {
+            "name": "Cosmic",
+            "description": "See multiple realities simultaneously",
+            "shader": "quantum_vision.gdshader",
+            "color": [1.0, 0.2, 0.2, 1.0]
+        },
+        "7": {
+            "name": "Beyond",
+            "description": "All effects + reality breathes with consciousness",
+            "shader": "consciousness_pulse.gdshader",
+            "color": [1.0, 0.5, 0.0, 1.0]
+        }
+    },
+    
+    "requirements": {
+        "godot_version": "4.5",
+        "rendering": "forward_plus",
+        "features": ["shaders", "post_processing"]
+    },
+    
+    "performance": {
+        "gpu_tier_minimum": 2,
+        "recommended_fps": 60,
+        "mobile_friendly": false
+    }
+}

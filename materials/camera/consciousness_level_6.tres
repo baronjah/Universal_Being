@@ -1,0 +1,17 @@
+[gd_resource type="ShaderMaterial" format=3]
+
+[ext_resource type="Shader" path="res://components/camera_effects/shaders/quantum_vision.gdshader" id="1"]
+
+[resource]
+shader = ExtResource("1")
+shader_parameter/reality_layers = 4
+shader_parameter/layer_offset = 0.005
+shader_parameter/quantum_frequency = 4.0
+shader_parameter/consciousness_level = 6.0
+shader_parameter/consciousness_pulse = 0.0
+shader_parameter/reality_mix = 0.7
+shader_parameter/probability_wave = 2.0
+shader_parameter/reality_color_1 = Vector3(1, 0.2, 0.2)
+shader_parameter/reality_color_2 = Vector3(0.2, 1, 0.2)
+shader_parameter/reality_color_3 = Vector3(0.2, 0.2, 1)
+shader_parameter/reality_color_4 = Vector3(1, 1, 0.2)

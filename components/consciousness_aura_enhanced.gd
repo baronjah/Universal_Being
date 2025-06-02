@@ -155,12 +155,9 @@ func create_color_ramp() -> Gradient:
     # In Godot 4, use set_offset and set_color
     gradient.set_offset(0, 0.0)
     gradient.set_color(0, Color(base_color.r, base_color.g, base_color.b, 0.0))
-    gradient.add_point(0.2)
-    gradient.set_color(1, base_color)
-    gradient.add_point(0.8)
-    gradient.set_color(2, base_color)
-    gradient.add_point(1.0)
-    gradient.set_color(3, Color(base_color.r, base_color.g, base_color.b, 0.0))
+    gradient.add_point(0.2, base_color)
+    gradient.add_point(0.8, base_color)
+    gradient.add_point(1.0, Color(base_color.r, base_color.g, base_color.b, 0.0))
     
     return gradient
 

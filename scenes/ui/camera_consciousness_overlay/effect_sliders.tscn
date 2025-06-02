@@ -1,0 +1,147 @@
+[gd_scene load_steps=2 format=3 uid="uid://debxmxfxscy"]
+
+[ext_resource type="Script" path="res://ui/camera_consciousness_overlay/effect_sliders.gd" id="1_4k4m3"]
+
+[node name="EffectSliders" type="Panel" parent="."]
+custom_minimum_size = Vector2(400, 600)
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_4k4m3")
+
+[node name="Background" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.1, 0.1, 0.1, 0.8)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 15
+
+[node name="Title" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "Consciousness Effects"
+horizontal_alignment = 1
+
+[node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="SlidersContainer" type="VBoxContainer" parent="VBoxContainer/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 20
+
+[node name="VignetteContainer" type="VBoxContainer" parent="VBoxContainer/ScrollContainer/SlidersContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/ScrollContainer/SlidersContainer/VignetteContainer"]
+layout_mode = 2
+text = "Vignette Intensity"
+
+[node name="VignetteSlider" type="HSlider" parent="VBoxContainer/ScrollContainer/SlidersContainer/VignetteContainer"]
+layout_mode = 2
+max_value = 1.0
+step = 0.01
+
+[node name="DOFContainer" type="VBoxContainer" parent="VBoxContainer/ScrollContainer/SlidersContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/ScrollContainer/SlidersContainer/DOFContainer"]
+layout_mode = 2
+text = "Depth of Field Blur"
+
+[node name="DOFSlider" type="HSlider" parent="VBoxContainer/ScrollContainer/SlidersContainer/DOFContainer"]
+layout_mode = 2
+max_value = 1.0
+step = 0.01
+
+[node name="BloomContainer" type="VBoxContainer" parent="VBoxContainer/ScrollContainer/SlidersContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/ScrollContainer/SlidersContainer/BloomContainer"]
+layout_mode = 2
+text = "Bloom Intensity"
+
+[node name="BloomSlider" type="HSlider" parent="VBoxContainer/ScrollContainer/SlidersContainer/BloomContainer"]
+layout_mode = 2
+max_value = 1.0
+step = 0.01
+
+[node name="ChromaticContainer" type="VBoxContainer" parent="VBoxContainer/ScrollContainer/SlidersContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/ScrollContainer/SlidersContainer/ChromaticContainer"]
+layout_mode = 2
+text = "Chromatic Aberration"
+
+[node name="ChromaticSlider" type="HSlider" parent="VBoxContainer/ScrollContainer/SlidersContainer/ChromaticContainer"]
+layout_mode = 2
+max_value = 1.0
+step = 0.01
+
+[node name="DistortionContainer" type="VBoxContainer" parent="VBoxContainer/ScrollContainer/SlidersContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/ScrollContainer/SlidersContainer/DistortionContainer"]
+layout_mode = 2
+text = "Reality Distortion"
+
+[node name="DistortionSlider" type="HSlider" parent="VBoxContainer/ScrollContainer/SlidersContainer/DistortionContainer"]
+layout_mode = 2
+max_value = 1.0
+step = 0.01
+
+[node name="QuantumContainer" type="VBoxContainer" parent="VBoxContainer/ScrollContainer/SlidersContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/ScrollContainer/SlidersContainer/QuantumContainer"]
+layout_mode = 2
+text = "Quantum Opacity"
+
+[node name="QuantumSlider" type="HSlider" parent="VBoxContainer/ScrollContainer/SlidersContainer/QuantumContainer"]
+layout_mode = 2
+max_value = 1.0
+step = 0.01
+
+[node name="MasterContainer" type="VBoxContainer" parent="VBoxContainer/ScrollContainer/SlidersContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/ScrollContainer/SlidersContainer/MasterContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 16
+text = "Master Intensity"
+
+[node name="MasterSlider" type="HSlider" parent="VBoxContainer/ScrollContainer/SlidersContainer/MasterContainer"]
+layout_mode = 2
+max_value = 1.0
+step = 0.01
+
+[node name="PresetContainer" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 10
+alignment = 1
+
+[node name="SavePreset" type="Button" parent="VBoxContainer/PresetContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Save Preset"
+
+[node name="LoadPreset" type="Button" parent="VBoxContainer/PresetContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Load Preset"
+
+[node name="ResetButton" type="Button" parent="VBoxContainer/PresetContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Reset All" 

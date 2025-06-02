@@ -1,0 +1,13 @@
+[gd_resource type="ShaderMaterial" format=3]
+
+[ext_resource type="Shader" path="res://components/camera_effects/shaders/reality_distortion.gdshader" id="1"]
+
+[resource]
+shader = ExtResource("1")
+shader_parameter/distortion_strength = 0.02
+shader_parameter/wave_frequency = 3.0
+shader_parameter/wave_amplitude = 0.01
+shader_parameter/consciousness_level = 5.0
+shader_parameter/consciousness_pulse = 0.0
+shader_parameter/time_distortion = 1.0
+shader_parameter/distortion_center = Vector2(0.5, 0.5)

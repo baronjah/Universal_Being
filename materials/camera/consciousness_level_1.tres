@@ -1,0 +1,11 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3]
+
+[ext_resource type="Shader" path="res://components/camera_effects/shaders/vignette_soft.gdshader" id="1_shader"]
+
+[resource]
+shader = ExtResource("1_shader")
+shader_parameter/intensity = 0.15
+shader_parameter/softness = 0.8
+shader_parameter/vignette_color = Color(0, 0, 0, 1)
+shader_parameter/consciousness_level = 1.0
+shader_parameter/consciousness_pulse = 0.0 

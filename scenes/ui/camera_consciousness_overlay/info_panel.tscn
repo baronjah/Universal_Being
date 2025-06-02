@@ -1,0 +1,89 @@
+[gd_scene load_steps=2 format=3 uid="uid://c4q8v0j6y5n3q"]
+
+[ext_resource type="Script" path="res://ui/camera_consciousness_overlay/info_panel.gd" id="1_3k4m3"]
+
+[node name="InfoPanel" type="Panel" parent="."]
+custom_minimum_size = Vector2(300, 400)
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_3k4m3")
+
+[node name="Background" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.1, 0.1, 0.1, 0.8)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 10
+
+[node name="TitleContainer" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Title" type="Label" parent="VBoxContainer/TitleContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 24
+text = "Camera Consciousness"
+horizontal_alignment = 1
+
+[node name="LevelContainer" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="LevelIcon" type="TextureRect" parent="VBoxContainer/LevelContainer"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="LevelName" type="Label" parent="VBoxContainer/LevelContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 18
+text = "Level 0 - Dormant"
+horizontal_alignment = 1
+
+[node name="Description" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_font_sizes/font_size = 14
+text = "The camera's current consciousness level determines its awareness and capabilities."
+autowrap_mode = 3
+
+[node name="EffectsList" type="RichTextLabel" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_font_sizes/normal_font_size = 14
+bbcode_enabled = true
+text = "[b]Active Effects:[/b]
+• Quantum Awareness
+• Reality Distortion
+• Time Perception"
+scroll_following = true
+
+[node name="StatusContainer" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="FPSCounter" type="Label" parent="VBoxContainer/StatusContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "FPS: 60"
+horizontal_alignment = 1
+
+[node name="CameraMode" type="Label" parent="VBoxContainer/StatusContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Mode: Standard"
+horizontal_alignment = 1 

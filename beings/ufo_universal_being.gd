@@ -234,7 +234,7 @@ func _on_evolution_complete(new_type: AdvancedUFOGenerator.UFOType):
 
 func _on_consciousness_changed(new_level: int):
     """Handle consciousness level changes"""
-    super._on_consciousness_changed(new_level)
+    # Note: No super call needed as base method is empty
     
     _update_size_from_consciousness()
     

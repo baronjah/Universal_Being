@@ -1,0 +1,17 @@
+[gd_resource type="ShaderMaterial" format=3]
+
+[ext_resource type="Shader" path="res://components/camera_effects/shaders/consciousness_pulse.gdshader" id="1"]
+
+[resource]
+shader = ExtResource("1")
+shader_parameter/consciousness_level = 7.0
+shader_parameter/consciousness_pulse = 1.0
+shader_parameter/vignette_strength = 0.5
+shader_parameter/bloom_threshold = 0.6
+shader_parameter/aberration_amount = 0.002
+shader_parameter/distortion_strength = 0.015
+shader_parameter/breathing_frequency = 1.0
+shader_parameter/breathing_amplitude = 0.03
+shader_parameter/transcendence_color = Vector3(1, 0.9, 0.7)
+shader_parameter/energy_intensity = 2.0
+shader_parameter/evolution_speed = 2.0

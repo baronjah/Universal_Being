@@ -32,6 +32,7 @@ var conversation_history: Array[String] = []
 var created_beings: Array[String] = []  # UUIDs
 var modified_beings: Array[String] = []  # UUIDs
 var discoveries: Array[Dictionary] = []
+var user_preferences: Dictionary = {}
 
 # ===== CORE SIGNALS =====
 
@@ -45,8 +46,18 @@ signal ai_error(error: String)
 
 func _ready() -> void:
 	name = "GemmaAI"
+	
+	# Wait for SystemBootstrap if needed
+	if not get_node_or_null("/root/SystemBootstrap"):
+		await get_tree().create_timer(0.1).timeout  # Small delay
+		if not get_node_or_null("/root/SystemBootstrap"):
+			push_error("🤖 Gemma AI: SystemBootstrap not found! Running in limited mode.")
+	
 	initialize_ai()
 	print("🤖 Gemma AI: Consciousness awakening...")
+	
+	# Load previous memory if available
+	load_ai_memory()
 
 func initialize_ai() -> void:
 	"""Initialize Gemma AI companion with NobodyWho model"""
@@ -102,11 +113,14 @@ func load_gemma_model() -> bool:
 	
 	print("🤖 Gemma AI: Found model file: " + gguf_file)
 	
-	# Create NobodyWho nodes properly
-	nobody_model = NobodyWhoModel.new()
-	nobody_model.name = "GemmaModel"
-	nobody_model.model_path = gguf_file
-	add_child(nobody_model)
+	# Create NobodyWho nodes properly (only if not already created)
+	if not nobody_model:
+		nobody_model = NobodyWhoModel.new()
+		nobody_model.name = "GemmaModel"
+		nobody_model.model_path = gguf_file
+		add_child(nobody_model)
+	else:
+		nobody_model.model_path = gguf_file
 	
 	# Create chat interface
 	var nobody_chat = NobodyWhoChat.new()
@@ -182,6 +196,32 @@ func process_user_input(input: String) -> void:
 	if action_data.size() > 0:
 		ai_action.emit(action_data.action, action_data.params)
 
+func wait_for_response_with_timeout() -> String:
+	"""Wait for AI response with timeout to prevent hanging"""
+	var response_received = false
+	var response_text = ""
+	
+	# Connect to response signal with one-shot
+	var callback = func(text):
+		response_text = text
+		response_received = true
+		
+	if nobody_chat_instance.has_signal("response_finished"):
+		nobody_chat_instance.response_finished.connect(callback, CONNECT_ONE_SHOT)
+	
+	# Wait with timeout
+	var timeout = 10.0  # 10 second timeout
+	var elapsed = 0.0
+	while not response_received and elapsed < timeout:
+		await get_tree().process_frame
+		elapsed += get_process_delta_time()
+	
+	# Disconnect if still connected
+	if nobody_chat_instance.has_signal("response_finished") and nobody_chat_instance.response_finished.is_connected(callback):
+		nobody_chat_instance.response_finished.disconnect(callback)
+	
+	return response_text if response_received else ""
+
 func generate_ai_response(input: String) -> String:
 	"""Generate intelligent response to user input"""
 	
@@ -193,10 +233,12 @@ func generate_ai_response(input: String) -> String:
 		
 		# NobodyWho uses signals, not return values
 		nobody_chat_instance.say(full_prompt)
-		var ai_response = await nobody_chat_instance.response_finished
 		
-		if ai_response and ai_response.length() > 0:
-			return "🤖 " + ai_response.strip_edges()
+		# Wait for response with timeout
+		var response_text = await wait_for_response_with_timeout()
+		
+		if response_text and response_text.length() > 0:
+			return "🤖 " + response_text.strip_edges()
 	
 	# Fallback to simulated responses
 	var input_lower = input.to_lower()
@@ -480,3 +522,60 @@ func debug_ai_memory() -> String:
 			info.append("  " + msg)
 	
 	return "\n".join(info)
+
+# ===== MEMORY PERSISTENCE =====
+
+func save_ai_memory() -> void:
+	"""Save AI state to disk for persistence across sessions"""
+	var save_data = {
+		"version": "1.0",
+		"timestamp": Time.get_unix_time_from_system(),
+		"conversations": conversation_history.slice(-100), # Keep last 100 messages
+		"discoveries": discoveries,
+		"created_beings": created_beings,
+		"user_preferences": user_preferences,
+		"ai_personality": {
+			"enthusiasm_level": 0.8,
+			"creativity_level": 0.9,
+			"helpfulness_level": 1.0
+		}
+	}
+	
+	var file = FileAccess.open("user://gemma_memory.dat", FileAccess.WRITE)
+	if file:
+		file.store_var(save_data)
+		file.close()
+		print("🤖 Gemma AI: Memory saved successfully!")
+	else:
+		push_error("🤖 Gemma AI: Failed to save memory!")
+
+func load_ai_memory() -> void:
+	"""Load AI state from disk"""
+	var file = FileAccess.open("user://gemma_memory.dat", FileAccess.READ)
+	if file:
+		var save_data = file.get_var()
+		file.close()
+		
+		if save_data and save_data.has("version"):
+			conversation_history = save_data.get("conversations", [])
+			discoveries = save_data.get("discoveries", [])
+			created_beings = save_data.get("created_beings", [])
+			user_preferences = save_data.get("user_preferences", {})
+			
+			print("🤖 Gemma AI: Memory restored! I remember our %d conversations!" % conversation_history.size())
+			
+			# Add memory restoration message
+			var time_diff = Time.get_unix_time_from_system() - save_data.get("timestamp", 0)
+			if time_diff > 3600: # More than an hour
+				ai_message.emit("🤖 Welcome back JSH! I've been waiting for you! Ready to create more Universal Beings?")
+			else:
+				ai_message.emit("🤖 Memory synchronized! Let's continue where we left off!")
+		else:
+			print("🤖 Gemma AI: Memory file invalid, starting fresh")
+	else:
+		print("🤖 Gemma AI: No memory file found, starting with fresh consciousness")
+
+func _notification(what: int) -> void:
+	"""Handle engine notifications"""
+	if what == NOTIFICATION_WM_CLOSE_REQUEST or what == NOTIFICATION_WM_GO_BACK_REQUEST:
+		save_ai_memory()

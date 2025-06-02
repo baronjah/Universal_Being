@@ -19,6 +19,7 @@ const ACTIONS_LIBRARY: String = LIBRARIES_PATH + "actions_library/"
 const INTERFACES_LIBRARY: String = LIBRARIES_PATH + "interfaces_library/"
 const AI_LIBRARY: String = LIBRARIES_PATH + "ai_library/"
 const COMPOSITES_LIBRARY: String = LIBRARIES_PATH + "composites_library/"
+const COMPACTS_LIBRARY: String = LIBRARIES_PATH + "compacts_library/"
 
 ## Cache System
 var zip_cache: Dictionary = {}  # path -> data
@@ -26,15 +27,25 @@ var component_cache: Dictionary = {}  # path -> component_data
 var being_templates: Dictionary = {}  # type -> template_data
 var evolution_rules: Dictionary = {}  # form -> [possible_evolutions]
 
+## Indexing System for Queries
+var type_index: Dictionary = {}  # type -> [file_paths]
+var name_index: Dictionary = {}  # name -> file_path
+var consciousness_index: Dictionary = {}  # level -> [file_paths]
+
 ## Session Data
 var session_beings: Array[String] = []  # UUIDs of beings created this session
 var session_evolutions: Array[Dictionary] = []  # Evolution history
 var session_interactions: Array[Dictionary] = []  # Interaction logs
 
+## Compact System
+var compact_system: AkashicCompactSystem = null
+var active_compacts: Dictionary = {}  # id -> Compact
+var compact_chains: Dictionary = {}  # being_id -> [compact_ids]
+
 # ===== CORE SIGNALS =====
 
-signal being_saved_to_zip(path: String, being: UniversalBeing)
-signal being_loaded_from_zip(path: String, being: UniversalBeing)
+signal being_saved_to_zip(path: String, being: Node)
+signal being_loaded_from_zip(path: String, being: Node)
 signal component_loaded(path: String, data: Dictionary)
 signal evolution_rule_added(from_form: String, to_form: String)
 signal akashic_memory_updated(type: String, data: Dictionary)
@@ -62,6 +73,12 @@ func pentagon_sewers() -> void:
 
 # ===== ZIP FILE MANAGEMENT =====
 
+func ensure_directory_exists(file_path: String) -> void:
+	"""Ensure the directory for a file path exists"""
+	var dir_path = file_path.get_base_dir()
+	if not DirAccess.dir_exists_absolute(dir_path):
+		DirAccess.make_dir_recursive_absolute(dir_path)
+
 func load_being_from_zip(zip_path: String) -> Dictionary:
 	"""Load a Universal Being from ZIP file"""
 	if zip_path in zip_cache:
@@ -84,20 +101,31 @@ func load_being_from_zip(zip_path: String) -> Dictionary:
 			var parse_result = json.parse(json_string)
 			if parse_result == OK:
 				var data = json.data
+				# Migrate data if needed
+				data = migrate_being_data(data)
 				zip_cache[zip_path] = data
 				return data.duplicate(true)
+			else:
+				push_error("JSON parse error at line %d: %s" % [json.get_error_line(), json.get_error_message()])
+				# Return minimal valid data instead of empty
+				return create_default_being_template()
 	
 	# Return default template if file doesn't exist
 	return create_default_being_template()
 
-func save_being_to_zip(being: UniversalBeing, zip_path: String) -> bool:
+func save_being_to_zip(being: Node, zip_path: String) -> bool:
 	"""Save a Universal Being to ZIP file"""
+	# Verify it's a UniversalBeing
+	if not being.has_method("get_all_properties"):
+		push_error("AkashicRecords: Not a valid UniversalBeing")
+		return false
+		
 	var being_data = {
 		"manifest": {
 			"universal_being": {
-				"uuid": being.being_uuid,
-				"name": being.being_name,
-				"type": being.being_type,
+				"uuid": being.get("being_uuid"),
+				"name": being.get("being_name"),
+				"type": being.get("being_type"),
 				"version": "1.0.0",
 				"created": Time.get_datetime_string_from_system(),
 				"creator": "JSH + Gemma"
@@ -114,17 +142,20 @@ func save_being_to_zip(being: UniversalBeing, zip_path: String) -> bool:
 				"resource_cost": 1
 			},
 			"ai_integration": {
-				"gemma_can_modify": being.metadata.gemma_can_modify,
-				"gemma_can_read": being.metadata.ai_accessible,
+				"gemma_can_modify": being.get("metadata", {}).get("gemma_can_modify", true),
+				"gemma_can_read": being.get("metadata", {}).get("ai_accessible", true),
 				"debug_level": "full"
 			}
 		},
-		"properties": being.get_all_properties(),
-		"components": being.components,
-		"evolution_state": being.evolution_state,
-		"consciousness_level": being.consciousness_level,
-		"metadata": being.metadata
+		"properties": being.call("get_all_properties") if being.has_method("get_all_properties") else {},
+		"components": being.get("components", []),
+		"evolution_state": being.get("evolution_state", {}),
+		"consciousness_level": being.get("consciousness_level", 0),
+		"metadata": being.get("metadata", {})
 	}
+	
+	# Ensure directory exists
+	ensure_directory_exists(zip_path)
 	
 	# Save as JSON (simulating ZIP)
 	var json_path = zip_path.replace(".ub.zip", ".json")
@@ -326,6 +357,40 @@ func add_evolution_rule(from_form: String, to_form: String) -> void:
 		evolution_rules[from_form].append(to_form)
 		evolution_rule_added.emit(from_form, to_form)
 
+# ===== INDEXING SYSTEM =====
+
+func rebuild_indices() -> void:
+	"""Rebuild all indices for faster queries"""
+	type_index.clear()
+	name_index.clear()
+	consciousness_index.clear()
+	
+	for file_path in get_all_library_files():
+		var data = load_being_from_zip(file_path)
+		var manifest = data.get("manifest", {})
+		var ub_data = manifest.get("universal_being", {})
+		
+		# Index by type
+		var type = ub_data.get("type", "")
+		if type:
+			if type not in type_index:
+				type_index[type] = []
+			type_index[type].append(file_path)
+		
+		# Index by name
+		var name = ub_data.get("name", "")
+		if name:
+			name_index[name] = file_path
+		
+		# Index by consciousness level
+		var level = data.get("consciousness_level", 0)
+		if level not in consciousness_index:
+			consciousness_index[level] = []
+		consciousness_index[level].append(file_path)
+	
+	print("📚 Akashic: Indices rebuilt - %d types, %d names, %d consciousness levels" % 
+		[type_index.size(), name_index.size(), consciousness_index.size()])
+
 # ===== QUERY SYSTEM =====
 
 func query_library(search_terms: Array[String]) -> Array[String]:
@@ -390,6 +455,72 @@ func save_session_data() -> void:
 	
 	var session_file = "res://saves/session_" + str(Time.get_unix_time_from_system()) + ".json"
 	save_template_data(session_file, session_data)
+
+# ===== BATCH OPERATIONS =====
+
+func load_beings_batch(paths: Array[String]) -> Array[Dictionary]:
+	"""Load multiple beings in one operation"""
+	var results: Array[Dictionary] = []
+	for path in paths:
+		results.append(load_being_from_zip(path))
+	return results
+
+func save_beings_batch(beings: Array[Node], base_path: String) -> int:
+	"""Save multiple beings at once"""
+	var success_count = 0
+	for i in range(beings.size()):
+		var being = beings[i]
+		var path = base_path + "being_%d.ub.zip" % i
+		if save_being_to_zip(being, path):
+			success_count += 1
+	return success_count
+
+func query_by_type(type: String) -> Array[String]:
+	"""Fast query using type index"""
+	if type in type_index:
+		return type_index[type]
+	return []
+
+func query_by_consciousness(level: int) -> Array[String]:
+	"""Fast query using consciousness index"""
+	if level in consciousness_index:
+		return consciousness_index[level]
+	return []
+
+# ===== MIGRATION SYSTEM =====
+
+func migrate_being_data(data: Dictionary) -> Dictionary:
+	"""Migrate being data to current version"""
+	var manifest = data.get("manifest", {})
+	var ub_data = manifest.get("universal_being", {})
+	var version = ub_data.get("version", "0.0.0")
+	
+	match version:
+		"0.0.0":
+			# Migrate from version 0 to 1
+			ub_data.version = "1.0.0"
+			if not data.has("consciousness_level"):
+				data.consciousness_level = 0
+			if not data.has("metadata"):
+				data.metadata = {
+					"ai_accessible": true,
+					"gemma_can_modify": true
+				}
+			if not data.has("components"):
+				data.components = []
+			if not data.has("evolution_state"):
+				data.evolution_state = {
+					"current_form": ub_data.get("type", "unknown"),
+					"can_become": [],
+					"evolution_history": []
+				}
+		"1.0.0":
+			# Current version, no migration needed
+			pass
+		_:
+			push_warning("Unknown being version: %s" % version)
+	
+	return data
 
 # ===== AI INTEGRATION =====
 

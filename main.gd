@@ -89,31 +89,40 @@ func _input(event: InputEvent) -> void:
 	elif event.is_action_pressed("inspect_being"):
 		show_inspection_interface()
 	elif event is InputEventKey and event.pressed:
-		match event.keycode:
-			KEY_F1:
-				show_help()
-			KEY_F2:
-				show_status()
-			KEY_F3:
-				create_test_being()
-			KEY_F4:
-				create_camera_universal_being()
-			KEY_F5:
-				create_console_universal_being()
-			KEY_F6:
-				sync_folders_to_zip()
-			KEY_F7:
-				create_cursor_universal_being()
-			KEY_F8:
-				create_claude_desktop_mcp_bridge()
-			KEY_F9:
-				create_chatgpt_premium_bridge()
-			KEY_F10:
-				create_google_gemini_premium_bridge()
-			KEY_F12:
-				toggle_pentagon_ai_mode()
-			KEY_G:
-				create_genesis_conductor_being()
+		# Normal keyboard shortcuts (no F-keys except F1)
+		if event.ctrl_pressed:
+			match event.keycode:
+				KEY_H:  # Ctrl+H for Help
+					show_help()
+				KEY_S:  # Ctrl+S for Status  
+					show_status()
+				KEY_T:  # Ctrl+T for Test being
+					create_test_being()
+				KEY_K:  # Ctrl+K for Camera (looK around)
+					create_camera_universal_being()
+				KEY_SEMICOLON:  # Ctrl+; for Console
+					create_console_universal_being()
+				KEY_Z:  # Ctrl+Z for Zip sync
+					sync_folders_to_zip()
+				KEY_U:  # Ctrl+U for cUrsor
+					create_cursor_universal_being()
+				KEY_M:  # Ctrl+M for MCP bridge
+					create_claude_desktop_mcp_bridge()
+				KEY_B:  # Ctrl+B for Biblical ChatGPT
+					create_chatgpt_premium_bridge()
+				KEY_G:  # Ctrl+G for Gemini
+					create_google_gemini_premium_bridge()
+				KEY_P:  # Ctrl+P for Pentagon AI mode
+					toggle_pentagon_ai_mode()
+		elif event.alt_pressed:
+			match event.keycode:
+				KEY_G:  # Alt+G for Genesis conductor
+					create_genesis_conductor_being()
+		else:
+			# Single key shortcuts (be careful with these)
+			match event.keycode:
+				KEY_F1:  # Keep F1 for help (standard)
+					show_help()
 
 func toggle_console() -> void:
 	"""Toggle Universal Console (~ key)"""
@@ -129,8 +138,8 @@ func toggle_console() -> void:
 		else:
 			print("🖥️ Console being found but no toggle method")
 	else:
-		# Create new Universal Console
-		print("🖥️ Creating new Universal Console...")
+		# Create new Universal Console if none exists
+		print("🖥️ No console found, creating new Universal Console...")
 		create_console_universal_being()
 	
 	if GemmaAI:
@@ -139,20 +148,23 @@ func toggle_console() -> void:
 func show_help() -> void:
 	"""Show help information"""
 	print("🌟 Universal Being Engine - Help:")
-	print("  ~ - Toggle Universal Console (NEW!)")
+	print("  ~ - Toggle Universal Console")
 	print("  Ctrl+N - Create new Universal Being")
 	print("  Ctrl+I - Inspect Universal Beings")
-	print("  F1 - Show help")
-	print("  F2 - Show status") 
-	print("  F3 - Create test being")
-	print("  F4 - Create camera Universal Being (3D trackball) [AUTO]")
-	print("  F5 - Create Universal Console (revolutionary interface)")
-	print("  F6 - Sync folders to ZIP (development workflow)")
-	print("  F7 - Create Universal Cursor (triangle with sphere collision) [AUTO]")
-	print("  F8 - Create Claude Desktop MCP Bridge")
-	print("  F9 - Create ChatGPT Premium Bridge (Biblical Genesis Decoder)")
-	print("  F10 - Create Google Gemini Premium Bridge (Cosmic Multimodal Insights)")
-	print("  F12 - Toggle Pentagon AI Mode (6-AI Collaboration)")
+	print("")
+	print("🔑 Creation Commands:")
+	print("  Ctrl+H - Show Help (this screen)")
+	print("  Ctrl+S - Show Status") 
+	print("  Ctrl+T - Create Test being")
+	print("  Ctrl+K - Create Camera Universal Being (looK around)")
+	print("  Ctrl+; - Create Console Universal Being")
+	print("  Ctrl+Z - Sync folders to ZIP")
+	print("  Ctrl+U - Create Universal cUrsor")
+	print("  Ctrl+M - Create MCP Bridge (Claude Desktop)")
+	print("  Ctrl+B - Create Biblical Bridge (ChatGPT)")
+	print("  Ctrl+G - Create Gemini Bridge")
+	print("  Ctrl+P - Toggle Pentagon AI Mode (6-AI Collaboration)")
+	print("  Alt+G - Create Genesis Conductor")
 	print("")
 	print("🎥 Camera Controls (when camera being is active):")
 	print("  Mouse wheel - Zoom in/out")
@@ -262,6 +274,14 @@ func create_console_universal_being() -> Node:
 	if not systems_ready:
 		print("🌟 Cannot create console - systems not ready")
 		return null
+	
+	# Check if console already exists
+	var existing_console = find_console_being()
+	if existing_console:
+		print("🖥️ Console already exists, toggling it instead")
+		if existing_console.has_method("toggle_console"):
+			existing_console.toggle_console()
+		return existing_console
 	
 	# Create console using SystemBootstrap for proper class loading
 	var console_being = SystemBootstrap.create_console_universal_being()

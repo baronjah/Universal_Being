@@ -289,6 +289,19 @@ func awaken_consciousness(level: int = 1) -> void:
 	consciousness_level = level
 	update_consciousness_visual()
 	consciousness_awakened.emit(level)
+	_on_consciousness_changed(level)
+
+func set_consciousness_level(level: int) -> void:
+	"""Set consciousness level with proper notification"""
+	if consciousness_level != level:
+		consciousness_level = level
+		update_consciousness_visual()
+		consciousness_awakened.emit(level)
+		_on_consciousness_changed(level)
+
+func _on_consciousness_changed(new_level: int) -> void:
+	"""Virtual method called when consciousness changes - override in subclasses"""
+	pass
 
 func update_consciousness(delta: float) -> void:
 	# Consciousness update logic - override in subclasses
