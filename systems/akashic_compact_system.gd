@@ -300,6 +300,60 @@ func merge_memory_content(sources: Array) -> Dictionary:
     
     return merged_content
 
+func merge_scenario_content(sources: Array) -> Dictionary:
+    """Merge scenario compacts intelligently"""
+    var merged_content = {
+        "title": "Merged Scenario",
+        "original_text": "",
+        "key_points": [],
+        "characters": [],
+        "locations": [],
+        "decisions": [],
+        "ai_instructions": {
+            "tone": "adaptive",
+            "style": "narrative",
+            "constraints": []
+        }
+    }
+    
+    # Collect all content
+    for source in sources:
+        if source.content.has("original_text"):
+            merged_content["original_text"] += source.content["original_text"] + "\n\n"
+        if source.content.has("key_points"):
+            merged_content["key_points"].append_array(source.content["key_points"])
+        if source.content.has("characters"):
+            merged_content["characters"].append_array(source.content["characters"])
+        if source.content.has("locations"):
+            merged_content["locations"].append_array(source.content["locations"])
+        if source.content.has("decisions"):
+            merged_content["decisions"].append_array(source.content["decisions"])
+    
+    # Remove duplicates
+    merged_content["key_points"] = merged_content["key_points"].filter(func(x): return x != "")
+    merged_content["characters"] = merged_content["characters"].filter(func(x): return x != "")
+    merged_content["locations"] = merged_content["locations"].filter(func(x): return x != "")
+    merged_content["decisions"] = merged_content["decisions"].filter(func(x): return x != "")
+    
+    # Deduplicate arrays
+    merged_content["key_points"] = Array(merged_content["key_points"]).filter(func(x, i, arr): return arr.find(x) == i)
+    merged_content["characters"] = Array(merged_content["characters"]).filter(func(x, i, arr): return arr.find(x) == i)
+    merged_content["locations"] = Array(merged_content["locations"]).filter(func(x, i, arr): return arr.find(x) == i)
+    merged_content["decisions"] = Array(merged_content["decisions"]).filter(func(x, i, arr): return arr.find(x) == i)
+    
+    return merged_content
+
+func merge_generic_content(sources: Array) -> Dictionary:
+    """Merge generic compacts"""
+    var merged = {}
+    for source in sources:
+        for key in source.content:
+            if not key in merged:
+                merged[key] = source.content[key]
+            elif merged[key] != source.content[key]:
+                merged[key] = [merged[key], source.content[key]]
+    return merged
+
 func branch_scenario(scenario_compact: Compact, choice: String) -> Compact:
     """Create a new scenario branch based on a choice"""
     var branch = Compact.new()

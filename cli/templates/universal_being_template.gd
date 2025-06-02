@@ -1,79 +1,77 @@
 # ==================================================
-# UNIVERSAL BEING: {being_name}
-# TYPE: {being_type}
-# PURPOSE: {purpose}
-# COMPONENTS: {components}
-# SCENES: {scenes}
+# UNIVERSAL BEING: "__BEING_NAME__"
+# TYPE: "__BEING_TYPE__"
+# PURPOSE: "__PURPOSE__"
+# COMPONENTS: "__COMPONENTS__"
+# SCENES: "__SCENES__"
 # ==================================================
 
 extends UniversalBeing
-class_name {class_name}
+# class_name "__CLASS_NAME__"  # Will be set by generator
 
 # ===== BEING-SPECIFIC PROPERTIES =====
-{properties}
+# __PROPERTIES__
 
 # ===== PENTAGON ARCHITECTURE IMPLEMENTATION =====
 
 func pentagon_init() -> void:
 	super.pentagon_init()
 	
-	being_type = "{being_type}"
-	being_name = "{being_name}"
-	consciousness_level = {consciousness_level}
+	being_type = "__BEING_TYPE__"
+	being_name = "__BEING_NAME__"
+	consciousness_level = 1  # __CONSCIOUSNESS_LEVEL__
 	
-	print("🌟 {being_name}: Pentagon Init Complete")
+	print("🌟 %s: Pentagon Init Complete" % being_name)
 
 func pentagon_ready() -> void:
 	super.pentagon_ready()
 	
 	# Load components if needed
-	{component_loading}
+	# __COMPONENT_LOADING__
 	
 	# Load scene if this being controls one
-	{scene_loading}
+	# __SCENE_LOADING__
 	
-	print("🌟 {being_name}: Pentagon Ready Complete")
+	print("🌟 %s: Pentagon Ready Complete" % being_name)
 
 func pentagon_process(delta: float) -> void:
 	super.pentagon_process(delta)
 	
 	# Being-specific process logic
-	{process_logic}
+	# __PROCESS_LOGIC__
 
 func pentagon_input(event: InputEvent) -> void:
 	super.pentagon_input(event)
 	
 	# Being-specific input handling
-	{input_logic}
+	# __INPUT_LOGIC__
 
 func pentagon_sewers() -> void:
 	# Being-specific cleanup
-	{cleanup_logic}
+	# __CLEANUP_LOGIC__
 	
 	super.pentagon_sewers()
 
 # ===== BEING-SPECIFIC METHODS =====
-{methods}
+# __METHODS__
 
 # ===== AI INTEGRATION =====
 
 func ai_interface() -> Dictionary:
 	var base_interface = super.ai_interface()
 	
-	base_interface["being_info"] = {
+	base_interface.being_info = {
 		"type": being_type,
 		"name": being_name,
 		"consciousness": consciousness_level
 	}
 	
-	base_interface["capabilities"] = [
-		{capabilities}
+	base_interface.capabilities = [
+		"basic_being"  # __CAPABILITIES__
 	]
 	
 	return base_interface
 
 func ai_invoke_method(method_name: String, args: Array = []) -> Variant:
-	match method_name:
-		{ai_methods}
-		_:
-			return super.ai_invoke_method(method_name, args) 
+	# __AI_METHODS__
+	return super.ai_invoke_method(method_name, args) 

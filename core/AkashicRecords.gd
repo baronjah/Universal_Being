@@ -142,8 +142,8 @@ func save_being_to_zip(being: Node, zip_path: String) -> bool:
 				"resource_cost": 1
 			},
 			"ai_integration": {
-				"gemma_can_modify": being.get("metadata", {}).get("gemma_can_modify") if being.get("metadata", {}).has("gemma_can_modify") else true,
-				"gemma_can_read": being.get("metadata", {}).get("ai_accessible") if being.get("metadata", {}).has("ai_accessible") else true,
+				"gemma_can_modify": being.metadata["gemma_can_modify"] if being.has("metadata") and being.metadata.has_key("gemma_can_modify") else true,
+				"gemma_can_read": being.metadata["ai_accessible"] if being.has("metadata") and being.metadata.has_key("ai_accessible") else true,
 				"debug_level": "full"
 			}
 		},

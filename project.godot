@@ -8,6 +8,13 @@
 
 config_version=5
 
+[GDScript]
+
+global_classes={
+"ConsoleBaseUniversalBeing": "*res://debug/console_base.gd",
+"GemmaNaturalLanguageUniversalBeing": "*res://debug/gemma_natural_language.gd"
+}
+
 [application]
 
 config/name="Universal_Being"
@@ -22,6 +29,10 @@ config/icon="res://icon.svg"
 SystemBootstrap="*res://autoloads/SystemBootstrap.gd"
 GemmaAI="*res://autoloads/GemmaAI.gd"
 
+[build]
+
+target/name="Universal_Being"
+
 [debug]
 
 gdscript/warnings/exclude_addons=false
@@ -33,6 +44,10 @@ project/assembly_name="Universal_Being"
 [editor_plugins]
 
 enabled=PackedStringArray("res://addons/goutte.camera.trackball/plugin.cfg")
+
+[filesystem]
+
+import/blender/enabled=false
 
 [input]
 

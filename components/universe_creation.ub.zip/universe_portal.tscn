@@ -1,0 +1,174 @@
+[gd_scene load_steps=5 format=3 uid="uid://c8x8v0j6y5n3q"]
+
+[ext_resource type="Script" path="res://components/universe_creation.ub.zip/universe_portal.gd" id="1_3k4m3"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_1"]
+radius = 1.0
+height = 0.2
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_1"]
+emission_shape = 1
+emission_sphere_radius = 1.0
+particle_flag_disable_z = true
+direction = Vector3(0, 1, 0)
+spread = 15.0
+gravity = Vector3(0, 0.5, 0)
+initial_velocity_min = 0.5
+initial_velocity_max = 1.0
+scale_min = 0.1
+scale_max = 0.3
+color = Color(0.5, 0.8, 1.0, 0.5)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1"]
+transparency = 1
+albedo_color = Color(0.5, 0.8, 1.0, 0.3)
+emission_enabled = true
+emission = Color(0.5, 0.8, 1.0, 1.0)
+emission_energy_multiplier = 2.0
+
+[node name="UniversePortal" type="Node3D"]
+script = ExtResource("1_3k4m3")
+
+[node name="PortalVisuals" type="Node3D" parent="."]
+
+[node name="PortalRing" type="CSGCylinder3D" parent="PortalVisuals"]
+transform = Transform3D(1, 0, 0, 0, 0.0001, 1, 0, -1, 0.0001, 0, 0, 0)
+radius = 1.0
+height = 0.1
+sides = 32
+material = SubResource("StandardMaterial3D_1")
+
+[node name="PortalParticles" type="GPUParticles3D" parent="PortalVisuals"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+amount = 100
+lifetime = 2.0
+preprocess = 1.0
+explosiveness = 0.1
+randomness = 0.2
+visibility_aabb = AABB(-2, -2, -2, 4, 4, 4)
+process_material = SubResource("ParticleProcessMaterial_1")
+
+[node name="PortalLight" type="OmniLight3D" parent="PortalVisuals"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+light_color = Color(0.5, 0.8, 1.0, 1.0)
+light_energy = 2.0
+omni_range = 3.0
+omni_attenuation = 2.0
+
+[node name="PortalCollision" type="Area3D" parent="."]
+
+[node name="CollisionShape" type="CollisionShape3D" parent="PortalCollision"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+shape = SubResource("CylinderShape3D_1")
+
+[node name="PortalUI" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -100.0
+offset_top = -100.0
+offset_right = 100.0
+offset_bottom = 100.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="PortalName" type="Label" parent="PortalUI"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -50.0
+offset_top = -80.0
+offset_right = 50.0
+offset_bottom = -60.0
+grow_horizontal = 2
+text = "Portal"
+horizontal_alignment = 1
+
+[node name="TargetUniverse" type="Label" parent="PortalUI"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -50.0
+offset_top = -60.0
+offset_right = 50.0
+offset_bottom = -40.0
+grow_horizontal = 2
+text = "To: [Universe]"
+horizontal_alignment = 1
+
+[node name="StabilityBar" type="ProgressBar" parent="PortalUI"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -50.0
+offset_top = -40.0
+offset_right = 50.0
+offset_bottom = -20.0
+grow_horizontal = 2
+value = 100.0
+show_percentage = false
+
+[node name="StabilityLabel" type="Label" parent="PortalUI/StabilityBar"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -50.0
+offset_top = -11.5
+offset_right = 50.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "Stability: 100%"
+horizontal_alignment = 1
+
+[node name="TravelerCount" type="Label" parent="PortalUI"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -50.0
+offset_top = -20.0
+offset_right = 50.0
+offset_bottom = 0.0
+grow_horizontal = 2
+text = "Travelers: 0/10"
+horizontal_alignment = 1
+
+[node name="StatusLabel" type="Label" parent="PortalUI"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -50.0
+offset_top = 0.0
+offset_right = 50.0
+offset_bottom = 20.0
+grow_horizontal = 2
+text = "Status: Active"
+horizontal_alignment = 1
+
+[node name="InteractionHint" type="Label" parent="PortalUI"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -100.0
+offset_top = -40.0
+offset_right = 100.0
+offset_bottom = -20.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "Press E to Enter
+Press D to Deactivate"
+horizontal_alignment = 1 

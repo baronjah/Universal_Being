@@ -31,16 +31,20 @@ func _ready() -> void:
 	name = "SystemBootstrap"
 	startup_time = Time.get_ticks_msec()
 	print("🚀 SystemBootstrap: Initializing Universal Being core...")
+	print("🚀 SystemBootstrap: Startup time: %d ms" % startup_time)
 	
 	# Load synchronously first
+	print("🚀 SystemBootstrap: Starting synchronous core class loading...")
 	load_core_classes()
 	
 	# Then initialize on next frame to ensure scene tree is ready
+	print("🚀 SystemBootstrap: Core classes loaded, deferring system initialization...")
 	call_deferred("initialize_systems")
 
 func load_core_classes() -> void:
 	"""Load core class resources with validation"""
 	print("🚀 SystemBootstrap: Loading core classes...")
+	print("🚀 SystemBootstrap: Checking class paths...")
 	
 	# Define class paths with fallbacks
 	var class_configs = {
@@ -62,57 +66,88 @@ func load_core_classes() -> void:
 	for class_name_key in ["UniversalBeing", "FloodGates", "AkashicRecords"]:
 		var config = class_configs[class_name_key]
 		var loaded = false
+		print("🚀 SystemBootstrap: Loading %s..." % class_name_key)
 		
 		for path in config.paths:
+			print("🚀 SystemBootstrap: Checking path: %s" % path)
 			if ResourceLoader.exists(path):
+				print("🚀 SystemBootstrap: Path exists, attempting to load...")
 				var resource = load(path)
 				if resource:
 					match class_name_key:
 						"UniversalBeing": UniversalBeingClass = resource
 						"FloodGates": FloodGatesClass = resource
 						"AkashicRecords": AkashicRecordsClass = resource
-					print("   ✓ Loaded %s from %s" % [class_name_key, path])
+					print("🚀 SystemBootstrap: ✓ Loaded %s from %s" % [class_name_key, path])
 					loaded = true
 					break
+				else:
+					print("🚀 SystemBootstrap: ❌ Failed to load resource from %s" % path)
+			else:
+				print("🚀 SystemBootstrap: Path does not exist: %s" % path)
 		
 		if not loaded and config.required:
 			var error = "Failed to load required class: " + class_name_key
 			initialization_errors.append(error)
 			push_error("🚀 SystemBootstrap: " + error)
+			print("🚀 SystemBootstrap: ❌ %s" % error)
 	
 	# Validate all loaded
 	if UniversalBeingClass and FloodGatesClass and AkashicRecordsClass:
 		core_loaded = true
-		print("🚀 SystemBootstrap: Core classes loaded successfully!")
+		print("🚀 SystemBootstrap: ✓ Core classes loaded successfully!")
+		print("🚀 SystemBootstrap: - UniversalBeing: %s" % ("Loaded" if UniversalBeingClass else "Missing"))
+		print("🚀 SystemBootstrap: - FloodGates: %s" % ("Loaded" if FloodGatesClass else "Missing"))
+		print("🚀 SystemBootstrap: - AkashicRecords: %s" % ("Loaded" if AkashicRecordsClass else "Missing"))
 	else:
-		system_error.emit("Core class loading failed")
+		var error = "Core class loading failed"
+		system_error.emit(error)
+		print("🚀 SystemBootstrap: ❌ %s" % error)
+		print("🚀 SystemBootstrap: Initialization errors:")
+		for err in initialization_errors:
+			print("🚀 SystemBootstrap: - %s" % err)
 
 func initialize_systems() -> void:
 	"""Initialize core system instances"""
+	print("🚀 SystemBootstrap: Starting system initialization...")
+	
 	if not core_loaded:
-		push_error("🚀 SystemBootstrap: Cannot initialize - core not loaded")
+		var error = "Cannot initialize - core not loaded"
+		push_error("🚀 SystemBootstrap: " + error)
+		print("🚀 SystemBootstrap: ❌ %s" % error)
 		return
 	
 	print("🚀 SystemBootstrap: Creating system instances...")
 	
 	# Create FloodGates instance
+	print("🚀 SystemBootstrap: Creating FloodGates instance...")
 	flood_gates_instance = FloodGatesClass.new()
 	flood_gates_instance.name = "FloodGates"
 	add_child(flood_gates_instance)
+	print("🚀 SystemBootstrap: ✓ FloodGates instance created")
 	
 	# Create AkashicRecords instance  
+	print("🚀 SystemBootstrap: Creating AkashicRecords instance...")
 	akashic_records_instance = AkashicRecordsClass.new()
 	akashic_records_instance.name = "AkashicRecords"
 	add_child(akashic_records_instance)
+	print("🚀 SystemBootstrap: ✓ AkashicRecords instance created")
 	
 	# Verify all systems ready
 	if flood_gates_instance and akashic_records_instance:
 		systems_ready = true
 		system_ready.emit()
 		var boot_time = (Time.get_ticks_msec() - startup_time) / 1000.0
-		print("🚀 SystemBootstrap: Universal Being systems ready! (Boot time: %.2fs)" % boot_time)
+		print("🚀 SystemBootstrap: ✓ Universal Being systems ready!")
+		print("🚀 SystemBootstrap: - Boot time: %.2fs" % boot_time)
+		print("🚀 SystemBootstrap: - FloodGates: %s" % ("Ready" if flood_gates_instance else "Not Ready"))
+		print("🚀 SystemBootstrap: - AkashicRecords: %s" % ("Ready" if akashic_records_instance else "Not Ready"))
 	else:
-		system_error.emit("System initialization incomplete")
+		var error = "System initialization incomplete"
+		system_error.emit(error)
+		print("🚀 SystemBootstrap: ❌ %s" % error)
+		print("🚀 SystemBootstrap: - FloodGates: %s" % ("Ready" if flood_gates_instance else "Not Ready"))
+		print("🚀 SystemBootstrap: - AkashicRecords: %s" % ("Ready" if akashic_records_instance else "Not Ready"))
 
 # ===== GLOBAL ACCESS FUNCTIONS =====
 

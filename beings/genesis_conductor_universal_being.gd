@@ -198,22 +198,30 @@ func bridge_consciousness_network() -> void:
 		return
 	
 	# Calculate average consciousness
-	var total_consciousness = consciousness_level
+	var total_consciousness = float(consciousness_level)
+	var valid_beings = 1  # Count self
+	
 	for being in consciousness_network:
 		if being.has_method("get"):
 			var level = being.get("consciousness_level")
-			if level != null:
-				total_consciousness += level
+			if level != null and typeof(level) in [TYPE_INT, TYPE_FLOAT]:
+				total_consciousness += float(level)
+				valid_beings += 1
 	
-	var average_consciousness = total_consciousness / (consciousness_network.size() + 1)
+	var average_consciousness = total_consciousness / max(valid_beings, 1)  # Prevent division by zero
 	
 	# Gradually bring all beings toward average consciousness
 	for being in consciousness_network:
 		if being.has_method("get") and being.has_method("set"):
 			var current = being.get("consciousness_level")
 			var target = average_consciousness
-			var new_level = lerp(current, target, 0.1)  # Gentle convergence
-			being.set("consciousness_level", int(new_level))
+			# Ensure we have valid numbers for lerp
+			if current != null and typeof(current) in [TYPE_INT, TYPE_FLOAT]:
+				var new_level = lerp(float(current), float(target), 0.1)  # Convert to float and gentle convergence
+				being.set("consciousness_level", int(new_level))
+			else:
+				# Fallback if consciousness_level is invalid
+				being.set("consciousness_level", int(average_consciousness))
 
 # ===== VISUAL SYSTEMS (Enhanced by Cursor) =====
 

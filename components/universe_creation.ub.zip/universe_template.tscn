@@ -1,0 +1,114 @@
+[gd_scene load_steps=4 format=3 uid="uid://b6x8v0j6y5n4r"]
+
+[ext_resource type="Script" path="res://components/universe_creation.ub.zip/universe_core.gd" id="1_2k4m3"]
+[ext_resource type="Script" path="res://components/universe_creation.ub.zip/universe_rules.gd" id="2_3k4m3"]
+[ext_resource type="Script" path="res://components/universe_creation.ub.zip/universe_portal.gd" id="3_4k4m3"]
+
+[node name="UniverseTemplate" type="Node3D"]
+script = ExtResource("1_2k4m3")
+
+[node name="UniverseRules" type="Node" parent="."]
+script = ExtResource("2_3k4m3")
+
+[node name="PhysicsSpace" type="Node3D" parent="."]
+
+[node name="LODManager" type="Node" parent="."]
+
+[node name="PortalManager" type="Node" parent="."]
+
+[node name="BeingManager" type="Node" parent="."]
+
+[node name="AkashicInterface" type="Node" parent="."]
+
+[node name="AmbientLight" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.866025, 0.5, 0, -0.5, 0.866025, 0, 10, 0)
+light_energy = 0.5
+shadow_enabled = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+
+[node name="CameraMount" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 10)
+
+[node name="Camera3D" type="Camera3D" parent="CameraMount"]
+transform = Transform3D(1, 0, 0, 0, 0.939693, 0.34202, 0, -0.34202, 0.939693, 0, 0, 0)
+current = true
+
+[node name="UI" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="UniverseInfo" type="Label" parent="UI"]
+layout_mode = 0
+offset_left = 20.0
+offset_top = 20.0
+offset_right = 300.0
+offset_bottom = 46.0
+text = "Universe: [Name]"
+horizontal_alignment = 1
+
+[node name="PhysicsStatus" type="Label" parent="UI"]
+layout_mode = 0
+offset_left = 20.0
+offset_top = 50.0
+offset_right = 300.0
+offset_bottom = 76.0
+text = "Physics: Enabled"
+horizontal_alignment = 1
+
+[node name="LODStatus" type="Label" parent="UI"]
+layout_mode = 0
+offset_left = 20.0
+offset_top = 80.0
+offset_right = 300.0
+offset_bottom = 106.0
+text = "LOD Level: 1"
+horizontal_alignment = 1
+
+[node name="TimeStatus" type="Label" parent="UI"]
+layout_mode = 0
+offset_left = 20.0
+offset_top = 110.0
+offset_right = 300.0
+offset_bottom = 136.0
+text = "Time: Flowing"
+horizontal_alignment = 1
+
+[node name="BeingCount" type="Label" parent="UI"]
+layout_mode = 0
+offset_left = 20.0
+offset_top = 140.0
+offset_right = 300.0
+offset_bottom = 166.0
+text = "Beings: 0"
+horizontal_alignment = 1
+
+[node name="PortalCount" type="Label" parent="UI"]
+layout_mode = 0
+offset_left = 20.0
+offset_top = 170.0
+offset_right = 300.0
+offset_bottom = 196.0
+text = "Portals: 0"
+horizontal_alignment = 1
+
+[node name="AkashicLog" type="RichTextLabel" parent="UI"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -400.0
+offset_top = -200.0
+offset_right = -20.0
+offset_bottom = -20.0
+grow_horizontal = 0
+grow_vertical = 0
+bbcode_enabled = true
+scroll_following = true
+text = "[center]🌌 Universe Log[/center]" 

@@ -69,7 +69,7 @@ func pentagon_input(event: InputEvent) -> void:
             KEY_F2:
                 _toggle_recording()
             KEY_F3:
-                _replay_last_macro()
+                replay_last_macro()
             KEY_F4:
                 _show_macro_menu()
 

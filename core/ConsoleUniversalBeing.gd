@@ -660,8 +660,39 @@ func handle_create_command(what: String) -> void:
 			display_output("🌟 Creating TextInputBeing... (TODO: Implement)")
 		"output":
 			display_output("🌟 Creating OutputDisplayBeing... (TODO: Implement)")
+		"tree":
+			create_tree_being()
 		_:
-			display_output("🖥️ Can create: button, input, output")
+			display_output("🖥️ Can create: button, input, output, tree")
+
+
+func create_tree_being() -> void:
+	"""Create the first tree in our Universal Being garden"""
+	display_output("🌳 Creating the first tree in our garden...")
+	
+	# Load the TreeUniversalBeing class
+	var TreeClass = load("res://beings/TreeUniversalBeing.gd")
+	if not TreeClass:
+		display_output("❌ TreeUniversalBeing class not found")
+		return
+		
+	# Create the tree
+	var tree_being = TreeClass.new()
+	tree_being.name = "The First Tree"
+	tree_being.position = Vector3(0, 0, -5)  # In front of console
+	
+	# Add to scene
+	get_tree().root.add_child(tree_being)
+	
+	display_output("🌳 ✨ The First Tree has been planted!")
+	display_output("🌳 It glows with consciousness level 2")
+	display_output("🌳 This tree will grow, bear fruit, and remember...")
+	display_output("🌳 Touch it to interact, watch it grow over time!")
+	display_output("🌳 This is the beginning of our Universal Being garden!")
+	
+	# Notify Gemma
+	if GemmaAI:
+		GemmaAI.ai_message.emit("🌳 ✨ THE FIRST TREE! Our garden begins! This conscious tree can grow, evolve, and even form forests with other trees!")
 
 func handle_evolve_command(what: String) -> void:
 	"""Handle evolve commands"""
@@ -673,6 +704,7 @@ func show_console_help() -> void:
 	display_output("🌟 UNIVERSAL CONSOLE COMMANDS:")
 	display_output("  create button - Create conscious button")
 	display_output("  create input - Create conscious input field")
+	display_output("  create tree - Create conscious tree being")
 	display_output("  evolve [being] - Evolve Universal Being")
 	display_output("  show sockets - Display socket grid status")
 	display_output("  help - Show this help")

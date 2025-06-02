@@ -103,61 +103,66 @@ func create_new_being(args: Array) -> void:
 	var scenes: String = args[4] if args.size() > 4 else ""
 	
 	# Generate class name and file name
-	var class_name: String = being_name.capitalize() + "UniversalBeing"
-	var file_name: String = being_name.to_snake_case() + "_universal_being.gd"
-	var file_path: String = "beings/" + file_name
+	var class_name_str: String = being_name.capitalize() + "UniversalBeing"
+	var file_name_str: String = being_name.to_snake_case() + "_universal_being.gd"
+	var file_path_str: String = "beings/" + file_name_str
 	
 	# Load template
 	var template_path = "res://cli/templates/universal_being_template.gd"
 	var template_file = FileAccess.open(template_path, FileAccess.READ)
 	if not template_file:
-		push_error("Failed to load template file: %s" % template_path)
+		push_error("Failed to load template file: " + template_path)
 		return
 	
 	var template = template_file.get_as_text()
 	template_file.close()
 	
-	# Replace template placeholders
-	var replacements = {
-		"{being_name}": being_name,
-		"{being_type}": being_type,
-		"{purpose}": purpose,
-		"{components}": components,
-		"{scenes}": scenes,
-		"{class_name}": class_name,
-		"{consciousness_level}": "1",  # Default consciousness level
-		"{properties}": "# Add your properties here",
-		"{component_loading}": "# Add component loading here",
-		"{scene_loading}": "# Add scene loading here",
-		"{process_logic}": "# Add process logic here",
-		"{input_logic}": "# Add input handling here",
-		"{cleanup_logic}": "# Add cleanup logic here",
-		"{methods}": "# Add your methods here",
-		"{capabilities}": "\"basic_being\"" if components.is_empty() else "\"basic_being\", \"component_aware\"",
-		"{ai_methods}": "# Add AI methods here"
+	# Define replacements as a dictionary for clarity
+	var replacements_dict = {
+		"\"__BEING_NAME__\"": "\"" + being_name + "\"",
+		"\"__BEING_TYPE__\"": "\"" + being_type + "\"",
+		"\"__PURPOSE__\"": "\"" + purpose + "\"",
+		"\"__COMPONENTS__\"": "\"" + components + "\"",
+		"\"__SCENES__\"": "\"" + scenes + "\"",
+		"# class_name \"__CLASS_NAME__\"": "class_name " + class_name_str,
+		"# __PROPERTIES__": "# Add your properties here",
+		"# __COMPONENT_LOADING__": "# Add component loading here",
+		"# __SCENE_LOADING__": "# Add scene loading here",
+		"# __PROCESS_LOGIC__": "# Add process logic here",
+		"# __INPUT_LOGIC__": "# Add input handling here",
+		"# __CLEANUP_LOGIC__": "# Add cleanup logic here",
+		"# __METHODS__": "# Add your methods here",
+		"# __AI_METHODS__": "# Add AI methods here"
 	}
 	
-	for placeholder in replacements:
-		template = template.replace(placeholder, replacements[placeholder])
+	# Handle capabilities based on components
+	var capabilities = "\"basic_being\""
+	if not components.is_empty():
+		capabilities = "\"basic_being\", \"component_aware\""
+	replacements_dict["\"" + "basic_being" + "\"  # __CAPABILITIES__"] = capabilities
+	
+	# Apply all replacements
+	for key in replacements_dict:
+		template = template.replace(key, replacements_dict[key])
 	
 	# Create file
-	var file = FileAccess.open(file_path, FileAccess.WRITE)
+	var file = FileAccess.open(file_path_str, FileAccess.WRITE)
 	if not file:
-		push_error("Failed to create file: %s" % file_path)
+		push_error("Failed to create file: " + file_path_str)
 		return
 	
 	file.store_string(template)
 	file.close()
 	
-	print("Created new Universal Being: %s" % file_path)
-	print("Class: %s" % class_name)
-	print("Type: %s" % being_type)
+	print("Created new Universal Being: " + file_path_str)
+	print("Class: " + class_name_str)
+	print("Type: " + being_type)
 	if not purpose.is_empty():
-		print("Purpose: %s" % purpose)
+		print("Purpose: " + purpose)
 	if not components.is_empty():
-		print("Components: %s" % components)
+		print("Components: " + components)
 	if not scenes.is_empty():
-		print("Scenes: %s" % scenes)
+		print("Scenes: " + scenes)
 
 # ===== COMPONENT GENERATION =====
 
@@ -165,7 +170,7 @@ func create_new_component(args: Array) -> void:
 	var component_name: String = args[0]
 	var description: String = args[1] if args.size() > 1 else ""
 	
-	ComponentLoader.create_component_template("res://components/" + component_name + ".ub.zip", component_name)
+	ComponentTemplateCreator.create_component_template("res://components/" + component_name + ".ub.zip", component_name)
 
 # ===== LISTING =====
 
@@ -259,7 +264,7 @@ func test_being(being_name: String) -> void:
 
 # ===== COMPONENT LOADER =====
 
-class ComponentLoader:
+class ComponentTemplateCreator:
 	static func create_component_template(output_path: String, component_name: String) -> void:
 		# Create manifest
 		var manifest = {
