@@ -119,6 +119,8 @@ func _input(event: InputEvent) -> void:
 					toggle_pentagon_ai_mode()
 				KEY_V:  # Ctrl+V for uniVerse creation
 					create_universe_universal_being()
+				KEY_N:  # Ctrl+N for universe Navigator
+					toggle_universe_navigator()
 		elif event.alt_pressed:
 			match event.keycode:
 				KEY_G:  # Alt+G for Genesis conductor
@@ -170,12 +172,23 @@ func show_help() -> void:
 	print("  Ctrl+G - Create Gemini Bridge")
 	print("  Ctrl+P - Toggle Pentagon AI Mode (6-AI Collaboration)")
 	print("  Ctrl+V - Create UniVerse (recursive reality)")
+	print("  Ctrl+N - Toggle universe Navigator (visual map)")
 	print("  Alt+G - Create Genesis Conductor")
 	print("")
 	print("🎥 Camera Controls (when camera being is active):")
 	print("  Mouse wheel - Zoom in/out")
 	print("  Q/E - Barrel roll left/right")
 	print("  Middle mouse + drag - Orbit around target")
+	print("")
+	print("🌌 Universe Console Commands:")
+	print("  universe create <name> - Create new universe")
+	print("  enter <universe> - Enter a universe")
+	print("  exit - Exit current universe")
+	print("  portal <target> - Create portal to another universe")
+	print("  inspect - Inspect current universe")
+	print("  list <universes|beings|portals> - List items")
+	print("  rules - Show universe rules")
+	print("  setrule <rule> <value> - Modify universe law")
 
 func show_status() -> void:
 	"""Show system status"""
@@ -295,6 +308,7 @@ func create_console_universal_being() -> Node:
 		push_error("🖥️ Failed to create ConsoleUniversalBeing")
 		return null
 	console_being.name = "Universal Console"
+	console_being.add_to_group("console_beings")
 	
 	add_child(console_being)
 	demo_beings.append(console_being)
@@ -302,6 +316,10 @@ func create_console_universal_being() -> Node:
 	print("🖥️ Universal Console created!")
 	print("🖥️ Revolutionary interface with socket system activated!")
 	print("🖥️ Every interface element is a conscious Universal Being!")
+	
+	# Integrate universe console commands
+	var integration = preload("res://beings/universe_console_integration.gd").new()
+	add_child(integration)
 	
 	# Show the console immediately
 	console_being.toggle_console()
@@ -668,3 +686,19 @@ func create_portal_between_universes() -> Node:
 	print("🌀 ✨ PORTAL CREATED between %s and %s!" % [universes[0].universe_name, universes[1].universe_name])
 	
 	return portal
+
+func toggle_universe_navigator() -> void:
+	"""Toggle the visual Universe Navigator interface"""
+	var integration = get_node_or_null("UniverseConsoleIntegration")
+	if not integration:
+		# Create integration if it doesn't exist
+		integration = preload("res://beings/universe_console_integration.gd").new()
+		add_child(integration)
+	
+	if integration.has_method("toggle_universe_navigator"):
+		integration.toggle_universe_navigator()
+		print("🌌 Universe Navigator toggled!")
+	
+	# Notify AI
+	if GemmaAI:
+		GemmaAI.ai_message.emit("🌌 Universe Navigator activated - visual map of infinite realities!")

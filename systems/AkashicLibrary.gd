@@ -48,6 +48,21 @@ func inscribe_genesis(message: String, data: Dictionary = {}) -> void:
 	chronicle_updated.emit(entry)	
 	# Keep memory bounded
 	if chronicle.size() > MAX_ENTRIES_MEMORY:
+		archive_old_entries()
+	
+	# Auto-save periodically
+	if creation_counter % 10 == 0:
+		save_chronicle()
+
+func inscribe_console_evolution(console_type: String, capabilities: Array) -> void:
+	"""Record the evolution of console capabilities"""
+	var message = "The %s gained new powers: %s" % [console_type, ", ".join(capabilities)]
+	var data = {
+		"console_type": console_type,
+		"capabilities": capabilities,
+		"evolution_type": "console_upgrade"
+	}
+	inscribe_genesis(message, data)
 		chronicle.pop_front()
 	
 	# Save periodically
