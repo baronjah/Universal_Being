@@ -71,7 +71,7 @@ func pentagon_sewers() -> void:
 # ===== INPUT ROUTING =====
 
 func _handle_input_routing(event: InputEvent) -> void:
-    """Main input routing logic"""
+    # Main input routing logic
     
     # Check for focus change hotkeys first
     if event is InputEventKey and event.pressed:
@@ -93,7 +93,7 @@ func _handle_input_routing(event: InputEvent) -> void:
             _route_mixed_mode(event)
 
 func _handle_focus_hotkeys(event: InputEventKey) -> bool:
-    """Handle focus switching hotkeys"""
+    # Handle focus switching hotkeys
     match event.keycode:
         console_toggle_key:  # ~ key
             _toggle_console_focus()
@@ -110,7 +110,7 @@ func _handle_focus_hotkeys(event: InputEventKey) -> bool:
     return false
 
 func _toggle_console_focus() -> void:
-    """Toggle between game and console focus"""
+    # Toggle between game and console focus
     match current_focus:
         FocusState.GAME_FOCUSED:
             _set_focus(FocusState.CONSOLE_FOCUSED)
@@ -125,7 +125,7 @@ func _toggle_console_focus() -> void:
             print("⌨️ Focus: GAME")
 
 func _toggle_ai_channel() -> void:
-    """Toggle AI collaboration channel"""
+    # Toggle AI collaboration channel
     if current_focus == FocusState.AI_CHANNEL:
         _set_focus(FocusState.GAME_FOCUSED)
         print("🤖 AI Channel: CLOSED")
@@ -134,13 +134,13 @@ func _toggle_ai_channel() -> void:
         print("🤖 AI Channel: OPEN - Gemma collaboration active!")
 
 func _handle_escape_key() -> void:
-    """ESC key always returns to game focus"""
+    # ESC key always returns to game focus
     if current_focus != FocusState.GAME_FOCUSED:
         _set_focus(FocusState.GAME_FOCUSED)
         print("⌨️ Focus: GAME (ESC pressed)")
 
 func _set_focus(new_focus: FocusState) -> void:
-    """Change input focus state"""
+    # Change input focus state
     var old_focus = current_focus
     current_focus = new_focus
     
@@ -157,7 +157,7 @@ func _set_focus(new_focus: FocusState) -> void:
 # ===== INPUT ROUTING METHODS =====
 
 func _route_to_game(event: InputEvent) -> void:
-    """Route input to game systems"""
+    # Route input to game systems
     # Let all game input handlers process the event
     for handler in game_input_handlers:
         if handler and handler.has_method("_input"):
@@ -166,7 +166,7 @@ func _route_to_game(event: InputEvent) -> void:
     # Don't consume the event - let it propagate normally
 
 func _route_to_console(event: InputEvent) -> void:
-    """Route input exclusively to console"""
+    # Route input exclusively to console
     if console_node and console_node.has_method("handle_input"):
         console_node.handle_input(event)
     
@@ -174,7 +174,7 @@ func _route_to_console(event: InputEvent) -> void:
     get_viewport().set_input_as_handled()
 
 func _route_to_ai_channel(event: InputEvent) -> void:
-    """Route input to AI collaboration system"""
+    # Route input to AI collaboration system
     # Both console and AI system receive input
     if console_node and console_node.has_method("handle_ai_input"):
         console_node.handle_ai_input(event)
@@ -187,7 +187,7 @@ func _route_to_ai_channel(event: InputEvent) -> void:
     get_viewport().set_input_as_handled()
 
 func _route_mixed_mode(event: InputEvent) -> void:
-    """Route input to both systems with smart filtering"""
+    # Route input to both systems with smart filtering
     # Special mode where some commands pass through
     var consumed = false
     
@@ -204,7 +204,7 @@ func _route_mixed_mode(event: InputEvent) -> void:
 # ===== VISUAL FEEDBACK =====
 
 func _update_visual_indicators() -> void:
-    """Update visual indicators for current focus state"""
+    # Update visual indicators for current focus state
     match current_focus:
         FocusState.GAME_FOCUSED:
             _set_cursor_style("game")
@@ -219,7 +219,7 @@ func _update_visual_indicators() -> void:
             _set_cursor_style("mixed")
 
 func _set_cursor_style(style: String) -> void:
-    """Set cursor visual style based on focus"""
+    # Set cursor visual style based on focus
     # Could change cursor, add overlay, etc.
     match style:
         "console":
@@ -232,7 +232,7 @@ func _set_cursor_style(style: String) -> void:
 # ===== NODE DISCOVERY =====
 
 func _find_console_node() -> void:
-    """Find the console node in the scene"""
+    # Find the console node in the scene
     # Try to find console by various methods
     var potential_consoles = [
         get_node_or_null("/root/Console"),
@@ -250,20 +250,20 @@ func _find_console_node() -> void:
         print("⚠️ Console node not found - some features may not work")
 
 func _find_command_processor() -> Node:
-    """Find the universal command processor"""
+    # Find the universal command processor
     return _find_node_by_class("UniversalCommandProcessor")
 
-func _find_node_by_class(class_name: String) -> Node:
-    """Find first node with specific class name"""
-    return _search_tree_for_class(get_tree().root, class_name)
+func _find_node_by_class(target_class: String) -> Node:
+    # Find first node with specific class name
+    return _search_tree_for_class(get_tree().root, target_class)
 
-func _search_tree_for_class(node: Node, class_name: String) -> Node:
-    """Recursively search tree for node with class name"""
-    if node.get_script() and node.get_script().get_global_name() == class_name:
+func _search_tree_for_class(node: Node, target_class: String) -> Node:
+    # Recursively search tree for node with class name
+    if node.get_script() and node.get_script().get_global_name() == target_class:
         return node
     
     for child in node.get_children():
-        var result = _search_tree_for_class(child, class_name)
+        var result = _search_tree_for_class(child, target_class)
         if result:
             return result
     
@@ -272,7 +272,7 @@ func _search_tree_for_class(node: Node, class_name: String) -> Node:
 # ===== INPUT BUFFER =====
 
 func _process_input_buffer() -> void:
-    """Process any buffered input events"""
+    # Process any buffered input events
     if input_buffer.is_empty():
         return
     
@@ -283,7 +283,7 @@ func _process_input_buffer() -> void:
         _handle_input_routing(event)
 
 func buffer_input(event: InputEvent) -> void:
-    """Buffer input event for later processing"""
+    # Buffer input event for later processing
     input_buffer.append(event)
 
 # ===== AI INTERFACE =====
@@ -291,7 +291,7 @@ func buffer_input(event: InputEvent) -> void:
 signal focus_changed(old_focus: FocusState, new_focus: FocusState)
 
 func ai_interface() -> Dictionary:
-    """AI interface for input management"""
+    # AI interface for input management
     var base = super.ai_interface()
     base.input_commands = [
         "set_focus",
@@ -304,7 +304,7 @@ func ai_interface() -> Dictionary:
     return base
 
 func ai_invoke_method(method_name: String, args: Array = []) -> Variant:
-    """AI method invocation for input control"""
+    # AI method invocation for input control
     match method_name:
         "set_focus":
             if args.size() > 0:

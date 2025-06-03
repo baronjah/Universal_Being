@@ -11,7 +11,7 @@ class_name UniverseDNAEditor
 
 # ===== UNIVERSE DNA EDITOR - THE GENETIC SCULPTOR =====
 
-signal dna_modified(universe: Node, trait: String, new_value: float)
+signal dna_modified(universe: Node, trait_name: String, new_value: float)
 signal template_created(template_name: String, dna: Dictionary)
 signal mutation_applied(universe: Node, mutations: Dictionary)
 

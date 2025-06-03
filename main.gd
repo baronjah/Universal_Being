@@ -1035,17 +1035,17 @@ func open_universe_dna_editor() -> void:
 	if GemmaAI:
 		GemmaAI.ai_message.emit("🧬 Universe DNA Editor activated - manipulate the fundamental traits of existence!")
 
-func _on_universe_dna_modified(universe: Node, trait: String, new_value: float) -> void:
-	"""Handle DNA modification from editor"""
-	print("🧬 DNA Modified: %s.%s = %.2f" % [universe.name, trait, new_value])
+func _on_universe_dna_modified(universe: Node, trait_name: String, new_value: float) -> void:
+	# Handle DNA modification from editor
+	print("🧬 DNA Modified: %s.%s = %.2f" % [universe.name, trait_name, new_value])
 	
 	# Log to Akashic Library
 	if SystemBootstrap and SystemBootstrap.is_system_ready():
 		var akashic = SystemBootstrap.get_akashic_library()
 		if akashic:
 			akashic.log_genesis_event("dna_modification", 
-				"🧬 The Universe '%s' evolved - %s trait shifted to %.2f" % [universe.name, trait, new_value],
-				{"universe": universe.name, "trait": trait, "value": new_value}
+				"🧬 The Universe '%s' evolved - %s trait shifted to %.2f" % [universe.name, trait_name, new_value],
+				{"universe": universe.name, "trait": trait_name, "value": new_value}
 			)
 
 func _on_dna_template_created(template_name: String, dna: Dictionary) -> void:

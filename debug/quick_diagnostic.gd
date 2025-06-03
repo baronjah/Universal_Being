@@ -39,13 +39,13 @@ func check_file(path: String) -> void:
 	else:
 		print("❌ %s NOT FOUND" % path)
 
-func test_load(path: String, class_name: String) -> void:
+func test_load(path: String, expected_class: String) -> void:
 	var resource = load(path)
 	if resource:
-		print("✅ %s loaded successfully" % class_name)
+		print("✅ %s loaded successfully" % expected_class)
 		if resource is GDScript:
 			print("   Type: GDScript ✓")
 		else:
 			print("   Type: %s ⚠️" % resource.get_class())
 	else:
-		print("❌ %s failed to load!" % class_name)
+		print("❌ %s failed to load!" % expected_class)

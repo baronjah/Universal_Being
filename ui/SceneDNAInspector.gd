@@ -39,7 +39,7 @@ func _ready() -> void:
 	print("🧬 Scene DNA Inspector: Ready to analyze scene structures")
 
 func _create_inspector_ui() -> void:
-	"""Create the inspector interface"""
+	# Create the inspector interface
 	var main_split = HSplitContainer.new()
 	main_split.split_offset = 400
 	add_child(main_split)
@@ -112,7 +112,7 @@ func _create_inspector_ui() -> void:
 	template_container.add_child(save_template_btn)
 
 func inspect_being_scene(being: UniversalBeing) -> void:
-	"""Inspect a being's loaded scene"""
+	# Inspect a being's loaded scene
 	current_being = being
 	
 	if not being.scene_is_loaded or not being.controlled_scene:
@@ -142,7 +142,7 @@ func inspect_being_scene(being: UniversalBeing) -> void:
 	print("🧬 Inspecting scene: %s" % being.scene_path)
 
 func _build_scene_tree(root_node: Node, parent_item: TreeItem = null) -> void:
-	"""Build tree view of scene structure"""
+	# Build tree view of scene structure
 	if not parent_item:
 		tree_view.clear()
 		parent_item = tree_view.create_item()
@@ -170,7 +170,7 @@ func _build_scene_tree(root_node: Node, parent_item: TreeItem = null) -> void:
 			_build_scene_tree(child, item)
 
 func _get_node_icon(node: Node) -> String:
-	"""Get icon for node type"""
+	# Get icon for node type
 	if node.is_class("Control"):
 		if node.is_class("Button"): return "🔘"
 		elif node.is_class("Label"): return "📝"
@@ -191,7 +191,7 @@ func _get_node_icon(node: Node) -> String:
 		return "📦"
 
 func _is_node_reusable(node: Node) -> bool:
-	"""Check if node is reusable for evolution"""
+	# Check if node is reusable for evolution
 	var reusable_classes = [
 		"Button", "Label", "LineEdit", "TextEdit", "Panel",
 		"MeshInstance3D", "Camera3D", "Light3D", "Area3D",
@@ -204,19 +204,19 @@ func _is_node_reusable(node: Node) -> bool:
 	return false
 
 func _is_node_interactive(node: Node) -> bool:
-	"""Check if node is interactive"""
+	# Check if node is interactive
 	var interactive_classes = [
 		"Button", "LineEdit", "TextEdit", "ItemList", "Tree",
 		"Area3D", "Area2D", "TouchScreenButton"
 	]
 	
-	for class_name in interactive_classes:
-		if node.is_class(class_name):
+	for class_type in interactive_classes:
+		if node.is_class(class_type):
 			return true
 	return false
 
 func _detect_scene_patterns() -> void:
-	"""Detect reusable patterns in the scene"""
+	# Detect reusable patterns in the scene
 	pattern_list.clear()
 	
 	if not current_being or not current_being.scene_is_loaded:
@@ -235,7 +235,7 @@ func _detect_scene_patterns() -> void:
 	_detect_interaction_patterns()
 
 func _get_pattern_icon(pattern_type: String) -> String:
-	"""Get icon for pattern type"""
+	# Get icon for pattern type
 	match pattern_type:
 		"ui_layout": return "🎨"
 		"3d_visual": return "🌐"
@@ -245,7 +245,7 @@ func _get_pattern_icon(pattern_type: String) -> String:
 		_: return "🔧"
 
 func _detect_ui_patterns() -> void:
-	"""Detect UI-specific patterns"""
+	# Detect UI-specific patterns
 	if not current_being:
 		return
 	
@@ -271,7 +271,7 @@ func _detect_ui_patterns() -> void:
 		pattern_list.add_item("🖥️ Interactive Display")
 
 func _detect_3d_patterns() -> void:
-	"""Detect 3D-specific patterns"""
+	# Detect 3D-specific patterns
 	if not current_being:
 		return
 	
@@ -293,7 +293,7 @@ func _detect_3d_patterns() -> void:
 		pattern_list.add_item("🏗️ Complex 3D Structure")
 
 func _detect_interaction_patterns() -> void:
-	"""Detect interaction patterns"""
+	# Detect interaction patterns
 	if not current_being:
 		return
 	
@@ -311,7 +311,7 @@ func _detect_interaction_patterns() -> void:
 		pattern_list.add_item("🎬 Animated System")
 
 func _find_nodes_of_type(root: Node, type_name: String, result_array: Array) -> void:
-	"""Recursively find nodes of specific type"""
+	# Recursively find nodes of specific type
 	if root.is_class(type_name):
 		result_array.append(root)
 	
@@ -319,7 +319,7 @@ func _find_nodes_of_type(root: Node, type_name: String, result_array: Array) -> 
 		_find_nodes_of_type(child, type_name, result_array)
 
 func _on_node_selected() -> void:
-	"""Handle node selection in tree"""
+	# Handle node selection in tree
 	selected_nodes.clear()
 	var selected = tree_view.get_selected()
 	
@@ -338,7 +338,7 @@ func _on_node_selected() -> void:
 		_show_node_info(selected_nodes[0])
 
 func _show_node_info(node_path: NodePath) -> void:
-	"""Show information about selected node"""
+	# Show information about selected node
 	if not current_being:
 		return
 	
@@ -373,12 +373,12 @@ func _show_node_info(node_path: NodePath) -> void:
 	info_panel.text = info_text
 
 func _on_pattern_selected(index: int) -> void:
-	"""Handle pattern selection"""
+	# Handle pattern selection
 	var pattern_name = pattern_list.get_item_text(index)
 	info_panel.text = "[b]Pattern: %s[/b]\n\n[i]This pattern can be extracted and reused in other beings[/i]" % pattern_name
 
 func _extract_selected_components() -> void:
-	"""Extract selected components for reuse"""
+	# Extract selected components for reuse
 	if selected_nodes.is_empty() or not current_being:
 		return
 	
@@ -392,7 +392,7 @@ func _extract_selected_components() -> void:
 			print("🧬 Extracted: %s (%s)" % [node.name, node.get_class()])
 
 func _extract_node_data(node: Node) -> Dictionary:
-	"""Extract data from a node for reuse"""
+	# Extract data from a node for reuse
 	var data = {
 		"name": node.name,
 		"class": node.get_class(),
@@ -416,7 +416,7 @@ func _extract_node_data(node: Node) -> Dictionary:
 	return data
 
 func _save_scene_template() -> void:
-	"""Save current scene analysis as template"""
+	# Save current scene analysis as template
 	if not current_being or template_name_input.text.is_empty():
 		return
 	
@@ -438,26 +438,21 @@ func _save_scene_template() -> void:
 	template_name_input.text = ""
 
 func _update_info_display() -> void:
-	"""Update main info display"""
+	# Update main info display
 	if not current_being:
 		info_panel.text = "[i]No scene loaded[/i]"
 		return
 	
-	info_panel.text = """[b]Scene DNA Analysis[/b]
-Scene: %s
-Nodes: %d
-Interaction Points: %d
-Modifiable Elements: %d
-Detected Patterns: %d
-
-[i]Select nodes to extract components or patterns to understand the structure[/i]""" % [
-		current_being.scene_path.get_file(),
-		scene_dna.node_count,
-		scene_dna.interaction_points.size(),
-		scene_dna.modifiable_elements.size(),
-		pattern_list.get_item_count()
-	]
+	var info_text = "[b]Scene DNA Analysis[/b]\n"
+	info_text += "Scene: %s\n" % current_being.scene_path.get_file()
+	info_text += "Nodes: %d\n" % scene_dna.node_count
+	info_text += "Interaction Points: %d\n" % scene_dna.interaction_points.size()
+	info_text += "Modifiable Elements: %d\n" % scene_dna.modifiable_elements.size()
+	info_text += "Detected Patterns: %d\n\n" % pattern_list.get_item_count()
+	info_text += "[i]Select nodes to extract components or patterns to understand the structure[/i]"
+	
+	info_panel.text = info_text
 
 func _on_close_requested() -> void:
-	"""Handle window close"""
+	# Handle window close
 	hide()

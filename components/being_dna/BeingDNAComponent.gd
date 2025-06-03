@@ -100,7 +100,7 @@ func pentagon_sewers() -> void:
 # ===== DNA VISUALIZATION =====
 
 func create_dna_visualizer() -> void:
-    """Create the DNA helix visualizer"""
+    # Create the DNA helix visualizer
     var visualizer_scene = load("res://components/being_dna/dna_visualizer.tscn")
     if visualizer_scene:
         dna_helix = visualizer_scene.instantiate()
@@ -112,7 +112,7 @@ func create_dna_visualizer() -> void:
             print("🧬 BeingDNA: Visualizer created")
 
 func update_dna_visualization(delta: float) -> void:
-    """Update DNA helix animation and appearance"""
+    # Update DNA helix animation and appearance
     if not dna_helix:
         return
     
@@ -150,7 +150,7 @@ func get_trait_color(category_key: String, trait_key: String, trait_value: float
 # ===== DNA EVOLUTION =====
 
 func calculate_evolution_potential() -> void:
-    """Calculate potential evolution paths based on current DNA"""
+    # Calculate potential evolution paths based on current DNA
     evolution_potential.clear()
     
     # Analyze current traits
@@ -160,7 +160,7 @@ func calculate_evolution_potential() -> void:
             var potential = calculate_trait_potential(category_name, trait_name, value)
             evolution_potential[category_name + "." + trait_name] = potential
 
-func calculate_trait_potential(category: String, trait: String, value: float) -> Dictionary:
+func calculate_trait_potential(category: String, trait_name: String, value: float) -> Dictionary:
     # Calculate evolution potential for a trait
     var potential = {
         "current": value,
@@ -175,30 +175,30 @@ func calculate_trait_potential(category: String, trait: String, value: float) ->
         potential.evolution_paths.append({
             "direction": "increase",
             "probability": 1.0 - value,
-            "description": "Evolve towards higher " + trait
+            "description": "Evolve towards higher " + trait_name
         })
     if value > 0.5:
         potential.evolution_paths.append({
             "direction": "decrease",
             "probability": value,
-            "description": "Evolve towards lower " + trait
+            "description": "Evolve towards lower " + trait_name
         })
     
     return potential
 
-func evolve_trait(category: String, trait: String, direction: String) -> bool:
+func evolve_trait(category: String, trait_name: String, direction: String) -> bool:
     # Evolve a specific trait
-    if not dna_traits.has(category) or not dna_traits[category].has(trait):
+    if not dna_traits.has(category) or not dna_traits[category].has(trait_name):
         return false
     
-    var current_value = dna_traits[category][trait]
+    var current_value = dna_traits[category][trait_name]
     var change = mutation_rate * (1.0 if direction == "increase" else -1.0)
     var new_value = clamp(current_value + change, 0.0, 1.0)
     
     # Record evolution
     evolution_history.append({
         "category": category,
-        "trait": trait,
+        "trait": trait_name,
         "old_value": current_value,
         "new_value": new_value,
         "direction": direction,
@@ -206,20 +206,20 @@ func evolve_trait(category: String, trait: String, direction: String) -> bool:
     })
     
     # Update trait value
-    dna_traits[category][trait] = new_value
+    dna_traits[category][trait_name] = new_value
     
     # Update visualization
-    update_trait_visualization(category, trait, new_value)
+    update_trait_visualization(category, trait_name, new_value)
     
     # Recalculate potential
     calculate_evolution_potential()
     
     # Notify parent being
     if parent_being and parent_being.has_method("on_dna_evolved"):
-        parent_being.on_dna_evolved(category, trait, current_value, new_value)
+        parent_being.on_dna_evolved(category, trait_name, current_value, new_value)
     
     print("🧬 BeingDNA: Trait evolved - %s.%s: %.2f → %.2f" % [
-        category, trait, current_value, new_value
+        category, trait_name, current_value, new_value
     ])
     
     return true
@@ -227,7 +227,7 @@ func evolve_trait(category: String, trait: String, direction: String) -> bool:
 # ===== DNA STATE MANAGEMENT =====
 
 func save_dna_state() -> void:
-    """Save current DNA state to component data"""
+    # Save current DNA state to component data
     component_data["dna_traits"] = dna_traits
     component_data["evolution_history"] = evolution_history
     component_data["evolution_potential"] = evolution_potential
@@ -239,7 +239,7 @@ func save_dna_state() -> void:
             akashic.log_dna_evolution(parent_being, dna_traits, evolution_history)
 
 func load_dna_state() -> void:
-    """Load DNA state from component data"""
+    # Load DNA state from component data
     if component_data.has("dna_traits"):
         dna_traits = component_data["dna_traits"]
     if component_data.has("evolution_history"):
@@ -250,7 +250,7 @@ func load_dna_state() -> void:
 # ===== DNA INTERACTION =====
 
 func handle_dna_click(position: Vector2) -> void:
-    """Handle click on DNA visualization"""
+    # Handle click on DNA visualization
     if not dna_helix:
         return
     
@@ -258,25 +258,25 @@ func handle_dna_click(position: Vector2) -> void:
     var clicked_trait = dna_helix.get_trait_at_position(position)
     if clicked_trait:
         var category = clicked_trait.get("category", "")
-        var trait = clicked_trait.get("trait", "")
+        var trait_name = clicked_trait.get("trait", "")
         var value = clicked_trait.get("value", 0.5)
         
         # Show evolution options
-        show_evolution_options(category, trait, value)
+        show_evolution_options(category, trait_name, value)
 
-func show_evolution_options(category: String, trait: String, value: float) -> void:
+func show_evolution_options(category: String, trait_name: String, value: float) -> void:
     # Show available evolution options for a trait
-    var potential = evolution_potential.get(category + "." + trait, {})
+    var potential = evolution_potential.get(category + "." + trait_name, {})
     if potential.is_empty():
         return
     
     # Create evolution menu
-    var menu = create_evolution_menu(category, trait, potential)
+    var menu = create_evolution_menu(category, trait_name, potential)
     if menu and parent_being:
         parent_being.add_child(menu)
         menu.global_position = get_viewport().get_mouse_position()
 
-func create_evolution_menu(category: String, trait: String, potential: Dictionary) -> Control:
+func create_evolution_menu(category: String, trait_name: String, potential: Dictionary) -> Control:
     # Create menu for trait evolution options
     var menu_scene = load("res://components/being_dna/evolution_menu.tscn")
     if not menu_scene:
@@ -284,14 +284,14 @@ func create_evolution_menu(category: String, trait: String, potential: Dictionar
     
     var menu = menu_scene.instantiate()
     if menu.has_method("setup_evolution_options"):
-        menu.setup_evolution_options(category, trait, potential, self)
+        menu.setup_evolution_options(category, trait_name, potential, self)
     
     return menu
 
 # ===== AI INTEGRATION =====
 
 func ai_interface() -> Dictionary:
-    """Provide AI interface for DNA manipulation"""
+    # Provide AI interface for DNA manipulation
     return {
         "component_type": "being_dna",
         "version": component_version,
@@ -304,8 +304,8 @@ func ai_interface() -> Dictionary:
         }
     }
 
-func get_trait_value(category: String, trait: String) -> float:
+func get_trait_value(category: String, trait_name: String) -> float:
     # Get current value of a trait
-    if dna_traits.has(category) and dna_traits[category].has(trait):
-        return dna_traits[category][trait]
-    return 0.5  # Default value 
+    if dna_traits.has(category) and dna_traits[category].has(trait_name):
+        return dna_traits[category][trait_name]
+    return 0.5  # Default value
