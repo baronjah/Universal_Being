@@ -32,6 +32,7 @@ var actions_list: VBoxContainer
 
 func _ready() -> void:
 	name = "InGameUniversalBeingInspector"
+	add_to_group("inspector")  # Add to inspector group for bridge discovery
 	set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	visible = false
 	mouse_filter = Control.MOUSE_FILTER_IGNORE
@@ -40,6 +41,10 @@ func _ready() -> void:
 	z_index = 500
 	
 	create_inspector_ui()
+	
+	# Create bridge connection
+	create_inspector_bridge()
+	
 	print("🔍 In-Game Universal Being Inspector ready")
 
 func create_inspector_ui() -> void:
@@ -388,6 +393,26 @@ func _invoke_method(method_name: String) -> void:
 func _on_close_pressed() -> void:
 	"""Close button pressed"""
 	hide_inspector()
+
+func refresh_properties() -> void:
+	"""Refresh the properties display"""
+	if current_being and properties_list:
+		populate_properties_list()
+
+func create_inspector_bridge() -> void:
+	"""Create or connect to the Universal Inspector Bridge"""
+	var bridge = get_tree().get_nodes_in_group("inspector_bridge").front()
+	if not bridge:
+		# Create new bridge
+		var BridgeClass = load("res://systems/UniversalInspectorBridge.gd")
+		if BridgeClass:
+			bridge = BridgeClass.new()
+			bridge.name = "UniversalInspectorBridge"
+			bridge.add_to_group("inspector_bridge")
+			get_tree().current_scene.add_child(bridge)
+			print("🔍 Created Universal Inspector Bridge")
+	else:
+		print("🔍 Connected to existing Inspector Bridge")
 
 func _input(event: InputEvent) -> void:
 	"""Handle input events"""

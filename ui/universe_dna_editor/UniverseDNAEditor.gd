@@ -219,6 +219,7 @@ func _create_trait_slider(trait_name: String, min_val: float, max_val: float, de
 	panel.custom_minimum_size = Vector2(0, 40)
 	
 	var hbox = HBoxContainer.new()
+	hbox.name = "HBox"  # CRITICAL: Must set name for get_node() to work
 	hbox.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	hbox.add_theme_constant_override("separation", 10)
 	panel.add_child(hbox)

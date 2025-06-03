@@ -246,7 +246,12 @@ func _process(delta: float):  # this allows overriding through inheritance
 func ready():
 	detect_actions_availability()
 	recompute_lubricant_efficiency()  # as friction setter may never trigger
-	#print("%s around %s is ready. ♥" % [get_name(), get_parent().get_name()])
+	
+	# Universal Being: Ensure camera starts at a reasonable distance if too close
+	if get_distance_to_target() < 0.5:
+		position = Vector3(0, 5, 10)
+	
+	print("🎥 TrackballCamera ready! Distance to target: %.2f" % get_distance_to_target())
 
 
 func input(event: InputEvent):
@@ -256,11 +261,19 @@ func input(event: InputEvent):
 
 func handle_mouse_input(event: InputEvent):
 	if (not mouse_move_mode) and (event is InputEventMouseButton):
-		if (event as InputEventMouseButton).pressed:
-			_mouseDragStart = get_mouse_position()
-		else:
-			_mouseDragStart = ABSURD_VECTOR2
-		_mouseDragPosition = _mouseDragStart
+		var mb = event as InputEventMouseButton
+		# Handle mouse wheel zoom
+		if mb.button_index == MOUSE_BUTTON_WHEEL_UP and mb.pressed:
+			add_zoom_inertia(zoom_strength * ZOOM_STRENGTH_NORMALIZATION * 2.0)
+		elif mb.button_index == MOUSE_BUTTON_WHEEL_DOWN and mb.pressed:
+			add_zoom_inertia(-zoom_strength * ZOOM_STRENGTH_NORMALIZATION * 2.0)
+		# Handle drag
+		elif mb.button_index == MOUSE_BUTTON_MIDDLE:
+			if mb.pressed:
+				_mouseDragStart = get_mouse_position()
+			else:
+				_mouseDragStart = ABSURD_VECTOR2
+			_mouseDragPosition = _mouseDragStart
 	if (mouse_move_mode) and (event is InputEventMouseMotion):
 		add_inertia(
 			(event as InputEventMouseMotion).relative *
@@ -572,7 +585,7 @@ func should_zoom_in() -> bool:
 	return (
 		_isZoomInActionAvailable
 		and
-		Input.is_action_just_released(self.action_zoom_in)
+		Input.is_action_pressed(self.action_zoom_in)
 	)
 
 
@@ -580,7 +593,7 @@ func should_zoom_out() -> bool:
 	return (
 		_isZoomOutActionAvailable
 		and
-		Input.is_action_just_released(self.action_zoom_out)
+		Input.is_action_pressed(self.action_zoom_out)
 	)
 
 
@@ -640,20 +653,18 @@ func is_action_available(action: String, silent := false) -> bool:
 		)
 	return false
 
+# Universal Being Integration
+signal send_basis(origin_current: Vector3, basis_current: Basis, rotation: Vector3)
+
 var rotation_speed : float = 1.0
-
-signal send_basis(origin_current , basis_current: Basis , rotation)
-
 var current_basis: Basis
 var current_origin: Vector3
 
+# Q/E roll is now handled through barrel roll actions
 func process_roll(delta: float):
-	var roll_speed = 2.0 * PI  # Adjust this value to control roll speed
+	# Roll functionality is handled by barrel roll system
+	# Q/E keys can be mapped to action_barrel_roll for rolling
 	if Input.is_action_pressed("key_e"):
-		apply_roll(-roll_speed * delta)
+		_rollInertia -= barrel_roll_strength * 2.0 * delta
 	elif Input.is_action_pressed("key_q"):
-		apply_roll(roll_speed * delta)
-
-func apply_roll(amount: float):
-	rotate_object_local(Vector3.FORWARD, amount)
-	update_horizon((get_transform().basis * _cameraUp).normalized())
+		_rollInertia += barrel_roll_strength * 2.0 * delta

@@ -1,0 +1,53 @@
+[gd_scene load_steps=2 format=3 uid="uid://debug_overlay_scene"]
+
+[ext_resource type="Script" path="res://systems/debug/debug_overlay.gd" id="1_debug"]
+
+[node name="DebugOverlay" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 1
+script = ExtResource("1_debug")
+
+[node name="Panel" type="Panel" parent="."]
+offset_left = 50.0
+offset_top = 50.0
+offset_right = 450.0
+offset_bottom = 550.0
+mouse_filter = 0
+
+[node name="MarginContainer" type="MarginContainer" parent="Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="VBox" type="VBoxContainer" parent="Panel/MarginContainer"]
+layout_mode = 2
+
+[node name="Header" type="HBoxContainer" parent="Panel/MarginContainer/VBox"]
+layout_mode = 2
+
+[node name="Title" type="Label" parent="Panel/MarginContainer/VBox/Header"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "🎛️ Debug Overlay"
+theme_override_font_sizes/font_size = 20
+
+[node name="CloseButton" type="Button" parent="Panel/MarginContainer/VBox/Header"]
+layout_mode = 2
+custom_minimum_size = Vector2(30, 30)
+text = "❌"
+
+[node name="Tree" type="Tree" parent="Panel/MarginContainer/VBox"]
+layout_mode = 2
+size_flags_vertical = 3
+custom_minimum_size = Vector2(0, 300)
+columns = 2
+
+[node name="Buttons" type="HBoxContainer" parent="Panel/MarginContainer/VBox"]
+layout_mode = 2
+alignment = 1

@@ -64,11 +64,17 @@ func create_demo_beings() -> void:
 	if demo_beings == null:
 		demo_beings = []
 	
-	# Create Auto Startup Universal Being first
+	# Create Universal Cursor FIRST - always visible and functional
+	create_cursor_universal_being()
+	
+	# Convert scene objects to Universal Beings
+	convert_scene_objects_to_universal_beings()
+	
+	# Create Auto Startup Universal Being
 	create_auto_startup_being()
 	
-	# Create first Universe for testing
-	create_universe_universal_being()
+	# Create first Universe for testing - DISABLED for now to prevent duplicates
+	# create_universe_universal_being()
 	
 	# Create a simple Universal Being
 	var demo_being = SystemBootstrap.create_universal_being()
@@ -158,7 +164,12 @@ func _input(event: InputEvent) -> void:
 				KEY_V:  # Ctrl+V for uniVerse creation
 					create_universe_universal_being()
 				KEY_N:  # Ctrl+N for Test being (removing navigator conflict)
+					# umm, we had conflict there, for bad way, i took away key_f4, and made that KEY_0 for debug
+		#elif event.keycode == KEY_F4:  # F4 for Debug Overlay
+		#	toggle_debug_overlay()
 					create_test_being()
+				KEY_0:
+					toggle_debug_overlay()
 				KEY_I:  # Ctrl+I toggles cursor inspect mode
 					toggle_cursor_inspect_mode()
 				KEY_O:  # Ctrl+O for Universe Simulator (Observe)
@@ -329,6 +340,30 @@ func show_inspection_interface() -> void:
 	"""Show inspection interface (Ctrl+I)"""
 	print("🌟 Inspection Interface requested (Ctrl+I)")
 	
+	# Ensure inspector bridge exists
+	var bridge = get_node_or_null("UniversalInspectorBridge")
+	if not bridge:
+		var BridgeClass = load("res://systems/UniversalInspectorBridge.gd")
+		if BridgeClass:
+			bridge = BridgeClass.new()
+			bridge.name = "UniversalInspectorBridge"
+			bridge.add_to_group("inspector_bridge")
+			add_child(bridge)
+			print("🔗 Created Universal Inspector Bridge")
+			
+			# Wait for bridge to connect to systems
+			await get_tree().create_timer(0.1).timeout
+	
+	# Check if fully connected
+	if bridge and bridge.has_method("is_fully_connected"):
+		if not bridge.is_fully_connected():
+			print("🔗 Bridge connecting to systems...")
+			bridge.connect_to_systems()
+	
+	# Enable editing mode
+	if bridge and bridge.has_method("enable_editing_mode"):
+		bridge.enable_editing_mode()
+	
 	if GemmaAI and GemmaAI.has_method("show_inspection_interface"):
 		GemmaAI.show_inspection_interface()
 	else:
@@ -466,13 +501,33 @@ func create_camera_universal_being(being: Node = null) -> Node:
 		camera_being.set("being_type", "camera")
 		camera_being.set("consciousness_level", 2)
 	
+	# Create a focus point for the camera to orbit around
+	var focus_point = Node3D.new()
+	focus_point.name = "CameraFocusPoint"
+	focus_point.position = Vector3.ZERO
+	camera_being.add_child(focus_point)
+	
 	# Load the trackball camera scene
 	if camera_being.has_method("load_scene"):
 		var scene_loaded = camera_being.load_scene("res://scenes/main/camera_point.tscn")
 		if scene_loaded:
+			# Get the loaded camera scene
+			var camera_scene = camera_being.get_scene_node("camera_point")
+			if camera_scene:
+				# Reparent the camera scene to be a child of the focus point
+				camera_being.remove_child(camera_scene)
+				focus_point.add_child(camera_scene)
+				
+				# Position the camera to look at the focus point
+				var trackball = camera_scene.get_node("TrackballCamera")
+				if trackball:
+					trackball.position = Vector3(0, 5, 10)  # Position camera above and behind
+					trackball.look_at(Vector3.ZERO, Vector3.UP)
+			
 			print("🌟 🎥 Camera Universal Being created!")
-			print("🌟 🎥 Trackball camera scene loaded and controlled!")
+			print("🌟 🎥 Trackball camera scene loaded and configured!")
 			print("🌟 🎥 Controls: Mouse wheel (zoom), Q/E (roll), Middle mouse (orbit)")
+			print("🌟 🎥 Camera positioned to orbit around origin point")
 			
 			# Notify Gemma AI
 			if GemmaAI and GemmaAI.has_method("notify_being_created"):
@@ -565,11 +620,21 @@ func create_cursor_universal_being() -> Node:
 		print("🌟 Cannot create cursor - systems not ready")
 		return null
 	
-	# Load cursor class
-	var CursorUniversalBeingClass = load("res://core/CursorUniversalBeing.gd")
+	# Check if a cursor already exists
+	var existing_cursor = find_cursor_being()
+	if existing_cursor:
+		print("🎯 Cursor already exists, focusing on it")
+		return existing_cursor
+	
+	# Try to load enhanced cursor first
+	var CursorUniversalBeingClass = load("res://core/CursorUniversalBeing_Enhanced.gd")
 	if not CursorUniversalBeingClass:
-		push_error("🎯 CursorUniversalBeing class not found")
-		return null
+		# Fallback to regular cursor
+		print("🎯 Enhanced cursor not found, falling back to regular cursor")
+		CursorUniversalBeingClass = load("res://core/CursorUniversalBeing.gd")
+		if not CursorUniversalBeingClass:
+			push_error("🎯 CursorUniversalBeing class not found")
+			return null
 	
 	var cursor_being = CursorUniversalBeingClass.new()
 	cursor_being.name = "Universal Cursor"
@@ -577,8 +642,9 @@ func create_cursor_universal_being() -> Node:
 	add_child(cursor_being)
 	demo_beings.append(cursor_being)
 	
-	print("🎯 Universal Cursor created!")
-	print("🎯 Triangle cursor with sphere collision activated!")
+	print("🎯 Enhanced Universal Cursor created!")
+	print("🎯 Triangle cursor with maximum rendering priority!")
+	print("🎯 Always visible over all 2D/3D interfaces!")
 	print("🎯 Precise interaction for 2D/3D interfaces enabled!")
 	
 	# Notify Gemma AI
@@ -707,6 +773,120 @@ func create_genesis_conductor_being() -> Node:
 		GemmaAI.ai_message.emit("🎭 ✨ GENESIS MOMENT: First Triple-AI being created! The future begins now!")
 	
 	return genesis_conductor
+
+func convert_scene_objects_to_universal_beings() -> void:
+	"""Convert scene objects (sphere, cube, etc.) to Universal Beings"""
+	print("🌟 Converting scene objects to Universal Beings...")
+	
+	# Find and convert DemoSphere
+	var demo_sphere = get_node_or_null("DemoSphere")
+	if demo_sphere:
+		var sphere_being = make_mesh_universal_being(demo_sphere, "Sphere Universal Being", "sphere")
+		if sphere_being:
+			demo_beings.append(sphere_being)
+			print("🌟 Created Sphere Universal Being")
+	
+	# Find and convert DemoCube
+	var demo_cube = get_node_or_null("DemoCube")
+	if demo_cube:
+		var cube_being = make_mesh_universal_being(demo_cube, "Cube Universal Being", "cube")
+		if cube_being:
+			demo_beings.append(cube_being)
+			print("🌟 Created Cube Universal Being")
+	
+	# Find and convert GroundPlane
+	var ground_plane = get_node_or_null("GroundPlane")
+	if ground_plane:
+		var ground_being = make_mesh_universal_being(ground_plane, "Ground Universal Being", "environment")
+		if ground_being:
+			demo_beings.append(ground_being)
+			print("🌟 Created Ground Universal Being")
+
+func make_mesh_universal_being(mesh_node: MeshInstance3D, being_name: String, being_type: String) -> UniversalBeing:
+	"""Convert a MeshInstance3D into a Universal Being"""
+	if not mesh_node or not SystemBootstrap:
+		return null
+	
+	# Create Universal Being
+	var universal_being = SystemBootstrap.create_universal_being()
+	if not universal_being:
+		return null
+	
+	# Set Universal Being properties
+	universal_being.being_name = being_name
+	universal_being.being_type = being_type
+	universal_being.consciousness_level = 2
+	universal_being.name = being_name
+	
+	# Get the mesh and transform from original
+	var original_transform = mesh_node.transform
+	var original_mesh = mesh_node.mesh
+	var original_material = mesh_node.material_override
+	
+	# Remove original from scene temporarily
+	var parent = mesh_node.get_parent()
+	parent.remove_child(mesh_node)
+	
+	# Add Universal Being to scene
+	parent.add_child(universal_being)
+	universal_being.transform = original_transform
+	
+	# Create new MeshInstance3D as child of Universal Being
+	var new_mesh = MeshInstance3D.new()
+	new_mesh.name = "MeshDisplay"
+	new_mesh.mesh = original_mesh
+	if original_material:
+		new_mesh.material_override = original_material
+	universal_being.add_child(new_mesh)
+	
+	# Add collision for interaction
+	var collision_area = Area3D.new()
+	collision_area.name = "InteractionArea"
+	universal_being.add_child(collision_area)
+	
+	var collision_shape = CollisionShape3D.new()
+	collision_shape.name = "CollisionShape"
+	
+	# Create appropriate collision shape based on mesh type
+	if original_mesh is SphereMesh:
+		var sphere_shape = SphereShape3D.new()
+		sphere_shape.radius = (original_mesh as SphereMesh).radius
+		collision_shape.shape = sphere_shape
+	elif original_mesh is BoxMesh:
+		var box_shape = BoxShape3D.new()
+		var box_mesh = original_mesh as BoxMesh
+		box_shape.size = Vector3(box_mesh.size.x, box_mesh.size.y, box_mesh.size.z)
+		collision_shape.shape = box_shape
+	elif original_mesh is PlaneMesh:
+		var box_shape = BoxShape3D.new()
+		var plane_mesh = original_mesh as PlaneMesh
+		box_shape.size = Vector3(plane_mesh.size.x, 0.1, plane_mesh.size.y)  # Thin box for plane
+		collision_shape.shape = box_shape
+	else:
+		# Default sphere collision
+		var sphere_shape = SphereShape3D.new()
+		sphere_shape.radius = 1.0
+		collision_shape.shape = sphere_shape
+	
+	collision_area.add_child(collision_shape)
+	
+	# Add Universal Being methods for inspection
+	universal_being.set_script(load("res://core/UniversalBeing.gd"))
+	
+	# Make it inspectable
+	if universal_being.has_method("add_component"):
+		universal_being.add_component("res://components/basic_interaction.ub.zip")
+	
+	# Clean up original node
+	mesh_node.queue_free()
+	
+	print("🌟 Converted %s to Universal Being with consciousness level %d" % [being_name, universal_being.consciousness_level])
+	
+	# Notify AI
+	if GemmaAI and GemmaAI.has_method("notify_being_created"):
+		GemmaAI.notify_being_created(universal_being)
+	
+	return universal_being
 
 func create_chatgpt_premium_bridge() -> Node:
 	"""Create ChatGPT Premium Bridge for biblical genesis translation"""
@@ -876,6 +1056,12 @@ func create_universe_universal_being() -> Node:
 	universe_being.time_scale = requirements.time_scale
 	universe_being.lod_level = requirements.lod_level
 	
+	# Set Universal Being properties
+	if universe_being.has_method("set"):
+		universe_being.set("being_name", universe_name)
+		universe_being.set("being_type", "universe")
+		universe_being.set("consciousness_level", 3)  # Universe level consciousness
+	
 	add_child(universe_being)
 	demo_beings.append(universe_being)
 	
@@ -995,6 +1181,55 @@ func toggle_layer_debug() -> void:
 	# Notify AI
 	if GemmaAI:
 		GemmaAI.ai_message.emit("🔍 Layer Debug Overlay toggled - visual layer system inspection activated!")
+
+func toggle_debug_overlay() -> void:
+	"""Toggle the Debug overlay (F4) - Luminus's elegant debug system"""
+	print("🎛️ Debug overlay toggle requested (F4)")
+	
+	# Initialize LogicConnector if not already done
+	var logic_connector = get_node_or_null("LogicConnector")
+	if not logic_connector:
+		var LogicConnectorClass = load("res://systems/debug/logic_connector_singleton.gd")
+		if LogicConnectorClass:
+			logic_connector = LogicConnectorClass.new()
+			logic_connector.name = "LogicConnector"
+			add_child(logic_connector)
+			print("🔌 LogicConnector created!")
+	
+	# Find existing overlay or create one
+	var overlay = get_node_or_null("DebugOverlay")
+	if not overlay:
+		# Create new debug overlay
+		var OverlayScene = load("res://systems/debug/debug_overlay.tscn")
+		if OverlayScene:
+			overlay = OverlayScene.instantiate()
+			overlay.name = "DebugOverlay"
+			add_child(overlay)
+			print("🎛️ Debug Overlay created!")
+		else:
+			print("❌ debug_overlay.tscn not found")
+			return
+	
+	# Use LogicConnector's raypick to find debuggable under cursor
+	var camera = get_viewport().get_camera_3d()
+	if not camera:
+		# Try to find camera universal being
+		for child in get_children():
+			if child.has_method("get_being_type") and child.get_being_type() == "camera":
+				camera = child
+				break
+	
+	if camera and logic_connector:
+		var target = logic_connector.raypick(camera)
+		if target:
+			overlay.target = target
+			overlay.show_overlay()
+			overlay._populate_panel()
+		else:
+			overlay.hide_overlay()
+			print("🎛️ No debuggable object found under cursor")
+	else:
+		print("❌ No camera available for raypicking")
 
 func toggle_component_library() -> void:
 	"""Toggle the Component Library interface (Ctrl+L)"""

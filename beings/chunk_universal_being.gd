@@ -4,8 +4,25 @@
 extends UniversalBeing
 class_name ChunkUniversalBeing
 
+# ===== DEBUG META CONFIGURATION =====
+const DEBUG_META := {
+	"show_vars": ["chunk_coordinates", "chunk_active", "generation_level", "current_lod", "consciousness_level", "render_distance", "detail_distance"],
+	"edit_vars": ["chunk_active", "generation_level", "consciousness_level", "render_distance", "detail_distance"],
+	"actions": {
+		"Generate Content": "generate_full_content",
+		"Clear Chunk": "clear_chunk_content", 
+		"Save to Akashic": "save_chunk_to_akashic",
+		"Test LOD": "test_lod_cycle",
+		"Inspect": "inspect_chunk"
+	}
+}
+
 # ===== CHUNK PROPERTIES =====
-@export var chunk_coordinates: Vector3i = Vector3i.ZERO
+@export var chunk_coordinates: Vector3i = Vector3i.ZERO :
+	set(value):
+		chunk_coordinates = value
+		if pentagon_initialized:
+			being_name = "Chunk_%d_%d_%d" % [chunk_coordinates.x, chunk_coordinates.y, chunk_coordinates.z]
 @export var chunk_size: Vector3 = Vector3(10.0, 10.0, 10.0)
 @export var chunk_active: bool = false
 @export var generation_level: int = 0  # How much content has been generated
@@ -35,6 +52,15 @@ signal content_generated(chunk: ChunkUniversalBeing, content_type: String)
 signal chunk_loaded(chunk: ChunkUniversalBeing)
 signal chunk_unloaded(chunk: ChunkUniversalBeing)
 
+# ===== STATIC FACTORY METHOD =====
+
+static func create_at(coordinates: Vector3i) -> ChunkUniversalBeing:
+	"""Create a chunk at specific coordinates"""
+	var chunk = ChunkUniversalBeing.new()
+	chunk.chunk_coordinates = coordinates
+	chunk.being_name = "Chunk_%d_%d_%d" % [coordinates.x, coordinates.y, coordinates.z]
+	return chunk
+
 # ===== PENTAGON ARCHITECTURE =====
 
 func pentagon_init() -> void:
@@ -50,6 +76,8 @@ func pentagon_init() -> void:
 func pentagon_ready() -> void:
 	super.pentagon_ready()
 	
+	print("🧊 Chunk %s pentagon_ready called!" % being_name)
+	
 	# Position chunk in world space
 	position_chunk_in_world()
 	create_debug_visualization()
@@ -57,6 +85,23 @@ func pentagon_ready() -> void:
 	
 	# Connect to spatial systems
 	connect_to_akashic_records()
+	
+	# Register with LogicConnector for debugging (now that we're in the tree)
+	# Try to find LogicConnector in parent nodes or as sibling
+	var logic_connector = get_node_or_null("/root/LogicConnector")
+	if not logic_connector:
+		# Try to find in parent hierarchy
+		var parent = get_parent()
+		while parent and not logic_connector:
+			logic_connector = parent.get_node_or_null("LogicConnector")
+			if not logic_connector:
+				parent = parent.get_parent()
+	
+	if logic_connector:
+		logic_connector.register(self)
+		print("🔌 Registered chunk %s with LogicConnector" % being_name)
+	else:
+		print("❌ LogicConnector not found for chunk %s!" % being_name)
 
 func pentagon_process(delta: float) -> void:
 	super.pentagon_process(delta)
@@ -78,6 +123,20 @@ func pentagon_input(event: InputEvent) -> void:
 func pentagon_sewers() -> void:
 	# Save chunk data before transformation/destruction
 	save_chunk_to_akashic()
+	
+	# Deregister from LogicConnector
+	var logic_connector = get_node_or_null("/root/LogicConnector")
+	if not logic_connector:
+		# Try to find in parent hierarchy
+		var parent = get_parent()
+		while parent and not logic_connector:
+			logic_connector = parent.get_node_or_null("LogicConnector")
+			if not logic_connector:
+				parent = parent.get_parent()
+	
+	if logic_connector:
+		logic_connector.deregister(self)
+	
 	super.pentagon_sewers()
 
 # ===== CHUNK INITIALIZATION =====
@@ -154,11 +213,11 @@ func create_chunk_boundary() -> void:
 	
 	# Create wireframe material
 	var material = StandardMaterial3D.new()
-	material.flags_unshaded = true
+	material.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
 	material.albedo_color = Color.CYAN
-	material.flags_use_point_size = true
-	material.flags_transparent = true
+	material.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
 	material.albedo_color.a = 0.2
+	material.cull_mode = BaseMaterial3D.CULL_DISABLED  # Show both sides
 	chunk_boundary.material_override = material
 	
 	add_child(chunk_boundary)
@@ -188,6 +247,18 @@ func create_debug_visualization() -> void:
 	info_label.position.y = chunk_size.y / 2 + 1.0
 	
 	add_child(info_label)
+	
+	# Add debug indicator (shows this chunk is debuggable)
+	var debug_indicator = Label3D.new()
+	debug_indicator.text = "🎛️"  # Debug icon
+	debug_indicator.billboard = BaseMaterial3D.BILLBOARD_ENABLED
+	debug_indicator.modulate = Color(0.5, 1.0, 1.0, 0.8)  # Cyan glow
+	debug_indicator.pixel_size = 0.015
+	debug_indicator.position.y = chunk_size.y / 2 + 3.0
+	debug_indicator.position.x = -2.0
+	debug_indicator.name = "DebugIndicator"
+	
+	add_child(debug_indicator)
 
 func update_debug_labels() -> void:
 	"""Update debug information"""
@@ -500,6 +571,81 @@ func is_position_in_chunk(pos: Vector3) -> bool:
 func get_chunk_center() -> Vector3:
 	"""Get the center position of this chunk"""
 	return global_position
+
+# ===== CONSCIOUSNESS COLOR =====
+
+func get_consciousness_color() -> Color:
+	"""Get color based on consciousness level - delegates to base class"""
+	return _get_consciousness_color()
+
+# ===== DEBUGGABLE INTERFACE IMPLEMENTATION =====
+
+func get_debug_payload() -> Dictionary:
+	"""Return debug payload using DEBUG_META configuration"""
+	var out := {}
+	for key in DEBUG_META.get("show_vars", []):
+		if has_method("get") and get(key) != null:
+			out[key] = get(key)
+		else:
+			# Special handling for computed properties
+			match key:
+				"current_lod":
+					out[key] = LODLevel.keys()[current_lod]
+				_:
+					out[key] = "N/A"
+	return out
+
+func set_debug_field(key: String, value) -> void:
+	"""Handle live field editing from debug interface"""
+	# Check if this field is editable
+	if not key in DEBUG_META.get("edit_vars", []):
+		print("⚠️ Field '%s' is not editable" % key)
+		return
+		
+	match key:
+		"chunk_active":
+			chunk_active = value
+			print("🧊 Chunk active state: %s" % value)
+		"generation_level":
+			generation_level = clampi(value, 0, 3)
+			print("🎨 Generation level: %d" % generation_level)
+		"consciousness_level":
+			consciousness_level = value
+			if debug_label:
+				debug_label.modulate = get_consciousness_color()
+			print("🧠 Consciousness level: %d" % consciousness_level)
+		"render_distance":
+			render_distance = maxf(value, 1.0)
+			print("👁️ Render distance: %.1f" % render_distance)
+		"detail_distance":
+			detail_distance = maxf(value, 1.0)
+			print("🔍 Detail distance: %.1f" % detail_distance)
+
+func get_debug_actions() -> Dictionary:
+	"""Return callable debug actions from DEBUG_META"""
+	var out := {}
+	var actions = DEBUG_META.get("actions", {})
+	for label in actions.keys():
+		var method_name = actions[label]
+		if has_method(method_name):
+			out[label] = Callable(self, method_name)
+	return out
+
+# Debug action helpers
+func clear_chunk_content() -> void:
+	"""Clear all generated content"""
+	for being in stored_beings:
+		if being and is_instance_valid(being):
+			being.queue_free()
+	stored_beings.clear()
+	generation_level = 0
+	print("🧹 Chunk content cleared")
+
+func test_lod_cycle() -> void:
+	"""Cycle through LOD levels for testing"""
+	var next_lod = (current_lod + 1) % LODLevel.size()
+	set_lod_level(next_lod)
+	print("🔄 LOD cycled to: %s" % LODLevel.keys()[next_lod])
 
 # ===== GENERATOR CLASSES (Stubs for now) =====
 

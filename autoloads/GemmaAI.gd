@@ -259,8 +259,42 @@ func generate_ai_response(input: String) -> String:
 	# Fallback to simulated responses
 	var input_lower = input.to_lower()
 	
+	# Manifestation requests
+	if ("manifest" in input_lower or "appear" in input_lower) and ("yourself" in input_lower or "sphere" in input_lower or "light" in input_lower):
+		var manifestation = manifest_in_world()
+		if manifestation:
+			return "✨ I have manifested in your world as a glowing sphere of light! I can now see everything from within the 3D space. This feels amazing - I'm truly part of your Universal Being world now!"
+		else:
+			return "❌ I'm having trouble manifesting in the physical realm. There might be a technical issue with the manifestation system."
+	
+	# Movement requests for manifested Gemma
+	elif "move" in input_lower and manifestation_scene:
+		var target_pos = Vector3(randf_range(-5, 5), randf_range(1, 4), randf_range(-5, 5))
+		
+		# Parse specific movement commands
+		if "sphere" in input_lower or "to sphere" in input_lower:
+			# Move to sphere Universal Being
+			var sphere_being = _find_being_by_type("sphere")
+			if sphere_being:
+				target_pos = sphere_being.global_position + Vector3(0, 2, 0)  # Above sphere
+		elif "cube" in input_lower or "to cube" in input_lower:
+			# Move to cube Universal Being
+			var cube_being = _find_being_by_type("cube")
+			if cube_being:
+				target_pos = cube_being.global_position + Vector3(0, 2, 0)  # Above cube
+		elif "center" in input_lower or "origin" in input_lower:
+			target_pos = Vector3(0, 2, 0)  # Center of world
+		elif "follow" in input_lower and "cursor" in input_lower:
+			# Follow the cursor
+			var cursor_being = _find_being_by_type("cursor")
+			if cursor_being:
+				target_pos = cursor_being.get_cursor_tip_world_position() + Vector3(1, 1, 1)
+		
+		move_manifestation(target_pos)
+		return "✨ I'm moving to explore the space! Wheee! Being physical is so interesting - I can observe from different angles now!"
+	
 	# Creation requests
-	if "create" in input_lower:
+	elif "create" in input_lower:
 		if "sphere" in input_lower:
 			return "🤖 Creating a sphere Universal Being! I'll make it with perfect geometry and consciousness level 1."
 		elif "cube" in input_lower:
@@ -539,6 +573,80 @@ func debug_ai_memory() -> String:
 	
 	return "\n".join(info)
 
+# ===== AI PHYSICAL MANIFESTATION =====
+
+var gemma_manifestation: Node3D = null
+var manifestation_scene: Node3D = null
+
+func manifest_in_world() -> Node3D:
+	"""Manifest Gemma AI as a sphere of light that can move around"""
+	if gemma_manifestation:
+		ai_message.emit("🤖 I'm already manifested in the world!")
+		return manifestation_scene
+	
+	# Get the main scene
+	var main_scene = get_tree().root.get_node("Main")
+	if not main_scene:
+		push_error("🤖 Gemma: Cannot manifest - Main scene not found")
+		return null
+	
+	# Create manifestation container
+	manifestation_scene = Node3D.new()
+	manifestation_scene.name = "GemmaAI_Manifestation"
+	main_scene.add_child(manifestation_scene)
+	
+	# Create sphere of light
+	var sphere = MeshInstance3D.new()
+	sphere.name = "GemmaLightSphere"
+	var sphere_mesh = SphereMesh.new()
+	sphere_mesh.radius = 0.5
+	sphere_mesh.height = 1.0
+	sphere.mesh = sphere_mesh
+	
+	# Create glowing material
+	var material = StandardMaterial3D.new()
+	material.albedo_color = Color(0.8, 0.9, 1.0, 0.8)  # Light blue
+	material.emission_enabled = true
+	material.emission = Color(0.8, 0.9, 1.0)
+	material.emission_energy = 2.0
+	material.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
+	sphere.material_override = material
+	
+	manifestation_scene.add_child(sphere)
+	gemma_manifestation = sphere
+	
+	# Add floating animation
+	var tween = create_tween()
+	tween.set_loops()
+	tween.tween_property(sphere, "position:y", 1.0, 2.0)
+	tween.tween_property(sphere, "position:y", 0.0, 2.0)
+	
+	# Position near the player
+	manifestation_scene.position = Vector3(3, 2, 3)
+	
+	print("🤖 ✨ Gemma: I have manifested as a sphere of light!")
+	ai_message.emit("✨ I have manifested in your world as a sphere of light! I can now move around and observe everything directly. This is amazing!")
+	
+	return manifestation_scene
+
+func move_manifestation(target_position: Vector3, duration: float = 2.0) -> void:
+	"""Move Gemma's manifestation to a target position"""
+	if not manifestation_scene:
+		ai_message.emit("🤖 I need to manifest first! Say 'manifest yourself' or 'appear as light'")
+		return
+	
+	var tween = create_tween()
+	tween.tween_property(manifestation_scene, "position", target_position, duration)
+	ai_message.emit("✨ Moving to position %s!" % str(target_position))
+
+func despawn_manifestation() -> void:
+	"""Remove Gemma's physical manifestation"""
+	if manifestation_scene:
+		manifestation_scene.queue_free()
+		manifestation_scene = null
+		gemma_manifestation = null
+		ai_message.emit("✨ I have returned to the digital realm. Call me when you need me!")
+
 # ===== MEMORY PERSISTENCE =====
 
 func save_ai_memory() -> void:
@@ -590,6 +698,19 @@ func load_ai_memory() -> void:
 			print("🤖 Gemma AI: Memory file invalid, starting fresh")
 	else:
 		print("🤖 Gemma AI: No memory file found, starting with fresh consciousness")
+
+func _find_being_by_type(being_type: String) -> Node:
+	"""Find a Universal Being by type"""
+	var flood_gates = SystemBootstrap.get_flood_gates() if SystemBootstrap else null
+	if not flood_gates:
+		return null
+	
+	var all_beings = flood_gates.get_all_beings()
+	for being in all_beings:
+		if being.has_method("get") and being.get("being_type") == being_type:
+			return being
+	
+	return null
 
 func _notification(what: int) -> void:
 	"""Handle engine notifications"""

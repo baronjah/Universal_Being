@@ -42,7 +42,7 @@ signal cursor_mode_changed(mode: CursorMode)
 
 func pentagon_init() -> void:
 	# Call parent init
-	super()
+	super.pentagon_init()
 	
 	# Set cursor-specific properties
 	being_type = "cursor"
@@ -54,7 +54,7 @@ func pentagon_init() -> void:
 
 func pentagon_ready() -> void:
 	# Call parent ready
-	super()
+	super.pentagon_ready()
 	
 	# Create cursor visual
 	create_cursor_triangle()
@@ -67,10 +67,12 @@ func pentagon_ready() -> void:
 	
 	# Hide system cursor
 	Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
+	
+	print("🎯 Universal Cursor ready! Mode: %s" % ("INSPECT" if current_mode == CursorMode.INSPECT else "INTERACT"))
 
 func pentagon_process(delta: float) -> void:
 	# Call parent process
-	super(delta)
+	super.pentagon_process(delta)
 	
 	# Update cursor position
 	update_cursor_position()
@@ -84,7 +86,7 @@ func pentagon_process(delta: float) -> void:
 
 func pentagon_input(event: InputEvent) -> void:
 	# Call parent input
-	super(event)
+	super.pentagon_input(event)
 	
 	# Handle cursor-specific input
 	process_cursor_input(event)
@@ -94,16 +96,22 @@ func pentagon_sewers() -> void:
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 	
 	# Call parent cleanup
-	super()
+	super.pentagon_sewers()
 
 # ===== CURSOR CREATION =====
 
 func create_cursor_triangle() -> void:
 	"""Create triangle cursor shape positioned like Windows cursor"""
+	# Create a dedicated CanvasLayer for cursor to ensure it's always on top
+	var cursor_layer = CanvasLayer.new()
+	cursor_layer.name = "CursorLayer"
+	cursor_layer.layer = 999  # Highest layer for absolute top rendering
+	add_child(cursor_layer)
+	
 	cursor_shape = Node2D.new()
 	cursor_shape.name = "CursorTriangle"
-	cursor_shape.z_index = 1000  # Render above all UI
-	add_child(cursor_shape)
+	cursor_shape.z_index = 1000  # Additional z_index for safety
+	cursor_layer.add_child(cursor_shape)
 	
 	# Create triangle points (tip matches Windows cursor tip position)
 	var triangle_points = PackedVector2Array([

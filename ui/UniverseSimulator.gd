@@ -135,6 +135,7 @@ func _create_info_panel():
 func _create_creation_panel():
 	"""Create the universe creation panel"""
 	var vbox = VBoxContainer.new()
+	vbox.name = "VBoxContainer"  # CRITICAL: Must set name for get_node() to work
 	vbox.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	vbox.add_theme_constant_override("separation", 10)
 	creation_panel.add_child(vbox)

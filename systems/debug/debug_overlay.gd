@@ -2,34 +2,48 @@
 # Spawns translucent panel only when looking at debuggable object and pressing F4
 
 extends Control
-class_name DebugOverlay
 
-## Drag this scene onto Autoloads (singleton)
-@onready var target: Debuggable = null
-@onready var panel: Panel = null
-@onready var tree: Tree = null
-@onready var btns: HBoxContainer = null
+## Current debug target
+var target: Object = null
 
-# UI Layout
-var main_container: VBoxContainer = null
-var header_label: Label = null
-var close_button: Button = null
+# Scene references
+@onready var panel: Panel = $Panel
+@onready var tree: Tree = $Panel/MarginContainer/VBox/Tree
+@onready var btns: HBoxContainer = $Panel/MarginContainer/VBox/Buttons
+@onready var header_label: Label = $Panel/MarginContainer/VBox/Header/Title
+@onready var close_button: Button = $Panel/MarginContainer/VBox/Header/CloseButton
 
 # ===== SETUP =====
 
 func _ready():
 	name = "DebugOverlay"
 	visible = false
-	setup_ui()
-	print("🎛️ Debug Overlay ready - Press F4 while looking at Debuggable objects!")
-
-func setup_ui():
-	"""Create the debug overlay UI structure"""
-	# Main panel
-	panel = Panel.new()
-	panel.size = Vector2(400, 500)
-	panel.position = Vector2(50, 50)
+	mouse_filter = Control.MOUSE_FILTER_IGNORE  # Let clicks through when just the overlay
 	
+	# Set up panel styling
+	setup_panel_style()
+	
+	# Connect UI elements
+	if close_button:
+		close_button.pressed.connect(hide_overlay)
+	
+	if tree:
+		tree.item_edited.connect(_on_tree_edited)
+		tree.set_column_title(0, "Property")
+		tree.set_column_title(1, "Value") 
+		tree.set_column_titles_visible(true)
+	
+	# Make panel block mouse events
+	if panel:
+		panel.mouse_filter = Control.MOUSE_FILTER_STOP
+	
+	print("🎛️ Debug Overlay ready!")
+
+func setup_panel_style():
+	"""Setup the panel visual style"""
+	if not panel:
+		return
+		
 	# Make panel semi-transparent
 	var style = StyleBoxFlat.new()
 	style.bg_color = Color(0.1, 0.1, 0.1, 0.9)
@@ -38,103 +52,34 @@ func setup_ui():
 	style.border_width_left = 2
 	style.border_width_right = 2
 	style.border_color = Color.CYAN
+	style.corner_radius_top_left = 4
+	style.corner_radius_top_right = 4
+	style.corner_radius_bottom_left = 4
+	style.corner_radius_bottom_right = 4
 	panel.add_theme_stylebox_override("panel", style)
-	
-	add_child(panel)
-	
-	# Margin container
-	var margin = MarginContainer.new()
-	margin.add_theme_constant_override("margin_top", 10)
-	margin.add_theme_constant_override("margin_bottom", 10)
-	margin.add_theme_constant_override("margin_left", 10)
-	margin.add_theme_constant_override("margin_right", 10)
-	panel.add_child(margin)
-	
-	# Main vertical container
-	main_container = VBoxContainer.new()
-	margin.add_child(main_container)
-	
-	# Header
-	create_header()
-	
-	# Tree for variables
-	create_tree()
-	
-	# Buttons container
-	create_buttons_container()
-
-func create_header():
-	"""Create header with title and close button"""
-	var header_container = HBoxContainer.new()
-	main_container.add_child(header_container)
-	
-	header_label = Label.new()
-	header_label.text = "🎛️ Debug Overlay"
-	header_label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	header_container.add_child(header_label)
-	
-	close_button = Button.new()
-	close_button.text = "❌"
-	close_button.custom_minimum_size = Vector2(30, 30)
-	close_button.pressed.connect(hide_overlay)
-	header_container.add_child(close_button)
-
-func create_tree():
-	"""Create tree for displaying debug variables"""
-	tree = Tree.new()
-	tree.size_flags_vertical = Control.SIZE_EXPAND_FILL
-	tree.custom_minimum_size.y = 300
-	tree.columns = 2
-	tree.set_column_title(0, "Property")
-	tree.set_column_title(1, "Value")
-	tree.set_column_titles_visible(true)
-	tree.item_edited.connect(_on_tree_edited)
-	main_container.add_child(tree)
-
-func create_buttons_container():
-	"""Create container for action buttons"""
-	btns = HBoxContainer.new()
-	btns.alignment = BoxContainer.ALIGNMENT_CENTER
-	main_container.add_child(btns)
 
 # ===== INPUT HANDLING =====
 
-func _unhandled_input(e):
-	"""Handle debug overlay toggle input"""
-	if e.is_action_pressed("ui_debug"):
-		toggle_debug_overlay()
-		get_viewport().set_input_as_handled()
-	elif e.is_action_pressed("ui_cancel") and visible:
-		hide_overlay()
-		get_viewport().set_input_as_handled()
-
-func toggle_debug_overlay():
-	"""Toggle debug overlay visibility"""
-	# Use LogicConnector's raypick to find debuggable under cursor
-	var camera = get_viewport().get_camera_3d()
-	if not camera:
-		print("❌ No camera found for debug overlay")
-		return
-	
-	target = LogicConnector.raypick(camera)
-	
-	if target:
-		show_overlay()
-		_populate_panel()
-	else:
-		if visible:
-			hide_overlay()
-		else:
-			print("🎛️ No Debuggable object found under cursor")
+func _gui_input(event):
+	"""Handle GUI input for closing overlay"""
+	if visible and event is InputEventMouseButton:
+		if event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
+			# Check if click is outside panel
+			var panel_rect = panel.get_global_rect()
+			if not panel_rect.has_point(event.global_position):
+				hide_overlay()
+				get_viewport().set_input_as_handled()
 
 func show_overlay():
 	"""Show the debug overlay"""
 	visible = true
+	mouse_filter = Control.MOUSE_FILTER_STOP  # Capture clicks when visible
 	print("🎛️ Debug overlay shown")
 
 func hide_overlay():
 	"""Hide the debug overlay"""
 	visible = false
+	mouse_filter = Control.MOUSE_FILTER_IGNORE  # Ignore clicks when hidden
 	target = null
 	print("🎛️ Debug overlay hidden")
 
@@ -143,11 +88,13 @@ func hide_overlay():
 func _populate_panel():
 	"""Populate the debug panel with target's debug data"""
 	if not target:
+		print("❌ No target to populate panel!")
 		return
 	
 	# Update header
 	var target_name = target.name if target.has_method("get") else "Unknown"
 	header_label.text = "🎛️ Debug: %s" % target_name
+	print("🎛️ Populating debug panel for: %s" % target_name)
 	
 	# Clear existing content
 	tree.clear()
@@ -165,6 +112,11 @@ func populate_tree():
 	root.set_text(0, "Debug Properties")
 	
 	var payload = target.get_debug_payload()
+	
+	# If no manual payload, try reflection
+	if payload.is_empty() and target.has_method("reflect_debug_data"):
+		print("🔍 Using reflection to get debug data...")
+		payload = target.reflect_debug_data()
 	
 	for key in payload.keys():
 		var value = payload[key]
@@ -326,15 +278,14 @@ func execute_debug_action(action_name: String, action_callable: Callable):
 	"""Execute a debug action"""
 	print("⚡ Executing debug action: %s" % action_name)
 	
-	try:
+	if action_callable.is_valid():
 		action_callable.call()
 		show_action_feedback(action_name, true)
 		
 		# Refresh panel after action execution
 		_populate_panel()
-		
-	except:
-		print("❌ Failed to execute debug action: %s" % action_name)
+	else:
+		print("❌ Failed to execute debug action: %s (Invalid callable)" % action_name)
 		show_action_feedback(action_name, false)
 
 func show_action_feedback(action_name: String, success: bool):
@@ -358,7 +309,7 @@ func is_overlay_visible() -> bool:
 	"""Check if overlay is currently visible"""
 	return visible
 
-func get_current_target() -> Debuggable:
+func get_current_target() -> Object:
 	"""Get currently debugged target"""
 	return target
 

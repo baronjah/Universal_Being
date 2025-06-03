@@ -107,7 +107,8 @@ func get_socket(socket_id: String) -> UniversalBeingSocket:
 
 func get_sockets_by_type(socket_type: UniversalBeingSocket.SocketType) -> Array[UniversalBeingSocket]:
 	"""Get all sockets of a specific type"""
-	return socket_groups.get(socket_type, [])
+	var empty_array: Array[UniversalBeingSocket] = []
+	return socket_groups.get(socket_type, empty_array)
 
 func get_sockets_by_name(name: String) -> Array[UniversalBeingSocket]:
 	"""Get all sockets with a specific name"""

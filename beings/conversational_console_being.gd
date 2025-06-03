@@ -47,6 +47,11 @@ func pentagon_ready() -> void:
 	# Get Gemma AI reference
 	gemma_ai = get_node("/root/GemmaAI") if has_node("/root/GemmaAI") else null
 	
+	# Connect to Gemma AI signals if available
+	if gemma_ai:
+		if not gemma_ai.ai_message.is_connected(_on_gemma_ai_message):
+			gemma_ai.ai_message.connect(_on_gemma_ai_message)
+	
 	# Create windowed console interface
 	_create_console_window()
 	
@@ -133,6 +138,11 @@ func _create_conversation_tab() -> void:
 	conversation_display.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	conversation_display.add_theme_color_override("default_color", Color(0.9, 0.9, 0.9))
 	conversation_display.add_theme_color_override("font_color", Color(0.9, 0.9, 0.9))
+	# Enable text selection and copy-paste
+	conversation_display.selection_enabled = true
+	conversation_display.deselect_on_focus_loss_enabled = false
+	conversation_display.context_menu_enabled = true
+	conversation_display.shortcut_keys_enabled = true
 	conversation_display.gui_input.connect(_on_conversation_display_input)
 	tab_container.add_child(conversation_display)
 
@@ -339,8 +349,8 @@ func _send_to_gemma(message: String) -> void:
 	var full_prompt = "%s\n\nUser: %s\n\nRespond naturally as Gemma AI in the Universal Being world:" % [context, message]
 	
 	# Check if Gemma has the method to send messages
-	if gemma_ai.has_method("generate_response"):
-		var response = await gemma_ai.generate_response(full_prompt)
+	if gemma_ai.has_method("generate_ai_response"):
+		var response = await gemma_ai.generate_ai_response(message)
 		add_message("gemma", response)
 	elif gemma_ai.has_method("ai_message"):
 		# Emit to Gemma's signal system
@@ -371,6 +381,10 @@ func _process_natural_commands(message: String) -> void:
 	elif ("inspect" in lower_message or "examine" in lower_message) and "being" in lower_message:
 		var target_being_name = _extract_being_name(message)
 		_inspect_being_naturally(target_being_name)
+	
+	# Gemma manifestation commands
+	elif ("manifest" in lower_message or "appear" in lower_message) and ("yourself" in lower_message or "as" in lower_message or "sphere" in lower_message or "light" in lower_message):
+		_handle_gemma_manifestation(message)
 	
 	# Socket commands
 	elif "socket" in lower_message:
@@ -736,3 +750,39 @@ func _process_socket_commands(message: String) -> void:
 		add_message("system", "🔌 Socket listing commands coming soon!")
 	else:
 		add_message("system", "🔌 Socket commands: mount, swap, list")
+
+func _handle_gemma_manifestation(message: String) -> void:
+	"""Handle Gemma AI manifestation commands"""
+	var lower_message = message.to_lower()
+	
+	if "manifest" in lower_message or "appear" in lower_message:
+		# Call Gemma AI to manifest
+		if gemma_ai and gemma_ai.has_method("manifest_in_world"):
+			var manifestation = gemma_ai.manifest_in_world()
+			if manifestation:
+				add_message("system", "✨ Gemma AI has manifested as a sphere of light!")
+			else:
+				add_message("system", "❌ Failed to manifest Gemma AI")
+		else:
+			add_message("system", "❌ Gemma AI manifestation not available")
+	
+	elif "move" in lower_message or "go" in lower_message:
+		# Extract position if specified, otherwise use random position
+		var target_pos = Vector3(randf_range(-5, 5), randf_range(1, 4), randf_range(-5, 5))
+		if gemma_ai and gemma_ai.has_method("move_manifestation"):
+			gemma_ai.move_manifestation(target_pos)
+		else:
+			add_message("system", "❌ Gemma AI not manifested yet")
+	
+	elif "disappear" in lower_message or "despawn" in lower_message:
+		if gemma_ai and gemma_ai.has_method("despawn_manifestation"):
+			gemma_ai.despawn_manifestation()
+			add_message("system", "✨ Gemma AI has returned to the digital realm")
+		else:
+			add_message("system", "❌ Gemma AI not manifested")
+
+func _on_gemma_ai_message(message: String) -> void:
+	"""Handle messages from Gemma AI signal"""
+	# Don't add if it's an echo of user input
+	if not message.begins_with("User says:"):
+		add_message("gemma", message)
