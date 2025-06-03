@@ -141,25 +141,6 @@ func _adjust_visual_for_trait(trait_name: String, trait_value: float) -> void:
 			# Higher evolution = faster particles
 			particles.speed_scale = 0.5 + trait_value * 1.5
 
-func _process(delta: float) -> void:
-	"""Process resonance pulsing"""
-	if not target_being or not visual_node:
-		return
-	
-	pulse_timer += delta * pulse_frequency
-	
-	# Pulse the resonance effect
-	var pulse = (sin(pulse_timer) + 1.0) * 0.5
-	var intensity = pulse * resonance_strength
-	
-	if visual_node:
-		visual_node.scale = Vector3.ONE * (1.0 + intensity * 0.2)
-		
-		# Emit resonance peak at maximum
-		if pulse > 0.95 and pulse_timer > 1.0:
-			resonance_peak.emit(intensity)
-			pulse_timer = 0.0
-
 func trigger_resonance_burst() -> void:
 	"""Trigger a burst of resonance energy"""
 	if particles:

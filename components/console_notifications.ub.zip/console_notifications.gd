@@ -9,6 +9,8 @@ extends Node
 
 class_name ConsoleNotificationsComponent
 
+# Godot lifecycle functions removed - base UniversalBeing handles bridging to Pentagon Architecture
+
 # Notification settings
 var enabled: bool = true
 var log_interactions: bool = true
@@ -23,10 +25,6 @@ var console_reference: Node
 
 # Signal
 signal notification_sent(message: String)
-
-func _ready() -> void:
-	name = "ConsoleNotificationsComponent"
-	print("📢 Console Notifications Component initialized")
 
 func apply_to_being(being: Node) -> void:
 	"""Apply notifications to a Universal Being"""

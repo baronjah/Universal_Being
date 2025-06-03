@@ -44,8 +44,10 @@ Beings evolve through consciousness stages:
 - **AI Collaboration**: Watch 6 AIs work together to create new beings
 - **Component System**: Modular .ub.zip files for infinite extensibility
 - **Scene Control**: Beings can control entire game scenes
-- **4D Timeline Management**: Branch, merge, and explore alternative timelines
-- **Code-Based Compression**: ZIP-style data storage with 50-70% compression ratios
+- **4D Timeline Management**: Branch, merge, and explore alternative timelines with perfect state restoration
+- **Code-Based Compression**: ZIP-style data storage with 50-70% compression ratios (validated by test suite)
+- **Scenario System**: Track complex multi-step events across branching timelines
+- **Checkpoint System**: Manual and automatic save points for timeline continuity
 - **Infinite Recursion**: Universes within universes with visual navigation
 - **Real-Time Editing**: Everything editable from within the game
 

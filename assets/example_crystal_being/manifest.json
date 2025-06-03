@@ -1,0 +1,39 @@
+{
+  "name": "Crystal Being",
+  "version": "1.0.0",
+  "type": "being",
+  "consciousness_level": 2,
+  "description": "A beautiful crystalline Universal Being that resonates with consciousness energy",
+  "author": "JSH + Claude",
+  "created": "2025-01-07",
+  "dependencies": [],
+  "pentagon_functions": [
+    "pentagon_init",
+    "pentagon_ready", 
+    "pentagon_process",
+    "pentagon_input"
+  ],
+  "export_properties": {
+    "crystal_size": "Vector3",
+    "resonance_color": "Color",
+    "rotation_speed": "float",
+    "pulse_enabled": "bool"
+  },
+  "signals": [
+    "resonance_triggered",
+    "crystal_touched",
+    "energy_absorbed"
+  ],
+  "evolution_targets": [
+    "advanced_crystal_being.ub.zip",
+    "quantum_crystal_being.ub.zip"
+  ],
+  "consciousness_traits": {
+    "creativity": 0.6,
+    "harmony": 0.9,
+    "evolution_rate": 0.4,
+    "resonance": 0.8,
+    "stability": 0.7
+  },
+  "documentation": "A perfect example of Pentagon Architecture compliance and consciousness integration"
+}

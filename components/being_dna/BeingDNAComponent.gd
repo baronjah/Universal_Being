@@ -127,7 +127,7 @@ func update_dna_visualization(delta: float) -> void:
             update_trait_visualization(category_key, trait_key, trait_value)
 
 func update_trait_visualization(category_key: String, trait_key: String, trait_value: float) -> void:
-    """Update visual representation of a trait"""
+    # Update visual representation of a trait
     if not dna_helix or not dna_helix.has_method("update_trait"):
         return
     
@@ -136,7 +136,7 @@ func update_trait_visualization(category_key: String, trait_key: String, trait_v
     dna_helix.update_trait(category_key, trait_key, trait_color)
 
 func get_trait_color(category_key: String, trait_key: String, trait_value: float) -> Color:
-    """Get color representation of trait value"""
+    # Get color representation of trait value
     var base_colors = {
         "physical": Color(0.2, 0.8, 0.2),  # Green
         "consciousness": Color(0.8, 0.2, 0.8),  # Purple
@@ -161,7 +161,7 @@ func calculate_evolution_potential() -> void:
             evolution_potential[category_name + "." + trait_name] = potential
 
 func calculate_trait_potential(category: String, trait: String, value: float) -> Dictionary:
-    """Calculate evolution potential for a trait"""
+    # Calculate evolution potential for a trait
     var potential = {
         "current": value,
         "min": 0.0,
@@ -187,7 +187,7 @@ func calculate_trait_potential(category: String, trait: String, value: float) ->
     return potential
 
 func evolve_trait(category: String, trait: String, direction: String) -> bool:
-    """Evolve a specific trait"""
+    # Evolve a specific trait
     if not dna_traits.has(category) or not dna_traits[category].has(trait):
         return false
     
@@ -265,7 +265,7 @@ func handle_dna_click(position: Vector2) -> void:
         show_evolution_options(category, trait, value)
 
 func show_evolution_options(category: String, trait: String, value: float) -> void:
-    """Show available evolution options for a trait"""
+    # Show available evolution options for a trait
     var potential = evolution_potential.get(category + "." + trait, {})
     if potential.is_empty():
         return
@@ -277,7 +277,7 @@ func show_evolution_options(category: String, trait: String, value: float) -> vo
         menu.global_position = get_viewport().get_mouse_position()
 
 func create_evolution_menu(category: String, trait: String, potential: Dictionary) -> Control:
-    """Create menu for trait evolution options"""
+    # Create menu for trait evolution options
     var menu_scene = load("res://components/being_dna/evolution_menu.tscn")
     if not menu_scene:
         return null
@@ -298,14 +298,14 @@ func ai_interface() -> Dictionary:
         "traits": dna_traits,
         "evolution_potential": evolution_potential,
         "methods": {
-            "evolve_trait": funcref(self, "evolve_trait"),
-            "get_trait_value": funcref(self, "get_trait_value"),
-            "calculate_potential": funcref(self, "calculate_evolution_potential")
+            "evolve_trait": Callable(self, "evolve_trait"),
+            "get_trait_value": Callable(self, "get_trait_value"),
+            "calculate_potential": Callable(self, "calculate_evolution_potential")
         }
     }
 
 func get_trait_value(category: String, trait: String) -> float:
-    """Get current value of a trait"""
+    # Get current value of a trait
     if dna_traits.has(category) and dna_traits[category].has(trait):
         return dna_traits[category][trait]
     return 0.5  # Default value 

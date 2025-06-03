@@ -8,11 +8,14 @@ class_name Component
 
 # Component identity
 var component_name: String = "base_component"
+var component_type: String = "base"
 var component_version: String = "1.0.0"
 var component_description: String = "Base component class"
+var tags: Array[String] = []
 
 # Component state
 var is_active: bool = true
+var attached_being: UniversalBeing = null  # Alias for parent_being
 var parent_being: UniversalBeing = null
 var component_data: Dictionary = {}
 

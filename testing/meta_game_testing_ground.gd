@@ -114,8 +114,8 @@ func pentagon_input(event: InputEvent) -> void:
     if event is InputEventKey and event.pressed:
         match event.keycode:
             KEY_F5: run_all_tests()
-            KEY_F6: run_test("potato_door")
-            KEY_F7: run_test("ai_collaboration")
+            KEY_F6: await run_test("potato_door")
+            KEY_F7: await run_test("ai_collaboration")
             KEY_F8: _create_gemma_test_scenario()
 
 func pentagon_sewers() -> void:
@@ -133,7 +133,7 @@ func run_all_tests() -> Dictionary:
     
     for test_name in test_scenarios:
         print("🧪 Running test: %s" % test_name)
-        var result = run_test(test_name)
+        var result = await run_test(test_name)
         all_results[test_name] = result
         
         # Wait between tests

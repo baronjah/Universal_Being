@@ -42,8 +42,10 @@ func process_physics(delta: float) -> void:
 
 func apply_gravity(delta: float) -> void:
     """Applies gravity to all physics bodies in the universe"""
-    var space_state = get_world_3d().direct_space_state
-    var bodies = get_tree().get_nodes_in_group("physics_bodies")
+    if not attached_being:
+        return
+    var space_state = attached_being.get_world_3d().direct_space_state
+    var bodies = attached_being.get_tree().get_nodes_in_group("physics_bodies")
     
     for body in bodies:
         if body is PhysicsBody3D:

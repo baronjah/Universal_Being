@@ -143,6 +143,8 @@ func _input(event: InputEvent) -> void:
 					open_universe_dna_editor()
 				KEY_R:  # Ctrl+R for Reality Editor
 					open_reality_editor()
+				KEY_Q:  # Ctrl+Q for Blueprint Toolbar (Quick creation)
+					toggle_blueprint_toolbar()
 		elif event.alt_pressed:
 			match event.keycode:
 				KEY_G:  # Alt+G for Genesis conductor
@@ -214,6 +216,7 @@ func show_help() -> void:
 	print("  Ctrl+L - Open Component Library (browse and apply components)")
 	print("  Ctrl+D - Open Universe DNA Editor (modify genetic traits)")
 	print("  Ctrl+R - Open Reality Editor (shape existence itself)")
+	print("  Ctrl+Q - Toggle Blueprint Toolbar (Quick DNA cloning/evolution)")
 	print("  In INSPECT mode - Click any being to inspect it")
 	print("  In INTERACT mode - Click beings for normal interaction")
 	print("")
@@ -1090,6 +1093,62 @@ func find_reality_editor() -> Node:
 			return child
 	return null
 
+func toggle_blueprint_toolbar() -> void:
+	"""Toggle the Blueprint Toolbar for quick DNA-based creation"""
+	print("🧬 Blueprint Toolbar toggle requested (Ctrl+Q)")
+	
+	# Check if toolbar already exists
+	var existing_toolbar = get_node_or_null("BlueprintToolbar")
+	if existing_toolbar:
+		if existing_toolbar.has_method("_toggle_toolbar"):
+			existing_toolbar._toggle_toolbar()
+		return
+	
+	# Create blueprint toolbar
+	var ToolbarClass = load("res://ui/BlueprintToolbar.gd")
+	if not ToolbarClass:
+		print("❌ Cannot load BlueprintToolbar script")
+		return
+	
+	var toolbar = ToolbarClass.new()
+	toolbar.name = "BlueprintToolbar"
+	add_child(toolbar)
+	
+	# Connect signals
+	if toolbar.has_signal("clone_requested"):
+		toolbar.clone_requested.connect(_on_blueprint_clone_requested)
+	if toolbar.has_signal("evolution_requested"):
+		toolbar.evolution_requested.connect(_on_blueprint_evolution_requested)
+	if toolbar.has_signal("template_saved"):
+		toolbar.template_saved.connect(_on_blueprint_template_saved)
+	
+	print("🧬 Blueprint Toolbar created - Quick DNA-based creation enabled!")
+	
+	# Notify AI
+	if GemmaAI:
+		GemmaAI.ai_message.emit("🧬 Blueprint Toolbar activated - rapid DNA cloning and evolution at your fingertips!")
+
+func _on_blueprint_clone_requested(source_being: UniversalBeing, modifications: Dictionary) -> void:
+	"""Handle clone request from blueprint toolbar"""
+	print("🧬 Clone requested from toolbar: %s" % source_being.being_name)
+
+func _on_blueprint_evolution_requested(source_being: UniversalBeing, template_dna: UniversalBeingDNA) -> void:
+	"""Handle evolution request from blueprint toolbar"""
+	print("🧬 Evolution requested from toolbar: %s -> %s" % [source_being.being_name, template_dna.being_name])
+
+func _on_blueprint_template_saved(template_name: String, dna: UniversalBeingDNA) -> void:
+	"""Handle template save from blueprint toolbar"""
+	print("🧬 Template saved: %s with %d traits" % [template_name, dna.get_total_trait_count()])
+	
+	# Log to Akashic Library
+	if SystemBootstrap and SystemBootstrap.is_system_ready():
+		var akashic = SystemBootstrap.get_akashic_library()
+		if akashic:
+			akashic.log_genesis_event("dna_template_saved",
+				"🧬 DNA template '%s' preserved in the eternal library" % template_name,
+				{"template_name": template_name, "trait_count": dna.get_total_trait_count()}
+			)
+
 func launch_interactive_test_environment() -> Node:
 	"""Launch the Interactive Test Environment for demonstrating Universal Being physics"""
 	print("🧪 Launching Interactive Test Environment...")
@@ -1148,3 +1207,4 @@ func _on_test_being_created(being: UniversalBeing) -> void:
 func _on_test_being_evolved(being: UniversalBeing, old_level: int, new_level: int) -> void:
 	"""Handle test being evolution"""
 	print("🧪 Test Evolution: %s evolved from level %d to %d!" % [being.being_name, old_level, new_level])
+

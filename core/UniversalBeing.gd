@@ -64,6 +64,12 @@ var metadata: Dictionary = {
 	"gemma_can_modify": true
 }
 
+## DNA and Blueprint System
+var dna_profile: UniversalBeingDNA = null
+var auto_analyze_dna: bool = true
+var blueprint_template: Dictionary = {}
+var clone_count: int = 0
+
 # ===== CONSCIOUSNESS AURA VISUAL SYSTEM =====
 
 var aura_node: Node2D = null
@@ -107,6 +113,12 @@ signal evolution_completed(new_being: UniversalBeing)
 signal component_added(component_path: String)
 signal component_removed(component_path: String)
 signal being_destroyed()
+
+# DNA and Blueprint signals
+signal dna_analyzed(dna_profile: UniversalBeingDNA)
+signal blueprint_created(blueprint_data: Dictionary)
+signal clone_created(clone: UniversalBeing, source_dna: UniversalBeingDNA)
+signal template_applied(template_name: String, modifications: Dictionary)
 
 # Physics and interaction signals
 signal being_entered_proximity(other_being: UniversalBeing)
@@ -173,12 +185,19 @@ func pentagon_init() -> void:
 	
 	# Initialize state machine
 	_initialize_state_machine()
+	
+	# Initialize DNA system
+	_initialize_dna_system()
 
 func pentagon_ready() -> void:
 	"""Ready phase - ALWAYS CALL SUPER FIRST in subclasses"""
 	pentagon_is_ready = true
 	consciousness_awakened.emit(consciousness_level)
 	update_visual_layer_order()
+	
+	# Perform initial DNA analysis if enabled
+	if auto_analyze_dna:
+		call_deferred("analyze_dna")
 
 func pentagon_process(delta: float) -> void:
 	"""Process phase - ALWAYS CALL SUPER FIRST in subclasses"""
@@ -694,18 +713,6 @@ func get_all_methods() -> Array[String]:
 		
 	return methods
 
-func clone_being() -> UniversalBeing:
-	"""Create a copy of this being"""
-	var clone = get_script().new()
-	
-	# Copy basic properties
-	clone.being_name = being_name + "_clone"
-	clone.being_type = being_type
-	clone.consciousness_level = consciousness_level
-	clone.components = components.duplicate()
-	clone.evolution_state = evolution_state.duplicate(true)
-	
-	return clone
 
 func save_to_zip(file_path: String) -> bool:
 	"""Save this being as a .ub.zip file"""
@@ -1505,3 +1512,231 @@ func _process_interaction_with(partner: UniversalBeing) -> void:
 	elif resonance > 0.5:
 		# Medium resonance shares consciousness
 		_transfer_consciousness(partner)
+
+# ===== DNA AND BLUEPRINT SYSTEM =====
+
+func _initialize_dna_system() -> void:
+	"""Initialize the DNA analysis system"""
+	if not dna_profile:
+		dna_profile = UniversalBeingDNA.new()
+	
+	print("🧬 DNA system initialized for %s" % being_name)
+
+func analyze_dna() -> UniversalBeingDNA:
+	"""Analyze and extract DNA from this being"""
+	if not dna_profile:
+		dna_profile = UniversalBeingDNA.new()
+	
+	dna_profile.analyze_being(self)
+	dna_analyzed.emit(dna_profile)
+	
+	print("🧬 DNA analysis complete for %s - %d traits catalogued" % [being_name, dna_profile.get_total_trait_count()])
+	log_action("dna_analysis", "DNA profile generated with %d traits" % dna_profile.get_total_trait_count())
+	
+	return dna_profile
+
+func get_dna_profile() -> UniversalBeingDNA:
+	"""Get the current DNA profile, analyzing if needed"""
+	if not dna_profile:
+		return analyze_dna()
+	return dna_profile
+
+func create_blueprint() -> Dictionary:
+	"""Create a blueprint for cloning/evolution"""
+	var dna = get_dna_profile()
+	blueprint_template = dna.create_clone_blueprint()
+	blueprint_created.emit(blueprint_template)
+	
+	print("🧬 Blueprint created for %s" % being_name)
+	log_action("blueprint_creation", "Blueprint generated for replication")
+	
+	return blueprint_template
+
+func clone_being(modifications: Dictionary = {}) -> UniversalBeing:
+	"""Create a clone of this being with optional modifications"""
+	var dna = get_dna_profile()
+	var blueprint = dna.create_clone_blueprint()
+	
+	# Create new being instance
+	var clone = get_script().new()
+	clone.being_name = being_name + "_Clone_%d" % (clone_count + 1)
+	clone.being_type = being_type
+	clone.being_uuid = generate_uuid()
+	
+	# Apply inheritance factors
+	var inheritance = blueprint.inheritance_factors
+	clone.consciousness_level = int(consciousness_level * inheritance.consciousness_inheritance)
+	clone.components = components.duplicate() if inheritance.component_inheritance >= 1.0 else []
+	clone.visual_layer = visual_layer
+	clone.clone_count = 0
+	
+	# Apply modifications
+	for property in modifications:
+		if property in clone:
+			clone.set(property, modifications[property])
+	
+	# Set parent lineage
+	clone.metadata.parent_uuid = being_uuid
+	clone.metadata.created_at = Time.get_ticks_msec()
+	
+	# Update clone count
+	clone_count += 1
+	
+	clone_created.emit(clone, dna)
+	print("🧬 Clone created: %s (consciousness: %d)" % [clone.being_name, clone.consciousness_level])
+	log_action("cloning", "Created clone %s with %d consciousness" % [clone.being_name, clone.consciousness_level])
+	
+	return clone
+
+func apply_template(template_name: String, template_data: Dictionary) -> bool:
+	"""Apply a template to modify this being"""
+	var modifications = {}
+	
+	# Extract modifications from template
+	if template_data.has("consciousness_modifications"):
+		var consciousness_mods = template_data.consciousness_modifications
+		if consciousness_mods.has("level_change"):
+			consciousness_level = clamp(consciousness_level + consciousness_mods.level_change, 0, 7)
+			modifications["consciousness_level"] = consciousness_level
+	
+	if template_data.has("component_modifications"):
+		var component_mods = template_data.component_modifications
+		for component_path in component_mods.get("add_components", []):
+			if add_component(component_path):
+				modifications["added_component"] = component_path
+		for component_path in component_mods.get("remove_components", []):
+			if remove_component(component_path):
+				modifications["removed_component"] = component_path
+	
+	if template_data.has("visual_modifications"):
+		var visual_mods = template_data.visual_modifications
+		if visual_mods.has("layer_change"):
+			visual_layer += visual_mods.layer_change
+			modifications["visual_layer"] = visual_layer
+	
+	# Update metadata
+	metadata.modified_at = Time.get_ticks_msec()
+	
+	template_applied.emit(template_name, modifications)
+	print("🧬 Template '%s' applied to %s" % [template_name, being_name])
+	log_action("template_application", "Applied template %s with %d modifications" % [template_name, modifications.size()])
+	
+	# Re-analyze DNA after template application
+	if auto_analyze_dna:
+		call_deferred("analyze_dna")
+	
+	return true
+
+func evolve_from_template(template_being: UniversalBeing, mutation_factor: float = 0.1) -> bool:
+	"""Evolve this being based on another being's DNA template"""
+	if not template_being:
+		return false
+	
+	var template_dna = template_being.get_dna_profile()
+	var evolution_blueprint = template_dna.get_evolution_blueprint()
+	
+	print("🧬 Evolving %s from %s template" % [being_name, template_being.being_name])
+	
+	# Apply evolutionary changes
+	var success_rate = evolution_blueprint.success_probability
+	if randf() < success_rate:
+		# Successful evolution
+		var mutation_points = evolution_blueprint.mutation_points
+		
+		for mutation in mutation_points:
+			if randf() < mutation.mutation_probability * mutation_factor:
+				_apply_mutation(mutation)
+		
+		# Update consciousness if applicable
+		if template_being.consciousness_level > consciousness_level:
+			var level_increase = min(1, template_being.consciousness_level - consciousness_level)
+			consciousness_level += level_increase
+		
+		# Inherit some components
+		for component in template_being.components:
+			if randf() < 0.3:  # 30% chance to inherit each component
+				add_component(component)
+		
+		evolution_initiated.emit(being_type, template_being.being_type + "_evolved")
+		
+		print("🧬 Evolution successful! %s evolved traits from %s" % [being_name, template_being.being_name])
+		log_action("template_evolution", "Successfully evolved from %s template" % template_being.being_name)
+		
+		# Re-analyze DNA
+		if auto_analyze_dna:
+			call_deferred("analyze_dna")
+		
+		return true
+	else:
+		print("🧬 Evolution failed for %s" % being_name)
+		log_action("template_evolution", "Evolution attempt failed")
+		return false
+
+func _apply_mutation(mutation: Dictionary) -> void:
+	"""Apply a specific mutation"""
+	match mutation.type:
+		"consciousness":
+			var range_values = mutation.mutation_range
+			consciousness_level = randi_range(range_values[0], range_values[1])
+		"component":
+			# Component mutation - could modify existing component
+			var component_path = mutation.component
+			if component_path in components:
+				# Could create a variant of the component
+				print("🧬 Mutating component: %s" % component_path)
+		"scene_structure":
+			# Scene structure mutation
+			if scene_is_loaded:
+				print("🧬 Mutating scene structure")
+
+func get_evolution_options() -> Array[Dictionary]:
+	"""Get available evolution options for this being"""
+	var dna = get_dna_profile()
+	var blueprint = dna.get_evolution_blueprint()
+	return blueprint.evolution_paths
+
+func get_blueprint_summary() -> String:
+	"""Get a summary of this being's blueprint"""
+	var dna = get_dna_profile()
+	return dna.get_summary()
+
+func save_dna_to_file(file_path: String) -> bool:
+	"""Save DNA profile to file"""
+	var dna = get_dna_profile()
+	return dna.save_to_file(file_path)
+
+func can_create_from_dna(dna: UniversalBeingDNA) -> bool:
+	"""Check if this being can create another being from given DNA"""
+	if consciousness_level < 3:
+		return false
+	
+	var required_consciousness = dna.consciousness_level
+	return consciousness_level >= required_consciousness - 1
+
+func create_from_dna(dna: UniversalBeingDNA, parent: Node = null) -> UniversalBeing:
+	"""Create a new being from DNA profile"""
+	if not can_create_from_dna(dna):
+		print("🧬 Cannot create being - insufficient consciousness level")
+		return null
+	
+	# Create new being
+	var new_being = get_script().new()
+	new_being.being_name = dna.being_name + "_Created"
+	new_being.being_type = dna.being_type
+	new_being.consciousness_level = max(1, dna.consciousness_level - 1)
+	new_being.components = dna.component_list.duplicate()
+	new_being.visual_layer = dna.visual_layer
+	
+	# Set metadata
+	new_being.metadata.parent_uuid = being_uuid
+	new_being.metadata.created_at = Time.get_ticks_msec()
+	
+	# Add to scene
+	var target_parent = parent if parent else get_parent()
+	if target_parent:
+		target_parent.add_child(new_being)
+	
+	print("🧬 Created new being from DNA: %s" % new_being.being_name)
+	log_action("dna_creation", "Created %s from DNA template" % new_being.being_name)
+	
+	return new_being

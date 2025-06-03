@@ -228,7 +228,7 @@ func ai_interface() -> Dictionary:
 	return base_interface
 
 func ai_invoke_method(method_name: String, args: Array = []) -> Variant:
-	"""AI method invocation for camera"""
+	# AI method invocation for camera
 	match method_name:
 		"set_consciousness":
 			if args.size() > 0:
@@ -252,7 +252,7 @@ func ai_invoke_method(method_name: String, args: Array = []) -> Variant:
 # ===== CAMERA EFFECTS INTEGRATION =====
 
 func _on_consciousness_changed(new_level: int) -> void:
-	"""Override consciousness change to update effects"""
+	# Override consciousness change to update effects
 	var old_level = consciousness_level  # Store old level before parent changes it
 	super._on_consciousness_changed(new_level)
 	
@@ -260,7 +260,7 @@ func _on_consciousness_changed(new_level: int) -> void:
 		camera_effects._on_consciousness_changed(old_level, new_level)
 
 func set_effects_enabled(enabled: bool) -> void:
-	"""Enable/disable camera effects"""
+	# Enable/disable camera effects
 	effects_enabled = enabled
 	if camera_effects:
 		camera_effects.set_effects_enabled(enabled)

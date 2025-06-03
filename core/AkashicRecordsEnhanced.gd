@@ -106,6 +106,7 @@ class CheckpointManager:
 
 class DataCompactor:
 	var compression_enabled: bool = true
+	var auto_archive_enabled: bool = false
 	var archive_path: String = "res://data/akashic/archives/"
 	var compression_ratio: float = 0.0
 	
@@ -135,7 +136,7 @@ class DataCompactor:
 		compacted_data = _zip_style_compression(compacted_data)
 		
 		# Step 5: Archive old data
-		if archive_old_data:
+		if auto_archive_enabled:
 			_archive_old_entries(compacted_data)
 		
 		var compressed_size = JSON.stringify(compacted_data).length()
@@ -479,7 +480,7 @@ class DataCompactor:
 		
 		return decompressed
 	
-	func _restore_string_references(data) -> void:
+	func _restore_string_references(data):
 		"""Recursively restore string references"""
 		if data is Dictionary:
 			if data.has("$REF"):
@@ -492,6 +493,7 @@ class DataCompactor:
 		elif data is Array:
 			for i in range(data.size()):
 				data[i] = _restore_string_references(data[i])
+		return data
 	
 	func _decompress_patterns(data: Dictionary) -> Dictionary:
 		"""Decompress pattern-compressed data"""

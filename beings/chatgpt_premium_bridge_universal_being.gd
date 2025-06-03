@@ -9,6 +9,8 @@
 extends UniversalBeing
 class_name ChatGPTPremiumBridgeUniversalBeing
 
+# Godot lifecycle functions removed - base UniversalBeing handles bridging to Pentagon Architecture
+
 # ===== BEING-SPECIFIC PROPERTIES =====
 @export var api_key: String = ""
 @export var chatgpt_connected: bool = false

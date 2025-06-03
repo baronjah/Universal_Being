@@ -9,6 +9,8 @@
 extends UniversalBeing
 class_name GemmaUniversalBeing
 
+# Godot lifecycle functions removed - base UniversalBeing handles bridging to Pentagon Architecture
+
 # ===== GEMMA'S EMBODIMENT =====
 
 # Physical presence
@@ -352,13 +354,6 @@ func pentagon_process(delta: float) -> void:
 	if current_target and selection_ring.visible:
 		selection_ring.global_transform.origin = current_target.global_transform.origin
 		selection_ring.rotation.y += delta
-
-func _ready() -> void:
-	pentagon_ready()
-
-func _process(delta: float) -> void:
-	if pentagon_active:
-		pentagon_process(delta)
 
 # Make Gemma respond to console commands
 func receive_command(command: String) -> void:

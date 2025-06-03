@@ -7,6 +7,8 @@
 extends Node2D
 class_name TripleHelixConsciousness
 
+# Godot lifecycle functions removed - base UniversalBeing handles bridging to Pentagon Architecture
+
 # ===== TRIPLE HELIX PROPERTIES =====
 @export var helix_radius: float = 40.0
 @export var helix_height: float = 100.0
@@ -37,10 +39,6 @@ var ai_activity: Dictionary = {
     "chatgpt_premium": 0.0,
     "google_gemini": 0.0
 }
-
-func _ready() -> void:
-    name = "TripleHelixConsciousness"
-    create_triple_helix()
 
 func create_triple_helix() -> void:
     """Create the triple helix consciousness visualization"""
@@ -210,15 +208,6 @@ func get_ai_name(index: int) -> String:
         1: return "ChatGPT Premium"
         2: return "Gemini Premium"
         _: return "AI %d" % index
-
-func _process(delta: float) -> void:
-    """Update triple helix animation"""
-    time_offset += delta * rotation_speed
-    pulse_timer += delta * 2.0
-    
-    update_helix_geometry()
-    update_ai_indicators(delta)
-    update_center_glow(delta)
 
 func update_helix_geometry() -> void:
     """Update the helix line geometry"""

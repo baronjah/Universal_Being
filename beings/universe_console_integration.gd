@@ -12,18 +12,6 @@ var console_component: UniverseConsoleComponent = null
 var universe_navigator: UniverseNavigator = null
 var console_being: Node = null
 
-func _ready() -> void:
-	name = "UniverseConsoleIntegration"
-	
-	# Wait for systems to be ready
-	if SystemBootstrap and not SystemBootstrap.is_system_ready():
-		await SystemBootstrap.system_ready
-	
-	# Find or create console
-	console_being = _find_console_being()
-	if console_being:
-		_integrate_universe_commands()
-
 func _find_console_being() -> Node:
 	"""Find the console universal being"""
 	var consoles = get_tree().get_nodes_in_group("console_beings")

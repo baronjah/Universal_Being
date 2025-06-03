@@ -2,7 +2,7 @@ extends Node
 
 # Quick diagnostic - paste this into a new script and run it
 
-func _ready():
+func _ready() -> void:
 	print("\n🔍 === QUICK DIAGNOSTIC ===")
 	
 	# Check files exist
@@ -33,13 +33,13 @@ func _ready():
 	
 	print("\n🔍 === END DIAGNOSTIC ===\n")
 
-func check_file(path: String):
+func check_file(path: String) -> void:
 	if ResourceLoader.exists(path):
 		print("✅ %s exists" % path)
 	else:
 		print("❌ %s NOT FOUND" % path)
 
-func test_load(path: String, class_name: String):
+func test_load(path: String, class_name: String) -> void:
 	var resource = load(path)
 	if resource:
 		print("✅ %s loaded successfully" % class_name)

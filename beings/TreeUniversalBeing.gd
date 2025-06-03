@@ -8,6 +8,8 @@
 extends UniversalBeing
 class_name TreeUniversalBeing
 
+# Godot lifecycle functions removed - base UniversalBeing handles bridging to Pentagon Architecture
+
 # Tree properties
 var growth_stage: int = 0  # 0-5 stages
 var trunk_height: float = 100.0
@@ -137,9 +139,3 @@ func set_season(new_season: String) -> void:
 	for leaf in leaves:
 		leaf.color = get_season_color()
 
-func _ready() -> void:
-	pentagon_ready()
-
-func _process(delta: float) -> void:
-	if pentagon_active:
-		pentagon_process(delta)

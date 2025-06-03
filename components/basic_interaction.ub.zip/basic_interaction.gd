@@ -8,6 +8,8 @@
 extends Node
 class_name BasicInteractionComponent
 
+# Godot lifecycle functions removed - base UniversalBeing handles bridging to Pentagon Architecture
+
 # Component properties
 var click_enabled: bool = true
 var hover_enabled: bool = true  
@@ -27,9 +29,6 @@ signal clicked(being: UniversalBeing)
 signal double_clicked(being: UniversalBeing)
 signal hover_entered(being: UniversalBeing)
 signal hover_exited(being: UniversalBeing)
-
-func _ready() -> void:
-	print("🎯 Basic Interaction Component initialized")
 
 func apply_to_being(target_being: UniversalBeing) -> void:
 	"""Apply this interaction component to a Universal Being"""

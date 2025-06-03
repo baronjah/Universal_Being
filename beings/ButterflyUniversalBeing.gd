@@ -92,12 +92,7 @@ func set_butterfly_color(new_color: Color) -> void:
 	if wing_right:
 		wing_right.color = color
 
-func _ready() -> void:
-	pentagon_ready()
-
-func _process(delta: float) -> void:
-	if pentagon_active:
-		pentagon_process(delta)
+# Godot lifecycle functions removed - base UniversalBeing handles bridging to Pentagon Architecture
 
 func create_butterfly_visuals() -> void:
 	"""Create the visual representation of the butterfly"""

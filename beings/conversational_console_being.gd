@@ -9,6 +9,8 @@
 extends UniversalBeing
 class_name ConversationalConsoleBeing
 
+# Godot lifecycle functions removed - base UniversalBeing handles bridging to Pentagon Architecture
+
 # ===== CONSOLE PROPERTIES =====
 @export var window_title: String = "Universal Being - AI Conversation"
 @export var window_size: Vector2 = Vector2(800, 600)

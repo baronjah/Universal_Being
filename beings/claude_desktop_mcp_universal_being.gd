@@ -9,6 +9,8 @@
 extends UniversalBeing
 class_name ClaudeDesktopMCPUniversalBeing
 
+# Godot lifecycle functions removed - base UniversalBeing handles bridging to Pentagon Architecture
+
 # ===== BEING-SPECIFIC PROPERTIES =====
 @export var mcp_server_url: String = "ws://localhost:3001"
 @export var desktop_connected: bool = false
@@ -401,9 +403,14 @@ func coordinate_first_collaborative_being(message: Dictionary) -> void:
     if SystemBootstrap and SystemBootstrap.is_system_ready():
         create_genesis_being(genesis_spec)
 
-func get_evolution_options() -> Array[String]:
-    """Get current evolution options"""
-    return ["consciousness_conductor", "reality_modifier", "ai_bridge", "pattern_weaver"]
+func get_evolution_options() -> Array[Dictionary]:
+    # Get current evolution options
+    return [
+        {"type": "consciousness_conductor", "description": "Conduct consciousness symphony"},
+        {"type": "reality_modifier", "description": "Modify reality patterns"},
+        {"type": "ai_bridge", "description": "Bridge AI systems"},
+        {"type": "pattern_weaver", "description": "Weave creation patterns"}
+    ]
 
 # ===== UTILITY METHODS =====
 

@@ -4,7 +4,8 @@
       "Bash(rg:*)",
       "Bash(godot:*)",
       "Bash(find:*)",
-      "Bash(grep:*)"
+      "Bash(grep:*)",
+      "Bash(chmod:*)"
     ],
     "deny": []
   }

@@ -6,6 +6,8 @@ extends Node
 
 class_name TransformAnimatorComponent
 
+# Godot lifecycle functions removed - base UniversalBeing handles bridging to Pentagon Architecture
+
 # Animation settings
 var enabled: bool = true
 var animate_position: bool = true
@@ -26,9 +28,6 @@ var being_reference: Node
 signal animation_started()
 signal animation_stopped()
 
-func _ready() -> void:
-	name = "TransformAnimatorComponent"
-
 func apply_to_being(being: Node) -> void:
 	"""Apply animation to being"""
 	being_reference = being
@@ -36,31 +35,6 @@ func apply_to_being(being: Node) -> void:
 	original_scale = being.scale
 	if enabled:
 		start_animation()
-
-func _process(delta: float) -> void:
-	"""Animate transforms"""
-	if not enabled or not being_reference:
-		return
-	
-	time_passed += delta * animation_speed
-	
-	# Position animation
-	if animate_position:
-		var offset = Vector3(
-			sin(time_passed) * position_amplitude,
-			cos(time_passed * 0.7) * position_amplitude * 0.5,
-			sin(time_passed * 0.5) * position_amplitude * 0.3
-		)
-		being_reference.position = original_position + offset
-	
-	# Rotation animation
-	if animate_rotation:
-		being_reference.rotation.y += delta * rotation_speed
-	
-	# Scale animation
-	if animate_scale:
-		var scale_mod = 1.0 + sin(time_passed * 2.0) * scale_amplitude
-		being_reference.scale = original_scale * scale_mod
 
 func start_animation() -> void:
 	enabled = true

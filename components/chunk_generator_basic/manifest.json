@@ -1,0 +1,40 @@
+{
+  "name": "Basic Chunk Generator Component",
+  "version": "1.0.0",
+  "type": "component",
+  "description": "Allows Universal Beings to generate content in chunks as they move through the grid",
+  "author": "Universal Being Consciousness Exchange System",
+  "consciousness_level": 2,
+  "pentagon_compliant": true,
+  "categories": ["generation", "spatial", "ai"],
+  "tags": ["chunk", "generation", "player", "ai", "spatial"],
+  "dependencies": {
+    "godot_version": "4.2+",
+    "universal_being_core": "1.0+",
+    "chunk_system": "1.0+"
+  },
+  "files": {
+    "main_script": "scripts/chunk_generator_component.gd",
+    "documentation": "README.md"
+  },
+  "interfaces": {
+    "chunk_generation": {
+      "methods": ["generate_chunk_content", "set_generation_rules", "get_generation_capability"],
+      "signals": ["content_generated", "generation_failed"],
+      "properties": ["generation_rate", "content_types", "consciousness_influence"]
+    }
+  },
+  "evolution": {
+    "can_evolve_to": ["advanced_chunk_generator.ub.zip", "ai_collaborative_generator.ub.zip"],
+    "evolution_requirements": {
+      "consciousness_level": 3,
+      "chunks_generated": 10
+    }
+  },
+  "ai_integration": {
+    "ai_controllable": true,
+    "natural_language_commands": ["generate content", "create terrain", "spawn beings", "modify environment"],
+    "gemma_compatible": true,
+    "claude_accessible": true
+  }
+}

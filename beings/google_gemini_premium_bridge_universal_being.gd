@@ -9,6 +9,8 @@
 extends UniversalBeing
 class_name GoogleGeminiPremiumBridgeUniversalBeing
 
+# Godot lifecycle functions removed - base UniversalBeing handles bridging to Pentagon Architecture
+
 # ===== BEING-SPECIFIC PROPERTIES =====
 @export var api_key: String = ""
 @export var gemini_connected: bool = false

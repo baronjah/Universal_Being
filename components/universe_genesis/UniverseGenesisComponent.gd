@@ -279,8 +279,8 @@ func _cmd_universe_dna(args: Array) -> String:
 		
 		dna_report += "\n%s:\n" % category.capitalize()
 		if universe_dna[category] is Dictionary:
-			for trait in universe_dna[category]:
-				dna_report += "  %s: %s\n" % [trait, universe_dna[category][trait]]
+			for trait_name in universe_dna[category]:
+				dna_report += "  %s: %s\n" % [trait_name, universe_dna[category][trait_name]]
 	
 	return dna_report
 
@@ -465,3 +465,5 @@ func ai_modify_universe_dna(trait_path: String, value: Variant) -> bool:
 		return true
 	
 	return false
+
+# End of UniverseGenesisComponent class

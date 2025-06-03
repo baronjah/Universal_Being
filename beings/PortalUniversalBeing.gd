@@ -9,6 +9,8 @@
 extends UniversalBeing
 class_name PortalUniversalBeing
 
+# Godot lifecycle functions removed - base UniversalBeing handles bridging to Pentagon Architecture
+
 # ===== PORTAL PROPERTIES =====
 
 @export var portal_name: String = "Unnamed Portal"
@@ -32,37 +34,6 @@ var portal_area: Area3D = null
 signal being_entered_portal(being: Node)
 signal being_exited_portal(being: Node, destination: Node)
 signal portal_destabilized()
-
-func _ready() -> void:
-	super._ready()
-	being_type = "portal"
-	consciousness_level = 3  # Portals have moderate consciousness
-	
-	create_portal_visuals()
-	setup_portal_area()
-func create_portal_visuals() -> void:
-	"""Create the visual representation of the portal"""
-	# Create mesh
-	portal_mesh = MeshInstance3D.new()
-	portal_mesh.mesh = TorusMesh.new()
-	portal_mesh.mesh.inner_radius = 0.8
-	portal_mesh.mesh.outer_radius = 1.2
-	add_child(portal_mesh)
-	
-	# Create simple emissive material
-	var material = StandardMaterial3D.new()
-	material.emission_enabled = true
-	material.emission = portal_color
-	material.emission_energy = 2.0
-	material.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
-	material.albedo_color = Color(portal_color.r, portal_color.g, portal_color.b, 0.5)
-	portal_mesh.material_override = material
-	
-	# Create particles
-	portal_particles = GPUParticles3D.new()
-	portal_particles.amount = 100
-	portal_particles.lifetime = 2.0
-	add_child(portal_particles)
 
 func setup_portal_area() -> void:
 	"""Setup collision area for portal entry"""
@@ -166,20 +137,6 @@ func create_transport_effect(pos: Vector3) -> void:
 	var tween = create_tween()
 	tween.tween_property(mat, "emission_energy", 0.0, 0.5)
 	tween.tween_callback(flash.queue_free)
-
-func _process(delta: float) -> void:
-	portal_age += delta
-	
-	# Update portal stability
-	if is_active:
-		portal_stability -= delta * 0.01
-		if portal_stability <= 0:
-			portal_destabilized.emit()
-			deactivate_portal()
-	
-	# Update shader time
-	if portal_mesh and portal_mesh.material_override:
-		portal_mesh.material_override.set_shader_parameter("time", portal_age)
 
 func get_portal_info() -> Dictionary:
 	"""Get information about this portal"""

@@ -9,6 +9,8 @@ extends Node
 
 class_name GlowEffectComponent
 
+# Godot lifecycle functions removed - base UniversalBeing handles bridging to Pentagon Architecture
+
 # Glow effect properties
 var glow_enabled: bool = true
 var glow_color: Color = Color.CYAN
@@ -26,10 +28,6 @@ var being_reference: Node
 signal glow_started()
 signal glow_stopped()
 signal glow_color_changed(new_color: Color)
-
-func _ready() -> void:
-	name = "GlowEffectComponent"
-	print("✨ Glow Effect Component initialized")
 
 func apply_to_being(being: Node) -> void:
 	"""Apply glow effect to a Universal Being"""
@@ -113,22 +111,6 @@ func set_glow_intensity(intensity: float) -> void:
 	"""Set glow intensity"""
 	glow_intensity = clamp(intensity, 0.0, 10.0)
 	_update_glow_appearance()
-
-func _process(delta: float) -> void:
-	"""Process glow animation"""
-	if not glow_enabled or not pulse_enabled:
-		return
-	
-	time_passed += delta * pulse_speed
-	
-	# Pulse animation
-	var pulse = (sin(time_passed * 2.0) + 1.0) * 0.5
-	var intensity_mod = 0.7 + pulse * 0.3
-	
-	if glow_node:
-		for child in glow_node.get_children():
-			if child is Sprite2D:
-				child.modulate.a = (0.5 - child.get_index() * 0.15) * intensity_mod * glow_intensity
 
 func _update_glow_appearance() -> void:
 	"""Update glow visual properties"""

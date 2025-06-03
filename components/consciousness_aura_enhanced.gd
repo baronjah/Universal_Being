@@ -7,6 +7,8 @@
 extends Node2D
 class_name ConsciousnessAuraEnhanced
 
+# Godot lifecycle functions removed - base UniversalBeing handles bridging to Pentagon Architecture
+
 # ===== CONSCIOUSNESS AURA PROPERTIES =====
 @export var consciousness_level: int = 0 : set = set_consciousness_level
 @export var aura_radius: float = 50.0
@@ -29,10 +31,6 @@ var consciousness_colors: Array[Color] = [
 # Animation State
 var pulse_timer: float = 0.0
 var swirl_rotation: float = 0.0
-
-func _ready() -> void:
-    name = "ConsciousnessAura"
-    create_enhanced_aura()
 
 func create_enhanced_aura() -> void:
     """Create beautiful particle-based consciousness aura"""
@@ -196,14 +194,6 @@ func update_aura_visuals() -> void:
         # Faster movement for higher consciousness
         material.initial_velocity_min = 20.0 + consciousness_level * 10.0
         material.initial_velocity_max = 40.0 + consciousness_level * 15.0
-
-func _process(delta: float) -> void:
-    """Animate consciousness effects"""
-    pulse_timer += delta * pulse_speed
-    swirl_rotation += delta * 30.0  # degrees per second
-    
-    update_pulse_animation(delta)
-    update_swirl_animation(delta)
 
 func update_pulse_animation(delta: float) -> void:
     """Create pulsing effect based on consciousness level"""

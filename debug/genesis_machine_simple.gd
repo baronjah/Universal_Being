@@ -1,4 +1,12 @@
-# Add this to main.gd to create Genesis Machine
+extends Node
+
+# Genesis Machine - Simple universe creator
+# This is a helper class - instantiate and call methods with main_node reference
+
+var main_node: Node = null
+
+func _init(main: Node = null) -> void:
+	main_node = main
 
 func create_genesis_machine() -> void:
 	"""Create the Genesis Machine for universe creation"""
@@ -67,7 +75,10 @@ func create_genesis_machine() -> void:
 	
 	# Add to window
 	genesis_window.add_child(vbox)
-	get_tree().root.add_child(genesis_window)
+	if main_node:
+		main_node.get_tree().root.add_child(genesis_window)
+	else:
+		print("Warning: No main_node set for Genesis Machine")
 	genesis_window.show()
 	
 	print("🌌 Genesis Machine created!")
@@ -94,7 +105,10 @@ func create_nested_universe() -> void:
 			being.set("consciousness_level", randi_range(1, 5))
 			universe.add_child(being)
 	
-	get_tree().current_scene.add_child(universe)
+	if main_node:
+		main_node.add_child(universe)
+	else:
+		print("Warning: No main_node set for Genesis Machine")
 	
 	print("🌌 Universe '%s' created with %d beings!" % [universe.name, 3])
 	

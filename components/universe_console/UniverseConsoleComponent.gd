@@ -9,6 +9,8 @@
 extends Node
 class_name UniverseConsoleComponent
 
+# Godot lifecycle functions removed - base UniversalBeing handles bridging to Pentagon Architecture
+
 # ===== UNIVERSE CONSOLE PROPERTIES =====
 
 var console_being: Node = null
@@ -39,15 +41,6 @@ signal universe_created(universe: Node)
 signal universe_entered(universe: Node)
 signal universe_exited(universe: Node)
 signal portal_created(from: Node, to: Node)
-
-func _ready() -> void:
-	name = "UniverseConsoleComponent"
-	
-	# Get Akashic Library
-	akashic_library = get_tree().get_first_node_in_group("akashic_library")
-	
-	# Find command processor if it exists
-	command_processor = get_tree().get_first_node_in_group("command_processor")
 
 func initialize(console: Node) -> void:
 	"""Initialize with the console being"""

@@ -1,5 +1,19 @@
+extends Node
+
 # IMMEDIATE FIX for SystemBootstrap.gd
 # Copy these functions and replace them in your existing file
+
+var UniversalBeingClass = null
+var FloodGatesClass = null
+var AkashicRecordsClass = null
+var core_loaded: bool = false
+var flood_gates_instance = null
+var akashic_records_instance = null
+var systems_ready: bool = false
+var system_ready = Signal()
+var system_error = Signal()
+var startup_time: float = 0.0
+var initialization_errors: Array = []
 
 # Replace the existing load_core_classes() function with this:
 func load_core_classes() -> void:

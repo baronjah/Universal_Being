@@ -8,6 +8,8 @@
 extends Node
 class_name SimpleCameraEffects
 
+# Godot lifecycle functions removed - base UniversalBeing handles bridging to Pentagon Architecture
+
 ## References
 var camera_being: Node  # CameraUniversalBeing
 var post_process_layer: CanvasLayer
@@ -50,24 +52,6 @@ var effects_enabled: bool = true
 var transition_speed: float = 1.0
 
 # ===== LIFECYCLE =====
-
-func _ready() -> void:
-	camera_being = get_parent()
-	
-	if not camera_being:
-		push_error("CameraEffectsComponent: No parent CameraUniversalBeing found!")
-		return
-	
-	# Connect to consciousness changes
-	if camera_being.has_signal("consciousness_changed"):
-		camera_being.consciousness_changed.connect(_on_consciousness_changed)
-	
-	# Setup post-process layer
-	setup_post_process_layer()
-	
-	# Apply initial effects
-	if "consciousness_level" in camera_being:
-		_on_consciousness_changed(0, camera_being.consciousness_level)
 
 func _exit_tree() -> void:
 	cleanup_all_effects()

@@ -1,9 +1,9 @@
 # Add this to ConsoleUniversalBeing.gd in the process_console_command function
-
+#
 # In the "create" case, add:
-"butterfly":
-	create_butterfly_being()
-	
+# "butterfly":
+#     create_butterfly_being()
+#     
 # Then add this function:
 func create_butterfly_being() -> void:
 	terminal_output("🦋 Creating Butterfly Universal Being...")

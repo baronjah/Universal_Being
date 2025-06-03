@@ -30,12 +30,12 @@ func query_interactions(filters: Dictionary) -> Array:
 	"""Query historical interactions"""
 	var results = []
 	for log in session_interactions:
-		var match = true
+		var matches_filter = true
 		if filters.has("type") and log.type != filters.type:
-			match = false
+			matches_filter = false
 		if filters.has("participant") and not filters.participant in log.participants:
-			match = false
-		if match:
+			matches_filter = false
+		if matches_filter:
 			results.append(log)
 	return results
 

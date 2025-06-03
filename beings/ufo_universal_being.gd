@@ -10,6 +10,8 @@
 extends UniversalBeing
 class_name UFOUniversalBeing
 
+# Godot lifecycle functions removed - base UniversalBeing handles bridging to Pentagon Architecture
+
 # ===== UFO-SPECIFIC PROPERTIES =====
 @export var ufo_size := Vector3(2.0, 0.6, 2.0)
 @export var mesh_resolution := 64

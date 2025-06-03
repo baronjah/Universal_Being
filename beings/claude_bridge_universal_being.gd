@@ -1,6 +1,8 @@
 extends UniversalBeing
 class_name ClaudeBridgeUniversalBeing
 
+# Godot lifecycle functions removed - base UniversalBeing handles bridging to Pentagon Architecture
+
 # Claude connection properties
 @export var claude_api_key: String = ""
 @export var claude_endpoint: String = "https://api.anthropic.com/v1/messages"
