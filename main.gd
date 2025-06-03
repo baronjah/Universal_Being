@@ -53,12 +53,16 @@ func simple_mode_init() -> void:
 	systems_ready = false
 
 func create_demo_beings() -> void:
-	"""Create demo Universal Beings including auto-startup"""
+	# Create demo Universal Beings including auto-startup
 	if not SystemBootstrap or not SystemBootstrap.is_system_ready():
 		print("🌟 Cannot create demo beings - systems not ready")
 		return
 	
 	print("🌟 Creating demo Universal Beings...")
+	
+	# Initialize demo_beings array if needed
+	if demo_beings == null:
+		demo_beings = []
 	
 	# Create Auto Startup Universal Being first
 	create_auto_startup_being()
@@ -94,7 +98,29 @@ func on_ai_message(message: String) -> void:
 	print("🤖 Gemma: %s" % message)
 
 func _input(event: InputEvent) -> void:
-	"""Handle global input"""
+	# Handle global input
+	# Clean up demo_beings periodically
+	cleanup_demo_beings()
+	
+	# Debug mouse clicks
+	if event is InputEventMouseButton and event.pressed:
+		if event.button_index == MOUSE_BUTTON_LEFT:
+			print("🖱️ Left click detected at position: %s" % event.position)
+			# Check if we hit any being
+			var camera = get_viewport().get_camera_3d()
+			if camera:
+				var from = camera.project_ray_origin(event.position)
+				var to = from + camera.project_ray_normal(event.position) * 1000
+				var space_state = camera.get_world_3d().direct_space_state
+				var query = PhysicsRayQueryParameters3D.create(from, to)
+				var result = space_state.intersect_ray(query)
+				if result:
+					print("🎯 Clicked on: %s" % result.collider)
+					if result.collider.has_method("inspect"):
+						result.collider.inspect()
+					elif result.collider.get_parent() and result.collider.get_parent().has_method("inspect"):
+						result.collider.get_parent().inspect()
+	
 	if event.is_action_pressed("ui_console_toggle"):
 		toggle_console()
 	elif event.is_action_pressed("create_being"):
@@ -131,8 +157,8 @@ func _input(event: InputEvent) -> void:
 					toggle_pentagon_ai_mode()
 				KEY_V:  # Ctrl+V for uniVerse creation
 					create_universe_universal_being()
-				KEY_N:  # Ctrl+N for universe Navigator
-					toggle_universe_navigator()
+				KEY_N:  # Ctrl+N for Test being (removing navigator conflict)
+					create_test_being()
 				KEY_I:  # Ctrl+I toggles cursor inspect mode
 					toggle_cursor_inspect_mode()
 				KEY_O:  # Ctrl+O for Universe Simulator (Observe)
@@ -205,6 +231,14 @@ func toggle_cursor_inspect_mode() -> void:
 		create_cursor_universal_being()
 		# Try again after creation
 		call_deferred("toggle_cursor_inspect_mode")
+
+func cleanup_demo_beings() -> void:
+	# Remove any freed instances from demo_beings array
+	var cleaned_beings: Array[Node] = []
+	for being in demo_beings:
+		if is_instance_valid(being) and not being.is_queued_for_deletion():
+			cleaned_beings.append(being)
+	demo_beings = cleaned_beings
 
 func show_help() -> void:
 	"""Show help information"""
@@ -318,9 +352,10 @@ func open_visual_inspector() -> void:
 	# Find first being with interaction component or use first available
 	var target_being = null
 	for being in demo_beings:
-		if being.has_method("get_component_info"):
-			target_being = being
-			break
+		if is_instance_valid(being) and not being.is_queued_for_deletion():
+			if being.has_method("get_component_info"):
+				target_being = being
+				break
 	
 	if not target_being:
 		target_being = demo_beings[0]
@@ -553,25 +588,27 @@ func create_cursor_universal_being() -> Node:
 	return cursor_being
 
 func find_console_being() -> Node:
-	"""Find existing Console being"""
+	# Find existing Console being
 	for being in demo_beings:
-		if being.has_method("get"):
-			var being_type = being.get("being_type")
-			if being_type in ["console", "ai_console", "unified_console"]:
+		if is_instance_valid(being) and not being.is_queued_for_deletion():
+			if being.has_method("get"):
+				var being_type = being.get("being_type")
+				if being_type in ["console", "ai_console", "unified_console"]:
+					return being
+			elif being.name.contains("Console"):
 				return being
-		elif being.name.contains("Console"):
-			return being
 	return null
 
 func find_cursor_being() -> Node:
-	"""Find existing Cursor being"""
+	# Find existing Cursor being
 	for being in demo_beings:
-		if being.has_method("get"):
-			var being_type = being.get("being_type")
-			if being_type == "cursor":
+		if is_instance_valid(being) and not being.is_queued_for_deletion():
+			if being.has_method("get"):
+				var being_type = being.get("being_type")
+				if being_type == "cursor":
+					return being
+			elif being.name.contains("Cursor"):
 				return being
-		elif being.name.contains("Cursor"):
-			return being
 	return null
 
 func create_auto_startup_being() -> Node:
@@ -636,9 +673,10 @@ func toggle_triple_ai_mode() -> void:
 	# Find MCP bridge
 	var mcp_bridge = null
 	for being in demo_beings:
-		if being.has_method("get") and being.get("being_type") == "mcp_bridge":
-			mcp_bridge = being
-			break
+		if is_instance_valid(being) and not being.is_queued_for_deletion():
+			if being.has_method("get") and being.get("being_type") == "mcp_bridge":
+				mcp_bridge = being
+				break
 	
 	if mcp_bridge and mcp_bridge.has_method("toggle_triple_ai_mode"):
 		mcp_bridge.toggle_triple_ai_mode()
@@ -750,10 +788,11 @@ func ensure_all_ai_bridges_created() -> void:
 	
 	# Check existing beings
 	for being in demo_beings:
-		if being.has_method("get"):
-			var being_type = being.get("being_type")
-			if being_type in bridges_needed:
-				bridges_needed[being_type] = true
+		if is_instance_valid(being) and not being.is_queued_for_deletion():
+			if being.has_method("get"):
+				var being_type = being.get("being_type")
+				if being_type in bridges_needed:
+					bridges_needed[being_type] = true
 	
 	# Create missing bridges
 	if not bridges_needed["mcp_bridge"]:
@@ -776,11 +815,13 @@ func ensure_all_ai_bridges_created() -> void:
 	print("🎯 Active AIs: Gemma (local), Claude Code, Cursor, Claude Desktop, ChatGPT Premium, Google Gemini Premium")
 
 func find_genesis_conductor() -> Node:
-	"""Find existing Genesis Conductor Universal Being"""
+	# Find existing Genesis Conductor Universal Being
 	for being in demo_beings:
-		if being.has_method("get") and being.get("being_type") == "consciousness_conductor":
-			return being
-		elif being.name.contains("Genesis Conductor"):
+		if is_instance_valid(being) and not being.is_queued_for_deletion():
+			if being.has_method("get") and being.get("being_type") == "consciousness_conductor":
+				return being
+			elif being.name.contains("Genesis Conductor"):
+				return being
 			return being
 	return null
 
@@ -890,8 +931,9 @@ func create_portal_between_universes() -> Node:
 	# Find universes
 	var universes = []
 	for being in demo_beings:
-		if being.has_method("get") and being.get("being_type") == "universe":
-			universes.append(being)
+		if is_instance_valid(being) and not being.is_queued_for_deletion():
+			if being.has_method("get") and being.get("being_type") == "universe":
+				universes.append(being)
 	
 	if universes.size() < 2:
 		print("🌀 Not enough universes found for portal creation")
@@ -1207,4 +1249,3 @@ func _on_test_being_created(being: UniversalBeing) -> void:
 func _on_test_being_evolved(being: UniversalBeing, old_level: int, new_level: int) -> void:
 	"""Handle test being evolution"""
 	print("🧪 Test Evolution: %s evolved from level %d to %d!" % [being.being_name, old_level, new_level])
-

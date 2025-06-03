@@ -1,0 +1,13 @@
+{
+	"component_name": "gemini_api",
+	"version": "1.0.0",
+	"description": "Google Gemini API integration component",
+	"author": "Universal Being Team",
+	"entry_script": "gemini_api.gd",
+	"being_type": "component",
+	"compatible_with": ["gemini_bridge"],
+	"dependencies": [],
+	"files": [
+		"gemini_api.gd"
+	]
+}

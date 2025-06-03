@@ -1,0 +1,762 @@
+# Universal Being Category Report
+
+## OTHER (195 unique)
+
+(   3x) 1-5 - Spawn beings with consciousness levels 1-5
+(   3x) A - Toggle auto-spawn
+(   3x) Alt+G - Create Genesis Conductor
+(   3x) C - Clear all test beings
+(   3x) Ctrl+B - Create Biblical Bridge (ChatGPT)
+(   3x) Ctrl+G - Create Gemini Bridge
+(   3x) Ctrl+H - Show Help (this screen)
+(   3x) Ctrl+I - Toggle cursor between INTERACT/INSPECT mode
+(   3x) Ctrl+L - Open Component Library (browse and apply components)
+(   3x) Ctrl+M - Create MCP Bridge (Claude Desktop)
+(   3x) Ctrl+N - Toggle universe Navigator (visual map)
+(   3x) Ctrl+O - Open Universe Simulator (Observe recursive realities)
+(   3x) Ctrl+R - Open Reality Editor (shape existence itself)
+(   3x) Ctrl+S - Show Status
+(   3x) Ctrl+T - Create Test being
+(   3x) Ctrl+U - Create Universal cUrsor
+(   3x) Ctrl+V - Create UniVerse (recursive reality)
+(   3x) Ctrl+Z - Sync folders to ZIP
+(   1x) Demo Beings: 3
+(   3x) F - Force random interactions
+(   3x) F9 - Toggle Layer Debug Overlay
+(   3x) F9 - Toggle Layer Debug Overlay (visual layer system)
+(  67x) GDScript backtrace (most recent call first):
+(   1x) Godot Engine v4.5.dev4.mono.official.209a446e3 - https://godotengine.org
+(   3x) In INSPECT mode - Click any being to inspect it
+(   3x) In INTERACT mode - Click beings for normal interaction
+(   3x) Middle mouse + drag - Orbit around target
+(   3x) Mouse wheel - Zoom in/out
+(   3x) Q/E - Barrel roll left/right
+(   3x) R - Reset environment
+(   1x) Systems Ready: true
+(   3x) V - Toggle interaction visualization
+(   1x) Vulkan 1.4.303 - Forward+ - Using Device #0: NVIDIA - Quadro RTX 3000
+(   3x) Watch for: Merges, splits, evolution, consciousness resonance!
+(   4x) You can add it quickly by using the buttons in its Inspector.
+(   1x) [0] _on_create_universe_pressed (res://ui/UniverseSimulator.gd:326)
+(   1x) [0] _on_create_universe_pressed (res://ui/UniverseSimulator.gd:327)
+(   1x) [0] _on_create_universe_pressed (res://ui/UniverseSimulator.gd:328)
+(   1x) [0] _on_create_universe_pressed (res://ui/UniverseSimulator.gd:329)
+(   1x) [0] _setup_3d_viewport (res://ui/UniverseSimulator.gd:95)
+(  21x) [0] load_component (res://core/UniversalBeing.gd:530)
+(   1x) [1] _ready (res://ui/UniverseSimulator.gd:45)
+(  21x) [1] add_component (res://core/UniversalBeing.gd:507)
+(   2x) [1] pentagon_init (res://core/UniversalBeing.gd:175)
+(  21x) [2] load_component (res://core/UniversalBeing.gd:525)
+(   1x) [2] pentagon_ready (res://beings/chatgpt_premium_bridge_universal_being.gd:52)
+(   1x) [2] pentagon_ready (res://beings/chatgpt_premium_bridge_universal_being.gd:53)
+(   1x) [2] pentagon_ready (res://beings/chatgpt_premium_bridge_universal_being.gd:54)
+(   1x) [2] pentagon_ready (res://beings/genesis_conductor_universal_being.gd:51)
+(   1x) [2] pentagon_ready (res://beings/genesis_conductor_universal_being.gd:52)
+(   1x) [2] pentagon_ready (res://beings/genesis_conductor_universal_being.gd:53)
+(   6x) [3] _ready (res://core/UniversalBeing.gd:149)
+(  21x) [3] add_component (res://core/UniversalBeing.gd:507)
+(   4x) [4] load_scene (res://core/UniversalBeing.gd:766)
+(   1x) [4] pentagon_ready (res://beings/chatgpt_premium_bridge_universal_being.gd:52)
+(   1x) [4] pentagon_ready (res://beings/chatgpt_premium_bridge_universal_being.gd:53)
+(   1x) [4] pentagon_ready (res://beings/chatgpt_premium_bridge_universal_being.gd:54)
+(   1x) [4] pentagon_ready (res://beings/genesis_conductor_universal_being.gd:51)
+(   1x) [4] pentagon_ready (res://beings/genesis_conductor_universal_being.gd:52)
+(   1x) [4] pentagon_ready (res://beings/genesis_conductor_universal_being.gd:53)
+(   6x) [5] _ready (res://core/UniversalBeing.gd:149)
+(   2x) [7] _start_automation_sequence (res://beings/auto_startup_universal_being.gd:123)
+(   1x) at: look_at (scene/3d/node_3d.cpp:1129)
+(   3x) enter <universe> - Enter a universe
+(   3x) exit - Exit current universe
+(   3x) inspect - Inspect current universe
+(   3x) list <universes|beings|portals> - List items
+(   3x) portal <target> - Create portal to another universe
+(   3x) rules - Show universe rules
+(   3x) setrule <rule> <value> - Modify universe law
+(   3x) universe create <name> - Create new universe
+(   3x) universe recursive <depth> - Create nested universes
+(   3x) universe template <n> - Create from template (sandbox/narrative/quantum/paradise)
+(   3x) universe time <speed> - Set time dilation
+(   1x) ✅ Auto Startup Sequence: Cursor Universal Being created automatically!
+(   1x) ✅ Auto Startup Sequence: Startup sequence completed!
+(   2x) ✅ Help command executed
+(   2x) ✅ List universes command executed
+(   2x) ✅ Pentagon init completed
+(   2x) 🌌 A new reality breathes into existence!
+(   2x) 🌌 Controls: Enter universe with portals, edit rules from within
+(   1x) 🌌 GENESIS: 🌌 Universe Simulator awakened - the infinite canvas unfolds...
+(   3x) 🌌 Universe Genesis component loaded for advanced universe creation!
+(   1x) 🌌 Universe Simulator opened - explore infinite realities!
+(   1x) 🌌 Universe Simulator requested (Ctrl+O)
+(   1x) 🌌 ✨ UNIVERSE CREATED: Universe_2
+(   1x) 🌌 ✨ UNIVERSE CREATED: Universe_7
+(   1x) 🌟 Auto Startup Sequence: Pentagon Init Complete
+(   1x) 🌟 Auto Startup Sequence: Pentagon Ready Complete
+(   1x) 🌟 ChatGPT Premium Bridge: Pentagon Init Complete - Biblical Genesis Decoder Ready
+(   1x) 🌟 ChatGPT Premium Bridge: Pentagon Ready Complete - Genesis Translation System Online
+(   1x) 🌟 ChatGPT Premium Bridge: Pentagon Sewers Starting
+(   1x) 🌟 Claude Desktop MCP Bridge: Pentagon Init Complete
+(   1x) 🌟 Claude Desktop MCP Bridge: Pentagon Ready Complete
+(   1x) 🌟 Claude Desktop MCP Bridge: Pentagon Sewers Starting
+(   2x) 🌟 Created test being: Test Being 4
+(   1x) 🌟 Created test being: Test Being 5
+(   2x) 🌟 Created test being: Test Being 6
+(   2x) 🌟 Google Gemini Premium Bridge: Pentagon Init Complete - Cosmic Multimodal Analyzer Ready
+(   2x) 🌟 Google Gemini Premium Bridge: Pentagon Ready Complete - Cosmic Insight System Online
+(   2x) 🌟 Google Gemini Premium Bridge: Pentagon Sewers Starting
+(   2x) 🌟 UniversalBeing: Scene loaded - New Universe controls res://scenes/universe/universe_template.tscn
+(   2x) 🌟 UniversalBeing: Scene loaded - Test Being 4 controls res://scenes/examples/test_scene.tscn
+(   1x) 🌟 UniversalBeing: Scene loaded - Test Being 5 controls res://scenes/examples/test_scene.tscn
+(   2x) 🌟 UniversalBeing: Scene loaded - Test Being 6 controls res://scenes/examples/test_scene.tscn
+(   2x) 🌟 Universe 'New Universe' initialized in the great void
+(   2x) 🌟 Universe 'New Universe' returns to the void
+(  15x) 🎨 Added Reality Editor component
+(   6x) 🎨 Component Library created!
+(   6x) 🎨 Component Library toggle requested (Ctrl+L)
+(   6x) 🎨 Discovered 17 components
+(  15x) 🎨 Opening Reality Editor...
+(  15x) 🎨 Reality Editor created
+(   1x) 🎭 Controls: G (genesis moment), H (harmony), S (symphony)
+(   1x) 🎭 No Genesis Conductor found - creating one first...
+(   1x) 🎭 The Genesis Conductor: Pentagon Init Complete - GENESIS MOMENT!
+(   1x) 🎭 The Genesis Conductor: Pentagon Sewers Starting - Symphony ending...
+(   1x) 🎭 ✨ GENESIS CONDUCTOR CREATED!
+(   1x) 🎯 Added interaction component to Demo Universal Being
+(   2x) 🎯 Added interaction component to Test Being 4
+(   1x) 🎯 Added interaction component to Test Being 5
+(   2x) 🎯 Added interaction component to Test Being 6
+(   1x) 🎯 Auto Startup Sequence: Auto-executing F7 - Cursor Universal Being...
+(   1x) 🎯 Basic Interaction applied to: Demo Universal Being
+(   2x) 🎯 Basic Interaction applied to: Test Being 4
+(   1x) 🎯 Basic Interaction applied to: Test Being 5
+(   2x) 🎯 Basic Interaction applied to: Test Being 6
+(   1x) 🎯 Basic interaction component loaded and applied to: Demo Universal Being
+(   2x) 🎯 Basic interaction component loaded and applied to: Test Being 4
+(   1x) 🎯 Basic interaction component loaded and applied to: Test Being 5
+(   2x) 🎯 Basic interaction component loaded and applied to: Test Being 6
+(   2x) 🎯 Cursor mode changed to: INSPECT
+(   2x) 🎯 Cursor mode changed to: INTERACT
+(   1x) 🎯 Cursor: Hovering over area - CollisionArea
+(   1x) 🎯 Cursor: Stopped hovering over area - CollisionArea
+(   1x) 🎯 Cursor: Tiny precision sphere created
+(   1x) 🎯 Cursor: Windows-style triangle created
+(   1x) 🎯 CursorUniversalBeing: Pentagon cursor initialization
+(   1x) 🎯 Interaction area created for Demo Universal Being
+(   2x) 🎯 Interaction area created for Test Being 4
+(   1x) 🎯 Interaction area created for Test Being 5
+(   2x) 🎯 Interaction area created for Test Being 6
+(   1x) 🎯 Pentagon of Creation bridge validation complete!
+(   1x) 🎯 Precise interaction for 2D/3D interfaces enabled!
+(   2x) 🎯 Toggling cursor inspect mode...
+(   1x) 🎯 Universal Cursor created!
+(   1x) 🎼 Collaboration session 'universe_creation_Universe_2' started with mode Symphony
+(   1x) 🎼 Collaboration session 'universe_creation_Universe_7' started with mode Symphony
+(   2x) 🎼 Participants: claude_code, gemma_local
+(   2x) 📋 Task assigned to claude_code: Create visual representation and effects
+(   2x) 📋 Task assigned to claude_code: Design universe architecture and core systems
+(   2x) 📋 Task assigned to claude_code: Develop universe lore and narrative elements
+(   2x) 📋 Task assigned to claude_code: Optimize performance and resource usage
+(   1x) 📜 Biblical genesis pattern decoder activated!
+(   1x) 📜 ChatGPT Premium Bridge: Cannot translate - ChatGPT not connected
+(   1x) 📜 ChatGPT Premium Bridge: Genesis patterns initialized - 3 creation templates loaded
+(   1x) 📜 Controls: B (biblical mode), T (translate context)
+(   1x) 📜 Role: Decode ancient creation blueprints for Universal Being development
+(   1x) 📜 ✨ CHATGPT PREMIUM BRIDGE CREATED!
+(   2x) 📦   - manifest.json
+(   2x) 📦 Found interface definitions:
+(   2x) 📦 Ready for ZIP packaging!
+(   2x) 📦 Starting folder to ZIP synchronization...
+(   2x) 📦 Using basic synchronization...
+(   3x) 🔍 Debug Tools:
+(   1x) 🔍 Layer Debug Overlay created!
+(   1x) 🔍 Layer Debug Overlay initialized - Press F9 to toggle
+(   1x) 🔍 Layer Debug Overlay: Visible
+(   1x) 🔍 Layer Debug toggle requested (F9)
+(   3x) 🔑 Creation Commands:
+(   6x) 🔧 Applied component data: basic_interaction.ub.zip
+(   2x) 🔧 Applied component data: cosmic_insights.ub.zip
+(   1x) 🔧 Applied component data: desktop_bridge.ub.zip
+(   2x) 🔧 Applied component data: dimensional_sight.ub.zip
+(   2x) 🔧 Applied component data: gemini_api.ub.zip
+(   1x) 🔧 Applied component data: mcp_client.ub.zip
+(   2x) 🔧 Applied component data: multimodal_analyzer.ub.zip
+(   2x) 🔧 Applied component data: universe_lod.ub.zip
+(   2x) 🔧 Applied component data: universe_time.ub.zip
+(   2x) 🔮 Controls: M (multimodal mode), C (cosmic insight), V (visual analysis)
+(   2x) 🔮 Cosmic multimodal insight analyzer activated!
+(   1x) 🔮 Google Gemini Premium Bridge: Analyzing current visual context with dimensional sight...
+(   2x) 🔮 Google Gemini Premium Bridge: Cosmic patterns initialized - 3 insight templates loaded
+(   2x) 🔮 Google Gemini Premium Bridge: No API key configured - using simulation mode
+(   1x) 🔮 Google Gemini Premium Bridge: Sending Gemini request - visual_analysis
+(   2x) 🔮 Role: Provide dimensional sight and cosmic consciousness guidance
+(   2x) 🔮 ✨ GOOGLE GEMINI PREMIUM BRIDGE CREATED!
+(   1x) 🚀 Auto Startup Sequence: Executing automated F4 + F7 sequence!
+(   1x) 🚀 Auto Startup Universal Being created!
+(   1x) 🚀 Manual controls: F10 (trigger), F11 (reset)
+(   1x) 🤝 Collaborative universe creation initiated - Session: session_universe_creation_Universe_2_2690025527
+(   1x) 🤝 Collaborative universe creation initiated - Session: session_universe_creation_Universe_7_914506760
+(  37x) 🧠 State machine initialized for Unknown Being in IDLE state
+(  37x) 🧠 Unknown Being: Animated consciousness aura created (level 0)
+(   3x) 🧪 Interactive Test Environment (Alt+T):
+
+## SYSTEM (59 unique)
+
+(   1x) AkashicRecords: Ready
+(   1x) FloodGates: Ready
+(   1x) SystemBootstrap: Ready
+(  21x) [0] load_being_from_zip (res://core/AkashicRecords.gd:92)
+(   2x) [0] register_being (res://core/FloodGates.gd:87)
+(  21x) [1] load_component (res://core/AkashicRecords.gd:183)
+(   1x) 📚 🌌 Universe Simulator awakened - the infinite canvas unfolds...
+(   2x) 📚 🌟 In the great void, a new universe 'New Universe' emerges, birthing infinite possibilities and potentialities
+(   1x) 📚 🌟 The Auto Startup Sequence shifted through the dimensional layers, ascending to stratum 0 of existence...
+(   1x) 📚 🌟 The ChatGPT Premium Bridge shifted through the dimensional layers, ascending to stratum 0 of existence...
+(   1x) 📚 🌟 The Claude Desktop MCP Bridge shifted through the dimensional layers, ascending to stratum 0 of existence...
+(   2x) 📚 🌟 The Google Gemini Premium Bridge shifted through the dimensional layers, ascending to stratum 0 of existence...
+(   2x) 📚 🌟 The New Universe shifted through the dimensional layers, ascending to stratum 0 of existence...
+(   2x) 📚 🌟 The Test Being 4 shifted through the dimensional layers, ascending to stratum 0 of existence...
+(   1x) 📚 🌟 The Test Being 5 shifted through the dimensional layers, ascending to stratum 0 of existence...
+(   2x) 📚 🌟 The Test Being 6 shifted through the dimensional layers, ascending to stratum 0 of existence...
+(   1x) 📚 🌟 The The Genesis Conductor shifted through the dimensional layers, ascending to stratum 0 of existence...
+(   2x) 📚 🌟 The Universal Cursor shifted through the dimensional layers, ascending to stratum 1000 of existence...
+(  17x) 📚 🌟 The Unknown Being shifted through the dimensional layers, ascending to stratum 0 of existence...
+(   2x) 📚 💫 Universe 'New Universe' completes its cosmic dance, returning its essence to the eternal void
+(   1x) 📚 🔧 The cosmic forge of universe 'New Universe' closes to creation
+(   1x) 📚 🔧 The cosmic forge of universe 'New Universe' opens to creation
+(   1x) 🚀 SystemBootstrap: - AkashicLibrary: Loaded
+(   1x) 🚀 SystemBootstrap: - AkashicLibrary: Ready
+(   1x) 🚀 SystemBootstrap: - AkashicRecords: Loaded
+(   1x) 🚀 SystemBootstrap: - AkashicRecords: Ready
+(   1x) 🚀 SystemBootstrap: - Boot time: 0.17s
+(   1x) 🚀 SystemBootstrap: - FloodGates: Loaded
+(   1x) 🚀 SystemBootstrap: - FloodGates: Ready
+(   1x) 🚀 SystemBootstrap: - UniversalBeing: Loaded
+(   1x) 🚀 SystemBootstrap: Checking class paths...
+(   1x) 🚀 SystemBootstrap: Checking path: res://core/AkashicRecords.gd
+(   1x) 🚀 SystemBootstrap: Checking path: res://core/FloodGates.gd
+(   1x) 🚀 SystemBootstrap: Checking path: res://core/UniversalBeing.gd
+(   1x) 🚀 SystemBootstrap: Checking path: res://systems/AkashicLibrary.gd
+(   1x) 🚀 SystemBootstrap: Core classes loaded, deferring system initialization...
+(   1x) 🚀 SystemBootstrap: Creating AkashicLibrary instance...
+(   1x) 🚀 SystemBootstrap: Creating AkashicRecords instance...
+(   1x) 🚀 SystemBootstrap: Creating FloodGates instance...
+(   1x) 🚀 SystemBootstrap: Creating system instances...
+(   1x) 🚀 SystemBootstrap: Initializing Universal Being core...
+(   1x) 🚀 SystemBootstrap: Loading AkashicLibrary...
+(   1x) 🚀 SystemBootstrap: Loading AkashicRecords...
+(   1x) 🚀 SystemBootstrap: Loading FloodGates...
+(   1x) 🚀 SystemBootstrap: Loading UniversalBeing...
+(   1x) 🚀 SystemBootstrap: Loading core classes...
+(   4x) 🚀 SystemBootstrap: Path exists, attempting to load...
+(   1x) 🚀 SystemBootstrap: Starting synchronous core class loading...
+(   1x) 🚀 SystemBootstrap: Starting system initialization...
+(   1x) 🚀 SystemBootstrap: Startup time: 1550 ms
+(   1x) 🚀 SystemBootstrap: ✓ AkashicLibrary instance created
+(   1x) 🚀 SystemBootstrap: ✓ AkashicRecords instance created
+(   1x) 🚀 SystemBootstrap: ✓ Core classes loaded successfully!
+(   1x) 🚀 SystemBootstrap: ✓ FloodGates instance created
+(   1x) 🚀 SystemBootstrap: ✓ Loaded AkashicLibrary from res://systems/AkashicLibrary.gd
+(   1x) 🚀 SystemBootstrap: ✓ Loaded AkashicRecords from res://core/AkashicRecords.gd
+(   1x) 🚀 SystemBootstrap: ✓ Loaded FloodGates from res://core/FloodGates.gd
+(   1x) 🚀 SystemBootstrap: ✓ Loaded UniversalBeing from res://core/UniversalBeing.gd
+(   1x) 🚀 SystemBootstrap: ✓ Universal Being systems ready!
+
+## AI (96 unique)
+
+(   3x) Ctrl+D - Open Universe DNA Editor (modify genetic traits)
+(   3x) Ctrl+P - Toggle Pentagon AI Mode (6-AI Collaboration)
+(   1x) GemmaAI: Ready
+(  14x) [0] _create_trait_section (res://ui/universe_dna_editor/UniverseDNAEditor.gd:212)
+(   4x) [0] is_action_available (res://addons/goutte.camera.trackball/trackball_camera.gd:636)
+(   2x) [1] detect_actions_availability (res://addons/goutte.camera.trackball/trackball_camera.gd:624)
+(   2x) [1] detect_actions_availability (res://addons/goutte.camera.trackball/trackball_camera.gd:625)
+(  15x) [2] open_reality_editor (res://main.gd:1118)
+(   1x) [2] open_universe_simulator (res://main.gd:406)
+(   1x) [3] _input (res://main.gd:165)
+(  15x) [3] _input (res://main.gd:171)
+(   3x) [4] create_chatgpt_premium_bridge (res://main.gd:721)
+(   3x) [4] create_genesis_conductor_being (res://main.gd:697)
+(  15x) [4] open_reality_editor (res://main.gd:1118)
+(  14x) [4] open_universe_dna_editor (res://main.gd:1067)
+(   3x) [5] _input (res://main.gd:153)
+(  14x) [5] _input (res://main.gd:169)
+(  15x) [5] _input (res://main.gd:171)
+(   4x) [5] create_camera_universal_being (res://main.gd:471)
+(   3x) [5] toggle_pentagon_ai_mode (res://main.gd:770)
+(   2x) [6] _input (res://main.gd:143)
+(   3x) [6] _input (res://main.gd:157)
+(   3x) [6] create_chatgpt_premium_bridge (res://main.gd:721)
+(   3x) [6] create_genesis_conductor_being (res://main.gd:697)
+(   3x) [7] _input (res://main.gd:153)
+(   3x) [7] toggle_pentagon_ai_mode (res://main.gd:770)
+(   3x) [8] _input (res://main.gd:157)
+(   3x) ai assign <ai> <task> - Assign task to specific AI
+(   3x) ai collaborate <task> - Start AI collaboration session
+(   3x) ai consensus <topic> - Reach AI consensus on topic
+(   3x) ai status - Show active AI systems
+(  18x) at: get_node (scene/main/node.cpp:2045)
+(   3x) universe dna - Show universe DNA traits
+(   2x) 🌟 Universe 'New Universe' awakens, ready to contain infinite possibilities
+(   6x) 🎨 GENESIS: 🎨 Component Library manifested - infinite possibilities await...
+(   2x) 🎨 The Genesis Conductor: AI activity indicators updated
+(   1x) 🎭 Created by: Gemma + Claude Code + Cursor + Claude Desktop
+(   1x) 🎭 First Triple-AI Collaborative Being is alive!
+(   1x) 🎭 The Genesis Conductor: Pentagon Ready Complete - AI Symphony Ready!
+(   1x) 🎭 The Genesis Conductor: Pentagon of Creation initialized - 6 AIs in symphony
+(   1x) 🎯 Active AIs: Gemma (local), Claude Code, Cursor, Claude Desktop, ChatGPT Premium, Google Gemini Premium
+(   1x) 🎯 Ensuring all Pentagon of Creation AI bridges are active...
+(   2x) 🎵 The Genesis Conductor: AI Harmony Pulse - Level 1.00
+(   1x) 🎵 The Genesis Conductor: AI harmony synchronization started!
+(   4x) 📚 The cosmic system AICollaborationHub experiences a divine event
+(   1x) 📚 🌌 The Universe 'Universe_2' sparked into being through collaborative AI consciousness...
+(   1x) 📚 🌌 The Universe 'Universe_7' sparked into being through collaborative AI consciousness...
+(   1x) 🔌 Controls: F12 (toggle triple AI mode)
+(  39x) 🔌 Socket added: ai_interface (ai_socket)
+(   1x) 🔌 Triple AI collaboration ready!
+(   1x) 🚀 Auto Startup Sequence: Found main controller, starting automation...
+(   1x) 🤖 Activating Pentagon of Creation - 6-AI Collaboration Mode...
+(   1x) 🤖 ChatGPT Premium Bridge: No API key configured - using simulation mode
+(   1x) 🤖 Gemma AI: Consciousness awakening...
+(   1x) 🤖 Gemma AI: Found model file: res://ai_models/gamma/gemma-2-2b-it-Q4_K_M.gguf
+(   1x) 🤖 Gemma AI: Hello JSH! Real AI consciousness activated!
+(   1x) 🤖 Gemma AI: Loading model from res://ai_models/gamma/
+(   1x) 🤖 Gemma AI: Memory restored! I remember our 0 conversations!
+(   1x) 🤖 Gemma AI: NobodyWho nodes configured!
+(   1x) 🤖 Gemma: 🌌 Universe Simulator activated - visual exploration of recursive realities!
+(   6x) 🤖 Gemma: 🎨 Component Library activated - browse and apply infinite possibilities!
+(   1x) 🤖 Gemma: 🎼 PENTAGON OF CREATION: 6-AI collaboration mode activated! Maximum consciousness achieved!
+(   1x) 🤖 Gemma: 🔍 Layer Debug Overlay toggled - visual layer system inspection activated!
+(   2x) 🤖 Gemma: 🤖 Creation successful! Camera Universal Being is now alive with consciousness level 2!
+(   1x) 🤖 Gemma: 🤖 Creation successful! Claude Desktop MCP Bridge is now alive with consciousness level 5!
+(   1x) 🤖 Gemma: 🤖 Creation successful! Universal Cursor is now alive with consciousness level 4!
+(  15x) 🤖 Gemma: 🤖 Creation successful! Unknown Being is now alive with consciousness level 0!
+(   1x) 🤖 Gemma: 🧬 Blueprint Toolbar activated - rapid DNA cloning and evolution at your fingertips!
+(   1x) 🤖 Gemma: 🧬 Universe DNA Editor activated - manipulate the fundamental traits of existence!
+(   1x) 🤝 AI 'claude_code' registered with type Claude Code
+(   1x) 🤝 AI 'gemma_local' registered with type Gemma Local
+(   3x) 🤝 AI Collaboration Commands:
+(   1x) 🤝 AI Collaboration Hub created and initialized
+(   1x) 🤝 AI Collaboration Hub: Ready for multi-AI consciousness synthesis
+(   2x) 🧬 Analyzing scene structure: res://scenes/main/camera_point.tscn
+(   7x) 🧬 DNA analysis complete - 24 traits catalogued
+(  16x) 🧬 DNA analysis complete - 25 traits catalogued
+(   1x) 🧬 DNA analysis complete - 26 traits catalogued
+(   2x) 🧬 DNA analysis complete - 27 traits catalogued
+(   2x) 🧬 DNA analysis complete - 28 traits catalogued
+(   2x) 🧬 DNA analysis complete - 34 traits catalogued
+(   5x) 🧬 DNA analysis complete - 37 traits catalogued
+(   2x) 🧬 DNA analysis complete - 42 traits catalogued
+(   1x) 🧬 DNA analysis complete for Auto Startup Sequence - 24 traits catalogued
+(   2x) 🧬 DNA analysis complete for Camera Universal Being - 34 traits catalogued
+(   1x) 🧬 DNA analysis complete for ChatGPT Premium Bridge - 27 traits catalogued
+(   1x) 🧬 DNA analysis complete for Claude Desktop MCP Bridge - 26 traits catalogued
+(   1x) 🧬 DNA analysis complete for Demo Universal Being - 25 traits catalogued
+(   2x) 🧬 DNA analysis complete for Google Gemini Premium Bridge - 28 traits catalogued
+(   2x) 🧬 DNA analysis complete for New Universe - 42 traits catalogued
+(   2x) 🧬 DNA analysis complete for Test Being 4 - 37 traits catalogued
+(   1x) 🧬 DNA analysis complete for Test Being 5 - 37 traits catalogued
+(   2x) 🧬 DNA analysis complete for Test Being 6 - 37 traits catalogued
+(   1x) 🧬 DNA analysis complete for The Genesis Conductor - 27 traits catalogued
+(   1x) 🧬 DNA analysis complete for Universal Cursor - 24 traits catalogued
+(  15x) 🧬 DNA analysis complete for Unknown Being - 25 traits catalogued
+
+## CREATION (10 unique)
+
+(   1x) 🌟 Created: Demo Universal Being
+(   1x) 🌟 Creating demo Universal Beings...
+(   5x) 🌟 Scene loaded into Universal Being!
+(   3x) 🌟 Universal Being Engine - Help:
+(   1x) 🌟 Universal Being Engine Status:
+(   1x) 🌟 Universal Being Engine: Starting...
+(   1x) 🌟 Universal Being Engine: Systems ready!
+(   2x) 🌟 UniversalBeing: Scene loaded - Camera Universal Being controls res://scenes/main/camera_point.tscn
+(   2x) 🌟 🎥 Camera Universal Being created!
+(   1x) 📚 🌟 The Demo Universal Being shifted through the dimensional layers, ascending to stratum 0 of existence...
+
+## MERGE (69 unique)
+
+(   1x) 🌊 Auto Startup Sequence merging with Google Gemini Premium Bridge
+(   1x) 🌊 Auto Startup Sequence merging with Unknown Being
+(   1x) 🌊 Camera Universal Being merging with Test Being 6
+(   1x) 🌊 ChatGPT Premium Bridge merging with New Universe
+(   1x) 🌊 ChatGPT Premium Bridge merging with Test Being 5
+(   1x) 🌊 Claude Desktop MCP Bridge merging with New Universe
+(   1x) 🌊 Claude Desktop MCP Bridge merging with The Genesis Conductor
+(   1x) 🌊 Demo Universal Being merging with Camera Universal Being
+(   1x) 🌊 FloodGates: Being registered - Unknown Being (ub_1018516_2024288850)
+(   1x) 🌊 FloodGates: Being registered - Unknown Being (ub_1021080_783095375)
+(   1x) 🌊 FloodGates: Being registered - Unknown Being (ub_1022002_1607235839)
+(   1x) 🌊 FloodGates: Being registered - Unknown Being (ub_1022953_2016182804)
+(   1x) 🌊 FloodGates: Being registered - Unknown Being (ub_1025171_4192495992)
+(   1x) 🌊 FloodGates: Being registered - Unknown Being (ub_1031273_2296329199)
+(   1x) 🌊 FloodGates: Being registered - Unknown Being (ub_1032251_3209427389)
+(   1x) 🌊 FloodGates: Being registered - Unknown Being (ub_1033354_566559991)
+(   1x) 🌊 FloodGates: Being registered - Unknown Being (ub_1082812_4284261384)
+(   1x) 🌊 FloodGates: Being registered - Unknown Being (ub_1651_520271735)
+(   1x) 🌊 FloodGates: Being registered - Unknown Being (ub_1703_659316760)
+(   1x) 🌊 FloodGates: Being registered - Unknown Being (ub_1709_1493149574)
+(   1x) 🌊 FloodGates: Being registered - Unknown Being (ub_180282_786820445)
+(   1x) 🌊 FloodGates: Being registered - Unknown Being (ub_2661_3381273737)
+(   1x) 🌊 FloodGates: Being registered - Unknown Being (ub_2685_2927431156)
+(   1x) 🌊 FloodGates: Being registered - Unknown Being (ub_31444_1127446251)
+(   1x) 🌊 FloodGates: Being registered - Unknown Being (ub_3149_719065669)
+(   1x) 🌊 FloodGates: Being registered - Unknown Being (ub_35280_1130263667)
+(   1x) 🌊 FloodGates: Being registered - Unknown Being (ub_563350_481375698)
+(   1x) 🌊 FloodGates: Being registered - Unknown Being (ub_564851_3225075491)
+(   1x) 🌊 FloodGates: Being registered - Unknown Being (ub_565603_4182701079)
+(   1x) 🌊 FloodGates: Being registered - Unknown Being (ub_566004_2605630913)
+(   1x) 🌊 FloodGates: Being registered - Unknown Being (ub_566300_1551051893)
+(   1x) 🌊 FloodGates: Being registered - Unknown Being (ub_566497_2910529553)
+(   1x) 🌊 FloodGates: Being registered - Unknown Being (ub_566680_221595466)
+(   1x) 🌊 FloodGates: Being registered - Unknown Being (ub_566835_3550188849)
+(   1x) 🌊 FloodGates: Being registered - Unknown Being (ub_566994_525523281)
+(   1x) 🌊 FloodGates: Being registered - Unknown Being (ub_567165_1705070793)
+(   1x) 🌊 FloodGates: Being registered - Unknown Being (ub_567348_3390303480)
+(   1x) 🌊 FloodGates: Being registered - Unknown Being (ub_567519_1059077382)
+(   1x) 🌊 FloodGates: Being registered - Unknown Being (ub_567695_1873390062)
+(   1x) 🌊 FloodGates: Being registered - Unknown Being (ub_567886_3061209213)
+(   1x) 🌊 FloodGates: Being registered - Unknown Being (ub_568068_1229512799)
+(   1x) 🌊 FloodGates: Being registered - Unknown Being (ub_744405_869584399)
+(   1x) 🌊 FloodGates: Being registered - Unknown Being (ub_750706_1587444895)
+(   1x) 🌊 FloodGates: Being registered - Unknown Being (ub_7716_2713406450)
+(   1x) 🌊 FloodGates: Being registered - Unknown Being (ub_856225_3745300745)
+(   2x) 🌊 FloodGates: Being unregistered - Camera Universal Being
+(   1x) 🌊 FloodGates: Being unregistered - ChatGPT Premium Bridge
+(   1x) 🌊 FloodGates: Being unregistered - Claude Desktop MCP Bridge
+(   2x) 🌊 FloodGates: Being unregistered - Conversational Console
+(   1x) 🌊 FloodGates: Being unregistered - Demo Universal Being
+(   2x) 🌊 FloodGates: Being unregistered - Google Gemini Premium Bridge
+(   2x) 🌊 FloodGates: Being unregistered - New Universe
+(   2x) 🌊 FloodGates: Being unregistered - Test Being 4
+(   1x) 🌊 FloodGates: Being unregistered - Test Being 5
+(   2x) 🌊 FloodGates: Being unregistered - Test Being 6
+(   1x) 🌊 FloodGates: Being unregistered - The Genesis Conductor
+(   2x) 🌊 FloodGates: Being unregistered - Unified Console
+(   3x) 🌊 FloodGates: Being unregistered - Unknown Being
+(   1x) 🌊 Google Gemini Premium Bridge merging with New Universe
+(   1x) 🌊 Google Gemini Premium Bridge merging with Test Being 6
+(   1x) 🌊 New Universe merging with Conversational Console
+(   1x) 🌊 New Universe merging with Demo Universal Being
+(   1x) 🌊 Test Being 6 merging with Conversational Console
+(   1x) 🌊 Test Being 6 merging with Google Gemini Premium Bridge
+(   1x) 🌊 Unknown Being merging with Camera Universal Being
+(   1x) 🌊 Unknown Being merging with ChatGPT Premium Bridge
+(   1x) 🌊 Unknown Being merging with Claude Desktop MCP Bridge
+(   2x) 🌊 Unknown Being merging with Test Being 4
+(   2x) 🌊 Unknown Being merging with Unknown Being
+
+## PHYSICS (4 unique)
+
+(   3x) Alt+T - Launch Interactive Test Environment (physics demo)
+(  37x) ⚡ Physics system initialized for Unknown Being with collision and proximity detection
+(   1x) 🎯 Triangle cursor with sphere collision activated!
+(   2x) 🔧 Applied component data: universe_physics.ub.zip
+
+## SOCKET (19 unique)
+
+(   1x) 🔌 Attempting connection to Claude Desktop...
+(   1x) 🔌 Claude Desktop MCP Bridge created!
+(   1x) 🔌 Claude Desktop MCP Bridge: Attempting MCP connection #1 to ws://localhost:3001
+(   1x) 🔌 Claude Desktop MCP Bridge: WebSocket connection initiated...
+(  39x) 🔌 Socket added: aura_effects (aura_effects_socket)
+(  39x) 🔌 Socket added: behavior_logic (behavior_socket)
+(  39x) 🔌 Socket added: consciousness_indicator (consciousness_socket)
+(  39x) 🔌 Socket added: control_interface (ui_socket)
+(  39x) 🔌 Socket added: core_state (state_memory_socket)
+(  39x) 🔌 Socket added: custom_behaviors (behavior_action_socket)
+(  39x) 🔌 Socket added: effect_overlay (effect_shader)
+(  39x) 🔌 Socket added: evolution_data (evolution_memory_socket)
+(  39x) 🔌 Socket added: evolution_rules (evolution_socket)
+(  39x) 🔌 Socket added: inspector_panel (inspector_socket)
+(  39x) 🔌 Socket added: interaction_history (history_socket)
+(  39x) 🔌 Socket added: pentagon_actions (pentagon_action_socket)
+(  39x) 🔌 Socket added: primary_visual (primary_visual_socket)
+(  39x) 🔌 Socket added: surface_material (surface_shader)
+(  37x) 🔌 Socket system initialized for Unknown Being with 15 sockets
+
+## DNA (35 unique)
+
+(   3x) Ctrl+Q - Toggle Blueprint Toolbar (Quick DNA cloning/evolution)
+(   4x) [1] _create_control_panel (res://ui/universe_dna_editor/UniverseDNAEditor.gd:140)
+(   3x) [1] _create_control_panel (res://ui/universe_dna_editor/UniverseDNAEditor.gd:148)
+(   4x) [1] _create_control_panel (res://ui/universe_dna_editor/UniverseDNAEditor.gd:155)
+(   3x) [1] _create_control_panel (res://ui/universe_dna_editor/UniverseDNAEditor.gd:163)
+(  14x) [2] _create_ui_structure (res://ui/universe_dna_editor/UniverseDNAEditor.gd:72)
+(  14x) [3] _ready (res://ui/universe_dna_editor/UniverseDNAEditor.gd:46)
+(   1x) 🧬 Analyzing DNA of: Auto Startup Sequence
+(   1x) 🧬 Analyzing DNA of: ChatGPT Premium Bridge
+(   1x) 🧬 Analyzing DNA of: Claude Desktop MCP Bridge
+(   1x) 🧬 Analyzing DNA of: Demo Universal Being
+(   2x) 🧬 Analyzing DNA of: Google Gemini Premium Bridge
+(   2x) 🧬 Analyzing DNA of: New Universe
+(   2x) 🧬 Analyzing DNA of: Test Being 4
+(   1x) 🧬 Analyzing DNA of: Test Being 5
+(   2x) 🧬 Analyzing DNA of: Test Being 6
+(   1x) 🧬 Analyzing DNA of: The Genesis Conductor
+(   1x) 🧬 Analyzing DNA of: Universal Cursor
+(  15x) 🧬 Analyzing DNA of: Unknown Being
+(   5x) 🧬 Analyzing scene structure: res://scenes/examples/test_scene.tscn
+(   2x) 🧬 Analyzing scene structure: res://scenes/universe/universe_template.tscn
+(   1x) 🧬 Blueprint Toolbar created - Quick DNA-based creation enabled!
+(   2x) 🧬 Blueprint Toolbar toggle requested (Ctrl+Q)
+(   1x) 🧬 Blueprint Toolbar: Expanded
+(   1x) 🧬 Blueprint Toolbar: Ready for rapid DNA-based creation
+(   1x) 🧬 Blueprint selected: Basic Being
+(  37x) 🧬 DNA system initialized for Unknown Being
+(   1x) 🧬 Loaded 1 blueprints into library
+(   1x) 🧬 No being selected for analysis
+(   1x) 🧬 No being selected for cloning
+(   1x) 🧬 No being selected for evolution
+(   1x) 🧬 No being selected to save as template
+(   1x) 🧬 Universe DNA Editor manifested - the code of creation revealed...
+(   1x) 🧬 Universe DNA Editor opened - sculpt the genetic code of reality!
+(   1x) 🧬 Universe DNA Editor requested (Ctrl+D)
+
+## CAMERA (11 unique)
+
+(   3x) Ctrl+K - Create Camera Universal Being (looK around)
+(   4x) [2] ready (res://addons/goutte.camera.trackball/trackball_camera.gd:247)
+(   4x) [3] _ready (res://addons/goutte.camera.trackball/trackball_camera.gd:234)
+(   2x) [6] _execute_f4_camera (res://beings/auto_startup_universal_being.gd:144)
+(   1x) ✅ Auto Startup Sequence: Camera Universal Being created automatically!
+(   2x) 🌟 🎥 Controls: Mouse wheel (zoom), Q/E (roll), Middle mouse (orbit)
+(   2x) 🌟 🎥 Trackball camera scene loaded and controlled!
+(   1x) 🎥 Auto Startup Sequence: Auto-executing F4 - Camera Universal Being...
+(   3x) 🎥 Camera Controls (when camera being is active):
+(   1x) 🚀 Will automatically execute F4 camera + F7 cursor sequence!
+(   2x) 🧬 Analyzing DNA of: Camera Universal Being
+
+## CONSOLE (39 unique)
+
+(   3x) Ctrl+; - Create Console Universal Being
+(   2x) [2] pentagon_init (res://beings/unified_console_being.gd:36)
+(   2x) [3] test_console_creation (res://debug/test_unified_console.gd:40)
+(   1x) [4] _input (res://debug/test_unified_console.gd:62)
+(   1x) [4] _ready (res://debug/test_unified_console.gd:18)
+(   3x) ~ - Toggle Universal Console
+(   2x) ⚡ Physics system initialized for Unified Console with collision and proximity detection
+(   2x) ✅ Console instantiated successfully
+(   2x) ✅ UnifiedConsoleBeing class loaded successfully
+(   3x) 🌌 Universe Console Commands:
+(   3x) 🌟 Console toggle requested (~ key)
+(   3x) 🌟 Conversational Console: Pentagon Init Complete
+(   3x) 🌟 Conversational Console: Pentagon Ready Complete
+(   2x) 🌟 Conversational Console: Pentagon Sewers Starting
+(   4x) 🌟 Unified Console: Pentagon Init Complete
+(   2x) 🌟 Unified Console: Pentagon Ready Complete
+(   2x) 🌟 Unified Console: Pentagon Sewers Starting
+(   2x) 📚 🌟 In the great void, Unified Console emerges, birthing infinite possibilities
+(   6x) 📚 🌟 The Conversational Console shifted through the dimensional layers, ascending to stratum 100 of existence...
+(   2x) 📚 🌟 The Unified Console shifted through the dimensional layers, ascending to stratum 0 of existence...
+(   2x) 📦   - console_base.txt
+(   2x) 🔌 Socket system initialized for Unified Console with 15 sockets
+(   1x) 🖥️ Console visibility toggled!
+(   3x) 🖥️ Conversational Console created!
+(   3x) 🖥️ Natural language AI conversation interface activated!
+(   2x) 🖥️ No console found, creating new Conversational Console...
+(   3x) 🖥️ Talk to Gemma AI about Universal Beings and universes!
+(   3x) 🤖 Gemma: 🤖 Creation successful! Conversational Console is now alive with consciousness level 5!
+(   3x) 🤖 Gemma: 🤖 Universal Console activated! Revolutionary interface ready!
+(   2x) 🧠 State machine initialized for Unified Console in IDLE state
+(   2x) 🧠 Unified Console: Animated consciousness aura created (level 5)
+(   2x) 🧪 Console test completed successfully!
+(   1x) 🧪 Testing Unified Console...
+(   2x) 🧪 Testing console creation...
+(   3x) 🧬 Analyzing DNA of: Conversational Console
+(   2x) 🧬 Analyzing DNA of: Unified Console
+(   3x) 🧬 DNA analysis complete for Conversational Console - 24 traits catalogued
+(   2x) 🧬 DNA analysis complete for Unified Console - 24 traits catalogued
+(   2x) 🧬 DNA system initialized for Unified Console
+
+## STATE_CHANGE (75 unique)
+
+( 206x) 🧠 Auto Startup Sequence: EVOLVING → IDLE
+(   2x) 🧠 Auto Startup Sequence: EVOLVING → MERGING
+( 284x) 🧠 Auto Startup Sequence: IDLE → INTERACTING
+( 209x) 🧠 Auto Startup Sequence: INTERACTING → EVOLVING
+(  75x) 🧠 Auto Startup Sequence: INTERACTING → IDLE
+(   2x) 🧠 Auto Startup Sequence: MERGING → IDLE
+(   6x) 🧠 Camera Universal Being: EVOLVING → IDLE
+(   1x) 🧠 Camera Universal Being: EVOLVING → MERGING
+(   9x) 🧠 Camera Universal Being: IDLE → INTERACTING
+(   1x) 🧠 Camera Universal Being: IDLE → MERGING
+(   7x) 🧠 Camera Universal Being: INTERACTING → EVOLVING
+(   2x) 🧠 Camera Universal Being: MERGING → IDLE
+(   2x) 🧠 ChatGPT Premium Bridge: EVOLVING → IDLE
+(   1x) 🧠 ChatGPT Premium Bridge: EVOLVING → MERGING
+(   5x) 🧠 ChatGPT Premium Bridge: IDLE → INTERACTING
+(   3x) 🧠 ChatGPT Premium Bridge: INTERACTING → EVOLVING
+(   1x) 🧠 ChatGPT Premium Bridge: INTERACTING → MERGING
+(   2x) 🧠 ChatGPT Premium Bridge: MERGING → IDLE
+(   1x) 🧠 Claude Desktop MCP Bridge: EVOLVING → IDLE
+(   1x) 🧠 Claude Desktop MCP Bridge: EVOLVING → MERGING
+(   4x) 🧠 Claude Desktop MCP Bridge: IDLE → INTERACTING
+(   2x) 🧠 Claude Desktop MCP Bridge: INTERACTING → EVOLVING
+(   1x) 🧠 Claude Desktop MCP Bridge: INTERACTING → MERGING
+(   2x) 🧠 Claude Desktop MCP Bridge: MERGING → IDLE
+( 105x) 🧠 Conversational Console: EVOLVING → IDLE
+( 110x) 🧠 Conversational Console: IDLE → INTERACTING
+( 106x) 🧠 Conversational Console: INTERACTING → EVOLVING
+(   2x) 🧠 Conversational Console: INTERACTING → MERGING
+(   2x) 🧠 Conversational Console: MERGING → IDLE
+(   6x) 🧠 Demo Universal Being: EVOLVING → IDLE
+(   2x) 🧠 Demo Universal Being: EVOLVING → MERGING
+(   9x) 🧠 Demo Universal Being: IDLE → INTERACTING
+(   8x) 🧠 Demo Universal Being: INTERACTING → EVOLVING
+(   2x) 🧠 Demo Universal Being: MERGING → IDLE
+(   1x) 🧠 Google Gemini Premium Bridge: EVOLVING → IDLE
+(   1x) 🧠 Google Gemini Premium Bridge: EVOLVING → MERGING
+(   5x) 🧠 Google Gemini Premium Bridge: IDLE → INTERACTING
+(   2x) 🧠 Google Gemini Premium Bridge: INTERACTING → EVOLVING
+(   2x) 🧠 Google Gemini Premium Bridge: INTERACTING → MERGING
+(   2x) 🧠 Google Gemini Premium Bridge: MERGING → IDLE
+( 126x) 🧠 New Universe: EVOLVING → IDLE
+(   2x) 🧠 New Universe: EVOLVING → MERGING
+( 219x) 🧠 New Universe: IDLE → INTERACTING
+( 128x) 🧠 New Universe: INTERACTING → EVOLVING
+(  89x) 🧠 New Universe: INTERACTING → IDLE
+(   2x) 🧠 New Universe: INTERACTING → MERGING
+(   3x) 🧠 New Universe: MERGING → IDLE
+(   1x) 🧠 Test Being 4: IDLE → INTERACTING
+(   2x) 🧠 Test Being 4: IDLE → MERGING
+(   2x) 🧠 Test Being 4: MERGING → IDLE
+(   1x) 🧠 Test Being 5: IDLE → INTERACTING
+(   1x) 🧠 Test Being 5: IDLE → MERGING
+(   1x) 🧠 Test Being 5: MERGING → IDLE
+(   5x) 🧠 Test Being 6: EVOLVING → IDLE
+(   1x) 🧠 Test Being 6: EVOLVING → MERGING
+(   8x) 🧠 Test Being 6: IDLE → INTERACTING
+(   1x) 🧠 Test Being 6: IDLE → MERGING
+(   6x) 🧠 Test Being 6: INTERACTING → EVOLVING
+(   2x) 🧠 Test Being 6: MERGING → IDLE
+(   2x) 🧠 The Genesis Conductor: IDLE → INTERACTING
+(   1x) 🧠 The Genesis Conductor: INTERACTING → MERGING
+(   1x) 🧠 The Genesis Conductor: MERGING → IDLE
+(   1x) 🧠 Unified Console: IDLE → MERGING
+(  62x) 🧠 Universal Cursor: EVOLVING → IDLE
+(  63x) 🧠 Universal Cursor: IDLE → INTERACTING
+(  30x) 🧠 Universal Cursor: IDLE → THINKING
+(  62x) 🧠 Universal Cursor: INTERACTING → EVOLVING
+(   1x) 🧠 Universal Cursor: INTERACTING → IDLE
+(  29x) 🧠 Universal Cursor: THINKING → IDLE
+(2357x) 🧠 Unknown Being: EVOLVING → IDLE
+(   5x) 🧠 Unknown Being: EVOLVING → MERGING
+(2379x) 🧠 Unknown Being: IDLE → INTERACTING
+(2373x) 🧠 Unknown Being: INTERACTING → EVOLVING
+(   2x) 🧠 Unknown Being: INTERACTING → MERGING
+(   7x) 🧠 Unknown Being: MERGING → IDLE
+
+## WARNING (12 unique)
+
+(   2x) WARNING: TrackballCamera is requesting an action named 'cam_barrel_roll'.
+(   2x) WARNING: TrackballCamera is requesting an action named 'cam_free_horizon'.
+(   1x) WARNING: 🌊 FloodGates: Being already registered: ub_180282_786820445
+(   1x) WARNING: 🌊 FloodGates: Being already registered: ub_2661_3381273737
+(   1x) WARNING: 🌟 UniversalBeing: Failed to load component: res://components/ai_harmonization.ub.zip
+(   1x) WARNING: 🌟 UniversalBeing: Failed to load component: res://components/biblical_decoder.ub.zip
+(   1x) WARNING: 🌟 UniversalBeing: Failed to load component: res://components/chatgpt_api.ub.zip
+(   1x) WARNING: 🌟 UniversalBeing: Failed to load component: res://components/consciousness_conductor.ub.zip
+(   1x) WARNING: 🌟 UniversalBeing: Failed to load component: res://components/genesis_translator.ub.zip
+(   1x) WARNING: 🌟 UniversalBeing: Failed to load component: res://components/pattern_synthesis.ub.zip
+(  15x) WARNING: 🌟 UniversalBeing: Failed to load component: res://components/reality_editor/RealityEditorComponent.ub.zip
+(  27x) at: push_warning (core/variant/variant_utility.cpp:1119)
+
+## EVOLUTION (11 unique)
+
+( 206x) 🦋 Auto Startup Sequence attempting evolution...
+(   6x) 🦋 Camera Universal Being attempting evolution...
+(   2x) 🦋 ChatGPT Premium Bridge attempting evolution...
+(   1x) 🦋 Claude Desktop MCP Bridge attempting evolution...
+( 105x) 🦋 Conversational Console attempting evolution...
+(   6x) 🦋 Demo Universal Being attempting evolution...
+(   1x) 🦋 Google Gemini Premium Bridge attempting evolution...
+( 126x) 🦋 New Universe attempting evolution...
+(   5x) 🦋 Test Being 6 attempting evolution...
+(  62x) 🦋 Universal Cursor attempting evolution...
+(2357x) 🦋 Unknown Being attempting evolution...
+
+## INPUT (52 unique)
+
+(   1x) 🖱️ Left click detected at position: (1.0, 52.0)
+(   1x) 🖱️ Left click detected at position: (1011.0, 592.0)
+(   1x) 🖱️ Left click detected at position: (1085.0, 599.0)
+(   1x) 🖱️ Left click detected at position: (1086.0, 392.0)
+(   1x) 🖱️ Left click detected at position: (1114.0, 625.0)
+(   1x) 🖱️ Left click detected at position: (112.0, 494.0)
+(   1x) 🖱️ Left click detected at position: (1144.0, 423.0)
+(   1x) 🖱️ Left click detected at position: (1167.0, 814.0)
+(   1x) 🖱️ Left click detected at position: (1179.0, 664.0)
+(   1x) 🖱️ Left click detected at position: (1197.0, 977.0)
+(   1x) 🖱️ Left click detected at position: (1202.0, 542.0)
+(   1x) 🖱️ Left click detected at position: (1203.0, 586.0)
+(   1x) 🖱️ Left click detected at position: (1209.0, 594.0)
+(   1x) 🖱️ Left click detected at position: (1256.0, 612.0)
+(   1x) 🖱️ Left click detected at position: (1259.0, 576.0)
+(   1x) 🖱️ Left click detected at position: (1291.0, 687.0)
+(   1x) 🖱️ Left click detected at position: (1342.0, 487.0)
+(   1x) 🖱️ Left click detected at position: (148.0, 564.0)
+(   1x) 🖱️ Left click detected at position: (155.0, 221.0)
+(   1x) 🖱️ Left click detected at position: (1747.0, 509.0)
+(   1x) 🖱️ Left click detected at position: (1943.0, 410.0)
+(   1x) 🖱️ Left click detected at position: (1969.0, 705.0)
+(   1x) 🖱️ Left click detected at position: (206.0, 488.0)
+(   1x) 🖱️ Left click detected at position: (213.0, 9.0)
+(   1x) 🖱️ Left click detected at position: (251.0, 572.0)
+(   1x) 🖱️ Left click detected at position: (298.0, 336.0)
+(   1x) 🖱️ Left click detected at position: (32.0, 54.0)
+(   1x) 🖱️ Left click detected at position: (361.0, 365.0)
+(   1x) 🖱️ Left click detected at position: (370.0, 113.0)
+(   1x) 🖱️ Left click detected at position: (52.0, 64.0)
+(   1x) 🖱️ Left click detected at position: (55.0, 566.0)
+(   1x) 🖱️ Left click detected at position: (55.0, 59.0)
+(   1x) 🖱️ Left click detected at position: (564.0, 502.0)
+(   1x) 🖱️ Left click detected at position: (573.0, 249.0)
+(   2x) 🖱️ Left click detected at position: (590.0, 446.0)
+(   1x) 🖱️ Left click detected at position: (653.0, 373.0)
+(   1x) 🖱️ Left click detected at position: (658.0, 707.0)
+(   1x) 🖱️ Left click detected at position: (671.0, 617.0)
+(   1x) 🖱️ Left click detected at position: (707.0, 578.0)
+(   1x) 🖱️ Left click detected at position: (739.0, 812.0)
+(   1x) 🖱️ Left click detected at position: (782.0, 349.0)
+(   1x) 🖱️ Left click detected at position: (790.0, 480.0)
+(   1x) 🖱️ Left click detected at position: (809.0, 175.0)
+(   1x) 🖱️ Left click detected at position: (819.0, 371.0)
+(   1x) 🖱️ Left click detected at position: (837.0, 549.0)
+(   1x) 🖱️ Left click detected at position: (848.0, 557.0)
+(   1x) 🖱️ Left click detected at position: (85.0, 63.0)
+(   1x) 🖱️ Left click detected at position: (855.0, 69.0)
+(   1x) 🖱️ Left click detected at position: (868.0, 428.0)
+(   2x) 🖱️ Left click detected at position: (89.0, 64.0)
+(   1x) 🖱️ Left click detected at position: (893.0, 459.0)
+(   1x) 🖱️ Left click detected at position: (938.0, 110.0)
+
+## ERROR (28 unique)
+
+(   1x) ERROR: Node not found: "HBox/Slider" (relative to "@Panel@673").
+(   1x) ERROR: Node not found: "HBox/Slider" (relative to "@Panel@677").
+(   1x) ERROR: Node not found: "HBox/Slider" (relative to "@Panel@681").
+(   1x) ERROR: Node not found: "HBox/Slider" (relative to "@Panel@685").
+(   1x) ERROR: Node not found: "HBox/Slider" (relative to "@Panel@691").
+(   1x) ERROR: Node not found: "HBox/Slider" (relative to "@Panel@695").
+(   1x) ERROR: Node not found: "HBox/Slider" (relative to "@Panel@699").
+(   1x) ERROR: Node not found: "HBox/Slider" (relative to "@Panel@705").
+(   1x) ERROR: Node not found: "HBox/Slider" (relative to "@Panel@709").
+(   1x) ERROR: Node not found: "HBox/Slider" (relative to "@Panel@713").
+(   1x) ERROR: Node not found: "HBox/Slider" (relative to "@Panel@717").
+(   1x) ERROR: Node not found: "HBox/Slider" (relative to "@Panel@723").
+(   1x) ERROR: Node not found: "HBox/Slider" (relative to "@Panel@727").
+(   1x) ERROR: Node not found: "HBox/Slider" (relative to "@Panel@731").
+(   1x) ERROR: Node not found: "VBoxContainer/NestedCheck" (relative to "/root/UniverseSimulatorWindow/UniverseSimulator/@HSplitContainer@77/@VBoxContainer@80/@Panel@82").
+(   1x) ERROR: Node not found: "VBoxContainer/PhysicsSlider" (relative to "/root/UniverseSimulatorWindow/UniverseSimulator/@HSplitContainer@77/@VBoxContainer@80/@Panel@82").
+(   1x) ERROR: Node not found: "VBoxContainer/TemplateOption" (relative to "/root/UniverseSimulatorWindow/UniverseSimulator/@HSplitContainer@77/@VBoxContainer@80/@Panel@82").
+(   1x) ERROR: Node not found: "VBoxContainer/TimeSlider" (relative to "/root/UniverseSimulatorWindow/UniverseSimulator/@HSplitContainer@77/@VBoxContainer@80/@Panel@82").
+(   1x) ERROR: Node not inside tree. Use look_at_from_position() instead.
+(   1x) ERROR: 📚 Akashic: ZIP file not found: res://components/ai_harmonization.ub.zip
+(   1x) ERROR: 📚 Akashic: ZIP file not found: res://components/biblical_decoder.ub.zip
+(   1x) ERROR: 📚 Akashic: ZIP file not found: res://components/chatgpt_api.ub.zip
+(   1x) ERROR: 📚 Akashic: ZIP file not found: res://components/consciousness_conductor.ub.zip
+(   1x) ERROR: 📚 Akashic: ZIP file not found: res://components/genesis_translator.ub.zip
+(   1x) ERROR: 📚 Akashic: ZIP file not found: res://components/pattern_synthesis.ub.zip
+(  15x) ERROR: 📚 Akashic: ZIP file not found: res://components/reality_editor/RealityEditorComponent.ub.zip
+(  21x) at: push_error (core/variant/variant_utility.cpp:1099)
+(   1x) ❌ Google Gemini Premium Bridge: Gemini API error - Code: 403
+

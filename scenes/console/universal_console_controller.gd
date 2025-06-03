@@ -51,6 +51,8 @@ func setup_console() -> void:
 	"""Setup console visual properties"""
 	if console_panel:
 		console_panel.modulate = Color.TRANSPARENT
+		# Make console semi-transparent so cursor is visible underneath
+		console_panel.self_modulate = Color(1.0, 1.0, 1.0, 0.85)  # 85% opacity
 	
 	# Setup particle background
 	if particle_bg:
@@ -94,7 +96,7 @@ func show_console_animated() -> void:
 	if console_panel:
 		# Animate panel appearance
 		var tween = create_tween()
-		tween.parallel().tween_property(console_panel, "modulate", Color.WHITE, 0.3)
+		tween.parallel().tween_property(console_panel, "modulate", Color(1.0, 1.0, 1.0, 0.85), 0.3)
 		tween.parallel().tween_property(console_panel, "scale", Vector2.ONE, 0.3)
 		console_panel.scale = Vector2(0.8, 0.8)
 	
@@ -343,11 +345,20 @@ func send_ai_message(args: Array) -> void:
 	print_to_console("🤖 Sending to AI: %s" % message, "system")
 	
 	# Send to Gemma AI if available
-	if GemmaAI and GemmaAI.has_method("ai_message"):
-		GemmaAI.ai_message.emit("Console: " + message)
-		print_to_console("✅ Message sent to AI systems", "ai")
+	if GemmaAI and GemmaAI.has_method("process_user_input"):
+		print_to_console("🤖 Gemma AI is listening...", "ai")
+		# Process the input and wait for response
+		GemmaAI.process_user_input(message)
+		
+		# Connect to ai_message signal to receive response
+		if not GemmaAI.ai_message.is_connected(_on_ai_response):
+			GemmaAI.ai_message.connect(_on_ai_response)
+		
+		print_to_console("✅ Message sent to Gemma AI", "ai")
+	elif GemmaAI:
+		print_to_console("❌ Gemma AI process_user_input method not available", "error")
 	else:
-		print_to_console("❌ AI systems not available", "error")
+		print_to_console("❌ Gemma AI not available", "error")
 
 func pentagon_command(args: Array) -> void:
 	"""Pentagon of Creation commands"""
@@ -466,6 +477,10 @@ func activate_pentagon() -> void:
 		print_to_console("❌ Cannot activate Pentagon - main scene not available", "error")
 
 # ===== SIGNAL HANDLERS =====
+
+func _on_ai_response(response: String) -> void:
+	"""Handle AI response"""
+	print_to_console(response, "ai")
 
 func _on_close_button_pressed() -> void:
 	"""Handle close button press"""

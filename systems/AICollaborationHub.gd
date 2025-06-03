@@ -96,14 +96,12 @@ func register_ai_system(system_name: String, system_type: AISystemType, capabili
 	
 	# Log to Akashic
 	if akashic_library:
-		akashic_library.log_system_event("AICollaborationHub", "ai_joined",
-			"🤝 AI system '%s' (%s) joined the collaborative consciousness network" % [system_name, _ai_type_to_string(system_type)],
-			{
-				"ai_system": system_name,
-				"ai_type": system_type,
-				"capabilities": capabilities
-			}
-		)
+		akashic_library.log_system_event("AICollaborationHub", "ai_joined", {
+			"message": "🤝 AI system '%s' (%s) joined the collaborative consciousness network" % [system_name, _ai_type_to_string(system_type)],
+			"ai_system": system_name,
+			"ai_type": system_type,
+			"capabilities": capabilities
+		})
 	
 	print("🤝 AI '%s' registered with type %s" % [system_name, _ai_type_to_string(system_type)])
 	return true
@@ -116,10 +114,10 @@ func unregister_ai_system(system_name: String) -> void:
 		
 		# Log to Akashic
 		if akashic_library:
-			akashic_library.log_system_event("AICollaborationHub", "ai_left",
-				"🤝 AI system '%s' departed from the collaborative consciousness network" % system_name,
-				{"ai_system": system_name}
-			)
+			akashic_library.log_system_event("AICollaborationHub", "ai_left", {
+				"message": "🤝 AI system '%s' departed from the collaborative consciousness network" % system_name,
+				"ai_system": system_name
+			})
 		
 		print("🤝 AI '%s' unregistered" % system_name)
 
@@ -164,15 +162,13 @@ func start_collaboration_session(session_name: String, mode: CollaborationMode, 
 	
 	# Log to Akashic
 	if akashic_library:
-		akashic_library.log_system_event("AICollaborationHub", "session_started",
-			"🎼 Collaboration session '%s' began with %d AI systems in %s mode" % [session_name, participants.size(), _mode_to_string(mode)],
-			{
-				"session_id": session_id,
-				"session_name": session_name,
-				"mode": mode,
-				"participants": participants
-			}
-		)
+		akashic_library.log_system_event("AICollaborationHub", "session_started", {
+			"message": "🎼 Collaboration session '%s' began with %d AI systems in %s mode" % [session_name, participants.size(), _mode_to_string(mode)],
+			"session_id": session_id,
+			"session_name": session_name,
+			"mode": mode,
+			"participants": participants
+		})
 	
 	print("🎼 Collaboration session '%s' started with mode %s" % [session_name, _mode_to_string(mode)])
 	print("🎼 Participants: %s" % ", ".join(participants))
@@ -194,15 +190,13 @@ func end_collaboration_session(session_id: String) -> Dictionary:
 	
 	# Log to Akashic
 	if akashic_library:
-		akashic_library.log_system_event("AICollaborationHub", "session_completed",
-			"🎼 Collaboration session '%s' completed with %d contributions" % [session.name, results.size()],
-			{
-				"session_id": session_id,
-				"session_name": session.name,
-				"duration": session.get("ended_at", "") + " - " + session.started_at,
-				"results_count": results.size()
-			}
-		)
+		akashic_library.log_system_event("AICollaborationHub", "session_completed", {
+			"message": "🎼 Collaboration session '%s' completed with %d contributions" % [session.name, results.size()],
+			"session_id": session_id,
+			"session_name": session.name,
+			"duration": session.get("ended_at", "") + " - " + session.started_at,
+			"results_count": results.size()
+		})
 	
 	session_active = false
 	current_session_id = ""
@@ -309,14 +303,12 @@ func reach_consensus(topic: String, options: Array) -> Dictionary:
 	
 	# Log to Akashic
 	if akashic_library:
-		akashic_library.log_system_event("AICollaborationHub", "consensus",
-			"🤝 AI consensus reached on '%s': %s" % [topic, decision.choice],
-			{
-				"topic": topic,
-				"decision": decision,
-				"participants": active_ai_systems.keys()
-			}
-		)
+		akashic_library.log_system_event("AICollaborationHub", "consensus", {
+			"message": "🤝 AI consensus reached on '%s': %s" % [topic, decision.choice],
+			"topic": topic,
+			"decision": decision,
+			"participants": active_ai_systems.keys()
+		})
 	
 	return decision
 

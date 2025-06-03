@@ -1,0 +1,13 @@
+{
+	"component_name": "universe_lod",
+	"version": "1.0.0",
+	"description": "Level of Detail system for universe rendering optimization",
+	"author": "Universal Being Team",
+	"entry_script": "universe_lod.gd",
+	"being_type": "component",
+	"compatible_with": ["universe"],
+	"dependencies": [],
+	"files": [
+		"universe_lod.gd"
+	]
+}

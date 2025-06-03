@@ -51,7 +51,8 @@ func pentagon_ready() -> void:
 	_create_console_window()
 	
 	# Add Universe Genesis component for advanced universe creation
-	add_component("res://components/universe_genesis/UniverseGenesisComponent.gd")
+	# NOTE: Components should be .ub.zip files, not .gd files
+	# add_component("res://components/universe_genesis.ub.zip")  # Uncomment when component exists
 	
 	# Welcome message
 	add_message("system", "🌟 Universal Being AI Console Ready")
@@ -368,8 +369,8 @@ func _process_natural_commands(message: String) -> void:
 	
 	# Being inspection
 	elif ("inspect" in lower_message or "examine" in lower_message) and "being" in lower_message:
-		var being_name = _extract_being_name(message)
-		_inspect_being_naturally(being_name)
+		var target_being_name = _extract_being_name(message)
+		_inspect_being_naturally(target_being_name)
 	
 	# Socket commands
 	elif "socket" in lower_message:
@@ -700,9 +701,9 @@ func _extract_being_name(message: String) -> String:
 	else:
 		return ""
 
-func _inspect_being_naturally(being_name: String) -> void:
+func _inspect_being_naturally(target_being_name: String) -> void:
 	"""Inspect being through natural language"""
-	if being_name.is_empty():
+	if target_being_name.is_empty():
 		add_message("system", "🔍 Please specify which being to inspect")
 		return
 	
@@ -714,14 +715,14 @@ func _inspect_being_naturally(being_name: String) -> void:
 	
 	var all_beings = flood_gates.get_all_beings()
 	for being in all_beings:
-		if being.being_name.to_lower().contains(being_name.to_lower()):
+		if being.being_name.to_lower().contains(target_being_name.to_lower()):
 			_display_being_inspection(being)
 			# Switch to inspector tab
 			if channel_tabs:
 				channel_tabs.current_tab = 2  # Inspector tab (0=conversation, 1=universe, 2=inspector)
 			return
 	
-	add_message("system", "🔍 Being '%s' not found" % being_name)
+	add_message("system", "🔍 Being '%s' not found" % target_being_name)
 
 func _process_socket_commands(message: String) -> void:
 	"""Process socket-related commands"""

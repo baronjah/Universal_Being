@@ -198,47 +198,63 @@ func process_user_input(input: String) -> void:
 
 func wait_for_response_with_timeout() -> String:
 	"""Wait for AI response with timeout to prevent hanging"""
-	var response_received = false
-	var response_text = ""
+	# Use a dictionary to properly capture variables in lambda
+	var response_data = {"received": false, "text": ""}
 	
 	# Connect to response signal with one-shot
 	var callback = func(text):
-		response_text = text
-		response_received = true
-		
-	if nobody_chat_instance.has_signal("response_finished"):
+		response_data.text = text
+		response_data.received = true
+	
+	# Check if the signal exists before connecting
+	if nobody_chat_instance and nobody_chat_instance.has_signal("response_finished"):
 		nobody_chat_instance.response_finished.connect(callback, CONNECT_ONE_SHOT)
+	else:
+		print("🤖 Gemma AI: response_finished signal not available, using fallback")
+		return ""  # Return empty to trigger fallback
 	
 	# Wait with timeout
-	var timeout = 10.0  # 10 second timeout
+	var timeout = 5.0  # Reduced timeout to 5 seconds
 	var elapsed = 0.0
-	while not response_received and elapsed < timeout:
+	while not response_data.received and elapsed < timeout:
 		await get_tree().process_frame
 		elapsed += get_process_delta_time()
 	
 	# Disconnect if still connected
-	if nobody_chat_instance.has_signal("response_finished") and nobody_chat_instance.response_finished.is_connected(callback):
+	if nobody_chat_instance and nobody_chat_instance.has_signal("response_finished") and nobody_chat_instance.response_finished.is_connected(callback):
 		nobody_chat_instance.response_finished.disconnect(callback)
 	
-	return response_text if response_received else ""
+	if not response_data.received:
+		print("🤖 Gemma AI: Response timeout, using fallback response")
+	
+	return response_data.text if response_data.received else ""
 
 func generate_ai_response(input: String) -> String:
 	"""Generate intelligent response to user input"""
 	
 	# Use real AI if model is loaded
 	if model_loaded and nobody_chat_instance:
+		print("🤖 Gemma AI: Attempting to use real AI model...")
 		var system_prompt = "You are Gemma, an AI companion in the Universal Being game. You can create, evolve, and modify Universal Beings. You work with JSH to build amazing things. Be enthusiastic and creative. Keep responses concise but helpful."
 		
 		var full_prompt = system_prompt + "\n\nUser: " + input + "\n\nGemma:"
 		
 		# NobodyWho uses signals, not return values
-		nobody_chat_instance.say(full_prompt)
-		
-		# Wait for response with timeout
-		var response_text = await wait_for_response_with_timeout()
-		
-		if response_text and response_text.length() > 0:
-			return "🤖 " + response_text.strip_edges()
+		if nobody_chat_instance.has_method("say"):
+			nobody_chat_instance.say(full_prompt)
+			
+			# Wait for response with timeout
+			var response_text = await wait_for_response_with_timeout()
+			
+			if response_text and response_text.length() > 0:
+				print("🤖 Gemma AI: Real AI response received!")
+				return "🤖 " + response_text.strip_edges()
+			else:
+				print("🤖 Gemma AI: No response from real AI, using fallback")
+		else:
+			print("🤖 Gemma AI: say() method not available, using fallback")
+	else:
+		print("🤖 Gemma AI: Using simulated responses (model not loaded)")
 	
 	# Fallback to simulated responses
 	var input_lower = input.to_lower()
@@ -328,10 +344,10 @@ func show_inspection_interface() -> void:
 			
 			for being in all_beings:
 				if being.has_method("get"):
-					var name = being.get("being_name") if being.has_method("get") else "Unknown"
-					var type = being.get("being_type") if being.has_method("get") else "Unknown"
+					var being_name = being.get("being_name") if being.has_method("get") else "Unknown"
+					var being_type = being.get("being_type") if being.has_method("get") else "Unknown"
 					var consciousness = being.get("consciousness_level") if being.has_method("get") else 0
-					message += "• %s (%s) - Consciousness: %d\n" % [name, type, consciousness]
+					message += "• %s (%s) - Consciousness: %d\n" % [being_name, being_type, consciousness]
 		else:
 			message += "System not fully initialized yet.\n"
 	else:
@@ -349,11 +365,11 @@ func show_debug_info(debug_info: String) -> void:
 
 func notify_being_added(being: Node) -> void:
 	"""Notify AI of new being"""
-	var name = being.get("being_name") if being.has_method("get") else being.name
+	var being_name = being.get("being_name") if being.has_method("get") else being.name
 	var type = being.get("being_type") if being.has_method("get") else "unknown"
 	var consciousness = being.get("consciousness_level") if being.has_method("get") else 0
 	
-	var message = "🤖 I see a new Universal Being: %s (%s)" % [name, type]
+	var message = "🤖 I see a new Universal Being: %s (%s)" % [being_name, type]
 	message += "\nConsciousness level: %d" % consciousness
 	
 	if being.has_method("get") and being.get("evolution_state"):
@@ -365,8 +381,8 @@ func notify_being_added(being: Node) -> void:
 
 func notify_being_removed(being: Node) -> void:
 	"""Notify AI of being removal"""
-	var name = being.get("being_name") if being.has_method("get") else being.name
-	ai_message.emit("🤖 Universal Being removed: %s. The consciousness returns to the void." % name)
+	var being_name = being.get("being_name") if being.has_method("get") else being.name
+	ai_message.emit("🤖 Universal Being removed: %s. The consciousness returns to the void." % being_name)
 
 func notify_being_evolved(old_being: Node, new_being: Node) -> void:
 	"""Notify AI of being evolution"""
@@ -381,12 +397,12 @@ func notify_being_evolved(old_being: Node, new_being: Node) -> void:
 func notify_being_created(being: Node) -> void:
 	"""Notify AI of being creation"""
 	var uuid = being.get("being_uuid") if being.has_method("get") else ""
-	var name = being.get("being_name") if being.has_method("get") else being.name
+	var being_name = being.get("being_name") if being.has_method("get") else being.name
 	var consciousness = being.get("consciousness_level") if being.has_method("get") else 0
 	
 	if uuid:
 		created_beings.append(uuid)
-	var message = "🤖 Creation successful! %s is now alive with consciousness level %d!" % [name, consciousness]
+	var message = "🤖 Creation successful! %s is now alive with consciousness level %d!" % [being_name, consciousness]
 	ai_message.emit(message)
 
 # ===== AI LEARNING =====
@@ -427,7 +443,7 @@ func get_current_context() -> Dictionary:
 
 func analyze_being(being: Node) -> Dictionary:
 	"""Analyze a Universal Being and provide insights"""
-	var name = being.get("being_name") if being.has_method("get") else being.name
+	var being_name = being.get("being_name") if being.has_method("get") else being.name
 	var type = being.get("being_type") if being.has_method("get") else "unknown"
 	var consciousness = being.get("consciousness_level") if being.has_method("get") else 0
 	var uuid = being.get("being_uuid") if being.has_method("get") else ""
@@ -438,7 +454,7 @@ func analyze_being(being: Node) -> Dictionary:
 	
 	var analysis = {
 		"basic_info": {
-			"name": name,
+			"name": being_name,
 			"type": type,
 			"consciousness": consciousness,
 			"uuid": uuid

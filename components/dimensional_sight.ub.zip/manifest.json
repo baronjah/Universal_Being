@@ -1,0 +1,13 @@
+{
+	"component_name": "dimensional_sight",
+	"version": "1.0.0",
+	"description": "Dimensional perception and visualization component",
+	"author": "Universal Being Team",
+	"entry_script": "dimensional_sight.gd",
+	"being_type": "component",
+	"compatible_with": ["ai_bridge"],
+	"dependencies": [],
+	"files": [
+		"dimensional_sight.gd"
+	]
+}

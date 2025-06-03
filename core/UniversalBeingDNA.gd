@@ -242,13 +242,13 @@ func _analyze_modifiable_elements(being: UniversalBeing) -> void:
 		
 		# Check for modifiable properties
 		if node.is_class("Control"):
-			modifications.extend(["position", "size", "modulate", "visible"])
+			modifications.append_array(["position", "size", "modulate", "visible"])
 		if node.is_class("MeshInstance3D"):
-			modifications.extend(["mesh", "material_override", "transform"])
+			modifications.append_array(["mesh", "material_override", "transform"])
 		if node.is_class("Label") or node.is_class("Button"):
-			modifications.extend(["text", "font_size", "font_color"])
+			modifications.append_array(["text", "font_size", "font_color"])
 		if node.is_class("Light3D"):
-			modifications.extend(["light_energy", "light_color"])
+			modifications.append_array(["light_energy", "light_color"])
 		
 		if not modifications.is_empty():
 			modifiable_elements[node_path] = {
@@ -373,9 +373,9 @@ func _analyze_component_system(being: UniversalBeing) -> void:
 # ===== DNA UTILITY METHODS =====
 
 func _calculate_preferred_states(being: UniversalBeing) -> Array[String]:
-	"""Calculate which states this being prefers"""
+	# Calculate which states this being prefers
 	# Simple heuristic based on consciousness level
-	var preferred = []
+	var preferred: Array[String] = []
 	
 	if being.consciousness_level >= 3:
 		preferred.append("THINKING")
@@ -421,8 +421,8 @@ func _calculate_evolution_readiness(being: UniversalBeing) -> float:
 	return clamp(readiness, 0.0, 1.0)
 
 func _identify_transcendence_markers(being: UniversalBeing) -> Array[String]:
-	"""Identify markers indicating potential for transcendence"""
-	var markers = []
+	# Identify markers indicating potential for transcendence
+	var markers: Array[String] = []
 	
 	if being.consciousness_level >= 6:
 		markers.append("high_consciousness")

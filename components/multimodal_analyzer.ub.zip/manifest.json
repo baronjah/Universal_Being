@@ -1,0 +1,13 @@
+{
+	"component_name": "multimodal_analyzer",
+	"version": "1.0.0",
+	"description": "Multimodal content analysis for AI systems",
+	"author": "Universal Being Team",
+	"entry_script": "multimodal_analyzer.gd",
+	"being_type": "component",
+	"compatible_with": ["ai_bridge"],
+	"dependencies": [],
+	"files": [
+		"multimodal_analyzer.gd"
+	]
+}

@@ -386,10 +386,10 @@ func collaborate_with_ai() -> void:
 			# Log collaboration
 			var akashic = SystemBootstrap.get_akashic_library()
 			if akashic:
-				akashic.log_system_event("AI Collaboration",
-					"🤖 The cosmic mind of Gemma joins the creation dance...",
-					{"collaboration": collaboration}
-				)
+				akashic.log_system_event("AI Collaboration", "collaboration_started", {
+					"message": "🤖 The cosmic mind of Gemma joins the creation dance...",
+					"collaboration": collaboration
+				})
 
 # ===== UTILITY FUNCTIONS =====
 

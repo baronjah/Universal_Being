@@ -1,0 +1,13 @@
+{
+	"component_name": "desktop_bridge",
+	"version": "1.0.0",
+	"description": "Bridge component for Claude Desktop integration",
+	"author": "Universal Being Team",
+	"entry_script": "desktop_bridge.gd",
+	"being_type": "component",
+	"compatible_with": ["claude_desktop"],
+	"dependencies": [],
+	"files": [
+		"desktop_bridge.gd"
+	]
+}

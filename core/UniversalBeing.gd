@@ -929,10 +929,23 @@ func _to_string() -> String:
 # ===== AKASHIC LOGGING INTERFACE =====
 
 func log_action(event_type: String, message: String = "", data: Dictionary = {}) -> void:
-	if component_data.has("akashic_logger"):
-		component_data.akashic_logger.log_action(event_type, message, data)
-	else:
-		push_error("AkashicLoggerComponent not found on this being!")
+	# TEMPORARY DEBUG: Verify this code is being executed
+	# print("DEBUG: log_action called with defensive checks")
+	
+	# Completely defensive logging - many beings don't have logging components
+	if not component_data:
+		return  # No components at all
+		
+	var logger = component_data.get("akashic_logger", null)
+	if not logger:
+		return  # No logger component
+		
+	if not is_instance_valid(logger):
+		return  # Logger was freed
+		
+	if logger.has_method("log_action"):
+		logger.log_action(event_type, message, data)
+	# Silently skip if no logger component - this is normal for many beings
 
 func set_visual_layer(value: int) -> void:
 	visual_layer = value
@@ -1184,8 +1197,9 @@ func _initialize_state_machine() -> void:
 	state_timer = 0.0
 	state_history.clear()
 	
-	# Connect state change signal to log changes
-	state_changed.connect(_on_state_changed)
+	# Connect state change signal to log changes (only if not already connected)
+	if not state_changed.is_connected(_on_state_changed):
+		state_changed.connect(_on_state_changed)
 	
 	print("🧠 State machine initialized for %s in %s state" % [being_name, _state_to_string(current_state)])
 
@@ -1266,12 +1280,13 @@ func _process_dormant_state(delta: float) -> void:
 
 func _process_idle_state(delta: float) -> void:
 	"""Process idle state - waiting for stimulation"""
-	# Random chance to start thinking
-	if randf() < 0.01:  # 1% chance per frame
+	# DRASTICALLY REDUCED: Beings were changing states too frequently
+	# Random chance to start thinking (much less frequent)
+	if randf() < 0.00001:  # 0.001% chance per frame (roughly once every 1660 seconds at 60fps)
 		change_state(BeingState.THINKING, "spontaneous thought")
 	
-	# Check if nearby beings should trigger interaction
-	if not nearby_beings.is_empty() and randf() < 0.005:
+	# Check if nearby beings should trigger interaction (also reduced)
+	if not nearby_beings.is_empty() and randf() < 0.00002:  # 0.002% chance
 		change_state(BeingState.INTERACTING, "proximity triggered")
 
 func _process_thinking_state(delta: float) -> void:
@@ -1321,10 +1336,10 @@ func _process_evolving_state(delta: float) -> void:
 		change_state(BeingState.IDLE, "evolution completed")
 
 func _process_merging_state(delta: float) -> void:
-	"""Process merging state"""
-	if state_timer > 2.0:
-		_attempt_merge()
-		change_state(BeingState.IDLE, "merge attempted")
+	"""Process merging state - DISABLED"""
+	# Merging disabled to prevent beings from disappearing
+	print("🚫 Merging process blocked - forcing return to IDLE")
+	change_state(BeingState.IDLE, "merging disabled")
 
 func _process_splitting_state(delta: float) -> void:
 	"""Process splitting state"""
@@ -1347,12 +1362,16 @@ func _handle_collision_interaction(other_being: UniversalBeing) -> void:
 	
 	match interaction_type:
 		"merge":
-			if consciousness_level >= 3 and other_being.consciousness_level >= 3:
-				_initiate_merge(other_being)
+			# DISABLED: Merging is destroying beings and consoles
+			# if consciousness_level >= 3 and other_being.consciousness_level >= 3:
+			#	_initiate_merge(other_being)
+			print("🚫 Merge blocked to prevent being destruction")
 		"consciousness_transfer":
 			_transfer_consciousness(other_being)
 		"evolution_trigger":
-			change_state(BeingState.EVOLVING, "collision triggered evolution")
+			# DISABLED: Evolution triggers are too chaotic
+			# change_state(BeingState.EVOLVING, "collision triggered evolution")
+			print("🚫 Evolution trigger blocked")
 
 func _handle_proximity_interaction(other_being: UniversalBeing) -> void:
 	"""Handle proximity-based interaction"""
@@ -1398,11 +1417,12 @@ func _generate_thought_result() -> Dictionary:
 		"should_evolve": false
 	}
 	
-	# Higher consciousness beings more likely to create/evolve
+	# DISABLED: Evolution is too chaotic - beings keep disappearing
+	# Higher consciousness beings occasionally create/evolve (much less frequent)
 	if consciousness_level >= 3:
-		result.should_create = randf() < 0.3
+		result.should_create = false  # randf() < 0.01  # 1% chance instead of 30%
 	if consciousness_level >= 5:
-		result.should_evolve = randf() < 0.2
+		result.should_evolve = false  # randf() < 0.01  # 1% chance instead of 20%
 	
 	return result
 
@@ -1440,12 +1460,15 @@ func _attempt_evolution() -> void:
 	action_completed.emit("evolution", {"new_level": consciousness_level})
 
 func _initiate_merge(other_being: UniversalBeing) -> void:
-	"""Initiate merging with another being"""
-	if other_being.current_state == BeingState.MERGING:
-		return  # Already merging
+	"""Initiate merging with another being - DISABLED"""
+	print("🚫 Merge initiation blocked - merging disabled to prevent destruction")
+	return  # Merging completely disabled
 	
-	change_state(BeingState.MERGING, "initiated merge")
-	other_being.change_state(BeingState.MERGING, "merge partner")
+	# if other_being.current_state == BeingState.MERGING:
+	#	return  # Already merging
+	
+	# change_state(BeingState.MERGING, "initiated merge")
+	# other_being.change_state(BeingState.MERGING, "merge partner")
 
 func _attempt_merge() -> void:
 	"""Attempt to merge with nearby beings"""

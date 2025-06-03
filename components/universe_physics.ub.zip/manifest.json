@@ -1,0 +1,13 @@
+{
+	"component_name": "universe_physics",
+	"version": "1.0.0",
+	"description": "Manages physics parameters for a universe",
+	"author": "Universal Being Team",
+	"entry_script": "universe_physics.gd",
+	"being_type": "component",
+	"compatible_with": ["universe"],
+	"dependencies": [],
+	"files": [
+		"universe_physics.gd"
+	]
+}

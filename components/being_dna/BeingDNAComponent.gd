@@ -106,7 +106,14 @@ func create_dna_visualizer() -> void:
         dna_helix = visualizer_scene.instantiate()
         if parent_being:
             parent_being.add_child(dna_helix)
-            dna_helix.global_position = parent_being.global_position
+            # Handle both 2D and 3D parent beings
+            if parent_being is Node2D:
+                dna_helix.global_position = parent_being.global_position
+            elif parent_being is Node3D:
+                # Convert 3D position to 2D for the DNA helix
+                dna_helix.global_position = Vector2(parent_being.global_position.x, parent_being.global_position.y)
+            else:
+                dna_helix.position = Vector2.ZERO
             dna_helix.scale = Vector2.ONE * helix_scale
             dna_helix.modulate.a = helix_opacity
             print("🧬 BeingDNA: Visualizer created")

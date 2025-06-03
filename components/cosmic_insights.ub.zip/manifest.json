@@ -1,0 +1,13 @@
+{
+	"component_name": "cosmic_insights",
+	"version": "1.0.0",
+	"description": "Cosmic pattern recognition and insights component",
+	"author": "Universal Being Team",
+	"entry_script": "cosmic_insights.gd",
+	"being_type": "component",
+	"compatible_with": ["ai_bridge"],
+	"dependencies": [],
+	"files": [
+		"cosmic_insights.gd"
+	]
+}

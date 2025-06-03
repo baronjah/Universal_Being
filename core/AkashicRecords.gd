@@ -84,6 +84,10 @@ func load_being_from_zip(zip_path: String) -> Dictionary:
 	if zip_path in zip_cache:
 		return zip_cache[zip_path].duplicate(true)
 		
+	# Check if it's a directory-based component (temporary support)
+	if DirAccess.dir_exists_absolute(zip_path):
+		return load_component_from_directory(zip_path)
+	
 	if not FileAccess.file_exists(zip_path):
 		push_error("📚 Akashic: ZIP file not found: " + zip_path)
 		return {}
@@ -432,6 +436,45 @@ func matches_search_terms(data: Dictionary, search_terms: Array[String]) -> bool
 			return true
 	
 	return false
+
+func load_component_from_directory(dir_path: String) -> Dictionary:
+	"""Load component from directory structure (temporary support for .ub.zip directories)"""
+	var manifest_path = dir_path.path_join("manifest.json")
+	
+	# Check for manifest file
+	if not FileAccess.file_exists(manifest_path):
+		push_warning("📚 Akashic: No manifest.json in component directory: " + dir_path)
+		return {}
+	
+	# Load manifest
+	var file = FileAccess.open(manifest_path, FileAccess.READ)
+	if not file:
+		push_error("📚 Akashic: Cannot read manifest: " + manifest_path)
+		return {}
+	
+	var json_string = file.get_as_text()
+	file.close()
+	
+	var json = JSON.new()
+	var parse_result = json.parse(json_string)
+	if parse_result != OK:
+		push_error("📚 Akashic: Invalid manifest JSON in: " + manifest_path)
+		return {}
+	
+	var manifest = json.data
+	
+	# Build component data structure
+	var component_data = {
+		"manifest": manifest,
+		"type": "component",
+		"path": dir_path,
+		"name": manifest.get("component_name", manifest.get("name", "unknown")),
+		"version": manifest.get("version", "1.0.0"),
+		"entry_script": manifest.get("entry_script", manifest.get("main_script", "")),
+		"files": manifest.get("files", [])
+	}
+	
+	return component_data
 
 func get_beings_by_type(type: String) -> Array[String]:
 	"""Get all beings of a specific type"""

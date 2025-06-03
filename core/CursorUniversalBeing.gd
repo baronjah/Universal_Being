@@ -419,3 +419,36 @@ func get_cursor_info() -> Dictionary:
 		"tip_position": cursor_tip_position,
 		"consciousness_level": consciousness_level
 	}
+
+# ===== STATE MACHINE OVERRIDES =====
+# Prevent cursor from creating offspring and reduce state transitions
+
+func _generate_thought_result() -> Dictionary:
+	"""Override thought generation - cursor should not create beings"""
+	var result = super._generate_thought_result()
+	# Cursor should never create offspring
+	result.should_create = false
+	# Cursor should rarely evolve
+	result.should_evolve = randf() < 0.01  # 1% chance instead of 20%
+	return result
+
+func _process_idle_state(delta: float) -> void:
+	"""Override idle state - cursor should be less active"""
+	# Don't randomly start thinking as often
+	if randf() < 0.001:  # 0.1% chance instead of 1%
+		change_state(BeingState.THINKING, "cursor contemplation")
+	
+	# Still check for interactions but less frequently
+	if not nearby_beings.is_empty() and randf() < 0.002:  # Reduced from 0.005
+		change_state(BeingState.INTERACTING, "cursor proximity check")
+
+func _attempt_creation() -> void:
+	"""Override creation - cursor should not create offspring"""
+	# Do nothing - cursor cannot create beings
+	print("🎯 Cursor: Creation blocked - cursors don't create offspring")
+	log_action("creation_blocked", "Cursor creation attempt blocked")
+
+func _process_creating_state(delta: float) -> void:
+	"""Override creating state - immediately return to idle"""
+	print("🎯 Cursor: Exiting CREATING state - cursors don't create")
+	change_state(BeingState.IDLE, "cursor cannot create")

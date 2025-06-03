@@ -138,7 +138,7 @@ func _create_console_ui() -> void:
 	
 	# Connect signals
 	input_field.text_submitted.connect(_on_command_submitted)
-	input_field.grab_focus()
+	input_field.grab_focus()  # Actually grab focus!()
 
 # ===== COMMAND REGISTRATION =====
 
@@ -485,9 +485,28 @@ func _cmd_tree(args: Array) -> String:
 # ===== HELPER FUNCTIONS =====
 
 func output(text: String) -> void:
-	"""Output text to console"""
+	# Output text to console
 	if console_text:
 		console_text.append_text(text + "\n")
+
+func toggle_console_visibility() -> void:
+	# Toggle console visibility
+	if console_text:
+		visible = not visible
+		if visible and input_field:
+			input_field.grab_focus()
+			print("🖥️ Console is now visible and focused!")
+		else:
+			print("🖥️ Console hidden")
+
+func focus_input() -> void:
+	# Force focus to input field
+	if input_field:
+		input_field.grab_focus()
+		# Also make sure console is visible
+		if console_text and console_text.get_parent():
+			console_text.get_parent().visible = true
+		print("🖥️ Console input focused!")
 
 func _navigate_history(direction: int) -> void:
 	"""Navigate command history"""

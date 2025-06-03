@@ -1,0 +1,13 @@
+{
+	"component_name": "universe_time",
+	"version": "1.0.0",
+	"description": "Manages time flow and temporal mechanics for a universe",
+	"author": "Universal Being Team",
+	"entry_script": "universe_time.gd",
+	"being_type": "component",
+	"compatible_with": ["universe"],
+	"dependencies": [],
+	"files": [
+		"universe_time.gd"
+	]
+}
