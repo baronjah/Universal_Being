@@ -1,0 +1,32 @@
+{
+  "name": "Glow Effect Component",
+  "version": "1.0.0",
+  "description": "Adds a beautiful consciousness glow effect to Universal Beings",
+  "type": "visual",
+  "author": "Claude Desktop MCP",
+  "created": "2025-06-03",
+  "main_script": "glow_effect.gd",
+  "socket_types": ["visual", "shader"],
+  "dependencies": [],
+  "files": [
+    "glow_effect.gd"
+  ],
+  "capabilities": [
+    "Dynamic glow intensity based on consciousness level",
+    "Customizable glow color",
+    "Pulsing animation",
+    "Performance optimized"
+  ],
+  "properties": {
+    "glow_enabled": true,
+    "glow_color": [0.0, 1.0, 1.0, 1.0],
+    "glow_intensity": 2.0,
+    "pulse_speed": 1.0,
+    "pulse_enabled": true
+  },
+  "signals": [
+    "glow_started",
+    "glow_stopped",
+    "glow_color_changed"
+  ]
+}

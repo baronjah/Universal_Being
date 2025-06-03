@@ -130,6 +130,7 @@ func _create_conversation_tab() -> void:
 	conversation_display.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	conversation_display.add_theme_color_override("default_color", Color(0.9, 0.9, 0.9))
 	conversation_display.add_theme_color_override("font_color", Color(0.9, 0.9, 0.9))
+	conversation_display.gui_input.connect(_on_conversation_display_input)
 	tab_container.add_child(conversation_display)
 
 func _create_universe_tab() -> void:
@@ -206,6 +207,7 @@ func _create_input_area(parent: Control) -> void:
 	# Connect signals
 	input_field.text_submitted.connect(_on_message_submitted)
 	send_button.pressed.connect(_on_send_pressed)
+	input_field.gui_input.connect(_on_input_field_input)
 	
 	# Focus input field
 	input_field.grab_focus()
@@ -265,6 +267,60 @@ func _send_message(message: String) -> void:
 	
 	# Send to Gemma AI
 	_send_to_gemma(message)
+
+func _on_input_field_input(event: InputEvent) -> void:
+	"""Handle copy/paste and other input events in the input field"""
+	if event is InputEventKey and event.pressed:
+		if event.ctrl_pressed:
+			match event.keycode:
+				KEY_V:  # Ctrl+V for paste
+					var clipboard_text = DisplayServer.clipboard_get()
+					if not clipboard_text.is_empty():
+						# Insert clipboard text at cursor position
+						var current_text = input_field.text
+						var cursor_pos = input_field.caret_column
+						var new_text = current_text.substr(0, cursor_pos) + clipboard_text + current_text.substr(cursor_pos)
+						input_field.text = new_text
+						input_field.caret_column = cursor_pos + clipboard_text.length()
+						add_message("system", "📋 Pasted text from clipboard")
+				
+				KEY_C:  # Ctrl+C for copy selected text
+					var selected_text = input_field.get_selected_text()
+					if not selected_text.is_empty():
+						DisplayServer.clipboard_set(selected_text)
+						add_message("system", "📋 Copied selected text to clipboard")
+					else:
+						# Copy entire input field if nothing selected
+						DisplayServer.clipboard_set(input_field.text)
+						add_message("system", "📋 Copied entire input to clipboard")
+				
+				KEY_A:  # Ctrl+A for select all
+					input_field.select_all()
+					add_message("system", "📋 Selected all text")
+				
+				KEY_X:  # Ctrl+X for cut
+					var selected_text = input_field.get_selected_text()
+					if not selected_text.is_empty():
+						DisplayServer.clipboard_set(selected_text)
+						input_field.delete_selection()
+						add_message("system", "📋 Cut selected text to clipboard")
+
+func _on_conversation_display_input(event: InputEvent) -> void:
+	"""Handle copy from conversation display"""
+	if event is InputEventKey and event.pressed:
+		if event.ctrl_pressed and event.keycode == KEY_C:
+			# Copy all conversation text to clipboard
+			var conversation_text = ""
+			for entry in conversation_history:
+				conversation_text += "[%s] %s: %s\n" % [entry.timestamp, entry.sender, entry.message]
+			
+			if not conversation_text.is_empty():
+				DisplayServer.clipboard_set(conversation_text)
+				add_message("system", "📋 Copied entire conversation to clipboard")
+		
+		elif event.ctrl_pressed and event.keycode == KEY_A:
+			# Select all visible text (this is more of a visual indication)
+			add_message("system", "📋 Use Ctrl+C to copy conversation text")
 
 func _send_to_gemma(message: String) -> void:
 	"""Send message to Gemma AI"""

@@ -180,19 +180,21 @@ func _create_child_dna(parent_dna: Dictionary) -> Dictionary:
 	child_dna.parent_dna = parent_dna
 	
 	# Apply mutations
-	for trait_category in child_dna:
-		if trait_category == "parent_dna":
+	for trait_category_key in child_dna.keys():
+		if trait_category_key == "parent_dna":
 			continue
 		
-		if child_dna[trait_category] is Dictionary:
-			for trait in child_dna[trait_category]:
+		var trait_category = child_dna[trait_category_key]
+		if trait_category is Dictionary:
+			for trait_key in trait_category.keys():
 				# 20% chance of mutation
 				if randf() < 0.2:
 					var mutation = randf_range(0.8, 1.2)
-					if child_dna[trait_category][trait] is float:
-						child_dna[trait_category][trait] *= mutation
-					elif child_dna[trait_category][trait] is int:
-						child_dna[trait_category][trait] = int(child_dna[trait_category][trait] * mutation)
+					var trait_value = trait_category[trait_key]
+					if trait_value is float:
+						trait_category[trait_key] = trait_value * mutation
+					elif trait_value is int:
+						trait_category[trait_key] = int(trait_value * mutation)
 	
 	return child_dna
 

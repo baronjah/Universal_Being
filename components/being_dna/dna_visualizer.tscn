@@ -1,0 +1,32 @@
+[gd_scene load_steps=2 format=3 uid="uid://c8q7y6n4x2dub"]
+
+[ext_resource type="Script" path="res://components/being_dna/dna_visualizer.gd" id="1_vf1jh"]
+
+[node name="DNAVisualizer" type="Node2D"]
+script = ExtResource("1_vf1jh")
+
+[node name="HelixBase" type="Node2D" parent="."]
+
+[node name="PhysicalStrand" type="Node2D" parent="HelixBase"]
+modulate = Color(0.2, 0.8, 0.2, 0.8)
+
+[node name="ConsciousnessStrand" type="Node2D" parent="HelixBase"]
+modulate = Color(0.8, 0.2, 0.8, 0.8)
+
+[node name="InteractionStrand" type="Node2D" parent="HelixBase"]
+modulate = Color(0.2, 0.2, 0.8, 0.8)
+
+[node name="EssenceStrand" type="Node2D" parent="HelixBase"]
+modulate = Color(0.8, 0.8, 0.2, 0.8)
+
+[node name="TraitPoints" type="Node2D" parent="."]
+
+[node name="EvolutionEffects" type="Node2D" parent="."]
+
+[node name="InteractionArea" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractionArea"]
+shape = SubResource("CircleShape2D_1")
+radius = 32.0 

@@ -1,0 +1,9 @@
+# Create universe_genesis.ub.zip package
+# This would normally be done through Godot's export system
+# For now, the component can be loaded directly via its .gd file path
+
+# Component location:
+# res://components/universe_genesis/UniverseGenesisComponent.gd
+
+# To use in any Universal Being:
+# add_component("res://components/universe_genesis/UniverseGenesisComponent.gd")

@@ -1,0 +1,27 @@
+{
+    "name": "Consciousness Resonator",
+    "version": "1.0.0",
+    "description": "A component that resonates with universe consciousness traits, creating visual and behavioral effects based on DNA",
+    "author": "Claude Desktop MCP",
+    "main_script": "consciousness_resonator.gd",
+    "socket_type": "consciousness",
+    "compatible_sockets": ["consciousness", "visual", "action"],
+    "properties": {
+        "resonance_strength": 1.0,
+        "pulse_frequency": 2.0,
+        "dna_sensitivity": 0.8
+    },
+    "signals": [
+        "resonance_peak",
+        "consciousness_sync",
+        "dna_response"
+    ],
+    "ai_interface": {
+        "methods": [
+            "set_resonance_strength",
+            "sync_with_universe_dna",
+            "trigger_resonance_burst"
+        ],
+        "description": "AI can control resonance patterns and DNA synchronization"
+    }
+}

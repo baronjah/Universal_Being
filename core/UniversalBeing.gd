@@ -69,6 +69,36 @@ var metadata: Dictionary = {
 var aura_node: Node2D = null
 var aura_animation_timer: float = 0.0
 
+# ===== PHYSICS AND INTERACTION SYSTEM =====
+
+var collision_area: Area3D = null
+var collision_shape: CollisionShape3D = null
+var proximity_area: Area3D = null
+var proximity_shape: CollisionShape3D = null
+var interaction_radius: float = 2.0
+var physics_enabled: bool = true
+
+# ===== STATE MACHINE SYSTEM =====
+
+enum BeingState {
+	DORMANT,        # Not active
+	IDLE,           # Active but not doing anything
+	THINKING,       # Processing/computing
+	MOVING,         # Changing position
+	INTERACTING,    # Engaging with other beings
+	CREATING,       # Birthing new entities
+	EVOLVING,       # Changing form/capabilities
+	MERGING,        # Combining with other beings
+	SPLITTING,      # Dividing into multiple beings
+	TRANSCENDING    # Moving to higher consciousness
+}
+
+var current_state: BeingState = BeingState.DORMANT
+var state_timer: float = 0.0
+var state_history: Array[BeingState] = []
+var nearby_beings: Array[UniversalBeing] = []
+var interaction_partners: Array[UniversalBeing] = []
+
 # ===== CORE SIGNALS =====
 
 signal consciousness_awakened(level: int)
@@ -77,6 +107,20 @@ signal evolution_completed(new_being: UniversalBeing)
 signal component_added(component_path: String)
 signal component_removed(component_path: String)
 signal being_destroyed()
+
+# Physics and interaction signals
+signal being_entered_proximity(other_being: UniversalBeing)
+signal being_exited_proximity(other_being: UniversalBeing)
+signal collision_detected(other_being: UniversalBeing)
+signal interaction_initiated(other_being: UniversalBeing, interaction_type: String)
+signal interaction_completed(other_being: UniversalBeing, result: Dictionary)
+
+# State machine signals
+signal state_changed(old_state: BeingState, new_state: BeingState)
+signal thinking_started(thought_topic: String)
+signal thinking_completed(thought_result: Dictionary)
+signal action_initiated(action_type: String, parameters: Dictionary)
+signal action_completed(action_type: String, result: Dictionary)
 signal scene_loaded(scene_node: Node)
 signal scene_unloaded()
 signal scene_node_accessed(node_name: String, node: Node)
@@ -121,8 +165,14 @@ func pentagon_init() -> void:
 	# Create consciousness visual
 	create_consciousness_visual()
 	
+	# Initialize physics and collision system
+	_initialize_physics_system()
+	
 	# Initialize socket system
 	_initialize_socket_system()
+	
+	# Initialize state machine
+	_initialize_state_machine()
 
 func pentagon_ready() -> void:
 	"""Ready phase - ALWAYS CALL SUPER FIRST in subclasses"""
@@ -133,6 +183,9 @@ func pentagon_ready() -> void:
 func pentagon_process(delta: float) -> void:
 	"""Process phase - ALWAYS CALL SUPER FIRST in subclasses"""
 	update_consciousness_visual()
+	_update_state_machine(delta)
+	_update_physics_interactions()
+	_process_proximity_detection()
 
 func pentagon_input(event: InputEvent) -> void:
 	"""Input phase - ALWAYS CALL SUPER FIRST in subclasses"""
@@ -478,9 +531,36 @@ func apply_component_data(component_path: String, data: Dictionary) -> void:
 			if prop in self:
 				set(prop, data.properties[prop])
 	
-	# If this is an interaction component, load it directly
+	# If this is an interaction component, load it directly as a node
 	if component_path.contains("basic_interaction"):
 		_load_basic_interaction_component()
+	
+	print("🔧 Applied component data: %s" % component_path.get_file())
+
+func _load_basic_interaction_component() -> void:
+	"""Load basic interaction component as an actual node"""
+	# Check if already loaded
+	var existing = get_node_or_null("BasicInteractionComponent")
+	if existing:
+		print("🎯 Basic interaction component already loaded")
+		return
+	
+	# Load the script and create instance
+	var component_script = load("res://components/basic_interaction.ub.zip/basic_interaction.gd")
+	if not component_script:
+		push_error("❌ Cannot load basic_interaction.gd script")
+		return
+	
+	# Create component instance
+	var component = component_script.new()
+	component.name = "BasicInteractionComponent"
+	add_child(component)
+	
+	# Apply component to this being
+	if component.has_method("apply_to_being"):
+		component.apply_to_being(self)
+	
+	print("🎯 Basic interaction component loaded and applied to: %s" % being_name)
 
 # ===== EVOLUTION SYSTEM =====
 
@@ -932,9 +1012,496 @@ func _log_layer_change_to_akashic() -> void:
 	var akashic = SystemBootstrap.get_akashic_library()
 	if akashic:
 		var poetic_message = "🌟 The %s shifted through the dimensional layers, ascending to stratum %d of existence..." % [being_name, visual_layer]
-		akashic.log_universal_being_event("layer_change", poetic_message, {
+		akashic.log_universe_event("layer_change", poetic_message, {
 			"being_uuid": being_uuid,
 			"being_name": being_name,
 			"new_layer": visual_layer,
 			"timestamp": Time.get_ticks_msec()
 		})
+
+# ===== PHYSICS AND COLLISION SYSTEM =====
+
+func _initialize_physics_system() -> void:
+	"""Initialize collision and proximity detection systems"""
+	if not physics_enabled:
+		return
+	
+	# Create main collision area for direct interactions
+	collision_area = Area3D.new()
+	collision_area.name = "CollisionArea"
+	collision_area.collision_layer = 1
+	collision_area.collision_mask = 1
+	add_child(collision_area)
+	
+	# Create collision shape
+	collision_shape = CollisionShape3D.new()
+	collision_shape.name = "CollisionShape"
+	var sphere_shape = SphereShape3D.new()
+	sphere_shape.radius = 0.5  # Base collision radius
+	collision_shape.shape = sphere_shape
+	collision_area.add_child(collision_shape)
+	
+	# Create proximity detection area (larger radius)
+	proximity_area = Area3D.new()
+	proximity_area.name = "ProximityArea"
+	proximity_area.collision_layer = 2
+	proximity_area.collision_mask = 2
+	add_child(proximity_area)
+	
+	# Create proximity shape
+	proximity_shape = CollisionShape3D.new()
+	proximity_shape.name = "ProximityShape"
+	var proximity_sphere = SphereShape3D.new()
+	proximity_sphere.radius = interaction_radius
+	proximity_shape.shape = proximity_sphere
+	proximity_area.add_child(proximity_shape)
+	
+	# Connect signals
+	collision_area.body_entered.connect(_on_collision_entered)
+	collision_area.body_exited.connect(_on_collision_exited)
+	collision_area.area_entered.connect(_on_area_collision_entered)
+	collision_area.area_exited.connect(_on_area_collision_exited)
+	
+	proximity_area.area_entered.connect(_on_proximity_entered)
+	proximity_area.area_exited.connect(_on_proximity_exited)
+	
+	print("⚡ Physics system initialized for %s with collision and proximity detection" % being_name)
+
+func _update_physics_interactions() -> void:
+	"""Update physics-based interactions"""
+	if not physics_enabled or not collision_area:
+		return
+	
+	# Update collision radius based on consciousness level
+	var base_radius = 0.5
+	var consciousness_multiplier = 1.0 + (consciousness_level * 0.2)
+	var new_radius = base_radius * consciousness_multiplier
+	
+	if collision_shape and collision_shape.shape:
+		collision_shape.shape.radius = new_radius
+	
+	# Update proximity radius
+	var proximity_multiplier = 1.0 + (consciousness_level * 0.5)
+	interaction_radius = 2.0 * proximity_multiplier
+	
+	if proximity_shape and proximity_shape.shape:
+		proximity_shape.shape.radius = interaction_radius
+
+func _process_proximity_detection() -> void:
+	"""Process proximity-based interactions"""
+	for being in nearby_beings:
+		if not is_instance_valid(being):
+			nearby_beings.erase(being)
+			continue
+		
+		var distance = global_position.distance_to(being.global_position)
+		var consciousness_resonance = _calculate_consciousness_resonance(being)
+		
+		# Check for automatic interactions based on consciousness levels
+		if consciousness_resonance > 0.8 and distance < interaction_radius * 0.5:
+			_initiate_consciousness_interaction(being)
+
+func _calculate_consciousness_resonance(other_being: UniversalBeing) -> float:
+	"""Calculate consciousness resonance between beings"""
+	if not other_being:
+		return 0.0
+	
+	var level_difference = abs(consciousness_level - other_being.consciousness_level)
+	var max_difference = 7.0  # Maximum consciousness levels
+	
+	# Higher resonance for similar consciousness levels
+	var base_resonance = 1.0 - (level_difference / max_difference)
+	
+	# Bonus for beings in creative or transcendent states
+	var state_bonus = 0.0
+	if current_state in [BeingState.CREATING, BeingState.TRANSCENDING]:
+		state_bonus += 0.2
+	if other_being.current_state in [BeingState.CREATING, BeingState.TRANSCENDING]:
+		state_bonus += 0.2
+	
+	return clamp(base_resonance + state_bonus, 0.0, 1.0)
+
+# ===== COLLISION SIGNAL HANDLERS =====
+
+func _on_collision_entered(body: Node3D) -> void:
+	"""Handle collision with another body"""
+	var other_being = _find_universal_being_in_node(body)
+	if other_being and other_being != self:
+		collision_detected.emit(other_being)
+		_handle_collision_interaction(other_being)
+
+func _on_collision_exited(body: Node3D) -> void:
+	"""Handle collision exit"""
+	pass  # Could implement separation effects here
+
+func _on_area_collision_entered(area: Area3D) -> void:
+	"""Handle collision with another area"""
+	var other_being = _find_universal_being_in_node(area)
+	if other_being and other_being != self:
+		collision_detected.emit(other_being)
+		_handle_collision_interaction(other_being)
+
+func _on_area_collision_exited(area: Area3D) -> void:
+	"""Handle area collision exit"""
+	pass
+
+func _on_proximity_entered(area: Area3D) -> void:
+	"""Handle proximity detection"""
+	var other_being = _find_universal_being_in_node(area)
+	if other_being and other_being != self and other_being not in nearby_beings:
+		nearby_beings.append(other_being)
+		being_entered_proximity.emit(other_being)
+		_handle_proximity_interaction(other_being)
+
+func _on_proximity_exited(area: Area3D) -> void:
+	"""Handle proximity exit"""
+	var other_being = _find_universal_being_in_node(area)
+	if other_being and other_being in nearby_beings:
+		nearby_beings.erase(other_being)
+		being_exited_proximity.emit(other_being)
+
+func _find_universal_being_in_node(node: Node) -> UniversalBeing:
+	"""Find UniversalBeing in a node hierarchy"""
+	var current = node
+	while current:
+		if current is UniversalBeing:
+			return current
+		current = current.get_parent()
+	return null
+
+# ===== STATE MACHINE SYSTEM =====
+
+func _initialize_state_machine() -> void:
+	"""Initialize the Universal Being state machine"""
+	current_state = BeingState.IDLE
+	state_timer = 0.0
+	state_history.clear()
+	
+	# Connect state change signal to log changes
+	state_changed.connect(_on_state_changed)
+	
+	print("🧠 State machine initialized for %s in %s state" % [being_name, _state_to_string(current_state)])
+
+func _update_state_machine(delta: float) -> void:
+	"""Update the state machine"""
+	state_timer += delta
+	
+	# State-specific behavior
+	match current_state:
+		BeingState.DORMANT:
+			_process_dormant_state(delta)
+		BeingState.IDLE:
+			_process_idle_state(delta)
+		BeingState.THINKING:
+			_process_thinking_state(delta)
+		BeingState.MOVING:
+			_process_moving_state(delta)
+		BeingState.INTERACTING:
+			_process_interacting_state(delta)
+		BeingState.CREATING:
+			_process_creating_state(delta)
+		BeingState.EVOLVING:
+			_process_evolving_state(delta)
+		BeingState.MERGING:
+			_process_merging_state(delta)
+		BeingState.SPLITTING:
+			_process_splitting_state(delta)
+		BeingState.TRANSCENDING:
+			_process_transcending_state(delta)
+
+func change_state(new_state: BeingState, reason: String = "") -> void:
+	"""Change the current state"""
+	if new_state == current_state:
+		return
+	
+	var old_state = current_state
+	state_history.append(old_state)
+	
+	# Keep history manageable
+	if state_history.size() > 10:
+		state_history.pop_front()
+	
+	current_state = new_state
+	state_timer = 0.0
+	
+	state_changed.emit(old_state, new_state)
+	log_action("state_change", "State changed from %s to %s%s" % [
+		_state_to_string(old_state), 
+		_state_to_string(new_state),
+		(" - " + reason) if not reason.is_empty() else ""
+	])
+
+func _state_to_string(state: BeingState) -> String:
+	"""Convert state enum to string"""
+	match state:
+		BeingState.DORMANT: return "DORMANT"
+		BeingState.IDLE: return "IDLE"
+		BeingState.THINKING: return "THINKING"
+		BeingState.MOVING: return "MOVING"
+		BeingState.INTERACTING: return "INTERACTING"
+		BeingState.CREATING: return "CREATING"
+		BeingState.EVOLVING: return "EVOLVING"
+		BeingState.MERGING: return "MERGING"
+		BeingState.SPLITTING: return "SPLITTING"
+		BeingState.TRANSCENDING: return "TRANSCENDING"
+		_: return "UNKNOWN"
+
+func _on_state_changed(old_state: BeingState, new_state: BeingState) -> void:
+	"""Handle state changes"""
+	print("🧠 %s: %s → %s" % [being_name, _state_to_string(old_state), _state_to_string(new_state)])
+
+# ===== STATE PROCESSING METHODS =====
+
+func _process_dormant_state(delta: float) -> void:
+	"""Process dormant state - minimal activity"""
+	if consciousness_level > 0:
+		change_state(BeingState.IDLE, "consciousness activated")
+
+func _process_idle_state(delta: float) -> void:
+	"""Process idle state - waiting for stimulation"""
+	# Random chance to start thinking
+	if randf() < 0.01:  # 1% chance per frame
+		change_state(BeingState.THINKING, "spontaneous thought")
+	
+	# Check if nearby beings should trigger interaction
+	if not nearby_beings.is_empty() and randf() < 0.005:
+		change_state(BeingState.INTERACTING, "proximity triggered")
+
+func _process_thinking_state(delta: float) -> void:
+	"""Process thinking state - consciousness processing"""
+	if state_timer > 2.0:  # Think for 2 seconds
+		var thought_result = _generate_thought_result()
+		thinking_completed.emit(thought_result)
+		
+		# Decide next action based on thought
+		if thought_result.get("should_create", false):
+			change_state(BeingState.CREATING, "inspired to create")
+		elif thought_result.get("should_evolve", false):
+			change_state(BeingState.EVOLVING, "evolution insight")
+		else:
+			change_state(BeingState.IDLE, "thought completed")
+
+func _process_moving_state(delta: float) -> void:
+	"""Process moving state"""
+	# Simple movement logic
+	if state_timer > 3.0:
+		change_state(BeingState.IDLE, "movement completed")
+
+func _process_interacting_state(delta: float) -> void:
+	"""Process interaction state"""
+	if interaction_partners.is_empty():
+		change_state(BeingState.IDLE, "no interaction partners")
+		return
+	
+	# Process interactions
+	for partner in interaction_partners:
+		if is_instance_valid(partner):
+			_process_interaction_with(partner)
+	
+	if state_timer > 5.0:
+		change_state(BeingState.IDLE, "interaction completed")
+
+func _process_creating_state(delta: float) -> void:
+	"""Process creation state - birthing new entities"""
+	if state_timer > 3.0:
+		_attempt_creation()
+		change_state(BeingState.IDLE, "creation completed")
+
+func _process_evolving_state(delta: float) -> void:
+	"""Process evolution state"""
+	if state_timer > 4.0:
+		_attempt_evolution()
+		change_state(BeingState.IDLE, "evolution completed")
+
+func _process_merging_state(delta: float) -> void:
+	"""Process merging state"""
+	if state_timer > 2.0:
+		_attempt_merge()
+		change_state(BeingState.IDLE, "merge attempted")
+
+func _process_splitting_state(delta: float) -> void:
+	"""Process splitting state"""
+	if state_timer > 3.0:
+		_attempt_split()
+		change_state(BeingState.IDLE, "split completed")
+
+func _process_transcending_state(delta: float) -> void:
+	"""Process transcending state"""
+	if state_timer > 5.0:
+		consciousness_level = min(consciousness_level + 1, 7)
+		change_state(BeingState.IDLE, "transcendence achieved")
+
+# ===== INTERACTION METHODS =====
+
+func _handle_collision_interaction(other_being: UniversalBeing) -> void:
+	"""Handle direct collision with another being"""
+	var interaction_type = _determine_interaction_type(other_being)
+	interaction_initiated.emit(other_being, interaction_type)
+	
+	match interaction_type:
+		"merge":
+			if consciousness_level >= 3 and other_being.consciousness_level >= 3:
+				_initiate_merge(other_being)
+		"consciousness_transfer":
+			_transfer_consciousness(other_being)
+		"evolution_trigger":
+			change_state(BeingState.EVOLVING, "collision triggered evolution")
+
+func _handle_proximity_interaction(other_being: UniversalBeing) -> void:
+	"""Handle proximity-based interaction"""
+	var resonance = _calculate_consciousness_resonance(other_being)
+	
+	if resonance > 0.7:
+		if not other_being in interaction_partners:
+			interaction_partners.append(other_being)
+		
+		if current_state == BeingState.IDLE:
+			change_state(BeingState.INTERACTING, "high consciousness resonance")
+
+func _initiate_consciousness_interaction(other_being: UniversalBeing) -> void:
+	"""Initiate consciousness-based interaction"""
+	if current_state in [BeingState.IDLE, BeingState.THINKING]:
+		change_state(BeingState.INTERACTING, "consciousness interaction")
+		if not other_being in interaction_partners:
+			interaction_partners.append(other_being)
+
+func _determine_interaction_type(other_being: UniversalBeing) -> String:
+	"""Determine what type of interaction should occur"""
+	var level_sum = consciousness_level + other_being.consciousness_level
+	var level_diff = abs(consciousness_level - other_being.consciousness_level)
+	
+	if level_sum >= 10:
+		return "transcendence_catalyst"
+	elif level_diff <= 1 and consciousness_level >= 4:
+		return "merge"
+	elif level_diff >= 3:
+		return "consciousness_transfer"
+	else:
+		return "resonance_sharing"
+
+# ===== CREATION AND EVOLUTION METHODS =====
+
+func _generate_thought_result() -> Dictionary:
+	"""Generate result of thinking process"""
+	var result = {
+		"topic": "existence",
+		"duration": state_timer,
+		"consciousness_used": consciousness_level,
+		"should_create": false,
+		"should_evolve": false
+	}
+	
+	# Higher consciousness beings more likely to create/evolve
+	if consciousness_level >= 3:
+		result.should_create = randf() < 0.3
+	if consciousness_level >= 5:
+		result.should_evolve = randf() < 0.2
+	
+	return result
+
+func _attempt_creation() -> void:
+	"""Attempt to create a new being"""
+	if consciousness_level < 2:
+		return
+	
+	print("🌟 %s attempting creation..." % being_name)
+	action_initiated.emit("creation", {"parent": being_uuid})
+	
+	# Create a simple offspring being
+	var offspring = UniversalBeing.new()
+	offspring.being_name = being_name + "_Offspring"
+	offspring.being_type = being_type + "_child"
+	offspring.consciousness_level = max(1, consciousness_level - 1)
+	offspring.position = position + Vector3(randf_range(-2, 2), 0, randf_range(-2, 2))
+	
+	get_parent().add_child(offspring)
+	
+	action_completed.emit("creation", {"offspring": offspring.being_uuid})
+	log_action("creation", "Created offspring: %s" % offspring.being_name)
+
+func _attempt_evolution() -> void:
+	"""Attempt to evolve to a higher form"""
+	print("🦋 %s attempting evolution..." % being_name)
+	action_initiated.emit("evolution", {"current_level": consciousness_level})
+	
+	# Increase consciousness with small chance
+	if randf() < 0.5:
+		consciousness_level = min(consciousness_level + 1, 7)
+		evolution_initiated.emit(being_type, being_type + "_evolved")
+		log_action("evolution", "Evolved to consciousness level %d" % consciousness_level)
+	
+	action_completed.emit("evolution", {"new_level": consciousness_level})
+
+func _initiate_merge(other_being: UniversalBeing) -> void:
+	"""Initiate merging with another being"""
+	if other_being.current_state == BeingState.MERGING:
+		return  # Already merging
+	
+	change_state(BeingState.MERGING, "initiated merge")
+	other_being.change_state(BeingState.MERGING, "merge partner")
+
+func _attempt_merge() -> void:
+	"""Attempt to merge with nearby beings"""
+	var merge_candidates = []
+	for being in nearby_beings:
+		if being.current_state == BeingState.MERGING and being != self:
+			merge_candidates.append(being)
+	
+	if not merge_candidates.is_empty():
+		var partner = merge_candidates[0]
+		_complete_merge(partner)
+
+func _complete_merge(other_being: UniversalBeing) -> void:
+	"""Complete merge with another being"""
+	print("🌊 %s merging with %s" % [being_name, other_being.being_name])
+	
+	# Combine consciousness levels
+	var new_level = min((consciousness_level + other_being.consciousness_level) / 2 + 1, 7)
+	consciousness_level = new_level
+	
+	# Remove the other being
+	other_being.queue_free()
+	
+	log_action("merge", "Merged with %s, new consciousness: %d" % [other_being.being_name, consciousness_level])
+
+func _attempt_split() -> void:
+	"""Attempt to split into multiple beings"""
+	if consciousness_level < 4:
+		return
+	
+	print("✂️ %s attempting split..." % being_name)
+	
+	# Create two smaller beings
+	for i in range(2):
+		var split_being = UniversalBeing.new()
+		split_being.being_name = being_name + "_Split_%d" % (i + 1)
+		split_being.being_type = being_type
+		split_being.consciousness_level = max(1, consciousness_level - 2)
+		split_being.position = position + Vector3(randf_range(-1, 1), 0, randf_range(-1, 1))
+		
+		get_parent().add_child(split_being)
+	
+	# Reduce own consciousness
+	consciousness_level = max(1, consciousness_level - 1)
+	log_action("split", "Split into multiple beings")
+
+func _transfer_consciousness(other_being: UniversalBeing) -> void:
+	"""Transfer consciousness between beings"""
+	if consciousness_level > other_being.consciousness_level:
+		var transfer_amount = min(1, consciousness_level - other_being.consciousness_level)
+		consciousness_level -= transfer_amount
+		other_being.consciousness_level += transfer_amount
+		
+		log_action("consciousness_transfer", "Transferred %d consciousness to %s" % [transfer_amount, other_being.being_name])
+
+func _process_interaction_with(partner: UniversalBeing) -> void:
+	"""Process ongoing interaction with a partner"""
+	var resonance = _calculate_consciousness_resonance(partner)
+	
+	if resonance > 0.9:
+		# High resonance can trigger evolution
+		if randf() < 0.1:
+			change_state(BeingState.EVOLVING, "resonance evolution")
+	elif resonance > 0.5:
+		# Medium resonance shares consciousness
+		_transfer_consciousness(partner)

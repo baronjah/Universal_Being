@@ -36,7 +36,7 @@ func start_button_test() -> void:
     
     # Create button being
     test_button = preload("res://beings/button_universal_being.gd").new()
-    test_button.position = Vector2(400, 300)
+    test_button.position = Vector3(400, 300, 0)
     add_child(test_button)
     
     # Load visual scene
@@ -70,7 +70,7 @@ func start_pentagon_test() -> void:
     var pentagon_scene = load(pentagon_scene_path)
     if pentagon_scene:
         var pentagon_instance = pentagon_scene.instantiate()
-        pentagon_instance.position = Vector2(512, 300)
+        pentagon_instance.position = Vector3(512, 300, 0)
         add_child(pentagon_instance)
         
         # Create network manager

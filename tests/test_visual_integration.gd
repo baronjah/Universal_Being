@@ -29,7 +29,8 @@ func _ready():
 	
 	# Create the button being
 	button_being = preload("res://beings/button_universal_being.gd").new()
-	button_being.position = get_viewport_rect().size / 2
+	var viewport_size = get_viewport_rect().size
+	button_being.position = Vector3(viewport_size.x / 2, viewport_size.y / 2, 0)
 	add_child(button_being)
 	
 	# Load the visual scene

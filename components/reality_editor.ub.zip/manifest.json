@@ -1,0 +1,38 @@
+{
+  "component_name": "Reality Editor",
+  "component_type": "interface",
+  "version": "1.0.0",
+  "author": "Claude Desktop MCP",
+  "description": "Visual reality manipulation interface - edit universe laws, being properties, and create components from within the game",
+  "main_script": "RealityEditorComponent.gd",
+  "dependencies": [],
+  "compatible_sockets": [
+    "INTERFACE",
+    "SCRIPT"
+  ],
+  "properties": {
+    "editor_mode": "universe",
+    "auto_save": true,
+    "visual_feedback": true,
+    "ai_integration": true
+  },
+  "signals": [
+    "reality_modified",
+    "law_changed",
+    "being_edited",
+    "component_created"
+  ],
+  "methods": [
+    "open_reality_editor",
+    "edit_universe_laws",
+    "create_component",
+    "modify_being_live"
+  ],
+  "tags": [
+    "editor",
+    "visual",
+    "creation",
+    "universe",
+    "ai_compatible"
+  ]
+}

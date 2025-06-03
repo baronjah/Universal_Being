@@ -1,0 +1,32 @@
+{
+  "name": "Console Notifications Component",
+  "version": "1.0.0",
+  "description": "Sends all being events and state changes to the console as notifications",
+  "type": "interface",
+  "author": "Claude Desktop MCP",
+  "created": "2025-06-03",
+  "main_script": "console_notifications.gd",
+  "socket_types": ["interface", "memory"],
+  "dependencies": [],
+  "files": [
+    "console_notifications.gd"
+  ],
+  "capabilities": [
+    "Automatic event logging to console",
+    "State change notifications",
+    "Interaction feedback",
+    "Consciousness level alerts",
+    "Component mount/unmount notifications"
+  ],
+  "properties": {
+    "enabled": true,
+    "log_interactions": true,
+    "log_state_changes": true,
+    "log_consciousness": true,
+    "log_components": true,
+    "notification_prefix": "📢"
+  },
+  "signals": [
+    "notification_sent"
+  ]
+}

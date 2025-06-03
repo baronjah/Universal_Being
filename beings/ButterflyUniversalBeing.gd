@@ -24,7 +24,7 @@ func pentagon_init() -> void:
 	consciousness_level = 3
 	name = being_name
 	create_butterfly_visuals()
-	base_position = position
+	base_position = Vector2(position.x, position.y)
 	
 func pentagon_ready() -> void:
 	super.pentagon_ready()
@@ -54,11 +54,9 @@ func pentagon_process(delta: float) -> void:
 	
 	# Gentle horizontal movement
 	position.x += flight_speed * delta
-	if position.x > get_viewport_rect().size.x + 100:
+	var viewport = get_viewport()
+	if viewport and position.x > viewport.get_visible_rect().size.x + 100:
 		position.x = -100
-
-func create_butterfly_visuals() -> void:
-	# Body
 	body = Polygon2D.new()
 	body.polygon = PackedVector2Array([
 		Vector2(0, -10), Vector2(3, 0), Vector2(0, 10),
@@ -100,3 +98,34 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	if pentagon_active:
 		pentagon_process(delta)
+
+func create_butterfly_visuals() -> void:
+	"""Create the visual representation of the butterfly"""
+	# Create body
+	body = Polygon2D.new()
+	body.polygon = PackedVector2Array([
+		Vector2(0, -10), Vector2(3, 0), Vector2(0, 10),
+		Vector2(-3, 0)
+	])
+	body.color = Color.BLACK
+	add_child(body)
+	
+	# Create left wing
+	wing_left = Polygon2D.new()
+	wing_left.polygon = PackedVector2Array([
+		Vector2(0, 0), Vector2(-20, -10), Vector2(-25, 0),
+		Vector2(-20, 10), Vector2(-10, 5)
+	])
+	wing_left.color = color
+	wing_left.position = Vector2(-3, 0)
+	add_child(wing_left)
+	
+	# Create right wing
+	wing_right = Polygon2D.new()
+	wing_right.polygon = PackedVector2Array([
+		Vector2(0, 0), Vector2(20, -10), Vector2(25, 0),
+		Vector2(20, 10), Vector2(10, 5)
+	])
+	wing_right.color = color
+	wing_right.position = Vector2(3, 0)
+	add_child(wing_right)

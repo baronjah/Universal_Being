@@ -1,5 +1,5 @@
 # ==================================================
-# UNIVERSAL BEING: Tree Universal Being
+# UNIVERSAL BEING: Sacred Tree Universal Being
 # TYPE: visual
 # PURPOSE: A Universal Being that can visualize and manage tree structures
 # COMPONENTS: []
@@ -7,7 +7,7 @@
 # ==================================================
 
 extends UniversalBeing
-class_name TreeUniversalBeing
+class_name SacredTreeUniversalBeing
 
 # ===== BEING-SPECIFIC PROPERTIES =====
 @export var tree_depth: int = 3

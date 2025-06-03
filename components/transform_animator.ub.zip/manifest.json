@@ -1,0 +1,35 @@
+{
+  "name": "Transform Animator Component",
+  "version": "1.0.0",
+  "description": "Animates Universal Being position, rotation, and scale with various patterns",
+  "type": "action",
+  "author": "Claude Desktop MCP",
+  "created": "2025-06-03",
+  "main_script": "transform_animator.gd",
+  "socket_types": ["action", "physics"],
+  "dependencies": [],
+  "files": [
+    "transform_animator.gd"
+  ],
+  "capabilities": [
+    "Smooth position oscillation",
+    "Continuous rotation",
+    "Breathing scale animation",
+    "Multiple animation patterns",
+    "Customizable speed and amplitude"
+  ],
+  "properties": {
+    "enabled": true,
+    "animate_position": true,
+    "animate_rotation": true,
+    "animate_scale": false,
+    "position_amplitude": 2.0,
+    "rotation_speed": 1.0,
+    "scale_amplitude": 0.2,
+    "animation_speed": 1.0
+  },
+  "signals": [
+    "animation_started",
+    "animation_stopped"
+  ]
+}

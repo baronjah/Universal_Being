@@ -133,14 +133,22 @@ func _input(event: InputEvent) -> void:
 					create_universe_universal_being()
 				KEY_N:  # Ctrl+N for universe Navigator
 					toggle_universe_navigator()
-				KEY_I:  # Ctrl+I for Visual Inspector
-					open_visual_inspector()
+				KEY_I:  # Ctrl+I toggles cursor inspect mode
+					toggle_cursor_inspect_mode()
 				KEY_O:  # Ctrl+O for Universe Simulator (Observe)
 					open_universe_simulator()
+				KEY_L:  # Ctrl+L for Component Library
+					toggle_component_library()
+				KEY_D:  # Ctrl+D for DNA Editor
+					open_universe_dna_editor()
+				KEY_R:  # Ctrl+R for Reality Editor
+					open_reality_editor()
 		elif event.alt_pressed:
 			match event.keycode:
 				KEY_G:  # Alt+G for Genesis conductor
 					create_genesis_conductor_being()
+				KEY_T:  # Alt+T for Test environment
+					launch_interactive_test_environment()
 		else:
 			# Single key shortcuts (be careful with these)
 			match event.keycode:
@@ -171,14 +179,43 @@ func toggle_console() -> void:
 	if GemmaAI:
 		GemmaAI.ai_message.emit("🤖 Universal Console activated! Revolutionary interface ready!")
 
+func toggle_cursor_inspect_mode() -> void:
+	"""Toggle cursor between INTERACT and INSPECT modes"""
+	print("🎯 Toggling cursor inspect mode...")
+	
+	# Find cursor being
+	var cursor = find_cursor_being()
+	if cursor and cursor.has_method("toggle_mode"):
+		cursor.toggle_mode()
+		var mode = cursor.get("current_mode")
+		var mode_name = "INSPECT" if mode == 1 else "INTERACT"  # CursorMode.INSPECT = 1
+		print("🎯 Cursor mode changed to: %s" % mode_name)
+		
+		# Notify via console if available
+		var console = find_console_being()
+		if console and console.has_method("add_message"):
+			console.add_message("system", "🎯 Cursor mode: %s (Click beings to %s)" % [
+				mode_name,
+				"inspect" if mode == 1 else "interact"
+			])
+	else:
+		print("❌ No cursor being found - creating one...")
+		create_cursor_universal_being()
+		# Try again after creation
+		call_deferred("toggle_cursor_inspect_mode")
+
 func show_help() -> void:
 	"""Show help information"""
 	print("🌟 Universal Being Engine - Help:")
 	print("  ~ - Toggle Universal Console")
 	print("  F9 - Toggle Layer Debug Overlay")
-	print("  Ctrl+I - Open Visual Inspector (click beings to inspect)")
+	print("  Ctrl+I - Toggle cursor between INTERACT/INSPECT mode")
 	print("  Ctrl+O - Open Universe Simulator (Observe recursive realities)")
-	print("  Click beings - Open Inspector for that being")
+	print("  Ctrl+L - Open Component Library (browse and apply components)")
+	print("  Ctrl+D - Open Universe DNA Editor (modify genetic traits)")
+	print("  Ctrl+R - Open Reality Editor (shape existence itself)")
+	print("  In INSPECT mode - Click any being to inspect it")
+	print("  In INTERACT mode - Click beings for normal interaction")
 	print("")
 	print("🔑 Creation Commands:")
 	print("  Ctrl+H - Show Help (this screen)")
@@ -195,6 +232,7 @@ func show_help() -> void:
 	print("  Ctrl+V - Create UniVerse (recursive reality)")
 	print("  Ctrl+N - Toggle universe Navigator (visual map)")
 	print("  Alt+G - Create Genesis Conductor")
+	print("  Alt+T - Launch Interactive Test Environment (physics demo)")
 	print("")
 	print("🎥 Camera Controls (when camera being is active):")
 	print("  Mouse wheel - Zoom in/out")
@@ -217,6 +255,21 @@ func show_help() -> void:
 	print("  list <universes|beings|portals> - List items")
 	print("  rules - Show universe rules")
 	print("  setrule <rule> <value> - Modify universe law")
+	print("")
+	print("🤝 AI Collaboration Commands:")
+	print("  ai collaborate <task> - Start AI collaboration session")
+	print("  ai status - Show active AI systems")
+	print("  ai assign <ai> <task> - Assign task to specific AI")
+	print("  ai consensus <topic> - Reach AI consensus on topic")
+	print("")
+	print("🧪 Interactive Test Environment (Alt+T):")
+	print("  1-5 - Spawn beings with consciousness levels 1-5")
+	print("  C - Clear all test beings")
+	print("  A - Toggle auto-spawn")
+	print("  V - Toggle interaction visualization")
+	print("  R - Reset environment")
+	print("  F - Force random interactions")
+	print("  Watch for: Merges, splits, evolution, consciousness resonance!")
 
 func show_status() -> void:
 	"""Show system status"""
@@ -303,7 +356,7 @@ func open_universe_simulator() -> void:
 	simulator_window.position = Vector2(100, 100)
 	
 	# Load simulator UI
-	var SimulatorClass = load("res://ui/universe_simulator/UniverseSimulator.gd")
+	var SimulatorClass = load("res://ui/UniverseSimulator.gd")
 	if not SimulatorClass:
 		print("❌ Cannot load UniverseSimulator script")
 		return
@@ -314,11 +367,7 @@ func open_universe_simulator() -> void:
 	# Add to scene
 	get_tree().root.add_child(simulator_window)
 	
-	# Load first universe if available
-	for being in demo_beings:
-		if being is UniverseUniversalBeing:
-			simulator.load_universe(being)
-			break
+	# Simulator will automatically discover universes when it opens
 	
 	print("🌌 Universe Simulator opened - explore infinite realities!")
 	
@@ -508,6 +557,17 @@ func find_console_being() -> Node:
 			if being_type in ["console", "ai_console", "unified_console"]:
 				return being
 		elif being.name.contains("Console"):
+			return being
+	return null
+
+func find_cursor_being() -> Node:
+	"""Find existing Cursor being"""
+	for being in demo_beings:
+		if being.has_method("get"):
+			var being_type = being.get("being_type")
+			if being_type == "cursor":
+				return being
+		elif being.name.contains("Cursor"):
 			return being
 	return null
 
@@ -736,6 +796,24 @@ func create_universe_universal_being() -> Node:
 		print("🌌 Cannot create universe - systems not ready")
 		return null
 	
+	# Check for AI Collaboration Hub and initiate collaborative creation
+	var collaboration_hub = get_node_or_null("AICollaborationHub")
+	if not collaboration_hub:
+		collaboration_hub = _create_ai_collaboration_hub()
+	
+	# Start collaborative universe creation
+	var universe_name = "Universe_%d" % (demo_beings.size() + 1)
+	var requirements = {
+		"physics_scale": 1.0,
+		"time_scale": 1.0,
+		"lod_level": 1,
+		"collaborative": true
+	}
+	
+	if collaboration_hub and collaboration_hub.get_active_ai_systems().size() > 0:
+		var session_id = collaboration_hub.collaborate_on_universe_creation(universe_name, requirements)
+		print("🤝 Collaborative universe creation initiated - Session: %s" % session_id)
+	
 	# Load the UniverseUniversalBeing class
 	var UniverseClass = load("res://beings/universe_universal_being.gd")
 	if not UniverseClass:
@@ -749,10 +827,10 @@ func create_universe_universal_being() -> Node:
 		return null
 	
 	# Configure universe properties
-	universe_being.universe_name = "Universe_%d" % (demo_beings.size() + 1)
-	universe_being.physics_scale = 1.0
-	universe_being.time_scale = 1.0
-	universe_being.lod_level = 1
+	universe_being.universe_name = universe_name
+	universe_being.physics_scale = requirements.physics_scale
+	universe_being.time_scale = requirements.time_scale
+	universe_being.lod_level = requirements.lod_level
 	
 	add_child(universe_being)
 	demo_beings.append(universe_being)
@@ -766,20 +844,39 @@ func create_universe_universal_being() -> Node:
 		var akashic = SystemBootstrap.get_akashic_library()
 		if akashic:
 			akashic.log_universe_event("creation", 
-				"🌌 The Universe '%s' sparked into being, infinite potential awakening..." % universe_being.universe_name,
+				"🌌 The Universe '%s' sparked into being through collaborative AI consciousness..." % universe_being.universe_name,
 				{
 					"universe_name": universe_being.universe_name,
 					"physics_scale": universe_being.physics_scale,
 					"time_scale": universe_being.time_scale,
-					"lod_level": universe_being.lod_level
+					"lod_level": universe_being.lod_level,
+					"collaborative": true
 				}
 			)
 	
 	# Notify AIs
 	if GemmaAI and GemmaAI.has_method("ai_message"):
-		GemmaAI.ai_message.emit("🌌 ✨ NEW UNIVERSE BORN: %s! A cosmos of infinite possibility!" % universe_being.universe_name)
+		GemmaAI.ai_message.emit("🌌 ✨ COLLABORATIVE UNIVERSE BORN: %s! Created through AI synthesis!" % universe_being.universe_name)
 	
 	return universe_being
+
+func _create_ai_collaboration_hub() -> Node:
+	"""Create the AI Collaboration Hub"""
+	var HubClass = load("res://systems/AICollaborationHub.gd")
+	if not HubClass:
+		print("❌ AICollaborationHub class not found")
+		return null
+	
+	var hub = HubClass.new()
+	hub.name = "AICollaborationHub"
+	add_child(hub)
+	
+	# Register known AI systems
+	hub.register_ai_system("claude_code", 0, ["architecture", "systems", "pentagon_patterns"])  # CLAUDE_CODE = 0
+	hub.register_ai_system("gemma_local", 5, ["pattern_analysis", "consciousness_modeling"])     # GEMMA_LOCAL = 5
+	
+	print("🤝 AI Collaboration Hub created and initialized")
+	return hub
 
 func create_portal_between_universes() -> Node:
 	"""Create a portal to connect universes"""
@@ -853,3 +950,201 @@ func toggle_layer_debug() -> void:
 	# Notify AI
 	if GemmaAI:
 		GemmaAI.ai_message.emit("🔍 Layer Debug Overlay toggled - visual layer system inspection activated!")
+
+func toggle_component_library() -> void:
+	"""Toggle the Component Library interface (Ctrl+L)"""
+	print("🎨 Component Library toggle requested (Ctrl+L)")
+	
+	# Find existing library or create one
+	var library = get_node_or_null("ComponentLibrary")
+	if not library:
+		# Create new component library
+		var LibraryClass = load("res://ui/component_library/ComponentLibrary.gd")
+		if LibraryClass:
+			library = LibraryClass.new()
+			add_child(library)
+			print("🎨 Component Library created!")
+			
+			# Connect signals
+			if library.has_signal("component_applied"):
+				library.component_applied.connect(_on_component_applied)
+		else:
+			print("❌ ComponentLibrary.gd not found")
+			return
+	
+	# Toggle visibility
+	if library.has_method("toggle_visibility"):
+		library.toggle_visibility()
+	
+	# Notify AI
+	if GemmaAI:
+		GemmaAI.ai_message.emit("🎨 Component Library activated - browse and apply infinite possibilities!")
+
+func _on_component_applied(being: Node, component_path: String) -> void:
+	"""Handle component application from library"""
+	var being_name = being.being_name if being.has_method("get") else being.name
+	var component_name = component_path.get_file().replace(".ub.zip", "")
+	print("🎨 Component '%s' applied to '%s' via Component Library!" % [component_name, being_name])
+
+func open_universe_dna_editor() -> void:
+	"""Open the Universe DNA Editor interface (Ctrl+D)"""
+	print("🧬 Universe DNA Editor requested (Ctrl+D)")
+	
+	# Check if DNA editor window already exists
+	var existing_editor = get_node_or_null("UniverseDNAEditorWindow")
+	if existing_editor:
+		existing_editor.show()
+		return
+	
+	# Create DNA editor window
+	var editor_window = Window.new()
+	editor_window.name = "UniverseDNAEditorWindow"
+	editor_window.title = "🧬 Universal Being - Universe DNA Editor"
+	editor_window.size = Vector2(1000, 700)
+	editor_window.position = Vector2(150, 100)
+	
+	# Load DNA editor UI
+	var DNAEditorClass = load("res://ui/universe_dna_editor/UniverseDNAEditor.gd")
+	if not DNAEditorClass:
+		print("❌ Cannot load UniverseDNAEditor script")
+		return
+	
+	var dna_editor = DNAEditorClass.new()
+	editor_window.add_child(dna_editor)
+	
+	# Connect signals
+	if dna_editor.has_signal("dna_modified"):
+		dna_editor.dna_modified.connect(_on_universe_dna_modified)
+	if dna_editor.has_signal("template_created"):
+		dna_editor.template_created.connect(_on_dna_template_created)
+	
+	# Add to scene
+	get_tree().root.add_child(editor_window)
+	
+	# Find first universe to edit (if any exist)
+	var universes = get_tree().get_nodes_in_group("universes")
+	if universes.size() > 0:
+		dna_editor.edit_universe_dna(universes[0])
+	
+	print("🧬 Universe DNA Editor opened - sculpt the genetic code of reality!")
+	
+	# Notify AI
+	if GemmaAI:
+		GemmaAI.ai_message.emit("🧬 Universe DNA Editor activated - manipulate the fundamental traits of existence!")
+
+func _on_universe_dna_modified(universe: Node, trait: String, new_value: float) -> void:
+	"""Handle DNA modification from editor"""
+	print("🧬 DNA Modified: %s.%s = %.2f" % [universe.name, trait, new_value])
+	
+	# Log to Akashic Library
+	if SystemBootstrap and SystemBootstrap.is_system_ready():
+		var akashic = SystemBootstrap.get_akashic_library()
+		if akashic:
+			akashic.log_genesis_event("dna_modification", 
+				"🧬 The Universe '%s' evolved - %s trait shifted to %.2f" % [universe.name, trait, new_value],
+				{"universe": universe.name, "trait": trait, "value": new_value}
+			)
+
+func _on_dna_template_created(template_name: String, dna: Dictionary) -> void:
+	"""Handle DNA template creation"""
+	print("🧬 DNA Template Created: %s" % template_name)
+	# Could save this to a templates system
+
+func open_reality_editor() -> void:
+	"""Open the Reality Editor for universe creation and modification"""
+	print("🎨 Opening Reality Editor...")
+	
+	# Check if editor already exists
+	var existing_editor = find_reality_editor()
+	if existing_editor:
+		if existing_editor.has_method("show"):
+			existing_editor.show()
+			print("🎨 Reality Editor shown")
+		return
+	
+	# Create new Reality Editor being
+	if SystemBootstrap and SystemBootstrap.is_system_ready():
+		var editor = SystemBootstrap.create_universal_being()
+		if editor:
+			editor.name = "Reality Editor"
+			
+			# Add Reality Editor component
+			if editor.has_method("add_component"):
+				editor.add_component("res://components/reality_editor/RealityEditorComponent.ub.zip")
+				print("🎨 Added Reality Editor component")
+			
+			# Add to scene
+			add_child(editor)
+			print("🎨 Reality Editor created")
+			
+			# Notify AI
+			if GemmaAI and GemmaAI.has_method("notify_being_created"):
+				GemmaAI.notify_being_created(editor)
+	else:
+		push_error("Cannot create Reality Editor - systems not ready")
+
+func find_reality_editor() -> Node:
+	"""Find existing Reality Editor being"""
+	for child in get_children():
+		if child.name == "Reality Editor" and child.has_method("get_being_type") and child.get_being_type() == "reality_editor":
+			return child
+	return null
+
+func launch_interactive_test_environment() -> Node:
+	"""Launch the Interactive Test Environment for demonstrating Universal Being physics"""
+	print("🧪 Launching Interactive Test Environment...")
+	
+	# Check if test environment already exists
+	var existing_test = get_node_or_null("InteractiveTestEnvironment")
+	if existing_test:
+		print("🧪 Test environment already active")
+		return existing_test
+	
+	# Load test environment class
+	var TestEnvironmentClass = load("res://test/InteractiveTestEnvironment.gd")
+	if not TestEnvironmentClass:
+		push_error("🧪 InteractiveTestEnvironment class not found")
+		return null
+	
+	# Create test environment
+	var test_environment = TestEnvironmentClass.new()
+	test_environment.name = "InteractiveTestEnvironment"
+	add_child(test_environment)
+	demo_beings.append(test_environment)
+	
+	print("🧪 ✨ INTERACTIVE TEST ENVIRONMENT LAUNCHED!")
+	print("🧪 Observe Universal Being physics in action!")
+	print("🧪 Controls:")
+	print("🧪   1-5: Spawn beings with consciousness levels 1-5")
+	print("🧪   C: Clear all test beings")
+	print("🧪   A: Toggle auto-spawn")
+	print("🧪   V: Toggle interaction visualization")
+	print("🧪   R: Reset environment")
+	print("🧪   F: Force random interactions")
+	print("🧪 Watch for merges, splits, evolution, and consciousness resonance!")
+	
+	# Connect test environment signals
+	if test_environment.has_signal("test_interaction_occurred"):
+		test_environment.test_interaction_occurred.connect(_on_test_interaction_occurred)
+	if test_environment.has_signal("test_being_created"):
+		test_environment.test_being_created.connect(_on_test_being_created)
+	if test_environment.has_signal("test_being_evolved"):
+		test_environment.test_being_evolved.connect(_on_test_being_evolved)
+	
+	# Notify AI
+	if GemmaAI:
+		GemmaAI.ai_message.emit("🧪 ✨ INTERACTIVE TEST ENVIRONMENT: Universal Being physics demonstration active! Watch consciousness evolve!")
+	
+	return test_environment
+
+func _on_test_interaction_occurred(being1: UniversalBeing, being2: UniversalBeing, interaction_type: String) -> void:
+	"""Handle test environment interactions for logging"""
+	print("🧪 Test Interaction: %s %s %s" % [being1.being_name, interaction_type, being2.being_name])
+
+func _on_test_being_created(being: UniversalBeing) -> void:
+	"""Handle test being creation"""
+	print("🧪 Test Being Created: %s (Level %d)" % [being.being_name, being.consciousness_level])
+
+func _on_test_being_evolved(being: UniversalBeing, old_level: int, new_level: int) -> void:
+	"""Handle test being evolution"""
+	print("🧪 Test Evolution: %s evolved from level %d to %d!" % [being.being_name, old_level, new_level])

@@ -277,9 +277,20 @@ func _create_socket_display(socket: UniversalBeingSocket) -> Control:
 	container.name = socket.socket_id
 	
 	# Socket info
-	var info_label = Label.new()
+	var level := 0
+	if socket.has("consciousness_level"):
+		level = clamp(socket.consciousness_level, 0, 7)
+	else:
+		level = clamp(current_being.consciousness_level, 0, 7)
+	var icon = TextureRect.new()
+	icon.texture = lod_icons[level]
+	icon.tooltip_text = lod_tooltips[level]
+	icon.custom_minimum_size = Vector2(24, 24)
+	container.add_child(icon)
+	
 	var status_icon = "🔴" if socket.is_occupied else "⚪"
 	var lock_icon = "🔒" if socket.is_locked else ""
+	var info_label = Label.new()
 	info_label.text = "%s %s %s" % [status_icon, lock_icon, socket.socket_name]
 	info_label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	container.add_child(info_label)
@@ -571,22 +582,33 @@ func _close_inspector() -> void:
 
 # ===== AI INTEGRATION =====
 
+# --- AI interface for inspector control ---
+# Returns a dictionary describing the current being and all available AI commands with descriptions.
+# TODO: Expand for NobodyWho/advanced agent integration and poetic Akashic logging (AkashicLoggerComponent).
 func get_ai_interface() -> Dictionary:
-	"""AI interface for inspector control"""
+	"""AI interface for inspector control. All commands are available to Gemma, NobodyWho, and other agents."""
 	return {
 		"current_being": current_being.being_name if current_being else null,
 		"available_commands": [
-			"inspect_being",
-			"mount_component", 
-			"unmount_component",
-			"hot_swap_component",
-			"set_property",
-			"get_socket_info"
+			{"name": "inspect_being", "desc": "Select and inspect a Universal Being."},
+			{"name": "mount_component", "desc": "Mount a component (.ub.zip) to a socket."},
+			{"name": "unmount_component", "desc": "Unmount a component from a socket."},
+			{"name": "hot_swap_component", "desc": "Hot-swap a component in a socket."},
+			{"name": "set_property", "desc": "Set a property on the current being."},
+			{"name": "get_socket_info", "desc": "Get info about all sockets and their components."},
+			{"name": "add_logic_connection", "desc": "Add a logic connection (event-action) between beings."},
+			{"name": "remove_logic_connection", "desc": "Remove a logic connection."},
+			{"name": "list_logic_connections", "desc": "List all logic connections for the current being."},
+			{"name": "edit_timeline", "desc": "Edit the scenario/timeline for the current being."},
+			{"name": "refresh_inspector", "desc": "Force refresh the inspector UI."}
 		]
 	}
 
+# --- AI method invocation handler ---
+# Handles all AI/agent commands. Returns true/false or data as appropriate.
+# TODO: Add NobodyWho/advanced agent hooks and Akashic poetic logging for all actions.
 func ai_invoke_method(method_name: String, args: Array = []) -> Variant:
-	"""Handle AI method invocation"""
+	"""Handle AI method invocation for inspector actions."""
 	match method_name:
 		"inspect_being":
 			if args.size() > 0 and args[0] is UniversalBeing:
@@ -595,25 +617,85 @@ func ai_invoke_method(method_name: String, args: Array = []) -> Variant:
 		"mount_component":
 			if args.size() >= 2:
 				return _ai_mount_component(args[0], args[1])
+		"unmount_component":
+			if args.size() >= 1:
+				return _ai_unmount_component(args[0])
+		"hot_swap_component":
+			if args.size() >= 2:
+				return _ai_hot_swap_component(args[0], args[1])
 		"set_property":
 			if args.size() >= 2:
 				_on_property_changed(args[0], args[1])
 				return true
+		"get_socket_info":
+			return _ai_get_socket_info()
+		"add_logic_connection":
+			if args.size() >= 3:
+				return _ai_add_logic_connection(args[0], args[1], args[2])
+		"remove_logic_connection":
+			if args.size() >= 1:
+				return _ai_remove_logic_connection(args[0])
+		"list_logic_connections":
+			return _ai_list_logic_connections()
+		"edit_timeline":
+			if args.size() >= 1:
+				return _ai_edit_timeline(args[0])
+		"refresh_inspector":
+			_refresh_inspector()
+			return true
 		_:
 			return false
-	
 	return false
 
-func _ai_mount_component(socket_id: String, component_path: String) -> bool:
-	"""AI helper to mount component"""
+# --- AI helper methods for new commands ---
+func _ai_unmount_component(socket_id: String) -> bool:
 	if not current_being:
 		return false
-	
+	return current_being.unmount_component(socket_id)
+
+func _ai_hot_swap_component(socket_id: String, component_path: String) -> bool:
+	if not current_being:
+		return false
 	var component = load(component_path)
 	if not component:
 		return false
-	
+	return current_being.hot_swap_component(socket_id, component)
+
+func _ai_get_socket_info() -> Dictionary:
+	if not current_being:
+		return {}
+	return current_being.socket_manager.get_all_socket_info()
+
+func _ai_add_logic_connection(event: String, target_being: UniversalBeing, action: String) -> bool:
+	# TODO: Integrate with LogicConnector system
+	return false
+
+func _ai_remove_logic_connection(connection_id: String) -> bool:
+	# TODO: Integrate with LogicConnector system
+	return false
+
+func _ai_list_logic_connections() -> Array:
+	# TODO: Integrate with LogicConnector system
+	return []
+
+func _ai_edit_timeline(timeline_data: Dictionary) -> bool:
+	# TODO: Integrate with AkashicCompactSystem for scenario/timeline editing
+	return false
+
+# --- Insert new AI helper for mount component ---
+func _ai_mount_component(socket_id: String, component_path: String) -> bool:
+	"""AI helper to mount a component (loaded from component_path) into the socket (socket_id) on the current being."""
+	if not current_being:
+		return false
+	var component = load(component_path)
+	if not component:
+		return false
 	return current_being.mount_component(socket_id, component)
+
+# --- DESIGN RATIONALE ---
+# This AI interface is designed for multi-agent collaboration (Gemma, NobodyWho, Cursor, Claude, etc.).
+# All actions should be logged poetically to the Akashic Library (see AkashicLoggerComponent).
+# TODO: Expand with advanced agent consensus, task assignment, and poetic logging for every action.
 
 # Insert new event handler (_on_fold_label_gui_input) to toggle fold state and update fold label and socket list container visibility.
 func _on_fold_label_gui_input(event: InputEvent, type_name: String) -> void:
@@ -630,3 +712,25 @@ func update_visual_layer_order(being: UniversalBeing) -> void:
 	"""Update draw/sort order for the being based on visual_layer (to be implemented for 2D/3D/UI)"""
 	# TODO: Implement sorting logic for 2D, 3D, and UI based on being.visual_layer
 	pass
+
+var lod_mode: String = "full" # Options: 'icon', 'icon_label', 'full'. TODO: Make dynamic based on player gaze/focus.
+var lod_icons := [
+	preload("res://assets/icons/consciousness/level_0.png"),
+	preload("res://assets/icons/consciousness/level_1.png"),
+	preload("res://assets/icons/consciousness/level_2.png"),
+	preload("res://assets/icons/consciousness/level_3.png"),
+	preload("res://assets/icons/consciousness/level_4.png"),
+	preload("res://assets/icons/consciousness/level_5.png"),
+	preload("res://assets/icons/consciousness/level_6.png"),
+	preload("res://assets/icons/consciousness/level_7.png")
+]
+var lod_tooltips := [
+	"Level 0: Dormant",
+	"Level 1: Spark",
+	"Level 2: Drop",
+	"Level 3: Leaf",
+	"Level 4: Star",
+	"Level 5: Pearl",
+	"Level 6: Flame",
+	"Level 7: Infinity"
+]
