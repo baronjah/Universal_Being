@@ -29,6 +29,17 @@ var send_button: Button = null
 var gemma_ai: Node = null
 var conversation_context: String = ""
 
+# ===== ENHANCED COMMAND SYSTEM =====
+var enhanced_command_processor: Node = null
+var natural_language_triggers: Dictionary = {}
+var macro_recording: bool = false
+var current_macro: Array[String] = []
+var recorded_macros: Dictionary = {}
+
+# ===== CURSOR CONTROL =====
+var cursor_visible_in_console: bool = true
+var last_cursor_mode: Input.CursorShape = Input.CURSOR_ARROW
+
 # ===== PENTAGON ARCHITECTURE =====
 
 func pentagon_init() -> void:
@@ -46,6 +57,9 @@ func pentagon_ready() -> void:
 	
 	# Get Gemma AI reference
 	gemma_ai = get_node("/root/GemmaAI") if has_node("/root/GemmaAI") else null
+	
+	# Initialize enhanced command processor
+	_initialize_enhanced_command_system()
 	
 	# Connect to Gemma AI signals if available
 	if gemma_ai:
@@ -96,8 +110,15 @@ func _create_console_window() -> void:
 	console_window.wrap_controls = true
 	console_window.unresizable = false
 	
+	# Make console always on top but allow cursor interaction
+	console_window.always_on_top = true
+	console_window.mouse_filter = Control.MOUSE_FILTER_PASS
+	
 	# Add to scene tree
 	get_tree().root.add_child(console_window)
+	
+	# Initially hidden until toggled
+	console_window.visible = false
 	
 	# Create main container
 	var main_container = VBoxContainer.new()
@@ -267,12 +288,24 @@ func _on_send_pressed() -> void:
 	_send_message(input_field.text)
 
 func _send_message(message: String) -> void:
-	"""Send message to AI"""
+	"""Send message to AI and process commands"""
 	if message.strip_edges().is_empty():
 		return
 	
 	# Add user message
 	add_message("user", message)
+	
+	# Record macro if recording
+	if macro_recording:
+		current_macro.append(message)
+		add_message("system", "📝 Added to macro: " + message)
+	
+	# Check for enhanced commands first
+	if _process_enhanced_commands(message):
+		# Command was processed, clear input and return
+		input_field.text = ""
+		input_field.grab_focus()
+		return
 	
 	# Clear input
 	input_field.text = ""
@@ -786,3 +819,345 @@ func _on_gemma_ai_message(message: String) -> void:
 	# Don't add if it's an echo of user input
 	if not message.begins_with("User says:"):
 		add_message("gemma", message)
+
+# ===== ENHANCED COMMAND SYSTEM =====
+
+func _initialize_enhanced_command_system() -> void:
+	"""Initialize the enhanced command processor integration"""
+	# Try to get existing command processor from the system
+	if has_node("/root/universal_command_processor"):
+		enhanced_command_processor = get_node("/root/universal_command_processor")
+	elif SystemBootstrap and SystemBootstrap.has_method("get_command_processor"):
+		enhanced_command_processor = SystemBootstrap.get_command_processor()
+	
+	# Initialize natural language triggers for Universe creation
+	_setup_universe_triggers()
+	
+	add_message("system", "🌟 Enhanced command system initialized - Type '/help' for commands")
+
+func _setup_universe_triggers() -> void:
+	"""Setup natural language triggers for universe operations"""
+	natural_language_triggers = {
+		"create_universe": ["create universe", "make universe", "genesis", "new world"],
+		"list_universes": ["show universes", "list worlds", "what universes"],
+		"enter_universe": ["enter universe", "go to universe", "visit world"],
+		"inspect_being": ["inspect being", "examine being", "analyze being"],
+		"socket_operations": ["mount socket", "swap socket", "list sockets"],
+		"macro_operations": ["record macro", "stop macro", "play macro", "list macros"]
+	}
+
+func _process_enhanced_commands(message: String) -> bool:
+	"""Process enhanced commands - returns true if command was handled"""
+	var lower_msg = message.to_lower().strip_edges()
+	
+	# Handle macro commands first
+	if lower_msg.begins_with("/macro"):
+		return _handle_macro_commands(message)
+	
+	# Handle direct Universal Being commands
+	if lower_msg.begins_with("/"):
+		return _handle_slash_commands(message)
+	
+	# Handle natural language commands
+	for trigger_type in natural_language_triggers:
+		for trigger in natural_language_triggers[trigger_type]:
+			if trigger in lower_msg:
+				return _handle_natural_trigger(trigger_type, message)
+	
+	# Not a command
+	return false
+
+func _handle_macro_commands(message: String) -> bool:
+	"""Handle macro recording and playback commands"""
+	var parts = message.split(" ")
+	if parts.size() < 2:
+		add_message("system", "📝 Macro commands: /macro record <name>, /macro stop, /macro play <name>, /macro list")
+		return true
+	
+	var action = parts[1]
+	match action:
+		"record":
+			var macro_name = parts[2] if parts.size() > 2 else "unnamed_macro"
+			_start_macro_recording(macro_name)
+		"stop":
+			_stop_macro_recording()
+		"play":
+			var macro_name = parts[2] if parts.size() > 2 else ""
+			_play_macro(macro_name)
+		"list":
+			_list_macros()
+		_:
+			add_message("system", "📝 Unknown macro action: " + action)
+	
+	return true
+
+func _handle_slash_commands(message: String) -> bool:
+	"""Handle slash commands for direct system access"""
+	var parts = message.split(" ")
+	var command = parts[0].substr(1)  # Remove the "/"
+	var args = parts.slice(1) if parts.size() > 1 else []
+	
+	match command:
+		"help":
+			_show_enhanced_help()
+		"create":
+			_handle_create_command(args)
+		"inspect":
+			_handle_inspect_command(args)
+		"count":
+			_handle_count_command(args)
+		"load":
+			_handle_load_command(args)
+		"execute":
+			_handle_execute_command(args)
+		"trigger":
+			_handle_trigger_command(args)
+		"reload":
+			_handle_reload_command(args)
+		_:
+			if enhanced_command_processor and enhanced_command_processor.has_method("execute_command"):
+				var result = enhanced_command_processor.execute_command(message.substr(1))
+				add_message("system", "🌟 " + str(result))
+			else:
+				add_message("system", "❌ Unknown command: " + command)
+	
+	return true
+
+func _handle_natural_trigger(trigger_type: String, message: String) -> bool:
+	"""Handle natural language triggers"""
+	match trigger_type:
+		"create_universe":
+			var universe_name = _extract_universe_name(message)
+			_create_universe_naturally(universe_name)
+		"list_universes":
+			_list_universes_naturally()
+		"enter_universe":
+			var universe_name = _extract_universe_name(message)
+			_enter_universe_naturally(universe_name)
+		"inspect_being":
+			var being_name = _extract_being_name(message)
+			_inspect_being_naturally(being_name)
+		"socket_operations":
+			_process_socket_commands(message)
+		"macro_operations":
+			_handle_macro_natural_language(message)
+		_:
+			return false
+	
+	return true
+
+func _start_macro_recording(macro_name: String) -> void:
+	"""Start recording a new macro"""
+	if macro_recording:
+		add_message("system", "📝 Already recording macro. Stop current recording first.")
+		return
+	
+	macro_recording = true
+	current_macro = []
+	add_message("system", "🔴 Recording macro: " + macro_name)
+	add_message("system", "📝 All subsequent commands will be recorded. Type '/macro stop' to finish.")
+
+func _stop_macro_recording() -> void:
+	"""Stop macro recording and save it"""
+	if not macro_recording:
+		add_message("system", "📝 No macro currently recording")
+		return
+	
+	macro_recording = false
+	var macro_name = "macro_" + str(Time.get_ticks_msec())
+	recorded_macros[macro_name] = current_macro.duplicate()
+	
+	add_message("system", "⏹️ Stopped recording. Saved as: " + macro_name)
+	add_message("system", "📝 Recorded %d commands" % current_macro.size())
+	current_macro = []
+
+func _play_macro(macro_name: String) -> void:
+	"""Play back a recorded macro"""
+	if macro_name.is_empty():
+		add_message("system", "📝 Please specify macro name")
+		return
+	
+	if not recorded_macros.has(macro_name):
+		add_message("system", "📝 Macro not found: " + macro_name)
+		return
+	
+	var macro_commands = recorded_macros[macro_name]
+	add_message("system", "▶️ Playing macro: " + macro_name + " (%d commands)" % macro_commands.size())
+	
+	for command in macro_commands:
+		# Simulate processing each command
+		add_message("macro", command)
+		_send_to_gemma(command)
+
+func _list_macros() -> void:
+	"""List all recorded macros"""
+	if recorded_macros.is_empty():
+		add_message("system", "📝 No macros recorded yet")
+		return
+	
+	add_message("system", "📝 Recorded macros:")
+	for macro_name in recorded_macros:
+		var command_count = recorded_macros[macro_name].size()
+		add_message("system", "  • %s (%d commands)" % [macro_name, command_count])
+
+func _show_enhanced_help() -> void:
+	"""Show enhanced command help"""
+	var help_text = """
+🌟 Universal Being Console - Enhanced Commands
+
+💬 Natural Language:
+  • "Create a universe called [name]"
+  • "Show me all universes"
+  • "Enter universe [name]"
+  • "Inspect being [name]"
+
+📝 Macro System:
+  • /macro record <name> - Start recording
+  • /macro stop - Stop recording  
+  • /macro play <name> - Play macro
+  • /macro list - List all macros
+
+🔧 Direct Commands:
+  • /create being <name> <type>
+  • /inspect <target>
+  • /count lines <file>
+  • /execute <code>
+  • /reload all
+  • /trigger <word> <action>
+
+🔌 Socket Commands:
+  • "mount socket [type] on [being]"
+  • "swap socket [being1] [being2]"
+  • "list sockets on [being]"
+
+🌌 Universe Commands:
+  • "Genesis [name]" - Quick universe creation
+  • "Enter the void" - Visit empty universe
+  • "Show me reality" - List all universes
+"""
+	
+	add_message("system", help_text)
+
+func _handle_create_command(args: Array) -> void:
+	"""Handle create command"""
+	if args.is_empty():
+		add_message("system", "Usage: /create being <name> [type]")
+		return
+	
+	if args[0] == "being":
+		var being_name = args[1] if args.size() > 1 else "Unnamed"
+		var being_type = args[2] if args.size() > 2 else "generic"
+		
+		# Try to create through SystemBootstrap
+		if SystemBootstrap and SystemBootstrap.has_method("create_universal_being"):
+			var new_being = SystemBootstrap.create_universal_being()
+			if new_being:
+				new_being.being_name = being_name
+				new_being.being_type = being_type
+				add_message("system", "✨ Created being: %s (%s)" % [being_name, being_type])
+			else:
+				add_message("system", "❌ Failed to create being")
+		else:
+			add_message("system", "❌ SystemBootstrap not available for being creation")
+
+func _handle_inspect_command(args: Array) -> void:
+	"""Handle inspect command"""
+	if args.is_empty():
+		add_message("system", "Usage: /inspect <being_name>")
+		return
+	
+	var target = args[0]
+	_inspect_being_naturally(target)
+
+func _handle_count_command(args: Array) -> void:
+	"""Handle count command"""
+	if args.size() < 2:
+		add_message("system", "Usage: /count <what> <target>")
+		return
+	
+	var what = args[0]
+	var target = args[1]
+	
+	match what:
+		"beings":
+			var flood_gates = SystemBootstrap.get_flood_gates() if SystemBootstrap else null
+			if flood_gates:
+				var beings = flood_gates.get_all_beings()
+				add_message("system", "🔢 Total beings: %d" % beings.size())
+			else:
+				add_message("system", "❌ FloodGates not available")
+		"lines":
+			if FileAccess.file_exists(target):
+				var file = FileAccess.open(target, FileAccess.READ)
+				var line_count = 0
+				while not file.eof_reached():
+					file.get_line()
+					line_count += 1
+				file.close()
+				add_message("system", "🔢 Lines in %s: %d" % [target, line_count])
+			else:
+				add_message("system", "❌ File not found: " + target)
+
+func _handle_execute_command(args: Array) -> void:
+	"""Handle execute command for GDScript code"""
+	if args.is_empty():
+		add_message("system", "Usage: /execute <gdscript_code>")
+		return
+	
+	var code = " ".join(args)
+	add_message("system", "⚡ Executing: " + code)
+	add_message("system", "🚧 Code execution system coming soon!")
+
+func _handle_load_command(args: Array) -> void:
+	"""Handle load command"""
+	if args.is_empty():
+		add_message("system", "Usage: /load <file_or_component>")
+		return
+	
+	var target = args[0]
+	add_message("system", "📦 Loading: " + target)
+	add_message("system", "🚧 Dynamic loading system coming soon!")
+
+func _handle_trigger_command(args: Array) -> void:
+	"""Handle trigger command for natural language setup"""
+	if args.size() < 2:
+		add_message("system", "Usage: /trigger <word> <action>")
+		return
+	
+	var word = args[0]
+	var action = " ".join(args.slice(1))
+	
+	# Add to natural language triggers
+	if not natural_language_triggers.has("custom"):
+		natural_language_triggers["custom"] = []
+	
+	natural_language_triggers["custom"].append(word)
+	add_message("system", "🔮 Created trigger: Say '%s' to %s" % [word, action])
+
+func _handle_reload_command(args: Array) -> void:
+	"""Handle reload command"""
+	add_message("system", "🔄 Reloading systems...")
+	
+	# Reload Gemma AI if available
+	if gemma_ai and gemma_ai.has_method("reload"):
+		gemma_ai.reload()
+		add_message("system", "🤖 Gemma AI reloaded")
+	
+	# Reload command processor
+	if enhanced_command_processor:
+		add_message("system", "🌟 Command processor refreshed")
+	
+	add_message("system", "✅ Reload complete")
+
+func _handle_macro_natural_language(message: String) -> void:
+	"""Handle macro commands in natural language"""
+	var lower_msg = message.to_lower()
+	
+	if "record" in lower_msg:
+		var macro_name = "spoken_macro_" + str(Time.get_ticks_msec())
+		_start_macro_recording(macro_name)
+	elif "stop recording" in lower_msg:
+		_stop_macro_recording()
+	elif "play" in lower_msg or "replay" in lower_msg:
+		_list_macros()
+		add_message("system", "📝 Specify which macro to play with '/macro play <name>'")

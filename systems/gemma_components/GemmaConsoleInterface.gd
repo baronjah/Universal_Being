@@ -6,7 +6,7 @@
 # SCENES: res://scenes/gemma/console_interface.tscn
 # ==================================================
 
-extends Node  # Changed from UniversalBeingInterface to avoid circular dependency
+extends UniversalBeing  # Must extend UniversalBeing for Pentagon architecture
 class_name GemmaConsoleInterface
 
 # ==================================================
@@ -38,11 +38,28 @@ const COMMAND_COLOR = Color(1.0, 0.9, 0.7)  # Light yellow for commands
 # ==================================================
 # EXPORT VARIABLES
 # ==================================================
+@export var console_title: String = "Gemma Console"
 @export var auto_complete_enabled: bool = true
 @export var show_suggestions: bool = true
 @export var gemma_personality_mode: String = "curious"  # curious, analytical, creative
 @export var console_height: int = 300
 @export var font_size: int = 14
+
+# ==================================================
+# INTERFACE PROPERTIES
+# ==================================================
+var interface_title: String = "Gemma Console"
+var interface_layer: int = 100
+var interface_theme: String = "gemma_console"
+var scene_is_loaded: bool = false
+var current_interface_state: int = 0
+
+# Interface state enum
+enum InterfaceState {
+	NORMAL,
+	MINIMIZED,
+	MAXIMIZED
+}
 
 # ==================================================
 # VARIABLES  
@@ -97,40 +114,31 @@ func pentagon_init() -> void:
 
 func _setup_console_ui() -> void:
 	"""Create the console UI structure"""
-	# Main container
-	console_container = VBoxContainer.new()
-	add_child(console_container)
+	if not scene_is_loaded:
+		return
+		
+	# Get UI elements from scene
+	console_container = get_scene_node("ConsoleContainer") as VBoxContainer
+	output_rich_text = get_scene_node("OutputRichText") as RichTextLabel
+	input_line_edit = get_scene_node("InputLineEdit") as LineEdit
+	suggestion_panel = get_scene_node("SuggestionPanel") as Panel
+	suggestion_list = get_scene_node("SuggestionList") as ItemList
 	
-	# Output area
-	output_rich_text = RichTextLabel.new()
-	output_rich_text.custom_minimum_size.y = console_height
-	output_rich_text.bbcode_enabled = true
-	output_rich_text.scroll_following = true
-	output_rich_text.selection_enabled = true
-	console_container.add_child(output_rich_text)
+	# Configure UI elements
+	if output_rich_text:
+		output_rich_text.custom_minimum_size.y = console_height
+		output_rich_text.bbcode_enabled = true
+		output_rich_text.scroll_following = true
+		output_rich_text.selection_enabled = true
 	
-	# Input area
-	var input_container = HBoxContainer.new()
-	console_container.add_child(input_container)
+	if input_line_edit:
+		input_line_edit.text_submitted.connect(_on_command_submitted)
+		input_line_edit.text_changed.connect(_on_text_changed)
 	
-	var prompt_label = Label.new()
-	prompt_label.text = GEMMA_PROMPT
-	prompt_label.modulate = RESPONSE_COLOR
-	input_container.add_child(prompt_label)
-	
-	input_line_edit = LineEdit.new()
-	input_line_edit.text_submitted.connect(_on_command_submitted)
-	input_line_edit.text_changed.connect(_on_text_changed)
-	input_container.add_child(input_line_edit)
-	
-	# Suggestion panel (hidden by default)
-	suggestion_panel = Panel.new()
-	suggestion_panel.visible = false
-	add_child(suggestion_panel)
-	
-	suggestion_list = ItemList.new()
-	suggestion_list.item_selected.connect(_on_suggestion_selected)
-	suggestion_panel.add_child(suggestion_list)
+	if suggestion_panel:
+		suggestion_panel.visible = false
+		if suggestion_list:
+			suggestion_list.item_selected.connect(_on_suggestion_selected)
 
 # ==================================================
 # COMMAND REGISTRATION
@@ -727,19 +735,18 @@ func _on_text_changed(new_text: String) -> void:
 	
 	# Show suggestions
 	if matches.size() > 0 and show_suggestions:
-		_show_suggestions(matches)
+		_show_command_suggestions(matches)
 	else:
 		suggestion_panel.visible = false
 
-func _show_suggestions(suggestions: Array) -> void:
-	"""Show command suggestions"""
+func _show_command_suggestions(suggestions: Array) -> void:
+	"""Show general command suggestions from command processing"""
+	if not scene_is_loaded or not show_suggestions:
+		return
+		
 	suggestion_list.clear()
 	for suggestion in suggestions:
 		suggestion_list.add_item(suggestion)
-	
-	# Position panel above input
-	suggestion_panel.position = input_line_edit.global_position - Vector2(0, 100)
-	suggestion_panel.size = Vector2(200, min(suggestions.size() * 20 + 10, 150))
 	suggestion_panel.visible = true
 
 func _on_suggestion_selected(index: int) -> void:
@@ -837,8 +844,12 @@ func pentagon_ready() -> void:
 	# Load console scene
 	load_scene("res://scenes/gemma/console_interface.tscn")
 	
-	# Initialize console UI
-	setup_console_interface()
+	# Setup console UI
+	_setup_console_ui()
+	
+	# Register commands
+	_register_core_commands()
+	_load_command_aliases()
 	
 	print("🎮 %s: Pentagon Ready Complete" % being_name)
 
@@ -846,17 +857,20 @@ func pentagon_process(delta: float) -> void:
 	super.pentagon_process(delta)
 	
 	# Update console state
-	update_console_state()
+	if scene_is_loaded:
+		_update_console_state(delta)
 
 func pentagon_input(event: InputEvent) -> void:
 	super.pentagon_input(event)
 	
 	# Handle console input
-	handle_console_input(event)
+	if scene_is_loaded:
+		_handle_console_input(event)
 
 func pentagon_sewers() -> void:
-	# Cleanup console state
-	cleanup_console_state()
+	# Cleanup console resources
+	if scene_is_loaded:
+		_cleanup_console()
 	
 	super.pentagon_sewers()
 
@@ -909,17 +923,20 @@ func update_console_state() -> void:
 	update_output_display()
 
 func handle_console_input(event: InputEvent) -> void:
-	"""Handle console input events"""
+	"""Handle console-specific input events"""
 	if not scene_is_loaded:
 		return
 		
-	# Handle input field events
-	var input_field = get_scene_node("InputField")
-	if input_field and input_field.has_focus():
-		if event is InputEventKey and event.pressed:
-			if event.keycode == KEY_ENTER:
-				process_command(input_field.text)
-				input_field.text = ""
+	if event is InputEventKey:
+		if event.pressed:
+			match event.keycode:
+				KEY_UP:
+					_navigate_history(-1)
+				KEY_DOWN:
+					_navigate_history(1)
+				KEY_TAB:
+					if auto_complete_enabled:
+						_show_tab_completion_suggestions()
 
 func cleanup_console_state() -> void:
 	"""Cleanup console state before destruction"""
@@ -966,7 +983,10 @@ func reset_console_state() -> void:
 
 func ai_interface() -> Dictionary:
 	"""Enhanced AI interface for console interaction"""
-	var base_interface = super.ai_interface()
+	var base_interface = {}
+	if has_method("super.ai_interface"):
+		base_interface = super.ai_interface()
+	
 	base_interface.console_commands = [
 		"execute_command",
 		"clear_history",
@@ -974,19 +994,12 @@ func ai_interface() -> Dictionary:
 		"toggle_visibility"
 	]
 	base_interface.console_properties = {
-		"is_visible": visible,
+		"is_visible": is_visible_in_tree(),
 		"is_minimized": current_interface_state == InterfaceState.MINIMIZED,
 		"is_maximized": current_interface_state == InterfaceState.MAXIMIZED
 	}
 	return base_interface
 
-# ===== INTERFACE PROPERTIES =====
-@export var console_title: String = "Gemma Console"
-
-# ===== CONSOLE STATE =====
-var output_buffer: Array[Dictionary] = []
-var current_command: String = ""
-var is_processing_command: bool = false
 
 # ===== COMMAND HANDLERS =====
 func _cmd_analyze(args: Array) -> void:
@@ -1016,3 +1029,113 @@ func _cmd_forget(args: Array) -> void:
 func _cmd_context(args: Array) -> void:
 	"""Show current context and state"""
 	pass  # Implement in subclasses
+
+# ==================================================
+# UNIVERSAL BEING INTERFACE METHODS
+# ==================================================
+func load_scene(scene_path: String) -> bool:
+	"""Load a scene for this interface"""
+	# Basic implementation for console interface
+	scene_is_loaded = ResourceLoader.exists(scene_path)
+	return scene_is_loaded
+
+func get_scene_node(node_name: String) -> Node:
+	"""Get a node from the loaded scene"""
+	# Look for node in children
+	for child in get_children():
+		if child.name == node_name:
+			return child
+	return null
+
+# ==================================================
+# CONSOLE STATE MANAGEMENT
+# ==================================================
+
+func _update_console_state(delta: float) -> void:
+	"""Update console state and animations"""
+	if not scene_is_loaded:
+		return
+		
+	# Update suggestion panel position if visible
+	if suggestion_panel and suggestion_panel.visible:
+		var input_pos = input_line_edit.global_position
+		suggestion_panel.global_position = Vector2(input_pos.x, input_pos.y + input_line_edit.size.y)
+	
+	# Update any animations or effects
+	_update_console_effects(delta)
+
+func _handle_console_input(event: InputEvent) -> void:
+	"""Handle console-specific input events"""
+	if not scene_is_loaded:
+		return
+		
+	if event is InputEventKey:
+		if event.pressed:
+			match event.keycode:
+				KEY_UP:
+					_navigate_history(-1)
+				KEY_DOWN:
+					_navigate_history(1)
+				KEY_TAB:
+					if auto_complete_enabled:
+						_show_tab_completion_suggestions()
+
+func _cleanup_console() -> void:
+	"""Clean up console resources"""
+	if not scene_is_loaded:
+		return
+		
+	# Disconnect signals
+	if input_line_edit:
+		if input_line_edit.text_submitted.is_connected(_on_command_submitted):
+			input_line_edit.text_submitted.disconnect(_on_command_submitted)
+		if input_line_edit.text_changed.is_connected(_on_text_changed):
+			input_line_edit.text_changed.disconnect(_on_text_changed)
+	
+	if suggestion_list and suggestion_list.item_selected.is_connected(_on_suggestion_selected):
+		suggestion_list.item_selected.disconnect(_on_suggestion_selected)
+	
+	# Clear references
+	console_container = null
+	output_rich_text = null
+	input_line_edit = null
+	suggestion_panel = null
+	suggestion_list = null
+
+func _update_console_effects(delta: float) -> void:
+	"""Update visual effects and animations"""
+	if not scene_is_loaded:
+		return
+		
+	# Add any console-specific visual effects here
+	pass
+
+func _navigate_history(direction: int) -> void:
+	"""Navigate through command history"""
+	if command_history.is_empty():
+		return
+		
+	history_index = clamp(history_index + direction, 0, command_history.size() - 1)
+	if input_line_edit:
+		input_line_edit.text = command_history[history_index]
+		input_line_edit.caret_column = input_line_edit.text.length()
+
+func _show_tab_completion_suggestions() -> void:
+	"""Show command suggestions based on current input for tab completion"""
+	if not scene_is_loaded or not show_suggestions:
+		return
+		
+	var current_text = input_line_edit.text.to_lower()
+	var suggestions = []
+	
+	for cmd in available_commands:
+		if cmd.begins_with(current_text):
+			suggestions.append(cmd)
+	
+	if not suggestions.is_empty():
+		suggestion_list.clear()
+		for suggestion in suggestions:
+			suggestion_list.add_item(suggestion)
+		suggestion_panel.visible = true
+	else:
+		suggestion_panel.visible = false

@@ -139,8 +139,14 @@ func _input(event: InputEvent) -> void:
 		create_test_being()
 	# Removed old inspect_being action - now handled by KEY_I below
 	elif event is InputEventKey and event.pressed:
+		# Handle ESC for console close  
+		if event.keycode == KEY_ESCAPE:
+			print("🔐 ESC pressed - closing console...")
+			var console_being = find_console_being()
+			if console_being and console_being.has_method("toggle_console_visibility"):
+				console_being.toggle_console_visibility()
 		# Handle F9 for Layer Debug
-		if event.keycode == KEY_F9:
+		elif event.keycode == KEY_F9:
 			toggle_layer_debug()
 		# Normal keyboard shortcuts (no F-keys except F1)
 		elif event.ctrl_pressed:
@@ -192,6 +198,8 @@ func _input(event: InputEvent) -> void:
 					create_chunk_system()
 				KEY_F:  # Ctrl+F for Interface system test
 					test_universal_interface_system()
+				KEY_J:  # Ctrl+J for Genesis Adventure (Journey)
+					launch_genesis_adventure()
 				KEY_ENTER:  # Ctrl+Enter to enter selected universe
 					if event.ctrl_pressed:
 						enter_selected_universe()
@@ -340,6 +348,7 @@ func toggle_gemma_console() -> void:
 	print("  Ctrl+G - Create Gemini Bridge")
 	print("  Ctrl+P - Toggle Pentagon AI Mode (6-AI Collaboration)")
 	print("  Ctrl+V - Create UniVerse (recursive reality)")
+	print("  Ctrl+J - Launch Genesis Adventure (desert garden oasis)")
 	print("  Ctrl+N - Toggle universe Navigator (visual map)")
 	print("  Alt+G - Create Genesis Conductor")
 	print("  Alt+T - Launch Interactive Test Environment (physics demo)")
@@ -2134,3 +2143,39 @@ func update_help_with_recursive_controls() -> void:
 	print("  - AI-guided universe template generation")
 	print("  - Portal networks between realities")
 	print("  - Consciousness-aware universal evolution")
+
+func launch_genesis_adventure() -> Node:
+	"""Launch the Desert Garden Genesis Adventure (Ctrl+J)"""
+	print("🌴 Launching Desert Garden Genesis Adventure...")
+	
+	# Check if adventure already exists
+	var existing_adventure = get_node_or_null("DesertGardenGenesis")
+	if existing_adventure:
+		print("🌴 Genesis Adventure already active!")
+		return existing_adventure
+	
+	if not systems_ready:
+		print("🌴 Cannot launch adventure - systems not ready")
+		return null
+	
+	# Load and create the adventure launcher
+	var LauncherClass = load("res://launch_genesis_adventure.gd")
+	if not LauncherClass:
+		print("❌ Genesis Adventure launcher not found")
+		return null
+	
+	var adventure_launcher = LauncherClass.new()
+	adventure_launcher.name = "GenesisAdventureLauncher"
+	add_child(adventure_launcher)
+	
+	print("🌴 ✨ DESERT GARDEN GENESIS ADVENTURE LAUNCHED!")
+	print("🌴 You and your AI companion can now create together!")
+	print("🌴 Explore the walled garden oasis in the desert!")
+	print("🌴 Visit collaboration areas to build new sections!")
+	print("🌴 Use your creation energy to manifest Universal Beings!")
+	
+	# Notify AI
+	if GemmaAI:
+		GemmaAI.ai_message.emit("🌴 ✨ GENESIS ADVENTURE: Collaborative creation garden manifested! The journey begins!")
+	
+	return adventure_launcher

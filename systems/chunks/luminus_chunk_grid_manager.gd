@@ -51,8 +51,8 @@ func _load_chunk(coords : Vector3i) -> void:
 	# Register with FloodGates if available
 	if SystemBootstrap and SystemBootstrap.is_system_ready():
 		var flood_gates = SystemBootstrap.get_flood_gates()
-		if flood_gates and flood_gates.has_method("add_being"):
-			flood_gates.add_being(chunk, get_tree().current_scene)
+		if flood_gates and flood_gates.has_method("add_being_to_scene"):
+			flood_gates.add_being_to_scene(chunk, get_tree().current_scene)
 		else:
 			get_tree().current_scene.add_child(chunk)
 	else:

@@ -11,6 +11,7 @@ class_name UniversalBeingSocket
 
 # ===== SOCKET TYPES =====
 enum SocketType {
+	ANY = -1,   # Special value for searching all types
 	VISUAL,     # Visual appearance, models, textures, particles
 	SCRIPT,     # Behavior scripts, logic components  
 	SHADER,     # Material shaders, visual effects

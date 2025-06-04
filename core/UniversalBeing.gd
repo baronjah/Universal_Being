@@ -159,6 +159,8 @@ func _init() -> void:
 func _ready() -> void:
 	if not (self is UniversalBeing):
 		push_warning("Node is not a UniversalBeing! All scene elements must extend UniversalBeing.")
+	# Add to universal_beings group so tests can find us
+	add_to_group("universal_beings")
 	pentagon_ready()
 
 func _process(delta: float) -> void:

@@ -108,8 +108,8 @@ func use_existing_creation_system(being_type: String, properties: Dictionary = {
 			new_being.consciousness_level = properties.get("consciousness_level", 1)
 			
 			# Use FloodGates to properly register the being
-			if flood_gates and flood_gates.has_method("add_being"):
-				flood_gates.add_being(new_being, get_tree().root)
+			if flood_gates and flood_gates.has_method("add_being_to_scene"):
+				flood_gates.add_being_to_scene(new_being, get_tree().root)
 			else:
 				# Fallback to direct addition
 				get_tree().root.add_child(new_being)

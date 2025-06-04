@@ -192,12 +192,12 @@ func get_socket_configuration() -> Dictionary:
 	
 	return config
 
-func get_available_sockets(socket_type: UniversalBeingSocket.SocketType = -1) -> Array[UniversalBeingSocket]:
+func get_available_sockets(socket_type: UniversalBeingSocket.SocketType = UniversalBeingSocket.SocketType.ANY) -> Array[UniversalBeingSocket]:
 	"""Get all available (unoccupied) sockets, optionally filtered by type"""
 	var available: Array[UniversalBeingSocket] = []
 	
 	var search_sockets = sockets.values()
-	if socket_type != -1:
+	if socket_type != UniversalBeingSocket.SocketType.ANY:
 		search_sockets = socket_groups[socket_type]
 	
 	for socket in search_sockets:
@@ -206,12 +206,12 @@ func get_available_sockets(socket_type: UniversalBeingSocket.SocketType = -1) ->
 	
 	return available
 
-func get_occupied_sockets(socket_type: UniversalBeingSocket.SocketType = -1) -> Array[UniversalBeingSocket]:
+func get_occupied_sockets(socket_type: UniversalBeingSocket.SocketType = UniversalBeingSocket.SocketType.ANY) -> Array[UniversalBeingSocket]:
 	"""Get all occupied sockets, optionally filtered by type"""
 	var occupied: Array[UniversalBeingSocket] = []
 	
 	var search_sockets = sockets.values()
-	if socket_type != -1:
+	if socket_type != UniversalBeingSocket.SocketType.ANY:
 		search_sockets = socket_groups[socket_type]
 	
 	for socket in search_sockets:
