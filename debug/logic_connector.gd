@@ -1,8 +1,118 @@
-# Logic Connector - Universal interface pattern for all Universal Being scripts
-# Provides standardized debugging, inspection, and interaction capabilities
+# ==================================================
+# LOGIC CONNECTOR - Universal interface pattern for all Universal Being scripts
+# ENHANCED: Now supports socket connections and action execution from Akashic Records
+# PURPOSE: Connect any logic to any Universal Being - make everything possible
+# ENHANCED: 2025-06-04 - Universal Logic Revolution
+# AUTHOR: JSH + Claude Code + Luminus + The Vision
+# ==================================================
 
 extends RefCounted
 class_name LogicConnector
+
+# ===== ENHANCED CAPABILITIES =====
+
+# Registry of all possible actions from Akashic Records
+static var akashic_action_registry: Dictionary = {}
+static var socket_connections: Dictionary = {}
+static var active_logic_flows: Array[Dictionary] = []
+
+# Connection visualization
+static var connection_visualizer: Node = null
+
+# ===== SINGLETON REGISTRY (from Luminus's elegant system) =====
+
+static var _registry: Dictionary = {}   # Object → Debuggable
+
+# Registry management
+static func register(o: Object) -> void:
+	"""Register an object if it implements Debuggable interface"""
+	if o.has_method("get_debug_payload") and o.has_method("set_debug_field") and o.has_method("get_debug_actions"):
+		_registry[o] = o
+		print("🔌 Registered debuggable: %s" % o.name if o.has_method("get") else str(o))
+
+static func deregister(o: Object) -> void:
+	"""Deregister an object from debug registry"""
+	if o in _registry:
+		print("🔌 Deregistered debuggable: %s" % o.name if o.has_method("get") else str(o))
+	_registry.erase(o)
+
+static func all() -> Array:
+	"""Get all registered debuggable objects"""
+	return _registry.values()
+
+static func raypick(camera: Camera3D) -> Object:
+	"""Pick debuggable object under camera raycast"""
+	if not camera:
+		print("❌ No camera provided for raypick")
+		return null
+	
+	var space_state = camera.get_world_3d().direct_space_state
+	var from = camera.global_position
+	var to = camera.global_position - camera.transform.basis.z * 1000
+	
+	var query = PhysicsRayQueryParameters3D.create(from, to)
+	var hit = space_state.intersect_ray(query)
+	
+	if hit:
+		var collider = hit.get("collider")
+		print("🎯 Raycast hit: %s" % collider)
+		
+		# First check if the collider itself is debuggable
+		if collider in _registry:
+			print("✅ Hit object is debuggable!")
+			return _registry[collider]
+		
+		# Check if the collider has a debuggable parent meta
+		if collider.has_meta("debuggable_parent"):
+			var parent = collider.get_meta("debuggable_parent")
+			if parent in _registry.values():
+				print("✅ Hit object's parent is debuggable!")
+				return parent
+		
+		# Check if any parent node is debuggable
+		var node = collider
+		while node:
+			if node in _registry:
+				print("✅ Found debuggable in parent chain!")
+				return _registry[node]
+			node = node.get_parent()
+		
+		print("❌ Hit object is not debuggable")
+	else:
+		print("❌ Raycast hit nothing")
+	
+	return null
+
+static func get_debuggable_count() -> int:
+	"""Get number of registered debuggable objects"""
+	return _registry.size()
+
+static func find_debuggable_by_name(name: String) -> Object:
+	"""Find debuggable object by name"""
+	for obj in _registry.keys():
+		if obj.has_method("get") and obj.name == name:
+			return _registry[obj]
+	return null
+
+static func get_debuggable_types() -> Array:
+	"""Get all unique types of registered debuggables"""
+	var types = []
+	for obj in _registry.keys():
+		var type = obj.get_class() if obj.has_method("get_class") else "Unknown"
+		if type not in types:
+			types.append(type)
+	return types
+
+static func clear_registry() -> void:
+	"""Clear all registered objects (for testing)"""
+	_registry.clear()
+	print("🔌 LogicConnector registry cleared")
+
+static func print_registry_status() -> void:
+	"""Print current registry status"""
+	print("🔌 LogicConnector Registry Status:")
+	print("  Total Objects: %d" % _registry.size())
+	print("  Debuggable Types: %s" % str(get_debuggable_types()))
 
 # ===== CONNECTOR INTERFACE =====
 
@@ -370,12 +480,10 @@ static func execute_action(object: Node, action_name: String, parameters: Array 
 		result.message = "Method '%s' not found" % action_name
 		return result
 	
-	try:
-		result.return_value = object.callv(action_name, parameters)
-		result.success = true
-		result.message = "Action '%s' executed successfully" % action_name
-	except:
-		result.message = "Failed to execute action '%s'" % action_name
+	# Execute action safely
+	result.return_value = object.callv(action_name, parameters)
+	result.success = true
+	result.message = "Action '%s' executed successfully" % action_name
 	
 	return result
 
@@ -387,21 +495,18 @@ static func set_variable(object: Node, variable_name: String, value) -> Dictiona
 		"old_value": null
 	}
 	
-	try:
-		# Get old value
-		if object.has_method("get"):
-			result.old_value = object.get(variable_name)
-		
-		# Set new value
-		if object.has_method("set"):
-			object.set(variable_name, value)
-		else:
-			object.set(variable_name, value)
-		
-		result.success = true
-		result.message = "Variable '%s' set to %s" % [variable_name, value]
-	except:
-		result.message = "Failed to set variable '%s'" % variable_name
+	# Get old value
+	if object.has_method("get"):
+		result.old_value = object.get(variable_name)
+	
+	# Set new value safely
+	if object.has_method("set"):
+		object.set(variable_name, value)
+	else:
+		object.set(variable_name, value)
+	
+	result.success = true
+	result.message = "Variable '%s' set to %s" % [variable_name, value]
 	
 	return result
 

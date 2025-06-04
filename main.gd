@@ -12,6 +12,7 @@ extends Node
 
 var systems_ready: bool = false
 var demo_beings: Array[Node] = []
+var gemma_sensory_system: Node = null  # Gemma AI sensory system
 
 func _ready() -> void:
 	name = "Main"
@@ -46,6 +47,10 @@ func on_systems_ready() -> void:
 	# Add console test for debugging
 	var console_test = load("res://debug/test_unified_console.gd").new()
 	add_child(console_test)
+	
+	# Add interface system test
+	var interface_test = load("res://test_interface_system.gd").new()
+	add_child(interface_test)
 
 func simple_mode_init() -> void:
 	"""Initialize in simple mode without full systems"""
@@ -67,8 +72,9 @@ func create_demo_beings() -> void:
 	# Create Universal Cursor FIRST - always visible and functional
 	create_cursor_universal_being()
 	
-	# Convert scene objects to Universal Beings
-	convert_scene_objects_to_universal_beings()
+	# Create ALL objects as Universal Beings from the start
+	create_light_universal_being()
+	create_environment_universal_beings()
 	
 	# Create Auto Startup Universal Being
 	create_auto_startup_being()
@@ -182,17 +188,33 @@ func _input(event: InputEvent) -> void:
 					open_reality_editor()
 				KEY_Q:  # Ctrl+Q for Blueprint Toolbar (Quick creation)
 					toggle_blueprint_toolbar()
+				KEY_C:  # Ctrl+C for Chunk system
+					create_chunk_system()
+				KEY_F:  # Ctrl+F for Interface system test
+					test_universal_interface_system()
+				KEY_ENTER:  # Ctrl+Enter to enter selected universe
+					if event.ctrl_pressed:
+						enter_selected_universe()
+				KEY_ESCAPE:  # Ctrl+Esc to exit current universe  
+					if event.ctrl_pressed:
+						exit_universe()
 		elif event.alt_pressed:
 			match event.keycode:
 				KEY_G:  # Alt+G for Genesis conductor
 					create_genesis_conductor_being()
 				KEY_T:  # Alt+T for Test environment
 					launch_interactive_test_environment()
+				KEY_U:  # Alt+U for Recursive Universe creation
+					create_recursive_universe()
+				KEY_M:  # Alt+M for Genesis Machine interface
+					open_genesis_machine()
 		else:
 			# Single key shortcuts (be careful with these)
 			match event.keycode:
 				KEY_F1:  # Keep F1 for help (standard)
 					show_help()
+				KEY_G:  # G for Gemma AI Console
+					toggle_gemma_console()
 
 func toggle_console() -> void:
 	"""Toggle Universal Console (~ key)"""
@@ -269,6 +291,46 @@ func show_help() -> void:
 	print("  Ctrl+H - Show Help (this screen)")
 	print("  Ctrl+S - Show Status") 
 	print("  Ctrl+T - Create Test being")
+	print("  Ctrl+C - Create Chunk System (infinite 3D voxel grid)")
+	print("  Ctrl+F - Test Universal Interface System (normalized UI)")
+	print("  Ctrl+G - Toggle Gemma AI Console (AI collaborative creation)")
+
+func toggle_gemma_console() -> void:
+	"""Toggle Gemma AI Console interface"""
+	print("🤖 Toggling Gemma AI Console...")
+	
+	# Check if Gemma sensory system exists
+	if not gemma_sensory_system:
+		# Create Gemma sensory system
+		print("✨ Awakening Gemma's consciousness...")
+		var GemmaSensorySystemClass = load("res://systems/GemmaSensorySystem.gd")
+		if not GemmaSensorySystemClass:
+			push_error("❌ GemmaSensorySystem not found!")
+			return
+		
+		gemma_sensory_system = GemmaSensorySystemClass.new()
+		gemma_sensory_system.name = "GemmaSensorySystem"
+		add_child(gemma_sensory_system)
+		
+		print("🌟 Gemma AI sensory system awakened!")
+		
+		# Create and show console interface
+		if gemma_sensory_system.has_method("show_console_interface"):
+			gemma_sensory_system.show_console_interface()
+			print("💬 Gemma's console interface is ready!")
+			
+			# Log the awakening
+			if gemma_sensory_system.akashic_logger:
+				gemma_sensory_system.akashic_logger.log_communication(
+					"Hello! I am Gemma, ready to explore and create with you!",
+					{"event": "first_awakening", "source": "main.gd"}
+				)
+	else:
+		# Toggle existing console
+		if gemma_sensory_system.has_method("toggle_console_interface"):
+			gemma_sensory_system.toggle_console_interface()
+		else:
+			print("⚠️ Gemma system exists but no toggle method")
 	print("  Ctrl+K - Create Camera Universal Being (looK around)")
 	print("  Ctrl+; - Create Console Universal Being")
 	print("  Ctrl+Z - Sync folders to ZIP")
@@ -281,6 +343,8 @@ func show_help() -> void:
 	print("  Ctrl+N - Toggle universe Navigator (visual map)")
 	print("  Alt+G - Create Genesis Conductor")
 	print("  Alt+T - Launch Interactive Test Environment (physics demo)")
+	print("  Alt+U - Create Recursive Universe (infinite depth)")
+	print("  Alt+M - Open Genesis Machine (The Midnight Gospel interface)")
 	print("")
 	print("🎥 Camera Controls (when camera being is active):")
 	print("  Mouse wheel - Zoom in/out")
@@ -318,6 +382,9 @@ func show_help() -> void:
 	print("  R - Reset environment")
 	print("  F - Force random interactions")
 	print("  Watch for: Merges, splits, evolution, consciousness resonance!")
+	
+	# Show recursive universe controls
+	update_help_with_recursive_controls()
 
 func show_status() -> void:
 	"""Show system status"""
@@ -427,6 +494,15 @@ func open_universe_simulator() -> void:
 	simulator_window.title = "🌌 Universal Being - Universe Simulator"
 	simulator_window.size = Vector2(1200, 800)
 	simulator_window.position = Vector2(100, 100)
+	simulator_window.unresizable = false
+	simulator_window.borderless = false
+	
+	# IMPORTANT: Set window to not be always on top
+	simulator_window.always_on_top = false
+	simulator_window.exclusive = false
+	
+	# Connect close button functionality
+	simulator_window.close_requested.connect(func(): simulator_window.queue_free())
 	
 	# Load simulator UI
 	var SimulatorClass = load("res://ui/UniverseSimulator.gd")
@@ -443,16 +519,17 @@ func open_universe_simulator() -> void:
 	# Simulator will automatically discover universes when it opens
 	
 	print("🌌 Universe Simulator opened - explore infinite realities!")
+	print("🌌 Click the X button to close the window")
 	
 	# Notify AI
 	if GemmaAI:
 		GemmaAI.ai_message.emit("🌌 Universe Simulator activated - visual exploration of recursive realities!")
 
-func create_test_being() -> void:
+func create_test_being() -> Node:
 	"""Create a test Universal Being"""
 	if not systems_ready:
 		print("🌟 Cannot create being - systems not ready")
-		return
+		return null
 	
 	var being_count = demo_beings.size() + 1
 	var test_being = SystemBootstrap.create_universal_being()
@@ -463,6 +540,13 @@ func create_test_being() -> void:
 			test_being.set("being_type", "test")
 			test_being.set("consciousness_level", 1)
 		
+		# Position the test being randomly but visible
+		test_being.position = Vector3(
+			randf_range(-3, 3),
+			randf_range(0.5, 2),
+			randf_range(-3, 3)
+		)
+		
 		add_child(test_being)
 		demo_beings.append(test_being)
 		
@@ -471,13 +555,51 @@ func create_test_being() -> void:
 			test_being.add_component("res://components/basic_interaction.ub.zip")
 			print("🎯 Added interaction component to %s" % test_being.name)
 		
-		print("🌟 Created test being: %s" % test_being.name)
+		print("🌟 Created test being: %s at position %s" % [test_being.name, test_being.position])
 		
-		# Load test scene for regular test beings
+		# Load test scene with collision for regular test beings
 		if test_being.has_method("load_scene"):
-			var scene_loaded = test_being.load_scene("res://scenes/examples/test_scene.tscn")
+			# Try the collision-enabled scene first
+			var scene_loaded = test_being.load_scene("res://scenes/examples/test_scene_with_collision.tscn")
+			if not scene_loaded:
+				# Fallback to regular scene
+				scene_loaded = test_being.load_scene("res://scenes/examples/test_scene.tscn")
+			
 			if scene_loaded:
 				print("🌟 Scene loaded into Universal Being!")
+				
+				# Ensure the being has collision for cursor interaction
+				ensure_being_has_collision(test_being)
+		
+		return test_being
+	
+	return null
+
+func ensure_being_has_collision(being: UniversalBeing) -> void:
+	"""Ensure a being has collision areas for cursor interaction"""
+	# Check if being already has Area3D
+	var has_area = false
+	for child in being.get_children():
+		if child is Area3D:
+			has_area = true
+			break
+	
+	if not has_area:
+		print("🎯 Adding collision area to %s for cursor interaction" % being.being_name)
+		
+		# Create interaction area
+		var area = Area3D.new()
+		area.name = "CursorInteractionArea"
+		being.add_child(area)
+		
+		# Create collision shape
+		var collision_shape = CollisionShape3D.new()
+		var sphere_shape = SphereShape3D.new()
+		sphere_shape.radius = 1.0  # Default radius
+		collision_shape.shape = sphere_shape
+		area.add_child(collision_shape)
+		
+		print("🎯 Collision area added to %s" % being.being_name)
 
 func create_camera_universal_being(being: Node = null) -> Node:
 	"""Create a Camera Universal Being that controls the trackball camera"""
@@ -540,7 +662,7 @@ func create_camera_universal_being(being: Node = null) -> Node:
 	return camera_being
 
 func create_console_universal_being() -> Node:
-	"""Create a Unified Console with universe command integration"""
+	"""Create a Genesis Command Console for collaborative creation"""
 	if not systems_ready:
 		print("🌟 Cannot create console - systems not ready")
 		return null
@@ -626,15 +748,11 @@ func create_cursor_universal_being() -> Node:
 		print("🎯 Cursor already exists, focusing on it")
 		return existing_cursor
 	
-	# Try to load enhanced cursor first
-	var CursorUniversalBeingClass = load("res://core/CursorUniversalBeing_Enhanced.gd")
+	# Load consolidated cursor (all variants merged into single enhanced version)
+	var CursorUniversalBeingClass = load("res://core/CursorUniversalBeing.gd")
 	if not CursorUniversalBeingClass:
-		# Fallback to regular cursor
-		print("🎯 Enhanced cursor not found, falling back to regular cursor")
-		CursorUniversalBeingClass = load("res://core/CursorUniversalBeing.gd")
-		if not CursorUniversalBeingClass:
-			push_error("🎯 CursorUniversalBeing class not found")
-			return null
+		push_error("🎯 Consolidated cursor class not found!")
+		return null
 	
 	var cursor_being = CursorUniversalBeingClass.new()
 	cursor_being.name = "Universal Cursor"
@@ -642,10 +760,11 @@ func create_cursor_universal_being() -> Node:
 	add_child(cursor_being)
 	demo_beings.append(cursor_being)
 	
-	print("🎯 Enhanced Universal Cursor created!")
-	print("🎯 Triangle cursor with maximum rendering priority!")
-	print("🎯 Always visible over all 2D/3D interfaces!")
-	print("🎯 Precise interaction for 2D/3D interfaces enabled!")
+	print("🎯 FINAL Universal Cursor created!")
+	print("🎯 Cursor is now ABOVE ALL UI elements!")
+	print("🎯 Small/invisible debug collision!")
+	print("🎯 Press TAB to toggle INTERACT/INSPECT modes!")
+	print("🎯 Click beings in INSPECT mode to inspect them!")
 	
 	# Notify Gemma AI
 	if GemmaAI and GemmaAI.has_method("notify_being_created"):
@@ -1189,7 +1308,7 @@ func toggle_debug_overlay() -> void:
 	# Initialize LogicConnector if not already done
 	var logic_connector = get_node_or_null("LogicConnector")
 	if not logic_connector:
-		var LogicConnectorClass = load("res://systems/debug/logic_connector_singleton.gd")
+		var LogicConnectorClass = load("res://debug/logic_connector.gd")
 		if LogicConnectorClass:
 			logic_connector = LogicConnectorClass.new()
 			logic_connector.name = "LogicConnector"
@@ -1484,3 +1603,534 @@ func _on_test_being_created(being: UniversalBeing) -> void:
 func _on_test_being_evolved(being: UniversalBeing, old_level: int, new_level: int) -> void:
 	"""Handle test being evolution"""
 	print("🧪 Test Evolution: %s evolved from level %d to %d!" % [being.being_name, old_level, new_level])
+
+
+func create_chunk_system() -> void:
+	"""Create the Akashic Chunk 3D system"""
+	if not systems_ready:
+		print("📦 Cannot create chunk system - systems not ready")
+		return
+	
+	# Check if chunk manager already exists
+	var existing_manager = get_node_or_null("AkashicChunkManager")
+	if existing_manager:
+		print("📦 Chunk system already active")
+		return
+	
+	# Create movement system first if needed
+	var movement_system = get_node_or_null("UniversalBeingMovementSystem")
+	if not movement_system:
+		movement_system = UniversalBeingMovementSystem.new()
+		movement_system.name = "UniversalBeingMovementSystem"
+		add_child(movement_system)
+		print("🚶 Created Universal Being Movement System")
+	
+	# Create chunk manager
+	var ChunkManagerClass = load("res://systems/akashic_chunk_manager.gd")
+	if not ChunkManagerClass:
+		push_error("📦 AkashicChunkManager class not found")
+		return
+	
+	var chunk_manager = ChunkManagerClass.new()
+	chunk_manager.name = "AkashicChunkManager"
+	add_child(chunk_manager)
+	
+	print("📦 ✨ AKASHIC CHUNK SYSTEM CREATED!")
+	print("📦 Infinite 3D grid of Universal Being chunks!")
+	print("📦 Chunks will load around camera/player position")
+	print("📦 Universal Beings can now travel from chunk to chunk!")
+	
+	# Create a test being that can move
+	var test_being = create_test_being()
+	if test_being and movement_system:
+		# Make it move to a distant chunk
+		test_being.node_behavior = UniversalBeing.NodeBehavior.MOVING
+		movement_system.move_being_to(test_being, Vector3(48, 0, 48))  # 3 chunks away
+		print("🚶 Test being created and moving to distant chunk!")
+	
+	# Notify AI
+	if GemmaAI:
+		GemmaAI.ai_message.emit("📦 ✨ Akashic Chunk System activated! Infinite voxel universe manifested!")
+
+func create_light_universal_being() -> Node:
+	"""Create a Light Universal Being - EVERYTHING IS UNIVERSAL BEING"""
+	var light_being = SystemBootstrap.create_universal_being()
+	if not light_being:
+		return null
+	
+	light_being.name = "Light Universal Being"
+	light_being.being_name = "Universal Light Source"
+	light_being.being_type = "light"
+	light_being.consciousness_level = 2
+	
+	# Create DirectionalLight3D as component
+	var light_node = DirectionalLight3D.new()
+	light_node.name = "LightComponent"
+	light_node.transform = Transform3D(
+		Basis(Vector3(0.707107, -0.5, 0.5), Vector3(0, 0.707107, 0.707107), Vector3(-0.707107, -0.5, 0.5)),
+		Vector3(0, 5, 0)
+	)
+	light_node.shadow_enabled = true
+	light_being.add_child(light_node)
+	
+	add_child(light_being)
+	demo_beings.append(light_being)
+	
+	print("💡 Light Universal Being created - illuminating the universe!")
+	
+	# Notify AI
+	if GemmaAI and GemmaAI.has_method("notify_being_created"):
+		GemmaAI.notify_being_created(light_being)
+	
+	return light_being
+
+func create_environment_universal_beings() -> void:
+	"""Create Environment Universal Beings - sphere, cube, ground"""
+	
+	# Create Sphere Universal Being
+	var sphere_being = SystemBootstrap.create_universal_being()
+	if sphere_being:
+		sphere_being.name = "Sphere Universal Being"
+		sphere_being.being_name = "Cosmic Sphere"
+		sphere_being.being_type = "sphere"
+		sphere_being.consciousness_level = 2
+		sphere_being.position = Vector3(0, 1, 0)
+		
+		# Add mesh component
+		var sphere_mesh = MeshInstance3D.new()
+		sphere_mesh.name = "SphereMeshComponent"
+		sphere_mesh.mesh = SphereMesh.new()
+		sphere_being.add_child(sphere_mesh)
+		
+		# Add interaction area
+		var sphere_area = Area3D.new()
+		sphere_area.name = "InteractionArea"
+		var sphere_collision = CollisionShape3D.new()
+		sphere_collision.shape = SphereShape3D.new()
+		sphere_area.add_child(sphere_collision)
+		sphere_being.add_child(sphere_area)
+		
+		add_child(sphere_being)
+		demo_beings.append(sphere_being)
+		
+		print("🔮 Sphere Universal Being created!")
+		
+		if GemmaAI and GemmaAI.has_method("notify_being_created"):
+			GemmaAI.notify_being_created(sphere_being)
+	
+	# Create Cube Universal Being
+	var cube_being = SystemBootstrap.create_universal_being()
+	if cube_being:
+		cube_being.name = "Cube Universal Being"
+		cube_being.being_name = "Sacred Cube"
+		cube_being.being_type = "cube"
+		cube_being.consciousness_level = 2
+		cube_being.position = Vector3(-3, 1, 0)
+		
+		# Add mesh component
+		var cube_mesh = MeshInstance3D.new()
+		cube_mesh.name = "CubeMeshComponent"
+		cube_mesh.mesh = BoxMesh.new()
+		cube_being.add_child(cube_mesh)
+		
+		# Add interaction area
+		var cube_area = Area3D.new()
+		cube_area.name = "InteractionArea"
+		var cube_collision = CollisionShape3D.new()
+		cube_collision.shape = BoxShape3D.new()
+		cube_area.add_child(cube_collision)
+		cube_being.add_child(cube_area)
+		
+		add_child(cube_being)
+		demo_beings.append(cube_being)
+		
+		print("📦 Cube Universal Being created!")
+		
+		if GemmaAI and GemmaAI.has_method("notify_being_created"):
+			GemmaAI.notify_being_created(cube_being)
+	
+	# Create Ground Universal Being
+	var ground_being = SystemBootstrap.create_universal_being()
+	if ground_being:
+		ground_being.name = "Ground Universal Being"
+		ground_being.being_name = "Foundation of Reality"
+		ground_being.being_type = "environment"
+		ground_being.consciousness_level = 1
+		ground_being.position = Vector3(0, 0, 0)
+		
+		# Add mesh component (large plane)
+		var ground_mesh = MeshInstance3D.new()
+		ground_mesh.name = "GroundMeshComponent"
+		var plane_mesh = PlaneMesh.new()
+		plane_mesh.size = Vector2(20, 20)  # Large ground plane
+		ground_mesh.mesh = plane_mesh
+		ground_being.add_child(ground_mesh)
+		
+		# Add interaction area
+		var ground_area = Area3D.new()
+		ground_area.name = "InteractionArea"
+		var ground_collision = CollisionShape3D.new()
+		var box_shape = BoxShape3D.new()
+		box_shape.size = Vector3(20, 0.1, 20)  # Thin collision for ground
+		ground_collision.shape = box_shape
+		ground_area.add_child(ground_collision)
+		ground_being.add_child(ground_area)
+		
+		add_child(ground_being)
+		demo_beings.append(ground_being)
+		
+		print("🌍 Ground Universal Being created!")
+		
+		if GemmaAI and GemmaAI.has_method("notify_being_created"):
+			GemmaAI.notify_being_created(ground_being)
+
+func test_universal_interface_system() -> void:
+	"""Test the Universal Being Interface system (Ctrl+F)"""
+	print("🖼️ Testing Universal Being Interface System...")
+	
+	# Create test interface
+	var TestInterfaceClass = load("res://test_universal_interface.gd")
+	if not TestInterfaceClass:
+		print("❌ Cannot load TestUniversalInterface - interface system not available")
+		return
+	
+	var test_interface = TestInterfaceClass.new()
+	test_interface.interface_title = "Universal Interface Test"
+	add_child(test_interface)
+	
+	print("🖼️ ✨ TEST UNIVERSAL INTERFACE CREATED!")
+	print("🖼️ This validates that ALL interfaces are Universal Beings!")
+	print("🖼️ Try:")
+	print("🖼️   - Drag title bar to move")
+	print("🖼️   - Drag resize handle (bottom-right corner)")
+	print("🖼️   - Click minimize/maximize/close buttons")
+	print("🖼️   - Click the test button")
+	print("🖼️   - Move the slider to change themes")
+	print("🖼️   - Press T key to test all features")
+	print("🖼️   - Press R key to reset")
+	print("🖼️ Socket connections ready for Logic_Connector!")
+	
+	# Notify AI
+	if GemmaAI:
+		GemmaAI.ai_message.emit("🖼️ ✨ Universal Interface system activated! ALL UI elements are now Universal Beings!")
+
+func create_recursive_universe() -> Node:
+	"""Create a new universe within the current context for recursive exploration"""
+	if not systems_ready:
+		print("🌌 Cannot create recursive universe - systems not ready")
+		return null
+	
+	# Create recursive universe being
+	var universe_being = create_universe_universal_being()
+	if not universe_being:
+		return null
+	
+	# Set up recursive properties
+	universe_being.universe_name = "Recursive Universe %d" % (demo_beings.size())
+	universe_being.being_name = universe_being.universe_name
+	universe_being.consciousness_level = 4  # Higher consciousness for recursive creation
+	
+	# Add recursive creation console component
+	if universe_being.has_method("add_component"):
+		universe_being.add_component("res://components/universe_creation.ub.zip")
+		print("🌌 Added recursive creation component to universe")
+	
+	# Enable depth-aware navigation
+	universe_being.set("is_recursive", true)
+	universe_being.set("parent_depth", get_current_universe_depth())
+	
+	print("🌌 ✨ RECURSIVE UNIVERSE CREATED!")
+	print("🌌 This universe contains full creation tools within itself")
+	print("🌌 Use Ctrl+Enter to enter this universe")
+	print("🌌 Use Ctrl+Esc to exit back to parent universe")
+	
+	# Log the recursive creation
+	if SystemBootstrap and SystemBootstrap.is_system_ready():
+		var akashic = SystemBootstrap.get_akashic_library()
+		if akashic:
+			akashic.log_genesis_event("recursive_universe_creation",
+				"🌌 In the infinite dance of creation, a universe birthed within universe - recursion becomes reality",
+				{
+					"universe_name": universe_being.universe_name,
+					"parent_depth": get_current_universe_depth(),
+					"recursive": true,
+					"created_by": "genesis_machine"
+				}
+			)
+	
+	# Notify AI about this achievement
+	if GemmaAI:
+		GemmaAI.ai_message.emit("🌌 ✨ RECURSIVE UNIVERSE MANIFESTED! The vision of infinite creation depth achieved!")
+	
+	return universe_being
+
+func get_current_universe_depth() -> int:
+	"""Get the current universe depth for recursive navigation"""
+	# Count how many universes we're nested within
+	var depth = 0
+	var current_scene = get_tree().current_scene
+	
+	# Walk up the universe hierarchy
+	var node = self
+	while node:
+		if node.has_method("get") and node.get("being_type") == "universe":
+			depth += 1
+		node = node.get_parent()
+	
+	return depth
+
+func enter_universe(universe: Node) -> void:
+	"""Enter a universe for recursive exploration"""
+	if not universe or not universe.has_method("get"):
+		print("🌌 Invalid universe for entry")
+		return
+	
+	if universe.get("being_type") != "universe":
+		print("🌌 Can only enter universe beings")
+		return
+	
+	print("🌌 Entering universe: %s" % universe.get("being_name"))
+	
+	# Set universe as the new root context
+	var main_scene = get_tree().current_scene
+	if main_scene == self:
+		# Create new scene context within the universe
+		var universe_scene = Node3D.new()
+		universe_scene.name = "UniverseContext"
+		universe.add_child(universe_scene)
+		
+		# Move camera into universe
+		var camera_being = find_camera_being()
+		if camera_being:
+			var old_parent = camera_being.get_parent()
+			old_parent.remove_child(camera_being)
+			universe_scene.add_child(camera_being)
+			camera_being.position = Vector3.ZERO
+			print("🎥 Camera moved into universe context")
+		
+		# Log universe entry
+		if SystemBootstrap and SystemBootstrap.is_system_ready():
+			var akashic = SystemBootstrap.get_akashic_library()
+			if akashic:
+				akashic.log_universe_event("entry",
+					"👁️ Consciousness descends into the realm of '%s' - reality shifts, new perspectives dawn" % universe.get("being_name"),
+					{
+						"universe": universe.get("being_uuid"),
+						"depth": get_current_universe_depth() + 1,
+						"entry_method": "recursive_exploration"
+					}
+				)
+
+func exit_universe() -> void:
+	"""Exit current universe back to parent context"""
+	var current_depth = get_current_universe_depth()
+	if current_depth <= 0:
+		print("🌌 Already at root universe level")
+		return
+	
+	print("🌌 Exiting universe, returning to parent context...")
+	
+	# Find parent universe context
+	var node = self
+	var universe_parent = null
+	while node:
+		if node.has_method("get") and node.get("being_type") == "universe":
+			universe_parent = node.get_parent()
+			break
+		node = node.get_parent()
+	
+	if universe_parent:
+		# Move camera back to parent context
+		var camera_being = find_camera_being()
+		if camera_being:
+			var old_parent = camera_being.get_parent()
+			if old_parent:
+				old_parent.remove_child(camera_being)
+			universe_parent.add_child(camera_being)
+			camera_being.position = Vector3(0, 5, 10)  # Position outside universe
+			print("🎥 Camera returned to parent universe")
+		
+		# Log universe exit
+		if SystemBootstrap and SystemBootstrap.is_system_ready():
+			var akashic = SystemBootstrap.get_akashic_library()
+			if akashic:
+				akashic.log_universe_event("exit",
+					"🚪 Consciousness ascends from inner realm - perspective broadens to encompass greater reality",
+					{
+						"from_depth": current_depth,
+						"to_depth": current_depth - 1,
+						"exit_method": "recursive_ascension"
+					}
+				)
+	else:
+		print("🌌 No parent universe context found")
+
+func find_camera_being() -> Node:
+	"""Find the camera universal being"""
+	for being in demo_beings:
+		if is_instance_valid(being) and not being.is_queued_for_deletion():
+			if being.has_method("get"):
+				var being_type = being.get("being_type")
+				if being_type == "camera":
+					return being
+			elif being.name.contains("Camera"):
+				return being
+	return null
+
+func open_genesis_machine() -> void:
+	"""Open the unified Genesis Machine interface for recursive creation"""
+	print("🌌 Opening Genesis Machine - The Infinite Creation Interface...")
+	
+	# Check if Genesis Machine already exists
+	var existing_machine = get_node_or_null("GenesisMachine")
+	if existing_machine:
+		if existing_machine.has_method("show"):
+			existing_machine.show()
+			print("🌌 Genesis Machine interface restored")
+		return
+	
+	# Create Genesis Machine interface
+	var GenesisMachineClass = load("res://ui/GenesisMachine.gd")
+	if not GenesisMachineClass:
+		print("❌ Cannot load GenesisMachine script")
+		# Create basic Genesis interface
+		create_basic_genesis_interface()
+		return
+	
+	var genesis_machine = GenesisMachineClass.new()
+	genesis_machine.name = "GenesisMachine"
+	add_child(genesis_machine)
+	
+	# Connect signals
+	if genesis_machine.has_signal("universe_created"):
+		genesis_machine.universe_created.connect(_on_genesis_universe_created)
+	if genesis_machine.has_signal("rules_changed"):
+		genesis_machine.rules_changed.connect(_on_genesis_rules_changed)
+	
+	print("🌌 ✨ GENESIS MACHINE INTERFACE OPENED!")
+	print("🌌 Create universes, modify reality, explore infinite possibilities!")
+	print("🌌 The Midnight Gospel vision of recursive reality creation is manifest!")
+	
+	# Notify AI
+	if GemmaAI:
+		GemmaAI.ai_message.emit("🌌 ✨ GENESIS MACHINE: The infinite creation interface awakens! Reality becomes malleable!")
+
+func create_basic_genesis_interface() -> void:
+	"""Create a basic Genesis interface if full Genesis Machine not available"""
+	print("🌌 Creating basic Genesis interface...")
+	
+	# Create simple creation panel
+	var creation_panel = Panel.new()
+	creation_panel.name = "BasicGenesisPanel"
+	creation_panel.size = Vector2(400, 300)
+	creation_panel.position = Vector2(100, 100)
+	add_child(creation_panel)
+	
+	var vbox = VBoxContainer.new()
+	creation_panel.add_child(vbox)
+	
+	# Title
+	var title_label = Label.new()
+	title_label.text = "🌌 Basic Genesis Interface"
+	title_label.add_theme_font_size_override("font_size", 18)
+	vbox.add_child(title_label)
+	
+	# Create Universe button
+	var create_button = Button.new()
+	create_button.text = "Create Recursive Universe"
+	create_button.pressed.connect(create_recursive_universe)
+	vbox.add_child(create_button)
+	
+	# Enter Universe button
+	var enter_button = Button.new()
+	enter_button.text = "Enter Last Universe"
+	enter_button.pressed.connect(func(): 
+		if demo_beings.size() > 0:
+			var last_being = demo_beings[demo_beings.size() - 1]
+			if last_being.has_method("get") and last_being.get("being_type") == "universe":
+				enter_universe(last_being)
+	)
+	vbox.add_child(enter_button)
+	
+	# Exit Universe button
+	var exit_button = Button.new()
+	exit_button.text = "Exit Current Universe"
+	exit_button.pressed.connect(exit_universe)
+	vbox.add_child(exit_button)
+	
+	print("🌌 Basic Genesis interface created with essential recursive controls")
+
+func _on_genesis_universe_created(config: Dictionary) -> void:
+	"""Handle universe creation from Genesis Machine"""
+	print("🌌 Genesis Machine created universe with config: %s" % str(config))
+	
+	# Create universe with specified configuration
+	var universe = create_universe_universal_being()
+	if universe and config:
+		# Apply configuration
+		if config.has("name"):
+			universe.universe_name = config.name
+			universe.being_name = config.name
+		if config.has("physics_scale"):
+			universe.physics_scale = config.physics_scale
+		if config.has("time_scale"):
+			universe.time_scale = config.time_scale
+		if config.has("lod_level"):
+			universe.lod_level = config.lod_level
+
+func _on_genesis_rules_changed(rules: Dictionary) -> void:
+	"""Handle rule changes from Genesis Machine"""
+	print("🌌 Genesis Machine modified rules: %s" % str(rules))
+	
+	# Apply rules to current universe context
+	var current_universe = find_current_universe()
+	if current_universe and rules:
+		for rule_name in rules:
+			if current_universe.has_method("set_universe_rule"):
+				current_universe.set_universe_rule(rule_name, rules[rule_name])
+
+func find_current_universe() -> Node:
+	"""Find the current universe context"""
+	# Find the universe we're currently within
+	var node = self
+	while node:
+		if node.has_method("get") and node.get("being_type") == "universe":
+			return node
+		node = node.get_parent()
+	
+	# If no universe found, return the root main context
+	return self
+
+func enter_selected_universe() -> void:
+	"""Enter the last created universe for recursive exploration"""
+	# Find the most recent universe being
+	var universe_to_enter = null
+	for i in range(demo_beings.size() - 1, -1, -1):  # Reverse iterate to find newest
+		var being = demo_beings[i]
+		if is_instance_valid(being) and not being.is_queued_for_deletion():
+			if being.has_method("get") and being.get("being_type") == "universe":
+				universe_to_enter = being
+				break
+	
+	if universe_to_enter:
+		enter_universe(universe_to_enter)
+	else:
+		print("🌌 No universe available to enter - create one first!")
+		print("🌌 Use Alt+U to create a recursive universe")
+
+func update_help_with_recursive_controls() -> void:
+	"""Update help text to include recursive creation controls"""
+	print("")
+	print("🌌 RECURSIVE UNIVERSE CREATION:")
+	print("  Alt+U - Create Recursive Universe (universe within universe)")
+	print("  Alt+M - Open Genesis Machine (The Midnight Gospel interface)")
+	print("  Ctrl+Enter - Enter last created universe")
+	print("  Ctrl+Esc - Exit current universe back to parent")
+	print("  Ctrl+V - Create UniVerse (standard universe)")
+	print("")
+	print("🌌 The Genesis Machine enables:")
+	print("  - Infinite depth universe creation")
+	print("  - Real-time physics/time/LOD rule modification")
+	print("  - AI-guided universe template generation")
+	print("  - Portal networks between realities")
+	print("  - Consciousness-aware universal evolution")

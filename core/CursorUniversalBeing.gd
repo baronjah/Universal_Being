@@ -1,462 +1,365 @@
 # ==================================================
-# SCRIPT NAME: CursorUniversalBeing.gd
-# DESCRIPTION: Universal Being cursor for 2D/3D interaction
-# PURPOSE: Triangle cursor with sphere collision for precise interaction
-# CREATED: 2025-06-01 - Universal Being Revolution
-# AUTHOR: JSH + Claude Code + Luminus + Alpha
+# SCRIPT NAME: CursorUniversalBeing_Final.gd
+# DESCRIPTION: Final fixed cursor with proper UI layering and small debug collision
+# PURPOSE: Cursor that's ALWAYS visible over ALL UI elements
+# CREATED: 2025-06-03 - Universal Being Revolution Final Fix
+# AUTHOR: JSH + Claude Desktop MCP
 # ==================================================
 
 extends UniversalBeing
 class_name CursorUniversalBeing
 
-# ===== CURSOR UNIVERSAL BEING =====
+# ===== CURSOR PROPERTIES =====
+@export var cursor_color: Color = Color.CYAN
+@export var inspect_color: Color = Color(1.0, 0.5, 0.0)
+@export var debug_collision_visible: bool = false
+@export var enhanced_glow: bool = true
+@export var hover_feedback_intensity: float = 0.3
 
-## Cursor Properties
+# Cursor visuals
+var cursor_viewport: SubViewport = null
+var cursor_container: SubViewportContainer = null
 var cursor_shape: Node2D = null
-var interaction_sphere: Area3D = null
-var cursor_tip_position: Vector2 = Vector2.ZERO
+var mode_label: Label = null
 
-## Interaction State
+# 3D interaction
+var ray_cast: RayCast3D = null
+var debug_mesh: MeshInstance3D = null
+
+# State
 var is_hovering: bool = false
 var hovered_object: Node = null
-var is_clicking: bool = false
-
-## Cursor Modes
-enum CursorMode {
-	INTERACT,  # Normal interaction mode (click to activate)
-	INSPECT    # Inspection mode (click to inspect)
-}
-var current_mode: CursorMode = CursorMode.INTERACT
-var mode_visual_indicator: Node2D = null
+var current_mode: int = 0  # 0 = INTERACT, 1 = INSPECT
 
 # ===== SIGNALS =====
-
 signal cursor_hover_started(object: Node)
-signal cursor_hover_ended(object: Node)
+signal cursor_hover_ended(object: Node)  
 signal cursor_clicked(object: Node, position: Vector2)
-signal cursor_dragging(object: Node, delta_position: Vector2)
 signal cursor_inspected(being: UniversalBeing)
-signal cursor_mode_changed(mode: CursorMode)
+signal cursor_mode_changed(mode: int)
 
 # ===== PENTAGON ARCHITECTURE =====
 
 func pentagon_init() -> void:
-	# Call parent init
 	super.pentagon_init()
-	
-	# Set cursor-specific properties
 	being_type = "cursor"
-	consciousness_level = 4  # High consciousness for precise interaction
-	being_name = "Universal Cursor"
-	visual_layer = 1000  # Very high layer to appear on top of everything
-	
-	print("🎯 CursorUniversalBeing: Pentagon cursor initialization")
+	consciousness_level = 4
+	being_name = "Universal Cursor Final"
+	print("🎯 CursorUniversalBeingFinal: Pentagon init")
 
 func pentagon_ready() -> void:
-	# Call parent ready
 	super.pentagon_ready()
 	
-	# Create cursor visual
-	create_cursor_triangle()
+	# Create cursor on absolute top layer
+	create_absolute_top_cursor()
 	
-	# Create interaction sphere
-	create_interaction_sphere()
-	
-	# Create mode indicator
-	create_mode_indicator()
+	# Create raycast for interaction
+	create_minimal_raycast()
 	
 	# Hide system cursor
 	Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
 	
-	print("🎯 Universal Cursor ready! Mode: %s" % ("INSPECT" if current_mode == CursorMode.INSPECT else "INTERACT"))
+	print("🎯 Final Universal Cursor ready! Always on top!")
 
 func pentagon_process(delta: float) -> void:
-	# Call parent process
 	super.pentagon_process(delta)
 	
-	# Update cursor position
-	update_cursor_position()
+	# Update cursor to mouse position
+	if cursor_shape:
+		cursor_shape.global_position = get_viewport().get_mouse_position()
 	
-	# Update mode indicator position
-	if mode_visual_indicator and cursor_shape:
-		mode_visual_indicator.global_position = cursor_shape.global_position
-	
-	# Process interactions
-	process_cursor_interactions(delta)
+	# Update raycast
+	update_raycast_detection()
 
 func pentagon_input(event: InputEvent) -> void:
-	# Call parent input
 	super.pentagon_input(event)
 	
-	# Handle cursor-specific input
-	process_cursor_input(event)
+	if event is InputEventMouseButton:
+		if event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
+			handle_click()
+	elif event is InputEventKey and event.pressed:
+		if event.keycode == KEY_TAB:
+			toggle_mode()
 
 func pentagon_sewers() -> void:
-	# Restore system cursor
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
-	
-	# Call parent cleanup
 	super.pentagon_sewers()
 
-# ===== CURSOR CREATION =====
+# ===== ABSOLUTE TOP CURSOR =====
 
-func create_cursor_triangle() -> void:
-	"""Create triangle cursor shape positioned like Windows cursor"""
-	# Create a dedicated CanvasLayer for cursor to ensure it's always on top
-	var cursor_layer = CanvasLayer.new()
-	cursor_layer.name = "CursorLayer"
-	cursor_layer.layer = 999  # Highest layer for absolute top rendering
-	add_child(cursor_layer)
+func create_absolute_top_cursor() -> void:
+	# Get the root viewport
+	var root = get_tree().root
 	
+	# Create SubViewport for cursor (renders on top of everything)
+	cursor_viewport = SubViewport.new()
+	cursor_viewport.transparent_bg = true
+	cursor_viewport.size = get_viewport().size
+	cursor_viewport.render_target_update_mode = SubViewport.UPDATE_ALWAYS
+	cursor_viewport.gui_disable_input = true  # Don't interfere with window input
+	
+	# Create container at absolute top
+	cursor_container = SubViewportContainer.new()
+	cursor_container.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	cursor_container.set_anchors_preset(Control.PRESET_FULL_RECT)
+	cursor_container.z_index = RenderingServer.CANVAS_ITEM_Z_MAX  # Absolute maximum
+	
+	# IMPORTANT: Make cursor work across windows
+	cursor_container.top_level = true  # This makes it independent of parent transforms
+	cursor_container.show_behind_parent = false
+	
+	# Add to root (above Main scene)
+	root.add_child(cursor_container)
+	cursor_container.add_child(cursor_viewport)
+	
+	# Move container to top
+	root.move_child(cursor_container, root.get_child_count() - 1)
+	
+	# Create cursor shape in viewport
 	cursor_shape = Node2D.new()
-	cursor_shape.name = "CursorTriangle"
-	cursor_shape.z_index = 1000  # Additional z_index for safety
-	cursor_layer.add_child(cursor_shape)
+	cursor_shape.name = "CursorShape"
+	cursor_viewport.add_child(cursor_shape)
 	
-	# Create triangle points (tip matches Windows cursor tip position)
-	var triangle_points = PackedVector2Array([
-		Vector2(0, 0),      # Top tip (interaction point) - matches Windows cursor
-		Vector2(-4, 12),    # Bottom left (smaller triangle)
-		Vector2(3, 8)       # Bottom right (asymmetric like Windows cursor)
+	# Triangle cursor with enhanced visuals
+	var triangle = Polygon2D.new()
+	triangle.polygon = PackedVector2Array([
+		Vector2(0, 0),
+		Vector2(-4, 12),
+		Vector2(3, 8)
 	])
+	triangle.color = cursor_color
+	triangle.name = "TriangleCursor"
+	cursor_shape.add_child(triangle)
 	
-	# Create triangle polygon
-	var polygon = Polygon2D.new()
-	polygon.polygon = triangle_points
-	polygon.color = Color.CYAN if current_mode == CursorMode.INTERACT else Color(1.0, 0.5, 0.0)  # Orange for inspect mode
-	cursor_shape.add_child(polygon)
+	# Enhanced glow effect
+	if enhanced_glow:
+		var glow = Polygon2D.new()
+		glow.polygon = triangle.polygon
+		glow.color = Color(cursor_color.r, cursor_color.g, cursor_color.b, 0.3)
+		var glow_transform = Transform2D()
+		glow_transform = glow_transform.scaled(Vector2(1.5, 1.5))
+		glow.transform = glow_transform
+		glow.name = "GlowEffect"
+		cursor_shape.add_child(glow)
+		cursor_shape.move_child(glow, 0)  # Behind triangle
 	
-	# Add outline for visibility
-	var line = Line2D.new()
-	line.add_point(Vector2(0, 0))
-	line.add_point(Vector2(-4, 12))
-	line.add_point(Vector2(3, 8))
-	line.add_point(Vector2(0, 0))
-	line.width = 1
-	line.default_color = Color.WHITE
-	cursor_shape.add_child(line)
+	# White outline
+	var outline = Line2D.new()
+	outline.add_point(Vector2(0, 0))
+	outline.add_point(Vector2(-4, 12))
+	outline.add_point(Vector2(3, 8))
+	outline.add_point(Vector2(0, 0))
+	outline.width = 2
+	outline.default_color = Color.WHITE
+	outline.name = "Outline"
+	cursor_shape.add_child(outline)
 	
-	# Set tip position for precise interaction (Windows cursor tip)
-	cursor_tip_position = Vector2(0, 0)
+	# Mode indicator with background
+	var bg = ColorRect.new()
+	bg.color = Color(0, 0, 0, 0.8)
+	bg.size = Vector2(70, 18)
+	bg.position = Vector2(10, -5)
+	cursor_shape.add_child(bg)
 	
-	print("🎯 Cursor: Windows-style triangle created")
+	mode_label = Label.new()
+	mode_label.text = "INTERACT"
+	mode_label.add_theme_font_size_override("font_size", 10)
+	mode_label.position = Vector2(12, -3)
+	mode_label.modulate = cursor_color
+	cursor_shape.add_child(mode_label)
+	
+	# Connect viewport resize
+	get_viewport().size_changed.connect(_on_viewport_resized)
+	
+	print("🎯 Cursor created at absolute top layer!")
 
-func create_interaction_sphere() -> void:
-	"""Create tiny 3D interaction sphere at cursor tip"""
-	interaction_sphere = Area3D.new()
-	interaction_sphere.name = "InteractionSphere"
-	add_child(interaction_sphere)
-	
-	# Create tiny sphere collision shape - same size as visual
-	var collision_shape = CollisionShape3D.new()
-	var sphere_shape = SphereShape3D.new()
-	sphere_shape.radius = 0.02  # Very small for precise interaction
-	collision_shape.shape = sphere_shape
-	interaction_sphere.add_child(collision_shape)
-	
-	# Create tiny visual sphere
-	var mesh_instance = MeshInstance3D.new()
-	var sphere_mesh = SphereMesh.new()
-	sphere_mesh.radius = 0.02  # Same as collision
-	sphere_mesh.height = 0.04  # Diameter = 2 * radius
-	mesh_instance.mesh = sphere_mesh
-	
-	# Make it glow subtly
-	var material = StandardMaterial3D.new()
-	material.albedo_color = Color.CYAN
-	material.emission = Color.CYAN
-	material.emission_energy = 0.3
-	material.flags_transparent = true
-	material.albedo_color.a = 0.7  # Semi-transparent
-	mesh_instance.material_override = material
-	
-	interaction_sphere.add_child(mesh_instance)
-	
-	# Connect interaction signals
-	interaction_sphere.area_entered.connect(_on_area_entered)
-	interaction_sphere.area_exited.connect(_on_area_exited)
-	interaction_sphere.body_entered.connect(_on_body_entered)
-	interaction_sphere.body_exited.connect(_on_body_exited)
-	
-	print("🎯 Cursor: Tiny precision sphere created")
+func _on_viewport_resized() -> void:
+	if cursor_viewport:
+		cursor_viewport.size = get_viewport().size
 
-# ===== CURSOR BEHAVIOR =====
+# ===== MINIMAL RAYCAST =====
 
-func update_cursor_position() -> void:
-	"""Update cursor position to follow mouse"""
-	if cursor_shape:
-		var mouse_pos = get_viewport().get_mouse_position()
-		cursor_shape.global_position = mouse_pos
+func create_minimal_raycast() -> void:
+	# Create raycast for detection only
+	ray_cast = RayCast3D.new()
+	ray_cast.name = "CursorRay"
+	ray_cast.enabled = true
+	ray_cast.target_position = Vector3(0, 0, -100)
+	add_child(ray_cast)
+	
+	# Debug visualization (small and optional)
+	if debug_collision_visible:
+		debug_mesh = MeshInstance3D.new()
+		var sphere = SphereMesh.new()
+		sphere.radius = 0.01  # Tiny!
+		sphere.height = 0.02
+		debug_mesh.mesh = sphere
 		
-		# Update 3D sphere position (project to 3D space)
-		if interaction_sphere:
-			var camera = get_viewport().get_camera_3d()
-			if camera:
-				# Project 2D mouse to 3D ray
-				var ray_origin = camera.project_ray_origin(mouse_pos)
-				var ray_direction = camera.project_ray_normal(mouse_pos)
-				
-				# Position sphere slightly forward from camera
-				interaction_sphere.global_position = ray_origin + ray_direction * 2.0
-
-func process_cursor_interactions(delta: float) -> void:
-	"""Process cursor interactions with objects"""
-	if is_hovering and hovered_object:
-		# Update hover state
-		if hovered_object.has_method("on_cursor_hover"):
-			hovered_object.on_cursor_hover(cursor_tip_position)
-
-func process_cursor_input(event: InputEvent) -> void:
-	"""Process cursor-specific input"""
-	if event is InputEventMouseButton:
-		if event.button_index == MOUSE_BUTTON_LEFT:
-			if event.pressed:
-				is_clicking = true
-				if hovered_object:
-					cursor_clicked.emit(hovered_object, cursor_tip_position)
-					
-					# Different behavior based on mode
-					if current_mode == CursorMode.INSPECT:
-						# Always inspect in inspect mode
-						trigger_inspector_for_object(hovered_object)
-					else:
-						# Normal interaction in interact mode
-						if hovered_object.has_method("on_cursor_click"):
-							hovered_object.on_cursor_click(cursor_tip_position)
-			else:
-				is_clicking = false
-	
-	elif event is InputEventMouseMotion:
-		if is_clicking and hovered_object:
-			cursor_dragging.emit(hovered_object, event.relative)
-			if hovered_object.has_method("on_cursor_drag"):
-				hovered_object.on_cursor_drag(event.relative)
-
-func trigger_inspector_for_object(object: Node) -> void:
-	"""Trigger inspector interface for clicked Universal Being"""
-	# Check if object is a Universal Being or related to one
-	var universal_being = find_universal_being(object)
-	
-	if universal_being:
-		print("🔍 Cursor Inspect Mode: Inspecting %s" % universal_being.being_name)
+		var material = StandardMaterial3D.new()
+		material.albedo_color = Color(1, 0, 0, 0.3)
+		material.vertex_color_use_as_albedo = true
+		debug_mesh.material_override = material
 		
-		# Get main scene
-		var main_scene = get_tree().current_scene
-		if main_scene:
-			# Load inspector class
-			var inspector_script = load("res://ui/InGameUniversalBeingInspector.gd")
-			if inspector_script:
-				# Get or create inspector
-				var inspector = main_scene.get_node_or_null("InGameUniversalBeingInspector")
-				if not inspector:
-					inspector = inspector_script.new()
-					main_scene.add_child(inspector)
-				
-				# Open inspector for this being
-				inspector.inspect_being(universal_being)
-				cursor_inspected.emit(universal_being)
+		add_child(debug_mesh)
+	
+	print("🎯 Minimal raycast created")
+
+func update_raycast_detection() -> void:
+	var camera = get_viewport().get_camera_3d()
+	if not camera or not ray_cast:
+		return
+	
+	var mouse_pos = get_viewport().get_mouse_position()
+	var from = camera.project_ray_origin(mouse_pos)
+	var to = from + camera.project_ray_normal(mouse_pos) * 100
+	
+	# Position raycast
+	ray_cast.global_position = from
+	ray_cast.target_position = ray_cast.to_local(to)
+	
+	# Update debug mesh if visible
+	if debug_mesh and debug_collision_visible:
+		debug_mesh.global_position = from + camera.project_ray_normal(mouse_pos) * 2
+		debug_mesh.visible = true
+	elif debug_mesh:
+		debug_mesh.visible = false
+	
+	# Check for hover
+	check_hover()
+
+func check_hover() -> void:
+	var new_hover = null
+	
+	if ray_cast.is_colliding():
+		var collider = ray_cast.get_collider()
+		new_hover = find_universal_being(collider)
+	
+	if new_hover != hovered_object:
+		if hovered_object:
+			is_hovering = false
+			cursor_hover_ended.emit(hovered_object)
 		
-		# Also send to Gemma AI if available
-		if GemmaAI:
-			# Create inspection report
-			var inspection_data = get_being_inspection_data(universal_being)
-			var message = "🔍 CURSOR INSPECTION:\n"
-			message += "🌟 Being: %s\n" % inspection_data.get("name", "Unknown")
-			message += "🧠 Type: %s\n" % inspection_data.get("type", "unknown")
-			message += "💫 Consciousness: %d\n" % inspection_data.get("consciousness", 0)
-			message += "📍 Position: %s\n" % str(universal_being.global_position)
-			
-			if GemmaAI.has_method("ai_message"):
-				GemmaAI.ai_message.emit(message)
+		hovered_object = new_hover
+		
+		if hovered_object:
+			is_hovering = true
+			cursor_hover_started.emit(hovered_object)
+		else:
+			is_hovering = false
+		
+		# Update visual feedback
+		update_hover_visual()
+
+func update_hover_visual() -> void:
+	if not cursor_shape:
+		return
+	
+	var triangle = cursor_shape.get_node_or_null("TriangleCursor")
+	var glow = cursor_shape.get_node_or_null("GlowEffect")
+	var outline = cursor_shape.get_node_or_null("Outline")
+	
+	if triangle and triangle is Polygon2D:
+		var base_color = cursor_color if current_mode == 0 else inspect_color
+		
+		if is_hovering and hovered_object:
+			# Enhanced hover feedback
+			triangle.color = base_color.lightened(hover_feedback_intensity)
+			if glow:
+				glow.color = Color(base_color.r, base_color.g, base_color.b, 0.6)
+			if outline:
+				outline.default_color = base_color.lightened(0.5)
+		else:
+			# Normal state
+			triangle.color = base_color
+			if glow:
+				glow.color = Color(base_color.r, base_color.g, base_color.b, 0.3)
+			if outline:
+				outline.default_color = Color.WHITE
+
+# ===== INTERACTION =====
+
+func handle_click() -> void:
+	if not hovered_object:
+		return
+		
+	cursor_clicked.emit(hovered_object, get_viewport().get_mouse_position())
+	
+	if current_mode == 1:  # INSPECT mode
+		var being = find_universal_being(hovered_object)
+		if being:
+			inspect_being(being)
+
+func inspect_being(being: UniversalBeing) -> void:
+	print("🔍 Inspecting: %s" % being.being_name)
+	
+	# Try bridge first
+	var bridge = get_tree().get_nodes_in_group("inspector_bridge").front()
+	if bridge and bridge.has_method("inspect_being"):
+		bridge.inspect_being(being)
+		cursor_inspected.emit(being)
+		return
+	
+	# Create inspector
+	var main = get_tree().current_scene
+	if main:
+		var inspector = main.get_node_or_null("InGameUniversalBeingInspector")
+		if not inspector:
+			inspector = Control.new()
+			inspector.name = "InGameUniversalBeingInspector"
+			inspector.set_script(load("res://ui/InGameUniversalBeingInspector.gd"))
+			main.add_child(inspector)
+		
+		if inspector.has_method("inspect_being"):
+			inspector.inspect_being(being)
+			cursor_inspected.emit(being)
 
 func find_universal_being(node: Node) -> UniversalBeing:
-	"""Find Universal Being from clicked node"""
-	var current = node
+	if not node:
+		return null
 	
-	# Traverse up the tree to find a Universal Being
+	var current = node
 	while current:
 		if current is UniversalBeing:
-			return current as UniversalBeing
-		elif current.has_method("get") and current.has_method("pentagon_init"):
-			# This looks like a Universal Being
 			return current
-		
 		current = current.get_parent()
 	
 	return null
 
-func get_being_inspection_data(being: Node) -> Dictionary:
-	"""Get inspection data for a Universal Being"""
-	var data = {}
-	
-	if being.has_method("get"):
-		data["name"] = being.get("being_name") if being.has_method("get") else being.name
-		data["type"] = being.get("being_type") if being.has_method("get") else "unknown"
-		data["consciousness"] = being.get("consciousness_level") if being.has_method("get") else 0
-	else:
-		data["name"] = being.name
-		data["type"] = "scene_object"
-		data["consciousness"] = 0
-	
-	return data
-
-# ===== INTERACTION CALLBACKS =====
-
-func _on_area_entered(area: Area3D) -> void:
-	"""Handle area entered by cursor sphere"""
-	if not is_hovering:
-		is_hovering = true
-		hovered_object = area
-		cursor_hover_started.emit(area)
-		print("🎯 Cursor: Hovering over area - %s" % area.name)
-
-func _on_area_exited(area: Area3D) -> void:
-	"""Handle area exited by cursor sphere"""
-	if is_hovering and hovered_object == area:
-		is_hovering = false
-		cursor_hover_ended.emit(area)
-		hovered_object = null
-		print("🎯 Cursor: Stopped hovering over area - %s" % area.name)
-
-func _on_body_entered(body: Node3D) -> void:
-	"""Handle body entered by cursor sphere"""
-	if not is_hovering:
-		is_hovering = true
-		hovered_object = body
-		cursor_hover_started.emit(body)
-		print("🎯 Cursor: Hovering over body - %s" % body.name)
-
-func _on_body_exited(body: Node3D) -> void:
-	"""Handle body exited by cursor sphere"""
-	if is_hovering and hovered_object == body:
-		is_hovering = false
-		cursor_hover_ended.emit(body)
-		hovered_object = null
-		print("🎯 Cursor: Stopped hovering over body - %s" % body.name)
-
-# ===== CURSOR UTILITIES =====
-
-func get_cursor_tip_world_position() -> Vector3:
-	"""Get the world position of cursor tip in 3D space"""
-	if interaction_sphere:
-		return interaction_sphere.global_position
-	return Vector3.ZERO
-
-func set_cursor_visibility(visible: bool) -> void:
-	"""Set cursor visibility"""
-	if cursor_shape:
-		cursor_shape.visible = visible
-
-func set_cursor_color(color: Color) -> void:
-	"""Set cursor color"""
-	if cursor_shape:
-		var polygon = cursor_shape.get_child(0)
-		if polygon is Polygon2D:
-			polygon.color = color
-
 func toggle_mode() -> void:
-	"""Toggle between interact and inspect modes"""
-	if current_mode == CursorMode.INTERACT:
-		set_mode(CursorMode.INSPECT)
-	else:
-		set_mode(CursorMode.INTERACT)
-
-func set_mode(mode: CursorMode) -> void:
-	"""Set cursor mode"""
-	if current_mode != mode:
-		current_mode = mode
-		update_cursor_appearance()
-		update_mode_indicator()
-		cursor_mode_changed.emit(mode)
-		
-		print("🎯 Cursor mode changed to: %s" % ("INSPECT" if mode == CursorMode.INSPECT else "INTERACT"))
-
-func update_cursor_appearance() -> void:
-	"""Update cursor visual based on mode"""
-	if current_mode == CursorMode.INSPECT:
-		set_cursor_color(Color(1.0, 0.5, 0.0))  # Orange for inspect
-		if interaction_sphere:
-			var mesh_instance = interaction_sphere.get_child(1) if interaction_sphere.get_child_count() > 1 else null
-			if mesh_instance and mesh_instance is MeshInstance3D:
-				var material = mesh_instance.material_override as StandardMaterial3D
-				if material:
-					material.albedo_color = Color(1.0, 0.5, 0.0)
-					material.emission = Color(1.0, 0.5, 0.0)
-	else:
-		set_cursor_color(Color.CYAN)  # Cyan for interact
-		if interaction_sphere:
-			var mesh_instance = interaction_sphere.get_child(1) if interaction_sphere.get_child_count() > 1 else null
-			if mesh_instance and mesh_instance is MeshInstance3D:
-				var material = mesh_instance.material_override as StandardMaterial3D
-				if material:
-					material.albedo_color = Color.CYAN
-					material.emission = Color.CYAN
-
-func create_mode_indicator() -> void:
-	"""Create visual mode indicator"""
-	mode_visual_indicator = Node2D.new()
-	mode_visual_indicator.name = "ModeIndicator"
-	mode_visual_indicator.z_index = 999
-	add_child(mode_visual_indicator)
+	current_mode = 1 if current_mode == 0 else 0
+	cursor_mode_changed.emit(current_mode)
 	
-	# Create mode label
-	var label = Label.new()
-	label.name = "ModeLabel"
-	label.text = "INTERACT"
-	label.add_theme_font_size_override("font_size", 10)
-	label.position = Vector2(15, -5)  # Position near cursor
-	mode_visual_indicator.add_child(label)
+	# Update visuals
+	if mode_label:
+		mode_label.text = "INSPECT" if current_mode == 1 else "INTERACT"
+		mode_label.modulate = inspect_color if current_mode == 1 else cursor_color
+	
+	# Use enhanced visual system
+	update_hover_visual()
+	
+	print("🎯 Cursor mode: %s" % ("INSPECT" if current_mode == 1 else "INTERACT"))
 
-func update_mode_indicator() -> void:
-	"""Update mode indicator visual"""
-	if mode_visual_indicator:
-		var label = mode_visual_indicator.get_node_or_null("ModeLabel")
-		if label and label is Label:
-			label.text = "INSPECT" if current_mode == CursorMode.INSPECT else "INTERACT"
-			label.modulate = Color(1.0, 0.5, 0.0) if current_mode == CursorMode.INSPECT else Color.CYAN
-
-# ===== DEBUG FUNCTIONS =====
+# ===== API =====
 
 func get_cursor_info() -> Dictionary:
-	"""Get cursor information for debugging"""
 	return {
-		"mode": "INSPECT" if current_mode == CursorMode.INSPECT else "INTERACT",
-		"is_hovering": is_hovering,
-		"hovered_object": hovered_object.name if hovered_object else "none",
-		"is_clicking": is_clicking,
-		"tip_position": cursor_tip_position,
-		"consciousness_level": consciousness_level
+		"mode": "INSPECT" if current_mode == 1 else "INTERACT",
+		"is_hovering": hovered_object != null,
+		"hovered_object": hovered_object.name if hovered_object else "none"
 	}
 
-# ===== STATE MACHINE OVERRIDES =====
-# Prevent cursor from creating offspring and reduce state transitions
+func get_cursor_tip_world_position() -> Vector3:
+	if ray_cast:
+		return ray_cast.global_position
+	return Vector3.ZERO
+
+# ===== STATE OVERRIDES =====
 
 func _generate_thought_result() -> Dictionary:
-	"""Override thought generation - cursor should not create beings"""
 	var result = super._generate_thought_result()
-	# Cursor should never create offspring
 	result.should_create = false
-	# Cursor should rarely evolve
-	result.should_evolve = randf() < 0.01  # 1% chance instead of 20%
+	result.should_evolve = false
 	return result
 
-func _process_idle_state(delta: float) -> void:
-	"""Override idle state - cursor should be less active"""
-	# Don't randomly start thinking as often
-	if randf() < 0.001:  # 0.1% chance instead of 1%
-		change_state(BeingState.THINKING, "cursor contemplation")
-	
-	# Still check for interactions but less frequently
-	if not nearby_beings.is_empty() and randf() < 0.002:  # Reduced from 0.005
-		change_state(BeingState.INTERACTING, "cursor proximity check")
-
 func _attempt_creation() -> void:
-	"""Override creation - cursor should not create offspring"""
-	# Do nothing - cursor cannot create beings
-	print("🎯 Cursor: Creation blocked - cursors don't create offspring")
-	log_action("creation_blocked", "Cursor creation attempt blocked")
-
-func _process_creating_state(delta: float) -> void:
-	"""Override creating state - immediately return to idle"""
-	print("🎯 Cursor: Exiting CREATING state - cursors don't create")
-	change_state(BeingState.IDLE, "cursor cannot create")
+	print("🎯 Cursor cannot create beings")

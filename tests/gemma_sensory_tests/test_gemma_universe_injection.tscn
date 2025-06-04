@@ -1,0 +1,19 @@
+[gd_scene load_steps=2 format=3 uid="uid://b4m5gvyqk8xrn"]
+
+[ext_resource type="Script" path="res://tests/gemma_sensory_tests/test_gemma_universe_injection.gd" id="1_1xk5y"]
+
+[node name="TestGemmaUniverseInjection" type="Node3D"]
+script = ExtResource("1_1xk5y")
+auto_start_test = true
+test_delay = 2.0
+verbose_logging = true
+
+[node name="Camera3D" type="Camera3D" parent="."]
+position = Vector3(0, 10, 15)
+rotation = Vector3(-0.349066, 0, 0)
+fov = 60.0
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+rotation = Vector3(-0.785398, -0.785398, 0)
+light_energy = 0.5
+shadow_enabled = true

@@ -1,0 +1,74 @@
+[gd_scene load_steps=6 format=3 uid="uid://cl7323wi1shhg"]
+
+[ext_resource type="Script" uid="uid://bq40a6pgcikqx" path="res://main.gd" id="1_vf1jh"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_1"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_1"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_1"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_1"]
+
+[node name="Main" type="Node3D"]
+script = ExtResource("1_vf1jh")
+
+[node name="UI" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Title" type="Label" parent="UI"]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = -60.0
+offset_right = 400.0
+offset_bottom = -40.0
+grow_vertical = 0
+theme_override_font_sizes/font_size = 18
+text = "Universal Being Engine - Ready!"
+
+[node name="Instructions" type="Label" parent="UI"]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = -80.0
+offset_right = 600.0
+offset_bottom = -40.0
+grow_vertical = 0
+theme_override_font_sizes/font_size = 12
+text = "~ console | TAB toggle inspect mode | Ctrl+K camera | Ctrl+U cursor | Ctrl+N create test being | Click to inspect in INSPECT mode!"
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.707107, -0.5, 0.5, 0, 0.707107, 0.707107, -0.707107, -0.5, 0.5, 0, 5, 0)
+shadow_enabled = true
+
+[node name="DemoSphere" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+mesh = SubResource("SphereMesh_1")
+
+[node name="DemoSphereArea" type="Area3D" parent="DemoSphere"]
+
+[node name="DemoSphereCollision" type="CollisionShape3D" parent="DemoSphere/DemoSphereArea"]
+shape = SubResource("SphereShape3D_1")
+
+[node name="DemoCube" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 1, 0)
+mesh = SubResource("BoxMesh_1")
+
+[node name="DemoCubeArea" type="Area3D" parent="DemoCube"]
+
+[node name="DemoCubeCollision" type="CollisionShape3D" parent="DemoCube/DemoCubeArea"]
+shape = SubResource("BoxShape3D_1")
+
+[node name="GroundPlane" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_1")

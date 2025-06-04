@@ -50,10 +50,10 @@ func _ready() -> void:
 func create_inspector_ui() -> void:
 	"""Create the inspector interface"""
 	
-	# Main panel (positioned on right side)
+	# Main panel (positioned on right side) - WIDER for better visibility
 	main_panel = Panel.new()
-	main_panel.size = Vector2(400, 600)
-	main_panel.position = Vector2(get_viewport().get_visible_rect().size.x - 420, 20)
+	main_panel.size = Vector2(600, 700)  # Increased width from 400 to 600
+	main_panel.position = Vector2(get_viewport().get_visible_rect().size.x - 620, 20)
 	
 	# Style the panel
 	var panel_style = StyleBoxFlat.new()
@@ -73,13 +73,14 @@ func create_inspector_ui() -> void:
 	
 	# Title and close button
 	var header = HBoxContainer.new()
-	header.size = Vector2(380, 30)
+	header.size = Vector2(580, 30)  # Adjusted for wider panel
 	header.position = Vector2(10, 10)
 	main_panel.add_child(header)
 	
 	title_label = Label.new()
 	title_label.text = "Universal Being Inspector"
 	title_label.add_theme_color_override("font_color", Color.WHITE)
+	title_label.add_theme_font_size_override("font_size", 16)
 	header.add_child(title_label)
 	
 	var spacer = Control.new()
@@ -90,12 +91,13 @@ func create_inspector_ui() -> void:
 	close_button.text = "×"
 	close_button.size = Vector2(30, 30)
 	close_button.add_theme_color_override("font_color", Color.WHITE)
+	close_button.add_theme_font_size_override("font_size", 20)
 	close_button.pressed.connect(_on_close_pressed)
 	header.add_child(close_button)
 	
 	# Tab container
 	tab_container = TabContainer.new()
-	tab_container.size = Vector2(380, 540)
+	tab_container.size = Vector2(580, 640)  # Adjusted for wider panel
 	tab_container.position = Vector2(10, 50)
 	main_panel.add_child(tab_container)
 	
@@ -169,6 +171,21 @@ func show_inspector() -> void:
 	visible = true
 	mouse_filter = Control.MOUSE_FILTER_STOP
 	is_visible_inspector = true
+	
+	# Ensure panel is within screen bounds
+	var viewport_size = get_viewport().get_visible_rect().size
+	var panel_size = main_panel.size
+	var margin = 20
+	
+	# Adjust position if panel would be off-screen
+	if main_panel.position.x + panel_size.x > viewport_size.x - margin:
+		main_panel.position.x = viewport_size.x - panel_size.x - margin
+	if main_panel.position.y + panel_size.y > viewport_size.y - margin:
+		main_panel.position.y = viewport_size.y - panel_size.y - margin
+	
+	# Ensure minimum position
+	main_panel.position.x = max(margin, main_panel.position.x)
+	main_panel.position.y = max(margin, main_panel.position.y)
 	
 	# Animate in
 	var tween = create_tween()
@@ -293,21 +310,61 @@ func populate_actions() -> void:
 
 func add_property_row(label: String, value: String) -> void:
 	"""Add a property row to properties list"""
-	var hbox = HBoxContainer.new()
+	var container = VBoxContainer.new()
+	container.add_theme_constant_override("separation", 2)
 	
+	# Create a properly formatted row
+	var hbox = HBoxContainer.new()
+	hbox.add_theme_constant_override("separation", 10)
+	
+	# Label with fixed width
 	var label_node = Label.new()
 	label_node.text = label + ":"
-	label_node.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	label_node.custom_minimum_size.x = 150  # Fixed width for labels
 	label_node.add_theme_color_override("font_color", Color(0.8, 0.8, 1.0))
+	label_node.add_theme_font_size_override("font_size", 12)
 	hbox.add_child(label_node)
 	
+	# Value that can expand
 	var value_node = Label.new()
 	value_node.text = value
 	value_node.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	value_node.add_theme_color_override("font_color", Color.WHITE)
+	value_node.add_theme_font_size_override("font_size", 12)
+	value_node.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	
+	# Special formatting for different value types
+	if value.begins_with("(") and value.ends_with(")"):
+		# Vector formatting - make more readable
+		value_node.text = format_vector(value)
+	elif value.length() > 50:
+		# Long values - add tooltip with full value
+		value_node.tooltip_text = value
+		value_node.text = value.substr(0, 47) + "..."
+	
 	hbox.add_child(value_node)
 	
-	properties_list.add_child(hbox)
+	container.add_child(hbox)
+	
+	# Add separator line
+	var separator = HSeparator.new()
+	separator.modulate = Color(0.3, 0.3, 0.3, 0.5)
+	container.add_child(separator)
+	
+	properties_list.add_child(container)
+
+func format_vector(vector_str: String) -> String:
+	"""Format vector strings for better readability"""
+	# Remove parentheses and split
+	var cleaned = vector_str.strip_edges().trim_prefix("(").trim_suffix(")")
+	var parts = cleaned.split(",")
+	
+	if parts.size() == 2:
+		return "X: %s, Y: %s" % [parts[0].strip_edges(), parts[1].strip_edges()]
+	elif parts.size() == 3:
+		return "X: %s, Y: %s, Z: %s" % [parts[0].strip_edges(), parts[1].strip_edges(), parts[2].strip_edges()]
+	
+	return vector_str
 
 func add_socket_row(socket_data: Dictionary) -> void:
 	"""Add a socket row to sockets list"""
@@ -348,14 +405,46 @@ func add_separator(text: String) -> void:
 	if not target_list:
 		return
 	
-	var separator = HSeparator.new()
-	target_list.add_child(separator)
+	# Add some spacing before separator
+	var spacer = Control.new()
+	spacer.custom_minimum_size.y = 10
+	target_list.add_child(spacer)
 	
 	if not text.is_empty():
+		# Section header with background
+		var header_container = PanelContainer.new()
+		var header_style = StyleBoxFlat.new()
+		header_style.bg_color = Color(0.2, 0.3, 0.4, 0.8)
+		header_style.corner_radius_top_left = 4
+		header_style.corner_radius_top_right = 4
+		header_style.corner_radius_bottom_left = 4
+		header_style.corner_radius_bottom_right = 4
+		header_style.content_margin_left = 10
+		header_style.content_margin_right = 10
+		header_style.content_margin_top = 5
+		header_style.content_margin_bottom = 5
+		header_container.add_theme_stylebox_override("panel", header_style)
+		
 		var label = Label.new()
-		label.text = text
+		label.text = text.to_upper()
 		label.add_theme_color_override("font_color", Color(1.0, 1.0, 0.6))
-		target_list.add_child(label)
+		label.add_theme_font_size_override("font_size", 14)
+		# Use bold font style without loading external font
+		label.add_theme_constant_override("font_outline_size", 1)
+		label.add_theme_color_override("font_outline_color", Color(0.1, 0.1, 0.1))
+		header_container.add_child(label)
+		
+		target_list.add_child(header_container)
+	else:
+		# Simple separator line
+		var separator = HSeparator.new()
+		separator.modulate = Color(0.5, 0.5, 0.5, 0.5)
+		target_list.add_child(separator)
+	
+	# Add spacing after separator
+	var spacer2 = Control.new()
+	spacer2.custom_minimum_size.y = 5
+	target_list.add_child(spacer2)
 
 func add_info_label(text: String) -> void:
 	"""Add an info label to current tab"""
@@ -397,7 +486,24 @@ func _on_close_pressed() -> void:
 func refresh_properties() -> void:
 	"""Refresh the properties display"""
 	if current_being and properties_list:
-		populate_properties_list()
+		# Clear existing properties
+		for child in properties_list.get_children():
+			child.queue_free()
+		
+		# Repopulate with current being's properties
+		populate_properties()
+
+func populate_properties_list() -> void:
+	"""Populate the properties list with current being data"""
+	if not current_being or not properties_list:
+		return
+	
+	# Clear existing
+	for child in properties_list.get_children():
+		child.queue_free()
+	
+	# Add properties
+	populate_properties()
 
 func create_inspector_bridge() -> void:
 	"""Create or connect to the Universal Inspector Bridge"""

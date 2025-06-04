@@ -34,6 +34,19 @@ var evolution_state: Dictionary = {
 	"last_evolution": 0
 }
 
+## Movement System
+var movement_target: Vector3 = Vector3.ZERO
+var is_moving: bool = false
+var forward_direction: Vector3 = Vector3.FORWARD
+enum NodeBehavior {
+	STATIC,     # Doesn't move (like records, chunks)
+	MOVING,     # Can move around
+	MERGING,    # Can merge with others
+	SPAWNING,   # Can create copies/children
+	FLOWING     # Like water, changes form
+}
+@export var node_behavior: NodeBehavior = NodeBehavior.MOVING
+
 ## Component System (ZIP-based)
 var components: Array[String] = []  # Paths to .ub.zip files
 var component_data: Dictionary = {}
@@ -353,6 +366,37 @@ func get_inspector_data() -> Dictionary:
 	if not socket_manager:
 		return {"error": "Socket system not initialized"}
 	return socket_manager.get_inspector_data()
+
+# ===== INTERFACE SOCKET COMPATIBILITY METHODS =====
+
+func add_socket(socket_name: String, socket_direction: String, socket_data_type: String) -> void:
+	"""Add a socket for interface connections (compatibility method)"""
+	if not socket_manager:
+		push_warning("Socket system not initialized - cannot add socket %s" % socket_name)
+		return
+	
+	# Create a basic socket for interface compatibility
+	print("🔌 Interface socket requested: %s (%s, %s)" % [socket_name, socket_direction, socket_data_type])
+	# This is a stub implementation for interface compatibility
+
+func connect_socket(from_socket: String, to_being: Node, to_socket: String) -> bool:
+	"""Connect socket to another being's socket (compatibility method)"""
+	if not socket_manager:
+		push_warning("Socket system not initialized - cannot connect socket %s" % from_socket)
+		return false
+	
+	print("🔌 Socket connection requested: %s -> %s.%s" % [from_socket, to_being.name, to_socket])
+	# This is a stub implementation for interface compatibility
+	return true
+
+func set_socket_value(socket_name: String, value: Variant) -> void:
+	"""Set value for a socket (compatibility method)"""
+	if not socket_manager:
+		push_warning("Socket system not initialized - cannot set socket value %s" % socket_name)
+		return
+	
+	print("🔌 Socket value set: %s = %s" % [socket_name, str(value)])
+	# This is a stub implementation for interface compatibility
 
 # ===== SOCKET SIGNAL HANDLERS =====
 
@@ -687,7 +731,96 @@ func ai_invoke_method(method_name: String, args: Array = []) -> Variant:
 		
 	if has_method(method_name):
 		return callv(method_name, args)
-		
+	
+	return null
+
+# ===== MOVEMENT SYSTEM =====
+
+func move_to(target_position: Vector3) -> void:
+	"""Start moving this being to a target position"""
+	if node_behavior == NodeBehavior.STATIC:
+		return  # Static beings don't move
+	
+	movement_target = target_position
+	is_moving = true
+	
+	# Get movement system
+	var movement_system = get_node_or_null("/root/Main/UniversalBeingMovementSystem")
+	if movement_system:
+		movement_system.move_being_to(self, target_position)
+
+func stop_movement() -> void:
+	"""Stop current movement"""
+	is_moving = false
+	
+	var movement_system = get_node_or_null("/root/Main/UniversalBeingMovementSystem")
+	if movement_system:
+		movement_system.stop_being(self)
+
+func set_forward_direction(direction: Vector3) -> void:
+	"""Set the forward facing direction for movement"""
+	forward_direction = direction.normalized()
+	
+	# Update visual rotation
+	if forward_direction.length() > 0.01:
+		look_at(global_position + forward_direction, Vector3.UP)
+
+func can_merge_with(other: UniversalBeing) -> bool:
+	"""Check if this being can merge with another"""
+	if node_behavior != NodeBehavior.MERGING:
+		return false
+	
+	# Check compatibility
+	if being_type == other.being_type:
+		return true
+	
+	# Check if types can merge (water + water = larger water)
+	if being_type in ["water", "cloud", "energy"] and other.being_type == being_type:
+		return true
+	
+	return false
+
+func merge_with(other: UniversalBeing) -> void:
+	"""Merge with another being"""
+	if not can_merge_with(other):
+		return
+	
+	# Combine consciousness
+	consciousness_level = max(consciousness_level, other.consciousness_level)
+	
+	# Log the merge
+	log_action("merge", "Merged with %s" % other.being_name)
+	
+	# Remove the other being
+	other.queue_free()
+
+func spawn_child(properties: Dictionary = {}) -> UniversalBeing:
+	"""Spawn a child being"""
+	if node_behavior != NodeBehavior.SPAWNING:
+		return null
+	
+	# Create child through system
+	if SystemBootstrap and SystemBootstrap.is_system_ready():
+		var child = SystemBootstrap.create_universal_being()
+		if child:
+			# Set child properties
+			child.being_type = being_type
+			child.consciousness_level = max(1, consciousness_level - 1)
+			
+			# Apply custom properties
+			for key in properties:
+				if child.has_method("set"):
+					child.set(key, properties[key])
+			
+			# Position near parent
+			child.position = position + Vector3(randf() * 2 - 1, 0, randf() * 2 - 1)
+			
+			# Add to scene
+			get_parent().add_child(child)
+			
+			log_action("spawn", "Spawned child: %s" % child.being_name)
+			return child
+	
 	return null
 
 # ===== UTILITY FUNCTIONS =====

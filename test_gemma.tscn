@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://gemma_test"]
+
+[ext_resource type="Script" path="res://systems/GemmaSensorySystem.gd" id="1"]
+
+[node name="GemmaTest" type="Node2D"]
+
+[node name="GemmaSensorySystem" type="Node" parent="."]
+script = ExtResource("1")

@@ -54,8 +54,36 @@ func _ready():
 
 func _create_ui():
 	"""Create the main UI layout"""
+	# Add close button at the top
+	var header = HBoxContainer.new()
+	header.custom_minimum_size = Vector2(0, 40)
+	add_child(header)
+	
+	# Title
+	var title = Label.new()
+	title.text = "🌌 Universe Simulator - Infinite Realities"
+	title.add_theme_font_size_override("font_size", 16)
+	title.add_theme_color_override("font_color", Color(0.8, 0.8, 1.0))
+	header.add_child(title)
+	
+	# Spacer
+	var spacer = Control.new()
+	spacer.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	header.add_child(spacer)
+	
+	# Close button
+	var close_btn = Button.new()
+	close_btn.text = "✕ Close"
+	close_btn.add_theme_font_size_override("font_size", 14)
+	close_btn.add_theme_color_override("font_color", Color.WHITE)
+	close_btn.pressed.connect(_on_close_pressed)
+	header.add_child(close_btn)
+	
+	# Main content
 	var main_container = HSplitContainer.new()
 	main_container.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	main_container.set_anchor(SIDE_TOP, 0.0)
+	main_container.set_offset(SIDE_TOP, 45)  # Below header
 	main_container.split_offset = 900
 	add_child(main_container)
 	
@@ -212,7 +240,7 @@ func _add_universe_visualization(universe_being: Node):
 	var mesh_instance = MeshInstance3D.new()
 	var sphere_mesh = SphereMesh.new()
 	sphere_mesh.radial_segments = 32
-	sphere_mesh.height_segments = 16
+	# height_segments doesn't exist in Godot 4 - removed
 	sphere_mesh.radius = UNIVERSE_SPHERE_SIZE
 	sphere_mesh.height = UNIVERSE_SPHERE_SIZE * 2
 	mesh_instance.mesh = sphere_mesh
@@ -395,3 +423,17 @@ func _log_genesis(message: String):
 				"timestamp": Time.get_unix_time_from_system(),
 				"universe_count": universe_count
 			})
+
+
+func _on_close_pressed():
+	"""Handle close button press"""
+	print("🌌 Universe Simulator closing...")
+	
+	# Get parent window
+	var parent_window = get_window()
+	if parent_window and parent_window != get_tree().root:
+		# We're in a separate window - close it
+		parent_window.queue_free()
+	else:
+		# We're embedded - just hide
+		hide()
