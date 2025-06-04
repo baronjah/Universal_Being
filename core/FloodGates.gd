@@ -11,7 +11,7 @@ class_name FloodGates
 # ===== FLOODGATE AUTHORITY =====
 
 ## System Limits
-const MAX_BEINGS: int = 144  # Sacred number of maximum entities
+const MAX_BEINGS: int = 500  # Increased limit for larger universes (was 144)
 const OPERATION_QUEUE_SIZE: int = 256
 
 ## Scene Tree Control

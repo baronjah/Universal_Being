@@ -1466,7 +1466,7 @@ func _process_creating_state(delta: float) -> void:
 
 func _process_evolving_state(delta: float) -> void:
 	"""Process evolution state"""
-	if state_timer > 4.0:
+	if state_timer > 20.0:  # Increased from 4.0 to 20.0 to reduce evolution frequency
 		_attempt_evolution()
 		change_state(BeingState.IDLE, "evolution completed")
 

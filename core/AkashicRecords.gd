@@ -634,3 +634,21 @@ func validate_libraries() -> bool:
 		print("📚 Akashic: All libraries validated ✓")
 	
 	return valid
+
+func load_universal_being_data(being_id: String) -> Dictionary:
+	"""Load Universal Being data by ID - used by chunk system"""
+	# Try to load from cache first
+	if zip_cache.has(being_id):
+		return zip_cache[being_id]
+	
+	# Search in libraries for being with this ID
+	var all_files = get_all_library_files()
+	for file_path in all_files:
+		var data = load_being_from_zip(file_path)
+		if data.get("id", "") == being_id or data.get("being_id", "") == being_id:
+			zip_cache[being_id] = data
+			return data
+	
+	# If not found, return empty dictionary
+	print("📚 Akashic: Being data not found for ID: " + being_id)
+	return {}

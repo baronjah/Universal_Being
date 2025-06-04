@@ -101,18 +101,29 @@ func pentagon_sewers() -> void:
 # ===== CONSOLE WINDOW CREATION =====
 
 func _create_console_window() -> void:
-	"""Create the conversational console window"""
-	# Create main window
-	console_window = Window.new()
-	console_window.title = window_title
-	console_window.size = window_size
-	console_window.position = window_position
-	console_window.wrap_controls = true
-	console_window.unresizable = false
+	"""Create the conversational console window using Universal Interface System"""
 	
-	# Make console always on top but allow cursor interaction
-	console_window.always_on_top = true
-	console_window.mouse_filter = Control.MOUSE_FILTER_PASS
+	# Load Universal Interface Manager if not already loaded
+	var interface_manager = get_node_or_null("/root/UniversalInterfaceManager")
+	if not interface_manager:
+		var UniversalInterfaceManagerClass = load("res://systems/universal_interface_manager.gd")
+		interface_manager = UniversalInterfaceManagerClass.new()
+		interface_manager.name = "UniversalInterfaceManager"
+		get_tree().root.add_child(interface_manager)
+	
+	# Create normalized console window
+	var config = {
+		"id": "ai_console",
+		"title": window_title,
+		"size": window_size,
+		"position": window_position,
+		"theme": "console",
+		"layer": "console",
+		"esc_closes": true,
+		"moveable": true
+	}
+	
+	console_window = interface_manager.create_normalized_window(config)
 	
 	# Add to scene tree
 	get_tree().root.add_child(console_window)

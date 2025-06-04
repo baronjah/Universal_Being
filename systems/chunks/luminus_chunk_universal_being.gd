@@ -59,6 +59,6 @@ func _request_content_from_akashic() -> void:
 		loaded_content = true
 	else:
 		# First-time visit → seed content according to Y-layer rules
-		ChunkGenerator.populate(self)
+		ChunkGenerator.populate(self as ChunkUniversalBeing)
 		AkashicSpatialDB.save_chunk(self)
 		loaded_content = true
