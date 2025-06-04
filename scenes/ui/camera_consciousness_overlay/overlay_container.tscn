@@ -1,9 +1,10 @@
 [gd_scene load_steps=5 format=3 uid="uid://badebxmxfxscy"]
 
 [ext_resource type="Script" path="res://ui/camera_consciousness_overlay/overlay_container.gd" id="1_5k4m3"]
-[ext_resource type="PackedScene" uid="uid://b6x8v0j6y5n3q" path="res://scenes/ui/camera_consciousness_overlay/consciousness_meter.tscn" id="2_3k4m3"]
+[ext_resource type="PackedScene" uid="uid://b6x8v0j6y5n3q" path="res://scenes/camera_consciousness_post_process.tscn" id="2_3k4m3"]
 [ext_resource type="PackedScene" uid="uid://c4q8v0j6y5n3q" path="res://scenes/ui/camera_consciousness_overlay/info_panel.tscn" id="3_4k4m3"]
-[ext_resource type="PackedScene" uid="uid://d4q8v0j6y5n3q" path="res://scenes/ui/camera_consciousness_overlay/effect_sliders.tscn" id="4_5k4m3"]
+[ext_resource type="PackedScene" uid="uid://debxmxfxscy" path="res://scenes/ui/camera_consciousness_overlay/effect_sliders.tscn" id="4_5k4m3"]
+
 
 [node name="OverlayContainer" type="Control"]
 layout_mode = 3

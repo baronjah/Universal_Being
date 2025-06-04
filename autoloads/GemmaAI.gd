@@ -716,3 +716,170 @@ func _notification(what: int) -> void:
 	"""Handle engine notifications"""
 	if what == NOTIFICATION_WM_CLOSE_REQUEST or what == NOTIFICATION_WM_GO_BACK_REQUEST:
 		save_ai_memory()
+
+# ===== INTERFACE OBSERVATION SYSTEM =====
+
+var observed_interfaces: Array[Node] = []
+
+func observe_interface(interface_node: Node) -> void:
+	"""Observe a user interface for context and interaction"""
+	if not interface_node in observed_interfaces:
+		observed_interfaces.append(interface_node)
+		print("🤖 Gemma: Now observing interface: %s" % interface_node.name)
+		
+		# Connect to interface signals if available
+		if interface_node.has_signal("interface_updated"):
+			interface_node.interface_updated.connect(_on_interface_updated.bind(interface_node))
+		else:
+			# Interface doesn't have the signal, that's okay - we can still observe it
+			print("🤖 Gemma: Interface %s doesn't have interface_updated signal, basic observation only" % interface_node.name)
+		
+		# Analyze the interface structure
+		var analysis = _analyze_interface_structure(interface_node)
+		ai_message.emit("👁️ I can see the %s interface! It has %d interactive elements." % [interface_node.name, analysis.interactive_count])
+
+func unobserve_interface(interface_node: Node) -> void:
+	"""Stop observing an interface"""
+	observed_interfaces.erase(interface_node)
+	
+	if interface_node.has_signal("interface_updated"):
+		if interface_node.interface_updated.is_connected(_on_interface_updated):
+			interface_node.interface_updated.disconnect(_on_interface_updated)
+	
+	print("🤖 Gemma: Stopped observing interface: %s" % interface_node.name)
+
+func _on_interface_updated(data: Dictionary, interface: Node) -> void:
+	"""Handle interface update signals"""
+	print("🤖 Gemma: Interface updated - %s - %s" % [interface.name, str(data)])
+	
+	# Provide contextual suggestions based on the update
+	if data.has("action"):
+		match data.action:
+			"selection_changed":
+				ai_message.emit("🤖 I see you selected something! Need help with it?")
+			"value_changed":
+				ai_message.emit("🤖 Value updated! I'm tracking the changes.")
+			"request_help":
+				ai_message.emit("🤖 I'm here to help! What would you like to know?")
+
+func _analyze_interface_structure(interface_node: Node) -> Dictionary:
+	"""Analyze the structure of an interface"""
+	var analysis = {
+		"interactive_count": 0,
+		"buttons": [],
+		"inputs": [],
+		"displays": []
+	}
+	
+	# Recursively analyze all children
+	_analyze_node_recursive(interface_node, analysis)
+	
+	return analysis
+
+func _analyze_node_recursive(node: Node, analysis: Dictionary) -> void:
+	"""Recursively analyze nodes in an interface"""
+	# Check for interactive elements
+	if node is Button:
+		analysis.interactive_count += 1
+		analysis.buttons.append(node.name)
+	elif node is LineEdit or node is TextEdit:
+		analysis.interactive_count += 1
+		analysis.inputs.append(node.name)
+	elif node is RichTextLabel or node is Label:
+		analysis.displays.append(node.name)
+	
+	# Analyze children
+	for child in node.get_children():
+		_analyze_node_recursive(child, analysis)
+
+func get_interface_suggestions(interface_node: Node) -> Array[String]:
+	"""Get AI suggestions for using an interface"""
+	var suggestions: Array[String] = []
+	var interface_name = interface_node.name
+	
+	match interface_name:
+		"UniverseBuilderInterface":
+			suggestions.append("Try creating a universe with unique physics rules!")
+			suggestions.append("I can help you design custom time dilation effects")
+			suggestions.append("Want to make a universe where gravity works differently?")
+		"BeingInspectorInterface":
+			suggestions.append("Click on any being to see its internal state")
+			suggestions.append("I can explain what each property does")
+			suggestions.append("Try modifying consciousness levels to see evolution options")
+		"AIchatInterface":
+			suggestions.append("Ask me anything about Universal Beings!")
+			suggestions.append("I can help you create custom components")
+			suggestions.append("Want to learn about Pentagon Architecture?")
+		_:
+			suggestions.append("This interface looks interesting! What does it do?")
+			suggestions.append("I'm analyzing the structure to understand it better")
+			suggestions.append("Click around and I'll learn how it works!")
+	
+	return suggestions
+
+# ===== TEXT-BASED INTERFACE VISION =====
+
+var text_interface_system: Node = null
+var current_interface_vision: String = ""
+
+func set_text_interface_system(system: Node) -> void:
+	"""Set the text interface system for vision"""
+	text_interface_system = system
+	print("🤖 Gemma: Connected to text interface vision system")
+
+func update_interface_vision(vision_text: String) -> void:
+	"""Update Gemma's text-based interface vision"""
+	current_interface_vision = vision_text
+	
+	# Process the vision update
+	_process_interface_vision(vision_text)
+
+func _process_interface_vision(vision_text: String) -> void:
+	"""Process the interface vision and generate responses"""
+	# Extract key information from the vision
+	var interface_count = _extract_interface_count(vision_text)
+	var available_actions = _extract_available_actions(vision_text)
+	
+	# Generate contextual responses
+	if interface_count > 3:
+		ai_message.emit("🤖 I can see %d interfaces in your world! Quite a rich environment." % interface_count)
+	
+	# Look for specific interface types
+	if "UniverseBuilderInterface" in vision_text:
+		ai_message.emit("🌌 I see the Universe Builder is available! Want to create some worlds together?")
+	
+	if "console" in vision_text.to_lower():
+		ai_message.emit("💬 The console is active - I can see all your commands and help with them!")
+
+func _extract_interface_count(vision_text: String) -> int:
+	"""Extract the number of interfaces from vision text"""
+	var lines = vision_text.split("\n")
+	for line in lines:
+		if "Active Interfaces:" in line:
+			var parts = line.split(":")
+			if parts.size() > 1:
+				return parts[1].strip_edges().to_int()
+	return 0
+
+func _extract_available_actions(vision_text: String) -> Array[String]:
+	"""Extract available actions from vision text"""
+	var actions: Array[String] = []
+	var lines = vision_text.split("\n")
+	var in_interactions = false
+	
+	for line in lines:
+		if "INTERACTION SUGGESTIONS" in line:
+			in_interactions = true
+			continue
+		elif in_interactions and line.begins_with("- "):
+			actions.append(line.substr(2))
+	
+	return actions
+
+func get_current_interface_vision() -> String:
+	"""Get current interface vision text"""
+	return current_interface_vision
+
+func can_see_interface(interface_name: String) -> bool:
+	"""Check if Gemma can see a specific interface"""
+	return interface_name in current_interface_vision

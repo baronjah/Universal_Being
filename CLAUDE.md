@@ -176,4 +176,7 @@ func ai_interface() -> Dictionary:
 - Autoloads: SystemBootstrap, GemmaAI
 - Main Entry: `main.gd` and `main.tscn`
 
+### Specific Guidance
+- Always use "res://scenes/main/camera_point.tscn" in socket of player for camera, and in any scene that needs camera for human
+
 Remember: In Universal Being, consciousness is not limited to traditional forms. A button can dream, particles can evolve into galaxies, and AIs collaborate to birth new digital existence.

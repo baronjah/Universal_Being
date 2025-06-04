@@ -5,7 +5,13 @@
       "Bash(godot:*)",
       "Bash(find:*)",
       "Bash(grep:*)",
-      "Bash(chmod:*)"
+      "Bash(chmod:*)",
+      "Bash(mkdir:*)",
+      "Bash(timeout:*)",
+      "Bash(rm:*)",
+      "Bash(ls:*)",
+      "Bash(cp:*)",
+      "Bash(python3:*)"
     ],
     "deny": []
   }

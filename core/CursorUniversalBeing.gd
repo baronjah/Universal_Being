@@ -45,7 +45,12 @@ func pentagon_init() -> void:
 	being_type = "cursor"
 	consciousness_level = 4
 	being_name = "Universal Cursor Final"
+	
+	# START IN INSPECT MODE BY DEFAULT!
+	current_mode = 1  # INSPECT mode for Universal Beings
+	
 	print("🎯 CursorUniversalBeingFinal: Pentagon init")
+	print("🔍 Starting in INSPECT mode - click Universal Beings to inspect!")
 
 func pentagon_ready() -> void:
 	super.pentagon_ready()
@@ -59,7 +64,9 @@ func pentagon_ready() -> void:
 	# Hide system cursor
 	Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
 	
-	print("🎯 Final Universal Cursor ready! Always on top!")
+	# Initialize cursor functionality
+	_setup_cursor_signals()
+	_configure_interaction_modes()
 
 func pentagon_process(delta: float) -> void:
 	super.pentagon_process(delta)
@@ -102,7 +109,8 @@ func create_absolute_top_cursor() -> void:
 	cursor_container = SubViewportContainer.new()
 	cursor_container.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	cursor_container.set_anchors_preset(Control.PRESET_FULL_RECT)
-	cursor_container.z_index = RenderingServer.CANVAS_ITEM_Z_MAX  # Absolute maximum
+	cursor_container.z_index = 999999  # MAXIMUM Z-INDEX EVER!
+	cursor_container.z_as_relative = false  # ABSOLUTE Z!
 	
 	# IMPORTANT: Make cursor work across windows
 	cursor_container.top_level = true  # This makes it independent of parent transforms
@@ -232,7 +240,12 @@ func check_hover() -> void:
 	
 	if ray_cast.is_colliding():
 		var collider = ray_cast.get_collider()
+		print("🎯 Raycast hit: %s" % (collider.name if collider else "null"))
 		new_hover = find_universal_being(collider)
+		if new_hover:
+			print("🎯 Found Universal Being: %s" % new_hover.being_name)
+		else:
+			print("🎯 No Universal Being found in: %s" % (collider.name if collider else "null"))
 	
 	if new_hover != hovered_object:
 		if hovered_object:
@@ -279,15 +292,24 @@ func update_hover_visual() -> void:
 # ===== INTERACTION =====
 
 func handle_click() -> void:
+	print("🖱️ CURSOR CLICK! Hovered object: %s" % (hovered_object.name if hovered_object else "NONE"))
+	
 	if not hovered_object:
+		print("❌ No object to click on!")
 		return
 		
 	cursor_clicked.emit(hovered_object, get_viewport().get_mouse_position())
 	
 	if current_mode == 1:  # INSPECT mode
+		print("🔍 In inspect mode, looking for Universal Being...")
 		var being = find_universal_being(hovered_object)
 		if being:
+			print("✅ Found Universal Being: %s" % being.being_name)
 			inspect_being(being)
+		else:
+			print("❌ No Universal Being found in object hierarchy!")
+	else:
+		print("⚠️ Not in inspect mode (mode: %d)" % current_mode)
 
 func inspect_being(being: UniversalBeing) -> void:
 	print("🔍 Inspecting: %s" % being.being_name)
@@ -362,4 +384,24 @@ func _generate_thought_result() -> Dictionary:
 	return result
 
 func _attempt_creation() -> void:
-	print("🎯 Cursor cannot create beings")
+	# Cursor is inspection-only, no creation
+	pass
+
+func _setup_cursor_signals() -> void:
+	"""Connect cursor to game systems"""
+	# Connect to console for inspection reports
+	var console = get_tree().get_nodes_in_group("console").front()
+	if console and cursor_inspected.is_connected(_on_cursor_inspected):
+		cursor_inspected.connect(_on_cursor_inspected)
+
+func _configure_interaction_modes() -> void:
+	"""Configure cursor interaction capabilities"""
+	# Set default to inspect mode for Universal Beings
+	current_mode = 1  # INSPECT mode
+	update_hover_visual()
+
+func _on_cursor_inspected(being: UniversalBeing) -> void:
+	"""Handle Universal Being inspection"""
+	var console = get_tree().get_nodes_in_group("console").front()
+	if console and console.has_method("add_message"):
+		console.add_message("system", "Inspecting: %s (%s)" % [being.being_name, being.being_type])

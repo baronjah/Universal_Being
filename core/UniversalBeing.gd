@@ -210,6 +210,9 @@ func pentagon_ready() -> void:
 	consciousness_awakened.emit(consciousness_level)
 	update_visual_layer_order()
 	
+	# Auto-create label if no visual representation exists
+	call_deferred("_check_and_create_auto_label")
+	
 	# Perform initial DNA analysis if enabled
 	if auto_analyze_dna:
 		call_deferred("analyze_dna")
@@ -220,6 +223,10 @@ func pentagon_process(delta: float) -> void:
 	_update_state_machine(delta)
 	_update_physics_interactions()
 	_process_proximity_detection()
+	
+	# Update auto-label periodically (every 60 frames)
+	if Engine.get_process_frames() % 60 == 0:
+		update_auto_label()
 
 func pentagon_input(event: InputEvent) -> void:
 	"""Input phase - ALWAYS CALL SUPER FIRST in subclasses"""
@@ -271,6 +278,87 @@ func create_consciousness_visual() -> void:
 func update_consciousness_visual() -> void:
 	aura_animation_timer += get_process_delta_time()
 	_update_aura_visual()
+
+func _check_and_create_auto_label() -> void:
+	"""Create Label3D if Universal Being has no other visual representation"""
+	# Skip if this is a special type that should not have auto-labels
+	if being_type in ["cursor", "ui", "console", "camera"]:
+		return
+	
+	# Check if already has visual representation (besides aura)
+	var has_visual = false
+	for child in get_children():
+		if child is MeshInstance3D or child is CSGShape3D or child is Label3D:
+			has_visual = true
+			break
+		elif child.name.contains("Mesh") or child.name.contains("Visual") or child.name.contains("Model"):
+			has_visual = true
+			break
+	
+	# If no visual representation, create a label
+	if not has_visual:
+		_create_auto_label()
+
+func _create_auto_label() -> void:
+	"""Create a Label3D with the being's name and info"""
+	# Check if label already exists
+	if has_node("AutoLabel"):
+		return
+	
+	var label = Label3D.new()
+	label.name = "AutoLabel"
+	label.text = "%s\n[%s]\nL%d" % [being_name, being_type, consciousness_level]
+	label.billboard = BaseMaterial3D.BILLBOARD_ENABLED
+	label.position.y = 1.0  # Float above the being
+	label.modulate = _get_consciousness_color()
+	
+	# Make text size based on consciousness level
+	label.pixel_size = 0.005 + (consciousness_level * 0.001)
+	
+	# Add outline for readability
+	label.outline_size = 2
+	label.outline_modulate = Color.BLACK
+	
+	add_child(label)
+	
+	# Make label collision area match text size
+	_create_label_collision_area(label)
+	
+	print("🏷️ Auto-label created for %s: %s" % [being_name, label.text])
+
+func _create_label_collision_area(label: Label3D) -> void:
+	"""Create collision area that matches the label size"""
+	if not collision_shape or not collision_area:
+		return
+	
+	# Estimate text size and make collision area match
+	var text_lines = label.text.split("\n")
+	var longest_line = ""
+	for line in text_lines:
+		if line.length() > longest_line.length():
+			longest_line = line
+	
+	# Rough text size estimation
+	var text_width = longest_line.length() * 0.3
+	var text_height = text_lines.size() * 0.5
+	
+	# Update collision shape to be at least as big as text
+	if collision_shape.shape is BoxShape3D:
+		var box_shape = collision_shape.shape as BoxShape3D
+		box_shape.size.x = max(box_shape.size.x, text_width)
+		box_shape.size.y = max(box_shape.size.y, text_height + 1.0)  # +1 for label height
+		box_shape.size.z = max(box_shape.size.z, 0.5)
+	elif collision_shape.shape is SphereShape3D:
+		var sphere_shape = collision_shape.shape as SphereShape3D
+		sphere_shape.radius = max(sphere_shape.radius, max(text_width, text_height) * 0.5)
+
+func update_auto_label() -> void:
+	"""Update auto-label text when properties change"""
+	var label = get_node_or_null("AutoLabel") as Label3D
+	if label:
+		label.text = "%s\n[%s]\nL%d" % [being_name, being_type, consciousness_level]
+		label.modulate = _get_consciousness_color()
+		label.pixel_size = 0.005 + (consciousness_level * 0.001)
 
 func _update_aura_visual() -> void:
 	if not aura_node:

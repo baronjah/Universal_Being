@@ -1,0 +1,3 @@
+[gd_scene format=3 uid="uid://dhy01f6kvegbt"]
+
+[node name="TextWindow" type="Node3D"]

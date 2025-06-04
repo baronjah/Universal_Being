@@ -1,6 +1,89 @@
-[gd_scene load_steps=2 format=3 uid="uid://b2v7hqk3x2dub"]
+[gd_scene load_steps=8 format=3]
 
-[ext_resource type="Script" uid="uid://bq40a6pgcikqx" path="res://main.gd" id="1_vf1jh"]
+[ext_resource type="Script" path="res://beings/player_universal_being.gd" id="1"]
+[ext_resource type="Script" path="res://core/CursorUniversalBeing.gd" id="2"]
+[ext_resource type="Script" path="res://beings/perfect_universal_console.gd" id="3"]
+
+[sub_resource type="Environment" id="Environment_1"]
+background_mode = 1
+background_color = Color(0.1, 0.2, 0.4, 1)
+ambient_light_source = 2
+ambient_light_color = Color(0.8, 0.9, 1, 1)
+ambient_light_energy = 0.3
+
+[sub_resource type="GDScript" id="GDScript_MAIN"]
+script/source = "extends Node3D
+
+func _ready():
+	# Initialize game systems
+	setup_game_world()
+	setup_ui_hints()
+	setup_input_handling()
+
+func setup_game_world():
+	# Ensure all Universal Beings are properly connected
+	var player = get_node_or_null('Player')
+	var cursor = get_node_or_null('Cursor') 
+	var console = get_node_or_null('Console')
+	
+	# Connect player to cursor for inspection
+	if player and cursor and cursor.has_method('set_player_reference'):
+		cursor.set_player_reference(player)
+
+func setup_ui_hints():
+	# Create game instructions UI
+	var ui_layer = CanvasLayer.new()
+	ui_layer.layer = 50
+	add_child(ui_layer)
+	
+	var hints = Label.new()
+	hints.text = 'WASD: Move | Mouse: Inspect | ~: Console | TAB: Cursor Mode'
+	hints.position = Vector2(10, 10)
+	hints.add_theme_color_override('font_color', Color.WHITE)
+	ui_layer.add_child(hints)
+
+func setup_input_handling():
+	# Enable console toggle
+	set_process_input(true)
+
+func _input(event):
+	if event.is_action_pressed('open_console'):
+		var console = get_node_or_null('Console')
+		if console and console.has_method('toggle_console_visibility'):
+			console.toggle_console_visibility()
+"
+
+[sub_resource type="BoxMesh" id="BoxMesh_GROUND"]
+size = Vector3(100, 1, 100)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_GROUND"]
+size = Vector3(100, 1, 100)
 
 [node name="Main" type="Node3D"]
-script = ExtResource("1_vf1jh")
+script = SubResource("GDScript_MAIN")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_1")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.707, -0.5, 0.5, 0, 0.707, 0.707, -0.707, -0.5, 0.5, 0, 8, 0)
+light_energy = 1.2
+shadow_enabled = true
+
+[node name="Ground" type="StaticBody3D" parent="."]
+
+[node name="GroundMesh" type="MeshInstance3D" parent="Ground"]
+mesh = SubResource("BoxMesh_GROUND")
+
+[node name="GroundCollision" type="CollisionShape3D" parent="Ground"]
+shape = SubResource("BoxShape3D_GROUND")
+
+[node name="Player" type="CharacterBody3D" parent="." groups=["player"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
+script = ExtResource("1")
+
+[node name="Cursor" type="Node3D" parent="." groups=["cursor"]]
+script = ExtResource("2")
+
+[node name="Console" type="Node3D" parent="." groups=["console"]]
+script = ExtResource("3")
