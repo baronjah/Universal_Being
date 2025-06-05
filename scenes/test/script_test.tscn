@@ -1,0 +1,14 @@
+[gd_scene load_steps=2 format=3 uid="uid://script_test_scene"]
+
+[ext_resource type="Script" path="res://scripts/PlasmoidUniversalBeing.gd" id="1"]
+
+[node name="ScriptTest" type="Node3D"]
+script = ExtResource("1")
+
+[node name="Label" type="Label" parent="."]
+offset_right = 400.0
+offset_bottom = 100.0
+text = "Script Test Scene - Check console for errors
+F1 - Toggle this info
+ESC - Exit test"
+vertical_alignment = 1

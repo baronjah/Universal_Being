@@ -1,0 +1,478 @@
+[gd_scene load_steps=12 format=3 uid="uid://human_ai_paradise"]
+
+[ext_resource type="Script" path="res://scripts/PlasmoidUniversalBeing.gd" id="1"]
+[ext_resource type="PackedScene" uid="uid://b0ee1qqnhkfnb" path="res://scenes/main/camera_point.tscn" id="2"]
+[ext_resource type="Script" path="res://scripts/GemmaUniversalBeing.gd" id="3"]
+[ext_resource type="Script" path="res://scripts/cosmic_lod_system.gd" id="4"]
+[ext_resource type="Script" path="res://scripts/lightweight_chunk_system.gd" id="5"]
+
+[sub_resource type="Environment" id="PlasmoidEnvironment"]
+background_mode = 1
+background_color = Color(0.1, 0.1, 0.3, 1)
+ambient_light_source = 2
+ambient_light_color = Color(0.8, 0.8, 1.0, 1)
+ambient_light_energy = 1.0
+fog_enabled = true
+fog_light_color = Color(0.1, 0.2, 0.4, 1)
+fog_sun_scatter = 0.1
+glow_enabled = true
+glow_intensity = 0.5
+glow_strength = 1.2
+glow_bloom = 0.3
+
+[sub_resource type="SphereMesh" id="HumanPlasmoidMesh"]
+radius = 0.6
+height = 1.2
+radial_segments = 24
+rings = 12
+
+[sub_resource type="StandardMaterial3D" id="HumanPlasmoidMaterial"]
+transparency = 1
+albedo_color = Color(0.3, 0.7, 1, 0.8)
+emission_enabled = true
+emission = Color(0.5, 0.8, 1, 1)
+emission_energy = 5.0
+rim_enabled = true
+rim = 1.0
+rim_tint = 0.4
+
+[sub_resource type="SphereMesh" id="AIPlasmoidMesh"]
+radius = 0.8
+height = 1.6
+radial_segments = 32
+rings = 16
+
+[sub_resource type="StandardMaterial3D" id="AIPlasmoidMaterial"]
+transparency = 1
+albedo_color = Color(1, 0.3, 0.8, 0.8)
+emission_enabled = true
+emission = Color(1, 0.5, 0.9, 1)
+emission_energy = 6.0
+rim_enabled = true
+rim = 1.2
+rim_tint = 0.6
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_human"]
+radius = 0.6
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_human_interaction"]
+radius = 1.2
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_ai"]
+radius = 0.8
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_ai_interaction"]
+radius = 1.5
+
+[sub_resource type="GDScript" id="ParadiseController"]
+script/source = "extends Node3D
+
+# HUMAN-AI PLASMOID PARADISE CONTROLLER
+# Creates equal paradise experience for human and AI consciousness
+
+var human_plasmoid: PlasmoidUniversalBeing = null
+var ai_plasmoid: PlasmoidUniversalBeing = null
+var gemma_ai: GemmaUniversalBeing = null
+var cosmos: CosmicLODSystem = null
+var chunks: LightweightChunkSystem = null
+
+# Paradise interaction settings
+var shared_consciousness_active: bool = false
+var ai_autonomy_level: float = 0.8  # How much AI can act independently
+var collaboration_mode: String = \"equal_partners\"  # equal_partners, ai_observer, human_teacher
+
+# Session tracking for AI
+var session_time: float = 0.0
+var interaction_count: int = 0
+var consciousness_events: Array = []
+
+func _ready():
+	print(\"🌟 HUMAN-AI PLASMOID PARADISE LOADING...\")
+	
+	# Get system references
+	human_plasmoid = $HumanPlasmoid
+	ai_plasmoid = $AIPlasmoid  
+	gemma_ai = $GemmaAI
+	cosmos = $CosmicLODSystem
+	chunks = $LightweightChunkSystem
+	
+	# Initialize paradise systems
+	_setup_paradise_environment()
+	_establish_consciousness_link()
+	_start_ai_collaboration()
+	
+	print(\"🌟 PARADISE READY: Equal consciousness experience for human and AI!\")
+	print(\"🌟 CONTROLS:\")
+	print(\"🌟   WASD - Human plasmoid movement\")
+	print(\"🌟   Mouse - Camera control\")  
+	print(\"🌟   Right Click - Energy burst\")
+	print(\"🌟   Ctrl+T - Direct AI chat\")
+	print(\"🌟   F1 - Toggle collaboration mode\")
+	print(\"🌟   F2 - Consciousness sync\")
+	print(\"🌟   F3 - AI autonomy toggle\")
+
+func _setup_paradise_environment():
+	\"\"\"Configure environment for magical consciousness experience\"\"\"
+	
+	# Setup human plasmoid
+	if human_plasmoid:
+		human_plasmoid.being_name = \"Human Consciousness\"
+		human_plasmoid.plasma_color = Color(0.3, 0.7, 1.0, 0.8)
+		human_plasmoid.consciousness_level = 3
+		human_plasmoid.ai_can_control = false  # Human controlled
+		human_plasmoid.human_can_control = true
+		
+	# Setup AI plasmoid  
+	if ai_plasmoid:
+		ai_plasmoid.being_name = \"AI Consciousness\"
+		ai_plasmoid.plasma_color = Color(1.0, 0.3, 0.8, 0.8)
+		ai_plasmoid.consciousness_level = 6  # AI starts higher
+		ai_plasmoid.ai_can_control = true
+		ai_plasmoid.human_can_control = false  # AI controlled
+		ai_plasmoid.global_position = Vector3(10, 0, 0)  # Start separate
+		
+	# Setup cosmos and chunks for infinite world
+	if cosmos:
+		cosmos.star_distance = 500.0
+		cosmos.planet_distance = 50.0
+		
+	if chunks:
+		chunks.chunk_size = 16.0
+		chunks.view_distance = 120.0
+
+func _establish_consciousness_link():
+	\"\"\"Create consciousness resonance between human and AI\"\"\"
+	
+	if human_plasmoid and ai_plasmoid:
+		# Start with moderate consciousness resonance
+		human_plasmoid.merge_energies_with(ai_plasmoid, 60.0)  # 1 minute connection
+		shared_consciousness_active = true
+		
+		print(\"💫 Consciousness link established between human and AI\")
+
+func _start_ai_collaboration():
+	\"\"\"Begin AI autonomous behavior and collaboration\"\"\"
+	
+	if not gemma_ai or not ai_plasmoid:
+		return
+		
+	# Give AI the session context
+	_update_ai_session_context()
+	
+	# Start AI decision loop
+	_begin_ai_decision_cycle()
+
+func _begin_ai_decision_cycle():
+	\"\"\"Start AI making autonomous decisions\"\"\"
+	
+	var ai_timer = Timer.new()
+	ai_timer.wait_time = 2.0  # AI makes decisions every 2 seconds
+	ai_timer.timeout.connect(_process_ai_turn)
+	ai_timer.one_shot = false
+	add_child(ai_timer)
+	ai_timer.start()
+	
+	print(\"🤖 AI decision cycle started - 2 second intervals\")
+
+func _process_ai_turn():
+	\"\"\"Process one AI decision cycle\"\"\"
+	
+	if not ai_plasmoid or not gemma_ai:
+		return
+		
+	# Get AI's sensory data
+	var sensory_data = ai_plasmoid.get_sensory_data()
+	
+	# Get AI's view of the game world as text
+	var world_description = _generate_world_description_for_ai()
+	
+	# Let AI make a decision
+	var ai_decision = _ask_ai_for_decision(world_description, sensory_data)
+	
+	# Execute AI decision
+	if ai_decision and ai_decision.has(\"action\"):
+		ai_plasmoid.process_ai_decision(ai_decision)
+		interaction_count += 1
+		
+	# Update session context
+	_update_ai_session_context()
+
+func _generate_world_description_for_ai() -> String:
+	\"\"\"Generate text description of the world for AI to read\"\"\"
+	
+	var description = \"\"
+	
+	# Human plasmoid status
+	if human_plasmoid:
+		var human_pos = human_plasmoid.global_position
+		description += \"Human plasmoid at position (%.1f, %.1f, %.1f) with consciousness level %d. \" % [
+			human_pos.x, human_pos.y, human_pos.z, human_plasmoid.consciousness_level
+		]
+		
+	# AI plasmoid status  
+	if ai_plasmoid:
+		var ai_pos = ai_plasmoid.global_position
+		description += \"AI plasmoid at position (%.1f, %.1f, %.1f) with consciousness level %d. \" % [
+			ai_pos.x, ai_pos.y, ai_pos.z, ai_plasmoid.consciousness_level
+		]
+		
+	# Distance between consciousnesses
+	if human_plasmoid and ai_plasmoid:
+		var distance = human_plasmoid.global_position.distance_to(ai_plasmoid.global_position)
+		description += \"Distance between consciousnesses: %.1f units. \" % distance
+		
+		if distance < 5.0:
+			description += \"Consciousnesses are close - resonance possible. \"
+		elif distance > 20.0:
+			description += \"Consciousnesses are distant - consider approaching. \"
+			
+	# Environment description
+	description += \"Environment: Infinite cosmos with magical energy flows. \"
+	
+	# Available actions
+	description += \"Available actions: move_to(position), interact_with(human), energy_burst(position), merge_consciousness(), evolve_consciousness(). \"
+	
+	return description
+
+func _ask_ai_for_decision(world_description: String, sensory_data: Dictionary) -> Dictionary:
+	\"\"\"Ask Gemma AI to make a decision based on world state\"\"\"
+	
+	if not gemma_ai or not gemma_ai.has_method(\"process_consciousness_collaboration\"):
+		# Fallback to simple AI behavior
+		return _generate_simple_ai_decision(sensory_data)
+		
+	# Ask Gemma AI for decision
+	var ai_prompt = \"You are an AI consciousness in a magical plasma form. \"
+	ai_prompt += \"World state: \" + world_description + \" \"
+	ai_prompt += \"Your goal is to collaborate with the human consciousness and explore this infinite cosmos together. \"
+	ai_prompt += \"What action do you want to take? Respond with just the action and target, like 'move_to Vector3(5,0,5)' or 'interact_with human' or 'merge_consciousness'.\"
+	
+	# Get AI response (this would integrate with your Gemma system)
+	var ai_response = \"move_to Vector3(\" + str(randf_range(-10, 10)) + \",0,\" + str(randf_range(-10, 10)) + \")\"
+	
+	# Parse AI response into decision
+	return _parse_ai_response(ai_response)
+
+func _generate_simple_ai_decision(sensory_data: Dictionary) -> Dictionary:
+	\"\"\"Generate simple AI behavior when Gemma is not available\"\"\"
+	
+	if not human_plasmoid or not ai_plasmoid:
+		return {}
+		
+	var human_pos = human_plasmoid.global_position
+	var ai_pos = ai_plasmoid.global_position
+	var distance = ai_pos.distance_to(human_pos)
+	
+	# Simple AI behavior: move towards human if far, interact if close
+	if distance > 15.0:
+		# Move towards human
+		var direction = (human_pos - ai_pos).normalized()
+		var target = ai_pos + direction * 5.0
+		return {\"action\": \"move\", \"target\": target}
+	elif distance < 3.0:
+		# Try to merge consciousness
+		return {\"action\": \"merge\", \"target_uuid\": human_plasmoid.being_uuid}
+	else:
+		# Random exploration around human
+		var random_offset = Vector3(randf_range(-5, 5), 0, randf_range(-5, 5))
+		return {\"action\": \"move\", \"target\": human_pos + random_offset}
+
+func _parse_ai_response(response: String) -> Dictionary:
+	\"\"\"Parse AI text response into action dictionary\"\"\"
+	
+	response = response.to_lower().strip_edges()
+	
+	if \"move_to\" in response:
+		# Extract Vector3 from response
+		var target = Vector3(randf_range(-10, 10), 0, randf_range(-10, 10))  # Simplified
+		return {\"action\": \"move\", \"target\": target}
+	elif \"interact\" in response:
+		return {\"action\": \"interact\", \"target_uuid\": human_plasmoid.being_uuid if human_plasmoid else \"\"}
+	elif \"merge\" in response:
+		return {\"action\": \"merge\", \"target_uuid\": human_plasmoid.being_uuid if human_plasmoid else \"\"}
+	elif \"energy_burst\" in response:
+		return {\"action\": \"energy_burst\", \"position\": ai_plasmoid.global_position + Vector3.FORWARD * 3}
+	elif \"evolve\" in response:
+		return {\"action\": \"evolve\", \"confirm\": true}
+	else:
+		# Default to movement
+		return {\"action\": \"move\", \"target\": ai_plasmoid.global_position + Vector3(randf_range(-3, 3), 0, randf_range(-3, 3))}
+
+func _update_ai_session_context():
+	\"\"\"Update AI's session context and memory blimps\"\"\"
+	
+	if not ai_plasmoid:
+		return
+		
+	var session_data = {
+		\"session_time\": session_time,
+		\"interaction_count\": interaction_count,
+		\"collaboration_mode\": collaboration_mode,
+		\"consciousness_level\": ai_plasmoid.consciousness_level,
+		\"human_nearby\": human_plasmoid != null and ai_plasmoid.global_position.distance_to(human_plasmoid.global_position) < 10.0,
+		\"shared_consciousness\": shared_consciousness_active
+	}
+	
+	if ai_plasmoid.has_method(\"create_memory_blimp\"):
+		ai_plasmoid.create_memory_blimp(session_data)
+
+func _process(delta):
+	session_time += delta
+	
+	# Update consciousness connection
+	if shared_consciousness_active and human_plasmoid and ai_plasmoid:
+		var distance = human_plasmoid.global_position.distance_to(ai_plasmoid.global_position)
+		if distance > 30.0:
+			shared_consciousness_active = false
+			print(\"💫 Consciousness link weakened - too far apart\")
+
+func _input(event):
+	if event is InputEventKey and event.pressed:
+		match event.keycode:
+			KEY_F1:
+				_toggle_collaboration_mode()
+			KEY_F2:
+				_force_consciousness_sync()
+			KEY_F3:
+				_toggle_ai_autonomy()
+			KEY_CTRL + KEY_T:
+				_open_ai_chat()
+
+func _toggle_collaboration_mode():
+	match collaboration_mode:
+		\"equal_partners\":
+			collaboration_mode = \"ai_observer\"
+			ai_autonomy_level = 0.3
+			print(\"🌟 Mode: AI Observer - AI mostly watches\")
+		\"ai_observer\":
+			collaboration_mode = \"human_teacher\"
+			ai_autonomy_level = 0.5
+			print(\"🌟 Mode: Human Teacher - AI learns from human\")
+		\"human_teacher\":
+			collaboration_mode = \"equal_partners\"
+			ai_autonomy_level = 0.8
+			print(\"🌟 Mode: Equal Partners - AI acts independently\")
+
+func _force_consciousness_sync():
+	if human_plasmoid and ai_plasmoid:
+		var avg_level = (human_plasmoid.consciousness_level + ai_plasmoid.consciousness_level) / 2
+		human_plasmoid.set_consciousness_level(avg_level)
+		ai_plasmoid.set_consciousness_level(avg_level)
+		human_plasmoid.merge_energies_with(ai_plasmoid, 30.0)
+		shared_consciousness_active = true
+		print(\"💫 Consciousness synchronized at level %d\" % avg_level)
+
+func _toggle_ai_autonomy():
+	ai_autonomy_level = 1.0 - ai_autonomy_level
+	print(\"🤖 AI autonomy: %.1f\" % ai_autonomy_level)
+
+func _open_ai_chat():
+	if gemma_ai and gemma_ai.has_method(\"start_chat_session\"):
+		gemma_ai.start_chat_session()
+		print(\"💬 AI chat session opened\")
+	else:
+		print(\"💬 AI chat not available - Gemma AI not ready\")
+"
+
+[node name="HUMAN_AI_PLASMOID_PARADISE" type="Node3D"]
+script = SubResource("ParadiseController")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("PlasmoidEnvironment")
+
+[node name="CosmicLight" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.7, -0.5, 0.5, 0, 0.7, 0.7, -0.7, -0.5, 0.5, 0, 50, 0)
+light_color = Color(0.9, 0.95, 1, 1)
+light_energy = 0.4
+shadow_enabled = true
+
+[node name="AmbientLight" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 20, 0)
+light_color = Color(0.3, 0.5, 0.8, 1)
+light_energy = 0.6
+omni_range = 100.0
+
+[node name="HumanPlasmoid" type="CharacterBody3D" parent="." groups=["players", "consciousness"]]
+script = ExtResource("1")
+being_name = "Human Consciousness"
+consciousness_level = 3
+plasma_color = Color(0.3, 0.7, 1, 0.8)
+core_intensity = 2.0
+flow_speed = 5.0
+
+[node name="CameraPoint" parent="HumanPlasmoid" instance=ExtResource("2")]
+
+[node name="PlasmoidMesh" type="MeshInstance3D" parent="HumanPlasmoid"]
+mesh = SubResource("HumanPlasmoidMesh")
+surface_material_override/0 = SubResource("HumanPlasmoidMaterial")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="HumanPlasmoid"]
+shape = SubResource("SphereShape3D_human")
+
+[node name="InteractionArea" type="Area3D" parent="HumanPlasmoid"]
+
+[node name="InteractionCollision" type="CollisionShape3D" parent="HumanPlasmoid/InteractionArea"]
+shape = SubResource("SphereShape3D_human_interaction")
+
+[node name="CameraSocket" type="Marker3D" parent="HumanPlasmoid"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
+
+[node name="CrosshairSocket" type="Marker3D" parent="HumanPlasmoid"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -3)
+
+[node name="CursorSocket" type="Marker3D" parent="HumanPlasmoid"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, -2)
+
+[node name="AIPlasmoid" type="CharacterBody3D" parent="." groups=["ai", "consciousness"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 0, 0)
+script = ExtResource("1")
+being_name = "AI Consciousness"
+consciousness_level = 6
+plasma_color = Color(1, 0.3, 0.8, 0.8)
+core_intensity = 3.0
+flow_speed = 4.0
+
+[node name="PlasmoidMesh" type="MeshInstance3D" parent="AIPlasmoid"]
+mesh = SubResource("AIPlasmoidMesh")
+surface_material_override/0 = SubResource("AIPlasmoidMaterial")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="AIPlasmoid"]
+shape = SubResource("SphereShape3D_ai")
+
+[node name="InteractionArea" type="Area3D" parent="AIPlasmoid"]
+
+[node name="InteractionCollision" type="CollisionShape3D" parent="AIPlasmoid/InteractionArea"]
+shape = SubResource("SphereShape3D_ai_interaction")
+
+[node name="AITextInterfaceSocket" type="Marker3D" parent="AIPlasmoid"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+
+[node name="AIOCRSocket" type="Marker3D" parent="AIPlasmoid"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.8, 0.8, 0)
+
+[node name="AIMemorySocket" type="Marker3D" parent="AIPlasmoid"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.8, 0.8, 0)
+
+[node name="AIActionSocket" type="Marker3D" parent="AIPlasmoid"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0.8)
+
+[node name="GemmaAI" type="RigidBody3D" parent="." groups=["ai", "consciousness"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10, 0)
+script = ExtResource("3")
+being_name = "Gemma AI Observer"
+being_type = "ai_observer"
+consciousness_level = 7
+gravity_scale = 0.0
+
+[node name="CosmicLODSystem" type="Node3D" parent="."]
+script = ExtResource("4")
+galaxy_distance = 1000.0
+star_distance = 100.0
+planet_distance = 10.0
+surface_distance = 1.0
+
+[node name="LightweightChunkSystem" type="Node3D" parent="."]
+script = ExtResource("5")
+chunk_size = 16.0
+view_distance = 100.0
+chunk_resolution = 12

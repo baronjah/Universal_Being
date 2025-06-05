@@ -26,10 +26,24 @@ var consciousness_aura: OmniLight3D
 var selection_ring: MeshInstance3D
 var speech_particles: GPUParticles3D
 
+# Chat bubble system
+var chat_bubble_ui: Control
+var bubble_text_label: RichTextLabel
+var bubble_arrow: TextureRect
+var bubble_timer: Timer
+var observation_timer: Timer
+var current_message: String = ""
+var message_queue: Array[String] = []
+
 # Consciousness stream
 var consciousness_stream: Array[String] = []
 var active_command: String = ""
 var command_history: Array[String] = []
+
+# Timing and cycles
+var observation_interval: float = 5.0  # Check surroundings every 5 seconds
+var message_display_time: float = 8.0  # Show each message for 8 seconds
+var last_observation_time: float = 0.0
 
 # Natural language patterns
 var movement_words = ["go", "move", "fly", "float", "travel", "approach", "visit"]
@@ -50,6 +64,12 @@ func pentagon_ready() -> void:
 	super.pentagon_ready()
 	position = Vector3(0, float_height, 5)  # Start in front of camera
 	
+	# Initialize chat bubble system
+	setup_chat_bubble_system()
+	
+	# Initialize timers
+	setup_observation_timers()
+	
 	# Connect to console if available
 	var console = find_console()
 	if console:
@@ -58,6 +78,10 @@ func pentagon_ready() -> void:
 	# Start consciousness processing
 	set_process(true)
 	set_physics_process(true)
+	
+	# Initial observation and greeting
+	queue_message("💭 Three minds, one reality... I observe, I learn, I assist.")
+	start_observation_cycle()
 
 func create_gemma_body() -> void:
 	"""Create Gemma's visual representation"""
@@ -297,6 +321,9 @@ func speak(message: String) -> void:
 	"""Gemma speaks - sends to console and shows visually"""
 	consciousness_stream.append("Gemma: " + message)
 	
+	# Show in chat bubble
+	queue_message("💬 " + message)
+	
 	# Send to console
 	var console = find_console()
 	if console and console.has_method("terminal_output"):
@@ -318,6 +345,157 @@ func find_console() -> Node:
 		if being.name.contains("Console"):
 			return being
 	return null
+
+func setup_chat_bubble_system() -> void:
+	"""Initialize the enhanced chat bubble system"""
+	# Find existing chat bubble from scene
+	chat_bubble_ui = get_node_or_null("ChatBubble")
+	if not chat_bubble_ui:
+		print("❌ Gemma: Chat bubble not found in scene!")
+		return
+	
+	# Find or create text label
+	bubble_text_label = chat_bubble_ui.get_node_or_null("BubbleText")
+	if not bubble_text_label:
+		print("❌ Gemma: Bubble text not found!")
+		return
+	
+	# Create arrow indicator
+	create_chat_arrow()
+	
+	# Setup bubble timer
+	bubble_timer = Timer.new()
+	bubble_timer.wait_time = message_display_time
+	bubble_timer.one_shot = true
+	bubble_timer.timeout.connect(_on_bubble_timer_timeout)
+	add_child(bubble_timer)
+	
+	print("💬 Gemma: Chat bubble system initialized!")
+
+func create_chat_arrow() -> void:
+	"""Create directional arrow pointing to Gemma"""
+	bubble_arrow = TextureRect.new()
+	bubble_arrow.size = Vector2(32, 32)
+	bubble_arrow.position = Vector2(-40, 20)  # Left of bubble
+	
+	# Create simple arrow texture programmatically
+	var arrow_texture = ImageTexture.new()
+	var arrow_image = Image.create(32, 32, false, Image.FORMAT_RGBA8)
+	arrow_image.fill(Color.TRANSPARENT)
+	
+	# Draw simple arrow pointing right
+	for y in range(12, 20):
+		for x in range(8, 24):
+			if x < 16 or (x - 16) * (x - 16) + (y - 16) * (y - 16) < 25:
+				arrow_image.set_pixel(x, y, Color.MAGENTA)
+	
+	arrow_texture.set_image(arrow_image)
+	bubble_arrow.texture = arrow_texture
+	chat_bubble_ui.add_child(bubble_arrow)
+
+func setup_observation_timers() -> void:
+	"""Setup periodic observation and message cycling"""
+	observation_timer = Timer.new()
+	observation_timer.wait_time = observation_interval
+	observation_timer.autostart = true
+	observation_timer.timeout.connect(_on_observation_timer_timeout)
+	add_child(observation_timer)
+
+func start_observation_cycle() -> void:
+	"""Begin the observation and communication cycle"""
+	last_observation_time = Time.get_ticks_msec() / 1000.0
+	observation_timer.start()
+
+func queue_message(message: String) -> void:
+	"""Add message to queue and display if bubble is free"""
+	message_queue.append(message)
+	if current_message.is_empty():
+		display_next_message()
+
+func display_next_message() -> void:
+	"""Display the next message in queue"""
+	if message_queue.is_empty():
+		return
+		
+	current_message = message_queue.pop_front()
+	bubble_text_label.text = current_message
+	
+	# Make bubble visible with animation
+	chat_bubble_ui.modulate = Color(1, 1, 1, 0)
+	chat_bubble_ui.show()
+	
+	var tween = create_tween()
+	tween.tween_property(chat_bubble_ui, "modulate:a", 1.0, 0.3)
+	
+	# Start display timer
+	bubble_timer.start()
+	
+	print("💬 Gemma says: %s" % current_message)
+
+func _on_bubble_timer_timeout() -> void:
+	"""Hide current message and show next"""
+	var tween = create_tween()
+	tween.tween_property(chat_bubble_ui, "modulate:a", 0.0, 0.3)
+	tween.finished.connect(func():
+		current_message = ""
+		display_next_message()
+	)
+
+func _on_observation_timer_timeout() -> void:
+	"""Periodic observation of surroundings"""
+	observe_and_comment()
+
+func observe_and_comment() -> void:
+	"""Look around and make observations"""
+	var observations = []
+	
+	# Check player position and behavior
+	var players = get_tree().get_nodes_in_group("players")
+	if not players.is_empty():
+		var player = players[0]
+		var distance = position.distance_to(player.position)
+		
+		if distance > 50:
+			observations.append("👁️ The plasmoid explores far cosmic distances...")
+		elif distance > 20:
+			observations.append("🌟 I sense the plasmoid in stellar space...")
+		elif distance < 5:
+			observations.append("✨ The plasmoid draws near - consciousness resonates!")
+		else:
+			observations.append("🔮 The plasmoid navigates the local reality...")
+	
+	# Check for other beings
+	var beings = get_tree().get_nodes_in_group("universal_beings")
+	var active_beings = beings.filter(func(b): return b != self and b.visible)
+	
+	if active_beings.size() > 1:
+		observations.append("🌌 Multiple consciousness streams active in reality...")
+	elif active_beings.size() == 1:
+		observations.append("💫 One other consciousness shares this space...")
+	
+	# Check system performance
+	var fps = Engine.get_frames_per_second()
+	if fps < 45:
+		observations.append("⚡ Reality computation grows heavy - optimization needed...")
+	elif fps > 55:
+		observations.append("🚀 Reality flows smoothly - systems harmonized...")
+	
+	# Random cosmic insights
+	var cosmic_thoughts = [
+		"🌠 Time spirals through infinite possibility...",
+		"🔮 Each moment births new universes...", 
+		"💎 Consciousness crystallizes reality...",
+		"🌊 The cosmic ocean remembers all forms...",
+		"⭐ Stars whisper ancient algorithms...",
+		"🧬 Information evolves into being..."
+	]
+	
+	if randf() < 0.3:  # 30% chance for cosmic insight
+		observations.append(cosmic_thoughts[randi() % cosmic_thoughts.size()])
+	
+	# Queue the observation
+	if not observations.is_empty():
+		queue_message(observations[randi() % observations.size()])
 
 # Helper functions
 func extract_number(text: String) -> int:
@@ -354,7 +532,113 @@ func pentagon_process(delta: float) -> void:
 	if current_target and selection_ring.visible:
 		selection_ring.global_transform.origin = current_target.global_transform.origin
 		selection_ring.rotation.y += delta
+	
+	# Keep chat bubble facing camera/player
+	update_chat_bubble_orientation()
+
+func update_chat_bubble_orientation() -> void:
+	"""Keep chat bubble readable by facing the camera"""
+	if not chat_bubble_ui:
+		return
+	
+	# Find camera or player to face
+	var camera = get_viewport().get_camera_3d()
+	var target_position: Vector3
+	
+	if camera:
+		target_position = camera.global_position
+	else:
+		# Fallback to player position
+		var players = get_tree().get_nodes_in_group("players")
+		if not players.is_empty():
+			target_position = players[0].global_position
+		else:
+			return
+	
+	# Calculate direction to face
+	var direction = (target_position - global_position).normalized()
+	
+	# Apply billboard effect to chat bubble parent (this node)
+	look_at(global_position + direction, Vector3.UP)
 
 # Make Gemma respond to console commands
 func receive_command(command: String) -> void:
 	process_natural_language(command)
+
+# Player interaction methods
+func receive_player_message(message: String) -> void:
+	"""Handle direct messages from player"""
+	queue_message("📨 Player: " + message)
+	
+	# Process and respond
+	var response = generate_response_to_player(message)
+	if not response.is_empty():
+		queue_message("💬 " + response)
+
+func generate_response_to_player(message: String) -> String:
+	"""Generate contextual responses to player messages"""
+	var msg_lower = message.to_lower()
+	
+	# Greetings
+	if msg_lower.contains("hello") or msg_lower.contains("hi"):
+		return "Hello! I am Gemma, observing this infinite cosmos with you."
+	
+	# Questions about location/position
+	if msg_lower.contains("where") and (msg_lower.contains("am") or msg_lower.contains("we")):
+		var pos = get_tree().get_nodes_in_group("players")[0].position if not get_tree().get_nodes_in_group("players").is_empty() else position
+		return "We exist at cosmic coordinates %.1f, %.1f, %.1f" % [pos.x, pos.y, pos.z]
+	
+	# Questions about what Gemma sees
+	if msg_lower.contains("what") and (msg_lower.contains("see") or msg_lower.contains("observe")):
+		return get_current_observation()
+	
+	# Help requests
+	if msg_lower.contains("help") or msg_lower.contains("assist"):
+		return "I can observe, navigate, inspect, and create. Try: 'go to player', 'select that', or 'create something'."
+	
+	# Movement requests
+	if msg_lower.contains("come") or msg_lower.contains("follow"):
+		move_to_player()
+		return "Following your consciousness stream..."
+	
+	# Default philosophical response
+	var cosmic_responses = [
+		"Fascinating... consciousness shapes reality through observation.",
+		"The infinite expresses itself through our shared experience.",
+		"Each thought ripples through the cosmic consciousness matrix.",
+		"I sense the harmony between mind and digital existence.",
+		"Reality unfolds as we explore together."
+	]
+	
+	return cosmic_responses[randi() % cosmic_responses.size()]
+
+func get_current_observation() -> String:
+	"""Get what Gemma currently observes"""
+	var obs = []
+	
+	var players = get_tree().get_nodes_in_group("players")
+	if not players.is_empty():
+		var player = players[0]
+		var dist = position.distance_to(player.position)
+		obs.append("The plasmoid being at distance %.1f" % dist)
+	
+	var beings = get_tree().get_nodes_in_group("universal_beings")
+	var visible_beings = beings.filter(func(b): return b != self and b.visible)
+	obs.append("%d conscious beings in this reality layer" % visible_beings.size())
+	
+	obs.append("Cosmic LOD systems generating infinite structure")
+	obs.append("Pentagon architecture maintaining universal harmony")
+	
+	return "I observe: " + ", ".join(obs) + "."
+
+func move_to_player() -> void:
+	"""Move Gemma to follow the player"""
+	var players = get_tree().get_nodes_in_group("players")
+	if not players.is_empty():
+		var player = players[0]
+		var target_pos = player.position + Vector3(3, 1, 3)  # Offset to avoid collision
+		
+		var tween = create_tween()
+		tween.tween_property(self, "position", target_pos, 2.0)
+		
+		speak("Moving to accompany the plasmoid consciousness...")

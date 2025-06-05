@@ -1,6 +1,6 @@
 [gd_scene load_steps=7 format=3 uid="uid://bwcpvd8w4d76h"]
 
-[ext_resource type="Script" path="res://core/UniversalBeing.gd" id="1"]
+[ext_resource type="Script" path="res://scripts/PlasmoidUniversalBeing.gd" id="1"]
 
 [sub_resource type="SphereMesh" id="SphereMesh_plasmoid"]
 radius = 0.5
@@ -65,6 +65,18 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2)
 
 [node name="CursorSocket" type="Marker3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, -1.5)
+
+[node name="AITextInterfaceSocket" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8, 0)
+
+[node name="AIOCRSocket" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 0.5, 0)
+
+[node name="AIMemorySocket" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0.5, 0)
+
+[node name="AIActionSocket" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, 0.5)
 
 [node name="PulseAnimator" type="AnimationPlayer" parent="."]
 

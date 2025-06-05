@@ -1,0 +1,21 @@
+[gd_scene load_steps=3 format=3 uid="uid://wasd_test"]
+
+[ext_resource type="Script" path="res://scripts/PlasmoidUniversalBeing.gd" id="1"]
+
+[sub_resource type="SphereShape3D" id="TestShape"]
+radius = 0.6
+
+[node name="SimpleWASDTest" type="CharacterBody3D"]
+script = ExtResource("1")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("TestShape")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+[node name="Label" type="Label" parent="."]
+offset_right = 400.0
+offset_bottom = 100.0
+text = "WASD Test - Use WASD keys to move
+Space/Shift for up/down
+F1 - Exit test"
+vertical_alignment = 1

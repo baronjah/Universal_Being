@@ -6,7 +6,7 @@
 # AUTHOR: JSH + Claude Code + Luminus + Alpha
 # ==================================================
 
-extends CharacterBody3D
+extends Node3D
 class_name UniversalBeing
 
 # ===== CORE UNIVERSAL BEING PROPERTIES =====
@@ -177,44 +177,7 @@ func _exit_tree() -> void:
 # Pentagon Functions - Override in subclasses
 
 func pentagon_init() -> void:
-	# Initialize physics body
-	if self is CharacterBody3D:
-		# Add collision shape
-		var collision = CollisionShape3D.new()
-		var shape = CapsuleShape3D.new()
-		shape.radius = 0.5
-		shape.height = 2.0
-		collision.shape = shape
-		add_child(collision)
-		
-		# Add visual mesh
-		var mesh_instance = MeshInstance3D.new()
-		var capsule_mesh = CapsuleMesh.new()
-		capsule_mesh.radius = 0.5
-		capsule_mesh.height = 2.0
-		mesh_instance.mesh = capsule_mesh
-		add_child(mesh_instance)
-		
-		# Create camera socket
-		var camera_socket = get_node_or_null("CameraSocket")
-		if not camera_socket:
-			camera_socket = Node3D.new()
-			camera_socket.name = "CameraSocket"
-			camera_socket.position = Vector3(0, 1.5, 0)
-			add_child(camera_socket)
-		
-		# Load and attach camera to socket
-		var camera_scene = load("res://scenes/main/camera_point.tscn")
-		if camera_scene:
-			var camera_instance = camera_scene.instantiate()
-			camera_socket.add_child(camera_instance)
-			
-			# Set trackball camera as current
-			var trackball_cam = camera_instance.get_node_or_null("TrackballCamera")
-			if trackball_cam:
-				trackball_cam.current = true
-	
-	# Initialize Universal Being core
+	"""Initialize Universal Being core - ALWAYS CALL SUPER FIRST in subclasses"""
 	if being_uuid.is_empty():
 		being_uuid = generate_uuid()
 	metadata.created_at = Time.get_ticks_msec()
@@ -255,29 +218,7 @@ func pentagon_ready() -> void:
 		call_deferred("analyze_dna")
 
 func pentagon_process(delta: float) -> void:
-	# Basic movement for CharacterBody3D
-	if self is CharacterBody3D:
-		# Handle gravity
-		if not is_on_floor():
-			velocity.y -= 20.0 * delta
-		
-		# Handle jump
-		if Input.is_action_just_pressed("jump") and is_on_floor():
-			velocity.y = 10.0
-		
-		# Handle movement
-		var input_dir = Input.get_vector("move_left", "move_right", "move_forward", "move_backward")
-		var direction = (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
-		
-		if direction:
-			velocity.x = direction.x * 5.0
-			velocity.z = direction.z * 5.0
-		else:
-			velocity.x = move_toward(velocity.x, 0, 5.0 * delta)
-			velocity.z = move_toward(velocity.z, 0, 5.0 * delta)
-		
-		move_and_slide()
-	
+	"""Process phase - ALWAYS CALL SUPER FIRST in subclasses"""
 	update_consciousness_visual()
 	_update_state_machine(delta)
 	_update_physics_interactions()
