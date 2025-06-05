@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://cek7gkn7m2n5j"
+path="res://.godot/imported/Impact Metal Object Solid Hit By Solid Pipe 01.wav-339a88d3f0fae5d099f7513eb1fc008c.sample"
+
+[deps]
+
+source_file="res://akashic_library/sounds/Impacts/Impact Metal Object Solid Hit By Solid Pipe 01.wav"
+dest_files=["res://.godot/imported/Impact Metal Object Solid Hit By Solid Pipe 01.wav-339a88d3f0fae5d099f7513eb1fc008c.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

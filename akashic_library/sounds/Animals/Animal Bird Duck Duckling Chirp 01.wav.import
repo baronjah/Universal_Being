@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://b6d7i68rbwkre"
+path="res://.godot/imported/Animal Bird Duck Duckling Chirp 01.wav-3ef32fc1bbfe7060be0bb51a509be2f0.sample"
+
+[deps]
+
+source_file="res://akashic_library/sounds/Animals/Animal Bird Duck Duckling Chirp 01.wav"
+dest_files=["res://.godot/imported/Animal Bird Duck Duckling Chirp 01.wav-3ef32fc1bbfe7060be0bb51a509be2f0.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

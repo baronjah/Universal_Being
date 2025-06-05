@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://dxlnthc61d0xk"
+path="res://.godot/imported/Impact Plastic Shards Hit Concrete 01.wav-e07140e8dfb3d09a500879b8b2c8797f.sample"
+
+[deps]
+
+source_file="res://akashic_library/sounds/Impacts/Impact Plastic Shards Hit Concrete 01.wav"
+dest_files=["res://.godot/imported/Impact Plastic Shards Hit Concrete 01.wav-e07140e8dfb3d09a500879b8b2c8797f.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

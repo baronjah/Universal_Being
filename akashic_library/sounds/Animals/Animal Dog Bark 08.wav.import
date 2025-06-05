@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://djjy8njwtpae2"
+path="res://.godot/imported/Animal Dog Bark 08.wav-d1cea1ed343247341bc98a5dfbc0ce75.sample"
+
+[deps]
+
+source_file="res://akashic_library/sounds/Animals/Animal Dog Bark 08.wav"
+dest_files=["res://.godot/imported/Animal Dog Bark 08.wav-d1cea1ed343247341bc98a5dfbc0ce75.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

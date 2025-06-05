@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://c267jmtbe4vnu"
+path="res://.godot/imported/Animal Mammal Carnivore Grizzly Bear Growl 01.wav-565d8c1958d5b2f91ae60b8071593009.sample"
+
+[deps]
+
+source_file="res://akashic_library/sounds/Animals/Animal Mammal Carnivore Grizzly Bear Growl 01.wav"
+dest_files=["res://.godot/imported/Animal Mammal Carnivore Grizzly Bear Growl 01.wav-565d8c1958d5b2f91ae60b8071593009.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

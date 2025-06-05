@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://bg2hfnsiyf5ih"
+path="res://.godot/imported/Crash Metal With Ring Short 02.wav-1bb43d99bc51c6b4be2faf8b6089f64d.sample"
+
+[deps]
+
+source_file="res://akashic_library/sounds/Crashes/Crash Metal With Ring Short 02.wav"
+dest_files=["res://.godot/imported/Crash Metal With Ring Short 02.wav-1bb43d99bc51c6b4be2faf8b6089f64d.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

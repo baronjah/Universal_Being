@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://d1q2cev1oxt15"
+path="res://.godot/imported/Impact Wood Breaks And Falls 01.wav-ee4591aacb8a639ad28ad5a0b3290f6e.sample"
+
+[deps]
+
+source_file="res://akashic_library/sounds/Impacts/Impact Wood Breaks And Falls 01.wav"
+dest_files=["res://.godot/imported/Impact Wood Breaks And Falls 01.wav-ee4591aacb8a639ad28ad5a0b3290f6e.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

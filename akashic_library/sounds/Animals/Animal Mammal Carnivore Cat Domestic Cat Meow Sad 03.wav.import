@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://dfb78xtdwr6mc"
+path="res://.godot/imported/Animal Mammal Carnivore Cat Domestic Cat Meow Sad 03.wav-dc941b3a344de308695bbfaa38336722.sample"
+
+[deps]
+
+source_file="res://akashic_library/sounds/Animals/Animal Mammal Carnivore Cat Domestic Cat Meow Sad 03.wav"
+dest_files=["res://.godot/imported/Animal Mammal Carnivore Cat Domestic Cat Meow Sad 03.wav-dc941b3a344de308695bbfaa38336722.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://cwwd0wwkun7i1"
+path="res://.godot/imported/Science Fiction Sci-Fi Electronic Space Ship Descending 226.wav-3f239347a841c016a8be460c42f0f77e.sample"
+
+[deps]
+
+source_file="res://akashic_library/sounds/Science Fiction/Science Fiction Sci-Fi Electronic Space Ship Descending 226.wav"
+dest_files=["res://.godot/imported/Science Fiction Sci-Fi Electronic Space Ship Descending 226.wav-3f239347a841c016a8be460c42f0f77e.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

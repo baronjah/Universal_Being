@@ -1,3 +1,6 @@
 [gd_scene format=3 uid="uid://cr8tfn0ypg8f4"]
 
 [node name="TextLine" type="Node3D"]
+
+[node name="Label3D" type="Label3D" parent="."]
+text = "label-test"

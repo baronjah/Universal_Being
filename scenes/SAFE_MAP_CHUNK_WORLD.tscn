@@ -1,0 +1,187 @@
+[gd_scene load_steps=8 format=3]
+
+[ext_resource type="Script" path="res://scripts/map_world_controller.gd" id="1"]
+[ext_resource type="Script" path="res://scripts/chunk_grid_manager.gd" id="2"]
+
+[sub_resource type="GDScript" id="SafePlayerScript"]
+script/source = "extends Node3D
+class_name SafePlayer
+
+@export var move_speed: float = 5.0
+var velocity: Vector3 = Vector3.ZERO
+var camera: Camera3D = null
+
+func _ready():
+	add_to_group(\"players\")
+	
+	# Create basic camera
+	camera = Camera3D.new()
+	camera.name = \"PlayerCamera\"
+	camera.position = Vector3(0, 5, 10)
+	add_child(camera)
+	
+	# Create visual mesh
+	var mesh_instance = MeshInstance3D.new()
+	var sphere = SphereMesh.new()
+	sphere.radius = 0.5
+	sphere.height = 1.0
+	mesh_instance.mesh = sphere
+	mesh_instance.name = \"PlayerMesh\"
+	
+	# Create glowing material
+	var material = StandardMaterial3D.new()
+	material.albedo_color = Color(0.3, 0.7, 1.0, 0.8)
+	material.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
+	material.emission_enabled = true
+	material.emission = Color(0.5, 0.8, 1.0, 1)
+	material.emission_energy = 1.5
+	mesh_instance.material_override = material
+	add_child(mesh_instance)
+	
+	print(\"🎮 Safe Player ready at position: %s\" % global_position)
+
+func _input(event):
+	if not camera:
+		return
+		
+	if event is InputEventMouseMotion and Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
+		# Simple mouse look
+		rotate_y(-event.relative.x * 0.002)
+		camera.rotate_x(-event.relative.y * 0.002)
+		camera.rotation.x = clamp(camera.rotation.x, -1.5, 1.5)
+	
+	if event.is_action_pressed(\"ui_cancel\"):
+		if Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
+			Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+		else:
+			Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+
+func _physics_process(delta):
+	# Simple movement
+	var input_dir = Vector3()
+	if Input.is_action_pressed(\"ui_up\"):
+		input_dir.z -= 1
+	if Input.is_action_pressed(\"ui_down\"):
+		input_dir.z += 1
+	if Input.is_action_pressed(\"ui_left\"):
+		input_dir.x -= 1
+	if Input.is_action_pressed(\"ui_right\"):
+		input_dir.x += 1
+	if Input.is_action_pressed(\"ui_accept\"):  # Space
+		input_dir.y += 1
+	if Input.is_action_pressed(\"ui_select\"):  # Shift
+		input_dir.y -= 1
+	
+	if input_dir.length() > 0:
+		# Transform direction relative to player rotation
+		var direction = transform.basis * input_dir.normalized()
+		velocity = direction * move_speed
+	else:
+		velocity = velocity.move_toward(Vector3.ZERO, move_speed * delta * 3)
+	
+	global_position += velocity * delta
+"
+
+[sub_resource type="SphereMesh" id="PlayerMesh"]
+radius = 0.5
+height = 1.0
+
+[sub_resource type="Environment" id="WorldEnvironment"]
+background_mode = 1
+background_color = Color(0.05, 0.05, 0.1, 1)
+ambient_light_source = 2
+ambient_light_color = Color(0.4, 0.4, 0.6, 1)
+ambient_light_energy = 0.3
+
+[sub_resource type="PlaneMesh" id="GroundMesh"]
+size = Vector2(100, 100)
+
+[sub_resource type="BoxShape3D" id="GroundShape"]
+size = Vector3(100, 0.1, 100)
+
+[node name="SAFE_MAP_CHUNK_WORLD" type="Node3D"]
+script = ExtResource("1")
+
+[node name="ChunkGridManager" type="Node3D" parent="."]
+script = ExtResource("2")
+chunk_size = Vector3(10, 10, 10)
+render_distance = 1
+generation_distance = 2
+auto_generate = true
+debug_visualization = true
+
+[node name="SafePlayer" type="Node3D" parent="." groups=["players"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 0)
+script = SubResource("SafePlayerScript")
+
+[node name="Ground" type="StaticBody3D" parent="."]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Ground"]
+mesh = SubResource("GroundMesh")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ground"]
+shape = SubResource("GroundShape")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.7, -0.5, 0.5, 0, 0.7, 0.7, -0.7, -0.5, 0.5, 0, 15, 0)
+light_energy = 0.8
+shadow_enabled = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("WorldEnvironment")
+
+[node name="UI" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="DebugInfo" type="VBoxContainer" parent="UI"]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = -120.0
+offset_right = 300.0
+offset_bottom = -10.0
+
+[node name="GridStatus" type="Label" parent="UI/DebugInfo"]
+layout_mode = 2
+text = "Grid Status: Initializing..."
+
+[node name="PlayerPos" type="Label" parent="UI/DebugInfo"]
+layout_mode = 2
+text = "Player: (0, 0, 0)"
+
+[node name="ChunkInfo" type="Label" parent="UI/DebugInfo"]
+layout_mode = 2
+text = "Current Chunk: [0,0,0]"
+
+[node name="Performance" type="Label" parent="UI/DebugInfo"]
+layout_mode = 2
+text = "FPS: 60"
+
+[node name="Instructions" type="VBoxContainer" parent="UI"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -250.0
+offset_top = 10.0
+offset_right = -10.0
+offset_bottom = 140.0
+
+[node name="Title" type="Label" parent="UI/Instructions"]
+layout_mode = 2
+text = "SAFE MAP CHUNK WORLD"
+horizontal_alignment = 1
+
+[node name="Controls" type="Label" parent="UI/Instructions"]
+layout_mode = 2
+text = "Arrow Keys - Move
+Space/Shift - Up/Down
+Mouse - Look around
+ESC - Toggle mouse capture
+F1 - Toggle debug UI
+F2 - Print grid status"

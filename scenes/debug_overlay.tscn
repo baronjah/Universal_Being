@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://debug_overlay_scene"]
 
-[ext_resource type="Script" path="res://systems/debug/debug_overlay.gd" id="1_debug"]
+[ext_resource type="Script" path="res://scripts/debug_overlay.gd" id="1_debug"]
 
 [node name="DebugOverlay" type="Control"]
 anchor_right = 1.0

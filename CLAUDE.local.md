@@ -1,0 +1,2 @@
+- everything in Universal Being project must be 3D, underneath it, it must also be 1d, text, for ai companion
+- before answering, always check docs

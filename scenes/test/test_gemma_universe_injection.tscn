@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://b4m5gvyqk8xrn"]
 
-[ext_resource type="Script" path="res://tests/gemma_sensory_tests/test_gemma_universe_injection.gd" id="1_1xk5y"]
+[ext_resource type="Script" path="res://scripts/test_gemma_universe_injection.gd" id="1_1xk5y"]
 
 [node name="TestGemmaUniverseInjection" type="Node3D"]
 script = ExtResource("1_1xk5y")

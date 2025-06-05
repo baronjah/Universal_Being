@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://6gwnc4vvfmu6"
+path="res://.godot/imported/Science Fiction Sci-Fi Electronic E-mail Notification144.wav-3871c7ebbd60aa869586d66630931adc.sample"
+
+[deps]
+
+source_file="res://akashic_library/sounds/Science Fiction/Science Fiction Sci-Fi Electronic E-mail Notification144.wav"
+dest_files=["res://.godot/imported/Science Fiction Sci-Fi Electronic E-mail Notification144.wav-3871c7ebbd60aa869586d66630931adc.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

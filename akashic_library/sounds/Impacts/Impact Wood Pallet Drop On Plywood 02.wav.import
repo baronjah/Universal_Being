@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://b0a581ch2l0p3"
+path="res://.godot/imported/Impact Wood Pallet Drop On Plywood 02.wav-4148517507105f48645309cb20860ef9.sample"
+
+[deps]
+
+source_file="res://akashic_library/sounds/Impacts/Impact Wood Pallet Drop On Plywood 02.wav"
+dest_files=["res://.godot/imported/Impact Wood Pallet Drop On Plywood 02.wav-4148517507105f48645309cb20860ef9.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

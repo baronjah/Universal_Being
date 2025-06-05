@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://dov3v47f7wkn5"
+path="res://.godot/imported/Crash DVD Player Slamming On Pavement 01.wav-a485402c5c4c9f411d1c1ed1b7d943c2.sample"
+
+[deps]
+
+source_file="res://akashic_library/sounds/Crashes/Crash DVD Player Slamming On Pavement 01.wav"
+dest_files=["res://.godot/imported/Crash DVD Player Slamming On Pavement 01.wav-a485402c5c4c9f411d1c1ed1b7d943c2.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

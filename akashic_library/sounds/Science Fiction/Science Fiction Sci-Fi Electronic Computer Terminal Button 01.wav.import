@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://dpc6i5wadvgm"
+path="res://.godot/imported/Science Fiction Sci-Fi Electronic Computer Terminal Button 01.wav-096118c5bc40f12401d2e6949a85892c.sample"
+
+[deps]
+
+source_file="res://akashic_library/sounds/Science Fiction/Science Fiction Sci-Fi Electronic Computer Terminal Button 01.wav"
+dest_files=["res://.godot/imported/Science Fiction Sci-Fi Electronic Computer Terminal Button 01.wav-096118c5bc40f12401d2e6949a85892c.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

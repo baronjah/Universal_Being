@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://b28tl4xp5hqyn"
+path="res://.godot/imported/Impact Metal Cans Dumped On Cement Short 01.wav-0a6a57907ee2ae01a36ee28272eede5b.sample"
+
+[deps]
+
+source_file="res://akashic_library/sounds/Impacts/Impact Metal Cans Dumped On Cement Short 01.wav"
+dest_files=["res://.godot/imported/Impact Metal Cans Dumped On Cement Short 01.wav-0a6a57907ee2ae01a36ee28272eede5b.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

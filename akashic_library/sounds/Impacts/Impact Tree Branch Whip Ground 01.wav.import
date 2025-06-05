@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://b0775g2dn5g8w"
+path="res://.godot/imported/Impact Tree Branch Whip Ground 01.wav-37a0e31821a92b772a984d086d2d125c.sample"
+
+[deps]
+
+source_file="res://akashic_library/sounds/Impacts/Impact Tree Branch Whip Ground 01.wav"
+dest_files=["res://.godot/imported/Impact Tree Branch Whip Ground 01.wav-37a0e31821a92b772a984d086d2d125c.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://b3hyo8brak41l"
+path="res://.godot/imported/Animal Horse Walks By On Gravel 01.wav-cd070a91f63da84051e45264aefbe445.sample"
+
+[deps]
+
+source_file="res://akashic_library/sounds/Animals/Animal Horse Walks By On Gravel 01.wav"
+dest_files=["res://.godot/imported/Animal Horse Walks By On Gravel 01.wav-cd070a91f63da84051e45264aefbe445.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

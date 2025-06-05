@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://ci8pswq773vku"
+path="res://.godot/imported/Impact Glass Debris Hit By Small Metal Pole 02.wav-5fa81228c5302342a0cf1ca41f5e96bf.sample"
+
+[deps]
+
+source_file="res://akashic_library/sounds/Impacts/Impact Glass Debris Hit By Small Metal Pole 02.wav"
+dest_files=["res://.godot/imported/Impact Glass Debris Hit By Small Metal Pole 02.wav-5fa81228c5302342a0cf1ca41f5e96bf.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

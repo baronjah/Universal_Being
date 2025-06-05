@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://e61x7qektl7x"
+path="res://.godot/imported/Impact Human Grab Coat And Rustles It 01.wav-a11cbad2325901249290b58552e281ef.sample"
+
+[deps]
+
+source_file="res://akashic_library/sounds/Impacts/Impact Human Grab Coat And Rustles It 01.wav"
+dest_files=["res://.godot/imported/Impact Human Grab Coat And Rustles It 01.wav-a11cbad2325901249290b58552e281ef.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://laqtp0m4a7hj"
+path="res://.godot/imported/Animal Mammal Carnivore Tiger Snarl 02.wav-7fc521b4ca5b9e5edef706f065e24e7f.sample"
+
+[deps]
+
+source_file="res://akashic_library/sounds/Animals/Animal Mammal Carnivore Tiger Snarl 02.wav"
+dest_files=["res://.godot/imported/Animal Mammal Carnivore Tiger Snarl 02.wav-7fc521b4ca5b9e5edef706f065e24e7f.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

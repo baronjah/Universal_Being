@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://cq0evu1gaajbu"
+path="res://.godot/imported/Impact Trash Can Lid Hit By Plastic Tube 01.wav-d655fedb2eee13f63cd53f5c4bbc7778.sample"
+
+[deps]
+
+source_file="res://akashic_library/sounds/Impacts/Impact Trash Can Lid Hit By Plastic Tube 01.wav"
+dest_files=["res://.godot/imported/Impact Trash Can Lid Hit By Plastic Tube 01.wav-d655fedb2eee13f63cd53f5c4bbc7778.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

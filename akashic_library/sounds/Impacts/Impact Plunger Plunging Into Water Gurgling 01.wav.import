@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://br7sn0wdy0aqm"
+path="res://.godot/imported/Impact Plunger Plunging Into Water Gurgling 01.wav-1605068df7f6a6a355ace2350d30a93c.sample"
+
+[deps]
+
+source_file="res://akashic_library/sounds/Impacts/Impact Plunger Plunging Into Water Gurgling 01.wav"
+dest_files=["res://.godot/imported/Impact Plunger Plunging Into Water Gurgling 01.wav-1605068df7f6a6a355ace2350d30a93c.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

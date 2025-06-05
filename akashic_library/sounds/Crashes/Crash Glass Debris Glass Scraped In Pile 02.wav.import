@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://b43v8y3khx14p"
+path="res://.godot/imported/Crash Glass Debris Glass Scraped In Pile 02.wav-e6b1ff824eb76d7d853ffe1f71c9a12b.sample"
+
+[deps]
+
+source_file="res://akashic_library/sounds/Crashes/Crash Glass Debris Glass Scraped In Pile 02.wav"
+dest_files=["res://.godot/imported/Crash Glass Debris Glass Scraped In Pile 02.wav-e6b1ff824eb76d7d853ffe1f71c9a12b.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

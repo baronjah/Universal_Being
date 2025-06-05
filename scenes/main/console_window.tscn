@@ -1,0 +1,3 @@
+[gd_scene format=3 uid="uid://cjwph0uxrsnb1"]
+
+[node name="ConsoleWindow" type="Node3D"]

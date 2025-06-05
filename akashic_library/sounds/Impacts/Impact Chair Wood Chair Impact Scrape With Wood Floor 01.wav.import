@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://bnyax3dx1opx4"
+path="res://.godot/imported/Impact Chair Wood Chair Impact Scrape With Wood Floor 01.wav-9b413b945277bc10991766338a531a99.sample"
+
+[deps]
+
+source_file="res://akashic_library/sounds/Impacts/Impact Chair Wood Chair Impact Scrape With Wood Floor 01.wav"
+dest_files=["res://.godot/imported/Impact Chair Wood Chair Impact Scrape With Wood Floor 01.wav-9b413b945277bc10991766338a531a99.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

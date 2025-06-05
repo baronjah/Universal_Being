@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://wxdbweit5gw1"
+path="res://.godot/imported/Impact Machete Hit On Branch 06.wav-aa4a44d5aef9dd040a0b9ad0f5362a10.sample"
+
+[deps]
+
+source_file="res://akashic_library/sounds/Impacts/Impact Machete Hit On Branch 06.wav"
+dest_files=["res://.godot/imported/Impact Machete Hit On Branch 06.wav-aa4a44d5aef9dd040a0b9ad0f5362a10.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

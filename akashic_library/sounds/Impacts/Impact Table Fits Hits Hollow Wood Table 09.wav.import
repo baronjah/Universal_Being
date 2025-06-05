@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://k01wh2ruh0yd"
+path="res://.godot/imported/Impact Table Fits Hits Hollow Wood Table 09.wav-f65ca1c2e1f312a0bccff17583c58c73.sample"
+
+[deps]
+
+source_file="res://akashic_library/sounds/Impacts/Impact Table Fits Hits Hollow Wood Table 09.wav"
+dest_files=["res://.godot/imported/Impact Table Fits Hits Hollow Wood Table 09.wav-f65ca1c2e1f312a0bccff17583c58c73.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

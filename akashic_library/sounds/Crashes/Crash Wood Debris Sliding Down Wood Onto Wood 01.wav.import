@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://bq2jh8tyq4o5e"
+path="res://.godot/imported/Crash Wood Debris Sliding Down Wood Onto Wood 01.wav-b8b4dbc3bed989fd26b9336dbc5e927f.sample"
+
+[deps]
+
+source_file="res://akashic_library/sounds/Crashes/Crash Wood Debris Sliding Down Wood Onto Wood 01.wav"
+dest_files=["res://.godot/imported/Crash Wood Debris Sliding Down Wood Onto Wood 01.wav-b8b4dbc3bed989fd26b9336dbc5e927f.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

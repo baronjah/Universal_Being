@@ -1,3 +1,16 @@
-[gd_scene format=3 uid="uid://bh7f1so4tqqoc"]
+[gd_scene load_steps=3 format=3 uid="uid://bh7f1so4tqqoc"]
+
+[ext_resource type="Texture2D" uid="uid://dvolnxk5hyifa" path="res://akashic_library/icons/black_sphere.png" id="1_eq5ir"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_wxptd"]
+radius = 0.261684
 
 [node name="Icon" type="Node3D"]
+
+[node name="Sprite3D" type="Sprite3D" parent="."]
+texture = ExtResource("1_eq5ir")
+
+[node name="Area3D" type="Area3D" parent="Sprite3D"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Sprite3D/Area3D"]
+shape = SubResource("SphereShape3D_wxptd")

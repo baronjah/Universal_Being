@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://do7xq3o65up17"
+path="res://.godot/imported/Animal Toad Spadefoot Toad Quack 01.wav-dd3fed6a24d46424db2bf74b67c15bfe.sample"
+
+[deps]
+
+source_file="res://akashic_library/sounds/Animals/Animal Toad Spadefoot Toad Quack 01.wav"
+dest_files=["res://.godot/imported/Animal Toad Spadefoot Toad Quack 01.wav-dd3fed6a24d46424db2bf74b67c15bfe.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

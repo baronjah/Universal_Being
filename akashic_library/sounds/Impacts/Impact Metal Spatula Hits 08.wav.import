@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://bbtnfl578sktd"
+path="res://.godot/imported/Impact Metal Spatula Hits 08.wav-9dc9ae24daa2ead05c16b39c5ae8f793.sample"
+
+[deps]
+
+source_file="res://akashic_library/sounds/Impacts/Impact Metal Spatula Hits 08.wav"
+dest_files=["res://.godot/imported/Impact Metal Spatula Hits 08.wav-9dc9ae24daa2ead05c16b39c5ae8f793.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

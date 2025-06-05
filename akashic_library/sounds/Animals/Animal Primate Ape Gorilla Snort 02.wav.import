@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://c0urwxus3du37"
+path="res://.godot/imported/Animal Primate Ape Gorilla Snort 02.wav-5ce27e74ddb74c1e6b88fc6ac582bc91.sample"
+
+[deps]
+
+source_file="res://akashic_library/sounds/Animals/Animal Primate Ape Gorilla Snort 02.wav"
+dest_files=["res://.godot/imported/Animal Primate Ape Gorilla Snort 02.wav-5ce27e74ddb74c1e6b88fc6ac582bc91.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

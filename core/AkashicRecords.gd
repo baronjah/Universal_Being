@@ -652,3 +652,44 @@ func load_universal_being_data(being_id: String) -> Dictionary:
 	# If not found, return empty dictionary
 	print("📚 Akashic: Being data not found for ID: " + being_id)
 	return {}
+
+func save_universal_being_data(being_id: String, data: Dictionary) -> bool:
+	"""Save Universal Being data by ID - used by chunk system"""
+	# Store in cache
+	zip_cache[being_id] = data
+	
+	# Create zip path for the being
+	var zip_path = "user://akashic_chunks/" + being_id + ".ub.zip"
+	
+	# Ensure directory exists
+	var dir = DirAccess.open("user://")
+	if not dir.dir_exists("akashic_chunks"):
+		dir.make_dir("akashic_chunks")
+	
+	# Create manifest for the zip
+	var manifest = {
+		"id": being_id,
+		"being_id": being_id,
+		"name": data.get("name", being_id),
+		"type": data.get("type", "chunk"),
+		"consciousness_level": data.get("consciousness_level", 1),
+		"timestamp": Time.get_ticks_msec(),
+		"version": "1.0"
+	}
+	
+	# Create the zip file with manifest and data
+	var file_access = FileAccess.open(zip_path, FileAccess.WRITE)
+	if file_access:
+		var json_string = JSON.stringify({
+			"manifest": manifest,
+			"data": data
+		})
+		file_access.store_string(json_string)
+		file_access.close()
+		
+		print("💾 Akashic: Saved being data for ID: " + being_id)
+		being_saved_to_zip.emit(zip_path, null)
+		return true
+	else:
+		print("❌ Akashic: Failed to save being data for ID: " + being_id)
+		return false

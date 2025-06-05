@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://dd024ihldhsy1"
+path="res://.godot/imported/Impact Human Grab Throat And Choke Short 01.wav-f319aa080e5db14c8e1d50ccb15cc6f7.sample"
+
+[deps]
+
+source_file="res://akashic_library/sounds/Impacts/Impact Human Grab Throat And Choke Short 01.wav"
+dest_files=["res://.godot/imported/Impact Human Grab Throat And Choke Short 01.wav-f319aa080e5db14c8e1d50ccb15cc6f7.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

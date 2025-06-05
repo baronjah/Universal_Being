@@ -1,0 +1,47 @@
+[gd_scene load_steps=5 format=3 uid="uid://ce6m61cn3kvl3"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_qlrwi"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_f58ak"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_f78r0"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_untoc"]
+
+[node name="GeneratorProjector" type="Node3D"]
+
+[node name="Layer_0" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Layer_0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 0.103788, 0, 0, 0)
+mesh = SubResource("BoxMesh_qlrwi")
+
+[node name="Area3D" type="Area3D" parent="Layer_0/MeshInstance3D"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Layer_0/MeshInstance3D/Area3D"]
+shape = SubResource("BoxShape3D_f58ak")
+
+[node name="Layer_1" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Layer_1"]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 0.104, 0, 0, 0)
+mesh = SubResource("BoxMesh_qlrwi")
+
+[node name="Area3D" type="Area3D" parent="Layer_1/MeshInstance3D"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Layer_1/MeshInstance3D/Area3D"]
+shape = SubResource("BoxShape3D_f78r0")
+
+[node name="Layer_2" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -3)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Layer_2"]
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 0.104, 0, 0, 0)
+mesh = SubResource("BoxMesh_qlrwi")
+
+[node name="Area3D" type="Area3D" parent="Layer_2/MeshInstance3D"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Layer_2/MeshInstance3D/Area3D"]
+shape = SubResource("BoxShape3D_untoc")

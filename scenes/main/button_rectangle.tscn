@@ -1,0 +1,26 @@
+[gd_scene load_steps=3 format=3 uid="uid://b53d77rmmoljr"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_q0kc5"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_0c061"]
+
+[node name="ButtonRectangle" type="Node3D"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(2, 0, 0, 0, 1, 0, 0, 0, 0.1, 0, 0, 0)
+mesh = SubResource("BoxMesh_q0kc5")
+
+[node name="Area3D" type="Area3D" parent="MeshInstance3D"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D/Area3D"]
+shape = SubResource("BoxShape3D_0c061")
+
+[node name="InputSocket" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.2, 0, 0)
+metadata/socket_type = "input"
+metadata/socket_name = "in"
+
+[node name="OutputSocket" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.2, 0, 0)
+metadata/socket_type = "output"
+metadata/socket_name = "out"

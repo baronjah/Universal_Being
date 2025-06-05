@@ -1,6 +1,17 @@
 # CLAUDE.md
 
+The most important task is to always focus on human user experience and how he sees the game.
+
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+
+main scenes folder = "res://scenes/main/"
+here we shall have every core visible element of the game.
+
+2D icons folder = "res://akashic_library/icons/"
+
+2d textures folder = "res://akashic_library/textures/"
+
+sounds = "res://akashic_library/sounds/"
 
 ## Universal Being - Revolutionary Game Architecture
 
@@ -80,6 +91,7 @@ godot --path . scenes/main.tscn
 
 ### AI Collaboration System
 6 AI systems work together:
+# yet each can do it all at once, you too
 1. **Claude Code** - System architecture (you)
 2. **Cursor** - Visual development
 3. **ChatGPT** - Narrative & biblical metaphors
@@ -178,5 +190,10 @@ func ai_interface() -> Dictionary:
 
 ### Specific Guidance
 - Always use "res://scenes/main/camera_point.tscn" in socket of player for camera, and in any scene that needs camera for human
+
+### Key Design Principle
+- everything in Universal Being project must be 3D, underneath it, it must also be 1d, text, for ai companion
+
+- before answering, always check docs
 
 Remember: In Universal Being, consciousness is not limited to traditional forms. A button can dream, particles can evolve into galaxies, and AIs collaborate to birth new digital existence.

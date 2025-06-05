@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://bpwq68get7ao5"
+path="res://.godot/imported/Impact Tire Roll On Cement 01.wav-8e2fb3436a85c401d74781e28d88e921.sample"
+
+[deps]
+
+source_file="res://akashic_library/sounds/Impacts/Impact Tire Roll On Cement 01.wav"
+dest_files=["res://.godot/imported/Impact Tire Roll On Cement 01.wav-8e2fb3436a85c401d74781e28d88e921.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

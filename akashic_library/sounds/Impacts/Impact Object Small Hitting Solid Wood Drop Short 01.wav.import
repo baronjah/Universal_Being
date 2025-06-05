@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://bhj8gdmuv32hk"
+path="res://.godot/imported/Impact Object Small Hitting Solid Wood Drop Short 01.wav-49cd7af5bf0d534e0d4616d41db3ff3d.sample"
+
+[deps]
+
+source_file="res://akashic_library/sounds/Impacts/Impact Object Small Hitting Solid Wood Drop Short 01.wav"
+dest_files=["res://.godot/imported/Impact Object Small Hitting Solid Wood Drop Short 01.wav-49cd7af5bf0d534e0d4616d41db3ff3d.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

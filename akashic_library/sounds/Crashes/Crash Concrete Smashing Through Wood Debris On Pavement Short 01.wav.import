@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://tc3almi6qyxe"
+path="res://.godot/imported/Crash Concrete Smashing Through Wood Debris On Pavement Short 01.wav-c5e4cf38d89886f7e6266e46b60663e6.sample"
+
+[deps]
+
+source_file="res://akashic_library/sounds/Crashes/Crash Concrete Smashing Through Wood Debris On Pavement Short 01.wav"
+dest_files=["res://.godot/imported/Crash Concrete Smashing Through Wood Debris On Pavement Short 01.wav-c5e4cf38d89886f7e6266e46b60663e6.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

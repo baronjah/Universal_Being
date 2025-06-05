@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://b7mtnricv8m1n"
+path="res://.godot/imported/Impact Metal Bang 08.wav-c90312640fa70a2cec035128e9da0b19.sample"
+
+[deps]
+
+source_file="res://akashic_library/sounds/Impacts/Impact Metal Bang 08.wav"
+dest_files=["res://.godot/imported/Impact Metal Bang 08.wav-c90312640fa70a2cec035128e9da0b19.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://dwv7gbfprldcp"
+path="res://.godot/imported/Impact Object Heavy Object Dragged Through Dirt 01.wav-10efb29b93b792bd2ec4c113e7a71ff8.sample"
+
+[deps]
+
+source_file="res://akashic_library/sounds/Impacts/Impact Object Heavy Object Dragged Through Dirt 01.wav"
+dest_files=["res://.godot/imported/Impact Object Heavy Object Dragged Through Dirt 01.wav-10efb29b93b792bd2ec4c113e7a71ff8.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://du838rykrm2xk"
+path="res://.godot/imported/Crash Metal With Debris 01.wav-751ebb2a4794a4b3dc5df0bb49e21baf.sample"
+
+[deps]
+
+source_file="res://akashic_library/sounds/Crashes/Crash Metal With Debris 01.wav"
+dest_files=["res://.godot/imported/Crash Metal With Debris 01.wav-751ebb2a4794a4b3dc5df0bb49e21baf.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

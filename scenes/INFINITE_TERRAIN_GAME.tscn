@@ -1,0 +1,457 @@
+[gd_scene load_steps=10 format=3]
+
+[ext_resource type="Script" path="res://scripts/player_universal_being.gd" id="1"]
+[ext_resource type="PackedScene" uid="uid://b0ee1qqnhkfnb" path="res://scenes/main/camera_point.tscn" id="2"]
+
+[sub_resource type="GDScript" id="InfiniteTerrainController"]
+script/source = "extends Node3D
+
+# INFINITE TERRAIN GAME - Height maps, clouds, water, exploration
+# Data collection for user preferences
+
+var player: PlayerUniversalBeing = null
+var terrain_chunks: Dictionary = {}
+var water_level: float = 5.0
+var cloud_layer: Node3D = null
+
+# User data collection
+var user_preferences: Dictionary = {
+	\"movement_speed\": 10.0,
+	\"preferred_terrain_type\": \"hills\",
+	\"water_interaction\": false,
+	\"cloud_preference\": \"low\",
+	\"exploration_style\": \"ground\",
+	\"time_spent_areas\": {},
+	\"favorite_biomes\": []
+}
+
+func _ready():
+	player = $Player
+	create_infinite_terrain_system()
+	create_water_system()
+	create_cloud_system()
+	
+	print(\"🗻 INFINITE TERRAIN GAME LOADED\")
+	print(\"🌊 Water system active\")
+	print(\"☁️ Cloud system active\")
+	print(\"📊 Data collection: ACTIVE\")
+
+func create_infinite_terrain_system():
+	\"\"\"Create infinite procedural terrain\"\"\"
+	# Generate initial 3x3 terrain grid around player
+	for x in range(-1, 2):
+		for z in range(-1, 2):
+			var chunk_coord = Vector2i(x, z)
+			create_terrain_chunk(chunk_coord)
+
+func create_terrain_chunk(coord: Vector2i) -> Node3D:
+	var chunk = Node3D.new()
+	chunk.name = \"TerrainChunk_%d_%d\" % [coord.x, coord.y]
+	
+	# Create heightmap terrain
+	var terrain_mesh = create_heightmap_mesh(coord)
+	var mesh_instance = MeshInstance3D.new()
+	mesh_instance.mesh = terrain_mesh
+	
+	# Terrain material based on height
+	var material = create_terrain_material(coord)
+	mesh_instance.material_override = material
+	
+	# Position chunk in world
+	var world_pos = Vector3(coord.x * 50, 0, coord.y * 50)
+	chunk.global_position = world_pos
+	mesh_instance.name = \"TerrainMesh\"
+	chunk.add_child(mesh_instance)
+	
+	# Add collision for walking
+	var collision_body = StaticBody3D.new()
+	var collision_shape = CollisionShape3D.new()
+	var heightfield_shape = HeightMapShape3D.new()
+	# Note: Would need actual heightmap data here
+	collision_shape.shape = heightfield_shape
+	collision_body.add_child(collision_shape)
+	chunk.add_child(collision_body)
+	
+	terrain_chunks[coord] = chunk
+	add_child(chunk)
+	
+	print(\"🗻 Generated terrain chunk [%d,%d]\" % [coord.x, coord.y])
+	return chunk
+
+func create_heightmap_mesh(coord: Vector2i) -> Mesh:
+	\"\"\"Generate procedural heightmap mesh\"\"\"
+	var plane = PlaneMesh.new()
+	plane.size = Vector2(50, 50)
+	plane.subdivide_width = 32
+	plane.subdivide_depth = 32
+	
+	# TODO: Apply actual heightmap displacement
+	# For now, create varied terrain with noise
+	
+	return plane
+
+func create_terrain_material(coord: Vector2i) -> StandardMaterial3D:
+	\"\"\"Create terrain material based on biome\"\"\"
+	var material = StandardMaterial3D.new()
+	
+	# Determine biome based on coordinate
+	var biome_type = determine_biome(coord)
+	
+	match biome_type:
+		\"grassland\":
+			material.albedo_color = Color(0.3, 0.7, 0.2)
+			material.roughness = 0.8
+		\"desert\":
+			material.albedo_color = Color(0.8, 0.7, 0.4)
+			material.roughness = 0.9
+		\"snow\":
+			material.albedo_color = Color(0.9, 0.9, 1.0)
+			material.roughness = 0.3
+		\"forest\":
+			material.albedo_color = Color(0.2, 0.5, 0.1)
+			material.roughness = 0.7
+		_:
+			material.albedo_color = Color(0.5, 0.5, 0.5)
+	
+	return material
+
+func determine_biome(coord: Vector2i) -> String:
+	var distance_from_origin = coord.length()
+	
+	if distance_from_origin < 2:
+		return \"grassland\"
+	elif distance_from_origin < 4:
+		return \"forest\"
+	elif distance_from_origin < 6:
+		return \"desert\"
+	else:
+		return \"snow\"
+
+func create_water_system():
+	\"\"\"Create infinite water plane\"\"\"
+	var water = MeshInstance3D.new()
+	water.name = \"InfiniteWater\"
+	
+	# Large water plane
+	var water_plane = PlaneMesh.new()
+	water_plane.size = Vector2(2000, 2000)
+	water.mesh = water_plane
+	
+	# Water material
+	var water_material = StandardMaterial3D.new()
+	water_material.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
+	water_material.albedo_color = Color(0.2, 0.4, 0.8, 0.6)
+	water_material.emission_enabled = true
+	water_material.emission = Color(0.1, 0.2, 0.4)
+	water_material.emission_energy = 0.3
+	water_material.roughness = 0.1
+	water_material.metallic = 0.8
+	water.material_override = water_material
+	
+	water.global_position = Vector3(0, water_level, 0)
+	add_child(water)
+	
+	print(\"🌊 Infinite water system created at level %.1f\" % water_level)
+
+func create_cloud_system():
+	\"\"\"Create moving cloud layer\"\"\"
+	cloud_layer = Node3D.new()
+	cloud_layer.name = \"CloudLayer\"
+	
+	# Create multiple cloud patches
+	for i in range(20):
+		var cloud = MeshInstance3D.new()
+		cloud.name = \"Cloud_%d\" % i
+		
+		# Cloud mesh - sphere
+		var sphere = SphereMesh.new()
+		sphere.radius = randf_range(10, 25)
+		sphere.height = sphere.radius * 1.5
+		cloud.mesh = sphere
+		
+		# Cloud material
+		var cloud_material = StandardMaterial3D.new()
+		cloud_material.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
+		cloud_material.albedo_color = Color(1.0, 1.0, 1.0, 0.4)
+		cloud_material.emission_enabled = true
+		cloud_material.emission = Color(0.9, 0.9, 1.0)
+		cloud_material.emission_energy = 0.2
+		cloud.material_override = cloud_material
+		
+		# Position clouds at height
+		cloud.global_position = Vector3(
+			randf_range(-200, 200),
+			randf_range(50, 80),
+			randf_range(-200, 200)
+		)
+		
+		cloud_layer.add_child(cloud)
+	
+	add_child(cloud_layer)
+	print(\"☁️ Cloud system created with 20 cloud patches\")
+
+func _process(delta):
+	update_terrain_streaming()
+	animate_clouds(delta)
+	collect_user_data(delta)
+	update_ui()
+
+func update_terrain_streaming():
+	\"\"\"Stream terrain chunks around player\"\"\"
+	if not player:
+		return
+	
+	var player_chunk = Vector2i(
+		int(player.global_position.x / 50),
+		int(player.global_position.z / 50)
+	)
+	
+	# Generate missing chunks in 3x3 grid
+	for x in range(player_chunk.x - 1, player_chunk.x + 2):
+		for z in range(player_chunk.y - 1, player_chunk.y + 2):
+			var chunk_coord = Vector2i(x, z)
+			if chunk_coord not in terrain_chunks:
+				create_terrain_chunk(chunk_coord)
+	
+	# Remove distant chunks
+	var chunks_to_remove = []
+	for coord in terrain_chunks.keys():
+		var distance = coord.distance_to(player_chunk)
+		if distance > 3:
+			chunks_to_remove.append(coord)
+	
+	for coord in chunks_to_remove:
+		var chunk = terrain_chunks[coord]
+		if is_instance_valid(chunk):
+			chunk.queue_free()
+		terrain_chunks.erase(coord)
+
+func animate_clouds(delta):
+	\"\"\"Animate cloud movement\"\"\"
+	if not cloud_layer:
+		return
+	
+	# Move clouds slowly
+	for cloud in cloud_layer.get_children():
+		cloud.global_position.x += delta * 2.0
+		cloud.global_position.z += delta * 1.0
+		
+		# Wrap clouds around
+		if cloud.global_position.x > 300:
+			cloud.global_position.x = -300
+		if cloud.global_position.z > 300:
+			cloud.global_position.z = -300
+
+func collect_user_data(delta):
+	\"\"\"Collect user behavior data\"\"\"
+	if not player:
+		return
+	
+	# Track time in different areas
+	var current_biome = get_current_biome()
+	if current_biome not in user_preferences.time_spent_areas:
+		user_preferences.time_spent_areas[current_biome] = 0.0
+	user_preferences.time_spent_areas[current_biome] += delta
+	
+	# Track movement patterns
+	var speed = player.velocity.length() if player.has_method(\"get\") else 0.0
+	if speed > user_preferences.movement_speed * 1.2:
+		user_preferences.exploration_style = \"fast\"
+	elif speed < user_preferences.movement_speed * 0.5:
+		user_preferences.exploration_style = \"slow\"
+	
+	# Track water interaction
+	if player.global_position.y < water_level + 2:
+		user_preferences.water_interaction = true
+	
+	# Track cloud preference
+	if player.global_position.y > 30:
+		user_preferences.cloud_preference = \"high\"
+
+func get_current_biome() -> String:
+	if not player:
+		return \"unknown\"
+	
+	var player_chunk = Vector2i(
+		int(player.global_position.x / 50),
+		int(player.global_position.z / 50)
+	)
+	
+	return determine_biome(player_chunk)
+
+func update_ui():
+	if Engine.get_process_frames() % 30 == 0:
+		var ui = get_node_or_null(\"TerrainGameUI\")
+		if not ui:
+			return
+		
+		# Update position
+		var pos_label = ui.get_node_or_null(\"Stats/Position\")
+		if pos_label and player:
+			var pos = player.global_position
+			pos_label.text = \"Position: (%.0f, %.0f, %.0f)\" % [pos.x, pos.y, pos.z]
+		
+		# Update biome
+		var biome_label = ui.get_node_or_null(\"Stats/Biome\")
+		if biome_label:
+			biome_label.text = \"Biome: %s\" % get_current_biome().capitalize()
+		
+		# Update altitude
+		var altitude_label = ui.get_node_or_null(\"Stats/Altitude\")
+		if altitude_label and player:
+			var altitude = player.global_position.y
+			var status = \"Ground\" if altitude < 10 else \"Flying\" if altitude < 40 else \"High Altitude\"
+			altitude_label.text = \"Altitude: %.0fm (%s)\" % [altitude, status]
+
+func _input(event):
+	if event is InputEventKey and event.pressed:
+		match event.keycode:
+			KEY_R:
+				print_user_data()
+			KEY_H:
+				teleport_to_highest_point()
+			KEY_W:
+				teleport_to_water()
+			KEY_C:
+				teleport_to_clouds()
+
+func print_user_data():
+	\"\"\"Print collected user preference data\"\"\"
+	print(\"📊 USER PREFERENCE DATA:\")
+	print(\"  Movement style: %s\" % user_preferences.exploration_style)
+	print(\"  Water interaction: %s\" % user_preferences.water_interaction)
+	print(\"  Cloud preference: %s\" % user_preferences.cloud_preference)
+	print(\"  Time in biomes: %s\" % user_preferences.time_spent_areas)
+
+func teleport_to_highest_point():
+	\"\"\"Teleport to highest terrain point\"\"\"
+	if player:
+		player.global_position = Vector3(0, 100, 0)
+		print(\"🏔️ Teleported to highest point\")
+
+func teleport_to_water():
+	\"\"\"Teleport to water level\"\"\"
+	if player:
+		player.global_position = Vector3(0, water_level + 1, 0)
+		print(\"🌊 Teleported to water level\")
+
+func teleport_to_clouds():
+	\"\"\"Teleport to cloud level\"\"\"
+	if player:
+		player.global_position = Vector3(0, 60, 0)
+		print(\"☁️ Teleported to cloud level\")
+"
+
+[sub_resource type="Environment" id="TerrainEnvironment"]
+background_mode = 1
+background_color = Color(0.4, 0.6, 0.9, 1)
+ambient_light_source = 2
+ambient_light_color = Color(0.4, 0.5, 0.7, 1)
+ambient_light_energy = 0.3
+fog_enabled = true
+fog_light_color = Color(0.6, 0.7, 0.9, 1)
+fog_sun_scatter = 0.2
+
+[sub_resource type="SphereMesh" id="PlasmoidMeshTerrain"]
+radius = 0.5
+height = 1.0
+
+[sub_resource type="StandardMaterial3D" id="PlasmoidMaterialTerrain"]
+transparency = 1
+albedo_color = Color(0.3, 0.7, 1, 0.8)
+emission_enabled = true
+emission = Color(0.5, 0.8, 1, 1)
+emission_energy = 2.0
+
+[sub_resource type="Theme" id="TerrainGameTheme"]
+
+[node name="INFINITE_TERRAIN_GAME" type="Node3D"]
+script = SubResource("InfiniteTerrainController")
+
+[node name="Player" type="Node3D" parent="." groups=["players"]]
+script = ExtResource("1")
+move_speed = 10.0
+float_height = 2.0
+
+[node name="CameraPoint" parent="Player" instance=ExtResource("2")]
+
+[node name="PlasmoidMesh" type="MeshInstance3D" parent="Player"]
+mesh = SubResource("PlasmoidMeshTerrain")
+surface_material_override/0 = SubResource("PlasmoidMaterialTerrain")
+
+[node name="TerrainEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("TerrainEnvironment")
+
+[node name="SunLight" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.7, -0.5, 0.5, 0, 0.7, 0.7, -0.7, -0.5, 0.5, 0, 200, 0)
+light_energy = 0.8
+shadow_enabled = true
+
+[node name="TerrainGameUI" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme = SubResource("TerrainGameTheme")
+
+[node name="Title" type="Label" parent="TerrainGameUI"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -200.0
+offset_top = 10.0
+offset_right = 200.0
+offset_bottom = 50.0
+text = "INFINITE TERRAIN - Height Maps • Water • Clouds"
+horizontal_alignment = 1
+
+[node name="Stats" type="VBoxContainer" parent="TerrainGameUI"]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = -120.0
+offset_right = 300.0
+offset_bottom = -10.0
+
+[node name="Position" type="Label" parent="TerrainGameUI/Stats"]
+layout_mode = 2
+text = "Position: (0, 0, 0)"
+
+[node name="Biome" type="Label" parent="TerrainGameUI/Stats"]
+layout_mode = 2
+text = "Biome: Grassland"
+
+[node name="Altitude" type="Label" parent="TerrainGameUI/Stats"]
+layout_mode = 2
+text = "Altitude: 0m (Ground)"
+
+[node name="Controls" type="VBoxContainer" parent="TerrainGameUI"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -280.0
+offset_top = 10.0
+offset_right = -10.0
+offset_bottom = 200.0
+
+[node name="Movement" type="Label" parent="TerrainGameUI/Controls"]
+layout_mode = 2
+text = "🗻 INFINITE TERRAIN EXPLORATION 🗻
+
+WASD - Explore terrain
+Space/Shift - Fly up/down
+Mouse - Look around"
+
+[node name="Teleports" type="Label" parent="TerrainGameUI/Controls"]
+layout_mode = 2
+text = "H - Teleport to highest point
+W - Teleport to water level  
+C - Teleport to clouds
+R - Show preference data
+
+🌊 WATER ☁️ CLOUDS 🗻 MOUNTAINS
+INFINITE PROCEDURAL WORLD"

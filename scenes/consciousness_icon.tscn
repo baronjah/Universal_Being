@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://c4k8p0xqy7v8m"]
 
-[ext_resource type="Script" path="res://assets/development/libraries/assets/consciousness_icons/consciousness_icon.gd" id="1_abc123"]
+[ext_resource type="Script" path="res://scripts/consciousness_icon.gd" id="1_abc123"]
 [ext_resource type="Texture2D" path="res://assets/icons/consciousness/level_1.png" id="2_def456"]
 
 [sub_resource type="Animation" id="Animation_default_pulse"]

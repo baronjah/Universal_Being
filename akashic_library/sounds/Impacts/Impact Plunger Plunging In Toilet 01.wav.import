@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://qsbyrf5yad25"
+path="res://.godot/imported/Impact Plunger Plunging In Toilet 01.wav-ba371aaf0bece65619acba3abf1be02a.sample"
+
+[deps]
+
+source_file="res://akashic_library/sounds/Impacts/Impact Plunger Plunging In Toilet 01.wav"
+dest_files=["res://.godot/imported/Impact Plunger Plunging In Toilet 01.wav-ba371aaf0bece65619acba3abf1be02a.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

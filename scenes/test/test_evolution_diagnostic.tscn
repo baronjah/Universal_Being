@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://bfxhnyc4j2i47"]
 
-[ext_resource type="Script" path="res://test_evolution_diagnostic.gd" id="1_5kl0m"]
+[ext_resource type="Script" path="res://scripts/test_evolution_diagnostic.gd" id="1_5kl0m"]
 
 [node name="EvolutionDiagnosticRunner" type="Node"]
 script = ExtResource("1_5kl0m")

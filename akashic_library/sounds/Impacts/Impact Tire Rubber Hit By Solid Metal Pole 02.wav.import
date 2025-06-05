@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://cuxh4i4vbb2p4"
+path="res://.godot/imported/Impact Tire Rubber Hit By Solid Metal Pole 02.wav-f6c0eaf7012f55814143cdb8c6e5e383.sample"
+
+[deps]
+
+source_file="res://akashic_library/sounds/Impacts/Impact Tire Rubber Hit By Solid Metal Pole 02.wav"
+dest_files=["res://.godot/imported/Impact Tire Rubber Hit By Solid Metal Pole 02.wav-f6c0eaf7012f55814143cdb8c6e5e383.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

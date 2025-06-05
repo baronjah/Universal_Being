@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://sgucv3j2h3dv"
+path="res://.godot/imported/Impact Debris Large Plastic Hit By Small Metal Pipe 01.wav-3758bc61620bf540902649b11e6b998c.sample"
+
+[deps]
+
+source_file="res://akashic_library/sounds/Impacts/Impact Debris Large Plastic Hit By Small Metal Pipe 01.wav"
+dest_files=["res://.godot/imported/Impact Debris Large Plastic Hit By Small Metal Pipe 01.wav-3758bc61620bf540902649b11e6b998c.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

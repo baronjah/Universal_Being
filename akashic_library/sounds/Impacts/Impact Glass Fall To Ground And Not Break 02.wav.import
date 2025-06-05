@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://mst2pqqjvy2w"
+path="res://.godot/imported/Impact Glass Fall To Ground And Not Break 02.wav-ced37ab078ee2230e31308805d831ae6.sample"
+
+[deps]
+
+source_file="res://akashic_library/sounds/Impacts/Impact Glass Fall To Ground And Not Break 02.wav"
+dest_files=["res://.godot/imported/Impact Glass Fall To Ground And Not Break 02.wav-ced37ab078ee2230e31308805d831ae6.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

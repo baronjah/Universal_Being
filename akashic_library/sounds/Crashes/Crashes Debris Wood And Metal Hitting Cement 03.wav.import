@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://djn5gglnl86ke"
+path="res://.godot/imported/Crashes Debris Wood And Metal Hitting Cement 03.wav-a5c46c08cb18ee86b1fce83e7155e2c2.sample"
+
+[deps]
+
+source_file="res://akashic_library/sounds/Crashes/Crashes Debris Wood And Metal Hitting Cement 03.wav"
+dest_files=["res://.godot/imported/Crashes Debris Wood And Metal Hitting Cement 03.wav-a5c46c08cb18ee86b1fce83e7155e2c2.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

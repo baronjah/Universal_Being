@@ -1,0 +1,265 @@
+[gd_scene load_steps=8 format=3]
+
+[ext_resource type="Script" path="res://scripts/cosmic_lod_system.gd" id="1"]
+[ext_resource type="Script" path="res://scripts/player_universal_being.gd" id="2"]
+[ext_resource type="Script" path="res://scripts/chunk_grid_manager.gd" id="3"]
+[ext_resource type="PackedScene" uid="uid://b0ee1qqnhkfnb" path="res://scenes/main/camera_point.tscn" id="4"]
+
+[sub_resource type="GDScript" id="UltimateController"]
+script/source = "extends Node3D
+
+var cosmic_lod: CosmicLODSystem = null
+var chunk_manager: ChunkGridManager = null
+var player = null
+var akashic = null
+
+func _ready():
+	cosmic_lod = $CosmicLODSystem
+	chunk_manager = $ChunkGridManager
+	player = $Player
+	
+	if SystemBootstrap and SystemBootstrap.is_system_ready():
+		akashic = SystemBootstrap.get_akashic_records()
+	
+	print(\"🌌 ULTIMATE UNIVERSAL BEING GAME ACTIVATED\")
+	print(\"🌌 INFINITE COSMOS: GALAXIES → STARS → PLANETS → SURFACES\")
+	print(\"🌌 PLASMOID PLAYER WITH TRACKBALL CAMERA\")
+	print(\"🌌 PENTAGON ARCHITECTURE ACTIVE\")
+	print(\"🌌 AKASHIC RECORDS ZIP SYSTEM READY\")
+
+func _process(delta):
+	update_ui()
+
+func update_ui():
+	if Engine.get_process_frames() % 30 == 0:  # Update every 30 frames
+		var ui = get_node_or_null(\"UI\")
+		if not ui or not player:
+			return
+		
+		var pos_label = ui.get_node_or_null(\"Info/Position\")
+		if pos_label:
+			var pos = player.global_position
+			pos_label.text = \"Plasmoid: (%.0f, %.0f, %.0f)\" % [pos.x, pos.y, pos.z]
+		
+		var cosmic_label = ui.get_node_or_null(\"Info/Cosmic\")
+		if cosmic_label and cosmic_lod:
+			var stats = cosmic_lod.get_cosmic_stats()
+			cosmic_label.text = \"Cosmic Objects: %d\" % stats.cosmic_objects
+		
+		var chunks_label = ui.get_node_or_null(\"Info/Chunks\")
+		if chunks_label and chunk_manager:
+			var stats = chunk_manager.get_grid_status()
+			chunks_label.text = \"Active Chunks: %d\" % stats.active_chunks
+
+func _input(event):
+	if event is InputEventKey and event.pressed:
+		match event.keycode:
+			KEY_F1:
+				toggle_ui()
+			KEY_F2:
+				print_universe_stats()
+			KEY_F3:
+				save_universe_state()
+			KEY_F4:
+				teleport_to_galaxy()
+			KEY_F5:
+				evolve_consciousness()
+
+func toggle_ui():
+	var ui = get_node_or_null(\"UI\")
+	if ui:
+		ui.visible = !ui.visible
+
+func print_universe_stats():
+	print(\"🌌 UNIVERSE STATISTICS:\")
+	if cosmic_lod:
+		print(\"  Cosmic: %s\" % cosmic_lod.get_cosmic_stats())
+	if chunk_manager:
+		print(\"  Chunks: %s\" % chunk_manager.get_grid_status())
+	if player:
+		print(\"  Plasmoid: %s\" % player.global_position)
+
+func save_universe_state():
+	if not akashic or not player:
+		print(\"❌ Cannot save - Akashic Records not ready\")
+		return
+	
+	var universe_data = {
+		\"plasmoid_position\": player.global_position,
+		\"consciousness_level\": player.consciousness_level if player.has_method(\"get\") else 4,
+		\"timestamp\": Time.get_ticks_msec(),
+		\"cosmic_scale\": determine_cosmic_scale()
+	}
+	
+	if akashic.has_method(\"save_universal_being_data\"):
+		var success = akashic.save_universal_being_data(\"universe_state\", universe_data)
+		if success:
+			print(\"💾 Universe state saved to Akashic Records\")
+		else:
+			print(\"❌ Failed to save universe state\")
+
+func determine_cosmic_scale() -> String:
+	if not player:
+		return \"unknown\"
+	
+	var pos = player.global_position
+	var distance_from_origin = pos.length()
+	
+	if distance_from_origin > 1000:
+		return \"galactic\"
+	elif distance_from_origin > 100:
+		return \"stellar\"
+	elif distance_from_origin > 10:
+		return \"planetary\"
+	else:
+		return \"surface\"
+
+func teleport_to_galaxy():
+	if not player:
+		return
+	
+	var galaxy_pos = Vector3(
+		randf_range(-5000, 5000),
+		randf_range(-5000, 5000),
+		randf_range(-5000, 5000)
+	)
+	
+	if player.has_method(\"teleport_to\"):
+		player.teleport_to(galaxy_pos)
+		print(\"✈️ Teleported to distant galaxy at %s\" % galaxy_pos)
+
+func evolve_consciousness():
+	if not player or not player.has_method(\"set_consciousness_level\"):
+		return
+	
+	var current_level = player.consciousness_level if player.has_method(\"get\") else 4
+	var new_level = (current_level + 1) % 8  # Cycle through 0-7
+	player.set_consciousness_level(new_level)
+	print(\"🧠 Consciousness evolved to level %d\" % new_level)
+"
+
+[sub_resource type="Environment" id="InfiniteSpaceEnvironment"]
+background_mode = 1
+background_color = Color(0.01, 0.01, 0.05, 1)
+ambient_light_source = 2
+ambient_light_color = Color(0.2, 0.2, 0.4, 1)
+ambient_light_energy = 0.3
+fog_enabled = true
+fog_light_color = Color(0.05, 0.05, 0.2, 1)
+fog_sun_scatter = 0.1
+
+[sub_resource type="SphereMesh" id="PlasmoidMesh"]
+radius = 0.5
+height = 1.0
+
+[sub_resource type="StandardMaterial3D" id="PlasmoidMaterial"]
+transparency = 1
+albedo_color = Color(0.3, 0.7, 1, 0.8)
+emission_enabled = true
+emission = Color(0.5, 0.8, 1, 1)
+emission_energy = 1.5
+rim_enabled = true
+rim = 0.5
+
+[node name="ULTIMATE_UNIVERSAL_BEING" type="Node3D"]
+script = SubResource("UltimateController")
+
+[node name="CosmicLODSystem" type="Node3D" parent="."]
+script = ExtResource("1")
+galaxy_distance = 2000.0
+star_distance = 200.0
+planet_distance = 20.0
+surface_distance = 2.0
+
+[node name="ChunkGridManager" type="Node3D" parent="."]
+script = ExtResource("3")
+render_distance = 2
+generation_distance = 3
+auto_generate = true
+debug_visualization = false
+
+[node name="Player" type="Node3D" parent="." groups=["players"]]
+script = ExtResource("2")
+
+[node name="CameraPoint" parent="Player" instance=ExtResource("4")]
+
+[node name="PlasmoidMesh" type="MeshInstance3D" parent="Player"]
+mesh = SubResource("PlasmoidMesh")
+surface_material_override/0 = SubResource("PlasmoidMaterial")
+
+[node name="InfiniteSpaceEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("InfiniteSpaceEnvironment")
+
+[node name="CosmicLight" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.7, -0.5, 0.5, 0, 0.7, 0.7, -0.7, -0.5, 0.5, 0, 50, 0)
+light_color = Color(0.9, 0.9, 1, 1)
+light_energy = 0.4
+shadow_enabled = true
+
+[node name="UI" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="Title" type="Label" parent="UI"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -250.0
+offset_top = 20.0
+offset_right = 250.0
+offset_bottom = 60.0
+text = "ULTIMATE UNIVERSAL BEING - INFINITE COSMOS"
+horizontal_alignment = 1
+
+[node name="Info" type="VBoxContainer" parent="UI"]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 20.0
+offset_top = -120.0
+offset_right = 350.0
+offset_bottom = -20.0
+
+[node name="Position" type="Label" parent="UI/Info"]
+layout_mode = 2
+text = "Plasmoid: (0, 0, 0)"
+
+[node name="Cosmic" type="Label" parent="UI/Info"]
+layout_mode = 2
+text = "Cosmic Objects: 0"
+
+[node name="Chunks" type="Label" parent="UI/Info"]
+layout_mode = 2
+text = "Active Chunks: 0"
+
+[node name="Controls" type="VBoxContainer" parent="UI"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -300.0
+offset_top = 20.0
+offset_right = -20.0
+offset_bottom = 200.0
+
+[node name="Movement" type="Label" parent="UI/Controls"]
+layout_mode = 2
+text = "🌌 INFINITE COSMIC EXPLORATION 🌌
+
+WASD - Fly through infinite space
+Mouse - Trackball camera look
+Space/Shift - Vertical flight"
+
+[node name="Functions" type="Label" parent="UI/Controls"]
+layout_mode = 2
+text = "F1 - Toggle UI
+F2 - Universe statistics  
+F3 - Save to Akashic Records
+F4 - Teleport to galaxy
+F5 - Evolve consciousness
+
+FLY TO: GALAXIES → STARS → PLANETS → SURFACES"

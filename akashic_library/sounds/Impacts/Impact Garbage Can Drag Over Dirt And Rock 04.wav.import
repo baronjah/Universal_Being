@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://8y5nw4u5ev21"
+path="res://.godot/imported/Impact Garbage Can Drag Over Dirt And Rock 04.wav-b5ca7465bab3211bf9d45ce0331978bd.sample"
+
+[deps]
+
+source_file="res://akashic_library/sounds/Impacts/Impact Garbage Can Drag Over Dirt And Rock 04.wav"
+dest_files=["res://.godot/imported/Impact Garbage Can Drag Over Dirt And Rock 04.wav-b5ca7465bab3211bf9d45ce0331978bd.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://cp6nhr4undeoj"
+path="res://.godot/imported/Crash Aluminum Garbage Can Dropping On Pavement With Metal Slide 01.wav-4a9ff09de8d784fb0f1de0bdfde8465c.sample"
+
+[deps]
+
+source_file="res://akashic_library/sounds/Crashes/Crash Aluminum Garbage Can Dropping On Pavement With Metal Slide 01.wav"
+dest_files=["res://.godot/imported/Crash Aluminum Garbage Can Dropping On Pavement With Metal Slide 01.wav-4a9ff09de8d784fb0f1de0bdfde8465c.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

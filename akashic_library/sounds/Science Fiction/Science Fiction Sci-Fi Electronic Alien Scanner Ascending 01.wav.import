@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://nd3c2v8u6dm"
+path="res://.godot/imported/Science Fiction Sci-Fi Electronic Alien Scanner Ascending 01.wav-65bca133d591d2d93472b04aac6bbc49.sample"
+
+[deps]
+
+source_file="res://akashic_library/sounds/Science Fiction/Science Fiction Sci-Fi Electronic Alien Scanner Ascending 01.wav"
+dest_files=["res://.godot/imported/Science Fiction Sci-Fi Electronic Alien Scanner Ascending 01.wav-65bca133d591d2d93472b04aac6bbc49.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

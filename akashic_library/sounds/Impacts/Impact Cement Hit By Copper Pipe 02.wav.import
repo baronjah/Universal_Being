@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://dwwme8brelgc8"
+path="res://.godot/imported/Impact Cement Hit By Copper Pipe 02.wav-bc0309ee6373e31bc56f4cd8ec51a1e1.sample"
+
+[deps]
+
+source_file="res://akashic_library/sounds/Impacts/Impact Cement Hit By Copper Pipe 02.wav"
+dest_files=["res://.godot/imported/Impact Cement Hit By Copper Pipe 02.wav-bc0309ee6373e31bc56f4cd8ec51a1e1.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

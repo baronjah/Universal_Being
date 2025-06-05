@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://1q8on3cq2gfw"
+path="res://.godot/imported/Animal Horse Trot By On Gravel 02.wav-249bf7d80af96e1e08349153f339236d.sample"
+
+[deps]
+
+source_file="res://akashic_library/sounds/Animals/Animal Horse Trot By On Gravel 02.wav"
+dest_files=["res://.godot/imported/Animal Horse Trot By On Gravel 02.wav-249bf7d80af96e1e08349153f339236d.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

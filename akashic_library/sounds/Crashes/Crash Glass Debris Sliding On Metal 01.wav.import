@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://1d221lt5g2wl"
+path="res://.godot/imported/Crash Glass Debris Sliding On Metal 01.wav-f9a22f7b52ca520c1edf2311608ef9fb.sample"
+
+[deps]
+
+source_file="res://akashic_library/sounds/Crashes/Crash Glass Debris Sliding On Metal 01.wav"
+dest_files=["res://.godot/imported/Crash Glass Debris Sliding On Metal 01.wav-f9a22f7b52ca520c1edf2311608ef9fb.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

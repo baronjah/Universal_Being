@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://bkwlbvttsfphw"
+path="res://.godot/imported/Impact Sliding Crash Car Crash 01.wav-80a3ed9362f3c045136c45e8dd5676ec.sample"
+
+[deps]
+
+source_file="res://akashic_library/sounds/Impacts/Impact Sliding Crash Car Crash 01.wav"
+dest_files=["res://.godot/imported/Impact Sliding Crash Car Crash 01.wav-80a3ed9362f3c045136c45e8dd5676ec.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

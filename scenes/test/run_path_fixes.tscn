@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://bh8qb7wj3p8kv"]
 
-[ext_resource type="Script" path="res://run_path_fixes.gd" id="1_r3n8s"]
+[ext_resource type="Script" path="res://scripts/run_path_fixes.gd" id="1_r3n8s"]
 
 [node name="PathFixRunner" type="Node"]
 script = ExtResource("1_r3n8s")

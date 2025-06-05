@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://60ncfmn6pme1"
+path="res://.godot/imported/Impact Mallet Hit Ceramic Tile 02.wav-370ab0752c3c788f76c17a9180e77d67.sample"
+
+[deps]
+
+source_file="res://akashic_library/sounds/Impacts/Impact Mallet Hit Ceramic Tile 02.wav"
+dest_files=["res://.godot/imported/Impact Mallet Hit Ceramic Tile 02.wav-370ab0752c3c788f76c17a9180e77d67.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

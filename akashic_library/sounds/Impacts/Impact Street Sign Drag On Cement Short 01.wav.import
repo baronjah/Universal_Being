@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://b32rut8nwmy20"
+path="res://.godot/imported/Impact Street Sign Drag On Cement Short 01.wav-19fe15b29ecbed59597a6179fd803942.sample"
+
+[deps]
+
+source_file="res://akashic_library/sounds/Impacts/Impact Street Sign Drag On Cement Short 01.wav"
+dest_files=["res://.godot/imported/Impact Street Sign Drag On Cement Short 01.wav-19fe15b29ecbed59597a6179fd803942.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

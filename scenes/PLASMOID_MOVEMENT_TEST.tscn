@@ -1,0 +1,46 @@
+[gd_scene load_steps=5 format=3]
+
+[ext_resource type="PackedScene" uid="uid://bwcpvd8w4d76h" path="res://scenes/main/plasmoid.tscn" id="1"]
+[ext_resource type="PackedScene" uid="uid://b0ee1qqnhkfnb" path="res://scenes/main/camera_point.tscn" id="2"]
+
+[sub_resource type="PlaneMesh" id="GroundMesh"]
+size = Vector2(50, 50)
+
+[sub_resource type="BoxShape3D" id="GroundShape"]
+size = Vector3(50, 0.1, 50)
+
+[sub_resource type="BoxMesh" id="MarkerMesh"]
+
+[node name="PLASMOID_MOVEMENT_TEST" type="Node3D"]
+
+[node name="Plasmoid" parent="." instance=ExtResource("1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
+
+[node name="CameraPoint" parent="Plasmoid" instance=ExtResource("2")]
+
+[node name="Ground" type="StaticBody3D" parent="."]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Ground"]
+mesh = SubResource("GroundMesh")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ground"]
+shape = SubResource("GroundShape")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.7, -0.5, 0.5, 0, 0.7, 0.7, -0.7, -0.5, 0.5, 0, 10, 0)
+
+[node name="North" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, -10)
+mesh = SubResource("MarkerMesh")
+
+[node name="South" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 10)
+mesh = SubResource("MarkerMesh")
+
+[node name="East" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 1, 0)
+mesh = SubResource("MarkerMesh")
+
+[node name="West" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 1, 0)
+mesh = SubResource("MarkerMesh")

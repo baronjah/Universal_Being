@@ -20,7 +20,7 @@ global_classes={
 config/name="Universal_Being"
 config/description="The game where everything is a Universal Being that can become anything"
 config/version="1.0.0"
-run/main_scene="res://main.tscn"
+run/main_scene="res://scenes/main/plasmoid.tscn"
 config/features=PackedStringArray("4.5", "Forward Plus")
 config/icon="res://icon.svg"
 

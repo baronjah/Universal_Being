@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://bq3nkovgl8d4t"
+path="res://.godot/imported/Impact Wood Drag Through Leaf Debris 01.wav-e627869eea1a39797dd4e2b3675e5460.sample"
+
+[deps]
+
+source_file="res://akashic_library/sounds/Impacts/Impact Wood Drag Through Leaf Debris 01.wav"
+dest_files=["res://.godot/imported/Impact Wood Drag Through Leaf Debris 01.wav-e627869eea1a39797dd4e2b3675e5460.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

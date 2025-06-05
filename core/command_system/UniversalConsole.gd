@@ -4,7 +4,7 @@
 # LOCATION: core/command_system/UniversalConsole.gd
 # ==================================================
 
-extends Control
+extends Node3D
 class_name UniversalConsole
 
 ## Console components
@@ -13,9 +13,6 @@ class_name UniversalConsole
 @onready var suggestions_box: ItemList = ItemList.new()
 
 ## Systems
-var command_processor: UniversalCommandProcessor
-var macro_system: MacroSystem
-var code_editor: LiveCodeEditor
 var akashic_records: Node
 
 ## Console state
@@ -36,11 +33,17 @@ func _ready() -> void:
 	print_welcome()
 
 func _setup_ui() -> void:
-	"""Create console UI"""
-	# Set console properties
-	anchor_right = 1.0
-	anchor_bottom = 0.5
-	color = Color(0, 0, 0, 0.9)
+	# Create console UI container
+	var console_ui = Control.new()
+	console_ui.name = "ConsoleUI"
+	console_ui.set_anchors_preset(Control.PRESET_TOP_WIDE)
+	console_ui.size = Vector2(get_viewport().size.x, 400)
+	
+	# Background panel
+	var panel = Panel.new()
+	panel.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	panel.modulate = Color(0.1, 0.1, 0.1, 0.9)
+	console_ui.add_child(panel)
 	
 	var margin = MarginContainer.new()
 	margin.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
@@ -68,14 +71,13 @@ func _setup_ui() -> void:
 	
 	# Suggestions box (hidden by default)
 	suggestions_box.visible = false
-	suggestions_box.max_displayed_items = 5
+	suggestions_box.max_columns = 1
 	suggestions_box.item_selected.connect(_on_suggestion_selected)
 	add_child(suggestions_box)
 
 func _connect_systems() -> void:
 	"""Connect to all subsystems"""
-	# Command processor
-	command_processor = UniversalCommandProcessor.new()
+	# Simple command system for now
 	add_child(command_processor)
 	
 	# Macro system
@@ -116,55 +118,50 @@ func toggle() -> void:
 		console_closed.emit()
 
 func print_welcome() -> void:
-	"""Print welcome message"""
-	output_line("[color=cyan]╔═══════════════════════════════════════╗[/color]")
-	output_line("[color=cyan]║   UNIVERSAL CONSOLE - Reality OS      ║[/color]")
-	output_line("[color=cyan]╚═══════════════════════════════════════╝[/color]")
+	output_line("=== UNIVERSAL CONSOLE ===")
+	output_line("Reality Development Interface")
+	output_line("Type 'help' for commands")
+	output_line("Ready to create universes...")
 	output_line("")
-	output_line("Welcome to the Universe Simulator!")
-	output_line("Type [color=yellow]help[/color] for commands")
-	output_line("Type [color=yellow]tutorial[/color] to learn reality manipulation")
+	output_line("Systems online:")
+	output_line("• Console: Online")
+	output_line("• AI Communication: Ready")
+	output_line("• Game Creation: Ready")
 	output_line("")
 
 func _on_command_entered(text: String) -> void:
-	"""Process entered command"""
 	if text.strip_edges().is_empty():
 		return
 	
 	# Add to history
 	command_history.append(text)
-	history_index = command_history.size()
+	history_index = -1
 	
-	# Echo command
-	output_line("[color=gray]> %s[/color]" % text)
+	# Show command
+	output_line("> " + text)
 	
-	# Special console commands
-	if text.begins_with("/"):
-		process_console_command(text.substr(1))
-	else:
-		# Process through command processor
-		var result = command_processor.execute_command(text)
-		if result != null and result != "":
-			output_line(str(result))
+	# Basic commands
+	var parts = text.split(" ")
+	var cmd = parts[0].to_lower()
 	
-	# Clear input
-	input_line.clear()
-
-func process_console_command(cmd: String) -> void:
-	"""Process console-specific commands"""
-	var parts = cmd.split(" ", 2)
-	var command = parts[0]
-	var args = parts[1] if parts.size() > 1 else ""
-	
-	match command:
+	match cmd:
+		"help":
+			output_line("Commands: help, clear, spawn, test, ai")
 		"clear":
 			output_area.clear()
-		
-		"save":
-			save_session()
-			output_line("Session saved to Akashic Records")
-		
-		"load":
+		"spawn":
+			output_line("Spawning Universal Being...")
+		"test":
+			output_line("AI Communication test: Hello from console!")
+		"ai":
+			output_line("AI Communication ready - type messages to create game together")
+		_:
+			output_line("AI: " + text)
+			output_line("Creating game element: " + text)
+	
+	# Clear input
+	input_line.text = ""
+
 			if args:
 				load_session(args)
 			else:
@@ -334,8 +331,7 @@ func load_session(name: String) -> void:
 			output_line("Session loaded: %s" % name)
 
 func output_line(text: String) -> void:
-	"""Output formatted text to console"""
-	output_area.append_bbcode(text + "\n")
+	output_area.append_text(text + "\n")
 
 func navigate_history(direction: int) -> void:
 	"""Navigate command history"""

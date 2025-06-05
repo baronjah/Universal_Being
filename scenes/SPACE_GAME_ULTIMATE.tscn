@@ -1,0 +1,724 @@
+[gd_scene load_steps=15 format=3]
+
+[ext_resource type="Script" path="res://scripts/player_universal_being.gd" id="1"]
+[ext_resource type="PackedScene" uid="uid://b0ee1qqnhkfnb" path="res://scenes/main/camera_point.tscn" id="2"]
+
+[sub_resource type="GDScript" id="SpaceGameController"]
+script/source = "extends Node3D
+
+# SPACE GAME ULTIMATE - Mechas, Mining, Planets, AI
+# Built on the geometric cosmos foundation
+
+var player: PlayerUniversalBeing = null
+var current_mecha: Node3D = null
+var space_stations: Array = []
+var mineable_asteroids: Array = []
+var ai_companions: Array = []
+
+# Game state
+var resources: Dictionary = {\"metal\": 100, \"energy\": 50, \"crystals\": 10}
+var mecha_equipped: bool = false
+
+func _ready():
+	player = $Player
+	
+	# Generate space environment around player
+	generate_space_environment()
+	
+	# Create starting mecha
+	spawn_mecha_near_player()
+	
+	# Add AI companions
+	spawn_ai_companions()
+	
+	print(\"🚀 SPACE GAME ULTIMATE ACTIVATED\")
+	print(\"🤖 MECHAS, MINING, PLANETS, AI ONLINE\")
+	print(\"⛏️ RESOURCES: Metal:%d Energy:%d Crystals:%d\" % [resources.metal, resources.energy, resources.crystals])
+
+func generate_space_environment():
+	\"\"\"Generate space environment with planets, asteroids, stations\"\"\"
+	
+	# Generate planets at regular intervals
+	for i in range(5):
+		var planet_pos = Vector3(
+			randf_range(-2000, 2000),
+			randf_range(-500, 500), 
+			randf_range(-2000, 2000)
+		)
+		create_planet(planet_pos, i)
+	
+	# Generate asteroid fields
+	for i in range(20):
+		var asteroid_pos = Vector3(
+			randf_range(-1000, 1000),
+			randf_range(-200, 200),
+			randf_range(-1000, 1000)
+		)
+		create_mineable_asteroid(asteroid_pos)
+	
+	# Generate space stations
+	for i in range(3):
+		var station_pos = Vector3(
+			randf_range(-1500, 1500),
+			randf_range(-300, 300),
+			randf_range(-1500, 1500)
+		)
+		create_space_station(station_pos, i)
+
+func create_planet(pos: Vector3, planet_id: int):
+	\"\"\"Create a planet with landing zones\"\"\"
+	var planet = MeshInstance3D.new()
+	planet.name = \"Planet_%d\" % planet_id
+	planet.global_position = pos
+	
+	# Planet mesh - large sphere
+	var sphere = SphereMesh.new()
+	sphere.radius = 50.0
+	sphere.height = 100.0
+	sphere.radial_segments = 32
+	sphere.rings = 16
+	planet.mesh = sphere
+	
+	# Planet material based on type
+	var material = StandardMaterial3D.new()
+	match planet_id % 4:
+		0: # Earth-like
+			material.albedo_color = Color(0.2, 0.7, 0.3)
+			material.emission = Color(0.1, 0.3, 0.1)
+		1: # Desert
+			material.albedo_color = Color(0.8, 0.6, 0.2)
+			material.emission = Color(0.3, 0.2, 0.0)
+		2: # Ice
+			material.albedo_color = Color(0.7, 0.8, 1.0)
+			material.emission = Color(0.2, 0.3, 0.4)
+		3: # Volcanic
+			material.albedo_color = Color(0.8, 0.2, 0.1)
+			material.emission = Color(0.4, 0.1, 0.0)
+	
+	material.emission_energy = 0.3
+	planet.material_override = material
+	
+	# Add collision for landing
+	var collision = StaticBody3D.new()
+	var shape = CollisionShape3D.new()
+	var sphere_shape = SphereShape3D.new()
+	sphere_shape.radius = 50.0
+	shape.shape = sphere_shape
+	collision.add_child(shape)
+	planet.add_child(collision)
+	
+	# Planet metadata
+	planet.set_meta(\"planet_type\", [\"Earth\", \"Desert\", \"Ice\", \"Volcanic\"][planet_id % 4])
+	planet.set_meta(\"can_land\", true)
+	planet.set_meta(\"resources\", {\"metal\": randf_range(50, 200), \"crystals\": randf_range(10, 50)})
+	
+	add_child(planet)
+	print(\"🌍 Created %s planet at %s\" % [planet.get_meta(\"planet_type\"), pos])
+
+func create_mineable_asteroid(pos: Vector3):
+	\"\"\"Create mineable asteroid with resources\"\"\"
+	var asteroid = MeshInstance3D.new()
+	asteroid.name = \"Asteroid_%d\" % mineable_asteroids.size()
+	asteroid.global_position = pos
+	
+	# Asteroid mesh - irregular box
+	var box = BoxMesh.new()
+	box.size = Vector3(
+		randf_range(3, 8),
+		randf_range(3, 8), 
+		randf_range(3, 8)
+	)
+	asteroid.mesh = box
+	asteroid.rotation = Vector3(randf(), randf(), randf())
+	
+	# Asteroid material - rocky with metal veins
+	var material = StandardMaterial3D.new()
+	material.albedo_color = Color(0.4, 0.3, 0.2)
+	material.emission_enabled = true
+	material.emission = Color(0.6, 0.4, 0.1)  # Metal glow
+	material.emission_energy = 0.5
+	material.roughness = 0.8
+	asteroid.material_override = material
+	
+	# Add collision for mining
+	var collision = StaticBody3D.new()
+	var shape = CollisionShape3D.new()
+	var box_shape = BoxShape3D.new()
+	box_shape.size = box.size
+	shape.shape = box_shape
+	collision.add_child(shape)
+	asteroid.add_child(collision)
+	
+	# Mining data
+	var metal_amount = randf_range(10, 50)
+	var energy_amount = randf_range(5, 20)
+	asteroid.set_meta(\"mineable\", true)
+	asteroid.set_meta(\"metal\", metal_amount)
+	asteroid.set_meta(\"energy\", energy_amount)
+	asteroid.set_meta(\"mining_progress\", 0.0)
+	
+	mineable_asteroids.append(asteroid)
+	add_child(asteroid)
+
+func create_space_station(pos: Vector3, station_id: int):
+	\"\"\"Create space station with services\"\"\"
+	var station = Node3D.new()
+	station.name = \"SpaceStation_%d\" % station_id
+	station.global_position = pos
+	
+	# Station structure - multiple connected modules
+	for module in range(3):
+		var module_mesh = MeshInstance3D.new()
+		module_mesh.name = \"Module_%d\" % module
+		
+		var cylinder = CylinderMesh.new()
+		cylinder.top_radius = 8.0
+		cylinder.bottom_radius = 8.0
+		cylinder.height = 20.0
+		module_mesh.mesh = cylinder
+		
+		# Position modules
+		module_mesh.position = Vector3(module * 25, 0, 0)
+		module_mesh.rotation.z = PI / 2  # Horizontal orientation
+		
+		# Station material - technological
+		var material = StandardMaterial3D.new()
+		material.albedo_color = Color(0.3, 0.3, 0.4)
+		material.metallic = 0.8
+		material.roughness = 0.2
+		material.emission_enabled = true
+		material.emission = Color(0.0, 0.3, 0.6)
+		material.emission_energy = 1.0
+		module_mesh.material_override = material
+		
+		station.add_child(module_mesh)
+	
+	# Station services
+	var services = [\"Mecha Repair\", \"Resource Trading\", \"Mission Control\"][station_id % 3]
+	station.set_meta(\"station_type\", services)
+	station.set_meta(\"can_dock\", true)
+	
+	space_stations.append(station)
+	add_child(station)
+	print(\"🏭 Created %s station at %s\" % [services, pos])
+
+func spawn_mecha_near_player():
+	\"\"\"Spawn a mecha near the player\"\"\"
+	if not player:
+		return
+	
+	var mecha_pos = player.global_position + Vector3(10, 5, 0)
+	current_mecha = create_mecha(mecha_pos, \"PlayerMecha\")
+	
+	print(\"🤖 Mecha spawned near player\")
+
+func create_mecha(pos: Vector3, mecha_name: String) -> Node3D:
+	\"\"\"Create a pilotable mecha\"\"\"
+	var mecha = Node3D.new()
+	mecha.name = mecha_name
+	mecha.global_position = pos
+	
+	# Mecha body - main torso
+	var torso = MeshInstance3D.new()
+	torso.name = \"Torso\"
+	var torso_mesh = BoxMesh.new()
+	torso_mesh.size = Vector3(4, 6, 3)
+	torso.mesh = torso_mesh
+	mecha.add_child(torso)
+	
+	# Mecha head
+	var head = MeshInstance3D.new()
+	head.name = \"Head\"
+	head.position = Vector3(0, 4, 0)
+	var head_mesh = SphereMesh.new()
+	head_mesh.radius = 1.5
+	head.mesh = head_mesh
+	torso.add_child(head)
+	
+	# Mecha arms
+	for i in range(2):
+		var arm = MeshInstance3D.new()
+		arm.name = \"Arm_%d\" % i
+		arm.position = Vector3(3 if i == 0 else -3, 1, 0)
+		var arm_mesh = CylinderMesh.new()
+		arm_mesh.top_radius = 0.8
+		arm_mesh.bottom_radius = 0.8
+		arm_mesh.height = 5.0
+		arm.mesh = arm_mesh
+		torso.add_child(arm)
+	
+	# Mecha legs  
+	for i in range(2):
+		var leg = MeshInstance3D.new()
+		leg.name = \"Leg_%d\" % i
+		leg.position = Vector3(1 if i == 0 else -1, -5, 0)
+		var leg_mesh = CylinderMesh.new()
+		leg_mesh.top_radius = 1.0
+		leg_mesh.bottom_radius = 1.0
+		leg_mesh.height = 6.0
+		leg.mesh = leg_mesh
+		torso.add_child(leg)
+	
+	# Mecha material - metallic blue
+	var material = StandardMaterial3D.new()
+	material.albedo_color = Color(0.2, 0.4, 0.8)
+	material.metallic = 0.9
+	material.roughness = 0.1
+	material.emission_enabled = true
+	material.emission = Color(0.1, 0.2, 0.4)
+	material.emission_energy = 0.8
+	
+	# Apply material to all parts
+	torso.material_override = material
+	for child in torso.get_children():
+		if child is MeshInstance3D:
+			child.material_override = material
+	
+	# Mecha stats
+	mecha.set_meta(\"hp\", 100)
+	mecha.set_meta(\"energy\", 100)
+	mecha.set_meta(\"pilot\", null)
+	mecha.set_meta(\"can_pilot\", true)
+	
+	add_child(mecha)
+	return mecha
+
+func spawn_ai_companions():
+	\"\"\"Spawn AI companion ships\"\"\"
+	for i in range(2):
+		var companion_pos = player.global_position + Vector3(
+			randf_range(-20, 20),
+			randf_range(-10, 10),
+			randf_range(-20, 20)
+		)
+		create_ai_companion(companion_pos, \"AI_Companion_%d\" % i)
+
+func create_ai_companion(pos: Vector3, ai_name: String):
+	\"\"\"Create AI companion ship\"\"\"
+	var companion = Node3D.new()
+	companion.name = ai_name
+	companion.global_position = pos
+	
+	# AI ship body - sleek design
+	var body = MeshInstance3D.new()
+	body.name = \"Body\"
+	var body_mesh = BoxMesh.new()
+	body_mesh.size = Vector3(3, 1, 8)
+	body.mesh = body_mesh
+	companion.add_child(body)
+	
+	# AI ship wings
+	for i in range(2):
+		var wing = MeshInstance3D.new()
+		wing.name = \"Wing_%d\" % i
+		wing.position = Vector3(2 if i == 0 else -2, 0, -1)
+		var wing_mesh = BoxMesh.new()
+		wing_mesh.size = Vector3(4, 0.5, 2)
+		wing.mesh = wing_mesh
+		body.add_child(wing)
+	
+	# AI material - glowing green
+	var material = StandardMaterial3D.new()
+	material.albedo_color = Color(0.1, 0.8, 0.2)
+	material.emission_enabled = true
+	material.emission = Color(0.0, 0.6, 0.1)
+	material.emission_energy = 1.2
+	material.metallic = 0.7
+	
+	body.material_override = material
+	for child in body.get_children():
+		if child is MeshInstance3D:
+			child.material_override = material
+	
+	# AI behavior
+	companion.set_meta(\"ai_type\", \"escort\")
+	companion.set_meta(\"follow_target\", player)
+	companion.set_meta(\"hp\", 80)
+	
+	ai_companions.append(companion)
+	add_child(companion)
+	print(\"🤖 AI companion %s spawned\" % ai_name)
+
+func _process(delta):
+	update_ai_companions(delta)
+	update_ui()
+
+func update_ai_companions(delta):
+	\"\"\"Update AI companion behavior\"\"\"
+	for companion in ai_companions:
+		if not is_instance_valid(companion) or not player:
+			continue
+		
+		# Simple follow behavior
+		var target_pos = player.global_position + Vector3(
+			sin(Time.get_ticks_msec() * 0.001) * 15,
+			cos(Time.get_ticks_msec() * 0.001) * 5,
+			-10
+		)
+		
+		companion.global_position = companion.global_position.move_toward(target_pos, delta * 5.0)
+		companion.look_at(player.global_position, Vector3.UP)
+
+func update_ui():
+	if Engine.get_process_frames() % 30 == 0:
+		var ui = get_node_or_null(\"SpaceGameUI\")
+		if not ui:
+			return
+		
+		# Update resource display
+		var resources_label = ui.get_node_or_null(\"Stats/Resources\")
+		if resources_label:
+			resources_label.text = \"Resources: Metal:%d Energy:%d Crystals:%d\" % [resources.metal, resources.energy, resources.crystals]
+		
+		# Update mecha status
+		var mecha_label = ui.get_node_or_null(\"Stats/Mecha\")
+		if mecha_label and current_mecha:
+			var hp = current_mecha.get_meta(\"hp\", 100)
+			var energy = current_mecha.get_meta(\"energy\", 100)
+			mecha_label.text = \"Mecha: HP:%d Energy:%d\" % [hp, energy]
+
+func _input(event):
+	if event is InputEventKey and event.pressed:
+		match event.keycode:
+			KEY_E:
+				interact_with_nearest()
+			KEY_M:
+				toggle_mecha_pilot()
+			KEY_T:
+				open_trading_interface()
+			KEY_B:
+				build_space_station()
+
+func interact_with_nearest():
+	\"\"\"Interact with nearest object\"\"\"
+	if not player:
+		return
+	
+	var nearest_distance = 999999.0
+	var nearest_object = null
+	
+	# Check asteroids for mining
+	for asteroid in mineable_asteroids:
+		if not is_instance_valid(asteroid):
+			continue
+		var distance = player.global_position.distance_to(asteroid.global_position)
+		if distance < nearest_distance and distance < 20.0:
+			nearest_distance = distance
+			nearest_object = asteroid
+	
+	# Check space stations for docking
+	for station in space_stations:
+		if not is_instance_valid(station):
+			continue
+		var distance = player.global_position.distance_to(station.global_position)
+		if distance < nearest_distance and distance < 50.0:
+			nearest_distance = distance
+			nearest_object = station
+	
+	if nearest_object:
+		if nearest_object.get_meta(\"mineable\", false):
+			mine_asteroid(nearest_object)
+		elif nearest_object.get_meta(\"can_dock\", false):
+			dock_at_station(nearest_object)
+
+func mine_asteroid(asteroid):
+	\"\"\"Mine resources from asteroid\"\"\"
+	var metal = asteroid.get_meta(\"metal\", 0)
+	var energy = asteroid.get_meta(\"energy\", 0)
+	
+	resources.metal += int(metal * 0.3)  # 30% extraction rate
+	resources.energy += int(energy * 0.3)
+	
+	asteroid.set_meta(\"metal\", metal * 0.7)
+	asteroid.set_meta(\"energy\", energy * 0.7)
+	
+	print(\"⛏️ Mined asteroid! +%d metal, +%d energy\" % [int(metal * 0.3), int(energy * 0.3)])
+
+func dock_at_station(station):
+	\"\"\"Dock at space station\"\"\"
+	var station_type = station.get_meta(\"station_type\", \"Unknown\")
+	print(\"🏭 Docked at %s station\" % station_type)
+	
+	match station_type:
+		\"Mecha Repair\":
+			if current_mecha:
+				current_mecha.set_meta(\"hp\", 100)
+				current_mecha.set_meta(\"energy\", 100)
+				print(\"🔧 Mecha repaired!\")
+		\"Resource Trading\":
+			print(\"💰 Trading interface opened\")
+		\"Mission Control\":
+			print(\"📋 Mission briefing available\")
+
+func toggle_mecha_pilot():
+	\"\"\"Toggle between piloting mecha and plasmoid\"\"\"
+	if not current_mecha:
+		return
+	
+	mecha_equipped = !mecha_equipped
+	
+	if mecha_equipped:
+		# Move player into mecha
+		player.global_position = current_mecha.global_position
+		current_mecha.set_meta(\"pilot\", player)
+		print(\"🤖 Piloting mecha\")
+	else:
+		# Exit mecha
+		player.global_position = current_mecha.global_position + Vector3(5, 0, 0)
+		current_mecha.set_meta(\"pilot\", null)
+		print(\"⚡ Exited mecha - back to plasmoid form\")
+
+func open_trading_interface():
+	print(\"💰 Trading interface: Metal:%d Energy:%d Crystals:%d\" % [resources.metal, resources.energy, resources.crystals])
+
+func build_space_station():
+	if resources.metal >= 100 and resources.energy >= 50:
+		resources.metal -= 100
+		resources.energy -= 50
+		
+		var build_pos = player.global_position + Vector3(0, 0, 50)
+		create_space_station(build_pos, space_stations.size())
+		print(\"🏗️ Built new space station!\")
+	else:
+		print(\"❌ Insufficient resources for space station\")
+"
+
+[sub_resource type="Environment" id="SpaceEnvironment"]
+background_mode = 1
+background_color = Color(0.02, 0.02, 0.05, 1)
+ambient_light_source = 2
+ambient_light_color = Color(0.1, 0.1, 0.2, 1)
+ambient_light_energy = 0.15
+fog_enabled = true
+fog_light_color = Color(0.05, 0.05, 0.15, 1)
+fog_sun_scatter = 0.1
+glow_enabled = true
+glow_intensity = 0.4
+glow_strength = 1.0
+glow_bloom = 0.15
+
+[sub_resource type="SphereMesh" id="PlasmoidMesh"]
+radius = 0.5
+height = 1.0
+
+[sub_resource type="StandardMaterial3D" id="PlasmoidMaterial"]
+transparency = 1
+albedo_color = Color(0.3, 0.7, 1, 0.8)
+emission_enabled = true
+emission = Color(0.5, 0.8, 1, 1)
+emission_energy = 2.0
+rim_enabled = true
+rim = 0.8
+
+[sub_resource type="QuadMesh" id="StarfieldMesh"]
+size = Vector2(4000, 4000)
+
+[sub_resource type="StandardMaterial3D" id="StarfieldMaterial"]
+transparency = 1
+albedo_color = Color(1, 1, 1, 0.8)
+emission_enabled = true
+emission = Color(1, 1, 1, 1)
+emission_energy = 0.5
+vertex_color_use_as_albedo = true
+billboard_mode = 1
+
+[sub_resource type="GDScript" id="StarfieldGenerator"]
+script/source = "extends Node3D
+
+func _ready():
+	generate_starfield()
+
+func generate_starfield():
+	# Create background starfield
+	for i in range(1000):
+		var star = MeshInstance3D.new()
+		star.name = \"Star_%d\" % i
+		
+		# Random position in sphere around origin
+		var distance = randf_range(500, 2000)
+		var theta = randf() * PI * 2
+		var phi = randf() * PI
+		
+		star.position = Vector3(
+			distance * sin(phi) * cos(theta),
+			distance * sin(phi) * sin(theta),
+			distance * cos(phi)
+		)
+		
+		# Star mesh - small sphere
+		var sphere = SphereMesh.new()
+		sphere.radius = randf_range(0.5, 2.0)
+		sphere.height = sphere.radius * 2
+		star.mesh = sphere
+		
+		# Star material - glowing
+		var material = StandardMaterial3D.new()
+		var star_color = Color(
+			randf_range(0.8, 1.0),
+			randf_range(0.8, 1.0), 
+			randf_range(0.9, 1.0)
+		)
+		material.albedo_color = star_color
+		material.emission_enabled = true
+		material.emission = star_color
+		material.emission_energy = randf_range(1.0, 3.0)
+		star.material_override = material
+		
+		add_child(star)
+"
+
+[sub_resource type="GDScript" id="NebulaGenerator"]
+script/source = "extends Node3D
+
+func _ready():
+	generate_nebulae()
+
+func generate_nebulae():
+	# Create distant nebulae
+	for i in range(5):
+		var nebula = MeshInstance3D.new()
+		nebula.name = \"Nebula_%d\" % i
+		
+		# Random distant position
+		nebula.position = Vector3(
+			randf_range(-3000, 3000),
+			randf_range(-1000, 1000),
+			randf_range(-3000, 3000)
+		)
+		
+		# Nebula mesh - large sphere
+		var sphere = SphereMesh.new()
+		sphere.radius = randf_range(100, 300)
+		sphere.height = sphere.radius * 2
+		nebula.mesh = sphere
+		
+		# Nebula material - translucent glowing
+		var material = StandardMaterial3D.new()
+		material.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
+		var nebula_colors = [
+			Color(1.0, 0.3, 0.5, 0.3),  # Pink
+			Color(0.3, 0.5, 1.0, 0.3),  # Blue  
+			Color(0.5, 1.0, 0.3, 0.3),  # Green
+			Color(1.0, 0.8, 0.2, 0.3),  # Yellow
+			Color(0.8, 0.2, 1.0, 0.3)   # Purple
+		]
+		var color = nebula_colors[i % nebula_colors.size()]
+		material.albedo_color = color
+		material.emission_enabled = true
+		material.emission = Color(color.r, color.g, color.b, 1.0)
+		material.emission_energy = 0.8
+		nebula.material_override = material
+		
+		add_child(nebula)
+"
+
+[sub_resource type="Theme" id="SpaceGameTheme"]
+
+[node name="SPACE_GAME_ULTIMATE" type="Node3D"]
+script = SubResource("SpaceGameController")
+
+[node name="Player" type="Node3D" parent="." groups=["players"]]
+script = ExtResource("1")
+move_speed = 12.0
+float_height = 3.0
+mouse_sensitivity = 0.002
+interaction_range = 20.0
+
+[node name="CameraPoint" parent="Player" instance=ExtResource("2")]
+
+[node name="PlasmoidMesh" type="MeshInstance3D" parent="Player"]
+mesh = SubResource("PlasmoidMesh")
+surface_material_override/0 = SubResource("PlasmoidMaterial")
+
+[node name="SpaceEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("SpaceEnvironment")
+
+[node name="StarField" type="Node3D" parent="."]
+script = SubResource("StarfieldGenerator")
+
+[node name="Nebulae" type="Node3D" parent="."]
+script = SubResource("NebulaGenerator")
+
+[node name="SunLight" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.7, -0.5, 0.5, 0, 0.7, 0.7, -0.7, -0.5, 0.5, 0, 200, 0)
+light_color = Color(1, 0.95, 0.8, 1)
+light_energy = 0.4
+shadow_enabled = true
+
+[node name="SpaceAmbient" type="OmniLight3D" parent="."]
+light_color = Color(0.2, 0.3, 0.5, 1)
+light_energy = 0.3
+omni_range = 1000.0
+
+[node name="SpaceGameUI" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme = SubResource("SpaceGameTheme")
+
+[node name="Title" type="Label" parent="SpaceGameUI"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -200.0
+offset_top = 10.0
+offset_right = 200.0
+offset_bottom = 50.0
+text = "SPACE GAME ULTIMATE - MECHAS • MINING • PLANETS • AI"
+horizontal_alignment = 1
+
+[node name="Stats" type="VBoxContainer" parent="SpaceGameUI"]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = -150.0
+offset_right = 400.0
+offset_bottom = -10.0
+
+[node name="Position" type="Label" parent="SpaceGameUI/Stats"]
+layout_mode = 2
+text = "Position: (0, 0, 0)"
+
+[node name="Resources" type="Label" parent="SpaceGameUI/Stats"]
+layout_mode = 2
+text = "Resources: Metal:100 Energy:50 Crystals:10"
+
+[node name="Mecha" type="Label" parent="SpaceGameUI/Stats"]
+layout_mode = 2
+text = "Mecha: HP:100 Energy:100"
+
+[node name="Targets" type="Label" parent="SpaceGameUI/Stats"]
+layout_mode = 2
+text = "Nearest: None"
+
+[node name="Controls" type="VBoxContainer" parent="SpaceGameUI"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -350.0
+offset_top = 10.0
+offset_right = -10.0
+offset_bottom = 250.0
+
+[node name="Movement" type="Label" parent="SpaceGameUI/Controls"]
+layout_mode = 2
+text = "🚀 SPACE EXPLORATION 🚀
+
+WASD - Fly through space
+Mouse - Trackball camera
+Space/Shift - Vertical flight"
+
+[node name="Actions" type="Label" parent="SpaceGameUI/Controls"]
+layout_mode = 2
+text = "E - Interact (Mine/Dock)
+M - Toggle Mecha pilot
+T - Trading interface
+B - Build space station
+
+🤖 MECHAS • ⛏️ MINING • 🌍 PLANETS • 🤖 AI
+FLY TO PLANETS • PILOT MECHAS • MINE ASTEROIDS"

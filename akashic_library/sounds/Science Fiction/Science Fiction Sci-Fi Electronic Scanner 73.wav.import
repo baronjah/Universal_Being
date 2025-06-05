@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://cc8xfsmganjv1"
+path="res://.godot/imported/Science Fiction Sci-Fi Electronic Scanner 73.wav-12741f5e39ea8173021f6c2e1bb4db49.sample"
+
+[deps]
+
+source_file="res://akashic_library/sounds/Science Fiction/Science Fiction Sci-Fi Electronic Scanner 73.wav"
+dest_files=["res://.godot/imported/Science Fiction Sci-Fi Electronic Scanner 73.wav-12741f5e39ea8173021f6c2e1bb4db49.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

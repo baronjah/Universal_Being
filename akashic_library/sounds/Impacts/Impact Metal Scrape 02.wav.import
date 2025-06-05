@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://cj8mom8aj7twx"
+path="res://.godot/imported/Impact Metal Scrape 02.wav-110f6d59ae8bde995edf92f323e3fcca.sample"
+
+[deps]
+
+source_file="res://akashic_library/sounds/Impacts/Impact Metal Scrape 02.wav"
+dest_files=["res://.godot/imported/Impact Metal Scrape 02.wav-110f6d59ae8bde995edf92f323e3fcca.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

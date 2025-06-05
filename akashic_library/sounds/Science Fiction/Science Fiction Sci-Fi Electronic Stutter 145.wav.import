@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://d25apb4m0v5iw"
+path="res://.godot/imported/Science Fiction Sci-Fi Electronic Stutter 145.wav-08994ec5b2899342a88936dea635753a.sample"
+
+[deps]
+
+source_file="res://akashic_library/sounds/Science Fiction/Science Fiction Sci-Fi Electronic Stutter 145.wav"
+dest_files=["res://.godot/imported/Science Fiction Sci-Fi Electronic Stutter 145.wav-08994ec5b2899342a88936dea635753a.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

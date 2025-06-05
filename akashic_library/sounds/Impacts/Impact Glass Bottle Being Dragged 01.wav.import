@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://dgw44c2kh1u22"
+path="res://.godot/imported/Impact Glass Bottle Being Dragged 01.wav-d4dd04496738ec347564e3c8004dc98f.sample"
+
+[deps]
+
+source_file="res://akashic_library/sounds/Impacts/Impact Glass Bottle Being Dragged 01.wav"
+dest_files=["res://.godot/imported/Impact Glass Bottle Being Dragged 01.wav-d4dd04496738ec347564e3c8004dc98f.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

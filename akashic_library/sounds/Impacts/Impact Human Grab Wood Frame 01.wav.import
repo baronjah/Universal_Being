@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://bdiw41co848tg"
+path="res://.godot/imported/Impact Human Grab Wood Frame 01.wav-5dfb1781fa23d8b85bf4994b30ffe3ba.sample"
+
+[deps]
+
+source_file="res://akashic_library/sounds/Impacts/Impact Human Grab Wood Frame 01.wav"
+dest_files=["res://.godot/imported/Impact Human Grab Wood Frame 01.wav-5dfb1781fa23d8b85bf4994b30ffe3ba.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://drwpxj6gxfchs"
+path="res://.godot/imported/Crashes Light Bulb Debris Falling On Plastic Tub 11.wav-79813d95ff3f2c0647afb53ef74aa33c.sample"
+
+[deps]
+
+source_file="res://akashic_library/sounds/Crashes/Crashes Light Bulb Debris Falling On Plastic Tub 11.wav"
+dest_files=["res://.godot/imported/Crashes Light Bulb Debris Falling On Plastic Tub 11.wav-79813d95ff3f2c0647afb53ef74aa33c.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

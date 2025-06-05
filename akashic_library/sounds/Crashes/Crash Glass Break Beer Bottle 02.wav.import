@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://cgsu65f4th1yg"
+path="res://.godot/imported/Crash Glass Break Beer Bottle 02.wav-5d9e794099a1328350c3d146cfd3b8bb.sample"
+
+[deps]
+
+source_file="res://akashic_library/sounds/Crashes/Crash Glass Break Beer Bottle 02.wav"
+dest_files=["res://.godot/imported/Crash Glass Break Beer Bottle 02.wav-5d9e794099a1328350c3d146cfd3b8bb.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

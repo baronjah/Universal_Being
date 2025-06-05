@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://dpljukkm68t12"
+path="res://.godot/imported/Impact Brick Drag On Wood 01.wav-b7c74ac5e6594d34171b1ccf85dba7cb.sample"
+
+[deps]
+
+source_file="res://akashic_library/sounds/Impacts/Impact Brick Drag On Wood 01.wav"
+dest_files=["res://.godot/imported/Impact Brick Drag On Wood 01.wav-b7c74ac5e6594d34171b1ccf85dba7cb.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

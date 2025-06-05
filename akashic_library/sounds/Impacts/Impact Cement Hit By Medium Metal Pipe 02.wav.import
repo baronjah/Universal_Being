@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://bq0d48i6ni73u"
+path="res://.godot/imported/Impact Cement Hit By Medium Metal Pipe 02.wav-29fbb8c1fb64ac156fb6612bb89859e5.sample"
+
+[deps]
+
+source_file="res://akashic_library/sounds/Impacts/Impact Cement Hit By Medium Metal Pipe 02.wav"
+dest_files=["res://.godot/imported/Impact Cement Hit By Medium Metal Pipe 02.wav-29fbb8c1fb64ac156fb6612bb89859e5.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

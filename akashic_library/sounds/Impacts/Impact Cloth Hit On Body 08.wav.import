@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://cdounkvo4maw6"
+path="res://.godot/imported/Impact Cloth Hit On Body 08.wav-896b34a4b7959e343801201378ff596f.sample"
+
+[deps]
+
+source_file="res://akashic_library/sounds/Impacts/Impact Cloth Hit On Body 08.wav"
+dest_files=["res://.godot/imported/Impact Cloth Hit On Body 08.wav-896b34a4b7959e343801201378ff596f.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

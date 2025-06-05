@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://c8q6v4y2n3m1p"]
 
-[ext_resource type="Script" path="res://ui/camera_consciousness_overlay/consciousness_meter.gd" id="1_2k4m3"]
+[ext_resource type="Script" path="res://scripts/ui/camera_consciousness_overlay/consciousness_meter.gd" id="1_2k4m3"]
 [ext_resource type="Texture2D" uid="uid://c8q6v4y2n3m1p" path="res://assets/icons/consciousness/level_0.png" id="2_3k4m3"]
 [ext_resource type="Shader" path="res://shaders/glow.gdshader" id="3_4k5m3"]
 

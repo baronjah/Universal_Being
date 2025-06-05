@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://buuaid2meu0mo"
+path="res://.godot/imported/Impact Hand Hit Car 01.wav-63a6927717f546a7b84e7970f269395c.sample"
+
+[deps]
+
+source_file="res://akashic_library/sounds/Impacts/Impact Hand Hit Car 01.wav"
+dest_files=["res://.godot/imported/Impact Hand Hit Car 01.wav-63a6927717f546a7b84e7970f269395c.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

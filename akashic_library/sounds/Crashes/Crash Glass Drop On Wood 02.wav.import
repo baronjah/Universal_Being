@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://i5irx25vtv46"
+path="res://.godot/imported/Crash Glass Drop On Wood 02.wav-c4b3a8c4b98c10362706d74d99e5e219.sample"
+
+[deps]
+
+source_file="res://akashic_library/sounds/Crashes/Crash Glass Drop On Wood 02.wav"
+dest_files=["res://.godot/imported/Crash Glass Drop On Wood 02.wav-c4b3a8c4b98c10362706d74d99e5e219.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://bpej4mf7di2rn"
+path="res://.godot/imported/Impact Ceramic Debris Hit By Plastic Tube 02.wav-74297ed4a6252a1d4f3bb4b24f1c5c14.sample"
+
+[deps]
+
+source_file="res://akashic_library/sounds/Impacts/Impact Ceramic Debris Hit By Plastic Tube 02.wav"
+dest_files=["res://.godot/imported/Impact Ceramic Debris Hit By Plastic Tube 02.wav-74297ed4a6252a1d4f3bb4b24f1c5c14.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

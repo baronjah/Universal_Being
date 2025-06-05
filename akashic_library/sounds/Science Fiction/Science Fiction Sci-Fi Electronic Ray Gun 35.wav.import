@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://dajwajcm1dtim"
+path="res://.godot/imported/Science Fiction Sci-Fi Electronic Ray Gun 35.wav-7a2d0979c437e44cd7fd59206dd1b7e1.sample"
+
+[deps]
+
+source_file="res://akashic_library/sounds/Science Fiction/Science Fiction Sci-Fi Electronic Ray Gun 35.wav"
+dest_files=["res://.godot/imported/Science Fiction Sci-Fi Electronic Ray Gun 35.wav-7a2d0979c437e44cd7fd59206dd1b7e1.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

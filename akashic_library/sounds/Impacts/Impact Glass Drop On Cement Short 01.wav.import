@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://d0l4bn65s3d2v"
+path="res://.godot/imported/Impact Glass Drop On Cement Short 01.wav-e4580ac219cbcd465ea2987f4fa39164.sample"
+
+[deps]
+
+source_file="res://akashic_library/sounds/Impacts/Impact Glass Drop On Cement Short 01.wav"
+dest_files=["res://.godot/imported/Impact Glass Drop On Cement Short 01.wav-e4580ac219cbcd465ea2987f4fa39164.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

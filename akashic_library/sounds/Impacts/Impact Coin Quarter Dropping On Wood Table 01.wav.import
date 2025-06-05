@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://c2cjj37iief0q"
+path="res://.godot/imported/Impact Coin Quarter Dropping On Wood Table 01.wav-ed433521e45d4a0bb792869d95b1a7e0.sample"
+
+[deps]
+
+source_file="res://akashic_library/sounds/Impacts/Impact Coin Quarter Dropping On Wood Table 01.wav"
+dest_files=["res://.godot/imported/Impact Coin Quarter Dropping On Wood Table 01.wav-ed433521e45d4a0bb792869d95b1a7e0.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

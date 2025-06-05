@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://cxi0tst1rla4t"
+path="res://.godot/imported/Crash Brick Tumble Down 01.wav-35caf08dca6ed6f8539dacfa356edd42.sample"
+
+[deps]
+
+source_file="res://akashic_library/sounds/Crashes/Crash Brick Tumble Down 01.wav"
+dest_files=["res://.godot/imported/Crash Brick Tumble Down 01.wav-35caf08dca6ed6f8539dacfa356edd42.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

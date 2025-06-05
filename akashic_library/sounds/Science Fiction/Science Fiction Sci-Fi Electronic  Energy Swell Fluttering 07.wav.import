@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://byfeer6xo1tuk"
+path="res://.godot/imported/Science Fiction Sci-Fi Electronic  Energy Swell Fluttering 07.wav-b3eb0f7e1b0183ab5784625e34f6a1c2.sample"
+
+[deps]
+
+source_file="res://akashic_library/sounds/Science Fiction/Science Fiction Sci-Fi Electronic  Energy Swell Fluttering 07.wav"
+dest_files=["res://.godot/imported/Science Fiction Sci-Fi Electronic  Energy Swell Fluttering 07.wav-b3eb0f7e1b0183ab5784625e34f6a1c2.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

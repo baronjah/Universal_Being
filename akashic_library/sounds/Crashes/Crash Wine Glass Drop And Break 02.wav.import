@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://ceqrxi5qtn4pi"
+path="res://.godot/imported/Crash Wine Glass Drop And Break 02.wav-644a41e57f964ce4397dd0834bd03470.sample"
+
+[deps]
+
+source_file="res://akashic_library/sounds/Crashes/Crash Wine Glass Drop And Break 02.wav"
+dest_files=["res://.godot/imported/Crash Wine Glass Drop And Break 02.wav-644a41e57f964ce4397dd0834bd03470.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

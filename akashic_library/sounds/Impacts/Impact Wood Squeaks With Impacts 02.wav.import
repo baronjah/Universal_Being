@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://g20h6n2upqke"
+path="res://.godot/imported/Impact Wood Squeaks With Impacts 02.wav-46ea9d80475849edeef682ef97002fd4.sample"
+
+[deps]
+
+source_file="res://akashic_library/sounds/Impacts/Impact Wood Squeaks With Impacts 02.wav"
+dest_files=["res://.godot/imported/Impact Wood Squeaks With Impacts 02.wav-46ea9d80475849edeef682ef97002fd4.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

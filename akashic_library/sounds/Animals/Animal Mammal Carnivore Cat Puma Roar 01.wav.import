@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://drc2ddonj5fdj"
+path="res://.godot/imported/Animal Mammal Carnivore Cat Puma Roar 01.wav-d2cc39ea3a69de09864616b94174efa4.sample"
+
+[deps]
+
+source_file="res://akashic_library/sounds/Animals/Animal Mammal Carnivore Cat Puma Roar 01.wav"
+dest_files=["res://.godot/imported/Animal Mammal Carnivore Cat Puma Roar 01.wav-d2cc39ea3a69de09864616b94174efa4.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

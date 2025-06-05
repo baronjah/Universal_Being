@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://17qhnl2wwr2d"
+path="res://.godot/imported/Science Fiction Sci-Fi Electronic Communication Static 223.wav-22cde95610e8cda727d952f73e704182.sample"
+
+[deps]
+
+source_file="res://akashic_library/sounds/Science Fiction/Science Fiction Sci-Fi Electronic Communication Static 223.wav"
+dest_files=["res://.godot/imported/Science Fiction Sci-Fi Electronic Communication Static 223.wav-22cde95610e8cda727d952f73e704182.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

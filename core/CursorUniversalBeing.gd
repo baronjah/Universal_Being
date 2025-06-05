@@ -109,7 +109,7 @@ func create_absolute_top_cursor() -> void:
 	cursor_container = SubViewportContainer.new()
 	cursor_container.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	cursor_container.set_anchors_preset(Control.PRESET_FULL_RECT)
-	cursor_container.z_index = 999999  # MAXIMUM Z-INDEX EVER!
+	cursor_container.z_index = 4096  # Maximum safe z-index
 	cursor_container.z_as_relative = false  # ABSOLUTE Z!
 	
 	# IMPORTANT: Make cursor work across windows

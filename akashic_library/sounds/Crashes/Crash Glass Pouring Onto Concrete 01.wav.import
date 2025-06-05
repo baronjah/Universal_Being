@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://cp5oh2iguvn5u"
+path="res://.godot/imported/Crash Glass Pouring Onto Concrete 01.wav-71784a810aed5ea0f5bf17b9de2eaddb.sample"
+
+[deps]
+
+source_file="res://akashic_library/sounds/Crashes/Crash Glass Pouring Onto Concrete 01.wav"
+dest_files=["res://.godot/imported/Crash Glass Pouring Onto Concrete 01.wav-71784a810aed5ea0f5bf17b9de2eaddb.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

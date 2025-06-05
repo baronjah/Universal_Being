@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://chu8xn368boy3"
+path="res://.godot/imported/Crash Metal Objects 02.wav-98d170bf54091180cb925e1f2505a017.sample"
+
+[deps]
+
+source_file="res://akashic_library/sounds/Crashes/Crash Metal Objects 02.wav"
+dest_files=["res://.godot/imported/Crash Metal Objects 02.wav-98d170bf54091180cb925e1f2505a017.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

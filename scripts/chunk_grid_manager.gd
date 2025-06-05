@@ -29,8 +29,8 @@ var chunk_templates: Dictionary = {}
 
 # Performance Management
 var chunks_per_frame: int = 1  # Max chunks to process per frame
-var max_active_chunks: int = 100
-var chunk_cache_size: int = 200
+var max_active_chunks: int = 25  # Much lower limit
+var chunk_cache_size: int = 50
 
 # Signals
 signal chunk_grid_ready()
@@ -74,15 +74,17 @@ func pentagon_process(delta: float) -> void:
 	# Update observer positions
 	update_observer_positions()
 	
-	# Process chunk loading/unloading based on observers
-	process_chunk_lod_updates(delta)
+	# Process chunk loading/unloading based on observers (reduced frequency)
+	if Engine.get_process_frames() % 3 == 0:  # Only every 3rd frame
+		process_chunk_lod_updates(delta)
 	
-	# Generate new chunks around observers
-	if auto_generate:
+	# Generate new chunks around observers (reduced frequency)
+	if auto_generate and Engine.get_process_frames() % 5 == 0:  # Only every 5th frame
 		process_chunk_generation()
 	
-	# Clean up distant chunks
-	process_chunk_cleanup()
+	# Clean up distant chunks (reduced frequency)
+	if Engine.get_process_frames() % 10 == 0:  # Only every 10th frame
+		process_chunk_cleanup()
 	
 	# Update debug visualization
 	if debug_visualization:
@@ -217,11 +219,12 @@ func generate_initial_chunks(center: Vector3i) -> void:
 	"""Generate initial chunks around the center point"""
 	print("🧊 Generating initial chunks around %s" % center)
 	
-	for x in range(center.x - render_distance, center.x + render_distance + 1):
-		for y in range(center.y - 2, center.y + 3):  # Limited Y range initially
-			for z in range(center.z - render_distance, center.z + render_distance + 1):
+	# Only generate immediate chunks around player (much smaller area)
+	for x in range(center.x - 1, center.x + 2):  # 3x3 instead of 7x7
+		for y in range(center.y, center.y + 1):  # Only current Y level
+			for z in range(center.z - 1, center.z + 2):  # 3x3 instead of 7x7
 				var chunk_coord = Vector3i(x, y, z)
-				if chunk_coord not in active_chunks:
+				if chunk_coord not in active_chunks and active_chunks.size() < max_active_chunks:
 					create_chunk_at_coordinate(chunk_coord)
 
 func create_chunk_at_coordinate(coordinates: Vector3i) -> ChunkUniversalBeing:
@@ -317,17 +320,22 @@ func process_chunk_generation() -> void:
 
 func generate_chunks_around_coordinate(center: Vector3i) -> void:
 	"""Generate chunks in a radius around the center coordinate"""
-	for x in range(center.x - generation_distance, center.x + generation_distance + 1):
-		for y in range(center.y - 2, center.y + 3):  # Limited Y range
-			for z in range(center.z - generation_distance, center.z + generation_distance + 1):
+	# Much more conservative generation - only immediate neighbors
+	if active_chunks.size() >= max_active_chunks:
+		return  # Don't generate more chunks if we're at limit
+		
+	for x in range(center.x - 1, center.x + 2):  # Only immediate neighbors
+		for y in range(center.y, center.y + 1):  # Only current Y level
+			for z in range(center.z - 1, center.z + 2):
 				var chunk_coord = Vector3i(x, y, z)
 				
 				# Check if chunk is within generation distance
 				var distance = chunk_coord.distance_to(center)
-				if distance <= generation_distance and chunk_coord not in active_chunks:
-					# Limit chunks per frame
-					if loading_chunks.size() < chunks_per_frame:
+				if distance <= 2 and chunk_coord not in active_chunks:
+					# Strict limit on chunks per frame
+					if loading_chunks.size() < 1:  # Only 1 chunk per frame
 						loading_chunks.append(chunk_coord)
+						break  # Exit early to prevent overload
 
 func process_chunk_cleanup() -> void:
 	"""Remove chunks that are too far from any observer"""
@@ -349,10 +357,12 @@ func process_chunk_cleanup() -> void:
 		if not should_keep:
 			chunks_to_remove.append(coordinates)
 	
-	# Remove distant chunks
+	# Remove distant chunks more aggressively
+	var removed_count = 0
 	for coordinates in chunks_to_remove:
-		if chunks_to_remove.size() <= chunks_per_frame:  # Limit cleanup per frame
+		if removed_count < 3:  # Remove up to 3 chunks per frame
 			remove_chunk_at_coordinate(coordinates)
+			removed_count += 1
 
 func remove_chunk_at_coordinate(coordinates: Vector3i) -> void:
 	"""Remove a chunk from the grid"""

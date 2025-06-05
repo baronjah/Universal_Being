@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://btrqvxy6ko1mi"
+path="res://.godot/imported/Crashes Rock Roll Down Wood Into Metal Pile 06.wav-5b81fb3d0e217ce31817f71cb0213fbb.sample"
+
+[deps]
+
+source_file="res://akashic_library/sounds/Crashes/Crashes Rock Roll Down Wood Into Metal Pile 06.wav"
+dest_files=["res://.godot/imported/Crashes Rock Roll Down Wood Into Metal Pile 06.wav-5b81fb3d0e217ce31817f71cb0213fbb.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

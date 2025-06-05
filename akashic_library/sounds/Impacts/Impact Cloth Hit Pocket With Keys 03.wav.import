@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://duo5axc11kbdb"
+path="res://.godot/imported/Impact Cloth Hit Pocket With Keys 03.wav-acf66da5f14ca4b15cb5c4fa244f3731.sample"
+
+[deps]
+
+source_file="res://akashic_library/sounds/Impacts/Impact Cloth Hit Pocket With Keys 03.wav"
+dest_files=["res://.godot/imported/Impact Cloth Hit Pocket With Keys 03.wav-acf66da5f14ca4b15cb5c4fa244f3731.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

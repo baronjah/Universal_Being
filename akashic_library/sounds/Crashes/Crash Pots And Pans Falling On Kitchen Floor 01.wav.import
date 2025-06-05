@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://ha0khxhnw50k"
+path="res://.godot/imported/Crash Pots And Pans Falling On Kitchen Floor 01.wav-5845b6624eef83a22d0c2c57011d2950.sample"
+
+[deps]
+
+source_file="res://akashic_library/sounds/Crashes/Crash Pots And Pans Falling On Kitchen Floor 01.wav"
+dest_files=["res://.godot/imported/Crash Pots And Pans Falling On Kitchen Floor 01.wav-5845b6624eef83a22d0c2c57011d2950.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

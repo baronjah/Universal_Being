@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://vu318k8oa8hq"
+path="res://.godot/imported/Crash Metal Objects Hitting Cement 03.wav-4d68bd17b6c7679d4db41a300b21761b.sample"
+
+[deps]
+
+source_file="res://akashic_library/sounds/Crashes/Crash Metal Objects Hitting Cement 03.wav"
+dest_files=["res://.godot/imported/Crash Metal Objects Hitting Cement 03.wav-4d68bd17b6c7679d4db41a300b21761b.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://bi47tisgmgq4p"
+path="res://.godot/imported/Impact Coins Multiple Coin Drop On Felt 05.wav-7aff69181d7cd82af099d69362ed3a42.sample"
+
+[deps]
+
+source_file="res://akashic_library/sounds/Impacts/Impact Coins Multiple Coin Drop On Felt 05.wav"
+dest_files=["res://.godot/imported/Impact Coins Multiple Coin Drop On Felt 05.wav-7aff69181d7cd82af099d69362ed3a42.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

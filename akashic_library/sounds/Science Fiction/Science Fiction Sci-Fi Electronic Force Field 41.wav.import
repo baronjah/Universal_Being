@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://cywgsq4tbs7h7"
+path="res://.godot/imported/Science Fiction Sci-Fi Electronic Force Field 41.wav-283dad03b7787834c7e62db5750b6878.sample"
+
+[deps]
+
+source_file="res://akashic_library/sounds/Science Fiction/Science Fiction Sci-Fi Electronic Force Field 41.wav"
+dest_files=["res://.godot/imported/Science Fiction Sci-Fi Electronic Force Field 41.wav-283dad03b7787834c7e62db5750b6878.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

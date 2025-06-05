@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://bkca27mqk1mfe"
+path="res://.godot/imported/Animal Mammal Carnivore Cat Lynx Hiss 02.wav-e01999b5aa4d3bd874661c3523a6ba72.sample"
+
+[deps]
+
+source_file="res://akashic_library/sounds/Animals/Animal Mammal Carnivore Cat Lynx Hiss 02.wav"
+dest_files=["res://.godot/imported/Animal Mammal Carnivore Cat Lynx Hiss 02.wav-e01999b5aa4d3bd874661c3523a6ba72.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

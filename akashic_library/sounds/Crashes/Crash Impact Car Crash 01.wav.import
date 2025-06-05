@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://p1g4x64rbfy4"
+path="res://.godot/imported/Crash Impact Car Crash 01.wav-d221ad01888d781d66f5e94d3f368b09.sample"
+
+[deps]
+
+source_file="res://akashic_library/sounds/Crashes/Crash Impact Car Crash 01.wav"
+dest_files=["res://.godot/imported/Crash Impact Car Crash 01.wav-d221ad01888d781d66f5e94d3f368b09.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://bsaxttt8hwuix"
+path="res://.godot/imported/Impact Concrete Cinder Block Hits Concrete 01.wav-2a347dc8308029d17429a290a8eac9bc.sample"
+
+[deps]
+
+source_file="res://akashic_library/sounds/Impacts/Impact Concrete Cinder Block Hits Concrete 01.wav"
+dest_files=["res://.godot/imported/Impact Concrete Cinder Block Hits Concrete 01.wav-2a347dc8308029d17429a290a8eac9bc.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

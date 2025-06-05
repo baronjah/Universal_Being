@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://bjflrkp64bkdy"
+path="res://.godot/imported/Impact Wood Broken Chair Drop On Cement Floor 07.wav-dd442cabd8341e49ed65851d88ce398a.sample"
+
+[deps]
+
+source_file="res://akashic_library/sounds/Impacts/Impact Wood Broken Chair Drop On Cement Floor 07.wav"
+dest_files=["res://.godot/imported/Impact Wood Broken Chair Drop On Cement Floor 07.wav-dd442cabd8341e49ed65851d88ce398a.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

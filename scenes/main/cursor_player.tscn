@@ -1,3 +1,32 @@
-[gd_scene format=3 uid="uid://clp8xeksp8ve3"]
+[gd_scene load_steps=5 format=3 uid="uid://clp8xeksp8ve3"]
 
-[node name="CursorPlayer" type="Node2D"]
+[ext_resource type="Texture2D" uid="uid://cdba88va4h8tf" path="res://akashic_library/textures/cursor_center.png" id="1_x2oyh"]
+
+[sub_resource type="StandardMaterial3D" id="CursorMaterial"]
+transparency = 1
+albedo_color = Color(0, 1, 1, 0.7)
+emission_enabled = true
+emission = Color(0, 1, 1, 1)
+emission_energy_multiplier = 0.5
+
+[sub_resource type="SphereMesh" id="SphereMesh_ngk7r"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_x2oyh"]
+
+[node name="CursorPlayer" type="Node3D"]
+
+[node name="3D_Cursor_Sphere" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0, 0, 0)
+material_override = SubResource("CursorMaterial")
+mesh = SubResource("SphereMesh_ngk7r")
+
+[node name="Area3D" type="Area3D" parent="3D_Cursor_Sphere"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="3D_Cursor_Sphere/Area3D"]
+shape = SubResource("SphereShape3D_x2oyh")
+
+[node name="Screen_Cursor_Sprite" type="Sprite3D" parent="."]
+sorting_offset = 999.0
+billboard = 2
+texture_filter = 0
+texture = ExtResource("1_x2oyh")

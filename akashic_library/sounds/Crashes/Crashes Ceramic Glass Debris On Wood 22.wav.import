@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://dkx2c2bgsfal5"
+path="res://.godot/imported/Crashes Ceramic Glass Debris On Wood 22.wav-a6a2fd5e3e334111dc0f7da61fb6c7dd.sample"
+
+[deps]
+
+source_file="res://akashic_library/sounds/Crashes/Crashes Ceramic Glass Debris On Wood 22.wav"
+dest_files=["res://.godot/imported/Crashes Ceramic Glass Debris On Wood 22.wav-a6a2fd5e3e334111dc0f7da61fb6c7dd.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

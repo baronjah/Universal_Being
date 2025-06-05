@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://bk53inkmi6wae"
+path="res://.godot/imported/Impact Metal Impact Metal Pole Hit Metal Ring 01.wav-aaa1207ba18960d61d717ca17edfbe42.sample"
+
+[deps]
+
+source_file="res://akashic_library/sounds/Impacts/Impact Metal Impact Metal Pole Hit Metal Ring 01.wav"
+dest_files=["res://.godot/imported/Impact Metal Impact Metal Pole Hit Metal Ring 01.wav-aaa1207ba18960d61d717ca17edfbe42.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

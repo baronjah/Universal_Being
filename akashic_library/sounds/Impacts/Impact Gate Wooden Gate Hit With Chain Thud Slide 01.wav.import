@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://sw3spg0ce423"
+path="res://.godot/imported/Impact Gate Wooden Gate Hit With Chain Thud Slide 01.wav-3fe8fb47038614b9e21ce7833168d4fb.sample"
+
+[deps]
+
+source_file="res://akashic_library/sounds/Impacts/Impact Gate Wooden Gate Hit With Chain Thud Slide 01.wav"
+dest_files=["res://.godot/imported/Impact Gate Wooden Gate Hit With Chain Thud Slide 01.wav-3fe8fb47038614b9e21ce7833168d4fb.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

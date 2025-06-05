@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://cbc05rwn347mf"
+path="res://.godot/imported/Impact Coins Multiple Coins Drop On Board 09.wav-4d1a60ac57e546289a48521a1cf1dbef.sample"
+
+[deps]
+
+source_file="res://akashic_library/sounds/Impacts/Impact Coins Multiple Coins Drop On Board 09.wav"
+dest_files=["res://.godot/imported/Impact Coins Multiple Coins Drop On Board 09.wav-4d1a60ac57e546289a48521a1cf1dbef.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

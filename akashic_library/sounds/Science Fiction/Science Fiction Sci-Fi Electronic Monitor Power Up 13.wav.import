@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://bcpuvcyvw4nbp"
+path="res://.godot/imported/Science Fiction Sci-Fi Electronic Monitor Power Up 13.wav-997a285b15d10d607075ec0b3d0a8601.sample"
+
+[deps]
+
+source_file="res://akashic_library/sounds/Science Fiction/Science Fiction Sci-Fi Electronic Monitor Power Up 13.wav"
+dest_files=["res://.godot/imported/Science Fiction Sci-Fi Electronic Monitor Power Up 13.wav-997a285b15d10d607075ec0b3d0a8601.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

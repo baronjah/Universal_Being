@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://cep25kejk7ds5"
+path="res://.godot/imported/Animal Mammal Carnivore Cat Bobcat Snarl 02.wav-8d524df5c0fe40d02fd843f0bfcf6fac.sample"
+
+[deps]
+
+source_file="res://akashic_library/sounds/Animals/Animal Mammal Carnivore Cat Bobcat Snarl 02.wav"
+dest_files=["res://.godot/imported/Animal Mammal Carnivore Cat Bobcat Snarl 02.wav-8d524df5c0fe40d02fd843f0bfcf6fac.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

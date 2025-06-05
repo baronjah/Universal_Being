@@ -1,0 +1,278 @@
+[gd_scene load_steps=8 format=3]
+
+[ext_resource type="Script" path="res://scripts/matrix_chunk_system.gd" id="1"]
+[ext_resource type="Script" path="res://scripts/player_universal_being.gd" id="3"]
+
+[sub_resource type="GDScript" id="Neo"]
+script/source = "extends Node3D
+
+@export var fly_speed: float = 20.0
+@export var mouse_sensitivity: float = 0.003
+
+var velocity: Vector3 = Vector3.ZERO
+var camera: Camera3D = null
+
+func _ready():
+	add_to_group(\"players\")
+	
+	# Create Matrix camera
+	camera = Camera3D.new()
+	camera.name = \"MatrixCamera\"
+	camera.position = Vector3(0, 3, 8)
+	camera.fov = 90
+	add_child(camera)
+	
+	# Create Neo visual
+	var mesh_instance = MeshInstance3D.new()
+	var capsule = CapsuleMesh.new()
+	capsule.radius = 0.4
+	capsule.height = 1.8
+	mesh_instance.mesh = capsule
+	
+	# Neo's Matrix appearance
+	var material = StandardMaterial3D.new()
+	material.albedo_color = Color.BLACK
+	material.emission_enabled = true
+	material.emission = Color(0.0, 1.0, 0.0, 1)  # Matrix green
+	material.emission_energy = 0.8
+	material.rim_enabled = true
+	material.rim = 1.0
+	material.rim_tint = 0.8
+	mesh_instance.material_override = material
+	mesh_instance.name = \"NeoMesh\"
+	add_child(mesh_instance)
+	
+	print(\"🕴️ NEO HAS ENTERED THE MATRIX\")
+	print(\"🔴 INFINITE WORLD STREAMING ACTIVE\")
+
+func _input(event):
+	if not camera:
+		return
+		
+	if event is InputEventMouseMotion and Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
+		# Matrix-style smooth camera
+		rotate_y(-event.relative.x * mouse_sensitivity)
+		camera.rotate_x(-event.relative.y * mouse_sensitivity)
+		camera.rotation.x = clamp(camera.rotation.x, -1.4, 1.4)
+	
+	if event.is_action_pressed(\"ui_cancel\"):
+		if Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
+			Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+		else:
+			Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+
+func _physics_process(delta):
+	# Matrix-style flying movement
+	var input_dir = Vector3()
+	
+	# WASD for movement
+	if Input.is_action_pressed(\"ui_up\"):
+		input_dir.z -= 1
+	if Input.is_action_pressed(\"ui_down\"):
+		input_dir.z += 1
+	if Input.is_action_pressed(\"ui_left\"):
+		input_dir.x -= 1
+	if Input.is_action_pressed(\"ui_right\"):
+		input_dir.x += 1
+		
+	# Space/Shift for vertical
+	if Input.is_action_pressed(\"ui_accept\"):  # Space
+		input_dir.y += 1
+	if Input.is_action_pressed(\"ui_select\"):  # Shift
+		input_dir.y -= 1
+	
+	# Matrix flying - no gravity, smooth movement
+	if input_dir.length() > 0:
+		var direction = transform.basis * input_dir.normalized()
+		velocity = direction * fly_speed
+	else:
+		velocity = velocity.move_toward(Vector3.ZERO, fly_speed * delta * 3)
+	
+	# Apply movement
+	global_position += velocity * delta
+	
+	# Matrix visual effects
+	update_matrix_effects()
+
+func update_matrix_effects():
+	\"\"\"Update Matrix visual effects on Neo\"\"\"
+	var mesh = get_node_or_null(\"NeoMesh\")
+	if mesh and mesh.material_override:
+		var material = mesh.material_override
+		# Pulse Matrix green energy
+		var pulse = sin(Time.get_ticks_msec() * 0.005) * 0.3 + 0.8
+		material.emission_energy = pulse
+"
+
+[sub_resource type="GDScript" id="MatrixController"]
+script/source = "extends Node3D
+
+var matrix_system: MatrixChunkSystem = null
+var neo: Node3D = null
+var ui_labels: Dictionary = {}
+
+func _ready():
+	# Find components
+	matrix_system = get_node_or_null(\"MatrixChunkSystem\")
+	neo = get_node_or_null(\"Player\")
+	
+	# Find UI
+	var ui = get_node_or_null(\"MatrixUI\")
+	if ui:
+		ui_labels.chunks = ui.get_node_or_null(\"Stats/ChunkCount\")
+		ui_labels.position = ui.get_node_or_null(\"Stats/NeoPosition\")
+		ui_labels.fps = ui.get_node_or_null(\"Stats/FPS\")
+	
+	print(\"🔴 MATRIX CONTROL SYSTEM ONLINE\")
+
+func _process(delta):
+	# Update Matrix UI
+	if Engine.get_process_frames() % 10 == 0:
+		update_matrix_ui()
+
+func update_matrix_ui():
+	if matrix_system and neo:
+		var stats = matrix_system.get_matrix_stats()
+		
+		if ui_labels.chunks:
+			ui_labels.chunks.text = \"Matrix Chunks: %d\" % stats.active_chunks
+		
+		if ui_labels.position:
+			var pos = neo.global_position
+			ui_labels.position.text = \"Plasmoid: (%.1f, %.1f, %.1f)\" % [pos.x, pos.y, pos.z]
+		
+		if ui_labels.fps:
+			ui_labels.fps.text = \"Matrix FPS: %d\" % Engine.get_frames_per_second()
+
+func _input(event):
+	if event is InputEventKey and event.pressed:
+		match event.keycode:
+			KEY_F1:
+				# Toggle Matrix UI
+				var ui = get_node_or_null(\"MatrixUI\")
+				if ui:
+					ui.visible = !ui.visible
+			
+			KEY_F2:
+				# Matrix system stats
+				if matrix_system:
+					var stats = matrix_system.get_matrix_stats()
+					print(\"🔴 MATRIX STATS: %s\" % stats)
+			
+			KEY_F3:
+				# Save current Matrix chunk
+				if matrix_system and neo:
+					var pos = neo.global_position
+					var coord = matrix_system.world_to_chunk_coord(pos)
+					matrix_system.save_matrix_chunk(coord)
+					print(\"💾 MATRIX CHUNK SAVED: [%d,%d,%d]\" % [coord.x, coord.y, coord.z])
+"
+
+[sub_resource type="Environment" id="MatrixEnvironment"]
+background_mode = 1
+background_color = Color(0, 0.05, 0, 1)
+ambient_light_source = 2
+ambient_light_color = Color(0, 0.3, 0, 1)
+ambient_light_energy = 0.2
+fog_enabled = true
+fog_light_color = Color(0, 0.2, 0, 1)
+fog_sun_scatter = 0.1
+
+[sub_resource type="CapsuleMesh" id="NeoMesh"]
+radius = 0.4
+height = 1.8
+
+[sub_resource type="StandardMaterial3D" id="NeoMaterial"]
+albedo_color = Color(0, 0, 0, 1)
+emission_enabled = true
+emission = Color(0, 1, 0, 1)
+emission_energy = 0.8
+rim_enabled = true
+rim = 1.0
+rim_tint = 0.8
+
+[node name="MATRIX_INFINITE_CHUNKS" type="Node3D"]
+script = SubResource("MatrixController")
+
+[node name="MatrixChunkSystem" type="Node3D" parent="."]
+script = ExtResource("1")
+chunk_size = 8.0
+render_distance = 60.0
+generation_seed = 1999
+
+[node name="Player" type="Node3D" parent="." groups=["players"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 0)
+script = ExtResource("3")
+
+[node name="MatrixEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("MatrixEnvironment")
+
+[node name="MatrixLight" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.7, -0.5, 0.5, 0, 0.7, 0.7, -0.7, -0.5, 0.5, 0, 20, 0)
+light_color = Color(0, 0.8, 0, 1)
+light_energy = 0.3
+shadow_enabled = true
+
+[node name="MatrixUI" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="Title" type="Label" parent="MatrixUI"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -150.0
+offset_top = 20.0
+offset_right = 150.0
+offset_bottom = 60.0
+text = "THE MATRIX - INFINITE CHUNKS"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Stats" type="VBoxContainer" parent="MatrixUI"]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 20.0
+offset_top = -120.0
+offset_right = 300.0
+offset_bottom = -20.0
+
+[node name="ChunkCount" type="Label" parent="MatrixUI/Stats"]
+layout_mode = 2
+text = "Matrix Chunks: 0"
+
+[node name="NeoPosition" type="Label" parent="MatrixUI/Stats"]
+layout_mode = 2
+text = "Plasmoid: (0, 0, 0)"
+
+[node name="FPS" type="Label" parent="MatrixUI/Stats"]
+layout_mode = 2
+text = "Matrix FPS: 60"
+
+[node name="Instructions" type="VBoxContainer" parent="MatrixUI"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -250.0
+offset_top = 20.0
+offset_right = -20.0
+offset_bottom = 160.0
+
+[node name="Controls" type="Label" parent="MatrixUI/Instructions"]
+layout_mode = 2
+text = "🔴 MATRIX CONTROLS 🔴
+Arrow Keys - Fly through Matrix
+Space/Shift - Up/Down
+Mouse - Look around
+ESC - Toggle mouse
+F1 - Toggle UI
+F2 - Matrix stats
+F3 - Save chunk
+
+FLY INFINITELY IN ANY DIRECTION"

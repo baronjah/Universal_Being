@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://dsxpo0ovud3ij"]
+
+[ext_resource type="Texture2D" uid="uid://ch20ufhwjujq5" path="res://akashic_library/icons/infinity_symbol.png" id="1_ibetd"]
+
+[node name="LogicConnector" type="Node3D"]
+
+[node name="Sprite3D" type="Sprite3D" parent="."]
+texture = ExtResource("1_ibetd")

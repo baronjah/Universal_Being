@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://dujs23xmuxo3g"
+path="res://.godot/imported/Animal Primate Ape Chimpanzee Chatter 01.wav-009203143e1487d5de8c6216226865f8.sample"
+
+[deps]
+
+source_file="res://akashic_library/sounds/Animals/Animal Primate Ape Chimpanzee Chatter 01.wav"
+dest_files=["res://.godot/imported/Animal Primate Ape Chimpanzee Chatter 01.wav-009203143e1487d5de8c6216226865f8.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

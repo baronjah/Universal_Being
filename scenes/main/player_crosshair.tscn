@@ -1,3 +1,30 @@
-[gd_scene format=3 uid="uid://rhbr7qt146pq"]
+[gd_scene load_steps=4 format=3 uid="uid://rhbr7qt146pq"]
+
+[ext_resource type="Texture2D" uid="uid://drn4bt7ffcv6j" path="res://akashic_library/icons/star.png" id="1_rnfji"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_chevr"]
+radius = 0.0601981
+
+[sub_resource type="StandardMaterial3D" id="CrosshairMaterial"]
+transparency = 1
+no_depth_test = true
+shading_mode = 0
+vertex_color_use_as_albedo = true
+disable_receive_shadows = true
 
 [node name="PlayerCrosshair" type="Node3D"]
+
+[node name="Crosshair_Sprite" type="Sprite3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.1)
+sorting_offset = 1000.0
+material_override = SubResource("CrosshairMaterial")
+texture = ExtResource("1_rnfji")
+billboard = 2
+texture_filter = 0
+pixel_size = 0.005
+modulate = Color(1, 1, 0.5, 0.8)
+
+[node name="Center_Area3D" type="Area3D" parent="Crosshair_Sprite"]
+
+[node name="Center_CollisionShape3D" type="CollisionShape3D" parent="Crosshair_Sprite/Center_Area3D"]
+shape = SubResource("SphereShape3D_chevr")

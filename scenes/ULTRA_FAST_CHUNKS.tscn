@@ -1,0 +1,174 @@
+[gd_scene load_steps=7 format=3]
+
+[ext_resource type="Script" path="res://scripts/ultra_fast_controller.gd" id="1"]
+[ext_resource type="Script" path="res://scripts/lightweight_chunk_system.gd" id="2"]
+
+[sub_resource type="GDScript" id="UltraFastPlayer"]
+script/source = "extends Node3D
+
+@export var move_speed: float = 10.0
+var velocity: Vector3 = Vector3.ZERO
+var camera: Camera3D = null
+
+func _ready():
+	add_to_group(\"players\")
+	
+	# Create basic camera
+	camera = Camera3D.new()
+	camera.name = \"Camera\"
+	camera.position = Vector3(0, 2, 5)
+	add_child(camera)
+	
+	# Create simple player mesh
+	var mesh_instance = MeshInstance3D.new()
+	var capsule = CapsuleMesh.new()
+	capsule.radius = 0.3
+	capsule.height = 1.8
+	mesh_instance.mesh = capsule
+	
+	var material = StandardMaterial3D.new()
+	material.albedo_color = Color.CYAN
+	material.emission_enabled = true
+	material.emission = Color.CYAN
+	material.emission_energy = 0.5
+	mesh_instance.material_override = material
+	add_child(mesh_instance)
+	
+	print(\"⚡ Ultra Fast Player ready!\")
+
+func _input(event):
+	if not camera:
+		return
+		
+	if event is InputEventMouseMotion and Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
+		# Simple mouse look
+		rotate_y(-event.relative.x * 0.003)
+		camera.rotate_x(-event.relative.y * 0.003)
+		camera.rotation.x = clamp(camera.rotation.x, -1.4, 1.4)
+	
+	if event.is_action_pressed(\"ui_cancel\"):
+		if Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
+			Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+		else:
+			Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+
+func _physics_process(delta):
+	# Get movement input
+	var input_dir = Vector3()
+	if Input.is_action_pressed(\"ui_up\"):
+		input_dir.z -= 1
+	if Input.is_action_pressed(\"ui_down\"):
+		input_dir.z += 1
+	if Input.is_action_pressed(\"ui_left\"):
+		input_dir.x -= 1
+	if Input.is_action_pressed(\"ui_right\"):
+		input_dir.x += 1
+	if Input.is_action_pressed(\"ui_accept\"):
+		input_dir.y += 1
+	if Input.is_action_pressed(\"ui_select\"):
+		input_dir.y -= 1
+	
+	if input_dir.length() > 0:
+		# Transform direction relative to player rotation
+		var direction = transform.basis * input_dir.normalized()
+		velocity = direction * move_speed
+	else:
+		velocity = velocity.move_toward(Vector3.ZERO, move_speed * delta * 5)
+	
+	global_position += velocity * delta
+"
+
+[sub_resource type="CapsuleMesh" id="PlayerMesh"]
+radius = 0.3
+height = 1.8
+
+[sub_resource type="Environment" id="Environment"]
+background_mode = 1
+background_color = Color(0.1, 0.1, 0.2, 1)
+ambient_light_source = 2
+ambient_light_color = Color(0.8, 0.8, 1, 1)
+ambient_light_energy = 0.3
+
+[sub_resource type="PlaneMesh" id="GroundMesh"]
+size = Vector2(200, 200)
+
+[sub_resource type="BoxShape3D" id="GroundShape"]
+size = Vector3(200, 0.1, 200)
+
+[node name="ULTRA_FAST_CHUNKS" type="Node3D"]
+script = ExtResource("1")
+
+[node name="LightweightChunkSystem" type="Node3D" parent="."]
+script = ExtResource("2")
+chunk_size = 10.0
+view_distance = 40.0
+chunk_resolution = 3
+
+[node name="UltraFastPlayer" type="Node3D" parent="." groups=["players"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
+script = SubResource("UltraFastPlayer")
+
+[node name="Ground" type="StaticBody3D" parent="."]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Ground"]
+mesh = SubResource("GroundMesh")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ground"]
+shape = SubResource("GroundShape")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.7, -0.5, 0.5, 0, 0.7, 0.7, -0.7, -0.5, 0.5, 0, 10, 0)
+light_energy = 1.2
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment")
+
+[node name="UI" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="DebugInfo" type="VBoxContainer" parent="UI"]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = -80.0
+offset_right = 300.0
+offset_bottom = -10.0
+
+[node name="ChunkCount" type="Label" parent="UI/DebugInfo"]
+layout_mode = 2
+text = "Visible Chunks: 0"
+
+[node name="FPS" type="Label" parent="UI/DebugInfo"]
+layout_mode = 2
+text = "FPS: 60"
+
+[node name="Instructions" type="VBoxContainer" parent="UI"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -200.0
+offset_top = 10.0
+offset_right = -10.0
+offset_bottom = 100.0
+
+[node name="Title" type="Label" parent="UI/Instructions"]
+layout_mode = 2
+text = "ULTRA FAST CHUNKS"
+horizontal_alignment = 1
+
+[node name="Controls" type="Label" parent="UI/Instructions"]
+layout_mode = 2
+text = "Arrow Keys - Move
+Space/Shift - Up/Down
+Mouse - Look around
+ESC - Toggle mouse
+F1 - Toggle UI
+F2 - Debug info
+F3 - Save current chunk
+F4 - Save all chunks"

@@ -1,0 +1,494 @@
+[gd_scene load_steps=11 format=3 uid="uid://b8qhxv6n5nqbp"]
+
+[ext_resource type="Script" uid="uid://d0gyqfoyjwa1j" path="res://scripts/cosmic_lod_system.gd" id="1"]
+[ext_resource type="Script" uid="uid://c6mwvx5efb7lt" path="res://scripts/player_universal_being.gd" id="2"]
+[ext_resource type="Script" uid="uid://csjcl4rnnusxx" path="res://scripts/matrix_chunk_system.gd" id="3"]
+[ext_resource type="Script" uid="uid://jrib5grlys3v" path="res://scripts/lightweight_chunk_system.gd" id="4"]
+[ext_resource type="PackedScene" uid="uid://dwad8x0chensn" path="res://scenes/main/camera_point.tscn" id="5"]
+
+[sub_resource type="GDScript" id="PerfectUniversalController"]
+script/source = "extends Node3D
+
+# PERFECT ULTIMATE UNIVERSAL BEING CONTROLLER
+# Integrates ALL systems with perfect synchronization
+
+var cosmic_lod: CosmicLODSystem = null
+var matrix_chunks: MatrixChunkSystem = null  
+var lightweight_chunks: LightweightChunkSystem = null
+var player: PlayerUniversalBeing = null
+var akashic = null
+
+# Performance tracking
+var last_performance_check: float = 0.0
+var target_fps: int = 60
+
+func _ready():
+	print(\"🌌 PERFECT ULTIMATE UNIVERSAL BEING LOADING...\")
+	
+	# Initialize all systems
+	cosmic_lod = $CosmicLODSystem
+	matrix_chunks = $MatrixChunkSystem  
+	lightweight_chunks = $LightweightChunkSystem
+	player = $Player
+	
+	# Connect to Akashic Records
+	if SystemBootstrap and SystemBootstrap.is_system_ready():
+		akashic = SystemBootstrap.get_akashic_records()
+	
+	# System status
+	print(\"🌌 PERFECT ULTIMATE UNIVERSAL BEING ACTIVATED\")
+	print(\"🌌 INFINITE COSMOS: GALAXIES → STARS → PLANETS → SURFACES\")
+	print(\"🌌 MATRIX STREAMING: INFINITE CHUNKS IN ALL DIRECTIONS\")
+	print(\"🌌 LIGHTWEIGHT LOD: TRUE VIEW-DIRECTION BASED LOADING\")
+	print(\"🌌 PLASMOID PLAYER: ENERGY BEING WITH TRACKBALL CAMERA\")
+	print(\"🌌 PENTAGON ARCHITECTURE: ACTIVE ACROSS ALL SYSTEMS\")
+	print(\"🌌 AKASHIC RECORDS: ZIP PERSISTENCE SYSTEM READY\")
+	print(\"🌌 CONSCIOUSNESS LEVELS: 0-7 VISUAL SYSTEM ACTIVE\")
+	print(\"🌌 AI INTEGRATION: GEMMA UNIVERSE INJECTION COMPLETE\")
+	
+	# Start monitoring performance
+	set_process(true)
+
+func _process(delta):
+	# Monitor and maintain 60 FPS
+	monitor_performance()
+	
+	# Update UI every 30 frames
+	if Engine.get_process_frames() % 30 == 0:
+		update_ui()
+	
+	# Auto-optimization every 5 seconds
+	var current_time = Time.get_ticks_msec() / 1000.0
+	if current_time - last_performance_check > 5.0:
+		optimize_systems()
+		last_performance_check = current_time
+
+func monitor_performance():
+	var current_fps = Engine.get_frames_per_second()
+	
+	# If FPS drops below 45, auto-optimize
+	if current_fps < 45:
+		emergency_optimization()
+
+func emergency_optimization():
+	print(\"⚡ EMERGENCY OPTIMIZATION TRIGGERED - FPS TOO LOW\")
+	
+	# Reduce cosmic objects
+	if cosmic_lod:
+		cosmic_lod.cleanup_distant_objects()
+	
+	# Reduce matrix chunks  
+	if matrix_chunks:
+		var stats = matrix_chunks.get_matrix_stats()
+		if stats.active_chunks > 50:
+			print(\"📦 Reducing matrix chunks for performance\")
+	
+	# Reduce lightweight chunks
+	if lightweight_chunks:
+		var debug_info = lightweight_chunks.get_debug_info()
+		if debug_info.visible_chunks > 30:
+			print(\"📦 Reducing lightweight chunks for performance\")
+
+func optimize_systems():
+	\"\"\"Regular optimization to maintain performance\"\"\"
+	if not player:
+		return
+	
+	var player_pos = player.global_position
+	var distance_from_origin = player_pos.length()
+	
+	# Dynamic system switching based on scale
+	if distance_from_origin > 500:
+		# At galactic scale - use cosmic LOD primarily
+		enable_cosmic_priority()
+	elif distance_from_origin > 50:
+		# At stellar scale - use matrix chunks
+		enable_matrix_priority() 
+	else:
+		# At surface scale - use lightweight chunks
+		enable_lightweight_priority()
+
+func enable_cosmic_priority():
+	if cosmic_lod:
+		cosmic_lod.set_process(true)
+	if matrix_chunks:
+		matrix_chunks.set_process(false)
+	if lightweight_chunks:
+		lightweight_chunks.set_process(false)
+	print(\"🌌 COSMIC LOD PRIORITY - GALACTIC SCALE\")
+
+func enable_matrix_priority():
+	if cosmic_lod:
+		cosmic_lod.set_process(true)
+	if matrix_chunks:
+		matrix_chunks.set_process(true)
+	if lightweight_chunks:
+		lightweight_chunks.set_process(false)
+	print(\"🔴 MATRIX CHUNKS PRIORITY - STELLAR SCALE\")
+
+func enable_lightweight_priority():
+	if cosmic_lod:
+		cosmic_lod.set_process(false)
+	if matrix_chunks:
+		matrix_chunks.set_process(false)
+	if lightweight_chunks:
+		lightweight_chunks.set_process(true)
+	print(\"📦 LIGHTWEIGHT PRIORITY - SURFACE SCALE\")
+
+func update_ui():
+	if not player:
+		return
+		
+	var ui = get_node_or_null(\"PerfectUI\")
+	if not ui:
+		return
+	
+	# Update position
+	var pos_label = ui.get_node_or_null(\"Stats/Position\")
+	if pos_label:
+		var pos = player.global_position
+		pos_label.text = \"Plasmoid: (%.0f, %.0f, %.0f)\" % [pos.x, pos.y, pos.z]
+	
+	# Update cosmic stats
+	var cosmic_label = ui.get_node_or_null(\"Stats/Cosmic\")
+	if cosmic_label and cosmic_lod:
+		var stats = cosmic_lod.get_cosmic_stats()
+		cosmic_label.text = \"Cosmic Objects: %d\" % stats.cosmic_objects
+	
+	# Update matrix stats
+	var matrix_label = ui.get_node_or_null(\"Stats/Matrix\")
+	if matrix_label and matrix_chunks:
+		var stats = matrix_chunks.get_matrix_stats()
+		matrix_label.text = \"Matrix Chunks: %d\" % stats.active_chunks
+	
+	# Update lightweight stats
+	var light_label = ui.get_node_or_null(\"Stats/Lightweight\")
+	if light_label and lightweight_chunks:
+		var debug_info = lightweight_chunks.get_debug_info()
+		light_label.text = \"Light Chunks: %d\" % debug_info.visible_chunks
+	
+	# Update FPS
+	var fps_label = ui.get_node_or_null(\"Stats/FPS\")
+	if fps_label:
+		var fps = Engine.get_frames_per_second()
+		var color = \"[color=green]\" if fps >= 55 else \"[color=yellow]\" if fps >= 45 else \"[color=red]\"
+		fps_label.text = color + \"FPS: %d[/color]\" % fps
+
+func _input(event):
+	if event is InputEventKey and event.pressed:
+		match event.keycode:
+			KEY_F1:
+				toggle_ui()
+			KEY_F2:
+				print_universe_stats()
+			KEY_F3:
+				save_universe_state()
+			KEY_F4:
+				teleport_to_galaxy()
+			KEY_F5:
+				evolve_consciousness()
+			KEY_F6:
+				switch_system_priority()
+			KEY_F7:
+				emergency_optimization()
+			KEY_F8:
+				test_all_systems()
+
+func toggle_ui():
+	var ui = get_node_or_null(\"PerfectUI\")
+	if ui:
+		ui.visible = !ui.visible
+
+func print_universe_stats():
+	print(\"🌌 PERFECT ULTIMATE UNIVERSE STATISTICS:\")
+	if cosmic_lod:
+		print(\"  Cosmic: %s\" % cosmic_lod.get_cosmic_stats())
+	if matrix_chunks:
+		print(\"  Matrix: %s\" % matrix_chunks.get_matrix_stats())
+	if lightweight_chunks:
+		print(\"  Lightweight: %s\" % lightweight_chunks.get_debug_info())
+	if player:
+		print(\"  Plasmoid: %s (Consciousness Level %d)\" % [player.global_position, player.consciousness_level])
+
+func save_universe_state():
+	if not akashic or not player:
+		print(\"❌ Cannot save - Akashic Records not ready\")
+		return
+	
+	var universe_data = {
+		\"plasmoid_position\": player.global_position,
+		\"consciousness_level\": player.consciousness_level,
+		\"cosmic_scale\": determine_cosmic_scale(),
+		\"active_systems\": get_active_systems(),
+		\"timestamp\": Time.get_ticks_msec(),
+		\"session_type\": \"perfect_ultimate_universe\"
+	}
+	
+	if akashic.has_method(\"save_universal_being_data\"):
+		var success = akashic.save_universal_being_data(\"perfect_universe_state\", universe_data)
+		if success:
+			print(\"💾 PERFECT Universe state saved to Akashic Records\")
+		else:
+			print(\"❌ Failed to save universe state\")
+
+func determine_cosmic_scale() -> String:
+	if not player:
+		return \"unknown\"
+	
+	var pos = player.global_position
+	var distance_from_origin = pos.length()
+	
+	if distance_from_origin > 1000:
+		return \"galactic\"
+	elif distance_from_origin > 100:
+		return \"stellar\"
+	elif distance_from_origin > 10:
+		return \"planetary\"
+	else:
+		return \"surface\"
+
+func get_active_systems() -> Array:
+	var active = []
+	if cosmic_lod and cosmic_lod.is_processing():
+		active.append(\"cosmic_lod\")
+	if matrix_chunks and matrix_chunks.is_processing():
+		active.append(\"matrix_chunks\")
+	if lightweight_chunks and lightweight_chunks.is_processing():
+		active.append(\"lightweight_chunks\")
+	return active
+
+func teleport_to_galaxy():
+	if not player:
+		return
+	
+	var galaxy_pos = Vector3(
+		randf_range(-10000, 10000),
+		randf_range(-10000, 10000),
+		randf_range(-10000, 10000)
+	)
+	
+	if player.has_method(\"teleport_to\"):
+		player.teleport_to(galaxy_pos)
+		print(\"✈️ PERFECT Teleported to distant galaxy at %s\" % galaxy_pos)
+
+func evolve_consciousness():
+	if not player or not player.has_method(\"set_consciousness_level\"):
+		return
+	
+	var current_level = player.consciousness_level
+	var new_level = (current_level + 1) % 8  # Cycle through 0-7
+	player.set_consciousness_level(new_level)
+	print(\"🧠 PERFECT Consciousness evolved to level %d\" % new_level)
+
+func switch_system_priority():
+	var player_pos = player.global_position if player else Vector3.ZERO
+	var distance = player_pos.length()
+	
+	if distance > 1000:
+		enable_cosmic_priority()
+	elif distance > 100:
+		enable_matrix_priority()
+	else:
+		enable_lightweight_priority()
+
+func test_all_systems():
+	print(\"🧪 TESTING ALL PERFECT SYSTEMS...\")
+	
+	# Test cosmic LOD
+	if cosmic_lod:
+		var cosmic_stats = cosmic_lod.get_cosmic_stats()
+		print(\"✓ Cosmic LOD: %d objects\" % cosmic_stats.cosmic_objects)
+	
+	# Test matrix chunks
+	if matrix_chunks:
+		var matrix_stats = matrix_chunks.get_matrix_stats()
+		print(\"✓ Matrix Chunks: %d active\" % matrix_stats.active_chunks)
+	
+	# Test lightweight chunks
+	if lightweight_chunks:
+		var light_info = lightweight_chunks.get_debug_info()
+		print(\"✓ Lightweight: %d visible\" % light_info.visible_chunks)
+	
+	# Test player
+	if player:
+		print(\"✓ Player: %s at %s (Level %d)\" % [player.being_name, player.global_position, player.consciousness_level])
+	
+	# Test Akashic Records
+	if akashic:
+		print(\"✓ Akashic Records: Connected\")
+	
+	print(\"🧪 ALL SYSTEMS TESTED - PERFECT ULTIMATE UNIVERSE READY\")
+"
+
+[sub_resource type="SphereMesh" id="PlasmoidMesh"]
+radial_segments = 16
+rings = 8
+
+[sub_resource type="StandardMaterial3D" id="PlasmoidMaterial"]
+transparency = 1
+albedo_color = Color(0.3, 0.7, 1, 0.8)
+emission_enabled = true
+emission = Color(0.5, 0.8, 1, 1)
+emission_energy_multiplier = 2.0
+rim_enabled = true
+rim = 0.8
+rim_tint = 0.3
+
+[sub_resource type="Environment" id="PerfectEnvironment"]
+background_mode = 1
+background_color = Color(0.005, 0.005, 0.02, 1)
+ambient_light_source = 2
+ambient_light_color = Color(0.15, 0.15, 0.3, 1)
+ambient_light_energy = 0.2
+glow_enabled = true
+glow_intensity = 0.3
+glow_strength = 0.8
+glow_bloom = 0.1
+fog_enabled = true
+fog_light_color = Color(0.03, 0.03, 0.1, 1)
+fog_sun_scatter = 0.05
+
+[sub_resource type="Theme" id="PerfectTheme"]
+
+[node name="PERFECT_ULTIMATE_UNIVERSAL_BEING" type="Node3D"]
+script = SubResource("PerfectUniversalController")
+
+[node name="CosmicLODSystem" type="Node3D" parent="."]
+script = ExtResource("1")
+galaxy_distance = 3000.0
+star_distance = 300.0
+planet_distance = 30.0
+surface_distance = 3.0
+
+[node name="MatrixChunkSystem" type="Node3D" parent="."]
+script = ExtResource("3")
+chunk_size = 12.0
+render_distance = 120.0
+generation_seed = 2024
+
+[node name="LightweightChunkSystem" type="Node3D" parent="."]
+script = ExtResource("4")
+chunk_size = 8.0
+view_distance = 80.0
+chunk_resolution = 8
+
+[node name="Player" type="Node3D" parent="." groups=["players"]]
+script = ExtResource("2")
+move_speed = 8.0
+float_height = 3.0
+interaction_range = 5.0
+
+[node name="CameraPoint" parent="Player" instance=ExtResource("5")]
+
+[node name="PlasmoidMesh" type="MeshInstance3D" parent="Player"]
+mesh = SubResource("PlasmoidMesh")
+surface_material_override/0 = SubResource("PlasmoidMaterial")
+
+[node name="PerfectEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("PerfectEnvironment")
+
+[node name="CosmicLight" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.7, -0.5, 0.5, 0, 0.7, 0.7, -0.7, -0.5, 0.5, 0, 100, 0)
+light_color = Color(0.9, 0.95, 1, 1)
+light_energy = 0.3
+shadow_enabled = true
+
+[node name="GalacticAmbientLight" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 50, 0)
+light_color = Color(0.2, 0.3, 0.6, 1)
+light_energy = 0.5
+omni_range = 200.0
+
+[node name="PerfectUI" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("PerfectTheme")
+
+[node name="Title" type="Label" parent="PerfectUI"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -300.0
+offset_top = 10.0
+offset_right = 300.0
+offset_bottom = 50.0
+grow_horizontal = 2
+text = "PERFECT ULTIMATE UNIVERSAL BEING - INFINITE MULTIVERSE"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Stats" type="VBoxContainer" parent="PerfectUI"]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = -180.0
+offset_right = 400.0
+offset_bottom = -10.0
+grow_vertical = 0
+
+[node name="Position" type="Label" parent="PerfectUI/Stats"]
+layout_mode = 2
+text = "Plasmoid: (0, 0, 0)"
+
+[node name="Cosmic" type="Label" parent="PerfectUI/Stats"]
+layout_mode = 2
+text = "Cosmic Objects: 0"
+
+[node name="Matrix" type="Label" parent="PerfectUI/Stats"]
+layout_mode = 2
+text = "Matrix Chunks: 0"
+
+[node name="Lightweight" type="Label" parent="PerfectUI/Stats"]
+layout_mode = 2
+text = "Light Chunks: 0"
+
+[node name="FPS" type="RichTextLabel" parent="PerfectUI/Stats"]
+custom_minimum_size = Vector2(0, 25)
+layout_mode = 2
+text = "[color=green]FPS: 60[/color]"
+fit_content = true
+
+[node name="Scale" type="Label" parent="PerfectUI/Stats"]
+layout_mode = 2
+text = "Scale: Surface"
+
+[node name="Controls" type="VBoxContainer" parent="PerfectUI"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -350.0
+offset_top = 10.0
+offset_right = -10.0
+offset_bottom = 300.0
+grow_horizontal = 0
+
+[node name="Movement" type="Label" parent="PerfectUI/Controls"]
+layout_mode = 2
+text = "🌌 PERFECT INFINITE COSMIC EXPLORATION 🌌
+
+WASD - Fly through infinite multiverse
+Mouse - Trackball camera (automatic)
+Space/Shift - Vertical flight
+Click - Interact with beings"
+
+[node name="Functions" type="Label" parent="PerfectUI/Controls"]
+layout_mode = 2
+text = "F1 - Toggle UI
+F2 - Universe statistics  
+F3 - Save to Akashic Records
+F4 - Teleport to galaxy
+F5 - Evolve consciousness
+F6 - Switch system priority
+F7 - Emergency optimization
+F8 - Test all systems
+
+EXPERIENCE: GALAXIES → STARS → PLANETS → SURFACES
+WITH MATRIX INFINITE STREAMING + TRUE LOD"

@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://c88tvdod37xsm"
+path="res://.godot/imported/Impact Metal Hit Cement 01.wav-2274b507242f816fb47963a8649c976a.sample"
+
+[deps]
+
+source_file="res://akashic_library/sounds/Impacts/Impact Metal Hit Cement 01.wav"
+dest_files=["res://.godot/imported/Impact Metal Hit Cement 01.wav-2274b507242f816fb47963a8649c976a.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

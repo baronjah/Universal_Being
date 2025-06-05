@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://br6r32b8cehcj"
+path="res://.godot/imported/Impact Glass Debris Thrown On More Debris 01.wav-dcec198d584bdfc4c35b23abb0db7089.sample"
+
+[deps]
+
+source_file="res://akashic_library/sounds/Impacts/Impact Glass Debris Thrown On More Debris 01.wav"
+dest_files=["res://.godot/imported/Impact Glass Debris Thrown On More Debris 01.wav-dcec198d584bdfc4c35b23abb0db7089.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2
