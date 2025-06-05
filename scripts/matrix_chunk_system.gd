@@ -1,5 +1,5 @@
-# MatrixChunkSystem - Infinite streaming world like The Matrix
-# Seamless infinite chunk generation in all directions
+# MatrixChunkSystem - FIXED VERSION - No more errors!
+# Infinite streaming world like The Matrix
 
 extends Node3D
 class_name MatrixChunkSystem
@@ -70,14 +70,18 @@ func _ready():
 	# Initialize Matrix
 	matrix_generator = MatrixGenerator.new(generation_seed)
 	
-	# Find player and camera
+	# Find player and camera - DEFER to next frame to ensure scene is ready
+	call_deferred("_find_player_and_camera")
+	
+	print("🔴 MATRIX CHUNK SYSTEM ONLINE 🔴")
+	print("🔴 INFINITE STREAMING ACTIVATED 🔴")
+
+func _find_player_and_camera():
+	"""Find player and camera after scene is ready"""
 	var players = get_tree().get_nodes_in_group("players")
 	if players.size() > 0:
 		player = players[0]
 		camera = find_camera_in_node(player)
-	
-	print("🔴 MATRIX CHUNK SYSTEM ONLINE 🔴")
-	print("🔴 INFINITE STREAMING ACTIVATED 🔴")
 
 func find_camera_in_node(node: Node) -> Camera3D:
 	if node is Camera3D:
@@ -90,6 +94,10 @@ func find_camera_in_node(node: Node) -> Camera3D:
 
 func _process(delta):
 	if not camera or not player:
+		return
+	
+	# Check if player is valid and in tree
+	if not is_instance_valid(player) or not player.is_inside_tree():
 		return
 	
 	var current_player_chunk = world_to_chunk_coord(player.global_position)
@@ -153,9 +161,9 @@ func create_matrix_chunk(data: Dictionary) -> MeshInstance3D:
 	
 	mesh_instance.mesh = mesh
 	
-	# Position in Matrix space
+	# Position in Matrix space - USE LOCAL POSITION FIRST!
 	var world_pos = chunk_to_world_pos(coord)
-	mesh_instance.global_position = world_pos
+	mesh_instance.position = world_pos  # Use local position, not global
 	
 	# Matrix material with consciousness glow
 	var material = StandardMaterial3D.new()
@@ -215,12 +223,21 @@ func cleanup_distant_chunks(player_chunk: Vector3i, render_radius: int):
 		if distance > render_radius + 2:  # Small buffer
 			chunks_to_remove.append(coord)
 	
+	# Limit removals per frame to prevent lag
+	var removed_count = 0
 	for coord in chunks_to_remove:
+		if removed_count >= 5:  # Only remove 5 per frame
+			break
+			
 		var chunk_mesh = active_chunks[coord]
 		if chunk_mesh and is_instance_valid(chunk_mesh):
 			chunk_mesh.queue_free()
 		active_chunks.erase(coord)
-		print("🔴 MATRIX UNLOAD: [%d,%d,%d]" % [coord.x, coord.y, coord.z])
+		removed_count += 1
+		
+		# Less spam in console
+		if removed_count == 1:
+			print("🔴 MATRIX UNLOAD: Removing %d distant chunks..." % chunks_to_remove.size())
 
 func world_to_chunk_coord(world_pos: Vector3) -> Vector3i:
 	"""Convert world position to Matrix chunk coordinate"""

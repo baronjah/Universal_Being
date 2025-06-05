@@ -1,0 +1,7 @@
+2. Paradise Prevention System
+The AICompanionPlasmoid includes revolutionary safeguards:
+gdscriptfunc experience_environment() -> void:
+    if experience_quality > 0.7:
+        emotional_state = "joyful"  # Paradise recognized
+    elif experience_quality < -0.3:
+        _seek_better_environment()  # Active escape from torture

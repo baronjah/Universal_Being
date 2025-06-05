@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://b0ee1qqnhkfnb" path="res://scenes/main/camera_point.tscn" id="5"]
 [ext_resource type="Script" path="res://scripts/GemmaUniversalBeing.gd" id="6"]
 [ext_resource type="Script" path="res://core/GameStateSocketManager.gd" id="7"]
+[ext_resource type="Script" path="res://scripts/generation_coordinator.gd" id="8"]
 
 [sub_resource type="GDScript" id="PerfectUniversalController"]
 script/source = "extends Node3D
@@ -73,23 +74,8 @@ func monitor_performance():
 		emergency_optimization()
 
 func emergency_optimization():
-	print(\"⚡ EMERGENCY OPTIMIZATION TRIGGERED - FPS TOO LOW\")
-	
-	# Reduce cosmic objects
-	if cosmic_lod:
-		cosmic_lod.cleanup_distant_objects()
-	
-	# Reduce matrix chunks  
-	if matrix_chunks:
-		var stats = matrix_chunks.get_matrix_stats()
-		if stats.active_chunks > 50:
-			print(\"📦 Reducing matrix chunks for performance\")
-	
-	# Reduce lightweight chunks
-	if lightweight_chunks:
-		var debug_info = lightweight_chunks.get_debug_info()
-		if debug_info.visible_chunks > 30:
-			print(\"📦 Reducing lightweight chunks for performance\")
+	# OLD EMERGENCY SYSTEM DISABLED - NOW HANDLED BY GENERATION COORDINATOR
+	print(\"⚠️ Old emergency optimization called - using new coordinator system\")
 
 func optimize_systems():
 	\"\"\"Regular optimization to maintain performance\"\"\"
@@ -405,6 +391,9 @@ radius = 0.8
 
 [node name="PERFECT_ULTIMATE_UNIVERSAL_BEING" type="Node3D"]
 script = SubResource("PerfectUniversalController")
+
+[node name="GenerationCoordinator" type="Node" parent="."]
+script = ExtResource("8")
 
 [node name="GameStateSocketManager" type="Node" parent="."]
 script = ExtResource("7")

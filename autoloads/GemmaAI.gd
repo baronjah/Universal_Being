@@ -150,6 +150,13 @@ Be enthusiastic, creative, and helpful. Keep responses concise but insightful.""
 	# Store reference for later use
 	nobody_chat_instance = nobody_chat
 	
+	# PRE-START WORKER to avoid delays during conversations
+	if nobody_chat_instance.has_method("start_worker"):
+		nobody_chat_instance.start_worker()
+		print("🤖 Gemma AI: Worker pre-started for instant responses!")
+	else:
+		print("🤖 Gemma AI: Worker will start on first message")
+	
 	print("🤖 Gemma AI: NobodyWho nodes configured!")
 	return true
 

@@ -1,0 +1,7 @@
+4. Shared Exploration Goals
+gdscript# In AICompanionPlasmoid:
+func propose_exploration(target: Vector3):
+    emotional_state = "excited"
+    # Creates visual indicator pointing to discovery
+    emit_exploration_beacon(target)
+    # Wait for player response/agreement

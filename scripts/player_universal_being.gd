@@ -462,8 +462,8 @@ func _create_crosshair_ui() -> void:
 	
 	crosshair_ui.add_child(crosshair_label)
 	
-	# Add to scene tree at viewport level so it's always visible
-	get_viewport().add_child(crosshair_ui)
+	# Add to scene tree at viewport level so it's always visible (deferred to avoid busy parent)
+	get_viewport().call_deferred("add_child", crosshair_ui)
 	
 	print("⚡ Magical crosshair created for plasmoid targeting")
 

@@ -38,6 +38,7 @@ var input_handlers: Dictionary = {}
 # Console and AI systems
 var console_active: bool = false
 var ai_chat_active: bool = false
+var console_instance: Node = null  # Store console reference
 var gemma_reference: Node = null
 
 # Shared data access (AI and Human see same data)
@@ -123,16 +124,36 @@ func setup_input_handlers() -> void:
 	input_handlers[InputState.AI_CHAT] = func(event):
 		handle_ai_chat_input(event)
 
+func _unhandled_key_input(event: InputEvent) -> void:
+	"""Handle key input with lower priority than UI elements"""
+	_input(event)
+
 func _input(event: InputEvent) -> void:
 	"""Main input router based on current state"""
+	
+	# Handle backtick console toggle (highest priority - always works)
+	if event is InputEventKey and event.pressed and event.keycode == KEY_QUOTELEFT:
+		if console_active:
+			deactivate_console()
+		else:
+			activate_console()
+		get_viewport().set_input_as_handled()
+		return
 	
 	# Emergency unlock (always available)
 	if event is InputEventKey and event.pressed and event.keycode == KEY_ESCAPE:
 		emergency_unlock()
+		get_viewport().set_input_as_handled()
+		return
+	
+	# If console is active, let console handle ALL typing input
+	if current_input_state == InputState.CONSOLE:
+		# Don't block any keys - let console receive everything for typing
 		return
 	
 	# State change inputs (highest priority)
 	if handle_state_change_input(event):
+		get_viewport().set_input_as_handled()
 		return
 	
 	# Route to current state handler
@@ -143,6 +164,10 @@ func _input(event: InputEvent) -> void:
 func handle_state_change_input(event: InputEvent) -> bool:
 	"""Handle input that changes game state"""
 	if not event is InputEventKey or not event.pressed:
+		return false
+	
+	# Don't handle state changes when console is active (let console handle typing)
+	if current_input_state == InputState.CONSOLE:
 		return false
 	
 	match event.keycode:
@@ -169,6 +194,7 @@ func handle_state_change_input(event: InputEvent) -> bool:
 func handle_normal_input(event: InputEvent) -> void:
 	"""Handle input in normal state - pass to player/camera"""
 	# Input flows normally to player controller and camera
+	# This is where Q/E camera controls would be handled
 	pass
 
 func handle_interact_input(event: InputEvent) -> void:
@@ -190,8 +216,9 @@ func handle_console_input(event: InputEvent) -> void:
 	lock_cursor()
 	
 	if event is InputEventKey and event.pressed:
-		if event.keycode == KEY_ESCAPE or event.keycode == KEY_ENTER:
+		if event.keycode == KEY_ESCAPE:
 			deactivate_console()
+		# Note: Don't close console on ENTER - let LineEdit handle command submission
 
 func handle_ai_chat_input(event: InputEvent) -> void:
 	"""Handle AI chat input"""
@@ -201,6 +228,10 @@ func handle_ai_chat_input(event: InputEvent) -> void:
 
 func change_state(new_state: InputState) -> void:
 	"""Change game input state"""
+	# Only change if state is actually different
+	if current_input_state == new_state:
+		return  # No change needed
+		
 	var old_state = current_input_state
 	state_history.append(old_state)
 	current_input_state = new_state
@@ -219,6 +250,9 @@ func activate_console() -> void:
 	state_sockets["console_state"]["active"] = true
 	state_sockets["console_state"]["focus_locked"] = true
 	
+	# Load and show the console scene
+	spawn_console_ui()
+	
 	change_state(InputState.CONSOLE)
 	lock_cursor()
 	
@@ -230,6 +264,13 @@ func deactivate_console() -> void:
 	console_active = false
 	state_sockets["console_state"]["active"] = false
 	state_sockets["console_state"]["focus_locked"] = false
+	
+	# Hide the console UI
+	if console_instance and is_instance_valid(console_instance):
+		if console_instance.has_method("set_console_visible"):
+			console_instance.set_console_visible(false)
+		else:
+			console_instance.hide()
 	
 	change_state(InputState.NORMAL)
 	unlock_cursor()
@@ -258,10 +299,15 @@ func deactivate_ai_chat() -> void:
 
 func set_cursor_state(new_state: CursorState) -> void:
 	"""Set cursor state"""
-	current_cursor_state = new_state
-	state_sockets["cursor_control"]["state"] = new_state
-	
-	print("🖱️ Cursor: %s" % CursorState.keys()[new_state])
+	# Only print if state actually changes
+	if current_cursor_state != new_state:
+		current_cursor_state = new_state
+		state_sockets["cursor_control"]["state"] = new_state
+		print("🖱️ Cursor: %s" % CursorState.keys()[new_state])
+	else:
+		# Update the socket without spam
+		current_cursor_state = new_state
+		state_sockets["cursor_control"]["state"] = new_state
 
 func lock_cursor() -> void:
 	"""Lock cursor movement"""
@@ -312,7 +358,9 @@ func update_inspection_target() -> void:
 	# Similar to interaction but for inspection
 	var mouse_pos = get_viewport().get_mouse_position()
 	# ... inspection logic
-	print("🔍 Inspecting...")
+	# Only log occasionally, not every mouse movement
+	if randf() < 0.01:  # 1% chance to log
+		print("🔍 Inspecting...")
 
 func connect_to_akashic_records() -> void:
 	"""Connect to Akashic Records for shared AI-Human access"""
@@ -377,5 +425,47 @@ static func get_instance() -> GameStateSocketManager:
 	if scene_root:
 		return scene_root.get_node_or_null("GameStateSocketManager")
 	return null
+
+func spawn_console_ui() -> void:
+	"""Create and show the animated console UI"""
+	# Check if we already have a console instance
+	if console_instance and is_instance_valid(console_instance):
+		if console_instance.has_method("set_console_visible"):
+			console_instance.set_console_visible(true)
+		else:
+			console_instance.show()
+		print("✅ Console UI reused existing instance")
+		return
+	
+	# Clear invalid reference
+	console_instance = null
+	
+	# Check if console exists in scene tree
+	var existing_console = get_tree().get_first_node_in_group("console")
+	if existing_console:
+		console_instance = existing_console
+		if console_instance.has_method("set_console_visible"):
+			console_instance.set_console_visible(true)
+		else:
+			console_instance.show()
+		print("✅ Console UI found existing instance")
+		return
+	
+	# Load the console scene
+	var console_scene = preload("res://scenes/console/universal_console_animated.tscn")
+	if console_scene:
+		console_instance = console_scene.instantiate()
+		console_instance.add_to_group("console")
+		
+		# Add to UI layer (so it appears on top)
+		get_tree().root.add_child(console_instance)
+		
+		# Show the console with animation
+		if console_instance.has_method("set_console_visible"):
+			console_instance.set_console_visible(true)
+		
+		print("✅ Console UI spawned successfully")
+	else:
+		print("❌ Failed to load console scene")
 
 # print("🎮 Game State Socket Manager: Class loaded")

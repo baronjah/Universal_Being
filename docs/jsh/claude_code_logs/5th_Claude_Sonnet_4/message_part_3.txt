@@ -1,0 +1,3 @@
+1. Immediate Energy Transfer (Critical)
+Implement the energy merging system from the plasmoid architecture:
+gdscriptfunc merge_energies_with(other: PlasmoidUniversalBeing, duration: float = 2.0)

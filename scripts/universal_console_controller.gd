@@ -36,11 +36,13 @@ func _ready() -> void:
 	setup_console()
 	register_console_commands()
 	
-	# Connect signals
+	# Connect signals (only if not already connected)
 	if close_button:
-		close_button.pressed.connect(_on_close_button_pressed)
+		if not close_button.pressed.is_connected(_on_close_button_pressed):
+			close_button.pressed.connect(_on_close_button_pressed)
 	if input_field:
-		input_field.text_submitted.connect(_on_input_field_text_submitted)
+		if not input_field.text_submitted.is_connected(_on_input_field_text_submitted):
+			input_field.text_submitted.connect(_on_input_field_text_submitted)
 	
 	# Start with console hidden
 	set_console_visible(false)
@@ -205,17 +207,41 @@ func _on_input_field_text_submitted(text: String) -> void:
 
 func _input(event: InputEvent) -> void:
 	"""Handle console-specific input"""
-	if not console_visible or not input_field or not input_field.has_focus():
+	if not event is InputEventKey or not event.pressed:
 		return
 	
-	if event is InputEventKey and event.pressed:
-		match event.keycode:
-			KEY_UP:
+	# Handle backtick toggle (works both visible and hidden)
+	if event.keycode == KEY_QUOTELEFT:
+		get_viewport().set_input_as_handled()
+		var game_state = GameStateSocketManager.get_instance()
+		if game_state:
+			if console_visible:
+				game_state.deactivate_console()
+			else:
+				game_state.activate_console()
+		return
+	
+	# Handle other keys only when console is visible
+	if not console_visible:
+		return
+	
+	match event.keycode:
+		KEY_UP:
+			if input_field and input_field.has_focus():
 				navigate_history(-1)
-			KEY_DOWN:
+				get_viewport().set_input_as_handled()
+		KEY_DOWN:
+			if input_field and input_field.has_focus():
 				navigate_history(1)
-			KEY_ESCAPE:
-				set_console_visible(false)
+				get_viewport().set_input_as_handled()
+		KEY_ESCAPE:
+			# Close console via GameStateSocketManager
+			var game_state = GameStateSocketManager.get_instance()
+			if game_state:
+				game_state.deactivate_console()
+			else:
+				set_console_visible(false)  # Fallback
+			get_viewport().set_input_as_handled()
 
 func navigate_history(direction: int) -> void:
 	"""Navigate command history"""

@@ -1,0 +1,6 @@
+Immediate Actions:
+1. Enable Energy Transfer
+gdscript# In the player's plasmoid, detect pink plasmoid proximity
+if nearby_beings.has(pink_plasmoid):
+    if Input.is_action_pressed("share_energy"):
+        merge_energies_with(pink_plasmoid, 5.0)  # Longer merge for awakening

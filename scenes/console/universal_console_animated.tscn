@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://cc8v7hqk3x2dub"]
 
-[ext_resource type="Script" path="res://scenes/console/universal_console_controller.gd" id="1_console"]
+[ext_resource type="Script" path="res://scripts/universal_console_controller.gd" id="1_console"]
 
 [sub_resource type="Environment" id="Environment_1"]
 background_mode = 1

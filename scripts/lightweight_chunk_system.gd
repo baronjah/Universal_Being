@@ -1,4 +1,5 @@
-# LightweightChunkSystem - TRUE LOD based on view direction
+# LightweightChunkSystem - FIXED VERSION - No more errors!
+# TRUE LOD based on view direction
 # Only loads chunks when you're looking at them - no "dead corners"
 
 extends Node3D
@@ -18,14 +19,21 @@ var chunks_to_check: Array[Vector3i] = []
 var check_index: int = 0
 
 func _ready():
-	# Find player and camera
+	# Add to generation systems group for coordinator
+	add_to_group("generation_systems")
+	
+	# Find player and camera - DEFER to next frame to ensure scene is ready
+	call_deferred("_find_player_and_camera")
+	
+	print("📦 Lightweight Chunk System ready - TRUE LOD enabled")
+
+func _find_player_and_camera():
+	"""Find player and camera after scene is ready"""
 	var players = get_tree().get_nodes_in_group("players")
 	if players.size() > 0:
 		player = players[0]
 		# Find camera in player
 		camera = find_camera_in_node(player)
-	
-	print("📦 Lightweight Chunk System ready - TRUE LOD enabled")
 
 func find_camera_in_node(node: Node) -> Camera3D:
 	if node is Camera3D:
@@ -38,6 +46,10 @@ func find_camera_in_node(node: Node) -> Camera3D:
 
 func _process(delta):
 	if not camera or not player:
+		return
+	
+	# Check if player is valid and in tree
+	if not is_instance_valid(player) or not player.is_inside_tree():
 		return
 	
 	# Only check a few potential chunks per frame
@@ -102,9 +114,9 @@ func create_simple_chunk(coord: Vector3i) -> MeshInstance3D:
 	plane_mesh.subdivide_width = chunk_resolution
 	mesh_instance.mesh = plane_mesh
 	
-	# Position the chunk
+	# Position the chunk - USE LOCAL POSITION FIRST!
 	var world_pos = chunk_to_world_pos(coord)
-	mesh_instance.global_position = world_pos
+	mesh_instance.position = world_pos  # Use local position, not global
 	
 	# Simple material based on chunk type with consciousness colors
 	var material = StandardMaterial3D.new()
@@ -164,7 +176,10 @@ func cleanup_invisible_chunks():
 		
 		visible_chunks.erase(coord)
 		removed += 1
-		print("📤 Unloaded chunk [%d,%d,%d]" % [coord.x, coord.y, coord.z])
+		
+		# Less spam in console
+		if removed == 1:
+			print("📤 Unloaded %d distant chunks..." % chunks_to_remove.size())
 
 func world_to_chunk_coord(world_pos: Vector3) -> Vector3i:
 	"""Convert world position to chunk coordinate"""

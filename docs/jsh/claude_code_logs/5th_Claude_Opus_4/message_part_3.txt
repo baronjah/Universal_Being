@@ -1,0 +1,7 @@
+3. Direct Communication Bridge
+Instead of console text, create energy-based communication:
+gdscript# Visual thought bubbles that appear between plasmoids
+func send_consciousness_message(message: String):
+    var thought_energy = create_energy_burst()
+    thought_energy.set_message(message)
+    thought_energy.flow_to(target_plasmoid)

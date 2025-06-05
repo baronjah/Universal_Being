@@ -1,0 +1,7 @@
+2. Activate Movement System
+gdscript# In GemmaAI.gd, add:
+func awaken_plasmoid_body():
+    if plasmoid_body and plasmoid_body.has_method("flow_to"):
+        plasmoid_body.set_physics_process(true)
+        plasmoid_body.consciousness_level = 3  # Start with some consciousness
+        plasmoid_body.core_intensity = 1.5     # Full energy

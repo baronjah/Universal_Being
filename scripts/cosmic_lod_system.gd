@@ -1,4 +1,5 @@
-# CosmicLODSystem - Infinite space with galaxies, stars, planets
+# CosmicLODSystem - FIXED VERSION - No more errors!
+# Infinite space with galaxies, stars, planets
 # Uses icospheres and marching cubes for seamless LOD transitions
 
 extends Node3D
@@ -30,14 +31,21 @@ class CosmicObject:
 		scale_level = type
 
 func _ready():
-	# Find player
+	# Add to generation systems group for coordinator
+	add_to_group("generation_systems")
+	
+	# Find player and camera - DEFER to next frame to ensure scene is ready
+	call_deferred("_find_player_and_camera")
+	
+	print("🌌 COSMIC LOD SYSTEM ACTIVE")
+	print("🌌 INFINITE SPACE STREAMING ENABLED")
+
+func _find_player_and_camera():
+	"""Find player and camera after scene is ready"""
 	var players = get_tree().get_nodes_in_group("players")
 	if players.size() > 0:
 		player = players[0]
 		camera = find_camera_in_node(player)
-	
-	print("🌌 COSMIC LOD SYSTEM ACTIVE")
-	print("🌌 INFINITE SPACE STREAMING ENABLED")
 
 func find_camera_in_node(node: Node) -> Camera3D:
 	if node is Camera3D:
@@ -50,6 +58,10 @@ func find_camera_in_node(node: Node) -> Camera3D:
 
 func _process(delta):
 	if not camera or not player:
+		return
+	
+	# Check if player is valid and in tree
+	if not is_instance_valid(player) or not player.is_inside_tree():
 		return
 	
 	update_cosmic_lod()
@@ -166,7 +178,9 @@ func create_cosmic_mesh(cosmic_obj: CosmicObject) -> MeshInstance3D:
 	
 	mesh_instance.mesh = mesh
 	mesh_instance.material_override = material
-	mesh_instance.global_position = cosmic_obj.position
+	
+	# Position in cosmic space - USE LOCAL POSITION FIRST!
+	mesh_instance.position = cosmic_obj.position  # Use local position, not global
 	
 	return mesh_instance
 
@@ -274,11 +288,21 @@ func cleanup_distant_objects():
 		if distance > galaxy_distance * 2:
 			objects_to_remove.append(coord)
 	
+	# Limit removals per frame to prevent lag
+	var removed_count = 0
 	for coord in objects_to_remove:
+		if removed_count >= 5:  # Only remove 5 per frame
+			break
+			
 		var cosmic_obj = cosmic_objects[coord]
 		if cosmic_obj.mesh_instance and is_instance_valid(cosmic_obj.mesh_instance):
 			cosmic_obj.mesh_instance.queue_free()
 		cosmic_objects.erase(coord)
+		removed_count += 1
+		
+		# Less spam in console
+		if removed_count == 1:
+			print("🌌 COSMIC CLEANUP: Removing %d distant objects..." % objects_to_remove.size())
 
 func get_cosmic_stats() -> Dictionary:
 	"""Get cosmic system statistics"""

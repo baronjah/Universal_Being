@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://bi624gyjtjn51"]
+
+[ext_resource type="Script" path="res://scripts/generation_coordinator.gd" id="1_coordinator"]
+
+[node name="GenerationCoordinator" type="Node"]
+script = ExtResource("1_coordinator")
+target_fps = 30.0
+emergency_fps = 20.0
+recovery_fps = 40.0
