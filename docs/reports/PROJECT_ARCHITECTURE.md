@@ -29,7 +29,7 @@ Universal Being is a **living universe simulator** where:
 2. **pentagon_ready()** - Connection to universe systems
 3. **pentagon_process()** - Living & processing reality
 4. **pentagon_input()** - Sensing & responding to events
-5. **pentagon_sewers()** - Death/transformation & cleanup
+5. **pentagon_sewers()** - Cleanup phase
 
 ---
 
