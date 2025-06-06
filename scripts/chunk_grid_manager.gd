@@ -1,4 +1,4 @@
-# ChunkGridManager - 3D Spatial Grid System for Universal Being
+# ChunkGridManager - 3D Node3D Grid System for Universal Being
 # Manages infinite 3D grid where each chunk is a Universal Being
 
 extends UniversalBeing

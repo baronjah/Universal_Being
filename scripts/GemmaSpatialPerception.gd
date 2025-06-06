@@ -1,14 +1,14 @@
 # ==================================================
 # SCRIPT NAME: GemmaSpatialPerception.gd
-# DESCRIPTION: Gemma AI Spatial Perception System - 3D world understanding
+# DESCRIPTION: Gemma AI Node3D Perception System - 3D world understanding
 # PURPOSE: Give Gemma spatial awareness and 3D navigation capabilities
-# CREATED: 2025-06-04 - Gemma Spatial System
+# CREATED: 2025-06-04 - Gemma Node3D System
 # AUTHOR: JSH + Claude Code + Gemma AI
 # ==================================================
 extends Node
 class_name GemmaSpatialPerception
 
-# Spatial analysis components
+# Node3D analysis components
 var spatial_memory: Dictionary = {}
 var universal_beings_map: Dictionary = {}
 var spatial_relationships: Array[Dictionary] = []
@@ -49,7 +49,7 @@ func _initialize_spatial_systems():
 	world_bounds = AABB(Vector3(-100, -100, -100), Vector3(200, 200, 200))
 	current_focus_point = Vector3.ZERO
 	
-	print("🗺️ GemmaSpatialPerception: Spatial systems ready")
+	print("🗺️ GemmaSpatialPerception: Node3D systems ready")
 
 func _start_spatial_monitoring():
 	"""Start continuous spatial monitoring"""

@@ -61,4 +61,3 @@ func load_shader(shader_file:RDShaderFile)->GLSLShader:
 	
 	var shader_rid:RID = rd.shader_create_from_spirv(shader_spirv)
 	return GLSLShader.new(self, shader_rid)
-
