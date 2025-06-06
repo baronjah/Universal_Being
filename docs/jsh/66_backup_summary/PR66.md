@@ -141,6 +141,7 @@ func pentagon_sewers() -> void       # Cleanup phase - ALWAYS super() LAST
 1. **update_paths.py** - Automated path updates (78+ files corrected)
 2. **fix_akashic_references.py** - Class naming issue resolver
 3. **clean_scripts_folder.py** - Scripts organization (NEW)
+4. **upgrade_scenes.py** - Godot 4.4 resource migration
 
 ### **Analysis Tools**  
 1. **validate_pentagon.py** - Pentagon compliance checking
@@ -284,6 +285,7 @@ The Universal Being project is now **architecturally sound** and ready for the c
 2. `analyze_project_architecture.py` - Architecture analyzer
 3. `update_paths.py` - Path migration tool
 4. `fix_akashic_references.py` - Reference fixing tool
+5. `upgrade_scenes.py` - Godot 4.4 resource migration tool
 
 ---
 
