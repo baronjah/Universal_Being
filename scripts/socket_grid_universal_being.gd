@@ -60,7 +60,7 @@ func initialize_grid() -> void:
     cells.clear()
     for y in range(grid_size.y):
         for x in range(grid_size.x):
-            var cell = preload("res://beings/socket_cell_universal_being.gd").new()
+            var cell = preload("res://scripts_backup/socket_cell_universal_being.gd").new()
             cell.position = Vector2i(x, y)
             cells.append(cell)
             # Optionally add to scene or register with FloodGate if needed

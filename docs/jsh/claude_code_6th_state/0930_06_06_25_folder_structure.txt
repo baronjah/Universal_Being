@@ -1,0 +1,1958 @@
+
+    Directory: C:\Users\Percision 15\Universal_Being\addons\goutte.camera.trackball
+
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+-a----        01.06.2025     18:04              9 .gitignore
+-a----        01.06.2025     18:04           3468 icon.png
+-a----        01.06.2025     18:04            830 icon.png.import
+-a----        01.06.2025     18:04            415 icon_trackball_camera.png
+-a----        01.06.2025     18:04            880 icon_trackball_camera.png.import
+-a----        01.06.2025     18:04           5229 icon_trackball_camera.svg
+-a----        01.06.2025     18:04            977 icon_trackball_camera.svg.import
+-a----        01.06.2025     18:04            371 plugin.cfg
+-a----        01.06.2025     18:04             60 README.md
+-a----        03.06.2025     20:48          22608 trackball_camera.gd
+-a----        01.06.2025     18:04             19 trackball_camera.gd.uid
+-a----        01.06.2025     18:04           5765 trackball_camera_inspector_plugin.gd
+-a----        01.06.2025     18:04             20 trackball_camera_inspector_plugin.gd.uid
+-a----        01.06.2025     18:04            933 trackball_camera_plugin.gd
+-a----        01.06.2025     18:04             20 trackball_camera_plugin.gd.uid
+
+
+    Directory: C:\Users\Percision 15\Universal_Being\addons\marching_cubes_viewer
+
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+-a----        02.06.2025     00:57            402 marching_cubes_viewer.gd
+-a----        02.06.2025     01:08             20 marching_cubes_viewer.gd.uid
+-a----        02.06.2025     00:57            171 plugin.cfg
+
+
+    Directory: C:\Users\Percision 15\Universal_Being\addons\marching_cubes_viewer\art\icons
+
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+-a----        02.06.2025     00:57           2980 marching_cubes_glsl_icon.svg
+-a----        02.06.2025     01:08            995 marching_cubes_glsl_icon.svg.import
+
+
+    Directory: C:\Users\Percision 15\Universal_Being\addons\marching_cubes_viewer\scenes\controls
+
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+-a----        02.06.2025     00:57           2341 image_stack_viewer.gd
+-a----        02.06.2025     01:08             18 image_stack_viewer.gd.uid
+-a----        02.06.2025     00:57            765 image_stack_viewer.tscn
+-a----        02.06.2025     00:57           4171 marching_cubes_viewer.gd
+-a----        02.06.2025     01:08             20 marching_cubes_viewer.gd.uid
+-a----        02.06.2025     00:57            749 marching_cubes_viewer.tscn
+-a----        02.06.2025     00:57           1876 mesh_viewer_cpu.gd
+-a----        02.06.2025     01:08             20 mesh_viewer_cpu.gd.uid
+-a----        02.06.2025     00:57           2114 mesh_viewer_cpu.tscn
+
+
+    Directory: C:\Users\Percision 15\Universal_Being\addons\marching_cubes_viewer\scenes\controls\glsl
+
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+-a----        02.06.2025     00:57           8506 marching_cubes_viewer_glsl.gd
+-a----        02.06.2025     01:08             20 marching_cubes_viewer_glsl.gd.uid
+-a----        02.06.2025     00:57            354 marching_cubes_viewer_glsl.tscn
+
+
+    Directory: C:\Users\Percision 15\Universal_Being\addons\marching_cubes_viewer\scripts\glsl
+
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+-a----        02.06.2025     00:57           2643 glsl_context.gd
+-a----        02.06.2025     01:08             19 glsl_context.gd.uid
+-a----        02.06.2025     00:57           2445 glsl_shader.gd
+-a----        02.06.2025     01:08             20 glsl_shader.gd.uid
+
+
+    Directory: C:\Users\Percision 15\Universal_Being\addons\marching_cubes_viewer\scripts\glsl_shader_tools
+
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+-a----        02.06.2025     00:57           1282 glsl_shader_tool.gd
+-a----        02.06.2025     01:08             20 glsl_shader_tool.gd.uid
+-a----        02.06.2025     00:57           6826 glsl_util.gd
+-a----        02.06.2025     01:08             19 glsl_util.gd.uid
+-a----        02.06.2025     00:57          14872 marching_cubes_generator_glsl_variable.gd
+-a----        02.06.2025     01:08             20 marching_cubes_generator_glsl_variable.gd.uid
+-a----        02.06.2025     00:57           5739 mipmap_generator_rf_3d.gd
+-a----        02.06.2025     01:08             20 mipmap_generator_rf_3d.gd.uid
+-a----        02.06.2025     00:57           5478 mipmap_generator_rgba8_3d.gd
+-a----        02.06.2025     01:08             19 mipmap_generator_rgba8_3d.gd.uid
+-a----        02.06.2025     00:57           5398 mipmap_generator_rgbaf_3d.gd
+-a----        02.06.2025     01:08             20 mipmap_generator_rgbaf_3d.gd.uid
+-a----        02.06.2025     00:57           5786 sobel_gradient_generator.gd
+-a----        02.06.2025     01:08             20 sobel_gradient_generator.gd.uid
+
+
+    Directory: C:\Users\Percision 15\Universal_Being\addons\marching_cubes_viewer\scripts\math
+
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+-a----        02.06.2025     00:57          13210 cube_symmetries.gd
+-a----        02.06.2025     01:08             20 cube_symmetries.gd.uid
+-a----        02.06.2025     00:57           1556 image_gradient.gd
+-a----        02.06.2025     01:08             20 image_gradient.gd.uid
+-a----        02.06.2025     00:57           7899 marching_cubes.gd
+-a----        02.06.2025     01:08             20 marching_cubes.gd.uid
+-a----        02.06.2025     00:57          14622 marching_cube_table.gd
+-a----        02.06.2025     01:08             20 marching_cube_table.gd.uid
+
+
+    Directory: C:\Users\Percision 15\Universal_Being\addons\marching_cubes_viewer\scripts\resources\cpu
+
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+-a----        02.06.2025     00:57           3855 zipped_image_archive_cpu_Texture3D.gd
+-a----        02.06.2025     01:08             19 zipped_image_archive_cpu_Texture3D.gd.uid
+-a----        02.06.2025     00:57           4205 zipped_image_stack.gd
+-a----        02.06.2025     01:08             19 zipped_image_stack.gd.uid
+
+
+    Directory: C:\Users\Percision 15\Universal_Being\addons\marching_cubes_viewer\scripts\resources\gpu
+
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+-a----        02.06.2025     00:57           3175 zipped_image_archive_rf_3d.gd
+-a----        02.06.2025     01:08             19 zipped_image_archive_rf_3d.gd.uid
+-a----        02.06.2025     00:57           2155 zipped_image_archive_rf_Texture3D.gd
+-a----        02.06.2025     01:08             19 zipped_image_archive_rf_Texture3D.gd.uid
+
+
+    Directory: C:\Users\Percision 15\Universal_Being\addons\marching_cubes_viewer\shaders
+
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+-a----        02.06.2025     00:57           2289 kernel_convolution_3d.glsl
+-a----        02.06.2025     01:08            369 kernel_convolution_3d.glsl.import
+-a----        02.06.2025     00:57          17806 marching_cubes_mesh_gen_var_len.glsl
+-a----        02.06.2025     01:08            399 marching_cubes_mesh_gen_var_len.glsl.import
+-a----        02.06.2025     00:57           2432 mipmap_generator_rf_3d.glsl
+-a----        02.06.2025     01:08            372 mipmap_generator_rf_3d.glsl.import
+-a----        02.06.2025     00:57           2152 mipmap_generator_rgba8_3d.glsl
+-a----        02.06.2025     01:08            381 mipmap_generator_rgba8_3d.glsl.import
+-a----        02.06.2025     00:57           2156 mipmap_generator_rgbaf_3d.glsl
+-a----        02.06.2025     01:08            380 mipmap_generator_rgbaf_3d.glsl.import
+-a----        02.06.2025     00:57           2575 sobel_gradient_3d.glsl
+-a----        02.06.2025     01:08            357 sobel_gradient_3d.glsl.import
+
+
+    Directory: C:\Users\Percision 15\Universal_Being\addons\nobodywho
+
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+-a----        01.06.2025     16:17           4576 icon.svg
+-a----        01.06.2025     16:17            913 icon.svg.import
+-a----        01.06.2025     16:17       19687112 nobodywho-godot-aarch64-apple-darwin-debug.dylib
+-a----        01.06.2025     16:17        9788096 nobodywho-godot-aarch64-apple-darwin-release.dylib
+-a----        01.06.2025     16:17       19951360 nobodywho-godot-x86_64-apple-darwin-debug.dylib
+-a----        01.06.2025     16:17       10280308 nobodywho-godot-x86_64-apple-darwin-release.dylib
+-a----        01.06.2025     16:17       34696704 nobodywho-godot-x86_64-pc-windows-msvc-debug.dll
+-a----        01.06.2025     16:17      112103424 nobodywho-godot-x86_64-pc-windows-msvc-debug.pdb
+-a----        01.06.2025     16:17       31098880 nobodywho-godot-x86_64-pc-windows-msvc-release.dll
+-a----        01.06.2025     16:17        5722112 nobodywho-godot-x86_64-pc-windows-msvc-release.pdb
+-a----        01.06.2025     16:17      143935136 nobodywho-godot-x86_64-unknown-linux-gnu-debug.so
+-a----        01.06.2025     16:17       23000640 nobodywho-godot-x86_64-unknown-linux-gnu-release.so
+-a----        01.06.2025     16:17           1110 nobodywho.gdextension
+-a----        01.06.2025     16:17             20 nobodywho.gdextension.uid
+
+
+    Directory: C:\Users\Percision 15\Universal_Being\ai_models\gamma
+
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+-a----        17.02.2025     12:47     1708582752 gemma-2-2b-it-Q4_K_M.gguf
+-a----        01.06.2025     15:58           1275 README.md
+
+
+    Directory: C:\Users\Percision 15\Universal_Being\akashic_library
+
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+-a----        03.06.2025     13:03           3905 ASSET_CREATION_RULES.md
+-a----        02.06.2025     17:32           4836 camera_consciousness_data.json
+-a----        03.06.2025     13:08           2440 create_asset.sh
+-a----        02.06.2025     17:32           3098 evolution_narratives.json
+-a----        01.06.2025     23:05           1464 pentagon_constellation_logo.svg
+-a----        04.06.2025     19:56            980 pentagon_constellation_logo.svg.import
+-a----        02.06.2025     00:51            734 ufo_icon.svg
+-a----        04.06.2025     20:14            924 ufo_icon.svg.import
+
+
+    Directory: C:\Users\Percision 15\Universal_Being\akashic_library\beings
+
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+-a----        04.06.2025     00:29             20 akashic_chunk_3d.gd.uid
+-a----        03.06.2025     12:46          20429 chatgpt_premium_bridge_universal_being.gd.backup
+-a----        03.06.2025     12:46           4289 claude_bridge_universal_being.gd.backup
+-a----        03.06.2025     12:46          20664 claude_desktop_mcp_universal_being.gd.backup
+-a----        03.06.2025     12:46          24672 conversational_console_being.gd.backup
+-a----        03.06.2025     13:08           4304 crystal_being.ub.zip
+-a----        03.06.2025     12:46          11344 GemmaUniversalBeing.gd.backup
+-a----        03.06.2025     12:46          23227 google_gemini_premium_bridge_universal_being.gd.backup
+-a----        03.06.2025     12:46           5704 PortalUniversalBeing.gd.backup
+-a----        03.06.2025     12:46           3841 TreeUniversalBeing.gd.backup
+-a----        03.06.2025     12:46          12101 ufo_universal_being.gd.backup
+-a----        03.06.2025     12:46           2339 universe_console_integration.gd.backup
+
+
+    Directory: C:\Users\Percision 15\Universal_Being\akashic_library\components
+
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+-a----        03.06.2025     12:46           9590 consciousness_aura_enhanced.gd.backup
+-a----        03.06.2025     12:46          11406 simple_camera_effects.gd.backup
+-a----        03.06.2025     12:46          12454 triple_helix_consciousness.gd.backup
+
+
+    Directory: C:\Users\Percision 15\Universal_Being\akashic_library\components\akashic_logger.ub.zip
+
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+-a----        03.06.2025     00:27            470 manifest.json
+
+
+    Directory: C:\Users\Percision 15\Universal_Being\akashic_library\components\basic_interaction.ub.zip
+
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+-a----        03.06.2025     12:46           7359 basic_interaction.gd.backup
+-a----        03.06.2025     00:26            694 manifest.json
+
+
+    Directory: C:\Users\Percision 15\Universal_Being\akashic_library\components\being_dna
+
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+-a----        03.06.2025     12:46           8777 dna_visualizer.gd.backup
+
+
+    Directory: C:\Users\Percision 15\Universal_Being\akashic_library\components\button_basic
+
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+-a----        02.06.2025     17:59           1375 file_list.json
+-a----        02.06.2025     17:57           1056 manifest.json
+
+
+    Directory: C:\Users\Percision 15\Universal_Being\akashic_library\components\camera_effects
+
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+-a----        02.06.2025     13:45           2781 manifest.json
+
+
+    Directory: C:\Users\Percision 15\Universal_Being\akashic_library\components\camera_effects\shaders
+
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+-a----        02.06.2025     16:39           2514 bloom_consciousness.gdshader
+-a----        02.06.2025     15:22             20 bloom_consciousness.gdshader.uid
+-a----        02.06.2025     16:39           2276 chromatic_aberration.gdshader
+-a----        02.06.2025     15:22             20 chromatic_aberration.gdshader.uid
+-a----        02.06.2025     16:40           5803 consciousness_pulse.gdshader
+-a----        02.06.2025     15:22             20 consciousness_pulse.gdshader.uid
+-a----        02.06.2025     13:32           2880 depth_of_field.gdshader
+-a----        02.06.2025     15:22             19 depth_of_field.gdshader.uid
+-a----        02.06.2025     16:40           3993 quantum_vision.gdshader
+-a----        02.06.2025     15:22             20 quantum_vision.gdshader.uid
+-a----        02.06.2025     16:39           2785 reality_distortion.gdshader
+-a----        02.06.2025     15:22             20 reality_distortion.gdshader.uid
+-a----        02.06.2025     16:39           1198 vignette_soft.gdshader
+-a----        02.06.2025     15:22             19 vignette_soft.gdshader.uid
+
+
+    Directory: C:\Users\Percision 15\Universal_Being\akashic_library\components\chunk_generator_basic
+
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+-a----        03.06.2025     13:25           1394 manifest.json
+-a----        03.06.2025     13:27           2870 README.md
+
+
+    Directory: C:\Users\Percision 15\Universal_Being\akashic_library\components\consciousness_resonator.ub.zip
+
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+-a----        03.06.2025     12:46           6461 consciousness_resonator.gd.backup
+-a----        03.06.2025     02:13            874 manifest.json
+
+
+    Directory: C:\Users\Percision 15\Universal_Being\akashic_library\components\console_notifications.ub.zip
+
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+-a----        03.06.2025     12:46           6097 console_notifications.gd.backup
+-a----        03.06.2025     01:40            854 manifest.json
+
+
+    Directory: C:\Users\Percision 15\Universal_Being\akashic_library\components\cosmic_insights.ub.zip
+
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+-a----        03.06.2025     16:05            327 manifest.json
+
+
+    Directory: C:\Users\Percision 15\Universal_Being\akashic_library\components\desktop_bridge.ub.zip
+
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+-a----        03.06.2025     16:05            327 manifest.json
+
+
+    Directory: C:\Users\Percision 15\Universal_Being\akashic_library\components\dimensional_sight.ub.zip
+
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+-a----        03.06.2025     16:05            334 manifest.json
+
+
+    Directory: C:\Users\Percision 15\Universal_Being\akashic_library\components\gemini_api.ub.zip
+
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+-a----        03.06.2025     16:05            306 manifest.json
+
+
+    Directory: C:\Users\Percision 15\Universal_Being\akashic_library\components\glow_effect.ub.zip
+
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+-a----        03.06.2025     12:46           6335 glow_effect.gd.backup
+-a----        03.06.2025     01:37            778 manifest.json
+
+
+    Directory: C:\Users\Percision 15\Universal_Being\akashic_library\components\mcp_client.ub.zip
+
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+-a----        03.06.2025     16:04            326 manifest.json
+
+
+    Directory: C:\Users\Percision 15\Universal_Being\akashic_library\components\multimodal_analyzer.ub.zip
+
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+-a----        03.06.2025     16:05            332 manifest.json
+
+
+    Directory: C:\Users\Percision 15\Universal_Being\akashic_library\components\reality_editor.ub.zip
+
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+-a----        03.06.2025     02:23            857 manifest.json
+-a----        03.06.2025     02:40           2984 README.md
+
+
+    Directory: C:\Users\Percision 15\Universal_Being\akashic_library\components\transform_animator.ub.zip
+
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+-a----        03.06.2025     01:41            903 manifest.json
+-a----        03.06.2025     12:46           2380 transform_animator.gd.backup
+
+
+    Directory: C:\Users\Percision 15\Universal_Being\akashic_library\components\universe_console
+
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+-a----        03.06.2025     12:46          14571 UniverseConsoleComponent.gd.backup
+
+
+    Directory: C:\Users\Percision 15\Universal_Being\akashic_library\components\universe_creation.ub.zip
+
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+-a----        02.06.2025     21:51           1833 manifest.json
+
+
+    Directory: C:\Users\Percision 15\Universal_Being\akashic_library\components\universe_genesis
+
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+-a----        03.06.2025     01:18           1199 manifest.json
+-a----        03.06.2025     01:27            373 package_info.txt
+-a----        03.06.2025     01:26           2855 README.md
+
+
+    Directory: C:\Users\Percision 15\Universal_Being\akashic_library\components\universe_lod.ub.zip
+
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+-a----        03.06.2025     15:45            326 manifest.json
+
+
+    Directory: C:\Users\Percision 15\Universal_Being\akashic_library\components\universe_physics.ub.zip
+
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+-a----        03.06.2025     15:45            321 manifest.json
+
+
+    Directory: C:\Users\Percision 15\Universal_Being\akashic_library\components\universe_time.ub.zip
+
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+-a----        03.06.2025     15:45            326 manifest.json
+
+
+    Directory: C:\Users\Percision 15\Universal_Being\akashic_library\development\libraries\actions
+
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+-a----        02.06.2025     18:48            766 README.md
+
+
+    Directory: C:\Users\Percision 15\Universal_Being\akashic_library\development\libraries\ai
+
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+-a----        02.06.2025     18:48            782 README.md
+
+
+    Directory: C:\Users\Percision 15\Universal_Being\akashic_library\development\libraries\assets\consciousness_icons
+
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+-a----        02.06.2025     18:46           2588 file_list.json
+-a----        02.06.2025     18:45           3089 manifest.json
+
+
+    Directory: C:\Users\Percision 15\Universal_Being\akashic_library\development\libraries\assets\consciousness_icons\i
+    cons
+
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+-a----        02.06.2025     18:47           2101 level_0.png
+-a----        04.06.2025     19:56            879 level_0.png.import
+-a----        02.06.2025     18:47           1532 level_1.png
+-a----        04.06.2025     19:56            879 level_1.png.import
+-a----        02.06.2025     18:47           1969 level_2.png
+-a----        04.06.2025     19:56            879 level_2.png.import
+-a----        02.06.2025     18:47           2267 level_3.png
+-a----        04.06.2025     19:56            879 level_3.png.import
+-a----        02.06.2025     18:47           1524 level_4.png
+-a----        04.06.2025     19:56            878 level_4.png.import
+-a----        02.06.2025     18:47           2217 level_5.png
+-a----        04.06.2025     19:56            879 level_5.png.import
+-a----        02.06.2025     18:47           1679 level_6.png
+-a----        04.06.2025     19:56            879 level_6.png.import
+-a----        02.06.2025     18:47           1987 level_7.png
+-a----        04.06.2025     19:56            878 level_7.png.import
+
+
+    Directory: C:\Users\Percision 15\Universal_Being\akashic_library\development\libraries\composites
+
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+-a----        02.06.2025     18:48            818 README.md
+
+
+    Directory: C:\Users\Percision 15\Universal_Being\akashic_library\development\libraries\interfaces
+
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+-a----        02.06.2025     18:48            790 README.md
+
+
+    Directory: C:\Users\Percision 15\Universal_Being\akashic_library\development\libraries\logics
+
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+-a----        02.06.2025     18:48            799 README.md
+
+
+    Directory: C:\Users\Percision 15\Universal_Being\akashic_library\effects
+
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+-a----        01.06.2025     23:57           1627 visual_effect_guide.md
+
+
+    Directory: C:\Users\Percision 15\Universal_Being\akashic_library\effects\shaders
+
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+-a----        02.06.2025     10:41           2016 ai_connection_beam.gdshader
+-a----        02.06.2025     10:42             20 ai_connection_beam.gdshader.uid
+-a----        02.06.2025     10:40           1354 consciousness_pulse.gdshader
+-a----        02.06.2025     10:42             20 consciousness_pulse.gdshader.uid
+-a----        02.06.2025     10:41           2070 marching_cubes_glow.gdshader
+-a----        02.06.2025     10:42             20 marching_cubes_glow.gdshader.uid
+-a----        05.06.2025     16:15           1961 plasmoid_being.gdshader
+-a----        05.06.2025     16:23             20 plasmoid_being.gdshader.uid
+
+
+    Directory: C:\Users\Percision 15\Universal_Being\akashic_library\example_crystal_being
+
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+-a----        03.06.2025     13:08           2804 documentation.md
+-a----        03.06.2025     13:06            994 manifest.json
+
+
+    Directory: C:\Users\Percision 15\Universal_Being\akashic_library\genesis_logs
+
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+-a----        04.06.2025     11:02           4941 compilation_errors_fixed_2025_06_04.json
+-a----        03.06.2025     23:03           2074 cursor_collision_fix_2025_06_03.json
+-a----        03.06.2025     23:16           1550 cursor_final_transcendence_2025_06_03.json
+-a----        03.06.2025     22:40           1784 cursor_transcendence_2025_06_03.json
+-a----        04.06.2025     00:15           2973 evolution_trinity_2025_06_04.json
+-a----        04.06.2025     16:46           3514 game_world_creation_2025_06_04.json
+-a----        04.06.2025     00:10           1736 genesis_command_console_2025_06_04.json
+-a----        03.06.2025     22:50           2191 inspector_bridge_unification_2025_06_03.json
+-a----        03.06.2025     23:45           1506 inspector_ui_clarity_2025_06_03.json
+-a----        04.06.2025     16:22           2973 interface_loading_system_2025_06_04.json
+-a----        04.06.2025     00:26           1823 movement_chunks_2025_06_04.json
+-a----        04.06.2025     17:00           4654 perfect_interface_system_2025_06_04.json
+-a----        04.06.2025     10:50           5069 recursive_creation_enhancement_2025_06_04.json
+-a----        03.06.2025     23:55           1773 universe_simulator_fix_2025_06_04.json
+
+
+    Directory: C:\Users\Percision 15\Universal_Being\akashic_library\icons
+
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+-a----        02.06.2025     15:03           2101 black_sphere.png
+-a----        04.06.2025     21:04           1085 black_sphere.png.import
+-a----        02.06.2025     15:03           1969 droplet.png
+-a----        04.06.2025     20:15            829 droplet.png.import
+-a----        02.06.2025     15:03           1679 fire.png
+-a----        04.06.2025     20:16            821 fire.png.import
+-a----        02.06.2025     15:03           1524 hexa_star.png
+-a----        04.06.2025     20:15            836 hexa_star.png.import
+-a----        02.06.2025     15:03           1987 infinity_symbol.png
+-a----        04.06.2025     22:31           1100 infinity_symbol.png.import
+-a----        02.06.2025     15:03           2267 plant.png
+-a----        04.06.2025     20:15            824 plant.png.import
+-a----        04.06.2025     20:45             51 README.md
+-a----        02.06.2025     15:03           1532 star.png
+-a----        04.06.2025     21:44           1045 star.png.import
+-a----        02.06.2025     15:03           2217 white_sphere.png
+-a----        04.06.2025     20:15            844 white_sphere.png.import
+
+
+    Directory: C:\Users\Percision 15\Universal_Being\akashic_library\interfaces
+
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+-a----        01.06.2025     18:38           5698 console_base.txt
+-a----        01.06.2025     18:38           1796 manifest.json
+
+
+    Directory: C:\Users\Percision 15\Universal_Being\akashic_library\materials\camera
+
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+-a----        02.06.2025     13:25            431 consciousness_level_1.tres
+-a----        02.06.2025     13:32            525 consciousness_level_3.tres
+-a----        02.06.2025     13:32            549 consciousness_level_4.tres
+-a----        02.06.2025     13:42            495 consciousness_level_5.tres
+-a----        02.06.2025     13:43            688 consciousness_level_6.tres
+-a----        02.06.2025     13:43            675 consciousness_level_7.tres
+
+
+    Directory: C:\Users\Percision 15\Universal_Being\akashic_library\sounds\Animals
+
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+-a----        04.06.2025     20:29       17314948 Animal Ambience Crickets Near A Stream 01.wav
+-a----        04.06.2025     20:40            611 Animal Ambience Crickets Near A Stream 01.wav.import
+-a----        04.06.2025     20:29       17313086 Animal Ambience Jungle Rain Forest Insects Creatures 01.wav
+-a----        04.06.2025     20:40            654 Animal Ambience Jungle Rain Forest Insects Creatures 01.wav.import
+-a----        04.06.2025     20:29       17311030 Animal Ambience Jungle Rain Forest Insects Creatures 02.wav
+-a----        04.06.2025     20:40            654 Animal Ambience Jungle Rain Forest Insects Creatures 02.wav.import
+-a----        04.06.2025     20:29       17315410 Animal Ambience Monkeys In Jungle 01.wav
+-a----        04.06.2025     20:40            597 Animal Ambience Monkeys In Jungle 01.wav.import
+-a----        04.06.2025     20:29         667676 Animal Animal Bray 02.wav
+-a----        04.06.2025     20:40            552 Animal Animal Bray 02.wav.import
+-a----        04.06.2025     20:29          98686 Animal Bird American Goldfinch Chirp 01.wav
+-a----        04.06.2025     20:40            606 Animal Bird American Goldfinch Chirp 01.wav.import
+-a----        04.06.2025     20:29         103806 Animal Bird American Goldfinch Chirp 02.wav
+-a----        04.06.2025     20:40            605 Animal Bird American Goldfinch Chirp 02.wav.import
+-a----        04.06.2025     20:29          34244 Animal Bird Black Necked Stilt Chirp 01.wav
+-a----        04.06.2025     20:40            606 Animal Bird Black Necked Stilt Chirp 01.wav.import
+-a----        04.06.2025     20:29          33576 Animal Bird Black Necked Stilt Chirp 02.wav
+-a----        04.06.2025     20:40            606 Animal Bird Black Necked Stilt Chirp 02.wav.import
+-a----        04.06.2025     20:29         132084 Animal Bird Brown Headed Cowbird Chirp 01.wav
+-a----        04.06.2025     20:40            612 Animal Bird Brown Headed Cowbird Chirp 01.wav.import
+
+# way more sounds files
+
+
+
+    Directory: C:\Users\Percision 15\Universal_Being\akashic_library\sounds\Crashes
+
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+-a----        04.06.2025     20:30        1028706 Crash Aluminum And Metal Rocking And Dropping On Concrete 01.wav
+-a----        04.06.2025     20:40            669 Crash Aluminum And Metal Rocking And Dropping On Concrete 01.wav.impo
+                                                  rt
+-a----        04.06.2025     20:30         371494 Crash Aluminum Baseball Bat Striking DVD Player 01.wav
+-a----        04.06.2025     20:40            639 Crash Aluminum Baseball Bat Striking DVD Player 01.wav.import
+-a----        04.06.2025     20:30         436738 Crash Aluminum Garbage Can Dropping On Pavement 01.wav
+-a----        04.06.2025     20:40            638 Crash Aluminum Garbage Can Dropping On Pavement 01.wav.import
+-a----        04.06.2025     20:30         351630 Crash Aluminum Garbage Can Dropping On Pavement 02.wav
+-a----        04.06.2025     20:40            638 Crash Aluminum Garbage Can Dropping On Pavement 02.wav.import
+-a----        04.06.2025     20:30         606748 Crash Aluminum Garbage Can Dropping On Pavement With Metal Slide 01.w
+                                                  av
+-a----        04.06.2025     20:40            690 Crash Aluminum Garbage Can Dropping On Pavement With Metal Slide 01.w
+
+# way more sounds here too
+
+
+    Directory: C:\Users\Percision 15\Universal_Being\akashic_library\sounds\Impacts
+
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+-a----        04.06.2025     20:30         220454 Impact Aluminum Baseball Bat Hitting VCR 01.wav
+-a----        04.06.2025     20:40            617 Impact Aluminum Baseball Bat Hitting VCR 01.wav.import
+-a----        04.06.2025     20:30         515716 Impact Aluminum Baseball Bat Hitting VCR Multiple 01.wav
+-a----        04.06.2025     20:40            645 Impact Aluminum Baseball Bat Hitting VCR Multiple 01.wav.import
+-a----        04.06.2025     20:30         282252 Impact Ax Hit Ceramic 01.wav
+-a----        04.06.2025     20:40            561 Impact Ax Hit Ceramic 01.wav.import
+-a----        04.06.2025     20:30         167658 Impact Ax Hit Glass Debris Beer Bottle 02.wav
+-a----        04.06.2025     20:40            612 Impact Ax Hit Glass Debris Beer Bottle 02.wav.import
+-a----        04.06.2025     20:30         220428 Impact Ax Hit Glass Debris Fine 01.wav
+-a----        04.06.2025     20:40            591 Impact Ax Hit Glass Debris Fine 01.wav.import
+-a----        04.06.2025     20:30         185216 Impact Ax Hit Glass Debris Fine 02.wav
+-a----        04.06.2025     20:40            591 Impact Ax Hit Glass Debris Fine 02.wav.import
+-a----        04.06.2025     20:30         253962 Impact Ax Smash Ceramic 01.wav
+-a----        04.06.2025     20:40            567 Impact Ax Smash Ceramic 01.wav.import
+-a----        04.06.2025     20:30         145514 Impact Bag Duffle Bag Drop Metal Surface 05.wav
+-a----        04.06.2025     20:40            618 Impact Bag Duffle Bag Drop Metal Surface 05.wav.import
+
+# way more sounds here too
+
+    Directory: C:\Users\Percision 15\Universal_Being\akashic_library\sounds\Science Fiction
+
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+-a----        04.06.2025     20:29          38274 LICENSE-FR.pdf
+-a----        04.06.2025     20:29          36062 LICENSE.pdf
+-a----        04.06.2025     20:29         707740 Science Fiction Sci-Fi Alien Breathe 03.wav
+-a----        04.06.2025     20:40            614 Science Fiction Sci-Fi Alien Breathe 03.wav.import
+-a----        04.06.2025     20:29        1403066 Science Fiction Sci-Fi Alien Growl 04.wav
+-a----        04.06.2025     20:40            608 Science Fiction Sci-Fi Alien Growl 04.wav.import
+-a----        04.06.2025     20:29        1052786 Science Fiction Sci-Fi Alien Growl 07.wav
+-a----        04.06.2025     20:40            608 Science Fiction Sci-Fi Alien Growl 07.wav.import
+-a----        04.06.2025     20:29         867252 Science Fiction Sci-Fi Alien Hiss 01.wav
+-a----        04.06.2025     20:40            605 Science Fiction Sci-Fi Alien Hiss 01.wav.import
+-a----        04.06.2025     20:29        1319640 Science Fiction Sci-Fi Alien Hiss 06.wav
+-a----        04.06.2025     20:40            605 Science Fiction Sci-Fi Alien Hiss 06.wav.import
+-a----        04.06.2025     20:29         478304 Science Fiction Sci-Fi Alien Hiss Through Tube 02.wav
+-a----        04.06.2025     20:40            644 Science Fiction Sci-Fi Alien Hiss Through Tube 02.wav.import
+-a----        04.06.2025     20:29         786324 Science Fiction Sci-Fi Alien Hiss Through Tube 03.wav
+-a----        04.06.2025     20:40            643 Science Fiction Sci-Fi Alien Hiss Through Tube 03.wav.import
+-a----        04.06.2025     20:29          51336 Science Fiction Sci-Fi Electronic  Clicking 153.wav
+-a----        04.06.2025     20:40            637 Science Fiction Sci-Fi Electronic  Clicking 153.wav.import
+-a----        04.06.2025     20:29         980482 Science Fiction Sci-Fi Electronic  Data Stream  258.wav
+
+# way more sounds here
+
+    Directory: C:\Users\Percision 15\Universal_Being\akashic_library\systems\debug
+
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+-a----        03.06.2025     19:27           1668 DEBUG_ARCHITECTURE.md
+
+
+    Directory: C:\Users\Percision 15\Universal_Being\akashic_library\textures
+
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+-a----        04.06.2025     22:17           1060 cursor_center.png
+-a----        04.06.2025     22:17           1093 cursor_center.png.import
+-a----        04.06.2025     20:17        2650629 dirt_dry.png
+-a----        04.06.2025     20:17            836 dirt_dry.png.import
+-a----        04.06.2025     20:17        2529056 dirt_wet.png
+-a----        04.06.2025     20:17            836 dirt_wet.png.import
+-a----        04.06.2025     20:17        3096812 grass_dead.png
+-a----        04.06.2025     20:17            841 grass_dead.png.import
+-a----        04.06.2025     20:17        2906266 grass_short.png
+-a----        04.06.2025     20:17            845 grass_short.png.import
+-a----        04.06.2025     20:17        2175202 grass_tall.png
+-a----        04.06.2025     20:17            842 grass_tall.png.import
+-a----        04.06.2025     20:17        2643095 rock_granite.png
+-a----        04.06.2025     20:17            848 rock_granite.png.import
+-a----        04.06.2025     20:17        2405929 rock_limestone.png
+-a----        04.06.2025     20:17            854 rock_limestone.png.import
+-a----        04.06.2025     20:17        1685672 rock_marble.png
+-a----        04.06.2025     20:17            845 rock_marble.png.import
+-a----        04.06.2025     20:17        2320773 sand_coarse.png
+-a----        04.06.2025     20:17            845 sand_coarse.png.import
+-a----        04.06.2025     20:17        2719510 sand_fine.png
+-a----        04.06.2025     20:17            838 sand_fine.png.import
+-a----        04.06.2025     20:17        2278346 sand_wet.png
+-a----        04.06.2025     20:17            836 sand_wet.png.import
+-a----        04.06.2025     20:17        2072329 stone_cracked.png
+-a----        04.06.2025     20:17            850 stone_cracked.png.import
+-a----        04.06.2025     20:17        2485021 stone_rough.png
+-a----        04.06.2025     20:17            845 stone_rough.png.import
+-a----        04.06.2025     20:17        1509427 stone_smooth.png
+-a----        04.06.2025     20:17            848 stone_smooth.png.import
+-a----        04.06.2025     21:26           8920 window_default.png
+-a----        04.06.2025     21:26           1098 window_default.png.import
+-a----        04.06.2025     20:17        2617811 wood_bark.png
+-a----        04.06.2025     20:17            839 wood_bark.png.import
+-a----        04.06.2025     20:17        2741803 wood_logs.png
+-a----        04.06.2025     20:17            839 wood_logs.png.import
+-a----        04.06.2025     20:17        1689458 wood_planks.png
+-a----        04.06.2025     20:17            845 wood_planks.png.import
+
+
+
+    Directory: C:\Users\Percision 15\Universal_Being\autoloads
+
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+-a----        02.06.2025     17:56          16339 akashic_loader.gd
+-a----        02.06.2025     15:43             20 akashic_loader.gd.uid
+-a----        06.06.2025     01:46          38682 GemmaAI.gd
+-a----        01.06.2025     16:15             20 GemmaAI.gd.uid
+-a----        05.06.2025     12:09          14607 SystemBootstrap.gd
+-a----        01.06.2025     16:30             20 SystemBootstrap.gd.uid
+
+
+    Directory: C:\Users\Percision 15\Universal_Being\beings
+
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+-a----        05.06.2025     23:12           7514 ConsciousnessRevolutionSpawner.gd
+-a----        05.06.2025     23:00             19 ConsciousnessRevolutionSpawner.gd.uid
+-a----        05.06.2025     23:24          19489 GemmaAICompanionPlasmoid.gd
+-a----        05.06.2025     22:18             20 GemmaAICompanionPlasmoid.gd.uid
+-a----        05.06.2025     23:42          12510 plasmoid_universal_being.gd
+-a----        05.06.2025     23:35             19 plasmoid_universal_being.gd.uid
+
+
+    Directory: C:\Users\Percision 15\Universal_Being\beings\plasmoid
+
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+-a----        05.06.2025     23:43            491 energy_burst.gd
+-a----        05.06.2025     23:44             20 energy_burst.gd.uid
+-a----        05.06.2025     23:43            309 energy_burst.tscn
+
+
+    Directory: C:\Users\Percision 15\Universal_Being\core
+
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+-a----        02.06.2025     21:45           1927 ActionComponent.gd
+-a----        02.06.2025     22:01             20 ActionComponent.gd.uid
+-a----        05.06.2025     12:09          21958 AkashicRecords.gd
+-a----        01.06.2025     16:15             20 AkashicRecords.gd.uid
+-a----        03.06.2025     10:43          57765 AkashicRecordsEnhanced.gd
+-a----        02.06.2025     21:25             20 AkashicRecordsEnhanced.gd.uid
+-a----        02.06.2025     21:23           5691 akashic_living_database.gd
+-a----        02.06.2025     21:25             20 akashic_living_database.gd.uid
+-a----        04.06.2025     12:24          14380 akashic_loader.gd
+-a----        04.06.2025     12:33             20 akashic_loader.gd.uid
+-a----        03.06.2025     14:09           9038 CameraUniversalBeing.gd
+-a----        01.06.2025     18:29             20 CameraUniversalBeing.gd.uid
+-a----        03.06.2025     11:07           2660 Component.gd
+-a----        02.06.2025     23:25             19 Component.gd.uid
+-a----        02.06.2025     17:18           2782 Connector.gd
+-a----        02.06.2025     18:21             20 Connector.gd.uid
+-a----        02.06.2025     20:17          34482 ConsoleUniversalBeing.gd
+-a----        01.06.2025     18:41             20 ConsoleUniversalBeing.gd.uid
+-a----        05.06.2025     08:43          12311 CursorUniversalBeing.gd
+-a----        01.06.2025     19:41             19 CursorUniversalBeing.gd.uid
+-a----        05.06.2025     12:09          22191 FloodGates.gd
+-a----        01.06.2025     16:15             19 FloodGates.gd.uid
+-a----        05.06.2025     20:27          14431 GameStateSocketManager.gd
+-a----        05.06.2025     14:48             20 GameStateSocketManager.gd.uid
+-a----        01.06.2025     22:47           4712 genesis_pattern.gd
+-a----        01.06.2025     23:41             20 genesis_pattern.gd.uid
+-a----        02.06.2025     19:27           4399 input_focus_manager.gd
+-a----        02.06.2025     19:36             19 input_focus_manager.gd.uid
+-a----        02.06.2025     19:27           7474 macro_system.gd
+-a----        02.06.2025     19:36             20 macro_system.gd.uid
+-a----        02.06.2025     21:45           1683 MemoryComponent.gd
+-a----        02.06.2025     22:01             19 MemoryComponent.gd.uid
+-a----        05.06.2025     08:29           3582 MemoryOptimizer.gd
+-a----        05.06.2025     08:37             20 MemoryOptimizer.gd.uid
+-a----        02.06.2025     19:36          10299 meta_game_testing_ground.gd
+-a----        02.06.2025     19:36             19 meta_game_testing_ground.gd.uid
+-a----        02.06.2025     17:18           1883 Pentagon.gd
+-a----        02.06.2025     18:21             20 Pentagon.gd.uid
+-a----        04.06.2025     02:16          11060 PentagonManager.gd
+-a----        04.06.2025     10:44             19 PentagonManager.gd.uid
+-a----        05.06.2025     10:06           3064 SimpleConsole.gd
+-a----        05.06.2025     10:21             20 SimpleConsole.gd.uid
+-a----        05.06.2025     23:41          73920 UniversalBeing.gd
+-a----        01.06.2025     16:15             20 UniversalBeing.gd.uid
+-a----        03.06.2025     01:04           5381 UniversalBeingControl.gd
+-a----        03.06.2025     00:59             19 UniversalBeingControl.gd.uid
+-a----        03.06.2025     15:53          22784 UniversalBeingDNA.gd
+-a----        03.06.2025     02:21             20 UniversalBeingDNA.gd.uid
+-a----        04.06.2025     11:11          14156 UniversalBeingInterface.gd
+-a----        04.06.2025     10:44             20 UniversalBeingInterface.gd.uid
+-a----        04.06.2025     12:13           7835 UniversalBeingSocket.gd
+-a----        03.06.2025     00:03             20 UniversalBeingSocket.gd.uid
+-a----        04.06.2025     12:14          12512 UniversalBeingSocketManager.gd
+-a----        03.06.2025     00:03             20 UniversalBeingSocketManager.gd.uid
+-a----        06.06.2025     01:04          14880 UniversalTimersSystem.gd
+-a----        06.06.2025     01:12             19 UniversalTimersSystem.gd.uid
+-a----        03.06.2025     13:58           5528 universal_being_base_enhanced.gd
+-a----        03.06.2025     14:17             20 universal_being_base_enhanced.gd.uid
+-a----        02.06.2025     20:26              1 universal_being_template.gd
+-a----        02.06.2025     20:26             19 universal_being_template.gd.uid
+-a----        02.06.2025     17:54           9198 ZipPackageManager.gd
+-a----        02.06.2025     18:21             20 ZipPackageManager.gd.uid
+
+
+    Directory: C:\Users\Percision 15\Universal_Being\core\command_system
+
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+-a----        04.06.2025     12:23           5649 LiveCodeEditor.gd
+-a----        04.06.2025     12:33             20 LiveCodeEditor.gd.uid
+-a----        04.06.2025     12:23           7991 MacroSystem.gd
+-a----        04.06.2025     12:33             20 MacroSystem.gd.uid
+-a----        04.06.2025     12:23          11799 UniversalCommandProcessor.gd
+-a----        04.06.2025     12:33             20 UniversalCommandProcessor.gd.uid
+-a----        05.06.2025     10:02          12234 UniversalConsole.gd
+-a----        04.06.2025     12:33             20 UniversalConsole.gd.uid
+
+
+    Directory: C:\Users\Percision 15\Universal_Being\docs
+
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+-a----        05.06.2025     12:50            129 CLEANUP_REPORT.md
+-a----        05.06.2025     22:52           7882 CONSCIOUSNESS_PLAYER_GUIDE.md
+-a----        06.06.2025     01:01           7160 CONSCIOUSNESS_REVOLUTION_PLAYER_GUIDE.md
+-a----        05.06.2025     12:50          20015 PENTAGON_VALIDATION_REPORT.md
+-a----        04.06.2025     19:44           1170 QUICK_START.md
+-a----        03.06.2025     10:08           4140 README.md
+-a----        05.06.2025     22:56          10549 REVOLUTION_SHOWCASE_SCRIPT.md
+-a----        05.06.2025     22:54           9134 TELEPATHIC_COMMUNICATION_PROTOCOL.md
+-a----        06.06.2025     01:11           7852 UNIVERSAL_TIMERS_GUIDE.md
+
+
+    Directory: C:\Users\Percision 15\Universal_Being\docs\ai_context
+
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+-a----        04.06.2025     16:23          30296 ACTIVE_WORK_SESSION.md
+-a----        04.06.2025     00:37           1604 error_fixes_2025_06_04.md
+-a----        04.06.2025     10:21           2566 GEMMA_UNIVERSE_INJECTION_COMPLETE.md
+-a----        04.06.2025     13:31           6026 INTERFACE_NAVIGATION.md
+-a----        03.06.2025     02:14         225000 Interruptor_0.md
+-a----        03.06.2025     02:29         170845 interruptor_1.md
+-a----        03.06.2025     01:10           2683 layer_system_summary.md
+
+
+    Directory: C:\Users\Percision 15\Universal_Being\docs\ai_insights
+
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+-a----        02.06.2025     18:13           5517 CLAUDE_DESKTOP_FOLLOWUP.md
+-a----        02.06.2025     17:55           6727 CLAUDE_DESKTOP_insights.md
+-a----        02.06.2025     18:00          10362 GEMINI_insights.md
+
+
+    Directory: C:\Users\Percision 15\Universal_Being\docs\akashic_library
+
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+-a----        03.06.2025     14:31           2337 2025-06-03_reserved_keywords_purge.md
+-a----        03.06.2025     14:42           2822 2025-06-03_runtime_awakening.md
+-a----        03.06.2025     14:14           2339 2025-06-03_syntax_healing.md
+
+
+    Directory: C:\Users\Percision 15\Universal_Being\docs\akashic_records\genesis_logs
+
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+-a----        03.06.2025     19:03           2492 debug_system_birth.md
+
+
+    Directory: C:\Users\Percision 15\Universal_Being\docs\archive
+
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+-a----        02.06.2025     01:04           1330 ACTION_CHECKLIST.md
+-a----        01.06.2025     23:57           1413 ai_coordination_prompt.md
+-a----        02.06.2025     17:53           7400 AI_DEVELOPMENT_RAILS.md
+-a----        01.06.2025     22:41           3366 AI_SYNC_MANIFEST.md
+-a----        02.06.2025     00:07           5107 AI_TASKS_V2.md
+-a----        04.06.2025     00:54           2128 chunk_system_merge.md
+-a----        04.06.2025     00:26            531 chunk_system_note.md
+-a----        04.06.2025     22:27            147 CLAUDE.local.md
+-a----        04.06.2025     16:33           5280 CLAUDE_CODE_CONTINUITY_PROMPT.md
+-a----        02.06.2025     00:02            852 CLAUDE_CODE_FIXES.md
+-a----        04.06.2025     01:08           5796 COMPLETE_FILE_MAP.md
+-a----        02.06.2025     00:21           1536 constellation_complete.md
+-a----        02.06.2025     00:35            899 cursor_icons_quick.md
+-a----        02.06.2025     00:26           1577 cursor_integration.md
+-a----        02.06.2025     19:02           6442 CURSOR_NEXT_OBJECTIVES.md
+-a----        02.06.2025     00:26           2919 cursor_next_tasks.md
+-a----        02.06.2025     00:26            854 cursor_quick.md
+-a----        02.06.2025     19:19           6550 CURSOR_RULES.md
+-a----        02.06.2025     01:03           2024 CURSOR_TASKS.md
+-a----        03.06.2025     17:45         112707 ERROR_TRIAGE_LOG.md
+-a----        03.06.2025     20:21          12582 ERROR_TRIAGE_LOG_CONTINUED.md
+-a----        03.06.2025     21:35           6654 ERROR_TRIAGE_LOG_NEW.md
+-a----        04.06.2025     02:03           2319 EVOLUTION_DIAGNOSTIC_REPORT.md
+-a----        04.06.2025     01:31           4615 EVOLUTION_PLAN.md
+-a----        02.06.2025     01:08           4388 FILE_SYNC_CHECKLIST.md
+-a----        02.06.2025     00:30            888 FIX_NOW.md
+-a----        02.06.2025     17:53           8296 GAME_CREATION_RAILS.md
+-a----        02.06.2025     01:07           5721 GEMINI_TASKS.md
+-a----        04.06.2025     10:58           1738 GEMMA_ERROR_FIXES.md
+-a----        04.06.2025     11:26            947 GEMMA_FINAL_FIX.md
+-a----        04.06.2025     11:13           1568 GEMMA_FIXES_ROUND2.md
+-a----        04.06.2025     11:24           1319 GEMMA_FIXES_ROUND3.md
+-a----        02.06.2025     20:21           1773 GENESIS_CONDUCTOR_FIX.md
+-a----        25.05.2025     14:22           4915 GODOT_CLASSES_OVERVIEW.md
+-a----        02.06.2025     00:14           3378 IMMEDIATE_TASKS_NOW.md
+-a----        03.06.2025     23:44           1366 inspector_ui_improvements.md
+-a----        03.06.2025     13:35           6560 INTEGRATION_SUMMARY.md
+-a----        02.06.2025     01:04           1033 LUMINUS_ASSET_REQUEST.md
+-a----        02.06.2025     01:06           5699 LUMINUS_TASKS.md
+-a----        02.06.2025     00:33           1113 luno_optimization_quick.md
+-a----        05.06.2025     12:09           1351 MANIFEST.md
+-a----        02.06.2025     01:02           3211 marching_cubes_integration.md
+-a----        02.06.2025     00:19           1688 marching_cubes_quick.md
+-a----        02.06.2025     00:19            900 marching_cubes_tasks.md
+-a----        04.06.2025     03:17           5849 MASTER_TODO_LIST.md
+-a----        02.06.2025     18:17            965 NEXT_SESSION_QUICKSTART.md
+-a----        02.06.2025     00:26           2200 NOW_TASKS.md
+-a----        02.06.2025     00:36            979 parallel_tasks.md
+-a----        02.06.2025     00:48           1371 PARSE_ERRORS_FIXED_V2.md
+-a----        02.06.2025     00:30           1410 PARSE_FIXES_NOW.md
+-a----        01.06.2025     22:17           9431 PENTAGON_OF_CREATION_COMPLETE.md
+-a----        02.06.2025     20:39           2141 QUICK_IMPROVEMENTS.md
+-a----        02.06.2025     01:04           1017 QUICK_SYNC.md
+-a----        02.06.2025     00:07           1637 QUICK_TASKS.md
+-a----        02.06.2025     00:54           2332 README_UFO_PIPELINE.md
+-a----        02.06.2025     00:33            718 ready_features.md
+-a----        02.06.2025     19:03           5420 READY_FOR_GEMMA_TESTING.md
+-a----        02.06.2025     00:43            886 READY_TO_LAUNCH.md
+-a----        04.06.2025     10:31           4338 SESSION_CHECKPOINT_2025_06_04.md
+-a----        01.06.2025     23:10           2560 SESSION_HANDOFF_2025_06_01.md
+-a----        02.06.2025     18:11           6391 SESSION_HANDOFF_2025_06_02.md
+-a----        02.06.2025     01:05           4852 SESSION_MEMORY.md
+-a----        02.06.2025     20:38           6018 SYSTEMBOOTSTRAP_ENHANCEMENTS.md
+-a----        02.06.2025     00:56           1707 SYSTEM_TIMING_FIX.md
+-a----        02.06.2025     00:07           1066 TASKS_GEMINI_RESEARCH.md
+-a----        02.06.2025     20:18           1807 THE_FIRST_TREE.md
+-a----        01.06.2025     16:12           3707 TODAYS_ACHIEVEMENTS.md
+-a----        01.06.2025     22:44           5297 UB_ZIP_SPECIFICATION.md
+-a----        04.06.2025     17:24           4434 UNIVERSE_RULES_EDITOR_COMPLETE.md
+-a----        02.06.2025     00:01            921 URGENT_FIXES.md
+-a----        02.06.2025     00:43           1137 what_we_built.md
+-a----        02.06.2025     21:46           4077 WORDS_OF_POWER.md
+
+
+    Directory: C:\Users\Percision 15\Universal_Being\docs\guides
+
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+-a----        02.06.2025     00:35           2127 cursor_icon_guide.md
+-a----        01.06.2025     21:07           2844 CURSOR_QUICK_REFERENCE.md
+-a----        01.06.2025     22:48           5114 CURSOR_VISUAL_IMPLEMENTATION_GUIDE.md
+-a----        27.05.2025     22:28           3605 CUSTOM_TUTORIAL_3D_WORDS.md
+-a----        27.05.2025     22:29           6085 CUSTOM_TUTORIAL_RAGDOLL_PHYSICS.md
+-a----        27.05.2025     22:30           6088 ETHEREAL_ENGINE_LEARNING_PATH.md
+-a----        04.06.2025     03:16           4459 GEMMA_AI_GUIDE.md
+-a----        04.06.2025     10:46           3596 GEMMA_INTEGRATION_GUIDE.md
+-a----        04.06.2025     10:20           3249 GEMMA_UNIVERSE_INJECTION_GUIDE.md
+-a----        02.06.2025     00:32           2486 luno_optimization_guide.md
+-a----        27.05.2025     22:31           4102 QUICK_CLASS_REFERENCE.md
+-a----        04.06.2025     10:32           4802 QUICK_RECOVERY_GUIDE.md
+-a----        03.06.2025     21:52          11131 UNIVERSAL_BEING_NAMING_CONVENTIONS.md
+
+
+    Directory: C:\Users\Percision 15\Universal_Being\docs\integration
+
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+-a----        04.06.2025     12:24           7451 akashic_architecture_diagram.md
+-a----        04.06.2025     12:24           5483 akashic_loader_notes.md
+-a----        04.06.2025     12:24           3802 akashic_quick_start.md
+-a----        04.06.2025     12:24           1512 akashic_summary.md
+-a----        04.06.2025     12:24           3144 COMMAND_SYSTEM_INTEGRATION.md
+-a----        04.06.2025     12:24           3651 INTEGRATION_COMPLETE.md
+-a----        04.06.2025     12:24           6689 UNIVERSAL_COMMAND_SYSTEM.md
+-a----        04.06.2025     12:24           1591 UNIVERSE_CREATED.md
+
+
+    Directory: C:\Users\Percision 15\Universal_Being\docs\jsh\claude_code_logs
+
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+-a----        05.06.2025     15:08          89566 5th_0.txt
+-a----        05.06.2025     15:10         377669 5th_1.txt
+-a----        05.06.2025     21:18         227148 5th_2.txt
+-a----        05.06.2025     21:14         131041 5th_3.txt
+-a----        05.06.2025     21:32          18905 5th_4.txt
+
+
+    Directory: C:\Users\Percision 15\Universal_Being\docs\jsh\claude_code_logs\5th_Claude_Haiku_3dot5
+
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+-a----        05.06.2025     21:50            446 human_prompt.txt
+-a----        05.06.2025     21:50           1003 message_part_0.txt
+-a----        05.06.2025     21:50           1301 message_part_1.txt
+
+
+    Directory: C:\Users\Percision 15\Universal_Being\docs\jsh\claude_code_logs\5th_Claude_Opus_3
+
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+-a----        05.06.2025     21:52            446 human_prompt.txt
+-a----        05.06.2025     21:53           1645 message_part_0.txt
+-a----        05.06.2025     21:53           1948 message_part_1.txt
+
+
+    Directory: C:\Users\Percision 15\Universal_Being\docs\jsh\claude_code_logs\5th_Claude_Opus_4
+
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+-a----        05.06.2025     21:41           1241 message_part_0.txt
+-a----        05.06.2025     21:41            279 message_part_1.txt
+-a----        05.06.2025     21:41            342 message_part_2.txt
+-a----        05.06.2025     21:42            340 message_part_3.txt
+-a----        05.06.2025     21:42            272 message_part_4.txt
+-a----        05.06.2025     21:42           1075 message_part_5.txt
+-a----        05.06.2025     21:42            446 prompt_of_human.txt
+-a----        05.06.2025     21:41           1997 thoughts.txt
+
+
+    Directory: C:\Users\Percision 15\Universal_Being\docs\jsh\claude_code_logs\5th_Claude_Sonnet_4
+
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+-a----        05.06.2025     21:44            650 message_part_0.txt
+-a----        05.06.2025     21:44            333 message_part_1.txt
+-a----        05.06.2025     21:44            984 message_part_2.txt
+-a----        05.06.2025     21:45            196 message_part_3.txt
+-a----        05.06.2025     21:45           1295 message_part_4.txt
+-a----        05.06.2025     21:44            446 prompt_from_human.txt
+-a----        05.06.2025     21:44           2941 thoughts.txt
+
+
+    Directory: C:\Users\Percision 15\Universal_Being\docs\jsh\claude_code_logs\Claude_Sonnet_3dot7
+
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+-a----        05.06.2025     21:47            446 human_prompt.txt
+-a----        05.06.2025     21:47           4636 message.txt
+-a----        05.06.2025     21:47           3940 thoughts.txt
+
+
+    Directory: C:\Users\Percision 15\Universal_Being\docs\jsh\claude_code_logs\thre_plasmoid_files
+
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+-a----        05.06.2025     21:37           6781 ai_companion_plasmoid.gd
+-a----        05.06.2025     22:18             20 ai_companion_plasmoid.gd.uid
+-a----        05.06.2025     21:36           2014 plasmoid_being.gdshader
+-a----        05.06.2025     22:18             20 plasmoid_being.gdshader.uid
+
+
+    Directory: C:\Users\Percision 15\Universal_Being\docs\mystical
+
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+-a----        04.06.2025     11:34           3970 ENLIGHTENED_BEINGS_ARCHITECTURE.md
+
+
+    Directory: C:\Users\Percision 15\Universal_Being\docs\reports
+
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+-a----        01.06.2025     23:06           1787 AI_COLLABORATION_STATUS.md
+-a----        01.06.2025     16:30           2970 BOOTSTRAP_STATUS.md
+-a----        02.06.2025     12:10           2123 claude_desktop_analysis_prompt.md
+-a----        02.06.2025     01:05           1116 CLAUDE_SYNC_STATUS.md
+-a----        01.06.2025     16:35           3666 CLEAN_FOUNDATION_STATUS.md
+-a----        01.06.2025     16:25           3254 FIXED_ISSUES_STATUS.md
+-a----        02.06.2025     00:08           1527 gemini_research_summary.md
+-a----        02.06.2025     00:33            893 LAUNCH_STATUS.md
+-a----        02.06.2025     19:17           9213 PROJECT_ARCHITECTURE.md
+-a----        02.06.2025     00:15           1160 PROJECT_STATUS.md
+-a----        01.06.2025     18:43           7743 PROJECT_STATUS_2025_06_01.md
+-a----        01.06.2025     16:12          10002 PROJECT_STATUS_COMPREHENSIVE.md
+-a----        02.06.2025     12:10            521 quick_analysis_prompt.md
+-a----        01.06.2025     16:44           1811 QUICK_FIX_STATUS.md
+-a----        02.06.2025     00:41           1558 STATUS_COMPLETE.md
+-a----        02.06.2025     00:02           1219 STATUS_UPDATE.md
+-a----        03.06.2025     00:36           6757 UNIVERSAL_BEING_STATUS_2025_06_02.md
+
+
+    Directory: C:\Users\Percision 15\Universal_Being\docs\testing_reports
+
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+-a----        03.06.2025     14:55           2718 2025-06-03_runtime_fixes.md
+
+
+    Directory: C:\Users\Percision 15\Universal_Being\docs\vision
+
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+-a----        03.06.2025     13:09           2069 ASSET_SYSTEM_SUCCESS.md
+-a----        02.06.2025     01:03           5079 MASTER_SYNC_PLAN.md
+-a----        03.06.2025     12:56           1131 PENTAGON_ARCHITECTURE_SUCCESS.md
+-a----        02.06.2025     01:05           4822 PROJECT_COORDINATION_PLAN.md
+-a----        03.06.2025     12:56            983 SPRINT_TO_FINISH.md
+-a----        03.06.2025     12:55            997 TUESDAY_12_52_PROGRESS.md
+-a----        04.06.2025     00:44           4971 Wishes_Whims_Praises.md
+
+
+    Directory: C:\Users\Percision 15\Universal_Being\docs\vision_analysis
+
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+-a----        01.06.2025     21:22           1721 README.md
+-a----        01.06.2025     21:35           3752 vision_2025-06-01_21-19_terminal_ui_bootup.md
+-a----        01.06.2025     22:42           1113 vision_template.md
+
+
+    Directory: C:\Users\Percision 15\Universal_Being\scenes
+
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+-a----        01.06.2025     23:57            443 awakening_white.tscn
+-a----        03.06.2025     20:55            585 awakening_white_fixed.tscn
+-a----        01.06.2025     23:57            437 aware_blue.tscn
+-a----        01.06.2025     23:58            437 beyond_red.tscn
+-a----        05.06.2025     09:55            702 button_basic.tscn
+-a----        02.06.2025     13:25            885 camera_consciousness_post_process.tscn
+-a----        05.06.2025     12:55            442 camera_point.tscn
+-a----        04.06.2025     23:03           2280 CLEAN_MOVEMENT_TEST.tscn
+-a----        04.06.2025     22:40           7324 COMPLETE_UNIVERSAL_BEING_GAME.tscn
+-a----        05.06.2025     09:55           2618 consciousness_icon.tscn
+-a----        01.06.2025     23:57            444 conscious_green.tscn
+-a----        05.06.2025     09:55           1273 console_text_layer.tscn
+-a----        05.06.2025     09:54           1526 debug_overlay.tscn
+-a----        05.06.2025     09:55           1042 dna_visualizer.tscn
+-a----        01.06.2025     23:57            445 dormant_gray.tscn
+-a----        01.06.2025     23:53            511 dormant_gray_template.tscn
+-a----        01.06.2025     23:58            445 enlightened_gold.tscn
+-a----        01.06.2025     23:58            443 evolution_flash.tscn
+-a----        05.06.2025     18:24            300 generation_coordinator.tscn
+-a----        01.06.2025     23:58            522 genesis_evolution.tscn
+-a----        05.06.2025     16:24          16843 HUMAN_AI_PLASMOID_PARADISE.tscn
+-a----        05.06.2025     01:27          13262 INFINITE_TERRAIN_GAME.tscn
+-a----        04.06.2025     19:01           1212 main_CLEAN.tscn
+-a----        04.06.2025     19:06            214 main_OLD_BACKUP.tscn
+-a----        04.06.2025     23:32           2726 map_chunk_world.tscn
+-a----        04.06.2025     23:55           7622 MATRIX_INFINITE_CHUNKS.tscn
+-a----        04.06.2025     19:58           2061 PERFECT_GAME.tscn
+-a----        06.06.2025     01:28          18999 PERFECT_ULTIMATE_UNIVERSAL_BEING.tscn
+-a----        05.06.2025     18:24           1200 performance_monitor_ui.tscn
+-a----        04.06.2025     23:02           1695 PLASMOID_MOVEMENT_TEST.tscn
+-a----        04.06.2025     22:00           3600 playable_world.tscn
+-a----        04.06.2025     23:32           5268 SAFE_MAP_CHUNK_WORLD.tscn
+-a----        04.06.2025     19:58            890 SIMPLE.tscn
+-a----        04.06.2025     22:51           1027 SIMPLE_GAME.tscn
+-a----        05.06.2025     12:53           1917 SIMPLE_MOVEMENT_TEST.tscn
+-a----        05.06.2025     00:38          20765 SPACE_GAME_ULTIMATE.tscn
+-a----        05.06.2025     01:02          19249 SPACE_GAME_ULTIMATE_V2.tscn
+-a----        04.06.2025     22:57           1544 TEST_MOVEMENT.tscn
+-a----        04.06.2025     22:40           1822 test_playable_world.tscn
+-a----        05.06.2025     00:05           7535 ULTIMATE_UNIVERSAL_BEING.tscn
+-a----        04.06.2025     23:39           4761 ULTRA_FAST_CHUNKS.tscn
+-a----        04.06.2025     19:58           4522 universe_portal.tscn
+-a----        04.06.2025     19:52           2659 universe_template.tscn
+
+
+    Directory: C:\Users\Percision 15\Universal_Being\scenes\console
+
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+-a----        02.06.2025     23:29           3997 creation_console.tscn
+-a----        05.06.2025     19:32           5113 universal_console_animated.tscn
+
+
+    Directory: C:\Users\Percision 15\Universal_Being\scenes\examples
+
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+-a----        01.06.2025     18:29            583 test_scene.tscn
+-a----        03.06.2025     23:02           1127 test_scene_with_collision.tscn
+
+
+    Directory: C:\Users\Percision 15\Universal_Being\scenes\game
+
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+-a----        04.06.2025     16:39           2548 universal_being_world.tscn
+
+
+    Directory: C:\Users\Percision 15\Universal_Being\scenes\main
+
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+-a----        04.06.2025     21:52            912 button_rectangle.tscn
+-a----        04.06.2025     21:20            903 button_square.tscn
+-a----        04.06.2025     21:21            908 button_square_with_sockets.tscn
+-a----        05.06.2025     08:29            442 camera_point.tscn
+-a----        05.06.2025     10:37             89 console_window.tscn
+-a----        04.06.2025     22:40           1113 cursor_player.tscn
+-a----        04.06.2025     21:58           1771 generator_projector.tscn
+-a----        04.06.2025     21:10            559 icon.tscn
+-a----        04.06.2025     22:31           6359 interface_window.tscn
+-a----        04.06.2025     22:39            314 Logic_Connector.tscn
+-a----        05.06.2025     16:06           2839 plasmoid.tscn
+-a----        04.06.2025     22:25           1016 player_crosshair.tscn
+-a----        04.06.2025     20:04             86 text_bracet.tscn
+-a----        04.06.2025     21:42            153 text_line.tscn
+-a----        04.06.2025     20:06             86 text_window.tscn
+-a----        05.06.2025     10:06            326 universal_being.tscn
+
+
+    Directory: C:\Users\Percision 15\Universal_Being\scenes\not_working
+
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+-a----        01.06.2025     23:58            446 transcendent_glow.tscn
+-a----        04.06.2025     19:01           1470 WORKING_GAME.tscn
+
+
+    Directory: C:\Users\Percision 15\Universal_Being\scenes\templates
+
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+-a----        01.06.2025     22:57           1194 ai_collaboration_panel.tscn
+-a----        01.06.2025     23:00           1245 ai_pentagon_constellation.tscn
+-a----        01.06.2025     22:52           1042 button_template.tscn
+
+
+    Directory: C:\Users\Percision 15\Universal_Being\scenes\test
+
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+-a----        05.06.2025     16:24           2794 bright_movement_test.tscn
+-a----        05.06.2025     09:45            277 camera_effects_test.tscn
+-a----        05.06.2025     09:45            620 debug_system_test.tscn
+-a----        05.06.2025     23:22            319 direct_revolution_test.tscn
+-a----        05.06.2025     09:51            195 gemma_integration_status.tscn
+-a----        04.06.2025     10:44            214 main_clean.tscn
+-a----        04.06.2025     10:44           2270 main_old.tscn
+-a----        05.06.2025     16:22           2634 movement_test_with_camera.tscn
+-a----        05.06.2025     23:21            383 revolution_monitor_test.tscn
+-a----        05.06.2025     09:51            198 run_gemma_integration_test.tscn
+-a----        05.06.2025     09:49            213 run_path_fixes.tscn
+-a----        05.06.2025     09:47            206 run_visual_test.tscn
+-a----        05.06.2025     23:26            331 scene_inspector_test.tscn
+-a----        05.06.2025     16:10            415 script_test.tscn
+-a----        05.06.2025     16:22           2559 simple_movement_test.tscn
+-a----        05.06.2025     23:26            340 simple_revolution_test.tscn
+-a----        05.06.2025     16:18            637 simple_wasd_test.tscn
+-a----        05.06.2025     09:48            198 test_chunk_system_simple.tscn
+-a----        02.06.2025     15:24            263 test_consciousness_icons.tscn
+-a----        05.06.2025     09:50            227 test_enhanced_health.tscn
+-a----        05.06.2025     09:50            236 test_evolution_diagnostic.tscn
+-a----        05.06.2025     09:48            180 test_foundation_status.tscn
+-a----        05.06.2025     09:48            258 test_gemma.tscn
+-a----        05.06.2025     09:49            264 test_gemma_full_integration.tscn
+-a----        05.06.2025     09:48            182 test_gemma_systems.tscn
+-a----        05.06.2025     09:48            591 test_gemma_universe_injection.tscn
+-a----        05.06.2025     09:47            729 test_interaction_environment.tscn
+-a----        05.06.2025     09:49            189 test_mover_system.tscn
+-a----        05.06.2025     23:19            389 test_revolution.tscn
+-a----        05.06.2025     09:51            217 test_system_health.tscn
+-a----        05.06.2025     16:23           2336 working_movement_test.tscn
+
+
+    Directory: C:\Users\Percision 15\Universal_Being\scenes\ui
+
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+-a----        05.06.2025     09:54           5233 reality_editor.tscn
+-a----        05.06.2025     09:54          11266 UniverseSimulator.tscn
+
+
+    Directory: C:\Users\Percision 15\Universal_Being\scenes\ui\camera_consciousness_overlay
+
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+-a----        05.06.2025     09:54           1943 consciousness_meter.tscn
+-a----        05.06.2025     09:53           5017 effect_sliders.tscn
+-a----        05.06.2025     09:53           2701 info_panel.tscn
+-a----        04.06.2025     19:50           1855 overlay_container.tscn
+
+
+    Directory: C:\Users\Percision 15\Universal_Being\scenes\universe
+
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+-a----        03.06.2025     20:57            834 universe_template.tscn
+
+
+    Directory: C:\Users\Percision 15\Universal_Being\scripts
+
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+-a----        03.06.2025     11:09           1905 add_butterfly_command.gd
+-a----        04.06.2025     19:48             20 add_butterfly_command.gd.uid
+-a----        02.06.2025     00:59          10686 advanced_ufo_generator.gd
+-a----        02.06.2025     01:08             19 advanced_ufo_generator.gd.uid
+-a----        02.06.2025     00:47          12446 advanced_visualization_optimizer.gd
+-a----        02.06.2025     00:13             19 advanced_visualization_optimizer.gd.uid
+-a----        03.06.2025     22:23          15371 AICollaborationHub.gd
+-a----        03.06.2025     02:21             20 AICollaborationHub.gd.uid
+-a----        02.06.2025     22:07           8291 ai_natural_language_console.gd
+-a----        04.06.2025     19:48             20 ai_natural_language_console.gd.uid
+-a----        01.06.2025     23:02          10261 ai_pentagon_network.gd
+-a----        01.06.2025     23:41             20 ai_pentagon_network.gd.uid
+-a----        06.06.2025     01:28           6527 AkashicLibrary.gd
+-a----        02.06.2025     22:39             19 AkashicLibrary.gd.uid
+-a----        03.06.2025     11:10           1668 akashic_additions.gd
+-a----        04.06.2025     19:48             20 akashic_additions.gd.uid
+-a----        04.06.2025     00:54           4695 akashic_chunk_manager.gd
+-a----        04.06.2025     00:29             20 akashic_chunk_manager.gd.uid
+-a----        02.06.2025     20:54          21093 akashic_compact_system.gd
+-a----        02.06.2025     19:55             20 akashic_compact_system.gd.uid
+-a----        02.06.2025     23:45           1715 akashic_logger.gd
+-a----        02.06.2025     23:46             19 akashic_logger.gd.uid
+-a----        03.06.2025     13:32           7244 akashic_spatial_db.gd
+-a----        03.06.2025     14:17             20 akashic_spatial_db.gd.uid
+-a----        03.06.2025     21:49          20205 archaeological_scanner.gd
+-a----        03.06.2025     21:59             20 archaeological_scanner.gd.uid
+-a----        03.06.2025     13:04           9073 asset_checker.gd
+-a----        03.06.2025     13:11             20 asset_checker.gd.uid
+-a----        01.06.2025     21:44           8292 auto_startup_universal_being.gd
+-a----        01.06.2025     21:46             20 auto_startup_universal_being.gd.uid
+-a----        03.06.2025     22:23           7382 basic_interaction.gd
+-a----        03.06.2025     00:27             20 basic_interaction.gd.uid
+-a----        02.06.2025     18:28             76 basic_test.gd
+-a----        04.06.2025     19:48             20 basic_test.gd.uid
+-a----        03.06.2025     14:38          11282 BeingDNAComponent.gd
+-a----        03.06.2025     02:31             20 BeingDNAComponent.gd.uid
+-a----        03.06.2025     12:45           3472 ButterflyUniversalBeing.gd
+-a----        02.06.2025     21:18             20 ButterflyUniversalBeing.gd.uid
+-a----        04.06.2025     21:17           3688 button_3d_universal_being.gd
+-a----        04.06.2025     21:18             19 button_3d_universal_being.gd.uid
+-a----        03.06.2025     02:25           6394 button_basic.gd
+-a----        02.06.2025     18:21             20 button_basic.gd.uid
+-a----        02.06.2025     00:32           5687 button_universal_being.gd
+-a----        01.06.2025     23:41             20 button_universal_being.gd.uid
+-a----        02.06.2025     15:56          11081 camera_effects_component.gd
+-a----        02.06.2025     15:22             19 camera_effects_component.gd.uid
+-a----        03.06.2025     02:25           4531 camera_effects_test.gd
+-a----        04.06.2025     19:48             20 camera_effects_test.gd.uid
+-a----        03.06.2025     12:46          20530 chatgpt_premium_bridge_universal_being.gd
+-a----        01.06.2025     22:11             19 chatgpt_premium_bridge_universal_being.gd.uid
+-a----        03.06.2025     13:29          10924 chunk_generator.gd
+-a----        03.06.2025     14:17             19 chunk_generator.gd.uid
+-a----        03.06.2025     13:26          12351 chunk_generator_component.gd
+-a----        03.06.2025     14:17             19 chunk_generator_component.gd.uid
+-a----        04.06.2025     23:34          17600 chunk_grid_manager.gd
+-a----        03.06.2025     14:17             20 chunk_grid_manager.gd.uid
+-a----        04.06.2025     23:41          21309 chunk_universal_being.gd
+-a----        03.06.2025     14:17             20 chunk_universal_being.gd.uid
+-a----        04.06.2025     17:23          17506 chunk_universe_generator.gd
+-a----        04.06.2025     17:00             20 chunk_universe_generator.gd.uid
+-a----        03.06.2025     12:46           4390 claude_bridge_universal_being.gd
+-a----        01.06.2025     21:18             20 claude_bridge_universal_being.gd.uid
+-a----        03.06.2025     14:06          20638 claude_desktop_mcp_universal_being.gd
+-a----        01.06.2025     21:52             20 claude_desktop_mcp_universal_being.gd.uid
+-a----        02.06.2025     18:01          14033 complete_package_system_test.gd
+-a----        04.06.2025     19:48             20 complete_package_system_test.gd.uid
+-a----        01.06.2025     22:42           3616 component_loader.gd
+-a----        01.06.2025     23:41             20 component_loader.gd.uid
+-a----        05.06.2025     13:48          11890 comprehensive_system_test.gd
+-a----        05.06.2025     14:48             19 comprehensive_system_test.gd.uid
+-a----        05.06.2025     15:26          11778 ConsciousnessFeedbackSystem.gd
+-a----        05.06.2025     15:54             19 ConsciousnessFeedbackSystem.gd.uid
+-a----        03.06.2025     12:46           9362 consciousness_aura_enhanced.gd
+-a----        01.06.2025     23:41             20 consciousness_aura_enhanced.gd.uid
+-a----        04.06.2025     11:16          18645 consciousness_exchange_system.gd
+-a----        03.06.2025     14:17             19 consciousness_exchange_system.gd.uid
+-a----        02.06.2025     19:18          10435 consciousness_icon.gd
+-a----        02.06.2025     19:08             19 consciousness_icon.gd.uid
+-a----        03.06.2025     12:46           5965 consciousness_resonator.gd
+-a----        03.06.2025     02:21             19 consciousness_resonator.gd.uid
+-a----        02.06.2025     00:41           7074 consciousness_tooltip_system.gd
+-a----        02.06.2025     00:41             20 consciousness_tooltip_system.gd.uid
+-a----        01.06.2025     23:00           6872 consciousness_visualizer.gd
+-a----        01.06.2025     23:41             19 consciousness_visualizer.gd.uid
+-a----        03.06.2025     02:25          19928 ConsoleTextLayer.gd
+-a----        02.06.2025     18:21             20 ConsoleTextLayer.gd.uid
+-a----        02.06.2025     22:04           6171 console_base.gd
+-a----        04.06.2025     19:48             20 console_base.gd.uid
+-a----        02.06.2025     22:21           5806 console_butterfly_fix.gd
+-a----        04.06.2025     19:48             19 console_butterfly_fix.gd.uid
+-a----        02.06.2025     22:21           5902 console_butterfly_tree_fix.gd
+-a----        04.06.2025     19:48             20 console_butterfly_tree_fix.gd.uid
+-a----        02.06.2025     22:22           7438 console_enhancements.gd
+-a----        04.06.2025     19:48             20 console_enhancements.gd.uid
+-a----        03.06.2025     12:46           6075 console_notifications.gd
+-a----        03.06.2025     02:21             20 console_notifications.gd.uid
+-a----        02.06.2025     18:34            966 console_test.gd
+-a----        04.06.2025     19:48             19 console_test.gd.uid
+-a----        01.06.2025     21:35           3107 console_universal_being.gd
+-a----        01.06.2025     21:38             20 console_universal_being.gd.uid
+-a----        04.06.2025     13:25          39635 conversational_console_being.gd
+-a----        02.06.2025     23:45             19 conversational_console_being.gd.uid
+-a----        03.06.2025     16:06            595 cosmic_insights.gd
+-a----        03.06.2025     16:07             20 cosmic_insights.gd.uid
+-a----        05.06.2025     18:14           9786 cosmic_lod_system.gd
+-a----        05.06.2025     00:02             20 cosmic_lod_system.gd.uid
+-a----        01.06.2025     22:47            353 create_example_component.gd
+-a----        01.06.2025     23:41             20 create_example_component.gd.uid
+-a----        04.06.2025     21:22           6400 cursor_controller.gd
+-a----        04.06.2025     21:26             20 cursor_controller.gd.uid
+-a----        03.06.2025     13:47          10986 debug_click_handler.gd
+-a----        04.06.2025     19:48             20 debug_click_handler.gd.uid
+-a----        03.06.2025     13:52           7791 debug_integration_example.gd
+-a----        04.06.2025     19:48             20 debug_integration_example.gd.uid
+-a----        04.06.2025     18:14           9877 debug_overlay.gd
+-a----        03.06.2025     14:17             19 debug_overlay.gd.uid
+-a----        04.06.2025     02:20           4636 debug_system_test.gd
+-a----        04.06.2025     19:48             19 debug_system_test.gd.uid
+-a----        04.06.2025     13:09          17534 desert_garden_genesis.gd
+-a----        04.06.2025     19:48             20 desert_garden_genesis.gd.uid
+-a----        03.06.2025     16:05            782 desktop_bridge.gd
+-a----        03.06.2025     16:07             20 desktop_bridge.gd.uid
+-a----        03.06.2025     16:06            625 dimensional_sight.gd
+-a----        03.06.2025     16:07             20 dimensional_sight.gd.uid
+-a----        03.06.2025     12:46           8777 dna_visualizer.gd
+-a----        03.06.2025     02:36             20 dna_visualizer.gd.uid
+-a----        04.06.2025     11:35           5122 enable_144k_enlightenment.gd
+-a----        04.06.2025     19:48             20 enable_144k_enlightenment.gd.uid
+-a----        03.06.2025     13:59           8349 enhanced_debug_click_handler.gd
+-a----        04.06.2025     19:48             19 enhanced_debug_click_handler.gd.uid
+-a----        05.06.2025     08:30           3790 enhanced_game_world.gd
+-a----        05.06.2025     12:55             19 enhanced_game_world.gd.uid
+-a----        04.06.2025     11:34           9598 EnlightenedGroupManager.gd
+-a----        04.06.2025     11:50             20 EnlightenedGroupManager.gd.uid
+-a----        04.06.2025     01:39          17835 evolution_diagnostic.gd
+-a----        04.06.2025     10:44             20 evolution_diagnostic.gd.uid
+-a----        03.06.2025     10:53           1938 fix_all_docstrings.gd
+-a----        04.06.2025     19:48             20 fix_all_docstrings.gd.uid
+-a----        01.06.2025     22:40            736 flood_gate_controller.gd
+-a----        01.06.2025     23:41             20 flood_gate_controller.gd.uid
+-a----        05.06.2025     15:37          15774 FoundationPolishSystem.gd
+-a----        05.06.2025     15:54             19 FoundationPolishSystem.gd.uid
+-a----        01.06.2025     21:35           4987 game_launcher_universal_being.gd
+-a----        01.06.2025     21:38             18 game_launcher_universal_being.gd.uid
+-a----        04.06.2025     18:14           9167 game_world_controller.gd
+-a----        04.06.2025     17:00             18 game_world_controller.gd.uid
+-a----        03.06.2025     21:54          14190 gdscript_directive_scanner.gd
+-a----        03.06.2025     21:59             20 gdscript_directive_scanner.gd.uid
+-a----        03.06.2025     22:13           9561 gdscript_validator_bridge.gd
+-a----        03.06.2025     22:19             19 gdscript_validator_bridge.gd.uid
+-a----        03.06.2025     16:05            540 gemini_api.gd
+-a----        03.06.2025     16:07             19 gemini_api.gd.uid
+-a----        04.06.2025     11:06          25484 Gemma3DPerceptionLogger.gd
+-a----        04.06.2025     10:44             20 Gemma3DPerceptionLogger.gd.uid
+-a----        04.06.2025     11:03          17143 GemmaAkashicLogger.gd
+-a----        04.06.2025     10:44             20 GemmaAkashicLogger.gd.uid
+-a----        04.06.2025     11:10           6752 GemmaAudio.gd
+-a----        04.06.2025     10:44             20 GemmaAudio.gd.uid
+-a----        04.06.2025     11:26          34202 GemmaConsoleInterface.gd
+-a----        04.06.2025     10:44             20 GemmaConsoleInterface.gd.uid
+-a----        04.06.2025     11:11          13394 GemmaInterfaceReader.gd
+-a----        04.06.2025     10:44             20 GemmaInterfaceReader.gd.uid
+-a----        05.06.2025     15:01          10405 GemmaMacroMaster.gd
+-a----        05.06.2025     15:54             19 GemmaMacroMaster.gd.uid
+-a----        04.06.2025     11:13          20082 GemmaSensorySystem.gd
+-a----        04.06.2025     10:44             20 GemmaSensorySystem.gd.uid
+-a----        04.06.2025     11:11          10688 GemmaSpatialPerception.gd
+-a----        04.06.2025     10:44             20 GemmaSpatialPerception.gd.uid
+-a----        05.06.2025     13:41          20915 GemmaUniversalBeing.gd
+-a----        02.06.2025     22:01             19 GemmaUniversalBeing.gd.uid
+-a----        04.06.2025     10:48          51828 GemmaUniverseInjector.gd
+-a----        04.06.2025     10:44             20 GemmaUniverseInjector.gd.uid
+-a----        04.06.2025     10:18          15012 GemmaUniverseInjector_enhancements.gd
+-a----        04.06.2025     10:44             20 GemmaUniverseInjector_enhancements.gd.uid
+-a----        04.06.2025     02:27          12863 GemmaVision.gd
+-a----        04.06.2025     10:44             20 GemmaVision.gd.uid
+-a----        04.06.2025     10:50           4577 gemma_integration_status.gd
+-a----        04.06.2025     19:48             19 gemma_integration_status.gd.uid
+-a----        02.06.2025     22:04          10819 gemma_natural_language.gd
+-a----        04.06.2025     19:48             20 gemma_natural_language.gd.uid
+-a----        02.06.2025     22:06           5691 gemma_simple.gd
+-a----        04.06.2025     19:48             20 gemma_simple.gd.uid
+-a----        04.06.2025     17:10          11969 gemma_text_interface_system.gd
+-a----        04.06.2025     17:00             20 gemma_text_interface_system.gd.uid
+-a----        05.06.2025     18:18           6917 generation_coordinator.gd
+-a----        05.06.2025     18:24             19 generation_coordinator.gd.uid
+-a----        02.06.2025     20:21          15100 genesis_conductor_universal_being.gd
+-a----        01.06.2025     22:11             20 genesis_conductor_universal_being.gd.uid
+-a----        03.06.2025     11:11           3619 genesis_machine_simple.gd
+-a----        04.06.2025     19:48             19 genesis_machine_simple.gd.uid
+-a----        03.06.2025     12:46           5894 glow_effect.gd
+-a----        03.06.2025     01:38             19 glow_effect.gd.uid
+-a----        03.06.2025     12:46          23328 google_gemini_premium_bridge_universal_being.gd
+-a----        01.06.2025     22:16             19 google_gemini_premium_bridge_universal_being.gd.uid
+-a----        04.06.2025     17:08           7166 ground_universal_being.gd
+-a----        04.06.2025     17:00             20 ground_universal_being.gd.uid
+-a----        04.06.2025     21:54           6439 icon_universal_being.gd
+-a----        04.06.2025     22:00             20 icon_universal_being.gd.uid
+-a----        03.06.2025     11:12           2321 immediate_fix.gd
+-a----        04.06.2025     19:48             19 immediate_fix.gd.uid
+-a----        03.06.2025     14:20          10707 input_focus_manager.gd
+-a----        02.06.2025     19:08             19 input_focus_manager.gd.uid
+-a----        03.06.2025     02:25          18809 InteractiveTestEnvironment.gd
+-a----        04.06.2025     19:48             20 InteractiveTestEnvironment.gd.uid
+-a----        04.06.2025     21:51          11799 interface_window_universal_being.gd
+-a----        04.06.2025     21:46             20 interface_window_universal_being.gd.uid
+-a----        05.06.2025     15:28          16850 IntuitiveInteractionSystem.gd
+-a----        05.06.2025     15:54             20 IntuitiveInteractionSystem.gd.uid
+-a----        04.06.2025     12:14          10359 launch_genesis_adventure.gd
+-a----        04.06.2025     19:48             20 launch_genesis_adventure.gd.uid
+-a----        05.06.2025     18:16           8776 lightweight_chunk_system.gd
+-a----        04.06.2025     23:41             19 lightweight_chunk_system.gd.uid
+-a----        04.06.2025     16:42           4686 light_universal_being.gd
+-a----        04.06.2025     17:00             20 light_universal_being.gd.uid
+-a----        05.06.2025     15:32          16914 LocalAICollaboration.gd
+-a----        05.06.2025     15:54             20 LocalAICollaboration.gd.uid
+-a----        04.06.2025     22:01           5179 lod_generator_universal_being.gd
+-a----        04.06.2025     22:02             19 lod_generator_universal_being.gd.uid
+-a----        04.06.2025     02:15           9685 LogicConnectorSystem.gd
+-a----        04.06.2025     10:44             20 LogicConnectorSystem.gd.uid
+-a----        04.06.2025     02:15          18909 logic_connector.gd
+-a----        04.06.2025     19:48             20 logic_connector.gd.uid
+-a----        04.06.2025     11:15           3450 luminus_chunk_grid_manager.gd
+-a----        03.06.2025     14:17             19 luminus_chunk_grid_manager.gd.uid
+-a----        04.06.2025     13:22           2446 luminus_chunk_universal_being.gd
+-a----        03.06.2025     14:17             20 luminus_chunk_universal_being.gd.uid
+-a----        02.06.2025     00:02           1089 luminus_narrative_system.gd
+-a----        02.06.2025     00:13             20 luminus_narrative_system.gd.uid
+-a----        02.06.2025     20:53          13418 macro_system.gd
+-a----        02.06.2025     19:08             20 macro_system.gd.uid
+-a----        04.06.2025     19:04          81942 main_OLD_COMPLEX.gd
+-a----        04.06.2025     19:48             20 main_OLD_COMPLEX.gd.uid
+-a----        04.06.2025     20:01           6587 main_script.gd
+-a----        03.06.2025     13:11             20 main_script.gd.uid
+-a----        04.06.2025     19:01            898 main_SIMPLE.gd
+-a----        04.06.2025     19:48             20 main_SIMPLE.gd.uid
+-a----        04.06.2025     23:41           7598 map_world_controller.gd
+-a----        04.06.2025     23:24             19 map_world_controller.gd.uid
+-a----        05.06.2025     18:13           9049 matrix_chunk_system.gd
+-a----        04.06.2025     23:53             20 matrix_chunk_system.gd.uid
+-a----        03.06.2025     16:05            781 mcp_client.gd
+-a----        03.06.2025     16:07             20 mcp_client.gd.uid
+-a----        03.06.2025     11:17          13811 meta_game_testing_ground.gd
+-a----        04.06.2025     19:48             20 meta_game_testing_ground.gd.uid
+-a----        05.06.2025     23:13           3438 monitor_debug_output.gd
+-a----        05.06.2025     23:35             20 monitor_debug_output.gd.uid
+-a----        03.06.2025     16:06            618 multimodal_analyzer.gd
+-a----        03.06.2025     16:07             19 multimodal_analyzer.gd.uid
+-a----        03.06.2025     22:05          20285 naming_validator.gd
+-a----        03.06.2025     21:59             20 naming_validator.gd.uid
+-a----        02.06.2025     18:33            755 package_test.gd
+-a----        04.06.2025     19:48             20 package_test.gd.uid
+-a----        04.06.2025     01:29          13062 path_audit_system.gd
+-a----        04.06.2025     10:44             20 path_audit_system.gd.uid
+-a----        04.06.2025     01:56           6498 path_reference_fixer.gd
+-a----        04.06.2025     10:44             20 path_reference_fixer.gd.uid
+-a----        02.06.2025     00:44          25817 pentagon_network_visualizer.gd
+-a----        01.06.2025     23:41             20 pentagon_network_visualizer.gd.uid
+-a----        04.06.2025     06:51          14519 pentagon_validator.gd
+-a----        04.06.2025     10:44             20 pentagon_validator.gd.uid
+-a----        04.06.2025     06:57          14529 pentagon_validator_fixed.gd
+-a----        04.06.2025     10:44             19 pentagon_validator_fixed.gd.uid
+-a----        04.06.2025     19:08          30483 perfect_universal_console.gd
+-a----        04.06.2025     13:37             20 perfect_universal_console.gd.uid
+-a----        05.06.2025     18:10           3203 performance_fix_autoload.gd
+-a----        05.06.2025     18:24             20 performance_fix_autoload.gd.uid
+-a----        05.06.2025     18:09           2414 performance_fix_patch.gd
+-a----        05.06.2025     18:24             20 performance_fix_patch.gd.uid
+-a----        05.06.2025     18:10           5002 performance_monitor_ui.gd
+-a----        05.06.2025     18:24             20 performance_monitor_ui.gd.uid
+-a----        05.06.2025     18:28           6005 performance_optimizer.gd
+-a----        05.06.2025     18:52             20 performance_optimizer.gd.uid
+-a----        05.06.2025     18:06          18687 player_universal_being.gd
+-a----        05.06.2025     12:25             20 player_universal_being.gd.uid
+-a----        04.06.2025     12:24           7123 PoeticLogger.gd
+-a----        04.06.2025     12:33             19 PoeticLogger.gd.uid
+-a----        02.06.2025     22:34           2087 poetic_log.gd
+-a----        02.06.2025     22:39             19 poetic_log.gd.uid
+-a----        03.06.2025     12:46           4467 PortalUniversalBeing.gd
+-a----        02.06.2025     22:39             20 PortalUniversalBeing.gd.uid
+-a----        04.06.2025     11:32          10509 QuantumFloodGates.gd
+-a----        04.06.2025     11:50             20 QuantumFloodGates.gd.uid
+-a----        03.06.2025     14:30           1572 quick_diagnostic.gd
+-a----        04.06.2025     19:48             20 quick_diagnostic.gd.uid
+-a----        04.06.2025     18:14           2264 quick_health_check.gd
+-a----        04.06.2025     19:48             20 quick_health_check.gd.uid
+-a----        04.06.2025     10:20           2628 quick_test_universe_injection.gd
+-a----        04.06.2025     19:48             20 quick_test_universe_injection.gd.uid
+-a----        04.06.2025     18:14          33285 RealityEditorComponent.gd
+-a----        03.06.2025     02:25             20 RealityEditorComponent.gd.uid
+-a----        03.06.2025     14:41          15747 recursive_creation_console_universal_being.gd
+-a----        02.06.2025     23:26             20 recursive_creation_console_universal_being.gd.uid
+-a----        03.06.2025     22:10          13743 remote_godot_bridge.gd
+-a----        03.06.2025     22:06             20 remote_godot_bridge.gd.uid
+-a----        03.06.2025     13:05           3841 run_asset_validation.gd
+-a----        03.06.2025     13:11             20 run_asset_validation.gd.uid
+-a----        04.06.2025     10:44           1047 run_gemma_integration_test.gd
+-a----        04.06.2025     19:48             20 run_gemma_integration_test.gd.uid
+-a----        04.06.2025     01:30           5441 run_path_audit.gd
+-a----        04.06.2025     19:48             20 run_path_audit.gd.uid
+-a----        04.06.2025     18:14           2292 run_path_fixes.gd
+-a----        04.06.2025     19:48             19 run_path_fixes.gd.uid
+-a----        02.06.2025     00:38           1308 run_tests.gd
+-a----        04.06.2025     19:48             20 run_tests.gd.uid
+-a----        03.06.2025     21:54           3146 scan_directive_conflicts.gd
+-a----        04.06.2025     19:48             20 scan_directive_conflicts.gd.uid
+-a----        05.06.2025     15:05          13214 SelfRepairSystem.gd
+-a----        05.06.2025     15:54             20 SelfRepairSystem.gd.uid
+-a----        05.06.2025     16:22           1493 SimpleMovablePlasmoid.gd
+-a----        05.06.2025     16:23             20 SimpleMovablePlasmoid.gd.uid
+-a----        03.06.2025     12:46          10986 simple_camera_effects.gd
+-a----        02.06.2025     15:22             19 simple_camera_effects.gd.uid
+-a----        03.06.2025     11:13           1453 simple_console_fix.gd
+-a----        04.06.2025     19:48             20 simple_console_fix.gd.uid
+-a----        03.06.2025     22:16           3953 simple_gdscript_validator.gd
+-a----        03.06.2025     22:19             20 simple_gdscript_validator.gd.uid
+-a----        04.06.2025     02:22           2240 simple_health_check.gd
+-a----        04.06.2025     19:48             19 simple_health_check.gd.uid
+-a----        04.06.2025     22:18           4373 simple_player_controller.gd
+-a----        04.06.2025     21:18             20 simple_player_controller.gd.uid
+-a----        05.06.2025     12:54           3775 simple_player_test.gd
+-a----        05.06.2025     12:55             20 simple_player_test.gd.uid
+-a----        04.06.2025     21:51           6770 socket_button_universal_being.gd
+-a----        04.06.2025     21:21             20 socket_button_universal_being.gd.uid
+-a----        01.06.2025     21:30              1 socket_cell_universal_being.gd
+-a----        01.06.2025     21:38             19 socket_cell_universal_being.gd.uid
+-a----        01.06.2025     21:35           3549 socket_grid_universal_being.gd
+-a----        01.06.2025     21:38             19 socket_grid_universal_being.gd.uid
+-a----        03.06.2025     11:14           1432 systembootstrap_quickfix.gd
+-a----        04.06.2025     19:48             20 systembootstrap_quickfix.gd.uid
+-a----        01.06.2025     21:35           3763 terminal_universal_being.gd
+-a----        01.06.2025     21:38             20 terminal_universal_being.gd.uid
+-a----        03.06.2025     00:27            768 test_add_interaction.gd
+-a----        04.06.2025     19:48             20 test_add_interaction.gd.uid
+-a----        03.06.2025     10:06           9522 test_akashic_compression.gd
+-a----        04.06.2025     19:48             20 test_akashic_compression.gd.uid
+-a----        03.06.2025     02:43           6576 test_all_visuals.gd
+-a----        04.06.2025     19:48             20 test_all_visuals.gd.uid
+-a----        04.06.2025     02:02           5371 test_bootstrap_initialization.gd
+-a----        04.06.2025     19:48             20 test_bootstrap_initialization.gd.uid
+-a----        02.06.2025     18:25           7056 test_camera_consciousness.gd
+-a----        04.06.2025     19:48             20 test_camera_consciousness.gd.uid
+-a----        04.06.2025     10:09           3321 test_chunk_generator_hotspots.gd
+-a----        04.06.2025     19:48             19 test_chunk_generator_hotspots.gd.uid
+-a----        04.06.2025     18:14           4917 test_collaborative_chunk_generation.gd
+-a----        04.06.2025     19:48             20 test_collaborative_chunk_generation.gd.uid
+-a----        02.06.2025     16:59           9691 test_complete_camera_consciousness.gd
+-a----        04.06.2025     19:48             19 test_complete_camera_consciousness.gd.uid
+-a----        03.06.2025     01:41            795 test_component_library.gd
+-a----        04.06.2025     19:48             19 test_component_library.gd.uid
+-a----        02.06.2025     15:31           7335 test_consciousness_icons.gd
+-a----        04.06.2025     19:48             20 test_consciousness_icons.gd.uid
+-a----        04.06.2025     02:13           4203 test_enhanced_health.gd
+-a----        04.06.2025     19:48             20 test_enhanced_health.gd.uid
+-a----        04.06.2025     18:14           3478 test_evolution_diagnostic.gd
+-a----        04.06.2025     19:48             20 test_evolution_diagnostic.gd.uid
+-a----        02.06.2025     00:38           6315 test_framework.gd
+-a----        04.06.2025     19:48             20 test_framework.gd.uid
+-a----        04.06.2025     10:43          16260 test_gemma_full_integration.gd
+-a----        04.06.2025     19:48             20 test_gemma_full_integration.gd.uid
+-a----        04.06.2025     03:12           5571 test_gemma_senses.gd
+-a----        04.06.2025     19:48             20 test_gemma_senses.gd.uid
+-a----        04.06.2025     03:38          10475 test_gemma_sensory_complete.gd
+-a----        04.06.2025     19:48             19 test_gemma_sensory_complete.gd.uid
+-a----        04.06.2025     18:14           3808 test_gemma_systems.gd
+-a----        04.06.2025     19:48             20 test_gemma_systems.gd.uid
+-a----        04.06.2025     10:09          10408 test_gemma_universe_injection.gd
+-a----        04.06.2025     19:48             20 test_gemma_universe_injection.gd.uid
+-a----        04.06.2025     11:42           5915 test_genesis_scenario.gd
+-a----        04.06.2025     19:48             20 test_genesis_scenario.gd.uid
+-a----        04.06.2025     18:36           4106 test_interface_system.gd
+-a----        04.06.2025     19:48             19 test_interface_system.gd.uid
+-a----        04.06.2025     03:50            496 test_path_fixer.gd
+-a----        04.06.2025     19:48             20 test_path_fixer.gd.uid
+-a----        04.06.2025     06:53           1880 test_pentagon_validator.gd
+-a----        04.06.2025     19:48             19 test_pentagon_validator.gd.uid
+-a----        04.06.2025     06:57           1920 test_pentagon_validator_fixed.gd
+-a----        04.06.2025     19:48             20 test_pentagon_validator_fixed.gd.uid
+-a----        03.06.2025     02:31           1073 test_reality_editor.gd
+-a----        04.06.2025     19:48             19 test_reality_editor.gd.uid
+-a----        04.06.2025     18:14           2069 test_system_health.gd
+-a----        04.06.2025     19:48             20 test_system_health.gd.uid
+-a----        02.06.2025     23:33           1718 test_unified_console.gd
+-a----        04.06.2025     19:48             20 test_unified_console.gd.uid
+-a----        04.06.2025     18:14           8174 test_universal_being_mover.gd
+-a----        04.06.2025     19:48             19 test_universal_being_mover.gd.uid
+-a----        03.06.2025     02:43           3967 test_visual_integration.gd
+-a----        04.06.2025     19:48             19 test_visual_integration.gd.uid
+-a----        04.06.2025     21:51           4352 text_representation_system.gd
+-a----        04.06.2025     21:52             20 text_representation_system.gd.uid
+-a----        03.06.2025     12:46           1727 transform_animator.gd
+-a----        03.06.2025     02:21             19 transform_animator.gd.uid
+-a----        03.06.2025     12:46           3816 TreeUniversalBeing.gd
+-a----        02.06.2025     21:40             20 TreeUniversalBeing.gd.uid
+-a----        03.06.2025     02:39           3348 tree_universal_being.gd
+-a----        02.06.2025     20:29             20 tree_universal_being.gd.uid
+-a----        03.06.2025     12:46          12221 triple_helix_consciousness.gd
+-a----        01.06.2025     23:41             20 triple_helix_consciousness.gd.uid
+-a----        06.06.2025     01:08          20929 turn_based_creation_system.gd
+-a----        03.06.2025     14:17             19 turn_based_creation_system.gd.uid
+-a----        02.06.2025     00:53           8426 ufo_marching_cubes.gd
+-a----        02.06.2025     00:54             20 ufo_marching_cubes.gd.uid
+-a----        03.06.2025     12:46          12202 ufo_universal_being.gd
+-a----        02.06.2025     01:08             20 ufo_universal_being.gd.uid
+-a----        04.06.2025     23:39           1886 ultra_fast_controller.gd
+-a----        04.06.2025     23:41             20 ultra_fast_controller.gd.uid
+-a----        03.06.2025     13:34          11324 unified_chunk_system.gd
+-a----        03.06.2025     14:17             19 unified_chunk_system.gd.uid
+-a----        03.06.2025     22:23          23077 unified_console_being.gd
+-a----        02.06.2025     23:29             19 unified_console_being.gd.uid
+-a----        03.06.2025     13:54          14587 unified_debug_interface.gd
+-a----        04.06.2025     19:48             20 unified_debug_interface.gd.uid
+-a----        03.06.2025     02:07          25271 UniversalBeingInspector.gd
+-a----        03.06.2025     00:03             20 UniversalBeingInspector.gd.uid
+-a----        02.06.2025     19:11          19182 UniversalConsole.gd
+-a----        02.06.2025     19:12             19 UniversalConsole.gd.uid
+-a----        03.06.2025     22:49          13317 UniversalInspectorBridge.gd
+-a----        03.06.2025     22:50             20 UniversalInspectorBridge.gd.uid
+-a----        02.06.2025     21:26           8703 universal_being_generator.gd
+-a----        01.06.2025     23:41             20 universal_being_generator.gd.uid
+-a----        04.06.2025     00:53           8345 universal_being_movement_system.gd
+-a----        04.06.2025     00:29             20 universal_being_movement_system.gd.uid
+-a----        04.06.2025     10:32          20039 universal_being_mover.gd
+-a----        04.06.2025     10:44             20 universal_being_mover.gd.uid
+-a----        03.06.2025     21:51          20398 universal_being_pattern_extractor.gd
+-a----        03.06.2025     21:59             20 universal_being_pattern_extractor.gd.uid
+-a----        02.06.2025     21:23           1867 universal_being_template.gd
+-a----        02.06.2025     19:36             19 universal_being_template.gd.uid
+-a----        02.06.2025     19:18          21824 universal_command_processor.gd
+-a----        02.06.2025     19:08             20 universal_command_processor.gd.uid
+-a----        06.06.2025     01:48          28634 universal_console_controller.gd
+-a----        04.06.2025     19:48             20 universal_console_controller.gd.uid
+-a----        04.06.2025     17:09          13340 universal_interface_being.gd
+-a----        04.06.2025     17:00             20 universal_interface_being.gd.uid
+-a----        04.06.2025     13:31           8396 universal_interface_manager.gd
+-a----        04.06.2025     13:29             20 universal_interface_manager.gd.uid
+-a----        03.06.2025     13:45          18135 universal_script_inspector.gd
+-a----        04.06.2025     19:48             20 universal_script_inspector.gd.uid
+-a----        03.06.2025     12:46          14397 UniverseConsoleComponent.gd
+-a----        02.06.2025     22:39             20 UniverseConsoleComponent.gd.uid
+-a----        03.06.2025     11:17          14909 UniverseGenesisComponent.gd
+-a----        03.06.2025     01:32             19 UniverseGenesisComponent.gd.uid
+-a----        04.06.2025     12:24          10648 UniverseManager.gd
+-a----        04.06.2025     12:33             20 UniverseManager.gd.uid
+-a----        03.06.2025     12:46           2025 universe_console_integration.gd
+-a----        02.06.2025     22:54             20 universe_console_integration.gd.uid
+-a----        03.06.2025     02:25          10108 universe_core.gd
+-a----        02.06.2025     22:01             20 universe_core.gd.uid
+-a----        02.06.2025     23:24           6107 universe_lod.gd
+-a----        02.06.2025     23:25             20 universe_lod.gd.uid
+-a----        03.06.2025     10:45           3452 universe_physics.gd
+-a----        02.06.2025     23:25             19 universe_physics.gd.uid
+-a----        03.06.2025     02:25           6761 universe_portal.gd
+-a----        02.06.2025     22:01             19 universe_portal.gd.uid
+-a----        04.06.2025     19:58          10813 universe_rules.gd
+-a----        02.06.2025     22:01             20 universe_rules.gd.uid
+-a----        02.06.2025     23:24           4171 universe_time.gd
+-a----        02.06.2025     23:25             20 universe_time.gd.uid
+-a----        03.06.2025     02:39          13986 universe_universal_being.gd
+-a----        02.06.2025     23:25             20 universe_universal_being.gd.uid
+-a----        05.06.2025     18:34           8786 visual_enhancement_system.gd
+-a----        05.06.2025     18:52             20 visual_enhancement_system.gd.uid
+
+
+    Directory: C:\Users\Percision 15\Universal_Being\scripts\ui
+
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+-a----        05.06.2025     09:53           7116 UniverseSimulator.gd
+-a----        05.06.2025     10:21             19 UniverseSimulator.gd.uid
+
+
+    Directory: C:\Users\Percision 15\Universal_Being\scripts\ui\camera_consciousness_overlay
+
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+-a----        05.06.2025     09:53           2745 consciousness_meter.gd
+-a----        05.06.2025     10:21             20 consciousness_meter.gd.uid
+-a----        05.06.2025     09:52           3962 effect_sliders.gd
+-a----        05.06.2025     10:21             19 effect_sliders.gd.uid
+-a----        05.06.2025     09:52           2081 info_panel.gd
+-a----        05.06.2025     10:21             20 info_panel.gd.uid
+
+
+    Directory: C:\Users\Percision 15\Universal_Being\shaders
+
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+-a----        05.06.2025     22:06           2699 consciousness_ripple.gdshader
+-a----        05.06.2025     22:18             20 consciousness_ripple.gdshader.uid
+-a----        05.06.2025     23:42           1183 plasmoid_being.gdshader
+-a----        05.06.2025     23:44             20 plasmoid_being.gdshader.uid
+
+
+    Directory: C:\Users\Percision 15\Universal_Being\systems
+
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+-a----        06.06.2025     01:28           6527 AkashicLibrary.gd
+-a----        06.06.2025     01:29             20 AkashicLibrary.gd.uid
+-a----        05.06.2025     22:45           6895 ConsciousnessAudioManager.gd
+-a----        05.06.2025     23:00             20 ConsciousnessAudioManager.gd.uid
+-a----        05.06.2025     22:14           8689 ConsciousnessRevolutionIntegrator.gd
+-a----        05.06.2025     22:18             20 ConsciousnessRevolutionIntegrator.gd.uid
+-a----        05.06.2025     23:24          12015 ConsciousnessRippleSystem.gd
+-a----        05.06.2025     22:18             19 ConsciousnessRippleSystem.gd.uid
+-a----        06.06.2025     01:47           8328 UBPrintCollector.gd
+-a----        06.06.2025     01:12             20 UBPrintCollector.gd.uid
+
+
+    Directory: C:\Users\Percision 15\Universal_Being\tests
+
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+-a----        05.06.2025     22:50          13351 consciousness_revolution_validator.gd
+-a----        05.06.2025     23:00             20 consciousness_revolution_validator.gd.uid
+
+
+    Directory: C:\Users\Percision 15\Universal_Being\tools
+
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+-a----        03.06.2025     16:31           7296 debug_log_analyzer.py
+-a----        03.06.2025     16:32           3646 find_godot_logs.py
+-a----        03.06.2025     22:17           6481 mcp_gdscript_validator.py
+-a----        03.06.2025     12:46           3594 pentagon_cleanup.sh
+-a----        03.06.2025     10:06           1482 run_compression_tests.sh
+-a----        01.06.2025     22:24           2645 setup_github.sh
+-a----        04.06.2025     11:41           2802 start_genesis_adventure.sh
+-a----        03.06.2025     22:11           7020 test_lsp_connection.py
+-a----        01.06.2025     22:58            350 test_visual.sh
+
+
+    Directory: C:\Users\Percision 15\Universal_Being\tools\__pycache__
+
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+-a----        03.06.2025     22:11           7587 test_lsp_connection.cpython-312.pyc
+
+
+    Directory: C:\Users\Percision 15\Universal_Being\ui
+
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+-a----        06.06.2025     01:53           8420 TelepathicScreenOverlay.gd
+-a----        05.06.2025     23:00             19 TelepathicScreenOverlay.gd.uid
+-a----        06.06.2025     01:58            870 TelepathicScreenOverlay.tscn
+
+
+PS C:\Users\Percision 15\Universal_Being>

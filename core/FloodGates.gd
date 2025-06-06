@@ -233,7 +233,7 @@ func evolve_being(old_being: Node, new_type: String) -> Node:
 	"""Evolve a Universal Being into new form"""
 	print("🌊 FloodGates: Evolution requested - %s to %s" % [old_being.name, new_type])
 	
-	# This would integrate with AkashicRecords for actual evolution
+	# This would integrate with AkashicRecordsSystemSystem for actual evolution
 	# For now, placeholder
 	var new_being = create_being_placeholder(new_type)
 	if new_being:

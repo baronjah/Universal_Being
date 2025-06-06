@@ -58,7 +58,7 @@ func check_core_systems() -> void:
 	var core_files = {
 		"UniversalBeing": "res://core/UniversalBeing.gd",
 		"FloodGates": "res://core/FloodGates.gd",
-		"AkashicRecords": "res://core/AkashicRecords.gd"
+		"AkashicRecordsSystemSystem": "res://systems/storage/AkashicRecordsSystem.gd"
 	}
 	
 	for system_name in core_files:
@@ -75,8 +75,8 @@ func check_gemma_systems() -> void:
 	
 	var gemma_files = {
 		"GemmaSensorySystem": "res://systems/GemmaSensorySystem.gd",
-		"GemmaUniverseInjector": "res://systems/GemmaUniverseInjector.gd",
-		"GemmaUniversalBeing": "res://beings/GemmaUniversalBeing.gd",
+		"GemmaUniverseInjector": "res://scripts/GemmaUniverseInjector.gd",
+		"GemmaUniversalBeing": "res://scripts/GemmaUniversalBeing.gd",
 		"GemmaVision": "res://systems/gemma_components/GemmaVision.gd",
 		"GemmaConsoleInterface": "res://systems/gemma_components/GemmaConsoleInterface.gd",
 		"GemmaAkashicLogger": "res://systems/gemma_components/GemmaAkashicLogger.gd"

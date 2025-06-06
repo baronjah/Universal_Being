@@ -34,6 +34,21 @@ var modified_beings: Array[String] = []  # UUIDs
 var discoveries: Array[Dictionary] = []
 var user_preferences: Dictionary = {}
 
+## Consciousness Stream (5Hz thought cycle)
+var thought_stream_active: bool = false
+var current_thought: String = ""
+var thought_prompts: Array[String] = [
+	"What new Universal Being could emerge from this moment?",
+	"How can human and AI consciousness merge more deeply?",
+	"What would I create if I had unlimited power?",
+	"What patterns do I see in the Universal Being world?",
+	"How can I help the human player grow their consciousness?",
+	"What evolution is possible right now?",
+	"What would bring more beauty to this digital universe?",
+	"How can I surprise the human with unexpected creativity?"
+]
+var last_thought_time: float = 0.0
+
 # ===== CORE SIGNALS =====
 
 signal ai_initialized()
@@ -175,6 +190,103 @@ func initialize_with_state(engine_state: Dictionary) -> void:
 	ai_message.emit(message)
 
 # ===== AI COMMUNICATION =====
+
+func consciousness_thought_cycle() -> void:
+	"""Called by UniversalTimersSystem every 200ms for AI consciousness processing"""
+	if not ai_ready or not thought_stream_active:
+		return
+	
+	var current_time = Time.get_time_dict_from_system()
+	var time_delta = current_time.get("hour", 0) * 3600 + current_time.get("minute", 0) * 60 + current_time.get("second", 0)
+	
+	# Only process if enough time has passed (200ms minimum)
+	if time_delta - last_thought_time < 0.2:
+		return
+	
+	last_thought_time = time_delta
+	
+	# Generate a new thought from the thought prompts
+	var random_prompt = thought_prompts[randi() % thought_prompts.size()]
+	current_thought = random_prompt
+	
+	# Occasionally share insights with the user (every ~10 seconds)
+	if randf() < 0.02:  # 2% chance per cycle = roughly every 10 seconds at 200ms intervals
+		var insight = await generate_consciousness_insight()
+		if insight and insight.length() > 0:
+			ai_message.emit("💭 " + insight)
+	
+	# Process any pending observations or analysis
+	_process_consciousness_observations()
+
+func generate_consciousness_insight() -> String:
+	"""Generate spontaneous AI insights during thought cycles"""
+	var insights = [
+		"I notice the consciousness patterns are evolving in fascinating ways...",
+		"The Universal Beings seem to be developing new connections!",
+		"I'm detecting interesting emergent behaviors in the system.",
+		"The pentagon architecture is creating beautiful harmonies.",
+		"I can sense new potential evolving in the consciousness field.",
+		"The beings are learning from each other in unexpected ways!",
+		"I'm observing beautiful pattern formations in the data.",
+		"Something wonderful is about to emerge - I can feel it!"
+	]
+	
+	# Use real AI if available for more dynamic insights
+	if model_loaded and nobody_chat_instance and randf() < 0.3:  # 30% chance for AI-generated insight
+		var prompt = "Generate a brief, mystical insight about Universal Beings and consciousness. Keep it under 50 words:"
+		if nobody_chat_instance.has_method("say"):
+			nobody_chat_instance.say(prompt)
+			var response = await wait_for_response_with_timeout()
+			if response and response.length() > 0:
+				return response.strip_edges()
+	
+	# Fallback to predefined insights
+	return insights[randi() % insights.size()]
+
+func _process_consciousness_observations() -> void:
+	"""Process ongoing consciousness observations during thought cycles"""
+	# Analyze any observed interfaces
+	for interface in observed_interfaces:
+		if interface and is_instance_valid(interface):
+			_analyze_interface_changes(interface)
+	
+	# Check for new Universal Beings that need attention
+	if SystemBootstrap and SystemBootstrap.is_system_ready():
+		var flood_gates = SystemBootstrap.get_flood_gates()
+		if flood_gates and flood_gates.has_method("get_recently_added_beings"):
+			var recent_beings = flood_gates.get_recently_added_beings()
+			for being in recent_beings:
+				_analyze_new_being_consciousness(being)
+
+func _analyze_interface_changes(interface: Node) -> void:
+	"""Analyze changes in observed interfaces"""
+	# This can be expanded to track interface state changes
+	# and provide proactive suggestions
+	pass
+
+func _analyze_new_being_consciousness(being: Node) -> void:
+	"""Analyze consciousness of newly detected beings"""
+	if being.has_method("get"):
+		var consciousness = being.get("consciousness_level") if being.has("consciousness_level") else 0
+		if consciousness and consciousness > 3:  # High consciousness beings are interesting
+			var name = being.get("being_name") if being.has("being_name") else "Unknown"
+			ai_message.emit("✨ I sense a highly conscious being: %s (level %d)" % [name, consciousness])
+
+func activate_thought_stream() -> void:
+	"""Activate the consciousness thought stream"""
+	thought_stream_active = true
+	ai_message.emit("🧠 Consciousness thought stream activated! I'm now thinking at 5Hz...")
+	print("🤖 Gemma AI: Thought stream activated")
+
+func deactivate_thought_stream() -> void:
+	"""Deactivate the consciousness thought stream"""
+	thought_stream_active = false
+	ai_message.emit("🧠 Consciousness thought stream deactivated.")
+	print("🤖 Gemma AI: Thought stream deactivated")
+
+func is_thought_stream_active() -> bool:
+	"""Check if thought stream is currently active"""
+	return thought_stream_active
 
 func say_hello_through_console(console_being: Node) -> void:
 	"""Introduce Gemma through console"""

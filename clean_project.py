@@ -242,7 +242,7 @@ class UniversalBeingCleaner:
         report_path = self.root / 'docs' / 'CLEANUP_REPORT.md'
         report_path.parent.mkdir(exist_ok=True)
         
-        with open(report_path, 'w') as f:
+        with open(report_path, 'w', encoding='utf-8') as f:
             f.write("# Universal Being Project Cleanup Report\\n\\n")
             f.write(f"**Actions Performed:** {len(self.log)}\\n\\n")
             f.write("## Perfect Structure Achieved\\n\\n")
@@ -300,6 +300,7 @@ class UniversalBeingCleaner:
 
 def main():
     """Main cleanup function"""
+    # Get project root from current script location
     project_root = os.path.dirname(os.path.abspath(__file__))
     cleaner = UniversalBeingCleaner(project_root)
     cleaner.run_cleanup()

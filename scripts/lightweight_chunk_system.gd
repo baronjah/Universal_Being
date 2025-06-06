@@ -212,7 +212,7 @@ func save_chunk_as_zip(coord: Vector3i) -> bool:
 		"material_data": extract_material_data(chunk_mesh)
 	}
 	
-	# Use SystemBootstrap to access AkashicRecords
+	# Use SystemBootstrap to access AkashicRecordsSystemSystem
 	if SystemBootstrap and SystemBootstrap.is_system_ready():
 		var akashic = SystemBootstrap.get_akashic_records()
 		if akashic and akashic.has_method("save_universal_being_data"):

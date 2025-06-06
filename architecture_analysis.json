@@ -1,0 +1,6548 @@
+{
+  "timestamp": "2025-06-06 12:20:35",
+  "project_structure": {
+    "core": {
+      "description": "Core Architecture",
+      "exists": true,
+      "script_count": 18,
+      "subdirectories": [
+        {
+          "name": "command_system",
+          "script_count": 4,
+          "analysis": {
+            "description": "Core Architecture - command_system",
+            "exists": true,
+            "script_count": 4,
+            "subdirectories": [],
+            "files": [
+              {
+                "name": "LiveCodeEditor.gd",
+                "size": 5656,
+                "modified": 1749205019.8425078
+              },
+              {
+                "name": "MacroSystem.gd",
+                "size": 8305,
+                "modified": 1749204121.0359328
+              },
+              {
+                "name": "UniversalCommandProcessor.gd",
+                "size": 12196,
+                "modified": 1749204121.0359328
+              },
+              {
+                "name": "UniversalConsole.gd",
+                "size": 12681,
+                "modified": 1749204121.036931
+              }
+            ],
+            "size_kb": 37.93
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "Component.gd",
+          "size": 2560,
+          "modified": 1749205079.7374728
+        },
+        {
+          "name": "Connector.gd",
+          "size": 2782,
+          "modified": 1748877511.9932823
+        },
+        {
+          "name": "FloodGates.gd",
+          "size": 22203,
+          "modified": 1749205089.862543
+        },
+        {
+          "name": "genesis_pattern.gd",
+          "size": 4712,
+          "modified": 1748810845.5204778
+        },
+        {
+          "name": "Pentagon.gd",
+          "size": 1737,
+          "modified": 1749195469.7103508
+        },
+        {
+          "name": "PentagonManager.gd",
+          "size": 11061,
+          "modified": 1749205069.726372
+        },
+        {
+          "name": "SimpleConsole.gd",
+          "size": 3064,
+          "modified": 1749110788.388412
+        },
+        {
+          "name": "UniversalBeing.gd",
+          "size": 73908,
+          "modified": 1749205019.8174007
+        },
+        {
+          "name": "UniversalBeingControl.gd",
+          "size": 5388,
+          "modified": 1749205019.8224065
+        },
+        {
+          "name": "UniversalBeingDNA.gd",
+          "size": 22790,
+          "modified": 1749205019.8264093
+        },
+        {
+          "name": "UniversalBeingInterface.gd",
+          "size": 14156,
+          "modified": 1749028311.5500164
+        },
+        {
+          "name": "UniversalBeingSocket.gd",
+          "size": 7841,
+          "modified": 1749205019.831452
+        },
+        {
+          "name": "UniversalBeingSocketManager.gd",
+          "size": 12518,
+          "modified": 1749205019.8364525
+        },
+        {
+          "name": "universal_being_base_enhanced.gd",
+          "size": 5528,
+          "modified": 1748951890.4958062
+        }
+      ],
+      "size_kb": 185.83
+    },
+    "beings": {
+      "description": "Being Implementations",
+      "exists": true,
+      "script_count": 15,
+      "subdirectories": [
+        {
+          "name": "butterfly",
+          "script_count": 1,
+          "analysis": {
+            "description": "Being Implementations - butterfly",
+            "exists": true,
+            "script_count": 1,
+            "subdirectories": [],
+            "files": [
+              {
+                "name": "ButterflyUniversalBeing.gd",
+                "size": 3472,
+                "modified": 1748947539.0
+              }
+            ],
+            "size_kb": 3.39
+          }
+        },
+        {
+          "name": "camera",
+          "script_count": 1,
+          "analysis": {
+            "description": "Being Implementations - camera",
+            "exists": true,
+            "script_count": 1,
+            "subdirectories": [],
+            "files": [
+              {
+                "name": "CameraUniversalBeing.gd",
+                "size": 9038,
+                "modified": 1748952573.329062
+              }
+            ],
+            "size_kb": 8.83
+          }
+        },
+        {
+          "name": "console",
+          "script_count": 1,
+          "analysis": {
+            "description": "Being Implementations - console",
+            "exists": true,
+            "script_count": 1,
+            "subdirectories": [],
+            "files": [
+              {
+                "name": "ConsoleUniversalBeing.gd",
+                "size": 34482,
+                "modified": 1748888278.4444556
+              }
+            ],
+            "size_kb": 33.67
+          }
+        },
+        {
+          "name": "cursor",
+          "script_count": 1,
+          "analysis": {
+            "description": "Being Implementations - cursor",
+            "exists": true,
+            "script_count": 1,
+            "subdirectories": [],
+            "files": [
+              {
+                "name": "CursorUniversalBeing.gd",
+                "size": 12311,
+                "modified": 1749105825.748871
+              }
+            ],
+            "size_kb": 12.02
+          }
+        },
+        {
+          "name": "misc",
+          "script_count": 4,
+          "analysis": {
+            "description": "Being Implementations - misc",
+            "exists": true,
+            "script_count": 4,
+            "subdirectories": [],
+            "files": [
+              {
+                "name": "ground_universal_being.gd",
+                "size": 7166,
+                "modified": 1749049682.0
+              },
+              {
+                "name": "icon_universal_being.gd",
+                "size": 6439,
+                "modified": 1749066899.5248744
+              },
+              {
+                "name": "light_universal_being.gd",
+                "size": 4686,
+                "modified": 1749048158.0
+              },
+              {
+                "name": "SimpleMovablePlasmoid.gd",
+                "size": 1493,
+                "modified": 1749133359.7312076
+              }
+            ],
+            "size_kb": 19.32
+          }
+        },
+        {
+          "name": "plasmoid",
+          "script_count": 1,
+          "analysis": {
+            "description": "Being Implementations - plasmoid",
+            "exists": true,
+            "script_count": 1,
+            "subdirectories": [],
+            "files": [
+              {
+                "name": "energy_burst.gd",
+                "size": 491,
+                "modified": 1749159804.1271977
+              }
+            ],
+            "size_kb": 0.48
+          }
+        },
+        {
+          "name": "player",
+          "script_count": 1,
+          "analysis": {
+            "description": "Being Implementations - player",
+            "exists": true,
+            "script_count": 1,
+            "subdirectories": [],
+            "files": [
+              {
+                "name": "player_universal_being.gd",
+                "size": 18687,
+                "modified": 1749139595.1301434
+              }
+            ],
+            "size_kb": 18.25
+          }
+        },
+        {
+          "name": "portal",
+          "script_count": 1,
+          "analysis": {
+            "description": "Being Implementations - portal",
+            "exists": true,
+            "script_count": 1,
+            "subdirectories": [],
+            "files": [
+              {
+                "name": "PortalUniversalBeing.gd",
+                "size": 4467,
+                "modified": 1748947582.0
+              }
+            ],
+            "size_kb": 4.36
+          }
+        },
+        {
+          "name": "tree",
+          "script_count": 1,
+          "analysis": {
+            "description": "Being Implementations - tree",
+            "exists": true,
+            "script_count": 1,
+            "subdirectories": [],
+            "files": [
+              {
+                "name": "TreeUniversalBeing.gd",
+                "size": 3816,
+                "modified": 1748947582.0
+              }
+            ],
+            "size_kb": 3.73
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "ConsciousnessRevolutionSpawner.gd",
+          "size": 8070,
+          "modified": 1749205171.2682004
+        },
+        {
+          "name": "GemmaAICompanionPlasmoid.gd",
+          "size": 19993,
+          "modified": 1749205229.641491
+        },
+        {
+          "name": "plasmoid_universal_being.gd",
+          "size": 12510,
+          "modified": 1749159746.5882254
+        }
+      ],
+      "size_kb": 39.72
+    },
+    "systems": {
+      "description": "System Components",
+      "exists": true,
+      "script_count": 24,
+      "subdirectories": [
+        {
+          "name": "input",
+          "script_count": 1,
+          "analysis": {
+            "description": "System Components - input",
+            "exists": true,
+            "script_count": 1,
+            "subdirectories": [],
+            "files": [
+              {
+                "name": "input_focus_manager.gd",
+                "size": 4399,
+                "modified": 1748885220.7387383
+              }
+            ],
+            "size_kb": 4.3
+          }
+        },
+        {
+          "name": "performance",
+          "script_count": 1,
+          "analysis": {
+            "description": "System Components - performance",
+            "exists": true,
+            "script_count": 1,
+            "subdirectories": [],
+            "files": [
+              {
+                "name": "MemoryOptimizer.gd",
+                "size": 3582,
+                "modified": 1749104993.6212032
+              }
+            ],
+            "size_kb": 3.5
+          }
+        },
+        {
+          "name": "state",
+          "script_count": 1,
+          "analysis": {
+            "description": "System Components - state",
+            "exists": true,
+            "script_count": 1,
+            "subdirectories": [],
+            "files": [
+              {
+                "name": "GameStateSocketManager.gd",
+                "size": 14431,
+                "modified": 1749148052.575243
+              }
+            ],
+            "size_kb": 14.09
+          }
+        },
+        {
+          "name": "storage",
+          "script_count": 6,
+          "analysis": {
+            "description": "System Components - storage",
+            "exists": true,
+            "script_count": 6,
+            "subdirectories": [],
+            "files": [
+              {
+                "name": "AkashicRecords.gd",
+                "size": 22006,
+                "modified": 1749205111.0192165
+              },
+              {
+                "name": "AkashicRecordsEnhanced.gd",
+                "size": 57801,
+                "modified": 1749205123.1639705
+              },
+              {
+                "name": "AkashicRecordsSystem.gd",
+                "size": 57825,
+                "modified": 1749205100.9670076
+              },
+              {
+                "name": "akashic_living_database.gd",
+                "size": 5915,
+                "modified": 1749204121.0725336
+              },
+              {
+                "name": "akashic_loader.gd",
+                "size": 14380,
+                "modified": 1749032663.4425602
+              },
+              {
+                "name": "ZipPackageManager.gd",
+                "size": 9198,
+                "modified": 1748879681.7565064
+              }
+            ],
+            "size_kb": 163.21
+          }
+        },
+        {
+          "name": "timing",
+          "script_count": 1,
+          "analysis": {
+            "description": "System Components - timing",
+            "exists": true,
+            "script_count": 1,
+            "subdirectories": [],
+            "files": [
+              {
+                "name": "UniversalTimersSystem.gd",
+                "size": 14881,
+                "modified": 1749195469.786351
+              }
+            ],
+            "size_kb": 14.53
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "AkashicLibrary.gd",
+          "size": 6537,
+          "modified": 1749205019.7589986
+        },
+        {
+          "name": "ConsciousnessAudioManager.gd",
+          "size": 6895,
+          "modified": 1749156337.2643473
+        },
+        {
+          "name": "ConsciousnessFeedbackSystem.gd",
+          "size": 11778,
+          "modified": 1749129960.7271512
+        },
+        {
+          "name": "ConsciousnessRevolutionIntegrator.gd",
+          "size": 8689,
+          "modified": 1749154480.1465788
+        },
+        {
+          "name": "ConsciousnessRippleSystem.gd",
+          "size": 12015,
+          "modified": 1749158664.4955795
+        },
+        {
+          "name": "consciousness_aura_enhanced.gd",
+          "size": 9362,
+          "modified": 1748947583.0
+        },
+        {
+          "name": "consciousness_exchange_system.gd",
+          "size": 19140,
+          "modified": 1749204120.8496878
+        },
+        {
+          "name": "consciousness_icon.gd",
+          "size": 10435,
+          "modified": 1748884729.0
+        },
+        {
+          "name": "consciousness_resonator.gd",
+          "size": 5965,
+          "modified": 1748947583.0
+        },
+        {
+          "name": "consciousness_tooltip_system.gd",
+          "size": 7077,
+          "modified": 1749205019.762999
+        },
+        {
+          "name": "consciousness_visualizer.gd",
+          "size": 6872,
+          "modified": 1748811642.0
+        },
+        {
+          "name": "FoundationPolishSystem.gd",
+          "size": 15784,
+          "modified": 1749205019.7685142
+        },
+        {
+          "name": "pentagon_network_visualizer.gd",
+          "size": 25817,
+          "modified": 1748817855.0
+        },
+        {
+          "name": "UBPrintCollector.gd",
+          "size": 8328,
+          "modified": 1749167249.6334076
+        }
+      ],
+      "size_kb": 151.26
+    },
+    "components": {
+      "description": "Reusable Components",
+      "exists": true,
+      "script_count": 2,
+      "subdirectories": [],
+      "files": [
+        {
+          "name": "ActionComponent.gd",
+          "size": 1877,
+          "modified": 1749205134.826056
+        },
+        {
+          "name": "MemoryComponent.gd",
+          "size": 1637,
+          "modified": 1749205144.4770355
+        }
+      ],
+      "size_kb": 3.43
+    },
+    "scripts": {
+      "description": "Working Scripts",
+      "exists": true,
+      "script_count": 178,
+      "subdirectories": [
+        {
+          "name": "archive",
+          "script_count": 23,
+          "analysis": {
+            "description": "Working Scripts - archive",
+            "exists": true,
+            "script_count": 23,
+            "subdirectories": [],
+            "files": [
+              {
+                "name": "console_butterfly_fix.gd",
+                "size": 5645,
+                "modified": 1749205019.7437458
+              },
+              {
+                "name": "console_butterfly_tree_fix.gd",
+                "size": 5903,
+                "modified": 1749205019.749796
+              },
+              {
+                "name": "enhanced_debug_click_handler.gd",
+                "size": 8349,
+                "modified": 1748951970.5716655
+              },
+              {
+                "name": "enhanced_game_world.gd",
+                "size": 3790,
+                "modified": 1749105055.301176
+              },
+              {
+                "name": "GemmaUniverseInjector_enhancements.gd",
+                "size": 15012,
+                "modified": 1749025124.0
+              },
+              {
+                "name": "immediate_fix.gd",
+                "size": 2529,
+                "modified": 1749204121.0494173
+              },
+              {
+                "name": "main_OLD_COMPLEX.gd",
+                "size": 84224,
+                "modified": 1749204121.051941
+              },
+              {
+                "name": "main_SIMPLE.gd",
+                "size": 907,
+                "modified": 1749195873.491254
+              },
+              {
+                "name": "pentagon_validator_fixed.gd",
+                "size": 14539,
+                "modified": 1749205019.7547975
+              },
+              {
+                "name": "performance_fix_autoload.gd",
+                "size": 3203,
+                "modified": 1749139847.9849033
+              },
+              {
+                "name": "performance_fix_patch.gd",
+                "size": 2414,
+                "modified": 1749139775.9097311
+              },
+              {
+                "name": "quick_diagnostic.gd",
+                "size": 1681,
+                "modified": 1749204121.0539412
+              },
+              {
+                "name": "quick_health_check.gd",
+                "size": 2273,
+                "modified": 1749195873.5733986
+              },
+              {
+                "name": "quick_test_universe_injection.gd",
+                "size": 2628,
+                "modified": 1749025204.4312687
+              },
+              {
+                "name": "simple_camera_effects.gd",
+                "size": 10986,
+                "modified": 1748947583.0
+              },
+              {
+                "name": "simple_console_fix.gd",
+                "size": 1453,
+                "modified": 1748942017.4703157
+              },
+              {
+                "name": "simple_gdscript_validator.gd",
+                "size": 3953,
+                "modified": 1748981817.1196837
+              },
+              {
+                "name": "simple_health_check.gd",
+                "size": 2249,
+                "modified": 1749195873.6193132
+              },
+              {
+                "name": "simple_player_controller.gd",
+                "size": 4373,
+                "modified": 1749068320.2598767
+              },
+              {
+                "name": "simple_player_test.gd",
+                "size": 3775,
+                "modified": 1749120871.1474814
+              },
+              {
+                "name": "systembootstrap_quickfix.gd",
+                "size": 1499,
+                "modified": 1749204121.0554523
+              },
+              {
+                "name": "test_enhanced_health.gd",
+                "size": 4372,
+                "modified": 1749204121.0564637
+              },
+              {
+                "name": "test_pentagon_validator_fixed.gd",
+                "size": 1920,
+                "modified": 1749013066.389113
+              }
+            ],
+            "size_kb": 183.28
+          }
+        },
+        {
+          "name": "beings",
+          "script_count": 0,
+          "analysis": {
+            "description": "Working Scripts - beings",
+            "exists": true,
+            "script_count": 0,
+            "subdirectories": [],
+            "files": [],
+            "size_kb": 0.0
+          }
+        },
+        {
+          "name": "bridges",
+          "script_count": 8,
+          "analysis": {
+            "description": "Working Scripts - bridges",
+            "exists": true,
+            "script_count": 8,
+            "subdirectories": [],
+            "files": [
+              {
+                "name": "chatgpt_premium_bridge_universal_being.gd",
+                "size": 20530,
+                "modified": 1748947582.0
+              },
+              {
+                "name": "claude_bridge_universal_being.gd",
+                "size": 4390,
+                "modified": 1748947582.0
+              },
+              {
+                "name": "claude_desktop_mcp_universal_being.gd",
+                "size": 20638,
+                "modified": 1748952385.0
+              },
+              {
+                "name": "desktop_bridge.gd",
+                "size": 782,
+                "modified": 1748959548.0
+              },
+              {
+                "name": "gdscript_validator_bridge.gd",
+                "size": 9561,
+                "modified": 1748981628.8909516
+              },
+              {
+                "name": "gemini_api.gd",
+                "size": 540,
+                "modified": 1748959556.0
+              },
+              {
+                "name": "google_gemini_premium_bridge_universal_being.gd",
+                "size": 23328,
+                "modified": 1748947582.0
+              },
+              {
+                "name": "remote_godot_bridge.gd",
+                "size": 13743,
+                "modified": 1748981406.1545956
+              }
+            ],
+            "size_kb": 91.32
+          }
+        },
+        {
+          "name": "tests",
+          "script_count": 0,
+          "analysis": {
+            "description": "Working Scripts - tests",
+            "exists": true,
+            "script_count": 0,
+            "subdirectories": [],
+            "files": [],
+            "size_kb": 0.0
+          }
+        },
+        {
+          "name": "tools",
+          "script_count": 8,
+          "analysis": {
+            "description": "Working Scripts - tools",
+            "exists": true,
+            "script_count": 8,
+            "subdirectories": [],
+            "files": [
+              {
+                "name": "archaeological_scanner.gd",
+                "size": 20205,
+                "modified": 1748980151.1198068
+              },
+              {
+                "name": "asset_checker.gd",
+                "size": 9077,
+                "modified": 1749205019.7335157
+              },
+              {
+                "name": "component_loader.gd",
+                "size": 3616,
+                "modified": 1748810574.0
+              },
+              {
+                "name": "gdscript_directive_scanner.gd",
+                "size": 14190,
+                "modified": 1748980455.385718
+              },
+              {
+                "name": "naming_validator.gd",
+                "size": 20285,
+                "modified": 1748981125.6855369
+              },
+              {
+                "name": "path_audit_system.gd",
+                "size": 13062,
+                "modified": 1748993378.1110084
+              },
+              {
+                "name": "path_reference_fixer.gd",
+                "size": 6811,
+                "modified": 1749204121.0619721
+              },
+              {
+                "name": "pentagon_validator.gd",
+                "size": 14529,
+                "modified": 1749205019.7387478
+              }
+            ],
+            "size_kb": 99.39
+          }
+        },
+        {
+          "name": "ui",
+          "script_count": 4,
+          "analysis": {
+            "description": "Working Scripts - ui",
+            "exists": true,
+            "script_count": 4,
+            "subdirectories": [
+              {
+                "name": "camera_consciousness_overlay",
+                "script_count": 3,
+                "analysis": {
+                  "description": "Working Scripts - ui - camera_consciousness_overlay",
+                  "exists": true,
+                  "script_count": 3,
+                  "subdirectories": [],
+                  "files": [
+                    {
+                      "name": "consciousness_meter.gd",
+                      "size": 2745,
+                      "modified": 1749109991.2447424
+                    },
+                    {
+                      "name": "effect_sliders.gd",
+                      "size": 3962,
+                      "modified": 1749109971.9580388
+                    },
+                    {
+                      "name": "info_panel.gd",
+                      "size": 2081,
+                      "modified": 1749109951.06817
+                    }
+                  ],
+                  "size_kb": 8.58
+                }
+              }
+            ],
+            "files": [
+              {
+                "name": "UniverseSimulator.gd",
+                "size": 7116,
+                "modified": 1749110024.2008114
+              }
+            ],
+            "size_kb": 6.96
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "add_butterfly_command.gd",
+          "size": 1905,
+          "modified": 1748941778.4103544
+        },
+        {
+          "name": "advanced_ufo_generator.gd",
+          "size": 10686,
+          "modified": 1748818767.0
+        },
+        {
+          "name": "advanced_visualization_optimizer.gd",
+          "size": 12446,
+          "modified": 1748818066.0
+        },
+        {
+          "name": "AICollaborationHub.gd",
+          "size": 15371,
+          "modified": 1748982238.0
+        },
+        {
+          "name": "ai_natural_language_console.gd",
+          "size": 8291,
+          "modified": 1748894840.3704047
+        },
+        {
+          "name": "ai_pentagon_network.gd",
+          "size": 10261,
+          "modified": 1748811736.0
+        },
+        {
+          "name": "AkashicLibrary.gd",
+          "size": 6527,
+          "modified": 1749166105.76324
+        },
+        {
+          "name": "akashic_additions.gd",
+          "size": 1738,
+          "modified": 1749204120.7381592
+        },
+        {
+          "name": "akashic_chunk_manager.gd",
+          "size": 4695,
+          "modified": 1748991242.0
+        },
+        {
+          "name": "akashic_compact_system.gd",
+          "size": 21718,
+          "modified": 1749204120.7391636
+        },
+        {
+          "name": "akashic_logger.gd",
+          "size": 1715,
+          "modified": 1748900755.0
+        },
+        {
+          "name": "akashic_spatial_db.gd",
+          "size": 7244,
+          "modified": 1748950351.0
+        },
+        {
+          "name": "auto_startup_universal_being.gd",
+          "size": 8292,
+          "modified": 1748807072.0
+        },
+        {
+          "name": "basic_interaction.gd",
+          "size": 7382,
+          "modified": 1748982238.0
+        },
+        {
+          "name": "basic_test.gd",
+          "size": 76,
+          "modified": 1748881723.2386427
+        },
+        {
+          "name": "BeingDNAComponent.gd",
+          "size": 11282,
+          "modified": 1748954307.0
+        },
+        {
+          "name": "button_3d_universal_being.gd",
+          "size": 3688,
+          "modified": 1749064631.9660478
+        },
+        {
+          "name": "button_basic.gd",
+          "size": 6394,
+          "modified": 1748910357.0
+        },
+        {
+          "name": "button_universal_being.gd",
+          "size": 5687,
+          "modified": 1748817161.0
+        },
+        {
+          "name": "camera_effects_component.gd",
+          "size": 11081,
+          "modified": 1748872576.0
+        },
+        {
+          "name": "camera_effects_test.gd",
+          "size": 4531,
+          "modified": 1748910357.21299
+        },
+        {
+          "name": "chunk_generator.gd",
+          "size": 10924,
+          "modified": 1748950199.0
+        },
+        {
+          "name": "chunk_generator_component.gd",
+          "size": 12351,
+          "modified": 1748950003.0
+        },
+        {
+          "name": "chunk_grid_manager.gd",
+          "size": 17600,
+          "modified": 1749072860.3946416
+        },
+        {
+          "name": "chunk_universal_being.gd",
+          "size": 21309,
+          "modified": 1749073265.318496
+        },
+        {
+          "name": "chunk_universe_generator.gd",
+          "size": 17506,
+          "modified": 1749050626.0
+        },
+        {
+          "name": "complete_package_system_test.gd",
+          "size": 14033,
+          "modified": 1748880092.926097
+        },
+        {
+          "name": "comprehensive_system_test.gd",
+          "size": 11890,
+          "modified": 1749124083.6251328
+        },
+        {
+          "name": "ConsoleTextLayer.gd",
+          "size": 19928,
+          "modified": 1748910357.0
+        },
+        {
+          "name": "console_base.gd",
+          "size": 6171,
+          "modified": 1748894684.476487
+        },
+        {
+          "name": "console_enhancements.gd",
+          "size": 7438,
+          "modified": 1748895740.1165335
+        },
+        {
+          "name": "console_notifications.gd",
+          "size": 6075,
+          "modified": 1748947583.0
+        },
+        {
+          "name": "console_test.gd",
+          "size": 966,
+          "modified": 1748882059.7557044
+        },
+        {
+          "name": "console_universal_being.gd",
+          "size": 3107,
+          "modified": 1748806539.0
+        },
+        {
+          "name": "conversational_console_being.gd",
+          "size": 39635,
+          "modified": 1749036347.0
+        },
+        {
+          "name": "cosmic_insights.gd",
+          "size": 595,
+          "modified": 1748959574.0
+        },
+        {
+          "name": "cosmic_lod_system.gd",
+          "size": 9786,
+          "modified": 1749140092.822235
+        },
+        {
+          "name": "create_example_component.gd",
+          "size": 353,
+          "modified": 1748810837.0
+        },
+        {
+          "name": "cursor_controller.gd",
+          "size": 6400,
+          "modified": 1749064942.4814525
+        },
+        {
+          "name": "desert_garden_genesis.gd",
+          "size": 17534,
+          "modified": 1749035377.580023
+        },
+        {
+          "name": "dimensional_sight.gd",
+          "size": 625,
+          "modified": 1748959583.0
+        },
+        {
+          "name": "dna_visualizer.gd",
+          "size": 8777,
+          "modified": 1748947583.0
+        },
+        {
+          "name": "enable_144k_enlightenment.gd",
+          "size": 5122,
+          "modified": 1749029715.2144873
+        },
+        {
+          "name": "EnlightenedGroupManager.gd",
+          "size": 9598,
+          "modified": 1749029641.0
+        },
+        {
+          "name": "fix_all_docstrings.gd",
+          "size": 1938,
+          "modified": 1748940832.9954743
+        },
+        {
+          "name": "flood_gate_controller.gd",
+          "size": 736,
+          "modified": 1748810455.0
+        },
+        {
+          "name": "game_launcher_universal_being.gd",
+          "size": 4987,
+          "modified": 1748806553.0
+        },
+        {
+          "name": "game_world_controller.gd",
+          "size": 9176,
+          "modified": 1749195873.3693652
+        },
+        {
+          "name": "Gemma3DPerceptionLogger.gd",
+          "size": 25484,
+          "modified": 1749027996.0
+        },
+        {
+          "name": "GemmaAkashicLogger.gd",
+          "size": 17143,
+          "modified": 1749027783.0
+        },
+        {
+          "name": "GemmaAudio.gd",
+          "size": 6752,
+          "modified": 1749028259.0
+        },
+        {
+          "name": "GemmaConsoleInterface.gd",
+          "size": 34202,
+          "modified": 1749029170.0
+        },
+        {
+          "name": "GemmaInterfaceReader.gd",
+          "size": 13394,
+          "modified": 1749028297.0
+        },
+        {
+          "name": "GemmaMacroMaster.gd",
+          "size": 10405,
+          "modified": 1749128480.1387486
+        },
+        {
+          "name": "GemmaSensorySystem.gd",
+          "size": 20082,
+          "modified": 1749028384.0
+        },
+        {
+          "name": "GemmaSpatialPerception.gd",
+          "size": 10688,
+          "modified": 1749028285.0
+        },
+        {
+          "name": "GemmaUniversalBeing.gd",
+          "size": 21010,
+          "modified": 1749196594.2964895
+        },
+        {
+          "name": "GemmaUniverseInjector.gd",
+          "size": 51828,
+          "modified": 1749026914.0
+        },
+        {
+          "name": "GemmaVision.gd",
+          "size": 12863,
+          "modified": 1748996848.0
+        },
+        {
+          "name": "gemma_integration_status.gd",
+          "size": 4744,
+          "modified": 1749204120.7543023
+        },
+        {
+          "name": "gemma_natural_language.gd",
+          "size": 10819,
+          "modified": 1748894654.4949338
+        },
+        {
+          "name": "gemma_simple.gd",
+          "size": 5691,
+          "modified": 1748894791.9625874
+        },
+        {
+          "name": "gemma_text_interface_system.gd",
+          "size": 11969,
+          "modified": 1749049801.0
+        },
+        {
+          "name": "generation_coordinator.gd",
+          "size": 7041,
+          "modified": 1749196450.0792856
+        },
+        {
+          "name": "genesis_conductor_universal_being.gd",
+          "size": 15100,
+          "modified": 1748888486.0
+        },
+        {
+          "name": "genesis_machine_simple.gd",
+          "size": 3619,
+          "modified": 1748941892.7565598
+        },
+        {
+          "name": "glow_effect.gd",
+          "size": 5894,
+          "modified": 1748947583.0
+        },
+        {
+          "name": "input_focus_manager.gd",
+          "size": 10707,
+          "modified": 1748953256.0
+        },
+        {
+          "name": "InteractiveTestEnvironment.gd",
+          "size": 18809,
+          "modified": 1748910357.481518
+        },
+        {
+          "name": "interface_window_universal_being.gd",
+          "size": 11799,
+          "modified": 1749066715.7196462
+        },
+        {
+          "name": "IntuitiveInteractionSystem.gd",
+          "size": 16850,
+          "modified": 1749130102.7556696
+        },
+        {
+          "name": "launch_genesis_adventure.gd",
+          "size": 10359,
+          "modified": 1749032096.2543147
+        },
+        {
+          "name": "lightweight_chunk_system.gd",
+          "size": 9051,
+          "modified": 1749204120.7582715
+        },
+        {
+          "name": "LocalAICollaboration.gd",
+          "size": 16914,
+          "modified": 1749130323.069842
+        },
+        {
+          "name": "lod_generator_universal_being.gd",
+          "size": 5179,
+          "modified": 1749067299.0713933
+        },
+        {
+          "name": "LogicConnectorSystem.gd",
+          "size": 9685,
+          "modified": 1748996146.0
+        },
+        {
+          "name": "logic_connector.gd",
+          "size": 18909,
+          "modified": 1748996117.6044135
+        },
+        {
+          "name": "luminus_chunk_grid_manager.gd",
+          "size": 3450,
+          "modified": 1749028559.0
+        },
+        {
+          "name": "luminus_chunk_universal_being.gd",
+          "size": 2446,
+          "modified": 1749036166.0
+        },
+        {
+          "name": "luminus_narrative_system.gd",
+          "size": 1089,
+          "modified": 1748815329.0
+        },
+        {
+          "name": "macro_system.gd",
+          "size": 13418,
+          "modified": 1748890404.0
+        },
+        {
+          "name": "main_script.gd",
+          "size": 6587,
+          "modified": 1749060099.6649394
+        },
+        {
+          "name": "map_world_controller.gd",
+          "size": 7598,
+          "modified": 1749073265.411782
+        },
+        {
+          "name": "matrix_chunk_system.gd",
+          "size": 9049,
+          "modified": 1749139992.9352572
+        },
+        {
+          "name": "mcp_client.gd",
+          "size": 781,
+          "modified": 1748959539.0
+        },
+        {
+          "name": "meta_game_testing_ground.gd",
+          "size": 10299,
+          "modified": 1748885805.9398484
+        },
+        {
+          "name": "multimodal_analyzer.gd",
+          "size": 618,
+          "modified": 1748959565.0
+        },
+        {
+          "name": "package_test.gd",
+          "size": 755,
+          "modified": 1748881992.5480194
+        },
+        {
+          "name": "perfect_universal_console.gd",
+          "size": 31392,
+          "modified": 1749204120.7627802
+        },
+        {
+          "name": "performance_optimizer.gd",
+          "size": 6005,
+          "modified": 1749140900.9154103
+        },
+        {
+          "name": "PoeticLogger.gd",
+          "size": 7123,
+          "modified": 1749032654.0
+        },
+        {
+          "name": "poetic_log.gd",
+          "size": 2087,
+          "modified": 1748896453.0
+        },
+        {
+          "name": "QuantumFloodGates.gd",
+          "size": 10509,
+          "modified": 1749029572.0
+        },
+        {
+          "name": "RealityEditorComponent.gd",
+          "size": 33285,
+          "modified": 1749053664.0
+        },
+        {
+          "name": "recursive_creation_console_universal_being.gd",
+          "size": 15747,
+          "modified": 1748954466.0
+        },
+        {
+          "name": "scan_directive_conflicts.gd",
+          "size": 3146,
+          "modified": 1748980493.7775967
+        },
+        {
+          "name": "SelfRepairSystem.gd",
+          "size": 13214,
+          "modified": 1749128738.9443471
+        },
+        {
+          "name": "socket_button_universal_being.gd",
+          "size": 6770,
+          "modified": 1749066665.033468
+        },
+        {
+          "name": "socket_grid_universal_being.gd",
+          "size": 3549,
+          "modified": 1748806536.0
+        },
+        {
+          "name": "terminal_universal_being.gd",
+          "size": 3763,
+          "modified": 1748806541.0
+        },
+        {
+          "name": "text_representation_system.gd",
+          "size": 4352,
+          "modified": 1749066716.8381906
+        },
+        {
+          "name": "transform_animator.gd",
+          "size": 1727,
+          "modified": 1748947583.0
+        },
+        {
+          "name": "tree_universal_being.gd",
+          "size": 3348,
+          "modified": 1748911189.0
+        },
+        {
+          "name": "triple_helix_consciousness.gd",
+          "size": 12221,
+          "modified": 1748947583.0
+        },
+        {
+          "name": "turn_based_creation_system.gd",
+          "size": 20929,
+          "modified": 1749164883.5684092
+        },
+        {
+          "name": "ufo_marching_cubes.gd",
+          "size": 8426,
+          "modified": 1748818420.0
+        },
+        {
+          "name": "ufo_universal_being.gd",
+          "size": 12202,
+          "modified": 1748947582.0
+        },
+        {
+          "name": "ultra_fast_controller.gd",
+          "size": 1886,
+          "modified": 1749073159.6655438
+        },
+        {
+          "name": "unified_chunk_manager.gd",
+          "size": 7214,
+          "modified": 1749196558.6962733
+        },
+        {
+          "name": "unified_chunk_system.gd",
+          "size": 11324,
+          "modified": 1748950489.0
+        },
+        {
+          "name": "unified_console_being.gd",
+          "size": 23077,
+          "modified": 1748982239.0
+        },
+        {
+          "name": "UniversalBeingInspector.gd",
+          "size": 25271,
+          "modified": 1748909224.0
+        },
+        {
+          "name": "UniversalConsole.gd",
+          "size": 19206,
+          "modified": 1749204120.7697742
+        },
+        {
+          "name": "UniversalInspectorBridge.gd",
+          "size": 13317,
+          "modified": 1748983743.0
+        },
+        {
+          "name": "universal_being_generator.gd",
+          "size": 8703,
+          "modified": 1748892367.0
+        },
+        {
+          "name": "universal_being_movement_system.gd",
+          "size": 8345,
+          "modified": 1748991186.0
+        },
+        {
+          "name": "universal_being_mover.gd",
+          "size": 20039,
+          "modified": 1749025977.0
+        },
+        {
+          "name": "universal_being_pattern_extractor.gd",
+          "size": 20960,
+          "modified": 1749204120.7712843
+        },
+        {
+          "name": "universal_command_processor.gd",
+          "size": 22487,
+          "modified": 1749204120.7733264
+        },
+        {
+          "name": "universal_console_controller.gd",
+          "size": 28634,
+          "modified": 1749167313.0623302
+        },
+        {
+          "name": "universal_interface_being.gd",
+          "size": 13340,
+          "modified": 1749049745.0
+        },
+        {
+          "name": "universal_interface_manager.gd",
+          "size": 8396,
+          "modified": 1749036667.0
+        },
+        {
+          "name": "universal_script_inspector.gd",
+          "size": 18135,
+          "modified": 1748951146.7016342
+        },
+        {
+          "name": "UniverseConsoleComponent.gd",
+          "size": 14397,
+          "modified": 1748947583.0
+        },
+        {
+          "name": "UniverseGenesisComponent.gd",
+          "size": 14909,
+          "modified": 1748942256.0
+        },
+        {
+          "name": "UniverseManager.gd",
+          "size": 10648,
+          "modified": 1749032645.0
+        },
+        {
+          "name": "universe_console_integration.gd",
+          "size": 2025,
+          "modified": 1748947582.0
+        },
+        {
+          "name": "universe_core.gd",
+          "size": 10108,
+          "modified": 1748910357.0
+        },
+        {
+          "name": "universe_lod.gd",
+          "size": 6107,
+          "modified": 1748899465.0
+        },
+        {
+          "name": "universe_physics.gd",
+          "size": 3452,
+          "modified": 1748940307.0
+        },
+        {
+          "name": "universe_portal.gd",
+          "size": 6761,
+          "modified": 1748910358.0
+        },
+        {
+          "name": "universe_rules.gd",
+          "size": 10813,
+          "modified": 1749059926.9052901
+        },
+        {
+          "name": "universe_time.gd",
+          "size": 4171,
+          "modified": 1748899443.0
+        },
+        {
+          "name": "universe_universal_being.gd",
+          "size": 13986,
+          "modified": 1748911182.0
+        },
+        {
+          "name": "visual_enhancement_system.gd",
+          "size": 8786,
+          "modified": 1749141242.105192
+        }
+      ],
+      "size_kb": 1421.21
+    },
+    "autoloads": {
+      "description": "Global Singletons",
+      "exists": true,
+      "script_count": 3,
+      "subdirectories": [],
+      "files": [
+        {
+          "name": "akashic_loader.gd",
+          "size": 16339,
+          "modified": 1748879774.9104137
+        },
+        {
+          "name": "GemmaAI.gd",
+          "size": 38682,
+          "modified": 1749167207.1799755
+        },
+        {
+          "name": "SystemBootstrap.gd",
+          "size": 15320,
+          "modified": 1749204120.7276778
+        }
+      ],
+      "size_kb": 68.69
+    },
+    "akashic_library": {
+      "description": "Asset Library",
+      "exists": true,
+      "script_count": 0,
+      "subdirectories": [
+        {
+          "name": "beings",
+          "script_count": 0,
+          "analysis": {
+            "description": "Asset Library - beings",
+            "exists": true,
+            "script_count": 0,
+            "subdirectories": [
+              {
+                "name": "characters",
+                "script_count": 0,
+                "analysis": {
+                  "description": "Asset Library - beings - characters",
+                  "exists": true,
+                  "script_count": 0,
+                  "subdirectories": [],
+                  "files": [],
+                  "size_kb": 0.0
+                }
+              }
+            ],
+            "files": [],
+            "size_kb": 0.0
+          }
+        },
+        {
+          "name": "cli",
+          "script_count": 0,
+          "analysis": {
+            "description": "Asset Library - cli",
+            "exists": true,
+            "script_count": 0,
+            "subdirectories": [
+              {
+                "name": "templates",
+                "script_count": 0,
+                "analysis": {
+                  "description": "Asset Library - cli - templates",
+                  "exists": true,
+                  "script_count": 0,
+                  "subdirectories": [],
+                  "files": [],
+                  "size_kb": 0.0
+                }
+              }
+            ],
+            "files": [],
+            "size_kb": 0.0
+          }
+        },
+        {
+          "name": "collaboration",
+          "script_count": 0,
+          "analysis": {
+            "description": "Asset Library - collaboration",
+            "exists": true,
+            "script_count": 0,
+            "subdirectories": [],
+            "files": [],
+            "size_kb": 0.0
+          }
+        },
+        {
+          "name": "components",
+          "script_count": 0,
+          "analysis": {
+            "description": "Asset Library - components",
+            "exists": true,
+            "script_count": 0,
+            "subdirectories": [
+              {
+                "name": "akashic_logger.ub.zip",
+                "script_count": 0,
+                "analysis": {
+                  "description": "Asset Library - components - akashic_logger.ub.zip",
+                  "exists": true,
+                  "script_count": 0,
+                  "subdirectories": [],
+                  "files": [],
+                  "size_kb": 0.0
+                }
+              },
+              {
+                "name": "basic_interaction.ub.zip",
+                "script_count": 0,
+                "analysis": {
+                  "description": "Asset Library - components - basic_interaction.ub.zip",
+                  "exists": true,
+                  "script_count": 0,
+                  "subdirectories": [],
+                  "files": [],
+                  "size_kb": 0.0
+                }
+              },
+              {
+                "name": "being_dna",
+                "script_count": 0,
+                "analysis": {
+                  "description": "Asset Library - components - being_dna",
+                  "exists": true,
+                  "script_count": 0,
+                  "subdirectories": [],
+                  "files": [],
+                  "size_kb": 0.0
+                }
+              },
+              {
+                "name": "button_basic",
+                "script_count": 0,
+                "analysis": {
+                  "description": "Asset Library - components - button_basic",
+                  "exists": true,
+                  "script_count": 0,
+                  "subdirectories": [],
+                  "files": [],
+                  "size_kb": 0.0
+                }
+              },
+              {
+                "name": "camera_effects",
+                "script_count": 0,
+                "analysis": {
+                  "description": "Asset Library - components - camera_effects",
+                  "exists": true,
+                  "script_count": 0,
+                  "subdirectories": [
+                    {
+                      "name": "shaders",
+                      "script_count": 0,
+                      "analysis": {
+                        "description": "Asset Library - components - camera_effects - shaders",
+                        "exists": true,
+                        "script_count": 0,
+                        "subdirectories": [],
+                        "files": [],
+                        "size_kb": 0.0
+                      }
+                    }
+                  ],
+                  "files": [],
+                  "size_kb": 0.0
+                }
+              },
+              {
+                "name": "chunk_generator_basic",
+                "script_count": 0,
+                "analysis": {
+                  "description": "Asset Library - components - chunk_generator_basic",
+                  "exists": true,
+                  "script_count": 0,
+                  "subdirectories": [
+                    {
+                      "name": "scripts",
+                      "script_count": 0,
+                      "analysis": {
+                        "description": "Asset Library - components - chunk_generator_basic - scripts",
+                        "exists": true,
+                        "script_count": 0,
+                        "subdirectories": [],
+                        "files": [],
+                        "size_kb": 0.0
+                      }
+                    }
+                  ],
+                  "files": [],
+                  "size_kb": 0.0
+                }
+              },
+              {
+                "name": "consciousness_resonator.ub.zip",
+                "script_count": 0,
+                "analysis": {
+                  "description": "Asset Library - components - consciousness_resonator.ub.zip",
+                  "exists": true,
+                  "script_count": 0,
+                  "subdirectories": [],
+                  "files": [],
+                  "size_kb": 0.0
+                }
+              },
+              {
+                "name": "console_notifications.ub.zip",
+                "script_count": 0,
+                "analysis": {
+                  "description": "Asset Library - components - console_notifications.ub.zip",
+                  "exists": true,
+                  "script_count": 0,
+                  "subdirectories": [],
+                  "files": [],
+                  "size_kb": 0.0
+                }
+              },
+              {
+                "name": "cosmic_insights.ub.zip",
+                "script_count": 0,
+                "analysis": {
+                  "description": "Asset Library - components - cosmic_insights.ub.zip",
+                  "exists": true,
+                  "script_count": 0,
+                  "subdirectories": [],
+                  "files": [],
+                  "size_kb": 0.0
+                }
+              },
+              {
+                "name": "desktop_bridge.ub.zip",
+                "script_count": 0,
+                "analysis": {
+                  "description": "Asset Library - components - desktop_bridge.ub.zip",
+                  "exists": true,
+                  "script_count": 0,
+                  "subdirectories": [],
+                  "files": [],
+                  "size_kb": 0.0
+                }
+              },
+              {
+                "name": "dimensional_sight.ub.zip",
+                "script_count": 0,
+                "analysis": {
+                  "description": "Asset Library - components - dimensional_sight.ub.zip",
+                  "exists": true,
+                  "script_count": 0,
+                  "subdirectories": [],
+                  "files": [],
+                  "size_kb": 0.0
+                }
+              },
+              {
+                "name": "gemini_api.ub.zip",
+                "script_count": 0,
+                "analysis": {
+                  "description": "Asset Library - components - gemini_api.ub.zip",
+                  "exists": true,
+                  "script_count": 0,
+                  "subdirectories": [],
+                  "files": [],
+                  "size_kb": 0.0
+                }
+              },
+              {
+                "name": "glow_effect.ub.zip",
+                "script_count": 0,
+                "analysis": {
+                  "description": "Asset Library - components - glow_effect.ub.zip",
+                  "exists": true,
+                  "script_count": 0,
+                  "subdirectories": [],
+                  "files": [],
+                  "size_kb": 0.0
+                }
+              },
+              {
+                "name": "mcp_client.ub.zip",
+                "script_count": 0,
+                "analysis": {
+                  "description": "Asset Library - components - mcp_client.ub.zip",
+                  "exists": true,
+                  "script_count": 0,
+                  "subdirectories": [],
+                  "files": [],
+                  "size_kb": 0.0
+                }
+              },
+              {
+                "name": "multimodal_analyzer.ub.zip",
+                "script_count": 0,
+                "analysis": {
+                  "description": "Asset Library - components - multimodal_analyzer.ub.zip",
+                  "exists": true,
+                  "script_count": 0,
+                  "subdirectories": [],
+                  "files": [],
+                  "size_kb": 0.0
+                }
+              },
+              {
+                "name": "poetic_log.ub.zip",
+                "script_count": 0,
+                "analysis": {
+                  "description": "Asset Library - components - poetic_log.ub.zip",
+                  "exists": true,
+                  "script_count": 0,
+                  "subdirectories": [],
+                  "files": [],
+                  "size_kb": 0.0
+                }
+              },
+              {
+                "name": "reality_editor",
+                "script_count": 0,
+                "analysis": {
+                  "description": "Asset Library - components - reality_editor",
+                  "exists": true,
+                  "script_count": 0,
+                  "subdirectories": [],
+                  "files": [],
+                  "size_kb": 0.0
+                }
+              },
+              {
+                "name": "reality_editor.ub.zip",
+                "script_count": 0,
+                "analysis": {
+                  "description": "Asset Library - components - reality_editor.ub.zip",
+                  "exists": true,
+                  "script_count": 0,
+                  "subdirectories": [],
+                  "files": [],
+                  "size_kb": 0.0
+                }
+              },
+              {
+                "name": "transform_animator.ub.zip",
+                "script_count": 0,
+                "analysis": {
+                  "description": "Asset Library - components - transform_animator.ub.zip",
+                  "exists": true,
+                  "script_count": 0,
+                  "subdirectories": [],
+                  "files": [],
+                  "size_kb": 0.0
+                }
+              },
+              {
+                "name": "universe_console",
+                "script_count": 0,
+                "analysis": {
+                  "description": "Asset Library - components - universe_console",
+                  "exists": true,
+                  "script_count": 0,
+                  "subdirectories": [],
+                  "files": [],
+                  "size_kb": 0.0
+                }
+              },
+              {
+                "name": "universe_creation.ub.zip",
+                "script_count": 0,
+                "analysis": {
+                  "description": "Asset Library - components - universe_creation.ub.zip",
+                  "exists": true,
+                  "script_count": 0,
+                  "subdirectories": [],
+                  "files": [],
+                  "size_kb": 0.0
+                }
+              },
+              {
+                "name": "universe_genesis",
+                "script_count": 0,
+                "analysis": {
+                  "description": "Asset Library - components - universe_genesis",
+                  "exists": true,
+                  "script_count": 0,
+                  "subdirectories": [],
+                  "files": [],
+                  "size_kb": 0.0
+                }
+              },
+              {
+                "name": "universe_lod.ub.zip",
+                "script_count": 0,
+                "analysis": {
+                  "description": "Asset Library - components - universe_lod.ub.zip",
+                  "exists": true,
+                  "script_count": 0,
+                  "subdirectories": [],
+                  "files": [],
+                  "size_kb": 0.0
+                }
+              },
+              {
+                "name": "universe_physics.ub.zip",
+                "script_count": 0,
+                "analysis": {
+                  "description": "Asset Library - components - universe_physics.ub.zip",
+                  "exists": true,
+                  "script_count": 0,
+                  "subdirectories": [],
+                  "files": [],
+                  "size_kb": 0.0
+                }
+              },
+              {
+                "name": "universe_time.ub.zip",
+                "script_count": 0,
+                "analysis": {
+                  "description": "Asset Library - components - universe_time.ub.zip",
+                  "exists": true,
+                  "script_count": 0,
+                  "subdirectories": [],
+                  "files": [],
+                  "size_kb": 0.0
+                }
+              }
+            ],
+            "files": [],
+            "size_kb": 0.0
+          }
+        },
+        {
+          "name": "creation",
+          "script_count": 0,
+          "analysis": {
+            "description": "Asset Library - creation",
+            "exists": true,
+            "script_count": 0,
+            "subdirectories": [
+              {
+                "name": "libraries",
+                "script_count": 0,
+                "analysis": {
+                  "description": "Asset Library - creation - libraries",
+                  "exists": true,
+                  "script_count": 0,
+                  "subdirectories": [],
+                  "files": [],
+                  "size_kb": 0.0
+                }
+              }
+            ],
+            "files": [],
+            "size_kb": 0.0
+          }
+        },
+        {
+          "name": "data",
+          "script_count": 0,
+          "analysis": {
+            "description": "Asset Library - data",
+            "exists": true,
+            "script_count": 0,
+            "subdirectories": [
+              {
+                "name": "akashic",
+                "script_count": 0,
+                "analysis": {
+                  "description": "Asset Library - data - akashic",
+                  "exists": true,
+                  "script_count": 0,
+                  "subdirectories": [],
+                  "files": [],
+                  "size_kb": 0.0
+                }
+              },
+              {
+                "name": "config",
+                "script_count": 0,
+                "analysis": {
+                  "description": "Asset Library - data - config",
+                  "exists": true,
+                  "script_count": 0,
+                  "subdirectories": [],
+                  "files": [],
+                  "size_kb": 0.0
+                }
+              },
+              {
+                "name": "templates",
+                "script_count": 0,
+                "analysis": {
+                  "description": "Asset Library - data - templates",
+                  "exists": true,
+                  "script_count": 0,
+                  "subdirectories": [],
+                  "files": [],
+                  "size_kb": 0.0
+                }
+              }
+            ],
+            "files": [],
+            "size_kb": 0.0
+          }
+        },
+        {
+          "name": "development",
+          "script_count": 0,
+          "analysis": {
+            "description": "Asset Library - development",
+            "exists": true,
+            "script_count": 0,
+            "subdirectories": [
+              {
+                "name": "libraries",
+                "script_count": 0,
+                "analysis": {
+                  "description": "Asset Library - development - libraries",
+                  "exists": true,
+                  "script_count": 0,
+                  "subdirectories": [
+                    {
+                      "name": "actions",
+                      "script_count": 0,
+                      "analysis": {
+                        "description": "Asset Library - development - libraries - actions",
+                        "exists": true,
+                        "script_count": 0,
+                        "subdirectories": [
+                          {
+                            "name": "movement_system",
+                            "script_count": 0,
+                            "analysis": {
+                              "description": "Asset Library - development - libraries - actions - movement_system",
+                              "exists": true,
+                              "script_count": 0,
+                              "subdirectories": [],
+                              "files": [],
+                              "size_kb": 0.0
+                            }
+                          }
+                        ],
+                        "files": [],
+                        "size_kb": 0.0
+                      }
+                    },
+                    {
+                      "name": "ai",
+                      "script_count": 0,
+                      "analysis": {
+                        "description": "Asset Library - development - libraries - ai",
+                        "exists": true,
+                        "script_count": 0,
+                        "subdirectories": [
+                          {
+                            "name": "gemma_integration",
+                            "script_count": 0,
+                            "analysis": {
+                              "description": "Asset Library - development - libraries - ai - gemma_integration",
+                              "exists": true,
+                              "script_count": 0,
+                              "subdirectories": [],
+                              "files": [],
+                              "size_kb": 0.0
+                            }
+                          }
+                        ],
+                        "files": [],
+                        "size_kb": 0.0
+                      }
+                    },
+                    {
+                      "name": "assets",
+                      "script_count": 0,
+                      "analysis": {
+                        "description": "Asset Library - development - libraries - assets",
+                        "exists": true,
+                        "script_count": 0,
+                        "subdirectories": [
+                          {
+                            "name": "consciousness_icons",
+                            "script_count": 0,
+                            "analysis": {
+                              "description": "Asset Library - development - libraries - assets - consciousness_icons",
+                              "exists": true,
+                              "script_count": 0,
+                              "subdirectories": [
+                                {
+                                  "name": "icons",
+                                  "script_count": 0,
+                                  "analysis": {
+                                    "description": "Asset Library - development - libraries - assets - consciousness_icons - icons",
+                                    "exists": true,
+                                    "script_count": 0,
+                                    "subdirectories": [],
+                                    "files": [],
+                                    "size_kb": 0.0
+                                  }
+                                }
+                              ],
+                              "files": [],
+                              "size_kb": 0.0
+                            }
+                          }
+                        ],
+                        "files": [],
+                        "size_kb": 0.0
+                      }
+                    },
+                    {
+                      "name": "composites",
+                      "script_count": 0,
+                      "analysis": {
+                        "description": "Asset Library - development - libraries - composites",
+                        "exists": true,
+                        "script_count": 0,
+                        "subdirectories": [
+                          {
+                            "name": "complete_beings",
+                            "script_count": 0,
+                            "analysis": {
+                              "description": "Asset Library - development - libraries - composites - complete_beings",
+                              "exists": true,
+                              "script_count": 0,
+                              "subdirectories": [],
+                              "files": [],
+                              "size_kb": 0.0
+                            }
+                          }
+                        ],
+                        "files": [],
+                        "size_kb": 0.0
+                      }
+                    },
+                    {
+                      "name": "interfaces",
+                      "script_count": 0,
+                      "analysis": {
+                        "description": "Asset Library - development - libraries - interfaces",
+                        "exists": true,
+                        "script_count": 0,
+                        "subdirectories": [
+                          {
+                            "name": "console_ui",
+                            "script_count": 0,
+                            "analysis": {
+                              "description": "Asset Library - development - libraries - interfaces - console_ui",
+                              "exists": true,
+                              "script_count": 0,
+                              "subdirectories": [],
+                              "files": [],
+                              "size_kb": 0.0
+                            }
+                          }
+                        ],
+                        "files": [],
+                        "size_kb": 0.0
+                      }
+                    },
+                    {
+                      "name": "logics",
+                      "script_count": 0,
+                      "analysis": {
+                        "description": "Asset Library - development - libraries - logics",
+                        "exists": true,
+                        "script_count": 0,
+                        "subdirectories": [
+                          {
+                            "name": "basic_behaviors",
+                            "script_count": 0,
+                            "analysis": {
+                              "description": "Asset Library - development - libraries - logics - basic_behaviors",
+                              "exists": true,
+                              "script_count": 0,
+                              "subdirectories": [],
+                              "files": [],
+                              "size_kb": 0.0
+                            }
+                          }
+                        ],
+                        "files": [],
+                        "size_kb": 0.0
+                      }
+                    }
+                  ],
+                  "files": [],
+                  "size_kb": 0.0
+                }
+              }
+            ],
+            "files": [],
+            "size_kb": 0.0
+          }
+        },
+        {
+          "name": "effects",
+          "script_count": 0,
+          "analysis": {
+            "description": "Asset Library - effects",
+            "exists": true,
+            "script_count": 0,
+            "subdirectories": [
+              {
+                "name": "camera",
+                "script_count": 0,
+                "analysis": {
+                  "description": "Asset Library - effects - camera",
+                  "exists": true,
+                  "script_count": 0,
+                  "subdirectories": [],
+                  "files": [],
+                  "size_kb": 0.0
+                }
+              },
+              {
+                "name": "shaders",
+                "script_count": 0,
+                "analysis": {
+                  "description": "Asset Library - effects - shaders",
+                  "exists": true,
+                  "script_count": 0,
+                  "subdirectories": [],
+                  "files": [],
+                  "size_kb": 0.0
+                }
+              }
+            ],
+            "files": [],
+            "size_kb": 0.0
+          }
+        },
+        {
+          "name": "example_crystal_being",
+          "script_count": 0,
+          "analysis": {
+            "description": "Asset Library - example_crystal_being",
+            "exists": true,
+            "script_count": 0,
+            "subdirectories": [
+              {
+                "name": "resources",
+                "script_count": 0,
+                "analysis": {
+                  "description": "Asset Library - example_crystal_being - resources",
+                  "exists": true,
+                  "script_count": 0,
+                  "subdirectories": [],
+                  "files": [],
+                  "size_kb": 0.0
+                }
+              },
+              {
+                "name": "scenes",
+                "script_count": 0,
+                "analysis": {
+                  "description": "Asset Library - example_crystal_being - scenes",
+                  "exists": true,
+                  "script_count": 0,
+                  "subdirectories": [],
+                  "files": [],
+                  "size_kb": 0.0
+                }
+              },
+              {
+                "name": "scripts",
+                "script_count": 0,
+                "analysis": {
+                  "description": "Asset Library - example_crystal_being - scripts",
+                  "exists": true,
+                  "script_count": 0,
+                  "subdirectories": [],
+                  "files": [],
+                  "size_kb": 0.0
+                }
+              }
+            ],
+            "files": [],
+            "size_kb": 0.0
+          }
+        },
+        {
+          "name": "genesis_logs",
+          "script_count": 0,
+          "analysis": {
+            "description": "Asset Library - genesis_logs",
+            "exists": true,
+            "script_count": 0,
+            "subdirectories": [],
+            "files": [],
+            "size_kb": 0.0
+          }
+        },
+        {
+          "name": "icons",
+          "script_count": 0,
+          "analysis": {
+            "description": "Asset Library - icons",
+            "exists": true,
+            "script_count": 0,
+            "subdirectories": [],
+            "files": [],
+            "size_kb": 0.0
+          }
+        },
+        {
+          "name": "interfaces",
+          "script_count": 0,
+          "analysis": {
+            "description": "Asset Library - interfaces",
+            "exists": true,
+            "script_count": 0,
+            "subdirectories": [],
+            "files": [],
+            "size_kb": 0.0
+          }
+        },
+        {
+          "name": "libraries",
+          "script_count": 0,
+          "analysis": {
+            "description": "Asset Library - libraries",
+            "exists": true,
+            "script_count": 0,
+            "subdirectories": [
+              {
+                "name": "actions_library",
+                "script_count": 0,
+                "analysis": {
+                  "description": "Asset Library - libraries - actions_library",
+                  "exists": true,
+                  "script_count": 0,
+                  "subdirectories": [],
+                  "files": [],
+                  "size_kb": 0.0
+                }
+              },
+              {
+                "name": "ai_library",
+                "script_count": 0,
+                "analysis": {
+                  "description": "Asset Library - libraries - ai_library",
+                  "exists": true,
+                  "script_count": 0,
+                  "subdirectories": [],
+                  "files": [],
+                  "size_kb": 0.0
+                }
+              },
+              {
+                "name": "assets_library",
+                "script_count": 0,
+                "analysis": {
+                  "description": "Asset Library - libraries - assets_library",
+                  "exists": true,
+                  "script_count": 0,
+                  "subdirectories": [],
+                  "files": [],
+                  "size_kb": 0.0
+                }
+              },
+              {
+                "name": "composites_library",
+                "script_count": 0,
+                "analysis": {
+                  "description": "Asset Library - libraries - composites_library",
+                  "exists": true,
+                  "script_count": 0,
+                  "subdirectories": [],
+                  "files": [],
+                  "size_kb": 0.0
+                }
+              },
+              {
+                "name": "interfaces_library",
+                "script_count": 0,
+                "analysis": {
+                  "description": "Asset Library - libraries - interfaces_library",
+                  "exists": true,
+                  "script_count": 0,
+                  "subdirectories": [],
+                  "files": [],
+                  "size_kb": 0.0
+                }
+              },
+              {
+                "name": "logics_library",
+                "script_count": 0,
+                "analysis": {
+                  "description": "Asset Library - libraries - logics_library",
+                  "exists": true,
+                  "script_count": 0,
+                  "subdirectories": [],
+                  "files": [],
+                  "size_kb": 0.0
+                }
+              }
+            ],
+            "files": [],
+            "size_kb": 0.0
+          }
+        },
+        {
+          "name": "library",
+          "script_count": 0,
+          "analysis": {
+            "description": "Asset Library - library",
+            "exists": true,
+            "script_count": 0,
+            "subdirectories": [
+              {
+                "name": "commands",
+                "script_count": 0,
+                "analysis": {
+                  "description": "Asset Library - library - commands",
+                  "exists": true,
+                  "script_count": 0,
+                  "subdirectories": [],
+                  "files": [],
+                  "size_kb": 0.0
+                }
+              },
+              {
+                "name": "templates",
+                "script_count": 0,
+                "analysis": {
+                  "description": "Asset Library - library - templates",
+                  "exists": true,
+                  "script_count": 0,
+                  "subdirectories": [],
+                  "files": [],
+                  "size_kb": 0.0
+                }
+              },
+              {
+                "name": "utilities",
+                "script_count": 0,
+                "analysis": {
+                  "description": "Asset Library - library - utilities",
+                  "exists": true,
+                  "script_count": 0,
+                  "subdirectories": [],
+                  "files": [],
+                  "size_kb": 0.0
+                }
+              }
+            ],
+            "files": [],
+            "size_kb": 0.0
+          }
+        },
+        {
+          "name": "materials",
+          "script_count": 0,
+          "analysis": {
+            "description": "Asset Library - materials",
+            "exists": true,
+            "script_count": 0,
+            "subdirectories": [
+              {
+                "name": "camera",
+                "script_count": 0,
+                "analysis": {
+                  "description": "Asset Library - materials - camera",
+                  "exists": true,
+                  "script_count": 0,
+                  "subdirectories": [],
+                  "files": [],
+                  "size_kb": 0.0
+                }
+              }
+            ],
+            "files": [],
+            "size_kb": 0.0
+          }
+        },
+        {
+          "name": "narrative",
+          "script_count": 0,
+          "analysis": {
+            "description": "Asset Library - narrative",
+            "exists": true,
+            "script_count": 0,
+            "subdirectories": [],
+            "files": [],
+            "size_kb": 0.0
+          }
+        },
+        {
+          "name": "runtime",
+          "script_count": 0,
+          "analysis": {
+            "description": "Asset Library - runtime",
+            "exists": true,
+            "script_count": 0,
+            "subdirectories": [
+              {
+                "name": "libraries",
+                "script_count": 0,
+                "analysis": {
+                  "description": "Asset Library - runtime - libraries",
+                  "exists": true,
+                  "script_count": 0,
+                  "subdirectories": [],
+                  "files": [],
+                  "size_kb": 0.0
+                }
+              }
+            ],
+            "files": [],
+            "size_kb": 0.0
+          }
+        },
+        {
+          "name": "saves",
+          "script_count": 0,
+          "analysis": {
+            "description": "Asset Library - saves",
+            "exists": true,
+            "script_count": 0,
+            "subdirectories": [],
+            "files": [],
+            "size_kb": 0.0
+          }
+        },
+        {
+          "name": "scenes",
+          "script_count": 0,
+          "analysis": {
+            "description": "Asset Library - scenes",
+            "exists": true,
+            "script_count": 0,
+            "subdirectories": [],
+            "files": [],
+            "size_kb": 0.0
+          }
+        },
+        {
+          "name": "sounds",
+          "script_count": 0,
+          "analysis": {
+            "description": "Asset Library - sounds",
+            "exists": true,
+            "script_count": 0,
+            "subdirectories": [
+              {
+                "name": "Animals",
+                "script_count": 0,
+                "analysis": {
+                  "description": "Asset Library - sounds - Animals",
+                  "exists": true,
+                  "script_count": 0,
+                  "subdirectories": [],
+                  "files": [],
+                  "size_kb": 0.0
+                }
+              },
+              {
+                "name": "Crashes",
+                "script_count": 0,
+                "analysis": {
+                  "description": "Asset Library - sounds - Crashes",
+                  "exists": true,
+                  "script_count": 0,
+                  "subdirectories": [],
+                  "files": [],
+                  "size_kb": 0.0
+                }
+              },
+              {
+                "name": "Impacts",
+                "script_count": 0,
+                "analysis": {
+                  "description": "Asset Library - sounds - Impacts",
+                  "exists": true,
+                  "script_count": 0,
+                  "subdirectories": [],
+                  "files": [],
+                  "size_kb": 0.0
+                }
+              },
+              {
+                "name": "Science Fiction",
+                "script_count": 0,
+                "analysis": {
+                  "description": "Asset Library - sounds - Science Fiction",
+                  "exists": true,
+                  "script_count": 0,
+                  "subdirectories": [],
+                  "files": [],
+                  "size_kb": 0.0
+                }
+              }
+            ],
+            "files": [],
+            "size_kb": 0.0
+          }
+        },
+        {
+          "name": "systems",
+          "script_count": 0,
+          "analysis": {
+            "description": "Asset Library - systems",
+            "exists": true,
+            "script_count": 0,
+            "subdirectories": [
+              {
+                "name": "ai",
+                "script_count": 0,
+                "analysis": {
+                  "description": "Asset Library - systems - ai",
+                  "exists": true,
+                  "script_count": 0,
+                  "subdirectories": [],
+                  "files": [],
+                  "size_kb": 0.0
+                }
+              },
+              {
+                "name": "chunks",
+                "script_count": 0,
+                "analysis": {
+                  "description": "Asset Library - systems - chunks",
+                  "exists": true,
+                  "script_count": 0,
+                  "subdirectories": [],
+                  "files": [],
+                  "size_kb": 0.0
+                }
+              },
+              {
+                "name": "console",
+                "script_count": 0,
+                "analysis": {
+                  "description": "Asset Library - systems - console",
+                  "exists": true,
+                  "script_count": 0,
+                  "subdirectories": [],
+                  "files": [],
+                  "size_kb": 0.0
+                }
+              },
+              {
+                "name": "creator",
+                "script_count": 0,
+                "analysis": {
+                  "description": "Asset Library - systems - creator",
+                  "exists": true,
+                  "script_count": 0,
+                  "subdirectories": [],
+                  "files": [],
+                  "size_kb": 0.0
+                }
+              },
+              {
+                "name": "debug",
+                "script_count": 0,
+                "analysis": {
+                  "description": "Asset Library - systems - debug",
+                  "exists": true,
+                  "script_count": 0,
+                  "subdirectories": [],
+                  "files": [],
+                  "size_kb": 0.0
+                }
+              },
+              {
+                "name": "gemma_components",
+                "script_count": 0,
+                "analysis": {
+                  "description": "Asset Library - systems - gemma_components",
+                  "exists": true,
+                  "script_count": 0,
+                  "subdirectories": [],
+                  "files": [],
+                  "size_kb": 0.0
+                }
+              },
+              {
+                "name": "inspector",
+                "script_count": 0,
+                "analysis": {
+                  "description": "Asset Library - systems - inspector",
+                  "exists": true,
+                  "script_count": 0,
+                  "subdirectories": [],
+                  "files": [],
+                  "size_kb": 0.0
+                }
+              },
+              {
+                "name": "optimization",
+                "script_count": 0,
+                "analysis": {
+                  "description": "Asset Library - systems - optimization",
+                  "exists": true,
+                  "script_count": 0,
+                  "subdirectories": [],
+                  "files": [],
+                  "size_kb": 0.0
+                }
+              },
+              {
+                "name": "spatial",
+                "script_count": 0,
+                "analysis": {
+                  "description": "Asset Library - systems - spatial",
+                  "exists": true,
+                  "script_count": 0,
+                  "subdirectories": [],
+                  "files": [],
+                  "size_kb": 0.0
+                }
+              }
+            ],
+            "files": [],
+            "size_kb": 0.0
+          }
+        },
+        {
+          "name": "textures",
+          "script_count": 0,
+          "analysis": {
+            "description": "Asset Library - textures",
+            "exists": true,
+            "script_count": 0,
+            "subdirectories": [],
+            "files": [],
+            "size_kb": 0.0
+          }
+        },
+        {
+          "name": "validation",
+          "script_count": 0,
+          "analysis": {
+            "description": "Asset Library - validation",
+            "exists": true,
+            "script_count": 0,
+            "subdirectories": [],
+            "files": [],
+            "size_kb": 0.0
+          }
+        }
+      ],
+      "files": [],
+      "size_kb": 0.0
+    }
+  },
+  "pentagon_compliance": {
+    "total_scripts": 313,
+    "compliant_scripts": 289,
+    "non_compliant": [
+      {
+        "file": "beings/plasmoid_universal_being.gd",
+        "issues": []
+      },
+      {
+        "file": "core/PentagonManager.gd",
+        "issues": []
+      },
+      {
+        "file": "core/UniversalBeing.gd",
+        "issues": [
+          "Missing super.pentagon_init() call",
+          "Missing super.pentagon_ready() call",
+          "Missing super.pentagon_process() call",
+          "Missing super.pentagon_input() call",
+          "Missing super.pentagon_sewers() call"
+        ]
+      },
+      {
+        "file": "core/UniversalBeingControl.gd",
+        "issues": [
+          "Missing super.pentagon_init() call",
+          "Missing super.pentagon_ready() call",
+          "Missing super.pentagon_process() call",
+          "Missing super.pentagon_input() call",
+          "Missing super.pentagon_sewers() call"
+        ]
+      },
+      {
+        "file": "core/UniversalBeingDNA.gd",
+        "issues": []
+      },
+      {
+        "file": "core/UniversalBeingSocket.gd",
+        "issues": []
+      },
+      {
+        "file": "core/UniversalBeingSocketManager.gd",
+        "issues": []
+      },
+      {
+        "file": "core/universal_being_base_enhanced.gd",
+        "issues": []
+      },
+      {
+        "file": "scripts/chunk_grid_manager.gd",
+        "issues": []
+      },
+      {
+        "file": "scripts/GemmaUniversalBeing.gd",
+        "issues": []
+      },
+      {
+        "file": "scripts/LogicConnectorSystem.gd",
+        "issues": []
+      },
+      {
+        "file": "scripts/turn_based_creation_system.gd",
+        "issues": []
+      },
+      {
+        "file": "scripts/unified_chunk_system.gd",
+        "issues": []
+      },
+      {
+        "file": "systems/AkashicLibrary.gd",
+        "issues": [
+          "Missing super.pentagon_init() call",
+          "Missing super.pentagon_ready() call",
+          "Missing super.pentagon_process() call",
+          "Missing super.pentagon_input() call",
+          "Missing super.pentagon_sewers() call"
+        ]
+      },
+      {
+        "file": "systems/consciousness_exchange_system.gd",
+        "issues": []
+      },
+      {
+        "file": "systems/consciousness_tooltip_system.gd",
+        "issues": [
+          "Missing super.pentagon_init() call",
+          "Missing super.pentagon_ready() call",
+          "Missing super.pentagon_process() call",
+          "Missing super.pentagon_input() call",
+          "Missing super.pentagon_sewers() call"
+        ]
+      },
+      {
+        "file": "systems/FoundationPolishSystem.gd",
+        "issues": []
+      },
+      {
+        "file": "beings/butterfly/ButterflyUniversalBeing.gd",
+        "issues": []
+      },
+      {
+        "file": "beings/camera/CameraUniversalBeing.gd",
+        "issues": [
+          "Missing super.pentagon_init() call",
+          "Missing super.pentagon_ready() call",
+          "Missing super.pentagon_process() call",
+          "Missing super.pentagon_input() call",
+          "Missing super.pentagon_sewers() call"
+        ]
+      },
+      {
+        "file": "beings/console/ConsoleUniversalBeing.gd",
+        "issues": [
+          "Missing super.pentagon_init() call",
+          "Missing super.pentagon_ready() call",
+          "Missing super.pentagon_process() call",
+          "Missing super.pentagon_input() call",
+          "Missing super.pentagon_sewers() call"
+        ]
+      },
+      {
+        "file": "beings/portal/PortalUniversalBeing.gd",
+        "issues": []
+      },
+      {
+        "file": "beings/tree/TreeUniversalBeing.gd",
+        "issues": []
+      },
+      {
+        "file": "core/command_system/LiveCodeEditor.gd",
+        "issues": [
+          "Missing super.pentagon_init() call",
+          "Missing super.pentagon_process() call"
+        ]
+      },
+      {
+        "file": "scripts/tools/asset_checker.gd",
+        "issues": []
+      }
+    ],
+    "missing_methods": {
+      "pentagon_sewers": [
+        "beings/plasmoid_universal_being.gd",
+        "core/PentagonManager.gd",
+        "core/UniversalBeingDNA.gd",
+        "core/UniversalBeingSocket.gd",
+        "core/UniversalBeingSocketManager.gd",
+        "scripts/chunk_grid_manager.gd",
+        "scripts/GemmaUniversalBeing.gd",
+        "scripts/LogicConnectorSystem.gd",
+        "scripts/turn_based_creation_system.gd",
+        "scripts/unified_chunk_system.gd",
+        "systems/consciousness_exchange_system.gd",
+        "systems/FoundationPolishSystem.gd",
+        "beings/butterfly/ButterflyUniversalBeing.gd",
+        "beings/portal/PortalUniversalBeing.gd",
+        "beings/tree/TreeUniversalBeing.gd",
+        "core/command_system/LiveCodeEditor.gd",
+        "scripts/tools/asset_checker.gd"
+      ],
+      "pentagon_init": [
+        "core/PentagonManager.gd",
+        "core/UniversalBeingDNA.gd",
+        "core/UniversalBeingSocket.gd",
+        "core/UniversalBeingSocketManager.gd",
+        "scripts/LogicConnectorSystem.gd",
+        "systems/FoundationPolishSystem.gd",
+        "beings/portal/PortalUniversalBeing.gd",
+        "scripts/tools/asset_checker.gd"
+      ],
+      "pentagon_ready": [
+        "core/PentagonManager.gd",
+        "core/UniversalBeingDNA.gd",
+        "core/UniversalBeingSocket.gd",
+        "core/UniversalBeingSocketManager.gd",
+        "core/universal_being_base_enhanced.gd",
+        "scripts/LogicConnectorSystem.gd",
+        "systems/FoundationPolishSystem.gd",
+        "beings/portal/PortalUniversalBeing.gd",
+        "core/command_system/LiveCodeEditor.gd",
+        "scripts/tools/asset_checker.gd"
+      ],
+      "pentagon_process": [
+        "core/PentagonManager.gd",
+        "core/UniversalBeingDNA.gd",
+        "core/UniversalBeingSocket.gd",
+        "core/UniversalBeingSocketManager.gd",
+        "core/universal_being_base_enhanced.gd",
+        "scripts/LogicConnectorSystem.gd",
+        "systems/FoundationPolishSystem.gd",
+        "beings/portal/PortalUniversalBeing.gd",
+        "scripts/tools/asset_checker.gd"
+      ],
+      "pentagon_input": [
+        "core/PentagonManager.gd",
+        "core/UniversalBeingDNA.gd",
+        "core/UniversalBeingSocket.gd",
+        "core/UniversalBeingSocketManager.gd",
+        "core/universal_being_base_enhanced.gd",
+        "scripts/GemmaUniversalBeing.gd",
+        "scripts/LogicConnectorSystem.gd",
+        "systems/FoundationPolishSystem.gd",
+        "beings/butterfly/ButterflyUniversalBeing.gd",
+        "beings/portal/PortalUniversalBeing.gd",
+        "beings/tree/TreeUniversalBeing.gd",
+        "core/command_system/LiveCodeEditor.gd",
+        "scripts/tools/asset_checker.gd"
+      ]
+    },
+    "super_call_issues": [],
+    "compliance_by_directory": {
+      "direct_revolution_test.gd": {
+        "total": 1,
+        "compliant": 1,
+        "files": [
+          {
+            "name": "direct_revolution_test.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          }
+        ]
+      },
+      "monitor_revolution.gd": {
+        "total": 1,
+        "compliant": 1,
+        "files": [
+          {
+            "name": "monitor_revolution.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          }
+        ]
+      },
+      "scene_inspector.gd": {
+        "total": 1,
+        "compliant": 1,
+        "files": [
+          {
+            "name": "scene_inspector.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          }
+        ]
+      },
+      "test_akashic_system.gd": {
+        "total": 1,
+        "compliant": 1,
+        "files": [
+          {
+            "name": "test_akashic_system.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          }
+        ]
+      },
+      "test_consciousness_revolution.gd": {
+        "total": 1,
+        "compliant": 1,
+        "files": [
+          {
+            "name": "test_consciousness_revolution.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          }
+        ]
+      },
+      "test_revolution_direct.gd": {
+        "total": 1,
+        "compliant": 1,
+        "files": [
+          {
+            "name": "test_revolution_direct.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          }
+        ]
+      },
+      "autoloads": {
+        "total": 3,
+        "compliant": 3,
+        "files": [
+          {
+            "name": "akashic_loader.gd",
+            "compliant": true,
+            "issues": []
+          },
+          {
+            "name": "GemmaAI.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          },
+          {
+            "name": "SystemBootstrap.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          }
+        ]
+      },
+      "beings": {
+        "total": 15,
+        "compliant": 9,
+        "files": [
+          {
+            "name": "ConsciousnessRevolutionSpawner.gd",
+            "compliant": true,
+            "issues": []
+          },
+          {
+            "name": "GemmaAICompanionPlasmoid.gd",
+            "compliant": true,
+            "issues": []
+          },
+          {
+            "name": "plasmoid_universal_being.gd",
+            "compliant": false,
+            "issues": []
+          },
+          {
+            "name": "ButterflyUniversalBeing.gd",
+            "compliant": false,
+            "issues": []
+          },
+          {
+            "name": "CameraUniversalBeing.gd",
+            "compliant": false,
+            "issues": [
+              "Missing super.pentagon_init() call",
+              "Missing super.pentagon_ready() call",
+              "Missing super.pentagon_process() call",
+              "Missing super.pentagon_input() call",
+              "Missing super.pentagon_sewers() call"
+            ]
+          },
+          {
+            "name": "ConsoleUniversalBeing.gd",
+            "compliant": false,
+            "issues": [
+              "Missing super.pentagon_init() call",
+              "Missing super.pentagon_ready() call",
+              "Missing super.pentagon_process() call",
+              "Missing super.pentagon_input() call",
+              "Missing super.pentagon_sewers() call"
+            ]
+          },
+          {
+            "name": "CursorUniversalBeing.gd",
+            "compliant": true,
+            "issues": []
+          },
+          {
+            "name": "ground_universal_being.gd",
+            "compliant": true,
+            "issues": []
+          },
+          {
+            "name": "icon_universal_being.gd",
+            "compliant": true,
+            "issues": []
+          },
+          {
+            "name": "light_universal_being.gd",
+            "compliant": true,
+            "issues": []
+          },
+          {
+            "name": "SimpleMovablePlasmoid.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          },
+          {
+            "name": "energy_burst.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          },
+          {
+            "name": "player_universal_being.gd",
+            "compliant": true,
+            "issues": []
+          },
+          {
+            "name": "PortalUniversalBeing.gd",
+            "compliant": false,
+            "issues": []
+          },
+          {
+            "name": "TreeUniversalBeing.gd",
+            "compliant": false,
+            "issues": []
+          }
+        ]
+      },
+      "components": {
+        "total": 2,
+        "compliant": 2,
+        "files": [
+          {
+            "name": "ActionComponent.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          },
+          {
+            "name": "MemoryComponent.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          }
+        ]
+      },
+      "core": {
+        "total": 18,
+        "compliant": 10,
+        "files": [
+          {
+            "name": "Component.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          },
+          {
+            "name": "Connector.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          },
+          {
+            "name": "FloodGates.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          },
+          {
+            "name": "genesis_pattern.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          },
+          {
+            "name": "Pentagon.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          },
+          {
+            "name": "PentagonManager.gd",
+            "compliant": false,
+            "issues": []
+          },
+          {
+            "name": "SimpleConsole.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          },
+          {
+            "name": "UniversalBeing.gd",
+            "compliant": false,
+            "issues": [
+              "Missing super.pentagon_init() call",
+              "Missing super.pentagon_ready() call",
+              "Missing super.pentagon_process() call",
+              "Missing super.pentagon_input() call",
+              "Missing super.pentagon_sewers() call"
+            ]
+          },
+          {
+            "name": "UniversalBeingControl.gd",
+            "compliant": false,
+            "issues": [
+              "Missing super.pentagon_init() call",
+              "Missing super.pentagon_ready() call",
+              "Missing super.pentagon_process() call",
+              "Missing super.pentagon_input() call",
+              "Missing super.pentagon_sewers() call"
+            ]
+          },
+          {
+            "name": "UniversalBeingDNA.gd",
+            "compliant": false,
+            "issues": []
+          },
+          {
+            "name": "UniversalBeingInterface.gd",
+            "compliant": true,
+            "issues": []
+          },
+          {
+            "name": "UniversalBeingSocket.gd",
+            "compliant": false,
+            "issues": []
+          },
+          {
+            "name": "UniversalBeingSocketManager.gd",
+            "compliant": false,
+            "issues": []
+          },
+          {
+            "name": "universal_being_base_enhanced.gd",
+            "compliant": false,
+            "issues": []
+          },
+          {
+            "name": "LiveCodeEditor.gd",
+            "compliant": false,
+            "issues": [
+              "Missing super.pentagon_init() call",
+              "Missing super.pentagon_process() call"
+            ]
+          },
+          {
+            "name": "MacroSystem.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          },
+          {
+            "name": "UniversalCommandProcessor.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          },
+          {
+            "name": "UniversalConsole.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          }
+        ]
+      },
+      "scripts": {
+        "total": 178,
+        "compliant": 172,
+        "files": [
+          {
+            "name": "add_butterfly_command.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          },
+          {
+            "name": "advanced_ufo_generator.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          },
+          {
+            "name": "advanced_visualization_optimizer.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          },
+          {
+            "name": "AICollaborationHub.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          },
+          {
+            "name": "ai_natural_language_console.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          },
+          {
+            "name": "ai_pentagon_network.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          },
+          {
+            "name": "AkashicLibrary.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          },
+          {
+            "name": "akashic_additions.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          },
+          {
+            "name": "akashic_chunk_manager.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          },
+          {
+            "name": "akashic_compact_system.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          },
+          {
+            "name": "akashic_logger.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          },
+          {
+            "name": "akashic_spatial_db.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          },
+          {
+            "name": "auto_startup_universal_being.gd",
+            "compliant": true,
+            "issues": []
+          },
+          {
+            "name": "basic_interaction.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          },
+          {
+            "name": "basic_test.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          },
+          {
+            "name": "BeingDNAComponent.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          },
+          {
+            "name": "button_3d_universal_being.gd",
+            "compliant": true,
+            "issues": []
+          },
+          {
+            "name": "button_basic.gd",
+            "compliant": true,
+            "issues": []
+          },
+          {
+            "name": "button_universal_being.gd",
+            "compliant": true,
+            "issues": []
+          },
+          {
+            "name": "camera_effects_component.gd",
+            "compliant": true,
+            "issues": []
+          },
+          {
+            "name": "camera_effects_test.gd",
+            "compliant": true,
+            "issues": []
+          },
+          {
+            "name": "chunk_generator.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          },
+          {
+            "name": "chunk_generator_component.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          },
+          {
+            "name": "chunk_grid_manager.gd",
+            "compliant": false,
+            "issues": []
+          },
+          {
+            "name": "chunk_universal_being.gd",
+            "compliant": true,
+            "issues": []
+          },
+          {
+            "name": "chunk_universe_generator.gd",
+            "compliant": true,
+            "issues": []
+          },
+          {
+            "name": "complete_package_system_test.gd",
+            "compliant": true,
+            "issues": []
+          },
+          {
+            "name": "comprehensive_system_test.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          },
+          {
+            "name": "ConsoleTextLayer.gd",
+            "compliant": true,
+            "issues": []
+          },
+          {
+            "name": "console_base.gd",
+            "compliant": true,
+            "issues": []
+          },
+          {
+            "name": "console_enhancements.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          },
+          {
+            "name": "console_notifications.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          },
+          {
+            "name": "console_test.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          },
+          {
+            "name": "console_universal_being.gd",
+            "compliant": true,
+            "issues": []
+          },
+          {
+            "name": "conversational_console_being.gd",
+            "compliant": true,
+            "issues": []
+          },
+          {
+            "name": "cosmic_insights.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          },
+          {
+            "name": "cosmic_lod_system.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          },
+          {
+            "name": "create_example_component.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          },
+          {
+            "name": "cursor_controller.gd",
+            "compliant": true,
+            "issues": []
+          },
+          {
+            "name": "desert_garden_genesis.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          },
+          {
+            "name": "dimensional_sight.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          },
+          {
+            "name": "dna_visualizer.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          },
+          {
+            "name": "enable_144k_enlightenment.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          },
+          {
+            "name": "EnlightenedGroupManager.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          },
+          {
+            "name": "fix_all_docstrings.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          },
+          {
+            "name": "flood_gate_controller.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          },
+          {
+            "name": "game_launcher_universal_being.gd",
+            "compliant": true,
+            "issues": []
+          },
+          {
+            "name": "game_world_controller.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          },
+          {
+            "name": "Gemma3DPerceptionLogger.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          },
+          {
+            "name": "GemmaAkashicLogger.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          },
+          {
+            "name": "GemmaAudio.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          },
+          {
+            "name": "GemmaConsoleInterface.gd",
+            "compliant": true,
+            "issues": []
+          },
+          {
+            "name": "GemmaInterfaceReader.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          },
+          {
+            "name": "GemmaMacroMaster.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          },
+          {
+            "name": "GemmaSensorySystem.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          },
+          {
+            "name": "GemmaSpatialPerception.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          },
+          {
+            "name": "GemmaUniversalBeing.gd",
+            "compliant": false,
+            "issues": []
+          },
+          {
+            "name": "GemmaUniverseInjector.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          },
+          {
+            "name": "GemmaVision.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          },
+          {
+            "name": "gemma_integration_status.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          },
+          {
+            "name": "gemma_natural_language.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          },
+          {
+            "name": "gemma_simple.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          },
+          {
+            "name": "gemma_text_interface_system.gd",
+            "compliant": true,
+            "issues": []
+          },
+          {
+            "name": "generation_coordinator.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          },
+          {
+            "name": "genesis_conductor_universal_being.gd",
+            "compliant": true,
+            "issues": []
+          },
+          {
+            "name": "genesis_machine_simple.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          },
+          {
+            "name": "glow_effect.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          },
+          {
+            "name": "input_focus_manager.gd",
+            "compliant": true,
+            "issues": []
+          },
+          {
+            "name": "InteractiveTestEnvironment.gd",
+            "compliant": true,
+            "issues": []
+          },
+          {
+            "name": "interface_window_universal_being.gd",
+            "compliant": true,
+            "issues": []
+          },
+          {
+            "name": "IntuitiveInteractionSystem.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          },
+          {
+            "name": "launch_genesis_adventure.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          },
+          {
+            "name": "lightweight_chunk_system.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          },
+          {
+            "name": "LocalAICollaboration.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          },
+          {
+            "name": "lod_generator_universal_being.gd",
+            "compliant": true,
+            "issues": []
+          },
+          {
+            "name": "LogicConnectorSystem.gd",
+            "compliant": false,
+            "issues": []
+          },
+          {
+            "name": "logic_connector.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          },
+          {
+            "name": "luminus_chunk_grid_manager.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          },
+          {
+            "name": "luminus_chunk_universal_being.gd",
+            "compliant": true,
+            "issues": []
+          },
+          {
+            "name": "luminus_narrative_system.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          },
+          {
+            "name": "macro_system.gd",
+            "compliant": true,
+            "issues": []
+          },
+          {
+            "name": "main_script.gd",
+            "compliant": true,
+            "issues": []
+          },
+          {
+            "name": "map_world_controller.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          },
+          {
+            "name": "matrix_chunk_system.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          },
+          {
+            "name": "mcp_client.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          },
+          {
+            "name": "meta_game_testing_ground.gd",
+            "compliant": true,
+            "issues": []
+          },
+          {
+            "name": "multimodal_analyzer.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          },
+          {
+            "name": "package_test.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          },
+          {
+            "name": "perfect_universal_console.gd",
+            "compliant": true,
+            "issues": []
+          },
+          {
+            "name": "performance_optimizer.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          },
+          {
+            "name": "PoeticLogger.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          },
+          {
+            "name": "poetic_log.gd",
+            "compliant": true,
+            "issues": []
+          },
+          {
+            "name": "QuantumFloodGates.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          },
+          {
+            "name": "RealityEditorComponent.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          },
+          {
+            "name": "recursive_creation_console_universal_being.gd",
+            "compliant": true,
+            "issues": []
+          },
+          {
+            "name": "scan_directive_conflicts.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          },
+          {
+            "name": "SelfRepairSystem.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          },
+          {
+            "name": "socket_button_universal_being.gd",
+            "compliant": true,
+            "issues": []
+          },
+          {
+            "name": "socket_grid_universal_being.gd",
+            "compliant": true,
+            "issues": []
+          },
+          {
+            "name": "terminal_universal_being.gd",
+            "compliant": true,
+            "issues": []
+          },
+          {
+            "name": "text_representation_system.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          },
+          {
+            "name": "transform_animator.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          },
+          {
+            "name": "tree_universal_being.gd",
+            "compliant": true,
+            "issues": []
+          },
+          {
+            "name": "triple_helix_consciousness.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          },
+          {
+            "name": "turn_based_creation_system.gd",
+            "compliant": false,
+            "issues": []
+          },
+          {
+            "name": "ufo_marching_cubes.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          },
+          {
+            "name": "ufo_universal_being.gd",
+            "compliant": true,
+            "issues": []
+          },
+          {
+            "name": "ultra_fast_controller.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          },
+          {
+            "name": "unified_chunk_manager.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          },
+          {
+            "name": "unified_chunk_system.gd",
+            "compliant": false,
+            "issues": []
+          },
+          {
+            "name": "unified_console_being.gd",
+            "compliant": true,
+            "issues": []
+          },
+          {
+            "name": "UniversalBeingInspector.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          },
+          {
+            "name": "UniversalConsole.gd",
+            "compliant": true,
+            "issues": []
+          },
+          {
+            "name": "UniversalInspectorBridge.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          },
+          {
+            "name": "universal_being_generator.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          },
+          {
+            "name": "universal_being_movement_system.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          },
+          {
+            "name": "universal_being_mover.gd",
+            "compliant": true,
+            "issues": []
+          },
+          {
+            "name": "universal_being_pattern_extractor.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          },
+          {
+            "name": "universal_command_processor.gd",
+            "compliant": true,
+            "issues": []
+          },
+          {
+            "name": "universal_console_controller.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          },
+          {
+            "name": "universal_interface_being.gd",
+            "compliant": true,
+            "issues": []
+          },
+          {
+            "name": "universal_interface_manager.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          },
+          {
+            "name": "universal_script_inspector.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          },
+          {
+            "name": "UniverseConsoleComponent.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          },
+          {
+            "name": "UniverseGenesisComponent.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          },
+          {
+            "name": "UniverseManager.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          },
+          {
+            "name": "universe_console_integration.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          },
+          {
+            "name": "universe_core.gd",
+            "compliant": true,
+            "issues": []
+          },
+          {
+            "name": "universe_lod.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          },
+          {
+            "name": "universe_physics.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          },
+          {
+            "name": "universe_portal.gd",
+            "compliant": true,
+            "issues": []
+          },
+          {
+            "name": "universe_rules.gd",
+            "compliant": true,
+            "issues": []
+          },
+          {
+            "name": "universe_time.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          },
+          {
+            "name": "universe_universal_being.gd",
+            "compliant": true,
+            "issues": []
+          },
+          {
+            "name": "visual_enhancement_system.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          },
+          {
+            "name": "console_butterfly_fix.gd",
+            "compliant": true,
+            "issues": []
+          },
+          {
+            "name": "console_butterfly_tree_fix.gd",
+            "compliant": true,
+            "issues": []
+          },
+          {
+            "name": "enhanced_debug_click_handler.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          },
+          {
+            "name": "enhanced_game_world.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          },
+          {
+            "name": "GemmaUniverseInjector_enhancements.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          },
+          {
+            "name": "immediate_fix.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          },
+          {
+            "name": "main_OLD_COMPLEX.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          },
+          {
+            "name": "main_SIMPLE.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          },
+          {
+            "name": "pentagon_validator_fixed.gd",
+            "compliant": true,
+            "issues": []
+          },
+          {
+            "name": "performance_fix_autoload.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          },
+          {
+            "name": "performance_fix_patch.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          },
+          {
+            "name": "quick_diagnostic.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          },
+          {
+            "name": "quick_health_check.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          },
+          {
+            "name": "quick_test_universe_injection.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          },
+          {
+            "name": "simple_camera_effects.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          },
+          {
+            "name": "simple_console_fix.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          },
+          {
+            "name": "simple_gdscript_validator.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          },
+          {
+            "name": "simple_health_check.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          },
+          {
+            "name": "simple_player_controller.gd",
+            "compliant": true,
+            "issues": []
+          },
+          {
+            "name": "simple_player_test.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          },
+          {
+            "name": "systembootstrap_quickfix.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          },
+          {
+            "name": "test_enhanced_health.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          },
+          {
+            "name": "test_pentagon_validator_fixed.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          },
+          {
+            "name": "chatgpt_premium_bridge_universal_being.gd",
+            "compliant": true,
+            "issues": []
+          },
+          {
+            "name": "claude_bridge_universal_being.gd",
+            "compliant": true,
+            "issues": []
+          },
+          {
+            "name": "claude_desktop_mcp_universal_being.gd",
+            "compliant": true,
+            "issues": []
+          },
+          {
+            "name": "desktop_bridge.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          },
+          {
+            "name": "gdscript_validator_bridge.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          },
+          {
+            "name": "gemini_api.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          },
+          {
+            "name": "google_gemini_premium_bridge_universal_being.gd",
+            "compliant": true,
+            "issues": []
+          },
+          {
+            "name": "remote_godot_bridge.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          },
+          {
+            "name": "archaeological_scanner.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          },
+          {
+            "name": "asset_checker.gd",
+            "compliant": false,
+            "issues": []
+          },
+          {
+            "name": "component_loader.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          },
+          {
+            "name": "gdscript_directive_scanner.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          },
+          {
+            "name": "naming_validator.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          },
+          {
+            "name": "path_audit_system.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          },
+          {
+            "name": "path_reference_fixer.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          },
+          {
+            "name": "pentagon_validator.gd",
+            "compliant": true,
+            "issues": []
+          },
+          {
+            "name": "UniverseSimulator.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          },
+          {
+            "name": "consciousness_meter.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          },
+          {
+            "name": "effect_sliders.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          },
+          {
+            "name": "info_panel.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          }
+        ]
+      },
+      "systems": {
+        "total": 24,
+        "compliant": 20,
+        "files": [
+          {
+            "name": "AkashicLibrary.gd",
+            "compliant": false,
+            "issues": [
+              "Missing super.pentagon_init() call",
+              "Missing super.pentagon_ready() call",
+              "Missing super.pentagon_process() call",
+              "Missing super.pentagon_input() call",
+              "Missing super.pentagon_sewers() call"
+            ]
+          },
+          {
+            "name": "ConsciousnessAudioManager.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          },
+          {
+            "name": "ConsciousnessFeedbackSystem.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          },
+          {
+            "name": "ConsciousnessRevolutionIntegrator.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          },
+          {
+            "name": "ConsciousnessRippleSystem.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          },
+          {
+            "name": "consciousness_aura_enhanced.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          },
+          {
+            "name": "consciousness_exchange_system.gd",
+            "compliant": false,
+            "issues": []
+          },
+          {
+            "name": "consciousness_icon.gd",
+            "compliant": true,
+            "issues": []
+          },
+          {
+            "name": "consciousness_resonator.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          },
+          {
+            "name": "consciousness_tooltip_system.gd",
+            "compliant": false,
+            "issues": [
+              "Missing super.pentagon_init() call",
+              "Missing super.pentagon_ready() call",
+              "Missing super.pentagon_process() call",
+              "Missing super.pentagon_input() call",
+              "Missing super.pentagon_sewers() call"
+            ]
+          },
+          {
+            "name": "consciousness_visualizer.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          },
+          {
+            "name": "FoundationPolishSystem.gd",
+            "compliant": false,
+            "issues": []
+          },
+          {
+            "name": "pentagon_network_visualizer.gd",
+            "compliant": true,
+            "issues": []
+          },
+          {
+            "name": "UBPrintCollector.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          },
+          {
+            "name": "input_focus_manager.gd",
+            "compliant": true,
+            "issues": []
+          },
+          {
+            "name": "MemoryOptimizer.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          },
+          {
+            "name": "GameStateSocketManager.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          },
+          {
+            "name": "AkashicRecords.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          },
+          {
+            "name": "AkashicRecordsEnhanced.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          },
+          {
+            "name": "AkashicRecordsSystem.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          },
+          {
+            "name": "akashic_living_database.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          },
+          {
+            "name": "akashic_loader.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          },
+          {
+            "name": "ZipPackageManager.gd",
+            "compliant": true,
+            "issues": []
+          },
+          {
+            "name": "UniversalTimersSystem.gd",
+            "compliant": true,
+            "issues": []
+          }
+        ]
+      },
+      "tests": {
+        "total": 40,
+        "compliant": 40,
+        "files": [
+          {
+            "name": "consciousness_revolution_validator.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          },
+          {
+            "name": "debug_click_handler.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          },
+          {
+            "name": "debug_integration_example.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          },
+          {
+            "name": "debug_overlay.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          },
+          {
+            "name": "debug_system_test.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          },
+          {
+            "name": "evolution_diagnostic.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          },
+          {
+            "name": "monitor_debug_output.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          },
+          {
+            "name": "performance_monitor_ui.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          },
+          {
+            "name": "run_asset_validation.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          },
+          {
+            "name": "run_gemma_integration_test.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          },
+          {
+            "name": "run_path_audit.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          },
+          {
+            "name": "run_path_fixes.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          },
+          {
+            "name": "run_tests.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          },
+          {
+            "name": "test_add_interaction.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          },
+          {
+            "name": "test_akashic_compression.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          },
+          {
+            "name": "test_all_visuals.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          },
+          {
+            "name": "test_bootstrap_initialization.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          },
+          {
+            "name": "test_camera_consciousness.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          },
+          {
+            "name": "test_chunk_generator_hotspots.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          },
+          {
+            "name": "test_collaborative_chunk_generation.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          },
+          {
+            "name": "test_complete_camera_consciousness.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          },
+          {
+            "name": "test_component_library.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          },
+          {
+            "name": "test_consciousness_icons.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          },
+          {
+            "name": "test_evolution_diagnostic.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          },
+          {
+            "name": "test_framework.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          },
+          {
+            "name": "test_gemma_full_integration.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          },
+          {
+            "name": "test_gemma_senses.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          },
+          {
+            "name": "test_gemma_sensory_complete.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          },
+          {
+            "name": "test_gemma_systems.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          },
+          {
+            "name": "test_gemma_universe_injection.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          },
+          {
+            "name": "test_genesis_scenario.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          },
+          {
+            "name": "test_interface_system.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          },
+          {
+            "name": "test_path_fixer.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          },
+          {
+            "name": "test_pentagon_validator.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          },
+          {
+            "name": "test_reality_editor.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          },
+          {
+            "name": "test_system_health.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          },
+          {
+            "name": "test_unified_console.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          },
+          {
+            "name": "test_universal_being_mover.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          },
+          {
+            "name": "test_visual_integration.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          },
+          {
+            "name": "unified_debug_interface.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          }
+        ]
+      },
+      "ui": {
+        "total": 1,
+        "compliant": 1,
+        "files": [
+          {
+            "name": "TelepathicScreenOverlay.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          }
+        ]
+      },
+      "addons": {
+        "total": 25,
+        "compliant": 25,
+        "files": [
+          {
+            "name": "trackball_camera.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          },
+          {
+            "name": "trackball_camera_inspector_plugin.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          },
+          {
+            "name": "trackball_camera_plugin.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          },
+          {
+            "name": "marching_cubes_viewer.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          },
+          {
+            "name": "image_stack_viewer.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          },
+          {
+            "name": "marching_cubes_viewer.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          },
+          {
+            "name": "mesh_viewer_cpu.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          },
+          {
+            "name": "marching_cubes_viewer_glsl.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          },
+          {
+            "name": "glsl_context.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          },
+          {
+            "name": "glsl_shader.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          },
+          {
+            "name": "glsl_shader_tool.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          },
+          {
+            "name": "glsl_util.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          },
+          {
+            "name": "marching_cubes_generator_glsl_variable.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          },
+          {
+            "name": "mipmap_generator_rf_3d.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          },
+          {
+            "name": "mipmap_generator_rgba8_3d.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          },
+          {
+            "name": "mipmap_generator_rgbaf_3d.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          },
+          {
+            "name": "sobel_gradient_generator.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          },
+          {
+            "name": "cube_symmetries.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          },
+          {
+            "name": "image_gradient.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          },
+          {
+            "name": "marching_cubes.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          },
+          {
+            "name": "marching_cube_table.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          },
+          {
+            "name": "zipped_image_archive_cpu_Texture3D.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          },
+          {
+            "name": "zipped_image_stack.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          },
+          {
+            "name": "zipped_image_archive_rf_3d.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          },
+          {
+            "name": "zipped_image_archive_rf_Texture3D.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          }
+        ]
+      },
+      "docs": {
+        "total": 1,
+        "compliant": 1,
+        "files": [
+          {
+            "name": "ai_companion_plasmoid.gd",
+            "compliant": true,
+            "issues": [
+              "Not a UniversalBeing"
+            ]
+          }
+        ]
+      }
+    },
+    "compliance_percentage": 92.3
+  },
+  "socket_usage": {},
+  "consciousness_levels": {
+    "level_distribution": {
+      "3": 30,
+      "7": 8,
+      "1": 21,
+      "2": 30,
+      "0": 6,
+      "4": 13,
+      "5": 22,
+      "6": 2
+    },
+    "beings_by_level": {
+      "3": [
+        "akashic_loader.gd",
+        "GemmaAICompanionPlasmoid.gd",
+        "UniversalBeingInterface.gd",
+        "ai_natural_language_console.gd",
+        "chunk_generator.gd",
+        "complete_package_system_test.gd",
+        "ConsoleTextLayer.gd",
+        "console_universal_being.gd",
+        "desert_garden_genesis.gd",
+        "GemmaConsoleInterface.gd",
+        "gemma_natural_language.gd",
+        "genesis_conductor_universal_being.gd",
+        "input_focus_manager.gd",
+        "lod_generator_universal_being.gd",
+        "matrix_chunk_system.gd",
+        "meta_game_testing_ground.gd",
+        "recursive_creation_console_universal_being.gd",
+        "terminal_universal_being.gd",
+        "ufo_universal_being.gd",
+        "universal_being_mover.gd",
+        "universe_core.gd",
+        "universe_rules.gd",
+        "universe_universal_being.gd",
+        "pentagon_network_visualizer.gd",
+        "test_camera_consciousness.gd",
+        "ButterflyUniversalBeing.gd",
+        "ConsoleUniversalBeing.gd",
+        "ground_universal_being.gd",
+        "LiveCodeEditor.gd",
+        "ZipPackageManager.gd"
+      ],
+      "7": [
+        "ConsciousnessRevolutionSpawner.gd",
+        "GemmaAICompanionPlasmoid.gd",
+        "GemmaUniversalBeing.gd",
+        "InteractiveTestEnvironment.gd",
+        "perfect_universal_console.gd",
+        "UniversalConsole.gd",
+        "universal_command_processor.gd",
+        "test_camera_consciousness.gd"
+      ],
+      "1": [
+        "plasmoid_universal_being.gd",
+        "button_universal_being.gd",
+        "chunk_generator.gd",
+        "chunk_generator.gd",
+        "chunk_generator.gd",
+        "chunk_generator_component.gd",
+        "chunk_generator_component.gd",
+        "chunk_universal_being.gd",
+        "chunk_universe_generator.gd",
+        "ConsoleTextLayer.gd",
+        "desert_garden_genesis.gd",
+        "luminus_chunk_universal_being.gd",
+        "matrix_chunk_system.gd",
+        "socket_button_universal_being.gd",
+        "consciousness_exchange_system.gd",
+        "consciousness_icon.gd",
+        "test_camera_consciousness.gd",
+        "test_camera_consciousness.gd",
+        "ground_universal_being.gd",
+        "main_OLD_COMPLEX.gd",
+        "simple_player_controller.gd"
+      ],
+      "2": [
+        "auto_startup_universal_being.gd",
+        "button_basic.gd",
+        "chunk_generator.gd",
+        "chunk_generator.gd",
+        "console_base.gd",
+        "console_enhancements.gd",
+        "cursor_controller.gd",
+        "desert_garden_genesis.gd",
+        "game_launcher_universal_being.gd",
+        "gemma_simple.gd",
+        "interface_window_universal_being.gd",
+        "main_script.gd",
+        "matrix_chunk_system.gd",
+        "socket_grid_universal_being.gd",
+        "tree_universal_being.gd",
+        "universal_interface_being.gd",
+        "universe_portal.gd",
+        "test_camera_consciousness.gd",
+        "CameraUniversalBeing.gd",
+        "ground_universal_being.gd",
+        "ground_universal_being.gd",
+        "light_universal_being.gd",
+        "TreeUniversalBeing.gd",
+        "console_butterfly_fix.gd",
+        "console_butterfly_tree_fix.gd",
+        "main_OLD_COMPLEX.gd",
+        "main_OLD_COMPLEX.gd",
+        "main_OLD_COMPLEX.gd",
+        "main_OLD_COMPLEX.gd",
+        "input_focus_manager.gd"
+      ],
+      "0": [
+        "button_3d_universal_being.gd",
+        "camera_effects_test.gd",
+        "poetic_log.gd",
+        "test_complete_camera_consciousness.gd",
+        "icon_universal_being.gd",
+        "AkashicRecords.gd"
+      ],
+      "4": [
+        "chunk_generator.gd",
+        "chunk_grid_manager.gd",
+        "chunk_universe_generator.gd",
+        "desert_garden_genesis.gd",
+        "genesis_conductor_universal_being.gd",
+        "macro_system.gd",
+        "matrix_chunk_system.gd",
+        "test_camera_consciousness.gd",
+        "CursorUniversalBeing.gd",
+        "ground_universal_being.gd",
+        "player_universal_being.gd",
+        "main_OLD_COMPLEX.gd",
+        "chatgpt_premium_bridge_universal_being.gd"
+      ],
+      "5": [
+        "chunk_generator.gd",
+        "chunk_generator.gd",
+        "conversational_console_being.gd",
+        "desert_garden_genesis.gd",
+        "desert_garden_genesis.gd",
+        "gemma_text_interface_system.gd",
+        "genesis_conductor_universal_being.gd",
+        "genesis_conductor_universal_being.gd",
+        "launch_genesis_adventure.gd",
+        "matrix_chunk_system.gd",
+        "turn_based_creation_system.gd",
+        "unified_chunk_system.gd",
+        "unified_console_being.gd",
+        "consciousness_exchange_system.gd",
+        "test_camera_consciousness.gd",
+        "test_framework.gd",
+        "MacroSystem.gd",
+        "main_OLD_COMPLEX.gd",
+        "claude_bridge_universal_being.gd",
+        "claude_desktop_mcp_universal_being.gd",
+        "google_gemini_premium_bridge_universal_being.gd",
+        "google_gemini_premium_bridge_universal_being.gd"
+      ],
+      "6": [
+        "test_camera_consciousness.gd",
+        "UniversalTimersSystem.gd"
+      ]
+    },
+    "consciousness_evolution": [],
+    "total_conscious_beings": 132
+  },
+  "component_analysis": {},
+  "autoload_analysis": {
+    "configured_autoloads": {
+      "SystemBootstrap": "res://autoloads/SystemBootstrap.gd",
+      "AkashicRecordsSystemSystem": "res://systems/storage/AkashicRecordsSystemSystem.gd",
+      "GemmaAI": "res://autoloads/GemmaAI.gd",
+      "UBPrint": "res://systems/UBPrintCollector.gd"
+    },
+    "autoload_files_exist": {
+      "SystemBootstrap": true,
+      "AkashicRecordsSystemSystem": false,
+      "GemmaAI": true,
+      "UBPrint": true
+    },
+    "autoload_health": "Poor - missing autoload files"
+  },
+  "scene_analysis": {},
+  "akashic_integration": {
+    "akashic_references": 31,
+    "save_operations": 7,
+    "load_operations": 12,
+    "component_packages": 19,
+    "akashic_library_structure": {
+      "description": "Akashic Library",
+      "exists": true,
+      "script_count": 0,
+      "subdirectories": [
+        {
+          "name": "beings",
+          "script_count": 0,
+          "analysis": {
+            "description": "Akashic Library - beings",
+            "exists": true,
+            "script_count": 0,
+            "subdirectories": [
+              {
+                "name": "characters",
+                "script_count": 0,
+                "analysis": {
+                  "description": "Akashic Library - beings - characters",
+                  "exists": true,
+                  "script_count": 0,
+                  "subdirectories": [],
+                  "files": [],
+                  "size_kb": 0.0
+                }
+              }
+            ],
+            "files": [],
+            "size_kb": 0.0
+          }
+        },
+        {
+          "name": "cli",
+          "script_count": 0,
+          "analysis": {
+            "description": "Akashic Library - cli",
+            "exists": true,
+            "script_count": 0,
+            "subdirectories": [
+              {
+                "name": "templates",
+                "script_count": 0,
+                "analysis": {
+                  "description": "Akashic Library - cli - templates",
+                  "exists": true,
+                  "script_count": 0,
+                  "subdirectories": [],
+                  "files": [],
+                  "size_kb": 0.0
+                }
+              }
+            ],
+            "files": [],
+            "size_kb": 0.0
+          }
+        },
+        {
+          "name": "collaboration",
+          "script_count": 0,
+          "analysis": {
+            "description": "Akashic Library - collaboration",
+            "exists": true,
+            "script_count": 0,
+            "subdirectories": [],
+            "files": [],
+            "size_kb": 0.0
+          }
+        },
+        {
+          "name": "components",
+          "script_count": 0,
+          "analysis": {
+            "description": "Akashic Library - components",
+            "exists": true,
+            "script_count": 0,
+            "subdirectories": [
+              {
+                "name": "akashic_logger.ub.zip",
+                "script_count": 0,
+                "analysis": {
+                  "description": "Akashic Library - components - akashic_logger.ub.zip",
+                  "exists": true,
+                  "script_count": 0,
+                  "subdirectories": [],
+                  "files": [],
+                  "size_kb": 0.0
+                }
+              },
+              {
+                "name": "basic_interaction.ub.zip",
+                "script_count": 0,
+                "analysis": {
+                  "description": "Akashic Library - components - basic_interaction.ub.zip",
+                  "exists": true,
+                  "script_count": 0,
+                  "subdirectories": [],
+                  "files": [],
+                  "size_kb": 0.0
+                }
+              },
+              {
+                "name": "being_dna",
+                "script_count": 0,
+                "analysis": {
+                  "description": "Akashic Library - components - being_dna",
+                  "exists": true,
+                  "script_count": 0,
+                  "subdirectories": [],
+                  "files": [],
+                  "size_kb": 0.0
+                }
+              },
+              {
+                "name": "button_basic",
+                "script_count": 0,
+                "analysis": {
+                  "description": "Akashic Library - components - button_basic",
+                  "exists": true,
+                  "script_count": 0,
+                  "subdirectories": [],
+                  "files": [],
+                  "size_kb": 0.0
+                }
+              },
+              {
+                "name": "camera_effects",
+                "script_count": 0,
+                "analysis": {
+                  "description": "Akashic Library - components - camera_effects",
+                  "exists": true,
+                  "script_count": 0,
+                  "subdirectories": [
+                    {
+                      "name": "shaders",
+                      "script_count": 0,
+                      "analysis": {
+                        "description": "Akashic Library - components - camera_effects - shaders",
+                        "exists": true,
+                        "script_count": 0,
+                        "subdirectories": [],
+                        "files": [],
+                        "size_kb": 0.0
+                      }
+                    }
+                  ],
+                  "files": [],
+                  "size_kb": 0.0
+                }
+              },
+              {
+                "name": "chunk_generator_basic",
+                "script_count": 0,
+                "analysis": {
+                  "description": "Akashic Library - components - chunk_generator_basic",
+                  "exists": true,
+                  "script_count": 0,
+                  "subdirectories": [
+                    {
+                      "name": "scripts",
+                      "script_count": 0,
+                      "analysis": {
+                        "description": "Akashic Library - components - chunk_generator_basic - scripts",
+                        "exists": true,
+                        "script_count": 0,
+                        "subdirectories": [],
+                        "files": [],
+                        "size_kb": 0.0
+                      }
+                    }
+                  ],
+                  "files": [],
+                  "size_kb": 0.0
+                }
+              },
+              {
+                "name": "consciousness_resonator.ub.zip",
+                "script_count": 0,
+                "analysis": {
+                  "description": "Akashic Library - components - consciousness_resonator.ub.zip",
+                  "exists": true,
+                  "script_count": 0,
+                  "subdirectories": [],
+                  "files": [],
+                  "size_kb": 0.0
+                }
+              },
+              {
+                "name": "console_notifications.ub.zip",
+                "script_count": 0,
+                "analysis": {
+                  "description": "Akashic Library - components - console_notifications.ub.zip",
+                  "exists": true,
+                  "script_count": 0,
+                  "subdirectories": [],
+                  "files": [],
+                  "size_kb": 0.0
+                }
+              },
+              {
+                "name": "cosmic_insights.ub.zip",
+                "script_count": 0,
+                "analysis": {
+                  "description": "Akashic Library - components - cosmic_insights.ub.zip",
+                  "exists": true,
+                  "script_count": 0,
+                  "subdirectories": [],
+                  "files": [],
+                  "size_kb": 0.0
+                }
+              },
+              {
+                "name": "desktop_bridge.ub.zip",
+                "script_count": 0,
+                "analysis": {
+                  "description": "Akashic Library - components - desktop_bridge.ub.zip",
+                  "exists": true,
+                  "script_count": 0,
+                  "subdirectories": [],
+                  "files": [],
+                  "size_kb": 0.0
+                }
+              },
+              {
+                "name": "dimensional_sight.ub.zip",
+                "script_count": 0,
+                "analysis": {
+                  "description": "Akashic Library - components - dimensional_sight.ub.zip",
+                  "exists": true,
+                  "script_count": 0,
+                  "subdirectories": [],
+                  "files": [],
+                  "size_kb": 0.0
+                }
+              },
+              {
+                "name": "gemini_api.ub.zip",
+                "script_count": 0,
+                "analysis": {
+                  "description": "Akashic Library - components - gemini_api.ub.zip",
+                  "exists": true,
+                  "script_count": 0,
+                  "subdirectories": [],
+                  "files": [],
+                  "size_kb": 0.0
+                }
+              },
+              {
+                "name": "glow_effect.ub.zip",
+                "script_count": 0,
+                "analysis": {
+                  "description": "Akashic Library - components - glow_effect.ub.zip",
+                  "exists": true,
+                  "script_count": 0,
+                  "subdirectories": [],
+                  "files": [],
+                  "size_kb": 0.0
+                }
+              },
+              {
+                "name": "mcp_client.ub.zip",
+                "script_count": 0,
+                "analysis": {
+                  "description": "Akashic Library - components - mcp_client.ub.zip",
+                  "exists": true,
+                  "script_count": 0,
+                  "subdirectories": [],
+                  "files": [],
+                  "size_kb": 0.0
+                }
+              },
+              {
+                "name": "multimodal_analyzer.ub.zip",
+                "script_count": 0,
+                "analysis": {
+                  "description": "Akashic Library - components - multimodal_analyzer.ub.zip",
+                  "exists": true,
+                  "script_count": 0,
+                  "subdirectories": [],
+                  "files": [],
+                  "size_kb": 0.0
+                }
+              },
+              {
+                "name": "poetic_log.ub.zip",
+                "script_count": 0,
+                "analysis": {
+                  "description": "Akashic Library - components - poetic_log.ub.zip",
+                  "exists": true,
+                  "script_count": 0,
+                  "subdirectories": [],
+                  "files": [],
+                  "size_kb": 0.0
+                }
+              },
+              {
+                "name": "reality_editor",
+                "script_count": 0,
+                "analysis": {
+                  "description": "Akashic Library - components - reality_editor",
+                  "exists": true,
+                  "script_count": 0,
+                  "subdirectories": [],
+                  "files": [],
+                  "size_kb": 0.0
+                }
+              },
+              {
+                "name": "reality_editor.ub.zip",
+                "script_count": 0,
+                "analysis": {
+                  "description": "Akashic Library - components - reality_editor.ub.zip",
+                  "exists": true,
+                  "script_count": 0,
+                  "subdirectories": [],
+                  "files": [],
+                  "size_kb": 0.0
+                }
+              },
+              {
+                "name": "transform_animator.ub.zip",
+                "script_count": 0,
+                "analysis": {
+                  "description": "Akashic Library - components - transform_animator.ub.zip",
+                  "exists": true,
+                  "script_count": 0,
+                  "subdirectories": [],
+                  "files": [],
+                  "size_kb": 0.0
+                }
+              },
+              {
+                "name": "universe_console",
+                "script_count": 0,
+                "analysis": {
+                  "description": "Akashic Library - components - universe_console",
+                  "exists": true,
+                  "script_count": 0,
+                  "subdirectories": [],
+                  "files": [],
+                  "size_kb": 0.0
+                }
+              },
+              {
+                "name": "universe_creation.ub.zip",
+                "script_count": 0,
+                "analysis": {
+                  "description": "Akashic Library - components - universe_creation.ub.zip",
+                  "exists": true,
+                  "script_count": 0,
+                  "subdirectories": [],
+                  "files": [],
+                  "size_kb": 0.0
+                }
+              },
+              {
+                "name": "universe_genesis",
+                "script_count": 0,
+                "analysis": {
+                  "description": "Akashic Library - components - universe_genesis",
+                  "exists": true,
+                  "script_count": 0,
+                  "subdirectories": [],
+                  "files": [],
+                  "size_kb": 0.0
+                }
+              },
+              {
+                "name": "universe_lod.ub.zip",
+                "script_count": 0,
+                "analysis": {
+                  "description": "Akashic Library - components - universe_lod.ub.zip",
+                  "exists": true,
+                  "script_count": 0,
+                  "subdirectories": [],
+                  "files": [],
+                  "size_kb": 0.0
+                }
+              },
+              {
+                "name": "universe_physics.ub.zip",
+                "script_count": 0,
+                "analysis": {
+                  "description": "Akashic Library - components - universe_physics.ub.zip",
+                  "exists": true,
+                  "script_count": 0,
+                  "subdirectories": [],
+                  "files": [],
+                  "size_kb": 0.0
+                }
+              },
+              {
+                "name": "universe_time.ub.zip",
+                "script_count": 0,
+                "analysis": {
+                  "description": "Akashic Library - components - universe_time.ub.zip",
+                  "exists": true,
+                  "script_count": 0,
+                  "subdirectories": [],
+                  "files": [],
+                  "size_kb": 0.0
+                }
+              }
+            ],
+            "files": [],
+            "size_kb": 0.0
+          }
+        },
+        {
+          "name": "creation",
+          "script_count": 0,
+          "analysis": {
+            "description": "Akashic Library - creation",
+            "exists": true,
+            "script_count": 0,
+            "subdirectories": [
+              {
+                "name": "libraries",
+                "script_count": 0,
+                "analysis": {
+                  "description": "Akashic Library - creation - libraries",
+                  "exists": true,
+                  "script_count": 0,
+                  "subdirectories": [],
+                  "files": [],
+                  "size_kb": 0.0
+                }
+              }
+            ],
+            "files": [],
+            "size_kb": 0.0
+          }
+        },
+        {
+          "name": "data",
+          "script_count": 0,
+          "analysis": {
+            "description": "Akashic Library - data",
+            "exists": true,
+            "script_count": 0,
+            "subdirectories": [
+              {
+                "name": "akashic",
+                "script_count": 0,
+                "analysis": {
+                  "description": "Akashic Library - data - akashic",
+                  "exists": true,
+                  "script_count": 0,
+                  "subdirectories": [],
+                  "files": [],
+                  "size_kb": 0.0
+                }
+              },
+              {
+                "name": "config",
+                "script_count": 0,
+                "analysis": {
+                  "description": "Akashic Library - data - config",
+                  "exists": true,
+                  "script_count": 0,
+                  "subdirectories": [],
+                  "files": [],
+                  "size_kb": 0.0
+                }
+              },
+              {
+                "name": "templates",
+                "script_count": 0,
+                "analysis": {
+                  "description": "Akashic Library - data - templates",
+                  "exists": true,
+                  "script_count": 0,
+                  "subdirectories": [],
+                  "files": [],
+                  "size_kb": 0.0
+                }
+              }
+            ],
+            "files": [],
+            "size_kb": 0.0
+          }
+        },
+        {
+          "name": "development",
+          "script_count": 0,
+          "analysis": {
+            "description": "Akashic Library - development",
+            "exists": true,
+            "script_count": 0,
+            "subdirectories": [
+              {
+                "name": "libraries",
+                "script_count": 0,
+                "analysis": {
+                  "description": "Akashic Library - development - libraries",
+                  "exists": true,
+                  "script_count": 0,
+                  "subdirectories": [
+                    {
+                      "name": "actions",
+                      "script_count": 0,
+                      "analysis": {
+                        "description": "Akashic Library - development - libraries - actions",
+                        "exists": true,
+                        "script_count": 0,
+                        "subdirectories": [
+                          {
+                            "name": "movement_system",
+                            "script_count": 0,
+                            "analysis": {
+                              "description": "Akashic Library - development - libraries - actions - movement_system",
+                              "exists": true,
+                              "script_count": 0,
+                              "subdirectories": [],
+                              "files": [],
+                              "size_kb": 0.0
+                            }
+                          }
+                        ],
+                        "files": [],
+                        "size_kb": 0.0
+                      }
+                    },
+                    {
+                      "name": "ai",
+                      "script_count": 0,
+                      "analysis": {
+                        "description": "Akashic Library - development - libraries - ai",
+                        "exists": true,
+                        "script_count": 0,
+                        "subdirectories": [
+                          {
+                            "name": "gemma_integration",
+                            "script_count": 0,
+                            "analysis": {
+                              "description": "Akashic Library - development - libraries - ai - gemma_integration",
+                              "exists": true,
+                              "script_count": 0,
+                              "subdirectories": [],
+                              "files": [],
+                              "size_kb": 0.0
+                            }
+                          }
+                        ],
+                        "files": [],
+                        "size_kb": 0.0
+                      }
+                    },
+                    {
+                      "name": "assets",
+                      "script_count": 0,
+                      "analysis": {
+                        "description": "Akashic Library - development - libraries - assets",
+                        "exists": true,
+                        "script_count": 0,
+                        "subdirectories": [
+                          {
+                            "name": "consciousness_icons",
+                            "script_count": 0,
+                            "analysis": {
+                              "description": "Akashic Library - development - libraries - assets - consciousness_icons",
+                              "exists": true,
+                              "script_count": 0,
+                              "subdirectories": [
+                                {
+                                  "name": "icons",
+                                  "script_count": 0,
+                                  "analysis": {
+                                    "description": "Akashic Library - development - libraries - assets - consciousness_icons - icons",
+                                    "exists": true,
+                                    "script_count": 0,
+                                    "subdirectories": [],
+                                    "files": [],
+                                    "size_kb": 0.0
+                                  }
+                                }
+                              ],
+                              "files": [],
+                              "size_kb": 0.0
+                            }
+                          }
+                        ],
+                        "files": [],
+                        "size_kb": 0.0
+                      }
+                    },
+                    {
+                      "name": "composites",
+                      "script_count": 0,
+                      "analysis": {
+                        "description": "Akashic Library - development - libraries - composites",
+                        "exists": true,
+                        "script_count": 0,
+                        "subdirectories": [
+                          {
+                            "name": "complete_beings",
+                            "script_count": 0,
+                            "analysis": {
+                              "description": "Akashic Library - development - libraries - composites - complete_beings",
+                              "exists": true,
+                              "script_count": 0,
+                              "subdirectories": [],
+                              "files": [],
+                              "size_kb": 0.0
+                            }
+                          }
+                        ],
+                        "files": [],
+                        "size_kb": 0.0
+                      }
+                    },
+                    {
+                      "name": "interfaces",
+                      "script_count": 0,
+                      "analysis": {
+                        "description": "Akashic Library - development - libraries - interfaces",
+                        "exists": true,
+                        "script_count": 0,
+                        "subdirectories": [
+                          {
+                            "name": "console_ui",
+                            "script_count": 0,
+                            "analysis": {
+                              "description": "Akashic Library - development - libraries - interfaces - console_ui",
+                              "exists": true,
+                              "script_count": 0,
+                              "subdirectories": [],
+                              "files": [],
+                              "size_kb": 0.0
+                            }
+                          }
+                        ],
+                        "files": [],
+                        "size_kb": 0.0
+                      }
+                    },
+                    {
+                      "name": "logics",
+                      "script_count": 0,
+                      "analysis": {
+                        "description": "Akashic Library - development - libraries - logics",
+                        "exists": true,
+                        "script_count": 0,
+                        "subdirectories": [
+                          {
+                            "name": "basic_behaviors",
+                            "script_count": 0,
+                            "analysis": {
+                              "description": "Akashic Library - development - libraries - logics - basic_behaviors",
+                              "exists": true,
+                              "script_count": 0,
+                              "subdirectories": [],
+                              "files": [],
+                              "size_kb": 0.0
+                            }
+                          }
+                        ],
+                        "files": [],
+                        "size_kb": 0.0
+                      }
+                    }
+                  ],
+                  "files": [],
+                  "size_kb": 0.0
+                }
+              }
+            ],
+            "files": [],
+            "size_kb": 0.0
+          }
+        },
+        {
+          "name": "effects",
+          "script_count": 0,
+          "analysis": {
+            "description": "Akashic Library - effects",
+            "exists": true,
+            "script_count": 0,
+            "subdirectories": [
+              {
+                "name": "camera",
+                "script_count": 0,
+                "analysis": {
+                  "description": "Akashic Library - effects - camera",
+                  "exists": true,
+                  "script_count": 0,
+                  "subdirectories": [],
+                  "files": [],
+                  "size_kb": 0.0
+                }
+              },
+              {
+                "name": "shaders",
+                "script_count": 0,
+                "analysis": {
+                  "description": "Akashic Library - effects - shaders",
+                  "exists": true,
+                  "script_count": 0,
+                  "subdirectories": [],
+                  "files": [],
+                  "size_kb": 0.0
+                }
+              }
+            ],
+            "files": [],
+            "size_kb": 0.0
+          }
+        },
+        {
+          "name": "example_crystal_being",
+          "script_count": 0,
+          "analysis": {
+            "description": "Akashic Library - example_crystal_being",
+            "exists": true,
+            "script_count": 0,
+            "subdirectories": [
+              {
+                "name": "resources",
+                "script_count": 0,
+                "analysis": {
+                  "description": "Akashic Library - example_crystal_being - resources",
+                  "exists": true,
+                  "script_count": 0,
+                  "subdirectories": [],
+                  "files": [],
+                  "size_kb": 0.0
+                }
+              },
+              {
+                "name": "scenes",
+                "script_count": 0,
+                "analysis": {
+                  "description": "Akashic Library - example_crystal_being - scenes",
+                  "exists": true,
+                  "script_count": 0,
+                  "subdirectories": [],
+                  "files": [],
+                  "size_kb": 0.0
+                }
+              },
+              {
+                "name": "scripts",
+                "script_count": 0,
+                "analysis": {
+                  "description": "Akashic Library - example_crystal_being - scripts",
+                  "exists": true,
+                  "script_count": 0,
+                  "subdirectories": [],
+                  "files": [],
+                  "size_kb": 0.0
+                }
+              }
+            ],
+            "files": [],
+            "size_kb": 0.0
+          }
+        },
+        {
+          "name": "genesis_logs",
+          "script_count": 0,
+          "analysis": {
+            "description": "Akashic Library - genesis_logs",
+            "exists": true,
+            "script_count": 0,
+            "subdirectories": [],
+            "files": [],
+            "size_kb": 0.0
+          }
+        },
+        {
+          "name": "icons",
+          "script_count": 0,
+          "analysis": {
+            "description": "Akashic Library - icons",
+            "exists": true,
+            "script_count": 0,
+            "subdirectories": [],
+            "files": [],
+            "size_kb": 0.0
+          }
+        },
+        {
+          "name": "interfaces",
+          "script_count": 0,
+          "analysis": {
+            "description": "Akashic Library - interfaces",
+            "exists": true,
+            "script_count": 0,
+            "subdirectories": [],
+            "files": [],
+            "size_kb": 0.0
+          }
+        },
+        {
+          "name": "libraries",
+          "script_count": 0,
+          "analysis": {
+            "description": "Akashic Library - libraries",
+            "exists": true,
+            "script_count": 0,
+            "subdirectories": [
+              {
+                "name": "actions_library",
+                "script_count": 0,
+                "analysis": {
+                  "description": "Akashic Library - libraries - actions_library",
+                  "exists": true,
+                  "script_count": 0,
+                  "subdirectories": [],
+                  "files": [],
+                  "size_kb": 0.0
+                }
+              },
+              {
+                "name": "ai_library",
+                "script_count": 0,
+                "analysis": {
+                  "description": "Akashic Library - libraries - ai_library",
+                  "exists": true,
+                  "script_count": 0,
+                  "subdirectories": [],
+                  "files": [],
+                  "size_kb": 0.0
+                }
+              },
+              {
+                "name": "assets_library",
+                "script_count": 0,
+                "analysis": {
+                  "description": "Akashic Library - libraries - assets_library",
+                  "exists": true,
+                  "script_count": 0,
+                  "subdirectories": [],
+                  "files": [],
+                  "size_kb": 0.0
+                }
+              },
+              {
+                "name": "composites_library",
+                "script_count": 0,
+                "analysis": {
+                  "description": "Akashic Library - libraries - composites_library",
+                  "exists": true,
+                  "script_count": 0,
+                  "subdirectories": [],
+                  "files": [],
+                  "size_kb": 0.0
+                }
+              },
+              {
+                "name": "interfaces_library",
+                "script_count": 0,
+                "analysis": {
+                  "description": "Akashic Library - libraries - interfaces_library",
+                  "exists": true,
+                  "script_count": 0,
+                  "subdirectories": [],
+                  "files": [],
+                  "size_kb": 0.0
+                }
+              },
+              {
+                "name": "logics_library",
+                "script_count": 0,
+                "analysis": {
+                  "description": "Akashic Library - libraries - logics_library",
+                  "exists": true,
+                  "script_count": 0,
+                  "subdirectories": [],
+                  "files": [],
+                  "size_kb": 0.0
+                }
+              }
+            ],
+            "files": [],
+            "size_kb": 0.0
+          }
+        },
+        {
+          "name": "library",
+          "script_count": 0,
+          "analysis": {
+            "description": "Akashic Library - library",
+            "exists": true,
+            "script_count": 0,
+            "subdirectories": [
+              {
+                "name": "commands",
+                "script_count": 0,
+                "analysis": {
+                  "description": "Akashic Library - library - commands",
+                  "exists": true,
+                  "script_count": 0,
+                  "subdirectories": [],
+                  "files": [],
+                  "size_kb": 0.0
+                }
+              },
+              {
+                "name": "templates",
+                "script_count": 0,
+                "analysis": {
+                  "description": "Akashic Library - library - templates",
+                  "exists": true,
+                  "script_count": 0,
+                  "subdirectories": [],
+                  "files": [],
+                  "size_kb": 0.0
+                }
+              },
+              {
+                "name": "utilities",
+                "script_count": 0,
+                "analysis": {
+                  "description": "Akashic Library - library - utilities",
+                  "exists": true,
+                  "script_count": 0,
+                  "subdirectories": [],
+                  "files": [],
+                  "size_kb": 0.0
+                }
+              }
+            ],
+            "files": [],
+            "size_kb": 0.0
+          }
+        },
+        {
+          "name": "materials",
+          "script_count": 0,
+          "analysis": {
+            "description": "Akashic Library - materials",
+            "exists": true,
+            "script_count": 0,
+            "subdirectories": [
+              {
+                "name": "camera",
+                "script_count": 0,
+                "analysis": {
+                  "description": "Akashic Library - materials - camera",
+                  "exists": true,
+                  "script_count": 0,
+                  "subdirectories": [],
+                  "files": [],
+                  "size_kb": 0.0
+                }
+              }
+            ],
+            "files": [],
+            "size_kb": 0.0
+          }
+        },
+        {
+          "name": "narrative",
+          "script_count": 0,
+          "analysis": {
+            "description": "Akashic Library - narrative",
+            "exists": true,
+            "script_count": 0,
+            "subdirectories": [],
+            "files": [],
+            "size_kb": 0.0
+          }
+        },
+        {
+          "name": "runtime",
+          "script_count": 0,
+          "analysis": {
+            "description": "Akashic Library - runtime",
+            "exists": true,
+            "script_count": 0,
+            "subdirectories": [
+              {
+                "name": "libraries",
+                "script_count": 0,
+                "analysis": {
+                  "description": "Akashic Library - runtime - libraries",
+                  "exists": true,
+                  "script_count": 0,
+                  "subdirectories": [],
+                  "files": [],
+                  "size_kb": 0.0
+                }
+              }
+            ],
+            "files": [],
+            "size_kb": 0.0
+          }
+        },
+        {
+          "name": "saves",
+          "script_count": 0,
+          "analysis": {
+            "description": "Akashic Library - saves",
+            "exists": true,
+            "script_count": 0,
+            "subdirectories": [],
+            "files": [],
+            "size_kb": 0.0
+          }
+        },
+        {
+          "name": "scenes",
+          "script_count": 0,
+          "analysis": {
+            "description": "Akashic Library - scenes",
+            "exists": true,
+            "script_count": 0,
+            "subdirectories": [],
+            "files": [],
+            "size_kb": 0.0
+          }
+        },
+        {
+          "name": "sounds",
+          "script_count": 0,
+          "analysis": {
+            "description": "Akashic Library - sounds",
+            "exists": true,
+            "script_count": 0,
+            "subdirectories": [
+              {
+                "name": "Animals",
+                "script_count": 0,
+                "analysis": {
+                  "description": "Akashic Library - sounds - Animals",
+                  "exists": true,
+                  "script_count": 0,
+                  "subdirectories": [],
+                  "files": [],
+                  "size_kb": 0.0
+                }
+              },
+              {
+                "name": "Crashes",
+                "script_count": 0,
+                "analysis": {
+                  "description": "Akashic Library - sounds - Crashes",
+                  "exists": true,
+                  "script_count": 0,
+                  "subdirectories": [],
+                  "files": [],
+                  "size_kb": 0.0
+                }
+              },
+              {
+                "name": "Impacts",
+                "script_count": 0,
+                "analysis": {
+                  "description": "Akashic Library - sounds - Impacts",
+                  "exists": true,
+                  "script_count": 0,
+                  "subdirectories": [],
+                  "files": [],
+                  "size_kb": 0.0
+                }
+              },
+              {
+                "name": "Science Fiction",
+                "script_count": 0,
+                "analysis": {
+                  "description": "Akashic Library - sounds - Science Fiction",
+                  "exists": true,
+                  "script_count": 0,
+                  "subdirectories": [],
+                  "files": [],
+                  "size_kb": 0.0
+                }
+              }
+            ],
+            "files": [],
+            "size_kb": 0.0
+          }
+        },
+        {
+          "name": "systems",
+          "script_count": 0,
+          "analysis": {
+            "description": "Akashic Library - systems",
+            "exists": true,
+            "script_count": 0,
+            "subdirectories": [
+              {
+                "name": "ai",
+                "script_count": 0,
+                "analysis": {
+                  "description": "Akashic Library - systems - ai",
+                  "exists": true,
+                  "script_count": 0,
+                  "subdirectories": [],
+                  "files": [],
+                  "size_kb": 0.0
+                }
+              },
+              {
+                "name": "chunks",
+                "script_count": 0,
+                "analysis": {
+                  "description": "Akashic Library - systems - chunks",
+                  "exists": true,
+                  "script_count": 0,
+                  "subdirectories": [],
+                  "files": [],
+                  "size_kb": 0.0
+                }
+              },
+              {
+                "name": "console",
+                "script_count": 0,
+                "analysis": {
+                  "description": "Akashic Library - systems - console",
+                  "exists": true,
+                  "script_count": 0,
+                  "subdirectories": [],
+                  "files": [],
+                  "size_kb": 0.0
+                }
+              },
+              {
+                "name": "creator",
+                "script_count": 0,
+                "analysis": {
+                  "description": "Akashic Library - systems - creator",
+                  "exists": true,
+                  "script_count": 0,
+                  "subdirectories": [],
+                  "files": [],
+                  "size_kb": 0.0
+                }
+              },
+              {
+                "name": "debug",
+                "script_count": 0,
+                "analysis": {
+                  "description": "Akashic Library - systems - debug",
+                  "exists": true,
+                  "script_count": 0,
+                  "subdirectories": [],
+                  "files": [],
+                  "size_kb": 0.0
+                }
+              },
+              {
+                "name": "gemma_components",
+                "script_count": 0,
+                "analysis": {
+                  "description": "Akashic Library - systems - gemma_components",
+                  "exists": true,
+                  "script_count": 0,
+                  "subdirectories": [],
+                  "files": [],
+                  "size_kb": 0.0
+                }
+              },
+              {
+                "name": "inspector",
+                "script_count": 0,
+                "analysis": {
+                  "description": "Akashic Library - systems - inspector",
+                  "exists": true,
+                  "script_count": 0,
+                  "subdirectories": [],
+                  "files": [],
+                  "size_kb": 0.0
+                }
+              },
+              {
+                "name": "optimization",
+                "script_count": 0,
+                "analysis": {
+                  "description": "Akashic Library - systems - optimization",
+                  "exists": true,
+                  "script_count": 0,
+                  "subdirectories": [],
+                  "files": [],
+                  "size_kb": 0.0
+                }
+              },
+              {
+                "name": "spatial",
+                "script_count": 0,
+                "analysis": {
+                  "description": "Akashic Library - systems - spatial",
+                  "exists": true,
+                  "script_count": 0,
+                  "subdirectories": [],
+                  "files": [],
+                  "size_kb": 0.0
+                }
+              }
+            ],
+            "files": [],
+            "size_kb": 0.0
+          }
+        },
+        {
+          "name": "textures",
+          "script_count": 0,
+          "analysis": {
+            "description": "Akashic Library - textures",
+            "exists": true,
+            "script_count": 0,
+            "subdirectories": [],
+            "files": [],
+            "size_kb": 0.0
+          }
+        },
+        {
+          "name": "validation",
+          "script_count": 0,
+          "analysis": {
+            "description": "Akashic Library - validation",
+            "exists": true,
+            "script_count": 0,
+            "subdirectories": [],
+            "files": [],
+            "size_kb": 0.0
+          }
+        }
+      ],
+      "files": [],
+      "size_kb": 0.0
+    },
+    "integration_health": "Excellent - active integration"
+  },
+  "architecture_health": {
+    "structure": {
+      "core_organization": "Excellent",
+      "beings_separation": "Good",
+      "systems_organization": "Good",
+      "total_scripts": 240,
+      "organization_score": 95
+    }
+  }
+}

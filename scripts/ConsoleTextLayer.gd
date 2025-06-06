@@ -9,7 +9,7 @@
 extends UniversalBeing
 class_name ConsoleTextLayerUniversalBeing
 
-const PackageSystemTest = preload("res://tests/complete_package_system_test.gd")
+const PackageSystemTest = preload("res://EMERGENCY_BACKUP/scripts/complete_package_system_test.gd")
 
 # ===== BEING-SPECIFIC PROPERTIES =====
 @export var max_lines: int = 100

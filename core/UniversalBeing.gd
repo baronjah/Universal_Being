@@ -1,7 +1,7 @@
 # ==================================================
 # SCRIPT NAME: UniversalBeing.gd
 # DESCRIPTION: The foundation of all consciousness - Core Universal Being class
-# PURPOSE: Every single entity in the game extends this - buttons, assets, AI, everything
+# PURPOSE: Every single entity in the game extends UniversalBeing
 # CREATED: 2025-06-01 - Universal Being Revolution 
 # AUTHOR: JSH + Claude Code + Luminus + Alpha
 # ==================================================
@@ -126,6 +126,9 @@ signal evolution_completed(new_being: UniversalBeing)
 signal component_added(component_path: String)
 signal component_removed(component_path: String)
 signal being_destroyed()
+
+# Consciousness Ripple System
+signal consciousness_ripple_created(origin: Vector3, intensity: float, type: String)
 
 # DNA and Blueprint signals
 signal dna_analyzed(dna_profile: UniversalBeingDNA)
@@ -949,7 +952,7 @@ func save_to_zip(file_path: String) -> bool:
 				push_error("🌟 UniversalBeing: Failed to save %s to %s" % [being_name, file_path])
 			return success
 		else:
-			push_error("🌟 UniversalBeing: AkashicRecords save method not available")
+			push_error("🌟 UniversalBeing: AkashicRecordsSystemSystem save method not available")
 	else:
 		push_error("🌟 UniversalBeing: Cannot save - systems not ready")
 	
@@ -1469,11 +1472,47 @@ func change_state(new_state: BeingState, reason: String = "") -> void:
 	state_timer = 0.0
 	
 	state_changed.emit(old_state, new_state)
+	
+	# Create consciousness ripple on significant state changes
+	_create_consciousness_ripple_for_state(new_state)
+	
 	log_action("state_change", "State changed from %s to %s%s" % [
 		_state_to_string(old_state), 
 		_state_to_string(new_state),
 		(" - " + reason) if not reason.is_empty() else ""
 	])
+
+func _create_consciousness_ripple_for_state(new_state: BeingState) -> void:
+	"""Create consciousness ripple based on state change"""
+	var ripple_type = "thought"
+	var ripple_intensity = (consciousness_level * 0.2) + 0.5
+	
+	# Different ripple types for different states
+	match new_state:
+		BeingState.THINKING:
+			ripple_type = "thought"
+			ripple_intensity = (consciousness_level * 0.3) + 0.5
+		BeingState.CREATING:
+			ripple_type = "creation"
+			ripple_intensity = (consciousness_level * 0.5) + 1.5
+		BeingState.EVOLVING:
+			ripple_type = "evolution"
+			ripple_intensity = (consciousness_level * 0.4) + 2.0
+		BeingState.INTERACTING:
+			ripple_type = "interaction"
+			ripple_intensity = (consciousness_level * 0.3) + 1.0
+		BeingState.TRANSCENDING:
+			ripple_type = "transcendence"
+			ripple_intensity = (consciousness_level * 0.6) + 3.0
+		BeingState.MERGING:
+			ripple_type = "interaction"
+			ripple_intensity = (consciousness_level * 0.4) + 2.0
+		_:
+			# Don't create ripples for dormant, idle, moving, splitting states
+			return
+	
+	# Emit consciousness ripple signal
+	consciousness_ripple_created.emit(global_position, ripple_intensity, ripple_type)
 
 func _state_to_string(state: BeingState) -> String:
 	"""Convert state enum to string"""
@@ -1986,3 +2025,89 @@ func create_from_dna(dna: UniversalBeingDNA, parent: Node = null) -> UniversalBe
 	log_action("dna_creation", "Created %s from DNA template" % new_being.being_name)
 	
 	return new_being
+
+# ===== VIRTUAL METHODS FOR SUBCLASSES =====
+# These methods are called by specific Universal Being types but implemented as stubs in the base class
+
+func _initialize_movement_system() -> void:
+	"""Virtual method - override in subclasses for custom movement initialization"""
+	pass
+
+func _scan_for_energy_connections() -> void:
+	"""Virtual method - override in subclasses for energy scanning"""
+	pass
+
+func _update_plasma_shader(delta: float) -> void:
+	"""Virtual method - override in subclasses for plasma shader updates"""
+	pass
+
+func _update_energy_connections(delta: float) -> void:
+	"""Virtual method - override in subclasses for energy connection updates"""
+	pass
+
+func _update_trail_particles() -> void:
+	"""Virtual method - override in subclasses for trail particle updates"""
+	pass
+
+func _update_consciousness_particles() -> void:
+	"""Virtual method - override in subclasses for consciousness particle updates"""
+	pass
+
+func _emit_movement_burst() -> void:
+	"""Virtual method - override in subclasses for movement burst effects"""
+	pass
+
+func _emit_birth_particles() -> void:
+	"""Virtual method - override in subclasses for birth particle effects"""
+	pass
+
+func _get_energy_sense_data() -> Dictionary:
+	"""Virtual method - override in subclasses for energy sensing"""
+	return {}
+
+func _get_consciousness_connections() -> Array:
+	"""Virtual method - override in subclasses for consciousness connections"""
+	return []
+
+func _sense_environment_energy() -> Dictionary:
+	"""Virtual method - override in subclasses for environment energy sensing"""
+	return {}
+
+func _find_being_by_uuid(uuid: String) -> UniversalBeing:
+	"""Find a Universal Being by UUID in the current scene"""
+	var beings = get_tree().get_nodes_in_group("universal_beings")
+	for being in beings:
+		if being is UniversalBeing and being.being_uuid == uuid:
+			return being
+	return null
+
+func _initiate_interaction(other_being: UniversalBeing) -> void:
+	"""Initiate interaction with another being"""
+	if not other_being or other_being == self:
+		return
+	
+	change_state(BeingState.INTERACTING, "manual interaction initiated")
+	if not other_being in interaction_partners:
+		interaction_partners.append(other_being)
+	
+	interaction_initiated.emit(other_being, "direct_interaction")
+	log_action("interaction", "Initiated interaction with %s" % other_being.being_name)
+
+func get_global_mouse_position() -> Vector3:
+	"""Get the global mouse position projected onto the scene"""
+	if not get_viewport():
+		return Vector3.ZERO
+	
+	var camera = get_viewport().get_camera_3d()
+	if not camera:
+		return Vector3.ZERO
+	
+	var mouse_pos = get_viewport().get_mouse_position()
+	var from = camera.project_ray_origin(mouse_pos)
+	var to = from + camera.project_ray_normal(mouse_pos) * 1000.0
+	
+	# Simple plane intersection at y=0
+	var plane = Plane(Vector3.UP, 0.0)
+	var intersection = plane.intersects_ray(from, to - from)
+	
+	return intersection if intersection else Vector3.ZERO

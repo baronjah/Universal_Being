@@ -83,8 +83,8 @@ func update_fps_monitoring():
 func handle_emergency_optimization():
 	"""Handle emergency optimization when FPS drops too low"""
 	
-	# Trigger emergency if FPS drops below 20
-	if current_fps < 20 and not emergency_active:
+	# Trigger emergency if FPS drops below 45 (raised threshold for better performance)
+	if current_fps < 45 and not emergency_active:
 		print("🚨 EMERGENCY OPTIMIZATION ACTIVATED - FPS TOO LOW: %.1f" % current_fps)
 		emergency_active = true
 		emergency_start_time = Time.get_ticks_msec() / 1000.0
@@ -95,8 +95,8 @@ func handle_emergency_optimization():
 		# Force garbage collection
 		call_deferred("_emergency_cleanup")
 	
-	# Exit emergency when FPS recovers
-	elif current_fps > 40 and emergency_active:
+	# Exit emergency when FPS recovers above 55 (raised from 40)
+	elif current_fps > 55 and emergency_active:
 		var emergency_duration = (Time.get_ticks_msec() / 1000.0) - emergency_start_time
 		print("✅ EMERGENCY OPTIMIZATION ENDED - FPS RECOVERED: %.1f (Duration: %.1fs)" % [current_fps, emergency_duration])
 		emergency_active = false
@@ -132,12 +132,13 @@ func coordinate_generation_systems():
 	if not player:
 		return
 	
+	# REMOVED 2-second delay for instant chunk loading
 	# Only check every 2 seconds to prevent rapid switching
-	var current_time = Time.get_ticks_msec() / 1000.0
-	if current_time - last_mode_check < 2.0:
-		return
+	#var current_time = Time.get_ticks_msec() / 1000.0
+	#if current_time - last_mode_check < 2.0:
+	#	return
 	
-	last_mode_check = current_time
+	#last_mode_check = current_time
 	
 	# Determine appropriate mode
 	var target_mode = determine_generation_mode()

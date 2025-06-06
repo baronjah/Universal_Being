@@ -1,0 +1,20 @@
+E 0:00:01:175   load_source_code: Attempt to open script 'res://systems/storage/AkashicRecordsSystemSystem.gd' resulted in error 'File not found'.
+  <C++ Error>   Condition "err" is true. Returning: err
+  <C++ Source>  modules/gdscript/gdscript.cpp:1113 @ load_source_code()
+###
+E 0:00:01:176   _load: Failed loading resource: res://systems/storage/AkashicRecordsSystemSystem.gd. Make sure resources have been imported by opening the project in the editor at least once.
+  <C++ Error>   Condition "found" is true. Returning: Ref<Resource>()
+  <C++ Source>  core/io/resource_loader.cpp:342 @ _load()
+###
+E 0:00:01:176   start: Failed to instantiate an autoload, can't load from path: res://systems/storage/AkashicRecordsSystemSystem.gd.
+  <C++ Error>   Condition "res.is_null()" is true. Continuing.
+  <C++ Source>  main/main.cpp:4267 @ start()
+###
+E 0:00:02:577   load: Failed to load script "res://scripts_backup/player_universal_being.gd" with error "Parse error".
+  <C++ Source>  modules/gdscript/gdscript.cpp:3024 @ load()
+###
+E 0:00:05:427   load: Failed to load script "res://scripts_backup/GemmaUniversalBeing.gd" with error "Compilation failed".
+  <C++ Source>  modules/gdscript/gdscript.cpp:3024 @ load()
+###
+E 0:00:05:914   load: Failed to load script "res://scripts/universal_console_controller.gd" with error "Parse error".
+  <C++ Source>  modules/gdscript/gdscript.cpp:3024 @ load()

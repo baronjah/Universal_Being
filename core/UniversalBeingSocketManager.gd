@@ -6,7 +6,7 @@
 # AUTHOR: JSH + Claude Code - Universal Being Socket System
 # ==================================================
 
-extends Resource
+extends UniversalBeing
 class_name UniversalBeingSocketManager
 
 # ===== SOCKET REGISTRY =====

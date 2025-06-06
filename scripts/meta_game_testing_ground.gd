@@ -1,419 +1,334 @@
 # ==================================================
-# UNIVERSAL BEING: MetaGameTestingGround
-# TYPE: Testing Environment
-# PURPOSE: Testing ground for meta-game command system and AI collaboration
-# COMPONENTS: Test scenarios, command validation, AI interaction tests
-# SCENES: meta_game_testing_ground.tscn
+# UNIVERSAL BEING: Meta Game Testing Ground
+# TYPE: system
+# PURPOSE: Provides a sandbox environment for testing Universal Beings
+# COMPONENTS: []
+# SCENES: ["res://scenes/meta_game/testing_ground.tscn"]
 # ==================================================
 
 extends UniversalBeing
-class_name MetaGameTestingGround
+class_name MetaGameTestingGroundUniversalBeing
 
-# ===== TEST SCENARIOS =====
-var test_scenarios: Dictionary = {
-    "potato_door": {
-        "description": "Test 'say potato to open doors' natural language command",
-        "setup_commands": [
-            "/scene load res://scenes/test/door_test.tscn",
-            "/create being door at 100,100"
-        ],
-        "test_commands": [
-            "say potato to open doors",
-            "potato"  # Trigger the logic connector
-        ],
-        "expected_results": ["Logic connector created", "Door opened"]
-    },
-    
-    "ai_collaboration": {
-        "description": "Test AI collaboration channel with Gemma",
-        "setup_commands": [
-            "/toggle ai_channel"
-        ],
-        "test_commands": [
-            "/gemma create new logic for movement",
-            "/create being from ai description smart_button"
-        ],
-        "expected_results": ["AI collaboration active", "New being created"]
-    },
-    
-    "script_inspection": {
-        "description": "Test data inspection commands",
-        "setup_commands": [],
-        "test_commands": [
-            "count lines in res://core/UniversalBeing.gd",
-            "show functions in res://core/UniversalBeing.gd",
-            "/inspect components in button_basic"
-        ],
-        "expected_results": ["Line count returned", "Functions listed", "Components analyzed"]
-    },
-    
-    "reality_modification": {
-        "description": "Test in-game reality modification",
-        "setup_commands": [
-            "/scene load res://scenes/test/empty_world.tscn"
-        ],
-        "test_commands": [
-            "/create being conscious_cube with consciousness 3",
-            "/modify consciousness_cube consciousness 5",
-            "/when cube near player then evolve"
-        ],
-        "expected_results": ["Being created", "Consciousness changed", "Logic connector set"]
-    },
-    
-    "macro_recording": {
-        "description": "Test macro recording and playback",
-        "setup_commands": [],
-        "test_commands": [
-            "/start recording door_sequence",
-            "say potato to open doors",
-            "/scene load door.tscn",
-            "/stop recording",
-            "/replay door_sequence"
-        ],
-        "expected_results": ["Recording started", "Commands recorded", "Macro played back"]
-    }
-}
+# ===== TESTING GROUND STATE =====
 
-# ===== TEST STATE =====
-var current_test: String = ""
-var test_results: Dictionary = {}
-var ai_responses_received: Array[String] = []
+var active_tests: Dictionary = {}  # test_id -> TestData
+var test_history: Array[TestData] = []
+var max_history_size: int = 100
+var current_scene: Node = null
 
-# ===== PENTAGON ARCHITECTURE =====
+# ===== TEST DATA STRUCTURE =====
+
+class TestData:
+	var test_id: String
+	var being_type: String
+	var test_parameters: Dictionary
+	var start_time: int
+	var end_time: int
+	var status: String  # "running", "completed", "failed"
+	var results: Dictionary
+	var created_by: String
+	
+	func _init(p_test_id: String, p_being_type: String, p_parameters: Dictionary = {}, p_created_by: String = "system") -> void:
+		test_id = p_test_id
+		being_type = p_being_type
+		test_parameters = p_parameters
+		start_time = Time.get_unix_time_from_system()
+		end_time = 0
+		status = "running"
+		results = {}
+		created_by = p_created_by
+	
+	func complete(p_results: Dictionary = {}) -> void:
+		end_time = Time.get_unix_time_from_system()
+		status = "completed"
+		results = p_results
+	
+	func fail(p_error: String) -> void:
+		end_time = Time.get_unix_time_from_system()
+		status = "failed"
+		results = {"error": p_error}
+	
+	func to_dict() -> Dictionary:
+		return {
+			"test_id": test_id,
+			"being_type": being_type,
+			"test_parameters": test_parameters,
+			"start_time": start_time,
+			"end_time": end_time,
+			"status": status,
+			"results": results,
+			"created_by": created_by,
+			"duration": end_time - start_time if end_time > 0 else 0
+		}
+	
+	static func from_dict(data: Dictionary) -> TestData:
+		var test = TestData.new(
+			data.get("test_id", ""),
+			data.get("being_type", ""),
+			data.get("test_parameters", {}),
+			data.get("created_by", "system")
+		)
+		test.end_time = data.get("end_time", 0)
+		test.status = data.get("status", "running")
+		test.results = data.get("results", {})
+		return test
+
+# ===== PENTAGON ARCHITECTURE IMPLEMENTATION =====
 
 func pentagon_init() -> void:
-    super.pentagon_init()
-    
-    being_type = "testing_ground"
-    being_name = "Meta-Game Testing Ground"
-    consciousness_level = 6  # High level for testing complex systems
-    
-    print("🧪 MetaGameTestingGround: Testing environment initialized")
+	super.pentagon_init()
+	
+	being_type = "meta_game_testing_ground"
+	being_name = "Meta Game Testing Ground"
+	consciousness_level = 3  # High consciousness for AI testing
+	
+	print("🧪 Meta Game Testing Ground: Pentagon Init Complete")
 
 func pentagon_ready() -> void:
-    super.pentagon_ready()
-    
-    # Set up testing UI
-    _create_testing_interface()
-    
-    # Connect to command systems
-    _connect_to_test_systems()
-    
-    print("🧪 MetaGameTestingGround: Ready for meta-game testing")
+	super.pentagon_ready()
+	
+	# Register with FloodGate as system being
+	if SystemBootstrap and SystemBootstrap.is_system_ready():
+		var flood_gates = SystemBootstrap.get_flood_gates()
+		if flood_gates and flood_gates.has_method("register_system_being"):
+			flood_gates.register_system_being(self)
+	
+	# Load testing ground scene
+	load_testing_ground()
+	
+	print("🧪 Meta Game Testing Ground: Pentagon Ready Complete")
 
 func pentagon_process(delta: float) -> void:
-    super.pentagon_process(delta)
-    
-    # Monitor test progress
-    _monitor_test_execution()
+	super.pentagon_process(delta)
+	
+	# Process active tests
+	process_active_tests()
 
 func pentagon_input(event: InputEvent) -> void:
-    super.pentagon_input(event)
-    
-    # Handle testing hotkeys
-    if event is InputEventKey and event.pressed:
-        match event.keycode:
-            KEY_F5: run_all_tests()
-            KEY_F6: await run_test("potato_door")
-            KEY_F7: await run_test("ai_collaboration")
-            KEY_F8: _create_gemma_test_scenario()
+	super.pentagon_input(event)
+	
+	# Handle test-related input
+	if event is InputEventKey and event.pressed:
+		if event.keycode == KEY_ESCAPE:
+			cancel_all_tests()
 
 func pentagon_sewers() -> void:
-    print("🧪 MetaGameTestingGround: Saving test results...")
-    _save_test_results()
-    super.pentagon_sewers()
+	# Save test history
+	save_test_history()
+	
+	# Cleanup active tests
+	cancel_all_tests()
+	
+	# Unload scene
+	if current_scene:
+		current_scene.queue_free()
+		current_scene = null
+	
+	super.pentagon_sewers()
 
-# ===== TESTING EXECUTION =====
+# ===== TESTING GROUND METHODS =====
 
-func run_all_tests() -> Dictionary:
-    """Run all test scenarios"""
-    print("🧪 Running all meta-game tests...")
-    
-    var all_results = {}
-    
-    for test_name in test_scenarios:
-        print("🧪 Running test: %s" % test_name)
-        var result = await run_test(test_name)
-        all_results[test_name] = result
-        
-        # Wait between tests
-        await get_tree().create_timer(2.0).timeout
-    
-    _generate_test_report(all_results)
-    return all_results
+func load_testing_ground() -> bool:
+	"""Load the testing ground scene"""
+	if current_scene:
+		push_error("Testing ground scene already loaded")
+		return false
+	
+	var scene = load("res://scenes/meta_game/testing_ground.tscn")
+	if not scene:
+		push_error("Failed to load testing ground scene")
+		return false
+	
+	current_scene = scene.instantiate()
+	add_child(current_scene)
+	print("🧪 Testing ground scene loaded")
+	return true
 
-func run_test(test_name: String) -> Dictionary:
-    """Run a specific test scenario"""
-    if not test_scenarios.has(test_name):
-        print("🧪 Test not found: %s" % test_name)
-        return {"success": false, "error": "Test not found"}
-    
-    current_test = test_name
-    var scenario = test_scenarios[test_name]
-    var cmd_processor = _get_command_processor()
-    
-    if not cmd_processor:
-        return {"success": false, "error": "Command processor not available"}
-    
-    print("🧪 Starting test: %s" % scenario.description)
-    
-    var result = {
-        "test_name": test_name,
-        "success": true,
-        "setup_results": [],
-        "test_results": [],
-        "errors": [],
-        "start_time": Time.get_unix_time_from_system()
-    }
-    
-    # Run setup commands
-    for setup_cmd in scenario.setup_commands:
-        var setup_result = cmd_processor.process_universal_command(setup_cmd, "test_setup")
-        result.setup_results.append(setup_result)
-        
-        if not setup_result.success:
-            result.errors.append("Setup failed: %s" % setup_cmd)
-    
-    # Wait for setup to complete
-    await get_tree().create_timer(1.0).timeout
-    
-    # Run test commands
-    for test_cmd in scenario.test_commands:
-        var test_result = cmd_processor.process_universal_command(test_cmd, "test")
-        result.test_results.append(test_result)
-        
-        if not test_result.success:
-            result.errors.append("Test failed: %s" % test_cmd)
-            result.success = false
-        
-        # Wait between commands
-        await get_tree().create_timer(0.5).timeout
-    
-    result.end_time = Time.get_unix_time_from_system()
-    result.duration = result.end_time - result.start_time
-    
-    # Validate expected results
-    _validate_test_results(result, scenario.expected_results)
-    
-    test_results[test_name] = result
-    current_test = ""
-    
-    print("🧪 Test completed: %s (Success: %s)" % [test_name, str(result.success)])
-    return result
+func start_test(being_type: String, parameters: Dictionary = {}, created_by: String = "system") -> String:
+	"""Start a new test for a Universal Being type"""
+	var test_id = generate_test_id()
+	var test = TestData.new(test_id, being_type, parameters, created_by)
+	
+	# Create test instance
+	if SystemBootstrap and SystemBootstrap.is_system_ready():
+		var flood_gates = SystemBootstrap.get_flood_gates()
+		if flood_gates and flood_gates.has_method("create_being"):
+			var being = flood_gates.create_being(being_type, parameters)
+			if being:
+				test.results["being_uuid"] = being.being_uuid
+				active_tests[test_id] = test
+				print("🧪 Started test %s for %s" % [test_id, being_type])
+				return test_id
+	
+	test.fail("Failed to create test instance")
+	add_to_history(test)
+	push_error("Failed to start test for %s" % being_type)
+	return ""
 
-# ===== GEMMA AI TESTING =====
+func cancel_test(test_id: String) -> bool:
+	"""Cancel a specific test"""
+	if not active_tests.has(test_id):
+		push_error("Test %s not found" % test_id)
+		return false
+	
+	var test = active_tests[test_id]
+	test.fail("Test cancelled")
+	add_to_history(test)
+	active_tests.erase(test_id)
+	
+	# Cleanup test instance
+	if test.results.has("being_uuid"):
+		if SystemBootstrap and SystemBootstrap.is_system_ready():
+			var flood_gates = SystemBootstrap.get_flood_gates()
+			if flood_gates and flood_gates.has_method("destroy_being"):
+				flood_gates.destroy_being(test.results["being_uuid"])
+	
+	print("🧪 Cancelled test: %s" % test_id)
+	return true
 
-func _create_gemma_test_scenario() -> void:
-    """Create interactive test scenario for Gemma AI"""
-    print("🤖 Creating Gemma AI test scenario...")
-    
-    # Create test environment
-    var test_commands = [
-        "/scene load res://scenes/test/ai_playground.tscn",
-        "/toggle ai_channel",
-        "/create being test_subject with consciousness 2"
-    ]
-    
-    var cmd_processor = _get_command_processor()
-    for cmd in test_commands:
-        if cmd_processor:
-            cmd_processor.process_universal_command(cmd, "gemma_test_setup")
-    
-    # Instructions for Gemma
-    print("🤖 GEMMA AI TEST ENVIRONMENT READY!")
-    print("🤖 Available commands for testing:")
-    print("   - 'say hello to create greeting' (natural language)")
-    print("   - '/create being smart_helper' (direct command)")
-    print("   - 'count lines in UniversalBeing.gd' (inspection)")
-    print("   - '/when player near helper then assist' (logic connector)")
-    print("   - '/start recording gemma_sequence' (macro recording)")
-    print("🤖 Try any combination! The system will learn and adapt!")
+func cancel_all_tests() -> void:
+	"""Cancel all active tests"""
+	for test_id in active_tests.keys():
+		cancel_test(test_id)
 
-func test_gemma_command(command: String) -> Dictionary:
-    """Test a command specifically from Gemma AI"""
-    print("🤖 Gemma command: %s" % command)
-    
-    var cmd_processor = _get_command_processor()
-    if not cmd_processor:
-        return {"success": false, "error": "Command processor unavailable"}
-    
-    var result = cmd_processor.process_universal_command(command, "gemma")
-    
-    # Log for AI learning
-    ai_responses_received.append(command)
-    
-    # Provide feedback to Gemma
-    if result.success:
-        print("🤖 ✅ SUCCESS: %s" % result.message)
-        if result.new_beings_created.size() > 0:
-            print("🤖 🌟 New beings created: %s" % str(result.new_beings_created))
-    else:
-        print("🤖 ❌ ERROR: %s" % result.message)
-        print("🤖 💡 Suggestion: Try a different approach or check syntax")
-    
-    return result
+func process_active_tests() -> void:
+	"""Process all active tests"""
+	for test_id in active_tests.keys():
+		var test = active_tests[test_id]
+		
+		# Check if test being is still valid
+		if test.results.has("being_uuid"):
+			if SystemBootstrap and SystemBootstrap.is_system_ready():
+				var flood_gates = SystemBootstrap.get_flood_gates()
+				if flood_gates and flood_gates.has_method("get_being"):
+					var being = flood_gates.get_being(test.results["being_uuid"])
+					if not being:
+						test.fail("Test being was destroyed")
+						add_to_history(test)
+						active_tests.erase(test_id)
+						continue
+		
+		# Update test results
+		update_test_results(test)
 
-# ===== INPUT FOCUS TESTING =====
+func update_test_results(test: TestData) -> void:
+	"""Update results for a test"""
+	if not test.results.has("being_uuid"):
+		return
+	
+	if SystemBootstrap and SystemBootstrap.is_system_ready():
+		var flood_gates = SystemBootstrap.get_flood_gates()
+		if flood_gates and flood_gates.has_method("get_being"):
+			var being = flood_gates.get_being(test.results["being_uuid"])
+			if being:
+				# Collect being state
+				test.results["state"] = {
+					"position": being.position if being.has_method("get_position") else Vector3.ZERO,
+					"rotation": being.rotation if being.has_method("get_rotation") else Vector3.ZERO,
+					"scale": being.scale if being.has_method("get_scale") else Vector3.ONE,
+					"consciousness": being.consciousness_level if being.has_method("get_consciousness") else 0,
+					"components": being.component_data if being.has_method("get_components") else {}
+				}
 
-func test_input_focus() -> Dictionary:
-    """Test input focus management system"""
-    print("⌨️ Testing input focus management...")
-    
-    var focus_manager = _get_input_focus_manager()
-    if not focus_manager:
-        return {"success": false, "error": "Input focus manager not found"}
-    
-    var test_sequence = [
-        "game_focused",     # Default state
-        "console_focused",  # Press ~ key
-        "ai_channel",       # Press F1 key
-        "game_focused"      # Press ESC key
-    ]
-    
-    var results = []
-    
-    for expected_state in test_sequence:
-        # Simulate focus change
-        var current_state = focus_manager.ai_invoke_method("get_focus_state")
-        results.append({
-            "expected": expected_state,
-            "actual": current_state,
-            "match": current_state == expected_state
-        })
-        
-        await get_tree().create_timer(0.5).timeout
-    
-    return {"success": true, "focus_tests": results}
+func add_to_history(test: TestData) -> void:
+	"""Add a test to history"""
+	test_history.append(test)
+	if test_history.size() > max_history_size:
+		test_history.pop_front()
 
-# ===== UTILITY FUNCTIONS =====
+func generate_test_id() -> String:
+	"""Generate a unique test ID"""
+	return "test_%d" % Time.get_unix_time_from_system()
 
-func _validate_test_results(result: Dictionary, expected: Array) -> void:
-    """Validate test results against expected outcomes"""
-    result.validation = {"passed": 0, "total": expected.size(), "details": []}
-    
-    for expectation in expected:
-        var found = false
-        
-        # Check if expectation appears in any result message
-        for test_result in result.test_results:
-            if test_result.message.contains(expectation):
-                found = true
-                break
-        
-        if found:
-            result.validation.passed += 1
-        
-        result.validation.details.append({
-            "expectation": expectation,
-            "met": found
-        })
-    
-    result.validation_success = result.validation.passed == result.validation.total
+# ===== TEST QUERY METHODS =====
 
-func _generate_test_report(all_results: Dictionary) -> void:
-    """Generate comprehensive test report"""
-    print("\n🧪 ===== META-GAME TEST REPORT =====")
-    
-    var total_tests = all_results.size()
-    var passed_tests = 0
-    
-    for test_name in all_results:
-        var result = all_results[test_name]
-        if result.success:
-            passed_tests += 1
-        
-        print("🧪 %s: %s (%.1fs)" % [
-            test_name,
-            "PASS" if result.success else "FAIL",
-            result.get("duration", 0.0)
-        ])
-        
-        if result.has("errors") and result.errors.size() > 0:
-            for error in result.errors:
-                print("   ❌ %s" % error)
-    
-    print("🧪 Summary: %d/%d tests passed (%.1f%%)" % [
-        passed_tests,
-        total_tests,
-        (passed_tests * 100.0) / total_tests if total_tests > 0 else 0
-    ])
-    print("🧪 ================================\n")
+func get_test_info(test_id: String) -> Dictionary:
+	"""Get information about a test"""
+	if active_tests.has(test_id):
+		return active_tests[test_id].to_dict()
+	
+	# Check history
+	for test in test_history:
+		if test.test_id == test_id:
+			return test.to_dict()
+	
+	return {}
 
-func _get_command_processor() -> Node:
-    """Get the universal command processor"""
-    return get_node_or_null("/root/UniversalCommandProcessor")
+func list_active_tests() -> Array[Dictionary]:
+	"""List all active tests"""
+	var test_list: Array[Dictionary] = []
+	for test in active_tests.values():
+		test_list.append(test.to_dict())
+	return test_list
 
-func _get_input_focus_manager() -> Node:
-    """Get the input focus manager"""
-    return get_node_or_null("/root/InputFocusManager")
+func get_test_history() -> Array[Dictionary]:
+	"""Get test execution history"""
+	var history: Array[Dictionary] = []
+	for test in test_history:
+		history.append(test.to_dict())
+	return history
 
-func _create_testing_interface() -> void:
-    """Create UI for testing"""
-    # Could create visual testing interface
-    pass
+# ===== PERSISTENCE =====
 
-func _connect_to_test_systems() -> void:
-    """Connect to systems for testing"""
-    # Connect to various systems for monitoring
-    pass
+func save_test_history() -> void:
+	"""Save test history to Akashic Records"""
+	if SystemBootstrap and SystemBootstrap.is_system_ready():
+		var akashic = SystemBootstrap.get_akashic_records()
+		if akashic and akashic.has_method("save_data"):
+			var history_data = []
+			for test in test_history:
+				history_data.append(test.to_dict())
+			akashic.save_data("test_history", history_data)
 
-func _monitor_test_execution() -> void:
-    """Monitor ongoing test execution"""
-    # Monitor test progress and results
-    pass
+func load_test_history() -> void:
+	"""Load test history from Akashic Records"""
+	if SystemBootstrap and SystemBootstrap.is_system_ready():
+		var akashic = SystemBootstrap.get_akashic_records()
+		if akashic and akashic.has_method("load_data"):
+			var history_data = akashic.load_data("test_history", [])
+			for test_data in history_data:
+				test_history.append(TestData.from_dict(test_data))
 
-func _save_test_results() -> void:
-    """Save test results for analysis"""
-    var save_data = {
-        "test_results": test_results,
-        "ai_responses": ai_responses_received,
-        "timestamp": Time.get_unix_time_from_system()
-    }
-    
-    var file = FileAccess.open("user://meta_game_test_results.json", FileAccess.WRITE)
-    if file:
-        file.store_string(JSON.stringify(save_data))
-        file.close()
-
-# ===== AI INTERFACE =====
+# ===== AI INTEGRATION =====
 
 func ai_interface() -> Dictionary:
-    """AI interface for testing system"""
-    var base = super.ai_interface()
-    base.testing_commands = [
-        "run_test",
-        "run_all_tests",
-        "test_gemma_command",
-        "create_test_scenario",
-        "get_test_results"
-    ]
-    base.available_tests = test_scenarios.keys()
-    base.current_test = current_test
-    return base
+	var base_interface = super.ai_interface()
+	
+	base_interface["test_info"] = {
+		"active_tests": active_tests.size(),
+		"history_size": test_history.size(),
+		"scene_loaded": current_scene != null
+	}
+	
+	base_interface["capabilities"] = [
+		"test_creation",
+		"test_monitoring",
+		"test_control",
+		"history_tracking"
+	]
+	
+	return base_interface
 
 func ai_invoke_method(method_name: String, args: Array = []) -> Variant:
-    """AI method invocation for testing"""
-    match method_name:
-        "run_test":
-            if args.size() > 0:
-                return await run_test(args[0])
-        
-        "run_all_tests":
-            return await run_all_tests()
-        
-        "test_gemma_command":
-            if args.size() > 0:
-                return test_gemma_command(args[0])
-        
-        "create_test_scenario":
-            _create_gemma_test_scenario()
-            return "Gemma test scenario created"
-        
-        "get_test_results":
-            return test_results
-        
-        _:
-            return await super.ai_invoke_method(method_name, args)
-
-func _to_string() -> String:
-    return "MetaGameTestingGround<Tests:%d, Current:%s>" % [test_scenarios.size(), current_test]
+	match method_name:
+		"start_test":
+			if args.size() >= 1:
+				return start_test(args[0], args[1] if args.size() > 1 else {}, args[2] if args.size() > 2 else "ai")
+			return ""
+		"cancel_test":
+			if args.size() > 0:
+				return cancel_test(args[0])
+			return false
+		"cancel_all":
+			cancel_all_tests()
+			return true
+		"list_active":
+			return list_active_tests()
+		"get_history":
+			return get_test_history()
+		"get_test_info":
+			if args.size() > 0:
+				return get_test_info(args[0])
+			return {}
+		_:
+			return super.ai_invoke_method(method_name, args) 

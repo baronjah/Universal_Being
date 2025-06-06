@@ -5,7 +5,7 @@
 # CREATED: 2025-06-03 - Universal Being Evolution
 # ==================================================
 
-extends Resource
+extends UniversalBeing
 class_name UniversalBeingDNA
 
 # ===== DNA STRUCTURE =====

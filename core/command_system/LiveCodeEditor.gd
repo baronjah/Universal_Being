@@ -4,7 +4,7 @@
 # LOCATION: core/command_system/LiveCodeEditor.gd
 # ==================================================
 
-extends Control
+extends UniversalBeing
 class_name LiveCodeEditor
 
 @onready var code_edit: CodeEdit = CodeEdit.new()

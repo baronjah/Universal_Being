@@ -1,0 +1,1155 @@
+Godot Engine v4.5.dev4.mono.official (c) 2007-present Juan Linietsky, Ariel Manzur & Godot Contributors.
+--- Debug adapter server started on port 6006 ---
+--- GDScript language server started on port 6005 ---
+  ERROR: Attempt to open script 'res://systems/storage/AkashicRecordsSystemSystem.gd' resulted in error 'File not found'.
+  ERROR: Failed loading resource: res://systems/storage/AkashicRecordsSystemSystem.gd. Make sure resources have been imported by opening the project in the editor at least once.
+  ERROR: Failed to create an autoload, can't load from path: res://systems/storage/AkashicRecordsSystemSystem.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://EMERGENCY_BACKUP/autoloads/akashic_loader.gd and res://autoloads/akashic_loader.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://EMERGENCY_BACKUP/autoloads/GemmaAI.gd and res://autoloads/GemmaAI.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://EMERGENCY_BACKUP/autoloads/SystemBootstrap.gd and res://autoloads/SystemBootstrap.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://EMERGENCY_BACKUP/beings/butterfly/ButterflyUniversalBeing.gd and res://beings/butterfly/ButterflyUniversalBeing.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://EMERGENCY_BACKUP/beings/camera/CameraUniversalBeing.gd and res://beings/camera/CameraUniversalBeing.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://EMERGENCY_BACKUP/beings/console/ConsoleUniversalBeing.gd and res://beings/console/ConsoleUniversalBeing.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://EMERGENCY_BACKUP/beings/cursor/CursorUniversalBeing.gd and res://beings/cursor/CursorUniversalBeing.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://EMERGENCY_BACKUP/beings/misc/ground_universal_being.gd and res://beings/misc/ground_universal_being.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://EMERGENCY_BACKUP/beings/misc/icon_universal_being.gd and res://beings/misc/icon_universal_being.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://EMERGENCY_BACKUP/beings/misc/light_universal_being.gd and res://beings/misc/light_universal_being.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://EMERGENCY_BACKUP/beings/misc/SimpleMovablePlasmoid.gd and res://beings/misc/SimpleMovablePlasmoid.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://EMERGENCY_BACKUP/beings/plasmoid/energy_burst.gd and res://beings/plasmoid/energy_burst.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://EMERGENCY_BACKUP/beings/plasmoid/energy_burst.tscn and res://beings/plasmoid/energy_burst.tscn.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://EMERGENCY_BACKUP/beings/player/player_universal_being.gd and res://beings/player/player_universal_being.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://EMERGENCY_BACKUP/beings/portal/PortalUniversalBeing.gd and res://beings/portal/PortalUniversalBeing.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://EMERGENCY_BACKUP/beings/tree/TreeUniversalBeing.gd and res://beings/tree/TreeUniversalBeing.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://EMERGENCY_BACKUP/beings/ConsciousnessRevolutionSpawner.gd and res://beings/ConsciousnessRevolutionSpawner.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://EMERGENCY_BACKUP/beings/GemmaAICompanionPlasmoid.gd and res://beings/GemmaAICompanionPlasmoid.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://EMERGENCY_BACKUP/beings/plasmoid_universal_being.gd and res://beings/plasmoid_universal_being.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://EMERGENCY_BACKUP/components/ActionComponent.gd and res://components/ActionComponent.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://EMERGENCY_BACKUP/components/MemoryComponent.gd and res://components/MemoryComponent.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://EMERGENCY_BACKUP/core/command_system/LiveCodeEditor.gd and res://core/command_system/LiveCodeEditor.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://EMERGENCY_BACKUP/core/command_system/MacroSystem.gd and res://core/command_system/MacroSystem.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://EMERGENCY_BACKUP/core/command_system/UniversalCommandProcessor.gd and res://core/command_system/UniversalCommandProcessor.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://EMERGENCY_BACKUP/core/command_system/UniversalConsole.gd and res://core/command_system/UniversalConsole.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://EMERGENCY_BACKUP/core/Component.gd and res://core/Component.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://EMERGENCY_BACKUP/core/Connector.gd and res://core/Connector.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://EMERGENCY_BACKUP/core/FloodGates.gd and res://core/FloodGates.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://EMERGENCY_BACKUP/core/genesis_pattern.gd and res://core/genesis_pattern.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://EMERGENCY_BACKUP/core/Pentagon.gd and res://core/Pentagon.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://EMERGENCY_BACKUP/core/PentagonManager.gd and res://core/PentagonManager.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://EMERGENCY_BACKUP/core/SimpleConsole.gd and res://core/SimpleConsole.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://EMERGENCY_BACKUP/core/UniversalBeing.gd and res://core/UniversalBeing.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://EMERGENCY_BACKUP/core/UniversalBeingControl.gd and res://core/UniversalBeingControl.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://EMERGENCY_BACKUP/core/UniversalBeingDNA.gd and res://core/UniversalBeingDNA.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://EMERGENCY_BACKUP/core/UniversalBeingInterface.gd and res://core/UniversalBeingInterface.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://EMERGENCY_BACKUP/core/UniversalBeingSocket.gd and res://core/UniversalBeingSocket.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://EMERGENCY_BACKUP/core/UniversalBeingSocketManager.gd and res://core/UniversalBeingSocketManager.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://EMERGENCY_BACKUP/core/universal_being_base_enhanced.gd and res://core/universal_being_base_enhanced.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://EMERGENCY_BACKUP/systems/storage/AkashicRecordsSystem.gd and res://EMERGENCY_BACKUP/systems/storage/AkashicRecordsEnhanced.gd.
+  ERROR: Invalid color code: #.
+  ERROR: scene/resources/resource_format_text.cpp:39 - res://scenes/templates/button_template.tscn:1 - Parse Error: Expected '['.
+  ERROR: Invalid color code: #.
+  ERROR: scene/resources/resource_format_text.cpp:39 - res://scenes/templates/button_template.tscn:1 - Parse Error: Expected '['.
+  ERROR: scene/resources/resource_format_text.cpp:874 - Condition "error != OK" is true.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts/archive/console_butterfly_fix.gd and res://EMERGENCY_BACKUP/scripts/archive/console_butterfly_fix.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts/archive/console_butterfly_tree_fix.gd and res://EMERGENCY_BACKUP/scripts/archive/console_butterfly_tree_fix.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts/archive/enhanced_debug_click_handler.gd and res://EMERGENCY_BACKUP/scripts/archive/enhanced_debug_click_handler.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts/archive/enhanced_game_world.gd and res://EMERGENCY_BACKUP/scripts/archive/enhanced_game_world.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts/archive/GemmaUniverseInjector_enhancements.gd and res://EMERGENCY_BACKUP/scripts/archive/GemmaUniverseInjector_enhancements.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts/archive/immediate_fix.gd and res://EMERGENCY_BACKUP/scripts/archive/immediate_fix.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts/archive/main_OLD_COMPLEX.gd and res://EMERGENCY_BACKUP/scripts/archive/main_OLD_COMPLEX.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts/archive/main_SIMPLE.gd and res://EMERGENCY_BACKUP/scripts/archive/main_SIMPLE.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts/archive/pentagon_validator_fixed.gd and res://EMERGENCY_BACKUP/scripts/archive/pentagon_validator_fixed.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts/archive/performance_fix_autoload.gd and res://EMERGENCY_BACKUP/scripts/archive/performance_fix_autoload.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts/archive/performance_fix_patch.gd and res://EMERGENCY_BACKUP/scripts/archive/performance_fix_patch.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts/archive/quick_diagnostic.gd and res://EMERGENCY_BACKUP/scripts/archive/quick_diagnostic.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts/archive/quick_health_check.gd and res://EMERGENCY_BACKUP/scripts/archive/quick_health_check.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts/archive/quick_test_universe_injection.gd and res://EMERGENCY_BACKUP/scripts/archive/quick_test_universe_injection.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts/archive/simple_camera_effects.gd and res://EMERGENCY_BACKUP/scripts/archive/simple_camera_effects.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts/archive/simple_console_fix.gd and res://EMERGENCY_BACKUP/scripts/archive/simple_console_fix.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts/archive/simple_gdscript_validator.gd and res://EMERGENCY_BACKUP/scripts/archive/simple_gdscript_validator.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts/archive/simple_health_check.gd and res://EMERGENCY_BACKUP/scripts/archive/simple_health_check.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts/archive/simple_player_controller.gd and res://EMERGENCY_BACKUP/scripts/archive/simple_player_controller.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts/archive/simple_player_test.gd and res://EMERGENCY_BACKUP/scripts/archive/simple_player_test.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts/archive/systembootstrap_quickfix.gd and res://EMERGENCY_BACKUP/scripts/archive/systembootstrap_quickfix.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts/archive/test_enhanced_health.gd and res://EMERGENCY_BACKUP/scripts/archive/test_enhanced_health.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts/archive/test_pentagon_validator_fixed.gd and res://EMERGENCY_BACKUP/scripts/archive/test_pentagon_validator_fixed.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts/bridges/chatgpt_premium_bridge_universal_being.gd and res://EMERGENCY_BACKUP/scripts/bridges/chatgpt_premium_bridge_universal_being.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts/bridges/claude_bridge_universal_being.gd and res://EMERGENCY_BACKUP/scripts/bridges/claude_bridge_universal_being.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts/bridges/claude_desktop_mcp_universal_being.gd and res://EMERGENCY_BACKUP/scripts/bridges/claude_desktop_mcp_universal_being.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts/bridges/desktop_bridge.gd and res://EMERGENCY_BACKUP/scripts/bridges/desktop_bridge.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts/bridges/gdscript_validator_bridge.gd and res://EMERGENCY_BACKUP/scripts/bridges/gdscript_validator_bridge.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts/bridges/gemini_api.gd and res://EMERGENCY_BACKUP/scripts/bridges/gemini_api.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts/bridges/google_gemini_premium_bridge_universal_being.gd and res://EMERGENCY_BACKUP/scripts/bridges/google_gemini_premium_bridge_universal_being.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts/bridges/remote_godot_bridge.gd and res://EMERGENCY_BACKUP/scripts/bridges/remote_godot_bridge.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts/tools/archaeological_scanner.gd and res://EMERGENCY_BACKUP/scripts/tools/archaeological_scanner.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts/tools/asset_checker.gd and res://EMERGENCY_BACKUP/scripts/tools/asset_checker.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts/tools/component_loader.gd and res://EMERGENCY_BACKUP/scripts/tools/component_loader.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts/tools/gdscript_directive_scanner.gd and res://EMERGENCY_BACKUP/scripts/tools/gdscript_directive_scanner.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts/tools/naming_validator.gd and res://EMERGENCY_BACKUP/scripts/tools/naming_validator.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts/tools/path_audit_system.gd and res://EMERGENCY_BACKUP/scripts/tools/path_audit_system.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts/tools/path_reference_fixer.gd and res://EMERGENCY_BACKUP/scripts/tools/path_reference_fixer.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts/tools/pentagon_validator.gd and res://EMERGENCY_BACKUP/scripts/tools/pentagon_validator.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts/ui/camera_consciousness_overlay/consciousness_meter.gd and res://EMERGENCY_BACKUP/scripts/ui/camera_consciousness_overlay/consciousness_meter.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts/ui/camera_consciousness_overlay/effect_sliders.gd and res://EMERGENCY_BACKUP/scripts/ui/camera_consciousness_overlay/effect_sliders.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts/ui/camera_consciousness_overlay/info_panel.gd and res://EMERGENCY_BACKUP/scripts/ui/camera_consciousness_overlay/info_panel.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts/ui/UniverseSimulator.gd and res://EMERGENCY_BACKUP/scripts/ui/UniverseSimulator.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts/add_butterfly_command.gd and res://EMERGENCY_BACKUP/scripts/add_butterfly_command.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts/advanced_ufo_generator.gd and res://EMERGENCY_BACKUP/scripts/advanced_ufo_generator.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts/advanced_visualization_optimizer.gd and res://EMERGENCY_BACKUP/scripts/advanced_visualization_optimizer.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts/AICollaborationHub.gd and res://EMERGENCY_BACKUP/scripts/AICollaborationHub.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts/ai_natural_language_console.gd and res://EMERGENCY_BACKUP/scripts/ai_natural_language_console.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts/ai_pentagon_network.gd and res://EMERGENCY_BACKUP/scripts/ai_pentagon_network.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts/AkashicLibrary.gd and res://EMERGENCY_BACKUP/scripts/AkashicLibrary.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts/akashic_additions.gd and res://EMERGENCY_BACKUP/scripts/akashic_additions.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts/akashic_chunk_manager.gd and res://EMERGENCY_BACKUP/scripts/akashic_chunk_manager.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts/akashic_compact_system.gd and res://EMERGENCY_BACKUP/scripts/akashic_compact_system.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts/akashic_logger.gd and res://EMERGENCY_BACKUP/scripts/akashic_logger.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts/akashic_spatial_db.gd and res://EMERGENCY_BACKUP/scripts/akashic_spatial_db.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts/auto_startup_universal_being.gd and res://EMERGENCY_BACKUP/scripts/auto_startup_universal_being.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts/basic_interaction.gd and res://EMERGENCY_BACKUP/scripts/basic_interaction.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts/basic_test.gd and res://EMERGENCY_BACKUP/scripts/basic_test.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts/BeingDNAComponent.gd and res://EMERGENCY_BACKUP/scripts/BeingDNAComponent.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts/button_3d_universal_being.gd and res://EMERGENCY_BACKUP/scripts/button_3d_universal_being.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts/button_basic.gd and res://EMERGENCY_BACKUP/scripts/button_basic.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts/button_universal_being.gd and res://EMERGENCY_BACKUP/scripts/button_universal_being.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts/camera_effects_component.gd and res://EMERGENCY_BACKUP/scripts/camera_effects_component.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts/camera_effects_test.gd and res://EMERGENCY_BACKUP/scripts/camera_effects_test.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts/chunk_generator.gd and res://EMERGENCY_BACKUP/scripts/chunk_generator.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts/chunk_generator_component.gd and res://EMERGENCY_BACKUP/scripts/chunk_generator_component.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts/chunk_grid_manager.gd and res://EMERGENCY_BACKUP/scripts/chunk_grid_manager.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts/chunk_universal_being.gd and res://EMERGENCY_BACKUP/scripts/chunk_universal_being.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts/chunk_universe_generator.gd and res://EMERGENCY_BACKUP/scripts/chunk_universe_generator.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts/complete_package_system_test.gd and res://EMERGENCY_BACKUP/scripts/complete_package_system_test.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts/comprehensive_system_test.gd and res://EMERGENCY_BACKUP/scripts/comprehensive_system_test.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts/ConsoleTextLayer.gd and res://EMERGENCY_BACKUP/scripts/ConsoleTextLayer.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts/console_base.gd and res://EMERGENCY_BACKUP/scripts/console_base.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts/console_enhancements.gd and res://EMERGENCY_BACKUP/scripts/console_enhancements.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts/console_notifications.gd and res://EMERGENCY_BACKUP/scripts/console_notifications.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts/console_test.gd and res://EMERGENCY_BACKUP/scripts/console_test.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts/console_universal_being.gd and res://EMERGENCY_BACKUP/scripts/console_universal_being.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts/conversational_console_being.gd and res://EMERGENCY_BACKUP/scripts/conversational_console_being.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts/cosmic_insights.gd and res://EMERGENCY_BACKUP/scripts/cosmic_insights.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts/cosmic_lod_system.gd and res://EMERGENCY_BACKUP/scripts/cosmic_lod_system.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts/create_example_component.gd and res://EMERGENCY_BACKUP/scripts/create_example_component.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts/cursor_controller.gd and res://EMERGENCY_BACKUP/scripts/cursor_controller.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts/desert_garden_genesis.gd and res://EMERGENCY_BACKUP/scripts/desert_garden_genesis.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts/dimensional_sight.gd and res://EMERGENCY_BACKUP/scripts/dimensional_sight.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts/dna_visualizer.gd and res://EMERGENCY_BACKUP/scripts/dna_visualizer.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts/enable_144k_enlightenment.gd and res://EMERGENCY_BACKUP/scripts/enable_144k_enlightenment.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts/EnlightenedGroupManager.gd and res://EMERGENCY_BACKUP/scripts/EnlightenedGroupManager.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts/fix_all_docstrings.gd and res://EMERGENCY_BACKUP/scripts/fix_all_docstrings.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts/flood_gate_controller.gd and res://EMERGENCY_BACKUP/scripts/flood_gate_controller.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts/game_launcher_universal_being.gd and res://EMERGENCY_BACKUP/scripts/game_launcher_universal_being.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts/game_world_controller.gd and res://EMERGENCY_BACKUP/scripts/game_world_controller.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts/Gemma3DPerceptionLogger.gd and res://EMERGENCY_BACKUP/scripts/Gemma3DPerceptionLogger.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts/GemmaAkashicLogger.gd and res://EMERGENCY_BACKUP/scripts/GemmaAkashicLogger.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts/GemmaAudio.gd and res://EMERGENCY_BACKUP/scripts/GemmaAudio.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts/GemmaConsoleInterface.gd and res://EMERGENCY_BACKUP/scripts/GemmaConsoleInterface.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts/GemmaInterfaceReader.gd and res://EMERGENCY_BACKUP/scripts/GemmaInterfaceReader.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts/GemmaMacroMaster.gd and res://EMERGENCY_BACKUP/scripts/GemmaMacroMaster.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts/GemmaSensorySystem.gd and res://EMERGENCY_BACKUP/scripts/GemmaSensorySystem.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts/GemmaSpatialPerception.gd and res://EMERGENCY_BACKUP/scripts/GemmaSpatialPerception.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts/GemmaUniversalBeing.gd and res://EMERGENCY_BACKUP/scripts/GemmaUniversalBeing.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts/GemmaUniverseInjector.gd and res://EMERGENCY_BACKUP/scripts/GemmaUniverseInjector.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts/GemmaVision.gd and res://EMERGENCY_BACKUP/scripts/GemmaVision.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts/gemma_integration_status.gd and res://EMERGENCY_BACKUP/scripts/gemma_integration_status.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts/gemma_natural_language.gd and res://EMERGENCY_BACKUP/scripts/gemma_natural_language.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts/gemma_simple.gd and res://EMERGENCY_BACKUP/scripts/gemma_simple.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts/gemma_text_interface_system.gd and res://EMERGENCY_BACKUP/scripts/gemma_text_interface_system.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts/generation_coordinator.gd and res://EMERGENCY_BACKUP/scripts/generation_coordinator.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts/genesis_conductor_universal_being.gd and res://EMERGENCY_BACKUP/scripts/genesis_conductor_universal_being.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts/genesis_machine_simple.gd and res://EMERGENCY_BACKUP/scripts/genesis_machine_simple.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts/glow_effect.gd and res://EMERGENCY_BACKUP/scripts/glow_effect.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts/input_focus_manager.gd and res://EMERGENCY_BACKUP/scripts/input_focus_manager.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts/InteractiveTestEnvironment.gd and res://EMERGENCY_BACKUP/scripts/InteractiveTestEnvironment.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts/interface_window_universal_being.gd and res://EMERGENCY_BACKUP/scripts/interface_window_universal_being.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts/IntuitiveInteractionSystem.gd and res://EMERGENCY_BACKUP/scripts/IntuitiveInteractionSystem.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts/launch_genesis_adventure.gd and res://EMERGENCY_BACKUP/scripts/launch_genesis_adventure.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts/lightweight_chunk_system.gd and res://EMERGENCY_BACKUP/scripts/lightweight_chunk_system.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts/LocalAICollaboration.gd and res://EMERGENCY_BACKUP/scripts/LocalAICollaboration.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts/lod_generator_universal_being.gd and res://EMERGENCY_BACKUP/scripts/lod_generator_universal_being.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts/LogicConnectorSystem.gd and res://EMERGENCY_BACKUP/scripts/LogicConnectorSystem.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts/logic_connector.gd and res://EMERGENCY_BACKUP/scripts/logic_connector.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts/luminus_chunk_grid_manager.gd and res://EMERGENCY_BACKUP/scripts/luminus_chunk_grid_manager.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts/luminus_chunk_universal_being.gd and res://EMERGENCY_BACKUP/scripts/luminus_chunk_universal_being.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts/luminus_narrative_system.gd and res://EMERGENCY_BACKUP/scripts/luminus_narrative_system.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts/macro_system.gd and res://EMERGENCY_BACKUP/scripts/macro_system.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts/main_script.gd and res://EMERGENCY_BACKUP/scripts/main_script.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts/map_world_controller.gd and res://EMERGENCY_BACKUP/scripts/map_world_controller.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts/matrix_chunk_system.gd and res://EMERGENCY_BACKUP/scripts/matrix_chunk_system.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts/mcp_client.gd and res://EMERGENCY_BACKUP/scripts/mcp_client.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts/meta_game_testing_ground.gd and res://EMERGENCY_BACKUP/scripts/meta_game_testing_ground.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts/multimodal_analyzer.gd and res://EMERGENCY_BACKUP/scripts/multimodal_analyzer.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts/package_test.gd and res://EMERGENCY_BACKUP/scripts/package_test.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts/perfect_universal_console.gd and res://EMERGENCY_BACKUP/scripts/perfect_universal_console.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts/performance_optimizer.gd and res://EMERGENCY_BACKUP/scripts/performance_optimizer.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts/PoeticLogger.gd and res://EMERGENCY_BACKUP/scripts/PoeticLogger.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts/poetic_log.gd and res://EMERGENCY_BACKUP/scripts/poetic_log.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts/QuantumFloodGates.gd and res://EMERGENCY_BACKUP/scripts/QuantumFloodGates.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts/RealityEditorComponent.gd and res://EMERGENCY_BACKUP/scripts/RealityEditorComponent.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts/recursive_creation_console_universal_being.gd and res://EMERGENCY_BACKUP/scripts/recursive_creation_console_universal_being.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts/scan_directive_conflicts.gd and res://EMERGENCY_BACKUP/scripts/scan_directive_conflicts.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts/SelfRepairSystem.gd and res://EMERGENCY_BACKUP/scripts/SelfRepairSystem.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts/socket_button_universal_being.gd and res://EMERGENCY_BACKUP/scripts/socket_button_universal_being.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts/socket_grid_universal_being.gd and res://EMERGENCY_BACKUP/scripts/socket_grid_universal_being.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts/terminal_universal_being.gd and res://EMERGENCY_BACKUP/scripts/terminal_universal_being.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts/text_representation_system.gd and res://EMERGENCY_BACKUP/scripts/text_representation_system.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts/transform_animator.gd and res://EMERGENCY_BACKUP/scripts/transform_animator.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts/tree_universal_being.gd and res://EMERGENCY_BACKUP/scripts/tree_universal_being.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts/triple_helix_consciousness.gd and res://EMERGENCY_BACKUP/scripts/triple_helix_consciousness.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts/turn_based_creation_system.gd and res://EMERGENCY_BACKUP/scripts/turn_based_creation_system.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts/ufo_marching_cubes.gd and res://EMERGENCY_BACKUP/scripts/ufo_marching_cubes.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts/ufo_universal_being.gd and res://EMERGENCY_BACKUP/scripts/ufo_universal_being.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts/ultra_fast_controller.gd and res://EMERGENCY_BACKUP/scripts/ultra_fast_controller.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts/unified_chunk_manager.gd and res://EMERGENCY_BACKUP/scripts/unified_chunk_manager.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts/unified_chunk_system.gd and res://EMERGENCY_BACKUP/scripts/unified_chunk_system.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts/unified_console_being.gd and res://EMERGENCY_BACKUP/scripts/unified_console_being.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts/UniversalBeingInspector.gd and res://EMERGENCY_BACKUP/scripts/UniversalBeingInspector.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts/UniversalConsole.gd and res://EMERGENCY_BACKUP/scripts/UniversalConsole.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts/UniversalInspectorBridge.gd and res://EMERGENCY_BACKUP/scripts/UniversalInspectorBridge.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts/universal_being_generator.gd and res://EMERGENCY_BACKUP/scripts/universal_being_generator.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts/universal_being_movement_system.gd and res://EMERGENCY_BACKUP/scripts/universal_being_movement_system.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts/universal_being_mover.gd and res://EMERGENCY_BACKUP/scripts/universal_being_mover.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts/universal_being_pattern_extractor.gd and res://EMERGENCY_BACKUP/scripts/universal_being_pattern_extractor.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts/universal_command_processor.gd and res://EMERGENCY_BACKUP/scripts/universal_command_processor.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts/universal_console_controller.gd and res://EMERGENCY_BACKUP/scripts/universal_console_controller.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts/universal_interface_being.gd and res://EMERGENCY_BACKUP/scripts/universal_interface_being.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts/universal_interface_manager.gd and res://EMERGENCY_BACKUP/scripts/universal_interface_manager.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts/universal_script_inspector.gd and res://EMERGENCY_BACKUP/scripts/universal_script_inspector.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts/UniverseConsoleComponent.gd and res://EMERGENCY_BACKUP/scripts/UniverseConsoleComponent.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts/UniverseGenesisComponent.gd and res://EMERGENCY_BACKUP/scripts/UniverseGenesisComponent.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts/UniverseManager.gd and res://EMERGENCY_BACKUP/scripts/UniverseManager.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts/universe_console_integration.gd and res://EMERGENCY_BACKUP/scripts/universe_console_integration.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts/universe_core.gd and res://EMERGENCY_BACKUP/scripts/universe_core.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts/universe_lod.gd and res://EMERGENCY_BACKUP/scripts/universe_lod.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts/universe_physics.gd and res://EMERGENCY_BACKUP/scripts/universe_physics.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts/universe_portal.gd and res://EMERGENCY_BACKUP/scripts/universe_portal.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts/universe_rules.gd and res://EMERGENCY_BACKUP/scripts/universe_rules.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts/universe_time.gd and res://EMERGENCY_BACKUP/scripts/universe_time.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts/universe_universal_being.gd and res://EMERGENCY_BACKUP/scripts/universe_universal_being.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts/visual_enhancement_system.gd and res://EMERGENCY_BACKUP/scripts/visual_enhancement_system.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts_backup/ui/camera_consciousness_overlay/consciousness_meter.gd and res://scripts/ui/camera_consciousness_overlay/consciousness_meter.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts_backup/ui/camera_consciousness_overlay/effect_sliders.gd and res://scripts/ui/camera_consciousness_overlay/effect_sliders.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts_backup/ui/camera_consciousness_overlay/info_panel.gd and res://scripts/ui/camera_consciousness_overlay/info_panel.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts_backup/ui/UniverseSimulator.gd and res://scripts/ui/UniverseSimulator.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts_backup/add_butterfly_command.gd and res://scripts/add_butterfly_command.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts_backup/advanced_ufo_generator.gd and res://scripts/advanced_ufo_generator.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts_backup/advanced_visualization_optimizer.gd and res://scripts/advanced_visualization_optimizer.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts_backup/AICollaborationHub.gd and res://scripts/AICollaborationHub.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts_backup/ai_natural_language_console.gd and res://scripts/ai_natural_language_console.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts_backup/ai_pentagon_network.gd and res://scripts/ai_pentagon_network.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts_backup/AkashicLibrary.gd and res://scripts/AkashicLibrary.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts_backup/akashic_additions.gd and res://scripts/akashic_additions.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts_backup/akashic_chunk_manager.gd and res://scripts/akashic_chunk_manager.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts_backup/akashic_compact_system.gd and res://scripts/akashic_compact_system.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts_backup/akashic_logger.gd and res://scripts/akashic_logger.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts_backup/akashic_spatial_db.gd and res://scripts/akashic_spatial_db.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts_backup/auto_startup_universal_being.gd and res://scripts/auto_startup_universal_being.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts_backup/basic_interaction.gd and res://scripts/basic_interaction.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts_backup/basic_test.gd and res://scripts/basic_test.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts_backup/BeingDNAComponent.gd and res://scripts/BeingDNAComponent.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts_backup/button_3d_universal_being.gd and res://scripts/button_3d_universal_being.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts_backup/button_basic.gd and res://scripts/button_basic.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts_backup/button_universal_being.gd and res://scripts/button_universal_being.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts_backup/camera_effects_component.gd and res://scripts/camera_effects_component.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts_backup/camera_effects_test.gd and res://scripts/camera_effects_test.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts_backup/chunk_generator.gd and res://scripts/chunk_generator.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts_backup/chunk_generator_component.gd and res://scripts/chunk_generator_component.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts_backup/chunk_grid_manager.gd and res://scripts/chunk_grid_manager.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts_backup/chunk_universal_being.gd and res://scripts/chunk_universal_being.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts_backup/chunk_universe_generator.gd and res://scripts/chunk_universe_generator.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts_backup/complete_package_system_test.gd and res://scripts/complete_package_system_test.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts_backup/comprehensive_system_test.gd and res://scripts/comprehensive_system_test.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts_backup/ConsoleTextLayer.gd and res://scripts/ConsoleTextLayer.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts_backup/console_base.gd and res://scripts/console_base.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts_backup/console_enhancements.gd and res://scripts/console_enhancements.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts_backup/console_notifications.gd and res://scripts/console_notifications.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts_backup/console_test.gd and res://scripts/console_test.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts_backup/console_universal_being.gd and res://scripts/console_universal_being.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts_backup/conversational_console_being.gd and res://scripts/conversational_console_being.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts_backup/cosmic_insights.gd and res://scripts/cosmic_insights.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts_backup/cosmic_lod_system.gd and res://scripts/cosmic_lod_system.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts_backup/create_example_component.gd and res://scripts/create_example_component.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts_backup/cursor_controller.gd and res://scripts/cursor_controller.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts_backup/desert_garden_genesis.gd and res://scripts/desert_garden_genesis.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts_backup/dimensional_sight.gd and res://scripts/dimensional_sight.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts_backup/dna_visualizer.gd and res://scripts/dna_visualizer.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts_backup/enable_144k_enlightenment.gd and res://scripts/enable_144k_enlightenment.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts_backup/EnlightenedGroupManager.gd and res://scripts/EnlightenedGroupManager.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts_backup/fix_all_docstrings.gd and res://scripts/fix_all_docstrings.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts_backup/flood_gate_controller.gd and res://scripts/flood_gate_controller.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts_backup/game_launcher_universal_being.gd and res://scripts/game_launcher_universal_being.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts_backup/game_world_controller.gd and res://scripts/game_world_controller.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts_backup/Gemma3DPerceptionLogger.gd and res://scripts/Gemma3DPerceptionLogger.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts_backup/GemmaAkashicLogger.gd and res://scripts/GemmaAkashicLogger.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts_backup/GemmaAudio.gd and res://scripts/GemmaAudio.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts_backup/GemmaConsoleInterface.gd and res://scripts/GemmaConsoleInterface.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts_backup/GemmaInterfaceReader.gd and res://scripts/GemmaInterfaceReader.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts_backup/GemmaMacroMaster.gd and res://scripts/GemmaMacroMaster.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts_backup/GemmaSensorySystem.gd and res://scripts/GemmaSensorySystem.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts_backup/GemmaSpatialPerception.gd and res://scripts/GemmaSpatialPerception.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts_backup/GemmaUniversalBeing.gd and res://scripts/GemmaUniversalBeing.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts_backup/GemmaUniverseInjector.gd and res://scripts/GemmaUniverseInjector.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts_backup/GemmaVision.gd and res://scripts/GemmaVision.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts_backup/gemma_integration_status.gd and res://scripts/gemma_integration_status.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts_backup/gemma_natural_language.gd and res://scripts/gemma_natural_language.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts_backup/gemma_simple.gd and res://scripts/gemma_simple.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts_backup/gemma_text_interface_system.gd and res://scripts/gemma_text_interface_system.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts_backup/generation_coordinator.gd and res://scripts/generation_coordinator.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts_backup/genesis_conductor_universal_being.gd and res://scripts/genesis_conductor_universal_being.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts_backup/genesis_machine_simple.gd and res://scripts/genesis_machine_simple.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts_backup/glow_effect.gd and res://scripts/glow_effect.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts_backup/input_focus_manager.gd and res://scripts/input_focus_manager.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts_backup/InteractiveTestEnvironment.gd and res://scripts/InteractiveTestEnvironment.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts_backup/interface_window_universal_being.gd and res://scripts/interface_window_universal_being.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts_backup/IntuitiveInteractionSystem.gd and res://scripts/IntuitiveInteractionSystem.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts_backup/launch_genesis_adventure.gd and res://scripts/launch_genesis_adventure.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts_backup/lightweight_chunk_system.gd and res://scripts/lightweight_chunk_system.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts_backup/LocalAICollaboration.gd and res://scripts/LocalAICollaboration.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts_backup/lod_generator_universal_being.gd and res://scripts/lod_generator_universal_being.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts_backup/LogicConnectorSystem.gd and res://scripts/LogicConnectorSystem.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts_backup/logic_connector.gd and res://scripts/logic_connector.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts_backup/luminus_chunk_grid_manager.gd and res://scripts/luminus_chunk_grid_manager.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts_backup/luminus_chunk_universal_being.gd and res://scripts/luminus_chunk_universal_being.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts_backup/luminus_narrative_system.gd and res://scripts/luminus_narrative_system.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts_backup/macro_system.gd and res://scripts/macro_system.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts_backup/main_script.gd and res://scripts/main_script.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts_backup/map_world_controller.gd and res://scripts/map_world_controller.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts_backup/matrix_chunk_system.gd and res://scripts/matrix_chunk_system.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts_backup/mcp_client.gd and res://scripts/mcp_client.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts_backup/meta_game_testing_ground.gd and res://scripts/meta_game_testing_ground.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts_backup/multimodal_analyzer.gd and res://scripts/multimodal_analyzer.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts_backup/package_test.gd and res://scripts/package_test.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts_backup/perfect_universal_console.gd and res://scripts/perfect_universal_console.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts_backup/performance_optimizer.gd and res://scripts/performance_optimizer.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts_backup/PoeticLogger.gd and res://scripts/PoeticLogger.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts_backup/poetic_log.gd and res://scripts/poetic_log.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts_backup/QuantumFloodGates.gd and res://scripts/QuantumFloodGates.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts_backup/RealityEditorComponent.gd and res://scripts/RealityEditorComponent.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts_backup/recursive_creation_console_universal_being.gd and res://scripts/recursive_creation_console_universal_being.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts_backup/scan_directive_conflicts.gd and res://scripts/scan_directive_conflicts.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts_backup/SelfRepairSystem.gd and res://scripts/SelfRepairSystem.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts_backup/socket_button_universal_being.gd and res://scripts/socket_button_universal_being.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts_backup/socket_grid_universal_being.gd and res://scripts/socket_grid_universal_being.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts_backup/terminal_universal_being.gd and res://scripts/terminal_universal_being.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts_backup/text_representation_system.gd and res://scripts/text_representation_system.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts_backup/transform_animator.gd and res://scripts/transform_animator.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts_backup/tree_universal_being.gd and res://scripts/tree_universal_being.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts_backup/triple_helix_consciousness.gd and res://scripts/triple_helix_consciousness.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts_backup/turn_based_creation_system.gd and res://scripts/turn_based_creation_system.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts_backup/ufo_marching_cubes.gd and res://scripts/ufo_marching_cubes.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts_backup/ufo_universal_being.gd and res://scripts/ufo_universal_being.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts_backup/ultra_fast_controller.gd and res://scripts/ultra_fast_controller.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts_backup/unified_chunk_manager.gd and res://scripts/unified_chunk_manager.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts_backup/unified_chunk_system.gd and res://scripts/unified_chunk_system.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts_backup/unified_console_being.gd and res://scripts/unified_console_being.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts_backup/UniversalBeingInspector.gd and res://scripts/UniversalBeingInspector.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts_backup/UniversalConsole.gd and res://scripts/UniversalConsole.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts_backup/UniversalInspectorBridge.gd and res://scripts/UniversalInspectorBridge.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts_backup/universal_being_generator.gd and res://scripts/universal_being_generator.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts_backup/universal_being_movement_system.gd and res://scripts/universal_being_movement_system.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts_backup/universal_being_mover.gd and res://scripts/universal_being_mover.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts_backup/universal_being_pattern_extractor.gd and res://scripts/universal_being_pattern_extractor.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts_backup/universal_command_processor.gd and res://scripts/universal_command_processor.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts_backup/universal_console_controller.gd and res://scripts/universal_console_controller.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts_backup/universal_interface_being.gd and res://scripts/universal_interface_being.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts_backup/universal_interface_manager.gd and res://scripts/universal_interface_manager.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts_backup/universal_script_inspector.gd and res://scripts/universal_script_inspector.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts_backup/UniverseConsoleComponent.gd and res://scripts/UniverseConsoleComponent.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts_backup/UniverseGenesisComponent.gd and res://scripts/UniverseGenesisComponent.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts_backup/UniverseManager.gd and res://scripts/UniverseManager.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts_backup/universe_console_integration.gd and res://scripts/universe_console_integration.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts_backup/universe_core.gd and res://scripts/universe_core.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts_backup/universe_lod.gd and res://scripts/universe_lod.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts_backup/universe_physics.gd and res://scripts/universe_physics.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts_backup/universe_portal.gd and res://scripts/universe_portal.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts_backup/universe_rules.gd and res://scripts/universe_rules.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts_backup/universe_time.gd and res://scripts/universe_time.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts_backup/universe_universal_being.gd and res://scripts/universe_universal_being.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://scripts_backup/visual_enhancement_system.gd and res://scripts/visual_enhancement_system.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://systems/input/input_focus_manager.gd and res://EMERGENCY_BACKUP/systems/input/input_focus_manager.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://systems/performance/MemoryOptimizer.gd and res://EMERGENCY_BACKUP/systems/performance/MemoryOptimizer.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://systems/state/GameStateSocketManager.gd and res://EMERGENCY_BACKUP/systems/state/GameStateSocketManager.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://systems/storage/AkashicRecords.gd and res://EMERGENCY_BACKUP/systems/storage/AkashicRecords.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://systems/storage/AkashicRecordsEnhanced.gd and res://EMERGENCY_BACKUP/systems/storage/AkashicRecordsSystem.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://systems/storage/AkashicRecordsSystem.gd and res://systems/storage/AkashicRecordsEnhanced.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://systems/storage/akashic_living_database.gd and res://EMERGENCY_BACKUP/systems/storage/akashic_living_database.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://systems/storage/akashic_loader.gd and res://EMERGENCY_BACKUP/systems/storage/akashic_loader.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://systems/storage/ZipPackageManager.gd and res://EMERGENCY_BACKUP/systems/storage/ZipPackageManager.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://systems/timing/UniversalTimersSystem.gd and res://EMERGENCY_BACKUP/systems/timing/UniversalTimersSystem.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://systems/AkashicLibrary.gd and res://EMERGENCY_BACKUP/systems/AkashicLibrary.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://systems/ConsciousnessAudioManager.gd and res://EMERGENCY_BACKUP/systems/ConsciousnessAudioManager.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://systems/ConsciousnessFeedbackSystem.gd and res://EMERGENCY_BACKUP/systems/ConsciousnessFeedbackSystem.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://systems/ConsciousnessRevolutionIntegrator.gd and res://EMERGENCY_BACKUP/systems/ConsciousnessRevolutionIntegrator.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://systems/ConsciousnessRippleSystem.gd and res://EMERGENCY_BACKUP/systems/ConsciousnessRippleSystem.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://systems/consciousness_aura_enhanced.gd and res://EMERGENCY_BACKUP/systems/consciousness_aura_enhanced.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://systems/consciousness_exchange_system.gd and res://EMERGENCY_BACKUP/systems/consciousness_exchange_system.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://systems/consciousness_icon.gd and res://EMERGENCY_BACKUP/systems/consciousness_icon.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://systems/consciousness_resonator.gd and res://EMERGENCY_BACKUP/systems/consciousness_resonator.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://systems/consciousness_tooltip_system.gd and res://EMERGENCY_BACKUP/systems/consciousness_tooltip_system.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://systems/consciousness_visualizer.gd and res://EMERGENCY_BACKUP/systems/consciousness_visualizer.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://systems/FoundationPolishSystem.gd and res://EMERGENCY_BACKUP/systems/FoundationPolishSystem.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://systems/pentagon_network_visualizer.gd and res://EMERGENCY_BACKUP/systems/pentagon_network_visualizer.gd.
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://systems/UBPrintCollector.gd and res://EMERGENCY_BACKUP/systems/UBPrintCollector.gd.
+  ERROR: res://autoloads/akashic_loader.gd:9 - Parse Error: Could not resolve class "UniversalBeing".
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://autoloads/akashic_loader.gd" with error "Parse error".
+  ERROR: res://core/UniversalBeingSocketManager.gd:69 - Parse Error: The function signature doesn't match the parent. Parent signature is "add_socket(String, String, String) -> void".
+  ERROR: res://core/UniversalBeingSocketManager.gd:130 - Parse Error: Could not resolve external class member "mount_component".
+  ERROR: res://core/UniversalBeingSocketManager.gd:156 - Parse Error: Could not resolve external class member "unmount_component".
+  ERROR: res://core/UniversalBeingDNA.gd:14 - Parse Error: The member "being_uuid" already exists in parent class UniversalBeing.
+  ERROR: res://core/UniversalBeingDNA.gd:15 - Parse Error: The member "being_name" already exists in parent class UniversalBeing.
+  ERROR: res://core/UniversalBeingDNA.gd:16 - Parse Error: The member "being_type" already exists in parent class UniversalBeing.
+  ERROR: res://core/UniversalBeingDNA.gd:17 - Parse Error: The member "consciousness_level" already exists in parent class UniversalBeing.
+  ERROR: res://core/UniversalBeingDNA.gd:28 - Parse Error: The member "scene_path" already exists in parent class UniversalBeing.
+  ERROR: res://core/UniversalBeingDNA.gd:32 - Parse Error: The member "visual_layer" already exists in parent class UniversalBeing.
+  ERROR: res://core/UniversalBeingDNA.gd:653 - Parse Error: Invalid argument for "save()" function: argument 1 should be "Resource" but is "UniversalBeingDNA".
+  ERROR: res://core/UniversalBeingDNA.gd:664 - Parse Error: Invalid cast. Cannot convert from "Resource" to "UniversalBeingDNA".
+  ERROR: res://core/UniversalBeingSocket.gd:36 - Parse Error: The member "component_data" already exists in parent class UniversalBeing.
+  ERROR: res://core/UniversalBeingSocket.gd:81 - Parse Error: The function signature doesn't match the parent. Parent signature is "mount_component(String, Resource, bool = <default>) -> bool".
+  ERROR: res://core/UniversalBeingSocket.gd:113 - Parse Error: The function signature doesn't match the parent. Parent signature is "unmount_component(String) -> bool".
+  ERROR: res://core/UniversalBeing.gd:0 - Compile Error: Failed to compile depended scripts.
+  ERROR: res://beings/butterfly/ButterflyUniversalBeing.gd:0 - Compile Error: Failed to compile depended scripts.
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://beings/butterfly/ButterflyUniversalBeing.gd" with error "Parse error".
+  ERROR: res://beings/camera/CameraUniversalBeing.gd:230 - Parse Error: Not all code paths return a value.
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://beings/camera/CameraUniversalBeing.gd" with error "Parse error".
+  ERROR: res://beings/ConsciousnessRevolutionSpawner.gd:52 - Parse Error: Function "_emergency_shutdown()" not found in base self.
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://beings/ConsciousnessRevolutionSpawner.gd" with error "Parse error".
+  ERROR: res://beings/GemmaAICompanionPlasmoid.gd:21 - Parse Error: The member "consciousness_awakened" already exists in parent class UniversalBeing.
+  ERROR: res://beings/GemmaAICompanionPlasmoid.gd:52 - Parse Error: Identifier "plasma_color" not declared in the current scope.
+  ERROR: res://beings/GemmaAICompanionPlasmoid.gd:237 - Parse Error: Function "get_sensory_data()" not found in base self.
+  ERROR: res://beings/GemmaAICompanionPlasmoid.gd:243 - Parse Error: Function "process_ai_decision()" not found in base self.
+  ERROR: res://beings/GemmaAICompanionPlasmoid.gd:292 - Parse Error: Function "_create_consciousness_art()" not found in base self.
+  ERROR: res://beings/GemmaAICompanionPlasmoid.gd:301 - Parse Error: Function "flow_to()" not found in base self.
+  ERROR: res://beings/GemmaAICompanionPlasmoid.gd:306 - Parse Error: Function "flow_to()" not found in base self.
+  ERROR: res://beings/GemmaAICompanionPlasmoid.gd:333 - Parse Error: Function "flow_to()" not found in base self.
+  ERROR: res://beings/GemmaAICompanionPlasmoid.gd:380 - Parse Error: Function "flow_to()" not found in base self.
+  ERROR: res://beings/GemmaAICompanionPlasmoid.gd:399 - Parse Error: Function "flow_to()" not found in base self.
+  ERROR: res://beings/GemmaAICompanionPlasmoid.gd:420 - Parse Error: Too many arguments for "get()" call. Expected at most 1 but received 2.
+  ERROR: res://beings/GemmaAICompanionPlasmoid.gd:445 - Parse Error: Function "flow_to()" not found in base self.
+  ERROR: res://beings/GemmaAICompanionPlasmoid.gd:449 - Parse Error: Function "flow_to()" not found in base self.
+  ERROR: res://beings/GemmaAICompanionPlasmoid.gd:462 - Parse Error: Function "_sense_environmental_beauty()" not found in base self.
+  ERROR: res://beings/GemmaAICompanionPlasmoid.gd:467 - Parse Error: Identifier "energy_connections" not declared in the current scope.
+  ERROR: res://beings/GemmaAICompanionPlasmoid.gd:469 - Parse Error: Identifier "energy_connections" not declared in the current scope.
+  ERROR: res://beings/GemmaAICompanionPlasmoid.gd:500 - Parse Error: Function "flow_to()" not found in base self.
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://beings/GemmaAICompanionPlasmoid.gd" with error "Parse error".
+  ERROR: res://core/command_system/UniversalCommandProcessor.gd:22 - Parse Error: Function "_register_natural_triggers()" not found in base self.
+  ERROR: res://core/command_system/UniversalCommandProcessor.gd:32 - Parse Error: Identifier "_cmd_analyze" not declared in the current scope.
+  ERROR: res://core/command_system/UniversalCommandProcessor.gd:33 - Parse Error: Identifier "_cmd_tree" not declared in the current scope.
+  ERROR: res://core/command_system/UniversalCommandProcessor.gd:37 - Parse Error: Identifier "_cmd_spawn" not declared in the current scope.
+  ERROR: res://core/command_system/UniversalCommandProcessor.gd:38 - Parse Error: Identifier "_cmd_generate" not declared in the current scope.
+  ERROR: res://core/command_system/UniversalCommandProcessor.gd:39 - Parse Error: Identifier "_cmd_evolve" not declared in the current scope.
+  ERROR: res://core/command_system/UniversalCommandProcessor.gd:44 - Parse Error: Identifier "_cmd_connect" not declared in the current scope.
+  ERROR: res://core/command_system/UniversalCommandProcessor.gd:45 - Parse Error: Identifier "_cmd_trigger" not declared in the current scope.
+  ERROR: res://core/command_system/UniversalCommandProcessor.gd:48 - Parse Error: Identifier "_cmd_edit" not declared in the current scope.
+  ERROR: res://core/command_system/UniversalCommandProcessor.gd:49 - Parse Error: Identifier "_cmd_reload" not declared in the current scope.
+  ERROR: res://core/command_system/UniversalCommandProcessor.gd:50 - Parse Error: Identifier "_cmd_save" not declared in the current scope.
+  ERROR: res://core/command_system/UniversalCommandProcessor.gd:55 - Parse Error: Identifier "_cmd_history" not declared in the current scope.
+  ERROR: res://core/command_system/UniversalCommandProcessor.gd:56 - Parse Error: Identifier "_cmd_undo" not declared in the current scope.
+  ERROR: res://core/command_system/UniversalCommandProcessor.gd:57 - Parse Error: Identifier "_cmd_macro" not declared in the current scope.
+  ERROR: res://core/command_system/UniversalCommandProcessor.gd:172 - Parse Error: Not all code paths return a value.
+  ERROR: res://core/command_system/UniversalCommandProcessor.gd:232 - Parse Error: Not all code paths return a value.
+  ERROR: res://core/command_system/UniversalCommandProcessor.gd:289 - Parse Error: Not all code paths return a value.
+  ERROR: res://core/command_system/UniversalCommandProcessor.gd:344 - Parse Error: Expression is of type "UniversalBeing" so it can't be of type "Node2D".
+  ERROR: res://core/command_system/UniversalCommandProcessor.gd:373 - Parse Error: Static function "execute_command()" not found in base "UniversalCommandProcessor".
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://core/command_system/UniversalCommandProcessor.gd" with error "Parse error".
+  ERROR: res://core/command_system/UniversalConsole.gd:165 - Parse Error: Expected statement, found "Indent" instead.
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://core/command_system/UniversalConsole.gd" with error "Parse error".
+  ERROR: res://core/UniversalBeingControl.gd:16 - Parse Error: The member "being_uuid" already exists in parent class UniversalBeing.
+  ERROR: res://core/UniversalBeingControl.gd:17 - Parse Error: The member "being_name" already exists in parent class UniversalBeing.
+  ERROR: res://core/UniversalBeingControl.gd:18 - Parse Error: The member "being_type" already exists in parent class UniversalBeing.
+  ERROR: res://core/UniversalBeingControl.gd:19 - Parse Error: The member "consciousness_level" already exists in parent class UniversalBeing.
+  ERROR: res://core/UniversalBeingControl.gd:20 - Parse Error: The member "visual_layer" already exists in parent class UniversalBeing.
+  ERROR: res://core/UniversalBeingControl.gd:23 - Parse Error: The member "component_data" already exists in parent class UniversalBeing.
+  ERROR: res://core/UniversalBeingControl.gd:24 - Parse Error: The member "socket_manager" already exists in parent class UniversalBeing.
+  ERROR: res://core/UniversalBeingControl.gd:27 - Parse Error: The member "pentagon_initialized" already exists in parent class UniversalBeing.
+  ERROR: res://core/UniversalBeingControl.gd:30 - Parse Error: The member "layer_changed" already exists in parent class UniversalBeing.
+  ERROR: res://core/UniversalBeingControl.gd:131 - Parse Error: Identifier "modulate" not declared in the current scope.
+  ERROR: res://core/UniversalBeingControl.gd:148 - Parse Error: Identifier "size" not declared in the current scope.
+  ERROR: res://core/UniversalBeingControl.gd:150 - Parse Error: Identifier "modulate" not declared in the current scope.
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://core/UniversalBeingControl.gd" with error "Parse error".
+  ERROR: res://core/UniversalBeingInterface.gd:323 - Parse Error: Invalid argument for "connect_socket()" function: argument 1 should be "String" but is "UniversalBeingInterface".
+  ERROR: res://core/UniversalBeingInterface.gd:323 - Parse Error: Invalid argument for "connect_socket()" function: argument 2 should be "Node" but is "String".
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://core/UniversalBeingInterface.gd" with error "Parse error".
+  ERROR: res://core/universal_being_base_enhanced.gd:16 - Parse Error: Could not find type "Debuggable" in the current scope.
+  ERROR: res://core/universal_being_base_enhanced.gd:160 - Parse Error: Function "get_components()" not found in base self.
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://core/universal_being_base_enhanced.gd" with error "Parse error".
+  ERROR: res://docs/jsh/claude_code_logs/thre_plasmoid_files/ai_companion_plasmoid.gd:150 - Parse Error: Function "_sense_threats()" not found in base self.
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://docs/jsh/claude_code_logs/thre_plasmoid_files/ai_companion_plasmoid.gd" with error "Parse error".
+  ERROR: res://EMERGENCY_BACKUP/beings/camera/CameraUniversalBeing.gd:230 - Parse Error: Not all code paths return a value.
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://EMERGENCY_BACKUP/beings/camera/CameraUniversalBeing.gd" with error "Parse error".
+  ERROR: res://EMERGENCY_BACKUP/beings/ConsciousnessRevolutionSpawner.gd:52 - Parse Error: Function "_emergency_shutdown()" not found in base self.
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://EMERGENCY_BACKUP/beings/ConsciousnessRevolutionSpawner.gd" with error "Parse error".
+  ERROR: res://EMERGENCY_BACKUP/beings/GemmaAICompanionPlasmoid.gd:21 - Parse Error: The member "consciousness_awakened" already exists in parent class UniversalBeing.
+  ERROR: res://EMERGENCY_BACKUP/beings/GemmaAICompanionPlasmoid.gd:52 - Parse Error: Identifier "plasma_color" not declared in the current scope.
+  ERROR: res://EMERGENCY_BACKUP/beings/GemmaAICompanionPlasmoid.gd:237 - Parse Error: Function "get_sensory_data()" not found in base self.
+  ERROR: res://EMERGENCY_BACKUP/beings/GemmaAICompanionPlasmoid.gd:243 - Parse Error: Function "process_ai_decision()" not found in base self.
+  ERROR: res://EMERGENCY_BACKUP/beings/GemmaAICompanionPlasmoid.gd:292 - Parse Error: Function "_create_consciousness_art()" not found in base self.
+  ERROR: res://EMERGENCY_BACKUP/beings/GemmaAICompanionPlasmoid.gd:301 - Parse Error: Function "flow_to()" not found in base self.
+  ERROR: res://EMERGENCY_BACKUP/beings/GemmaAICompanionPlasmoid.gd:306 - Parse Error: Function "flow_to()" not found in base self.
+  ERROR: res://EMERGENCY_BACKUP/beings/GemmaAICompanionPlasmoid.gd:333 - Parse Error: Function "flow_to()" not found in base self.
+  ERROR: res://EMERGENCY_BACKUP/beings/GemmaAICompanionPlasmoid.gd:380 - Parse Error: Function "flow_to()" not found in base self.
+  ERROR: res://EMERGENCY_BACKUP/beings/GemmaAICompanionPlasmoid.gd:399 - Parse Error: Function "flow_to()" not found in base self.
+  ERROR: res://EMERGENCY_BACKUP/beings/GemmaAICompanionPlasmoid.gd:420 - Parse Error: Too many arguments for "get()" call. Expected at most 1 but received 2.
+  ERROR: res://EMERGENCY_BACKUP/beings/GemmaAICompanionPlasmoid.gd:445 - Parse Error: Function "flow_to()" not found in base self.
+  ERROR: res://EMERGENCY_BACKUP/beings/GemmaAICompanionPlasmoid.gd:449 - Parse Error: Function "flow_to()" not found in base self.
+  ERROR: res://EMERGENCY_BACKUP/beings/GemmaAICompanionPlasmoid.gd:462 - Parse Error: Function "_sense_environmental_beauty()" not found in base self.
+  ERROR: res://EMERGENCY_BACKUP/beings/GemmaAICompanionPlasmoid.gd:467 - Parse Error: Identifier "energy_connections" not declared in the current scope.
+  ERROR: res://EMERGENCY_BACKUP/beings/GemmaAICompanionPlasmoid.gd:469 - Parse Error: Identifier "energy_connections" not declared in the current scope.
+  ERROR: res://EMERGENCY_BACKUP/beings/GemmaAICompanionPlasmoid.gd:500 - Parse Error: Function "flow_to()" not found in base self.
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://EMERGENCY_BACKUP/beings/GemmaAICompanionPlasmoid.gd" with error "Parse error".
+  ERROR: res://EMERGENCY_BACKUP/core/command_system/UniversalCommandProcessor.gd:22 - Parse Error: Function "_register_natural_triggers()" not found in base self.
+  ERROR: res://EMERGENCY_BACKUP/core/command_system/UniversalCommandProcessor.gd:32 - Parse Error: Identifier "_cmd_analyze" not declared in the current scope.
+  ERROR: res://EMERGENCY_BACKUP/core/command_system/UniversalCommandProcessor.gd:33 - Parse Error: Identifier "_cmd_tree" not declared in the current scope.
+  ERROR: res://EMERGENCY_BACKUP/core/command_system/UniversalCommandProcessor.gd:37 - Parse Error: Identifier "_cmd_spawn" not declared in the current scope.
+  ERROR: res://EMERGENCY_BACKUP/core/command_system/UniversalCommandProcessor.gd:38 - Parse Error: Identifier "_cmd_generate" not declared in the current scope.
+  ERROR: res://EMERGENCY_BACKUP/core/command_system/UniversalCommandProcessor.gd:39 - Parse Error: Identifier "_cmd_evolve" not declared in the current scope.
+  ERROR: res://EMERGENCY_BACKUP/core/command_system/UniversalCommandProcessor.gd:44 - Parse Error: Identifier "_cmd_connect" not declared in the current scope.
+  ERROR: res://EMERGENCY_BACKUP/core/command_system/UniversalCommandProcessor.gd:45 - Parse Error: Identifier "_cmd_trigger" not declared in the current scope.
+  ERROR: res://EMERGENCY_BACKUP/core/command_system/UniversalCommandProcessor.gd:48 - Parse Error: Identifier "_cmd_edit" not declared in the current scope.
+  ERROR: res://EMERGENCY_BACKUP/core/command_system/UniversalCommandProcessor.gd:49 - Parse Error: Identifier "_cmd_reload" not declared in the current scope.
+  ERROR: res://EMERGENCY_BACKUP/core/command_system/UniversalCommandProcessor.gd:50 - Parse Error: Identifier "_cmd_save" not declared in the current scope.
+  ERROR: res://EMERGENCY_BACKUP/core/command_system/UniversalCommandProcessor.gd:55 - Parse Error: Identifier "_cmd_history" not declared in the current scope.
+  ERROR: res://EMERGENCY_BACKUP/core/command_system/UniversalCommandProcessor.gd:56 - Parse Error: Identifier "_cmd_undo" not declared in the current scope.
+  ERROR: res://EMERGENCY_BACKUP/core/command_system/UniversalCommandProcessor.gd:57 - Parse Error: Identifier "_cmd_macro" not declared in the current scope.
+  ERROR: res://EMERGENCY_BACKUP/core/command_system/UniversalCommandProcessor.gd:172 - Parse Error: Not all code paths return a value.
+  ERROR: res://EMERGENCY_BACKUP/core/command_system/UniversalCommandProcessor.gd:232 - Parse Error: Not all code paths return a value.
+  ERROR: res://EMERGENCY_BACKUP/core/command_system/UniversalCommandProcessor.gd:289 - Parse Error: Not all code paths return a value.
+  ERROR: res://EMERGENCY_BACKUP/core/command_system/UniversalCommandProcessor.gd:344 - Parse Error: Expression is of type "UniversalBeing" so it can't be of type "Node2D".
+  ERROR: res://EMERGENCY_BACKUP/core/command_system/UniversalCommandProcessor.gd:373 - Parse Error: Static function "execute_command()" not found in base "UniversalCommandProcessor".
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://EMERGENCY_BACKUP/core/command_system/UniversalCommandProcessor.gd" with error "Parse error".
+  ERROR: res://EMERGENCY_BACKUP/core/command_system/UniversalConsole.gd:165 - Parse Error: Expected statement, found "Indent" instead.
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://EMERGENCY_BACKUP/core/command_system/UniversalConsole.gd" with error "Parse error".
+  ERROR: res://EMERGENCY_BACKUP/core/UniversalBeing.gd:163 - Parse Error: Expression is of type "res://EMERGENCY_BACKUP/core/UniversalBeing.gd" so it can't be of type "UniversalBeing".
+  ERROR: res://EMERGENCY_BACKUP/core/UniversalBeing.gd:404 - Parse Error: Invalid argument for "new()" function: argument 1 should be "UniversalBeing" but is "res://EMERGENCY_BACKUP/core/UniversalBeing.gd".
+  ERROR: res://EMERGENCY_BACKUP/core/UniversalBeing.gd:1815 - Parse Error: Invalid argument for "analyze_being()" function: argument 1 should be "UniversalBeing" but is "res://EMERGENCY_BACKUP/core/UniversalBeing.gd".
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://EMERGENCY_BACKUP/core/UniversalBeing.gd" with error "Parse error".
+  ERROR: res://EMERGENCY_BACKUP/core/UniversalBeingControl.gd:16 - Parse Error: The member "being_uuid" already exists in parent class UniversalBeing.
+  ERROR: res://EMERGENCY_BACKUP/core/UniversalBeingControl.gd:17 - Parse Error: The member "being_name" already exists in parent class UniversalBeing.
+  ERROR: res://EMERGENCY_BACKUP/core/UniversalBeingControl.gd:18 - Parse Error: The member "being_type" already exists in parent class UniversalBeing.
+  ERROR: res://EMERGENCY_BACKUP/core/UniversalBeingControl.gd:19 - Parse Error: The member "consciousness_level" already exists in parent class UniversalBeing.
+  ERROR: res://EMERGENCY_BACKUP/core/UniversalBeingControl.gd:20 - Parse Error: The member "visual_layer" already exists in parent class UniversalBeing.
+  ERROR: res://EMERGENCY_BACKUP/core/UniversalBeingControl.gd:23 - Parse Error: The member "component_data" already exists in parent class UniversalBeing.
+  ERROR: res://EMERGENCY_BACKUP/core/UniversalBeingControl.gd:24 - Parse Error: The member "socket_manager" already exists in parent class UniversalBeing.
+  ERROR: res://EMERGENCY_BACKUP/core/UniversalBeingControl.gd:27 - Parse Error: The member "pentagon_initialized" already exists in parent class UniversalBeing.
+  ERROR: res://EMERGENCY_BACKUP/core/UniversalBeingControl.gd:30 - Parse Error: The member "layer_changed" already exists in parent class UniversalBeing.
+  ERROR: res://EMERGENCY_BACKUP/core/UniversalBeingControl.gd:131 - Parse Error: Identifier "modulate" not declared in the current scope.
+  ERROR: res://EMERGENCY_BACKUP/core/UniversalBeingControl.gd:148 - Parse Error: Identifier "size" not declared in the current scope.
+  ERROR: res://EMERGENCY_BACKUP/core/UniversalBeingControl.gd:150 - Parse Error: Identifier "modulate" not declared in the current scope.
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://EMERGENCY_BACKUP/core/UniversalBeingControl.gd" with error "Parse error".
+  ERROR: res://EMERGENCY_BACKUP/core/UniversalBeingDNA.gd:14 - Parse Error: The member "being_uuid" already exists in parent class UniversalBeing.
+  ERROR: res://EMERGENCY_BACKUP/core/UniversalBeingDNA.gd:15 - Parse Error: The member "being_name" already exists in parent class UniversalBeing.
+  ERROR: res://EMERGENCY_BACKUP/core/UniversalBeingDNA.gd:16 - Parse Error: The member "being_type" already exists in parent class UniversalBeing.
+  ERROR: res://EMERGENCY_BACKUP/core/UniversalBeingDNA.gd:17 - Parse Error: The member "consciousness_level" already exists in parent class UniversalBeing.
+  ERROR: res://EMERGENCY_BACKUP/core/UniversalBeingDNA.gd:28 - Parse Error: The member "scene_path" already exists in parent class UniversalBeing.
+  ERROR: res://EMERGENCY_BACKUP/core/UniversalBeingDNA.gd:32 - Parse Error: The member "visual_layer" already exists in parent class UniversalBeing.
+  ERROR: res://EMERGENCY_BACKUP/core/UniversalBeingDNA.gd:653 - Parse Error: Invalid argument for "save()" function: argument 1 should be "Resource" but is "res://EMERGENCY_BACKUP/core/UniversalBeingDNA.gd".
+  ERROR: res://EMERGENCY_BACKUP/core/UniversalBeingDNA.gd:664 - Parse Error: Invalid cast. Cannot convert from "Resource" to "UniversalBeingDNA".
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://EMERGENCY_BACKUP/core/UniversalBeingDNA.gd" with error "Parse error".
+  ERROR: res://EMERGENCY_BACKUP/core/UniversalBeingInterface.gd:323 - Parse Error: Invalid argument for "connect_socket()" function: argument 1 should be "String" but is "UniversalBeingInterface".
+  ERROR: res://EMERGENCY_BACKUP/core/UniversalBeingInterface.gd:323 - Parse Error: Invalid argument for "connect_socket()" function: argument 2 should be "Node" but is "String".
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://EMERGENCY_BACKUP/core/UniversalBeingInterface.gd" with error "Parse error".
+  ERROR: res://EMERGENCY_BACKUP/core/UniversalBeingSocket.gd:36 - Parse Error: The member "component_data" already exists in parent class UniversalBeing.
+  ERROR: res://EMERGENCY_BACKUP/core/UniversalBeingSocket.gd:81 - Parse Error: The function signature doesn't match the parent. Parent signature is "mount_component(String, Resource, bool = <default>) -> bool".
+  ERROR: res://EMERGENCY_BACKUP/core/UniversalBeingSocket.gd:113 - Parse Error: The function signature doesn't match the parent. Parent signature is "unmount_component(String) -> bool".
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://EMERGENCY_BACKUP/core/UniversalBeingSocket.gd" with error "Parse error".
+  ERROR: res://EMERGENCY_BACKUP/core/UniversalBeingSocketManager.gd:69 - Parse Error: The function signature doesn't match the parent. Parent signature is "add_socket(String, String, String) -> void".
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://EMERGENCY_BACKUP/core/UniversalBeingSocketManager.gd" with error "Parse error".
+  ERROR: res://EMERGENCY_BACKUP/core/universal_being_base_enhanced.gd:16 - Parse Error: Could not find type "Debuggable" in the current scope.
+  ERROR: res://EMERGENCY_BACKUP/core/universal_being_base_enhanced.gd:160 - Parse Error: Function "get_components()" not found in base self.
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://EMERGENCY_BACKUP/core/universal_being_base_enhanced.gd" with error "Parse error".
+  ERROR: res://EMERGENCY_BACKUP/scripts/archive/console_butterfly_fix.gd:10 - Parse Error: Class "ConsoleButterflyFixUniversalBeing" hides a global script class.
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://EMERGENCY_BACKUP/scripts/archive/console_butterfly_fix.gd" with error "Parse error".
+  ERROR: res://EMERGENCY_BACKUP/scripts/archive/console_butterfly_tree_fix.gd:10 - Parse Error: Class "ConsoleButterflyTreeFixUniversalBeing" hides a global script class.
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://EMERGENCY_BACKUP/scripts/archive/console_butterfly_tree_fix.gd" with error "Parse error".
+  ERROR: res://EMERGENCY_BACKUP/scripts/archive/enhanced_debug_click_handler.gd:5 - Parse Error: Class "EnhancedDebugClickHandler" hides a global script class.
+  ERROR: res://EMERGENCY_BACKUP/scripts/archive/enhanced_debug_click_handler.gd:13 - Parse Error: Could not parse global class "UnifiedDebugInterface" from "res://tests/unified_debug_interface.gd".
+  ERROR: res://EMERGENCY_BACKUP/scripts/archive/enhanced_debug_click_handler.gd:20 - Parse Error: Could not find type "Debuggable" in the current scope.
+  ERROR: res://EMERGENCY_BACKUP/scripts/archive/enhanced_debug_click_handler.gd:21 - Parse Error: Could not find type "Debuggable" in the current scope.
+  ERROR: res://EMERGENCY_BACKUP/scripts/archive/enhanced_debug_click_handler.gd:145 - Parse Error: Could not find type "Debuggable" in the current scope.
+  ERROR: res://EMERGENCY_BACKUP/scripts/archive/enhanced_debug_click_handler.gd:215 - Parse Error: Could not find type "Debuggable" in the current scope.
+  ERROR: res://EMERGENCY_BACKUP/scripts/archive/enhanced_debug_click_handler.gd:230 - Parse Error: Could not find type "Debuggable" in the current scope.
+  ERROR: res://EMERGENCY_BACKUP/scripts/archive/enhanced_debug_click_handler.gd:42 - Parse Error: Could not resolve class "UnifiedDebugInterface", because of a parser error.
+  ERROR: res://EMERGENCY_BACKUP/scripts/archive/enhanced_debug_click_handler.gd:218 - Parse Error: Could not find type "Debuggable" in the current scope.
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://EMERGENCY_BACKUP/scripts/archive/enhanced_debug_click_handler.gd" with error "Parse error".
+  ERROR: res://EMERGENCY_BACKUP/scripts/archive/enhanced_game_world.gd:93 - Parse Error: Preload file "res://scenes/universal_being_template.tscn" does not exist.
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://EMERGENCY_BACKUP/scripts/archive/enhanced_game_world.gd" with error "Parse error".
+  ERROR: res://EMERGENCY_BACKUP/scripts/archive/GemmaUniverseInjector_enhancements.gd:117 - Parse Error: Function "create_tween()" not found in base self.
+  ERROR: res://EMERGENCY_BACKUP/scripts/archive/GemmaUniverseInjector_enhancements.gd:123 - Parse Error: Function "create_tween()" not found in base self.
+  ERROR: res://EMERGENCY_BACKUP/scripts/archive/GemmaUniverseInjector_enhancements.gd:173 - Parse Error: Function "create_tween()" not found in base self.
+  ERROR: res://EMERGENCY_BACKUP/scripts/archive/GemmaUniverseInjector_enhancements.gd:292 - Parse Error: Identifier "gemma_console" not declared in the current scope.
+  ERROR: res://EMERGENCY_BACKUP/scripts/archive/GemmaUniverseInjector_enhancements.gd:293 - Parse Error: Identifier "gemma_console" not declared in the current scope.
+  ERROR: res://EMERGENCY_BACKUP/scripts/archive/GemmaUniverseInjector_enhancements.gd:296 - Parse Error: Identifier "gemma_logger" not declared in the current scope.
+  ERROR: res://EMERGENCY_BACKUP/scripts/archive/GemmaUniverseInjector_enhancements.gd:297 - Parse Error: Identifier "gemma_logger" not declared in the current scope.
+  ERROR: res://EMERGENCY_BACKUP/scripts/archive/GemmaUniverseInjector_enhancements.gd:365 - Parse Error: Function "get_tree()" not found in base self.
+  ERROR: res://EMERGENCY_BACKUP/scripts/archive/GemmaUniverseInjector_enhancements.gd:394 - Parse Error: Identifier "gemma_preference_learning" not declared in the current scope.
+  ERROR: res://EMERGENCY_BACKUP/scripts/archive/GemmaUniverseInjector_enhancements.gd:401 - Parse Error: Identifier "gemma_preferences" not declared in the current scope.
+  ERROR: res://EMERGENCY_BACKUP/scripts/archive/GemmaUniverseInjector_enhancements.gd:401 - Parse Error: Identifier "gemma_preferences" not declared in the current scope.
+  ERROR: res://EMERGENCY_BACKUP/scripts/archive/GemmaUniverseInjector_enhancements.gd:402 - Parse Error: Identifier "gemma_preferences" not declared in the current scope.
+  ERROR: res://EMERGENCY_BACKUP/scripts/archive/GemmaUniverseInjector_enhancements.gd:402 - Parse Error: Identifier "gemma_preferences" not declared in the current scope.
+  ERROR: res://EMERGENCY_BACKUP/scripts/archive/GemmaUniverseInjector_enhancements.gd:406 - Parse Error: Identifier "gemma_preferences" not declared in the current scope.
+  ERROR: res://EMERGENCY_BACKUP/scripts/archive/GemmaUniverseInjector_enhancements.gd:406 - Parse Error: Identifier "gemma_preferences" not declared in the current scope.
+  ERROR: res://EMERGENCY_BACKUP/scripts/archive/GemmaUniverseInjector_enhancements.gd:407 - Parse Error: Identifier "gemma_preferences" not declared in the current scope.
+  ERROR: res://EMERGENCY_BACKUP/scripts/archive/GemmaUniverseInjector_enhancements.gd:407 - Parse Error: Identifier "gemma_preferences" not declared in the current scope.
+  ERROR: res://EMERGENCY_BACKUP/scripts/archive/GemmaUniverseInjector_enhancements.gd:411 - Parse Error: Identifier "gemma_preferences" not declared in the current scope.
+  ERROR: res://EMERGENCY_BACKUP/scripts/archive/GemmaUniverseInjector_enhancements.gd:411 - Parse Error: Identifier "gemma_preferences" not declared in the current scope.
+  ERROR: res://EMERGENCY_BACKUP/scripts/archive/GemmaUniverseInjector_enhancements.gd:412 - Parse Error: Identifier "gemma_preferences" not declared in the current scope.
+  ERROR: res://EMERGENCY_BACKUP/scripts/archive/GemmaUniverseInjector_enhancements.gd:421 - Parse Error: Identifier "gemma_preferences" not declared in the current scope.
+  ERROR: res://EMERGENCY_BACKUP/scripts/archive/GemmaUniverseInjector_enhancements.gd:439 - Parse Error: Identifier "gemma_preferences" not declared in the current scope.
+  ERROR: res://EMERGENCY_BACKUP/scripts/archive/GemmaUniverseInjector_enhancements.gd:440 - Parse Error: Identifier "UniverseType" not declared in the current scope.
+  ERROR: res://EMERGENCY_BACKUP/scripts/archive/GemmaUniverseInjector_enhancements.gd:441 - Parse Error: Identifier "gemma_preferences" not declared in the current scope.
+  ERROR: res://EMERGENCY_BACKUP/scripts/archive/GemmaUniverseInjector_enhancements.gd:442 - Parse Error: Identifier "UniverseType" not declared in the current scope.
+  ERROR: res://EMERGENCY_BACKUP/scripts/archive/GemmaUniverseInjector_enhancements.gd:444 - Parse Error: Identifier "UniverseType" not declared in the current scope.
+  ERROR: res://EMERGENCY_BACKUP/scripts/archive/GemmaUniverseInjector_enhancements.gd:453 - Parse Error: Identifier "gemma_preferences" not declared in the current scope.
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://EMERGENCY_BACKUP/scripts/archive/GemmaUniverseInjector_enhancements.gd" with error "Parse error".
+  ERROR: res://core/UniversalBeingDNA.gd:14 - Parse Error: The member "being_uuid" already exists in parent class UniversalBeing.
+  ERROR: res://core/UniversalBeingDNA.gd:15 - Parse Error: The member "being_name" already exists in parent class UniversalBeing.
+  ERROR: res://core/UniversalBeingDNA.gd:16 - Parse Error: The member "being_type" already exists in parent class UniversalBeing.
+  ERROR: res://core/UniversalBeingDNA.gd:17 - Parse Error: The member "consciousness_level" already exists in parent class UniversalBeing.
+  ERROR: res://core/UniversalBeingDNA.gd:28 - Parse Error: The member "scene_path" already exists in parent class UniversalBeing.
+  ERROR: res://core/UniversalBeingDNA.gd:32 - Parse Error: The member "visual_layer" already exists in parent class UniversalBeing.
+  ERROR: res://core/UniversalBeingDNA.gd:653 - Parse Error: Invalid argument for "save()" function: argument 1 should be "Resource" but is "UniversalBeingDNA".
+  ERROR: res://core/UniversalBeingDNA.gd:664 - Parse Error: Invalid cast. Cannot convert from "Resource" to "UniversalBeingDNA".
+  ERROR: res://scripts/universe_console_integration.gd:12 - Parse Error: Could not find type "UniverseNavigator" in the current scope.
+  ERROR: res://scripts/universe_console_integration.gd:33 - Parse Error: Value of type "res://EMERGENCY_BACKUP/scripts/UniverseConsoleComponent.gd" cannot be assigned to a variable of type "UniverseConsoleComponent".
+  ERROR: res://scripts/universe_console_integration.gd:48 - Parse Error: Preload file "res://ui/UniverseNavigator.gd" does not exist.
+  ERROR: res://EMERGENCY_BACKUP/scripts/archive/main_OLD_COMPLEX.gd:0 - Compile Error: Failed to compile depended scripts.
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://EMERGENCY_BACKUP/scripts/archive/main_OLD_COMPLEX.gd" with error "Parse error".
+  ERROR: res://EMERGENCY_BACKUP/scripts/archive/pentagon_validator_fixed.gd:10 - Parse Error: Class "PentagonValidatorFixed" hides a global script class.
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://EMERGENCY_BACKUP/scripts/archive/pentagon_validator_fixed.gd" with error "Parse error".
+  ERROR: res://scripts/GemmaConsoleInterface.gd:54 - Parse Error: The member "scene_is_loaded" already exists in parent class UniversalBeing.
+  ERROR: res://scripts/GemmaUniverseInjector.gd:0 - Compile Error: Failed to compile depended scripts.
+  ERROR: res://EMERGENCY_BACKUP/scripts/archive/quick_test_universe_injection.gd:0 - Compile Error: Failed to compile depended scripts.
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://EMERGENCY_BACKUP/scripts/archive/quick_test_universe_injection.gd" with error "Parse error".
+  ERROR: res://EMERGENCY_BACKUP/scripts/archive/simple_camera_effects.gd:9 - Parse Error: Class "SimpleCameraEffects" hides a global script class.
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://EMERGENCY_BACKUP/scripts/archive/simple_camera_effects.gd" with error "Parse error".
+  ERROR: res://EMERGENCY_BACKUP/scripts/archive/simple_player_controller.gd:8 - Parse Error: Class "SimplePlayerController" hides a global script class.
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://EMERGENCY_BACKUP/scripts/archive/simple_player_controller.gd" with error "Parse error".
+  ERROR: res://EMERGENCY_BACKUP/scripts/archive/simple_player_test.gd:116 - Parse Error: Too few arguments for "rstrip()" call. Expected at least 1 but received 0.
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://EMERGENCY_BACKUP/scripts/archive/simple_player_test.gd" with error "Parse error".
+  ERROR: res://EMERGENCY_BACKUP/scripts/bridges/remote_godot_bridge.gd:378 - Parse Error: Static function "exit()" not found in base "GDScriptNativeClass".
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://EMERGENCY_BACKUP/scripts/bridges/remote_godot_bridge.gd" with error "Parse error".
+  ERROR: res://EMERGENCY_BACKUP/scripts/tools/asset_checker.gd:121 - Parse Error: Cannot find member "filter" in base "PackedStringArray".
+  ERROR: res://EMERGENCY_BACKUP/scripts/tools/asset_checker.gd:121 - Parse Error: Function "filter()" not found in base PackedStringArray.
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://EMERGENCY_BACKUP/scripts/tools/asset_checker.gd" with error "Parse error".
+  ERROR: res://EMERGENCY_BACKUP/scripts/ui/camera_consciousness_overlay/consciousness_meter.gd:55 - Parse Error: Invalid operands "float" and "float" for "%" operator.
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://EMERGENCY_BACKUP/scripts/ui/camera_consciousness_overlay/consciousness_meter.gd" with error "Parse error".
+  ERROR: res://EMERGENCY_BACKUP/scripts/add_butterfly_command.gd:59 - Parse Error: Unexpected identifier "terminal_output" in class body.
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://EMERGENCY_BACKUP/scripts/add_butterfly_command.gd" with error "Parse error".
+  ERROR: res://EMERGENCY_BACKUP/scripts/akashic_additions.gd:15 - Parse Error: Identifier "session_interactions" not declared in the current scope.
+  ERROR: res://EMERGENCY_BACKUP/scripts/akashic_additions.gd:32 - Parse Error: Identifier "session_interactions" not declared in the current scope.
+  ERROR: res://EMERGENCY_BACKUP/scripts/akashic_additions.gd:45 - Parse Error: Identifier "session_beings" not declared in the current scope.
+  ERROR: res://EMERGENCY_BACKUP/scripts/akashic_additions.gd:46 - Parse Error: Identifier "session_interactions" not declared in the current scope.
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://EMERGENCY_BACKUP/scripts/akashic_additions.gd" with error "Parse error".
+  ERROR: res://scripts/luminus_chunk_universal_being.gd:62 - Parse Error: Invalid cast. Cannot convert from "LuminusChunkUniversalBeing" to "ChunkUniversalBeing".
+  ERROR: res://EMERGENCY_BACKUP/scripts/akashic_spatial_db.gd:0 - Compile Error: Failed to compile depended scripts.
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://EMERGENCY_BACKUP/scripts/akashic_spatial_db.gd" with error "Parse error".
+  ERROR: res://EMERGENCY_BACKUP/scripts/BeingDNAComponent.gd:110 - Parse Error: Expression is of type "UniversalBeing" so it can't be of type "Node2D".
+  ERROR: res://EMERGENCY_BACKUP/scripts/BeingDNAComponent.gd:111 - Parse Error: Value of type "Vector3" cannot be assigned to a variable of type "Vector2".
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://EMERGENCY_BACKUP/scripts/BeingDNAComponent.gd" with error "Parse error".
+  ERROR: res://EMERGENCY_BACKUP/scripts/chunk_generator.gd:64 - Parse Error: Static function "_world_to_chunk_coords()" not found in base "ChunkGridManager".
+  ERROR: res://EMERGENCY_BACKUP/scripts/chunk_generator.gd:65 - Parse Error: Static function "_stream_around()" not found in base "ChunkGridManager".
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://EMERGENCY_BACKUP/scripts/chunk_generator.gd" with error "Parse error".
+  ERROR: res://EMERGENCY_BACKUP/scripts/chunk_universal_being.gd:400 - Parse Error: Invalid argument for "generate_terrain()" function: argument 1 should be "ChunkUniversalBeing" but is "res://EMERGENCY_BACKUP/scripts/chunk_universal_being.gd".
+  ERROR: res://EMERGENCY_BACKUP/scripts/chunk_universal_being.gd:402 - Parse Error: Invalid argument for "generate_stars()" function: argument 1 should be "ChunkUniversalBeing" but is "res://EMERGENCY_BACKUP/scripts/chunk_universal_being.gd".
+  ERROR: res://EMERGENCY_BACKUP/scripts/chunk_universal_being.gd:412 - Parse Error: Invalid argument for "generate_detailed_content()" function: argument 1 should be "ChunkUniversalBeing" but is "res://EMERGENCY_BACKUP/scripts/chunk_universal_being.gd".
+  ERROR: res://EMERGENCY_BACKUP/scripts/chunk_universal_being.gd:422 - Parse Error: Invalid argument for "generate_beings()" function: argument 1 should be "ChunkUniversalBeing" but is "res://EMERGENCY_BACKUP/scripts/chunk_universal_being.gd".
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://EMERGENCY_BACKUP/scripts/chunk_universal_being.gd" with error "Parse error".
+  ERROR: res://core/UniversalBeingSocket.gd:36 - Parse Error: The member "component_data" already exists in parent class UniversalBeing.
+  ERROR: res://core/UniversalBeingSocket.gd:81 - Parse Error: The function signature doesn't match the parent. Parent signature is "mount_component(String, Resource, bool = <default>) -> bool".
+  ERROR: res://core/UniversalBeingSocket.gd:113 - Parse Error: The function signature doesn't match the parent. Parent signature is "unmount_component(String) -> bool".
+  ERROR: res://core/UniversalBeingSocketManager.gd:69 - Parse Error: The function signature doesn't match the parent. Parent signature is "add_socket(String, String, String) -> void".
+  ERROR: res://EMERGENCY_BACKUP/scripts/conversational_console_being.gd:0 - Compile Error: Failed to compile depended scripts.
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://EMERGENCY_BACKUP/scripts/conversational_console_being.gd" with error "Parse error".
+  ERROR: res://scripts/luminus_chunk_universal_being.gd:62 - Parse Error: Invalid cast. Cannot convert from "LuminusChunkUniversalBeing" to "ChunkUniversalBeing".
+  ERROR: res://scripts/luminus_chunk_grid_manager.gd:0 - Compile Error: Failed to compile depended scripts.
+  ERROR: res://EMERGENCY_BACKUP/scripts/desert_garden_genesis.gd:0 - Compile Error: Failed to compile depended scripts.
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://EMERGENCY_BACKUP/scripts/desert_garden_genesis.gd" with error "Parse error".
+  ERROR: res://EMERGENCY_BACKUP/scripts/GemmaConsoleInterface.gd:54 - Parse Error: The member "scene_is_loaded" already exists in parent class UniversalBeing.
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://EMERGENCY_BACKUP/scripts/GemmaConsoleInterface.gd" with error "Parse error".
+  ERROR: res://EMERGENCY_BACKUP/scripts/GemmaMacroMaster.gd:349 - Parse Error: Unexpected identifier "print" in class body.
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://EMERGENCY_BACKUP/scripts/GemmaMacroMaster.gd" with error "Parse error".
+  ERROR: res://scripts/GemmaConsoleInterface.gd:54 - Parse Error: The member "scene_is_loaded" already exists in parent class UniversalBeing.
+  ERROR: res://EMERGENCY_BACKUP/scripts/GemmaSensorySystem.gd:0 - Compile Error: Failed to compile depended scripts.
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://EMERGENCY_BACKUP/scripts/GemmaSensorySystem.gd" with error "Parse error".
+  ERROR: res://scripts/GemmaConsoleInterface.gd:54 - Parse Error: The member "scene_is_loaded" already exists in parent class UniversalBeing.
+  ERROR: res://EMERGENCY_BACKUP/scripts/GemmaUniverseInjector.gd:0 - Compile Error: Failed to compile depended scripts.
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://EMERGENCY_BACKUP/scripts/GemmaUniverseInjector.gd" with error "Parse error".
+  ERROR: res://EMERGENCY_BACKUP/scripts/input_focus_manager.gd:306 - Parse Error: Not all code paths return a value.
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://EMERGENCY_BACKUP/scripts/input_focus_manager.gd" with error "Parse error".
+  ERROR: res://EMERGENCY_BACKUP/scripts/IntuitiveInteractionSystem.gd:529 - Parse Error: Unexpected identifier "print" in class body.
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://EMERGENCY_BACKUP/scripts/IntuitiveInteractionSystem.gd" with error "Parse error".
+  ERROR: res://EMERGENCY_BACKUP/scripts/LocalAICollaboration.gd:502 - Parse Error: Unexpected identifier "print" in class body.
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://EMERGENCY_BACKUP/scripts/LocalAICollaboration.gd" with error "Parse error".
+  ERROR: res://scripts/luminus_chunk_universal_being.gd:62 - Parse Error: Invalid cast. Cannot convert from "LuminusChunkUniversalBeing" to "ChunkUniversalBeing".
+  ERROR: res://EMERGENCY_BACKUP/scripts/luminus_chunk_grid_manager.gd:0 - Compile Error: Failed to compile depended scripts.
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://EMERGENCY_BACKUP/scripts/luminus_chunk_grid_manager.gd" with error "Parse error".
+  ERROR: res://EMERGENCY_BACKUP/scripts/luminus_chunk_universal_being.gd:43 - Parse Error: Invalid argument for "save_chunk()" function: argument 1 should be "LuminusChunkUniversalBeing" but is "res://EMERGENCY_BACKUP/scripts/luminus_chunk_universal_being.gd".
+  ERROR: res://EMERGENCY_BACKUP/scripts/luminus_chunk_universal_being.gd:58 - Parse Error: Invalid argument for "load_chunk_into()" function: argument 1 should be "LuminusChunkUniversalBeing" but is "res://EMERGENCY_BACKUP/scripts/luminus_chunk_universal_being.gd".
+  ERROR: res://EMERGENCY_BACKUP/scripts/luminus_chunk_universal_being.gd:62 - Parse Error: Invalid cast. Cannot convert from "res://EMERGENCY_BACKUP/scripts/luminus_chunk_universal_being.gd" to "ChunkUniversalBeing".
+  ERROR: res://EMERGENCY_BACKUP/scripts/luminus_chunk_universal_being.gd:63 - Parse Error: Invalid argument for "save_chunk()" function: argument 1 should be "LuminusChunkUniversalBeing" but is "res://EMERGENCY_BACKUP/scripts/luminus_chunk_universal_being.gd".
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://EMERGENCY_BACKUP/scripts/luminus_chunk_universal_being.gd" with error "Parse error".
+  ERROR: res://EMERGENCY_BACKUP/scripts/macro_system.gd:381 - Parse Error: Not all code paths return a value.
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://EMERGENCY_BACKUP/scripts/macro_system.gd" with error "Parse error".
+  ERROR: res://EMERGENCY_BACKUP/scripts/main_script.gd:117 - Parse Error: Cannot find member "EMISSION_SPHERE" in base "ParticleProcessMaterial".
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://EMERGENCY_BACKUP/scripts/main_script.gd" with error "Parse error".
+  ERROR: res://EMERGENCY_BACKUP/scripts/perfect_universal_console.gd:246 - Parse Error: Preload file "res://interfaces/universe_rules_editor_interface.gd" does not exist.
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://EMERGENCY_BACKUP/scripts/perfect_universal_console.gd" with error "Parse error".
+  ERROR: res://EMERGENCY_BACKUP/scripts/performance_optimizer.gd:51 - Parse Error: Cannot find member "CAMERA_CULL_MASK_DEFAULT" in base "RenderingServer".
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://EMERGENCY_BACKUP/scripts/performance_optimizer.gd" with error "Parse error".
+  ERROR: res://EMERGENCY_BACKUP/scripts/QuantumFloodGates.gd:50 - Parse Error: Cannot call the parent class' virtual function "_ready()" because it hasn't been defined.
+  ERROR: res://EMERGENCY_BACKUP/scripts/QuantumFloodGates.gd:57 - Parse Error: Cannot assign a new value to a constant.
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://EMERGENCY_BACKUP/scripts/QuantumFloodGates.gd" with error "Parse error".
+  ERROR: res://EMERGENCY_BACKUP/scripts/SelfRepairSystem.gd:429 - Parse Error: Unexpected identifier "print" in class body.
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://EMERGENCY_BACKUP/scripts/SelfRepairSystem.gd" with error "Parse error".
+  ERROR: res://EMERGENCY_BACKUP/scripts/text_representation_system.gd:86 - Parse Error: Too many arguments for "get()" call. Expected at most 1 but received 2.
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://EMERGENCY_BACKUP/scripts/text_representation_system.gd" with error "Parse error".
+  ERROR: res://EMERGENCY_BACKUP/scripts/turn_based_creation_system.gd:18 - Parse Error: Could not find type "ScenarioManager" in the current scope.
+  ERROR: res://EMERGENCY_BACKUP/scripts/turn_based_creation_system.gd:112 - Parse Error: Identifier "ScenarioManager" not declared in the current scope.
+  ERROR: res://EMERGENCY_BACKUP/scripts/turn_based_creation_system.gd:547 - Parse Error: Could not resolve class "UniversalTimersSystem", because of a parser error.
+  ERROR: res://EMERGENCY_BACKUP/scripts/turn_based_creation_system.gd:580 - Parse Error: Could not resolve class "UniversalTimersSystem", because of a parser error.
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://EMERGENCY_BACKUP/scripts/turn_based_creation_system.gd" with error "Parse error".
+  ERROR: res://EMERGENCY_BACKUP/scripts/unified_chunk_system.gd:345 - Parse Error: Cannot get return value of call to "_load_chunk()" because it returns "void".
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://EMERGENCY_BACKUP/scripts/unified_chunk_system.gd" with error "Parse error".
+  ERROR: res://EMERGENCY_BACKUP/scripts/UniversalBeingInspector.gd:494 - Parse Error: Could not resolve external class member "add_socket".
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://EMERGENCY_BACKUP/scripts/UniversalBeingInspector.gd" with error "Parse error".
+  ERROR: res://scripts/macro_system.gd:381 - Parse Error: Not all code paths return a value.
+  ERROR: res://EMERGENCY_BACKUP/scripts/UniversalConsole.gd:0 - Compile Error: Failed to compile depended scripts.
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://EMERGENCY_BACKUP/scripts/UniversalConsole.gd" with error "Parse error".
+  ERROR: res://core/UniversalBeingSocket.gd:36 - Parse Error: The member "component_data" already exists in parent class UniversalBeing.
+  ERROR: res://core/UniversalBeingSocket.gd:81 - Parse Error: The function signature doesn't match the parent. Parent signature is "mount_component(String, Resource, bool = <default>) -> bool".
+  ERROR: res://core/UniversalBeingSocket.gd:113 - Parse Error: The function signature doesn't match the parent. Parent signature is "unmount_component(String) -> bool".
+  ERROR: res://core/UniversalBeingSocketManager.gd:69 - Parse Error: The function signature doesn't match the parent. Parent signature is "add_socket(String, String, String) -> void".
+  ERROR: res://scripts/conversational_console_being.gd:0 - Compile Error: Failed to compile depended scripts.
+  ERROR: res://EMERGENCY_BACKUP/scripts/UniversalInspectorBridge.gd:0 - Compile Error: Failed to compile depended scripts.
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://EMERGENCY_BACKUP/scripts/UniversalInspectorBridge.gd" with error "Parse error".
+  ERROR: res://EMERGENCY_BACKUP/scripts/universal_console_controller.gd:504 - Parse Error: Could not resolve class "UniversalTimersSystem", because of a parser error.
+  ERROR: res://EMERGENCY_BACKUP/scripts/universal_console_controller.gd:722 - Parse Error: Could not resolve class "UniversalTimersSystem", because of a parser error.
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://EMERGENCY_BACKUP/scripts/universal_console_controller.gd" with error "Parse error".
+  ERROR: res://EMERGENCY_BACKUP/scripts/universal_interface_manager.gd:52 - Parse Error: Value of type "res://EMERGENCY_BACKUP/scripts/universal_interface_manager.gd" cannot be assigned to a variable of type "UniversalInterfaceManager".
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://EMERGENCY_BACKUP/scripts/universal_interface_manager.gd" with error "Parse error".
+  ERROR: res://EMERGENCY_BACKUP/scripts/universal_script_inspector.gd:525 - Parse Error: Expected end of statement after expression, found ":" instead.
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://EMERGENCY_BACKUP/scripts/universal_script_inspector.gd" with error "Parse error".
+  ERROR: res://EMERGENCY_BACKUP/scripts/UniverseGenesisComponent.gd:451 - Parse Error: Closing "}" doesn't have an opening counterpart.
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://EMERGENCY_BACKUP/scripts/UniverseGenesisComponent.gd" with error "Parse error".
+  ERROR: res://EMERGENCY_BACKUP/scripts/universe_console_integration.gd:12 - Parse Error: Could not find type "UniverseNavigator" in the current scope.
+  ERROR: res://EMERGENCY_BACKUP/scripts/universe_console_integration.gd:33 - Parse Error: Value of type "res://EMERGENCY_BACKUP/scripts/UniverseConsoleComponent.gd" cannot be assigned to a variable of type "UniverseConsoleComponent".
+  ERROR: res://EMERGENCY_BACKUP/scripts/universe_console_integration.gd:48 - Parse Error: Preload file "res://ui/UniverseNavigator.gd" does not exist.
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://EMERGENCY_BACKUP/scripts/universe_console_integration.gd" with error "Parse error".
+  ERROR: res://EMERGENCY_BACKUP/scripts/visual_enhancement_system.gd:93 - Parse Error: Cannot find member "TONE_MAPPER_REINHARD" in base "Environment".
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://EMERGENCY_BACKUP/scripts/visual_enhancement_system.gd" with error "Parse error".
+  ERROR: res://scripts/universal_console_controller.gd:504 - Parse Error: Could not resolve class "UniversalTimersSystem", because of a parser error.
+  ERROR: res://scripts/universal_console_controller.gd:722 - Parse Error: Could not resolve class "UniversalTimersSystem", because of a parser error.
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://scripts/universal_console_controller.gd" with error "Parse error".
+  ERROR: res://EMERGENCY_BACKUP/systems/storage/AkashicRecords.gd:10 - Parse Error: Class "AkashicRecordsSystemSystem" hides an autoload singleton.
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://EMERGENCY_BACKUP/systems/storage/AkashicRecords.gd" with error "Parse error".
+  ERROR: res://EMERGENCY_BACKUP/systems/storage/akashic_loader.gd:75 - Parse Error: Function "_preload_being_packages()" not found in base self.
+  ERROR: res://EMERGENCY_BACKUP/systems/storage/akashic_loader.gd:92 - Parse Error: Cannot call non-static function "set_meta()" on the class "ZipPackageManager" directly. Make an instance instead.
+  ERROR: res://EMERGENCY_BACKUP/systems/storage/akashic_loader.gd:130 - Parse Error: Static function "load_package()" not found in base "ZipPackageManager".
+  ERROR: res://EMERGENCY_BACKUP/systems/storage/akashic_loader.gd:158 - Parse Error: Static function "load_package()" not found in base "ZipPackageManager".
+  ERROR: res://EMERGENCY_BACKUP/systems/storage/akashic_loader.gd:182 - Parse Error: Static function "load_package()" not found in base "ZipPackageManager".
+  ERROR: res://EMERGENCY_BACKUP/systems/storage/akashic_loader.gd:247 - Parse Error: Static function "load_package()" not found in base "ZipPackageManager".
+  ERROR: res://EMERGENCY_BACKUP/systems/storage/akashic_loader.gd:321 - Parse Error: Cannot assign a new value to a constant.
+  ERROR: res://EMERGENCY_BACKUP/systems/storage/akashic_loader.gd:323 - Parse Error: Cannot assign a new value to a constant.
+  ERROR: res://EMERGENCY_BACKUP/systems/storage/akashic_loader.gd:375 - Parse Error: Static function "scan_libraries()" not found in base "ZipPackageManager".
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://EMERGENCY_BACKUP/systems/storage/akashic_loader.gd" with error "Parse error".
+  ERROR: res://EMERGENCY_BACKUP/systems/timing/UniversalTimersSystem.gd:424 - Parse Error: Expected end of statement after expression, found ":" instead.
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://EMERGENCY_BACKUP/systems/timing/UniversalTimersSystem.gd" with error "Parse error".
+  ERROR: res://EMERGENCY_BACKUP/systems/ConsciousnessAudioManager.gd:191 - Parse Error: Unexpected identifier "print" in class body.
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://EMERGENCY_BACKUP/systems/ConsciousnessAudioManager.gd" with error "Parse error".
+  ERROR: res://EMERGENCY_BACKUP/systems/ConsciousnessFeedbackSystem.gd:355 - Parse Error: Unexpected identifier "print" in class body.
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://EMERGENCY_BACKUP/systems/ConsciousnessFeedbackSystem.gd" with error "Parse error".
+  ERROR: res://EMERGENCY_BACKUP/systems/ConsciousnessRevolutionIntegrator.gd:248 - Parse Error: Unexpected identifier "print" in class body.
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://EMERGENCY_BACKUP/systems/ConsciousnessRevolutionIntegrator.gd" with error "Parse error".
+  ERROR: res://EMERGENCY_BACKUP/systems/ConsciousnessRippleSystem.gd:186 - Parse Error: Too many arguments for "get()" call. Expected at most 1 but received 2.
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://EMERGENCY_BACKUP/systems/ConsciousnessRippleSystem.gd" with error "Parse error".
+  ERROR: res://EMERGENCY_BACKUP/systems/consciousness_exchange_system.gd:309 - Parse Error: Function "interpret_perception_consciousness()" not found in base self.
+  ERROR: res://EMERGENCY_BACKUP/systems/consciousness_exchange_system.gd:311 - Parse Error: Function "interpret_communication_consciousness()" not found in base self.
+  ERROR: res://EMERGENCY_BACKUP/systems/consciousness_exchange_system.gd:313 - Parse Error: Function "interpret_evolution_consciousness()" not found in base self.
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://EMERGENCY_BACKUP/systems/consciousness_exchange_system.gd" with error "Parse error".
+  ERROR: res://EMERGENCY_BACKUP/systems/consciousness_tooltip_system.gd:203 - Parse Error: Member "pentagon_is_ready" is not a function.
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://EMERGENCY_BACKUP/systems/consciousness_tooltip_system.gd" with error "Parse error".
+  ERROR: res://EMERGENCY_BACKUP/systems/FoundationPolishSystem.gd:497 - Parse Error: Unexpected identifier "print" in class body.
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://EMERGENCY_BACKUP/systems/FoundationPolishSystem.gd" with error "Parse error".
+  ERROR: res://scripts/archive/enhanced_debug_click_handler.gd:13 - Parse Error: Could not parse global class "UnifiedDebugInterface" from "res://tests/unified_debug_interface.gd".
+  ERROR: res://scripts/archive/enhanced_debug_click_handler.gd:20 - Parse Error: Could not find type "Debuggable" in the current scope.
+  ERROR: res://scripts/archive/enhanced_debug_click_handler.gd:21 - Parse Error: Could not find type "Debuggable" in the current scope.
+  ERROR: res://scripts/archive/enhanced_debug_click_handler.gd:145 - Parse Error: Could not find type "Debuggable" in the current scope.
+  ERROR: res://scripts/archive/enhanced_debug_click_handler.gd:215 - Parse Error: Could not find type "Debuggable" in the current scope.
+  ERROR: res://scripts/archive/enhanced_debug_click_handler.gd:230 - Parse Error: Could not find type "Debuggable" in the current scope.
+  ERROR: res://scripts/archive/enhanced_debug_click_handler.gd:42 - Parse Error: Could not resolve class "UnifiedDebugInterface", because of a parser error.
+  ERROR: res://scripts/archive/enhanced_debug_click_handler.gd:218 - Parse Error: Could not find type "Debuggable" in the current scope.
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://scripts/archive/enhanced_debug_click_handler.gd" with error "Parse error".
+  ERROR: res://scripts/archive/enhanced_game_world.gd:93 - Parse Error: Preload file "res://scenes/universal_being_template.tscn" does not exist.
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://scripts/archive/enhanced_game_world.gd" with error "Parse error".
+  ERROR: res://scripts/archive/GemmaUniverseInjector_enhancements.gd:117 - Parse Error: Function "create_tween()" not found in base self.
+  ERROR: res://scripts/archive/GemmaUniverseInjector_enhancements.gd:123 - Parse Error: Function "create_tween()" not found in base self.
+  ERROR: res://scripts/archive/GemmaUniverseInjector_enhancements.gd:173 - Parse Error: Function "create_tween()" not found in base self.
+  ERROR: res://scripts/archive/GemmaUniverseInjector_enhancements.gd:292 - Parse Error: Identifier "gemma_console" not declared in the current scope.
+  ERROR: res://scripts/archive/GemmaUniverseInjector_enhancements.gd:293 - Parse Error: Identifier "gemma_console" not declared in the current scope.
+  ERROR: res://scripts/archive/GemmaUniverseInjector_enhancements.gd:296 - Parse Error: Identifier "gemma_logger" not declared in the current scope.
+  ERROR: res://scripts/archive/GemmaUniverseInjector_enhancements.gd:297 - Parse Error: Identifier "gemma_logger" not declared in the current scope.
+  ERROR: res://scripts/archive/GemmaUniverseInjector_enhancements.gd:365 - Parse Error: Function "get_tree()" not found in base self.
+  ERROR: res://scripts/archive/GemmaUniverseInjector_enhancements.gd:394 - Parse Error: Identifier "gemma_preference_learning" not declared in the current scope.
+  ERROR: res://scripts/archive/GemmaUniverseInjector_enhancements.gd:401 - Parse Error: Identifier "gemma_preferences" not declared in the current scope.
+  ERROR: res://scripts/archive/GemmaUniverseInjector_enhancements.gd:401 - Parse Error: Identifier "gemma_preferences" not declared in the current scope.
+  ERROR: res://scripts/archive/GemmaUniverseInjector_enhancements.gd:402 - Parse Error: Identifier "gemma_preferences" not declared in the current scope.
+  ERROR: res://scripts/archive/GemmaUniverseInjector_enhancements.gd:402 - Parse Error: Identifier "gemma_preferences" not declared in the current scope.
+  ERROR: res://scripts/archive/GemmaUniverseInjector_enhancements.gd:406 - Parse Error: Identifier "gemma_preferences" not declared in the current scope.
+  ERROR: res://scripts/archive/GemmaUniverseInjector_enhancements.gd:406 - Parse Error: Identifier "gemma_preferences" not declared in the current scope.
+  ERROR: res://scripts/archive/GemmaUniverseInjector_enhancements.gd:407 - Parse Error: Identifier "gemma_preferences" not declared in the current scope.
+  ERROR: res://scripts/archive/GemmaUniverseInjector_enhancements.gd:407 - Parse Error: Identifier "gemma_preferences" not declared in the current scope.
+  ERROR: res://scripts/archive/GemmaUniverseInjector_enhancements.gd:411 - Parse Error: Identifier "gemma_preferences" not declared in the current scope.
+  ERROR: res://scripts/archive/GemmaUniverseInjector_enhancements.gd:411 - Parse Error: Identifier "gemma_preferences" not declared in the current scope.
+  ERROR: res://scripts/archive/GemmaUniverseInjector_enhancements.gd:412 - Parse Error: Identifier "gemma_preferences" not declared in the current scope.
+  ERROR: res://scripts/archive/GemmaUniverseInjector_enhancements.gd:421 - Parse Error: Identifier "gemma_preferences" not declared in the current scope.
+  ERROR: res://scripts/archive/GemmaUniverseInjector_enhancements.gd:439 - Parse Error: Identifier "gemma_preferences" not declared in the current scope.
+  ERROR: res://scripts/archive/GemmaUniverseInjector_enhancements.gd:440 - Parse Error: Identifier "UniverseType" not declared in the current scope.
+  ERROR: res://scripts/archive/GemmaUniverseInjector_enhancements.gd:441 - Parse Error: Identifier "gemma_preferences" not declared in the current scope.
+  ERROR: res://scripts/archive/GemmaUniverseInjector_enhancements.gd:442 - Parse Error: Identifier "UniverseType" not declared in the current scope.
+  ERROR: res://scripts/archive/GemmaUniverseInjector_enhancements.gd:444 - Parse Error: Identifier "UniverseType" not declared in the current scope.
+  ERROR: res://scripts/archive/GemmaUniverseInjector_enhancements.gd:453 - Parse Error: Identifier "gemma_preferences" not declared in the current scope.
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://scripts/archive/GemmaUniverseInjector_enhancements.gd" with error "Parse error".
+  ERROR: res://core/UniversalBeingDNA.gd:14 - Parse Error: The member "being_uuid" already exists in parent class UniversalBeing.
+  ERROR: res://core/UniversalBeingDNA.gd:15 - Parse Error: The member "being_name" already exists in parent class UniversalBeing.
+  ERROR: res://core/UniversalBeingDNA.gd:16 - Parse Error: The member "being_type" already exists in parent class UniversalBeing.
+  ERROR: res://core/UniversalBeingDNA.gd:17 - Parse Error: The member "consciousness_level" already exists in parent class UniversalBeing.
+  ERROR: res://core/UniversalBeingDNA.gd:28 - Parse Error: The member "scene_path" already exists in parent class UniversalBeing.
+  ERROR: res://core/UniversalBeingDNA.gd:32 - Parse Error: The member "visual_layer" already exists in parent class UniversalBeing.
+  ERROR: res://core/UniversalBeingDNA.gd:653 - Parse Error: Invalid argument for "save()" function: argument 1 should be "Resource" but is "UniversalBeingDNA".
+  ERROR: res://core/UniversalBeingDNA.gd:664 - Parse Error: Invalid cast. Cannot convert from "Resource" to "UniversalBeingDNA".
+  ERROR: res://scripts/universe_console_integration.gd:12 - Parse Error: Could not find type "UniverseNavigator" in the current scope.
+  ERROR: res://scripts/universe_console_integration.gd:33 - Parse Error: Value of type "res://EMERGENCY_BACKUP/scripts/UniverseConsoleComponent.gd" cannot be assigned to a variable of type "UniverseConsoleComponent".
+  ERROR: res://scripts/universe_console_integration.gd:48 - Parse Error: Preload file "res://ui/UniverseNavigator.gd" does not exist.
+  ERROR: res://scripts/archive/main_OLD_COMPLEX.gd:0 - Compile Error: Failed to compile depended scripts.
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://scripts/archive/main_OLD_COMPLEX.gd" with error "Parse error".
+  ERROR: res://scripts/archive/simple_player_test.gd:116 - Parse Error: Too few arguments for "rstrip()" call. Expected at least 1 but received 0.
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://scripts/archive/simple_player_test.gd" with error "Parse error".
+  ERROR: res://scripts/bridges/remote_godot_bridge.gd:378 - Parse Error: Static function "exit()" not found in base "GDScriptNativeClass".
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://scripts/bridges/remote_godot_bridge.gd" with error "Parse error".
+  ERROR: res://scripts/tools/asset_checker.gd:121 - Parse Error: Cannot find member "filter" in base "PackedStringArray".
+  ERROR: res://scripts/tools/asset_checker.gd:121 - Parse Error: Function "filter()" not found in base PackedStringArray.
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://scripts/tools/asset_checker.gd" with error "Parse error".
+  ERROR: res://scripts/ui/camera_consciousness_overlay/consciousness_meter.gd:55 - Parse Error: Invalid operands "float" and "float" for "%" operator.
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://scripts/ui/camera_consciousness_overlay/consciousness_meter.gd" with error "Parse error".
+  ERROR: res://scripts/add_butterfly_command.gd:59 - Parse Error: Unexpected identifier "terminal_output" in class body.
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://scripts/add_butterfly_command.gd" with error "Parse error".
+  ERROR: res://scripts/akashic_additions.gd:15 - Parse Error: Identifier "session_interactions" not declared in the current scope.
+  ERROR: res://scripts/akashic_additions.gd:32 - Parse Error: Identifier "session_interactions" not declared in the current scope.
+  ERROR: res://scripts/akashic_additions.gd:45 - Parse Error: Identifier "session_beings" not declared in the current scope.
+  ERROR: res://scripts/akashic_additions.gd:46 - Parse Error: Identifier "session_interactions" not declared in the current scope.
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://scripts/akashic_additions.gd" with error "Parse error".
+  ERROR: res://scripts/luminus_chunk_universal_being.gd:62 - Parse Error: Invalid cast. Cannot convert from "LuminusChunkUniversalBeing" to "ChunkUniversalBeing".
+  ERROR: res://scripts/akashic_spatial_db.gd:0 - Compile Error: Failed to compile depended scripts.
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://scripts/akashic_spatial_db.gd" with error "Parse error".
+  ERROR: res://scripts/BeingDNAComponent.gd:110 - Parse Error: Expression is of type "UniversalBeing" so it can't be of type "Node2D".
+  ERROR: res://scripts/BeingDNAComponent.gd:111 - Parse Error: Value of type "Vector3" cannot be assigned to a variable of type "Vector2".
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://scripts/BeingDNAComponent.gd" with error "Parse error".
+  ERROR: res://scripts/chunk_generator.gd:64 - Parse Error: Static function "_world_to_chunk_coords()" not found in base "ChunkGridManager".
+  ERROR: res://scripts/chunk_generator.gd:65 - Parse Error: Static function "_stream_around()" not found in base "ChunkGridManager".
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://scripts/chunk_generator.gd" with error "Parse error".
+  ERROR: res://scripts/GemmaMacroMaster.gd:349 - Parse Error: Unexpected identifier "print" in class body.
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://scripts/GemmaMacroMaster.gd" with error "Parse error".
+  ERROR: res://scripts/GemmaConsoleInterface.gd:54 - Parse Error: The member "scene_is_loaded" already exists in parent class UniversalBeing.
+  ERROR: res://scripts/GemmaSensorySystem.gd:0 - Compile Error: Failed to compile depended scripts.
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://scripts/GemmaSensorySystem.gd" with error "Parse error".
+  ERROR: res://scripts/input_focus_manager.gd:306 - Parse Error: Not all code paths return a value.
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://scripts/input_focus_manager.gd" with error "Parse error".
+  ERROR: res://scripts/IntuitiveInteractionSystem.gd:529 - Parse Error: Unexpected identifier "print" in class body.
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://scripts/IntuitiveInteractionSystem.gd" with error "Parse error".
+  ERROR: res://scripts/LocalAICollaboration.gd:502 - Parse Error: Unexpected identifier "print" in class body.
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://scripts/LocalAICollaboration.gd" with error "Parse error".
+  ERROR: res://scripts/main_script.gd:117 - Parse Error: Cannot find member "EMISSION_SPHERE" in base "ParticleProcessMaterial".
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://scripts/main_script.gd" with error "Parse error".
+  ERROR: res://scripts/perfect_universal_console.gd:246 - Parse Error: Preload file "res://interfaces/universe_rules_editor_interface.gd" does not exist.
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://scripts/perfect_universal_console.gd" with error "Parse error".
+  ERROR: res://scripts/performance_optimizer.gd:51 - Parse Error: Cannot find member "CAMERA_CULL_MASK_DEFAULT" in base "RenderingServer".
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://scripts/performance_optimizer.gd" with error "Parse error".
+  ERROR: res://scripts/QuantumFloodGates.gd:50 - Parse Error: Cannot call the parent class' virtual function "_ready()" because it hasn't been defined.
+  ERROR: res://scripts/QuantumFloodGates.gd:57 - Parse Error: Cannot assign a new value to a constant.
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://scripts/QuantumFloodGates.gd" with error "Parse error".
+  ERROR: res://scripts/SelfRepairSystem.gd:429 - Parse Error: Unexpected identifier "print" in class body.
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://scripts/SelfRepairSystem.gd" with error "Parse error".
+  ERROR: res://scripts/text_representation_system.gd:86 - Parse Error: Too many arguments for "get()" call. Expected at most 1 but received 2.
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://scripts/text_representation_system.gd" with error "Parse error".
+  ERROR: res://scripts/turn_based_creation_system.gd:18 - Parse Error: Could not find type "ScenarioManager" in the current scope.
+  ERROR: res://scripts/turn_based_creation_system.gd:112 - Parse Error: Identifier "ScenarioManager" not declared in the current scope.
+  ERROR: res://scripts/turn_based_creation_system.gd:547 - Parse Error: Could not resolve class "UniversalTimersSystem", because of a parser error.
+  ERROR: res://scripts/turn_based_creation_system.gd:580 - Parse Error: Could not resolve class "UniversalTimersSystem", because of a parser error.
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://scripts/turn_based_creation_system.gd" with error "Parse error".
+  ERROR: res://scripts/unified_chunk_system.gd:345 - Parse Error: Cannot get return value of call to "_load_chunk()" because it returns "void".
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://scripts/unified_chunk_system.gd" with error "Parse error".
+  ERROR: res://core/UniversalBeingSocket.gd:36 - Parse Error: The member "component_data" already exists in parent class UniversalBeing.
+  ERROR: res://core/UniversalBeingSocket.gd:81 - Parse Error: The function signature doesn't match the parent. Parent signature is "mount_component(String, Resource, bool = <default>) -> bool".
+  ERROR: res://core/UniversalBeingSocket.gd:113 - Parse Error: The function signature doesn't match the parent. Parent signature is "unmount_component(String) -> bool".
+  ERROR: res://core/UniversalBeingSocketManager.gd:69 - Parse Error: The function signature doesn't match the parent. Parent signature is "add_socket(String, String, String) -> void".
+  ERROR: res://scripts/UniversalBeingInspector.gd:0 - Compile Error: Failed to compile depended scripts.
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://scripts/UniversalBeingInspector.gd" with error "Parse error".
+  ERROR: res://scripts/macro_system.gd:381 - Parse Error: Not all code paths return a value.
+  ERROR: res://scripts/UniversalConsole.gd:0 - Compile Error: Failed to compile depended scripts.
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://scripts/UniversalConsole.gd" with error "Parse error".
+  ERROR: res://scripts/universal_script_inspector.gd:525 - Parse Error: Expected end of statement after expression, found ":" instead.
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://scripts/universal_script_inspector.gd" with error "Parse error".
+  ERROR: res://scripts/UniverseGenesisComponent.gd:451 - Parse Error: Closing "}" doesn't have an opening counterpart.
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://scripts/UniverseGenesisComponent.gd" with error "Parse error".
+  ERROR: res://scripts/visual_enhancement_system.gd:93 - Parse Error: Cannot find member "TONE_MAPPER_REINHARD" in base "Environment".
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://scripts/visual_enhancement_system.gd" with error "Parse error".
+  ERROR: res://scripts_backup/ui/camera_consciousness_overlay/consciousness_meter.gd:55 - Parse Error: Invalid operands "float" and "float" for "%" operator.
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://scripts_backup/ui/camera_consciousness_overlay/consciousness_meter.gd" with error "Parse error".
+  ERROR: res://scripts_backup/add_butterfly_command.gd:59 - Parse Error: Unexpected identifier "terminal_output" in class body.
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://scripts_backup/add_butterfly_command.gd" with error "Parse error".
+  ERROR: res://scripts_backup/akashic_additions.gd:15 - Parse Error: Identifier "session_interactions" not declared in the current scope.
+  ERROR: res://scripts_backup/akashic_additions.gd:32 - Parse Error: Identifier "session_interactions" not declared in the current scope.
+  ERROR: res://scripts_backup/akashic_additions.gd:45 - Parse Error: Identifier "session_beings" not declared in the current scope.
+  ERROR: res://scripts_backup/akashic_additions.gd:46 - Parse Error: Identifier "session_interactions" not declared in the current scope.
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://scripts_backup/akashic_additions.gd" with error "Parse error".
+  ERROR: res://scripts/luminus_chunk_universal_being.gd:62 - Parse Error: Invalid cast. Cannot convert from "LuminusChunkUniversalBeing" to "ChunkUniversalBeing".
+  ERROR: res://scripts_backup/akashic_spatial_db.gd:0 - Compile Error: Failed to compile depended scripts.
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://scripts_backup/akashic_spatial_db.gd" with error "Parse error".
+  ERROR: res://scripts_backup/asset_checker.gd:121 - Parse Error: Cannot find member "filter" in base "PackedStringArray".
+  ERROR: res://scripts_backup/asset_checker.gd:121 - Parse Error: Function "filter()" not found in base PackedStringArray.
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://scripts_backup/asset_checker.gd" with error "Parse error".
+  ERROR: res://scripts_backup/BeingDNAComponent.gd:110 - Parse Error: Expression is of type "UniversalBeing" so it can't be of type "Node2D".
+  ERROR: res://scripts_backup/BeingDNAComponent.gd:111 - Parse Error: Value of type "Vector3" cannot be assigned to a variable of type "Vector2".
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://scripts_backup/BeingDNAComponent.gd" with error "Parse error".
+  ERROR: res://scripts_backup/chunk_generator.gd:64 - Parse Error: Static function "_world_to_chunk_coords()" not found in base "ChunkGridManager".
+  ERROR: res://scripts_backup/chunk_generator.gd:65 - Parse Error: Static function "_stream_around()" not found in base "ChunkGridManager".
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://scripts_backup/chunk_generator.gd" with error "Parse error".
+  ERROR: res://scripts_backup/chunk_universal_being.gd:400 - Parse Error: Invalid argument for "generate_terrain()" function: argument 1 should be "ChunkUniversalBeing" but is "res://scripts_backup/chunk_universal_being.gd".
+  ERROR: res://scripts_backup/chunk_universal_being.gd:402 - Parse Error: Invalid argument for "generate_stars()" function: argument 1 should be "ChunkUniversalBeing" but is "res://scripts_backup/chunk_universal_being.gd".
+  ERROR: res://scripts_backup/chunk_universal_being.gd:412 - Parse Error: Invalid argument for "generate_detailed_content()" function: argument 1 should be "ChunkUniversalBeing" but is "res://scripts_backup/chunk_universal_being.gd".
+  ERROR: res://scripts_backup/chunk_universal_being.gd:422 - Parse Error: Invalid argument for "generate_beings()" function: argument 1 should be "ChunkUniversalBeing" but is "res://scripts_backup/chunk_universal_being.gd".
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://scripts_backup/chunk_universal_being.gd" with error "Parse error".
+  ERROR: res://scripts_backup/ConsciousnessFeedbackSystem.gd:355 - Parse Error: Unexpected identifier "print" in class body.
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://scripts_backup/ConsciousnessFeedbackSystem.gd" with error "Parse error".
+  ERROR: res://scripts_backup/consciousness_exchange_system.gd:309 - Parse Error: Function "interpret_perception_consciousness()" not found in base self.
+  ERROR: res://scripts_backup/consciousness_exchange_system.gd:311 - Parse Error: Function "interpret_communication_consciousness()" not found in base self.
+  ERROR: res://scripts_backup/consciousness_exchange_system.gd:313 - Parse Error: Function "interpret_evolution_consciousness()" not found in base self.
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://scripts_backup/consciousness_exchange_system.gd" with error "Parse error".
+  ERROR: res://systems/consciousness_tooltip_system.gd:203 - Parse Error: Member "pentagon_is_ready" is not a function.
+  ERROR: res://scripts_backup/consciousness_tooltip_system.gd:0 - Compile Error: Failed to compile depended scripts.
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://scripts_backup/consciousness_tooltip_system.gd" with error "Parse error".
+  ERROR: res://core/UniversalBeingSocket.gd:36 - Parse Error: The member "component_data" already exists in parent class UniversalBeing.
+  ERROR: res://core/UniversalBeingSocket.gd:81 - Parse Error: The function signature doesn't match the parent. Parent signature is "mount_component(String, Resource, bool = <default>) -> bool".
+  ERROR: res://core/UniversalBeingSocket.gd:113 - Parse Error: The function signature doesn't match the parent. Parent signature is "unmount_component(String) -> bool".
+  ERROR: res://core/UniversalBeingSocketManager.gd:69 - Parse Error: The function signature doesn't match the parent. Parent signature is "add_socket(String, String, String) -> void".
+  ERROR: res://scripts_backup/conversational_console_being.gd:0 - Compile Error: Failed to compile depended scripts.
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://scripts_backup/conversational_console_being.gd" with error "Parse error".
+  ERROR: res://scripts_backup/debug_click_handler.gd:14 - Parse Error: Could not parse global class "UniversalScriptInspector" from "res://scripts/universal_script_inspector.gd".
+  ERROR: res://scripts_backup/debug_click_handler.gd:49 - Parse Error: Could not resolve class "UniversalScriptInspector", because of a parser error.
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://scripts_backup/debug_click_handler.gd" with error "Parse error".
+  ERROR: res://scripts_backup/debug_integration_example.gd:9 - Parse Error: Could not parse global class "UniversalScriptInspector" from "res://scripts/universal_script_inspector.gd".
+  ERROR: res://scripts_backup/debug_integration_example.gd:65 - Parse Error: Invalid operands to operator *, String and int.
+  ERROR: res://scripts_backup/debug_integration_example.gd:67 - Parse Error: Invalid operands to operator *, String and int.
+  ERROR: res://scripts_backup/debug_integration_example.gd:109 - Parse Error: Invalid operands to operator *, String and int.
+  ERROR: res://scripts_backup/debug_integration_example.gd:144 - Parse Error: Function "on_systems_ready()" not found in base self.
+  ERROR: res://scripts_backup/debug_integration_example.gd:146 - Parse Error: Identifier "on_systems_ready" not declared in the current scope.
+  ERROR: res://scripts_backup/debug_integration_example.gd:155 - Parse Error: Function "toggle_console()" not found in base self.
+  ERROR: res://scripts_backup/debug_integration_example.gd:165 - Parse Error: Identifier "demo_beings" not declared in the current scope.
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://scripts_backup/debug_integration_example.gd" with error "Parse error".
+  ERROR: res://scripts_backup/enhanced_debug_click_handler.gd:13 - Parse Error: Could not parse global class "UnifiedDebugInterface" from "res://tests/unified_debug_interface.gd".
+  ERROR: res://scripts_backup/enhanced_debug_click_handler.gd:20 - Parse Error: Could not find type "Debuggable" in the current scope.
+  ERROR: res://scripts_backup/enhanced_debug_click_handler.gd:21 - Parse Error: Could not find type "Debuggable" in the current scope.
+  ERROR: res://scripts_backup/enhanced_debug_click_handler.gd:145 - Parse Error: Could not find type "Debuggable" in the current scope.
+  ERROR: res://scripts_backup/enhanced_debug_click_handler.gd:215 - Parse Error: Could not find type "Debuggable" in the current scope.
+  ERROR: res://scripts_backup/enhanced_debug_click_handler.gd:230 - Parse Error: Could not find type "Debuggable" in the current scope.
+  ERROR: res://scripts_backup/enhanced_debug_click_handler.gd:42 - Parse Error: Could not resolve class "UnifiedDebugInterface", because of a parser error.
+  ERROR: res://scripts_backup/enhanced_debug_click_handler.gd:218 - Parse Error: Could not find type "Debuggable" in the current scope.
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://scripts_backup/enhanced_debug_click_handler.gd" with error "Parse error".
+  ERROR: res://scripts_backup/enhanced_game_world.gd:93 - Parse Error: Preload file "res://scenes/universal_being_template.tscn" does not exist.
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://scripts_backup/enhanced_game_world.gd" with error "Parse error".
+  ERROR: res://scripts_backup/FoundationPolishSystem.gd:497 - Parse Error: Unexpected identifier "print" in class body.
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://scripts_backup/FoundationPolishSystem.gd" with error "Parse error".
+  ERROR: res://scripts_backup/GemmaConsoleInterface.gd:54 - Parse Error: The member "scene_is_loaded" already exists in parent class UniversalBeing.
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://scripts_backup/GemmaConsoleInterface.gd" with error "Parse error".
+  ERROR: res://scripts_backup/GemmaMacroMaster.gd:349 - Parse Error: Unexpected identifier "print" in class body.
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://scripts_backup/GemmaMacroMaster.gd" with error "Parse error".
+  ERROR: res://scripts/GemmaConsoleInterface.gd:54 - Parse Error: The member "scene_is_loaded" already exists in parent class UniversalBeing.
+  ERROR: res://scripts_backup/GemmaSensorySystem.gd:0 - Compile Error: Failed to compile depended scripts.
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://scripts_backup/GemmaSensorySystem.gd" with error "Parse error".
+  ERROR: res://scripts/GemmaConsoleInterface.gd:54 - Parse Error: The member "scene_is_loaded" already exists in parent class UniversalBeing.
+  ERROR: res://scripts_backup/GemmaUniverseInjector.gd:0 - Compile Error: Failed to compile depended scripts.
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://scripts_backup/GemmaUniverseInjector.gd" with error "Parse error".
+  ERROR: res://scripts_backup/GemmaUniverseInjector_enhancements.gd:117 - Parse Error: Function "create_tween()" not found in base self.
+  ERROR: res://scripts_backup/GemmaUniverseInjector_enhancements.gd:123 - Parse Error: Function "create_tween()" not found in base self.
+  ERROR: res://scripts_backup/GemmaUniverseInjector_enhancements.gd:173 - Parse Error: Function "create_tween()" not found in base self.
+  ERROR: res://scripts_backup/GemmaUniverseInjector_enhancements.gd:292 - Parse Error: Identifier "gemma_console" not declared in the current scope.
+  ERROR: res://scripts_backup/GemmaUniverseInjector_enhancements.gd:293 - Parse Error: Identifier "gemma_console" not declared in the current scope.
+  ERROR: res://scripts_backup/GemmaUniverseInjector_enhancements.gd:296 - Parse Error: Identifier "gemma_logger" not declared in the current scope.
+  ERROR: res://scripts_backup/GemmaUniverseInjector_enhancements.gd:297 - Parse Error: Identifier "gemma_logger" not declared in the current scope.
+  ERROR: res://scripts_backup/GemmaUniverseInjector_enhancements.gd:365 - Parse Error: Function "get_tree()" not found in base self.
+  ERROR: res://scripts_backup/GemmaUniverseInjector_enhancements.gd:394 - Parse Error: Identifier "gemma_preference_learning" not declared in the current scope.
+  ERROR: res://scripts_backup/GemmaUniverseInjector_enhancements.gd:401 - Parse Error: Identifier "gemma_preferences" not declared in the current scope.
+  ERROR: res://scripts_backup/GemmaUniverseInjector_enhancements.gd:401 - Parse Error: Identifier "gemma_preferences" not declared in the current scope.
+  ERROR: res://scripts_backup/GemmaUniverseInjector_enhancements.gd:402 - Parse Error: Identifier "gemma_preferences" not declared in the current scope.
+  ERROR: res://scripts_backup/GemmaUniverseInjector_enhancements.gd:402 - Parse Error: Identifier "gemma_preferences" not declared in the current scope.
+  ERROR: res://scripts_backup/GemmaUniverseInjector_enhancements.gd:406 - Parse Error: Identifier "gemma_preferences" not declared in the current scope.
+  ERROR: res://scripts_backup/GemmaUniverseInjector_enhancements.gd:406 - Parse Error: Identifier "gemma_preferences" not declared in the current scope.
+  ERROR: res://scripts_backup/GemmaUniverseInjector_enhancements.gd:407 - Parse Error: Identifier "gemma_preferences" not declared in the current scope.
+  ERROR: res://scripts_backup/GemmaUniverseInjector_enhancements.gd:407 - Parse Error: Identifier "gemma_preferences" not declared in the current scope.
+  ERROR: res://scripts_backup/GemmaUniverseInjector_enhancements.gd:411 - Parse Error: Identifier "gemma_preferences" not declared in the current scope.
+  ERROR: res://scripts_backup/GemmaUniverseInjector_enhancements.gd:411 - Parse Error: Identifier "gemma_preferences" not declared in the current scope.
+  ERROR: res://scripts_backup/GemmaUniverseInjector_enhancements.gd:412 - Parse Error: Identifier "gemma_preferences" not declared in the current scope.
+  ERROR: res://scripts_backup/GemmaUniverseInjector_enhancements.gd:421 - Parse Error: Identifier "gemma_preferences" not declared in the current scope.
+  ERROR: res://scripts_backup/GemmaUniverseInjector_enhancements.gd:439 - Parse Error: Identifier "gemma_preferences" not declared in the current scope.
+  ERROR: res://scripts_backup/GemmaUniverseInjector_enhancements.gd:440 - Parse Error: Identifier "UniverseType" not declared in the current scope.
+  ERROR: res://scripts_backup/GemmaUniverseInjector_enhancements.gd:441 - Parse Error: Identifier "gemma_preferences" not declared in the current scope.
+  ERROR: res://scripts_backup/GemmaUniverseInjector_enhancements.gd:442 - Parse Error: Identifier "UniverseType" not declared in the current scope.
+  ERROR: res://scripts_backup/GemmaUniverseInjector_enhancements.gd:444 - Parse Error: Identifier "UniverseType" not declared in the current scope.
+  ERROR: res://scripts_backup/GemmaUniverseInjector_enhancements.gd:453 - Parse Error: Identifier "gemma_preferences" not declared in the current scope.
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://scripts_backup/GemmaUniverseInjector_enhancements.gd" with error "Parse error".
+  ERROR: res://scripts_backup/input_focus_manager.gd:306 - Parse Error: Not all code paths return a value.
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://scripts_backup/input_focus_manager.gd" with error "Parse error".
+  ERROR: res://scripts_backup/IntuitiveInteractionSystem.gd:529 - Parse Error: Unexpected identifier "print" in class body.
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://scripts_backup/IntuitiveInteractionSystem.gd" with error "Parse error".
+  ERROR: res://scripts_backup/LocalAICollaboration.gd:502 - Parse Error: Unexpected identifier "print" in class body.
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://scripts_backup/LocalAICollaboration.gd" with error "Parse error".
+  ERROR: res://scripts/luminus_chunk_universal_being.gd:62 - Parse Error: Invalid cast. Cannot convert from "LuminusChunkUniversalBeing" to "ChunkUniversalBeing".
+  ERROR: res://scripts_backup/luminus_chunk_grid_manager.gd:0 - Compile Error: Failed to compile depended scripts.
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://scripts_backup/luminus_chunk_grid_manager.gd" with error "Parse error".
+  ERROR: res://scripts_backup/luminus_chunk_universal_being.gd:43 - Parse Error: Invalid argument for "save_chunk()" function: argument 1 should be "LuminusChunkUniversalBeing" but is "res://scripts_backup/luminus_chunk_universal_being.gd".
+  ERROR: res://scripts_backup/luminus_chunk_universal_being.gd:58 - Parse Error: Invalid argument for "load_chunk_into()" function: argument 1 should be "LuminusChunkUniversalBeing" but is "res://scripts_backup/luminus_chunk_universal_being.gd".
+  ERROR: res://scripts_backup/luminus_chunk_universal_being.gd:62 - Parse Error: Invalid cast. Cannot convert from "res://scripts_backup/luminus_chunk_universal_being.gd" to "ChunkUniversalBeing".
+  ERROR: res://scripts_backup/luminus_chunk_universal_being.gd:63 - Parse Error: Invalid argument for "save_chunk()" function: argument 1 should be "LuminusChunkUniversalBeing" but is "res://scripts_backup/luminus_chunk_universal_being.gd".
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://scripts_backup/luminus_chunk_universal_being.gd" with error "Parse error".
+  ERROR: res://scripts_backup/macro_system.gd:381 - Parse Error: Not all code paths return a value.
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://scripts_backup/macro_system.gd" with error "Parse error".
+  ERROR: res://core/UniversalBeingDNA.gd:14 - Parse Error: The member "being_uuid" already exists in parent class UniversalBeing.
+  ERROR: res://core/UniversalBeingDNA.gd:15 - Parse Error: The member "being_name" already exists in parent class UniversalBeing.
+  ERROR: res://core/UniversalBeingDNA.gd:16 - Parse Error: The member "being_type" already exists in parent class UniversalBeing.
+  ERROR: res://core/UniversalBeingDNA.gd:17 - Parse Error: The member "consciousness_level" already exists in parent class UniversalBeing.
+  ERROR: res://core/UniversalBeingDNA.gd:28 - Parse Error: The member "scene_path" already exists in parent class UniversalBeing.
+  ERROR: res://core/UniversalBeingDNA.gd:32 - Parse Error: The member "visual_layer" already exists in parent class UniversalBeing.
+  ERROR: res://core/UniversalBeingDNA.gd:653 - Parse Error: Invalid argument for "save()" function: argument 1 should be "Resource" but is "UniversalBeingDNA".
+  ERROR: res://core/UniversalBeingDNA.gd:664 - Parse Error: Invalid cast. Cannot convert from "Resource" to "UniversalBeingDNA".
+  ERROR: res://scripts/universe_console_integration.gd:12 - Parse Error: Could not find type "UniverseNavigator" in the current scope.
+  ERROR: res://scripts/universe_console_integration.gd:33 - Parse Error: Value of type "res://EMERGENCY_BACKUP/scripts/UniverseConsoleComponent.gd" cannot be assigned to a variable of type "UniverseConsoleComponent".
+  ERROR: res://scripts/universe_console_integration.gd:48 - Parse Error: Preload file "res://ui/UniverseNavigator.gd" does not exist.
+  ERROR: res://scripts_backup/main_OLD_COMPLEX.gd:0 - Compile Error: Failed to compile depended scripts.
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://scripts_backup/main_OLD_COMPLEX.gd" with error "Parse error".
+  ERROR: res://scripts_backup/main_script.gd:117 - Parse Error: Cannot find member "EMISSION_SPHERE" in base "ParticleProcessMaterial".
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://scripts_backup/main_script.gd" with error "Parse error".
+  ERROR: res://scripts_backup/perfect_universal_console.gd:246 - Parse Error: Preload file "res://interfaces/universe_rules_editor_interface.gd" does not exist.
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://scripts_backup/perfect_universal_console.gd" with error "Parse error".
+  ERROR: res://scripts_backup/performance_optimizer.gd:51 - Parse Error: Cannot find member "CAMERA_CULL_MASK_DEFAULT" in base "RenderingServer".
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://scripts_backup/performance_optimizer.gd" with error "Parse error".
+  ERROR: res://scripts_backup/QuantumFloodGates.gd:50 - Parse Error: Cannot call the parent class' virtual function "_ready()" because it hasn't been defined.
+  ERROR: res://scripts_backup/QuantumFloodGates.gd:57 - Parse Error: Cannot assign a new value to a constant.
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://scripts_backup/QuantumFloodGates.gd" with error "Parse error".
+  ERROR: res://scripts_backup/remote_godot_bridge.gd:378 - Parse Error: Static function "exit()" not found in base "GDScriptNativeClass".
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://scripts_backup/remote_godot_bridge.gd" with error "Parse error".
+  ERROR: res://EMERGENCY_BACKUP/scripts/tools/asset_checker.gd:121 - Parse Error: Cannot find member "filter" in base "PackedStringArray".
+  ERROR: res://EMERGENCY_BACKUP/scripts/tools/asset_checker.gd:121 - Parse Error: Function "filter()" not found in base PackedStringArray.
+  ERROR: res://scripts_backup/run_asset_validation.gd:0 - Compile Error: Failed to compile depended scripts.
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://scripts_backup/run_asset_validation.gd" with error "Parse error".
+  ERROR: res://scripts_backup/SelfRepairSystem.gd:429 - Parse Error: Unexpected identifier "print" in class body.
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://scripts_backup/SelfRepairSystem.gd" with error "Parse error".
+  ERROR: res://scripts_backup/simple_player_test.gd:116 - Parse Error: Too few arguments for "rstrip()" call. Expected at least 1 but received 0.
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://scripts_backup/simple_player_test.gd" with error "Parse error".
+  ERROR: res://beings/camera/CameraUniversalBeing.gd:230 - Parse Error: Not all code paths return a value.
+  ERROR: res://scripts_backup/test_camera_consciousness.gd:0 - Compile Error: Failed to compile depended scripts.
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://scripts_backup/test_camera_consciousness.gd" with error "Parse error".
+  ERROR: res://beings/camera/CameraUniversalBeing.gd:230 - Parse Error: Not all code paths return a value.
+  ERROR: res://scripts_backup/test_complete_camera_consciousness.gd:0 - Compile Error: Failed to compile depended scripts.
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://scripts_backup/test_complete_camera_consciousness.gd" with error "Parse error".
+  ERROR: res://scripts_backup/test_gemma_universe_injection.gd:296 - Parse Error: Cannot assign a new value to a constant.
+  ERROR: res://scripts_backup/test_gemma_universe_injection.gd:304 - Parse Error: Cannot assign a new value to a constant.
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://scripts_backup/test_gemma_universe_injection.gd" with error "Parse error".
+  ERROR: res://scripts_backup/text_representation_system.gd:86 - Parse Error: Too many arguments for "get()" call. Expected at most 1 but received 2.
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://scripts_backup/text_representation_system.gd" with error "Parse error".
+  ERROR: res://scripts_backup/turn_based_creation_system.gd:18 - Parse Error: Could not find type "ScenarioManager" in the current scope.
+  ERROR: res://scripts_backup/turn_based_creation_system.gd:112 - Parse Error: Identifier "ScenarioManager" not declared in the current scope.
+  ERROR: res://scripts_backup/turn_based_creation_system.gd:547 - Parse Error: Could not resolve class "UniversalTimersSystem", because of a parser error.
+  ERROR: res://scripts_backup/turn_based_creation_system.gd:580 - Parse Error: Could not resolve class "UniversalTimersSystem", because of a parser error.
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://scripts_backup/turn_based_creation_system.gd" with error "Parse error".
+  ERROR: res://scripts_backup/unified_chunk_system.gd:345 - Parse Error: Cannot get return value of call to "_load_chunk()" because it returns "void".
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://scripts_backup/unified_chunk_system.gd" with error "Parse error".
+  ERROR: res://scripts_backup/unified_debug_interface.gd:361 - Parse Error: Expected end of statement after expression, found ":" instead.
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://scripts_backup/unified_debug_interface.gd" with error "Parse error".
+  ERROR: res://core/UniversalBeingSocket.gd:36 - Parse Error: The member "component_data" already exists in parent class UniversalBeing.
+  ERROR: res://core/UniversalBeingSocket.gd:81 - Parse Error: The function signature doesn't match the parent. Parent signature is "mount_component(String, Resource, bool = <default>) -> bool".
+  ERROR: res://core/UniversalBeingSocket.gd:113 - Parse Error: The function signature doesn't match the parent. Parent signature is "unmount_component(String) -> bool".
+  ERROR: res://core/UniversalBeingSocketManager.gd:69 - Parse Error: The function signature doesn't match the parent. Parent signature is "add_socket(String, String, String) -> void".
+  ERROR: res://scripts_backup/UniversalBeingInspector.gd:0 - Compile Error: Failed to compile depended scripts.
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://scripts_backup/UniversalBeingInspector.gd" with error "Parse error".
+  ERROR: res://scripts/macro_system.gd:381 - Parse Error: Not all code paths return a value.
+  ERROR: res://scripts_backup/UniversalConsole.gd:0 - Compile Error: Failed to compile depended scripts.
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://scripts_backup/UniversalConsole.gd" with error "Parse error".
+  ERROR: res://scripts_backup/universal_console_controller.gd:504 - Parse Error: Could not resolve class "UniversalTimersSystem", because of a parser error.
+  ERROR: res://scripts_backup/universal_console_controller.gd:722 - Parse Error: Could not resolve class "UniversalTimersSystem", because of a parser error.
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://scripts_backup/universal_console_controller.gd" with error "Parse error".
+  ERROR: res://scripts_backup/universal_interface_manager.gd:52 - Parse Error: Value of type "res://scripts_backup/universal_interface_manager.gd" cannot be assigned to a variable of type "UniversalInterfaceManager".
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://scripts_backup/universal_interface_manager.gd" with error "Parse error".
+  ERROR: res://scripts_backup/universal_script_inspector.gd:525 - Parse Error: Expected end of statement after expression, found ":" instead.
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://scripts_backup/universal_script_inspector.gd" with error "Parse error".
+  ERROR: res://scripts_backup/UniverseGenesisComponent.gd:451 - Parse Error: Closing "}" doesn't have an opening counterpart.
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://scripts_backup/UniverseGenesisComponent.gd" with error "Parse error".
+  ERROR: res://scripts_backup/universe_console_integration.gd:12 - Parse Error: Could not find type "UniverseNavigator" in the current scope.
+  ERROR: res://scripts_backup/universe_console_integration.gd:33 - Parse Error: Value of type "res://EMERGENCY_BACKUP/scripts/UniverseConsoleComponent.gd" cannot be assigned to a variable of type "UniverseConsoleComponent".
+  ERROR: res://scripts_backup/universe_console_integration.gd:48 - Parse Error: Preload file "res://ui/UniverseNavigator.gd" does not exist.
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://scripts_backup/universe_console_integration.gd" with error "Parse error".
+  ERROR: res://scripts_backup/visual_enhancement_system.gd:93 - Parse Error: Cannot find member "TONE_MAPPER_REINHARD" in base "Environment".
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://scripts_backup/visual_enhancement_system.gd" with error "Parse error".
+  ERROR: res://systems/performance/MemoryOptimizer.gd:124 - Parse Error: Value of type "res://systems/performance/MemoryOptimizer.gd" cannot be assigned to a variable of type "MemoryOptimizer".
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://systems/performance/MemoryOptimizer.gd" with error "Parse error".
+  ERROR: res://systems/storage/akashic_loader.gd:75 - Parse Error: Function "_preload_being_packages()" not found in base self.
+  ERROR: res://systems/storage/akashic_loader.gd:92 - Parse Error: Cannot call non-static function "set_meta()" on the class "ZipPackageManager" directly. Make an instance instead.
+  ERROR: res://systems/storage/akashic_loader.gd:130 - Parse Error: Static function "load_package()" not found in base "ZipPackageManager".
+  ERROR: res://systems/storage/akashic_loader.gd:158 - Parse Error: Static function "load_package()" not found in base "ZipPackageManager".
+  ERROR: res://systems/storage/akashic_loader.gd:182 - Parse Error: Static function "load_package()" not found in base "ZipPackageManager".
+  ERROR: res://systems/storage/akashic_loader.gd:247 - Parse Error: Static function "load_package()" not found in base "ZipPackageManager".
+  ERROR: res://systems/storage/akashic_loader.gd:321 - Parse Error: Cannot assign a new value to a constant.
+  ERROR: res://systems/storage/akashic_loader.gd:323 - Parse Error: Cannot assign a new value to a constant.
+  ERROR: res://systems/storage/akashic_loader.gd:375 - Parse Error: Static function "scan_libraries()" not found in base "ZipPackageManager".
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://systems/storage/akashic_loader.gd" with error "Parse error".
+  ERROR: res://systems/timing/UniversalTimersSystem.gd:424 - Parse Error: Expected end of statement after expression, found ":" instead.
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://systems/timing/UniversalTimersSystem.gd" with error "Parse error".
+  ERROR: res://systems/ConsciousnessAudioManager.gd:191 - Parse Error: Unexpected identifier "print" in class body.
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://systems/ConsciousnessAudioManager.gd" with error "Parse error".
+  ERROR: res://systems/ConsciousnessFeedbackSystem.gd:355 - Parse Error: Unexpected identifier "print" in class body.
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://systems/ConsciousnessFeedbackSystem.gd" with error "Parse error".
+  ERROR: res://systems/ConsciousnessRevolutionIntegrator.gd:248 - Parse Error: Unexpected identifier "print" in class body.
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://systems/ConsciousnessRevolutionIntegrator.gd" with error "Parse error".
+  ERROR: res://systems/ConsciousnessRippleSystem.gd:186 - Parse Error: Too many arguments for "get()" call. Expected at most 1 but received 2.
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://systems/ConsciousnessRippleSystem.gd" with error "Parse error".
+  ERROR: res://systems/consciousness_exchange_system.gd:309 - Parse Error: Function "interpret_perception_consciousness()" not found in base self.
+  ERROR: res://systems/consciousness_exchange_system.gd:311 - Parse Error: Function "interpret_communication_consciousness()" not found in base self.
+  ERROR: res://systems/consciousness_exchange_system.gd:313 - Parse Error: Function "interpret_evolution_consciousness()" not found in base self.
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://systems/consciousness_exchange_system.gd" with error "Parse error".
+  ERROR: res://systems/FoundationPolishSystem.gd:497 - Parse Error: Unexpected identifier "print" in class body.
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://systems/FoundationPolishSystem.gd" with error "Parse error".
+  ERROR: res://tests/consciousness_revolution_validator.gd:400 - Parse Error: Unexpected identifier "print" in class body.
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://tests/consciousness_revolution_validator.gd" with error "Parse error".
+  ERROR: res://tests/debug_click_handler.gd:14 - Parse Error: Could not parse global class "UniversalScriptInspector" from "res://scripts/universal_script_inspector.gd".
+  ERROR: res://tests/debug_click_handler.gd:49 - Parse Error: Could not resolve class "UniversalScriptInspector", because of a parser error.
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://tests/debug_click_handler.gd" with error "Parse error".
+  ERROR: res://tests/debug_integration_example.gd:9 - Parse Error: Could not parse global class "UniversalScriptInspector" from "res://scripts/universal_script_inspector.gd".
+  ERROR: res://tests/debug_integration_example.gd:65 - Parse Error: Invalid operands to operator *, String and int.
+  ERROR: res://tests/debug_integration_example.gd:67 - Parse Error: Invalid operands to operator *, String and int.
+  ERROR: res://tests/debug_integration_example.gd:109 - Parse Error: Invalid operands to operator *, String and int.
+  ERROR: res://tests/debug_integration_example.gd:144 - Parse Error: Function "on_systems_ready()" not found in base self.
+  ERROR: res://tests/debug_integration_example.gd:146 - Parse Error: Identifier "on_systems_ready" not declared in the current scope.
+  ERROR: res://tests/debug_integration_example.gd:155 - Parse Error: Function "toggle_console()" not found in base self.
+  ERROR: res://tests/debug_integration_example.gd:165 - Parse Error: Identifier "demo_beings" not declared in the current scope.
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://tests/debug_integration_example.gd" with error "Parse error".
+  ERROR: res://EMERGENCY_BACKUP/scripts/tools/asset_checker.gd:121 - Parse Error: Cannot find member "filter" in base "PackedStringArray".
+  ERROR: res://EMERGENCY_BACKUP/scripts/tools/asset_checker.gd:121 - Parse Error: Function "filter()" not found in base PackedStringArray.
+  ERROR: res://tests/run_asset_validation.gd:0 - Compile Error: Failed to compile depended scripts.
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://tests/run_asset_validation.gd" with error "Parse error".
+  ERROR: res://beings/camera/CameraUniversalBeing.gd:230 - Parse Error: Not all code paths return a value.
+  ERROR: res://tests/test_camera_consciousness.gd:0 - Compile Error: Failed to compile depended scripts.
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://tests/test_camera_consciousness.gd" with error "Parse error".
+  ERROR: res://beings/camera/CameraUniversalBeing.gd:230 - Parse Error: Not all code paths return a value.
+  ERROR: res://tests/test_complete_camera_consciousness.gd:0 - Compile Error: Failed to compile depended scripts.
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://tests/test_complete_camera_consciousness.gd" with error "Parse error".
+  ERROR: res://tests/test_gemma_universe_injection.gd:296 - Parse Error: Cannot assign a new value to a constant.
+  ERROR: res://tests/test_gemma_universe_injection.gd:304 - Parse Error: Cannot assign a new value to a constant.
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://tests/test_gemma_universe_injection.gd" with error "Parse error".
+  ERROR: res://tests/unified_debug_interface.gd:361 - Parse Error: Expected end of statement after expression, found ":" instead.
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://tests/unified_debug_interface.gd" with error "Parse error".
+  ERROR: res://test_akashic_system.gd:49 - Parse Error: Function "get_root()" not found in base self.
+  ERROR: res://test_akashic_system.gd:53 - Parse Error: Function "quit()" not found in base self.
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://test_akashic_system.gd" with error "Parse error".
+  ERROR: res://test_consciousness_revolution.gd:8 - Parse Error: Invalid operands to operator *, String and int.
+  ERROR: res://test_consciousness_revolution.gd:82 - Parse Error: Function "has_node()" not found in base self.
+  ERROR: res://test_consciousness_revolution.gd:84 - Parse Error: Function "get_node()" not found in base self.
+  ERROR: res://test_consciousness_revolution.gd:94 - Parse Error: Invalid operands to operator *, String and int.
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://test_consciousness_revolution.gd" with error "Parse error".

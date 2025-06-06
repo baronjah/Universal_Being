@@ -68,7 +68,7 @@ func _setup_chunk_system() -> void:
 	"""Setup the 3D chunk system for the garden"""
 	
 	# Create chunk manager
-	var ChunkManagerClass = preload("res://systems/chunks/luminus_chunk_grid_manager.gd")
+	var ChunkManagerClass = preload("res://scripts/luminus_chunk_grid_manager.gd")
 	chunk_manager = ChunkManagerClass.new()
 	chunk_manager.name = "GardenChunkManager"
 	add_child(chunk_manager)

@@ -890,7 +890,7 @@ func connect_to_game_systems() -> void:
 
 func _save_console_state() -> void:
 	"""Save console state for next session"""
-	# Could save to AkashicRecords
+	# Could save to AkashicRecordsSystemSystem
 	pass
 
 func _on_being_created(being: UniversalBeing) -> void:

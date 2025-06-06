@@ -144,7 +144,7 @@ func _ensure_cursor_on_top() -> void:
 	
 	if not cursor_being:
 		# Create cursor if it doesn't exist
-		var CursorClass = load("res://core/CursorUniversalBeing.gd")
+		var CursorClass = load("res://beings/cursor/CursorUniversalBeing.gd")
 		var cursor_node = Node3D.new()
 		cursor_node.set_script(CursorClass)
 		cursor_node.name = "CursorBeing"

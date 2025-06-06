@@ -240,7 +240,7 @@ class UniversalBeingAnalyzer:
         }
         
         json_path = self.root / 'script_analysis.json'
-        with open(json_path, 'w') as f:
+        with open(json_path, 'w', encoding='utf-8') as f:
             json.dump(json_data, f, indent=2)
             
         print(f"📊 JSON data saved to: {json_path}")
@@ -272,6 +272,7 @@ class UniversalBeingAnalyzer:
 
 def main():
     """Run the analysis"""
+    # Get project root from current script location
     project_root = os.path.dirname(os.path.abspath(__file__))
     analyzer = UniversalBeingAnalyzer(project_root)
     analyzer.analyze_project()

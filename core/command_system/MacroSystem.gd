@@ -5,7 +5,7 @@
 # ==================================================
 
 extends Node
-class_name MacroSystem
+#class_name MacroSystem # Commented to avoid duplicate
 
 var command_processor: UniversalCommandProcessor
 var recording: bool = false
@@ -212,8 +212,8 @@ func create_combo_macro(name: String, macro_names: Array[String]) -> bool:
 
 func save_macros() -> void:
 	"""Save all macros to Akashic Records"""
-	if has_node("/root/AkashicRecords"):
-		var akashic = get_node("/root/AkashicRecords")
+	if has_node("/root/AkashicRecordsSystemSystem"):
+		var akashic = get_node("/root/AkashicRecordsSystemSystem")
 		var data = {}
 		for name in stored_macros:
 			data[name] = stored_macros[name].to_dict()
@@ -221,8 +221,8 @@ func save_macros() -> void:
 
 func load_macros() -> void:
 	"""Load macros from Akashic Records"""
-	if has_node("/root/AkashicRecords"):
-		var akashic = get_node("/root/AkashicRecords")
+	if has_node("/root/AkashicRecordsSystemSystem"):
+		var akashic = get_node("/root/AkashicRecordsSystemSystem")
 		var data = akashic.load_record("macros", "system")
 		if data and data is Dictionary:
 			for name in data:

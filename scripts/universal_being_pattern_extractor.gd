@@ -332,7 +332,7 @@ static func generate_universal_being_style_guide() -> String:
 	guide.append("### Classes & Types")
 	guide.append("```gdscript")
 	guide.append("class_name UniversalBeing         # ✅ PascalCase for types")
-	guide.append("class_name AkashicRecords         # ✅ Architectural systems")
+	guide.append("class_name AkashicRecordsSystemSystem         # ✅ Architectural systems")
 	guide.append("class_name PentagonArchitecture   # ✅ Core frameworks")
 	guide.append("class_name SocketMountingSystem   # ✅ Component systems")
 	guide.append("```")

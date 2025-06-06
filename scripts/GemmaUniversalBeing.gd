@@ -58,6 +58,11 @@ func pentagon_init() -> void:
 	being_type = "ai_consciousness"
 	consciousness_level = 7  # Highest consciousness
 	name = "Gemma"
+	
+	# Add to groups for tracking
+	add_to_group("ai_companions")
+	add_to_group("gemma_beings")
+	
 	create_gemma_body()
 	
 func pentagon_ready() -> void:

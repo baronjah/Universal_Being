@@ -6,7 +6,7 @@
 # AUTHOR: Claude Code
 # ==================================================
 
-extends Control
+extends UniversalBeing
 class_name UniversalBeingControl
 
 # Import core Universal Being functionality

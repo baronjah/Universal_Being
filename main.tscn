@@ -1,6 +1,6 @@
 [gd_scene load_steps=8 format=3]
 
-[ext_resource type="Script" path="res://core/CursorUniversalBeing.gd" id="2"]
+[ext_resource type="Script" path="res://beings/cursor/CursorUniversalBeing.gd" id="2"]
 [ext_resource type="PackedScene" uid="uid://cjwph0uxrsnb1" path="res://scenes/main/console_window.tscn" id="3"]
 [ext_resource type="Script" path="res://core/UniversalBeing.gd" id="4"]
 

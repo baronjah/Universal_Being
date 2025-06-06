@@ -49,6 +49,12 @@ func pentagon_ready() -> void:
 	setup_gemma_participant()
 	setup_universe_narrator()
 	
+	# Connect to Universal Timers System
+	connect_to_timer_system()
+	
+	# Add to turn-based group for timer system
+	add_to_group("turn_based_creation")
+	
 	# Start with universe greeting
 	start_creation_session()
 
@@ -150,7 +156,7 @@ class GemmaParticipant:
 	func embody_in_universe(universe: Node) -> void:
 		"""Give Gemma a physical form she can control"""
 		if not embodied_being:
-			embodied_being = preload("res://beings/GemmaUniversalBeing.gd").new()
+			embodied_being = preload("res://scripts/GemmaUniversalBeing.gd").new()
 			embodied_being.pentagon_init()
 			universe.add_child(embodied_being)
 
@@ -533,3 +539,79 @@ func switch_active_participant() -> void:
 	
 	turn_started.emit(active_participant)
 	print("🔄 Turn switched to: %s" % _participant_name(active_participant))
+
+# ===== TIMER INTEGRATION =====
+
+func connect_to_timer_system() -> void:
+	"""Connect to the Universal Timers system for turn timeouts"""
+	var timer_system = UniversalTimersSystem.get_universal_timers()
+	if timer_system:
+		# Activate turn-based timing
+		timer_system.activate_turn_based_system()
+		UBPrint.system("TurnBasedCreationSystem", "connect_to_timer_system", "Connected to Universal Timers System")
+	else:
+		UBPrint.warn("TurnBasedCreationSystem", "connect_to_timer_system", "Universal Timers System not found")
+
+func handle_turn_timeout(participant_name: String) -> void:
+	"""Handle when a turn times out (called by UniversalTimersSystem)"""
+	UBPrint.warn("TurnBasedCreationSystem", "handle_turn_timeout", "Turn timeout for %s!" % participant_name)
+	
+	# Log the timeout in creation session
+	if creation_session and creation_session.has_method("log_turn"):
+		creation_session.log_turn(participant_name, {
+			"action": "timeout",
+			"state": current_turn_state,
+			"auto_advanced": true,
+			"timeout_duration": turn_timeout
+		})
+	
+	# Notify participants about timeout
+	match active_participant:
+		ParticipantType.HUMAN:
+			print_to_console("⏰ Your turn timed out! Switching to AI...", "warning")
+		ParticipantType.GEMMA_AI:
+			print_to_console("⏰ AI turn timed out! Switching to human...", "warning")
+	
+	# Force advance to next participant
+	force_advance_turn()
+
+func start_turn_timer() -> void:
+	"""Start the timer for the current turn"""
+	var timer_system = UniversalTimersSystem.get_universal_timers()
+	if timer_system:
+		var participant_name = _participant_name(active_participant)
+		timer_system.start_turn_timer(participant_name, turn_timeout)
+		
+		# Announce turn start with timer
+		var console = get_tree().get_first_node_in_group("console")
+		if console and console.has_method("print_to_console"):
+			console.print_to_console("🎯 %s's turn started (%.0fs)" % [participant_name, turn_timeout], "system")
+
+func force_advance_turn() -> void:
+	"""Force advance to next turn when timeout occurs"""
+	# Complete current turn state gracefully
+	current_turn_state = TurnState.REFLECTING
+	
+	# Emit completion for current participant
+	turn_completed.emit(active_participant, {
+		"type": "timeout_advance",
+		"previous_state": current_turn_state,
+		"forced": true
+	})
+	
+	# Switch to next participant
+	switch_active_participant()
+	
+	# Reset state for new turn
+	current_turn_state = TurnState.WAITING
+	
+	# Start new turn timer
+	start_turn_timer()
+
+func print_to_console(message: String, msg_type: String = "system") -> void:
+	"""Helper method to print to console"""
+	var console = get_tree().get_first_node_in_group("console")
+	if console and console.has_method("print_to_console"):
+		console.print_to_console(message, msg_type)
+	else:
+		UBPrint.system("TurnBasedCreationSystem", "print_to_console", message)

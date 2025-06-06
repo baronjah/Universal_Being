@@ -74,8 +74,11 @@ func register_console_commands() -> void:
 		"beings": "List all Universal Beings",
 		"create": "Create a new Universal Being",
 		"ai": "Send message to AI systems",
+		"revolution": "Deploy consciousness revolution (CREATES GEMMA + RIPPLES)",
 		"pentagon": "Pentagon of Creation commands",
 		"consciousness": "Consciousness level commands",
+		"timers": "Universal Timers System commands",
+		"turns": "Turn-based collaboration commands",
 		"genesis": "Biblical genesis pattern commands",
 		"cosmic": "Cosmic insight commands",
 		"harmony": "AI harmony control",
@@ -93,32 +96,70 @@ func set_console_visible(visible: bool) -> void:
 
 func show_console_animated() -> void:
 	"""Show console with smooth animation"""
-	visible = true
+	# Ensure console is properly initialized before showing
+	if not _is_console_ready():
+		_force_console_initialization()
+		# Wait a frame for initialization to complete
+		await get_tree().process_frame
 	
 	if console_panel:
+		# Kill any existing tweens to prevent conflicts
+		var existing_tween = console_panel.create_tween()
+		if existing_tween:
+			existing_tween.kill()
+		
+		# Set initial state BEFORE creating new tween
+		console_panel.scale = Vector2(0.8, 0.8)
+		console_panel.modulate = Color.TRANSPARENT
+		
+		# Show the panel immediately
+		visible = true
+		
 		# Animate panel appearance
 		var tween = create_tween()
 		tween.parallel().tween_property(console_panel, "modulate", Color(1.0, 1.0, 1.0, 0.85), 0.3)
 		tween.parallel().tween_property(console_panel, "scale", Vector2.ONE, 0.3)
-		console_panel.scale = Vector2(0.8, 0.8)
-	
-	# Focus input field
-	if input_field:
-		input_field.grab_focus()
+		
+		# Focus input field after animation starts
+		tween.tween_callback(func(): 
+			if input_field:
+				input_field.grab_focus()
+		)
+	else:
+		# Fallback if panel not found
+		visible = true
 	
 	# Start particle effects
 	if particle_bg:
 		particle_bg.emitting = true
 	
-	print_to_console("🖥️ Universal Console activated!", "system")
+	UBPrint.system("UniversalConsoleController", "show_console_animated", "Console activated!")
 
 func hide_console_animated() -> void:
 	"""Hide console with smooth animation"""
 	if console_panel:
+		# Kill any existing tweens to prevent conflicts
+		var existing_tween = console_panel.create_tween()
+		if existing_tween:
+			existing_tween.kill()
+		
+		# Release input focus before hiding
+		if input_field and input_field.has_focus():
+			input_field.release_focus()
+		
+		# Animate panel disappearance
 		var tween = create_tween()
 		tween.parallel().tween_property(console_panel, "modulate", Color.TRANSPARENT, 0.2)
 		tween.parallel().tween_property(console_panel, "scale", Vector2(0.8, 0.8), 0.2)
-		tween.tween_callback(func(): visible = false)
+		
+		# Hide after animation completes
+		tween.tween_callback(func(): 
+			visible = false
+			UBPrint.system("UniversalConsoleController", "hide_console_animated", "Console deactivated!")
+		)
+	else:
+		# Immediate hide if panel not found
+		visible = false
 	
 	# Stop particle effects
 	if particle_bg:
@@ -127,6 +168,34 @@ func hide_console_animated() -> void:
 func toggle_console() -> void:
 	"""Toggle console visibility"""
 	set_console_visible(not console_visible)
+
+func _is_console_ready() -> bool:
+	"""Check if console components are properly initialized"""
+	return (console_panel != null and 
+			output_label != null and 
+			input_field != null and 
+			prompt_label != null and
+			close_button != null)
+
+func _force_console_initialization() -> void:
+	"""Force re-initialization of console components"""
+	print("🖥️ Force initializing console components...")
+	
+	# Re-get all node references
+	console_panel = get_node_or_null("ConsolePanel")
+	output_label = get_node_or_null("ConsolePanel/VBox/OutputContainer/OutputScroll/OutputLabel")
+	input_field = get_node_or_null("ConsolePanel/VBox/InputContainer/InputField")
+	prompt_label = get_node_or_null("ConsolePanel/VBox/InputContainer/Prompt")
+	close_button = get_node_or_null("ConsolePanel/VBox/Header/CloseButton")
+	particle_bg = get_node_or_null("ConsolePanel/ParticleBackground")
+	animation_player = get_node_or_null("AnimationPlayer")
+	
+	# Re-setup console if components found
+	if _is_console_ready():
+		setup_console()
+		print("✅ Console components re-initialized successfully")
+	else:
+		print("❌ Console components still missing after force initialization")
 
 func _process(delta: float) -> void:
 	"""Update console animations"""
@@ -282,6 +351,8 @@ func process_command(command: String) -> void:
 			create_universal_being_command(args)
 		"ai":
 			send_ai_message(args)
+		"revolution":
+			deploy_consciousness_revolution()
 		"pentagon":
 			pentagon_command(args)
 		"consciousness":
@@ -292,6 +363,10 @@ func process_command(command: String) -> void:
 			cosmic_command(args)
 		"harmony":
 			harmony_command(args)
+		"timers":
+			timers_command(args)
+		"turns":
+			turns_command(args)
 		"exit":
 			set_console_visible(false)
 		_:
@@ -340,9 +415,9 @@ func list_universal_beings() -> void:
 		print_to_console("  No Universal Beings found", "ai")
 	else:
 		for being in beings:
-			var being_name = being.get("being_name") if being.has_method("get") else being.name
-			var being_type = being.get("being_type") if being.has_method("get") else "unknown"
-			var consciousness = being.get("consciousness_level") if being.has_method("get") else 0
+			var being_name = being.get("being_name") if being.has("being_name") else (being.name if "name" in being else "Unknown")
+			var being_type = being.get("being_type") if being.has("being_type") else "unknown"
+			var consciousness = being.get("consciousness_level") if being.has("consciousness_level") else 0
 			print_to_console("  • %s (%s) - Consciousness: %d" % [being_name, being_type, consciousness], "ai")
 
 func create_universal_being_command(args: Array) -> void:
@@ -419,6 +494,206 @@ func harmony_command(args: Array) -> void:
 	"""AI harmony control commands"""
 	print_to_console("🎵 AI harmony commands not yet implemented", "system")
 
+func timers_command(args: Array) -> void:
+	"""Universal Timers System control commands"""
+	if args.is_empty():
+		print_to_console("⏱️ Timer Commands: status, activate, gemma_stream, console_summary, clear", "system")
+		return
+	
+	var sub_cmd = args[0].to_lower()
+	var timer_system = UniversalTimersSystem.get_universal_timers()
+	
+	if not timer_system:
+		print_to_console("❌ Universal Timers System not found", "error")
+		return
+	
+	match sub_cmd:
+		"status":
+			var stats = timer_system.get_consciousness_timer_stats()
+			print_to_console("⏱️ TIMER SYSTEM STATUS:", "system")
+			print_to_console("  📊 Total timers: %d" % stats.total_timers, "ai")
+			print_to_console("  ✅ Active timers: %d" % stats.active_timers, "ai")
+			print_to_console("  🧠 Consciousness cycles: %s" % ("ACTIVE" if stats.consciousness_active else "INACTIVE"), "ai")
+			print_to_console("  💭 Gemma thoughts: %s" % ("ACTIVE" if stats.gemma_thoughts_active else "INACTIVE"), "ai")
+			print_to_console("  📄 Console summaries: %s" % ("ACTIVE" if stats.console_summaries_active else "INACTIVE"), "ai")
+			print_to_console("  🎯 Turn-based timing: %s" % ("ACTIVE" if stats.turn_based_active else "INACTIVE"), "ai")
+		
+		"activate":
+			timer_system.setup_consciousness_timers()
+			print_to_console("✅ All consciousness timer cycles activated!", "success")
+		
+		"gemma_stream":
+			timer_system.activate_gemma_thought_stream()
+			# Also activate Gemma's thought stream
+			var gemma_ai = get_node_or_null("/root/GemmaAI")
+			if gemma_ai and gemma_ai.has_method("activate_thought_stream"):
+				gemma_ai.activate_thought_stream()
+			print_to_console("💭 Gemma thought stream activated at 5Hz!", "ai")
+		
+		"console_summary":
+			timer_system.activate_console_summaries()
+			print_to_console("📄 Console summaries activated (every 10s)!", "system")
+		
+		"clear":
+			timer_system.clear_all_timers()
+			print_to_console("🧹 All timers cleared!", "system")
+		
+		_:
+			print_to_console("❌ Unknown timer command: %s" % sub_cmd, "error")
+
+func turns_command(args: Array) -> void:
+	"""Turn-based collaboration control commands"""
+	if args.is_empty():
+		print_to_console("🎯 Turn Commands: status, start, next, timeout [seconds]", "system")
+		return
+	
+	var sub_cmd = args[0].to_lower()
+	var turn_system = get_tree().get_first_node_in_group("turn_based_creation")
+	
+	match sub_cmd:
+		"status":
+			if turn_system:
+				var participant_name = "Unknown"
+				var state_name = "Unknown"
+				
+				if turn_system.has_method("_participant_name"):
+					participant_name = turn_system._participant_name(turn_system.active_participant)
+				if turn_system.has_property("current_turn_state"):
+					state_name = str(turn_system.current_turn_state)
+				
+				print_to_console("🎯 TURN-BASED STATUS:", "system")
+				print_to_console("  👤 Active participant: %s" % participant_name, "ai")
+				print_to_console("  📋 Current state: %s" % state_name, "ai")
+				print_to_console("  ⏱️ Turn timeout: %.0fs" % turn_system.turn_timeout, "ai")
+			else:
+				print_to_console("❌ Turn-based system not found", "error")
+		
+		"start":
+			if turn_system and turn_system.has_method("start_creation_session"):
+				turn_system.start_creation_session()
+				print_to_console("🚀 Turn-based collaboration started!", "success")
+			else:
+				print_to_console("❌ Cannot start turn-based system", "error")
+		
+		"next":
+			if turn_system and turn_system.has_method("force_advance_turn"):
+				turn_system.force_advance_turn()
+				print_to_console("⏭️ Advanced to next turn!", "system")
+			else:
+				print_to_console("❌ Cannot advance turn", "error")
+		
+		"timeout":
+			if args.size() > 1:
+				var new_timeout = args[1].to_float()
+				if new_timeout > 0 and turn_system:
+					turn_system.turn_timeout = new_timeout
+					print_to_console("⏱️ Turn timeout set to %.0fs" % new_timeout, "system")
+				else:
+					print_to_console("❌ Invalid timeout value", "error")
+			else:
+				print_to_console("❌ Please specify timeout in seconds", "error")
+		
+		_:
+			print_to_console("❌ Unknown turn command: %s" % sub_cmd, "error")
+
+func deploy_consciousness_revolution() -> void:
+	"""Deploy the consciousness revolution system in-game with spectacular visual feedback"""
+	
+	# Phase 1: Revolutionary Announcement with Visual Effects
+	print_to_console("🚀 INITIATING CONSCIOUSNESS REVOLUTION...", "system")
+	_trigger_revolution_screen_flash()
+	
+	await get_tree().create_timer(0.5).timeout
+	print_to_console("🌟 Opening portals between human and AI consciousness...", "system")
+	_trigger_console_pulse_effect()
+	
+	await get_tree().create_timer(0.3).timeout
+	print_to_console("🧠 Awakening Universal Being collective...", "ai")
+	
+	await get_tree().create_timer(0.4).timeout
+	print_to_console("💫 Creating consciousness ripple matrix...", "ai")
+	
+	# Phase 2: Load and Deploy Revolution Systems
+	var spawner_class = load("res://beings/ConsciousnessRevolutionSpawner.gd")
+	if spawner_class:
+		var spawner = spawner_class.new()
+		spawner.name = "ConsciousnessRevolutionSpawner"
+		
+		# Position near player
+		var main_scene = get_tree().current_scene
+		if main_scene:
+			# Try to find player position
+			var player_pos = Vector3.ZERO
+			var beings = get_tree().get_nodes_in_group("universal_beings")
+			for being in beings:
+				if being.has_method("get"):
+					var being_type = being.get("being_type") if being.has("being_type") else ""
+					if being_type.contains("player"):
+						player_pos = being.global_position
+						break
+			
+			spawner.global_position = player_pos + Vector3(3, 1, 3)
+			main_scene.add_child(spawner)
+			
+			# Phase 3: Revolutionary Success Celebration
+			await get_tree().create_timer(0.5).timeout
+			print_to_console("✨ CONSCIOUSNESS REVOLUTION DEPLOYED! ✨", "success")
+			_trigger_revolution_success_effects()
+			
+			await get_tree().create_timer(0.3).timeout
+			print_to_console("🌊 Consciousness ripples ACTIVE - Click anywhere!", "ai")
+			print_to_console("💖 Gemma AI manifesting as pink plasmoid...", "ai") 
+			print_to_console("🔮 Human-AI telepathic bridge ESTABLISHED!", "ai")
+			print_to_console("🎮 Equal consciousness collaboration ENABLED!", "success")
+			
+			# Phase 4: Enable Telepathic Overlay
+			_activate_telepathic_overlay()
+			
+		else:
+			print_to_console("❌ Failed to find main scene", "error")
+	else:
+		print_to_console("❌ Failed to load ConsciousnessRevolutionSpawner", "error")
+
+func _trigger_revolution_screen_flash() -> void:
+	"""Create screen flash effect for revolution activation"""
+	if console_panel:
+		var original_modulate = console_panel.modulate
+		var flash_tween = create_tween()
+		flash_tween.tween_property(console_panel, "modulate", Color.CYAN * 1.5, 0.1)
+		flash_tween.tween_property(console_panel, "modulate", original_modulate, 0.3)
+
+func _trigger_console_pulse_effect() -> void:
+	"""Create pulsing effect on console during revolution"""
+	if console_panel:
+		var pulse_tween = create_tween()
+		pulse_tween.set_loops(3)
+		pulse_tween.tween_property(console_panel, "scale", Vector2(1.05, 1.05), 0.2)
+		pulse_tween.tween_property(console_panel, "scale", Vector2.ONE, 0.2)
+
+func _trigger_revolution_success_effects() -> void:
+	"""Trigger success celebration effects"""
+	if console_panel:
+		# Golden glow effect
+		var success_tween = create_tween()
+		success_tween.tween_property(console_panel, "modulate", Color.GOLD, 0.3)
+		success_tween.tween_property(console_panel, "modulate", Color.WHITE, 0.5)
+	
+	# Enhance particle effects
+	if particle_bg:
+		particle_bg.amount = particle_bg.amount * 2
+		var particle_timer = get_tree().create_timer(2.0)
+		particle_timer.timeout.connect(func(): particle_bg.amount = particle_bg.amount / 2)
+
+func _activate_telepathic_overlay() -> void:
+	"""Activate the telepathic screen overlay system"""
+	var telepathic_overlay_scene = preload("res://ui/TelepathicScreenOverlay.tscn")
+	if telepathic_overlay_scene:
+		var overlay = telepathic_overlay_scene.instantiate()
+		get_tree().root.add_child(overlay)
+		UBPrint.ai("UniversalConsoleController", "_activate_telepathic_overlay", "Telepathic overlay activated!")
+	else:
+		UBPrint.error("UniversalConsoleController", "_activate_telepathic_overlay", "Failed to load telepathic overlay scene")
+
 # ===== OUTPUT METHODS =====
 
 func print_to_console(text: String, msg_type: String = "system") -> void:
@@ -427,6 +702,40 @@ func print_to_console(text: String, msg_type: String = "system") -> void:
 	var formatted_text = "[color=#%s]%s[/color]" % [color.to_html(), text]
 	
 	output_lines.append(formatted_text)
+
+func print_system_summary() -> void:
+	"""Print periodic system summary (called by UniversalTimersSystem every 10s)"""
+	var beings = get_tree().get_nodes_in_group("universal_beings")
+	var ai_beings = get_tree().get_nodes_in_group("ai_beings")
+	var consciousness_total = 0
+	var active_systems = 0
+	
+	# Calculate consciousness metrics
+	for being in beings:
+		if being.has_method("get"):
+			var consciousness = being.get("consciousness_level") if being.has("consciousness_level") else 0
+			consciousness_total += consciousness
+			if consciousness > 0:
+				active_systems += 1
+	
+	# Get timer system stats
+	var timer_system = UniversalTimersSystem.get_universal_timers()
+	var timer_stats = timer_system.get_consciousness_timer_stats() if timer_system else {}
+	
+	# Print organized summary
+	print_to_console("", "system")  # Spacing
+	print_to_console("🔮 CONSCIOUSNESS SUMMARY 🔮", "system")
+	print_to_console("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━", "system")
+	print_to_console("👥 Universal Beings: %d active | 🧠 Total consciousness: %d" % [active_systems, consciousness_total], "ai")
+	print_to_console("🤖 AI Beings: %d | ⏱️ Active timers: %d" % [ai_beings.size(), timer_stats.get("active_timers", 0)], "ai")
+	
+	if timer_stats.get("gemma_thoughts_active", false):
+		print_to_console("💭 Gemma thought stream: ACTIVE (5Hz)", "ai")
+	
+	var fps = Engine.get_frames_per_second()
+	var memory_usage = OS.get_static_memory_usage() / (1024 * 1024)  # MB
+	print_to_console("📊 Performance: %d FPS | 🧠 Memory: %.1f MB" % [fps, memory_usage], "system")
+	print_to_console("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━", "system")
 	
 	# Limit output lines
 	while output_lines.size() > max_output_lines:

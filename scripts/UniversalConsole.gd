@@ -130,8 +130,8 @@ func _connect_systems() -> void:
         input_manager = get_node("/root/InputFocusManager")
     
     # Find Akashic Records
-    if has_node("/root/AkashicRecords"):
-        akashic_records = get_node("/root/AkashicRecords")
+    if has_node("/root/AkashicRecordsSystemSystem"):
+        akashic_records = get_node("/root/AkashicRecordsSystemSystem")
         _load_console_state()
 
 func _setup_input_handling() -> void:

@@ -1,4 +1,4 @@
-# Add these methods to your AkashicRecords.gd file
+# Add these methods to your AkashicRecordsSystemSystem.gd file
 
 # ===== LIVING DATABASE FEATURES =====
 

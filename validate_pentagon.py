@@ -69,8 +69,12 @@ class PentagonValidator:
         
         # Non-Universal Being core files
         self.core_system_files = {
-            'FloodGates.gd', 'Pentagon.gd', 'AkashicRecords.gd',
-            'Component.gd', 'Connector.gd', 'ZipPackageManager.gd'
+            'UniversalBeing.gd',  # Base class - doesn't extend itself!
+            'FloodGates.gd', 'Pentagon.gd', 'PentagonManager.gd',
+            'AkashicRecords.gd', 'AkashicRecordsEnhanced.gd', 'AkashicRecordsSystem.gd',
+            'Component.gd', 'Connector.gd', 'ZipPackageManager.gd',
+            'UniversalBeingDNA.gd', 'UniversalBeingSocket.gd', 'UniversalBeingSocketManager.gd',
+            'akashic_living_database.gd', 'input_focus_manager.gd', 'macro_system.gd'
         }
 
     def validate_project(self):
@@ -366,6 +370,7 @@ class PentagonValidator:
 
 def main():
     """Main validation function"""
+    # Get project root from current script location
     project_root = os.path.dirname(os.path.abspath(__file__))
     validator = PentagonValidator(project_root)
     validator.validate_project()

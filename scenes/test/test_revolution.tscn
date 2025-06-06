@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://test_revolution"]
+
+[ext_resource type="Script" path="res://test_revolution_direct.gd" id="1"]
+[ext_resource type="PackedScene" uid="uid://perfect_ultimate" path="res://scenes/PERFECT_ULTIMATE_UNIVERSAL_BEING.tscn" id="2"]
+
+[node name="TestRevolution" type="Node"]
+script = ExtResource("1")
+
+[node name="Main" parent="." instance=ExtResource("2")]

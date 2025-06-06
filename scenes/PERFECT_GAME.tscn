@@ -1,7 +1,7 @@
 [gd_scene load_steps=8 format=3]
 
 [ext_resource type="Script" uid="uid://c6mwvx5efb7lt" path="res://scripts/player_universal_being.gd" id="1"]
-[ext_resource type="Script" uid="uid://4e5af323xa3f" path="res://core/CursorUniversalBeing.gd" id="2"]
+[ext_resource type="Script" uid="uid://4e5af323xa3f" path="res://beings/cursor/CursorUniversalBeing.gd" id="2"]
 [ext_resource type="Script" uid="uid://d1xkl3r0qq4ej" path="res://scripts/perfect_universal_console.gd" id="3"]
 
 [sub_resource type="Environment" id="Environment_1"]

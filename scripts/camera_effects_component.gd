@@ -6,7 +6,7 @@
 # SCENES: camera_consciousness_post_process.tscn, camera_aura_particles.tscn, consciousness_overlay.tscn
 # ==================================================
 
-# res://components/camera_effects/camera_effects_component.gd
+# res://scripts/camera_effects_component.gd
 extends UniversalBeing
 class_name CameraEffectsComponent
 

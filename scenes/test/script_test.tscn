@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://script_test_scene"]
 
-[ext_resource type="Script" path="res://scripts/PlasmoidUniversalBeing.gd" id="1"]
+[ext_resource type="Script" path="res://beings/plasmoid_universal_being.gd" id="1"]
 
 [node name="ScriptTest" type="Node3D"]
 script = ExtResource("1")

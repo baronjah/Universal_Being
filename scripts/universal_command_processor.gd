@@ -431,8 +431,8 @@ func _setup_logic_connectors() -> void:
     """Setup initial logic connector system"""
     logic_connectors = {}
     # Load any saved connectors from Akashic Records
-    if has_node("/root/AkashicRecords"):
-        var records = get_node("/root/AkashicRecords")
+    if has_node("/root/AkashicRecordsSystemSystem"):
+        var records = get_node("/root/AkashicRecordsSystemSystem")
         var saved_connectors = records.load_record("logic_connectors", "system")
         if saved_connectors:
             logic_connectors = saved_connectors
@@ -451,14 +451,14 @@ func _process_command_queue(delta: float) -> void:
 
 func _save_command_history() -> void:
     """Save command history to Akashic Records"""
-    if has_node("/root/AkashicRecords"):
-        var records = get_node("/root/AkashicRecords")
+    if has_node("/root/AkashicRecordsSystemSystem"):
+        var records = get_node("/root/AkashicRecordsSystemSystem")
         records.save_record("command_history", "system", command_history)
 
 func _save_logic_connectors() -> void:
     """Save logic connectors to Akashic Records"""
-    if has_node("/root/AkashicRecords"):
-        var records = get_node("/root/AkashicRecords")
+    if has_node("/root/AkashicRecordsSystemSystem"):
+        var records = get_node("/root/AkashicRecordsSystemSystem")
         records.save_record("logic_connectors", "system", logic_connectors)
 
 func _classify_command(command: String) -> CommandType:

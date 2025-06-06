@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://movement_test_camera"]
 
-[ext_resource type="Script" path="res://scripts/PlasmoidUniversalBeing.gd" id="1"]
+[ext_resource type="Script" path="res://beings/plasmoid_universal_being.gd" id="1"]
 [ext_resource type="PackedScene" uid="uid://b0ee1qqnhkfnb" path="res://scenes/main/camera_point.tscn" id="2"]
 
 [sub_resource type="SphereShape3D" id="TestShape"]

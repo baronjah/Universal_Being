@@ -1,6 +1,6 @@
 [gd_scene load_steps=12 format=3 uid="uid://human_ai_paradise"]
 
-[ext_resource type="Script" path="res://scripts/PlasmoidUniversalBeing.gd" id="1"]
+[ext_resource type="Script" path="res://beings/plasmoid_universal_being.gd" id="1"]
 [ext_resource type="PackedScene" uid="uid://b0ee1qqnhkfnb" path="res://scenes/main/camera_point.tscn" id="2"]
 [ext_resource type="Script" path="res://scripts/GemmaUniversalBeing.gd" id="3"]
 [ext_resource type="Script" path="res://scripts/cosmic_lod_system.gd" id="4"]

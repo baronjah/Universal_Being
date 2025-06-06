@@ -146,7 +146,7 @@ def test_remote_connection():
     if os.path.exists(mcp_config_path):
         print("✅ Godot MCP config found")
         try:
-            with open(mcp_config_path, 'r') as f:
+            with open(mcp_config_path, 'r', encoding='utf-8') as f:
                 config = json.load(f)
             print(f"   MCP Server configured: {'godot' in config.get('mcpServers', {})}")
             return True

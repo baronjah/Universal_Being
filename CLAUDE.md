@@ -4,6 +4,50 @@ The most important task is to always focus on human user experience and how he s
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+## 🎮 Single-Terminal Multi-Agent Workflow
+
+### How It Works
+You operate as 4 different specialized agents in ONE terminal, cycling through roles:
+
+1. **🏗️ Architect** - Design systems, analyze problems, create plans
+2. **🎮 Programmer** - Implement features, write GDScript, build systems
+3. **🧪 Validator** - Test performance, debug issues, ensure quality
+4. **📚 Documentation** - Create guides, document systems, build tools
+
+### Starting a Session
+```bash
+cd /path/to/Universal_Being && claude
+```
+
+First message: "You are operating as multi-agent system. Start as Architect and create GAME_DEV_PLAN.md"
+
+### Switching Agents
+Simply say: "Continue as [Agent name]" or "Switch to [Agent] role"
+
+### Central Planning Document
+All work coordinated through `GAME_DEV_PLAN.md` which tracks:
+- Current agent and phase
+- Task assignments per agent
+- Progress on each system
+- Handoff notes between agents
+- Communication log
+
+### Example Workflow
+```
+You: "Start as Architect and analyze the performance issues"
+Claude (Architect): "I'll analyze the monolithic UniversalBeing.gd..."
+
+You: "Switch to Programmer and implement the fixes"
+Claude (Programmer): "Reading the Architect's analysis, I'll refactor..."
+
+You: "Continue as Validator and test the changes"
+Claude (Validator): "I'll profile the performance improvements..."
+```
+
+---
+
+## Folder Structure
+
 main scenes folder = "res://scenes/main/"
 here we shall have every core visible element of the game.
 
@@ -16,7 +60,7 @@ sounds = "res://akashic_library/sounds/"
 ## Universal Being - Revolutionary Game Architecture
 
 ### Core Concept
-Universal Being is a game where **everything** is a conscious entity that can evolve into **anything else**. This is powered by 6 AI systems collaborating in real-time.
+Universal Being is a game where **everything** is a conscious entity that can evolve into **anything else**. 
 
 ### Current Status (2025-06-05)
 - **Foundation**: 2+ years of Pentagon Architecture development ✅
@@ -31,20 +75,6 @@ Universal Being is a game where **everything** is a conscious entity that can ev
 2. **Performance**: Constant consciousness updates, no LOD for distant beings
 3. **Implementation Gaps**: Socket system has stubs, decompression incomplete
 4. **Maintenance**: Pentagon super calls easily forgotten, no type safety
-
-### AI Collaboration Framework (Active)
-- **Claude Code**: System architecture, Pentagon implementation, performance optimization
-- **Gemma AI (Local)**: Real-time pattern detection, consciousness analysis, runtime adaptation
-- **Claude Desktop**: File operations, cross-AI coordination, build automation
-- **Cursor**: Visual effects, shader development, UI/UX design
-- **ChatGPT**: Narrative documentation, Genesis-style poetry, being personalities
-- **Gemini**: Performance research, algorithm optimization, data analysis
-
-### Local AI Partnership (Gemma + Claude Code)
-- **Real-time collaboration**: 2-second sync cycles for observation sharing
-- **Pattern-driven architecture**: Gemma detects issues → Claude Code implements fixes
-- **Collaborative artifacts**: Visual representations of successful AI partnerships
-- **Performance optimization**: Combined pattern detection + architectural solutions
 
 ### Pentagon Architecture (CRITICAL)
 Every Universal Being follows 5 sacred lifecycle methods:
@@ -116,16 +146,6 @@ godot --path . scenes/main.tscn
 4: Gold (1.0, 0.84, 0.0)     # Enlightened
 5: White (1.0, 1.0, 1.0)     # Transcendent (with glow)
 ```
-
-### AI Collaboration System
-6 AI systems work together:
-# yet each can do it all at once, you too
-1. **Claude Code** - System architecture (you)
-2. **Cursor** - Visual development
-3. **ChatGPT** - Narrative & biblical metaphors
-4. **Gemini** - Research & optimization
-5. **Claude Desktop** - Orchestration via MCP
-6. **Gemma AI** - Local pattern analysis
 
 ### Key Files to Understand
 

@@ -33,9 +33,9 @@ func pentagon_ready() -> void:
     add_component("res://components/game_launcher.ub.zip")
     load_scene("res://scenes/main_scene.tscn")
     # Instantiate and register core beings
-    terminal = preload("res://beings/terminal_universal_being.gd").new()
-    console = preload("res://beings/console_universal_being.gd").new()
-    socket_grid = preload("res://beings/socket_grid_universal_being.gd").new()
+    terminal = preload("res://scripts/terminal_universal_being.gd").new()
+    console = preload("res://scripts/console_universal_being.gd").new()
+    socket_grid = preload("res://scripts/socket_grid_universal_being.gd").new()
     beings = [terminal, console, socket_grid]
     # Optionally add to scene tree if needed
     for being in beings:
@@ -83,7 +83,7 @@ func pentagon_sewers() -> void:
 
 func spawn_terminal() -> void:
     if not terminal:
-        terminal = preload("res://beings/terminal_universal_being.gd").new()
+        terminal = preload("res://scripts/terminal_universal_being.gd").new()
         beings.append(terminal)
         if has_method("add_child"):
             add_child(terminal)
@@ -91,7 +91,7 @@ func spawn_terminal() -> void:
 
 func spawn_console() -> void:
     if not console:
-        console = preload("res://beings/console_universal_being.gd").new()
+        console = preload("res://scripts/console_universal_being.gd").new()
         beings.append(console)
         if has_method("add_child"):
             add_child(console)
@@ -99,7 +99,7 @@ func spawn_console() -> void:
 
 func spawn_socket_grid() -> void:
     if not socket_grid:
-        socket_grid = preload("res://beings/socket_grid_universal_being.gd").new()
+        socket_grid = preload("res://scripts/socket_grid_universal_being.gd").new()
         beings.append(socket_grid)
         if has_method("add_child"):
             add_child(socket_grid)

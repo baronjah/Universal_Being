@@ -715,14 +715,14 @@ func update_visual_layer_order(being: UniversalBeing) -> void:
 
 var lod_mode: String = "full" # Options: 'icon', 'icon_label', 'full'. TODO: Make dynamic based on player gaze/focus.
 var lod_icons := [
-	preload("res://assets/icons/consciousness/level_0.png"),
-	preload("res://assets/icons/consciousness/level_1.png"),
-	preload("res://assets/icons/consciousness/level_2.png"),
-	preload("res://assets/icons/consciousness/level_3.png"),
-	preload("res://assets/icons/consciousness/level_4.png"),
-	preload("res://assets/icons/consciousness/level_5.png"),
-	preload("res://assets/icons/consciousness/level_6.png"),
-	preload("res://assets/icons/consciousness/level_7.png")
+	preload("res://icon.svg"),
+	preload("res://icon.svg"),
+	preload("res://icon.svg"),
+	preload("res://icon.svg"),
+	preload("res://icon.svg"),
+	preload("res://icon.svg"),
+	preload("res://icon.svg"),
+	preload("res://icon.svg")
 ]
 var lod_tooltips := [
 	"Level 0: Dormant",

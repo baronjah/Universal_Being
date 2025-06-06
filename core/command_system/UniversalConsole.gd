@@ -5,7 +5,7 @@
 # ==================================================
 
 extends Node3D
-class_name UniversalConsole
+#class_name UniversalConsole # Commented to avoid duplicate
 
 ## Console components
 @onready var output_area: RichTextLabel = RichTextLabel.new()
@@ -90,8 +90,8 @@ func _connect_systems() -> void:
 	add_child(code_editor)
 	
 	# Find Akashic Records
-	if has_node("/root/AkashicRecords"):
-		akashic_records = get_node("/root/AkashicRecords")
+	if has_node("/root/AkashicRecordsSystemSystem"):
+		akashic_records = get_node("/root/AkashicRecordsSystemSystem")
 
 func _setup_input_handling() -> void:
 	"""Setup keyboard shortcuts"""

@@ -1,13 +1,13 @@
-[gd_scene load_steps=16 format=3 uid="uid://b8qhxv6n5nqbp"]
+[gd_scene load_steps=17 format=3 uid="uid://b8qhxv6n5nqbp"]
 
-[ext_resource type="Script" path="res://scripts/cosmic_lod_system.gd" id="1"]
-[ext_resource type="Script" path="res://scripts/player_universal_being.gd" id="2"]
-[ext_resource type="Script" path="res://scripts/matrix_chunk_system.gd" id="3"]
-[ext_resource type="Script" path="res://scripts/lightweight_chunk_system.gd" id="4"]
-[ext_resource type="PackedScene" uid="uid://b0ee1qqnhkfnb" path="res://scenes/main/camera_point.tscn" id="5"]
-[ext_resource type="Script" path="res://scripts/GemmaUniversalBeing.gd" id="6"]
-[ext_resource type="Script" path="res://core/GameStateSocketManager.gd" id="7"]
-[ext_resource type="Script" path="res://scripts/generation_coordinator.gd" id="8"]
+[ext_resource type="Script" uid="uid://d0gyqfoyjwa1j" path="res://scripts_backup/cosmic_lod_system.gd" id="1"]
+[ext_resource type="Script" uid="uid://cdtfsq4nhmu8x" path="res://scripts_backup/player_universal_being.gd" id="2"]
+[ext_resource type="Script" uid="uid://csjcl4rnnusxx" path="res://scripts_backup/matrix_chunk_system.gd" id="3"]
+[ext_resource type="Script" uid="uid://jrib5grlys3v" path="res://scripts_backup/lightweight_chunk_system.gd" id="4"]
+[ext_resource type="PackedScene" uid="uid://dwad8x0chensn" path="res://scenes/main/camera_point.tscn" id="5"]
+[ext_resource type="Script" uid="uid://k6a8a1xmlngv" path="res://scripts_backup/GemmaUniversalBeing.gd" id="6"]
+[ext_resource type="Script" uid="uid://dby1vc8tk68r6" path="res://systems/state/GameStateSocketManager.gd" id="7"]
+[ext_resource type="Script" uid="uid://6r0c7mg1ovbq" path="res://scripts_backup/generation_coordinator.gd" id="8"]
 
 [sub_resource type="GDScript" id="PerfectUniversalController"]
 script/source = "extends Node3D
@@ -340,23 +340,7 @@ func _on_comprehensive_test_completed(results: Dictionary):
 			title.text = \"PERFECT ULTIMATE UNIVERSAL BEING - TEST RESULTS: %.0f%% PASS RATE\" % success_rate
 "
 
-[sub_resource type="Environment" id="PerfectEnvironment"]
-background_mode = 1
-background_color = Color(0.005, 0.005, 0.02, 1)
-ambient_light_source = 2
-ambient_light_color = Color(0.15, 0.15, 0.3, 1)
-ambient_light_energy = 0.2
-fog_enabled = true
-fog_light_color = Color(0.03, 0.03, 0.1, 1)
-fog_sun_scatter = 0.05
-glow_enabled = true
-glow_intensity = 0.3
-glow_strength = 0.8
-glow_bloom = 0.1
-
 [sub_resource type="SphereMesh" id="PlasmoidMesh"]
-radius = 0.5
-height = 1.0
 radial_segments = 16
 rings = 8
 
@@ -365,16 +349,24 @@ transparency = 1
 albedo_color = Color(0.3, 0.7, 1, 0.8)
 emission_enabled = true
 emission = Color(0.5, 0.8, 1, 1)
-emission_energy = 2.0
+emission_energy_multiplier = 2.0
 rim_enabled = true
 rim = 0.8
 rim_tint = 0.3
 
-[sub_resource type="Theme" id="PerfectTheme"]
-
-[sub_resource type="SphereMesh" id="GemmaMesh"]
-radius = 0.8
-height = 1.6
+[sub_resource type="Environment" id="PerfectEnvironment"]
+background_mode = 1
+background_color = Color(0.005, 0.005, 0.02, 1)
+ambient_light_source = 2
+ambient_light_color = Color(0.15, 0.15, 0.3, 1)
+ambient_light_energy = 0.2
+glow_enabled = true
+glow_intensity = 0.3
+glow_strength = 0.8
+glow_bloom = 0.1
+fog_enabled = true
+fog_light_color = Color(0.03, 0.03, 0.1, 1)
+fog_sun_scatter = 0.05
 
 [sub_resource type="StandardMaterial3D" id="GemmaMaterial"]
 transparency = 1
@@ -386,8 +378,14 @@ rim_enabled = true
 rim = 2.5
 rim_tint = 0.9
 
+[sub_resource type="SphereMesh" id="GemmaMesh"]
+radius = 0.8
+height = 1.6
+
 [sub_resource type="SphereShape3D" id="GemmaShape"]
 radius = 0.8
+
+[sub_resource type="Theme" id="PerfectTheme"]
 
 [node name="PERFECT_ULTIMATE_UNIVERSAL_BEING" type="Node3D"]
 script = SubResource("PerfectUniversalController")
@@ -421,7 +419,6 @@ chunk_resolution = 8
 script = ExtResource("2")
 move_speed = 8.0
 float_height = 3.0
-mouse_sensitivity = 0.002
 interaction_range = 5.0
 
 [node name="CameraPoint" parent="Player" instance=ExtResource("5")]
@@ -447,15 +444,15 @@ omni_range = 200.0
 
 [node name="GemmaAI" type="RigidBody3D" parent="." groups=["ai", "consciousness"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 3, 8)
+gravity_scale = 0.0
 script = ExtResource("6")
 being_name = "Gemma AI Consciousness"
 being_type = "ai_consciousness"
 consciousness_level = 6
-gravity_scale = 0.0
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="GemmaAI"]
-mesh = SubResource("GemmaMesh")
 material_override = SubResource("GemmaMaterial")
+mesh = SubResource("GemmaMesh")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="GemmaAI"]
 shape = SubResource("GemmaShape")
@@ -476,13 +473,17 @@ offset_left = -100.0
 offset_top = -80.0
 offset_right = 100.0
 offset_bottom = -20.0
+grow_horizontal = 2
+grow_vertical = 2
 
 [node name="BubbleBackground" type="NinePatchRect" parent="GemmaAI/ChatBubble"]
+modulate = Color(0.2, 0.2, 0.8, 0.9)
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-modulate = Color(0.2, 0.2, 0.8, 0.9)
+grow_horizontal = 2
+grow_vertical = 2
 
 [node name="BubbleText" type="RichTextLabel" parent="GemmaAI/ChatBubble"]
 layout_mode = 1
@@ -493,6 +494,8 @@ offset_left = 10.0
 offset_top = 5.0
 offset_right = -10.0
 offset_bottom = -5.0
+grow_horizontal = 2
+grow_vertical = 2
 text = "💭 Three minds, one reality..."
 fit_content = true
 
@@ -501,6 +504,8 @@ layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 theme = SubResource("PerfectTheme")
 
 [node name="Title" type="Label" parent="PerfectUI"]
@@ -512,6 +517,7 @@ offset_left = -300.0
 offset_top = 10.0
 offset_right = 300.0
 offset_bottom = 50.0
+grow_horizontal = 2
 text = "PERFECT ULTIMATE UNIVERSAL BEING - INFINITE MULTIVERSE"
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -525,6 +531,7 @@ offset_left = 10.0
 offset_top = -180.0
 offset_right = 400.0
 offset_bottom = -10.0
+grow_vertical = 0
 
 [node name="Position" type="Label" parent="PerfectUI/Stats"]
 layout_mode = 2
@@ -543,8 +550,8 @@ layout_mode = 2
 text = "Light Chunks: 0"
 
 [node name="FPS" type="RichTextLabel" parent="PerfectUI/Stats"]
-layout_mode = 2
 custom_minimum_size = Vector2(0, 25)
+layout_mode = 2
 text = "[color=green]FPS: 60[/color]"
 fit_content = true
 
@@ -561,6 +568,7 @@ offset_left = -350.0
 offset_top = 10.0
 offset_right = -10.0
 offset_bottom = 300.0
+grow_horizontal = 0
 
 [node name="Movement" type="Label" parent="PerfectUI/Controls"]
 layout_mode = 2
@@ -604,6 +612,8 @@ offset_left = -200.0
 offset_top = -150.0
 offset_right = -10.0
 offset_bottom = -10.0
+grow_horizontal = 0
+grow_vertical = 0
 
 [node name="StateTitle" type="Label" parent="PerfectUI/GameStateDisplay"]
 layout_mode = 2

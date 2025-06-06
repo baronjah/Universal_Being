@@ -6,7 +6,7 @@
 # AUTHOR: JSH + Claude Code - Universal Being Socket Architects
 # ==================================================
 
-extends Resource
+extends UniversalBeing
 class_name UniversalBeingSocket
 
 # ===== SOCKET TYPES =====

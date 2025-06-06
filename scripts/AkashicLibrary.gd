@@ -1,6 +1,7 @@
 # ==================================================
 # UNIVERSAL BEING SYSTEM: Akashic Library
 # PURPOSE: Records all actions and changes in poetic, genesis-style language
+# i found it in scripts folder, in flooodgates i seen it in systems, we might need to add systems folder to python scriptura
 # ==================================================
 
 extends Node

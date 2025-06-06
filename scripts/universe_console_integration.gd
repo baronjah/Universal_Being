@@ -30,7 +30,7 @@ func _find_console_being() -> Node:
 func _integrate_universe_commands() -> void:
 	"""Integrate universe commands into console"""
 	# Create universe console component
-	console_component = preload("res://components/universe_console/UniverseConsoleComponent.gd").new()
+	console_component = preload("res://EMERGENCY_BACKUP/scripts/UniverseConsoleComponent.gd").new()
 	add_child(console_component)
 	console_component.initialize(console_being)
 	

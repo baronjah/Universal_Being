@@ -305,6 +305,7 @@ That's it! You're now in the Universal Being universe where everything is consci
 
 def main():
     """Main organization function"""
+    # Get project root from current script location
     project_root = os.path.dirname(os.path.abspath(__file__))
     organizer = DocsOrganizer(project_root)
     organizer.organize_docs()

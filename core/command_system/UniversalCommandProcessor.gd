@@ -5,7 +5,7 @@
 # ==================================================
 
 extends Node
-class_name UniversalCommandProcessor
+#class_name UniversalCommandProcessor # Commented to avoid duplicate
 
 ## Command patterns and triggers
 var command_registry: Dictionary = {}
@@ -247,8 +247,8 @@ func _cmd_load(args: Array) -> String:
 		
 		"record":
 			# Load from akashic records
-			if has_node("/root/AkashicRecords"):
-				var records = get_node("/root/AkashicRecords")
+			if has_node("/root/AkashicRecordsSystemSystem"):
+				var records = get_node("/root/AkashicRecordsSystemSystem")
 				var data = records.load_record(path)
 				return "📚 Loaded record: %s" % path
 		
