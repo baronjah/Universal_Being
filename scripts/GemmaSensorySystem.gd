@@ -97,7 +97,7 @@ func _initialize_spatial_system() -> void:
 	spatial_system.relative_positioning = true
 	spatial_system.scene_mapping = true
 	
-	print("🗺️ Gemma Spatial system initialized")
+	print("🗺️ Gemma Node3D system initialized")
 
 func _initialize_interface_system() -> void:
 	"""Initialize Gemma's interface reading system"""
@@ -272,7 +272,7 @@ func _analyze_current_scene() -> Dictionary:
 		var being_data = _analyze_being(being)
 		analysis.beings_analysis.append(being_data)
 	
-	# Spatial analysis
+	# Node3D analysis
 	if spatial_system:
 		analysis.spatial_layout = spatial_system.get_scene_layout_summary()
 	
