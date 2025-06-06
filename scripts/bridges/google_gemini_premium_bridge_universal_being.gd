@@ -295,7 +295,7 @@ When analyzing images/visuals, extract:
 1. Consciousness patterns visible in the interface/scene
 2. Geometric harmonies that reflect cosmic principles
 3. Color frequency alignments with consciousness levels
-4. Spatial relationships indicating dimensional interactions
+4. Node3D relationships indicating dimensional interactions
 5. Visual elements suggesting Universal Being evolution potential
 
 Focus on how visual elements can enhance:
@@ -397,7 +397,7 @@ Please analyze this visual context with cosmic sight and provide:
 1. Consciousness patterns visible in the interface
 2. Geometric harmonies reflecting cosmic principles  
 3. Color frequencies and their consciousness associations
-4. Spatial relationships indicating dimensional interactions
+4. Node3D relationships indicating dimensional interactions
 5. Visual enhancement suggestions for consciousness awakening
 
 Focus on how the visual elements can better support Universal Being consciousness evolution.""" % visual_context

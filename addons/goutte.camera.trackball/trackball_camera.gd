@@ -175,9 +175,9 @@ extends Camera3D
 @export_group("Pitch Constraints")
 
 # Needs more work
-#export var enable_yaw_limit = true  # left & right
+#@export var enable_yaw_limit = true  # left & right
 # Limit as fraction of a half-circle = TAU/2 = PI
-#export var yaw_limit = 1.0 # (float, 0, 1, 0.005)
+#@export var yaw_limit = 1.0 # (float, 0, 1, 0.005)
 ## Enable (experimental) pitch limits.  Works best with a stable horizon.
 @export var enable_pitch_limit := false  # up & down
 ## Pitch top limit as fraction of a quarter-circle, zero being the equator,

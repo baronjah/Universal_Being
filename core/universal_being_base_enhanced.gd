@@ -35,7 +35,7 @@ func get_debug_payload() -> Dictionary:
 		"being_type": being_type,
 		"consciousness_level": consciousness_level,
 		
-		# Spatial properties (if applicable)
+		# Node3D properties (if applicable)
 		"global_position": global_position if self is Node3D else Vector3.ZERO,
 		"rotation": rotation if self is Node3D else Vector3.ZERO,
 		
