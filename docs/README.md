@@ -25,7 +25,7 @@ Every Universal Being follows 5 lifecycle methods:
 - `pentagon_ready()` - Awakening
 - `pentagon_process()` - Living
 - `pentagon_input()` - Sensing
-- `pentagon_sewers()` - Transformation/Death
+- `pentagon_sewers()` - Cleanup phase
 
 ### Consciousness Levels
 Beings evolve through consciousness stages:

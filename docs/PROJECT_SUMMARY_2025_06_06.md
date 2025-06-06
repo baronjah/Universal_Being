@@ -86,7 +86,7 @@ func pentagon_init() -> void      # Birth - ALWAYS super() FIRST
 func pentagon_ready() -> void     # Awakening - ALWAYS super() FIRST  
 func pentagon_process(delta) -> void # Living - ALWAYS super() FIRST
 func pentagon_input(event) -> void   # Sensing - ALWAYS super() FIRST
-func pentagon_sewers() -> void       # Death - ALWAYS super() LAST
+func pentagon_sewers() -> void       # Cleanup phase - ALWAYS super() LAST
 ```
 
 ### 2. **UniversalBeing.gd** - The Foundation

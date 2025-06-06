@@ -21,7 +21,7 @@ pentagon_init()    → Birth
 pentagon_ready()   → Awakening  
 pentagon_process() → Living (managed by Pentagon for 60fps)
 pentagon_input()   → Sensing
-pentagon_sewers()  → Death/Transformation
+pentagon_sewers()  → Cleanup phase
 ```
 
 ### 🎮 GAME COMPLETION READY:
