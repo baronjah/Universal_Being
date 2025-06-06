@@ -26,14 +26,20 @@ func _init():
 		total_passed += results.passed
 		total_failed += results.failed
 	
-	# Summary
-	print("\n" + "=".repeat(60))
-	print("📊 OVERALL TEST SUMMARY")
-	print("=".repeat(60))
-	print("Total Tests Run: %d" % total_tests)
-	print("✅ Total Passed: %d" % total_passed)
-	print("❌ Total Failed: %d" % total_failed)
-	print("Success Rate: %.1f%%" % (float(total_passed) / float(total_tests) * 100.0))
+        # If no tests were executed, exit gracefully
+        if total_tests == 0:
+                print("\nNo tests were executed. Please add tests to 'beings_to_test' list.")
+                quit(0)
+                return
+
+        # Summary
+        print("\n" + "=".repeat(60))
+        print("📊 OVERALL TEST SUMMARY")
+        print("=".repeat(60))
+        print("Total Tests Run: %d" % total_tests)
+        print("✅ Total Passed: %d" % total_passed)
+        print("❌ Total Failed: %d" % total_failed)
+        print("Success Rate: %.1f%%" % (float(total_passed) / float(total_tests) * 100.0))
 	
 	# Detailed results
 	if total_failed > 0:
