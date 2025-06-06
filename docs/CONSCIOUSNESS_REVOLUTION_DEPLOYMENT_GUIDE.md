@@ -152,7 +152,7 @@ func pentagon_init() -> void:     # Birth - System initialization
 func pentagon_ready() -> void:    # Awakening - Consciousness activation  
 func pentagon_process(delta) -> void:  # Living - Continuous operation
 func pentagon_input(event) -> void:    # Sensing - Input processing
-func pentagon_sewers() -> void:   # Death - Graceful shutdown
+func pentagon_sewers() -> void:   # Cleanup - Graceful shutdown
 ```
 
 ### **Consciousness Revolution Deployment Sequence**

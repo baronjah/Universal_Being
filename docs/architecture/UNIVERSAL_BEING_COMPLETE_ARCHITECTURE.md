@@ -123,7 +123,7 @@ func pentagon_init() -> void      # Birth/Creation
 func pentagon_ready() -> void     # Awakening/Initialization  
 func pentagon_process(delta) -> void # Living/Processing
 func pentagon_input(event) -> void   # Sensing/Input handling
-func pentagon_sewers() -> void       # Death/Transformation
+func pentagon_sewers() -> void       # Cleanup phase
 ```
 
 #### Socket System (15 Built-in Sockets):
@@ -151,7 +151,7 @@ Every Universal Being follows this exact pattern:
 2. **Ready** (Awakening) - Always call `super.pentagon_ready()` FIRST
 3. **Process** (Living) - Always call `super.pentagon_process(delta)` FIRST
 4. **Input** (Sensing) - Always call `super.pentagon_input(event)` FIRST
-5. **Sewers** (Death) - Always call `super.pentagon_sewers()` LAST
+5. **Sewers** (Cleanup) - Always call `super.pentagon_sewers()` LAST
 
 #### Rules:
 - NEVER skip super() calls

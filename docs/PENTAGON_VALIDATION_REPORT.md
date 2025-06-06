@@ -18,7 +18,7 @@ All Universal Beings MUST implement these 5 sacred methods:
 2. `pentagon_ready()` - Awakening (super() call FIRST)
 3. `pentagon_process(delta)` - Living (super() call FIRST)
 4. `pentagon_input(event)` - Sensing (super() call FIRST)
-5. `pentagon_sewers()` - Death/Transformation (super() call LAST)
+5. `pentagon_sewers()` - Cleanup phase (super() call LAST)
 
 ## ❌ Pentagon Violations
 
