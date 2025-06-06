@@ -138,4 +138,3 @@ func set_season(new_season: String) -> void:
 	# Update all leaves
 	for leaf in leaves:
 		leaf.color = get_season_color()
-

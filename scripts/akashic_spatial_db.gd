@@ -1,4 +1,4 @@
-# AkashicSpatialDB - Spatial database integration for chunk persistence
+# AkashicSpatialDB - Node3D database integration for chunk persistence
 # Connects Luminus's elegant system with Universal Being's Akashic Records
 
 extends Object

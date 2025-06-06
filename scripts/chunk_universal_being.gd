@@ -1,4 +1,4 @@
-# ChunkUniversalBeing - 3D Grid Spatial Data Storage
+# ChunkUniversalBeing - 3D Grid Node3D Data Storage
 # Each chunk represents a 10x10x10 unit of space that can contain and generate content
 
 extends UniversalBeing
