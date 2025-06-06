@@ -147,8 +147,8 @@ func _initialize_systems_async() -> bool:
 	
 	await get_tree().process_frame
 	
-	# Create AkashicRecordsSystemSystem instance  
-	_log_with_timestamp("🔄 Creating AkashicRecordsSystemSystem instance...")
+	# Create AkashicRecordsSystem instance  
+	_log_with_timestamp("🔄 Creating AkashicRecordsSystem instance...")
 	if not AkashicRecordsSystemClass:
 		var error = "AkashicRecordsSystemClass not loaded"
 		initialization_errors.append(error)
@@ -158,7 +158,7 @@ func _initialize_systems_async() -> bool:
 	akashic_records_instance = AkashicRecordsSystemClass.new()
 	akashic_records_instance.name = "AkashicRecordsSystem"
 	add_child(akashic_records_instance)
-	_log_with_timestamp("✓ AkashicRecordsSystemSystem instance created")
+	_log_with_timestamp("✓ AkashicRecordsSystem instance created")
 	
 	await get_tree().process_frame
 	
@@ -216,7 +216,7 @@ func _print_initialization_summary() -> void:
 	_log_with_timestamp("   Core loaded: %s" % core_loaded)
 	_log_with_timestamp("   Systems ready: %s" % systems_ready)
 	_log_with_timestamp("   FloodGates: %s" % ("Ready" if flood_gates_instance else "Not Ready"))
-	_log_with_timestamp("   AkashicRecordsSystemSystem: %s" % ("Ready" if akashic_records_instance else "Not Ready"))
+	_log_with_timestamp("   AkashicRecordsSystem: %s" % ("Ready" if akashic_records_instance else "Not Ready"))
 	_log_with_timestamp("   AkashicLibrary: %s" % ("Ready" if akashic_library_instance else "Not Ready"))
 	_log_with_timestamp("   Errors: %d" % initialization_errors.size())
 	_log_with_timestamp("✓ Universal Being systems ready!")
@@ -306,9 +306,9 @@ func get_flood_gates():
 	return flood_gates_instance
 
 func get_akashic_records():
-	"""Get AkashicRecordsSystemSystem instance"""
+	"""Get AkashicRecordsSystem instance"""
 	if not akashic_records_instance:
-		push_warning("SystemBootstrap: AkashicRecordsSystemSystem not initialized")
+		push_warning("SystemBootstrap: AkashicRecordsSystem not initialized")
 	return akashic_records_instance
 
 func get_akashic_library():
@@ -368,7 +368,7 @@ func load_being_data(path: String) -> Dictionary:
 	"""Static function to load being data from Akashic Records"""
 	if akashic_records_instance:
 		return akashic_records_instance.load_being_from_zip(path)
-	push_error("SystemBootstrap: AkashicRecordsSystemSystem not available")
+	push_error("SystemBootstrap: AkashicRecordsSystem not available")
 	return {}
 
 func get_bootstrap_instance():

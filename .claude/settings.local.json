@@ -13,7 +13,9 @@
       "Bash(cp:*)",
       "Bash(python3:*)",
       "Bash(python:*)",
-      "Bash(mv:*)"
+      "Bash(mv:*)",
+      "Bash(/usr/lib/node_modules/@anthropic-ai/claude-code/vendor/ripgrep/x64-linux/rg \"func.*chat\" --type gd)",
+      "Bash(/usr/lib/node_modules/@anthropic-ai/claude-code/vendor/ripgrep/x64-linux/rg \"func.*chat\" .)"
     ],
     "deny": []
   }

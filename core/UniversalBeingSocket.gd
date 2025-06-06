@@ -6,7 +6,7 @@
 # AUTHOR: JSH + Claude Code - Universal Being Socket Architects
 # ==================================================
 
-extends UniversalBeing
+extends Resource
 class_name UniversalBeingSocket
 
 # ===== SOCKET TYPES =====
@@ -33,7 +33,7 @@ enum SocketType {
 # ===== SOCKET CONTENT =====
 var mounted_component: Resource = null
 var component_path: String = ""
-var component_data: Dictionary = {}
+var socket_component_data: Dictionary = {}  # Renamed to avoid conflict with parent
 var socket_metadata: Dictionary = {}
 
 # ===== SOCKET SIGNALS =====
@@ -78,7 +78,7 @@ func _set_default_compatibility() -> void:
 
 # ===== COMPONENT MOUNTING =====
 
-func mount_component(component: Resource, force: bool = false) -> bool:
+func mount_component_to_socket(component: Resource, force: bool = false) -> bool:
 	"""Mount a component into this socket"""
 	if is_locked and not force:
 		push_error("Socket %s is locked" % socket_id)
@@ -95,7 +95,7 @@ func mount_component(component: Resource, force: bool = false) -> bool:
 	
 	# Unmount existing component if any
 	if is_occupied:
-		unmount_component()
+		unmount_component_from_socket()
 	
 	# Mount new component
 	mounted_component = component
@@ -104,13 +104,13 @@ func mount_component(component: Resource, force: bool = false) -> bool:
 	
 	# Extract component metadata
 	if component.has_method("get_socket_metadata"):
-		component_data = component.get_socket_metadata()
+		socket_component_data = component.get_socket_metadata()
 	
 	component_mounted.emit(component)
 	print("🔌 Component mounted to %s socket: %s" % [socket_name, component_path])
 	return true
 
-func unmount_component() -> bool:
+func unmount_component_from_socket() -> bool:
 	"""Unmount the current component"""
 	if not is_occupied:
 		return false
@@ -121,7 +121,7 @@ func unmount_component() -> bool:
 	mounted_component = null
 	is_occupied = false
 	component_path = ""
-	component_data.clear()
+	socket_component_data.clear()
 	
 	component_unmounted.emit(old_component)
 	print("🔌 Component unmounted from %s socket" % socket_name)
@@ -186,17 +186,17 @@ func get_socket_info() -> Dictionary:
 		"is_locked": is_locked,
 		"compatibility_tags": compatibility_tags,
 		"component_path": component_path,
-		"component_data": component_data,
+		"component_data": socket_component_data,
 		"socket_metadata": socket_metadata
 	}
 
 func get_component_data() -> Dictionary:
 	"""Get data from mounted component"""
-	return component_data.duplicate()
+	return socket_component_data.duplicate()
 
 func set_component_data(data: Dictionary) -> void:
 	"""Set data for mounted component"""
-	component_data = data.duplicate()
+	socket_component_data = data.duplicate()
 	
 	# If component supports setting data, call it
 	if mounted_component and mounted_component.has_method("set_socket_data"):
@@ -213,7 +213,7 @@ func serialize() -> Dictionary:
 		"is_locked": is_locked,
 		"compatibility_tags": compatibility_tags,
 		"component_path": component_path,
-		"component_data": component_data,
+		"component_data": socket_component_data,
 		"socket_metadata": socket_metadata
 	}
 
@@ -225,14 +225,14 @@ func deserialize(data: Dictionary) -> void:
 	is_locked = data.get("is_locked", false)
 	compatibility_tags = data.get("compatibility_tags", [])
 	component_path = data.get("component_path", "")
-	component_data = data.get("component_data", {})
+	socket_component_data = data.get("component_data", {})
 	socket_metadata = data.get("socket_metadata", {})
 	
 	# Try to reload component if path exists
 	if not component_path.is_empty() and FileAccess.file_exists(component_path):
 		var component = load(component_path)
 		if component:
-			mount_component(component, true)
+			mount_component_to_socket(component, true)
 
 # ===== DEBUG AND UTILITIES =====
 

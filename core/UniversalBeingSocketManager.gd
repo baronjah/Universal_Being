@@ -38,35 +38,48 @@ func _initialize_socket_groups() -> void:
 func _create_default_sockets() -> void:
 	"""Create default socket configuration for Universal Being"""
 	# Visual sockets
-	add_socket(UniversalBeingSocket.SocketType.VISUAL, "primary_visual", "primary_visual_socket")
-	add_socket(UniversalBeingSocket.SocketType.VISUAL, "aura_effects", "aura_effects_socket")
-	add_socket(UniversalBeingSocket.SocketType.VISUAL, "consciousness_indicator", "consciousness_socket")
+	add_socket_with_type(UniversalBeingSocket.SocketType.VISUAL, "primary_visual", "primary_visual_socket")
+	add_socket_with_type(UniversalBeingSocket.SocketType.VISUAL, "aura_effects", "aura_effects_socket")
+	add_socket_with_type(UniversalBeingSocket.SocketType.VISUAL, "consciousness_indicator", "consciousness_socket")
 	
 	# Script sockets
-	add_socket(UniversalBeingSocket.SocketType.SCRIPT, "behavior_logic", "behavior_socket")
-	add_socket(UniversalBeingSocket.SocketType.SCRIPT, "ai_interface", "ai_socket")
-	add_socket(UniversalBeingSocket.SocketType.SCRIPT, "evolution_rules", "evolution_socket")
+	add_socket_with_type(UniversalBeingSocket.SocketType.SCRIPT, "behavior_logic", "behavior_socket")
+	add_socket_with_type(UniversalBeingSocket.SocketType.SCRIPT, "ai_interface", "ai_socket")
+	add_socket_with_type(UniversalBeingSocket.SocketType.SCRIPT, "evolution_rules", "evolution_socket")
 	
 	# Shader sockets
-	add_socket(UniversalBeingSocket.SocketType.SHADER, "surface_material", "surface_shader")
-	add_socket(UniversalBeingSocket.SocketType.SHADER, "effect_overlay", "effect_shader")
+	add_socket_with_type(UniversalBeingSocket.SocketType.SHADER, "surface_material", "surface_shader")
+	add_socket_with_type(UniversalBeingSocket.SocketType.SHADER, "effect_overlay", "effect_shader")
 	
 	# Action sockets
-	add_socket(UniversalBeingSocket.SocketType.ACTION, "pentagon_actions", "pentagon_action_socket")
-	add_socket(UniversalBeingSocket.SocketType.ACTION, "custom_behaviors", "behavior_action_socket")
+	add_socket_with_type(UniversalBeingSocket.SocketType.ACTION, "pentagon_actions", "pentagon_action_socket")
+	add_socket_with_type(UniversalBeingSocket.SocketType.ACTION, "custom_behaviors", "behavior_action_socket")
 	
 	# Memory sockets
-	add_socket(UniversalBeingSocket.SocketType.MEMORY, "core_state", "state_memory_socket")
-	add_socket(UniversalBeingSocket.SocketType.MEMORY, "interaction_history", "history_socket")
-	add_socket(UniversalBeingSocket.SocketType.MEMORY, "evolution_data", "evolution_memory_socket")
+	add_socket_with_type(UniversalBeingSocket.SocketType.MEMORY, "core_state", "state_memory_socket")
+	add_socket_with_type(UniversalBeingSocket.SocketType.MEMORY, "interaction_history", "history_socket")
+	add_socket_with_type(UniversalBeingSocket.SocketType.MEMORY, "evolution_data", "evolution_memory_socket")
 	
 	# Interface sockets (for UI beings)
-	add_socket(UniversalBeingSocket.SocketType.INTERFACE, "control_interface", "ui_socket")
-	add_socket(UniversalBeingSocket.SocketType.INTERFACE, "inspector_panel", "inspector_socket")
+	add_socket_with_type(UniversalBeingSocket.SocketType.INTERFACE, "control_interface", "ui_socket")
+	add_socket_with_type(UniversalBeingSocket.SocketType.INTERFACE, "inspector_panel", "inspector_socket")
 
 # ===== SOCKET MANAGEMENT =====
 
-func add_socket(socket_type: UniversalBeingSocket.SocketType, name: String, id: String = "") -> UniversalBeingSocket:
+func add_socket(socket_name: String, socket_direction: String, socket_data_type: String) -> void:
+	"""Add a socket for interface connections (compatibility method)"""
+	# Convert to our internal socket system
+	var socket_type = UniversalBeingSocket.SocketType.INTERFACE
+	if socket_data_type.contains("visual"):
+		socket_type = UniversalBeingSocket.SocketType.VISUAL
+	elif socket_data_type.contains("script"):
+		socket_type = UniversalBeingSocket.SocketType.SCRIPT
+	elif socket_data_type.contains("action"):
+		socket_type = UniversalBeingSocket.SocketType.ACTION
+	
+	add_socket_with_type(socket_type, socket_name, socket_name + "_" + socket_direction)
+
+func add_socket_with_type(socket_type: UniversalBeingSocket.SocketType, name: String, id: String = "") -> UniversalBeingSocket:
 	"""Add a new socket to the being"""
 	var socket = UniversalBeingSocket.new(socket_type, name, id)
 	
@@ -91,7 +104,7 @@ func remove_socket(socket_id: String) -> bool:
 	
 	# Unmount any component
 	if socket.is_occupied:
-		socket.unmount_component()
+		socket.unmount_component_from_socket()
 	
 	# Unregister socket
 	sockets.erase(socket_id)
@@ -120,6 +133,14 @@ func get_sockets_by_name(name: String) -> Array[UniversalBeingSocket]:
 
 # ===== COMPONENT MANAGEMENT =====
 
+func mount_component(socket_id: String, component: Resource, force: bool = false) -> bool:
+	"""Mount component to socket (compatibility method)"""
+	return mount_component_to_socket(socket_id, component, force)
+
+func unmount_component(socket_id: String) -> bool:
+	"""Unmount component from socket (compatibility method)"""
+	return unmount_component_from_socket(socket_id)
+
 func mount_component_to_socket(socket_id: String, component: Resource, force: bool = false) -> bool:
 	"""Mount a component to a specific socket"""
 	var socket = get_socket(socket_id)
@@ -127,7 +148,7 @@ func mount_component_to_socket(socket_id: String, component: Resource, force: bo
 		push_error("Socket not found: %s" % socket_id)
 		return false
 	
-	return socket.mount_component(component, force)
+	return socket.mount_component_to_socket(component, force)
 
 func mount_component_by_type(socket_type: UniversalBeingSocket.SocketType, component: Resource, socket_name: String = "") -> bool:
 	"""Mount component to first available socket of type"""
@@ -137,12 +158,12 @@ func mount_component_by_type(socket_type: UniversalBeingSocket.SocketType, compo
 	if not socket_name.is_empty():
 		for socket in type_sockets:
 			if socket.socket_name == socket_name and not socket.is_occupied:
-				return socket.mount_component(component)
+				return socket.mount_component_to_socket(component)
 	
 	# Otherwise use first available socket
 	for socket in type_sockets:
 		if not socket.is_occupied:
-			return socket.mount_component(component)
+			return socket.mount_component_to_socket(component)
 	
 	push_error("No available sockets of type %s" % UniversalBeingSocket.SocketType.keys()[socket_type])
 	return false
@@ -153,7 +174,7 @@ func unmount_component_from_socket(socket_id: String) -> bool:
 	if not socket:
 		return false
 	
-	return socket.unmount_component()
+	return socket.unmount_component_from_socket()
 
 func get_mounted_component(socket_id: String) -> Resource:
 	"""Get component mounted to socket"""
@@ -234,8 +255,8 @@ func hot_swap_component(socket_id: String, new_component: Resource) -> bool:
 	var old_data = socket.get_component_data()
 	
 	# Unmount old, mount new
-	socket.unmount_component()
-	var success = socket.mount_component(new_component, true)
+	socket.unmount_component_from_socket()
+	var success = socket.mount_component_to_socket(new_component, true)
 	
 	# Restore data if compatible
 	if success and not old_data.is_empty():

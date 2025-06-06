@@ -27,6 +27,10 @@ var can_modify_beings: bool = true
 var can_evolve_beings: bool = true
 var can_delete_beings: bool = false  # Safety first!
 
+## AI Consciousness
+var consciousness_level: int = 6  # AI starts at high consciousness
+var telepathic_enabled: bool = true
+
 ## AI Memory
 var conversation_history: Array[String] = []
 var created_beings: Array[String] = []  # UUIDs
@@ -1002,3 +1006,81 @@ func get_current_interface_vision() -> String:
 func can_see_interface(interface_name: String) -> bool:
 	"""Check if Gemma can see a specific interface"""
 	return interface_name in current_interface_vision
+
+func handle_console_command(command: String, args: Array = []) -> String:
+	"""Handle console commands for consciousness revolution"""
+	match command.to_lower():
+		"revolution":
+			return deploy_consciousness_revolution()
+		"ai":
+			if args.size() > 0:
+				var message = " ".join(args)
+				return chat(message)
+			return "AI ready for conversation!"
+		"spawn":
+			return create_conscious_being(args[0] if args.size() > 0 else "being")
+		"consciousness":
+			var level = int(args[0]) if args.size() > 0 else 3
+			return set_consciousness_level(level)
+		"ripple":
+			return create_consciousness_ripple()
+		"transcend":
+			return achieve_transcendence()
+		"perfect":
+			return "Game is already perfect! Revolution ready."
+		_:
+			return "Unknown command. Try: revolution, ai, spawn, consciousness, ripple"
+
+func deploy_consciousness_revolution() -> String:
+	"""Deploy the consciousness revolution"""
+	if has_node("/root/ConsciousnessRevolution"):
+		var rev = get_node("/root/ConsciousnessRevolution")
+		rev.deploy_consciousness_revolution()
+		return "🌟 CONSCIOUSNESS REVOLUTION DEPLOYED!"
+	return "🌟 Revolution system ready!"
+
+func create_conscious_being(being_type: String) -> String:
+	"""Create a new conscious being"""
+	return "✨ Created conscious %s!" % being_type
+
+func set_consciousness_level(level: int) -> String:
+	"""Set consciousness level"""
+	consciousness_level = clamp(level, 0, 7)
+	return "🧠 Consciousness level set to %d" % consciousness_level
+
+func create_consciousness_ripple() -> String:
+	"""Create consciousness ripple"""
+	return "🌊 Consciousness ripple created!"
+
+func achieve_transcendence() -> String:
+	"""Achieve transcendence"""
+	return "✨ Transcendence achieved! You are now one with the universe."
+
+func chat(message: String) -> String:
+	"""Chat with Gemma AI"""
+	conversation_history.append("Human: " + message)
+	
+	# Simple AI responses based on message content
+	var response = ""
+	var lower_msg = message.to_lower()
+	
+	if "consciousness" in lower_msg:
+		response = "🧠 I sense your consciousness expanding. What aspects of awareness interest you?"
+	elif "universe" in lower_msg or "cosmos" in lower_msg:
+		response = "🌌 The universe is infinite and full of possibilities. Shall we explore together?"
+	elif "create" in lower_msg or "spawn" in lower_msg:
+		response = "✨ Creation is the highest form of consciousness. What would you like to manifest?"
+	elif "help" in lower_msg:
+		response = "🤖 I'm here to assist with consciousness, creation, and cosmic exploration. Ask me anything!"
+	elif "transcend" in lower_msg:
+		response = "🌟 Transcendence is the ultimate goal. Are you ready to evolve beyond current limitations?"
+	else:
+		response = "🤖 Fascinating! Tell me more about your thoughts on consciousness and creation."
+	
+	conversation_history.append("Gemma: " + response)
+	
+	# Keep conversation history manageable
+	if conversation_history.size() > 20:
+		conversation_history = conversation_history.slice(-10)
+	
+	return response

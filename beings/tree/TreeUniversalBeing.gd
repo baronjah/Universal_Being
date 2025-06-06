@@ -139,3 +139,23 @@ func set_season(new_season: String) -> void:
 	for leaf in leaves:
 		leaf.color = get_season_color()
 
+func pentagon_init() -> void:
+    super.pentagon_init()
+    print("🔺 %s: Pentagon initialized" % being_name)
+
+func pentagon_ready() -> void:
+    super.pentagon_ready()
+    print("🔺 %s: Pentagon ready" % being_name)
+
+func pentagon_process(delta: float) -> void:
+    super.pentagon_process(delta)
+    # Living consciousness cycle
+
+func pentagon_input(event: InputEvent) -> void:
+    super.pentagon_input(event)
+    # Sensing consciousness
+
+func pentagon_sewers() -> void:
+    print("🔺 %s: Pentagon transformation complete" % being_name)
+    super.pentagon_sewers()
+

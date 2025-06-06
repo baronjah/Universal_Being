@@ -1,14 +1,14 @@
 # Pentagon Architecture Validation Report
 
-**Generated:** 2025-06-06 12:22:02  
-**Compliance Rate:** 48.2%  
+**Generated:** 2025-06-06 14:57:48  
+**Compliance Rate:** 51.8%  
 **Total Files Scanned:** 83  
 
 ## 📊 Summary
 
-- ✅ **Compliant Files:** 40
-- ❌ **Files with Violations:** 43
-- ⚪ **Non-Universal Being Files:** 129
+- ✅ **Compliant Files:** 43
+- ❌ **Files with Violations:** 40
+- ⚪ **Non-Universal Being Files:** 130
 
 ## 🔥 Pentagon Architecture Rules
 
@@ -202,13 +202,6 @@ All Universal Beings MUST implement these 5 sacred methods:
 ### `beings/GemmaAICompanionPlasmoid.gd`
 - ❌ Missing being_type or being_name assignment
 
-### `beings/plasmoid_universal_being.gd`
-- ❌ Missing pentagon_sewers() method
-
-### `beings/butterfly/ButterflyUniversalBeing.gd`
-- ❌ Missing pentagon_input() method
-- ❌ Missing pentagon_sewers() method
-
 ### `beings/camera/CameraUniversalBeing.gd`
 - ❌ pentagon_init() missing super() call
 - ❌ pentagon_ready() missing super() call
@@ -225,26 +218,20 @@ All Universal Beings MUST implement these 5 sacred methods:
 - ❌ pentagon_sewers() missing super() call
 
 ### `beings/portal/PortalUniversalBeing.gd`
-- ❌ Missing pentagon_init() method
-- ❌ Missing pentagon_ready() method
-- ❌ Missing pentagon_process() method
-- ❌ Missing pentagon_input() method
-- ❌ Missing pentagon_sewers() method
 - ❌ Missing consciousness_level assignment
 - ❌ Missing being_type or being_name assignment
-
-### `beings/tree/TreeUniversalBeing.gd`
-- ❌ Missing pentagon_input() method
-- ❌ Missing pentagon_sewers() method
 
 ## ✅ Pentagon Compliant Files
 
 - ✅ `beings/ConsciousnessRevolutionSpawner.gd`
+- ✅ `beings/butterfly/ButterflyUniversalBeing.gd`
 - ✅ `beings/cursor/CursorUniversalBeing.gd`
 - ✅ `beings/misc/ground_universal_being.gd`
 - ✅ `beings/misc/icon_universal_being.gd`
 - ✅ `beings/misc/light_universal_being.gd`
+- ✅ `beings/plasmoid_universal_being.gd`
 - ✅ `beings/player/player_universal_being.gd`
+- ✅ `beings/tree/TreeUniversalBeing.gd`
 - ✅ `scripts/InteractiveTestEnvironment.gd`
 - ✅ `scripts/UniversalConsole.gd`
 - ✅ `scripts/archive/console_butterfly_fix.gd`
@@ -355,6 +342,7 @@ All Universal Beings MUST implement these 5 sacred methods:
 - ⚪ `scripts/bridges/remote_godot_bridge.gd`
 - ⚪ `scripts/chunk_generator.gd`
 - ⚪ `scripts/comprehensive_system_test.gd`
+- ⚪ `scripts/consciousness_revolution_command.gd`
 - ⚪ `scripts/console_notifications.gd`
 - ⚪ `scripts/console_test.gd`
 - ⚪ `scripts/cosmic_insights.gd`

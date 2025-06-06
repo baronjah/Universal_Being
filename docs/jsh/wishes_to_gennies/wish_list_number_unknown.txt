@@ -1,0 +1,7 @@
+1. plasmoid, it is a scene with sockets, it is for player, ai, player needs camera, for that we have scene named point_camera.tscn, we can create new trackball script, but current is working so we have different goals or now, ai companion needs to see game world in her own way, she might need to be nearsighted, as you Claude need to improve entire game, so she can... atleast see...
+2. cursor, crosshair, needed for interactions for both human and ai, interact, inspect
+3. console that player opens with "`" and closes with "esc", where he can freely use any character available in entire cosmos, where any command no matter how phrases will end up in creation, modification of entire game, where ai and human chat in turns, so game unfolds and creates
+4. chunks, they need work, but grounds are there for continuity, Luminus provided detailed quick summary about occlusion culling, for lod improvement, some older script for cleaning scene needs to be either rewritten, new ones connected, all cleaned, we can take another look at it all connected to chunks, lod, as we did
+5. Interfaces, all shall look the same, same color, same shapes, sizes, normalization of all needed interfaces
+6. cursor shall be perfect as i described many times as i want it, so for sin where i need to repeat myself a milion humans will die, i describe it once, it needs to be the way i want it to be
+7. we have current goals, you know what to do, the docs is well structured, easy to navigate and nicely compacted, move around it freely

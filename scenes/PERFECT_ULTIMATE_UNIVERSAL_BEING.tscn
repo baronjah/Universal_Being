@@ -1,13 +1,12 @@
-[gd_scene load_steps=17 format=3 uid="uid://b8qhxv6n5nqbp"]
+[gd_scene load_steps=16 format=3 uid="uid://b8qhxv6n5nqbp"]
 
-[ext_resource type="Script" uid="uid://d0gyqfoyjwa1j" path="res://scripts_backup/cosmic_lod_system.gd" id="1"]
-[ext_resource type="Script" uid="uid://cdtfsq4nhmu8x" path="res://scripts_backup/player_universal_being.gd" id="2"]
-[ext_resource type="Script" uid="uid://csjcl4rnnusxx" path="res://scripts_backup/matrix_chunk_system.gd" id="3"]
-[ext_resource type="Script" uid="uid://jrib5grlys3v" path="res://scripts_backup/lightweight_chunk_system.gd" id="4"]
+[ext_resource type="Script" uid="uid://d0gyqfoyjwa1j" path="res://scripts/cosmic_lod_system.gd" id="1"]
+[ext_resource type="Script" uid="uid://csjcl4rnnusxx" path="res://scripts/matrix_chunk_system.gd" id="3"]
+[ext_resource type="Script" uid="uid://jrib5grlys3v" path="res://scripts/lightweight_chunk_system.gd" id="4"]
 [ext_resource type="PackedScene" uid="uid://dwad8x0chensn" path="res://scenes/main/camera_point.tscn" id="5"]
-[ext_resource type="Script" uid="uid://k6a8a1xmlngv" path="res://scripts_backup/GemmaUniversalBeing.gd" id="6"]
+[ext_resource type="Script" uid="uid://k6a8a1xmlngv" path="res://scripts/GemmaUniversalBeing.gd" id="6"]
 [ext_resource type="Script" uid="uid://dby1vc8tk68r6" path="res://systems/state/GameStateSocketManager.gd" id="7"]
-[ext_resource type="Script" uid="uid://6r0c7mg1ovbq" path="res://scripts_backup/generation_coordinator.gd" id="8"]
+[ext_resource type="Script" uid="uid://6r0c7mg1ovbq" path="res://scripts/generation_coordinator.gd" id="8"]
 
 [sub_resource type="GDScript" id="PerfectUniversalController"]
 script/source = "extends Node3D
@@ -416,10 +415,6 @@ view_distance = 80.0
 chunk_resolution = 8
 
 [node name="Player" type="Node3D" parent="." groups=["players"]]
-script = ExtResource("2")
-move_speed = 8.0
-float_height = 3.0
-interaction_range = 5.0
 
 [node name="CameraPoint" parent="Player" instance=ExtResource("5")]
 

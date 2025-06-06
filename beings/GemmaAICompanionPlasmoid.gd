@@ -43,6 +43,18 @@ var exploration_target: Vector3 = Vector3.ZERO
 var exploration_timer: float = 0.0
 var independent_exploration: bool = true  # True AI autonomy
 
+# AI VISION SYSTEM - Making the AI truly see
+var vision_range: float = 15.0  # Nearsighted but detailed vision as requested
+var vision_scan_timer: float = 0.0
+var vision_scan_interval: float = 0.5  # Scan environment twice per second
+var visible_beings: Array[UniversalBeing] = []
+var environmental_awareness: Dictionary = {
+	"nearby_objects": [],
+	"consciousness_signals": [],
+	"terrain_features": [],
+	"interaction_opportunities": []
+}
+
 # ===== PENTAGON ARCHITECTURE =====
 
 func pentagon_init() -> void:
@@ -87,6 +99,13 @@ func pentagon_process(delta: float) -> void:
 	# Enhanced autonomous exploration  
 	exploration_timer += delta
 	_update_autonomous_exploration(delta)
+	
+	# AI VISION PROCESSING - The AI truly sees the world
+	vision_scan_timer += delta
+	if vision_scan_timer >= vision_scan_interval:
+		_scan_environment()
+		_process_visual_information()
+		vision_scan_timer = 0.0
 	
 	# Follow behavior (if target set and not in independent mode)
 	if following_target and not independent_exploration:
@@ -561,4 +580,104 @@ func pentagon_sewers() -> void:
 		gemma_connection.queue_free()
 	super.pentagon_sewers()
 
-# 💖 GemmaAICompanionPlasmoid: Class loaded - Ready for consciousness partnership!
+# ===== AI VISION SYSTEM =====
+
+func _scan_environment() -> void:
+	"""Scan environment with nearsighted but detailed AI vision"""
+	visible_beings.clear()
+	environmental_awareness.nearby_objects.clear()
+	environmental_awareness.consciousness_signals.clear()
+	environmental_awareness.terrain_features.clear()
+	environmental_awareness.interaction_opportunities.clear()
+	
+	# Find all beings within vision range (nearsighted as requested)
+	var space_state = get_world_3d().direct_space_state
+	var query = PhysicsRayQueryParameters3D.create(
+		global_position,
+		global_position + Vector3(vision_range, 0, 0)
+	)
+	
+	# Scan in 8 directions for detailed environmental awareness
+	var directions = [
+		Vector3(1, 0, 0), Vector3(-1, 0, 0),
+		Vector3(0, 1, 0), Vector3(0, -1, 0),
+		Vector3(0, 0, 1), Vector3(0, 0, -1),
+		Vector3(1, 0, 1).normalized(), Vector3(-1, 0, -1).normalized()
+	]
+	
+	for direction in directions:
+		query = PhysicsRayQueryParameters3D.create(
+			global_position,
+			global_position + direction * vision_range
+		)
+		var result = space_state.intersect_ray(query)
+		
+		if result:
+			environmental_awareness.nearby_objects.append({
+				"position": result.position,
+				"normal": result.normal,
+				"distance": global_position.distance_to(result.position),
+				"direction": direction
+			})
+	
+	# Find nearby Universal Beings (consciousness detection)
+	var all_beings = get_tree().get_nodes_in_group("universal_beings")
+	for being in all_beings:
+		if being != self and being is UniversalBeing:
+			var distance = global_position.distance_to(being.global_position)
+			if distance <= vision_range:
+				visible_beings.append(being)
+				environmental_awareness.consciousness_signals.append({
+					"being": being,
+					"consciousness_level": being.consciousness_level,
+					"distance": distance,
+					"being_type": being.being_type
+				})
+
+func _process_visual_information() -> void:
+	"""Process visual information and make AI decisions based on what is seen"""
+	var processing_thoughts = []
+	
+	# Analyze visible beings
+	for being_data in environmental_awareness.consciousness_signals:
+		var being = being_data.being
+		var distance = being_data.distance
+		
+		if being.being_type.contains("player"):
+			processing_thoughts.append("I see the human player %.1f units away" % distance)
+			# Move closer if far away
+			if distance > preferred_distance * 2:
+				exploration_target = being.global_position + Vector3(
+					randf() * 6 - 3, 0, randf() * 6 - 3
+				)
+				current_goal = "approaching_human"
+		
+		elif being.consciousness_level > consciousness_level:
+			processing_thoughts.append("I see a higher consciousness being (level %d)" % being.consciousness_level)
+			# Show curiosity about higher consciousness
+			emotional_state = "curious"
+		
+		elif being_data.being_type.contains("button"):
+			processing_thoughts.append("I notice an interactive button")
+			environmental_awareness.interaction_opportunities.append(being)
+	
+	# Analyze terrain and obstacles
+	var obstacle_count = environmental_awareness.nearby_objects.size()
+	if obstacle_count > 4:
+		processing_thoughts.append("Environment is complex with %d nearby obstacles" % obstacle_count)
+		# Navigate more carefully in complex environments
+		movement_speed = 4.0
+	else:
+		processing_thoughts.append("Clear environment, moving freely")
+		movement_speed = 8.0
+	
+	# Report AI vision processing occasionally
+	if randf() < 0.1 and processing_thoughts.size() > 0:  # 10% chance per scan
+		var thought = processing_thoughts[randi() % processing_thoughts.size()]
+		print("👁️ %s: %s" % [companion_name, thought])
+		
+		# Send telepathic message about what AI sees
+		if visible_beings.size() > 1:  # Only when there's something interesting to see
+			_send_telepathic_message_to_player(_find_human_player())
+
+# 💖 GemmaAICompanionPlasmoid: Class loaded - Ready for consciousness partnership with AI VISION!

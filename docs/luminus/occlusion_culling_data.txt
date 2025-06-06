@@ -1,0 +1,81 @@
+Luminus, so the game i am making, the idea of it being "online", fake online, it is mostly about there being posibility of using more than device at once, for one play session, computer for more heavy work, and vr for just playing, the lod, what is behind something, and now i think, the rtx, ray tracing, when the server is there to calculate stuff, we dont need that good lightning, but maybe the lod have a word for the way, to cast rays, and know what to render even more efficiently?
+
+
+ChatGPT said:
+
+Thought for 1m 24s
+The word you’re looking for is occlusion culling.
+In Godot 4.4 the engine rasterises a simplified “occluder” mesh to a tiny buffer on the CPU using Intel Embree; it then fires a few dozen software rays per thread into that buffer to decide which objects’ AABBs are completely hidden. Any fully hidden (“occluded”) mesh is skipped, so the renderer works only on what the camera can really see 
+docs.godotengine.org
+. Pairing occlusion culling with the built-in mesh Level-of-Detail (LOD) system gives the biggest win — LOD swaps in lighter meshes as soon as they touch one pixel on screen 
+docs.godotengine.org
+.
+
+Why this clicks with your “fake-online”/multi-device idea
+Piece	Runs on PC (“server”)	Runs on VR headset (“client”)
+Heavy path-traced lighting / RTX GI	Full resolution every few frames → bake to light-field textures or 3 D irradiance volumes	Just samples the textures; no RT cores needed
+Occlusion culling (visibility set)	Casts rays, figures out which nodes are visible	Receives a visible-only node list; never even instantiates the hidden meshes
+Mesh & texture LOD	Generates/imports LODs once, streams only the LOD level the headset needs	Draws the streamed mesh directly
+Gameplay / physics	Authoritative simulation	Optional local prediction for feel
+
+Network payload shrinks to: transforms, material IDs for visible objects, and occasional updated light textures. Latency is fine because visibility doesn’t need to be frame-perfect for humans; an extra 50 ms only adds one frame of overdraw.
+
+Quick occlusion-culling checklist in Godot 4.4
+Turn it on
+Project Settings → Rendering → Occlusion Culling → Use Occlusion Culling.
+
+Bake occluders once
+
+Add an OccluderInstance3D to each level root.
+
+Press Bake Occluders in the 3-D viewport toolbar.
+
+Static walls/rocks work best; skip transparent or animated stuff.
+
+Let the game toggle it at runtime (e.g. PC on / headset off):
+
+gdscript
+Copy
+Edit
+# Godot 4.4 / GDScript 2.0
+get_tree().root.use_occlusion_culling = true
+Tune cost vs. accuracy (PC can afford more rays):
+
+gdscript
+Copy
+Edit
+ProjectSettings.set_setting(
+    "rendering/occlusion_culling/occlusion_rays_per_thread", 64) # default 32
+LOD is automatic on imported scenes. To bias for VR:
+
+gdscript
+Copy
+Edit
+get_tree().root.mesh_lod_threshold = 2.0  # default 1 px; 2–4 px is good for mobile
+Minimal “visibility-only” stream example
+gdscript
+Copy
+Edit
+# Server-side script (PC)
+extends MultiplayerSpawner
+
+func _physics_process(delta):
+    var cam := $MainCamera
+    var visible_nodes := cam.get_visible_nodes()          # Godot 4.4 helper
+    rpc_unreliable_id(client_id, "update_visible", visible_nodes)
+
+remote func update_visible(list: PackedInt64Array):
+    # Client (headset) receives node IDs; hides everything else
+    for n in get_tree().get_nodes_in_group("streamed"):
+        n.visible = list.has(n.get_instance_id())
+Add your heavy RTX pass on the server and compress its result into a cubic ViewportTexture; send it occasionally and sample it in a sky-box or reflection probe on the headset.
+
+Extra optimisation tips
+Visibility Ranges (HLOD): Group far buildings under one parent and set visibility_range_begin/end so the whole block swaps to a single proxy mesh at distance. Works great with open-world terrain.
+
+Foveated rendering: Most VR runtimes expose eye-tracked foveation; you can raise mesh_lod_threshold outside the fovea for another 20-30 % GPU win.
+
+Signed-Distance-Field GI: If full RTX is overkill, bake SDFGI on the PC; only a low-res 3-D texture needs streaming.
+
+TL;DR
+Use occlusion culling (rays decide what’s hidden) plus mesh LOD to slash draw calls before you even transmit them. Compute-heavy RTX lighting can stay on the PC; the VR device just renders the trimmed, lighter scene. That gives you the “online-but-local” feel without demanding RTX-class hardware on the headset.

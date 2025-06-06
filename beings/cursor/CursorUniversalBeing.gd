@@ -16,6 +16,12 @@ class_name CursorUniversalBeing
 @export var enhanced_glow: bool = true
 @export var hover_feedback_intensity: float = 0.3
 
+# CONSCIOUSNESS RIPPLES - Make cursor actions visible
+var ripple_timer: float = 0.0
+var last_click_position: Vector3 = Vector3.ZERO
+var consciousness_ripple_radius: float = 2.0
+var interaction_history: Array[Dictionary] = []
+
 # Cursor visuals
 var cursor_viewport: SubViewport = null
 var cursor_container: SubViewportContainer = null
@@ -77,6 +83,12 @@ func pentagon_process(delta: float) -> void:
 	
 	# Update raycast
 	update_raycast_detection()
+	
+	# Update consciousness ripples from cursor movement
+	ripple_timer += delta
+	if ripple_timer >= 0.5:  # Create movement ripples every 0.5 seconds
+		_create_consciousness_ripple("movement")
+		ripple_timer = 0.0
 
 func pentagon_input(event: InputEvent) -> void:
 	super.pentagon_input(event)
@@ -294,6 +306,9 @@ func update_hover_visual() -> void:
 func handle_click() -> void:
 	print("🖱️ CURSOR CLICK! Hovered object: %s" % (hovered_object.name if hovered_object else "NONE"))
 	
+	# ENHANCED: Create consciousness ripple on every click
+	_enhance_click_feedback()
+	
 	if not hovered_object:
 		print("❌ No object to click on!")
 		return
@@ -405,3 +420,56 @@ func _on_cursor_inspected(being: UniversalBeing) -> void:
 	var console = get_tree().get_nodes_in_group("console").front()
 	if console and console.has_method("add_message"):
 		console.add_message("system", "Inspecting: %s (%s)" % [being.being_name, being.being_type])
+
+# ===== CONSCIOUSNESS RIPPLE SYSTEM =====
+
+func _create_consciousness_ripple(interaction_type: String) -> void:
+	"""Create visible consciousness ripples from cursor interactions"""
+	var mouse_pos = get_viewport().get_mouse_position()
+	var camera = get_viewport().get_camera_3d()
+	
+	if camera:
+		# Project mouse position to 3D world
+		var world_pos = camera.project_ray_origin(mouse_pos)
+		var ray_dir = camera.project_ray_normal(mouse_pos)
+		
+		# Create ripple at interaction point
+		var ripple_data = {
+			"position": world_pos,
+			"type": interaction_type,
+			"intensity": 1.0,
+			"timestamp": Time.get_ticks_msec()
+		}
+		
+		# Store interaction history
+		interaction_history.append(ripple_data)
+		if interaction_history.size() > 50:
+			interaction_history.pop_front()  # Keep last 50 interactions
+		
+		# Emit consciousness ripple signal if available
+		if has_signal("consciousness_ripple_created"):
+			consciousness_ripple_created.emit(world_pos, consciousness_ripple_radius, interaction_type)
+		
+		# Print consciousness feedback
+		if interaction_type == "click":
+			print("🎯 Consciousness ripple: %s at %v" % [interaction_type, world_pos])
+
+func _enhance_click_feedback() -> void:
+	"""Enhanced visual and consciousness feedback for clicks"""
+	last_click_position = get_cursor_tip_world_position()
+	_create_consciousness_ripple("click")
+	
+	# Create larger ripple for clicks
+	consciousness_ripple_radius = 3.0
+	
+	# Add interaction to history with more detail
+	var interaction_data = {
+		"type": "click",
+		"position": last_click_position,
+		"mode": "INSPECT" if current_mode == 1 else "INTERACT",
+		"target": hovered_object.name if hovered_object else "empty_space",
+		"consciousness_level": consciousness_level,
+		"timestamp": Time.get_ticks_msec()
+	}
+	
+	print("🎯 Enhanced click: %s" % interaction_data)
