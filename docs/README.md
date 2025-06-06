@@ -98,6 +98,7 @@ This project thrives on AI-human collaboration. Each AI has its own branch:
 - `gemma-patterns` - Behavior patterns
 - `chatgpt-genesis` - Biblical blueprints
 - `gemini-cosmic` - Cosmic insights
+- `upgrade_gdscript.py` - migrate scripts to Godot 4.4 (see `docs/UPGRADE_GDSCRIPT.md`)
 
 ## 📜 License
 
