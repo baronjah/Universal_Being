@@ -97,6 +97,7 @@ Universal_Being/
     ├── fix_akashic_references.py    # Reference fixing
     ├── validate_pentagon.py         # Pentagon validation
     ├── analyze_game_scripts.py      # Script analysis
+    ├── upgrade_scenes.py            # Godot 4.4 resource migration
     └── clean_project.py             # Project organization
 ```
 
@@ -488,7 +489,8 @@ component_name.ub.zip/
 ### 🔧 **Path Migration Tools**
 - `update_paths.py` - Automated path updating
 - `fix_akashic_references.py` - Reference fixing
-- Both tools update 50+ files automatically
+- `upgrade_scenes.py` - Godot 4.4 resource migration
+- These tools update 50+ files automatically
 
 ### ✅ **Validation Tools**
 - `validate_pentagon.py` - Pentagon compliance checking
