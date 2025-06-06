@@ -107,29 +107,31 @@ def main():
     # Scene integration check
     print("\n🎬 Scene Integration Check:")
     scene_file = "scenes/PERFECT_ULTIMATE_UNIVERSAL_BEING.tscn"
+    total_checks += 1
     if os.path.exists(scene_file):
         with open(scene_file, 'r', encoding='utf-8') as f:
             scene_content = f.read()
-        
+
         required_elements = [
             "GameStateSocketManager",
-            "GemmaAI", 
+            "GemmaAI",
             "ChatBubble",
             "GameStateDisplay",
             "F9 - Run comprehensive test"
         ]
-        
+
         missing_elements = []
         for element in required_elements:
             if element not in scene_content:
                 missing_elements.append(element)
-        
-        total_checks += 1
+
         if missing_elements:
             print(f"❌ Scene Integration: Missing elements: {', '.join(missing_elements)}")
         else:
             print("✅ Scene Integration: All enhanced elements present")
             passed_checks += 1
+    else:
+        print(f"❌ Scene file not found: {scene_file}")
     
     # Summary
     print("\n" + "=" * 60)
