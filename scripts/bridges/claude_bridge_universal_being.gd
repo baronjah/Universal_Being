@@ -85,6 +85,7 @@ func _cleanup_connection() -> void:
 
 # Public interface for other beings
 func send_to_claude(content: String, context: Dictionary = {}) -> void:
+	pass
 	var message = {
 		"content": content,
 		"context": context,
@@ -93,12 +94,14 @@ func send_to_claude(content: String, context: Dictionary = {}) -> void:
 	_message_queue.append(message)
 
 func get_claude_response() -> String:
+	pass
 	var response = _response_buffer
 	_response_buffer = ""
 	return response
 
 # AI interface for dynamic behavior modification
 func ai_interface() -> Dictionary:
+	pass
 	var base_interface = super.ai_interface()
 	base_interface.custom_commands = [
 		"send_message",

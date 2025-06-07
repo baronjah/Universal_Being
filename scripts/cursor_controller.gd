@@ -147,6 +147,7 @@ func _can_connect_sockets(socket_a: Marker3D, socket_b: Marker3D) -> bool:
 	return (type_a == "output" and type_b == "input") or (type_a == "input" and type_b == "output")
 
 func _connect_sockets(socket_a: Marker3D, socket_b: Marker3D) -> void:
+	pass
 	var output_socket = socket_a if socket_a.get_meta("socket_type") == "output" else socket_b
 	var input_socket = socket_a if socket_a.get_meta("socket_type") == "input" else socket_b
 	
@@ -162,6 +163,7 @@ func _connect_sockets(socket_a: Marker3D, socket_b: Marker3D) -> void:
 		print("🔗 Connected: ", output_being.being_name, " -> ", input_being.being_name)
 
 func _find_parent_being(node: Node) -> UniversalBeing:
+	pass
 	var current = node
 	while current:
 		if current is UniversalBeing:
@@ -214,6 +216,7 @@ func _update_cursor_visual() -> void:
 # ===== AI INTEGRATION =====
 
 func ai_interface() -> Dictionary:
+	pass
 	var base = super.ai_interface()
 	base.cursor_state = {
 		"position": global_position,

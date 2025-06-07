@@ -38,35 +38,35 @@ func _initialize_socket_groups() -> void:
 func _create_default_sockets() -> void:
 	"""Create default socket configuration for Universal Being"""
 	# Visual sockets
-	add_socket(UniversalBeingSocket.SocketType.VISUAL, "primary_visual", "primary_visual_socket")
-	add_socket(UniversalBeingSocket.SocketType.VISUAL, "aura_effects", "aura_effects_socket")
-	add_socket(UniversalBeingSocket.SocketType.VISUAL, "consciousness_indicator", "consciousness_socket")
+	add_typed_socket(UniversalBeingSocket.SocketType.VISUAL, "primary_visual", "primary_visual_socket")
+	add_typed_socket(UniversalBeingSocket.SocketType.VISUAL, "aura_effects", "aura_effects_socket")
+	add_typed_socket(UniversalBeingSocket.SocketType.VISUAL, "consciousness_indicator", "consciousness_socket")
 	
 	# Script sockets
-	add_socket(UniversalBeingSocket.SocketType.SCRIPT, "behavior_logic", "behavior_socket")
-	add_socket(UniversalBeingSocket.SocketType.SCRIPT, "ai_interface", "ai_socket")
-	add_socket(UniversalBeingSocket.SocketType.SCRIPT, "evolution_rules", "evolution_socket")
+	add_typed_socket(UniversalBeingSocket.SocketType.SCRIPT, "behavior_logic", "behavior_socket")
+	add_typed_socket(UniversalBeingSocket.SocketType.SCRIPT, "ai_interface", "ai_socket")
+	add_typed_socket(UniversalBeingSocket.SocketType.SCRIPT, "evolution_rules", "evolution_socket")
 	
 	# Shader sockets
-	add_socket(UniversalBeingSocket.SocketType.SHADER, "surface_material", "surface_shader")
-	add_socket(UniversalBeingSocket.SocketType.SHADER, "effect_overlay", "effect_shader")
+	add_typed_socket(UniversalBeingSocket.SocketType.SHADER, "surface_material", "surface_shader")
+	add_typed_socket(UniversalBeingSocket.SocketType.SHADER, "effect_overlay", "effect_shader")
 	
 	# Action sockets
-	add_socket(UniversalBeingSocket.SocketType.ACTION, "pentagon_actions", "pentagon_action_socket")
-	add_socket(UniversalBeingSocket.SocketType.ACTION, "custom_behaviors", "behavior_action_socket")
+	add_typed_socket(UniversalBeingSocket.SocketType.ACTION, "pentagon_actions", "pentagon_action_socket")
+	add_typed_socket(UniversalBeingSocket.SocketType.ACTION, "custom_behaviors", "behavior_action_socket")
 	
 	# Memory sockets
-	add_socket(UniversalBeingSocket.SocketType.MEMORY, "core_state", "state_memory_socket")
-	add_socket(UniversalBeingSocket.SocketType.MEMORY, "interaction_history", "history_socket")
-	add_socket(UniversalBeingSocket.SocketType.MEMORY, "evolution_data", "evolution_memory_socket")
+	add_typed_socket(UniversalBeingSocket.SocketType.MEMORY, "core_state", "state_memory_socket")
+	add_typed_socket(UniversalBeingSocket.SocketType.MEMORY, "interaction_history", "history_socket")
+	add_typed_socket(UniversalBeingSocket.SocketType.MEMORY, "evolution_data", "evolution_memory_socket")
 	
 	# Interface sockets (for UI beings)
-	add_socket(UniversalBeingSocket.SocketType.INTERFACE, "control_interface", "ui_socket")
-	add_socket(UniversalBeingSocket.SocketType.INTERFACE, "inspector_panel", "inspector_socket")
+	add_typed_socket(UniversalBeingSocket.SocketType.INTERFACE, "control_interface", "ui_socket")
+	add_typed_socket(UniversalBeingSocket.SocketType.INTERFACE, "inspector_panel", "inspector_socket")
 
 # ===== SOCKET MANAGEMENT =====
 
-func add_socket(socket_type: UniversalBeingSocket.SocketType, name: String, id: String = "") -> UniversalBeingSocket:
+func add_typed_socket(socket_type: UniversalBeingSocket.SocketType, name: String, id: String = "") -> UniversalBeingSocket:
 	"""Add a new socket to the being"""
 	var socket = UniversalBeingSocket.new(socket_type, name, id)
 	

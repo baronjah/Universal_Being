@@ -58,6 +58,7 @@ func load_universe_templates():
 	template_selector.add_item("Quantum Maze")
 
 func _on_create_universe():
+	pass
 	var universe_name = universe_name_input.text.strip_edges()
 	if universe_name.is_empty():
 		log_message("[color=red]Error: Universe name cannot be empty[/color]")
@@ -89,6 +90,7 @@ func _on_create_universe():
 	universe_name_input.text = ""
 
 func _on_universe_selected():
+	pass
 	var selected_item = universe_tree.get_selected()
 	if selected_item:
 		selected_universe = selected_item.get_text(0)

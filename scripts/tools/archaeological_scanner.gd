@@ -143,6 +143,7 @@ class ArchaeologicalReport:
 		return shadowing_violations.size() + unused_signals.size() + socket_enum_issues.size() + unused_parameters.size()
 	
 	func generate_summary() -> String:
+		pass
 		var summary = []
 		summary.append("🏺 ARCHAEOLOGICAL SCAN REPORT")
 		summary.append("Timestamp: %s" % scan_timestamp)

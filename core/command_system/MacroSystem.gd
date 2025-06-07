@@ -27,6 +27,7 @@ class Macro:
 		commands.append(MacroCommand.new(cmd, delay_ms))
 	
 	func to_dict() -> Dictionary:
+		pass
 		var cmds = []
 		for cmd in commands:
 			cmds.append(cmd.to_dict())

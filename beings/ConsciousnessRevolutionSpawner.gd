@@ -51,6 +51,21 @@ func pentagon_input(event: InputEvent) -> void:
 			print("🛑 Emergency consciousness revolution shutdown requested")
 			_emergency_shutdown()
 
+func _emergency_shutdown() -> void:
+	"""Emergency shutdown of consciousness revolution"""
+	print("🛑 EMERGENCY SHUTDOWN: Halting all consciousness evolution!")
+	# Stop all spawning
+	spawn_enabled = false
+	# Clear all evolving beings
+	for being in evolution_queue:
+		if is_instance_valid(being):
+			being.queue_free()
+	evolution_queue.clear()
+	# Disable ripple system
+	if ripple_system:
+		ripple_system.set_physics_process(false)
+		ripple_system.set_process(false)
+
 func pentagon_sewers() -> void:
 	print("🔄 %s: Revolution system shutting down gracefully..." % being_name)
 	if ripple_system:
@@ -191,13 +206,10 @@ func _update_spawning_process(delta: float) -> void:
 	match spawning_phase:
 		1:  # Creating ripple system
 			# Visual feedback would be on material/mesh instead of modulate for 3D
-			pass
 		2:  # Creating Gemma
 			# Visual feedback would be on material/mesh instead of modulate for 3D
-			pass
 		3:  # Connecting systems
 			# Visual feedback would be on material/mesh instead of modulate for 3D
-			pass
 		4:  # Revolution active
 			# Visual feedback completed
 			pass

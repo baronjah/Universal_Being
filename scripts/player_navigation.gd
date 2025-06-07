@@ -15,6 +15,7 @@ func _ready():
     _create_crosshair()
 
 func _create_crosshair():
+	pass
     var crosshair = ColorRect.new()
     crosshair.color = Color.WHITE
     crosshair.size = Vector2(4, 4)
@@ -33,6 +34,7 @@ func _unhandled_input(event):
             camera.position.z = clamp(camera.position.z + zoom_speed, -50, -2)
 
 func _process(delta):
+	pass
     var direction = Vector3.ZERO
     if Input.is_action_pressed("move_forward"):
         direction -= camera.global_transform.basis.z

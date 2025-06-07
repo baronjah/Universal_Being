@@ -128,6 +128,7 @@ func lock_focus(locked: bool = true) -> void:
 # ===== AI INTEGRATION =====
 
 func ai_interface() -> Dictionary:
+	pass
 	var base_interface = super.ai_interface()
 	
 	base_interface["focus_info"] = {

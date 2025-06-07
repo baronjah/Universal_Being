@@ -121,13 +121,13 @@ func _attempt_mcp_connection() -> void:
         print("🔌 %s: WebSocket connection initiated..." % being_name)
 
 func _process_websocket_messages() -> void:
+	pass
     # Process incoming WebSocket messages
     var state = websocket.get_ready_state()
     
     match state:
         WebSocketPeer.STATE_CONNECTING:
             # Still connecting
-            pass
         WebSocketPeer.STATE_OPEN:
             if not desktop_connected:
                 _on_mcp_connected()
@@ -184,6 +184,7 @@ func _on_mcp_disconnected() -> void:
 # ===== MESSAGE HANDLING =====
 
 func _handle_mcp_message(message_str: String) -> void:
+	pass
     # Handle incoming MCP message from Claude Desktop
     var json = JSON.new()
     var parse_result = json.parse(message_str)
@@ -206,11 +207,11 @@ func _handle_mcp_message(message_str: String) -> void:
             _handle_ai_collaboration(message)
         "heartbeat_response":
             # Claude Desktop is alive
-            pass
         _:
             print("❓ %s: Unknown MCP message type: %s" % [being_name, message.get("type")])
 
 func _handle_create_being_request(message: Dictionary) -> void:
+	pass
     # Handle request to create a Universal Being from Claude Desktop
     var being_type = message.get("being_type", "generic")
     var being_name = message.get("being_name", "Desktop Created Being")
@@ -242,6 +243,7 @@ func _handle_create_being_request(message: Dictionary) -> void:
             print("✅ %s: Being created successfully via Claude Desktop!" % being_name)
 
 func _handle_ai_collaboration(message: Dictionary) -> void:
+	pass
     # Handle AI collaboration commands
     var command = message.get("command")
     
@@ -290,6 +292,7 @@ func enable_triple_ai_mode() -> void:
         })
 
 func find_claude_code_bridge() -> Node:
+	pass
     # Find existing Claude Code bridge
     var main_scene = get_tree().current_scene
     return _find_node_by_type(main_scene, "ai_bridge")
@@ -340,6 +343,7 @@ func create_semantic_message(intent: String, being_data: Dictionary = {}) -> Dic
     }
 
 func _handle_semantic_intent(message: Dictionary) -> void:
+	pass
     # Handle semantic intent messages from Claude Desktop
     var intent = message.get("intent")
     print("🎭 %s: Processing semantic intent: %s" % [being_name, intent])
@@ -442,6 +446,7 @@ func _process_message_queue() -> void:
 # ===== AI INTEGRATION =====
 
 func ai_interface() -> Dictionary:
+	pass
     # Enhanced AI interface for MCP bridge
     var base_interface = super.ai_interface()
     base_interface.custom_commands = [
@@ -491,6 +496,7 @@ func _send_disconnect_message() -> void:
     })
 
 func _handle_modify_being_request(message: Dictionary) -> void:
+	pass
     # Handle request to modify an existing Universal Being
     var being_id = message.get("being_id")
     var modifications = message.get("modifications", {})
@@ -544,6 +550,7 @@ func orchestrate_ai_collaboration(message: Dictionary) -> void:
     # Implementation would coordinate AI actions
 
 func find_all_universal_beings(node: Node) -> Array:
+	pass
     # Find all Universal Beings in the scene tree
     var beings = []
     if node.has_method("pentagon_init"):  # It's a Universal Being
@@ -553,6 +560,7 @@ func find_all_universal_beings(node: Node) -> Array:
     return beings
 
 func calculate_total_consciousness(beings: Array) -> int:
+	pass
     # Calculate total consciousness across all beings
     var total = 0
     for being in beings:

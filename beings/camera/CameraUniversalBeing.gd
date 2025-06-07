@@ -186,6 +186,7 @@ func set_camera_enabled(enabled: bool) -> void:
 	print("🎥 CameraUniversalBeing: Camera %s" % ("enabled" if enabled else "disabled"))
 
 func get_camera_info() -> Dictionary:
+	pass
 	# Get camera information for AI/debug
 	var info = {
 		"has_camera": trackball_camera != null,
@@ -207,6 +208,7 @@ func get_camera_info() -> Dictionary:
 # ===== AI INTEGRATION =====
 
 func ai_interface() -> Dictionary:
+	pass
 	# Enhanced AI interface for camera beings
 	var base_interface = super()
 	
@@ -252,6 +254,7 @@ func ai_invoke_method(method_name: String, args: Array = []) -> Variant:
 # ===== CAMERA EFFECTS INTEGRATION =====
 
 func _on_consciousness_changed(new_level: int) -> void:
+	pass
 	# Override consciousness change to update effects
 	var old_level = consciousness_level  # Store old level before parent changes it
 	super._on_consciousness_changed(new_level)
@@ -276,6 +279,7 @@ func reset_camera_position() -> void:
 # ===== DEBUG FUNCTIONS =====
 
 func debug_camera_info() -> String:
+	pass
 	# Get camera debug information
 	var info = []
 	info.append("=== Camera Universal Being Debug ===")

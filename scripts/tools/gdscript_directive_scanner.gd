@@ -144,6 +144,7 @@ class DirectiveScanReport:
 		conflicts_by_type[conflict.conflict_type] += 1
 	
 	func get_summary() -> String:
+		pass
 		var summary = []
 		summary.append("🚫 GDScript Directive Conflict Scan Report")
 		summary.append("Timestamp: %s" % scan_timestamp)

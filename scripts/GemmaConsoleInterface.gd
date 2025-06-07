@@ -51,7 +51,6 @@ const COMMAND_COLOR = Color(1.0, 0.9, 0.7)  # Light yellow for commands
 var interface_title: String = "Gemma Console"
 var interface_layer: int = 100
 var interface_theme: String = "gemma_console"
-var scene_is_loaded: bool = false
 var current_interface_state: int = 0
 
 # Interface state enum

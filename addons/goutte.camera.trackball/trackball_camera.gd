@@ -354,6 +354,7 @@ func process_zoom(delta: float):
 
 
 func process_drag_inertia(delta: float):
+	pass
 	var inertia := _dragInertia.length()
 	if inertia > self.inertia_threshold:
 		apply_rotation_from_tangent(_dragInertia * inertia_strength)
@@ -373,6 +374,7 @@ func process_roll_inertia(delta: float):
 
 
 func process_zoom_inertia(delta: float):
+	pass
 	# This whole function is … bouerk.  Please share your improvements!
 	var cpl := get_distance_to_target()
 	if abs(_zoomInertia) > zoom_inertia_threshold:
@@ -444,6 +446,7 @@ func apply_pitch_constraint(on_transform: Transform3D) -> Transform3D:
 
 
 func apply_soft_pitch_constraint(on_transform: Transform3D) -> Transform3D:
+	pass
 	var eulers := on_transform.basis.get_euler()
 	var top_overflow := - QUARTER_CIRCLE * self.pitch_top_limit - eulers.x
 	var bottom_overflow := QUARTER_CIRCLE * self.pitch_bottom_limit + eulers.x
@@ -476,6 +479,7 @@ func apply_soft_pitch_constraint(on_transform: Transform3D) -> Transform3D:
 # Experimental: assumes the pitch constraint axis is UP
 # todo: consider get_pitch_constraint_axis() at some point
 func apply_hard_pitch_constraint(on_transform: Transform3D) -> Transform3D:
+	pass
 	# eulers.x is in radians, -TAU/4 at north pole, TAU/4 at south, 0 at equator
 	var eulers := on_transform.basis.get_euler()
 	var top_overflow = - QUARTER_CIRCLE * self.pitch_top_limit - eulers.x
@@ -494,6 +498,7 @@ func apply_hard_pitch_constraint(on_transform: Transform3D) -> Transform3D:
 # Glitchy (unstable, drifts).   This naive implementation needs more work.
 # But it is an interesting approach, so it's still hanging around for now.
 func apply_hard_pitch_constraint_drift(on_transform: Transform3D) -> Transform3D:
+	pass
 	var eulers := on_transform.basis.get_euler()
 	var previousEulerX := eulers.x
 	# 1. Clamp the camera angle
@@ -520,6 +525,7 @@ func apply_hard_pitch_constraint_drift(on_transform: Transform3D) -> Transform3D
 
 
 func apply_rotation_from_tangent(tangent: Vector2):
+	pass
 	var up: Vector3
 	if should_stabilize_horizon():
 		up = get_horizon()

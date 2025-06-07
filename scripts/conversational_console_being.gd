@@ -521,6 +521,7 @@ func _on_window_close_requested() -> void:
 # ===== AI INTEGRATION =====
 
 func ai_interface() -> Dictionary:
+	pass
 	var base_interface = super.ai_interface()
 	base_interface.custom_commands = ["send_message", "add_message", "toggle_visibility"]
 	base_interface.custom_properties = {

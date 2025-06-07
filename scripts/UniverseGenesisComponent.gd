@@ -261,6 +261,7 @@ func _cmd_universe_template(args: Array) -> String:
 		return "❌ Failed to create universe from template '%s'" % template_name
 
 func _cmd_universe_recursive(args: Array) -> String:
+	pass
 	var depth = int(args[0]) if args.size() > 0 else 3
 	var count = int(args[1]) if args.size() > 1 else 2
 	
@@ -271,6 +272,7 @@ func _cmd_universe_recursive(args: Array) -> String:
 	return "🌌 Created %d universes in %d levels of recursion!" % [universes.size(), depth]
 
 func _cmd_universe_dna(args: Array) -> String:
+	pass
 	var dna_report = "🧬 Universe DNA Report:\n"
 	
 	for category in universe_dna:

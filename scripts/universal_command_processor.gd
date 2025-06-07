@@ -559,7 +559,6 @@ func _execute_creation_plan(plan: Array) -> bool:
     """Execute a creation plan"""
     for step in plan:
         # Execute each step
-        pass
     return true
 
 # ===== MACRO SYSTEM =====

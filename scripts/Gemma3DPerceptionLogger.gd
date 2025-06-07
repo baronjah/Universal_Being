@@ -573,7 +573,6 @@ func _calculate_apparent_size(being: Node, distance: float) -> float:
 	var base_size = 1.0  # Assume base size
 	if being.has_method("get_bounds"):
 		# Would get actual bounds
-		pass
 	
 	return base_size / max(distance * distance, 1.0)
 
@@ -788,6 +787,7 @@ func _assess_pattern_significance(clusters: Array) -> float:
 	return float(clusters.size()) / 10.0
 
 func _calculate_interaction_likelihood(being1: Dictionary, being2: Dictionary) -> float:
+	pass
 	var distance = being1.position.distance_to(being2.position)
 	return max(0.0, 1.0 - distance / 20.0)
 

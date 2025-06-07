@@ -104,6 +104,7 @@ func connect_to_systems() -> void:
 		print("🔗 Connected to Gemma AI")
 
 func find_cursor_being() -> Node:
+	pass
 	# Find cursor being in the scene
 	var main = get_tree().current_scene
 	if main:
@@ -190,6 +191,7 @@ func inspect_being(being: UniversalBeing) -> void:
 	inspection_logged.emit(inspection_data)
 
 func get_being_components(being: UniversalBeing) -> Array:
+	pass
 	var components = []
 	if being.has_method("get_components"):
 		components = being.get_components()
@@ -198,6 +200,7 @@ func get_being_components(being: UniversalBeing) -> Array:
 	return components
 
 func get_editable_properties(being: UniversalBeing) -> Dictionary:
+	pass
 	# Properties that can be edited in the inspector
 	var editable = {}
 	
@@ -254,6 +257,7 @@ func get_editable_properties(being: UniversalBeing) -> Dictionary:
 	return editable
 
 func get_available_actions(being: UniversalBeing) -> Array:
+	pass
 	var actions = []
 	
 	# Universal actions
@@ -372,6 +376,7 @@ func save_being_to_akashic(being: UniversalBeing) -> void:
 		print("💾 Saved being to Akashic Records: %s" % save_path)
 
 func export_being_dna(being: UniversalBeing) -> void:
+	pass
 	# Export being DNA for cloning/evolution
 	var dna = {
 		"being_name": being.being_name,
@@ -417,6 +422,7 @@ func get_connected_systems() -> Dictionary:
 	return connected_systems
 
 func is_fully_connected() -> bool:
+	pass
 	# Check if all essential systems are connected
 	var essential_systems = ["inspector", "console", "cursor", "akashic_records"]
 	for system in essential_systems:

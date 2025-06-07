@@ -163,6 +163,7 @@ func _create_player_body() -> void:
 # ===== PLASMOID MOVEMENT =====
 
 func _physics_process(delta: float) -> void:
+	pass
 	# Plasmoid movement - no gravity, free floating like text-based game
 	
 	# Get input direction in 3D space (W=FORWARD IS LAW!)

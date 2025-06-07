@@ -40,6 +40,7 @@ const COMMANDS = {
 # ===== INITIALIZATION =====
 
 func _init() -> void:
+	pass
 	# Parse command line arguments
 	var args = OS.get_cmdline_args()
 	if args.size() > 0:
@@ -50,6 +51,7 @@ func _init() -> void:
 # ===== COMMAND PROCESSING =====
 
 func process_command(args: Array) -> void:
+	pass
 	var command = args[0]
 	var command_args = args.slice(1)
 	
@@ -96,6 +98,7 @@ func print_usage(command: String) -> void:
 # ===== BEING GENERATION =====
 
 func create_new_being(args: Array) -> void:
+	pass
 	var being_name: String = args[0]
 	var being_type: String = args[1]
 	var purpose: String = args[2] if args.size() > 2 else ""
@@ -167,6 +170,7 @@ func create_new_being(args: Array) -> void:
 # ===== COMPONENT GENERATION =====
 
 func create_new_component(args: Array) -> void:
+	pass
 	var component_name: String = args[0]
 	var description: String = args[1] if args.size() > 1 else ""
 	
@@ -175,6 +179,7 @@ func create_new_component(args: Array) -> void:
 # ===== LISTING =====
 
 func list_items(args: Array) -> void:
+	pass
 	var type = args[0] if args.size() > 0 else "beings"
 	
 	match type:
@@ -187,6 +192,7 @@ func list_items(args: Array) -> void:
 			print("Available types: beings, components")
 
 func list_beings() -> void:
+	pass
 	var dir = DirAccess.open("res://beings")
 	if not dir:
 		push_error("Failed to open beings directory")
@@ -203,6 +209,7 @@ func list_beings() -> void:
 		file_name = dir.get_next()
 
 func list_components() -> void:
+	pass
 	var dir = DirAccess.open("res://components")
 	if not dir:
 		push_error("Failed to open components directory")
@@ -221,6 +228,7 @@ func list_components() -> void:
 # ===== TESTING =====
 
 func test_being(being_name: String) -> void:
+	pass
 	var file_name = being_name.to_snake_case() + "_universal_being.gd"
 	var file_path = "res://beings/" + file_name
 	

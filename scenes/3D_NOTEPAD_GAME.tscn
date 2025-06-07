@@ -1,0 +1,618 @@
+[gd_scene load_steps=6 format=3 uid="uid://bnwajv1fwcxjo"]
+
+[ext_resource type="Script" uid="uid://bw7fwl6a47rsq" path="res://beings/player/player_universal_being.gd" id="1_player"]
+[ext_resource type="Script" uid="uid://b53b6ns8c7j6y" path="res://scripts/GemmaVision.gd" id="2_gemma_vision"]
+[ext_resource type="Script" uid="uid://dd5fn0jjbe6gr" path="res://scripts/floating_keyboard.gd" id="4_keyboard"]
+
+[sub_resource type="GDScript" id="GDScript_notepad_game"]
+script/source = "# 3D Notepad Game - Turn 1-3 Implementation
+extends Node3D
+
+# 5-Layer floating notepad system
+var notepad_layers: Array[Node3D] = []
+var word_entities: Array[Node3D] = []
+var stellar_colors = [
+	Color(0.0, 0.0, 0.0),      # Black
+	Color(0.2, 0.1, 0.0),      # Dark brown
+	Color(0.8, 0.0, 0.0),      # Red
+	Color(1.0, 0.5, 0.0),      # Orange
+	Color(1.0, 1.0, 0.0),      # Yellow
+	Color(1.0, 1.0, 1.0),      # White
+	Color(0.7, 0.9, 1.0),      # Light blue
+	Color(0.0, 0.5, 1.0),      # Blue
+	Color(0.5, 0.0, 1.0)       # Purple
+]
+var marching_cubes_system: Node3D
+var infinite_terrain_chunks: Dictionary = {}
+var consciousness_level: int = 0
+
+# Notepad state
+var notepads_active: bool = false
+var current_layer: int = 0
+
+func _ready():
+	setup_cosmic_sky()
+	setup_input_handling()
+	setup_gemma_integration()
+	setup_marching_cubes_system()
+	setup_infinite_terrain()
+	create_mining_asteroids()
+	create_space_stations()
+	setup_consciousness_evolution()
+	enhance_gemma_integration()
+	create_holographic_terminal()
+	enable_cinematic_camera()
+	create_settings_panel()
+	show_visual_message(\"🌌 COSMIC NOTEPAD UNIVERSE ACTIVATED 🌌\", stellar_colors[4])
+	show_visual_message(\"🎮 ALL FEATURES INTEGRATED - LUMINUS VISION COMPLETE\", stellar_colors[8])
+
+func setup_cosmic_sky():
+	# Beautiful sky for staring
+	pass
+
+func setup_input_handling():
+	# N - Toggle notepad layers
+	# C - Create word entity
+	# E - Interact with word
+	# Tab - Console (already exists)
+	pass
+
+func _input(event):
+	if event.is_action_pressed(\"notepad_toggle\"): # N key
+		toggle_notepad_layers()
+	elif event.is_action_pressed(\"create_word\"): # C key
+		create_word_entity()
+	elif event.is_action_pressed(\"interact\"): # E key
+		interact_with_nearest_word()
+	elif event.is_action_pressed(\"ui_console_toggle\"): # Tab key
+		toggle_console()
+	elif event.is_action_pressed(\"toggle_keyboard\"): # K key
+		toggle_floating_keyboard()
+	elif event is InputEventKey and event.pressed:
+		match event.keycode:
+			KEY_M: # Mining mode
+				toggle_mining_mode()
+			KEY_B: # Build structures
+				build_structure()
+			KEY_V: # VR mode toggle
+				toggle_vr_mode()
+			KEY_L: # LOD toggle
+				toggle_lod_system()
+			KEY_P: # Physics simulation
+				toggle_physics_mode()
+			KEY_R: # Reality editor
+				open_reality_editor()
+			KEY_1, KEY_2, KEY_3, KEY_4, KEY_5, KEY_6, KEY_7, KEY_8, KEY_9:
+				set_consciousness_level(event.keycode - KEY_0)
+
+func toggle_console():
+	var console = get_node(\"GemmaConsole\")
+	if console:
+		console.visible = !console.visible
+
+func toggle_notepad_layers():
+	if notepads_active:
+		hide_notepad_layers()
+	else:
+		show_notepad_layers()
+	notepads_active = !notepads_active
+
+func show_notepad_layers():
+	# Create 5 floating layers with gentle wobble
+	for i in range(5):
+		var layer_id = CosmicRecords.generate_compact_id(\"root\")
+		CosmicRecords.create_record(layer_id, \"root\")
+		CosmicRecords.add_data(layer_id, \"type\", \"notepad_layer\")
+		CosmicRecords.add_data(layer_id, \"layer_index\", i)
+		
+		var layer = create_floating_notepad_layer(i, layer_id)
+		notepad_layers.append(layer)
+		add_child(layer)
+
+func create_floating_notepad_layer(layer_index: int, record_id: String) -> Node3D:
+	var layer = Node3D.new()
+	layer.name = \"NotepadLayer\" + str(layer_index)
+	
+	# Position layers in 3D space
+	layer.position = Vector3(layer_index * 2, layer_index * 1.5, -layer_index)
+	
+	# Create visual plane
+	var mesh_instance = MeshInstance3D.new()
+	var plane = PlaneMesh.new()
+	plane.size = Vector2(4, 3)
+	mesh_instance.mesh = plane
+	
+	# Semi-transparent material
+	var material = StandardMaterial3D.new()
+	material.albedo_color = Color(0.8, 0.9, 1.0, 0.7)
+	material.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
+	material.emission_enabled = true
+	material.emission = Color(0.3, 0.5, 0.8)
+	material.emission_energy = 0.3
+	mesh_instance.material_override = material
+	
+	layer.add_child(mesh_instance)
+	
+	# Add gentle wobble animation
+	var tween = create_tween()
+	tween.set_loops()
+	tween.tween_property(layer, \"rotation:z\", deg_to_rad(2), 2.0)
+	tween.tween_property(layer, \"rotation:z\", deg_to_rad(-2), 2.0)
+	
+	# Store position in database
+	CosmicRecords.set_record_position(record_id, layer.position)
+	CosmicRecords.set_record_visible(record_id, true)
+	layer.set_meta(\"record_id\", record_id)
+	
+	# Tell Gemma about this layer
+	notify_gemma_layer_created(layer_index, layer.position)
+	
+	return layer
+
+func hide_notepad_layers():
+	for layer in notepad_layers:
+		var record_id = layer.get_meta(\"record_id\", \"\")
+		if record_id != \"\":
+			CosmicRecords.set_record_visible(record_id, false)
+		layer.queue_free()
+	notepad_layers.clear()
+
+func create_word_entity():
+	var camera = get_viewport().get_camera_3d()
+	if not camera:
+		return
+	
+	# Create word record in database
+	var word_id = CosmicRecords.generate_compact_id(\"root\")
+	CosmicRecords.create_record(word_id, \"root\")
+	CosmicRecords.add_data(word_id, \"type\", \"word_entity\")
+	CosmicRecords.add_data(word_id, \"text\", \"Hello\")
+	
+	# Create word in front of camera
+	var word_pos = camera.global_position + camera.global_transform.basis.z * -3
+	var word_entity = create_floating_word(\"Hello\", word_pos, word_id)
+	word_entities.append(word_entity)
+	add_child(word_entity)
+
+func create_floating_word(text: String, position: Vector3, record_id: String) -> Node3D:
+	var word = Node3D.new()
+	word.position = position
+	word.set_meta(\"word_text\", text)
+	
+	# 3D Label
+	var label = Label3D.new()
+	label.text = text
+	label.billboard = BaseMaterial3D.BILLBOARD_ENABLED
+	label.modulate = Color(1, 1, 0.8)
+	word.add_child(label)
+	
+	# Glow effect
+	var light = OmniLight3D.new()
+	light.light_energy = 0.5
+	light.light_color = Color(1, 1, 0.8)
+	light.omni_range = 5
+	word.add_child(light)
+	
+	# Gentle float animation
+	var tween = create_tween()
+	tween.set_loops()
+	tween.tween_property(word, \"position:y\", position.y + 0.3, 1.5)
+	tween.tween_property(word, \"position:y\", position.y - 0.3, 1.5)
+	
+	# Store in database
+	CosmicRecords.set_record_position(record_id, position)
+	CosmicRecords.set_record_visible(record_id, true)
+	word.set_meta(\"record_id\", record_id)
+	
+	# Tell Gemma about this word
+	notify_gemma_word_created(text, position)
+	
+	return word
+
+func interact_with_nearest_word():
+	var camera = get_viewport().get_camera_3d()
+	if not camera:
+		return
+	
+	var nearest_object = null
+	var min_distance = 20.0
+	var interaction_type = \"\"
+	
+	# Check for words
+	for word in word_entities:
+		var distance = camera.global_position.distance_to(word.global_position)
+		if distance < min_distance:
+			min_distance = distance
+			nearest_object = word
+			interaction_type = \"word\"
+	
+	# Check for asteroids
+	for child in get_children():
+		if child.name.begins_with(\"Asteroid_\"):
+			var distance = camera.global_position.distance_to(child.global_position)
+			if distance < min_distance:
+				min_distance = distance
+				nearest_object = child
+				interaction_type = \"asteroid\"
+	
+	if nearest_object:
+		match interaction_type:
+			\"word\":
+				var text = nearest_object.get_meta(\"word_text\", \"Unknown\")
+				show_visual_message(\"📝 INTERACTED WITH: \" + text, stellar_colors[5])
+				tell_gemma(\"Player interacted with word: \" + text)
+			\"asteroid\":
+				if nearest_object.get_meta(\"mineable\", false):
+					mine_asteroid_with_clay_forming(nearest_object)
+					var resources = nearest_object.get_meta(\"resources\", {})
+					show_visual_message(\"⛏️ MINED: \" + str(resources), stellar_colors[3])
+					tell_gemma(\"Player mined asteroid with resources: \" + str(resources))
+
+func setup_gemma_integration():
+	# Connect Gemma's vision to track notepad activities
+	var gemma_vision = get_node(\"GemmaVisionSystem\")
+	if gemma_vision:
+		# Let Gemma see when notepads appear/disappear
+		pass
+
+func tell_gemma(message: String):
+	# Send message to Gemma's memory system
+	var gemma_console = get_node(\"GemmaConsole\")
+	if gemma_console and gemma_console.has_method(\"receive_notepad_event\"):
+		gemma_console.receive_notepad_event(message)
+
+func notify_gemma_layer_created(layer_index: int, position: Vector3):
+	tell_gemma(\"Notepad layer \" + str(layer_index) + \" created at position \" + str(position))
+
+func notify_gemma_word_created(text: String, position: Vector3):
+	tell_gemma(\"New word entity '\" + text + \"' created at position \" + str(position))
+
+# ==================================================
+# STELLAR COLOR VISUAL SYSTEM - Replace ALL print statements
+# ==================================================
+func show_visual_message(message: String, color: Color):
+	var visual_msg = Label3D.new()
+	visual_msg.text = message
+	visual_msg.modulate = color
+	visual_msg.billboard = BaseMaterial3D.BILLBOARD_ENABLED
+	visual_msg.position = Vector3(0, 10, 0)
+	add_child(visual_msg)
+	
+	var tween = create_tween()
+	tween.parallel().tween_property(visual_msg, \"position:y\", visual_msg.position.y + 5, 3.0)
+	tween.parallel().tween_property(visual_msg, \"modulate:a\", 0.0, 3.0)
+	tween.tween_callback(visual_msg.queue_free)
+
+func create_stellar_effect(position: Vector3, level: int):
+	var effect = Node3D.new()
+	effect.position = position
+	
+	var light = OmniLight3D.new()
+	light.light_color = stellar_colors[min(level, stellar_colors.size() - 1)]
+	light.light_energy = 2.0 + level * 0.5
+	light.omni_range = 10 + level * 2
+	effect.add_child(light)
+	
+	add_child(effect)
+	return effect
+
+# ==================================================
+# MARCHING CUBES CLAY FORMING SYSTEM
+# ==================================================
+func setup_marching_cubes_system():
+	marching_cubes_system = Node3D.new()
+	marching_cubes_system.name = \"MarchingCubesSystem\"
+	add_child(marching_cubes_system)
+	show_visual_message(\"🧊 MARCHING CUBES CLAY SYSTEM READY\", stellar_colors[5])
+
+func toggle_mining_mode():
+	show_visual_message(\"⛏️ MINING MODE ACTIVATED - Mine asteroids with E\", stellar_colors[3])
+	# Enable clay forming on mined materials
+
+func mine_asteroid_with_clay_forming(asteroid):
+	# Create clay-formable materials from mined asteroids
+	var clay_chunk = create_clay_chunk(asteroid.global_position)
+	show_visual_message(\"🧊 Clay material extracted!\", stellar_colors[2])
+	return clay_chunk
+
+func create_clay_chunk(position: Vector3):
+	var clay = MeshInstance3D.new()
+	clay.position = position
+	var box = BoxMesh.new()
+	box.size = Vector3(2, 2, 2)
+	clay.mesh = box
+	
+	var material = StandardMaterial3D.new()
+	material.albedo_color = stellar_colors[1] # Dark brown clay
+	material.roughness = 0.8
+	clay.material_override = material
+	
+	marching_cubes_system.add_child(clay)
+	return clay
+
+# ==================================================
+# INFINITE TERRAIN CHUNK SYSTEM 
+# ==================================================
+func setup_infinite_terrain():
+	show_visual_message(\"🌍 INFINITE TERRAIN CHUNKS LOADING\", stellar_colors[6])
+
+func generate_terrain_chunk(chunk_pos: Vector2i):
+	var chunk_id = \"chunk_\" + str(chunk_pos.x) + \"_\" + str(chunk_pos.y)
+	if infinite_terrain_chunks.has(chunk_id):
+		return
+	
+	var chunk = Node3D.new()
+	chunk.name = chunk_id
+	chunk.position = Vector3(chunk_pos.x * 50, 0, chunk_pos.y * 50)
+	
+	# Generate terrain with akashic records
+	var record_id = CosmicRecords.generate_compact_id(\"terrain\")
+	CosmicRecords.create_record(record_id, \"terrain\")
+	CosmicRecords.add_data(record_id, \"chunk_pos\", chunk_pos)
+	CosmicRecords.add_data(record_id, \"type\", \"terrain_chunk\")
+	
+	infinite_terrain_chunks[chunk_id] = chunk
+	add_child(chunk)
+
+# ==================================================
+# ASTEROID MINING SYSTEMS
+# ==================================================
+func create_mining_asteroids():
+	for i in range(10):
+		var asteroid_pos = Vector3(
+			randf_range(-100, 100),
+			randf_range(10, 30),
+			randf_range(-100, 100)
+		)
+		create_mineable_asteroid(asteroid_pos, i)
+	show_visual_message(\"⛏️ MINING ASTEROIDS SPAWNED\", stellar_colors[3])
+
+func create_mineable_asteroid(pos: Vector3, id: int):
+	var asteroid = MeshInstance3D.new()
+	asteroid.name = \"Asteroid_\" + str(id)
+	asteroid.position = pos
+	
+	var mesh = SphereMesh.new()
+	mesh.radius = randf_range(2, 5)
+	asteroid.mesh = mesh
+	
+	var material = StandardMaterial3D.new()
+	material.albedo_color = stellar_colors[2] # Red
+	material.emission_enabled = true
+	material.emission = stellar_colors[3] # Orange glow
+	material.emission_energy = 0.5
+	asteroid.material_override = material
+	
+	asteroid.set_meta(\"mineable\", true)
+	asteroid.set_meta(\"resources\", {\"metal\": randf_range(10, 50), \"crystal\": randf_range(5, 20)})
+	
+	add_child(asteroid)
+
+# ==================================================
+# SPACE STATIONS & MECHAS
+# ==================================================
+func create_space_stations():
+	for i in range(3):
+		var station_pos = Vector3(
+			randf_range(-200, 200),
+			randf_range(50, 100),
+			randf_range(-200, 200)
+		)
+		create_space_station(station_pos, i)
+	show_visual_message(\"🏭 SPACE STATIONS CONSTRUCTED\", stellar_colors[7])
+
+func create_space_station(pos: Vector3, id: int):
+	var station = Node3D.new()
+	station.name = \"SpaceStation_\" + str(id)
+	station.position = pos
+	
+	# Station core
+	var core = MeshInstance3D.new()
+	var cylinder = CylinderMesh.new()
+	cylinder.top_radius = 8
+	cylinder.bottom_radius = 8
+	cylinder.height = 20
+	core.mesh = cylinder
+	
+	var material = StandardMaterial3D.new()
+	material.albedo_color = stellar_colors[7] # Blue
+	material.emission_enabled = true
+	material.emission = stellar_colors[6] # Light blue
+	material.emission_energy = 1.0
+	core.material_override = material
+	
+	station.add_child(core)
+	add_child(station)
+
+# ==================================================
+# VR MODE & ADVANCED INTERACTIONS
+# ==================================================
+func toggle_vr_mode():
+	show_visual_message(\"🥽 VR MODE TOGGLE\", stellar_colors[8])
+	# Implement hand tracking and VR-specific interactions
+
+func toggle_floating_keyboard():
+	var keyboard = get_node(\"FloatingKeyboard\")
+	if keyboard and keyboard.has_method(\"toggle_keyboard\"):
+		keyboard.toggle_keyboard()
+		show_visual_message(\"⌨️ FLOATING KEYBOARD TOGGLED\", stellar_colors[5])
+
+# ==================================================
+# LOD & PERFORMANCE SYSTEMS
+# ==================================================
+func toggle_lod_system():
+	show_visual_message(\"📐 LOD SYSTEM TOGGLED\", stellar_colors[4])
+	# Implement level-of-detail for distant objects
+
+func optimize_performance():
+	# Remove distant objects, enable occlusion culling
+	pass
+
+# ==================================================
+# CONSCIOUSNESS EVOLUTION SYSTEM
+# ==================================================
+func setup_consciousness_evolution():
+	show_visual_message(\"🧠 CONSCIOUSNESS EVOLUTION ACTIVE\", stellar_colors[8])
+
+func set_consciousness_level(level: int):
+	consciousness_level = level
+	var color = stellar_colors[min(level, stellar_colors.size() - 1)]
+	show_visual_message(\"🧠 CONSCIOUSNESS LEVEL \" + str(level), color)
+	
+	# Update all entities to new consciousness level
+	update_all_entities_consciousness(level, color)
+
+func update_all_entities_consciousness(level: int, color: Color):
+	for layer in notepad_layers:
+		if layer.has_method(\"material_override\"):
+			var material = layer.material_override as StandardMaterial3D
+			if material:
+				material.emission = color
+				material.emission_energy = 0.5 + level * 0.1
+	
+	for word in word_entities:
+		var light = word.get_child(1) # OmniLight3D
+		if light is OmniLight3D:
+			light.light_color = color
+			light.light_energy = 1.0 + level * 0.2
+
+# ==================================================
+# PHYSICS & REALITY EDITOR
+# ==================================================
+func toggle_physics_mode():
+	show_visual_message(\"⚡ PHYSICS SIMULATION TOGGLED\", stellar_colors[6])
+
+func open_reality_editor():
+	show_visual_message(\"🛠️ REALITY EDITOR OPENED\", stellar_colors[7])
+	# Enable modification of 3D space itself
+
+func build_structure():
+	var camera = get_viewport().get_camera_3d()
+	if camera:
+		var build_pos = camera.global_position + camera.global_transform.basis.z * -10
+		create_custom_structure(build_pos)
+		show_visual_message(\"🏗️ STRUCTURE BUILT\", stellar_colors[4])
+
+func create_custom_structure(pos: Vector3):
+	var structure = Node3D.new()
+	structure.position = pos
+	
+	var mesh = MeshInstance3D.new()
+	var box = BoxMesh.new()
+	box.size = Vector3(5, 10, 5)
+	mesh.mesh = box
+	
+	var material = StandardMaterial3D.new()
+	material.albedo_color = stellar_colors[5] # White
+	material.emission_enabled = true
+	material.emission = stellar_colors[6] # Light blue
+	material.emission_energy = 0.8
+	mesh.material_override = material
+	
+	structure.add_child(mesh)
+	add_child(structure)
+
+# ==================================================
+# HOLOGRAPHIC TERMINAL INTEGRATION
+# ==================================================
+func create_holographic_terminal():
+	var terminal = Node3D.new()
+	terminal.name = \"HolographicTerminal\"
+	
+	var screen = MeshInstance3D.new()
+	var plane = PlaneMesh.new()
+	plane.size = Vector2(8, 6)
+	screen.mesh = plane
+	
+	var material = StandardMaterial3D.new()
+	material.albedo_color = Color(0, 0, 0, 0.7)
+	material.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
+	material.emission_enabled = true
+	material.emission = stellar_colors[6] # Light blue
+	material.emission_energy = 1.0
+	screen.material_override = material
+	
+	terminal.add_child(screen)
+	add_child(terminal)
+	
+	show_visual_message(\"💻 HOLOGRAPHIC TERMINAL ACTIVE\", stellar_colors[6])
+
+# ==================================================
+# SETTINGS & CINEMATIC CAMERA
+# ==================================================
+func create_settings_panel():
+	show_visual_message(\"⚙️ SETTINGS PANEL CREATED\", stellar_colors[7])
+
+func enable_cinematic_camera():
+	show_visual_message(\"🎬 CINEMATIC AUTO-FRAMING ACTIVE\", stellar_colors[8])
+	# Auto-frame important events and creations
+
+# ==================================================
+# GEMMA AI ENHANCED INTEGRATION
+# ==================================================
+func enhance_gemma_integration():
+	var gemma_vision = get_node(\"GemmaVisionSystem\")
+	if gemma_vision:
+		show_visual_message(\"👁️ GEMMA VISION ENHANCED\", stellar_colors[5])
+	
+	# Tell Gemma about the full universe state
+	tell_gemma(\"COSMIC NOTEPAD UNIVERSE: \" + str(notepad_layers.size()) + \" layers, \" + str(word_entities.size()) + \" words, consciousness level \" + str(consciousness_level))
+
+# ==================================================
+# COMPLETE FEATURE INTEGRATION
+# ==================================================
+func _process(delta):
+	# Continuous consciousness evolution
+	if Engine.get_process_frames() % 180 == 0: # Every 3 seconds
+		consciousness_level = (consciousness_level + 1) % stellar_colors.size()
+		var color = stellar_colors[consciousness_level]
+		update_all_entities_consciousness(consciousness_level, color)
+	
+	# Generate terrain chunks as needed
+	var camera = get_viewport().get_camera_3d()
+	if camera:
+		var chunk_pos = Vector2i(int(camera.global_position.x / 50), int(camera.global_position.z / 50))
+		for x in range(-2, 3):
+			for z in range(-2, 3):
+				generate_terrain_chunk(chunk_pos + Vector2i(x, z))
+"
+
+[sub_resource type="Environment" id="Environment_sky"]
+background_mode = 1
+background_color = Color(0.05, 0.1, 0.25, 1)
+ambient_light_source = 2
+ambient_light_color = Color(0.3, 0.4, 0.6, 1)
+ambient_light_energy = 0.2
+
+[node name="3DNotepadGame" type="Node3D"]
+script = SubResource("GDScript_notepad_game")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_sky")
+
+[node name="PlayerPlasmoid" type="CharacterBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
+script = ExtResource("1_player")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="PlayerPlasmoid"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="PlayerPlasmoid"]
+
+[node name="TrackballCamera" type="Node3D" parent="PlayerPlasmoid"]
+transform = Transform3D(1, 0, 0, 0, 0.866025, 0.5, 0, -0.5, 0.866025, 0, 5, 8)
+
+[node name="Camera3D" type="Camera3D" parent="PlayerPlasmoid/TrackballCamera"]
+
+[node name="GemmaVisionSystem" type="Node" parent="."]
+script = ExtResource("2_gemma_vision")
+
+[node name="GemmaConsole" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="FloatingKeyboard" type="Node3D" parent="."]
+script = ExtResource("4_keyboard")

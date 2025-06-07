@@ -330,6 +330,7 @@ func _extract_functions(content: String) -> Array[String]:
 	return functions
 
 func _count_nodes_recursive(node: Node) -> int:
+	pass
 	var count = 1
 	for child in node.get_children():
 		count += _count_nodes_recursive(child)
@@ -368,6 +369,7 @@ class CommandContext:
 	var commands: Array[String] = []
 	
 	func execute_all() -> Array:
+		pass
 		var results = []
 		for cmd in commands:
 			results.append(UniversalCommandProcessor.execute_command(cmd))

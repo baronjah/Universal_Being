@@ -292,6 +292,7 @@ func load_test_history() -> void:
 # ===== AI INTEGRATION =====
 
 func ai_interface() -> Dictionary:
+	pass
 	var base_interface = super.ai_interface()
 	
 	base_interface["test_info"] = {

@@ -76,6 +76,7 @@ func add_mipmaps(img_width:int, img_height:int, img_depth:int, img_format:int, p
 
 
 func load_image_from_zip(path:String):
+	pass
 	var reader:ZIPReader = ZIPReader.new()
 	var err := reader.open(path)
 	if err != OK:

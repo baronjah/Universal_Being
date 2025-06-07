@@ -57,6 +57,7 @@ func _process(_delta):
 		_check_revolution_status()
 
 func _check_revolution_status():
+	pass
 	# Check for revolution components
 	var ripple_system = get_node_or_null("/root/Main/ConsciousnessRippleSystem")
 	var gemma_companion = get_node_or_null("/root/Main/GemmaAICompanion")
@@ -88,6 +89,7 @@ func _search_tree(node: Node, search_name: String) -> Node:
 	return null
 
 func _log(message: String):
+	pass
 	var timestamp = "%.2f" % (Time.get_ticks_msec() / 1000.0 - start_time)
 	var log_line = "[%s] %s" % [timestamp, message]
 	print(log_line)

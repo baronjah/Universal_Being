@@ -54,6 +54,7 @@ var supported_image_file_formats:Array[String] = [
 ]
 
 func load_image_from_zip(path:String):
+	pass
 	var reader:ZIPReader = ZIPReader.new()
 	var err := reader.open(path)
 	if err != OK:
@@ -106,6 +107,7 @@ func get_cell_value(pos:Vector3i)->float:
 	return val
 
 func get_gradient(pos:Vector3)->Vector3:
+	pass
 	var dx:float = get_cell_value(pos + Vector3(1, 0, 0)) - get_cell_value(pos + Vector3(-1, 0, 0))
 	var dy:float = get_cell_value(pos + Vector3(0, 1, 0)) - get_cell_value(pos + Vector3(0, -1, 0))
 	var dz:float = get_cell_value(pos + Vector3(0, 0, 1)) - get_cell_value(pos + Vector3(0, 0, -1))
@@ -130,7 +132,6 @@ func calc_gradients()->ImageGradient:
 				
 				var grad:Vector3 = Vector3(dx, dy, dz)
 				if !grad.is_zero_approx():
-					pass
 				grad_list.append(grad)
 				
 	gradient = ImageGradient.new()

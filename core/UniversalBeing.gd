@@ -264,6 +264,7 @@ class AuraNode2D extends Node2D:
 	var aura_radius: float = 32.0
 	var aura_opacity: float = 0.3
 	func _draw() -> void:
+		pass
 		var color_with_alpha = aura_color
 		color_with_alpha.a = aura_opacity
 		draw_circle(Vector2.ZERO, aura_radius, color_with_alpha)

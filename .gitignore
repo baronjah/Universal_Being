@@ -101,3 +101,16 @@ ub
 # ===== USER DATA =====
 user://
 saves/
+
+
+# ===== Luminus =====
+
+Claude_Account_Data/Luminus/chat.html
+Claude_Account_Data/Luminus/conversations.json
+
+
+# ===== Claude =====
+
+Claude_Account_Data/conversations.json
+Claude_Account_Data/projects.json
+Claude_Account_Data/users.json

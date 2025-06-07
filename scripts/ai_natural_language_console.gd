@@ -235,6 +235,7 @@ func get_color_name(color: Color) -> String:
 # ===== AI INTEGRATION =====
 
 func ai_interface() -> Dictionary:
+	pass
 	var base_interface = super.ai_interface()
 	base_interface.ai_commands = ["create", "interpret", "get_color"]
 	base_interface.ai_properties = {

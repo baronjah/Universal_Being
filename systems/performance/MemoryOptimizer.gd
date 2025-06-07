@@ -28,6 +28,7 @@ func _ready():
 	print("🧠 Memory Optimizer initialized")
 
 func _check_memory():
+	pass
 	var usage = get_memory_usage_mb()
 	memory_usage_history.append(usage)
 	
@@ -52,6 +53,7 @@ func _check_memory():
 				perform_cleanup()
 
 func get_memory_usage_mb() -> float:
+	pass
 	# Get approximate memory usage
 	var info = OS.get_memory_info()
 	var usage_bytes = info.get("physical", 0)

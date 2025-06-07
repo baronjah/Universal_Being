@@ -16,6 +16,7 @@ var _unload_queue : Array      = []    # coords queued by chunks themselves
 
 ## ─────────── PENTAGON LIFECYCLE ───
 func pentagon_process(delta : float) -> void:
+	pass
 	# Find any player-like being for streaming
 	var players = get_tree().get_nodes_in_group("players")
 	if players.is_empty():
@@ -35,6 +36,7 @@ static func queue_unload(coords : Vector3i) -> void:
 
 ## ─────────── INTERNALS ────────────
 func _stream_around(center : Vector3i) -> void:
+	pass
 	var radius := int(ceil(LOAD_RADIUS / CHUNK_SIZE))
 	for x in range(center.x - radius, center.x + radius + 1):
 		for y in range(center.y - radius, center.y + radius + 1):
@@ -44,6 +46,7 @@ func _stream_around(center : Vector3i) -> void:
 					_load_chunk(c)
 
 func _load_chunk(coords : Vector3i) -> void:
+	pass
 	var chunk = LuminusChunkUniversalBeing.new()
 	chunk.coords = coords
 	chunk.global_position = Vector3(coords) * CHUNK_SIZE

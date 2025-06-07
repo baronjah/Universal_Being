@@ -37,7 +37,6 @@ func apply_to_being(target_being: UniversalBeing) -> void:
 	# Connect to being's input system
 	if being.has_method("pentagon_input"):
 		# The being will call our handle_input method
-		pass
 	
 	# Add collision detection for mouse interactions
 	setup_interaction_area()
