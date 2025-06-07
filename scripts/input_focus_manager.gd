@@ -140,6 +140,7 @@ func _handle_escape_key() -> void:
         print("⌨️ Focus: GAME (ESC pressed)")
 
 func _set_focus(new_focus: FocusState) -> void:
+	pass
     # Change input focus state
     var old_focus = current_focus
     current_focus = new_focus
@@ -187,6 +188,7 @@ func _route_to_ai_channel(event: InputEvent) -> void:
     get_viewport().set_input_as_handled()
 
 func _route_mixed_mode(event: InputEvent) -> void:
+	pass
     # Route input to both systems with smart filtering
     # Special mode where some commands pass through
     var consumed = false
@@ -224,7 +226,6 @@ func _set_cursor_style(style: String) -> void:
     match style:
         "console":
             # Make cursor more prominent for console mode
-            pass
         "ai":
             # Special AI collaboration cursor
             pass
@@ -232,6 +233,7 @@ func _set_cursor_style(style: String) -> void:
 # ===== NODE DISCOVERY =====
 
 func _find_console_node() -> void:
+	pass
     # Find the console node in the scene
     # Try to find console by various methods
     var potential_consoles = [
@@ -291,6 +293,7 @@ func buffer_input(event: InputEvent) -> void:
 signal focus_changed(old_focus: FocusState, new_focus: FocusState)
 
 func ai_interface() -> Dictionary:
+	pass
     # AI interface for input management
     var base = super.ai_interface()
     base.input_commands = [

@@ -37,6 +37,7 @@ signal universe_rule_changed(universe: Universe, rule: String, value: Variant)
 signal universe_destroyed(universe: Universe)
 
 func _ready() -> void:
+	pass
 	# Create the prime universe
 	var prime = create_universe("Prime Universe", null, {
 		"description": "The first reality, from which all others spring"

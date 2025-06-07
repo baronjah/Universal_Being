@@ -83,6 +83,7 @@ func success(script_name: String, function_name: String, message: String, messag
 # ===== CONSCIOUSNESS-SPECIFIC LOGGING =====
 
 func consciousness(script_name: String, function_name: String, message: String, level: int = 0) -> void:
+	pass
 	var message_id = "consciousness_level_%d" % level
 	log_message(script_name, function_name, message, message_id, "consciousness")
 

@@ -15,6 +15,7 @@ func _can_handle(object):
 
 
 func _parse_begin(object):
+	pass
 	var create_actions_button := Button.new()
 	create_actions_button.set_name("Create")
 	create_actions_button.set_text("Create Actions")
@@ -56,6 +57,7 @@ func _parse_property(object, type, name, hint_type, hint_string, usage_flags, wi
 
 
 func add_default_action(object: Object, name: String):
+	pass
 	var setting_key = "input/%s" % object.get(name)
 	var setting = {
 		'deadzone': 0.5,

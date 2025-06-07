@@ -221,6 +221,7 @@ class PeerColoring extends RefCounted:
 		return prev.get_root_coloring()
 
 	func reverse_winding()->bool:
+		pass
 		var count:int = 0
 		for op in operations:
 			match op:
@@ -236,6 +237,7 @@ class PeerColoring extends RefCounted:
 		return (count & 1) == 1
 	
 	func calc_tranform()->Transform3D:
+		pass
 		var xform:Transform3D = Transform3D.IDENTITY
 		
 		for op in operations:

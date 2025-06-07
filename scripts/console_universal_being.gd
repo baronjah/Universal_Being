@@ -66,6 +66,7 @@ func clear_console() -> void:
 # ===== AI INTEGRATION =====
 
 func ai_interface() -> Dictionary:
+	pass
     var base_interface = super.ai_interface()
     base_interface.custom_commands = ["add_command", "clear_console"]
     base_interface.custom_properties = {

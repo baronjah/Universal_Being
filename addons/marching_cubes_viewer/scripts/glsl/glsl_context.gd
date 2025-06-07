@@ -44,6 +44,7 @@ func _init():
 ## @return: Object encapsulating shader, or null if there was an error
 ## in loading or compiling.
 func load_shader_from_path(path:String)->GLSLShader:
+	pass
 	var shader_file:RDShaderFile = load(path)
 	return load_shader(shader_file)
 	

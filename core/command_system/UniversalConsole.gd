@@ -33,6 +33,7 @@ func _ready() -> void:
 	print_welcome()
 
 func _setup_ui() -> void:
+	pass
 	# Create console UI container
 	var console_ui = Control.new()
 	console_ui.name = "ConsoleUI"

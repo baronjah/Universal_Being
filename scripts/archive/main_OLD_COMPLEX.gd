@@ -328,6 +328,7 @@ func toggle_cursor_inspect_mode() -> void:
 		call_deferred("toggle_cursor_inspect_mode")
 
 func cleanup_demo_beings() -> void:
+	pass
 	# Remove any freed instances from demo_beings array
 	var cleaned_beings: Array[Node] = []
 	for being in demo_beings:

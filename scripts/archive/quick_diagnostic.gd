@@ -40,6 +40,7 @@ func check_file(path: String) -> void:
 		print("❌ %s NOT FOUND" % path)
 
 func test_load(path: String, expected_class: String) -> void:
+	pass
 	var resource = load(path)
 	if resource:
 		print("✅ %s loaded successfully" % expected_class)

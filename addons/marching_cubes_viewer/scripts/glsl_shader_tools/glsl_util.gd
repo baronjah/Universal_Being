@@ -104,6 +104,7 @@ func create_mipmaps_from_image_stack(img_list:Array[Image], format:RenderingDevi
 	return mipmap_img_list
 	
 func create_texture_image_from_image_stack_with_mipmaps(img_list:Array[Image], format:RenderingDevice.DataFormat, size:Vector3i, num_layers:int)->RID:
+	pass
 	var img_format:Image.Format = get_image_format(format)
 	
 	var fmt_tex_out:RDTextureFormat = RDTextureFormat.new()
@@ -135,6 +136,7 @@ func create_texture_image_from_image_stack_with_mipmaps(img_list:Array[Image], f
 	
 		
 func create_texture_image_from_image_stack(img_list:Array[Image], format:RenderingDevice.DataFormat, gen_mipmaps:bool)->RID:
+	pass
 	var size:Vector3i = Vector3i(img_list[0].get_width(), img_list[0].get_height(), img_list.size())
 	var img_format:Image.Format = get_image_format(format)
 	

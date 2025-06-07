@@ -557,7 +557,6 @@ func _on_property_changed(property_name: String, value: Variant) -> void:
 	# Apply property change
 	if property_name.begins_with("socket_"):
 		# Socket manager property
-		pass
 	else:
 		# Core being property
 		current_being.set(property_name, value)

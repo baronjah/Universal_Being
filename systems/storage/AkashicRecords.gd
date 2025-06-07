@@ -559,7 +559,6 @@ func migrate_being_data(data: Dictionary) -> Dictionary:
 				}
 		"1.0.0":
 			# Current version, no migration needed
-			pass
 		_:
 			push_warning("Unknown being version: %s" % version)
 	

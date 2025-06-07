@@ -204,6 +204,7 @@ func execute_command(command: String) -> void:
 # ===== BASE COMMANDS =====
 
 func _cmd_help(args: Array) -> String:
+	pass
 	var output_text = "\n=== Available Commands ===\n"
 	
 	# Group commands by category
@@ -227,6 +228,7 @@ func _cmd_clear(args: Array) -> String:
 	return ""
 
 func _cmd_history(args: Array) -> String:
+	pass
 	var count = 10
 	if args.size() > 0 and args[0].is_valid_int():
 		count = int(args[0])
@@ -255,6 +257,7 @@ func _cmd_ai(args: Array) -> String:
 			return "Unknown ai subcommand: %s" % args[0]
 
 func _cmd_beings(args: Array) -> String:
+	pass
 	var flood_gates = SystemBootstrap.get_flood_gates() if SystemBootstrap else null
 	if not flood_gates:
 		return "FloodGates system not available"
@@ -311,6 +314,7 @@ func _cmd_universe(args: Array) -> String:
 			return "Unknown universe action: %s" % action
 
 func _create_universe(universe_name: String) -> String:
+	pass
 	# Load UniverseUniversalBeing class directly
 	var UniverseClass = load("res://beings/universe_universal_being.gd")
 	if not UniverseClass:
@@ -336,6 +340,7 @@ func _create_universe(universe_name: String) -> String:
 	return "✨ Universe '%s' created! Use 'enter %s' to explore it." % [universe_name, universe_name]
 
 func _delete_universe(universe_name: String) -> String:
+	pass
 	var universe = _find_universe_by_name(universe_name)
 	if not universe:
 		return "Universe '%s' not found." % universe_name
@@ -410,6 +415,7 @@ func _cmd_exit(args: Array) -> String:
 	return "🌌 Returned to %s" % (current_universe.universe_name if current_universe else "root")
 
 func _cmd_list(args: Array) -> String:
+	pass
 	var list_type = args[0] if args.size() > 0 else "universes"
 	
 	match list_type:
@@ -474,6 +480,7 @@ func _cmd_lod(args: Array) -> String:
 			return "Unknown lod action: %s" % action
 
 func _cmd_tree(args: Array) -> String:
+	pass
 	var output_text = "🌌 Universe Tree:\n"
 	var root_universes = _find_root_universes()
 	
@@ -705,6 +712,7 @@ func _on_command_submitted(command: String) -> void:
 # ===== AI INTEGRATION =====
 
 func ai_interface() -> Dictionary:
+	pass
 	var base_interface = super.ai_interface()
 	base_interface.custom_commands = ["output", "execute", "clear", "universe", "portal", "enter", "exit"]
 	base_interface.custom_properties = {

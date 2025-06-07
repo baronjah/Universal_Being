@@ -26,6 +26,7 @@ func update_consciousness_level(level: int):
 	update_display()
 
 func update_display():
+	pass
 	var level_name_text = "Level %d - %s" % [consciousness_level, 
 		consciousness_names[min(consciousness_level, consciousness_names.size() - 1)]]
 	level_name.text = level_name_text
@@ -46,6 +47,7 @@ func update_display():
 			description.text = "The camera has achieved cosmic consciousness, perceiving all dimensions simultaneously."
 
 func update_effects(effects: Array[String]):
+	pass
 	var effects_text = "[b]Active Effects:[/b]\n"
 	for effect in effects:
 		effects_text += "• %s\n" % effect

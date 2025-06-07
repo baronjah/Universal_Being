@@ -132,6 +132,7 @@ func log_being_event(being: UniversalBeing, event_type: String, data: Dictionary
 	})
 
 func log_system_event(system_name: String, event_type: String, data: Dictionary = {}) -> void:
+	pass
 	# Log a system-related event in poetic style
 	var template = GENESIS_TEMPLATES.get(event_type, ["The cosmic system {name} experiences a divine event"])[0]
 	var message = template.format({

@@ -324,6 +324,7 @@ func show_gemma_help() -> void:
 # ===== AI INTEGRATION =====
 
 func ai_interface() -> Dictionary:
+	pass
 	var base_interface = super.ai_interface()
 	base_interface.gemma_commands = [
 		"move_to",

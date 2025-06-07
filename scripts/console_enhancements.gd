@@ -209,6 +209,7 @@ func apply_console_config(config: Dictionary) -> void:
 # ===== AI INTEGRATION =====
 
 func ai_interface() -> Dictionary:
+	pass
 	var base_interface = super.ai_interface()
 	base_interface.ai_commands = ["create_butterfly", "akashic_status", "akashic_list"]
 	base_interface.ai_properties = {

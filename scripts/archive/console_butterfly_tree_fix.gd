@@ -172,6 +172,7 @@ func create_basic_tree() -> String:
 # ===== AI INTEGRATION =====
 
 func ai_interface() -> Dictionary:
+	pass
 	var base_interface = super.ai_interface()
 	base_interface.ai_commands = ["create_butterfly", "create_tree"]
 	base_interface.ai_properties = {

@@ -55,6 +55,7 @@ func update_display():
 	set_consciousness_progress(base_progress + consciousness_progress % (100.0 / max_level))
 
 func _process(delta):
+	pass
 	# Animate glow effect
 	var time = Time.get_time_dict_from_system()
 	var pulse = sin(time.second * 2.0 + time.millisecond * 0.01) * 0.1 + 0.9
@@ -69,6 +70,7 @@ func evolve_consciousness():
 		create_evolution_animation()
 
 func create_evolution_animation():
+	pass
 	# Create a brief flash effect
 	var tween = create_tween()
 	var original_color = glow_effect.color
@@ -79,6 +81,7 @@ func create_evolution_animation():
 	tween.tween_property(glow_effect, "modulate:a", 0.3, 0.3)
 
 func pulse_consciousness():
+	pass
 	# Create a consciousness pulse effect
 	var tween = create_tween()
 	tween.tween_property(glow_effect, "modulate:a", 0.8, 0.1)

@@ -208,6 +208,7 @@ func get_socket_info() -> Dictionary:
 # ===== AI INTEGRATION =====
 
 func ai_interface() -> Dictionary:
+	pass
 	var base = super.ai_interface()
 	base.socket_info = get_socket_info()
 	base.text_representation = get_text_representation()
@@ -216,6 +217,7 @@ func ai_interface() -> Dictionary:
 # ===== 1D TEXT REPRESENTATION =====
 
 func get_text_representation() -> String:
+	pass
 	var text = "[BUTTON:%s]" % being_name
 	text += " STATE:%s" % ("PRESSED" if button_pressed_signal else "IDLE")
 	text += " IN:%s" % ("ACTIVE" if input_active else "NONE")

@@ -726,6 +726,7 @@ func _handle_inspect_command(args: Array) -> void:
 	add_message("system", "🔍 Inspect command processing...")
 
 func _handle_count_command(args: Array) -> void:
+	pass
 	var flood_gates = SystemBootstrap.get_flood_gates() if SystemBootstrap else null
 	if flood_gates:
 		var beings = flood_gates.get_all_beings()

@@ -10,6 +10,7 @@
 extends SceneTree
 
 func _init():
+	pass
 	# Load the scanner
 	var scanner_script = load("res://tools/gdscript_directive_scanner.gd")
 	if not scanner_script:

@@ -504,6 +504,7 @@ func observe_and_comment() -> void:
 
 # Helper functions
 func extract_number(text: String) -> int:
+	pass
 	var regex = RegEx.new()
 	regex.compile("\\d+")
 	var result = regex.search(text)
@@ -512,6 +513,7 @@ func extract_number(text: String) -> int:
 	return 0
 
 func extract_quoted_text(text: String) -> String:
+	pass
 	var start = text.find('"')
 	var end = text.rfind('"')
 	if start >= 0 and end > start:

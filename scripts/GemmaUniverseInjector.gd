@@ -971,10 +971,8 @@ func _setup_atmosphere(parent: Node3D, atmosphere_type: String) -> void:
 	match atmosphere_type:
 		"peaceful":
 			# Could add fog, particles, etc
-			pass
 		"productive":
 			# Workshop atmosphere
-			pass
 		"mathematical":
 			# Grid patterns, geometric shapes
 			_create_mathematical_atmosphere(parent)
