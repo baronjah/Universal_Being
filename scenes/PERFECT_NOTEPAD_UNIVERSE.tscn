@@ -1,0 +1,702 @@
+[gd_scene load_steps=4 format=3]
+
+[sub_resource type="GDScript" id="GDScript_perfect_notepad"]
+script/source = "extends Node3D
+
+var stellar_colors = [Color(0,0,0),Color(0.2,0.1,0),Color(0.8,0,0),Color(1,0.5,0),Color(1,1,0),Color(1,1,1),Color(0.7,0.9,1),Color(0,0.5,1),Color(0.5,0,1)]
+var camera_rotation = Vector2.ZERO
+var move_speed = 20.0
+var look_speed = 0.002
+var notepad_layers = []
+var word_entities = []
+var programming_nodes = []
+var floating_keyboard = null
+var holographic_terminal = null
+var occlusion_system = null
+
+func _ready():
+	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+	create_space_environment()
+	create_initial_programming_nodes()
+	
+	# Skip occlusion system for now - voices demand immediate functionality
+	
+	show_visual_message(\"🌌 PERFECT NOTEPAD UNIVERSE - N=Notepad C=Words E=Interact\", stellar_colors[4])
+	
+	# Connect Gemma AI to observe the universe
+	var gemma_ai = get_node_or_null(\"/root/GemmaAI\")
+	if gemma_ai and gemma_ai.has_method(\"observe_notepad_universe\"):
+		gemma_ai.observe_notepad_universe()
+
+func _input(event):
+	if event is InputEventMouseMotion and Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
+		camera_rotation.x -= event.relative.x * look_speed
+		camera_rotation.y = clamp(camera_rotation.y - event.relative.y * look_speed, -1.5, 1.5)
+		$Camera3D.rotation = Vector3(camera_rotation.y, camera_rotation.x, 0)
+	
+	if event.is_action_pressed(\"ui_cancel\"):
+		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE if Input.mouse_mode == Input.MOUSE_MODE_CAPTURED else Input.MOUSE_MODE_CAPTURED
+	elif event.is_action_pressed(\"notepad_toggle\"):
+		toggle_notepad()
+	elif event.is_action_pressed(\"create_word\"):
+		create_floating_word()
+	elif event.is_action_pressed(\"interact\"):
+		interact_with_nearest()
+	elif event.is_action_pressed(\"toggle_keyboard\"):
+		toggle_floating_keyboard()
+	elif event.is_action_pressed(\"ui_console_toggle\"):
+		toggle_holographic_terminal()
+
+func _process(delta):
+	handle_movement(delta)
+	update_floating_effects(delta)
+	
+	# Update Gemma's spatial awareness from camera position and direction
+	var gemma_ai = get_node_or_null("/root/GemmaAI")
+	if gemma_ai and gemma_ai.has_method("update_spatial_awareness"):
+		var camera_forward = -$Camera3D.transform.basis.z  # Camera looks down -Z
+		gemma_ai.update_spatial_awareness($Camera3D.position, camera_forward)
+
+func handle_movement(delta):
+	var input_vector = Vector3()
+	if Input.is_action_pressed(\"move_forward\"):
+		input_vector.z -= 1
+	if Input.is_action_pressed(\"move_backward\"):
+		input_vector.z += 1
+	if Input.is_action_pressed(\"move_left\"):
+		input_vector.x -= 1
+	if Input.is_action_pressed(\"move_right\"):
+		input_vector.x += 1
+	if Input.is_action_pressed(\"move_up\"):
+		input_vector.y += 1
+	if Input.is_action_pressed(\"move_down\"):
+		input_vector.y -= 1
+	
+	if input_vector.length() > 0:
+		input_vector = input_vector.normalized()
+		input_vector = $Camera3D.global_transform.basis * input_vector
+		$Camera3D.global_position += input_vector * move_speed * delta
+
+func create_space_environment():
+	for i in range(100):
+		var star = MeshInstance3D.new()
+		star.mesh = SphereMesh.new()
+		star.mesh.radius = 0.4
+		star.position = Vector3(randf_range(-300,300), randf_range(-300,300), randf_range(-300,300))
+		var mat = StandardMaterial3D.new()
+		mat.albedo_color = stellar_colors[5]
+		mat.emission_enabled = true
+		mat.emission = stellar_colors[5]
+		mat.emission_energy = 2.0
+		star.material_override = mat
+		add_child(star)
+
+func create_initial_programming_nodes():
+	create_programming_node(\"NOTEPAD\", Vector3(-8, 0, 0), stellar_colors[6])
+	create_programming_node(\"WORDS\", Vector3(0, 0, 0), stellar_colors[4])
+	create_programming_node(\"DATABASE\", Vector3(8, 0, 0), stellar_colors[7])
+
+func create_programming_node(name: String, pos: Vector3, color: Color):
+	var node = Node3D.new()
+	node.position = pos
+	node.set_meta(\"node_name\", name)
+	node.set_meta(\"node_type\", \"function\")
+	
+	var body = MeshInstance3D.new()
+	body.mesh = BoxMesh.new()
+	body.mesh.size = Vector3(2, 1.5, 0.8)
+	var mat = StandardMaterial3D.new()
+	mat.albedo_color = color
+	mat.emission_enabled = true
+	mat.emission = color
+	mat.emission_energy = 0.6
+	body.material_override = mat
+	node.add_child(body)
+	
+	var label = Label3D.new()
+	label.text = name
+	label.billboard = BaseMaterial3D.BILLBOARD_ENABLED
+	label.position = Vector3(0, 1, 0)
+	label.modulate = stellar_colors[5]
+	node.add_child(label)
+	
+	add_child(node)
+	programming_nodes.append(node)
+
+func toggle_notepad():
+	if notepad_layers.is_empty():
+		show_notepad_layers()
+	else:
+		hide_notepad_layers()
+
+func show_notepad_layers():
+	# Turn 4: Color depth progression - Cyan→Blue→Indigo→Purple→Deep Violet
+	var depth_colors = [
+		Color(0.0, 1.0, 1.0),      # Layer 1: Cyan
+		Color(0.0, 0.5, 1.0),      # Layer 2: Blue  
+		Color(0.3, 0.0, 0.8),      # Layer 3: Indigo
+		Color(0.5, 0.0, 1.0),      # Layer 4: Purple
+		Color(0.3, 0.0, 0.5)       # Layer 5: Deep Violet
+	]
+	
+	for i in range(5):
+		var layer = MeshInstance3D.new()
+		layer.mesh = PlaneMesh.new()
+		layer.mesh.size = Vector2(6, 4)
+		layer.position = $Camera3D.position + $Camera3D.transform.basis.z * -10 + Vector3(i*2-4, i*1.5-3, 0)
+		layer.look_at($Camera3D.position, Vector3.UP)
+		
+		var mat = StandardMaterial3D.new()
+		# Use depth-specific color with increased transparency for deeper layers
+		var layer_color = depth_colors[i]
+		var depth_alpha = 0.9 - (i * 0.15)  # Fade deeper layers
+		mat.albedo_color = Color(layer_color.r * 0.3, layer_color.g * 0.3, layer_color.b * 0.3, depth_alpha)
+		mat.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
+		mat.emission_enabled = true
+		mat.emission = layer_color
+		mat.emission_energy = 0.6 - (i * 0.1)  # Dimmer glow for deeper layers
+		layer.material_override = mat
+		
+		# Use semantic ID instead of arbitrary layer names
+		var semantic_id = CosmicRecords.create_semantic_id(\"interface.notepad.layer\")
+		layer.set_meta(\"semantic_id\", semantic_id)
+		layer.set_meta(\"wobble_offset\", randf() * 6.28)
+		
+		add_child(layer)
+		notepad_layers.append(layer)
+		
+		# Store with precise semantic meaning
+		CosmicRecords.create_record(semantic_id, \"interface.notepad\")
+		CosmicRecords.add_data(semantic_id, \"layer_depth\", i)
+		CosmicRecords.add_data(semantic_id, \"semantic_type\", \"interface.notepad.layer\")
+		CosmicRecords.add_data(semantic_id, \"consciousness_depth\", i + 1)
+	
+	show_visual_message(\"📝 NOTEPAD LAYERS MANIFESTED\", stellar_colors[6])
+
+func hide_notepad_layers():
+	for layer in notepad_layers:
+		layer.queue_free()
+	notepad_layers.clear()
+	show_visual_message(\"📝 NOTEPAD LAYERS DISSOLVED\", stellar_colors[1])
+
+func create_floating_word():
+	var word_text = [\"COSMIC\", \"VISION\", \"REALITY\", \"DREAM\", \"UNIVERSE\", \"LIGHT\", \"TRUTH\", \"PEACE\"][randi() % 8]
+	
+	var word = Label3D.new()
+	word.text = word_text
+	word.position = $Camera3D.position + $Camera3D.transform.basis.z * -5 + Vector3(randf_range(-2,2), randf_range(-1,1), 0)
+	word.billboard = BaseMaterial3D.BILLBOARD_ENABLED
+	word.modulate = stellar_colors[randi() % stellar_colors.size()]
+	word.set_meta(\"word_type\", \"floating_word\")
+	word.set_meta(\"float_speed\", randf_range(0.002, 0.005))
+	word.set_meta(\"float_radius\", randf_range(0.5, 1.5))
+	word.set_meta(\"initial_position\", word.position)
+	
+	add_child(word)
+	word_entities.append(word)
+	
+	# Create semantic ID for floating word entity
+	var semantic_id = CosmicRecords.create_semantic_id(\"entity.word.floating\")
+	word.set_meta(\"semantic_id\", semantic_id)
+	
+	CosmicRecords.create_record(semantic_id, \"entity.word\")
+	CosmicRecords.add_data(semantic_id, \"text_content\", word_text)
+	CosmicRecords.add_data(semantic_id, \"spatial_position\", word.position)
+	CosmicRecords.add_data(semantic_id, \"semantic_type\", \"entity.word.floating\")
+	CosmicRecords.add_data(semantic_id, \"consciousness_resonance\", randf())
+	
+	show_visual_message(\"✨ WORD CREATED: \" + word_text, stellar_colors[4])
+	
+	# Let Gemma comment on the word
+	var gemma_ai = get_node_or_null(\"/root/GemmaAI\")
+	if gemma_ai and gemma_ai.has_method(\"comment_on_word_creation\"):
+		gemma_ai.comment_on_word_creation(word_text)
+
+func toggle_floating_keyboard():
+	if floating_keyboard:
+		floating_keyboard.queue_free()
+		floating_keyboard = null
+		show_visual_message(\"⌨️ KEYBOARD DISSOLVED\", stellar_colors[1])
+	else:
+		create_floating_keyboard()
+
+func create_floating_keyboard():
+	floating_keyboard = Node3D.new()
+	floating_keyboard.name = \"FloatingKeyboard\"
+	floating_keyboard.position = $Camera3D.position + $Camera3D.transform.basis.z * -6
+	floating_keyboard.look_at($Camera3D.position, Vector3.UP)
+	
+	var keys = \"QWERTYUIOP ASDFGHJKL ZXCVBNM\"
+	var row = 0
+	var col = 0
+	
+	for i in range(keys.length()):
+		var char = keys[i]
+		if char == \" \":
+			row += 1
+			col = 0
+			continue
+		
+		var key = MeshInstance3D.new()
+		key.mesh = BoxMesh.new()
+		key.mesh.size = Vector3(0.8, 0.8, 0.2)
+		key.position = Vector3(col * 0.9 - 4.5, -row * 0.9, 0)
+		
+		var mat = StandardMaterial3D.new()
+		mat.albedo_color = stellar_colors[6]
+		mat.emission_enabled = true
+		mat.emission = stellar_colors[6]
+		mat.emission_energy = 0.3
+		key.material_override = mat
+		
+		var label = Label3D.new()
+		label.text = char
+		label.billboard = BaseMaterial3D.BILLBOARD_ENABLED
+		label.position = Vector3(0, 0, 0.2)
+		label.modulate = stellar_colors[5]
+		key.add_child(label)
+		
+		floating_keyboard.add_child(key)
+		col += 1
+	
+	add_child(floating_keyboard)
+	show_visual_message(\"⌨️ FLOATING KEYBOARD MANIFESTED\", stellar_colors[6])
+
+func interact_with_nearest():
+	var nearest = find_nearest_interactable()
+	if nearest:
+		var type = nearest.get_meta(\"node_type\", \"\")
+		var name = nearest.get_meta(\"node_name\", \"Unknown\")
+		
+		if type == \"function\":
+			show_visual_message(\"⚡ INTERACTING WITH: \" + name, stellar_colors[3])
+			create_interaction_effect(nearest.position)
+			
+			# Show interaction feedback clearly
+			var feedback_msg = Label3D.new()
+			feedback_msg.text = \"🔗 CONNECTED TO \" + name.to_upper()
+			feedback_msg.position = nearest.position + Vector3(0, 2, 0)
+			feedback_msg.billboard = BaseMaterial3D.BILLBOARD_ENABLED
+			feedback_msg.modulate = stellar_colors[4]
+			add_child(feedback_msg)
+			var tween = create_tween()
+			tween.tween_property(feedback_msg, \"position:y\", feedback_msg.position.y + 3, 2.0)
+			tween.parallel().tween_property(feedback_msg, \"modulate:a\", 0.0, 2.0)
+			tween.tween_callback(feedback_msg.queue_free)
+			
+		elif nearest.get_meta(\"word_type\") == \"floating_word\":
+			show_visual_message(\"💫 WORD ABSORBED: \" + nearest.text, stellar_colors[8])
+			create_word_interaction_effect(nearest)
+			
+			# Show clear word interaction feedback
+			var word_feedback = Label3D.new()
+			word_feedback.text = \"✨ ABSORBED: \" + nearest.text.to_upper()
+			word_feedback.position = nearest.position + Vector3(0, 1, 0)
+			word_feedback.billboard = BaseMaterial3D.BILLBOARD_ENABLED
+			word_feedback.modulate = stellar_colors[6]
+			add_child(word_feedback)
+			var tween2 = create_tween()
+			tween2.tween_property(word_feedback, \"position:y\", word_feedback.position.y + 4, 2.5)
+			tween2.parallel().tween_property(word_feedback, \"modulate:a\", 0.0, 2.5)
+			tween2.tween_callback(word_feedback.queue_free)
+
+func find_nearest_interactable():
+	var camera_pos = $Camera3D.position
+	var nearest = null
+	var min_dist = 15.0
+	
+	for node in programming_nodes:
+		var dist = node.position.distance_to(camera_pos)
+		if dist < min_dist:
+			min_dist = dist
+			nearest = node
+	
+	for word in word_entities:
+		if is_instance_valid(word):
+			var dist = word.position.distance_to(camera_pos)
+			if dist < min_dist:
+				min_dist = dist
+				nearest = word
+	
+	return nearest
+
+func create_interaction_effect(pos: Vector3):
+	var particles = GPUParticles3D.new()
+	particles.amount = 30
+	particles.lifetime = 1.0
+	particles.emitting = true
+	particles.position = pos
+	
+	var material = ParticleProcessMaterial.new()
+	material.direction = Vector3(0, 1, 0)
+	material.initial_velocity_min = 5.0
+	material.initial_velocity_max = 10.0
+	material.gravity = Vector3.ZERO
+	material.scale_min = 0.1
+	material.scale_max = 0.3
+	material.color = stellar_colors[4]
+	particles.process_material = material
+	
+	add_child(particles)
+	get_tree().create_timer(2.0).timeout.connect(particles.queue_free)
+
+func create_word_interaction_effect(word):
+	var original_scale = word.scale
+	var tween = create_tween()
+	tween.tween_property(word, \"scale\", original_scale * 1.5, 0.3)
+	tween.tween_property(word, \"scale\", original_scale, 0.3)
+
+func update_floating_effects(delta):
+	var time = Time.get_ticks_msec() * 0.001
+	var camera_pos = $Camera3D.position
+	
+	# Turn 4: Proximity = Brightness logic for notepad layers
+	for i in range(notepad_layers.size()):
+		var layer = notepad_layers[i]
+		if is_instance_valid(layer):
+			var wobble_offset = layer.get_meta(\"wobble_offset\", 0.0)
+			var wobble = sin(time * 2.0 + wobble_offset) * 0.1
+			layer.position.y += wobble * delta
+			
+			# Distance-based brightness adjustment
+			var distance = layer.position.distance_to(camera_pos)
+			var proximity_factor = clamp(1.0 - (distance / 30.0), 0.2, 1.0)
+			var material = layer.material_override as StandardMaterial3D
+			if material:
+				material.emission_energy = (0.6 - (i * 0.1)) * proximity_factor
+	
+	# Clean up words that fly too far and update floating motion
+	for i in range(word_entities.size() - 1, -1, -1):
+		var word = word_entities[i]
+		if not is_instance_valid(word):
+			word_entities.remove_at(i)
+			continue
+		
+		# Check distance from origin - remove if too far (safety limit)
+		if word.position.length() > 500.0:
+			show_visual_message(\"💫 WORD DISSOLVED INTO COSMOS: \" + word.text, stellar_colors[8])
+			word.queue_free()
+			word_entities.remove_at(i)
+			continue
+		
+		# Gentle floating motion instead of flying away
+		var float_speed = word.get_meta(\"float_speed\", 0.003)
+		var float_radius = word.get_meta(\"float_radius\", 1.0)
+		var initial_pos = word.get_meta(\"initial_position\", word.position)
+		
+		# Orbit around initial position instead of flying away
+		word.position.x = initial_pos.x + sin(time * float_speed) * float_radius
+		word.position.y = initial_pos.y + cos(time * float_speed * 0.7) * (float_radius * 0.5)
+		word.position.z = initial_pos.z + sin(time * float_speed * 0.5) * (float_radius * 0.3)
+
+func show_visual_message(text: String, color: Color):
+	var msg = Label3D.new()
+	msg.text = text
+	msg.modulate = color
+	msg.billboard = BaseMaterial3D.BILLBOARD_ENABLED
+	msg.position = $Camera3D.position + Vector3(0, 3, -5)
+	add_child(msg)
+	
+	var tween = create_tween()
+	tween.parallel().tween_property(msg, \"position:y\", msg.position.y + 5, 3.0)
+	tween.parallel().tween_property(msg, \"modulate:a\", 0.0, 3.0)
+	tween.tween_callback(msg.queue_free)
+
+func interpret_semantic_command(command: String):
+	# Universal semantic command interpreter
+	var cmd_parts = command.split(\" \")
+	var action = cmd_parts[0] if cmd_parts.size() > 0 else \"\"
+	
+	match action:
+		\"manifest\":
+			if cmd_parts.size() > 1:
+				var concept = cmd_parts[1]
+				manifest_concept(concept)
+		\"connect\":
+			if cmd_parts.size() > 2:
+				connect_semantic_entities(cmd_parts[1], cmd_parts[2])
+		\"query\":
+			if cmd_parts.size() > 1:
+				query_semantic_space(cmd_parts[1])
+		\"evolve\":
+			if cmd_parts.size() > 1:
+				evolve_semantic_entity(cmd_parts[1])
+		\"peace\":
+			bring_akashic_peace()
+		\"status\":
+			show_visual_message(\"📊 \" + get_peace_status(), stellar_colors[7])
+		_:
+			show_visual_message(\"⚠️ UNKNOWN SEMANTIC: \" + command, stellar_colors[2])
+
+func manifest_concept(concept_path: String):
+	var semantic_id = CosmicRecords.create_semantic_id(concept_path)
+	var meaning = CosmicRecords.decode_semantic_meaning(semantic_id)
+	
+	show_visual_message(\"✨ MANIFESTING: \" + meaning.domain + \".\" + meaning.concept, stellar_colors[4])
+	
+	# Create based on semantic meaning
+	match meaning.domain:
+		\"entity\":
+			if meaning.concept == \"word\":
+				create_floating_word()
+		\"interface\":
+			if meaning.concept == \"notepad\":
+				toggle_notepad()
+		\"navigation\":
+			if meaning.concept == \"camera\":
+				show_visual_message(\"🎥 CAMERA SEMANTIC ACTIVATED\", stellar_colors[6])
+
+func query_semantic_space(query: String):
+	var results = []
+	for record_id in CosmicRecords.records_map.keys():
+		var record = CosmicRecords.records_map[record_id]
+		if record.data.has(\"semantic_type\"):
+			var semantic_type = record.data.semantic_type
+			if query in semantic_type:
+				results.append(semantic_type)
+	
+	show_visual_message(\"🔍 FOUND \" + str(results.size()) + \" SEMANTIC MATCHES\", stellar_colors[7])
+
+func connect_semantic_entities(entity1_id: String, entity2_id: String):
+	# Create connection between two semantic entities
+	var connection_id = CosmicRecords.create_semantic_id(\"connection.semantic.link\")
+	CosmicRecords.create_record(connection_id, \"connections\")
+	CosmicRecords.add_data(connection_id, \"entity1\", entity1_id)
+	CosmicRecords.add_data(connection_id, \"entity2\", entity2_id)
+	CosmicRecords.add_data(connection_id, \"connection_type\", \"semantic_link\")
+	CosmicRecords.add_data(connection_id, \"created_time\", Time.get_ticks_msec())
+	
+	# Visual connection effect
+	create_connection_visualization(entity1_id, entity2_id)
+	show_visual_message(\"🔗 CONNECTED: \" + entity1_id + \" ↔ \" + entity2_id, stellar_colors[8])
+
+func evolve_semantic_entity(entity_id: String):
+	# Find entity in records
+	if CosmicRecords.records_map.has(entity_id):
+		var entity = CosmicRecords.records_map[entity_id]
+		var current_type = entity.data.get(\"semantic_type\", \"unknown\")
+		
+		# Evolution logic based on semantic type
+		var evolved_type = \"\"
+		match current_type:
+			\"entity.word.floating\":
+				evolved_type = \"entity.word.consciousness\"
+			\"interface.notepad.layer\":
+				evolved_type = \"interface.notepad.dimensional\"
+			\"system.cosmic.database\":
+				evolved_type = \"system.cosmic.quantum\"
+			_:
+				evolved_type = current_type + \".evolved\"
+		
+		# Update entity
+		CosmicRecords.add_data(entity_id, \"semantic_type\", evolved_type)
+		CosmicRecords.add_data(entity_id, \"evolution_time\", Time.get_ticks_msec())
+		
+		# Visual evolution effect
+		create_evolution_visualization(entity_id)
+		show_visual_message(\"🌟 EVOLVED: \" + entity_id + \" → \" + evolved_type, stellar_colors[4])
+	else:
+		show_visual_message(\"❌ ENTITY NOT FOUND: \" + entity_id, stellar_colors[2])
+
+func create_connection_visualization(entity1_id: String, entity2_id: String):
+	# Create visual connection between entities (if they exist in 3D space)
+	var entity1_pos = Vector3.ZERO
+	var entity2_pos = Vector3.ZERO
+	var found_positions = false
+	
+	# Find positions of entities in the scene
+	for word in word_entities:
+		if is_instance_valid(word) and word.has_meta(\"semantic_id\"):
+			var semantic_id = word.get_meta(\"semantic_id\")
+			if semantic_id == entity1_id:
+				entity1_pos = word.position
+				found_positions = true
+			elif semantic_id == entity2_id:
+				entity2_pos = word.position
+				found_positions = true
+	
+	if found_positions and entity1_pos != entity2_pos:
+		# Create visual connection line
+		var connection_line = MeshInstance3D.new()
+		var line_mesh = CylinderMesh.new()
+		line_mesh.top_radius = 0.02
+		line_mesh.bottom_radius = 0.02
+		line_mesh.height = entity1_pos.distance_to(entity2_pos)
+		connection_line.mesh = line_mesh
+		
+		# Position and orient the line
+		connection_line.position = (entity1_pos + entity2_pos) / 2
+		connection_line.look_at(entity2_pos, Vector3.UP)
+		connection_line.rotation_degrees.x += 90
+		
+		# Style the connection
+		var mat = StandardMaterial3D.new()
+		mat.albedo_color = stellar_colors[8]
+		mat.emission_enabled = true
+		mat.emission = stellar_colors[8]
+		mat.emission_energy = 1.0
+		connection_line.material_override = mat
+		
+		add_child(connection_line)
+		
+		# Auto-remove after 5 seconds
+		get_tree().create_timer(5.0).timeout.connect(connection_line.queue_free)
+
+func create_evolution_visualization(entity_id: String):
+	# Find the entity in the scene and create evolution effect
+	for word in word_entities:
+		if is_instance_valid(word) and word.has_meta(\"semantic_id\"):
+			if word.get_meta(\"semantic_id\") == entity_id:
+				# Evolution particle effect
+				var particles = GPUParticles3D.new()
+				particles.amount = 20
+				particles.lifetime = 2.0
+				particles.emitting = true
+				particles.position = word.position
+				
+				var material = ParticleProcessMaterial.new()
+				material.direction = Vector3(0, 1, 0)
+				material.initial_velocity_min = 3.0
+				material.initial_velocity_max = 8.0
+				material.gravity = Vector3.ZERO
+				material.scale_min = 0.1
+				material.scale_max = 0.4
+				material.color = stellar_colors[4]
+				particles.process_material = material
+				
+				add_child(particles)
+				get_tree().create_timer(3.0).timeout.connect(particles.queue_free)
+				
+				# Scale pulse effect on the word
+				var original_scale = word.scale
+				var tween = create_tween()
+				tween.tween_property(word, \"scale\", original_scale * 1.8, 0.5)
+				tween.tween_property(word, \"scale\", original_scale, 0.5)
+				break
+
+func toggle_holographic_terminal():
+	if holographic_terminal:
+		holographic_terminal.queue_free()
+		holographic_terminal = null
+		show_visual_message(\"💻 TERMINAL DISSOLVED\", stellar_colors[1])
+	else:
+		create_holographic_terminal()
+
+func create_holographic_terminal():
+	holographic_terminal = Control.new()
+	holographic_terminal.name = \"HolographicTerminal\"
+	holographic_terminal.set_anchors_and_offsets_preset(Control.PRESET_CENTER)
+	holographic_terminal.size = Vector2(600, 400)
+	holographic_terminal.position = Vector2(-300, -200)
+	
+	# Terminal background
+	var terminal_bg = NinePatchRect.new()
+	terminal_bg.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	terminal_bg.color = Color(0.1, 0.1, 0.2, 0.8)
+	holographic_terminal.add_child(terminal_bg)
+	
+	# Terminal text
+	var terminal_text = RichTextLabel.new()
+	terminal_text.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	terminal_text.add_theme_color_override(\"default_color\", stellar_colors[6])
+	terminal_text.add_theme_font_size_override(\"normal_font_size\", 14)
+	terminal_text.bbcode_enabled = true
+	terminal_text.text = \"[color=\" + stellar_colors[6].to_html() + \"]╔══════ COSMIC TERMINAL ══════╗[/color]\\n\"
+	terminal_text.text += \"[color=\" + stellar_colors[4].to_html() + \"]> connect akashic_records[/color]\\n\"
+	terminal_text.text += \"[color=\" + stellar_colors[7].to_html() + \"]> manifest entity.word.floating[/color]\\n\"
+	terminal_text.text += \"[color=\" + stellar_colors[5].to_html() + \"]> query interface.notepad[/color]\\n\"
+	terminal_text.text += \"[color=\" + stellar_colors[6].to_html() + \"]> _[/color]\"
+	holographic_terminal.add_child(terminal_text)
+	
+	# Input field
+	var input_field = LineEdit.new()
+	input_field.anchors_preset = Control.PRESET_BOTTOM_WIDE
+	input_field.offset_top = -30
+	input_field.placeholder_text = \"Enter cosmic command...\"
+	input_field.add_theme_color_override(\"font_color\", stellar_colors[5])
+	input_field.add_theme_color_override(\"font_placeholder_color\", stellar_colors[2])
+	input_field.text_submitted.connect(_on_terminal_command_entered)
+	holographic_terminal.add_child(input_field)
+	
+	# Add to UI
+	$UI.add_child(holographic_terminal)
+	show_visual_message(\"💻 HOLOGRAPHIC TERMINAL MANIFESTED - TAB\", stellar_colors[6])
+	
+	# Focus input
+	input_field.grab_focus()
+
+func _on_terminal_command_entered(command: String):
+	if command.strip_edges() != \"\":
+		interpret_semantic_command(command)
+		show_visual_message(\"⚡ COMMAND EXECUTED: \" + command, stellar_colors[3])
+		
+		# Add command to terminal history
+		if holographic_terminal:
+			var terminal_text = holographic_terminal.get_child(1) as RichTextLabel
+			terminal_text.text += \"\\n[color=\" + stellar_colors[4].to_html() + \"]> \" + command + \"[/color]\"
+			
+			# Clear input
+			var input_field = holographic_terminal.get_child(2) as LineEdit
+			input_field.text = \"\"
+
+func _on_peace_achieved(peace_level: float):
+	\"\"\"Callback when occlusion system achieves peace\"\"\"
+	if peace_level > 0.8:
+		show_visual_message(\"🕊️ AKASHIC PEACE ACHIEVED: \" + str(int(peace_level * 100)) + \"%\", stellar_colors[5])
+	elif peace_level > 0.5:
+		show_visual_message(\"🌿 AKASHIC HARMONY: \" + str(int(peace_level * 100)) + \"%\", stellar_colors[3])
+
+func bring_akashic_peace():
+	\"\"\"Special command to optimize Akashic Records for peace\"\"\"
+	show_visual_message(\"🕊️ BRINGING PEACE TO AKASHIC RECORDS...\", stellar_colors[6])
+	
+func get_peace_status() -> String:
+	\"\"\"Get current peace status report\"\"\"
+	return \"Peace system ready\"
+"
+
+[sub_resource type="Environment" id="Environment_perfect"]
+background_mode = 1
+background_color = Color(0.01, 0.01, 0.08, 1)
+ambient_light_source = 2
+ambient_light_color = Color(0.1, 0.1, 0.2, 1)
+ambient_light_energy = 0.3
+
+[sub_resource type="Theme" id="Theme_perfect"]
+
+[node name="PerfectNotepadUniverse" type="Node3D"]
+script = SubResource("GDScript_perfect_notepad")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+fov = 85.0
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_perfect")
+
+[node name="UI" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme = SubResource("Theme_perfect")
+
+[node name="Controls" type="Label" parent="UI"]
+layout_mode = 0
+offset_left = 10.0
+offset_top = 10.0
+offset_right = 500.0
+offset_bottom = 200.0
+text = "🌌 PERFECT NOTEPAD UNIVERSE
+
+WASD - Move through space
+Mouse - Look around
+Q/F - Up/Down movement
+N - Toggle notepad layers
+C - Create floating words
+K - Toggle floating keyboard
+TAB - Holographic terminal
+E - Interact with nearest object
+ESC - Free/capture mouse
+
+✨ Experience your cosmic notepad vision
+💻 Use terminal for cosmic commands"

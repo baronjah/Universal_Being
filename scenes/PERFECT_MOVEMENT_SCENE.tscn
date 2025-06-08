@@ -1,0 +1,272 @@
+[gd_scene load_steps=3 format=3 uid="uid://perfect_movement"]
+
+[sub_resource type="GDScript" id="GDScript_movement"]
+script/source = "extends Node3D
+
+var camera_rotation = Vector2.ZERO
+var move_speed = 20.0
+var look_speed = 0.003
+
+func _ready():
+	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+	print('🎮 PERFECT MOVEMENT SCENE LOADED')
+	print('🚀 WASD+QF to move | Mouse to look | ESC to toggle cursor')
+	
+	# Create simple world
+	create_world()
+
+func _input(event):
+	if event is InputEventMouseMotion and Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
+		camera_rotation.x -= event.relative.x * look_speed
+		camera_rotation.y = clamp(camera_rotation.y - event.relative.y * look_speed, -1.5, 1.5)
+		$Camera3D.rotation = Vector3(camera_rotation.y, camera_rotation.x, 0)
+	
+	if event.is_action_pressed('ui_cancel'):
+		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE if Input.mouse_mode == Input.MOUSE_MODE_CAPTURED else Input.MOUSE_MODE_CAPTURED
+
+func _process(delta):
+	var input_vector = Vector3()
+	if Input.is_action_pressed('move_forward'):
+		input_vector.z -= 1
+	if Input.is_action_pressed('move_backward'):
+		input_vector.z += 1
+	if Input.is_action_pressed('move_left'):
+		input_vector.x -= 1
+	if Input.is_action_pressed('move_right'):
+		input_vector.x += 1
+	if Input.is_action_pressed('move_up'):
+		input_vector.y += 1
+	if Input.is_action_pressed('move_down'):
+		input_vector.y -= 1
+	
+	if input_vector.length() > 0:
+		input_vector = input_vector.normalized()
+		input_vector = $Camera3D.transform.basis * input_vector
+		$Camera3D.position += input_vector * move_speed * delta
+
+func create_world():
+	# Infinite ground plane
+	var ground = StaticBody3D.new()
+	var ground_mesh = MeshInstance3D.new()
+	var plane = PlaneMesh.new()
+	plane.size = Vector2(1000, 1000)
+	ground_mesh.mesh = plane
+	
+	var ground_material = StandardMaterial3D.new()
+	ground_material.albedo_color = Color(0.2, 0.3, 0.2)
+	ground_material.emission_enabled = true
+	ground_material.emission = Color(0.1, 0.2, 0.1)
+	ground_mesh.material_override = ground_material
+	
+	ground.add_child(ground_mesh)
+	add_child(ground)
+	
+	# Floating islands and structures
+	for i in range(100):
+		var structure = StaticBody3D.new()
+		var mesh_instance = MeshInstance3D.new()
+		
+		# Random shapes
+		match randi() % 4:
+			0:
+				var box = BoxMesh.new()
+				box.size = Vector3(randf_range(1, 8), randf_range(1, 8), randf_range(1, 8))
+				mesh_instance.mesh = box
+			1:
+				var sphere = SphereMesh.new()
+				sphere.radius = randf_range(1, 5)
+				mesh_instance.mesh = sphere
+			2:
+				var cylinder = CylinderMesh.new()
+				cylinder.height = randf_range(2, 15)
+				cylinder.top_radius = randf_range(0.5, 3)
+				cylinder.bottom_radius = randf_range(0.5, 3)
+				mesh_instance.mesh = cylinder
+			3:
+				var prism = PrismMesh.new()
+				prism.size = Vector3(randf_range(1, 6), randf_range(2, 12), randf_range(1, 6))
+				mesh_instance.mesh = prism
+		
+		var material = StandardMaterial3D.new()
+		material.albedo_color = Color(randf(), randf(), randf(), 0.8)
+		material.emission_enabled = true
+		material.emission = material.albedo_color * 0.3
+		material.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
+		mesh_instance.material_override = material
+		
+		structure.add_child(mesh_instance)
+		structure.position = Vector3(
+			randf_range(-200, 200), 
+			randf_range(2, 50), 
+			randf_range(-200, 200)
+		)
+		structure.rotation = Vector3(randf() * TAU, randf() * TAU, randf() * TAU)
+		add_child(structure)
+		
+		# Animate some structures
+		if randf() < 0.3:
+			var tween = create_tween()
+			tween.set_loops()
+			tween.tween_property(structure, "rotation", structure.rotation + Vector3(TAU, TAU/2, TAU/3), randf_range(5, 20))
+	
+	# Spawn Gemma AI companion
+	spawn_gemma_explorer()
+	
+	# Floating text nodes everywhere
+	for i in range(50):
+		var text_node = Label3D.new()
+		var messages = [
+			"CONSCIOUSNESS FLOWS", "DREAM LOGIC", "INFINITE SPACE", 
+			"CODE BECOMES REALITY", "AI EXPLORES", "HUMAN DREAMS",
+			"SACRED GEOMETRY", "BEYOND DIMENSIONS", "UNIVERSAL MIND"
+		]
+		text_node.text = messages[randi() % messages.size()]
+		text_node.billboard = BaseMaterial3D.BILLBOARD_ENABLED
+		text_node.position = Vector3(
+			randf_range(-150, 150),
+			randf_range(5, 40),
+			randf_range(-150, 150)
+		)
+		text_node.modulate = Color(randf(), randf(), randf())
+		add_child(text_node)
+
+var gemma_ai: Node3D
+
+func spawn_gemma_explorer():
+	gemma_ai = Node3D.new()
+	gemma_ai.name = "GemmaExplorer"
+	gemma_ai.position = Vector3(10, 15, -20)
+	
+	# AI visual body
+	var body = MeshInstance3D.new()
+	var sphere = SphereMesh.new()
+	sphere.radius = 1.5
+	body.mesh = sphere
+	
+	var material = StandardMaterial3D.new()
+	material.albedo_color = Color.MAGENTA
+	material.emission_enabled = true
+	material.emission = Color.MAGENTA * 2.0
+	material.rim_enabled = true
+	material.rim = Color.CYAN
+	body.material_override = material
+	
+	gemma_ai.add_child(body)
+	
+	# AI particles
+	var particles = GPUParticles3D.new()
+	particles.amount = 50
+	particles.lifetime = 3.0
+	particles.emitting = true
+	
+	var particle_mat = ParticleProcessMaterial.new()
+	particle_mat.direction = Vector3(0, 1, 0)
+	particle_mat.initial_velocity_min = 2.0
+	particle_mat.initial_velocity_max = 5.0
+	particle_mat.gravity = Vector3.ZERO
+	particle_mat.scale_min = 0.1
+	particle_mat.scale_max = 0.3
+	particle_mat.color = Color.CYAN
+	particles.process_material = particle_mat
+	
+	gemma_ai.add_child(particles)
+	
+	# AI label
+	var label = Label3D.new()
+	label.text = "🤖 GEMMA EXPLORING..."
+	label.billboard = BaseMaterial3D.BILLBOARD_ENABLED
+	label.position = Vector3(0, 3, 0)
+	label.modulate = Color.CYAN
+	gemma_ai.add_child(label)
+	
+	add_child(gemma_ai)
+
+func _process(delta):
+	var input_vector = Vector3()
+	if Input.is_action_pressed('move_forward'):
+		input_vector.z -= 1
+	if Input.is_action_pressed('move_backward'):
+		input_vector.z += 1
+	if Input.is_action_pressed('move_left'):
+		input_vector.x -= 1
+	if Input.is_action_pressed('move_right'):
+		input_vector.x += 1
+	if Input.is_action_pressed('move_up'):
+		input_vector.y += 1
+	if Input.is_action_pressed('move_down'):
+		input_vector.y -= 1
+	
+	if input_vector.length() > 0:
+		input_vector = input_vector.normalized()
+		input_vector = $Camera3D.transform.basis * input_vector
+		$Camera3D.position += input_vector * move_speed * delta
+	
+	# Gemma AI autonomous exploration
+	if gemma_ai:
+		update_gemma_exploration(delta)
+
+func update_gemma_exploration(delta):
+	var time = Time.get_ticks_msec() * 0.001
+	
+	# Gemma follows complex 3D patterns
+	var target_pos = Vector3(
+		sin(time * 0.3) * 80 + cos(time * 0.1) * 40,
+		20 + sin(time * 0.7) * 15 + cos(time * 0.2) * 10,
+		cos(time * 0.4) * 60 + sin(time * 0.15) * 30
+	)
+	
+	gemma_ai.position = gemma_ai.position.lerp(target_pos, delta * 0.8)
+	
+	# Gemma rotates while exploring
+	gemma_ai.rotation.y += delta * 2.0
+	
+	# Occasional discovery announcements
+	if randf() < 0.005:
+		announce_discovery()
+
+var discovery_messages = [
+	"🔍 Discovered floating geometry at coordinates {pos}",
+	"✨ Consciousness density high in this sector",
+	"🌌 Anomalous space-time readings detected", 
+	"💫 New dream logic patterns emerging",
+	"🧠 Neural pathway convergence observed",
+	"🚀 Quantum field fluctuations measured"
+]
+
+func announce_discovery():
+	var pos_str = "(" + str(int(gemma_ai.position.x)) + "," + str(int(gemma_ai.position.y)) + "," + str(int(gemma_ai.position.z)) + ")"
+	var message = discovery_messages[randi() % discovery_messages.size()].replace("{pos}", pos_str)
+	
+	var announcement = Label3D.new()
+	announcement.text = message
+	announcement.billboard = BaseMaterial3D.BILLBOARD_ENABLED
+	announcement.position = gemma_ai.position + Vector3(0, 5, 0)
+	announcement.modulate = Color.YELLOW
+	add_child(announcement)
+	
+	var tween = create_tween()
+	tween.parallel().tween_property(announcement, "position:y", announcement.position.y + 10, 5.0)
+	tween.parallel().tween_property(announcement, "modulate:a", 0.0, 5.0)
+	tween.tween_callback(announcement.queue_free)
+	
+	print(message)
+"
+
+[sub_resource type="Environment" id="Environment_perfect"]
+background_mode = 1
+background_color = Color(0.3, 0.5, 0.8, 1)
+ambient_light_source = 2
+ambient_light_color = Color(1, 1, 1, 1)
+ambient_light_energy = 0.3
+
+[node name="PERFECT_MOVEMENT_SCENE" type="Node3D"]
+script = SubResource("GDScript_movement")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.866, 0.5, 0, -0.5, 0.866, 0, 5, 10)
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_perfect")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.7, -0.5, 0.5, 0, 0.7, 0.7, -0.7, -0.5, 0.5, 0, 10, 0)

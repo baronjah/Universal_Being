@@ -67,6 +67,39 @@ func generate_compact_id(parent_id: String = "root") -> String:
 	next_id_counter[parent_id] += 1
 	return id
 
+func create_semantic_id(concept_path: String) -> String:
+	var semantic_map = {
+		"consciousness.navigator.3d": "c3d",
+		"interface.notepad.layer": "ui.np",
+		"data.akashic.record": "ak.data",
+		"entity.word.floating": "word.float",
+		"system.cosmic.database": "sys.cosmos",
+		"visual.stellar.color": "vis.star",
+		"input.keyboard.floating": "key.float",
+		"navigation.camera.free": "cam.free",
+		"manifestation.word.create": "create.word",
+		"interaction.energy.touch": "touch.energy"
+	}
+	
+	if semantic_map.has(concept_path):
+		return semantic_map[concept_path] + "." + generate_compact_id("semantic")
+	else:
+		return concept_path + "." + generate_compact_id("unknown")
+
+func decode_semantic_meaning(semantic_id: String) -> Dictionary:
+	var parts = semantic_id.split(".")
+	if parts.size() < 2:
+		return {"error": "invalid_semantic_id"}
+	
+	var meaning = {
+		"domain": parts[0],
+		"concept": parts[1] if parts.size() > 1 else "",
+		"instance": parts[2] if parts.size() > 2 else "",
+		"full_path": semantic_id
+	}
+	
+	return meaning
+
 func get_child_records(record_id: String) -> Array:
 	if records_map.has(record_id):
 		return records_map[record_id]["children"]

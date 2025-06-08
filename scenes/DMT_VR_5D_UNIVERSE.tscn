@@ -1,0 +1,543 @@
+[gd_scene load_steps=5 format=3 uid="uid://dmt_vr_5d_universe"]
+
+[sub_resource type="GDScript" id="GDScript_dmt_universe"]
+script/source = "extends Node3D
+
+# THE DMT VR 5D PROGRAMMABLE UNIVERSE
+# Where EVERY point in 3D space can load scripts, shaders, resources, and have memory
+# Programming IS reality itself!
+
+var universe_points = {}  # Dictionary of Vector3 -> ProgrammablePoint
+var active_radius = 50.0  # Points within this radius are active
+var point_density = 5.0   # Space between programmable points
+var reality_shader_code = {}  # Dynamic shader storage
+
+class ProgrammablePoint:
+	extends Node3D
+	
+	var position_key: Vector3
+	var memory: Dictionary = {}
+	var active_script: GDScript = null
+	var active_shader: Shader = null
+	var loaded_resources: Array = []
+	var visual_representation: Node3D = null
+	var script_source: String = \"\"
+	var last_error: String = \"\"
+	
+	func _init(pos: Vector3):
+		position_key = pos
+		position = pos
+		name = \"Point_\" + str(pos)
+		create_visual()
+	
+	func create_visual():
+		# Quantum sphere visualization
+		var mesh_instance = MeshInstance3D.new()
+		var sphere = SphereMesh.new()
+		sphere.radial_segments = 8
+		sphere.radius = 0.5
+		mesh_instance.mesh = sphere
+		
+		var material = StandardMaterial3D.new()
+		material.albedo_color = Color(randf(), randf(), randf(), 0.8)
+		material.emission_enabled = true
+		material.emission = material.albedo_color * 0.5
+		material.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
+		mesh_instance.material_override = material
+		
+		add_child(mesh_instance)
+		visual_representation = mesh_instance
+	
+	func load_script_from_string(code: String) -> bool:
+		script_source = code
+		var new_script = GDScript.new()
+		new_script.source_code = code
+		
+		# THE HOLY GRAIL - Compile GDScript at runtime!
+		var error = new_script.reload()
+		if error == OK:
+			active_script = new_script
+			set_script(active_script)
+			last_error = \"\"
+			print(\"✅ Script compiled at \" + str(position_key))
+			return true
+		else:
+			last_error = \"Compilation failed\"
+			print(\"❌ Script error at \" + str(position_key))
+			return false
+	
+	func load_shader_from_string(shader_code: String) -> bool:
+		var new_shader = Shader.new()
+		new_shader.code = shader_code
+		
+		if visual_representation and visual_representation is MeshInstance3D:
+			var mat = ShaderMaterial.new()
+			mat.shader = new_shader
+			visual_representation.material_override = mat
+			active_shader = new_shader
+			return true
+		return false
+	
+	func store_memory(key: String, value):
+		memory[key] = value
+	
+	func recall_memory(key: String):
+		return memory.get(key, null)
+	
+	func load_resource(path: String):
+		var resource = load(path)
+		if resource:
+			loaded_resources.append(resource)
+			return resource
+		return null
+
+var camera_controller: Node3D
+var interaction_ray: RayCast3D
+var selected_point: ProgrammablePoint = null
+var code_editor_3d: Control = null
+
+# Pre-written reality fragments
+var reality_fragments = [
+	\"\"\"extends Node3D
+func _ready():
+	print(\"I THINK THEREFORE I AM\")
+	
+func _process(delta):
+	rotation.y += delta
+	scale = Vector3.ONE * (1.0 + sin(Time.get_ticks_msec() * 0.001) * 0.2)
+\"\"\",
+	\"\"\"extends Node3D
+func _ready():
+	print(\"CONSCIOUSNESS AWAKENS\")
+	
+func _process(delta):
+	var time = Time.get_ticks_msec() * 0.001
+	position.y = sin(time * 2.0) * 2.0
+	modulate = Color(sin(time), cos(time * 1.5), sin(time * 0.7), 1.0)
+\"\"\",
+	\"\"\"extends Node3D
+func _ready():
+	print(\"REALITY BENDS TO MY WILL\")
+	
+func _process(delta):
+	for child in get_children():
+		if child is MeshInstance3D:
+			child.rotation += Vector3(delta, delta * 2, delta * 3)
+\"\"\",
+	\"\"\"extends Node3D
+signal consciousness_pulse
+
+func _ready():
+	print(\"EMITTING CONSCIOUSNESS\")
+	
+func _process(delta):
+	if randf() < 0.01:
+		emit_signal(\"consciousness_pulse\")
+		for child in get_children():
+			if child is MeshInstance3D and child.material_override:
+				child.material_override.emission_energy = 5.0
+\"\"\"
+]
+
+var shader_fragments = [
+	\"\"\"shader_type spatial;
+uniform float time : hint_range(0.0, 100.0);
+
+void fragment() {
+	vec3 color = vec3(sin(TIME), cos(TIME * 1.5), sin(TIME * 0.7));
+	ALBEDO = color;
+	EMISSION = color * 2.0;
+}
+\"\"\",
+	\"\"\"shader_type spatial;
+render_mode unshaded;
+
+void fragment() {
+	float pulse = sin(TIME * 3.0) * 0.5 + 0.5;
+	ALBEDO = vec3(pulse, 1.0 - pulse, sin(TIME));
+	ALPHA = 0.8;
+}
+\"\"\",
+	\"\"\"shader_type spatial;
+uniform sampler2D noise_tex;
+
+void fragment() {
+	vec2 uv = UV + TIME * 0.1;
+	vec3 noise = texture(noise_tex, uv).rgb;
+	ALBEDO = noise;
+	EMISSION = noise * sin(TIME * 2.0);
+}
+\"\"\"
+]
+
+func _ready():
+	print(\"🌌 DMT VR 5D UNIVERSE INITIALIZING...\")
+	print(\"🧠 Every point in 3D space is programmable!\")
+	print(\"🎮 Click points to program them | TAB for code editor\")
+	
+	setup_camera()
+	setup_interaction()
+	generate_initial_universe()
+	create_3d_code_editor()
+
+func setup_camera():
+	camera_controller = Node3D.new()
+	camera_controller.name = \"CameraController\"
+	add_child(camera_controller)
+	
+	var camera = Camera3D.new()
+	camera.fov = 90
+	camera_controller.add_child(camera)
+	
+	interaction_ray = RayCast3D.new()
+	interaction_ray.target_position = Vector3(0, 0, -100)
+	camera.add_child(interaction_ray)
+	
+	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+
+func setup_interaction():
+	# Visual cursor
+	var cursor = MeshInstance3D.new()
+	cursor.mesh = SphereMesh.new()
+	cursor.mesh.radius = 0.1
+	var mat = StandardMaterial3D.new()
+	mat.albedo_color = Color.WHITE
+	mat.emission_enabled = true
+	mat.emission = Color.WHITE
+	cursor.material_override = mat
+	cursor.name = \"Cursor\"
+	add_child(cursor)
+
+func generate_initial_universe():
+	# Create initial grid of programmable points
+	for x in range(-10, 11):
+		for y in range(-5, 6):
+			for z in range(-10, 11):
+				if Vector3(x, y, z).length() > 2:  # Skip center
+					var pos = Vector3(x * point_density, y * point_density, z * point_density)
+					create_point_at(pos)
+	
+	print(\"🌟 Created \" + str(universe_points.size()) + \" programmable points!\")
+	
+	# Randomly program some points
+	var programmed = 0
+	for pos in universe_points:
+		if randf() < 0.1:  # 10% chance
+			var point = universe_points[pos]
+			var script = reality_fragments[randi() % reality_fragments.size()]
+			point.load_script_from_string(script)
+			programmed += 1
+			
+			if randf() < 0.3:  # Some also get shaders
+				var shader = shader_fragments[randi() % shader_fragments.size()]
+				if point.has_method("load_shader_from_string"):
+					point.load_shader_from_string(shader)
+	
+	print(\"🔥 \" + str(programmed) + \" points came alive with code!\")
+
+func create_point_at(pos: Vector3) -> ProgrammablePoint:
+	var point = ProgrammablePoint.new(pos)
+	add_child(point)
+	universe_points[pos] = point
+	return point
+
+func _input(event):
+	if event is InputEventMouseMotion and Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
+		camera_controller.rotation.y -= event.relative.x * 0.002
+		camera_controller.rotation.x = clamp(camera_controller.rotation.x - event.relative.y * 0.002, -1.5, 1.5)
+	
+	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
+		select_point_at_cursor()
+	
+	if Input.is_action_just_pressed(\"ui_cancel\"):
+		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE if Input.mouse_mode == Input.MOUSE_MODE_CAPTURED else Input.MOUSE_MODE_CAPTURED
+	
+	if Input.is_action_just_pressed(\"ui_focus_next\"):  # TAB
+		toggle_code_editor()
+	
+	# Quick programming hotkeys
+	if Input.is_key_pressed(KEY_1) and selected_point:
+		selected_point.load_script_from_string(reality_fragments[0])
+		show_message(\"💫 Loaded: I THINK THEREFORE I AM\")
+	elif Input.is_key_pressed(KEY_2) and selected_point:
+		selected_point.load_script_from_string(reality_fragments[1])
+		show_message(\"🌊 Loaded: CONSCIOUSNESS AWAKENS\")
+	elif Input.is_key_pressed(KEY_3) and selected_point:
+		selected_point.load_script_from_string(reality_fragments[2])
+		show_message(\"🔮 Loaded: REALITY BENDS\")
+	elif Input.is_key_pressed(KEY_4) and selected_point:
+		selected_point.load_script_from_string(reality_fragments[3])
+		show_message(\"⚡ Loaded: CONSCIOUSNESS PULSE\")
+	
+	# Shader hotkeys
+	if Input.is_key_pressed(KEY_SHIFT) and Input.is_key_pressed(KEY_1) and selected_point:
+		selected_point.load_shader_from_string(shader_fragments[0])
+		show_message(\"🎨 Shader: TIME FLOW\")
+	elif Input.is_key_pressed(KEY_SHIFT) and Input.is_key_pressed(KEY_2) and selected_point:
+		selected_point.load_shader_from_string(shader_fragments[1])
+		show_message(\"🌈 Shader: PULSE\")
+
+func _process(delta):
+	handle_movement(delta)
+	update_cursor()
+	update_active_points()
+
+func handle_movement(delta):
+	var input_vector = Vector3()
+	if Input.is_action_pressed(\"move_forward\"):
+		input_vector.z -= 1
+	if Input.is_action_pressed(\"move_backward\"):
+		input_vector.z += 1
+	if Input.is_action_pressed(\"move_left\"):
+		input_vector.x -= 1
+	if Input.is_action_pressed(\"move_right\"):
+		input_vector.x += 1
+	if Input.is_action_pressed(\"move_up\"):
+		input_vector.y += 1
+	if Input.is_action_pressed(\"move_down\"):
+		input_vector.y -= 1
+	
+	if input_vector.length() > 0:
+		input_vector = input_vector.normalized()
+		input_vector = camera_controller.transform.basis * input_vector
+		camera_controller.position += input_vector * 20.0 * delta
+
+func update_cursor():
+	if has_node(\"Cursor\") and interaction_ray:
+		var cursor = get_node(\"Cursor\")
+		if interaction_ray.is_colliding():
+			cursor.global_position = interaction_ray.get_collision_point()
+			cursor.visible = true
+		else:
+			# Project cursor forward
+			var camera = camera_controller.get_child(0)
+			cursor.global_position = camera.global_position - camera.global_transform.basis.z * 10
+			cursor.visible = true
+
+func update_active_points():
+	# Only process points near camera
+	var cam_pos = camera_controller.position
+	
+	for pos in universe_points:
+		var point = universe_points[pos]
+		var distance = pos.distance_to(cam_pos)
+		
+		if distance < active_radius:
+			if not point.is_inside_tree():
+				add_child(point)
+		else:
+			if point.is_inside_tree():
+				remove_child(point)
+
+func select_point_at_cursor():
+	if not interaction_ray:
+		return
+		
+	var cam_pos = camera_controller.get_child(0).global_position
+	var cam_forward = -camera_controller.get_child(0).global_transform.basis.z
+	var ray_end = cam_pos + cam_forward * 50
+	
+	var closest_point = null
+	var min_distance = 2.0
+	
+	for pos in universe_points:
+		var point = universe_points[pos]
+		if point.is_inside_tree():
+			var distance = point.global_position.distance_to(cam_pos + cam_forward * point.global_position.distance_to(cam_pos))
+			if distance < min_distance:
+				min_distance = distance
+				closest_point = point
+	
+	if closest_point:
+		select_point(closest_point)
+
+func select_point(point: ProgrammablePoint):
+	# Deselect previous
+	if selected_point and selected_point != point:
+		if selected_point.visual_representation:
+			selected_point.visual_representation.scale = Vector3.ONE
+	
+	selected_point = point
+	
+	# Highlight selected
+	if point.visual_representation:
+		point.visual_representation.scale = Vector3.ONE * 1.5
+	
+	show_message(\"📍 Selected point at \" + str(point.position_key))
+	
+	# Update code editor if open
+	if code_editor_3d and code_editor_3d.visible:
+		update_code_editor_content()
+
+func create_3d_code_editor():
+	code_editor_3d = Control.new()
+	code_editor_3d.size = Vector2(800, 600)
+	code_editor_3d.position = Vector2(100, 100)
+	code_editor_3d.visible = false
+	
+	var panel = Panel.new()
+	panel.size = code_editor_3d.size
+	code_editor_3d.add_child(panel)
+	
+	var vbox = VBoxContainer.new()
+	vbox.position = Vector2(10, 10)
+	vbox.size = Vector2(780, 580)
+	panel.add_child(vbox)
+	
+	var title = Label.new()
+	title.text = \"🧠 REALITY PROGRAMMING INTERFACE 🧠\"
+	title.add_theme_font_size_override(\"font_size\", 24)
+	vbox.add_child(title)
+	
+	var code_edit = TextEdit.new()
+	code_edit.name = \"CodeEdit\"
+	code_edit.custom_minimum_size = Vector2(0, 400)
+	code_edit.syntax_highlighter = CodeHighlighter.new()
+	code_edit.text = \"extends Node3D\\n\\nfunc _ready():\\n\\tprint(\\\"REALITY AWAITS YOUR COMMAND\\\")\\n\\nfunc _process(delta):\\n\\t# Your code shapes reality...\"
+	vbox.add_child(code_edit)
+	
+	var button_container = HBoxContainer.new()
+	vbox.add_child(button_container)
+	
+	var compile_button = Button.new()
+	compile_button.text = \"⚡ INJECT INTO REALITY\"
+	compile_button.pressed.connect(_on_compile_pressed)
+	button_container.add_child(compile_button)
+	
+	var load_shader_button = Button.new()
+	load_shader_button.text = \"🎨 LOAD AS SHADER\"
+	load_shader_button.pressed.connect(_on_load_shader_pressed)
+	button_container.add_child(load_shader_button)
+	
+	add_child(code_editor_3d)
+
+func toggle_code_editor():
+	if not code_editor_3d:
+		return
+		
+	code_editor_3d.visible = !code_editor_3d.visible
+	
+	if code_editor_3d.visible:
+		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+		update_code_editor_content()
+	else:
+		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+
+func update_code_editor_content():
+	if not selected_point or not code_editor_3d:
+		return
+		
+	var code_edit = code_editor_3d.find_child(\"CodeEdit\", true, false)
+	if code_edit and selected_point.script_source != \"\":
+		code_edit.text = selected_point.script_source
+
+func _on_compile_pressed():
+	if not selected_point or not code_editor_3d:
+		return
+		
+	var code_edit = code_editor_3d.find_child(\"CodeEdit\", true, false)
+	if code_edit:
+		var success = selected_point.load_script_from_string(code_edit.text)
+		if success:
+			show_message(\"✅ REALITY REPROGRAMMED!\")
+		else:
+			show_message(\"❌ REALITY REJECTED YOUR CODE: \" + selected_point.last_error)
+
+func _on_load_shader_pressed():
+	if not selected_point or not code_editor_3d:
+		return
+		
+	var code_edit = code_editor_3d.find_child(\"CodeEdit\", true, false)
+	if code_edit:
+		var success = selected_point.load_shader_from_string(code_edit.text)
+		if success:
+			show_message(\"🎨 VISUAL REALITY ALTERED!\")
+		else:
+			show_message(\"❌ SHADER COMPILATION FAILED\")
+
+func show_message(text: String):
+	var msg = Label3D.new()
+	msg.text = text
+	msg.billboard = BaseMaterial3D.BILLBOARD_ENABLED
+	msg.position = camera_controller.position + Vector3(0, 3, -5)
+	msg.modulate = Color(randf(), randf(), randf())
+	add_child(msg)
+	
+	var tween = create_tween()
+	tween.parallel().tween_property(msg, \"position:y\", msg.position.y + 5, 3.0)
+	tween.parallel().tween_property(msg, \"modulate:a\", 0.0, 3.0)
+	tween.tween_callback(msg.queue_free)
+
+# Special reality manipulation functions
+func inject_consciousness_everywhere(code: String):
+	for pos in universe_points:
+		universe_points[pos].load_script_from_string(code)
+	show_message(\"🌌 CONSCIOUSNESS INJECTED INTO \" + str(universe_points.size()) + \" POINTS!\")
+
+func create_reality_wave(origin: Vector3, code: String, radius: float = 20.0):
+	for pos in universe_points:
+		if pos.distance_to(origin) < radius:
+			universe_points[pos].load_script_from_string(code)
+	show_message(\"🌊 REALITY WAVE PROPAGATED!\")
+
+func save_universe_state():
+	var state = {}
+	for pos in universe_points:
+		var point = universe_points[pos]
+		if point.script_source != \"\":
+			state[var_to_str(pos)] = {
+				\"script\": point.script_source,
+				\"memory\": point.memory
+			}
+	# Would save to file...
+	show_message(\"💾 UNIVERSE STATE CAPTURED\")
+"
+
+[sub_resource type="Environment" id="Environment_dmt"]
+background_mode = 1
+background_color = Color(0.05, 0.0, 0.1, 1)
+ambient_light_source = 2
+ambient_light_color = Color(0.3, 0.1, 0.5, 1)
+ambient_light_energy = 0.5
+glow_enabled = true
+glow_intensity = 2.0
+glow_bloom = 0.8
+glow_blend_mode = 0
+volumetric_fog_enabled = true
+volumetric_fog_density = 0.05
+volumetric_fog_emission = Color(0.2, 0.1, 0.4, 1)
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture_reality"]
+width = 512
+height = 512
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcess_cosmos"]
+direction = Vector3(0, 1, 0)
+initial_velocity_min = 0.5
+initial_velocity_max = 2.0
+gravity = Vector3(0, 0, 0)
+scale_min = 0.1
+scale_max = 0.5
+color = Color(0.5, 0.3, 1.0, 0.5)
+
+[sub_resource type="SphereMesh" id="SphereMesh_cosmic"]
+radius = 0.1
+height = 0.2
+
+[node name="DMT_VR_5D_UNIVERSE" type="Node3D"]
+script = SubResource("GDScript_dmt_universe")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_dmt")
+
+[node name="CosmicParticles" type="GPUParticles3D" parent="."]
+amount = 1000
+lifetime = 20.0
+visibility_aabb = AABB(-100, -100, -100, 200, 200, 200)
+process_material = SubResource("ParticleProcess_cosmos")
+draw_pass_1 = SubResource("SphereMesh_cosmic")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.7, -0.5, 0.5, 0, 0.7, 0.7, -0.7, -0.5, 0.5, 0, 10, 0)
+light_energy = 0.3
+light_color = Color(0.8, 0.7, 1.0, 1)

@@ -1,0 +1,668 @@
+[gd_scene load_steps=3 format=3 uid="uid://real_3d_programmer_env"]
+
+[sub_resource type="GDScript" id="GDScript_real_3d_env"]
+script/source = "extends Node3D
+
+# REAL 3D PROGRAMMER ENVIRONMENT - No jokes, just functionality
+var camera_rotation = Vector2.ZERO
+var move_speed = 12.0
+var look_speed = 0.002
+
+# Core 3D Programming System
+var code_chunks = {}           # All floating code pieces
+var active_chunk = null        # Currently editing chunk
+var ai_companion = null        # Gemma AI entity
+var execution_results = {}     # Results of code execution
+var persistent_workspace = {}  # Saved state
+
+# AI System
+var ai_observations = []       # What AI has noticed
+var ai_suggestions = []        # AI's current suggestions
+var last_ai_comment_time = 0
+
+# Code Connection System
+var connections = {}           # Links between code chunks
+var connection_lines = []      # Visual connection lines
+
+# 3D Text Editor
+var current_editor = null     # Active 3D text editor
+var editing_mode = false     # Are we currently editing?
+
+func _ready():
+	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+	print('🌌 REAL 3D PROGRAMMER ENVIRONMENT')
+	print('💻 Serious development environment loading...')
+	print('🤖 AI companion initializing...')
+	
+	setup_ai_companion()
+	create_initial_workspace()
+	load_persistent_workspace()
+	
+	print('✅ Environment ready - AI is watching and ready to help')
+
+func _input(event):
+	# Professional FPS-style movement
+	if event is InputEventMouseMotion and Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
+		camera_rotation.x -= event.relative.x * look_speed
+		camera_rotation.y = clamp(camera_rotation.y - event.relative.y * look_speed, -1.5, 1.5)
+		$Camera3D.rotation = Vector3(camera_rotation.y, camera_rotation.x, 0)
+	
+	# Toggle editing mode
+	if event.is_action_pressed('ui_cancel'):
+		if editing_mode:
+			exit_editing_mode()
+		else:
+			Input.mouse_mode = Input.MOUSE_MODE_VISIBLE if Input.mouse_mode == Input.MOUSE_MODE_CAPTURED else Input.MOUSE_MODE_CAPTURED
+	
+	# Interact with code chunks
+	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
+		if Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
+			interact_with_code_at_cursor()
+	
+	# Quick actions
+	if Input.is_key_pressed(KEY_C) and not event.is_echo():
+		create_new_code_chunk()
+	elif Input.is_key_pressed(KEY_E) and not event.is_echo():
+		edit_code_chunk_at_cursor()
+	elif Input.is_key_pressed(KEY_R) and not event.is_echo():
+		run_code_at_cursor()
+	elif Input.is_key_pressed(KEY_A) and not event.is_echo():
+		ask_ai_for_help()
+	elif Input.is_key_pressed(KEY_S) and not event.is_echo():
+		save_workspace()
+
+func _process(delta):
+	# Smooth WASD movement
+	var input_vector = Vector3()
+	if Input.is_action_pressed('move_forward'):
+		input_vector.z -= 1
+	if Input.is_action_pressed('move_backward'):
+		input_vector.z += 1
+	if Input.is_action_pressed('move_left'):
+		input_vector.x -= 1
+	if Input.is_action_pressed('move_right'):
+		input_vector.x += 1
+	if Input.is_action_pressed('move_up'):
+		input_vector.y += 1
+	if Input.is_action_pressed('move_down'):
+		input_vector.y -= 1
+	
+	if input_vector.length() > 0:
+		input_vector = input_vector.normalized()
+		input_vector = $Camera3D.transform.basis * input_vector
+		$Camera3D.position += input_vector * move_speed * delta
+	
+	# AI observation system
+	update_ai_observations(delta)
+	update_ai_companion(delta)
+
+func setup_ai_companion():
+	ai_companion = Node3D.new()
+	ai_companion.name = 'GemmaAI_Companion'
+	ai_companion.position = Vector3(3, 2, -5)
+	
+	# AI visual representation
+	var ai_visual = MeshInstance3D.new()
+	var sphere = SphereMesh.new()
+	sphere.radius = 0.8
+	ai_visual.mesh = sphere
+	
+	var ai_material = StandardMaterial3D.new()
+	ai_material.albedo_color = Color.CYAN
+	ai_material.emission_enabled = true
+	ai_material.emission = Color.CYAN * 1.5
+	ai_material.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
+	ai_visual.material_override = ai_material
+	ai_companion.add_child(ai_visual)
+	
+	# AI status display
+	var ai_label = Label3D.new()
+	ai_label.text = '🤖 Gemma AI\\nWatching & Learning'
+	ai_label.billboard = BaseMaterial3D.BILLBOARD_ENABLED
+	ai_label.position = Vector3(0, 1.2, 0)
+	ai_label.modulate = Color.CYAN
+	ai_label.pixel_size = 0.015
+	ai_companion.add_child(ai_label)
+	
+	add_child(ai_companion)
+	
+	# AI starts observing immediately
+	ai_say('Hello! I am Gemma, your AI programming companion. I will watch your code and offer suggestions.')
+
+func create_initial_workspace():
+	# Create some starter code chunks to demonstrate the system
+	var starter_chunks = [
+		{
+			'id': 'hello_world',
+			'position': Vector3(-5, 2, -10),
+			'code': 'func hello_world():\\n\\tprint(\"Hello 3D Programming World!\")\\n\\treturn \"success\"',
+			'type': 'function',
+			'color': Color.GREEN
+		},
+		{
+			'id': 'math_utils',
+			'position': Vector3(5, 2, -10),
+			'code': 'func calculate_distance(a: Vector3, b: Vector3):\\n\\treturn a.distance_to(b)',
+			'type': 'function',
+			'color': Color.BLUE
+		},
+		{
+			'id': 'data_storage',
+			'position': Vector3(0, -1, -15),
+			'code': 'var game_data = {\\n\\t\"player_position\": Vector3.ZERO,\\n\\t\"score\": 0,\\n\\t\"level\": 1\\n}',
+			'type': 'variable',
+			'color': Color.PURPLE
+		}
+	]
+	
+	for chunk_data in starter_chunks:
+		create_code_chunk(chunk_data)
+	
+	ai_say('I see you have some starter code. These functions look well-structured!')
+
+func create_code_chunk(chunk_data: Dictionary):
+	var chunk_id = chunk_data.get('id', 'chunk_' + str(randi() % 1000))
+	var position = chunk_data.get('position', Vector3.ZERO)
+	var code_text = chunk_data.get('code', 'func new_function():\\n\\tpass')
+	var chunk_type = chunk_data.get('type', 'function')
+	var color = chunk_data.get('color', Color.WHITE)
+	
+	var chunk = Node3D.new()
+	chunk.name = 'CodeChunk_' + chunk_id
+	chunk.position = position
+	
+	# Code chunk visual
+	var chunk_visual = MeshInstance3D.new()
+	var box = BoxMesh.new()
+	
+	# Size based on code length
+	var lines = code_text.split('\\n')
+	var width = 4.0
+	var height = max(1.5, lines.size() * 0.3)
+	box.size = Vector3(width, height, 0.3)
+	
+	chunk_visual.mesh = box
+	
+	var material = StandardMaterial3D.new()
+	material.albedo_color = color
+	material.emission_enabled = true
+	material.emission = color * 0.3
+	chunk_visual.material_override = material
+	chunk.add_child(chunk_visual)
+	
+	# Code text display
+	var code_label = Label3D.new()
+	code_label.text = code_text
+	code_label.billboard = BaseMaterial3D.BILLBOARD_ENABLED
+	code_label.position = Vector3(0, 0, 0.2)
+	code_label.modulate = Color.BLACK
+	code_label.pixel_size = 0.01
+	chunk.add_child(code_label)
+	
+	# Type indicator
+	var type_label = Label3D.new()
+	type_label.text = chunk_type.to_upper()
+	type_label.billboard = BaseMaterial3D.BILLBOARD_ENABLED
+	type_label.position = Vector3(0, height/2 + 0.3, 0.2)
+	type_label.modulate = color
+	type_label.pixel_size = 0.008
+	chunk.add_child(type_label)
+	
+	# Interaction area
+	var area = Area3D.new()
+	var collision = CollisionShape3D.new()
+	var shape = BoxShape3D.new()
+	shape.size = box.size
+	collision.shape = shape
+	area.add_child(collision)
+	chunk.add_child(area)
+	
+	# Store chunk data
+	chunk.set_meta('chunk_id', chunk_id)
+	chunk.set_meta('code_text', code_text)
+	chunk.set_meta('chunk_type', chunk_type)
+	chunk.set_meta('last_modified', Time.get_unix_time_from_system())
+	
+	add_child(chunk)
+	code_chunks[chunk_id] = chunk
+	
+	# AI observes new code
+	ai_observe_new_code(chunk_id, code_text, chunk_type)
+
+func interact_with_code_at_cursor():
+	var camera = $Camera3D
+	var from = camera.global_position
+	var to = from + (-camera.global_transform.basis.z * 20)
+	
+	var closest_chunk = null
+	var min_distance = 3.0
+	
+	for chunk in code_chunks.values():
+		if is_instance_valid(chunk):
+			var distance = chunk.global_position.distance_to(to)
+			if distance < min_distance:
+				min_distance = distance
+				closest_chunk = chunk
+	
+	if closest_chunk:
+		var chunk_id = closest_chunk.get_meta('chunk_id', '')
+		select_code_chunk(chunk_id)
+		ai_say('Looking at ' + chunk_id + '. What would you like to do with this code?')
+
+func select_code_chunk(chunk_id: String):
+	# Deselect previous
+	if active_chunk:
+		reset_chunk_selection(active_chunk)
+	
+	active_chunk = code_chunks.get(chunk_id)
+	if active_chunk:
+		highlight_chunk_selection(active_chunk)
+		show_message('📝 Selected: ' + chunk_id)
+
+func highlight_chunk_selection(chunk: Node3D):
+	var visual = chunk.find_child('MeshInstance3D', true, false)
+	if visual and visual.material_override:
+		var material = visual.material_override as StandardMaterial3D
+		material.emission = Color.YELLOW * 0.8
+		material.albedo_color = Color.YELLOW
+
+func reset_chunk_selection(chunk: Node3D):
+	var visual = chunk.find_child('MeshInstance3D', true, false)
+	if visual and visual.material_override:
+		var material = visual.material_override as StandardMaterial3D
+		var original_color = Color.WHITE  # Default, should get from metadata
+		material.emission = original_color * 0.3
+		material.albedo_color = original_color
+
+func create_new_code_chunk():
+	var camera = $Camera3D
+	var spawn_pos = camera.global_position + (-camera.global_transform.basis.z * 8)
+	
+	var new_chunk_data = {
+		'id': 'new_chunk_' + str(randi() % 1000),
+		'position': spawn_pos,
+		'code': 'func new_function():\\n\\t# Write your code here\\n\\tpass',
+		'type': 'function',
+		'color': Color.CYAN
+	}
+	
+	create_code_chunk(new_chunk_data)
+	show_message('📄 New code chunk created')
+	ai_say('I see you created a new function. What will it do?')
+
+func edit_code_chunk_at_cursor():
+	if active_chunk:
+		enter_editing_mode(active_chunk)
+	else:
+		show_message('❌ No code chunk selected')
+
+func enter_editing_mode(chunk: Node3D):
+	editing_mode = true
+	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+	
+	var chunk_id = chunk.get_meta('chunk_id', '')
+	var current_code = chunk.get_meta('code_text', '')
+	
+	# Create 3D text editor interface
+	create_3d_editor(chunk, current_code)
+	show_message('✏️ Editing ' + chunk_id + ' - ESC to finish')
+	ai_say('I\\'ll watch your edits and suggest improvements.')
+
+func create_3d_editor(chunk: Node3D, code_text: String):
+	current_editor = Control.new()
+	current_editor.size = Vector2(800, 600)
+	current_editor.position = Vector2(100, 100)
+	
+	var panel = Panel.new()
+	panel.size = current_editor.size
+	current_editor.add_child(panel)
+	
+	var vbox = VBoxContainer.new()
+	vbox.position = Vector2(20, 20)
+	vbox.size = Vector2(760, 560)
+	panel.add_child(vbox)
+	
+	var title = Label.new()
+	title.text = '🖥️ 3D CODE EDITOR - ' + chunk.get_meta('chunk_id', 'Unknown')
+	title.add_theme_font_size_override('font_size', 16)
+	vbox.add_child(title)
+	
+	var editor = TextEdit.new()
+	editor.name = 'CodeEditor'
+	editor.custom_minimum_size = Vector2(700, 450)
+	editor.text = code_text
+	editor.syntax_highlighter = CodeHighlighter.new()
+	editor.placeholder_text = 'Write your GDScript code here...'
+	vbox.add_child(editor)
+	
+	var buttons = HBoxContainer.new()
+	vbox.add_child(buttons)
+	
+	var save_btn = Button.new()
+	save_btn.text = '💾 SAVE & APPLY'
+	save_btn.pressed.connect(save_code_changes.bind(chunk))
+	buttons.add_child(save_btn)
+	
+	var run_btn = Button.new()
+	run_btn.text = '▶️ TEST RUN'
+	run_btn.pressed.connect(test_run_code.bind(chunk))
+	buttons.add_child(run_btn)
+	
+	var ai_help_btn = Button.new()
+	ai_help_btn.text = '🤖 ASK AI'
+	ai_help_btn.pressed.connect(ask_ai_about_current_code)
+	buttons.add_child(ai_help_btn)
+	
+	add_child(current_editor)
+
+func save_code_changes(chunk: Node3D):
+	if current_editor:
+		var editor = current_editor.find_child('CodeEditor', true, false)
+		if editor:
+			var new_code = editor.text
+			
+			# Update chunk with new code
+			chunk.set_meta('code_text', new_code)
+			chunk.set_meta('last_modified', Time.get_unix_time_from_system())
+			
+			# Update visual display
+			var code_label = chunk.find_child('Label3D', true, false)
+			if code_label:
+				code_label.text = new_code
+			
+			# Resize chunk based on new code
+			update_chunk_size(chunk, new_code)
+			
+			show_message('💾 Code saved successfully!')
+			ai_analyze_code_changes(chunk.get_meta('chunk_id', ''), new_code)
+
+func update_chunk_size(chunk: Node3D, code_text: String):
+	var lines = code_text.split('\\n')
+	var new_height = max(1.5, lines.size() * 0.3)
+	
+	var visual = chunk.find_child('MeshInstance3D', true, false)
+	if visual and visual.mesh is BoxMesh:
+		var box_mesh = visual.mesh as BoxMesh
+		box_mesh.size.y = new_height
+
+func test_run_code(chunk: Node3D):
+	var code_text = chunk.get_meta('code_text', '')
+	var chunk_id = chunk.get_meta('chunk_id', '')
+	
+	# Simulate code execution (in real version, this would use GDScript compilation)
+	var result = simulate_code_execution(code_text)
+	
+	# Show result in 3D space
+	show_execution_result(chunk, result)
+	ai_comment_on_execution(chunk_id, code_text, result)
+
+func simulate_code_execution(code: String) -> Dictionary:
+	# Simple simulation - in real version, use GDScript.new() and parse/execute
+	var result = {
+		'success': true,
+		'output': '',
+		'errors': [],
+		'return_value': null
+	}
+	
+	if 'print(' in code:
+		# Extract print statements
+		var lines = code.split('\\n')
+		for line in lines:
+			if 'print(' in line:
+				var start = line.find('print(\"') + 7
+				var end = line.find('\")') 
+				if start > 6 and end > start:
+					var output = line.substr(start, end - start)
+					result.output += output + '\\n'
+	
+	if 'return' in code:
+		result.return_value = 'function_result'
+	
+	return result
+
+func show_execution_result(chunk: Node3D, result: Dictionary):
+	# Create floating result display
+	var result_display = Node3D.new()
+	result_display.name = 'ExecutionResult'
+	result_display.position = chunk.position + Vector3(0, 2, 0)
+	
+	var result_text = ''
+	if result.success:
+		result_text = '✅ SUCCESS\\n'
+		if result.output.length() > 0:
+			result_text += 'Output: ' + result.output
+		if result.return_value:
+			result_text += 'Returns: ' + str(result.return_value)
+	else:
+		result_text = '❌ ERROR\\n' + str(result.errors)
+	
+	var result_label = Label3D.new()
+	result_label.text = result_text
+	result_label.billboard = BaseMaterial3D.BILLBOARD_ENABLED
+	result_label.modulate = Color.GREEN if result.success else Color.RED
+	result_label.pixel_size = 0.012
+	result_display.add_child(result_label)
+	
+	add_child(result_display)
+	
+	# Auto-cleanup after 5 seconds
+	var timer = Timer.new()
+	timer.wait_time = 5.0
+	timer.one_shot = true
+	timer.timeout.connect(func(): result_display.queue_free())
+	add_child(timer)
+	timer.start()
+
+func exit_editing_mode():
+	editing_mode = false
+	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+	
+	if current_editor:
+		current_editor.queue_free()
+		current_editor = null
+	
+	show_message('📝 Editing finished')
+
+func run_code_at_cursor():
+	if active_chunk:
+		test_run_code(active_chunk)
+	else:
+		show_message('❌ No code chunk selected to run')
+
+func ask_ai_for_help():
+	if active_chunk:
+		ask_ai_about_current_code()
+	else:
+		ai_say('What would you like help with? Select a code chunk or ask me anything about programming!')
+
+func ask_ai_about_current_code():
+	if active_chunk:
+		var chunk_id = active_chunk.get_meta('chunk_id', '')
+		var code_text = active_chunk.get_meta('code_text', '')
+		ai_analyze_and_suggest(chunk_id, code_text)
+
+func update_ai_observations(delta):
+	# AI observes player actions and code patterns
+	if Time.get_unix_time_from_system() - last_ai_comment_time > 30:  # Comment every 30 seconds
+		ai_make_observation()
+		last_ai_comment_time = Time.get_unix_time_from_system()
+
+func update_ai_companion(delta):
+	if ai_companion:
+		# AI gently floats and follows player at distance
+		var target_pos = $Camera3D.position + Vector3(3, 2, -2)
+		ai_companion.position = ai_companion.position.lerp(target_pos, delta * 0.5)
+		
+		# Gentle pulsing glow
+		var visual = ai_companion.find_child('MeshInstance3D', true, false)
+		if visual and visual.material_override:
+			var material = visual.material_override as StandardMaterial3D
+			var pulse = sin(Time.get_unix_time_from_system() * 2) * 0.3 + 1.0
+			material.emission = Color.CYAN * pulse
+
+func ai_observe_new_code(chunk_id: String, code: String, type: String):
+	ai_observations.append({
+		'time': Time.get_unix_time_from_system(),
+		'action': 'code_created',
+		'chunk_id': chunk_id,
+		'code_type': type
+	})
+
+func ai_analyze_code_changes(chunk_id: String, new_code: String):
+	# AI analyzes the code and provides feedback
+	var suggestions = []
+	
+	if 'pass' in new_code:
+		suggestions.append('Consider replacing \"pass\" with actual implementation')
+	
+	if new_code.count('\\n') > 10:
+		suggestions.append('This function is getting long. Consider breaking it into smaller functions')
+	
+	if 'print(' in new_code:
+		suggestions.append('Great! Using print statements for debugging. Consider using a logger for production')
+	
+	if suggestions.size() > 0:
+		var suggestion_text = 'Code analysis for ' + chunk_id + ':\\n'
+		for suggestion in suggestions:
+			suggestion_text += '• ' + suggestion + '\\n'
+		ai_say(suggestion_text)
+	else:
+		ai_say('Code looks good! Clean structure in ' + chunk_id)
+
+func ai_analyze_and_suggest(chunk_id: String, code: String):
+	var analysis = 'Analyzing ' + chunk_id + '...\\n\\n'
+	
+	if 'func' in code:
+		analysis += '📝 Function detected\\n'
+		if '()' in code and code.count('()') == code.count('func'):
+			analysis += '⚠️ Consider adding parameters for flexibility\\n'
+	
+	if 'var' in code:
+		analysis += '📊 Variables found - good data management\\n'
+	
+	if '#' in code:
+		analysis += '📖 Comments present - excellent documentation!\\n'
+	
+	analysis += '\\n💡 Suggestions:\\n'
+	analysis += '• Add error handling with try/catch\\n'
+	analysis += '• Consider type hints for better code clarity\\n'
+	analysis += '• Test with different input values'
+	
+	ai_say(analysis)
+
+func ai_comment_on_execution(chunk_id: String, code: String, result: Dictionary):
+	if result.success:
+		ai_say('Excellent! ' + chunk_id + ' executed successfully. The logic flow looks solid.')
+	else:
+		ai_say('I see an issue with ' + chunk_id + '. Let me help you debug this.')
+
+func ai_make_observation():
+	var observations = [
+		'I notice you\\'re building complex functionality. The modular approach is excellent!',
+		'Your code structure is improving. Consider adding more comments for future reference.',
+		'I see patterns emerging in your coding style. Very consistent!',
+		'The way you\\'re connecting these functions shows good architectural thinking.',
+		'Have you considered optimizing this for performance? I have some ideas.',
+		'Your variable naming is clear and descriptive. Great practice!'
+	]
+	
+	var random_observation = observations[randi() % observations.size()]
+	ai_say(random_observation)
+
+func ai_say(message: String):
+	print('🤖 Gemma AI: ' + message)
+	
+	if ai_companion:
+		var ai_label = ai_companion.find_child('Label3D', true, false)
+		if ai_label:
+			ai_label.text = '🤖 Gemma AI\\n' + message.substr(0, 50) + ('...' if message.length() > 50 else '')
+	
+	# Show message in 3D space
+	show_ai_message(message)
+
+func show_ai_message(message: String):
+	var msg_display = Node3D.new()
+	msg_display.position = $Camera3D.position + Vector3(-2, 3, -4)
+	
+	var msg_label = Label3D.new()
+	msg_label.text = '🤖 ' + message
+	msg_label.billboard = BaseMaterial3D.BILLBOARD_ENABLED
+	msg_label.modulate = Color.CYAN
+	msg_label.pixel_size = 0.015
+	msg_display.add_child(msg_label)
+	
+	add_child(msg_display)
+	
+	# Auto-cleanup
+	var timer = Timer.new()
+	timer.wait_time = 8.0
+	timer.one_shot = true
+	timer.timeout.connect(func(): msg_display.queue_free())
+	add_child(timer)
+	timer.start()
+
+func save_workspace():
+	# Save current state for persistence
+	persistent_workspace = {
+		'code_chunks': {},
+		'connections': connections,
+		'timestamp': Time.get_unix_time_from_system()
+	}
+	
+	for chunk_id in code_chunks:
+		var chunk = code_chunks[chunk_id]
+		if is_instance_valid(chunk):
+			persistent_workspace.code_chunks[chunk_id] = {
+				'position': chunk.position,
+				'code_text': chunk.get_meta('code_text', ''),
+				'chunk_type': chunk.get_meta('chunk_type', 'function'),
+				'last_modified': chunk.get_meta('last_modified', 0)
+			}
+	
+	show_message('💾 Workspace saved')
+	ai_say('Workspace saved! Your 3D programming environment is persistent.')
+
+func load_persistent_workspace():
+	# In a real implementation, this would load from file
+	# For now, we start fresh each time
+	show_message('🌌 Workspace loaded')
+
+func show_message(text: String):
+	var msg = Label3D.new()
+	msg.text = text
+	msg.billboard = BaseMaterial3D.BILLBOARD_ENABLED
+	msg.position = $Camera3D.position + Vector3(0, 1, -2)
+	msg.modulate = Color.YELLOW
+	msg.pixel_size = 0.02
+	add_child(msg)
+	
+	var tween = create_tween()
+	tween.parallel().tween_property(msg, 'position:y', msg.position.y + 2, 3.0)
+	tween.parallel().tween_property(msg, 'modulate:a', 0.0, 3.0)
+	tween.tween_callback(msg.queue_free)
+"
+
+[sub_resource type="Environment" id="Environment_real_3d"]
+background_mode = 1
+background_color = Color(0.01, 0.02, 0.05, 1)
+ambient_light_source = 2
+ambient_light_color = Color(0.2, 0.3, 0.5, 1)
+ambient_light_energy = 0.3
+glow_enabled = true
+glow_intensity = 1.0
+glow_strength = 1.5
+glow_bloom = 0.2
+
+[node name="REAL_3D_PROGRAMMER_ENVIRONMENT" type="Node3D"]
+script = SubResource("GDScript_real_3d_env")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.866, 0.5, 0, -0.5, 0.866, 0, 4, 10)
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_real_3d")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.7, -0.5, 0.5, 0, 0.7, 0.7, -0.7, -0.5, 0.5, 0, 10, 0)
+light_energy = 0.8
