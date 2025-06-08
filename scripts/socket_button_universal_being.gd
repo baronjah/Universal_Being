@@ -208,20 +208,18 @@ func get_socket_info() -> Dictionary:
 # ===== AI INTEGRATION =====
 
 func ai_interface() -> Dictionary:
-	pass
-	var base = super.ai_interface()
-	base.socket_info = get_socket_info()
-	base.text_representation = get_text_representation()
-	return base
+        var base = super.ai_interface()
+        base.socket_info = get_socket_info()
+        base.text_representation = get_text_representation()
+        return base
 
 # ===== 1D TEXT REPRESENTATION =====
 
 func get_text_representation() -> String:
-	pass
-	var text = "[BUTTON:%s]" % being_name
-	text += " STATE:%s" % ("PRESSED" if button_pressed_signal else "IDLE")
-	text += " IN:%s" % ("ACTIVE" if input_active else "NONE")
-	text += " OUT:%s" % ("HIGH" if output_value else "LOW")
-	text += " CONNECTIONS:[%d->%d]" % [connected_inputs.size(), connected_outputs.size()]
-	text += " CONSCIOUSNESS:%d" % consciousness_level
-	return text
+        var text = "[BUTTON:%s]" % being_name
+        text += " STATE:%s" % ("PRESSED" if button_pressed_signal else "IDLE")
+        text += " IN:%s" % ("ACTIVE" if input_active else "NONE")
+        text += " OUT:%s" % ("HIGH" if output_value else "LOW")
+        text += " CONNECTIONS:[%d->%d]" % [connected_inputs.size(), connected_outputs.size()]
+        text += " CONSCIOUSNESS:%d" % consciousness_level
+        return text
