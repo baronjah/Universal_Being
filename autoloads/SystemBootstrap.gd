@@ -8,6 +8,19 @@
 
 extends Node
 
+func show_system_visual(msg: String):
+	var stellar_colors = [Color(0,0,0),Color(0.2,0.1,0),Color(0.8,0,0),Color(1,0.5,0),Color(1,1,0),Color(1,1,1),Color(0.7,0.9,1),Color(0,0.5,1),Color(0.5,0,1)]
+	var visual = Label3D.new()
+	visual.text = "🚀 SYSTEM: " + msg
+	visual.modulate = stellar_colors[4]
+	visual.billboard = BaseMaterial3D.BILLBOARD_ENABLED
+	visual.position = Vector3(0, 25, 0)
+	get_tree().current_scene.add_child(visual)
+	var tween = get_tree().create_tween()
+	tween.parallel().tween_property(visual, "position:y", visual.position.y + 10, 6.0)
+	tween.parallel().tween_property(visual, "modulate:a", 0.0, 6.0)
+	tween.tween_callback(visual.queue_free)
+
 # ===== ENHANCED SYSTEM BOOTSTRAP =====
 
 # State machine for robust initialization
@@ -59,7 +72,7 @@ func _log_with_timestamp(message: String) -> void:
 	var timestamp = Time.get_datetime_string_from_system()
 	var log_entry = "[%s] %s" % [timestamp, message]
 	initialization_log.append(log_entry)
-	print(log_entry)
+	show_system_visual(log_entry)
 
 func _load_core_classes_async() -> bool:
 	"""Load all core classes asynchronously with validation"""

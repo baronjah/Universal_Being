@@ -1,0 +1,192 @@
+[gd_scene load_steps=4 format=3 uid="uid://caqh1iocc4no"]
+
+[sub_resource type="GDScript" id="GDScript_simple_perfect"]
+script/source = "extends Node3D
+
+var player_pos = Vector3.ZERO
+var camera_rotation = Vector2.ZERO
+var move_speed = 20.0
+var look_speed = 0.002
+var stellar_colors = [Color(0,0,0),Color(0.2,0.1,0),Color(0.8,0,0),Color(1,0.5,0),Color(1,1,0),Color(1,1,1),Color(0.7,0.9,1),Color(0,0.5,1),Color(0.5,0,1)]
+var notepad_layers = []
+var word_entities = []
+var asteroids = []
+
+func _ready():
+	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+	create_space_environment()
+	show_message(\"🚀 SIMPLE PERFECT GAME - PRESS N FOR NOTEPAD\", stellar_colors[4])
+
+func _input(event):
+	if event is InputEventMouseMotion and Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
+		camera_rotation.x -= event.relative.x * look_speed
+		camera_rotation.y = clamp(camera_rotation.y - event.relative.y * look_speed, -1.5, 1.5)
+		$Camera3D.rotation = Vector3(camera_rotation.y, camera_rotation.x, 0)
+	
+	if event.is_action_pressed(\"ui_cancel\"):
+		if Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
+			Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+		else:
+			Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+	
+	if event.is_action_pressed(\"notepad_toggle\"):
+		toggle_notepad()
+	elif event.is_action_pressed(\"create_word\"):
+		create_word()
+	elif event.is_action_pressed(\"interact\"):
+		interact_nearest()
+
+func _process(delta):
+	var input_vector = Vector3()
+	if Input.is_action_pressed(\"move_forward\"):
+		input_vector.z -= 1
+	if Input.is_action_pressed(\"move_backward\"):
+		input_vector.z += 1
+	if Input.is_action_pressed(\"move_left\"):
+		input_vector.x -= 1
+	if Input.is_action_pressed(\"move_right\"):
+		input_vector.x += 1
+	if Input.is_action_pressed(\"move_up\"):
+		input_vector.y += 1
+	if Input.is_action_pressed(\"move_down\"):
+		input_vector.y -= 1
+	
+	if input_vector.length() > 0:
+		input_vector = input_vector.normalized()
+		input_vector = $Camera3D.global_transform.basis * input_vector
+		player_pos += input_vector * move_speed * delta
+		$Camera3D.global_position = player_pos
+
+func create_space_environment():
+	for i in range(20):
+		var asteroid = MeshInstance3D.new()
+		asteroid.mesh = SphereMesh.new()
+		asteroid.mesh.radius = randf_range(2, 5)
+		asteroid.position = Vector3(randf_range(-100,100), randf_range(-50,50), randf_range(-100,100))
+		var mat = StandardMaterial3D.new()
+		mat.albedo_color = stellar_colors[2]
+		mat.emission_enabled = true
+		mat.emission = stellar_colors[3]
+		mat.emission_energy = 0.3
+		asteroid.material_override = mat
+		asteroid.set_meta(\"type\", \"asteroid\")
+		asteroid.set_meta(\"resources\", randf_range(10, 50))
+		add_child(asteroid)
+		asteroids.append(asteroid)
+	
+	for i in range(100):
+		var star = MeshInstance3D.new()
+		star.mesh = SphereMesh.new()
+		star.mesh.radius = 0.5
+		star.position = Vector3(randf_range(-500,500), randf_range(-500,500), randf_range(-500,500))
+		var mat = StandardMaterial3D.new()
+		mat.albedo_color = stellar_colors[5]
+		mat.emission_enabled = true
+		mat.emission = stellar_colors[5]
+		mat.emission_energy = 2.0
+		star.material_override = mat
+		add_child(star)
+
+func toggle_notepad():
+	if notepad_layers.is_empty():
+		for i in range(5):
+			var layer = MeshInstance3D.new()
+			layer.mesh = PlaneMesh.new()
+			layer.mesh.size = Vector2(4, 3)
+			layer.position = $Camera3D.position + $Camera3D.transform.basis.z * -8 + Vector3(i*2-4, i*1.5-3, 0)
+			layer.look_at($Camera3D.position, Vector3.UP)
+			var mat = StandardMaterial3D.new()
+			mat.albedo_color = Color(0.8, 0.9, 1.0, 0.7)
+			mat.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
+			mat.emission_enabled = true
+			mat.emission = stellar_colors[6]
+			mat.emission_energy = 0.3
+			layer.material_override = mat
+			add_child(layer)
+			notepad_layers.append(layer)
+		show_message(\"📝 NOTEPAD LAYERS CREATED\", stellar_colors[6])
+	else:
+		for layer in notepad_layers:
+			layer.queue_free()
+		notepad_layers.clear()
+		show_message(\"📝 NOTEPAD HIDDEN\", stellar_colors[1])
+
+func create_word():
+	var word = Label3D.new()
+	word.text = \"Hello\"
+	word.position = $Camera3D.position + $Camera3D.transform.basis.z * -3
+	word.billboard = BaseMaterial3D.BILLBOARD_ENABLED
+	word.modulate = stellar_colors[4]
+	add_child(word)
+	word_entities.append(word)
+	show_message(\"✨ WORD CREATED\", stellar_colors[4])
+
+func interact_nearest():
+	var nearest = null
+	var min_dist = 10.0
+	for asteroid in asteroids:
+		var dist = asteroid.position.distance_to($Camera3D.position)
+		if dist < min_dist:
+			min_dist = dist
+			nearest = asteroid
+	
+	if nearest:
+		var resources = nearest.get_meta(\"resources\")
+		show_message(\"⛏️ MINED \" + str(int(resources)) + \" RESOURCES\", stellar_colors[3])
+		nearest.queue_free()
+		asteroids.erase(nearest)
+
+func show_message(text: String, color: Color):
+	var msg = Label3D.new()
+	msg.text = text
+	msg.modulate = color
+	msg.billboard = BaseMaterial3D.BILLBOARD_ENABLED
+	msg.position = $Camera3D.position + Vector3(0, 2, -3)
+	add_child(msg)
+	var tween = create_tween()
+	tween.parallel().tween_property(msg, \"position:y\", msg.position.y + 3, 2.0)
+	tween.parallel().tween_property(msg, \"modulate:a\", 0.0, 2.0)
+	tween.tween_callback(msg.queue_free)
+"
+
+[sub_resource type="Environment" id="Environment_space"]
+background_mode = 1
+background_color = Color(0.02, 0.02, 0.05, 1)
+ambient_light_source = 2
+ambient_light_color = Color(0.1, 0.1, 0.2, 1)
+ambient_light_energy = 0.15
+
+[sub_resource type="Theme" id="Theme_simple"]
+
+[node name="SimplePerfectGame" type="Node3D"]
+script = SubResource("GDScript_simple_perfect")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+fov = 90.0
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_space")
+
+[node name="UI" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_simple")
+
+[node name="Controls" type="Label" parent="UI"]
+layout_mode = 0
+offset_left = 10.0
+offset_top = 10.0
+offset_right = 400.0
+offset_bottom = 150.0
+text = "SIMPLE PERFECT GAME
+WASD - Move
+Mouse - Look
+Q/F - Up/Down
+N - Notepad
+C - Create Word
+E - Mine Asteroid
+ESC - Free Mouse"

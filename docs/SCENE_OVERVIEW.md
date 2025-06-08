@@ -17,7 +17,10 @@ This guide summarizes the three most complete scenes shipped with the project. E
 
 ### Integration Idea
 Start from **PERFECT_ULTIMATE_UNIVERSAL_BEING.tscn** and selectively merge notepad features from the other scenes. This keeps the strong cosmic foundation while adding keyboard input, floating layers and word interactions.
+#<<<<<<< 2eavzb-codex/integrate-game-visions-and-mechanics
 
 ## UNIVERSAL_BEING_GAME.tscn
-* New unified scene that instantiates both the **PERFECT_ULTIMATE_UNIVERSAL_BEING** environment and the **3D_NOTEPAD_GAME** mechanics.
-* Serves as an experimental playground where all major systems run together.
+#* New unified scene that instantiates both the **PERFECT_ULTIMATE_UNIVERSAL_BEING** environment and the **3D_NOTEPAD_GAME** mechanics.
+#* Serves as an experimental playground where all major systems run together.
+#=======
+#>>>>>>> seventh_may_sixth_day_AMEN

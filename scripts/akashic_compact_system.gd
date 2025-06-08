@@ -61,8 +61,8 @@ func _ready():
     # Load consciousness icons
     load_consciousness_icons()
     
-    # Connect to AkashicRecordsSystemSystem if available
-    var akashic = get_node_or_null("/root/AkashicRecordsSystemSystem")
+    # Connect to CosmicRecords if available
+    var akashic = get_node_or_null("/root/CosmicRecords")
     if akashic:
         print("📚 Compact System connected to Akashic Records")
 
