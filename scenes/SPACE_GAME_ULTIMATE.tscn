@@ -1,7 +1,6 @@
-[gd_scene load_steps=15 format=3]
+[gd_scene load_steps=9 format=3 uid="uid://bdg56rh1xqhwp"]
 
-[ext_resource type="Script" path="res://scripts/player_universal_being.gd" id="1"]
-[ext_resource type="PackedScene" uid="uid://b0ee1qqnhkfnb" path="res://scenes/main/camera_point.tscn" id="2"]
+[ext_resource type="PackedScene" uid="uid://dwad8x0chensn" path="res://scenes/main/camera_point.tscn" id="2"]
 
 [sub_resource type="GDScript" id="SpaceGameController"]
 script/source = "extends Node3D
@@ -483,44 +482,29 @@ func build_space_station():
 		print(\"❌ Insufficient resources for space station\")
 "
 
-[sub_resource type="Environment" id="SpaceEnvironment"]
-background_mode = 1
-background_color = Color(0.02, 0.02, 0.05, 1)
-ambient_light_source = 2
-ambient_light_color = Color(0.1, 0.1, 0.2, 1)
-ambient_light_energy = 0.15
-fog_enabled = true
-fog_light_color = Color(0.05, 0.05, 0.15, 1)
-fog_sun_scatter = 0.1
-glow_enabled = true
-glow_intensity = 0.4
-glow_strength = 1.0
-glow_bloom = 0.15
-
 [sub_resource type="SphereMesh" id="PlasmoidMesh"]
-radius = 0.5
-height = 1.0
 
 [sub_resource type="StandardMaterial3D" id="PlasmoidMaterial"]
 transparency = 1
 albedo_color = Color(0.3, 0.7, 1, 0.8)
 emission_enabled = true
 emission = Color(0.5, 0.8, 1, 1)
-emission_energy = 2.0
+emission_energy_multiplier = 2.0
 rim_enabled = true
 rim = 0.8
 
-[sub_resource type="QuadMesh" id="StarfieldMesh"]
-size = Vector2(4000, 4000)
-
-[sub_resource type="StandardMaterial3D" id="StarfieldMaterial"]
-transparency = 1
-albedo_color = Color(1, 1, 1, 0.8)
-emission_enabled = true
-emission = Color(1, 1, 1, 1)
-emission_energy = 0.5
-vertex_color_use_as_albedo = true
-billboard_mode = 1
+[sub_resource type="Environment" id="SpaceEnvironment"]
+background_mode = 1
+background_color = Color(0.02, 0.02, 0.05, 1)
+ambient_light_source = 2
+ambient_light_color = Color(0.1, 0.1, 0.2, 1)
+ambient_light_energy = 0.15
+glow_enabled = true
+glow_intensity = 0.4
+glow_bloom = 0.15
+fog_enabled = true
+fog_light_color = Color(0.05, 0.05, 0.15, 1)
+fog_sun_scatter = 0.1
 
 [sub_resource type="GDScript" id="StarfieldGenerator"]
 script/source = "extends Node3D
@@ -618,11 +602,6 @@ func generate_nebulae():
 script = SubResource("SpaceGameController")
 
 [node name="Player" type="Node3D" parent="." groups=["players"]]
-script = ExtResource("1")
-move_speed = 12.0
-float_height = 3.0
-mouse_sensitivity = 0.002
-interaction_range = 20.0
 
 [node name="CameraPoint" parent="Player" instance=ExtResource("2")]
 
@@ -655,6 +634,8 @@ layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 theme = SubResource("SpaceGameTheme")
 
 [node name="Title" type="Label" parent="SpaceGameUI"]
@@ -666,6 +647,7 @@ offset_left = -200.0
 offset_top = 10.0
 offset_right = 200.0
 offset_bottom = 50.0
+grow_horizontal = 2
 text = "SPACE GAME ULTIMATE - MECHAS • MINING • PLANETS • AI"
 horizontal_alignment = 1
 
@@ -678,6 +660,7 @@ offset_left = 10.0
 offset_top = -150.0
 offset_right = 400.0
 offset_bottom = -10.0
+grow_vertical = 0
 
 [node name="Position" type="Label" parent="SpaceGameUI/Stats"]
 layout_mode = 2
@@ -704,6 +687,7 @@ offset_left = -350.0
 offset_top = 10.0
 offset_right = -10.0
 offset_bottom = 250.0
+grow_horizontal = 0
 
 [node name="Movement" type="Label" parent="SpaceGameUI/Controls"]
 layout_mode = 2

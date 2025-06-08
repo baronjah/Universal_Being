@@ -39,6 +39,7 @@ func _ready() -> void:
 	_update_chunks_around(Vector3.ZERO)
 
 func _physics_process(_delta: float) -> void:
+	pass
 	# Update chunks based on camera/player position
 	var camera = get_viewport().get_camera_3d()
 	if camera:

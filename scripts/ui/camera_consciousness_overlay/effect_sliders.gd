@@ -88,6 +88,7 @@ func _on_master_changed(value: float):
 	effect_changed.emit("master", value)
 
 func set_consciousness_level(level: int):
+	pass
 	# Adjust sliders based on consciousness level
 	var base_intensity = level * 0.1
 	

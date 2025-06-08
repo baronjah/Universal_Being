@@ -168,6 +168,7 @@ func update_console_output() -> void:
 # ===== AI INTEGRATION =====
 
 func ai_interface() -> Dictionary:
+	pass
     var base_interface = super.ai_interface()
     base_interface.console_commands = ["execute", "clear", "history"]
     base_interface.console_properties = {

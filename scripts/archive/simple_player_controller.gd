@@ -140,6 +140,7 @@ func _try_interact() -> void:
 # ===== AI INTEGRATION =====
 
 func ai_interface() -> Dictionary:
+	pass
 	var base = super.ai_interface()
 	base.player_state = {
 		"position": global_position,

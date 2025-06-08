@@ -129,9 +129,9 @@ func _connect_systems() -> void:
     if has_node("/root/InputFocusManager"):
         input_manager = get_node("/root/InputFocusManager")
     
-    # Find Akashic Records
-    if has_node("/root/AkashicRecordsSystemSystem"):
-        akashic_records = get_node("/root/AkashicRecordsSystemSystem")
+    # Find Akashic Records (using correct autoload name)
+    if has_node("/root/CosmicRecords"):
+        akashic_records = get_node("/root/CosmicRecords")
         _load_console_state()
 
 func _setup_input_handling() -> void:

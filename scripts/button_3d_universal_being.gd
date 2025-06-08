@@ -106,6 +106,7 @@ func _on_mouse_exited() -> void:
 # ===== AI INTEGRATION =====
 
 func ai_interface() -> Dictionary:
+	pass
 	var base = super.ai_interface()
 	base.button_state = {
 		"clicks": click_count,

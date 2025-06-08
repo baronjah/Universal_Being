@@ -16,6 +16,7 @@ func log_interaction(data: Dictionary) -> void:
 	emit_signal("akashic_memory_updated", "interaction", entry)
 
 func infer_emotion(data: Dictionary) -> String:
+	pass
 	var emotions = {
 		"attack": "hostile", "help": "friendly",
 		"trade": "neutral", "gift": "generous"

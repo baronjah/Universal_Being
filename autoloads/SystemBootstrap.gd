@@ -8,6 +8,19 @@
 
 extends Node
 
+func show_system_visual(msg: String):
+	var stellar_colors = [Color(0,0,0),Color(0.2,0.1,0),Color(0.8,0,0),Color(1,0.5,0),Color(1,1,0),Color(1,1,1),Color(0.7,0.9,1),Color(0,0.5,1),Color(0.5,0,1)]
+	var visual = Label3D.new()
+	visual.text = "🚀 SYSTEM: " + msg
+	visual.modulate = stellar_colors[4]
+	visual.billboard = BaseMaterial3D.BILLBOARD_ENABLED
+	visual.position = Vector3(0, 25, 0)
+	get_tree().current_scene.add_child(visual)
+	var tween = get_tree().create_tween()
+	tween.parallel().tween_property(visual, "position:y", visual.position.y + 10, 6.0)
+	tween.parallel().tween_property(visual, "modulate:a", 0.0, 6.0)
+	tween.tween_callback(visual.queue_free)
+
 # ===== ENHANCED SYSTEM BOOTSTRAP =====
 
 # State machine for robust initialization
@@ -59,7 +72,7 @@ func _log_with_timestamp(message: String) -> void:
 	var timestamp = Time.get_datetime_string_from_system()
 	var log_entry = "[%s] %s" % [timestamp, message]
 	initialization_log.append(log_entry)
-	print(log_entry)
+	show_system_visual(log_entry)
 
 func _load_core_classes_async() -> bool:
 	"""Load all core classes asynchronously with validation"""
@@ -147,8 +160,8 @@ func _initialize_systems_async() -> bool:
 	
 	await get_tree().process_frame
 	
-       # Create AkashicRecordsSystem instance
-       _log_with_timestamp("🔄 Creating AkashicRecordsSystem instance...")
+	   # Create AkashicRecordsSystem instance
+	_log_with_timestamp("🔄 Creating AkashicRecordsSystem instance...")
 	if not AkashicRecordsSystemClass:
 		var error = "AkashicRecordsSystemClass not loaded"
 		initialization_errors.append(error)
@@ -158,7 +171,7 @@ func _initialize_systems_async() -> bool:
 	akashic_records_instance = AkashicRecordsSystemClass.new()
 	akashic_records_instance.name = "AkashicRecordsSystem"
 	add_child(akashic_records_instance)
-       _log_with_timestamp("✓ AkashicRecordsSystem instance created")
+	_log_with_timestamp("✓ AkashicRecordsSystem instance created")
 	
 	await get_tree().process_frame
 	
@@ -216,7 +229,7 @@ func _print_initialization_summary() -> void:
 	_log_with_timestamp("   Core loaded: %s" % core_loaded)
 	_log_with_timestamp("   Systems ready: %s" % systems_ready)
 	_log_with_timestamp("   FloodGates: %s" % ("Ready" if flood_gates_instance else "Not Ready"))
-       _log_with_timestamp("   AkashicRecordsSystem: %s" % ("Ready" if akashic_records_instance else "Not Ready"))
+	_log_with_timestamp("   AkashicRecordsSystem: %s" % ("Ready" if akashic_records_instance else "Not Ready"))
 	_log_with_timestamp("   AkashicLibrary: %s" % ("Ready" if akashic_library_instance else "Not Ready"))
 	_log_with_timestamp("   Errors: %d" % initialization_errors.size())
 	_log_with_timestamp("✓ Universal Being systems ready!")
@@ -306,9 +319,9 @@ func get_flood_gates():
 	return flood_gates_instance
 
 func get_akashic_records():
-       """Get AkashicRecordsSystem instance"""
+
 	if not akashic_records_instance:
-               push_warning("SystemBootstrap: AkashicRecordsSystem not initialized")
+		push_warning("SystemBootstrap: AkashicRecordsSystem not initialized")
 	return akashic_records_instance
 
 func get_akashic_library():
@@ -365,10 +378,10 @@ func add_being_to_scene(being: Node, parent: Node) -> bool:
 		return true
 
 func load_being_data(path: String) -> Dictionary:
-	"""Static function to load being data from Akashic Records"""
+
 	if akashic_records_instance:
 		return akashic_records_instance.load_being_from_zip(path)
-       push_error("SystemBootstrap: AkashicRecordsSystem not available")
+		#push_error("SystemBootstrap: AkashicRecordsSystem not available")
 	return {}
 
 func get_bootstrap_instance():

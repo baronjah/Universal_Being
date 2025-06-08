@@ -112,6 +112,7 @@ func refresh_status() -> void:
 # ===== AI INTEGRATION =====
 
 func ai_interface() -> Dictionary:
+	pass
     var base_interface = super.ai_interface()
     base_interface.custom_commands = ["spawn_terminal", "spawn_console", "spawn_socket_grid", "refresh_status"]
     base_interface.custom_properties = {

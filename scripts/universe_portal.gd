@@ -198,6 +198,7 @@ func interact_with_portal() -> void:
 # ===== AI INTEGRATION =====
 
 func ai_interface() -> Dictionary:
+	pass
 	var base_interface = super.ai_interface()
 	base_interface.portal_commands = ["activate", "deactivate", "set_target"]
 	base_interface.portal_properties = {

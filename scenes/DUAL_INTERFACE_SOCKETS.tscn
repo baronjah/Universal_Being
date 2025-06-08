@@ -1,0 +1,713 @@
+[gd_scene load_steps=3 format=3 uid="uid://dual_interface_sockets"]
+
+[sub_resource type="GDScript" id="GDScript_dual_sockets"]
+script/source = "extends Node3D
+
+# DUAL INTERFACE: 3D Notes + 2D Editing with Socket Connections
+var camera_rotation = Vector2.ZERO
+var move_speed = 15.0
+var look_speed = 0.002
+
+# Note system with socket connections
+var floating_notes = []
+var selected_notes = []
+var note_connections = {}  # Dictionary of connections between notes
+var socket_lines = []      # Visual lines between sockets
+
+# Current editing state
+var editing_note = null
+var dual_ui: Control = null
+var current_selection = ''
+
+# Socket system
+var input_sockets = {}    # note_id -> Array of input socket positions
+var output_sockets = {}   # note_id -> Array of output socket positions
+
+func _ready():
+	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+	print('🧠 DUAL INTERFACE: 3D Notes + Socket Connections')
+	print('📝 N=Note | E=Edit | Click=Select | S=Socket')
+	print('🔗 SHIFT+Click=Connect | CTRL+Click=Expand/Collapse')
+	
+	create_dual_interface_ui()
+	create_demo_notes()
+
+func _input(event):
+	if event is InputEventMouseMotion and Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
+		camera_rotation.x -= event.relative.x * look_speed
+		camera_rotation.y = clamp(camera_rotation.y - event.relative.y * look_speed, -1.5, 1.5)
+		$Camera3D.rotation = Vector3(camera_rotation.y, camera_rotation.x, 0)
+	
+	if event.is_action_pressed('ui_cancel'):
+		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE if Input.mouse_mode == Input.MOUSE_MODE_CAPTURED else Input.MOUSE_MODE_CAPTURED
+		if dual_ui:
+			dual_ui.visible = Input.mouse_mode == Input.MOUSE_MODE_VISIBLE
+	
+	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
+		if Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
+			if Input.is_key_pressed(KEY_SHIFT):
+				connect_notes_at_cursor()
+			elif Input.is_key_pressed(KEY_CTRL):
+				toggle_plus_symbol_at_cursor()
+			else:
+				select_note_at_cursor()
+	
+	if Input.is_key_pressed(KEY_N) and not event.is_echo():
+		create_note_at_cursor()
+	elif Input.is_key_pressed(KEY_E) and not event.is_echo():
+		edit_selected_note()
+	elif Input.is_key_pressed(KEY_S) and not event.is_echo():
+		add_socket_from_selection()
+
+func _process(delta):
+	var input_vector = Vector3()
+	if Input.is_action_pressed('move_forward'):
+		input_vector.z -= 1
+	if Input.is_action_pressed('move_backward'):
+		input_vector.z += 1
+	if Input.is_action_pressed('move_left'):
+		input_vector.x -= 1
+	if Input.is_action_pressed('move_right'):
+		input_vector.x += 1
+	if Input.is_action_pressed('move_up'):
+		input_vector.y += 1
+	if Input.is_action_pressed('move_down'):
+		input_vector.y -= 1
+	
+	if input_vector.length() > 0:
+		input_vector = input_vector.normalized()
+		input_vector = $Camera3D.transform.basis * input_vector
+		$Camera3D.position += input_vector * move_speed * delta
+
+func create_dual_interface_ui():
+	dual_ui = Control.new()
+	dual_ui.size = Vector2(1200, 800)
+	dual_ui.position = Vector2(50, 50)
+	dual_ui.visible = false
+	
+	var panel = Panel.new()
+	panel.size = dual_ui.size
+	dual_ui.add_child(panel)
+	
+	var hsplit = HSplitContainer.new()
+	hsplit.position = Vector2(10, 10)
+	hsplit.size = Vector2(1180, 780)
+	panel.add_child(hsplit)
+	
+	# Left: 2D Text Editor with Selection
+	var left_panel = VBoxContainer.new()
+	hsplit.add_child(left_panel)
+	
+	var editor_title = Label.new()
+	editor_title.text = '✏️ TEXT EDITOR - SELECT TO HIGHLIGHT 3D'
+	editor_title.add_theme_font_size_override('font_size', 18)
+	left_panel.add_child(editor_title)
+	
+	var text_editor = TextEdit.new()
+	text_editor.name = 'TextEditor'
+	text_editor.custom_minimum_size = Vector2(500, 600)
+	text_editor.text = 'extends Node3D\\n\\nfunc _ready():\\n\\tprint(\"Hello from note!\")\\n\\nfunc process_input(data):\\n\\treturn data + \"_processed\"\\n\\nfunc get_output():\\n\\treturn \"result\"'
+	text_editor.text_changed.connect(_on_text_changed)
+	text_editor.caret_changed.connect(_on_caret_changed)
+	left_panel.add_child(text_editor)
+	
+	# Editor buttons
+	var editor_buttons = HBoxContainer.new()
+	left_panel.add_child(editor_buttons)
+	
+	var update_3d_btn = Button.new()
+	update_3d_btn.text = '📤 UPDATE 3D NOTE'
+	update_3d_btn.pressed.connect(update_3d_from_editor)
+	editor_buttons.add_child(update_3d_btn)
+	
+	var add_socket_btn = Button.new()
+	add_socket_btn.text = '🔌 ADD SOCKET'
+	add_socket_btn.pressed.connect(add_socket_from_selection)
+	editor_buttons.add_child(add_socket_btn)
+	
+	# Right: Socket and Connection Manager
+	var right_panel = VBoxContainer.new()
+	hsplit.add_child(right_panel)
+	
+	var socket_title = Label.new()
+	socket_title.text = '🔌 SOCKET CONNECTIONS'
+	socket_title.add_theme_font_size_override('font_size', 18)
+	right_panel.add_child(socket_title)
+	
+	var socket_list = ItemList.new()
+	socket_list.name = 'SocketList'
+	socket_list.custom_minimum_size = Vector2(400, 300)
+	socket_list.item_selected.connect(_on_socket_selected)
+	right_panel.add_child(socket_list)
+	
+	var connection_info = Label.new()
+	connection_info.name = 'ConnectionInfo'
+	connection_info.text = 'Select text in editor, then click ADD SOCKET\\nUse SHIFT+Click in 3D to connect notes'
+	connection_info.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	right_panel.add_child(connection_info)
+	
+	var socket_buttons = HBoxContainer.new()
+	right_panel.add_child(socket_buttons)
+	
+	var clear_connections_btn = Button.new()
+	clear_connections_btn.text = '🧹 CLEAR CONNECTIONS'
+	clear_connections_btn.pressed.connect(clear_all_connections)
+	socket_buttons.add_child(clear_connections_btn)
+	
+	var optimize_lines_btn = Button.new()
+	optimize_lines_btn.text = '🕷️ OPTIMIZE LINES'
+	optimize_lines_btn.pressed.connect(optimize_connection_lines)
+	socket_buttons.add_child(optimize_lines_btn)
+	
+	add_child(dual_ui)
+
+func create_note_at_cursor():
+	var camera = $Camera3D
+	var from = camera.global_position
+	var to = from + (-camera.global_transform.basis.z * 15)
+	
+	var note_id = generate_note_id()
+	var note = create_floating_note(to, 'New Note ' + str(note_id), note_id)
+	floating_notes.append(note)
+	
+	# Initialize socket arrays
+	input_sockets[note_id] = []
+	output_sockets[note_id] = []
+	
+	# Add plus symbol for expandable sections
+	add_plus_symbols_to_note(note)
+	
+	show_message('📝 Note created: ' + str(note_id))
+
+func add_plus_symbols_to_note(note: Node3D):
+	# Create expandable plus symbols for code sections
+	var plus_container = Node3D.new()
+	plus_container.name = 'PlusSymbols'
+	note.add_child(plus_container)
+	
+	# Add plus symbols for different code sections
+	var sections = [
+		{'name': 'functions', 'pos': Vector3(1.8, 0.8, 0.1), 'color': Color.GREEN},
+		{'name': 'variables', 'pos': Vector3(1.8, 0.4, 0.1), 'color': Color.BLUE},
+		{'name': 'classes', 'pos': Vector3(1.8, 0.0, 0.1), 'color': Color.PURPLE},
+		{'name': 'imports', 'pos': Vector3(1.8, -0.4, 0.1), 'color': Color.ORANGE}
+	]
+	
+	for section in sections:
+		create_plus_symbol(plus_container, section.name, section.pos, section.color)
+
+func create_plus_symbol(parent: Node3D, section_name: String, pos: Vector3, color: Color):
+	var plus_symbol = StaticBody3D.new()
+	plus_symbol.name = 'Plus_' + section_name
+	plus_symbol.position = pos
+	
+	# Plus visual (cross shape)
+	var plus_visual = MeshInstance3D.new()
+	var box = BoxMesh.new()
+	box.size = Vector3(0.2, 0.2, 0.05)
+	plus_visual.mesh = box
+	
+	var plus_material = StandardMaterial3D.new()
+	plus_material.albedo_color = color
+	plus_material.emission_enabled = true
+	plus_material.emission = color
+	plus_symbol.add_child(plus_visual)
+	
+	# Plus collision for clicking
+	var collision = CollisionShape3D.new()
+	var shape = BoxShape3D.new()
+	shape.size = Vector3(0.2, 0.2, 0.05)
+	collision.shape = shape
+	plus_symbol.add_child(collision)
+	
+	# Plus label
+	var label = Label3D.new()
+	label.text = '+' + section_name.substr(0,1).to_upper()
+	label.billboard = BaseMaterial3D.BILLBOARD_ENABLED
+	label.position = Vector3(0.3, 0, 0)
+	label.modulate = color
+	label.pixel_size = 0.01
+	plus_symbol.add_child(label)
+	
+	# Store metadata
+	plus_symbol.set_meta('section_type', section_name)
+	plus_symbol.set_meta('expanded', false)
+	plus_symbol.set_meta('parent_note', parent.get_parent())
+	
+	parent.add_child(plus_symbol)
+
+func create_floating_note(pos: Vector3, text: String, note_id: String):
+	var note = Node3D.new()
+	note.name = 'Note_' + note_id
+	note.position = pos
+	note.set_meta('note_id', note_id)
+	note.set_meta('note_text', text)
+	note.set_meta('selected_text', '')
+	
+	# Main note visual
+	var note_visual = MeshInstance3D.new()
+	var box = BoxMesh.new()
+	box.size = Vector3(3, 2, 0.1)
+	note_visual.mesh = box
+	
+	var material = StandardMaterial3D.new()
+	material.albedo_color = Color.WHITE
+	material.emission_enabled = true
+	material.emission = Color.CYAN * 0.5
+	note_visual.material_override = material
+	note.add_child(note_visual)
+	
+	# Note text label
+	var label = Label3D.new()
+	label.text = text
+	label.billboard = BaseMaterial3D.BILLBOARD_ENABLED
+	label.position = Vector3(0, 0, 0.1)
+	label.modulate = Color.BLACK
+	note.add_child(label)
+	
+	# Socket container for visual sockets
+	var socket_container = Node3D.new()
+	socket_container.name = 'SocketContainer'
+	note.add_child(socket_container)
+	
+	add_child(note)
+	return note
+
+func select_note_at_cursor():
+	var camera = $Camera3D
+	var from = camera.global_position
+	var to = from + (-camera.global_transform.basis.z * 50)
+	
+	var closest_note = null
+	var min_distance = 5.0
+	
+	for note in floating_notes:
+		if is_instance_valid(note):
+			var distance = note.global_position.distance_to(to)
+			if distance < min_distance:
+				min_distance = distance
+				closest_note = note
+	
+	if closest_note:
+		# Deselect previous
+		for note in selected_notes:
+			set_note_selection_visual(note, false)
+		selected_notes.clear()
+		
+		# Select new note
+		selected_notes.append(closest_note)
+		set_note_selection_visual(closest_note, true)
+		editing_note = closest_note
+		
+		# Load into editor
+		load_note_into_editor(closest_note)
+		
+		show_message('📝 Selected: ' + closest_note.get_meta('note_id', 'Unknown'))
+
+func set_note_selection_visual(note: Node3D, selected: bool):
+	var visual = note.find_child('MeshInstance3D', true, false)
+	if visual and visual.material_override:
+		var material = visual.material_override as StandardMaterial3D
+		if selected:
+			material.emission = Color.YELLOW
+			material.albedo_color = Color.YELLOW
+		else:
+			material.emission = Color.CYAN * 0.5
+			material.albedo_color = Color.WHITE
+
+func load_note_into_editor(note: Node3D):
+	if not dual_ui:
+		return
+		
+	var text_editor = dual_ui.find_child('TextEditor', true, false)
+	if text_editor:
+		var note_text = note.get_meta('note_text', 'New note content')
+		text_editor.text = note_text
+
+func edit_selected_note():
+	if selected_notes.size() > 0:
+		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+		dual_ui.visible = true
+		load_note_into_editor(selected_notes[0])
+
+func _on_text_changed():
+	# Update the 3D note when text changes
+	if editing_note and dual_ui:
+		var text_editor = dual_ui.find_child('TextEditor', true, false)
+		if text_editor:
+			editing_note.set_meta('note_text', text_editor.text)
+			
+			# Update 3D label
+			var label = editing_note.find_child('Label3D', true, false)
+			if label:
+				# Show first few lines as preview
+				var lines = text_editor.text.split('\\n')
+				var preview = ''
+				for i in range(min(3, lines.size())):
+					preview += lines[i] + '\\n'
+				label.text = preview + '...'
+
+func _on_caret_changed():
+	# Handle text selection for socket creation
+	if not dual_ui or not editing_note:
+		return
+		
+	var text_editor = dual_ui.find_child('TextEditor', true, false)
+	if text_editor and text_editor.has_selection():
+		current_selection = text_editor.get_selected_text()
+		
+		# Highlight selected text in 3D note (green effect)
+		highlight_selection_in_3d(editing_note, current_selection)
+		
+		# Update connection info
+		var connection_info = dual_ui.find_child('ConnectionInfo', true, false)
+		if connection_info:
+			connection_info.text = 'Selected: \"' + current_selection + '\"\\nClick ADD SOCKET to create connection point'
+
+func highlight_selection_in_3d(note: Node3D, selected_text: String):
+	# Store selected text in note
+	note.set_meta('selected_text', selected_text)
+	
+	# Create green highlight effect
+	var highlight = note.find_child('SelectionHighlight', true, false)
+	if highlight:
+		highlight.queue_free()
+	
+	if selected_text.length() > 0:
+		highlight = MeshInstance3D.new()
+		highlight.name = 'SelectionHighlight'
+		var sphere = SphereMesh.new()
+		sphere.radius = 0.3
+		highlight.mesh = sphere
+		
+		var highlight_material = StandardMaterial3D.new()
+		highlight_material.albedo_color = Color.GREEN
+		highlight_material.emission_enabled = true
+		highlight_material.emission = Color.GREEN * 2.0
+		highlight_material.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
+		highlight.material_override = highlight_material
+		
+		highlight.position = Vector3(2, 1, 0.2)  # Next to the note
+		note.add_child(highlight)
+
+func add_socket_from_selection():
+	if not editing_note or current_selection.length() == 0:
+		show_message('❌ No text selected!')
+		return
+		
+	var note_id = editing_note.get_meta('note_id', '')
+	add_socket_to_note(editing_note, current_selection, 'output')
+	
+	show_message('🔌 Socket added: ' + current_selection)
+	update_socket_list()
+
+func add_socket_to_note(note: Node3D, socket_name: String, socket_type: String):
+	var note_id = note.get_meta('note_id', '')
+	var socket_container = note.find_child('SocketContainer', true, false)
+	
+	if not socket_container:
+		socket_container = Node3D.new()
+		socket_container.name = 'SocketContainer'
+		note.add_child(socket_container)
+	
+	# Create visual socket
+	var socket_visual = MeshInstance3D.new()
+	socket_visual.name = 'Socket_' + socket_name
+	var sphere = SphereMesh.new()
+	sphere.radius = 0.2
+	socket_visual.mesh = sphere
+	
+	var socket_material = StandardMaterial3D.new()
+	if socket_type == 'input':
+		socket_material.albedo_color = Color.BLUE
+		socket_material.emission = Color.BLUE
+	else:
+		socket_material.albedo_color = Color.RED
+		socket_material.emission = Color.RED
+	socket_material.emission_enabled = true
+	socket_visual.material_override = socket_material
+	
+	# Position socket
+	var existing_sockets = socket_container.get_children().size()
+	var socket_pos = Vector3(
+		1.5 if socket_type == 'output' else -1.5,
+		1 - (existing_sockets * 0.4),
+		0
+	)
+	socket_visual.position = socket_pos
+	socket_container.add_child(socket_visual)
+	
+	# Store socket data
+	var socket_data = {
+		'name': socket_name,
+		'type': socket_type,
+		'position': socket_pos,
+		'global_position': note.global_position + socket_pos
+	}
+	
+	if socket_type == 'input':
+		input_sockets[note_id].append(socket_data)
+	else:
+		output_sockets[note_id].append(socket_data)
+
+func connect_notes_at_cursor():
+	# Connect two selected notes via sockets
+	if selected_notes.size() < 2:
+		show_message('❌ Select 2 notes first!')
+		return
+		
+	var from_note = selected_notes[0]
+	var to_note = selected_notes[1]
+	
+	var from_id = from_note.get_meta('note_id', '')
+	var to_id = to_note.get_meta('note_id', '')
+	
+	create_connection_line(from_note, to_note)
+	
+	# Store connection
+	if not note_connections.has(from_id):
+		note_connections[from_id] = []
+	note_connections[from_id].append(to_id)
+	
+	show_message('🔗 Connected: ' + from_id + ' → ' + to_id)
+
+func create_connection_line(from_note: Node3D, to_note: Node3D):
+	# Create visual line between notes
+	var line = MeshInstance3D.new()
+	line.name = 'Connection_' + from_note.get_meta('note_id', '') + '_to_' + to_note.get_meta('note_id', '')
+	
+	# Calculate line between notes
+	var from_pos = from_note.global_position
+	var to_pos = to_note.global_position
+	var distance = from_pos.distance_to(to_pos)
+	
+	# Create cylinder as line
+	var cylinder = CylinderMesh.new()
+	cylinder.height = distance
+	cylinder.top_radius = 0.05
+	cylinder.bottom_radius = 0.05
+	line.mesh = cylinder
+	
+	var line_material = StandardMaterial3D.new()
+	line_material.albedo_color = Color.YELLOW
+	line_material.emission_enabled = true
+	line_material.emission = Color.YELLOW * 0.5
+	line.material_override = line_material
+	
+	# Position and orient line
+	line.position = (from_pos + to_pos) / 2
+	line.look_at(to_pos, Vector3.UP)
+	line.rotate_object_local(Vector3.RIGHT, PI/2)
+	
+	add_child(line)
+	socket_lines.append(line)
+
+func update_3d_from_editor():
+	if editing_note and dual_ui:
+		var text_editor = dual_ui.find_child('TextEditor', true, false)
+		if text_editor:
+			editing_note.set_meta('note_text', text_editor.text)
+			show_message('📤 3D note updated!')
+
+func update_socket_list():
+	if not dual_ui:
+		return
+		
+	var socket_list = dual_ui.find_child('SocketList', true, false)
+	if socket_list:
+		socket_list.clear()
+		
+		for note_id in input_sockets:
+			for socket in input_sockets[note_id]:
+				socket_list.add_item('🔵 IN: ' + note_id + '.' + socket.name)
+		
+		for note_id in output_sockets:
+			for socket in output_sockets[note_id]:
+				socket_list.add_item('🔴 OUT: ' + note_id + '.' + socket.name)
+
+func _on_socket_selected(index: int):
+	pass  # Handle socket selection
+
+func clear_all_connections():
+	for line in socket_lines:
+		if is_instance_valid(line):
+			line.queue_free()
+	socket_lines.clear()
+	note_connections.clear()
+	show_message('🧹 All connections cleared!')
+
+func optimize_connection_lines():
+	# TODO: Implement smart line routing to avoid overlaps
+	show_message('🕷️ Line optimization not yet implemented')
+
+func generate_note_id() -> String:
+	return 'note_' + str(randi() % 1000)
+
+func create_demo_notes():
+	# Create some example notes with sockets and plus symbols
+	var note1 = create_floating_note(Vector3(-5, 2, -10), 'Input Handler', 'input_handler')
+	var note2 = create_floating_note(Vector3(5, 2, -10), 'Data Processor', 'data_processor')
+	var note3 = create_floating_note(Vector3(0, -2, -15), 'Output Manager', 'output_manager')
+	
+	floating_notes.append_array([note1, note2, note3])
+	
+	# Initialize socket arrays
+	for note in [note1, note2, note3]:
+		var note_id = note.get_meta('note_id', '')
+		input_sockets[note_id] = []
+		output_sockets[note_id] = []
+		
+		# Add plus symbols to existing notes
+		add_plus_symbols_to_note(note)
+	
+	# Add some demo sockets
+	add_socket_to_note(note1, 'user_input', 'input')
+	add_socket_to_note(note1, 'processed_data', 'output')
+	add_socket_to_note(note2, 'raw_data', 'input')
+	add_socket_to_note(note2, 'clean_data', 'output')
+	add_socket_to_note(note3, 'final_data', 'input')
+	
+	show_message('🌟 Demo notes created with sockets and plus symbols!')
+
+func toggle_plus_symbol_at_cursor():
+	var camera = $Camera3D
+	var from = camera.global_position
+	var to = from + (-camera.global_transform.basis.z * 50)
+	
+	var closest_plus = null
+	var min_distance = 3.0
+	
+	# Find all plus symbols in the scene
+	for note in floating_notes:
+		if is_instance_valid(note):
+			var plus_container = note.find_child('PlusSymbols', true, false)
+			if plus_container:
+				for plus_symbol in plus_container.get_children():
+					var distance = plus_symbol.global_position.distance_to(to)
+					if distance < min_distance:
+						min_distance = distance
+						closest_plus = plus_symbol
+	
+	if closest_plus:
+		toggle_plus_symbol(closest_plus)
+
+func toggle_plus_symbol(plus_symbol: StaticBody3D):
+	var expanded = plus_symbol.get_meta('expanded', false)
+	var section_type = plus_symbol.get_meta('section_type', '')
+	var parent_note = plus_symbol.get_meta('parent_note', null)
+	
+	plus_symbol.set_meta('expanded', !expanded)
+	
+	# Update visual
+	var label = plus_symbol.find_child('Label3D', true, false)
+	if label:
+		if expanded:
+			label.text = '+' + section_type.substr(0,1).to_upper()
+			collapse_section(plus_symbol, section_type)
+		else:
+			label.text = '−' + section_type.substr(0,1).to_upper()
+			expand_section(plus_symbol, section_type)
+	
+	show_message('📋 ' + section_type + (' collapsed' if expanded else ' expanded'))
+
+func expand_section(plus_symbol: StaticBody3D, section_type: String):
+	# Create floating code elements for this section
+	var parent_note = plus_symbol.get_meta('parent_note', null)
+	if not parent_note:
+		return
+		
+	var expansion_container = Node3D.new()
+	expansion_container.name = 'Expansion_' + section_type
+	parent_note.add_child(expansion_container)
+	
+	# Generate example code elements based on section type
+	var code_elements = get_code_elements_for_section(section_type)
+	
+	for i in range(code_elements.size()):
+		var element = code_elements[i]
+		create_code_element(expansion_container, element, Vector3(2.5, 0.5 - i * 0.3, 0.2))
+
+func collapse_section(plus_symbol: StaticBody3D, section_type: String):
+	# Remove expansion container
+	var parent_note = plus_symbol.get_meta('parent_note', null)
+	if not parent_note:
+		return
+		
+	var expansion = parent_note.find_child('Expansion_' + section_type, true, false)
+	if expansion:
+		expansion.queue_free()
+
+func get_code_elements_for_section(section_type: String) -> Array:
+	match section_type:
+		'functions':
+			return ['_ready()', '_process(delta)', 'handle_input()', 'update_state()']
+		'variables':
+			return ['var health: int', 'var position: Vector3', 'var is_active: bool']
+		'classes':
+			return ['class PlayerData', 'class GameState', 'class NetworkHandler']
+		'imports':
+			return ['extends Node3D', 'class_name MyClass', '@onready var ui']
+		_:
+			return ['code_element_1', 'code_element_2']
+
+func create_code_element(parent: Node3D, element_text: String, pos: Vector3):
+	var element = Node3D.new()
+	element.name = 'CodeElement_' + element_text.replace(' ', '_')
+	element.position = pos
+	
+	# Visual element
+	var element_visual = MeshInstance3D.new()
+	var box = BoxMesh.new()
+	box.size = Vector3(1.5, 0.2, 0.05)
+	element_visual.mesh = box
+	
+	var element_material = StandardMaterial3D.new()
+	element_material.albedo_color = Color(0.8, 0.8, 1.0)
+	element_material.emission_enabled = true
+	element_material.emission = Color(0.3, 0.3, 0.6)
+	element_visual.material_override = element_material
+	element.add_child(element_visual)
+	
+	# Element label
+	var element_label = Label3D.new()
+	element_label.text = element_text
+	element_label.billboard = BaseMaterial3D.BILLBOARD_ENABLED
+	element_label.position = Vector3(0, 0, 0.1)
+	element_label.modulate = Color.WHITE
+	element_label.pixel_size = 0.008
+	element.add_child(element_label)
+	
+	parent.add_child(element)
+
+func show_message(text: String):
+	var msg = Label3D.new()
+	msg.text = text
+	msg.billboard = BaseMaterial3D.BILLBOARD_ENABLED
+	msg.position = $Camera3D.position + Vector3(0, 3, -5)
+	msg.modulate = Color.YELLOW
+	add_child(msg)
+	
+	var tween = create_tween()
+	tween.parallel().tween_property(msg, 'position:y', msg.position.y + 2, 2.0)
+	tween.parallel().tween_property(msg, 'modulate:a', 0.0, 2.0)
+	tween.tween_callback(msg.queue_free)
+"
+
+[sub_resource type="Environment" id="Environment_dual"]
+background_mode = 1
+background_color = Color(0.05, 0.05, 0.15, 1)
+ambient_light_source = 2
+ambient_light_color = Color(0.3, 0.3, 0.5, 1)
+ambient_light_energy = 0.4
+
+[node name="DUAL_INTERFACE_SOCKETS" type="Node3D"]
+script = SubResource("GDScript_dual_sockets")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.866, 0.5, 0, -0.5, 0.866, 0, 5, 12)
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_dual")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.7, -0.5, 0.5, 0, 0.7, 0.7, -0.7, -0.5, 0.5, 0, 10, 0)

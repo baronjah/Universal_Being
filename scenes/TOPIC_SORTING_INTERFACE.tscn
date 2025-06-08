@@ -1,0 +1,446 @@
+[gd_scene load_steps=3 format=3 uid="uid://topic_sorting_interface"]
+
+[sub_resource type="GDScript" id="GDScript_topic_sorting"]
+script/source = "extends Node3D
+
+# MESSAGE TOPIC SORTING + SCALE-BASED THEMES
+var camera_rotation = Vector2.ZERO
+var move_speed = 15.0
+var look_speed = 0.002
+
+# Topic sorting system
+var topic_baskets = {}     # topic_name -> Array of messages
+var message_history = []   # All human messages
+var topic_keywords = {     # Keywords to identify topics
+	'vr_ide': ['vr', 'ide', 'hand', 'tracking', 'keyboard', 'quest'],
+	'sockets': ['socket', 'connection', 'line', 'input', 'output', 'connect'],
+	'notes': ['note', 'floating', '3d', 'editor', 'text', 'selection'],
+	'plus_symbols': ['plus', 'expand', 'collapse', 'code', 'section'],
+	'interface': ['interface', '2d', 'ui', 'viewport', 'resolution', 'scale'],
+	'themes': ['theme', 'visual', 'color', 'appearance', 'style'],
+	'space_game': ['space', 'game', 'consciousness', 'mining', 'stellar'],
+	'godot': ['godot', 'gdscript', 'scene', 'node', 'script']
+}
+
+# Scale-based theme system
+enum ViewportScale {
+	TINY,        # < 800px width
+	SMALL,       # 800-1200px
+	MEDIUM,      # 1200-1600px  
+	LARGE,       # 1600-2000px
+	HUGE         # > 2000px
+}
+
+var current_scale: ViewportScale = ViewportScale.MEDIUM
+var theme_colors = {
+	ViewportScale.TINY: {'bg': Color(0.1, 0.05, 0.2), 'accent': Color.MAGENTA},
+	ViewportScale.SMALL: {'bg': Color(0.05, 0.1, 0.15), 'accent': Color.CYAN},
+	ViewportScale.MEDIUM: {'bg': Color(0.05, 0.05, 0.15), 'accent': Color.YELLOW},
+	ViewportScale.LARGE: {'bg': Color(0.02, 0.08, 0.12), 'accent': Color.GREEN},
+	ViewportScale.HUGE: {'bg': Color(0.01, 0.03, 0.08), 'accent': Color.WHITE}
+}
+
+# Adaptive UI elements
+var topic_baskets_ui = []
+var adaptive_ui: Control = null
+var current_theme_colors: Dictionary
+
+func _ready():
+	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+	print('📊 TOPIC SORTING + SCALE THEMES SYSTEM')
+	print('📝 Auto-organizing messages into topic baskets')
+	print('🎨 Scale-based adaptive themes and interface')
+	
+	detect_viewport_scale()
+	apply_current_theme()
+	create_adaptive_ui()
+	create_demo_messages()
+
+func _input(event):
+	if event is InputEventMouseMotion and Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
+		camera_rotation.x -= event.relative.x * look_speed
+		camera_rotation.y = clamp(camera_rotation.y - event.relative.y * look_speed, -1.5, 1.5)
+		$Camera3D.rotation = Vector3(camera_rotation.y, camera_rotation.x, 0)
+	
+	if event.is_action_pressed('ui_cancel'):
+		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE if Input.mouse_mode == Input.MOUSE_MODE_CAPTURED else Input.MOUSE_MODE_CAPTURED
+		if adaptive_ui:
+			adaptive_ui.visible = Input.mouse_mode == Input.MOUSE_MODE_VISIBLE
+	
+	if Input.is_key_pressed(KEY_T) and not event.is_echo():
+		add_test_message()
+	elif Input.is_key_pressed(KEY_R) and not event.is_echo():
+		reorganize_topics()
+	elif Input.is_key_pressed(KEY_S) and not event.is_echo():
+		cycle_scale_theme()
+
+func _process(delta):
+	var input_vector = Vector3()
+	if Input.is_action_pressed('move_forward'):
+		input_vector.z -= 1
+	if Input.is_action_pressed('move_backward'):
+		input_vector.z += 1
+	if Input.is_action_pressed('move_left'):
+		input_vector.x -= 1
+	if Input.is_action_pressed('move_right'):
+		input_vector.x += 1
+	if Input.is_action_pressed('move_up'):
+		input_vector.y += 1
+	if Input.is_action_pressed('move_down'):
+		input_vector.y -= 1
+	
+	if input_vector.length() > 0:
+		input_vector = input_vector.normalized()
+		input_vector = $Camera3D.transform.basis * input_vector
+		$Camera3D.position += input_vector * move_speed * delta
+	
+	# Check for viewport changes
+	check_viewport_scale_changes()
+
+func detect_viewport_scale():
+	var viewport_size = get_viewport().get_visible_rect().size
+	var width = viewport_size.x
+	
+	if width < 800:
+		current_scale = ViewportScale.TINY
+	elif width < 1200:
+		current_scale = ViewportScale.SMALL
+	elif width < 1600:
+		current_scale = ViewportScale.MEDIUM
+	elif width < 2000:
+		current_scale = ViewportScale.LARGE
+	else:
+		current_scale = ViewportScale.HUGE
+	
+	print('🎨 Viewport Scale: ' + get_scale_name(current_scale) + ' (' + str(width) + 'px)')
+
+func get_scale_name(scale: ViewportScale) -> String:
+	match scale:
+		ViewportScale.TINY: return 'TINY'
+		ViewportScale.SMALL: return 'SMALL'
+		ViewportScale.MEDIUM: return 'MEDIUM'
+		ViewportScale.LARGE: return 'LARGE'
+		ViewportScale.HUGE: return 'HUGE'
+		_: return 'UNKNOWN'
+
+func apply_current_theme():
+	current_theme_colors = theme_colors[current_scale]
+	
+	# Update environment colors
+	var world_env = $WorldEnvironment
+	if world_env and world_env.environment:
+		world_env.environment.background_color = current_theme_colors.bg
+		world_env.environment.ambient_light_color = current_theme_colors.accent
+	
+	# Update all existing UI elements with new theme
+	update_existing_ui_colors()
+
+func update_existing_ui_colors():
+	# Update topic basket colors
+	for basket_node in topic_baskets_ui:
+		if is_instance_valid(basket_node):
+			apply_theme_to_basket(basket_node)
+
+func check_viewport_scale_changes():
+	# Only check in interactive mode, not headless
+	if DisplayServer.get_name() == 'headless':
+		return
+		
+	var old_scale = current_scale
+	detect_viewport_scale()
+	
+	if old_scale != current_scale:
+		print('🎨 Scale changed: ' + get_scale_name(old_scale) + ' → ' + get_scale_name(current_scale))
+		apply_current_theme()
+		recreate_adaptive_ui()
+
+func cycle_scale_theme():
+	# Manually cycle through themes for testing
+	current_scale = (current_scale + 1) % ViewportScale.size()
+	apply_current_theme()
+	recreate_adaptive_ui()
+	show_message('🎨 Theme: ' + get_scale_name(current_scale))
+
+func create_adaptive_ui():
+	adaptive_ui = Control.new()
+	adaptive_ui.name = 'AdaptiveUI'
+	adaptive_ui.visible = false
+	
+	# Scale-based UI sizing
+	var ui_scale = get_ui_scale_factor()
+	var base_size = Vector2(1000, 700) * ui_scale
+	
+	adaptive_ui.size = base_size
+	adaptive_ui.position = Vector2(50, 50)
+	
+	var panel = Panel.new()
+	panel.size = adaptive_ui.size
+	
+	# Apply theme colors to panel
+	var style_box = StyleBoxFlat.new()
+	style_box.bg_color = current_theme_colors.bg
+	style_box.border_color = current_theme_colors.accent
+	style_box.border_width_left = 2
+	style_box.border_width_right = 2
+	style_box.border_width_top = 2
+	style_box.border_width_bottom = 2
+	panel.add_theme_stylebox_override('panel', style_box)
+	
+	adaptive_ui.add_child(panel)
+	
+	create_topic_baskets_ui(panel)
+	create_controls_panel(panel)
+	
+	add_child(adaptive_ui)
+
+func get_ui_scale_factor() -> float:
+	match current_scale:
+		ViewportScale.TINY: return 0.6
+		ViewportScale.SMALL: return 0.8
+		ViewportScale.MEDIUM: return 1.0
+		ViewportScale.LARGE: return 1.2
+		ViewportScale.HUGE: return 1.5
+		_: return 1.0
+
+func create_topic_baskets_ui(parent: Control):
+	var scroll_container = ScrollContainer.new()
+	scroll_container.position = Vector2(10, 10)
+	scroll_container.size = Vector2(parent.size.x - 20, parent.size.y - 150)
+	parent.add_child(scroll_container)
+	
+	var vbox = VBoxContainer.new()
+	scroll_container.add_child(vbox)
+	
+	var title = Label.new()
+	title.text = '📊 MESSAGE TOPIC BASKETS'
+	title.add_theme_font_size_override('font_size', 20)
+	title.add_theme_color_override('font_color', current_theme_colors.accent)
+	vbox.add_child(title)
+	
+	# Create basket displays for each topic
+	for topic_name in topic_keywords.keys():
+		create_topic_basket_display(vbox, topic_name)
+
+func create_topic_basket_display(parent: VBoxContainer, topic_name: String):
+	var basket_container = VBoxContainer.new()
+	basket_container.name = 'Basket_' + topic_name
+	
+	var basket_header = HBoxContainer.new()
+	basket_container.add_child(basket_header)
+	
+	var basket_label = Label.new()
+	basket_label.text = '🗂️ ' + topic_name.to_upper() + ' (' + str(get_topic_message_count(topic_name)) + ' messages)'
+	basket_label.add_theme_color_override('font_color', current_theme_colors.accent)
+	basket_header.add_child(basket_label)
+	
+	var expand_button = Button.new()
+	expand_button.text = '+'
+	expand_button.custom_minimum_size = Vector2(30, 20)
+	expand_button.pressed.connect(toggle_basket_expansion.bind(topic_name))
+	basket_header.add_child(expand_button)
+	
+	var message_list = ItemList.new()
+	message_list.name = 'MessageList'
+	message_list.custom_minimum_size = Vector2(0, 100)
+	message_list.visible = false
+	update_basket_message_list(message_list, topic_name)
+	basket_container.add_child(message_list)
+	
+	parent.add_child(basket_container)
+	topic_baskets_ui.append(basket_container)
+
+func get_topic_message_count(topic_name: String) -> int:
+	return topic_baskets.get(topic_name, []).size()
+
+func toggle_basket_expansion(topic_name: String):
+	var basket = find_basket_ui(topic_name)
+	if basket:
+		var message_list = basket.find_child('MessageList', true, false)
+		var expand_button = basket.find_child('Button', true, false)
+		
+		if message_list and expand_button:
+			message_list.visible = !message_list.visible
+			expand_button.text = '-' if message_list.visible else '+'
+
+func find_basket_ui(topic_name: String) -> Control:
+	for basket in topic_baskets_ui:
+		if is_instance_valid(basket) and basket.name == 'Basket_' + topic_name:
+			return basket
+	return null
+
+func update_basket_message_list(message_list: ItemList, topic_name: String):
+	message_list.clear()
+	var messages = topic_baskets.get(topic_name, [])
+	
+	for i in range(messages.size()):
+		var msg = messages[i]
+		var preview = msg.substr(0, 50) + ('...' if msg.length() > 50 else '')
+		message_list.add_item(str(i + 1) + ': ' + preview)
+
+func create_controls_panel(parent: Control):
+	var controls = HBoxContainer.new()
+	controls.position = Vector2(10, parent.size.y - 120)
+	controls.size = Vector2(parent.size.x - 20, 100)
+	parent.add_child(controls)
+	
+	var add_message_btn = Button.new()
+	add_message_btn.text = '📝 ADD TEST MESSAGE (T)'
+	add_message_btn.pressed.connect(add_test_message)
+	controls.add_child(add_message_btn)
+	
+	var reorganize_btn = Button.new()
+	reorganize_btn.text = '🔄 REORGANIZE (R)'
+	reorganize_btn.pressed.connect(reorganize_topics)
+	controls.add_child(reorganize_btn)
+	
+	var theme_btn = Button.new()
+	theme_btn.text = '🎨 CYCLE THEME (S)'
+	theme_btn.pressed.connect(cycle_scale_theme)
+	controls.add_child(theme_btn)
+	
+	var info_label = Label.new()
+	info_label.text = 'Current Scale: ' + get_scale_name(current_scale)
+	info_label.add_theme_color_override('font_color', current_theme_colors.accent)
+	controls.add_child(info_label)
+
+func recreate_adaptive_ui():
+	if adaptive_ui:
+		adaptive_ui.queue_free()
+	topic_baskets_ui.clear()
+	create_adaptive_ui()
+
+func apply_theme_to_basket(basket: Control):
+	# Apply current theme colors to basket UI elements
+	var labels = []
+	find_all_labels(basket, labels)
+	
+	for label in labels:
+		if label.has_theme_color_override('font_color'):
+			label.add_theme_color_override('font_color', current_theme_colors.accent)
+
+func find_all_labels(node: Node, label_array: Array):
+	if node is Label:
+		label_array.append(node)
+	
+	for child in node.get_children():
+		find_all_labels(child, label_array)
+
+func add_test_message():
+	var test_messages = [
+		'I want VR hand tracking with floating 3D keyboard',
+		'The socket connections need better line routing',
+		'Can we add more plus symbols for code sections?',
+		'The 2D interface should scale with viewport resolution',
+		'Space game needs better consciousness progression',
+		'Godot scenes are not loading properly',
+		'The visual themes look great with different scales',
+		'Notes floating in 3D space are amazing'
+	]
+	
+	var random_message = test_messages[randi() % test_messages.size()]
+	add_message_to_system(random_message)
+	show_message('📝 Added: ' + random_message.substr(0, 30) + '...')
+
+func add_message_to_system(message: String):
+	message_history.append(message)
+	categorize_message(message)
+	update_all_basket_displays()
+
+func categorize_message(message: String):
+	var message_lower = message.to_lower()
+	var best_topic = 'uncategorized'
+	var best_score = 0
+	
+	# Score each topic based on keyword matches
+	for topic_name in topic_keywords.keys():
+		var score = 0
+		var keywords = topic_keywords[topic_name]
+		
+		for keyword in keywords:
+			if message_lower.contains(keyword):
+				score += 1
+		
+		if score > best_score:
+			best_score = score
+			best_topic = topic_name
+	
+	# Add to appropriate basket
+	if not topic_baskets.has(best_topic):
+		topic_baskets[best_topic] = []
+	
+	topic_baskets[best_topic].append(message)
+	
+	print('📂 Categorized \"' + message.substr(0, 30) + '...\" → ' + best_topic)
+
+func update_all_basket_displays():
+	# Update all basket UI displays with new message counts
+	for basket in topic_baskets_ui:
+		if is_instance_valid(basket):
+			var topic_name = basket.name.replace('Basket_', '')
+			var label = basket.find_child('Label', true, false)
+			if label:
+				label.text = '🗂️ ' + topic_name.to_upper() + ' (' + str(get_topic_message_count(topic_name)) + ' messages)'
+			
+			var message_list = basket.find_child('MessageList', true, false)
+			if message_list:
+				update_basket_message_list(message_list, topic_name)
+
+func reorganize_topics():
+	# Re-categorize all messages with improved algorithm
+	topic_baskets.clear()
+	
+	for message in message_history:
+		categorize_message(message)
+	
+	update_all_basket_displays()
+	show_message('🔄 All messages reorganized!')
+
+func create_demo_messages():
+	# Add some demo messages to show the system working
+	var demo_messages = [
+		'I need VR hand tracking for the 3D keyboard interface',
+		'Socket connections should show input and output clearly',
+		'Plus symbols need to expand code sections properly',
+		'Interface scaling based on viewport resolution is important',
+		'Space game consciousness progression feels amazing',
+		'Godot scene loading has some issues to fix',
+		'The visual themes adapt beautifully to different scales'
+	]
+	
+	for message in demo_messages:
+		add_message_to_system(message)
+	
+	show_message('📊 Demo messages added to topic baskets!')
+
+func show_message(text: String):
+	var msg = Label3D.new()
+	msg.text = text
+	msg.billboard = BaseMaterial3D.BILLBOARD_ENABLED
+	msg.position = $Camera3D.position + Vector3(0, 3, -5)
+	msg.modulate = current_theme_colors.accent
+	add_child(msg)
+	
+	var tween = create_tween()
+	tween.parallel().tween_property(msg, 'position:y', msg.position.y + 2, 2.0)
+	tween.parallel().tween_property(msg, 'modulate:a', 0.0, 2.0)
+	tween.tween_callback(msg.queue_free)
+"
+
+[sub_resource type="Environment" id="Environment_topic"]
+background_mode = 1
+background_color = Color(0.05, 0.05, 0.15, 1)
+ambient_light_source = 2
+ambient_light_color = Color(0.3, 0.3, 0.5, 1)
+ambient_light_energy = 0.4
+
+[node name="TOPIC_SORTING_INTERFACE" type="Node3D"]
+script = SubResource("GDScript_topic_sorting")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.866, 0.5, 0, -0.5, 0.866, 0, 5, 12)
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_topic")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.7, -0.5, 0.5, 0, 0.7, 0.7, -0.7, -0.5, 0.5, 0, 10, 0)

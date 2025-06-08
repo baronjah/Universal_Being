@@ -347,6 +347,7 @@ func _sort_by_priority(a: Dictionary, b: Dictionary) -> bool:
 	return a.priority > b.priority
 
 func _estimate_package_size(path: String) -> int:
+	pass
 	var file = FileAccess.open(path, FileAccess.READ)
 	if file:
 		var size = file.get_length()
@@ -355,6 +356,7 @@ func _estimate_package_size(path: String) -> int:
 	return 0
 
 func _calculate_package_memory(package: Dictionary) -> int:
+	pass
 	# Rough estimation based on content
 	var size = 0
 	size += str(package.manifest).length()

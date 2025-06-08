@@ -51,12 +51,14 @@ func dispose():
 	pass
 
 func generate_mesh_raw(result_grid_size:Vector3i, threshold:float, mipmap_lod:float, img_list_density:Array[Image], img_list_gradient:Array[Image])->ArrayMesh:
+	pass
 	var density_tex_rid:RID = create_texture_image_from_image_stack(img_list_density, RenderingDevice.DATA_FORMAT_R32_SFLOAT, true)
 	var grad_tex_rid:RID = create_texture_image_from_image_stack(img_list_gradient, RenderingDevice.DATA_FORMAT_R32G32B32A32_SFLOAT, true)
 	return generate_mesh(result_grid_size, threshold, mipmap_lod, density_tex_rid, grad_tex_rid)
 
 
 func generate_mesh(result_grid_size:Vector3i, threshold:float, mipmap_lod:float, density_tex_rid:RID, grad_tex_rid:RID)->ArrayMesh:
+	pass
 	var start_time:int = Time.get_ticks_msec()
 	
 	run_mesh_shader(result_grid_size, threshold, mipmap_lod, density_tex_rid, grad_tex_rid)
@@ -108,6 +110,7 @@ func generate_mesh(result_grid_size:Vector3i, threshold:float, mipmap_lod:float,
 # img_list_density - image stack with 3d density data
 # img_list_gradient - image stack with 3d gradient data
 func run_mesh_shader(result_grid_size:Vector3i, threshold:float, mipmap_lod:float, density_tex_rid:RID, grad_tex_rid:RID):
+	pass
 	#Create buffer for read only parameters
 	var param_ro_buf:PackedByteArray
 	param_ro_buf.resize(8 * 4)
@@ -288,6 +291,7 @@ func get_format_bytes_per_pixel(format:RenderingDevice.DataFormat)->int:
 
 #func create_texture_image(size:Vector3i):
 func create_texture_image_from_image_stack(img_list:Array[Image], format:RenderingDevice.DataFormat, gen_mipmaps:bool)->RID:
+	pass
 	var size:Vector3i = Vector3i(img_list[0].get_width(), img_list[0].get_height(), img_list.size())
 	var img_format:Image.Format = get_image_format(format)
 	
@@ -354,6 +358,7 @@ func create_texture_image_from_image_stack(img_list:Array[Image], format:Renderi
 
 
 func load_shader_from_path(path:String)->RID:
+	pass
 	var shader_file:RDShaderFile = load(path)
 	return load_shader(shader_file)
 	

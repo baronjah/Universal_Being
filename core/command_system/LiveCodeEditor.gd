@@ -46,6 +46,7 @@ func _setup_ui() -> void:
 	add_child(vbox)
 
 func _setup_shortcuts() -> void:
+	pass
 	# Ctrl+Enter to execute
 	var execute_shortcut = Shortcut.new()
 	var execute_event = InputEventKey.new()
@@ -154,6 +155,7 @@ func toggle_visibility() -> void:
 
 # Quick snippets for common operations
 func insert_snippet(snippet_name: String) -> void:
+	pass
 	var snippets = {
 		"being": """
 extends UniversalBeing
@@ -175,7 +177,6 @@ func on_trigger(word: String, data: Dictionary, speaker: UniversalBeing) -> void
 		"activate":
 			print("Activated by ", speaker.being_name)
 		_:
-			pass
 """,
 		"evolution": """
 func can_evolve_to(new_type: String) -> bool:

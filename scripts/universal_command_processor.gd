@@ -430,9 +430,9 @@ func _initialize_command_patterns() -> void:
 func _setup_logic_connectors() -> void:
     """Setup initial logic connector system"""
     logic_connectors = {}
-    # Load any saved connectors from Akashic Records
-    if has_node("/root/AkashicRecordsSystemSystem"):
-        var records = get_node("/root/AkashicRecordsSystemSystem")
+    # Load any saved connectors from Akashic Records (using correct autoload name)
+    if has_node("/root/CosmicRecords"):
+        var records = get_node("/root/CosmicRecords")
         var saved_connectors = records.load_record("logic_connectors", "system")
         if saved_connectors:
             logic_connectors = saved_connectors
@@ -451,14 +451,14 @@ func _process_command_queue(delta: float) -> void:
 
 func _save_command_history() -> void:
     """Save command history to Akashic Records"""
-    if has_node("/root/AkashicRecordsSystemSystem"):
-        var records = get_node("/root/AkashicRecordsSystemSystem")
+    if has_node("/root/CosmicRecords"):
+        var records = get_node("/root/CosmicRecords")
         records.save_record("command_history", "system", command_history)
 
 func _save_logic_connectors() -> void:
     """Save logic connectors to Akashic Records"""
-    if has_node("/root/AkashicRecordsSystemSystem"):
-        var records = get_node("/root/AkashicRecordsSystemSystem")
+    if has_node("/root/CosmicRecords"):
+        var records = get_node("/root/CosmicRecords")
         records.save_record("logic_connectors", "system", logic_connectors)
 
 func _classify_command(command: String) -> CommandType:
@@ -559,7 +559,6 @@ func _execute_creation_plan(plan: Array) -> bool:
     """Execute a creation plan"""
     for step in plan:
         # Execute each step
-        pass
     return true
 
 # ===== MACRO SYSTEM =====

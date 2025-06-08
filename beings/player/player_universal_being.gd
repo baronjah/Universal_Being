@@ -52,7 +52,7 @@ func pentagon_init() -> void:
 	if is_inside_tree():
 		global_position.y = float_height
 	
-	print("⚡ %s: Pentagon Init - Energy consciousness awakens" % being_name)
+	show_ub_visual("⚡ %s: Pentagon Init - Energy consciousness awakens" % being_name)
 
 func pentagon_ready() -> void:
 	super.pentagon_ready()
@@ -74,7 +74,7 @@ func pentagon_ready() -> void:
 	if console_nodes.size() > 0:
 		var console = console_nodes[0]  # Use [0] instead of front()
 		if console:
-			print("🎮 Player connected to console")
+			show_ub_visual("🎮 Player connected to console")
 	
 	# Register with cursor for interaction
 	var cursor_nodes = get_tree().get_nodes_in_group("cursor")
@@ -83,7 +83,7 @@ func pentagon_ready() -> void:
 		if cursor and cursor.has_method("set_player_reference"):
 			cursor.set_player_reference(self)
 	
-	print("⚡ %s: Pentagon Ready - Plasmoid controls active" % being_name)
+	show_ub_visual("⚡ %s: Pentagon Ready - Plasmoid controls active" % being_name)
 
 func pentagon_process(delta: float) -> void:
 	super.pentagon_process(delta)
@@ -116,7 +116,7 @@ func pentagon_input(event: InputEvent) -> void:
 		_toggle_console()
 
 func pentagon_sewers() -> void:
-	print("⚡ %s: Plasmoid energy dispersing..." % being_name)
+	show_ub_visual("⚡ %s: Plasmoid energy dispersing..." % being_name)
 	super.pentagon_sewers()
 
 # ===== PLAYER BODY CREATION =====
@@ -163,6 +163,7 @@ func _create_player_body() -> void:
 # ===== PLASMOID MOVEMENT =====
 
 func _physics_process(delta: float) -> void:
+	pass
 	# Plasmoid movement - no gravity, free floating like text-based game
 	
 	# Get input direction in 3D space (W=FORWARD IS LAW!)
@@ -224,7 +225,7 @@ func _setup_camera() -> void:
 	"""Set up camera using your prepared trackball camera scene"""
 	# Check if camera scene exists first
 	if not ResourceLoader.exists("res://scenes/main/camera_point.tscn"):
-		print("⚠️ Camera scene not found, creating basic camera")
+		show_ub_visual("⚠️ Camera scene not found, creating basic camera")
 		_create_basic_camera()
 		return
 	
@@ -253,7 +254,7 @@ func _setup_camera() -> void:
 			
 			# Camera is ready
 		else:
-			print("⚠️ TrackballCamera not found in scene, trying fallback")
+			show_ub_visual("⚠️ TrackballCamera not found in scene, trying fallback")
 			camera = _find_camera_in_node(camera_instance)
 			camera_pivot = camera_instance
 		
@@ -388,7 +389,7 @@ func _clear_highlight() -> void:
 
 func _interact_with_being(being: UniversalBeing) -> void:
 	"""Magical lightning interaction with a Universal Being"""
-	print("⚡ Plasmoid casting lightning toward: %s" % being.being_name)
+	show_ub_visual("⚡ Plasmoid casting lightning toward: %s" % being.being_name)
 	
 	# Cast lightning to being's position
 	_cast_lightning_to_target(being.global_position)
@@ -398,7 +399,7 @@ func _interact_with_being(being: UniversalBeing) -> void:
 
 func _complete_interaction(being: UniversalBeing) -> void:
 	"""Complete the interaction after lightning effect"""
-	print("⚡ Lightning connection established with: %s" % being.being_name)
+	show_ub_visual("⚡ Lightning connection established with: %s" % being.being_name)
 	
 	# Open inspector for the being
 	var console_nodes = get_tree().get_nodes_in_group("console")
@@ -465,7 +466,7 @@ func _create_crosshair_ui() -> void:
 	# Add to scene tree at viewport level so it's always visible (deferred to avoid busy parent)
 	get_viewport().call_deferred("add_child", crosshair_ui)
 	
-	print("⚡ Magical crosshair created for plasmoid targeting")
+	show_ub_visual("⚡ Magical crosshair created for plasmoid targeting")
 
 func _update_crosshair_position() -> void:
 	"""Update crosshair to always be at screen center (camera aim direction)"""
@@ -488,7 +489,7 @@ func _update_crosshair_position() -> void:
 
 func _create_lightning_system() -> void:
 	"""Create lightning effect system for magical interactions"""
-	print("⚡ Lightning system ready for magical interactions")
+	show_ub_visual("⚡ Lightning system ready for magical interactions")
 
 func _cast_lightning_to_target(target_pos: Vector3) -> void:
 	"""Cast magical lightning from plasmoid to target position"""
@@ -500,7 +501,7 @@ func _cast_lightning_to_target(target_pos: Vector3) -> void:
 	# Energy drain effect on plasmoid
 	_plasmoid_energy_discharge()
 	
-	print("⚡ Lightning cast from plasmoid to %v" % target_pos)
+	show_ub_visual("⚡ Lightning cast from plasmoid to %v" % target_pos)
 
 func _create_lightning_particles(target_pos: Vector3) -> void:
 	"""Create particle-based lightning effect"""

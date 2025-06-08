@@ -98,6 +98,7 @@ func _dump_scene_tree():
 	_dump_node(get_tree().root, 0)
 
 func _dump_node(node: Node, depth: int):
+	pass
 	var indent = "  ".repeat(depth)
 	var info = "%s%s" % [indent, node.name]
 	

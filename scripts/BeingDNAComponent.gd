@@ -100,6 +100,7 @@ func pentagon_sewers() -> void:
 # ===== DNA VISUALIZATION =====
 
 func create_dna_visualizer() -> void:
+	pass
     # Create the DNA helix visualizer
     var visualizer_scene = load("res://components/being_dna/dna_visualizer.tscn")
     if visualizer_scene:
@@ -143,6 +144,7 @@ func update_trait_visualization(category_key: String, trait_key: String, trait_v
     dna_helix.update_trait(category_key, trait_key, trait_color)
 
 func get_trait_color(category_key: String, trait_key: String, trait_value: float) -> Color:
+	pass
     # Get color representation of trait value
     var base_colors = {
         "physical": Color(0.2, 0.8, 0.2),  # Green
@@ -168,6 +170,7 @@ func calculate_evolution_potential() -> void:
             evolution_potential[category_name + "." + trait_name] = potential
 
 func calculate_trait_potential(category: String, trait_name: String, value: float) -> Dictionary:
+	pass
     # Calculate evolution potential for a trait
     var potential = {
         "current": value,
@@ -272,6 +275,7 @@ func handle_dna_click(position: Vector2) -> void:
         show_evolution_options(category, trait_name, value)
 
 func show_evolution_options(category: String, trait_name: String, value: float) -> void:
+	pass
     # Show available evolution options for a trait
     var potential = evolution_potential.get(category + "." + trait_name, {})
     if potential.is_empty():
@@ -284,6 +288,7 @@ func show_evolution_options(category: String, trait_name: String, value: float) 
         menu.global_position = get_viewport().get_mouse_position()
 
 func create_evolution_menu(category: String, trait_name: String, potential: Dictionary) -> Control:
+	pass
     # Create menu for trait evolution options
     var menu_scene = load("res://components/being_dna/evolution_menu.tscn")
     if not menu_scene:

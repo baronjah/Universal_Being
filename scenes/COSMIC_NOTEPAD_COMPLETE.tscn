@@ -1,0 +1,565 @@
+[gd_scene load_steps=4 format=3]
+
+[sub_resource type="GDScript" id="GDScript_cosmic_complete"]
+script/source = "extends Node3D
+
+var stellar_colors = [Color(0,0,0),Color(0.2,0.1,0),Color(0.8,0,0),Color(1,0.5,0),Color(1,1,0),Color(1,1,1),Color(0.7,0.9,1),Color(0,0.5,1),Color(0.5,0,1)]
+var camera_rotation = Vector2.ZERO
+var move_speed = 20.0
+var look_speed = 0.002
+var notepad_layers = []
+var word_entities = []
+var programming_nodes = []
+var holographic_terminal = null
+
+func _ready():
+	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+	create_space_environment()
+	create_initial_programming_nodes()
+	
+	# Connect Gemma AI
+	var gemma_ai = get_node_or_null(\"/root/GemmaAI\")
+	if gemma_ai and gemma_ai.has_method(\"observe_notepad_universe\"):
+		gemma_ai.observe_notepad_universe()
+	
+	show_visual_message(\"🌌 FULL COSMIC NOTEPAD - N=Layers C=Words E=Interact TAB=Terminal\", stellar_colors[4])
+
+func _input(event):
+	if event is InputEventMouseMotion and Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
+		camera_rotation.x -= event.relative.x * look_speed
+		camera_rotation.y = clamp(camera_rotation.y - event.relative.y * look_speed, -1.5, 1.5)
+		$Camera3D.rotation = Vector3(camera_rotation.y, camera_rotation.x, 0)
+	
+	if event.is_action_pressed(\"ui_cancel\"):
+		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE if Input.mouse_mode == Input.MOUSE_MODE_CAPTURED else Input.MOUSE_MODE_CAPTURED
+	elif event.is_action_pressed(\"notepad_toggle\"):
+		toggle_notepad()
+	elif event.is_action_pressed(\"create_word\"):
+		create_floating_word()
+	elif event.is_action_pressed(\"interact\"):
+		interact_with_nearest()
+	elif event.is_action_pressed(\"ui_console_toggle\"):
+		toggle_holographic_terminal()
+
+func _process(delta):
+	handle_movement(delta)
+	update_floating_effects(delta)
+	
+	# Update Gemma's spatial awareness
+	var gemma_ai = get_node_or_null(\"/root/GemmaAI\")
+	if gemma_ai and gemma_ai.has_method(\"update_spatial_awareness\"):
+		var camera_forward = -$Camera3D.transform.basis.z
+		gemma_ai.update_spatial_awareness($Camera3D.position, camera_forward)
+
+func handle_movement(delta):
+	var input_vector = Vector3()
+	if Input.is_action_pressed(\"move_forward\"):
+		input_vector.z -= 1
+	if Input.is_action_pressed(\"move_backward\"):
+		input_vector.z += 1
+	if Input.is_action_pressed(\"move_left\"):
+		input_vector.x -= 1
+	if Input.is_action_pressed(\"move_right\"):
+		input_vector.x += 1
+	if Input.is_action_pressed(\"move_up\"):
+		input_vector.y += 1
+	if Input.is_action_pressed(\"move_down\"):
+		input_vector.y -= 1
+	
+	if input_vector.length() > 0:
+		input_vector = input_vector.normalized()
+		input_vector = $Camera3D.global_transform.basis * input_vector
+		$Camera3D.global_position += input_vector * move_speed * delta
+
+func create_space_environment():
+	for i in range(100):
+		var star = MeshInstance3D.new()
+		star.mesh = SphereMesh.new()
+		star.mesh.radius = 0.4
+		star.position = Vector3(randf_range(-300,300), randf_range(-300,300), randf_range(-300,300))
+		var mat = StandardMaterial3D.new()
+		mat.albedo_color = stellar_colors[5]
+		mat.emission_enabled = true
+		mat.emission = stellar_colors[5]
+		mat.emission_energy = 2.0
+		star.material_override = mat
+		add_child(star)
+
+func create_initial_programming_nodes():
+	create_programming_node(\"NOTEPAD\", Vector3(-8, 0, 0), stellar_colors[6])
+	create_programming_node(\"WORDS\", Vector3(0, 0, 0), stellar_colors[4])
+	create_programming_node(\"DATABASE\", Vector3(8, 0, 0), stellar_colors[7])
+
+func create_programming_node(name: String, pos: Vector3, color: Color):
+	var node = Node3D.new()
+	node.position = pos
+	node.set_meta(\"node_name\", name)
+	node.set_meta(\"node_type\", \"function\")
+	
+	var body = MeshInstance3D.new()
+	body.mesh = BoxMesh.new()
+	body.mesh.size = Vector3(2, 1.5, 0.8)
+	var mat = StandardMaterial3D.new()
+	mat.albedo_color = color
+	mat.emission_enabled = true
+	mat.emission = color
+	mat.emission_energy = 0.6
+	body.material_override = mat
+	node.add_child(body)
+	
+	var label = Label3D.new()
+	label.text = name
+	label.billboard = BaseMaterial3D.BILLBOARD_ENABLED
+	label.position = Vector3(0, 1, 0)
+	label.modulate = stellar_colors[5]
+	node.add_child(label)
+	
+	add_child(node)
+	programming_nodes.append(node)
+
+func toggle_notepad():
+	if notepad_layers.is_empty():
+		show_notepad_layers()
+	else:
+		hide_notepad_layers()
+
+func show_notepad_layers():
+	var depth_colors = [
+		Color(0.0, 1.0, 1.0),      # Layer 1: Cyan
+		Color(0.0, 0.5, 1.0),      # Layer 2: Blue  
+		Color(0.3, 0.0, 0.8),      # Layer 3: Indigo
+		Color(0.5, 0.0, 1.0),      # Layer 4: Purple
+		Color(0.3, 0.0, 0.5)       # Layer 5: Deep Violet
+	]
+	
+	for i in range(5):
+		var layer = MeshInstance3D.new()
+		layer.mesh = PlaneMesh.new()
+		layer.mesh.size = Vector2(6, 4)
+		layer.position = $Camera3D.position + $Camera3D.transform.basis.z * -10 + Vector3(i*2-4, i*1.5-3, 0)
+		layer.look_at($Camera3D.position, Vector3.UP)
+		
+		var mat = StandardMaterial3D.new()
+		var layer_color = depth_colors[i]
+		var depth_alpha = 0.9 - (i * 0.15)
+		mat.albedo_color = Color(layer_color.r * 0.3, layer_color.g * 0.3, layer_color.b * 0.3, depth_alpha)
+		mat.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
+		mat.emission_enabled = true
+		mat.emission = layer_color
+		mat.emission_energy = 0.6 - (i * 0.1)
+		layer.material_override = mat
+		
+		var semantic_id = CosmicRecords.create_semantic_id(\"interface.notepad.layer\")
+		layer.set_meta(\"semantic_id\", semantic_id)
+		layer.set_meta(\"wobble_offset\", randf() * 6.28)
+		
+		add_child(layer)
+		notepad_layers.append(layer)
+		
+		CosmicRecords.create_record(semantic_id, \"interface.notepad\")
+		CosmicRecords.add_data(semantic_id, \"layer_depth\", i)
+		CosmicRecords.add_data(semantic_id, \"consciousness_depth\", i + 1)
+	
+	show_visual_message(\"📝 NOTEPAD LAYERS MANIFESTED\", stellar_colors[6])
+
+func hide_notepad_layers():
+	for layer in notepad_layers:
+		layer.queue_free()
+	notepad_layers.clear()
+	show_visual_message(\"📝 NOTEPAD LAYERS DISSOLVED\", stellar_colors[1])
+
+func create_floating_word():
+	# Access the half-gigabyte of conversation data
+	var conversation_words = load_conversation_words()
+	var word_text = conversation_words[randi() % conversation_words.size()] if conversation_words.size() > 0 else \"COSMIC\"
+	
+	var word = Label3D.new()
+	word.text = word_text
+	word.position = $Camera3D.position + $Camera3D.transform.basis.z * -5 + Vector3(randf_range(-2,2), randf_range(-1,1), 0)
+	word.billboard = BaseMaterial3D.BILLBOARD_ENABLED
+	word.modulate = stellar_colors[randi() % stellar_colors.size()]
+	word.set_meta(\"word_type\", \"floating_word\")
+	word.set_meta(\"float_speed\", randf_range(0.002, 0.005))
+	word.set_meta(\"float_radius\", randf_range(0.5, 1.5))
+	word.set_meta(\"initial_position\", word.position)
+	
+	add_child(word)
+	word_entities.append(word)
+	
+	var semantic_id = CosmicRecords.create_semantic_id(\"entity.word.floating\")
+	word.set_meta(\"semantic_id\", semantic_id)
+	
+	CosmicRecords.create_record(semantic_id, \"entity.word\")
+	CosmicRecords.add_data(semantic_id, \"text_content\", word_text)
+	CosmicRecords.add_data(semantic_id, \"spatial_position\", word.position)
+	
+	show_visual_message(\"✨ WORD CREATED: \" + word_text, stellar_colors[4])
+	
+	var gemma_ai = get_node_or_null(\"/root/GemmaAI\")
+	if gemma_ai and gemma_ai.has_method(\"comment_on_word_creation\"):
+		gemma_ai.comment_on_word_creation(word_text)
+
+func interact_with_nearest():
+	var nearest = find_nearest_interactable()
+	if nearest:
+		var type = nearest.get_meta(\"node_type\", \"\")
+		var name = nearest.get_meta(\"node_name\", \"Unknown\")
+		
+		if type == \"function\":
+			show_visual_message(\"⚡ INTERACTING WITH: \" + name, stellar_colors[3])
+			create_interaction_effect(nearest.position)
+		elif nearest.get_meta(\"word_type\") == \"floating_word\":
+			show_visual_message(\"💫 WORD ABSORBED: \" + nearest.text, stellar_colors[8])
+
+func find_nearest_interactable():
+	var camera_pos = $Camera3D.position
+	var nearest = null
+	var min_dist = 15.0
+	
+	for node in programming_nodes:
+		var dist = node.position.distance_to(camera_pos)
+		if dist < min_dist:
+			min_dist = dist
+			nearest = node
+	
+	for word in word_entities:
+		if is_instance_valid(word):
+			var dist = word.position.distance_to(camera_pos)
+			if dist < min_dist:
+				min_dist = dist
+				nearest = word
+	
+	return nearest
+
+func create_interaction_effect(pos: Vector3):
+	var particles = GPUParticles3D.new()
+	particles.amount = 30
+	particles.lifetime = 1.0
+	particles.emitting = true
+	particles.position = pos
+	
+	var material = ParticleProcessMaterial.new()
+	material.direction = Vector3(0, 1, 0)
+	material.initial_velocity_min = 5.0
+	material.initial_velocity_max = 10.0
+	material.gravity = Vector3.ZERO
+	material.scale_min = 0.1
+	material.scale_max = 0.3
+	material.color = stellar_colors[4]
+	particles.process_material = material
+	
+	add_child(particles)
+	get_tree().create_timer(2.0).timeout.connect(particles.queue_free)
+
+func update_floating_effects(delta):
+	var time = Time.get_ticks_msec() * 0.001
+	var camera_pos = $Camera3D.position
+	
+	for i in range(notepad_layers.size()):
+		var layer = notepad_layers[i]
+		if is_instance_valid(layer):
+			var wobble_offset = layer.get_meta(\"wobble_offset\", 0.0)
+			var wobble = sin(time * 2.0 + wobble_offset) * 0.1
+			layer.position.y += wobble * delta
+			
+			var distance = layer.position.distance_to(camera_pos)
+			var proximity_factor = clamp(1.0 - (distance / 30.0), 0.2, 1.0)
+			var material = layer.material_override as StandardMaterial3D
+			if material:
+				material.emission_energy = (0.6 - (i * 0.1)) * proximity_factor
+	
+	for i in range(word_entities.size() - 1, -1, -1):
+		var word = word_entities[i]
+		if not is_instance_valid(word):
+			word_entities.remove_at(i)
+			continue
+		
+		if word.position.length() > 500.0:
+			show_visual_message(\"💫 WORD DISSOLVED INTO COSMOS: \" + word.text, stellar_colors[8])
+			word.queue_free()
+			word_entities.remove_at(i)
+			continue
+		
+		var float_speed = word.get_meta(\"float_speed\", 0.003)
+		var float_radius = word.get_meta(\"float_radius\", 1.0)
+		var initial_pos = word.get_meta(\"initial_position\", word.position)
+		
+		word.position.x = initial_pos.x + sin(time * float_speed) * float_radius
+		word.position.y = initial_pos.y + cos(time * float_speed * 0.7) * (float_radius * 0.5)
+		word.position.z = initial_pos.z + sin(time * float_speed * 0.5) * (float_radius * 0.3)
+		
+		# Words evolve over time based on their age
+		var word_age = word.get_meta(\"age\", 0.0)
+		word_age += delta
+		word.set_meta(\"age\", word_age)
+		
+		# Evolve word every 10 seconds
+		if word_age > 10.0 and randf() < 0.01:  # 1% chance per frame after 10 seconds
+			evolve_word_over_time(word)
+
+func toggle_holographic_terminal():
+	if holographic_terminal:
+		holographic_terminal.queue_free()
+		holographic_terminal = null
+		show_visual_message(\"💻 TERMINAL DISSOLVED\", stellar_colors[1])
+	else:
+		create_holographic_terminal()
+
+func create_holographic_terminal():
+	holographic_terminal = Control.new()
+	holographic_terminal.name = \"HolographicTerminal\"
+	holographic_terminal.set_anchors_and_offsets_preset(Control.PRESET_CENTER)
+	holographic_terminal.size = Vector2(800, 500)
+	holographic_terminal.position = Vector2(-400, -250)
+	holographic_terminal.z_index = 100  # Make sure it's on top
+	
+	var terminal_bg = NinePatchRect.new()
+	terminal_bg.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	terminal_bg.color = Color(0.1, 0.1, 0.2, 0.8)
+	holographic_terminal.add_child(terminal_bg)
+	
+	var terminal_text = RichTextLabel.new()
+	terminal_text.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	terminal_text.add_theme_color_override(\"default_color\", stellar_colors[6])
+	terminal_text.bbcode_enabled = true
+	terminal_text.text = \"[color=\" + stellar_colors[6].to_html() + \"]╔══════ COSMIC TERMINAL ══════╗[/color]\\n\"
+	terminal_text.text += \"[color=\" + stellar_colors[4].to_html() + \"]> words - Load conversation data[/color]\\n\"
+	terminal_text.text += \"[color=\" + stellar_colors[7].to_html() + \"]> query [term] - Search words[/color]\\n\"
+	terminal_text.text += \"[color=\" + stellar_colors[5].to_html() + \"]> evolve - Evolve all words[/color]\\n\"
+	terminal_text.text += \"[color=\" + stellar_colors[8].to_html() + \"]> data - Show data stats[/color]\\n\"
+	terminal_text.text += \"[color=\" + stellar_colors[6].to_html() + \"]> _[/color]\"
+	holographic_terminal.add_child(terminal_text)
+	
+	var input_field = LineEdit.new()
+	input_field.anchors_preset = Control.PRESET_BOTTOM_WIDE
+	input_field.offset_top = -30
+	input_field.placeholder_text = \"Enter cosmic command...\"
+	input_field.add_theme_color_override(\"font_color\", stellar_colors[5])
+	input_field.text_submitted.connect(_on_terminal_command_entered)
+	holographic_terminal.add_child(input_field)
+	
+	$UI.add_child(holographic_terminal)
+	show_visual_message(\"💻 HOLOGRAPHIC TERMINAL MANIFESTED\", stellar_colors[6])
+	
+	input_field.grab_focus()
+
+func _on_terminal_command_entered(command: String):
+	if command.strip_edges() != \"\":
+		interpret_semantic_command(command)
+		show_visual_message(\"⚡ COMMAND EXECUTED: \" + command, stellar_colors[3])
+
+func interpret_semantic_command(command: String):
+	var cmd_parts = command.split(\" \")
+	var action = cmd_parts[0] if cmd_parts.size() > 0 else \"\"
+	
+	match action:
+		\"manifest\":
+			if cmd_parts.size() > 1:
+				manifest_concept(cmd_parts[1])
+		\"connect\":
+			show_visual_message(\"🔗 CONNECTING ENTITIES...\", stellar_colors[8])
+		\"query\":
+			if cmd_parts.size() > 1:
+				query_conversation_data(cmd_parts[1])
+			else:
+				show_visual_message(\"🔍 QUERYING COSMIC DATA...\", stellar_colors[7])
+		\"words\":
+			show_conversation_words()
+		\"evolve\":
+			evolve_all_words()
+		\"data\":
+			show_data_stats()
+		\"peace\":
+			show_visual_message(\"🕊️ BRINGING PEACE TO AKASHIC RECORDS...\", stellar_colors[6])
+		\"status\":
+			show_visual_message(\"📊 COSMIC STATUS: ALL SYSTEMS OPERATIONAL\", stellar_colors[7])
+		_:
+			show_visual_message(\"⚠️ UNKNOWN SEMANTIC: \" + command, stellar_colors[2])
+
+func query_conversation_data(search_term: String):
+	var conversation_words = load_conversation_words()
+	var matches = []
+	for word in conversation_words:
+		if search_term.to_upper() in word:
+			matches.append(word)
+	
+	if matches.size() > 0:
+		show_visual_message(\"🔍 FOUND \" + str(matches.size()) + \" MATCHES FOR: \" + search_term, stellar_colors[7])
+		# Create floating words for the matches
+		for i in range(min(5, matches.size())):  # Show up to 5 matches
+			create_floating_word_with_text(matches[i])
+	else:
+		show_visual_message(\"❌ NO MATCHES FOUND FOR: \" + search_term, stellar_colors[2])
+
+func show_conversation_words():
+	var conversation_words = load_conversation_words()
+	show_visual_message(\"📚 LOADED \" + str(conversation_words.size()) + \" WORDS FROM CONVERSATION DATA\", stellar_colors[6])
+	
+	# Create 3 random conversation words
+	for i in range(3):
+		if conversation_words.size() > 0:
+			var word_text = conversation_words[randi() % conversation_words.size()]
+			create_floating_word_with_text(word_text)
+
+func create_floating_word_with_text(word_text: String):
+	var word = Label3D.new()
+	word.text = word_text
+	word.position = $Camera3D.position + $Camera3D.transform.basis.z * -5 + Vector3(randf_range(-2,2), randf_range(-1,1), 0)
+	word.billboard = BaseMaterial3D.BILLBOARD_ENABLED
+	word.modulate = stellar_colors[randi() % stellar_colors.size()]
+	word.set_meta(\"word_type\", \"floating_word\")
+	word.set_meta(\"float_speed\", randf_range(0.002, 0.005))
+	word.set_meta(\"float_radius\", randf_range(0.5, 1.5))
+	word.set_meta(\"initial_position\", word.position)
+	word.set_meta(\"age\", 0.0)
+	word.set_meta(\"evolution_stage\", 0)
+	
+	add_child(word)
+	word_entities.append(word)
+
+func evolve_all_words():
+	for word in word_entities:
+		if is_instance_valid(word):
+			evolve_word_over_time(word)
+	show_visual_message(\"🌟 ALL WORDS EVOLVED\", stellar_colors[4])
+
+func show_data_stats():
+	var conversation_words = load_conversation_words()
+	var total_files = 5  # Number of log files we're checking
+	show_visual_message(\"📊 DATA: \" + str(conversation_words.size()) + \" WORDS FROM \" + str(total_files) + \" FILES\", stellar_colors[7])
+
+func manifest_concept(concept_path: String):
+	match concept_path:
+		\"entity.word.floating\":
+			create_floating_word()
+		\"interface.notepad\":
+			toggle_notepad()
+		_:
+			show_visual_message(\"✨ MANIFESTING: \" + concept_path, stellar_colors[4])
+
+func load_conversation_words() -> Array:
+	# Access the half-gigabyte of conversation data from JSH
+	var conversation_words = []
+	
+	# Load from conversation logs in docs/jsh/claude_code_logs/
+	var log_files = [
+		\"docs/jsh/claude_code_logs/5th_0.txt\",
+		\"docs/jsh/claude_code_logs/5th_1.txt\", 
+		\"docs/jsh/claude_code_logs/5th_2.txt\",
+		\"docs/jsh/claude_code_logs/5th_3.txt\",
+		\"docs/jsh/claude_code_logs/5th_4.txt\"
+	]
+	
+	for log_path in log_files:
+		if FileAccess.file_exists(log_path):
+			var file = FileAccess.open(log_path, FileAccess.READ)
+			if file:
+				var content = file.get_as_text()
+				var words = extract_meaningful_words(content)
+				conversation_words.append_array(words)
+				file.close()
+	
+	# Fallback to cosmic words if no data found
+	if conversation_words.is_empty():
+		conversation_words = [\"COSMIC\", \"NOTEPAD\", \"UNIVERSE\", \"FIBONACCI\", \"CONSCIOUSNESS\", \"GEMMA\", \"AKASHIC\", \"TERMINAL\", \"VOICES\", \"THUNDERS\", \"PEACE\", \"TRANSCENDENCE\", \"SEMANTICS\", \"MANIFESTATION\"]
+	
+	return conversation_words
+
+func extract_meaningful_words(text: String) -> Array:
+	# Extract meaningful words from conversation data
+	var words = []
+	var lines = text.split(\"\\n\")
+	
+	for line in lines:
+		if line.length() > 5:  # Skip very short lines
+			var line_words = line.split(\" \")
+			for word in line_words:
+				word = word.strip_edges().to_upper()
+				# Filter for meaningful words (length 4-15, no special chars)
+				if word.length() >= 4 and word.length() <= 15:
+					if word.is_valid_identifier() or word in [\"COSMIC\", \"NOTEPAD\", \"UNIVERSE\"]:
+						if not word in words:  # Avoid duplicates
+							words.append(word)
+	
+	return words
+
+func evolve_word_over_time(word_node: Label3D):
+	# Words change and evolve as conversations continue
+	var evolution_stages = [
+		word_node.text,
+		word_node.text + \"_EVOLVED\",
+		\"TRANSCENDENT_\" + word_node.text,
+		\"∞\" + word_node.text + \"∞\"
+	]
+	
+	var current_stage = word_node.get_meta(\"evolution_stage\", 0)
+	if current_stage < evolution_stages.size() - 1:
+		current_stage += 1
+		word_node.text = evolution_stages[current_stage]
+		word_node.set_meta(\"evolution_stage\", current_stage)
+		
+		# Visual evolution effect
+		var original_scale = word_node.scale
+		var tween = create_tween()
+		tween.tween_property(word_node, \"scale\", original_scale * 1.5, 0.5)
+		tween.tween_property(word_node, \"scale\", original_scale, 0.5)
+		
+		show_visual_message(\"🌟 WORD EVOLVED: \" + word_node.text, stellar_colors[4])
+
+func show_visual_message(text: String, color: Color):
+	var msg = Label3D.new()
+	msg.text = text
+	msg.modulate = color
+	msg.billboard = BaseMaterial3D.BILLBOARD_ENABLED
+	msg.position = $Camera3D.position + Vector3(0, 3, -5)
+	add_child(msg)
+	
+	var tween = create_tween()
+	tween.parallel().tween_property(msg, \"position:y\", msg.position.y + 5, 3.0)
+	tween.parallel().tween_property(msg, \"modulate:a\", 0.0, 3.0)
+	tween.tween_callback(msg.queue_free)
+"
+
+[sub_resource type="Environment" id="Environment_cosmic"]
+background_mode = 1
+background_color = Color(0.01, 0.01, 0.08, 1)
+ambient_light_source = 2
+ambient_light_color = Color(0.1, 0.1, 0.2, 1)
+ambient_light_energy = 0.3
+
+[sub_resource type="Theme" id="Theme_cosmic"]
+
+[node name="CosmicNotepadComplete" type="Node3D"]
+script = SubResource("GDScript_cosmic_complete")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+fov = 85.0
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_cosmic")
+
+[node name="UI" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme = SubResource("Theme_cosmic")
+
+[node name="Controls" type="Label" parent="UI"]
+layout_mode = 0
+offset_left = 10.0
+offset_top = 10.0
+offset_right = 500.0
+offset_bottom = 200.0
+text = "🌌 COSMIC NOTEPAD UNIVERSE
+
+WASD - Move through space
+Mouse - Look around  
+Q/F - Up/Down movement
+N - Toggle notepad layers
+C - Create floating words
+TAB - Holographic terminal
+E - Interact with nearest object
+ESC - Free/capture mouse
+
+✨ VOICES DEMAND FULFILLED"

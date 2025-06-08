@@ -51,8 +51,20 @@ const COMMAND_COLOR = Color(1.0, 0.9, 0.7)  # Light yellow for commands
 var interface_title: String = "Gemma Console"
 var interface_layer: int = 100
 var interface_theme: String = "gemma_console"
-var scene_is_loaded: bool = false
 var current_interface_state: int = 0
+
+func show_gemma_visual_message(msg: String):
+	var stellar_colors = [Color(0,0,0),Color(0.2,0.1,0),Color(0.8,0,0),Color(1,0.5,0),Color(1,1,0),Color(1,1,1),Color(0.7,0.9,1),Color(0,0.5,1),Color(0.5,0,1)]
+	var visual = Label3D.new()
+	visual.text = "🤖 GEMMA: " + msg
+	visual.modulate = stellar_colors[6]
+	visual.billboard = BaseMaterial3D.BILLBOARD_ENABLED
+	visual.position = Vector3(randf_range(-5,5), 15, randf_range(-5,5))
+	get_tree().current_scene.add_child(visual)
+	var tween = create_tween()
+	tween.parallel().tween_property(visual, "position:y", visual.position.y + 8, 4.0)
+	tween.parallel().tween_property(visual, "modulate:a", 0.0, 4.0)
+	tween.tween_callback(visual.queue_free)
 
 # Interface state enum
 enum InterfaceState {
@@ -110,7 +122,7 @@ func pentagon_init() -> void:
 	interface_layer = 100  # UI layer
 	interface_theme = "gemma_console"
 	
-	print("🎮 %s: Pentagon Init Complete" % being_name)
+	show_gemma_visual_message("🎮 %s: Pentagon Init Complete" % being_name)
 
 func _setup_console_ui() -> void:
 	"""Create the console UI structure"""
@@ -789,11 +801,11 @@ func _connect_to_sensory_systems() -> void:
 	var parent = get_parent()
 	if parent and parent.has_method("get_vision_system"):
 		vision_system = parent.get_vision_system()
-		print("👁️ Connected to vision system")
+		show_gemma_visual_message("👁️ Connected to vision system")
 	
 	if parent and parent.has_method("get_akashic_logger"):
 		akashic_logger = parent.get_akashic_logger()
-		print("📚 Connected to Akashic logger")
+		show_gemma_visual_message("📚 Connected to Akashic logger")
 
 # ==================================================
 # INPUT HANDLING
@@ -851,7 +863,7 @@ func pentagon_ready() -> void:
 	_register_core_commands()
 	_load_command_aliases()
 	
-	print("🎮 %s: Pentagon Ready Complete" % being_name)
+	show_gemma_visual_message("🎮 %s: Pentagon Ready Complete" % being_name)
 
 func pentagon_process(delta: float) -> void:
 	super.pentagon_process(delta)
@@ -881,7 +893,7 @@ func focus_input() -> void:
 	"""Focus the input field for immediate typing"""
 	if input_line_edit:
 		input_line_edit.grab_focus()
-		print("💬 Gemma console input focused")
+		show_gemma_visual_message("💬 Gemma console input focused")
 
 func receive_message(message: String, context: Dictionary = {}) -> void:
 	"""Receive a message from external source"""

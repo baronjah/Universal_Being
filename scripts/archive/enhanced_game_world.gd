@@ -21,6 +21,7 @@ func _ready():
 		MemoryOptimizer.instance.memory_critical.connect(_on_memory_critical)
 
 func setup_environment():
+	pass
 	# Add more interesting lighting
 	var omni_light = OmniLight3D.new()
 	omni_light.position = Vector3(0, 10, 0)
@@ -38,6 +39,7 @@ func setup_environment():
 		env.environment.fog_sun_scatter = 0.5
 
 func setup_ui():
+	pass
 	var ui_layer = CanvasLayer.new()
 	ui_layer.layer = 10
 	add_child(ui_layer)
@@ -81,6 +83,7 @@ func _process(_delta):
 				being_counter.text = "Beings: %d / %d" % [flood_gates.get_being_count(), max_beings]
 
 func _spawn_random_being():
+	pass
 	var bootstrap = get_node_or_null("/root/SystemBootstrap")
 	if not bootstrap:
 		return

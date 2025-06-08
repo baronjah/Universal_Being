@@ -129,6 +129,7 @@ func update_consciousness_visual() -> void:
 # ===== AI INTEGRATION =====
 
 func ai_interface() -> Dictionary:
+	pass
     var base = super.ai_interface()
     base.custom_commands = [
         "reset_clicks",

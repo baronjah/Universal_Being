@@ -6,7 +6,7 @@
 # AUTHOR: JSH + Claude Code - Universal Being Socket Architects
 # ==================================================
 
-extends UniversalBeing
+extends Resource
 class_name UniversalBeingSocket
 
 # ===== SOCKET TYPES =====
@@ -237,6 +237,7 @@ func deserialize(data: Dictionary) -> void:
 # ===== DEBUG AND UTILITIES =====
 
 func _to_string() -> String:
+	pass
 	var status = "occupied" if is_occupied else "empty"
 	var lock_status = " (locked)" if is_locked else ""
 	return "Socket<%s:%s:%s%s>" % [SocketType.keys()[socket_type], socket_name, status, lock_status]

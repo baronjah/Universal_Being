@@ -163,6 +163,7 @@ func _on_corner_clicked(corner_name: String, camera: Node, event: InputEvent, po
 		resize_corner = corner_name
 
 func _handle_resize() -> void:
+	pass
 	var mouse_pos = get_viewport().get_mouse_position()
 	var camera = get_viewport().get_camera_3d()
 	if not camera:
@@ -253,6 +254,7 @@ func _add_socket_points() -> void:
 		socket.add_child(vis)
 
 func _create_socket_visual(color: Color) -> MeshInstance3D:
+	pass
 	var mesh_instance = MeshInstance3D.new()
 	var sphere_mesh = SphereMesh.new()
 	sphere_mesh.radius_height = 0.15
@@ -282,6 +284,7 @@ func _setup_visual_style() -> void:
 		sprite_3d.material_override = material
 
 func _highlight_element(element: Node3D, color: Color) -> void:
+	pass
 	var mesh = element.find_child("MeshInstance3D") as MeshInstance3D
 	if mesh:
 		var mat = mesh.material_override
@@ -293,6 +296,7 @@ func _highlight_element(element: Node3D, color: Color) -> void:
 		mat.emission_energy = 0.5
 
 func _unhighlight_element(element: Node3D) -> void:
+	pass
 	var mesh = element.find_child("MeshInstance3D") as MeshInstance3D
 	if mesh and mesh.material_override:
 		mesh.material_override.emission_enabled = false
@@ -300,6 +304,7 @@ func _unhighlight_element(element: Node3D) -> void:
 # ===== AI INTEGRATION =====
 
 func ai_interface() -> Dictionary:
+	pass
 	var base = super.ai_interface()
 	base.window_state = {
 		"title": window_title,
@@ -314,6 +319,7 @@ func ai_interface() -> Dictionary:
 # ===== 1D TEXT REPRESENTATION =====
 
 func get_text_representation() -> String:
+	pass
 	var text = "=== INTERFACE WINDOW ===\n"
 	text += "Title: %s\n" % window_title
 	text += "Position: %.2f, %.2f, %.2f\n" % [global_position.x, global_position.y, global_position.z]

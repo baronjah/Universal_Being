@@ -52,6 +52,7 @@ func _process(delta):
 	pass
 	
 func export_gltf():
+	pass
 	#Export
 	var doc:GLTFDocument = GLTFDocument.new()
 	var state:GLTFState = GLTFState.new()

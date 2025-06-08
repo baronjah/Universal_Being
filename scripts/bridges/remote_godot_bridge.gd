@@ -55,6 +55,7 @@ class RemoteConnection:
 		return false
 	
 	func _wait_for_connection() -> void:
+		pass
 		var timeout = 5.0
 		var elapsed = 0.0
 		while client.get_status() == StreamPeerTCP.STATUS_CONNECTING and elapsed < timeout:

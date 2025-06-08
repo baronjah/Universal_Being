@@ -150,6 +150,7 @@ func handle_create_command(being_type: String) -> String:
 # ===== AI INTEGRATION =====
 
 func ai_interface() -> Dictionary:
+	pass
 	var base_interface = super.ai_interface()
 	base_interface.gemma_commands = ["move_to", "inspect", "create"]
 	base_interface.gemma_properties = {

@@ -524,6 +524,5 @@ func get_consciousness_description(level: int) -> String:
 func _on_game_state_changed(old_state, new_state) -> void:
 	"""React to game state changes"""
 	# Could disable interaction during console mode, etc.
-	pass
 
 print("🎮 Intuitive Interaction System: Player-friendly controls ready!")

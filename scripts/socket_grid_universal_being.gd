@@ -66,6 +66,7 @@ func initialize_grid() -> void:
             # Optionally add to scene or register with FloodGate if needed
 
 func get_cell(x: int, y: int) -> Variant:
+	pass
     var idx = y * grid_size.x + x
     if idx >= 0 and idx < cells.size():
         return cells[idx]
@@ -74,6 +75,7 @@ func get_cell(x: int, y: int) -> Variant:
 # ===== AI INTEGRATION =====
 
 func ai_interface() -> Dictionary:
+	pass
     var base_interface = super.ai_interface()
     base_interface.custom_commands = ["get_cell", "update_grid_size"]
     base_interface.custom_properties = {

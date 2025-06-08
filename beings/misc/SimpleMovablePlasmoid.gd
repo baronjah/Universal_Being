@@ -20,6 +20,7 @@ func _ready():
 		mesh_instance.material_override = material
 
 func _physics_process(delta):
+	pass
 	var input_vector = Vector3.ZERO
 	
 	# Get WASD input

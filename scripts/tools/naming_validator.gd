@@ -196,6 +196,7 @@ class Violation:
 				return "NAMING_SUGGESTION"
 	
 	func _generate_message() -> String:
+		pass
 		var base_msg = ""
 		match severity:
 			ViolationSeverity.CRITICAL:

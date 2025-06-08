@@ -95,6 +95,7 @@ func pentagon_sewers() -> void:
 # ===== ABSOLUTE TOP CURSOR =====
 
 func create_absolute_top_cursor() -> void:
+	pass
 	# Get the root viewport
 	var root = get_tree().root
 	
@@ -213,6 +214,7 @@ func create_minimal_raycast() -> void:
 	print("🎯 Minimal raycast created")
 
 func update_raycast_detection() -> void:
+	pass
 	var camera = get_viewport().get_camera_3d()
 	if not camera or not ray_cast:
 		return
@@ -236,6 +238,7 @@ func update_raycast_detection() -> void:
 	check_hover()
 
 func check_hover() -> void:
+	pass
 	var new_hover = null
 	
 	if ray_cast.is_colliding():
@@ -378,6 +381,7 @@ func get_cursor_tip_world_position() -> Vector3:
 # ===== STATE OVERRIDES =====
 
 func _generate_thought_result() -> Dictionary:
+	pass
 	var result = super._generate_thought_result()
 	result.should_create = false
 	result.should_evolve = false

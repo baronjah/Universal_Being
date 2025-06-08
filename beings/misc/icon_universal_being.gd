@@ -164,6 +164,7 @@ func _add_sockets() -> void:
 # ===== TEXT REPRESENTATION =====
 
 func get_text_representation() -> String:
+	pass
 	var text = "🎨 [ICON:%s]" % icon_name.to_upper()
 	text += " CATEGORY:%s" % icon_category
 	text += " CLICKS:%d" % click_count
@@ -197,6 +198,7 @@ func get_ascii_art() -> String:
 # ===== AI INTEGRATION =====
 
 func ai_interface() -> Dictionary:
+	pass
 	var base = super.ai_interface()
 	base.icon_info = {
 		"name": icon_name,

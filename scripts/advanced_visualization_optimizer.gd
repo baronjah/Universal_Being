@@ -76,6 +76,7 @@ func _ready() -> void:
 	set_process(true)
 
 func initialize_gpu_resources() -> void:
+	pass
 	# Initialize compute shaders for force calculations
 	var rd = RenderingServer.create_local_rendering_device()
 	if rd:
@@ -159,7 +160,6 @@ func apply_visual_optimizations(data: Dictionary, lod: LODLevel) -> Dictionary:
 	match lod:
 		LODLevel.FULL_DETAIL:
 			# No optimization needed
-			pass
 		
 		LODLevel.REDUCED_DETAIL:
 			# Reduce particle counts
@@ -387,6 +387,7 @@ func identify_behavioral_outliers(network: AIPentagonNetwork) -> Array:
 # ===== PERFORMANCE MONITORING =====
 
 func _process(delta: float) -> void:
+	pass
 	var fps = Engine.get_frames_per_second()
 	
 	if fps < TARGET_FPS * 0.8:  # Below 80% of target

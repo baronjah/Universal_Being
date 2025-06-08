@@ -34,6 +34,7 @@ func _ready():
 	get_tree().quit()
 
 func _print_tree(node: Node, depth: int):
+	pass
 	var indent = ""
 	for i in range(depth):
 		indent += "  "
@@ -46,6 +47,7 @@ func _print_tree(node: Node, depth: int):
 			_print_tree(child, depth + 1)
 
 func _find_console_nodes(node: Node) -> Array:
+	pass
 	var results = []
 	if "console" in node.name.to_lower():
 		results.append(node)
@@ -54,6 +56,7 @@ func _find_console_nodes(node: Node) -> Array:
 	return results
 
 func _find_nodes_with_text(node: Node, search_text: String) -> Array:
+	pass
 	var results = []
 	if search_text.to_lower() in node.name.to_lower():
 		results.append(node)

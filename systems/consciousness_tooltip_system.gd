@@ -165,6 +165,7 @@ func _on_hide_fade_done():
     _current_being = null
 
 func update_tooltip_text(level: int, being: UniversalBeing = null) -> void:
+	pass
     # Use being's custom narrative if present
     var narrative := ""
     if being and being.has_method("get_custom_narrative_for_level"):
@@ -182,6 +183,7 @@ func get_narrative_for_level(level: int) -> String:
     return TOOLTIPS.get(level, "...")
     
 func _position_tooltip(pos: Vector2) -> void:
+	pass
     # Show tooltip above the being (project world to screen if needed)
     var offset := Vector2(0, -70)
     _bg.global_position = pos + offset

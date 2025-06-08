@@ -144,6 +144,7 @@ func get_color_name(color: Color) -> String:
 # ===== AI INTEGRATION =====
 
 func ai_interface() -> Dictionary:
+	pass
     var base_interface = super.ai_interface()
     base_interface.ai_commands = ["create_butterfly", "akashic_status"]
     base_interface.ai_properties = {

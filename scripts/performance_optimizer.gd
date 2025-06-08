@@ -90,6 +90,7 @@ func should_log_error(error_message: String) -> bool:
     return true
 
 func _process(delta):
+	pass
     # Track FPS
     var current_fps = Engine.get_frames_per_second()
     fps_history.append(current_fps)

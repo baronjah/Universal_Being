@@ -74,6 +74,7 @@ func pentagon_sewers() -> void:
 # ===== GENERATION METHODS =====
 
 func _create_layer(index: int) -> Node3D:
+	pass
 	var layer = Node3D.new()
 	layer.name = "Layer_%d" % index
 	
@@ -94,6 +95,7 @@ func _create_layer(index: int) -> Node3D:
 	return layer
 
 func _populate_layer(layer: Node3D, index: int) -> void:
+	pass
 	# Create visual indicator (like in generator_projector)
 	var mesh_instance = MeshInstance3D.new()
 	var box_mesh = BoxMesh.new()
@@ -149,6 +151,7 @@ func _update_layer_visibility() -> void:
 # ===== TEXT REPRESENTATION =====
 
 func get_text_representation() -> String:
+	pass
 	var text = "=== LOD GENERATOR ===\n"
 	text += "Direction: %s\n" % _get_direction_name()
 	text += "Active Layers: %d/%d\n" % [layers.size(), max_layers]
@@ -164,6 +167,7 @@ func get_text_representation() -> String:
 	return text
 
 func _get_direction_name() -> String:
+	pass
 	var forward = -transform.basis.z
 	if abs(forward.z) > 0.9:
 		return "FORWARD" if forward.z < 0 else "BACKWARD"
@@ -175,6 +179,7 @@ func _get_direction_name() -> String:
 # ===== AI INTEGRATION =====
 
 func ai_interface() -> Dictionary:
+	pass
 	var base = super.ai_interface()
 	base.generator_info = {
 		"layers": layers.size(),

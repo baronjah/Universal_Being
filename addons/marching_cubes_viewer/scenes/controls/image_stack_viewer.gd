@@ -55,6 +55,7 @@ func _process(delta):
 
 
 func _on_spin_cur_image_value_changed(value:float):
+	pass
 	var img_idx:int = %spin_cur_image.value
 	var tex = null if image_list.is_empty() else image_list[img_idx]
 	%img_texture.texture = ImageTexture.create_from_image(tex)
