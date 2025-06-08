@@ -7,7 +7,7 @@
 # ==================================================
 
 extends UniversalBeing
-#class_name UniversalTimersSystem # Commented to avoid duplicate
+class_name UniversalTimersSystem
 
 # ===== UNIVERSAL BEING TIMER PROPERTIES =====
 
