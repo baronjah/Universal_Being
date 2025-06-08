@@ -5,7 +5,7 @@
 # ==================================================
 
 extends Node
-class_name AkashicLibrary
+class_name AkashicLibrarySystem
 
 # Library state
 var library_path: String = "res://akashic_library/"

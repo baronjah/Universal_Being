@@ -5,7 +5,7 @@
 # ==================================================
 
 extends UniversalBeing
-#class_name AkashicLibrary # Commented to avoid duplicate
+class_name AkashicLibrary # Commented to avoid duplicate
 
 # Library state
 var library_path: String = "res://akashic_library/"

@@ -5,7 +5,7 @@
 # ==================================================
 
 extends Node
-class_name AkashicLibrary
+class_name AkashicLibrarySystem
 
 ## Chronicle configuration
 const SAVE_PATH = "user://akashic_chronicle.json"

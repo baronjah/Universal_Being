@@ -1,61 +1,54 @@
 [gd_scene load_steps=7 format=3 uid="uid://bwcpvd8w4d76h"]
 
-[ext_resource type="Script" path="res://beings/plasmoid_universal_being.gd" id="1"]
+[ext_resource type="Script" uid="uid://pooqmvex58dx" path="res://beings/plasmoid_universal_being.gd" id="1"]
 
-[sub_resource type="SphereMesh" id="SphereMesh_plasmoid"]
-radius = 0.5
-height = 1.0
+[sub_resource type="SphereShape3D" id="SphereShape_interaction"]
+radius = 1.0
 
 [sub_resource type="StandardMaterial3D" id="PlasmoidMaterial"]
 transparency = 1
 albedo_color = Color(0.3, 0.7, 1, 0.8)
 emission_enabled = true
 emission = Color(0.5, 0.8, 1, 1)
-emission_energy = 1.5
+emission_energy_multiplier = 1.5
 rim_enabled = true
-rim_tint = 0.5
 
-[sub_resource type="SphereShape3D" id="SphereShape_interaction"]
-radius = 1.0
-
-[sub_resource type="Environment" id="Environment_glow"]
-background_mode = 1
-background_color = Color(0.05, 0.05, 0.1, 1)
-glow_enabled = true
-glow_levels = 7
-glow_intensity = 0.8
-glow_strength = 1.0
-glow_bloom = 0.2
+[sub_resource type="SphereMesh" id="SphereMesh_plasmoid"]
 
 [sub_resource type="StandardMaterial3D" id="CoreMaterial"]
 transparency = 1
 albedo_color = Color(1, 1, 1, 0.6)
 emission_enabled = true
 emission = Color(0.8, 0.9, 1, 1)
-emission_energy = 2.0
+emission_energy_multiplier = 2.0
+
+[sub_resource type="Environment" id="Environment_glow"]
+background_mode = 1
+background_color = Color(0.05, 0.05, 0.1, 1)
+glow_enabled = true
+glow_bloom = 0.2
 
 [node name="Plasmoid" type="CharacterBody3D"]
 script = ExtResource("1")
-
-[node name="PlasmoidMesh" type="MeshInstance3D" parent="."]
-mesh = SubResource("SphereMesh_plasmoid")
-material_override = SubResource("PlasmoidMaterial")
-
-[node name="CoreMesh" type="MeshInstance3D" parent="PlasmoidMesh"]
-transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 0, 0, 0)
-mesh = SubResource("SphereMesh_plasmoid")
-material_override = SubResource("CoreMaterial")
-
-[node name="ConsciousnessLight" type="OmniLight3D" parent="."]
-light_color = Color(0.3, 0.7, 1, 1)
-light_energy = 1.0
-omni_range = 8.0
-omni_attenuation = 0.5
 
 [node name="InteractionArea" type="Area3D" parent="."]
 
 [node name="InteractionCollision" type="CollisionShape3D" parent="InteractionArea"]
 shape = SubResource("SphereShape_interaction")
+
+[node name="PlasmoidMesh" type="MeshInstance3D" parent="."]
+material_override = SubResource("PlasmoidMaterial")
+mesh = SubResource("SphereMesh_plasmoid")
+
+[node name="CoreMesh" type="MeshInstance3D" parent="PlasmoidMesh"]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 0, 0, 0)
+material_override = SubResource("CoreMaterial")
+mesh = SubResource("SphereMesh_plasmoid")
+
+[node name="ConsciousnessLight" type="OmniLight3D" parent="."]
+light_color = Color(0.3, 0.7, 1, 1)
+omni_range = 8.0
+omni_attenuation = 0.5
 
 [node name="CameraSocket" type="Marker3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)

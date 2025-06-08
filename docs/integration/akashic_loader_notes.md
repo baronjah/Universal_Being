@@ -163,7 +163,7 @@ print("Memory: %d%%, FPS: %d" % [metrics.memory_percent, metrics.current_fps])
 
 # Handle warnings:
 akashic.memory_warning.connect(func(percent):
-    print("⚠️ Memory usage: %d%%" % percent)
+	print("⚠️ Memory usage: %d%%" % percent)
 )
 ```
 

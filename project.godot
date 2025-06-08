@@ -30,7 +30,8 @@ SystemBootstrap="*res://autoloads/SystemBootstrap.gd"
 CosmicRecords="*res://scripts/records_map.gd"
 GemmaAI="*res://autoloads/GemmaAI.gd"
 UBPrint="*res://systems/UBPrintCollector.gd"
-#FallbackRegistry="*res://core/AutoRegisterFallbacks.gd"
+FallbackRegistry="*res://core/AutoRegisterFallbacks.gd"
+FloodGatesSystem="*res://core/FloodGates.gd"
 
 [build]
 
