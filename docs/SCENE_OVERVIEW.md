@@ -7,8 +7,7 @@ This guide summarizes the three most complete scenes shipped with the project. E
 * Press **F1–F9** to test optimization and AI functions.
 
 ## 3D_NOTEPAD_GAME.tscn
-* The current main scene listed in `project.godot`.
-* Features a 5‑layer floating notepad system with interactive words, asteroid mining and a holographic terminal.
+* Former main scene focused on the 5‑layer floating notepad system with interactive words, asteroid mining and a holographic terminal.
 * Demonstrates Gemma Vision, infinite terrain chunks and consciousness evolution.
 
 ## COSMIC_NOTEPAD_COMPLETE.tscn
@@ -17,10 +16,8 @@ This guide summarizes the three most complete scenes shipped with the project. E
 
 ### Integration Idea
 Start from **PERFECT_ULTIMATE_UNIVERSAL_BEING.tscn** and selectively merge notepad features from the other scenes. This keeps the strong cosmic foundation while adding keyboard input, floating layers and word interactions.
-#<<<<<<< 2eavzb-codex/integrate-game-visions-and-mechanics
 
 ## UNIVERSAL_BEING_GAME.tscn
-#* New unified scene that instantiates both the **PERFECT_ULTIMATE_UNIVERSAL_BEING** environment and the **3D_NOTEPAD_GAME** mechanics.
-#* Serves as an experimental playground where all major systems run together.
-#=======
-#>>>>>>> seventh_may_sixth_day_AMEN
+* Unified scene that instantiates the **PERFECT_ULTIMATE_UNIVERSAL_BEING** environment, **3D_NOTEPAD_GAME** mechanics and the **CLEAN_3D_PROGRAMMING** playground.
+* Now set as the project's main scene so that all major systems load by default.
+* Serves as an experimental sandbox where all major systems run together.
