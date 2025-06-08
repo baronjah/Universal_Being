@@ -1,6 +1,6 @@
 # main.gd
 extends Node
-class_name UniversalBeingGame
+#class_name UniversalBeingGame
 
 #
 #Looking at the main section as a player experiencing the game:
