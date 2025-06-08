@@ -7,7 +7,7 @@
 # ==================================================
 
 extends UniversalBeing
-#class_name UniversalTimersSystem # Commented to avoid duplicate
+class_name UniversalTimersSystem
 
 # ===== UNIVERSAL BEING TIMER PROPERTIES =====
 
@@ -171,7 +171,7 @@ func create_timer(timer_id: String, duration: float, callback: Callable = Callab
 		_timers[timer_id].consciousness_category = "system"
 	elif timer_id.contains("turn"):
 		_timers[timer_id].consciousness_category = "collaboration"
-	else:
+			else:
 		_timers[timer_id].consciousness_category = "general"
 	
 	UBPrint.debug("UniversalTimersSystem", "create_timer", "Created timer '%s' (%.1fs, %s)" % [timer_id, duration, "repeating" if repeating else "one-shot"])
@@ -426,7 +426,7 @@ func _on_timer_timeout(timer_id: String) -> void:
 				timer_data.callback.call(timer_data.user_data)
 			else:
 				timer_data.callback.call()
-		except:
+		catch err:
 			UBPrint.error("UniversalTimersSystem", "_on_timer_timeout", "Timer callback failed for '%s'" % timer_id)
 	
 	# Handle repeating timers
