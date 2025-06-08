@@ -420,8 +420,8 @@ func _on_timer_timeout(timer_id: String) -> void:
 	
 	var timer_data = _timers[timer_id]
 	
+
         # Execute callback if provided
-#<<<<<<< gwuheo-codex/integrate-game-visions-and-mechanics
         if timer_data.callback.is_valid():
                 try:
                         if timer_data.user_data != null:
@@ -430,8 +430,12 @@ func _on_timer_timeout(timer_id: String) -> void:
                                 timer_data.callback.call()
                 catch err:
                         UBPrint.error("UniversalTimersSystem", "_on_timer_timeout", "Timer callback failed for '%s'" % timer_id)
-#=======
+
         if timer_data.callback.is_valid():
+
+	# Execute callback if provided
+	if timer_data.callback.is_valid():
+
                try:
                        if timer_data.user_data != null:
                                timer_data.callback.call(timer_data.user_data)
@@ -439,8 +443,7 @@ func _on_timer_timeout(timer_id: String) -> void:
                                timer_data.callback.call()
                catch err:
                        UBPrint.error("UniversalTimersSystem", "_on_timer_timeout", "Timer callback failed for '%s'" % timer_id)
-#>>>>>>> seventh_may_sixth_day_AMEN
-	
+
 	# Handle repeating timers
 	if timer_data.is_repeating:
 		timer_data.timer.start()

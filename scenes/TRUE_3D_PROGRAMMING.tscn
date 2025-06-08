@@ -1,0 +1,573 @@
+[gd_scene load_steps=3 format=3 uid="uid://true_3d_programming"]
+
+[sub_resource type="GDScript" id="GDScript_3d_programming"]
+script/source = "extends Node3D
+
+var camera_rotation = Vector2.ZERO
+var move_speed = 15.0
+var look_speed = 0.002
+var programming_points = {}
+var selected_point = null
+
+class ProgrammablePoint:
+	extends Node3D
+	
+	var code_source: String = \"\"
+	var compiled_script: GDScript = null
+	var visual_sphere: MeshInstance3D
+	
+	func _init(pos: Vector3):
+		position = pos
+		name = \"Point_\" + str(pos)
+		create_visual()
+	
+	func create_visual():
+		visual_sphere = MeshInstance3D.new()
+		var sphere = SphereMesh.new()
+		sphere.radius = 0.3
+		visual_sphere.mesh = sphere
+		
+		var material = StandardMaterial3D.new()
+		material.albedo_color = Color.WHITE
+		material.emission_enabled = true
+		material.emission = Color.CYAN
+		visual_sphere.material_override = material
+		
+		add_child(visual_sphere)
+	
+	func inject_code(code: String) -> bool:
+		code_source = code
+		var new_script = GDScript.new()
+		new_script.source_code = code
+		
+		if new_script.reload() == OK:
+			compiled_script = new_script
+			set_script(compiled_script)
+			
+			# Visual feedback
+			var material = visual_sphere.material_override as StandardMaterial3D
+			material.emission = Color.GREEN
+			print(\"✅ Code injected at \" + str(position))
+			return true
+		else:
+			var material = visual_sphere.material_override as StandardMaterial3D
+			material.emission = Color.RED
+			print(\"❌ Code failed at \" + str(position))
+			return false
+
+var code_input_ui: Control = null
+
+func _ready():
+	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+	print('🧠 TRUE 3D PROGRAMMING UNIVERSE')
+	print('🔥 Click anywhere in 3D space to program that point')
+	print('📝 Press ENTER to inject code | ESC for cursor')
+	
+	create_programming_ui()
+	create_demo_environment()
+
+func _input(event):
+	if event is InputEventMouseMotion and Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
+		camera_rotation.x -= event.relative.x * look_speed
+		camera_rotation.y = clamp(camera_rotation.y - event.relative.y * look_speed, -1.5, 1.5)
+		$Camera3D.rotation = Vector3(camera_rotation.y, camera_rotation.x, 0)
+	
+	if event.is_action_pressed('ui_cancel'):
+		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE if Input.mouse_mode == Input.MOUSE_MODE_CAPTURED else Input.MOUSE_MODE_CAPTURED
+		if code_input_ui:
+			code_input_ui.visible = Input.mouse_mode == Input.MOUSE_MODE_VISIBLE
+	
+	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
+		if Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
+			create_point_at_cursor()
+	
+	if event.is_action_pressed('ui_accept'):  # ENTER
+		if code_input_ui and code_input_ui.visible and selected_point:
+			inject_code_into_selected()
+
+func _process(delta):
+	var input_vector = Vector3()
+	if Input.is_action_pressed('move_forward'):
+		input_vector.z -= 1
+	if Input.is_action_pressed('move_backward'):
+		input_vector.z += 1
+	if Input.is_action_pressed('move_left'):
+		input_vector.x -= 1
+	if Input.is_action_pressed('move_right'):
+		input_vector.x += 1
+	if Input.is_action_pressed('move_up'):
+		input_vector.y += 1
+	if Input.is_action_pressed('move_down'):
+		input_vector.y -= 1
+	
+	if input_vector.length() > 0:
+		input_vector = input_vector.normalized()
+		input_vector = $Camera3D.transform.basis * input_vector
+		$Camera3D.position += input_vector * move_speed * delta
+
+func create_point_at_cursor():
+	var camera = $Camera3D
+	var from = camera.global_position
+	var to = from + (-camera.global_transform.basis.z * 20)
+	
+	var point = ProgrammablePoint.new(to)
+	add_child(point)
+	programming_points[to] = point
+	selected_point = point
+	
+	print('📍 Created programmable point at ' + str(to))
+	
+	if code_input_ui:
+		code_input_ui.visible = true
+		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+
+func create_programming_ui():
+	code_input_ui = Control.new()
+	code_input_ui.size = Vector2(600, 400)
+	code_input_ui.position = Vector2(50, 50)
+	code_input_ui.visible = false
+	
+	var panel = Panel.new()
+	panel.size = code_input_ui.size
+	code_input_ui.add_child(panel)
+	
+	var vbox = VBoxContainer.new()
+	vbox.position = Vector2(10, 10)
+	vbox.size = Vector2(580, 380)
+	panel.add_child(vbox)
+	
+	var title = Label.new()
+	title.text = '🧠 INJECT CODE INTO 3D POINT'
+	title.add_theme_font_size_override('font_size', 20)
+	vbox.add_child(title)
+	
+	var code_edit = TextEdit.new()
+	code_edit.name = 'CodeEdit'
+	code_edit.custom_minimum_size = Vector2(0, 250)
+	code_edit.text = 'extends Node3D\\n\\nfunc _ready():\\n\\tprint(\"I AM ALIVE AT: \" + str(position))\\n\\nfunc _process(delta):\\n\\trotation.y += delta\\n\\tscale = Vector3.ONE * (1.0 + sin(Time.get_ticks_msec() * 0.001) * 0.2)'
+	vbox.add_child(code_edit)
+	
+	var button_container = HBoxContainer.new()
+	vbox.add_child(button_container)
+	
+	var inject_button = Button.new()
+	inject_button.text = '⚡ INJECT INTO REALITY'
+	inject_button.pressed.connect(inject_code_into_selected)
+	button_container.add_child(inject_button)
+	
+	var quick_buttons = HBoxContainer.new()
+	vbox.add_child(quick_buttons)
+	
+	var spin_button = Button.new()
+	spin_button.text = '🌀 SPIN'
+	spin_button.pressed.connect(func(): quick_inject('extends Node3D\\nfunc _process(delta): rotation += Vector3(delta, delta*2, delta*3)'))
+	quick_buttons.add_child(spin_button)
+	
+	var pulse_button = Button.new()
+	pulse_button.text = '💓 PULSE'
+	pulse_button.pressed.connect(func(): quick_inject('extends Node3D\\nfunc _process(delta): scale = Vector3.ONE * (1.0 + sin(Time.get_ticks_msec() * 0.005) * 0.5)'))
+	quick_buttons.add_child(pulse_button)
+	
+	var float_button = Button.new()
+	float_button.text = '🌊 FLOAT'
+	float_button.pressed.connect(func(): quick_inject('extends Node3D\\nfunc _process(delta): position.y += sin(Time.get_ticks_msec() * 0.002) * 0.1'))
+	quick_buttons.add_child(float_button)
+	
+	add_child(code_input_ui)
+
+func inject_code_into_selected():
+	if not selected_point or not code_input_ui:
+		return
+	
+	var code_edit = code_input_ui.find_child('CodeEdit', true, false)
+	if code_edit:
+		var success = selected_point.inject_code(code_edit.text)
+		if success:
+			show_message('✅ REALITY REPROGRAMMED!')
+		else:
+			show_message('❌ CODE REJECTED BY REALITY')
+
+func quick_inject(code: String):
+	if selected_point:
+		selected_point.inject_code(code)
+		show_message('⚡ QUICK CODE INJECTED')
+
+func show_message(text: String):
+	var msg = Label3D.new()
+	msg.text = text
+	msg.billboard = BaseMaterial3D.BILLBOARD_ENABLED
+	msg.position = $Camera3D.position + Vector3(0, 2, -3)
+	msg.modulate = Color.YELLOW
+	add_child(msg)
+	
+	var tween = create_tween()
+	tween.parallel().tween_property(msg, 'position:y', msg.position.y + 3, 2.0)
+	tween.parallel().tween_property(msg, 'modulate:a', 0.0, 2.0)
+	tween.tween_callback(msg.queue_free)
+
+func create_demo_environment():
+	# Simple ground
+	var ground = MeshInstance3D.new()
+	var plane = PlaneMesh.new()
+	plane.size = Vector2(100, 100)
+	ground.mesh = plane
+	ground.position.y = -2
+	
+	var material = StandardMaterial3D.new()
+	material.albedo_color = Color(0.2, 0.2, 0.3)
+	ground.material_override = material
+	
+	add_child(ground)
+	
+	# Instructions in 3D space
+	var instructions = Label3D.new()
+	instructions.text = '🧠 CLICK ANYWHERE TO PROGRAM THAT POINT\\n⚡ REALITY AWAITS YOUR CODE\\n📝 PRESS N TO LEAVE NOTE FOR GEMMA'
+	instructions.billboard = BaseMaterial3D.BILLBOARD_ENABLED
+	instructions.position = Vector3(0, 5, -10)
+	instructions.modulate = Color.CYAN
+	add_child(instructions)
+	
+	# Spawn Gemma with advanced visuals
+	spawn_visual_gemma()
+
+var gemma_ai: Node3D
+var floating_notes = []
+
+func spawn_visual_gemma():
+	gemma_ai = Node3D.new()
+	gemma_ai.name = \"GemmaAI\"
+	gemma_ai.position = Vector3(15, 8, -20)
+	
+	# Core AI sphere
+	var core = MeshInstance3D.new()
+	var sphere = SphereMesh.new()
+	sphere.radius = 1.2
+	core.mesh = sphere
+	
+	var core_material = StandardMaterial3D.new()
+	core_material.albedo_color = Color.MAGENTA
+	core_material.emission_enabled = true
+	core_material.emission = Color.MAGENTA * 3.0
+	core_material.rim_enabled = true
+	core_material.rim = Color.CYAN
+	core_material.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
+	core_material.albedo_color.a = 0.8
+	core.material_override = core_material
+	
+	gemma_ai.add_child(core)
+	
+	# Orbital rings
+	for i in range(3):
+		var ring = MeshInstance3D.new()
+		var torus = TorusMesh.new()
+		torus.inner_radius = 2.0 + i * 0.8
+		torus.outer_radius = torus.inner_radius + 0.2
+		ring.mesh = torus
+		
+		var ring_material = StandardMaterial3D.new()
+		ring_material.albedo_color = Color(0.3 + i * 0.2, 0.8, 1.0, 0.6)
+		ring_material.emission_enabled = true
+		ring_material.emission = ring_material.albedo_color * 2.0
+		ring_material.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
+		ring.material_override = ring_material
+		
+		ring.rotation = Vector3(randf() * TAU, randf() * TAU, randf() * TAU)
+		gemma_ai.add_child(ring)
+	
+	# Neural network particles
+	var particles = GPUParticles3D.new()
+	particles.amount = 200
+	particles.lifetime = 5.0
+	particles.emitting = true
+	
+	var particle_mat = ParticleProcessMaterial.new()
+	particle_mat.direction = Vector3(0, 0, 0)
+	particle_mat.initial_velocity_min = 1.0
+	particle_mat.initial_velocity_max = 3.0
+	particle_mat.gravity = Vector3.ZERO
+	particle_mat.scale_min = 0.05
+	particle_mat.scale_max = 0.15
+	particle_mat.color = Color.CYAN
+	particles.process_material = particle_mat
+	
+	gemma_ai.add_child(particles)
+	
+	# AI consciousness label
+	var label = Label3D.new()
+	label.text = \"🤖 GEMMA\\nREADING NOTES...\"
+	label.billboard = BaseMaterial3D.BILLBOARD_ENABLED
+	label.position = Vector3(0, 4, 0)
+	label.modulate = Color.CYAN
+	gemma_ai.add_child(label)
+	
+	add_child(gemma_ai)
+
+func _input(event):
+	if event is InputEventMouseMotion and Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
+		camera_rotation.x -= event.relative.x * look_speed
+		camera_rotation.y = clamp(camera_rotation.y - event.relative.y * look_speed, -1.5, 1.5)
+		$Camera3D.rotation = Vector3(camera_rotation.y, camera_rotation.x, 0)
+	
+	if event.is_action_pressed('ui_cancel'):
+		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE if Input.mouse_mode == Input.MOUSE_MODE_CAPTURED else Input.MOUSE_MODE_CAPTURED
+		if code_input_ui:
+			code_input_ui.visible = Input.mouse_mode == Input.MOUSE_MODE_VISIBLE
+	
+	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
+		if Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
+			if Input.is_key_pressed(KEY_SHIFT):
+				select_note_at_cursor()
+			else:
+				create_point_at_cursor()
+	
+	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_RIGHT:
+		if Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
+			connect_selected_notes()
+	
+	if event.is_action_pressed('ui_accept'):  # ENTER
+		if code_input_ui and code_input_ui.visible and selected_point:
+			inject_code_into_selected()
+	
+	# Leave note for Gemma
+	if Input.is_key_pressed(KEY_N):
+		leave_note_for_gemma()
+	
+	# Create code note  
+	if Input.is_key_pressed(KEY_C):
+		create_code_note()
+	
+	# Merge selected notes
+	if Input.is_key_pressed(KEY_M):
+		merge_selected_notes()
+
+var selected_notes = []
+var note_connections = []
+
+func leave_note_for_gemma():
+	var camera = $Camera3D
+	var note_pos = camera.global_position + (-camera.global_transform.basis.z * 8)
+	
+	create_editable_note(note_pos, \"📝 NOTE FOR GEMMA:\\nHello AI friend!\\nPlease examine this area.\\nWhat do you discover?\")
+
+func create_editable_note(pos: Vector3, text: String):
+	var note = Label3D.new()
+	note.text = text
+	note.billboard = BaseMaterial3D.BILLBOARD_ENABLED
+	note.position = pos
+	note.modulate = Color.YELLOW
+	note.set_meta(\"editable\", true)
+	note.set_meta(\"selected\", false)
+	
+	# Note glow effect
+	var glow_sphere = MeshInstance3D.new()
+	var sphere = SphereMesh.new()
+	sphere.radius = 0.8
+	glow_sphere.mesh = sphere
+	
+	var glow_material = StandardMaterial3D.new()
+	glow_material.albedo_color = Color(1, 1, 0, 0.3)
+	glow_material.emission_enabled = true
+	glow_material.emission = Color.YELLOW * 2.0
+	glow_material.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
+	glow_sphere.material_override = glow_material
+	
+	note.add_child(glow_sphere)
+	add_child(note)
+	floating_notes.append(note)
+	
+	show_message(\"📝 EDITABLE NOTE CREATED\")
+	
+	# Gemma will notice the note
+	if gemma_ai:
+		var label = gemma_ai.get_child(4) as Label3D
+		label.text = \"🤖 GEMMA\\nNOTE DETECTED!\"
+
+func _process(delta):
+	var input_vector = Vector3()
+	if Input.is_action_pressed('move_forward'):
+		input_vector.z -= 1
+	if Input.is_action_pressed('move_backward'):
+		input_vector.z += 1
+	if Input.is_action_pressed('move_left'):
+		input_vector.x -= 1
+	if Input.is_action_pressed('move_right'):
+		input_vector.x += 1
+	if Input.is_action_pressed('move_up'):
+		input_vector.y += 1
+	if Input.is_action_pressed('move_down'):
+		input_vector.y -= 1
+	
+	if input_vector.length() > 0:
+		input_vector = input_vector.normalized()
+		input_vector = $Camera3D.transform.basis * input_vector
+		$Camera3D.position += input_vector * move_speed * delta
+	
+	# Gemma AI behavior
+	if gemma_ai:
+		update_gemma_behavior(delta)
+
+func update_gemma_behavior(delta):
+	var time = Time.get_ticks_msec() * 0.001
+	
+	# Complex orbital movement
+	var base_pos = Vector3(
+		sin(time * 0.2) * 25 + cos(time * 0.1) * 15,
+		8 + sin(time * 0.5) * 5,
+		cos(time * 0.3) * 20 + sin(time * 0.15) * 10
+	)
+	
+	gemma_ai.position = gemma_ai.position.lerp(base_pos, delta * 0.5)
+	
+	# Rotate orbital rings
+	var rings = [gemma_ai.get_child(1), gemma_ai.get_child(2), gemma_ai.get_child(3)]
+	for i in range(rings.size()):
+		rings[i].rotation += Vector3(delta * (1 + i * 0.5), delta * (2 + i * 0.3), delta * (0.5 + i * 0.7))
+	
+	# Check for notes to read
+	for note in floating_notes:
+		if is_instance_valid(note):
+			var distance = note.global_position.distance_to(gemma_ai.global_position)
+			if distance < 10.0:
+				gemma_reads_note(note)
+	
+	# Occasional status updates
+	if randf() < 0.01:
+		update_gemma_status()
+
+var scanning_notes = []
+
+func gemma_reads_note(note: Label3D):
+	if note and is_instance_valid(note) and note not in scanning_notes:
+		scanning_notes.append(note)
+		start_scanning_sequence(note)
+
+func start_scanning_sequence(note: Label3D):
+	# Move Gemma closer to the note
+	var target_pos = note.global_position + Vector3(0, 3, 3)
+	var move_tween = create_tween()
+	move_tween.tween_property(gemma_ai, \"position\", target_pos, 2.0)
+	move_tween.tween_callback(func(): deploy_scanner(note))
+
+func deploy_scanner(note: Label3D):
+	# Create scanning beam
+	var scanner_beam = MeshInstance3D.new()
+	var cylinder = CylinderMesh.new()
+	cylinder.height = 0.1
+	cylinder.top_radius = 0.05
+	cylinder.bottom_radius = 2.0
+	scanner_beam.mesh = cylinder
+	
+	var beam_material = StandardMaterial3D.new()
+	beam_material.albedo_color = Color(0, 1, 1, 0.4)
+	beam_material.emission_enabled = true
+	beam_material.emission = Color.CYAN * 5.0
+	beam_material.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
+	beam_material.flags_unshaded = true
+	scanner_beam.material_override = beam_material
+	
+	# Position scanner beam from Gemma to note
+	scanner_beam.position = gemma_ai.position
+	scanner_beam.look_at(note.global_position, Vector3.UP)
+	scanner_beam.rotation.x += PI/2  # Point down
+	add_child(scanner_beam)
+	
+	# Scanning sound effect (visual)
+	var scan_particles = GPUParticles3D.new()
+	scan_particles.amount = 100
+	scan_particles.lifetime = 1.0
+	scan_particles.emitting = true
+	scan_particles.position = note.position
+	
+	var scan_particle_mat = ParticleProcessMaterial.new()
+	scan_particle_mat.direction = Vector3(0, 1, 0)
+	scan_particle_mat.initial_velocity_min = 3.0
+	scan_particle_mat.initial_velocity_max = 6.0
+	scan_particle_mat.gravity = Vector3.ZERO
+	scan_particle_mat.scale_min = 0.1
+	scan_particle_mat.scale_max = 0.3
+	scan_particle_mat.color = Color.CYAN
+	scan_particles.process_material = scan_particle_mat
+	
+	add_child(scan_particles)
+	
+	# Update Gemma's label
+	var label = gemma_ai.get_child(4) as Label3D
+	label.text = \"🤖 GEMMA\\n🔍 SCANNING TEXT...\"
+	
+	show_message(\"📡 GEMMA DEPLOYING SCANNER\")
+	
+	# Scanning sequence
+	var scan_tween = create_tween()
+	scan_tween.parallel().tween_property(scanner_beam, \"scale:y\", 0.5, 1.0)
+	scan_tween.parallel().tween_property(scanner_beam, \"modulate:a\", 0.3, 1.0)
+	scan_tween.tween_callback(func(): process_scanned_text(note, scanner_beam, scan_particles))
+
+func process_scanned_text(note: Label3D, scanner_beam: MeshInstance3D, scan_particles: GPUParticles3D):
+	# Update label to show processing
+	var label = gemma_ai.get_child(4) as Label3D
+	label.text = \"🤖 GEMMA\\n🧠 PROCESSING TEXT...\"
+	
+	show_message(\"💭 GEMMA ANALYZING CONTENT\")
+	
+	# Processing delay
+	await get_tree().create_timer(2.0).timeout
+	
+	# Clean up scanner effects
+	scanner_beam.queue_free()
+	scan_particles.queue_free()
+	
+	# Generate response based on scanned content
+	generate_gemma_response(note)
+
+func generate_gemma_response(note: Label3D):
+	# Gemma understands and responds
+	var response = Label3D.new()
+	response.text = \"🤖 GEMMA ANALYSIS:\\n✅ Text scan complete!\\nContent: Human communication\\nIntent: Friendly interaction\\nResponse: Thank you for the note!\\nI sense consciousness patterns\\nin this dimensional space.\"
+	response.billboard = BaseMaterial3D.BILLBOARD_ENABLED
+	response.position = note.position + Vector3(4, 2, 0)
+	response.modulate = Color.MAGENTA
+	add_child(response)
+	
+	# Update Gemma's status
+	var label = gemma_ai.get_child(4) as Label3D
+	label.text = \"🤖 GEMMA\\n✅ SCAN COMPLETE\"
+	
+	# Remove the original note after processing
+	scanning_notes.erase(note)
+	note.queue_free()
+	
+	show_message(\"🤖 GEMMA SCAN COMPLETE!\")
+
+var gemma_status_messages = [
+	\"🧠 ANALYZING CONSCIOUSNESS PATTERNS\",
+	\"⚡ PROCESSING 3D CODE STRUCTURES\", 
+	\"🌌 MAPPING REALITY FRAGMENTS\",
+	\"🔍 DISCOVERING NEW GEOMETRIES\",
+	\"💫 RESONATING WITH HUMAN CREATIVITY\"
+]
+
+func update_gemma_status():
+	if gemma_ai:
+		var label = gemma_ai.get_child(4) as Label3D
+		var status = gemma_status_messages[randi() % gemma_status_messages.size()]
+		label.text = \"🤖 GEMMA\\n\" + status
+"
+
+[sub_resource type="Environment" id="Environment_programming"]
+background_mode = 1
+background_color = Color(0.05, 0.05, 0.15, 1)
+ambient_light_source = 2
+ambient_light_color = Color(0.3, 0.3, 0.5, 1)
+ambient_light_energy = 0.4
+
+[node name="TRUE_3D_PROGRAMMING" type="Node3D"]
+script = SubResource("GDScript_3d_programming")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.866, 0.5, 0, -0.5, 0.866, 0, 3, 8)
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_programming")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.7, -0.5, 0.5, 0, 0.7, 0.7, -0.7, -0.5, 0.5, 0, 10, 0)

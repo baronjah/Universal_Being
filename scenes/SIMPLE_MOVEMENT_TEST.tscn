@@ -1,6 +1,6 @@
 [gd_scene load_steps=8 format=3]
 
-[ext_resource type="Script" path="res://scripts/simple_player_test.gd" id="1"]
+[ext_resource type="Script" uid="uid://cpk7600uh5v85" path="res://scripts/archive/simple_player_test.gd" id="1"]
 [ext_resource type="PackedScene" uid="uid://dwad8x0chensn" path="res://scenes/main/camera_point.tscn" id="2"]
 
 [sub_resource type="Environment" id="Environment_1"]

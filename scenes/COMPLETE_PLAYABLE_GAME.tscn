@@ -1,0 +1,543 @@
+[gd_scene load_steps=3 format=3 uid="uid://complete_playable_game"]
+
+[sub_resource type="GDScript" id="GDScript_complete_game"]
+script/source = "extends Node3D
+
+# COMPLETE PLAYABLE GAME - Full experience in one scene
+var camera_rotation = Vector2.ZERO
+var move_speed = 15.0
+var look_speed = 0.002
+
+# Game World
+var floating_code_islands = []
+var player_progress = 0
+var game_objectives = []
+var ai_companion_active = true
+
+# Game State
+enum GamePhase { EXPLORATION, BUILDING, CONNECTING, MASTERY }
+var current_phase = GamePhase.EXPLORATION
+var completed_challenges = 0
+
+func _ready():
+	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+	print('🌌 COMPLETE PLAYABLE GAME STARTING')
+	print('🎮 Welcome to the 3D Programming Universe!')
+	print('🎯 Goal: Connect code islands, solve challenges, master 3D programming')
+	
+	create_complete_game_world()
+	start_game_tutorial()
+
+func _input(event):
+	# Simple FPS controls
+	if event is InputEventMouseMotion and Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
+		camera_rotation.x -= event.relative.x * look_speed
+		camera_rotation.y = clamp(camera_rotation.y - event.relative.y * look_speed, -1.5, 1.5)
+		$Camera3D.rotation = Vector3(camera_rotation.y, camera_rotation.x, 0)
+	
+	if event.is_action_pressed('ui_cancel'):
+		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE if Input.mouse_mode == Input.MOUSE_MODE_CAPTURED else Input.MOUSE_MODE_CAPTURED
+	
+	# Game interactions
+	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
+		if Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
+			interact_with_world()
+	
+	# Quick actions for full game experience
+	if Input.is_key_pressed(KEY_SPACE) and not event.is_echo():
+		advance_game_phase()
+	elif Input.is_key_pressed(KEY_T) and not event.is_echo():
+		show_tutorial_hint()
+	elif Input.is_key_pressed(KEY_M) and not event.is_echo():
+		show_game_map()
+
+func _process(delta):
+	# Smooth movement
+	var input_vector = Vector3()
+	if Input.is_action_pressed('move_forward'):
+		input_vector.z -= 1
+	if Input.is_action_pressed('move_backward'):
+		input_vector.z += 1
+	if Input.is_action_pressed('move_left'):
+		input_vector.x -= 1
+	if Input.is_action_pressed('move_right'):
+		input_vector.x += 1
+	if Input.is_action_pressed('move_up'):
+		input_vector.y += 1
+	if Input.is_action_pressed('move_down'):
+		input_vector.y -= 1
+	
+	if input_vector.length() > 0:
+		input_vector = input_vector.normalized()
+		input_vector = $Camera3D.transform.basis * input_vector
+		$Camera3D.position += input_vector * move_speed * delta
+	
+	# Game progression
+	update_game_state(delta)
+
+func create_complete_game_world():
+	# Create a full playable world with multiple code islands
+	
+	# Island 1: Tutorial Island (Functions)
+	create_code_island(Vector3(-20, 5, -30), 'TUTORIAL ISLAND', 'Functions & Basics', Color.GREEN, [
+		'func hello_world():\\n\\tprint(\"Welcome to 3D Programming!\")\\n\\treturn true',
+		'func add_numbers(a: int, b: int):\\n\\treturn a + b',
+		'func player_movement(speed: float):\\n\\treturn Vector3(speed, 0, 0)'
+	])
+	
+	# Island 2: Logic Island (Conditionals)
+	create_code_island(Vector3(20, 8, -25), 'LOGIC ISLAND', 'If/Else & Loops', Color.BLUE, [
+		'func check_player_health(health: int):\\n\\tif health > 50:\\n\\t\\treturn \"Healthy\"\\n\\telse:\\n\\t\\treturn \"Injured\"',
+		'func count_items(inventory: Array):\\n\\tfor item in inventory:\\n\\t\\tprint(item)\\n\\treturn inventory.size()',
+		'func game_loop(running: bool):\\n\\twhile running:\\n\\t\\tupdate_game()\\n\\t\\trunning = check_exit()'
+	])
+	
+	# Island 3: Data Island (Variables & Objects)
+	create_code_island(Vector3(0, 12, -50), 'DATA ISLAND', 'Variables & Objects', Color.PURPLE, [
+		'var player_data = {\\n\\t\"name\": \"Programmer\",\\n\\t\"level\": 1,\\n\\t\"xp\": 0\\n}',
+		'class GameCharacter:\\n\\tvar health = 100\\n\\tvar position = Vector3.ZERO\\n\\tfunc move(dir):\\n\\t\\tposition += dir',
+		'var game_settings = {\\n\\t\"difficulty\": \"Normal\",\\n\\t\"sound\": true,\\n\\t\"graphics\": \"High\"\\n}'
+	])
+	
+	# Island 4: Connection Island (APIs & Integration)
+	create_code_island(Vector3(-15, 15, -70), 'CONNECTION ISLAND', 'APIs & Systems', Color.ORANGE, [
+		'func connect_to_api(url: String):\\n\\tvar http = HTTPRequest.new()\\n\\treturn http.request(url)',
+		'func save_game_data(data: Dictionary):\\n\\tvar file = FileAccess.open(\"save.json\", FileAccess.WRITE)\\n\\tfile.store_string(JSON.stringify(data))',
+		'func load_player_stats():\\n\\tvar file = FileAccess.open(\"stats.json\", FileAccess.READ)\\n\\treturn JSON.parse_string(file.get_as_text())'
+	])
+	
+	# Island 5: Master Island (Advanced Concepts)
+	create_code_island(Vector3(25, 20, -80), 'MASTER ISLAND', 'Advanced Programming', Color.GOLD, [
+		'func optimize_performance(data: Array):\\n\\t# Use threading for large datasets\\n\\tvar thread = Thread.new()\\n\\tthread.start(process_data.bind(data))',
+		'func create_3d_effect(position: Vector3):\\n\\tvar particles = GPUParticles3D.new()\\n\\tparticles.position = position\\n\\treturn particles',
+		'func ai_decision_tree(input: Dictionary):\\n\\t# Machine learning integration\\n\\tvar model = load(\"res://ai_model.tres\")\\n\\treturn model.predict(input)'
+	])
+	
+	# Create AI Companion
+	create_ai_companion()
+	
+	# Create connecting bridges between islands
+	create_island_bridges()
+	
+	# Game objectives
+	game_objectives = [
+		'Explore Tutorial Island and run your first function',
+		'Complete Logic Island challenges with if/else statements', 
+		'Master Data Island by creating game objects',
+		'Connect systems on Connection Island',
+		'Achieve mastery on Master Island'
+	]
+	
+	show_game_message('🌌 Welcome to the 3D Programming Universe!\\n🎯 Explore 5 islands, solve coding challenges, and master 3D programming!\\n\\n📍 Start at TUTORIAL ISLAND (green, left)')
+
+func create_code_island(position: Vector3, name: String, description: String, color: Color, code_samples: Array):
+	var island = Node3D.new()
+	island.name = 'Island_' + name.replace(' ', '_')
+	island.position = position
+	
+	# Island platform
+	var platform = MeshInstance3D.new()
+	var box = BoxMesh.new()
+	box.size = Vector3(15, 2, 15)
+	platform.mesh = box
+	
+	var platform_material = StandardMaterial3D.new()
+	platform_material.albedo_color = color
+	platform_material.emission_enabled = true
+	platform_material.emission = color * 0.3
+	platform.material_override = platform_material
+	island.add_child(platform)
+	
+	# Island title
+	var title = Label3D.new()
+	title.text = name + '\\n' + description
+	title.billboard = BaseMaterial3D.BILLBOARD_ENABLED
+	title.position = Vector3(0, 3, 0)
+	title.modulate = color
+	title.pixel_size = 0.02
+	island.add_child(title)
+	
+	# Code samples on the island
+	for i in range(code_samples.size()):
+		var code_chunk = create_code_chunk_on_island(
+			Vector3(i * 4 - 4, 1.5, 0), 
+			code_samples[i], 
+			'sample_' + str(i),
+			color
+		)
+		island.add_child(code_chunk)
+	
+	# Challenge marker
+	var challenge = create_island_challenge(name, color)
+	challenge.position = Vector3(0, 4, -5)
+	island.add_child(challenge)
+	
+	add_child(island)
+	floating_code_islands.append(island)
+
+func create_code_chunk_on_island(pos: Vector3, code: String, id: String, color: Color):
+	var chunk = Node3D.new()
+	chunk.name = 'CodeChunk_' + id
+	chunk.position = pos
+	
+	# Code display
+	var visual = MeshInstance3D.new()
+	var box = BoxMesh.new()
+	box.size = Vector3(3, 2, 0.2)
+	visual.mesh = box
+	
+	var material = StandardMaterial3D.new()
+	material.albedo_color = color * 0.8
+	material.emission_enabled = true
+	material.emission = color * 0.4
+	visual.material_override = material
+	chunk.add_child(visual)
+	
+	var code_label = Label3D.new()
+	code_label.text = code
+	code_label.billboard = BaseMaterial3D.BILLBOARD_ENABLED
+	code_label.position = Vector3(0, 0, 0.2)
+	code_label.modulate = Color.WHITE
+	code_label.pixel_size = 0.008
+	chunk.add_child(code_label)
+	
+	# Interaction area
+	var area = Area3D.new()
+	var collision = CollisionShape3D.new()
+	var shape = BoxShape3D.new()
+	shape.size = box.size
+	collision.shape = shape
+	area.add_child(collision)
+	chunk.add_child(area)
+	
+	# Store metadata
+	chunk.set_meta('code_text', code)
+	chunk.set_meta('chunk_id', id)
+	chunk.set_meta('island_color', color)
+	
+	return chunk
+
+func create_island_challenge(island_name: String, color: Color):
+	var challenge = Node3D.new()
+	challenge.name = 'Challenge_' + island_name.replace(' ', '_')
+	
+	# Challenge crystal
+	var crystal = MeshInstance3D.new()
+	var sphere = SphereMesh.new()
+	sphere.radius = 1.0
+	crystal.mesh = sphere
+	
+	var crystal_material = StandardMaterial3D.new()
+	crystal_material.albedo_color = color
+	crystal_material.emission_enabled = true
+	crystal_material.emission = color * 1.5
+	crystal_material.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
+	crystal.material_override = crystal_material
+	challenge.add_child(crystal)
+	
+	# Challenge text
+	var challenge_text = Label3D.new()
+	var challenge_description = get_island_challenge_description(island_name)
+	challenge_text.text = '💎 CHALLENGE\\n' + challenge_description
+	challenge_text.billboard = BaseMaterial3D.BILLBOARD_ENABLED
+	challenge_text.position = Vector3(0, 2, 0)
+	challenge_text.modulate = color
+	challenge_text.pixel_size = 0.012
+	challenge.add_child(challenge_text)
+	
+	# Store challenge data
+	challenge.set_meta('island_name', island_name)
+	challenge.set_meta('completed', false)
+	challenge.set_meta('challenge_text', challenge_description)
+	
+	return challenge
+
+func get_island_challenge_description(island_name: String) -> String:
+	match island_name:
+		'TUTORIAL ISLAND':
+			return 'Run the hello_world function\\nand see your first output!'
+		'LOGIC ISLAND':
+			return 'Create a function with\\nif/else conditions'
+		'DATA ISLAND':
+			return 'Build a player character\\nwith health and position'
+		'CONNECTION ISLAND':
+			return 'Connect two code chunks\\nto share data'
+		'MASTER ISLAND':
+			return 'Optimize performance\\nand create advanced effects'
+		_:
+			return 'Complete this island\\'s\\ncoding challenge'
+
+func create_ai_companion():
+	var ai = Node3D.new()
+	ai.name = 'AI_Companion'
+	ai.position = Vector3(3, 2, -5)
+	
+	# AI visual
+	var ai_visual = MeshInstance3D.new()
+	var sphere = SphereMesh.new()
+	sphere.radius = 0.8
+	ai_visual.mesh = sphere
+	
+	var ai_material = StandardMaterial3D.new()
+	ai_material.albedo_color = Color.CYAN
+	ai_material.emission_enabled = true
+	ai_material.emission = Color.CYAN * 2.0
+	ai_material.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
+	ai_visual.material_override = ai_material
+	ai.add_child(ai_visual)
+	
+	# AI status
+	var ai_label = Label3D.new()
+	ai_label.text = '🤖 AI Guide\\nI\\'ll help you explore!'
+	ai_label.billboard = BaseMaterial3D.BILLBOARD_ENABLED
+	ai_label.position = Vector3(0, 1.5, 0)
+	ai_label.modulate = Color.CYAN
+	ai_label.pixel_size = 0.015
+	ai.add_child(ai_label)
+	
+	add_child(ai)
+
+func create_island_bridges():
+	# Create visual connections between islands
+	var connections = [
+		[Vector3(-20, 5, -30), Vector3(20, 8, -25)],    # Tutorial to Logic
+		[Vector3(20, 8, -25), Vector3(0, 12, -50)],     # Logic to Data  
+		[Vector3(0, 12, -50), Vector3(-15, 15, -70)],   # Data to Connection
+		[Vector3(-15, 15, -70), Vector3(25, 20, -80)]   # Connection to Master
+	]
+	
+	for connection in connections:
+		create_bridge(connection[0], connection[1])
+
+func create_bridge(from: Vector3, to: Vector3):
+	var bridge = MeshInstance3D.new()
+	bridge.name = 'Bridge'
+	
+	var distance = from.distance_to(to)
+	var cylinder = CylinderMesh.new()
+	cylinder.height = distance
+	cylinder.top_radius = 0.2
+	cylinder.bottom_radius = 0.2
+	bridge.mesh = cylinder
+	
+	var bridge_material = StandardMaterial3D.new()
+	bridge_material.albedo_color = Color.YELLOW
+	bridge_material.emission_enabled = true
+	bridge_material.emission = Color.YELLOW * 0.5
+	bridge.material_override = bridge_material
+	
+	bridge.position = (from + to) / 2
+	bridge.look_at(to, Vector3.UP)
+	bridge.rotate_object_local(Vector3.RIGHT, PI/2)
+	
+	add_child(bridge)
+
+func start_game_tutorial():
+	show_game_message('🎮 CONTROLS:\\nWASD - Move\\nMouse - Look\\nClick - Interact\\nSPACE - Next Phase\\nT - Hint\\nM - Map')
+	
+	await get_tree().create_timer(3.0).timeout
+	show_game_message('🌟 Your mission: Visit each island, solve coding challenges, and become a 3D programming master!\\n\\n📍 Start by flying to the green TUTORIAL ISLAND on your left')
+
+func interact_with_world():
+	var camera = $Camera3D
+	var from = camera.global_position
+	var to = from + (-camera.global_transform.basis.z * 20)
+	
+	# Check for code chunks
+	var closest_object = null
+	var min_distance = 5.0
+	
+	for island in floating_code_islands:
+		for child in island.get_children():
+			if child.name.begins_with('CodeChunk_') or child.name.begins_with('Challenge_'):
+				var distance = child.global_position.distance_to(to)
+				if distance < min_distance:
+					min_distance = distance
+					closest_object = child
+	
+	if closest_object:
+		if closest_object.name.begins_with('CodeChunk_'):
+			interact_with_code_chunk(closest_object)
+		elif closest_object.name.begins_with('Challenge_'):
+			interact_with_challenge(closest_object)
+
+func interact_with_code_chunk(chunk: Node3D):
+	var code = chunk.get_meta('code_text', '')
+	var chunk_id = chunk.get_meta('chunk_id', '')
+	var color = chunk.get_meta('island_color', Color.WHITE)
+	
+	# Highlight the chunk
+	var visual = chunk.find_child('MeshInstance3D', true, false)
+	if visual and visual.material_override:
+		var material = visual.material_override as StandardMaterial3D
+		material.emission = Color.WHITE * 1.5
+	
+	# Show code execution result
+	show_code_execution_result(chunk, code, color)
+	
+	# AI comment
+	show_ai_comment('Great! You\\'re exploring ' + chunk_id + '. This code shows important programming concepts.')
+	
+	# Check for learning progress
+	player_progress += 1
+	check_phase_completion()
+
+func interact_with_challenge(challenge: Node3D):
+	var island_name = challenge.get_meta('island_name', '')
+	var completed = challenge.get_meta('completed', false)
+	var challenge_text = challenge.get_meta('challenge_text', '')
+	
+	if not completed:
+		# Complete the challenge
+		challenge.set_meta('completed', true)
+		completed_challenges += 1
+		
+		# Visual feedback
+		var crystal = challenge.find_child('MeshInstance3D', true, false)
+		if crystal and crystal.material_override:
+			var material = crystal.material_override as StandardMaterial3D
+			material.emission = Color.WHITE * 3.0
+		
+		show_game_message('✅ CHALLENGE COMPLETED!\\n' + island_name + '\\n\\nYou\\'ve mastered: ' + challenge_text)
+		show_ai_comment('Excellent work! You\\'ve completed the ' + island_name + ' challenge. Your programming skills are growing!')
+		
+		# Check for game completion
+		if completed_challenges >= 5:
+			complete_game()
+		else:
+			show_game_message('🎯 Progress: ' + str(completed_challenges) + '/5 islands completed\\n\\nNext: Explore more islands and solve their challenges!')
+	else:
+		show_game_message('✅ Already completed: ' + island_name + '\\n\\nGreat job! Move on to the next island.')
+
+func show_code_execution_result(chunk: Node3D, code: String, color: Color):
+	# Simulate code execution with visual results
+	var result_text = '▶️ EXECUTED\\n'
+	
+	if 'print(' in code:
+		result_text += '📝 Output: Hello 3D Programming!\\n'
+	if 'return' in code:
+		result_text += '✅ Function completed successfully\\n'
+	if 'func' in code:
+		result_text += '🔧 Function is ready to use\\n'
+	
+	var result_display = Node3D.new()
+	result_display.position = chunk.position + Vector3(0, 3, 0)
+	
+	var result_label = Label3D.new()
+	result_label.text = result_text
+	result_label.billboard = BaseMaterial3D.BILLBOARD_ENABLED
+	result_label.modulate = color
+	result_label.pixel_size = 0.015
+	result_display.add_child(result_label)
+	
+	get_parent().add_child(result_display)
+	
+	# Auto-cleanup
+	var timer = Timer.new()
+	timer.wait_time = 4.0
+	timer.one_shot = true
+	timer.timeout.connect(func(): result_display.queue_free())
+	add_child(timer)
+	timer.start()
+
+func advance_game_phase():
+	current_phase = (current_phase + 1) % GamePhase.size()
+	
+	match current_phase:
+		GamePhase.EXPLORATION:
+			show_game_message('🌌 EXPLORATION PHASE\\nFly around and discover code islands!')
+		GamePhase.BUILDING:
+			show_game_message('🔨 BUILDING PHASE\\nInteract with code chunks and understand how they work!')
+		GamePhase.CONNECTING:
+			show_game_message('🔗 CONNECTING PHASE\\nSee how different pieces of code connect together!')
+		GamePhase.MASTERY:
+			show_game_message('🎓 MASTERY PHASE\\nComplete challenges and become a 3D programming master!')
+
+func show_tutorial_hint():
+	var hints = [
+		'💡 TIP: Fly close to code chunks and click on them to interact',
+		'💡 TIP: Each island teaches different programming concepts',
+		'💡 TIP: Look for glowing crystals - these are challenges to complete',
+		'💡 TIP: The AI companion will guide you through your journey',
+		'💡 TIP: Complete all 5 islands to master 3D programming',
+		'💡 TIP: Use WASD to fly around the 3D programming universe'
+	]
+	
+	var random_hint = hints[randi() % hints.size()]
+	show_game_message(random_hint)
+
+func show_game_map():
+	var map_text = '🗺️ 3D PROGRAMMING UNIVERSE MAP\\n\\n'
+	map_text += '🟢 TUTORIAL ISLAND (Functions) - Left\\n'
+	map_text += '🔵 LOGIC ISLAND (If/Else) - Right\\n'  
+	map_text += '🟣 DATA ISLAND (Variables) - Center Back\\n'
+	map_text += '🟠 CONNECTION ISLAND (APIs) - Left Back\\n'
+	map_text += '🟡 MASTER ISLAND (Advanced) - Right Back\\n\\n'
+	map_text += '📍 Progress: ' + str(completed_challenges) + '/5 completed'
+	
+	show_game_message(map_text)
+
+func update_game_state(delta):
+	# Keep AI companion following at distance
+	var ai = find_child('AI_Companion', true, false)
+	if ai:
+		var target_pos = $Camera3D.position + Vector3(3, 1, -3)
+		ai.position = ai.position.lerp(target_pos, delta * 2.0)
+
+func check_phase_completion():
+	if player_progress >= 3 and current_phase == GamePhase.EXPLORATION:
+		advance_game_phase()
+	elif player_progress >= 6 and current_phase == GamePhase.BUILDING:
+		advance_game_phase()
+
+func complete_game():
+	show_game_message('🏆 CONGRATULATIONS!\\n\\nYou have mastered the 3D Programming Universe!\\n\\n✅ All 5 islands completed\\n✅ All challenges solved\\n✅ You are now a 3D Programming Master!\\n\\n🌌 The universe is yours to explore and expand!')
+	show_ai_comment('Incredible achievement! You\\'ve proven yourself as a true master of 3D programming. Well done!')
+
+func show_ai_comment(message: String):
+	var ai = find_child('AI_Companion', true, false)
+	if ai:
+		var ai_label = ai.find_child('Label3D', true, false)
+		if ai_label:
+			ai_label.text = '🤖 AI Guide\\n' + message.substr(0, 40) + ('...' if message.length() > 40 else '')
+	
+	print('🤖 AI: ' + message)
+
+func show_game_message(text: String):
+	var msg = Label3D.new()
+	msg.text = text
+	msg.billboard = BaseMaterial3D.BILLBOARD_ENABLED
+	msg.position = $Camera3D.position + Vector3(0, 2, -4)
+	msg.modulate = Color.YELLOW
+	msg.pixel_size = 0.018
+	add_child(msg)
+	
+	var tween = create_tween()
+	tween.parallel().tween_property(msg, 'position:y', msg.position.y + 3, 6.0)
+	tween.parallel().tween_property(msg, 'modulate:a', 0.0, 6.0)
+	tween.tween_callback(msg.queue_free)
+"
+
+[sub_resource type="Environment" id="Environment_complete_game"]
+background_mode = 1
+background_color = Color(0.01, 0.02, 0.08, 1)
+ambient_light_source = 2
+ambient_light_color = Color(0.3, 0.4, 0.6, 1)
+ambient_light_energy = 0.4
+glow_enabled = true
+glow_intensity = 1.2
+glow_strength = 1.8
+glow_bloom = 0.3
+
+[node name="COMPLETE_PLAYABLE_GAME" type="Node3D"]
+script = SubResource("GDScript_complete_game")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.866, 0.5, 0, -0.5, 0.866, 0, 5, 15)
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_complete_game")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.7, -0.5, 0.5, 0, 0.7, 0.7, -0.7, -0.5, 0.5, 0, 15, 0)
+light_energy = 1.0

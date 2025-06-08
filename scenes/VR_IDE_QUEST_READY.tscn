@@ -1,0 +1,339 @@
+[gd_scene load_steps=4 format=3 uid="uid://vr_ide_quest_ready"]
+
+[sub_resource type="GDScript" id="GDScript_vr_quest"]
+script/source = "extends Node3D
+
+# VR IDE with actual hand tracking for Quest 2
+var xr_interface: XRInterface
+var vr_keyboard: Node3D
+var left_hand_controller: XRController3D
+var right_hand_controller: XRController3D
+
+func _ready():
+	print('🥽 QUEST 2 VR IDE INITIALIZING...')
+	setup_vr_system()
+	create_vr_environment()
+
+func setup_vr_system():
+	# Initialize OpenXR for Quest 2
+	xr_interface = XRServer.find_interface('OpenXR')
+	if xr_interface and xr_interface.is_initialized():
+		print('✅ VR Interface Found: OpenXR')
+		
+		# Enable VR mode
+		get_viewport().use_xr = true
+		xr_interface.session_begun.connect(_on_vr_session_started)
+		xr_interface.session_ended.connect(_on_vr_session_ended)
+		
+	else:
+		print('⚠️ No VR Interface - Running Desktop Mode')
+		create_fallback_camera()
+
+func create_fallback_camera():
+	# Desktop fallback camera
+	var camera = Camera3D.new()
+	camera.name = 'FallbackCamera'
+	camera.position = Vector3(0, 2, 5)
+	add_child(camera)
+
+func _on_vr_session_started():
+	print('🥽 VR SESSION STARTED - Quest 2 Ready!')
+	setup_hand_tracking()
+
+func _on_vr_session_ended():
+	print('🥽 VR SESSION ENDED')
+
+func setup_hand_tracking():
+	# Setup left hand tracking
+	left_hand_controller = find_child('LeftHand', true, false)
+	if left_hand_controller:
+		left_hand_controller.button_pressed.connect(_on_hand_button_pressed.bind('left'))
+		left_hand_controller.button_released.connect(_on_hand_button_released.bind('left'))
+	
+	# Setup right hand tracking  
+	right_hand_controller = find_child('RightHand', true, false)
+	if right_hand_controller:
+		right_hand_controller.button_pressed.connect(_on_hand_button_pressed.bind('right'))
+		right_hand_controller.button_released.connect(_on_hand_button_released.bind('right'))
+
+func create_vr_environment():
+	# Create the VR IDE workspace
+	var vr_workspace = Node3D.new()
+	vr_workspace.name = 'VR_IDE_Workspace'
+	vr_workspace.position = Vector3(0, 1.5, -2)  # At comfortable VR height
+	
+	create_floating_keyboard(vr_workspace)
+	create_claude_status_display(vr_workspace)
+	create_artifact_collection_zone(vr_workspace)
+	
+	add_child(vr_workspace)
+	print('🌌 VR IDE WORKSPACE CREATED')
+
+func create_floating_keyboard(parent: Node3D):
+	vr_keyboard = Node3D.new()
+	vr_keyboard.name = 'VR_Floating_Keyboard'
+	vr_keyboard.position = Vector3(0, 0, 0)
+	
+	var keys = [
+		['Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P'],
+		['A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L'],
+		['Z', 'X', 'C', 'V', 'B', 'N', 'M']
+	]
+	
+	for row_idx in range(keys.size()):
+		var row = keys[row_idx]
+		for key_idx in range(row.size()):
+			var key = row[key_idx]
+			create_vr_key(key, Vector3(key_idx * 0.08, -row_idx * 0.08, 0), vr_keyboard)
+	
+	parent.add_child(vr_keyboard)
+
+func create_vr_key(key_text: String, pos: Vector3, parent: Node3D):
+	# VR-optimized key size and interaction
+	var key_area = Area3D.new()
+	key_area.name = 'VR_Key_' + key_text
+	key_area.position = pos
+	
+	# Visual key
+	var mesh_instance = MeshInstance3D.new()
+	var box = BoxMesh.new()
+	box.size = Vector3(0.06, 0.06, 0.01)  # VR-appropriate size
+	mesh_instance.mesh = box
+	
+	var material = StandardMaterial3D.new()
+	material.albedo_color = Color.WHITE
+	material.emission_enabled = true
+	material.emission = Color(0.3, 0.3, 1.0)
+	mesh_instance.material_override = material
+	
+	key_area.add_child(mesh_instance)
+	
+	# Key label
+	var label = Label3D.new()
+	label.text = key_text
+	label.billboard = BaseMaterial3D.BILLBOARD_ENABLED
+	label.position = Vector3(0, 0, 0.02)
+	label.modulate = Color.BLACK
+	label.pixel_size = 0.001  # VR-appropriate text size
+	key_area.add_child(label)
+	
+	# Hand collision detection
+	var collision = CollisionShape3D.new()
+	var shape = BoxShape3D.new()
+	shape.size = Vector3(0.06, 0.06, 0.01)
+	collision.shape = shape
+	key_area.add_child(collision)
+	
+	# VR hand interaction signals
+	key_area.area_entered.connect(_on_hand_entered_key.bind(key_text, key_area))
+	key_area.area_exited.connect(_on_hand_exited_key.bind(key_text, key_area))
+	
+	# Store key metadata for VR interaction
+	key_area.set_meta('key_value', key_text)
+	key_area.set_meta('original_emission', material.emission)
+	
+	parent.add_child(key_area)
+
+func _on_hand_entered_key(key_text: String, key_area: Area3D):
+	# Visual feedback when hand approaches key
+	var mesh = key_area.find_child('MeshInstance3D', true, false) as MeshInstance3D
+	if mesh and mesh.material_override:
+		var material = mesh.material_override as StandardMaterial3D
+		material.emission = Color.YELLOW * 2.0
+	
+	print('👋 Hand near key: ' + key_text)
+
+func _on_hand_exited_key(key_text: String, key_area: Area3D):
+	# Reset visual feedback
+	var mesh = key_area.find_child('MeshInstance3D', true, false) as MeshInstance3D
+	if mesh and mesh.material_override:
+		var material = mesh.material_override as StandardMaterial3D
+		material.emission = key_area.get_meta('original_emission', Color.CYAN)
+
+func _on_hand_button_pressed(button_name: String, hand: String):
+	# Detect pinch/trigger to 'press' key
+	if button_name == 'trigger_click' or button_name == 'grip_click':
+		var hand_controller = left_hand_controller if hand == 'left' else right_hand_controller
+		if hand_controller:
+			check_key_press_at_hand_position(hand_controller.global_position, hand)
+
+func _on_hand_button_released(button_name: String, hand: String):
+	pass  # Key release handling
+
+func check_key_press_at_hand_position(hand_pos: Vector3, hand: String):
+	# Find closest key to hand position and 'press' it
+	var closest_key = null
+	var min_distance = 0.05  # 5cm interaction range
+	
+	for key_area in get_tree().get_nodes_in_group('vr_keys'):
+		var distance = hand_pos.distance_to(key_area.global_position)
+		if distance < min_distance:
+			min_distance = distance
+			closest_key = key_area
+	
+	if closest_key:
+		var key_value = closest_key.get_meta('key_value', '')
+		press_vr_key(key_value, hand)
+
+func press_vr_key(key_text: String, hand: String):
+	print('⌨️ VR Key Pressed: ' + key_text + ' (by ' + hand + ' hand)')
+	
+	# Visual feedback for key press
+	create_key_press_effect(key_text)
+	
+	# Add to current typing buffer or execute command
+	handle_key_input(key_text)
+
+func create_key_press_effect(key_text: String):
+	# Create particle effect at key location
+	var key_node = find_key_by_text(key_text)
+	if key_node:
+		var particles = GPUParticles3D.new()
+		particles.position = key_node.global_position
+		particles.amount = 20
+		particles.lifetime = 0.5
+		particles.emitting = true
+		
+		var particle_material = ParticleProcessMaterial.new()
+		particle_material.direction = Vector3(0, 1, 0)
+		particle_material.initial_velocity_min = 1.0
+		particle_material.initial_velocity_max = 3.0
+		particle_material.gravity = Vector3(0, -2, 0)
+		particle_material.color = Color.CYAN
+		particles.process_material = particle_material
+		
+		add_child(particles)
+		
+		# Clean up particles after effect
+		var timer = Timer.new()
+		timer.wait_time = 2.0
+		timer.one_shot = true
+		timer.timeout.connect(func(): particles.queue_free())
+		add_child(timer)
+		timer.start()
+
+func find_key_by_text(key_text: String) -> Node3D:
+	for child in vr_keyboard.get_children():
+		if child.get_meta('key_value', '') == key_text:
+			return child
+	return null
+
+func handle_key_input(key_text: String):
+	# Handle the typed key - could build words, execute commands, etc.
+	show_vr_message('Typed: ' + key_text)
+
+func create_claude_status_display(parent: Node3D):
+	var status_display = Node3D.new()
+	status_display.name = 'Claude_Status_VR'
+	status_display.position = Vector3(0, 0.5, -0.3)
+	
+	var claude_status = Label3D.new()
+	claude_status.text = '🤖 CLAUDE: VR MODE ACTIVE'
+	claude_status.billboard = BaseMaterial3D.BILLBOARD_ENABLED
+	claude_status.modulate = Color.CYAN
+	claude_status.pixel_size = 0.002
+	status_display.add_child(claude_status)
+	
+	var task_status = Label3D.new()
+	task_status.text = '👋 USE HANDS TO TYPE'
+	task_status.billboard = BaseMaterial3D.BILLBOARD_ENABLED
+	task_status.position = Vector3(0, -0.1, 0)
+	task_status.modulate = Color.YELLOW
+	task_status.pixel_size = 0.001
+	status_display.add_child(task_status)
+	
+	parent.add_child(status_display)
+
+func create_artifact_collection_zone(parent: Node3D):
+	var collection_zone = Area3D.new()
+	collection_zone.name = 'VR_Artifact_Zone'
+	collection_zone.position = Vector3(0.5, 0, 0)
+	
+	# Smaller, VR-appropriate collection zone
+	var zone_visual = MeshInstance3D.new()
+	var cylinder = CylinderMesh.new()
+	cylinder.height = 0.3
+	cylinder.top_radius = 0.15
+	cylinder.bottom_radius = 0.15
+	zone_visual.mesh = cylinder
+	
+	var zone_material = StandardMaterial3D.new()
+	zone_material.albedo_color = Color(1, 1, 0, 0.3)
+	zone_material.emission_enabled = true
+	zone_material.emission = Color.YELLOW
+	zone_material.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
+	zone_visual.material_override = zone_material
+	
+	collection_zone.add_child(zone_visual)
+	
+	var instruction = Label3D.new()
+	instruction.text = '🌐 ARTIFACT\\nCOLLECTION'
+	instruction.billboard = BaseMaterial3D.BILLBOARD_ENABLED
+	instruction.position = Vector3(0, 0.2, 0)
+	instruction.modulate = Color.YELLOW
+	instruction.pixel_size = 0.001
+	collection_zone.add_child(instruction)
+	
+	parent.add_child(collection_zone)
+
+func show_vr_message(text: String):
+	var msg = Label3D.new()
+	msg.text = text
+	msg.billboard = BaseMaterial3D.BILLBOARD_ENABLED
+	msg.position = Vector3(0, 2.2, -1.5)  # Above user in VR
+	msg.modulate = Color.GREEN
+	msg.pixel_size = 0.003
+	add_child(msg)
+	
+	# Auto-cleanup
+	var timer = Timer.new()
+	timer.wait_time = 2.0
+	timer.one_shot = true
+	timer.timeout.connect(func(): if is_instance_valid(msg): msg.queue_free())
+	add_child(timer)
+	timer.start()
+
+func _input(event):
+	# Fallback desktop input if no VR
+	if event.is_action_pressed('ui_cancel'):
+		get_tree().quit()
+"
+
+[sub_resource type="Environment" id="Environment_vr_quest"]
+background_mode = 1
+background_color = Color(0.05, 0.05, 0.2, 1)
+ambient_light_source = 2
+ambient_light_color = Color(0.4, 0.4, 0.6, 1)
+ambient_light_energy = 0.3
+
+[sub_resource type="BoxMesh" id="HandMesh"]
+size = Vector3(0.05, 0.05, 0.15)
+
+[node name="VR_IDE_QUEST_READY" type="Node3D"]
+script = SubResource("GDScript_vr_quest")
+
+[node name="XROrigin3D" type="XROrigin3D" parent="."]
+
+[node name="XRCamera3D" type="XRCamera3D" parent="XROrigin3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.8, 0)
+
+[node name="LeftHand" type="XRController3D" parent="XROrigin3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 1.5, -0.3)
+tracker = &"left_hand"
+
+[node name="LeftHandMesh" type="MeshInstance3D" parent="XROrigin3D/LeftHand"]
+mesh = SubResource("HandMesh")
+
+[node name="RightHand" type="XRController3D" parent="XROrigin3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 1.5, -0.3)
+tracker = &"right_hand"
+
+[node name="RightHandMesh" type="MeshInstance3D" parent="XROrigin3D/RightHand"]
+mesh = SubResource("HandMesh")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_vr_quest")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.7, -0.5, 0.5, 0, 0.7, 0.7, -0.7, -0.5, 0.5, 0, 5, 0)
+light_energy = 0.8
