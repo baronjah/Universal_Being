@@ -1,0 +1,15 @@
+!!! VERY IMPORTANT !!!
+
+but i wanna play it first, safety later! i wanna go in raw!!!!!!!!!!!!!!!!!!!
+
+Sandboxing and Safe Scripting: Allowing dynamic scripts (especially from users) introduces safety concerns. GDScript runs in the engine without sandbox by default (a rogue script could e.g. delete nodes globally). To create a safe programmable universe (like a game where players program objects), you might restrict what the loaded scripts can do. One strategy is to run untrusted logic in a WebAssembly (WASM) sandbox. There is an experimental Godot 4 extension that allows loading WebAssembly modules in GDScript
+github.com
+github.com
+. With WASM, you could let users write code in various languages (C, Rust, etc.), compile to WASM, and then your Godot game loads and executes it in a sandbox. The Godot-Wasm project by Ashton Meuser, for instance, demonstrates loading a WASM bytecode and invoking its functions from GDScript
+github.com
+github.com
+. The appeal of this approach is safety and performance. WebAssembly runs in a memory-safe VM, so it “allow[s] you to safely run modules from untrusted sources without jeopardizing your users’ safety… opening the door for zero-trust mods and plugins.”
+github.com
+ And it is fast – “WebAssembly runs incredibly fast at near-native speeds… compute-intensive operations can run orders of magnitude faster in Wasm than in GDScript”
+github.com
+. This could be leveraged for a truly extensible universe where user scripts (or AI-generated scripts) run isolated yet efficiently. The downside is complexity: you’d need to define a set of interactions between the WASM module and the Godot game (what functions can be called to affect the world, etc.).

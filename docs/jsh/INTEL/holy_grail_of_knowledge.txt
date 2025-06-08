@@ -1,0 +1,10 @@
+Dynamic GDScript Loading: Godot 4 supports loading and even creating scripts at runtime. One approach is using the ResourceLoader.load() (or shorthand load()) to load a GDScript file by path. This works for scenes and scripts pulled from disk or even downloaded via HTTP
+forum.godotengine.org
+. For example, you can keep external .gd script files and load them into points on the fly. Another powerful technique is to compile GDScript from a text string at runtime. Godot’s GDScript class allows creating a new script, setting its source code, and compiling it by calling reload(). In code:
+gdscript
+Copy
+Edit
+var new_script = GDScript.new()
+new_script.source_code = script_text  # script_text is a String with GDScript code
+new_script.reload()  # compile the code
+node.set_script(new_script)  # attach to a node

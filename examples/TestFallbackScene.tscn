@@ -1,0 +1,41 @@
+[gd_scene load_steps=2 format=3]
+
+[sub_resource type="GDScript" id="GDScript_test"]
+script/source = "extends Node
+
+func _ready():
+	print('🧪 TESTING FALLBACK SYSTEM')
+	
+	# Wait for auto-registration to complete
+	await get_tree().process_frame
+	
+	# Create player instance with fallback
+	var player = UniversalFallbackSystem.create_fallback_instance('BasePlayer')
+	
+	if player:
+		print('✅ Player created with fallback system')
+		
+		# Test method calls
+		if player.has_method('move_player'):
+			player.move_player(1.0)
+		
+		if player.has_method('attack'):
+			player.attack()
+		
+		if player.has_method('fly'):
+			player.fly()
+		
+		if player.has_method('cast_spell'):
+			player.cast_spell('Lightning')
+		
+		if player.has_method('get_health'):
+			print('Health: ' + str(player.get_health()))
+		
+		if player.has_method('get_mana'):
+			print('Mana: ' + str(player.get_mana()))
+	else:
+		print('❌ Failed to create player instance')
+"
+
+[node name="TestFallbackScene" type="Node"]
+script = SubResource("GDScript_test")

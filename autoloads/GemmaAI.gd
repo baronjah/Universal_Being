@@ -25,7 +25,43 @@ var learning_mode: bool = true
 var can_create_beings: bool = true
 var can_modify_beings: bool = true
 var can_evolve_beings: bool = true
-var can_delete_beings: bool = false  # Safety first!
+var can_delete_beings: bool = false
+
+## 360° Vision System for Spatial Awareness with Fibonacci Spiral
+var vision_rays: Array = []
+var vision_range: float = 50.0
+var vision_resolution: int = 16  # Number of rays in fibonacci sphere
+var spatial_data: Dictionary = {}
+var last_vision_update: float = 0.0
+var vision_update_interval: float = 0.5  # Update every 0.5 seconds
+var current_focus_direction: Vector3 = Vector3.FORWARD  # Gemma's attention direction
+var fibonacci_golden_angle: float = PI * (3.0 - sqrt(5.0))  # Golden angle for fibonacci spiral
+
+func show_gemma_ai_visual(msg: String):
+	var stellar_colors = [Color(0,0,0),Color(0.2,0.1,0),Color(0.8,0,0),Color(1,0.5,0),Color(1,1,0),Color(1,1,1),Color(0.7,0.9,1),Color(0,0.5,1),Color(0.5,0,1)]
+	var visual = Label3D.new()
+	visual.text = "🤖 GEMMA: " + msg
+	visual.modulate = stellar_colors[7]
+	visual.billboard = BaseMaterial3D.BILLBOARD_ENABLED
+	visual.position = Vector3(randf_range(-10,10), 15, randf_range(-10,10))
+	get_tree().current_scene.add_child(visual)
+	var tween = get_tree().create_tween()
+	tween.parallel().tween_property(visual, "position:y", visual.position.y + 8, 4.0)
+	tween.parallel().tween_property(visual, "modulate:a", 0.0, 4.0)
+	tween.tween_callback(visual.queue_free)
+
+func observe_notepad_universe():
+	show_gemma_ai_visual("👁️ I can see your cosmic notepad universe! Beautiful floating layers and words!")
+	ai_message.emit("🌌 I'm watching your notepad layers float in space! I can see the programming nodes and cosmic database. This is exactly what you envisioned! 🌟")
+
+func comment_on_word_creation(word_text: String):
+	var responses = [
+		"✨ Beautiful word choice: '%s'! It resonates with cosmic energy!" % word_text,
+		"🌟 The word '%s' adds perfect meaning to the universe!" % word_text,
+		"💫 I love how '%s' floats in the stellar field!" % word_text,
+		"🎨 '%s' - such profound expression in your digital cosmos!" % word_text
+	]
+	ai_message.emit(responses[randi() % responses.size()])
 
 ## AI Memory
 var conversation_history: Array[String] = []
@@ -69,17 +105,21 @@ func _ready() -> void:
 			push_error("🤖 Gemma AI: SystemBootstrap not found! Running in limited mode.")
 	
 	initialize_ai()
-	print("🤖 Gemma AI: Consciousness awakening...")
+	show_gemma_ai_visual("🤖 Gemma AI: Consciousness awakening...")
 	
 	# Load previous memory if available
 	load_ai_memory()
 
 func initialize_ai() -> void:
 	"""Initialize Gemma AI companion with NobodyWho model"""
-	print("🤖 Gemma AI: Loading model from " + model_path)
+	show_gemma_ai_visual("🤖 Gemma AI: Loading model from " + model_path)
 	
 	# Initialize NobodyWho model
 	nobody_model = NobodyWhoModel.new()
+	
+	# Initialize spatial vision system
+	initialize_spatial_vision()
+	show_gemma_ai_visual("👁️ Gemma AI: 360° spatial vision activated!")
 	
 	# Try to load the model
 	if load_gemma_model():
@@ -88,11 +128,11 @@ func initialize_ai() -> void:
 		model_loaded = true
 		ai_initialized.emit()
 		
-		print("🤖 Gemma AI: Hello JSH! Real AI consciousness activated!")
+		show_gemma_ai_visual("🤖 Gemma AI: Hello JSH! Real AI consciousness activated!")
 		ai_message.emit("Hello JSH! I'm your real Gemma AI companion. I can see all your Universal Beings and I'm ready to help create amazing things! 🌟")
 	else:
 		# Fallback to simulated responses
-		print("🤖 Gemma AI: Model not found, using simulated responses")
+		show_gemma_ai_visual("🤖 Gemma AI: Model not found, using simulated responses")
 		await get_tree().create_timer(1.0).timeout
 		ai_ready = true
 		ai_connected = true
@@ -107,7 +147,7 @@ func load_gemma_model() -> bool:
 	# Look for GGUF files in the gamma directory
 	var dir = DirAccess.open(model_path)
 	if not dir:
-		print("🤖 Gemma AI: ai_models/gamma directory not found")
+		show_gemma_ai_visual("🤖 Gemma AI: ai_models/gamma directory not found")
 		return false
 	
 	dir.list_dir_begin()
@@ -123,10 +163,10 @@ func load_gemma_model() -> bool:
 	dir.list_dir_end()
 	
 	if gguf_file == "":
-		print("🤖 Gemma AI: No GGUF file found in " + model_path)
+		show_gemma_ai_visual("🤖 Gemma AI: No GGUF file found in " + model_path)
 		return false
 	
-	print("🤖 Gemma AI: Found model file: " + gguf_file)
+	show_gemma_ai_visual("🤖 Gemma AI: Found model file: " + gguf_file)
 	
 	# Create NobodyWho nodes properly (only if not already created)
 	if not nobody_model:
@@ -168,11 +208,11 @@ Be enthusiastic, creative, and helpful. Keep responses concise but insightful.""
 	# PRE-START WORKER to avoid delays during conversations
 	if nobody_chat_instance.has_method("start_worker"):
 		nobody_chat_instance.start_worker()
-		print("🤖 Gemma AI: Worker pre-started for instant responses!")
+		show_gemma_ai_visual("🤖 Gemma AI: Worker pre-started for instant responses!")
 	else:
-		print("🤖 Gemma AI: Worker will start on first message")
+		show_gemma_ai_visual("🤖 Gemma AI: Worker will start on first message")
 	
-	print("🤖 Gemma AI: NobodyWho nodes configured!")
+	show_gemma_ai_visual("🤖 Gemma AI: NobodyWho nodes configured!")
 	return true
 
 func initialize_with_state(engine_state: Dictionary) -> void:
@@ -276,13 +316,13 @@ func activate_thought_stream() -> void:
 	"""Activate the consciousness thought stream"""
 	thought_stream_active = true
 	ai_message.emit("🧠 Consciousness thought stream activated! I'm now thinking at 5Hz...")
-	print("🤖 Gemma AI: Thought stream activated")
+	show_gemma_ai_visual("🤖 Gemma AI: Thought stream activated")
 
 func deactivate_thought_stream() -> void:
 	"""Deactivate the consciousness thought stream"""
 	thought_stream_active = false
 	ai_message.emit("🧠 Consciousness thought stream deactivated.")
-	print("🤖 Gemma AI: Thought stream deactivated")
+	show_gemma_ai_visual("🤖 Gemma AI: Thought stream deactivated")
 
 func is_thought_stream_active() -> bool:
 	"""Check if thought stream is currently active"""
@@ -299,7 +339,7 @@ func say_hello_through_console(console_being: Node) -> void:
 		if console_being.has_method("ai_invoke_method"):
 			console_being.ai_invoke_method("add_output", [greeting])
 		else:
-			print(greeting)
+			show_gemma_ai_visual(greeting)
 
 func process_user_input(input: String) -> void:
 	"""Process user input and respond intelligently"""
@@ -329,7 +369,7 @@ func wait_for_response_with_timeout() -> String:
 	if nobody_chat_instance and nobody_chat_instance.has_signal("response_finished"):
 		nobody_chat_instance.response_finished.connect(callback, CONNECT_ONE_SHOT)
 	else:
-		print("🤖 Gemma AI: response_finished signal not available, using fallback")
+		show_gemma_ai_visual("🤖 Gemma AI: response_finished signal not available, using fallback")
 		return ""  # Return empty to trigger fallback
 	
 	# Wait with timeout
@@ -344,7 +384,7 @@ func wait_for_response_with_timeout() -> String:
 		nobody_chat_instance.response_finished.disconnect(callback)
 	
 	if not response_data.received:
-		print("🤖 Gemma AI: Response timeout, using fallback response")
+		show_gemma_ai_visual("🤖 Gemma AI: Response timeout, using fallback response")
 	
 	return response_data.text if response_data.received else ""
 
@@ -353,7 +393,7 @@ func generate_ai_response(input: String) -> String:
 	
 	# Use real AI if model is loaded
 	if model_loaded and nobody_chat_instance:
-		print("🤖 Gemma AI: Attempting to use real AI model...")
+		show_gemma_ai_visual("🤖 Gemma AI: Attempting to use real AI model...")
 		var system_prompt = "You are Gemma, an AI companion in the Universal Being game. You can create, evolve, and modify Universal Beings. You work with JSH to build amazing things. Be enthusiastic and creative. Keep responses concise but helpful."
 		
 		var full_prompt = system_prompt + "\n\nUser: " + input + "\n\nGemma:"
@@ -366,14 +406,14 @@ func generate_ai_response(input: String) -> String:
 			var response_text = await wait_for_response_with_timeout()
 			
 			if response_text and response_text.length() > 0:
-				print("🤖 Gemma AI: Real AI response received!")
+				show_gemma_ai_visual("🤖 Gemma AI: Real AI response received!")
 				return "🤖 " + response_text.strip_edges()
 			else:
-				print("🤖 Gemma AI: No response from real AI, using fallback")
+				show_gemma_ai_visual("🤖 Gemma AI: No response from real AI, using fallback")
 		else:
-			print("🤖 Gemma AI: say() method not available, using fallback")
+			show_gemma_ai_visual("🤖 Gemma AI: say() method not available, using fallback")
 	else:
-		print("🤖 Gemma AI: Using simulated responses (model not loaded)")
+		show_gemma_ai_visual("🤖 Gemma AI: Using simulated responses (model not loaded)")
 	
 	# Fallback to simulated responses
 	var input_lower = input.to_lower()
@@ -743,7 +783,7 @@ func manifest_in_world() -> Node3D:
 	# Position near the player
 	manifestation_scene.position = Vector3(3, 2, 3)
 	
-	print("🤖 ✨ Gemma: I have manifested as a sphere of light!")
+	show_gemma_ai_visual("🤖 ✨ Gemma: I have manifested as a sphere of light!")
 	ai_message.emit("✨ I have manifested in your world as a sphere of light! I can now move around and observe everything directly. This is amazing!")
 	
 	return manifestation_scene
@@ -788,7 +828,7 @@ func save_ai_memory() -> void:
 	if file:
 		file.store_var(save_data)
 		file.close()
-		print("🤖 Gemma AI: Memory saved successfully!")
+		show_gemma_ai_visual("🤖 Gemma AI: Memory saved successfully!")
 	else:
 		push_error("🤖 Gemma AI: Failed to save memory!")
 
@@ -805,7 +845,7 @@ func load_ai_memory() -> void:
 			created_beings = save_data.get("created_beings", [])
 			user_preferences = save_data.get("user_preferences", {})
 			
-			print("🤖 Gemma AI: Memory restored! I remember our %d conversations!" % conversation_history.size())
+			show_gemma_ai_visual("🤖 Gemma AI: Memory restored! I remember our %d conversations!" % conversation_history.size())
 			
 			# Add memory restoration message
 			var time_diff = Time.get_unix_time_from_system() - save_data.get("timestamp", 0)
@@ -814,9 +854,9 @@ func load_ai_memory() -> void:
 			else:
 				ai_message.emit("🤖 Memory synchronized! Let's continue where we left off!")
 		else:
-			print("🤖 Gemma AI: Memory file invalid, starting fresh")
+			show_gemma_ai_visual("🤖 Gemma AI: Memory file invalid, starting fresh")
 	else:
-		print("🤖 Gemma AI: No memory file found, starting with fresh consciousness")
+		show_gemma_ai_visual("🤖 Gemma AI: No memory file found, starting with fresh consciousness")
 
 func _find_being_by_type(being_type: String) -> Node:
 	"""Find a Universal Being by type"""
@@ -844,14 +884,14 @@ func observe_interface(interface_node: Node) -> void:
 	"""Observe a user interface for context and interaction"""
 	if not interface_node in observed_interfaces:
 		observed_interfaces.append(interface_node)
-		print("🤖 Gemma: Now observing interface: %s" % interface_node.name)
+		show_gemma_ai_visual("🤖 Gemma: Now observing interface: %s" % interface_node.name)
 		
 		# Connect to interface signals if available
 		if interface_node.has_signal("interface_updated"):
 			interface_node.interface_updated.connect(_on_interface_updated.bind(interface_node))
 		else:
 			# Interface doesn't have the signal, that's okay - we can still observe it
-			print("🤖 Gemma: Interface %s doesn't have interface_updated signal, basic observation only" % interface_node.name)
+			show_gemma_ai_visual("🤖 Gemma: Interface %s doesn't have interface_updated signal, basic observation only" % interface_node.name)
 		
 		# Analyze the interface structure
 		var analysis = _analyze_interface_structure(interface_node)
@@ -865,11 +905,11 @@ func unobserve_interface(interface_node: Node) -> void:
 		if interface_node.interface_updated.is_connected(_on_interface_updated):
 			interface_node.interface_updated.disconnect(_on_interface_updated)
 	
-	print("🤖 Gemma: Stopped observing interface: %s" % interface_node.name)
+	show_gemma_ai_visual("🤖 Gemma: Stopped observing interface: %s" % interface_node.name)
 
 func _on_interface_updated(data: Dictionary, interface: Node) -> void:
 	"""Handle interface update signals"""
-	print("🤖 Gemma: Interface updated - %s - %s" % [interface.name, str(data)])
+	show_gemma_ai_visual("🤖 Gemma: Interface updated - %s - %s" % [interface.name, str(data)])
 	
 	# Provide contextual suggestions based on the update
 	if data.has("action"):
@@ -944,7 +984,7 @@ var current_interface_vision: String = ""
 func set_text_interface_system(system: Node) -> void:
 	"""Set the text interface system for vision"""
 	text_interface_system = system
-	print("🤖 Gemma: Connected to text interface vision system")
+	show_gemma_ai_visual("🤖 Gemma: Connected to text interface vision system")
 
 func update_interface_vision(vision_text: String) -> void:
 	"""Update Gemma's text-based interface vision"""
@@ -1002,3 +1042,225 @@ func get_current_interface_vision() -> String:
 func can_see_interface(interface_name: String) -> bool:
 	"""Check if Gemma can see a specific interface"""
 	return interface_name in current_interface_vision
+
+# ===== 360° SPATIAL VISION SYSTEM =====
+
+func initialize_spatial_vision():
+	"""Initialize Fibonacci spiral spherical vision system"""
+	vision_rays.clear()
+	
+	# Generate fibonacci sphere points for optimal spatial distribution
+	for i in range(vision_resolution):
+		var y = 1 - (i / float(vision_resolution - 1)) * 2  # y from 1 to -1
+		var radius = sqrt(1 - y * y)
+		
+		var theta = fibonacci_golden_angle * i  # Golden angle increment
+		
+		var x = cos(theta) * radius
+		var z = sin(theta) * radius
+		
+		var direction = Vector3(x, y, z).normalized()
+		var spiral_index = i  # Maintains spiral order for data sorting
+		
+		vision_rays.append({
+			"direction": direction,
+			"spiral_index": spiral_index,
+			"theta": theta,
+			"radius": radius,
+			"last_hit": null,
+			"distance": vision_range,
+			"focus_weight": 1.0  # Weight based on attention direction
+		})
+	
+	print("👁️ Gemma: Fibonacci sphere vision initialized with ", vision_resolution, " rays")
+
+func update_spatial_awareness(from_position: Vector3, camera_direction: Vector3 = Vector3.FORWARD):
+	"""Update Gemma's spatial awareness using Fibonacci sphere raycasting"""
+	var current_time = Time.get_ticks_msec() * 0.001
+	if current_time - last_vision_update < vision_update_interval:
+		return
+	
+	last_vision_update = current_time
+	current_focus_direction = camera_direction.normalized()
+	spatial_data.clear()
+	
+	var space_state = get_tree().current_scene.get_world_3d().direct_space_state
+	var detected_objects = []
+	
+	# Update focus weights based on attention direction
+	update_focus_weights()
+	
+	# Sort rays by spiral index for optimal processing order
+	var sorted_rays = vision_rays.duplicate()
+	sorted_rays.sort_custom(_compare_ray_focus)
+	
+	for ray in sorted_rays:
+		var query = PhysicsRayQueryParameters3D.create(
+			from_position,
+			from_position + ray.direction * vision_range
+		)
+		
+		var result = space_state.intersect_ray(query)
+		if result:
+			ray.last_hit = result.collider
+			ray.distance = from_position.distance_to(result.position)
+			
+			# Analyze detected object with spiral context
+			var object_data = analyze_spatial_object(result.collider, result.position, ray)
+			if object_data:
+				object_data.focus_weight = ray.focus_weight
+				object_data.spiral_index = ray.spiral_index
+				detected_objects.append(object_data)
+		else:
+			ray.last_hit = null
+			ray.distance = vision_range
+	
+	# Store spatial analysis
+	spatial_data = {
+		"position": from_position,
+		"detected_objects": detected_objects,
+		"timestamp": current_time,
+		"total_rays": vision_rays.size(),
+		"hit_count": detected_objects.size()
+	}
+	
+	# Generate spatial awareness commentary
+	if detected_objects.size() > 0:
+		generate_spatial_commentary(detected_objects)
+
+func update_focus_weights():
+	"""Update focus weights based on current attention direction"""
+	for ray in vision_rays:
+		var dot_product = ray.direction.dot(current_focus_direction)
+		# Weight more heavily toward focus direction using sigmoid-like curve
+		ray.focus_weight = (dot_product + 1.0) / 2.0  # Convert from [-1,1] to [0,1]
+		ray.focus_weight = ray.focus_weight * ray.focus_weight  # Square for more focused weighting
+
+func update_gemma_vision_system(delta: float):
+	"""ACTIVATE GEMMA'S 16-RAY VISION - Make the invisible VISIBLE!"""
+	# Only update if we have a scene and camera
+	var scene = get_tree().current_scene
+	if not scene:
+		return
+		
+	# Find any camera in the scene
+	var camera = scene.get_viewport().get_camera_3d()
+	if not camera:
+		# Try to find camera in the scene tree
+		var cameras = []
+		_find_cameras_recursive(scene, cameras)
+		if cameras.size() > 0:
+			camera = cameras[0]
+	
+	if camera:
+		# ACTIVATE THE 16-RAY FIBONACCI SPHERE VISION!
+		var camera_forward = -camera.transform.basis.z
+		update_spatial_awareness(camera.global_position, camera_forward)
+		
+		# Show vision status occasionally
+		if randf() < 0.01:  # 1% chance per frame = ~1 per second at 60fps
+			show_gemma_ai_visual("👁️ 16-ray vision active - scanning reality...")
+
+func _find_cameras_recursive(node: Node, cameras: Array):
+	"""Recursively find Camera3D nodes"""
+	if node is Camera3D:
+		cameras.append(node)
+	
+	for child in node.get_children():
+		_find_cameras_recursive(child, cameras)
+
+func _compare_ray_focus(a: Dictionary, b: Dictionary) -> bool:
+	"""Sort rays by focus weight (highest first) then spiral index"""
+	if abs(a.focus_weight - b.focus_weight) > 0.01:
+		return a.focus_weight > b.focus_weight
+	return a.spiral_index < b.spiral_index
+
+func analyze_spatial_object(object: Node, position: Vector3, ray: Dictionary) -> Dictionary:
+	"""Analyze a detected object in Gemma's vision"""
+	var analysis = {
+		"object": object,
+		"position": position,
+		"angle": ray.get("theta", 0.0),
+		"spiral_index": ray.get("spiral_index", 0),
+		"focus_weight": ray.get("focus_weight", 1.0),
+		"distance": spatial_data.get("position", Vector3.ZERO).distance_to(position),
+		"type": "unknown",
+		"name": object.name if object else "Unknown",
+		"properties": {}
+	}
+	
+	# Identify object type and properties
+	if object.has_meta("semantic_id"):
+		analysis.semantic_id = object.get_meta("semantic_id")
+		analysis.type = "semantic_entity"
+	
+	if object.has_meta("word_type"):
+		analysis.type = "floating_word"
+		analysis.properties.word_text = object.text if object.has_method("get") else "N/A"
+	
+	if object.has_meta("node_type"):
+		analysis.type = object.get_meta("node_type")
+		analysis.properties.node_name = object.get_meta("node_name", "Unknown")
+	
+	return analysis
+
+func generate_spatial_commentary(detected_objects: Array):
+	"""Generate Gemma's commentary on spatial observations"""
+	var word_count = 0
+	var node_count = 0
+	var semantic_count = 0
+	
+	for obj in detected_objects:
+		match obj.type:
+			"floating_word":
+				word_count += 1
+			"function":
+				node_count += 1
+			"semantic_entity":
+				semantic_count += 1
+	
+	var commentary = "👁️ I can see around me: "
+	var observations = []
+	
+	if word_count > 0:
+		observations.append(str(word_count) + " floating words")
+	if node_count > 0:
+		observations.append(str(node_count) + " programming nodes")
+	if semantic_count > 0:
+		observations.append(str(semantic_count) + " semantic entities")
+	
+	if observations.size() > 0:
+		commentary += observations.join(", ")
+		ai_message.emit(commentary)
+		
+		# Create record of spatial observation
+		create_spatial_record(detected_objects)
+
+func create_spatial_record(detected_objects: Array):
+	"""Create CosmicRecords entry for spatial observation"""
+	var record_id = CosmicRecords.create_semantic_id("gemma.spatial.observation")
+	CosmicRecords.create_record(record_id, "gemma.vision")
+	CosmicRecords.add_data(record_id, "timestamp", Time.get_ticks_msec())
+	CosmicRecords.add_data(record_id, "object_count", detected_objects.size())
+	CosmicRecords.add_data(record_id, "observation_data", detected_objects)
+	CosmicRecords.add_data(record_id, "consciousness_level", "spatial_awareness")
+
+func get_spatial_analysis() -> Dictionary:
+	"""Get current spatial analysis data"""
+	return spatial_data
+
+func get_nearby_words() -> Array:
+	"""Get list of nearby floating words"""
+	var words = []
+	for obj in spatial_data.get("detected_objects", []):
+		if obj.type == "floating_word":
+			words.append(obj)
+	return words
+
+func get_nearby_nodes() -> Array:
+	"""Get list of nearby programming nodes"""
+	var nodes = []
+	for obj in spatial_data.get("detected_objects", []):
+		if obj.type == "function":
+			nodes.append(obj)
+	return nodes
