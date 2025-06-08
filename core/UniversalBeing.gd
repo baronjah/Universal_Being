@@ -34,6 +34,19 @@ var evolution_state: Dictionary = {
 	"last_evolution": 0
 }
 
+func show_ub_visual(msg: String):
+	var stellar_colors = [Color(0,0,0),Color(0.2,0.1,0),Color(0.8,0,0),Color(1,0.5,0),Color(1,1,0),Color(1,1,1),Color(0.7,0.9,1),Color(0,0.5,1),Color(0.5,0,1)]
+	var visual = Label3D.new()
+	visual.text = being_name + ": " + msg
+	visual.modulate = stellar_colors[consciousness_level]
+	visual.billboard = BaseMaterial3D.BILLBOARD_ENABLED
+	visual.position = global_position + Vector3(0, 3, 0)
+	get_tree().current_scene.add_child(visual)
+	var tween = get_tree().create_tween()
+	tween.parallel().tween_property(visual, "position:y", visual.position.y + 5, 3.0)
+	tween.parallel().tween_property(visual, "modulate:a", 0.0, 3.0)
+	tween.tween_callback(visual.queue_free)
+
 ## Movement System
 var movement_target: Vector3 = Vector3.ZERO
 var is_moving: bool = false
@@ -276,7 +289,7 @@ func create_consciousness_visual() -> void:
 	aura_node.name = "ConsciousnessAura"
 	add_child(aura_node)
 	_update_aura_visual()
-	print("🧠 %s: Animated consciousness aura created (level %d)" % [being_name, consciousness_level])
+	show_ub_visual("🧠 %s: Animated consciousness aura created (level %d)" % [being_name, consciousness_level])
 	log_action("visual_update", "🧠 %s: Aura visual created for consciousness level %d" % [being_name, consciousness_level])
 
 func update_consciousness_visual() -> void:
@@ -328,7 +341,7 @@ func _create_auto_label() -> void:
 	# Make label collision area match text size
 	_create_label_collision_area(label)
 	
-	print("🏷️ Auto-label created for %s: %s" % [being_name, label.text])
+	show_ub_visual("🏷️ Auto-label created for %s: %s" % [being_name, label.text])
 
 func _create_label_collision_area(label: Label3D) -> void:
 	"""Create collision area that matches the label size"""
@@ -409,7 +422,7 @@ func _initialize_socket_system() -> void:
 	socket_manager.component_unmounted.connect(_on_socket_component_unmounted)
 	socket_manager.socket_configuration_changed.connect(_on_socket_configuration_changed)
 	
-	print("🔌 Socket system initialized for %s with %d sockets" % [being_name, socket_manager.sockets.size()])
+	show_ub_visual("🔌 Socket system initialized for %s with %d sockets" % [being_name, socket_manager.sockets.size()])
 
 func get_socket(socket_id: String) -> UniversalBeingSocket:
 	"""Get socket by ID"""
@@ -470,7 +483,7 @@ func add_socket(socket_name: String, socket_direction: String, socket_data_type:
 		return
 	
 	# Create a basic socket for interface compatibility
-	print("🔌 Interface socket requested: %s (%s, %s)" % [socket_name, socket_direction, socket_data_type])
+	show_ub_visual("🔌 Interface socket requested: %s (%s, %s)" % [socket_name, socket_direction, socket_data_type])
 	# This is a stub implementation for interface compatibility
 
 func connect_socket(from_socket: String, to_being: Node, to_socket: String) -> bool:
@@ -479,7 +492,7 @@ func connect_socket(from_socket: String, to_being: Node, to_socket: String) -> b
 		push_warning("Socket system not initialized - cannot connect socket %s" % from_socket)
 		return false
 	
-	print("🔌 Socket connection requested: %s -> %s.%s" % [from_socket, to_being.name, to_socket])
+	show_ub_visual("🔌 Socket connection requested: %s -> %s.%s" % [from_socket, to_being.name, to_socket])
 	# This is a stub implementation for interface compatibility
 	return true
 
@@ -489,14 +502,14 @@ func set_socket_value(socket_name: String, value: Variant) -> void:
 		push_warning("Socket system not initialized - cannot set socket value %s" % socket_name)
 		return
 	
-	print("🔌 Socket value set: %s = %s" % [socket_name, str(value)])
+	show_ub_visual("🔌 Socket value set: %s = %s" % [socket_name, str(value)])
 	# This is a stub implementation for interface compatibility
 
 # ===== SOCKET SIGNAL HANDLERS =====
 
 func _on_socket_component_mounted(socket: UniversalBeingSocket, component: Resource) -> void:
 	"""Handle component mounted to socket"""
-	print("🔌 Component mounted: %s -> %s" % [component.get_class(), socket.socket_name])
+	show_ub_visual("🔌 Component mounted: %s -> %s" % [component.get_class(), socket.socket_name])
 	
 	# Apply component based on socket type
 	match socket.socket_type:
@@ -515,7 +528,7 @@ func _on_socket_component_mounted(socket: UniversalBeingSocket, component: Resou
 
 func _on_socket_component_unmounted(socket: UniversalBeingSocket, component: Resource) -> void:
 	"""Handle component unmounted from socket"""
-	print("🔌 Component unmounted: %s <- %s" % [component.get_class(), socket.socket_name])
+	show_ub_visual("🔌 Component unmounted: %s <- %s" % [component.get_class(), socket.socket_name])
 	
 	# Remove component effects based on socket type
 	match socket.socket_type:
@@ -543,7 +556,7 @@ func _on_socket_configuration_changed() -> void:
 
 func _on_socket_hot_swapped(socket: UniversalBeingSocket, new_component: Resource) -> void:
 	"""Handle hot-swap completion"""
-	print("🔄 Hot-swap completed: %s in %s socket" % [new_component.get_class(), socket.socket_name])
+	show_ub_visual("🔄 Hot-swap completed: %s in %s socket" % [new_component.get_class(), socket.socket_name])
 	
 	# Refresh being state
 	_refresh_being_state()
@@ -692,14 +705,14 @@ func apply_component_data(component_path: String, data: Dictionary) -> void:
 	if component_path.contains("basic_interaction"):
 		_load_basic_interaction_component()
 	
-	print("🔧 Applied component data: %s" % component_path.get_file())
+	show_ub_visual("🔧 Applied component data: %s" % component_path.get_file())
 
 func _load_basic_interaction_component() -> void:
 	"""Load basic interaction component as an actual node"""
 	# Check if already loaded
 	var existing = get_node_or_null("BasicInteractionComponent")
 	if existing:
-		print("🎯 Basic interaction component already loaded")
+		show_ub_visual("🎯 Basic interaction component already loaded")
 		return
 	
 	# Load the script and create instance
@@ -717,7 +730,7 @@ func _load_basic_interaction_component() -> void:
 	if component.has_method("apply_to_being"):
 		component.apply_to_being(self)
 	
-	print("🎯 Basic interaction component loaded and applied to: %s" % being_name)
+	show_ub_visual("🎯 Basic interaction component loaded and applied to: %s" % being_name)
 
 # ===== EVOLUTION SYSTEM =====
 
@@ -745,7 +758,7 @@ func evolve_to(new_form_path: String) -> Node:  # Changed return type for compat
 	
 	if new_being:
 		evolution_completed.emit(new_being)
-		print("🌟 UniversalBeing: Evolution successful - %s evolved to %s" % [being_name, new_form_path])
+		show_ub_visual("🌟 UniversalBeing: Evolution successful - %s evolved to %s" % [being_name, new_form_path])
 	else:
 		push_error("🌟 UniversalBeing: Evolution failed for %s" % being_name)
 		
@@ -948,7 +961,7 @@ func save_to_zip(file_path: String) -> bool:
 		if akashic_records and akashic_records.has_method("save_being_to_zip"):
 			var success = akashic_records.save_being_to_zip(self, file_path)
 			if success:
-				print("🌟 UniversalBeing: Successfully saved %s to %s" % [being_name, file_path])
+				show_ub_visual("🌟 UniversalBeing: Successfully saved %s to %s" % [being_name, file_path])
 			else:
 				push_error("🌟 UniversalBeing: Failed to save %s to %s" % [being_name, file_path])
 			return success
@@ -1000,7 +1013,7 @@ func load_scene(tscn_path: String) -> bool:
 	metadata.scene_path = tscn_path
 	
 	scene_loaded.emit(controlled_scene)
-	print("🌟 UniversalBeing: Scene loaded - %s controls %s" % [being_name, tscn_path])
+	show_ub_visual("🌟 UniversalBeing: Scene loaded - %s controls %s" % [being_name, tscn_path])
 	return true
 
 func unload_scene() -> bool:
@@ -1026,7 +1039,7 @@ func unload_scene() -> bool:
 		metadata.erase("scene_path")
 	
 	scene_unloaded.emit()
-	print("🌟 UniversalBeing: Scene unloaded from %s" % being_name)
+	show_ub_visual("🌟 UniversalBeing: Scene unloaded from %s" % being_name)
 	return true
 
 func map_scene_nodes(root_node: Node, prefix: String = "") -> void:
@@ -1086,7 +1099,7 @@ func set_scene_property(node_path: String, property: String, value) -> bool:
 	}
 	
 	metadata.modified_at = Time.get_ticks_msec()
-	print("🌟 UniversalBeing: Scene property set - %s.%s = %s" % [node_path, property, str(value)])
+	show_ub_visual("🌟 UniversalBeing: Scene property set - %s.%s = %s" % [node_path, property, str(value)])
 	return true
 
 func get_scene_property(node_path: String, property: String):
@@ -1112,7 +1125,7 @@ func call_scene_method(node_path: String, method: String, args: Array = []):
 		return null
 	
 	var result = node.callv(method, args)
-	print("🌟 UniversalBeing: Scene method called - %s.%s() = %s" % [node_path, method, str(result)])
+	show_ub_visual("🌟 UniversalBeing: Scene method called - %s.%s() = %s" % [node_path, method, str(result)])
 	return result
 
 func get_scene_info() -> Dictionary:
@@ -1157,7 +1170,7 @@ func _to_string() -> String:
 
 func log_action(event_type: String, message: String = "", data: Dictionary = {}) -> void:
 	# TEMPORARY DEBUG: Verify this code is being executed
-	# print("DEBUG: log_action called with defensive checks")
+	# show_ub_visual("DEBUG: log_action called with defensive checks")
 	
 	# Completely defensive logging - many beings don't have logging components
 	if not component_data:
@@ -1312,7 +1325,7 @@ func _initialize_physics_system() -> void:
 	proximity_area.area_entered.connect(_on_proximity_entered)
 	proximity_area.area_exited.connect(_on_proximity_exited)
 	
-	print("⚡ Physics system initialized for %s with collision and proximity detection" % being_name)
+	show_ub_visual("⚡ Physics system initialized for %s with collision and proximity detection" % being_name)
 
 func _update_physics_interactions() -> void:
 	"""Update physics-based interactions"""
@@ -1428,7 +1441,7 @@ func _initialize_state_machine() -> void:
 	if not state_changed.is_connected(_on_state_changed):
 		state_changed.connect(_on_state_changed)
 	
-	print("🧠 State machine initialized for %s in %s state" % [being_name, _state_to_string(current_state)])
+	show_ub_visual("🧠 State machine initialized for %s in %s state" % [being_name, _state_to_string(current_state)])
 
 func _update_state_machine(delta: float) -> void:
 	"""Update the state machine"""
@@ -1532,7 +1545,7 @@ func _state_to_string(state: BeingState) -> String:
 
 func _on_state_changed(old_state: BeingState, new_state: BeingState) -> void:
 	"""Handle state changes"""
-	print("🧠 %s: %s → %s" % [being_name, _state_to_string(old_state), _state_to_string(new_state)])
+	show_ub_visual("🧠 %s: %s → %s" % [being_name, _state_to_string(old_state), _state_to_string(new_state)])
 
 # ===== STATE PROCESSING METHODS =====
 
@@ -1601,7 +1614,7 @@ func _process_evolving_state(delta: float) -> void:
 func _process_merging_state(delta: float) -> void:
 	"""Process merging state - DISABLED"""
 	# Merging disabled to prevent beings from disappearing
-	print("🚫 Merging process blocked - forcing return to IDLE")
+	show_ub_visual("🚫 Merging process blocked - forcing return to IDLE")
 	change_state(BeingState.IDLE, "merging disabled")
 
 func _process_splitting_state(delta: float) -> void:
@@ -1628,13 +1641,13 @@ func _handle_collision_interaction(other_being: UniversalBeing) -> void:
 			# DISABLED: Merging is destroying beings and consoles
 			# if consciousness_level >= 3 and other_being.consciousness_level >= 3:
 			#	_initiate_merge(other_being)
-			print("🚫 Merge blocked to prevent being destruction")
+			show_ub_visual("🚫 Merge blocked to prevent being destruction")
 		"consciousness_transfer":
 			_transfer_consciousness(other_being)
 		"evolution_trigger":
 			# DISABLED: Evolution triggers are too chaotic
 			# change_state(BeingState.EVOLVING, "collision triggered evolution")
-			print("🚫 Evolution trigger blocked")
+			show_ub_visual("🚫 Evolution trigger blocked")
 
 func _handle_proximity_interaction(other_being: UniversalBeing) -> void:
 	"""Handle proximity-based interaction"""
@@ -1694,7 +1707,7 @@ func _attempt_creation() -> void:
 	if consciousness_level < 2:
 		return
 	
-	print("🌟 %s attempting creation..." % being_name)
+	show_ub_visual("🌟 %s attempting creation..." % being_name)
 	action_initiated.emit("creation", {"parent": being_uuid})
 	
 	# Create a simple offspring being
@@ -1711,7 +1724,7 @@ func _attempt_creation() -> void:
 
 func _attempt_evolution() -> void:
 	"""Attempt to evolve to a higher form"""
-	print("🦋 %s attempting evolution..." % being_name)
+	show_ub_visual("🦋 %s attempting evolution..." % being_name)
 	action_initiated.emit("evolution", {"current_level": consciousness_level})
 	
 	# Increase consciousness with small chance
@@ -1724,7 +1737,7 @@ func _attempt_evolution() -> void:
 
 func _initiate_merge(other_being: UniversalBeing) -> void:
 	"""Initiate merging with another being - DISABLED"""
-	print("🚫 Merge initiation blocked - merging disabled to prevent destruction")
+	show_ub_visual("🚫 Merge initiation blocked - merging disabled to prevent destruction")
 	return  # Merging completely disabled
 	
 	# if other_being.current_state == BeingState.MERGING:
@@ -1746,7 +1759,7 @@ func _attempt_merge() -> void:
 
 func _complete_merge(other_being: UniversalBeing) -> void:
 	"""Complete merge with another being"""
-	print("🌊 %s merging with %s" % [being_name, other_being.being_name])
+	show_ub_visual("🌊 %s merging with %s" % [being_name, other_being.being_name])
 	
 	# Combine consciousness levels
 	var new_level = min((consciousness_level + other_being.consciousness_level) / 2 + 1, 7)
@@ -1762,7 +1775,7 @@ func _attempt_split() -> void:
 	if consciousness_level < 4:
 		return
 	
-	print("✂️ %s attempting split..." % being_name)
+	show_ub_visual("✂️ %s attempting split..." % being_name)
 	
 	# Create two smaller beings
 	for i in range(2):
@@ -1806,7 +1819,7 @@ func _initialize_dna_system() -> void:
 	if not dna_profile:
 		dna_profile = UniversalBeingDNA.new()
 	
-	print("🧬 DNA system initialized for %s" % being_name)
+	show_ub_visual("🧬 DNA system initialized for %s" % being_name)
 
 func analyze_dna() -> UniversalBeingDNA:
 	"""Analyze and extract DNA from this being"""
@@ -1816,7 +1829,7 @@ func analyze_dna() -> UniversalBeingDNA:
 	dna_profile.analyze_being(self)
 	dna_analyzed.emit(dna_profile)
 	
-	print("🧬 DNA analysis complete for %s - %d traits catalogued" % [being_name, dna_profile.get_total_trait_count()])
+	show_ub_visual("🧬 DNA analysis complete for %s - %d traits catalogued" % [being_name, dna_profile.get_total_trait_count()])
 	log_action("dna_analysis", "DNA profile generated with %d traits" % dna_profile.get_total_trait_count())
 	
 	return dna_profile
@@ -1827,13 +1840,13 @@ func get_dna_profile() -> UniversalBeingDNA:
 		return analyze_dna()
 	return dna_profile
 
-func create_blueprint() -> Dictionary:
+func create_blueshow_ub_visual() -> Dictionary:
 	"""Create a blueprint for cloning/evolution"""
 	var dna = get_dna_profile()
-	blueprint_template = dna.create_clone_blueprint()
+	blueprint_template = dna.create_clone_blueshow_ub_visual()
 	blueprint_created.emit(blueprint_template)
 	
-	print("🧬 Blueprint created for %s" % being_name)
+	show_ub_visual("🧬 Blueprint created for %s" % being_name)
 	log_action("blueprint_creation", "Blueprint generated for replication")
 	
 	return blueprint_template
@@ -1841,7 +1854,7 @@ func create_blueprint() -> Dictionary:
 func clone_being(modifications: Dictionary = {}) -> UniversalBeing:
 	"""Create a clone of this being with optional modifications"""
 	var dna = get_dna_profile()
-	var blueprint = dna.create_clone_blueprint()
+	var blueprint = dna.create_clone_blueshow_ub_visual()
 	
 	# Create new being instance
 	var clone = get_script().new()
@@ -1869,7 +1882,7 @@ func clone_being(modifications: Dictionary = {}) -> UniversalBeing:
 	clone_count += 1
 	
 	clone_created.emit(clone, dna)
-	print("🧬 Clone created: %s (consciousness: %d)" % [clone.being_name, clone.consciousness_level])
+	show_ub_visual("🧬 Clone created: %s (consciousness: %d)" % [clone.being_name, clone.consciousness_level])
 	log_action("cloning", "Created clone %s with %d consciousness" % [clone.being_name, clone.consciousness_level])
 	
 	return clone
@@ -1904,7 +1917,7 @@ func apply_template(template_name: String, template_data: Dictionary) -> bool:
 	metadata.modified_at = Time.get_ticks_msec()
 	
 	template_applied.emit(template_name, modifications)
-	print("🧬 Template '%s' applied to %s" % [template_name, being_name])
+	show_ub_visual("🧬 Template '%s' applied to %s" % [template_name, being_name])
 	log_action("template_application", "Applied template %s with %d modifications" % [template_name, modifications.size()])
 	
 	# Re-analyze DNA after template application
@@ -1919,9 +1932,9 @@ func evolve_from_template(template_being: UniversalBeing, mutation_factor: float
 		return false
 	
 	var template_dna = template_being.get_dna_profile()
-	var evolution_blueprint = template_dna.get_evolution_blueprint()
+	var evolution_blueprint = template_dna.get_evolution_blueshow_ub_visual()
 	
-	print("🧬 Evolving %s from %s template" % [being_name, template_being.being_name])
+	show_ub_visual("🧬 Evolving %s from %s template" % [being_name, template_being.being_name])
 	
 	# Apply evolutionary changes
 	var success_rate = evolution_blueprint.success_probability
@@ -1945,7 +1958,7 @@ func evolve_from_template(template_being: UniversalBeing, mutation_factor: float
 		
 		evolution_initiated.emit(being_type, template_being.being_type + "_evolved")
 		
-		print("🧬 Evolution successful! %s evolved traits from %s" % [being_name, template_being.being_name])
+		show_ub_visual("🧬 Evolution successful! %s evolved traits from %s" % [being_name, template_being.being_name])
 		log_action("template_evolution", "Successfully evolved from %s template" % template_being.being_name)
 		
 		# Re-analyze DNA
@@ -1954,7 +1967,7 @@ func evolve_from_template(template_being: UniversalBeing, mutation_factor: float
 		
 		return true
 	else:
-		print("🧬 Evolution failed for %s" % being_name)
+		show_ub_visual("🧬 Evolution failed for %s" % being_name)
 		log_action("template_evolution", "Evolution attempt failed")
 		return false
 
@@ -1969,16 +1982,16 @@ func _apply_mutation(mutation: Dictionary) -> void:
 			var component_path = mutation.component
 			if component_path in components:
 				# Could create a variant of the component
-				print("🧬 Mutating component: %s" % component_path)
+				show_ub_visual("🧬 Mutating component: %s" % component_path)
 		"scene_structure":
 			# Scene structure mutation
 			if scene_is_loaded:
-				print("🧬 Mutating scene structure")
+				show_ub_visual("🧬 Mutating scene structure")
 
 func get_evolution_options() -> Array[Dictionary]:
 	"""Get available evolution options for this being"""
 	var dna = get_dna_profile()
-	var blueprint = dna.get_evolution_blueprint()
+	var blueprint = dna.get_evolution_blueshow_ub_visual()
 	return blueprint.evolution_paths
 
 func get_blueprint_summary() -> String:
@@ -2002,7 +2015,7 @@ func can_create_from_dna(dna: UniversalBeingDNA) -> bool:
 func create_from_dna(dna: UniversalBeingDNA, parent: Node = null) -> UniversalBeing:
 	"""Create a new being from DNA profile"""
 	if not can_create_from_dna(dna):
-		print("🧬 Cannot create being - insufficient consciousness level")
+		show_ub_visual("🧬 Cannot create being - insufficient consciousness level")
 		return null
 	
 	# Create new being
@@ -2022,7 +2035,7 @@ func create_from_dna(dna: UniversalBeingDNA, parent: Node = null) -> UniversalBe
 	if target_parent:
 		target_parent.add_child(new_being)
 	
-	print("🧬 Created new being from DNA: %s" % new_being.being_name)
+	show_ub_visual("🧬 Created new being from DNA: %s" % new_being.being_name)
 	log_action("dna_creation", "Created %s from DNA template" % new_being.being_name)
 	
 	return new_being

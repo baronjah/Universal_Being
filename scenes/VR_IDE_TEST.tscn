@@ -1,0 +1,206 @@
+[gd_scene load_steps=3 format=3 uid="uid://vr_ide_test"]
+
+[sub_resource type="GDScript" id="GDScript_vr_ide"]
+script/source = "extends Node3D
+
+func _ready():
+	print('🌌 VR IDE TEST SCENE ACTIVATED')
+	create_vr_ide_bridge()
+
+func _input(event):
+	if event.is_action_pressed('ui_cancel'):
+		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE if Input.mouse_mode == Input.MOUSE_MODE_CAPTURED else Input.MOUSE_MODE_CAPTURED
+
+func create_vr_ide_bridge():
+	var vr_bridge = Node3D.new()
+	vr_bridge.name = 'VR_IDE_ETERNAL_CROSSROADS'
+	vr_bridge.position = Vector3(-20, 5, -15)
+	
+	# Create 3D floating keyboard
+	var vr_keyboard_3d = Node3D.new()
+	vr_keyboard_3d.name = 'VR_Keyboard_3D'
+	vr_keyboard_3d.position = Vector3(0, 0, 0)
+	
+	var keys = [
+		['Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P'],
+		['A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L'],
+		['Z', 'X', 'C', 'V', 'B', 'N', 'M']
+	]
+	
+	for row_idx in range(keys.size()):
+		var row = keys[row_idx]
+		for key_idx in range(row.size()):
+			var key = row[key_idx]
+			create_vr_3d_key(key, Vector3(key_idx * 1.2, -row_idx * 1.2, 0), vr_keyboard_3d)
+	
+	vr_bridge.add_child(vr_keyboard_3d)
+	
+	# Create artifact collection zone
+	var collection_zone = Area3D.new()
+	collection_zone.name = 'ArtifactCollectionZone'
+	collection_zone.position = Vector3(15, 5, 0)
+	
+	# Visual indicator
+	var zone_visual = MeshInstance3D.new()
+	var cylinder = CylinderMesh.new()
+	cylinder.height = 2.0
+	cylinder.top_radius = 3.0
+	cylinder.bottom_radius = 3.0
+	zone_visual.mesh = cylinder
+	
+	var zone_material = StandardMaterial3D.new()
+	zone_material.albedo_color = Color(1, 1, 0, 0.3)
+	zone_material.emission_enabled = true
+	zone_material.emission = Color.YELLOW
+	zone_material.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
+	zone_visual.material_override = zone_material
+	
+	collection_zone.add_child(zone_visual)
+	
+	# Floating instruction
+	var instruction = Label3D.new()
+	instruction.text = '🌐 SHAKE BROWSER HERE\\nTO DROP ARTIFACTS'
+	instruction.billboard = BaseMaterial3D.BILLBOARD_ENABLED
+	instruction.position = Vector3(0, 4, 0)
+	instruction.modulate = Color.YELLOW
+	collection_zone.add_child(instruction)
+	
+	vr_bridge.add_child(collection_zone)
+	
+	# Claude status display
+	var claude_status = Label3D.new()
+	claude_status.name = 'ClaudeStatus'
+	claude_status.text = '🤖 CLAUDE: VR IDE ACTIVE'
+	claude_status.billboard = BaseMaterial3D.BILLBOARD_ENABLED
+	claude_status.position = Vector3(0, 8, 0)
+	claude_status.modulate = Color.CYAN
+	vr_bridge.add_child(claude_status)
+	
+	var task_status = Label3D.new()
+	task_status.name = 'TaskStatus'
+	task_status.text = '📋 TASK: Hand Tracking IDE'
+	task_status.billboard = BaseMaterial3D.BILLBOARD_ENABLED
+	task_status.position = Vector3(0, 6, 0)
+	task_status.modulate = Color.YELLOW
+	vr_bridge.add_child(task_status)
+	
+	add_child(vr_bridge)
+	
+	# Start monitoring bridge file
+	var monitor_timer = Timer.new()
+	monitor_timer.wait_time = 2.0
+	monitor_timer.timeout.connect(update_claude_bridge_display.bind(vr_bridge))
+	add_child(monitor_timer)
+	monitor_timer.start()
+	
+	print('🌌 VR IDE ETERNAL CROSSROADS ACTIVATED!')
+
+func create_vr_3d_key(key_text: String, pos: Vector3, parent: Node3D):
+	var key_button = StaticBody3D.new()
+	key_button.name = 'VR_Key_' + key_text
+	key_button.position = pos
+	
+	# Visual cube for key
+	var mesh_instance = MeshInstance3D.new()
+	var box = BoxMesh.new()
+	box.size = Vector3(1, 1, 0.2)
+	mesh_instance.mesh = box
+	
+	var material = StandardMaterial3D.new()
+	material.albedo_color = Color.WHITE
+	material.emission_enabled = true
+	material.emission = Color(0.2, 0.2, 0.8)
+	mesh_instance.material_override = material
+	
+	key_button.add_child(mesh_instance)
+	
+	# Key label
+	var label = Label3D.new()
+	label.text = key_text
+	label.billboard = BaseMaterial3D.BILLBOARD_ENABLED
+	label.position = Vector3(0, 0, 0.2)
+	label.modulate = Color.BLACK
+	key_button.add_child(label)
+	
+	# Collision for hand interaction
+	var collision = CollisionShape3D.new()
+	var shape = BoxShape3D.new()
+	shape.size = Vector3(1, 1, 0.2)
+	collision.shape = shape
+	key_button.add_child(collision)
+	
+	# Store key metadata
+	key_button.set_meta('key_value', key_text)
+	key_button.set_meta('is_vr_key', true)
+	
+	parent.add_child(key_button)
+
+func update_claude_bridge_display(vr_bridge: Node3D):
+	var bridge_file = 'res://claude_bridge.json'
+	if not FileAccess.file_exists(bridge_file):
+		return
+		
+	var file = FileAccess.open(bridge_file, FileAccess.READ)
+	if not file:
+		return
+		
+	var json_text = file.get_as_text()
+	file.close()
+	
+	var json = JSON.new()
+	var parse_result = json.parse(json_text)
+	if parse_result != OK:
+		return
+		
+	var data = json.data
+	
+	# Update Claude status
+	var claude_status = vr_bridge.find_child('ClaudeStatus', true, false)
+	if claude_status:
+		claude_status.text = '🤖 CLAUDE: ' + data.get('claude_status', 'Working...')
+	
+	var task_status = vr_bridge.find_child('TaskStatus', true, false)
+	if task_status:
+		task_status.text = '📋 TASK: ' + data.get('current_task', 'Unknown')
+	
+	# Display thoughts as floating messages
+	var thoughts = data.get('thoughts', [])
+	for i in range(min(thoughts.size(), 3)):
+		var thought_text = '💭 ' + thoughts[i]
+		create_floating_claude_thought(thought_text, Vector3(i * 8, 4, 0), vr_bridge)
+
+func create_floating_claude_thought(text: String, pos: Vector3, parent: Node3D):
+	var thought = Label3D.new()
+	thought.text = text
+	thought.billboard = BaseMaterial3D.BILLBOARD_ENABLED
+	thought.position = pos
+	thought.modulate = Color.MAGENTA
+	parent.add_child(thought)
+	
+	# Auto-cleanup after 3 seconds
+	var timer = Timer.new()
+	timer.wait_time = 3.0
+	timer.one_shot = true
+	timer.timeout.connect(func(): if is_instance_valid(thought): thought.queue_free())
+	parent.add_child(timer)
+	timer.start()
+"
+
+[sub_resource type="Environment" id="Environment_vr"]
+background_mode = 1
+background_color = Color(0.05, 0.05, 0.15, 1)
+ambient_light_source = 2
+ambient_light_color = Color(0.3, 0.3, 0.5, 1)
+ambient_light_energy = 0.4
+
+[node name="VR_IDE_TEST" type="Node3D"]
+script = SubResource("GDScript_vr_ide")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.866, 0.5, 0, -0.5, 0.866, 0, 8, 15)
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_vr")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.7, -0.5, 0.5, 0, 0.7, 0.7, -0.7, -0.5, 0.5, 0, 10, 0)

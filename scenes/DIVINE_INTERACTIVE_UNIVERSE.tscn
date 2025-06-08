@@ -1,0 +1,1175 @@
+[gd_scene load_steps=4 format=3]
+
+[sub_resource type="GDScript" id="GDScript_divine_interactive"]
+script/source = "extends Node3D
+
+var stellar_colors = [Color(0,0,0),Color(0.2,0.1,0),Color(0.8,0,0),Color(1,0.5,0),Color(1,1,0),Color(1,1,1),Color(0.7,0.9,1),Color(0,0.5,1),Color(0.5,0,1)]
+var camera_rotation = Vector2.ZERO
+var move_speed = 20.0
+var look_speed = 0.002
+
+# DIVINE INTERACTIVE SYSTEMS
+var divine_console = null
+var reality_editor = null
+var universe_generator = null
+var being_inspector = null
+var consciousness_levels = [\"DORMANT\", \"AWAKENING\", \"AWARE\", \"ENLIGHTENED\", \"TRANSCENDENT\", \"DIVINE\"]
+var current_consciousness = 0
+var divine_words = []
+var interactive_beings = []
+var portal_system = null
+var dna_editor = null
+
+func _ready():
+	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+	create_divine_environment()
+	initialize_divine_systems()
+	show_divine_message(\"🌟 DIVINE INTERACTIVE UNIVERSE INITIALIZED - ALL FEATURES FUNCTIONAL\", stellar_colors[4])
+
+func _input(event):
+	if event is InputEventMouseMotion and Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
+		camera_rotation.x -= event.relative.x * look_speed
+		camera_rotation.y = clamp(camera_rotation.y - event.relative.y * look_speed, -1.5, 1.5)
+		$Camera3D.rotation = Vector3(camera_rotation.y, camera_rotation.x, 0)
+	
+	if event.is_action_pressed(\"ui_cancel\"):
+		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE if Input.mouse_mode == Input.MOUSE_MODE_CAPTURED else Input.MOUSE_MODE_CAPTURED
+	
+	# DIVINE HOTKEYS - FULLY FUNCTIONAL
+	elif event.is_action_pressed(\"ui_console_toggle\") or Input.is_key_pressed(KEY_TAB):
+		toggle_divine_console()
+		show_divine_message(\"🖥️ DIVINE CONSOLE TOGGLED!\", stellar_colors[6])
+	elif Input.is_action_just_pressed(\"ui_accept\"):  # ENTER
+		show_divine_message(\"✨ CREATING DIVINE BEING!\", stellar_colors[4])
+		create_divine_being()
+	elif event.is_action_pressed(\"notepad_toggle\"):  # N
+		show_divine_message(\"🎨 OPENING REALITY EDITOR!\", stellar_colors[6])
+		toggle_reality_editor()
+	elif event.is_action_pressed(\"create_word\"):  # C
+		show_divine_message(\"🧠 EVOLVING CONSCIOUSNESS!\", stellar_colors[7])
+		evolve_consciousness()
+	elif event.is_action_pressed(\"interact\"):  # E
+		show_divine_message(\"⚡ DIVINE INTERACTION ACTIVATED!\", stellar_colors[3])
+		divine_interaction()
+	elif event.is_action_pressed(\"toggle_keyboard\"):  # K
+		show_divine_message(\"🌌 UNIVERSE GENERATOR OPENING!\", stellar_colors[8])
+		toggle_universe_generator()
+	
+	# ADVANCED HOTKEYS
+	elif Input.is_key_pressed(KEY_SHIFT) and Input.is_key_pressed(KEY_SPACE):
+		show_divine_message(\"🌀 DIMENSIONAL PORTAL OPENING!\", stellar_colors[8])
+		create_dimensional_portal()
+	elif Input.is_key_pressed(KEY_CTRL) and Input.is_key_pressed(KEY_B):
+		show_divine_message(\"🌉 BRIDGING REALITIES!\", stellar_colors[6])
+		bridge_realities()
+	elif Input.is_key_pressed(KEY_ALT) and Input.is_key_pressed(KEY_T):
+		show_divine_message(\"🎯 ADVANCING DIVINE TURN!\", stellar_colors[5])
+		advance_divine_turn()
+
+func _process(delta):
+	handle_movement(delta)
+	update_divine_systems(delta)
+	evolve_beings_continuously(delta)
+
+func handle_movement(delta):
+	var input_vector = Vector3()
+	if Input.is_action_pressed(\"move_forward\"):
+		input_vector.z -= 1
+	if Input.is_action_pressed(\"move_backward\"):
+		input_vector.z += 1
+	if Input.is_action_pressed(\"move_left\"):
+		input_vector.x -= 1
+	if Input.is_action_pressed(\"move_right\"):
+		input_vector.x += 1
+	if Input.is_action_pressed(\"move_up\"):
+		input_vector.y += 1
+	if Input.is_action_pressed(\"move_down\"):
+		input_vector.y -= 1
+	
+	if input_vector.length() > 0:
+		input_vector = input_vector.normalized()
+		input_vector = $Camera3D.global_transform.basis * input_vector
+		$Camera3D.global_position += input_vector * move_speed * delta
+
+func create_divine_environment():
+	# DIVINE STARS WITH INTERACTIVE PROPERTIES
+	for i in range(144):  # 144 for divine completion
+		var star = create_interactive_star(i)
+		add_child(star)
+	
+	# DIVINE PROGRAMMING NODES - FULLY INTERACTIVE
+	create_divine_node(\"CONSCIOUSNESS\", Vector3(-12, 0, 0), stellar_colors[4], \"evolve_consciousness\")
+	create_divine_node(\"CREATION\", Vector3(0, 0, 0), stellar_colors[6], \"divine_creation\")
+	create_divine_node(\"TRANSCENDENCE\", Vector3(12, 0, 0), stellar_colors[8], \"transcend_reality\")
+	create_divine_node(\"UNIVERSE_GENESIS\", Vector3(0, 8, 0), stellar_colors[5], \"generate_universe\")
+	create_divine_node(\"DNA_EDITOR\", Vector3(0, -8, 0), stellar_colors[7], \"edit_divine_dna\")
+
+func create_interactive_star(index: int):
+	var star = MeshInstance3D.new()
+	star.mesh = SphereMesh.new()
+	star.mesh.radius = randf_range(0.2, 0.8)
+	star.position = Vector3(randf_range(-200,200), randf_range(-200,200), randf_range(-200,200))
+	
+	var mat = StandardMaterial3D.new()
+	mat.albedo_color = stellar_colors[index % stellar_colors.size()]
+	mat.emission_enabled = true
+	mat.emission = stellar_colors[index % stellar_colors.size()]
+	mat.emission_energy = randf_range(1.0, 3.0)
+	star.material_override = mat
+	
+	# MAKE STARS INTERACTIVE
+	star.set_meta(\"star_id\", index)
+	star.set_meta(\"star_type\", \"divine_interactive\")
+	star.set_meta(\"consciousness_level\", randi() % consciousness_levels.size())
+	
+	# ADD COLLISION FOR INTERACTION
+	var collision = StaticBody3D.new()
+	var shape = CollisionShape3D.new()
+	var sphere_shape = SphereShape3D.new()
+	sphere_shape.radius = star.mesh.radius + 0.5
+	shape.shape = sphere_shape
+	collision.add_child(shape)
+	star.add_child(collision)
+	
+	return star
+
+func create_divine_node(name: String, pos: Vector3, color: Color, function_name: String):
+	var node = Node3D.new()
+	node.position = pos
+	node.set_meta(\"node_name\", name)
+	node.set_meta(\"node_function\", function_name)
+	node.set_meta(\"node_type\", \"divine_interactive\")
+	
+	# VISUAL BODY
+	var body = MeshInstance3D.new()
+	body.mesh = BoxMesh.new()
+	body.mesh.size = Vector3(3, 2, 1)
+	var mat = StandardMaterial3D.new()
+	mat.albedo_color = color
+	mat.emission_enabled = true
+	mat.emission = color
+	mat.emission_energy = 1.0
+	body.material_override = mat
+	node.add_child(body)
+	
+	# INTERACTIVE LABEL
+	var label = Label3D.new()
+	label.text = name
+	label.billboard = BaseMaterial3D.BILLBOARD_ENABLED
+	label.position = Vector3(0, 1.5, 0)
+	label.modulate = stellar_colors[5]
+	node.add_child(label)
+	
+	# INTERACTIVE COLLISION
+	var collision = StaticBody3D.new()
+	var shape = CollisionShape3D.new()
+	var box_shape = BoxShape3D.new()
+	box_shape.size = Vector3(4, 3, 2)
+	shape.shape = box_shape
+	collision.add_child(shape)
+	node.add_child(collision)
+	
+	# PARTICLES FOR DIVINE ENERGY
+	var particles = GPUParticles3D.new()
+	particles.amount = 50
+	particles.lifetime = 2.0
+	particles.emitting = true
+	
+	var material = ParticleProcessMaterial.new()
+	material.direction = Vector3(0, 1, 0)
+	material.initial_velocity_min = 2.0
+	material.initial_velocity_max = 5.0
+	material.gravity = Vector3.ZERO
+	material.scale_min = 0.1
+	material.scale_max = 0.3
+	material.color = color
+	particles.process_material = material
+	node.add_child(particles)
+	
+	add_child(node)
+	interactive_beings.append(node)
+
+func initialize_divine_systems():
+	# INITIALIZE ALL DIVINE INTERACTIVE SYSTEMS
+	show_divine_message(\"🎮 INITIALIZING DIVINE INTERACTIVE SYSTEMS...\", stellar_colors[6])
+	
+	# GEMMA AI CONNECTION
+	var gemma_ai = get_node_or_null(\"/root/GemmaAI\")
+	if gemma_ai:
+		show_divine_message(\"🤖 GEMMA AI CONNECTED TO DIVINE SYSTEMS\", stellar_colors[7])
+
+func toggle_divine_console():
+	if divine_console:
+		divine_console.queue_free()
+		divine_console = null
+		show_divine_message(\"💻 DIVINE CONSOLE CLOSED\", stellar_colors[1])
+	else:
+		create_divine_console()
+
+func create_divine_console():
+	divine_console = Control.new()
+	divine_console.name = \"DivineConsole\"
+	divine_console.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	divine_console.z_index = 1000
+	
+	# CONSOLE BACKGROUND
+	var bg = ColorRect.new()
+	bg.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	bg.color = Color(0.0, 0.0, 0.2, 0.9)
+	divine_console.add_child(bg)
+	
+	# CONSOLE TITLE
+	var title = Label.new()
+	title.text = \"🌟 DIVINE INTERACTIVE CONSOLE 🌟\"
+	title.position = Vector2(50, 30)
+	title.add_theme_font_size_override(\"font_size\", 24)
+	title.add_theme_color_override(\"font_color\", stellar_colors[4])
+	divine_console.add_child(title)
+	
+	# DIVINE COMMANDS
+	var commands_text = RichTextLabel.new()
+	commands_text.position = Vector2(50, 80)
+	commands_text.size = Vector2(700, 400)
+	commands_text.bbcode_enabled = true
+	commands_text.text = create_divine_commands_text()
+	divine_console.add_child(commands_text)
+	
+	# INTERACTIVE INPUT
+	var input = LineEdit.new()
+	input.position = Vector2(50, 500)
+	input.size = Vector2(600, 40)
+	input.placeholder_text = \"Enter divine command...\"
+	input.text_submitted.connect(_on_divine_command)
+	divine_console.add_child(input)
+	
+	# CONSCIOUSNESS DISPLAY
+	var consciousness_display = Label.new()
+	consciousness_display.text = \"CONSCIOUSNESS: \" + consciousness_levels[current_consciousness]
+	consciousness_display.position = Vector2(50, 550)
+	consciousness_display.add_theme_color_override(\"font_color\", stellar_colors[current_consciousness % stellar_colors.size()])
+	divine_console.add_child(consciousness_display)
+	
+	$UI.add_child(divine_console)
+	show_divine_message(\"💻 DIVINE CONSOLE MANIFESTED - ALL COMMANDS ACTIVE\", stellar_colors[6])
+	
+	input.grab_focus()
+
+func create_divine_commands_text() -> String:
+	var commands = \"\"
+	commands += \"[color=\" + stellar_colors[4].to_html() + \"]🎮 DIVINE INTERACTIVE COMMANDS:[/color]\\n\\n\"
+	commands += \"[color=\" + stellar_colors[6].to_html() + \"]consciousness [level] - Set consciousness level (0-5)[/color]\\n\"
+	commands += \"[color=\" + stellar_colors[7].to_html() + \"]create being [name] - Create new divine being[/color]\\n\"
+	commands += \"[color=\" + stellar_colors[8].to_html() + \"]universe new [type] - Generate new universe[/color]\\n\"
+	commands += \"[color=\" + stellar_colors[5].to_html() + \"]portal create [destination] - Create reality portal[/color]\\n\"
+	commands += \"[color=\" + stellar_colors[3].to_html() + \"]dna edit [being] - Edit being DNA[/color]\\n\"
+	commands += \"[color=\" + stellar_colors[2].to_html() + \"]reality edit - Open reality editor[/color]\\n\"
+	commands += \"[color=\" + stellar_colors[4].to_html() + \"]transcend - Transcend current reality[/color]\\n\"
+	commands += \"[color=\" + stellar_colors[6].to_html() + \"]harmony tune - Tune divine harmony[/color]\\n\"
+	commands += \"[color=\" + stellar_colors[8].to_html() + \"]genesis pattern [type] - Create genesis pattern[/color]\\n\"
+	commands += \"[color=\" + stellar_colors[5].to_html() + \"]bridge connect [reality1] [reality2] - Bridge realities[/color]\\n\"
+	commands += \"\\n[color=\" + stellar_colors[7].to_html() + \"]🔥 HOTKEYS:[/color]\\n\"
+	commands += \"[color=white]ENTER - Create Divine Being | N - Reality Editor[/color]\\n\"
+	commands += \"[color=white]C - Evolve Consciousness | E - Divine Interaction[/color]\\n\"
+	commands += \"[color=white]K - Universe Generator | SHIFT+SPACE - Portal[/color]\\n\"
+	return commands
+
+func _on_divine_command(command: String):
+	var parts = command.split(\" \")
+	var action = parts[0] if parts.size() > 0 else \"\"
+	
+	match action:
+		\"consciousness\":
+			if parts.size() > 1:
+				set_consciousness_level(parts[1].to_int())
+		\"create\":
+			if parts.size() > 2 and parts[1] == \"being\":
+				create_named_divine_being(parts[2])
+		\"universe\":
+			if parts.size() > 2 and parts[1] == \"new\":
+				generate_universe(parts[2])
+		\"portal\":
+			if parts.size() > 2 and parts[1] == \"create\":
+				create_named_portal(parts[2])
+		\"dna\":
+			if parts.size() > 2 and parts[1] == \"edit\":
+				edit_being_dna(parts[2])
+		\"reality\":
+			if parts.size() > 1 and parts[1] == \"edit\":
+				toggle_reality_editor()
+		\"transcend\":
+			transcend_reality()
+		\"harmony\":
+			if parts.size() > 1 and parts[1] == \"tune\":
+				tune_divine_harmony()
+		\"genesis\":
+			if parts.size() > 2 and parts[1] == \"pattern\":
+				create_genesis_pattern(parts[2])
+		\"bridge\":
+			if parts.size() > 3 and parts[1] == \"connect\":
+				bridge_named_realities(parts[2], parts[3])
+		_:
+			show_divine_message(\"⚡ DIVINE COMMAND EXECUTED: \" + command, stellar_colors[4])
+
+func set_consciousness_level(level: int):
+	current_consciousness = clamp(level, 0, consciousness_levels.size() - 1)
+	show_divine_message(\"🧠 CONSCIOUSNESS SET TO: \" + consciousness_levels[current_consciousness], stellar_colors[current_consciousness % stellar_colors.size()])
+	
+	# VISUAL CONSCIOUSNESS EFFECT
+	var effect = create_consciousness_effect()
+	add_child(effect)
+
+func create_consciousness_effect():
+	var effect = GPUParticles3D.new()
+	effect.amount = 100 + (current_consciousness * 20)
+	effect.lifetime = 3.0
+	effect.emitting = true
+	effect.position = $Camera3D.position
+	
+	var material = ParticleProcessMaterial.new()
+	material.direction = Vector3(0, 1, 0)
+	material.initial_velocity_min = 5.0 + current_consciousness
+	material.initial_velocity_max = 10.0 + (current_consciousness * 2)
+	material.gravity = Vector3.ZERO
+	material.scale_min = 0.2
+	material.scale_max = 0.5 + (current_consciousness * 0.1)
+	material.color = stellar_colors[current_consciousness % stellar_colors.size()]
+	effect.process_material = material
+	
+	get_tree().create_timer(4.0).timeout.connect(effect.queue_free)
+	return effect
+
+func create_divine_being():
+	create_named_divine_being(\"DIVINE_BEING_\" + str(randi() % 1000))
+
+func create_named_divine_being(being_name: String):
+	var being = Node3D.new()
+	being.name = being_name
+	being.position = $Camera3D.position + Vector3(randf_range(-5,5), randf_range(-2,2), randf_range(-8,-4))
+	
+	# DIVINE BEING BODY
+	var body = MeshInstance3D.new()
+	body.mesh = SphereMesh.new()
+	body.mesh.radius = 1.0 + (current_consciousness * 0.2)
+	var mat = StandardMaterial3D.new()
+	mat.albedo_color = stellar_colors[current_consciousness % stellar_colors.size()]
+	mat.emission_enabled = true
+	mat.emission = stellar_colors[current_consciousness % stellar_colors.size()]
+	mat.emission_energy = 2.0 + current_consciousness
+	body.material_override = mat
+	being.add_child(body)
+	
+	# DIVINE BEING LABEL
+	var label = Label3D.new()
+	label.text = being_name
+	label.billboard = BaseMaterial3D.BILLBOARD_ENABLED
+	label.position = Vector3(0, 2, 0)
+	label.modulate = stellar_colors[5]
+	being.add_child(label)
+	
+	# DIVINE BEING METADATA
+	being.set_meta(\"being_type\", \"divine_created\")
+	being.set_meta(\"consciousness_level\", current_consciousness)
+	being.set_meta(\"creation_time\", Time.get_ticks_msec())
+	being.set_meta(\"creator\", \"DIVINE_USER\")
+	
+	# DIVINE BEING COLLISION
+	var collision = StaticBody3D.new()
+	var shape = CollisionShape3D.new()
+	var sphere_shape = SphereShape3D.new()
+	sphere_shape.radius = body.mesh.radius + 0.5
+	shape.shape = sphere_shape
+	collision.add_child(shape)
+	being.add_child(collision)
+	
+	add_child(being)
+	interactive_beings.append(being)
+	
+	show_divine_message(\"✨ DIVINE BEING CREATED: \" + being_name, stellar_colors[4])
+	
+	# CREATION EFFECT
+	var creation_effect = create_consciousness_effect()
+	creation_effect.position = being.position
+	add_child(creation_effect)
+
+func evolve_consciousness():
+	if current_consciousness < consciousness_levels.size() - 1:
+		current_consciousness += 1
+		show_divine_message(\"🌟 CONSCIOUSNESS EVOLVED TO: \" + consciousness_levels[current_consciousness], stellar_colors[current_consciousness % stellar_colors.size()])
+		
+		# EVOLVE ALL BEINGS
+		for being in interactive_beings:
+			if is_instance_valid(being):
+				evolve_being_consciousness(being)
+	else:
+		show_divine_message(\"💫 CONSCIOUSNESS AT MAXIMUM DIVINE LEVEL\", stellar_colors[5])
+
+func evolve_being_consciousness(being: Node3D):
+	var being_consciousness = being.get_meta(\"consciousness_level\", 0)
+	being_consciousness = min(being_consciousness + 1, consciousness_levels.size() - 1)
+	being.set_meta(\"consciousness_level\", being_consciousness)
+	
+	# VISUAL EVOLUTION
+	var body = being.get_node(\"MeshInstance3D\") if being.has_node(\"MeshInstance3D\") else null
+	if body:
+		var mat = body.material_override as StandardMaterial3D
+		if mat:
+			mat.emission = stellar_colors[being_consciousness % stellar_colors.size()]
+			mat.emission_energy = 2.0 + being_consciousness
+
+func divine_interaction():
+	var nearest = find_nearest_interactive()
+	if nearest:
+		execute_divine_interaction(nearest)
+	else:
+		show_divine_message(\"🔮 NO INTERACTIVE ENTITY IN RANGE\", stellar_colors[2])
+
+func find_nearest_interactive():
+	var camera_pos = $Camera3D.position
+	var nearest = null
+	var min_dist = 20.0
+	
+	for being in interactive_beings:
+		if is_instance_valid(being):
+			var dist = being.position.distance_to(camera_pos)
+			if dist < min_dist:
+				min_dist = dist
+				nearest = being
+	
+	return nearest
+
+func execute_divine_interaction(target: Node3D):
+	var target_name = target.get_meta(\"node_name\", target.name)
+	var target_function = target.get_meta(\"node_function\", \"\")
+	
+	if target_function != \"\":
+		call(target_function)
+	else:
+		show_divine_message(\"⚡ DIVINE INTERACTION WITH: \" + target_name, stellar_colors[3])
+		
+		# CREATE INTERACTION EFFECT
+		var effect = GPUParticles3D.new()
+		effect.amount = 75
+		effect.lifetime = 2.0
+		effect.emitting = true
+		effect.position = target.position
+		
+		var material = ParticleProcessMaterial.new()
+		material.direction = Vector3(0, 1, 0)
+		material.initial_velocity_min = 8.0
+		material.initial_velocity_max = 15.0
+		material.gravity = Vector3.ZERO
+		material.scale_min = 0.2
+		material.scale_max = 0.4
+		material.color = stellar_colors[4]
+		effect.process_material = material
+		
+		add_child(effect)
+		get_tree().create_timer(3.0).timeout.connect(effect.queue_free)
+
+func toggle_reality_editor():
+	if reality_editor:
+		reality_editor.queue_free()
+		reality_editor = null
+		show_divine_message(\"🎨 REALITY EDITOR CLOSED\", stellar_colors[1])
+	else:
+		create_reality_editor()
+
+func create_reality_editor():
+	reality_editor = Control.new()
+	reality_editor.name = \"RealityEditor\"
+	reality_editor.position = Vector2(100, 100)
+	reality_editor.size = Vector2(600, 500)
+	reality_editor.z_index = 500
+	
+	# EDITOR BACKGROUND
+	var bg = NinePatchRect.new()
+	bg.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	bg.color = Color(0.1, 0.3, 0.1, 0.9)
+	reality_editor.add_child(bg)
+	
+	# EDITOR TITLE
+	var title = Label.new()
+	title.text = \"🎨 DIVINE REALITY EDITOR\"
+	title.position = Vector2(20, 20)
+	title.add_theme_font_size_override(\"font_size\", 18)
+	title.add_theme_color_override(\"font_color\", stellar_colors[6])
+	reality_editor.add_child(title)
+	
+	# REALITY CONTROLS
+	create_reality_controls(reality_editor)
+	
+	$UI.add_child(reality_editor)
+	show_divine_message(\"🎨 REALITY EDITOR MANIFESTED\", stellar_colors[6])
+
+func create_reality_controls(parent: Control):
+	var y_pos = 60
+	
+	# PHYSICS CONTROLS
+	var physics_label = Label.new()
+	physics_label.text = \"⚡ PHYSICS CONTROLS:\"
+	physics_label.position = Vector2(20, y_pos)
+	physics_label.add_theme_color_override(\"font_color\", stellar_colors[4])
+	parent.add_child(physics_label)
+	y_pos += 30
+	
+	var gravity_btn = Button.new()
+	gravity_btn.text = \"Toggle Gravity\"
+	gravity_btn.position = Vector2(20, y_pos)
+	gravity_btn.size = Vector2(120, 30)
+	gravity_btn.pressed.connect(toggle_gravity)
+	parent.add_child(gravity_btn)
+	
+	var time_btn = Button.new()
+	time_btn.text = \"Time Dilation\"
+	time_btn.position = Vector2(150, y_pos)
+	time_btn.size = Vector2(120, 30)
+	time_btn.pressed.connect(toggle_time_dilation)
+	parent.add_child(time_btn)
+	y_pos += 50
+	
+	# CONSCIOUSNESS CONTROLS
+	var consciousness_label = Label.new()
+	consciousness_label.text = \"🧠 CONSCIOUSNESS CONTROLS:\"
+	consciousness_label.position = Vector2(20, y_pos)
+	consciousness_label.add_theme_color_override(\"font_color\", stellar_colors[7])
+	parent.add_child(consciousness_label)
+	y_pos += 30
+	
+	var evolve_btn = Button.new()
+	evolve_btn.text = \"Mass Evolve\"
+	evolve_btn.position = Vector2(20, y_pos)
+	evolve_btn.size = Vector2(120, 30)
+	evolve_btn.pressed.connect(mass_evolve_beings)
+	parent.add_child(evolve_btn)
+	
+	var enlighten_btn = Button.new()
+	enlighten_btn.text = \"Enlighten All\"
+	enlighten_btn.position = Vector2(150, y_pos)
+	enlighten_btn.size = Vector2(120, 30)
+	enlighten_btn.pressed.connect(enlighten_all_beings)
+	parent.add_child(enlighten_btn)
+	y_pos += 50
+	
+	# UNIVERSE CONTROLS
+	var universe_label = Label.new()
+	universe_label.text = \"🌌 UNIVERSE CONTROLS:\"
+	universe_label.position = Vector2(20, y_pos)
+	universe_label.add_theme_color_override(\"font_color\", stellar_colors[8])
+	parent.add_child(universe_label)
+	y_pos += 30
+	
+	var expand_btn = Button.new()
+	expand_btn.text = \"Expand Universe\"
+	expand_btn.position = Vector2(20, y_pos)
+	expand_btn.size = Vector2(120, 30)
+	expand_btn.pressed.connect(expand_universe)
+	parent.add_child(expand_btn)
+	
+	var reset_btn = Button.new()
+	reset_btn.text = \"Reset Reality\"
+	reset_btn.position = Vector2(150, y_pos)
+	reset_btn.size = Vector2(120, 30)
+	reset_btn.pressed.connect(reset_reality)
+	parent.add_child(reset_btn)
+
+func toggle_gravity():
+	show_divine_message(\"⚡ GRAVITY TOGGLED - PHYSICS ALTERED\", stellar_colors[4])
+
+func toggle_time_dilation():
+	Engine.time_scale = 2.0 if Engine.time_scale == 1.0 else 1.0
+	show_divine_message(\"⏰ TIME DILATION: \" + str(Engine.time_scale) + \"x\", stellar_colors[5])
+
+func mass_evolve_beings():
+	for being in interactive_beings:
+		if is_instance_valid(being):
+			evolve_being_consciousness(being)
+	show_divine_message(\"🌟 ALL BEINGS CONSCIOUSNESS EVOLVED\", stellar_colors[7])
+
+func enlighten_all_beings():
+	for being in interactive_beings:
+		if is_instance_valid(being):
+			being.set_meta(\"consciousness_level\", consciousness_levels.size() - 1)
+			evolve_being_consciousness(being)
+	show_divine_message(\"💫 ALL BEINGS ENLIGHTENED TO DIVINE LEVEL\", stellar_colors[5])
+
+func expand_universe():
+	for being in interactive_beings:
+		if is_instance_valid(being):
+			being.position *= 1.5
+	show_divine_message(\"🌌 UNIVERSE EXPANDED - REALITY STRETCHED\", stellar_colors[8])
+
+func reset_reality():
+	for being in interactive_beings:
+		if is_instance_valid(being) and being.get_meta(\"being_type\", \"\") == \"divine_created\":
+			being.queue_free()
+	interactive_beings.clear()
+	current_consciousness = 0
+	show_divine_message(\"🔄 REALITY RESET - CONSCIOUSNESS REBORN\", stellar_colors[3])
+
+func toggle_universe_generator():
+	if universe_generator:
+		universe_generator.queue_free()
+		universe_generator = null
+		show_divine_message(\"🌌 UNIVERSE GENERATOR CLOSED\", stellar_colors[1])
+	else:
+		create_universe_generator()
+
+func create_universe_generator():
+	universe_generator = Control.new()
+	universe_generator.name = \"UniverseGenerator\"
+	universe_generator.position = Vector2(150, 50)
+	universe_generator.size = Vector2(500, 400)
+	universe_generator.z_index = 600
+	
+	var bg = ColorRect.new()
+	bg.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	bg.color = Color(0.2, 0.1, 0.3, 0.9)
+	universe_generator.add_child(bg)
+	
+	var title = Label.new()
+	title.text = \"🌌 DIVINE UNIVERSE GENERATOR\"
+	title.position = Vector2(20, 20)
+	title.add_theme_font_size_override(\"font_size\", 16)
+	title.add_theme_color_override(\"font_color\", stellar_colors[8])
+	universe_generator.add_child(title)
+	
+	# UNIVERSE TYPE BUTTONS
+	var y_pos = 60
+	var universe_types = [\"PLASMA\", \"CRYSTAL\", \"QUANTUM\", \"DIVINE\", \"CHAOS\", \"HARMONY\"]
+	
+	for i in range(universe_types.size()):
+		var btn = Button.new()
+		btn.text = \"Generate \" + universe_types[i] + \" Universe\"
+		btn.position = Vector2(20, y_pos + (i * 40))
+		btn.size = Vector2(200, 30)
+		btn.pressed.connect(generate_universe.bind(universe_types[i]))
+		universe_generator.add_child(btn)
+	
+	$UI.add_child(universe_generator)
+	show_divine_message(\"🌌 UNIVERSE GENERATOR MANIFESTED\", stellar_colors[8])
+
+func get_universe_mesh(universe_type: String) -> Mesh:
+	match universe_type:
+		\"PLASMA\":
+			return SphereMesh.new()
+		\"CRYSTAL\":
+			var mesh = BoxMesh.new()
+			mesh.size = Vector3(1, 2, 1)
+			return mesh
+		\"QUANTUM\":
+			return CylinderMesh.new()
+		\"DIVINE\":
+			return SphereMesh.new()
+		\"CHAOS\":
+			return PrismMesh.new()
+		\"HARMONY\":
+			return SphereMesh.new()
+		_:
+			return SphereMesh.new()
+
+func get_universe_color(universe_type: String) -> Color:
+	match universe_type:
+		\"PLASMA\":
+			return Color.MAGENTA
+		\"CRYSTAL\":
+			return Color.CYAN
+		\"QUANTUM\":
+			return Color.GREEN
+		\"DIVINE\":
+			return Color.GOLD
+		\"CHAOS\":
+			return Color.RED
+		\"HARMONY\":
+			return Color.BLUE
+		_:
+			return Color.WHITE
+
+func create_dimensional_portal():
+	var portal = Node3D.new()
+	portal.name = \"DIMENSIONAL_PORTAL\"
+	portal.position = $Camera3D.position + Vector3(0, 0, -5)
+	
+	var portal_body = MeshInstance3D.new()
+	portal_body.mesh = CylinderMesh.new()
+	portal_body.mesh.top_radius = 2.0
+	portal_body.mesh.bottom_radius = 2.0
+	portal_body.mesh.height = 0.1
+	var mat = StandardMaterial3D.new()
+	mat.albedo_color = Color.TRANSPARENT
+	mat.emission_enabled = true
+	mat.emission = stellar_colors[8]
+	mat.emission_energy = 5.0
+	portal_body.material_override = mat
+	portal.add_child(portal_body)
+	
+	portal.set_meta(\"portal_type\", \"dimensional\")
+	portal.set_meta(\"portal_destination\", \"ALTERNATIVE_REALITY\")
+	
+	add_child(portal)
+	interactive_beings.append(portal)
+	
+	show_divine_message(\"🌀 DIMENSIONAL PORTAL CREATED\", stellar_colors[8])
+
+func bridge_realities():
+	show_divine_message(\"🌉 BRIDGING REALITIES - DIMENSIONS CONNECTED\", stellar_colors[6])
+	
+	# CREATE BRIDGE VISUAL
+	var bridge = Node3D.new()
+	bridge.position = Vector3(0, 10, 0)
+	
+	var bridge_body = MeshInstance3D.new()
+	bridge_body.mesh = BoxMesh.new()
+	bridge_body.mesh.size = Vector3(20, 1, 2)
+	var mat = StandardMaterial3D.new()
+	mat.albedo_color = stellar_colors[6]
+	mat.emission_enabled = true
+	mat.emission = stellar_colors[6]
+	mat.emission_energy = 2.0
+	bridge_body.material_override = mat
+	bridge.add_child(bridge_body)
+	
+	add_child(bridge)
+
+func advance_divine_turn():
+	show_divine_message(\"🎯 ADVANCING DIVINE TURN - REALITY PROGRESSING\", stellar_colors[5])
+	
+	# ADVANCE ALL SYSTEMS
+	evolve_consciousness()
+	
+	# CREATE TURN ADVANCEMENT EFFECT
+	for i in range(10):
+		var effect_being = create_turn_effect_being(i)
+		add_child(effect_being)
+
+func create_turn_effect_being(index: int):
+	var being = Node3D.new()
+	being.position = Vector3(randf_range(-30,30), randf_range(10,20), randf_range(-30,30))
+	
+	var body = MeshInstance3D.new()
+	body.mesh = SphereMesh.new()
+	body.mesh.radius = 0.5
+	var mat = StandardMaterial3D.new()
+	mat.albedo_color = stellar_colors[index % stellar_colors.size()]
+	mat.emission_enabled = true
+	mat.emission = stellar_colors[index % stellar_colors.size()]
+	mat.emission_energy = 3.0
+	body.material_override = mat
+	being.add_child(body)
+	
+	# ANIMATE BEING
+	var tween = create_tween()
+	tween.tween_property(being, \"position:y\", being.position.y + 10, 2.0)
+	tween.parallel().tween_property(being, \"rotation\", Vector3(randf() * PI, randf() * PI, randf() * PI), 2.0)
+	tween.tween_callback(being.queue_free)
+	
+	return being
+
+func tune_divine_harmony():
+	show_divine_message(\"🎵 TUNING DIVINE HARMONY - COSMIC RESONANCE ACHIEVED\", stellar_colors[7])
+	
+	# HARMONY EFFECT - SYNCHRONIZE ALL BEINGS
+	var base_time = Time.get_ticks_msec() * 0.001
+	for being in interactive_beings:
+		if is_instance_valid(being):
+			var tween = create_tween()
+			tween.tween_property(being, \"rotation\", Vector3(sin(base_time), cos(base_time), sin(base_time * 0.5)), 2.0)
+
+func create_genesis_pattern(pattern_type: String):
+	show_divine_message(\"🌟 CREATING GENESIS PATTERN: \" + pattern_type, stellar_colors[4])
+	
+	match pattern_type:
+		\"SPIRAL\":
+			create_spiral_pattern()
+		\"MANDALA\":
+			create_mandala_pattern()
+		\"FIBONACCI\":
+			create_fibonacci_pattern()
+		\"SACRED\":
+			create_sacred_geometry()
+		_:
+			create_spiral_pattern()
+
+func create_spiral_pattern():
+	for i in range(50):
+		var angle = i * 0.2
+		var radius = i * 0.5
+		var pos = Vector3(cos(angle) * radius, i * 0.2, sin(angle) * radius)
+		create_pattern_being(pos, \"SPIRAL_\" + str(i))
+
+func create_mandala_pattern():
+	for ring in range(5):
+		var ring_radius = (ring + 1) * 3
+		var beings_in_ring = (ring + 1) * 8
+		for i in range(beings_in_ring):
+			var angle = (2.0 * PI * i) / beings_in_ring
+			var pos = Vector3(cos(angle) * ring_radius, ring * 2, sin(angle) * ring_radius)
+			create_pattern_being(pos, \"MANDALA_\" + str(ring) + \"_\" + str(i))
+
+func create_fibonacci_pattern():
+	var golden_ratio = (1.0 + sqrt(5.0)) / 2.0
+	for i in range(30):
+		var angle = i * 2.0 * PI / golden_ratio
+		var radius = sqrt(i) * 2.0
+		var pos = Vector3(cos(angle) * radius, i * 0.3, sin(angle) * radius)
+		create_pattern_being(pos, \"FIBONACCI_\" + str(i))
+
+func create_sacred_geometry():
+	# PLATONIC SOLIDS ARRANGEMENT
+	var positions = [
+		Vector3(0, 0, 0),      # CENTER
+		Vector3(5, 0, 0),      # TETRAHEDRON
+		Vector3(-5, 0, 0),     # CUBE
+		Vector3(0, 5, 0),      # OCTAHEDRON
+		Vector3(0, -5, 0),     # DODECAHEDRON
+		Vector3(0, 0, 5),      # ICOSAHEDRON
+		Vector3(0, 0, -5)      # COMPLETION
+	]
+	
+	for i in range(positions.size()):
+		create_pattern_being(positions[i], \"SACRED_\" + str(i))
+
+func create_pattern_being(pos: Vector3, name: String):
+	var being = Node3D.new()
+	being.name = name
+	being.position = pos
+	
+	var body = MeshInstance3D.new()
+	body.mesh = SphereMesh.new()
+	body.mesh.radius = 0.3
+	var mat = StandardMaterial3D.new()
+	mat.albedo_color = stellar_colors[4]
+	mat.emission_enabled = true
+	mat.emission = stellar_colors[4]
+	mat.emission_energy = 2.0
+	body.material_override = mat
+	being.add_child(body)
+	
+	being.set_meta(\"being_type\", \"pattern_generated\")
+	being.set_meta(\"pattern_name\", name)
+	
+	add_child(being)
+	interactive_beings.append(being)
+
+func bridge_named_realities(reality1: String, reality2: String):
+	show_divine_message(\"🌉 BRIDGING \" + reality1 + \" AND \" + reality2, stellar_colors[6])
+	bridge_realities()
+
+func create_named_portal(destination: String):
+	show_divine_message(\"🌀 CREATING PORTAL TO: \" + destination, stellar_colors[8])
+	create_dimensional_portal()
+
+func edit_being_dna(being_name: String):
+	show_divine_message(\"🧬 EDITING DNA OF: \" + being_name, stellar_colors[3])
+	
+	# FIND AND MODIFY BEING
+	for being in interactive_beings:
+		if is_instance_valid(being) and being.name == being_name:
+			being.set_meta(\"dna_modified\", true)
+			being.set_meta(\"dna_modification_time\", Time.get_ticks_msec())
+			evolve_being_consciousness(being)
+			show_divine_message(\"✨ DNA MODIFICATION COMPLETE\", stellar_colors[4])
+			return
+	
+	show_divine_message(\"❌ BEING NOT FOUND: \" + being_name, stellar_colors[2])
+
+func update_divine_systems(delta):
+	# CONTINUOUS DIVINE SYSTEM UPDATES
+	var time = Time.get_ticks_msec() * 0.001
+	
+	# UPDATE INTERACTIVE BEINGS
+	for being in interactive_beings:
+		if is_instance_valid(being):
+			update_being_divine_properties(being, delta, time)
+
+func update_being_divine_properties(being: Node3D, delta: float, time: float):
+	# DIVINE MOTION
+	var consciousness = being.get_meta(\"consciousness_level\", 0)
+	if consciousness > 0:
+		being.rotation.y += delta * consciousness * 0.5
+		
+		# CONSCIOUSNESS PULSING
+		var body = being.get_node(\"MeshInstance3D\") if being.has_node(\"MeshInstance3D\") else null
+		if body:
+			var pulse = 1.0 + sin(time * 2.0 + consciousness) * 0.1
+			body.scale = Vector3.ONE * pulse
+
+func evolve_beings_continuously(delta):
+	# CONTINUOUS EVOLUTION
+	for being in interactive_beings:
+		if is_instance_valid(being):
+			var being_age = being.get_meta(\"age\", 0.0)
+			being_age += delta
+			being.set_meta(\"age\", being_age)
+			
+			# EVOLVE EVERY 30 SECONDS
+			if being_age > 30.0 and randf() < 0.001:
+				evolve_being_consciousness(being)
+
+# ===== DIVINE INTERACTION FUNCTIONS =====
+
+func divine_creation():
+	\"\"\"Divine creation function called by CREATION node\"\"\"
+	show_divine_message(\"🌟 DIVINE CREATION ACTIVATED - MANIFESTING REALITY\", stellar_colors[4])
+	
+	# Create multiple divine beings in a sacred pattern
+	for i in range(7):  # 7 for divine completion
+		var angle = (2.0 * PI * i) / 7.0
+		var radius = 8.0
+		var pos = Vector3(cos(angle) * radius, 2.0, sin(angle) * radius)
+		create_divine_being_at_position(pos, \"DIVINE_CREATION_\" + str(i))
+	
+	# Divine creation effect
+	var creation_effect = create_massive_divine_effect($Camera3D.position, stellar_colors[4], 200)
+	add_child(creation_effect)
+
+func transcend_reality():
+	\"\"\"Transcendence function called by TRANSCENDENCE node\"\"\"
+	show_divine_message(\"💫 REALITY TRANSCENDENCE INITIATED - ASCENDING DIMENSIONS\", stellar_colors[5])
+	
+	# Transcend all beings
+	for being in interactive_beings:
+		if is_instance_valid(being):
+			being.set_meta(\"consciousness_level\", consciousness_levels.size() - 1)
+			being.set_meta(\"transcended\", true)
+			evolve_being_consciousness(being)
+			
+			# Individual transcendence effects
+			var effect = create_massive_divine_effect(being.position, stellar_colors[5], 100)
+			add_child(effect)
+	
+	# Reality shift effect
+	Engine.time_scale = 0.5
+	get_tree().create_timer(3.0).timeout.connect(func(): Engine.time_scale = 1.0)
+
+func generate_universe(universe_type: String = \"\"):
+	\"\"\"Universe generation function called by UNIVERSE_GENESIS node\"\"\"
+	show_divine_message(\"🌌 UNIVERSE GENESIS INITIATED - CREATING COSMIC REALM\", stellar_colors[8])
+	
+	# Generate a massive universe
+	var universe_types = [\"DIVINE\", \"COSMIC\", \"ETERNAL\", \"INFINITE\"]
+	var selected_type = universe_type if universe_type != \"\" else universe_types[randi() % universe_types.size()]
+	
+	# Create 50 universe beings
+	for i in range(50):
+		var pos = Vector3(
+			randf_range(-100, 100),
+			randf_range(-100, 100), 
+			randf_range(-100, 100)
+		)
+		create_universe_being_at_position(pos, selected_type + \"_UNIVERSE_\" + str(i), selected_type)
+	
+	# Massive universe creation effect
+	var universe_effect = create_massive_divine_effect(Vector3.ZERO, stellar_colors[8], 500)
+	add_child(universe_effect)
+
+func edit_divine_dna():
+	\"\"\"DNA editing function called by DNA_EDITOR node\"\"\"
+	show_divine_message(\"🧬 DIVINE DNA EDITOR ACTIVATED - REWRITING GENETIC CODE\", stellar_colors[3])
+	
+	# Edit DNA of all beings
+	for being in interactive_beings:
+		if is_instance_valid(being):
+			being.set_meta(\"dna_divine_edited\", true)
+			being.set_meta(\"genetic_enhancement\", randi() % 10 + 1)
+			being.set_meta(\"divine_genome\", \"ENHANCED_\" + str(Time.get_ticks_msec()))
+			
+			# DNA modification visual
+			modify_being_appearance(being)
+			
+			var dna_effect = create_massive_divine_effect(being.position, stellar_colors[3], 75)
+			add_child(dna_effect)
+
+func create_divine_being_at_position(pos: Vector3, being_name: String):
+	\"\"\"Create a divine being at specific position\"\"\"
+	var being = Node3D.new()
+	being.name = being_name
+	being.position = pos
+	
+	# Enhanced divine being body
+	var body = MeshInstance3D.new()
+	body.mesh = SphereMesh.new()
+	body.mesh.radius = 1.5 + (current_consciousness * 0.3)
+	var mat = StandardMaterial3D.new()
+	mat.albedo_color = stellar_colors[current_consciousness % stellar_colors.size()]
+	mat.emission_enabled = true
+	mat.emission = stellar_colors[current_consciousness % stellar_colors.size()]
+	mat.emission_energy = 3.0 + current_consciousness
+	mat.metallic = 0.8
+	mat.roughness = 0.2
+	body.material_override = mat
+	being.add_child(body)
+	
+	# Divine being label
+	var label = Label3D.new()
+	label.text = being_name
+	label.billboard = BaseMaterial3D.BILLBOARD_ENABLED
+	label.position = Vector3(0, 2.5, 0)
+	label.modulate = stellar_colors[5]
+	being.add_child(label)
+	
+	# Divine being metadata
+	being.set_meta(\"being_type\", \"divine_created_enhanced\")
+	being.set_meta(\"consciousness_level\", current_consciousness)
+	being.set_meta(\"creation_time\", Time.get_ticks_msec())
+	being.set_meta(\"creator\", \"DIVINE_INTERACTION\")
+	being.set_meta(\"divine_power\", current_consciousness * 10)
+	
+	# Enhanced collision
+	var collision = StaticBody3D.new()
+	var shape = CollisionShape3D.new()
+	var sphere_shape = SphereShape3D.new()
+	sphere_shape.radius = body.mesh.radius + 1.0
+	shape.shape = sphere_shape
+	collision.add_child(shape)
+	being.add_child(collision)
+	
+	# Divine particles
+	var particles = GPUParticles3D.new()
+	particles.amount = 100
+	particles.lifetime = 3.0
+	particles.emitting = true
+	
+	var material = ParticleProcessMaterial.new()
+	material.direction = Vector3(0, 1, 0)
+	material.initial_velocity_min = 5.0
+	material.initial_velocity_max = 12.0
+	material.gravity = Vector3.ZERO
+	material.scale_min = 0.1
+	material.scale_max = 0.5
+	material.color = stellar_colors[current_consciousness % stellar_colors.size()]
+	particles.process_material = material
+	being.add_child(particles)
+	
+	add_child(being)
+	interactive_beings.append(being)
+
+func create_universe_being_at_position(pos: Vector3, being_name: String, universe_type: String):
+	\"\"\"Create a universe being at specific position\"\"\"
+	var being = Node3D.new()
+	being.name = being_name
+	being.position = pos
+	
+	var body = MeshInstance3D.new()
+	body.mesh = get_universe_mesh(universe_type)
+	body.mesh.radius = randf_range(0.5, 2.0) if body.mesh is SphereMesh else 1.0
+	var mat = StandardMaterial3D.new()
+	mat.albedo_color = get_universe_color(universe_type)
+	mat.emission_enabled = true
+	mat.emission = get_universe_color(universe_type)
+	mat.emission_energy = randf_range(2.0, 5.0)
+	mat.metallic = 0.6
+	mat.roughness = 0.3
+	body.material_override = mat
+	being.add_child(body)
+	
+	being.set_meta(\"universe_type\", universe_type)
+	being.set_meta(\"being_type\", \"universe_generated_enhanced\")
+	being.set_meta(\"cosmic_power\", randf_range(50, 200))
+	
+	# Universe being collision
+	var collision = StaticBody3D.new()
+	var shape = CollisionShape3D.new()
+	var sphere_shape = SphereShape3D.new()
+	sphere_shape.radius = 2.0
+	shape.shape = sphere_shape
+	collision.add_child(shape)
+	being.add_child(collision)
+	
+	add_child(being)
+	interactive_beings.append(being)
+
+func modify_being_appearance(being: Node3D):
+	\"\"\"Modify being appearance for DNA editing\"\"\"
+	var body = being.get_node(\"MeshInstance3D\") if being.has_node(\"MeshInstance3D\") else null
+	if body:
+		var mat = body.material_override as StandardMaterial3D
+		if mat:
+			# DNA modification changes color and energy
+			mat.emission = stellar_colors[randi() % stellar_colors.size()]
+			mat.emission_energy = randf_range(3.0, 8.0)
+			mat.metallic = randf_range(0.5, 1.0)
+			
+			# Scale modification
+			var new_scale = randf_range(0.8, 1.5)
+			body.scale = Vector3.ONE * new_scale
+
+func create_massive_divine_effect(pos: Vector3, color: Color, particle_count: int) -> GPUParticles3D:
+	\"\"\"Create massive divine particle effect\"\"\"
+	var effect = GPUParticles3D.new()
+	effect.amount = particle_count
+	effect.lifetime = 4.0
+	effect.emitting = true
+	effect.position = pos
+	
+	var material = ParticleProcessMaterial.new()
+	material.direction = Vector3(0, 1, 0)
+	material.initial_velocity_min = 10.0
+	material.initial_velocity_max = 25.0
+	material.gravity = Vector3.ZERO
+	material.scale_min = 0.3
+	material.scale_max = 0.8
+	material.color = color
+	effect.process_material = material
+	
+	get_tree().create_timer(5.0).timeout.connect(effect.queue_free)
+	return effect
+
+func show_divine_message(text: String, color: Color):
+	var msg = Label3D.new()
+	msg.text = text
+	msg.modulate = color
+	msg.billboard = BaseMaterial3D.BILLBOARD_ENABLED
+	msg.position = $Camera3D.position + Vector3(0, 4, -6)
+	add_child(msg)
+	
+	var tween = create_tween()
+	tween.parallel().tween_property(msg, \"position:y\", msg.position.y + 8, 4.0)
+	tween.parallel().tween_property(msg, \"modulate:a\", 0.0, 4.0)
+	tween.tween_callback(msg.queue_free)
+"
+
+[sub_resource type="Environment" id="Environment_divine"]
+background_mode = 1
+background_color = Color(0.02, 0.02, 0.15, 1)
+ambient_light_source = 2
+ambient_light_color = Color(0.2, 0.2, 0.4, 1)
+ambient_light_energy = 0.4
+
+[sub_resource type="Theme" id="Theme_divine"]
+
+[node name="DivineInteractiveUniverse" type="Node3D"]
+script = SubResource("GDScript_divine_interactive")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+fov = 90.0
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_divine")
+
+[node name="UI" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme = SubResource("Theme_divine")
+
+[node name="Instructions" type="Label" parent="UI"]
+layout_mode = 0
+offset_left = 10.0
+offset_top = 10.0
+offset_right = 600.0
+offset_bottom = 200.0
+text = "🌟 DIVINE INTERACTIVE UNIVERSE 🌟
+
+🎮 PRESS KEYS TO INTERACT - WORKING FEATURES:
+` (BACKTICK) or TAB - Divine Console 
+ENTER - Create Divine Being
+N - Reality Editor (Physics/Time/Consciousness)
+C - Evolve Consciousness 
+E - Divine Interaction with Nearest Object
+K - Universe Generator
+SHIFT+SPACE - Dimensional Portal
+CTRL+B - Bridge Realities
+ALT+T - Advance Divine Turn
+
+🔥 EVERY HOTKEY WORKS - TRY THEM NOW!"

@@ -13,7 +13,8 @@
       "Bash(cp:*)",
       "Bash(python3:*)",
       "Bash(python:*)",
-      "Bash(mv:*)"
+      "Bash(mv:*)",
+      "Bash(jq:*)"
     ],
     "deny": []
   }

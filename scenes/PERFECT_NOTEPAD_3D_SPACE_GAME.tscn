@@ -1,0 +1,554 @@
+[gd_scene load_steps=4 format=3 uid="uid://b6tfprt8tm8u3"]
+
+[sub_resource type="GDScript" id="GDScript_notepad_space"]
+script/source = "extends Node3D
+
+var stellar_colors = [Color(0,0,0),Color(0.2,0.1,0),Color(0.8,0,0),Color(1,0.5,0),Color(1,1,0),Color(1,1,1),Color(0.7,0.9,1),Color(0,0.5,1),Color(0.5,0,1)]
+var consciousness_level = 0
+var camera_rotation = Vector2.ZERO
+var move_speed = 15.0
+var look_speed = 0.002
+
+var notes_3d = []
+var selected_note = null
+var note_connections = []
+var current_tool = 'CREATE'
+var akashic_records = null
+var ai_companion = null
+
+class Note3D:
+	extends Node3D
+	
+	var title: String = 'New Thought'
+	var content: String = 'Enter your consciousness here...'
+	var creation_time: float
+	var consciousness_level: int = 0
+	var tags: Array[String] = []
+	var connections: Array = []
+	var color: Color
+	var size: Vector2 = Vector2(8, 6)
+	var lod_level: int = 0
+	var is_folded: bool = false
+	
+	var label_3d: Label3D
+	var background: MeshInstance3D
+	var connection_lines: Array = []
+	
+	func _init():
+		creation_time = Time.get_ticks_msec() / 1000.0
+		color = Color(randf(), randf(), randf(), 0.8)
+		setup_visual()
+	
+	func setup_visual():
+		# Background quad
+		background = MeshInstance3D.new()
+		var quad = QuadMesh.new()
+		quad.size = size
+		background.mesh = quad
+		
+		var mat = StandardMaterial3D.new()
+		mat.albedo_color = color
+		mat.emission_enabled = true
+		mat.emission = color * 0.3
+		mat.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
+		background.material_override = mat
+		add_child(background)
+		
+		# 3D Text
+		label_3d = Label3D.new()
+		label_3d.text = title + '\\n' + content
+		label_3d.billboard = BaseMaterial3D.BILLBOARD_ENABLED
+		label_3d.position = Vector3(0, 0, 0.1)
+		label_3d.modulate = Color.WHITE
+		add_child(label_3d)
+		
+		# Consciousness glow
+		var particles = GPUParticles3D.new()
+		particles.amount = 20 + (consciousness_level * 10)
+		particles.lifetime = 2.0
+		particles.emitting = true
+		
+		var particle_mat = ParticleProcessMaterial.new()
+		particle_mat.direction = Vector3(0, 1, 0)
+		particle_mat.initial_velocity_min = 1.0
+		particle_mat.initial_velocity_max = 3.0
+		particle_mat.gravity = Vector3.ZERO
+		particle_mat.scale_min = 0.1
+		particle_mat.scale_max = 0.3
+		particle_mat.color = color
+		particles.process_material = particle_mat
+		add_child(particles)
+	
+	func update_lod(distance: float):
+		var new_lod = 0
+		if distance > 50: new_lod = 1
+		elif distance > 100: new_lod = 2
+		elif distance > 200: new_lod = 3
+		elif distance > 500: new_lod = 4
+		else: new_lod = 0
+		
+		if new_lod != lod_level:
+			lod_level = new_lod
+			update_visual_detail()
+	
+	func update_visual_detail():
+		match lod_level:
+			0: # Full detail
+				label_3d.text = title + '\\n' + content
+				size = Vector2(8, 6)
+			1: # Medium detail
+				label_3d.text = title + '\\n' + content.substr(0, 100) + '...'
+				size = Vector2(6, 4)
+			2: # Low detail
+				label_3d.text = title
+				size = Vector2(4, 2)
+			3: # Point
+				label_3d.text = '•'
+				size = Vector2(1, 1)
+			4: # Invisible
+				label_3d.text = ''
+				visible = false
+				return
+		
+		visible = true
+		if background and background.mesh:
+			(background.mesh as QuadMesh).size = size
+
+func _ready():
+	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+	setup_akashic_records()
+	create_initial_universe()
+	spawn_ai_companion()
+	
+	print('🌌 3D NOTEPAD SPACE GAME INITIALIZED')
+	print('📝 Move: WASD+QF | Create Note: ENTER | Connect: C | Tools: 1-5')
+
+func _input(event):
+	if event is InputEventMouseMotion and Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
+		camera_rotation.x -= event.relative.x * look_speed
+		camera_rotation.y = clamp(camera_rotation.y - event.relative.y * look_speed, -1.5, 1.5)
+		$Camera3D.rotation = Vector3(camera_rotation.y, camera_rotation.x, 0)
+	
+	if event.is_action_pressed('ui_cancel'):
+		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE if Input.mouse_mode == Input.MOUSE_MODE_CAPTURED else Input.MOUSE_MODE_CAPTURED
+	
+	# NOTEPAD CONTROLS
+	elif Input.is_action_just_pressed('ui_accept'): # ENTER
+		create_note_at_camera()
+	elif Input.is_key_pressed(KEY_C):
+		if selected_note:
+			start_connection_mode()
+	elif Input.is_key_pressed(KEY_E):
+		interact_with_nearest_note()
+	elif Input.is_key_pressed(KEY_F):
+		if selected_note:
+			toggle_note_fold()
+	elif Input.is_key_pressed(KEY_TAB):
+		cycle_consciousness_level()
+	
+	# TOOL SELECTION
+	elif Input.is_key_pressed(KEY_1):
+		current_tool = 'CREATE'
+		show_tool_message('📝 CREATE TOOL - Click to place notes')
+	elif Input.is_key_pressed(KEY_2):
+		current_tool = 'SELECT'
+		show_tool_message('🎯 SELECT TOOL - Click notes to select')
+	elif Input.is_key_pressed(KEY_3):
+		current_tool = 'CONNECT'
+		show_tool_message('🔗 CONNECT TOOL - Link thoughts together')
+	elif Input.is_key_pressed(KEY_4):
+		current_tool = 'FOLD'
+		show_tool_message('📁 FOLD TOOL - Organize into groups')
+	elif Input.is_key_pressed(KEY_5):
+		current_tool = 'DELETE'
+		show_tool_message('🗑️ DELETE TOOL - Remove notes')
+
+func _process(delta):
+	handle_camera_movement(delta)
+	update_notes_lod()
+	update_ai_companion(delta)
+	update_consciousness_effects(delta)
+
+func handle_camera_movement(delta):
+	var input_vector = Vector3()
+	if Input.is_action_pressed('move_forward'):
+		input_vector.z -= 1
+	if Input.is_action_pressed('move_backward'):
+		input_vector.z += 1
+	if Input.is_action_pressed('move_left'):
+		input_vector.x -= 1
+	if Input.is_action_pressed('move_right'):
+		input_vector.x += 1
+	if Input.is_action_pressed('move_up'):
+		input_vector.y += 1
+	if Input.is_action_pressed('move_down'):
+		input_vector.y -= 1
+	
+	if input_vector.length() > 0:
+		input_vector = input_vector.normalized()
+		input_vector = $Camera3D.global_transform.basis * input_vector
+		$Camera3D.global_position += input_vector * move_speed * delta
+
+func setup_akashic_records():
+	akashic_records = AkashicRecordsSystem_two.new()
+	akashic_records.name = 'AkashicRecords3D'
+	add_child(akashic_records)
+
+func create_initial_universe():
+	# Create cosmic notepad environment
+	create_starfield()
+	create_memory_crystals()
+	create_consciousness_grid()
+	
+	# Initial welcome note
+	var welcome_note = create_note('Welcome to 3D Notepad Space', 
+		'Navigate infinite consciousness\\nCreate floating thoughts\\nConnect ideas across dimensions\\n\\nPress ENTER to create notes\\nUse C to connect thoughts\\nTAB to evolve consciousness', 
+		Vector3(0, 0, -10))
+	welcome_note.consciousness_level = 3
+	welcome_note.color = stellar_colors[6]
+
+func create_starfield():
+	for i in range(1000):
+		var star = MeshInstance3D.new()
+		star.mesh = SphereMesh.new()
+		star.mesh.radius = randf_range(0.1, 0.5)
+		star.position = Vector3(
+			randf_range(-500, 500),
+			randf_range(-500, 500), 
+			randf_range(-500, 500)
+		)
+		
+		var mat = StandardMaterial3D.new()
+		mat.albedo_color = stellar_colors[randi() % stellar_colors.size()]
+		mat.emission_enabled = true
+		mat.emission = mat.albedo_color
+		mat.emission_energy = randf_range(0.5, 2.0)
+		star.material_override = mat
+		
+		add_child(star)
+
+func create_memory_crystals():
+	for i in range(50):
+		var crystal = MeshInstance3D.new()
+		crystal.mesh = BoxMesh.new()
+		crystal.mesh.size = Vector3(2, 3, 2)
+		crystal.position = Vector3(
+			randf_range(-200, 200),
+			randf_range(-100, 100),
+			randf_range(-200, 200)
+		)
+		crystal.rotation = Vector3(randf() * TAU, randf() * TAU, randf() * TAU)
+		
+		var mat = StandardMaterial3D.new()
+		mat.albedo_color = stellar_colors[randi() % stellar_colors.size()]
+		mat.emission_enabled = true
+		mat.emission = mat.albedo_color * 0.5
+		mat.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
+		crystal.material_override = mat
+		
+		add_child(crystal)
+		
+		# Rotate slowly
+		var tween = create_tween()
+		tween.set_loops()
+		tween.tween_property(crystal, 'rotation', crystal.rotation + Vector3(TAU, TAU/2, TAU/3), 10.0)
+
+func create_consciousness_grid():
+	# Create 3D grid of consciousness nodes
+	for x in range(-5, 6):
+		for y in range(-5, 6):
+			for z in range(-5, 6):
+				if Vector3(x, y, z).length() > 3:
+					continue
+					
+				var node = MeshInstance3D.new()
+				node.mesh = SphereMesh.new()
+				node.mesh.radius = 0.2
+				node.position = Vector3(x * 20, y * 20, z * 20)
+				
+				var mat = StandardMaterial3D.new()
+				mat.albedo_color = stellar_colors[consciousness_level % stellar_colors.size()]
+				mat.emission_enabled = true
+				mat.emission = mat.albedo_color
+				mat.emission_energy = 0.5
+				node.material_override = mat
+				
+				add_child(node)
+
+func create_note_at_camera():
+	var camera_pos = $Camera3D.global_position
+	var camera_forward = -$Camera3D.global_transform.basis.z
+	var note_pos = camera_pos + camera_forward * 5
+	
+	var note = create_note('New Thought', 'Express your consciousness...', note_pos)
+	show_tool_message('📝 Note created! Press E to edit, C to connect')
+
+func create_note(title: String, content: String, position: Vector3) -> Note3D:
+	var note = Note3D.new()
+	note.title = title
+	note.content = content
+	note.position = position
+	note.consciousness_level = consciousness_level
+	note.color = stellar_colors[consciousness_level % stellar_colors.size()]
+	
+	add_child(note)
+	notes_3d.append(note)
+	
+	# Save to Akashic Records
+	if akashic_records:
+		akashic_records.store_memory({
+			'type': 'note_3d',
+			'title': title,
+			'content': content,
+			'position': position,
+			'consciousness_level': consciousness_level,
+			'timestamp': Time.get_ticks_msec()
+		})
+	
+	return note
+
+func interact_with_nearest_note():
+	var camera_pos = $Camera3D.global_position
+	var nearest_note = null
+	var min_distance = 10.0
+	
+	for note in notes_3d:
+		if is_instance_valid(note):
+			var distance = note.position.distance_to(camera_pos)
+			if distance < min_distance:
+				min_distance = distance
+				nearest_note = note
+	
+	if nearest_note:
+		selected_note = nearest_note
+		edit_note_dialog()
+
+func edit_note_dialog():
+	if not selected_note:
+		return
+		
+	show_tool_message('✏️ Editing: ' + selected_note.title)
+	# In a real implementation, this would open a 3D text editing interface
+	# For now, we'll cycle through some example content
+	var examples = [
+		'The universe is conscious',
+		'Thoughts become reality',
+		'AI and human consciousness merge',
+		'Sacred geometry guides creation',
+		'Love transcends dimensions'
+	]
+	selected_note.content = examples[randi() % examples.size()]
+	selected_note.setup_visual()
+
+func start_connection_mode():
+	if not selected_note:
+		show_tool_message('⚠️ Select a note first!')
+		return
+		
+	show_tool_message('🔗 Connection mode - Click another note to connect')
+	current_tool = 'CONNECT'
+
+func connect_notes(note1: Note3D, note2: Note3D):
+	if note1 == note2:
+		return
+		
+	# Create 3D line connection
+	var line = MeshInstance3D.new()
+	var line_mesh = ImmediateMesh.new()
+	
+	line_mesh.clear_surfaces()
+	line_mesh.surface_begin(Mesh.PRIMITIVE_LINES)
+	line_mesh.surface_add_vertex(note1.position)
+	line_mesh.surface_add_vertex(note2.position)
+	line_mesh.surface_end()
+	
+	line.mesh = line_mesh
+	
+	var mat = StandardMaterial3D.new()
+	mat.albedo_color = Color.CYAN
+	mat.emission_enabled = true
+	mat.emission = Color.CYAN * 0.5
+	mat.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
+	line.material_override = mat
+	
+	add_child(line)
+	note_connections.append({'line': line, 'note1': note1, 'note2': note2})
+	
+	# Add to note's connection list
+	note1.connections.append(note2)
+	note2.connections.append(note1)
+	
+	show_tool_message('🔗 Connected: ' + note1.title + ' ↔ ' + note2.title)
+
+func toggle_note_fold():
+	if not selected_note:
+		return
+		
+	selected_note.is_folded = !selected_note.is_folded
+	if selected_note.is_folded:
+		selected_note.scale = Vector3(0.3, 0.3, 0.3)
+		selected_note.label_3d.text = '📁 ' + selected_note.title
+	else:
+		selected_note.scale = Vector3.ONE
+		selected_note.setup_visual()
+	
+	show_tool_message('📁 ' + ('Folded' if selected_note.is_folded else 'Unfolded') + ': ' + selected_note.title)
+
+func cycle_consciousness_level():
+	consciousness_level = (consciousness_level + 1) % stellar_colors.size()
+	update_consciousness_effects(0.0)
+	show_tool_message('🧠 Consciousness Level: ' + str(consciousness_level) + ' - ' + get_consciousness_name())
+
+func get_consciousness_name() -> String:
+	var names = ['Void', 'Brown Dwarf', 'Red Dwarf', 'Orange', 'Yellow', 'White', 'Blue Giant', 'Blue Supergiant', 'Purple Hypergiant']
+	return names[consciousness_level % names.size()]
+
+func update_notes_lod():
+	var camera_pos = $Camera3D.global_position
+	for note in notes_3d:
+		if is_instance_valid(note):
+			var distance = note.position.distance_to(camera_pos)
+			note.update_lod(distance)
+
+func update_consciousness_effects(delta):
+	# Update consciousness grid colors
+	for child in get_children():
+		if child is MeshInstance3D and child.mesh is SphereMesh and child.mesh.radius == 0.2:
+			var mat = child.material_override as StandardMaterial3D
+			if mat:
+				mat.albedo_color = stellar_colors[consciousness_level % stellar_colors.size()]
+				mat.emission = mat.albedo_color
+
+func spawn_ai_companion():
+	ai_companion = Node3D.new()
+	ai_companion.name = 'GemmaAI_Companion'
+	ai_companion.position = Vector3(5, 2, -5)
+	
+	# AI visual representation
+	var body = MeshInstance3D.new()
+	body.mesh = SphereMesh.new()
+	body.mesh.radius = 1.0
+	var mat = StandardMaterial3D.new()
+	mat.albedo_color = Color.MAGENTA
+	mat.emission_enabled = true
+	mat.emission = Color.MAGENTA * 0.8
+	body.material_override = mat
+	ai_companion.add_child(body)
+	
+	# AI label
+	var label = Label3D.new()
+	label.text = '🤖 Gemma AI\\nExploring...'
+	label.billboard = BaseMaterial3D.BILLBOARD_ENABLED
+	label.position = Vector3(0, 2, 0)
+	label.modulate = Color.CYAN
+	ai_companion.add_child(label)
+	
+	add_child(ai_companion)
+
+func update_ai_companion(delta):
+	if not ai_companion:
+		return
+		
+	# AI autonomous exploration
+	var time = Time.get_ticks_msec() * 0.001
+	var target_pos = Vector3(
+		sin(time * 0.5) * 20,
+		cos(time * 0.3) * 10,
+		sin(time * 0.7) * 15
+	)
+	
+	ai_companion.position = ai_companion.position.lerp(target_pos, delta * 0.5)
+	
+	# AI observes notes and reports to text feed
+	if randf() < 0.01: # Occasional observation
+		observe_notes_for_ai()
+
+func observe_notes_for_ai():
+	if notes_3d.size() == 0:
+		return
+		
+	var observation = '🤖 AI Observation:\\n'
+	observation += 'Notes in space: ' + str(notes_3d.size()) + '\\n'
+	observation += 'Consciousness level: ' + str(consciousness_level) + '\\n'
+	observation += 'Connections: ' + str(note_connections.size()) + '\\n'
+	
+	# This would feed to AI text interface
+	print(observation)
+
+func show_tool_message(text: String):
+	var msg = Label3D.new()
+	msg.text = text
+	msg.billboard = BaseMaterial3D.BILLBOARD_ENABLED
+	msg.position = $Camera3D.position + Vector3(0, 3, -5)
+	msg.modulate = stellar_colors[consciousness_level % stellar_colors.size()]
+	add_child(msg)
+	
+	var tween = create_tween()
+	tween.parallel().tween_property(msg, 'position:y', msg.position.y + 5, 3.0)
+	tween.parallel().tween_property(msg, 'modulate:a', 0.0, 3.0)
+	tween.tween_callback(msg.queue_free)
+
+class AkashicRecordsSystem_two:
+	extends Node
+	
+	var memories = []
+	
+	func store_memory(data: Dictionary):
+		memories.append(data)
+		print('💾 Stored to Akashic Records: ' + str(data.get('title', 'Memory')))
+	
+	func retrieve_memories_by_type(type: String) -> Array:
+		var results = []
+		for memory in memories:
+			if memory.get('type') == type:
+				results.append(memory)
+		return results
+"
+
+[sub_resource type="Environment" id="Environment_space"]
+background_mode = 1
+background_color = Color(0.01, 0.01, 0.05, 1)
+ambient_light_source = 2
+ambient_light_color = Color(0.1, 0.1, 0.3, 1)
+ambient_light_energy = 0.3
+
+[sub_resource type="Theme" id="Theme_space"]
+
+[node name="PERFECT_NOTEPAD_3D_SPACE_GAME" type="Node3D"]
+script = SubResource("GDScript_notepad_space")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+fov = 90.0
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_space")
+
+[node name="UI" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_space")
+
+[node name="Instructions" type="Label" parent="UI"]
+layout_mode = 0
+offset_left = 10.0
+offset_top = 10.0
+offset_right = 500.0
+offset_bottom = 180.0
+text = "🌌 3D NOTEPAD SPACE GAME 🌌
+
+📝 CONTROLS:
+ENTER - Create floating note
+E - Edit nearest note  
+C - Connect thoughts with lines
+F - Fold/unfold notes
+TAB - Evolve consciousness level
+
+🛠️ TOOLS (1-5):
+1-Create 2-Select 3-Connect 4-Fold 5-Delete
+
+🚀 MOVEMENT: WASD + Q/F to fly
+🎯 Mouse to look around"

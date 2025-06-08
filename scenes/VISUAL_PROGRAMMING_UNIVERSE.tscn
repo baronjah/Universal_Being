@@ -1,0 +1,403 @@
+[gd_scene load_steps=4 format=3]
+
+[sub_resource type="GDScript" id="GDScript_visual_programming"]
+script/source = "extends Node3D
+
+var stellar_colors = [Color(0,0,0),Color(0.2,0.1,0),Color(0.8,0,0),Color(1,0.5,0),Color(1,1,0),Color(1,1,1),Color(0.7,0.9,1),Color(0,0.5,1),Color(0.5,0,1)]
+var programming_nodes = []
+var connections = []
+var selected_node = null
+var dragging_connection = false
+var connection_start_socket = null
+var notepad_layers = []
+var scene_states = []
+
+func _ready():
+	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+	create_space_environment()
+	spawn_initial_nodes()
+	show_visual_message(\"🧠 3D VISUAL PROGRAMMING UNIVERSE\", stellar_colors[8])
+
+func _input(event):
+	if event is InputEventMouseMotion and Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
+		rotate_camera(event.relative)
+	elif event.is_action_pressed(\"ui_cancel\"):
+		toggle_mouse_mode()
+	elif event.is_action_pressed(\"notepad_toggle\"):
+		toggle_notepad_interface()
+	elif event.is_action_pressed(\"create_word\"):
+		create_programming_node()
+	elif event.is_action_pressed(\"interact\"):
+		interact_with_nearest()
+	elif event is InputEventMouseButton and event.pressed:
+		handle_node_interaction(event)
+
+func _process(delta):
+	handle_movement(delta)
+	update_connections()
+	
+func handle_movement(delta):
+	var input_vector = Vector3()
+	if Input.is_action_pressed(\"move_forward\"):
+		input_vector.z -= 1
+	if Input.is_action_pressed(\"move_backward\"):
+		input_vector.z += 1
+	if Input.is_action_pressed(\"move_left\"):
+		input_vector.x -= 1
+	if Input.is_action_pressed(\"move_right\"):
+		input_vector.x += 1
+	if Input.is_action_pressed(\"move_up\"):
+		input_vector.y += 1
+	if Input.is_action_pressed(\"move_down\"):
+		input_vector.y -= 1
+	
+	if input_vector.length() > 0:
+		input_vector = input_vector.normalized()
+		input_vector = $Camera3D.global_transform.basis * input_vector
+		$Camera3D.global_position += input_vector * 20.0 * delta
+
+func rotate_camera(relative_motion):
+	$Camera3D.rotation.y -= relative_motion.x * 0.002
+	$Camera3D.rotation.x = clamp($Camera3D.rotation.x - relative_motion.y * 0.002, -1.5, 1.5)
+
+func toggle_mouse_mode():
+	if Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
+		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+	else:
+		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+
+func create_space_environment():
+	for i in range(50):
+		var star = MeshInstance3D.new()
+		star.mesh = SphereMesh.new()
+		star.mesh.radius = 0.3
+		star.position = Vector3(randf_range(-200,200), randf_range(-200,200), randf_range(-200,200))
+		var mat = StandardMaterial3D.new()
+		mat.albedo_color = stellar_colors[5]
+		mat.emission_enabled = true
+		mat.emission = stellar_colors[5]
+		mat.emission_energy = 1.5
+		star.material_override = mat
+		add_child(star)
+
+func spawn_initial_nodes():
+	create_function_node(\"INPUT\", Vector3(-10, 0, 0), stellar_colors[6])
+	create_function_node(\"PROCESS\", Vector3(0, 0, 0), stellar_colors[4])
+	create_function_node(\"OUTPUT\", Vector3(10, 0, 0), stellar_colors[2])
+
+func create_function_node(func_name: String, pos: Vector3, color: Color):
+	var node = Node3D.new()
+	node.position = pos
+	node.set_meta(\"function_name\", func_name)
+	node.set_meta(\"node_type\", \"function\")
+	
+	var body = MeshInstance3D.new()
+	body.mesh = BoxMesh.new()
+	body.mesh.size = Vector3(3, 2, 1)
+	var mat = StandardMaterial3D.new()
+	mat.albedo_color = color
+	mat.emission_enabled = true
+	mat.emission = color
+	mat.emission_energy = 0.5
+	body.material_override = mat
+	node.add_child(body)
+	
+	var label = Label3D.new()
+	label.text = func_name
+	label.billboard = BaseMaterial3D.BILLBOARD_ENABLED
+	label.position = Vector3(0, 1.5, 0)
+	label.modulate = stellar_colors[5]
+	node.add_child(label)
+	
+	create_input_socket(node, Vector3(-1.5, 0, 0))
+	create_output_socket(node, Vector3(1.5, 0, 0))
+	
+	add_child(node)
+	programming_nodes.append(node)
+	
+	var record_id = CosmicRecords.generate_compact_id(\"programming_nodes\")
+	CosmicRecords.create_record(record_id, \"programming_nodes\")
+	CosmicRecords.add_data(record_id, \"function_name\", func_name)
+	CosmicRecords.add_data(record_id, \"position\", pos)
+	CosmicRecords.add_data(record_id, \"color\", color)
+	node.set_meta(\"record_id\", record_id)
+
+func create_input_socket(parent_node: Node3D, local_pos: Vector3):
+	var socket = MeshInstance3D.new()
+	socket.mesh = SphereMesh.new()
+	socket.mesh.radius = 0.3
+	socket.position = local_pos
+	var mat = StandardMaterial3D.new()
+	mat.albedo_color = stellar_colors[7]
+	mat.emission_enabled = true
+	mat.emission = stellar_colors[7]
+	mat.emission_energy = 1.0
+	socket.material_override = mat
+	socket.set_meta(\"socket_type\", \"input\")
+	socket.set_meta(\"parent_node\", parent_node)
+	parent_node.add_child(socket)
+
+func create_output_socket(parent_node: Node3D, local_pos: Vector3):
+	var socket = MeshInstance3D.new()
+	socket.mesh = SphereMesh.new()
+	socket.mesh.radius = 0.3
+	socket.position = local_pos
+	var mat = StandardMaterial3D.new()
+	mat.albedo_color = stellar_colors[3]
+	mat.emission_enabled = true
+	mat.emission = stellar_colors[3]
+	mat.emission_energy = 1.0
+	socket.material_override = mat
+	socket.set_meta(\"socket_type\", \"output\")
+	socket.set_meta(\"parent_node\", parent_node)
+	parent_node.add_child(socket)
+
+func handle_node_interaction(event):
+	if event.button_index == MOUSE_BUTTON_LEFT:
+		var ray_origin = $Camera3D.global_position
+		var ray_end = ray_origin + $Camera3D.global_transform.basis.z * -100
+		
+		var space_state = get_world_3d().direct_space_state
+		var query = PhysicsRayQueryParameters3D.create(ray_origin, ray_end)
+		var result = space_state.intersect_ray(query)
+		
+		if result:
+			var collider = result.collider
+			handle_object_clicked(collider)
+
+func handle_object_clicked(object):
+	if object.has_meta(\"socket_type\"):
+		handle_socket_clicked(object)
+	elif object.has_meta(\"node_type\"):
+		handle_node_clicked(object)
+
+func handle_socket_clicked(socket):
+	if dragging_connection:
+		complete_connection(socket)
+	else:
+		start_connection(socket)
+
+func start_connection(socket):
+	if socket.get_meta(\"socket_type\") == \"output\":
+		dragging_connection = true
+		connection_start_socket = socket
+		show_visual_message(\"🔗 STARTING CONNECTION\", stellar_colors[6])
+
+func complete_connection(end_socket):
+	if end_socket.get_meta(\"socket_type\") == \"input\" and connection_start_socket:
+		create_connection(connection_start_socket, end_socket)
+		dragging_connection = false
+		connection_start_socket = null
+		show_visual_message(\"✅ CONNECTION CREATED\", stellar_colors[4])
+
+func create_connection(output_socket, input_socket):
+	var connection = {
+		\"output\": output_socket,
+		\"input\": input_socket,
+		\"line\": null
+	}
+	connections.append(connection)
+	
+	var record_id = CosmicRecords.generate_compact_id(\"connections\")
+	CosmicRecords.create_record(record_id, \"connections\")
+	CosmicRecords.add_data(record_id, \"from_node\", output_socket.get_meta(\"parent_node\").get_meta(\"function_name\"))
+	CosmicRecords.add_data(record_id, \"to_node\", input_socket.get_meta(\"parent_node\").get_meta(\"function_name\"))
+
+func update_connections():
+	for connection in connections:
+		if connection.line:
+			connection.line.queue_free()
+		
+		var start_pos = connection.output.global_position
+		var end_pos = connection.input.global_position
+		connection.line = create_connection_line(start_pos, end_pos)
+
+func create_connection_line(start_pos: Vector3, end_pos: Vector3):
+	var line = MeshInstance3D.new()
+	var mesh = CylinderMesh.new()
+	mesh.top_radius = 0.05
+	mesh.bottom_radius = 0.05
+	mesh.height = start_pos.distance_to(end_pos)
+	line.mesh = mesh
+	
+	line.position = (start_pos + end_pos) / 2
+	line.look_at(end_pos, Vector3.UP)
+	line.rotation_degrees.x += 90
+	
+	var mat = StandardMaterial3D.new()
+	mat.albedo_color = stellar_colors[8]
+	mat.emission_enabled = true
+	mat.emission = stellar_colors[8]
+	mat.emission_energy = 0.8
+	line.material_override = mat
+	
+	add_child(line)
+	return line
+
+func create_programming_node():
+	var pos = $Camera3D.position + $Camera3D.transform.basis.z * -5
+	var func_name = \"FUNC_\" + str(programming_nodes.size())
+	create_function_node(func_name, pos, stellar_colors[randi() % stellar_colors.size()])
+	show_visual_message(\"⚡ NEW FUNCTION NODE\", stellar_colors[4])
+
+func toggle_notepad_interface():
+	if notepad_layers.is_empty():
+		create_notepad_interface()
+	else:
+		hide_notepad_interface()
+
+func create_notepad_interface():
+	for i in range(3):
+		var layer = MeshInstance3D.new()
+		layer.mesh = PlaneMesh.new()
+		layer.mesh.size = Vector2(6, 4)
+		layer.position = $Camera3D.position + $Camera3D.transform.basis.z * -8 + Vector3(i*3-3, i*2-2, 0)
+		layer.look_at($Camera3D.position, Vector3.UP)
+		
+		var mat = StandardMaterial3D.new()
+		mat.albedo_color = Color(0.1, 0.1, 0.2, 0.8)
+		mat.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
+		mat.emission_enabled = true
+		mat.emission = stellar_colors[6]
+		mat.emission_energy = 0.3
+		layer.material_override = mat
+		
+		add_child(layer)
+		notepad_layers.append(layer)
+	
+	show_visual_message(\"📝 NOTEPAD PROGRAMMING INTERFACE\", stellar_colors[6])
+
+func hide_notepad_interface():
+	for layer in notepad_layers:
+		layer.queue_free()
+	notepad_layers.clear()
+	show_visual_message(\"📝 NOTEPAD HIDDEN\", stellar_colors[1])
+
+func interact_with_nearest():
+	var nearest = find_nearest_programmable_object()
+	if nearest:
+		if nearest.has_meta(\"node_type\"):
+			edit_function_node(nearest)
+		elif nearest.has_meta(\"socket_type\"):
+			inspect_socket(nearest)
+
+func find_nearest_programmable_object():
+	var nearest = null
+	var min_dist = 10.0
+	for node in programming_nodes:
+		var dist = node.position.distance_to($Camera3D.position)
+		if dist < min_dist:
+			min_dist = dist
+			nearest = node
+	return nearest
+
+func edit_function_node(node):
+	var func_name = node.get_meta(\"function_name\")
+	show_visual_message(\"✏️ EDITING: \" + func_name, stellar_colors[4])
+
+func inspect_socket(socket):
+	var socket_type = socket.get_meta(\"socket_type\")
+	var parent_name = socket.get_meta(\"parent_node\").get_meta(\"function_name\")
+	show_visual_message(\"🔍 \" + socket_type.to_upper() + \" SOCKET: \" + parent_name, stellar_colors[7])
+
+func save_current_scene_state():
+	var state = {
+		\"nodes\": [],
+		\"connections\": []
+	}
+	
+	for node in programming_nodes:
+		state.nodes.append({
+			\"name\": node.get_meta(\"function_name\"),
+			\"position\": node.position,
+			\"record_id\": node.get_meta(\"record_id\")
+		})
+	
+	for connection in connections:
+		state.connections.append({
+			\"from\": connection.output.get_meta(\"parent_node\").get_meta(\"function_name\"),
+			\"to\": connection.input.get_meta(\"parent_node\").get_meta(\"function_name\")
+		})
+	
+	scene_states.append(state)
+	show_visual_message(\"💾 SCENE STATE SAVED\", stellar_colors[4])
+
+func load_scene_state(index: int):
+	if index < 0 or index >= scene_states.size():
+		return
+	
+	clear_current_scene()
+	var state = scene_states[index]
+	
+	for node_data in state.nodes:
+		create_function_node(node_data.name, node_data.position, stellar_colors[4])
+	
+	show_visual_message(\"📂 SCENE STATE LOADED\", stellar_colors[6])
+
+func clear_current_scene():
+	for node in programming_nodes:
+		node.queue_free()
+	programming_nodes.clear()
+	
+	for connection in connections:
+		if connection.line:
+			connection.line.queue_free()
+	connections.clear()
+
+func show_visual_message(text: String, color: Color):
+	var msg = Label3D.new()
+	msg.text = text
+	msg.modulate = color
+	msg.billboard = BaseMaterial3D.BILLBOARD_ENABLED
+	msg.position = $Camera3D.position + Vector3(0, 2, -3)
+	add_child(msg)
+	var tween = create_tween()
+	tween.parallel().tween_property(msg, \"position:y\", msg.position.y + 3, 2.0)
+	tween.parallel().tween_property(msg, \"modulate:a\", 0.0, 2.0)
+	tween.tween_callback(msg.queue_free)
+"
+
+[sub_resource type="Environment" id="Environment_space"]
+background_mode = 1
+background_color = Color(0.02, 0.02, 0.1, 1)
+ambient_light_source = 2
+ambient_light_color = Color(0.1, 0.1, 0.3, 1)
+ambient_light_energy = 0.2
+
+[sub_resource type="Theme" id="Theme_programming"]
+
+[node name="VisualProgrammingUniverse" type="Node3D"]
+script = SubResource("GDScript_visual_programming")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+fov = 90
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_space")
+
+[node name="UI" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme = SubResource("Theme_programming")
+
+[node name="Controls" type="Label" parent="UI"]
+layout_mode = 0
+offset_left = 10.0
+offset_top = 10.0
+offset_right = 500.0
+offset_bottom = 200.0
+text = "🧠 3D VISUAL PROGRAMMING UNIVERSE
+
+WASD - Move through space
+Mouse - Look around
+N - Toggle notepad interface
+C - Create new function node
+E - Edit/inspect nearest object
+Left Click - Connect sockets
+ESC - Free mouse
+
+🔗 Connect OUTPUT (orange) to INPUT (blue) sockets
+⚡ Create programs by linking function nodes
+📝 Use notepad to define node behavior"
