@@ -1,0 +1,79 @@
+[gd_scene load_steps=10 format=3]
+
+[ext_resource type="Script" path="res://worlds/universal_being_test_world.gd" id="1"]
+[ext_resource type="Script" path="res://beings/plasmoid_universal_being.gd" id="2"]
+[ext_resource type="Script" path="res://beings/cursor/CursorUniversalBeing.gd" id="3"]
+[ext_resource type="Script" path="res://beings/console/ConsoleUniversalBeing.gd" id="4"]
+[ext_resource type="PackedScene" path="res://scenes/main/camera_point.tscn" id="5"]
+[ext_resource type="Script" path="res://systems/state/GameStateSocketManager.gd" id="6"]
+
+[sub_resource type="Environment" id="Environment_1"]
+background_mode = 1
+background_color = Color(0.05, 0.05, 0.1, 1)
+ambient_light_source = 2
+ambient_light_color = Color(0.3, 0.4, 0.6, 1)
+ambient_light_energy = 0.3
+fog_enabled = true
+fog_light_color = Color(0.4, 0.5, 0.7, 1)
+fog_density = 0.01
+
+[sub_resource type="BoxMesh" id="BoxMesh_1"]
+size = Vector3(20, 0.2, 20)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1"]
+albedo_color = Color(0.2, 0.25, 0.35, 1)
+metallic = 0.3
+roughness = 0.8
+
+[sub_resource type="BoxShape3D" id="BoxShape_1"]
+size = Vector3(20, 0.2, 20)
+
+[sub_resource type="BoxMesh" id="CubeMesh"]
+size = Vector3(1,1,1)
+
+[sub_resource type="BoxShape3D" id="CubeShape"]
+size = Vector3(1,1,1)
+
+[node name="TestUniversalBeingWorld" type="Node3D"]
+script = ExtResource("1")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_1")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.707107, -0.5, 0.5, 0, 0.707107, 0.707107, -0.707107, -0.5, 0.5, 0, 10, 0)
+light_energy = 0.8
+shadow_enabled = true
+
+[node name="Ground" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.1, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Ground"]
+mesh = SubResource("BoxMesh_1")
+surface_material_override/0 = SubResource("StandardMaterial3D_1")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ground"]
+shape = SubResource("BoxShape_1")
+
+[node name="Player" type="Node3D" parent="."]
+script = ExtResource("2")
+
+[node name="CameraPoint" parent="Player" instance=ExtResource("5")]
+
+[node name="Cursor" type="Node3D" parent="."]
+script = ExtResource("3")
+
+[node name="Console" type="Node" parent="."]
+script = ExtResource("4")
+
+[node name="GameStateSocketManager" type="Node" parent="."]
+script = ExtResource("6")
+
+[node name="TestCube" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0.5, 0)
+
+[node name="CubeMesh" type="MeshInstance3D" parent="TestCube"]
+mesh = SubResource("CubeMesh")
+
+[node name="CubeCollision" type="CollisionShape3D" parent="TestCube"]
+shape = SubResource("CubeShape")
