@@ -114,3 +114,5 @@ Claude_Account_Data/Luminus/conversations.json
 Claude_Account_Data/conversations.json
 Claude_Account_Data/projects.json
 Claude_Account_Data/users.json
+scripts/12_turns_system_archive/setup_api_keys.gd
+scripts/12_turns_system_archive/initialize_system.gd
