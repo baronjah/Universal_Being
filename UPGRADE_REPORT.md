@@ -1,6 +1,6 @@
 # Upgrade Report
 
-The automated upgrade utilities were executed to migrate the project to Godot 4.4 / GDScript 2.0.
+The automated upgrade utilities were executed to migrate the project to Godot 4.5 dev4 / GDScript 2.0.
 
 - **GDScript files scanned:** 272
 - **Scripts upgraded:** 183
@@ -13,5 +13,5 @@ Due to the environment lacking a Godot executable, the Godot validation and test
 
 
 ## Next Steps
-- Install Godot 4.4 to run `godot4 --headless --path . --check-only` and execute `tests/run_tests.gd`.
+- Install Godot 4.5 dev4 to run `godot --headless --path . --check-only` and execute `tests/run_tests.gd`.
 - Review any remaining manual upgrade tasks marked with `# FIXME`.
