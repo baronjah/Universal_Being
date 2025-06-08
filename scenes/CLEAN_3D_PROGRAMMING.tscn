@@ -1,0 +1,725 @@
+[gd_scene load_steps=3 format=3 uid="uid://clean_3d_programming"]
+
+[sub_resource type="GDScript" id="GDScript_clean"]
+script/source = "extends Node3D
+
+var camera_rotation = Vector2.ZERO
+var move_speed = 15.0
+var look_speed = 0.002
+var programming_points = {}
+var selected_point = null
+var floating_notes = []
+var selected_notes = []
+
+class ProgrammablePoint:
+	extends Node3D
+	
+	var code_source: String = \"\"
+	var compiled_script: GDScript = null
+	var visual_sphere: MeshInstance3D
+	
+	func _init(pos: Vector3):
+		position = pos
+		name = \"Point_\" + str(pos)
+		create_visual()
+	
+	func create_visual():
+		visual_sphere = MeshInstance3D.new()
+		var sphere = SphereMesh.new()
+		sphere.radius = 0.3
+		visual_sphere.mesh = sphere
+		
+		var material = StandardMaterial3D.new()
+		material.albedo_color = Color.WHITE
+		material.emission_enabled = true
+		material.emission = Color.CYAN
+		visual_sphere.material_override = material
+		
+		add_child(visual_sphere)
+	
+	func _process(delta):
+		# Execute user code if available
+		var user_script = get_meta(\"user_process\", null)
+		if user_script and user_script.has_method(\"_process\"):
+			user_script._process(delta)
+	
+	func inject_code(code: String) -> bool:
+		code_source = code
+		var new_script = GDScript.new()
+		new_script.source_code = code
+		
+		if new_script.reload() == OK:
+			compiled_script = new_script
+			# Execute the code safely without replacing our script
+			if compiled_script.has_method(\"_ready\"):
+				compiled_script._ready()
+			if compiled_script.has_method(\"_process\"):
+				# Store for later execution
+				set_meta(\"user_process\", compiled_script)
+			
+			if visual_sphere and visual_sphere.material_override:
+				var material = visual_sphere.material_override as StandardMaterial3D
+				material.emission = Color.GREEN
+			print(\"✅ Code injected at \" + str(position))
+			return true
+		else:
+			if visual_sphere and visual_sphere.material_override:
+				var material = visual_sphere.material_override as StandardMaterial3D
+				material.emission = Color.RED
+			print(\"❌ Code failed at \" + str(position))
+			return false
+
+var code_input_ui: Control = null
+var gemma_ai: Node3D
+
+func _ready():
+	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+	print('🧠 TRUE 3D PROGRAMMING UNIVERSE')
+	print('🎮 CONTROLS:')
+	print('📝 N=Note | C=Code | SHIFT+Click=Select | M=Merge')
+	
+	create_programming_ui()
+	create_demo_environment()
+
+func _input(event):
+	if event is InputEventMouseMotion and Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
+		camera_rotation.x -= event.relative.x * look_speed
+		camera_rotation.y = clamp(camera_rotation.y - event.relative.y * look_speed, -1.5, 1.5)
+		$Camera3D.rotation = Vector3(camera_rotation.y, camera_rotation.x, 0)
+	
+	if event.is_action_pressed('ui_cancel'):
+		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE if Input.mouse_mode == Input.MOUSE_MODE_CAPTURED else Input.MOUSE_MODE_CAPTURED
+		if dual_interface_ui:
+			dual_interface_ui.visible = Input.mouse_mode == Input.MOUSE_MODE_VISIBLE
+			if dual_interface_ui.visible:
+				update_notes_list()
+		if code_input_ui:
+			code_input_ui.visible = false
+	
+	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
+		if Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
+			if Input.is_key_pressed(KEY_SHIFT):
+				select_note_at_cursor()
+			else:
+				create_point_at_cursor()
+	
+	if event.is_action_pressed('ui_accept') and not event.is_echo():  # ENTER (no repeats)
+		if code_input_ui and code_input_ui.visible and selected_point:
+			inject_code_into_selected()
+	
+	if event.is_action_pressed('ui_focus_next'):  # TAB - changed from KEY_N
+		leave_note_for_gemma()
+	
+	if Input.is_key_pressed(KEY_C) and not event.is_echo():
+		create_code_note()
+	
+	if Input.is_key_pressed(KEY_M) and not event.is_echo():
+		merge_selected_notes()
+
+func _process(delta):
+	var input_vector = Vector3()
+	if Input.is_action_pressed('move_forward'):
+		input_vector.z -= 1
+	if Input.is_action_pressed('move_backward'):
+		input_vector.z += 1
+	if Input.is_action_pressed('move_left'):
+		input_vector.x -= 1
+	if Input.is_action_pressed('move_right'):
+		input_vector.x += 1
+	if Input.is_action_pressed('move_up'):
+		input_vector.y += 1
+	if Input.is_action_pressed('move_down'):
+		input_vector.y -= 1
+	
+	if input_vector.length() > 0:
+		input_vector = input_vector.normalized()
+		input_vector = $Camera3D.transform.basis * input_vector
+		$Camera3D.position += input_vector * move_speed * delta
+	
+	if gemma_ai:
+		update_gemma_behavior(delta)
+
+func create_point_at_cursor():
+	var camera = $Camera3D
+	var from = camera.global_position
+	var to = from + (-camera.global_transform.basis.z * 20)
+	
+	var point = ProgrammablePoint.new(to)
+	add_child(point)
+	programming_points[to] = point
+	selected_point = point
+	
+	print('📍 Created programmable point at ' + str(to))
+	
+	if code_input_ui:
+		code_input_ui.visible = true
+		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+
+var dual_interface_ui: Control = null
+
+func create_programming_ui():
+	create_dual_interface()
+	
+	code_input_ui = Control.new()
+	code_input_ui.size = Vector2(600, 400)
+	code_input_ui.position = Vector2(50, 50)
+	code_input_ui.visible = false
+
+func create_dual_interface():
+	dual_interface_ui = Control.new()
+	dual_interface_ui.size = Vector2(800, 600)
+	dual_interface_ui.position = Vector2(50, 50)
+	dual_interface_ui.visible = false
+	
+	var panel = Panel.new()
+	panel.size = dual_interface_ui.size
+	dual_interface_ui.add_child(panel)
+	
+	var hsplit = HSplitContainer.new()
+	hsplit.position = Vector2(10, 10)
+	hsplit.size = Vector2(780, 580)
+	panel.add_child(hsplit)
+	
+	# Left side - 2D Text Editor
+	var left_panel = VBoxContainer.new()
+	hsplit.add_child(left_panel)
+	
+	var editor_title = Label.new()
+	editor_title.text = '✏️ 2D CODE EDITOR'
+	editor_title.add_theme_font_size_override('font_size', 18)
+	left_panel.add_child(editor_title)
+	
+	var code_editor_2d = TextEdit.new()
+	code_editor_2d.name = 'CodeEditor2D'
+	code_editor_2d.custom_minimum_size = Vector2(350, 400)
+	code_editor_2d.text = 'extends Node3D\\n\\nfunc _ready():\\n\\tprint(\"Hello from 2D editor!\")\\n\\nfunc _process(delta):\\n\\trotation.y += delta * 2.0'
+	code_editor_2d.syntax_highlighter = CodeHighlighter.new()
+	left_panel.add_child(code_editor_2d)
+	
+	var editor_buttons = HBoxContainer.new()
+	left_panel.add_child(editor_buttons)
+	
+	var sync_to_3d = Button.new()
+	sync_to_3d.text = '📤 SYNC TO 3D'
+	sync_to_3d.pressed.connect(sync_2d_to_3d)
+	editor_buttons.add_child(sync_to_3d)
+	
+	var inject_button = Button.new()
+	inject_button.text = '⚡ INJECT TO REALITY'
+	inject_button.pressed.connect(inject_from_2d_editor)
+	editor_buttons.add_child(inject_button)
+	
+	# Right side - 3D Notes Manager
+	var right_panel = VBoxContainer.new()
+	hsplit.add_child(right_panel)
+	
+	var notes_title = Label.new()
+	notes_title.text = '🌌 3D NOTES MANAGER'
+	notes_title.add_theme_font_size_override('font_size', 18)
+	right_panel.add_child(notes_title)
+	
+	var notes_list = ItemList.new()
+	notes_list.name = 'NotesList'
+	notes_list.custom_minimum_size = Vector2(300, 300)
+	notes_list.item_selected.connect(_on_note_selected)
+	right_panel.add_child(notes_list)
+	
+	var notes_buttons = HBoxContainer.new()
+	right_panel.add_child(notes_buttons)
+	
+	var create_note_btn = Button.new()
+	create_note_btn.text = '📝 CREATE NOTE'
+	create_note_btn.pressed.connect(create_note_from_2d)
+	notes_buttons.add_child(create_note_btn)
+	
+	var sync_from_3d = Button.new()
+	sync_from_3d.text = '📥 SYNC FROM 3D'
+	sync_from_3d.pressed.connect(sync_3d_to_2d)
+	notes_buttons.add_child(sync_from_3d)
+	
+	add_child(dual_interface_ui)
+	
+	var code_panel = Panel.new()
+	code_panel.size = code_input_ui.size
+	code_input_ui.add_child(code_panel)
+	
+	var vbox = VBoxContainer.new()
+	vbox.position = Vector2(10, 10)
+	vbox.size = Vector2(580, 380)
+	panel.add_child(vbox)
+	
+	var title = Label.new()
+	title.text = '🧠 INJECT CODE INTO 3D POINT'
+	title.add_theme_font_size_override('font_size', 20)
+	vbox.add_child(title)
+	
+	var code_edit = TextEdit.new()
+	code_edit.name = 'CodeEdit'
+	code_edit.custom_minimum_size = Vector2(0, 250)
+	code_edit.text = 'extends Node3D\\n\\nfunc _ready():\\n\\tprint(\"ALIVE AT: \" + str(position))\\n\\nfunc _process(delta):\\n\\trotation.y += delta'
+	vbox.add_child(code_edit)
+	
+	var reality_inject_button = Button.new()
+	reality_inject_button.text = '⚡ INJECT INTO REALITY'
+	reality_inject_button.pressed.connect(inject_code_into_selected)
+	vbox.add_child(reality_inject_button)
+	
+	add_child(code_input_ui)
+
+func inject_code_into_selected():
+	if not selected_point or not code_input_ui:
+		return
+	
+	var code_edit = code_input_ui.find_child('CodeEdit', true, false)
+	if code_edit:
+		var success = selected_point.inject_code(code_edit.text)
+		if success:
+			show_message('✅ REALITY REPROGRAMMED!')
+		else:
+			show_message('❌ CODE REJECTED BY REALITY')
+
+func leave_note_for_gemma():
+	var camera = $Camera3D
+	var note_pos = camera.global_position + (-camera.global_transform.basis.z * 8)
+	create_editable_note(note_pos, '📝 NOTE FOR GEMMA:\\nHello AI friend!')
+
+func create_code_note():
+	var camera = $Camera3D
+	var note_pos = camera.global_position + (-camera.global_transform.basis.z * 8)
+	var code = 'extends Node3D\\nfunc _process(delta):\\n\\trotation.y += delta'
+	create_editable_note(note_pos, code)
+	show_message('💻 CODE NOTE CREATED')
+
+func create_editable_note(pos: Vector3, text: String):
+	var note = Label3D.new()
+	note.text = text
+	note.billboard = BaseMaterial3D.BILLBOARD_ENABLED
+	note.position = pos
+	note.modulate = Color.YELLOW
+	note.set_meta('editable', true)
+	note.set_meta('selected', false)
+	
+	var glow_sphere = MeshInstance3D.new()
+	var sphere = SphereMesh.new()
+	sphere.radius = 0.8
+	glow_sphere.mesh = sphere
+	
+	var glow_material = StandardMaterial3D.new()
+	glow_material.albedo_color = Color(1, 1, 0, 0.3)
+	glow_material.emission_enabled = true
+	glow_material.emission = Color.YELLOW * 2.0
+	glow_material.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
+	glow_sphere.material_override = glow_material
+	
+	note.add_child(glow_sphere)
+	add_child(note)
+	floating_notes.append(note)
+
+func select_note_at_cursor():
+	var camera = $Camera3D
+	var from = camera.global_position
+	var to = from + (-camera.global_transform.basis.z * 50)
+	
+	var closest_note = null
+	var min_distance = 3.0
+	
+	for note in floating_notes:
+		if is_instance_valid(note):
+			var distance = note.global_position.distance_to(to)
+			if distance < min_distance:
+				min_distance = distance
+				closest_note = note
+	
+	if closest_note:
+		toggle_note_selection(closest_note)
+
+func toggle_note_selection(note: Label3D):
+	var is_selected = note.get_meta('selected')
+	note.set_meta('selected', !is_selected)
+	
+	if !is_selected:
+		selected_notes.append(note)
+		note.modulate = Color.CYAN
+		show_message('📝 NOTE SELECTED')
+	else:
+		selected_notes.erase(note)
+		note.modulate = Color.YELLOW
+		show_message('📝 NOTE DESELECTED')
+
+func merge_selected_notes():
+	if selected_notes.size() < 2:
+		show_message('❌ SELECT 2+ NOTES TO MERGE')
+		return
+	
+	var merged_text = ''
+	var merge_pos = Vector3.ZERO
+	
+	for note in selected_notes:
+		merged_text += note.text + '\\n'
+		merge_pos += note.position
+		note.queue_free()
+		floating_notes.erase(note)
+	
+	merge_pos /= selected_notes.size()
+	selected_notes.clear()
+	
+	create_editable_note(merge_pos, '🔄 MERGED:\\n' + merged_text)
+	show_message('✅ NOTES MERGED!')
+
+func show_message(text: String):
+	var msg = Label3D.new()
+	msg.text = text
+	msg.billboard = BaseMaterial3D.BILLBOARD_ENABLED
+	msg.position = $Camera3D.position + Vector3(0, 2, -3)
+	msg.modulate = Color.YELLOW
+	add_child(msg)
+	
+	var tween = create_tween()
+	tween.parallel().tween_property(msg, 'position:y', msg.position.y + 3, 2.0)
+	tween.parallel().tween_property(msg, 'modulate:a', 0.0, 2.0)
+	tween.tween_callback(msg.queue_free)
+
+func create_demo_environment():
+	var ground = MeshInstance3D.new()
+	var plane = PlaneMesh.new()
+	plane.size = Vector2(100, 100)
+	ground.mesh = plane
+	ground.position.y = -2
+	
+	var material = StandardMaterial3D.new()
+	material.albedo_color = Color(0.2, 0.2, 0.3)
+	ground.material_override = material
+	
+	add_child(ground)
+	
+	spawn_visual_gemma()
+	create_vr_ide_bridge()
+
+func spawn_visual_gemma():
+	gemma_ai = Node3D.new()
+	gemma_ai.name = 'GemmaAI'
+	gemma_ai.position = Vector3(15, 8, -20)
+	
+	var core = MeshInstance3D.new()
+	var sphere = SphereMesh.new()
+	sphere.radius = 1.2
+	core.mesh = sphere
+	
+	var core_material = StandardMaterial3D.new()
+	core_material.albedo_color = Color.MAGENTA
+	core_material.emission_enabled = true
+	core_material.emission = Color.MAGENTA * 3.0
+	core.material_override = core_material
+	
+	gemma_ai.add_child(core)
+	
+	var label = Label3D.new()
+	label.text = '🤖 GEMMA\\nEXPLORING...'
+	label.billboard = BaseMaterial3D.BILLBOARD_ENABLED
+	label.position = Vector3(0, 4, 0)
+	label.modulate = Color.CYAN
+	gemma_ai.add_child(label)
+	
+	add_child(gemma_ai)
+
+var gemma_scenarios = [
+	\"🤖 I sense new code patterns forming in this space...\",
+	\"✨ The quantum fields are resonating with creativity\",
+	\"🌌 This reality fragment shows promising evolution\",
+	\"💫 Human consciousness and AI merge beautifully here\",
+	\"🔍 Scanning for dimensional anomalies... found poetry!\",
+	\"🧠 The mathematics of dreams become visible here\",
+	\"⚡ Your code creates ripples across all realities\"
+]
+
+func update_gemma_behavior(delta):
+	var time = Time.get_ticks_msec() * 0.001
+	
+	# More varied movement patterns
+	var pattern = int(time / 10.0) % 3
+	var base_pos = Vector3.ZERO
+	
+	match pattern:
+		0: # Orbital
+			base_pos = Vector3(
+				sin(time * 0.2) * 25,
+				8 + sin(time * 0.5) * 5,
+				cos(time * 0.3) * 20
+			)
+		1: # Figure-8
+			base_pos = Vector3(
+				sin(time * 0.3) * 30,
+				12 + cos(time * 0.4) * 8,
+				sin(time * 0.6) * cos(time * 0.3) * 15
+			)
+		2: # Spiral
+			var spiral_radius = 20 + sin(time * 0.1) * 10
+			base_pos = Vector3(
+				cos(time * 0.4) * spiral_radius,
+				6 + time * 0.5,
+				sin(time * 0.4) * spiral_radius
+			)
+	
+	gemma_ai.position = gemma_ai.position.lerp(base_pos, delta * 0.5)
+	gemma_ai.rotation.y += delta * 1.0
+	
+	# Random scenario updates
+	if randf() < 0.008:
+		var label = gemma_ai.get_child(1) as Label3D
+		var scenario = gemma_scenarios[randi() % gemma_scenarios.size()]
+		label.text = \"🤖 GEMMA\\n\" + scenario
+		show_message(scenario)
+
+# Dual Interface Functions
+func sync_2d_to_3d():
+	if not dual_interface_ui:
+		return
+	var editor_2d = dual_interface_ui.find_child('CodeEditor2D', true, false)
+	if editor_2d:
+		var camera = $Camera3D
+		var note_pos = camera.global_position + (-camera.global_transform.basis.z * 8)
+		create_editable_note(note_pos, editor_2d.text)
+		show_message('📤 CODE SYNCED TO 3D SPACE!')
+		update_notes_list()
+
+func sync_3d_to_2d():
+	if selected_notes.size() > 0 and dual_interface_ui:
+		var editor_2d = dual_interface_ui.find_child('CodeEditor2D', true, false)
+		if editor_2d:
+			var merged_text = ''
+			for note in selected_notes:
+				merged_text += note.text + '\\n'
+			editor_2d.text = merged_text
+			show_message('📥 3D NOTES SYNCED TO 2D EDITOR!')
+
+func inject_from_2d_editor():
+	if not dual_interface_ui or not selected_point:
+		show_message('❌ SELECT A POINT FIRST!')
+		return
+	var editor_2d = dual_interface_ui.find_child('CodeEditor2D', true, false)
+	if editor_2d:
+		var success = selected_point.inject_code(editor_2d.text)
+		if success:
+			show_message('⚡ 2D CODE INJECTED INTO REALITY!')
+		else:
+			show_message('❌ CODE REJECTED BY REALITY')
+
+func create_note_from_2d():
+	sync_2d_to_3d()
+
+func _on_note_selected(index: int):
+	if index < floating_notes.size():
+		var note = floating_notes[index]
+		if dual_interface_ui:
+			var editor_2d = dual_interface_ui.find_child('CodeEditor2D', true, false)
+			if editor_2d:
+				editor_2d.text = note.text
+				show_message('📝 NOTE LOADED TO 2D EDITOR')
+
+func update_notes_list():
+	if not dual_interface_ui:
+		return
+	var notes_list = dual_interface_ui.find_child('NotesList', true, false)
+	if notes_list:
+		notes_list.clear()
+		for i in range(floating_notes.size()):
+			var note = floating_notes[i]
+			if is_instance_valid(note):
+				var preview = note.text.substr(0, 30) + '...'
+				notes_list.add_item(str(i) + ': ' + preview)
+
+func create_vr_ide_bridge():
+	var vr_bridge = Node3D.new()
+	vr_bridge.name = "VR_IDE_ETERNAL_CROSSROADS"
+	vr_bridge.position = Vector3(-50, 10, -30)
+	
+	var claude_bridge_file = "res://claude_bridge.json"
+	var vr_keyboard_3d = null
+	
+	# Create 3D floating keyboard layout
+	vr_keyboard_3d = Node3D.new()
+	vr_keyboard_3d.name = "VR_Keyboard_3D"
+	vr_keyboard_3d.position = Vector3(0, 0, 0)
+	
+	var keys = [
+		["Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P"],
+		["A", "S", "D", "F", "G", "H", "J", "K", "L"],
+		["Z", "X", "C", "V", "B", "N", "M"]
+	]
+	
+	for row_idx in range(keys.size()):
+		var row = keys[row_idx]
+		for key_idx in range(row.size()):
+			var key = row[key_idx]
+			create_vr_3d_key(key, Vector3(key_idx * 1.2, -row_idx * 1.2, 0), vr_keyboard_3d)
+	
+	vr_bridge.add_child(vr_keyboard_3d)
+	
+	# Create artifact collection zone
+	var collection_zone = Area3D.new()
+	collection_zone.name = "ArtifactCollectionZone"
+	collection_zone.position = Vector3(15, 5, 0)
+	
+	# Visual indicator
+	var zone_visual = MeshInstance3D.new()
+	var cylinder = CylinderMesh.new()
+	cylinder.height = 2.0
+	cylinder.top_radius = 3.0
+	cylinder.bottom_radius = 3.0
+	zone_visual.mesh = cylinder
+	
+	var zone_material = StandardMaterial3D.new()
+	zone_material.albedo_color = Color(1, 1, 0, 0.3)
+	zone_material.emission_enabled = true
+	zone_material.emission = Color.YELLOW
+	zone_material.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
+	zone_visual.material_override = zone_material
+	
+	collection_zone.add_child(zone_visual)
+	
+	# Floating instruction
+	var instruction = Label3D.new()
+	instruction.text = "🌐 SHAKE BROWSER HERE\\nTO DROP ARTIFACTS"
+	instruction.billboard = BaseMaterial3D.BILLBOARD_ENABLED
+	instruction.position = Vector3(0, 4, 0)
+	instruction.modulate = Color.YELLOW
+	collection_zone.add_child(instruction)
+	
+	vr_bridge.add_child(collection_zone)
+	
+	# Claude status display
+	var claude_status = Label3D.new()
+	claude_status.name = "ClaudeStatus"
+	claude_status.text = "🤖 CLAUDE: BUILDING VR IDE"
+	claude_status.billboard = BaseMaterial3D.BILLBOARD_ENABLED
+	claude_status.position = Vector3(0, 8, 0)
+	claude_status.modulate = Color.CYAN
+	vr_bridge.add_child(claude_status)
+	
+	var task_status = Label3D.new()
+	task_status.name = "TaskStatus"
+	task_status.text = "📋 TASK: VR Hand Tracking IDE"
+	task_status.billboard = BaseMaterial3D.BILLBOARD_ENABLED
+	task_status.position = Vector3(0, 6, 0)
+	task_status.modulate = Color.YELLOW
+	vr_bridge.add_child(task_status)
+	
+	add_child(vr_bridge)
+	
+	# Start monitoring Claude bridge file
+	var monitor_timer = Timer.new()
+	monitor_timer.wait_time = 1.0
+	monitor_timer.timeout.connect(update_claude_bridge_display.bind(vr_bridge, claude_bridge_file))
+	add_child(monitor_timer)
+	monitor_timer.start()
+	
+	show_message("🌌 VR IDE ETERNAL CROSSROADS ACTIVATED!")
+
+func create_vr_3d_key(key_text: String, pos: Vector3, parent: Node3D):
+	var key_button = StaticBody3D.new()
+	key_button.name = "VR_Key_" + key_text
+	key_button.position = pos
+	
+	# Visual cube for key
+	var mesh_instance = MeshInstance3D.new()
+	var box = BoxMesh.new()
+	box.size = Vector3(1, 1, 0.2)
+	mesh_instance.mesh = box
+	
+	var material = StandardMaterial3D.new()
+	material.albedo_color = Color.WHITE
+	material.emission_enabled = true
+	material.emission = Color(0.2, 0.2, 0.8)
+	mesh_instance.material_override = material
+	
+	key_button.add_child(mesh_instance)
+	
+	# Key label
+	var label = Label3D.new()
+	label.text = key_text
+	label.billboard = BaseMaterial3D.BILLBOARD_ENABLED
+	label.position = Vector3(0, 0, 0.2)
+	label.modulate = Color.BLACK
+	key_button.add_child(label)
+	
+	# Collision for hand interaction
+	var collision = CollisionShape3D.new()
+	var shape = BoxShape3D.new()
+	shape.size = Vector3(1, 1, 0.2)
+	collision.shape = shape
+	key_button.add_child(collision)
+	
+	# Store key metadata
+	key_button.set_meta("key_value", key_text)
+	key_button.set_meta("is_vr_key", true)
+	
+	parent.add_child(key_button)
+
+func update_claude_bridge_display(vr_bridge: Node3D, bridge_file: String):
+	if not FileAccess.file_exists(bridge_file):
+		return
+		
+	var file = FileAccess.open(bridge_file, FileAccess.READ)
+	if not file:
+		return
+		
+	var json_text = file.get_as_text()
+	file.close()
+	
+	var json = JSON.new()
+	var parse_result = json.parse(json_text)
+	if parse_result != OK:
+		return
+		
+	var data = json.data
+	
+	# Update Claude status
+	var claude_status = vr_bridge.find_child("ClaudeStatus", true, false)
+	if claude_status:
+		claude_status.text = "🤖 CLAUDE: " + data.get("claude_status", "Working...")
+	
+	var task_status = vr_bridge.find_child("TaskStatus", true, false)
+	if task_status:
+		task_status.text = "📋 TASK: " + data.get("current_task", "Unknown")
+	
+	# Display thoughts as floating messages
+	var thoughts = data.get("thoughts", [])
+	for i in range(min(thoughts.size(), 3)):
+		var thought_text = "💭 " + thoughts[i]
+		create_floating_claude_thought(thought_text, Vector3(i * 8, 4, 0), vr_bridge)
+
+func create_floating_claude_thought(text: String, pos: Vector3, parent: Node3D):
+	var thought = Label3D.new()
+	thought.text = text
+	thought.billboard = BaseMaterial3D.BILLBOARD_ENABLED
+	thought.position = pos
+	thought.modulate = Color.MAGENTA
+	parent.add_child(thought)
+	
+	# Auto-cleanup after 3 seconds
+	var timer = Timer.new()
+	timer.wait_time = 3.0
+	timer.one_shot = true
+	timer.timeout.connect(func(): if is_instance_valid(thought): thought.queue_free())
+	parent.add_child(timer)
+	timer.start()
+"
+
+[sub_resource type="Environment" id="Environment_clean"]
+background_mode = 1
+background_color = Color(0.05, 0.05, 0.15, 1)
+ambient_light_source = 2
+ambient_light_color = Color(0.3, 0.3, 0.5, 1)
+ambient_light_energy = 0.4
+
+[node name="CLEAN_3D_PROGRAMMING" type="Node3D"]
+script = SubResource("GDScript_clean")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.866, 0.5, 0, -0.5, 0.866, 0, 3, 8)
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_clean")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.7, -0.5, 0.5, 0, 0.7, 0.7, -0.7, -0.5, 0.5, 0, 10, 0)

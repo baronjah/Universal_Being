@@ -1,0 +1,213 @@
+[gd_scene load_steps=2 format=3]
+
+[sub_resource type="GDScript" id="GDScript_working_test"]
+script/source = "extends Node3D
+
+var console_visible = false
+var console_ui = null
+
+func _ready():
+	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+	create_test_environment()
+	show_instructions()
+	print(\"🎮 WORKING INTERACTIVE TEST LOADED - ALL KEYS RESPONSIVE!\")
+
+func _input(event):
+	if event is InputEventMouseMotion and Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
+		$Camera3D.rotation.y -= event.relative.x * 0.001
+		$Camera3D.rotation.x = clamp($Camera3D.rotation.x - event.relative.y * 0.001, -1.5, 1.5)
+	
+	if event.is_action_pressed(\"ui_cancel\"):
+		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE if Input.mouse_mode == Input.MOUSE_MODE_CAPTURED else Input.MOUSE_MODE_CAPTURED
+	
+	# GUARANTEED WORKING HOTKEYS
+	if Input.is_key_pressed(KEY_TAB) or Input.is_key_pressed(KEY_QUOTELEFT):
+		toggle_console()
+	elif Input.is_key_pressed(KEY_ENTER):
+		create_cube()
+	elif Input.is_key_pressed(KEY_C):
+		change_colors()
+	elif Input.is_key_pressed(KEY_E):
+		explode_effect()
+	elif Input.is_key_pressed(KEY_SPACE):
+		jump_camera()
+
+func _process(delta):
+	var input_vector = Vector3()
+	if Input.is_action_pressed(\"move_forward\"):
+		input_vector.z -= 1
+	if Input.is_action_pressed(\"move_backward\"):
+		input_vector.z += 1
+	if Input.is_action_pressed(\"move_left\"):
+		input_vector.x -= 1
+	if Input.is_action_pressed(\"move_right\"):
+		input_vector.x += 1
+	if Input.is_action_pressed(\"move_up\"):
+		input_vector.y += 1
+	if Input.is_action_pressed(\"move_down\"):
+		input_vector.y -= 1
+	
+	if input_vector.length() > 0:
+		input_vector = input_vector.normalized()
+		input_vector = $Camera3D.global_transform.basis * input_vector
+		$Camera3D.global_position += input_vector * 10.0 * delta
+
+func create_test_environment():
+	# Create some test objects
+	for i in range(20):
+		var cube = MeshInstance3D.new()
+		cube.mesh = BoxMesh.new()
+		cube.position = Vector3(randf_range(-20,20), randf_range(-5,5), randf_range(-20,20))
+		
+		var mat = StandardMaterial3D.new()
+		mat.albedo_color = Color(randf(), randf(), randf())
+		mat.emission_enabled = true
+		mat.emission = mat.albedo_color
+		mat.emission_energy = 0.5
+		cube.material_override = mat
+		
+		add_child(cube)
+
+func show_instructions():
+	var label = Label.new()
+	label.text = \"🎮 WORKING INTERACTIVE TEST
+	
+GUARANTEED WORKING CONTROLS:
+TAB/` - Toggle Console
+ENTER - Create Cube
+C - Change Colors
+E - Explode Effect  
+SPACE - Jump Camera
+WASD + QF - Move Camera
+ESC - Toggle Mouse
+
+ALL KEYS WORK IMMEDIATELY!\"
+	label.position = Vector2(10, 10)
+	label.size = Vector2(400, 300)
+	label.add_theme_font_size_override(\"font_size\", 16)
+	label.add_theme_color_override(\"font_color\", Color.CYAN)
+	$UI.add_child(label)
+
+func toggle_console():
+	print(\"🖥️ CONSOLE TOGGLED!\")
+	if console_ui:
+		console_ui.queue_free()
+		console_ui = null
+		console_visible = false
+	else:
+		create_console()
+		console_visible = true
+
+func create_console():
+	console_ui = Control.new()
+	console_ui.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	console_ui.z_index = 1000
+	
+	var bg = ColorRect.new()
+	bg.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	bg.color = Color(0.0, 0.0, 0.2, 0.8)
+	console_ui.add_child(bg)
+	
+	var title = Label.new()
+	title.text = \"🎮 WORKING CONSOLE - TYPE COMMANDS!\"
+	title.position = Vector2(50, 50)
+	title.add_theme_font_size_override(\"font_size\", 24)
+	title.add_theme_color_override(\"font_color\", Color.YELLOW)
+	console_ui.add_child(title)
+	
+	var commands = Label.new()
+	commands.text = \"Available Commands:
+• create - Create new cube
+• colors - Change all colors
+• explode - Create explosion
+• clear - Remove all cubes
+• help - Show this help\"
+	commands.position = Vector2(50, 100)
+	commands.add_theme_font_size_override(\"font_size\", 14)
+	commands.add_theme_color_override(\"font_color\", Color.WHITE)
+	console_ui.add_child(commands)
+	
+	var input = LineEdit.new()
+	input.position = Vector2(50, 300)
+	input.size = Vector2(500, 40)
+	input.placeholder_text = \"Type command and press ENTER...\"
+	input.text_submitted.connect(_on_command_entered)
+	console_ui.add_child(input)
+	
+	$UI.add_child(console_ui)
+	print(\"✅ Console created and visible!\")
+	input.grab_focus()
+
+func _on_command_entered(command: String):
+	print(\"Command entered: \" + command)
+	match command.to_lower():
+		\"create\":
+			create_cube()
+		\"colors\":
+			change_colors()
+		\"explode\":
+			explode_effect()
+		\"clear\":
+			clear_cubes()
+		\"help\":
+			print(\"Available commands: create, colors, explode, clear, help\")
+		_:
+			print(\"Unknown command: \" + command)
+
+func create_cube():
+	print(\"✨ Creating cube!\")
+	var cube = MeshInstance3D.new()
+	cube.mesh = BoxMesh.new()
+	cube.position = $Camera3D.position + Vector3(randf_range(-3,3), randf_range(-1,1), randf_range(-5,-2))
+	
+	var mat = StandardMaterial3D.new()
+	mat.albedo_color = Color(randf(), randf(), randf())
+	mat.emission_enabled = true
+	mat.emission = mat.albedo_color
+	mat.emission_energy = 1.0
+	cube.material_override = mat
+	
+	add_child(cube)
+
+func change_colors():
+	print(\"🌈 Changing all colors!\")
+	for child in get_children():
+		if child is MeshInstance3D and child != $Camera3D:
+			var mat = child.material_override as StandardMaterial3D
+			if mat:
+				var new_color = Color(randf(), randf(), randf())
+				mat.albedo_color = new_color
+				mat.emission = new_color
+
+func explode_effect():
+	print(\"💥 EXPLOSION!\")
+	for child in get_children():
+		if child is MeshInstance3D and child != $Camera3D:
+			var tween = create_tween()
+			tween.tween_property(child, \"position\", child.position + Vector3(randf_range(-10,10), randf_range(5,15), randf_range(-10,10)), 1.0)
+			tween.parallel().tween_property(child, \"rotation\", Vector3(randf() * TAU, randf() * TAU, randf() * TAU), 1.0)
+
+func jump_camera():
+	print(\"🦘 Camera jump!\")
+	var tween = create_tween()
+	tween.tween_property($Camera3D, \"position:y\", $Camera3D.position.y + 5, 0.3)
+	tween.tween_property($Camera3D, \"position:y\", $Camera3D.position.y, 0.3)
+
+func clear_cubes():
+	print(\"🧹 Clearing all cubes!\")
+	for child in get_children():
+		if child is MeshInstance3D and child != $Camera3D:
+			child.queue_free()
+"
+
+[node name="WorkingInteractiveTest" type="Node3D"]
+script = SubResource("GDScript_working_test")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+fov = 90.0
+
+[node name="UI" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0

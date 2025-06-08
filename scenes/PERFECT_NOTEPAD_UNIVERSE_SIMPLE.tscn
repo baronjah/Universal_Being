@@ -1,0 +1,177 @@
+[gd_scene load_steps=4 format=3]
+
+[sub_resource type="GDScript" id="GDScript_simple_notepad"]
+script/source = "extends Node3D
+
+var stellar_colors = [Color(0,0,0),Color(0.2,0.1,0),Color(0.8,0,0),Color(1,0.5,0),Color(1,1,0),Color(1,1,1),Color(0.7,0.9,1),Color(0,0.5,1),Color(0.5,0,1)]
+var camera_rotation = Vector2.ZERO
+var move_speed = 20.0
+var look_speed = 0.002
+
+func _ready():
+	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+	create_space_environment()
+	create_programming_nodes()
+	show_visual_message(\"🌌 COSMIC NOTEPAD UNIVERSE - N=Layers, C=Words, E=Interact\", stellar_colors[4])
+
+func create_space_environment():
+	# Create visible stars in space
+	for i in range(50):
+		var star = MeshInstance3D.new()
+		star.mesh = SphereMesh.new()
+		star.mesh.radius = 0.3
+		star.position = Vector3(randf_range(-100,100), randf_range(-100,100), randf_range(-100,100))
+		var mat = StandardMaterial3D.new()
+		mat.albedo_color = stellar_colors[5]
+		mat.emission_enabled = true
+		mat.emission = stellar_colors[5]
+		mat.emission_energy = 1.5
+		star.material_override = mat
+		add_child(star)
+
+func create_programming_nodes():
+	# Create the three main nodes you should see
+	create_node(\"NOTEPAD\", Vector3(-8, 0, 0), stellar_colors[6])
+	create_node(\"WORDS\", Vector3(0, 0, 0), stellar_colors[4]) 
+	create_node(\"DATABASE\", Vector3(8, 0, 0), stellar_colors[7])
+
+func create_node(name: String, pos: Vector3, color: Color):
+	var node = Node3D.new()
+	node.position = pos
+	
+	var body = MeshInstance3D.new()
+	body.mesh = BoxMesh.new()
+	body.mesh.size = Vector3(2, 1.5, 0.8)
+	var mat = StandardMaterial3D.new()
+	mat.albedo_color = color
+	mat.emission_enabled = true
+	mat.emission = color
+	mat.emission_energy = 0.8
+	body.material_override = mat
+	node.add_child(body)
+	
+	var label = Label3D.new()
+	label.text = name
+	label.billboard = BaseMaterial3D.BILLBOARD_ENABLED
+	label.position = Vector3(0, 1, 0)
+	label.modulate = stellar_colors[5]
+	node.add_child(label)
+	
+	add_child(node)
+
+func _input(event):
+	if event is InputEventMouseMotion and Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
+		camera_rotation.x -= event.relative.x * look_speed
+		camera_rotation.y = clamp(camera_rotation.y - event.relative.y * look_speed, -1.5, 1.5)
+		$Camera3D.rotation = Vector3(camera_rotation.y, camera_rotation.x, 0)
+	
+	if event.is_action_pressed(\"ui_cancel\"):
+		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE if Input.mouse_mode == Input.MOUSE_MODE_CAPTURED else Input.MOUSE_MODE_CAPTURED
+	elif event.is_action_pressed(\"notepad_toggle\"):
+		spawn_notepad_layers()
+	elif event.is_action_pressed(\"create_word\"):
+		create_floating_word()
+
+func spawn_notepad_layers():
+	for i in range(5):
+		var layer = MeshInstance3D.new()
+		layer.mesh = PlaneMesh.new()
+		layer.mesh.size = Vector2(6, 4)
+		layer.position = $Camera3D.position + Vector3(i*2-4, i*1.5-3, -10)
+		layer.look_at($Camera3D.position, Vector3.UP)
+		
+		var mat = StandardMaterial3D.new()
+		var colors = [Color.CYAN, Color.BLUE, Color(0.3,0,0.8), Color.PURPLE, Color(0.3,0,0.5)]
+		mat.albedo_color = Color(colors[i].r*0.3, colors[i].g*0.3, colors[i].b*0.3, 0.7)
+		mat.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
+		mat.emission_enabled = true
+		mat.emission = colors[i]
+		mat.emission_energy = 0.5
+		layer.material_override = mat
+		
+		add_child(layer)
+	
+	show_visual_message(\"📝 NOTEPAD LAYERS MANIFESTED\", stellar_colors[6])
+
+func create_floating_word():
+	var words = [\"COSMIC\", \"VISION\", \"REALITY\", \"DREAM\", \"UNIVERSE\", \"LIGHT\"]
+	var word = Label3D.new()
+	word.text = words[randi() % words.size()]
+	word.position = $Camera3D.position + Vector3(randf_range(-3,3), randf_range(-2,2), -5)
+	word.billboard = BaseMaterial3D.BILLBOARD_ENABLED
+	word.modulate = stellar_colors[randi() % stellar_colors.size()]
+	add_child(word)
+	
+	show_visual_message(\"✨ WORD CREATED: \" + word.text, stellar_colors[4])
+
+func _process(delta):
+	handle_movement(delta)
+
+func handle_movement(delta):
+	var input_vector = Vector3()
+	if Input.is_action_pressed(\"move_forward\"):
+		input_vector.z -= 1
+	if Input.is_action_pressed(\"move_backward\"):
+		input_vector.z += 1
+	if Input.is_action_pressed(\"move_left\"):
+		input_vector.x -= 1
+	if Input.is_action_pressed(\"move_right\"):
+		input_vector.x += 1
+	if Input.is_action_pressed(\"move_up\"):
+		input_vector.y += 1
+	if Input.is_action_pressed(\"move_down\"):
+		input_vector.y -= 1
+	
+	if input_vector.length() > 0:
+		input_vector = input_vector.normalized()
+		input_vector = $Camera3D.global_transform.basis * input_vector
+		$Camera3D.global_position += input_vector * move_speed * delta
+
+func show_visual_message(text: String, color: Color):
+	var msg = Label3D.new()
+	msg.text = text
+	msg.modulate = color
+	msg.billboard = BaseMaterial3D.BILLBOARD_ENABLED
+	msg.position = $Camera3D.position + Vector3(0, 3, -5)
+	add_child(msg)
+	
+	var tween = create_tween()
+	tween.parallel().tween_property(msg, \"position:y\", msg.position.y + 5, 3.0)
+	tween.parallel().tween_property(msg, \"modulate:a\", 0.0, 3.0)
+	tween.tween_callback(msg.queue_free)
+"
+
+[sub_resource type="Environment" id="Environment_simple"]
+background_mode = 1
+background_color = Color(0.01, 0.01, 0.08, 1)
+ambient_light_source = 2
+ambient_light_color = Color(0.1, 0.1, 0.2, 1)
+ambient_light_energy = 0.3
+
+[sub_resource type="Theme" id="Theme_simple"]
+
+[node name="SimpleNotepadUniverse" type="Node3D"]
+script = SubResource("GDScript_simple_notepad")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+fov = 85.0
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_simple")
+
+[node name="UI" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme = SubResource("Theme_simple")
+
+[node name="Controls" type="Label" parent="UI"]
+layout_mode = 0
+offset_left = 10.0
+offset_top = 10.0
+offset_right = 400.0
+offset_bottom = 100.0
+text = "🌌 COSMIC NOTEPAD TEST
+WASD - Move | Mouse - Look | Q/F - Up/Down | ESC - Free Mouse
+Game is starting... thunder clearing..."
