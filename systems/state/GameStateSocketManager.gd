@@ -6,7 +6,7 @@
 # ==================================================
 
 extends Node
-#class_name GameStateSocketManager # Commented to avoid duplicate
+class_name GameStateSocketManager
 
 # ===== GAME STATE SOCKETS =====
 
