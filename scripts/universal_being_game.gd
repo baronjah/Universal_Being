@@ -3,9 +3,11 @@ class_name UniversalBeingGame
 
 @export var perfect_scene: PackedScene
 @export var notepad_scene: PackedScene
+@export var programming_scene: PackedScene
 
 var perfect_instance: Node
 var notepad_instance: Node
+var programming_instance: Node
 
 func _ready():
     if perfect_scene:
@@ -14,3 +16,6 @@ func _ready():
     if notepad_scene:
         notepad_instance = notepad_scene.instantiate()
         add_child(notepad_instance)
+    if programming_scene:
+        programming_instance = programming_scene.instantiate()
+        add_child(programming_instance)
