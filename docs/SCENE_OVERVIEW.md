@@ -19,5 +19,7 @@ Start from **PERFECT_ULTIMATE_UNIVERSAL_BEING.tscn** and selectively merge notep
 
 ## UNIVERSAL_BEING_GAME.tscn
 * Unified scene that instantiates the **PERFECT_ULTIMATE_UNIVERSAL_BEING** environment, **3D_NOTEPAD_GAME** mechanics and the **CLEAN_3D_PROGRAMMING** playground.
+
 * Now set as the project's main scene so that all major systems load by default.
+
 * Serves as an experimental sandbox where all major systems run together.
