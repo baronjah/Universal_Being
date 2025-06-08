@@ -131,7 +131,7 @@ func _setup_consciousness_effects() -> void:
 	consciousness_aura.light_color = plasma_color
 	consciousness_aura.light_energy = core_intensity
 	consciousness_aura.omni_range = consciousness_glow_radius
-	consciousness_aura.light_soft = 2.0
+	#consciousness_aura.light_soft = 2.0
 	add_child(consciousness_aura)
 	
 	# Consciousness particles

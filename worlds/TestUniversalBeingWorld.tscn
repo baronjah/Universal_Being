@@ -1,11 +1,11 @@
-[gd_scene load_steps=10 format=3]
+[gd_scene load_steps=13 format=3 uid="uid://bdsre3de2olmw"]
 
-[ext_resource type="Script" path="res://worlds/universal_being_test_world.gd" id="1"]
-[ext_resource type="Script" path="res://beings/plasmoid_universal_being.gd" id="2"]
-[ext_resource type="Script" path="res://beings/cursor/CursorUniversalBeing.gd" id="3"]
-[ext_resource type="Script" path="res://beings/console/ConsoleUniversalBeing.gd" id="4"]
-[ext_resource type="PackedScene" path="res://scenes/main/camera_point.tscn" id="5"]
-[ext_resource type="Script" path="res://systems/state/GameStateSocketManager.gd" id="6"]
+[ext_resource type="Script" uid="uid://c3w58egshdf6v" path="res://worlds/universal_being_test_world.gd" id="1"]
+[ext_resource type="Script" uid="uid://pooqmvex58dx" path="res://beings/plasmoid_universal_being.gd" id="2"]
+[ext_resource type="Script" uid="uid://4e5af323xa3f" path="res://beings/cursor/CursorUniversalBeing.gd" id="3"]
+[ext_resource type="Script" uid="uid://cfl32dd33hh1s" path="res://beings/console/ConsoleUniversalBeing.gd" id="4"]
+[ext_resource type="PackedScene" uid="uid://dwad8x0chensn" path="res://scenes/main/camera_point.tscn" id="5"]
+[ext_resource type="Script" uid="uid://dby1vc8tk68r6" path="res://systems/state/GameStateSocketManager.gd" id="6"]
 
 [sub_resource type="Environment" id="Environment_1"]
 background_mode = 1
@@ -15,7 +15,6 @@ ambient_light_color = Color(0.3, 0.4, 0.6, 1)
 ambient_light_energy = 0.3
 fog_enabled = true
 fog_light_color = Color(0.4, 0.5, 0.7, 1)
-fog_density = 0.01
 
 [sub_resource type="BoxMesh" id="BoxMesh_1"]
 size = Vector3(20, 0.2, 20)
@@ -29,10 +28,8 @@ roughness = 0.8
 size = Vector3(20, 0.2, 20)
 
 [sub_resource type="BoxMesh" id="CubeMesh"]
-size = Vector3(1,1,1)
 
 [sub_resource type="BoxShape3D" id="CubeShape"]
-size = Vector3(1,1,1)
 
 [node name="TestUniversalBeingWorld" type="Node3D"]
 script = ExtResource("1")
@@ -63,7 +60,7 @@ script = ExtResource("2")
 [node name="Cursor" type="Node3D" parent="."]
 script = ExtResource("3")
 
-[node name="Console" type="Node" parent="."]
+[node name="Console" type="Node3D" parent="."]
 script = ExtResource("4")
 
 [node name="GameStateSocketManager" type="Node" parent="."]

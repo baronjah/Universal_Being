@@ -35,6 +35,9 @@ var evolution_state: Dictionary = {
 }
 
 func show_ub_visual(msg: String):
+	if not get_tree() or not get_tree().current_scene:
+		# add that task to tasker, so we check again
+		return
 	var stellar_colors = [Color(0,0,0),Color(0.2,0.1,0),Color(0.8,0,0),Color(1,0.5,0),Color(1,1,0),Color(1,1,1),Color(0.7,0.9,1),Color(0,0.5,1),Color(0.5,0,1)]
 	var visual = Label3D.new()
 	visual.text = being_name + ": " + msg
