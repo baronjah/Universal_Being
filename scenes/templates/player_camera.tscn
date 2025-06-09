@@ -1,0 +1,26 @@
+[gd_scene load_steps=2 format=3 uid="uid://c8q7v6u5t4s3r"]
+
+[ext_resource type="Script" path="res://core/UniversalBeing.gd" id="1_2k4m3"]
+
+[node name="PlayerCamera" type="Node3D" groups=["universal_beings"]]
+script = ExtResource("1_2k4m3")
+being_type = "player_camera"
+being_name = "Player Camera"
+consciousness_level = 3
+
+[node name="CameraMount" type="Node3D" parent="."]
+
+[node name="Camera3D" type="Camera3D" parent="CameraMount"]
+transform = Transform3D(1, 0, 0, 0, 0.866025, 0.5, 0, -0.5, 0.866025, 0, 0, 0)
+current = true
+
+[node name="MovementHandler" type="Node" parent="."]
+script = ExtResource("2_3n4p5")
+
+[connection signal="ready" from="." to="." method="pentagon_ready"]
+[connection signal="process" from="." to="." method="pentagon_process"]
+[connection signal="input" from="." to="." method="pentagon_input"]
+[connection signal="tree_exiting" from="." to="." method="pentagon_sewers"]
+
+[connection signal="move_requested" from="MovementHandler" to="CameraMount" method="translate"]
+[connection signal="look_requested" from="MovementHandler" to="CameraMount" method="rotate_y"] 

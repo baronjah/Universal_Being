@@ -155,7 +155,7 @@ func hide_console_animated() -> void:
 		# Hide after animation completes
 		tween.tween_callback(func(): 
 			visible = false
-			UBPrint.system("UniversalConsoleController", "hide_console_animated", "Console deactivated!")
+			#UBPrint.system("UniversalConsoleController", "hide_console_animated", "Console deactivated!")
 		)
 	else:
 		# Immediate hide if panel not found

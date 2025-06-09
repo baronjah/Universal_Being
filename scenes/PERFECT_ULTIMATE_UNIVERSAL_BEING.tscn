@@ -9,7 +9,6 @@
 [ext_resource type="Script" uid="uid://dby1vc8tk68r6" path="res://systems/state/GameStateSocketManager.gd" id="7"]
 [ext_resource type="Script" uid="uid://6r0c7mg1ovbq" path="res://scripts/generation_coordinator.gd" id="8"]
 
-
 [sub_resource type="GDScript" id="PerfectUniversalController"]
 script/source = "extends Node3D
 

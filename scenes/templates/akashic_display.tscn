@@ -1,0 +1,114 @@
+[gd_scene load_steps=4 format=3 uid="uid://b6d477w0b01f5"]
+
+[ext_resource type="Script" path="res://core/UniversalBeing.gd" id="1_2k4m3"]
+[ext_resource type="Script" path="res://systems/akashic_display_system.gd" id="2_3n4p5"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1"]
+bg_color = Color(0.05, 0.05, 0.1, 0.8)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.2, 0.4, 1.0, 0.3)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[node name="AkashicDisplay" type="Control" groups=["universal_beings"]]
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -200.0
+offset_top = -150.0
+offset_right = 200.0
+offset_bottom = 150.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_2k4m3")
+being_type = "akashic_display"
+being_name = "Akashic Records Display"
+consciousness_level = 3
+
+[node name="DisplaySystem" type="Node" parent="."]
+script = ExtResource("2_3n4p5")
+
+[node name="Background" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_1")
+
+[node name="Title" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -100.0
+offset_top = 10.0
+offset_right = 100.0
+offset_bottom = 36.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 18
+text = "Akashic Records"
+horizontal_alignment = 1
+
+[node name="RecordsContainer" type="ScrollContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = 50.0
+offset_right = -10.0
+offset_bottom = -10.0
+grow_horizontal = 2
+grow_vertical = 2
+horizontal_scroll_mode = 0
+
+[node name="RecordsList" type="VBoxContainer" parent="RecordsContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 10
+
+[node name="RecordTemplate" type="PanelContainer" parent="RecordsContainer/RecordsList"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="RecordContent" type="RichTextLabel" parent="RecordsContainer/RecordsList/RecordTemplate"]
+layout_mode = 2
+size_flags_horizontal = 3
+bbcode_enabled = true
+text = "In the beginning, there was light..."
+
+[node name="Particles" type="GPUParticles2D" parent="."]
+emitting = false
+amount = 20
+lifetime = 2.0
+one_shot = true
+explosiveness = 1.0
+randomness = 0.2
+direction = Vector2(0, -1)
+spread = 15.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 50.0
+initial_velocity_max = 100.0
+scale_amount_min = 0.5
+scale_amount_max = 1.0
+color = Color(0.2, 0.4, 1.0, 0.5)
+
+[connection signal="ready" from="." to="." method="pentagon_ready"]
+[connection signal="process" from="." to="." method="pentagon_process"]
+[connection signal="input" from="." to="." method="pentagon_input"]
+[connection signal="tree_exiting" from="." to="." method="pentagon_sewers"]
+
+[connection signal="record_added" from="DisplaySystem" to="RecordsContainer/RecordsList" method="add_record"]
+[connection signal="display_toggled" from="DisplaySystem" to="." method="set_visible"]
+[connection signal="particles_triggered" from="DisplaySystem" to="Particles" method="restart"] 

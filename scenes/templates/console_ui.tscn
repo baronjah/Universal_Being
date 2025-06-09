@@ -1,0 +1,109 @@
+[gd_scene load_steps=4 format=3 uid="uid://5jfb6xyayxe0"]
+
+[ext_resource type="Script" path="res://core/UniversalBeing.gd" id="1_2k4m3"]
+[ext_resource type="Script" path="res://systems/console_ui_system.gd" id="2_3n4p5"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1"]
+bg_color = Color(0.05, 0.05, 0.1, 0.9)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.2, 0.4, 1.0, 0.5)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2"]
+bg_color = Color(0.1, 0.1, 0.2, 0.9)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.3, 0.5, 1.0, 0.3)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+
+[node name="ConsoleUI" type="Control" groups=["universal_beings"]]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_2k4m3")
+being_type = "console_ui"
+being_name = "Console Interface"
+consciousness_level = 3
+
+[node name="ConsoleSystem" type="Node" parent="."]
+script = ExtResource("2_3n4p5")
+
+[node name="Background" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_1")
+
+[node name="ConsoleContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 10
+alignment = 1
+
+[node name="OutputPanel" type="Panel" parent="ConsoleContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_2")
+
+[node name="OutputScroll" type="ScrollContainer" parent="ConsoleContainer/OutputPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+horizontal_scroll_mode = 0
+
+[node name="OutputText" type="RichTextLabel" parent="ConsoleContainer/OutputPanel/OutputScroll"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+bbcode_enabled = true
+text = "Welcome to Universal Being Console
+Type 'help' for available commands..."
+
+[node name="InputContainer" type="HBoxContainer" parent="ConsoleContainer"]
+layout_mode = 2
+theme_override_constants/separation = 5
+
+[node name="Prompt" type="Label" parent="ConsoleContainer/InputContainer"]
+layout_mode = 2
+text = ">"
+horizontal_alignment = 1
+
+[node name="InputField" type="LineEdit" parent="ConsoleContainer/InputContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "Type a command or speak to Gemma..."
+clear_button_enabled = true
+shortcut_keys_enabled = true
+
+[connection signal="ready" from="." to="." method="pentagon_ready"]
+[connection signal="process" from="." to="." method="pentagon_process"]
+[connection signal="input" from="." to="." method="pentagon_input"]
+[connection signal="tree_exiting" from="." to="." method="pentagon_sewers"]
+
+[connection signal="text_submitted" from="ConsoleContainer/InputContainer/InputField" to="ConsoleSystem" method="handle_command"]
+[connection signal="output_received" from="ConsoleSystem" to="ConsoleContainer/OutputPanel/OutputScroll/OutputText" method="append_text"]
+[connection signal="console_toggled" from="ConsoleSystem" to="." method="set_visible"] 

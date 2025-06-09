@@ -1,0 +1,138 @@
+[gd_scene load_steps=15 format=3 uid="uid://b6r6nd1yutvqf"]
+
+[ext_resource type="Script" path="res://core/UniversalBeing.gd" id="1_2k4m3"]
+[ext_resource type="Script" path="res://systems/universal_being_movement_system.gd" id="2_3n4p5"]
+[ext_resource type="Script" path="res://systems/gemma_sensory_system.gd" id="3_4m5n6"]
+[ext_resource type="Script" path="res://systems/akashic_logger.gd" id="4_5n6m7"]
+[ext_resource type="Script" path="res://systems/console_interface.gd" id="5_6m7n8"]
+[ext_resource type="PackedScene" uid="uid://c8q7v6u5t4s3r" path="res://scenes/templates/player_camera.tscn" id="6_7n8m9"]
+[ext_resource type="PackedScene" uid="uid://d9r8s7t6u5v4w" path="res://scenes/templates/creation_wand.tscn" id="7_8m9n0"]
+[ext_resource type="PackedScene" uid="uid://e0w9v8u7t6s5r" path="res://scenes/templates/console_ui.tscn" id="8_9n0m1"]
+[ext_resource type="PackedScene" uid="uid://f1r0s9t8u7v6w" path="res://scenes/templates/akashic_display.tscn" id="9_0m1n2"]
+
+[sub_resource type="Environment" id="Environment_1"]
+background_mode = 2
+background_color = Color(0.05, 0.05, 0.1, 1.0)
+ambient_light_source = 2
+ambient_light_color = Color(0.2, 0.2, 0.3, 1.0)
+ambient_light_energy = 0.5
+fog_enabled = true
+fog_light_color = Color(0.1, 0.1, 0.2, 1.0)
+fog_density = 0.01
+volumetric_fog_enabled = true
+volumetric_fog_density = 0.01
+volumetric_fog_albedo = Color(0.2, 0.2, 0.3, 1.0)
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_1"]
+sky_top_color = Color(0.05, 0.05, 0.1, 1.0)
+sky_horizon_color = Color(0.1, 0.1, 0.2, 1.0)
+ground_bottom_color = Color(0.02, 0.02, 0.05, 1.0)
+ground_horizon_color = Color(0.1, 0.1, 0.2, 1.0)
+
+[sub_resource type="Sky" id="Sky_1"]
+sky_material = SubResource("ProceduralSkyMaterial_1")
+
+[sub_resource type="WorldEnvironment" id="WorldEnvironment_1"]
+environment = SubResource("Environment_1")
+sky = SubResource("Sky_1")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_1"]
+size = Vector3(1000, 1, 1000)
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_1"]
+data = PackedVector3Array(0, 0, 0, 0, 0, 1000, 0, 1000, 1000, 0, 0, 0, 0, 1000, 1000, 0, 1000, 0)
+
+[node name="PerfectPlayableUniverse" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("WorldEnvironment_1")
+
+[node name="UniversalBeing" type="Node3D" parent="." groups=["universal_beings"]]
+script = ExtResource("1_2k4m3")
+being_type = "universe"
+being_name = "Perfect Playable Universe"
+consciousness_level = 5
+
+[node name="MovementSystem" type="Node" parent="UniversalBeing"]
+script = ExtResource("2_3n4p5")
+
+[node name="GemmaSensory" type="Node" parent="UniversalBeing"]
+script = ExtResource("3_4m5n6")
+
+[node name="AkashicLogger" type="Node" parent="UniversalBeing"]
+script = ExtResource("4_5n6m7")
+
+[node name="ConsoleInterface" type="Node" parent="UniversalBeing"]
+script = ExtResource("5_6m7n8")
+
+[node name="PlayerCamera" parent="UniversalBeing" instance=ExtResource("6_7n8m9")]
+transform = Transform3D(1, 0, 0, 0, 0.866025, 0.5, 0, -0.5, 0.866025, 0, 5, 10)
+
+[node name="CreationWand" parent="UniversalBeing" instance=ExtResource("7_8m9n0")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, -0.3, -0.5)
+
+[node name="ConsoleUI" parent="UniversalBeing" instance=ExtResource("8_9n0m1")]
+visible = false
+
+[node name="AkashicDisplay" parent="UniversalBeing" instance=ExtResource("9_0m1n2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, -5)
+
+[node name="Ground" type="StaticBody3D" parent="UniversalBeing" groups=["universal_beings"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+script = ExtResource("1_2k4m3")
+being_type = "ground"
+being_name = "Sacred Ground"
+consciousness_level = 1
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="UniversalBeing/Ground"]
+shape = SubResource("BoxShape3D_1")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="UniversalBeing/Ground"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+mesh = SubResource("BoxMesh_1")
+
+[node name="Boundary" type="StaticBody3D" parent="UniversalBeing" groups=["universal_beings"]]
+script = ExtResource("1_2k4m3")
+being_type = "boundary"
+being_name = "Cosmic Boundary"
+consciousness_level = 1
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="UniversalBeing/Boundary"]
+shape = SubResource("ConcavePolygonShape3D_1")
+
+[node name="WelcomePortal" type="Node3D" parent="UniversalBeing" groups=["universal_beings"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, -5)
+script = ExtResource("1_2k4m3")
+being_type = "portal"
+being_name = "Welcome Portal"
+consciousness_level = 3
+
+[node name="OmniLight3D" type="OmniLight3D" parent="UniversalBeing/WelcomePortal"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
+light_color = Color(0.2, 0.4, 1.0, 1.0)
+light_energy = 2.0
+omni_range = 10.0
+omni_attenuation = 2.0
+
+[node name="WelcomeText" type="Label3D" parent="UniversalBeing/WelcomePortal"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
+text = "Welcome to Universal Being
+Press ` to open console
+WASD to move
+Mouse to look
+Click to create
+F to interact"
+
+[node name="CreationTools" type="Node3D" parent="UniversalBeing" groups=["universal_beings"]]
+script = ExtResource("1_2k4m3")
+being_type = "tool_collection"
+being_name = "Creation Tools"
+consciousness_level = 2
+
+[node name="ToolSpawnPoint" type="Marker3D" parent="UniversalBeing/CreationTools"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, -3)
+
+[connection signal="ready" from="UniversalBeing" to="UniversalBeing" method="pentagon_ready"]
+[connection signal="process" from="UniversalBeing" to="UniversalBeing" method="pentagon_process"]
+[connection signal="input" from="UniversalBeing" to="UniversalBeing" method="pentagon_input"]
+[connection signal="tree_exiting" from="UniversalBeing" to="UniversalBeing" method="pentagon_sewers"] 

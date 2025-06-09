@@ -1,0 +1,66 @@
+[gd_scene load_steps=4 format=3 uid="uid://fed75wxbx1d5"]
+
+[ext_resource type="Script" path="res://core/UniversalBeing.gd" id="1_2k4m3"]
+[ext_resource type="Script" path="res://systems/creation_wand_system.gd" id="2_3n4p5"]
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_1"]
+top_radius = 0.02
+bottom_radius = 0.02
+height = 0.3
+radial_segments = 8
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_1"]
+radius = 0.02
+height = 0.3
+
+[node name="CreationWand" type="Node3D" groups=["universal_beings"]]
+script = ExtResource("1_2k4m3")
+being_type = "creation_wand"
+being_name = "Creation Wand"
+consciousness_level = 3
+
+[node name="WandSystem" type="Node" parent="."]
+script = ExtResource("2_3n4p5")
+
+[node name="WandModel" type="Node3D" parent="."]
+
+[node name="Handle" type="MeshInstance3D" parent="WandModel"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.15, 0)
+mesh = SubResource("CylinderMesh_1")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="WandModel"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.15, 0)
+shape = SubResource("CylinderShape3D_1")
+
+[node name="CreationBeam" type="OmniLight3D" parent="WandModel"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, 0)
+light_color = Color(0.2, 0.8, 1.0, 1.0)
+light_energy = 0.0
+omni_range = 5.0
+omni_attenuation = 2.0
+
+[node name="CreationParticles" type="GPUParticles3D" parent="WandModel"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, 0)
+emitting = false
+amount = 32
+lifetime = 0.5
+one_shot = true
+explosiveness = 1.0
+randomness = 0.2
+direction = Vector3(0, 1, 0)
+spread = 15.0
+gravity = Vector3(0, 0, 0)
+initial_velocity_min = 0.5
+initial_velocity_max = 1.0
+scale_amount_min = 0.1
+scale_amount_max = 0.2
+color = Color(0.2, 0.8, 1.0, 0.5)
+
+[connection signal="ready" from="." to="." method="pentagon_ready"]
+[connection signal="process" from="." to="." method="pentagon_process"]
+[connection signal="input" from="." to="." method="pentagon_input"]
+[connection signal="tree_exiting" from="." to="." method="pentagon_sewers"]
+
+[connection signal="creation_started" from="WandSystem" to="CreationBeam" method="set_light_energy"]
+[connection signal="creation_ended" from="WandSystem" to="CreationBeam" method="set_light_energy"]
+[connection signal="creation_triggered" from="WandSystem" to="CreationParticles" method="restart"] 
