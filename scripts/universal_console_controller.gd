@@ -133,7 +133,7 @@ func show_console_animated() -> void:
 	if particle_bg:
 		particle_bg.emitting = true
 	
-	UBPrint.system("UniversalConsoleController", "show_console_animated", "Console activated!")
+#	UBPrint.system("UniversalConsoleController", "show_console_animated", "Console activated!")
 
 func hide_console_animated() -> void:
 	"""Hide console with smooth animation"""

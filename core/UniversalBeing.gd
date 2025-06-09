@@ -6,6 +6,9 @@
 # AUTHOR: JSH + Claude Code + Luminus + Alpha
 # ==================================================
 
+# how i sinned in scriptura :
+# _defer_visual_retry(msg)
+
 extends Node3D
 class_name UniversalBeing
 
@@ -34,21 +37,49 @@ var evolution_state: Dictionary = {
 	"last_evolution": 0
 }
 
+var messages_missed : Array = []
+
 func show_ub_visual(msg: String):
 	if not get_tree() or not get_tree().current_scene:
 		# add that task to tasker, so we check again
+		messages_missed.append(msg)
+		#_defer_visual_retry(msg)
 		return
+	show_now_ub_visual(msg)
+	if messages_missed.size() > 0:
+		# hmm so many at once again huh... you complained about it yet you do that 
+		# but i wanna game !
+		for messages_to_send_after_we_can in messages_missed:
+			var send_one_just = messages_missed.pop_back()
+			show_now_ub_visual(send_one_just) 
+
+
+
+func show_now_ub_visual(msg):
 	var stellar_colors = [Color(0,0,0),Color(0.2,0.1,0),Color(0.8,0,0),Color(1,0.5,0),Color(1,1,0),Color(1,1,1),Color(0.7,0.9,1),Color(0,0.5,1),Color(0.5,0,1)]
 	var visual = Label3D.new()
 	visual.text = being_name + ": " + msg
 	visual.modulate = stellar_colors[consciousness_level]
 	visual.billboard = BaseMaterial3D.BILLBOARD_ENABLED
 	visual.position = global_position + Vector3(0, 3, 0)
-	get_tree().current_scene.add_child(visual)
+	get_tree().current_scene.add_child(visual)# hmm i remember it call_deffered(function) # but see it written in here... that way i treid hehe
 	var tween = get_tree().create_tween()
 	tween.parallel().tween_property(visual, "position:y", visual.position.y + 5, 3.0)
 	tween.parallel().tween_property(visual, "modulate:a", 0.0, 3.0)
 	tween.tween_callback(visual.queue_free)
+
+# function that is a sin 
+# cardinal sin of not having google for computer files like i need today
+func _defer_visual_retry(pending_visual_msgs):
+	var timer = get_tree().create_timer(0.5) # 0.5 seconds
+	await timer.timeout
+	if get_tree() and get_tree().current_scene:
+		for msg in pending_visual_msgs:
+			show_ub_visual(msg)
+		pending_visual_msgs.clear()
+	elif pending_visual_msgs.size() > 0:
+		_defer_visual_retry(pending_visual_msgs) # Try again
+
 
 ## Movement System
 var movement_target: Vector3 = Vector3.ZERO
