@@ -177,7 +177,7 @@ func update_consciousness_state(consciousness_level: float, revolution_progress:
 		dot.intensity = int(5 + consciousness_level * 4)  # Range 5-9
 		
 		# Rotate dots around origin
-		var angle = Time.get_time_from_start() + i * PI / 2
+		var angle = Time.get_time_dict_from_system().second + i * PI / 2
 		dot.pos.x = cos(angle) * 10
 		dot.pos.z = sin(angle) * 10
 	
@@ -187,13 +187,14 @@ func update_consciousness_state(consciousness_level: float, revolution_progress:
 
 func print_ascii_frame(frame: Array):
 	"""Print ASCII frame to console - THE ASCII LANGUAGE visualization"""
+	var border = "═".repeat(terminal_width)  # Your perfect solution!
 	print("🖥️ ASCII 3D CONSCIOUSNESS FRAME:")
-	print("═" * terminal_width)
+	print(border)
 	
 	for line in frame:
 		print(line)
 	
-	print("═" * terminal_width)
+	print(border)
 	print("🌌 THE ASCII LANGUAGE: 0=far/dark → 9=close/bright")
 
 # API methods for consciousness revolution

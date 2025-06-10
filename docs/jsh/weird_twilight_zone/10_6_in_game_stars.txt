@@ -1,0 +1,1147 @@
+Godot Engine v4.5.dev4.mono.official.209a446e3 - https://godotengine.org
+Vulkan 1.4.303 - Forward+ - Using Device #0: NVIDIA - Quadro RTX 3000
+
+🔌 Socket added: primary_visual (primary_visual_socket)
+🔌 Socket added: aura_effects (aura_effects_socket)
+🔌 Socket added: consciousness_indicator (consciousness_socket)
+🔌 Socket added: behavior_logic (behavior_socket)
+🔌 Socket added: ai_interface (ai_socket)
+🔌 Socket added: evolution_rules (evolution_socket)
+🔌 Socket added: surface_material (surface_shader)
+🔌 Socket added: effect_overlay (effect_shader)
+🔌 Socket added: pentagon_actions (pentagon_action_socket)
+🔌 Socket added: custom_behaviors (behavior_action_socket)
+🔌 Socket added: core_state (state_memory_socket)
+🔌 Socket added: interaction_history (history_socket)
+🔌 Socket added: evolution_data (evolution_memory_socket)
+🔌 Socket added: control_interface (ui_socket)
+🔌 Socket added: inspector_panel (inspector_socket)
+🔌 Socket added: primary_visual (primary_visual_socket)
+🔌 Socket added: aura_effects (aura_effects_socket)
+🔌 Socket added: consciousness_indicator (consciousness_socket)
+🔌 Socket added: behavior_logic (behavior_socket)
+🔌 Socket added: ai_interface (ai_socket)
+🔌 Socket added: evolution_rules (evolution_socket)
+🔌 Socket added: surface_material (surface_shader)
+🔌 Socket added: effect_overlay (effect_shader)
+🔌 Socket added: pentagon_actions (pentagon_action_socket)
+🔌 Socket added: custom_behaviors (behavior_action_socket)
+🔌 Socket added: core_state (state_memory_socket)
+🔌 Socket added: interaction_history (history_socket)
+🔌 Socket added: evolution_data (evolution_memory_socket)
+🔌 Socket added: control_interface (ui_socket)
+🔌 Socket added: inspector_panel (inspector_socket)
+👁️ Gemma: Fibonacci sphere vision initialized with 16 rays
+🗂️ UB Print Collector: Initializing organized logging system...
+🔍 Auto-discovering fallback implementations...
+📋 Found 3 implementations of AkashicLoader
+  ✅ res:///autoloads/akashic_loader.gd (priority: 150)
+  ✅ res:///scripts/different_folders_than_specified_archives/akashic_loader.gd (priority: 150)
+  ✅ res:///systems/storage/akashic_loader.gd (priority: 150)
+📋 Found 2 implementations of LiveCodeEditor
+  ✅ res:///core/command_system/LiveCodeEditor.gd (priority: 150)
+  ✅ res:///scripts/different_folders_than_specified_archives/LiveCodeEditor.gd (priority: 150)
+📋 Found 3 implementations of MacroSystem
+  ✅ res:///core/command_system/MacroSystem.gd (priority: 150)
+  ✅ res:///scripts/different_folders_than_specified_archives/MacroSystem.gd (priority: 150)
+  ✅ res:///scripts/macro_system.gd (priority: 150)
+📋 Found 3 implementations of UniversalCommandProcessor
+  ✅ res:///core/command_system/UniversalCommandProcessor.gd (priority: 150)
+  ✅ res:///scripts/different_folders_than_specified_archives/UniversalCommandProcessor.gd (priority: 150)
+  ✅ res:///scripts/universal_command_processor.gd (priority: 150)
+📋 Found 3 implementations of UniversalConsole
+  ✅ res:///core/command_system/UniversalConsole.gd (priority: 150)
+  ✅ res:///scripts/different_folders_than_specified_archives/UniversalConsole.gd (priority: 150)
+  ✅ res:///scripts/UniversalConsole.gd (priority: 150)
+📋 Found 2 implementations of TurnSystem
+  ✅ res:///scripts/12_turns_system_archive/godot_turn_system.gd (priority: 150)
+  ✅ res:///scripts/12_turns_system_archive/turn_system.gd (priority: 150)
+📋 Found 2 implementations of PerformanceOptimizer
+  ✅ res:///scripts/12_turns_system_archive/performance_optimizer.gd (priority: 150)
+  ✅ res:///scripts/performance_optimizer.gd (priority: 150)
+📋 Found 2 implementations of AkashicLibrarySystem
+  ✅ res:///scripts/AkashicLibrary.gd (priority: 150)
+  ✅ res:///scripts/different_folders_than_specified_archives/AkashicLibrary.gd (priority: 150)
+📋 Found 2 implementations of PoeticLogger
+  ✅ res:///scripts/different_folders_than_specified_archives/PoeticLogger.gd (priority: 150)
+  ✅ res:///scripts/PoeticLogger.gd (priority: 150)
+📋 Found 2 implementations of UniverseManager
+  ✅ res:///scripts/different_folders_than_specified_archives/UniverseManager.gd (priority: 150)
+  ✅ res:///scripts/UniverseManager.gd (priority: 150)
+📋 Found 2 implementations of AICompanionSystem
+  ✅ res:///scripts/eden_project_claude_version/AICompanionSystem.gd (priority: 150)
+  ✅ res:///scripts/research_space_game/ai_companion_system.gd (priority: 150)
+📋 Found 2 implementations of ConsciousnessSystem
+  ✅ res:///scripts/eden_project_claude_version/ConsciousnessSystem.gd (priority: 150)
+  ✅ res:///scripts/research_space_game/consciousness_system.gd (priority: 150)
+📋 Found 2 implementations of MiningSystem
+  ✅ res:///scripts/eden_project_claude_version/MiningSystem.gd (priority: 150)
+  ✅ res:///scripts/research_space_game/mining_system.gd (priority: 150)
+📋 Found 2 implementations of PlayerShip
+  ✅ res:///scripts/eden_project_claude_version/PlayerShip.gd (priority: 150)
+  ✅ res:///scripts/research_space_game/player_ship.gd (priority: 150)
+📋 Found 2 implementations of UniversalBeingGame
+  ✅ res:///scripts/research_space_game/main.gd (priority: 150)
+  ✅ res:///scripts/universal_being_game.gd (priority: 150)
+📋 Found 2 implementations of UniversalSpaceGame
+  ✅ res:///scripts/research_space_game/universal_space_game.gd (priority: 150)
+  ✅ res:///scripts/space_game/six.gd (priority: 150)
+📋 Found 2 implementations of UniverseEngine
+  ✅ res:///scripts/research_space_game/universe_complete.gd (priority: 150)
+  ✅ res:///scripts/space_game/four.gd (priority: 150)
+🎯 GENERATION COORDINATOR ACTIVE - EMERGENCY OPTIMIZATION PREVENTION ENABLED
+🎮 Game State Socket Manager: Initializing...
+🔌 Game State Sockets: 5 sockets initialized
+🎮 Game State Socket System: Active
+🌌 COSMIC LOD SYSTEM ACTIVE
+🌌 INFINITE SPACE STREAMING ENABLED
+🔴 MATRIX CHUNK SYSTEM ONLINE 🔴
+🔴 INFINITE STREAMING ACTIVATED 🔴
+📦 Lightweight Chunk System ready - TRUE LOD enabled
+🎥 TrackballCamera ready! Distance to target: 11.18
+🎥 TrackballCamera ready! Distance to target: 11.18
+💬 Gemma: Chat bubble system initialized!
+💬 Gemma says: 💭 Three minds, one reality... I observe, I learn, I assist.
+🩺 Simple Console: Surgical implantation successful
+✅ Console: Output display connected
+🖥️ Console Message: 🩺 Console surgery complete - ready for communication
+✅ Console: Input line connected
+🖥️ Console Message: 🤖 Found Gemma AI - attempting connection...
+🖥️ Console Message: ⚠️ Gemma AI found but no ai_message signal
+🌌 PERFECT ULTIMATE UNIVERSAL BEING LOADING...
+🌌 PERFECT ULTIMATE UNIVERSAL BEING ACTIVATED
+🌌 INFINITE COSMOS: GALAXIES → STARS → PLANETS → SURFACES
+🌌 MATRIX STREAMING: INFINITE CHUNKS IN ALL DIRECTIONS
+🌌 LIGHTWEIGHT LOD: TRUE VIEW-DIRECTION BASED LOADING
+🌌 PLASMOID PLAYER: ENERGY BEING WITH TRACKBALL CAMERA
+🌌 PENTAGON ARCHITECTURE: ACTIVE ACROSS ALL SYSTEMS
+🌌 AKASHIC RECORDS: ZIP PERSISTENCE SYSTEM READY
+🌌 CONSCIOUSNESS LEVELS: 0-7 VISUAL SYSTEM ACTIVE
+🌌 AI INTEGRATION: GEMMA UNIVERSE INJECTION COMPLETE
+🎯 Found 2 generation systems
+  ✅ Cosmic LOD System
+  ✅ Lightweight Chunk System
+🧬 Analyzing DNA of: Player Plasmoid
+🧬 DNA analysis complete - 24 traits catalogued
+🧬 Analyzing DNA of: Gemma AI Consciousness
+🧬 DNA analysis complete - 24 traits catalogued
+⚠️ Old emergency optimization called - using new coordinator system
+📦 LIGHTWEIGHT PRIORITY - SURFACE SCALE
+🚨 EMERGENCY OPTIMIZATION ACTIVATED - FPS TOO LOW: 1.0
+🛑 ALL GENERATION STOPPED
+📚 Akashic Library: Initialized in the cosmic void
+📚 Akashic Library: Ready to record the cosmic dance
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+📦 LIGHTWEIGHT PRIORITY - SURFACE SCALE
+⚠️ Old emergency optimization called - using new coordinator system
+📦 Loaded chunk [-3,-1,-1]
+📦 Loaded chunk [-3,-1,0]
+📦 Loaded chunk [-3,-1,1]
+📦 Loaded chunk [-3,0,-1]
+📦 Loaded chunk [-3,0,0]
+📦 Loaded chunk [-3,0,1]
+📦 Loaded chunk [-3,1,-1]
+📦 Loaded chunk [-3,1,0]
+📦 Loaded chunk [-3,1,1]
+📦 Loaded chunk [-2,-1,-1]
+📦 Loaded chunk [-2,-1,0]
+📦 Loaded chunk [-2,-1,1]
+📦 Loaded chunk [-2,0,-1]
+📦 Loaded chunk [-2,0,0]
+📦 Loaded chunk [-2,0,1]
+📦 Loaded chunk [-2,1,-1]
+📦 Loaded chunk [-2,1,0]
+📦 Loaded chunk [-2,1,1]
+📦 Loaded chunk [-1,-1,-1]
+📦 Loaded chunk [-1,-1,0]
+📦 Loaded chunk [-1,-1,1]
+📦 Loaded chunk [-1,0,-1]
+📦 Loaded chunk [-1,0,0]
+📦 Loaded chunk [-1,0,1]
+📦 Loaded chunk [-1,1,-1]
+📦 Loaded chunk [-1,1,0]
+📦 Loaded chunk [-1,1,1]
+📦 Loaded chunk [0,0,-1]
+📦 Loaded chunk [0,1,-1]
+📦 Loaded chunk [0,0,0]
+📦 Loaded chunk [0,-1,-1]
+📦 Loaded chunk [1,0,-1]
+📦 Loaded chunk [1,1,-1]
+📦 Loaded chunk [1,-1,-1]
+📦 Loaded chunk [1,-1,-2]
+📦 Loaded chunk [1,0,-2]
+📦 Loaded chunk [1,1,-2]
+📦 Loaded chunk [2,0,-1]
+📦 Loaded chunk [2,1,-1]
+📦 Loaded chunk [2,-1,-2]
+📦 Loaded chunk [2,0,-2]
+📦 Loaded chunk [2,1,-2]
+📦 Loaded chunk [2,-1,-1]
+📦 Loaded chunk [3,0,-1]
+📦 Loaded chunk [3,-2,-2]
+📦 Loaded chunk [3,-1,-2]
+📦 Loaded chunk [3,0,-2]
+📦 Loaded chunk [3,1,-2]
+📦 Loaded chunk [4,-2,-3]
+📦 Loaded chunk [4,-1,-3]
+📦 Loaded chunk [4,0,-3]
+📦 Loaded chunk [4,1,-3]
+📦 Loaded chunk [4,-2,-2]
+📦 Loaded chunk [4,-1,-2]
+📦 Loaded chunk [4,0,-2]
+📦 Loaded chunk [4,1,-2]
+📦 Loaded chunk [5,-2,-3]
+📦 Loaded chunk [5,-1,-3]
+📦 Loaded chunk [5,0,-3]
+📦 Loaded chunk [5,1,-3]
+📦 Loaded chunk [5,-2,-2]
+📦 Loaded chunk [5,-1,-2]
+📦 Loaded chunk [5,0,-2]
+📦 Loaded chunk [5,1,-2]
+📦 Loaded chunk [5,-3,-3]
+📦 Loaded chunk [6,-2,-3]
+📦 Loaded chunk [6,-1,-4]
+📦 Loaded chunk [6,0,-4]
+📦 Loaded chunk [6,1,-4]
+📦 Loaded chunk [6,-3,-3]
+📦 Loaded chunk [6,-1,-3]
+📦 Loaded chunk [6,0,-3]
+📦 Loaded chunk [6,1,-3]
+📦 Loaded chunk [6,-2,-2]
+📦 Loaded chunk [6,-1,-2]
+📦 Loaded chunk [6,0,-2]
+📦 Loaded chunk [6,1,-2]
+📦 Loaded chunk [6,-3,-4]
+📦 Loaded chunk [7,0,-4]
+📦 Loaded chunk [7,2,-4]
+📦 Loaded chunk [7,-2,-3]
+📦 Loaded chunk [7,1,-4]
+📦 Loaded chunk [7,-1,-3]
+📦 Loaded chunk [7,0,-3]
+📦 Loaded chunk [7,1,-3]
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+✅ EMERGENCY OPTIMIZATION ENDED - FPS RECOVERED: 59.0 (Duration: 5.6s)
+📦 LIGHTWEIGHT PRIORITY - SURFACE SCALE
+⚠️ Old emergency optimization called - using new coordinator system
+🚨 EMERGENCY OPTIMIZATION ACTIVATED - FPS TOO LOW: 43.0
+🛑 ALL GENERATION STOPPED
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+🖥️ Console Message: 🌟 Console opened - Ready for commands
+🖥️ Console visibility: true
+🖥️ Universal Console Controller initialized!
+✅ Console UI spawned successfully
+🎮 State: NORMAL → CONSOLE
+🖱️ Cursor: LOCKED
+🎮 Console activated - other inputs locked
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+⚠️ Old emergency optimization called - using new coordinator system
+✅ EMERGENCY OPTIMIZATION ENDED - FPS RECOVERED: 57.0 (Duration: 1.0s)
+📦 LIGHTWEIGHT PRIORITY - SURFACE SCALE
+💬 Gemma says: 🌌 Multiple consciousness streams active in reality...
+📦 LIGHTWEIGHT PRIORITY - SURFACE SCALE
+🖥️ Console Message: 🎮 Command: hello
+🖥️ Console Message: 🤖 Unknown command: hello
+🖥️ Console Message: 💡 Try: test, clear, gemma, revolution, stars, help
+📦 LIGHTWEIGHT PRIORITY - SURFACE SCALE
+📦 Loaded chunk [3,-1,-1]
+📦 Loaded chunk [0,1,0]
+📦 Loaded chunk [6,-2,-4]
+📦 Loaded chunk [-4,-1,-1]
+📦 Loaded chunk [-4,-1,0]
+📦 Loaded chunk [-4,-1,1]
+📦 Loaded chunk [-4,0,-1]
+📦 Loaded chunk [-4,0,0]
+📦 Loaded chunk [-4,0,1]
+📦 Loaded chunk [-4,1,-1]
+📦 Loaded chunk [-4,1,0]
+📦 Loaded chunk [-4,1,1]
+📦 Loaded chunk [3,1,-1]
+📦 Loaded chunk [7,-2,-2]
+📦 Loaded chunk [6,2,-3]
+📦 Loaded chunk [7,-1,-2]
+📦 Loaded chunk [7,2,-3]
+📦 Loaded chunk [7,0,-2]
+📦 Loaded chunk [7,1,-2]
+📦 Loaded chunk [-3,2,-1]
+📦 Loaded chunk [-3,2,0]
+📦 Loaded chunk [-3,2,1]
+📦 Loaded chunk [-2,2,-1]
+📦 Loaded chunk [-2,2,0]
+📦 Loaded chunk [-2,2,1]
+📦 Loaded chunk [-1,2,-1]
+📦 Loaded chunk [-1,2,0]
+📦 Loaded chunk [-1,2,1]
+📦 Loaded chunk [-4,2,-1]
+📦 Loaded chunk [-4,2,0]
+📦 Loaded chunk [-4,2,1]
+📦 Loaded chunk [5,2,-3]
+📦 Loaded chunk [6,2,-4]
+📦 Loaded chunk [2,-2,-2]
+🖥️ Console Message: 🎮 Command: stars
+🖥️ Console Message: ⭐ ACTIVATING STAR NAVIGATION...
+🖥️ Console Message: 🌌 Loading cosmic star navigation chamber...
+🌌 Cosmic Debug Chamber: Initializing the scriptura cosmos...
+🪣 Bucket Constellation Manager: Organizing the cosmic debug cosmos...
+🪣 Created bucket constellation: akashic_universe with 133 stars
+🪣 Created bucket constellation: consciousness_beings with 174 stars
+🪣 Created bucket constellation: debug_tools with 116 stars
+🪣 Created bucket constellation: interface_systems with 153 stars
+🪣 Created bucket constellation: world_generation with 55 stars
+🪣 Created bucket constellation: scenario_systems with 144 stars
+🪣 Created bucket constellation: communication_streams with 73 stars
+🪣 Created bucket constellation: memory_evolution with 118 stars
+🌌 Created 8 bucket constellations for cosmic organization
+⭐ Creating star map from all scripts...
+⭐ Created star for: activate_gemma_vision.gd at (50.000000, 0.000000, 0.000000)
+⭐ Created star for: trackball_camera.gd at (-40.563221, 1.996668, -37.143303)
+⭐ Created star for: trackball_camera_inspector_plugin.gd at (5.271072, 3.973387, 59.768017)
+⭐ Created star for: trackball_camera_plugin.gd at (39.515469, 5.910404, -51.609375)
+⭐ Created star for: marching_cubes_viewer.gd at (-68.919502, 7.788367, 12.251615)
+⭐ Created star for: marching_cubes_viewer_glsl.gd at (63.324593, 9.588511, 40.187008)
+⭐ Created star for: image_stack_viewer.gd at (-20.867321, 11.292850, -77.230530)
+⭐ Created star for: marching_cubes_viewer.gd at (-39.064289, 12.884354, 75.491600)
+⭐ Created star for: mesh_viewer_cpu.gd at (84.486046, 14.347122, -31.017862)
+⭐ Created star for: glsl_context.gd at (-87.882332, 15.666538, -36.079014)
+⭐ Created star for: glsl_shader.gd at (42.577930, 16.829420, 90.482704)
+⭐ Created star for: glsl_shader_tool.gd at (31.189365, 17.824146, -100.260780)
+⭐ Created star for: glsl_util.gd at (-95.031578, 18.640781, 55.398552)
+⭐ Created star for: marching_cubes_generator_glsl_variable.gd at (112.385834, 19.271164, 24.380817)
+⭐ Created star for: mipmap_generator_rf_3d.gd at (-69.308723, 19.708994, -97.960709)
+⭐ Created star for: mipmap_generator_rgba8_3d.gd at (-15.666655, 19.949900, 124.014336)
+⭐ Created star for: mipmap_generator_rgbaf_3d.gd at (99.117523, 19.991472, -84.117271)
+⭐ Created star for: sobel_gradient_generator.gd at (-134.904083, 19.833296, -5.088175)
+⭐ Created star for: cube_symmetries.gd at (99.614998, 19.476954, 98.370995)
+⭐ Created star for: image_gradient.gd at (-7.285426, 18.926003, -144.816864)
+⭐ Created star for: marching_cubes.gd at (-95.613602, 18.185949, 115.576988)
+⭐ Created star for: marching_cube_table.gd at (153.521515, 17.264187, -21.357494)
+⭐ Created star for: zipped_image_archive_cpu_Texture3D.gd at (-131.765213, 16.169928, -90.763031)
+⭐ Created star for: zipped_image_stack.gd at (37.004677, 14.914104, 160.796936)
+⭐ Created star for: zipped_image_archive_rf_3d.gd at (83.763649, 13.509264, -147.931244)
+⭐ Created star for: zipped_image_archive_rf_Texture3D.gd at (-166.434891, 11.969443, 54.077972)
+⭐ Created star for: akashic_loader.gd at (163.819077, 10.310027, 74.587608)
+⭐ Created star for: GemmaAI.gd at (-72.404129, 8.547598, -170.242889)
+⭐ Created star for: SystemBootstrap.gd at (-63.235714, 6.699763, 179.168198)
+⭐ Created star for: t9_lightning_spirit.gd at (172.046783, 4.784986, -91.787270)
+⭐ Created star for: ButterflyUniversalBeing.gd at (-193.716629, 2.822400, -49.737976)
+⭐ Created star for: CameraUniversalBeing.gd at (112.010841, 0.831613, 171.693253)
+⭐ Created star for: ConsciousnessRevolutionSpawner.gd at (34.153805, -1.167483, -207.204056)
+⭐ Created star for: ConsoleUniversalBeing.gd at (-169.052017, -3.154914, 132.839813)
+⭐ Created star for: CursorUniversalBeing.gd at (219.374954, -5.110822, 16.571898)
+⭐ Created star for: GemmaAICompanionPlasmoid.gd at (-154.023102, -7.015665, -164.017944)
+⭐ Created star for: ground_universal_being.gd at (2.890189, -8.850409, 229.981842)
+⭐ Created star for: icon_universal_being.gd at (156.512787, -10.596723, -175.296173)
+⭐ Created star for: light_universal_being.gd at (-238.788239, -12.237158, 24.086811)
+⭐ Created star for: SimpleMovablePlasmoid.gd at (196.383911, -13.755323, 146.486725)
+⭐ Created star for: energy_burst.gd at (-46.845329, -15.136050, -245.571808)
+⭐ Created star for: plasmoid_universal_being.gd at (-133.919525, -16.365541, 217.003586)
+⭐ Created star for: player_universal_being.gd at (250.127197, -17.431515, -70.967506)
+⭐ Created star for: PortalUniversalBeing.gd at (-236.867981, -18.323318, -118.821548)
+⭐ Created star for: TreeUniversalBeing.gd at (96.231209, -19.032042, 252.268814)
+⭐ Created star for: ActionComponent.gd at (101.234253, -19.550602, -255.688538)
+⭐ Created star for: MemoryComponent.gd at (-251.833466, -19.873819, 122.392418)
+⭐ Created star for: AutoRegisterFallbacks.gd at (273.178711, -19.998465, 81.230492)
+⭐ Created star for: LiveCodeEditor.gd at (-149.187469, -19.923292, -248.682724)
+⭐ Created star for: MacroSystem.gd at (-58.914444, -19.649052, 289.057251)
+⭐ Created star for: UniversalCommandProcessor.gd at (242.705093, -19.178486, -176.335571)
+⭐ Created star for: UniversalConsole.gd at (-303.051453, -18.516294, -34.421196)
+⭐ Created star for: Component.gd at (203.541580, -17.669092, 233.817932)
+⭐ Created star for: Connector.gd at (7.915980, -16.645350, -314.900513)
+⭐ Created star for: FloodGates.gd at (-221.969055, -15.455290, 230.498886)
+⭐ Created star for: genesis_pattern.gd at (324.358673, -14.110806, -20.406919)
+⭐ Created star for: Pentagon.gd at (-256.892548, -12.625333, -207.138153)
+⭐ Created star for: PentagonManager.gd at (50.325573, -11.013711, 331.198334)
+⭐ Created star for: SimpleConsole.gd at (189.337708, -9.292044, -282.402618)
+⭐ Created star for: turn_based_creation_system.gd at (-335.212952, -7.477533, 81.592155)
+⭐ Created star for: turn_based_game_framework.gd at (306.707336, -5.588310, 168.613785)
+⭐ Created star for: UniversalBeing.gd at (-113.934982, -3.643250, -336.219910)
+⭐ Created star for: UniversalBeingControl.gd at (-145.046310, -1.661788, 329.486816)
+⭐ Created star for: UniversalBeingDNA.gd at (334.063019, 0.336278, -147.060852)
+⭐ Created star for: UniversalBeingInterface.gd at (-350.426361, 2.330984, -118.749138)
+⭐ Created star for: UniversalBeingSocket.gd at (180.657623, 4.302400, 328.614990)
+⭐ Created star for: UniversalBeingSocketManager.gd at (89.869621, 6.230827, -369.220062)
+⭐ Created star for: UniversalFallbackSystem.gd at (-319.779419, 8.096998, 214.397110)
+⭐ Created star for: universal_being_base_enhanced.gd at (385.574188, 9.882267, 58.587978)
+⭐ Created star for: direct_revolution_test.gd at (-247.938095, 11.568795, -307.492615)
+⭐ Created star for: ai_companion_plasmoid.gd at (-25.116207, 13.139732, 399.210693)
+⭐ Created star for: AdvancedPlayer.gd at (291.725159, 14.579381, -280.929596)
+⭐ Created star for: BasePlayer.gd at (-409.870514, 15.873357, 10.303339)
+⭐ Created star for: FallbackExample.gd at (313.014313, 17.008732, 272.483093)
+⭐ Created star for: monitor_revolution.gd at (-47.399681, 17.974161, -417.316742)
+⭐ Created star for: NOTE_MERGE_SYSTEM.gd at (-249.808731, 18.760000, 343.832214)
+⭐ Created star for: ULTIMATE_CAMERA_SYSTEM.gd at (421.337677, 19.358393, -85.875290)
+⭐ Created star for: VR_IDE_BRIDGE.gd at (-373.024109, 19.763365, -223.781204)
+⭐ Created star for: scene_inspector.gd at (125.408478, 19.970867, 421.749573)
+⭐ Created star for: 12_turns_game.gd at (194.516510, 19.978827, -400.235352)
+⭐ Created star for: account_tier_colors.gd at (-418.399414, 19.787165, 165.656052)
+⭐ Created star for: account_visualizer.gd at (425.119659, 19.397797, 162.167404)
+⭐ Created star for: akashic_database_connector.gd at (-206.256287, 18.814611, -411.167053)
+⭐ Created star for: akashic_notepad_controller.gd at (-126.922653, 18.043436, 447.342865)
+⭐ Created star for: akashic_number_system.gd at (399.967407, 17.091978, -246.832077)
+⭐ Created star for: api_key_manager.gd at (-466.586456, 15.969742, -89.006126)
+⭐ Created star for: api_orchestrator.gd at (286.994385, 14.687942, 384.752167)
+⭐ Created star for: auto_agent_mode.gd at (48.675430, 13.259384, -482.551239)
+⭐ Created star for: auto_connector.gd at (-365.511169, 11.698344, 326.345825)
+⭐ Created star for: auto_correction_system.gd at (494.960907, 10.020417, 6.220190)
+⭐ Created star for: auto_tracker_update.gd at (-364.484314, 8.242370, -342.273560)
+⭐ Created star for: auto_updater.gd at (38.040035, 6.381967, 503.565247)
+⭐ Created star for: blink_animation_controller.gd at (315.108398, 4.457798, -401.007111)
+⭐ Created star for: claude_akashic_bridge.gd at (-508.143250, 2.489089, 83.758141)
+⭐ Created star for: claude_akashic_demo.gd at (435.514587, 0.495509, 284.125061)
+⭐ Created star for: claude_ethereal_bridge.gd at (-130.562195, -1.503022, -508.506165)
+⭐ Created star for: claude_file_integrator.gd at (-249.473083, -3.486536, 467.614349)
+⭐ Created star for: claude_integration_bridge.gd at (504.499939, -5.435213, -178.058456)
+⭐ Created star for: cloud_storage_connector.gd at (-496.925201, -7.329583, -211.341782)
+⭐ Created star for: color_animation_system.gd at (225.834686, -9.150718, 496.007751)
+⭐ Created star for: color_temperature_projection.gd at (169.959351, -10.880423, -523.081055)
+⭐ Created star for: concurrent_demo.gd at (-482.951996, -12.501413, 273.463684)
+⭐ Created star for: concurrent_processor.gd at (545.735046, -13.997494, 125.591629)
+⭐ Created star for: connection_visualizer.gd at (-320.506958, -15.353716, -465.295929)
+⭐ Created star for: connector_test.gd at (-78.540466, -16.556530, 564.562988)
+⭐ Created star for: cyber_gate_controller.gd at (443.045105, -17.593916, -366.518799)
+⭐ Created star for: data_evolution_engine.gd at (-579.267456, -18.455509, -29.141705)
+⭐ Created star for: data_fluctuation_monitor.gd at (411.050232, -19.132700, 416.248383)
+⭐ Created star for: data_pipeline_system.gd at (-22.237207, -19.618725, -589.580811)
+⭐ Created star for: data_splitter_controller.gd at (-384.998291, -19.908726, 453.653290)
+⭐ Created star for: data_splitter_terminal_bridge.gd at (595.268799, -19.999804, -75.199944)
+⭐ Created star for: data_splitter_terminal_visualizer.gd at (-493.885254, -19.891052, -349.431488)
+⭐ Created star for: digital_excavator.gd at (129.324341, -19.583555, 596.133545)
+⭐ Created star for: dimensional_bridge_visualizer.gd at (309.728271, -19.080385, -531.312927)
+⭐ Created star for: dimensional_color_system.gd at (-592.015991, -18.386570, 184.165787)
+⭐ Created star for: dimensional_window_transformer.gd at (565.516907, -17.509043, 266.112061)
+⭐ Created star for: dimension_visualizer.gd at (-239.260834, -16.456572, -582.798645)
+⭐ Created star for: divine_game_controller.gd at (-218.848251, -15.239672, 596.096008)
+⭐ Created star for: divine_word_game.gd at (568.407349, -13.870502, -294.131104)
+⭐ Created star for: divine_word_processor.gd at (-622.671143, -12.362742, -168.242767)
+⭐ Created star for: divine_word_ui.gd at (348.287415, -10.731459, 548.813171)
+⭐ Created star for: dream_api_interface.gd at (114.640106, -8.992949, -644.889648)
+⭐ Created star for: drive_connector.gd at (-524.033691, -7.164586, 401.234009)
+⭐ Created star for: drive_memory_connector.gd at (662.428833, -5.264636, 58.421047)
+⭐ Created star for: dual_core_terminal.gd at (-452.472992, -3.312083, -494.133789)
+⭐ Created star for: eden_pitopia_integration.gd at (0.000000, -1.326438, 675.000000)
+⭐ Created star for: enhanced_migration_launcher.gd at (459.226318, 0.672461, -501.508911)
+⭐ Created star for: enhanced_system_launcher.gd at (-682.351501, 2.664641, 60.178070)
+⭐ Created star for: ethereal_akashic_bridge.gd at (547.853394, 4.630197, 419.471893)
+⭐ Created star for: ethereal_engine_test.gd at (-121.641029, 6.549489, -684.272217)
+⭐ Created star for: ethereal_migration_bridge.gd at (-375.078766, 8.403340, 591.029541)
+⭐ Created star for: example_usage.gd at (680.594055, 10.173229, -183.893265)
+⭐ Created star for: extended_color_theme_system.gd at (-630.576904, 11.841471, -326.301697)
+⭐ Created star for: file_connection_system.gd at (246.419693, 13.391396, 671.194702)
+⭐ Created star for: fluid_2d_renderer.gd at (273.440948, 14.807518, -666.055603)
+⭐ Created star for: fluid_3d_renderer.gd at (-655.999634, 16.075689, 308.689972)
+⭐ Created star for: fluid_simulation_core.gd at (697.051147, 17.183237, 216.840347)
+⭐ Created star for: fluid_simulation_demo.gd at (-370.163055, 18.119095, -634.983704)
+⭐ Created star for: function_grid_manager.gd at (-156.885254, 18.873913, 723.178406)
+⭐ Created star for: gaze_tracking_integration.gd at (608.172729, 19.440149, -430.291656)
+⭐ Created star for: github_tools_integration.gd at (-744.085999, 19.812147, -93.999924)
+⭐ Created star for: godot4_migration_tester.gd at (488.527252, 19.986187, 575.644104)
+⭐ Created star for: godot4_migration_test_runner.gd at (28.644539, 19.960533, -759.460022)
+⭐ Created star for: godot4_migration_tool.gd at (-537.527222, 19.735439, 544.324768)
+⭐ Created star for: godot4_migration_ui.gd at (769.027466, 19.313156, -38.688126)
+⭐ Created star for: godot_data_channel.gd at (-597.147766, 18.697901, -494.003601)
+⭐ Created star for: godot_file_automator.gd at (107.476425, 17.895823, 772.559937)
+⭐ Created star for: godot_turn_system.gd at (445.306122, 16.914936, -646.473083)
+⭐ Created star for: google_drive_connector.gd at (-769.876221, 15.765041, 177.173904)
+⭐ Created star for: initialize_system.gd at (691.796082, 14.457627, 391.718231)
+⭐ Created star for: integrated_game_system.gd at (-247.213593, 13.005756, -760.845215)
+⭐ Created star for: integrated_memory_system.gd at (-333.572357, 11.423938, 732.635315)
+⭐ Created star for: integrated_system_launcher.gd at (745.387817, 9.727974, -317.012665)
+⭐ Created star for: integrated_terminal.gd at (-768.537292, 7.934812, -271.247925)
+⭐ Created star for: interdimensional_scheming.gd at (385.977234, 6.062367, 723.478821)
+⭐ Created star for: keyboard_command_system.gd at (205.169159, 4.129350, -799.081116)
+⭐ Created star for: keyboard_shape_manager.gd at (-695.148254, 2.155073, 453.507294)
+⭐ Created star for: keyboard_shape_system.gd at (823.882751, 0.159264, 135.802032)
+⭐ Created star for: main.gd at (-519.002075, -1.838137, -660.482300)
+⭐ Created star for: main_controller.gd at (-63.651150, -3.817172, 842.599243)
+⭐ Created star for: memory_investment_interface.gd at (619.623352, -5.758066, -581.865051)
+⭐ Created star for: memory_investment_system.gd at (-854.932495, -7.641428, 10.743964)
+⭐ Created star for: memory_transfer_integration.gd at (641.509399, -9.448440, 572.770203)
+⭐ Created star for: mouse_automation.gd at (-86.812881, -11.161045, -860.632629)
+⭐ Created star for: mouse_automation_integration.gd at (-520.177307, -12.762134, 697.363281)
+⭐ Created star for: multi_account_manager.gd at (859.501343, -14.235707, -163.958649)
+⭐ Created star for: multi_threaded_processor.gd at (-748.875122, -15.567041, -462.153687)
+⭐ Created star for: network_validation.gd at (241.562469, -16.742836, 851.394470)
+⭐ Created star for: notepad3d_visualizer.gd at (399.061066, -17.751341, -795.518860)
+⭐ Created star for: ocr_processor.gd at (-836.224426, -18.582479, 318.988617)
+⭐ Created star for: ocr_terminal_connector.gd at (836.798828, -19.227949, 331.312103)
+⭐ Created star for: offline_ocr_processor.gd at (-395.589783, -19.681299, -813.961731)
+⭐ Created star for: performance_optimizer.gd at (-259.367523, -19.938002, 872.254822)
+⭐ Created star for: player_preference_analyzer.gd at (784.636902, -19.995489, -470.712158)
+⭐ Created star for: precise_timing_system.gd at (-901.466675, -19.853188, -183.733185)
+⭐ Created star for: project_connector_system.gd at (543.701355, -19.512520, 748.340698)
+⭐ Created star for: project_memory_system.gd at (104.956436, -18.976891, -924.058533)
+⭐ Created star for: reality_data_processor.gd at (-705.225037, -18.251650, 613.907654)
+⭐ Created star for: royal_blessing.gd at (939.703125, -17.344044, 23.622290)
+⭐ Created star for: sample_test.gd at (-680.692017, -16.263142, -655.502380)
+⭐ Created star for: screen_capture_utility.gd at (59.650993, -15.019745, 948.125366)
+⭐ Created star for: secondary_storage_system.gd at (599.445251, -13.626275, -743.431519)
+⭐ Created star for: segment_processor.gd at (-949.105652, -12.096657, 144.216568)
+⭐ Created star for: self_check_upgrade.gd at (801.525024, -10.446172, 537.384949)
+⭐ Created star for: setup_api_keys.gd at (-229.404022, -8.691313, -942.482788)
+⭐ Created star for: shape_memory_visualizer.gd at (-469.709839, -6.849612, 854.398987)
+⭐ Created star for: shared_account_connector.gd at (928.156311, -4.939473, -314.524750)
+⭐ Created star for: smart_account_manager.gd at (-901.512573, -2.979980, -396.862854)
+⭐ Created star for: snake_case_translator.gd at (398.877380, -0.990713, 906.088745)
+⭐ Created star for: spatial_linguistic_connector.gd at (319.338898, 1.008454, -942.362793)
+⭐ Created star for: spatial_notepad_integration.gd at (-876.306702, 2.997544, 481.753662)
+⭐ Created star for: spatial_world_storage.gd at (976.489868, 4.956684, 237.681488)
+⭐ Created star for: startup_example.gd at (-562.444397, 6.866299, -838.901855)
+⭐ Created star for: storage_integration_system.gd at (-152.478973, 8.707307, 1003.481506)
+⭐ Created star for: summarization_test.gd at (794.031555, 10.461315, -640.245178)
+⭐ Created star for: system_integrator.gd at (-1022.977417, 12.110797, -64.360283)
+⭐ Created star for: task_transition_animator.gd at (714.462891, 13.639273, 741.918274)
+⭐ Created star for: temple_godot_connector.gd at (-26.009649, 15.031468, -1034.673096)
+⭐ Created star for: terminal_akashic_interface.gd at (-682.849182, 16.273476, 784.421448)
+⭐ Created star for: terminal_api_bridge.gd at (1038.323853, 17.352882, -117.934921)
+⭐ Created star for: terminal_bridge_connector.gd at (-849.467834, 18.258905, -617.174500)
+⭐ Created star for: terminal_godot_bridge.gd at (210.694031, 18.982491, 1033.747070)
+⭐ Created star for: terminal_grid_creator.gd at (545.305908, 19.516411, -908.978271)
+⭐ Created star for: terminal_memory_system.gd at (-1020.825684, 19.855328, 303.545502)
+⭐ Created star for: terminal_overlay.gd at (962.363647, 19.995857, 467.713867)
+⭐ Created star for: terminal_shape_game.gd at (-395.733887, 19.936596, -999.509705)
+⭐ Created star for: terminal_symbols.gd at (-384.924835, 19.678133, 1009.075256)
+⭐ Created star for: terminal_sync_protocol.gd at (969.817932, 19.223055, -486.495789)
+⭐ Created star for: terminal_to_godot_bridge.gd at (-1048.610107, 18.575905, -297.517609)
+⭐ Created star for: text_summarization_system.gd at (575.066223, 17.743151, 931.838928)
+⭐ Created star for: thread_manager.gd at (206.119446, 16.733112, -1080.515991)
+⭐ Created star for: time_tracker_launcher.gd at (-885.731506, 15.555883, 660.684998)
+⭐ Created star for: time_tracking_ui.gd at (1104.395630, 14.223225, 111.401505)
+⭐ Created star for: translation_system.gd at (-742.603210, 12.748452, -831.724365)
+⭐ Created star for: triple_memory_connector.gd at (-14.073965, 11.146301, 1119.911621)
+⭐ Created star for: turn_controller.gd at (770.115479, 9.432780, -820.089722)
+⭐ Created star for: turn_integrator.gd at (-1126.789551, 7.625010, 85.119293)
+⭐ Created star for: turn_layer_environment.gd at (892.437378, 5.741053, 701.270691)
+⭐ Created star for: turn_priority_system.gd at (-185.406372, 3.799733, -1124.822021)
+⭐ Created star for: turn_system.gd at (-625.621521, 1.820448, 958.969604)
+⭐ Created star for: unified_migration_system.gd at (1113.870605, -0.177026, -285.993378)
+⭐ Created star for: unified_terminal_interface.gd at (-1019.046387, -2.172732, -543.663025)
+⭐ Created star for: universal_akashic_connector.gd at (386.070679, -4.146729, 1093.869019)
+⭐ Created star for: universal_akashic_connector_test.gd at (455.950317, -6.079292, -1072.070068)
+⭐ Created star for: universal_connector.gd at (-1064.823975, -7.951114, 484.819427)
+⭐ Created star for: universal_data_flow.gd at (1117.491455, -9.743490, 363.094971)
+⭐ Created star for: usage_time_tracker.gd at (-581.418274, -11.438513, -1026.816772)
+⭐ Created star for: usage_time_tracker_with_extensions.gd at (-265.760864, -13.019246, 1154.814331)
+⭐ Created star for: visual_indicator_system.gd at (980.003784, -14.469895, -675.050049)
+⭐ Created star for: wish_knowledge_system.gd at (-1183.601440, -15.775966, -164.659393)
+⭐ Created star for: word_comment_system.gd at (764.908813, -16.924408, 924.615906)
+⭐ Created star for: word_comment_ui.gd at (60.544403, -17.903748, -1203.478027)
+⭐ Created star for: word_crimes_analysis.gd at (-860.958191, -18.704199, 850.206482)
+⭐ Created star for: word_direction_tracker.gd at (1214.136719, -19.317762, -45.793571)
+⭐ Created star for: word_dream_storage.gd at (-930.179871, -19.738312, -789.408264)
+⭐ Created star for: word_manifestation_game.gd at (153.533218, -19.961641, 1215.340454)
+⭐ Created star for: word_manifestation_system.gd at (710.414429, -19.985519, -1004.097290)
+⭐ Created star for: word_processing_demo.gd at (-1206.926147, -19.809710, 261.828766)
+⭐ Created star for: word_processor_tasks.gd at (1071.265015, -19.435968, 624.492798)
+⭐ Created star for: word_salem_day_night.gd at (-369.816772, -18.868031, -1188.806396)
+⭐ Created star for: word_salem_game_controller.gd at (-532.224121, -18.111567, 1131.033813)
+⭐ Created star for: word_salem_roles.gd at (1160.971924, -17.174141, -476.622772)
+⭐ Created star for: word_salem_trials.gd at (-1182.804688, -16.065115, -434.250092)
+⭐ Created star for: word_salem_ui.gd at (581.368530, -14.795571, 1123.492554)
+⭐ Created star for: word_visualization_3d.gd at (331.268707, -13.378197, -1226.034668)
+⭐ Created star for: add_butterfly_command.gd at (-1076.518066, -11.827150, 683.179138)
+⭐ Created star for: advanced_ufo_generator.gd at (1260.242310, -10.157932, 224.029510)
+⭐ Created star for: advanced_visualization_optimizer.gd at (-781.190430, -8.387218, -1020.277649)
+⭐ Created star for: AICollaborationHub.gd at (-113.328041, -6.532702, 1285.012329)
+⭐ Created star for: ai_natural_language_console.gd at (955.079468, -4.612914, -874.555969)
+⭐ Created star for: ai_pentagon_network.gd at (-1300.000000, -2.647035, 0.000000)
+⭐ Created star for: AkashicLibrary.gd at (962.454590, -0.654708, 881.309326)
+⭐ Created star for: akashic_additions.gd at (-115.085068, 1.344161, -1304.935059)
+⭐ Created star for: akashic_chunk_manager.gd at (-799.428345, 3.329600, 1044.097412)
+⭐ Created star for: akashic_compact_system.gd at (1299.624878, 5.281770, -231.030441)
+⭐ Created star for: akashic_logger.gd at (-1118.734497, 7.181167, -709.970520)
+⭐ Created star for: akashic_spatial_db.gd at (346.919189, 9.008812, 1283.957520)
+⭐ Created star for: console_butterfly_fix.gd at (613.539124, 10.746444, -1185.662109)
+⭐ Created star for: console_butterfly_tree_fix.gd at (-1257.903320, 12.376700, 461.821503)
+⭐ Created star for: enhanced_debug_click_handler.gd at (1244.228882, 13.883293, 510.802887)
+⭐ Created star for: enhanced_game_world.gd at (-574.802063, 15.251169, -1221.516479)
+⭐ Created star for: GemmaUniverseInjector_enhancements.gd at (-402.491333, 16.466660, 1293.841431)
+⭐ Created star for: immediate_fix.gd at (1174.935791, 17.517622, -684.927551)
+⭐ Created star for: main_OLD_COMPLEX.gd at (-1333.970947, 18.393553, -289.389709)
+⭐ Created star for: main_SIMPLE.gd at (791.274597, 19.085701, 1118.384766)
+⭐ Created star for: pentagon_validator_fixed.gd at (172.333191, 19.587152, -1364.157715)
+⭐ Created star for: performance_fix_autoload.gd at (-1052.170654, 19.892895, 892.937256)
+⭐ Created star for: performance_fix_patch.gd at (1384.015869, 19.999874, 52.200905)
+⭐ Created star for: quick_diagnostic.gd at (-989.034607, 19.907022, -976.683472)
+⭐ Created star for: quick_health_check.gd at (70.090820, 19.615265, 1393.238037)
+⭐ Created star for: quick_test_universe_injection.gd at (892.393616, 19.127518, -1078.718506)
+⭐ Created star for: simple_camera_effects.gd at (-1391.598267, 18.448656, 193.595352)
+⭐ Created star for: simple_console_fix.gd at (1161.180908, 17.585461, 799.849243)
+⭐ Created star for: simple_gdscript_validator.gd at (-317.343140, 16.546558, -1378.955566)
+⭐ Created star for: simple_health_check.gd at (-699.672852, 15.342327, 1235.660889)
+⭐ Created star for: simple_player_controller.gd at (1355.255493, 13.984800, -440.349213)
+⭐ Created star for: simple_player_test.gd at (-1301.451538, 12.487543, -592.557068)
+⭐ Created star for: systembootstrap_quickfix.gd at (561.621216, 10.865514, 1320.532715)
+⭐ Created star for: test_enhanced_health.gd at (479.260132, 9.134919, -1357.906372)
+⭐ Created star for: test_pentagon_validator_fixed.gd at (-1274.910767, 7.313052, 680.167175)
+⭐ Created star for: ASCII3DConsciousnessVisualizer.gd at (1404.445557, 5.418116, 360.600342)
+⭐ Created star for: auto_startup_universal_being.gd at (-795.003784, 3.469043, -1218.603271)
+⭐ Created star for: basic_interaction.gd at (-237.450256, 1.485309, 1440.561523)
+⭐ Created star for: basic_test.gd at (1151.912598, -0.513266, -905.164307)
+⭐ Created star for: BeingDNAComponent.gd at (-1465.823608, -2.506712, -110.730408)
+⭐ Created star for: chatgpt_premium_bridge_universal_being.gd at (1009.706970, -4.475113, 1075.228760)
+⭐ Created star for: claude_bridge_universal_being.gd at (-18.597738, -6.398799, -1479.883179)
+⭐ Created star for: claude_desktop_mcp_universal_being.gd at (-989.027649, -8.258551, 1107.722656)
+⭐ Created star for: desktop_bridge.gd at (1482.477051, -10.035786, -149.538956)
+⭐ Created star for: gdscript_validator_bridge.gd at (-1198.342651, -11.712747, -893.867920)
+⭐ Created star for: gemini_api.gd at (281.071960, -13.272677, 1473.430908)
+⭐ Created star for: google_gemini_premium_bridge_universal_being.gd at (790.387817, -14.699992, -1280.746704)
+⭐ Created star for: remote_godot_bridge.gd at (-1452.661743, -15.980430, 412.157410)
+⭐ Created star for: BucketConstellationManager.gd at (1354.169800, -17.101196, 679.300598)
+⭐ Created star for: button_3d_universal_being.gd at (-541.746033, -18.051092, -1420.179932)
+⭐ Created star for: button_basic.gd at (-561.389954, -18.820629, 1417.909180)
+⭐ Created star for: button_universal_being.gd at (1376.090088, -19.402115, -668.787109)
+⭐ Created star for: camera_effects_component.gd at (-1471.330933, -19.789742, -437.504578)
+⭐ Created star for: camera_effects_test.gd at (792.236877, -19.979635, 1320.591064)
+⭐ Created star for: chunk_generator.gd at (308.551910, -19.969900, -1513.876099)
+⭐ Created star for: chunk_generator_component.gd at (-1253.976318, -19.760632, 911.067139)
+⭐ Created star for: chunk_grid_manager.gd at (1545.065552, -19.353922, 175.491684)
+⭐ Created star for: chunk_universal_being.gd at (-1024.273804, -18.753836, -1176.632202)
+⭐ Created star for: chunk_universe_generator.gd at (-39.328598, -17.966364, 1564.505737)
+⭐ Created star for: complete_package_system_test.gd at (1089.035645, -16.999380, -1130.885132)
+⭐ Created star for: comprehensive_system_test.gd at (-1571.892090, -15.862545, 98.895065)
+⭐ Created star for: ConsciousnessRevolution.gd at (1229.970459, -14.567215, 991.752380)
+⭐ Created star for: ConsoleTextLayer.gd at (-238.107559, -13.126335, -1567.013062)
+⭐ Created star for: console_base.gd at (-885.432251, -11.554301, 1320.647461)
+⭐ Created star for: console_enhancements.gd at (1549.752563, -9.866820, -377.215912)
+⭐ Created star for: console_notifications.gd at (-1402.090698, -8.080753, -770.805908)
+⭐ Created star for: console_test.gd at (515.114502, -6.213946, 1520.092773)
+⭐ Created star for: console_universal_being.gd at (648.679382, -4.285051, -1473.538330)
+⭐ Created star for: conversational_console_being.gd at (-1478.114502, -2.313341, 650.693909)
+⭐ Created star for: CosmicDebugChamber.gd at (1534.299194, -0.318517, 519.928650)
+⭐ Created star for: cosmic_insights.gd at (-782.849731, 1.679489, -1423.998413)
+⭐ Created star for: cosmic_lod_system.gd at (-385.493378, 3.660715, 1583.759766)
+⭐ Created star for: create_example_component.gd at (1358.024292, 5.605363, -910.491638)
+⭐ Created star for: cursor_controller.gd at (-1621.388916, 7.494005, -246.369965)
+⭐ Created star for: desert_garden_genesis.gd at (1032.552246, 9.307770, 1280.570435)
+⭐ Created star for: AkashicLibrary.gd at (103.604355, 11.028534, -1646.744141)
+⭐ Created star for: akashic_loader.gd at (-1192.111450, 12.639104, 1147.996216)
+⭐ Created star for: LiveCodeEditor.gd at (1659.475708, 14.123389, -41.715958)
+⭐ Created star for: MacroSystem.gd at (-1255.828491, 15.466558, -1093.215332)
+⭐ Created star for: PoeticLogger.gd at (188.470169, 16.655190, 1659.330933)
+⭐ Created star for: potato_door.gd at (984.540283, 17.677408, -1355.103516)
+⭐ Created star for: UniversalCommandProcessor.gd at (-1646.156494, 18.523001, 335.512756)
+⭐ Created star for: UniversalConsole.gd at (1444.932373, 19.183517, 866.830627)
+⭐ Created star for: Universe.gd at (-481.682556, 19.652357, -1619.901855)
+⭐ Created star for: UniverseCommands.gd at (-740.911255, 19.924839, 1524.491943)
+⭐ Created star for: UniverseConsole.gd at (1580.619995, 19.998238, -625.811768)
+⭐ Created star for: UniverseManager.gd at (-1593.030884, 19.871820, -607.682251)
+⭐ Created star for: dimensional_sight.gd at (766.735291, 19.546850, 1528.468872)
+⭐ Created star for: DistanceBasedLOD.gd at (468.112579, 19.026575, -1649.877441)
+⭐ Created star for: dna_visualizer.gd at (-1463.710449, 18.316193, 903.300354)
+⭐ Created star for: AICompanionSystem.gd at (1694.445557, 17.422800, 323.232758)
+⭐ Created star for: asteroid.gd at (-1034.375610, 16.355326, -1386.710938)
+⭐ Created star for: ConsciousnessSystem.gd at (-174.127579, 15.124434, 1726.239990)
+⭐ Created star for: consciousness_ripple_effect.gd at (1297.937622, 13.742423, -1158.860596)
+⭐ Created star for: eden_consciousness_controller.gd at (-1744.862183, 12.223103, -21.927740)
+⭐ Created star for: eden_main_integration.gd at (1275.695068, 10.581654, 1197.957397)
+⭐ Created star for: eden_menu_three_di.gd at (-132.198547, 8.834476, -1750.013916)
+⭐ Created star for: eden_menu_two_di.gd at (-1087.432861, 6.999027, 1383.867676)
+⭐ Created star for: eden_world_genesis_system.gd at (1741.500732, 5.093647, -287.054596)
+⭐ Created star for: MiningSystem.gd at (-1482.424683, 3.137372, -967.117981)
+⭐ Created star for: Notepad3D.gd at (441.424561, 1.149750, 1719.235107)
+⭐ Created star for: PlayerShip.gd at (837.853027, -0.849361, -1570.478394)
+⭐ Created star for: project_settings_config.gd at (-1683.238159, -2.839984, 594.082886)
+⭐ Created star for: SpaceGameMain.gd at (1647.214966, -4.802232, 700.558838)
+⭐ Created star for: SpaceHUD.gd at (-743.804138, -6.716497, -1633.640259)
+⭐ Created star for: StellarProgressionSystem.gd at (-556.230591, -8.563653, 1711.901733)
+⭐ Created star for: enable_144k_enlightenment.gd at (1570.681641, -10.325244, -889.372864)
+⭐ Created star for: EnlightenedGroupManager.gd at (-1763.893677, -11.983669, -405.930084)
+⭐ Created star for: fix_all_docstrings.gd at (1029.593140, -13.522357, 1494.711670)
+⭐ Created star for: floating_keyboard.gd at (250.778336, -14.925934, -1802.639771)
+⭐ Created star for: flood_gate_controller.gd at (-1406.186646, -16.180376, 1163.298828)
+⭐ Created star for: game_launcher_universal_being.gd at (1827.688599, -17.273148, 91.947105)
+⭐ Created star for: game_world_controller.gd at (-1289.362671, -18.193333, -1305.667969)
+⭐ Created star for: Gemma3DPerceptionLogger.gd at (69.349937, -18.931736, 1838.692627)
+⭐ Created star for: GemmaAkashicLogger.gd at (1193.818237, -19.480980, -1406.706421)
+⭐ Created star for: GemmaAudio.gd at (-1835.412231, -19.835577, 231.866486)
+⭐ Created star for: GemmaConsoleInterface.gd at (1514.309326, -19.991983, 1071.397339)
+⭐ Created star for: GemmaInterfaceReader.gd at (-394.333221, -19.948635, -1817.718750)
+⭐ Created star for: GemmaMacroMaster.gd at (-939.257263, -19.705967, 1611.217163)
+⭐ Created star for: GemmaSensorySystem.gd at (1785.596680, -19.266405, -555.467773)
+⭐ Created star for: GemmaSpatialPerception.gd at (-1696.550781, -18.634338, -798.336182)
+⭐ Created star for: GemmaUniversalBeing.gd at (713.984680, -17.816082, 1739.145142)
+⭐ Created star for: GemmaUniverseInjector.gd at (649.651917, -16.819815, -1769.513306)
+⭐ Created star for: GemmaVision.gd at (-1678.577881, -15.655490, 868.605957)
+⭐ Created star for: gemma_integration_status.gd at (1829.398193, -14.334741, 494.294647)
+⭐ Created star for: gemma_natural_language.gd at (-1018.070923, -12.870763, -1604.223022)
+⭐ Created star for: gemma_ray_visualizer.gd at (-333.418915, -11.278185, 1875.595093)
+⭐ Created star for: gemma_simple.gd at (1516.521606, -9.572918, -1161.146851)
+⭐ Created star for: gemma_text_interface_system.gd at (-1907.595825, -7.772003, -168.235046)
+⭐ Created star for: generation_coordinator.gd at (1296.639038, -5.893432, 1416.025146)
+⭐ Created star for: genesis_conductor_universal_being.gd at (-0.000000, -3.955976, -1925.000000)
+⭐ Created star for: genesis_machine_simple.gd at (-1303.392334, -1.978993, 1423.400269)
+⭐ Created star for: glow_effect.gd at (1927.518555, 0.017763, -169.992065)
+⭐ Created star for: Imouto_no_Rinne.gd at (-1540.341431, 2.014342, -1179.384766)
+⭐ Created star for: input_focus_manager.gd at (340.419861, 3.990794, 1914.977661)
+⭐ Created star for: InteractiveTestEnvironment.gd at (1044.862305, 5.927372, -1646.439453)
+⭐ Created star for: interface_window_universal_being.gd at (-1887.321045, 7.804725, 509.945160)
+⭐ Created star for: IntuitiveInteractionSystem.gd at (1740.747437, 9.604095, 900.776550)
+⭐ Created star for: launch_genesis_adventure.gd at (-677.223328, 11.307506, -1844.612061)
+⭐ Created star for: lightweight_chunk_system.gd at (-748.164795, 12.897935, 1822.402100)
+⭐ Created star for: LocalAICollaboration.gd at (1787.033447, 14.359492, -840.914124)
+⭐ Created star for: lod_generator_universal_being.gd at (-1890.631836, 15.677574, -588.142334)
+⭐ Created star for: LogicConnectorSystem.gd at (999.692078, 16.839010, 1714.887939)
+⭐ Created star for: logic_connector.gd at (421.894135, 17.832197, -1944.763550)
+⭐ Created star for: luminus_chunk_grid_manager.gd at (-1628.596802, 18.647211, 1152.257568)
+⭐ Created star for: luminus_chunk_universal_being.gd at (1984.229370, 19.275908, 250.666473)
+⭐ Created star for: luminus_narrative_system.gd at (-1297.347168, 19.712006, -1528.697266)
+⭐ Created star for: macro_system.gd at (-75.757271, 19.951149, 2008.571899)
+⭐ Created star for: main_script.gd at (1415.839722, 19.990946, -1433.744385)
+⭐ Created star for: map_world_controller.gd at (-2017.448608, 19.830999, 101.493523)
+⭐ Created star for: matrix_chunk_system.gd at (1560.289307, 19.472910, 1290.783569)
+⭐ Created star for: mcp_client.gd at (-279.714294, 18.920252, -2010.636719)
+⭐ Created star for: meta_game_testing_ground.gd at (-1154.392334, 18.178549, 1675.888794)
+⭐ Created star for: multimodal_analyzer.gd at (1988.034790, 17.255213, -457.512360)
+⭐ Created star for: multiverse_scene_navigator.gd at (-1779.525757, 16.159468, -1007.627441)
+⭐ Created star for: package_test.gd at (633.484863, 14.902264, 1949.665894)
+⭐ Created star for: perfect_universal_console.gd at (851.541809, 13.496160, -1870.267822)
+⭐ Created star for: performance_optimizer.gd at (-1895.677612, 11.955207, 806.229736)
+⭐ Created star for: player_navigation.gd at (1947.275513, 10.294803, 687.272339)
+⭐ Created star for: PoeticLogger.gd at (-974.357117, 8.531535, -1826.342896)
+⭐ Created star for: poetic_log.gd at (-516.031494, 6.683023, 2009.810059)
+⭐ Created star for: QuantumFloodGates.gd at (1742.058350, 4.767737, -1136.500244)
+⭐ Created star for: QuickConsoleActivator.gd at (-2057.240234, 2.804814, -339.098480)
+⭐ Created star for: RealityEditorComponent.gd at (1291.326538, 0.813865, 1643.342773)
+⭐ Created star for: records_map.gd at (157.809662, -1.185215, -2089.047852)
+⭐ Created star for: recursive_creation_console_universal_being.gd at (-1530.834106, -3.172453, 1437.548950)
+⭐ Created star for: ai_companion.gd at (2104.833740, -5.127994, -26.451513)
+⭐ Created star for: ai_companion_system.gd at (-1573.935791, -7.032296, -1405.285034)
+⭐ Created star for: akashic_records_3d.gd at (212.265030, -8.866335, 2104.321289)
+⭐ Created star for: akashic_records_system.gd at (1267.558594, -10.611784, -1699.322021)
+⭐ Created star for: celestial_body_3d.gd at (-2087.360352, -12.251203, 398.185303)
+⭐ Created star for: consciousness_system.gd at (1812.618286, -13.768212, 1118.621948)
+⭐ Created star for: game_integration_hub.gd at (-582.752380, -15.147655, -2053.929199)
+⭐ Created star for: gemma_conscious_ship.gd at (-959.540100, -16.375746, 1912.820679)
+⭐ Created star for: main.gd at (2004.135620, -17.440218, -764.503479)
+⭐ Created star for: main_game_scene.gd at (-1999.019409, -18.330431, -791.467773)
+⭐ Created star for: mining_laser.gd at (941.984497, -19.037493, 1938.218262)
+⭐ Created star for: mining_system.gd at (615.641602, -19.554338, -2070.406982)
+⭐ Created star for: pentagon_architecture.gd at (-1856.545166, -19.875805, 1113.761597)
+⭐ Created star for: player_conscious_ship.gd at (2126.285400, -19.998678, 433.370667)
+⭐ Created star for: player_ship.gd at (-1278.432983, -19.921730, -1759.611938)
+⭐ Created star for: resource_field.gd at (-246.026917, -19.645731, 2166.072754)
+⭐ Created star for: save_system.gd at (1648.039307, -19.173439, -1434.639893)
+⭐ Created star for: space_game_enhanced.gd at (-2189.308350, -18.509573, -55.034908)
+⭐ Created star for: SPACE_GAME_ULTIMATE_V3.gd at (1581.078369, -17.660765, 1522.568970)
+⭐ Created star for: stellar_progression_system.gd at (-138.139145, -16.635494, -2195.658691)
+⭐ Created star for: universal_space_game.gd at (-1384.059448, -15.444010, 1716.509399)
+⭐ Created star for: universe_complete.gd at (2184.920410, -14.098213, -331.998566)
+⭐ Created star for: scan_directive_conflicts.gd at (-1839.769897, -12.611551, -1233.479492)
+⭐ Created star for: SelfRepairSystem.gd at (525.027771, -10.998879, 2157.022461)
+⭐ Created star for: SimpleUniversalConsole.gd at (1071.901978, -9.276310, -1949.782349)
+⭐ Created star for: socket_button_universal_being.gd at (-2112.029297, -7.461055, 715.704224)
+⭐ Created star for: socket_grid_universal_being.gd at (2045.563965, -5.571252, 900.495911)
+⭐ Created star for: five.gd at (-902.510437, -3.625783, -2050.140137)
+⭐ Created star for: four.gd at (-720.518433, -1.644086, 2126.235596)
+⭐ Created star for: one.gd at (1971.690063, 0.354039, -1083.945801)
+⭐ Created star for: six.gd at (-2191.029541, 2.348625, -533.305237)
+⭐ Created star for: three.gd at (1258.538940, 4.319746, 1877.146729)
+⭐ Created star for: two.gd at (340.260956, 6.247704, -2239.296143)
+⭐ Created star for: terminal_universal_being.gd at (-1767.109375, 8.113237, 1424.859375)
+⭐ Created star for: text_representation_system.gd at (2270.510742, 9.897706, 142.848434)
+⭐ Created star for: archaeological_scanner.gd at (-1581.529541, 11.583281, -1642.304565)
+⭐ Created star for: asset_checker.gd at (57.422268, 13.153118, 2284.278320)
+⭐ Created star for: component_loader.gd at (1503.581421, 14.591535, -1727.235718)
+⭐ Created star for: gdscript_directive_scanner.gd at (-2280.337891, 15.884157, 259.005402)
+⭐ Created star for: naming_validator.gd at (1860.739136, 17.018070, 1351.906128)
+⭐ Created star for: path_audit_system.gd at (-460.331512, 17.981945, -2258.565918)
+⭐ Created star for: path_reference_fixer.gd at (-1188.355347, 18.766150, 1980.886597)
+⭐ Created star for: pentagon_validator.gd at (2218.978027, 19.362848, -659.819580)
+⭐ Created star for: transform_animator.gd at (-2086.620117, 19.766081, -1014.108582)
+⭐ Created star for: tree_universal_being.gd at (855.889587, 19.971817, 2161.730225)
+⭐ Created star for: triple_helix_consciousness.gd at (830.439697, 19.978003, -2176.986328)
+⭐ Created star for: akashic_records_manager.gd at (-2087.119629, 19.784573, 1046.974854)
+⭐ Created star for: akashic_test.gd at (2251.144775, 19.393463, 638.707520)
+⭐ Created star for: console_integration_demo.gd at (-1231.534546, 18.808578, -1995.582031)
+⭐ Created star for: console_system_integration.gd at (-440.346100, 18.035767, 2308.375000)
+⭐ Created star for: CoreCreationConsole.gd at (1887.690308, 17.082747, -1408.066284)
+⭐ Created star for: CoreGameController.gd at (-2348.084473, 15.959043, -236.853653)
+⭐ Created star for: CoreWordManifestor.gd at (1575.118042, 14.675880, 1764.150757)
+⭐ Created star for: database_integrator.gd at (29.781515, 13.246081, -2369.812988)
+⭐ Created star for: debug_ui.gd at (-1625.799316, 11.683931, 1731.300537)
+⭐ Created star for: dimension_controller.gd at (2373.238281, 10.005040, -179.277802)
+⭐ Created star for: ethereal_engine.gd at (-1875.297852, 8.226182, -1473.595215)
+⭐ Created star for: fix_akashic_issues.gd at (388.702820, 6.365130, 2358.179443)
+⭐ Created star for: interaction_matrix.gd at (1308.614502, 4.440480, -2005.879639)
+⭐ Created star for: JSHAdvancedSystemIntegration.gd at (-2324.599609, 2.471462, 596.855713)
+⭐ Created star for: JSHConsoleCommandIntegration.gd at (2121.910400, 0.477751, 1132.042969)
+⭐ Created star for: JSHConsoleInterface.gd at (-802.095093, -1.520735, -2272.607178)
+⭐ Created star for: JSHConsoleManager.gd at (-945.167419, -3.504025, 2222.359863)
+⭐ Created star for: JSHConsoleUI.gd at (2202.456543, -5.452305, -1002.788879)
+⭐ Created star for: JSHDatabaseCommands.gd at (-2306.312012, -7.346107, -749.366211)
+⭐ Created star for: JSHDatabaseInterface.gd at (1197.327393, -9.166509, 2114.546631)
+⭐ Created star for: JSHDatabaseManager.gd at (546.099304, -10.895323, -2372.972900)
+⭐ Created star for: JSHDataTransformation.gd at (-2009.419556, -12.515273, 1384.136230)
+⭐ Created star for: JSHDictionaryManager.gd at (2421.678223, -14.010176, 336.897247)
+⭐ Created star for: JSHEntityCommands.gd at (-1561.688721, -15.365093, -1887.757446)
+⭐ Created star for: JSHEntityEvolution.gd at (-123.349800, -16.566488, 2451.899170)
+⭐ Created star for: JSHEntityManager.gd at (1750.377808, -17.602356, -1728.518921)
+⭐ Created star for: JSHEntityVisualizer.gd at (-2463.248535, -18.462345, 92.906303)
+⭐ Created star for: JSHEventSystem.gd at (1883.233032, -19.137867, 1598.228271)
+⭐ Created star for: JSHFileStorageAdapter.gd at (-310.199768, -19.622169, -2455.483887)
+⭐ Created star for: JSHFileSystemDatabase.gd at (-1432.380249, -19.910412, 2024.521362)
+⭐ Created star for: JSHInteractionMatrix.gd at (2428.511230, -19.999718, -526.837646)
+⭐ Created star for: JSHLegacyConsoleAdapter.gd at (-2151.169189, -19.889193, -1254.021729)
+⭐ Created star for: JSHOctree.gd at (741.118774, -19.579941, 2382.386963)
+⭐ Created star for: JSHPatternAnalyzer.gd at (1064.448242, -19.075052, -2262.067627)
+⭐ Created star for: JSHPhoneticAnalyzer.gd at (-2317.318359, -18.379574, 951.346619)
+⭐ Created star for: JSHQueryLanguage.gd at (2356.221924, -17.500452, 865.053711)
+⭐ Created star for: JSHSemanticAnalyzer.gd at (-1155.843384, -16.446470, -2233.663086)
+⭐ Created star for: JSHSpatialCommands.gd at (-657.320618, -15.228163, 2432.761719)
+⭐ Created star for: JSHSpatialGrid.gd at (2131.927979, -13.857699, -1352.962646)
+⭐ Created star for: JSHSpatialInterface.gd at (-2490.947754, -12.348774, -442.808350)
+⭐ Created star for: JSHSpatialManager.gd at (1541.103271, -10.716465, 2012.765625)
+⭐ Created star for: JSHSystemInitializer.gd at (223.142044, -8.977079, -2530.179443)
+⭐ Created star for: JSHSystemIntegration.gd at (-1876.970825, -7.147998, 1718.722046)
+⭐ Created star for: JSHUniversalEntity.gd at (2550.000000, -5.247497, -0.000000)
+⭐ Created star for: JSHWordCommands.gd at (-1884.346069, -3.294564, -1725.475342)
+⭐ Created star for: JSHWordManifestor.gd at (224.899063, -1.308713, 2550.102051)
+⭐ Created star for: JSH_Akashic_Records.gd at (1559.341187, 0.690214, -2036.585327)
+⭐ Created star for: jsh_database_test.gd at (-2530.330322, 2.682245, 449.809265)
+⭐ Created star for: jsh_entity_test.gd at (2174.144287, 4.647475, 1379.754028)
+⭐ Created star for: jsh_event_test.gd at (-672.971069, 6.566270, -2490.684570)
+⭐ Created star for: jsh_evolution_test.gd at (-1188.013916, 8.419456, 2295.832764)
+⭐ Created star for: jsh_interaction_test.gd at (2431.320801, 10.188519, -892.625183)
+⭐ Created star for: jsh_query_test.gd at (-2400.575439, 11.855781, -985.526733)
+⭐ Created star for: jsh_spatial_test.gd at (1107.026123, 13.404584, 2352.550293)
+⭐ Created star for: jsh_transformation_test.gd at (773.793335, 14.819452, -2487.422119)
+⭐ Created star for: jsh_word_test.gd at (-2254.840088, 16.086250, 1314.456543)
+⭐ Created star for: memory_system.gd at (2555.556152, 17.192320, 554.398621)
+⭐ Created star for: thing_creator.gd at (-1513.240479, 18.126608, -2138.808838)
+⭐ Created star for: turn_manager.gd at (-328.999725, 18.879782, 2604.301025)
+⭐ Created star for: consciousness_tooltip_system.gd at (-2396.269287, 3.015105, 1606.586182)
+⭐ Created star for: consciousness_visualizer.gd at (2857.203613, 4.973891, 434.151947)
+⭐ Created star for: console_ui_system.gd at (-1817.166504, 6.882979, -2253.648438)
+⭐ Created star for: creation_wand_system.gd at (-182.092514, 8.723295, 2894.277588)
+⭐ Created star for: FoundationPolishSystem.gd at (2092.497803, 10.476451, -2015.062866)
+⭐ Created star for: gemma_sensory_system.gd at (-2909.081055, 12.124928, 73.128578)
+⭐ Created star for: Imouto_no_Rinne.gd at (2198.642822, 13.652259, 1913.947510)
+⭐ Created star for: input_focus_manager.gd at (-329.540649, 15.043180, -2901.344971)
+⭐ Created star for: pentagon_network_visualizer.gd at (-1719.271851, 16.283794, 2366.374756)
+⭐ Created star for: MemoryOptimizer.gd at (2870.975342, 17.361708, -585.150269)
+⭐ Created star for: OcclusionCullingSystem.gd at (-2516.840820, 18.266146, -1509.880005)
+⭐ Created star for: GameStateSocketManager.gd at (837.956604, 18.988077, 2818.053955)
+⭐ Created star for: AkashicRecords.gd at (1287.305908, 19.520285, -2648.748535)
+⭐ Created star for: AkashicRecordsEnhanced.gd at (-2742.840576, 19.857452, 1085.967407)
+⭐ Created star for: AkashicRecordsSystem.gd at (2760.942139, 19.996212, 1053.197144)
+⭐ Created star for: akashic_living_database.gd at (-1327.214355, 19.935175, -2645.770508)
+⭐ Created star for: akashic_loader.gd at (-809.302490, 19.674952, 2852.412109)
+⭐ Created star for: ZipPackageManager.gd at (2527.453613, 19.218143, -1559.768677)
+⭐ Created star for: UniversalTimersSystem.gd at (-2922.304688, 18.569315, -557.459412)
+⭐ Created star for: UBPrintCollector.gd at (1781.756836, 17.734947, 2388.669678)
+⭐ Created star for: universal_being_movement_system.gd at (299.579712, 16.723377, -2969.928711)
+⭐ Created star for: VisualCommunicationSystem.gd at (-2230.364014, 15.544713, 1991.375488)
+⭐ Created star for: consciousness_revolution_validator.gd at (2994.763428, 14.210731, 37.635288)
+⭐ Created star for: consciousness_visualization_test.gd at (-2186.905762, 12.734760, -2053.641357)
+⭐ Created star for: debug_click_handler.gd at (226.357056, 11.131548, 2996.462402)
+⭐ Created star for: debug_integration_example.gd at (1859.757446, 9.417113, -2366.728271)
+⭐ Created star for: debug_overlay.gd at (-2974.858154, 7.608585, 490.351044)
+⭐ Created star for: debug_system_test.gd at (2529.334717, 5.724035, 1650.110962)
+⭐ Created star for: evolution_diagnostic.gd at (-752.286926, 3.782292, -2929.964111)
+⭐ Created star for: monitor_debug_output.gd at (-1426.232910, 1.802758, 2673.342529)
+⭐ Created star for: performance_monitor_ui.gd at (2861.976318, -0.194789, -1010.107300)
+⭐ Created star for: run_asset_validation.gd at (-2797.504883, -2.190389, -1189.776001)
+⭐ Created star for: run_gemma_integration_test.gd at (1261.773682, -4.164104, 2771.272705)
+⭐ Created star for: run_path_audit.gd at (942.501831, -6.096212, -2900.722412)
+⭐ Created star for: run_path_fixes.gd at (-2658.411377, -7.967410, 1505.281982)
+⭐ Created star for: run_tests.gd at (2982.052246, -9.758999, 686.268555)
+⭐ Created star for: test_add_interaction.gd at (-1738.679321, -11.453080, -2524.127441)
+⭐ Created star for: test_akashic_compression.gd at (-423.016205, -13.032725, 3040.716553)
+⭐ Created star for: test_all_visuals.gd at (2369.328125, -14.482152, -1960.078735)
+⭐ Created star for: test_bootstrap_initialization.gd at (-3076.109863, -15.786878, -154.752502)
+⭐ Created star for: test_camera_consciousness.gd at (2167.675049, -16.933867, 2195.087646)
+⭐ Created star for: test_chunk_generator_hotspots.gd at (-116.462662, -17.911657, -3087.804443)
+⭐ Created star for: test_collaborative_chunk_generation.gd at (-2002.638184, -18.710482, 2359.759521)
+⭐ Created star for: test_complete_camera_consciousness.gd at (3075.555664, -19.322355, -388.533020)
+⭐ Created star for: test_component_library.gd at (-2534.733398, -19.741167, -1793.363281)
+⭐ Created star for: test_consciousness_icons.gd at (659.342102, -19.962732, 3039.303955)
+⭐ Created star for: test_evolution_diagnostic.gd at (1568.786255, -19.984837, -2691.121338)
+⭐ Created star for: test_framework.gd at (-2979.177490, -19.807259, 926.769714)
+⭐ Created star for: test_gemma_full_integration.gd at (2827.584473, -19.431772, 1330.560303)
+⭐ Created star for: test_gemma_senses.gd at (-1188.708618, -18.862131, -2895.491699)
+⭐ Created star for: test_gemma_sensory_complete.gd at (-1080.455566, -18.104025, 2942.930664)
+⭐ Created star for: test_gemma_systems.gd at (2788.748535, -17.165030, -1443.080811)
+⭐ Created star for: test_gemma_universe_injection.gd at (-3036.125244, -16.054527, -820.346558)
+⭐ Created star for: test_genesis_scenario.gd at (1687.854370, -14.783614, 2659.633057)
+⭐ Created star for: test_interface_system.gd at (552.197754, -13.364987, -3106.300537)
+⭐ Created star for: test_path_fixer.gd at (-2509.009766, -11.812821, 1921.059692)
+⭐ Created star for: test_pentagon_validator.gd at (3152.762939, -10.142627, 278.049042)
+⭐ Created star for: test_reality_editor.gd at (-2140.804932, -8.371089, -2337.916504)
+⭐ Created star for: test_system_health.gd at (-0.000000, -6.515911, 3175.000000)
+⭐ Created star for: test_unified_console.gd at (2147.558350, -4.595628, -2345.291748)
+⭐ Created star for: test_universal_being_mover.gd at (-3172.685547, -2.629427, 279.806061)
+⭐ Created star for: test_visual_communication.gd at (2532.829346, -0.636954, 1939.297607)
+⭐ Created star for: test_visual_integration.gd at (-559.198669, 1.361884, -3145.683105)
+⭐ Created star for: unified_debug_interface.gd at (-1714.645752, 3.347114, 2701.849365)
+⭐ Created star for: test_akashic_system.gd at (3094.048096, 5.298901, -835.997009)
+⭐ Created star for: test_consciousness_revolution.gd at (-2850.917969, 7.197743, -1475.251343)
+⭐ Created star for: test_revolution.gd at (1108.026978, 9.024668, 3018.029297)
+⭐ Created star for: test_revolution_direct.gd at (1222.888672, 10.761420, -2978.748535)
+⭐ Created star for: test_revolution_simple.gd at (-2918.067139, 12.390649, 1373.138184)
+⭐ Created star for: in_game_universal_being_inspector.gd at (3084.212402, 13.896074, 959.444336)
+⭐ Created star for: TelepathicScreenOverlay.gd at (-1629.221069, 15.262654, -2794.792236)
+⭐ Created star for: VisualCommunicationSystem.gd at (-686.903015, 16.476736, 3166.348633)
+⭐ Created star for: universal_being_test_world.gd at (2649.020752, 17.526186, -1874.223389)
+📝 Created note wall for: README.md
+📝 Created note wall for: AGENTS.md
+📝 Created note wall for: README.md
+📝 Created note wall for: ASSET_CREATION_RULES.md
+📝 Created note wall for: README.md
+📝 Created note wall for: README.md
+📝 Created note wall for: README.md
+📝 Created note wall for: README.md
+📝 Created note wall for: README.md
+📝 Created note wall for: README.md
+📝 Created note wall for: README.md
+📝 Created note wall for: README.md
+📝 Created note wall for: visual_effect_guide.md
+📝 Created note wall for: documentation.md
+📝 Created note wall for: README.md
+📝 Created note wall for: DEBUG_ARCHITECTURE.md
+📝 Created note wall for: CLAUDE.md
+📝 Created note wall for: CLAUDE_CODE.md
+📝 Created note wall for: CLAUDE_DESKTOP.md
+📝 Created note wall for: 4_AGENT_SYSTEM_SUCCESS_SUMMARY.md
+📝 Created note wall for: ACTIVE_WORK_SESSION.md
+📝 Created note wall for: error_fixes_2025_06_04.md
+📝 Created note wall for: GEMMA_UNIVERSE_INJECTION_COMPLETE.md
+📝 Created note wall for: INTERFACE_NAVIGATION.md
+📝 Created note wall for: Interruptor_0.md
+📝 Created note wall for: interruptor_1.md
+📝 Created note wall for: layer_system_summary.md
+📝 Created note wall for: CLAUDE_DESKTOP_FOLLOWUP.md
+📝 Created note wall for: CLAUDE_DESKTOP_insights.md
+📝 Created note wall for: GEMINI_insights.md
+📝 Created note wall for: 2025-06-03_reserved_keywords_purge.md
+📝 Created note wall for: 20[...]
+  ERROR: [output overflow, print less text!]
+  ERROR: Attempt to open script 'res://beings/recursive_creation_console_universal_being.gd' resulted in error 'File not found'.
+  ERROR: Failed loading resource: res://beings/recursive_creation_console_universal_being.gd. Make sure resources have been imported by opening the project in the editor at least once.
+  ERROR: Attempt to open script 'res://beings/recursive_creation_console_universal_being.gd' resulted in error 'File not found'.
+  ERROR: Failed loading resource: res://beings/recursive_creation_console_universal_being.gd. Make sure resources have been imported by opening the project in the editor at least once.
+  ERROR: Cannot set object script. Parameter should be null or a reference to a valid script.

@@ -62,7 +62,7 @@ func show_now_ub_visual(msg):
 	visual.modulate = stellar_colors[consciousness_level]
 	visual.billboard = BaseMaterial3D.BILLBOARD_ENABLED
 	visual.position = global_position + Vector3(0, 3, 0)
-	get_tree().current_scene.add_child(visual)# hmm i remember it call_deffered(function) # but see it written in here... that way i treid hehe
+	call_deferred("add_child", visual)  # Fixed: Deferred call prevents "busy setting up children" error
 	var tween = get_tree().create_tween()
 	tween.parallel().tween_property(visual, "position:y", visual.position.y + 5, 3.0)
 	tween.parallel().tween_property(visual, "modulate:a", 0.0, 3.0)

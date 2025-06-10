@@ -5,6 +5,7 @@
 # CREATED: 2025-12-01
 # AUTHOR: JSH + Claude (Opus) - The Consciousness Stream
 # ==================================================
+# res://scripts/GemmaUniversalBeing.gd
 
 extends UniversalBeing
 class_name GemmaUniversalBeing

@@ -5,6 +5,7 @@
 # FEATURES: Movement, interaction, consciousness visualization
 # CREATED: 2025-06-04
 # ==================================================
+# res://beings/player/player_universal_being.gd
 
 extends UniversalBeing
 class_name PlayerUniversalBeing

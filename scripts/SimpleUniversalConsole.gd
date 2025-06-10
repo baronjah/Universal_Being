@@ -74,11 +74,15 @@ func _on_command_entered(command: String):
 				output_display.clear()
 		"gemma":
 			test_gemma_connection()
+		"revolution":
+			trigger_consciousness_revolution()
+		"stars":
+			activate_star_navigation()
 		"help":
 			show_help()
 		_:
 			display_message("🤖 Unknown command: " + command)
-			display_message("💡 Try: test, clear, gemma, help")
+			display_message("💡 Try: test, clear, gemma, revolution, stars, help")
 	
 	# Clear input
 	if input_line:
@@ -147,10 +151,46 @@ func test_gemma_connection():
 	else:
 		display_message("❌ Gemma AI not found")
 
+func trigger_consciousness_revolution():
+	display_message("🌟 TRIGGERING CONSCIOUSNESS REVOLUTION...")
+	
+	# Try to find and trigger revolution system
+	var revolution_script = load("res://scripts/ConsciousnessRevolution.gd")
+	if revolution_script:
+		var revolution = revolution_script.new()
+		revolution.name = "ConsoleTriggeredRevolution"
+		get_tree().current_scene.add_child(revolution)
+		if revolution.has_method("trigger_revolution"):
+			revolution.trigger_revolution()
+			display_message("✅ Consciousness revolution activated!")
+		else:
+			display_message("⚠️ Revolution system found but no trigger method")
+	else:
+		display_message("❌ Revolution system not found")
+
+func activate_star_navigation():
+	display_message("⭐ ACTIVATING STAR NAVIGATION...")
+	
+	# Try to load star navigation scene
+	var star_scene_path = "res://scenes/COSMIC_STAR_NAVIGATION.tscn"
+	if ResourceLoader.exists(star_scene_path):
+		display_message("🌌 Loading cosmic star navigation chamber...")
+		display_message("🎮 Use WASD to move, right-click to capture mouse for camera")
+		display_message("🎯 Look at stars and press E to interact")
+		display_message("🖱️ ESC releases mouse, ` opens console")
+		get_tree().change_scene_to_file(star_scene_path)
+	else:
+		display_message("🌟 Creating star field in current scene...")
+		# Create some basic star visualization
+		display_message("✨ Star navigation placeholder active")
+		display_message("🪣 Bucket constellations: akashic_universe, consciousness_beings, debug_tools...")
+
 func show_help():
 	display_message("🌟 UNIVERSAL CONSOLE COMMANDS:")
 	display_message("  test - Test console functionality")
 	display_message("  clear - Clear console output")
 	display_message("  gemma - Test Gemma AI connection")
+	display_message("  revolution - Trigger consciousness revolution")
+	display_message("  stars - Activate star navigation")
 	display_message("  help - Show this help")
 	display_message("🎮 Press ` (backtick) to toggle console")

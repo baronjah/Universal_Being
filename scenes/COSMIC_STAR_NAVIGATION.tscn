@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://bfwxqm8qtcpn0"]
+[gd_scene load_steps=5 format=3 uid="uid://bfwxqm8qtcpn0"]
 
 [ext_resource type="Script" path="res://scripts/CosmicDebugChamber.gd" id="1_1k2vj"]
 [ext_resource type="Script" path="res://scripts/BucketConstellationManager.gd" id="2_p5xwh"]
+[ext_resource type="Script" path="res://scripts/StarNavigationPlayer.gd" id="3_star_player"]
 
 [sub_resource type="Environment" id="Environment_1qkr8"]
 background_mode = 1
@@ -9,6 +10,13 @@ background_color = Color(0.05, 0.05, 0.2, 1)
 ambient_light_source = 2
 ambient_light_color = Color(0.5, 0.5, 1, 1)
 ambient_light_energy = 0.3
+
+[sub_resource type="SphereMesh" id="SphereMesh_plasmoid"]
+radius = 0.3
+height = 0.6
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_plasmoid"]
+radius = 0.3
 
 [node name="CosmicStarNavigation" type="Node3D"]
 
@@ -20,11 +28,14 @@ script = ExtResource("2_p5xwh")
 
 [node name="PlayerPlasmoid" type="CharacterBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 20)
+script = ExtResource("3_star_player")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="PlayerPlasmoid"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+mesh = SubResource("SphereMesh_plasmoid")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="PlayerPlasmoid"]
+shape = SubResource("SphereShape3D_plasmoid")
 
 [node name="CameraPlasmoid" type="Camera3D" parent="PlayerPlasmoid"]
 transform = Transform3D(1, 0, 0, 0, 0.866025, 0.5, 0, -0.5, 0.866025, 0, 3, 5)

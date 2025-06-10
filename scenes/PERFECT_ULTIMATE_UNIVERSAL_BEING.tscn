@@ -8,6 +8,7 @@
 [ext_resource type="Script" uid="uid://k6a8a1xmlngv" path="res://scripts/GemmaUniversalBeing.gd" id="6"]
 [ext_resource type="Script" uid="uid://dby1vc8tk68r6" path="res://systems/state/GameStateSocketManager.gd" id="7"]
 [ext_resource type="Script" uid="uid://6r0c7mg1ovbq" path="res://scripts/generation_coordinator.gd" id="8"]
+[ext_resource type="Script" path="res://scripts/SimpleUniversalConsole.gd" id="9_console"]
 
 [sub_resource type="GDScript" id="PerfectUniversalController"]
 script/source = "extends Node3D
@@ -656,6 +657,7 @@ offset_right = 400.0
 offset_bottom = 200.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("9_console")
 
 [node name="ConsoleBackground" type="Panel" parent="UniversalConsole"]
 layout_mode = 1

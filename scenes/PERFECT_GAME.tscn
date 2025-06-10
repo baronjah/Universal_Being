@@ -1,15 +1,9 @@
-[gd_scene load_steps=8 format=3]
+[gd_scene load_steps=12 format=3 uid="uid://dk4y2j2ahpnro"]
 
-[ext_resource type="Script" uid="uid://c6mwvx5efb7lt" path="res://scripts/player_universal_being.gd" id="1"]
+[ext_resource type="Script" uid="uid://bw7fwl6a47rsq" path="res://beings/player/player_universal_being.gd" id="1"]
 [ext_resource type="Script" uid="uid://4e5af323xa3f" path="res://beings/cursor/CursorUniversalBeing.gd" id="2"]
-[ext_resource type="Script" uid="uid://d1xkl3r0qq4ej" path="res://scripts/perfect_universal_console.gd" id="3"]
-
-[sub_resource type="Environment" id="Environment_1"]
-background_mode = 1
-background_color = Color(0.1, 0.2, 0.4, 1)
-ambient_light_source = 2
-ambient_light_color = Color(0.8, 0.9, 1, 1)
-ambient_light_energy = 0.3
+[ext_resource type="Script" uid="uid://ck6nmsyqo08nu" path="res://scripts/SimpleUniversalConsole.gd" id="3"]
+[ext_resource type="Script" uid="uid://datujorhvr33" path="res://addons/goutte.camera.trackball/trackball_camera.gd" id="4"]
 
 [sub_resource type="GDScript" id="GDScript_MAIN"]
 script/source = "extends Node3D
@@ -22,11 +16,26 @@ func _ready():
 	print('🔮 TAB = Switch cursor modes')
 "
 
+[sub_resource type="Environment" id="Environment_1"]
+background_mode = 1
+background_color = Color(0.1, 0.2, 0.4, 1)
+ambient_light_source = 2
+ambient_light_color = Color(0.8, 0.9, 1, 1)
+ambient_light_energy = 0.3
+
 [sub_resource type="BoxMesh" id="BoxMesh_GROUND"]
 size = Vector3(100, 1, 100)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_GROUND"]
 size = Vector3(100, 1, 100)
+
+[sub_resource type="SphereMesh" id="SphereMesh_player"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_player"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_cursor"]
+radius = 0.1
+height = 0.2
 
 [node name="Main" type="Node3D"]
 script = SubResource("GDScript_MAIN")
@@ -51,8 +60,53 @@ shape = SubResource("BoxShape3D_GROUND")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
 script = ExtResource("1")
 
+[node name="PlayerMesh" type="MeshInstance3D" parent="Player"]
+mesh = SubResource("SphereMesh_player")
+
+[node name="PlayerCollision" type="CollisionShape3D" parent="Player"]
+shape = SubResource("SphereShape3D_player")
+
+[node name="CameraPivot" type="Node3D" parent="Player"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 5)
+
+[node name="TrackballCamera" type="Camera3D" parent="Player/CameraPivot" groups=["trackball_camera"]]
+script = ExtResource("4")
+
 [node name="Cursor" type="Node3D" parent="." groups=["cursor"]]
 script = ExtResource("2")
 
-[node name="Console" type="Node3D" parent="." groups=["console"]]
+[node name="CursorMesh" type="MeshInstance3D" parent="Cursor"]
+mesh = SubResource("SphereMesh_cursor")
+
+[node name="Console" type="Control" parent="." groups=["console"]]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
 script = ExtResource("3")
+
+[node name="ConsoleVBox" type="VBoxContainer" parent="Console"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -400.0
+offset_top = -300.0
+offset_right = 400.0
+offset_bottom = 300.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="OutputDisplay" type="RichTextLabel" parent="Console/ConsoleVBox"]
+layout_mode = 2
+size_flags_vertical = 3
+bbcode_enabled = true
+text = "[color=cyan]🌟 Universal Being Console[/color]
+[color=white]Ready for commands...[/color]"
+
+[node name="InputLine" type="LineEdit" parent="Console/ConsoleVBox"]
+layout_mode = 2
+placeholder_text = "Enter command..."
