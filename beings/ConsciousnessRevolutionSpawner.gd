@@ -51,6 +51,9 @@ func pentagon_input(event: InputEvent) -> void:
 			print("🛑 Emergency consciousness revolution shutdown requested")
 			_emergency_shutdown()
 
+var spawn_enabled
+var evolution_queue
+
 func _emergency_shutdown() -> void:
 	"""Emergency shutdown of consciousness revolution"""
 	print("🛑 EMERGENCY SHUTDOWN: Halting all consciousness evolution!")
@@ -205,14 +208,13 @@ func _update_spawning_process(delta: float) -> void:
 	"""Update visual feedback during spawning"""
 	match spawning_phase:
 		1:  # Creating ripple system
-			# Visual feedback would be on material/mesh instead of modulate for 3D
+			pass  # Visual feedback would be on material/mesh instead of modulate for 3D
 		2:  # Creating Gemma
-			# Visual feedback would be on material/mesh instead of modulate for 3D
+			pass  # Visual feedback would be on material/mesh instead of modulate for 3D
 		3:  # Connecting systems
-			# Visual feedback would be on material/mesh instead of modulate for 3D
+			pass  # Visual feedback would be on material/mesh instead of modulate for 3D
 		4:  # Revolution active
-			# Visual feedback completed
-			pass
+			pass  # Visual feedback completed
 
 # ===== INPUT HANDLING FOR REVOLUTION =====
 

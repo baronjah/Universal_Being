@@ -4,6 +4,7 @@
 # PURPOSE: Socket-based state management for entire game
 # ARCHITECTURE: Same as Universal Being sockets but for game-level states
 # ==================================================
+# res://systems/state/GameStateSocketManager.gd
 
 extends Node
 class_name GameStateSocketManager

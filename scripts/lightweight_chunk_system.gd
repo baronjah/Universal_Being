@@ -1,6 +1,7 @@
 # LightweightChunkSystem - FIXED VERSION - No more errors!
 # TRUE LOD based on view direction
 # Only loads chunks when you're looking at them - no "dead corners"
+# res://scripts/lightweight_chunk_system.gd
 
 extends Node3D
 class_name LightweightChunkSystem

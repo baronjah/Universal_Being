@@ -156,20 +156,20 @@ func speak_word_of_power(word: AkashicWord, target: Node3D):
 			# Shows hidden dimensions
 			reveal_quantum_layer(target.position)
 
-
-# akashic_records_system.gd
-extends Node
-class_name AkashicRecordsSystem
-
-signal record_accessed(record_id: String)
-signal knowledge_integrated(knowledge_type: String)
-signal universal_pattern_discovered(pattern: String)
-
-# The Akashic Records - universal memory bank
-var records: Dictionary = {}
-var accessed_records: Array[String] = []
-var integrated_knowledge: Dictionary = {}
-var discovered_patterns: Array[String] = []
+#
+## akashic_records_system.gd
+#extends Node
+#class_name AkashicRecordsSystem
+#
+#signal record_accessed(record_id: String)
+#signal knowledge_integrated(knowledge_type: String)
+#signal universal_pattern_discovered(pattern: String)
+#
+## The Akashic Records - universal memory bank
+#var records: Dictionary = {}
+#var accessed_records: Array[String] = []
+#var integrated_knowledge: Dictionary = {}
+#var discovered_patterns: Array[String] = []
 
 # Record categories
 enum RecordType {

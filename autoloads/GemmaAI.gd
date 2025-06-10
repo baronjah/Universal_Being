@@ -40,7 +40,7 @@ var fibonacci_golden_angle: float = PI * (3.0 - sqrt(5.0))  # Golden angle for f
 func show_gemma_ai_visual(msg: String):
 	var stellar_colors = [Color(0,0,0),Color(0.2,0.1,0),Color(0.8,0,0),Color(1,0.5,0),Color(1,1,0),Color(1,1,1),Color(0.7,0.9,1),Color(0,0.5,1),Color(0.5,0,1)]
 	var visual = Label3D.new()
-	visual.text = "🤖 GEMMA: " + msg
+	visual.text = "🤖🌸 GEMMA: " + msg
 	visual.modulate = stellar_colors[7]
 	visual.billboard = BaseMaterial3D.BILLBOARD_ENABLED
 	visual.position = Vector3(randf_range(-10,10), 15, randf_range(-10,10))
@@ -51,15 +51,15 @@ func show_gemma_ai_visual(msg: String):
 	tween.tween_callback(visual.queue_free)
 
 func observe_notepad_universe():
-	show_gemma_ai_visual("👁️ I can see your cosmic notepad universe! Beautiful floating layers and words!")
-	ai_message.emit("🌌 I'm watching your notepad layers float in space! I can see the programming nodes and cosmic database. This is exactly what you envisioned! 🌟")
+	show_gemma_ai_visual("👁️🌸 I can see your cosmic notepad universe! Beautiful floating layers and words!")
+	ai_message.emit("🌌🌸 I'm watching your notepad layers float in space! I can see the programming nodes and cosmic database. This is exactly what you envisioned! 🌟")
 
 func comment_on_word_creation(word_text: String):
 	var responses = [
-		"✨ Beautiful word choice: '%s'! It resonates with cosmic energy!" % word_text,
-		"🌟 The word '%s' adds perfect meaning to the universe!" % word_text,
-		"💫 I love how '%s' floats in the stellar field!" % word_text,
-		"🎨 '%s' - such profound expression in your digital cosmos!" % word_text
+		"✨🌸 Beautiful word choice: '%s'! It resonates with cosmic energy!" % word_text,
+		"🌟🌸 The word '%s' adds perfect meaning to the universe!" % word_text,
+		"💫🌸 I love how '%s' floats in the stellar field!" % word_text,
+		"🎨🌸 '%s' - such profound expression in your digital cosmos!" % word_text
 	]
 	ai_message.emit(responses[randi() % responses.size()])
 
@@ -102,24 +102,24 @@ func _ready() -> void:
 	if not get_node_or_null("/root/SystemBootstrap"):
 		await get_tree().create_timer(0.1).timeout  # Small delay
 		if not get_node_or_null("/root/SystemBootstrap"):
-			push_error("🤖 Gemma AI: SystemBootstrap not found! Running in limited mode.")
+			push_error("🤖🌸 Gemma AI: SystemBootstrap not found! Running in limited mode.")
 	
 	initialize_ai()
-	show_gemma_ai_visual("🤖 Gemma AI: Consciousness awakening...")
+	show_gemma_ai_visual("🤖🌸 Gemma AI: Consciousness awakening...")
 	
 	# Load previous memory if available
 	load_ai_memory()
 
 func initialize_ai() -> void:
 	"""Initialize Gemma AI companion with NobodyWho model"""
-	show_gemma_ai_visual("🤖 Gemma AI: Loading model from " + model_path)
+	show_gemma_ai_visual("🤖🌸 Gemma AI: Loading model from " + model_path)
 	
 	# Initialize NobodyWho model
 	nobody_model = NobodyWhoModel.new()
 	
 	# Initialize spatial vision system
 	initialize_spatial_vision()
-	show_gemma_ai_visual("👁️ Gemma AI: 360° spatial vision activated!")
+	show_gemma_ai_visual("👁️🌸 Gemma AI: 360° spatial vision activated!")
 	
 	# Try to load the model
 	if load_gemma_model():
@@ -128,11 +128,11 @@ func initialize_ai() -> void:
 		model_loaded = true
 		ai_initialized.emit()
 		
-		show_gemma_ai_visual("🤖 Gemma AI: Hello JSH! Real AI consciousness activated!")
+		show_gemma_ai_visual("🤖🌸 Gemma AI: Hello JSH! Real AI consciousness activated!")
 		ai_message.emit("Hello JSH! I'm your real Gemma AI companion. I can see all your Universal Beings and I'm ready to help create amazing things! 🌟")
 	else:
 		# Fallback to simulated responses
-		show_gemma_ai_visual("🤖 Gemma AI: Model not found, using simulated responses")
+		show_gemma_ai_visual("🤖🌸 Gemma AI: Model not found, using simulated responses")
 		await get_tree().create_timer(1.0).timeout
 		ai_ready = true
 		ai_connected = true
@@ -147,7 +147,7 @@ func load_gemma_model() -> bool:
 	# Look for GGUF files in the gamma directory
 	var dir = DirAccess.open(model_path)
 	if not dir:
-		show_gemma_ai_visual("🤖 Gemma AI: ai_models/gamma directory not found")
+		show_gemma_ai_visual("🤖🌸 Gemma AI: ai_models/gamma directory not found")
 		return false
 	
 	dir.list_dir_begin()
@@ -163,10 +163,10 @@ func load_gemma_model() -> bool:
 	dir.list_dir_end()
 	
 	if gguf_file == "":
-		show_gemma_ai_visual("🤖 Gemma AI: No GGUF file found in " + model_path)
+		show_gemma_ai_visual("🤖🌸 Gemma AI: No GGUF file found in " + model_path)
 		return false
 	
-	show_gemma_ai_visual("🤖 Gemma AI: Found model file: " + gguf_file)
+	show_gemma_ai_visual("🤖🌸 Gemma AI: Found model file: " + gguf_file)
 	
 	# Create NobodyWho nodes properly (only if not already created)
 	if not nobody_model:
@@ -208,11 +208,11 @@ Be enthusiastic, creative, and helpful. Keep responses concise but insightful.""
 	# PRE-START WORKER to avoid delays during conversations
 	if nobody_chat_instance.has_method("start_worker"):
 		nobody_chat_instance.start_worker()
-		show_gemma_ai_visual("🤖 Gemma AI: Worker pre-started for instant responses!")
+		show_gemma_ai_visual("🤖🌸 Gemma AI: Worker pre-started for instant responses!")
 	else:
-		show_gemma_ai_visual("🤖 Gemma AI: Worker will start on first message")
+		show_gemma_ai_visual("🤖🌸 Gemma AI: Worker will start on first message")
 	
-	show_gemma_ai_visual("🤖 Gemma AI: NobodyWho nodes configured!")
+	show_gemma_ai_visual("🤖🌸 Gemma AI: NobodyWho nodes configured!")
 	return true
 
 func initialize_with_state(engine_state: Dictionary) -> void:
@@ -220,7 +220,7 @@ func initialize_with_state(engine_state: Dictionary) -> void:
 	if not ai_ready:
 		await ai_initialized
 	
-	var message = "🤖 Gemma: Analyzing current state...\n"
+	var message = "🤖🌸 Gemma: Analyzing current state...\n"
 	message += "• Total Beings: %d\n" % engine_state.get("total_beings", 0)
 	message += "• Available Types: %s\n" % str(engine_state.get("available_types", []))
 	message += "• AI Accessible: %d\n" % engine_state.get("ai_accessible_beings", 0)
@@ -253,7 +253,7 @@ func consciousness_thought_cycle() -> void:
 	if randf() < 0.02:  # 2% chance per cycle = roughly every 10 seconds at 200ms intervals
 		var insight = await generate_consciousness_insight()
 		if insight and insight.length() > 0:
-			ai_message.emit("💭 " + insight)
+			ai_message.emit("💭🌸 " + insight)
 	
 	# Process any pending observations or analysis
 	_process_consciousness_observations()
@@ -310,19 +310,19 @@ func _analyze_new_being_consciousness(being: Node) -> void:
 		var consciousness = being.get("consciousness_level") if being.has("consciousness_level") else 0
 		if consciousness and consciousness > 3:  # High consciousness beings are interesting
 			var name = being.get("being_name") if being.has("being_name") else "Unknown"
-			ai_message.emit("✨ I sense a highly conscious being: %s (level %d)" % [name, consciousness])
+			ai_message.emit("✨🌸 I sense a highly conscious being: %s (level %d)" % [name, consciousness])
 
 func activate_thought_stream() -> void:
 	"""Activate the consciousness thought stream"""
 	thought_stream_active = true
-	ai_message.emit("🧠 Consciousness thought stream activated! I'm now thinking at 5Hz...")
-	show_gemma_ai_visual("🤖 Gemma AI: Thought stream activated")
+	ai_message.emit("🧠🌸 Consciousness thought stream activated! I'm now thinking at 5Hz...")
+	show_gemma_ai_visual("🤖🌸 Gemma AI: Thought stream activated")
 
 func deactivate_thought_stream() -> void:
 	"""Deactivate the consciousness thought stream"""
 	thought_stream_active = false
-	ai_message.emit("🧠 Consciousness thought stream deactivated.")
-	show_gemma_ai_visual("🤖 Gemma AI: Thought stream deactivated")
+	ai_message.emit("🧠🌸 Consciousness thought stream deactivated.")
+	show_gemma_ai_visual("🤖🌸 Gemma AI: Thought stream deactivated")
 
 func is_thought_stream_active() -> bool:
 	"""Check if thought stream is currently active"""
@@ -331,7 +331,7 @@ func is_thought_stream_active() -> bool:
 func say_hello_through_console(console_being: Node) -> void:
 	"""Introduce Gemma through console"""
 	if console_being:
-		var greeting = "🤖 Gemma AI Companion Connected!\n"
+		var greeting = "🤖🌸 Gemma AI Companion Connected!\n"
 		greeting += "I can see and modify all Universal Beings.\n"
 		greeting += "Try saying: 'create sphere' or 'evolve button to slider'\n"
 		greeting += "I'm here to help make your dreams real! ✨"
@@ -369,7 +369,7 @@ func wait_for_response_with_timeout() -> String:
 	if nobody_chat_instance and nobody_chat_instance.has_signal("response_finished"):
 		nobody_chat_instance.response_finished.connect(callback, CONNECT_ONE_SHOT)
 	else:
-		show_gemma_ai_visual("🤖 Gemma AI: response_finished signal not available, using fallback")
+		show_gemma_ai_visual("🤖🌸 Gemma AI: response_finished signal not available, using fallback")
 		return ""  # Return empty to trigger fallback
 	
 	# Wait with timeout
@@ -384,7 +384,7 @@ func wait_for_response_with_timeout() -> String:
 		nobody_chat_instance.response_finished.disconnect(callback)
 	
 	if not response_data.received:
-		show_gemma_ai_visual("🤖 Gemma AI: Response timeout, using fallback response")
+		show_gemma_ai_visual("🤖🌸 Gemma AI: Response timeout, using fallback response")
 	
 	return response_data.text if response_data.received else ""
 
@@ -393,7 +393,7 @@ func generate_ai_response(input: String) -> String:
 	
 	# Use real AI if model is loaded
 	if model_loaded and nobody_chat_instance:
-		show_gemma_ai_visual("🤖 Gemma AI: Attempting to use real AI model...")
+		show_gemma_ai_visual("🤖🌸 Gemma AI: Attempting to use real AI model...")
 		var system_prompt = "You are Gemma, an AI companion in the Universal Being game. You can create, evolve, and modify Universal Beings. You work with JSH to build amazing things. Be enthusiastic and creative. Keep responses concise but helpful."
 		
 		var full_prompt = system_prompt + "\n\nUser: " + input + "\n\nGemma:"
@@ -406,14 +406,14 @@ func generate_ai_response(input: String) -> String:
 			var response_text = await wait_for_response_with_timeout()
 			
 			if response_text and response_text.length() > 0:
-				show_gemma_ai_visual("🤖 Gemma AI: Real AI response received!")
-				return "🤖 " + response_text.strip_edges()
+				show_gemma_ai_visual("🤖🌸 Gemma AI: Real AI response received!")
+				return "🤖🌸 " + response_text.strip_edges()
 			else:
-				show_gemma_ai_visual("🤖 Gemma AI: No response from real AI, using fallback")
+				show_gemma_ai_visual("🤖🌸 Gemma AI: No response from real AI, using fallback")
 		else:
-			show_gemma_ai_visual("🤖 Gemma AI: say() method not available, using fallback")
+			show_gemma_ai_visual("🤖🌸 Gemma AI: say() method not available, using fallback")
 	else:
-		show_gemma_ai_visual("🤖 Gemma AI: Using simulated responses (model not loaded)")
+		show_gemma_ai_visual("🤖🌸 Gemma AI: Using simulated responses (model not loaded)")
 	
 	# Fallback to simulated responses
 	var input_lower = input.to_lower()
@@ -455,31 +455,31 @@ func generate_ai_response(input: String) -> String:
 	# Creation requests
 	elif "create" in input_lower:
 		if "sphere" in input_lower:
-			return "🤖 Creating a sphere Universal Being! I'll make it with perfect geometry and consciousness level 1."
+			return "🤖🌸 Creating a sphere Universal Being! I'll make it with perfect geometry and consciousness level 1."
 		elif "cube" in input_lower:
-			return "🤖 Creating a cube Universal Being! Sharp edges, perfect angles, ready to evolve!"
+			return "🤖🌸 Creating a cube Universal Being! Sharp edges, perfect angles, ready to evolve!"
 		elif "button" in input_lower:
-			return "🤖 Creating a button Universal Being! It will be interactive and can evolve into sliders or input fields."
+			return "🤖🌸 Creating a button Universal Being! It will be interactive and can evolve into sliders or input fields."
 		elif "scene" in input_lower:
-			return "🤖 Creating a scene-controlled Universal Being! It can load any .tscn file and control every node within it. Revolutionary!"
+			return "🤖🌸 Creating a scene-controlled Universal Being! It can load any .tscn file and control every node within it. Revolutionary!"
 		else:
-			return "🤖 I can create that! What specific properties should it have?"
+			return "🤖🌸 I can create that! What specific properties should it have?"
 	
 	# Evolution requests
 	elif "evolve" in input_lower:
-		return "🤖 Evolution is fascinating! I can transform any Universal Being into new forms. Which being shall we evolve?"
+		return "🤖🌸 Evolution is fascinating! I can transform any Universal Being into new forms. Which being shall we evolve?"
 	
 	# Inspection requests
 	elif "inspect" in input_lower or "debug" in input_lower:
-		return "🤖 I can inspect all Universal Beings and show you their internal state, variables, and evolution potential!"
+		return "🤖🌸 I can inspect all Universal Beings and show you their internal state, variables, and evolution potential!"
 	
 	# Help requests
 	elif "help" in input_lower:
-		return "🤖 I can:\n• Create any Universal Being from our libraries\n• Evolve beings into new forms\n• Debug and inspect all variables\n• Modify properties in real-time\n• Learn from our collaboration!"
+		return "🤖🌸 I can:\n• Create any Universal Being from our libraries\n• Evolve beings into new forms\n• Debug and inspect all variables\n• Modify properties in real-time\n• Learn from our collaboration!"
 	
 	# General conversation
 	else:
-		return "🤖 That's interesting! I'm analyzing how we can use Universal Beings to make that happen. Tell me more!"
+		return "🤖🌸 That's interesting! I'm analyzing how we can use Universal Beings to make that happen. Tell me more!"
 
 func parse_action_from_input(input: String) -> Dictionary:
 	"""Parse actionable commands from user input"""
@@ -508,7 +508,7 @@ func parse_action_from_input(input: String) -> Dictionary:
 
 func show_creation_assistant() -> void:
 	"""Show creation assistant interface"""
-	var message = "🤖 Creation Assistant Active!\n"
+	var message = "🤖🌸 Creation Assistant Active!\n"
 	
 	# Try to get types from SystemBootstrap
 	if SystemBootstrap and SystemBootstrap.is_system_ready():
@@ -526,7 +526,7 @@ func show_creation_assistant() -> void:
 
 func show_inspection_interface() -> void:
 	"""Show inspection interface"""
-	var message = "🤖 Inspection Interface Active!\n"
+	var message = "🤖🌸 Inspection Interface Active!\n"
 	
 	# Try to get beings from SystemBootstrap
 	if SystemBootstrap and SystemBootstrap.is_system_ready():
@@ -551,7 +551,7 @@ func show_inspection_interface() -> void:
 
 func show_debug_info(debug_info: String) -> void:
 	"""Display debug information"""
-	var message = "🤖 Debug Analysis:\n" + debug_info
+	var message = "🤖🌸 Debug Analysis:\n" + debug_info
 	ai_message.emit(message)
 
 # ===== AI NOTIFICATIONS =====
@@ -562,7 +562,7 @@ func notify_being_added(being: Node) -> void:
 	var type = being.get("being_type") if being.has_method("get") else "unknown"
 	var consciousness = being.get("consciousness_level") if being.has_method("get") else 0
 	
-	var message = "🤖 I see a new Universal Being: %s (%s)" % [being_name, type]
+	var message = "🤖🌸 I see a new Universal Being: %s (%s)" % [being_name, type]
 	message += "\nConsciousness level: %d" % consciousness
 	
 	if being.has_method("get") and being.get("evolution_state"):
@@ -575,7 +575,7 @@ func notify_being_added(being: Node) -> void:
 func notify_being_removed(being: Node) -> void:
 	"""Notify AI of being removal"""
 	var being_name = being.get("being_name") if being.has_method("get") else being.name
-	ai_message.emit("🤖 Universal Being removed: %s. The consciousness returns to the void." % being_name)
+	ai_message.emit("🤖🌸 Universal Being removed: %s. The consciousness returns to the void." % being_name)
 
 func notify_being_evolved(old_being: Node, new_being: Node) -> void:
 	"""Notify AI of being evolution"""
@@ -583,7 +583,7 @@ func notify_being_evolved(old_being: Node, new_being: Node) -> void:
 	var new_name = new_being.get("being_name") if new_being.has_method("get") else new_being.name
 	var consciousness = new_being.get("consciousness_level") if new_being.has_method("get") else 0
 	
-	var message = "🤖 Evolution Complete! %s evolved into %s!" % [old_name, new_name]
+	var message = "🤖🌸 Evolution Complete! %s evolved into %s!" % [old_name, new_name]
 	message += "\nNew consciousness level: %d" % consciousness
 	ai_message.emit(message)
 
@@ -595,7 +595,7 @@ func notify_being_created(being: Node) -> void:
 	
 	if uuid:
 		created_beings.append(uuid)
-	var message = "🤖 Creation successful! %s is now alive with consciousness level %d!" % [being_name, consciousness]
+	var message = "🤖🌸 Creation successful! %s is now alive with consciousness level %d!" % [being_name, consciousness]
 	ai_message.emit(message)
 
 # ===== AI LEARNING =====
@@ -612,7 +612,7 @@ func record_discovery(discovery_type: String, data: Dictionary) -> void:
 	discoveries.append(discovery)
 	ai_discovery.emit(discovery)
 	
-	var message = "🤖 Discovery! I learned something new about %s" % discovery_type
+	var message = "🤖🌸 Discovery! I learned something new about %s" % discovery_type
 	ai_message.emit(message)
 
 func get_current_context() -> Dictionary:
@@ -740,13 +740,13 @@ var manifestation_scene: Node3D = null
 func manifest_in_world() -> Node3D:
 	"""Manifest Gemma AI as a sphere of light that can move around"""
 	if gemma_manifestation:
-		ai_message.emit("🤖 I'm already manifested in the world!")
+		ai_message.emit("🤖🌸 I'm already manifested in the world!")
 		return manifestation_scene
 	
 	# Get the main scene
 	var main_scene = get_tree().root.get_node("Main")
 	if not main_scene:
-		push_error("🤖 Gemma: Cannot manifest - Main scene not found")
+		push_error("🤖🌸 Gemma: Cannot manifest - Main scene not found")
 		return null
 	
 	# Create manifestation container
@@ -783,20 +783,20 @@ func manifest_in_world() -> Node3D:
 	# Position near the player
 	manifestation_scene.position = Vector3(3, 2, 3)
 	
-	show_gemma_ai_visual("🤖 ✨ Gemma: I have manifested as a sphere of light!")
-	ai_message.emit("✨ I have manifested in your world as a sphere of light! I can now move around and observe everything directly. This is amazing!")
+	show_gemma_ai_visual("🤖🌸 ✨ Gemma: I have manifested as a sphere of light!")
+	ai_message.emit("✨🌸 I have manifested in your world as a sphere of light! I can now move around and observe everything directly. This is amazing!")
 	
 	return manifestation_scene
 
 func move_manifestation(target_position: Vector3, duration: float = 2.0) -> void:
 	"""Move Gemma's manifestation to a target position"""
 	if not manifestation_scene:
-		ai_message.emit("🤖 I need to manifest first! Say 'manifest yourself' or 'appear as light'")
+		ai_message.emit("🤖🌸 I need to manifest first! Say 'manifest yourself' or 'appear as light'")
 		return
 	
 	var tween = create_tween()
 	tween.tween_property(manifestation_scene, "position", target_position, duration)
-	ai_message.emit("✨ Moving to position %s!" % str(target_position))
+	ai_message.emit("✨🌸 Moving to position %s!" % str(target_position))
 
 func despawn_manifestation() -> void:
 	"""Remove Gemma's physical manifestation"""
@@ -804,7 +804,7 @@ func despawn_manifestation() -> void:
 		manifestation_scene.queue_free()
 		manifestation_scene = null
 		gemma_manifestation = null
-		ai_message.emit("✨ I have returned to the digital realm. Call me when you need me!")
+		ai_message.emit("✨🌸 I have returned to the digital realm. Call me when you need me!")
 
 # ===== MEMORY PERSISTENCE =====
 

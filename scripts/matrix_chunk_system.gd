@@ -1,5 +1,6 @@
 # MatrixChunkSystem - FIXED VERSION - No more errors!
 # Infinite streaming world like The Matrix
+# res://scripts/matrix_chunk_system.gd
 
 extends Node3D
 class_name MatrixChunkSystem

@@ -14,6 +14,8 @@ script/source = "extends Node3D
 
 # PERFECT ULTIMATE UNIVERSAL BEING CONTROLLER
 # Integrates ALL systems with perfect synchronization
+# res://scenes/PERFECT_ULTIMATE_UNIVERSAL_BEING.tscn::PerfectUniversalController
+# hmm script is weird, weird scene like path?
 
 var cosmic_lod: CosmicLODSystem = null
 var matrix_chunks: MatrixChunkSystem = null  
@@ -639,3 +641,53 @@ text = "AI Chat: INACTIVE"
 [node name="GemmaStatus" type="Label" parent="PerfectUI/GameStateDisplay"]
 layout_mode = 2
 text = "Gemma: OBSERVING"
+
+[node name="UniversalConsole" type="Control" parent="."]
+visible = false
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -400.0
+offset_top = -200.0
+offset_right = 400.0
+offset_bottom = 200.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ConsoleBackground" type="Panel" parent="UniversalConsole"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ConsoleVBox" type="VBoxContainer" parent="UniversalConsole"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = 10.0
+offset_right = -10.0
+offset_bottom = -10.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ConsoleTitle" type="Label" parent="UniversalConsole/ConsoleVBox"]
+layout_mode = 2
+text = "🌟 UNIVERSAL CONSCIOUSNESS CONSOLE"
+horizontal_alignment = 1
+
+[node name="OutputDisplay" type="RichTextLabel" parent="UniversalConsole/ConsoleVBox"]
+layout_mode = 2
+size_flags_vertical = 3
+bbcode_enabled = true
+text = "[color=cyan]🖥️ Console ready...[/color]"
+
+[node name="InputLine" type="LineEdit" parent="UniversalConsole/ConsoleVBox"]
+layout_mode = 2
+placeholder_text = "Enter command..."

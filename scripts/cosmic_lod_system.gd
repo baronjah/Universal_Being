@@ -1,6 +1,7 @@
 # CosmicLODSystem - FIXED VERSION - No more errors!
 # Infinite space with galaxies, stars, planets
 # Uses icospheres and marching cubes for seamless LOD transitions
+#  res://scripts/cosmic_lod_system.gd
 
 extends Node3D
 class_name CosmicLODSystem

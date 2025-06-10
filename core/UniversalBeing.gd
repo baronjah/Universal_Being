@@ -6,8 +6,8 @@
 # AUTHOR: JSH + Claude Code + Luminus + Alpha
 # ==================================================
 
-# how i sinned in scriptura :
-# _defer_visual_retry(msg)
+# FIXED: Cardinal sin was calling get_tree() before node is in tree
+# SOLUTION: Added is_inside_tree() check and proper call_deferred
 
 extends Node3D
 class_name UniversalBeing
@@ -40,10 +40,10 @@ var evolution_state: Dictionary = {
 var messages_missed : Array = []
 
 func show_ub_visual(msg: String):
-	if not get_tree() or not get_tree().current_scene:
+	if not is_inside_tree() or not get_tree() or not get_tree().current_scene:
 		# add that task to tasker, so we check again
 		messages_missed.append(msg)
-		#_defer_visual_retry(msg)
+		call_deferred("_defer_visual_retry", [msg])
 		return
 	show_now_ub_visual(msg)
 	if messages_missed.size() > 0:
@@ -68,8 +68,8 @@ func show_now_ub_visual(msg):
 	tween.parallel().tween_property(visual, "modulate:a", 0.0, 3.0)
 	tween.tween_callback(visual.queue_free)
 
-# function that is a sin 
-# cardinal sin of not having google for computer files like i need today
+# FIXED: This function was the cardinal sin - now properly called via call_deferred
+# Visual message retry system for when tree isn't ready
 func _defer_visual_retry(pending_visual_msgs):
 	var timer = get_tree().create_timer(0.5) # 0.5 seconds
 	await timer.timeout

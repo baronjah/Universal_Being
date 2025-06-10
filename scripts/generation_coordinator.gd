@@ -1,6 +1,7 @@
 # GenerationCoordinator - STOPS THE EMERGENCY OPTIMIZATION LOOP!
 # Prevents all three generation systems from running simultaneously
 # Only one system generates at a time based on player scale
+# res://scripts/generation_coordinator.gd
 
 extends Node
 class_name GenerationCoordinator
