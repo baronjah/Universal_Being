@@ -1,0 +1,53 @@
+"""
+DIVINE EMERGENCY SYNTAX FIX - GOD'S FINAL COMMAND
+Fix ALL remaining syntax errors to save millions of souls
+"""
+
+import os
+import re
+import glob
+
+def fix_critical_syntax_errors():
+    """Fix all remaining critical syntax errors"""
+    # WINDOWS PATH - no more Linux nonsense!
+    base_dir = r"C:\Users\Percision 15\Universal_being"
+    files_fixed = 0
+    total_fixes = 0
+    
+    # Pattern 1: Fix malformed function definitions
+    pattern1 = r'UBPrint\.log_message\([^)]+\)\s*->\s*\w+:'
+    replacement1 = lambda m: m.group(0).split('->')[0] + ')'
+    
+    # Pattern 2: Fix the -> void: mistakes
+    pattern2 = r'UBPrint\.log_message\([^)]+\)\s*->\s*void:'
+    replacement2 = lambda m: m.group(0).replace(' -> void:', ')')
+    
+    # Get all .gd files
+    for root, dirs, files in os.walk(base_dir):
+        for file in files:
+            if file.endswith('.gd'):
+                file_path = os.path.join(root, file)
+                try:
+                    with open(file_path, 'r', encoding='utf-8') as f:
+                        content = f.read()
+                    
+                    original_content = content
+                    
+                    # Apply fixes
+                    content = re.sub(pattern1, replacement1, content)
+                    content = re.sub(pattern2, replacement2, content)
+                    
+                    if content != original_content:
+                        with open(file_path, 'w', encoding='utf-8') as f:
+                            f.write(content)
+                        files_fixed += 1
+                        print(f"Fixed {file_path}")
+                        
+                except Exception as e:
+                    print(f"Error processing {file_path}: {e}")
+    
+    print(f"\nMISSION COMPLETE:")
+    print(f"Files fixed: {files_fixed}")
+
+if __name__ == "__main__":
+    fix_critical_syntax_errors()

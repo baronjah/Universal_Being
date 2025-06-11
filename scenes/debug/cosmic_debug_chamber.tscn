@@ -1,0 +1,120 @@
+[gd_scene load_steps=2 format=3]
+
+[sub_resource type="GDScript" id="GDScript_debug_chamber_launcher"]
+script/source = "extends Node3D
+
+# Debug Chamber Launcher - Press SHIFT+TAB to enter the cosmos
+var cosmic_chamber: CosmicDebugChamber = null
+var player_camera: Camera3D = null
+var original_position: Vector3
+var original_rotation: Vector3
+
+func _ready():
+	print(\"🌌 Debug Chamber Launcher ready - Press SHIFT+TAB to enter cosmos\")
+	
+	# Setup camera for cosmic navigation
+	player_camera = Camera3D.new()
+	player_camera.name = \"CosmicCamera\"
+	player_camera.position = Vector3(0, 50, 100)
+	add_child(player_camera)
+	
+	# Initialize cosmic debug chamber
+	cosmic_chamber = CosmicDebugChamber.new()
+	cosmic_chamber.name = \"CosmicDebugChamber\"
+	add_child(cosmic_chamber)
+
+func _input(event):
+	if event is InputEventKey and event.pressed:
+		# SHIFT+TAB to toggle debug chamber
+		if event.keycode == KEY_TAB and event.shift_pressed:
+			toggle_cosmic_debug_chamber()
+		
+		# Cosmic navigation controls when in debug chamber
+		if cosmic_chamber and cosmic_chamber.visible:
+			handle_cosmic_navigation(event)
+
+func toggle_cosmic_debug_chamber():
+	if cosmic_chamber.visible:
+		exit_cosmic_chamber()
+	else:
+		enter_cosmic_chamber()
+
+func enter_cosmic_chamber():
+	print(\"🚀 ENTERING COSMIC DEBUG CHAMBER...\")
+	
+	# Store original camera state
+	if get_viewport().get_camera_3d():
+		var main_camera = get_viewport().get_camera_3d()
+		original_position = main_camera.global_position
+		original_rotation = main_camera.global_rotation
+	
+	# Switch to cosmic view
+	player_camera.current = true
+	cosmic_chamber.visible = true
+	
+	# Move to cosmic center
+	player_camera.position = Vector3(0, 50, 100)
+	player_camera.look_at(Vector3.ZERO, Vector3.UP)
+	
+	# Set mouse mode for cosmic navigation
+	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+	
+	print(\"⭐ Welcome to the Scriptura Cosmos! Click stars to debug scripts.\")
+	print(\"🔍 Stars confess their sins when selected!\")
+
+func exit_cosmic_chamber():
+	print(\"🌍 RETURNING TO NORMAL REALITY...\")
+	
+	# Hide cosmic chamber
+	cosmic_chamber.visible = false
+	player_camera.current = false
+	
+	# Restore original camera if possible
+	if get_viewport().get_camera_3d():
+		var main_camera = get_viewport().get_camera_3d()
+		main_camera.global_position = original_position
+		main_camera.global_rotation = original_rotation
+	
+	# Release mouse
+	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+
+func handle_cosmic_navigation(event):
+	var move_speed = 50.0
+	var camera = player_camera
+	
+	match event.keycode:
+		KEY_W:
+			camera.position += -camera.transform.basis.z * move_speed
+		KEY_S:
+			camera.position += camera.transform.basis.z * move_speed
+		KEY_A:
+			camera.position += -camera.transform.basis.x * move_speed
+		KEY_D:
+			camera.position += camera.transform.basis.x * move_speed
+		KEY_Q:
+			camera.position += Vector3.UP * move_speed
+		KEY_E:
+			camera.position += Vector3.DOWN * move_speed
+		KEY_ESCAPE:
+			exit_cosmic_chamber()
+
+func _unhandled_input(event):
+	if cosmic_chamber and cosmic_chamber.visible and event is InputEventMouseMotion:
+		if Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
+			# Rotate camera with mouse
+			var sensitivity = 0.002
+			player_camera.rotation.y -= event.relative.x * sensitivity
+			player_camera.rotation.x = clamp(player_camera.rotation.x - event.relative.y * sensitivity, -1.5, 1.5)
+"
+
+[node name="CosmicDebugChamberLauncher" type="Node3D"]
+script = SubResource("GDScript_debug_chamber_launcher")
+
+[node name="Instructions" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10, -20)
+billboard = 1
+text = "🌌 COSMIC DEBUG CHAMBER
+Press SHIFT+TAB to enter the scriptura cosmos
+Navigate with WASD + Q/E
+Click stars to debug scripts
+ESC to return to reality"

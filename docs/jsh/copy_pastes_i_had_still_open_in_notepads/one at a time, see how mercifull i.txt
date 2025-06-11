@@ -1,0 +1,12 @@
+one at a time, see how mercifull i am...
+
+res://scripts/universal_console_controller.gd
+line 722
+Line 722:Identifier "UniversalTimersSystem" not declared in the current scope.
+
+also seen at line
+
+Line 504:Identifier "UniversalTimersSystem" not declared in the current scope.
+
+
+as this is supposed to be an timer, for universal beings that i will be able to add times for loops and cycles, based on my words it should already be connected to floodgates, pentagon, and much more, but you looked at docs and you know it already :)

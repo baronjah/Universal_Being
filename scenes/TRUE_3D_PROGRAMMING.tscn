@@ -79,11 +79,30 @@ func _input(event):
 	
 	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
 		if Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
-			create_point_at_cursor()
+			if Input.is_key_pressed(KEY_SHIFT):
+				select_note_at_cursor()
+			else:
+				create_point_at_cursor()
+	
+	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_RIGHT:
+		if Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
+			connect_selected_notes()
 	
 	if event.is_action_pressed('ui_accept'):  # ENTER
 		if code_input_ui and code_input_ui.visible and selected_point:
 			inject_code_into_selected()
+	
+	# Leave note for Gemma
+	if Input.is_key_pressed(KEY_N):
+		leave_note_for_gemma()
+	
+	# Create code note  
+	if Input.is_key_pressed(KEY_C):
+		create_code_note()
+	
+	# Merge selected notes
+	if Input.is_key_pressed(KEY_M):
+		merge_selected_notes()
 
 func _process(delta):
 	var input_vector = Vector3()
@@ -104,6 +123,10 @@ func _process(delta):
 		input_vector = input_vector.normalized()
 		input_vector = $Camera3D.transform.basis * input_vector
 		$Camera3D.position += input_vector * move_speed * delta
+	
+	# Update Gemma AI behavior
+	if gemma_ai:
+		update_gemma_behavior(delta)
 
 func create_point_at_cursor():
 	var camera = $Camera3D
@@ -302,43 +325,6 @@ func spawn_visual_gemma():
 	
 	add_child(gemma_ai)
 
-func _input(event):
-	if event is InputEventMouseMotion and Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
-		camera_rotation.x -= event.relative.x * look_speed
-		camera_rotation.y = clamp(camera_rotation.y - event.relative.y * look_speed, -1.5, 1.5)
-		$Camera3D.rotation = Vector3(camera_rotation.y, camera_rotation.x, 0)
-	
-	if event.is_action_pressed('ui_cancel'):
-		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE if Input.mouse_mode == Input.MOUSE_MODE_CAPTURED else Input.MOUSE_MODE_CAPTURED
-		if code_input_ui:
-			code_input_ui.visible = Input.mouse_mode == Input.MOUSE_MODE_VISIBLE
-	
-	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
-		if Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
-			if Input.is_key_pressed(KEY_SHIFT):
-				select_note_at_cursor()
-			else:
-				create_point_at_cursor()
-	
-	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_RIGHT:
-		if Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
-			connect_selected_notes()
-	
-	if event.is_action_pressed('ui_accept'):  # ENTER
-		if code_input_ui and code_input_ui.visible and selected_point:
-			inject_code_into_selected()
-	
-	# Leave note for Gemma
-	if Input.is_key_pressed(KEY_N):
-		leave_note_for_gemma()
-	
-	# Create code note  
-	if Input.is_key_pressed(KEY_C):
-		create_code_note()
-	
-	# Merge selected notes
-	if Input.is_key_pressed(KEY_M):
-		merge_selected_notes()
 
 var selected_notes = []
 var note_connections = []
@@ -382,29 +368,6 @@ func create_editable_note(pos: Vector3, text: String):
 		var label = gemma_ai.get_child(4) as Label3D
 		label.text = \"🤖 GEMMA\\nNOTE DETECTED!\"
 
-func _process(delta):
-	var input_vector = Vector3()
-	if Input.is_action_pressed('move_forward'):
-		input_vector.z -= 1
-	if Input.is_action_pressed('move_backward'):
-		input_vector.z += 1
-	if Input.is_action_pressed('move_left'):
-		input_vector.x -= 1
-	if Input.is_action_pressed('move_right'):
-		input_vector.x += 1
-	if Input.is_action_pressed('move_up'):
-		input_vector.y += 1
-	if Input.is_action_pressed('move_down'):
-		input_vector.y -= 1
-	
-	if input_vector.length() > 0:
-		input_vector = input_vector.normalized()
-		input_vector = $Camera3D.transform.basis * input_vector
-		$Camera3D.position += input_vector * move_speed * delta
-	
-	# Gemma AI behavior
-	if gemma_ai:
-		update_gemma_behavior(delta)
 
 func update_gemma_behavior(delta):
 	var time = Time.get_ticks_msec() * 0.001
@@ -551,6 +514,24 @@ func update_gemma_status():
 		var label = gemma_ai.get_child(4) as Label3D
 		var status = gemma_status_messages[randi() % gemma_status_messages.size()]
 		label.text = \"🤖 GEMMA\\n\" + status
+
+func select_note_at_cursor():
+	\"\"\"Select floating note at cursor position\"\"\"
+	print(\"📝 Selecting note at cursor position\")
+
+func connect_selected_notes():
+	\"\"\"Connect selected notes together\"\"\"
+	print(\"🔗 Connecting selected notes\")
+
+func create_code_note():
+	\"\"\"Create a new code note\"\"\"
+	var camera = $Camera3D
+	var note_pos = camera.global_position + (-camera.global_transform.basis.z * 5)
+	create_editable_note(note_pos, \"💻 CODE NOTE:\\nFunction ideas:\\n- Implement new feature\\n- Optimize performance\")
+
+func merge_selected_notes():
+	\"\"\"Merge selected notes together\"\"\"
+	print(\"📝 Merging selected notes into one\")
 "
 
 [sub_resource type="Environment" id="Environment_programming"]

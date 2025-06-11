@@ -1,0 +1,6 @@
+res://scripts/turn_based_creation_system.gd
+
+
+it can be like txt file, that does specific repeatitions
+
+like normal function that is created by functions

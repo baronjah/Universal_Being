@@ -1,0 +1,7 @@
+res://autoloads/SystemBootstrap.gd
+res : / / scripts/archive/ systembootstrap_quickfix. gd
+
+res : / /scripts/archive/ immediate_fix . gd
+res: . gd
+
+res: / . gd

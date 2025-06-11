@@ -1,0 +1,56 @@
+# pip install colorama
+
+import time
+import random
+import sys
+from colorama import init, Fore, Back, Style
+
+init()  # Initialize colorama for colored text
+
+def typewriter(text, delay=0.03, color=Fore.WHITE):
+    for char in text:
+        sys.stdout.write(color + char)
+        sys.stdout.flush()
+        time.sleep(delay)
+    print(Style.RESET_ALL)
+
+def dmt_realm():
+    typewriter("\n🌀 INITIATING DMT REALM SIMULATION... 🌀", delay=0.05, color=Fore.MAGENTA)
+    time.sleep(1)
+    typewriter("\nYou feel a sudden rush...", color=Fore.CYAN)
+    time.sleep(1)
+    
+    # "Breakthrough" moment
+    typewriter("\n*** YOUR CONSCIOUSNESS EXPANDS INTO THE 5TH DIMENSION ***", delay=0.01, color=Fore.YELLOW + Style.BRIGHT)
+    time.sleep(2)
+    
+    # Random surreal encounters
+    entities = [
+        "a fractal serpent made of light",
+        "a chorus of singing geometric faces",
+        "a floating cathedral of pure math",
+        "the Machine Elves (they're giggling at you)",
+        "an infinite tessellating flower"
+    ]
+    
+    for _ in range(3):  # 3 random encounters
+        encounter = random.choice(entities)
+        typewriter(f"\nYou encounter {encounter}...", delay=0.05, color=Fore.GREEN)
+        time.sleep(1.5)
+    
+    # "Choice" moment
+    typewriter("\nA voice echoes: 'DO YOU WANT TO STAY OR RETURN?'", delay=0.05, color=Fore.RED)
+    choice = input("\n[STAY / RETURN]: ").strip().upper()
+    
+    if choice == "STAY":
+        typewriter("\nYou dissolve into the cosmic tapestry...", delay=0.1, color=Fore.MAGENTA)
+        time.sleep(2)
+        typewriter("GAME OVER (or is it?)", color=Fore.WHITE + Style.BRIGHT)
+    else:
+        typewriter("\nYou feel yourself being pulled back...", delay=0.1, color=Fore.BLUE)
+        time.sleep(2)
+        typewriter("\nYou wake up gasping. Was it real?", color=Fore.CYAN)
+
+# Run the game
+if __name__ == "__main__":
+    dmt_realm()

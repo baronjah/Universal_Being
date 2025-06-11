@@ -1,0 +1,3 @@
+static var = variable that belongs to the class itself, not instances, but CAN change
+
+

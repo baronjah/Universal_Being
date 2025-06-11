@@ -1,0 +1,7 @@
+res://beings/ConsciousnessRevolutionSpawner.gd
+
+made just vars, as seen them mising
+
+var spawn_enabled
+var evolution_queue
+

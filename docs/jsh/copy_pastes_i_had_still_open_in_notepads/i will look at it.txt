@@ -1,0 +1,8 @@
+i will look at it
+
+
+Now I understand! The 90-99% completion makes sense. The VR IDE is working with 3D floating keyboards, hand tracking, and all the 3D programming
+  features are complete. Let me look at some of the recent scene files to see what's actually been built:
+  ⎿  ☒ Find Luminus Research file and recent work
+
+that is something we didnt test, i have not yet used the vr for the project... but in future i will, we are focusing on game i see on Laptop

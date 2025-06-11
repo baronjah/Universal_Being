@@ -1,0 +1,3 @@
+res://scenes/CLEAN_3D_PROGRAMMING.tscn::GDScript_clean
+line 179
+Invalid call. Nonexistent function 'inject_code' in base 'Node3D (-9223371888175085871.gd)'.

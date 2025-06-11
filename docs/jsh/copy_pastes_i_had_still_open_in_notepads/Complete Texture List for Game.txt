@@ -1,0 +1,45 @@
+Complete Texture List for Game
+Natural Materials
+
+Wood (planks, logs, bark variations)
+Stone (smooth, rough, cracked)
+Rock (granite, marble, limestone)
+Sand (fine, coarse, wet)
+Grass (short, tall, dead)
+Dirt/Ground (dry, wet, muddy)
+Water (calm, rippled, deep)
+Ice (clear, frosted, cracked)
+
+Metals & Industrial
+
+Steel (brushed, rusted, polished)
+Iron (raw, oxidized)
+Copper (new, patina, verdigris)
+Aluminum (matte, reflective)
+Chrome (mirror finish)
+Rust (light, heavy, flaking)
+
+Sci-Fi/Space Materials
+
+Plasma (energy fields, containment)
+Asteroid (rocky, metallic, ice)
+Hull plating (ship exteriors)
+Circuit boards (tech panels)
+Energy crystals
+Force fields (translucent barriers)
+
+Ores & Minerals
+
+Coal (chunks, powder)
+Gold ore (veined rock)
+Silver ore
+Diamond (raw, cut)
+Quartz (clear, smoky)
+Uranium (glowing variants)
+
+Organic/Fabric
+
+Leather (smooth, worn, cracked)
+Fabric (canvas, silk, worn cloth)
+Rubber (smooth, textured)
+Plastic (smooth, scratched)

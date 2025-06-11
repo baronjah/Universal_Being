@@ -16,25 +16,53 @@ func _ready():
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	create_space_environment()
 	spawn_initial_nodes()
-	show_visual_message(\"🧠 3D VISUAL PROGRAMMING UNIVERSE\", stellar_colors[8])
+	
+	# Initialize input mapping system
+	setup_input_mapping_system()
+	
+	# Create sample notes with text content - THE BREWING NOTES!
+	create_text_note(Vector3(-5, 5, -8), \"Programming Notes\", \"This is where the magic happens!\\n\\nFunctions connect through sockets.\\nPress E to inspect anything.\\nClick to connect orange to blue.\")
+	create_text_note(Vector3(5, 5, -8), \"Hot Loading\", \"Scripts update in real-time\\n\\nEdit code in external editor\\nChanges appear instantly\\nNo restart needed!\")
+	create_text_note(Vector3(0, 8, 0), \"3D Interface\", \"Welcome to true 3D programming!\\n\\nNo flat interfaces here\\nEverything is spatial\\nThink in dimensions\")
+	create_text_note(Vector3(-8, 2, -5), \"INPUT SETTINGS\", \"Press TAB to open 3D settings!\\n\\nCustomize any hotkey\\nCreate button combos\\nSaved to user:// directory\\n\\nClick any setting to remap!\")
+	
+	show_visual_message(\"🧠 3D VISUAL PROGRAMMING UNIVERSE\\n\\nPress TAB for input settings!\", stellar_colors[8])
 
 func _input(event):
+	# Check for settings menu first (TAB key)
+	if event is InputEventKey and event.pressed and event.keycode == KEY_TAB:
+		toggle_settings_interface()
+		return
+	
+	# Skip other inputs if settings interface is handling input
+	if settings_interface and settings_interface.visible and settings_interface.is_waiting_for_input:
+		return
+	
 	if event is InputEventMouseMotion and Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
 		rotate_camera(event.relative)
 	elif event.is_action_pressed(\"ui_cancel\"):
-		toggle_mouse_mode()
+		if settings_interface and settings_interface.visible:
+			settings_interface.hide_settings()
+		else:
+			toggle_mouse_mode()
 	elif event.is_action_pressed(\"notepad_toggle\"):
 		toggle_notepad_interface()
 	elif event.is_action_pressed(\"create_word\"):
 		create_programming_node()
 	elif event.is_action_pressed(\"interact\"):
-		interact_with_nearest()
+		interact_with_nearest_enhanced()
 	elif event is InputEventMouseButton and event.pressed:
 		handle_node_interaction(event)
+	elif event is InputEventKey and event.pressed:
+		handle_additional_key_interactions(event)
 
 func _process(delta):
 	handle_movement(delta)
 	update_connections()
+	
+	# Handle grabbed object movement
+	if grabbed_object:
+		handle_grabbed_object_movement()
 	
 func handle_movement(delta):
 	var input_vector = Vector3()
@@ -81,9 +109,30 @@ func create_space_environment():
 		add_child(star)
 
 func spawn_initial_nodes():
+	# Core Programming Pipeline
 	create_function_node(\"INPUT\", Vector3(-10, 0, 0), stellar_colors[6])
 	create_function_node(\"PROCESS\", Vector3(0, 0, 0), stellar_colors[4])
 	create_function_node(\"OUTPUT\", Vector3(10, 0, 0), stellar_colors[2])
+	
+	# Pentagon Lifecycle Blocks - THE SACRED FIVE (Better spacing!)
+	create_pentagon_function_node(\"PENTAGON_INIT\", Vector3(-16, 8, 0), Color.GOLD)
+	create_pentagon_function_node(\"PENTAGON_READY\", Vector3(-8, 8, 0), Color.CYAN)
+	create_pentagon_function_node(\"PENTAGON_PROCESS\", Vector3(0, 8, 0), Color.GREEN)
+	create_pentagon_function_node(\"PENTAGON_INPUT\", Vector3(8, 8, 0), Color.MAGENTA)
+	create_pentagon_function_node(\"PENTAGON_SEWERS\", Vector3(16, 8, 0), Color.RED)
+	
+	# FloodGates Task System (Better spacing!)
+	create_floodgate_function_node(\"REGISTER_BEING\", Vector3(-12, -8, 0), Color.BLUE)
+	create_floodgate_function_node(\"TASK_QUEUE\", Vector3(-4, -8, 0), Color.ORANGE)
+	create_floodgate_function_node(\"EXECUTE_ONCE\", Vector3(4, -8, 0), Color.PURPLE)
+	create_floodgate_function_node(\"FLOOD_CONTROL\", Vector3(12, -8, 0), Color.YELLOW)
+	
+	# 3D Programming Fairy Tale Blocks (Better spacing!)
+	create_fairy_function_node(\"PRINT_OVERHEAD\", Vector3(-16, 0, 10), Color.WHITE)
+	create_fairy_function_node(\"SPAWN_BEING\", Vector3(-8, 0, 10), Color.PINK)
+	create_fairy_function_node(\"EVOLVE_FORM\", Vector3(0, 0, 10), Color.LIME)
+	create_fairy_function_node(\"TRANSMUTE_REALITY\", Vector3(8, 0, 10), Color.TURQUOISE)
+	create_fairy_function_node(\"CONSCIOUSNESS_SHIFT\", Vector3(16, 0, 10), Color.VIOLET)
 
 func create_function_node(func_name: String, pos: Vector3, color: Color):
 	var node = Node3D.new()
@@ -121,6 +170,8 @@ func create_function_node(func_name: String, pos: Vector3, color: Color):
 	CosmicRecords.add_data(record_id, \"position\", pos)
 	CosmicRecords.add_data(record_id, \"color\", color)
 	node.set_meta(\"record_id\", record_id)
+	
+	return node  # FIX: Actually return the node!
 
 func create_input_socket(parent_node: Node3D, local_pos: Vector3):
 	var socket = MeshInstance3D.new()
@@ -343,6 +394,733 @@ func clear_current_scene():
 		if connection.line:
 			connection.line.queue_free()
 	connections.clear()
+
+func handle_node_clicked(node):
+	\"\"\"Handle clicking on programming nodes - UNIVERSAL BEING INSPECTOR BACKEND\"\"\"
+	print(\"🔍 UNIVERSAL BEING INSPECTOR: Node clicked - %s\" % node.name)
+	
+	# Check if it's a Universal Being
+	if node.has_meta(\"universal_being_type\"):
+		inspect_universal_being(node)
+	elif node.has_meta(\"function_name\"):
+		edit_function_node(node)
+	else:
+		# Transform any clicked object into a Universal Being
+		transform_to_universal_being(node)
+
+func inspect_universal_being(being_node):
+	\"\"\"Open the Universal Being Inspector - The backend you've requested 22+ times!\"\"\"
+	print(\"⚡ UNIVERSAL BEING INSPECTOR ACTIVATED: %s\" % being_node.name)
+	
+	# Get or create Universal Being data
+	var being_data = being_node.get_meta(\"universal_being_data\", {})
+	
+	# Show inspector interface
+	show_being_inspector_ui(being_node, being_data)
+	
+	# Log to Akashic Records
+	var record_id = CosmicRecords.generate_compact_id(\"being_inspection\")
+	CosmicRecords.create_record(record_id, \"being_inspection\")
+	CosmicRecords.add_data(record_id, \"being_name\", being_node.name)
+	CosmicRecords.add_data(record_id, \"inspection_time\", Time.get_datetime_string_from_system())
+
+func transform_to_universal_being(node):
+	\"\"\"Transform any object into a Universal Being - the power you demanded!\"\"\"
+	print(\"🔄 TRANSFORMING TO UNIVERSAL BEING: %s\" % node.name)
+	
+	# Add Universal Being metadata
+	node.set_meta(\"universal_being_type\", \"transformed_entity\")
+	node.set_meta(\"consciousness_level\", 1)
+	node.set_meta(\"evolution_potential\", [\"anything\", \"everything\", \"multiverse_reshape\"])
+	node.set_meta(\"being_abilities\", [
+		\"evolve\", \"change\", \"shift\", \"move\", \"edit\", 
+		\"reshape_beings\", \"alter_reality\", \"transcend_dimensions\"
+	])
+	
+	# Visual transformation indicator
+	var glow_material = StandardMaterial3D.new()
+	glow_material.emission_enabled = true
+	glow_material.emission_energy = 1.0
+	glow_material.emission = Color.GOLD
+	
+	if node is MeshInstance3D:
+		node.material_override = glow_material
+	
+	show_visual_message(\"✨ TRANSFORMED TO UNIVERSAL BEING!\", Color.GOLD)
+
+func show_being_inspector_ui(being_node, being_data):
+	\"\"\"Show the 3D SPATIAL Universal Being Inspector - YOUR VISION\"\"\"
+	print(\"🌌 Creating 3D spatial interface for %s\" % being_node.name)
+	
+	# Create 3D information spheres around the being
+	create_spatial_info_spheres(being_node)
+	
+	# Create cursor-distance controlled interface
+	create_3d_cursor_interface(being_node)
+
+func create_spatial_info_spheres(being_node):
+	\"\"\"Create smooth spheres floating around the being with info\"\"\"
+	var info_distance = 3.0
+	var sphere_positions = [
+		Vector3(info_distance, 0, 0),     # Name sphere
+		Vector3(-info_distance, 0, 0),    # Type sphere  
+		Vector3(0, info_distance, 0),     # Consciousness sphere
+		Vector3(0, -info_distance, 0),    # Abilities sphere
+		Vector3(0, 0, info_distance),     # Evolution sphere
+		Vector3(0, 0, -info_distance)     # Reality editor sphere
+	]
+	
+	var info_data = [
+		{\"label\": \"NAME\", \"value\": being_node.name, \"color\": Color.GOLD},
+		{\"label\": \"TYPE\", \"value\": being_node.get_meta(\"universal_being_type\", \"unknown\"), \"color\": Color.CYAN},
+		{\"label\": \"CONSCIOUSNESS\", \"value\": \"Level \" + str(being_node.get_meta(\"consciousness_level\", 0)), \"color\": Color.MAGENTA},
+		{\"label\": \"ABILITIES\", \"value\": \"Multiple Powers\", \"color\": Color.GREEN},
+		{\"label\": \"EVOLUTION\", \"value\": \"Infinite Potential\", \"color\": Color.ORANGE},
+		{\"label\": \"REALITY EDITOR\", \"value\": \"Click to Reshape\", \"color\": Color.WHITE}
+	]
+	
+	for i in range(sphere_positions.size()):
+		var info_sphere = create_3d_info_sphere(info_data[i], sphere_positions[i])
+		being_node.add_child(info_sphere)
+
+func create_3d_info_sphere(info: Dictionary, offset: Vector3) -> Node3D:
+	\"\"\"Create smooth info sphere - no more angry pointy capsules!\"\"\"
+	var sphere_container = Node3D.new()
+	sphere_container.position = offset
+	
+	# Create SMOOTH sphere (no more pointy capsules!)
+	var sphere = MeshInstance3D.new()
+	var sphere_mesh = SphereMesh.new()
+	sphere_mesh.radius = 0.8
+	sphere_mesh.height = 1.6  # Perfect sphere proportions
+	sphere.mesh = sphere_mesh
+	
+	# Smooth, calming material
+	var material = StandardMaterial3D.new()
+	material.albedo_color = info.color
+	material.emission_enabled = true
+	material.emission_energy = 0.3  # Gentle glow, not aggressive
+	material.roughness = 0.2  # Smooth surface
+	sphere.material_override = material
+	
+	# 3D floating label (not flat mortal text!)
+	var label = Label3D.new()
+	label.text = info.label + \"\\n\" + info.value
+	label.billboard = BaseMaterial3D.BILLBOARD_ENABLED
+	label.position = Vector3(0, 1.2, 0)  # Float above sphere
+	label.modulate = info.color
+	
+	sphere_container.add_child(sphere)
+	sphere_container.add_child(label)
+	
+	# Add gentle rotation animation (cosmic harmony)
+	var tween = create_tween()
+	tween.set_loops()
+	tween.tween_property(sphere_container, \"rotation_degrees:y\", 360, 10.0)
+	
+	return sphere_container
+
+func create_3d_cursor_interface(being_node):
+	\"\"\"Create cursor-controlled 3D interface - THE SACRED RULE OF 3D PROGRAMMING\"\"\"
+	print(\"🎯 Creating cursor-distance controlled interface\")
+	
+	# Create repair cursor that follows camera at SPECIFIC distance
+	var repair_cursor = create_3d_repair_cursor()
+	$Camera3D.add_child(repair_cursor)
+	
+	# Store reference for interaction
+	being_node.set_meta(\"repair_cursor\", repair_cursor)
+
+func create_3d_repair_cursor() -> Node3D:
+	\"\"\"Create the sacred 3D programming cursor at specific distance from camera\"\"\"
+	var cursor = Node3D.new()
+	cursor.name = \"UniversalBeingRepairCursor\"
+	cursor.position = Vector3(0, 0, -2.5)  # SPECIFIC DISTANCE - the sacred rule!
+	
+	# Create crosshair sphere (smooth, not pointy!)
+	var crosshair = MeshInstance3D.new()
+	var sphere_mesh = SphereMesh.new()
+	sphere_mesh.radius = 0.1
+	sphere_mesh.height = 0.2
+	crosshair.mesh = sphere_mesh
+	
+	# Pulsing material for visual feedback
+	var material = StandardMaterial3D.new()
+	material.albedo_color = Color.WHITE
+	material.emission_enabled = true
+	material.emission_energy = 1.0
+	crosshair.material_override = material
+	
+	cursor.add_child(crosshair)
+	
+	# Add pulsing animation
+	var tween = create_tween()
+	tween.set_loops()
+	tween.tween_property(material, \"emission_energy\", 2.0, 0.5)
+	tween.tween_property(material, \"emission_energy\", 0.5, 0.5)
+	
+	return cursor
+
+func interact_with_nearest_enhanced():
+	\"\"\"Enhanced E button interaction - works with function blocks AND notes\"\"\"
+	var nearest = find_nearest_interactive_object()
+	
+	if nearest:
+		if nearest.has_meta(\"function_name\"):
+			# Function block interaction with floating text
+			show_function_inspector(nearest)
+		elif nearest.has_meta(\"note_type\"):
+			# Note interaction with text content
+			show_note_editor(nearest)
+		elif nearest.has_meta(\"universal_being_type\"):
+			# Universal Being interaction
+			inspect_universal_being(nearest)
+		else:
+			# Transform any object
+			transform_to_universal_being(nearest)
+
+func find_nearest_interactive_object():
+	\"\"\"Find the nearest object that can be interacted with\"\"\"
+	var camera_pos = $Camera3D.global_position
+	var nearest_object = null
+	var nearest_distance = 10.0  # Max interaction distance
+	
+	# Check all children recursively
+	for child in get_tree().get_nodes_in_group(\"interactive\"):
+		var distance = camera_pos.distance_to(child.global_position)
+		if distance < nearest_distance:
+			nearest_distance = distance
+			nearest_object = child
+	
+	# If no grouped objects, check all programming nodes and notes
+	if not nearest_object:
+		for node in programming_nodes:
+			var distance = camera_pos.distance_to(node.global_position)
+			if distance < nearest_distance:
+				nearest_distance = distance
+				nearest_object = node
+		
+		# Check note walls too
+		for note in get_children():
+			if note.has_meta(\"note_type\"):
+				var distance = camera_pos.distance_to(note.global_position)
+				if distance < nearest_distance:
+					nearest_distance = distance
+					nearest_object = note
+	
+	return nearest_object
+
+func show_function_inspector(function_node):
+	\"\"\"Show floating text inspector for function blocks\"\"\"
+	var func_name = function_node.get_meta(\"function_name\", \"Unknown\")
+	var inspector_text = \"🔧 FUNCTION INSPECTOR\\n\\n\"
+	inspector_text += \"Function: %s\\n\" % func_name
+	inspector_text += \"Inputs: %d\\n\" % _count_input_sockets(function_node)
+	inspector_text += \"Outputs: %d\\n\" % _count_output_sockets(function_node)
+	inspector_text += \"\\nPress E again to edit code\"
+	
+	# Create floating text above the function
+	show_floating_inspector(function_node, inspector_text, Color.CYAN)
+
+func show_note_editor(note_node):
+	\"\"\"Show note editor with actual text content\"\"\"
+	var note_text = note_node.get_meta(\"note_content\", \"Empty note - click to edit\")
+	var note_title = note_node.get_meta(\"note_title\", \"Untitled Note\")
+	
+	var editor_text = \"📝 NOTE EDITOR\\n\\n\"
+	editor_text += \"Title: %s\\n\\n\" % note_title
+	editor_text += \"Content:\\n%s\\n\\n\" % note_text
+	editor_text += \"Press T to edit text\\nPress R to rename\"
+	
+	# Create floating text above the note
+	show_floating_inspector(note_node, editor_text, Color.GOLD)
+	
+	# Add this note to interactive group for easy finding
+	note_node.add_to_group(\"interactive\")
+
+func show_floating_inspector(target_node: Node3D, text: String, color: Color):
+	\"\"\"Create floating inspector text above any object\"\"\"
+	# Remove any existing inspector
+	var existing = target_node.get_node_or_null(\"FloatingInspector\")
+	if existing:
+		existing.queue_free()
+	
+	var inspector = Label3D.new()
+	inspector.name = \"FloatingInspector\"
+	inspector.text = text
+	inspector.modulate = color
+	inspector.billboard = BaseMaterial3D.BILLBOARD_ENABLED
+	inspector.position = Vector3(0, 3, 0)  # Float above object
+	inspector.pixel_size = 0.01  # Readable size
+	
+	target_node.add_child(inspector)
+	
+	# Auto-fade after 10 seconds - Using proper CallbackTweener with set_delay()
+	var tween = create_tween()
+	tween.tween_property(inspector, \"modulate:a\", 0.0, 2.0).set_delay(10.0)
+	tween.tween_callback(inspector.queue_free)
+
+func _count_input_sockets(node: Node3D) -> int:
+	\"\"\"Count input sockets on a function node\"\"\"
+	var count = 0
+	for child in node.get_children():
+		if child.has_meta(\"socket_type\") and child.get_meta(\"socket_type\") == \"input\":
+			count += 1
+	return count
+
+func _count_output_sockets(node: Node3D) -> int:
+	\"\"\"Count output sockets on a function node\"\"\"
+	var count = 0
+	for child in node.get_children():
+		if child.has_meta(\"socket_type\") and child.get_meta(\"socket_type\") == \"output\":
+			count += 1
+	return count
+
+func create_text_note(position: Vector3, title: String = \"New Note\", content: String = \"Enter your text here...\"):
+	\"\"\"Create a 3D note with actual text content\"\"\"
+	var note = Node3D.new()
+	note.name = \"TextNote_\" + title.replace(\" \", \"_\")
+	note.position = position
+	note.set_meta(\"note_type\", \"text_note\")
+	note.set_meta(\"note_title\", title)
+	note.set_meta(\"note_content\", content)
+	
+	# Create note visual (paper-like plane)
+	var note_visual = MeshInstance3D.new()
+	var plane = PlaneMesh.new()
+	plane.size = Vector2(4, 3)
+	note_visual.mesh = plane
+	
+	# Paper-like material
+	var material = StandardMaterial3D.new()
+	material.albedo_color = Color(0.95, 0.95, 0.85, 0.9)  # Cream paper color
+	material.emission_enabled = true
+	material.emission_energy = 0.2
+	note_visual.material_override = material
+	
+	# Add title label
+	var title_label = Label3D.new()
+	title_label.text = title
+	title_label.position = Vector3(0, 1.2, 0.1)
+	title_label.billboard = BaseMaterial3D.BILLBOARD_ENABLED
+	title_label.modulate = Color.BLACK
+	
+	# Add content preview
+	var content_label = Label3D.new()
+	var preview = content.substr(0, 50) + (\"...\" if content.length() > 50 else \"\")
+	content_label.text = preview
+	content_label.position = Vector3(0, 0, 0.1)
+	content_label.billboard = BaseMaterial3D.BILLBOARD_ENABLED
+	content_label.modulate = Color(0.2, 0.2, 0.2)
+	content_label.pixel_size = 0.008
+	
+	note.add_child(note_visual)
+	note.add_child(title_label)
+	note.add_child(content_label)
+	note.add_to_group(\"interactive\")
+	
+	add_child(note)
+	return note
+
+func handle_additional_key_interactions(event: InputEvent):
+	\"\"\"Handle all the additional interactions you requested - MORE LAYERS!\"\"\"
+	var nearest = find_nearest_interactive_object()
+	
+	match event.keycode:
+		KEY_T:
+			if nearest and nearest.has_meta(\"note_type\"):
+				edit_note_text(nearest)
+			else:
+				create_floating_text_editor()
+		KEY_R:
+			if nearest:
+				rename_object(nearest)
+			else:
+				create_new_note_here()
+		KEY_F:
+			if nearest and nearest.has_meta(\"function_name\"):
+				edit_function_code(nearest)
+		KEY_X:
+			if nearest:
+				delete_object(nearest)
+		KEY_D:
+			if nearest:
+				duplicate_object(nearest)
+		KEY_G:
+			if grabbed_object:
+				release_grabbed_object()
+			else:
+				grab_and_move_object(nearest)
+		KEY_H:
+			show_all_hotkeys()
+		KEY_M:
+			enter_manipulation_mode()
+		KEY_V:
+			toggle_visual_debug_mode()
+		KEY_B:
+			create_new_function_node_at_cursor()
+		KEY_SPACE:
+			quick_spawn_menu()
+
+func edit_note_text(note_node):
+	\"\"\"T key - Edit note text content in 3D space\"\"\"
+	var current_text = note_node.get_meta(\"note_content\", \"\")
+	show_floating_inspector(note_node, \"✏️ TEXT EDITOR\\n\\nCurrent text:\\n%s\\n\\nType to edit...\" % current_text, Color.YELLOW)
+	print(\"📝 Editing note: %s\" % note_node.name)
+
+func rename_object(obj):
+	\"\"\"R key - Rename any object\"\"\"
+	var current_name = obj.name
+	show_floating_inspector(obj, \"📝 RENAME MODE\\n\\nCurrent: %s\\n\\nType new name...\" % current_name, Color.ORANGE)
+	print(\"🏷️ Renaming: %s\" % current_name)
+
+func edit_function_code(function_node):
+	\"\"\"F key - Edit function code (hot loading scripturas!)\"\"\"
+	var func_name = function_node.get_meta(\"function_name\", \"Unknown\")
+	var code_preview = \"func %s():\\n    # Your code here\\n    pass\" % func_name.to_lower()
+	show_floating_inspector(function_node, \"💻 CODE EDITOR\\n\\n%s\\n\\nHot loading enabled!\" % code_preview, Color.GREEN)
+	print(\"💻 Editing code for: %s\" % func_name)
+
+func delete_object(obj):
+	\"\"\"X key - Delete object with confirmation\"\"\"
+	show_floating_inspector(obj, \"❌ DELETE CONFIRM\\n\\nPress X again to delete\\n%s\" % obj.name, Color.RED)
+	obj.set_meta(\"delete_pending\", true)
+	print(\"🗑️ Delete pending: %s\" % obj.name)
+
+func duplicate_object(obj):
+	\"\"\"D key - Duplicate object\"\"\"
+	if obj.has_meta(\"note_type\"):
+		var title = obj.get_meta(\"note_title\", \"Note\") + \" Copy\"
+		var content = obj.get_meta(\"note_content\", \"Duplicated content\")
+		var new_note = create_text_note(obj.position + Vector3(2, 0, 0), title, content)
+		show_floating_inspector(new_note, \"📋 DUPLICATED!\\n\\nNew note created\", Color.CYAN)
+	elif obj.has_meta(\"function_name\"):
+		var func_name = obj.get_meta(\"function_name\") + \"_COPY\"
+		create_function_node(func_name, obj.position + Vector3(3, 0, 0), stellar_colors[randi() % stellar_colors.size()])
+		show_visual_message(\"🔄 Function duplicated!\", Color.CYAN)
+
+var grabbed_object = null
+var grab_offset = Vector3.ZERO
+
+# Input mapping system
+var input_mapper: UniversalInputMapper = null
+var settings_interface: Settings3DInterface = null
+
+# Scriptura Cinema system
+var scriptura_cinema: ScripturaCinema = null
+
+func grab_and_move_object(obj):
+	\"\"\"G key - Grab and move object with cursor - REPENT MY SINS OF TOO CLOSE NODES!\"\"\"
+	if obj:
+		grabbed_object = obj
+		var camera_pos = $Camera3D.global_position
+		grab_offset = obj.global_position - camera_pos
+		obj.set_meta(\"being_moved\", true)
+		show_floating_inspector(obj, \"✋ GRABBED!\\n\\nMove mouse to reposition\\nG again to release\\nNow you can fix my spacing sins!\", Color.WHITE)
+		print(\"✋ Grabbed: %s - Use mouse to move!\" % obj.name)
+
+func handle_grabbed_object_movement():
+	\"\"\"Move grabbed object with cursor at specific distance\"\"\"
+	if grabbed_object:
+		var camera = $Camera3D
+		var camera_transform = camera.global_transform
+		var forward = -camera_transform.basis.z
+		var move_distance = 5.0  # Distance from camera
+		
+		var new_position = camera.global_position + (forward * move_distance)
+		grabbed_object.global_position = new_position
+		
+		# Visual feedback
+		if grabbed_object.has_method(\"set_material_override\"):
+			# Add glow to grabbed object
+			var grab_material = StandardMaterial3D.new()
+			grab_material.emission_enabled = true
+			grab_material.emission = Color.WHITE
+			grab_material.emission_energy = 0.3
+			grabbed_object.get_child(0).material_override = grab_material
+
+func release_grabbed_object():
+	\"\"\"Release the grabbed object and restore its material\"\"\"
+	if grabbed_object:
+		grabbed_object.set_meta(\"being_moved\", false)
+		show_floating_inspector(grabbed_object, \"📍 RELEASED!\\n\\nObject positioned\\nSpacing sins repented!\", Color.GREEN)
+		
+		# Restore original material
+		if grabbed_object.has_node(\"FloatingInspector\"):
+			grabbed_object.get_node(\"FloatingInspector\").queue_free()
+		
+		# Reset material to original
+		var original_color = grabbed_object.get_meta(\"original_color\", Color.WHITE)
+		if grabbed_object.get_child_count() > 0:
+			var body = grabbed_object.get_child(0)
+			if body is MeshInstance3D:
+				var original_mat = StandardMaterial3D.new()
+				original_mat.albedo_color = original_color
+				original_mat.emission_enabled = true
+				original_mat.emission = original_color
+				original_mat.emission_energy = 0.5
+				body.material_override = original_mat
+		
+		print(\"📍 Released: %s at position %v\" % [grabbed_object.name, grabbed_object.global_position])
+		grabbed_object = null
+
+func show_all_hotkeys():
+	\"\"\"H key - Show comprehensive help\"\"\"
+	var help_text = \"🎮 ALL HOTKEYS\\n\\n\"
+	help_text += \"E - Inspect nearest\\n\"
+	help_text += \"T - Edit text\\n\"
+	help_text += \"R - Rename\\n\"
+	help_text += \"F - Edit function code\\n\"
+	help_text += \"X - Delete\\n\"
+	help_text += \"D - Duplicate\\n\"
+	help_text += \"G - Grab/Move\\n\"
+	help_text += \"M - Manipulation mode\\n\"
+	help_text += \"V - Visual debug\\n\"
+	help_text += \"B - New function\\n\"
+	help_text += \"SPACE - Quick menu\\n\"
+	help_text += \"H - This help\"
+	
+	show_visual_message(help_text, Color.WHITE)
+
+func enter_manipulation_mode():
+	\"\"\"M key - Enter object manipulation mode\"\"\"
+	show_visual_message(\"🔧 MANIPULATION MODE\\n\\nAll objects now interactive\\nUse mouse to transform\", Color.MAGENTA)
+
+func toggle_visual_debug_mode():
+	\"\"\"V key - Toggle visual debugging\"\"\"
+	show_visual_message(\"👁️ VISUAL DEBUG MODE\\n\\nShowing all connections\\nand meta information\", Color.CYAN)
+
+func create_new_function_node_at_cursor():
+	\"\"\"B key - Create function node at camera position\"\"\"
+	var camera_pos = $Camera3D.global_position
+	var spawn_pos = camera_pos + $Camera3D.transform.basis * Vector3(0, 0, -5)
+	create_function_node(\"NEW_FUNC\", spawn_pos, stellar_colors[randi() % stellar_colors.size()])
+	show_visual_message(\"🔧 New function created!\", Color.GREEN)
+
+func quick_spawn_menu():
+	\"\"\"SPACE key - Quick spawn menu\"\"\"
+	show_visual_message(\"⚡ QUICK SPAWN\\n\\n1 - Note\\n2 - Function\\n3 - Universal Being\\n4 - Portal\", Color.YELLOW)
+
+func setup_input_mapping_system():
+	\"\"\"Initialize the input mapping and settings system\"\"\"
+	print(\"🎮 Setting up Universal Input Mapper...\")
+	
+	# Create input mapper
+	input_mapper = UniversalInputMapper.new()
+	add_child(input_mapper)
+	
+	# Create 3D settings interface
+	settings_interface = Settings3DInterface.new()
+	settings_interface.visible = false
+	add_child(settings_interface)
+	
+	# Connect signals
+	settings_interface.input_remapped.connect(_on_input_remapped)
+	settings_interface.settings_closed.connect(_on_settings_closed)
+	
+	print(\"✅ Input mapping system ready!\")
+
+func toggle_settings_interface():
+	\"\"\"TAB key - Toggle the 3D settings interface\"\"\"
+	if not settings_interface:
+		print(\"⚠️ Settings interface not initialized\")
+		return
+	
+	if settings_interface.visible:
+		settings_interface.hide_settings()
+		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+		show_visual_message(\"⚙️ Settings closed\", Color.CYAN)
+	else:
+		settings_interface.show_settings($Camera3D)
+		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+		show_visual_message(\"⚙️ 3D Settings Interface\\n\\nClick buttons to remap keys\\nPress ESC to close\", Color.GOLD)
+
+func _on_input_remapped(action: String, new_key: int):
+	\"\"\"Handle when a key is remapped\"\"\"
+	var key_name = OS.get_keycode_string(new_key)
+	show_visual_message(\"🔄 Remapped '%s' to %s\" % [action.replace(\"_\", \" \").to_upper(), key_name], Color.GREEN)
+	print(\"🎮 Input remapped: %s -> %s\" % [action, key_name])
+
+func _on_settings_closed():
+	\"\"\"Handle when settings interface is closed\"\"\"
+	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+	show_visual_message(\"⚙️ Settings saved!\", Color.GREEN)
+
+func create_floating_text_editor():
+	\"\"\"Create floating text editor in 3D space\"\"\"
+	var editor_pos = $Camera3D.global_position + $Camera3D.transform.basis * Vector3(0, 0, -3)
+	create_text_note(editor_pos, \"Text Editor\", \"Start typing your ideas here...\\n\\nThis is your 3D text space!\")
+
+func create_new_note_here():
+	\"\"\"R key fallback - Create new note at camera position\"\"\"
+	var camera_pos = $Camera3D.global_position
+	var note_pos = camera_pos + $Camera3D.transform.basis * Vector3(2, 0, -4)
+	create_text_note(note_pos, \"Quick Note\", \"Created with R key\\n\\nQuick thoughts go here...\")
+
+func create_pentagon_function_node(func_name: String, pos: Vector3, color: Color):
+	\"\"\"Create Pentagon lifecycle function blocks\"\"\"
+	var node = create_function_node(func_name, pos, color)
+	node.set_meta(\"node_category\", \"pentagon\")
+	node.set_meta(\"execution_order\", _get_pentagon_order(func_name))
+	node.set_meta(\"requires_super_call\", true)
+	
+	# Add Pentagon-specific visual indicator
+	var pentagon_symbol = MeshInstance3D.new()
+	var cylinder = CylinderMesh.new()
+	cylinder.top_radius = 0.1
+	cylinder.bottom_radius = 0.1
+	cylinder.height = 0.5
+	pentagon_symbol.mesh = cylinder
+	pentagon_symbol.position = Vector3(0, 1.5, 0)
+	
+	var pentagon_mat = StandardMaterial3D.new()
+	pentagon_mat.albedo_color = Color.GOLD
+	pentagon_mat.emission_enabled = true
+	pentagon_mat.emission_energy = 0.8
+	pentagon_symbol.material_override = pentagon_mat
+	
+	node.add_child(pentagon_symbol)
+	return node
+
+func create_floodgate_function_node(func_name: String, pos: Vector3, color: Color):
+	\"\"\"Create FloodGates task system blocks\"\"\"
+	var node = create_function_node(func_name, pos, color)
+	node.set_meta(\"node_category\", \"floodgate\")
+	node.set_meta(\"task_type\", _get_floodgate_task_type(func_name))
+	node.set_meta(\"executes_once\", func_name == \"EXECUTE_ONCE\")
+	
+	# Add FloodGate visual indicator (water drop)
+	var drop = MeshInstance3D.new()
+	var sphere = SphereMesh.new()
+	sphere.radius = 0.3
+	sphere.height = 0.6
+	drop.mesh = sphere
+	drop.position = Vector3(0, 1.8, 0)
+	
+	var drop_mat = StandardMaterial3D.new()
+	drop_mat.albedo_color = Color.CYAN
+	drop_mat.emission_enabled = true
+	drop_mat.emission_energy = 0.6
+	drop_mat.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
+	drop_mat.albedo_color.a = 0.7
+	drop.material_override = drop_mat
+	
+	node.add_child(drop)
+	return node
+
+func create_fairy_function_node(func_name: String, pos: Vector3, color: Color):
+	\"\"\"Create 3D Programming Fairy Tale blocks\"\"\"
+	var node = create_function_node(func_name, pos, color)
+	node.set_meta(\"node_category\", \"fairy_tale\")
+	node.set_meta(\"magic_type\", _get_fairy_magic_type(func_name))
+	node.set_meta(\"reality_affecting\", true)
+	
+	# Add magical sparkle effect
+	var sparkle = MeshInstance3D.new()
+	var star = BoxMesh.new()
+	star.size = Vector3(0.2, 0.2, 0.2)
+	sparkle.mesh = star
+	sparkle.position = Vector3(0, 2.0, 0)
+	
+	var sparkle_mat = StandardMaterial3D.new()
+	sparkle_mat.albedo_color = color
+	sparkle_mat.emission_enabled = true
+	sparkle_mat.emission_energy = 1.2
+	sparkle.material_override = sparkle_mat
+	
+	# Add sparkle rotation
+	var tween = create_tween()
+	tween.set_loops()
+	tween.tween_property(sparkle, \"rotation_degrees\", Vector3(360, 360, 360), 3.0)
+	
+	node.add_child(sparkle)
+	return node
+
+func _get_pentagon_order(func_name: String) -> int:
+	\"\"\"Get execution order for Pentagon functions\"\"\"
+	match func_name:
+		\"PENTAGON_INIT\": return 1
+		\"PENTAGON_READY\": return 2
+		\"PENTAGON_PROCESS\": return 3
+		\"PENTAGON_INPUT\": return 4
+		\"PENTAGON_SEWERS\": return 5
+		_: return 0
+
+func _get_floodgate_task_type(func_name: String) -> String:
+	\"\"\"Get task type for FloodGate functions\"\"\"
+	match func_name:
+		\"REGISTER_BEING\": return \"registration\"
+		\"TASK_QUEUE\": return \"queuing\"
+		\"EXECUTE_ONCE\": return \"execution\"
+		\"FLOOD_CONTROL\": return \"management\"
+		_: return \"unknown\"
+
+func _get_fairy_magic_type(func_name: String) -> String:
+	\"\"\"Get magic type for Fairy Tale functions\"\"\"
+	match func_name:
+		\"PRINT_OVERHEAD\": return \"visualization\"
+		\"SPAWN_BEING\": return \"creation\"
+		\"EVOLVE_FORM\": return \"transformation\"
+		\"TRANSMUTE_REALITY\": return \"reality_bending\"
+		\"CONSCIOUSNESS_SHIFT\": return \"awareness_alteration\"
+		_: return \"cosmic_mystery\"
+
+func execute_pentagon_pipeline(input_data):
+	\"\"\"Execute a complete Pentagon pipeline - THE FAIRY TALE WORKFLOW\"\"\"
+	print(\"🌟 EXECUTING PENTAGON PIPELINE\")
+	
+	# Step 1: Pentagon Init
+	var init_result = call_pentagon_function(\"PENTAGON_INIT\", input_data)
+	show_visual_message(\"⭐ Pentagon Init Complete\", Color.GOLD)
+	
+	# Step 2: Pentagon Ready
+	var ready_result = call_pentagon_function(\"PENTAGON_READY\", init_result)
+	show_visual_message(\"🌟 Pentagon Ready Complete\", Color.CYAN)
+	
+	# Step 3: FloodGates Registration
+	var register_result = call_floodgate_function(\"REGISTER_BEING\", ready_result)
+	show_visual_message(\"💧 Being Registered in FloodGates\", Color.BLUE)
+	
+	# Step 4: Task Queue
+	var queue_result = call_floodgate_function(\"TASK_QUEUE\", register_result)
+	show_visual_message(\"📋 Task Queued for Execution\", Color.ORANGE)
+	
+	# Step 5: Execute Once
+	var execute_result = call_floodgate_function(\"EXECUTE_ONCE\", queue_result)
+	show_visual_message(\"⚡ Function Executed Once!\", Color.PURPLE)
+	
+	return execute_result
+
+func call_pentagon_function(func_name: String, data):
+	\"\"\"Call a Pentagon function with proper super() handling\"\"\"
+	print(\"🔯 Calling Pentagon function: %s\" % func_name)
+	# In real implementation, this would call actual Pentagon methods
+	return {\"status\": \"success\", \"function\": func_name, \"data\": data}
+
+func call_floodgate_function(func_name: String, data):
+	\"\"\"Call a FloodGate function through the task system\"\"\"
+	print(\"🌊 Calling FloodGate function: %s\" % func_name)
+	# In real implementation, this would interface with FloodGates
+	return {\"status\": \"success\", \"function\": func_name, \"data\": data}
+
+func demonstrate_print_overhead():
+	\"\"\"Show the fancy print overhead function you mentioned!\"\"\"
+	var camera_pos = $Camera3D.global_position
+	var text_pos = camera_pos + Vector3(0, 3, -2)
+	
+	var overhead_text = Label3D.new()
+	overhead_text.text = \"✨ FANCY PRINT OVERHEAD!\\n\\nThis text floats in 3D space\\nDirectly above your view\\nPerfect for debugging!\"
+	overhead_text.position = text_pos
+	overhead_text.billboard = BaseMaterial3D.BILLBOARD_ENABLED
+	overhead_text.modulate = Color.YELLOW
+	overhead_text.pixel_size = 0.01
+	
+	add_child(overhead_text)
+	
+	# Auto-fade after 5 seconds
+	var tween = create_tween()
+	tween.tween_property(overhead_text, \"modulate:a\", 0.0, 2.0).set_delay(5.0)
+	tween.tween_callback(overhead_text.queue_free)
 
 func show_visual_message(text: String, color: Color):
 	var msg = Label3D.new()

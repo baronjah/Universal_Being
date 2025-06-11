@@ -1,0 +1,17 @@
+3 shaders, sorry i guess... but kinda needed to take a look what was there for me to.. appreciate...
+class_name AkashicLoader
+SCRIPT NAME: GemmaAI.gd (Autoload)
+SCRIPT NAME: SystemBootstrap.gd (Autoload)
+SCRIPT NAME: UniversalBeing.gd
+SCRIPT NAME: FloodGates.gd
+class_name Pentagon
+class_name PentagonManager
+class_name UniversalBeingSocket
+class_name UniversalBeingSocketManager
+class_name PlasmoidUniversalBeing
+class_name GameStateSocketManager
+SCRIPT NAME: AkashicRecordsSystem.gd = :("sad face" = # class_name AkashicRecordsSystemEnhanced  # Commented out to avoid autoload conflict
+class_name AkashicLibrary
+class_name RecordsMap
+class_name UBPrintCollector
+# AUTO REGISTER FALLBACKS - Scans project for same-named classes, umm = res://core/AutoRegisterFallbacks.gd

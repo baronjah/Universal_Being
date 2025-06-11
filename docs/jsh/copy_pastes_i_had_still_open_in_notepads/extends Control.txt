@@ -1,0 +1,14 @@
+extends Control
+class_name InGameUniversalBeingInspector
+
+func inspect_being(being:
+
+
+if that being is an node, then execute
+
+
+also somehow,somewhere in the code we have the, visual thingies
+    if being and being.has_method("get_name"):
+        print("🔍 Inspecting %s" % being.get_name())
+    else:
+        print("🔍 Inspecting unknown being")

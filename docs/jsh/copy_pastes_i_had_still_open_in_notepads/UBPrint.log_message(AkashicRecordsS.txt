@@ -1,0 +1,1 @@
+	UBPrint.log_message("AkashicRecordsSystem", "_ready", "📦 Timeline exported with %.1f%% compression to: %s" % [stats.efficiency_percent, file_path], "converted_print")" % [stats.uncompressed_size_kb, stats.compressed_size_kb, stats.space_saved_kb], "converted_print")

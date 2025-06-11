@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://cursor_3d_universal_being"]
+
+[ext_resource type="Script" path="res://beings/cursor/cursor_3d_universal_being.gd" id="1"]
+
+[node name="Cursor3DUniversalBeing" type="Node3D"]
+script = ExtResource("1")

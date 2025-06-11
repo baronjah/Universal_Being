@@ -1,0 +1,16 @@
+List of features, not visible to player on 5th of june, which shall been already in game, and visible:
+
+fully functional console with connection to ai companion
+through which both ai and human, can create, edit, inspect, modfiy, anything
+
+interfaces for : inspector, editor, creator, modifyier
+interface for preview of currently being created asset by ai, human, cooperation
+an ai connection to pink plasmoid, where ai can move around freely, inspect and see and have every sense so it connects to console where she can use any command i could
+
+
+
+
+list of features that was visible and experiencable to player
+plasmoid with camera and movement for player
+pink plasmoid hovering on spawn point
+chunks generation which needs overhaul for Occlusion Culling, and much more updates

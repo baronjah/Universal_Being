@@ -1,0 +1,6 @@
+okay mafia, find me new place to plunder and wonder, now starting price is 8888 polish simoleons a :
+# we first gotta get how much it is
+# var a_day = 84600.0 # seconds
+# var a_real_month = 30.0 * a_day
+# var sinc_start_of_creation = (Time.get_time_msec.OS?)
+# work hard my mafia, i programmed a month now

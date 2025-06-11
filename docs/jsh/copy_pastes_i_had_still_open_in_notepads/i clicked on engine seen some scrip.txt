@@ -1,0 +1,91 @@
+i clicked on engine seen some scripts reload? then these messages appeared
+
+  ERROR: res://scripts/DistanceBasedLOD.gd:246 - Parse Error: Unexpected identifier "print" in class body.
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://scripts/DistanceBasedLOD.gd" with error "Parse error".
+  ERROR: res://scripts/QuickConsoleActivator.gd:67 - Parse Error: Unexpected identifier "print" in class body.
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://scripts/QuickConsoleActivator.gd" with error "Parse error".
+
+
+hmm, will try to play scene and see how it looks like, hmm scene loaded 
+
+flown like before, tried buttons, didnt notice yet, would you like me to restart engine, i guess
+
+Godot Engine v4.5.dev4.mono.official (c) 2007-present Juan Linietsky, Ariel Manzur & Godot Contributors.
+--- Debug adapter server started on port 6006 ---
+--- GDScript language server started on port 6005 ---
+  WARNING: editor/editor_file_system.cpp:1372 - UID duplicate detected between res://systems/storage/AkashicRecordsSystem.gd and res://systems/storage/AkashicRecordsEnhanced.gd.
+  ERROR: res://scripts/12_turns_system_archive/performance_optimizer.gd:142 - Parse Error: Expected parameter name.
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://scripts/12_turns_system_archive/performance_optimizer.gd" with error "Parse error".
+  ERROR: res://scripts/different_folders_than_specified_archives/UniversalCommandProcessor.gd:22 - Parse Error: Function "_register_natural_triggers()" not found in base self.
+  ERROR: res://scripts/different_folders_than_specified_archives/UniversalCommandProcessor.gd:32 - Parse Error: Identifier "_cmd_analyze" not declared in the current scope.
+  ERROR: res://scripts/different_folders_than_specified_archives/UniversalCommandProcessor.gd:33 - Parse Error: Identifier "_cmd_tree" not declared in the current scope.
+  ERROR: res://scripts/different_folders_than_specified_archives/UniversalCommandProcessor.gd:37 - Parse Error: Identifier "_cmd_spawn" not declared in the current scope.
+  ERROR: res://scripts/different_folders_than_specified_archives/UniversalCommandProcessor.gd:38 - Parse Error: Identifier "_cmd_generate" not declared in the current scope.
+  ERROR: res://scripts/different_folders_than_specified_archives/UniversalCommandProcessor.gd:39 - Parse Error: Identifier "_cmd_evolve" not declared in the current scope.
+  ERROR: res://scripts/different_folders_than_specified_archives/UniversalCommandProcessor.gd:44 - Parse Error: Identifier "_cmd_connect" not declared in the current scope.
+  ERROR: res://scripts/different_folders_than_specified_archives/UniversalCommandProcessor.gd:45 - Parse Error: Identifier "_cmd_trigger" not declared in the current scope.
+  ERROR: res://scripts/different_folders_than_specified_archives/UniversalCommandProcessor.gd:48 - Parse Error: Identifier "_cmd_edit" not declared in the current scope.
+  ERROR: res://scripts/different_folders_than_specified_archives/UniversalCommandProcessor.gd:49 - Parse Error: Identifier "_cmd_reload" not declared in the current scope.
+  ERROR: res://scripts/different_folders_than_specified_archives/UniversalCommandProcessor.gd:50 - Parse Error: Identifier "_cmd_save" not declared in the current scope.
+  ERROR: res://scripts/different_folders_than_specified_archives/UniversalCommandProcessor.gd:55 - Parse Error: Identifier "_cmd_history" not declared in the current scope.
+  ERROR: res://scripts/different_folders_than_specified_archives/UniversalCommandProcessor.gd:56 - Parse Error: Identifier "_cmd_undo" not declared in the current scope.
+  ERROR: res://scripts/different_folders_than_specified_archives/UniversalCommandProcessor.gd:57 - Parse Error: Identifier "_cmd_macro" not declared in the current scope.
+  ERROR: res://scripts/different_folders_than_specified_archives/UniversalCommandProcessor.gd:172 - Parse Error: Not all code paths return a value.
+  ERROR: res://scripts/different_folders_than_specified_archives/UniversalCommandProcessor.gd:232 - Parse Error: Not all code paths return a value.
+  ERROR: res://scripts/different_folders_than_specified_archives/UniversalCommandProcessor.gd:289 - Parse Error: Not all code paths return a value.
+  ERROR: res://scripts/different_folders_than_specified_archives/UniversalCommandProcessor.gd:344 - Parse Error: Expression is of type "UniversalBeing" so it can't be of type "Node2D".
+  ERROR: res://scripts/different_folders_than_specified_archives/UniversalCommandProcessor.gd:373 - Parse Error: Cannot call non-static function "execute_command()" on the class "UniversalCommandProcessor" directly. Make an instance instead.
+  ERROR: res://scripts/different_folders_than_specified_archives/MacroSystem.gd:0 - Compile Error: Failed to compile depended scripts.
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://scripts/different_folders_than_specified_archives/MacroSystem.gd" with error "Parse error".
+  ERROR: res://scripts/different_folders_than_specified_archives/UniversalConsole.gd:43 - Parse Error: Identifier "color" not declared in the current scope.
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://scripts/different_folders_than_specified_archives/UniversalConsole.gd" with error "Parse error".
+  ERROR: res://scripts/eden_project_claude_version/AICompanionSystem.gd:256 - Parse Error: Expected statement, found "static" instead.
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://scripts/eden_project_claude_version/AICompanionSystem.gd" with error "Parse error".
+  ERROR: res://scripts/eden_project_claude_version/ConsciousnessSystem.gd:13 - Parse Error: The member "consciousness_ripple_created" already exists in parent class UniversalBeing.
+  ERROR: res://scripts/eden_project_claude_version/ConsciousnessSystem.gd:34 - Parse Error: The member "current_state" already exists in parent class UniversalBeing.
+  ERROR: res://scripts/eden_project_claude_version/ConsciousnessSystem.gd:97 - Parse Error: Function "_update_frequency_resonance()" not found in base self.
+  ERROR: res://scripts/eden_project_claude_version/ConsciousnessSystem.gd:298 - Parse Error: Could not resolve class "AkashicRecordsSystem", because of a parser error.
+  ERROR: res://scripts/eden_project_claude_version/ConsciousnessSystem.gd:299 - Parse Error: Could not resolve class "AkashicRecordsSystem", because of a parser error.
+  ERROR: res://scripts/eden_project_claude_version/ConsciousnessSystem.gd:588 - Parse Error: Preload file "res://effects/ConsciousnessRipple.tscn" does not exist.
+  ERROR: res://scripts/eden_project_claude_version/ConsciousnessSystem.gd:603 - Parse Error: Identifier "philosophical_insight_shared" not declared in the current scope.
+  ERROR: res://scripts/eden_project_claude_version/ConsciousnessSystem.gd:660 - Parse Error: Could not resolve class "AkashicRecordsSystem", because of a parser error.
+  ERROR: res://scripts/eden_project_claude_version/ConsciousnessSystem.gd:669 - Parse Error: Could not resolve class "AkashicRecordsSystem", because of a parser error.
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://scripts/eden_project_claude_version/ConsciousnessSystem.gd" with error "Parse error".
+  ERROR: res://scripts/eden_project_claude_version/MiningSystem.gd:6 - Parse Error: Could not parse global class "PlayerShip" from "res://scripts/eden_project_claude_version/PlayerShip.gd".
+  ERROR: res://scripts/eden_project_claude_version/MiningSystem.gd:215 - Parse Error: Could not parse global class "PlayerShip" from "res://scripts/eden_project_claude_version/PlayerShip.gd".
+  ERROR: res://scripts/eden_project_claude_version/MiningSystem.gd:241 - Parse Error: Could not parse global class "PlayerShip" from "res://scripts/eden_project_claude_version/PlayerShip.gd".
+  ERROR: res://scripts/eden_project_claude_version/MiningSystem.gd:262 - Parse Error: Could not parse global class "PlayerShip" from "res://scripts/eden_project_claude_version/PlayerShip.gd".
+  ERROR: res://scripts/eden_project_claude_version/MiningSystem.gd:315 - Parse Error: Could not parse global class "PlayerShip" from "res://scripts/eden_project_claude_version/PlayerShip.gd".
+  ERROR: res://scripts/eden_project_claude_version/MiningSystem.gd:359 - Parse Error: Could not parse global class "PlayerShip" from "res://scripts/eden_project_claude_version/PlayerShip.gd".
+  ERROR: res://scripts/eden_project_claude_version/MiningSystem.gd:207 - Parse Error: Cannot call non-static function "register_being()" on the class "FloodGates" directly. Make an instance instead.
+  ERROR: res://scripts/eden_project_claude_version/MiningSystem.gd:413 - Parse Error: Could not resolve class "AkashicRecordsSystem", because of a parser error.
+  ERROR: res://scripts/eden_project_claude_version/MiningSystem.gd:414 - Parse Error: Could not resolve class "AkashicRecordsSystem", because of a parser error.
+  ERROR: res://scripts/eden_project_claude_version/MiningSystem.gd:512 - Parse Error: Could not resolve class "AkashicRecordsSystem", because of a parser error.
+  ERROR: res://scripts/eden_project_claude_version/MiningSystem.gd:525 - Parse Error: Could not resolve class "AkashicRecordsSystem", because of a parser error.
+  ERROR: res://scripts/eden_project_claude_version/MiningSystem.gd:528 - Parse Error: Could not resolve class "AkashicRecordsSystem", because of a parser error.
+  ERROR: res://scripts/eden_project_claude_version/MiningSystem.gd:529 - Parse Error: Could not resolve class "AkashicRecordsSystem", because of a parser error.
+  ERROR: res://scripts/eden_project_claude_version/MiningSystem.gd:557 - Parse Error: Preload file "res://shaders/mining_beam.gdshader" does not exist.
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://scripts/eden_project_claude_version/MiningSystem.gd" with error "Parse error".
+  ERROR: res://scripts/eden_project_claude_version/PlayerShip.gd:361 - Parse Error: Expected statement, found "static" instead.
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://scripts/eden_project_claude_version/PlayerShip.gd" with error "Parse error".
+  ERROR: res://scripts/research_space_game/universal_space_game.gd:1177 - Parse Error: Class "ConsciousnessVisualizer" hides a global script class.
+  ERROR: res://scripts/research_space_game/universal_space_game.gd:1276 - Parse Error: Class "AkashicLibrary" hides a global script class.
+  ERROR: res://scripts/research_space_game/universal_space_game.gd:66 - Parse Error: Could not find type "SpaceStructure" in the current scope.
+  ERROR: res://scripts/research_space_game/universal_space_game.gd:96 - Parse Error: Value of type "AkashicLibrary" cannot be assigned to a variable of type "AkashicLibrary".
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://scripts/research_space_game/universal_space_game.gd" with error "Parse error".
+  ERROR: res://scripts/DistanceBasedLOD.gd:246 - Parse Error: Unexpected identifier "print" in class body.
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://scripts/DistanceBasedLOD.gd" with error "Parse error".
+  ERROR: res://scripts/QuickConsoleActivator.gd:67 - Parse Error: Unexpected identifier "print" in class body.
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://scripts/QuickConsoleActivator.gd" with error "Parse error".
+  ERROR: res://scenes/VISUAL_PROGRAMMING_UNIVERSE.tscn::GDScript_visual_programming:169 - Parse Error: Function "handle_node_clicked()" not found in base self.
+  ERROR: res://scenes/TRUE_3D_PROGRAMMING.tscn::GDScript_3d_programming:302 - Parse Error: Function "_input" has the same name as a previously declared function.
+  ERROR: res://scripts/archive/simple_player_test.gd:68 - Parse Error: Closing ")" doesn't have an opening counterpart.
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://scripts/archive/simple_player_test.gd" with error "Parse error".
+  WARNING: scene/resources/resource_format_text.cpp:447 - res://scenes/PLASMOID_MOVEMENT_TEST.tscn:4 - ext_resource, invalid UID: uid://b0ee1qqnhkfnb - using text path instead: res://scenes/main/camera_point.tscn
+  ERROR: res://scripts/research_space_game/akashic_records_system.gd:175 - Parse Error: Enum "RecordType" has the same name as a previously declared enum.
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://scripts/research_space_game/akashic_records_system.gd" with error "Parse error".
+  ERROR: res://systems/Imouto_no_Rinne.gd:46 - Parse Error: Expected closing ")" after grouping expression.
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://systems/Imouto_no_Rinne.gd" with error "Parse error".
+
+
+okay i run off to toilet now

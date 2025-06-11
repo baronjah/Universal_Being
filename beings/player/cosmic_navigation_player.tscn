@@ -1,0 +1,31 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://beings/player/cosmic_navigation_player.gd" id="1"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_1"]
+height = 1.8
+
+[node name="CosmicNavigationPlayer" type="CharacterBody3D"]
+script = ExtResource("1")
+
+[node name="CosmicCamera" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.8, 0)
+fov = 75.0
+
+[node name="InteractionRay" type="RayCast3D" parent="CosmicCamera"]
+target_position = Vector3(0, 0, -20)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("CapsuleShape3D_1")
+
+[node name="NavigationDisplay" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5, 0)
+billboard = 1
+text = "🚀 COSMIC NAVIGATOR
+WASD + Mouse: Navigate
+SHIFT: Cosmic Speed
+C: Toggle Mode
+F: Fly to Nearest
+R: Reset Position
+ESC: Toggle Mouse"
+modulate = Color(0.8, 0.9, 1, 0.7)

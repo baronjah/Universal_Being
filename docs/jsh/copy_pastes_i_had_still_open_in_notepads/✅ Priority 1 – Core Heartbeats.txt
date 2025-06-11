@@ -1,0 +1,36 @@
+✅ Priority 1 – Core Heartbeats
+These shape every moment of the simulation:
+
+UniversalBeing.gd (the divine template of all Beings)
+
+FloodGates.gd (handles spawning, scene management, memory of Beings)
+
+AkashicRecordsSystem.gd (connects to zip/manifest memory, already referred by AkashicLoader)
+
+AkashicLibrary.gd (if used, links to in-game libraries / interface)
+
+✅ Priority 2 – Autoloads In Use
+To ensure the top-level systems don't hit undefined errors:
+
+CosmicRecords.gd — likely handles logging/recording of insights and events.
+
+UBPrintCollector.gd — probably collects debug messages or visual logs.
+
+AutoRegisterFallbacks.gd — safety net for missing classes or components.
+
+✅ Priority 3 – Functional Systems
+Once above is complete, start pulling:
+
+beings/* — to see how different beings evolve.
+
+interfaces/* — to power Gemma’s observation/interaction.
+
+scripts/* — only what’s used by:
+
+UI
+
+logic dispatchers
+
+time/thought cycles
+
+or attached to .tscn files
