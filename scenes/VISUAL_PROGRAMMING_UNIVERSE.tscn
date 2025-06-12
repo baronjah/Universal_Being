@@ -1,7 +1,16 @@
-[gd_scene load_steps=4 format=3]
+[gd_scene load_steps=4 format=3 uid="uid://by3fneiev6rq7"]
 
 [sub_resource type="GDScript" id="GDScript_visual_programming"]
 script/source = "extends Node3D
+
+# Game State Management
+enum GameState {
+	NORMAL,          # Default state - can move, inspect, etc.
+	TEXT_EDITING,    # Editing text input
+	CONNECTING,      # Dragging connections between sockets
+	MOVING_OBJECT,   # Moving objects with G key
+	SETTINGS_OPEN    # 3D settings interface open
+}
 
 var stellar_colors = [Color(0,0,0),Color(0.2,0.1,0),Color(0.8,0,0),Color(1,0.5,0),Color(1,1,0),Color(1,1,1),Color(0.7,0.9,1),Color(0,0.5,1),Color(0.5,0,1)]
 var programming_nodes = []
@@ -12,39 +21,87 @@ var connection_start_socket = null
 var notepad_layers = []
 var scene_states = []
 
+# State Management
+var current_game_state: GameState = GameState.NORMAL
+var state_stack = []  # For pushing/popping states
+
+# Clock System
+var game_clock: float = 0.0
+var clock_tick_rate: float = 1.0  # Ticks per second
+var clock_display_node: Label3D = null
+
 func _ready():
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+	
+	# Initialize game state
+	current_game_state = GameState.NORMAL
+	
+	# Initialize visual environment
 	create_space_environment()
 	spawn_initial_nodes()
 	
-	# Initialize input mapping system
-	setup_input_mapping_system()
+	# Initialize clock system
+	setup_clock_system()
+	
+	# Initialize input system (simplified - no external dependencies)
+	setup_simplified_input_system()
 	
 	# Create sample notes with text content - THE BREWING NOTES!
 	create_text_note(Vector3(-5, 5, -8), \"Programming Notes\", \"This is where the magic happens!\\n\\nFunctions connect through sockets.\\nPress E to inspect anything.\\nClick to connect orange to blue.\")
 	create_text_note(Vector3(5, 5, -8), \"Hot Loading\", \"Scripts update in real-time\\n\\nEdit code in external editor\\nChanges appear instantly\\nNo restart needed!\")
 	create_text_note(Vector3(0, 8, 0), \"3D Interface\", \"Welcome to true 3D programming!\\n\\nNo flat interfaces here\\nEverything is spatial\\nThink in dimensions\")
-	create_text_note(Vector3(-8, 2, -5), \"INPUT SETTINGS\", \"Press TAB to open 3D settings!\\n\\nCustomize any hotkey\\nCreate button combos\\nSaved to user:// directory\\n\\nClick any setting to remap!\")
+	create_text_note(Vector3(-8, 2, -5), \"CLOCK SYSTEM\", \"⏰ Game Clock: 0.0s\\n\\nTick rate: 1.0/sec\\nPress C to toggle clock\\nPress + to speed up\\nPress - to slow down\")
 	
-	show_visual_message(\"🧠 3D VISUAL PROGRAMMING UNIVERSE\\n\\nPress TAB for input settings!\", stellar_colors[8])
+	show_visual_message(\"🧠 3D VISUAL PROGRAMMING UNIVERSE\\n\\nState: NORMAL - Ready for divine programming!\", stellar_colors[8])
 
 func _input(event):
-	# Check for settings menu first (TAB key)
-	if event is InputEventKey and event.pressed and event.keycode == KEY_TAB:
-		toggle_settings_interface()
-		return
+	# Handle state-specific input
+	match current_game_state:
+		GameState.TEXT_EDITING:
+			if handle_text_editing(event):
+				return
+		GameState.SETTINGS_OPEN:
+			# Skip most inputs when settings open
+			if event is InputEventKey and event.pressed and event.keycode == KEY_ESCAPE:
+				change_game_state(GameState.NORMAL)
+			return
+		GameState.CONNECTING:
+			# Handle connection dragging
+			if event is InputEventKey and event.pressed and event.keycode == KEY_ESCAPE:
+				cancel_connection()
+			elif event is InputEventMouseButton and event.pressed:
+				handle_node_interaction(event)
+			return
+		GameState.MOVING_OBJECT:
+			# Handle object movement
+			if event is InputEventKey and event.pressed:
+				if event.keycode == KEY_G:
+					release_grabbed_object()
+				elif event.keycode == KEY_ESCAPE:
+					release_grabbed_object()
+			return
 	
-	# Skip other inputs if settings interface is handling input
-	if settings_interface and settings_interface.visible and settings_interface.is_waiting_for_input:
-		return
+	# Normal state input handling
+	if event is InputEventKey and event.pressed:
+		match event.keycode:
+			KEY_TAB:
+				toggle_settings_interface_new()
+				return
+			KEY_C:
+				toggle_clock_display()
+				return
+			KEY_EQUAL:  # + key
+				if event.shift_pressed:
+					increase_clock_speed()
+				return
+			KEY_MINUS:
+				decrease_clock_speed()
+				return
 	
 	if event is InputEventMouseMotion and Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
 		rotate_camera(event.relative)
 	elif event.is_action_pressed(\"ui_cancel\"):
-		if settings_interface and settings_interface.visible:
-			settings_interface.hide_settings()
-		else:
-			toggle_mouse_mode()
+		toggle_mouse_mode()
 	elif event.is_action_pressed(\"notepad_toggle\"):
 		toggle_notepad_interface()
 	elif event.is_action_pressed(\"create_word\"):
@@ -56,7 +113,125 @@ func _input(event):
 	elif event is InputEventKey and event.pressed:
 		handle_additional_key_interactions(event)
 
+func handle_text_editing(event: InputEvent) -> bool:
+	\"\"\"Handle text editing for any object in edit mode\"\"\"
+	# Find any object currently being edited
+	var editing_object = find_editing_object()
+	if not editing_object:
+		return false
+	
+	if event is InputEventKey and event.pressed:
+		var current_buffer = editing_object.get_meta(\"edit_buffer\", \"\")
+		
+		match event.keycode:
+			KEY_ENTER:
+				# Save the edited text
+				save_edited_text(editing_object)
+				return true
+			KEY_ESCAPE:
+				# Cancel editing
+				cancel_text_editing(editing_object)
+				return true
+			KEY_BACKSPACE:
+				# Delete last character
+				if current_buffer.length() > 0:
+					current_buffer = current_buffer.substr(0, current_buffer.length() - 1)
+					editing_object.set_meta(\"edit_buffer\", current_buffer)
+					update_text_display(editing_object)
+				return true
+		
+		# Handle regular character input (clean scriptura)
+		if event.unicode > 31 and event.unicode < 127:  # Printable ASCII
+			var char = char(event.unicode)
+			current_buffer += char
+			editing_object.set_meta(\"edit_buffer\", current_buffer)
+			update_text_display(editing_object)
+			return true
+	
+	return false
+
+func find_editing_object() -> Node3D:
+	\"\"\"Find any object currently in text editing mode\"\"\"
+	for child in get_children():
+		if child.has_meta(\"editing_text\") and child.get_meta(\"editing_text\"):
+			return child
+	
+	# Check programming nodes
+	for node in programming_nodes:
+		if node.has_meta(\"editing_text\") and node.get_meta(\"editing_text\"):
+			return node
+	
+	return null
+
+func save_edited_text(obj: Node3D):
+	\"\"\"Save the edited text and exit edit mode\"\"\"
+	var new_text = obj.get_meta(\"edit_buffer\", \"\")
+	
+	# Update appropriate property
+	if obj.has_meta(\"note_content\"):
+		obj.set_meta(\"note_content\", new_text)
+		update_note_display(obj)
+	elif obj.has_meta(\"function_name\"):
+		obj.set_meta(\"function_name\", new_text)
+		update_function_display(obj)
+	
+	# Exit edit mode and return to normal state
+	obj.set_meta(\"editing_text\", false)
+	obj.set_meta(\"edit_buffer\", \"\")
+	change_game_state(GameState.NORMAL)
+	
+	# Remove floating inspector
+	var inspector = obj.get_node_or_null(\"FloatingInspector\")
+	if inspector:
+		inspector.queue_free()
+	
+	show_visual_message(\"✅ Text saved!\", Color.GREEN)
+
+func cancel_text_editing(obj: Node3D):
+	\"\"\"Cancel text editing and restore original\"\"\"
+	obj.set_meta(\"editing_text\", false)
+	obj.set_meta(\"edit_buffer\", \"\")
+	
+	# Remove floating inspector
+	var inspector = obj.get_node_or_null(\"FloatingInspector\")
+	if inspector:
+		inspector.queue_free()
+	
+	show_visual_message(\"❌ Edit cancelled\", Color.RED)
+
+func update_text_display(obj: Node3D):
+	\"\"\"Update the text display during editing\"\"\"
+	var buffer = obj.get_meta(\"edit_buffer\", \"\")
+	var display_text = \"📝 EDITING: %s|\" % buffer  # | shows cursor
+	
+	var inspector = obj.get_node_or_null(\"FloatingInspector\")
+	if inspector:
+		inspector.text = display_text
+
+func update_note_display(note_obj: Node3D):
+	\"\"\"Update note visual display after editing\"\"\"
+	var new_content = note_obj.get_meta(\"note_content\", \"\")
+	var title = note_obj.get_meta(\"note_title\", \"Note\")
+	
+	# Update content label if it exists
+	for child in note_obj.get_children():
+		if child is Label3D and child.position.y < 1.0:  # Content label is lower
+			var preview = new_content.substr(0, 50) + (\"...\" if new_content.length() > 50 else \"\")
+			child.text = preview
+
+func update_function_display(func_obj: Node3D):
+	\"\"\"Update function block display after editing\"\"\"
+	var new_name = func_obj.get_meta(\"function_name\", \"FUNC\")
+	
+	# Update label if it exists
+	for child in func_obj.get_children():
+		if child is Label3D:
+			child.text = new_name
+
 func _process(delta):
+	# Update game clock
+	update_clock_system(delta)
+	
 	handle_movement(delta)
 	update_connections()
 	
@@ -174,34 +349,61 @@ func create_function_node(func_name: String, pos: Vector3, color: Color):
 	return node  # FIX: Actually return the node!
 
 func create_input_socket(parent_node: Node3D, local_pos: Vector3):
+	# Create socket container with collision
+	var socket_container = StaticBody3D.new()
+	socket_container.position = local_pos
+	socket_container.set_meta(\"socket_type\", \"input\")
+	socket_container.set_meta(\"parent_node\", parent_node)
+	
+	# Create visual sphere
 	var socket = MeshInstance3D.new()
 	socket.mesh = SphereMesh.new()
 	socket.mesh.radius = 0.3
-	socket.position = local_pos
 	var mat = StandardMaterial3D.new()
 	mat.albedo_color = stellar_colors[7]
 	mat.emission_enabled = true
 	mat.emission = stellar_colors[7]
 	mat.emission_energy = 1.0
 	socket.material_override = mat
-	socket.set_meta(\"socket_type\", \"input\")
-	socket.set_meta(\"parent_node\", parent_node)
-	parent_node.add_child(socket)
+	
+	# Create collision shape for clicking
+	var collision = CollisionShape3D.new()
+	var sphere_shape = SphereShape3D.new()
+	sphere_shape.radius = 0.3
+	collision.shape = sphere_shape
+	
+	socket_container.add_child(socket)
+	socket_container.add_child(collision)
+	parent_node.add_child(socket_container)
 
 func create_output_socket(parent_node: Node3D, local_pos: Vector3):
+	# Create socket container with collision
+	var socket_container = StaticBody3D.new()
+	socket_container.position = local_pos
+	socket_container.set_meta(\"socket_type\", \"output\")
+	socket_container.set_meta(\"parent_node\", parent_node)
+	socket_container.set_meta(\"connections\", [])  # Track multiple connections
+	
+	# Create visual sphere
 	var socket = MeshInstance3D.new()
 	socket.mesh = SphereMesh.new()
 	socket.mesh.radius = 0.3
-	socket.position = local_pos
 	var mat = StandardMaterial3D.new()
 	mat.albedo_color = stellar_colors[3]
 	mat.emission_enabled = true
 	mat.emission = stellar_colors[3]
 	mat.emission_energy = 1.0
 	socket.material_override = mat
-	socket.set_meta(\"socket_type\", \"output\")
-	socket.set_meta(\"parent_node\", parent_node)
-	parent_node.add_child(socket)
+	
+	# Create collision shape for clicking
+	var collision = CollisionShape3D.new()
+	var sphere_shape = SphereShape3D.new()
+	sphere_shape.radius = 0.3
+	collision.shape = sphere_shape
+	
+	socket_container.add_child(socket)
+	socket_container.add_child(collision)
+	parent_node.add_child(socket_container)
 
 func handle_node_interaction(event):
 	if event.button_index == MOUSE_BUTTON_LEFT:
@@ -232,27 +434,52 @@ func start_connection(socket):
 	if socket.get_meta(\"socket_type\") == \"output\":
 		dragging_connection = true
 		connection_start_socket = socket
-		show_visual_message(\"🔗 STARTING CONNECTION\", stellar_colors[6])
+		change_game_state(GameState.CONNECTING)
+		show_visual_message(\"🔗 STARTING CONNECTION\\nESC to cancel\", stellar_colors[6])
 
 func complete_connection(end_socket):
 	if end_socket.get_meta(\"socket_type\") == \"input\" and connection_start_socket:
 		create_connection(connection_start_socket, end_socket)
 		dragging_connection = false
 		connection_start_socket = null
+		change_game_state(GameState.NORMAL)
 		show_visual_message(\"✅ CONNECTION CREATED\", stellar_colors[4])
+	else:
+		# Invalid connection target
+		show_visual_message(\"⚠️ Can only connect to INPUT sockets\", Color.ORANGE)
 
 func create_connection(output_socket, input_socket):
+	# Check if connection already exists
+	for existing in connections:
+		if existing.output == output_socket and existing.input == input_socket:
+			show_visual_message(\"⚠️ Connection already exists!\", Color.ORANGE)
+			return
+	
 	var connection = {
 		\"output\": output_socket,
 		\"input\": input_socket,
-		\"line\": null
+		\"line\": null,
+		\"id\": generate_connection_id()
 	}
 	connections.append(connection)
 	
-	var record_id = CosmicRecords.generate_compact_id(\"connections\")
-	CosmicRecords.create_record(record_id, \"connections\")
-	CosmicRecords.add_data(record_id, \"from_node\", output_socket.get_meta(\"parent_node\").get_meta(\"function_name\"))
-	CosmicRecords.add_data(record_id, \"to_node\", input_socket.get_meta(\"parent_node\").get_meta(\"function_name\"))
+	# Track connections on sockets for multiple connection support
+	var output_connections = output_socket.get_meta(\"connections\", [])
+	output_connections.append(connection)
+	output_socket.set_meta(\"connections\", output_connections)
+	
+	var input_connections = input_socket.get_meta(\"connections\", [])
+	input_connections.append(connection)
+	input_socket.set_meta(\"connections\", input_connections)
+	
+	# Store in simplified record system (no external dependencies)
+	print(\"🔗 Connection created: %s -> %s\" % [
+		output_socket.get_meta(\"parent_node\").get_meta(\"function_name\"),
+		input_socket.get_meta(\"parent_node\").get_meta(\"function_name\")
+	])
+
+func generate_connection_id() -> String:
+	return \"conn_\" + str(Time.get_ticks_msec())
 
 func update_connections():
 	for connection in connections:
@@ -611,16 +838,27 @@ func find_nearest_interactive_object():
 	return nearest_object
 
 func show_function_inspector(function_node):
-	\"\"\"Show floating text inspector for function blocks\"\"\"
+	\"\"\"Show floating text inspector for function blocks - STANDARDIZED FOR ALL BLOCKS\"\"\"
 	var func_name = function_node.get_meta(\"function_name\", \"Unknown\")
-	var inspector_text = \"🔧 FUNCTION INSPECTOR\\n\\n\"
+	var block_category = function_node.get_meta(\"node_category\", \"function\")
+	var inspector_text = \"🔧 CODE BLOCK INSPECTOR\\n\\n\"
 	inspector_text += \"Function: %s\\n\" % func_name
+	inspector_text += \"Category: %s\\n\" % block_category.to_upper()
 	inspector_text += \"Inputs: %d\\n\" % _count_input_sockets(function_node)
 	inspector_text += \"Outputs: %d\\n\" % _count_output_sockets(function_node)
-	inspector_text += \"\\nPress E again to edit code\"
+	inspector_text += \"\\nE - Edit inspector text\"
+	inspector_text += \"\\nF - Open code editor\"
+	inspector_text += \"\\nG - Move block\"
+	inspector_text += \"\\nX - Delete block\"
 	
-	# Create floating text above the function
-	show_floating_inspector(function_node, inspector_text, Color.CYAN)
+	# Check if this block was already inspected (E again = edit mode)
+	if function_node.get_meta(\"inspector_active\", false):
+		show_code_interface(function_node)
+	else:
+		function_node.set_meta(\"inspector_active\", true)
+		show_floating_inspector(function_node, inspector_text, Color.CYAN)
+		# Reset inspector state after 5 seconds
+		get_tree().create_timer(5.0).timeout.connect(func(): function_node.set_meta(\"inspector_active\", false))
 
 func show_note_editor(note_node):
 	\"\"\"Show note editor with actual text content\"\"\"
@@ -761,12 +999,51 @@ func handle_additional_key_interactions(event: InputEvent):
 			create_new_function_node_at_cursor()
 		KEY_SPACE:
 			quick_spawn_menu()
+		KEY_U:
+			if nearest:
+				undo_object_position(nearest)
 
 func edit_note_text(note_node):
 	\"\"\"T key - Edit note text content in 3D space\"\"\"
 	var current_text = note_node.get_meta(\"note_content\", \"\")
-	show_floating_inspector(note_node, \"✏️ TEXT EDITOR\\n\\nCurrent text:\\n%s\\n\\nType to edit...\" % current_text, Color.YELLOW)
+	note_node.set_meta(\"editing_text\", true)
+	note_node.set_meta(\"edit_buffer\", current_text)
+	
+	# Change to text editing state
+	change_game_state(GameState.TEXT_EDITING)
+	
+	var editor_text = \"✏️ TEXT EDITOR - ACTIVE\\n\\n\"
+	editor_text += \"Current text:\\n%s\\n\\n\" % current_text
+	editor_text += \"🎮 CONTROLS:\\n\"
+	editor_text += \"Type to edit\\n\"
+	editor_text += \"ENTER - Save changes\\n\"
+	editor_text += \"ESC - Cancel\\n\"
+	editor_text += \"\\n⌨️ Text input active!\"
+	
+	show_floating_inspector(note_node, editor_text, Color.YELLOW)
 	print(\"📝 Editing note: %s\" % note_node.name)
+
+func create_editable_text_interface(target_node):
+	\"\"\"Create editable text interface for any object\"\"\"
+	var text_content = \"\"
+	
+	if target_node.has_meta(\"note_content\"):
+		text_content = target_node.get_meta(\"note_content\", \"\")
+	elif target_node.has_meta(\"function_name\"):
+		text_content = target_node.get_meta(\"function_name\", \"\")
+	
+	target_node.set_meta(\"editing_text\", true)
+	target_node.set_meta(\"edit_buffer\", text_content)
+	target_node.set_meta(\"cursor_position\", text_content.length())
+	
+	var interface_text = \"📝 EDITABLE TEXT INTERFACE\\n\\n\"
+	interface_text += \"Content: %s|\\n\\n\" % text_content  # | shows cursor
+	interface_text += \"Type to edit\\n\"
+	interface_text += \"ENTER - Save\\n\"
+	interface_text += \"ESC - Cancel\\n\"
+	interface_text += \"BACKSPACE - Delete\"
+	
+	show_floating_inspector(target_node, interface_text, Color.CYAN)
 
 func rename_object(obj):
 	\"\"\"R key - Rename any object\"\"\"
@@ -777,9 +1054,57 @@ func rename_object(obj):
 func edit_function_code(function_node):
 	\"\"\"F key - Edit function code (hot loading scripturas!)\"\"\"
 	var func_name = function_node.get_meta(\"function_name\", \"Unknown\")
-	var code_preview = \"func %s():\\n    # Your code here\\n    pass\" % func_name.to_lower()
-	show_floating_inspector(function_node, \"💻 CODE EDITOR\\n\\n%s\\n\\nHot loading enabled!\" % code_preview, Color.GREEN)
+	show_code_editor_interface(function_node)
 	print(\"💻 Editing code for: %s\" % func_name)
+
+func show_code_editor_interface(function_node):
+	\"\"\"Create clean code editing interface\"\"\"
+	var func_name = function_node.get_meta(\"function_name\", \"Unknown\")
+	var block_category = function_node.get_meta(\"node_category\", \"function\")
+	
+	# Generate clean code template based on category
+	var code_template = generate_code_template(func_name, block_category)
+	
+	var editor_text = \"💻 CODE EDITOR - HOT LOADING\\n\\n\"
+	editor_text += \"Function: %s\\n\" % func_name
+	editor_text += \"Category: %s\\n\\n\" % block_category.to_upper()
+	editor_text += \"Code Template:\\n%s\\n\\n\" % code_template
+	editor_text += \"✨ Hot loading enabled\\n\"
+	editor_text += \"📝 Edit with T key\"
+	
+	show_floating_inspector(function_node, editor_text, Color.GREEN)
+
+func generate_code_template(func_name: String, category: String) -> String:
+	\"\"\"Generate clean GDScript template without extra words\"\"\"
+	var clean_name = func_name.to_lower().replace(\"_\", \"\")
+	
+	match category:
+		\"pentagon\":
+			return \"func %s():\\n    super.%s()\\n    pass\" % [clean_name, clean_name]
+		\"floodgate\":
+			return \"func %s(data):\\n    return data\" % clean_name
+		\"fairy_tale\":
+			return \"func %s():\\n    # Magic happens\\n    pass\" % clean_name
+		_:
+			return \"func %s():\\n    pass\" % clean_name
+
+func show_code_interface(function_node):
+	\"\"\"Show interactive code interface when E pressed again\"\"\"
+	var func_name = function_node.get_meta(\"function_name\", \"Unknown\")
+	var interface_text = \"⚙️ CODE INTERFACE\\n\\n\"
+	interface_text += \"Function: %s\\n\\n\" % func_name
+	interface_text += \"Actions:\\n\"
+	interface_text += \"F - Edit code\\n\"
+	interface_text += \"T - Edit text\\n\"
+	interface_text += \"R - Rename\\n\"
+	interface_text += \"D - Duplicate\\n\"
+	interface_text += \"X - Delete\\n\"
+	interface_text += \"G - Move\\n\\n\"
+	interface_text += \"Click to edit this text\"
+	
+	# Make this text editable
+	function_node.set_meta(\"text_editable\", true)
+	show_floating_inspector(function_node, interface_text, Color.YELLOW)
 
 func delete_object(obj):
 	\"\"\"X key - Delete object with confirmation\"\"\"
@@ -810,14 +1135,34 @@ var settings_interface: Settings3DInterface = null
 var scriptura_cinema: ScripturaCinema = null
 
 func grab_and_move_object(obj):
-	\"\"\"G key - Grab and move object with cursor - REPENT MY SINS OF TOO CLOSE NODES!\"\"\"
+	\"\"\"G key - Grab and move object with cursor - ALL BLOCKS ARE MOVEABLE!\"\"\"
 	if obj:
-		grabbed_object = obj
-		var camera_pos = $Camera3D.global_position
-		grab_offset = obj.global_position - camera_pos
-		obj.set_meta(\"being_moved\", true)
-		show_floating_inspector(obj, \"✋ GRABBED!\\n\\nMove mouse to reposition\\nG again to release\\nNow you can fix my spacing sins!\", Color.WHITE)
-		print(\"✋ Grabbed: %s - Use mouse to move!\" % obj.name)
+		# Ensure ALL blocks can be moved - no fixed positions for important blocks
+		if obj.has_meta(\"function_name\") or obj.has_meta(\"note_type\"):
+			grabbed_object = obj
+			var camera_pos = $Camera3D.global_position
+			grab_offset = obj.global_position - camera_pos
+			obj.set_meta(\"being_moved\", true)
+			obj.set_meta(\"original_position\", obj.global_position)  # Store for undo
+			
+			# Change to moving object state
+			change_game_state(GameState.MOVING_OBJECT)
+			
+			var block_type = \"CODE BLOCK\" if obj.has_meta(\"function_name\") else \"NOTE\"
+			var category = obj.get_meta(\"node_category\", \"function\").to_upper()
+			
+			var move_text = \"✋ GRABBED %s!\\n\\n\" % block_type
+			move_text += \"Type: %s\\n\" % category
+			move_text += \"Move mouse to reposition\\n\"
+			move_text += \"G - Release\\n\"
+			move_text += \"U - Undo position\\n\"
+			move_text += \"ESC - Cancel\\n\"
+			move_text += \"\\n🌌 All blocks are moveable!\"
+			
+			show_floating_inspector(obj, move_text, Color.WHITE)
+			print(\"✋ Grabbed: %s - Use mouse to move!\" % obj.name)
+		else:
+			show_visual_message(\"⚠️ Object not moveable\", Color.RED)
 
 func handle_grabbed_object_movement():
 	\"\"\"Move grabbed object with cursor at specific distance\"\"\"
@@ -863,24 +1208,39 @@ func release_grabbed_object():
 		
 		print(\"📍 Released: %s at position %v\" % [grabbed_object.name, grabbed_object.global_position])
 		grabbed_object = null
+		
+		# Return to normal state
+		change_game_state(GameState.NORMAL)
 
 func show_all_hotkeys():
 	\"\"\"H key - Show comprehensive help\"\"\"
-	var help_text = \"🎮 ALL HOTKEYS\\n\\n\"
-	help_text += \"E - Inspect nearest\\n\"
-	help_text += \"T - Edit text\\n\"
-	help_text += \"R - Rename\\n\"
-	help_text += \"F - Edit function code\\n\"
-	help_text += \"X - Delete\\n\"
+	var help_text = \"🎮 STANDARDIZED HOTKEYS\\n\\n\"
+	help_text += \"E - Inspect (press again for interface)\\n\"
+	help_text += \"F - Code editor (hot loading)\\n\"
+	help_text += \"T - Edit text (live typing)\\n\"
+	help_text += \"R - Rename object\\n\"
+	help_text += \"G - Grab/Move (all blocks moveable)\\n\"
+	help_text += \"U - Undo position\\n\"
 	help_text += \"D - Duplicate\\n\"
-	help_text += \"G - Grab/Move\\n\"
+	help_text += \"X - Delete\\n\"
+	help_text += \"B - New function block\\n\"
 	help_text += \"M - Manipulation mode\\n\"
 	help_text += \"V - Visual debug\\n\"
-	help_text += \"B - New function\\n\"
-	help_text += \"SPACE - Quick menu\\n\"
+	help_text += \"SPACE - Quick spawn menu\\n\"
+	help_text += \"TAB - 3D Settings\\n\"
 	help_text += \"H - This help\"
 	
 	show_visual_message(help_text, Color.WHITE)
+
+func undo_object_position(obj):
+	\"\"\"U key - Undo object position to original\"\"\"
+	if obj.has_meta(\"original_position\"):
+		var original_pos = obj.get_meta(\"original_position\")
+		obj.global_position = original_pos
+		show_floating_inspector(obj, \"↩️ POSITION RESTORED\\n\\nReturned to original position\", Color.CYAN)
+		print(\"↩️ Restored %s to position %v\" % [obj.name, original_pos])
+	else:
+		show_visual_message(\"⚠️ No original position stored\", Color.ORANGE)
 
 func enter_manipulation_mode():
 	\"\"\"M key - Enter object manipulation mode\"\"\"
@@ -924,6 +1284,10 @@ func toggle_settings_interface():
 	\"\"\"TAB key - Toggle the 3D settings interface\"\"\"
 	if not settings_interface:
 		print(\"⚠️ Settings interface not initialized\")
+		# we gotta
+		# setup_input_mapping_system()
+		# or split it into two functions
+		# and turn on only settings not input mapper too, they connect but not that much
 		return
 	
 	if settings_interface.visible:
@@ -1133,6 +1497,111 @@ func show_visual_message(text: String, color: Color):
 	tween.parallel().tween_property(msg, \"position:y\", msg.position.y + 3, 2.0)
 	tween.parallel().tween_property(msg, \"modulate:a\", 0.0, 2.0)
 	tween.tween_callback(msg.queue_free)
+
+# ===== STATE MANAGEMENT SYSTEM =====
+
+func change_game_state(new_state: GameState):
+	\"\"\"Change game state with proper cleanup\"\"\"
+	var old_state = current_game_state
+	current_game_state = new_state
+	
+	# Handle state transitions
+	match old_state:
+		GameState.TEXT_EDITING:
+			# Clean up any active text editing
+			var editing_obj = find_editing_object()
+			if editing_obj:
+				cancel_text_editing(editing_obj)
+		GameState.CONNECTING:
+			# Clean up connection dragging
+			dragging_connection = false
+			connection_start_socket = null
+		GameState.MOVING_OBJECT:
+			# Clean up object movement
+			if grabbed_object:
+				release_grabbed_object()
+	
+	# Update visual feedback
+	var state_names = {
+		GameState.NORMAL: \"NORMAL\",
+		GameState.TEXT_EDITING: \"TEXT_EDITING\", 
+		GameState.CONNECTING: \"CONNECTING\",
+		GameState.MOVING_OBJECT: \"MOVING_OBJECT\",
+		GameState.SETTINGS_OPEN: \"SETTINGS_OPEN\"
+	}
+	
+	show_visual_message(\"🎮 State: %s\" % state_names[new_state], Color.CYAN)
+	print(\"🎮 Game state changed: %s -> %s\" % [state_names[old_state], state_names[new_state]])
+
+func cancel_connection():
+	\"\"\"Cancel current connection dragging\"\"\"
+	dragging_connection = false
+	connection_start_socket = null
+	change_game_state(GameState.NORMAL)
+	show_visual_message(\"❌ Connection cancelled\", Color.RED)
+
+# ===== CLOCK SYSTEM =====
+
+func setup_clock_system():
+	\"\"\"Initialize the game clock system\"\"\"
+	game_clock = 0.0
+	
+	# Create clock display
+	clock_display_node = Label3D.new()
+	clock_display_node.text = \"⏰ 0.0s\"
+	clock_display_node.position = Vector3(10, 8, 0)
+	clock_display_node.billboard = BaseMaterial3D.BILLBOARD_ENABLED
+	clock_display_node.modulate = Color.WHITE
+	clock_display_node.pixel_size = 0.008
+	add_child(clock_display_node)
+	
+	print(\"⏰ Clock system initialized\")
+
+func update_clock_system(delta: float):
+	\"\"\"Update the game clock each frame\"\"\"
+	game_clock += delta * clock_tick_rate
+	
+	# Update clock display
+	if clock_display_node:
+		clock_display_node.text = \"⏰ %.1fs (%.1fx)\" % [game_clock, clock_tick_rate]
+
+func toggle_clock_display():
+	\"\"\"Toggle clock visibility\"\"\"
+	if clock_display_node:
+		clock_display_node.visible = !clock_display_node.visible
+		var status = \"shown\" if clock_display_node.visible else \"hidden\"
+		show_visual_message(\"⏰ Clock %s\" % status, Color.YELLOW)
+
+func increase_clock_speed():
+	\"\"\"Increase clock tick rate\"\"\"
+	clock_tick_rate = min(10.0, clock_tick_rate + 0.5)
+	show_visual_message(\"⏰ Clock speed: %.1fx\" % clock_tick_rate, Color.GREEN)
+
+func decrease_clock_speed():
+	\"\"\"Decrease clock tick rate\"\"\"
+	clock_tick_rate = max(0.1, clock_tick_rate - 0.5)
+	show_visual_message(\"⏰ Clock speed: %.1fx\" % clock_tick_rate, Color.ORANGE)
+
+# ===== SIMPLIFIED INPUT SYSTEM =====
+
+func setup_simplified_input_system():
+	\"\"\"Setup simplified input system without external dependencies\"\"\"
+	# No external dependencies - just use built-in input
+	print(\"⌨️ Simplified input system ready\")
+
+func toggle_settings_interface_new():
+	\"\"\"Toggle simplified settings interface\"\"\"
+	if current_game_state == GameState.SETTINGS_OPEN:
+		change_game_state(GameState.NORMAL)
+		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+		show_visual_message(\"⚙️ Settings closed\", Color.CYAN)
+		# hmm i wanted to 
+		# toggle_settings_interface()
+		# then inside of it
+	else:
+		change_game_state(GameState.SETTINGS_OPEN)
+		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+		show_visual_message(\"⚙️ Settings (simplified)\\n\\nESC to close\\nC - Toggle clock\\n+/- - Clock speed\", Color.GOLD)
 "
 
 [sub_resource type="Environment" id="Environment_space"]
@@ -1148,7 +1617,7 @@ ambient_light_energy = 0.2
 script = SubResource("GDScript_visual_programming")
 
 [node name="Camera3D" type="Camera3D" parent="."]
-fov = 90
+fov = 90.0
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_space")
@@ -1158,6 +1627,8 @@ layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 theme = SubResource("Theme_programming")
 
 [node name="Controls" type="Label" parent="UI"]

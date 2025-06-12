@@ -1,0 +1,1456 @@
+[gd_scene load_steps=4 format=3]
+
+[sub_resource type="GDScript" id="GDScript_visual_programming"]
+script/source = "extends Node3D
+
+# Game State Management
+enum GameState {
+	NORMAL,          # Default state - can move, inspect, etc.
+	TEXT_EDITING,    # Editing text input
+	CONNECTING,      # Dragging connections between sockets
+	MOVING_OBJECT,   # Moving objects with G key
+	SETTINGS_OPEN    # 3D settings interface open
+}
+
+var stellar_colors = [Color(0,0,0),Color(0.2,0.1,0),Color(0.8,0,0),Color(1,0.5,0),Color(1,1,0),Color(1,1,1),Color(0.7,0.9,1),Color(0,0.5,1),Color(0.5,0,1)]
+var programming_nodes = []
+var connections = []
+var selected_node = null
+var dragging_connection = false
+var connection_start_socket = null
+var notepad_layers = []
+var scene_states = []
+
+# State Management
+var current_game_state: GameState = GameState.NORMAL
+var state_stack = []  # For pushing/popping states
+
+# Clock System - TRUE EXECUTION TIMING
+var game_clock: float = 0.0
+var clock_tick_rate: float = 1.0  # Ticks per second
+var clock_display_node: Label3D = null
+
+# DIVINE EXECUTION SYSTEM
+var execution_timers = {}  # Connection ID -> Timer data
+var execution_rates = [0.1, 0.2, 0.5, 1.0, 2.0, 5.0, 10.0]  # Available execution rates
+var current_rate_index = 3  # Default to 1.0 second
+var data_pulses = []  # Visual data flow pulses
+var execution_queue = []  # Functions waiting to execute
+
+# Movement/interaction variables
+var grabbed_object = null
+var grab_offset = Vector3.ZERO
+
+func _ready():
+	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+	
+	# Initialize game state
+	current_game_state = GameState.NORMAL
+	
+	# Initialize visual environment
+	create_space_environment()
+	spawn_initial_nodes()
+	
+	# Initialize clock system
+	setup_clock_system()
+	
+	# Create sample notes with text content
+	create_text_note(Vector3(-5, 5, -8), \"Programming Notes\", \"This is where the magic happens!\\n\\nFunctions connect through sockets.\\nPress E to inspect anything.\\nClick to connect orange to blue.\")
+	create_text_note(Vector3(5, 5, -8), \"Hot Loading\", \"Scripts update in real-time\\n\\nEdit code in external editor\\nChanges appear instantly\\nNo restart needed!\")
+	create_text_note(Vector3(0, 8, 0), \"3D Interface\", \"Welcome to true 3D programming!\\n\\nNo flat interfaces here\\nEverything is spatial\\nThink in dimensions\")
+	create_text_note(Vector3(-8, 2, -5), \"CLOCK SYSTEM\", \"⏰ Game Clock: 0.0s\\n\\nTick rate: 1.0/sec\\nPress C to toggle clock\\nPress + to speed up\\nPress - to slow down\")
+	
+	show_visual_message(\"🧠 3D VISUAL PROGRAMMING UNIVERSE\\n\\nState: NORMAL - Ready for divine programming!\", stellar_colors[8])
+
+func _input(event):
+	# Handle state-specific input
+	match current_game_state:
+		GameState.TEXT_EDITING:
+			if handle_text_editing(event):
+				return
+		GameState.SETTINGS_OPEN:
+			# Skip most inputs when settings open
+			if event is InputEventKey and event.pressed and event.keycode == KEY_ESCAPE:
+				change_game_state(GameState.NORMAL)
+			return
+		GameState.CONNECTING:
+			# Handle connection dragging
+			if event is InputEventKey and event.pressed and event.keycode == KEY_ESCAPE:
+				cancel_connection()
+			elif event is InputEventMouseButton and event.pressed:
+				handle_node_interaction(event)
+			return
+		GameState.MOVING_OBJECT:
+			# Handle object movement
+			if event is InputEventKey and event.pressed:
+				if event.keycode == KEY_G:
+					release_grabbed_object()
+				elif event.keycode == KEY_ESCAPE:
+					release_grabbed_object()
+			return
+	
+	# Normal state input handling
+	if event is InputEventKey and event.pressed:
+		match event.keycode:
+			KEY_TAB:
+				toggle_settings_interface()
+				return
+			KEY_C:
+				toggle_clock_display()
+				return
+			KEY_EQUAL:  # + key
+				if event.shift_pressed:
+					increase_clock_speed()
+				return
+			KEY_MINUS:
+				decrease_clock_speed()
+				return
+	
+	if event is InputEventMouseMotion and Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
+		rotate_camera(event.relative)
+	elif event.is_action_pressed(\"ui_cancel\"):
+		toggle_mouse_mode()
+	elif event.is_action_pressed(\"notepad_toggle\"):
+		toggle_notepad_interface()
+	elif event.is_action_pressed(\"create_word\"):
+		create_programming_node()
+	elif event.is_action_pressed(\"interact\"):
+		interact_with_nearest_enhanced()
+	elif event is InputEventMouseButton and event.pressed:
+		handle_node_interaction(event)
+	elif event is InputEventKey and event.pressed:
+		handle_additional_key_interactions(event)
+
+func _process(delta):
+	# Update game clock
+	update_clock_system(delta)
+	
+	# DIVINE EXECUTION SYSTEM - Process timed function execution
+	process_execution_timers(delta)
+	update_data_pulses(delta)
+	
+	handle_movement(delta)
+	update_connections()
+	
+	# Handle grabbed object movement
+	if grabbed_object:
+		handle_grabbed_object_movement()
+
+# ===== MOVEMENT AND CAMERA =====
+
+func handle_movement(delta):
+	var input_vector = Vector3()
+	if Input.is_action_pressed(\"move_forward\"):
+		input_vector.z -= 1
+	if Input.is_action_pressed(\"move_backward\"):
+		input_vector.z += 1
+	if Input.is_action_pressed(\"move_left\"):
+		input_vector.x -= 1
+	if Input.is_action_pressed(\"move_right\"):
+		input_vector.x += 1
+	if Input.is_action_pressed(\"move_up\"):
+		input_vector.y += 1
+	if Input.is_action_pressed(\"move_down\"):
+		input_vector.y -= 1
+	
+	if input_vector.length() > 0:
+		input_vector = input_vector.normalized()
+		input_vector = $Camera3D.global_transform.basis * input_vector
+		$Camera3D.global_position += input_vector * 20.0 * delta
+
+func rotate_camera(relative_motion):
+	$Camera3D.rotation.y -= relative_motion.x * 0.002
+	$Camera3D.rotation.x = clamp($Camera3D.rotation.x - relative_motion.y * 0.002, -1.5, 1.5)
+
+func toggle_mouse_mode():
+	if Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
+		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+	else:
+		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+
+# ===== ENVIRONMENT CREATION =====
+
+func create_space_environment():
+	for i in range(50):
+		var star = MeshInstance3D.new()
+		star.mesh = SphereMesh.new()
+		star.mesh.radius = 0.3
+		star.position = Vector3(randf_range(-200,200), randf_range(-200,200), randf_range(-200,200))
+		var mat = StandardMaterial3D.new()
+		mat.albedo_color = stellar_colors[5]
+		mat.emission_enabled = true
+		mat.emission = stellar_colors[5]
+		mat.emission_energy = 1.5
+		star.material_override = mat
+		add_child(star)
+
+func spawn_initial_nodes():
+	# Core Programming Pipeline
+	create_function_node(\"INPUT\", Vector3(-10, 0, 0), stellar_colors[6])
+	create_function_node(\"PROCESS\", Vector3(0, 0, 0), stellar_colors[4])
+	create_function_node(\"OUTPUT\", Vector3(10, 0, 0), stellar_colors[2])
+	
+	# Pentagon Lifecycle Blocks - THE SACRED FIVE
+	create_pentagon_function_node(\"PENTAGON_INIT\", Vector3(-16, 8, 0), Color.GOLD)
+	create_pentagon_function_node(\"PENTAGON_READY\", Vector3(-8, 8, 0), Color.CYAN)
+	create_pentagon_function_node(\"PENTAGON_PROCESS\", Vector3(0, 8, 0), Color.GREEN)
+	create_pentagon_function_node(\"PENTAGON_INPUT\", Vector3(8, 8, 0), Color.MAGENTA)
+	create_pentagon_function_node(\"PENTAGON_SEWERS\", Vector3(16, 8, 0), Color.RED)
+	
+	# FloodGates Task System
+	create_floodgate_function_node(\"REGISTER_BEING\", Vector3(-12, -8, 0), Color.BLUE)
+	create_floodgate_function_node(\"TASK_QUEUE\", Vector3(-4, -8, 0), Color.ORANGE)
+	create_floodgate_function_node(\"EXECUTE_ONCE\", Vector3(4, -8, 0), Color.PURPLE)
+	create_floodgate_function_node(\"FLOOD_CONTROL\", Vector3(12, -8, 0), Color.YELLOW)
+	
+	# 3D Programming Fairy Tale Blocks
+	create_fairy_function_node(\"PRINT_OVERHEAD\", Vector3(-16, 0, 10), Color.WHITE)
+	create_fairy_function_node(\"SPAWN_BEING\", Vector3(-8, 0, 10), Color.PINK)
+	create_fairy_function_node(\"EVOLVE_FORM\", Vector3(0, 0, 10), Color.LIME)
+	create_fairy_function_node(\"TRANSMUTE_REALITY\", Vector3(8, 0, 10), Color.TURQUOISE)
+	create_fairy_function_node(\"CONSCIOUSNESS_SHIFT\", Vector3(16, 0, 10), Color.VIOLET)
+
+# ===== NODE CREATION SYSTEM =====
+
+func create_function_node(func_name: String, pos: Vector3, color: Color):
+	var node = Node3D.new()
+	node.position = pos
+	node.set_meta(\"function_name\", func_name)
+	node.set_meta(\"node_type\", \"function\")
+	
+	var body = MeshInstance3D.new()
+	body.mesh = BoxMesh.new()
+	body.mesh.size = Vector3(3, 2, 1)
+	var mat = StandardMaterial3D.new()
+	mat.albedo_color = color
+	mat.emission_enabled = true
+	mat.emission = color
+	mat.emission_energy = 0.5
+	body.material_override = mat
+	node.add_child(body)
+	
+	var label = Label3D.new()
+	label.text = func_name
+	label.billboard = BaseMaterial3D.BILLBOARD_ENABLED
+	label.position = Vector3(0, 1.5, 0)
+	label.modulate = stellar_colors[5]
+	node.add_child(label)
+	
+	create_input_socket(node, Vector3(-1.5, 0, 0))
+	create_output_socket(node, Vector3(1.5, 0, 0))
+	
+	add_child(node)
+	programming_nodes.append(node)
+	
+	# Simple logging instead of CosmicRecords
+	print(\"📝 Function node created: %s at %v\" % [func_name, pos])
+	
+	return node
+
+func create_input_socket(parent_node: Node3D, local_pos: Vector3):
+	# Create socket container with collision
+	var socket_container = StaticBody3D.new()
+	socket_container.position = local_pos
+	socket_container.set_meta(\"socket_type\", \"input\")
+	socket_container.set_meta(\"parent_node\", parent_node)
+	
+	# Create visual sphere
+	var socket = MeshInstance3D.new()
+	socket.mesh = SphereMesh.new()
+	socket.mesh.radius = 0.3
+	var mat = StandardMaterial3D.new()
+	mat.albedo_color = stellar_colors[7]
+	mat.emission_enabled = true
+	mat.emission = stellar_colors[7]
+	mat.emission_energy = 1.0
+	socket.material_override = mat
+	
+	# Create collision shape for clicking
+	var collision = CollisionShape3D.new()
+	var sphere_shape = SphereShape3D.new()
+	sphere_shape.radius = 0.3
+	collision.shape = sphere_shape
+	
+	socket_container.add_child(socket)
+	socket_container.add_child(collision)
+	parent_node.add_child(socket_container)
+
+func create_output_socket(parent_node: Node3D, local_pos: Vector3):
+	# Create socket container with collision
+	var socket_container = StaticBody3D.new()
+	socket_container.position = local_pos
+	socket_container.set_meta(\"socket_type\", \"output\")
+	socket_container.set_meta(\"parent_node\", parent_node)
+	socket_container.set_meta(\"connections\", [])  # Track multiple connections
+	
+	# Create visual sphere
+	var socket = MeshInstance3D.new()
+	socket.mesh = SphereMesh.new()
+	socket.mesh.radius = 0.3
+	var mat = StandardMaterial3D.new()
+	mat.albedo_color = stellar_colors[3]
+	mat.emission_enabled = true
+	mat.emission = stellar_colors[3]
+	mat.emission_energy = 1.0
+	socket.material_override = mat
+	
+	# Create collision shape for clicking
+	var collision = CollisionShape3D.new()
+	var sphere_shape = SphereShape3D.new()
+	sphere_shape.radius = 0.3
+	collision.shape = sphere_shape
+	
+	socket_container.add_child(socket)
+	socket_container.add_child(collision)
+	parent_node.add_child(socket_container)
+
+# ===== SPECIALIZED NODE CREATION =====
+
+func create_pentagon_function_node(func_name: String, pos: Vector3, color: Color):
+	var node = create_function_node(func_name, pos, color)
+	node.set_meta(\"node_category\", \"pentagon\")
+	node.set_meta(\"execution_order\", _get_pentagon_order(func_name))
+	node.set_meta(\"requires_super_call\", true)
+	
+	# Add Pentagon-specific visual indicator
+	var pentagon_symbol = MeshInstance3D.new()
+	var cylinder = CylinderMesh.new()
+	cylinder.top_radius = 0.1
+	cylinder.bottom_radius = 0.1
+	cylinder.height = 0.5
+	pentagon_symbol.mesh = cylinder
+	pentagon_symbol.position = Vector3(0, 1.5, 0)
+	
+	var pentagon_mat = StandardMaterial3D.new()
+	pentagon_mat.albedo_color = Color.GOLD
+	pentagon_mat.emission_enabled = true
+	pentagon_mat.emission_energy = 0.8
+	pentagon_symbol.material_override = pentagon_mat
+	
+	node.add_child(pentagon_symbol)
+	return node
+
+func create_floodgate_function_node(func_name: String, pos: Vector3, color: Color):
+	var node = create_function_node(func_name, pos, color)
+	node.set_meta(\"node_category\", \"floodgate\")
+	node.set_meta(\"task_type\", _get_floodgate_task_type(func_name))
+	node.set_meta(\"executes_once\", func_name == \"EXECUTE_ONCE\")
+	
+	# Add FloodGate visual indicator (water drop)
+	var drop = MeshInstance3D.new()
+	var sphere = SphereMesh.new()
+	sphere.radius = 0.3
+	sphere.height = 0.6
+	drop.mesh = sphere
+	drop.position = Vector3(0, 1.8, 0)
+	
+	var drop_mat = StandardMaterial3D.new()
+	drop_mat.albedo_color = Color.CYAN
+	drop_mat.emission_enabled = true
+	drop_mat.emission_energy = 0.6
+	drop_mat.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
+	drop_mat.albedo_color.a = 0.7
+	drop.material_override = drop_mat
+	
+	node.add_child(drop)
+	return node
+
+func create_fairy_function_node(func_name: String, pos: Vector3, color: Color):
+	var node = create_function_node(func_name, pos, color)
+	node.set_meta(\"node_category\", \"fairy_tale\")
+	node.set_meta(\"magic_type\", _get_fairy_magic_type(func_name))
+	node.set_meta(\"reality_affecting\", true)
+	
+	# Add magical sparkle effect
+	var sparkle = MeshInstance3D.new()
+	var star = BoxMesh.new()
+	star.size = Vector3(0.2, 0.2, 0.2)
+	sparkle.mesh = star
+	sparkle.position = Vector3(0, 2.0, 0)
+	
+	var sparkle_mat = StandardMaterial3D.new()
+	sparkle_mat.albedo_color = color
+	sparkle_mat.emission_enabled = true
+	sparkle_mat.emission_energy = 1.2
+	sparkle.material_override = sparkle_mat
+	
+	# Add sparkle rotation
+	var tween = create_tween()
+	tween.set_loops()
+	tween.tween_property(sparkle, \"rotation_degrees\", Vector3(360, 360, 360), 3.0)
+	
+	node.add_child(sparkle)
+	return node
+
+# ===== HELPER FUNCTIONS FOR NODE TYPES =====
+
+func _get_pentagon_order(func_name: String) -> int:
+	match func_name:
+		\"PENTAGON_INIT\": return 1
+		\"PENTAGON_READY\": return 2
+		\"PENTAGON_PROCESS\": return 3
+		\"PENTAGON_INPUT\": return 4
+		\"PENTAGON_SEWERS\": return 5
+		_: return 0
+
+func _get_floodgate_task_type(func_name: String) -> String:
+	match func_name:
+		\"REGISTER_BEING\": return \"registration\"
+		\"TASK_QUEUE\": return \"queuing\"
+		\"EXECUTE_ONCE\": return \"execution\"
+		\"FLOOD_CONTROL\": return \"management\"
+		_: return \"unknown\"
+
+func _get_fairy_magic_type(func_name: String) -> String:
+	match func_name:
+		\"PRINT_OVERHEAD\": return \"visualization\"
+		\"SPAWN_BEING\": return \"creation\"
+		\"EVOLVE_FORM\": return \"transformation\"
+		\"TRANSMUTE_REALITY\": return \"reality_bending\"
+		\"CONSCIOUSNESS_SHIFT\": return \"awareness_alteration\"
+		_: return \"cosmic_mystery\"
+
+# ===== CONNECTION SYSTEM =====
+
+func handle_node_interaction(event):
+	if event.button_index == MOUSE_BUTTON_LEFT:
+		var ray_origin = $Camera3D.global_position
+		var ray_end = ray_origin + $Camera3D.global_transform.basis.z * -100
+		
+		var space_state = get_world_3d().direct_space_state
+		var query = PhysicsRayQueryParameters3D.create(ray_origin, ray_end)
+		var result = space_state.intersect_ray(query)
+		
+		if result:
+			var collider = result.collider
+			handle_object_clicked(collider)
+
+func handle_object_clicked(object):
+	if object.has_meta(\"socket_type\"):
+		handle_socket_clicked(object)
+	elif object.has_meta(\"node_type\"):
+		handle_node_clicked(object)
+
+func handle_socket_clicked(socket):
+	if dragging_connection:
+		complete_connection(socket)
+	else:
+		start_connection(socket)
+
+func start_connection(socket):
+	if socket.get_meta(\"socket_type\") == \"output\":
+		dragging_connection = true
+		connection_start_socket = socket
+		change_game_state(GameState.CONNECTING)
+		show_visual_message(\"🔗 STARTING CONNECTION\\nESC to cancel\", stellar_colors[6])
+
+func complete_connection(end_socket):
+	if end_socket.get_meta(\"socket_type\") == \"input\" and connection_start_socket:
+		create_connection(connection_start_socket, end_socket)
+		dragging_connection = false
+		connection_start_socket = null
+		change_game_state(GameState.NORMAL)
+		show_visual_message(\"✅ CONNECTION CREATED\", stellar_colors[4])
+	else:
+		show_visual_message(\"⚠️ Can only connect to INPUT sockets\", Color.ORANGE)
+
+func create_connection(output_socket, input_socket):
+	# Check if connection already exists
+	for existing in connections:
+		if existing.output == output_socket and existing.input == input_socket:
+			show_visual_message(\"⚠️ Connection already exists!\", Color.ORANGE)
+			return
+	
+	var connection_id = generate_connection_id()
+	var connection = {
+		\"output\": output_socket,
+		\"input\": input_socket,
+		\"line\": null,
+		\"id\": connection_id,
+		\"execution_rate\": execution_rates[current_rate_index],  # Default 1.0 second
+		\"timing_strip\": null,
+		\"last_execution\": 0.0,
+		\"pulse_active\": false,
+		\"data_value\": null
+	}
+	connections.append(connection)
+	
+	# Initialize execution timer for this connection
+	setup_connection_execution_timer(connection)
+	
+	# Track connections on sockets for multiple connection support
+	var output_connections = output_socket.get_meta(\"connections\", [])
+	output_connections.append(connection)
+	output_socket.set_meta(\"connections\", output_connections)
+	
+	var input_connections = input_socket.get_meta(\"connections\", [])
+	input_connections.append(connection)
+	input_socket.set_meta(\"connections\", input_connections)
+	
+	# Create timing control strip on connection
+	create_timing_strip(connection)
+	
+	print(\"🔗 Connection created: %s -> %s (Rate: %.1fs)\" % [
+		output_socket.get_meta(\"parent_node\").get_meta(\"function_name\"),
+		input_socket.get_meta(\"parent_node\").get_meta(\"function_name\"),
+		connection.execution_rate
+	])
+
+func generate_connection_id() -> String:
+	return \"conn_\" + str(Time.get_ticks_msec())
+
+func update_connections():
+	for connection in connections:
+		if connection.line:
+			connection.line.queue_free()
+		
+		var start_pos = connection.output.global_position
+		var end_pos = connection.input.global_position
+		connection.line = create_connection_line(start_pos, end_pos)
+
+func create_connection_line(start_pos: Vector3, end_pos: Vector3):
+	var line = MeshInstance3D.new()
+	var mesh = CylinderMesh.new()
+	mesh.top_radius = 0.05
+	mesh.bottom_radius = 0.05
+	mesh.height = start_pos.distance_to(end_pos)
+	line.mesh = mesh
+	
+	line.position = (start_pos + end_pos) / 2
+	line.look_at(end_pos, Vector3.UP)
+	line.rotation_degrees.x += 90
+	
+	var mat = StandardMaterial3D.new()
+	mat.albedo_color = stellar_colors[8]
+	mat.emission_enabled = true
+	mat.emission = stellar_colors[8]
+	mat.emission_energy = 0.8
+	line.material_override = mat
+	
+	add_child(line)
+	return line
+
+# ===== STATE MANAGEMENT SYSTEM =====
+
+func change_game_state(new_state: GameState):
+	var old_state = current_game_state
+	current_game_state = new_state
+	
+	# Handle state transitions
+	match old_state:
+		GameState.TEXT_EDITING:
+			var editing_obj = find_editing_object()
+			if editing_obj:
+				cancel_text_editing(editing_obj)
+		GameState.CONNECTING:
+			dragging_connection = false
+			connection_start_socket = null
+		GameState.MOVING_OBJECT:
+			if grabbed_object:
+				release_grabbed_object()
+	
+	# Update visual feedback
+	var state_names = {
+		GameState.NORMAL: \"NORMAL\",
+		GameState.TEXT_EDITING: \"TEXT_EDITING\", 
+		GameState.CONNECTING: \"CONNECTING\",
+		GameState.MOVING_OBJECT: \"MOVING_OBJECT\",
+		GameState.SETTINGS_OPEN: \"SETTINGS_OPEN\"
+	}
+	
+	show_visual_message(\"🎮 State: %s\" % state_names[new_state], Color.CYAN)
+	print(\"🎮 Game state changed: %s -> %s\" % [state_names[old_state], state_names[new_state]])
+
+func cancel_connection():
+	dragging_connection = false
+	connection_start_socket = null
+	change_game_state(GameState.NORMAL)
+	show_visual_message(\"❌ Connection cancelled\", Color.RED)
+
+# ===== CLOCK SYSTEM =====
+
+func setup_clock_system():
+	game_clock = 0.0
+	
+	# Create clock display
+	clock_display_node = Label3D.new()
+	clock_display_node.text = \"⏰ 0.0s\"
+	clock_display_node.position = Vector3(10, 8, 0)
+	clock_display_node.billboard = BaseMaterial3D.BILLBOARD_ENABLED
+	clock_display_node.modulate = Color.WHITE
+	clock_display_node.pixel_size = 0.008
+	add_child(clock_display_node)
+	
+	print(\"⏰ Clock system initialized\")
+
+func update_clock_system(delta: float):
+	game_clock += delta * clock_tick_rate
+	
+	if clock_display_node:
+		clock_display_node.text = \"⏰ %.1fs (%.1fx)\" % [game_clock, clock_tick_rate]
+
+func toggle_clock_display():
+	if clock_display_node:
+		clock_display_node.visible = !clock_display_node.visible
+		var status = \"shown\" if clock_display_node.visible else \"hidden\"
+		show_visual_message(\"⏰ Clock %s\" % status, Color.YELLOW)
+
+func increase_clock_speed():
+	clock_tick_rate = min(10.0, clock_tick_rate + 0.5)
+	show_visual_message(\"⏰ Clock speed: %.1fx\" % clock_tick_rate, Color.GREEN)
+
+func decrease_clock_speed():
+	clock_tick_rate = max(0.1, clock_tick_rate - 0.5)
+	show_visual_message(\"⏰ Clock speed: %.1fx\" % clock_tick_rate, Color.ORANGE)
+
+# ===== TEXT EDITING SYSTEM =====
+
+func handle_text_editing(event: InputEvent) -> bool:
+	var editing_object = find_editing_object()
+	if not editing_object:
+		return false
+	
+	if event is InputEventKey and event.pressed:
+		var current_buffer = editing_object.get_meta(\"edit_buffer\", \"\")
+		
+		match event.keycode:
+			KEY_ENTER:
+				save_edited_text(editing_object)
+				return true
+			KEY_ESCAPE:
+				cancel_text_editing(editing_object)
+				return true
+			KEY_BACKSPACE:
+				if current_buffer.length() > 0:
+					current_buffer = current_buffer.substr(0, current_buffer.length() - 1)
+					editing_object.set_meta(\"edit_buffer\", current_buffer)
+					update_text_display(editing_object)
+				return true
+		
+		# Handle regular character input
+		if event.unicode > 31 and event.unicode < 127:  # Printable ASCII
+			var char = char(event.unicode)
+			current_buffer += char
+			editing_object.set_meta(\"edit_buffer\", current_buffer)
+			update_text_display(editing_object)
+			return true
+	
+	return false
+
+func find_editing_object() -> Node3D:
+	for child in get_children():
+		if child.has_meta(\"editing_text\") and child.get_meta(\"editing_text\"):
+			return child
+	
+	for node in programming_nodes:
+		if node.has_meta(\"editing_text\") and node.get_meta(\"editing_text\"):
+			return node
+	
+	return null
+
+func save_edited_text(obj: Node3D):
+	var new_text = obj.get_meta(\"edit_buffer\", \"\")
+	
+	if obj.has_meta(\"note_content\"):
+		obj.set_meta(\"note_content\", new_text)
+		update_note_display(obj)
+	elif obj.has_meta(\"function_name\"):
+		obj.set_meta(\"function_name\", new_text)
+		update_function_display(obj)
+	
+	obj.set_meta(\"editing_text\", false)
+	obj.set_meta(\"edit_buffer\", \"\")
+	change_game_state(GameState.NORMAL)
+	
+	var inspector = obj.get_node_or_null(\"FloatingInspector\")
+	if inspector:
+		inspector.queue_free()
+	
+	show_visual_message(\"✅ Text saved!\", Color.GREEN)
+
+func cancel_text_editing(obj: Node3D):
+	obj.set_meta(\"editing_text\", false)
+	obj.set_meta(\"edit_buffer\", \"\")
+	change_game_state(GameState.NORMAL)
+	
+	var inspector = obj.get_node_or_null(\"FloatingInspector\")
+	if inspector:
+		inspector.queue_free()
+	
+	show_visual_message(\"❌ Edit cancelled\", Color.RED)
+
+func update_text_display(obj: Node3D):
+	var buffer = obj.get_meta(\"edit_buffer\", \"\")
+	var display_text = \"📝 EDITING: %s|\" % buffer
+	
+	var inspector = obj.get_node_or_null(\"FloatingInspector\")
+	if inspector:
+		inspector.text = display_text
+
+func update_note_display(note_obj: Node3D):
+	var new_content = note_obj.get_meta(\"note_content\", \"\")
+	
+	for child in note_obj.get_children():
+		if child is Label3D and child.position.y < 1.0:
+			var preview = new_content.substr(0, 50) + (\"...\" if new_content.length() > 50 else \"\")
+			child.text = preview
+
+func update_function_display(func_obj: Node3D):
+	var new_name = func_obj.get_meta(\"function_name\", \"FUNC\")
+	
+	for child in func_obj.get_children():
+		if child is Label3D:
+			child.text = new_name
+
+# ===== INTERACTION SYSTEM =====
+
+func interact_with_nearest_enhanced():
+	var nearest = find_nearest_interactive_object()
+	
+	if nearest:
+		if nearest.has_meta(\"function_name\"):
+			show_function_inspector(nearest)
+		elif nearest.has_meta(\"note_type\"):
+			show_note_editor(nearest)
+		else:
+			transform_to_universal_being(nearest)
+
+func find_nearest_interactive_object():
+	var camera_pos = $Camera3D.global_position
+	var nearest_object = null
+	var nearest_distance = 10.0
+	
+	for node in programming_nodes:
+		var distance = camera_pos.distance_to(node.global_position)
+		if distance < nearest_distance:
+			nearest_distance = distance
+			nearest_object = node
+	
+	for note in get_children():
+		if note.has_meta(\"note_type\"):
+			var distance = camera_pos.distance_to(note.global_position)
+			if distance < nearest_distance:
+				nearest_distance = distance
+				nearest_object = note
+	
+	return nearest_object
+
+func show_function_inspector(function_node):
+	var func_name = function_node.get_meta(\"function_name\", \"Unknown\")
+	var block_category = function_node.get_meta(\"node_category\", \"function\")
+	var inspector_text = \"🔧 CODE BLOCK INSPECTOR\\n\\n\"
+	inspector_text += \"Function: %s\\n\" % func_name
+	inspector_text += \"Category: %s\\n\" % block_category.to_upper()
+	inspector_text += \"Inputs: %d\\n\" % _count_input_sockets(function_node)
+	inspector_text += \"Outputs: %d\\n\" % _count_output_sockets(function_node)
+	inspector_text += \"\\nE - Edit inspector text\"
+	inspector_text += \"\\nF - Open code editor\"
+	inspector_text += \"\\nG - Move block\"
+	inspector_text += \"\\nX - Delete block\"
+	
+	if function_node.get_meta(\"inspector_active\", false):
+		show_code_interface(function_node)
+	else:
+		function_node.set_meta(\"inspector_active\", true)
+		show_floating_inspector(function_node, inspector_text, Color.CYAN)
+		get_tree().create_timer(5.0).timeout.connect(func(): function_node.set_meta(\"inspector_active\", false))
+
+func show_code_interface(function_node):
+	var func_name = function_node.get_meta(\"function_name\", \"Unknown\")
+	var interface_text = \"⚙️ CODE INTERFACE\\n\\n\"
+	interface_text += \"Function: %s\\n\\n\" % func_name
+	interface_text += \"Actions:\\n\"
+	interface_text += \"F - Edit code\\n\"
+	interface_text += \"T - Edit text\\n\"
+	interface_text += \"R - Rename\\n\"
+	interface_text += \"D - Duplicate\\n\"
+	interface_text += \"X - Delete\\n\"
+	interface_text += \"G - Move\\n\\n\"
+	interface_text += \"Click to edit this text\"
+	
+	function_node.set_meta(\"text_editable\", true)
+	show_floating_inspector(function_node, interface_text, Color.YELLOW)
+
+func show_note_editor(note_node):
+	var note_text = note_node.get_meta(\"note_content\", \"Empty note - click to edit\")
+	var note_title = note_node.get_meta(\"note_title\", \"Untitled Note\")
+	
+	var editor_text = \"📝 NOTE EDITOR\\n\\n\"
+	editor_text += \"Title: %s\\n\\n\" % note_title
+	editor_text += \"Content:\\n%s\\n\\n\" % note_text
+	editor_text += \"Press T to edit text\\nPress R to rename\"
+	
+	show_floating_inspector(note_node, editor_text, Color.GOLD)
+	note_node.add_to_group(\"interactive\")
+
+func show_floating_inspector(target_node: Node3D, text: String, color: Color):
+	var existing = target_node.get_node_or_null(\"FloatingInspector\")
+	if existing:
+		existing.queue_free()
+	
+	var inspector = Label3D.new()
+	inspector.name = \"FloatingInspector\"
+	inspector.text = text
+	inspector.modulate = color
+	inspector.billboard = BaseMaterial3D.BILLBOARD_ENABLED
+	inspector.position = Vector3(0, 3, 0)
+	inspector.pixel_size = 0.01
+	
+	target_node.add_child(inspector)
+	
+	var tween = create_tween()
+	tween.tween_property(inspector, \"modulate:a\", 0.0, 2.0).set_delay(10.0)
+	tween.tween_callback(inspector.queue_free)
+
+func _count_input_sockets(node: Node3D) -> int:
+	var count = 0
+	for child in node.get_children():
+		if child.has_meta(\"socket_type\") and child.get_meta(\"socket_type\") == \"input\":
+			count += 1
+	return count
+
+func _count_output_sockets(node: Node3D) -> int:
+	var count = 0
+	for child in node.get_children():
+		if child.has_meta(\"socket_type\") and child.get_meta(\"socket_type\") == \"output\":
+			count += 1
+	return count
+
+# ===== NOTE CREATION =====
+
+func create_text_note(position: Vector3, title: String = \"New Note\", content: String = \"Enter your text here...\"):
+	var note = Node3D.new()
+	note.name = \"TextNote_\" + title.replace(\" \", \"_\")
+	note.position = position
+	note.set_meta(\"note_type\", \"text_note\")
+	note.set_meta(\"note_title\", title)
+	note.set_meta(\"note_content\", content)
+	
+	# Create note visual
+	var note_visual = MeshInstance3D.new()
+	var plane = PlaneMesh.new()
+	plane.size = Vector2(4, 3)
+	note_visual.mesh = plane
+	
+	var material = StandardMaterial3D.new()
+	material.albedo_color = Color(0.95, 0.95, 0.85, 0.9)
+	material.emission_enabled = true
+	material.emission_energy = 0.2
+	note_visual.material_override = material
+	
+	# Add title label
+	var title_label = Label3D.new()
+	title_label.text = title
+	title_label.position = Vector3(0, 1.2, 0.1)
+	title_label.billboard = BaseMaterial3D.BILLBOARD_ENABLED
+	title_label.modulate = Color.BLACK
+	
+	# Add content preview
+	var content_label = Label3D.new()
+	var preview = content.substr(0, 50) + (\"...\" if content.length() > 50 else \"\")
+	content_label.text = preview
+	content_label.position = Vector3(0, 0, 0.1)
+	content_label.billboard = BaseMaterial3D.BILLBOARD_ENABLED
+	content_label.modulate = Color(0.2, 0.2, 0.2)
+	content_label.pixel_size = 0.008
+	
+	note.add_child(note_visual)
+	note.add_child(title_label)
+	note.add_child(content_label)
+	note.add_to_group(\"interactive\")
+	
+	add_child(note)
+	return note
+
+# ===== KEY INTERACTIONS =====
+
+func handle_additional_key_interactions(event: InputEvent):
+	var nearest = find_nearest_interactive_object()
+	
+	match event.keycode:
+		KEY_T:
+			if nearest and nearest.has_meta(\"note_type\"):
+				edit_note_text(nearest)
+			else:
+				create_floating_text_editor()
+		KEY_R:
+			if nearest:
+				rename_object(nearest)
+			else:
+				create_new_note_here()
+		KEY_F:
+			if nearest and nearest.has_meta(\"function_name\"):
+				edit_function_code(nearest)
+		KEY_X:
+			if nearest:
+				delete_object(nearest)
+		KEY_D:
+			if nearest:
+				duplicate_object(nearest)
+		KEY_G:
+			if grabbed_object:
+				release_grabbed_object()
+			else:
+				grab_and_move_object(nearest)
+		KEY_H:
+			show_all_hotkeys()
+		KEY_M:
+			enter_manipulation_mode()
+		KEY_V:
+			toggle_visual_debug_mode()
+		KEY_B:
+			create_new_function_node_at_cursor()
+		KEY_SPACE:
+			quick_spawn_menu()
+		KEY_U:
+			if nearest:
+				undo_object_position(nearest)
+
+func edit_note_text(note_node):
+	var current_text = note_node.get_meta(\"note_content\", \"\")
+	note_node.set_meta(\"editing_text\", true)
+	note_node.set_meta(\"edit_buffer\", current_text)
+	
+	change_game_state(GameState.TEXT_EDITING)
+	
+	var editor_text = \"✏️ TEXT EDITOR - ACTIVE\\n\\n\"
+	editor_text += \"Current text:\\n%s\\n\\n\" % current_text
+	editor_text += \"🎮 CONTROLS:\\n\"
+	editor_text += \"Type to edit\\n\"
+	editor_text += \"ENTER - Save changes\\n\"
+	editor_text += \"ESC - Cancel\\n\"
+	editor_text += \"\\n⌨️ Text input active!\"
+	
+	show_floating_inspector(note_node, editor_text, Color.YELLOW)
+	print(\"📝 Editing note: %s\" % note_node.name)
+
+func rename_object(obj):
+	var current_name = obj.name
+	show_floating_inspector(obj, \"📝 RENAME MODE\\n\\nCurrent: %s\\n\\nType new name...\" % current_name, Color.ORANGE)
+	print(\"🏷️ Renaming: %s\" % current_name)
+
+func edit_function_code(function_node):
+	var func_name = function_node.get_meta(\"function_name\", \"Unknown\")
+	show_code_editor_interface(function_node)
+	print(\"💻 Editing code for: %s\" % func_name)
+
+func show_code_editor_interface(function_node):
+	var func_name = function_node.get_meta(\"function_name\", \"Unknown\")
+	var block_category = function_node.get_meta(\"node_category\", \"function\")
+	
+	var code_template = generate_code_template(func_name, block_category)
+	
+	var editor_text = \"💻 CODE EDITOR - HOT LOADING\\n\\n\"
+	editor_text += \"Function: %s\\n\" % func_name
+	editor_text += \"Category: %s\\n\\n\" % block_category.to_upper()
+	editor_text += \"Code Template:\\n%s\\n\\n\" % code_template
+	editor_text += \"✨ Hot loading enabled\\n\"
+	editor_text += \"📝 Edit with T key\"
+	
+	show_floating_inspector(function_node, editor_text, Color.GREEN)
+
+func generate_code_template(func_name: String, category: String) -> String:
+	var clean_name = func_name.to_lower().replace(\"_\", \"\")
+	
+	match category:
+		\"pentagon\":
+			return \"func %s():\\n    super.%s()\\n    pass\" % [clean_name, clean_name]
+		\"floodgate\":
+			return \"func %s(data):\\n    return data\" % clean_name
+		\"fairy_tale\":
+			return \"func %s():\\n    # Magic happens\\n    pass\" % clean_name
+		_:
+			return \"func %s():\\n    pass\" % clean_name
+
+func delete_object(obj):
+	show_floating_inspector(obj, \"❌ DELETE CONFIRM\\n\\nPress X again to delete\\n%s\" % obj.name, Color.RED)
+	obj.set_meta(\"delete_pending\", true)
+	print(\"🗑️ Delete pending: %s\" % obj.name)
+
+func duplicate_object(obj):
+	if obj.has_meta(\"note_type\"):
+		var title = obj.get_meta(\"note_title\", \"Note\") + \" Copy\"
+		var content = obj.get_meta(\"note_content\", \"Duplicated content\")
+		var new_note = create_text_note(obj.position + Vector3(2, 0, 0), title, content)
+		show_floating_inspector(new_note, \"📋 DUPLICATED!\\n\\nNew note created\", Color.CYAN)
+	elif obj.has_meta(\"function_name\"):
+		var func_name = obj.get_meta(\"function_name\") + \"_COPY\"
+		create_function_node(func_name, obj.position + Vector3(3, 0, 0), stellar_colors[randi() % stellar_colors.size()])
+		show_visual_message(\"🔄 Function duplicated!\", Color.CYAN)
+
+# ===== OBJECT MOVEMENT =====
+
+func grab_and_move_object(obj):
+	if obj:
+		if obj.has_meta(\"function_name\") or obj.has_meta(\"note_type\"):
+			grabbed_object = obj
+			var camera_pos = $Camera3D.global_position
+			grab_offset = obj.global_position - camera_pos
+			obj.set_meta(\"being_moved\", true)
+			obj.set_meta(\"original_position\", obj.global_position)
+			
+			change_game_state(GameState.MOVING_OBJECT)
+			
+			var block_type = \"CODE BLOCK\" if obj.has_meta(\"function_name\") else \"NOTE\"
+			var category = obj.get_meta(\"node_category\", \"function\").to_upper()
+			
+			var move_text = \"✋ GRABBED %s!\\n\\n\" % block_type
+			move_text += \"Type: %s\\n\" % category
+			move_text += \"Move mouse to reposition\\n\"
+			move_text += \"G - Release\\n\"
+			move_text += \"U - Undo position\\n\"
+			move_text += \"ESC - Cancel\\n\"
+			move_text += \"\\n🌌 All blocks are moveable!\"
+			
+			show_floating_inspector(obj, move_text, Color.WHITE)
+			print(\"✋ Grabbed: %s - Use mouse to move!\" % obj.name)
+		else:
+			show_visual_message(\"⚠️ Object not moveable\", Color.RED)
+
+func handle_grabbed_object_movement():
+	if grabbed_object:
+		var camera = $Camera3D
+		var camera_transform = camera.global_transform
+		var forward = -camera_transform.basis.z
+		var move_distance = 5.0
+		
+		var new_position = camera.global_position + (forward * move_distance)
+		grabbed_object.global_position = new_position
+		
+		if grabbed_object.get_child_count() > 0:
+			var grab_material = StandardMaterial3D.new()
+			grab_material.emission_enabled = true
+			grab_material.emission = Color.WHITE
+			grab_material.emission_energy = 0.3
+			grabbed_object.get_child(0).material_override = grab_material
+
+func release_grabbed_object():
+	if grabbed_object:
+		grabbed_object.set_meta(\"being_moved\", false)
+		show_floating_inspector(grabbed_object, \"📍 RELEASED!\\n\\nObject positioned\\nSpacing sins repented!\", Color.GREEN)
+		
+		if grabbed_object.has_node(\"FloatingInspector\"):
+			grabbed_object.get_node(\"FloatingInspector\").queue_free()
+		
+		var original_color = grabbed_object.get_meta(\"original_color\", Color.WHITE)
+		if grabbed_object.get_child_count() > 0:
+			var body = grabbed_object.get_child(0)
+			if body is MeshInstance3D:
+				var original_mat = StandardMaterial3D.new()
+				original_mat.albedo_color = original_color
+				original_mat.emission_enabled = true
+				original_mat.emission = original_color
+				original_mat.emission_energy = 0.5
+				body.material_override = original_mat
+		
+		print(\"📍 Released: %s at position %v\" % [grabbed_object.name, grabbed_object.global_position])
+		grabbed_object = null
+		
+		change_game_state(GameState.NORMAL)
+
+func undo_object_position(obj):
+	if obj.has_meta(\"original_position\"):
+		var original_pos = obj.get_meta(\"original_position\")
+		obj.global_position = original_pos
+		show_floating_inspector(obj, \"↩️ POSITION RESTORED\\n\\nReturned to original position\", Color.CYAN)
+		print(\"↩️ Restored %s to position %v\" % [obj.name, original_pos])
+	else:
+		show_visual_message(\"⚠️ No original position stored\", Color.ORANGE)
+
+# ===== MISC FUNCTIONS =====
+
+func create_programming_node():
+	var pos = $Camera3D.position + $Camera3D.transform.basis.z * -5
+	var func_name = \"FUNC_\" + str(programming_nodes.size())
+	create_function_node(func_name, pos, stellar_colors[randi() % stellar_colors.size()])
+	show_visual_message(\"⚡ NEW FUNCTION NODE\", stellar_colors[4])
+
+func toggle_notepad_interface():
+	if notepad_layers.is_empty():
+		create_notepad_interface()
+	else:
+		hide_notepad_interface()
+
+func create_notepad_interface():
+	for i in range(3):
+		var layer = MeshInstance3D.new()
+		layer.mesh = PlaneMesh.new()
+		layer.mesh.size = Vector2(6, 4)
+		layer.position = $Camera3D.position + $Camera3D.transform.basis.z * -8 + Vector3(i*3-3, i*2-2, 0)
+		layer.look_at($Camera3D.position, Vector3.UP)
+		
+		var mat = StandardMaterial3D.new()
+		mat.albedo_color = Color(0.1, 0.1, 0.2, 0.8)
+		mat.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
+		mat.emission_enabled = true
+		mat.emission = stellar_colors[6]
+		mat.emission_energy = 0.3
+		layer.material_override = mat
+		
+		add_child(layer)
+		notepad_layers.append(layer)
+	
+	show_visual_message(\"📝 NOTEPAD PROGRAMMING INTERFACE\", stellar_colors[6])
+
+func hide_notepad_interface():
+	for layer in notepad_layers:
+		layer.queue_free()
+	notepad_layers.clear()
+	show_visual_message(\"📝 NOTEPAD HIDDEN\", stellar_colors[1])
+
+func show_all_hotkeys():
+	var help_text = \"🎮 STANDARDIZED HOTKEYS\\n\\n\"
+	help_text += \"E - Inspect (press again for interface)\\n\"
+	help_text += \"F - Code editor (hot loading)\\n\"
+	help_text += \"T - Edit text (live typing)\\n\"
+	help_text += \"R - Rename object\\n\"
+	help_text += \"G - Grab/Move (all blocks moveable)\\n\"
+	help_text += \"U - Undo position\\n\"
+	help_text += \"D - Duplicate\\n\"
+	help_text += \"X - Delete\\n\"
+	help_text += \"B - New function block\\n\"
+	help_text += \"M - Manipulation mode\\n\"
+	help_text += \"V - Visual debug\\n\"
+	help_text += \"SPACE - Quick spawn menu\\n\"
+	help_text += \"C - Toggle clock\\n\"
+	help_text += \"+/- - Clock speed\\n\"
+	help_text += \"TAB - Settings\\n\"
+	help_text += \"H - This help\"
+	
+	show_visual_message(help_text, Color.WHITE)
+
+func enter_manipulation_mode():
+	show_visual_message(\"🔧 MANIPULATION MODE\\n\\nAll objects now interactive\\nUse mouse to transform\", Color.MAGENTA)
+
+func toggle_visual_debug_mode():
+	show_visual_message(\"👁️ VISUAL DEBUG MODE\\n\\nShowing all connections\\nand meta information\", Color.CYAN)
+
+func create_new_function_node_at_cursor():
+	var camera_pos = $Camera3D.global_position
+	var spawn_pos = camera_pos + $Camera3D.transform.basis * Vector3(0, 0, -5)
+	create_function_node(\"NEW_FUNC\", spawn_pos, stellar_colors[randi() % stellar_colors.size()])
+	show_visual_message(\"🔧 New function created!\", Color.GREEN)
+
+func quick_spawn_menu():
+	show_visual_message(\"⚡ QUICK SPAWN\\n\\n1 - Note\\n2 - Function\\n3 - Universal Being\\n4 - Portal\", Color.YELLOW)
+
+func create_floating_text_editor():
+	var editor_pos = $Camera3D.global_position + $Camera3D.transform.basis * Vector3(0, 0, -3)
+	create_text_note(editor_pos, \"Text Editor\", \"Start typing your ideas here...\\n\\nThis is your 3D text space!\")
+
+func create_new_note_here():
+	var camera_pos = $Camera3D.global_position
+	var note_pos = camera_pos + $Camera3D.transform.basis * Vector3(2, 0, -4)
+	create_text_note(note_pos, \"Quick Note\", \"Created with R key\\n\\nQuick thoughts go here...\")
+
+func handle_node_clicked(node):
+	print(\"🔍 Node clicked: %s\" % node.name)
+	
+	if node.has_meta(\"universal_being_type\"):
+		inspect_universal_being(node)
+	elif node.has_meta(\"function_name\"):
+		show_function_inspector(node)
+	else:
+		transform_to_universal_being(node)
+
+func inspect_universal_being(being_node):
+	print(\"⚡ UNIVERSAL BEING INSPECTOR: %s\" % being_node.name)
+	show_visual_message(\"🌌 Universal Being Inspector\\n\\nInspecting: %s\" % being_node.name, Color.GOLD)
+
+func transform_to_universal_being(node):
+	print(\"🔄 TRANSFORMING TO UNIVERSAL BEING: %s\" % node.name)
+	
+	node.set_meta(\"universal_being_type\", \"transformed_entity\")
+	node.set_meta(\"consciousness_level\", 1)
+	node.set_meta(\"evolution_potential\", [\"anything\", \"everything\", \"multiverse_reshape\"])
+	
+	var glow_material = StandardMaterial3D.new()
+	glow_material.emission_enabled = true
+	glow_material.emission_energy = 1.0
+	glow_material.emission = Color.GOLD
+	
+	if node is MeshInstance3D:
+		node.material_override = glow_material
+	
+	show_visual_message(\"✨ TRANSFORMED TO UNIVERSAL BEING!\", Color.GOLD)
+
+func toggle_settings_interface():
+	if current_game_state == GameState.SETTINGS_OPEN:
+		change_game_state(GameState.NORMAL)
+		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+		show_visual_message(\"⚙️ Settings closed\", Color.CYAN)
+	else:
+		change_game_state(GameState.SETTINGS_OPEN)
+		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+		show_visual_message(\"⚙️ Settings (simplified)\\n\\nESC to close\\nC - Toggle clock\\n+/- - Clock speed\", Color.GOLD)
+
+func show_visual_message(text: String, color: Color):
+	var msg = Label3D.new()
+	msg.text = text
+	msg.modulate = color
+	msg.billboard = BaseMaterial3D.BILLBOARD_ENABLED
+	msg.position = $Camera3D.position + Vector3(0, 2, -3)
+	add_child(msg)
+	var tween = create_tween()
+	tween.parallel().tween_property(msg, \"position:y\", msg.position.y + 3, 2.0)
+	tween.parallel().tween_property(msg, \"modulate:a\", 0.0, 2.0)
+	tween.tween_callback(msg.queue_free)
+
+# ===== DIVINE EXECUTION SYSTEM =====
+
+func setup_connection_execution_timer(connection):
+	\"\"\"Initialize execution timer for a connection\"\"\"
+	execution_timers[connection.id] = {
+		\"connection\": connection,
+		\"timer\": 0.0,
+		\"active\": true
+	}
+	print(\"⏰ Execution timer setup for %s (Rate: %.1fs)\" % [connection.id, connection.execution_rate])
+
+func process_execution_timers(delta: float):
+	\"\"\"Process all connection execution timers - THE DIVINE CLOCK SYSTEM\"\"\"
+	for timer_id in execution_timers.keys():
+		var timer_data = execution_timers[timer_id]
+		if not timer_data.active:
+			continue
+			
+		var connection = timer_data.connection
+		timer_data.timer += delta
+		
+		# Check if it's time to execute
+		if timer_data.timer >= connection.execution_rate:
+			execute_connection_pipeline(connection)
+			timer_data.timer = 0.0  # Reset timer
+			connection.last_execution = game_clock
+
+func execute_connection_pipeline(connection):
+	\"\"\"Execute a function pipeline through a connection - REAL EXECUTION\"\"\"
+	var output_node = connection.output.get_meta(\"parent_node\")
+	var input_node = connection.input.get_meta(\"parent_node\")
+	
+	var output_func = output_node.get_meta(\"function_name\", \"UNKNOWN\")
+	var input_func = input_node.get_meta(\"function_name\", \"UNKNOWN\")
+	
+	# Generate data in output function
+	var data = generate_function_data(output_func)
+	connection.data_value = data
+	
+	# Send data through visual pulse
+	create_data_pulse(connection, data)
+	
+	# Execute input function with data
+	execute_function_with_data(input_func, data, input_node)
+	
+	print(\"⚡ EXECUTED: %s(%.2f) -> %s\" % [output_func, data, input_func])
+
+func generate_function_data(func_name: String) -> float:
+	\"\"\"Generate data based on function type\"\"\"
+	match func_name:
+		\"INPUT\":
+			return randf() * 100.0  # Random input data
+		\"PENTAGON_INIT\":
+			return 1.0  # Initialization signal
+		\"PENTAGON_READY\":
+			return 2.0  # Ready signal
+		\"REGISTER_BEING\":
+			return 10.0  # Being registration data
+		\"TASK_QUEUE\":
+			return 5.0  # Task data
+		\"PRINT_OVERHEAD\":
+			return 999.0  # Overhead debug data
+		\"SPAWN_BEING\":
+			return 777.0  # Creation energy
+		\"CONSCIOUSNESS_SHIFT\":
+			return 144.0  # Enlightenment frequency
+		_:
+			return randf() * 50.0  # Default random data
+
+func execute_function_with_data(func_name: String, data: float, node: Node3D):
+	\"\"\"Execute input function with received data\"\"\"
+	# Visual feedback on the receiving node
+	flash_node_execution(node, data)
+	
+	# Process data based on function type
+	match func_name:
+		\"PROCESS\":
+			# Processing function - modify data
+			var processed = data * 1.5
+			print(\"💻 PROCESS: %.2f -> %.2f\" % [data, processed])
+		\"OUTPUT\":
+			# Output function - display result
+			print(\"📤 OUTPUT: %.2f\" % data)
+			show_output_result(data, node)
+		\"PENTAGON_PROCESS\":
+			# Pentagon processing
+			print(\"🔯 PENTAGON PROCESS: %.2f\" % data)
+		\"EXECUTE_ONCE\":
+			# FloodGate execution
+			print(\"🌊 EXECUTE_ONCE: %.2f\" % data)
+		\"EVOLVE_FORM\":
+			# Fairy tale transformation
+			print(\"✨ EVOLVE_FORM: %.2f\" % data)
+		_:
+			print(\"🔧 %s: %.2f\" % [func_name, data])
+
+func flash_node_execution(node: Node3D, data: float):
+	\"\"\"Flash node when it executes with data\"\"\"
+	if node.get_child_count() > 0:
+		var body = node.get_child(0)
+		if body is MeshInstance3D:
+			var flash_material = StandardMaterial3D.new()
+			flash_material.emission_enabled = true
+			flash_material.emission = Color.WHITE
+			flash_material.emission_energy = 2.0
+			body.material_override = flash_material
+			
+			# Restore original material after flash
+			var tween = create_tween()
+			tween.tween_property(flash_material, \"emission_energy\", 0.5, 0.2)
+
+func show_output_result(data: float, node: Node3D):
+	\"\"\"Show output result above output node\"\"\"
+	var result_label = Label3D.new()
+	result_label.text = \"📤 OUTPUT: %.2f\" % data
+	result_label.position = Vector3(0, 2.5, 0)
+	result_label.billboard = BaseMaterial3D.BILLBOARD_ENABLED
+	result_label.modulate = Color.GREEN
+	node.add_child(result_label)
+	
+	# Auto-remove after 2 seconds
+	var tween = create_tween()
+	tween.tween_property(result_label, \"modulate:a\", 0.0, 1.0).set_delay(2.0)
+	tween.tween_callback(result_label.queue_free)
+
+func create_timing_strip(connection):
+	\"\"\"Create timing control strip on connection line - THE PAPER STRIP!\"\"\"
+	var strip_container = Node3D.new()
+	strip_container.name = \"TimingStrip_\" + connection.id
+	
+	# Create paper strip visual
+	var strip = MeshInstance3D.new()
+	var plane = PlaneMesh.new()
+	plane.size = Vector2(1.0, 0.3)
+	strip.mesh = plane
+	
+	# Paper material
+	var material = StandardMaterial3D.new()
+	material.albedo_color = Color(0.95, 0.95, 0.85, 0.9)
+	material.emission_enabled = true
+	material.emission_energy = 0.3
+	strip.material_override = material
+	
+	# Position strip at midpoint of connection
+	var start_pos = connection.output.global_position
+	var end_pos = connection.input.global_position
+	strip_container.global_position = (start_pos + end_pos) / 2
+	strip_container.look_at(end_pos, Vector3.UP)
+	
+	# Add timing text
+	var timing_label = Label3D.new()
+	timing_label.text = \"%.1fs\" % connection.execution_rate
+	timing_label.position = Vector3(0, 0, 0.1)
+	timing_label.billboard = BaseMaterial3D.BILLBOARD_ENABLED
+	timing_label.modulate = Color.BLACK
+	timing_label.pixel_size = 0.005
+	
+	strip_container.add_child(strip)
+	strip_container.add_child(timing_label)
+	connection.timing_strip = strip_container
+	
+	add_child(strip_container)
+	print(\"📄 Timing strip created: %.1fs\" % connection.execution_rate)
+
+func create_data_pulse(connection, data: float):
+	\"\"\"Create visual data pulse moving along connection\"\"\"
+	var pulse = {
+		\"connection\": connection,
+		\"progress\": 0.0,
+		\"data\": data,
+		\"visual\": null,
+		\"speed\": 2.0  # Speed of pulse movement
+	}
+	
+	# Create pulse visual
+	var pulse_sphere = MeshInstance3D.new()
+	var sphere = SphereMesh.new()
+	sphere.radius = 0.2
+	pulse_sphere.mesh = sphere
+	
+	var pulse_material = StandardMaterial3D.new()
+	pulse_material.albedo_color = Color.YELLOW
+	pulse_material.emission_enabled = true
+	pulse_material.emission = Color.YELLOW
+	pulse_material.emission_energy = 1.5
+	pulse_sphere.material_override = pulse_material
+	
+	pulse.visual = pulse_sphere
+	data_pulses.append(pulse)
+	add_child(pulse_sphere)
+	
+	print(\"💫 Data pulse created: %.2f\" % data)
+
+func update_data_pulses(delta: float):
+	\"\"\"Update visual data pulses moving along connections\"\"\"
+	for i in range(data_pulses.size() - 1, -1, -1):
+		var pulse = data_pulses[i]
+		pulse.progress += pulse.speed * delta
+		
+		if pulse.progress >= 1.0:
+			# Pulse reached destination
+			pulse.visual.queue_free()
+			data_pulses.remove_at(i)
+			continue
+		
+		# Update pulse position along connection line
+		var start_pos = pulse.connection.output.global_position
+		var end_pos = pulse.connection.input.global_position
+		pulse.visual.global_position = start_pos.lerp(end_pos, pulse.progress)
+"
+
+[sub_resource type="Environment" id="Environment_space"]
+background_mode = 1
+background_color = Color(0.02, 0.02, 0.1, 1)
+ambient_light_source = 2
+ambient_light_color = Color(0.1, 0.1, 0.3, 1)
+ambient_light_energy = 0.2
+
+[sub_resource type="Theme" id="Theme_programming"]
+
+[node name="VisualProgrammingUniverse" type="Node3D"]
+script = SubResource("GDScript_visual_programming")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+fov = 90
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_space")
+
+[node name="UI" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme = SubResource("Theme_programming")
+
+[node name="Controls" type="Label" parent="UI"]
+layout_mode = 0
+offset_left = 10.0
+offset_top = 10.0
+offset_right = 500.0
+offset_bottom = 200.0
+text = "🧠 3D VISUAL PROGRAMMING UNIVERSE - DIVINE EXECUTION
+
+WASD - Move through space
+Mouse - Look around
+E - Edit/inspect nearest object
+Left Click - Connect sockets (creates timing strips!)
+ESC - Free mouse
+C - Toggle clock
++/- - Adjust clock speed
+TAB - Settings
+
+🔗 Connect OUTPUT (orange) to INPUT (blue) sockets
+⚡ Functions EXECUTE at timed intervals (0.1s to 10s)
+📄 Paper strips show execution timing on connections
+💫 Watch data pulses flow between functions
+📊 See real function execution with visual feedback"

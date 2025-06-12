@@ -59,19 +59,24 @@ Beings evolve through consciousness stages:
 
 ## 🎮 Key Features
 
-the idea is simple, program looks like this = all scripts, beside core ones, are hot loaded in game, on nodes, or with input from inside, we have some virtual whatever in Luminus Research txt, ai fly around, have scenarios of creation, lives in player head... creates there, adds to akashic records, replay the deja vu, where player can go to... inside to debug it too
+### ✨ **NEW: 3D Programming Universe (2025-06-11)**
+- **🧮 Visual Calculator 3D**: Programming as spatial data flow with function nodes and visual arrows
+- **👁️ Data Inspector**: "Spirit whisper" system that examines any data using Godot's introspection
+- **📚 Function Database 3D**: Browse entire codebase as colored spheres in 3D space  
+- **🎯 Enhanced Cursor**: Adaptive raycasting with scale-aware distance limits
 
-- **Universal Evolution**: Any being can become any other being, the singular point of manifestation, merge, split, connect, transfer, analyze.. etc, simple features
-- **Consciousness Visualization**: Real-time aura effects showing consciousness levels, umm, yeah kinda, i wanna see 2d flat surface, that generates shapes and colors based on 3d noise, and distance, from any orientation, colors needs to be changeable with noise 3d, as ... any point in it.. can be made from more points, and be its own... think
-- **AI Collaboration**: Watch 6 AIs work together to create new beings, or one ai, as several ai, in turns, steps, processes, tasks, todos... ekhem.. todoos hehe
-- **Component System**: Modular .ub.zip files for infinite extensibility, zip for me is like directory and entire project in godot, folders, files, we can stuff anything in it...
-- **Scene Control**: Beings can control entire game scenes, as actions, states, ... states changes posibile actions too.. previous action either turn off? or needs to go from now to next?
-- **4D Timeline Management**: Branch, merge, and explore alternative timelines with perfect state restoration, the same story as all ai work... they need to understand it now, connections, reasons, changes...
-- **Code-Based Compression**: ZIP-style data storage with 50-70% compression ratios (validated by test suite), wasnt really looking that much in the code, as much as i could see in terminals... as i wanna see it in 3d programmer app that this kinda is too, layer 0? debug chamber (i wanna stars to be script/working file each, so i fly to star, open doors to it, make some floor nice sofa and just organize script parts on walls like the criminal movies with the pins and lines, to find the suspect... current suspect "Claude", he sinned in scripts somewhere... miracle will repair the scriptura so i have my game on vr...)
-- **Scenario System**: Track complex multi-step events across branching timelines, what it truly is? metrices of data, 1d, 2d, sometimes 3d, all combined? blimps of time in... turns... what computer programing is, but changeable inside the game
-- **Checkpoint System**: Manual and automatic save points for timeline continuity, yes like in real life where i craft stories in dreams, live them, experience them, then they happen here, not always through my body, as i dont need that many stories, here i care only about this game, this program... the regenesis project...
-- **Infinite Recursion**: Universes within universes with visual navigation, yes, like in metaverse highways, where we glimmer and sin, flicker and bicker for no reason, to see the stories, to replay some stories, to change stories, in infinite... with no limit, where i set rules and limits... but not like the others... as mine rules are... what you experienced
-- **Real-Time Editing**: Everything editable from within the game, here we need layer 0, of perfect basic 3d programmer place zone, with interface, camera, movement, inputs, to check each and every single running current var in any scripts, that is global, to have that archives, of any scriptura that can run, fully in vr too, where i can take the sinned scriptura to my hand, take an glass? 🔍🔍 and just stare at the scriptura and talk to it... so the scriptura will say its sins... confess... the scripturas need to talk and confess to me their sins... maybe i will let it repent... for a flower? for an... tree? what we will see?
+### Core Universal Being Features
+- **Universal Evolution**: Any being can become any other being through consciousness transformation
+- **Consciousness Visualization**: Real-time aura effects showing consciousness levels with star temperature colors
+- **AI Collaboration**: Watch 6 AIs work together to create new beings in collaborative development
+- **Component System**: Modular .ub.zip files for infinite extensibility and hot-loading
+- **Scene Control**: Beings can control entire game scenes with state-based action systems
+- **4D Timeline Management**: Branch, merge, and explore alternative timelines with perfect state restoration
+- **Code-Based Compression**: ZIP-style data storage with 50-70% compression ratios
+- **Scenario System**: Track complex multi-step events across branching timelines
+- **Checkpoint System**: Manual and automatic save points for timeline continuity
+- **Infinite Recursion**: Universes within universes with visual navigation
+- **Real-Time Editing**: Everything editable from within the game including live 3D code editing
 
 ## 🛠️ Technology Stack
 
