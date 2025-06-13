@@ -25,6 +25,12 @@ var scene_states = []
 var current_game_state: GameState = GameState.NORMAL
 var state_stack = []  # For pushing/popping states
 
+# SAVE/LOAD SYSTEM FOR 3D PROGRAMMING CONSTRUCTS
+var construct_saves = {}
+var save_file_path = "user://divine_programming_constructs.json"
+var auto_save_timer: float = 0.0
+var auto_save_interval: float = 30.0  # Auto-save every 30 seconds
+
 # Clock System - TRUE EXECUTION TIMING
 var game_clock: float = 0.0
 var clock_tick_rate: float = 1.0  # Ticks per second
@@ -53,6 +59,9 @@ func _ready():
 	
 	# Initialize clock system
 	setup_clock_system()
+	
+	# Initialize save/load system
+	setup_save_load_system()
 	
 	# Create sample notes with text content
 	create_text_note(Vector3(-5, 5, -8), \"Programming Notes\", \"This is where the magic happens!\\n\\nFunctions connect through sockets.\\nPress E to inspect anything.\\nClick to connect orange to blue.\")
@@ -105,6 +114,14 @@ func _input(event):
 			KEY_MINUS:
 				decrease_clock_speed()
 				return
+			KEY_S:
+				if event.ctrl_pressed:
+					save_current_construct()
+					return
+			KEY_L:
+				if event.ctrl_pressed:
+					load_saved_construct()
+					return
 	
 	if event is InputEventMouseMotion and Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
 		rotate_camera(event.relative)
@@ -125,6 +142,9 @@ func _process(delta):
 	# Update game clock
 	update_clock_system(delta)
 	
+	# Update auto-save timer
+	update_auto_save_system(delta)
+	
 	# DIVINE EXECUTION SYSTEM - Process timed function execution
 	process_execution_timers(delta)
 	update_data_pulses(delta)
@@ -140,18 +160,26 @@ func _process(delta):
 
 func handle_movement(delta):
 	var input_vector = Vector3()
-	if Input.is_action_pressed(\"move_forward\"):
+	
+	# WASD movement
+	if Input.is_action_pressed(\"move_forward\") or Input.is_key_pressed(KEY_W):
 		input_vector.z -= 1
-	if Input.is_action_pressed(\"move_backward\"):
+	if Input.is_action_pressed(\"move_backward\") or Input.is_key_pressed(KEY_S):
 		input_vector.z += 1
-	if Input.is_action_pressed(\"move_left\"):
+	if Input.is_action_pressed(\"move_left\") or Input.is_key_pressed(KEY_A):
 		input_vector.x -= 1
-	if Input.is_action_pressed(\"move_right\"):
+	if Input.is_action_pressed(\"move_right\") or Input.is_key_pressed(KEY_D):
 		input_vector.x += 1
 	if Input.is_action_pressed(\"move_up\"):
 		input_vector.y += 1
 	if Input.is_action_pressed(\"move_down\"):
 		input_vector.y -= 1
+	
+	# QE for barrel roll (Z-axis rotation)
+	if Input.is_key_pressed(KEY_Q):
+		$Camera3D.rotation.z += 2.0 * delta  # Barrel roll left
+	if Input.is_key_pressed(KEY_E):
+		$Camera3D.rotation.z -= 2.0 * delta  # Barrel roll right
 	
 	if input_vector.length() > 0:
 		input_vector = input_vector.normalized()
@@ -232,7 +260,7 @@ func create_function_node(func_name: String, pos: Vector3, color: Color):
 	var label = Label3D.new()
 	label.text = func_name
 	label.billboard = BaseMaterial3D.BILLBOARD_ENABLED
-	label.position = Vector3(0, 1.5, 0)
+	label.position = Vector3(0, 2.5, 0)  # Higher to avoid clipping with blocks
 	label.modulate = stellar_colors[5]
 	node.add_child(label)
 	
@@ -511,8 +539,8 @@ func update_connections():
 func create_connection_line(start_pos: Vector3, end_pos: Vector3):
 	var line = MeshInstance3D.new()
 	var mesh = CylinderMesh.new()
-	mesh.top_radius = 0.05
-	mesh.bottom_radius = 0.05
+	mesh.top_radius = 0.15  # MUCH THICKER - 3x the size
+	mesh.bottom_radius = 0.15
 	mesh.height = start_pos.distance_to(end_pos)
 	line.mesh = mesh
 	
@@ -521,10 +549,11 @@ func create_connection_line(start_pos: Vector3, end_pos: Vector3):
 	line.rotation_degrees.x += 90
 	
 	var mat = StandardMaterial3D.new()
-	mat.albedo_color = stellar_colors[8]
+	mat.albedo_color = Color.CYAN  # BRIGHT CYAN - absolutely visible
 	mat.emission_enabled = true
-	mat.emission = stellar_colors[8]
-	mat.emission_energy = 0.8
+	mat.emission = Color.CYAN
+	mat.emission_energy = 2.5  # SUPER BRIGHT
+	mat.flags_unshaded = true  # Always visible regardless of lighting
 	line.material_override = mat
 	
 	add_child(line)
@@ -1114,10 +1143,300 @@ func show_all_hotkeys():
 	help_text += \"SPACE - Quick spawn menu\\n\"
 	help_text += \"C - Toggle clock\\n\"
 	help_text += \"+/- - Clock speed\\n\"
+	help_text += \"Ctrl+S - Save construct\\n\"
+	help_text += \"Ctrl+L - Load construct\\n\"
 	help_text += \"TAB - Settings\\n\"
 	help_text += \"H - This help\"
 	
 	show_visual_message(help_text, Color.WHITE)
+
+# ===== SAVE/LOAD SYSTEM FOR 3D PROGRAMMING CONSTRUCTS =====
+
+func setup_save_load_system():
+	\"\"\"Initialize the save/load system for 3D programming constructs\"\"\"
+	auto_save_timer = 0.0
+	construct_saves = {}
+	
+	# Try to load existing saves
+	if FileAccess.file_exists(save_file_path):
+		load_all_constructs()
+	
+	show_visual_message(\"💾 SAVE/LOAD SYSTEM INITIALIZED\\n\\nCtrl+S - Save construct\\nCtrl+L - Load construct\\nAuto-save: 30s\", Color.CYAN)
+	print(\"💾 Save/Load system initialized\")
+
+func update_auto_save_system(delta: float):
+	\"\"\"Update auto-save timer and trigger saves when needed\"\"\"
+	auto_save_timer += delta
+	
+	if auto_save_timer >= auto_save_interval:
+		auto_save_current_construct()
+		auto_save_timer = 0.0
+
+func save_current_construct():
+	\"\"\"Save current 3D programming construct to file\"\"\"
+	var construct_data = serialize_current_construct()
+	var timestamp = Time.get_datetime_string_from_system()
+	var save_name = \"construct_\" + timestamp.replace(\":\", \"-\").replace(\" \", \"_\")
+	
+	construct_saves[save_name] = construct_data
+	save_constructs_to_file()
+	
+	show_visual_message(\"💾 CONSTRUCT SAVED!\\n\\nName: %s\\nNodes: %d\\nConnections: %d\" % [save_name, programming_nodes.size(), connections.size()], Color.GREEN)
+	print(\"💾 Saved construct: %s\" % save_name)
+
+func auto_save_current_construct():
+	\"\"\"Auto-save current construct with auto prefix\"\"\"
+	var construct_data = serialize_current_construct()
+	var timestamp = Time.get_datetime_string_from_system()
+	var save_name = \"auto_\" + timestamp.replace(\":\", \"-\").replace(\" \", \"_\")
+	
+	construct_saves[save_name] = construct_data
+	save_constructs_to_file()
+	
+	# Subtle auto-save notification
+	show_visual_message(\"🔄 Auto-saved: %s\" % save_name, Color.YELLOW)
+	print(\"🔄 Auto-saved construct: %s\" % save_name)
+
+func serialize_current_construct() -> Dictionary:
+	\"\"\"Serialize the current 3D programming construct to data\"\"\"
+	var construct_data = {
+		\"timestamp\": Time.get_datetime_string_from_system(),
+		\"camera_position\": $Camera3D.global_position,
+		\"camera_rotation\": $Camera3D.rotation,
+		\"game_clock\": game_clock,
+		\"clock_speed\": clock_tick_rate,
+		\"nodes\": [],
+		\"connections\": [],
+		\"notes\": []
+	}
+	
+	# Serialize programming nodes
+	for node in programming_nodes:
+		var node_data = {
+			\"name\": node.name,
+			\"position\": node.global_position,
+			\"rotation\": node.rotation,
+			\"function_name\": node.get_meta(\"function_name\", \"UNKNOWN\"),
+			\"node_type\": node.get_meta(\"node_type\", \"function\"),
+			\"node_category\": node.get_meta(\"node_category\", \"default\"),
+			\"metadata\": get_node_metadata(node)
+		}
+		construct_data.nodes.append(node_data)
+	
+	# Serialize connections
+	for connection in connections:
+		var connection_data = {
+			\"output_node\": find_node_id(connection.output.get_meta(\"parent_node\")),
+			\"input_node\": find_node_id(connection.input.get_meta(\"parent_node\")),
+			\"execution_rate\": connection.execution_rate,
+			\"connection_id\": connection.id
+		}
+		construct_data.connections.append(connection_data)
+	
+	# Serialize text notes
+	for child in get_children():
+		if child.has_meta(\"note_type\"):
+			var note_data = {
+				\"position\": child.global_position,
+				\"title\": child.get_meta(\"note_title\", \"Note\"),
+				\"content\": child.get_meta(\"note_content\", \"\"),
+				\"note_type\": child.get_meta(\"note_type\")
+			}
+			construct_data.notes.append(note_data)
+	
+	return construct_data
+
+func get_node_metadata(node: Node3D) -> Dictionary:
+	\"\"\"Extract all metadata from a node\"\"\"
+	var metadata = {}
+	
+	# Get all known metadata keys
+	var meta_keys = [\"execution_order\", \"requires_super_call\", \"task_type\", \"executes_once\", 
+					\"magic_type\", \"reality_affecting\", \"universal_being_type\", \"consciousness_level\"]
+	
+	for key in meta_keys:
+		if node.has_meta(key):
+			metadata[key] = node.get_meta(key)
+	
+	return metadata
+
+func find_node_id(target_node: Node3D) -> int:
+	\"\"\"Find the index ID of a node in the programming_nodes array\"\"\"
+	for i in range(programming_nodes.size()):
+		if programming_nodes[i] == target_node:
+			return i
+	return -1
+
+func save_constructs_to_file():
+	\"\"\"Save all constructs to persistent file\"\"\"
+	var file = FileAccess.open(save_file_path, FileAccess.WRITE)
+	if file:
+		var json_string = JSON.stringify(construct_saves)
+		file.store_string(json_string)
+		file.close()
+		print(\"💾 Saved %d constructs to file\" % construct_saves.size())
+	else:
+		print(\"❌ Failed to save constructs to file\")
+
+func load_saved_construct():
+	\"\"\"Load most recent saved construct\"\"\"
+	if construct_saves.is_empty():
+		load_all_constructs()
+	
+	if construct_saves.is_empty():
+		show_visual_message(\"⚠️ NO SAVED CONSTRUCTS\\n\\nNo constructs found to load\", Color.ORANGE)
+		return
+	
+	# Get most recent save (last in dictionary)
+	var save_names = construct_saves.keys()
+	var latest_save = save_names[save_names.size() - 1]
+	
+	load_construct_from_data(construct_saves[latest_save], latest_save)
+
+func load_all_constructs():
+	\"\"\"Load all saved constructs from file\"\"\"
+	if not FileAccess.file_exists(save_file_path):
+		show_visual_message(\"📁 NO SAVE FILE\\n\\nNo previous saves found\", Color.CYAN)
+		return
+	
+	var file = FileAccess.open(save_file_path, FileAccess.READ)
+	if file:
+		var json_string = file.get_as_text()
+		file.close()
+		
+		var json = JSON.new()
+		var result = json.parse(json_string)
+		
+		if result == OK:
+			construct_saves = json.data
+			show_visual_message(\"📁 LOADED %d CONSTRUCTS\\n\\nReady to restore\" % construct_saves.size(), Color.GREEN)
+			print(\"📁 Loaded %d constructs from file\" % construct_saves.size())
+		else:
+			show_visual_message(\"❌ CORRUPTED SAVE FILE\\n\\nCould not parse JSON\", Color.RED)
+			print(\"❌ Failed to parse save file JSON\")
+	else:
+		show_visual_message(\"❌ FAILED TO LOAD\\n\\nCould not open save file\", Color.RED)
+		print(\"❌ Failed to open save file\")
+
+func load_construct_from_data(construct_data: Dictionary, save_name: String):
+	\"\"\"Load a specific construct from serialized data\"\"\"
+	# Clear current construct
+	clear_current_construct()
+	
+	# Restore camera position
+	if construct_data.has(\"camera_position\"):
+		$Camera3D.global_position = construct_data.camera_position
+	if construct_data.has(\"camera_rotation\"):
+		$Camera3D.rotation = construct_data.camera_rotation
+	
+	# Restore clock
+	if construct_data.has(\"game_clock\"):
+		game_clock = construct_data.game_clock
+	if construct_data.has(\"clock_speed\"):
+		clock_tick_rate = construct_data.clock_speed
+	
+	# Restore nodes
+	for node_data in construct_data.get(\"nodes\", []):
+		restore_programming_node(node_data)
+	
+	# Restore connections (after nodes are created)
+	for connection_data in construct_data.get(\"connections\", []):
+		restore_connection(connection_data)
+	
+	# Restore notes
+	for note_data in construct_data.get(\"notes\", []):
+		restore_text_note(note_data)
+	
+	show_visual_message(\"✅ CONSTRUCT LOADED!\\n\\nName: %s\\nNodes: %d\\nConnections: %d\" % [save_name, programming_nodes.size(), connections.size()], Color.GREEN)
+	print(\"✅ Loaded construct: %s\" % save_name)
+
+func clear_current_construct():
+	\"\"\"Clear all current programming construct elements\"\"\"
+	# Clear nodes
+	for node in programming_nodes:
+		node.queue_free()
+	programming_nodes.clear()
+	
+	# Clear connections
+	connections.clear()
+	
+	# Clear notes
+	for child in get_children():
+		if child.has_meta(\"note_type\"):
+			child.queue_free()
+	
+	print(\"🧹 Cleared current construct\")
+
+func restore_programming_node(node_data: Dictionary):
+	\"\"\"Restore a programming node from serialized data\"\"\"
+	var func_name = node_data.get(\"function_name\", \"RESTORED_FUNC\")
+	var position = node_data.get(\"position\", Vector3.ZERO)
+	var category = node_data.get(\"node_category\", \"function\")
+	
+	# Create appropriate node type
+	var node
+	match category:
+		\"pentagon\":
+			node = create_pentagon_function_node(func_name, position, Color.GOLD)
+		\"floodgate\":
+			node = create_floodgate_function_node(func_name, position, Color.BLUE)
+		\"fairy_tale\":
+			node = create_fairy_function_node(func_name, position, Color.PINK)
+		_:
+			node = create_function_node(func_name, position, stellar_colors[randi() % stellar_colors.size()])
+	
+	# Restore metadata
+	var metadata = node_data.get(\"metadata\", {})
+	for key in metadata:
+		node.set_meta(key, metadata[key])
+	
+	# Restore transform
+	if node_data.has(\"rotation\"):
+		node.rotation = node_data.rotation
+	
+	return node
+
+func restore_connection(connection_data: Dictionary):
+	\"\"\"Restore a connection from serialized data\"\"\"
+	var output_id = connection_data.get(\"output_node\", -1)
+	var input_id = connection_data.get(\"input_node\", -1)
+	
+	if output_id >= 0 and input_id < programming_nodes.size() and input_id >= 0 and output_id < programming_nodes.size():
+		var output_node = programming_nodes[output_id]
+		var input_node = programming_nodes[input_id]
+		
+		# Find the output and input sockets
+		var output_socket = find_output_socket(output_node)
+		var input_socket = find_input_socket(input_node)
+		
+		if output_socket and input_socket:
+			create_connection(output_socket, input_socket)
+			
+			# Restore execution rate if specified
+			if connection_data.has(\"execution_rate\") and not connections.is_empty():
+				connections[-1].execution_rate = connection_data.execution_rate
+
+func find_output_socket(node: Node3D):
+	\"\"\"Find the output socket of a node\"\"\"
+	for child in node.get_children():
+		if child.has_meta(\"socket_type\") and child.get_meta(\"socket_type\") == \"output\":
+			return child
+	return null
+
+func find_input_socket(node: Node3D):
+	\"\"\"Find the input socket of a node\"\"\"
+	for child in node.get_children():
+		if child.has_meta(\"socket_type\") and child.get_meta(\"socket_type\") == \"input\":
+			return child
+	return null
+
+func restore_text_note(note_data: Dictionary):
+	\"\"\"Restore a text note from serialized data\"\"\"
+	var position = note_data.get(\"position\", Vector3.ZERO)
+	var title = note_data.get(\"title\", \"Restored Note\")
+	var content = note_data.get(\"content\", \"Restored content\")
+	
+	create_text_note(position, title, content)
 
 func enter_manipulation_mode():
 	show_visual_message(\"🔧 MANIPULATION MODE\\n\\nAll objects now interactive\\nUse mouse to transform\", Color.MAGENTA)
@@ -1441,16 +1760,20 @@ offset_bottom = 200.0
 text = "🧠 3D VISUAL PROGRAMMING UNIVERSE - DIVINE EXECUTION
 
 WASD - Move through space
-Mouse - Look around
-E - Edit/inspect nearest object
+QE - Barrel roll camera rotation  
+Mouse - Look around (no gimbal lock)
+F - Edit/inspect nearest object
 Left Click - Connect sockets (creates timing strips!)
 ESC - Free mouse
 C - Toggle clock
 +/- - Adjust clock speed
+Ctrl+S - Save construct
+Ctrl+L - Load construct
 TAB - Settings
 
 🔗 Connect OUTPUT (orange) to INPUT (blue) sockets
 ⚡ Functions EXECUTE at timed intervals (0.1s to 10s)
 📄 Paper strips show execution timing on connections
 💫 Watch data pulses flow between functions
-📊 See real function execution with visual feedback"
+📊 See real function execution with visual feedback
+💾 Auto-save every 30 seconds + manual save/load"

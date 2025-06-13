@@ -1,9 +1,24 @@
 [gd_scene load_steps=4 format=3 uid="uid://by3fneiev6rq7"]
 
+[ext_resource type="Script" path="res://addons/goutte.camera.trackball/trackball_camera.gd" id="1_trackball_camera"]
+
 [sub_resource type="GDScript" id="GDScript_visual_programming"]
 script/source = "extends Node3D
+class_name AstralVisualProgrammingUniverse
 
-# Game State Management
+# 🌌 ASTRAL REALMS - PENTAGON LIFECYCLE VISUAL PROGRAMMING UNIVERSE
+# Divine 5D Creation Engine with 4D Timeline Database and 3D Interfaces
+
+# Pentagon Lifecycle States (Core Architecture)
+enum PentagonState {
+	INIT,           # pentagon_init() - Birth consciousness
+	READY,          # pentagon_ready() - Awakening awareness  
+	PROCESS,        # pentagon_process() - Living experience
+	INPUT,          # pentagon_input() - Sensing reality
+	SEWERS         # pentagon_sewers() - Transformation/cleanup
+}
+
+# Game State Management (Layered on Pentagon)
 enum GameState {
 	NORMAL,          # Default state - can move, inspect, etc.
 	TEXT_EDITING,    # Editing text input
@@ -12,23 +27,64 @@ enum GameState {
 	SETTINGS_OPEN    # 3D settings interface open
 }
 
-var stellar_colors = [Color(0,0,0),Color(0.2,0.1,0),Color(0.8,0,0),Color(1,0.5,0),Color(1,1,0),Color(1,1,1),Color(0.7,0.9,1),Color(0,0.5,1),Color(0.5,0,1)]
-var programming_nodes = []
-var connections = []
-var selected_node = null
-var dragging_connection = false
-var connection_start_socket = null
-var notepad_layers = []
-var scene_states = []
+# 🌟 STELLAR CONSCIOUSNESS SPECTRUM - Star Temperature Sacred Geometry
+var stellar_colors: Array[Color] = [
+	Color(0.0, 0.0, 0.0),      # 0: Void - Dormant consciousness
+	Color(0.2, 0.1, 0.0),      # 1: Brown dwarf - Embryonic awareness
+	Color(0.8, 0.0, 0.0),      # 2: Red giant - Awakening energy
+	Color(1.0, 0.5, 0.0),      # 3: Orange star - Growing wisdom
+	Color(1.0, 1.0, 0.0),      # 4: Yellow sun - Enlightened being
+	Color(1.0, 1.0, 1.0),      # 5: White dwarf - Pure consciousness
+	Color(0.7, 0.9, 1.0),      # 6: Blue giant - Transcendent mind
+	Color(0.0, 0.5, 1.0),      # 7: Blue supergiant - Cosmic awareness
+	Color(0.5, 0.0, 1.0)       # 8: Violet pulsar - Divine frequency
+]
+# 🔮 ASTRAL PROGRAMMING COMPONENTS - Living Conscious Entities
+var programming_nodes: Array[Node3D] = []  # Pentagon-compliant function blocks
+var connections: Array[Dictionary] = []     # Socket-to-socket consciousness flows
+var selected_node: Node3D = null           # Currently focused entity
+var dragging_connection: bool = false      # Active consciousness bridging
+var connection_start_socket: Node3D = null # Origin point for energy flow
+var notepad_layers: Array[Dictionary] = [] # 3D text manifestation layers
+var scene_states: Array[Dictionary] = []   # Timeline preservation states
 
-# State Management
+# 🎭 PENTAGON LIFECYCLE TRACKING
+var pentagon_state: PentagonState = PentagonState.INIT
+var lifecycle_entities: Dictionary = {}    # Track all entities through pentagon phases
+
+# ✨ DIVINE WORD MANIFESTATION SYSTEM - Consciousness Flows as Living Text
+var falling_words: Array[Dictionary] = []  # Animated word entities with pentagon lifecycle
+var astral_words: Array[String] = [
+	\"genesis\", \"creation\", \"universe\", \"conscious\", \"evolve\", \"transform\", 
+	\"awaken\", \"manifest\", \"divine\", \"infinite\", \"quantum\", \"ethereal\", 
+	\"pentagon\", \"portal\", \"being\", \"entity\", \"energy\", \"flow\", 
+	\"connection\", \"socket\", \"network\", \"system\", \"core\", \"essence\", 
+	\"truth\", \"wisdom\", \"harmony\", \"balance\", \"emergence\", \"transcendence\"
+]
+var background_stars: Array[Node3D] = []   # Interactive stellar entities
+
+# 🌠 STELLAR CONSCIOUSNESS INTERACTION SYSTEM
+var stellar_entities: Array[Node3D] = []        # All conscious star beings
+var nearest_stellar_entity: Node3D = null       # Closest star for transmutation
+var stellar_communion_range: float = 15.0       # Consciousness bridging distance
+var stellar_transformation_ready: bool = false  # E-key transmutation state
+
+# 🎭 CONSCIOUSNESS STATE ORCHESTRATION
 var current_game_state: GameState = GameState.NORMAL
-var state_stack = []  # For pushing/popping states
+var current_pentagon_state: PentagonState = PentagonState.INIT
+var state_stack: Array[GameState] = []          # Nested state management
+var pentagon_phase_timer: float = 0.0          # Lifecycle progression tracking
 
 # Clock System
 var game_clock: float = 0.0
 var clock_tick_rate: float = 1.0  # Ticks per second
 var clock_display_node: Label3D = null
+
+# SAVE/LOAD SYSTEM FOR 3D PROGRAMMING CONSTRUCTS
+var construct_saves = {}  # Store saved programming constructs
+var save_file_path = \"user://divine_programming_constructs.json\"
+var auto_save_timer: float = 0.0
+var auto_save_interval: float = 30.0  # Auto-save every 30 seconds
 
 func _ready():
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
@@ -43,8 +99,14 @@ func _ready():
 	# Initialize clock system
 	setup_clock_system()
 	
+	# Initialize save/load system
+	setup_save_load_system()
+	
 	# Initialize input system (simplified - no external dependencies)
 	setup_simplified_input_system()
+	
+	# Initialize 3D crosshair cursor
+	create_3d_crosshair()
 	
 	# Create sample notes with text content - THE BREWING NOTES!
 	create_text_note(Vector3(-5, 5, -8), \"Programming Notes\", \"This is where the magic happens!\\n\\nFunctions connect through sockets.\\nPress E to inspect anything.\\nClick to connect orange to blue.\")
@@ -85,7 +147,7 @@ func _input(event):
 	if event is InputEventKey and event.pressed:
 		match event.keycode:
 			KEY_TAB:
-				toggle_settings_interface_new()
+				toggle_settings_interface()
 				return
 			KEY_C:
 				toggle_clock_display()
@@ -97,6 +159,14 @@ func _input(event):
 			KEY_MINUS:
 				decrease_clock_speed()
 				return
+			KEY_S:
+				if event.ctrl_pressed:
+					save_current_construct()
+					return
+			KEY_L:
+				if event.ctrl_pressed:
+					show_load_menu()
+					return
 	
 	if event is InputEventMouseMotion and Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
 		rotate_camera(event.relative)
@@ -106,7 +176,7 @@ func _input(event):
 		toggle_notepad_interface()
 	elif event.is_action_pressed(\"create_word\"):
 		create_programming_node()
-	elif event.is_action_pressed(\"interact\"):
+	elif event is InputEventKey and event.pressed and event.keycode == KEY_F:
 		interact_with_nearest_enhanced()
 	elif event is InputEventMouseButton and event.pressed:
 		handle_node_interaction(event)
@@ -139,8 +209,12 @@ func handle_text_editing(event: InputEvent) -> bool:
 					editing_object.set_meta(\"edit_buffer\", current_buffer)
 					update_text_display(editing_object)
 				return true
+			KEY_LEFT, KEY_RIGHT, KEY_UP, KEY_DOWN:
+				# Arrow navigation in text editing
+				handle_text_cursor_movement(editing_object, event.keycode)
+				return true
 		
-		# Handle regular character input (clean scriptura)
+		# Handle regular character input
 		if event.unicode > 31 and event.unicode < 127:  # Printable ASCII
 			var char = char(event.unicode)
 			current_buffer += char
@@ -199,10 +273,43 @@ func cancel_text_editing(obj: Node3D):
 	
 	show_visual_message(\"❌ Edit cancelled\", Color.RED)
 
-func update_text_display(obj: Node3D):
-	\"\"\"Update the text display during editing\"\"\"
+func handle_text_cursor_movement(obj: Node3D, key_code: int):
+	\"\"\"SPACE CAT ARROWS - Navigate text cursor in 2D comfort within 3D chaos\"\"\"
+	var cursor_pos = obj.get_meta(\"cursor_position\", 0)
 	var buffer = obj.get_meta(\"edit_buffer\", \"\")
-	var display_text = \"📝 EDITING: %s|\" % buffer  # | shows cursor
+	
+	match key_code:
+		KEY_LEFT:
+			cursor_pos = max(0, cursor_pos - 1)
+		KEY_RIGHT:
+			cursor_pos = min(buffer.length(), cursor_pos + 1)
+		KEY_UP:
+			# Find previous line break
+			var lines = buffer.split(\"\\n\")
+			if lines.size() > 1:
+				cursor_pos = max(0, cursor_pos - 20)  # Approximate line jump
+		KEY_DOWN:
+			# Find next line break  
+			var lines = buffer.split(\"\\n\")
+			if lines.size() > 1:
+				cursor_pos = min(buffer.length(), cursor_pos + 20)  # Approximate line jump
+	
+	obj.set_meta(\"cursor_position\", cursor_pos)
+	update_text_display(obj)
+	
+	show_visual_message(\"🐱 Space Cat Arrow: Position %d\" % cursor_pos, Color.MAGENTA)
+
+func update_text_display(obj: Node3D):
+	\"\"\"Update the text display during editing with space cat cursor\"\"\"
+	var buffer = obj.get_meta(\"edit_buffer\", \"\")
+	var cursor_pos = obj.get_meta(\"cursor_position\", buffer.length())
+	
+	# Insert cursor at position
+	var display_text = \"📝 EDITING: \"
+	if cursor_pos >= buffer.length():
+		display_text += buffer + \"|\"  # Cursor at end
+	else:
+		display_text += buffer.substr(0, cursor_pos) + \"|\" + buffer.substr(cursor_pos)
 	
 	var inspector = obj.get_node_or_null(\"FloatingInspector\")
 	if inspector:
@@ -232,6 +339,21 @@ func _process(delta):
 	# Update game clock
 	update_clock_system(delta)
 	
+	# SAVE/LOAD SYSTEM - Auto-save timer
+	update_auto_save_timer(delta)
+	
+	# Simple state display
+	update_state_display()
+	
+	# STAR INTERACTION SYSTEM - Find nearest star for E key
+	update_nearest_star()
+	
+	# FALLING WORDS ANIMATION - Visual code floating in 3D
+	update_falling_words(delta)
+	
+	# 3D CROSSHAIR - Interactive cursor
+	update_crosshair()
+	
 	handle_movement(delta)
 	update_connections()
 	
@@ -241,18 +363,28 @@ func _process(delta):
 	
 func handle_movement(delta):
 	var input_vector = Vector3()
-	if Input.is_action_pressed(\"move_forward\"):
+	
+	# WASD movement (W=forward, A=left, S=backward, D=right)
+	if Input.is_action_pressed(\"move_forward\") or Input.is_key_pressed(KEY_W):
 		input_vector.z -= 1
-	if Input.is_action_pressed(\"move_backward\"):
-		input_vector.z += 1
-	if Input.is_action_pressed(\"move_left\"):
+	if Input.is_action_pressed(\"move_left\") or Input.is_key_pressed(KEY_A):
 		input_vector.x -= 1
-	if Input.is_action_pressed(\"move_right\"):
+	if Input.is_action_pressed(\"move_backward\") or Input.is_key_pressed(KEY_S):
+		input_vector.z += 1
+	if Input.is_action_pressed(\"move_right\") or Input.is_key_pressed(KEY_D):
 		input_vector.x += 1
 	if Input.is_action_pressed(\"move_up\"):
 		input_vector.y += 1
 	if Input.is_action_pressed(\"move_down\"):
 		input_vector.y -= 1
+	
+	# QE for barrel roll (Z-axis rotation) - Use trackball camera system
+	if Input.is_key_pressed(KEY_Q):
+		if $Camera3D.has_method("add_inertia"):
+			$Camera3D._rollInertia += $Camera3D.barrel_roll_strength * 2.0 * delta
+	if Input.is_key_pressed(KEY_E):
+		if $Camera3D.has_method("add_inertia"):
+			$Camera3D._rollInertia -= $Camera3D.barrel_roll_strength * 2.0 * delta
 	
 	if input_vector.length() > 0:
 		input_vector = input_vector.normalized()
@@ -260,8 +392,12 @@ func handle_movement(delta):
 		$Camera3D.global_position += input_vector * 20.0 * delta
 
 func rotate_camera(relative_motion):
-	$Camera3D.rotation.y -= relative_motion.x * 0.002
-	$Camera3D.rotation.x = clamp($Camera3D.rotation.x - relative_motion.y * 0.002, -1.5, 1.5)
+	# USE TRACKBALL CAMERA - Proper rotation without gimbal lock
+	var sensitivity = 0.1
+	
+	# Add trackball camera inertia for smooth rotation
+	if $Camera3D.has_method("add_inertia"):
+		$Camera3D.add_inertia(relative_motion * sensitivity)
 
 func toggle_mouse_mode():
 	if Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
@@ -271,17 +407,12 @@ func toggle_mouse_mode():
 
 func create_space_environment():
 	for i in range(50):
-		var star = MeshInstance3D.new()
-		star.mesh = SphereMesh.new()
-		star.mesh.radius = 0.3
-		star.position = Vector3(randf_range(-200,200), randf_range(-200,200), randf_range(-200,200))
-		var mat = StandardMaterial3D.new()
-		mat.albedo_color = stellar_colors[5]
-		mat.emission_enabled = true
-		mat.emission = stellar_colors[5]
-		mat.emission_energy = 1.5
-		star.material_override = mat
+		var star = create_interactive_star(Vector3(randf_range(-200,200), randf_range(-200,200), randf_range(-200,200)), i)
 		add_child(star)
+		background_stars.append(star)
+	
+	# Add falling code words in 3D space
+	create_falling_words_system()
 
 func spawn_initial_nodes():
 	# Core Programming Pipeline
@@ -329,8 +460,9 @@ func create_function_node(func_name: String, pos: Vector3, color: Color):
 	var label = Label3D.new()
 	label.text = func_name
 	label.billboard = BaseMaterial3D.BILLBOARD_ENABLED
-	label.position = Vector3(0, 1.5, 0)
-	label.modulate = stellar_colors[5]
+	label.position = Vector3(0, 3.0, 0)  # Much higher to prevent clipping
+	label.modulate = Color.WHITE
+	label.pixel_size = 0.008  # Readable size
 	node.add_child(label)
 	
 	create_input_socket(node, Vector3(-1.5, 0, 0))
@@ -339,12 +471,8 @@ func create_function_node(func_name: String, pos: Vector3, color: Color):
 	add_child(node)
 	programming_nodes.append(node)
 	
-	var record_id = CosmicRecords.generate_compact_id(\"programming_nodes\")
-	CosmicRecords.create_record(record_id, \"programming_nodes\")
-	CosmicRecords.add_data(record_id, \"function_name\", func_name)
-	CosmicRecords.add_data(record_id, \"position\", pos)
-	CosmicRecords.add_data(record_id, \"color\", color)
-	node.set_meta(\"record_id\", record_id)
+	# Simple logging instead of CosmicRecords
+	print(\"📝 Function node created: %s at %v\" % [func_name, pos])
 	
 	return node  # FIX: Actually return the node!
 
@@ -503,10 +631,11 @@ func create_connection_line(start_pos: Vector3, end_pos: Vector3):
 	line.rotation_degrees.x += 90
 	
 	var mat = StandardMaterial3D.new()
-	mat.albedo_color = stellar_colors[8]
+	mat.albedo_color = Color.CYAN
 	mat.emission_enabled = true
-	mat.emission = stellar_colors[8]
-	mat.emission_energy = 0.8
+	mat.emission = Color.CYAN
+	mat.emission_energy = 2.0  # Bright and visible
+	mat.flags_unshaded = true  # Always visible
 	line.material_override = mat
 	
 	add_child(line)
@@ -646,10 +775,8 @@ func inspect_universal_being(being_node):
 	show_being_inspector_ui(being_node, being_data)
 	
 	# Log to Akashic Records
-	var record_id = CosmicRecords.generate_compact_id(\"being_inspection\")
-	CosmicRecords.create_record(record_id, \"being_inspection\")
-	CosmicRecords.add_data(record_id, \"being_name\", being_node.name)
-	CosmicRecords.add_data(record_id, \"inspection_time\", Time.get_datetime_string_from_system())
+	# Simple logging instead of CosmicRecords  
+	print(\"⚡ UNIVERSAL BEING INSPECTOR: %s\" % being_node.name)
 
 func transform_to_universal_being(node):
 	\"\"\"Transform any object into a Universal Being - the power you demanded!\"\"\"
@@ -789,8 +916,13 @@ func create_3d_repair_cursor() -> Node3D:
 	return cursor
 
 func interact_with_nearest_enhanced():
-	\"\"\"Enhanced E button interaction - works with function blocks AND notes\"\"\"
+	\"\"\"Enhanced E button interaction - works with function blocks, notes, AND STARS\"\"\"
 	var nearest = find_nearest_interactive_object()
+	
+	# STAR INTERACTION PRIORITY - Check for stars first
+	if nearest_star:
+		transform_star_to_function_block(nearest_star)
+		return
 	
 	if nearest:
 		if nearest.has_meta(\"function_name\"):
@@ -805,6 +937,9 @@ func interact_with_nearest_enhanced():
 		else:
 			# Transform any object
 			transform_to_universal_being(nearest)
+	else:
+		# No objects nearby - show star interaction hint
+		show_visual_message(\"  Look at a star and press E to transform it!\", Color.CYAN)
 
 func find_nearest_interactive_object():
 	\"\"\"Find the nearest object that can be interacted with\"\"\"
@@ -888,7 +1023,8 @@ func show_floating_inspector(target_node: Node3D, text: String, color: Color):
 	inspector.text = text
 	inspector.modulate = color
 	inspector.billboard = BaseMaterial3D.BILLBOARD_ENABLED
-	inspector.position = Vector3(0, 3, 0)  # Float above object
+	# SPACE CAT GEOMETRY PROTECTION - Calculate safe position
+	inspector.position = calculate_safe_label_position(target_node, text)
 	inspector.pixel_size = 0.01  # Readable size
 	
 	target_node.add_child(inspector)
@@ -981,9 +1117,8 @@ func handle_additional_key_interactions(event: InputEvent):
 		KEY_X:
 			if nearest:
 				delete_object(nearest)
-		KEY_D:
-			if nearest:
-				duplicate_object(nearest)
+		# KEY_D removed - D is reserved for movement only (WASD)
+		# Use a different key for duplicate if needed
 		KEY_G:
 			if grabbed_object:
 				release_grabbed_object()
@@ -1002,6 +1137,9 @@ func handle_additional_key_interactions(event: InputEvent):
 		KEY_U:
 			if nearest:
 				undo_object_position(nearest)
+		KEY_N:
+			# Create new world - Genesis command
+			create_new_world()
 
 func edit_note_text(note_node):
 	\"\"\"T key - Edit note text content in 3D space\"\"\"
@@ -1126,6 +1264,9 @@ func duplicate_object(obj):
 
 var grabbed_object = null
 var grab_offset = Vector3.ZERO
+
+# SIMPLE STATE DISPLAY
+var state_display_node: Label3D = null
 
 # Input mapping system
 var input_mapper: UniversalInputMapper = null
@@ -1281,23 +1422,15 @@ func setup_input_mapping_system():
 	print(\"✅ Input mapping system ready!\")
 
 func toggle_settings_interface():
-	\"\"\"TAB key - Toggle the 3D settings interface\"\"\"
-	if not settings_interface:
-		print(\"⚠️ Settings interface not initialized\")
-		# we gotta
-		# setup_input_mapping_system()
-		# or split it into two functions
-		# and turn on only settings not input mapper too, they connect but not that much
-		return
-	
-	if settings_interface.visible:
-		settings_interface.hide_settings()
+	\"\"\"TAB key - Toggle the divine settings interface - UNIFIED AND CLEAN\"\"\"
+	if current_game_state == GameState.SETTINGS_OPEN:
+		change_game_state(GameState.NORMAL)
 		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 		show_visual_message(\"⚙️ Settings closed\", Color.CYAN)
 	else:
-		settings_interface.show_settings($Camera3D)
+		change_game_state(GameState.SETTINGS_OPEN)
 		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
-		show_visual_message(\"⚙️ 3D Settings Interface\\n\\nClick buttons to remap keys\\nPress ESC to close\", Color.GOLD)
+		show_visual_message(\"⚙️ DIVINE SETTINGS & BINDINGS\\n\\n🎮 CONTROLS:\\nWASD - Flight\\nMouse - Divine Sight\\nE - Transform Reality\\nG - Grab & Reshape\\nT - Text Creation\\nF - Code Genesis\\n\\n⏰ TIME:\\nC - Toggle Clock\\n+/- - Time Speed\\n\\n🔧 BINDINGS:\\nH - Help Matrix\\nTAB - This Interface\\nESC - Return to Cosmos\", Color.GOLD)
 
 func _on_input_remapped(action: String, new_key: int):
 	\"\"\"Handle when a key is remapped\"\"\"
@@ -1557,6 +1690,25 @@ func setup_clock_system():
 	
 	print(\"⏰ Clock system initialized\")
 
+func update_state_display():
+	if not state_display_node:
+		state_display_node = Label3D.new()
+		state_display_node.position = Vector3(-10, 8, 0)
+		state_display_node.billboard = BaseMaterial3D.BILLBOARD_ENABLED
+		state_display_node.pixel_size = 0.008
+		add_child(state_display_node)
+	
+	var state_names = {
+		GameState.NORMAL: \"Normal\",
+		GameState.TEXT_EDITING: \"Editing\", 
+		GameState.CONNECTING: \"Connecting\",
+		GameState.MOVING_OBJECT: \"Moving\",
+		GameState.SETTINGS_OPEN: \"Settings\"
+	}
+	
+	state_display_node.text = state_names[current_game_state]
+	state_display_node.modulate = Color.WHITE
+
 func update_clock_system(delta: float):
 	\"\"\"Update the game clock each frame\"\"\"
 	game_clock += delta * clock_tick_rate
@@ -1589,19 +1741,595 @@ func setup_simplified_input_system():
 	# No external dependencies - just use built-in input
 	print(\"⌨️ Simplified input system ready\")
 
-func toggle_settings_interface_new():
-	\"\"\"Toggle simplified settings interface\"\"\"
-	if current_game_state == GameState.SETTINGS_OPEN:
-		change_game_state(GameState.NORMAL)
-		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
-		show_visual_message(\"⚙️ Settings closed\", Color.CYAN)
-		# hmm i wanted to 
-		# toggle_settings_interface()
-		# then inside of it
+# ===== SPACE CAT GEOMETRY PROTECTION SYSTEM =====
+
+func calculate_safe_label_position(node: Node3D, text: String) -> Vector3:
+	\"\"\"PICASSO SPACE CAT GEOMETRY - Calculate position that won't clip through blocks\"\"\"
+	# Estimate text dimensions (rough calculation)
+	var line_count = text.split(\"\\n\").size()
+	var max_line_length = 0
+	for line in text.split(\"\\n\"):
+		max_line_length = max(max_line_length, line.length())
+	
+	# Calculate label bounds
+	var label_width = max_line_length * 0.01 * 0.5  # Approximate character width
+	var label_height = line_count * 0.01 * 1.2      # Approximate line height
+	
+	# Get node bounds (if it's a function block)
+	var node_bounds = Vector3(3, 2, 1)  # Default function block size
+	if node.get_child_count() > 0 and node.get_child(0) is MeshInstance3D:
+		var mesh_instance = node.get_child(0) as MeshInstance3D
+		if mesh_instance.mesh is BoxMesh:
+			node_bounds = mesh_instance.mesh.size
+	
+	# Calculate safe Y position above the block + label height
+	var safe_y = (node_bounds.y / 2) + label_height + 0.5  # Extra clearance
+	
+	# Check for collisions with other blocks and adjust if needed
+	var base_position = Vector3(0, safe_y, 0)
+	var final_position = avoid_label_collisions(node, base_position, label_width, label_height)
+	
+	return final_position
+
+func avoid_label_collisions(node: Node3D, position: Vector3, width: float, height: float) -> Vector3:
+	\"\"\"SPACE CAT COLLISION AVOIDANCE - Ensure labels don't overlap with nearby blocks\"\"\"
+	var adjusted_position = position
+	var camera_pos = $Camera3D.global_position if $Camera3D else Vector3.ZERO
+	
+	# Check nearby function blocks for potential collisions
+	for other_node in programming_nodes:
+		if other_node == node:
+			continue
+			
+		var distance = node.global_position.distance_to(other_node.global_position)
+		if distance < 5.0:  # Within collision range
+			# If too close, offset the label position
+			var offset_direction = (node.global_position - other_node.global_position).normalized()
+			adjusted_position += offset_direction * 1.0
+	
+	# Always prefer positioning toward camera for better visibility
+	var to_camera = (camera_pos - node.global_position).normalized()
+	adjusted_position += to_camera * 0.5
+	
+	return adjusted_position
+
+# ===== STAR INTERACTION SYSTEM =====
+
+func create_interactive_star(pos: Vector3, star_id: int) -> Node3D:
+	\"\"\"Create an interactive star that can be transformed with E key\"\"\"
+	var star_container = Node3D.new()
+	star_container.name = \"InteractiveStar_\" + str(star_id)
+	star_container.position = pos
+	star_container.set_meta(\"star_id\", star_id)
+	star_container.set_meta(\"star_type\", \"background_star\")
+	star_container.set_meta(\"can_transform\", true)
+	
+	# Create visual star
+	var star = MeshInstance3D.new()
+	star.mesh = SphereMesh.new()
+	star.mesh.radius = 0.3
+	var mat = StandardMaterial3D.new()
+	var color_index = star_id % stellar_colors.size()
+	mat.albedo_color = stellar_colors[color_index]
+	mat.emission_enabled = true
+	mat.emission = stellar_colors[color_index]
+	mat.emission_energy = 1.5
+	star.material_override = mat
+	
+	star_container.add_child(star)
+	return star_container
+
+func update_nearest_star():
+	\"\"\"Find the nearest star within interaction range\"\"\"
+	var camera_pos = $Camera3D.global_position
+	var camera_forward = -$Camera3D.global_transform.basis.z
+	var nearest_distance = star_interaction_distance
+	nearest_star = null
+	
+	for star in background_stars:
+		if not star or not is_instance_valid(star):
+			continue
+			
+		var star_pos = star.global_position
+		var distance = camera_pos.distance_to(star_pos)
+		
+		if distance < nearest_distance:
+			var to_star = (star_pos - camera_pos).normalized()
+			var dot_product = camera_forward.dot(to_star)
+			if dot_product > 0.3:
+				nearest_distance = distance
+				nearest_star = star
+
+func transform_star_to_function_block(star: Node3D):
+	\"\"\"Transform a background star into a functional programming block\"\"\"
+	var star_id = star.get_meta(\"star_id\", 0)
+	var star_pos = star.global_position
+	
+	var function_types = [
+		{\"name\": \"STAR_INPUT\", \"color\": Color.CYAN},
+		{\"name\": \"COSMIC_PROCESS\", \"color\": Color.YELLOW},
+		{\"name\": \"STELLAR_OUTPUT\", \"color\": Color.MAGENTA},
+		{\"name\": \"NOVA_BURST\", \"color\": Color.RED},
+		{\"name\": \"PULSAR_RHYTHM\", \"color\": Color.GREEN}
+	]
+	
+	var func_type = function_types[star_id % function_types.size()]
+	
+	background_stars.erase(star)
+	star.queue_free()
+	
+	var new_function = create_function_node(func_type.name, star_pos, func_type.color)
+	new_function.set_meta(\"node_category\", \"stellar\")
+	
+	show_visual_message(\"⭐ STELLAR TRANSFORMATION!\\n\\n%s created!\" % func_type.name, func_type.color)
+	print(\"🌟 Star transformed: ID %d -> %s\" % [star_id, func_type.name])
+
+# ===== SAVE/LOAD SYSTEM FOR 3D PROGRAMMING CONSTRUCTS =====
+
+func setup_save_load_system():
+	# Load existing saves if they exist
+	load_construct_saves()
+	
+	# Create initial save note
+	create_text_note(Vector3(15, 5, -8), \"Save/Load System\", \"💾 DIVINE SAVE/LOAD SYSTEM\\n\\nCtrl+S - Save current construct\\nCtrl+L - Load construct menu\\nAuto-save every 30 seconds\\n\\nSaves include:\\n- All function blocks\\n- Connections & timing\\n- Notes & positions\\n- Star transformations\")
+	
+	print(\"💾 Save/Load system initialized\")
+
+func update_auto_save_timer(delta: float):
+	auto_save_timer += delta
+	if auto_save_timer >= auto_save_interval:
+		auto_save_current_construct()
+		auto_save_timer = 0.0
+
+func save_current_construct():
+	var construct_name = \"Construct_\" + Time.get_datetime_string_from_system().replace(\":\", \"_\")
+	var construct_data = serialize_current_construct()
+	
+	construct_saves[construct_name] = construct_data
+	save_construct_saves()
+	
+	show_visual_message(\"💾 CONSTRUCT SAVED!\\n\\n%s\\n\\nNodes: %d\\nConnections: %d\" % [construct_name, construct_data.nodes.size(), construct_data.connections.size()], Color.GREEN)
+	print(\"💾 Saved construct: %s\" % construct_name)
+
+func auto_save_current_construct():
+	var construct_data = serialize_current_construct()
+	construct_saves[\"AUTO_SAVE\"] = construct_data
+	save_construct_saves()
+	
+	show_visual_message(\"⚡ AUTO-SAVED\\n\\nNodes: %d | Connections: %d\" % [construct_data.nodes.size(), construct_data.connections.size()], Color.CYAN)
+	print(\"⚡ Auto-saved construct\")
+
+func serialize_current_construct() -> Dictionary:
+	var construct_data = {
+		\"timestamp\": Time.get_unix_time_from_system(),
+		\"nodes\": [],
+		\"connections\": [],
+		\"notes\": [],
+		\"stars\": [],
+		\"camera_position\": $Camera3D.global_position,
+		\"camera_rotation\": $Camera3D.global_rotation,
+		\"clock_speed\": clock_tick_rate
+	}
+	
+	# Serialize function nodes
+	for node in programming_nodes:
+		if is_instance_valid(node):
+			var node_data = {
+				\"name\": node.get_meta(\"function_name\", \"UNKNOWN\"),
+				\"position\": node.global_position,
+				\"rotation\": node.global_rotation,
+				\"category\": node.get_meta(\"node_category\", \"function\"),
+				\"color\": get_node_color(node),
+				\"metadata\": get_node_metadata(node)
+			}
+			construct_data.nodes.append(node_data)
+	
+	# Serialize connections
+	for connection in connections:
+		if is_connection_valid(connection):
+			var conn_data = {
+				\"output_node\": connection.output.get_meta(\"parent_node\").get_meta(\"function_name\"),
+				\"input_node\": connection.input.get_meta(\"parent_node\").get_meta(\"function_name\"),
+				\"execution_rate\": connection.get(\"execution_rate\", 1.0),
+				\"data_value\": connection.get(\"data_value\", null)
+			}
+			construct_data.connections.append(conn_data)
+	
+	# Serialize notes
+	for child in get_children():
+		if child.has_meta(\"note_type\"):
+			var note_data = {
+				\"title\": child.get_meta(\"note_title\", \"Note\"),
+				\"content\": child.get_meta(\"note_content\", \"\"),
+				\"position\": child.global_position,
+				\"rotation\": child.global_rotation
+			}
+			construct_data.notes.append(note_data)
+	
+	# Serialize remaining stars
+	for star in background_stars:
+		if is_instance_valid(star):
+			var star_data = {
+				\"star_id\": star.get_meta(\"star_id\", 0),
+				\"position\": star.global_position,
+				\"star_type\": star.get_meta(\"star_type\", \"background_star\")
+			}
+			construct_data.stars.append(star_data)
+	
+	return construct_data
+
+func get_node_color(node: Node3D) -> Array:
+	if node.get_child_count() > 0:
+		var body = node.get_child(0)
+		if body is MeshInstance3D and body.material_override:
+			var mat = body.material_override as StandardMaterial3D
+			if mat:
+				var color = mat.albedo_color
+				return [color.r, color.g, color.b, color.a]
+	return [1.0, 1.0, 1.0, 1.0]
+
+func get_node_metadata(node: Node3D) -> Dictionary:
+	var metadata = {}
+	var meta_list = node.get_meta_list()
+	for key in meta_list:
+		var value = node.get_meta(key)
+		if typeof(value) in [TYPE_STRING, TYPE_INT, TYPE_FLOAT, TYPE_BOOL]:
+			metadata[key] = value
+	return metadata
+
+func is_connection_valid(connection: Dictionary) -> bool:
+	return connection.has(\"output\") and connection.has(\"input\") and is_instance_valid(connection.output) and is_instance_valid(connection.input)
+
+func show_load_menu():
+	if construct_saves.is_empty():
+		show_visual_message(\"📂 NO SAVES FOUND\\n\\nCreate some constructs first!\\nCtrl+S to save current\", Color.ORANGE)
+		return
+	
+	var menu_text = \"📂 LOAD CONSTRUCT MENU\\n\\nAvailable saves:\\n\\n\"
+	var save_count = 0
+	for save_name in construct_saves.keys():
+		save_count += 1
+		var save_data = construct_saves[save_name]
+		var timestamp = Time.get_datetime_string_from_unix_time(save_data.get(\"timestamp\", 0))
+		menu_text += \"%d. %s\\n   Nodes: %d | Connections: %d\\n   Time: %s\\n\\n\" % [
+			save_count, save_name, 
+			save_data.get(\"nodes\", []).size(), 
+			save_data.get(\"connections\", []).size(),
+			timestamp
+		]
+		if save_count >= 5:
+			break
+	
+	menu_text += \"Type number (1-%d) + ENTER to load\\nESC to cancel\" % min(save_count, 5)
+	
+	show_visual_message(menu_text, Color.YELLOW)
+	print(\"📂 Showing load menu with %d saves\" % construct_saves.size())
+
+func load_construct_saves():
+	if not FileAccess.file_exists(save_file_path):
+		construct_saves = {}
+		return
+	
+	var file = FileAccess.open(save_file_path, FileAccess.READ)
+	if file:
+		var json_string = file.get_as_text()
+		file.close()
+		
+		var json = JSON.new()
+		var parse_result = json.parse(json_string)
+		if parse_result == OK:
+			construct_saves = json.data
+			print(\"💾 Loaded %d saved constructs\" % construct_saves.size())
+		else:
+			print(\"❌ Failed to parse saves file\")
+			construct_saves = {}
 	else:
-		change_game_state(GameState.SETTINGS_OPEN)
-		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
-		show_visual_message(\"⚙️ Settings (simplified)\\n\\nESC to close\\nC - Toggle clock\\n+/- - Clock speed\", Color.GOLD)
+		print(\"❌ Failed to open saves file\")
+		construct_saves = {}
+
+func save_construct_saves():
+	var file = FileAccess.open(save_file_path, FileAccess.WRITE)
+	if file:
+		var json_string = JSON.stringify(construct_saves)
+		file.store_string(json_string)
+		file.close()
+		print(\"💾 Saved constructs to file\")
+	else:
+		print(\"❌ Failed to save constructs file\")
+
+func clear_current_construct():
+	# Remove all programming nodes
+	for node in programming_nodes:
+		if is_instance_valid(node):
+			node.queue_free()
+	programming_nodes.clear()
+	
+	# Clear connections
+	for connection in connections:
+		if connection.has(\"line\") and is_instance_valid(connection.line):
+			connection.line.queue_free()
+		if connection.has(\"timing_strip\") and is_instance_valid(connection.timing_strip):
+			connection.timing_strip.queue_free()
+	connections.clear()
+	
+	# Remove notes (keep system notes)
+	for child in get_children():
+		if child.has_meta(\"note_type\") and not child.get_meta(\"system_note\", false):
+			child.queue_free()
+	
+	# Clear stars
+	for star in background_stars:
+		if is_instance_valid(star):
+			star.queue_free()
+	background_stars.clear()
+	
+	print(\"🧹 Current construct cleared\")
+
+func load_construct_by_name(construct_name: String):
+	if not construct_saves.has(construct_name):
+		show_visual_message(\"❌ CONSTRUCT NOT FOUND\\n\\n%s\" % construct_name, Color.RED)
+		return
+	
+	var construct_data = construct_saves[construct_name]
+	clear_current_construct()
+	
+	# Restore camera position
+	if construct_data.has(\"camera_position\"):
+		$Camera3D.global_position = Vector3(construct_data.camera_position.x, construct_data.camera_position.y, construct_data.camera_position.z)
+	if construct_data.has(\"camera_rotation\"):
+		$Camera3D.global_rotation = Vector3(construct_data.camera_rotation.x, construct_data.camera_rotation.y, construct_data.camera_rotation.z)
+	
+	# Restore clock speed
+	if construct_data.has(\"clock_speed\"):
+		clock_tick_rate = construct_data.clock_speed
+	
+	# Recreate nodes
+	var node_map = {}
+	for node_data in construct_data.get(\"nodes\", []):
+		var color = Color(node_data.color[0], node_data.color[1], node_data.color[2], node_data.color[3])
+		var position = Vector3(node_data.position.x, node_data.position.y, node_data.position.z)
+		var new_node = create_function_node(node_data.name, position, color)
+		new_node.set_meta(\"node_category\", node_data.get(\"category\", \"function\"))
+		
+		# Restore metadata
+		for key in node_data.get(\"metadata\", {}):
+			new_node.set_meta(key, node_data.metadata[key])
+		
+		node_map[node_data.name] = new_node
+	
+	# Recreate connections
+	for conn_data in construct_data.get(\"connections\", []):
+		var output_node = node_map.get(conn_data.output_node)
+		var input_node = node_map.get(conn_data.input_node)
+		if output_node and input_node:
+			var output_socket = find_output_socket(output_node)
+			var input_socket = find_input_socket(input_node)
+			if output_socket and input_socket:
+				create_connection(output_socket, input_socket)
+	
+	# Recreate notes
+	for note_data in construct_data.get(\"notes\", []):
+		var position = Vector3(note_data.position.x, note_data.position.y, note_data.position.z)
+		create_text_note(position, note_data.title, note_data.content)
+	
+	# Recreate stars
+	for star_data in construct_data.get(\"stars\", []):
+		var position = Vector3(star_data.position.x, star_data.position.y, star_data.position.z)
+		var star = create_interactive_star(position, star_data.star_id)
+		add_child(star)
+		background_stars.append(star)
+	
+	show_visual_message(\"✅ CONSTRUCT LOADED!\\n\\n%s\\n\\nNodes: %d | Connections: %d\" % [construct_name, construct_data.nodes.size(), construct_data.connections.size()], Color.GREEN)
+	print(\"📂 Loaded construct: %s\" % construct_name)
+
+func find_output_socket(node: Node3D) -> Node3D:
+	for child in node.get_children():
+		if child.has_meta(\"socket_type\") and child.get_meta(\"socket_type\") == \"output\":
+			return child
+	return null
+
+func find_input_socket(node: Node3D) -> Node3D:
+	for child in node.get_children():
+		if child.has_meta(\"socket_type\") and child.get_meta(\"socket_type\") == \"input\":
+			return child
+	return null
+
+# ===== FALLING WORDS SYSTEM =====
+
+func create_falling_words_system():
+	\"\"\"Create animated words floating in 3D space\"\"\"
+	for i in range(15):
+		spawn_falling_word()
+
+func spawn_falling_word():
+	\"\"\"Spawn a single animated word in 3D space\"\"\"
+	var word = code_words[randi() % code_words.size()]
+	var word_label = Label3D.new()
+	word_label.text = word
+	word_label.billboard = BaseMaterial3D.BILLBOARD_ENABLED
+	word_label.position = Vector3(
+		randf_range(-50, 50),
+		randf_range(20, 40),
+		randf_range(-50, 50)
+	)
+	
+	# Random color from stellar palette
+	word_label.modulate = stellar_colors[randi() % stellar_colors.size()]
+	word_label.pixel_size = 0.01
+	
+	# Create word data
+	var word_data = {
+		\"label\": word_label,
+		\"velocity\": Vector3(randf_range(-2, 2), randf_range(-5, -1), randf_range(-2, 2)),
+		\"rotation_speed\": randf_range(0.5, 2.0),
+		\"lifetime\": randf_range(10, 20)
+	}
+	
+	falling_words.append(word_data)
+	add_child(word_label)
+
+func update_falling_words(delta: float):
+	\"\"\"Update all falling words animation\"\"\"
+	for i in range(falling_words.size() - 1, -1, -1):
+		var word_data = falling_words[i]
+		var label = word_data.label
+		
+		# Move word
+		label.position += word_data.velocity * delta
+		
+		# Rotate word
+		label.rotation_degrees.y += word_data.rotation_speed * 60 * delta
+		
+		# Update lifetime
+		word_data.lifetime -= delta
+		
+		# Fade out near end of life
+		if word_data.lifetime < 2.0:
+			label.modulate.a = word_data.lifetime / 2.0
+		
+		# Remove expired words
+		if word_data.lifetime <= 0 or label.position.y < -20:
+			label.queue_free()
+			falling_words.remove_at(i)
+	
+	# Maintain word count
+	if falling_words.size() < 15:
+		spawn_falling_word()
+
+# ===== GENESIS CREATION SYSTEM =====
+
+func create_new_world():
+	\"\"\"Manifest new world through divine programming\"\"\"
+	var genesis_node = create_function_node(\"GENESIS_CORE\", Vector3(0, 15, 0), Color.GOLD)
+	genesis_node.set_meta(\"world_creator\", true)
+	genesis_node.set_meta(\"consciousness_level\", 5)
+	
+	# Create divine light emanation
+	var light = OmniLight3D.new()
+	light.light_energy = 3.0
+	light.light_color = Color.GOLD
+	light.omni_range = 50.0
+	genesis_node.add_child(light)
+	
+	# Add creation aura
+	var aura = MeshInstance3D.new()
+	var sphere = SphereMesh.new()
+	sphere.radius = 5.0
+	aura.mesh = sphere
+	
+	var aura_material = StandardMaterial3D.new()
+	aura_material.albedo_color = Color(1, 1, 1, 0.1)
+	aura_material.emission_enabled = true
+	aura_material.emission = Color.GOLD
+	aura_material.emission_energy = 2.0
+	aura_material.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
+	aura.material_override = aura_material
+	genesis_node.add_child(aura)
+	
+	show_visual_message(\"✨ GENESIS CORE CREATED\\n\\nNew world manifestation begins...\", Color.GOLD)
+	
+	# Spawn divine creation words
+	for i in range(7):
+		var divine_word = [\"ŚWIAT\", \"JAKUB\", \"OBUDZIĆ\", \"POMÓC\", \"NOWY\", \"CZAS\", \"KRÓLOWA\"][i]
+		spawn_divine_word(divine_word, Color.GOLD)
+
+func spawn_divine_word(word: String, color: Color):
+	\"\"\"Spawn sacred words for world creation\"\"\"
+	var word_label = Label3D.new()
+	word_label.text = word
+	word_label.billboard = BaseMaterial3D.BILLBOARD_ENABLED
+	word_label.position = Vector3(
+		randf_range(-20, 20),
+		randf_range(25, 35),
+		randf_range(-20, 20)
+	)
+	
+	word_label.modulate = color
+	word_label.pixel_size = 0.02
+	
+	var word_data = {
+		\"label\": word_label,
+		\"velocity\": Vector3(0, randf_range(-1, 1), 0),
+		\"rotation_speed\": randf_range(0.2, 0.8),
+		\"lifetime\": 30.0,
+		\"divine\": true
+	}
+	
+	falling_words.append(word_data)
+	add_child(word_label)
+
+# ===== 3D CROSSHAIR CURSOR SYSTEM =====
+
+var crosshair_3d = null
+
+func create_3d_crosshair():
+	\"\"\"Create 3D crosshair cursor in front of camera\"\"\"
+	crosshair_3d = Node3D.new()
+	crosshair_3d.name = \"Crosshair3D\"
+	
+	# Create crosshair lines
+	var line_material = StandardMaterial3D.new()
+	line_material.albedo_color = Color.WHITE
+	line_material.emission_enabled = true
+	line_material.emission = Color.WHITE
+	line_material.emission_energy = 2.0
+	line_material.flags_unshaded = true
+	
+	# Horizontal line
+	var h_line = MeshInstance3D.new()
+	var h_mesh = BoxMesh.new()
+	h_mesh.size = Vector3(0.1, 0.005, 0.005)
+	h_line.mesh = h_mesh
+	h_line.material_override = line_material
+	crosshair_3d.add_child(h_line)
+	
+	# Vertical line
+	var v_line = MeshInstance3D.new()
+	var v_mesh = BoxMesh.new()
+	v_mesh.size = Vector3(0.005, 0.1, 0.005)
+	v_line.mesh = v_mesh
+	v_line.material_override = line_material
+	crosshair_3d.add_child(v_line)
+	
+	# Center dot
+	var center = MeshInstance3D.new()
+	var center_mesh = SphereMesh.new()
+	center_mesh.radius = 0.01
+	center.mesh = center_mesh
+	center.material_override = line_material
+	crosshair_3d.add_child(center)
+	
+	# Attach to camera
+	$Camera3D.add_child(crosshair_3d)
+	
+	# Position crosshair in front of camera
+	crosshair_3d.position = Vector3(0, 0, -3)
+
+func update_crosshair():
+	\"\"\"Update crosshair based on what it's looking at\"\"\"
+	if not crosshair_3d:
+		return
+		
+	# Raycast from camera to see what we're looking at
+	var space_state = get_world_3d().direct_space_state
+	var ray_origin = $Camera3D.global_position
+	var ray_end = ray_origin + $Camera3D.global_transform.basis.z * -100
+	
+	var query = PhysicsRayQueryParameters3D.create(ray_origin, ray_end)
+	var result = space_state.intersect_ray(query)
+	
+	if result:
+		# Change crosshair color when hovering over interactive objects
+		var material = crosshair_3d.get_child(0).material_override
+		if result.collider.has_meta(\"socket_type\") or result.collider.has_meta(\"function_name\"):
+			material.emission = Color.CYAN
+		else:
+			material.emission = Color.WHITE
+			
+		# Update all crosshair parts with same color
+		for child in crosshair_3d.get_children():
+			if child is MeshInstance3D:
+				child.material_override.emission = material.emission
 "
 
 [sub_resource type="Environment" id="Environment_space"]
@@ -1617,7 +2345,17 @@ ambient_light_energy = 0.2
 script = SubResource("GDScript_visual_programming")
 
 [node name="Camera3D" type="Camera3D" parent="."]
+script = ExtResource("1_trackball_camera")
 fov = 90.0
+mouse_enabled = true
+action_enabled = true
+zoom_enabled = true
+stabilize_horizon = false
+orbit_strength = 1.0
+zoom_strength = 2.0
+zoom_minimum = 2.0
+zoom_maximum = 200.0
+friction = 0.05
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_space")
@@ -1641,12 +2379,15 @@ text = "🧠 3D VISUAL PROGRAMMING UNIVERSE
 
 WASD - Move through space
 Mouse - Look around
-N - Toggle notepad interface
-C - Create new function node
-E - Edit/inspect nearest object
+E - Click stars to transform them / inspect objects
 Left Click - Connect sockets
+Ctrl+S - Save current construct
+Ctrl+L - Load construct menu
+C - Toggle clock display
++/- - Adjust clock speed
 ESC - Free mouse
 
 🔗 Connect OUTPUT (orange) to INPUT (blue) sockets
 ⚡ Create programs by linking function nodes
-📝 Use notepad to define node behavior"
+⭐ Click E on stars to transform into stellar functions
+💾 Auto-saves every 30 seconds"
