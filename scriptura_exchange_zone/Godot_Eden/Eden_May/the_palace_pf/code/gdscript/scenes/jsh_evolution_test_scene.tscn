@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://bpc3240717uce"]
+
+[ext_resource type="Script" path="res://jsh_evolution_test.gd" id="1_wdr5g"]
+
+[node name="JSHEvolutionTestScene" type="Node"]
+script = ExtResource("1_wdr5g")

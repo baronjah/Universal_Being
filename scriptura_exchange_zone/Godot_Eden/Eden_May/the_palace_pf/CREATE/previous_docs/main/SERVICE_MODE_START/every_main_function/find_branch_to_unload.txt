@@ -1,0 +1,31 @@
+func find_branch_to_unload(thing_path):
+	var new_path_splitter = str(thing_path).split("/")
+	tree_mutex.lock()
+	if scene_tree_jsh["main_root"]["branches"][new_path_splitter[0]]["children"].has(new_path_splitter[1]):
+		var branch_part_to_cache = scene_tree_jsh["main_root"]["branches"][new_path_splitter[0]]["children"][new_path_splitter[1]].duplicate(true)
+		var branch_name_to_cache = new_path_splitter[0]
+		var child_name_to_cache = new_path_splitter[1]
+		tree_mutex.unlock()
+		cache_branch(branch_name_to_cache, child_name_to_cache, branch_part_to_cache)
+		
+		tree_mutex.lock()
+		scene_tree_jsh["main_root"]["branches"][new_path_splitter[0]]["children"].erase(new_path_splitter[1])
+		tree_mutex.unlock()
+	else:
+		tree_mutex.unlock()
+		
+		
+	array_counting_mutex.lock()
+	
+	# if has branch name
+	if array_for_counting_finish.has(new_path_splitter[0]):
+		if array_for_counting_finish[new_path_splitter[0]].has(new_path_splitter[1]):
+			print(" cache branch we can unload that node ", new_path_splitter[1])
+			array_for_counting_finish[new_path_splitter[0]].erase(new_path_splitter[1])
+		else:
+			print(" cache branch that node does not exist in that container", new_path_splitter[0])
+	else:
+		print(" cache branch that container does not exist")
+		# if has child_name
+	
+	array_counting_mutex.unlock()

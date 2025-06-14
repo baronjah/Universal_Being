@@ -1,0 +1,59 @@
+[gd_scene load_steps=8 format=3 uid="uid://bxbytf8u6wgds"]
+
+[ext_resource type="Script" path="res://code/gdscript/scripts/universe_particles_physics/space_game_main.gd" id="1_s8w7c"]
+[ext_resource type="PackedScene" uid="uid://dbtykr1r2o4sx" path="res://scenes/Galaxies.tscn" id="2_b45gf"]
+[ext_resource type="PackedScene" uid="uid://b2qwdqm0d1ht1" path="res://scenes/GalaxyCloseUp.tscn" id="3_8g6d3"]
+[ext_resource type="PackedScene" uid="uid://dosjp4u2gdm1q" path="res://scenes/CelestialBody.tscn" id="4_f7jms"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_2hmot"]
+sky_horizon_color = Color(0.0392157, 0.0470588, 0.054902, 1)
+sky_curve = 0.0718889
+ground_bottom_color = Color(0.133333, 0.133333, 0.133333, 1)
+ground_horizon_color = Color(0.0392157, 0.0470588, 0.054902, 1)
+
+[sub_resource type="Sky" id="Sky_a0y8d"]
+sky_material = SubResource("ProceduralSkyMaterial_2hmot")
+
+[sub_resource type="Environment" id="Environment_tqiwc"]
+background_mode = 2
+sky = SubResource("Sky_a0y8d")
+ambient_light_color = Color(0.109804, 0.109804, 0.109804, 1)
+tonemap_mode = 2
+glow_enabled = true
+glow_intensity = 0.2
+glow_bloom = 0.06
+glow_blend_mode = 1
+fog_enabled = true
+fog_light_color = Color(0.0313726, 0.0313726, 0.0313726, 1)
+fog_density = 0.002
+fog_sky_affect = 0.0
+volumetric_fog_enabled = true
+volumetric_fog_density = 0.01
+
+[node name="SpaceGame" type="Node3D"]
+script = ExtResource("1_s8w7c")
+universe_scene = ExtResource("2_b45gf")
+galaxy_scene = ExtResource("3_8g6d3")
+planet_scene = ExtResource("4_f7jms")
+start_scale = "universe"
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_tqiwc")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.646177, -0.47848, 0.594535, 0, 0.77907, 0.626859, -0.763129, -0.405057, 0.503434, 0, 0, 0)
+light_color = Color(0.756863, 0.74902, 0.819608, 1)
+shadow_enabled = true
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.965926, 0.258819, 0, -0.258819, 0.965926, 0, 20, 50)
+
+[node name="InfoLabel" type="Label" parent="."]
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -40.0
+offset_right = 264.0
+grow_vertical = 0
+text = "Space Navigation: WASD + Mouse
+Scale Transitions: Click on objects"

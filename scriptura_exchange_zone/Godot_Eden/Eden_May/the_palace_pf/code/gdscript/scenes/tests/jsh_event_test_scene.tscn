@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://dofg1k3hpxfhw"]
+
+[ext_resource type="Script" path="res://jsh_event_test.gd" id="1_8l0bm"]
+
+[node name="JSHEventTestScene" type="Node"]
+script = ExtResource("1_8l0bm")

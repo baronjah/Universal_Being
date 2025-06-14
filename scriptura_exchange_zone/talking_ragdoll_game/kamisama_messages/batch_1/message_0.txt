@@ -1,0 +1,27 @@
+✅ UniversalBeingSceneContainer has been implemented as a Node3D script. It defines:
+
+A visual bounding box (BoxMesh) for the container.
+
+Eight connection points (center + 6 sides + bottom).
+
+A add_being() method to insert beings at connection points.
+
+Optional grid snapping to align contents cleanly.
+
+Access to container bounds and connection point positions.
+
+This can now act as a modular scene cell—a room, zone, or tile in the larger world. You can:
+
+Attach beings (UI, objects, portals) via index.
+
+Snap objects in space for grid/tile logic.
+
+Expand it later with connection_metadata, portals, or doorways.
+
+Next step ideas:
+
+Link containers to one another with directional metadata (e.g., north_container = X).
+
+Add connection_point_type (door, window, socket).
+
+Implement highlight() to show active/hovered containers in the editor.

@@ -1,0 +1,174 @@
+Bryce-Style Interface Patterns for Godot Projects
+Core Design Principles
+
+Everything Visible: Tools, presets, and previews accessible without menu diving
+Visual Presets: Show thumbnails/previews of what each option creates
+Real-time Feedback: Changes appear immediately in multiple views
+Contextual Interface: UI adapts to current tool/mode
+
+Project Applications
+1. Talking Ragdoll - Character Creator Interface
+gdscript# Character presets with visual thumbnails
+var character_presets = {
+    "Classic Ragdoll": {"joint_stiffness": 0.3, "mesh": "basic_doll.glb"},
+    "Floppy Physics": {"joint_stiffness": 0.1, "bounce": 0.8},
+    "Stiff Marionette": {"joint_stiffness": 0.9, "string_tension": 1.0}
+}
+
+# UI Layout: HBoxContainer with TextureButtons showing preset previews
+2. Akashic Records - Knowledge Graph Builder
+gdscript# Node type presets
+var node_types = {
+    "Memory Crystal": {"color": Color.CYAN, "connections": 4},
+    "Thought Web": {"color": Color.PURPLE, "connections": 8},
+    "Experience Node": {"color": Color.GOLD, "connections": 2}
+}
+
+# Connection patterns as presets
+var connection_presets = [
+    "Radial Network", "Tree Hierarchy", "Mesh Grid", "Organic Flow"
+]
+3. Botepad3D - 3D Environment Editor
+gdscript# Terrain generation presets (like Bryce)
+var terrain_presets = {
+    "Rolling Hills": {"noise_type": "perlin", "amplitude": 2.0},
+    "Sharp Peaks": {"noise_type": "ridged", "amplitude": 5.0},
+    "Gentle Dunes": {"noise_type": "simplex", "amplitude": 1.0}
+}
+
+# Object placement tools
+var placement_modes = ["Paint", "Scatter", "Grid", "Path", "Random"]
+4. Eden - Garden/Ecosystem Builder
+gdscript# Plant growth presets
+var growth_patterns = {
+    "Wildflower Meadow": {"density": 0.7, "height_var": 0.3},
+    "Forest Grove": {"density": 0.3, "height_var": 0.8},
+    "Zen Garden": {"density": 0.1, "height_var": 0.1}
+}
+
+# Seasonal presets
+var seasons = ["Spring Bloom", "Summer Lush", "Autumn Gold", "Winter Bare"]
+5. Harmony - Music/Audio Visualization
+gdscript# Visualization presets
+var visual_modes = {
+    "Waveform Mountains": {"terrain_response": "amplitude"},
+    "Frequency Crystals": {"crystal_growth": "spectrum"},
+    "Rhythm Garden": {"plant_dance": "beat_detection"}
+}
+UI Component Templates
+Preset Grid (like Bryce Objects panel)
+gdscript# Creates visual preset grid
+class_name PresetGrid extends GridContainer
+
+func populate_presets(preset_dict: Dictionary):
+    for preset_name in preset_dict:
+        var button = TextureButton.new()
+        button.texture_normal = load("res://thumbnails/" + preset_name + ".png")
+        button.text = preset_name
+        button.pressed.connect(_on_preset_selected.bind(preset_name))
+        add_child(button)
+Contextual Tool Panel
+gdscript# Changes tools based on current mode
+class_name ContextualToolbar extends HBoxContainer
+
+enum Mode { TERRAIN, OBJECTS, LIGHTING, EFFECTS }
+var current_mode: Mode
+
+func switch_mode(new_mode: Mode):
+    clear_children()
+    match new_mode:
+        Mode.TERRAIN:
+            add_terrain_tools()
+        Mode.OBJECTS:
+            add_object_tools()
+        # etc...
+Real-time Preview System
+gdscript# Dual viewport setup like Bryce
+class_name DualPreview extends HSplitContainer
+
+@onready var edit_view: SubViewport = $EditView
+@onready var result_view: SubViewport = $ResultView
+
+func update_preview():
+    # Update both views when changes occur
+    edit_view.render_target_update_mode = SubViewport.UPDATE_ALWAYS
+    result_view.render_target_update_mode = SubViewport.UPDATE_ALWAYS
+Asset Organization Structure
+Garden Assets (Eden Project)
+res://garden_assets/
+├── plants/
+│   ├── presets/
+│   │   ├── wildflower_mix.tres
+│   │   ├── herb_garden.tres
+│   │   └── tree_grove.tres
+│   ├── models/
+│   └── thumbnails/
+├── terrain/
+│   ├── presets/
+│   └── materials/
+└── tools/
+    ├── brushes/
+    └── patterns/
+Workflow Documentation Template
+Project: [Name]
+Core Loop:
+
+Select Category → 2. Choose Preset → 3. Place/Apply → 4. Refine → 5. Iterate
+
+Interface Zones:
+
+Top Bar: Primary tool modes (Create, Edit, View, Export)
+Left Panel: Context-sensitive tool options
+Center: Main workspace with real-time preview
+Right Panel: Asset browser with visual thumbnails
+Bottom: Timeline/animation controls (if applicable)
+
+Preset Categories:
+
+List main categories (terrain, objects, effects, etc.)
+Note thumbnail generation method
+Document parameter ranges
+
+Technical Notes
+Godot-Specific Implementation
+gdscript# Use Resource system for presets
+class_name TerrainPreset extends Resource
+
+@export var noise_type: String
+@export var amplitude: float
+@export var frequency: float
+@export var octaves: int
+@export var thumbnail: Texture2D
+
+func apply_to_heightfield(heightfield: HeightMapShape3D):
+    # Implementation here
+Performance Considerations
+
+Generate thumbnails at project build time
+Use LOD for real-time previews
+Cache expensive operations
+Update previews on timer, not every frame
+
+Action Items for Current Projects
+Immediate Tasks:
+
+Create preset resource classes for each project type
+Design thumbnail generation system
+Build contextual UI framework that can switch tool sets
+Document asset organization for each project
+Prototype dual-preview system for terrain editing
+
+Asset Creation Pipeline:
+
+Design → Create → Generate Thumbnail → Package as Preset → Test in UI
+Document parameters and use cases
+Organize into logical categories
+Create variation sets (like Bryce's terrain types)
+
+Notes on Bryce-Style Benefits:
+
+Reduces Cognitive Load: No hunting through menus
+Encourages Experimentation: Easy to try different presets
+Visual Learning: See what tools do before using them
+Faster Iteration: Quick access to common operations
+Discoverable: New users can explore by browsing visually

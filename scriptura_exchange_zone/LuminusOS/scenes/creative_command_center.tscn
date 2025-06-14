@@ -1,0 +1,37 @@
+[gd_scene load_steps=4 format=3]
+
+[ext_resource type="Script" path="res://scripts/ui/CreativeCommandCenter.gd" id="1_qxmn2"]
+[ext_resource type="Script" path="res://scripts/api/OpenAIGateway.gd" id="2_51gu6"]
+[ext_resource type="Script" path="res://scripts/creative/IdeaVisualizer.gd" id="3_mqntu"]
+
+[node name="CreativeCommandCenter" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_qxmn2")
+
+[node name="OpenAIGateway" type="Node" parent="."]
+script = ExtResource("2_51gu6")
+
+[node name="VisualizationContainer" type="SubViewportContainer" parent="."]
+visible = false
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="VisualizationViewport" type="SubViewport" parent="VisualizationContainer"]
+handle_input_locally = false
+size = Vector2i(800, 600)
+render_target_update_mode = 4
+
+[node name="IdeaVisualizer" type="Node3D" parent="VisualizationContainer/VisualizationViewport"]
+script = ExtResource("3_mqntu")
+
+[node name="Camera3D" type="Camera3D" parent="VisualizationContainer/VisualizationViewport"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 10)
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="VisualizationContainer/VisualizationViewport"]
+transform = Transform3D(0.766044, -0.413176, 0.492404, 0, 0.766044, 0.642788, -0.642788, -0.492404, 0.586824, 5, 5, 5)

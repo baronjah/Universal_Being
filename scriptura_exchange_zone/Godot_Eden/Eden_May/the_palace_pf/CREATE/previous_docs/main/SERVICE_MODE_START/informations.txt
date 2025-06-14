@@ -1,0 +1,8 @@
+##
+components i started some work in past=code segments of main file i noted to touch
+copy_everything=copy of version one backup
+every_main_function=every function in main script right now 179 functions almost two hundred
+MAIN_FILES_INFORMATIONS=the files with information
+new_things=mermaids visualisations
+rest of components=code segments of main file
+work_some_work_being_done=files with messages, what we done already

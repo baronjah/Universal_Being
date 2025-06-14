@@ -1,0 +1,16 @@
+func unlock_stuck_mutexes():
+	print("🔓 Checking & Unlocking stuck mutexes...")
+
+	var mutex_list = [
+		active_r_s_mut, cached_r_s_mutex, tree_mutex, cached_tree_mutex, 
+		mutex_nodes_to_be_added, mutex_data_to_send, movmentes_mutex, 
+		mutex_for_unloading_nodes, mutex_function_call, array_mutex_process, 
+		menace_mutex, array_counting_mutex, mutex_for_container_state, 
+		mutex_for_trickery, unload_queue_mutex, load_queue_mutex, 
+		mutex_containers, mutex_singular_l_u
+	]
+
+	for mutex in mutex_list:
+		if !mutex.try_lock():
+			print("⚠️ Unlocking:", mutex)
+			mutex.unlock()

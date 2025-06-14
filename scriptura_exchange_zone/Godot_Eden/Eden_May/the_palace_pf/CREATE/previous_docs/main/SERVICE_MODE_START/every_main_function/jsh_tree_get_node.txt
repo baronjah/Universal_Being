@@ -1,0 +1,15 @@
+func jsh_tree_get_node(node_path_get_node: String) -> Node:
+	var path_parts = node_path_get_node.split("/")
+	tree_mutex.lock()
+	var current = scene_tree_jsh["main_root"]["branches"]
+	for part in path_parts:
+		if current.has(part):
+			current = current[part]
+			if path_parts[-1] == part:
+				#print(" current : " , current["node"])
+				tree_mutex.unlock()
+				return current["node"]
+			else:
+				current = current["children"]
+	tree_mutex.unlock()
+	return null

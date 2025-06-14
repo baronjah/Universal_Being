@@ -1,0 +1,47 @@
+func get_data_structure_size(data) -> int:
+	# Early return for null data
+	if data == null:
+		return 0
+		
+	match typeof(data):
+		TYPE_DICTIONARY:
+			var total_size = 0
+			for key in data:
+				# Add key size
+				total_size += var_to_bytes(key).size()
+				# Add value size recursively
+				if data[key] != null:
+					total_size += get_data_structure_size(data[key])
+			return total_size
+			
+		TYPE_ARRAY:
+			var total_size = 0
+			for item in data:
+				if item != null:
+					total_size += get_data_structure_size(item)
+			return total_size
+			
+		TYPE_OBJECT:
+			# Handle special cases like Nodes
+			if data is Node:
+				return 8  # Base pointer size
+			return var_to_bytes(data).size()
+			
+		TYPE_STRING:
+			return data.length() * 2  # Approximate UTF-16 size
+			
+		TYPE_INT:
+			return 4
+			
+		TYPE_FLOAT:
+			return 8
+			
+		TYPE_VECTOR2, TYPE_VECTOR2I:
+			return 8
+			
+		TYPE_VECTOR3, TYPE_VECTOR3I:
+			return 12
+			
+		_:
+			# Default fallback using var_to_bytes
+			return var_to_bytes(data).size()

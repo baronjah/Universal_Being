@@ -1,0 +1,7 @@
+GLTFDocumentExtensionConvertImporterMesh
+Inherits: GLTFDocumentExtension < Resource < RefCounted < Object
+
+There is currently no description for this class. Please help us by contributing one!
+
+Tutorials
+Runtime file loading and saving

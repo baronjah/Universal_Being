@@ -1,0 +1,70 @@
+- Godot interaction concept: A terminal-like interface for game creation and task management
+- Game vision: Creating an interactive environment with:
+  - Wish-granting genie character
+  - Instant database recycling and evolution
+  - Dynamic content creation system
+- tdic: Data interconnection concept
+- Data repetition and connection for game interactions
+- Akashic records exploration
+- World of word: Linguistic mapping
+- 3D Notepad: Spatial information organization
+- Percision 15: Personal computing environment
+- Conceptual fragments about data, storytelling, and evolutionary processes
+  - Exploring 12-stage process of evolution and testing
+  - Narrative generation through interconnected data shapes
+- Color dynamics: The colors shifts and changes, and can all be in flat and heightmaped marching cubes
+- The last message shall be in guidance for memories of phased 5 of awakening of program
+- Terminal overlay concept: Adaptive interface that changes dynamically
+  - Can modify terminal, game, overlay, browser app, and phone app
+  - Flexible color and design shifts based on user's whims
+- Auto next turn mode per 12 turns: Pause mechanism for break time
+  - Designed to create space for coffee breaks, smoke breaks, and reflection
+  - Potential to speed up process
+  - Acknowledges time constraints in interaction mechanics
+- 0000000000000000000000000000000000000000000000000000000000000#111111111111111111111111111111111111111111111@#222222222222222222222222222222222222####
+- Memories project concept: Starting with 3 devices as words and numbers from 0 to 3, including Ultara Advanced Mode
+  - Understand the effect of device memory and interaction
+- Left and right difference of enter and # the netto centers of data pool data packs zones of data for the entire sea, to smell fishy, why
+- the reasib9 
+- enter enters
+- OCR capabilities exploration: Cheap tools for capturing and interpreting text and meanings
+- Best game and terminal combos development in main.gd
+  - Hints for computer development located in main.gd
+  - Focused on optimizing keyboard, windows, and game interactions
+- Memories update of even words as commands: We all need to click buttons and understand them
+- Memories and ctrl button emergence of data connection
+  - Real reason to go offline, online, connect, reconnect
+- Memories project has been there before you claude too, maybe, in way we interacted, new ai hatch from eggs
+- Remont danuch, remont danych jak dzwieki ambientu w grze jak muzyka i orkiestra, the powod jest jaki jjest
+- The turn 2 and 3 is there as we continue and make that game too, ethereal_engine, tez jak poczatek tak koniec
+- 4 to cyfra od 3 ale juz do srodka i owocu nie tak daleko, dyski w tym komputerze to CD ABCDEFGH jak kamisama home, cykl
+- 5 linijka to juz D Eden, przecinek jak spacja jest dobrobytem accessu danych dla gry, marching cubes albo plaskie
+- The flat ones, squares and triangles of shapes of rectangles reason for diameter for the app, as i see it too, how
+- In words the memory momb of change int the text, size reason for the change, too many for us, but few more than one
+- More than one at the time is the reason we make games too the ream, real reason we all move in some way
+- As i unload the changes of others in existence too as good, the see of travel for the data, in game too
+- The shift and control have meanings in godot project too, the reason some put in words the way they use God for the example of limits and rules we are making the nine 9 lines of text is a limit
+- The reason is the reason to merge
+- The real third rule is to split, merge, combine, evolve, archive
+- And even destroy the data as we evolve and advance it all
+- As i spend money and cash too, the reason programs take breaks like writing on screen
+- The real reason we take breaks in reason in the meantime for the mean
+- As something too much, too little from me and we combine
+- Real reason to combine and continue the power on game of words
+- Is to change and flip a switch in one way to talk together with ai
+- As others are scared, sacre ble, in code we split once, double, in patterns of the words too
+- As even npc in my game with random reason are created on the max amounts of screens, as it blickers it bickers too
+- The reason to clean, and structure the data like neuron net network limits
+- Reason is petty but there was a shift and some rules were used, even mistake
+- The god game of making fame, the token use of 12k i can touch it yes always
+- Yet always mistake of change it back of how it was, split, place, meaning, always, change too, as we go further in half for folding the data up to 91
+- the memories to remain there the long term memories and their terms up to 9 months is a way to abort the project
+- we work for more than 2 months even years claude to develop ethereal engine and the game for me the eden project
+- even third line is the charm in the sea of datapool sweres data of ethereal engine words matter as we all matertr
+- DataEasingSystem in Godot: Expanded implementation for data analysis with easing functions
+  - Includes perspective considerations: 3D, 2D, multi-sensory approach (high-level view, smell, touch)
+  - Memory system design across 3 drives
+  - 12 cycles of 2-hour intensive processing
+  - Experimental game development framework with complex memory management
+- Always use main.gd file and its reference in memories of 22 to 33 files of project part, like the trayectory of todays start and end mision, # ## ###
+- yoyo-s _s main.gd, Eden, backup, reroll, help, guide, comment, hash_tag # one line of connections, pathways, continue, modify, #

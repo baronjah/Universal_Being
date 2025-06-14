@@ -1,0 +1,23 @@
+func find_record_set(record_type: String) -> Dictionary:
+#	print(" check_possible_interactions check_possible_interactions find rec")
+	match record_type:
+		"base":
+			return RecordsBank.records_map_0
+		"menu":
+			return RecordsBank.records_map_2
+		"settings":
+			return RecordsBank.records_map_3
+		"keyboard":
+			return RecordsBank.records_map_4
+		"keyboard_left":
+			return RecordsBank.records_map_5
+		"keyboard_right":
+			return RecordsBank.records_map_6
+		"things_creation":
+			return RecordsBank.records_map_7
+		"singular_lines":
+			return RecordsBank.records_map_8
+		# Add more record sets as needed
+		_:
+			#print("Unknown record set: ", record_type)
+			return {}

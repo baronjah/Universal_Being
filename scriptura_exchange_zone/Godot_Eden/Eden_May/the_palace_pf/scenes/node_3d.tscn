@@ -1,0 +1,53 @@
+[gd_scene load_steps=10 format=3 uid="uid://cui7q4jjn3rxh"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_cabow"]
+transparency = 1
+albedo_color = Color(1, 0, 0, 0.372549)
+
+[sub_resource type="BoxMesh" id="BoxMesh_8qxvd"]
+material = SubResource("StandardMaterial3D_cabow")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_yey3p"]
+transparency = 1
+albedo_color = Color(1, 0, 1, 0.278431)
+
+[sub_resource type="SphereMesh" id="SphereMesh_bd4n3"]
+material = SubResource("StandardMaterial3D_yey3p")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ax1po"]
+transparency = 1
+albedo_color = Color(0, 0, 1, 0.847059)
+
+[sub_resource type="SphereMesh" id="SphereMesh_rlf7v"]
+material = SubResource("StandardMaterial3D_ax1po")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_nvcsp"]
+
+[sub_resource type="PrismMesh" id="PrismMesh_1f0mq"]
+material = SubResource("StandardMaterial3D_nvcsp")
+
+[sub_resource type="BoxMesh" id="BoxMesh_10is2"]
+
+[node name="Node3D" type="Node3D"]
+
+[node name="cube" type="MeshInstance3D" parent="."]
+transform = Transform3D(22, 0, 0, 0, 22, 0, 0, 0, 22, 0, 0, 0)
+mesh = SubResource("BoxMesh_8qxvd")
+
+[node name="Sphere1" type="MeshInstance3D" parent="."]
+transform = Transform3D(22, 0, 0, 0, 22, 0, 0, 0, 22, 0, 0, 0)
+mesh = SubResource("SphereMesh_bd4n3")
+
+[node name="Sphere2" type="MeshInstance3D" parent="."]
+transform = Transform3D(15, 0, 0, 0, 15, 0, 0, 0, 15, 0, 0, 0)
+mesh = SubResource("SphereMesh_rlf7v")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+
+[node name="shape1" type="MeshInstance3D" parent="."]
+transform = Transform3D(-4.99873, -0.112564, 0, 0.081277, -3.60934, -3.4592, 0.0778765, -3.45833, 3.61025, 0, 6.15662, 0)
+mesh = SubResource("PrismMesh_1f0mq")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="shape1"]
+transform = Transform3D(1, 1.86265e-09, 0, -1.86265e-09, 1, 0, 0, 0, 1, 0.0226669, -1.00659, 0)
+mesh = SubResource("BoxMesh_10is2")

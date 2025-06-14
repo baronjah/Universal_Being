@@ -1,0 +1,243 @@
+# Add these properties to the existing EtherealEngineUI class
+
+# Add behavior system reference
+var behavior_system = null
+
+# Add this code to the find_required_components method
+func find_required_components():
+	# Existing code...
+	
+	# Find or create behavior system
+	if has_node("/root/EntityBehaviorSystem"):
+		behavior_system = get_node("/root/EntityBehaviorSystem")
+	else:
+		# Try to load the script
+		var behavior_script = load("res://code/gdscript/scripts/core/EntityBehaviorSystem.gd")
+		if behavior_script:
+			behavior_system = behavior_script.get_instance()
+			behavior_system.name = "EntityBehaviorSystem"
+			get_tree().root.add_child(behavior_system)
+			print("Created EntityBehaviorSystem instance")
+		else:
+			push_error("EntityBehaviorSystem script not found!")
+
+# Add this new tab in the create_ui method after creating the existing tabs
+func create_ui():
+	# Existing code...
+	
+	# Create behavior tab
+	var behavior_button = Button.new()
+	behavior_button.text = "Behaviors"
+	behavior_button.pressed.connect(_on_behavior_tab_pressed)
+	tab_container.add_child(behavior_button)
+	
+	# Existing code...
+	
+	# Create behavior panel
+	behavior_panel = create_behavior_panel()
+	panel_container.add_child(behavior_panel)
+	
+	# Existing code...
+
+# Add this new panel creation method
+func create_behavior_panel():
+	var panel = Control.new()
+	panel.name = "BehaviorPanel"
+	panel.anchor_right = 1.0
+	panel.anchor_bottom = 1.0
+	
+	var layout = VBoxContainer.new()
+	layout.anchor_right = 1.0
+	layout.anchor_bottom = 1.0
+	layout.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	layout.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	panel.add_child(layout)
+	
+	# Title
+	var title = Label.new()
+	title.text = "Entity Behaviors"
+	title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	title.add_theme_font_size_override("font_size", 18)
+	layout.add_child(title)
+	
+	# Description
+	var description = Label.new()
+	description.text = "Control how entities interact with the environment and each other."
+	description.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	layout.add_child(description)
+	
+	# Behavior enable/disable
+	var toggle_container = HBoxContainer.new()
+	layout.add_child(toggle_container)
+	
+	var toggle_label = Label.new()
+	toggle_label.text = "Enable Behaviors: "
+	toggle_container.add_child(toggle_label)
+	
+	var toggle_button = CheckButton.new()
+	toggle_button.name = "BehaviorToggle"
+	toggle_button.pressed = true
+	toggle_button.pressed.connect(_on_behavior_toggle_pressed)
+	toggle_container.add_child(toggle_button)
+	
+	# Update interval
+	var interval_container = HBoxContainer.new()
+	layout.add_child(interval_container)
+	
+	var interval_label = Label.new()
+	interval_label.text = "Update Interval (seconds): "
+	interval_container.add_child(interval_label)
+	
+	var interval_slider = HSlider.new()
+	interval_slider.name = "IntervalSlider"
+	interval_slider.min_value = 0.1
+	interval_slider.max_value = 1.0
+	interval_slider.step = 0.1
+	interval_slider.value = 0.5
+	interval_slider.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	interval_slider.value_changed.connect(_on_interval_changed)
+	interval_container.add_child(interval_slider)
+	
+	var interval_value = Label.new()
+	interval_value.name = "IntervalValue"
+	interval_value.text = "0.5"
+	interval_value.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
+	interval_container.add_child(interval_value)
+	
+	# Entity behavior presets section
+	var presets_title = Label.new()
+	presets_title.text = "Behavior Presets"
+	presets_title.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
+	presets_title.add_theme_font_size_override("font_size", 16)
+	layout.add_child(presets_title)
+	
+	var presets_container = HBoxContainer.new()
+	layout.add_child(presets_container)
+	
+	var preset_names = ["Calm", "Lively", "Chaotic", "Reactive"]
+	for preset in preset_names:
+		var preset_button = Button.new()
+		preset_button.text = preset
+		preset_button.pressed.connect(func(): _on_preset_pressed(preset))
+		presets_container.add_child(preset_button)
+	
+	# Interactive entities list
+	var list_title = Label.new()
+	list_title.text = "Interactive Entities"
+	list_title.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
+	list_title.add_theme_font_size_override("font_size", 16)
+	layout.add_child(list_title)
+	
+	var entity_list = ItemList.new()
+	entity_list.name = "InteractiveEntityList"
+	entity_list.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	layout.add_child(entity_list)
+	
+	# Button container
+	var button_container = HBoxContainer.new()
+	layout.add_child(button_container)
+	
+	var refresh_button = Button.new()
+	refresh_button.text = "Refresh List"
+	refresh_button.pressed.connect(_on_refresh_behaviors_pressed)
+	button_container.add_child(refresh_button)
+	
+	var reinitialize_button = Button.new()
+	reinitialize_button.text = "Reinitialize All"
+	reinitialize_button.pressed.connect(_on_reinitialize_behaviors_pressed)
+	button_container.add_child(reinitialize_button)
+	
+	return panel
+
+# Add these new event handlers
+
+func _on_behavior_tab_pressed():
+	hide_all_panels()
+	behavior_panel.visible = true
+	current_panel = behavior_panel
+	
+	# Refresh the entity list
+	_on_refresh_behaviors_pressed()
+
+func _on_behavior_toggle_pressed():
+	if behavior_system:
+		var toggle = behavior_panel.get_node("BehaviorToggle")
+		behavior_system.behavior_active = toggle.pressed
+		add_console_text("Entity behaviors " + ("enabled" if toggle.pressed else "disabled"), 
+						Color(0.2, 0.8, 0.2))
+
+func _on_interval_changed(value):
+	if behavior_system:
+		behavior_system.update_interval = value
+		behavior_panel.get_node("IntervalValue").text = str(value)
+
+func _on_preset_pressed(preset_name):
+	if not behavior_system:
+		return
+		
+	match preset_name:
+		"Calm":
+			behavior_system.update_interval = 0.8
+			behavior_panel.get_node("IntervalSlider").value = 0.8
+			behavior_panel.get_node("IntervalValue").text = "0.8"
+			# Apply calm behavior settings
+			
+		"Lively":
+			behavior_system.update_interval = 0.4
+			behavior_panel.get_node("IntervalSlider").value = 0.4
+			behavior_panel.get_node("IntervalValue").text = "0.4"
+			# Apply lively behavior settings
+			
+		"Chaotic":
+			behavior_system.update_interval = 0.2
+			behavior_panel.get_node("IntervalSlider").value = 0.2
+			behavior_panel.get_node("IntervalValue").text = "0.2"
+			# Apply chaotic behavior settings
+			
+		"Reactive":
+			behavior_system.update_interval = 0.3
+			behavior_panel.get_node("IntervalSlider").value = 0.3
+			behavior_panel.get_node("IntervalValue").text = "0.3"
+			# Apply reactive behavior settings
+	
+	add_console_text("Applied '" + preset_name + "' behavior preset", Color(0.2, 0.8, 0.2))
+
+func _on_refresh_behaviors_pressed():
+	if not behavior_system:
+		return
+		
+	var entity_list = behavior_panel.get_node("InteractiveEntityList")
+	entity_list.clear()
+	
+	# Get all interactive entities
+	var entities = behavior_system.interactive_entities
+	for entity_id in entities:
+		var data = entities[entity_id]
+		var entity = data.entity
+		
+		if is_instance_valid(entity):
+			entity_list.add_item(entity_id + " (" + data.behavior_key + ")")
+
+func _on_reinitialize_behaviors_pressed():
+	if not behavior_system or not thing_creator:
+		return
+		
+	behavior_system.interactive_entities.clear()
+	
+	# Re-register all existing entities
+	var entities = thing_creator.get_all_entities()
+	for entity_id in entities:
+		var entity = thing_creator.get_entity(entity_id)
+		if entity:
+			behavior_system._on_entity_created(entity_id, entity.source_word, entity.global_position)
+	
+	add_console_text("Reinitialized behaviors for all entities", Color(0.2, 0.8, 0.2))
+	_on_refresh_behaviors_pressed()
+
+# Add to hide_all_panels method
+func hide_all_panels():
+	console_panel.visible = false
+	creation_panel.visible = false
+	pattern_panel.visible = false
+	info_panel.visible = false
+	behavior_panel.visible = false  # Add this line

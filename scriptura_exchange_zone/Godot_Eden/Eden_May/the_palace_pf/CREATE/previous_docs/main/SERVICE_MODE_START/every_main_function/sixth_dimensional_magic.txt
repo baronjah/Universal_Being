@@ -1,0 +1,10 @@
+func sixth_dimensional_magic(type_of_function, node_to_call, function_name : String, additional_data = null):
+	var data_for_function_call : Array = []
+	data_for_function_call.append(type_of_function)
+	data_for_function_call.append(node_to_call)
+	data_for_function_call.append(function_name)
+	if additional_data != null:
+		data_for_function_call.append(additional_data)
+	mutex_function_call.lock()
+	functions_to_be_called.append(data_for_function_call)
+	mutex_function_call.unlock()

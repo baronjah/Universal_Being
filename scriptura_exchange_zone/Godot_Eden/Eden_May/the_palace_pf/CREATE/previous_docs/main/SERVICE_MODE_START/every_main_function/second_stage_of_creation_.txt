@@ -1,0 +1,2 @@
+func second_stage_of_creation_(data_set_name_1, sets_to_create_1):
+	create_new_task("second_impact_for_real", sets_to_create_1[0])

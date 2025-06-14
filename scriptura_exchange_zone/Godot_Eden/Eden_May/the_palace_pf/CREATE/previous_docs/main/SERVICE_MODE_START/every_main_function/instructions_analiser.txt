@@ -1,0 +1,48 @@
+func instructions_analiser(metadata_parts, second_line, third_line, datapoint, container):
+	
+	var type = metadata_parts[1][0]
+	var counter = -1
+	for i in InstructionsBank.type_of_instruction_0:
+		counter +=1
+		if type == i:
+			break
+	match counter:
+		0: # 0 = "assign_priority_to_datapoint"
+			datapoint.datapoint_assign_priority(third_line[0][0])
+		1: # 1 = "assign_things_to_datapoint"
+			datapoint.add_thing_to_datapoint(third_line)
+		2: # 2 = "set_max_things_number", 
+			datapoint.datapoint_max_things_number_setter(third_line[0][0])
+		3: # 3 = "connect_containter_datapoint"
+			container.containter_start_up(0, datapoint)
+		4: # 4 = "add_things_to_container", 
+			print("analise instruction 4, we didnt use it yet, probably putting containers inside containers, so we have like, easy way to use scenes system :)")
+		5: # 5 = "set_the_scene", 
+			var scene_setter_number = int(third_line[0][0])
+			datapoint.scene_to_set_number_later(scene_setter_number)
+		6: # 6 = "rotate_container", 
+			#container.rotation.x -= deg_to_rad(int(third_line[1][0]))
+			var type_of_stuff : String = "rotate"
+			the_fourth_dimensional_magic(type_of_stuff, container, int(third_line[1][0]))
+			
+		7: # 7 = "setup_text_bracet"
+			var action_function_type : String = "single_function"
+			var name_of_function : String = "setup_text_handling"
+			sixth_dimensional_magic(action_function_type, datapoint, name_of_function)
+			#datapoint.setup_text_handling() # = get_node(database_node_path)
+		8: #
+			#print(" interaction single multi mode or whatever" , third_line[0][0] , third_line[1][0])
+			datapoint.set_maximum_interaction_number(third_line[0][0], int(third_line[1][0]))
+			
+		9: #move_container
+			print(" move container " , third_line)
+			var x = float(third_line[1][0])  # "0.0"
+			var y = float(third_line[1][1])  # "-4.5"
+			var z = float(third_line[1][2])  # "0.41"
+			var new_position = Vector3(x, y, z)
+			var type_of_stuff : String = "move"
+			the_fourth_dimensional_magic(type_of_stuff, container, new_position)
+			#container.position = Vector3(x, y, z)
+		10:
+			print(" load_file ")
+			datapoint.initialize_loading_file(third_line)

@@ -1,0 +1,23 @@
+func node_creation(node_name, crafted_data, coords, to_rotate, group_number, node_type, path_of_thing):
+	crafted_data.add_to_group(group_number)
+	var pos_parts = coords
+	var position_ = Vector3(float(pos_parts[0]), float(pos_parts[1]), float(pos_parts[2]))
+	crafted_data.position = position_
+	
+	# Set rotation
+	var rot_parts = to_rotate
+	var rotation_euler = Vector3(float(rot_parts[0]), float(rot_parts[1]), float(rot_parts[2]))
+	crafted_data.rotation_degrees = rotation_euler
+	# Set name if provided
+	if node_name != "":
+		crafted_data.name = node_name
+		
+	tasked_children(crafted_data, path_of_thing)
+	
+	match node_type:
+		"flat_shape", "model", "cursor", "screen", "circle", "button" :
+			add_collision_to_thing(crafted_data, node_type, path_of_thing, node_name)
+		_:
+			pass
+	
+	return crafted_data

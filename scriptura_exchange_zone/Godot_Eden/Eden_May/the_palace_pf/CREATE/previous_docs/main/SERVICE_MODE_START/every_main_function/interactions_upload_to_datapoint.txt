@@ -1,0 +1,8 @@
+func interactions_upload_to_datapoint(header_line, information_lines, datapoint):
+	var array_of_interactions : Array = []
+	var number_of_interactions = header_line.size() - 5
+	var num_counter : int = 5
+	for num_in in number_of_interactions:
+		array_of_interactions.append(header_line[num_counter])
+		num_counter +=1
+	datapoint.upload_interactions(header_line[3], information_lines, array_of_interactions, number_of_interactions)

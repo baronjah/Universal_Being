@@ -1,0 +1,672 @@
+[gd_scene load_steps=18 format=3 uid="uid://cme6uvdqxf4a7"]
+
+[ext_resource type="Script" path="res://scripts/unified_control_center.gd" id="1_e8r2i"]
+[ext_resource type="Theme" uid="uid://b8t7tkhvh17pt" path="res://themes/luminusos_theme.tres" id="2_45nsy"]
+[ext_resource type="FontFile" uid="uid://bq38pha1fml7k" path="res://fonts/retro_font.tres" id="3_yjtci"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_uvce2"]
+bg_color = Color(0.133333, 0.137255, 0.160784, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.2, 0.227451, 0.309804, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7d8ve"]
+bg_color = Color(0.160784, 0.168627, 0.203922, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.294118, 0.407843, 0.67451, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jk35t"]
+bg_color = Color(0.12549, 0.12549, 0.12549, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.501961, 0.247059, 0.701961, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6yudx"]
+bg_color = Color(0.188235, 0.2, 0.215686, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="Animation" id="Animation_xh2qm"]
+resource_name = "file_panel_transition"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("VSplitContainer/TopSection/FilesPanel:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_r6g42"]
+resource_name = "file_scroll"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("VSplitContainer/TopSection/FilesPanel/FileList:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(0.5, 1),
+"update": 0,
+"values": [Vector2(0, -20), Vector2(0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_1ynmd"]
+resource_name = "picture_panel_transition"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("VSplitContainer/TopSection/PicturePanel:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_ydrme"]
+resource_name = "type_text"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("VSplitContainer/BottomSection/CommandInput:custom_minimum_size")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.3),
+"transitions": PackedFloat32Array(0.5, 2, 1),
+"update": 0,
+"values": [Vector2(0, 40), Vector2(0, 45), Vector2(0, 40)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_gxbde"]
+_data = {
+"file_panel_transition": SubResource("Animation_xh2qm"),
+"file_scroll": SubResource("Animation_r6g42"),
+"picture_panel_transition": SubResource("Animation_1ynmd"),
+"type_text": SubResource("Animation_ydrme")
+}
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bh6g7"]
+bg_color = Color(0.156863, 0.168627, 0.192157, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.427451, 0.298039, 0.654902, 1)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_a5l2r"]
+bg_color = Color(0.0627451, 0.0666667, 0.0784314, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.290196, 0.294118, 0.388235, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6cjtd"]
+bg_color = Color(0.113725, 0.121569, 0.141176, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.290196, 0.294118, 0.388235, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dfkbq"]
+bg_color = Color(0, 0, 0, 0.784314)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.498039, 0.286275, 0.635294, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ht2xq"]
+bg_color = Color(0.156863, 0.168627, 0.192157, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.427451, 0.298039, 0.654902, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[node name="UnifiedControlCenter" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("2_45nsy")
+script = ExtResource("1_e8r2i")
+
+[node name="Background" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_uvce2")
+
+[node name="VSplitContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 10
+
+[node name="HeaderBar" type="Panel" parent="VSplitContainer"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_7d8ve")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VSplitContainer/HeaderBar"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 20
+
+[node name="SystemLabel" type="Label" parent="VSplitContainer/HeaderBar/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_fonts/font = ExtResource("3_yjtci")
+text = "LuminusOS - Unified Control Center"
+
+[node name="Spacer" type="Control" parent="VSplitContainer/HeaderBar/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="ViewButtons" type="HBoxContainer" parent="VSplitContainer/HeaderBar/HBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="FilesButton" type="Button" parent="VSplitContainer/HeaderBar/HBoxContainer/ViewButtons"]
+layout_mode = 2
+text = "Files"
+
+[node name="PicturesButton" type="Button" parent="VSplitContainer/HeaderBar/HBoxContainer/ViewButtons"]
+layout_mode = 2
+text = "Pictures"
+
+[node name="APIButton" type="Button" parent="VSplitContainer/HeaderBar/HBoxContainer/ViewButtons"]
+layout_mode = 2
+text = "API"
+
+[node name="ArchiveButton" type="Button" parent="VSplitContainer/HeaderBar/HBoxContainer/ViewButtons"]
+layout_mode = 2
+text = "Archive"
+
+[node name="Spacer2" type="Control" parent="VSplitContainer/HeaderBar/HBoxContainer"]
+custom_minimum_size = Vector2(20, 0)
+layout_mode = 2
+
+[node name="TurnLabel" type="Label" parent="VSplitContainer/HeaderBar/HBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.698039, 0.478431, 0.839216, 1)
+text = "Turn 3: Complexity"
+
+[node name="TopSection" type="HSplitContainer" parent="VSplitContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+split_offset = 300
+
+[node name="FilesPanel" type="Panel" parent="VSplitContainer/TopSection"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_jk35t")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VSplitContainer/TopSection/FilesPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 10
+
+[node name="PathBar" type="LineEdit" parent="VSplitContainer/TopSection/FilesPanel/VBoxContainer"]
+layout_mode = 2
+text = "/mnt/c/Users/Percision 15"
+placeholder_text = "Enter path..."
+editable = false
+
+[node name="FileListContainer" type="ScrollContainer" parent="VSplitContainer/TopSection/FilesPanel/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="FileList" type="VBoxContainer" parent="VSplitContainer/TopSection/FilesPanel/VBoxContainer/FileListContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/separation = 5
+
+[node name="QuickAccessBar" type="HBoxContainer" parent="VSplitContainer/TopSection/FilesPanel/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="HomeButton" type="Button" parent="VSplitContainer/TopSection/FilesPanel/VBoxContainer/QuickAccessBar"]
+layout_mode = 2
+text = "Home"
+
+[node name="UpButton" type="Button" parent="VSplitContainer/TopSection/FilesPanel/VBoxContainer/QuickAccessBar"]
+layout_mode = 2
+text = "Up"
+
+[node name="RefreshButton" type="Button" parent="VSplitContainer/TopSection/FilesPanel/VBoxContainer/QuickAccessBar"]
+layout_mode = 2
+text = "Refresh"
+
+[node name="NewFolderButton" type="Button" parent="VSplitContainer/TopSection/FilesPanel/VBoxContainer/QuickAccessBar"]
+layout_mode = 2
+text = "New Folder"
+
+[node name="MainPanel" type="Panel" parent="VSplitContainer/TopSection"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 2.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_6yudx")
+
+[node name="PicturePanel" type="Control" parent="VSplitContainer/TopSection"]
+visible = false
+layout_mode = 2
+
+[node name="ImageContainer" type="CenterContainer" parent="VSplitContainer/TopSection/PicturePanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextureRect" type="TextureRect" parent="VSplitContainer/TopSection/PicturePanel/ImageContainer"]
+layout_mode = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="PictureControls" type="HBoxContainer" parent="VSplitContainer/TopSection/PicturePanel"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -40.0
+grow_horizontal = 2
+grow_vertical = 0
+alignment = 1
+
+[node name="PrevButton" type="Button" parent="VSplitContainer/TopSection/PicturePanel/PictureControls"]
+layout_mode = 2
+text = "Previous"
+
+[node name="ZoomOutButton" type="Button" parent="VSplitContainer/TopSection/PicturePanel/PictureControls"]
+layout_mode = 2
+text = "Zoom -"
+
+[node name="ZoomResetButton" type="Button" parent="VSplitContainer/TopSection/PicturePanel/PictureControls"]
+layout_mode = 2
+text = "Reset Zoom"
+
+[node name="ZoomInButton" type="Button" parent="VSplitContainer/TopSection/PicturePanel/PictureControls"]
+layout_mode = 2
+text = "Zoom +"
+
+[node name="NextButton" type="Button" parent="VSplitContainer/TopSection/PicturePanel/PictureControls"]
+layout_mode = 2
+text = "Next"
+
+[node name="APIPanel" type="Control" parent="VSplitContainer/TopSection"]
+visible = false
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VSplitContainer/TopSection/APIPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 10
+
+[node name="PromptLabel" type="Label" parent="VSplitContainer/TopSection/APIPanel/VBoxContainer"]
+layout_mode = 2
+text = "Enter Prompt:"
+
+[node name="PromptInput" type="TextEdit" parent="VSplitContainer/TopSection/APIPanel/VBoxContainer"]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+placeholder_text = "Enter your prompt here..."
+wrap_mode = 1
+
+[node name="APIButtons" type="HBoxContainer" parent="VSplitContainer/TopSection/APIPanel/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 20
+alignment = 1
+
+[node name="ClaudeButton" type="Button" parent="VSplitContainer/TopSection/APIPanel/VBoxContainer/APIButtons"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.698039, 0.478431, 0.839216, 1)
+text = "Claude API"
+
+[node name="GeminiButton" type="Button" parent="VSplitContainer/TopSection/APIPanel/VBoxContainer/APIButtons"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.247059, 0.580392, 0.929412, 1)
+text = "Gemini API"
+
+[node name="CompareButton" type="Button" parent="VSplitContainer/TopSection/APIPanel/VBoxContainer/APIButtons"]
+layout_mode = 2
+disabled = true
+text = "Compare Responses"
+
+[node name="ResponsePanel" type="Panel" parent="VSplitContainer/TopSection/APIPanel/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="ResponseScroll" type="ScrollContainer" parent="VSplitContainer/TopSection/APIPanel/VBoxContainer/ResponsePanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ResponseText" type="RichTextLabel" parent="VSplitContainer/TopSection/APIPanel/VBoxContainer/ResponsePanel/ResponseScroll"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+bbcode_enabled = true
+text = "[Response will appear here]"
+
+[node name="ArchivePanel" type="Control" parent="VSplitContainer/TopSection"]
+visible = false
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VSplitContainer/TopSection/ArchivePanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 10
+
+[node name="ArchiveControls" type="HBoxContainer" parent="VSplitContainer/TopSection/ArchivePanel/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="CreateTickButton" type="Button" parent="VSplitContainer/TopSection/ArchivePanel/VBoxContainer/ArchiveControls"]
+layout_mode = 2
+text = "Create Tick"
+
+[node name="CreateHourButton" type="Button" parent="VSplitContainer/TopSection/ArchivePanel/VBoxContainer/ArchiveControls"]
+layout_mode = 2
+text = "Create Hour Archive"
+
+[node name="CreateDayButton" type="Button" parent="VSplitContainer/TopSection/ArchivePanel/VBoxContainer/ArchiveControls"]
+layout_mode = 2
+text = "Create Day Archive"
+
+[node name="ListArchivesButton" type="Button" parent="VSplitContainer/TopSection/ArchivePanel/VBoxContainer/ArchiveControls"]
+layout_mode = 2
+text = "List Archives"
+
+[node name="TypeOption" type="OptionButton" parent="VSplitContainer/TopSection/ArchivePanel/VBoxContainer/ArchiveControls"]
+layout_mode = 2
+item_count = 5
+selected = 0
+popup/item_0/text = "all"
+popup/item_0/id = 0
+popup/item_1/text = "tick"
+popup/item_1/id = 1
+popup/item_2/text = "hour"
+popup/item_2/id = 2
+popup/item_3/text = "day"
+popup/item_3/id = 3
+popup/item_4/text = "week"
+popup/item_4/id = 4
+
+[node name="ArchiveContent" type="Panel" parent="VSplitContainer/TopSection/ArchivePanel/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="ArchiveScroll" type="ScrollContainer" parent="VSplitContainer/TopSection/ArchivePanel/VBoxContainer/ArchiveContent"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ArchiveText" type="RichTextLabel" parent="VSplitContainer/TopSection/ArchivePanel/VBoxContainer/ArchiveContent/ArchiveScroll"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+bbcode_enabled = true
+text = "[Archive information will appear here]"
+
+[node name="ASCIIPanel" type="Control" parent="VSplitContainer/TopSection"]
+visible = false
+layout_mode = 2
+
+[node name="CenterContainer" type="CenterContainer" parent="VSplitContainer/TopSection/ASCIIPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ASCIIText" type="RichTextLabel" parent="VSplitContainer/TopSection/ASCIIPanel/CenterContainer"]
+custom_minimum_size = Vector2(600, 300)
+layout_mode = 2
+theme_override_colors/default_color = Color(0.698039, 0.478431, 0.839216, 1)
+theme_override_fonts/normal_font = ExtResource("3_yjtci")
+theme_override_font_sizes/normal_font_size = 20
+bbcode_enabled = true
+text = "[center]
+  █    █   █   █   █   █  █████  █   █  █   █   ███    ███
+ █ █   █   █   ██ ██   █    █    █   █  █   █  █   █  █   █
+█████  █   █   █ █ █   █    █    █   █  █   █  █      █
+█   █  █   █   █   █   █    █    █   █  █   █   ███    ███
+█   █  █   █   █   █   █    █    █   █  █   █      █      █
+█   █  █   █   █   █   █    █    █   █  █   █  █   █  █   █
+█   █   ███    █   █   █    █     ███    ███    ███    ███
+[/center]"
+
+[node name="FontButtons" type="HBoxContainer" parent="VSplitContainer/TopSection/ASCIIPanel"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -40.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/separation = 20
+alignment = 1
+
+[node name="DefaultFontButton" type="Button" parent="VSplitContainer/TopSection/ASCIIPanel/FontButtons"]
+layout_mode = 2
+text = "Default Font"
+
+[node name="BlockyFontButton" type="Button" parent="VSplitContainer/TopSection/ASCIIPanel/FontButtons"]
+layout_mode = 2
+text = "Blocky Font"
+
+[node name="CurvedFontButton" type="Button" parent="VSplitContainer/TopSection/ASCIIPanel/FontButtons"]
+layout_mode = 2
+text = "Curved Font"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_gxbde")
+}
+
+[node name="BottomSection" type="VBoxContainer" parent="VSplitContainer"]
+layout_mode = 2
+
+[node name="OutputPanel" type="Panel" parent="VSplitContainer/BottomSection"]
+custom_minimum_size = Vector2(0, 150)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_bh6g7")
+
+[node name="OutputScroll" type="ScrollContainer" parent="VSplitContainer/BottomSection/OutputPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="OutputText" type="RichTextLabel" parent="VSplitContainer/BottomSection/OutputPanel/OutputScroll"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+bbcode_enabled = true
+text = "Welcome to LuminusOS Unified Control Center.
+Type 'help' for a list of commands."
+
+[node name="CommandContainer" type="HBoxContainer" parent="VSplitContainer/BottomSection"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="PromptLabel" type="Label" parent="VSplitContainer/BottomSection/CommandContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.698039, 0.478431, 0.839216, 1)
+text = ">"
+
+[node name="CommandInput" type="LineEdit" parent="VSplitContainer/BottomSection"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_a5l2r")
+theme_override_styles/focus = SubResource("StyleBoxFlat_6cjtd")
+placeholder_text = "Enter command..."
+caret_blink = true
+
+[node name="StatusBar" type="Panel" parent="VSplitContainer"]
+custom_minimum_size = Vector2(0, 30)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_dfkbq")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VSplitContainer/StatusBar"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 20
+
+[node name="StatusLabel" type="Label" parent="VSplitContainer/StatusBar/HBoxContainer"]
+layout_mode = 2
+text = "System Ready"
+
+[node name="Spacer" type="Control" parent="VSplitContainer/StatusBar/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="DirectoryLabel" type="Label" parent="VSplitContainer/StatusBar/HBoxContainer"]
+layout_mode = 2
+text = "/mnt/c/Users/Percision 15"
+
+[node name="Spacer2" type="Control" parent="VSplitContainer/StatusBar/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="TurnProgressBar" type="ProgressBar" parent="VSplitContainer/StatusBar/HBoxContainer"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+value = 25.0
+
+[node name="TurnProgressLabel" type="Label" parent="VSplitContainer/StatusBar/HBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.698039, 0.478431, 0.839216, 1)
+text = "Turn 3/12: 25%"
+
+[node name="NotificationPanel" type="Panel" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -300.0
+offset_bottom = 60.0
+grow_horizontal = 0
+theme_override_styles/panel = SubResource("StyleBoxFlat_ht2xq")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="NotificationPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="NotificationTitle" type="Label" parent="NotificationPanel/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.698039, 0.478431, 0.839216, 1)
+text = "Archive Created"
+horizontal_alignment = 1
+
+[node name="NotificationText" type="Label" parent="NotificationPanel/VBoxContainer"]
+layout_mode = 2
+text = "Tick archive created successfully."
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[connection signal="text_submitted" from="VSplitContainer/BottomSection/CommandInput" to="." method="_on_command_input_text_submitted"]

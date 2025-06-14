@@ -1,0 +1,50 @@
+{
+  "story_1_1747905566": {
+    "id": "story_1_1747905566",
+    "name": "Desktop_Wisdom_Archive",
+    "essence": "Accumulated knowledge and artifacts from desktop conversations - the yesterdays that shape todays",
+    "phase": "genesis",
+    "energy_level": 0.9730552856124197,
+    "connections": [
+      "story_2_1747905704",
+      "story_3_1747905733"
+    ],
+    "created_at": "2025-05-22T11:19:26.625995",
+    "last_active": "2025-05-22T11:25:58.162589",
+    "transformation_count": 1,
+    "children_stories": [],
+    "parent_stories": []
+  },
+  "story_2_1747905704": {
+    "id": "story_2_1747905704",
+    "name": "Active_Implementation_Hub",
+    "essence": "Current development and reality shaping in progress - todays that manifest tomorrows",
+    "phase": "manifestation",
+    "energy_level": 0.7162834381537514,
+    "connections": [
+      "story_1_1747905566",
+      "story_3_1747905733"
+    ],
+    "created_at": "2025-05-22T11:21:44.910765",
+    "last_active": "2025-05-22T11:25:58.162606",
+    "transformation_count": 1,
+    "children_stories": [],
+    "parent_stories": []
+  },
+  "story_3_1747905733": {
+    "id": "story_3_1747905733",
+    "name": "Infinite_Potential_Engine",
+    "essence": "Future evolution and unlimited creative possibilities - tomorrows that inspire all times",
+    "phase": "transcendence",
+    "energy_level": 0.6539635137051285,
+    "connections": [
+      "story_2_1747905704",
+      "story_1_1747905566"
+    ],
+    "created_at": "2025-05-22T11:22:13.854021",
+    "last_active": "2025-05-22T11:25:58.162610",
+    "transformation_count": 1,
+    "children_stories": [],
+    "parent_stories": []
+  }
+}

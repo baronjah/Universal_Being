@@ -1,0 +1,14 @@
+func clean_dictionary(dict_name: String):
+	match dict_name:
+		"cached_record_sets":
+			# Clean old cached records
+			var current_time = Time.get_ticks_msec()
+			for key in cached_record_sets.keys():
+				if current_time - cached_record_sets[key].get("timestamp", 0) > 3600000: # 1 hour
+					cached_record_sets.erase(key)
+					
+		"dictionary_of_mistakes":
+			# Clean resolved errors
+			for key in dictionary_of_mistakes.keys():
+				if dictionary_of_mistakes[key].get("status") == "resolved":
+					dictionary_of_mistakes.erase(key)

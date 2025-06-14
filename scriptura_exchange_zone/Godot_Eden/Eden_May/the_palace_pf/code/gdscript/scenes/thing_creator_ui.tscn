@@ -1,0 +1,176 @@
+[gd_scene load_steps=3 format=3 uid="uid://bhs5cg0ynm6rl"]
+
+[ext_resource type="Script" path="res://code/gdscript/scripts/ui/thing_creator_ui.gd" id="1_hfpoy"]
+
+[node name="CoreThingCreatorUI" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_hfpoy")
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HSplitContainer" type="HSplitContainer" parent="Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+split_offset = 200
+
+[node name="LeftPanel" type="VBoxContainer" parent="Panel/HSplitContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Panel/HSplitContainer/LeftPanel"]
+layout_mode = 2
+text = "Available Words"
+horizontal_alignment = 1
+
+[node name="WordList" type="ItemList" parent="Panel/HSplitContainer/LeftPanel"]
+layout_mode = 2
+size_flags_vertical = 3
+allow_reselect = true
+auto_height = true
+
+[node name="SearchBox" type="VBoxContainer" parent="Panel/HSplitContainer/LeftPanel"]
+layout_mode = 2
+
+[node name="SearchField" type="LineEdit" parent="Panel/HSplitContainer/LeftPanel/SearchBox"]
+layout_mode = 2
+placeholder_text = "Search words..."
+
+[node name="CategoryFilter" type="OptionButton" parent="Panel/HSplitContainer/LeftPanel/SearchBox"]
+layout_mode = 2
+item_count = 1
+selected = 0
+popup/item_0/text = "All Categories"
+popup/item_0/id = 0
+
+[node name="ButtonContainer" type="HBoxContainer" parent="Panel/HSplitContainer/LeftPanel"]
+layout_mode = 2
+
+[node name="CreateButton" type="Button" parent="Panel/HSplitContainer/LeftPanel/ButtonContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Create"
+
+[node name="CloseButton" type="Button" parent="Panel/HSplitContainer/LeftPanel/ButtonContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Close"
+
+[node name="RightPanel" type="VBoxContainer" parent="Panel/HSplitContainer"]
+layout_mode = 2
+
+[node name="PreviewContainer" type="VBoxContainer" parent="Panel/HSplitContainer/RightPanel"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.4
+
+[node name="Label" type="Label" parent="Panel/HSplitContainer/RightPanel/PreviewContainer"]
+layout_mode = 2
+text = "Preview"
+horizontal_alignment = 1
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="Panel/HSplitContainer/RightPanel/PreviewContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+stretch = true
+
+[node name="SubViewport" type="SubViewport" parent="Panel/HSplitContainer/RightPanel/PreviewContainer/SubViewportContainer"]
+handle_input_locally = false
+size = Vector2i(2, 2)
+render_target_update_mode = 4
+
+[node name="Camera3D" type="Camera3D" parent="Panel/HSplitContainer/RightPanel/PreviewContainer/SubViewportContainer/SubViewport"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 3)
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Panel/HSplitContainer/RightPanel"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.6
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/HSplitContainer/RightPanel/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="PropertiesContainer" type="VBoxContainer" parent="Panel/HSplitContainer/RightPanel/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="CustomPropsContainer" type="VBoxContainer" parent="Panel/HSplitContainer/RightPanel/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="PositionContainer" type="VBoxContainer" parent="Panel/HSplitContainer/RightPanel/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Panel/HSplitContainer/RightPanel/ScrollContainer/VBoxContainer/PositionContainer"]
+layout_mode = 2
+text = "Position"
+
+[node name="XBox" type="HBoxContainer" parent="Panel/HSplitContainer/RightPanel/ScrollContainer/VBoxContainer/PositionContainer"]
+layout_mode = 2
+
+[node name="XLabel" type="Label" parent="Panel/HSplitContainer/RightPanel/ScrollContainer/VBoxContainer/PositionContainer/XBox"]
+layout_mode = 2
+text = "X:"
+
+[node name="XValue" type="SpinBox" parent="Panel/HSplitContainer/RightPanel/ScrollContainer/VBoxContainer/PositionContainer/XBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+min_value = -100.0
+max_value = 100.0
+step = 0.1
+
+[node name="YBox" type="HBoxContainer" parent="Panel/HSplitContainer/RightPanel/ScrollContainer/VBoxContainer/PositionContainer"]
+layout_mode = 2
+
+[node name="YLabel" type="Label" parent="Panel/HSplitContainer/RightPanel/ScrollContainer/VBoxContainer/PositionContainer/YBox"]
+layout_mode = 2
+text = "Y:"
+
+[node name="YValue" type="SpinBox" parent="Panel/HSplitContainer/RightPanel/ScrollContainer/VBoxContainer/PositionContainer/YBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+min_value = -100.0
+max_value = 100.0
+step = 0.1
+
+[node name="ZBox" type="HBoxContainer" parent="Panel/HSplitContainer/RightPanel/ScrollContainer/VBoxContainer/PositionContainer"]
+layout_mode = 2
+
+[node name="ZLabel" type="Label" parent="Panel/HSplitContainer/RightPanel/ScrollContainer/VBoxContainer/PositionContainer/ZBox"]
+layout_mode = 2
+text = "Z:"
+
+[node name="ZValue" type="SpinBox" parent="Panel/HSplitContainer/RightPanel/ScrollContainer/VBoxContainer/PositionContainer/ZBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+min_value = -100.0
+max_value = 100.0
+step = 0.1
+
+[node name="StatusBar" type="PanelContainer" parent="Panel"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -31.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="StatusLabel" type="Label" parent="Panel/StatusBar"]
+layout_mode = 2
+text = "Ready"
+horizontal_alignment = 1

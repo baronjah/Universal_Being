@@ -1,0 +1,56 @@
+res://scripts/core/txt_universal_database.gd
+
+line 521
+
+	message_popup_shown.emit(content, txt_name)
+
+
+Line 521:Identifier "content" not declared in the current scope.
+
+
+
+
+func _create_popup_from_txt(txt_name: String) -> Window:
+	"""Create beautiful movable window from TXT data"""
+	
+	# Safety check - ensure TXT entry exists
+	if not txt_database.has(txt_name):
+		print("❌ TXT entry not found in database: " + txt_name)
+		print("📚 Available entries: " + str(txt_database.keys()))
+		return null
+	
+	var txt_data = txt_database[txt_name]
+	
+	# Create movable window instead of modal dialog
+	var popup = Window.new()
+	popup.title = txt_data.get("name", "Universal Message")
+	popup.size = _parse_size(txt_data.get("size", "400x300"))
+	popup.unresizable = false
+	popup.always_on_top = true
+	popup.transient = false  # Makes it independent and movable
+	
+	# Position popup
+	var position_type = txt_data.get("position", "screen_center")
+	_position_popup(popup, position_type)
+	
+	# Create beautiful content area
+	var content_area = _create_window_content(txt_data)
+	popup.add_child(content_area)
+	
+	# Add to scene
+	get_tree().current_scene.add_child(popup)
+	active_popups.append(popup)
+	
+	# Auto-close timer if specified
+	var lifetime = txt_data.get("lifetime", "")
+	if lifetime.contains("seconds"):
+		var seconds = lifetime.split("_")[0].to_float()
+		popup.get_tree().create_timer(seconds).timeout.connect(popup.queue_free)
+	
+	popup.show()
+	print("🪟 Created popup from TXT: " + txt_name)
+	
+	message_popup_shown.emit(content, txt_name)
+	being_created_from_txt.emit(txt_name, txt_data.file_path)
+	
+	return popup

@@ -1,0 +1,57 @@
+launched main_game scene
+
+remember that this scene does not have gamma_ai scene two scripts loaded, so gamma stuff will be tested in another scene?
+
+what i have noticed, the Message that was there, changed into new txt way, and i was able to move it aorund, clicked ground and it dissapeared, i might have moved mouse and micro clicked the x, somehow, will test again later
+
+looks kinda different, it is like, it got two headers? on top? but the top top one, is for moving it around
+
+Inspector still, cannot be moved around,	
+
+
+being interface console
+being create tree
+
+i can inspect tree, but i cannot inspect interface now, somehow,
+
+
+umm clicked on editor, debugger, errors
+
+
+E 0:00:04:216   universal_object_manager.gd:65 @ create_object(): [UniversalObjectManager] Failed to create object type: magical_orb
+  <C++ Source>  core/variant/variant_utility.cpp:1099 @ push_error()
+  <Stack Trace> universal_object_manager.gd:65 @ create_object()
+                perfect_input.gd:98 @ create_divine_cursor()
+                perfect_input.gd:58 @ _ready()
+
+E 0:00:04:224   universal_object_manager.gd:65 @ create_object(): [UniversalObjectManager] Failed to create object type: input_interface
+  <C++ Source>  core/variant/variant_utility.cpp:1099 @ push_error()
+  <Stack Trace> universal_object_manager.gd:65 @ create_object()
+                perfect_input.gd:173 @ create_keyboard_being()
+                perfect_input.gd:59 @ _ready()
+
+
+E 0:04:12:047   universal_being_creator_ui.gd:335 @ _setup_preview_scene(): Node not inside tree. Use look_at_from_position() instead.
+  <C++ Error>   Condition "!is_inside_tree()" is true.
+  <C++ Source>  scene/3d/node_3d.cpp:1129 @ look_at()
+  <Stack Trace> universal_being_creator_ui.gd:335 @ _setup_preview_scene()
+                universal_being_creator_ui.gd:327 @ _create_preview_area()
+                universal_being_creator_ui.gd:164 @ _create_interface_layout()
+                universal_being_creator_ui.gd:80 @ _direct_initialization()
+                universal_being_creator_ui.gd:601 @ toggle_interface()
+                universal_being_creator_ui.gd:570 @ _input()
+
+
+
+E 0:04:12:049   universal_being_creator_ui.gd:341 @ _setup_preview_scene(): Node not inside tree. Use look_at_from_position() instead.
+  <C++ Error>   Condition "!is_inside_tree()" is true.
+  <C++ Source>  scene/3d/node_3d.cpp:1129 @ look_at()
+  <Stack Trace> universal_being_creator_ui.gd:341 @ _setup_preview_scene()
+                universal_being_creator_ui.gd:327 @ _create_preview_area()
+                universal_being_creator_ui.gd:164 @ _create_interface_layout()
+                universal_being_creator_ui.gd:80 @ _direct_initialization()
+                universal_being_creator_ui.gd:601 @ toggle_interface()
+                universal_being_creator_ui.gd:570 @ _input()
+
+
+these four were red

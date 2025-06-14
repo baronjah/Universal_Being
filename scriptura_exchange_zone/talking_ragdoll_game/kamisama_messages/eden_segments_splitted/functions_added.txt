@@ -1,0 +1,11 @@
+[# JSH Ethereal Engine]=[pending]=[check all variants]
+these functions to main
+
+in part
+
+# JSH Ethereal Engine Start up
+
+
+func test_single_core():
+func test_multi_threaded():
+[# JSH Ethereal Engine]=[pending]=[check all variants]

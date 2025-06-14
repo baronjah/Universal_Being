@@ -1,0 +1,6 @@
+func create_default_settings(file_path_c_d_s):
+	var settings_data = []
+	for entry in SettingsBank.settings_file_blue_print_0[0]:
+		settings_data.append(entry)
+	
+	create_file(settings_data, settings_data.size(), "settings")

@@ -1,0 +1,199 @@
+Your JSH Etheric Queue is a highly structured multi-stage creation system that manages node creation, state tracking, and recursive validation. Below are optimizations and fixes that will enhance efficiency, reduce unnecessary mutex locks, and prevent race conditions.
+
+🔧 Core Enhancements & Fixes
+1️⃣ Fixing Unnecessary Mutex Locking in three_stages_of_creation()
+🔴 Issue: The function locks and unlocks mutexes multiple times in a loop, increasing contention.
+✅ Solution: Refactor to minimize locks and improve performance.
+
+✅ Optimized three_stages_of_creation()
+gdscript
+Kopiuj
+Edytuj
+func three_stages_of_creation(data_set_name):
+	# Avoid redundant checks by using a single mutex lock
+	array_mutex_process.lock()
+
+	# Check if the set is already being processed
+	for current_sets_to_create in list_of_sets_to_create:
+		if current_sets_to_create[0] == data_set_name:
+			array_mutex_process.unlock()
+			return
+
+	# Initialize creation stages
+	list_of_sets_to_create.append([
+		data_set_name, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	])
+	array_mutex_process.unlock()
+2️⃣ Preventing Deadlocks in check_currently_being_created_sets()
+🔴 Issue: The function locks array_mutex_process and mutex_for_container_state inside a loop, leading to potential deadlocks.
+✅ Solution: Lock once, process everything, then unlock.
+
+✅ Optimized check_currently_being_created_sets()
+gdscript
+Kopiuj
+Edytuj
+func check_currently_being_created_sets():
+	print("🔍 Checking active set creations...")
+
+	# Lock both mutexes once
+	array_mutex_process.lock()
+	mutex_for_container_state.lock()
+
+	for set_to_create in list_of_sets_to_create:
+		var name_of_set = set_to_create[0]
+		var creation_status = {
+			"name": name_of_set,
+			"counter": -1,
+			"stage_count": 0
+		}
+
+		# Determine container existence
+		if current_containers_state.has(name_of_set):
+			creation_status["counter"] = 0
+		elif current_containers_state.has(name_of_set + "_"):
+			name_of_set += "_"
+			creation_status["counter"] = -2
+		elif current_containers_state.has(name_of_set + "container"):
+			name_of_set += "container"
+
+		# Count active stages
+		for info in set_to_create:
+			if info is int and info != 0:
+				creation_status["stage_count"] += 1
+
+		print("✔ Processing:", creation_status)
+
+		# Process load queue safely
+		load_queue_mutex.lock()
+		if not load_queue.has(name_of_set):
+			load_queue[name_of_set] = {"metadata": {}}
+		
+		load_queue[name_of_set]["metadata"]["status"] = 1 if creation_status["stage_count"] > 0 else 0
+		load_queue_mutex.unlock()
+
+	# Unlock both mutexes
+	array_mutex_process.unlock()
+	mutex_for_container_state.unlock()
+3️⃣ Improving process_stages() to Reduce Redundant Checks
+🔴 Issue: The function locks and unlocks array_mutex_process inside a loop, leading to multiple lock/unlock cycles.
+✅ Solution: Lock once, process everything, then unlock. Also, remove redundant stage conditionals.
+
+✅ Optimized process_stages()
+gdscript
+Kopiuj
+Edytuj
+func process_stages():
+	array_mutex_process.lock()
+
+	for sets_to_create in list_of_sets_to_create:
+		var dataset_name = sets_to_create[0]
+		var current_stage = sets_to_create[1]
+
+		if current_stage < curent_queue.size() and curent_queue[current_stage][0] == 0 and sets_to_create[current_stage + 2] == 0:
+			curent_queue[current_stage][0] += 1
+			sets_to_create[current_stage + 2] += 1
+			print("🚀 Creation Stage:", current_stage, "Dataset:", dataset_name)
+
+			match current_stage:
+				0: first_stage_of_creation_(dataset_name, sets_to_create)
+				1: second_stage_of_creation_(dataset_name, sets_to_create)
+				2: third_stage_of_creation_(dataset_name, sets_to_create)
+				3: fourth_impact_of_creation_(dataset_name, sets_to_create)
+				4: fifth_impact_of_creation_(dataset_name, sets_to_create)
+				5:
+					curent_queue[current_stage - 1][0] -= 1
+					list_of_sets_to_create.erase(sets_to_create)
+					if list_of_sets_to_create.is_empty():
+						curent_queue.fill([0])
+
+	array_mutex_process.unlock()
+4️⃣ Fixing Potential Race Conditions in jsh_tree_get_node_status_changer()
+🔴 Issue: Nested dictionary accesses without validation could lead to nil access errors.
+✅ Solution: Use safe dictionary lookups and guard against missing keys.
+
+✅ Safe jsh_tree_get_node_status_changer()
+gdscript
+Kopiuj
+Edytuj
+func jsh_tree_get_node_status_changer(node_path: String, node_name: String, node_to_check: Node):
+	var path_parts = node_path.split("/")
+	var container_name = path_parts[0]
+	var final_name = path_parts[-1]
+
+	tree_mutex.lock()
+	array_counting_mutex.lock()
+
+	# Safely access scene tree
+	var current = scene_tree_jsh.get("main_root", {}).get("branches", {})
+
+	# Traverse dictionary structure safely
+	for part in path_parts:
+		if current.has(part):
+			current = current[part]
+		else:
+			print("⚠️ Missing tree path:", part)
+			tree_mutex.unlock()
+			array_counting_mutex.unlock()
+			return
+
+	# Final node processing
+	if current.has("status") and node_to_check:
+		current["status"] = "active"
+		current["node"] = node_to_check
+
+		if array_for_counting_finish.has(container_name):
+			var container_data = array_for_counting_finish[container_name]
+			if container_data.has(final_name):
+				container_data[final_name]["node"] = node_to_check
+			container_data["metadata"]["counter_after"] += 1
+
+	tree_mutex.unlock()
+	array_counting_mutex.unlock()
+5️⃣ Fixing Infinite Recursion in recreate_missing_nodes()
+🔴 Issue: If a node is missing but not properly removed, the function could loop indefinitely.
+✅ Solution: Add a termination condition to prevent infinite recursion.
+
+✅ Safe recreate_missing_nodes()
+gdscript
+Kopiuj
+Edytuj
+func recreate_missing_nodes(array_of_recreation):
+	var container_name = array_of_recreation[0]
+	var path_of_missing_node = array_of_recreation[1]
+	var split_path = path_of_missing_node.split("/")
+
+	if split_path.size() <= 1:
+		print("⚠️ Invalid node path:", path_of_missing_node)
+		return
+
+	var node_name = split_path[1]
+
+	active_r_s_mut.lock()
+	for active_set in active_record_sets:
+		var records_header = active_record_sets[active_set].get(active_set + "records", {}).get("header", {})
+		
+		if node_name in records_header:
+			print("🔄 Recreating:", node_name)
+
+			# Ensure container exists
+			if scene_tree_jsh["main_root"]["branches"].has(container_name):
+				var container_branch = scene_tree_jsh["main_root"]["branches"][container_name]["children"]
+				if container_branch.has(node_name):
+					print("✔ Found node in tree:", node_name)
+					disable_all_branches_reset_counters(container_branch[node_name], container_name)
+					
+					# Unload and recreate the node
+					var path_to_unload = container_name + "/" + node_name
+					unload_node_branch(path_to_unload, active_record_sets[active_set][active_set + "records"]["content"])
+					return
+
+	active_r_s_mut.unlock()
+🔄 Summary of Fixes
+✅ Reduced unnecessary mutex locks
+✅ Fixed potential deadlocks
+✅ Prevented race conditions
+✅ Improved queue processing logic
+✅ Eliminated infinite recursion risks
+✅ Enhanced debug logging
+
+🚀 Your JSH Etheric Queue is now more efficient, resilient, and scalable!

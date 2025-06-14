@@ -1,0 +1,312 @@
+#
+# JSH Scene Tree
+#
+#      oooo  .oooooo..o ooooo   ooooo 
+#      `888 d8P'    `Y8 `888'   `888' 
+#       888 Y88bo.       888     888     ┏┓         ┏┳┓        ┏┓        
+#       888  `"Y8888o.   888ooooo888     ┗┓┏┏┓┏┓┏┓   ┃ ┏┓┏┓┏┓  ┗┓┓┏┏╋┏┓┏┳┓
+#       888      `"Y88b  888     888     ┗┛┗┗ ┛┗┗    ┻ ┛ ┗ ┗   ┗┛┗┫┛┗┗ ┛┗┗
+#       888 oo     .d8P  888     888                              ┛      
+#   .o. 88P 8""88888P'  o888o   o888o 
+#   `Y888P                            
+#
+# JSH Scene Tree
+#
+
+# container_path
+func disable_all_branches(branch_to_disable):
+	var all_containers : Array = []
+	var all_nodes : Array = []
+	var branches_to_process : Array = []
+	var just_container : Array = []
+
+	var process_branch = func traverse_branch(branch: Dictionary):
+		tree_mutex.lock()
+		if branch["metadata"].has("full_path") and branch["metadata"]["full_path"] != null:
+
+			all_containers.append(branch["name"])
+			branch["status"] = "disabled"
+			branch["node"] = null
+
+		if branch.has("children"):
+			for child_name in branch["children"]:
+				branches_to_process.append(branch["children"][child_name])
+				branch["children"][child_name]["status"] = "disabled"
+				branch["children"][child_name]["node"] = null 
+		tree_mutex.unlock()
+
+	process_branch.call(branch_to_disable)
+	
+	var current_branches = branches_to_process.duplicate(false)
+
+	# Process branches until none left
+	while branches_to_process.size() > 0:
+		
+		tree_mutex.lock()
+		var current_branch = branches_to_process[0]  # Get first branch
+		tree_mutex.unlock()
+		
+		process_branch.call(current_branch)        # Process it
+		
+		tree_mutex.lock()
+		branches_to_process.remove_at(0)            # Remove it and array shifts automatically
+		tree_mutex.unlock()
+
+
+func find_branch_to_unload(thing_path):
+	var new_path_splitter = str(thing_path).split("/")
+	tree_mutex.lock()
+	if scene_tree_jsh["main_root"]["branches"][new_path_splitter[0]]["children"].has(new_path_splitter[1]):
+		var branch_part_to_cache = scene_tree_jsh["main_root"]["branches"][new_path_splitter[0]]["children"][new_path_splitter[1]].duplicate(true)
+		var branch_name_to_cache = new_path_splitter[0]
+		var child_name_to_cache = new_path_splitter[1]
+		tree_mutex.unlock()
+		cache_branch(branch_name_to_cache, child_name_to_cache, branch_part_to_cache)
+		
+		tree_mutex.lock()
+		scene_tree_jsh["main_root"]["branches"][new_path_splitter[0]]["children"].erase(new_path_splitter[1])
+		tree_mutex.unlock()
+	else:
+		tree_mutex.unlock()
+		
+		
+	array_counting_mutex.lock()
+	
+	# if has branch name
+	if array_for_counting_finish.has(new_path_splitter[0]):
+		if array_for_counting_finish[new_path_splitter[0]].has(new_path_splitter[1]):
+			print(" cache branch we can unload that node ", new_path_splitter[1])
+			array_for_counting_finish[new_path_splitter[0]].erase(new_path_splitter[1])
+		else:
+			print(" cache branch that node does not exist in that container", new_path_splitter[0])
+	else:
+		print(" cache branch that container does not exist")
+		# if has child_name
+	
+	array_counting_mutex.unlock()
+
+
+func cache_tree_branch_fully(container_to_unload):
+	
+	cached_tree_mutex.lock()
+	
+	print(" new function to cache tree branch fully ", container_to_unload)
+	if !cached_jsh_tree_branches.has(container_to_unload):
+		print(" new function, it doesnt have that branch ", container_to_unload)
+		
+		tree_mutex.lock()
+		if scene_tree_jsh["main_root"]["branches"].has(container_to_unload):
+			print(" the main scene tree thingy got that container in it rn ")
+			tree_mutex.unlock()
+			
+			disable_all_branches(scene_tree_jsh["main_root"]["branches"][container_to_unload])
+			
+			tree_mutex.lock()
+			cached_jsh_tree_branches[container_to_unload] = scene_tree_jsh["main_root"]["branches"][container_to_unload]
+			scene_tree_jsh["main_root"]["branches"].erase(container_to_unload)
+			tree_mutex.unlock()
+		else:
+			tree_mutex.unlock()
+	
+	cached_tree_mutex.unlock()
+
+
+
+func cache_branch(branch_name, child_name, branch_part):
+	
+	print(" cache branch : ", branch_name, child_name)
+	
+	cached_tree_mutex.lock()
+	
+	if !cached_jsh_tree_branches.has(branch_name):
+		
+		tree_mutex.lock()
+		cached_jsh_tree_branches[branch_name] = {
+			"name" = scene_tree_jsh["main_root"]["branches"][branch_name]["name"],
+			"type" = scene_tree_jsh["main_root"]["branches"][branch_name]["type"],
+			"jsh_type" = scene_tree_jsh["main_root"]["branches"][branch_name]["jsh_type"],
+			"parent" = scene_tree_jsh["main_root"]["branches"][branch_name]["parent"],
+			"status" = "disabled",
+			"node" = null,
+			"metadata" = scene_tree_jsh["main_root"]["branches"][branch_name]["metadata"],
+			"children" = {}
+		}
+		tree_mutex.unlock()
+		
+		
+
+		
+		
+	if cached_jsh_tree_branches.has(branch_name):
+		if !cached_jsh_tree_branches[branch_name]["children"].has(child_name):
+			disable_all_branches(branch_part)
+			
+			tree_mutex.lock()
+			cached_jsh_tree_branches[branch_name]["children"][child_name] = branch_part
+			tree_mutex.unlock()
+	
+	cached_tree_mutex.unlock()
+
+# scene tree start up, creating the main root node info there
+func start_up_scene_tree():
+	
+	tree_mutex.lock()
+	scene_tree_jsh = TreeBlueprints.SCENE_TREE_BLUEPRINT.duplicate(true)
+	var name_to_add = self.name
+	scene_tree_jsh["main_root"]["name"] = name_to_add
+	scene_tree_jsh["main_root"]["type"] = self.get_class()
+	scene_tree_jsh["main_root"]["metadata"]["creation_time"] = Time.get_ticks_msec()
+	scene_tree_jsh["main_root"]["node"] = self
+	scene_tree_jsh["main_root"]["status"] = "active"
+	tree_mutex.unlock()
+
+
+func the_pretender_printer(node_name: String, node_path_jsh_tree: String, godot_node_type, node_type: String = "Node3D"):
+
+	tree_mutex.lock()
+	if !scene_tree_jsh.has("main_root"):
+		scene_tree_jsh = TreeBlueprints.SCENE_TREE_BLUEPRINT.duplicate(true)
+		scene_tree_jsh["main_root"]["name"] = "main"
+		scene_tree_jsh["main_root"]["type"] = "Node3D"
+		scene_tree_jsh["main_root"]["status"] = "active"
+		scene_tree_jsh["main_root"]["node"] = self
+
+	var path_parts = node_path_jsh_tree.split("/")
+	var current_branch = scene_tree_jsh["main_root"]["branches"]
+	cached_tree_mutex.lock()
+	var cached_current_branch = cached_jsh_tree_branches
+	cached_tree_mutex.unlock()
+	# Track the full path as we build it
+	var current_full_path = ""
+	
+	# Handle path traversal
+	for i in range(path_parts.size()):
+		var part = path_parts[i]
+		current_full_path = current_full_path + "/" + part if current_full_path else part
+		if !current_branch.has(part):
+			if cached_current_branch.has(part):
+				print(" the cached branch has that one ")
+				current_branch[part] = cached_current_branch[part]
+				cached_current_branch.erase(part)
+			else:
+				var new_branch = TreeBlueprints.BRANCH_BLUEPRINT.duplicate(true)
+				new_branch["name"] = part
+				new_branch["type"] = godot_node_type
+				new_branch["jsh_type"] = node_type
+				new_branch["status"] = "pending"
+				new_branch["node"] = null
+				new_branch["metadata"] = {
+					"creation_time": Time.get_ticks_msec(),
+					"full_path": current_full_path,
+					"parent_path": current_full_path.get_base_dir(),
+					"has_collision": false,
+					"has_area": false
+				}
+				if node_type == "datapoint":
+					scene_tree_jsh["main_root"]["branches"][path_parts[0]]["datapoint"] = {
+						"datapoint_name" = new_branch["name"],
+						"datapoint_path" = new_branch["metadata"]["full_path"]
+					}
+				current_branch[part] = new_branch
+
+		if i < path_parts.size() - 1:
+			if !current_branch[part].has("children"):
+				current_branch[part]["children"] = {}
+			current_branch = current_branch[part]["children"]
+			
+			if cached_current_branch.has(part):
+				if cached_current_branch[part].has("children"):
+					print(" the cached branch had them children")
+					cached_current_branch = cached_current_branch[part]["children"]
+	tree_mutex.unlock()
+
+
+# Modified print_tree_structure function
+func print_tree_structure(branch: Dictionary, indent: int = 0):
+	tree_mutex.lock()
+	var indent_str = "  ".repeat(indent)
+	var status = branch.get("status", "pending")  # Default to pending if no status
+	print("%s%s (%s) %s" % [
+		indent_str, 
+		branch["name"], 
+		branch["type"],
+		status_symbol[status]
+	])
+	
+	if branch.has("metadata"):
+		var metadata = branch["metadata"]
+		if metadata.get("has_collision", false):
+			print("%s  └─ Has Collision" % indent_str)
+		if metadata.get("has_area", false):
+			print("%s  └─ Has Area" % indent_str)
+	
+	if branch.has("branches"):
+		for child in branch["branches"].values():
+			tree_mutex.unlock()
+			print_tree_structure(child, indent + 1)
+	elif branch.has("children"):
+		for child in branch["children"].values():
+			tree_mutex.unlock()
+			print_tree_structure(child, indent + 1)
+	tree_mutex.unlock()
+
+func jsh_tree_get_node(node_path_get_node: String) -> Node:
+	var path_parts = node_path_get_node.split("/")
+	tree_mutex.lock()
+	var current = scene_tree_jsh["main_root"]["branches"]
+	for part in path_parts:
+		if current.has(part):
+			current = current[part]
+			if path_parts[-1] == part:
+				#print(" current : " , current["node"])
+				tree_mutex.unlock()
+				return current["node"]
+			else:
+				current = current["children"]
+	tree_mutex.unlock()
+	return null
+
+
+# claude idea of how to change it, i guess for me them mutexes unlocking after we call function, makes sense, maybe it is broken, will figure it out, when i have problem with it, may it be there
+#func print_tree_structure(branch: Dictionary, indent: int = 0):
+	#tree_mutex.lock()
+	#var indent_str = "  ".repeat(indent)
+	#var status = branch.get("status", "pending")
+	#var children_to_process = []
+	#
+	## Get all needed data while locked
+	#print("%s%s (%s) %s" % [
+		#indent_str, 
+		#branch["name"], 
+		#branch["type"],
+		#status_symbol[status]
+	#])
+	#
+	#if branch.has("branches"):
+		#children_to_process = branch["branches"].values()
+	#elif branch.has("children"):
+		#children_to_process = branch["children"].values()
+	#tree_mutex.unlock()
+#
+	## Process children after unlock
+	#for child in children_to_process:
+		#print_tree_structure(child, indent + 1)
+
+
+
+#func jsh_scene_tree_get_children(node_path_get_childs: String) -> Array:
+	#var path_parts = node_path_get_childs.split("/")
+	##tree_mutex.lock()
+	#var current_branch = scene_tree_jsh["main_root"]["branches"]
+	##tree_mutex.unlock()
+	## Navigate to the requested node
+	#for part in path_parts:
+		#if current_branch.has(part):
+			#if path_parts[-1] == part:
+				## We found our node, return its children
+				#return current_branch[part].get("children", {}).keys()
+			#else:
+				## Keep navigating
+				#current_branch = current_branch[part]["children"]
+	#
+	#return []

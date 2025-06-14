@@ -1,0 +1,31 @@
+func check_status():
+	var stuck_status = check_thread_status()
+	
+	if stuck_status == "error":
+		print(" something went wrong, starting retry timer")
+		if timer_system:  # Check if timer system exists
+			if timer_system.is_timer_active("retry_timer"):
+				print("Retry timer already running...")
+				return
+				
+			# Create and start retry timer
+			timer_system.create_timer("retry_timer", 5.0)
+			timer_system.start_timer("retry_timer")
+			
+			# You can also track the retry attempts
+			var current_attempt = 1
+			timer_system.timer_completed.connect(
+				func(timer_id): 
+					if timer_id == "retry_timer":
+						current_attempt += 1
+						print("Retry attempt: ", current_attempt)
+			)
+		else:
+			push_error("Timer system not initialized!")
+			
+	elif stuck_status == "working":
+		var updated_message = check_thread_status_type()
+		print(" stuck status after working : ", updated_message)
+	print(" stuff to do :: mutex statuses : ", breaks_and_handles_check(), 
+		  ", stuck_status threads status : ", stuck_status, 
+		  " and main sets to create", array_of_startup_check)

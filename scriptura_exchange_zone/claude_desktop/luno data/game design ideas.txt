@@ -1,0 +1,565 @@
+Game Design Document (GDD) Outline
+A GDD is crucial for keeping development focused. Create a folder in your Google Drive called GameDesign and within it, a document (e.g., Google Doc) named MyGame_GDD.gdoc. Here's a template outline you can copy and paste:
+
+Plaintext
+
+# MyGame_GDD.gdoc
+
+## 1. Overview
+    * **Game Title:** [Your Game Title]
+    * **Logline:** (1-2 sentence compelling description)
+    * **Genre:**
+    * **Target Audience:**
+    * **Platform(s):** (e.g., PC, Mobile)
+    * **Monetization (if any):**
+    * **Unique Selling Points (USPs):** What makes your game stand out?
+
+## 2. Gameplay
+    * **Core Gameplay Loop:** Describe the primary actions the player will repeatedly take.
+    * **Game Mechanics:**
+        * [Mechanic 1: e.g., Combat System - detailed description]
+        * [Mechanic 2: e.g., Crafting System - detailed description]
+        * [Mechanic 3: e.g., Dialogue System - detailed description]
+    * **Controls:** (Input methods and mappings)
+    * **Game Flow:** (How does the player progress through the game?)
+    * **Victory/Loss Conditions:**
+
+## 3. Story & World (If applicable)
+    * **Setting:** (Time, place, mood)
+    * **Backstory:**
+    * **Main Characters:** (Descriptions, motivations, roles)
+    * **Plot Outline/Key Narrative Beats:**
+    * **Lore:**
+
+## 4. Art & Audio
+    * **Art Style:** (e.g., Pixel art, 3D Low Poly, Realistic - include visual references if possible)
+    * **Music Style:** (e.g., Orchestral, Chiptune, Ambient)
+    * **Sound Effects (SFX) List (General categories):**
+
+## 5. Technical
+    * **Engine:** Godot Engine (GDScript)
+    * **Key Technical Challenges/Features:** (e.g., Procedural generation, advanced AI)
+
+## 6. Target Features & Scope
+    * **Minimum Viable Product (MVP) Features:**
+    * **Post-Launch/Stretch Goal Features:**
+
+## 7. Monetization (if applicable, expand here)
+
+## 8. Team Roles (Even if it's just you and Claude initially)
+    * [Your Name]: Lead Designer, Programmer
+    * Claude: AI Assistant (Code generation, brainstorming, documentation)
+
+---
+📊 II. Game Data Management (Database Files)
+For game data, instead of traditional complex databases, indie games often use structured text files like JSON, CSV, or Godot's own Resource files (.tres, .res). Create a folder named GameData in your Google Drive.
+
+A. Using JSON for Complex Data (e.g., Items, Characters)
+1. Item Database (items.json):
+Save this as items.json in your GameData folder.
+
+JSON
+
+[
+  {
+    "id": "sword_001",
+    "name": "Iron Sword",
+    "description": "A basic but reliable iron sword.",
+    "type": "weapon",
+    "damage": 10,
+    "weight": 5.0,
+    "icon_path": "res://assets/icons/items/sword_iron.png",
+    "equip_slot": "main_hand"
+  },
+  {
+    "id": "potion_health_001",
+    "name": "Minor Health Potion",
+    "description": "Restores a small amount of health.",
+    "type": "consumable",
+    "effect": "heal",
+    "effect_value": 25,
+    "icon_path": "res://assets/icons/items/potion_health_minor.png"
+  },
+  {
+    "id": "key_rusty",
+    "name": "Rusty Key",
+    "description": "Opens an old lock.",
+    "type": "quest_item",
+    "quest_id": "cellar_door_quest",
+    "icon_path": "res://assets/icons/items/key_rusty.png"
+  }
+]
+2. Character Stats Template (character_stats_template.json):
+Use this as a base for different character types (player, enemies).
+
+JSON
+
+{
+  "character_id": "player_default",
+  "name": "Hero",
+  "base_stats": {
+    "health": 100,
+    "mana": 50,
+    "stamina": 75,
+    "attack_power": 10,
+    "defense": 5,
+    "speed": 7
+  },
+  "sprite_sheet": "res://assets/sprites/characters/player_hero.png",
+  "abilities": ["ability_slash", "ability_block"]
+}
+3. Enemy Database (enemies.json):
+
+JSON
+
+[
+  {
+    "id": "goblin_grunt",
+    "name": "Goblin Grunt",
+    "base_stats": {
+      "health": 30,
+      "attack_power": 8,
+      "defense": 2,
+      "speed": 5
+    },
+    "sprite_sheet": "res://assets/sprites/enemies/goblin_grunt.png",
+    "loot_table_id": "goblin_common_loot",
+    "ai_behavior": "simple_melee"
+  },
+  {
+    "id": "orc_shaman",
+    "name": "Orc Shaman",
+    "base_stats": {
+      "health": 50,
+      "mana": 100,
+      "attack_power": 5, // low melee, high magic
+      "defense": 3,
+      "speed": 4
+    },
+    "sprite_sheet": "res://assets/sprites/enemies/orc_shaman.png",
+    "abilities": ["spell_fireball", "spell_heal_self"],
+    "loot_table_id": "shaman_rare_loot",
+    "ai_behavior": "caster_ranged"
+  }
+]
+B. Using CSV for Simpler Tabular Data (e.g., Level Data, Dialogue)
+1. Level Progression (level_progression.csv):
+Save as level_progression.csv.
+
+Fragment kodu
+
+Level,XP_Needed,Unlock_Description
+1,0,"Start of Journey"
+2,100,"First Skill Point"
+3,250,"New Area Accessible"
+4,500,"Advanced Crafting Recipe"
+2. Simple Dialogue (dialogue_npc_gardener.csv):
+Save as dialogue_npc_gardener.csv.
+
+Fragment kodu
+
+DialogueID,Character,Text,Condition,NextID
+GARDENER_GREET_1,Gardener,"Hello traveler! Beautiful day, isn't it?",,GARDENER_GREET_2
+GARDENER_GREET_2,Gardener,"The roses are blooming marvelously this year.",,
+GARDENER_QUEST_OFFER,Gardener,"Say, could you help me with a pest problem?",,GARDENER_QUEST_ACCEPT_CHOICE
+GARDENER_QUEST_ACCEPT_CHOICE,Player,"1. Sure, I can help. | 2. Not right now.",QUEST_NOT_ACTIVE,GARDENER_QUEST_ACCEPTED/GARDENER_QUEST_DECLINED
+GARDENER_QUEST_ACCEPTED,Gardener,"Wonderful! Get rid of those blighted slugs in the west patch.",QUEST_ACCEPTED,
+GARDENER_QUEST_DECLINED,Gardener,"Ah, a shame. Perhaps another time.",,
+C. Godot Resource Files (.tres)
+For data that benefits from Godot's editor integration (like character stats that might have exported variables for easy tweaking), you can create custom Resource scripts.
+
+Example: CharacterStatsResource.gd (save in your Godot project's scripts/resources folder):
+
+GDScript
+
+# CharacterStatsResource.gd
+extends Resource
+class_name CharacterStats
+
+@export var health: int = 100
+@export var mana: int = 50
+@export var attack_power: int = 10
+@export var defense: int = 5
+@export var speed: float = 50.0
+@export var character_name: String = "Default"
+@export var sprite_texture: Texture2D
+Then, in the Godot editor, you can create new CharacterStats resources, fill them in, and save them as .tres files (e.g., player_stats.tres, goblin_stats.tres). These can be directly loaded and used in your GDScript.
+
+📜 III. GDScript Best Practices & Rules
+Create a file named GDSCRIPT_GUIDELINES.md in a DevelopmentGuidelines folder in your Google Drive.
+
+Markdown
+
+# GDSCRIPT_GUIDELINES.md
+
+## A. Naming Conventions
+* **Classes/Nodes:** `PascalCase` (e.g., `PlayerController`, `EnemySpawner`)
+* **Functions & Methods:** `snake_case` (e.g., `move_player()`, `calculate_damage()`)
+* **Variables:** `snake_case` (e.g., `player_health`, `move_speed`)
+* **Constants:** `UPPER_SNAKE_CASE` (e.g., `MAX_JUMP_HEIGHT`, `GRAVITY`)
+* **Signals:** `snake_case` (e.g., `health_changed`, `enemy_defeated`)
+* **Private members (by convention):** Start with an underscore `_` (e.g., `_internal_timer`, `_private_function()`)
+
+## B. Code Formatting & Style
+* **Indentation:** Use Tabs (Godot default) or 4 Spaces consistently.
+* **Line Length:** Aim for lines no longer than 100-120 characters for readability.
+* **Blank Lines:**
+    * Use one blank line to separate logical sections within a function.
+    * Use two blank lines to separate functions and class definitions.
+* **Comments:**
+    * Use `#` for single-line comments.
+    * Use `"""Docstrings"""` for multi-line comments or function/class explanations.
+    * Comment *why* something is done, not just *what* is done if the code is already clear.
+    * `# TODO:` for things to be done.
+    * `# FIXME:` for known issues that need fixing.
+* **Type Hints:** Use static typing wherever possible for clarity and error prevention.
+    * `var health: int = 100`
+    * `func take_damage(amount: int) -> void:`
+    * `var target_node: KinematicBody2D`
+
+## C. Script Structure
+1.  `class_name` (if applicable, for custom types or global access)
+2.  `extends` statement
+3.  `# Docstring explaining the script's purpose`
+4.  `signal` definitions
+5.  `enum` definitions
+6.  `const` definitions
+7.  `@export` variables (group them by category if many)
+8.  `@onready var` declarations
+9.  Other member variables
+10. `_init()` function (constructor)
+11. `_ready()` function (called when node and children are in scene tree)
+12. `_enter_tree()`
+13. `_process(delta)` / `_physics_process(delta)`
+14. Other built-in Godot virtual functions (e.g., `_input`, `_unhandled_input`)
+15. Public methods
+16. Private methods (often prefixed with `_`)
+17. Signal callback methods (usually named `_on_NodeName_signal_name`)
+
+## D. GDScript Pathways & Game Logic Structure
+
+* **Nodes are Building Blocks:** Embrace Godot's node-based architecture. Each node should have a single, clear responsibility.
+* **Scene Composition:** Build complex objects and behaviors by composing scenes from simpler ones.
+* **Signals for Decoupling:** Use signals to communicate between nodes without creating hard dependencies. This makes your code more modular and easier to manage.
+    * Example: Player emits `health_changed` signal -> UI listens and updates health bar.
+* **Groups:** Add nodes to groups to manage them collectively (e.g., all "enemies" or all "collectables").
+* **Autoloads/Singletons:** For truly global data or functionality (e.g., `GameManager`, `AudioManager`, `PlayerData`). Use sparingly, as they can make code harder to test and reason about if overused.
+    * Create a script (e.g., `globals.gd`) and add it to Project > Project Settings > Autoload.
+* **Inheritance:** Use inheritance to share common functionality (e.g., a `BaseEnemy.gd` script that specific enemy types like `Goblin.gd` and `Orc.gd` extend from).
+* **Finite State Machines (FSMs):** Excellent for managing complex states for characters (idle, walking, attacking, dead) or game systems.
+    * Can be implemented with an `enum` for states and a `match` statement in `_process` or `_physics_process`.
+* **Resource Scripts (`extends Resource`):** For creating custom data assets that can be created, saved, and managed in the editor (see Game Data section).
+* **Keep `_process()` and `_physics_process()` Lean:** Offload heavy logic to functions or other nodes. These functions run every frame, so they need to be efficient.
+
+## E. Error Handling
+* Use `assert()` for conditions that should always be true during development.
+* Check for nulls before accessing node properties if a node might not exist (e.g., `if get_node_or_null("MyOptionalNode"):`).
+* Use `print_debug()` or `push_warning()`/`push_error()` for informative messages.
+
+---
+📂 IV. Godot Project Organization
+This is a general guideline for your Godot project folder structure. Create a GODOT_PROJECT_STRUCTURE.md file in your DevelopmentGuidelines folder.
+
+Markdown
+
+# GODOT_PROJECT_STRUCTURE.md
+
+## Root Folder (`res://`)
+* `/project.godot` (Godot project file)
+* `/icon.svg` (Default Godot icon, replace with yours)
+* `/README.md` (Optional: Brief project description, setup notes)
+
+## `/assets`
+    * Purpose: All raw art and audio assets.
+    * `/assets/graphics/`
+        * `/sprites/`
+            * `/player/`
+            * `/enemies/`
+            * `/items/`
+            * `/ui/`
+            * `/environment/`
+        * `/textures/`
+        * `/tilemaps/`
+    * `/assets/audio/`
+        * `/music/`
+        * `/sfx/`
+    * `/assets/fonts/`
+    * `/assets/models/` (if 3D)
+
+## `/scenes`
+    * Purpose: All your `.tscn` (and `.scn`) files.
+    * `/scenes/levels/`
+    * `/scenes/player/` (e.g., `player.tscn`)
+    * `/scenes/enemies/` (e.g., `goblin.tscn`, `orc.tscn`)
+    * `/scenes/ui/` (e.g., `main_menu.tscn`, `hud.tscn`, `settings_menu.tscn`)
+    * `/scenes/objects/` (e.g., `collectible_coin.tscn`, `projectile.tscn`)
+    * `/scenes/systems/` (e.g., `game_manager.tscn` if it's a node-based autoload)
+
+## `/scripts`
+    * Purpose: All your `.gd` script files.
+    * Structure can mirror `/scenes` or be based on functionality.
+    * `/scripts/player/`
+    * `/scripts/enemies/`
+    * `/scripts/ui/`
+    * `/scripts/core/` (e.g., base classes, core game logic)
+    * `/scripts/singletons/` (for Autoload scripts)
+    * `/scripts/resources/` (for custom Resource scripts, e.g., `CharacterStats.gd`)
+    * `/scripts/utils/` (for helper functions, static libraries)
+
+## `/data` (Optional, for imported data or Godot Resources)
+    * Purpose: `.tres` or `.res` files created from Resource scripts, or imported JSON/CSV if not loaded directly from `/GameData` (see below).
+    * `/data/character_stats/`
+    * `/data/item_definitions/`
+
+## `/addons` (If you use any plugins from the Godot Asset Library)
+
+## `/translations` (If your game supports multiple languages, .po files)
+
+## `/tests` (Optional: for unit or integration tests, e.g., using GUT addon)
+
+---☁️ V. Using Google Drive for Collaboration
+Create a Main Project Folder: On Google Drive, create a main folder for your game (e.g., "My Awesome Game Project").
+Subfolders: Inside, create the folders mentioned:
+GameDesign (for the GDD)
+GameData (for items.json, enemies.json, .csv files etc.)
+DevelopmentGuidelines (for GDSCRIPT_GUIDELINES.md, GODOT_PROJECT_STRUCTURE.md)
+Share with Claude (and team members):
+You can share individual files or the entire main project folder.
+When interacting with Claude, you can refer to these documents by name and instruct it to follow the rules or use the data structures defined within. For example:
+"Claude, generate a GDScript function to load items from GameData/items.json following the structure defined there and the GDSCRIPT_GUIDELINES.md."
+"Claude, help me design a new enemy based on the character_stats_template.json and add it to enemies.json."
+Version Control (Important!): While Google Drive is good for sharing documents, for your actual Godot project code (res:// folder), use Git for version control (e.g., with GitHub, GitLab, Bitbucket). You can then link your Git repository in a document within your Google Drive for reference. Don't put your live Godot project directly into Google Drive for syncing, as it can cause issues with Godot's metadata and binary import files. Use Drive for the design docs, data definitions, and guidelines.
+By providing Claude with these structured documents and rules, you can guide its contributions more effectively and maintain a cleaner, more organized game development process. Good luck!
+Okay, I can help you set up some foundational "files" and guidelines for your video game project, especially geared towards GDScript and Godot, which you can then use with Claude and share via Google Drive.
+
+Instead of complex database files, for many indie game needs, especially during development, structured data files (like JSON or CSV) and clear organizational principles work very well.
+
+Here’s a breakdown of files and guidelines:
+
+🎮 Game Design Document (GDD) Outline
+A GDD is a living document that outlines the vision for your game. It's crucial for keeping development focused. You can create this as a Google Doc.
+
+File Name Suggestion: MyGame_GDD.docx or create it directly in Google Docs.
+
+Sections to Include:
+
+Overview
+Game Concept: High-level idea, genre, target audience, unique selling points.
+Core Gameplay Loop: What players do repeatedly.
+Theme & Story (if applicable): Setting, narrative summary, key characters.
+Monetization (if applicable): How the game will generate revenue.
+Mechanics
+Core Mechanics: Detailed description of fundamental player actions (e.g., movement, combat, puzzle-solving).
+Secondary Mechanics: Other systems (e.g., crafting, dialogue, skill trees).
+Controls: How the player interacts with the game (keyboard, gamepad, touch).
+Game Elements
+Levels/Worlds: Descriptions, flow, objectives for each area.
+Characters: Player characters, NPCs, enemies (abilities, stats, backstories).
+Items: Collectibles, consumables, equipment (properties, effects).
+User Interface (UI) & User Experience (UX): Mockups/descriptions of menus, HUD, overall player journey.
+Art & Audio
+Visual Style: Art direction, mood boards, references.
+Sound Design: Music style, key sound effects.
+Technical
+Target Platform(s): PC, mobile, console.
+Engine: Godot (GDScript).
+Data Management: (See next section).
+Project Management (Optional, but good for collaboration)
+Team Roles (if applicable)
+Milestones & Deadlines
+Self-reflection: The search results provided good templates for GDDs. I've summarized common key sections that are useful for an indie developer.
+
+📊 Game Data "Databases" (Using JSON or CSV)
+For game data like item stats, character definitions, or level configurations, human-readable files are often best, especially with Godot. JSON is excellent for hierarchical data, while CSV is good for tabular data.
+
+Why JSON/CSV?
+
+Easy to edit manually or with simple tools (even text editors or spreadsheet software for CSV).
+Godot has built-in support for parsing JSON.
+Easy to version control with Git.
+Examples:
+
+1. Item Database (items.json)
+
+JSON
+
+[
+  {
+    "id": "sword_001",
+    "name": "Iron Sword",
+    "type": "weapon",
+    "damage": 10,
+    "description": "A basic iron sword."
+  },
+  {
+    "id": "potion_health_001",
+    "name": "Health Potion",
+    "type": "consumable",
+    "effect": "heal",
+    "amount": 25,
+    "description": "Restores a small amount of health."
+  }
+]
+2. Character Stats (characters.json)
+
+JSON
+
+{
+  "player": {
+    "base_health": 100,
+    "base_attack": 15,
+    "base_speed": 5,
+    "abilities": ["slash", "block"]
+  },
+  "goblin": {
+    "base_health": 30,
+    "base_attack": 8,
+    "base_speed": 3,
+    "loot_table_id": "goblin_loot_common"
+  }
+}
+3. Enemy Stats (enemies.csv) (Good for spreadsheet editing)
+File Name Suggestion: enemy_stats.csv
+
+Fragment kodu
+
+id,name,health,attack,defense,speed,xp_reward,loot_table_id
+goblin_01,Goblin Grunt,30,5,2,3,10,goblin_common
+orc_01,Orc Warrior,80,12,5,2,50,orc_standard
+How to use in GDScript (Conceptual):
+
+GDScript
+
+# For JSON
+func load_item_data(file_path: String) -> Array:
+    var file = FileAccess.open(file_path, FileAccess.READ)
+    if file:
+        var content = file.get_as_text()
+        var parsed_json = JSON.parse_string(content)
+        file.close()
+        if typeof(parsed_json) == TYPE_ARRAY:
+            return parsed_json
+    return []
+
+# For CSV (simplified parsing)
+func load_enemy_data_csv(file_path: String) -> Array:
+    var data_array = []
+    var file = FileAccess.open(file_path, FileAccess.READ)
+    if file:
+        var headers = file.get_csv_line() # Assuming first line is headers
+        while not file.eof_reached():
+            var row_values = file.get_csv_line()
+            if row_values.size() > 0 and row_values[0] != "": # Skip empty lines
+                var entry = {}
+                for i in range(min(headers.size(), row_values.size())):
+                    entry[headers[i]] = row_values[i] # Consider type conversion here
+                data_array.append(entry)
+        file.close()
+    return data_array
+
+func _ready():
+    var items = load_item_data("res://data/items.json")
+    for item in items:
+        print("Item: ", item.name, " Damage: ", item.get("damage", 0)) # Use .get for safety
+
+    var enemies_csv = load_enemy_data_csv("res://data/enemy_stats.csv")
+    for enemy in enemies_csv:
+        print("Enemy: ", enemy.name, " Health: ", enemy.health)
+Self-reflection: The search results confirmed JSON and CSV are common and provided examples of how Godot can handle them. I included simple GDScript examples for loading this data.
+
+📜 GDScript "Rules" and Pathways (Best Practices)
+These are guidelines to help keep your GDScript code clean, maintainable, and efficient.
+
+File Name Suggestion for your own guidelines summary: GDScript_Best_Practices.md (Markdown for easy formatting in Google Drive or other tools).
+
+1. Naming Conventions (Refer to official Godot Style Guide):
+* PascalCase for classes and nodes: PlayerController, EnemySpawner.
+* snake_case for functions and variables: move_player(), player_health. (For Godot 4, snake_case is also recommended for files and directories).
+* ALL_CAPS_SNAKE_CASE for constants and enums: MAX_SPEED, enum PlayerState { IDLE, RUNNING }.
+* Prefix private members with an underscore: _internal_variable, _on_Button_pressed(). (Though note GDScript doesn't have true private variables).
+
+2. Static Typing:
+* Use static type hints whenever possible. It improves code readability, helps catch errors early, and enables better autocompletion.
+```gdscript
+var health: int = 100
+var player_name: String = "Hero"
+var velocity: Vector2 = Vector2.ZERO
+
+  func take_damage(amount: int) -> void:
+      health -= amount
+      if health < 0:
+          health = 0
+
+  func get_inventory_item(index: int) -> ItemResource: # Assuming ItemResource is a custom resource
+      # ... logic to return an item
+      return null
+  ```
+3. Code Structure & Readability:
+* Keep functions short and focused: Each function should do one thing well.
+* Use comments wisely: Explain why something is done, not what is done (the code should explain the what).
+* Group related functions and variables.
+* Use signals for decoupled communication: Instead of direct function calls between distant nodes, emit signals and connect to them. This makes your scenes more modular.
+```gdscript
+# In Player.gd
+signal health_changed(new_health)
+signal died
+
+    func take_damage(amount: int) -> void:
+        health -= amount
+        health_changed.emit(health)
+        if health <= 0:
+            died.emit()
+
+    # In UIManager.gd (connected to player's health_changed signal)
+    func _on_player_health_changed(new_health: int) -> void:
+        health_bar.value = new_health
+    ```
+* **Use `class_name`** to register scripts as new types in Godot, making them easier to instance and type hint.
+    ```gdscript
+    # player.gd
+    class_name Player
+    extends CharacterBody2D
+    # ...
+    ```
+* **Leverage Custom Resources (`Resource`):** For data containers (e.g., item definitions, character stats, configurations). They are serializable, inheritable, and integrate well with the Godot editor.
+    ```gdscript
+    # item_resource.gd
+    class_name ItemResource
+    extends Resource
+
+    @export var item_name: String = "New Item"
+    @export var description: String = ""
+    @export var value: int = 0
+    @export var icon: Texture2D
+    ```
+4. Project Organization (Godot FileSystem):
+* Group by feature or asset type:
+* Option 1 (By Feature - often preferred for larger projects):
+res:// ├── player/ │ ├── Player.tscn │ ├── Player.gd │ └── player_sprite.png ├── enemy_goblin/ │ ├── Goblin.tscn │ ├── Goblin.gd │ └── goblin_art.png ├── ui/ │ ├── MainMenu.tscn │ ├── HUD.tscn │ └── ui_theme.tres ├── items/ │ ├── item_definitions.json │ └── item_icons/ │ └── sword_icon.png └── main/ └── MainGame.tscn
+* Option 2 (By Asset Type - can be simpler for small projects):
+res:// ├── scenes/ │ ├── Player.tscn │ └── Level1.tscn ├── scripts/ │ ├── Player.gd │ └── Enemy.gd ├── assets/ │ ├── sprites/ │ │ └── player.png │ └── sounds/ └── data/ └── items.json
+* The Godot documentation suggests grouping assets close to the scenes that use them (leaning towards Option 1).
+* Use snake_case for folder and file names (especially for Godot 4) to avoid case sensitivity issues across different operating systems.
+* Place third-party addons in an addons/ folder.
+
+5. Version Control (Git):
+* Absolutely essential. Initialize a Git repository for your project from day one.
+* Commit frequently with clear messages.
+* Use a .gitignore file tailored for Godot projects (you can find templates online) to exclude unnecessary files (e.g., *.translation, .godot/ import cache).
+Example .gitignore lines for Godot:
+# Godot specific .godot/ *.translation export_presets.cfg # If you have secrets or local config local_config/
+
+6. Autoloads (Singletons):
+* Use Autoloads for globally accessible scripts/nodes (e.g., GameManager, AudioManager, SaveLoadSystem).
+* Be mindful not to overuse them, as they can make code harder to follow if everything becomes globally accessible. Prefer signals and direct node communication where appropriate.
+
+Self-reflection: The search results provided links to the official Godot style guide (Source 2.2) and community discussions on best practices like GDQuest's guidelines (Source 2.1) and project organization (Source 3.1, 3.3). I've synthesized these into actionable advice.
+
+☁️ Using Google Drive
+Create a Main Project Folder: On your Google Drive, create a folder for your game (e.g., "My Awesome Game Project").
+Subfolders:
+Design/: Put your GDD (MyGame_GDD.docx or link to Google Doc) and any concept art or mood boards here.
+GameData/: Store your .json and .csv files here.
+DevelopmentGuidelines/: Store your GDScript_Best_Practices.md file here.
+GodotProject/: This would ideally be a copy or zip of your Godot project for sharing specific versions if you aren't using Git directly with Claude (though Git is far superior for code). Note: Direct real-time collaboration on Godot project files within Google Drive can be problematic due to how Godot manages project metadata. It's better for sharing snapshots or for the data files mentioned above.
+Sharing: Share the main project folder or specific files/subfolders with Claude (if it can access shared Drive links) or use it as your central point to copy-paste information for Claude.

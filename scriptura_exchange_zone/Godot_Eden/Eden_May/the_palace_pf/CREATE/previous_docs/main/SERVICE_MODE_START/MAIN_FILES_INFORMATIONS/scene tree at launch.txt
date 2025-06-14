@@ -1,0 +1,38 @@
+ ┖╴main
+    ┠╴sphere
+    ┃  ┠╴pointers
+    ┃  ┃  ┠╴cursor_mouse
+    ┃  ┃  ┠╴cursor_left
+    ┃  ┃  ┠╴cursor_right
+    ┃  ┃  ┠╴cursor_head
+    ┃  ┃  ┖╴cursor_body
+    ┃  ┠╴cameramove
+    ┃  ┃  ┖╴TrackballCamera
+    ┃  ┃     ┠╴CameraMover
+    ┃  ┃     ┖╴light
+    ┃  ┖╴godot_model
+    ┠╴WorldEnvironment
+    ┠╴system_check
+    ┠╴godot_timers_system
+    ┃  ┠╴@Timer@2
+    ┃  ┠╴@Timer@3
+    ┃  ┠╴@Timer@4
+    ┃  ┖╴@Timer@5
+    ┠╴godot_tree_system
+    ┠╴JSH_ThreadPool_Manager
+    ┠╴JSH_records_system
+    ┠╴JSH_scene_tree_system
+    ┠╴JSH_database_system
+    ┠╴JSH_queue_system
+    ┠╴JSH_turns_system
+    ┠╴JSH_cache_memory_system
+    ┠╴JSH_akashic_records
+    ┠╴JSH_multiplayer_files
+    ┠╴JSH_mainframe_database
+    ┠╴JSH_data_splitter
+    ┠╴JSH_task_manager
+    ┖╴@Node@6
+       ┠╴@Timer@7
+       ┠╴@Timer@8
+       ┠╴@Timer@9
+       ┖╴@Timer@10

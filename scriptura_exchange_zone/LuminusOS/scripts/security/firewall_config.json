@@ -1,0 +1,110 @@
+{
+    "security_level": 1,
+    "auto_activate": true,
+    "protected_paths": [
+        "/mnt/d/",
+        "/user/data/",
+        "/system/core/",
+        "/memory/primary/",
+        "/runtime/active/",
+        "/network/external/"
+    ],
+    "custom_transformations": {
+        "sin": "creation",
+        "curse": "blessing",
+        "dark": "illuminate",
+        "corrupt": "cleanse",
+        "fall": "ascend",
+        "password": "****PROTECTED****",
+        "secret": "****SECURED****",
+        "evil": "good",
+        "darkness": "light",
+        "chaos": "order",
+        "destruction": "creation",
+        "hate": "love"
+    },
+    "rule_sets": {
+        "system_protection": {
+            "description": "Protects core system words from alteration",
+            "priority": 10,
+            "enabled": true,
+            "patterns": ["system", "kernel", "root", "admin", "sudo", "exec"],
+            "mode": "DENY",
+            "action": "block_and_log"
+        },
+        "data_security": {
+            "description": "Secures sensitive data words",
+            "priority": 8,
+            "enabled": true,
+            "patterns": ["password", "key", "secret", "credentials", "token"],
+            "mode": "TRANSFORM",
+            "action": "obfuscate_and_log"
+        },
+        "external_filter": {
+            "description": "Filters incoming words from external sources",
+            "priority": 6,
+            "enabled": true,
+            "patterns": ["http", "url", "download", "remote", "fetch"],
+            "mode": "REDIRECT",
+            "action": "scan_before_process"
+        },
+        "creative_safety": {
+            "description": "Ensures creation words are properly constrained",
+            "priority": 5,
+            "enabled": true,
+            "patterns": ["create", "generate", "spawn", "instantiate", "manifest"],
+            "mode": "TRANSFORM",
+            "action": "add_safety_bounds"
+        },
+        "sin_protection": {
+            "description": "Transforms sin-related words into creation patterns",
+            "priority": 9,
+            "enabled": true,
+            "patterns": ["sin", "curse", "dark", "corrupt", "fall"],
+            "mode": "TRANSFORM",
+            "action": "redeem_to_creation"
+        },
+        "proactive_defense": {
+            "description": "Actively scans and predicts potential threats",
+            "priority": 7,
+            "enabled": false,
+            "patterns": ["modify", "override", "bypass", "exploit"],
+            "mode": "REDIRECT",
+            "action": "analyze_intent"
+        },
+        "quantum_entanglement": {
+            "description": "Creates quantum paired security tokens",
+            "priority": 9,
+            "enabled": false,
+            "patterns": ["quantum", "entangle", "superposition", "observe"],
+            "mode": "TRANSFORM",
+            "action": "create_quantum_pair"
+        },
+        "divine_protection": {
+            "description": "Applies spiritual-level security to all words",
+            "priority": 11,
+            "enabled": false,
+            "patterns": ["divine", "spirit", "soul", "eternal", "transcend"],
+            "mode": "TRANSFORM",
+            "action": "apply_divine_blessing"
+        }
+    },
+    "scanner_settings": {
+        "scan_interval": 1.0,
+        "deep_scan_interval": 86400,
+        "perform_startup_scan": true,
+        "scan_new_words": true,
+        "log_all_transformations": true
+    },
+    "response_actions": {
+        "on_intrusion": "block_and_notify",
+        "on_suspicious": "transform_and_log",
+        "on_repeated_intrusion": "increase_security_level"
+    },
+    "notification_settings": {
+        "notify_on_intrusion": true,
+        "notify_on_level_change": true,
+        "notify_on_rule_trigger": false,
+        "notification_style": "minimal"
+    }
+}

@@ -1,0 +1,61 @@
+# Core system states that need mutex protection
+var core_states := {
+	"mutex": Mutex.new(),  # Single mutex for all core states
+	"states": {
+		"creation": SystemState.INACTIVE,
+		"deletion": SystemState.INACTIVE,
+		"movement": SystemState.INACTIVE,
+		"edit": SystemState.INACTIVE
+	}
+}
+
+# First-time checks (need mutex as they're initialization flags)
+var initialization_states := {
+	"mutex": Mutex.new(),
+	"states": {
+		"first_start": null,      # fsc_status
+		"first_delta": null,      # fdc_status
+		"first_task": null        # ftc_status
+	}
+}
+
+# History tracking (needs mutex for concurrent access)
+var history_tracking := {
+	"mutex": Mutex.new(),
+	"mistakes": [],  # mistakes_of_past
+	"creation_history": [],
+	"deletion_history": []
+}
+
+# Time tracking (needs mutex for concurrent updates)
+var time_tracking := {
+	"mutex": Mutex.new(),
+	"delta_history": [],
+	"godot_timers": {},
+	"last_update": Time.get_ticks_msec()
+}
+
+
+# Add properties to track main script memory
+var memory_metadata = {
+	"arrays": {
+		"blimp_of_time": [],
+		"stored_delta_memory": [],
+		"past_deltas_memories": [],
+		"array_with_no_mutex": [],
+		"list_of_sets_to_create": []
+	},
+	"dictionaries": {
+		"active_record_sets": {},
+		"cached_record_sets": {},
+		"scene_tree_jsh": {},
+		"current_containers_state": {},
+		"dictionary_of_mistakes": {}
+	},
+	"last_cleanup": Time.get_ticks_msec(),
+	"cleanup_thresholds": {
+		"array_max": 1000,  # Max array entries
+		"dict_max_mb": 50,  # Max dictionary size in MB
+		"time_between_cleanups": 30000  # 30 seconds
+	}
+}

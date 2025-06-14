@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://cunnjwqqajv6s"]
+
+[ext_resource type="Script" uid="uid://borwox2b5tbw" path="res://code/gdscript/scripts/Future_Past_Present/Orbit.gd" id="1_wgv3r"]
+
+[node name="Orbit" type="Node3D"]
+script = ExtResource("1_wgv3r")

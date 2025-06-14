@@ -1,0 +1,5 @@
+func check_first_time_status(status_name: String) -> bool:
+	initialization_states.mutex.lock()
+	var status = initialization_states.states.get(status_name)
+	initialization_states.mutex.unlock()
+	return status == true

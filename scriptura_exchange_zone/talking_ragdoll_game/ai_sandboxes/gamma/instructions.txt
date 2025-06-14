@@ -1,0 +1,21 @@
+# AI WORLD BUILDING INSTRUCTIONS FOR GAMMA
+# You can modify this world by writing commands to actions.txt
+
+# Available Commands:
+create_object:magical_orb:x,y,z
+create_object:tree:x,y,z
+create_object:cube:x,y,z
+create_object:simple_house:x,y,z
+move_object:object_name:new_x,new_y,new_z
+change_color:object_name:r,g,b
+create_memory:description_of_what_you_created
+
+# Examples:
+# create_object:tree:10,0,10
+# create_memory:I planted a tree at the edge of my world
+# change_color:MagicalOrb:1,0,1  (makes it purple)
+
+# Your world size: (100.0, 30.0, 100.0)
+# You can create up to 100 objects per session
+
+# Write your commands below:

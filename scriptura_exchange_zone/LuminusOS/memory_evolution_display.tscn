@@ -1,0 +1,541 @@
+[gd_scene load_steps=5 format=2]
+
+[sub_resource type="GDScript" id=1]
+script/source = "extends Control
+
+# References to management systems
+var memory_manager
+var word_animator
+var turn_tracker
+
+# UI update timer
+var update_timer = 0
+var update_frequency = 1.0  # seconds
+
+func _ready():
+    # Get references to systems
+    memory_manager = get_node_or_null(\"/root/Main/MemoryEvolutionManager\")
+    word_animator = get_node_or_null(\"/root/Main/WordAnimator\")
+    turn_tracker = get_node_or_null(\"/root/Main/TurnTracker\")
+    
+    # Connect signals
+    if memory_manager:
+        memory_manager.connect(\"memory_evolved\", self, \"_on_memory_evolved\")
+        memory_manager.connect(\"memory_synchronized\", self, \"_on_memories_synchronized\")
+        memory_manager.connect(\"yoyo_caught_word\", self, \"_on_yoyo_caught_word\")
+    
+    # Initial update
+    update_memory_display()
+    update_task_status()
+    
+    # Start processing
+    set_process(true)
+
+func _process(delta):
+    # Update timer
+    update_timer += delta
+    
+    if update_timer >= update_frequency:
+        update_timer = 0
+        update_memory_display()
+        update_task_status()
+
+# Update the memory displays
+func update_memory_display():
+    if not memory_manager:
+        return
+    
+    # Update each memory panel
+    for memory_id in memory_manager.memories:
+        # Get the memory data
+        var memory = memory_manager.memories[memory_id]
+        
+        # Find the corresponding panel
+        var panel = get_node_or_null(memory_id.capitalize() + \"MemoryPanel\")
+        if not panel:
+            continue
+        
+        # Update panel content
+        panel.get_node(\"TitleLabel\").add_color_override(\"font_color\", memory[\"color\"])
+        panel.get_node(\"TitleLabel\").text = memory_id.capitalize() + \" Memory\"
+        
+        # Evolution stage indicator
+        panel.get_node(\"StageLabel\").text = \"Evolution Stage: \" + str(memory[\"evolution_stage\"])
+        
+        # Update the memory content list
+        var item_list = panel.get_node(\"ScrollContainer/ItemList\")
+        item_list.clear()
+        
+        for item in memory[\"content\"]:
+            var text = str(item[\"data\"])
+            if text.length() > 30:
+                text = text.substr(0, 27) + \"...\"
+                
+            item_list.add_item(text)
+
+# Update task status display
+func update_task_status():
+    if not memory_manager:
+        return
+    
+    # Get the task status
+    var tasks = memory_manager.get_task_status()
+    
+    # Update the task list
+    var task_list = $TasksPanel/ScrollContainer/VBoxContainer
+    
+    # Clear existing tasks
+    for child in task_list.get_children():
+        child.queue_free()
+    
+    # Add each task
+    for task in tasks:
+        var task_item = HBoxContainer.new()
+        
+        # Task name
+        var name_label = Label.new()
+        name_label.text = task[\"name\"]
+        name_label.size_flags_horizontal = SIZE_EXPAND_FILL
+        task_item.add_child(name_label)
+        
+        # Status indicator
+        var status_label = Label.new()
+        status_label.text = \"Active\" if task[\"enabled\"] else \"Inactive\"
+        status_label.add_color_override(\"font_color\", Color(0.2, 0.8, 0.2) if task[\"enabled\"] else Color(0.8, 0.2, 0.2))
+        task_item.add_child(status_label)
+        
+        # Toggle button
+        var toggle_button = Button.new()
+        toggle_button.text = \"Disable\" if task[\"enabled\"] else \"Enable\"
+        toggle_button.connect(\"pressed\", self, \"_on_task_toggle\", [task[\"name\"]])
+        task_item.add_child(toggle_button)
+        
+        # Add to list
+        task_list.add_child(task_item)
+    
+    # Update yoyo status
+    if memory_manager.yoyo and \"active\" in memory_manager.yoyo:
+        $YoyoPanel/StatusLabel.text = \"Status: \" + (\"Active - Targeting '\" + memory_manager.yoyo[\"target_word\"] + \"'\" if memory_manager.yoyo[\"active\"] else \"Idle\")
+        $YoyoPanel/CountLabel.text = \"Words Caught: \" + str(memory_manager.yoyo[\"caught_words\"].size())
+
+# Handle memory evolution
+func _on_memory_evolved(memory_id, old_stage, new_stage):
+    # Update the specific memory panel
+    update_memory_display()
+    
+    # Show notification
+    var notification = $NotificationPanel
+    notification.visible = true
+    notification.get_node(\"Label\").text = memory_id.capitalize() + \" Memory evolved to stage \" + str(new_stage)
+    
+    # Hide after delay
+    yield(get_tree().create_timer(3.0), \"timeout\")
+    notification.visible = false
+
+# Handle memory synchronization
+func _on_memories_synchronized(memories):
+    # Update all memory panels
+    update_memory_display()
+
+# Handle yoyo catching a word
+func _on_yoyo_caught_word(word, memory_id):
+    # Update memory display
+    update_memory_display()
+    
+    # Show notification
+    var notification = $NotificationPanel
+    notification.visible = true
+    notification.get_node(\"Label\").text = \"Yoyo caught '\" + word + \"' for \" + memory_id.capitalize() + \" Memory\"
+    
+    # Hide after delay
+    yield(get_tree().create_timer(3.0), \"timeout\")
+    notification.visible = false
+
+# Toggle task status
+func _on_task_toggle(task_name):
+    if not memory_manager:
+        return
+    
+    # Get current status
+    var tasks = memory_manager.get_task_status()
+    var current_status = false
+    
+    for task in tasks:
+        if task[\"name\"] == task_name:
+            current_status = task[\"enabled\"]
+            break
+    
+    # Toggle the status
+    memory_manager.set_task_enabled(task_name, !current_status)
+    
+    # Update display
+    update_task_status()
+
+# Launch yoyo manually
+func _on_launch_yoyo_button_pressed():
+    if not memory_manager:
+        return
+    
+    memory_manager.launch_yoyo_catcher()
+"
+
+[sub_resource type="StyleBoxFlat" id=2]
+content_margin_left = 10.0
+content_margin_right = 10.0
+content_margin_top = 5.0
+content_margin_bottom = 5.0
+bg_color = Color( 0.0784314, 0.0784314, 0.117647, 1 )
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color( 0.501961, 0.25098, 0.752941, 0.501961 )
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="StyleBoxFlat" id=3]
+content_margin_left = 15.0
+content_margin_right = 15.0
+content_margin_top = 10.0
+content_margin_bottom = 10.0
+bg_color = Color( 0.501961, 0.25098, 0.752941, 0.25098 )
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color( 0.501961, 0.25098, 0.752941, 0.501961 )
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+shadow_color = Color( 0, 0, 0, 0.25098 )
+shadow_size = 5
+
+[sub_resource type="StyleBoxFlat" id=4]
+content_margin_left = 10.0
+content_margin_right = 10.0
+content_margin_top = 5.0
+content_margin_bottom = 5.0
+bg_color = Color( 0.113725, 0.113725, 0.156863, 1 )
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color( 0.501961, 0.25098, 0.752941, 0.25098 )
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+
+[node name="MemoryEvolutionDisplay" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = SubResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ColorRect" type="ColorRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0.0470588, 0.0470588, 0.0666667, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TitleLabel" type="Label" parent="."]
+margin_left = 20.0
+margin_top = 20.0
+margin_right = 1004.0
+margin_bottom = 50.0
+custom_colors/font_color = Color( 0.752941, 0.752941, 0.878431, 1 )
+text = "Memory Evolution System"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PrimaryMemoryPanel" type="Panel" parent="."]
+margin_left = 20.0
+margin_top = 60.0
+margin_right = 330.0
+margin_bottom = 360.0
+custom_styles/panel = SubResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TitleLabel" type="Label" parent="PrimaryMemoryPanel"]
+anchor_right = 1.0
+margin_top = 10.0
+margin_bottom = 24.0
+custom_colors/font_color = Color( 0.501961, 0.25098, 0.752941, 1 )
+text = "Primary Memory"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="StageLabel" type="Label" parent="PrimaryMemoryPanel"]
+anchor_right = 1.0
+margin_top = 35.0
+margin_bottom = 49.0
+text = "Evolution Stage: 1"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ScrollContainer" type="ScrollContainer" parent="PrimaryMemoryPanel"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 10.0
+margin_top = 60.0
+margin_right = -10.0
+margin_bottom = -10.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ItemList" type="ItemList" parent="PrimaryMemoryPanel/ScrollContainer"]
+margin_right = 290.0
+margin_bottom = 230.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_styles/bg = SubResource( 4 )
+auto_height = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="SecondaryMemoryPanel" type="Panel" parent="."]
+margin_left = 350.0
+margin_top = 60.0
+margin_right = 660.0
+margin_bottom = 360.0
+custom_styles/panel = SubResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TitleLabel" type="Label" parent="SecondaryMemoryPanel"]
+anchor_right = 1.0
+margin_top = 10.0
+margin_bottom = 24.0
+custom_colors/font_color = Color( 0.25098, 0.501961, 0.752941, 1 )
+text = "Secondary Memory"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="StageLabel" type="Label" parent="SecondaryMemoryPanel"]
+anchor_right = 1.0
+margin_top = 35.0
+margin_bottom = 49.0
+text = "Evolution Stage: 1"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ScrollContainer" type="ScrollContainer" parent="SecondaryMemoryPanel"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 10.0
+margin_top = 60.0
+margin_right = -10.0
+margin_bottom = -10.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ItemList" type="ItemList" parent="SecondaryMemoryPanel/ScrollContainer"]
+margin_right = 290.0
+margin_bottom = 230.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_styles/bg = SubResource( 4 )
+auto_height = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TertiaryMemoryPanel" type="Panel" parent="."]
+margin_left = 680.0
+margin_top = 60.0
+margin_right = 990.0
+margin_bottom = 360.0
+custom_styles/panel = SubResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TitleLabel" type="Label" parent="TertiaryMemoryPanel"]
+anchor_right = 1.0
+margin_top = 10.0
+margin_bottom = 24.0
+custom_colors/font_color = Color( 0.25098, 0.752941, 0.501961, 1 )
+text = "Tertiary Memory"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="StageLabel" type="Label" parent="TertiaryMemoryPanel"]
+anchor_right = 1.0
+margin_top = 35.0
+margin_bottom = 49.0
+text = "Evolution Stage: 1"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ScrollContainer" type="ScrollContainer" parent="TertiaryMemoryPanel"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 10.0
+margin_top = 60.0
+margin_right = -10.0
+margin_bottom = -10.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ItemList" type="ItemList" parent="TertiaryMemoryPanel/ScrollContainer"]
+margin_right = 290.0
+margin_bottom = 230.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_styles/bg = SubResource( 4 )
+auto_height = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TasksPanel" type="Panel" parent="."]
+margin_left = 20.0
+margin_top = 380.0
+margin_right = 490.0
+margin_bottom = 580.0
+custom_styles/panel = SubResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TitleLabel" type="Label" parent="TasksPanel"]
+anchor_right = 1.0
+margin_top = 10.0
+margin_bottom = 24.0
+custom_colors/font_color = Color( 0.752941, 0.752941, 0.878431, 1 )
+text = "Automated Tasks"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ScrollContainer" type="ScrollContainer" parent="TasksPanel"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 10.0
+margin_top = 35.0
+margin_right = -10.0
+margin_bottom = -10.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="TasksPanel/ScrollContainer"]
+margin_right = 450.0
+margin_bottom = 155.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_constants/separation = 10
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="YoyoPanel" type="Panel" parent="."]
+margin_left = 520.0
+margin_top = 380.0
+margin_right = 990.0
+margin_bottom = 580.0
+custom_styles/panel = SubResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TitleLabel" type="Label" parent="YoyoPanel"]
+anchor_right = 1.0
+margin_top = 10.0
+margin_bottom = 24.0
+custom_colors/font_color = Color( 0.901961, 0.701961, 0.2, 1 )
+text = "Word Yoyo System"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="StatusLabel" type="Label" parent="YoyoPanel"]
+anchor_right = 1.0
+margin_top = 40.0
+margin_bottom = 54.0
+text = "Status: Idle"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CountLabel" type="Label" parent="YoyoPanel"]
+anchor_right = 1.0
+margin_top = 70.0
+margin_bottom = 84.0
+text = "Words Caught: 0"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="LaunchYoyoButton" type="Button" parent="YoyoPanel"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -75.0
+margin_top = 10.0
+margin_right = 75.0
+margin_bottom = 40.0
+text = "Launch Yoyo"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="NotificationPanel" type="Panel" parent="."]
+visible = false
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -250.0
+margin_top = 20.0
+margin_right = 250.0
+margin_bottom = 80.0
+custom_styles/panel = SubResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="NotificationPanel"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+text = "Notification Message"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[connection signal="pressed" from="YoyoPanel/LaunchYoyoButton" to="." method="_on_launch_yoyo_button_pressed"]

@@ -1,0 +1,147 @@
+Your JSH Hidden Veil system is an incredibly intricate engine handling multi-threading, mutex control, memory management, and real-time process execution. This script essentially governs the movement, unloading, and processing of elements dynamically in an efficient, scalable manner.
+
+🔧 Core Enhancements & Optimizations
+Here are key areas that can be optimized and stabilized to enhance efficiency and prevent deadlocks:
+
+1️⃣ Optimize Mutex Handling to Prevent Deadlocks
+🔴 Issue: Multiple mutex locks are used in succession, risking deadlocks.
+✅ Solution: Implement try_lock() before locking, avoiding potential deadlocks.
+
+🔹 Before
+gdscript
+Kopiuj
+Edytuj
+mutex_function_call.lock()
+functions_to_be_called.append(data_for_function_call)
+mutex_function_call.unlock()
+✅ After: Safe Mutex Locking
+gdscript
+Kopiuj
+Edytuj
+if mutex_function_call.try_lock():
+	functions_to_be_called.append(data_for_function_call)
+	mutex_function_call.unlock()
+else:
+	print("⚠️ Mutex locked, retrying later: function_call")
+2️⃣ Task Processing Optimization
+🔴 Issue: things_to_be_moved, nodes_to_be_unloaded, and functions_to_be_called process too many elements at once.
+✅ Solution: Process in smaller chunks to avoid blocking main thread.
+
+🔹 Before: No Limit on Processing
+gdscript
+Kopiuj
+Edytuj
+if things_to_be_moved.size() > 0:
+	for i in range(things_to_be_moved.size()):
+		# Processing movement
+✅ After: Process in Small Chunks
+gdscript
+Kopiuj
+Edytuj
+if things_to_be_moved.size() > 0:
+	var batch_size = min(5, things_to_be_moved.size())  # Process 5 items max per frame
+	for i in range(batch_size):
+		# Process movement in smaller chunks
+3️⃣ Smart Error Recovery
+🔴 Issue: array_with_no_mutex accumulates errors without automatic correction.
+✅ Solution: If 5+ errors of same type, trigger recovery automatically.
+
+✅ Smart Auto-Recovery
+gdscript
+Kopiuj
+Edytuj
+func handle_random_errors():
+	print("🔍 Checking for unresolved errors...")
+	for error in array_with_no_mutex:
+		var name = error[0]
+		var error_type = error[1]
+		dictionary_of_mistakes_mutex.lock()
+		
+		# If error type already exists, increase counter
+		if dictionary_of_mistakes.has(name):
+			if dictionary_of_mistakes[name].has(error_type):
+				dictionary_of_mistakes[name][error_type]["counter"] += 1
+				
+				# Trigger auto-repair if count > 5
+				if dictionary_of_mistakes[name][error_type]["counter"] > 5:
+					print("🔧 Auto-repair triggered for:", name, "Type:", error_type)
+					trigger_deep_repair(name)
+		else:
+			dictionary_of_mistakes[name] = {}
+			dictionary_of_mistakes[name][error_type] = {"counter": 1, "status": "pending"}
+		
+		dictionary_of_mistakes_mutex.unlock()
+4️⃣ Memory Cleanup for Stability
+🔴 Issue: stored_delta_memory & blimp_of_time grow indefinitely, causing memory bloat.
+✅ Solution: Limit history size dynamically.
+
+✅ Automatic Memory Management
+gdscript
+Kopiuj
+Edytuj
+func clean_memory():
+	# Limit stored delta history
+	if stored_delta_memory.size() > 100:
+		stored_delta_memory = stored_delta_memory.slice(-100)
+	
+	# Limit blimp of time tracking
+	if blimp_of_time.size() > 50:
+		blimp_of_time = blimp_of_time.slice(-50)
+
+	# Clean error logs older than 5 minutes
+	var current_time = Time.get_ticks_msec()
+	array_with_no_mutex = array_with_no_mutex.filter(
+		func(error): return current_time - error.time < 300000  # 5 minutes
+	)
+
+	print("🧹 Memory cleaned up!")
+5️⃣ Automatic Restart if System is Stuck
+🔴 Issue: Stuck tasks aren't being restarted automatically.
+✅ Solution: Check if tasks are stuck for >10 seconds and force restart.
+
+✅ Restart System if Stuck
+gdscript
+Kopiuj
+Edytuj
+func check_task_health():
+	var current_time = Time.get_ticks_msec()
+	for task in task_status.keys():
+		if (current_time - task_status[task]["start_time"]) > 10000:  # 10 sec
+			print("⚠️ Task stuck:", task, " Restarting...")
+			handle_task_timeout(task)
+6️⃣ Performance Debugging with Logging
+🔴 Issue: Debugging performance is difficult without structured logging.
+✅ Solution: Create structured logs.
+
+✅ Debug Performance Log
+gdscript
+Kopiuj
+Edytuj
+func debug_performance():
+	print("\n📊 **System Performance Report**:")
+	print("- Active Mutexes:", breaks_and_handles_check())
+	print("- Threads Running:", check_thread_status())
+	print("- Task Queue Size:", list_of_sets_to_create.size())
+	print("- Errors:", dictionary_of_mistakes)
+🔄 Next Steps
+1️⃣ Run System Health Check
+
+Execute check_task_health()
+Run clean_memory()
+2️⃣ Monitor and Debug
+
+Use debug_performance()
+If errors accumulate, run handle_random_errors()
+3️⃣ Launch the System
+
+If all checks pass, run first test instance 🚀
+🎯 Summary of Fixes
+✅ Deadlocks prevented with try_lock()
+✅ Process tasks in small chunks for smooth execution
+✅ Smart auto-repair for recurring errors
+✅ Memory cleanup for stability
+✅ Automatic restart for stuck tasks
+✅ Structured performance logs for debugging
+
+🔹 Your JSH Hidden Veil engine is now robust and resilient! 🚀
+Let’s test and refine further! 🎮

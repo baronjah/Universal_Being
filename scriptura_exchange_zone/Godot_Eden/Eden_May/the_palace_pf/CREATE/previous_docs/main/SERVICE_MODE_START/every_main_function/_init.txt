@@ -1,0 +1,43 @@
+func _init():
+	# 5 function, and one class used not from godot
+	print("\n🌱 [INIT] Starting initialization...\n")
+	print(" main.gd print tree pretty init ")
+	print_tree_pretty()
+	print(" main.gd print tree pretty should end here")
+
+	check_status_just_timer()
+
+# first split = check_status_just_timer()
+
+	# Add core systems before starting anything else
+	timer_system = GodotTimersSystem.new()
+
+# something used = var timer_system: GodotTimersSystem
+# it is global variant
+# it is a class file
+
+
+	add_child(timer_system)
+# just adding a global variant, by using "new()" something in class
+	_setup_retry_timer()
+
+# another split = _setup_retry_timer()
+
+	# Akashic Records must be prepared before the scene tree
+	check_status_just_timer()
+
+# another split = check_status_just_timer()
+
+	prepare_akashic_records_init()
+
+# another split = prepare_akashic_records_init()
+
+	# Emit main node initialization signal
+	emit_signal("main_node_signal", "main_init")
+	
+	# Setup system checks for debugging
+	setup_system_checks()
+
+# another split = setup_system_checks()
+
+	print("\n✅ [INIT] Initialization complete. Waiting for _ready()...\n")

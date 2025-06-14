@@ -1,0 +1,23 @@
+func some_leftover_data():
+	print(" just data")
+	
+	
+	
+	# check if container node is there
+	
+	# check if datapoint node is there
+	
+	
+	
+	# check datapoint dictionary of things with metadata
+	
+	# if we dont have it here, lets try to find it in datapoint
+	
+	# if the datapoint node is there
+	
+	# lets also check three ints of truth
+	
+	# probably the mutexes are needed for that in datapoint
+	
+	# check_state_of_dictionary_and_three_ints_of_doom()
+	# return dictionary, vec3i(0, 0, 0)

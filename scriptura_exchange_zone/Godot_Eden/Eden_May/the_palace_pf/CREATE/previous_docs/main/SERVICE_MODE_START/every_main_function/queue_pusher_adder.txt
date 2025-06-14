@@ -1,0 +1,30 @@
+func queue_pusher_adder(task):
+	#print("taskkk tag : ",task.tag, " taskkk target instance :  ", task.target_instance, " taskkk result : ", task.result, " taskkk target method : ", task.target_method, " target argument : " , task.target_argument)
+	mutex_singular_l_u.lock()
+	var method_task = task.target_method
+	
+	var completion_time = Time.get_ticks_msec()
+	var task_id = str(task.tag)
+	var target_argument = task.target_argument
+
+	if task_status.has(task_id):
+		var duration = completion_time - task_status[task_id]["start_time"]
+		if duration > 1000: # 1 second timeout
+			handle_task_timeout(task_id)
+	
+	print(" taskkkkk : ", method_task)
+	
+	# Process task
+	match method_task:
+		"three_stages_of_creation":
+			handle_creation_task(target_argument)
+			mutex_for_trickery.lock()
+			menace_tricker_checker = 1
+			mutex_for_trickery.unlock()
+		"unload_container":
+			handle_unload_task(target_argument)
+			mutex_for_trickery.lock()
+			menace_tricker_checker = 1
+			mutex_for_trickery.unlock()
+		"the_finisher_for_nodes":
+			print(" this means, the node is being finished to be whip out baby ")

@@ -1,0 +1,142 @@
+#
+# JSH Scene Tree Add Nodes, Physical and Astral Bodies
+#
+#      oooo  .oooooo..o ooooo   ooooo      ┏┓         ┏┳┓        ┏┓ ┓ ┓  ┳┓   ┓     
+#      `888 d8P'    `Y8 `888'   `888'      ┗┓┏┏┓┏┓┏┓   ┃ ┏┓┏┓┏┓  ┣┫┏┫┏┫  ┃┃┏┓┏┫┏┓┏   
+#       888 Y88bo.       888     888       ┗┛┗┗ ┛┗┗    ┻ ┛ ┗ ┗   ┛┗┗┻┗┻  ┛┗┗┛┗┻┗ ┛   
+#       888  `"Y8888o.   888ooooo888      ┏┓┓    •   ┓       ┓  ┏┓      ┓  ┳┓   ┓•  
+#       888      `"Y88b  888     888      ┃┃┣┓┓┏┏┓┏┏┓┃  ┏┓┏┓┏┫  ┣┫┏╋┏┓┏┓┃  ┣┫┏┓┏┫┓┏┓┏
+#       888 oo     .d8P  888     888      ┣┛┛┗┗┫┛┗┗┗┻┗  ┗┻┛┗┗┻  ┛┗┛┗┛ ┗┻┗  ┻┛┗┛┗┻┗┗ ┛
+#   .o. 88P 8""88888P'  o888o   o888o          ┛                        
+#   `Y888P                            
+#
+# JSH Scene Tree Add Nodes, Physical and Astral Bodies, also Sprit bodies ;)
+#
+
+# the node creation part! here we are putting nodes, wait a minute, we done it in buttons too? are we retarded or somethin?
+func node_creation(node_name, crafted_data, coords, to_rotate, group_number, node_type, path_of_thing):
+	crafted_data.add_to_group(group_number)
+	var pos_parts = coords
+	var position_ = Vector3(float(pos_parts[0]), float(pos_parts[1]), float(pos_parts[2]))
+	crafted_data.position = position_
+	
+	# Set rotation
+	var rot_parts = to_rotate
+	var rotation_euler = Vector3(float(rot_parts[0]), float(rot_parts[1]), float(rot_parts[2]))
+	crafted_data.rotation_degrees = rotation_euler
+	# Set name if provided
+	if node_name != "":
+		crafted_data.name = node_name
+		
+	tasked_children(crafted_data, path_of_thing)
+	
+	match node_type:
+		"flat_shape", "model", "cursor", "screen", "circle", "button" :
+			add_collision_to_thing(crafted_data, node_type, path_of_thing, node_name)
+		_:
+			pass
+	
+	return crafted_data
+
+
+# here we add collision shapes to things
+func add_collision_to_thing(thing_node, node_type, path_of_thingy, name_of_thingy):
+	# First add the regular flat collision
+	
+	# static_body
+	var static_body_name = "collision_" + name_of_thingy 
+	var static_body_path = path_of_thingy + "/" + static_body_name
+	
+	var static_body = StaticBody3D.new()
+	static_body.name = static_body_name
+	
+	# collision_shape
+	var shape_name = "shape_" + name_of_thingy 
+	var collision_shape_path = static_body_path + "/"  + shape_name
+	
+	var collision_shape = CollisionShape3D.new()
+	collision_shape.name = shape_name
+	
+	# area
+	var area_name = "aura_" + name_of_thingy 
+	var area_node_path = path_of_thingy + "/" + area_name
+	
+	var area = Area3D.new()
+	area.name = area_name
+	
+	# area_collision_shape it trully is aura!
+	var collision_area = "collision_aura_" + name_of_thingy
+	var collision_area_path = area_node_path + "/" + collision_area
+	
+	var area_collision_shape = CollisionShape3D.new()
+	area_collision_shape.name = collision_area
+
+	# Get mesh data to determine shape size
+	var mesh_instance = thing_node as MeshInstance3D
+	if mesh_instance and mesh_instance.mesh:
+		var aabb = mesh_instance.mesh.get_aabb()
+		
+		match node_type:
+			"flat_shape", "model", "button", "cursor", "screen", "circle":
+				# Create flat collision shape for StaticBody
+				var flat_shape = ConvexPolygonShape3D.new()
+				var vertices = mesh_instance.mesh.get_faces()
+				flat_shape.points = vertices
+				collision_shape.shape = flat_shape
+				
+				# Create larger shape for Area3D
+				var area_shape = ConvexPolygonShape3D.new()
+				var expanded_vertices = PackedVector3Array()
+				
+				# Create expanded version of vertices for area
+				var expansion_distance = 0.2  # Distance to expand in all directions
+				# Expand in all directions by adding vertices offset in +/- x, y, z
+				for vert in vertices:
+					# Positive directions
+					expanded_vertices.push_back(vert + Vector3(expansion_distance, expansion_distance, expansion_distance))
+					expanded_vertices.push_back(vert + Vector3(expansion_distance, expansion_distance, -expansion_distance))
+					expanded_vertices.push_back(vert + Vector3(expansion_distance, -expansion_distance, expansion_distance))
+					expanded_vertices.push_back(vert + Vector3(-expansion_distance, expansion_distance, expansion_distance))
+					# Negative directions
+					expanded_vertices.push_back(vert + Vector3(-expansion_distance, -expansion_distance, -expansion_distance))
+					expanded_vertices.push_back(vert + Vector3(-expansion_distance, -expansion_distance, expansion_distance))
+					expanded_vertices.push_back(vert + Vector3(-expansion_distance, expansion_distance, -expansion_distance))
+					expanded_vertices.push_back(vert + Vector3(expansion_distance, -expansion_distance, -expansion_distance))
+				
+				area_shape.points = expanded_vertices
+				area_collision_shape.shape = area_shape
+				
+			"heightmap":
+				# Create flat collision shape for StaticBody
+				var flat_shape = ConvexPolygonShape3D.new()
+				var vertices = mesh_instance.mesh.get_faces()
+				flat_shape.points = vertices
+				collision_shape.shape = flat_shape
+				
+				# Create larger shape for Area3D
+				var area_shape = ConvexPolygonShape3D.new()
+				var expanded_vertices = PackedVector3Array()
+				
+				# Create expanded version of vertices for area
+				var expansion_distance = 0.2  # Distance above and below the surface
+				for vert in vertices:
+					expanded_vertices.push_back(vert + Vector3(0, expansion_distance, 0))
+				for vert in vertices:
+					expanded_vertices.push_back(vert - Vector3(0, expansion_distance, 0))
+				
+				area_shape.points = expanded_vertices
+				area_collision_shape.shape = area_shape
+			_: # Default fallback
+				return
+	
+	# Configure collision properties
+	static_body.collision_layer = 1
+	static_body.collision_mask = 1
+	
+	area.collision_layer = 2  # Using different layer for area detection
+	area.collision_mask = 2   # Adjust these values based on your needs
+
+	tasked_children(static_body, static_body_path)
+	tasked_children(collision_shape, collision_shape_path)
+	tasked_children(area, area_node_path)
+	tasked_children(area_collision_shape, collision_area_path)

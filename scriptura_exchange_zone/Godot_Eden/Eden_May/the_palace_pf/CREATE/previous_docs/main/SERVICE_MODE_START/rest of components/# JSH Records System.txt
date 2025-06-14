@@ -1,0 +1,93 @@
+#
+# JSH Records System
+#
+#      oooo  .oooooo..o ooooo   ooooo 
+#      `888 d8P'    `Y8 `888'   `888' 
+#       888 Y88bo.       888     888     ┳┓        ┓   ┏┓         
+#       888  `"Y8888o.   888ooooo888     ┣┫┏┓┏┏┓┏┓┏┫┏  ┗┓┓┏┏╋┏┓┏┳┓
+#       888      `"Y88b  888     888     ┛┗┗ ┗┗┛┛ ┗┻┛  ┗┛┗┫┛┗┗ ┛┗┗
+#       888 oo     .d8P  888     888                      ┛       
+#   .o. 88P 8""88888P'  o888o   o888o 
+#   `Y888P                            
+#
+# JSH Records System
+#
+
+func container_finder(set_name):
+	
+	#var set_name_check = set_name.find("_")
+	#print(" new_information_0 : ", set_name_check)
+	
+	
+	var wordly_word = set_name + BanksCombiner.data_names_0[0]
+	
+	active_r_s_mut.lock()
+	
+	
+	var container_name_now = "akashic_records"
+	
+	
+	
+	
+	if active_record_sets.has(set_name):
+	
+		if active_record_sets[set_name][wordly_word].has("content") and active_record_sets[set_name][wordly_word]["content"] != []:
+		# it is content = [] so it is still empty
+			active_record_sets[set_name][wordly_word]
+			container_name_now = active_record_sets[set_name][wordly_word]["content"][0][0][6][0]#.duplicate(true)
+		
+		
+	active_r_s_mut.unlock()
+	
+	var container_splitter = container_name_now.split("/")
+	if container_splitter.size() > 1:
+		container_name_now = container_splitter[0]
+	return container_name_now
+
+
+
+func tasked_children(node_to_be_added, node_to_be_added_path):
+	var splitted_path = node_to_be_added_path.split("/")
+	var container_name = splitted_path[0]
+	var node_to_be_added_name = splitted_path[-1]
+	var parent_path = "/".join(splitted_path.slice(0, -1)) 
+
+	if splitted_path.size() == 1:
+		var node_type : int = 0
+		
+		mutex_nodes_to_be_added.lock()
+		nodes_to_be_added.append([node_type, node_to_be_added_name, node_to_be_added])
+		mutex_nodes_to_be_added.unlock()
+		
+	elif splitted_path.size() == 2:
+		var node_type : int = 1
+		
+		mutex_nodes_to_be_added.lock()
+		nodes_to_be_added.append([node_type, parent_path, node_to_be_added_name, node_to_be_added])
+		mutex_nodes_to_be_added.unlock()
+		
+	else:
+		var parent_name = splitted_path[1]
+		var node_type : int = 2
+		
+		mutex_nodes_to_be_added.lock()
+		nodes_to_be_added.append([node_type, parent_path, node_to_be_added_name, node_to_be_added, container_name])
+		mutex_nodes_to_be_added.unlock()
+
+
+func task_to_send_data_to_datapoint(data_for_sending):
+	#await_for_signal()
+	var current_datatype = data_for_sending[0][0]
+	var first_line_t = data_for_sending[0][1]
+	var parsed_lines_t = data_for_sending[0][2]
+	var data_point_node_t = data_for_sending[0][3]
+	
+	match current_datatype:
+		"instructions_analiser":
+			var container_node_t = data_for_sending[0][4]
+			instructions_analiser(first_line_t, parsed_lines_t[0], parsed_lines_t[1], data_point_node_t, container_node_t)
+		"scene_frame_upload":
+			var container_node_t = data_for_sending[0][4]
+			scene_frames_upload_to_datapoint(first_line_t, parsed_lines_t, data_point_node_t, container_node_t)
+		"interactions_upload":
+			interactions_upload_to_datapoint(first_line_t, parsed_lines_t, data_point_node_t)

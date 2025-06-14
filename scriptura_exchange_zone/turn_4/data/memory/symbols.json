@@ -1,0 +1,77 @@
+{
+  "created": "2025-05-11T19:23:46+02:00",
+  "dimension": 4,
+  "symbols": [
+    {
+      "symbol": "JSH",
+      "meaning": "Core identity symbol",
+      "power": 75,
+      "timeContexts": ["past", "present", "future"],
+      "associatedWords": ["identity", "core", "self", "consciousness"]
+    },
+    {
+      "symbol": "⌛",
+      "meaning": "Temporal flow",
+      "power": 65,
+      "timeContexts": ["past", "present", "future"],
+      "associatedWords": ["time", "flow", "chronos", "temporal"]
+    },
+    {
+      "symbol": "∞",
+      "meaning": "Infinite possibilities",
+      "power": 60,
+      "timeContexts": ["future"],
+      "associatedWords": ["infinite", "endless", "possibility", "potential"]
+    },
+    {
+      "symbol": "⚡",
+      "meaning": "Speed and acceleration",
+      "power": 55,
+      "timeContexts": ["present"],
+      "associatedWords": ["speed", "fast", "acceleration", "energy"]
+    },
+    {
+      "symbol": "🔄",
+      "meaning": "Change and difference",
+      "power": 50,
+      "timeContexts": ["past", "present"],
+      "associatedWords": ["change", "difference", "transformation", "evolution"]
+    },
+    {
+      "symbol": "🧠",
+      "meaning": "Consciousness and awareness",
+      "power": 70,
+      "timeContexts": ["present"],
+      "associatedWords": ["consciousness", "awareness", "mind", "thought"]
+    },
+    {
+      "symbol": "🔑",
+      "meaning": "Access and trust",
+      "power": 45,
+      "timeContexts": ["present", "future"],
+      "associatedWords": ["trust", "access", "key", "unlock"]
+    },
+    {
+      "symbol": "📊",
+      "meaning": "Data and knowledge",
+      "power": 40,
+      "timeContexts": ["past", "present", "future"],
+      "associatedWords": ["data", "knowledge", "information", "analysis"]
+    }
+  ],
+  "consoles": [
+    {
+      "name": "Core 1",
+      "symbols": ["JSH", "⌛", "🧠"],
+      "type": "primary",
+      "api": "claude"
+    },
+    {
+      "name": "Core 0",
+      "symbols": ["JSH", "∞", "⚡"],
+      "type": "secondary",
+      "api": "openai"
+    }
+  ],
+  "active": true
+}

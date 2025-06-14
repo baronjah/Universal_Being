@@ -1,0 +1,628 @@
+#
+# JSH Memories Transcription
+#
+#      oooo  .oooooo..o ooooo   ooooo 
+#      `888 d8P'    `Y8 `888'   `888' 
+#       888 Y88bo.       888     888     ┳┳┓         •     ┏┳┓          •   •      ┏┓         
+#       888  `"Y8888o.   888ooooo888     ┃┃┃┏┓┏┳┓┏┓┏┓┓┏┓┏   ┃ ┏┓┏┓┏┓┏┏┏┓┓┏┓╋┓┏┓┏┓  ┗┓┓┏┏╋┏┓┏┳┓
+#       888      `"Y88b  888     888     ┛ ┗┗ ┛┗┗┗┛┛ ┗┗ ┛   ┻ ┛ ┗┻┛┗┛┗┛ ┗┣┛┗┗┗┛┛┗  ┗┛┗┫┛┗┗ ┛┗┗
+#       888 oo     .d8P  888     888                                     ┛            ┛       
+#   .o. 88P 8""88888P'  o888o   o888o 
+#   `Y888P                            
+#
+# JSH Memories Transcription
+#
+
+func recreator(number_to_add, data_to_process, data_set_name, new_name_for_set):
+	
+	var initial_number_to_add : int = int(number_to_add)
+	print(" recreator whats wrong")
+	print(" new_name_for_set : " , new_name_for_set)
+	var processed_data : Dictionary
+	var data_to_work_on = data_to_process.duplicate(true)
+	var container_path = data_set_name + "_container/thing_"
+	var patterns = ["thing_" , container_path ]
+	var number_we_wanna_add : int
+	var container_name_to_free
+	var data_type_name_combined_first = data_set_name + "_" + BanksCombiner.data_names_0[0]
+	var tasks_to_be_done : int = 0
+	var datapoint_name
+	var datapoint_container_name
+	
+	for container_to_find in data_to_work_on[data_type_name_combined_first]["content"]:
+		if container_to_find[0][3][0] == "container":
+			container_name_to_free = container_to_find[0][0][0]
+			container_to_find.clear()
+			break
+	
+	data_to_work_on[data_type_name_combined_first]["content"].erase([])
+
+	for data_types in BanksCombiner.data_names_0:
+		var data_type_name_combined = data_set_name + "_" + data_types
+		
+
+		
+		
+		print(data_set_name + "_" + data_types)
+		for data_to_be_parsed_1 in data_to_work_on[data_type_name_combined]: 
+			if data_to_be_parsed_1 == "header":
+				if BanksCombiner.data_names_0[0] == data_types:
+					number_we_wanna_add = data_to_work_on[data_type_name_combined][data_to_be_parsed_1].size()
+					var counter_for_header_strings : int = 0
+					for container_name_to_find in data_to_work_on[data_type_name_combined][data_to_be_parsed_1]:
+						if container_name_to_find == container_name_to_free:
+							container_name_to_find = ""
+							data_to_work_on[data_type_name_combined][data_to_be_parsed_1][counter_for_header_strings] = ""
+							data_to_work_on[data_type_name_combined][data_to_be_parsed_1].erase("")
+							counter_for_header_strings +=1
+							break
+			var counter_new_0 : int = 0
+			for data_to_be_parsed_2 in data_to_work_on[data_type_name_combined][data_to_be_parsed_1]:
+				if data_to_be_parsed_2 is String:
+					
+					
+
+					
+					for pattern in patterns:
+						if data_to_be_parsed_2.begins_with(pattern):
+							var string_to_change = data_to_be_parsed_2.split("_")
+							var size_of_array = string_to_change.size() -1
+							string_to_change[size_of_array] = str(int(string_to_change[size_of_array]) + number_we_wanna_add)
+							string_to_change = "_".join(string_to_change)
+							data_to_work_on[data_type_name_combined][data_to_be_parsed_1][counter_new_0] = string_to_change
+				if data_to_be_parsed_2 is Array:
+					print(" recreator data_types : " , data_types)
+					
+					
+					if data_types == "instructions":
+						print(" recreator_check : 0 : ", data_to_be_parsed_2[0][1][0])
+						print(" recreator_check : 0 : ", data_to_be_parsed_2[2][0][0])
+						if data_to_be_parsed_2[0][1][0] == "set_the_scene":
+							print(" recreator_check : 0 :  we found that set the scene " , number_to_add , " for   " , new_name_for_set)
+							data_to_be_parsed_2[2][0][0][0] = str(number_to_add)
+							#break
+					
+					if initial_number_to_add == 1:
+						if data_types == "scenes":
+							print(" recreator_check : 10 : ", data_to_be_parsed_2[0][0], " and number_to_add : " , number_to_add)
+							print(" recreator_check : 11 : ", data_to_be_parsed_2)
+							var scene_number = data_to_be_parsed_2[0][0][0].substr(6, data_to_be_parsed_2[0][0][0].length()) #scene)
+							print(" recreator_check : 12 : ", scene_number)
+							number_to_add = scene_number
+							print(" recreator_check : 14 number_to_add " , number_to_add)
+						if data_types == "interactions":
+							number_to_add = initial_number_to_add
+							print(" recreator_check : 15 number_to_add " , number_to_add)
+					else:
+						break
+							
+						#break
+						
+
+						
+					
+					print(" recreator data_types : continuation : " , data_types)
+					
+					if data_to_be_parsed_2.size() > 1:
+						var counter_new_1 : int = 0
+						var counter_helper : int = 0
+						for data_to_be_parsed_3 in data_to_be_parsed_2:
+							if data_to_be_parsed_3 is String:
+								
+								
+								#if data_types == "instructions":
+									#print(" recreator_check : 0 1 instructions part , ", number_to_add)
+								
+								
+								
+									
+									
+									#print(" recreator_check : 0  2 : " , data_to_work_on[data_type_name_combined]["content"][0])
+								
+								
+								
+								for pattern in patterns:
+									if data_to_be_parsed_3.begins_with(pattern):
+										var string_to_change = data_to_be_parsed_3.split("_")
+										var size_of_array = string_to_change.size() -1
+										string_to_change[size_of_array] = str(int(string_to_change[size_of_array]) + number_we_wanna_add)
+										string_to_change = "_".join(string_to_change)
+										data_to_be_parsed_3 = string_to_change
+										counter_helper +=1
+							if data_to_be_parsed_3 is Array:
+								
+
+								
+								if data_to_be_parsed_3.size() > 1:
+									var counter_new_2 : int = 0
+									for data_to_be_parsed_4 in data_to_be_parsed_3:
+										if data_to_be_parsed_4[0] is String:
+											for pattern in patterns:
+												if data_to_be_parsed_4[0].begins_with(pattern):
+													var string_to_change = data_to_be_parsed_4[0].split("_")
+													var size_of_array = string_to_change.size() -1
+													string_to_change[size_of_array] = str(int(string_to_change[size_of_array]) + number_we_wanna_add)
+													string_to_change = "_".join(string_to_change)
+													data_to_be_parsed_4[0] = string_to_change
+										counter_new_2 +=1
+							counter_new_1 +=1
+				counter_new_0 +=1
+
+
+	for container_to_find in data_to_work_on[data_type_name_combined_first]["content"]:
+		if container_to_find[0][3][0] == "datapoint":
+			datapoint_name = container_to_find[0][0][0] # datapoint_name datapoint_container_name
+			datapoint_container_name = container_to_find[0][5][0]
+			break
+
+# 
+	for data_types in BanksCombiner.data_names_0:
+		var data_type_name_combined = data_set_name + "_" + data_types
+		var data_type_name_combined_new = new_name_for_set + data_types
+		print(data_set_name + "_" + data_types)
+		for data_to_be_parsed_1 in data_to_work_on[data_type_name_combined]: 
+			processed_data[data_type_name_combined_new] = data_to_work_on[data_type_name_combined].duplicate(true)
+	
+	processed_data["metadata"] = {
+				"timestamp": Time.get_ticks_msec(),
+				"datapoint_name": datapoint_name,
+				"datapoint_container_name": datapoint_container_name
+			} # # datapoint_name datapoint_container_name
+	
+	print(" recreator : ", processed_data)
+	return processed_data
+
+
+
+
+
+# the functions of the past, that works, and i can use it if! i would need them :)
+# finding highest number, in an array of ints
+func find_highest_in_array(numbers: Array) -> int:
+	return numbers.max()
+
+
+
+func load_record_set(records_part: String, record_type: String, type_of_data : int, records : Dictionary) -> void:
+	print(" load records set")
+	# dataSetLimits and data_sets_names in BanksCombiner
+	var max_nunmber_of_thingy = BanksCombiner.dataSetLimits[records_part]
+	
+	var current_record_type = record_type.split("_")
+	var current_r_t_l = current_record_type.size() - 1
+	var current_r_t_f = current_record_type[current_r_t_l]
+	
+	var amounts_of_that_record
+	var current_int_number : int = -1
+	
+	if BanksCombiner.data_names_2_numbers.has(current_r_t_f):
+		#print(" the number of record type : in int : ", BanksCombiner.data_names_2_numbers[current_r_t_f])
+		#current_int_number
+		current_int_number = BanksCombiner.data_names_2_numbers[current_r_t_f]
+		
+		#current_int_number +=6
+		#print(" the number of record type : in int : " , current_int_number)
+	
+	var current_number_of_that_set : int = 0
+	
+	active_r_s_mut.lock()
+	if !active_record_sets.has(records_part): # added that ! xD
+		current_number_of_that_set = 1
+	active_r_s_mut.unlock()
+	
+	var list_of_reliquaries : Array = [] # list of sacred relics—each one unique
+	var codices : Array = [] # Ancient manuscripts that hold wisdom
+	var current_record_line : Array = []
+	
+	
+	for current_record_to_process in records:
+		print(" do we even get there 02 ", current_record_to_process, " is that : ", current_r_t_f )#, " current_record_to_process :" ,records[current_record_to_process] )
+
+		
+		
+		var another_array_damn : Array = []
+		var string_splitter
+		for current_part in records[current_record_to_process]:
+			string_splitter = current_part[0].split("|")
+			var string_to_be_splitted
+			var tomes_of_knowledge : Array = []
+			for stringy_string in string_splitter:
+				string_to_be_splitted = stringy_string.split(",")
+				tomes_of_knowledge.append(string_to_be_splitted)
+			current_record_line.append(string_splitter[0])
+			another_array_damn.append(tomes_of_knowledge)
+		
+		match current_int_number:
+			0:
+				#print(" the numbers thingy dilema records ", list_of_reliquaries.size())
+				continue
+				
+			1:
+				if max_nunmber_of_thingy > 1:
+					print(" dubi dabi kurwa")
+				#print(" instructions ")
+				#print(" do we even get there 03 instructions ", another_array_damn," and that thingy : " , current_record_line)
+				#print(" do we even get there 04 ", another_array_damn[0][1][0])
+				#if another_array_damn[0][1][0] is String:
+					#print(" do we even get there 05 it is a string")
+					#match another_array_damn[0][1][0]:
+						#"set_the_scene":
+							#print(" do we even get there 06 set the scene ", another_array_damn[2][0][0])
+							#
+							#active_r_s_mut.lock()
+							#if active_record_sets.has(records_part):
+								#if active_record_sets[records_part].has("metadata"):
+									#print(" do we even get there 06")
+									## all turns well somehow, we got it
+									#if active_record_sets[records_part]["metadata"].has("record_data"):
+										#active_record_sets[records_part]["metadata"]["record_data"] = {
+											#"scene_to_set" = another_array_damn[2][0][0]
+											#
+										#}
+									#
+									#
+								#else:
+									#print(" do we even get there 07 we got problem 1")
+									## does not have metadata yet
+							#else:
+								#print(" do we even get there 08 we got problem 0")
+								## does not have that record set yet
+							#
+							#
+				continue
+			2:
+				#print(" do we even get there 03 scnes ", another_array_damn, current_record_line)
+				#print()
+				#print(" do we even get there 04 ")
+				# i wanna whip out scene number main
+				continue
+			3:
+				#print(" interactions ")
+				continue
+		
+		
+		
+		codices.append(another_array_damn)
+		list_of_reliquaries.append(current_record_line[0])
+		current_record_line.clear()
+		
+	var string_header : String = "header"
+	var string_content : String = "content"
+	var string_informational : String = ""
+	var records_processed : Dictionary = {} #{list_of_reliquaries, codices}
+	records_processed[string_header] =  list_of_reliquaries
+	records_processed[string_content] = codices
+	
+	
+	active_r_s_mut.lock()
+	
+	match current_int_number:
+		0:
+			print(" the numbers thingy dilema records ", list_of_reliquaries.size())
+			if active_record_sets.has(records_part):
+				if active_record_sets[records_part].has("metadata"):
+					if active_record_sets[records_part]["metadata"].has("record_data"):
+						active_record_sets[records_part]["metadata"]["record_data"]
+						print()
+			pass
+	
+	if active_record_sets.has(records_part):# and active_record_sets.has(record_type):
+		if active_record_sets[records_part].has(record_type):
+			active_r_s_mut.unlock()
+			print(" do we even get there 0 ")
+			return
+	active_r_s_mut.unlock()
+	
+	
+	active_r_s_mut.lock()
+	#if active_record_sets[records_part].has("metadata"):
+	#	print(" do we even get there 06")
+	
+	
+	if not active_record_sets.has(records_part):
+		active_record_sets[records_part] = {
+			"metadata": {
+				"timestamp": Time.get_ticks_msec(),
+				"container_count": current_number_of_that_set,
+				"max_containers": max_nunmber_of_thingy
+			}
+		}
+		print(" do we even get there 01 ", active_record_sets[records_part]["metadata"])
+	active_r_s_mut.unlock()
+	
+	
+	active_r_s_mut.lock()
+	if records.size() > 0:
+		active_record_sets[records_part][record_type] = records_processed
+		#current_record_set = record_type
+	active_r_s_mut.unlock()
+
+
+# the splitter function? just an easy way, to like, do something, between created memory dictionary, and where we analise what we have and what we wanna do with it
+# now it just do json copy without really doing too much
+func read_records_data(record_set : Dictionary, records_set_name):
+	print(" active records set fiasco ? read records data")
+
+
+func process_active_records_for_tree(active_records: Dictionary, set_name_to_process : String, container_name_here : String):
+	var records_set_name = set_name_to_process + "records"
+	
+	active_r_s_mut.lock()
+	for record in active_records[set_name_to_process][records_set_name]["content"]:
+		
+		var node_data = record[0]
+		var node_name = node_data[0][0]
+		var node_path_p_a_r_f_t = node_data[6][0]
+		var node_type = node_data[3][0]
+		var godot_type = match_node_type(node_type)
+		
+		if node_type != "container" and node_type != "datapoint":
+			array_counting_mutex.lock()
+			if !array_for_counting_finish[container_name_here].has("metadata"):
+				var counter_before : int = 0
+				var counter_after : int = 0
+				var inty_bolean : int = 0
+				
+				array_for_counting_finish[container_name_here]["metadata"] = {
+					"counter_before" = counter_before,
+					"counter_after" = counter_after,
+					"process_to_send" = inty_bolean
+				}
+				array_counting_mutex.unlock()
+				
+			else:
+				array_counting_mutex.unlock()
+				
+				
+			array_counting_mutex.lock()
+			if !array_for_counting_finish[container_name_here].has(node_name):
+				
+				array_for_counting_finish[container_name_here][node_name] = {
+					"node" = [],
+					"type" = node_type,
+					"g_type" = godot_type
+				}
+				array_counting_mutex.unlock()
+				
+			else:
+				array_counting_mutex.unlock()
+
+		array_counting_mutex.lock()
+		if !array_for_counting_finish[container_name_here].has("metadata"):
+			
+			var counter_before : int = 0
+			var counter_after : int = 0
+			var inty_bolean : int = 0
+			
+			array_for_counting_finish[container_name_here]["metadata"] = {
+				"counter_before" = counter_before,
+				"counter_after" = counter_after,
+				"process_to_send" = inty_bolean
+			}
+			array_counting_mutex.unlock()
+		else:
+			array_counting_mutex.unlock()
+			
+			
+		if node_type == "datapoint":
+			
+			array_counting_mutex.lock()
+			array_for_counting_finish[container_name_here]["metadata"]["datapoint_path"] = node_path_p_a_r_f_t
+			array_for_counting_finish[container_name_here]["metadata"]["datapoint_name"] = node_name
+			array_counting_mutex.unlock()
+			
+		if node_type == "container":
+			
+			array_counting_mutex.lock()
+			array_for_counting_finish[container_name_here]["metadata"]["container_path"] = node_path_p_a_r_f_t
+			array_for_counting_finish[container_name_here]["metadata"]["container_name"] = node_name
+			array_counting_mutex.unlock()
+			
+		var new_type_thingy = godot_type + "|" + node_type
+		the_pretender_printer(node_name, node_path_p_a_r_f_t, new_type_thingy, node_type)
+		
+		array_counting_mutex.lock()
+		array_for_counting_finish[container_name_here]["metadata"]["counter_before"] +=1
+		array_counting_mutex.unlock()
+		
+				# Add collision nodes based on type
+		if node_type in ["flat_shape", "model", "cursor", "screen", "circle"]:
+			
+			array_counting_mutex.lock()
+			array_for_counting_finish[container_name_here]["metadata"]["counter_before"] +=4
+			array_counting_mutex.unlock()
+			
+			# Static body and shape
+			var static_body_name = "collision_" + node_name
+			var static_body_path = node_path_p_a_r_f_t + "/" + static_body_name
+			the_pretender_printer(static_body_name, static_body_path, "StaticBody3D", "collision")
+			
+			var shape_name = "shape_" + node_name
+			var shape_path = static_body_path + "/" + shape_name
+			the_pretender_printer(shape_name, shape_path, "CollisionShape3D", "collision")
+
+			# Area and its shape
+			var area_name = "aura_" + node_name
+			var area_path = node_path_p_a_r_f_t + "/" + area_name
+			the_pretender_printer(area_name, area_path, "Area3D", "area")
+
+			var area_shape_name = "collision_aura_" + node_name
+			var area_shape_path = area_path + "/" + area_shape_name
+			the_pretender_printer(area_shape_name, area_shape_path, "CollisionShape3D", "collision")
+
+		# Special handling for buttons
+		elif node_type == "button":
+			
+			array_counting_mutex.lock()
+			array_for_counting_finish[container_name_here]["metadata"]["counter_before"] +=6
+			array_counting_mutex.unlock()
+			
+			var text_name = "text_" + node_name
+			var text_path = node_path_p_a_r_f_t + "/" + text_name
+			the_pretender_printer(text_name, text_path, "Label3D", "text")
+			
+			var shape_name = "shape_" + node_name
+			var shape_path = node_path_p_a_r_f_t + "/" + shape_name
+			the_pretender_printer(shape_name, shape_path, "MeshInstance3D", "button")
+
+			# Collision for shape
+			var collision_shape_name = "collision_" + shape_name
+			var collision_shape_path = shape_path + "/" + collision_shape_name
+			the_pretender_printer(collision_shape_name, collision_shape_path, "StaticBody3D", "collision")
+
+			var shape_collision_name = "shape_" + shape_name
+			var shape_collision_path = collision_shape_path + "/" + shape_collision_name
+			the_pretender_printer(shape_collision_name, shape_collision_path, "CollisionShape3D", "collision")
+
+			# Area for shape
+			var area_name = "aura_" + shape_name
+			var area_path = shape_path + "/" + area_name
+			the_pretender_printer(area_name, area_path, "Area3D", "area")
+
+			var area_collision_name = "collision_aura_" + shape_name
+			var area_collision_path = area_path + "/" + area_collision_name
+			the_pretender_printer(area_collision_name, area_collision_path, "CollisionShape3D", "collision")
+	#print(" process active record for tree dilema finish")
+	active_r_s_mut.unlock()
+
+func match_node_type(type: String) -> String:
+	match type:
+		"flat_shape", "model", "cursor", "screen", "circle":
+			return "MeshInstance3D"
+		"text":
+			return "Label3D"
+		"button":
+			return "Node3D" 
+		"connection":
+			return "MeshInstance3D"
+		"text_mesh":
+			return "MeshInstance3D"
+		"datapoint":
+			return "Node3D"
+		"container":
+			return "Node3D"
+		_:
+			return "Node3D"
+
+# here we make deep copy dictionary of json
+func deep_copy_dictionary(original: Dictionary) -> Dictionary:
+	# First, convert to JSON string (this breaks all references)
+	var json_string = JSON.stringify(original)
+	# Then parse back to dictionary (creates entirely new data structure)
+	var parsed = JSON.parse_string(json_string)
+	return parsed
+
+
+# here we are unloading sets to cache, adding stamp of time so 4d is here already
+# we also check the size, check if we can even cache it or we need to clean previous data
+# current limit is like 50 mb
+func unload_record_set(records_sets_name : String, record_type: String) -> void:
+	records_sets_name = records_sets_name + "_"
+	
+	active_r_s_mut.lock()
+	if active_record_sets.has(records_sets_name):
+		if active_record_sets[records_sets_name].has(record_type):
+			var data = active_record_sets[records_sets_name][record_type]
+			var meta_data = active_record_sets[records_sets_name]["metadata"]
+			active_r_s_mut.unlock()
+			
+			cache_data(records_sets_name, record_type, data, meta_data)
+			
+			active_r_s_mut.lock()
+			active_record_sets[records_sets_name].erase(record_type)
+			active_r_s_mut.unlock()
+			
+		else:
+			active_r_s_mut.unlock()
+	else:
+		active_r_s_mut.unlock()
+
+
+# here we actually cache that data
+func cache_data(records_sets_name: String, record_type: String, data, meta_data) -> void:
+	var current_cache_size = get_cache_total_size()
+	var new_data_size = get_dictionary_memory_size(data)
+	var max_size_bytes = max_cache_size_mb * 1024 * 1024
+	if current_cache_size + new_data_size > max_size_bytes:
+		clean_oldest_dataset()
+	current_cache_size = get_cache_total_size()
+	
+	
+	cached_r_s_mutex.lock()
+	if current_cache_size + new_data_size <= max_size_bytes:
+		if !cached_record_sets.has(records_sets_name):
+			
+			active_r_s_mut.lock()
+			cached_record_sets[records_sets_name] = { # current_cache_size
+				"metadata": active_record_sets[records_sets_name]["metadata"].duplicate(true)
+			}
+			active_r_s_mut.unlock()
+			
+		cached_record_sets[records_sets_name][record_type] = data.duplicate(true)
+		cached_record_sets[records_sets_name]["metadata"][str(record_type)] = {
+			"size": new_data_size,
+			"time_of_cache" : Time.get_ticks_msec()
+		}
+		cache_timestamps[records_sets_name + record_type] = Time.get_ticks_msec()
+
+	else:
+		print("Cache limit reached, cannot store new data")
+	cached_r_s_mutex.unlock()
+	
+# here we are cleaning cache from oldest file
+func clean_oldest_dataset() -> void:
+	var oldest_time = Time.get_ticks_msec()
+	var oldest_set = ""
+	
+	for timestamp_key in cache_timestamps:
+		if cache_timestamps[timestamp_key] < oldest_time:
+			oldest_time = cache_timestamps[timestamp_key]
+			oldest_set = timestamp_key.split("_")[0]
+	
+	if oldest_set != "":
+		#print("Removing oldest dataset: ", oldest_set)
+		cached_r_s_mutex.lock()
+		cached_record_sets.erase(oldest_set + "_")
+		cached_r_s_mutex.unlock()
+		
+		# Clean related timestamps
+		var to_remove = []
+		for timestamp_key in cache_timestamps:
+			if timestamp_key.begins_with(oldest_set):
+				to_remove.append(timestamp_key)
+		
+		for key in to_remove:
+			cache_timestamps.erase(key)
+
+
+# here the size of dictionary is being checked
+func get_dictionary_memory_size(dict: Dictionary) -> int:
+	var serialized = var_to_bytes(dict)
+	return serialized.size()
+
+
+# total size of cached memory ram whatever
+func get_cache_total_size() -> int:
+	var total_size: int = 0
+	
+	
+	cached_r_s_mutex.lock()
+	for records_set in cached_record_sets:
+		for record_type in cached_record_sets[records_set]:
+			var data = cached_record_sets[records_set][record_type]
+			total_size += get_dictionary_memory_size(data)
+	
+	#print("Total cache size in bytes: ", total_size)
+	#print("Total cache size in MB: ", total_size / (1024.0 * 1024.0))
+	cached_r_s_mutex.unlock()
+	return total_size
+
+# never really used, but it is still kinda there i guess, maybe one day i will, like use it for something, right now? threads
+func get_record_type_id(record_type: String) -> int:
+	match record_type:
+		"base":
+			return 0
+		"menu":
+			return 1
+		_:
+			return -1

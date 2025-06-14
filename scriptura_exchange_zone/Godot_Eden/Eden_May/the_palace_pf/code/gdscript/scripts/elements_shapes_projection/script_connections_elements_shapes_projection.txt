@@ -1,0 +1,39 @@
+# FOLDER: elements_shapes_projection
+# DESCRIPTION: Element system for creating and manipulating visual elements that can combine and project
+# DATE ANALYZED: 2025-05-09
+
+## SCRIPT INVENTORY
+--------------------------------------------------------------------------------
+SCRIPT: base_element.gd
+CLASS: None (Base class for elements)
+EXTENDS: Node3D
+CONNECTIONS:
+  - IMPORTS: None
+  - EXPORTS: Used by all element types (fire, water, wood, ash)
+  - CALLS: Internal methods, file operations for archiving
+  - CALLED BY: ElementManager for creation and management
+FUNCTIONALITY: Base class for all elements in the system, providing core functionality for physics, evolution, and visualization.
+INTEGRATION NOTES: Serves as the foundation for the element system, providing base functionality that specific elements can override and extend. Includes methods for archiving to the Akashic Records system.
+--------------------------------------------------------------------------------
+SCRIPT: fire_element.gd
+CLASS: FireElement
+EXTENDS: base_element.gd
+CONNECTIONS:
+  - IMPORTS: None
+  - EXPORTS: Used by ElementManager
+  - CALLS: ElementResourceManager for resource management
+  - CALLED BY: ElementManager for creation, processing physics and behavior
+FUNCTIONALITY: Provides fire-specific behavior including heat, light emission, particle effects, and interaction with flammable materials.
+INTEGRATION NOTES: Implements fire mechanics that can interact with other elements. Can connect to the resource management system for optimized rendering.
+--------------------------------------------------------------------------------
+SCRIPT: element_manager.gd
+CLASS: ElementManager
+EXTENDS: Node3D
+CONNECTIONS:
+  - IMPORTS: ElementResourceManager, various element scripts
+  - EXPORTS: Used by universal system
+  - CALLS: Element methods, ElementResourceManager
+  - CALLED BY: Universal bridge for creation and management
+FUNCTIONALITY: Manages the creation, processing, and lifecycle of all elements. Handles LOD (Level of Detail) optimization, performance monitoring, and resource management.
+INTEGRATION NOTES: Acts as the gateway to the element system. Implements interfaces for scale management to integrate with larger universe systems. Provides methods for manifesting words as element patterns.
+--------------------------------------------------------------------------------

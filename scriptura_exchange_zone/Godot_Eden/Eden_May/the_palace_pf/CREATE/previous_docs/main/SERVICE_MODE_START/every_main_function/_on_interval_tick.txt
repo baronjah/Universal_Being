@@ -1,0 +1,14 @@
+func _on_interval_tick(interval_name: String):
+	match interval_name:
+		"quick":
+			# Very frequent updates (0.1s)
+			print("🕒 Quick tick: ", Time.get_ticks_msec())
+		"short":
+			# Slightly less frequent updates (0.5s)
+			print("⏱️ Short tick: ", Time.get_ticks_msec())
+		"medium":
+			# Standard interval updates (1s)
+			print("⏰ Medium tick: ", Time.get_ticks_msec())
+		"long":
+			# Infrequent updates (10s)
+			print("🕓 Long tick: ", Time.get_ticks_msec())

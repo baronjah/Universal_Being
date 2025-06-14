@@ -1,0 +1,118 @@
+# DataPoint.gd Summary - Lines 1-500
+
+## File Overview
+- Path: res://code/gdscript/scripts/Menu_Keyboard_Console/data_point.gd
+- Primary class: Extends Node3D
+- Represents a data point in the JSH Ethereal Engine system
+
+## Core References (Lines 23-29)
+- Node references:
+  - thread_pool: Autoloaded thread pool manager
+  - task_manager: Task management system
+
+## Variables and Data Structures (Lines 31-109)
+### State Variables
+- main_scene_to_set: Integer (99) for tracking main scene
+- data_point_name: String identifier
+- data_point_number: Integer identifier
+- max_things_number: Maximum things allowed
+- current_things_number: Current count (-1 initially)
+- current_priority: Priority tracking (-1 initially)
+
+### Data Storage
+- datapoint_things_dictionary: Main storage dictionary
+- Scenes_array: Array for scene data
+- Interactions_array: Array for interaction data
+- data_point_information: Array for general information
+- data_point_layer_0: Base layer data
+- data_point_layer_0_data: Base layer content
+
+### Mutexes for Thread Safety
+- things_dictionary: Mutex for datapoint_things_dictionary
+- scenes_mutex: Mutex for Scenes_array
+- interactions_mutex: Mutex for Interactions_array
+- movement_checker_mutex: Mutex for movement_checker
+- mutex_for_three_thingies: Mutex for state integers
+- mutex_for_cursor: Mutex for cursor operations
+- current_text_mutex: Mutex for text editing
+
+### Text and Cursor Handling
+- current_text: String for text content
+- cursor_position: Integer position in text
+- cursor_visible: Boolean for cursor state
+- cursor_model: 3D mesh for cursor
+- char_width: Float for character spacing (0.2)
+- char_width_new: Alternative character width
+- bracket_width: Float for bracket sizing (4.0)
+- bracket_current_text: Array for bracket text
+
+### State Tracking
+- the_scenes_fiasco: Integer for scene state tracking
+- the_new_layers_fiasco: Integer for layer state tracking
+- third_inty_thingy: Third tracking integer
+- scenes_array_size_now: Size tracker for scenes array
+- movement_checker: Movement state tracker
+
+## Terminal System (Lines 146-266)
+### Terminal State Variables
+- terminal_current_command: Current command string
+- terminal_output_text: Output display text
+- terminal_command_history: Command history array
+- terminal_history_position: Position in history (-1 initially)
+- terminal_max_history: Maximum history entries (30)
+- terminal_cursor_visible: Cursor visibility state
+- terminal_cursor_blink_timer: Timing variable
+- terminal_cursor_blink_rate: Blink interval (0.5)
+- terminal_cursor_base_position: 3D position for cursor
+- terminal_variables: Dictionary for terminal variables
+
+### Terminal Commands Dictionary (Lines 162-184)
+Comprehensive command set including:
+- help: Show available commands
+- clear: Clear terminal
+- echo: Display text
+- ls: List objects
+- create/delete: Object management
+- connect: Connect objects
+- show/hide: Container visibility
+- move/rotate: Object transformation
+- load/unload: Scene management
+- find: Search functionality
+- status/mem: System information
+- set/get: Variable operations
+- run: Execute scripts
+- exit: Close terminal
+
+### Terminal Functions (Lines 186-266)
+- setup_terminal(): Initialize terminal system
+- terminal_blink_cursor(): Handle cursor blinking
+- handle_terminal_key_press(): Process keyboard input
+- handle_terminal_backspace(): Handle backspace key
+- update_terminal_display(): Refresh terminal view
+- history_up()/history_down(): Navigate command history
+- execute_command(): Process entered command (incomplete)
+
+## Core Functions (Lines 280-432)
+- _init(): Simple initialization function
+- process_delta_fake(): Debug output function
+- connect_keyboard_to_field(): Set up keyboard connections
+- receive_keyboard_connection(): Handle keyboard connection
+- on_keyboard_ready(): Initialize keyboard when ready
+- set_connection_target(): Configure connections between objects
+- finishied_setting_up_datapoint(): Post-setup initialization
+- check_state_of_dictionary_and_three_ints_of_doom(): State checking
+- new_datapoint_layer_system(): Layer management
+- check_dictionary_from_datapoint(): Thread-safe dictionary access
+- check_if_datapoint_moved_once(): Movement state checking
+
+## File Loading System (Lines 443-478)
+- initialize_loading_file(): Load and process settings/modules files
+- Handles different file types (settings.txt, modules.txt)
+- Processes content into label-friendly format
+
+## Text Management (Lines 492-500)
+- settings_labels_start(): Begins updating text for settings UI
+- Processes the_label_message into displayable format
+- Iterates through dictionary to update UI labels (incomplete)
+
+Reading continues from line 500.

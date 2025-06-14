@@ -1,0 +1,34 @@
+func cache_branch(branch_name, child_name, branch_part):
+	
+	print(" cache branch : ", branch_name, child_name)
+	
+	cached_tree_mutex.lock()
+	
+	if !cached_jsh_tree_branches.has(branch_name):
+		
+		tree_mutex.lock()
+		cached_jsh_tree_branches[branch_name] = {
+			"name" = scene_tree_jsh["main_root"]["branches"][branch_name]["name"],
+			"type" = scene_tree_jsh["main_root"]["branches"][branch_name]["type"],
+			"jsh_type" = scene_tree_jsh["main_root"]["branches"][branch_name]["jsh_type"],
+			"parent" = scene_tree_jsh["main_root"]["branches"][branch_name]["parent"],
+			"status" = "disabled",
+			"node" = null,
+			"metadata" = scene_tree_jsh["main_root"]["branches"][branch_name]["metadata"],
+			"children" = {}
+		}
+		tree_mutex.unlock()
+		
+		
+
+		
+		
+	if cached_jsh_tree_branches.has(branch_name):
+		if !cached_jsh_tree_branches[branch_name]["children"].has(child_name):
+			disable_all_branches(branch_part)
+			
+			tree_mutex.lock()
+			cached_jsh_tree_branches[branch_name]["children"][child_name] = branch_part
+			tree_mutex.unlock()
+	
+	cached_tree_mutex.unlock()

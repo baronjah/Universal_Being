@@ -1,0 +1,174 @@
+# Eden Space Game - Vehicle Systems
+
+## Spaceship System
+
+### Ship Components
+- **Hull**: Base structure and health
+- **Engines**: Propulsion and maneuverability
+- **Weapons**: Combat capabilities
+- **Shields**: Defensive systems
+- **Power Core**: Energy generation
+- **Sensors**: Detection and scanning
+- **Life Support**: Sustains crew/player
+- **Special Systems**: Unique abilities
+
+### Ship Classes
+- **Scout**: Fast, light, exploration-focused
+- **Fighter**: Combat-oriented, agile
+- **Hauler**: Cargo capacity, slower
+- **Science Vessel**: Advanced sensors, research tools
+- **Capital Ship**: Large, powerful, crew capacity
+- **Custom**: Player-designed hybrid crafts
+
+### Ship Construction
+- **Component Attachment**: Modular building system
+- **Structural Integrity**: Weight and balance considerations
+- **Resource Requirements**: Materials needed for parts
+- **Customization**: Colors, markings, style options
+- **Blueprint System**: Save and share designs
+
+### Flight Physics
+- **Space Movement**: Zero-gravity, Newtonian physics
+- **Atmospheric Flight**: Aerodynamics when in atmosphere
+- **Engine Types**: Different propulsion behaviors
+- **Gravity Effects**: Planetary and stellar gravity wells
+- **Inertia**: Mass-based momentum
+
+## Mecha System
+
+### Mecha Components
+- **Frame**: Base structure and movement capability
+- **Limbs**: Articulation and interaction points
+- **Power System**: Energy generation and storage
+- **Armor**: Defensive capabilities
+- **Weapons**: Combat systems
+- **Utility Tools**: Special function equipment
+- **Cockpit**: Pilot interface and life support
+- **Sensors**: Environmental monitoring
+
+### Mecha Types
+- **Humanoid**: Balanced, versatile design
+- **Spider**: Multi-legged, stable on rough terrain
+- **Tank**: Heavy armor, high firepower
+- **Flyer**: Aerial capabilities
+- **Aquatic**: Water-optimized design
+- **Hybrid**: Combination of multiple types
+
+### Mecha Construction
+- **Frame Selection**: Base type determination
+- **Limb Attachment**: Configure articulation points
+- **System Integration**: Power, weapons, tools
+- **Balance Considerations**: Weight distribution
+- **Aesthetic Customization**: Visual appearance
+
+### Movement Mechanics
+- **Walking/Running**: Bipedal/multi-legged locomotion
+- **Jumping**: Vertical movement
+- **Flying**: For aerial units
+- **Swimming**: For aquatic units
+- **Transforming**: Shape-changing abilities
+
+## Integration with Game World
+
+### Space Navigation
+- **Star System Travel**: Between planets and stations
+- **FTL (Faster Than Light)**: Long-distance jumps
+- **Docking**: With stations and larger ships
+- **Landing**: On planetary surfaces
+- **Formation Flying**: Group movement
+
+### Planetary Exploration
+- **Terrain Traversal**: Navigate diverse landscapes
+- **Environmental Hazards**: Extreme conditions
+- **Resource Extraction**: Gathering materials
+- **Construction**: Building bases and outposts
+- **Combat**: Defense against threats
+
+### Multi-Scale Integration
+- **Ship-to-Mecha Transition**: Deploy mechas from ships
+- **Nested Vehicle Systems**: Ships carrying smaller craft
+- **Scale-Appropriate Controls**: Different handling at each scale
+- **Seamless Transitions**: Between vehicle types
+
+## Technical Implementation
+
+### Physics Systems
+- **Space Physics**: Zero-gravity, orbital mechanics
+- **Planetary Physics**: Gravity, atmospheric effects
+- **Collision Detection**: Between vehicles and environment
+- **Damage Model**: Component-based damage system
+- **Articulation System**: For mecha limbs and ship parts
+
+### Control Systems
+- **Direct Control**: Player input to vehicle response
+- **Autopilot**: Automated navigation
+- **Group Commands**: For multiple vehicles
+- **Context-Sensitive Controls**: Change based on situation
+- **Customizable Interface**: Player-defined control layout
+
+### Visual Effects
+- **Engine Effects**: Thrusters, exhaust
+- **Weapon Effects**: Projectiles, impacts
+- **Shield Visualization**: Energy fields
+- **Damage Representation**: Visual degradation
+- **Environmental Interaction**: Dust, water spray, etc.
+
+### Audio Design
+- **Engine Sounds**: Based on type and power
+- **System Noises**: Operational feedback
+- **Environment Interaction**: Surface contact, atmosphere
+- **Weapon Sounds**: Firing and impact
+- **Alert System**: Warning indicators
+
+## Advanced Features
+
+### Upgrades and Progression
+- **Component Improvements**: Better parts over time
+- **New Technologies**: Unlock advanced systems
+- **Skill-Based Bonuses**: Improved performance with experience
+- **Specialization Paths**: Focus on different vehicle aspects
+- **Rare Components**: Special discoveries
+
+### AI and Automation
+- **NPC Vehicles**: Computer-controlled craft
+- **Automated Defenses**: Turrets, drones
+- **Wingmen/Squad**: AI companions
+- **Traffic Systems**: Ambient vehicle movement
+- **Enemy Behavior**: Hostile craft tactics
+
+### Multiplayer Considerations
+- **Multiple Crew Positions**: Different roles on one ship
+- **Fleet Operations**: Coordinated multi-ship actions
+- **Shared Construction**: Collaborative building
+- **Resource Pooling**: Group gathering and allocation
+- **Combat Coordination**: Tactical cooperation
+
+## Example Vehicle Subsystems
+
+### Power Management
+- **Energy Generation**: Different generator types
+- **Power Distribution**: Prioritize systems
+- **Overload Management**: Handle power spikes
+- **Emergency Systems**: Backup power
+- **Efficiency Optimization**: Reduce waste
+
+### Sensor Arrays
+- **Long-Range Scanning**: Detect distant objects
+- **Resource Detection**: Find materials
+- **Tactical Sensors**: Combat information
+- **Scientific Instruments**: Research data
+- **Navigation Systems**: Route planning
+
+### Weapon Systems
+- **Projectile Weapons**: Bullets, missiles
+- **Energy Weapons**: Lasers, plasma
+- **Defensive Systems**: Point defense, chaff
+- **Special Weapons**: Unique effects
+- **Targeting Systems**: Accuracy enhancement
+
+### Cargo and Collection
+- **Storage Capacity**: Space for materials
+- **Automated Gathering**: Resource collection
+- **Sorting Systems**: Organize materials
+- **Processing Units**: Refine raw resources
+- **Crafting Stations**: Create new items

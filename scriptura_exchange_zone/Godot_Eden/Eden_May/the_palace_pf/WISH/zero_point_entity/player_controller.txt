@@ -1,0 +1,233 @@
+class_name PlayerController
+extends CharacterBody3D
+
+# ----- MOVEMENT PROPERTIES -----
+@export var walk_speed: float = 5.0
+@export var run_speed: float = 10.0
+@export var jump_strength: float = 5.0
+@export var acceleration: float = 8.0
+@export var air_control: float = 0.3
+@export var mouse_sensitivity: float = 0.2
+
+# ----- ABILITIES -----
+@export var can_fly: bool = true
+@export var flying_speed: float = 15.0
+@export var flying_acceleration: float = 4.0
+@export var flying_deceleration: float = 2.0
+
+# ----- PHYSICS -----
+var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
+var snap_vector = Vector3.DOWN
+
+# ----- STATE -----
+var is_flying: bool = false
+var is_running: bool = false
+var target_velocity: Vector3 = Vector3.ZERO
+
+# ----- NODES -----
+@onready var camera_mount = $CameraMount
+@onready var camera = $CameraMount/Camera3D
+@onready var interaction_ray = $CameraMount/Camera3D/InteractionRay
+@onready var floating_indicator = $FloatingIndicator
+
+# ----- SIGNALS -----
+signal interact_triggered(object)
+signal console_toggled()
+signal fly_mode_toggled(is_flying)
+
+func _ready():
+	# Lock mouse cursor
+	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+	
+	# Setup interaction system
+	interaction_ray.enabled = true
+	interaction_ray.collide_with_bodies = true
+	
+	# Initialize indicator
+	if floating_indicator:
+		floating_indicator.hide()
+
+func _input(event):
+	# Camera rotation with mouse
+	if event is InputEventMouseMotion and Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED:
+		# Rotate camera mount (left/right)
+		camera_mount.rotate_y(deg_to_rad(-event.relative.x * mouse_sensitivity))
+		
+		# Rotate camera (up/down)
+		var new_rotation = camera.rotation.x - deg_to_rad(event.relative.y * mouse_sensitivity)
+		camera.rotation.x = clamp(new_rotation, deg_to_rad(-89), deg_to_rad(89))
+	
+	# Toggle mouse capture with Escape
+	if event is InputEventKey and event.pressed and event.keycode == KEY_ESCAPE:
+		if Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED:
+			Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+		else:
+			Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+	
+	# Toggle console with Tab
+	if event is InputEventKey and event.pressed and event.keycode == KEY_TAB:
+		emit_signal("console_toggled")
+	
+	# Toggle fly mode with F
+	if event is InputEventKey and event.pressed and event.keycode == KEY_F and can_fly:
+		is_flying = !is_flying
+		emit_signal("fly_mode_toggled", is_flying)
+		
+		# Visual indicator
+		if floating_indicator:
+			if is_flying:
+				floating_indicator.show()
+			else:
+				floating_indicator.hide()
+	
+	# Interact with E
+	if event is InputEventKey and event.pressed and event.keycode == KEY_E:
+		handle_interaction()
+
+func _physics_process(delta):
+	# Get input direction
+	var input_dir = Input.get_vector("move_left", "move_right", "move_forward", "move_backward")
+	is_running = Input.is_action_pressed("run")
+	
+	if is_flying:
+		process_flying(input_dir, delta)
+	else:
+		process_walking(input_dir, delta)
+	
+	# Move the character
+	move_and_slide()
+	
+	# Update interaction highlighting
+	update_interaction_highlight()
+
+func process_walking(input_dir, delta):
+	# Add gravity
+	if not is_on_floor():
+		velocity.y -= gravity * delta
+		
+		# Less control in air
+		delta *= air_control
+	else:
+		# Reset snap vector when on floor
+		snap_vector = Vector3.DOWN
+	
+	# Handle jumping
+	if Input.is_action_just_pressed("jump") and is_on_floor():
+		velocity.y = jump_strength
+		snap_vector = Vector3.ZERO
+	
+	# Get movement direction relative to camera orientation
+	var direction = Vector3.ZERO
+	if input_dir:
+		var camera_basis = camera_mount.global_transform.basis
+		direction = (camera_basis.z * -input_dir.y + camera_basis.x * input_dir.x).normalized()
+		direction.y = 0  # Keep movement horizontal
+	
+	# Set speed based on running
+	var current_speed = run_speed if is_running else walk_speed
+	
+	# Calculate target velocity
+	var target = direction * current_speed
+	
+	# Smoothly interpolate to target velocity
+	velocity.x = lerp(velocity.x, target.x, acceleration * delta)
+	velocity.z = lerp(velocity.z, target.z, acceleration * delta)
+
+func process_flying(input_dir, delta):
+	# Get movement direction relative to camera orientation
+	var direction = Vector3.ZERO
+	var camera_basis = camera_mount.global_transform.basis
+	
+	# Horizontal movement (same as walking)
+	if input_dir:
+		direction += (camera_basis.z * -input_dir.y + camera_basis.x * input_dir.x).normalized()
+	
+	# Vertical movement
+	if Input.is_action_pressed("jump"):
+		direction += Vector3.UP
+	if Input.is_action_pressed("crouch"):
+		direction += Vector3.DOWN
+	
+	# Normalize if moving in multiple directions
+	if direction.length_squared() > 1:
+		direction = direction.normalized()
+	
+	# Set speed based on running
+	var current_speed = flying_speed * (1.5 if is_running else 1.0)
+	
+	# Calculate target velocity
+	var target = direction * current_speed
+	
+	# Apply acceleration or deceleration
+	var factor = flying_acceleration if direction.length_squared() > 0 else flying_deceleration
+	velocity = velocity.lerp(target, factor * delta)
+
+func handle_interaction():
+	if interaction_ray.is_colliding():
+		var collider = interaction_ray.get_collider()
+		
+		# Emit signal with collider
+		emit_signal("interact_triggered", collider)
+		
+		# Check if it's an entity
+		if collider is UniversalEntity:
+			# Evolve the entity
+			collider.evolve()
+		
+		# Check if it has a custom interaction method
+		elif collider.has_method("interact"):
+			collider.interact(self)
+
+func update_interaction_highlight():
+	if interaction_ray.is_colliding():
+		var collider = interaction_ray.get_collider()
+		
+		# If it's an interactive object
+		if collider is UniversalEntity or collider.has_method("interact"):
+			# Show interaction highlight
+			if collider.has_method("highlight"):
+				collider.highlight(true)
+			
+			# Change cursor if visible
+			if Input.get_mouse_mode() == Input.MOUSE_MODE_VISIBLE:
+				Input.set_default_cursor_shape(Input.CURSOR_POINTING_HAND)
+			
+			return
+	
+	# No interaction target
+	if Input.get_mouse_mode() == Input.MOUSE_MODE_VISIBLE:
+		Input.set_default_cursor_shape(Input.CURSOR_ARROW)
+
+# ----- FLOATING INDICATOR CLASS -----
+class FloatingIndicator extends Node3D:
+	var mesh_instance: MeshInstance3D
+	
+	func _ready():
+		# Create mesh
+		mesh_instance = MeshInstance3D.new()
+		add_child(mesh_instance)
+		
+		var ring = TorusMesh.new()
+		ring.inner_radius = 0.1
+		ring.outer_radius = 0.3
+		mesh_instance.mesh = ring
+		
+		# Create material
+		var material = StandardMaterial3D.new()
+		material.albedo_color = Color(0.2, 0.8, 1.0, 0.7)
+		material.emission_enabled = true
+		material.emission = Color(0.4, 0.8, 1.0)
+		material.emission_energy = 0.5
+		material.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
+		mesh_instance.material_override = material
+		
+		# Position above player
+		position = Vector3(0, 1.8, 0)
+	
+	func _process(delta):
+		# Slowly rotate
+		rotate_y(delta * 1.0)
+		
+		# Bob up and down
+		var bob_offset = sin(Time.get_ticks_msec() / 500.0) * 0.05
+		mesh_instance.position.y = bob_offset

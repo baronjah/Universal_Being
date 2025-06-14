@@ -1,0 +1,1 @@
+• You can make your own tools, then run them, and check results, python, bash, even gd script as you have godot-mcp tools, can make a scene, scripts, run it debug it, check result, check console, and you need to always remember to close the godot engine or played scene, afterwards, to maintain the balance and harmony

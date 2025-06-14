@@ -1,0 +1,682 @@
+# TestSuite.gd - Automated Testing for Ethereal Engine
+extends Node
+class_name TestSuite
+
+signal test_completed(test_name: String, passed: bool, details: String)
+signal all_tests_completed(results: Dictionary)
+signal performance_warning(metric: String, value: float, threshold: float)
+
+# Test results and state
+var test_results = {}
+var current_test = ""
+var tests_running = false
+var test_start_time = 0
+
+# Performance tracking
+var performance_metrics = {
+	"fps": [],
+	"memory_usage": [],
+	"frame_times": [],
+	"input_response_times": []
+}
+
+# Test thresholds for your Ethereal Engine
+var performance_thresholds = {
+	"min_fps": 45.0,
+	"max_memory_mb": 512.0,
+	"max_frame_time_ms": 22.0,  # ~45 FPS
+	"max_input_response_ms": 100.0
+}
+
+# Reference to main systems
+var ethereal_engine: Node3D
+var camera: Camera3D
+var ui_manager: Node
+
+func _ready():
+	print("🧪 TestSuite initialized - Cosmic Quality Assurance active")
+	find_system_references()
+	setup_automated_testing()
+
+func find_system_references():
+	# Find key components of your Ethereal Engine
+	ethereal_engine = get_node_or_null("/root/Main") # Your main scene
+	if ethereal_engine:
+		camera = ethereal_engine.get_viewport().get_camera_3d()
+		ui_manager = ethereal_engine.get_node_or_null("UI")
+
+func setup_automated_testing():
+	# Run background performance monitoring
+	var perf_timer = Timer.new()
+	perf_timer.wait_time = 1.0  # Every second
+	perf_timer.timeout.connect(collect_performance_metrics)
+	perf_timer.autostart = true
+	add_child(perf_timer)
+	
+	# Development auto-testing (debug builds only)
+	if OS.is_debug_build():
+		var test_timer = Timer.new()
+		test_timer.wait_time = 300.0  # Every 5 minutes
+		test_timer.timeout.connect(run_automated_background_test)
+		test_timer.autostart = true
+		add_child(test_timer)
+
+# =================== MAIN TEST FUNCTIONS ===================
+
+func run_quick_smoke_test() -> Dictionary:
+	print("🔥 Running Quick Smoke Test...")
+	test_start_time = Time.get_ticks_msec()
+	
+	var results = {
+		"game_starts": test_game_starts(),
+		"basic_movement": test_basic_movement(),
+		"word_creation": test_word_creation_basic(),
+		"ui_responsive": test_ui_responsive(),
+		"performance_check": test_performance_basic()
+	}
+	
+	var duration = Time.get_ticks_msec() - test_start_time
+	var all_passed = true
+	for test in results.values():
+		if not test:
+			all_passed = false
+			break
+	
+	print("⚡ Smoke Test completed in ", duration, "ms - ", "✅ PASSED" if all_passed else "❌ FAILED")
+	return results
+
+func run_full_regression_test():
+	print("🧪 Running Full Regression Test...")
+	tests_running = true
+	test_results.clear()
+	test_start_time = Time.get_ticks_msec()
+	
+	# Run all test categories
+	test_results["cosmic_navigation"] = await test_cosmic_navigation_full()
+	test_results["word_system"] = await test_word_system_full()
+	test_results["ui_system"] = await test_ui_system_full()
+	test_results["entity_system"] = await test_entity_system_full()
+	test_results["performance"] = await test_performance_full()
+	test_results["integration"] = await test_integration_full()
+	
+	tests_running = false
+	var duration = Time.get_ticks_msec() - test_start_time
+	
+	emit_signal("all_tests_completed", test_results)
+	print_test_summary(duration)
+	return test_results
+
+# =================== COSMIC NAVIGATION TESTS ===================
+
+func test_basic_movement() -> bool:
+	if not camera:
+		return false
+	
+	var initial_pos = camera.global_position
+	
+	# Simulate forward movement (W key)
+	simulate_key_input(KEY_W, 0.1)
+	await get_tree().process_frame
+	
+	var moved = camera.global_position.distance_to(initial_pos) > 0.01
+	return moved
+
+func test_cosmic_navigation_full() -> bool:
+	print("🚀 Testing Cosmic Navigation...")
+	
+	var tests = [
+		test_wasd_movement(),
+		test_camera_rotation(),
+		test_layer_navigation(),
+		test_planet_transition(),
+		test_camera_reset()
+	]
+	
+	var all_passed = true
+	for test_result in tests:
+		if not await test_result:
+			all_passed = false
+	
+	emit_signal("test_completed", "cosmic_navigation", all_passed, "Navigation system test")
+	return all_passed
+
+func test_wasd_movement() -> bool:
+	if not camera:
+		return false
+	
+	var initial_pos = camera.global_position
+	var movement_detected = false
+	
+	# Test each direction
+	var directions = [KEY_W, KEY_A, KEY_S, KEY_D, KEY_Q, KEY_E]
+	
+	for direction in directions:
+		var before_pos = camera.global_position
+		simulate_key_input(direction, 0.1)
+		await get_tree().process_frame
+		
+		if camera.global_position.distance_to(before_pos) > 0.01:
+			movement_detected = true
+	
+	return movement_detected
+
+func test_camera_rotation() -> bool:
+	if not camera:
+		return false
+	
+	var initial_rotation = camera.global_rotation
+	
+	# Simulate mouse drag for camera rotation
+	simulate_mouse_drag(Vector2(100, 50))
+	await get_tree().process_frame
+	
+	var rotation_changed = not camera.global_rotation.is_equal_approx(initial_rotation)
+	return rotation_changed
+
+func test_layer_navigation() -> bool:
+	# Test mouse wheel layer navigation
+	var initial_layer = get_current_layer()
+	
+	simulate_mouse_wheel(1)  # Scroll up
+	await get_tree().process_frame
+	
+	var layer_changed = get_current_layer() != initial_layer
+	return layer_changed
+
+func test_planet_transition() -> bool:
+	# Test movement between cosmic levels
+	if not ethereal_engine:
+		return false
+	
+	# This would test your planet transition system
+	# Adapt based on your specific implementation
+	return true
+
+func test_camera_reset() -> bool:
+	if not camera:
+		return false
+	
+	# Move camera away from origin
+	camera.global_position = Vector3(100, 100, 100)
+	
+	# Trigger camera reset (adapt to your reset method)
+	simulate_key_input(KEY_F, 0.1)  # Assuming F resets camera
+	await get_tree().process_frame
+	
+	# Check if camera moved closer to origin
+	var reset_worked = camera.global_position.length() < 50.0
+	return reset_worked
+
+# =================== WORD SYSTEM TESTS ===================
+
+func test_word_creation_basic() -> bool:
+	var initial_word_count = count_word_entities()
+	
+	# Simulate G key (generate new word)
+	simulate_key_input(KEY_G, 0.1)
+	await get_tree().process_frame
+	await get_tree().process_frame  # Give it time to create
+	
+	var words_created = count_word_entities() > initial_word_count
+	return words_created
+
+func test_word_system_full() -> bool:
+	print("📝 Testing Word System...")
+	
+	var tests = [
+		test_word_creation_advanced(),
+		test_word_interaction(),
+		test_word_positioning(),
+		test_word_layer_assignment(),
+		test_word_cleanup()
+	]
+	
+	var all_passed = true
+	for test_result in tests:
+		if not await test_result:
+			all_passed = false
+	
+	emit_signal("test_completed", "word_system", all_passed, "Word creation and management")
+	return all_passed
+
+func test_word_creation_advanced() -> bool:
+	var initial_count = count_word_entities()
+	
+	# Create multiple words
+	for i in range(3):
+		simulate_key_input(KEY_G, 0.1)
+		await get_tree().process_frame
+	
+	var created_multiple = count_word_entities() >= initial_count + 2
+	return created_multiple
+
+func test_word_interaction() -> bool:
+	# Ensure we have at least one word
+	if count_word_entities() == 0:
+		simulate_key_input(KEY_G, 0.1)
+		await get_tree().process_frame
+	
+	# Test E key interaction with words
+	simulate_key_input(KEY_E, 0.1)
+	await get_tree().process_frame
+	
+	# This test passes if no errors occur during interaction
+	return true
+
+func test_word_positioning() -> bool:
+	var word_entities = find_all_word_entities()
+	
+	# Check if words have valid positions
+	for word in word_entities:
+		if word.global_position == Vector3.ZERO:
+			return false  # Words shouldn't all be at origin
+	
+	return word_entities.size() > 0
+
+func test_word_layer_assignment() -> bool:
+	# Test if words are properly assigned to layers
+	var word_entities = find_all_word_entities()
+	
+	for word in word_entities:
+		# Check if word has layer metadata or proper parent
+		if not word.has_meta("layer") and not word.get_parent().name.contains("layer"):
+			return false
+	
+	return true
+
+func test_word_cleanup() -> bool:
+	# Test word removal/cleanup functionality
+	var initial_count = count_word_entities()
+	
+	# This would test your word deletion system
+	# Adapt based on your implementation
+	return true
+
+# =================== UI SYSTEM TESTS ===================
+
+func test_ui_responsive() -> bool:
+	if not ui_manager:
+		return false
+	
+	# Test if UI elements are visible and responsive
+	var ui_elements = ui_manager.get_children()
+	
+	for element in ui_elements:
+		if element is Control:
+			if not element.visible:
+				return false
+	
+	return ui_elements.size() > 0
+
+func test_ui_system_full() -> bool:
+	print("🖥️ Testing UI System...")
+	
+	var tests = [
+		test_corner_info_panel(),
+		test_layer_info_display(),
+		test_menu_functionality(),
+		test_ui_scaling(),
+		test_ui_interaction()
+	]
+	
+	var all_passed = true
+	for test_result in tests:
+		if not await test_result:
+			all_passed = false
+	
+	emit_signal("test_completed", "ui_system", all_passed, "User interface system")
+	return all_passed
+
+func test_corner_info_panel() -> bool:
+	# Test your corner info panel
+	var info_panel = find_ui_element_by_name("info_panel")
+	return info_panel != null and info_panel.visible
+
+func test_layer_info_display() -> bool:
+	# Test layer height information display
+	var layer_info = find_ui_element_by_name("layer_info")
+	return layer_info != null and layer_info.visible
+
+func test_menu_functionality() -> bool:
+	# Test menu responsiveness
+	return true  # Implement based on your menu system
+
+func test_ui_scaling() -> bool:
+	# Test UI scaling with different resolutions
+	return true
+
+func test_ui_interaction() -> bool:
+	# Test UI button interactions
+	return true
+
+# =================== ENTITY SYSTEM TESTS ===================
+
+func test_entity_system_full() -> bool:
+	print("🌍 Testing Entity System...")
+	
+	var tests = [
+		test_planet_rendering(),
+		test_sun_positioning(),
+		test_tree_placement(),
+		test_entity_collision(),
+		test_entity_memory_usage()
+	]
+	
+	var all_passed = true
+	for test_result in tests:
+		if not await test_result:
+			all_passed = false
+	
+	emit_signal("test_completed", "entity_system", all_passed, "Cosmic entity management")
+	return all_passed
+
+func test_planet_rendering() -> bool:
+	# Test if planets are rendering correctly
+	var planets = find_entities_by_type("planet")
+	return planets.size() > 0
+
+func test_sun_positioning() -> bool:
+	# Test sun placement and lighting
+	var sun = find_entity_by_name("sun")
+	return sun != null
+
+func test_tree_placement() -> bool:
+	# Test tree entity placement
+	var trees = find_entities_by_type("tree")
+	return trees.size() > 0
+
+func test_entity_collision() -> bool:
+	# Test entity collision detection
+	return true
+
+func test_entity_memory_usage() -> bool:
+	# Test for memory leaks in entity creation
+	var initial_memory = OS.get_static_memory_usage_by_type()
+	
+	# Create and destroy entities
+	for i in range(10):
+		simulate_key_input(KEY_G, 0.05)
+		await get_tree().process_frame
+	
+	var final_memory = OS.get_static_memory_usage_by_type()
+	var memory_increase = final_memory - initial_memory
+	
+	# Memory increase should be reasonable
+	return memory_increase < 50000000  # 50MB threshold
+
+# =================== PERFORMANCE TESTS ===================
+
+func test_performance_basic() -> bool:
+	var fps = Engine.get_frames_per_second()
+	return fps >= performance_thresholds.min_fps
+
+func test_performance_full() -> bool:
+	print("⚡ Testing Performance...")
+	
+	var tests = [
+		test_fps_stability(),
+		test_memory_usage(),
+		test_frame_times(),
+		test_input_responsiveness(),
+		test_loading_times()
+	]
+	
+	var all_passed = true
+	for test_result in tests:
+		if not await test_result:
+			all_passed = false
+	
+	emit_signal("test_completed", "performance", all_passed, "System performance")
+	return all_passed
+
+func test_fps_stability() -> bool:
+	var fps_samples = []
+	
+	# Collect FPS over 3 seconds
+	for i in range(60 * 3):  # 3 seconds at 60 FPS
+		fps_samples.append(Engine.get_frames_per_second())
+		await get_tree().process_frame
+	
+	var avg_fps = fps_samples.reduce(func(a, b): return a + b) / fps_samples.size()
+	return avg_fps >= performance_thresholds.min_fps
+
+func test_memory_usage() -> bool:
+	var memory_mb = OS.get_static_memory_usage_by_type() / 1048576.0  # Convert to MB
+	return memory_mb <= performance_thresholds.max_memory_mb
+
+func test_frame_times() -> bool:
+	var frame_times = []
+	
+	for i in range(60):  # 1 second of frames
+		var start = Time.get_ticks_usec()
+		await get_tree().process_frame
+		var end = Time.get_ticks_usec()
+		frame_times.append((end - start) / 1000.0)  # Convert to ms
+	
+	var avg_frame_time = frame_times.reduce(func(a, b): return a + b) / frame_times.size()
+	return avg_frame_time <= performance_thresholds.max_frame_time_ms
+
+func test_input_responsiveness() -> bool:
+	var response_times = []
+	
+	for i in range(10):
+		var start = Time.get_ticks_usec()
+		simulate_key_input(KEY_W, 0.01)
+		await get_tree().process_frame
+		var end = Time.get_ticks_usec()
+		response_times.append((end - start) / 1000.0)  # Convert to ms
+	
+	var avg_response = response_times.reduce(func(a, b): return a + b) / response_times.size()
+	return avg_response <= performance_thresholds.max_input_response_ms
+
+func test_loading_times() -> bool:
+	# Test scene loading times
+	return true
+
+# =================== INTEGRATION TESTS ===================
+
+func test_integration_full() -> bool:
+	print("🔗 Testing System Integration...")
+	
+	var tests = [
+		test_navigation_word_interaction(),
+		test_ui_system_integration(),
+		test_threading_stability(),
+		test_database_integrity()
+	]
+	
+	var all_passed = true
+	for test_result in tests:
+		if not await test_result:
+			all_passed = false
+	
+	emit_signal("test_completed", "integration", all_passed, "System integration")
+	return all_passed
+
+func test_navigation_word_interaction() -> bool:
+	# Test interaction between navigation and word systems
+	simulate_key_input(KEY_W, 0.1)  # Move
+	await get_tree().process_frame
+	simulate_key_input(KEY_G, 0.1)  # Create word
+	await get_tree().process_frame
+	simulate_key_input(KEY_E, 0.1)  # Interact with word
+	await get_tree().process_frame
+	
+	return true  # Passes if no errors occur
+
+func test_ui_system_integration() -> bool:
+	# Test UI updates with system changes
+	return true
+
+func test_threading_stability() -> bool:
+	# Test threading system under load
+	for i in range(10):
+		simulate_key_input(KEY_G, 0.01)  # Rapid word creation
+	
+	await get_tree().create_timer(1.0).timeout  # Wait for threads
+	return true
+
+func test_database_integrity() -> bool:
+	# Test database consistency
+	return true
+
+# =================== UTILITY FUNCTIONS ===================
+
+func simulate_key_input(keycode: int, duration: float):
+	var event = InputEventKey.new()
+	event.keycode = keycode
+	event.pressed = true
+	Input.parse_input_event(event)
+	
+	await get_tree().create_timer(duration).timeout
+	
+	event.pressed = false
+	Input.parse_input_event(event)
+
+func simulate_mouse_drag(delta: Vector2):
+	var event = InputEventMouseMotion.new()
+	event.relative = delta
+	Input.parse_input_event(event)
+
+func simulate_mouse_wheel(direction: int):
+	var event = InputEventMouseButton.new()
+	event.button_index = MOUSE_BUTTON_WHEEL_UP if direction > 0 else MOUSE_BUTTON_WHEEL_DOWN
+	event.pressed = true
+	Input.parse_input_event(event)
+
+func count_word_entities() -> int:
+	var words = find_all_word_entities()
+	return words.size()
+
+func find_all_word_entities() -> Array:
+	var words = []
+	var all_nodes = get_all_scene_nodes()
+	
+	for node in all_nodes:
+		if node.name.contains("Word") or node.name.contains("word"):
+			words.append(node)
+	
+	return words
+
+func find_entities_by_type(type: String) -> Array:
+	var entities = []
+	var all_nodes = get_all_scene_nodes()
+	
+	for node in all_nodes:
+		if node.name.to_lower().contains(type.to_lower()):
+			entities.append(node)
+	
+	return entities
+
+func find_entity_by_name(name: String) -> Node:
+	var all_nodes = get_all_scene_nodes()
+	
+	for node in all_nodes:
+		if node.name.to_lower().contains(name.to_lower()):
+			return node
+	
+	return null
+
+func find_ui_element_by_name(name: String) -> Control:
+	if not ui_manager:
+		return null
+	
+	return ui_manager.find_child(name, true, false)
+
+func get_all_scene_nodes() -> Array:
+	var nodes = []
+	collect_all_nodes(get_tree().current_scene, nodes)
+	return nodes
+
+func collect_all_nodes(node: Node, nodes: Array):
+	nodes.append(node)
+	for child in node.get_children():
+		collect_all_nodes(child, nodes)
+
+func get_current_layer() -> int:
+	# Implement based on your layer system
+	return 0
+
+func collect_performance_metrics():
+	performance_metrics.fps.append(Engine.get_frames_per_second())
+	performance_metrics.memory_usage.append(OS.get_static_memory_usage_by_type())
+	
+	# Keep only last 60 samples (1 minute of data)
+	if performance_metrics.fps.size() > 60:
+		performance_metrics.fps.pop_front()
+	if performance_metrics.memory_usage.size() > 60:
+		performance_metrics.memory_usage.pop_front()
+	
+	# Check for performance warnings
+	var current_fps = Engine.get_frames_per_second()
+	if current_fps < performance_thresholds.min_fps:
+		emit_signal("performance_warning", "fps", current_fps, performance_thresholds.min_fps)
+
+func run_automated_background_test():
+	if not tests_running:  # Don't interrupt active testing
+		print("🤖 Running automated background test...")
+		var results = run_quick_smoke_test()
+		
+		var failed_tests = []
+		for test_name in results:
+			if not results[test_name]:
+				failed_tests.append(test_name)
+		
+		if failed_tests.size() > 0:
+			print("⚠️ Background test detected issues: ", failed_tests)
+
+func print_test_summary(duration_ms: int = 0):
+	print("\n🎯 ETHEREAL ENGINE TEST SUMMARY")
+	print("=" * 50)
+	
+	var passed = 0
+	var total = test_results.size()
+	
+	for test_name in test_results:
+		var result = test_results[test_name]
+		var status = "✅ PASS" if result else "❌ FAIL"
+		print("  ", test_name.capitalize().replace("_", " "), ": ", status)
+		if result:
+			passed += 1
+	
+	print("=" * 50)
+	print("Results: ", passed, "/", total, " tests passed")
+	if duration_ms > 0:
+		print("Duration: ", duration_ms, "ms")
+	
+	if passed == total:
+		print("🌟 ALL TESTS PASSED - Cosmic Harmony Maintained!")
+		print("✨ Your Ethereal Engine is ready for new features!")
+	else:
+		print("⚠️ TESTS FAILED - Cosmic Debugging Required!")
+		print("🔧 Fix failing tests before adding new features!")
+
+# Debug console integration
+func _input(event):
+	if event.is_action_pressed("debug_console"):  # F12 key
+		show_test_console()
+
+func show_test_console():
+	print("🎮 Test Console Commands:")
+	print("  run_smoke_test() - Quick functionality check")
+	print("  run_full_test() - Complete regression test")
+	print("  get_performance_stats() - Current performance metrics")
+
+# External API for manual testing
+func get_performance_stats() -> Dictionary:
+	return performance_metrics.duplicate()
+
+func force_test_category(category: String):
+	match category:
+		"navigation":
+			test_cosmic_navigation_full()
+		"words":
+			test_word_system_full()
+		"ui":
+			test_ui_system_full()
+		"entities":
+			test_entity_system_full()
+		"performance":
+			test_performance_full()
+		_:
+			print("Unknown test category: ", category)

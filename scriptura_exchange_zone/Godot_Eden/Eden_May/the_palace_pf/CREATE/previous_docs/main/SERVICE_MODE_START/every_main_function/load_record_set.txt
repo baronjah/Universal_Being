@@ -1,0 +1,153 @@
+func load_record_set(records_part: String, record_type: String, type_of_data : int, records : Dictionary) -> void:
+	print(" load records set")
+	# dataSetLimits and data_sets_names in BanksCombiner
+	var max_nunmber_of_thingy = BanksCombiner.dataSetLimits[records_part]
+	
+	var current_record_type = record_type.split("_")
+	var current_r_t_l = current_record_type.size() - 1
+	var current_r_t_f = current_record_type[current_r_t_l]
+	
+	var amounts_of_that_record
+	var current_int_number : int = -1
+	
+	if BanksCombiner.data_names_2_numbers.has(current_r_t_f):
+		#print(" the number of record type : in int : ", BanksCombiner.data_names_2_numbers[current_r_t_f])
+		#current_int_number
+		current_int_number = BanksCombiner.data_names_2_numbers[current_r_t_f]
+		
+		#current_int_number +=6
+		#print(" the number of record type : in int : " , current_int_number)
+	
+	var current_number_of_that_set : int = 0
+	
+	active_r_s_mut.lock()
+	if !active_record_sets.has(records_part): # added that ! xD
+		current_number_of_that_set = 1
+	active_r_s_mut.unlock()
+	
+	var list_of_reliquaries : Array = [] # list of sacred relics—each one unique
+	var codices : Array = [] # Ancient manuscripts that hold wisdom
+	var current_record_line : Array = []
+	
+	
+	for current_record_to_process in records:
+		print(" do we even get there 02 ", current_record_to_process, " is that : ", current_r_t_f )#, " current_record_to_process :" ,records[current_record_to_process] )
+
+		
+		
+		var another_array_damn : Array = []
+		var string_splitter
+		for current_part in records[current_record_to_process]:
+			string_splitter = current_part[0].split("|")
+			var string_to_be_splitted
+			var tomes_of_knowledge : Array = []
+			for stringy_string in string_splitter:
+				string_to_be_splitted = stringy_string.split(",")
+				tomes_of_knowledge.append(string_to_be_splitted)
+			current_record_line.append(string_splitter[0])
+			another_array_damn.append(tomes_of_knowledge)
+		
+		match current_int_number:
+			0:
+				#print(" the numbers thingy dilema records ", list_of_reliquaries.size())
+				continue
+				
+			1:
+				if max_nunmber_of_thingy > 1:
+					print(" dubi dabi kurwa")
+				#print(" instructions ")
+				#print(" do we even get there 03 instructions ", another_array_damn," and that thingy : " , current_record_line)
+				#print(" do we even get there 04 ", another_array_damn[0][1][0])
+				#if another_array_damn[0][1][0] is String:
+					#print(" do we even get there 05 it is a string")
+					#match another_array_damn[0][1][0]:
+						#"set_the_scene":
+							#print(" do we even get there 06 set the scene ", another_array_damn[2][0][0])
+							#
+							#active_r_s_mut.lock()
+							#if active_record_sets.has(records_part):
+								#if active_record_sets[records_part].has("metadata"):
+									#print(" do we even get there 06")
+									## all turns well somehow, we got it
+									#if active_record_sets[records_part]["metadata"].has("record_data"):
+										#active_record_sets[records_part]["metadata"]["record_data"] = {
+											#"scene_to_set" = another_array_damn[2][0][0]
+											#
+										#}
+									#
+									#
+								#else:
+									#print(" do we even get there 07 we got problem 1")
+									## does not have metadata yet
+							#else:
+								#print(" do we even get there 08 we got problem 0")
+								## does not have that record set yet
+							#
+							#
+				continue
+			2:
+				#print(" do we even get there 03 scnes ", another_array_damn, current_record_line)
+				#print()
+				#print(" do we even get there 04 ")
+				# i wanna whip out scene number main
+				continue
+			3:
+				#print(" interactions ")
+				continue
+		
+		
+		
+		codices.append(another_array_damn)
+		list_of_reliquaries.append(current_record_line[0])
+		current_record_line.clear()
+		
+	var string_header : String = "header"
+	var string_content : String = "content"
+	var string_informational : String = ""
+	var records_processed : Dictionary = {} #{list_of_reliquaries, codices}
+	records_processed[string_header] =  list_of_reliquaries
+	records_processed[string_content] = codices
+	
+	
+	active_r_s_mut.lock()
+	
+	match current_int_number:
+		0:
+			print(" the numbers thingy dilema records ", list_of_reliquaries.size())
+			if active_record_sets.has(records_part):
+				if active_record_sets[records_part].has("metadata"):
+					if active_record_sets[records_part]["metadata"].has("record_data"):
+						active_record_sets[records_part]["metadata"]["record_data"]
+						print()
+			pass
+	
+	if active_record_sets.has(records_part):# and active_record_sets.has(record_type):
+		if active_record_sets[records_part].has(record_type):
+			active_r_s_mut.unlock()
+			print(" do we even get there 0 ")
+			return
+	active_r_s_mut.unlock()
+	
+	
+	active_r_s_mut.lock()
+	#if active_record_sets[records_part].has("metadata"):
+	#	print(" do we even get there 06")
+	
+	
+	if not active_record_sets.has(records_part):
+		active_record_sets[records_part] = {
+			"metadata": {
+				"timestamp": Time.get_ticks_msec(),
+				"container_count": current_number_of_that_set,
+				"max_containers": max_nunmber_of_thingy
+			}
+		}
+		print(" do we even get there 01 ", active_record_sets[records_part]["metadata"])
+	active_r_s_mut.unlock()
+	
+	
+	active_r_s_mut.lock()
+	if records.size() > 0:
+		active_record_sets[records_part][record_type] = records_processed
+		#current_record_set = record_type
+	active_r_s_mut.unlock()

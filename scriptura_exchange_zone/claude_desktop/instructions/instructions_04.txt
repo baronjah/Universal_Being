@@ -1,0 +1,8 @@
+that is some version of the main version of the eden project in godot
+one of the folders in there, keeps the main.gd, datapoint, records etc, the menu in 3d, flat 3d with depth system and setting it moving, it is all there, we must add many things to create it fully but its there
+
+
+the place holds more stories, files, connections
+C:\Users\Percision 15\Godot_Eden\Eden_May\the_palace_pf\code\gdscript\scripts
+
+each of the folder, can become, was an project on its own if not few, we must now connect to Claude account database of projects and chats to continue work on them and combine them into one creation, we shall now make new folder, to create new projects, from all the projects we stumble upon, and make notes, to what it was connected, to make our code base database

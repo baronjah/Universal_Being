@@ -1,0 +1,34 @@
+Core Systems Architecture
+1. Universal Being System
+
+Base class that everything inherits from
+Properties: type, group, name, version, state
+Area3D + SphereShape3D for consistent collision
+Built-in inspection/modification interface
+
+2. Console System
+
+Runtime command interface
+Create/modify/archive/load entities
+Query the world database
+Floodgate system for safe loading/unloading
+
+3. Interactive Database
+
+World state as queryable data structure
+CSV-like inspector for individual entities
+Nested properties (cell contains another CSV)
+Real-time synchronization with 3D world
+
+4. Development Blueprint System
+
+Rules for project continuity
+Templates for new entity types
+Version control for entity definitions
+
+Should we start by creating the development blueprint document first? This would establish our rules and patterns before we write any code. Then we can build:
+
+The UniversalBeing base class
+Basic console system
+Simple database structure
+Object inspector interface

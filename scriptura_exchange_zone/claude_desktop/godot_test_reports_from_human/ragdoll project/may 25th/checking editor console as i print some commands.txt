@@ -1,0 +1,182 @@
+Godot Engine v4.5.dev4.mono.official.209a446e3 - https://godotengine.org
+Vulkan 1.3.277 - Forward+ - Using Device #0: NVIDIA - Quadro RTX 3000
+
+[FloodgateController] Initializing central control system...
+[2025-05-25T12:20:25] [SYSTEM] === FLOODGATE CONTROLLER INITIALIZED ===
+[2025-05-25T12:20:25] [SYSTEM] Time: 2025-05-25T12:20:25
+[2025-05-25T12:20:25] [SYSTEM] Floodgate Controller ready for operations
+[AssetLibrary] Initializing asset management system...
+[AssetLibrary] Asset Library ready with 13 assets cataloged
+JSH Scene Tree System initialized
+ new script thread pull thing { "total_threads": 8, "first_entry_time": 1881, "last_entry_time": 0, "threads_history": [], "first_check": <null>, "current_check": <null> }
+🎮 [MainGameController] Initializing main game...
+🚀 [GameLauncher] Starting system diagnostics...
+
+=== SYSTEM STARTUP DIAGNOSTICS ===
+
+📋 Checking Autoload Systems:
+  ✅ FloodgateController: READY
+  ✅ AssetLibrary: READY
+  ✅ UISettingsManager: READY
+  ✅ ConsoleManager: READY
+  ✅ WorldBuilder: READY
+  ✅ DialogueSystem: READY
+  ✅ SceneLoader: READY
+
+🌊 Checking Floodgate Systems:
+  ✅ FloodgateController: Online
+
+🎬 Checking Scene Structure:
+  ✅ Main Scene: MainGame
+  ✅ Camera3D: Found at (0.0, 10.0, 20.0)
+  ✅ Ground: Found
+
+📦 Checking Critical Assets:
+  ✅ standardized_objects.gd: Found
+  ✅ floodgate_controller.gd: Found
+  ✅ asset_library.gd: Found
+  ✅ StandardizedObjects: Working
+
+📊 STARTUP STATUS REPORT:
+==================================================
+🎯 Systems Status: 10/11 operational
+✅ No critical errors detected
+🚀 All systems ready! Game launch successful!
+==================================================
+🎮 Game Ready! Press Tab to open console.
+📄 Diagnostic report saved to user://startup_diagnostic.json
+🎮 [MainGameController] Game launcher started
+[CONSOLE] Windows admin mode detected - using ASCII fallbacks
+Started waiting for user response...
+📝 Added todo to Talking Ragdoll Game: Test debug screen and state transitions
+📝 Added todo to Talking Ragdoll Game: Import 3D assets from Downloads folder
+📝 Added todo to Talking Ragdoll Game: Verify timer system tracks user wait time
+📝 Added todo to 12 Turns System: Update documentation files across strongholds
+📝 Added todo to 12 Turns System: Synchronize data across Windows/WSL/Claude homes
+📝 Added todo to 12 Turns System: Review and organize Unity assets for future use
+📝 Added todo to Eden OS Project: Archive threading patterns for future reference
+📝 Added todo to Eden OS Project: Document zone-based testing approach
+Starting test zone: planet with 2 tests
+  📊 Queue Status: { "actions": 0, "nodes": 0, "movements": 0, "functions": 0 }
+  ✅ AssetLibrary: Online
+  📚 Asset Catalog: { "objects": 5, "ragdolls": 2, "materials": 3, "textures": 1, "audio": 2 }
+Testing: object_spawning
+Testing: dialogue_system
+🎮 Console toggle requested - Visible: false
+[2025-05-25T12:20:28] [SYSTEM] Memory cleanup completed
+User responded after 3.79129733333333 seconds
+[SceneManager] Generating procedural world...
+[SceneManager] Clearing current scene...
+[WorldGen] Starting world generation...
+[WorldGen] World generation complete!
+Started waiting for user response...
+🎮 Console toggle requested - Visible: true
+[2025-05-25T12:20:33] [SYSTEM] Memory cleanup completed
+
+
+# after it loaded i used command world 
+
+# now tree
+
+🎮 Console toggle requested - Visible: false
+User responded after 63.3879793333311 seconds
+[2025-05-25T12:21:32] [MAGIC2] Queued second dimensional magic: node creation
+Started waiting for user response...
+[2025-05-25T12:21:32] [TRACK] Tracking new object: tree_1 (Total: 1/144)
+[2025-05-25T12:21:32] [SYSTEM1] Added root node: tree_1
+
+# astral
+
+User responded after 18.0662406666669 seconds
+[2025-05-25T12:21:50] [MAGIC2] Queued second dimensional magic: node creation
+Started waiting for user response...
+[2025-05-25T12:21:50] [TRACK] Tracking new astral being: @Node3D@832
+[2025-05-25T12:21:50] [SYSTEM1] Added root node: astral_being_1
+
+# setup_systems
+
+User responded after 8.65645566666667 seconds
+🤖 [MainGameController] Setting up ragdoll system...
+[RagdollController] Initializing ragdoll controller...
+[RagdollController] No ragdoll found in scene
+[RagdollController] Behavior changed: 0 -> 0
+[RagdollController] Ready - Ragdoll can now help build the garden!
+🤖 [MainGameController] RagdollController created and added to scene
+🖱️ [MainGameController] Setting up mouse interaction system...
+[MouseInteraction] Initializing mouse interaction system...
+[MouseInteraction] Found camera: Camera3D
+[MouseInteraction] Debug panel added to viewport GUI layer
+[MouseInteraction] Eden systems temporarily disabled - fixing compilation errors...
+[MouseInteraction] Ready - Click any object to inspect it!
+🖱️ [MainGameController] MouseInteractionSystem created and added to scene
+Started waiting for user response...
+
+
+# rock
+
+[2025-05-25T12:23:11] [MAGIC2] Queued second dimensional magic: node creation
+Started waiting for user response...
+[2025-05-25T12:23:11] [TRACK] Tracking new object: rock_1 (Total: 2/144)
+[2025-05-25T12:23:11] [SYSTEM1] Added root node: rock_1
+[2025-05-25T12:23:13] [SYSTEM] Memory cleanup completed
+
+
+# spawn_ragdoll
+
+[2025-05-25T12:23:18] [SYSTEM] Memory cleanup completed
+[2025-05-25T12:23:23] [SYSTEM] Memory cleanup completed
+[2025-05-25T12:23:28] [SYSTEM] Memory cleanup completed
+[MouseInteraction] Gesture mode ON - Draw shapes to cast spells!
+[MouseInteraction] Gesture mode OFF
+User responded after 20.2159846666668 seconds
+Started waiting for user response...
+[2025-05-25T12:23:33] [SYSTEM] Memory cleanup completed
+Ragdoll says: You know, I used to have bones... I miss bones.
+[2025-05-25T12:23:38] [SYSTEM] Memory cleanup completed
+Ragdoll says: You know, I used to have bones... I miss bones.
+
+
+# astral_being
+
+[MouseInteraction] Gesture mode ON - Draw shapes to cast spells!
+[MouseInteraction] Gesture mode OFF
+User responded after 23.8156386666666 seconds
+[2025-05-25T12:23:55] [MAGIC2] Queued second dimensional magic: node creation
+Started waiting for user response...
+[2025-05-25T12:23:55] [TRACK] Tracking new astral being: @Node3D@1779
+[2025-05-25T12:23:55] [SYSTEM1] Added root node: astral_being_2
+Ragdoll says: Walking is harder than it looks, you know?
+[2025-05-25T12:23:58] [SYSTEM] Memory cleanup completed
+
+
+# bird
+
+User responded after 21.3627903333334 seconds
+[WorldBuilder] Creating triangular bird character...
+[2025-05-25T12:25:13] [MAGIC2] Queued second dimensional magic: node creation
+[WorldBuilder] Queued triangular bird creation with AI: bird_1
+Started waiting for user response...
+[2025-05-25T12:25:13] [TRACK] Tracking new object: bird_1 (Total: 3/144)
+[2025-05-25T12:25:13] [SYSTEM1] Added root node: bird_1
+Ragdoll says: Oh hey there! Nice day for being a ragdoll, isn't it?
+[2025-05-25T12:25:16] [SYSTEM] Memory cleanup completed
+Ragdoll says: These legs are new! Still getting used to them.
+[2025-05-25T12:25:21] [SYSTEM] Memory cleanup completed
+
+
+# walk
+
+Ragdoll says: Oh hey there! Nice day for being a ragdoll, isn't it?
+[2025-05-25T12:25:41] [SYSTEM] Memory cleanup completed
+User responded after 32.4982289999994 seconds
+Started waiting for user response...
+Ragdoll says: I think I'm getting the hang of this walking thing!
+[2025-05-25T12:25:46] [SYSTEM] Memory cleanup completed
+Ragdoll says: Look at me go! I'm practically running!
+[2025-05-25T12:25:51] [SYSTEM] Memory cleanup completed
+Ragdoll says: I think I'm getting the hang of this walking thing!
+[2025-05-25T12:25:56] [SYSTEM] Memory cleanup completed
+
+
+
+

@@ -1,0 +1,167 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://dimensional_data_demo.gd" type="Script" id=1]
+
+[node name="DimensionalDataDemo" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 20.0
+margin_top = 20.0
+margin_right = -20.0
+margin_bottom = -20.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TitleLabel" type="Label" parent="VBoxContainer"]
+margin_right = 984.0
+margin_bottom = 14.0
+text = "12-Dimensional Data Processing System Demo"
+align = 1
+
+[node name="HSeparator" type="HSeparator" parent="VBoxContainer"]
+margin_top = 18.0
+margin_right = 984.0
+margin_bottom = 22.0
+
+[node name="InputSection" type="VBoxContainer" parent="VBoxContainer"]
+margin_top = 26.0
+margin_right = 984.0
+margin_bottom = 74.0
+
+[node name="Label" type="Label" parent="VBoxContainer/InputSection"]
+margin_right = 984.0
+margin_bottom = 14.0
+text = "Input Text:"
+
+[node name="InputText" type="TextEdit" parent="VBoxContainer/InputSection"]
+margin_top = 18.0
+margin_right = 984.0
+margin_bottom = 48.0
+rect_min_size = Vector2( 0, 30 )
+text = "The dimensional processing system transforms data across twelve planes of reality."
+
+[node name="DimensionSelector" type="HBoxContainer" parent="VBoxContainer"]
+margin_top = 78.0
+margin_right = 984.0
+margin_bottom = 98.0
+
+[node name="Label" type="Label" parent="VBoxContainer/DimensionSelector"]
+margin_top = 3.0
+margin_right = 71.0
+margin_bottom = 17.0
+text = "Dimension:"
+
+[node name="DimensionOption" type="OptionButton" parent="VBoxContainer/DimensionSelector"]
+margin_left = 75.0
+margin_right = 250.0
+margin_bottom = 20.0
+rect_min_size = Vector2( 175, 0 )
+
+[node name="TransformButton" type="Button" parent="VBoxContainer/DimensionSelector"]
+margin_left = 254.0
+margin_right = 354.0
+margin_bottom = 20.0
+rect_min_size = Vector2( 100, 0 )
+text = "Transform"
+
+[node name="ChainTransformButton" type="Button" parent="VBoxContainer/DimensionSelector"]
+margin_left = 358.0
+margin_right = 508.0
+margin_bottom = 20.0
+rect_min_size = Vector2( 150, 0 )
+text = "Chain Transform"
+
+[node name="ActivateButton" type="Button" parent="VBoxContainer/DimensionSelector"]
+margin_left = 512.0
+margin_right = 612.0
+margin_bottom = 20.0
+rect_min_size = Vector2( 100, 0 )
+text = "Activate"
+
+[node name="DeactivateButton" type="Button" parent="VBoxContainer/DimensionSelector"]
+margin_left = 616.0
+margin_right = 716.0
+margin_bottom = 20.0
+rect_min_size = Vector2( 100, 0 )
+text = "Deactivate"
+
+[node name="OutputSection" type="VBoxContainer" parent="VBoxContainer"]
+margin_top = 102.0
+margin_right = 984.0
+margin_bottom = 280.0
+
+[node name="Label" type="Label" parent="VBoxContainer/OutputSection"]
+margin_right = 984.0
+margin_bottom = 14.0
+text = "Transformation Result:"
+
+[node name="OutputText" type="RichTextLabel" parent="VBoxContainer/OutputSection"]
+margin_top = 18.0
+margin_right = 984.0
+margin_bottom = 148.0
+rect_min_size = Vector2( 0, 130 )
+bbcode_enabled = true
+
+[node name="StatusSection" type="VBoxContainer" parent="VBoxContainer"]
+margin_top = 284.0
+margin_right = 984.0
+margin_bottom = 522.0
+
+[node name="Label" type="Label" parent="VBoxContainer/StatusSection"]
+margin_right = 984.0
+margin_bottom = 14.0
+text = "Dimensional System Status:"
+
+[node name="StatusPanel" type="PanelContainer" parent="VBoxContainer/StatusSection"]
+margin_top = 18.0
+margin_right = 984.0
+margin_bottom = 238.0
+rect_min_size = Vector2( 0, 220 )
+
+[node name="StatusText" type="RichTextLabel" parent="VBoxContainer/StatusSection/StatusPanel"]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 977.0
+margin_bottom = 213.0
+bbcode_enabled = true
+
+[node name="RefreshStatusButton" type="Button" parent="VBoxContainer"]
+margin_top = 526.0
+margin_right = 984.0
+margin_bottom = 546.0
+text = "Refresh Status"
+
+[node name="SaveLoadSection" type="HBoxContainer" parent="VBoxContainer"]
+margin_top = 550.0
+margin_right = 984.0
+margin_bottom = 570.0
+alignment = 1
+
+[node name="SaveButton" type="Button" parent="VBoxContainer/SaveLoadSection"]
+margin_left = 367.0
+margin_right = 467.0
+margin_bottom = 20.0
+rect_min_size = Vector2( 100, 0 )
+text = "Save Data"
+
+[node name="LoadButton" type="Button" parent="VBoxContainer/SaveLoadSection"]
+margin_left = 471.0
+margin_right = 571.0
+margin_bottom = 20.0
+rect_min_size = Vector2( 100, 0 )
+text = "Load Data"
+
+[node name="ClearButton" type="Button" parent="VBoxContainer/SaveLoadSection"]
+margin_left = 575.0
+margin_right = 617.0
+margin_bottom = 20.0
+text = "Clear"

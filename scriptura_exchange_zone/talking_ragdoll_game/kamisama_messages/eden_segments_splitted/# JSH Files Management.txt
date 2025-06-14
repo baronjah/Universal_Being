@@ -1,0 +1,197 @@
+#
+# JSH Files Management
+#
+#      oooo  .oooooo..o ooooo   ooooo 
+#      `888 d8P'    `Y8 `888'   `888' 
+#       888 Y88bo.       888     888     ┏┓•┓     ┳┳┓                    ┏┓         
+#       888  `"Y8888o.   888ooooo888     ┣ ┓┃┏┓┏  ┃┃┃┏┓┏┓┏┓┏┓┏┓┏┳┓┏┓┏┓╋  ┗┓┓┏┏╋┏┓┏┳┓
+#       888      `"Y88b  888     888     ┻ ┗┗┗ ┛  ┛ ┗┗┻┛┗┗┻┗┫┗ ┛┗┗┗ ┛┗┗  ┗┛┗┫┛┗┗ ┛┗┗
+#       888 oo     .d8P  888     888                        ┛               ┛       
+#   .o. 88P 8""88888P'  o888o   o888o 
+#   `Y888P                            
+#
+# JSH Files Management
+#
+
+
+# file creation, here we have functions from second, maybe third chicken
+# now we have nice eggs
+func create_file(array_with_data: Array, lines_amount: int, name_for_file: String):
+
+	var file = FileAccess.open(path + "/" + name_for_file + ".txt", FileAccess.WRITE)
+	if file:
+		# We'll loop from 0 to lines_amount-1 to write each line
+		for line in range(lines_amount):
+			file.store_line(array_with_data[line][0]) 
+		file_path = path + "/" + name_for_file + ".txt"
+	
+	
+# finding files in lists of files, missing files thingy? or was it integrity stuff
+func file_finder(file_name, path_to_file, list_of_files, type_of_data):
+	var counter_liste = list_of_files.size()
+	var counter_times : int = 0
+	
+	for file in list_of_files:
+		if file == file_name:
+			file_path = path_to_file + "/" + file
+
+
+#checks if it is a first run, checks for an akashic_records.txt file
+func check_folder(folder_path):
+	var space_existence = DirAccess.open(folder_path)
+	if space_existence:
+		check_folder_content(space_existence)
+		directory_existence = true
+	else:
+		pass
+
+# checking folder content
+func check_folder_content(directory):  # Take DirAccess as parameter
+	files_content = directory.get_files()      # Get array of files
+	folders_content = directory.get_directories()  # Get array of folders
+	
+	# Check if we have any files
+	if files_content.size() > 0:
+		files_existence = true
+	else:
+		files_existence = false
+		
+	# Check if we have any folders
+	if folders_content.size() > 0:
+		folders_existence = true
+	else:
+		folders_existence = false
+
+
+# here we check existence of settings file and also sending it to class file
+func check_settings_file():
+	var settings_exists = FileAccess.file_exists("user://settings.txt")
+	
+	if settings_exists:
+		# File exists, we can try to open it
+		var file = FileAccess.open("user://settings.txt", FileAccess.READ)
+		if file:
+			#print("Successfully opened settings file")
+			SettingsBank.load_settings_file("user://settings.txt")
+			return true
+		else:
+#			print("File exists but couldn't open it")
+			return false
+	else:
+		#print("No settings file found in user://")
+		var file_data_of_settings = SettingsBank.settings_file_blue_print_0
+		var data_of_settings_cleaned : Array = []
+		for entry in file_data_of_settings[0]:
+			var cleansed = entry[0].split("|")
+			data_of_settings_cleaned.append(cleansed)
+			
+		# here we are after cleaning settings thingy, the D eden is : data_of_settings_cleaned[0][1] = lets see now : D:/Eden so here we got string! just string :(
+		var path_for_directory = data_of_settings_cleaned[0][1]
+		var path_for_user_data = "user://" # + data_of_settings_cleaned[1][1]
+		var path_for_database = data_of_settings_cleaned[1][1]
+		var settings_file_name = data_of_settings_cleaned[2][1]
+		var default_directory = DirAccess.dir_exists_absolute(path_for_directory)
+		# Check if directory exists first
+
+		if default_directory == true:
+			print("the directory exist, we can send there file, hmm, damn, i wanted to do it different way, like use res? but lets just do it my way, it even finds")
+		else:
+			scan_available_storage()
+		scan_available_storage()
+		if available_directiories[0]:
+			data_of_settings_cleaned.append(["available_directiory" , available_directiories[0]])
+		#return false
+		if !DirAccess.dir_exists_absolute(path_for_user_data + path_for_database):
+		#	# Create directory
+			DirAccess.make_dir_recursive_absolute(path_for_user_data + path_for_database)
+		if !FileAccess.file_exists(path_for_user_data + settings_file_name):
+			var file = FileAccess.open(path_for_user_data + settings_file_name, FileAccess.WRITE)
+			if file:
+				for line in data_of_settings_cleaned:
+					file.store_line(line[0] + " : " + line[1])
+			SettingsBank.load_settings_file(path_for_user_data + settings_file_name)
+	
+
+# creating file, what to put in, where,name
+func file_creation(file_content,  path_for_file, name_for_file):
+	var file = FileAccess.open( path_for_file + "/" + name_for_file + ".txt", FileAccess.WRITE)
+	if file:
+		for line in file_content:
+			file.store_line(line)  # [0] because each line is in its own array
+
+
+#
+# hmm i think i didnt use these, we done it different way
+#
+func setup_settings():
+	# 1. Check for directory
+	var eden_path = find_or_create_eden_directory()
+	
+	# 2. Check/Create akashic_records folder
+	var akashic_path = eden_path + "/akashic_records"
+	if !DirAccess.dir_exists_absolute(akashic_path):
+		DirAccess.make_dir_recursive_absolute(akashic_path)
+	
+	# 3. Check/Create settings file
+	var settings_file_path = akashic_path + "/settings.txt"
+	if !FileAccess.file_exists(settings_file_path):
+		create_default_settings(settings_file_path)
+	
+	# 4. Load settings into SettingsBank
+	SettingsBank.load_settings_file(settings_file_path)
+
+
+# so this one
+func find_or_create_eden_directory():
+	var available_dirs = scan_available_storage()
+	
+	# Try to find existing Eden folder
+	for dir in available_dirs:
+		if DirAccess.dir_exists_absolute(dir + "/Eden"):
+			return dir + "/Eden"
+	
+	# If not found, create in first available directory
+	var target_dir = available_dirs[0] + "/Eden"
+	DirAccess.make_dir_recursive_absolute(target_dir)
+	return target_dir
+
+# and this
+func create_default_settings(file_path_c_d_s):
+	var settings_data = []
+	for entry in SettingsBank.settings_file_blue_print_0[0]:
+		settings_data.append(entry)
+	
+	create_file(settings_data, settings_data.size(), "settings")
+
+
+# 
+func scan_available_storage():
+	#print("Scanning available storage...")
+	
+	# For Windows: Check drives A-Z
+	if OS.get_name() == "Windows":
+		for ascii in range(65, 91):  # A-Z in ASCII
+			var drive = char(ascii) + ":/"
+			var dir = DirAccess.open(drive)
+			if dir != null:
+				#print("Found drive: ", drive)
+				available_directiories.append(drive)
+				#print(" available_directiories : " , available_directiories)
+	
+	# For Android: Check common storage paths
+	elif OS.get_name() == "Android":
+		var common_paths = [
+			"/storage/emulated/0/",  # Internal storage
+			"/sdcard/",              # Common symlink to internal storage
+			"/storage/"              # Parent directory for all storage
+		]
+		
+		for path_s_a_s in common_paths:
+			var dir = DirAccess.open(path)
+			if dir != null:
+				#print("Found storage: ", path)
+				# List all storage devices in /storage/
+				if path_s_a_s == "/storage/":
+					var contents = dir.get_directories()
+					for storage in contents:
+						print("Storage device found: /storage/" + storage)

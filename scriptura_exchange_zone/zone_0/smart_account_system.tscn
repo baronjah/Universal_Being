@@ -1,0 +1,68 @@
+[gd_scene load_steps=18 format=2]
+
+[ext_resource path="res://12_turns_system/smart_account_manager.gd" type="Script" id=1]
+[ext_resource path="res://12_turns_system/shared_account_connector.gd" type="Script" id=2]
+[ext_resource path="res://12_turns_system/akashic_database_connector.gd" type="Script" id=3]
+[ext_resource path="res://12_turns_system/player_preference_analyzer.gd" type="Script" id=4]
+[ext_resource path="res://12_turns_system/auto_correction_system.gd" type="Script" id=5]
+[ext_resource path="res://12_turns_system/multi_account_manager.gd" type="Script" id=6]
+[ext_resource path="res://12_turns_system/multi_threaded_processor.gd" type="Script" id=7]
+[ext_resource path="res://12_turns_system/cloud_storage_connector.gd" type="Script" id=8]
+[ext_resource path="res://12_turns_system/google_drive_connector.gd" type="Script" id=9]
+[ext_resource path="res://12_turns_system/api_key_manager.gd" type="Script" id=10]
+[ext_resource path="res://12_turns_system/keyboard_shape_manager.gd" type="Script" id=11]
+[ext_resource path="res://12_turns_system/gaze_tracking_integration.gd" type="Script" id=12]
+[ext_resource path="res://12_turns_system/github_tools_integration.gd" type="Script" id=13]
+[ext_resource path="res://12_turns_system/project_memory_system.gd" type="Script" id=14]
+[ext_resource path="res://12_turns_system/terminal_overlay.gd" type="Script" id=15]
+[ext_resource path="res://12_turns_system/memory_investment_system.gd" type="Script" id=16]
+[ext_resource path="res://12_turns_system/word_direction_tracker.gd" type="Script" id=17]
+
+[node name="SmartAccountSystem" type="Node"]
+
+[node name="SmartAccountManager" type="Node" parent="."]
+script = ExtResource( 1 )
+
+[node name="SharedAccountConnector" type="Node" parent="."]
+script = ExtResource( 2 )
+
+[node name="AkashicDatabaseConnector" type="Node" parent="."]
+script = ExtResource( 3 )
+
+[node name="PlayerPreferenceAnalyzer" type="Node" parent="."]
+script = ExtResource( 4 )
+
+[node name="AutoCorrectionSystem" type="Node" parent="."]
+script = ExtResource( 5 )
+
+[node name="MultiAccountManager" type="Node" parent="."]
+script = ExtResource( 6 )
+
+[node name="MultiThreadedProcessor" type="Node" parent="."]
+script = ExtResource( 7 )
+
+[node name="CloudStorageConnector" type="Node" parent="."]
+script = ExtResource( 8 )
+
+[node name="GoogleDriveConnector" type="Node" parent="."]
+script = ExtResource( 9 )
+
+[node name="ApiKeyManager" type="Node" parent="."]
+script = ExtResource( 10 )
+
+[node name="KeyboardShapeManager" type="Node" parent="."]
+script = ExtResource( 11 )
+
+[node name="GazeTrackingIntegration" type="Node" parent="."]
+script = ExtResource( 12 )
+
+[node name="GitHubToolsIntegration" type="Node" parent="."]
+script = ExtResource( 13 )
+
+[node name="ProjectMemorySystem" type="Node" parent="."]
+script = ExtResource( 14 )
+
+[node name="TerminalOverlay" type="Control" parent="."]
+margin_right = 800.0
+margin_bottom = 600.0
+script = ExtResource( 15 )

@@ -1,0 +1,6 @@
+func check_system_function(check_name: String) -> bool:
+	match check_name:
+		"creation": return is_creation_possible()
+		"movement": return movement_possible
+		"deletion": return deletion_process_can_happen
+		_: return false

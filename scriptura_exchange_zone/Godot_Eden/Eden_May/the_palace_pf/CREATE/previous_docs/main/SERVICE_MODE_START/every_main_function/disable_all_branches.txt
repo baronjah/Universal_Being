@@ -1,0 +1,37 @@
+func disable_all_branches(branch_to_disable):
+	var all_containers : Array = []
+	var all_nodes : Array = []
+	var branches_to_process : Array = []
+	var just_container : Array = []
+
+	var process_branch = func traverse_branch(branch: Dictionary):
+		tree_mutex.lock()
+		if branch["metadata"].has("full_path") and branch["metadata"]["full_path"] != null:
+
+			all_containers.append(branch["name"])
+			branch["status"] = "disabled"
+			branch["node"] = null
+
+		if branch.has("children"):
+			for child_name in branch["children"]:
+				branches_to_process.append(branch["children"][child_name])
+				branch["children"][child_name]["status"] = "disabled"
+				branch["children"][child_name]["node"] = null 
+		tree_mutex.unlock()
+
+	process_branch.call(branch_to_disable)
+	
+	var current_branches = branches_to_process.duplicate(false)
+
+	# Process branches until none left
+	while branches_to_process.size() > 0:
+		
+		tree_mutex.lock()
+		var current_branch = branches_to_process[0]  # Get first branch
+		tree_mutex.unlock()
+		
+		process_branch.call(current_branch)        # Process it
+		
+		tree_mutex.lock()
+		branches_to_process.remove_at(0)            # Remove it and array shifts automatically
+		tree_mutex.unlock()

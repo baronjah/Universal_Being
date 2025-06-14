@@ -1,0 +1,127 @@
+# FOLDER: akashic_records
+# DESCRIPTION: Core system for universal entity model and record keeping
+# DATE ANALYZED: 2025-05-09
+
+## SCRIPT INVENTORY
+--------------------------------------------------------------------------------
+SCRIPT: universal_entity.gd
+CLASS: UniversalEntity
+EXTENDS: Node
+CONNECTIONS:
+  - IMPORTS: None
+  - EXPORTS: Used by all entity types and managers
+  - CALLS: Internal methods only
+  - CALLED BY: AkashicRecordsManagerA for entity instantiation
+FUNCTIONALITY: Base class for all entities in the game world. Represents the foundational "point" concept that can transform, evolve, and interact with other entities.
+INTEGRATION NOTES: This is the foundation of the entire entity system. Provides the core identity, spatial tracking, interaction rules, state management, history, and relationship tracking.
+--------------------------------------------------------------------------------
+SCRIPT: akashic_records_manager.gd
+CLASS: AkashicRecordsManagerA
+EXTENDS: Node
+CONNECTIONS:
+  - IMPORTS: DynamicDictionary, InteractionEngine, ZoneManager, WordEntry, evolution_manager.gd
+  - EXPORTS: Used by game systems, UI, and other managers
+  - CALLS: DynamicDictionary methods, InteractionEngine methods, ZoneManager methods
+  - CALLED BY: Various systems for record access, word creation, and entity instantiation
+FUNCTIONALITY: Central manager for all entities, words, interactions, and spatial tracking. Implements a singleton pattern for global access.
+INTEGRATION NOTES: This is the central "brain" that connects all subsystems. Handles dictionary initialization, word creation, interactions, and entity instantiation.
+--------------------------------------------------------------------------------
+SCRIPT: dynamic_dictionary.gd
+CLASS: DynamicDictionary
+EXTENDS: Node
+CONNECTIONS:
+  - IMPORTS: WordEntry
+  - EXPORTS: Used by AkashicRecordsManagerA
+  - CALLS: WordEntry methods, file operations
+  - CALLED BY: AkashicRecordsManagerA for dictionary operations
+FUNCTIONALITY: Manages word definitions, their relationships, hierarchies, and splitting when they become too complex.
+INTEGRATION NOTES: Implements the self-evolving database concept where entries can split into their own files when they grow too complex.
+--------------------------------------------------------------------------------
+SCRIPT: word_entry.gd
+CLASS: WordEntry
+EXTENDS: Resource
+CONNECTIONS:
+  - IMPORTS: None
+  - EXPORTS: Used by DynamicDictionary, InteractionEngine
+  - CALLS: Internal methods only
+  - CALLED BY: AkashicRecordsManagerA, DynamicDictionary, InteractionEngine
+FUNCTIONALITY: Represents a word/concept definition with properties, states, and interaction rules.
+INTEGRATION NOTES: The basic data unit in the akashic records system. Stores metadata, relationships, and rules.
+--------------------------------------------------------------------------------
+SCRIPT: zone_manager.gd
+CLASS: ZoneManager
+EXTENDS: Node
+CONNECTIONS:
+  - IMPORTS: None
+  - EXPORTS: Used by AkashicRecordsManagerA
+  - CALLS: Internal methods, file operations
+  - CALLED BY: AkashicRecordsManagerA for spatial operations
+FUNCTIONALITY: Manages spatial zones that can split and merge based on entity density and performance needs.
+INTEGRATION NOTES: Implements the dynamic chunking system where the world grid evolves based on activity.
+--------------------------------------------------------------------------------
+SCRIPT: interaction_engine.gd
+CLASS: InteractionEngine
+EXTENDS: Node
+CONNECTIONS:
+  - IMPORTS: WordEntry
+  - EXPORTS: Used by AkashicRecordsManagerA
+  - CALLS: WordEntry methods, DynamicDictionary methods
+  - CALLED BY: AkashicRecordsManagerA for processing word interactions
+FUNCTIONALITY: Processes interactions between words/entities based on defined rules.
+INTEGRATION NOTES: Core logic for emergence and evolution in the system. Handles condition evaluation and result generation.
+--------------------------------------------------------------------------------
+SCRIPT: thing_creator.gd
+CLASS: ThingCreatorA
+EXTENDS: Node
+CONNECTIONS:
+  - IMPORTS: AkashicRecordsManagerA, WordEntry
+  - EXPORTS: Used by game systems and UI
+  - CALLS: AkashicRecordsManagerA methods, scene tree methods
+  - CALLED BY: UI systems for creating things, game systems for instantiation
+FUNCTIONALITY: Creates visual representations of words/entities in the 3D world, manages their properties, and handles physical interactions.
+INTEGRATION NOTES: Bridges the gap between the conceptual database and the visual/interactive world. Acts as a factory for creating 3D entities from WordEntry definitions.
+--------------------------------------------------------------------------------
+SCRIPT: evolution_manager.gd
+CLASS: EvolutionManager
+EXTENDS: Node
+CONNECTIONS:
+  - IMPORTS: AkashicRecordsManagerA, WordEntry
+  - EXPORTS: Used by AkashicRecordsManagerA
+  - CALLS: WordEntry methods, random number generation, dictionary methods
+  - CALLED BY: AkashicRecordsManagerA, Timer for automatic evolution
+FUNCTIONALITY: Manages the automatic evolution of words over time, including property drift and variant generation.
+INTEGRATION NOTES: Provides the self-evolving aspect of the system, allowing words and entities to naturally change and develop over time through usage.
+--------------------------------------------------------------------------------
+SCRIPT: interaction_matrix.gd
+CLASS: InteractionMatrix
+EXTENDS: Node
+CONNECTIONS:
+  - IMPORTS: None
+  - EXPORTS: Used by UniversalBridge
+  - CALLS: Internal methods, random number generation
+  - CALLED BY: UniversalBridge for processing interactions between entities
+FUNCTIONALITY: Defines how different entity types interact with each other through a structured rule system.
+INTEGRATION NOTES: Provides the detailed interaction rules for elemental combinations, creating a rich emergent behavior system.
+--------------------------------------------------------------------------------
+SCRIPT: database_integrator.gd
+CLASS: AkashicDatabaseIntegrator
+EXTENDS: Node
+CONNECTIONS:
+  - IMPORTS: AkashicRecordsManagerA, various JSH systems
+  - EXPORTS: Used by game systems for database management
+  - CALLS: File operations, JSH data splitter methods
+  - CALLED BY: Game systems for database operations
+FUNCTIONALITY: Integrates the Akashic Records with JSH databases and handles automatic data splitting and organization.
+INTEGRATION NOTES: Provides the technical implementation of the self-evolving database concept, monitoring file sizes and automatically splitting when needed.
+--------------------------------------------------------------------------------
+SCRIPT: universal_bridge.gd
+CLASS: UniversalBridge
+EXTENDS: Node
+CONNECTIONS:
+  - IMPORTS: AkashicRecordsManagerA, ThingCreatorA, InteractionMatrix, ElementManager
+  - EXPORTS: Used by game systems to connect all subsystems
+  - CALLS: Methods from all major subsystems
+  - CALLED BY: Game systems for high-level operations
+FUNCTIONALITY: Serves as the central connection point between all major systems (Akashic Records, Element System, Thing Creator, Menu/Console).
+INTEGRATION NOTES: This is the "nervous system" that allows all parts of the game to communicate with each other, translating between conceptual entities and visual representations.
+--------------------------------------------------------------------------------

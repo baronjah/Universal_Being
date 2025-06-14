@@ -1,0 +1,10 @@
+# PERFECT READY - AI Entities Configuration
+# Format: ai_name:config_path
+# AI entities will be created as Universal Beings
+
+# Gamma - Kamisama's AI companion
+Gamma:config/ai/gamma_config.txt
+
+# Example additional AI entities:
+# Claude:config/ai/claude_config.txt
+# Helper:config/ai/helper_config.txt

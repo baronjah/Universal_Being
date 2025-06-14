@@ -1,0 +1,29 @@
+func recreator_of_singular_thing(data_set):
+	var cached_data_new = data_set.duplicate(true) 
+	var thing_name
+	var coords_to_place
+	var direction_to_place
+	var thing_type_file
+	var shape_name
+	var root_name
+	var pathway_dna
+	var group_number
+	var first_line : Array = []
+	var lines_parsed : Array = []
+	for lines in cached_data_new:
+		if lines == cached_data_new[0]:
+			first_line = cached_data_new[0]
+		else:
+			lines_parsed.append(lines)
+	thing_name = first_line[0][0]
+	coords_to_place = first_line[1][0]
+	direction_to_place = first_line[2][0]
+	thing_type_file = first_line[3][0]
+	shape_name = first_line[4][0]
+	root_name = first_line[5][0]
+	pathway_dna = first_line[6][0]
+	group_number = first_line[7][0]
+	#print(" the thingy dingy  : " , thing_name, thing_type_file, first_line, lines_parsed[0], group_number, shape_name, lines_parsed)
+	analise_data(thing_name, thing_type_file, first_line, lines_parsed[0], group_number, shape_name, lines_parsed)
+	first_line.clear()
+	lines_parsed.clear()

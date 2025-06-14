@@ -1,0 +1,8 @@
+func new_function_for_creation_recovery(record_type_now, first_stage_of_creation_now, stage_of_creation_now):
+	print(" fatal kurwa error 000 ", record_type_now , " , " , first_stage_of_creation_now, " , " , stage_of_creation_now)
+	if load_queue_mutex.try_lock():
+		print(" fatal kurwa error 00 load_queue_mutex ",)
+	else:
+		print(" fatal kurwa error 001 load_queue_mutex ",)
+		
+	array_with_no_mutex.append([record_type_now, first_stage_of_creation_now, stage_of_creation_now])

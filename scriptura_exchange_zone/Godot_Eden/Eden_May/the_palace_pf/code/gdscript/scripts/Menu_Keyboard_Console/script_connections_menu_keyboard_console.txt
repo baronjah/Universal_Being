@@ -1,0 +1,39 @@
+# FOLDER: Menu_Keyboard_Console
+# DESCRIPTION: Console, menu and keyboard system for interacting with the game world
+# DATE ANALYZED: 2025-05-09
+
+## SCRIPT INVENTORY
+--------------------------------------------------------------------------------
+SCRIPT: JSH_console.gd
+CLASS: JSHConsole
+EXTENDS: Node
+CONNECTIONS:
+  - IMPORTS: Various system references, including thread_pool, task_manager
+  - EXPORTS: Used as the main console interface
+  - CALLS: Methods of connected systems
+  - CALLED BY: Main game system, user input
+FUNCTIONALITY: Provides a comprehensive console system with command processing, history tracking, and terminal UI.
+INTEGRATION NOTES: The central interface for user interaction with the system. Integrates with various subsystems through registered commands and connections. Has multiple visual modes including 3D text rendering.
+--------------------------------------------------------------------------------
+SCRIPT: akashic_records_integration.gd
+CLASS: AkashicRecordsIntegration
+EXTENDS: Node
+CONNECTIONS:
+  - IMPORTS: AkashicRecordsManager, UI scenes
+  - EXPORTS: Used by JSHConsole
+  - CALLS: AkashicRecordsManager methods
+  - CALLED BY: JSHConsole for Akashic Records operations
+FUNCTIONALITY: Integrates the Akashic Records system with the console and UI, providing menu entries and command handling.
+INTEGRATION NOTES: Bridges the console interface with the Akashic Records system, allowing users to browse, create, and manipulate dictionary entries. Also connects element system events to dictionary updates.
+--------------------------------------------------------------------------------
+SCRIPT: thing_creator_integration.gd
+CLASS: ThingCreatorIntegration
+EXTENDS: Node
+CONNECTIONS:
+  - IMPORTS: ThingCreator, AkashicRecordsManager
+  - EXPORTS: Used by JSHConsole
+  - CALLS: ThingCreator methods, AkashicRecordsManager methods
+  - CALLED BY: JSHConsole for thing creation and management
+FUNCTIONALITY: Integrates the Thing Creator system with the console, providing UI and commands for creating and managing things.
+INTEGRATION NOTES: Allows the console to create visual entities in the world from dictionary entries. Acts as the bridge between the conceptual Akashic Records and the visual representation of entities.
+--------------------------------------------------------------------------------

@@ -1,0 +1,19 @@
+floodgates, universal_being, console, commands, akashic_records
+
+we had bird, in few versions, we had ragdolls in few versions, but these are for later, lets focus now on universal_beings, that can become anything
+
+yesterday, i talked and you made some commands that started with container, they were like rooms? you made few, they were supposed to connect to each other, based on their points, edges, corners sides, specific points and orientation, just like gizmo can attach to anything
+
+but i feel like these containers, shall be beings, i mean, i think each component of theirs was? hmm
+
+what we will need:
+
+an way to create shapes, assets, the asset creator
+
+where we have limits, that are bearable, and needed, so we generate an space, that is in godot metrics 10 by 10 by 10, in it we could add more beings, tell them which asset to use, arrange them in the spot, and store the frame of that space, as scene
+
+the same thing and similar one can be for createing asset, an shape, with simple shapes, and the sdf, where we can make one shape cut out piece of another etc, then we can make several of these shapes, stick them together, and make an asset, there is also an need for the bones to be possible with it too, so puting in somewhere some point, that takes the closest vertices? as the statics? maybe user will need to be able to select and deselect these points, to make sure the animations, of the objects, and the movement of edges, walls, vertices, are satisfying for me,
+
+asset creator, connected to universal beings, as with universal beings we create and creator, to make new universal_beings, all connected to console, commands, floodgates, and to database of ours, right now spread around entire folder, as assets, scenes, mostly txt files, maybe json files? too
+
+so lets ULTRATHINK

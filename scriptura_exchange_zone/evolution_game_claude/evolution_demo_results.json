@@ -1,0 +1,673 @@
+{
+  "config": {
+    "population_size": 30,
+    "mutation_rate": 0.15,
+    "crossover_rate": 0.8,
+    "elite_size": 3,
+    "max_generations": 50,
+    "fitness_threshold": 0.95
+  },
+  "generation": 1,
+  "population": [
+    {
+      "id": "gen0_entity_001",
+      "traits": {
+        "speed": 0.40967958784597336,
+        "agility": 1.1620791243154611,
+        "intelligence": 1.02114774710327,
+        "cooperation": 1.756938645878407,
+        "aggression": 1.3302730060127883,
+        "efficiency": 1.4412341490234142,
+        "adaptability": 0.7501275450195455,
+        "creativity": 1.44520887650207
+      },
+      "fitness": 1.0,
+      "generation": 0,
+      "parent_ids": [],
+      "mutations": []
+    },
+    {
+      "id": "gen0_entity_003",
+      "traits": {
+        "speed": 0.9324135631023606,
+        "agility": 1.3611539817638,
+        "intelligence": 1.2897459012038825,
+        "cooperation": 1.9866568629342625,
+        "aggression": 0.3541709269229205,
+        "efficiency": 0.9078299211338707,
+        "adaptability": 0.2872219739824119,
+        "creativity": 0.8848301090948707
+      },
+      "fitness": 1.0,
+      "generation": 0,
+      "parent_ids": [],
+      "mutations": []
+    },
+    {
+      "id": "gen0_entity_004",
+      "traits": {
+        "speed": 1.3362823076712476,
+        "agility": 0.26095120875989153,
+        "intelligence": 1.8137202974644018,
+        "cooperation": 0.39702441311267633,
+        "aggression": 1.0156444017396185,
+        "efficiency": 0.7628140224602529,
+        "adaptability": 0.7555335452570705,
+        "creativity": 0.8652062870661886
+      },
+      "fitness": 1.0,
+      "generation": 0,
+      "parent_ids": [],
+      "mutations": []
+    },
+    {
+      "id": "gen1_clone_003",
+      "traits": {
+        "speed": 1.70737010354999,
+        "agility": 1.2604532542627775,
+        "intelligence": 1.7175875720450269,
+        "cooperation": 0.6898136140367674,
+        "aggression": 1.5650950015933258,
+        "efficiency": 0.4578472887725752,
+        "adaptability": 1.0618204223665797,
+        "creativity": 1.5681095384106574
+      },
+      "fitness": 0.0,
+      "generation": 1,
+      "parent_ids": [
+        "gen0_entity_027"
+      ],
+      "mutations": [
+        "adaptability: 1.072 \u2192 1.062"
+      ]
+    },
+    {
+      "id": "gen1_entity_030",
+      "traits": {
+        "speed": 1.4960852926953803,
+        "agility": 1.2539733256809404,
+        "intelligence": 1.582415779724268,
+        "cooperation": 1.1569546896494596,
+        "aggression": 1.5100586376259242,
+        "efficiency": 1.2052539503252815,
+        "adaptability": 1.3336290747585418,
+        "creativity": 1.589852224089791
+      },
+      "fitness": 0.0,
+      "generation": 1,
+      "parent_ids": [
+        "gen0_entity_019",
+        "gen0_entity_027"
+      ],
+      "mutations": [
+        "speed: 1.671 \u2192 1.496",
+        "cooperation: 1.155 \u2192 1.157",
+        "aggression: 1.515 \u2192 1.510"
+      ]
+    },
+    {
+      "id": "gen1_clone_005",
+      "traits": {
+        "speed": 1.0344582369339277,
+        "agility": 1.7950716156570596,
+        "intelligence": 0.5980354791994344,
+        "cooperation": 0.30373247195786085,
+        "aggression": 1.1924232528091618,
+        "efficiency": 1.115362831697557,
+        "adaptability": 1.336466502057452,
+        "creativity": 1.9395997729211842
+      },
+      "fitness": 0.0,
+      "generation": 1,
+      "parent_ids": [
+        "gen0_entity_017"
+      ],
+      "mutations": [
+        "intelligence: 0.625 \u2192 0.598"
+      ]
+    },
+    {
+      "id": "gen1_entity_030",
+      "traits": {
+        "speed": 1.3309767363123242,
+        "agility": 1.7582850674147439,
+        "intelligence": 1.8641591242692306,
+        "cooperation": 1.0355425238944855,
+        "aggression": 1.0666600062635416,
+        "efficiency": 0.8785531440071122,
+        "adaptability": 1.499121284950959,
+        "creativity": 0.6683086864787336
+      },
+      "fitness": 0.0,
+      "generation": 1,
+      "parent_ids": [
+        "gen0_entity_011",
+        "gen0_entity_004"
+      ],
+      "mutations": [
+        "aggression: 1.008 \u2192 1.067"
+      ]
+    },
+    {
+      "id": "gen1_entity_030",
+      "traits": {
+        "speed": 1.4267393812544087,
+        "agility": 1.6679634120773814,
+        "intelligence": 0.8731324066769321,
+        "cooperation": 0.6705575734537054,
+        "aggression": 0.31801847488898627,
+        "efficiency": 1.9379544580531705,
+        "adaptability": 0.878458806194311,
+        "creativity": 1.043980156412083
+      },
+      "fitness": 0.0,
+      "generation": 1,
+      "parent_ids": [
+        "gen0_entity_025",
+        "gen0_entity_007"
+      ],
+      "mutations": []
+    },
+    {
+      "id": "gen1_clone_008",
+      "traits": {
+        "speed": 0.5051447210230864,
+        "agility": 1.45525918033624,
+        "intelligence": 1.0043211290920295,
+        "cooperation": 0.9474949662113157,
+        "aggression": 1.7948342048413766,
+        "efficiency": 1.4369220007373915,
+        "adaptability": 0.7108150793875344,
+        "creativity": 0.649190198208879
+      },
+      "fitness": 0.0,
+      "generation": 1,
+      "parent_ids": [
+        "gen0_entity_013"
+      ],
+      "mutations": [
+        "speed: 0.622 \u2192 0.505",
+        "adaptability: 0.774 \u2192 0.711",
+        "creativity: 0.785 \u2192 0.649"
+      ]
+    },
+    {
+      "id": "gen1_entity_030",
+      "traits": {
+        "speed": 1.115483095290175,
+        "agility": 1.7394751825523471,
+        "intelligence": 1.26376005552242,
+        "cooperation": 1.26411814979341,
+        "aggression": 0.35113148702276914,
+        "efficiency": 1.9344689077372978,
+        "adaptability": 0.7550095409152665,
+        "creativity": 1.3965065301071011
+      },
+      "fitness": 0.0,
+      "generation": 1,
+      "parent_ids": [
+        "gen0_entity_028",
+        "gen0_entity_007"
+      ],
+      "mutations": []
+    },
+    {
+      "id": "gen1_entity_030",
+      "traits": {
+        "speed": 1.428185480464851,
+        "agility": 1.7006179426509338,
+        "intelligence": 1.69000177377118,
+        "cooperation": 0.7416419701766451,
+        "aggression": 0.8358010523316179,
+        "efficiency": 0.6698870293403658,
+        "adaptability": 0.9283193627233954,
+        "creativity": 1.5873390940584815
+      },
+      "fitness": 0.0,
+      "generation": 1,
+      "parent_ids": [
+        "gen0_entity_027",
+        "gen0_entity_028"
+      ],
+      "mutations": [
+        "speed: 1.626 \u2192 1.428"
+      ]
+    },
+    {
+      "id": "gen1_clone_011",
+      "traits": {
+        "speed": 0.9673259930345518,
+        "agility": 1.6975522333760416,
+        "intelligence": 1.638950739929752,
+        "cooperation": 1.054559150842304,
+        "aggression": 0.8276041740199735,
+        "efficiency": 1.284117841609092,
+        "adaptability": 0.6398509955579426,
+        "creativity": 0.8657919035745877
+      },
+      "fitness": 0.0,
+      "generation": 1,
+      "parent_ids": [
+        "gen0_entity_021"
+      ],
+      "mutations": [
+        "cooperation: 1.129 \u2192 1.055"
+      ]
+    },
+    {
+      "id": "gen1_entity_030",
+      "traits": {
+        "speed": 1.3932663397950478,
+        "agility": 1.7940126536967558,
+        "intelligence": 1.9713145849428457,
+        "cooperation": 1.512757576117913,
+        "aggression": 0.3441439734014851,
+        "efficiency": 1.8776432887489385,
+        "adaptability": 1.3535651909326392,
+        "creativity": 0.4379945424060401
+      },
+      "fitness": 0.0,
+      "generation": 1,
+      "parent_ids": [
+        "gen0_entity_011",
+        "gen0_entity_028"
+      ],
+      "mutations": [
+        "intelligence: 1.874 \u2192 1.971",
+        "adaptability: 1.412 \u2192 1.354"
+      ]
+    },
+    {
+      "id": "gen1_entity_030",
+      "traits": {
+        "speed": 1.1577932119656251,
+        "agility": 0.3492869694627545,
+        "intelligence": 0.23171424190572956,
+        "cooperation": 1.7895815427567279,
+        "aggression": 0.654776061989406,
+        "efficiency": 1.1853597724972815,
+        "adaptability": 1.3560290309410736,
+        "creativity": 0.7329895727222924
+      },
+      "fitness": 0.0,
+      "generation": 1,
+      "parent_ids": [
+        "gen0_entity_004",
+        "gen0_entity_023"
+      ],
+      "mutations": []
+    },
+    {
+      "id": "gen1_entity_030",
+      "traits": {
+        "speed": 0.7258203402711866,
+        "agility": 1.7270693651720852,
+        "intelligence": 1.5288252370300637,
+        "cooperation": 1.6588999090991605,
+        "aggression": 1.4399866309784923,
+        "efficiency": 1.186740865839818,
+        "adaptability": 1.6218954365383782,
+        "creativity": 0.8645093008753488
+      },
+      "fitness": 0.0,
+      "generation": 1,
+      "parent_ids": [
+        "gen0_entity_018",
+        "gen0_entity_023"
+      ],
+      "mutations": [
+        "agility: 1.725 \u2192 1.727",
+        "efficiency: 1.190 \u2192 1.187"
+      ]
+    },
+    {
+      "id": "gen1_entity_030",
+      "traits": {
+        "speed": 0.9698930606817706,
+        "agility": 0.38603004561625237,
+        "intelligence": 1.720559976707936,
+        "cooperation": 0.43376222397684594,
+        "aggression": 0.9228307128871354,
+        "efficiency": 0.6870452005370008,
+        "adaptability": 1.4698643917026686,
+        "creativity": 1.5345447747888126
+      },
+      "fitness": 0.0,
+      "generation": 1,
+      "parent_ids": [
+        "gen0_entity_004",
+        "gen0_entity_005"
+      ],
+      "mutations": [
+        "cooperation: 0.463 \u2192 0.434",
+        "aggression: 0.971 \u2192 0.923",
+        "creativity: 1.681 \u2192 1.535"
+      ]
+    },
+    {
+      "id": "gen1_entity_030",
+      "traits": {
+        "speed": 0.37213495356506543,
+        "agility": 1.2243062436267822,
+        "intelligence": 0.8008091920333339,
+        "cooperation": 1.3336472367754155,
+        "aggression": 0.5661544323253451,
+        "efficiency": 1.06584417769078,
+        "adaptability": 1.6130165962290313,
+        "creativity": 0.9120480984711825
+      },
+      "fitness": 0.0,
+      "generation": 1,
+      "parent_ids": [
+        "gen0_entity_005",
+        "gen0_entity_023"
+      ],
+      "mutations": [
+        "cooperation: 1.323 \u2192 1.334"
+      ]
+    },
+    {
+      "id": "gen1_entity_030",
+      "traits": {
+        "speed": 0.9803294753069711,
+        "agility": 1.7431142993784585,
+        "intelligence": 1.8282804739634388,
+        "cooperation": 0.9810949201807464,
+        "aggression": 1.1462191958543362,
+        "efficiency": 1.1743545839241811,
+        "adaptability": 1.4151382434868713,
+        "creativity": 0.986802967870406
+      },
+      "fitness": 0.0,
+      "generation": 1,
+      "parent_ids": [
+        "gen0_entity_026",
+        "gen0_entity_021"
+      ],
+      "mutations": [
+        "agility: 1.750 \u2192 1.743",
+        "intelligence: 1.670 \u2192 1.828",
+        "creativity: 0.979 \u2192 0.987"
+      ]
+    },
+    {
+      "id": "gen1_entity_030",
+      "traits": {
+        "speed": 1.5812605983487646,
+        "agility": 2.0,
+        "intelligence": 1.967989753338404,
+        "cooperation": 0.8499918471246379,
+        "aggression": 1.008772880275345,
+        "efficiency": 1.3020075565809544,
+        "adaptability": 1.4616583573013517,
+        "creativity": 0.9332242569368581
+      },
+      "fitness": 0.0,
+      "generation": 1,
+      "parent_ids": [
+        "gen0_entity_026",
+        "gen0_entity_021"
+      ],
+      "mutations": [
+        "agility: 1.807 \u2192 2.000",
+        "creativity: 0.922 \u2192 0.933"
+      ]
+    },
+    {
+      "id": "gen1_entity_030",
+      "traits": {
+        "speed": 0.8980571516115509,
+        "agility": 0.7439851419805132,
+        "intelligence": 1.2645638314377177,
+        "cooperation": 1.4888158960605375,
+        "aggression": 1.1917915931732312,
+        "efficiency": 1.9630807156368553,
+        "adaptability": 0.9135827121482092,
+        "creativity": 1.0689118052505948
+      },
+      "fitness": 0.0,
+      "generation": 1,
+      "parent_ids": [
+        "gen0_entity_003",
+        "gen0_entity_006"
+      ],
+      "mutations": [
+        "agility: 0.671 \u2192 0.744",
+        "efficiency: 1.895 \u2192 1.963"
+      ]
+    },
+    {
+      "id": "gen1_entity_030",
+      "traits": {
+        "speed": 1.0817881306505632,
+        "agility": 1.9001136696646648,
+        "intelligence": 1.7702257328998243,
+        "cooperation": 0.8028036817628447,
+        "aggression": 0.9377019785841587,
+        "efficiency": 1.3397846443741717,
+        "adaptability": 1.8710377498907362,
+        "creativity": 0.16815025725373542
+      },
+      "fitness": 0.0,
+      "generation": 1,
+      "parent_ids": [
+        "gen0_entity_010",
+        "gen0_entity_011"
+      ],
+      "mutations": []
+    },
+    {
+      "id": "gen1_entity_030",
+      "traits": {
+        "speed": 1.1357238448395182,
+        "agility": 1.8440160673251762,
+        "intelligence": 1.4956018858131885,
+        "cooperation": 1.1578229288420236,
+        "aggression": 0.986948178803366,
+        "efficiency": 1.717795918497522,
+        "adaptability": 1.7546504453117224,
+        "creativity": 0.1791247129825442
+      },
+      "fitness": 0.0,
+      "generation": 1,
+      "parent_ids": [
+        "gen0_entity_011",
+        "gen0_entity_019"
+      ],
+      "mutations": [
+        "agility: 1.733 \u2192 1.844",
+        "aggression: 0.961 \u2192 0.987"
+      ]
+    },
+    {
+      "id": "gen1_entity_030",
+      "traits": {
+        "speed": 0.2947350094421893,
+        "agility": 1.7167875768612364,
+        "intelligence": 1.0858436312199977,
+        "cooperation": 1.3740495521803737,
+        "aggression": 0.9342507626398657,
+        "efficiency": 0.9654401016591831,
+        "adaptability": 1.6186425478985242,
+        "creativity": 1.30260422635984
+      },
+      "fitness": 0.0,
+      "generation": 1,
+      "parent_ids": [
+        "gen0_entity_005",
+        "gen0_entity_023"
+      ],
+      "mutations": [
+        "efficiency: 0.914 \u2192 0.965"
+      ]
+    },
+    {
+      "id": "gen1_entity_030",
+      "traits": {
+        "speed": 1.7634973873172317,
+        "agility": 0.6785063397884508,
+        "intelligence": 1.9640502318286925,
+        "cooperation": 0.6505665195233015,
+        "aggression": 1.0674719401206498,
+        "efficiency": 0.7401683524817123,
+        "adaptability": 0.7823954843524901,
+        "creativity": 0.942700197621134
+      },
+      "fitness": 0.0,
+      "generation": 1,
+      "parent_ids": [
+        "gen0_entity_027",
+        "gen0_entity_004"
+      ],
+      "mutations": [
+        "speed: 1.699 \u2192 1.763",
+        "intelligence: 1.802 \u2192 1.964"
+      ]
+    },
+    {
+      "id": "gen1_entity_030",
+      "traits": {
+        "speed": 0.5191973480307316,
+        "agility": 0.9949516905875886,
+        "intelligence": 1.433971966750893,
+        "cooperation": 1.7176773673237615,
+        "aggression": 0.3449777871092068,
+        "efficiency": 1.4403941757384418,
+        "adaptability": 0.2871185809229802,
+        "creativity": 1.0831847447007907
+      },
+      "fitness": 0.0,
+      "generation": 1,
+      "parent_ids": [
+        "gen0_entity_003",
+        "gen0_entity_001"
+      ],
+      "mutations": [
+        "agility: 1.157 \u2192 0.995",
+        "intelligence: 1.240 \u2192 1.434",
+        "cooperation: 1.798 \u2192 1.718",
+        "creativity: 1.089 \u2192 1.083"
+      ]
+    },
+    {
+      "id": "gen1_clone_025",
+      "traits": {
+        "speed": 0.5479150948355717,
+        "agility": 0.10223911630628518,
+        "intelligence": 0.994437158177606,
+        "cooperation": 0.6086920008938036,
+        "aggression": 1.723680462089116,
+        "efficiency": 0.9109783527418462,
+        "adaptability": 0.5663601084945915,
+        "creativity": 1.966692428867024
+      },
+      "fitness": 0.0,
+      "generation": 1,
+      "parent_ids": [
+        "gen0_entity_016"
+      ],
+      "mutations": [
+        "speed: 0.540 \u2192 0.548"
+      ]
+    },
+    {
+      "id": "gen1_entity_030",
+      "traits": {
+        "speed": 1.4650676209278302,
+        "agility": 1.2588781795773853,
+        "intelligence": 1.2747148736504803,
+        "cooperation": 1.8894006989008427,
+        "aggression": 1.2957849062722442,
+        "efficiency": 1.2546532647490114,
+        "adaptability": 1.4304316040796003,
+        "creativity": 1.4035934264570924
+      },
+      "fitness": 0.0,
+      "generation": 1,
+      "parent_ids": [
+        "gen0_entity_001",
+        "gen0_entity_026"
+      ],
+      "mutations": [
+        "cooperation: 1.800 \u2192 1.889",
+        "adaptability: 1.439 \u2192 1.430"
+      ]
+    },
+    {
+      "id": "gen1_entity_030",
+      "traits": {
+        "speed": 1.5051265121277377,
+        "agility": 1.4356990491741646,
+        "intelligence": 1.3313847595751354,
+        "cooperation": 0.49089491856943923,
+        "aggression": 0.4721569646338901,
+        "efficiency": 1.924129830721517,
+        "adaptability": 0.6582307860417105,
+        "creativity": 1.6649400545712443
+      },
+      "fitness": 0.0,
+      "generation": 1,
+      "parent_ids": [
+        "gen0_entity_009",
+        "gen0_entity_028"
+      ],
+      "mutations": [
+        "agility: 1.440 \u2192 1.436"
+      ]
+    },
+    {
+      "id": "gen1_entity_030",
+      "traits": {
+        "speed": 0.26303073586409254,
+        "agility": 1.8245435818053475,
+        "intelligence": 0.7325870088360444,
+        "cooperation": 0.4782217534759645,
+        "aggression": 0.34472884159641626,
+        "efficiency": 1.1116041001802894,
+        "adaptability": 0.9777791632598635,
+        "creativity": 1.2803542197275148
+      },
+      "fitness": 0.0,
+      "generation": 1,
+      "parent_ids": [
+        "gen0_entity_017",
+        "gen0_entity_007"
+      ],
+      "mutations": [
+        "speed: 0.423 \u2192 0.263"
+      ]
+    },
+    {
+      "id": "gen1_entity_030",
+      "traits": {
+        "speed": 1.7070068178564597,
+        "agility": 2.0,
+        "intelligence": 1.8332719328419602,
+        "cooperation": 1.8692766351627375,
+        "aggression": 0.44089091395056845,
+        "efficiency": 0.913115035551537,
+        "adaptability": 0.384041606167458,
+        "creativity": 0.935094210229338
+      },
+      "fitness": 0.0,
+      "generation": 1,
+      "parent_ids": [
+        "gen0_entity_003",
+        "gen0_entity_026"
+      ],
+      "mutations": []
+    }
+  ],
+  "evolution_history": [
+    {
+      "generation": 1,
+      "best_fitness": 1.0,
+      "avg_fitness": 0.1,
+      "population_size": 30,
+      "timestamp": "2025-05-22T09:22:54.906196"
+    }
+  ],
+  "best_fitness_history": [
+    1.0
+  ]
+}

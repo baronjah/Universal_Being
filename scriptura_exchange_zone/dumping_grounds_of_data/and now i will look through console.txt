@@ -1,0 +1,107 @@
+and now i will look through console log
+
+  ✅ AssetLibrary: Online
+  📚 Asset Catalog: { "objects": 8, "ragdolls": 2, "materials": 3, "textures": 1, "audio": 2 }
+
+umm but when i use command assets, it has 15 objects, like tree, wall, fruit, stick etc
+
+so maybe asset catalog and assets library, standardized objects
+
+all need to become one thing?
+
+in one standard?
+
+so gamma will understand it better for txt akashic records database of creation
+
+
+=== CONSOLE DIAGNOSTIC ===
+✅ ConsoleManager found
+Console properties:
+  - command_history (28)
+  - commands (27)
+  - metadata/command_descriptions (27)
+✅ 'commands' property exists
+  Type: 27
+  Is Dictionary: true
+  Command count: 329
+  First 5 commands:
+    - help
+    - setup_systems
+    - performance
+    - process_manager
+    - test
+=== END DIAGNOSTIC ===
+
+
+we have 329 commands, i dont know them all
+
+
+we also have combo of commands
+
+like when we start command with word "being"
+
+it will always be about universal_being
+
+etc
+
+
+that one is scary
+
+
+[SimpleConsoleTest] Looking for console...
+[SimpleConsoleTest] DebugConsole not found, trying JSHConsole...
+[SimpleConsoleTest] ❌ No console found!
+
+
+console_manager was like main console file? i am not sure anymore
+
+JSHConsole file that i remember needed a lot of work, like it needed to be rewritten, but we done that kinda, we have new working nice console, that can become connected to Universal_being interface system, with console, the logic_connector? that was the name? shall help us with that, as whole akashic_records database shall, show us them records , so we know what, where and how shall happen, by some command
+
+
+wait, we have even more commands
+
+
+
+🔧 [DelayedInjector] Attempting to inject commands...
+[DelayedInjector] Console found, checking commands...
+[DelayedInjector] ✅ Found commands via property check
+[DelayedInjector] Adding custom commands to dictionary with 340 existing commands...
+[DelayedInjector] ✅ Commands injected successfully!
+[DelayedInjector] New total commands: 340
+[DelayedInjector] ✅ Verified: spawn_biowalker added
+[DelayedInjector] ✅ Verified: test_layers added
+[DelayedInjector] ✅ Verified: layer added
+
+
+
+and i think that is the inspector, or connection to it
+
+
+✅ [InspectionBridge] Object inspector found: UniversalObjectInspector
+✅ [InspectionBridge] Console manager connected
+✅ [InspectionBridge] Floodgate controller connected
+✅ [InspectionBridge] Universal object manager connected
+🔍 [InspectionBridge] Scene tree monitoring active
+🌟 [InspectionBridge] All systems connected - everything is now inspectable!
+
+that we need, the one i see probably
+
+
+
+we also have these
+
+
+[LayerRealitySystem] Console commands registered
+✨ [MainGameController] Layer Reality System ready!
+   - Press F1-F4 to toggle layers
+   - Press F5 to cycle view modes
+   - Use 'layers' command for status
+
+
+we didnt do too much with it, so we definitely will need to take another look on it, as it will connect highly with what we tried to do with gizmo
+
+gizmo was supposed to be always seen, no matter what is between me and it, even if it is ground
+
+but here we made just 3 layers? background, top, even more top?
+
+for 3d layer system like in 2d scene, like layers in some photo edit shop program? hmm

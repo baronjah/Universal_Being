@@ -1,0 +1,56 @@
+# Tutorial Steps Configuration
+# Step-by-step progression through the game
+
+step:1
+title=Welcome to Talking Ragdoll Game
+description=Press Tab to open console
+action=check_console_open
+validation=console_visible
+
+step:2
+title=Test Console Commands
+description=Type 'help' and press Enter
+action=use_command
+command=help
+validation=help_displayed
+
+step:3
+title=Spawn Your First Object
+description=Type 'tree' to create a tree
+action=use_command
+command=tree
+validation=object_spawned
+
+step:4
+title=Click to Inspect
+description=Click on the tree you just created
+action=click_object
+target=tree
+validation=object_clicked
+
+step:5
+title=Create Universal Being
+description=Type 'spawn_universal_being'
+action=use_command
+command=spawn_universal_being
+validation=universal_being_exists
+
+step:6
+title=Transform Universal Being
+description=Type 'being_transform box'
+action=use_command
+command=being_transform box
+validation=transformation_completed
+
+step:7
+title=Check System Health
+description=Type 'repair_status'
+action=use_command
+command=repair_status
+validation=status_displayed
+
+step:8
+title=Tutorial Complete!
+description=Your game is fully operational
+action=celebration
+validation=tutorial_finished

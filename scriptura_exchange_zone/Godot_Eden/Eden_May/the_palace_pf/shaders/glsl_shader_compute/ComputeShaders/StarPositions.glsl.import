@@ -1,0 +1,14 @@
+[remap]
+
+importer="glsl"
+type="RDShaderFile"
+uid="uid://c0qdli58q5byy"
+path="res://.godot/imported/StarPositions.glsl-cf02a13253efbad9c2861ff2709ad4c4.res"
+
+[deps]
+
+source_file="res://shaders/glsl_shader_compute/ComputeShaders/StarPositions.glsl"
+dest_files=["res://.godot/imported/StarPositions.glsl-cf02a13253efbad9c2861ff2709ad4c4.res"]
+
+[params]
+

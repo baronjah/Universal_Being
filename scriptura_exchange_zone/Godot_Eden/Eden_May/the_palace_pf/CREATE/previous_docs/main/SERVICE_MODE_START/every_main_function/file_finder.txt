@@ -1,0 +1,7 @@
+func file_finder(file_name, path_to_file, list_of_files, type_of_data):
+	var counter_liste = list_of_files.size()
+	var counter_times : int = 0
+	
+	for file in list_of_files:
+		if file == file_name:
+			file_path = path_to_file + "/" + file

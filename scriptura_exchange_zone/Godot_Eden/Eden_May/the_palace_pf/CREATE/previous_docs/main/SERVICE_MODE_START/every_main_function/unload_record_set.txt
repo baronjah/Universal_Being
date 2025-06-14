@@ -1,0 +1,20 @@
+func unload_record_set(records_sets_name : String, record_type: String) -> void:
+	records_sets_name = records_sets_name + "_"
+	
+	active_r_s_mut.lock()
+	if active_record_sets.has(records_sets_name):
+		if active_record_sets[records_sets_name].has(record_type):
+			var data = active_record_sets[records_sets_name][record_type]
+			var meta_data = active_record_sets[records_sets_name]["metadata"]
+			active_r_s_mut.unlock()
+			
+			cache_data(records_sets_name, record_type, data, meta_data)
+			
+			active_r_s_mut.lock()
+			active_record_sets[records_sets_name].erase(record_type)
+			active_r_s_mut.unlock()
+			
+		else:
+			active_r_s_mut.unlock()
+	else:
+		active_r_s_mut.unlock()

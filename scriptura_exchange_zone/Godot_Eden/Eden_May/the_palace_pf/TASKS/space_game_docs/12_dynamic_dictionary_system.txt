@@ -1,0 +1,236 @@
+# Dynamic Dictionary System
+
+## Overview
+The Dynamic Dictionary System is a core component of Eden that enables complex relationships between concepts, elements, and game objects. It acts as both a database of entities and a rule engine for their interactions, allowing the game to model complex emergent behaviors from simple definitions.
+
+## Core Concepts
+
+### 1. Word/Entity Structure
+- **Base Words**: Fundamental concepts (fire, water, earth, etc.) that serve as root nodes
+- **Hierarchical Relationships**: Words can branch into subcategories (water → waterfall, river, splash)
+- **Properties**: Each word has attributes that define its behavior and appearance
+- **States**: Words can exist in different states (water: liquid, ice, vapor)
+- **Unique Identifiers**: Each entity has a unique ID (a0-z9, aa0, aa00 format)
+
+### 2. Dynamic File Management
+- **Word Files**: Base words start in a single dictionary file
+- **Splitting Mechanism**: When a word develops too many variations or becomes too complex, it splits into its own file
+- **Reference System**: Parent dictionaries maintain references to child dictionaries
+- **Dynamic Loading**: Only relevant word files are loaded when needed
+
+### 3. Rule-Based Interactions
+- **Transformation Rules**: Define how entities change when they interact
+- **Contextual Behavior**: Entities behave differently based on their environment
+- **Combination Logic**: Rules for how elements interact and combine
+- **Evolution Paths**: Define how entities can evolve over time
+
+## Technical Implementation
+
+### File Structure
+```
+/dictionary/
+  - root_dictionary.json       # Master dictionary with base words
+  - water_dictionary.json      # Split dictionary for water and its derivatives
+  - fire_dictionary.json       # Split dictionary for fire and its derivatives
+  /elements/                   # Element-specific dictionaries
+  /entities/                   # Entity-specific dictionaries
+  /interactions/               # Interaction rule definitions
+```
+
+### Dictionary Entry Format
+```json
+{
+  "id": "water",
+  "category": "element",
+  "parent": null,  // null indicates a root word
+  "children": ["waterfall", "river", "lake", "ocean", "rain"],
+  "properties": {
+    "flow": 0.8,
+    "transparency": 0.7,
+    "reflective": true,
+    "temperature": 20
+  },
+  "states": {
+    "liquid": {
+      "default": true,
+      "properties": {}
+    },
+    "ice": {
+      "transformation": {
+        "condition": "temperature < 0",
+        "properties": {
+          "flow": 0,
+          "transparency": 0.5,
+          "hardness": 0.6
+        }
+      }
+    },
+    "vapor": {
+      "transformation": {
+        "condition": "temperature > 100",
+        "properties": {
+          "flow": 1.0,
+          "transparency": 0.9,
+          "rises": true
+        }
+      }
+    }
+  },
+  "interactions": {
+    "fire": {
+      "result": "steam",
+      "conditions": {
+        "intensity": "> 0.5"
+      }
+    }
+  },
+  "file_reference": null  // If split into own file, contains path
+}
+```
+
+### Child Entry Format (For Split Dictionaries)
+```json
+{
+  "id": "waterfall",
+  "category": "form",
+  "parent": "water",
+  "children": ["small_waterfall", "large_waterfall", "cascade"],
+  "properties": {
+    "flow": 1.0,
+    "height": 10.0,
+    "sound": "rushing",
+    "spray": 0.7
+  },
+  "states": {
+    "flowing": {
+      "default": true,
+      "properties": {}
+    },
+    "frozen": {
+      "transformation": {
+        "condition": "temperature < -5",
+        "properties": {
+          "flow": 0,
+          "sound": "silent"
+        }
+      }
+    }
+  },
+  "interactions": {},
+  "file_reference": null
+}
+```
+
+## Integration with Space Game
+
+### Cosmic Scale to Element Scale
+- **Planet Composition**: Planet types define the dominant base words/elements
+- **Surface Features**: Terrain features (mountains, oceans) are represented by words
+- **Resource Deposits**: Resources are specific word instances with properties
+- **Weather Systems**: Dynamic interactions between elements at planetary scale
+
+### Entity Creation and Management
+
+1. **ID Generation System**:
+   - First characters: Entity type (p = planet, s = star, g = galaxy, e = element)
+   - Middle characters: Variant or type specification
+   - Numbers: Unique identifier within category
+
+2. **Entity Instantiation**:
+   - When created, entities inherit properties from their dictionary definition
+   - Entities maintain references to their dictionary entries
+   - Local modifications don't affect the dictionary but can be promoted if significant
+
+3. **Zone Management**:
+   - World starts as a single zone file
+   - As complexity increases, zones split into their own files
+   - Each zone tracks entities present and their states
+   - Connections between zones define interaction boundaries
+
+## Dynamic Evolution
+
+### Word Evolution Process
+1. **Usage Frequency**: Words used more often become more prominent
+2. **Variant Generation**: Common usage patterns can generate new variants
+3. **Property Drift**: Properties can gradually change based on usage context
+4. **Splitting Threshold**: When a word has too many variants or complex relationships, it becomes a separate dictionary
+
+### Spatial Evolution
+1. **Concentration Effects**: High concentration of elements creates new properties
+2. **Border Phenomena**: Interactions at zone boundaries create unique effects
+3. **Migration Patterns**: Elements can flow between zones based on gradients
+4. **Tipping Points**: When ratios of elements reach certain thresholds, transformations occur
+
+## Technical Structure in Godot
+
+### Core Classes
+
+1. **DynamicDictionary**: Main controller for the dictionary system
+   ```gdscript
+   # Handles loading, management, and saving of dictionary files
+   # Controls splitting and merging of dictionaries
+   # Provides API for word lookups and creation
+   ```
+
+2. **WordEntry**: Base class for dictionary entries
+   ```gdscript
+   # Represents a single word/concept
+   # Manages properties, states, and interactions
+   # Handles serialization and deserialization
+   ```
+
+3. **DictionarySplitter**: Utility for managing dictionary splitting
+   ```gdscript
+   # Analyzes dictionaries for splitting candidates
+   # Handles the file creation and reference updating
+   # Manages the splitting process
+   ```
+
+4. **InteractionEngine**: Processes interactions between words
+   ```gdscript
+   # Evaluates interaction rules
+   # Generates results of interactions
+   # Handles transformations and state changes
+   ```
+
+5. **ZoneManager**: Manages spatial organization of word instances
+   ```gdscript
+   # Controls zone creation and splitting
+   # Manages entity distribution across zones
+   # Handles zone file serialization
+   ```
+
+## Implementation Plan
+
+### Phase 1: Core Dictionary System
+1. Create the base dictionary data structure
+2. Implement word relationship management
+3. Build serialization/deserialization
+4. Create API for dictionary access
+
+### Phase 2: Dynamic File Management
+1. Implement dictionary splitting logic
+2. Create file reference system
+3. Build dynamic loading/unloading
+4. Test with large dictionaries
+
+### Phase 3: Interaction Rules
+1. Create the rule definition system
+2. Implement the interaction engine
+3. Add state transformation logic
+4. Build testing framework for rules
+
+### Phase 4: Zone Management
+1. Implement zone data structure
+2. Create zone splitting logic
+3. Build entity tracking system
+4. Add zone serialization
+
+### Phase 5: Integration with Space Game
+1. Connect planetary composition to dictionary
+2. Integrate with element system
+3. Link resource system with dictionary entries
+4. Implement visualization of dictionary relationships
+
+## Conclusion
+The Dynamic Dictionary System serves as the foundation for Eden's emergent gameplay, allowing complex interactions and evolutions to arise from simple, defined relationships. By integrating with the space game's scale-based architecture, it creates a seamless experience from universe scale down to elemental interactions.

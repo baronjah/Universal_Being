@@ -1,0 +1,72 @@
+# Eden Space Game Project Information
+
+## Project Location
+- Main Project Path: D:/GodotEden/godot luminus copy/eden feb
+- Documentation Path: D:/GodotEden/godot luminus copy/eden feb/space_game_docs
+
+## Primary Components
+
+### Menu Keyboard Console System
+- Primary interface for the game
+- Located in: code/gdscript/scripts/Menu_Keyboard_Console/
+- Key files:
+  - main.gd: Core controller for the interface
+  - records_bank.gd: Manages stored records
+  - actions_bank.gd: Controls available actions
+  - scenes_bank.gd: Handles different scenes
+  - instructions_bank.gd: Provides help information
+  - bank_combiner.gd: Coordinates between different banks
+  - datapoint.gd: Data structure for entities
+  - container.gd: Handles UI containers
+
+### Akashic Records System
+- Dynamic dictionary and word relationship management
+- Located in: code/gdscript/scripts/akashic_records/
+- Key files:
+  - akashic_records_manager.gd: Central coordinator for the system
+  - word_entry.gd: Individual word definitions
+  - dynamic_dictionary.gd: Word database
+  - interaction_engine.gd: Rules for word interactions
+  - zone_manager.gd: Spatial organization system
+  - evolution_manager.gd: Manages property drift and evolution
+  - frequency_visualizer.gd: Visualization of words as nodes
+
+### Element System
+- Physical representation of elements
+- Located in: code/gdscript/scripts/elements_shapes_projection/
+- Key files:
+  - elements_manager.gd: Manages all elements
+  - base_element.gd: Base class for all elements
+  - fire_element.gd: Fire implementation
+  - water_element.gd: Water implementation
+  - wood_element.gd: Wood implementation
+  - ash_element.gd: Ash implementation
+
+### VR System
+- VR implementation for Oculus Quest 2
+- Located in: code/gdscript/scripts/vr_system/
+- Key files:
+  - vr_manager.gd: Core VR management
+  - vr_akashic_interface.gd: Integration with Akashic Records
+  - vr_scene_setup.gd: Scene preparation for VR
+
+### Space System
+- Universe, galaxies, stars, planets
+- Located in: code/gdscript/scripts/Galaxy_Star_Planet/
+- Key files:
+  - space_camera_controller.gd: Controls camera movement
+  - planet_system.gd: Planet generation and behavior
+  - star_system_generator.gd: Star system creation
+  - space_selection_system.gd: Object selection in space
+
+## Current Issues
+1. Compatibility issues with Godot 4.4.1 (API changes)
+2. Dictionary empty() function deprecated
+3. Missing GridMesh class references
+4. Type mismatches in parameter passing
+5. Animation API changes
+6. Performance issues with too many light sources
+7. ZoneManager class resolution errors
+
+## Development Focus
+The primary focus should be on building the Akashic Records system integrated with the existing menu console, allowing for dynamic creation, evolution, and visualization of words/concepts as interactive entities in the game world.

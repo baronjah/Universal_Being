@@ -1,0 +1,16 @@
+eden scripts projects folders
+lets take a look at these folders, and understand these folders, and their files, so we can scavenge them to our projects faster
+
+D:\Godot Projects\game_blueprint\code\gdscript\scripts\Ai_Digital_Filter
+D:\Godot Projects\game_blueprint\code\gdscript\scripts\akashic_records
+D:\Godot Projects\game_blueprint\code\gdscript\scripts\Archive_Past_Text
+D:\Godot Projects\game_blueprint\code\gdscript\scripts\Dungeons
+D:\Godot Projects\game_blueprint\code\gdscript\scripts\Future_Past_Present
+D:\Godot Projects\game_blueprint\code\gdscript\scripts\Galaxy_Star_Planet
+D:\Godot Projects\game_blueprint\code\gdscript\scripts\Menu_Keyboard_Console
+D:\Godot Projects\game_blueprint\code\gdscript\scripts\Planet_Cloud_Water_Grass
+D:\Godot Projects\game_blueprint\code\gdscript\scripts\Snake_Space_Movement
+D:\Godot Projects\game_blueprint\code\gdscript\scripts\Space_Place_Point
+D:\Godot Projects\game_blueprint\code\gdscript\scripts\Text_Console_Window
+D:\Godot Projects\game_blueprint\code\gdscript\scripts\Thing_Place_Space
+D:\Godot Projects\game_blueprint\code\gdscript\scripts\Time_Repeat_Cycle_Loop_Return_Again

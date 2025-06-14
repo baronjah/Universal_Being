@@ -1,0 +1,810 @@
+# Integrating Your Expanded Concepts
+
+Your additional notes contain several powerful concepts that can enhance our Zero Point Entity Creator. Here's how we can integrate each of these ideas into our existing framework:
+
+## 1. Enhanced Word Database System
+
+Our current `word_manifestor.gd` already includes a basic word property system, but we can expand it to support your hierarchical concept database:
+
+```gdscript
+# Add to word_manifestor.gd
+
+# ----- HIERARCHICAL RELATIONSHIPS -----
+var word_hierarchies = {
+    # Base words and their subcategories
+    "water": ["waterfall", "river", "lake", "ocean", "rain", "splash", "droplet"],
+    "fire": ["flame", "spark", "ember", "blaze", "inferno", "flicker", "heat"],
+    "earth": ["mountain", "stone", "crystal", "sand", "soil", "metal", "gem"],
+    "air": ["wind", "breeze", "gust", "tornado", "cloud", "fog", "breath"]
+}
+
+# Word attributes by category
+var word_attributes = {
+    "water": ["flowing", "clear", "reflective", "cool", "wet", "fluid"],
+    "fire": ["hot", "bright", "flickering", "consuming", "transformative"],
+    "earth": ["solid", "stable", "heavy", "fertile", "crystalline"],
+    "air": ["invisible", "moving", "light", "free", "gaseous"]
+}
+
+# Word states
+var word_states = {
+    "water": ["liquid", "ice", "vapor", "mist"],
+    "fire": ["flame", "ember", "smoke", "ash"],
+    "earth": ["solid", "dust", "molten", "crystal"],
+    "air": ["still", "breeze", "gale", "vacuum"]
+}
+
+# Word combinations (formulaic)
+var word_combinations = {
+    "water+fire": "steam",
+    "fire+earth": "lava",
+    "earth+water": "mud",
+    "air+water": "mist",
+    "fire+air": "smoke",
+    "earth+air": "dust"
+}
+
+func get_subcategories(word: String) -> Array:
+    """
+    Get all subcategories for a base word
+    """
+    if word_hierarchies.has(word):
+        return word_hierarchies[word]
+    
+    # Check if it's a subcategory and return siblings
+    for base_word in word_hierarchies:
+        if word in word_hierarchies[base_word]:
+            return word_hierarchies[base_word]
+    
+    return []
+
+func get_attributes(word: String) -> Array:
+    """
+    Get all attributes for a word
+    """
+    # Check if it's a base word
+    if word_attributes.has(word):
+        return word_attributes[word]
+    
+    # Check if it's a subcategory
+    for base_word in word_hierarchies:
+        if word in word_hierarchies[base_word]:
+            return word_attributes[base_word]
+    
+    return []
+
+func get_possible_states(word: String) -> Array:
+    """
+    Get all possible states for a word
+    """
+    # Similar to get_attributes but for states
+    if word_states.has(word):
+        return word_states[word]
+    
+    for base_word in word_hierarchies:
+        if word in word_hierarchies[base_word]:
+            return word_states[base_word]
+    
+    return []
+```
+
+## 2. Enhanced Dynamic Map System
+
+Our `dynamic_map_system.gd` already has cell splitting and merging. We can enhance it with biomes and zone properties:
+
+```gdscript
+# Add to MapCell class in dynamic_map_system.gd
+
+# Zone/biome properties
+var zone_type: String = "neutral"
+var dominant_element: String = "none"
+var resources = {}
+var weather_state: String = "clear"
+var history = []  # Array of past significant events
+
+# Resource initialization
+func initialize_resources():
+    """
+    Initialize resources based on zone type
+    """
+    match zone_type:
+        "forest":
+            resources = {
+                "wood": 100.0,
+                "water": 50.0,
+                "earth": 30.0,
+                "fire": 5.0
+            }
+        "desert":
+            resources = {
+                "earth": 100.0,
+                "fire": 70.0,
+                "wood": 10.0,
+                "water": 5.0
+            }
+        "ocean":
+            resources = {
+                "water": 100.0,
+                "earth": 20.0,
+                "wood": 5.0
+            }
+        "mountain":
+            resources = {
+                "earth": 100.0,
+                "air": 50.0,
+                "water": 20.0,
+                "fire": 5.0
+            }
+        "plains":
+            resources = {
+                "earth": 50.0,
+                "wood": 40.0,
+                "water": 30.0,
+                "air": 30.0
+            }
+        _:  # Default/neutral
+            resources = {
+                "earth": 25.0,
+                "water": 25.0,
+                "fire": 25.0,
+                "air": 25.0
+            }
+
+# Update zone type based on entities
+func update_zone_type():
+    """
+    Update zone type based on dominant elements in the zone
+    """
+    var element_counts = {
+        "fire": 0,
+        "water": 0,
+        "earth": 0,
+        "air": 0,
+        "wood": 0
+    }
+    
+    # Count element types
+    for entity in get_entities():
+        if entity is UniversalEntity and entity.properties.has("elements"):
+            for element in entity.properties.elements:
+                if element_counts.has(element):
+                    element_counts[element] += entity.properties.elements[element]
+    
+    # Determine dominant element
+    var max_count = 0
+    var max_element = "none"
+    
+    for element in element_counts:
+        if element_counts[element] > max_count:
+            max_count = element_counts[element]
+            max_element = element
+    
+    dominant_element = max_element
+    
+    # Set zone type based on dominant element
+    if dominant_element == "water" and element_counts.water > 50:
+        zone_type = "ocean"
+    elif dominant_element == "earth" and element_counts.earth > 50:
+        if element_counts.air > 30:
+            zone_type = "mountain"
+        else:
+            zone_type = "plains"
+    elif dominant_element == "fire" and element_counts.fire > 50:
+        zone_type = "desert"
+    elif dominant_element == "wood" or (dominant_element == "earth" and element_counts.wood > 30):
+        zone_type = "forest"
+    else:
+        zone_type = "neutral"
+    
+    # Update resources based on new zone type
+    initialize_resources()
+    
+    # Record change in history
+    history.append({
+        "event": "zone_type_changed",
+        "old_type": zone_type,
+        "new_type": zone_type,
+        "timestamp": Time.get_unix_time_from_system()
+    })
+```
+
+## 3. Entity Evolution System
+
+We can expand the `UniversalEntity` class to include more sophisticated evolution mechanics:
+
+```gdscript
+# Add to universal_entity.gd
+
+# ----- EVOLUTION SYSTEM ENHANCEMENTS -----
+
+# Life cycle states
+enum LifeCycleState {
+    SEED,
+    NASCENT,
+    GROWING,
+    MATURE,
+    DECLINING,
+    TRANSFORMING
+}
+
+var life_cycle_state = LifeCycleState.SEED
+var life_cycle_progress = 0.0  # 0.0 to 1.0 within current state
+var age = 0.0  # Time alive in seconds
+
+# Resource consumption/production
+var resource_consumption = {}
+var resource_production = {}
+
+# History and memory
+var event_history = []
+var interaction_memory = {}
+
+func _process(delta):
+    # Update age
+    age += delta
+    
+    # Progress through life cycle
+    _update_life_cycle(delta)
+    
+    # Process resources
+    _process_resources(delta)
+
+func _update_life_cycle(delta):
+    """
+    Update the entity's life cycle state
+    """
+    # Progress within current state
+    life_cycle_progress += delta * (0.05 * evolution_stage)
+    
+    # Check for state transitions
+    if life_cycle_progress >= 1.0:
+        life_cycle_progress = 0.0
+        
+        match life_cycle_state:
+            LifeCycleState.SEED:
+                life_cycle_state = LifeCycleState.NASCENT
+                _record_life_event("germinated")
+            LifeCycleState.NASCENT:
+                life_cycle_state = LifeCycleState.GROWING
+                _record_life_event("began_growing")
+            LifeCycleState.GROWING:
+                if evolution_stage >= 3:
+                    life_cycle_state = LifeCycleState.MATURE
+                    _record_life_event("reached_maturity")
+            LifeCycleState.MATURE:
+                if randf() < 0.2 and age > 300:  # Random chance after 5 minutes
+                    life_cycle_state = LifeCycleState.DECLINING
+                    _record_life_event("began_declining")
+            LifeCycleState.DECLINING:
+                if randf() < 0.3:  # Random chance to transform
+                    life_cycle_state = LifeCycleState.TRANSFORMING
+                    _record_life_event("began_transformation")
+            LifeCycleState.TRANSFORMING:
+                # Rebirth or transformation
+                if randf() < 0.5:  # 50% chance of each
+                    # Rebirth
+                    life_cycle_state = LifeCycleState.SEED
+                    evolution_stage = max(1, evolution_stage - 1)
+                    _record_life_event("reborn")
+                else:
+                    # Transform to new form
+                    var possible_forms = ["crystal", "wisp", "seed", "spark", "flow"]
+                    var new_form = possible_forms[randi() % possible_forms.size()]
+                    transform_to(new_form)
+                    life_cycle_state = LifeCycleState.NASCENT
+                    _record_life_event("transformed", {"new_form": new_form})
+
+func _process_resources(delta):
+    """
+    Process resource consumption and production
+    """
+    # Resource production is based on form and evolution
+    resource_production = {}
+    
+    match current_form:
+        "flame":
+            resource_production["heat"] = 0.1 * evolution_stage
+            resource_consumption["air"] = 0.05 * evolution_stage
+        "droplet", "flow":
+            resource_production["moisture"] = 0.1 * evolution_stage
+        "crystal":
+            resource_production["stability"] = 0.08 * evolution_stage
+        "wisp":
+            resource_production["movement"] = 0.12 * evolution_stage
+    
+    # Check cell resources if available
+    var parent_cell = _get_parent_cell()
+    if parent_cell:
+        # Consume resources
+        var resources_satisfied = true
+        for resource in resource_consumption:
+            if parent_cell.resources.has(resource):
+                if parent_cell.resources[resource] >= resource_consumption[resource]:
+                    parent_cell.resources[resource] -= resource_consumption[resource]
+                else:
+                    resources_satisfied = false
+        
+        # If resources not satisfied, entity suffers
+        if not resources_satisfied:
+            manifestation_level = max(0.0, manifestation_level - 0.02 * delta)
+            if manifestation_level <= 0.1:
+                life_cycle_state = LifeCycleState.DECLINING
+        
+        # Produce resources
+        for resource in resource_production:
+            if not parent_cell.resources.has(resource):
+                parent_cell.resources[resource] = 0
+            parent_cell.resources[resource] += resource_production[resource] * delta
+
+func _get_parent_cell():
+    """
+    Find the cell this entity belongs to
+    """
+    var parent = get_parent()
+    while parent:
+        if parent is MapCell:
+            return parent
+        parent = parent.get_parent()
+    return null
+
+func _record_life_event(event_type, details = {}):
+    """
+    Record a significant life event
+    """
+    var event = {
+        "type": event_type,
+        "time": age,
+        "form": current_form,
+        "evolution_stage": evolution_stage
+    }
+    
+    # Add details
+    for key in details:
+        event[key] = details[key]
+    
+    event_history.append(event)
+    
+    # Limit history size
+    if event_history.size() > 20:
+        event_history.pop_front()
+```
+
+## 4. Creation Interface Enhancements
+
+We can expand the console to support more advanced commands for hierarchical creation:
+
+```gdscript
+# Add to word_manifestor.gd
+
+func process_command(command: String) -> Dictionary:
+    """
+    Enhanced command processing for hierarchical commands
+    """
+    command = command.strip_edges()
+    
+    # Split into command parts
+    var parts = command.split(" ", false, 1)
+    var action = parts[0].to_lower()
+    var params = parts[1] if parts.size() > 1 else ""
+    
+    var result = {
+        "success": false,
+        "message": "",
+        "entity": null
+    }
+    
+    match action:
+        # Existing commands...
+        
+        "subcategory", "sub":
+            # List subcategories for a word
+            var subcategories = get_subcategories(params)
+            if not subcategories.is_empty():
+                result.success = true
+                result.message = "Subcategories of '" + params + "':\n" + ", ".join(subcategories)
+            else:
+                result.message = "No subcategories found for '" + params + "'"
+        
+        "attributes", "attr":
+            # List attributes for a word
+            var attributes = get_attributes(params)
+            if not attributes.is_empty():
+                result.success = true
+                result.message = "Attributes of '" + params + "':\n" + ", ".join(attributes)
+            else:
+                result.message = "No attributes found for '" + params + "'"
+        
+        "states":
+            # List possible states for a word
+            var states = get_possible_states(params)
+            if not states.is_empty():
+                result.success = true
+                result.message = "States of '" + params + "':\n" + ", ".join(states)
+            else:
+                result.message = "No states found for '" + params + "'"
+        
+        "create_with_attributes", "cwa":
+            # Create an entity with specific attributes
+            var word_parts = params.split(" with ", false)
+            if word_parts.size() == 2:
+                var word = word_parts[0].strip_edges()
+                var attr_list = word_parts[1].strip_edges().split(",")
+                
+                var attributes = {}
+                for attr in attr_list:
+                    attributes[attr.strip_edges()] = 1.0
+                
+                var entity = manifest_word(word, null, {"attributes": attributes})
+                if entity:
+                    result.success = true
+                    result.message = "Created '" + word + "' with attributes: " + ", ".join(attr_list)
+                    result.entity = entity
+                else:
+                    result.message = "Failed to create entity with attributes"
+            else:
+                result.message = "Invalid format. Use 'create_with_attributes [word] with [attr1], [attr2], ...'"
+        
+        "transform_to_state", "state":
+            # Transform an entity to a specific state
+            var word_parts = params.split(" to ", false)
+            if word_parts.size() == 2:
+                var word = word_parts[0].strip_edges()
+                var state = word_parts[1].strip_edges()
+                
+                var entity = _find_entity_by_word(word)
+                if entity:
+                    entity.transform_to(state)
+                    result.success = true
+                    result.message = "Transformed '" + word + "' to state: " + state
+                    result.entity = entity
+                else:
+                    result.message = "No entity found with word: " + word
+            else:
+                result.message = "Invalid format. Use 'transform_to_state [word] to [state]'"
+        
+        # More commands...
+    
+    return result
+```
+
+## 5. Implementing Cycles System
+
+We can create a new CycleSystem script to manage time-based changes:
+
+```gdscript
+# Create new file: scripts/systems/cycle_system.gd
+
+class_name CycleSystem
+extends Node
+
+# ----- TIME CYCLES -----
+var day_cycle_duration: float = 600.0  # 10 minutes per day
+var season_cycle_duration: float = 2400.0  # 40 minutes per season
+var year_cycle_duration: float = 9600.0  # 160 minutes per year
+
+# Current cycle states
+var day_time: float = 0.0  # 0.0 to 1.0 (0=dawn, 0.25=noon, 0.5=dusk, 0.75=midnight)
+var season: float = 0.0  # 0.0 to 1.0 (0=spring, 0.25=summer, 0.5=fall, 0.75=winter)
+var year: int = 1
+
+# Cycle signals
+signal day_time_changed(value)
+signal day_cycle_completed
+signal season_changed(value)
+signal season_cycle_completed
+signal year_changed(value)
+
+# ----- WEATHER SYSTEM -----
+var current_weather: String = "clear"
+var weather_transition_time: float = 0.0
+var weather_duration: float = 300.0  # 5 minutes default weather duration
+
+# Weather probabilities by season
+var weather_probabilities = {
+    "spring": {"clear": 0.4, "rain": 0.4, "cloudy": 0.2, "stormy": 0.0},
+    "summer": {"clear": 0.6, "rain": 0.2, "cloudy": 0.1, "stormy": 0.1},
+    "fall": {"clear": 0.3, "rain": 0.3, "cloudy": 0.3, "stormy": 0.1},
+    "winter": {"clear": 0.5, "rain": 0.0, "cloudy": 0.4, "stormy": 0.1, "snow": 0.4}
+}
+
+# Weather signals
+signal weather_changed(new_weather, old_weather)
+
+# ----- MAP SYSTEM REFERENCE -----
+var map_system: DynamicMapSystem
+
+# ----- INITIALIZATION -----
+func _ready():
+    # Start cycles
+    set_process(true)
+
+func initialize(p_map_system: DynamicMapSystem):
+    map_system = p_map_system
+
+func _process(delta):
+    # Update time cycles
+    _update_day_cycle(delta)
+    _update_season_cycle(delta)
+    
+    # Update weather
+    _update_weather(delta)
+    
+    # Apply cycle effects to world
+    if map_system:
+        _apply_cycle_effects()
+
+func _update_day_cycle(delta):
+    var old_day_time = day_time
+    day_time += delta / day_cycle_duration
+    
+    if day_time >= 1.0:
+        day_time -= 1.0
+        emit_signal("day_cycle_completed")
+    
+    if int(old_day_time * 48) != int(day_time * 48):  # Emit every 30 minutes of day time
+        emit_signal("day_time_changed", day_time)
+
+func _update_season_cycle(delta):
+    var old_season = season
+    season += delta / season_cycle_duration
+    
+    if season >= 1.0:
+        season -= 1.0
+        year += 1
+        emit_signal("season_cycle_completed")
+        emit_signal("year_changed", year)
+    
+    if int(old_season * 20) != int(season * 20):  # Emit 20 times per season
+        emit_signal("season_changed", season)
+
+func _update_weather(delta):
+    # Update weather transition
+    weather_transition_time += delta
+    
+    if weather_transition_time >= weather_duration:
+        _change_weather()
+        weather_transition_time = 0.0
+
+func _change_weather():
+    var old_weather = current_weather
+    
+    # Determine season for probability table
+    var current_season_name = "spring"
+    if season < 0.25:
+        current_season_name = "spring"
+    elif season < 0.5:
+        current_season_name = "summer"
+    elif season < 0.75:
+        current_season_name = "fall"
+    else:
+        current_season_name = "winter"
+    
+    # Get probabilities for current season
+    var probabilities = weather_probabilities[current_season_name]
+    
+    # Choose new weather based on probabilities
+    var random_value = randf()
+    var cumulative_prob = 0.0
+    
+    for weather in probabilities:
+        cumulative_prob += probabilities[weather]
+        if random_value <= cumulative_prob:
+            current_weather = weather
+            break
+    
+    # Set duration based on weather type
+    match current_weather:
+        "clear":
+            weather_duration = randf_range(400.0, 800.0)  # 6-13 minutes
+        "cloudy":
+            weather_duration = randf_range(300.0, 600.0)  # 5-10 minutes
+        "rain":
+            weather_duration = randf_range(180.0, 400.0)  # 3-6 minutes
+        "stormy":
+            weather_duration = randf_range(120.0, 240.0)  # 2-4 minutes
+        "snow":
+            weather_duration = randf_range(300.0, 900.0)  # 5-15 minutes
+    
+    # Emit signal if weather actually changed
+    if old_weather != current_weather:
+        emit_signal("weather_changed", current_weather, old_weather)
+
+func _apply_cycle_effects():
+    # Apply effects to all active cells
+    for cell_coords in map_system.active_cells:
+        var cell = map_system.active_cells[cell_coords]
+        
+        # Apply time of day effects
+        _apply_time_of_day_effects(cell)
+        
+        # Apply seasonal effects
+        _apply_seasonal_effects(cell)
+        
+        # Apply weather effects
+        _apply_weather_effects(cell)
+
+func _apply_time_of_day_effects(cell):
+    # Morning: Entities become more active
+    if day_time > 0.0 and day_time < 0.3:
+        for entity in cell.get_entities():
+            if entity is UniversalEntity:
+                entity.properties["energy"] = entity.properties.get("energy", 0.5) * 1.2
+    
+    # Noon: Fire entities become stronger
+    elif day_time > 0.2 and day_time < 0.4:
+        for entity in cell.get_entities():
+            if entity is UniversalEntity and entity.properties.has("elements"):
+                if entity.properties.elements.has("fire") and entity.properties.elements.fire > 0.5:
+                    entity.evolve(0.02)
+    
+    # Evening: Water entities become stronger
+    elif day_time > 0.5 and day_time < 0.7:
+        for entity in cell.get_entities():
+            if entity is UniversalEntity and entity.properties.has("elements"):
+                if entity.properties.elements.has("water") and entity.properties.elements.water > 0.5:
+                    entity.evolve(0.02)
+    
+    # Night: Air entities become stronger
+    elif day_time > 0.7 or day_time < 0.1:
+        for entity in cell.get_entities():
+            if entity is UniversalEntity and entity.properties.has("elements"):
+                if entity.properties.elements.has("air") and entity.properties.elements.air > 0.5:
+                    entity.evolve(0.02)
+
+func _apply_seasonal_effects(cell):
+    # Spring: Growth for plant/earth entities
+    if season < 0.25:
+        for entity in cell.get_entities():
+            if entity is UniversalEntity and entity.properties.has("elements"):
+                if entity.properties.elements.has("wood") and entity.properties.elements.wood > 0.3:
+                    entity.evolve(0.01)
+    
+    # Summer: Fire entities thrive
+    elif season < 0.5:
+        for entity in cell.get_entities():
+            if entity is UniversalEntity and entity.properties.has("elements"):
+                if entity.properties.elements.has("fire") and entity.properties.elements.fire > 0.3:
+                    entity.evolve(0.01)
+    
+    # Fall: Air entities thrive
+    elif season < 0.75:
+        for entity in cell.get_entities():
+            if entity is UniversalEntity and entity.properties.has("elements"):
+                if entity.properties.elements.has("air") and entity.properties.elements.air > 0.3:
+                    entity.evolve(0.01)
+    
+    # Winter: Water entities thrive
+    else:
+        for entity in cell.get_entities():
+            if entity is UniversalEntity and entity.properties.has("elements"):
+                if entity.properties.elements.has("water") and entity.properties.elements.water > 0.3:
+                    entity.evolve(0.01)
+
+func _apply_weather_effects(cell):
+    # Apply different effects based on weather
+    match current_weather:
+        "rain":
+            # Increase water in cell resources
+            if cell.resources.has("water"):
+                cell.resources["water"] = min(cell.resources["water"] + 0.1, 100.0)
+            
+            # Help water entities
+            for entity in cell.get_entities():
+                if entity is UniversalEntity and entity.properties.has("elements"):
+                    if entity.properties.elements.has("water") and entity.properties.elements.water > 0.3:
+                        entity.evolve(0.01)
+        
+        "stormy":
+            # Help air and water entities
+            for entity in cell.get_entities():
+                if entity is UniversalEntity and entity.properties.has("elements"):
+                    if (entity.properties.elements.has("air") and entity.properties.elements.air > 0.3) or \
+                       (entity.properties.elements.has("water") and entity.properties.elements.water > 0.3):
+                        entity.evolve(0.02)
+        
+        "snow":
+            # Transform water to ice
+            for entity in cell.get_entities():
+                if entity is UniversalEntity and entity.current_form == "droplet":
+                    entity.transform_to("ice")
+
+# ----- PUBLIC METHODS -----
+func get_current_season_name() -> String:
+    if season < 0.25:
+        return "Spring"
+    elif season < 0.5:
+        return "Summer"
+    elif season < 0.75:
+        return "Fall"
+    else:
+        return "Winter"
+
+func get_time_of_day_name() -> String:
+    if day_time < 0.25:
+        return "Morning"
+    elif day_time < 0.5:
+        return "Afternoon"
+    elif day_time < 0.75:
+        return "Evening"
+    else:
+        return "Night"
+
+func get_formatted_time() -> String:
+    var hours = int(day_time * 24)
+    var minutes = int((day_time * 24 * 60) % 60)
+    return "%02d:%02d" % [hours, minutes]
+
+func get_cycle_info() -> String:
+    var info = "Year %d, %s, %s (%s)\n" % [year, get_current_season_name(), get_time_of_day_name(), get_formatted_time()]
+    info += "Weather: %s" % current_weather.capitalize()
+    return info
+```
+
+## 6. Update Game Controller to Integrate All Systems
+
+Finally, update the game controller to integrate all these systems:
+
+```gdscript
+# Add to game_controller.gd
+
+# ----- CYCLE SYSTEM -----
+var cycle_system: CycleSystem
+
+# ----- INITIALIZATION -----
+func _initialize_systems():
+    # Create existing systems...
+    
+    # Create cycle system
+    cycle_system = CycleSystem.new()
+    cycle_system.name = "cycle_system"
+    add_child(cycle_system)
+
+func _ready():
+    # Initialize systems
+    _initialize_systems()
+    
+    # Create player
+    _spawn_player()
+    
+    # Create console interface
+    _create_console()
+    
+    # Initialize cycle system
+    cycle_system.initialize(map_system)
+    
+    # Start performance monitoring
+    _start_performance_monitoring()
+    
+    # Initial manifested words
+    _manifest_starter_words()
+    
+    # Connect cycle system signals
+    cycle_system.connect("weather_changed", Callable(self, "_on_weather_changed"))
+    cycle_system.connect("season_changed", Callable(self, "_on_season_changed"))
+
+func _on_weather_changed(new_weather, old_weather):
+    # Notify player of weather change
+    if console:
+        console.display_message("Weather changed from " + old_weather + " to " + new_weather, Color(0.5, 0.7, 1.0))
+
+func _on_season_changed(season_value):
+    # Notify player of significant season changes
+    if season_value < 0.05 or season_value > 0.95 or (season_value > 0.45 and season_value < 0.55):
+        if console:
+            console.display_message("Season changing to " + cycle_system.get_current_season_name(), Color(0.7, 0.9, 0.5))
+
+# ----- UI UPDATES -----
+func _process(delta):
+    # Existing code...
+    
+    # Update UI with cycle information
+    _update_cycle_ui()
+
+func _update_cycle_ui():
+    # If you have a UI element for displaying cycle info
+    if cycle_system:
+        var cycle_info = cycle_system.get_cycle_info()
+        # Update UI element with this info
+```
+
+With these enhancements, you've integrated all the concepts from your notes into our existing framework!

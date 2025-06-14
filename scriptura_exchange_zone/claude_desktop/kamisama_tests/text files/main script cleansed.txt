@@ -1,0 +1,2047 @@
+# main, main node, main_root, main.gd, scripts/main.gd
+#
+
+#
+# JSH Ethereal Engine
+#
+#      oooo  .oooooo..o ooooo   ooooo 
+#      `888 d8P'    `Y8 `888'   `888' 
+#       888 Y88bo.       888     888     ┏┓ ┓         ┓  ┏┓    •      ┏┓        
+#       888  `"Y8888o.   888ooooo888     ┣ ╋┣┓┏┓┏┓┏┓┏┓┃  ┣ ┏┓┏┓┓┏┓┏┓  ┗┓┓┏┏╋┏┓┏┳┓
+#       888      `"Y88b  888     888     ┗┛┗┛┗┗ ┛ ┗ ┗┻┗  ┗┛┛┗┗┫┗┛┗┗   ┗┛┗┫┛┗┗ ┛┗┗
+#       888 oo     .d8P  888     888                          ┛          ┛      
+#   .o. 88P 8""88888P'  o888o   o888o 
+#   `Y888P                            
+#
+# JSH Ethereal Engine
+#
+
+#
+# current objectives :
+# 1 get first stage of initialization of memories working! so the analise data thingy
+# here we shall have all nodes put on the tree, names shall check out, node types, shall check out, names shall checkout, reparenting shall check out
+#
+
+# The main.gd file
+# it is being produced by me JSH and my friends i see in dreams :)
+# it is helped by moon people, reptilans, galactiv federation, sirius, betelgause, astral dmt realm beings, and aliens too
+extends Node3D
+var ethereal_engine
+var path = "D:/Eden"
+var file_path
+var file_name_search
+var files_content
+var folders_content
+var directory_existence = false
+var folders_existence = false
+var files_existence = false
+var analyzed_file_type :int = -1
+var number_of_record_to_be_created
+var state_of_files : int = -1
+var files_found_number : int
+var list_of_found_files : Array
+var list_of_missing_files : Array = []
+var list_of_missing_records_number : Array = []
+var just_added_new_node_data: Array = []
+var new_node_added
+var thing_add_number : String = "thing_"
+var record_add_number : String = "record_"
+var instruction_add_number : String = "instruction_"
+var set_add_number : String = "set_"
+var scene_add_number : String = "scene_"
+var frame_add_number : String = "frame_"
+var interaction_add_number  : String = "interaction_"
+var list_add_number : String = "list_"
+var txt = ".txt"
+var things_checker = {}
+var things_found : Array = []
+var things_found_reset : Array = []
+const DataPointScript = preload("res://scripts/data_point.gd")
+const ContainterScript = preload("res://scripts/containter.gd")
+const LineScript = preload("res://scripts/line.gd")
+var things_container
+var ray_distance_set = 20.0
+var lines_number_count : int = 0
+var viewport
+var mouse_pos
+var camera
+var turn_number_process : int = 0
+var delta_turn_0 : int = 0
+var records_data : Array = []
+var group_first
+var group_datapoints
+var data_received
+var active_record_sets_processed: Dictionary = {}
+var active_record_sets: Dictionary = {}
+var cached_record_sets: Dictionary = {}
+var cache_timestamps: Dictionary = {}
+var max_cache_size_mb: int = 8 
+var current_record_set: String = ""
+var type_of_data : int
+var active_containers: Dictionary = {}
+var container_pool: Dictionary = {}
+var pool_size_limit: int = 10 * 1024 * 1024
+var available_directiories : Array = []
+var newly_made_dictio : Dictionary
+var dictionary_of_places : Dictionary = {}
+var dictionary_to_find_number : Dictionary = {}
+var scene_tree_jsh : Dictionary = {}
+@onready var thread_pool = get_node("/root/thread_pool_autoload")
+var status_symbol = {
+	"active": "●",
+	"pending": "○", 
+	"disabled": "×"
+}
+var jsh_scene_tree_checker : int = -1
+var jsh_tasks_counter : int = 0
+
+#
+# JSH Ethereal Engine Start up
+#
+#      oooo  .oooooo..o ooooo   ooooo 
+#      `888 d8P'    `Y8 `888'   `888' 
+#       888 Y88bo.       888     888     ┏┓         ┓     ┏┓    •      
+#       888  `"Y8888o.   888ooooo888     ┗┓╋┏┓┏┓╋  ╋┣┓┏┓  ┣ ┏┓┏┓┓┏┓┏┓  
+#       888      `"Y88b  888     888     ┗┛┗┗┻┛ ┗  ┗┛┗┗   ┗┛┛┗┗┫┗┛┗┗   
+#       888 oo     .d8P  888     888                           ┛         
+#   .o. 88P 8""88888P'  o888o   o888o 
+#   `Y888P                            
+#
+# JSH Ethereal Engine Start up
+#
+
+
+func _ready():
+	thread_pool.connect("task_discarded", func(task): 
+		print("Task completed: ", task.tag)
+		var finished_task = task.tag
+		get_node_function(finished_task)
+		jsh_tasks_counter +=1
+	)
+	print("_ready : Project Eden, ver : thread and scenes conquering, we must manifest")
+	await get_tree().process_frame
+	check_settings_file()
+	mouse_pos = get_viewport().get_mouse_position()
+	camera = get_viewport().get_camera_3d()
+	viewport = get_viewport()
+	start_up_scene_tree()
+	things_container = Node3D.new()
+	things_container.name = "akashic_records"
+	tasked_children(things_container, "akashic_records")
+	things_container.set_script(ContainterScript)
+	var test_node_to_check_stuff = Node3D.new()
+	create_new_task("initialize_menu", "base")
+
+#
+# JSH Scene Tree
+#
+#      oooo  .oooooo..o ooooo   ooooo 
+#      `888 d8P'    `Y8 `888'   `888' 
+#       888 Y88bo.       888     888     ┏┓         ┏┳┓        ┏┓        
+#       888  `"Y8888o.   888ooooo888     ┗┓┏┏┓┏┓┏┓   ┃ ┏┓┏┓┏┓  ┗┓┓┏┏╋┏┓┏┳┓
+#       888      `"Y88b  888     888     ┗┛┗┗ ┛┗┗    ┻ ┛ ┗ ┗   ┗┛┗┫┛┗┗ ┛┗┗
+#       888 oo     .d8P  888     888                              ┛      
+#   .o. 88P 8""88888P'  o888o   o888o 
+#   `Y888P                            
+#
+# JSH Scene Tree
+#
+
+func start_up_scene_tree():
+	scene_tree_jsh = TreeBlueprints.SCENE_TREE_BLUEPRINT.duplicate(true)
+	var name_to_add = self.name
+	scene_tree_jsh["main_root"]["name"] = name_to_add
+	scene_tree_jsh["main_root"]["type"] = self.get_class()
+	scene_tree_jsh["main_root"]["metadata"]["creation_time"] = Time.get_ticks_msec()
+	scene_tree_jsh["main_root"]["node"] = self
+	scene_tree_jsh["main_root"]["status"] = "active"
+
+func collect_all_nodes() -> Array:
+	var all_containers : Array = []
+	var all_nodes : Array = []
+	var branches_to_process : Array = []
+	var process_branch = func traverse_branch(branch: Dictionary):
+		if branch.has("node") and branch["node"] != null:
+			all_containers.append([branch["name"], branch["node"]])
+		if branch.has("children"):
+			for child_name in branch["children"]:
+				branches_to_process.append(branch["children"][child_name])
+				all_nodes.append([branch["name"], branch["node"]])
+	var process_children = func traverse_branch(branch: Dictionary):
+		if branch.has("node") and branch["node"] != null:
+			all_nodes.append([branch["name"], branch["node"]])
+		if branch.has("children"):
+			for child_name in branch["children"]:
+				branches_to_process.append(branch["children"][child_name])
+	for branch_name in scene_tree_jsh["main_root"]["branches"]:
+		process_branch.call(scene_tree_jsh["main_root"]["branches"][branch_name])
+	var current_branches = branches_to_process.duplicate()
+	branches_to_process.clear()
+	while branches_to_process.size() > 0:
+		var current_branch = branches_to_process[0] 
+		process_children.call(current_branch)
+		branches_to_process.remove_at(0)  
+	return [all_containers, all_nodes]
+var pretentious_dictionary : Dictionary = {}
+func the_pretender_printer(node_name: String, node_path: String, node_type: String = "Node3D"):
+	if !pretentious_dictionary.has("main_root"):
+		pretentious_dictionary = TreeBlueprints.SCENE_TREE_BLUEPRINT.duplicate(true)
+		pretentious_dictionary["main_root"]["name"] = "main"
+		pretentious_dictionary["main_root"]["type"] = "Node3D"
+		pretentious_dictionary["main_root"]["status"] = "active"
+		
+	var path_parts = node_path.split("/")
+	var current_branch = pretentious_dictionary["main_root"]["branches"]
+	var current_full_path = ""
+	for i in range(path_parts.size()):
+		var part = path_parts[i]
+		current_full_path = current_full_path + "/" + part if current_full_path else part
+		if !current_branch.has(part):
+			var new_branch = TreeBlueprints.BRANCH_BLUEPRINT.duplicate(true)
+			new_branch["name"] = part
+			new_branch["type"] = node_type
+			new_branch["status"] = "pending"
+			new_branch["metadata"] = {
+				"creation_time": Time.get_ticks_msec(),
+				"full_path": current_full_path,
+				"parent_path": current_full_path.get_base_dir(),
+				"has_collision": false,
+				"has_area": false
+			}
+			if part.begins_with("@StaticBody3D"):
+				new_branch["metadata"]["is_collision_body"] = true
+				if current_branch.has(path_parts[i-1]):
+					current_branch[path_parts[i-1]]["metadata"]["has_collision"] = true
+			elif part.begins_with("@Area3D"):
+				new_branch["metadata"]["is_area"] = true
+				if current_branch.has(path_parts[i-1]):
+					current_branch[path_parts[i-1]]["metadata"]["has_area"] = true
+			elif part.begins_with("@CollisionShape3D"):
+				new_branch["metadata"]["is_collision_shape"] = true
+			current_branch[part] = new_branch
+		if i < path_parts.size() - 1:
+			if !current_branch[part].has("children"):
+				current_branch[part]["children"] = {}
+			current_branch = current_branch[part]["children"]
+	print_tree_structure(pretentious_dictionary["main_root"], 0)
+func print_tree_structure(branch: Dictionary, indent: int = 0):
+	var indent_str = "  ".repeat(indent)
+	var status = branch.get("status", "pending")
+	print("%s%s (%s) %s" % [
+		indent_str, 
+		branch["name"], 
+		branch["type"],
+		status_symbol[status]
+	])
+	if branch.has("metadata"):
+		var metadata = branch["metadata"]
+		if metadata.get("has_collision", false):
+			print("%s  └─ Has Collision" % indent_str)
+		if metadata.get("has_area", false):
+			print("%s  └─ Has Area" % indent_str)
+	if branch.has("branches"):
+		for child in branch["branches"].values():
+			print_tree_structure(child, indent + 1)
+	elif branch.has("children"):
+		for child in branch["children"].values():
+			print_tree_structure(child, indent + 1)
+func jsh_tree_get_node(node_path: String) -> Dictionary:
+	var path_parts = node_path.split("/")
+	var current = scene_tree_jsh["main_root"]["branches"]
+	
+	for part in path_parts:
+		if current.has(part):
+			current = current[part]
+			if path_parts[-1] == part:
+				return current
+			else:
+				current = current["children"]
+	return {}
+func jsh_tree_get_parent(node_path: String) -> Dictionary:
+	var path_parts = node_path.split("/")
+	if path_parts.size() <= 1:
+		return scene_tree_jsh["main_root"]
+		
+	var parent_path = "/".join(path_parts.slice(0, -1))
+	return jsh_tree_get_node(parent_path)
+func jsh_tree_get_children(node_path: String) -> Array:
+	var node = jsh_tree_get_node(node_path)
+	if node.has("children"):
+		return node["children"].values()
+	return []
+func jsh_tree_get_main() -> Dictionary:
+	return scene_tree_jsh["main_root"]
+func jsh_tree_get_siblings(node_path: String) -> Array:
+	var path_parts = node_path.split("/")
+	if path_parts.size() <= 1:
+		return scene_tree_jsh["main_root"]["branches"].values()
+	var parent = jsh_tree_get_parent(node_path)
+	if parent.has("children"):
+		var siblings = parent["children"].values()
+		for i in range(siblings.size()):
+			if siblings[i]["name"] == path_parts[-1]:
+				siblings.remove_at(i)
+				break
+		return siblings
+	return []
+func jsh_scene_tree_get_children(node_path: String) -> Array:
+	var path_parts = node_path.split("/")
+	var current_branch = scene_tree_jsh["main_root"]["branches"]
+	for part in path_parts:
+		if current_branch.has(part):
+			if path_parts[-1] == part:
+				return current_branch[part].get("children", {}).keys()
+			else:
+				current_branch = current_branch[part]["children"]
+	return []
+func jsh_scene_tree_get_node(node_path: String) -> Dictionary:
+	var path_parts = node_path.split("/")
+	var current = scene_tree_jsh["main_root"]["branches"]
+	for part in path_parts:
+		if current.has(part):
+			current = current[part]
+			if path_parts[-1] == part:
+				if current.has("node") and current["node"] != null:
+					return current
+				else:
+					print("No node reference stored!")
+			else:
+				current = current["children"]
+		else:
+			print("Part not found: ", part)
+	
+	print("Node not found in tree!")
+	return {}
+	
+	
+	
+func jsh_scene_tree_change_node_status(node_path: String):
+	var path_parts = node_path.split("/")
+	var current = scene_tree_jsh["main_root"]["branches"]
+	for part in path_parts:
+		if current.has(part):
+			current = current[part]
+			if path_parts[-1] == part:
+				if current.has("node") and current["node"] != null:
+					current["status"] = "active"
+					return
+				else:
+					print("No node reference stored!")
+			else:
+				current = current["children"]
+		else:
+			print("Part not found: ", part)
+	print("Node not found in tree! could not change status to active !")
+	return {}
+func jsh_tree_reparent_nodes(data_to_process):
+	print(" data_to_process ", data_to_process)
+
+#
+# JSH Multi Threads
+#
+#      oooo  .oooooo..o ooooo   ooooo 
+#      `888 d8P'    `Y8 `888'   `888' 
+#       888 Y88bo.       888     888     ┳┳┓  ┓ •  ┏┳┓┓        ┓   ┏┓         
+#       888  `"Y8888o.   888ooooo888     ┃┃┃┓┏┃╋┓   ┃ ┣┓┏┓┏┓┏┓┏┫┏  ┗┓┓┏┏╋┏┓┏┳┓
+#       888      `"Y88b  888     888     ┛ ┗┗┻┗┗┗   ┻ ┛┗┛ ┗ ┗┻┗┻┛  ┗┛┗┫┛┗┗ ┛┗┗
+#       888 oo     .d8P  888     888                                  ┛       
+#   .o. 88P 8""88888P'  o888o   o888o 
+#   `Y888P                            
+#
+# JSH Multi Threads
+#
+
+func create_new_task_two_datas(function_name: String, data):
+	var task_tag = function_name + "_" + str(Time.get_ticks_msec())
+	var completion_handler
+	completion_handler = func(completed_tag):
+		if completed_tag == task_tag:
+			print("Task completed: ", function_name)
+			thread_pool.disconnect("task_finished", completion_handler)
+	thread_pool.connect("task_finished", completion_handler)
+	thread_pool.submit_task(self, function_name, data, task_tag)
+
+func get_node_function(node_path : String):
+	await get_tree().process_frame
+	var task_done = node_path.split("|")
+	print()
+	if task_done[0] == "add_child_":
+		print(" add child task evaluation ")
+		var path_spliter = task_done[1].split("/")
+		var container_node_path = path_spliter[0]
+		var added_node_path = task_done[1]
+		var last_part = path_spliter[path_spliter.size() - 1]
+		var container_node = get_node(container_node_path)
+		var full_path_node = get_node(added_node_path)
+		var singular_node = get_node(last_part)
+		var container_status = scene_tree_jsh["main_root"]["branches"][container_node_path]["status"]
+		var parent_node_status
+		var added_node_status
+		var node_to_add
+		if path_spliter.size() > 1:
+			var some_data = jsh_scene_tree_get_node(added_node_path)
+			if some_data.has("status"):
+				added_node_status = some_data["status"]
+				print(" some_data : ", some_data["status"])
+			else:
+				added_node_status = "pending"
+				print(" some_data :  we didnt get it?!?!?!?!?!? " , added_node_path)
+			node_to_add = scene_tree_jsh["main_root"]["branches"][container_node_path]["children"][path_spliter[1]]["node"]
+		else:
+			added_node_status = container_status
+			node_to_add = scene_tree_jsh["main_root"]["branches"][container_node_path]["node"]
+		print(" quality assurance, checking statuses of nodes added : container : " , container_status , " added_node_status : " , added_node_status, " added node " , node_to_add , " singular_node : " , singular_node)
+		match added_node_status:
+			"active":
+				print(" it is active i guess")
+			"pending":
+				print(" added node status pending : container_node : " , container_node , " full_path_node " , full_path_node , " singular_node " , singular_node )
+				var counter_for_splitin : int = 0
+				var pathy_splin_mergin : Array = []
+				if path_spliter.size() == 2:
+					print(" i : guess is thingy nody")
+					singular_node.reparent(container_node)
+					added_node_status = "active"
+				if path_spliter.size() > 2:
+					print(" so did it work this way? : " , full_path_node)
+					for i in path_spliter:
+						pathy_splin_mergin.append(i)
+						var new_path = "/".join(PackedStringArray(pathy_splin_mergin.slice(0, -1)))
+						if singular_node:
+							if i == singular_node.name:
+								var parent_node = get_node(new_path)
+								singular_node.reparent(parent_node)
+								added_node_status = "active"
+								print(" path creation device : " , new_path , " , " , singular_node.name , " testing_node " , parent_node)
+			"disabled":
+				print(" it is disable i guess")
+		var newly_processed_node = get_node(added_node_path)
+		if added_node_status == "active":
+			if newly_processed_node:
+				print(" node was found by its path, from main_root in godot scene tree")
+				jsh_scene_tree_change_node_status(added_node_path)
+		var current_data = jsh_scene_tree_get_node(added_node_path)
+		if current_data.has("status"):
+			print(" after tries, lets check status again : ", current_data["status"])
+func tasked_children(child_node, container_path = null):
+	var data = {
+		"child": child_node,
+		"container_path": container_path if container_path else child_node.name,
+		"type": child_node.get_class(),
+		"creation_time": Time.get_ticks_msec()
+	}
+	print("\nTasking child: ", child_node.name)
+	print("With path: ", container_path)
+	var task_tag = "add_child_|" + container_path
+	thread_pool.submit_task(self, "_add_child_task", data, task_tag)
+	return task_tag
+func check_container_with_retry(path_parts: Array, child: Node, attempts: int = 0):
+	print(" check_container_with_retry : ", path_parts , " child " , child)
+	var main = get_tree().get_root().get_node("main")
+	if main and main.has_node(path_parts[0]):
+		var container = main.get_node(path_parts[0])
+		print(" check_container_with_retry container check : ", container)
+		var current_branch = scene_tree_jsh["main_root"]["branches"]
+		if current_branch.has(path_parts[0]):
+			print(" check_container_with_retry container check Updating container status to active: ", path_parts[0])
+			current_branch[path_parts[0]]["status"] = "active"
+			container.call_deferred("reparent", child)
+			if path_parts.size() > 1 and current_branch[path_parts[0]]["children"].has(path_parts[1]):
+				print(" check_container_with_retry container check Updating child status to active: ", path_parts[1])
+				current_branch[path_parts[0]]["children"][path_parts[1]]["status"] = "active"
+				container.call_deferred("reparent", child)
+		print(" check_container_with_retry container check child : ", child)
+		return container
+	elif attempts < 10: 
+		get_tree().create_timer(0.1).timeout.connect(  
+			func(): check_container_with_retry(path_parts, child, attempts + 1)
+		)
+func _add_child_task(data):
+	var child = data["child"]
+	var path = data["container_path"]
+	var path_parts = path.split("/")
+	var current_branch = scene_tree_jsh["main_root"]["branches"]
+	for i in range(path_parts.size()):
+		var part = path_parts[i]
+		if i == 0:  
+			if !current_branch.has(part):
+				print(" _add_child_task Creating branch for: ", part)
+				var new_branch = TreeBlueprints.BRANCH_BLUEPRINT.duplicate(true)
+				new_branch["name"] = part
+				new_branch["type"] = "Node3D"
+				new_branch["status"] = "pending"
+				new_branch["children"] = {}
+				new_branch["node"] = child if part == child.name else null
+				current_branch[part] = new_branch
+		else:  
+			if !current_branch[path_parts[i-1]]["children"].has(part):
+				print(" _add_child_task Creating child for: ", part, " in ", path_parts[i-1], " so here we have issues? path_parts.size() :" , path_parts.size(), " also : " , child)
+				var new_branch = TreeBlueprints.BRANCH_BLUEPRINT.duplicate(true)
+				new_branch["name"] = part
+				new_branch["type"] = data["type"]
+				new_branch["status"] = "pending"
+				new_branch["children"] = {}
+				new_branch["node"] = child if part == child.name else null
+				current_branch[path_parts[i-1]]["children"][part] = new_branch
+			current_branch = current_branch[path_parts[i-1]]["children"]
+	print(" _add_child_task Adding to scene: ", child.name)
+	self.call_deferred("add_child", child)
+	if path_parts.size() > 1:
+		print(" _add_child_task Checking for container: ", path_parts[0])
+		var container = get_node(path_parts[0])
+		if !container:
+			print(" _add_child_task Container not found directly, unfortunatelly")
+		if container:
+			print(" _add_child_task Container found, reparenting ", child.name)
+			container.call_deferred("reparent", child)
+			current_branch = scene_tree_jsh["main_root"]["branches"]
+			current_branch[path_parts[0]]["status"] = "active"
+			if current_branch[path_parts[0]]["children"].has(path_parts[1]):
+				current_branch[path_parts[0]]["children"][path_parts[1]]["status"] = "active"
+	else:
+		current_branch[child.name]["status"] = "active"
+		print(" i guess it was container? " , current_branch[child.name]["status"])
+func analyze_path(path_for_node: String) -> Dictionary:
+	var parts = path_for_node.split("/")
+	return {
+		"level": parts.size() - 1,  
+		"parts": parts,
+		"is_root": parts.size() == 1
+	}
+func _add_child_task2(data):
+	var child = data["child"]
+	var path_for_node = data["path"]
+	var path_parts = path_for_node.split("/")
+	var new_branch = TreeBlueprints.BRANCH_BLUEPRINT.duplicate(true)
+	new_branch["name"] = child.name
+	new_branch["type"] = data["type"]
+	new_branch["status"] = "pending"
+	var current_branch = scene_tree_jsh["main_root"]["branches"]
+	if path_parts.size() > 1:
+		for i in range(path_parts.size() - 1):
+			var part = path_parts[i]
+			if current_branch.has(part):
+				current_branch = current_branch[part]["children"]
+	current_branch[child.name] = new_branch
+	if path_parts.size() > 1:
+		var container = get_node(path_parts[0])
+		if container:
+			container.call_deferred("reparent", child)
+	else:
+		self.call_deferred("add_child", child)
+func create_new_task(function_name: String, data):
+	var task_tag = function_name + "_" + str(Time.get_ticks_msec())
+	var completion_handler
+	completion_handler = func(completed_tag):
+		if completed_tag == task_tag:
+			print("Task completed: ", function_name)
+			thread_pool.disconnect("task_finished", completion_handler)
+	thread_pool.connect("task_finished", completion_handler)
+	thread_pool.submit_task(self, function_name, data, task_tag)
+func test_task(message):
+	print(message)
+	return "Task completed!"
+func test_thread_pool():
+	thread_pool.submit_task(self, "test_task", "Hello from thread!")
+
+#
+# JSH Files Management
+#
+#      oooo  .oooooo..o ooooo   ooooo 
+#      `888 d8P'    `Y8 `888'   `888' 
+#       888 Y88bo.       888     888     ┏┓•┓     ┳┳┓                    ┏┓         
+#       888  `"Y8888o.   888ooooo888     ┣ ┓┃┏┓┏  ┃┃┃┏┓┏┓┏┓┏┓┏┓┏┳┓┏┓┏┓╋  ┗┓┓┏┏╋┏┓┏┳┓
+#       888      `"Y88b  888     888     ┻ ┗┗┗ ┛  ┛ ┗┗┻┛┗┗┻┗┫┗ ┛┗┗┗ ┛┗┗  ┗┛┗┫┛┗┗ ┛┗┗
+#       888 oo     .d8P  888     888                        ┛               ┛       
+#   .o. 88P 8""88888P'  o888o   o888o 
+#   `Y888P                            
+#
+# JSH Files Management
+#
+
+func create_file(array_with_data: Array, lines_amount: int, name_for_file: String):
+	var file = FileAccess.open(path + "/" + name_for_file + ".txt", FileAccess.WRITE)
+	if file:
+		for line in range(lines_amount):
+			file.store_line(array_with_data[line][0])
+		file_path = path + "/" + name_for_file + ".txt"
+func file_finder(file_name, path_to_file, list_of_files, type_of_data):
+	var counter_liste = list_of_files.size()
+	var counter_times : int = 0
+	for file in list_of_files:
+		if file == file_name:
+			file_path = path_to_file + "/" + file
+func check_folder(folder_path):
+	var space_existence = DirAccess.open(folder_path)
+	if space_existence:
+		check_folder_content(space_existence)
+		directory_existence = true
+	else:
+		pass
+func check_folder_content(directory):  
+	files_content = directory.get_files() 
+	folders_content = directory.get_directories() 
+	if files_content.size() > 0:
+		files_existence = true
+	else:
+		files_existence = false
+	if folders_content.size() > 0:
+		folders_existence = true
+	else:
+		folders_existence = false
+func check_settings_file():
+	print(" i gues we start that settings thingy")
+	var settings_exists = FileAccess.file_exists("user://settings.txt")
+	print("Does settings file exist in user://?: ", settings_exists)
+	if settings_exists:
+		var file = FileAccess.open("user://settings.txt", FileAccess.READ)
+		if file:
+			print("Successfully opened settings file")
+			SettingsBank.load_settings_file("user://settings.txt")
+			return true
+		else:
+			print("File exists but couldn't open it")
+			return false
+	else:
+		print("No settings file found in user://")
+		var file_data_of_settings = SettingsBank.settings_file_blue_print_0
+		var data_of_settings_cleaned : Array = []
+		for entry in file_data_of_settings[0]:
+			var cleansed = entry[0].split("|")
+			data_of_settings_cleaned.append(cleansed)
+		var path_for_directory = data_of_settings_cleaned[0][1]
+		var path_for_user_data = "user://"
+		var path_for_database = data_of_settings_cleaned[1][1]
+		var settings_file_name = data_of_settings_cleaned[2][1]
+		var default_directory = DirAccess.dir_exists_absolute(path_for_directory)
+		print(" path_for_user_data : " , path_for_user_data)
+		print(" so we use absolute stuff huh? what we got? true false? : " , default_directory)
+		if default_directory == true:
+			print("the directory exist, we can send there file, hmm, damn, i wanted to do it different way, like use res? but lets just do it my way, it even finds")
+		else:
+			scan_available_storage()
+		scan_available_storage()
+		print(" data_of_settings_cleaned : " , data_of_settings_cleaned , " and aval dir :" , available_directiories[0])
+		if available_directiories[0]:
+			data_of_settings_cleaned.append(["available_directiory" , available_directiories[0]])
+		if !DirAccess.dir_exists_absolute(path_for_user_data + path_for_database):
+			DirAccess.make_dir_recursive_absolute(path_for_user_data + path_for_database)
+		if !FileAccess.file_exists(path_for_user_data + settings_file_name):
+			var file = FileAccess.open(path_for_user_data + settings_file_name, FileAccess.WRITE)
+			if file:
+				for line in data_of_settings_cleaned:
+					file.store_line(line[0] + " : " + line[1])
+			SettingsBank.load_settings_file(path_for_user_data + settings_file_name)
+func file_creation(file_content,  path_for_file, name_for_file):
+	var file = FileAccess.open( path_for_file + "/" + name_for_file + ".txt", FileAccess.WRITE)
+	if file:
+		for line in file_content:
+			file.store_line(line)
+func setup_settings():
+	var eden_path = find_or_create_eden_directory()
+	var akashic_path = eden_path + "/akashic_records"
+	if !DirAccess.dir_exists_absolute(akashic_path):
+		DirAccess.make_dir_recursive_absolute(akashic_path)
+	var settings_file_path = akashic_path + "/settings.txt"
+	if !FileAccess.file_exists(settings_file_path):
+		create_default_settings(settings_file_path)
+	SettingsBank.load_settings_file(settings_file_path)
+func find_or_create_eden_directory():
+	var available_dirs = scan_available_storage()
+	for dir in available_dirs:
+		if DirAccess.dir_exists_absolute(dir + "/Eden"):
+			return dir + "/Eden"
+	var target_dir = available_dirs[0] + "/Eden"
+	DirAccess.make_dir_recursive_absolute(target_dir)
+	return target_dir
+func create_default_settings(file_path):
+	var settings_data = []
+	for entry in SettingsBank.settings_file_blue_print_0[0]:
+		settings_data.append(entry)
+	create_file(settings_data, settings_data.size(), "settings")
+func scan_available_storage():
+	print("Scanning available storage...")
+	if OS.get_name() == "Windows":
+		for ascii in range(65, 91):
+			var drive = char(ascii) + ":/"
+			var dir = DirAccess.open(drive)
+			if dir != null:
+				print("Found drive: ", drive)
+				available_directiories.append(drive)
+	elif OS.get_name() == "Android":
+		var common_paths = [
+			"/storage/emulated/0/",
+			"/sdcard/",
+			"/storage/"
+		]
+		for path in common_paths:
+			var dir = DirAccess.open(path)
+			if dir != null:
+				print("Found storage: ", path)
+				if path == "/storage/":
+					var contents = dir.get_directories()
+					for storage in contents:
+						print("Storage device found: /storage/" + storage)
+	print("User data dir: ", OS.get_user_data_dir())
+
+#
+# Memories Management
+#
+#      oooo  .oooooo..o ooooo   ooooo 
+#      `888 d8P'    `Y8 `888'   `888' 
+#       888 Y88bo.       888     888     ┳┳┓         •     ┳┳┓                   ┏┓         
+#       888  `"Y8888o.   888ooooo888     ┃┃┃┏┓┏┳┓┏┓┏┓┓┏┓┏  ┃┃┃┏┓┏┓┏┓┏┓┏┓┏┳┓┏┓┏┓╋ ┗┓┓┏┏╋┏┓┏┳┓
+#       888      `"Y88b  888     888     ┛ ┗┗ ┛┗┗┗┛┛ ┗┗ ┛  ┛ ┗┗┻┛┗┗┻┗┫┗ ┛┗┗┗ ┛┗┗ ┗┛┗┫┛┗┗ ┛┗┗
+#       888 oo     .d8P  888     888                                 ┛              ┛     
+#   .o. 88P 8""88888P'  o888o   o888o 
+#   `Y888P                            
+#
+# Memories Management
+#
+
+func initialize_menu(record_type: String):
+	print(" initalize memories ! : " , record_type)
+	var records_set_name = record_type + "_"
+	var use_cache = false
+	var already_exists = false
+	if active_record_sets.has(records_set_name):
+		already_exists = true
+		if active_record_sets[records_set_name].has("metadata"):
+			if active_record_sets[records_set_name]["metadata"]["container_count"] == BanksCombiner.dataSetLimits[records_set_name]:
+				return
+			if active_record_sets[records_set_name]["metadata"]["container_count"] == 1:
+				var number_of_set = active_record_sets[records_set_name]["metadata"]["container_count"]
+				var additional_set_name = record_type + str(number_of_set) + "_"
+				if !active_record_sets.has(additional_set_name):
+					var new_data = recreator(number_of_set, active_record_sets[records_set_name], record_type, additional_set_name)
+					active_record_sets[additional_set_name] = new_data.duplicate(true)
+					load_cached_data(additional_set_name)
+					var datapoint_node = get_node(active_record_sets[additional_set_name]["metadata"]["datapoint_container_name"] + "/" + active_record_sets[additional_set_name]["metadata"]["datapoint_name"])
+					datapoint_node.move_things_around(active_record_sets[records_set_name]["metadata"]["container_count"]) 
+					active_record_sets[records_set_name]["metadata"]["container_count"] +=1
+					return
+				else:
+					load_cached_data(additional_set_name)
+					var datapoint_node = get_node(active_record_sets[additional_set_name]["metadata"]["datapoint_container_name"] + "/" + active_record_sets[additional_set_name]["metadata"]["datapoint_name"])
+					datapoint_node.move_things_around(active_record_sets[records_set_name]["metadata"]["container_count"]) 
+					active_record_sets[records_set_name]["metadata"]["container_count"] +=1
+				return
+			if active_record_sets[records_set_name]["metadata"]["container_count"] > 1:
+				var number_of_set = active_record_sets[records_set_name]["metadata"]["container_count"]
+				var previous_additional_set_name = record_type + str(number_of_set -1)
+				var previous_additional_set_name_underscore = previous_additional_set_name + "_"
+				var additional_set_name = record_type + str(number_of_set) + "_"
+				if !active_record_sets.has(additional_set_name):
+					var new_data = recreator(number_of_set, active_record_sets[previous_additional_set_name_underscore], previous_additional_set_name, additional_set_name)
+					active_record_sets[additional_set_name] = new_data.duplicate(true)
+					load_cached_data(additional_set_name)
+					var datapoint_node = get_node(active_record_sets[additional_set_name]["metadata"]["datapoint_container_name"] + "/" + active_record_sets[additional_set_name]["metadata"]["datapoint_name"])
+					datapoint_node.move_things_around(active_record_sets[records_set_name]["metadata"]["container_count"]) 
+					active_record_sets[records_set_name]["metadata"]["container_count"] +=1
+					return
+				else:
+					load_cached_data(additional_set_name)
+					var datapoint_node = get_node(active_record_sets[additional_set_name]["metadata"]["datapoint_container_name"] + "/" + active_record_sets[additional_set_name]["metadata"]["datapoint_name"])
+					datapoint_node.move_things_around(active_record_sets[records_set_name]["metadata"]["container_count"]) 
+					active_record_sets[records_set_name]["metadata"]["container_count"] +=1
+				return
+		if active_record_sets[records_set_name].is_empty():
+			if cached_record_sets.has(records_set_name): 
+				if !cached_record_sets[records_set_name].is_empty():
+					use_cache = true
+					active_record_sets[records_set_name] = cached_record_sets[records_set_name].duplicate(true)
+					cached_record_sets.erase(records_set_name)
+					load_cached_data(records_set_name)
+					var datapoint_node_to_move_path = active_record_sets[records_set_name][records_set_name + "interactions"]["content"][0][0]
+					var datapoint_node_to_move = get_node(datapoint_node_to_move_path[1][0] + "/" + datapoint_node_to_move_path[2][0])
+					datapoint_node_to_move.scene_mover_after_all_loaded() 
+					active_record_sets[records_set_name]["metadata"]["container_count"] +=1
+					return
+	group_first = get_tree().get_nodes_in_group("group_0")
+	var group_second = get_tree().get_nodes_in_group("group_1")
+	group_datapoints = get_tree().get_nodes_in_group("datapoints")
+	var datapoint_node
+	var records : Dictionary
+	var current_data_pack_loaded
+	var records_part : String
+	var records_name : String
+	records_part = ""
+	match record_type:
+		"base":
+			current_data_pack_loaded = BanksCombiner.combination_0
+			records_part = "base_"
+		"menu":
+			current_data_pack_loaded = BanksCombiner.combination_1
+			records_part = "menu_"
+		"settings":
+			current_data_pack_loaded = BanksCombiner.combination_2
+			records_part = "settings_"
+		"keyboard":
+			current_data_pack_loaded = BanksCombiner.combination_3
+			records_part = "keyboard_"
+		"keyboard_left":
+			current_data_pack_loaded = BanksCombiner.combination_4
+			records_part = "keyboard_left_"
+		"keyboard_right":
+			current_data_pack_loaded = BanksCombiner.combination_5
+			records_part = "keyboard_right_"
+		"things_creation":
+			current_data_pack_loaded = BanksCombiner.combination_6
+			records_part = "things_creation_"
+		"singular_lines":
+			current_data_pack_loaded = BanksCombiner.combination_7
+			records_part = "singular_lines_"
+		_:
+			return {}
+	group_datapoints = get_tree().get_nodes_in_group("datapoints")
+	for data_types in current_data_pack_loaded:
+		type_of_data = data_types[0]
+		match type_of_data:
+			0:
+				records = find_record_set(record_type)
+				
+				records_name = records_part + "records"
+			1:
+				records = find_instructions_set(record_type)
+				records_name = records_part + "instructions"
+			2: 
+				records = find_scene_frames(record_type)
+				records_name = records_part + "scenes"
+			3:
+				records = find_interactions_list(record_type)
+				records_name = records_part + "interactions"
+		load_record_set(records_part, records_name, type_of_data, records)
+		if type_of_data == 3:
+			read_records_data(active_record_sets, records_part)
+	scene_tree()
+func find_record_set(record_type: String) -> Dictionary:
+	match record_type:
+		"base":
+			return RecordsBank.records_map_0
+		"menu":
+			return RecordsBank.records_map_2
+		"settings":
+			return RecordsBank.records_map_3
+		"keyboard":
+			return RecordsBank.records_map_4
+		"keyboard_left":
+			return RecordsBank.records_map_5
+		"keyboard_right":
+			return RecordsBank.records_map_6
+		"things_creation":
+			return RecordsBank.records_map_7
+		"singular_lines":
+			return RecordsBank.records_map_8
+		_:
+			return {}
+func find_instructions_set(record_type: String) -> Dictionary:
+	match record_type:
+		"base":
+			return InstructionsBank.instructions_set_0
+		"menu":
+			return InstructionsBank.instructions_set_1
+		"settings":
+			return InstructionsBank.instructions_set_2
+		"keyboard":
+			return InstructionsBank.instructions_set_3
+		"keyboard_left":
+			return InstructionsBank.instructions_set_4
+		"keyboard_right":
+			return InstructionsBank.instructions_set_5
+		"things_creation":
+			return InstructionsBank.instructions_set_6
+		"singular_lines":
+			return InstructionsBank.instructions_set_7
+		_:
+			return {}
+func find_scene_frames(record_type: String) -> Dictionary:
+	match record_type:
+		"base":
+			return ScenesBank.scenes_frames_0
+		"menu":
+			return ScenesBank.scenes_frames_1
+		"settings":
+			return ScenesBank.scenes_frames_2
+		"keyboard":
+			return ScenesBank.scenes_frames_3
+		"keyboard_left":
+			return ScenesBank.scenes_frames_4
+		"keyboard_right":
+			return ScenesBank.scenes_frames_5
+		"things_creation":
+			return ScenesBank.scenes_frames_6
+		"singular_lines":
+			return ScenesBank.scenes_frames_7
+		_:
+			return {}
+func find_interactions_list(record_type: String) -> Dictionary:
+	match record_type:
+		"base":
+			return InteractionsBank.interactions_list_0
+		"menu":
+			return InteractionsBank.interactions_list_1
+		"settings":
+			return InteractionsBank.interactions_list_2
+		"keyboard":
+			return InteractionsBank.interactions_list_3
+		"keyboard_left":
+			return InteractionsBank.interactions_list_4
+		"keyboard_right":
+			return InteractionsBank.interactions_list_5
+		"things_creation":
+			return InteractionsBank.interactions_list_6
+		"singular_lines":
+			return InteractionsBank.interactions_list_7
+		_:
+			return {}
+
+#
+# JSH Memories Transcription
+#
+#      oooo  .oooooo..o ooooo   ooooo 
+#      `888 d8P'    `Y8 `888'   `888' 
+#       888 Y88bo.       888     888     ┳┳┓         •     ┏┳┓          •   •      ┏┓         
+#       888  `"Y8888o.   888ooooo888     ┃┃┃┏┓┏┳┓┏┓┏┓┓┏┓┏   ┃ ┏┓┏┓┏┓┏┏┏┓┓┏┓╋┓┏┓┏┓  ┗┓┓┏┏╋┏┓┏┳┓
+#       888      `"Y88b  888     888     ┛ ┗┗ ┛┗┗┗┛┛ ┗┗ ┛   ┻ ┛ ┗┻┛┗┛┗┛ ┗┣┛┗┗┗┛┛┗  ┗┛┗┫┛┗┗ ┛┗┗
+#       888 oo     .d8P  888     888                                     ┛            ┛       
+#   .o. 88P 8""88888P'  o888o   o888o 
+#   `Y888P                            
+#
+# JSH Memories Transcription
+#
+
+func recreator(number_to_add, data_to_process, data_set_name, new_name_for_set):
+	
+	print(" new_name_for_set : " , new_name_for_set)
+	var processed_data : Dictionary
+	var data_to_work_on = data_to_process.duplicate(true)
+	var container_path = data_set_name + "_container/thing_"
+	var patterns = ["thing_" , container_path ]
+	var number_we_wanna_add : int
+	var container_name_to_free
+	var data_type_name_combined_first = data_set_name + "_" + BanksCombiner.data_names_0[0]
+	var tasks_to_be_done : int = 0
+	var datapoint_name
+	var datapoint_container_name
+	
+	for container_to_find in data_to_work_on[data_type_name_combined_first]["content"]:
+		if container_to_find[0][3][0] == "container":
+			container_name_to_free = container_to_find[0][0][0]
+			container_to_find.clear()
+			break
+	
+	data_to_work_on[data_type_name_combined_first]["content"].erase([])
+
+	for data_types in BanksCombiner.data_names_0:
+		var data_type_name_combined = data_set_name + "_" + data_types
+		print(data_set_name + "_" + data_types)
+		for data_to_be_parsed_1 in data_to_work_on[data_type_name_combined]: 
+			if data_to_be_parsed_1 == "header":
+				if BanksCombiner.data_names_0[0] == data_types:
+					number_we_wanna_add = data_to_work_on[data_type_name_combined][data_to_be_parsed_1].size()
+					var counter_for_header_strings : int = 0
+					for container_name_to_find in data_to_work_on[data_type_name_combined][data_to_be_parsed_1]:
+						if container_name_to_find == container_name_to_free:
+							container_name_to_find = ""
+							data_to_work_on[data_type_name_combined][data_to_be_parsed_1][counter_for_header_strings] = ""
+							data_to_work_on[data_type_name_combined][data_to_be_parsed_1].erase("")
+							counter_for_header_strings +=1
+							break
+			var counter_new_0 : int = 0
+			for data_to_be_parsed_2 in data_to_work_on[data_type_name_combined][data_to_be_parsed_1]:
+				if data_to_be_parsed_2 is String:
+					for pattern in patterns:
+						if data_to_be_parsed_2.begins_with(pattern):
+							var string_to_change = data_to_be_parsed_2.split("_")
+							var size_of_array = string_to_change.size() -1
+							string_to_change[size_of_array] = str(int(string_to_change[size_of_array]) + number_we_wanna_add)
+							string_to_change = "_".join(string_to_change)
+							data_to_work_on[data_type_name_combined][data_to_be_parsed_1][counter_new_0] = string_to_change
+				if data_to_be_parsed_2 is Array:
+					if data_to_be_parsed_2.size() > 1:
+						var counter_new_1 : int = 0
+						var counter_helper : int = 0
+						for data_to_be_parsed_3 in data_to_be_parsed_2:
+							if data_to_be_parsed_3 is String:
+								for pattern in patterns:
+									if data_to_be_parsed_3.begins_with(pattern):
+										var string_to_change = data_to_be_parsed_3.split("_")
+										var size_of_array = string_to_change.size() -1
+										string_to_change[size_of_array] = str(int(string_to_change[size_of_array]) + number_we_wanna_add)
+										string_to_change = "_".join(string_to_change)
+										data_to_be_parsed_3 = string_to_change
+										counter_helper +=1
+							if data_to_be_parsed_3 is Array:
+								if data_to_be_parsed_3.size() > 1:
+									var counter_new_2 : int = 0
+									for data_to_be_parsed_4 in data_to_be_parsed_3:
+										if data_to_be_parsed_4[0] is String:
+											for pattern in patterns:
+												if data_to_be_parsed_4[0].begins_with(pattern):
+													var string_to_change = data_to_be_parsed_4[0].split("_")
+													var size_of_array = string_to_change.size() -1
+													string_to_change[size_of_array] = str(int(string_to_change[size_of_array]) + number_we_wanna_add)
+													string_to_change = "_".join(string_to_change)
+													data_to_be_parsed_4[0] = string_to_change
+										counter_new_2 +=1
+							counter_new_1 +=1
+				counter_new_0 +=1
+	for container_to_find in data_to_work_on[data_type_name_combined_first]["content"]:
+		if container_to_find[0][3][0] == "datapoint":
+			datapoint_name = container_to_find[0][0][0]
+			datapoint_container_name = container_to_find[0][5][0]
+			break
+	for data_types in BanksCombiner.data_names_0:
+		var data_type_name_combined = data_set_name + "_" + data_types
+		var data_type_name_combined_new = new_name_for_set + data_types
+		print(data_set_name + "_" + data_types)
+		for data_to_be_parsed_1 in data_to_work_on[data_type_name_combined]: 
+			processed_data[data_type_name_combined_new] = data_to_work_on[data_type_name_combined].duplicate(true)
+	processed_data["metadata"] = {
+				"timestamp": Time.get_ticks_msec(),
+				"datapoint_name": datapoint_name,
+				"datapoint_container_name": datapoint_container_name
+			}
+	return processed_data
+func find_highest_in_array(numbers: Array) -> int:
+	return numbers.max()
+func create_dictionary_to_cleanse(data_to_add : String):
+	if !dictionary_of_places.has(data_to_add):
+		dictionary_of_places[data_to_add] = [
+			data_to_add
+		]
+	else:
+		dictionary_of_places[data_to_add].append(data_to_add)
+func find_highest_number(name_of_data : String, number_to_check : int):
+	if !dictionary_to_find_number.has(name_of_data):
+		dictionary_to_find_number[name_of_data] = [
+			number_to_check
+		]
+	else:
+		dictionary_to_find_number[name_of_data].append(number_to_check)
+func load_record_set(records_part: String, record_type: String, type_of_data : int, records : Dictionary) -> void:
+	var max_nunmber_of_thingy = BanksCombiner.dataSetLimits[records_part]
+	var current_number_of_that_set : int = 0
+	if !active_record_sets.has(records_part):
+		current_number_of_that_set = 1
+	var list_of_reliquaries : Array = []
+	var codices : Array = [] 
+	var current_record_line : Array = []
+	for current_record_to_process in records:
+		var another_array_damn : Array = []
+		var string_splitter
+		for current_part in records[current_record_to_process]:
+			string_splitter = current_part[0].split("|")
+			var string_to_be_splitted
+			var tomes_of_knowledge : Array = []
+			for stringy_string in string_splitter:
+				string_to_be_splitted = stringy_string.split(",")
+				tomes_of_knowledge.append(string_to_be_splitted)
+			current_record_line.append(string_splitter[0])
+			another_array_damn.append(tomes_of_knowledge)
+		codices.append(another_array_damn)
+		list_of_reliquaries.append(current_record_line[0])
+		current_record_line.clear()
+	var string_header : String = "header"
+	var string_content : String = "content"
+	var records_processed : Dictionary = {} 
+	records_processed[string_header] =  list_of_reliquaries
+	records_processed[string_content] = codices
+	if active_record_sets.has(records_part)
+		if active_record_sets[records_part].has(record_type):
+			return
+	if not active_record_sets.has(records_part):
+		active_record_sets[records_part] = {
+			"metadata": {
+				"timestamp": Time.get_ticks_msec(),
+				"container_count": current_number_of_that_set,
+				"max_containers": max_nunmber_of_thingy
+			}
+		}
+	if records.size() > 0:
+		active_record_sets[records_part][record_type] = records_processed
+		current_record_set = record_type
+func read_records_data(record_set : Dictionary, records_set_name):
+	var perfect_copy = deep_copy_dictionary(active_record_sets)
+	newly_made_dictio = perfect_copy.duplicate(true)
+	load_cached_data(records_set_name)
+func deep_copy_dictionary(original: Dictionary) -> Dictionary:
+	var json_string = JSON.stringify(original)
+	var parsed = JSON.parse_string(json_string)
+	return parsed
+func unload_record_set(records_sets_name : String, record_type: String) -> void:
+	records_sets_name = records_sets_name + "_"
+	if active_record_sets.has(records_sets_name):
+		if active_record_sets[records_sets_name].has(record_type):
+			var data = active_record_sets[records_sets_name][record_type]
+			var meta_data = active_record_sets[records_sets_name]["metadata"]
+			cache_data(records_sets_name, record_type, data, meta_data)
+			active_record_sets[records_sets_name].erase(record_type)
+func cache_data(records_sets_name: String, record_type: String, data, meta_data) -> void:
+	var current_cache_size = get_cache_total_size()
+	var new_data_size = get_dictionary_memory_size(data)
+	var max_size_bytes = max_cache_size_mb * 1024 * 1024
+	if current_cache_size + new_data_size > max_size_bytes:
+		clean_oldest_dataset()
+	current_cache_size = get_cache_total_size()
+	if current_cache_size + new_data_size <= max_size_bytes:
+		if !cached_record_sets.has(records_sets_name):
+			cached_record_sets[records_sets_name] = {
+				"metadata": active_record_sets[records_sets_name]["metadata"].duplicate(true)
+			}
+		cached_record_sets[records_sets_name][record_type] = data.duplicate(true)
+		cached_record_sets[records_sets_name]["metadata"][str(record_type)] = {
+			"size": new_data_size,
+			"time_of_cache" : Time.get_ticks_msec()
+		}
+		cache_timestamps[records_sets_name + record_type] = Time.get_ticks_msec()
+	else:
+		print("Cache limit reached, cannot store new data")
+func clean_oldest_dataset() -> void:
+	var oldest_time = Time.get_ticks_msec()
+	var oldest_set = ""
+	for timestamp_key in cache_timestamps:
+		if cache_timestamps[timestamp_key] < oldest_time:
+			oldest_time = cache_timestamps[timestamp_key]
+			oldest_set = timestamp_key.split("_")[0]
+	if oldest_set != "":
+		cached_record_sets.erase(oldest_set + "_")
+		var to_remove = []
+		for timestamp_key in cache_timestamps:
+			if timestamp_key.begins_with(oldest_set):
+				to_remove.append(timestamp_key)
+		for key in to_remove:
+			cache_timestamps.erase(key)
+func get_dictionary_memory_size(dict: Dictionary) -> int:
+	var serialized = var_to_bytes(dict)
+	return serialized.size()
+func get_cache_total_size() -> int:
+	var total_size: int = 0
+	for records_set in cached_record_sets:
+		for record_type in cached_record_sets[records_set]:
+			var data = cached_record_sets[records_set][record_type]
+			total_size += get_dictionary_memory_size(data)
+	return total_size
+func get_record_type_id(record_type: String) -> int:
+	match record_type:
+		"base":
+			return 0
+		"menu":
+			return 1
+		_:
+			return -1
+
+#
+# JSH Hidden Veil
+#
+#      oooo  .oooooo..o ooooo   ooooo 
+#      `888 d8P'    `Y8 `888'   `888' 
+#       888 Y88bo.       888     888     ┓┏• ┓ ┓      ┓┏  •┓  ┏┓         
+#       888  `"Y8888o.   888ooooo888     ┣┫┓┏┫┏┫┏┓┏┓  ┃┃┏┓┓┃  ┗┓┓┏┏╋┏┓┏┳┓
+#       888      `"Y88b  888     888     ┛┗┗┗┻┗┻┗ ┛┗  ┗┛┗ ┗┗  ┗┛┗┫┛┗┗ ┛┗┗
+#       888 oo     .d8P  888     888                             ┛       
+#   .o. 88P 8""88888P'  o888o   o888o 
+#   `Y888P                            
+#
+# JSH Hidden Veil
+#
+
+func create_layers_for_lod():
+	print("creating stuff for later lod, current button clicking")
+func _process(delta):
+	match turn_number_process:
+		0:
+			turn_number_process += 1
+			delta_turn_0 = delta
+			pass
+		1:
+			turn_number_process += 1
+			pass
+		2:
+			turn_number_process += 1
+			pass
+		3:
+			turn_number_process += 1
+			pass
+		4:
+			turn_number_process += 1
+			pass
+		5:
+			turn_number_process += 1
+			pass
+		6:
+			turn_number_process += 1
+			pass
+		7:
+			turn_number_process += 1
+			pass
+		8:
+			turn_number_process += 1
+			pass
+		9:
+			turn_number_process = 0
+			pass
+	if Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
+		pass
+	if Input.is_mouse_button_pressed(MOUSE_BUTTON_RIGHT):
+		pass
+func calculate_time(delta_current, time, hour, minute, second):
+	time = Time.get_ticks_msec()
+	var time_0 = time / 1000.0
+	var all_seconds : int = time / 1000
+	var minutes : int = all_seconds / 60
+	var remaining_seconds : int = all_seconds % 60
+	print("Time: ", minutes, " minutes and ", remaining_seconds, " seconds")
+func check_data_points():
+	for datapoint in group_datapoints:
+		data_received = datapoint.datapoint_check()
+		match data_received[0][0]: 
+			-1:
+				print("minus one")
+			0:
+				print(" priority check number 0! ")
+			1:
+				pass
+			2:
+				pass
+			3:
+				pass
+
+#
+# JSH Projections
+#
+#      oooo  .oooooo..o ooooo   ooooo 
+#      `888 d8P'    `Y8 `888'   `888' 
+#       888 Y88bo.       888     888     ┏┓    •    •       ┏┓         
+#       888  `"Y8888o.   888ooooo888     ┃┃┏┓┏┓┓┏┓┏╋┓┏┓┏┓┏  ┗┓┓┏┏╋┏┓┏┳┓
+#       888      `"Y88b  888     888     ┣┛┛ ┗┛┃┗ ┗┗┗┗┛┛┗┛  ┗┛┗┫┛┗┗ ┛┗┗
+#       888 oo     .d8P  888     888           ┛               ┛      
+#   .o. 88P 8""88888P'  o888o   o888o 
+#   `Y888P                            
+#
+# JSH Projections
+#
+
+func _input(event):
+	if event is InputEventMouseButton:
+		if event.button_index == MOUSE_BUTTON_LEFT:
+			if event.pressed:
+				print("_input : Left mouse clicked at: ", event.position)
+				var current_ray_points = get_ray_points(event.position)
+			else:
+				print("_input : Left mouse released at: ", event.position)
+		
+		if event.button_index == MOUSE_BUTTON_RIGHT:
+			if event.pressed:
+				pass
+			else:
+				pass
+	if event is InputEventMouseMotion:
+		pass
+func get_ray_points(mouse_position: Vector2) -> Array:
+	var from = camera.project_ray_origin(mouse_position)
+	var ray_normal = camera.project_ray_normal(mouse_position)
+	var to = from + ray_normal * ray_distance_set
+	var space_state = get_world_3d().direct_space_state
+	var query = PhysicsRayQueryParameters3D.create(from, to)
+	var result = space_state.intersect_ray(query)
+	if result:
+		to = result.position
+		var collider = result.collider
+		var parent = collider.get_parent()
+		var containter = parent.get_parent()
+		var get_container = func(node: Node, method_name: String):
+			while node:
+				if node.has_method(method_name):
+					return node
+				node = node.get_parent()
+			return null
+		var container = get_container.call(containter, "get_datapoint")
+		var datapoint = container.get_datapoint()
+		var current_node = collider
+		while current_node != null and not current_node.name.begins_with("thing_"):
+			current_node = current_node.get_parent()
+		if current_node:
+			var array_of_things_that_shall_remain = datapoint.thing_interaction(current_node)
+			if array_of_things_that_shall_remain != null:
+				var array_size = array_of_things_that_shall_remain[1].size()
+				if array_size > 0:
+					secondary_interaction_after_rc(array_of_things_that_shall_remain[1])
+				unload_nodes(array_of_things_that_shall_remain[0][0])
+	var line_node_now = get_node("akashic_records/thing_3")
+	var start_end_points : Array = [from, to]
+	line_node_now.change_points_of_line(start_end_points)
+	return [from, to]
+func secondary_interaction_after_rc(array_of_data):
+	var size_of_array : int = array_of_data.size()
+	var counter_to_know_which : int = 0
+	for interactions_to_do in array_of_data :
+		var array_to_have_fun_with =  array_of_data[counter_to_know_which]
+		counter_to_know_which +=1
+		var counter_inter : int = 0
+		for inter in InteractionsBank.type_of_interactions_0:
+			if array_of_data[0][0] == inter:
+				match counter_inter:
+						print(" array_of_things_that_shall_remain array_of_data : fun 0 ")
+						counter_inter = -1
+					1: 
+						print(" array_of_things_that_shall_remain array_of_data : fun 1 ")
+						counter_inter = -1
+					2: 
+						print(" array_of_things_that_shall_remain array_of_data : fun 2 ")
+						counter_inter = -1
+					3: 
+						print(" array_of_things_that_shall_remain array_of_data : fun 3 ")
+						counter_inter = -1
+					4: 
+						print(" array_of_things_that_shall_remain array_of_data : fun 4 ")
+						print( " array_to_have_fun_with[1] : " , array_to_have_fun_with[1])
+						unload_container(array_to_have_fun_with[1])
+						counter_inter = -1
+					5: 
+						print(" array_of_things_that_shall_remain array_of_data : fun 5 ")
+						counter_inter = -1
+			counter_inter +=1
+func unload_container(container_to_unload):
+	var container_to_be_unloaded = get_node_or_null(container_to_unload)
+	if container_to_be_unloaded != null:
+		container_to_be_unloaded.queue_free()
+		process_to_unload_records(container_to_unload)
+func process_to_unload_records(container_name_to_unload):
+	var parts = container_name_to_unload.split("_")
+	if parts.size() < 2:
+		return
+	var records_sets_name
+	if parts.size() > 2:
+		records_sets_name = parts[0] + "_" + parts[1]
+	else:
+		records_sets_name = parts[0]
+	var counter_for_rec_ty : int = 0
+	active_record_sets[records_sets_name + "_" ]["metadata"]["container_count"] = 0
+	for records_types in BanksCombiner.combination_0:
+		var record_to_unloadin = records_sets_name + "_" + BanksCombiner.data_names_0[counter_for_rec_ty]
+		counter_for_rec_ty +=1
+		unload_record_set(records_sets_name , record_to_unloadin)
+	active_record_sets[records_sets_name + "_" ].erase("metadata")
+
+
+#
+# JSH Memories Storage
+#
+#      oooo  .oooooo..o ooooo   ooooo 
+#      `888 d8P'    `Y8 `888'   `888' 
+#       888 Y88bo.       888     888     ┳┳┓         •     ┏┓             ┏┓        
+#       888  `"Y8888o.   888ooooo888     ┃┃┃┏┓┏┳┓┏┓┏┓┓┏┓┏  ┗┓╋┏┓┏┓┏┓┏┓┏┓  ┗┓┓┏┏╋┏┓┏┳┓
+#       888      `"Y88b  888     888     ┛ ┗┗ ┛┗┗┗┛┛ ┗┗ ┛  ┗┛┗┗┛┛ ┗┻┗┫┗   ┗┛┗┫┛┗┗ ┛┗┗
+#       888 oo     .d8P  888     888                                 ┛       ┛      
+#   .o. 88P 8""88888P'  o888o   o888o 
+#   `Y888P                            
+#
+# JSH Memories Storage
+#
+
+func unload_nodes(array_of_thingiess_that_shall_remain):
+
+	var counter_1 : int = 0
+	var counter_2 : int = 0
+	var data_point_node = array_of_thingiess_that_shall_remain[1][0]
+	var data_point
+	var children_finder = array_of_thingiess_that_shall_remain[0][0].get_children()
+
+	for children in children_finder:
+		var thing_to_something : int = 0
+		thing_to_something = 0
+		for nodes_to_remain in array_of_thingiess_that_shall_remain:
+			if str(children.name) == str(nodes_to_remain[0]):
+				thing_to_something = 1
+				break
+		match thing_to_something:
+			0:
+				counter_1 +=1
+				children.queue_free()
+			1:
+				counter_2 +=1
+				if data_point_node == str(children.name):
+					data_point = children
+	if counter_1 <=1:
+		pass
+	else:
+		data_point.update_layer_0_after_freeing()
+
+#
+# JSH Memories Processed
+#
+#      oooo  .oooooo..o ooooo   ooooo 
+#      `888 d8P'    `Y8 `888'   `888' 
+#       888 Y88bo.       888     888     ┳┳┓         •     ┏┓            ┓  ┏┓         
+#       888  `"Y8888o.   888ooooo888     ┃┃┃┏┓┏┳┓┏┓┏┓┓┏┓┏  ┃┃┏┓┏┓┏┏┓┏┏┏┓┏┫  ┗┓┓┏┏╋┏┓┏┳┓
+#       888      `"Y88b  888     888     ┛ ┗┗ ┛┗┗┗┛┛ ┗┗ ┛  ┣┛┛ ┗┛┗┗ ┛┛┗ ┗┻  ┗┛┗┫┛┗┗ ┛┗┗
+#       888 oo     .d8P  888     888                                           ┛      
+#   .o. 88P 8""88888P'  o888o   o888o 
+#   `Y888P                            
+#
+# JSH Memories Processed
+#
+
+func load_cached_data(data_set: String):
+	var records_set_name = data_set
+	var cached_data_new = active_record_sets[records_set_name].duplicate(true) 
+	var coords_to_place
+	var direction_to_place
+	var thing_type_file
+	var shape_name
+	var root_name
+	var pathway_dna
+	var group_number
+	var counter_to_know : int = 0
+	var first_line : Array = []
+	var lines_parsed : Array = []
+	for data_type in BanksCombiner.combination_0:
+		counter_to_know = 0
+		type_of_data = int(data_type[0])
+		var type_num = data_type[0]
+		var data_name = records_set_name + BanksCombiner.data_names_0[type_num]
+		var file_data = cached_data_new[data_name]["content"]
+		var size_of_data = file_data.size()
+		for record in file_data:
+			counter_to_know +=1
+			for lines in record:
+				if lines == record[0]:
+					first_line = record[0]
+				else:
+					lines_parsed.append(lines)
+			match type_of_data:
+				0:
+					thing_name = first_line[0][0]
+					coords_to_place = first_line[1][0]
+					direction_to_place = first_line[2][0]
+					thing_type_file = first_line[3][0]
+					shape_name = first_line[4][0]
+					root_name = first_line[5][0]
+					pathway_dna = first_line[6][0]
+					group_number = first_line[7][0]
+				1:
+					pass
+				2:
+					pass
+				3:
+					pass
+			match type_of_data:
+				0:
+					analise_data(thing_name, thing_type_file, first_line, lines_parsed[0], group_number, shape_name, lines_parsed)
+				1:
+					print("instruction stuff:")
+				2: 
+					print(" scenes and frames analise : ")
+				3: 
+					print("so we will need to add them to datapoint")
+					if counter_to_know - 666 == size_of_data:
+						var container_node_path = first_line[1][0]
+						var container_node = get_node(container_node_path)
+						var datapoint_node = container_node.get_datapoint()
+						var scene_number: int = 0
+						datapoint_node.move_things_around(scene_number)
+			first_line.clear()
+			lines_parsed.clear()
+func interactions_upload_to_datapoint(header_line, information_lines):
+	var array_of_interactions : Array = []
+	var number_of_interactions = header_line.size() - 5
+	var num_counter : int = 5
+	for num_in in number_of_interactions:
+		array_of_interactions.append(header_line[num_counter])
+		num_counter +=1
+	datapoint_pathy = header_line[1][0] + "/" + header_line[2][0]
+	datapoint_select = get_node(datapoint_pathy)
+	datapoint_select.upload_interactions(header_line[3], information_lines, array_of_interactions, number_of_interactions)
+var datapoint_selector
+var datapoint_path
+func scene_frames_upload_to_datapoint(header_line, information_lines):
+	datapoint_path = header_line[1][0] + "/" + header_line[2][0]
+	datapoint_selector = get_node(datapoint_path)
+	var new_way1 = header_line
+	var new_way2 = information_lines
+	datapoint_selector.upload_scenes_frames(header_line, information_lines)
+var current_database_instructed
+var thing_to_add
+var node_path
+var path_directory
+var path_for_the_thing
+func instructions_analiser(metadata_parts, second_line, third_line):
+	node_path = second_line[0][0] + "/" + second_line[1][0]
+	print("Looking for node at path: ", node_path)
+	var node_data = jsh_tree_get_node(node_path)
+	if !node_data.is_empty() and node_data.has("node") and node_data["node"] != null:
+		current_database_instructed = node_data["node"]
+		things_container = current_database_instructed.get_parent()
+	else:
+		print("Could not find node in tree: ", node_path)
+	var type = metadata_parts[1][0]
+	var counter = -1
+	for i in InstructionsBank.type_of_instruction_0:
+		counter +=1
+		if type == i:
+			break
+	match counter: 
+		0: 
+			current_database_instructed.datapoint_assign_priority(third_line[0][0])
+		1: 
+			var database_node_path = second_line[0][0] + "/" + second_line[1][0]
+			current_database_instructed = get_node(database_node_path)
+			for i in third_line:
+				if third_line[0] == i:
+					path_directory = i[0]
+				else:
+					path_for_the_thing = i[0]
+				node_path = str(path_directory) + "/" + str(path_for_the_thing)
+				thing_to_add = get_node(node_path)
+				if thing_to_add != null:
+					if i[0].begins_with("thing_"):
+						current_database_instructed.add_thing_to_datapoint(node_path, thing_to_add)
+					else:
+						print(" instruction analiser it does not begins with thing_ ")	
+		2: 
+			current_database_instructed.datapoint_max_things_number_setter(third_line[0][0])
+		3:
+			things_container.containter_start_up(0, current_database_instructed)
+		4: 
+			print("analise instruction 4, we didnt use it yet, probably putting containers inside containers, so we have like, easy way to use scenes system :)")
+		5: 
+			var scene_setter_number = int(third_line[0][0])
+			var database_node_path = second_line[0][0] + "/" + second_line[1][0]
+			current_database_instructed = get_node(database_node_path)
+			current_database_instructed.scene_to_set_number_later(scene_setter_number)
+		6: 
+			things_container.rotation.x -= deg_to_rad(int(third_line[1][0]))
+		7: 
+			current_database_instructed.setup_text_handling()
+		8: 
+			current_database_instructed.set_maximum_interaction_number(third_line[0][0], int(third_line[1][0]))
+func assign_priority(database_node, priority_to_assign):
+	match priority_to_assign: 
+		-1:
+			database_node.datapoint_assign_priority(priority_to_assign)
+		0:
+			database_node.datapoint_assign_priority(priority_to_assign)
+		1:
+			database_node.datapoint_assign_priority(priority_to_assign)
+		2:
+			database_node.datapoint_assign_priority(priority_to_assign)
+		3:
+			database_node.datapoint_assign_priority(priority_to_assign)
+func assign_things_to_datapoint():
+	pass
+
+#
+# JSH Things Creation
+#
+#      oooo  .oooooo..o ooooo   ooooo 
+#      `888 d8P'    `Y8 `888'   `888' 
+#       888 Y88bo.       888     888     ┏┳┓┓ •       ┏┓       •      ┏┓        
+#       888  `"Y8888o.   888ooooo888      ┃ ┣┓┓┏┓┏┓┏  ┃ ┏┓┏┓┏┓╋┓┏┓┏┓  ┗┓┓┏┏╋┏┓┏┳┓
+#       888      `"Y88b  888     888      ┻ ┛┗┗┛┗┗┫┛  ┗┛┛ ┗ ┗┻┗┗┗┛┛┗  ┗┛┗┫┛┗┗ ┛┗┗
+#       888 oo     .d8P  888     888              ┛                      ┛       
+#   .o. 88P 8""88888P'  o888o   o888o 
+#   `Y888P                            
+#
+# JSH Things Creation
+#
+
+func analise_data(thing_name_, type, data_to_analyze, second_part, group_number, verion_of_thing, information_lines_parsed):
+
+
+	just_added_new_node_data = data_to_analyze
+
+	var counter = -1
+	for i in RecordsBank.type_of_thing_0:
+		counter +=1
+		
+		if type == i:
+			break
+		else:
+			continue
+	match counter:
+			analyzed_file_type = 0
+			create_flat_shape(thing_name_, data_to_analyze, second_part, group_number, verion_of_thing, information_lines_parsed)
+		1:
+			analyzed_file_type = 1
+			create_text_label(thing_name_, data_to_analyze, second_part, group_number, verion_of_thing, information_lines_parsed)
+		2:
+			analyzed_file_type = 2
+			create_array_mesh(thing_name_, data_to_analyze, second_part, group_number, verion_of_thing, information_lines_parsed) 
+		3:
+			analyzed_file_type = 3
+			create_button(thing_name_, data_to_analyze, second_part, group_number, verion_of_thing, information_lines_parsed)
+		4:
+			analyzed_file_type = 4
+			create_cursor(thing_name_, data_to_analyze, second_part, group_number, verion_of_thing, information_lines_parsed)
+		5:
+			analyzed_file_type = 5
+			create_connection(thing_name_, data_to_analyze, second_part, group_number, verion_of_thing, information_lines_parsed)
+		6:
+			analyzed_file_type = 6
+			create_screen(thing_name_, data_to_analyze, second_part, group_number, verion_of_thing, information_lines_parsed)
+		7:
+			analyzed_file_type = 7
+			create_datapoint(thing_name_, data_to_analyze, second_part, group_number, verion_of_thing, information_lines_parsed)
+		8:
+			analyzed_file_type = 8
+			create_circle_shape(thing_name_, data_to_analyze, second_part, group_number, verion_of_thing, information_lines_parsed)
+		9:
+			analyzed_file_type = 8
+			create_container(thing_name_, data_to_analyze, second_part, group_number, verion_of_thing, information_lines_parsed)
+		10:
+			analyzed_file_type = 9
+			create_textmesh(thing_name_, data_to_analyze, second_part, group_number, verion_of_thing, information_lines_parsed)
+		_:  
+			print("hmmm didnt find the type of thing?")
+func scene_tree():
+	print_tree_pretty()
+func create_circle_shape(node_name: String, first_line : Array, data_to_write : Array, group_name : String, version_of_thing : String, information_lines_parsed : Array):
+	var coords = first_line[1]
+	var to_rotate = first_line[2]
+	var radius = data_to_write[0]
+	var num_points = data_to_write[1]
+	var points = generate_circle_points(int(radius[0]), int(num_points[0]))
+	create_flat_shape(node_name, first_line, points, group_name, version_of_thing, information_lines_parsed)
+func generate_circle_points(radius: float, num_points: int) -> Array:
+	num_points = clamp(num_points, 3, 33)
+	var points_to_clean
+	var points = []
+	var points_array = []
+	var angle_step = TAU / num_points
+	for i in range(num_points):
+		var angle = i * angle_step
+		var x : float = radius * cos(angle)
+		var y : float = radius * sin(angle)
+		var z : float
+		points_to_clean = "%0.1f,%0.1f,0.0" % [x, y]
+		points_to_clean = points_to_clean.split(",")
+		points.append(points_to_clean)
+	return points
+func create_flat_shape(node_name: String, first_line : Array, data_to_write : Array, group_name : String, version_of_thing : String, information_lines_parsed : Array):
+	
+	var node_path = first_line[6][0]
+	var coords = first_line[1]
+	var to_rotate = first_line[2]
+	var color_to_change = float(information_lines_parsed[1][0][0])
+	var opacity_to_change = float(information_lines_parsed[1][1][0])
+	var material = StandardMaterial3D.new()
+	var color_to_add_op = get_spectrum_color(color_to_change)
+	color_to_add_op.a = opacity_to_change
+	material.albedo_color = color_to_add_op
+	material.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA_SCISSOR
+	var vertices = PackedVector3Array()
+	var indices = PackedInt32Array()
+	vertices.push_back(Vector3.ZERO)
+	var vector_points = []
+	for point in data_to_write:
+		var point_vector = Vector3(float(point[0]), float(point[1]), float(point[2]))
+		vector_points.append(point_vector)
+		vertices.push_back(point_vector)
+	for i in range(vector_points.size()):
+		var next_i = (i + 1) % vector_points.size()
+		indices.append(0)
+		indices.append(i + 1)
+		indices.append(next_i + 1)
+	var arr_mesh = ArrayMesh.new()
+	var arrays = []
+	arrays.resize(Mesh.ARRAY_MAX)
+	arrays[Mesh.ARRAY_VERTEX] = vertices
+	arrays[Mesh.ARRAY_INDEX] = indices
+	arr_mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, arrays)
+	var mesh_instance = MeshInstance3D.new()
+	mesh_instance.mesh = arr_mesh
+	material.cull_mode = BaseMaterial3D.CULL_DISABLED
+	var node_type = "flat_shape"
+	mesh_instance.material_override = material
+	node_creation(node_name, mesh_instance, coords, to_rotate, group_name, node_type, node_path)
+func create_text_label(node_name: String, first_line : Array, data_to_write : Array, group_name : String, version_of_thing : String, information_lines_parsed : Array):
+	var node_path = first_line[6][0]
+	var coords = first_line[1]
+	var to_rotate = first_line[2]
+	var text_label = Label3D.new()
+	text_label.text = data_to_write[0][0] 
+	text_label.font_size = int(data_to_write[1][0])
+	text_label.no_depth_test = true 
+	text_label.modulate = Color(1, 1, 1)
+	var node_type = "text"
+	node_creation(node_name, text_label, coords, to_rotate, group_name, node_type, node_path) 
+func create_array_mesh(node_name: String, first_line : Array, data_to_write : Array, group_name : String, version_of_thing : String, information_lines_parsed : Array):
+	var node_path = first_line[6][0]
+	var coords = first_line[1]
+	var to_rotate = first_line[2]
+	var color_to_change = float(information_lines_parsed[1][0][0])
+	var opacity_to_change = float(information_lines_parsed[1][1][0])
+	var vertices = PackedVector3Array()
+	var vector_points = []
+	for point in data_to_write:
+		vector_points.append(Vector3(float(point[0]), float(point[1]), float(point[2])))
+	vertices.append(vector_points[0])
+	vertices.append(vector_points[2])
+	vertices.append(vector_points[1])
+	vertices.append(vector_points[0])
+	vertices.append(vector_points[3])
+	vertices.append(vector_points[2])
+	var arr_mesh = ArrayMesh.new()
+	var arrays = []
+	arrays.resize(Mesh.ARRAY_MAX)
+	arrays[Mesh.ARRAY_VERTEX] = vertices
+	arr_mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, arrays)
+	var mesh_instance = MeshInstance3D.new()
+	mesh_instance.mesh = arr_mesh
+	var material = StandardMaterial3D.new()
+	var color_to_add_op = get_spectrum_color(color_to_change)
+	color_to_add_op.a = opacity_to_change
+	material.albedo_color = color_to_add_op
+	material.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA_SCISSOR
+	mesh_instance.material_override = material
+	var node_type = "model"
+	node_creation(node_name, mesh_instance, coords, to_rotate, group_name, node_type, node_path)
+func create_textmesh(node_name: String, first_line : Array, data_to_write : Array, group_name : String, version_of_thing : String, information_lines_parsed : Array):
+	var node_path = first_line[6][0]
+	var coords = first_line[1]
+	var to_rotate = first_line[2]
+	var text_for_label = information_lines_parsed[1][0][0]
+	var size_for_label = int(information_lines_parsed[1][1][0])
+	var depth = float(information_lines_parsed[1][2][0])
+	var pixel_size = float(information_lines_parsed[1][3][0])
+	var color_to_change = float(information_lines_parsed[1][4][0])
+	var opacity_to_change = float(information_lines_parsed[1][5][0])
+	var material = StandardMaterial3D.new()
+	var color_to_add_op = get_spectrum_color(color_to_change)
+	color_to_add_op.a = opacity_to_change
+	material.albedo_color = color_to_add_op
+	material.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA_DEPTH_PRE_PASS
+	var mesh_instance = MeshInstance3D.new()
+	var text_mesh = TextMesh.new()
+	text_mesh.text = text_for_label
+	text_mesh.font_size = size_for_label
+	text_mesh.depth = depth
+	text_mesh.pixel_size = pixel_size
+	text_mesh.horizontal_alignment = 1
+	text_mesh.vertical_alignment = 1
+	mesh_instance.mesh = text_mesh
+	mesh_instance.name = node_name
+	material.cull_mode = BaseMaterial3D.CULL_DISABLED
+	if text_for_label == "JSH":
+		material.metallic = 1.0
+		material.specular = 0.52
+		material.roughness = 0.33
+	
+	mesh_instance.material_override = material
+	var node_type = "textmesh"
+	node_creation(node_name, mesh_instance, coords, to_rotate, group_name, node_type, node_path)
+func create_button(node_name: String, first_line : Array, data_to_write : Array, group_name : String, version_of_thing : String, information_lines_parsed : Array):
+	var node_path = first_line[6][0]
+	var coords = first_line[1]
+	var to_rotate = first_line[2]
+
+	var mesh_name = "shape_" + node_name 
+	var text_label_name = "text_" + node_name
+	var color_to_change = float(information_lines_parsed[1][2][0])
+	var opacity_to_change = float(information_lines_parsed[1][3][0])
+	var material = StandardMaterial3D.new()
+	var color_to_add_op = get_spectrum_color(color_to_change)
+	color_to_add_op.a = opacity_to_change
+	material.albedo_color = color_to_add_op
+	material.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA_SCISSOR
+	var text_for_label = information_lines_parsed[1][0][0]
+	var size_for_label = int(information_lines_parsed[1][1][0])
+	var button_node = Node3D.new()
+	button_node.name = node_name
+	var vertices = PackedVector3Array()
+	var indices = PackedInt32Array()
+	var vector_points = []
+	for point in data_to_write:
+		var point_vector = Vector3(float(point[0]), float(point[1]), float(point[2]))
+		vector_points.append(point_vector)
+		vertices.push_back(point_vector)
+	indices.append(0)
+	indices.append(1)
+	indices.append(2)
+	indices.append(0)
+	indices.append(2)
+	indices.append(3)
+	var arr_mesh = ArrayMesh.new()
+	var arrays = []
+	arrays.resize(Mesh.ARRAY_MAX)
+	arrays[Mesh.ARRAY_VERTEX] = vertices
+	arrays[Mesh.ARRAY_INDEX] = indices
+	arr_mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, arrays)
+	var mesh_instance = MeshInstance3D.new()
+	mesh_instance.mesh = arr_mesh
+	mesh_instance.name = mesh_name
+	material.cull_mode = BaseMaterial3D.CULL_DISABLED
+	mesh_instance.material_override = material
+	var text_label = Label3D.new()
+	text_label.name = text_label_name
+	text_label.text = text_for_label
+	text_label.font_size = size_for_label
+	text_label.no_depth_test = true
+	text_label.modulate = Color(1, 1, 1)  
+	text_label.position.z += 0.01 
+	var mesh_path = node_path + "/" + mesh_name
+	var label_path = node_path + "/" + text_label_name
+	tasked_children(text_label, label_path)
+	var node_type = "button"
+	node_creation(mesh_name, mesh_instance, coords, to_rotate, group_name, node_type, mesh_path)
+func create_cursor(node_name: String, first_line : Array, data_to_write : Array, group_name : String, version_of_thing : String, information_lines_parsed : Array):
+	var node_path = first_line[6][0]
+	var coords = first_line[1]
+	var to_rotate = first_line[2]
+	var color_to_change = float(information_lines_parsed[1][0][0])
+	var opacity_to_change = float(information_lines_parsed[1][1][0])
+	var material = StandardMaterial3D.new()
+	var color_to_add_op = get_spectrum_color(color_to_change)
+	color_to_add_op.a = opacity_to_change
+	material.albedo_color = color_to_add_op
+	material.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA_SCISSOR
+	var vertices = PackedVector3Array()
+	var triangle_data = [data_to_write[0], data_to_write[1], data_to_write[2]]
+	var triangle_scale = data_to_write[3]
+	var triangle_scale_vec3 : Vector3 = Vector3(float(triangle_scale[0]), float(triangle_scale[1]), float(triangle_scale[2]))
+	var vector_points = []
+	for point in triangle_data:
+		vector_points.append(Vector3(float(point[0]), float(point[1]), float(point[2])))
+	vertices.append(vector_points[0])
+	vertices.append(vector_points[1])
+	vertices.append(vector_points[2])
+	var arr_mesh = ArrayMesh.new()
+	var arrays = []
+	arrays.resize(Mesh.ARRAY_MAX)
+	arrays[Mesh.ARRAY_VERTEX] = vertices
+	arr_mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, arrays)
+	var mesh_instance = MeshInstance3D.new()
+	mesh_instance.mesh = arr_mesh
+	mesh_instance.scale = triangle_scale_vec3
+	material.cull_mode = StandardMaterial3D.CULL_DISABLED 
+	material.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED 
+	mesh_instance.material_override = material
+	var node_type = "cursor"
+	node_creation(node_name, mesh_instance, coords, to_rotate, group_name, node_type, node_path)
+func create_connection(node_name: String, first_line : Array, data_to_write : Array, group_name : String, version_of_thing : String, information_lines_parsed : Array):
+	var node_path = first_line[6][0]
+	var coords = first_line[1]
+	var to_rotate = first_line[2]
+	var cords_for_line = [data_to_write[0], data_to_write[1]]
+	var color_for_line = data_to_write[2][0]
+	var point1 = Vector3(
+		float(cords_for_line[0][0]),
+		float(cords_for_line[0][1]),
+		float(cords_for_line[0][2])
+	)
+	var point2 = Vector3(
+		float(cords_for_line[1][0]),
+		float(cords_for_line[1][1]),
+		float(cords_for_line[1][2])
+	)
+	var center = point1 + point2 / 2
+	var mesh_instance = MeshInstance3D.new()
+	var immediate_mesh = ImmediateMesh.new()
+	mesh_instance.mesh = immediate_mesh
+	mesh_instance.name = node_name
+	var material = StandardMaterial3D.new()
+	material.shading_mode = StandardMaterial3D.SHADING_MODE_UNSHADED
+	var color_line = float(data_to_write[2][0])
+	material.albedo_color = get_spectrum_color(color_line)
+	mesh_instance.material_override = material
+	immediate_mesh.surface_begin(Mesh.PRIMITIVE_LINES)
+	immediate_mesh.surface_add_vertex(point1 + center)
+	immediate_mesh.surface_add_vertex(center)
+	immediate_mesh.surface_add_vertex(center)
+	immediate_mesh.surface_add_vertex(point2 + center)
+	immediate_mesh.surface_end()
+	mesh_instance.set_script(LineScript)
+	var node_type = "connection"
+	node_creation(node_name, mesh_instance, coords, to_rotate, group_name, node_type, node_path)
+func create_screen(node_name: String, first_line : Array, data_to_write : Array, group_name : String, version_of_thing : String, information_lines_parsed : Array):
+	var node_path = first_line[6][0]
+	var coords = first_line[1]
+	var to_rotate = first_line[2]
+	var color_to_change = float(information_lines_parsed[1][0][0])
+	var opacity_to_change = float(information_lines_parsed[1][1][0])
+	var material = StandardMaterial3D.new()
+	var color_to_add_op = get_spectrum_color(color_to_change)
+	color_to_add_op.a = opacity_to_change
+	material.albedo_color = color_to_add_op
+	material.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA_DEPTH_PRE_PASS
+	var vertices = PackedVector3Array()
+	var vector_points = []
+	for point in data_to_write:
+		vector_points.append(Vector3(float(point[0]), float(point[1]), float(point[2])))
+	vertices.append(vector_points[0])
+	vertices.append(vector_points[2])
+	vertices.append(vector_points[1])
+	vertices.append(vector_points[0])
+	vertices.append(vector_points[3])
+	vertices.append(vector_points[2])
+	var arr_mesh = ArrayMesh.new()
+	var arrays = []
+	arrays.resize(Mesh.ARRAY_MAX)
+	arrays[Mesh.ARRAY_VERTEX] = vertices
+	arr_mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, arrays)
+	var mesh_instance = MeshInstance3D.new()
+	mesh_instance.mesh = arr_mesh
+	mesh_instance.material_override = material
+	var node_type =  "screen"
+	node_creation(node_name, mesh_instance, coords, to_rotate, group_name, node_type, node_path)
+func create_datapoint(node_name: String, first_line : Array, data_to_write : Array, group_name : String, version_of_thing : String, information_lines_parsed : Array):
+	var node_path = first_line[6][0]
+	var coords = first_line[1]
+	var to_rotate = first_line[2]
+	var data_point = Node3D.new()
+	data_point.set_script(DataPointScript)
+	data_point.setup_main_reference(self)
+	var message_tester 
+	message_tester = data_point.power_up_data_point(node_name, int(version_of_thing), data_to_write)
+	var node_type = "datapoint"
+	node_creation(node_name, data_point, coords, to_rotate, group_name, node_type, node_path)
+func create_container(node_name: String, first_line : Array, data_to_write : Array, group_name : String, version_of_thing : String, information_lines_parsed : Array):
+	var node_path = first_line[6][0]
+	var coords = first_line[1]
+	var to_rotate = first_line[2]
+	var container 
+	container = Node3D.new()
+	container.name = data_to_write[0][0]
+	container.set_script(ContainterScript)
+	if container.has_method("container_initialize"):
+		container.container_initialize(data_to_write)
+	var node_type = "container"
+	node_creation(data_to_write[0][0], container, coords, to_rotate, group_name, node_type, node_path)
+func get_spectrum_color(value: float) -> Color:
+	value = clamp(value, 0.0, 1.0)
+	var color_index = value * 10  
+	var colors = [
+		Color(0.0, 0.0, 0.0), 
+		Color(1.0, 1.0, 1.0),  
+		Color(0.0, 0.0, 0.0),  
+		Color(0.45, 0.25, 0.0),  
+		Color(1.0, 0.0, 0.0),    
+		Color(1.0, 0.5, 0.0), 
+		Color(1.0, 1.0, 0.0),   
+		Color(1.0, 1.0, 1.0),   
+		Color(0.0, 1.0, 0.0),   
+		Color(0.0, 0.0, 1.0),    
+		Color(0.5, 0.0, 0.5)    
+	]
+	var lower_index = floor(color_index)
+	var upper_index = ceil(color_index)
+	var t = color_index - lower_index
+	return colors[lower_index].lerp(colors[min(upper_index, 8)], t)
+
+#
+# JSH Scene Tree Add Nodes, Physical and Astral Bodies
+#
+#      oooo  .oooooo..o ooooo   ooooo      ┏┓         ┏┳┓        ┏┓ ┓ ┓  ┳┓   ┓     
+#      `888 d8P'    `Y8 `888'   `888'      ┗┓┏┏┓┏┓┏┓   ┃ ┏┓┏┓┏┓  ┣┫┏┫┏┫  ┃┃┏┓┏┫┏┓┏   
+#       888 Y88bo.       888     888       ┗┛┗┗ ┛┗┗    ┻ ┛ ┗ ┗   ┛┗┗┻┗┻  ┛┗┗┛┗┻┗ ┛   
+#       888  `"Y8888o.   888ooooo888      ┏┓┓    •   ┓       ┓  ┏┓      ┓  ┳┓   ┓•  
+#       888      `"Y88b  888     888      ┃┃┣┓┓┏┏┓┏┏┓┃  ┏┓┏┓┏┫  ┣┫┏╋┏┓┏┓┃  ┣┫┏┓┏┫┓┏┓┏
+#       888 oo     .d8P  888     888      ┣┛┛┗┗┫┛┗┗┗┻┗  ┗┻┛┗┗┻  ┛┗┛┗┛ ┗┻┗  ┻┛┗┛┗┻┗┗ ┛
+#   .o. 88P 8""88888P'  o888o   o888o          ┛                        
+#   `Y888P                            
+#
+# JSH Scene Tree Add Nodes, Physical and Astral Bodies, also Sprit bodies ;)
+#
+
+func node_creation(node_name, crafted_data, coords, to_rotate, group_number, node_type, path_of_thing):
+
+	print(" group_number : " , group_number)
+	crafted_data.add_to_group(group_number)
+	var pos_parts = coords
+	var position_ = Vector3(float(pos_parts[0]), float(pos_parts[1]), float(pos_parts[2]))
+	crafted_data.position = position_
+	var rot_parts = to_rotate
+	var rotation_euler = Vector3(float(rot_parts[0]), float(rot_parts[1]), float(rot_parts[2]))
+	crafted_data.rotation_degrees = rotation_euler
+	if node_name != "":
+		crafted_data.name = node_name
+	print(" node creation manifestation device : " , " 1 : " , crafted_data, " 2 :" , path_of_thing)
+	tasked_children(crafted_data, path_of_thing)
+	new_node_added = crafted_data
+	match node_type:
+		"flat_shape", "model", "cursor", "screen", "circle", "button" :
+			add_collision_to_thing(crafted_data, node_type, path_of_thing, node_name)
+		_:
+			pass
+	return crafted_data
+func handle_button_collision(crafted_data, path_of_thing, node_type, node_name):
+	var children = jsh_tree_get_children(path_of_thing)
+	print(" my new children : " , children)
+	for child in children:
+		if child["name"].begins_with("shape_"):
+			var mesh_node = child["node"]
+			if mesh_node:
+				add_collision_to_thing(mesh_node, node_type, path_of_thing, node_name)
+func handle_button_children(crafted_data, path_of_thing, node_type, node_name):
+	get_tree().create_timer(0.1).timeout.connect(func():
+		var children = crafted_data.get_children()
+		if children.size() > 0:
+			var mesh_node_button = children[0]
+			add_collision_to_thing(mesh_node_button, node_type, path_of_thing, node_name)
+	)
+func add_collision_to_thing(thing_node, node_type, path_of_thingy, name_of_thingy):
+	var static_body_name = "collision_" + name_of_thingy 
+	var static_body_path = path_of_thingy + "/" + static_body_name
+	var static_body = StaticBody3D.new()
+	static_body.name = static_body_name
+	tasked_children(static_body, static_body_path)
+	var shape_name = "shape_" + name_of_thingy 
+	var collision_shape_path = static_body_path + "/"  + shape_name
+	var collision_shape = CollisionShape3D.new()
+	collision_shape.name = shape_name
+	tasked_children(collision_shape, collision_shape_path)
+	var area_name = "aura_" + name_of_thingy 
+	var area_node_path = path_of_thingy + "/" + area_name
+	var area = Area3D.new()
+	area.name = area_name
+	tasked_children(area, area_node_path)
+	var collision_area = "collision_aura_" + name_of_thingy
+	var collision_area_path = area_node_path + "/" + collision_area
+	var area_collision_shape = CollisionShape3D.new()
+	area_collision_shape.name = collision_area
+	tasked_children(area_collision_shape, collision_area_path)
+	var mesh_instance = thing_node as MeshInstance3D
+	if mesh_instance and mesh_instance.mesh:
+		var aabb = mesh_instance.mesh.get_aabb()
+		match node_type:
+			"flat_shape", "model", "button", "cursor", "screen", "circle":
+				var flat_shape = ConvexPolygonShape3D.new()
+				var vertices = mesh_instance.mesh.get_faces()
+				flat_shape.points = vertices
+				collision_shape.shape = flat_shape
+				var area_shape = ConvexPolygonShape3D.new()
+				var expanded_vertices = PackedVector3Array()
+				var expansion_distance = 0.2
+				for vert in vertices:
+					expanded_vertices.push_back(vert + Vector3(expansion_distance, expansion_distance, expansion_distance))
+					expanded_vertices.push_back(vert + Vector3(expansion_distance, expansion_distance, -expansion_distance))
+					expanded_vertices.push_back(vert + Vector3(expansion_distance, -expansion_distance, expansion_distance))
+					expanded_vertices.push_back(vert + Vector3(-expansion_distance, expansion_distance, expansion_distance))
+					expanded_vertices.push_back(vert + Vector3(-expansion_distance, -expansion_distance, -expansion_distance))
+					expanded_vertices.push_back(vert + Vector3(-expansion_distance, -expansion_distance, expansion_distance))
+					expanded_vertices.push_back(vert + Vector3(-expansion_distance, expansion_distance, -expansion_distance))
+					expanded_vertices.push_back(vert + Vector3(expansion_distance, -expansion_distance, -expansion_distance))
+				area_shape.points = expanded_vertices
+				area_collision_shape.shape = area_shape
+			"heightmap":
+				var flat_shape = ConvexPolygonShape3D.new()
+				var vertices = mesh_instance.mesh.get_faces()
+				flat_shape.points = vertices
+				collision_shape.shape = flat_shape
+				var area_shape = ConvexPolygonShape3D.new()
+				var expanded_vertices = PackedVector3Array()
+				var expansion_distance = 0.2
+				for vert in vertices:
+					expanded_vertices.push_back(vert + Vector3(0, expansion_distance, 0))
+				for vert in vertices:
+					expanded_vertices.push_back(vert - Vector3(0, expansion_distance, 0))
+				
+				area_shape.points = expanded_vertices
+				area_collision_shape.shape = area_shape
+			_:
+				return
+	static_body.collision_layer = 1
+	static_body.collision_mask = 1
+	area.collision_layer = 2
+	area.collision_mask = 2

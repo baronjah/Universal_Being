@@ -1,0 +1,27 @@
+[gd_scene load_steps=4 format=3 uid="uid://dcj8o25d11yna"]
+
+[ext_resource type="Script" path="res://12_turns_system/enhanced_migration_launcher.gd" id="1_lqn2s"]
+[ext_resource type="Script" path="res://12_turns_system/godot4_migration_tool.gd" id="2_l37qn"]
+[ext_resource type="Script" path="res://12_turns_system/godot4_migration_tester.gd" id="3_gck57"]
+
+[node name="Godot4MigrationSystem" type="Node"]
+
+[node name="EnhancedMigrationLauncher" type="Node" parent="."]
+script = ExtResource("1_lqn2s")
+auto_start_ui = true
+enable_color_integration = true
+enable_test_runner = true
+
+[node name="Godot4MigrationTool" type="Node" parent="."]
+script = ExtResource("2_l37qn")
+backup_before_migration = true
+auto_fix_deprecated = true
+migrate_resources = true
+verbose_logging = true
+
+[node name="Godot4MigrationTester" type="Node" parent="."]
+script = ExtResource("3_gck57")
+test_scripts_path = "res://12_turns_system/tests/migration_test_scripts"
+output_path = "res://12_turns_system/tests/migration_output"
+verbose_logging = true
+run_tests_on_start = false

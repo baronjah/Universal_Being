@@ -1,0 +1,227 @@
+# Eden Space Game - Project Setup Guide
+
+## Project Configuration
+
+### Godot Settings
+
+#### Project Settings
+1. Open Project > Project Settings
+2. Go to General > Rendering
+   - Set Renderer to "Forward+"
+   - Enable MSAA (if performance allows)
+   - Set Textures > Default Filter to "Linear Mipmap"
+   - Enable HDR rendering
+
+3. Under Physics:
+   - Set 3D Physics Engine to "GodotPhysics3D"
+   - Adjust Tick FPS to 60
+   - Enable "Run on Separate Thread"
+
+4. Under Input:
+   - Add these action mappings:
+     - select: Left mouse button
+     - enter_elements: E key
+     - toggle_debug: F3 key
+     - screenshot: F12 key
+     - move_forward: W key
+     - move_backward: S key
+     - move_left: A key
+     - move_right: D key
+     - move_up: Space key
+     - move_down: Shift key
+     - zoom_in: Mouse wheel up
+     - zoom_out: Mouse wheel down
+     - orbit_rotate: Right mouse button
+
+#### Autoload Singletons
+1. Add ResourceManager:
+   - Name: ResourceManager
+   - Path: res://singletons/resource_manager.gd
+   - Enable singleton
+
+### Project Structure
+
+#### Core Directories
+- `/code` - All script files
+  - `/code/gdscript` - GDScript files
+    - `/code/gdscript/scripts` - Main script directories
+      - `/code/gdscript/scripts/elements_shapes_projection` - Element system
+      - `/code/gdscript/scripts/Galaxy_Star_Planet` - Space simulation
+      - `/code/gdscript/scripts/universe_particles_physics` - Universe framework
+      - `/code/gdscript/scripts/Menu_Keyboard_Console` - UI and input
+  - `/code/cScripts` - C# scripts (if used)
+
+- `/scenes` - Scene files (.tscn)
+  - Space scenes (Galaxies.tscn, GalaxyCloseUp.tscn, etc.)
+  - Element scenes
+  - UI scenes
+
+- `/singletons` - Global autoload scripts
+  - ResourceManager (resource_manager.gd)
+
+- `/shaders` - Shader files
+  - transition_overlay.gdshader - Scale transition effects
+  - (Other shader files)
+
+- `/space_game_docs` - Documentation and planning
+
+## Setting Up a Development Environment
+
+### Editor Configuration
+1. Open Editor > Editor Settings
+2. Recommended settings:
+   - Interface > Theme: "Dark"
+   - Text Editor > Enable Code Completion
+   - Text Editor > Display Line Numbers
+   - Text Editor > Highlight Current Line
+   - 3D Editor > Enable Grid
+   - 3D Editor > Grid Division Level: 10
+   - 3D Editor > Show FPS Counter
+
+### Version Control
+1. Initialize Git repository if not already done
+2. Recommended .gitignore:
+```
+# Godot-specific ignores
+.godot/
+.import/
+export.cfg
+export_presets.cfg
+
+# Mono-specific ignores
+.mono/
+data_*/
+
+# System/tool-specific ignores
+.DS_Store
+*.swp
+*~
+.vscode/
+```
+
+### Performance Profiling Setup
+1. Enable the debugger (View > Debugger)
+2. Set up profiling tabs:
+   - Performance monitoring
+   - Visual Profiler
+   - Network Profiler
+   - Monitors
+
+### Testing Setup
+1. Create test scenes:
+   - Element test scene
+   - Galaxy test scene
+   - Scale transition test scene
+2. Add debug controls for quick testing
+
+## Running the Space Game
+
+### Starting the Game
+1. Open either of these scenes:
+   - `space_game.tscn` - Base space game scene
+   - `element_space_demo.tscn` - Advanced demo with element integration
+
+2. Press F5 or click the Play button in Godot editor
+
+### Camera Controls
+- WASD: Move camera in current plane
+- Space/Shift: Move up/down
+- Mouse wheel: Zoom in/out
+- Right mouse button + move: Rotate camera
+- Left mouse click: Select objects
+
+### Scale Transition Controls
+- Click on a galaxy to zoom in to galaxy scale
+- Click on a star to zoom in to star system scale
+- Click on a planet to zoom in to planet scale
+- Press E when viewing a planet to enter element view
+- Press Escape to return to previous scale
+
+### Debug Controls
+- F3: Toggle debug visualization
+- F12: Take a screenshot
+
+## Adding New Components
+
+### Adding a New Element Type
+1. Create a new script extending `base_element.gd`
+2. Implement required methods:
+   - `_init()` - Set initial properties
+   - `process_behavior()` - Element behavior
+   - `set_detail_level()` - LOD implementation
+3. Add to ELEMENT_TYPES array in ElementManager
+4. Create visual components (meshes, particles, lights)
+
+### Adding a New Scale Level
+1. Create a new script extending ScaleManager
+2. Implement required methods:
+   - `initialize()` - Set up the scale
+   - `activate()` - When scale becomes active
+   - `deactivate()` - When scale becomes inactive
+   - `update()` - Per-frame processing
+   - `update_visual_components()` - Transition visuals
+3. Add to UniverseController
+4. Create transition logic to/from this scale
+
+### Creating a New Ship/Mecha Component
+1. Create a new scene with:
+   - Visual mesh
+   - Collision shape
+   - Component script
+2. Implement component properties:
+   - Mass
+   - Power requirements
+   - Special abilities
+   - Visual effects
+3. Add connection points for attachment
+4. Create component data file
+
+## Troubleshooting
+
+### Performance Issues
+1. Check FPS counter in debug view
+2. Review resource usage:
+   - Light count
+   - Particle system count
+   - Physics object count
+   - Visible object count
+3. Verify LOD is working properly:
+   - Distant objects should be simplified
+   - Off-screen objects should be culled
+4. Check for physics bottlenecks:
+   - Reduce physics processing
+   - Increase processing_elements_per_frame limit
+
+### Visual Glitches
+1. Check for shader compatibility issues
+2. Verify material settings
+3. Look for Z-fighting in 3D elements
+4. Check lighting and shadow settings
+
+### Script Errors
+1. Review error console
+2. Check signal connections
+3. Verify class inheritance
+4. Look for Node path issues
+
+## Expansion and Customization
+
+### Creating New Content
+1. Follow the modular system design
+2. Build on existing class hierarchies
+3. Use resource management for performance
+4. Implement LOD for all visual elements
+5. Document new components
+
+### Modifying Existing Systems
+1. Review documentation before changes
+2. Test changes in isolation
+3. Benchmark performance before/after
+4. Update documentation with changes
+
+### Adding Features
+1. Plan integration with existing systems
+2. Consider performance implications
+3. Implement in a modular, reusable way
+4. Add appropriate debug visualization
+5. Document the new feature

@@ -1,0 +1,21 @@
+func log_error_state(error_type, details):
+	dictionary_of_mistakes_mutex.lock()
+	
+	if !dictionary_of_mistakes.has(error_type):
+		dictionary_of_mistakes[error_type] = {
+			"first_seen": Time.get_ticks_msec(),
+			"count": 0,
+			"instances": []
+		}
+	
+	dictionary_of_mistakes[error_type]["count"] += 1
+	dictionary_of_mistakes[error_type]["instances"].append({
+		"time": Time.get_ticks_msec(),
+		"details": details
+	})
+	
+	# If error occurs frequently, trigger deep repair
+	if dictionary_of_mistakes[error_type]["count"] > 5:
+		trigger_deep_repair(error_type)
+		
+	dictionary_of_mistakes_mutex.unlock()

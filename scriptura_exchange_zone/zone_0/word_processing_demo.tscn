@@ -1,0 +1,161 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://word_processing_demo.gd" id="1_qw7dx"]
+
+[node name="WordProcessingDemo" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_qw7dx")
+
+[node name="MainPanel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MainPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="TitleLabel" type="Label" parent="MainPanel/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "Word Processing Demo"
+horizontal_alignment = 1
+
+[node name="HSeparator" type="HSeparator" parent="MainPanel/VBoxContainer"]
+layout_mode = 2
+
+[node name="DimensionPanel" type="HBoxContainer" parent="MainPanel/VBoxContainer"]
+layout_mode = 2
+
+[node name="DimensionLabel" type="Label" parent="MainPanel/VBoxContainer/DimensionPanel"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Dimension: 4D"
+
+[node name="Spacer" type="Control" parent="MainPanel/VBoxContainer/DimensionPanel"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="DimensionSlider" type="HSlider" parent="MainPanel/VBoxContainer/DimensionPanel"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+min_value = 0.0
+max_value = 11.0
+value = 3.0
+tick_count = 12
+ticks_on_borders = true
+
+[node name="CosmicAgePanel" type="HBoxContainer" parent="MainPanel/VBoxContainer"]
+layout_mode = 2
+
+[node name="CosmicAgeLabel" type="Label" parent="MainPanel/VBoxContainer/CosmicAgePanel"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Cosmic Age: 1"
+
+[node name="Spacer" type="Control" parent="MainPanel/VBoxContainer/CosmicAgePanel"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="CosmicAgeSlider" type="HSlider" parent="MainPanel/VBoxContainer/CosmicAgePanel"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+min_value = 1.0
+max_value = 10.0
+value = 1.0
+rounded = true
+tick_count = 10
+ticks_on_borders = true
+
+[node name="InputPanel" type="VBoxContainer" parent="MainPanel/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MainPanel/VBoxContainer/InputPanel"]
+layout_mode = 2
+text = "Enter Text:"
+
+[node name="InputTextEdit" type="TextEdit" parent="MainPanel/VBoxContainer/InputPanel"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 80)
+layout_mode = 2
+placeholder_text = "Enter text to process..."
+wrap_mode = 1
+
+[node name="ButtonPanel" type="HBoxContainer" parent="MainPanel/VBoxContainer"]
+layout_mode = 2
+
+[node name="ProcessButton" type="Button" parent="MainPanel/VBoxContainer/ButtonPanel"]
+layout_mode = 2
+text = "Process Text"
+
+[node name="SampleButton" type="Button" parent="MainPanel/VBoxContainer/ButtonPanel"]
+layout_mode = 2
+text = "Use Sample"
+
+[node name="BatchButton" type="Button" parent="MainPanel/VBoxContainer/ButtonPanel"]
+layout_mode = 2
+text = "Run Batch"
+
+[node name="StatsButton" type="Button" parent="MainPanel/VBoxContainer/ButtonPanel"]
+layout_mode = 2
+text = "Show Stats"
+
+[node name="HSeparator2" type="HSeparator" parent="MainPanel/VBoxContainer"]
+layout_mode = 2
+
+[node name="ProgressPanel" type="HBoxContainer" parent="MainPanel/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MainPanel/VBoxContainer/ProgressPanel"]
+layout_mode = 2
+text = "Processing:"
+
+[node name="ProcessingIndicator" type="ProgressBar" parent="MainPanel/VBoxContainer/ProgressPanel"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+
+[node name="OutputPanel" type="VBoxContainer" parent="MainPanel/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Label" type="Label" parent="MainPanel/VBoxContainer/OutputPanel"]
+layout_mode = 2
+text = "Results:"
+
+[node name="OutputScroll" type="ScrollContainer" parent="MainPanel/VBoxContainer/OutputPanel"]
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+vertical_scroll_mode = 2
+
+[node name="OutputRichText" type="RichTextLabel" parent="MainPanel/VBoxContainer/OutputPanel/OutputScroll"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+bbcode_enabled = true
+text = "Word processing results will appear here..."
+
+[connection signal="value_changed" from="MainPanel/VBoxContainer/DimensionPanel/DimensionSlider" to="." method="_on_dimension_changed"]
+[connection signal="value_changed" from="MainPanel/VBoxContainer/CosmicAgePanel/CosmicAgeSlider" to="." method="_on_cosmic_age_changed"]
+[connection signal="pressed" from="MainPanel/VBoxContainer/ButtonPanel/ProcessButton" to="." method="_on_process_button_pressed"]
+[connection signal="pressed" from="MainPanel/VBoxContainer/ButtonPanel/SampleButton" to="." method="_on_sample_button_pressed" binds= [0]]
+[connection signal="pressed" from="MainPanel/VBoxContainer/ButtonPanel/BatchButton" to="." method="_on_batch_button_pressed"]
+[connection signal="pressed" from="MainPanel/VBoxContainer/ButtonPanel/StatsButton" to="." method="_on_stats_button_pressed"]

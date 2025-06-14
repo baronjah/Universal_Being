@@ -1,0 +1,158 @@
+func recreator(number_to_add, data_to_process, data_set_name, new_name_for_set):
+	
+	var initial_number_to_add : int = int(number_to_add)
+	print(" recreator whats wrong")
+	print(" new_name_for_set : " , new_name_for_set)
+	var processed_data : Dictionary
+	var data_to_work_on = data_to_process.duplicate(true)
+	var container_path = data_set_name + "_container/thing_"
+	var patterns = ["thing_" , container_path ]
+	var number_we_wanna_add : int
+	var container_name_to_free
+	var data_type_name_combined_first = data_set_name + "_" + BanksCombiner.data_names_0[0]
+	var tasks_to_be_done : int = 0
+	var datapoint_name
+	var datapoint_container_name
+	
+	for container_to_find in data_to_work_on[data_type_name_combined_first]["content"]:
+		if container_to_find[0][3][0] == "container":
+			container_name_to_free = container_to_find[0][0][0]
+			container_to_find.clear()
+			break
+	
+	data_to_work_on[data_type_name_combined_first]["content"].erase([])
+
+	for data_types in BanksCombiner.data_names_0:
+		var data_type_name_combined = data_set_name + "_" + data_types
+		
+
+		
+		
+		print(data_set_name + "_" + data_types)
+		for data_to_be_parsed_1 in data_to_work_on[data_type_name_combined]: 
+			if data_to_be_parsed_1 == "header":
+				if BanksCombiner.data_names_0[0] == data_types:
+					number_we_wanna_add = data_to_work_on[data_type_name_combined][data_to_be_parsed_1].size()
+					var counter_for_header_strings : int = 0
+					for container_name_to_find in data_to_work_on[data_type_name_combined][data_to_be_parsed_1]:
+						if container_name_to_find == container_name_to_free:
+							container_name_to_find = ""
+							data_to_work_on[data_type_name_combined][data_to_be_parsed_1][counter_for_header_strings] = ""
+							data_to_work_on[data_type_name_combined][data_to_be_parsed_1].erase("")
+							counter_for_header_strings +=1
+							break
+			var counter_new_0 : int = 0
+			for data_to_be_parsed_2 in data_to_work_on[data_type_name_combined][data_to_be_parsed_1]:
+				if data_to_be_parsed_2 is String:
+					
+					
+
+					
+					for pattern in patterns:
+						if data_to_be_parsed_2.begins_with(pattern):
+							var string_to_change = data_to_be_parsed_2.split("_")
+							var size_of_array = string_to_change.size() -1
+							string_to_change[size_of_array] = str(int(string_to_change[size_of_array]) + number_we_wanna_add)
+							string_to_change = "_".join(string_to_change)
+							data_to_work_on[data_type_name_combined][data_to_be_parsed_1][counter_new_0] = string_to_change
+				if data_to_be_parsed_2 is Array:
+					print(" recreator data_types : " , data_types)
+					
+					
+					if data_types == "instructions":
+						print(" recreator_check : 0 : ", data_to_be_parsed_2[0][1][0])
+						print(" recreator_check : 0 : ", data_to_be_parsed_2[2][0][0])
+						if data_to_be_parsed_2[0][1][0] == "set_the_scene":
+							print(" recreator_check : 0 :  we found that set the scene " , number_to_add , " for   " , new_name_for_set)
+							data_to_be_parsed_2[2][0][0][0] = str(number_to_add)
+							#break
+					
+					if initial_number_to_add == 1:
+						if data_types == "scenes":
+							print(" recreator_check : 10 : ", data_to_be_parsed_2[0][0], " and number_to_add : " , number_to_add)
+							print(" recreator_check : 11 : ", data_to_be_parsed_2)
+							var scene_number = data_to_be_parsed_2[0][0][0].substr(6, data_to_be_parsed_2[0][0][0].length()) #scene)
+							print(" recreator_check : 12 : ", scene_number)
+							number_to_add = scene_number
+							print(" recreator_check : 14 number_to_add " , number_to_add)
+						if data_types == "interactions":
+							number_to_add = initial_number_to_add
+							print(" recreator_check : 15 number_to_add " , number_to_add)
+					else:
+						break
+							
+						#break
+						
+
+						
+					
+					print(" recreator data_types : continuation : " , data_types)
+					
+					if data_to_be_parsed_2.size() > 1:
+						var counter_new_1 : int = 0
+						var counter_helper : int = 0
+						for data_to_be_parsed_3 in data_to_be_parsed_2:
+							if data_to_be_parsed_3 is String:
+								
+								
+								#if data_types == "instructions":
+									#print(" recreator_check : 0 1 instructions part , ", number_to_add)
+								
+								
+								
+									
+									
+									#print(" recreator_check : 0  2 : " , data_to_work_on[data_type_name_combined]["content"][0])
+								
+								
+								
+								for pattern in patterns:
+									if data_to_be_parsed_3.begins_with(pattern):
+										var string_to_change = data_to_be_parsed_3.split("_")
+										var size_of_array = string_to_change.size() -1
+										string_to_change[size_of_array] = str(int(string_to_change[size_of_array]) + number_we_wanna_add)
+										string_to_change = "_".join(string_to_change)
+										data_to_be_parsed_3 = string_to_change
+										counter_helper +=1
+							if data_to_be_parsed_3 is Array:
+								
+
+								
+								if data_to_be_parsed_3.size() > 1:
+									var counter_new_2 : int = 0
+									for data_to_be_parsed_4 in data_to_be_parsed_3:
+										if data_to_be_parsed_4[0] is String:
+											for pattern in patterns:
+												if data_to_be_parsed_4[0].begins_with(pattern):
+													var string_to_change = data_to_be_parsed_4[0].split("_")
+													var size_of_array = string_to_change.size() -1
+													string_to_change[size_of_array] = str(int(string_to_change[size_of_array]) + number_we_wanna_add)
+													string_to_change = "_".join(string_to_change)
+													data_to_be_parsed_4[0] = string_to_change
+										counter_new_2 +=1
+							counter_new_1 +=1
+				counter_new_0 +=1
+
+
+	for container_to_find in data_to_work_on[data_type_name_combined_first]["content"]:
+		if container_to_find[0][3][0] == "datapoint":
+			datapoint_name = container_to_find[0][0][0] # datapoint_name datapoint_container_name
+			datapoint_container_name = container_to_find[0][5][0]
+			break
+
+# 
+	for data_types in BanksCombiner.data_names_0:
+		var data_type_name_combined = data_set_name + "_" + data_types
+		var data_type_name_combined_new = new_name_for_set + data_types
+		print(data_set_name + "_" + data_types)
+		for data_to_be_parsed_1 in data_to_work_on[data_type_name_combined]: 
+			processed_data[data_type_name_combined_new] = data_to_work_on[data_type_name_combined].duplicate(true)
+	
+	processed_data["metadata"] = {
+				"timestamp": Time.get_ticks_msec(),
+				"datapoint_name": datapoint_name,
+				"datapoint_container_name": datapoint_container_name
+			} # # datapoint_name datapoint_container_name
+	
+	print(" recreator : ", processed_data)
+	return processed_data

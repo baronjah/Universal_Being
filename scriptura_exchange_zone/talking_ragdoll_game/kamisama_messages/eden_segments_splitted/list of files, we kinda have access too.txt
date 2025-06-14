@@ -1,0 +1,27 @@
+### even list of every file needs to be organised, i started with pi
+### list of files start 0
+record_set_manager.gd = the manager for records
+scenes_bank.gd = current set of the scenes
+settings_bank.gd = here we have bank of setting file, what const it has etc
+system_check.gd = the zip file for save storage of it all so really a data file
+thread_pool.gd = the addon script for multi threads, plus some statistics
+thread_pool_manager.gd = here we can store some metrics, statistics stuff
+trackball_camera.gd = the addon for quanterion camera
+tree_blueprints_bank.gd = class file for tree, branches, metadatas, cached and uncached metadata maybe? main file storing information about three types of nodes
+UJAH_Texts.gd = secret file, a gift from me, after we finish game, secret after we finish
+functions_database.gd = cathegories, to understand it all
+main.gd = the main script
+data_point.gd = the datapoint script
+containter.gd = the container script
+godot_timers_system.gd = the clocks, and timing, and times, time things here, in greater detail
+backub_hand_0.txt = with mistake so we didnt backup anything quite yet we b p xD
+banks_combiner.gd = type of data, ways to unpack maybe, limits, list of records, so a constructs?
+instructions_bank.gd = instructions of specific things in specific containers
+interactions_bank.gd = what things in container can do, needs change into actions
+records_bank.gd = the record of a set of things
+line.gd = the script to move debug lines
+### pi stuff
+pi_dictionary.txt = print out from simple parser
+pi_digits.txt = string of pi number, long one, probably even phone can see it all in split second, and understand it in its own way literal way
+i_number.gd = an class file with pi numbers from pi_0 to pi_9999 each with 9 x ["0315614033"], from 0 to 9 we always assume there is data, as even with 0, we still open an package
+### pi stuff end

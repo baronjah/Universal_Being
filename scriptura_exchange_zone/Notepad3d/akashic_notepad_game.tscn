@@ -1,0 +1,111 @@
+[gd_scene load_steps=6 format=3]
+
+[ext_resource type="Script" path="res://integrated_game_system.gd" id="1"]
+[ext_resource type="Script" path="res://eden_pitopia_integration.gd" id="2"]
+[ext_resource type="Script" path="res://12_turns_system/word_manifestation_system.gd" id="3"]
+[ext_resource type="Script" path="res://turn_controller.gd" id="4"]
+[ext_resource type="Script" path="res://twelve_folders/godot_four_and_five_so_on/notepad3d_project/scripts/notepad3d_visualizer.gd" id="5"]
+
+[node name="AkashicNotepadGame" type="Node"]
+script = ExtResource("1")
+
+[node name="IntegratedGameSystem" type="Node" parent="."]
+script = ExtResource("1")
+
+[node name="EdenPitopiaIntegration" type="Node" parent="."]
+script = ExtResource("2")
+
+[node name="WordManifestationSystem" type="Node" parent="."]
+script = ExtResource("3")
+
+[node name="TurnController" type="Node" parent="."]
+script = ExtResource("4")
+
+[node name="Notepad3DVisualizer" type="Node" parent="."]
+script = ExtResource("5")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.866025, 0.5, 0, -0.5, 0.866025, 0, 10, 15)
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.866025, 0.25, -0.433013, 0, 0.866025, 0.5, 0.5, -0.433013, 0.75, 0, 10, 0)
+
+[node name="UI" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="InfoPanel" type="Panel" parent="UI"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -300.0
+offset_bottom = 200.0
+grow_horizontal = 0
+
+[node name="Label" type="Label" parent="UI/InfoPanel"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 30.0
+grow_horizontal = 2
+text = "Akashic Notepad3D Game"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="DimensionInfo" type="Label" parent="UI/InfoPanel"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 30.0
+offset_bottom = 60.0
+grow_horizontal = 2
+text = "Dimension: 3D (γ)"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="EntityInfo" type="Label" parent="UI/InfoPanel"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 60.0
+offset_bottom = 120.0
+grow_horizontal = 2
+text = "Entities: 0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="CommandPanel" type="Panel" parent="UI"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -100.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="LineEdit" type="LineEdit" parent="UI/CommandPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = 10.0
+offset_right = -10.0
+offset_bottom = -10.0
+grow_horizontal = 2
+grow_vertical = 2
+placeholder_text = "Enter a command or word to manifest..."
+
+[connection signal="dimension_synchronized" from="EdenPitopiaIntegration" to="IntegratedGameSystem" method="_on_dimension_synchronized"]
+[connection signal="entity_mapped" from="EdenPitopiaIntegration" to="IntegratedGameSystem" method="_on_entity_mapped"]
+[connection signal="word_manifested" from="EdenPitopiaIntegration" to="IntegratedGameSystem" method="_on_word_manifested"]
+[connection signal="turn_changed" from="TurnController" to="IntegratedGameSystem" method="_on_turn_changed"]
+[connection signal="turn_changed" from="TurnController" to="EdenPitopiaIntegration" method="_on_turn_changed"]
+[connection signal="word_manifested" from="WordManifestationSystem" to="IntegratedGameSystem" method="_on_word_manifested"]
+[connection signal="text_submitted" from="UI/CommandPanel/LineEdit" to="IntegratedGameSystem" method="_on_command_entered"]

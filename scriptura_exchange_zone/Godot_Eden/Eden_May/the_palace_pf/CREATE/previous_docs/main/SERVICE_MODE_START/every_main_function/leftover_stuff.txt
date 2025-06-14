@@ -1,0 +1,75 @@
+func leftover_stuff():
+	print(" just memory")
+
+	#if method_task == "three_stages_of_creation":
+		#var target_argument = task.target_argument
+		#var type_of_state : int = 1
+		#print(" taskkk three stages of creation  : " , target_argument , " amd " , method_task)
+		#the_current_state_of_tree(target_argument, type_of_state)
+		#
+		#print(" menace checker after task done ? hmm ")
+		#mutex_for_trickery.lock()
+		#menace_tricker_checker = 1
+		#mutex_for_trickery.unlock()
+		#print(" menace checker after task done ? hmm  2")
+	#
+	#if method_task == "unload_container":
+		#var target_argument = task.target_argument
+		#var type_of_state : int = -1
+		#var the_shorter_set = target_argument.substr(0, str(target_argument).length() - 10)
+		#print(" taskkk unload container : " , target_argument, " method_task " , method_task)
+		#the_current_state_of_tree(the_shorter_set, type_of_state)
+		
+		#unload_queue_mutex.lock()
+		#
+		#if !unload_queue.has(target_argument):
+			#print(" it is freshly added for unloading")
+			#var int_for_counting_tries : int = 0
+			#unload_queue[target_argument] = {
+				#"status" = "pending",
+				#"tries" = int_for_counting_tries
+			#}
+		#else:
+			#unload_queue[target_argument]["tries"] +=1
+		#
+		#unload_queue_mutex.unlock()
+		
+		
+		
+	# mutex_singular_l_u.unlock()
+	# the stuff, that could interrupt, is making the tree, pending
+	
+	# three_stages_of_creation , not really, we could hit limit of active sets, already unloaded?
+	
+	# next one kinda the same
+	
+	# initialize_menu
+	
+	
+	
+
+	# this means, that we have a set to pull out on the scene
+	
+	# second_impact_for_real
+	
+	# the same as above
+	
+	# third_impact_right_now
+	
+	# fourth_impact_right_now
+	
+	# fifth_impact_right_now
+	
+	# this means, that we updated scene tree
+	
+	# the_finisher_for_nodes
+	
+	# task_to_send_data_to_datapoint
+	
+	
+
+	
+	
+	
+	
+	# the ones that unload stuff ?

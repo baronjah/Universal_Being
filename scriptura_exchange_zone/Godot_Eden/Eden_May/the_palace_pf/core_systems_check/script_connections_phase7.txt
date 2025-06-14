@@ -1,0 +1,210 @@
+# Script Connections for Phase 7 - Projection Layer
+
+## Overview
+The Projection Layer connects internal database entities (UniversalEntity objects) with 2D/3D UI terminals in the game world. It allows players to visualize, interact with, and manipulate entities through visual interfaces.
+
+## Key Components
+The Projection Layer consists of several interconnected components that bridge the database and UI layers:
+
+### 1. Core Components
+- **JSHProjectionManager**: Central manager for all projection operations
+- **JSHProjectionInterface**: Interface defining standard methods for all projection implementations
+- **JSHTerminalProjection**: Projects entities onto terminal-style interfaces
+- **JSHFloatingProjection**: Projects entities as floating 3D visualizations
+- **JSHGridProjection**: Projects entities onto grid-based visualization systems
+- **JSHProjectionEventHandler**: Processes user interactions with projections
+
+### 2. UI Components
+- **JSHTerminalUI**: Terminal-style interface for entity visualization and manipulation
+- **JSHProjectionPanel**: Panel for displaying entity properties and relationships
+- **JSHEvolutionVisualizer**: Visualizes entity evolution paths
+- **JSHInteractionHistoryView**: Displays entity interaction history
+- **JSHFloatingTerminal**: 3D terminal that can be placed in the game world
+
+### 3. Visualization Components
+- **JSHEntityRenderer**: Renders visual representations of entities
+- **JSHConnectionRenderer**: Renders connections between entities
+- **JSHStateVisualizer**: Visualizes entity states with visual effects
+- **JSHZoneVisualizer**: Visualizes zone boundaries and properties
+
+## Integration Points
+
+### Connection with UniversalEntity System
+- Each `JSHUniversalEntity` can be connected to one or more projection instances
+- Entity property changes trigger updates in the projection
+- The projection can request property changes on the entity
+
+### Connection with Database System
+- `JSHDatabaseManager` notifies projection system of entity changes
+- Projection system can request entity loading/saving through database
+
+### Connection with Spatial System
+- Zone information used to determine entity visibility and grouping
+- Spatial system notifies projection system of zone changes
+
+### Connection with Event System
+- `JSHEventSystem` provides interaction history for visualization
+- Projection system raises events when users interact with entities through UI
+
+### Connection with Evolution System
+- `JSHEntityEvolution` provides evolution paths for visualization
+- Projection system can request evolution state changes
+
+### Connection with Console System
+- `JSHConsoleUI` integrated into terminal projections
+- Command output can be redirected to projection terminals
+
+## Component Relationships
+
+### JSHProjectionManager
+- Central manager for all projection operations
+- Maintains registry of active projections
+- Handles creation, updating, and destruction of projections
+- Routes entity events to appropriate projections
+- Manages synchronization between multiple projections of the same entity
+
+### JSHTerminalProjection
+- Connects directly to UniversalEntity objects
+- Links to JSHTerminalUI for display
+- Links to JSHConsoleUI for command input/output
+- Connects to JSHEventSystem for interaction history
+- Links to JSHEntityEvolution for evolution path visualization
+
+### JSHFloatingProjection
+- Displays entities as floating 3D objects in the world
+- Connects to zone system for spatial positioning
+- Uses visual effects to show entity state (e.g., glowing, pulsing)
+
+### JSHGridProjection
+- Organizes entities in a grid-based visualization
+- Supports different layout algorithms
+- Shows relationships between entities
+
+## File Structure
+The Projection Layer is organized in the following file structure:
+
+- `JSHProjectionInterface.gd`: Base interface for all projection systems
+- `JSHProjectionManager.gd`: Central manager for projections
+- `JSHTerminalProjection.gd`: Terminal-style projection implementation
+- `JSHFloatingProjection.gd`: Floating 3D visualization
+- `JSHGridProjection.gd`: Grid-based visualization
+- `JSHProjectionEventHandler.gd`: Event handling for projections
+
+- `ui/JSHTerminalUI.gd`: Terminal UI implementation
+- `ui/JSHProjectionPanel.gd`: Entity property panel
+- `ui/JSHEvolutionVisualizer.gd`: Evolution path visualizer
+- `ui/JSHInteractionHistoryView.gd`: Interaction history display
+- `ui/JSHFloatingTerminal.gd`: 3D floating terminal implementation
+
+- `visualization/JSHEntityRenderer.gd`: Entity rendering
+- `visualization/JSHConnectionRenderer.gd`: Entity connection rendering
+- `visualization/JSHStateVisualizer.gd`: Entity state visualization
+- `visualization/JSHZoneVisualizer.gd`: Zone visualization
+
+- `scenes/floating_terminal.tscn`: Example floating terminal scene
+- `scenes/grid_visualization.tscn`: Example grid visualization scene
+- `scenes/terminal_interface.tscn`: Example terminal interface scene
+
+## Integration with Existing Code
+
+### Integration with Menu_Keyboard_Console
+- The JSHTerminalProjection integrates with Menu_Keyboard_Console's text display system
+- Uses the JSH_console.gd for command input/output
+- Extends data_point.gd to support projection functionality
+
+### Integration with Galaxy_Star_Planet
+- Uses the spatial positioning system from CelestialBody.gd
+- Leverages the camera-facing behavior for floating terminals
+- Adapts the star_system.gd zone management for projection zones
+
+### Integration with Text_Console_Window
+- Builds on console_window_ui.gd for terminal interface
+- Extends the rich text functionality for entity visualization
+- Utilizes the command history and input handling
+
+### Integration with Snake_Space_Movement
+- Adapts movement controls for camera navigation around projections
+- Uses terminal integration from snake_controller.gd
+
+## Workflow Examples
+
+### Example 1: Projecting an Entity to a Terminal
+```gdscript
+# Get entity from database
+var entity = JSHEntityManager.get_instance().get_entity("entity_id")
+
+# Create projection
+var projection = JSHProjectionManager.get_instance().create_projection(
+    entity, 
+    JSHProjectionManager.TYPE_TERMINAL
+)
+
+# Add projection to a specific zone
+projection.set_zone("main_zone")
+
+# Show the projection
+projection.show()
+```
+
+### Example 2: Updating a Projection When Entity Changes
+```gdscript
+# JSHUniversalEntity emits signal when properties change
+entity.connect("property_changed", self, "_on_entity_property_changed")
+
+func _on_entity_property_changed(entity_id, property_name, new_value):
+    # Find projections for this entity
+    var projections = JSHProjectionManager.get_instance().get_projections_for_entity(entity_id)
+    
+    # Update each projection
+    for projection in projections:
+        projection.update_property(property_name, new_value)
+```
+
+### Example 3: User Interaction with Projection
+```gdscript
+# JSHProjectionEventHandler processes input events
+func _on_terminal_input_event(event, projection_id, entity_id):
+    if event is InputEventMouseButton and event.pressed:
+        # User clicked on projection
+        JSHProjectionManager.get_instance().select_projection(projection_id)
+        
+        # Show entity details
+        JSHProjectionManager.get_instance().show_entity_details(entity_id)
+```
+
+## Considerations for Different Entity Types
+
+### Text/Word Entities
+- Displayed as floating text in 3D space
+- Can be clicked to see definition, relationships, and evolution
+
+### Emoji-Style Entities (✧ ✦ ✢ ✽)
+- Displayed as 3D models or animated sprites
+- Visual state reflects entity properties
+- Particles or effects show energy/complexity level
+
+### Zone Entities
+- Displayed as bounded regions
+- Can be expanded/collapsed to show contained entities
+- Visual effects show zone properties (energy, density, etc.)
+
+## Implementation Notes
+
+### Performance Considerations
+- Use LOD (Level of Detail) for distant projections
+- Limit number of visible projections based on distance
+- Use instancing for similar projections
+- Batch updates for multiple projections
+
+### Visual Design
+- Color coding based on entity type
+- Size scaling based on entity complexity
+- Pulsing/glowing effects based on entity state
+- Connection lines showing relationships
+
+### Interaction Design
+- Click to select
+- Double-click to open detailed view
+- Drag to move (floating projections)
+- Context menu for commands
+- Keyboard shortcuts for common operations

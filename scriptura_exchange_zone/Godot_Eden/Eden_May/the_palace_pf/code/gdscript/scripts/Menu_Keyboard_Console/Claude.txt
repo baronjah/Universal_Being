@@ -1,0 +1,23 @@
+CLAUDE'S NOTES ON MENU_KEYBOARD_CONSOLE
+
+Key Files:
+- main.gd (360KB): Central control file
+- records_bank.gd: Storage for data records
+- actions_bank.gd: Defines available actions/functions
+- scenes_bank.gd: Manages scenes and their transitions
+- instructions_bank.gd: Contains instruction sets
+- banks_combiner.gd: Combines different banks
+- data_point.gd: Data structure for points/entities
+- container.gd: Container for storing objects
+
+Other Important Files:
+- JSH_console.gd: Console implementation
+- JSH_mainframe_database.gd: Database functionality
+- jsh_database_system.gd: Database management
+- jsh_digital_earthlings.gd: Entity system
+- jsh_marching_shapes_system.gd: Shape generation
+- jsh_snake_game.gd: Snake game implementation
+- jsh_task_manager.gd: Task scheduling
+- text_screen.gd: Text display management
+
+This folder appears to contain the core system architecture with banks of different types of data and functionality, a console interface, and database management.

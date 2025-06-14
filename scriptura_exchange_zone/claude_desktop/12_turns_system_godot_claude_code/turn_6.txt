@@ -1,0 +1,429 @@
+# WordManifestor.gd - Turn 3: The living 3D Notepad from your vision
+extends Node3D
+class_name WordManifestor
+
+signal word_created(word: String, layer: int)
+signal word_selected(word_entity: Node3D)
+signal layer_changed(new_layer: int)
+
+# Layer system matching your screenshots
+const LAYER_COUNT = 5
+var layers = []
+var active_layer = 0
+var floating_words = {}
+
+# Visual parameters for the cosmic feel
+@export var layer_spacing = 3.0
+@export var wobble_intensity = 0.1
+@export var glow_distance = 5.0
+@export var interaction_range = 3.0
+
+# Color scheme from your blue cosmic interface
+var layer_colors = [
+    Color(0.2, 0.8, 1.0, 0.4),  # Cyan - active thoughts
+    Color(0.1, 0.6, 1.0, 0.3),  # Blue - processing
+    Color(0.0, 0.4, 0.8, 0.3),  # Deep blue - stored knowledge
+    Color(0.3, 0.0, 0.8, 0.2),  # Purple - deep records  
+    Color(0.5, 0.0, 0.6, 0.2)   # Violet - akashic core
+]
+
+# Recent words from your interface
+var recent_words = ["consciousness", "evolution", "manifestation"]
+var word_templates = {
+    "consciousness": {"color": Color.YELLOW, "scale": 1.2},
+    "evolution": {"color": Color.GREEN, "scale": 1.0},
+    "manifestation": {"color": Color.CYAN, "scale": 1.1},
+    "cosmos": {"color": Color.BLUE, "scale": 0.9},
+    "eternal": {"color": Color.PURPLE, "scale": 1.0},
+    "boundless": {"color": Color.WHITE, "scale": 1.3}
+}
+
+@onready var camera = get_viewport().get_camera_3d()
+
+func _ready():
+    create_notepad_layers()
+    spawn_initial_words()
+    setup_input_handling()
+
+# Create the five floating layers like in your screenshots
+func create_notepad_layers():
+    for i in LAYER_COUNT:
+        var layer = create_floating_layer(i)
+        layer.position = Vector3(0, i * 2.0, -i * layer_spacing)
+        layer.name = "NotepadLayer_" + str(i)
+        add_child(layer)
+        layers.append(layer)
+        
+        # Add subtle rotation for cosmic effect
+        add_layer_animation(layer, i)
+
+func create_floating_layer(layer_index: int) -> Node3D:
+    var layer_node = Node3D.new()
+    
+    # Create the translucent plane container
+    var container = create_layer_container(layer_index)
+    layer_node.add_child(container)
+    
+    # Add interaction area for the layer
+    var interaction_area = create_layer_interaction_area(layer_index)
+    layer_node.add_child(interaction_area)
+    
+    return layer_node
+
+func create_layer_container(layer_index: int) -> MeshInstance3D:
+    var mesh_instance = MeshInstance3D.new()
+    mesh_instance.name = "LayerContainer"
+    
+    # Create plane mesh like your blue containers
+    var plane_mesh = PlaneMesh.new()
+    plane_mesh.size = Vector2(25, 18)  # Wide enough for multiple words
+    mesh_instance.mesh = plane_mesh
+    
+    # Translucent material matching your screenshots
+    var material = StandardMaterial3D.new()
+    material.albedo_color = layer_colors[layer_index]
+    material.flags_transparent = true
+    material.flags_unshaded = true
+    material.grow_amount = 0.1
+    
+    # Add subtle emission for glow effect
+    material.emission_enabled = true
+    material.emission = layer_colors[layer_index] * 0.5
+    
+    mesh_instance.material_override = material
+    
+    return mesh_instance
+
+func create_layer_interaction_area(layer_index: int) -> Area3D:
+    var area = Area3D.new()
+    area.name = "LayerInteractionArea"
+    
+    var collision = CollisionShape3D.new()
+    var box_shape = BoxShape3D.new()
+    box_shape.size = Vector3(25, 18, 1)
+    collision.shape = box_shape
+    area.add_child(collision)
+    
+    # Connect signals for layer interaction
+    area.body_entered.connect(_on_layer_entered.bind(layer_index))
+    area.body_exited.connect(_on_layer_exited.bind(layer_index))
+    
+    return area
+
+# Add floating animation to layers
+func add_layer_animation(layer: Node3D, index: int):
+    var tween = create_tween()
+    tween.set_loops()
+    
+    # Gentle floating motion with phase offset
+    var phase_offset = index * 0.5
+    tween.tween_method(
+        func(value): animate_layer_float(layer, value, phase_offset),
+        0.0, TAU, 4.0 + index * 0.5
+    )
+
+func animate_layer_float(layer: Node3D, time_value: float, phase: float):
+    var float_offset = Vector3(
+        sin(time_value + phase) * wobble_intensity,
+        cos(time_value * 0.7 + phase) * wobble_intensity * 0.5,
+        sin(time_value * 0.3 + phase) * wobble_intensity * 0.3
+    )
+    layer.position += float_offset
+
+# Spawn initial words from your recent words
+func spawn_initial_words():
+    for i in range(recent_words.size()):
+        var word = recent_words[i]
+        var layer_index = i % LAYER_COUNT
+        create_word_entity(word, layer_index, Vector3(i * 4 - 4, 0, 0))
+
+# Create floating word entities like the colored nodes in your screenshots
+func create_word_entity(word_text: String, layer_index: int, local_position: Vector3 = Vector3.ZERO) -> Node3D:
+    var word_entity = Node3D.new()
+    word_entity.name = "Word_" + word_text
+    
+    # Get word properties
+    var word_props = word_templates.get(word_text, {"color": Color.WHITE, "scale": 1.0})
+    
+    # Create visual representation
+    var label_3d = Label3D.new()
+    label_3d.text = word_text
+    label_3d.font_size = 32
+    label_3d.modulate = word_props.color
+    label_3d.billboard = BaseMaterial3D.BILLBOARD_ENABLED
+    label_3d.no_depth_test = true
+    word_entity.add_child(label_3d)
+    
+    # Add background sphere for better visibility
+    var sphere_visual = create_word_background(word_props)
+    word_entity.add_child(sphere_visual)
+    
+    # Add interaction area
+    var interaction_area = create_word_interaction_area(word_text)
+    word_entity.add_child(interaction_area)
+    
+    # Position and add to layer
+    word_entity.position = local_position
+    layers[layer_index].add_child(word_entity)
+    
+    # Store reference
+    floating_words[word_text] = {
+        "entity": word_entity,
+        "layer": layer_index,
+        "properties": word_props
+    }
+    
+    # Add floating animation
+    add_word_animation(word_entity, word_text)
+    
+    emit_signal("word_created", word_text, layer_index)
+    return word_entity
+
+func create_word_background(word_props: Dictionary) -> MeshInstance3D:
+    var mesh_instance = MeshInstance3D.new()
+    mesh_instance.name = "WordBackground"
+    
+    var sphere_mesh = SphereMesh.new()
+    sphere_mesh.radius = 1.5 * word_props.scale
+    mesh_instance.mesh = sphere_mesh
+    
+    var material = StandardMaterial3D.new()
+    material.albedo_color = word_props.color
+    material.albedo_color.a = 0.3
+    material.flags_transparent = true
+    material.emission_enabled = true
+    material.emission = word_props.color * 0.3
+    
+    mesh_instance.material_override = material
+    mesh_instance.position.z = -0.5  # Behind the text
+    
+    return mesh_instance
+
+func create_word_interaction_area(word_text: String) -> Area3D:
+    var area = Area3D.new()
+    area.name = "WordInteraction"
+    
+    var collision = CollisionShape3D.new()
+    var sphere_shape = SphereShape3D.new()
+    sphere_shape.radius = 2.0
+    collision.shape = sphere_shape
+    area.add_child(collision)
+    
+    # Connect interaction signals
+    area.input_event.connect(_on_word_clicked.bind(word_text))
+    area.body_entered.connect(_on_word_approached.bind(word_text))
+    area.body_exited.connect(_on_word_left.bind(word_text))
+    
+    return area
+
+func add_word_animation(word_entity: Node3D, word_text: String):
+    var tween = create_tween()
+    tween.set_loops()
+    
+    # Unique animation per word
+    var hash_offset = hash(word_text) % 100 / 100.0
+    tween.tween_method(
+        func(value): animate_word_float(word_entity, value, hash_offset),
+        0.0, TAU, 3.0 + hash_offset
+    )
+
+func animate_word_float(word_entity: Node3D, time_value: float, phase: float):
+    var base_position = word_entity.position
+    var float_offset = Vector3(
+        sin(time_value + phase) * wobble_intensity * 0.5,
+        cos(time_value * 0.8 + phase) * wobble_intensity,
+        sin(time_value * 0.4 + phase) * wobble_intensity * 0.3
+    )
+    
+    # Apply gentle rotation
+    word_entity.rotation.y = sin(time_value + phase) * 0.1
+
+# Input handling for notepad interaction
+func setup_input_handling():
+    pass  # Will be called from main scene
+
+func _input(event):
+    if event.is_action_pressed("toggle_notepad"):  # N key
+        toggle_notepad_visibility()
+    elif event.is_action_pressed("create_word"):   # C key
+        create_word_at_cursor()
+    elif event.is_action_pressed("interact"):      # E key
+        interact_with_nearest_word()
+    elif event.is_action_pressed("cycle_layer_up"):
+        cycle_active_layer(1)
+    elif event.is_action_pressed("cycle_layer_down"):
+        cycle_active_layer(-1)
+
+func toggle_notepad_visibility():
+    visible = !visible
+    if visible:
+        animate_notepad_appear()
+    else:
+        animate_notepad_disappear()
+
+func animate_notepad_appear():
+    modulate.a = 0.0
+    scale = Vector3(0.8, 0.8, 0.8)
+    
+    var tween = create_tween()
+    tween.parallel().tween_property(self, "modulate:a", 1.0, 0.5)
+    tween.parallel().tween_property(self, "scale", Vector3.ONE, 0.5)
+
+func animate_notepad_disappear():
+    var tween = create_tween()
+    tween.parallel().tween_property(self, "modulate:a", 0.0, 0.3)
+    tween.parallel().tween_property(self, "scale", Vector3(0.8, 0.8, 0.8), 0.3)
+
+func create_word_at_cursor():
+    if not camera:
+        return
+    
+    # Create word at camera forward position
+    var spawn_position = camera.global_position + camera.global_transform.basis.z * -8.0
+    var local_pos = to_local(spawn_position)
+    
+    # Prompt for word text (simplified for now)
+    var new_word = "word_" + str(randi() % 1000)
+    create_word_entity(new_word, active_layer, local_pos)
+
+func interact_with_nearest_word():
+    var nearest_word = find_nearest_word()
+    if nearest_word:
+        select_word(nearest_word)
+
+func find_nearest_word() -> String:
+    if not camera:
+        return ""
+    
+    var closest_distance = INF
+    var closest_word = ""
+    
+    for word_text in floating_words:
+        var word_data = floating_words[word_text]
+        var distance = camera.global_position.distance_to(word_data.entity.global_position)
+        
+        if distance < closest_distance and distance < interaction_range:
+            closest_distance = distance
+            closest_word = word_text
+    
+    return closest_word
+
+func select_word(word_text: String):
+    if word_text in floating_words:
+        var word_entity = floating_words[word_text].entity
+        highlight_word(word_entity)
+        emit_signal("word_selected", word_entity)
+
+func highlight_word(word_entity: Node3D):
+    # Highlight effect
+    var tween = create_tween()
+    tween.tween_property(word_entity, "scale", Vector3(1.2, 1.2, 1.2), 0.2)
+    tween.tween_property(word_entity, "scale", Vector3.ONE, 0.3)
+
+func cycle_active_layer(direction: int):
+    active_layer = (active_layer + direction) % LAYER_COUNT
+    if active_layer < 0:
+        active_layer = LAYER_COUNT - 1
+    
+    highlight_active_layer()
+    emit_signal("layer_changed", active_layer)
+
+func highlight_active_layer():
+    # Reset all layers
+    for i in range(layers.size()):
+        var container = layers[i].get_node("LayerContainer")
+        container.material_override.emission = layer_colors[i] * 0.5
+    
+    # Highlight active layer
+    var active_container = layers[active_layer].get_node("LayerContainer")
+    active_container.material_override.emission = layer_colors[active_layer] * 1.5
+
+# Signal handlers
+func _on_word_clicked(camera, event, position, normal, shape_idx, word_text):
+    if event is InputEventMouseButton and event.pressed:
+        if event.button_index == MOUSE_BUTTON_LEFT:
+            select_word(word_text)
+        elif event.button_index == MOUSE_BUTTON_RIGHT:
+            show_word_context_menu(word_text)
+
+func _on_word_approached(body, word_text):
+    if word_text in floating_words:
+        var word_entity = floating_words[word_text].entity
+        animate_word_approach(word_entity)
+
+func _on_word_left(body, word_text):
+    if word_text in floating_words:
+        var word_entity = floating_words[word_text].entity
+        animate_word_normal(word_entity)
+
+func animate_word_approach(word_entity: Node3D):
+    # Intensify glow when approached
+    var tween = create_tween()
+    tween.tween_property(word_entity, "modulate", Color.WHITE * 1.5, 0.3)
+
+func animate_word_normal(word_entity: Node3D):
+    # Return to normal state
+    var tween = create_tween()
+    tween.tween_property(word_entity, "modulate", Color.WHITE, 0.5)
+
+func _on_layer_entered(body, layer_index):
+    # Player entered layer area
+    if layer_index != active_layer:
+        active_layer = layer_index
+        highlight_active_layer()
+
+func _on_layer_exited(body, layer_index):
+    # Player left layer area
+    pass
+
+func show_word_context_menu(word_text: String):
+    # Show context menu for word operations
+    print("Context menu for word: ", word_text)
+    # TODO: Implement floating context menu
+
+# Integration with your evolution system
+func evolve_word(word_text: String, evolution_type: String):
+    if word_text in floating_words:
+        var evolved_text = apply_word_evolution(word_text, evolution_type)
+        update_word_visual(word_text, evolved_text)
+
+func apply_word_evolution(word: String, type: String) -> String:
+    # Your AIDNA/AIRNA evolution system
+    match type:
+        "AIRNA":
+            return word + "_evolved"
+        "AIDNA": 
+            return word + "_explained"
+        _:
+            return word + "_transformed"
+
+func update_word_visual(old_word: String, new_word: String):
+    if old_word in floating_words:
+        var word_data = floating_words[old_word]
+        var label = word_data.entity.get_node("Label3D")
+        label.text = new_word
+        
+        # Update storage
+        floating_words[new_word] = floating_words[old_word]
+        floating_words.erase(old_word)
+
+# Debug information
+func _process(delta):
+    # Update proximity-based effects
+    if camera:
+        update_word_proximities()
+
+func update_word_proximities():
+    for word_text in floating_words:
+        var word_data = floating_words[word_text]
+        var distance = camera.global_position.distance_to(word_data.entity.global_position)
+        
+        # Adjust glow based on distance
+        if distance < glow_distance:
+            var intensity = 1.0 - (distance / glow_distance)
+            update_word_glow(word_data.entity, intensity)
+
+func update_word_glow(word_entity: Node3D, intensity: float):
+    var background = word_entity.get_node("WordBackground")
+    var material = background.material_override as StandardMaterial3D
+    material.emission = material.albedo_color * intensity

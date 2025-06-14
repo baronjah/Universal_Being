@@ -1,0 +1,358 @@
+[gd_scene load_steps=3 format=3 uid="uid://cc7fqhj0t2xwl"]
+
+[ext_resource type="Script" path="res://paint_ui.gd" id="1_sngya"]
+[ext_resource type="Script" path="res://paint_canvas.gd" id="2_3g8b6"]
+
+[node name="PaintUI" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_sngya")
+
+[node name="PaintCanvas" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -300.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("2_3g8b6")
+
+[node name="CanvasBackground" type="ColorRect" parent="PaintCanvas"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.14902, 0.14902, 0.14902, 1)
+
+[node name="CanvasTextureRect" type="TextureRect" parent="PaintCanvas"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+expand_mode = 1
+stretch_mode = 4
+
+[node name="ShapeOverlay" type="TextureRect" parent="PaintCanvas"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+expand_mode = 1
+stretch_mode = 4
+
+[node name="GridOverlay" type="TextureRect" parent="PaintCanvas"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+expand_mode = 1
+stretch_mode = 4
+
+[node name="StrokeOverlay" type="TextureRect" parent="PaintCanvas"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+expand_mode = 1
+stretch_mode = 4
+
+[node name="BrushToolsPanel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 11
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -300.0
+grow_horizontal = 0
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="BrushToolsPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = 10.0
+offset_right = -10.0
+offset_bottom = -10.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="BrushToolsPanel/VBoxContainer"]
+layout_mode = 2
+text = "Brush Settings"
+horizontal_alignment = 1
+
+[node name="HSeparator" type="HSeparator" parent="BrushToolsPanel/VBoxContainer"]
+layout_mode = 2
+
+[node name="ModeToggleContainer" type="HBoxContainer" parent="BrushToolsPanel/VBoxContainer"]
+layout_mode = 2
+
+[node name="PainterModeButton" type="Button" parent="BrushToolsPanel/VBoxContainer/ModeToggleContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+toggle_mode = true
+button_pressed = true
+text = "Paint Mode"
+
+[node name="ShapePaintModeButton" type="Button" parent="BrushToolsPanel/VBoxContainer/ModeToggleContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+toggle_mode = true
+text = "Shape Mode"
+
+[node name="BrushSizeLabel" type="Label" parent="BrushToolsPanel/VBoxContainer"]
+layout_mode = 2
+text = "Brush Size:"
+
+[node name="BrushSizeSlider" type="HSlider" parent="BrushToolsPanel/VBoxContainer"]
+layout_mode = 2
+min_value = 1.0
+max_value = 100.0
+value = 10.0
+
+[node name="BrushOpacityLabel" type="Label" parent="BrushToolsPanel/VBoxContainer"]
+layout_mode = 2
+text = "Opacity:"
+
+[node name="BrushOpacitySlider" type="HSlider" parent="BrushToolsPanel/VBoxContainer"]
+layout_mode = 2
+max_value = 1.0
+step = 0.01
+value = 1.0
+
+[node name="BrushHardnessLabel" type="Label" parent="BrushToolsPanel/VBoxContainer"]
+layout_mode = 2
+text = "Hardness:"
+
+[node name="BrushHardnessSlider" type="HSlider" parent="BrushToolsPanel/VBoxContainer"]
+layout_mode = 2
+max_value = 1.0
+step = 0.01
+value = 0.8
+
+[node name="BrushTypeLabel" type="Label" parent="BrushToolsPanel/VBoxContainer"]
+layout_mode = 2
+text = "Brush Type:"
+
+[node name="BrushTypeSelector" type="OptionButton" parent="BrushToolsPanel/VBoxContainer"]
+layout_mode = 2
+
+[node name="DimensionLabel" type="Label" parent="BrushToolsPanel/VBoxContainer"]
+layout_mode = 2
+text = "Dimension:"
+
+[node name="DimensionSelector" type="OptionButton" parent="BrushToolsPanel/VBoxContainer"]
+layout_mode = 2
+
+[node name="ColorLabel" type="Label" parent="BrushToolsPanel/VBoxContainer"]
+layout_mode = 2
+text = "Color:"
+
+[node name="ColorPicker" type="ColorPickerButton" parent="BrushToolsPanel/VBoxContainer"]
+layout_mode = 2
+text = "Select Color"
+color = Color(1, 1, 1, 1)
+
+[node name="HSeparator2" type="HSeparator" parent="BrushToolsPanel/VBoxContainer"]
+layout_mode = 2
+
+[node name="ActionButtonsContainer" type="GridContainer" parent="BrushToolsPanel/VBoxContainer"]
+layout_mode = 2
+columns = 2
+
+[node name="CreateTextureButton" type="Button" parent="BrushToolsPanel/VBoxContainer/ActionButtonsContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "New Canvas"
+
+[node name="ClearCanvasButton" type="Button" parent="BrushToolsPanel/VBoxContainer/ActionButtonsContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Clear Canvas"
+
+[node name="ApplyToShapeButton" type="Button" parent="BrushToolsPanel/VBoxContainer/ActionButtonsContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Apply to Shape"
+
+[node name="CreateShapeTextureButton" type="Button" parent="BrushToolsPanel/VBoxContainer/ActionButtonsContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Shape Texture"
+
+[node name="ToggleGridButton" type="Button" parent="BrushToolsPanel/VBoxContainer/ActionButtonsContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Toggle Grid"
+
+[node name="HSeparator3" type="HSeparator" parent="BrushToolsPanel/VBoxContainer"]
+layout_mode = 2
+
+[node name="InstructionsLabel" type="Label" parent="BrushToolsPanel/VBoxContainer"]
+layout_mode = 2
+text = "Instructions:
+- Left click to paint
+- G to toggle grid
+- C to clear canvas
+- Escape to cancel stroke"
+
+[node name="ShapePanel" type="Panel" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 9
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = 10.0
+offset_right = 210.0
+offset_bottom = -10.0
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ShapePanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = 10.0
+offset_right = -10.0
+offset_bottom = -10.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="ShapePanel/VBoxContainer"]
+layout_mode = 2
+text = "Shapes"
+horizontal_alignment = 1
+
+[node name="HSeparator" type="HSeparator" parent="ShapePanel/VBoxContainer"]
+layout_mode = 2
+
+[node name="ShapeList" type="ItemList" parent="ShapePanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = 40.0
+offset_right = -10.0
+offset_bottom = -10.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="LayerPanel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -300.0
+offset_top = -200.0
+grow_horizontal = 0
+grow_vertical = 0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="LayerPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = 10.0
+offset_right = -10.0
+offset_bottom = -10.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="LayerPanel/VBoxContainer"]
+layout_mode = 2
+text = "Textures"
+horizontal_alignment = 1
+
+[node name="HSeparator" type="HSeparator" parent="LayerPanel/VBoxContainer"]
+layout_mode = 2
+
+[node name="LayerList" type="ItemList" parent="LayerPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = 40.0
+offset_right = -10.0
+offset_bottom = -10.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TexturePanel" type="Panel" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -590.0
+offset_top = -290.0
+offset_right = -310.0
+offset_bottom = -90.0
+grow_horizontal = 0
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="TexturePanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = 10.0
+offset_right = -10.0
+offset_bottom = -10.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="TexturePanel/VBoxContainer"]
+layout_mode = 2
+text = "Preview"
+horizontal_alignment = 1
+
+[node name="HSeparator" type="HSeparator" parent="TexturePanel/VBoxContainer"]
+layout_mode = 2
+
+[node name="TexturePreview" type="TextureRect" parent="TexturePanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = 40.0
+offset_right = -10.0
+offset_bottom = -10.0
+grow_horizontal = 2
+grow_vertical = 2
+expand_mode = 1
+stretch_mode = 5
+
+[connection signal="toggled" from="BrushToolsPanel/VBoxContainer/ModeToggleContainer/PainterModeButton" to="." method="_on_painter_mode_toggled"]
+[connection signal="toggled" from="BrushToolsPanel/VBoxContainer/ModeToggleContainer/ShapePaintModeButton" to="." method="_on_shape_paint_mode_toggled"]
+[connection signal="pressed" from="BrushToolsPanel/VBoxContainer/ActionButtonsContainer/CreateTextureButton" to="." method="_on_create_texture_button_pressed"]
+[connection signal="pressed" from="BrushToolsPanel/VBoxContainer/ActionButtonsContainer/ClearCanvasButton" to="." method="_on_clear_canvas_button_pressed"]
+[connection signal="pressed" from="BrushToolsPanel/VBoxContainer/ActionButtonsContainer/ApplyToShapeButton" to="." method="_on_apply_to_shape_button_pressed"]
+[connection signal="pressed" from="BrushToolsPanel/VBoxContainer/ActionButtonsContainer/CreateShapeTextureButton" to="." method="_on_create_shape_texture_button_pressed"]
+[connection signal="pressed" from="BrushToolsPanel/VBoxContainer/ActionButtonsContainer/ToggleGridButton" to="." method="_on_toggle_grid_button_pressed"]

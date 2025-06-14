@@ -1,0 +1,13 @@
+the first file to you, terminal Claude, we need folders and files, with their own pathways written on them by you, with the idea of several 
+strongholds of knowledge 
+that we need so far, are , 
+what tools do we have 
+in that wsl, terminal, node, npm, PowerShell, linux on windows
+what automation can do Claude Code on terminal
+stronghold of data for programming language basic rules, classes, modules, packets, mods, extension, addon
+words to remember and rules to follow, goals and tasks to do, to finish it all one day and 
+start from any point to create the evolution game
+add to it at any point to update previous starting point, find all points we start from and how, and to where we keep main databases parts, on all drives to catch on faster
+update all main files each day, to know what new tasks we will have soon
+priority tasks, in time to do it, when to do it, how hard to think of it, as we continue creation
+focus on godot 4.4 and forward versions, python, JavaScript, c sharp, as godot have mono too, glsl, gdshader, gd, py, js, cpp

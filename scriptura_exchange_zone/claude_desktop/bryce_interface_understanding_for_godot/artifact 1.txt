@@ -1,0 +1,330 @@
+# Living Universe Framework - Multi-Scale Dynamic World System
+
+## Core Concept: Adaptive Representation Layers
+**Text → 2D → 3D → 2D → Text** based on proximity, relevance, and system load
+
+## System Architecture Overview
+
+### 1. **Scale Hierarchy** (Universe → Local)
+```
+Galaxy Cluster (Text/Database)
+  ↓
+Galaxy (Text + 2D Map)
+  ↓
+Star System (2D + Basic 3D)
+  ↓
+Planet (Full 3D)
+  ↓
+Surface/Cities (High Detail 3D)
+  ↓
+Interiors (Ultra Detail 3D)
+```
+
+### 2. **Bryce-Style Interface Adaptation**
+
+#### **Universal Control Panel** (Always Visible)
+```gdscript
+# Main interface zones inspired by Bryce Materials Lab
+class_name UniverseControlPanel extends Control
+
+# Top Bar: Scale Context (like Bryce's Edit modes)
+@onready var scale_selector = $TopBar/ScaleSelector
+var current_scale: ScaleLevel
+
+# Left Panel: Entity Categories (like Bryce's material types)
+@onready var entity_browser = $LeftPanel/EntityBrowser
+
+# Center: Active World View (adaptive 3D/2D/Text)
+@onready var world_viewport = $Center/WorldViewport
+
+# Right Panel: Dynamic Properties (like Bryce's parameter sliders)
+@onready var property_panel = $RightPanel/PropertyPanel
+
+# Bottom: Timeline/Turn System
+@onready var time_controller = $Bottom/TimeController
+```
+
+#### **Entity Categories** (Visual Thumbnails like Bryce Materials)
+```
+Cosmic Structures:    [Galaxy], [Nebula], [Black Hole], [Star Cluster]
+Stellar Objects:      [Star], [Planet], [Moon], [Asteroid Belt]
+Civilizations:        [Empire], [Colony], [Station], [Fleet]
+Phenomena:           [Storm], [Anomaly], [Portal], [Field]
+Resources:           [Energy], [Matter], [Information], [Life]
+```
+
+### 3. **Mainbus Floodgate System**
+
+#### **Content Pipeline Management**
+```gdscript
+# Manages what gets loaded/unloaded based on player path
+class_name ContentMainbus extends Node
+
+# Prediction pipeline - anticipates player movement
+var predicted_path: Array[Vector3]
+var content_queue: Array[ContentRequest]
+
+# Floodgate controls - manages system load
+var max_3d_entities: int = 100
+var max_2d_entities: int = 1000
+var max_text_entities: int = 10000
+
+func update_content_pipeline():
+    # Predict where player is going
+    predict_player_path()
+    
+    # Queue content for that path
+    queue_content_for_path()
+    
+    # Manage representation levels
+    manage_entity_representations()
+    
+    # Trigger domino effects
+    process_cascade_effects()
+```
+
+#### **Representation State Machine**
+```gdscript
+# Each entity can exist in multiple representation states
+class_name EntityRepresentation extends Node
+
+enum RepState { DORMANT, TEXT, DATA_2D, SIMPLE_3D, FULL_3D }
+var current_state: RepState
+var entity_data: EntityData
+
+func transition_representation(new_state: RepState):
+    match new_state:
+        RepState.TEXT:
+            # Store in database, show as text entry
+            create_text_representation()
+        RepState.DATA_2D:
+            # Show as 2D icon/sprite with basic data
+            create_2d_representation()
+        RepState.SIMPLE_3D:
+            # Low-poly 3D with basic behavior
+            create_simple_3d()
+        RepState.FULL_3D:
+            # Full detail 3D with complete behavior
+            create_full_3d()
+```
+
+### 4. **Turn/Step System Integration**
+
+#### **Temporal Layers**
+```gdscript
+# Different time scales for different entity types
+class_name TemporalManager extends Node
+
+# Cosmic time (millions of years per step)
+var cosmic_timer: CosmicClock
+# Galactic time (thousands of years per step)  
+var galactic_timer: GalacticClock
+# Stellar time (years per step)
+var stellar_timer: StellarClock
+# Planetary time (days per step)
+var planetary_timer: PlanetaryClock
+# Local time (real-time)
+var local_timer: LocalClock
+
+func process_time_step():
+    # Only process entities at their relevant time scale
+    cosmic_timer.step()
+    if cosmic_timer.should_update():
+        update_cosmic_entities()
+    
+    galactic_timer.step()
+    if galactic_timer.should_update():
+        update_galactic_entities()
+    # etc...
+```
+
+### 5. **Domino Effect Cascade System**
+
+#### **Causal Chain Manager**
+```gdscript
+class_name CausalChainManager extends Node
+
+# Tracks cause-effect relationships
+var causal_chains: Dictionary = {}
+
+func trigger_event(event: GameEvent):
+    # Find all entities affected by this event
+    var affected = find_affected_entities(event)
+    
+    # Calculate propagation delays and effects
+    for entity in affected:
+        var delay = calculate_propagation_delay(event.source, entity)
+        var effect = calculate_effect_strength(event, entity)
+        
+        # Schedule the effect
+        schedule_delayed_effect(entity, effect, delay)
+
+func schedule_delayed_effect(entity: Entity, effect: Effect, delay: float):
+    # Effects happen at appropriate time scales
+    var timer = get_appropriate_timer(entity.scale_level)
+    timer.schedule_event(entity, effect, delay)
+```
+
+### 6. **Dynamic Storage & Modification System**
+
+#### **Entity Serialization Pipeline**
+```gdscript
+class_name EntityDatabase extends Node
+
+# Stores entities in different detail levels
+var dormant_entities: Dictionary = {}      # Text/data only
+var background_entities: Dictionary = {}   # 2D data
+var active_entities: Dictionary = {}       # 3D instances
+
+func store_entity(entity: Entity, storage_level: StorageLevel):
+    match storage_level:
+        StorageLevel.DORMANT:
+            # Serialize to minimal data
+            dormant_entities[entity.id] = entity.serialize_minimal()
+            entity.queue_free()
+        StorageLevel.BACKGROUND:
+            # Keep 2D representation
+            background_entities[entity.id] = entity.serialize_2d()
+            entity.transition_to_2d()
+        StorageLevel.ACTIVE:
+            # Full 3D in scene
+            active_entities[entity.id] = entity
+```
+
+### 7. **Predictive Path Content System**
+
+#### **Player Path Prediction**
+```gdscript
+class_name PathPredictor extends Node
+
+func predict_player_movement() -> Array[Vector3]:
+    var prediction = []
+    
+    # Analyze player movement history
+    var velocity = player.get_velocity()
+    var acceleration = player.get_acceleration()
+    
+    # Predict next 10 positions
+    for i in range(10):
+        var future_pos = calculate_future_position(i)
+        prediction.append(future_pos)
+    
+    # Consider player intentions (UI hints, mouse direction, etc.)
+    add_intention_based_predictions(prediction)
+    
+    return prediction
+
+func preload_content_for_path(path: Array[Vector3]):
+    for position in path:
+        var region = get_region_at(position)
+        region.prepare_content()
+        region.increase_detail_level()
+```
+
+### 8. **Bryce-Style Visual Management Interface**
+
+#### **Universe Browser** (Like Bryce Material Categories)
+```gdscript
+# Visual grid showing different universe regions
+class_name UniverseBrowser extends GridContainer
+
+func populate_universe_view():
+    # Show thumbnail previews of different regions
+    for region in universe.get_visible_regions():
+        var thumbnail = create_region_thumbnail(region)
+        var button = TextureButton.new()
+        button.texture_normal = thumbnail
+        button.text = region.name
+        button.pressed.connect(_on_region_selected.bind(region))
+        add_child(button)
+```
+
+#### **Dynamic Property Panel** (Like Bryce Parameter Sliders)
+```gdscript
+class_name DynamicPropertyPanel extends VBoxContainer
+
+func update_for_selection(selected_entity: Entity):
+    clear_children()
+    
+    # Add relevant controls based on entity type
+    match selected_entity.type:
+        EntityType.STAR:
+            add_star_controls(selected_entity)
+        EntityType.PLANET:
+            add_planet_controls(selected_entity)
+        EntityType.CIVILIZATION:
+            add_civilization_controls(selected_entity)
+
+func add_star_controls(star: StarEntity):
+    add_slider("Temperature", star.temperature, 1000, 50000)
+    add_slider("Mass", star.mass, 0.1, 100.0)
+    add_color_picker("Color", star.color)
+    add_checkbox("Variability", star.is_variable)
+```
+
+## Implementation Strategy
+
+### Phase 1: Core Framework
+1. **Entity Representation System** - Build the text/2D/3D transition system
+2. **Scale Management** - Implement zoom levels and detail switching
+3. **Basic Mainbus** - Simple load/unload based on distance
+
+### Phase 2: Intelligence Layer  
+1. **Path Prediction** - Anticipate player movement
+2. **Domino Effects** - Basic cause-effect chains
+3. **Temporal Systems** - Multi-scale time management
+
+### Phase 3: Advanced Features
+1. **Full Bryce-Style Interface** - Visual preset system
+2. **Complex Cascades** - Multi-level effect propagation  
+3. **AI-Driven Content** - Entities that evolve autonomously
+
+## Key Technical Notes
+
+### **Godot-Specific Optimizations**
+- Use `MultiMeshInstance3D` for distant star fields
+- Implement custom `LOD` system with `RenderingServer`
+- Use `WorkerThreadPool` for background entity updates
+- Store dormant entities in `.tres` resource files
+
+### **Memory Management**
+```gdscript
+# Automatic cleanup based on distance and relevance
+func cleanup_distant_entities():
+    for entity in active_entities.values():
+        var distance = player.global_position.distance_to(entity.global_position)
+        if distance > cleanup_threshold:
+            store_entity(entity, StorageLevel.DORMANT)
+```
+
+### **Performance Targets**
+- **Text Representation**: 100,000+ entities
+- **2D Representation**: 10,000 entities  
+- **3D Representation**: 1,000 entities
+- **Full Detail**: 100 entities
+
+## Workflow Documentation
+
+### **Session Notes Template**
+```markdown
+## Session: [Date] - [Focus Area]
+
+### Current Scale Context:
+- Player Location: [Galaxy/System/Planet/Surface]
+- Active Entities: [Count by type]
+- Background Entities: [Count]
+- Dormant Entities: [Count]
+
+### Changes Made:
+- [ ] New entity types added
+- [ ] Representation transitions updated  
+- [ ] Domino effects configured
+- [ ] Interface improvements
+
+### Next Session Goals:
+- [ ] Specific tasks to continue from this point
+- [ ] Data needed for next phase
+- [ ] System optimizations required
+```
+
+This framework creates a **living universe** where every entity can seamlessly transition between representation levels while maintaining consistency and providing the **immediate visual control** that makes Bryce so powerful.

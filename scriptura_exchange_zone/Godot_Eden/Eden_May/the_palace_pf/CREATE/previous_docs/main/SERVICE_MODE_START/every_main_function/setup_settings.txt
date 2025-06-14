@@ -1,0 +1,16 @@
+func setup_settings():
+	# 1. Check for directory
+	var eden_path = find_or_create_eden_directory()
+	
+	# 2. Check/Create akashic_records folder
+	var akashic_path = eden_path + "/akashic_records"
+	if !DirAccess.dir_exists_absolute(akashic_path):
+		DirAccess.make_dir_recursive_absolute(akashic_path)
+	
+	# 3. Check/Create settings file
+	var settings_file_path = akashic_path + "/settings.txt"
+	if !FileAccess.file_exists(settings_file_path):
+		create_default_settings(settings_file_path)
+	
+	# 4. Load settings into SettingsBank
+	SettingsBank.load_settings_file(settings_file_path)

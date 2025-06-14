@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://du8jtcci1tjff"]
+
+[ext_resource type="Script" path="res://jsh_transformation_test.gd" id="1_yrd31"]
+
+[node name="JSHTransformationTestScene" type="Node"]
+script = ExtResource("1_yrd31")

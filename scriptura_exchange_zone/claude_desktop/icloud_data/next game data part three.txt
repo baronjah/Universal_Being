@@ -1,0 +1,695 @@
+new move things around and interactions functions, we shall do it with tasks
+
+as they are already on scene it shall be easy 
+
+
+so, container count 
+
+cashe active stuff
+
+
+
+# tree_blueprints.gd
+class_name TreeBlueprints #TreeBlueprints.SCENE_TREE_BLUEPRINT BRANCH_BLUEPRINT
+
+const SCENE_TREE_BLUEPRINT = {
+	"main_root": {
+		"name": [],
+		"type": [],
+		"jsh_type": [],
+		"branches": {},
+		"status": "pending",  # pending/processing/complete
+		"metadata": {
+			"creation_time": 0,
+			"priority": 0
+		}
+	}
+}
+
+const BRANCH_BLUEPRINT = {
+	"name": [],
+	"type": [],
+	"jsh_type": [],
+	"children": {},
+	"parent": [],
+	"status": "pending",
+	"metadata": {
+		"position": Vector3.ZERO,
+		"rotation": Vector3.ZERO,
+		"creation_order": 0
+	}
+}
+
+
+# the two point o, jsh tree
+const JSH_TREE = {
+	"name": "",  # Root node name
+	"type": "",  # Node type
+	"status": "pending",
+	"node": null,  # Node reference
+	"nodes": {},  # All nodes by path
+	"metadata": {
+		"creation_time": 0,
+		"position": Vector3.ZERO,
+		"rotation": Vector3.ZERO,
+		"collisions": [],  # Track collision related nodes
+		"groups": [],
+		"parent_path": "",
+		"full_path": "",
+		"creation_order": 0
+	}
+}
+
+.
+
+
+
+extends Node3D
+class_name SettingsBank
+
+# Static variables to store settings
+static var path_to_main_directory: String
+static var path_to_settings_file: String
+static var settings_file_name: String
+static var last_created_thing_number: int = 0
+static var available_directory: String
+
+const type_of_settings_0 = [
+	"path_to_main_directory",
+	"last_created_thing_number"
+]
+
+const settings_file_blue_print_0 = {
+	0: [
+		["directory_path|D:/Eden"],
+		["database_path|akashic_records"],
+		["file_name|settings.txt"],
+		["last_thing_number|0"]
+	]
+}
+
+static func change_path_to_main_directory(new_path):
+	path_to_main_directory = new_path
+
+static func check_main_directory_path():
+	return path_to_main_directory
+
+static func change_path_to_settings_file(new_path):
+	path_to_settings_file = new_path
+
+static func check_settings_file_path():
+	return path_to_settings_file
+
+static func change_settings_file_name(new_name):
+	settings_file_name = new_name
+
+static func check_settings_file_name():
+	return settings_file_name
+
+static func check_all_settings_data():
+
+	var message_to_send : Dictionary = {
+					"directory_path": path_to_main_directory,
+					"database_path": path_to_settings_file,
+					"file_name": settings_file_name,
+					"last_thing_number": last_created_thing_number,
+					"available_directiory": available_directory 
+	}
+	return message_to_send
+	
+static func load_settings_file(file_path: String):
+	var file = FileAccess.open(file_path, FileAccess.READ)
+	if file:
+		while !file.eof_reached():
+			#print( "file :" , file) 
+			var line = file.get_line()
+			var parts = line.split(" : ", false, 1)  # Split only on first occurrence
+			if parts.size() == 2:
+				match parts[0]:
+					"directory_path":
+						path_to_main_directory = parts[1].strip_edges()
+					"database_path":
+						path_to_settings_file = parts[1].strip_edges()
+					"file_name":
+						settings_file_name = parts[1].strip_edges()
+					"last_thing_number":
+						last_created_thing_number = int(parts[1].strip_edges())
+					"available_directiory":  # Note: keeping original typo for compatibility
+						available_directory = parts[1].strip_edges()
+		
+		print("Settings loaded: " , file_path)
+		print("Main directory: ", path_to_main_directory)
+		print("Settings path: ", path_to_settings_file)
+		print("File name: ", settings_file_name)
+		print("Last thing number: ", last_created_thing_number)
+		print("Available directory: ", available_directory)
+		return true
+	return false
+
+static func save_settings_file(file_path: String) -> bool:
+	var file = FileAccess.open(file_path, FileAccess.WRITE)
+	if file:
+		file.store_line("directory_path : " + path_to_main_directory)
+		file.store_line("settings_path : " + path_to_settings_file)
+		file.store_line("file_name : " + settings_file_name)
+		file.store_line("last_thing_number : " + str(last_created_thing_number))
+		file.store_line("available_directiory : " + available_directory)
+		return true
+	return false
+
+.
+
+
+
+
+
+host and clients rubberband time settings, more distance settings, and funky animation with pressed w, and walking to serwer and two color of walking being
+
+
+
+
+
+.lenght() the length of string damn maybe it is th not ht 
+
+.size() the amount of thingies in Array
+
+str() change something into a string
+
+int() change the value into int 1 
+
+float() change value into float 1.0
+
+Dictionary stuff 
+name[key]
+
+.has(key) check if that key exist in dictionary 
+
+name[key].is_empty() check if that key is empty like {} or seen even {  }
+
+name[key] = {
+„key name string” = variant
+}
+
+const is like space for data, more like opening created file
+
+class is a script accessible for any other script 
+
+functions need to be static tho
+
+var function = func(): 
+here we maybe had stuff in ()
+
+var new = call.function()
+
+get_node(path) get a node from current script node by a path
+
+get_parent() get parent of current node
+
+get_sibling(path) get sibling that had the same parent
+
+for name in names
+run for example each thing in an array, as many times as size() of it
+
+match variant 
+match value of variant 
+
+connect.name() connect a signal of a script, node, autoload
+
+set_script(script path) while creating an node, we can attach a script to it
+
+node.get_script() checks if that node has a script
+
+get_tree() get scene tree, probably as we can load and unload scenes we can have few
+
+self.get_tree() works with multi threading 
+
+await get_tree().process_frame do something at next frame 
+
+substr(0, text.length() -1) from 0 to lenght minus number, so with -1 we get string without last char, symbol whatever
+
+substr(1, text.length()) similar, from 1 to last, so without first char, symbol 
+
+.append() an data place, like var something, when we first append it becomes something[0], second time we append it becomes something[1]
+
+get_world3d() an ray cast stuff hmm
+
+get_viewport() the stuff we can see, we can get sizes, where we clicked on it
+
+rotate.y rotate someting on specific axis 
+
+.position change position of something to someting 
+
+.basis the rotation basis of something each axis has three parts 
+
+.transform3d all postion rotation stuff in one variant?
+
+global, local transform, move thingy in the scene based on position of its parent or main node in scene
+
+
+
+
+
+
+
+# creating new tasks, also punishing mortals 
+func create_new_task(function_name: String, data):
+	var task_tag = function_name + "|" + data + "|" + str(Time.get_ticks_msec())
+	
+	# Declare the variable first
+	var completion_handler
+	
+	# Then assign the function to it
+	completion_handler = func(completed_tag):
+		if completed_tag == task_tag:
+			print("Task completed: ", function_name)
+			thread_pool.disconnect("task_finished", completion_handler)
+	
+	# Connect with the callable
+	thread_pool.connect("task_finished", completion_handler)
+	thread_pool.submit_task(self, function_name, data, task_tag)
+
+
+
+
+
+thread_pool.connect("task_discarded", func(task): 
+		var finished_task = task.tag
+		queue_pusher_adder(finished_task)
+	)
+
+
+and i send task this way
+
+# creating new tasks, also punishing mortals 
+func create_new_task(function_name: String, data):
+	var task_tag = function_name + "|" + data + "|" + str(Time.get_ticks_msec())
+	
+	# Declare the variable first
+	var completion_handler
+	
+	# Then assign the function to it
+	completion_handler = func(completed_tag):
+		if completed_tag == task_tag:
+			print("Task completed: ", function_name)
+			thread_pool.disconnect("task_finished", completion_handler)
+	
+	# Connect with the callable
+	thread_pool.connect("task_finished", completion_handler)
+	thread_pool.submit_task(self, function_name, data, task_tag)
+
+
+
+
+
+circle points from 0 to 9
+
+another circle on different y
+
+pick 0, 1 of first
+pick 0 of second
+
+make triangle
+
+clear first in first
+1
+append second in second 
+0, 1
+
+so it is single and dual bit system of creation, an divine orchestra of creation where we go singular and dual in shift and move forward 
+
+
+
+
+
+soo what is important, 
+
+move things around needs to change
+
+the datapoint add thing needs to change too,
+
+as it works not perfectly, in my opinnion we shall like just send the name of thing to datapoint layer
+
+we also had problem that sometimes we get them all things easily and fast, and i guess we could theoretically, when we activate the nodes 
+
+nah we do it now in 2.0 after tasked children
+
+maybe 
+
+when we check stuff in datapoint we should get parent and check how many children we got in there? maybe groups could help? we always do have a group of nodes, it was shared between the scripts so we can just check what’s popping in group and we shall have all nodes there anyway?
+
+name of group shall be based on container name
+
+it will be easy to
+var parent = get_parent()
+var datapoint_group = get_group(parent.name)
+
+with that we can get easier, faster, and more reliable way to get that layer
+
+
+
+
+
+var counter_add_node
+
+tasked children
+can +=1
+
+if node
+can -=1
+
+
+var array_added_nodes : Array = []
+
+tasked children add child 
+if node
+aan.append(node)
+
+
+
+
+
+new way for adding nodes,
+
+instead of unloading nodes, we strip them down, into bare nodes,
+
+and have container per node type, main one will hold knowledge of how many nodes we have, and where we move them
+
+so instead of unloading nodes, we change them into 0 mode, and move them around, change names, etc
+
+here we could theoretically make some kind of max amount of these nodes
+
+
+
+
+
+well, now with new dictionary of things, we can make the ray cast new thingies
+
+where we queue free nodes,
+
+we can either continue as she kinda says is better?
+
+or we can make new containers per node type and strip it clean from their energy
+
+it could lead to a problem that when we task children and try to add children we would need to check if a node is available, make them = node we wanted to add and instead move it on the scene
+
+also here we will need to make new array of things?
+
+i mean when we unload nodes, the dictionary would need probably an update too?
+
+which would mean that dictionary that we send there
+
+also needs to check if dictionary it has right now is empty? which would lead to a need to dictionaries merger?
+
+we queue free
+then we need to update my tree here too
+first we just deactivate these nodes on the tree
+
+and i am not sure if i want to cache these trees
+or if i wanna recreate them 
+
+
+
+
+
+ready connect tasker
+
+here we can make it so it creates a task, and goes to check stuff out in task, and also creates an task?
+
+
+right now we erase the entry of a thing
+
+we will probably need cache tree
+
+maybe let’s call it cached_tree_branches?
+
+if !ctb.has(branch name):
+    ctb[branch_name] = {
+„children” = {}
+}
+    if !ctb[bn][c].has(child name)
+        ctb[bn][c][child_name] = jsh_scene_tree[main root][branches][branch name][children][child_name]
+
+
+
+
+get node, instead of using entire path, get node after node?
+
+
+
+
+
+
+var container_name_fi = container_finder(data_set_nameeeeee)
+
+	var datapoint_path = scene_tree_jsh["main_root"]["branches"][container]["datapoint"]["datapoint_path"]
+
+var datapoint_name_now = datapoint_path.split(“/”)
+
+var datapoint_just_name = scene_tree_jsh["main_root"]["branches"][container]["datapoint"]["datapoint_name"]
+
+create_new_task(“the_third_inty_dp”, datapoint_just_name)
+
+func the_third_inty_dp(name_dp_ti):
+print()
+
+
+in datapoint.gd, queue pusher
+
+if split someting[1] == self.name:
+    the third inty thingy 
+
+
+we can also make new task for thirdy inty, and try to get node with await, but we already tried it and once it didn’t work 
+
+check if i clear the multi tasking array for first impact of creation, after we figure out if we go further, change the name of set, or go to last part of creation 
+
+
+
+
+
+process 
+
+if some array, to add things .size() > 0:
+run normal main thread function
+
+
+
+
+
+
+
+create records set
+create jsh tree
+create nodes to be placed data
+create travelling data
+
+create nodes, add them to tree
+here we counter after +1
+here we jsh tree node = node
+
+after counters ==
+
+we put nodes on travelling data
+
+
+
+
+
+
+
+maybe the main thread process is accessing an variable that is also accessed on other thread and that’s why sometimes there was an issue of not creating array with two sets at once?
+
+maybe do that function in call_deferred ? it’s what it was made for to use main thread, maybe my own function that just changes ints and makes arrays, can do it?
+
+
+
+
+
+
+the process stages
+
+array for creation and process while loop
+
+the three stages first creation of array
+
+maybe a mutex can help
+
+create_new_task("three_stages_of_creation", "base")
+	create_new_task("three_stages_of_creation", "menu")
+
+
+func three_stages_of_creation(data_set_name):
+	#print()
+	#while queue_of_staging_system
+	var current_stage_of_creation : int = 0
+	
+	var first_stage_bool : int = 0
+	var second_stage_bool : int = 0
+	var third_stage_bool : int = 0
+	var fourth_stage_bool : int = 0
+	var fifth_stage_bool : int = 0
+	var sixth_stage_bool : int = 0
+	var seventh_stage_bool : int = 0
+	var eight_stage_bool : int = 0
+	var nineth_stage_bool : int = 0
+	list_of_sets_to_create.append([data_set_name, current_stage_of_creation, first_stage_bool, second_stage_bool, third_stage_bool, fourth_stage_bool, fifth_stage_bool, sixth_stage_bool, seventh_stage_bool, eight_stage_bool, nineth_stage_bool])
+
+
+
+func _process(delta):
+	#if jsh_scene_tree_checker == 1:
+		#print("i guess we got em all, we catchet them all! and i have all them pokemons lol")
+		#check_all_nodes()
+	
+	#print(delta)
+	#lets start with simple turns system
+	#print("turn_number_process : ", turn_number_process)
+	#print("delta               : ", delta)
+	match turn_number_process:
+		0:
+			turn_number_process += 1
+			if list_of_sets_to_create.size() > 0:
+				if the_menace_checker == 0:
+					the_menace_checker = 1
+					print("here we run thingy")
+					create_new_task("process_stages", "from_delta_we_run")
+					#process_stages()
+
+
+
+
+
+next mutexes needed?
+the next goal, look throught every global variant 
+and add mutex to each
+
+check every in function var name
+change the names to make them unique 
+
+
+
+
+
+look at, plus tilt axis view, to know bottom
+
+
+
+
+
+0 each symbol, 
+1 each symbol and next symbol after
+
+-1 each symbol and previous and next symbol next to it
+
+2 each symbol and next 2 symbols after
+
+
+
+
+
+the three stages of creation
+
+the before all that normally needs to happen, happened
+
+the in between blimp
+
+the flatout in person
+
+the two version between the blimp 
+
+like aiming with body to check it i even fit in there literally, physically, as we could break a chest or two, and we need to reverse it
+
+maybe add to dream dimension 
+
+we prepared for it to not happen
+
+
+
+
+
+
+the video game
+
+we log stuff, definitely past minute in great detail
+
+if game crash we check what functions were used
+
+we check each of them
+we log how much we checked and store that data too at the launch, before we check one, we log it existence, we log crash data too, like number of tries 
+
+if the game crashed and was in that state, 
+
+
+
+
+
+
+
+maybe the problem is in process stages and that delta process hmm
+
+
+the initialize menu and load records set functions had problems 
+
+the checker for tree from ready was returning without going to the end of the function but it is working now 
+
+figure out what i wanted to do in load records sets
+
+ and initialize menu, probably just try try lock of mutexes 
+
+records system repair 
+
+
+
+
+
+
+
+256 maybe less size, each point is a symbol, and we just have basic state, and its transformation path
+
+
+
+
+
+
+
+
+scrolling lines, if scrolled to a certain point, it resents to 0, and lines changes 
+
+
+
+
+
+make an function that is checking every global var of array and dictionary size? do dictionaries have size?
+
+
+
+
+
+3d space as stitches of data and scale and distance? chunk based stitching of several chunks of data with files and arrays that load 
+
+the shaders are mostly limited by float value of number, what is limit of value is limit of variants
+
+
+
+
+
+if a 3d space is what it is at the base, so everything is saved at certain point, so for lenght of animation we set limits of points in time and its frequency, so i need to move things around too, with some weird 3d way, need simple few points in time and on time with buttons and animations, simple commands, limit of amount of shapes in animation, with exceptions, with groups to show and kinda like move around because it is in container, so rope system because of movement and direction, like it sees so moves in that direction because of command, what animation is, so type of thing is something how fast the material changes in certain situations of many variables too, so every word can have impact to change a game in certain way, so we make a story of came loading with very specific words plus extra, whatever the word was it will be so we load in chunks of words, the forced update and upgrade with game, with full list of functions as command, with shortcuts too, and certain size of lenght could help us out, like max 3 letters and numbers 
+
+file format of 2d space representation, with icons
+
+check before each frame in way we always continue, so it check if we had that thing before and if it’s state of movements is there, so we know what it was before and its current speed? and with few groups of things, and max amount per container lists per things, dotes, lines, lists of words, clickable for just true and false, and also the same for files, as its distance from scene tree control 
+
+the very literal need for evolution, so x amount words pushes the story, based on function name, maybe amounts of repetition, and the function var names as a way to make clear pathways for vars, colors and groups are needed
+
+the word in list of words of current time, evolution, the flow of evolution adding layer of scanning files to list of functions and their names of current name of var at function? limit number of each place in functions, amount of them, max amount of lines for literal interpretation, 1 x per file, any place to any place, colors for groups 
+the objective, duration, repetition, cycle, per certain duration 
+
+the god mode in game like punishment or creation and change because certain amount of time passes 
+
+the flow of actions and time per cycle of its state check like groups? and few pathways, main, shape, collision shape, name of shape like reading file name from end to sort a file content as every word is in certain way the same as file name and amount of contented and lists, colors, shapes 2d of 3d object like sprite 3d
+
+amounts of functions runs times, per what last known combo function happened, max amounts of words in first state of combo for words, with later second and third word combo of creation, i see fourth and fifth too
+
+the movement and sound being connected in forced way for everything as animation
+
+

@@ -1,0 +1,37 @@
+##
+MAIN_FILES_INFORMATION
+13 files, with that one
+#
+MAIN_FILES_INFORMATION
+current_state_of_code_segments
+files_information
+folders_on_main_pc
+functions_added
+functions_main
+init_function
+main_code_segments
+message_with_res_files
+metadata_global_variants
+metadata_global_variants_update
+process_delta_function
+ready_function
+##
+new_things
+mermaids visualisations
+#
+##
+copy_everything
+previous version
+#
+##
+every_main_function
+every function in main script, list can be seen in few files, current state of code segments, functions main, functions added, some might be missing, as i added more, right now we have 179 functions, and we are missing check on any of them i guess
+#
+##
+rest of components
+rest of the components, that i didnt work on, when i made that folder, now i probably did
+#
+##
+SERVICE_MODE_START
+here we have all the needed files i guess
+#

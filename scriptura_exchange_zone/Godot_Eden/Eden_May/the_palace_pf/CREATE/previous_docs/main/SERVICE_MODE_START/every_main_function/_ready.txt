@@ -1,0 +1,87 @@
+func _ready():
+	print("\n🚀 [READY] Beginning full system setup...\n")
+
+
+	# Conditional debugging
+	if OS.is_debug_build():
+		print("Scanning in debug mode, OS.is_debug_build()")
+		print_stack()  # Only in debug
+	else: 
+		print(" os is not in debug build ")
+
+	# Detect OS & environment
+	current_operational_system = OS.get_name()
+	print("🖥️ Running on:", current_operational_system)
+
+	# Load main script for structure analysis
+	var file = FileAccess.open("res://main.gd", FileAccess.READ)
+	if file:
+		var content = file.get_as_text()
+		var structure = task_manager.parse_code_structure(content)
+		task_manager.create_tasks_from_structure(structure)
+		print(task_manager.generate_task_report())
+
+	# 🔍 Scan all files & directories inside res://
+	print("\n🔍 Scanning res:// directory...\n")
+	var res_scan = scan_res_directory()
+	print("\n✅ Scan Completed. Files & Directories Indexed.\n")
+	
+	# ugly way to add timer
+	start_timer_of_finito()
+	
+	# Print the scene tree before changes
+	print("\n🌳 Scene Tree Before Adjustments:")
+	print_stack() 
+	print_tree_pretty()
+
+################# here we shall await for prints maybe??
+	#print_stack() 
+	print_stack() 
+	scan_eden_directory()
+
+	# Debug system state
+	message_of_delta_start = breaks_and_handles_check()
+	print("\n🔄 Delta System State:", message_of_delta_start)
+
+	# Connect signals for task management
+	thread_pool.connect("task_discarded", func(task): 
+		print("❌ Task discarded:", task)
+		queue_pusher_adder(task)
+		int_of_stuff_finished += 1
+	)
+
+	thread_pool.connect("task_started", func(task):
+		print("⏳ Task Started:", task)
+		track_task_status(task)
+		int_of_stuff_started += 1
+	)
+
+	print("\n🎬 Starting Scene Setup...\n")
+
+	# 📝 Load & Check Settings File
+	check_status_just_timer()
+	check_settings_file()
+
+	# Setup Viewport & Camera
+	mouse_pos = get_viewport().get_mouse_position()
+	camera = get_viewport().get_camera_3d()
+	viewport = get_viewport()
+	check_status_just_timer()
+
+	# 🚀 Start Scene Tree (Loading Components)
+	start_up_scene_tree()
+	check_status_just_timer()
+
+	print("\n⚡ Preparing Creation Stages...\n")
+	#create_new_task("three_stages_of_creation", "base")
+	#create_new_task("three_stages_of_creation", "menu")
+
+	print("\n✅ Scene Setup Complete!\n")
+
+	# Run Performance Tests
+	print("\n🛠️ Starting System Tests...\n")
+	test_single_core()
+	test_multi_threaded()
+	print("\n📝 Test Results:", test_results)
+	# Connect to interval ticks
+	timer_system.connect("interval_tick", Callable(self, "_on_interval_tick"))

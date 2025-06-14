@@ -1,0 +1,67 @@
+[gd_scene load_steps=3 format=3 uid="uid://dcy8ht1g6osxo"]
+
+[ext_resource type="Script" path="res://scripts/terminal.gd" id="1_xqe4n"]
+[ext_resource type="Theme" path="res://themes/luminusos_theme.tres" id="2_7t8xa"]
+
+[node name="LuminusOS" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0.2, 1)
+
+[node name="Terminal" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("2_7t8xa")
+script = ExtResource("1_xqe4n")
+
+[node name="TitleBar" type="HBoxContainer" parent="Terminal"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Terminal/TitleBar"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "LuminusOS v1.0 - Inspired by TempleOS"
+horizontal_alignment = 1
+
+[node name="OutputPanel" type="ScrollContainer" parent="Terminal"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Output" type="RichTextLabel" parent="Terminal/OutputPanel"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+bbcode_enabled = true
+text = "Welcome to LuminusOS!
+Type 'help' for available commands.
+"
+
+[node name="CommandLine" type="HBoxContainer" parent="Terminal"]
+layout_mode = 2
+
+[node name="Prompt" type="Label" parent="Terminal/CommandLine"]
+layout_mode = 2
+text = "> "
+
+[node name="Input" type="LineEdit" parent="Terminal/CommandLine"]
+layout_mode = 2
+size_flags_horizontal = 3
+caret_blink = true
+
+[connection signal="text_submitted" from="Terminal/CommandLine/Input" to="Terminal" method="_on_input_text_submitted"]

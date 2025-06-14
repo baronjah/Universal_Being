@@ -1,0 +1,102 @@
+[gd_scene load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://12_turns_system/memory_investment_system.gd" id="1_rmi3v"]
+[ext_resource type="Script" path="res://12_turns_system/word_direction_tracker.gd" id="2_klet4"]
+[ext_resource type="Script" path="res://12_turns_system/memory_investment_interface.gd" id="3_ckr8x"]
+[ext_resource type="Script" path="res://12_turns_system/word_visualization_3d.gd" id="4_ij2mx"]
+
+[node name="MemoryInvestmentScene" type="Node"]
+
+[node name="MemoryInvestmentSystem" type="Node" parent="."]
+script = ExtResource("1_rmi3v")
+
+[node name="WordDirectionTracker" type="Node" parent="."]
+script = ExtResource("2_klet4")
+
+[node name="UI" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("3_ckr8x")
+
+[node name="BackgroundRect" type="ColorRect" parent="UI"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.05, 0.07, 0.12, 0.9)
+
+[node name="Visualization" type="SubViewportContainer" parent="UI"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -300.0
+offset_top = -200.0
+offset_right = 300.0
+offset_bottom = 200.0
+grow_horizontal = 2
+grow_vertical = 2
+stretch = true
+
+[node name="SubViewport" type="SubViewport" parent="UI/Visualization"]
+handle_input_locally = false
+size = Vector2i(600, 400)
+render_target_update_mode = 4
+
+[node name="3DScene" type="Node3D" parent="UI/Visualization/SubViewport"]
+script = ExtResource("4_ij2mx")
+
+[node name="Camera3D" type="Camera3D" parent="UI/Visualization/SubViewport/3DScene"]
+transform = Transform3D(1, 0, 0, 0, 0.939693, 0.34202, 0, -0.34202, 0.939693, 0, 2, 5)
+fov = 60.0
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="UI/Visualization/SubViewport/3DScene"]
+transform = Transform3D(0.707107, 0.5, -0.5, 0, 0.707107, 0.707107, 0.707107, -0.5, 0.5, -5, 5, 5)
+light_energy = 0.8
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="UI/Visualization/SubViewport/3DScene"]
+
+[node name="TerminalOverlay" type="Control" parent="."]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ConsoleOutput" type="RichTextLabel" parent="TerminalOverlay"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = 10.0
+offset_right = -10.0
+offset_bottom = -50.0
+grow_horizontal = 2
+grow_vertical = 2
+bbcode_enabled = true
+scroll_following = true
+
+[node name="CommandInput" type="LineEdit" parent="TerminalOverlay"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = -40.0
+offset_right = -10.0
+offset_bottom = -10.0
+grow_horizontal = 2
+grow_vertical = 0
+placeholder_text = "Enter command..."

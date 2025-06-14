@@ -1,0 +1,152 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://godterminal.gd" type="Script" id=1]
+
+[sub_resource type="StyleBoxFlat" id=1]
+bg_color = Color( 0.0784314, 0.0784314, 0.117647, 1 )
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color( 0.501961, 0.25098, 0.752941, 0.501961 )
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+
+[sub_resource type="StyleBoxFlat" id=2]
+bg_color = Color( 0.0784314, 0.0784314, 0.117647, 1 )
+
+[sub_resource type="StyleBoxFlat" id=3]
+content_margin_left = 8.0
+content_margin_right = 8.0
+content_margin_top = 4.0
+content_margin_bottom = 4.0
+bg_color = Color( 0.0784314, 0.0784314, 0.117647, 1 )
+border_width_top = 1
+border_color = Color( 0.501961, 0.25098, 0.752941, 0.25098 )
+
+[sub_resource type="StyleBoxFlat" id=4]
+content_margin_left = 8.0
+content_margin_right = 8.0
+content_margin_top = 4.0
+content_margin_bottom = 4.0
+bg_color = Color( 0.113725, 0.113725, 0.156863, 1 )
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color( 0.501961, 0.25098, 0.752941, 0.501961 )
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[node name="GodTerminal" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 10.0
+margin_top = 10.0
+margin_right = -10.0
+margin_bottom = -10.0
+custom_constants/separation = 0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="StatusBar" type="Panel" parent="VBoxContainer"]
+margin_right = 1004.0
+margin_bottom = 30.0
+rect_min_size = Vector2( 0, 30 )
+custom_styles/panel = SubResource( 1 )
+
+[node name="LogoLabel" type="Label" parent="VBoxContainer/StatusBar"]
+anchor_top = 0.5
+anchor_bottom = 0.5
+margin_left = 10.0
+margin_top = -7.0
+margin_right = 200.0
+margin_bottom = 7.0
+custom_colors/font_color = Color( 0.501961, 0.25098, 0.752941, 1 )
+text = "GODTERMINAL"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TurnLabel" type="Label" parent="VBoxContainer/StatusBar"]
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+margin_left = -300.0
+margin_top = -7.0
+margin_right = -10.0
+margin_bottom = 7.0
+custom_colors/font_color = Color( 0.752941, 0.752941, 0.878431, 1 )
+text = "Turn: 1/12 | Phase: Genesis"
+align = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="OutputContainer" type="Panel" parent="VBoxContainer"]
+margin_top = 30.0
+margin_right = 1004.0
+margin_bottom = 530.0
+size_flags_vertical = 3
+custom_styles/panel = SubResource( 2 )
+
+[node name="OutputText" type="RichTextLabel" parent="VBoxContainer/OutputContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 10.0
+margin_top = 10.0
+margin_right = -10.0
+margin_bottom = -10.0
+custom_colors/default_color = Color( 0.752941, 0.752941, 0.878431, 1 )
+custom_styles/normal = SubResource( 2 )
+scroll_following = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="InputContainer" type="Panel" parent="VBoxContainer"]
+margin_top = 530.0
+margin_right = 1004.0
+margin_bottom = 580.0
+rect_min_size = Vector2( 0, 50 )
+custom_styles/panel = SubResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PromptLabel" type="Label" parent="VBoxContainer/InputContainer"]
+anchor_top = 0.5
+anchor_bottom = 0.5
+margin_left = 10.0
+margin_top = -7.0
+margin_right = 30.0
+margin_bottom = 7.0
+custom_colors/font_color = Color( 0.501961, 0.25098, 0.752941, 1 )
+text = "λ"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="InputField" type="LineEdit" parent="VBoxContainer/InputContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 30.0
+margin_top = 5.0
+margin_right = -10.0
+margin_bottom = -5.0
+custom_colors/font_color = Color( 0.752941, 0.752941, 0.878431, 1 )
+custom_styles/normal = SubResource( 4 )
+caret_blink = true
+__meta__ = {
+"_edit_use_anchors_": false
+}

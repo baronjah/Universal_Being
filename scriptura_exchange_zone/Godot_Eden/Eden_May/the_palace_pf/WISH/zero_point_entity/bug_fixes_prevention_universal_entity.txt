@@ -1,0 +1,205 @@
+# FIXES FOR UNIVERSAL_ENTITY.GD
+
+# Replace any instance of:
+func _add_particle_system(type: String, base_color: Color):
+	var particles = GPUParticles3D.new()
+	# ...rest of code
+
+# With:
+func _add_particle_system(type: String, base_color: Color):
+	var particles = GPUParticles3D.new()
+	particles.name = type + "_particles"
+	
+	var material = ParticleProcessMaterial.new()
+	material.emission_shape = ParticleProcessMaterial.EMISSION_SHAPE_SPHERE
+	material.emission_sphere_radius = 0.1
+	
+	match type:
+		"seed_glow":
+			material.gravity = Vector3(0, 0.1, 0)
+			material.initial_velocity_min = 0.1
+			material.initial_velocity_max = 0.2
+			material.scale_min = 0.01
+			material.scale_max = 0.03
+		"flame":
+			material.gravity = Vector3(0, 1.0, 0)
+			material.initial_velocity_min = 0.2
+			material.initial_velocity_max = 0.5
+			material.scale_min = 0.05
+			material.scale_max = 0.1
+		_:
+			# Default particles
+			material.gravity = Vector3(0, 0.5, 0)
+			material.initial_velocity_min = 0.1
+			material.initial_velocity_max = 0.3
+			material.scale_min = 0.02
+			material.scale_max = 0.05
+	
+	# Create a simple mesh for the particles
+	var particle_mesh = SphereMesh.new()
+	particle_mesh.radius = 0.05
+	particle_mesh.height = 0.1
+	
+	# Create a material for the particles
+	var mesh_material = StandardMaterial3D.new()
+	mesh_material.albedo_color = base_color
+	mesh_material.emission_enabled = true
+	mesh_material.emission = base_color
+	mesh_material.emission_energy = 1.5
+	particle_mesh.material = mesh_material
+	
+	# Attach the mesh to the particles
+	particles.draw_pass_1 = particle_mesh
+	particles.process_material = material
+	particles.amount = 20 + 10 * evolution_stage
+	particles.lifetime = 1.0
+	
+	effect_container.add_child(particles)
+	particle_systems[type] = particles
+
+
+# Add this function if missing:
+func load_from_data(data: Dictionary):
+	"""
+	Load entity state from saved data
+	"""
+	if data.has("source_word"):
+		source_word = data.source_word
+	
+	if data.has("manifestation_level"):
+		manifestation_level = data.manifestation_level
+	
+	if data.has("current_form"):
+		current_form = data.current_form
+	
+	if data.has("properties"):
+		properties = data.properties.duplicate()
+	
+	if data.has("evolution_stage"):
+		evolution_stage = data.evolution_stage
+	
+	if data.has("reality_context"):
+		reality_context = data.reality_context
+	
+	# Update visual based on loaded data
+	_update_visual_representation()
+	
+	return self
+
+# Add this function if missing:
+func save_data() -> Dictionary:
+	"""
+	Save entity state to dictionary
+	"""
+	var data = {
+		"entity_id": entity_id,
+		"source_word": source_word,
+		"manifestation_level": manifestation_level,
+		"current_form": current_form,
+		"properties": properties.duplicate(),
+		"evolution_stage": evolution_stage,
+		"reality_context": reality_context,
+		"dimension_layer": dimension_layer
+	}
+	
+	return data
+
+# FIXES FOR WORD_MANIFESTOR.GD
+
+# Make sure the _sort_by_similarity_score function has the right signature:
+func _sort_by_similarity_score(a, b, scores):
+	return scores[a] > scores[b]
+
+# If you get errors about PoolStringArray not existing, replace:
+var combo_key = PoolStringArray(words).join("+")
+
+# With: 
+var combo_key = "+".join(words)
+
+# FIXES FOR DYNAMIC_MAP_SYSTEM.GD
+
+# If you get errors about JSON.parse_string, ensure you're using Godot 4.4
+# If needed, replace:
+var json_result = JSON.parse_string(json_text)
+
+# With:
+var json_result = JSON.parse_string(json_text)
+if json_result == null:
+	print("Failed to parse JSON: ", json_text.substr(0, 100), "...")
+	return {}
+
+# FIXES FOR GAME_CONTROLLER.GD
+
+# In the _ready() function, ensure you're connecting signals properly:
+func _ready():
+	# Initialize systems
+	_initialize_systems()
+	
+	# Create player
+	_spawn_player()
+	
+	# Create console interface
+	_create_console()
+	
+	# Start performance monitoring
+	_start_performance_monitoring()
+	
+	# Initial manifested words
+	_manifest_starter_words()
+
+# Make sure the console connection is properly set up:
+func _create_console():
+	console = creation_console_scene.instantiate()
+	add_child(console)
+	
+	# Connect console signals
+	if console.has_signal("command_entered"):
+		console.connect("command_entered", Callable(self, "_on_console_command"))
+	else:
+		print("ERROR: Console doesn't have command_entered signal")
+
+# FIXES FOR PLAYER_CONTROLLER.GD
+
+# Ensure the _sort_by_similarity_score function is properly connected:
+func _input(event):
+	# Camera rotation with mouse
+	if event is InputEventMouseMotion and Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED:
+		# Rotate camera mount (left/right)
+		camera_mount.rotate_y(deg_to_rad(-event.relative.x * mouse_sensitivity))
+		
+		# Rotate camera (up/down)
+		var new_rotation = camera.rotation.x - deg_to_rad(event.relative.y * mouse_sensitivity)
+		camera.rotation.x = clamp(new_rotation, deg_to_rad(-89), deg_to_rad(89))
+
+# GENERAL FIXES FOR CONNECTING SYSTEMS
+
+# In game_controller.gd, ensure word_manifestor and map_system are properly connected:
+func _initialize_systems():
+	# Create map system
+	map_system = DynamicMapSystem.new()
+	map_system.name = "map_system"
+	add_child(map_system)
+	
+	# Create word manifestor
+	word_manifestor = WordManifestor.new()
+	word_manifestor.name = "word_manifestor"
+	add_child(word_manifestor)
+
+func _spawn_player():
+	player = player_scene.instantiate()
+	player.name = "player"
+	add_child(player)
+	
+	# Position at origin
+	player.global_position = Vector3(0, 1, 0)
+	
+	# Initialize systems with player reference
+	if map_system and player:
+		map_system.initialize_with_player(player)
+	
+	if word_manifestor and map_system and player:
+		word_manifestor.initialize(map_system, player)
+	
+	# Connect player signals
+	if player.has_signal("console_toggled"):
+		player.connect("console_toggled", Callable(self, "_toggle_console"))

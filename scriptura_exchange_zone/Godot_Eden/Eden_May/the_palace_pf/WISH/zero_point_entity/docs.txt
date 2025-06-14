@@ -1,0 +1,132 @@
+# JSH Ethereal Engine - Project Setup Guide
+
+This guide will help you set up the JSH Ethereal Engine project in Godot 4.4, with all the core components needed to create your dream game where you can manifest anything through words.
+
+## Project Structure
+
+Create your project with the following folder structure:
+
+```
+project/
+├── scenes/
+│   ├── entities/
+│   ├── ui/
+│   └── player/
+├── scripts/
+│   ├── core/
+│   ├── systems/
+│   └── utils/
+├── resources/
+│   ├── materials/
+│   └── meshes/
+└── assets/
+    ├── textures/
+    ├── models/
+    └── sounds/
+```
+
+## Core Files Setup
+
+### 1. Create the Universal Entity Scene
+
+1. Create a new scene (`universal_entity.tscn`) in the `scenes/entities` folder
+2. Add a `Node3D` as the root node
+3. Attach the `UniversalEntity.gd` script to it (from the artifact)
+4. Add child nodes:
+   - `VisualContainer` (Node3D)
+   - `EffectContainer` (Node3D)
+   - `CollisionShape3D` with a SphereShape
+
+### 2. Create the Player Scene
+
+1. Create a new scene (`player.tscn`) in the `scenes/player` folder
+2. Add a `CharacterBody3D` as the root node
+3. Attach the `PlayerController.gd` script to it
+4. Add child nodes:
+   - `CollisionShape3D` with a CapsuleShape
+   - `CameraMount` (Node3D) positioned at eye level
+   - `Camera3D` as a child of CameraMount
+   - `InteractionRay` (RayCast3D) as a child of Camera3D
+   - `FloatingIndicator` with a TorusMesh (initially hidden)
+
+### 3. Create the Console UI
+
+1. Create a new scene (`creation_console.tscn`) in the `scenes/ui` folder
+2. Add a `Control` node as the root
+3. Setup UI elements according to the `CreationConsole` class in the `game_controller.gd` script
+
+### 4. Create the Main Scene
+
+1. Create a new scene (`main.tscn`) as your main game scene
+2. Add a `Node3D` as the root node
+3. Attach the `game_controller.gd` script to it
+4. Configure the exported variables to reference your scenes:
+   - `player_scene` → `res://scenes/player/player.tscn`
+   - `creation_console_scene` → `res://scenes/ui/creation_console.tscn`
+   - `universal_entity_scene` → `res://scenes/entities/universal_entity.tscn`
+5. Add a basic environment with light and ground plane
+
+## Scripts Setup
+
+Place the provided script artifacts in the appropriate folders:
+
+1. `UniversalEntity.gd` → `scripts/core/universal_entity.gd`
+2. `WordManifestor.gd` → `scripts/systems/word_manifestor.gd`
+3. `DynamicMapSystem.gd` → `scripts/systems/dynamic_map_system.gd`
+4. `PlayerController.gd` → `scripts/core/player_controller.gd`
+5. `GameController.gd` → `scripts/core/game_controller.gd`
+
+## Input Map Configuration
+
+Configure the input map in Project Settings:
+
+1. `move_forward` → W key
+2. `move_backward` → S key
+3. `move_left` → A key
+4. `move_right` → D key
+5. `jump` → Space key
+6. `run` → Shift key
+7. `crouch` → Control key
+8. `interact` → E key
+
+## First Run Checklist
+
+Before running the game for the first time:
+
+1. Make sure all the scripts are properly attached to their respective scenes
+2. Check that the exported variables in the main scene are correctly set
+3. Configure the input map
+4. Set the main scene as the default scene in Project Settings
+
+## Additional Enhancement Ideas
+
+Once you have the core systems working, consider these enhancements:
+
+1. **Visual Effects**: Add particle systems for different entity forms
+2. **Sound Effects**: Create unique sounds for manifestation and transformations
+3. **Advanced Console**: Enhance the console with autocomplete and syntax highlighting
+4. **Reality Transitions**: Create visual effects for transitioning between realities
+5. **Entity Interaction**: Expand the ways entities can interact with each other
+6. **Word Database**: Build a larger pre-defined word database with interesting properties
+7. **User Interface**: Add a HUD showing current reality and nearby entities
+
+## Debugging Tips
+
+If you encounter issues:
+
+1. Use the built-in debugger to track entity counts and performance
+2. Add temporary visualization for cell boundaries in the map system
+3. Implement logging for the word manifestation process
+4. Check for any circular references between systems
+
+## Next Steps
+
+After getting the basic systems working:
+
+1. Expand the Universal Entity visualization system
+2. Enhance the word analysis with more nuanced properties
+3. Implement entity evolution pathways
+4. Add more reality contexts with different physics or rules
+5. Develop the connection system between entities
+
+This project structure provides a solid foundation for creating your dream game where words shape reality, everything is connected, and any concept can be manifested in the world.

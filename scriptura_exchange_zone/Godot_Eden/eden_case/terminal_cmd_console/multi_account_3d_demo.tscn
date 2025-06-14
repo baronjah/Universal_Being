@@ -1,0 +1,435 @@
+[gd_scene load_steps=8 format=3 uid="uid://dgjj6xy2vksbo"]
+
+[ext_resource type="Script" path="res://multi_account_3d_visualizer.gd" id="1_t83p4"]
+[ext_resource type="Script" path="res://multi_account_api_controller.gd" id="2_qmvil"]
+
+[sub_resource type="GDScript" id="GDScript_hj4x2"]
+script/source = "extends Node3D
+
+# Main controller for the multi-account 3D demo
+# Sets up accounts, API connections, and camera controls
+
+func _ready():
+	OS.set_window_title(\"Multi-Account 3D System Demo\")
+	
+	# Setup initial accounts
+	var api_controller = $APIController
+	var visualizer = $MultiAccount3DVisualizer
+	
+	# Create default accounts and connections after a short delay
+	get_tree().create_timer(0.5).timeout.connect(_setup_demo_accounts)
+
+func _setup_demo_accounts():
+	var visualizer = $MultiAccount3DVisualizer
+	var api_controller = $APIController
+	
+	# Create accounts with different tiers
+	visualizer.create_account(\"user_account\", \"User Account\", \"free\")
+	visualizer.create_account(\"plus_account\", \"Plus Account\", \"plus\")
+	visualizer.create_account(\"max_account\", \"Max Account\", \"max\")
+	visualizer.create_account(\"enterprise_account\", \"Enterprise Account\", \"enterprise\")
+	
+	# Set one account as active
+	visualizer.set_account_active(\"enterprise_account\")
+	
+	# Create some API connections
+	api_controller.create_api_connection(\"enterprise_account\", \"max_account\", 0)  # Claude API
+	api_controller.create_api_connection(\"max_account\", \"plus_account\", 1)  # Gemini API
+	api_controller.create_api_connection(\"plus_account\", \"user_account\", 2)  # Custom API
+	
+	# Send some demo API requests
+	get_tree().create_timer(1.5).timeout.connect(_send_demo_requests)
+
+func _send_demo_requests():
+	var api_controller = $APIController
+	
+	# Send API requests
+	api_controller.send_api_request(\"enterprise_account\", \"max_account\", 0, 
+		{\"prompt\": \"Generate a 3D visualization of data interconnections\"})
+	
+	get_tree().create_timer(1.0).timeout.connect(func():
+		api_controller.send_api_request(\"max_account\", \"plus_account\", 1, 
+			{\"text\": \"Process account synchronization\"})
+	)
+	
+	get_tree().create_timer(2.0).timeout.connect(func():
+		api_controller.send_api_request(\"plus_account\", \"user_account\", 2, 
+			{\"action\": \"data_transfer\", \"content\": \"Processed visualization\"})
+	)
+
+func _process(delta):
+	# Rotate camera smoothly around the scene
+	if $CameraOrbit:
+		$CameraOrbit.rotation.y += delta * 0.1
+"
+
+[sub_resource type="Environment" id="Environment_wh2aq"]
+background_mode = 1
+background_color = Color(0.0705882, 0.0705882, 0.0941176, 1)
+ambient_light_source = 2
+ambient_light_color = Color(0.152941, 0.152941, 0.211765, 1)
+tonemap_mode = 3
+glow_enabled = true
+glow_intensity = 0.3
+glow_bloom = 0.2
+glow_blend_mode = 0
+volumetric_fog_enabled = true
+volumetric_fog_density = 0.02
+
+[sub_resource type="GDScript" id="GDScript_3qqr5"]
+script/source = "extends Control
+
+# UI controller for the multi-account 3D demo
+
+var active_account = \"enterprise_account\"
+var active_window = 0
+
+@onready var visualizer = $\"../MultiAccount3DVisualizer\"
+@onready var api_controller = $\"../APIController\"
+@onready var account_label = $MarginContainer/VBoxContainer/AccountInfoPanel/AccountLabel
+@onready var tier_label = $MarginContainer/VBoxContainer/AccountInfoPanel/TierLabel
+@onready var api_count_label = $MarginContainer/VBoxContainer/APIInfoPanel/APICountLabel
+@onready var window_count_label = $MarginContainer/VBoxContainer/APIInfoPanel/WindowCountLabel
+@onready var api_log = $MarginContainer/VBoxContainer/APILogPanel/APILog
+
+func _ready():
+	# Connect signals
+	if api_controller:
+		api_controller.api_request_sent.connect(_on_api_request_sent)
+		api_controller.api_response_received.connect(_on_api_response_received)
+		api_controller.api_connection_state_changed.connect(_on_api_connection_state_changed)
+	
+	if visualizer:
+		visualizer.account_activated.connect(_on_account_activated)
+		visualizer.window_selected.connect(_on_window_selected)
+	
+	# Setup buttons
+	$MarginContainer/VBoxContainer/ButtonsPanel/AddConnectionButton.pressed.connect(_on_add_connection_pressed)
+	$MarginContainer/VBoxContainer/ButtonsPanel/SendRequestButton.pressed.connect(_on_send_request_pressed)
+	$MarginContainer/VBoxContainer/ButtonsPanel/AddWindowButton.pressed.connect(_on_add_window_pressed)
+	
+	# Initial update of UI
+	_update_ui()
+
+func _update_ui():
+	if not visualizer or not api_controller:
+		return
+	
+	# Update account info
+	account_label.text = \"Account: \" + active_account
+	tier_label.text = \"Tier: \" + _get_account_tier(active_account).capitalize()
+	
+	# Update API info
+	var api_connections = api_controller.get_api_connections(active_account)
+	api_count_label.text = \"API Connections: \" + str(api_connections.size())
+	
+	# Update window count if visualizer has account
+	if active_account in visualizer.account_windows:
+		var windows = visualizer.account_windows[active_account]
+		window_count_label.text = \"Windows: \" + str(windows.size())
+	else:
+		window_count_label.text = \"Windows: 0\"
+
+func _get_account_tier(account_id):
+	if account_id.begins_with(\"enterprise\"):
+		return \"enterprise\"
+	elif account_id.begins_with(\"max\"):
+		return \"max\"
+	elif account_id.begins_with(\"plus\"):
+		return \"plus\"
+	else:
+		return \"free\"
+
+func _add_to_log(message):
+	api_log.text += message + \"\\n\"
+	
+	# Limit log size
+	var lines = api_log.text.split(\"\\n\")
+	if lines.size() > 20:
+		var new_text = \"\"
+		for i in range(lines.size() - 20, lines.size()):
+			if i >= 0 and i < lines.size():
+				new_text += lines[i] + \"\\n\"
+		api_log.text = new_text
+
+func _on_api_request_sent(from_account, to_account, api_type, request):
+	var api_type_str = [\"CLAUDE\", \"GEMINI\", \"CUSTOM\", \"INTERNAL\", \"SHARED\", \"SECURE\"][api_type]
+	_add_to_log(\"REQUEST: \" + from_account + \" -> \" + to_account + \" [\" + api_type_str + \"]:\")
+	_add_to_log(\"  \" + str(request).substr(0, 50) + (str(request).length() > 50 ? \"...\" : \"\"))
+	
+	# Update UI
+	_update_ui()
+
+func _on_api_response_received(from_account, to_account, api_type, response):
+	var api_type_str = [\"CLAUDE\", \"GEMINI\", \"CUSTOM\", \"INTERNAL\", \"SHARED\", \"SECURE\"][api_type]
+	_add_to_log(\"RESPONSE: \" + from_account + \" <- \" + to_account + \" [\" + api_type_str + \"]:\")
+	_add_to_log(\"  \" + str(response).substr(0, 50) + (str(response).length() > 50 ? \"...\" : \"\"))
+	
+	# Update UI
+	_update_ui()
+
+func _on_api_connection_state_changed(connection_id, new_state):
+	var state_str = [\"INACTIVE\", \"CONNECTING\", \"ACTIVE\", \"ERROR\", \"THROTTLED\"][new_state]
+	_add_to_log(\"CONNECTION: \" + connection_id + \" -> \" + state_str)
+	
+	# Update UI
+	_update_ui()
+
+func _on_account_activated(account_id):
+	active_account = account_id
+	_add_to_log(\"ACTIVATED: \" + account_id)
+	
+	# Update UI
+	_update_ui()
+
+func _on_window_selected(account_id, window_id):
+	active_account = account_id
+	_add_to_log(\"WINDOW: \" + account_id + \" > \" + window_id)
+	
+	# Update UI
+	_update_ui()
+
+func _on_add_connection_pressed():
+	# Find an account to connect to
+	var accounts = [\"user_account\", \"plus_account\", \"max_account\", \"enterprise_account\"]
+	var target_account = \"\"
+	
+	for account in accounts:
+		if account != active_account:
+			target_account = account
+			break
+	
+	if target_account.empty():
+		_add_to_log(\"ERROR: No available account to connect to\")
+		return
+	
+	var result = api_controller.create_api_connection(active_account, target_account, 0)
+	if result:
+		_add_to_log(\"Created new API connection: \" + active_account + \" -> \" + target_account)
+	else:
+		_add_to_log(\"Failed to create API connection\")
+	
+	# Update UI
+	_update_ui()
+
+func _on_send_request_pressed():
+	# Find an available connection
+	var connections = api_controller.get_api_connections(active_account)
+	
+	if connections.size() == 0:
+		_add_to_log(\"ERROR: No available API connections\")
+		return
+	
+	# Use the first connection where this account is the source
+	var connection = null
+	for conn in connections:
+		if conn.from_account == active_account:
+			connection = conn
+			break
+	
+	if connection == null:
+		_add_to_log(\"ERROR: No outgoing API connections available\")
+		return
+	
+	var result = api_controller.send_api_request(
+		connection.from_account, 
+		connection.to_account, 
+		connection.api_type, 
+		{\"prompt\": \"Test API request from UI\", \"timestamp\": Time.get_unix_time_from_system()}
+	)
+	
+	if result:
+		_add_to_log(\"Sent test API request successfully\")
+	else:
+		_add_to_log(\"Failed to send API request\")
+	
+	# Update UI
+	_update_ui()
+
+func _on_add_window_pressed():
+	if visualizer:
+		var window_id = visualizer.add_window_to_account(active_account)
+		if window_id:
+			_add_to_log(\"Added new window: \" + window_id)
+		else:
+			_add_to_log(\"Failed to add window\")
+	else:
+		_add_to_log(\"ERROR: Visualizer not available\")
+	
+	# Update UI
+	_update_ui()
+"
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dpcyi"]
+bg_color = Color(0.0705882, 0.0705882, 0.0941176, 0.752941)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.301961, 0.301961, 0.4, 0.501961)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fpv4h"]
+bg_color = Color(0.0705882, 0.0705882, 0.0941176, 0.752941)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.4, 0.301961, 0.501961, 0.501961)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[node name="MultiAccount3DDemo" type="Node3D"]
+script = SubResource("GDScript_hj4x2")
+
+[node name="MultiAccount3DVisualizer" type="Node3D" parent="."]
+script = ExtResource("1_t83p4")
+
+[node name="APIController" type="Node" parent="."]
+script = ExtResource("2_qmvil")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_wh2aq")
+
+[node name="CameraOrbit" type="Node3D" parent="."]
+
+[node name="Camera3D" type="Camera3D" parent="CameraOrbit"]
+transform = Transform3D(1, 0, 0, 0, 0.906308, 0.422618, 0, -0.422618, 0.906308, 0, 5, 10)
+fov = 50.0
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.866025, 0.25, -0.433013, 0, 0.866025, 0.5, 0.5, -0.433013, 0.75, 0, 5, 0)
+light_energy = 0.3
+shadow_enabled = true
+
+[node name="OmniLight3D" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 0)
+light_color = Color(0.901961, 0.788235, 1, 1)
+light_energy = 3.0
+omni_range = 15.0
+
+[node name="UI" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = SubResource("GDScript_3qqr5")
+
+[node name="MarginContainer" type="MarginContainer" parent="UI"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -300.0
+offset_top = -400.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="AccountInfoPanel" type="PanelContainer" parent="UI/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_dpcyi")
+
+[node name="TitleLabel" type="Label" parent="UI/MarginContainer/VBoxContainer/AccountInfoPanel"]
+layout_mode = 2
+text = "Account Information"
+horizontal_alignment = 1
+
+[node name="AccountLabel" type="Label" parent="UI/MarginContainer/VBoxContainer/AccountInfoPanel"]
+layout_mode = 2
+text = "Account: enterprise_account"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TierLabel" type="Label" parent="UI/MarginContainer/VBoxContainer/AccountInfoPanel"]
+layout_mode = 2
+text = "Tier: Enterprise"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="APIInfoPanel" type="PanelContainer" parent="UI/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_dpcyi")
+
+[node name="TitleLabel" type="Label" parent="UI/MarginContainer/VBoxContainer/APIInfoPanel"]
+layout_mode = 2
+text = "API Information"
+horizontal_alignment = 1
+
+[node name="APICountLabel" type="Label" parent="UI/MarginContainer/VBoxContainer/APIInfoPanel"]
+layout_mode = 2
+text = "API Connections: 2"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="WindowCountLabel" type="Label" parent="UI/MarginContainer/VBoxContainer/APIInfoPanel"]
+layout_mode = 2
+text = "Windows: 6"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ButtonsPanel" type="PanelContainer" parent="UI/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_dpcyi")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="UI/MarginContainer/VBoxContainer/ButtonsPanel"]
+layout_mode = 2
+theme_override_constants/separation = 10
+alignment = 1
+
+[node name="AddConnectionButton" type="Button" parent="UI/MarginContainer/VBoxContainer/ButtonsPanel"]
+layout_mode = 2
+text = "Add API Connection"
+
+[node name="SendRequestButton" type="Button" parent="UI/MarginContainer/VBoxContainer/ButtonsPanel"]
+layout_mode = 2
+text = "Send Request"
+
+[node name="AddWindowButton" type="Button" parent="UI/MarginContainer/VBoxContainer/ButtonsPanel"]
+layout_mode = 2
+text = "Add Window"
+
+[node name="APILogPanel" type="PanelContainer" parent="UI/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_fpv4h")
+
+[node name="TitleLabel" type="Label" parent="UI/MarginContainer/VBoxContainer/APILogPanel"]
+layout_mode = 2
+text = "API Activity Log"
+horizontal_alignment = 1
+
+[node name="APILog" type="Label" parent="UI/MarginContainer/VBoxContainer/APILogPanel"]
+layout_mode = 2
+text = "System initialized..."
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="InfoLabel" type="Label" parent="UI"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -300.0
+offset_top = 20.0
+offset_right = 300.0
+offset_bottom = 46.0
+grow_horizontal = 2
+text = "Multi-Account 3D Visualization System"
+horizontal_alignment = 1

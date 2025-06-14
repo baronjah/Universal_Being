@@ -1,0 +1,47 @@
+func create_flat_shape(node_name: String, first_line : Array, data_to_write : Array, group_name : String, version_of_thing : String, information_lines_parsed : Array):
+	var node_path_c_f_s = first_line[6][0]
+	var coords = first_line[1]
+	var to_rotate = first_line[2]
+	var color_to_change = float(information_lines_parsed[1][0][0])
+	var opacity_to_change = float(information_lines_parsed[1][1][0])
+	var material = StandardMaterial3D.new()
+	var color_to_add_op = get_spectrum_color(color_to_change)
+	color_to_add_op.a = opacity_to_change
+	material.albedo_color = color_to_add_op
+	material.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA_SCISSOR
+	#mesh_instance.material_override = material
+	var vertices = PackedVector3Array()
+	var indices = PackedInt32Array()
+	
+	# Add center as first vertex
+	vertices.push_back(Vector3.ZERO)  # Index 0 is center
+	# Convert data points to Vector3s
+	var vector_points = []
+	for point in data_to_write:
+		var point_vector = Vector3(float(point[0]), float(point[1]), float(point[2]))
+		vector_points.append(point_vector)
+		vertices.push_back(point_vector)
+	for i in range(vector_points.size()):
+		var next_i = (i + 1) % vector_points.size()
+		indices.append(0)              # Center point
+		indices.append(i + 1)          # Current vertex (add 1 because center is at 0)
+		indices.append(next_i + 1)     # Next vertex (add 1 because center is at 0)
+	
+	# Create mesh
+	var arr_mesh = ArrayMesh.new()
+	var arrays = []
+	arrays.resize(Mesh.ARRAY_MAX)
+	arrays[Mesh.ARRAY_VERTEX] = vertices
+	arrays[Mesh.ARRAY_INDEX] = indices
+	
+	arr_mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, arrays)
+	
+	# Create mesh instance
+	var mesh_instance = MeshInstance3D.new()
+	mesh_instance.mesh = arr_mesh
+	
+	material.cull_mode = BaseMaterial3D.CULL_DISABLED # Visible from both sides
+	var node_type = "flat_shape"
+	
+	mesh_instance.material_override = material
+	node_creation(node_name, mesh_instance, coords, to_rotate, group_name, node_type, node_path_c_f_s)

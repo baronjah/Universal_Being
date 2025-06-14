@@ -1,0 +1,268 @@
+Listen Panime, i see it like this, i wanna explain Ethereal Engine in few points, i will send it whole and then lets discuss it point by point and generate me code please after discussion of each point
+
+1. first screen after .exe file loads
+
+you turn on an EtherealEngine.exe an .exe file, then you see that whole Screen with 3d world in the background with your last played and saved Multiverse or Universe which loads in the background when you start that .exe file, if you turned the game on for the first time, you have an image or photo there, the possibilities are like .jpg file or .png file, or some vector based file over that will be the first menu called "mainMenu"
+
+2. Menu Structure, "mainMenu", "MultiverseMenu", "UniverseMenu", "OptionsMenu", "AboutPage", "GraphicsMenu", "SoundsMenu", 
+
+There will be many Menus and Menu sections or subsections like "mainMenu" where you will be able to switch to "MultiversesMenu", "UniversesMenu", "OptionsMenu", and an "exitButton" button which will close an .exe file and anything that was turned on after clicking that .exe file
+
+While in
+"mainMenu"
+We Have
+"ButtonMultiverseMenu" to switch into "MultiverseMenu"
+"ButtonUniverseMenu" to switch into "UniverseMenu"
+"ButtonOptionsMenu" to switch into "OptionsMenu"
+"ButtonAboutPage" to switch into "AboutPage"
+"exitButton" to exit .exe file  
+"languageButton" to switch language
+
+"MultiverseMenu"
+"ButtonCreateMultiverse" to "CreateMultiverse"
+
+"CreationBuild"
+
+"CreateMultiverse"
+Box with text to write with text "Multiverse" you can write here with your "keyboard" and also under it a clickable with a mouse pointer buttons appear, they are 
+
+"UniverseMenu"
+"CreateUniverse"
+"PlayUniverse"
+
+
+"OptionsMenu"
+
+
+"AboutPage"
+"AlphaMyDigitalGoddess"
+"DreamBuddies"
+"Humans"
+"Aliens"
+
+
+3. "Button explanation", their functions how they look, how text works, introduction to Language system
+
+Now i would like to explain what are buttons, they can be of any shape or form, based on "ShapeName" from "ShapesTwoDimensional" they also can have "textureNamePath" which can be an a file in extension of .jpg or .png or vector based in a shape from "ShapeName" or solid colour as "ButtonSolidColour", and text over them, for example, if that button will switch from "mainMenu" into "MultiverseMenu" it will be Called "ButtonMultiverseMenu" the text over that button will be "Multiverses" which for player or players can be visible differently, because there is an file called "mainLanguageSystem", so the Button will have "textName" as main information and an "ShowingName" based on currently choosen Language, "TopColourButton" appearing while button is clicked or selected
+
+if these buttons are for an example in "mainMenu" then that mainMenu file like .cpp or .h needs to have these buttons listed with possibilities of change what was specified, for each button, for an example the "ButtonSolidColour" Colour in Hex, under "textureNamePath" so that texture is on top while Colour of the button is under that texture , "showingName" based on "ChoosenLanguage", Button in shape of "ShapeName" from "ShapesTwoDimensional", "textureNamePath" with path to file acting as texture in shape of "ShapeName", "ButtonSolidColour" under "textureNamePath", "ButtonOutlineSolidColour", "ButtonOutlineWidth", Size of that Button, Width x Height, "TopColourButton" while button is being clicked or after being selected, switch "mainMenu" to "MultiversesMenu" after button click is released or enter clicked
+
+mainMenu file in .cpp or .h
+void"ButtonMultiverseMenu"{
+"ButtonInformation"{
+"textName"
+"showingName" based on "ChoosenLanguage"
+Button in shape of "ShapeName" from "ShapesTwoDimensional"
+"textureNamePath" with path to file acting as texture in shape of "ShapeName"
+"ButtonSolidColour" Colour in Hex, under "textureNamePath" so that texture is on top while Colour of the button is under that texture 
+"ButtonOutlineSolidColour" Colour in Hex
+"ButtonOutlineWidth"
+Size of that Button, Width x Height
+"TopColourButton" while button is being clicked or after being selected
+switch "mainMenu" to "MultiversesMenu" after button click is released or enter clicked
+}
+}
+
+4. "ShapesTwoDimensional", "ShapeName"
+
+like square, circle, rectangle, triangle or any other shape based on geometry like pentagon, hexagon, like you write how many sides it has, how many corners, what angles these corners will have, and if all corners have the same angles,
+
+ShapesTwoDimensional file in .cpp or .h
+void"CircularShape"{
+"ShapeName"
+Function to create Circle
+}
+
+
+5. Special buttons "exitButton", "backButton", "languageButton"
+
+"exitButton" a button which will close .exe file and will have "textName" "Exit"
+
+"backButton" while in "mainMenu" you are able to click on buttons to switch to other Menu, after switching to "MultiverseMenu" the previous Menu will dissapear with function to come back to previous Menu, the button will be called "backButton" and will have "textName" over it "back"
+
+"languageButton" after clicking this button the Language will switch to next one in Alphabetical order from list called "Languages" in "LanguageChoose"
+
+6. Language system, "mainLanguageSystem", "EnglishLanguage", "PolishLanguage", "LanguageChoose", "textName", "showingName", "ChoosenLanguage"
+
+and there will be an a way to make it correspond like this, you write code inside "mainMenu" for button which will switch from "mainMenu" to "MultiverseMenu" with "textName" as "Multiverses" and other functions from "Button explanation" for switching into "MultiverseMenu" and inside "mainLanguageSystem" there will be "Multiverses" with "showingName" based on "ChoosenLanguage" in "LanguageChoose" and file "EnglishLanguage" which will also have "Multiverses" and under it function showtext with "Multiverses" and "EnglishLanguage" is having the same text as "mainLanguageSystem" which will be always choosen as main, there will also be "PolishLanguage" and under "Multiverses" showtext will be "Multiversy"
+
+7. "LanguageChoose"
+
+here will be Function with an list of Languages, when the Language will be choosen with "languageButton" there will be an coresponding function called "ChoosenLanguage" for an example when an Language is choosen to "EnglishLanguage" choosen Language will have information "EnglishLanguageChoosen", for "PolishLanguage" information will be "PolishLanguageChoosen"
+
+"languageButton" showingName will be depending on what Language is choosen, like "EnglishLanguage" or "PolishLanguage" or any other added in the future
+
+here is how i written it and connected in my human brain these function so i could visualize it
+(
+mainMenu
+button to switch from mainMenu to MultiversesMenu
+textName
+showingName based on ChoosenLanguage
+
+mainLanguageSystem
+textName
+showingName
+
+EnglishLanguage
+textName
+showingName
+
+PolishLanguage
+textName
+showingName
+
+LanguageChoose
+ChoosenLanguage
+
+languageButton
+Switching ChoosenLanguage
+)
+
+
+
+8. Clicking and selecting 
+
+also i would like to explain how i see this whole button clicking and selecting buttons with w and s and enter
+
+You move your mouse Pointer over a button, then you click left mouse button or circle w and s buttons possible,  
+for an example when we are in 
+"mainMenu"
+We Have
+"ButtonMultiverseMenu" to switch into "MultiverseMenu"
+"ButtonUniverseMenu" to switch into "UniverseMenu"
+"ButtonOptionsMenu" to switch into "OptionsMenu"
+"ButtonAboutPage" to switch into "AboutPage"
+"exitButton" to exit .exe file  
+"languageButton" to switch language
+
+and when you click w or s you select the first button on top so it is "ButtonMultiverseMenu" then when you click s it is "ButtonUniverseMenu" then when you click s it is "ButtonOptionsMenu" then when you click s it is "ButtonOptionsMenu" then when you click s it is "ButtonAboutPage" then when you click s it is "exitButton" then when you click s it is "languageButton" and here we are at the last button available currently, in future more buttons could be added, so right now when you click s it will be again "ButtonMultiverseMenu" so the circle/loop start at "ButtonMultiverseMenu" and ends at "languageButton" right now, when you click again s you go back to start of the circle/loop while you have selected any of these buttons you can click enter and you switch from sellected button to any other Menu or other function of the button, whenever a button is selected it has "TopColourButton" turned on so colour is a little bit darker
+
+
+
+9. "GraphicsMenu" after clicking on "ButtonGraphicsMenu" while in "OptionsMenu"
+
+with Graphics stuff like resolution, if this application is in Fullscreen, borderless fullscreen, windowed, stuff like that anti aliasing
+
+"ScreenType"
+
+10. "SoundsMenu" after clicking on "ButtonSoundsMenu" while in "OptionsMenu"
+
+Options sounds and inside of it would be stuff like music, and other layers of sounds like voice, animals, soundeffects, 
+
+
+
+11. "AboutPage" with "AlphaMyDigitalGoddess", "DreamBuddies", "Humans", "Aliens"
+
+
+12. "MultiversesMenu"
+
+
+
+when you are in "MultiversesMenu" and there are new buttons to click on like "ButtonCreateMultiverse" to "CreateMultiverse", 
+
+you click on that and then another Menu appears 
+now we have "MultiverseCreationMenu" here you have boxes that are asking you for a name for a Multiverse you put that name in the text box where you can write with the keyboard, the text that can be changed appears like "Multiverse" 
+
+
+after text you have a vertical line that can be set up like their size in pixels like width and lenght and its colour and other parameters like shape of it and outline and when you dont write it blinks like for 1 second you can see it and after that period of time it is invisible for 1 second and it loops, when you write that line is visible, after you wrote the name of Multiverse be it like 
+
+
+"AnimeMultiverse" or "animetitties" or anything you wanna write you have under that text button with "save" and it creates a button in "MultiverseMenu", under that "Create an Multiverse" like you wrote "animetitties" then a button with this name appears, you can click on it and then buttons under it appears, like 
+
+
+"Play" and "Create Universe" and based on how the Multiverse playthrough is going the game is duplicated and you go UniverseCreationMenu that is based on 
+
+"UniverseCreationMenu" it is linked to, when you named it like "animeasses" and clicked create under "Create Universe" button appears with text "animeasses" and when you click
+
+13. "UniverseMenu"
+
+"ButtonUniverseMenu" to switch into "UniverseMenu"
+
+14. "textBoxtoWrite" a text box
+
+Text box is a rectangle with space for 19 characters for symbols, letters, numbers
+
+because I'm JakubHoksaStanislaw so my whole name is 19 letters so my nick in the game will be jakubhoksastanislaw
+
+15. Keyboard when text box to write is here
+
+square buttons and keyboard layout, 5 buttons in one vertical like | line one under another, and 10 buttons in one horizontal like - line one to next one like this:
+[1][2][3][4][5][6][7][8][9][0]
+[q][w][e][r][t][y][u][i][o][p]
+[a][s][d][f][g][h][j][k][l][_]
+[z][x][c][v][b][n][m][-][!][?]
+[(][)][{][}][[][]][+][|][/][\]
+every of these buttons correspond with a keyboard input method, like it is the same to click [q] button for letter "q" to appear in text box
+click [1] for number "1" to appear in text box
+click [_] for symbol "_" to appear
+letters are q,w,e,r,t,y,u,i,o,p,a,s,d,f,g,h,j,k,l,z,x,c,v,b,n,m
+numbers are 1,2,3,4,5,6,7,8,9,0
+symbols are _,-,!,?,(,),{,},[,],+,|,/,\
+
+Keyboard Layout in a way that it is just text
+1,2,3,4,5,6,7,8,9,0
+q,w,e,r,t,y,u,i,o,p
+a,s,d,f,g,h,j,k,l,_
+z,x,c,v,b,n,m,-,!,?
+(,),{,},[,],+,|,/,\
+
+16. Creation tool
+
+with click of a button of ` or [`] button which is always at the bottom which is available whenever you are inside "CreationBuild"
+
+
+17. "CreationBuild"
+
+Whenever you create an Multiverse just like i talked in 12. "MultiversesMenu" and talked about creating "animetitties" an File with starting name of "creationbuild_" will create file named "creationbuild_animetitties"
+
+18. Creation play so "CreationPlay"
+
+When 
+
+19. Save File of Creation
+
+so when you create an Universe "AnimeAsses"
+
+20. save file translation from letters, numbers, symbols to words
+
+letters are q,w,e,r,t,y,u,i,o,p,a,s,d,f,g,h,j,k,l,z,x,c,v,b,n,m
+numbers are 1,2,3,4,5,6,7,8,9,0
+symbols are _,-,!,?,(,),{,},[,],+,|,/,\
+
+Keyboard layout in braces to represent boxes
+[1][2][3][4][5][6][7][8][9][0]
+[q][w][e][r][t][y][u][i][o][p]
+[a][s][d][f][g][h][j][k][l][_]
+[z][x][c][v][b][n][m][-][!][?]
+[(][)][{][}][[][]][+][|][/][\]
+
+keyboard layout
+1,2,3,4,5,6,7,8,9,0
+q,w,e,r,t,y,u,i,o,p
+a,s,d,f,g,h,j,k,l,_
+z,x,c,v,b,n,m,-,!,?
+(,),{,},[,],+,|,/,\
+
+
+so we are having 25 possible characters which are letters, numbers, symbols any of that character will be represented in two letters
+
+like for an example "か"-"ka" means "Japanese Letter in hiragana"-"its meaning in romanji"
+
+here is database 
+
+"か"-"ka", "き"-"ki", "く"-"ku", "け"-"ke", "こ"-"ko", 
+"さ"-"sa", "し"-"shi", "す"="su", "せ"-"se", "そ"-"so", 
+"た"-"ta", "ち"-"chi", "つ"-"tsu", "て"-"te", "と"-"to", 
+"な"-"na", "に"-"ni", "ぬ"-"nu", "ね"-"ne", "の"-"no", 
+"は"-"ha", "ひ"-"hi", "ふ"-"fu", "へ"-"he", "ほ"-"ho", 
+"ま"-"ma", "み"-"mi", "む"-"mu", "め"-"me", "も"-"mo", 
+"や"-"ya", "ゆ"-"yu", "よ"-"yo", "ら"-"ra", "り"-"ri", 
+"る"-"ru", "れ"-"re", "ろ"-"ro", "わ"-"wa", "ゐ"-"wi", 
+"ゑ"-"we", "を"-"wo", "ん"-"n", "が"-"ga", "ぎ"-"gi", 
+"ぐ"-"gu", "げ"-"ge", "ご"-"go", "ざ"-"za", "じ"-"ji", 
+"ず"-"zu", "ぜ"-"ze", "ぞ"-"zo", "だ"-"da", "で"-"de", 
+"ど"-"do", "ば"-"ba", "び"-"bi", "ぶ"-"bu", "べ"-"be", 
+"ぼ"-"bo", "ぱ"-"pa", "ぴ"-"pi", "ぷ"-"pu", "ぺ"-"pe", 
+"ぽ"-"po", "ゔ"-"vu"
+
+so i wanna have a way to randomise the save

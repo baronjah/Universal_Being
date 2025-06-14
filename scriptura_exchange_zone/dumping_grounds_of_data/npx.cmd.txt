@@ -1,0 +1,4 @@
+npx.cmd
+
+
+@wonderwhy-er/desktop-commander@latest

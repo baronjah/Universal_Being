@@ -1,0 +1,47 @@
+func create_cursor(node_name: String, first_line : Array, data_to_write : Array, group_name : String, version_of_thing : String, information_lines_parsed : Array):
+	var node_path_c_c_0 = first_line[6][0]
+	var coords = first_line[1]
+	var to_rotate = first_line[2]
+
+	var color_to_change = float(information_lines_parsed[1][0][0])
+	var opacity_to_change = float(information_lines_parsed[1][1][0])
+
+	var material = StandardMaterial3D.new()
+	var color_to_add_op = get_spectrum_color(color_to_change)
+	color_to_add_op.a = opacity_to_change
+	material.albedo_color = color_to_add_op
+	material.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA_SCISSOR
+	
+	var vertices = PackedVector3Array()
+	var triangle_data = [data_to_write[0], data_to_write[1], data_to_write[2]]
+	var triangle_scale = data_to_write[3]#cursor_thingy[3] 
+	
+	var triangle_scale_vec3 : Vector3 = Vector3(float(triangle_scale[0]), float(triangle_scale[1]), float(triangle_scale[2]))
+	var vector_points = []
+	for point in triangle_data:
+		vector_points.append(Vector3(float(point[0]), float(point[1]), float(point[2])))
+	
+	# Create triangles
+	vertices.append(vector_points[0])
+	vertices.append(vector_points[1])
+	vertices.append(vector_points[2])
+	
+	var arr_mesh = ArrayMesh.new()
+	var arrays = []
+	arrays.resize(Mesh.ARRAY_MAX)
+	arrays[Mesh.ARRAY_VERTEX] = vertices
+	
+	arr_mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, arrays)
+	
+	# Create mesh instance and set properties
+	var mesh_instance = MeshInstance3D.new()
+	mesh_instance.mesh = arr_mesh
+	mesh_instance.scale = triangle_scale_vec3
+	
+	material.cull_mode = StandardMaterial3D.CULL_DISABLED  # This makes it visible from both sides
+	material.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED  # Optional: makes it look flat
+
+	
+	mesh_instance.material_override = material
+	var node_type = "cursor"
+	node_creation(node_name, mesh_instance, coords, to_rotate, group_name, node_type, node_path_c_c_0)

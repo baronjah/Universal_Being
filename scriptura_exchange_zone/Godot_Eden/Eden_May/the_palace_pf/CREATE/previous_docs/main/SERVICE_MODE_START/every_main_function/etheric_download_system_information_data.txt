@@ -1,0 +1,16 @@
+func etheric_download_system_information_data():
+	print()
+# var download_received : Dictionary = {}
+# var upload_to_send : Dictionary = {}
+
+#func downloads_of_information():
+	#print
+	# here we receive downloads from containers and datapoints
+	# we create keys for the didctionary, with name to where to send it, and what to send there
+
+#func upload_data():
+	#print
+	# here we will be sending data to specific nodes, containers, datapoints
+	# we could add some kind of counter, of how many times we tried to send something, and cache that message? then we can try to send that message again, less often, and check if that node exist,
+	# also that cached message can have metadata and time? like if a player died, and cannot receive a message, we delete that message and informations about that player too, to save ram
+	# as messengers of god, shall also have fun, instead of running boring quests, we can hit the dungeons and build mechas with our minds

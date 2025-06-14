@@ -1,0 +1,35 @@
+func connect_containers(container_name_0, container_name_1):
+	print(" two containers to connect " , container_name_0 , " and : " , container_name_0)
+
+	var container_data_0
+	var container_data_1
+
+	mutex_containers.lock()
+	
+	
+	if list_of_containers.has(container_name_0):
+		# it has that container
+		if list_of_containers[container_name_0].has("connected_containers"):
+			
+			
+			
+			container_data_0 = list_of_containers[container_name_0]
+		else:
+			# it needs connected containers, connection
+			list_of_containers[container_name_0]["connected_containers"] = {}
+			list_of_containers[container_name_0]["connected_containers"][container_name_1] = {}
+		
+	if list_of_containers.has(container_name_1):
+		
+		if list_of_containers[container_name_1].has("connected_containers"):
+			
+			
+			
+			container_data_1 = list_of_containers[container_name_1]
+		else:
+			list_of_containers[container_name_1]["connected_containers"] = {}
+			list_of_containers[container_name_1]["connected_containers"][container_name_0] = {}
+	
+	
+	
+	mutex_containers.unlock()

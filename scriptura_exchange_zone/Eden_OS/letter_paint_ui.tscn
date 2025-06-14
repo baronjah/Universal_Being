@@ -1,0 +1,372 @@
+[gd_scene load_steps=4 format=3 uid="uid://ccjgpqobg8yp7"]
+
+[ext_resource type="Script" path="res://letter_paint_ui.gd" id="1_m7ydc"]
+[ext_resource type="Script" path="res://paint_canvas.gd" id="2_cdbmi"]
+[ext_resource type="Script" path="res://letter_paint_ui.gd@LetterSelectDialog" id="3_i1xqm"]
+
+[node name="LetterPaintUI" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_m7ydc")
+
+[node name="PaintCanvas" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -250.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("2_cdbmi")
+
+[node name="CanvasBackground" type="ColorRect" parent="PaintCanvas"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.921569, 0.921569, 0.921569, 1)
+
+[node name="CanvasTextureRect" type="TextureRect" parent="PaintCanvas"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+expand_mode = 1
+stretch_mode = 4
+
+[node name="ShapeOverlay" type="TextureRect" parent="PaintCanvas"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+expand_mode = 1
+stretch_mode = 4
+
+[node name="GridOverlay" type="TextureRect" parent="PaintCanvas"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+expand_mode = 1
+stretch_mode = 4
+
+[node name="StrokeOverlay" type="TextureRect" parent="PaintCanvas"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+expand_mode = 1
+stretch_mode = 4
+
+[node name="WordOverlay" type="Label" parent="PaintCanvas"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -70.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.588235)
+theme_override_constants/shadow_offset_x = 2
+theme_override_constants/shadow_offset_y = 2
+theme_override_font_sizes/font_size = 32
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="SidePanel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 11
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -250.0
+grow_horizontal = 0
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="SidePanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = 10.0
+offset_right = -10.0
+offset_bottom = -10.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="SidePanel/VBoxContainer"]
+layout_mode = 2
+text = "Mind Painting"
+horizontal_alignment = 1
+
+[node name="HSeparator" type="HSeparator" parent="SidePanel/VBoxContainer"]
+layout_mode = 2
+
+[node name="DimensionLabel" type="Label" parent="SidePanel/VBoxContainer"]
+layout_mode = 2
+text = "Dimension:"
+
+[node name="DimensionSelector" type="OptionButton" parent="SidePanel"]
+layout_mode = 2
+offset_left = 10.0
+offset_top = 63.0
+offset_right = 240.0
+offset_bottom = 94.0
+
+[node name="HSeparator2" type="HSeparator" parent="SidePanel/VBoxContainer"]
+layout_mode = 2
+
+[node name="PowerBarLabel" type="Label" parent="SidePanel/VBoxContainer"]
+layout_mode = 2
+text = "Mind Power:"
+
+[node name="PowerBar" type="ProgressBar" parent="SidePanel"]
+layout_mode = 0
+offset_left = 10.0
+offset_top = 145.0
+offset_right = 240.0
+offset_bottom = 172.0
+max_value = 100.0
+show_percentage = false
+
+[node name="LetterDisplay" type="Label" parent="SidePanel"]
+layout_mode = 0
+offset_left = 10.0
+offset_top = 182.0
+offset_right = 240.0
+offset_bottom = 232.0
+theme_override_font_sizes/font_size = 28
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HSeparator3" type="HSeparator" parent="SidePanel/VBoxContainer"]
+layout_mode = 2
+
+[node name="LetterButtonsContainer" type="VBoxContainer" parent="SidePanel"]
+layout_mode = 0
+offset_left = 10.0
+offset_top = 252.0
+offset_right = 240.0
+offset_bottom = 372.0
+
+[node name="PaintLetterButton" type="Button" parent="SidePanel/LetterButtonsContainer"]
+layout_mode = 2
+text = "Paint Letter"
+
+[node name="PaintWordButton" type="Button" parent="SidePanel/LetterButtonsContainer"]
+layout_mode = 2
+text = "Paint Word"
+
+[node name="ActivateWordButton" type="Button" parent="SidePanel/LetterButtonsContainer"]
+layout_mode = 2
+text = "Activate Current Word"
+
+[node name="UpdateMindButton" type="Button" parent="SidePanel/LetterButtonsContainer"]
+layout_mode = 2
+text = "Update Mind"
+
+[node name="ClearButton" type="Button" parent="SidePanel/LetterButtonsContainer"]
+layout_mode = 2
+text = "Clear Canvas"
+
+[node name="HSeparator4" type="HSeparator" parent="SidePanel/VBoxContainer"]
+layout_mode = 2
+
+[node name="SettingsContainer" type="VBoxContainer" parent="SidePanel"]
+layout_mode = 0
+offset_left = 10.0
+offset_top = 382.0
+offset_right = 240.0
+offset_bottom = 502.0
+
+[node name="ModeLabel" type="Label" parent="SidePanel"]
+layout_mode = 0
+offset_left = 10.0
+offset_top = 382.0
+offset_right = 240.0
+offset_bottom = 408.0
+text = "Mode: iPad"
+
+[node name="ToggleIPadModeButton" type="Button" parent="SidePanel/SettingsContainer"]
+layout_mode = 2
+text = "Toggle iPad/Desktop Mode"
+
+[node name="PencilLabel" type="Label" parent="SidePanel"]
+layout_mode = 0
+offset_left = 10.0
+offset_top = 442.0
+offset_right = 240.0
+offset_bottom = 468.0
+text = "Input: Pencil"
+
+[node name="TogglePencilModeButton" type="Button" parent="SidePanel/SettingsContainer"]
+layout_mode = 2
+text = "Toggle Pencil/Touch Mode"
+
+[node name="SizeLabel" type="Label" parent="SidePanel"]
+layout_mode = 0
+offset_left = 10.0
+offset_top = 502.0
+offset_right = 240.0
+offset_bottom = 528.0
+text = "Letter Size: 100"
+
+[node name="SizeSlider" type="HSlider" parent="SidePanel/SettingsContainer"]
+layout_mode = 2
+min_value = 50.0
+max_value = 200.0
+step = 10.0
+value = 100.0
+
+[node name="InsightPanel" type="Panel" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -200.0
+offset_top = -150.0
+offset_right = 200.0
+offset_bottom = 150.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="InsightTitle" type="Label" parent="InsightPanel"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 26.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 18
+text = "Mind Update"
+horizontal_alignment = 1
+
+[node name="HSeparator" type="HSeparator" parent="InsightPanel"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 30.0
+offset_bottom = 34.0
+grow_horizontal = 2
+
+[node name="InsightText" type="RichTextLabel" parent="InsightPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = 40.0
+offset_right = -10.0
+offset_bottom = -10.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Your mind expands with new understanding."
+
+[node name="CloseButton" type="Button" parent="InsightPanel"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -30.0
+offset_top = 5.0
+offset_right = -5.0
+offset_bottom = 36.0
+grow_horizontal = 0
+text = "X"
+
+[node name="LetterInfoPanel" type="Panel" parent="."]
+visible = false
+layout_mode = 0
+offset_left = 20.0
+offset_top = 20.0
+offset_right = 220.0
+offset_bottom = 220.0
+
+[node name="LetterInfoTitle" type="Label" parent="LetterInfoPanel"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 26.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 16
+text = "Letter Info"
+horizontal_alignment = 1
+
+[node name="HSeparator" type="HSeparator" parent="LetterInfoPanel"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 30.0
+offset_bottom = 34.0
+grow_horizontal = 2
+
+[node name="LetterInfoText" type="RichTextLabel" parent="LetterInfoPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = 40.0
+offset_right = -10.0
+offset_bottom = -10.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Letter info will appear here."
+
+[node name="CloseButton" type="Button" parent="LetterInfoPanel"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -30.0
+offset_top = 5.0
+offset_right = -5.0
+offset_bottom = 36.0
+grow_horizontal = 0
+text = "X"
+
+[node name="LetterSelectDialog" type="Window" parent="."]
+title = "Select Letter"
+position = Vector2i(100, 100)
+size = Vector2i(400, 300)
+visible = false
+script = ExtResource("3_i1xqm")
+
+[node name="WordInputDialog" type="Window" parent="."]
+title = "Enter Word"
+position = Vector2i(100, 100)
+size = Vector2i(400, 150)
+visible = false
+script = ExtResource("3_i1xqm")
+
+[connection signal="pressed" from="SidePanel/LetterButtonsContainer/PaintLetterButton" to="." method="_on_paint_letter_button_pressed"]
+[connection signal="pressed" from="SidePanel/LetterButtonsContainer/PaintWordButton" to="." method="_on_paint_word_button_pressed"]
+[connection signal="pressed" from="SidePanel/LetterButtonsContainer/ActivateWordButton" to="." method="_on_activate_word_button_pressed"]
+[connection signal="pressed" from="SidePanel/LetterButtonsContainer/UpdateMindButton" to="." method="_on_update_mind_button_pressed"]
+[connection signal="pressed" from="SidePanel/LetterButtonsContainer/ClearButton" to="." method="_on_clear_button_pressed"]
+[connection signal="pressed" from="SidePanel/SettingsContainer/ToggleIPadModeButton" to="." method="_on_toggle_ipad_mode_button_pressed"]
+[connection signal="pressed" from="SidePanel/SettingsContainer/TogglePencilModeButton" to="." method="_on_toggle_pencil_mode_button_pressed"]
+[connection signal="value_changed" from="SidePanel/SettingsContainer/SizeSlider" to="." method="_on_size_slider_value_changed"]
+[connection signal="pressed" from="InsightPanel/CloseButton" to="InsightPanel" method="hide"]
+[connection signal="pressed" from="LetterInfoPanel/CloseButton" to="LetterInfoPanel" method="hide"]
+[connection signal="letter_selected" from="LetterSelectDialog" to="." method="_on_letter_selected"]
+[connection signal="word_entered" from="WordInputDialog" to="." method="_on_word_entered"]

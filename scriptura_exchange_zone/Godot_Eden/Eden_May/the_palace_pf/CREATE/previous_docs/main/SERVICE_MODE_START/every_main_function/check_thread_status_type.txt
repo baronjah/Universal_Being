@@ -1,0 +1,40 @@
+func check_thread_status_type():
+	
+	var basic_state : String
+	
+	if thread_pool == null:
+		return "error"
+	else:
+		basic_state = "working"
+		
+	
+	var thread_stats = thread_pool.get_thread_stats()
+	var total_threads = OS.get_processor_count()
+	var executing_threads = 0
+	var stuck_threads = 0
+	
+	print("\nThread Pool Status:")
+	for thread_id in thread_stats:
+		var state = thread_stats[thread_id]
+		
+		if state["status"] == "executing":
+			executing_threads += 1
+		if state["is_stuck"]:
+			stuck_threads += 1
+			
+		print("Thread %s:" % thread_id)
+		print("  Status: %s (for %dms)" % [
+			state["status"],
+			state["time_in_state_ms"]
+		])
+		print("  Tasks Completed: %d" % state["tasks_completed"])
+		
+		if state["current_task"]:
+			print("  Current Task: %s" % state["current_task"].target_method)
+			print("  Task Args: %s" % str(state["current_task"].target_argument))
+	
+	print("\nSummary:")
+	print("Total Threads: %d" % total_threads)
+	print("Executing: %d" % executing_threads)
+	print("Stuck: %d" % stuck_threads)
+	return total_threads

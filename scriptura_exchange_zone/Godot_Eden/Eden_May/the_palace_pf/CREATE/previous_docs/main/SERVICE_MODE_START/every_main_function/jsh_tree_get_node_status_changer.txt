@@ -1,0 +1,42 @@
+func jsh_tree_get_node_status_changer(node_path_jsh_tree_status: String, node_name: String, node_to_check: Node):
+	var path_parts_jsh_status_node = node_path_jsh_tree_status.split("/")
+	
+	tree_mutex.lock()
+	var current = scene_tree_jsh["main_root"]["branches"]
+	tree_mutex.unlock()
+	
+	var name_of_container = path_parts_jsh_status_node[0]
+	var name_of_current_thing = path_parts_jsh_status_node[path_parts_jsh_status_node.size() - 1]
+	
+	tree_mutex.lock()
+	array_counting_mutex.lock()
+	
+	for part in path_parts_jsh_status_node:
+		if current.has(part):
+			current = current[part]
+			if path_parts_jsh_status_node[-1] == part:
+				if node_to_check:
+					current["status"] = "active"
+					current["node"] = node_to_check
+					
+					if array_for_counting_finish.has(name_of_container):
+						if array_for_counting_finish[name_of_container].has(name_of_current_thing):
+							array_for_counting_finish[name_of_container][name_of_current_thing]["node"] = node_to_check
+						array_for_counting_finish[path_parts_jsh_status_node[0]]["metadata"]["counter_after"] +=1
+						if array_for_counting_finish[name_of_container]["metadata"]["datapoint_name"] == name_of_current_thing:
+							array_for_counting_finish[name_of_container]["metadata"]["datapoint_node"] = node_to_check
+						if array_for_counting_finish[name_of_container]["metadata"]["container_path"] == name_of_current_thing:
+							array_for_counting_finish[name_of_container]["metadata"]["container_node"] = node_to_check
+						# here we get all the nodes, so we can send further, dictionary with all them nodes
+						if array_for_counting_finish[name_of_container]["metadata"]["counter_before"] == array_for_counting_finish[name_of_container]["metadata"]["counter_after"]:
+							create_new_task("newer_even_function_for_dictionary", name_of_container)
+					else:
+						print(" dilemafiasco i guess it could like, not find somehow that container? how ?")
+				else: # here i guess, the node doest exist? which should not be possible in current sceneario, where we get it on main thread, and task is made after that?
+					print(" dilemafiasco new way to check node from proces we are but we didnt get node? on if:")
+			else: # we didnt find it yet, so we dig further
+				current = current["children"]
+		else:
+			print(" dilemafiasco the new one? ")
+	tree_mutex.unlock()
+	array_counting_mutex.unlock()

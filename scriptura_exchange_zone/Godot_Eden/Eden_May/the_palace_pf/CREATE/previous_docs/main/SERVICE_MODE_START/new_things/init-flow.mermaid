@@ -1,0 +1,37 @@
+graph TD
+    Start([Start _init]) -->|Print| A[Print Tree Pretty]
+    A --> B[check_status_just_timer]
+    
+    subgraph Timer System Setup
+        B --> C[Create GodotTimersSystem]
+        C --> D[add_child timer_system]
+        D --> E[setup_retry_timer]
+    end
+    
+    E --> F[check_status_just_timer]
+    
+    subgraph Akashic Records Setup
+        F --> G[prepare_akashic_records_init]
+    end
+    
+    G --> H[Emit main_node_signal]
+    H --> I[setup_system_checks]
+    I --> End([End _init])
+    
+    %% Dependencies
+    Dependencies[Global Dependencies] -.->|Used by| C
+    Dependencies -.->|Used by| H
+    
+    %% States
+    State1[Pre-Timer State] -.->|Verified by| B
+    State2[Post-Timer State] -.->|Verified by| F
+    
+    style Start fill:#f96,stroke:#333,stroke-width:2px
+    style End fill:#f96,stroke:#333,stroke-width:2px
+    style Dependencies fill:#ccf,stroke:#333,stroke-width:2px
+    
+    classDef stateClass fill:#fcf,stroke:#333,stroke-width:1px
+    class State1,State2 stateClass
+    
+    classDef subprocessClass fill:#cfc,stroke:#333,stroke-width:1px
+    class C,D,E,G subprocessClass

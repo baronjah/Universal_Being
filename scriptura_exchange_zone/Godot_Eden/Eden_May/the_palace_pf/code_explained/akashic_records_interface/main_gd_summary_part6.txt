@@ -1,0 +1,68 @@
+# Main.gd Summary - Lines 2500-3000
+
+## Directory Scanning System (Lines 2500-2587)
+- Continuation of scan_eden_directory() function
+- Complete directory scanning and file enumeration
+- scan_available_storage(): Platform-specific storage detection
+  - Windows drive letter scanning (A-Z)
+  - Android storage path detection
+- scan_res_directory(): Scans Godot resource directory
+- scan_directory_with_sizes(): Enhanced directory scan with file sizes
+
+## Memory Management (Lines 2588-2646)
+- get_data_structure_size(): Recursive size calculation
+  - Type-specific size measurements (dictionaries, arrays, objects, etc.)
+  - Supports complex nested data structures
+- get_jsh(): Property accessor helper
+- check_memory_state(): System memory analysis
+  - Size tracking for arrays and dictionaries
+  - Automatic cleanup trigger based on thresholds
+
+## File Management (Lines 2649-2671)
+- setup_settings(): Configuration initialization
+  - Finds or creates Eden directory
+  - Initializes akashic_records folder
+  - Creates default settings if needed
+- Various file creation and loading functions
+
+## Memory Cleanup (Lines 2698-2723)
+- clean_array(): Type-specific array cleanup
+  - Different strategies for different array types
+  - Size limitation and time-based filtering
+- clean_dictionary(): Dictionary cleanup
+  - Age-based cleanup for cached records
+  - Status-based cleanup for errors/mistakes
+
+## Records System (Lines 2726-2999)
+- Advanced thread-safe record management system:
+  - check_record_in_active(): Active record set checking
+  - check_record_in_cached(): Cached record set checking
+  - check_set_limit(): Record set limit checking
+  - check_current_set_container_count(): Container counting
+  - check_record_set_type(): Record type identification
+  - check_if_first_time(): First-time record check
+- containers_states_checker(): Comprehensive container state analysis
+  - Complex nested checking of container states
+  - Thread-safe operations with multiple mutexes
+  - Path validation and node reference checking
+  - Error state tracking
+  - Hierarchical state management
+  - Three-dimensional state vectors (x, y, z) for container status
+
+## Notable Features
+1. Platform Detection: Different handling for Windows and Android
+2. Memory Optimization: Type-specific cleanup strategies
+3. Hierarchical Scanning: Recursive directory traversal
+4. Thread Safety: Extensive mutex usage
+5. Error Tracking: Detailed error state management
+6. Triple-State Tracking: Three-dimensional status tracking
+7. ASCII Art Headers: Decorative section headers
+8. Nested Validation: Deep object graph validation
+
+## Error Handling
+- Colorful error messages with emoji indicators
+- "FATAL KURWA ERROR" markers for critical failures
+- Detailed error state propagation
+- Complex state tracking for recovery
+
+Reading continues from line 3000.

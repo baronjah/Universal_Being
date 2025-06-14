@@ -1,0 +1,66 @@
+# Biomechanical Foot Structure
+
+## Side View (Walking Direction →)
+```
+        Shin
+         |
+         |
+    [Ankle Joint]
+         |
+    +----+----+
+    |  Heel   |
+    +----+----+
+         |
+   [Midfoot Joint]
+         |
+    +---------+--------+
+    |   Main Foot     |
+    +---------+--------+
+              |
+         [Toe Joint]
+              |
+         +----+----+
+         |  Toes   |
+         +----+----+
+```
+
+## Ground Contact Sequence
+```
+1. HEEL STRIKE       2. FOOT FLAT        3. MIDSTANCE
+   
+   Heel↓                Heel■ Foot↓         Heel■ Foot■
+   ====                 ==========          ==========
+   Ground               Ground              Ground
+
+4. HEEL OFF          5. TOE OFF
+   
+   Heel↑ Foot■ Toes↓    Foot↑ Toes■
+        ==========             ====
+        Ground                Ground
+```
+
+## Joint Angles During Gait
+```
+STANCE PHASE:
+Ankle: Dorsiflexion → Neutral → Plantarflexion
+       (-20°)      → (0°)    → (+30°)
+
+SWING PHASE:
+Ankle: Plantarflexion → Dorsiflexion → Dorsiflexion
+       (+30°)        → (-10°)      → (-20°)
+```
+
+## Force Application Points
+```
+Heel Strike:  Impact absorption at heel
+Midstance:    Vertical support through foot center
+Toe Off:      Push-off force at toe tips
+```
+
+## Multi-Contact Benefits
+- More stable ground contact
+- Natural weight distribution
+- Realistic rolling motion
+- Better push-off power
+- Improved balance control
+```

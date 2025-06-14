@@ -1,0 +1,22 @@
+func check_status_just_timer():
+	# it must return something, i wanna functions with, return
+	var stuck_status = check_thread_status()
+	
+	if stuck_status is String:
+		print(" stuck status it is string ")
+		if stuck_status == "error":
+			print(" stuck status something went wrong, starting verified timer " , stuck_status)
+			if timer_system:
+				var start_time = Time.get_ticks_msec()
+				timer_system.create_timer("retry_timer", 5.0)
+				timer_system.start_timer("retry_timer")
+				print(" stuck status Timer started at OS time: ", start_time)
+		else:
+			print(" stuck status it is not error, it is :::" , stuck_status)
+			var updated_message = check_thread_status_type()
+			print(" stuck status ::: " , updated_message, " :::: " , stuck_status)
+			return stuck_status
+	if stuck_status is int:
+		print(" stuck status is int " , stuck_status)
+		# maybe match
+		return str(stuck_status)

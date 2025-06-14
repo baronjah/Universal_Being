@@ -1,0 +1,31 @@
+# Player Progress Tracking
+# Automatically updated by the tutorial system
+
+session_start=0
+current_step=0
+completed_steps=[]
+total_play_time=0
+objects_spawned=0
+commands_used=[]
+achievements=[]
+
+# Achievements system
+achievement:first_steps
+name=First Steps
+description=Completed tutorial step 1
+unlocked=false
+
+achievement:object_master
+name=Object Master  
+description=Spawned 10 objects
+unlocked=false
+
+achievement:transformation_expert
+name=Transformation Expert
+description=Successfully transformed Universal Being
+unlocked=false
+
+achievement:system_consciousness
+name=System Consciousness
+description=Used self-repair system
+unlocked=false

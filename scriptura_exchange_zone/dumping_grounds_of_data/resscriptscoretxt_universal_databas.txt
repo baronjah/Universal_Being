@@ -1,0 +1,48 @@
+res://scripts/core/txt_universal_database.gd
+
+line 318
+
+	var txt_data = txt_database[txt_name]
+Invalid access to property or key 'system_status' on a base object of type 'Dictionary'.
+
+whole function i seen error
+
+
+func _create_popup_from_txt(txt_name: String) -> Control:
+	"""Create popup window from TXT data"""
+	
+	var txt_data = txt_database[txt_name]
+	
+	# Create popup container
+	var popup = AcceptDialog.new()
+	popup.title = txt_data.get("name", "Universal Message")
+	popup.size = _parse_size(txt_data.get("size", "400x300"))
+	
+	# Position popup
+	var position_type = txt_data.get("position", "screen_center")
+	_position_popup(popup, position_type)
+	
+	# Set content
+	var content = txt_data.get("content", "No content specified")
+	popup.dialog_text = content
+	
+	# Add to scene
+	get_tree().current_scene.add_child(popup)
+	active_popups.append(popup)
+	
+	# Auto-close timer if specified
+	var lifetime = txt_data.get("lifetime", "")
+	if lifetime.contains("seconds"):
+		var seconds = lifetime.split("_")[0].to_float()
+		popup.get_tree().create_timer(seconds).timeout.connect(popup.queue_free)
+	
+	popup.show()
+	print("🪟 Created popup from TXT: " + txt_name)
+	
+	message_popup_shown.emit(content, txt_name)
+	being_created_from_txt.emit(txt_name, txt_data.file_path)
+	
+	return popup
+
+
+

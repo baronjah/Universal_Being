@@ -1,0 +1,23 @@
+func clean_oldest_dataset() -> void:
+	var oldest_time = Time.get_ticks_msec()
+	var oldest_set = ""
+	
+	for timestamp_key in cache_timestamps:
+		if cache_timestamps[timestamp_key] < oldest_time:
+			oldest_time = cache_timestamps[timestamp_key]
+			oldest_set = timestamp_key.split("_")[0]
+	
+	if oldest_set != "":
+		#print("Removing oldest dataset: ", oldest_set)
+		cached_r_s_mutex.lock()
+		cached_record_sets.erase(oldest_set + "_")
+		cached_r_s_mutex.unlock()
+		
+		# Clean related timestamps
+		var to_remove = []
+		for timestamp_key in cache_timestamps:
+			if timestamp_key.begins_with(oldest_set):
+				to_remove.append(timestamp_key)
+		
+		for key in to_remove:
+			cache_timestamps.erase(key)

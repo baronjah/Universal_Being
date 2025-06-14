@@ -1,0 +1,161 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "JSHUniversalEntity Schema",
+  "description": "Schema for JSH Universal Entity System - defines the structure of entity data",
+  "type": "object",
+  "required": ["entity_id", "entity_type", "creation_timestamp"],
+  "properties": {
+    "entity_id": {
+      "type": "string",
+      "description": "Unique identifier for the entity"
+    },
+    "entity_type": {
+      "type": "string",
+      "description": "The type/classification of the entity"
+    },
+    "properties": {
+      "type": "object",
+      "description": "Custom properties of the entity",
+      "additionalProperties": true
+    },
+    "creation_timestamp": {
+      "type": "string",
+      "description": "ISO timestamp when the entity was created"
+    },
+    "transformation_history": {
+      "type": "array",
+      "description": "History of type transformations",
+      "items": {
+        "type": "object",
+        "required": ["action", "from_type", "to_type", "timestamp"],
+        "properties": {
+          "action": {
+            "type": "string",
+            "description": "The type of transformation action"
+          },
+          "from_type": {
+            "type": "string",
+            "description": "Original entity type"
+          },
+          "to_type": {
+            "type": "string",
+            "description": "New entity type"
+          },
+          "timestamp": {
+            "type": "string",
+            "description": "When the transformation occurred"
+          }
+        }
+      }
+    },
+    "references": {
+      "type": "object",
+      "description": "References to other entities",
+      "additionalProperties": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      }
+    },
+    "complexity": {
+      "type": "number",
+      "description": "Complexity score of the entity"
+    },
+    "evolution_stage": {
+      "type": "integer",
+      "description": "Current evolutionary development stage (0-3)",
+      "minimum": 0,
+      "maximum": 3
+    },
+    "parent_entities": {
+      "type": "array",
+      "description": "IDs of entities that created this entity",
+      "items": {
+        "type": "string"
+      }
+    },
+    "child_entities": {
+      "type": "array",
+      "description": "IDs of entities created by this entity",
+      "items": {
+        "type": "string"
+      }
+    },
+    "last_processed_time": {
+      "type": "integer",
+      "description": "Timestamp of last processing cycle"
+    },
+    "should_split": {
+      "type": "boolean",
+      "description": "Flag indicating if the entity should split"
+    },
+    "metadata": {
+      "type": "object",
+      "description": "Additional metadata for custom use",
+      "additionalProperties": true
+    },
+    "zones": {
+      "type": "array",
+      "description": "Zone IDs this entity belongs to",
+      "items": {
+        "type": "string"
+      }
+    },
+    "tags": {
+      "type": "array",
+      "description": "Tags for categorizing the entity",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "additionalProperties": false,
+  "definitions": {
+    "entityCore": {
+      "type": "object",
+      "required": ["entity_id", "entity_type"],
+      "properties": {
+        "entity_id": {
+          "type": "string"
+        },
+        "entity_type": {
+          "type": "string"
+        }
+      }
+    },
+    "transformationRecord": {
+      "type": "object",
+      "required": ["action", "from_type", "to_type", "timestamp"],
+      "properties": {
+        "action": {
+          "type": "string",
+          "enum": ["creation", "transform", "evolution", "split", "merge"]
+        },
+        "from_type": {
+          "type": "string"
+        },
+        "to_type": {
+          "type": "string"
+        },
+        "timestamp": {
+          "type": "string"
+        }
+      }
+    },
+    "interactionEffect": {
+      "type": "string",
+      "enum": [
+        "none",
+        "intensify",
+        "diminish",
+        "consume",
+        "fuse",
+        "transform",
+        "split",
+        "create",
+        "transmute"
+      ]
+    }
+  }
+}

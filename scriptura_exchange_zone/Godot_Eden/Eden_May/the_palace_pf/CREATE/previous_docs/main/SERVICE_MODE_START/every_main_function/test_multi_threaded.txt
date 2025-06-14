@@ -1,0 +1,22 @@
+func test_multi_threaded():
+	print("Running multi-threaded test...")
+	
+	# Reset for thread test
+	array_of_startup_check.clear()
+	
+	var task_tag = "test_prepare_akashic_records"
+	#thread_pool.submit_task(self, "prepare_akashic_records", null, task_tag)
+	thread_pool.submit_task_unparameterized(self, "prepare_akashic_records", task_tag)
+	
+	# Wait briefly for thread execution
+	await get_tree().create_timer(1.0).timeout
+	
+	# Validate results after multi-threading
+	test_results["multi_threaded"] = {
+		"array_size": array_of_startup_check.size(),
+		"first_start_check": array_of_startup_check[0] if array_of_startup_check.size() > 0 else "missing",
+		"akashic_records_included": "akashic_records" in array_of_startup_check[1] if array_of_startup_check.size() > 1 else "missing",
+		"main_sets_names": array_of_startup_check[2] if array_of_startup_check.size() > 2 else "missing"
+	}
+	
+	print("Multi-threaded test finished.")

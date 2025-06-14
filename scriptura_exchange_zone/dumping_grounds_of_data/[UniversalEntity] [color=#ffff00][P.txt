@@ -1,0 +1,323 @@
+[UniversalEntity] [color=#ffff00][PERFORMANCE] Low FPS detected - optimizing scene[/color]
+[UniversalEntity] [color=#ffff00][PERFORMANCE] Low FPS detected - optimizing scene[/color]
+[SimpleConsoleTest] Looking for console...
+[SimpleConsoleTest] DebugConsole not found, trying JSHConsole...
+[SimpleConsoleTest] ❌ No console found!
+🧪 [PentagonTester] Test command registered - use 'test_pentagon'
+🔄 [CameraMovementSystem] _process() running - frame: 120
+✅ [Performance] Reducing optimization to level 2
+
+╭────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ >                                                                                                                                      │
+╰────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+  ⏵⏵ auto-accept edits on (shift+tab to cycle)                                                       Context left until auto-compact: 4%
+
+
+🔄 [CameraMovementSystem] _process() running - frame: 360
+🕐 [EnhancedCommandRegistrar] Attempt #5 - Delayed registration (3.0s)
+🔄 [CameraMovementSystem] _process() running - frame: 420
+🔄 [CameraMovementSystem] _process() running - frame: 480
+🔄 [CameraMovementSystem] _process() running - frame: 540
+[2025-05-31T20:42:30] [SYSTEM] Memory cleanup completed
+🔄 [CameraMovementSystem] _process() running - frame: 600
+🔄 [CameraMovementSystem] _process() running - frame: 660
+🕐 [EnhancedCommandRegistrar] Attempt #6 - Delayed registration (5.0s)
+🔄 [CameraMovementSystem] _process() running - frame: 720
+🔄 [CameraMovementSystem] _process() running - frame: 780
+🔄 [CameraMovementSystem] _process() running - frame: 840
+[2025-05-31T20:42:35] [SYSTEM] Memory cleanup completed
+🔄 [CameraMovementSystem] _process() running - frame: 900
+[UniversalEntity] 😊 [UniversalEntity] System satisfaction: 100% - You should be happy!
+🔄 [CameraMovementSystem] _process() running - frame: 960
+🔄 [CameraMovementSystem] _process() running - frame: 1020
+🔄 [CameraMovementSystem] _process() running - frame: 1080
+🔄 [CameraMovementSystem] _process() running - frame: 1140
+🚪 [TxtWindow] Closing window: Claude Welcome Message
+[2025-05-31T20:42:40] [SYSTEM] Memory cleanup completed
+[UniversalEntity] 😊 [UniversalEntity] System satisfaction: 100% - You should be happy!
+🔄 [CameraMovementSystem] _process() running - frame: 1200
+🚪 [TxtWindow] Closing window: Pentagon System Status
+🖱️ DIVINE INPUT: InputEventMouseButton processed (main)
+🖱️ DIVINE INPUT: InputEventMouseButton processed (unhandled)
+🖱️ DIVINE INPUT: InputEventMouseButton processed (main)
+🖱️ DIVINE INPUT: InputEventMouseButton processed (unhandled)
+🔄 [CameraMovementSystem] _process() running - frame: 1260
+🖱️ DIVINE INPUT: InputEventMouseButton processed (main)
+
+
+
+
+
+
+
+
+🖱️ DIVINE INPUT: InputEventMouseButton processed (main)
+🖱️ DIVINE INPUT: InputEventMouseButton processed (unhandled)
+🖱️ DIVINE INPUT: InputEventMouseButton processed (main)
+🖱️ DIVINE INPUT: InputEventMouseButton processed (unhandled)
+🖱️ DIVINE INPUT: InputEventMouseButton processed (main)
+🖱️ DIVINE INPUT: InputEventMouseButton processed (unhandled)
+🖱️ DIVINE INPUT: InputEventMouseButton processed (main)
+🖱️ DIVINE INPUT: InputEventMouseButton processed (unhandled)
+🖱️ DIVINE INPUT: InputEventMouseButton processed (main)
+🖱️ DIVINE INPUT: InputEventMouseButton processed (unhandled)
+🖱️ DIVINE INPUT: InputEventMouseButton processed (main)
+🖱️ DIVINE INPUT: InputEventMouseButton processed (unhandled)
+🔄 [CameraMovementSystem] _process() running - frame: 1380
+🖱️ DIVINE INPUT: InputEventMouseButton processed (main)
+🖱️ DIVINE INPUT: InputEventMouseButton processed (unhandled)
+🖱️ DIVINE INPUT: InputEventMouseButton processed (main)
+🖱️ DIVINE INPUT: InputEventMouseButton processed (unhandled)
+🔄 [CameraMovementSystem] _process() running - frame: 1440
+🔑 Key pressed: keycode=83 (Tab=4194306)
+[2025-05-31T20:42:45] [SYSTEM] Memory cleanup completed
+🎮 [CameraMovementSystem] Keys: ["S"] Input: (0.028781, 0.370734, 0.928293)
+🎯 [CameraMovementSystem] Final movement input: (0.028781, 0.370734, 0.928293)
+🏃 [CameraMovementSystem] Target Velocity: (0.287807, 3.70734, 9.28293)
+🏃 [CameraMovementSystem] Current Velocity: (0.009594, 0.123578, 0.309431)
+🏃 [CameraMovementSystem] Acceleration: 20.0
+🏃 [CameraMovementSystem] Delta: 0.01666666666667
+🌍 [CameraMovementSystem] World movement...
+  Movement delta: (0.00016, 0.00206, 0.005157)
+  New world offset: (0.00016, 0.00206, 0.005157)
+  Target local position: (0.0, 0.0, 0.0)
+✅ [CameraMovementSystem] Infinite precision movement applied!
+  Local target: (0.00016, 0.00206, 0.005157)
+  Effective global: (0.00032, 0.004119, 0.010314)
+🎮 [CameraMovementSystem] Keys: ["S"] Input: (0.028781, 0.370734, 0.928293)
+🎯 [CameraMovementSystem] Final movement input: (0.028781, 0.370734, 0.928293)
+🏃 [CameraMovementSystem] Target Velocity: (0.287807, 3.70734, 9.28293)
+🏃 [CameraMovementSystem] Current Velocity: (0.019187, 0.247156, 0.618862)
+🏃 [CameraMovementSystem] Acceleration: 20.0
+🏃 [CameraMovementSystem] Delta: 0.01666666666667
+🌍 [CameraMovementSystem] World movement...
+  Movement delta: (0.00032, 0.004119, 0.010314)
+  New world offset: (0.00048, 0.006179, 0.015472)
+  Target local position: (0.00016, 0.00206, 0.005157)
+✅ [CameraMovementSystem] Infinite precision movement applied!
+  Local target: (0.00048, 0.006179, 0.015472)
+  Effective global: (0.000959, 0.012358, 0.030943)
+🎮 [CameraMovementSystem] Keys: ["S"] Input: (0.028781, 0.370734, 0.928293)
+🎯 [CameraMovementSystem] Final movement input: (0.028781, 0.370734, 0.928293)
+🏃 [CameraMovementSystem] Target Velocity: (0.287807, 3.70734, 9.28293)
+🏃 [CameraMovementSystem] Current Velocity: (0.028781, 0.370734, 0.928293)
+🏃 [CameraMovementSystem] Acceleration: 20.0
+🏃 [CameraMovementSystem] Delta: 0.01666666666667
+🌍 [CameraMovementSystem] World movement...
+  Movement delta: (0.00048, 0.006179, 0.015472)
+  New world offset: (0.000959, 0.012358, 0.030943)
+  Target local position: (0.00048, 0.006179, 0.015472)
+✅ [CameraMovementSystem] Infinite precision movement applied!
+  Local target: (0.000959, 0.012358, 0.030943)
+  Effective global: (0.001919, 0.024716, 0.061886)
+🎮 [CameraMovementSystem] Keys: ["S"] Input: (0.028781, 0.370734, 0.928293)
+🎯 [CameraMovementSystem] Final movement input: (0.028781, 0.370734, 0.928293)
+🏃 [CameraMovementSystem] Target Velocity: (0.287807, 3.70734, 9.28293)
+🏃 [CameraMovementSystem] Current Velocity: (0.038374, 0.494312, 1.237724)
+🏃 [CameraMovementSystem] Acceleration: 20.0
+🏃 [CameraMovementSystem] Delta: 0.01666666666667
+🌍 [CameraMovementSystem] World movement...
+  Movement delta: (0.00064, 0.008239, 0.020629)
+  New world offset: (0.001599, 0.020596, 0.051572)
+  Target local position: (0.000959, 0.012358, 0.030943)
+✅ [CameraMovementSystem] Infinite precision movement applied!
+  Local target: (0.001599, 0.020596, 0.051572)
+  Effective global: (0.003198, 0.041193, 0.103144)
+🌍 [CameraMovementSystem] World movement...
+  Movement delta: (0.00052, 0.006694, 0.016761)
+  New world offset: (0.002119, 0.02729, 0.068333)
+  Target local position: (0.001599, 0.020596, 0.051572)
+✅ [CameraMovementSystem] Infinite precision movement applied!
+  Local target: (0.002119, 0.02729, 0.068333)
+  Effective global: (0.004237, 0.05458, 0.136665)
+🌍 [CameraMovementSystem] World movement...
+  Movement delta: (0.0004, 0.005149, 0.012893)
+  New world offset: (0.002518, 0.032439, 0.081226)
+  Target local position: (0.002119, 0.02729, 0.068333)
+✅ [CameraMovementSystem] Infinite precision movement applied!
+  Local target: (0.002518, 0.032439, 0.081226)
+  Effective global: (0.005037, 0.064878, 0.162451)
+🌍 [CameraMovementSystem] World movement...
+  Movement delta: (0.00028, 0.003604, 0.009025)
+  New world offset: (0.002798, 0.036044, 0.090251)
+  Target local position: (0.002518, 0.032439, 0.081226)
+✅ [CameraMovementSystem] Infinite precision movement applied!
+  Local target: (0.002798, 0.036044, 0.090251)
+  Effective global: (0.005596, 0.072087, 0.180501)
+🌍 [CameraMovementSystem] World movement...
+  Movement delta: (0.00016, 0.00206, 0.005157)
+  New world offset: (0.002958, 0.038103, 0.095408)
+  Target local position: (0.002798, 0.036044, 0.090251)
+✅ [CameraMovementSystem] Infinite precision movement applied!
+  Local target: (0.002958, 0.038103, 0.095408)
+  Effective global: (0.005916, 0.076206, 0.190816)
+🌍 [CameraMovementSystem] World movement...
+  Movement delta: (0.00004, 0.000515, 0.001289)
+  New world offset: (0.002998, 0.038618, 0.096697)
+  Target local position: (0.002958, 0.038103, 0.095408)
+✅ [CameraMovementSystem] Infinite precision movement applied!
+  Local target: (0.002998, 0.038618, 0.096697)
+  Effective global: (0.005996, 0.077236, 0.193394)
+[UniversalEntity] 😊 [UniversalEntity] System satisfaction: 100% - You should be happy!
+🔑 Key pressed: keycode=83 (Tab=4194306)
+🔄 [CameraMovementSystem] _process() running - frame: 1500
+🎮 [CameraMovementSystem] Input check - WASD detection active
+🎮 [CameraMovementSystem] Keys: ["S"] Input: (0.028781, 0.370734, 0.928293)
+🎯 [CameraMovementSystem] Final movement input: (0.028781, 0.370734, 0.928293)
+🏃 [CameraMovementSystem] Target Velocity: (0.287807, 3.70734, 9.28293)
+🏃 [CameraMovementSystem] Current Velocity: (0.009594, 0.123578, 0.309431)
+🏃 [CameraMovementSystem] Acceleration: 20.0
+🏃 [CameraMovementSystem] Delta: 0.01666666666667
+🌍 [CameraMovementSystem] World movement...
+  Movement delta: (0.00016, 0.00206, 0.005157)
+  New world offset: (0.003158, 0.040678, 0.101854)
+  Target local position: (0.002998, 0.038618, 0.096697)
+✅ [CameraMovementSystem] Infinite precision movement applied!
+  Local target: (0.003158, 0.040678, 0.101854)
+  Effective global: (0.006316, 0.081356, 0.203709)
+🎮 [CameraMovementSystem] Keys: ["S"] Input: (0.028781, 0.370734, 0.928293)
+🎯 [CameraMovementSystem] Final movement input: (0.028781, 0.370734, 0.928293)
+🏃 [CameraMovementSystem] Target Velocity: (0.287807, 3.70734, 9.28293)
+🏃 [CameraMovementSystem] Current Velocity: (0.019187, 0.247156, 0.618862)
+🏃 [CameraMovementSystem] Acceleration: 20.0
+🏃 [CameraMovementSystem] Delta: 0.01666666666667
+🌍 [CameraMovementSystem] World movement...
+  Movement delta: (0.00032, 0.004119, 0.010314)
+  New world offset: (0.003478, 0.044797, 0.112169)
+  Target local position: (0.003158, 0.040678, 0.101854)
+✅ [CameraMovementSystem] Infinite precision movement applied!
+  Local target: (0.003478, 0.044797, 0.112169)
+  Effective global: (0.006955, 0.089594, 0.224338)
+🎮 [CameraMovementSystem] Keys: ["S"] Input: (0.028781, 0.370734, 0.928293)
+🎯 [CameraMovementSystem] Final movement input: (0.028781, 0.370734, 0.928293)
+🏃 [CameraMovementSystem] Target Velocity: (0.287807, 3.70734, 9.28293)
+🏃 [CameraMovementSystem] Current Velocity: (0.028781, 0.370734, 0.928293)
+🏃 [CameraMovementSystem] Acceleration: 20.0
+🏃 [CameraMovementSystem] Delta: 0.01666666666667
+🌍 [CameraMovementSystem] World movement...
+  Movement delta: (0.00048, 0.006179, 0.015472)
+  New world offset: (0.003957, 0.050976, 0.12764)
+
+
+
+
+
+
+  Local target: (0.097122, 1.251064, 3.132581)
+  Effective global: (0.194245, 2.502128, 6.265161)
+🔑 Key pressed: keycode=83 (Tab=4194306)
+🎮 [CameraMovementSystem] Keys: ["S"] Input: (0.028781, 0.370734, 0.928293)
+🎯 [CameraMovementSystem] Final movement input: (0.028781, 0.370734, 0.928293)
+🏃 [CameraMovementSystem] Target Velocity: (0.287807, 3.70734, 9.28293)
+🏃 [CameraMovementSystem] Current Velocity: (0.287807, 3.70734, 9.28293)
+🏃 [CameraMovementSystem] Acceleration: 20.0
+🏃 [CameraMovementSystem] Delta: 0.01666666666667
+🌍 [CameraMovementSystem] World movement...
+  Movement delta: (0.004797, 0.061789, 0.154716)
+  New world offset: (0.101919, 1.312853, 3.287296)
+  Target local position: (0.097122, 1.251064, 3.132581)
+✅ [CameraMovementSystem] Infinite precision movement applied!
+  Local target: (0.101919, 1.312853, 3.287296)
+  Effective global: (0.203838, 2.625706, 6.574592)
+🎮 [CameraMovementSystem] Keys: ["S"] Input: (0.028781, 0.370734, 0.928293)
+🎯 [CameraMovementSystem] Final movement input: (0.028781, 0.370734, 0.928293)
+🏃 [CameraMovementSystem] Target Velocity: (0.287807, 3.70734, 9.28293)
+🏃 [CameraMovementSystem] Current Velocity: (0.287807, 3.70734, 9.28293)
+🏃 [CameraMovementSystem] Acceleration: 20.0
+🏃 [CameraMovementSystem] Delta: 0.01666666666667
+🌍 [CameraMovementSystem] World movement...
+  Movement delta: (0.004797, 0.061789, 0.154716)
+  New world offset: (0.106716, 1.374642, 3.442012)
+  Target local position: (0.101919, 1.312853, 3.287296)
+✅ [CameraMovementSystem] Infinite precision movement applied!
+  Local target: (0.106716, 1.374642, 3.442012)
+  Effective global: (0.213432, 2.749284, 6.884023)
+🔑 Key pressed: keycode=83 (Tab=4194306)
+🎮 [CameraMovementSystem] Keys: ["S"] Input: (0.028781, 0.370734, 0.928293)
+🎯 [CameraMovementSystem] Final movement input: (0.028781, 0.370734, 0.928293)
+🏃 [CameraMovementSystem] Target Velocity: (0.287807, 3.70734, 9.28293)
+🏃 [CameraMovementSystem] Current Velocity: (0.287807, 3.70734, 9.28293)
+🏃 [CameraMovementSystem] Acceleration: 20.0
+🏃 [CameraMovementSystem] Delta: 0.01666666666667
+🌍 [CameraMovementSystem] World movement...
+  Movement delta: (0.004797, 0.061789, 0.154716)
+  New world offset: (0.111513, 1.436431, 3.596727)
+  Target local position: (0.106716, 1.374642, 3.442012)
+✅ [CameraMovementSystem] Infinite precision movement applied!
+  Local target: (0.111513, 1.436431, 3.596727)
+  Effective global: (0.223025, 2.872862, 7.193454)
+🎮 [CameraMovementSystem] Keys: ["S"] Input: (0.028781, 0.370734, 0.928293)
+🎯 [CameraMovementSystem] Final movement input: (0.028781, 0.370734, 0.928293)
+🏃 [CameraMovementSystem] Target Velocity: (0.287807, 3.70734, 9.28293)
+🏃 [CameraMovementSystem] Current Velocity: (0.287807, 3.70734, 9.28293)
+🏃 [CameraMovementSystem] Acceleration: 20.0
+🏃 [CameraMovementSystem] Delta: 0.01666666666667
+🌍 [CameraMovementSystem] World movement...
+  Movement delta: (0.004797, 0.061789, 0.154716)
+  New world offset: (0.116309, 1.49822, 3.751443)
+  Target local position: (0.111513, 1.436431, 3.596727)
+✅ [CameraMovementSystem] Infinite precision movement applied!
+  Local target: (0.116309, 1.49822, 3.751443)
+  Effective global: (0.232619, 2.99644, 7.502885)
+🔑 Key pressed: keycode=83 (Tab=4194306)
+🌍 [CameraMovementSystem] World movement...
+  Movement delta: (0.004677, 0.060244, 0.150848)
+  New world offset: (0.120986, 1.558465, 3.90229)
+  Target local position: (0.116309, 1.49822, 3.751443)
+✅ [CameraMovementSystem] Infinite precision movement applied!
+  Local target: (0.120986, 1.558465, 3.90229)
+  Effective global: (0.241973, 3.116929, 7.804581)
+
+
+
+
+
+
+
+
+
+
+✅ [CameraMovementSystem] Infinite precision movement applied!
+  Local target: (0.209721, 2.701483, 6.764336)
+  Effective global: (0.419442, 5.402966, 13.52867)
+🌍 [CameraMovementSystem] World movement...
+  Movement delta: (0.000126, 0.001619, 0.004053)
+  New world offset: (0.209847, 2.703102, 6.76839)
+  Target local position: (0.209721, 2.701483, 6.764336)
+✅ [CameraMovementSystem] Infinite precision movement applied!
+  Local target: (0.209847, 2.703102, 6.76839)
+  Effective global: (0.419693, 5.406204, 13.53678)
+🌍 [CameraMovementSystem] World movement...
+  Movement delta: (0.000006, 0.000074, 0.000186)
+  New world offset: (0.209852, 2.703176, 6.768575)
+  Target local position: (0.209847, 2.703102, 6.76839)
+✅ [CameraMovementSystem] Infinite precision movement applied!
+  Local target: (0.209852, 2.703176, 6.768575)
+  Effective global: (0.419705, 5.406353, 13.53715)
+🔑 Key pressed: keycode=68 (Tab=4194306)
+🔑 Key pressed: keycode=68 (Tab=4194306)
+🔑 Key pressed: keycode=68 (Tab=4194306)
+🔑 Key pressed: keycode=68 (Tab=4194306)
+🔑 Key pressed: keycode=68 (Tab=4194306)
+🔑 Key pressed: keycode=68 (Tab=4194306)
+🔑 Key pressed: keycode=68 (Tab=4194306)
+🔑 Key pressed: keycode=68 (Tab=4194306)
+🔑 Key pressed: keycode=68 (Tab=4194306)
+🔑 Key pressed: keycode=68 (Tab=4194306)
+🔑 Key pressed: keycode=68 (Tab=4194306)
+🔑 Key pressed: keycode=68 (Tab=4194306)
+🔑 Key pressed: keycode=68 (Tab=4194306)
+🔑 Key pressed: keycode=68 (Tab=4194306)
+🔑 Key pressed: keycode=68 (Tab=4194306)
+🔑 Key pressed: keycode=68 (Tab=4194306)
+🔑 Key pressed: keycode=68 (Tab=4194306)
+🔑 Key pressed: keycode=68 (Tab=4194306)
+🔑 Key pressed: keycode=87 (Tab=4194306)
+🔑 Key pressed: keycode=87 (Tab=4194306)
+🔑 Key pressed: keycode=87 (Tab=4194306)
+🔑 Key pressed: keycode=87 (Tab=4194306)
+🔑 Key pressed: keycode=87 (Tab=4194306)
+🔑 Key pressed: keycode=87 (Tab=4194306)
+🔑 Key pressed: keycode=87 (Tab=4194306)
+🔑 Key pressed: keycode=87 (Tab=4194306)
+🔑 Key pressed: keycode=87 (Tab=4194306)

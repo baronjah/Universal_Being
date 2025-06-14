@@ -1,0 +1,43 @@
+[gd_scene load_steps=9 format=3 uid="uid://chavj8eiixmlb"]
+
+[ext_resource type="Script" uid="uid://hiaw6wlx4e2c" path="res://code/gdscript/scripts/Future_Past_Present/thenewtestzone.gd" id="1_lfid0"]
+[ext_resource type="Script" uid="uid://bqat25ldvdr8t" path="res://code/gdscript/scripts/Future_Past_Present/Cubeoftruth.gd" id="2_dvjoc"]
+[ext_resource type="Texture2D" path="res://numbers/thme numbemrers.png" id="2_k4c3k"]
+[ext_resource type="Script" uid="uid://dm8igeqllwq1v" path="res://code/gdscript/scripts/Archive_Past_Text/CameraMovement.gd" id="3_8rxqd"]
+[ext_resource type="Script" uid="uid://dgftwr4d8js6q" path="res://addons/goutte.camera.trackball/trackball_camera.gd" id="4_6rosw"]
+[ext_resource type="Script" uid="uid://bxvxixd31umj3" path="res://code/gdscript/scripts/Space_Place_Point/Mover.gd" id="5_4j6yi"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wk327"]
+albedo_texture = ExtResource("2_k4c3k")
+
+[sub_resource type="BoxMesh" id="BoxMesh_o46dh"]
+material = SubResource("StandardMaterial3D_wk327")
+
+[node name="thenewtestzone" type="Node3D"]
+script = ExtResource("1_lfid0")
+
+[node name="Cubeoftruth" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.99555, 0.00981097, -0.0661995, -0.00995803, 0.978348, 0.142955, 0.0676311, -0.142286, 0.973997, 0, 0, 0)
+mesh = SubResource("BoxMesh_o46dh")
+script = ExtResource("2_dvjoc")
+
+[node name="CameraMovement" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.79906, 5.4606)
+script = ExtResource("3_8rxqd")
+
+[node name="Node3D" type="Node3D" parent="CameraMovement"]
+
+[node name="TrackballCamera" type="Camera3D" parent="CameraMovement"]
+transform = Transform3D(0.99115, 0.0095852, -0.132399, -0.0103128, 0.999935, -0.00481102, 0.132344, 0.00613385, 0.991185, 0, -0.801136, -2.17628)
+script = ExtResource("4_6rosw")
+
+[node name="Stabilizer_systems" type="Node3D" parent="CameraMovement/TrackballCamera"]
+
+[node name="Mover" type="Node3D" parent="CameraMovement/TrackballCamera/Stabilizer_systems"]
+script = ExtResource("5_4j6yi")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="CameraMovement"]
+omni_range = 8.27772
+
+[connection signal="movement_send" from="CameraMovement/TrackballCamera/Stabilizer_systems/Mover" to="CameraMovement" method="_on_mover_movement_send"]
+[connection signal="movement_send" from="CameraMovement/TrackballCamera/Stabilizer_systems/Mover" to="CameraMovement/Node3D" method="_on_mover_movement_send"]

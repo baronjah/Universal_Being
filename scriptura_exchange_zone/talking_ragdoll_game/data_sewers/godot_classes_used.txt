@@ -1,0 +1,132 @@
+# Godot Classes Used in talking_ragdoll_game Project
+
+## Classes Extended (Inheritance)
+- Node
+- Node3D
+- Control
+- CharacterBody3D
+- RigidBody3D
+- RefCounted
+- Resource
+- Custom: "res://scripts/core/talking_ragdoll.gd"
+
+## Classes Instantiated (.new())
+- Animation
+- AnimationLibrary
+- AnimationPlayer
+- Area3D
+- ArrayMesh
+- BoxMesh
+- BoxShape3D
+- Button
+- ButtonGroup
+- CanvasLayer
+- CapsuleMesh
+- CapsuleShape3D
+- CenterContainer
+- CharacterBody3D
+- CollisionShape3D
+- ColorRect
+- ConfigFile
+- Control
+- CylinderMesh
+- CylinderShape3D
+- DirectionalLight3D
+- FastNoiseLite
+- Generic6DOFJoint3D
+- GPUParticles3D
+- GridContainer
+- HBoxContainer
+- HingeJoint3D
+- HSeparator
+- ImageTexture
+- InputEventKey
+- JSON
+- Label
+- Label3D
+- LineEdit
+- MeshInstance3D
+- Mutex
+- Node
+- Node3D
+- OmniLight3D
+- Panel
+- PanelContainer
+- ParticleProcessMaterial
+- PhysicsMaterial
+- PhysicsRayQueryParameters3D
+- PinJoint3D
+- PlaneMesh
+- RegEx
+- RichTextLabel
+- RigidBody3D
+- ScrollContainer
+- SphereMesh
+- SphereShape3D
+- StandardMaterial3D
+- StaticBody3D
+- StyleBoxFlat
+- TextureRect
+- Thread
+- Timer
+- VBoxContainer
+
+## Godot Singletons/Global Classes Used
+- AudioStreamPlayer
+- AudioServer
+- Callable
+- ClassDB
+- Color
+- DirAccess
+- DisplayServer
+- Engine
+- FileAccess
+- Input
+- OS
+- Performance
+- PhysicsServer3D
+- ProjectSettings
+- RenderingServer
+- ResourceLoader
+- ResourceSaver
+- SceneTree
+- Signal
+- Time
+- Tween
+
+## Built-in Types Used
+- AABB
+- Basis
+- PackedScene
+- Quaternion
+- Rect2
+- Transform3D
+- Vector2
+- Vector3
+
+## Node Types Referenced (via get_node)
+Based on node paths and usage patterns, the project also uses:
+- Viewport
+- Camera3D
+- Environment
+- World3D
+
+## Custom Classes Created
+- ClaudeTimer
+- MultiProjectManager
+- MultiTodoManager
+- PassiveController
+- PhysicsStateManager
+- SceneTreeTracker
+- ThreadedTestSystem
+- WindowsConsoleFix
+
+## Summary
+The project uses approximately 85+ different Godot classes, focusing heavily on:
+- 3D physics (RigidBody3D, CollisionShape3D, joints)
+- UI elements (Control, Label, Button, containers)
+- Animation system (AnimationPlayer, AnimationLibrary)
+- Procedural mesh generation (ArrayMesh, various mesh types)
+- Particle effects (GPUParticles3D)
+- Threading and async operations (Thread, Mutex)
+- File I/O and configuration (FileAccess, ConfigFile)

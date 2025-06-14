@@ -1,0 +1,339 @@
+📁 scripts
+  📄 UJAH_Texts.gd
+  📄 banks_combiner.gd
+  📄 banks_combiner.gd.uid
+  📄 button.gd
+  📄 button.gd.uid
+  📄 camera_move.gd
+  📄 camera_move.gd.uid
+  📄 camera_mover.gd
+  📄 camera_mover.gd.uid
+  📄 containter.gd
+  📄 containter.gd.uid
+  📄 cursor_pc.gd
+  📄 cursor_pc.gd.uid
+  📄 data_point.gd
+  📄 data_point.gd.uid
+  📄 function_metadata.gd
+  📄 functions_database.gd
+  📄 godot_model.gd
+  📄 godot_timers_system.gd
+  📄 init_function.gd
+  📄 instructions_bank.gd
+  📄 instructions_bank.gd.uid
+  📄 interactions_bank.gd
+  📄 interactions_bank.gd.uid
+  📄 jsh_data_splitter.gd
+  📄 jsh_task_manager.gd
+  📄 line.gd
+  📄 line.gd.uid
+  📄 main.gd
+  📄 main.gd.uid
+  📄 pi_number.gd
+  📄 pi_number_creator.gd
+  📄 project_architecture.gd
+  📄 record_set_manager.gd
+  📄 records_bank.gd
+  📄 records_bank.gd.uid
+  📄 scene_tree_check.gd
+  📄 scene_tree_check.gd.uid
+  📄 scenes_bank.gd
+  📄 scenes_bank.gd.uid
+  📄 settings_bank.gd
+  📄 settings_bank.gd.uid
+  📄 system_check.gd
+  📄 system_interfaces.gd
+  📄 text_label.gd
+  📄 text_label.gd.uid
+  📄 thing (2).gd
+  📄 thing.gd
+  📄 thing.gd.uid
+  📄 thread_pool_manager.gd
+  📄 tree_blueprints_bank.gd
+
+
+
+### cleaning_0
+
+📁 scripts
+  📄 UJAH_Texts.gd
+  📄 banks_combiner.gd
+  📄 button.gd
+  📄 camera_move.gd
+  📄 camera_mover.gd
+  📄 containter.gd
+  📄 cursor_pc.gd
+  📄 data_point.gd
+  📄 function_metadata.gd
+  📄 functions_database.gd
+  📄 godot_model.gd
+  📄 godot_timers_system.gd
+  📄 init_function.gd
+  📄 instructions_bank.gd
+  📄 interactions_bank.gd
+  📄 jsh_data_splitter.gd
+  📄 jsh_task_manager.gd
+  📄 line.gd
+  📄 main.gd
+  📄 pi_number.gd
+  📄 pi_number_creator.gd
+  📄 project_architecture.gd
+  📄 record_set_manager.gd
+  📄 records_bank.gd
+  📄 scene_tree_check.gd
+  📄 scenes_bank.gd
+  📄 scenes_bank.gd.uid
+  📄 settings_bank.gd
+  📄 system_check.gd
+  📄 system_interfaces.gd
+  📄 text_label.gd
+  📄 thing (2).gd
+  📄 thing.gd
+  📄 thread_pool_manager.gd
+  📄 tree_blueprints_bank.gd
+
+### cleaning_2
+UJAH_Texts, banks_combiner, button, camera_move, camera_mover, containter, cursor_pc, data_point, function_metadata, functions_database, godot_model, godot_timers_system, init_function, instructions_bank, interactions_bank, jsh_data_splitter, jsh_task_manager, line, main, pi_number, pi_number_creator, project_architecture, record_set_manager, records_bank, scene_tree_check, scenes_bank, settings_bank, system_check, system_interfaces, text_label, thing (2), thing, thread_pool_manager, tree_blueprints_bank
+
+### cleaning_3
+
+# additionally camera addon file
+camera_move, camera_mover
+
+# additionally threadpool addon file
+thread_pool_manager, jsh_task_manager
+
+
+# the main file, and new project_architecture file
+main, project_architecture
+
+# records system files so far, so connected to active_record_sets and cached_record_sets
+banks_combiner, instructions_bank, interactions_bank, record_set_manager, records_bank, scenes_bank, thing
+
+# this needs different sorting, data splitting can happen in raycast, aura stuff, in writing, in two things interacting
+settings_bank, system_interfaces, godot_timers_system, jsh_data_splitter, jsh_task_manager
+
+
+# stuff that is happening on a scene tree
+tree_blueprints_bank, containter, data_point, scene_tree_check
+
+
+# we didnt touch too much of that too
+button , cursor_pc, line
+
+
+# the files we need to make our own kernel like system check, just normal all system clear
+function_metadata, functions_database
+
+
+# dunno, we didnt use it yet
+init_function
+
+
+
+# some random files, maybe we will work on them too
+UJAH_Texts, godot_model, pi_number, pi_number_creator
+
+
+### now i need some tree of godot scene tree to compare, and connect stuff here too 
+
+# Usage example in _ready() or as a standalone function
+func print_system_metrics():
+	var metrics = get_system_metrics()
+	print("🔍 System Metrics:")
+	for key in metrics:
+		print(key)
+		#print(f"{key}: {metrics[key]}")
+
+###had to change a thing, it given me error
+
+
+
+ shall_execute : 0
+🕒 Quick tick: 2236
+Timer quick_interval completed!
+ ┖╴main
+    ┠╴@Node@2
+    ┃  ┠╴@Timer@3
+    ┃  ┠╴@Timer@4
+    ┃  ┠╴@Timer@5
+    ┃  ┠╴@Timer@6
+    ┃  ┠╴@Timer@7
+    ┃  ┖╴@Timer@8
+    ┠╴sphere
+    ┃  ┠╴pointers
+    ┃  ┃  ┠╴cursor_mouse
+    ┃  ┃  ┠╴cursor_left
+    ┃  ┃  ┠╴cursor_right
+    ┃  ┃  ┠╴cursor_head
+    ┃  ┃  ┖╴cursor_body
+    ┃  ┠╴cameramove
+    ┃  ┃  ┖╴TrackballCamera
+    ┃  ┃     ┠╴CameraMover
+    ┃  ┃     ┖╴light
+    ┃  ┖╴godot_model
+    ┠╴WorldEnvironment
+    ┠╴system_check
+    ┠╴godot_timers_system
+    ┃  ┠╴@Timer@9
+    ┃  ┠╴@Timer@10
+    ┃  ┠╴@Timer@11
+    ┃  ┖╴@Timer@12
+    ┠╴godot_tree_system
+    ┠╴JSH_records_system
+    ┠╴JSH_scene_tree_system
+    ┠╴JSH_database_system
+    ┠╴JSH_queue_system
+    ┠╴JSH_turns_system
+    ┠╴JSH_cache_memory_system
+    ┠╴JSH_akashic_records
+    ┠╴JSH_multiplayer_files
+    ┠╴JSH_mainframe_database
+    ┠╴JSH_data_splitter
+    ┖╴JSH_task_manager
+
+
+###first cleaning of data
+ ┖╴main
+
+    ┠╴sphere
+
+    ┃  ┠╴cameramove
+    ┃  ┃  ┖╴TrackballCamera
+
+    ┠╴WorldEnvironment
+    ┠╴system_check
+    ┠╴godot_timers_system
+    ┠╴godot_tree_system
+    ┠╴JSH_records_system
+    ┠╴JSH_scene_tree_system
+    ┠╴JSH_database_system
+    ┠╴JSH_queue_system
+    ┠╴JSH_turns_system
+    ┠╴JSH_cache_memory_system
+    ┠╴JSH_akashic_records
+    ┠╴JSH_multiplayer_files
+    ┠╴JSH_mainframe_database
+    ┠╴JSH_data_splitter
+    ┖╴JSH_task_manager
+
+###second cleaning of data
+
+main, sphere, cameramove, TrackballCamera, WorldEnvironment, system_check, godot_timers_system, godot_tree_system, JSH_records_system, JSH_scene_tree_system, JSH_database_system, JSH_queue_system, JSH_turns_system, JSH_cache_memory_system, JSH_akashic_records, JSH_multiplayer_files, JSH_mainframe_database, JSH_data_splitter, JSH_task_manager
+
+
+
+### third cleaning of data
+
+
+## camera and its nodes, have some more
+# additionally camera addon file
+camera_move, camera_mover
+# for node i dunno, sphere so maybe planet generator too?
+Node: sphere, cameramove, TrackballCamera
+## code segments for that from main
+
+## code segments of scripts
+
+
+## threads, threadpool, threading, tasks, queue, turns, information streams
+# additionally threadpool addon file
+thread_pool_manager, jsh_task_manager
+# threadpool stuff, task stuff, queue stuff
+Node: JSH_queue_system, JSH_turns_system, JSH_task_manager
+## code segments for that from main
+
+## code segments of scripts
+
+
+## main node, project architecture, might become faucets of data, in some settings
+# the main file, and new project_architecture file
+main, project_architecture
+# nodes for main, and project architecture
+Node: main, WorldEnvironment, JSH_mainframe_database
+## code segments for that from main
+
+## code segments of scripts
+
+## database of files, creation from, created from, will create from, will compare, will evolve, will duplicate and maybe check something
+# records system files so far, so connected to active_record_sets and cached_record_sets
+banks_combiner, instructions_bank, interactions_bank, record_set_manager, records_bank, scenes_bank, thing
+# nodes connected to records system ram, rom, load, cache, archive, forget
+Node: JSH_records_system, JSH_database_system, JSH_cache_memory_system, JSH_akashic_records, JSH_multiplayer_files, JSH_data_splitter
+## code segments for that from main
+
+## code segments of scripts
+
+## timers, system check, well i need my own process delta made on timers too so there is less prints about game state
+# this needs different sorting, data splitting can happen in raycast, aura stuff, in writing, in two things interacting
+settings_bank, system_interfaces, godot_timers_system, jsh_data_splitter, jsh_task_manager
+# for nodes i am not sure yet, settings, informations, first run, first run of the day, stuff like that
+Node: system_check, godot_timers_system
+## code segments for that from main
+
+## code segments of scripts
+
+
+## tree, godot tree, my dictionary about that tree, its connections o scripts, functions, database parts
+# stuff that is happening on a scene tree
+tree_blueprints_bank, containter, data_point, scene_tree_check
+# nodes connected to tree stuff
+Node: godot_tree_system, JSH_scene_tree_system
+## code segments for that from main
+
+## code segments of scripts
+
+
+## stuff to do, just in case i would need a button and cursor and some debug line, it happened, but didnt venture further
+# we didnt touch too much of that too
+button , cursor_pc, line
+## code segments for that from main
+
+## code segments of scripts
+
+
+## functions of each file, in gd script, with descriptions, checks, etc
+# the files we need to make our own kernel like system check, just normal all system clear
+function_metadata, functions_database
+## code segments for that from main
+
+## code segments of scripts
+
+# dunno, we didnt use it yet
+init_function
+## code segments for that from main
+
+## code segments of scripts
+
+
+## files not really used right now
+# some random files, maybe we will work on them too
+UJAH_Texts, godot_model, pi_number, pi_number_creator
+## code segments for that from main
+
+## code segments of scripts
+
+### stuff to do ? connect main segments here, and we will work more on it now
+
+
+### we only have main.gd segmented into data type, can this be enought data?
+
+# JSH Ethereal Engine
+# JSH Ethereal Engine Initialization process
+# JSH Ethereal Engine Start up
+# JSH Ethereal Engine Repair
+# JSH Ethereal Engine check stuff before we proceed
+# JSH Etheric Download System
+# JSH Etheric Queue
+# JSH Records System
+# JSH Scene Tree
+# JSH Multi Threads
+# JSH Files Management
+# JSH Memories Management
+# JSH Memories Transcription
+# JSH Hidden Veil
+# JSH Projections System
+# JSH Memories Storage
+# JSH Memories Processed
+# JSH Things Creation
+# JSH Scene Tree Add Nodes, Physical and Astral Bodies

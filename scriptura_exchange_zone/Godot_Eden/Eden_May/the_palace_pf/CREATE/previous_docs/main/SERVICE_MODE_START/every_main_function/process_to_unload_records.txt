@@ -1,0 +1,28 @@
+func process_to_unload_records(container_name_to_unload):
+	var parts = container_name_to_unload.split("_")
+	if parts.size() < 2:
+		return
+	var records_sets_name
+	if parts.size() > 2:
+		records_sets_name = parts[0] + "_" + parts[1]
+	else:
+		records_sets_name = parts[0]
+	var counter_for_rec_ty : int = 0
+	
+	active_r_s_mut.lock()
+	if active_record_sets[records_sets_name + "_" ].has("metadata"):
+		active_record_sets[records_sets_name + "_" ]["metadata"]["container_count"] = 0
+		active_r_s_mut.unlock()
+		
+		for records_types in BanksCombiner.combination_0:
+			var record_to_unloadin = records_sets_name + "_" + BanksCombiner.data_names_0[counter_for_rec_ty]
+			counter_for_rec_ty +=1
+			
+			unload_record_set(records_sets_name , record_to_unloadin)
+			
+		active_r_s_mut.lock()
+		active_record_sets[records_sets_name + "_" ].erase("metadata")
+		active_r_s_mut.unlock()
+		
+	else:
+		active_r_s_mut.unlock()

@@ -1,0 +1,7 @@
+func check_folder(folder_path):
+	var space_existence = DirAccess.open(folder_path)
+	if space_existence:
+		check_folder_content(space_existence)
+		directory_existence = true
+	else:
+		pass

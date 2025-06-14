@@ -1,0 +1,140 @@
+func process_active_records_for_tree(active_records: Dictionary, set_name_to_process : String, container_name_here : String):
+	var records_set_name = set_name_to_process + "records"
+	
+	active_r_s_mut.lock()
+	for record in active_records[set_name_to_process][records_set_name]["content"]:
+		
+		var node_data = record[0]
+		var node_name = node_data[0][0]
+		var node_path_p_a_r_f_t = node_data[6][0]
+		var node_type = node_data[3][0]
+		var godot_type = match_node_type(node_type)
+		
+		if node_type != "container" and node_type != "datapoint":
+			array_counting_mutex.lock()
+			if !array_for_counting_finish[container_name_here].has("metadata"):
+				var counter_before : int = 0
+				var counter_after : int = 0
+				var inty_bolean : int = 0
+				
+				array_for_counting_finish[container_name_here]["metadata"] = {
+					"counter_before" = counter_before,
+					"counter_after" = counter_after,
+					"process_to_send" = inty_bolean
+				}
+				array_counting_mutex.unlock()
+				
+			else:
+				array_counting_mutex.unlock()
+				
+				
+			array_counting_mutex.lock()
+			if !array_for_counting_finish[container_name_here].has(node_name):
+				
+				array_for_counting_finish[container_name_here][node_name] = {
+					"node" = [],
+					"type" = node_type,
+					"g_type" = godot_type
+				}
+				array_counting_mutex.unlock()
+				
+			else:
+				array_counting_mutex.unlock()
+
+		array_counting_mutex.lock()
+		if !array_for_counting_finish[container_name_here].has("metadata"):
+			
+			var counter_before : int = 0
+			var counter_after : int = 0
+			var inty_bolean : int = 0
+			
+			array_for_counting_finish[container_name_here]["metadata"] = {
+				"counter_before" = counter_before,
+				"counter_after" = counter_after,
+				"process_to_send" = inty_bolean
+			}
+			array_counting_mutex.unlock()
+		else:
+			array_counting_mutex.unlock()
+			
+			
+		if node_type == "datapoint":
+			
+			array_counting_mutex.lock()
+			array_for_counting_finish[container_name_here]["metadata"]["datapoint_path"] = node_path_p_a_r_f_t
+			array_for_counting_finish[container_name_here]["metadata"]["datapoint_name"] = node_name
+			array_counting_mutex.unlock()
+			
+		if node_type == "container":
+			
+			array_counting_mutex.lock()
+			array_for_counting_finish[container_name_here]["metadata"]["container_path"] = node_path_p_a_r_f_t
+			array_for_counting_finish[container_name_here]["metadata"]["container_name"] = node_name
+			array_counting_mutex.unlock()
+			
+		var new_type_thingy = godot_type + "|" + node_type
+		the_pretender_printer(node_name, node_path_p_a_r_f_t, new_type_thingy, node_type)
+		
+		array_counting_mutex.lock()
+		array_for_counting_finish[container_name_here]["metadata"]["counter_before"] +=1
+		array_counting_mutex.unlock()
+		
+				# Add collision nodes based on type
+		if node_type in ["flat_shape", "model", "cursor", "screen", "circle"]:
+			
+			array_counting_mutex.lock()
+			array_for_counting_finish[container_name_here]["metadata"]["counter_before"] +=4
+			array_counting_mutex.unlock()
+			
+			# Static body and shape
+			var static_body_name = "collision_" + node_name
+			var static_body_path = node_path_p_a_r_f_t + "/" + static_body_name
+			the_pretender_printer(static_body_name, static_body_path, "StaticBody3D", "collision")
+			
+			var shape_name = "shape_" + node_name
+			var shape_path = static_body_path + "/" + shape_name
+			the_pretender_printer(shape_name, shape_path, "CollisionShape3D", "collision")
+
+			# Area and its shape
+			var area_name = "aura_" + node_name
+			var area_path = node_path_p_a_r_f_t + "/" + area_name
+			the_pretender_printer(area_name, area_path, "Area3D", "area")
+
+			var area_shape_name = "collision_aura_" + node_name
+			var area_shape_path = area_path + "/" + area_shape_name
+			the_pretender_printer(area_shape_name, area_shape_path, "CollisionShape3D", "collision")
+
+		# Special handling for buttons
+		elif node_type == "button":
+			
+			array_counting_mutex.lock()
+			array_for_counting_finish[container_name_here]["metadata"]["counter_before"] +=6
+			array_counting_mutex.unlock()
+			
+			var text_name = "text_" + node_name
+			var text_path = node_path_p_a_r_f_t + "/" + text_name
+			the_pretender_printer(text_name, text_path, "Label3D", "text")
+			
+			var shape_name = "shape_" + node_name
+			var shape_path = node_path_p_a_r_f_t + "/" + shape_name
+			the_pretender_printer(shape_name, shape_path, "MeshInstance3D", "button")
+
+			# Collision for shape
+			var collision_shape_name = "collision_" + shape_name
+			var collision_shape_path = shape_path + "/" + collision_shape_name
+			the_pretender_printer(collision_shape_name, collision_shape_path, "StaticBody3D", "collision")
+
+			var shape_collision_name = "shape_" + shape_name
+			var shape_collision_path = collision_shape_path + "/" + shape_collision_name
+			the_pretender_printer(shape_collision_name, shape_collision_path, "CollisionShape3D", "collision")
+
+			# Area for shape
+			var area_name = "aura_" + shape_name
+			var area_path = shape_path + "/" + area_name
+			the_pretender_printer(area_name, area_path, "Area3D", "area")
+
+			var area_collision_name = "collision_aura_" + shape_name
+			var area_collision_path = area_path + "/" + area_collision_name
+			the_pretender_printer(area_collision_name, area_collision_path, "CollisionShape3D", "collision")
+	#print(" process active record for tree dilema finish")
+	active_r_s_mut.unlock()

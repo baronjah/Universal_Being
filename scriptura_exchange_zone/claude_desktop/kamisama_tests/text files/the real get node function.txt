@@ -1,0 +1,32 @@
+var target_node = get_scene_node("CameraMovement/TrackballCamera/some_point_forward")
+
+
+
+
+
+func get_scene_node(path: String) -> Node: 
+	return get_tree().get_root().get_node(path)
+
+
+
+
+
+
+
+
+
+
+
+
+
+getting path from branch to root
+
+gdscriptCopyadd_child(star)
+var star_path = star.get_path()
+print("Star path:", star_path)
+
+If you want the path relative to a specific node (like the current scene root), you can use:
+and here would be from branch to branch!
+
+gdscriptCopyvar relative_path = get_path_to(star)
+print("Relative path to star:", relative_path)

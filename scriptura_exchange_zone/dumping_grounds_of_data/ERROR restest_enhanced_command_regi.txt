@@ -1,0 +1,628 @@
+  ERROR: res://test_enhanced_command_registration.gd:79 - Parse Error: Expected end of statement after expression, found ":" instead.
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://test_enhanced_command_registration.gd" with error "Parse error".
+  ERROR: res://test_pentagon_runner.gd:6 - Parse Error: Function "get_tree()" not found in base self.
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://test_pentagon_runner.gd" with error "Parse error".
+Godot Engine v4.5.dev4.mono.official.209a446e3 - https://godotengine.org
+Vulkan 1.3.277 - Forward+ - Using Device #0: NVIDIA - Quadro RTX 3000
+
+
+
+
+
+🏗️ PERFECT INIT: Entering scene tree, system starting...
+🌟 [UniversalObjectManager] Initializing perfect object tracking system...
+✅ [UniversalObjectManager] Ready - All objects will be perfect!
+[DebugManager] Initialized - Console spam reduction active
+🛡️ [PerformanceGuardian] Protecting game sanity...
+[FloodgateController] Initializing central control system...
+[FloodgateController] Scene tree tracker initialized
+[FloodgateController] Physics state manager initialized
+[2025-05-31T18:11:52] [SYSTEM] === FLOODGATE CONTROLLER INITIALIZED ===
+[2025-05-31T18:11:52] [SYSTEM] Time: 2025-05-31T18:11:52
+[2025-05-31T18:11:52] [SYSTEM] Floodgate Controller ready for operations
+[AssetLibrary] Initializing asset management system...
+[AssetLibrary] Asset Library ready with 16 assets cataloged
+📦 [StandardizedObjects] Initialized with 15 objects
+🔑 Console Manager: _ready() called, test console created, input enabled
+[JSHSceneTreeSystem] Setting up scene tree monitoring...
+[JSHSceneTreeSystem] Scene tree monitoring setup complete
+JSH Scene Tree System initialized
+ new script thread pull thing { "total_threads": 8, "first_entry_time": 3049, "last_entry_time": 0, "threads_history": [], "first_check": <null>, "current_check": <null> }
+[SimpleConsoleTest] Starting...
+[AdvancedInspectorLoader] Advanced inspector system loading...
+[DynamicViewport] Screen 1 detected:
+  Full size: (2400, 1350)
+  Usable area: [P: (2400, 0), S: (2400, 1290)]
+[DynamicViewport] Using project default size: 1920x1080
+[DynamicViewport] Display adapter initialized
+[AstralBeingManager] Astral dimension connected
+[UnifiedBeingSystem] Consolidating all being systems into one
+[UniversalEntity] 🌟 [UniversalEntity] Awakening after 2 years...
+📊 [GlobalVarSpreadsheet] Scanned everything!
+📊 [GlobalVarSpreadsheet] Ready to inspect everything!
+🎭 [ArchitectureHarmony] Bringing order to chaos...
+🔍 [ArchitectureHarmony] Scanning project architecture...
+⚡ [ArchitectureHarmony] Analyzing process usage...
+✅ [ArchitectureHarmony] Found 249 scripts, 90 process users
+🔗 [ArchitectureHarmony] Mapping script connections...
+🛡️ [DeltaGuardian] Frame protection activated
+   Target FPS: 60.0, Frame budget: 16.67ms
+⏰ [PerfectDeltaProcess] The ONE process begins...
+🔗 [InspectionBridge] Connecting all object creation to console...
+🌟 PERFECT INIT SYSTEM: Initializing...
+✅ PERFECT INIT: System ready for registration
+🎯 PERFECT READY SYSTEM: Initializing...
+🚫 PERFECT READY: Loaded 0 banned scripts
+📂 AI MODEL FOLDER: gamma (no model.gguf found yet)
+📂 AI MODEL FOLDER: shared (no model.gguf found yet)
+🤖 PERFECT READY: Found 1 AI entities to initialize
+✅ PERFECT READY: System initialized, waiting for Perfect Init completion
+🖱️ PERFECT INPUT SYSTEM: Initializing divine input management...
+🔗 LOGIC CONNECTOR SYSTEM: Initializing txt-based behavior engine...
+📁 LOGIC CONNECTOR: Action directories ensured
+📝 LOGIC CONNECTOR: Loaded 12 actions from actions/bird_behavior.txt
+🔗 LOGIC CONNECTOR: Connected to Perfect Pentagon systems
+✅ LOGIC CONNECTOR: System ready - 1 scripts loaded, AI collaboration enabled
+🌊 SEWERS MONITOR SYSTEM: Initializing flow tracking and bottleneck detection...
+📊 SEWERS MONITOR: Initialized monitoring for all sewer types
+🔗 SEWERS MONITOR: Connected to PerfectInit
+🔗 SEWERS MONITOR: Connected to PerfectReady
+🔗 SEWERS MONITOR: Connected to PerfectInput
+🔗 SEWERS MONITOR: Connected to LogicConnector
+✅ SEWERS MONITOR: System ready - Monitoring all flows through Perfect Pentagon
+🏗️ AI SANDBOX SYSTEM: Creating persistent AI worlds...
+🎮 AI SANDBOX: New session started - session_3861
+📂 LOADED: Sandbox for Gamma
+✅ AI SANDBOX: 1 sandbox worlds ready for AI entities
+👁️ GEMMA VISION: Initializing multi-dimensional text perception...
+📊 TEXT GRID: Created 50x50 word space for Gemma's vision
+🔗 AKASHIC LINK: Gemma's vision connected to universal records
+📝 NOTEPAD3D: No spatial text system found, using 2D grid only
+👁️ LAYER ACTIVE: Gemma can see 'Surface Text' layer
+👁️ LAYER ACTIVE: Gemma can see 'Hidden Meanings' layer
+👁️ LAYER ACTIVE: Gemma can see 'Emotional Layer' layer
+👁️ LAYER ACTIVE: Gemma can see 'Akashic Connections' layer
+👁️ LAYER ACTIVE: Gemma can see 'Code Reality' layer
+🌱 GEMMA LINK: Vision system connected to Seedling Gemma
+✅ GEMMA VISION: Seedling can now see through 5 layers of text reality
+🎨 UNIVERSAL BEING CREATOR UI: Initializing visual interface...
+📝 PERFECT READY: Registered UniversalBeingCreatorUI (deps: [], AI-friendly: YES)
+⚡ EMERGENCY PERFORMANCE FIX: Monitoring FPS...
+🎨 PENTAGON UI: Coordinating UI system initialization...
+📝 PERFECT READY: Registered PentagonUIIntegration (deps: ["PerfectInit", "PerfectReady"], AI-friendly: YES)
+📝 TXT UNIVERSAL DATABASE: Initializing text-to-reality converter...
+🔍 Scanning folder: user://universal_beings_database/messages/
+🔍 Attempting to open folder: user://universal_beings_database/messages/
+📄 Parsing TXT file: user://universal_beings_database/messages/claude_greeting.txt
+✅ Loaded TXT: claude_greeting (["type", "name", "position", "size", "background", "border", "content", &"category", &"file_path"])
+📂 Loaded 1 message TXT files from user://universal_beings_database/messages/
+🔍 Scanning folder: user://universal_beings_database/windows/
+🔍 Attempting to open folder: user://universal_beings_database/windows/
+📄 Parsing TXT file: user://universal_beings_database/windows/system_status.txt
+✅ Loaded TXT: system_status (["type", "name", "position", "size", "background", "border", "content", &"category", &"file_path"])
+📂 Loaded 1 window TXT files from user://universal_beings_database/windows/
+🔍 Scanning folder: user://universal_beings_database/ui_elements/
+🔍 Attempting to open folder: user://universal_beings_database/ui_elements/
+📄 Parsing TXT file: user://universal_beings_database/ui_elements/magical_button.txt
+✅ Loaded TXT: magical_button (["type", "name", "size", "background", "border", "text", "font", "hover_effect", "click_effect", "sound_hover", "sound_click", "action", "consciousness_level", &"category", &"file_path"])
+📂 Loaded 1 ui_element TXT files from user://universal_beings_database/ui_elements/
+🔍 Scanning folder: user://universal_beings_database/3d_objects/
+🔍 Attempting to open folder: user://universal_beings_database/3d_objects/
+📂 Loaded 0 3d_object TXT files from user://universal_beings_database/3d_objects/
+📚 TXT DATABASE: Loaded 3 total entries
+🗂️ Database keys: ["claude_greeting", "system_status", "magical_button"]
+🔍 TXT DATABASE: Attempting to register console commands...
+📡 TXT DATABASE: Found ConsoleManager
+✅ TXT DATABASE: Commands registered via register_command
+🧪 TXT WINDOW TEST: Adding test commands to console...
+🎮 [MainGameController] Initializing main game...
+🚦 [SpawnLimiter] Active - Max objects: 20
+🚦 [MainGameController] Spawn limiter active
+🌟 [MiracleDeclutterer] Making space for miracles...
+🌟 [MainGameController] Miracle declutterer active - from scribbles to UFOs!
+🎭 [ScriptOrchestra] The show begins - from scribbles to UFOs!
+🎭 [MainGameController] Script Orchestra ready - see the harmony!
+🔄 [ScriptMigration] Ready to unify all scripts...
+🔄 [MainGameController] Script migration helper ready - unify all code!
+🧠 [RagdollNeural] Neural network memories loading...
+🔍 [RagdollNeural] Integration status:
+   ✅ blink_animation
+   ✅ visual_indicators
+   ✅ dimensional_colors
+   ✅ biomechanical_walker
+🧠 [MainGameController] Neural network memories activated!
+🚀 [MainGameController] Adding quick test commands...
+✅ [MainGameController] Test commands added to console!
+📌 [SceneInjector] Added delayed command injector to scene
+[GizmoCollisionFix] Initializing gizmo collision fix...
+🎯 [MainGameController] Gizmo collision fix applied!
+[GizmoDirectFix] Initializing direct gizmo interaction fix...
+🎯 [MainGameController] Direct gizmo interaction fix applied!
+[GizmoDebug] Adding gizmo debug commands...
+[GizmoDebug] Debug commands registered!
+🔍 [MainGameController] Gizmo debug commands added!
+🎯 [MainGameController] Pentagon debug commands added!
+[CONSOLE] Windows admin mode detected - using ASCII fallbacks
+Started waiting for user response...
+📝 Added todo to Talking Ragdoll Game: Test debug screen and state transitions
+📝 Added todo to Talking Ragdoll Game: Import 3D assets from Downloads folder
+📝 Added todo to Talking Ragdoll Game: Verify timer system tracks user wait time
+📝 Added todo to 12 Turns System: Update documentation files across strongholds
+📝 Added todo to 12 Turns System: Synchronize data across Windows/WSL/Claude homes
+📝 Added todo to 12 Turns System: Review and organize Unity assets for future use
+📝 Added todo to Eden OS Project: Archive threading patterns for future reference
+📝 Added todo to Eden OS Project: Document zone-based testing approach
+[UniversalObjectInspector] Enhanced inspector ready
+[ConsoleManager] Created Universal Object Inspector
+✅ Console UI created successfully! Press Tab to open.
+🎮 Console Manager: Input processing enabled
+[FeatureTestPanel] Test panel ready
+🪟 Created popup from TXT: claude_greeting
+🪟 Created popup from TXT: system_status
+[DebugIntegration] Patching print statements to use DebugManager
+[DebugIntegration] Added debug commands to console
+[UnifiedWalkerCommands] Registered via register_command
+[UnifiedWalkerCommands] Commands registered successfully
+[AdvancedInspectorLoader] Integration patch applied successfully
+[FloodgateBridge] Console-Floodgate bridge established
+[ConsoleFilter] Message filtering active
+[UniversalEntity] ✅ [UniversalEntity] All core systems initialized!
+🖱️ CREATING DIVINE CURSOR: Mouse becoming Universal Being...
+Unknown object type: magical_orb
+🚨 DIVINE CURSOR ERROR: Failed to create Universal Being
+✨ DIVINE CURSOR: Basic cursor created (Universal Being system not available)
+Unknown object type: input_interface
+🔗 PERFECT INPUT: Connected to SewersMonitor
+✅ PERFECT INPUT: System ready - Divine Cursor active, AI integration enabled
+📊 [SpawnLimiter] Current counts: Boxes=0, Trees=0, Total=0
+🔧 [EnhancedCommandRegistrar] Initializing bulletproof command registration...
+🎯 [EnhancedCommandRegistrar] Attempt #1 - Immediate registration
+⚠️ [EnhancedCommandRegistrar] Immediate registration failed - PentagonDebugCommands not found.
+🔧 [MainGameController] Enhanced command registrar active - bulletproof Pentagon commands!
+🧪 [MainGameController] Pentagon command tester added - use 'test_pentagon'
+⚡ [MainGameController] Emergency performance commands added!
+[GizmoReset] Adding gizmo reset command...
+🔄 [MainGameController] Gizmo reset command added!
+[GizmoSystemFinder] Initializing gizmo system finder...
+[GizmoSystemFinder] Console commands registered!
+🔍 [MainGameController] Gizmo system finder added!
+[GizmoDiagnostics] Comprehensive gizmo diagnostics loading...
+[GizmoDiagnostics] Commands registered!
+🔬 [MainGameController] Comprehensive gizmo diagnostics added!
+✨ [MainGameController] Perfect gizmo fix added!
+[UniversalBeingLayerSystem] Initializing layer system...
+[LayerSystem] Interface materials ready
+🎭 [MainGameController] Universal Being Layer System added!
+🌊 [MainGameController] Setting up JSH Framework...
+[JSHSceneTreeSystem] Setting up scene tree monitoring...
+[JSHSceneTreeSystem] Scene tree monitoring setup complete
+JSH Scene Tree System initialized
+✅ [MainGameController] JSH Framework connected
+🚀 [GameLauncher] Starting system diagnostics...
+
+=== SYSTEM STARTUP DIAGNOSTICS ===
+
+📋 Checking Autoload Systems:
+  ✅ FloodgateController: READY
+  ✅ AssetLibrary: READY
+  ✅ UISettingsManager: READY
+  ✅ ConsoleManager: READY
+  ✅ WorldBuilder: READY
+  ✅ DialogueSystem: READY
+  ✅ SceneLoader: READY
+
+🌊 Checking Floodgate Systems:
+  ✅ FloodgateController: Online
+
+🎬 Checking Scene Structure:
+  ✅ Main Scene: MainGame
+  ✅ Camera3D: Found at (4.43748, 8.74983, 14.3898)
+  ✅ Ground: Found
+
+📦 Checking Critical Assets:
+  ✅ standardized_objects.gd: Found
+  ✅ floodgate_controller.gd: Found
+  ✅ asset_library.gd: Found
+🔧 [StandardizedObjects] Fixed RigidBody position for: Box_1
+  ✅ StandardizedObjects: Working
+
+📊 STARTUP STATUS REPORT:
+==================================================
+🎯 Systems Status: 10/11 operational
+✅ No critical errors detected
+🚀 All systems ready! Game launch successful!
+==================================================
+🎮 Game Ready! Press Tab to open console.
+📄 Diagnostic report saved to user://startup_diagnostic.json
+🔗 [MainGameController] Signals connected: systems_ready=1 connections
+🎮 [MainGameController] Game launcher started
+⚡ [MainGameController] Systems already ready, enabling features directly
+✅ [MainGameController] All systems ready - game fully operational!
+🚀 [MainGameController] Game features enabled!
+🎮 [MainGameController] Setting up input handlers...
+🎮 [MainGameController] Pigeon input controls configured
+🎮 [MainGameController] Input handlers configured
+🖼️ [MainGameController] UI elements configured
+📋 [MainGameController] Testing guide added - Press F1 to toggle
+🖱️ [MainGameController] Setting up mouse interaction system...
+[MouseInteraction] Initializing mouse interaction system...
+[MouseInteraction] Found camera: Camera3D
+[MouseInteraction] Debug panel added to viewport GUI layer
+[MouseInteraction] Eden systems temporarily disabled - fixing compilation errors...
+[MouseInteraction] Ready - Click any object to inspect it!
+🖱️ [MainGameController] MouseInteractionSystem created and added to scene
+🌌 [MainGameController] Setting up dimensional ragdoll system...
+🌌 [MainGameController] DimensionalRagdollSystem temporarily disabled - fixing compilation errors...
+🌐 [MainGameController] Setting up Layer Reality System...
+[LayerRealitySystem] Console commands registered
+✨ [MainGameController] Layer Reality System ready!
+   - Press F1-F4 to toggle layers
+   - Press F5 to cycle view modes
+   - Use 'layers' command for status
+🦿 [MainGameController] Biomechanical walker commands ready!
+🌌 [MainGameController] Setting up Akashic Records Bridge...
+🌌 [AkashicBridge] 🔌 Attempting connection to Akashic server...
+🌌 [AkashicBridge] 🌌 Akashic Bridge System initializing...
+🌌 [MainGameController] Akashic Records Bridge connected!
+   - Use 'akashic_connect' to link with Python server
+   - Start server: python akashic_server.py
+   - Web interface: http://localhost:8888
+   - Send commands from browser to game!
+   - Use 'spawn_biowalker' to create advanced walker
+   - Use 'walker_debug all on' to see gait visualization
+🔌 [MainGameController] Console command extension loaded
+✅ [InspectionBridge] Object inspector found: UniversalObjectInspector
+✅ [InspectionBridge] Console manager connected
+✅ [InspectionBridge] Floodgate controller connected
+✅ [InspectionBridge] Universal object manager connected
+🔍 [InspectionBridge] Scene tree monitoring active
+🌟 [InspectionBridge] All systems connected - everything is now inspectable!
+🚨 [DeltaGuardian] EMERGENCY MODE - FPS critically low!
+🚨 [Performance] EMERGENCY optimization triggered
+🧹 [Performance] Emergency cleared 0 objects
+Starting test zone: planet with 2 tests
+[UniversalEntity] [color=#ffff00][PERFORMANCE] Low FPS detected - optimizing scene[/color]
+🚨 CRITICAL FPS: 1 - ACTIVATING EMERGENCY MODE!
+🛑 DISABLED: ArchitectureHarmony
+🛑 DISABLED: UniversalInspectionBridge
+  📊 Queue Status: { "actions": 0, "nodes": 0, "movements": 0, "functions": 0 }
+  ✅ AssetLibrary: Online
+  📚 Asset Catalog: { "objects": 8, "ragdolls": 2, "materials": 3, "textures": 1, "audio": 2 }
+[AdvancedObjectInspector] Enhanced inspector ready with scene editing
+[AdvancedInspectorIntegration] Advanced inspector created
+[SceneEditorIntegration] Scene editor integration ready
+[AdvancedInspectorIntegration] Scene editor integration created
+[AdvancedInspectorIntegration] Registered advanced commands
+[AdvancedInspectorIntegration] Advanced inspector integrated with console
+[ConsoleUIFix] Console UI fixes applied
+⚡ Emergency performance commands registered
+[LayerIntegration] Commands added to console
+Layer commands registered with console
+[BiomechanicalWalker] Commands registered via register_command!
+Biomechanical walker commands registered
+Testing: object_spawning
+Testing: dialogue_system
+[UniversalEntity] [color=#ffff00][PERFORMANCE] Low FPS detected - optimizing scene[/color]
+
+=== CONSOLE DIAGNOSTIC ===
+✅ ConsoleManager found
+Console properties:
+  - command_history (28)
+  - commands (27)
+  - metadata/command_descriptions (27)
+✅ 'commands' property exists
+  Type: 27
+  Is Dictionary: true
+  Command count: 329
+  First 5 commands:
+    - help
+    - setup_systems
+    - performance
+    - process_manager
+    - test
+=== END DIAGNOSTIC ===
+
+[CommandExtension] Extending console commands...
+[UniversalEntity] [color=#ffff00][PERFORMANCE] Low FPS detected - optimizing scene[/color]
+[UniversalEntity] [color=#ffff00][PERFORMANCE] Low FPS detected - optimizing scene[/color]
+[UniversalEntity] [color=#ffff00][PERFORMANCE] Low FPS detected - optimizing scene[/color]
+[UniversalEntity] [color=#ffff00][PERFORMANCE] Low FPS detected - optimizing scene[/color]
+[UniversalEntity] [color=#ffff00][PERFORMANCE] Low FPS detected - optimizing scene[/color]
+[UniversalEntity] [color=#ffff00][PERFORMANCE] Low FPS detected - optimizing scene[/color]
+[UniversalEntity] [color=#ffff00][PERFORMANCE] Low FPS detected - optimizing scene[/color]
+[UniversalEntity] [color=#ffff00][PERFORMANCE] Low FPS detected - optimizing scene[/color]
+[UniversalEntity] [color=#ffff00][PERFORMANCE] Low FPS detected - optimizing scene[/color]
+[UniversalEntity] [color=#ffff00][PERFORMANCE] Low FPS detected - optimizing scene[/color]
+[GizmoSystemFinder] ❌ Gizmo system not found!
+[GizmoDirectFix] No gizmo system found yet
+[GizmoDirectFix] Found 0 gizmo components
+[GizmoDirectFix] Gizmo interaction fix ready!
+[UniversalEntity] [UniversalEntity] Registering commands...
+[UniversalEntity] [UniversalEntity] ✅ Commands registered successfully!
+[UniversalEntity] 🌟 [UniversalEntity] PERFECTION ACHIEVED! Your dream is real!
+[UniversalEntity] 🎉 [UniversalEntity] The dream is realized!
+🕐 [EnhancedCommandRegistrar] Attempt #2 - Delayed registration (0.5s)
+[UniversalEntity] [color=#ffff00][PERFORMANCE] Low FPS detected - optimizing scene[/color]
+[UniversalEntity] [color=#ffff00][PERFORMANCE] Low FPS detected - optimizing scene[/color]
+[UniversalEntity] [color=#ffff00][PERFORMANCE] Low FPS detected - optimizing scene[/color]
+[UniversalEntity] [color=#ffff00][PERFORMANCE] Low FPS detected - optimizing scene[/color]
+[UniversalEntity] [color=#ffff00][PERFORMANCE] Low FPS detected - optimizing scene[/color]
+[UniversalEntity] [color=#ffff00][PERFORMANCE] Low FPS detected - optimizing scene[/color]
+[UniversalEntity] [color=#ffff00][PERFORMANCE] Low FPS detected - optimizing scene[/color]
+[UniversalEntity] [color=#ffff00][PERFORMANCE] Low FPS detected - optimizing scene[/color]
+[UniversalEntity] [color=#ffff00][PERFORMANCE] Low FPS detected - optimizing scene[/color]
+[UniversalEntity] [color=#ffff00][PERFORMANCE] Low FPS detected - optimizing scene[/color]
+[UniversalEntity] [color=#ffff00][PERFORMANCE] Low FPS detected - optimizing scene[/color]
+[UniversalEntity] [color=#ffff00][PERFORMANCE] Low FPS detected - optimizing scene[/color]
+[UniversalEntity] [color=#ffff00][PERFORMANCE] Low FPS detected - optimizing scene[/color]
+[UniversalEntity] [color=#ffff00][PERFORMANCE] Low FPS detected - optimizing scene[/color]
+[UniversalEntity] [color=#ffff00][PERFORMANCE] Low FPS detected - optimizing scene[/color]
+[UniversalEntity] [color=#ffff00][PERFORMANCE] Low FPS detected - optimizing scene[/color]
+[UniversalEntity] [color=#ffff00][PERFORMANCE] Low FPS detected - optimizing scene[/color]
+[UniversalEntity] [color=#ffff00][PERFORMANCE] Low FPS detected - optimizing scene[/color]
+🚨 [Performance] EMERGENCY optimization triggered
+🧹 [Performance] Emergency cleared 0 objects
+[2025-05-31T18:11:54] [SYSTEM] Memory cleanup completed
+[UniversalEntity] [color=#ffff00][PERFORMANCE] Low FPS detected - optimizing scene[/color]
+[UniversalEntity] [color=#ffff00][PERFORMANCE] Low FPS detected - optimizing scene[/color]
+[UniversalEntity] [color=#ffff00][PERFORMANCE] Low FPS detected - optimizing scene[/color]
+[UniversalEntity] [color=#ffff00][PERFORMANCE] Low FPS detected - optimizing scene[/color]
+[UniversalEntity] [color=#ffff00][PERFORMANCE] Low FPS detected - optimizing scene[/color]
+[UniversalEntity] [color=#ffff00][PERFORMANCE] Low FPS detected - optimizing scene[/color]
+[UniversalEntity] [color=#ffff00][PERFORMANCE] Low FPS detected - optimizing scene[/color]
+[UniversalEntity] [color=#ffff00][PERFORMANCE] Low FPS detected - optimizing scene[/color]
+[UniversalEntity] [color=#ffff00][PERFORMANCE] Low FPS detected - optimizing scene[/color]
+[UniversalEntity] [color=#ffff00][PERFORMANCE] Low FPS detected - optimizing scene[/color]
+[UniversalEntity] [color=#ffff00][PERFORMANCE] Low FPS detected - optimizing scene[/color]
+[UniversalEntity] [color=#ffff00][PERFORMANCE] Low FPS detected - optimizing scene[/color]
+[UniversalEntity] [color=#ff0000][WARNING] Low FPS: 30.0[/color]
+✅ TXT WINDOW TEST: Test command added - try 'test_window'
+
+🔧 [DelayedInjector] Attempting to inject commands...
+[DelayedInjector] Console found, checking commands...
+[DelayedInjector] ✅ Found commands via property check
+[DelayedInjector] Adding custom commands to dictionary with 340 existing commands...
+[DelayedInjector] ✅ Commands injected successfully!
+[DelayedInjector] New total commands: 340
+[DelayedInjector] ✅ Verified: spawn_biowalker added
+[DelayedInjector] ✅ Verified: test_layers added
+[DelayedInjector] ✅ Verified: layer added
+🎯 Pentagon debug commands registered
+[GizmoSystemFinder] ❌ Gizmo system not found!
+[GizmoCollisionFix] No gizmo system found with GizmoSystemFinder!
+[UniversalEntity] [color=#ffff00][PERFORMANCE] Low FPS detected - optimizing scene[/color]
+[UniversalEntity] [color=#ffff00][PERFORMANCE] Low FPS detected - optimizing scene[/color]
+[UniversalEntity] [color=#ffff00][PERFORMANCE] Low FPS detected - optimizing scene[/color]
+[UniversalEntity] [color=#ffff00][PERFORMANCE] Low FPS detected - optimizing scene[/color]
+[UniversalEntity] [color=#ffff00][PERFORMANCE] Low FPS detected - optimizing scene[/color]
+[UniversalEntity] [color=#ffff00][PERFORMANCE] Low FPS detected - optimizing scene[/color]
+[UniversalEntity] [color=#ffff00][PERFORMANCE] Low FPS detected - optimizing scene[/color]
+[UniversalEntity] [color=#ffff00][PERFORMANCE] Low FPS detected - optimizing scene[/color]
+[UniversalEntity] [color=#ffff00][PERFORMANCE] Low FPS detected - optimizing scene[/color]
+[UniversalEntity] [color=#ffff00][PERFORMANCE] Low FPS detected - optimizing scene[/color]
+[UniversalEntity] [color=#ffff00][PERFORMANCE] Low FPS detected - optimizing scene[/color]
+[UniversalEntity] [color=#ffff00][PERFORMANCE] Low FPS detected - optimizing scene[/color]
+[UniversalEntity] [color=#ffff00][PERFORMANCE] Low FPS detected - optimizing scene[/color]
+[UniversalEntity] [color=#ffff00][PERFORMANCE] Low FPS detected - optimizing scene[/color]
+[UniversalEntity] [color=#ffff00][PERFORMANCE] Low FPS detected - optimizing scene[/color]
+[UniversalEntity] [color=#ffff00][PERFORMANCE] Low FPS detected - optimizing scene[/color]
+[UniversalEntity] [color=#ffff00][PERFORMANCE] Low FPS detected - optimizing scene[/color]
+[UniversalEntity] [color=#ffff00][PERFORMANCE] Low FPS detected - optimizing scene[/color]
+[UniversalEntity] [color=#ffff00][PERFORMANCE] Low FPS detected - optimizing scene[/color]
+[UniversalEntity] [color=#ffff00][PERFORMANCE] Low FPS detected - optimizing scene[/color]
+[UniversalEntity] [color=#ffff00][PERFORMANCE] Low FPS detected - optimizing scene[/color]
+[UniversalEntity] [color=#ffff00][PERFORMANCE] Low FPS detected - optimizing scene[/color]
+[UniversalEntity] [color=#ffff00][PERFORMANCE] Low FPS detected - optimizing scene[/color]
+[UniversalEntity] [color=#ffff00][PERFORMANCE] Low FPS detected - optimizing scene[/color]
+[UniversalEntity] [color=#ffff00][PERFORMANCE] Low FPS detected - optimizing scene[/color]
+[UniversalEntity] [color=#ffff00][PERFORMANCE] Low FPS detected - optimizing scene[/color]
+[UniversalEntity] [color=#ffff00][PERFORMANCE] Low FPS detected - optimizing scene[/color]
+[UniversalEntity] [color=#ffff00][PERFORMANCE] Low FPS detected - optimizing scene[/color]
+[UniversalEntity] [color=#ffff00][PERFORMANCE] Low FPS detected - optimizing scene[/color]
+[UniversalEntity] [color=#ffff00][PERFORMANCE] Low FPS detected - optimizing scene[/color]
+🕐 [EnhancedCommandRegistrar] Attempt #3 - Delayed registration (1.0s)
+[UniversalEntity] [color=#ffff00][PERFORMANCE] Low FPS detected - optimizing scene[/color]
+[UniversalEntity] [color=#ffff00][PERFORMANCE] Low FPS detected - optimizing scene[/color]
+[UniversalEntity] [color=#ffff00][PERFORMANCE] Low FPS detected - optimizing scene[/color]
+[UniversalEntity] [color=#ffff00][PERFORMANCE] Low FPS detected - optimizing scene[/color]
+[UniversalEntity] [color=#ffff00][PERFORMANCE] Low FPS detected - optimizing scene[/color]
+[UniversalEntity] [color=#ffff00][PERFORMANCE] Low FPS detected - optimizing scene[/color]
+[UniversalEntity] [color=#ffff00][PERFORMANCE] Low FPS detected - optimizing scene[/color]
+[UniversalEntity] [color=#ffff00][PERFORMANCE] Low FPS detected - optimizing scene[/color]
+[UniversalEntity] [color=#ffff00][PERFORMANCE] Low FPS detected - optimizing scene[/color]
+[UniversalEntity] [color=#ffff00][PERFORMANCE] Low FPS detected - optimizing scene[/color]
+[UniversalEntity] [color=#ffff00][PERFORMANCE] Low FPS detected - optimizing scene[/color]
+[UniversalEntity] [color=#ffff00][PERFORMANCE] Low FPS detected - optimizing scene[/color]
+[UniversalEntity] [color=#ffff00][PERFORMANCE] Low FPS detected - optimizing scene[/color]
+[UniversalEntity] [color=#ffff00][PERFORMANCE] Low FPS detected - optimizing scene[/color]
+[UniversalEntity] [color=#ffff00][PERFORMANCE] Low FPS detected - optimizing scene[/color]
+[UniversalEntity] [color=#ffff00][PERFORMANCE] Low FPS detected - optimizing scene[/color]
+[UniversalEntity] [color=#ffff00][PERFORMANCE] Low FPS detected - optimizing scene[/color]
+[UniversalEntity] [color=#ffff00][PERFORMANCE] Low FPS detected - optimizing scene[/color]
+✅ [DeltaGuardian] Emergency mode ended - FPS recovered
+✅ FPS RECOVERED: 59 - Deactivating emergency mode
+✅ RE-ENABLED: ArchitectureHarmony
+✅ RE-ENABLED: UniversalInspectionBridge
+[SimpleConsoleTest] Looking for console...
+[SimpleConsoleTest] DebugConsole not found, trying JSHConsole...
+[SimpleConsoleTest] ❌ No console found!
+🧪 [PentagonTester] Test command registered - use 'test_pentagon'
+✅ [Performance] Reducing optimization to level 2
+✅ [Performance] Reducing optimization to level 1
+✅ [Performance] Reducing optimization to level 0
+🕐 [EnhancedCommandRegistrar] Attempt #4 - Delayed registration (2.0s)
+[UniversalEntity] 😊 [UniversalEntity] System satisfaction: 100% - You should be happy!
+[2025-05-31T18:11:59] [SYSTEM] Memory cleanup completed
+🕐 [EnhancedCommandRegistrar] Attempt #5 - Delayed registration (3.0s)
+[UniversalEntity] 😊 [UniversalEntity] System satisfaction: 100% - You should be happy!
+
+
+
+
+
+
+
+
+
+
+
+
+
+[2025-05-31T18:12:04] [SYSTEM] Memory cleanup completed
+🖱️ DIVINE INPUT: InputEventMouseButton processed (main)
+🖱️ DIVINE INPUT: InputEventMouseButton processed (unhandled)
+🕐 [EnhancedCommandRegistrar] Attempt #6 - Delayed registration (5.0s)
+🖱️ DIVINE INPUT: InputEventMouseButton processed (main)
+[MouseInteraction] Raycasting from (4.43748, 8.74983, 14.3898) to direction (-0.179553, -0.067928, -0.9814)
+[MouseInteraction] No collision detected
+[MouseInteraction] Selection cleared
+🖱️ DIVINE INPUT: InputEventMouseButton processed (unhandled)
+🖱️ DIVINE INPUT: InputEventMouseButton processed (main)
+🖱️ DIVINE INPUT: InputEventMouseButton processed (unhandled)
+🔑 Key pressed: keycode=4194332 (Tab=4194306)
+✅ F1 key detected! Toggling console...
+🎮 Console toggle requested - Visible: false
+🔄 Showing console...
+[UniversalEntity] 😊 [UniversalEntity] System satisfaction: 100% - You should be happy!
+[2025-05-31T18:12:09] [SYSTEM] Memory cleanup completed
+🔑 Key pressed: keycode=4194332 (Tab=4194306)
+✅ F1 key detected! Toggling console...
+🎮 Console toggle requested - Visible: true
+🔄 Hiding console...
+🖱️ DIVINE INPUT: InputEventMouseButton processed (main)
+[MouseInteraction] Raycasting from (4.43748, 8.74983, 14.3898) to direction (-0.239039, -0.350946, -0.905371)
+[MouseInteraction] Hit object: Ground (StaticBody3D)
+[MouseInteraction] Hit position: (-1.522262, 0.0, -8.183042)
+[MouseInteraction] Selected: Ground
+[UniversalObjectInspector] Inspecting: Ground
+[MouseInteraction] Sent to Enhanced Object Inspector
+🖱️ DIVINE INPUT: InputEventMouseButton processed (unhandled)
+🖱️ DIVINE INPUT: InputEventMouseButton processed (main)
+[MouseInteraction] Combo: ["Ground:press", "Ground:release"]
+[MouseInteraction] COMBO: Click completed on Ground
+🖱️ DIVINE INPUT: InputEventMouseButton processed (unhandled)
+🖱️ DIVINE INPUT: InputEventMouseButton processed (main)
+🖱️ DIVINE INPUT: InputEventMouseButton processed (main)
+[UniversalEntity] 😊 [UniversalEntity] System satisfaction: 100% - You should be happy!
+[2025-05-31T18:12:14] [SYSTEM] Memory cleanup completed
+[2025-05-31T18:12:19] [SYSTEM] Memory cleanup completed
+💾 AUTO-SAVE: Saved 1 AI sandbox worlds
+[UniversalEntity] 😊 [UniversalEntity] System satisfaction: 100% - You should be happy!
+[2025-05-31T18:12:24] [SYSTEM] Memory cleanup completed
+[UniversalEntity] 😊 [UniversalEntity] System satisfaction: 100% - You should be happy!
+[2025-05-31T18:12:29] [SYSTEM] Memory cleanup completed
+[UniversalEntity] 😊 [UniversalEntity] System satisfaction: 100% - You should be happy!
+[2025-05-31T18:12:34] [SYSTEM] Memory cleanup completed
+[UniversalEntity] 😊 [UniversalEntity] System satisfaction: 100% - You should be happy!
+[2025-05-31T18:12:39] [SYSTEM] Memory cleanup completed
+[UniversalEntity] 😊 [UniversalEntity] System satisfaction: 100% - You should be happy!
+[2025-05-31T18:12:44] [SYSTEM] Memory cleanup completed
+[2025-05-31T18:12:49] [SYSTEM] Memory cleanup completed
+💾 AUTO-SAVE: Saved 1 AI sandbox worlds
+🌌 [AkashicBridge] 🔍 HTTP Response - Code: 0, Result: 2, Body length: 0, Body: ''
+🌌 [AkashicBridge] ❌ HTTP request failed with result: 2
+[UniversalEntity] 😊 [UniversalEntity] System satisfaction: 100% - You should be happy!
+[2025-05-31T18:12:54] [SYSTEM] Memory cleanup completed
+[UniversalEntity] 😊 [UniversalEntity] System satisfaction: 100% - You should be happy!
+[2025-05-31T18:12:59] [SYSTEM] Memory cleanup completed
+[2025-05-31T18:13:04] [SYSTEM] Memory cleanup completed
+[2025-05-31T18:13:09] [SYSTEM] Memory cleanup completed
+[UniversalEntity] 😊 [UniversalEntity] System satisfaction: 100% - You should be happy!
+[2025-05-31T18:13:14] [SYSTEM] Memory cleanup completed
+[2025-05-31T18:13:19] [SYSTEM] Memory cleanup completed
+💾 AUTO-SAVE: Saved 1 AI sandbox worlds
+[UniversalEntity] 😊 [UniversalEntity] System satisfaction: 100% - You should be happy!
+[2025-05-31T18:13:24] [SYSTEM] Memory cleanup completed
+🖱️ DIVINE INPUT: InputEventMouseButton processed (main)
+🖱️ DIVINE INPUT: InputEventMouseButton processed (main)
+[UniversalEntity] 😊 [UniversalEntity] System satisfaction: 100% - You should be happy!
+[2025-05-31T18:13:29] [SYSTEM] Memory cleanup completed
+🚪 [TxtWindow] Closing window: Pentagon System Status
+🚪 [TxtWindow] Closing window: Claude Welcome Message
+[2025-05-31T18:13:34] [SYSTEM] Memory cleanup completed
+🔑 Key pressed: keycode=4194343 (Tab=4194306)
+🖱️ DIVINE INPUT: InputEventMouseButton processed (main)
+[MouseInteraction] Raycasting from (4.43748, 8.74983, 14.3898) to direction (0.021301, -0.20116, -0.979327)
+[MouseInteraction] Hit object: Ground (StaticBody3D)
+[MouseInteraction] Hit position: (5.363996, 0.0, -28.20781)
+[MouseInteraction] Selected: Ground
+[UniversalObjectInspector] Inspecting: Ground
+[MouseInteraction] Sent to Enhanced Object Inspector
+🖱️ DIVINE INPUT: InputEventMouseButton processed (unhandled)
+🖱️ DIVINE INPUT: InputEventMouseButton processed (main)
+[MouseInteraction] Combo: ["Ground:press", "Ground:release"]
+[MouseInteraction] COMBO: Click completed on Ground
+🖱️ DIVINE INPUT: InputEventMouseButton processed (unhandled)
+[UniversalEntity] 😊 [UniversalEntity] System satisfaction: 100% - You should be happy!
+[2025-05-31T18:13:39] [SYSTEM] Memory cleanup completed
+🖱️ DIVINE INPUT: InputEventMouseButton processed (main)
+🖱️ DIVINE INPUT: InputEventMouseButton processed (main)
+[2025-05-31T18:13:44] [SYSTEM] Memory cleanup completed
+[2025-05-31T18:13:49] [SYSTEM] Memory cleanup completed
+💾 AUTO-SAVE: Saved 1 AI sandbox worlds
+[UniversalEntity] 😊 [UniversalEntity] System satisfaction: 100% - You should be happy!
+[2025-05-31T18:13:54] [SYSTEM] Memory cleanup completed
+[2025-05-31T18:13:59] [SYSTEM] Memory cleanup completed
+[UniversalEntity] 😊 [UniversalEntity] System satisfaction: 100% - You should be happy!
+[2025-05-31T18:14:04] [SYSTEM] Memory cleanup completed
+[2025-05-31T18:14:09] [SYSTEM] Memory cleanup completed
+[UniversalEntity] 😊 [UniversalEntity] System satisfaction: 100% - You should be happy!
+[2025-05-31T18:14:14] [SYSTEM] Memory cleanup completed
+[2025-05-31T18:14:19] [SYSTEM] Memory cleanup completed
+🖱️ DIVINE INPUT: InputEventMouseButton processed (main)
+🖱️ DIVINE INPUT: InputEventMouseButton processed (main)
+💾 AUTO-SAVE: Saved 1 AI sandbox worlds
+🖱️ DIVINE INPUT: InputEventMouseButton processed (main)
+[MouseInteraction] Raycasting from (4.43748, 8.74983, 14.3898) to direction (-0.066749, -0.120714, -0.990441)
+[MouseInteraction] No collision detected
+[MouseInteraction] Selection cleared
+🖱️ DIVINE INPUT: InputEventMouseButton processed (unhandled)
+🖱️ DIVINE INPUT: InputEventMouseButton processed (main)
+🖱️ DIVINE INPUT: InputEventMouseButton processed (unhandled)
+[UniversalEntity] 😊 [UniversalEntity] System satisfaction: 100% - You should be happy!
+🔑 Key pressed: keycode=4194306 (Tab=4194306)
+🔍 Tab key detected! Toggling console...
+🎮 Console toggle requested - Visible: false
+🔄 Showing console...
+[2025-05-31T18:14:24] [SYSTEM] Memory cleanup completed
+[MouseInteraction] Gesture mode ON - Draw shapes to cast spells!
+🔑 Key pressed: keycode=4194325 (Tab=4194306)
+[MouseInteraction] Gesture mode OFF
+User responded after 153.810139666673 seconds
+Started waiting for user response...
+[UniversalEntity] 😊 [UniversalEntity] System satisfaction: 100% - You should be happy!
+🔑 Key pressed: keycode=4194305 (Tab=4194306)
+🎮 Console toggle requested - Visible: true
+🔄 Hiding console...
+[2025-05-31T18:14:29] [SYSTEM] Memory cleanup completed
+🔑 Key pressed: keycode=4194306 (Tab=4194306)
+🔍 Tab key detected! Toggling console...
+🎮 Console toggle requested - Visible: false
+🔄 Showing console...
+[MouseInteraction] Gesture mode ON - Draw shapes to cast spells!
+🔑 Key pressed: keycode=4194325 (Tab=4194306)
+[MouseInteraction] Gesture mode OFF
+[UniversalEntity] 😊 [UniversalEntity] System satisfaction: 100% - You should be happy!
+User responded after 7.44970199999995 seconds
+Started waiting for user response...
+[2025-05-31T18:14:34] [SYSTEM] Memory cleanup completed
+[MouseInteraction] Gesture mode ON - Draw shapes to cast spells!
+🔑 Key pressed: keycode=4194325 (Tab=4194306)
+[MouseInteraction] Gesture mode OFF
+User responded after 2.733224 seconds
+Started waiting for user response...
+[2025-05-31T18:14:39] [SYSTEM] Memory cleanup completed
+[MouseInteraction] Gesture mode ON - Draw shapes to cast spells!
+🔑 Key pressed: keycode=4194325 (Tab=4194306)
+[MouseInteraction] Gesture mode OFF
+User responded after 5.13312799999998 seconds
+Started waiting for user response...
+[UniversalEntity] 😊 [UniversalEntity] System satisfaction: 100% - You should be happy!
+[MouseInteraction] Gesture mode ON - Draw shapes to cast spells!
+🔑 Key pressed: keycode=4194325 (Tab=4194306)
+[2025-05-31T18:14:44] [SYSTEM] Memory cleanup completed
+[MouseInteraction] Gesture mode OFF
+User responded after 3.84984599999999 seconds
+Started waiting for user response...
+[UniversalEntity] 😊 [UniversalEntity] System satisfaction: 100% - You should be happy!
+[2025-05-31T18:14:50] [SYSTEM] Memory cleanup completed

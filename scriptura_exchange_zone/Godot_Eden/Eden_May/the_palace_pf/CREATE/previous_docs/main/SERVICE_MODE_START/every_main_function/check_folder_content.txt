@@ -1,0 +1,15 @@
+func check_folder_content(directory):  # Take DirAccess as parameter
+	files_content = directory.get_files()      # Get array of files
+	folders_content = directory.get_directories()  # Get array of folders
+	
+	# Check if we have any files
+	if files_content.size() > 0:
+		files_existence = true
+	else:
+		files_existence = false
+		
+	# Check if we have any folders
+	if folders_content.size() > 0:
+		folders_existence = true
+	else:
+		folders_existence = false

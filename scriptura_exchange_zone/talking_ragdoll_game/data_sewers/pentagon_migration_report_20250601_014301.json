@@ -1,0 +1,1770 @@
+{
+  "total_processed": 237,
+  "successfully_migrated": 237,
+  "failed_migrations": 0,
+  "violations_fixed": {
+    "inheritance_fixes": 22,
+    "add_child_fixes": 3,
+    "material_pooling_fixes": 2,
+    "timer_pooling_fixes": 4,
+    "pentagon_functions_added": 33,
+    "headers_standardized": 0
+  },
+  "processed_scripts": [
+    {
+      "script": "scripts/autoload/advanced_inspector_loader.gd",
+      "fixes_applied": [],
+      "original_pentagon_score": 5,
+      "violations_before": 0,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/autoload/claude_timer_system.gd",
+      "fixes_applied": [],
+      "original_pentagon_score": 5,
+      "violations_before": 0,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/autoload/dialogue_system.gd",
+      "fixes_applied": [],
+      "original_pentagon_score": 5,
+      "violations_before": 0,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/autoload/dynamic_viewport_manager.gd",
+      "fixes_applied": [],
+      "original_pentagon_score": 5,
+      "violations_before": 0,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/autoload/multi_todo_manager.gd",
+      "fixes_applied": [],
+      "original_pentagon_score": 5,
+      "violations_before": 0,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/autoload/perfect_init.gd",
+      "fixes_applied": [],
+      "original_pentagon_score": 5,
+      "violations_before": 0,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/autoload/perfect_input.gd",
+      "fixes_applied": [],
+      "original_pentagon_score": 5,
+      "violations_before": 0,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/autoload/perfect_ready.gd",
+      "fixes_applied": [],
+      "original_pentagon_score": 5,
+      "violations_before": 0,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/autoload/scene_loader.gd",
+      "fixes_applied": [],
+      "original_pentagon_score": 5,
+      "violations_before": 0,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/autoload/sewers_monitor.gd",
+      "fixes_applied": [],
+      "original_pentagon_score": 5,
+      "violations_before": 0,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/autoload/windows_console_fix.gd",
+      "fixes_applied": [],
+      "original_pentagon_score": 5,
+      "violations_before": 0,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/autoload/ui_settings_manager.gd",
+      "fixes_applied": [
+        "extends Node → extends UniversalBeingBase"
+      ],
+      "original_pentagon_score": 5,
+      "violations_before": 1,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/autoload/universal_object_manager.gd",
+      "fixes_applied": [
+        "extends Node → extends UniversalBeingBase"
+      ],
+      "original_pentagon_score": 5,
+      "violations_before": 1,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/autoload/world_builder.gd",
+      "fixes_applied": [
+        "extends Node → extends UniversalBeingBase"
+      ],
+      "original_pentagon_score": 5,
+      "violations_before": 1,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/autoload/layer_reality_system.gd",
+      "fixes_applied": [],
+      "original_pentagon_score": 5,
+      "violations_before": 2,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/autoload/console_manager.gd",
+      "fixes_applied": [
+        "extends Node → extends UniversalBeingBase",
+        "Timer.new() → TimerManager.get_timer()"
+      ],
+      "original_pentagon_score": 5,
+      "violations_before": 5,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/core/advanced_being_system.gd",
+      "fixes_applied": [],
+      "original_pentagon_score": 5,
+      "violations_before": 0,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/core/ai_sandbox_system.gd",
+      "fixes_applied": [],
+      "original_pentagon_score": 5,
+      "violations_before": 0,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/core/akashic_bridge_system.gd",
+      "fixes_applied": [],
+      "original_pentagon_score": 5,
+      "violations_before": 0,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/core/akashic_records_database.gd",
+      "fixes_applied": [],
+      "original_pentagon_score": 5,
+      "violations_before": 0,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/core/architecture_harmony_system.gd",
+      "fixes_applied": [],
+      "original_pentagon_score": 5,
+      "violations_before": 0,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/core/asset_creator.gd",
+      "fixes_applied": [],
+      "original_pentagon_score": 5,
+      "violations_before": 0,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/core/background_process_manager.gd",
+      "fixes_applied": [],
+      "original_pentagon_score": 5,
+      "violations_before": 0,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/core/console_channel_system.gd",
+      "fixes_applied": [],
+      "original_pentagon_score": 5,
+      "violations_before": 0,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/core/debug_3d_screen.gd",
+      "fixes_applied": [],
+      "original_pentagon_score": 5,
+      "violations_before": 0,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/core/delta_frame_guardian.gd",
+      "fixes_applied": [],
+      "original_pentagon_score": 5,
+      "violations_before": 0,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/core/dimensional_color_system.gd",
+      "fixes_applied": [],
+      "original_pentagon_score": 5,
+      "violations_before": 0,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/core/eden_action_system.gd",
+      "fixes_applied": [],
+      "original_pentagon_score": 5,
+      "violations_before": 0,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/core/emergency_performance_fix.gd",
+      "fixes_applied": [],
+      "original_pentagon_score": 5,
+      "violations_before": 0,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/core/enhanced_interface_system.gd",
+      "fixes_applied": [],
+      "original_pentagon_score": 5,
+      "violations_before": 0,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/core/game_launcher.gd",
+      "fixes_applied": [],
+      "original_pentagon_score": 5,
+      "violations_before": 0,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/core/gamma_speech_bubble.gd",
+      "fixes_applied": [],
+      "original_pentagon_score": 5,
+      "violations_before": 0,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/core/gemma_vision_system.gd",
+      "fixes_applied": [],
+      "original_pentagon_score": 5,
+      "violations_before": 0,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/core/interface_manifestation_system.gd",
+      "fixes_applied": [],
+      "original_pentagon_score": 5,
+      "violations_before": 0,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/core/logic_connector.gd",
+      "fixes_applied": [],
+      "original_pentagon_score": 5,
+      "violations_before": 0,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/core/mouse_interaction_system.gd",
+      "fixes_applied": [],
+      "original_pentagon_score": 5,
+      "violations_before": 0,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/core/multi_layer_record_system.gd",
+      "fixes_applied": [],
+      "original_pentagon_score": 5,
+      "violations_before": 0,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/core/perfect_delta_process.gd",
+      "fixes_applied": [],
+      "original_pentagon_score": 5,
+      "violations_before": 0,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/core/perfect_pentagon_ui_integration.gd",
+      "fixes_applied": [],
+      "original_pentagon_score": 5,
+      "violations_before": 0,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/core/scene_editor_integration.gd",
+      "fixes_applied": [],
+      "original_pentagon_score": 5,
+      "violations_before": 0,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/core/scene_setup.gd",
+      "fixes_applied": [],
+      "original_pentagon_score": 5,
+      "violations_before": 0,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/core/self_repair_system.gd",
+      "fixes_applied": [],
+      "original_pentagon_score": 5,
+      "violations_before": 0,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/core/shape_gesture_system.gd",
+      "fixes_applied": [],
+      "original_pentagon_score": 5,
+      "violations_before": 0,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/core/synchronicity_pathfinder.gd",
+      "fixes_applied": [],
+      "original_pentagon_score": 5,
+      "violations_before": 0,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/core/txt_rule_editor.gd",
+      "fixes_applied": [],
+      "original_pentagon_score": 5,
+      "violations_before": 0,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/core/txt_universal_database.gd",
+      "fixes_applied": [],
+      "original_pentagon_score": 5,
+      "violations_before": 0,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/core/unified_asset_manager.gd",
+      "fixes_applied": [],
+      "original_pentagon_score": 5,
+      "violations_before": 0,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/core/unified_being_system.gd",
+      "fixes_applied": [],
+      "original_pentagon_score": 5,
+      "violations_before": 0,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/core/unified_creation_system.gd",
+      "fixes_applied": [],
+      "original_pentagon_score": 5,
+      "violations_before": 0,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/core/unified_scene_manager.gd",
+      "fixes_applied": [],
+      "original_pentagon_score": 5,
+      "violations_before": 0,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/core/universal_being_3d_blueprint_parser.gd",
+      "fixes_applied": [],
+      "original_pentagon_score": 5,
+      "violations_before": 0,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/core/universal_being_asset_connector.gd",
+      "fixes_applied": [],
+      "original_pentagon_score": 5,
+      "violations_before": 0,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/core/universal_being_base_enhanced.gd",
+      "fixes_applied": [],
+      "original_pentagon_score": 5,
+      "violations_before": 0,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/core/universal_being_floodgate_integration.gd",
+      "fixes_applied": [],
+      "original_pentagon_score": 5,
+      "violations_before": 0,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/core/universal_being_layer_system.gd",
+      "fixes_applied": [],
+      "original_pentagon_score": 5,
+      "violations_before": 0,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/core/universal_being_minimal.gd",
+      "fixes_applied": [],
+      "original_pentagon_score": 5,
+      "violations_before": 0,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/core/universal_being_scene_container.gd",
+      "fixes_applied": [],
+      "original_pentagon_score": 5,
+      "violations_before": 0,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/core/universal_being_visualizer.gd",
+      "fixes_applied": [],
+      "original_pentagon_score": 5,
+      "violations_before": 0,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/core/universal_data_hub.gd",
+      "fixes_applied": [],
+      "original_pentagon_score": 5,
+      "violations_before": 0,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/core/universal_gizmo_system.gd",
+      "fixes_applied": [],
+      "original_pentagon_score": 5,
+      "violations_before": 0,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/core/universal_inspection_bridge.gd",
+      "fixes_applied": [],
+      "original_pentagon_score": 5,
+      "violations_before": 0,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/core/universal_workflow_analyzer.gd",
+      "fixes_applied": [],
+      "original_pentagon_score": 5,
+      "violations_before": 0,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/core/universal_entity/global_variable_inspector.gd",
+      "fixes_applied": [],
+      "original_pentagon_score": 5,
+      "violations_before": 0,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/core/universal_entity/initialize_universal_entity.gd",
+      "fixes_applied": [],
+      "original_pentagon_score": 5,
+      "violations_before": 0,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/core/universal_entity/lists_viewer_system.gd",
+      "fixes_applied": [],
+      "original_pentagon_score": 5,
+      "violations_before": 0,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/core/universal_entity/system_health_monitor.gd",
+      "fixes_applied": [],
+      "original_pentagon_score": 5,
+      "violations_before": 0,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/core/universal_entity/universal_entity.gd",
+      "fixes_applied": [],
+      "original_pentagon_score": 5,
+      "violations_before": 0,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/core/universal_entity/universal_loader_unloader.gd",
+      "fixes_applied": [],
+      "original_pentagon_score": 5,
+      "violations_before": 0,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/jsh_framework/core/actions_bank.gd",
+      "fixes_applied": [],
+      "original_pentagon_score": 5,
+      "violations_before": 0,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/jsh_framework/core/banks_combiner.gd",
+      "fixes_applied": [],
+      "original_pentagon_score": 5,
+      "violations_before": 0,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/jsh_framework/core/container.gd",
+      "fixes_applied": [],
+      "original_pentagon_score": 5,
+      "violations_before": 0,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/jsh_framework/core/data_point.gd",
+      "fixes_applied": [],
+      "original_pentagon_score": 5,
+      "violations_before": 0,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/jsh_framework/core/functions_database.gd",
+      "fixes_applied": [],
+      "original_pentagon_score": 5,
+      "violations_before": 0,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/jsh_framework/core/function_metadata.gd",
+      "fixes_applied": [],
+      "original_pentagon_score": 5,
+      "violations_before": 0,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/jsh_framework/core/godot_timers_system.gd",
+      "fixes_applied": [],
+      "original_pentagon_score": 5,
+      "violations_before": 0,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/jsh_framework/core/init_function.gd",
+      "fixes_applied": [],
+      "original_pentagon_score": 5,
+      "violations_before": 0,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/jsh_framework/core/instructions_bank.gd",
+      "fixes_applied": [],
+      "original_pentagon_score": 5,
+      "violations_before": 0,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/jsh_framework/core/interactions_bank.gd",
+      "fixes_applied": [],
+      "original_pentagon_score": 5,
+      "violations_before": 0,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/jsh_framework/core/JSH_Akashic_Records.gd",
+      "fixes_applied": [],
+      "original_pentagon_score": 5,
+      "violations_before": 0,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/jsh_framework/core/JSH_console.gd",
+      "fixes_applied": [],
+      "original_pentagon_score": 5,
+      "violations_before": 0,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/jsh_framework/core/jsh_database_system.gd",
+      "fixes_applied": [],
+      "original_pentagon_score": 5,
+      "violations_before": 0,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/jsh_framework/core/jsh_data_splitter.gd",
+      "fixes_applied": [],
+      "original_pentagon_score": 5,
+      "violations_before": 0,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/jsh_framework/core/jsh_digital_earthlings.gd",
+      "fixes_applied": [],
+      "original_pentagon_score": 5,
+      "violations_before": 0,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/jsh_framework/core/JSH_digital_earthlings.gd.gd",
+      "fixes_applied": [],
+      "original_pentagon_score": 5,
+      "violations_before": 0,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/jsh_framework/core/JSH_mainframe_database.gd",
+      "fixes_applied": [],
+      "original_pentagon_score": 5,
+      "violations_before": 0,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/jsh_framework/core/jsh_marching_shapes_system.gd",
+      "fixes_applied": [],
+      "original_pentagon_score": 5,
+      "violations_before": 0,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/jsh_framework/core/jsh_scene_tree_system.gd",
+      "fixes_applied": [],
+      "original_pentagon_score": 5,
+      "violations_before": 0,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/jsh_framework/core/jsh_snake_game.gd",
+      "fixes_applied": [],
+      "original_pentagon_score": 5,
+      "violations_before": 0,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/jsh_framework/core/jsh_task_manager.gd",
+      "fixes_applied": [],
+      "original_pentagon_score": 5,
+      "violations_before": 0,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/jsh_framework/core/jsh_thread_pool_manager.gd",
+      "fixes_applied": [],
+      "original_pentagon_score": 5,
+      "violations_before": 0,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/jsh_framework/core/jsh_world.gd",
+      "fixes_applied": [],
+      "original_pentagon_score": 5,
+      "violations_before": 0,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/jsh_framework/core/line.gd",
+      "fixes_applied": [],
+      "original_pentagon_score": 5,
+      "violations_before": 0,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/jsh_framework/core/main.gd",
+      "fixes_applied": [],
+      "original_pentagon_score": 5,
+      "violations_before": 0,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/jsh_framework/core/modules_bank.gd",
+      "fixes_applied": [],
+      "original_pentagon_score": 5,
+      "violations_before": 0,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/jsh_framework/core/pallets_racing_game.gd",
+      "fixes_applied": [],
+      "original_pentagon_score": 5,
+      "violations_before": 0,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/jsh_framework/core/project_architecture.gd",
+      "fixes_applied": [],
+      "original_pentagon_score": 5,
+      "violations_before": 0,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/jsh_framework/core/racing_menu_integrator.gd",
+      "fixes_applied": [],
+      "original_pentagon_score": 5,
+      "violations_before": 0,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/jsh_framework/core/records_bank.gd",
+      "fixes_applied": [],
+      "original_pentagon_score": 5,
+      "violations_before": 0,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/jsh_framework/core/record_set_manager.gd",
+      "fixes_applied": [],
+      "original_pentagon_score": 5,
+      "violations_before": 0,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/jsh_framework/core/scenes_bank.gd",
+      "fixes_applied": [],
+      "original_pentagon_score": 5,
+      "violations_before": 0,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/jsh_framework/core/scene_tree_check.gd",
+      "fixes_applied": [],
+      "original_pentagon_score": 5,
+      "violations_before": 0,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/jsh_framework/core/settings_bank.gd",
+      "fixes_applied": [],
+      "original_pentagon_score": 5,
+      "violations_before": 0,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/jsh_framework/core/system_check.gd",
+      "fixes_applied": [],
+      "original_pentagon_score": 5,
+      "violations_before": 0,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/jsh_framework/core/system_interfaces.gd",
+      "fixes_applied": [],
+      "original_pentagon_score": 5,
+      "violations_before": 0,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/jsh_framework/core/text_label.gd",
+      "fixes_applied": [],
+      "original_pentagon_score": 5,
+      "violations_before": 0,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/jsh_framework/core/text_screen.gd",
+      "fixes_applied": [],
+      "original_pentagon_score": 5,
+      "violations_before": 0,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/jsh_framework/core/things_creator.gd",
+      "fixes_applied": [],
+      "original_pentagon_score": 5,
+      "violations_before": 0,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/jsh_framework/core/thread_pool_manager.gd",
+      "fixes_applied": [],
+      "original_pentagon_score": 5,
+      "violations_before": 0,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/jsh_framework/core/tree_blueprints_bank.gd",
+      "fixes_applied": [],
+      "original_pentagon_score": 5,
+      "violations_before": 0,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/core/asset_library.gd",
+      "fixes_applied": [
+        "extends Node → extends UniversalBeingBase"
+      ],
+      "original_pentagon_score": 5,
+      "violations_before": 1,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/core/debug_manager.gd",
+      "fixes_applied": [
+        "extends Node → extends UniversalBeingBase"
+      ],
+      "original_pentagon_score": 5,
+      "violations_before": 1,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/core/heightmap_world_generator.gd",
+      "fixes_applied": [],
+      "original_pentagon_score": 5,
+      "violations_before": 1,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/core/miracle_declutterer.gd",
+      "fixes_applied": [
+        "extends Node → extends UniversalBeingBase"
+      ],
+      "original_pentagon_score": 5,
+      "violations_before": 1,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/core/performance_guardian.gd",
+      "fixes_applied": [
+        "extends Node → extends UniversalBeingBase"
+      ],
+      "original_pentagon_score": 5,
+      "violations_before": 1,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/core/physics_state_manager.gd",
+      "fixes_applied": [
+        "extends Node → extends UniversalBeingBase"
+      ],
+      "original_pentagon_score": 5,
+      "violations_before": 1,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/core/scene_tree_tracker.gd",
+      "fixes_applied": [
+        "extends Node → extends UniversalBeingBase"
+      ],
+      "original_pentagon_score": 5,
+      "violations_before": 1,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/core/skeleton_ragdoll_hybrid.gd",
+      "fixes_applied": [
+        "extends Node3D → extends UniversalBeingBase"
+      ],
+      "original_pentagon_score": 5,
+      "violations_before": 1,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/core/standardized_objects.gd",
+      "fixes_applied": [
+        "extends Node → extends UniversalBeingBase"
+      ],
+      "original_pentagon_score": 5,
+      "violations_before": 1,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/core/the_universal_thing.gd",
+      "fixes_applied": [],
+      "original_pentagon_score": 5,
+      "violations_before": 1,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/jsh_framework/core/JSH_reality_shaders.gd",
+      "fixes_applied": [],
+      "original_pentagon_score": 5,
+      "violations_before": 1,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/core/floodgate_controller.gd",
+      "fixes_applied": [
+        "extends Node → extends UniversalBeingBase",
+        "add_child → FloodgateController.universal_add_child"
+      ],
+      "original_pentagon_score": 5,
+      "violations_before": 2,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/core/universal_being_base.gd",
+      "fixes_applied": [
+        "extends Node3D → extends UniversalBeingBase",
+        "add_child → FloodgateController.universal_add_child"
+      ],
+      "original_pentagon_score": 5,
+      "violations_before": 2,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/core/universal_being_node_base.gd",
+      "fixes_applied": [
+        "extends Node → extends UniversalBeingBase",
+        "add_child → FloodgateController.universal_add_child",
+        "Timer.new() → TimerManager.get_timer()",
+        "StandardMaterial3D.new() → MaterialLibrary.get_material()"
+      ],
+      "original_pentagon_score": 5,
+      "violations_before": 4,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/core/universal_being.gd",
+      "fixes_applied": [],
+      "original_pentagon_score": 5,
+      "violations_before": 5,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/autoload/pentagon_activity_monitor.gd",
+      "fixes_applied": [
+        "extends Node → extends UniversalBeingBase",
+        "Added _init",
+        "Added _input",
+        "Added sewers"
+      ],
+      "original_pentagon_score": 2,
+      "violations_before": 1,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/enhanced_command_registrar.gd",
+      "fixes_applied": [],
+      "original_pentagon_score": 5,
+      "violations_before": 0,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/main_game_controller.gd",
+      "fixes_applied": [],
+      "original_pentagon_score": 5,
+      "violations_before": 0,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/ai/gamma_controller.gd",
+      "fixes_applied": [],
+      "original_pentagon_score": 5,
+      "violations_before": 0,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/camera/camera_controller.gd",
+      "fixes_applied": [],
+      "original_pentagon_score": 5,
+      "violations_before": 0,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/camera/trackball_camera.gd",
+      "fixes_applied": [],
+      "original_pentagon_score": 5,
+      "violations_before": 0,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/components/multi_layer_entity.gd",
+      "fixes_applied": [],
+      "original_pentagon_score": 5,
+      "violations_before": 0,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/console/neural_consciousness_commands.gd",
+      "fixes_applied": [],
+      "original_pentagon_score": 5,
+      "violations_before": 0,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/debug/consciousness_bridge.gd",
+      "fixes_applied": [],
+      "original_pentagon_score": 5,
+      "violations_before": 0,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/debug/godot_remote_bridge.gd",
+      "fixes_applied": [],
+      "original_pentagon_score": 5,
+      "violations_before": 0,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/debug/movement_test.gd",
+      "fixes_applied": [],
+      "original_pentagon_score": 5,
+      "violations_before": 0,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/debug/ragdoll_debug_visualizer.gd",
+      "fixes_applied": [],
+      "original_pentagon_score": 5,
+      "violations_before": 0,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/debug/ragdoll_physics_test.gd",
+      "fixes_applied": [],
+      "original_pentagon_score": 5,
+      "violations_before": 0,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/debug/universal_entity_debug.gd",
+      "fixes_applied": [],
+      "original_pentagon_score": 5,
+      "violations_before": 0,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/effects/blink_animation_controller.gd",
+      "fixes_applied": [],
+      "original_pentagon_score": 5,
+      "violations_before": 0,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/effects/dimensional_color_system.gd",
+      "fixes_applied": [],
+      "original_pentagon_score": 5,
+      "violations_before": 0,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/effects/visual_indicator_system.gd",
+      "fixes_applied": [],
+      "original_pentagon_score": 5,
+      "violations_before": 0,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/jsh_framework/jsh_adapter.gd",
+      "fixes_applied": [],
+      "original_pentagon_score": 5,
+      "violations_before": 0,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/neural/simple_task_manager.gd",
+      "fixes_applied": [],
+      "original_pentagon_score": 5,
+      "violations_before": 0,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/passive_mode/autonomous_developer.gd",
+      "fixes_applied": [],
+      "original_pentagon_score": 5,
+      "violations_before": 0,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/passive_mode/multi_project_manager.gd",
+      "fixes_applied": [],
+      "original_pentagon_score": 5,
+      "violations_before": 0,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/passive_mode/passive_mode_controller.gd",
+      "fixes_applied": [],
+      "original_pentagon_score": 5,
+      "violations_before": 0,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/passive_mode/passive_mode_test.gd",
+      "fixes_applied": [],
+      "original_pentagon_score": 5,
+      "violations_before": 0,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/passive_mode/threaded_test_system.gd",
+      "fixes_applied": [],
+      "original_pentagon_score": 5,
+      "violations_before": 0,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/passive_mode/version_backup_system.gd",
+      "fixes_applied": [],
+      "original_pentagon_score": 5,
+      "violations_before": 0,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/passive_mode/workflow_manager.gd",
+      "fixes_applied": [],
+      "original_pentagon_score": 5,
+      "violations_before": 0,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/patches/add_commands_directly.gd",
+      "fixes_applied": [],
+      "original_pentagon_score": 5,
+      "violations_before": 0,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/patches/advanced_inspector_integration.gd",
+      "fixes_applied": [],
+      "original_pentagon_score": 5,
+      "violations_before": 0,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/patches/console_command_extension.gd",
+      "fixes_applied": [],
+      "original_pentagon_score": 5,
+      "violations_before": 0,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/patches/console_debug_overlay.gd",
+      "fixes_applied": [],
+      "original_pentagon_score": 5,
+      "violations_before": 0,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/patches/console_diagnostic.gd",
+      "fixes_applied": [],
+      "original_pentagon_score": 5,
+      "violations_before": 0,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/patches/console_layer_integration.gd",
+      "fixes_applied": [],
+      "original_pentagon_score": 5,
+      "violations_before": 0,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/patches/console_spam_filter.gd",
+      "fixes_applied": [],
+      "original_pentagon_score": 5,
+      "violations_before": 0,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/patches/console_ui_fix.gd",
+      "fixes_applied": [],
+      "original_pentagon_score": 5,
+      "violations_before": 0,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/patches/debug_test_commands.gd",
+      "fixes_applied": [],
+      "original_pentagon_score": 5,
+      "violations_before": 0,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/patches/delayed_command_injector.gd",
+      "fixes_applied": [],
+      "original_pentagon_score": 5,
+      "violations_before": 0,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/patches/emergency_performance_commands.gd",
+      "fixes_applied": [],
+      "original_pentagon_score": 5,
+      "violations_before": 0,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/patches/floodgate_console_bridge.gd",
+      "fixes_applied": [],
+      "original_pentagon_score": 5,
+      "violations_before": 0,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/patches/gizmo_collision_fix.gd",
+      "fixes_applied": [],
+      "original_pentagon_score": 5,
+      "violations_before": 0,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/patches/gizmo_comprehensive_diagnostics.gd",
+      "fixes_applied": [],
+      "original_pentagon_score": 5,
+      "violations_before": 0,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/patches/gizmo_debug_commands.gd",
+      "fixes_applied": [],
+      "original_pentagon_score": 5,
+      "violations_before": 0,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/patches/gizmo_direct_interaction_fix.gd",
+      "fixes_applied": [],
+      "original_pentagon_score": 5,
+      "violations_before": 0,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/patches/gizmo_perfect_fix.gd",
+      "fixes_applied": [],
+      "original_pentagon_score": 5,
+      "violations_before": 0,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/patches/gizmo_reset_command.gd",
+      "fixes_applied": [],
+      "original_pentagon_score": 5,
+      "violations_before": 0,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/patches/gizmo_system_finder.gd",
+      "fixes_applied": [],
+      "original_pentagon_score": 5,
+      "violations_before": 0,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/patches/pentagon_command_tester.gd",
+      "fixes_applied": [],
+      "original_pentagon_score": 5,
+      "violations_before": 0,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/patches/pentagon_debug_commands.gd",
+      "fixes_applied": [],
+      "original_pentagon_score": 5,
+      "violations_before": 0,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/patches/ragdoll_neural_integration.gd",
+      "fixes_applied": [],
+      "original_pentagon_score": 5,
+      "violations_before": 0,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/patches/scene_command_injector.gd",
+      "fixes_applied": [],
+      "original_pentagon_score": 5,
+      "violations_before": 0,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/patches/simple_console_test.gd",
+      "fixes_applied": [],
+      "original_pentagon_score": 5,
+      "violations_before": 0,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/patches/txt_window_test.gd",
+      "fixes_applied": [],
+      "original_pentagon_score": 5,
+      "violations_before": 0,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/patches/unified_walker_commands.gd",
+      "fixes_applied": [],
+      "original_pentagon_score": 5,
+      "violations_before": 0,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/patches/universal_console_helper.gd",
+      "fixes_applied": [],
+      "original_pentagon_score": 5,
+      "violations_before": 0,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/patches/universal_quickfix.gd",
+      "fixes_applied": [],
+      "original_pentagon_score": 5,
+      "violations_before": 0,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/test/automated_warning_fixer.gd",
+      "fixes_applied": [],
+      "original_pentagon_score": 5,
+      "violations_before": 0,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/test/batch_parameter_fixer.gd",
+      "fixes_applied": [],
+      "original_pentagon_score": 5,
+      "violations_before": 0,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/test/debug_scene_inspector.gd",
+      "fixes_applied": [],
+      "original_pentagon_score": 5,
+      "violations_before": 0,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/test/final_universal_check.gd",
+      "fixes_applied": [],
+      "original_pentagon_score": 5,
+      "violations_before": 0,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/test/fix_knowledge_base.gd",
+      "fixes_applied": [],
+      "original_pentagon_score": 5,
+      "violations_before": 0,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/test/floodgate_test.gd",
+      "fixes_applied": [],
+      "original_pentagon_score": 5,
+      "violations_before": 0,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/test/function_flow_tracker.gd",
+      "fixes_applied": [],
+      "original_pentagon_score": 5,
+      "violations_before": 0,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/test/integration_test.gd",
+      "fixes_applied": [],
+      "original_pentagon_score": 5,
+      "violations_before": 0,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/test/layer_system_demo.gd",
+      "fixes_applied": [],
+      "original_pentagon_score": 5,
+      "violations_before": 0,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/test/minimal_universal_test.gd",
+      "fixes_applied": [],
+      "original_pentagon_score": 5,
+      "violations_before": 0,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/test/perfect_pentagon_integration_test.gd",
+      "fixes_applied": [],
+      "original_pentagon_score": 5,
+      "violations_before": 0,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/test/run_warning_fixes.gd",
+      "fixes_applied": [],
+      "original_pentagon_score": 5,
+      "violations_before": 0,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/test/startup_diagnostic.gd",
+      "fixes_applied": [],
+      "original_pentagon_score": 5,
+      "violations_before": 0,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/test/startup_test.gd",
+      "fixes_applied": [],
+      "original_pentagon_score": 5,
+      "violations_before": 0,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/test/test_universal_being_assets.gd",
+      "fixes_applied": [],
+      "original_pentagon_score": 5,
+      "violations_before": 0,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/test/universal_entity_test.gd",
+      "fixes_applied": [],
+      "original_pentagon_score": 5,
+      "violations_before": 0,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/test/universal_launcher.gd",
+      "fixes_applied": [],
+      "original_pentagon_score": 5,
+      "violations_before": 0,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/test/universal_ready_check.gd",
+      "fixes_applied": [],
+      "original_pentagon_score": 5,
+      "violations_before": 0,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/test/warning_scanner.gd",
+      "fixes_applied": [],
+      "original_pentagon_score": 5,
+      "violations_before": 0,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/tools/optimize_autoloads.gd",
+      "fixes_applied": [],
+      "original_pentagon_score": 5,
+      "violations_before": 0,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/tools/organize_project_files.gd",
+      "fixes_applied": [],
+      "original_pentagon_score": 5,
+      "violations_before": 0,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/tools/script_migration_helper.gd",
+      "fixes_applied": [],
+      "original_pentagon_score": 5,
+      "violations_before": 0,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/tutorial/tutorial_manager.gd",
+      "fixes_applied": [],
+      "original_pentagon_score": 5,
+      "violations_before": 0,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/ui/advanced_object_inspector.gd",
+      "fixes_applied": [],
+      "original_pentagon_score": 5,
+      "violations_before": 0,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/ui/asset_creator_panel.gd",
+      "fixes_applied": [],
+      "original_pentagon_score": 5,
+      "violations_before": 0,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/ui/blink_animation_controller.gd",
+      "fixes_applied": [],
+      "original_pentagon_score": 5,
+      "violations_before": 0,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/ui/bryce_grid_interface.gd",
+      "fixes_applied": [],
+      "original_pentagon_score": 5,
+      "violations_before": 0,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/ui/console_world_view.gd",
+      "fixes_applied": [],
+      "original_pentagon_score": 5,
+      "violations_before": 0,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/ui/creative_mode_inventory.gd",
+      "fixes_applied": [],
+      "original_pentagon_score": 5,
+      "violations_before": 0,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/ui/enhanced_object_inspector.gd",
+      "fixes_applied": [],
+      "original_pentagon_score": 5,
+      "violations_before": 0,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/ui/feature_test_panel.gd",
+      "fixes_applied": [],
+      "original_pentagon_score": 5,
+      "violations_before": 0,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/ui/global_variable_spreadsheet.gd",
+      "fixes_applied": [],
+      "original_pentagon_score": 5,
+      "violations_before": 0,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/ui/grid_list_console_bridge.gd",
+      "fixes_applied": [],
+      "original_pentagon_score": 5,
+      "violations_before": 0,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/ui/height_map_overlay.gd",
+      "fixes_applied": [],
+      "original_pentagon_score": 5,
+      "violations_before": 0,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/ui/interactive_tutorial_system.gd",
+      "fixes_applied": [],
+      "original_pentagon_score": 5,
+      "violations_before": 0,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/ui/object_inspector.gd",
+      "fixes_applied": [],
+      "original_pentagon_score": 5,
+      "violations_before": 0,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/ui/script_orchestra_interface.gd",
+      "fixes_applied": [],
+      "original_pentagon_score": 5,
+      "violations_before": 0,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/ui/simple_testing_guide.gd",
+      "fixes_applied": [],
+      "original_pentagon_score": 5,
+      "violations_before": 0,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/ui/systematic_test_tutorial.gd",
+      "fixes_applied": [],
+      "original_pentagon_score": 5,
+      "violations_before": 0,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/ui/unified_grid_list_system.gd",
+      "fixes_applied": [],
+      "original_pentagon_score": 5,
+      "violations_before": 0,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/ui/universal_object_inspector.gd",
+      "fixes_applied": [],
+      "original_pentagon_score": 5,
+      "violations_before": 0,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/ui/visual_indicator_system.gd",
+      "fixes_applied": [],
+      "original_pentagon_score": 5,
+      "violations_before": 0,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/zones/creation_zone.gd",
+      "fixes_applied": [],
+      "original_pentagon_score": 5,
+      "violations_before": 0,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/zones/visualization_zone.gd",
+      "fixes_applied": [],
+      "original_pentagon_score": 5,
+      "violations_before": 0,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/zones/zone.gd",
+      "fixes_applied": [],
+      "original_pentagon_score": 5,
+      "violations_before": 0,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/zones/zone_system.gd",
+      "fixes_applied": [],
+      "original_pentagon_score": 5,
+      "violations_before": 0,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/archive/deprecated/astral_beings_OLD_DEPRECATED.gd",
+      "fixes_applied": [],
+      "original_pentagon_score": 5,
+      "violations_before": 0,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/archive/deprecated/astral_being_enhanced_OLD_DEPRECATED.gd",
+      "fixes_applied": [],
+      "original_pentagon_score": 5,
+      "violations_before": 0,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/jsh_framework/ai/ai_module.gd",
+      "fixes_applied": [],
+      "original_pentagon_score": 5,
+      "violations_before": 0,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/patches/debug_integration_patch.gd",
+      "fixes_applied": [
+        "extends Node → extends UniversalBeingBase"
+      ],
+      "original_pentagon_score": 5,
+      "violations_before": 1,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/patches/spawn_limiter.gd",
+      "fixes_applied": [
+        "extends Node → extends UniversalBeingBase"
+      ],
+      "original_pentagon_score": 5,
+      "violations_before": 1,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/ui/universal_being_creator_ui.gd",
+      "fixes_applied": [
+        "extends Control → extends UniversalBeingBase"
+      ],
+      "original_pentagon_score": 5,
+      "violations_before": 1,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/core/timer_manager.gd",
+      "fixes_applied": [
+        "extends Node → extends UniversalBeingBase",
+        "Timer.new() → TimerManager.get_timer()",
+        "Added _init",
+        "Added _input",
+        "Added sewers"
+      ],
+      "original_pentagon_score": 2,
+      "violations_before": 5,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/core/universal_being_ui.gd",
+      "fixes_applied": [
+        "Added _ready",
+        "Added _process",
+        "Added _input",
+        "Added sewers"
+      ],
+      "original_pentagon_score": 1,
+      "violations_before": 0,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/core/pentagon_initialization_queue.gd",
+      "fixes_applied": [
+        "extends Node → extends UniversalBeingBase",
+        "Timer.new() → TimerManager.get_timer()",
+        "Added _init",
+        "Added _process",
+        "Added _input",
+        "Added sewers"
+      ],
+      "original_pentagon_score": 1,
+      "violations_before": 2,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/core/material_library.gd",
+      "fixes_applied": [
+        "extends Node → extends UniversalBeingBase",
+        "StandardMaterial3D.new() → MaterialLibrary.get_material()",
+        "Added _init",
+        "Added _process",
+        "Added _input",
+        "Added sewers"
+      ],
+      "original_pentagon_score": 1,
+      "violations_before": 4,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/core/universal_being_3d.gd",
+      "fixes_applied": [
+        "Added _init",
+        "Added _ready",
+        "Added _process",
+        "Added _input",
+        "Added sewers"
+      ],
+      "original_pentagon_score": 0,
+      "violations_before": 0,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/core/universal_being_system.gd",
+      "fixes_applied": [
+        "Added _init",
+        "Added _ready",
+        "Added _process",
+        "Added _input",
+        "Added sewers"
+      ],
+      "original_pentagon_score": 0,
+      "violations_before": 0,
+      "dry_run": false
+    },
+    {
+      "script": "scripts/examples/pentagon_dependency_examples.gd",
+      "fixes_applied": [
+        "Added _init",
+        "Added _ready",
+        "Added _process",
+        "Added _input",
+        "Added sewers"
+      ],
+      "original_pentagon_score": 0,
+      "violations_before": 0,
+      "dry_run": false
+    }
+  ],
+  "summary": {
+    "migration_timestamp": "20250601_014301",
+    "success_rate": 100.0,
+    "total_fixes_applied": 64,
+    "backup_location": "/mnt/c/Users/Percision 15/talking_ragdoll_game/pentagon_migration_backups"
+  }
+}

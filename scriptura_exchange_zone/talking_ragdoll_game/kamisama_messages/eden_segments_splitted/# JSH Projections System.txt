@@ -1,0 +1,209 @@
+#
+# JSH Projections System
+#
+#      oooo  .oooooo..o ooooo   ooooo 
+#      `888 d8P'    `Y8 `888'   `888' 
+#       888 Y88bo.       888     888     ┏┓    •    •       ┏┓         
+#       888  `"Y8888o.   888ooooo888     ┃┃┏┓┏┓┓┏┓┏╋┓┏┓┏┓┏  ┗┓┓┏┏╋┏┓┏┳┓
+#       888      `"Y88b  888     888     ┣┛┛ ┗┛┃┗ ┗┗┗┗┛┛┗┛  ┗┛┗┫┛┗┗ ┛┗┗
+#       888 oo     .d8P  888     888           ┛               ┛      
+#   .o. 88P 8""88888P'  o888o   o888o 
+#   `Y888P                            
+#
+# JSH Projections System
+#
+
+# input, so far on laptop i just use mouse to interact, click, release, drag, left, right, middle one for camera
+func _input(event: InputEvent):
+	if event is InputEventMouseButton:
+		if event.button_index == MOUSE_BUTTON_LEFT:
+			if event.pressed:
+				print("_input : Left mouse clicked at: ", event.position)
+				var current_ray_points = get_ray_points(event.position)
+			else:
+				print("_input : Left mouse released at: ", event.position)
+		
+		if event.button_index == MOUSE_BUTTON_RIGHT:
+			if event.pressed:
+				pass
+				#print("_input : Right mouse clicked at: ", event.position)
+			else:
+				#print("_input : Right mouse released at: ", event.position)
+				pass
+	# Handle mouse motion
+	if event is InputEventMouseMotion:
+		#print("_input : Mouse moved to: ", event.position)
+		# For relative movement:
+		#print("_input : Mouse movement delta: ", event.relative)
+		pass
+		
+	camera.input(event)
+
+
+# ray points for mouse, with that we click things, change scenes, interact
+func get_ray_points(mouse_position: Vector2):
+	# Get the ray from the camera
+	var from = camera.project_ray_origin(mouse_position)
+	var ray_normal = camera.project_ray_normal(mouse_position)
+	var to = from + ray_normal * ray_distance_set
+	
+	#print(get_world_3d())
+	var space_state = get_world_3d().direct_space_state
+	var query = PhysicsRayQueryParameters3D.create(from, to)
+	var result = space_state.intersect_ray(query)
+	
+	var data : Array = []
+	data.append(result)
+	data.append(to)
+	data.append(from)
+	print(" to : " , to , " result : " , result , " from : " , from)
+	create_new_task("ray_cast_data_preparer", data) #
+
+func ray_cast_data_preparer(data_ray_cast):
+	var results = data_ray_cast[0]
+	var tos = data_ray_cast[1]
+	var froms = data_ray_cast[2]
+	multi_threaded_ray_cast(results, tos, froms)
+
+func multi_threaded_ray_cast(result, to, from):
+	print(" are we even at begining?")
+	if result:
+		to = result.position
+		var collider = result.collider
+		# Get the parent "thing" node
+		var parent = collider.get_parent()
+		var containter = parent.get_parent()
+		var get_container = func(node: Node, method_name: String):
+			while node:
+				if node.has_method(method_name):
+					return node
+				node = node.get_parent()
+			return null
+		#print(" maytbe there?")
+		var container = get_container.call(containter, "get_datapoint")
+		
+#		print("containter : ", container)
+		var datapoint = container.get_datapoint()
+		var current_node = collider
+		#print("current_node : " , current_node)
+		#await self.get_tree().process_frame
+		while current_node != null and not current_node.name.begins_with("thing_"):
+			current_node = current_node.get_parent()
+		
+		if current_node:
+			#var array_of_things_that_shall_remain = 
+			if datapoint:
+				datapoint.thing_interaction(current_node)
+			else:
+				print(" somehow we didnt get that datapoint, but we got different kinds of data :) " , container.name)
+				var stringy_container = str(container.name)
+				tree_mutex.lock()
+				var datapoint_path_ray_cast = scene_tree_jsh["main_root"]["branches"][stringy_container]["datapoint"]["datapoint_path"]
+				#print(scene_tree_jsh["main_root"]["branches"][stringy_container]["datapoint"]["datapoint_path"])
+				tree_mutex.unlock()
+				datapoint = jsh_tree_get_node(datapoint_path_ray_cast)
+				if datapoint:
+					datapoint.thing_interaction(current_node)
+				else:
+					print(" i guess it didn work out ?")
+			#if array_of_things_that_shall_remain != null:
+				#var array_size = array_of_things_that_shall_remain[1].size()
+				#if array_size > 0:
+					#secondary_interaction_after_rc(array_of_things_that_shall_remain[1])
+				#unload_nodes(array_of_things_that_shall_remain[0][0])
+	
+	#print(" do we ray cast? ")
+	var line_node_now = jsh_tree_get_node("akashic_records/thing_3")
+	if line_node_now:
+		var start_end_points : Array = [from, to]
+		#print(line_node_now.get_script())
+		#print(line_node_now.has_method("change_points_of_line"))
+		line_node_now.change_points_of_line(start_end_points)
+		return [from, to]
+
+# the secondary interaction after first one, right now, we used it only for unloading containers, per specific scenes, where we can pull out more than one scene, so anywhere, can also have 
+# more interaction of any kind, so far i only needed that one, rest is prepared
+func secondary_interaction_after_rc(array_of_data):
+	var size_of_array : int = array_of_data.size()
+	var counter_to_know_which : int = 0
+	for interactions_to_do in array_of_data :
+		var array_to_have_fun_with =  array_of_data[counter_to_know_which]
+		counter_to_know_which +=1
+		var counter_inter : int = 0
+		for inter in InteractionsBank.type_of_interactions_0:
+			if array_of_data[0][0] == inter:
+				match counter_inter: # "change_scene", "add_scene", "change_text", "call_function", "unload_container"
+					0: # change_scene
+						counter_inter = -1
+					1: # add_scene
+						counter_inter = -1
+					2: # change_text
+						counter_inter = -1
+					3: # call_function
+						counter_inter = -1
+					4: # unload_container
+						unload_container(array_to_have_fun_with[1])
+						counter_inter = -1
+					5: # dunno, we dont have one yet hehe
+						counter_inter = -1
+			counter_inter +=1
+
+
+
+
+# get node or null mate, this shit is fantastic, get something or nothing and say your prayers or something
+# here we were unloading containers
+func unload_container(container_to_unload):
+	print(" container_to_unload : " , container_to_unload)
+	cache_tree_branch_fully(container_to_unload)
+	process_to_unload_records(container_to_unload)
+	
+	array_counting_mutex.lock()
+	
+	# if has branch name
+	if array_for_counting_finish.has(container_to_unload):
+		print(" cache branch entire contionaeir now lololo")
+		array_for_counting_finish.erase(container_to_unload)
+		#if array_for_counting_finish[new_path_splitter[0]].has(new_path_splitter[1]):
+		#	print(" cache branch we can unload that node ", new_path_splitter[1])
+		##	array_for_counting_finish[new_path_splitter[0]].erase(new_path_splitter[1])
+		#else:
+		#	print(" cache branch that node does not exist in that container", new_path_splitter[0])
+	else:
+		print(" cache branch that container does not exist")
+		# if has child_name
+	
+	array_counting_mutex.unlock()
+	
+	#unload_container_from_dictionary_of_nodes(container_to_unload)
+
+# hmm here we are unloading containers, after going from raypoint, to datapoint to check what possibilities were there
+# it is faster my way
+func process_to_unload_records(container_name_to_unload):
+	var parts = container_name_to_unload.split("_")
+	if parts.size() < 2:
+		return
+	var records_sets_name
+	if parts.size() > 2:
+		records_sets_name = parts[0] + "_" + parts[1]
+	else:
+		records_sets_name = parts[0]
+	var counter_for_rec_ty : int = 0
+	
+	active_r_s_mut.lock()
+	if active_record_sets[records_sets_name + "_" ].has("metadata"):
+		active_record_sets[records_sets_name + "_" ]["metadata"]["container_count"] = 0
+		active_r_s_mut.unlock()
+		
+		for records_types in BanksCombiner.combination_0:
+			var record_to_unloadin = records_sets_name + "_" + BanksCombiner.data_names_0[counter_for_rec_ty]
+			counter_for_rec_ty +=1
+			
+			unload_record_set(records_sets_name , record_to_unloadin)
+			
+		active_r_s_mut.lock()
+		active_record_sets[records_sets_name + "_" ].erase("metadata")
+		active_r_s_mut.unlock()
+		
+	else:
+		active_r_s_mut.unlock()

@@ -1,0 +1,163 @@
+[gd_scene load_steps=2 format=3 uid="uid://bf1c44k53p83r"]
+
+[ext_resource type="Script" path="res://12_turns_system/godot4_migration_test_runner.gd" id="1_t23mg"]
+
+[node name="MigrationTestRunner" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_t23mg")
+
+[node name="Layout" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ControlPanel" type="HBoxContainer" parent="Layout"]
+layout_mode = 2
+
+[node name="RunAllButton" type="Button" parent="Layout/ControlPanel"]
+layout_mode = 2
+text = "Run All Tests"
+
+[node name="RunSelectedButton" type="Button" parent="Layout/ControlPanel"]
+layout_mode = 2
+disabled = true
+text = "Run Selected Test"
+
+[node name="BatchTestButton" type="Button" parent="Layout/ControlPanel"]
+layout_mode = 2
+text = "Batch Test Directory"
+
+[node name="BatchPathInput" type="LineEdit" parent="Layout/ControlPanel"]
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "Enter directory path for batch testing"
+
+[node name="BrowseButton" type="Button" parent="Layout/ControlPanel"]
+layout_mode = 2
+text = "Browse"
+
+[node name="GenerateReportButton" type="Button" parent="Layout/ControlPanel"]
+layout_mode = 2
+text = "Generate Report"
+
+[node name="TestProgress" type="VBoxContainer" parent="Layout"]
+layout_mode = 2
+
+[node name="ProgressBar" type="ProgressBar" parent="Layout/TestProgress"]
+layout_mode = 2
+max_value = 1.0
+
+[node name="StatusLabel" type="Label" parent="Layout/TestProgress"]
+layout_mode = 2
+text = "Ready"
+
+[node name="ContentPanel" type="HBoxContainer" parent="Layout"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="TestPanel" type="VBoxContainer" parent="Layout"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.3
+
+[node name="TestHeader" type="Label" parent="Layout/TestPanel"]
+layout_mode = 2
+text = "Test Cases"
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Layout/TestPanel"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="TestList" type="VBoxContainer" parent="Layout/TestPanel/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="ResultPanel" type="VBoxContainer" parent="Layout"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.7
+
+[node name="ResultTitle" type="Label" parent="Layout/ResultPanel"]
+layout_mode = 2
+text = "Test Results"
+
+[node name="ResultView" type="RichTextLabel" parent="Layout/ResultPanel"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.5
+bbcode_enabled = true
+text = "Run a test to see results"
+
+[node name="ResultTabs" type="TabContainer" parent="Layout/ResultPanel"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="ExpectedTab" type="VBoxContainer" parent="Layout/ResultPanel/ResultTabs"]
+layout_mode = 2
+
+[node name="ExpectedText" type="TextEdit" parent="Layout/ResultPanel/ResultTabs/ExpectedTab"]
+layout_mode = 2
+size_flags_vertical = 3
+editable = false
+
+[node name="ActualTab" type="VBoxContainer" parent="Layout/ResultPanel/ResultTabs"]
+visible = false
+layout_mode = 2
+
+[node name="ActualText" type="TextEdit" parent="Layout/ResultPanel/ResultTabs/ActualTab"]
+layout_mode = 2
+size_flags_vertical = 3
+editable = false
+
+[node name="DiffTab" type="VBoxContainer" parent="Layout/ResultPanel/ResultTabs"]
+visible = false
+layout_mode = 2
+
+[node name="DiffText" type="RichTextLabel" parent="Layout/ResultPanel/ResultTabs/DiffTab"]
+layout_mode = 2
+size_flags_vertical = 3
+bbcode_enabled = true
+
+[node name="SummaryPanel" type="PanelContainer" parent="Layout"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Layout/SummaryPanel"]
+layout_mode = 2
+
+[node name="SummaryLabel" type="Label" parent="Layout/SummaryPanel/VBoxContainer"]
+layout_mode = 2
+text = "Test Summary"
+
+[node name="TotalTests" type="Label" parent="Layout/SummaryPanel/VBoxContainer"]
+layout_mode = 2
+text = "Total Tests: 0"
+
+[node name="PassedTests" type="Label" parent="Layout/SummaryPanel/VBoxContainer"]
+layout_mode = 2
+text = "Passed: 0"
+
+[node name="FailedTests" type="Label" parent="Layout/SummaryPanel/VBoxContainer"]
+layout_mode = 2
+text = "Failed: 0"
+
+[node name="SuccessRate" type="Label" parent="Layout/SummaryPanel/VBoxContainer"]
+layout_mode = 2
+text = "Success Rate: 0%"
+
+[node name="FileDialog" type="FileDialog" parent="."]
+title = "Open a Directory"
+size = Vector2i(600, 400)
+ok_button_text = "Select Current Folder"
+file_mode = 2
+access = 2

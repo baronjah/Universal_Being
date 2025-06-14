@@ -1,0 +1,90 @@
+# Main.gd Summary - Lines 7000-7500
+
+## Visual Effects System (Lines 7000-7073)
+- **Screen Effects** (Lines 7000-7019)
+  - Scanline effect for display elements (every 4th line darker)
+  - Central glow effect based on distance calculation
+  - Digital noise addition through add_noise_pattern
+  
+- **Gradient Texture Generation** (Lines 7023-7051)
+  - Creates diagonal gradients with light-to-dark transitions
+  - Uses spectrum color system for base coloration
+  - Applies noise patterns for visual complexity
+
+- **Noise Pattern System** (Lines 7053-7073)
+  - Procedurally generates noise for texture detail
+  - Intensity-controlled random variation
+  - Only modifies non-transparent pixels
+
+- **Line Segment Operations** (Lines 7075-7087)
+  - Helper function to find closest point on a line segment
+  - Used for border detection in visual elements
+
+## Mesh Processing (Lines 7096-7195)
+- **UV Generation** (Lines 7098-7195)
+  - Automatically generates UV coordinates for meshes
+  - Handles both ArrayMesh and PrimitiveMesh types
+  - Normalizes UVs based on the mesh's bounding box (AABB)
+  - Preserves material assignment during UV regeneration
+  - Optimized for horizontal surfaces using XZ coordinates
+
+## Collision System (Lines 7197-7263)
+- **Collision Generation** (Lines 7199-7263)
+  - Creates both StaticBody3D and Area3D components for physical interaction
+  - Implements shape-specific collision strategies:
+    - Flat shapes use ConvexPolygonShape3D
+    - Handles buttons, cursors, screens, circles with appropriate colliders
+    - Special handling for heightmaps
+  - Creates "aura" collision areas slightly larger than the object
+  - Sets up physics layers and masks
+  - Uses tasked_children for node integration
+
+## ASCII Art and System Tests (Lines 7377-7418)
+- **JSH Engine Banner** (Lines 7377-7387)
+  - Decorative ASCII art marking system test section
+  
+- **System Tests** (Lines 7389-7418)
+  - Test framework begins with commented notes
+  - check_system_function: Validates system capabilities
+  - check_if_scene_was_set: Scene validation and error recovery
+  - setup_system_checks: Initializes readiness flags
+
+## System Testing and Validation (Lines 7419-7447)
+- **Initialization Testing** (Lines 7424-7436)
+  - Comprehensive system validation via test_init
+  - Stage-based validation for environment and threads
+  - Supports retry logic for thread initialization
+  
+- **Environment Validation** (Lines 7440-7447)
+  - Gathers system specifications
+  - Checks OS, processor count, Vulkan version, etc.
+  - Timestamps the validation operation
+
+## Error Handling and Repair (Lines 7448-7499)
+- **JSH Engine Repair Banner** (Lines 7450-7461)
+  - Decorative ASCII art marking system repair section
+  
+- **Error Logging** (Lines 7467-7483)
+  - Thread-safe error state logging with mutex protection
+  - Error tracking with timestamps and occurrence counting
+  - Triggers deep repair when error threshold exceeded (>5)
+  
+- **Health Monitoring** (Lines 7484-7499)
+  - Continuous health check system (every 5 seconds)
+  - Monitors thread pool for processing backlogs
+  - Thread-safe container state verification
+  - Error recording for problematic containers (status == -1)
+
+## Key Design Patterns
+- Thread-safe operations with mutex protection
+- Asynchronous health monitoring
+- Registry-based error tracking
+- Stage-based system validation
+- Smart resource management (materials preserved during mesh operations)
+
+## Architecture Insights
+- The system implements robust error handling with deep repair capability
+- Visual elements have sophisticated rendering with multiple quality layers
+- Physical interaction is carefully managed with distinct collision and "aura" zones
+- Health monitoring runs continuously to detect and address issues
+- System environment validation provides diagnostic information

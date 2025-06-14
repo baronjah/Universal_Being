@@ -1,0 +1,74 @@
+[gd_scene load_steps=9 format=3 uid="uid://dh6l7b18s4fcn"]
+
+[ext_resource type="Script" path="res://code/gdscript/scripts/universe_particles_physics/space_game_main.gd" id="1_2ojtm"]
+[ext_resource type="PackedScene" uid="uid://dbtykr1r2o4sx" path="res://scenes/Galaxies.tscn" id="2_5r17b"]
+[ext_resource type="PackedScene" uid="uid://b2qwdqm0d1ht1" path="res://scenes/GalaxyCloseUp.tscn" id="3_5tmm0"]
+[ext_resource type="PackedScene" uid="uid://dosjp4u2gdm1q" path="res://scenes/CelestialBody.tscn" id="4_eevdo"]
+[ext_resource type="Script" path="res://code/gdscript/scripts/elements_shapes_projection/element_manager.gd" id="5_6kntw"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_0usfk"]
+sky_horizon_color = Color(0.0352941, 0.0352941, 0.0705882, 1)
+sky_curve = 0.0718889
+ground_bottom_color = Color(0.133333, 0.133333, 0.133333, 1)
+ground_horizon_color = Color(0.0392157, 0.0470588, 0.054902, 1)
+
+[sub_resource type="Sky" id="Sky_j4qnr"]
+sky_material = SubResource("ProceduralSkyMaterial_0usfk")
+
+[sub_resource type="Environment" id="Environment_e6u2e"]
+background_mode = 2
+sky = SubResource("Sky_j4qnr")
+ambient_light_color = Color(0.109804, 0.109804, 0.109804, 1)
+tonemap_mode = 2
+glow_enabled = true
+glow_intensity = 0.3
+glow_bloom = 0.06
+glow_blend_mode = 1
+fog_enabled = true
+fog_light_color = Color(0.0196078, 0.0196078, 0.0392157, 1)
+fog_density = 0.003
+fog_sky_affect = 0.05
+volumetric_fog_enabled = true
+volumetric_fog_density = 0.01
+
+[node name="ElementSpaceDemo" type="Node3D"]
+script = ExtResource("1_2ojtm")
+universe_scene = ExtResource("2_5r17b")
+galaxy_scene = ExtResource("3_5tmm0")
+planet_scene = ExtResource("4_eevdo")
+element_scene = ExtResource("5_6kntw")
+start_scale = "universe"
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_e6u2e")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.646177, -0.47848, 0.594535, 0, 0.77907, 0.626859, -0.763129, -0.405057, 0.503434, 0, 0, 0)
+light_color = Color(0.756863, 0.74902, 0.819608, 1)
+shadow_enabled = true
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.965926, 0.258819, 0, -0.258819, 0.965926, 0, 20, 50)
+
+[node name="InfoLabel" type="Label" parent="."]
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -64.0
+offset_right = 344.0
+grow_vertical = 0
+text = "Space Navigation: WASD + Mouse
+Scale Transitions: Click on objects
+Element View: Press E on a planet
+Return to Space: Press Escape"
+
+[node name="UniverseController" type="Node3D" parent="."]
+script = ExtResource("5_6kntw")
+
+[node name="TransitionOverlay" type="ColorRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0)

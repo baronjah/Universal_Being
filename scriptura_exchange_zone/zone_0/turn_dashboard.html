@@ -1,0 +1,987 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>12-Turn System Dashboard</title>
+    <style>
+        :root {
+            --primary: #6c5ce7;
+            --secondary: #a29bfe;
+            --accent: #fd79a8;
+            --background: #12151f;
+            --card-bg: #1e2235;
+            --text: #dfe6e9;
+            --success: #00b894;
+            --warning: #fdcb6e;
+            --danger: #ff7675;
+        }
+        
+        body {
+            font-family: 'Segoe UI', 'Roboto', system-ui, sans-serif;
+            background-color: var(--background);
+            color: var(--text);
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            position: relative;
+        }
+        
+        h1 {
+            color: var(--primary);
+            font-size: 2.5rem;
+            margin: 0;
+            text-shadow: 0 0 10px rgba(108, 92, 231, 0.3);
+        }
+        
+        h2 {
+            color: var(--secondary);
+            font-size: 1.5rem;
+            margin: 0 0 20px 0;
+        }
+        
+        .turn-progress {
+            margin: 20px 0;
+            height: 30px;
+            background: #2d3436;
+            border-radius: 15px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            width: 25%; /* Will be set via JavaScript */
+            border-radius: 15px;
+            transition: width 0.5s ease;
+        }
+        
+        .progress-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-weight: bold;
+            text-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+        }
+        
+        .dashboard {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+        
+        .card {
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+        }
+        
+        .card h3 {
+            color: var(--accent);
+            border-bottom: 2px solid var(--accent);
+            padding-bottom: 10px;
+            margin-top: 0;
+        }
+        
+        .turn-system {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+        }
+        
+        .turn {
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            padding: 15px;
+            text-align: center;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        
+        .turn-number {
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background-color: var(--accent);
+            color: var(--background);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+        
+        .turn.current {
+            background-color: rgba(108, 92, 231, 0.2);
+            border: 2px solid var(--primary);
+        }
+        
+        .turn.completed {
+            background-color: rgba(0, 184, 148, 0.1);
+            border: 2px solid var(--success);
+        }
+        
+        .turn.future {
+            opacity: 0.7;
+            background-color: rgba(253, 203, 110, 0.1);
+            border: 2px solid var(--warning);
+        }
+        
+        .turn-phase {
+            font-weight: bold;
+            margin-top: 10px;
+            color: var(--secondary);
+        }
+        
+        .action-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 30px;
+            justify-content: center;
+        }
+        
+        button {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+        }
+        
+        button:hover {
+            background-color: var(--secondary);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        button.danger {
+            background-color: var(--danger);
+        }
+        
+        button.success {
+            background-color: var(--success);
+        }
+        
+        button.warning {
+            background-color: var(--warning);
+            color: #2d3436;
+        }
+        
+        button svg {
+            margin-right: 8px;
+        }
+        
+        .terminal-window {
+            background-color: #000;
+            border-radius: 10px;
+            padding: 15px;
+            font-family: 'Consolas', 'Monaco', monospace;
+            max-height: 300px;
+            overflow-y: auto;
+            margin-top: 20px;
+        }
+        
+        .terminal-output {
+            color: #00ff00;
+            white-space: pre-wrap;
+            word-break: break-all;
+        }
+        
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 15px 20px;
+            background-color: var(--success);
+            color: white;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            transform: translateX(120%);
+            transition: transform 0.3s ease;
+            z-index: 1000;
+        }
+        
+        .notification.show {
+            transform: translateX(0);
+        }
+        
+        .notification.error {
+            background-color: var(--danger);
+        }
+        
+        .settings-panel {
+            display: none;
+            margin-top: 30px;
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            padding: 20px;
+            animation: fadeIn 0.3s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: var(--secondary);
+        }
+        
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #2d3436;
+            background-color: var(--background);
+            color: var(--text);
+        }
+        
+        .data-display {
+            max-height: 200px;
+            overflow-y: auto;
+            margin-top: 15px;
+        }
+        
+        .file-list {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .file-list li {
+            padding: 8px 10px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .file-list li:hover {
+            background-color: rgba(255, 255, 255, 0.05);
+        }
+        
+        .quick-terminal {
+            display: flex;
+            margin-top: 20px;
+        }
+        
+        .quick-terminal input {
+            flex-grow: 1;
+            padding: 10px;
+            border-radius: 5px 0 0 5px;
+            border: 1px solid #2d3436;
+            background-color: var(--background);
+            color: var(--text);
+        }
+        
+        .quick-terminal button {
+            border-radius: 0 5px 5px 0;
+            padding: 10px 15px;
+        }
+        
+        .fade-transition {
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+        
+        .fade-transition.show {
+            opacity: 1;
+        }
+        
+        .tabs {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .tab {
+            padding: 10px 20px;
+            cursor: pointer;
+            color: var(--text);
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s ease;
+        }
+        
+        .tab.active {
+            color: var(--secondary);
+            border-bottom-color: var(--secondary);
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        .system-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .info-item {
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            padding: 15px;
+            text-align: center;
+        }
+        
+        .info-item h4 {
+            color: var(--accent);
+            margin: 0 0 10px 0;
+        }
+        
+        .value {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+        
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: var(--secondary);
+            animation: spin 1s ease-in-out infinite;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>12-Turn System Dashboard</h1>
+            <h2 id="current-phase">Current Turn: 3 - Complexity</h2>
+        </header>
+        
+        <div class="turn-progress">
+            <div class="progress-bar" id="turn-progress-bar"></div>
+            <div class="progress-text" id="turn-progress-text">25% Complete</div>
+        </div>
+        
+        <div class="tabs">
+            <div class="tab active" data-tab="dashboard">Dashboard</div>
+            <div class="tab" data-tab="turns">Turn System</div>
+            <div class="tab" data-tab="terminal">Terminal</div>
+            <div class="tab" data-tab="settings">Settings</div>
+        </div>
+        
+        <div class="tab-content active" id="dashboard-tab">
+            <div class="dashboard">
+                <div class="card">
+                    <h3>System Status</h3>
+                    <div class="system-info">
+                        <div class="info-item">
+                            <h4>Current Turn</h4>
+                            <div class="value" id="current-turn">3</div>
+                        </div>
+                        <div class="info-item">
+                            <h4>Turn Phase</h4>
+                            <div class="value" id="current-phase-short">Complexity</div>
+                        </div>
+                        <div class="info-item">
+                            <h4>Cycle Progress</h4>
+                            <div class="value" id="cycle-progress">25%</div>
+                        </div>
+                        <div class="info-item">
+                            <h4>Auto Advance</h4>
+                            <div class="value" id="auto-advance">Enabled</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <h3>Quick Actions</h3>
+                    <div class="action-buttons">
+                        <button id="advance-turn" class="success">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                <path d="M8 0a8 8 0 1 1 0 16A8 8 0 0 1 8 0zM4.5 7.5a.5.5 0 0 0 0 1h5.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H4.5z"/>
+                            </svg>
+                            Advance Turn
+                        </button>
+                        <button id="save-data">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                <path d="M2 1a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H9.5a1 1 0 0 0-1 1v7.293l2.646-2.647a.5.5 0 0 1 .708.708l-3.5 3.5a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L7.5 9.293V2a2 2 0 0 1 2-2H14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h2.5a.5.5 0 0 1 0 1H2z"/>
+                            </svg>
+                            Save Current Data
+                        </button>
+                        <button id="sync-drives" class="warning">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                <path d="M11.534 7h3.932a.25.25 0 0 1 .192.41l-1.966 2.36a.25.25 0 0 1-.384 0l-1.966-2.36a.25.25 0 0 1 .192-.41zm-11 2h3.932a.25.25 0 0 0 .192-.41L2.692 6.23a.25.25 0 0 0-.384 0L.342 8.59A.25.25 0 0 0 .534 9z"/>
+                                <path fill-rule="evenodd" d="M8 3c-1.552 0-2.94.707-3.857 1.818a.5.5 0 1 1-.771-.636A6.002 6.002 0 0 1 13.917 7H12.9A5.002 5.002 0 0 0 8 3zM3.1 9a5.002 5.002 0 0 0 8.757 2.182.5.5 0 1 1 .771.636A6.002 6.002 0 0 1 2.083 9H3.1z"/>
+                            </svg>
+                            Sync to D Drive
+                        </button>
+                        <button id="check-files">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                <path d="M10.854 7.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7.5 9.793l2.646-2.647a.5.5 0 0 1 .708 0z"/>
+                                <path d="M4 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H4zm0 1h8a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1z"/>
+                            </svg>
+                            Check File Sizes
+                        </button>
+                    </div>
+                    
+                    <div class="quick-terminal">
+                        <input type="text" id="command-input" placeholder="Enter bash command...">
+                        <button id="run-command">Run</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card">
+                <h3>Recent Activity</h3>
+                <div class="terminal-window">
+                    <div class="terminal-output" id="recent-activity">
+Terminal initialized. 12-Turn System Dashboard ready.
+Current turn: 3 - Complexity phase.
+System operational and waiting for commands...
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="tab-content" id="turns-tab">
+            <div class="card">
+                <h3>Turn System Status</h3>
+                <div class="turn-system" id="turn-system">
+                    <!-- Turn elements will be generated via JavaScript -->
+                </div>
+            </div>
+            
+            <div class="card">
+                <h3>Current Turn Data</h3>
+                <div class="data-display">
+                    <div id="current-turn-data">
+                        <p>Loading current turn data...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="tab-content" id="terminal-tab">
+            <div class="card">
+                <h3>Terminal Access</h3>
+                <div class="terminal-window">
+                    <div class="terminal-output" id="terminal-output">
+Welcome to the 12-Turn System Terminal.
+Type commands below to interact with the system.
+                    </div>
+                </div>
+                <div class="quick-terminal">
+                    <input type="text" id="terminal-input" placeholder="Enter command...">
+                    <button id="terminal-run">Execute</button>
+                </div>
+                
+                <div class="action-buttons">
+                    <button id="launch-terminal" class="warning">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                            <path d="M6 9a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 0 1h-3A.5.5 0 0 1 6 9zM3.854 4.146a.5.5 0 1 0-.708.708L4.793 6.5 3.146 8.146a.5.5 0 1 0 .708.708l2-2a.5.5 0 0 0 0-.708l-2-2z"/>
+                            <path d="M2 1a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2H2zm12 1a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1h12z"/>
+                        </svg>
+                        Launch Terminal Interface
+                    </button>
+                    <button id="run-turn-manager">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                            <path d="M9.405 1.05c-.413-1.4-2.397-1.4-2.81 0l-.1.34a1.464 1.464 0 0 1-2.105.872l-.31-.17c-1.283-.698-2.686.705-1.987 1.987l.169.311c.446.82.023 1.841-.872 2.105l-.34.1c-1.4.413-1.4 2.397 0 2.81l.34.1a1.464 1.464 0 0 1 .872 2.105l-.17.31c-.698 1.283.705 2.686 1.987 1.987l.311-.169a1.464 1.464 0 0 1 2.105.872l.1.34c.413 1.4 2.397 1.4 2.81 0l.1-.34a1.464 1.464 0 0 1 2.105-.872l.31.17c1.283.698 2.686-.705 1.987-1.987l-.169-.311a1.464 1.464 0 0 1 .872-2.105l.34-.1c1.4-.413 1.4-2.397 0-2.81l-.34-.1a1.464 1.464 0 0 1-.872-2.105l.17-.31c.698-1.283-.705-2.686-1.987-1.987l-.311.169a1.464 1.464 0 0 1-2.105-.872l-.1-.34zM8 10.93a2.929 2.929 0 1 1 0-5.86 2.929 2.929 0 0 1 0 5.858z"/>
+                        </svg>
+                        Run Turn Manager
+                    </button>
+                    <button id="setup-d-drive">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                            <path d="M4 16s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1H4Zm4-5.95a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z"/>
+                            <path d="M2 1a2 2 0 0 0-2 2v9.5A1.5 1.5 0 0 0 1.5 14h.653a5.373 5.373 0 0 1 1.066-2H1V3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v9h-2.219c.554.654.89 1.373 1.066 2h.653a1.5 1.5 0 0 0 1.5-1.5V3a2 2 0 0 0-2-2H2Z"/>
+                        </svg>
+                        Setup D Drive
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="tab-content" id="settings-tab">
+            <div class="card">
+                <h3>System Settings</h3>
+                <div class="form-group">
+                    <label for="auto-advance-toggle">Auto Advance Turns:</label>
+                    <select id="auto-advance-toggle">
+                        <option value="true" selected>Enabled</option>
+                        <option value="false">Disabled</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="time-per-turn">Time Per Turn (seconds):</label>
+                    <input type="number" id="time-per-turn" value="300" min="10" max="3600">
+                </div>
+                
+                <div class="form-group">
+                    <label for="max-file-size">Max File Size (KB):</label>
+                    <input type="number" id="max-file-size" value="1024" min="64" max="10240">
+                </div>
+                
+                <div class="action-buttons">
+                    <button id="save-settings" class="success">Save Settings</button>
+                    <button id="reset-settings" class="danger">Reset to Defaults</button>
+                </div>
+            </div>
+            
+            <div class="card">
+                <h3>System Paths</h3>
+                <div class="form-group">
+                    <label for="c-drive-path">C Drive Path:</label>
+                    <input type="text" id="c-drive-path" value="/mnt/c/Users/Percision 15/12_turns_system" readonly>
+                </div>
+                
+                <div class="form-group">
+                    <label for="d-drive-path">D Drive Path:</label>
+                    <input type="text" id="d-drive-path" value="/mnt/d/JSH_Turn_Data" readonly>
+                </div>
+                
+                <div class="form-group">
+                    <label for="screenshots-path">Screenshots Path:</label>
+                    <input type="text" id="screenshots-path" value="/mnt/c/Users/Percision 15/Pictures/Screenshots" readonly>
+                </div>
+                
+                <div class="form-group">
+                    <label for="godot-path">Godot Script Path:</label>
+                    <input type="text" id="godot-path" value="/mnt/c/Users/Percision 15/12_turns_system/godot_turn_system.gd" readonly>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="notification" id="notification">
+        Operation completed successfully!
+    </div>
+    
+    <script>
+        // Configuration
+        const config = {
+            cDrivePath: '/mnt/c/Users/Percision 15/12_turns_system',
+            dDrivePath: '/mnt/d/JSH_Turn_Data',
+            screenshotsPath: '/mnt/c/Users/Percision 15/Pictures/Screenshots',
+            maxTurns: 12,
+            currentTurn: 3, // Will be updated from file
+            turnPhases: [
+                "Genesis", 
+                "Formation", 
+                "Complexity", 
+                "Consciousness", 
+                "Awakening", 
+                "Enlightenment", 
+                "Manifestation", 
+                "Connection", 
+                "Harmony", 
+                "Transcendence", 
+                "Unity", 
+                "Beyond"
+            ],
+            turnDescriptions: [
+                "The beginning of all things; raw potential emerges from void.",
+                "Basic structures take shape; foundational elements are created.",
+                "Systems begin interacting; complexity arises from simplicity.",
+                "Awareness arises within systems; first feedback loops form.",
+                "Recognition of self and other; boundaries begin to form.",
+                "Understanding connections between all elements; insight emerges.",
+                "Bringing forth creation from thought; ideas become reality.",
+                "Building relationships between created elements; networks form.",
+                "Balance between all created elements; systems stabilize.",
+                "Rising beyond initial limitations; transformation occurs.",
+                "All becomes one; unification of created elements.",
+                "Moving beyond the current cycle; preparation for renewal."
+            ]
+        };
+        
+        // DOM Elements
+        const turnProgressBar = document.getElementById('turn-progress-bar');
+        const turnProgressText = document.getElementById('turn-progress-text');
+        const currentPhaseHeader = document.getElementById('current-phase');
+        const currentTurnDisplay = document.getElementById('current-turn');
+        const currentPhaseShort = document.getElementById('current-phase-short');
+        const cycleProgress = document.getElementById('cycle-progress');
+        const autoAdvanceDisplay = document.getElementById('auto-advance');
+        const terminalOutput = document.getElementById('terminal-output');
+        const recentActivity = document.getElementById('recent-activity');
+        const turnSystem = document.getElementById('turn-system');
+        const currentTurnData = document.getElementById('current-turn-data');
+        const notification = document.getElementById('notification');
+        
+        // Initialize turn system display
+        function initializeTurnSystem() {
+            turnSystem.innerHTML = '';
+            for (let i = 1; i <= config.maxTurns; i++) {
+                const turnElement = document.createElement('div');
+                let turnStatus = 'future';
+                
+                if (i < config.currentTurn) {
+                    turnStatus = 'completed';
+                } else if (i === config.currentTurn) {
+                    turnStatus = 'current';
+                }
+                
+                turnElement.className = `turn ${turnStatus}`;
+                turnElement.innerHTML = `
+                    <div class="turn-number">${i}</div>
+                    <div class="turn-phase">${config.turnPhases[i-1]}</div>
+                    <div class="turn-status">${turnStatus.charAt(0).toUpperCase() + turnStatus.slice(1)}</div>
+                `;
+                
+                turnSystem.appendChild(turnElement);
+            }
+        }
+        
+        // Update displays based on current turn
+        function updateDisplays() {
+            const progressPercent = (config.currentTurn / config.maxTurns) * 100;
+            turnProgressBar.style.width = `${progressPercent}%`;
+            turnProgressText.textContent = `${Math.round(progressPercent)}% Complete`;
+            currentPhaseHeader.textContent = `Current Turn: ${config.currentTurn} - ${config.turnPhases[config.currentTurn-1]}`;
+            currentTurnDisplay.textContent = config.currentTurn;
+            currentPhaseShort.textContent = config.turnPhases[config.currentTurn-1];
+            cycleProgress.textContent = `${Math.round(progressPercent)}%`;
+            
+            // Update turn elements
+            initializeTurnSystem();
+        }
+        
+        // Load current turn from file system
+        async function loadCurrentTurn() {
+            try {
+                // In a real implementation, this would call a server-side script
+                // For this demo, we'll use the config value
+                // Simulating loading delay
+                await new Promise(resolve => setTimeout(resolve, 500));
+                
+                addToActivity("✅ Loaded current turn: " + config.currentTurn);
+            } catch (error) {
+                console.error('Error loading current turn:', error);
+                addToActivity("❌ Error loading current turn: " + error.message);
+            }
+            
+            updateDisplays();
+        }
+        
+        // Add message to terminal output
+        function addToTerminal(message) {
+            const timestamp = new Date().toLocaleTimeString();
+            terminalOutput.innerHTML += `\n[${timestamp}] ${message}`;
+            terminalOutput.scrollTop = terminalOutput.scrollHeight;
+        }
+        
+        // Add activity message
+        function addToActivity(message) {
+            const timestamp = new Date().toLocaleTimeString();
+            recentActivity.innerHTML += `\n[${timestamp}] ${message}`;
+            recentActivity.scrollTop = recentActivity.scrollHeight;
+        }
+        
+        // Show notification
+        function showNotification(message, isError = false) {
+            notification.textContent = message;
+            notification.className = isError ? 'notification error' : 'notification';
+            notification.classList.add('show');
+            
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 3000);
+        }
+        
+        // Execute WSL command
+        async function executeWslCommand(command) {
+            addToTerminal(`$ ${command}`);
+            
+            try {
+                // In a real implementation, this would call a server-side script
+                // For this demo, we'll simulate command execution
+                await new Promise(resolve => setTimeout(resolve, 1000));
+                
+                // Simulate different commands
+                let output = '';
+                
+                if (command.includes('turn_manager.sh advance')) {
+                    // Advance turn
+                    config.currentTurn = (config.currentTurn % config.maxTurns) + 1;
+                    output = `Advanced to turn ${config.currentTurn}: ${config.turnPhases[config.currentTurn-1]}`;
+                    updateDisplays();
+                    addToActivity(`⏭️ Advanced to turn ${config.currentTurn}: ${config.turnPhases[config.currentTurn-1]}`);
+                } 
+                else if (command.includes('check')) {
+                    output = 'Checking file sizes...\nAll files within size limits.';
+                    addToActivity('📊 Checked file sizes: All files within limits');
+                }
+                else if (command.includes('sync')) {
+                    output = 'Syncing data to D drive...\nSync completed successfully.';
+                    addToActivity('🔄 Synced data to D drive');
+                }
+                else if (command.includes('ls')) {
+                    output = 'current_turn.txt\nturn_1\nturn_2\nturn_3\nturn_4\nturn_5\nturn_6\nturn_7\nturn_8\nturn_9\nturn_10\nturn_11\nturn_12\nturn_manager.sh\nterminal_interface.sh\nsetup_d_drive.sh\ngodot_turn_system.gd\nturn_dashboard.html';
+                }
+                else if (command.includes('cat')) {
+                    if (command.includes('current_turn.txt')) {
+                        output = String(config.currentTurn);
+                    } else {
+                        output = 'File contents would be displayed here';
+                    }
+                }
+                else {
+                    output = `Command executed: ${command}`;
+                }
+                
+                addToTerminal(output);
+                return output;
+            } catch (error) {
+                console.error('Error executing command:', error);
+                addToTerminal(`Error: ${error.message}`);
+                throw error;
+            }
+        }
+        
+        // Load turn data
+        async function loadTurnData() {
+            currentTurnData.innerHTML = '<p><div class="loading"></div> Loading turn data...</p>';
+            
+            try {
+                // Simulate data loading
+                await new Promise(resolve => setTimeout(resolve, 1000));
+                
+                const turnData = `<h4>Turn ${config.currentTurn} - ${config.turnPhases[config.currentTurn-1]}</h4>
+                <p>${config.turnDescriptions[config.currentTurn-1]}</p>
+                <h4>Files:</h4>
+                <ul class="file-list">
+                    <li>
+                        <span>turn_data.json</span>
+                        <span>2.5 KB</span>
+                    </li>
+                    <li>
+                        <span>complexity_data.txt</span>
+                        <span>1.2 KB</span>
+                    </li>
+                    <li>
+                        <span>system_report_2025-05-11.txt</span>
+                        <span>3.7 KB</span>
+                    </li>
+                </ul>
+                <h4>Status:</h4>
+                <p>Current turn is active and processing normally. All systems functional.</p>`;
+                
+                currentTurnData.innerHTML = turnData;
+            } catch (error) {
+                console.error('Error loading turn data:', error);
+                currentTurnData.innerHTML = `<p>Error loading turn data: ${error.message}</p>`;
+            }
+        }
+        
+        // Event Listeners
+        document.getElementById('advance-turn').addEventListener('click', async () => {
+            try {
+                await executeWslCommand(`${config.cDrivePath}/turn_manager.sh advance`);
+                showNotification(`Advanced to turn ${config.currentTurn}: ${config.turnPhases[config.currentTurn-1]}`);
+                loadTurnData();
+            } catch (error) {
+                showNotification('Error advancing turn: ' + error.message, true);
+            }
+        });
+        
+        document.getElementById('save-data').addEventListener('click', async () => {
+            try {
+                addToActivity(`💾 Saving data for turn ${config.currentTurn}...`);
+                await new Promise(resolve => setTimeout(resolve, 1000));
+                addToActivity(`✅ Data saved for turn ${config.currentTurn}`);
+                showNotification('Data saved successfully');
+            } catch (error) {
+                showNotification('Error saving data: ' + error.message, true);
+            }
+        });
+        
+        document.getElementById('sync-drives').addEventListener('click', async () => {
+            try {
+                await executeWslCommand(`${config.cDrivePath}/terminal_interface.sh sync`);
+                showNotification('Synced to D drive successfully');
+            } catch (error) {
+                showNotification('Error syncing to D drive: ' + error.message, true);
+            }
+        });
+        
+        document.getElementById('check-files').addEventListener('click', async () => {
+            try {
+                await executeWslCommand(`${config.cDrivePath}/turn_manager.sh check`);
+                showNotification('File check completed');
+            } catch (error) {
+                showNotification('Error checking files: ' + error.message, true);
+            }
+        });
+        
+        document.getElementById('run-command').addEventListener('click', async () => {
+            const commandInput = document.getElementById('command-input');
+            const command = commandInput.value.trim();
+            
+            if (command) {
+                try {
+                    await executeWslCommand(command);
+                    commandInput.value = '';
+                } catch (error) {
+                    // Error already handled in executeWslCommand
+                }
+            }
+        });
+        
+        document.getElementById('command-input').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                document.getElementById('run-command').click();
+            }
+        });
+        
+        document.getElementById('terminal-run').addEventListener('click', async () => {
+            const terminalInput = document.getElementById('terminal-input');
+            const command = terminalInput.value.trim();
+            
+            if (command) {
+                try {
+                    await executeWslCommand(command);
+                    terminalInput.value = '';
+                } catch (error) {
+                    // Error already handled in executeWslCommand
+                }
+            }
+        });
+        
+        document.getElementById('terminal-input').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                document.getElementById('terminal-run').click();
+            }
+        });
+        
+        document.getElementById('launch-terminal').addEventListener('click', async () => {
+            try {
+                addToTerminal('Launching terminal interface...');
+                await executeWslCommand(`${config.cDrivePath}/terminal_interface.sh`);
+                addToActivity('🖥️ Launched terminal interface');
+                showNotification('Terminal interface launched');
+            } catch (error) {
+                showNotification('Error launching terminal interface: ' + error.message, true);
+            }
+        });
+        
+        document.getElementById('run-turn-manager').addEventListener('click', async () => {
+            try {
+                addToTerminal('Running turn manager...');
+                await executeWslCommand(`${config.cDrivePath}/turn_manager.sh`);
+                addToActivity('⚙️ Run turn manager');
+                showNotification('Turn manager executed');
+            } catch (error) {
+                showNotification('Error running turn manager: ' + error.message, true);
+            }
+        });
+        
+        document.getElementById('setup-d-drive').addEventListener('click', async () => {
+            try {
+                addToTerminal('Setting up D drive...');
+                await executeWslCommand(`${config.cDrivePath}/setup_d_drive.sh`);
+                addToActivity('💽 Set up D drive storage');
+                showNotification('D drive setup completed');
+            } catch (error) {
+                showNotification('Error setting up D drive: ' + error.message, true);
+            }
+        });
+        
+        document.getElementById('save-settings').addEventListener('click', () => {
+            const autoAdvance = document.getElementById('auto-advance-toggle').value === 'true';
+            const timePerTurn = parseInt(document.getElementById('time-per-turn').value);
+            const maxFileSize = parseInt(document.getElementById('max-file-size').value);
+            
+            // In a real implementation, these would be saved to a configuration file
+            autoAdvanceDisplay.textContent = autoAdvance ? 'Enabled' : 'Disabled';
+            
+            addToActivity(`⚙️ Settings updated: Auto-advance ${autoAdvance ? 'enabled' : 'disabled'}, Time per turn: ${timePerTurn}s, Max file size: ${maxFileSize}KB`);
+            showNotification('Settings saved successfully');
+        });
+        
+        document.getElementById('reset-settings').addEventListener('click', () => {
+            document.getElementById('auto-advance-toggle').value = 'true';
+            document.getElementById('time-per-turn').value = '300';
+            document.getElementById('max-file-size').value = '1024';
+            
+            autoAdvanceDisplay.textContent = 'Enabled';
+            
+            addToActivity('⚙️ Settings reset to defaults');
+            showNotification('Settings reset to defaults');
+        });
+        
+        // Tab switching functionality
+        const tabs = document.querySelectorAll('.tab');
+        const tabContents = document.querySelectorAll('.tab-content');
+        
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                const tabId = tab.getAttribute('data-tab');
+                
+                // Remove active class from all tabs and contents
+                tabs.forEach(t => t.classList.remove('active'));
+                tabContents.forEach(c => c.classList.remove('active'));
+                
+                // Add active class to current tab and content
+                tab.classList.add('active');
+                document.getElementById(`${tabId}-tab`).classList.add('active');
+                
+                // Load content for specific tabs
+                if (tabId === 'turns') {
+                    loadTurnData();
+                }
+            });
+        });
+        
+        // Initialize
+        window.addEventListener('DOMContentLoaded', () => {
+            initializeTurnSystem();
+            loadCurrentTurn();
+            updateDisplays();
+            
+            // Add initial activity
+            addToActivity('🚀 12-Turn System Dashboard initialized');
+            addToActivity('📁 System directory: ' + config.cDrivePath);
+            addToActivity(`⏱️ Current turn: ${config.currentTurn} - ${config.turnPhases[config.currentTurn-1]}`);
+        });
+    </script>
+</body>
+</html>

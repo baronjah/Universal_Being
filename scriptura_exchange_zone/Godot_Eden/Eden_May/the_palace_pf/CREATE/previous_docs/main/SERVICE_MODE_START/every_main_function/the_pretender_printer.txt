@@ -1,0 +1,58 @@
+func the_pretender_printer(node_name: String, node_path_jsh_tree: String, godot_node_type, node_type: String = "Node3D"):
+
+	tree_mutex.lock()
+	if !scene_tree_jsh.has("main_root"):
+		scene_tree_jsh = TreeBlueprints.SCENE_TREE_BLUEPRINT.duplicate(true)
+		scene_tree_jsh["main_root"]["name"] = "main"
+		scene_tree_jsh["main_root"]["type"] = "Node3D"
+		scene_tree_jsh["main_root"]["status"] = "active"
+		scene_tree_jsh["main_root"]["node"] = self
+
+	var path_parts = node_path_jsh_tree.split("/")
+	var current_branch = scene_tree_jsh["main_root"]["branches"]
+	cached_tree_mutex.lock()
+	var cached_current_branch = cached_jsh_tree_branches
+	cached_tree_mutex.unlock()
+	# Track the full path as we build it
+	var current_full_path = ""
+	
+	# Handle path traversal
+	for i in range(path_parts.size()):
+		var part = path_parts[i]
+		current_full_path = current_full_path + "/" + part if current_full_path else part
+		if !current_branch.has(part):
+			if cached_current_branch.has(part):
+				print(" the cached branch has that one ")
+				current_branch[part] = cached_current_branch[part]
+				cached_current_branch.erase(part)
+			else:
+				var new_branch = TreeBlueprints.BRANCH_BLUEPRINT.duplicate(true)
+				new_branch["name"] = part
+				new_branch["type"] = godot_node_type
+				new_branch["jsh_type"] = node_type
+				new_branch["status"] = "pending"
+				new_branch["node"] = null
+				new_branch["metadata"] = {
+					"creation_time": Time.get_ticks_msec(),
+					"full_path": current_full_path,
+					"parent_path": current_full_path.get_base_dir(),
+					"has_collision": false,
+					"has_area": false
+				}
+				if node_type == "datapoint":
+					scene_tree_jsh["main_root"]["branches"][path_parts[0]]["datapoint"] = {
+						"datapoint_name" = new_branch["name"],
+						"datapoint_path" = new_branch["metadata"]["full_path"]
+					}
+				current_branch[part] = new_branch
+
+		if i < path_parts.size() - 1:
+			if !current_branch[part].has("children"):
+				current_branch[part]["children"] = {}
+			current_branch = current_branch[part]["children"]
+			
+			if cached_current_branch.has(part):
+				if cached_current_branch[part].has("children"):
+					print(" the cached branch had them children")
+					cached_current_branch = cached_current_branch[part]["children"]
+	tree_mutex.unlock()

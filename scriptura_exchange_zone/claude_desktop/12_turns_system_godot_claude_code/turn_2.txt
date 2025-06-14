@@ -1,0 +1,223 @@
+# EvolutionManager.gd - Core system for managing evolving codebase
+extends Node
+
+signal function_not_found(class_name: String, function_name: String)
+signal version_updated(file_path: String, old_version: String, new_version: String)
+signal ai_collaboration_needed(task: Dictionary)
+
+var file_registry = {}
+var version_history = {}
+var ai_contributors = {
+	"Claude": {"specialty": "architecture", "active": true},
+	"Luno": {"specialty": "creative", "active": false}, 
+	"Luminus": {"specialty": "optimization", "active": false}
+}
+
+var search_paths = [
+	"res://scripts/core/",
+	"res://scripts/systems/", 
+	"res://scripts/ui/",
+	"res://scripts/scenes/cosmic/",
+	"res://scripts/scenes/planetary/",
+	"res://scripts/scenes/multiverse/",
+	"res://scripts/deprecated/",
+	"res://scripts/ai_generated/"
+]
+
+func _ready():
+	build_file_registry()
+	load_version_history()
+	connect_ai_signals()
+
+# Enhanced file discovery with version fallback
+func find_working_class(class_name: String, context: String = "base") -> Script:
+	var search_patterns = [
+		"%s_v%d_%s_base.gd",
+		"%s_v%d_%s_enhanced.gd", 
+		"%s_v%d_base.gd",
+		"%s_%s.gd",
+		"%s.gd"
+	]
+	
+	# Start with latest version and work backwards
+	var latest_version = get_latest_version(class_name)
+	
+	for version in range(latest_version, 0, -1):
+		for pattern in search_patterns:
+			var filename = pattern % [class_name, version, context]
+			var script = try_load_script(filename)
+			if script and test_script_functionality(script):
+				return script
+	
+	# If nothing found, trigger AI generation
+	request_ai_implementation(class_name, context)
+	return null
+
+# Smart function finder with fallback chain
+func find_function(class_name: String, function_name: String, context: String = "base"):
+	var script = find_working_class(class_name, context)
+	if not script:
+		return null
+		
+	# Test if function exists and works
+	if script.has_method(function_name):
+		if test_function_works(script, function_name):
+			return {"script": script, "function": function_name, "status": "working"}
+	
+	# Search in related classes
+	var related_classes = find_related_classes(class_name)
+	for related_class in related_classes:
+		var result = find_function(related_class, function_name, context)
+		if result and result.status == "working":
+			log_function_redirect(class_name, related_class, function_name)
+			return result
+	
+	# Function not found anywhere - request AI help
+	emit_signal("function_not_found", class_name, function_name)
+	return {"script": null, "function": function_name, "status": "missing"}
+
+# Version control system
+func commit_change(file_path: String, description: String, ai_author: String = "Claude"):
+	var commit_data = {
+		"timestamp": Time.get_datetime_string_from_system(),
+		"file": file_path,
+		"description": description,
+		"hash": generate_hash(file_path + description),
+		"author": ai_author,
+		"branch": get_current_branch(),
+		"file_size": get_file_size(file_path),
+		"lines_changed": count_lines_changed(file_path)
+	}
+	
+	version_history[commit_data.hash] = commit_data
+	save_version_history()
+	emit_signal("version_updated", file_path, get_previous_version(file_path), get_current_version(file_path))
+
+# AI collaboration system
+func request_ai_collaboration(task_type: String, details: Dictionary):
+	var best_ai = select_best_ai_for_task(task_type)
+	
+	var collaboration_task = {
+		"id": generate_uuid(),
+		"type": task_type,
+		"assigned_to": best_ai,
+		"details": details,
+		"priority": calculate_priority(task_type, details),
+		"deadline": calculate_deadline(task_type),
+		"context": gather_context_for_task(details),
+		"previous_attempts": get_previous_attempts(task_type, details)
+	}
+	
+	emit_signal("ai_collaboration_needed", collaboration_task)
+	return collaboration_task
+
+# Context-aware loading for different game scenes
+func load_context_appropriate_files(scene_context: String):
+	var context_files = {
+		"cosmic": ["CosmicNavigation", "StarSystem", "UniverseRenderer"],
+		"planetary": ["PlanetSurface", "TerrainSystem", "AtmosphereRenderer"], 
+		"multiverse": ["DimensionPortal", "RealityBridge", "QuantumState"],
+		"terminal": ["TerminalInterface", "CommandProcessor", "DataVisualization"]
+	}
+	
+	if scene_context in context_files:
+		for class_name in context_files[scene_context]:
+			var script = find_working_class(class_name, scene_context)
+			if script:
+				register_active_script(class_name, script)
+
+# Intelligent evolution suggestions
+func analyze_evolution_opportunities():
+	var analysis = {
+		"performance_bottlenecks": find_performance_issues(),
+		"missing_functions": get_missing_function_log(),
+		"outdated_implementations": find_outdated_code(),
+		"ai_collaboration_opportunities": suggest_ai_tasks(),
+		"refactoring_targets": identify_refactoring_candidates()
+	}
+	
+	return generate_evolution_roadmap(analysis)
+
+# Helper functions
+func build_file_registry():
+	for path in search_paths:
+		scan_directory_for_scripts(path)
+
+func test_script_functionality(script: Script) -> bool:
+	# Basic validation - check if script loads without errors
+	if not script:
+		return false
+	
+	# Try to create instance to test compilation
+	var instance = script.new()
+	if instance:
+		instance.queue_free()
+		return true
+	return false
+
+func test_function_works(script: Script, function_name: String) -> bool:
+	# Create test instance and try calling function
+	var instance = script.new()
+	if instance and instance.has_method(function_name):
+		# Try safe function call with error handling
+		var result = instance.callv(function_name, [])
+		instance.queue_free()
+		return result != null
+	return false
+
+func select_best_ai_for_task(task_type: String) -> String:
+	match task_type:
+		"architecture", "logic", "analysis":
+			return "Claude"
+		"visual", "creative", "effects":
+			return "Luno"
+		"performance", "optimization", "debugging":
+			return "Luminus"
+		_:
+			return "Claude"  # Default fallback
+
+func generate_hash(input: String) -> String:
+	return str(input.hash())
+
+func log_function_redirect(from_class: String, to_class: String, function_name: String):
+	print("FUNCTION_REDIRECT: %s.%s() -> %s.%s()" % [from_class, function_name, to_class, function_name])
+
+# AI Generation Request
+func request_ai_implementation(class_name: String, context: String):
+	var request = {
+		"class_name": class_name,
+		"context": context,
+		"required_functions": get_expected_functions(class_name),
+		"performance_requirements": get_performance_requirements(context),
+		"integration_points": find_integration_requirements(class_name)
+	}
+	
+	request_ai_collaboration("implementation", request)
+
+# Evolution game integration
+func create_evolution_challenge() -> Dictionary:
+	return {
+		"challenge_id": generate_uuid(),
+		"type": "god_evolution",
+		"description": "Evolve the %s system for better cosmic navigation" % get_current_focus_area(),
+		"constraints": get_current_constraints(),
+		"success_criteria": define_success_metrics(),
+		"ai_roles": assign_ai_roles_for_challenge(),
+		"timeline": calculate_evolution_timeline()
+	}
+
+# Main analysis function for Claude
+func start_full_analysis():
+	print("=== EVOLUTION SYSTEM ANALYSIS START ===")
+	build_file_registry()
+	var analysis_report = {
+		"total_files": file_registry.size(),
+		"version_branches": count_version_branches(),
+		"missing_functions": get_missing_function_count(),
+		"evolution_opportunities": analyze_evolution_opportunities(),
+		"ai_collaboration_status": get_ai_status(),
+		"next_recommended_actions": generate_action_plan()
+	}
+	
+	print("Analysis complete. Ready for AI collaboration!")
+	return analysis_report

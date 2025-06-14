@@ -1,0 +1,31 @@
+Welcome to Ragdoll Console!
+Type 'help' for commands, Tab to toggle, Esc to close
+✅ [UniversalEntity] All core systems initialized!
+[LOADER] Emergency optimization triggered!
+[PERFORMANCE] Low FPS detected - optimizing scene
+[LOADER] Emergency optimization triggered!
+[PERFORMANCE] Low FPS detected - optimizing scene
+[LOADER] Emergency optimization triggered!
+[PERFORMANCE] Low FPS detected - optimizing scene
+[UniversalEntity] Registering commands...
+[UniversalEntity] ✅ Commands registered successfully!
+🌟 [UniversalEntity] PERFECTION ACHIEVED! Your dream is real!
+🎉 [UniversalEntity] The dream is realized!
+[WARNING] Low FPS: 30.0
+🔍 CLICKED: Ground (StaticBody3D)
+  Position: (0.0, -0.5, 0.0)
+  Type: unknown
+  Use 'inspect_by_name Ground' for details
+😊 [UniversalEntity] System satisfaction: 100% - You should be happy!
+😊 [UniversalEntity] System satisfaction: 100% - You should be happy!
+🔍 CLICKED: Ground (StaticBody3D)
+  Position: (0.0, -0.5, 0.0)
+  Type: unknown
+  Use 'inspect_by_name Ground' for details
+> pentagon_status
+😊 [UniversalEntity] System satisfaction: 100% - You should be happy!
+> system_health
+> flow_trace
+> gamma_status
+> test_pentagon
+> pentagon_status

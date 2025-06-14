@@ -1,0 +1,632 @@
+class_name DynamicMapSystem
+extends Node3D
+
+# ----- CONSTANTS -----
+const MIN_CELL_SIZE = 10.0
+const MAX_CELL_SIZE = 100.0
+const DEFAULT_CELL_SIZE = 50.0
+const MAX_ENTITIES_PER_CELL = 50
+const MIN_ENTITIES_FOR_CELL = 5
+const ACTIVE_RADIUS = 200.0  # How far from player to keep cells active
+
+# ----- MAP PROPERTIES -----
+var cells = {}  # Dictionary of all cells by coordinates
+var active_cells = {}  # Currently active cells
+
+# ----- PLAYER REFERENCE -----
+var player_node: Node3D = null
+
+# ----- FILE MANAGEMENT -----
+var save_directory = "user://map_data/"
+var map_metadata_file = "map_metadata.json"
+
+# ----- SIGNALS -----
+signal cell_created(cell_coords, cell_node)
+signal cell_split(parent_coords, new_cells)
+signal cell_merged(merged_cells, new_cell)
+signal entity_moved_cells(entity, old_cell, new_cell)
+
+# ----- INITIALIZATION -----
+func _ready():
+	# Ensure the save directory exists
+	var dir = DirAccess.open("user://")
+	if not dir.dir_exists(save_directory):
+		dir.make_dir(save_directory)
+	
+	# Create initial cell at origin
+	_create_cell(Vector3i(0, 0, 0))
+	
+	# Begin update cycle
+	set_process(true)
+
+func initialize_with_player(player: Node3D):
+	player_node = player
+	load_cells_around_position(player.global_position)
+
+# ----- UPDATE LOOP -----
+func _process(delta):
+	if player_node == null:
+		return
+	
+	# Check which cells should be active based on player position
+	update_active_cells()
+	
+	# For each active cell, check if it needs to split or merge
+	for cell_coords in active_cells:
+		var cell = active_cells[cell_coords]
+		check_cell_operations(cell)
+
+# ----- CELL MANAGEMENT -----
+func _create_cell(coords: Vector3i, size: float = DEFAULT_CELL_SIZE, data: Dictionary = {}) -> MapCell:
+	"""
+	Create a new cell at the specified coordinates
+	"""
+	var cell = MapCell.new()
+	cell.initialize(coords, size, data)
+	
+	# Position the cell in 3D space
+	cell.global_position = Vector3(coords.x * size, coords.y * size, coords.z * size)
+	
+	# Register the cell
+	cells[coords] = cell
+	active_cells[coords] = cell
+	
+	# Add to scene tree
+	add_child(cell)
+	
+	emit_signal("cell_created", coords, cell)
+	return cell
+
+func check_cell_operations(cell: MapCell):
+	"""
+	Check if a cell needs splitting or merging
+	"""
+	# Check for splitting
+	if cell.entity_count() > MAX_ENTITIES_PER_CELL and cell.size > MIN_CELL_SIZE:
+		split_cell(cell)
+		return
+	
+	# Check for merging with neighbors
+	if cell.entity_count() < MIN_ENTITIES_FOR_CELL and cell.size < MAX_CELL_SIZE:
+		check_merge_with_neighbors(cell)
+
+func split_cell(cell: MapCell):
+	"""
+	Split a cell into 8 smaller cells (octree style)
+	"""
+	var parent_coords = cell.coordinates
+	var new_size = cell.size / 2
+	var parent_data = cell.save_data()
+	var new_cells = []
+	
+	# Create 8 child cells (2x2x2 grid)
+	for x in range(2):
+		for y in range(2):
+			for z in range(2):
+				var offset = Vector3i(x, y, z)
+				var new_coords = parent_coords * 2 + offset
+				
+				var new_cell = _create_cell(new_coords, new_size)
+				new_cells.append(new_cell)
+	
+	# Distribute entities from parent cell to child cells
+	for entity_data in parent_data.entities:
+		var entity_pos = entity_data.position
+		
+		# Find which child cell should contain this entity
+		for new_cell in new_cells:
+			if new_cell.contains_point(entity_pos):
+				# Create entity in new cell
+				var entity = load_entity_from_data(entity_data)
+				new_cell.add_entity(entity)
+				break
+	
+	# Remove the parent cell
+	active_cells.erase(parent_coords)
+	cells.erase(parent_coords)
+	cell.queue_free()
+	
+	emit_signal("cell_split", parent_coords, new_cells)
+	
+	# Save metadata to reflect changes
+	save_map_metadata()
+
+func check_merge_with_neighbors(cell: MapCell):
+	"""
+	Check if this cell can be merged with neighbors
+	"""
+	var siblings = find_sibling_cells(cell)
+	
+	# If we have all siblings, check if they all have few entities
+	if siblings.size() == 7:  # We need all 7 siblings to merge
+		var total_entities = cell.entity_count()
+		var should_merge = true
+		
+		for sibling in siblings:
+			total_entities += sibling.entity_count()
+			if sibling.entity_count() >= MIN_ENTITIES_FOR_CELL:
+				should_merge = false
+				break
+		
+		# Only merge if the total would be manageable
+		if should_merge and total_entities <= MAX_ENTITIES_PER_CELL:
+			merge_cells([cell] + siblings)
+
+func find_sibling_cells(cell: MapCell) -> Array:
+	"""
+	Find the sibling cells that would form a complete parent cell with this one
+	"""
+	var siblings = []
+	var coords = cell.coordinates
+	
+	# Determine parent-level coordinates
+	var parent_coords = Vector3i(
+		floor(coords.x / 2.0),
+		floor(coords.y / 2.0),
+		floor(coords.z / 2.0)
+	)
+	
+	# Find all 8 children of the parent (including this cell)
+	for x in range(2):
+		for y in range(2):
+			for z in range(2):
+				var child_coords = parent_coords * 2 + Vector3i(x, y, z)
+				
+				# Skip this cell itself
+				if child_coords == coords:
+					continue
+				
+				# If the sibling exists, add it
+				if cells.has(child_coords):
+					siblings.append(cells[child_coords])
+	
+	return siblings
+
+func merge_cells(cells_to_merge: Array):
+	"""
+	Merge multiple cells into one larger cell
+	"""
+	if cells_to_merge.size() != 8:
+		return
+	
+	# Find the parent coordinates
+	var first_cell = cells_to_merge[0]
+	var parent_coords = Vector3i(
+		floor(first_cell.coordinates.x / 2.0),
+		floor(first_cell.coordinates.y / 2.0),
+		floor(first_cell.coordinates.z / 2.0)
+	)
+	
+	var new_size = first_cell.size * 2
+	var parent_cell = _create_cell(parent_coords, new_size)
+	
+	# Transfer entities from child cells to parent
+	for child_cell in cells_to_merge:
+		for entity in child_cell.get_entities():
+			parent_cell.add_entity(entity)
+		
+		# Remove the child cell
+		active_cells.erase(child_cell.coordinates)
+		cells.erase(child_cell.coordinates)
+		child_cell.queue_free()
+	
+	emit_signal("cell_merged", cells_to_merge, parent_cell)
+	
+	# Save metadata to reflect changes
+	save_map_metadata()
+
+# ----- ENTITY MANAGEMENT -----
+func add_entity_to_world(entity: Node3D, position: Vector3):
+	"""
+	Add an entity to the world at the specified position
+	"""
+	# Find the appropriate cell for this position
+	var cell = find_cell_at_position(position)
+	if cell == null:
+		# Create a new cell if needed
+		var cell_coords = calculate_cell_coords(position)
+		cell = _create_cell(cell_coords)
+	
+	# Add entity to cell
+	entity.global_position = position
+	cell.add_entity(entity)
+	
+	return cell
+
+func move_entity_between_cells(entity: Node3D, from_cell: MapCell, to_cell: MapCell):
+	"""
+	Move an entity from one cell to another
+	"""
+	if from_cell and to_cell and from_cell != to_cell:
+		from_cell.remove_entity(entity)
+		to_cell.add_entity(entity)
+		emit_signal("entity_moved_cells", entity, from_cell, to_cell)
+
+func update_entity_cell(entity: Node3D):
+	"""
+	Update which cell an entity belongs to based on its position
+	"""
+	var current_cell = find_cell_containing_entity(entity)
+	var position_cell = find_cell_at_position(entity.global_position)
+	
+	if current_cell != position_cell:
+		move_entity_between_cells(entity, current_cell, position_cell)
+
+# ----- COORDINATE & CELL LOOKUP -----
+func calculate_cell_coords(position: Vector3) -> Vector3i:
+	"""
+	Calculate the cell coordinates for a given position
+	"""
+	# Default implementation - can be improved to handle cells of different sizes
+	return Vector3i(
+		floor(position.x / DEFAULT_CELL_SIZE),
+		floor(position.y / DEFAULT_CELL_SIZE),
+		floor(position.z / DEFAULT_CELL_SIZE)
+	)
+
+func find_cell_at_position(position: Vector3) -> MapCell:
+	"""
+	Find the cell that contains the given position
+	"""
+	# This is a naive implementation that checks all cells
+	# This could be optimized with a spatial lookup structure
+	for cell_coords in cells:
+		var cell = cells[cell_coords]
+		if cell.contains_point(position):
+			return cell
+	
+	return null
+
+func find_cell_containing_entity(entity: Node3D) -> MapCell:
+	"""
+	Find the cell that contains the given entity
+	"""
+	# This could be optimized by keeping a reverse lookup
+	for cell_coords in cells:
+		var cell = cells[cell_coords]
+		if cell.contains_entity(entity):
+			return cell
+	
+	return null
+
+func update_active_cells():
+	"""
+	Update which cells are active based on player position
+	"""
+	if not player_node:
+		return
+	
+	var player_pos = player_node.global_position
+	
+	# Deactivate cells that are too far
+	var cells_to_deactivate = []
+	for coords in active_cells:
+		var cell = active_cells[coords]
+		var cell_center = cell.global_position + Vector3(cell.size/2, cell.size/2, cell.size/2)
+		
+		if cell_center.distance_to(player_pos) > ACTIVE_RADIUS:
+			cells_to_deactivate.append(coords)
+	
+	for coords in cells_to_deactivate:
+		active_cells.erase(coords)
+		cells[coords].set_active(false)
+	
+	# Activate cells that are close enough
+	for coords in cells:
+		if active_cells.has(coords):
+			continue
+			
+		var cell = cells[coords]
+		var cell_center = cell.global_position + Vector3(cell.size/2, cell.size/2, cell.size/2)
+		
+		if cell_center.distance_to(player_pos) <= ACTIVE_RADIUS:
+			active_cells[coords] = cell
+			cell.set_active(true)
+
+# ----- LOADING & SAVING -----
+func save_map_metadata():
+	"""
+	Save metadata about all cells to a file
+	"""
+	var metadata = {
+		"version": 1,
+		"cell_count": cells.size(),
+		"cells": {}
+	}
+	
+	for coords_key in cells:
+		var cell = cells[coords_key]
+		var coords_str = str(coords_key.x) + "," + str(coords_key.y) + "," + str(coords_key.z)
+		
+		metadata.cells[coords_str] = {
+			"size": cell.size,
+			"entity_count": cell.entity_count(),
+			"filename": cell.get_save_filename()
+		}
+	
+	var file = FileAccess.open(save_directory + map_metadata_file, FileAccess.WRITE)
+	if file:
+		file.store_string(JSON.stringify(metadata))
+	else:
+		print("Error saving map metadata: ", FileAccess.get_open_error())
+
+func load_map_metadata() -> Dictionary:
+	"""
+	Load metadata about all cells
+	"""
+	var metadata = {}
+	var file = FileAccess.open(save_directory + map_metadata_file, FileAccess.READ)
+	
+	if file:
+		var json_text = file.get_as_text()
+		var json_result = JSON.parse_string(json_text)
+		
+		if json_result:
+			metadata = json_result
+	else:
+		print("No map metadata found or error loading: ", FileAccess.get_open_error())
+	
+	return metadata
+
+func load_cells_around_position(position: Vector3, radius: float = ACTIVE_RADIUS):
+	"""
+	Load cells around a position from saved data
+	"""
+	var metadata = load_map_metadata()
+	
+	if metadata.is_empty():
+		# No saved map, create default cell
+		_create_cell(Vector3i(0, 0, 0))
+		return
+	
+	# Load cells from metadata
+	for coords_str in metadata.cells:
+		var coords_parts = coords_str.split(",")
+		var coords = Vector3i(
+			int(coords_parts[0]),
+			int(coords_parts[1]),
+			int(coords_parts[2])
+		)
+		
+		var cell_data = metadata.cells[coords_str]
+		var cell_center = Vector3(
+			coords.x * cell_data.size,
+			coords.y * cell_data.size,
+			coords.z * cell_data.size
+		) + Vector3(cell_data.size/2, cell_data.size/2, cell_data.size/2)
+		
+		# Only load cells within radius
+		if cell_center.distance_to(position) <= radius:
+			var cell = _create_cell(coords, cell_data.size)
+			cell.load_from_file(cell_data.filename)
+
+func load_entity_from_data(data: Dictionary) -> Node3D:
+	"""
+	Create an entity from saved data
+	"""
+	var entity_scene = load(data.scene_path)
+	if entity_scene:
+		var entity = entity_scene.instantiate()
+		
+		# Set transformation
+		entity.global_position = data.position
+		if data.has("rotation"):
+			entity.global_rotation = data.rotation
+		if data.has("scale"):
+			entity.scale = data.scale
+		
+		# If it's a universal entity, load properties
+		if entity is UniversalEntity and data.has("entity_data"):
+			entity.load_from_data(data.entity_data)
+		
+		return entity
+	
+	return null
+
+# ----- UTILITY FUNCTIONS -----
+func chunk_position(position: Vector3, chunk_size: float) -> Vector3:
+	"""
+	Convert a world position to a chunked position (closest chunk corner)
+	"""
+	return Vector3(
+		floor(position.x / chunk_size) * chunk_size,
+		floor(position.y / chunk_size) * chunk_size,
+		floor(position.z / chunk_size) * chunk_size
+	)
+
+# ----- MAP CELL CLASS -----
+class MapCell extends Node3D:
+	# Cell properties
+	var coordinates: Vector3i
+	var size: float
+	var is_active: bool = false
+	var entities_container: Node3D
+	
+	# Debug visualization
+	var debug_mesh: MeshInstance3D
+	
+	func _init():
+		entities_container = Node3D.new()
+		entities_container.name = "Entities"
+		add_child(entities_container)
+	
+	func initialize(coords: Vector3i, cell_size: float, data: Dictionary = {}):
+		coordinates = coords
+		size = cell_size
+		name = "Cell_" + str(coords.x) + "_" + str(coords.y) + "_" + str(coords.z)
+		
+		# Create debug visualization
+		create_debug_visual()
+		
+	func create_debug_visual():
+		debug_mesh = MeshInstance3D.new()
+		debug_mesh.name = "DebugMesh"
+		
+		var mesh = BoxMesh.new()
+		mesh.size = Vector3(size, size, size)
+		debug_mesh.mesh = mesh
+		
+		var material = StandardMaterial3D.new()
+		material.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
+		material.albedo_color = Color(0.2, 0.7, 0.2, 0.1)  # Green, mostly transparent
+		material.emission_enabled = true
+		material.emission = Color(0.3, 0.7, 0.3)
+		material.emission_energy = 0.2
+		
+		debug_mesh.material_override = material
+		
+		# Center the mesh on the cell
+		debug_mesh.position = Vector3(size/2, size/2, size/2)
+		
+		add_child(debug_mesh)
+	
+	func set_active(active: bool):
+		is_active = active
+		
+		# Update visual appearance
+		if debug_mesh and debug_mesh.material_override:
+			var material = debug_mesh.material_override
+			if is_active:
+				material.albedo_color = Color(0.2, 0.7, 0.2, 0.15)  # More visible
+				material.emission_energy = 0.3
+			else:
+				material.albedo_color = Color(0.2, 0.2, 0.7, 0.05)  # More transparent
+				material.emission_energy = 0.1
+		
+		# Pause or unpause entities based on active state
+		for entity in get_entities():
+			if entity.has_method("set_active"):
+				entity.set_active(active)
+	
+	func add_entity(entity: Node3D):
+		# Remove from current parent
+		if entity.get_parent():
+			entity.get_parent().remove_child(entity)
+		
+		# Add to this cell
+		entities_container.add_child(entity)
+		
+		# Set active state
+		if entity.has_method("set_active"):
+			entity.set_active(is_active)
+		
+		return entity
+	
+	func remove_entity(entity: Node3D):
+		if entity.get_parent() == entities_container:
+			entities_container.remove_child(entity)
+			return true
+		
+		return false
+	
+	func get_entities() -> Array:
+		return entities_container.get_children()
+	
+	func entity_count() -> int:
+		return entities_container.get_child_count()
+	
+	func contains_entity(entity: Node3D) -> bool:
+		return entity.get_parent() == entities_container
+	
+	func contains_point(point: Vector3) -> bool:
+		var min_point = global_position
+		var max_point = global_position + Vector3(size, size, size)
+		
+		return (
+			point.x >= min_point.x and point.x < max_point.x and
+			point.y >= min_point.y and point.y < max_point.y and
+			point.z >= min_point.z and point.z < max_point.z
+		)
+	
+	func get_save_filename() -> String:
+		return "cell_" + str(coordinates.x) + "_" + str(coordinates.y) + "_" + str(coordinates.z) + ".json"
+	
+	func save_to_file(filename: String = ""):
+		if filename.is_empty():
+			filename = get_save_filename()
+		
+		var data = save_data()
+		var file = FileAccess.open("user://map_data/" + filename, FileAccess.WRITE)
+		if file:
+			file.store_string(JSON.stringify(data))
+		else:
+			print("Error saving cell data: ", FileAccess.get_open_error())
+	
+	func load_from_file(filename: String):
+		var file = FileAccess.open("user://map_data/" + filename, FileAccess.READ)
+		if file:
+			var json_text = file.get_as_text()
+			var json_result = JSON.parse_string(json_text)
+			
+			if json_result:
+				load_from_data(json_result)
+		else:
+			print("Error loading cell data: ", FileAccess.get_open_error())
+	
+	func save_data() -> Dictionary:
+		var data = {
+			"coordinates": {
+				"x": coordinates.x,
+				"y": coordinates.y,
+				"z": coordinates.z
+			},
+			"size": size,
+			"entities": []
+		}
+		
+		# Save all entities
+		for entity in get_entities():
+			var entity_data = {
+				"scene_path": entity.scene_file_path,
+				"position": {
+					"x": entity.global_position.x,
+					"y": entity.global_position.y,
+					"z": entity.global_position.z
+				},
+				"rotation": {
+					"x": entity.global_rotation.x,
+					"y": entity.global_rotation.y,
+					"z": entity.global_rotation.z
+				},
+				"scale": {
+					"x": entity.scale.x,
+					"y": entity.scale.y,
+					"z": entity.scale.z
+				}
+			}
+			
+			# If it's a universal entity, save additional data
+			if entity is UniversalEntity:
+				entity_data["entity_data"] = entity.save_data()
+			
+			data.entities.append(entity_data)
+		
+		return data
+	
+	func load_from_data(data: Dictionary):
+		# Load each entity
+		if data.has("entities"):
+			for entity_data in data.entities:
+				var entity_scene = load(entity_data.scene_path)
+				if entity_scene:
+					var entity = entity_scene.instantiate()
+					
+					# Set transformation
+					var pos = entity_data.position
+					entity.global_position = Vector3(pos.x, pos.y, pos.z)
+					
+					if entity_data.has("rotation"):
+						var rot = entity_data.rotation
+						entity.global_rotation = Vector3(rot.x, rot.y, rot.z)
+					
+					if entity_data.has("scale"):
+						var scale_data = entity_data.scale
+						entity.scale = Vector3(scale_data.x, scale_data.y, scale_data.z)
+					
+					# If it's a universal entity, load properties
+					if entity is UniversalEntity and entity_data.has("entity_data"):
+						entity.load_from_data(entity_data.entity_data)
+					
+					add_entity(entity)
+				else:
+					print("Failed to load entity scene: ", entity_data.scene_path)

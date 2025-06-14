@@ -1,0 +1,29 @@
+func cache_data(records_sets_name: String, record_type: String, data, meta_data) -> void:
+	var current_cache_size = get_cache_total_size()
+	var new_data_size = get_dictionary_memory_size(data)
+	var max_size_bytes = max_cache_size_mb * 1024 * 1024
+	if current_cache_size + new_data_size > max_size_bytes:
+		clean_oldest_dataset()
+	current_cache_size = get_cache_total_size()
+	
+	
+	cached_r_s_mutex.lock()
+	if current_cache_size + new_data_size <= max_size_bytes:
+		if !cached_record_sets.has(records_sets_name):
+			
+			active_r_s_mut.lock()
+			cached_record_sets[records_sets_name] = { # current_cache_size
+				"metadata": active_record_sets[records_sets_name]["metadata"].duplicate(true)
+			}
+			active_r_s_mut.unlock()
+			
+		cached_record_sets[records_sets_name][record_type] = data.duplicate(true)
+		cached_record_sets[records_sets_name]["metadata"][str(record_type)] = {
+			"size": new_data_size,
+			"time_of_cache" : Time.get_ticks_msec()
+		}
+		cache_timestamps[records_sets_name + record_type] = Time.get_ticks_msec()
+
+	else:
+		print("Cache limit reached, cannot store new data")
+	cached_r_s_mutex.unlock()

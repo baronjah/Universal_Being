@@ -1,0 +1,68 @@
+graph TD
+    Start([_process delta]) --> Camera[Process Camera]
+    Camera --> Delta[each_blimp_of_delta]
+    Delta --> TurnSystem{Turn System}
+    
+    subgraph Turn 0 - System Check
+        TurnSystem -->|turn = 0| T0[Check System Readiness]
+        T0 --> T0Check{Ready?}
+        T0Check -->|Yes| T0Process[Process Stages]
+        T0Check -->|No| T0Log[Log State]
+    end
+    
+    subgraph Turn 1 - Node Addition
+        TurnSystem -->|turn = 1| T1[Process Pending Sets]
+        T1 --> T1Nodes[Process Node Addition Queue]
+        T1Nodes --> T1Add[Add Nodes to Scene]
+    end
+    
+    subgraph Turn 2 - Data Processing
+        TurnSystem -->|turn = 2| T2[Process Data Queue]
+        T2 --> T2Types{Data Types}
+        T2Types --> T2Inst[Instructions]
+        T2Types --> T2Scene[Scene Frames]
+        T2Types --> T2Inter[Interactions]
+    end
+    
+    subgraph Turn 3 - Movement
+        TurnSystem -->|turn = 3| T3[Process Movements]
+        T3 --> T3Types{Movement Types}
+        T3Types --> T3Move[Move]
+        T3Types --> T3Rot[Rotate]
+        T3Types --> T3Write[Write]
+    end
+    
+    subgraph Turn 4 - Unloading
+        TurnSystem -->|turn = 4| T4[Process Unloading]
+        T4 --> T4Types{Unload Types}
+        T4Types --> T4Cont[Containers]
+        T4Types --> T4Node[Single Nodes]
+    end
+    
+    subgraph Turn 5 - Function Calls
+        TurnSystem -->|turn = 5| T5[Process Function Calls]
+        T5 --> T5Types{Function Types}
+        T5Types --> T5Single[Single]
+        T5Types --> T5GetNode[Get Node]
+        T5Types --> T5Multi[Multiple Nodes]
+    end
+    
+    subgraph Turn 6 - System Monitoring
+        TurnSystem -->|turn = 6| T6[Monitor System State]
+        T6 --> T6Check[Check Task Completion]
+        T6Check --> T6Debug[Debug Checks]
+        T6Debug --> T6Memory[Memory Check]
+    end
+    
+    subgraph Turns 7-9
+        TurnSystem -->|turns 7-8| T78[Reserved Turns]
+        TurnSystem -->|turn 9| T9[Reset Turn Counter]
+    end
+    
+    style Start fill:#f96,stroke:#333,stroke-width:2px
+    
+    classDef turnClass fill:#bbf,stroke:#333,stroke-width:2px
+    class T0,T1,T2,T3,T4,T5,T6,T78,T9 turnClass
+    
+    classDef checkClass fill:#bfb,stroke:#333,stroke-width:2px
+    class T0Check,T6Check turnClass

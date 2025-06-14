@@ -1,0 +1,11 @@
+# PERFECT READY - Banned Scripts Configuration
+# Scripts listed here will be blocked from ready sequence
+# One script name per line, # for comments
+
+# Example banned scripts (currently none - system is permissive):
+# dangerous_script
+# legacy_broken_system
+# test_crash_system
+
+# AI Safety - These patterns are automatically blocked when ai_safe_mode is enabled:
+# Scripts starting with: system_, file_delete, network_, admin_, root_, sudo_, exec_, eval_, override_

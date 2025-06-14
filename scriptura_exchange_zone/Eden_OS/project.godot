@@ -1,0 +1,47 @@
+; Engine configuration file.
+; It's best edited using the editor UI and not directly,
+; since the parameters that go here are not all obvious.
+;
+; Format:
+;   [section] ; section goes between []
+;   param=value ; assign values to parameters
+
+config_version=5
+
+[application]
+
+config/name="Eden_OS"
+run/main_scene="res://scenes/main.tscn"
+config/features=PackedStringArray("4.4")
+config/icon="res://assets/icons/eden_os_icon.png"
+
+[autoload]
+
+GlobalCommands="*res://scripts/core/global_commands.gd"
+FileSystem="*res://scripts/core/file_system.gd"
+ScriptInterpreter="*res://scripts/core/script_interpreter.gd"
+EdenCore="*res://scripts/core/eden_core.gd"
+MultiTerminal="*res://scripts/core/multi_terminal.gd"
+WordSystem="*res://scripts/world_of_words/word_system.gd"
+TurnSystem="*res://scripts/turns/turn_system.gd"
+DimensionEngine="*res://scripts/dimensions/dimension_engine.gd"
+UserProfiles="*res://scripts/users/user_profiles.gd"
+MagicSystem="*res://scripts/magic/magic_system.gd"
+AkashicRecords="*res://scripts/akashic/akashic_records.gd"
+DataZoneManager="*res://scripts/data/data_zone_manager.gd"
+TimeSpaceEditor="*res://scripts/time_space/time_space_editor.gd"
+
+[display]
+
+window/size/viewport_width=1920
+window/size/viewport_height=1080
+window/size/resizable=true
+window/subwindows/embed_subwindows=false
+
+[gui]
+
+theme/custom="res://themes/eden_theme.tres"
+
+[rendering]
+
+environment/defaults/default_clear_color=Color(0, 0.05, 0.1, 1)

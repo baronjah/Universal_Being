@@ -1,0 +1,145 @@
+# Akashic Records Integration for main.gd
+
+To integrate the Akashic Records system with the main.gd script, add the following code to the appropriate sections:
+
+## 1. Import the AkashicRecordsIntegration class
+
+Add this near the top of the file with other imports:
+
+```gdscript
+const AkashicRecordsIntegration = preload("res://code/gdscript/scripts/Menu_Keyboard_Console/akashic_records_integration.gd")
+```
+
+## 2. Add a class variable for the integration
+
+Add this to the class variables section:
+
+```gdscript
+# Akashic Records integration
+var akashic_records_integration = null
+```
+
+## 3. Initialize the integration in _ready()
+
+Add this to the _ready() function, after the menu system is initialized:
+
+```gdscript
+# Initialize Akashic Records integration
+akashic_records_integration = AkashicRecordsIntegration.new()
+add_child(akashic_records_integration)
+akashic_records_integration.initialize(self)
+```
+
+## 4. Add a method to access the Akashic Records system
+
+Add this method to allow other scripts to access the system:
+
+```gdscript
+# Get the Akashic Records integration
+func get_akashic_records() -> AkashicRecordsIntegration:
+    return akashic_records_integration
+```
+
+## 5. Connect to the element system (if applicable)
+
+Add this code where you initialize your element system:
+
+```gdscript
+# Connect Akashic Records to element system
+if akashic_records_integration and element_system:
+    akashic_records_integration.connect_to_element_system(element_system)
+```
+
+## 6. Add cleanup in _exit_tree() if needed
+
+Add this to your cleanup code if you have an _exit_tree() method:
+
+```gdscript
+# Save Akashic Records data when exiting
+if akashic_records_integration:
+    akashic_records_integration.save_all()
+```
+
+## 7. Add support for the view area
+
+If you don't already have a view area for displaying UI content, add this:
+
+```gdscript
+# View area for UI content
+@onready var view_area = $ViewArea
+```
+
+And make sure you have a function to add content to it:
+
+```gdscript
+# Add content to the view area
+func add_to_view_area(content: Control) -> void:
+    # Clear existing content
+    for child in view_area.get_children():
+        child.queue_free()
+    
+    # Add new content
+    view_area.add_child(content)
+```
+
+## 8. Add a register_system method if not already present
+
+If your main script doesn't already have a system registration method:
+
+```gdscript
+# Dictionary of registered systems
+var registered_systems = {}
+
+# Register a system with the console
+func register_system(system, system_name: String) -> void:
+    registered_systems[system_name] = system
+    print("System registered: " + system_name)
+
+# Get a registered system
+func get_system(system_name: String):
+    return registered_systems.get(system_name, null)
+```
+
+## 9. Add a menu entry management system if not already present
+
+If your main script doesn't already have menu entry management:
+
+```gdscript
+# Menu entries by category
+var menu_entries = {
+    "things": [],
+    "scenes": [],
+    "actions": [],
+    "instructions": []
+}
+
+# Add a menu entry to a category
+func add_menu_entry(category: String, entry: Dictionary) -> void:
+    if menu_entries.has(category):
+        menu_entries[category].append(entry)
+        
+        # Refresh UI if needed
+        _update_menu_display(category)
+
+# Update menu display after adding entries
+func _update_menu_display(category: String) -> void:
+    # Implementation depends on your menu system
+    # This should refresh the display of the specified category
+    pass
+```
+
+## 10. Add a message display function if not already present
+
+```gdscript
+# Show a message to the user
+func show_message(message: String) -> void:
+    # Implementation depends on your UI
+    print(message)  # Fallback to console
+    
+    # Example of showing in UI:
+    # $StatusBar/Label.text = message
+```
+
+---
+
+These additions will integrate the Akashic Records system with your main.gd script. Adjust the code as needed to match your existing structure and naming conventions.

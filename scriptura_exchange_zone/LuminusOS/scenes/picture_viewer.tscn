@@ -1,0 +1,263 @@
+[gd_scene load_steps=10 format=3 uid="uid://cn0ijmh7jcx8q"]
+
+[ext_resource type="Script" path="res://scripts/picture_viewer.gd" id="1_jrhte"]
+[ext_resource type="Theme" uid="uid://b8t7tkhvh17pt" path="res://themes/luminusos_theme.tres" id="2_v3utp"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8kdfg"]
+bg_color = Color(0.0627451, 0.0666667, 0.0784314, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.501961, 0.247059, 0.701961, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tng65"]
+bg_color = Color(0, 0, 0, 0.392157)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.501961, 0.247059, 0.701961, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_p5qet"]
+bg_color = Color(0.188235, 0.2, 0.215686, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.501961, 0.247059, 0.701961, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="Animation" id="Animation_26e4t"]
+resource_name = "fade_in"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ImageContainer/TextureRect:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_7xbe6"]
+resource_name = "slide_left"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ImageContainer/TextureRect:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(0.5, 1),
+"update": 0,
+"values": [Vector2(100, 0), Vector2(0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("ImageContainer/TextureRect:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 0.5), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_r0eqa"]
+resource_name = "slide_right"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ImageContainer/TextureRect:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(0.5, 1),
+"update": 0,
+"values": [Vector2(-100, 0), Vector2(0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("ImageContainer/TextureRect:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 0.5), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_uutun"]
+_data = {
+"fade_in": SubResource("Animation_26e4t"),
+"slide_left": SubResource("Animation_7xbe6"),
+"slide_right": SubResource("Animation_r0eqa")
+}
+
+[node name="PictureViewer" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("2_v3utp")
+script = ExtResource("1_jrhte")
+
+[node name="Background" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_8kdfg")
+
+[node name="TitleBar" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 40.0
+grow_horizontal = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_tng65")
+
+[node name="TitleLabel" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 40.0
+grow_horizontal = 2
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ImageContainer" type="CenterContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 40.0
+offset_bottom = -60.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextureRect" type="TextureRect" parent="ImageContainer"]
+layout_mode = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="ControlPanel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -60.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_styles/panel = SubResource("StyleBoxFlat_p5qet")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="ControlPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 20
+alignment = 1
+
+[node name="PreviousButton" type="Button" parent="ControlPanel"]
+layout_mode = 2
+offset_left = 100.0
+offset_top = 10.0
+offset_right = 180.0
+offset_bottom = 50.0
+text = "< Previous"
+
+[node name="ZoomOutButton" type="Button" parent="ControlPanel"]
+layout_mode = 2
+offset_left = 250.0
+offset_top = 10.0
+offset_right = 310.0
+offset_bottom = 50.0
+text = "Zoom -"
+
+[node name="ZoomResetButton" type="Button" parent="ControlPanel"]
+layout_mode = 2
+offset_left = 350.0
+offset_top = 10.0
+offset_right = 450.0
+offset_bottom = 50.0
+text = "Reset Zoom"
+
+[node name="ZoomInButton" type="Button" parent="ControlPanel"]
+layout_mode = 2
+offset_left = 490.0
+offset_top = 10.0
+offset_right = 550.0
+offset_bottom = 50.0
+text = "Zoom +"
+
+[node name="NextButton" type="Button" parent="ControlPanel"]
+layout_mode = 2
+offset_left = 620.0
+offset_top = 10.0
+offset_right = 680.0
+offset_bottom = 50.0
+text = "Next >"
+
+[node name="ZoomLabel" type="Label" parent="ControlPanel"]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 20.0
+offset_top = -30.0
+offset_right = 80.0
+offset_bottom = -4.0
+grow_vertical = 0
+text = "100%"
+
+[node name="NavigationLabel" type="Label" parent="ControlPanel"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -80.0
+offset_top = -30.0
+offset_right = -20.0
+offset_bottom = -4.0
+grow_horizontal = 0
+grow_vertical = 0
+text = "1 / 10"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_uutun")
+}

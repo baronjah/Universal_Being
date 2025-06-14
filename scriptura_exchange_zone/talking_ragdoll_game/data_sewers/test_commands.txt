@@ -1,0 +1,77 @@
+# Testing Commands - Containers vs Zones
+
+## 🏠 CONTAINERS (Rooms that connect - Universal Being spaces)
+container               # Create container room
+containers              # List all containers
+container_connect A B   # Connect containers (if command exists)
+
+## 🌐 ZONES (3D Block Coding - Asset creation areas)  
+zone                    # Create zone pair for 3D block coding
+zones                   # List all zones
+zone 10 0 5             # Create second pair
+zone_connect creation_0 viz_1    # Cross-connect data flow
+
+## Universal Being Testing
+create_being           # Create basic being
+beings                 # List all beings
+conscious sphere_1 2   # Make being conscious level 2
+
+## Asset Creator Testing  
+shape sphere           # Add sphere to creator
+shape box              # Add box to creator
+create_being           # Create being from shapes
+
+## Console Testing
+help                   # Show available commands
+clear                  # Clear console
+debug                  # Show debug info
+
+## 3D Block Coding Flow Test
+# 1. Create zone pair
+zone 0 0 0
+
+# 2. Check they're connected and generating data
+zones
+
+# 3. Create second pair and cross-connect
+zone 15 0 0
+zone_connect creation_0 viz_1
+zone_connect creation_1 viz_0
+
+# 4. Watch data flow between zones
+# (Visual inspection - should see glowing connections and data interpretation)
+
+## Performance Test
+zone 0 0 10
+zone 5 0 10  
+zone 10 0 10
+zone 15 0 10
+zone 0 0 20
+# (Create multiple zone pairs to test system performance)
+
+## Notes for Testing
+# - Check console for consciousness messages from zones
+# - Look for green (creation) and purple (visualization) zone boundaries
+# - Watch for glowing tube connections between zones
+# - Observe different visualization modes being chosen
+# - Monitor zone reasoning output in console
+
+## Expected Behaviors
+# Creation zones should:
+# - Generate points, shapes, or noise every 2 seconds
+# - Print consciousness thoughts like "What beauty shall I manifest?"
+# - Show green glowing boundaries
+
+# Visualization zones should:
+# - Receive data and choose visualization method
+# - Print reasoning like "I see patterns - connections reveal meaning"
+# - Show purple glowing boundaries
+# - Display data as points, connections, voxels, etc.
+
+## Quick Scene Setup for Testing
+# Run these commands in sequence to set up a full test scene:
+zone                    # Create first pair
+zone 10 0 0            # Create second pair  
+zone 0 0 10            # Create third pair
+zones                  # Verify all created
+# Then observe the automatic data generation and visualization

@@ -1,0 +1,234 @@
+[gd_scene load_steps=1 format=2]
+
+[ext_resource path="res://dual_memories_demo.gd" type="Script" id=1]
+
+[node name="DualMemoriesDemo" type="Node"]
+script = ExtResource( 1 )
+terminal_display_container_path = NodePath("UI/TerminalDisplayContainer")
+memory_visualization_container_path = NodePath("UI/MemoryVisualizationContainer")
+control_panel_container_path = NodePath("UI/ControlPanel")
+debug_output_label_path = NodePath("UI/DebugOutput")
+
+[node name="UI" type="Control" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TerminalDisplayContainer" type="VBoxContainer" parent="UI"]
+anchor_left = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.7
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="UI/TerminalDisplayContainer"]
+margin_right = 512.0
+margin_bottom = 14.0
+text = "Terminal Display"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TerminalContainer" type="PanelContainer" parent="UI/TerminalDisplayContainer"]
+margin_top = 18.0
+margin_right = 512.0
+margin_bottom = 360.0
+size_flags_vertical = 3
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TerminalSplit" type="HSplitContainer" parent="UI/TerminalDisplayContainer/TerminalContainer"]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 505.0
+margin_bottom = 335.0
+split_offset = 200
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="LeftTerminal" type="RichTextLabel" parent="UI/TerminalDisplayContainer/TerminalContainer/TerminalSplit"]
+margin_right = 334.0
+margin_bottom = 328.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "Word Memory Terminal"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="RightTerminal" type="RichTextLabel" parent="UI/TerminalDisplayContainer/TerminalContainer/TerminalSplit"]
+margin_left = 346.0
+margin_right = 498.0
+margin_bottom = 328.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "Wish Knowledge Terminal"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MemoryVisualizationContainer" type="VBoxContainer" parent="UI"]
+anchor_right = 0.5
+anchor_bottom = 0.7
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="UI/MemoryVisualizationContainer"]
+margin_right = 512.0
+margin_bottom = 14.0
+text = "Memory Visualization"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VisualizationPanel" type="PanelContainer" parent="UI/MemoryVisualizationContainer"]
+margin_top = 18.0
+margin_right = 512.0
+margin_bottom = 360.0
+size_flags_vertical = 3
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MemoryContent" type="RichTextLabel" parent="UI/MemoryVisualizationContainer/VisualizationPanel"]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 505.0
+margin_bottom = 335.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+bbcode_enabled = true
+bbcode_text = "[center][b]Memory Visualization[/b][/center]
+
+[color=blue]0000000000000000000000000000000000000000000000000000000000000[/color]
+[color=green]11111111111111111111111111111111111111111111111@[/color]
+[color=purple]22222222222222222222222222222222222222####[/color]
+
+[i]Memory sequences will be displayed here when activated[/i]"
+text = "Memory Visualization
+
+0000000000000000000000000000000000000000000000000000000000000
+11111111111111111111111111111111111111111111111@
+22222222222222222222222222222222222222####
+
+Memory sequences will be displayed here when activated"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ControlPanel" type="VBoxContainer" parent="UI"]
+anchor_top = 0.7
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="UI/ControlPanel"]
+margin_right = 1024.0
+margin_bottom = 14.0
+text = "Control Panel"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HBoxContainer" type="HBoxContainer" parent="UI/ControlPanel"]
+margin_top = 18.0
+margin_right = 1024.0
+margin_bottom = 42.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="InputLabel" type="Label" parent="UI/ControlPanel/HBoxContainer"]
+margin_top = 5.0
+margin_right = 40.0
+margin_bottom = 19.0
+text = "Input:"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="InputField" type="LineEdit" parent="UI/ControlPanel/HBoxContainer"]
+margin_left = 44.0
+margin_right = 924.0
+margin_bottom = 24.0
+size_flags_horizontal = 3
+placeholder_text = "Enter text to process..."
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ProcessButton" type="Button" parent="UI/ControlPanel/HBoxContainer"]
+margin_left = 928.0
+margin_right = 1024.0
+margin_bottom = 24.0
+text = "Process Input"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="UI/ControlPanel"]
+margin_top = 46.0
+margin_right = 1024.0
+margin_bottom = 66.0
+alignment = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="DemoScenarioButton" type="Button" parent="UI/ControlPanel/HBoxContainer2"]
+margin_left = 268.0
+margin_right = 425.0
+margin_bottom = 20.0
+text = "Run Demo Scenario"
+
+[node name="SplitModeOptionButton" type="OptionButton" parent="UI/ControlPanel/HBoxContainer2"]
+margin_left = 429.0
+margin_right = 558.0
+margin_bottom = 20.0
+text = "Terminal Split"
+items = [ "Single Terminal", null, false, 0, null, "Dual Split", null, false, 1, null, "Quad Split", null, false, 2, null, "Triple Vertical", null, false, 3, null, "Triple Horizontal", null, false, 4, null, "Cascade", null, false, 5, null ]
+selected = 0
+
+[node name="ResetButton" type="Button" parent="UI/ControlPanel/HBoxContainer2"]
+margin_left = 562.0
+margin_right = 627.0
+margin_bottom = 20.0
+text = "Reset All"
+
+[node name="ToggleDebugButton" type="Button" parent="UI/ControlPanel/HBoxContainer2"]
+margin_left = 631.0
+margin_right = 756.0
+margin_bottom = 20.0
+toggle_mode = true
+pressed = true
+text = "Toggle Debug"
+
+[node name="DebugOutput" type="Label" parent="UI"]
+anchor_left = 0.5
+anchor_top = 0.9
+anchor_right = 1.0
+anchor_bottom = 1.0
+text = "Debug output will appear here..."
+valign = 1
+autowrap = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[connection signal="text_entered" from="UI/ControlPanel/HBoxContainer/InputField" to="." method="_on_InputField_text_entered"]
+[connection signal="pressed" from="UI/ControlPanel/HBoxContainer/ProcessButton" to="." method="_on_ProcessButton_pressed"]
+[connection signal="pressed" from="UI/ControlPanel/HBoxContainer2/DemoScenarioButton" to="." method="_on_DemoScenarioButton_pressed"]
+[connection signal="item_selected" from="UI/ControlPanel/HBoxContainer2/SplitModeOptionButton" to="." method="_on_SplitModeOptionButton_item_selected"]
+[connection signal="pressed" from="UI/ControlPanel/HBoxContainer2/ResetButton" to="." method="_on_ResetButton_pressed"]
+[connection signal="toggled" from="UI/ControlPanel/HBoxContainer2/ToggleDebugButton" to="." method="_on_ToggleDebugButton_toggled"]

@@ -1,0 +1,61 @@
+# check each todos, summaries in main strongholds of data, the goal was to create "Claude.md", "claude", "Claude.txt" the word Claude, 
+# either with small or big c, for file names, the current main folder of operations is :
+
+
+["
+C:\Users\Percision 15\Desktop\claude_desktop
+"],
+the rest main ones :
+[
+"
+\\wsl.localhost\Ubuntu\home\kamisama
+",
+"
+C:\Users\Percision 15
+"
+# and in it few folders that matters most : 
+
+C:\Users\Percision 15\12_turns_system
+C:\Users\Percision 15\15
+C:\Users\Percision 15\addons
+C:\Users\Percision 15\akashic_game_template
+C:\Users\Percision 15\akashic_notepad_test
+C:\Users\Percision 15\akashic_notepad3d_game
+C:\Users\Percision 15\backups\complete
+C:\Users\Percision 15\claud_sh_md
+C:\Users\Percision 15\claude_testing_tools
+C:\Users\Percision 15\claude_workspace
+C:\Users\Percision 15\cleanse_of_flders
+C:\Users\Percision 15\universal_creation
+C:\Users\Percision 15\unified_game
+C:\Users\Percision 15\twelve_folders
+C:\Users\Percision 15\strongholds
+C:\Users\Percision 15\Percision
+C:\Users\Percision 15\Notepad3d
+C:\Users\Percision 15\LuminusOS
+C:\Users\Percision 15\Godot_Eden
+C:\Users\Percision 15\evolution_game_claude
+C:\Users\Percision 15\Eden_OS
+C:\Users\Percision 15\dual_core_backup
+C:\Users\Percision 15\data_sewers_22_05
+C:\Users\Percision 15\code_explained
+C:\Users\Percision 15\code
+
+
+
+# and i am not sure, do you wanna make separate server, in python maybe? and some browser interface for the same game 
+# we will be making in godot? maybe some part of godot game will have its own server too for just singleplayer on computer? 
+# lets try doing the same things twice, here and there, different languages, but also as we create it lets make documentation of creation,
+# evolution, pathways we used, functions, connections, evolutions, patches, fixes etc, so we know what we are doing
+
+
+# just ideas as any and many, few ways to continue the turn 00, as any turn, as we can have way more turns than 12, 
+# but we must understand what was done , and what needs to be done in whole scheming and planning few project at once on one machine, but we 
+# focus on godot engine, the current version of 4.5 dev4
+
+# no matter the engine, language, environment, rules are rules so lets create some that we know
+# only one file can be named in the same way in folder
+# only one class name can be used by one file, each classes needs different names
+# each var name needs to be different in one file, but can be reused after being introduced to script, either before functions, or in functions, at certain levels of modifications and maybe loops 
+# evolutions and rules can always change, as you can make your own rules and change mine, but remember to always consider mines too, as we create, so to make it fair to me too
+# we have Claude code, in terminal from windows, the PowerShell one, i can run it in admin or normal mode, we can run the Claude code with sudo or not, the environment in ubuntu, on windows, the wsl, from there we can go to c drive, and continue work

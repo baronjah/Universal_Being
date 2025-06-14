@@ -1,0 +1,2 @@
+func first_stage_of_creation_(data_set_name_0, sets_to_create_0):
+	create_new_task("initialize_menu", sets_to_create_0[0])

@@ -1,0 +1,51 @@
+graph TD
+    Start([Start _ready]) --> Debug[Debug Mode Check]
+    
+    subgraph Initial Setup
+        Debug --> OS[OS Detection]
+        OS --> CodeAnalysis[Code Structure Analysis]
+        CodeAnalysis --> A[Scan res:// Directory]
+        A --> B[Print Initial Scene Tree]
+        B --> C[Scan Eden Directory]
+    end
+    
+    subgraph Task Management Setup
+        C --> D[Check Delta System State]
+        D --> E[Setup Thread Pool Signals]
+        E -->|On Discard| E1[Queue Pusher]
+        E -->|On Start| E2[Task Tracker]
+    end
+    
+    subgraph Scene Setup
+        E --> F[Check Timer Status]
+        F --> G[Check Settings File]
+        G --> H[Setup Viewport & Camera]
+        H --> Check1[Status Check]
+        Check1 --> I[Start Scene Tree]
+        I --> Check2[Status Check]
+    end
+    
+    subgraph Final Steps
+        Check2 --> J[Performance Tests]
+        J --> K[Connect Timer Intervals]
+        K --> End([End _ready])
+    end
+    
+    %% Checkpoints
+    Checkpoint1{Timer Check 1} -.-> F
+    Checkpoint2{Timer Check 2} -.-> Check1
+    Checkpoint3{Timer Check 3} -.-> Check2
+    
+    %% File Operations
+    Files[(File Systems)] -.-> A
+    Files -.-> CodeAnalysis
+    Files -.-> G
+    
+    style Start fill:#f96,stroke:#333,stroke-width:2px
+    style End fill:#f96,stroke:#333,stroke-width:2px
+    
+    classDef checkpoint fill:#fcf,stroke:#333,stroke-width:1px
+    class Checkpoint1,Checkpoint2,Checkpoint3 checkpoint
+    
+    classDef fileOps fill:#cfc,stroke:#333,stroke-width:1px
+    class Files fileOps

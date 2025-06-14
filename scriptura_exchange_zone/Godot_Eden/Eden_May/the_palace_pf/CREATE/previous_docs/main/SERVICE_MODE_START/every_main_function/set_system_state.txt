@@ -1,0 +1,8 @@
+func set_system_state(state_name: String, new_state: SystemState) -> bool:
+	if not core_states.states.has(state_name):
+		return false
+		
+	core_states.mutex.lock()
+	core_states.states[state_name] = new_state
+	core_states.mutex.unlock()
+	return true

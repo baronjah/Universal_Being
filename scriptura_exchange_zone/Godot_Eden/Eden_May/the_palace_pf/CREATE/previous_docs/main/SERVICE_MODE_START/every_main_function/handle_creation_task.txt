@@ -1,0 +1,32 @@
+func handle_creation_task(target_argument):
+	var type_of_state : int = 1
+	print(" handle_creation_task : ", target_argument)
+	
+	# Check if we can proceed with creation
+	load_queue_mutex.lock()
+	var can_proceed = true
+	if load_queue.has(target_argument):
+		if load_queue[target_argument].has("metadata"):
+			if load_queue[target_argument]["metadata"].has("status"):
+				if load_queue[target_argument]["metadata"]["status"] != 0:
+					can_proceed = false
+	load_queue_mutex.unlock()
+	
+	if can_proceed:
+		# Update tree state
+		the_current_state_of_tree(target_argument, type_of_state)
+		
+		# Trigger recheck
+		mutex_for_trickery.lock()
+		menace_tricker_checker = 1
+		mutex_for_trickery.unlock()
+	else:
+		# Log creation attempt for retry
+		dictionary_of_mistakes_mutex.lock()
+		if !dictionary_of_mistakes.has(target_argument):
+			dictionary_of_mistakes[target_argument] = {
+				"status": "pending",
+				"counter": int(1),
+				"last_attempt": Time.get_ticks_msec()
+			}
+		dictionary_of_mistakes_mutex.unlock()

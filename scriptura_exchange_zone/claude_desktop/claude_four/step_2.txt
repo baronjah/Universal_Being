@@ -1,0 +1,114 @@
+# Button System & UI Framework Implementation
+
+## Features from Recipe:
+- Buttons can be any shape from ShapesTwoDimensional
+- Support for texture (.jpg, .png) or solid color
+- Text overlay with textName
+- ShowingName based on chosen language
+- TopColourButton for clicked/selected state
+- Outline support with color and width
+- Size specification (Width x Height)
+
+## Implementation Steps:
+
+### Step 1: Create Shape System
+1. Create `Shape2D` base class
+2. Implement shape types:
+   - Square
+   - Circle
+   - Rectangle
+   - Triangle
+   - Pentagon
+   - Hexagon
+   - Custom polygon support
+3. Add shape generation methods
+
+### Step 2: Create Button Base Class
+```gdscript
+# ButtonBase.gd structure
+- textName: String
+- showingName: String
+- shape: Shape2D
+- textureNamePath: String
+- buttonSolidColour: Color
+- buttonOutlineSolidColour: Color
+- buttonOutlineWidth: float
+- size: Vector2
+- topColourButton: Color
+```
+
+### Step 3: Implement Button Visual States
+1. Normal state rendering
+2. Hover state (slight color change)
+3. Selected state (TopColourButton)
+4. Pressed state animation
+5. Disabled state
+
+### Step 4: Create Button Factory
+1. `ButtonFactory.create_button(config: Dictionary)`
+2. Shape generation based on type
+3. Texture loading system
+4. Color and outline application
+5. Text positioning and sizing
+
+### Step 5: Special Button Types
+1. Create ExitButton class
+2. Create BackButton class
+3. Create LanguageButton class
+4. Implement special behaviors
+
+## Testing Procedures:
+
+### Test 1: Shape Generation
+- [ ] Create button with each shape type
+- [ ] Verify correct geometry
+- [ ] Test custom polygon shapes
+- [ ] Verify shape scaling with size
+
+### Test 2: Visual Properties
+- [ ] Test solid color buttons
+- [ ] Test textured buttons
+- [ ] Verify outline rendering
+- [ ] Test color layering (texture over solid color)
+- [ ] Verify text positioning
+
+### Test 3: State Transitions
+- [ ] Test normal → hover transition
+- [ ] Test hover → selected transition
+- [ ] Test selected → pressed transition
+- [ ] Verify TopColourButton application
+- [ ] Test rapid state changes
+
+### Test 4: Button Factory
+- [ ] Create buttons from configuration
+- [ ] Test invalid configurations
+- [ ] Verify texture loading
+- [ ] Test missing texture fallback
+
+## Code Example:
+```gdscript
+var button_config = {
+    "textName": "Multiverses",
+    "shapeName": "rectangle",
+    "textureNamePath": "res://textures/button_bg.png",
+    "buttonSolidColour": Color.BLUE,
+    "buttonOutlineSolidColour": Color.WHITE,
+    "buttonOutlineWidth": 2.0,
+    "size": Vector2(200, 50),
+    "topColourButton": Color.DARK_BLUE
+}
+
+var button = ButtonFactory.create_button(button_config)
+```
+
+## Dependencies:
+- Shape generation system
+- Texture loading system
+- Language system (for showingName)
+- Input system
+
+## Expected Outcomes:
+- Flexible button creation system
+- Consistent visual styling
+- Smooth state transitions
+- Reusable button components

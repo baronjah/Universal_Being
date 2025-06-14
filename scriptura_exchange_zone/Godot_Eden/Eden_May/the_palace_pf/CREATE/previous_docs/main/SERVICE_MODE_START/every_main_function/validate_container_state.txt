@@ -1,0 +1,15 @@
+func validate_container_state(container_name):
+	var required_nodes = ["datapoint", "container"]
+	var missing_nodes = []
+	
+	tree_mutex.lock()
+	if scene_tree_jsh["main_root"]["branches"].has(container_name):
+		var container = scene_tree_jsh["main_root"]["branches"][container_name]
+		
+		for node_type in required_nodes:
+			if !container.has(node_type) or !is_instance_valid(container[node_type]["node"]):
+				missing_nodes.append(node_type)
+	tree_mutex.unlock()
+	
+	if missing_nodes.size() > 0:
+		attempt_container_repair(container_name, missing_nodes)

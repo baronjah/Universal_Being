@@ -1,0 +1,8 @@
+func get_record_type_id(record_type: String) -> int:
+	match record_type:
+		"base":
+			return 0
+		"menu":
+			return 1
+		_:
+			return -1

@@ -1,0 +1,220 @@
+[gd_scene load_steps=6 format=3 uid="uid://dcwjydl4uqxf8"]
+
+[ext_resource type="Script" path="res://12_turns_system/unified_migration_system.gd" id="1_i6xmo"]
+[ext_resource type="Script" path="res://12_turns_system/godot4_migration_tool.gd" id="2_mct5e"]
+[ext_resource type="Script" path="res://12_turns_system/ethereal_migration_bridge.gd" id="3_t8a53"]
+[ext_resource type="Script" path="res://12_turns_system/enhanced_migration_launcher.gd" id="4_j6xyw"]
+[ext_resource type="Script" path="res://12_turns_system/godot4_migration_tester.gd" id="5_a5f1k"]
+
+[node name="UnifiedMigrationSystem" type="Node"]
+script = ExtResource("1_i6xmo")
+auto_start = false
+enable_ethereal_engine_support = true
+enable_akashic_integration = true
+enable_color_system = true
+enable_statistics = true
+
+[node name="Godot4MigrationTool" type="Node" parent="."]
+script = ExtResource("2_mct5e")
+backup_before_migration = true
+auto_fix_deprecated = true
+migrate_resources = true
+verbose_logging = true
+
+[node name="EtherealMigrationBridge" type="Node" parent="."]
+script = ExtResource("3_t8a53")
+use_akashic_records = true
+track_reality_changes = true
+enable_word_manifestation = true
+dimensional_records_path = "res://akashic_records/migration"
+
+[node name="EnhancedMigrationLauncher" type="Node" parent="."]
+script = ExtResource("4_j6xyw")
+auto_start_ui = false
+enable_color_integration = true
+enable_test_runner = true
+
+[node name="Godot4MigrationTester" type="Node" parent="."]
+script = ExtResource("5_a5f1k")
+test_scripts_path = "res://12_turns_system/tests/migration_test_scripts"
+output_path = "res://12_turns_system/tests/migration_output"
+verbose_logging = true
+run_tests_on_start = false
+
+[node name="UI" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HeaderPanel" type="PanelContainer" parent="UI/VBoxContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="UI/VBoxContainer/HeaderPanel"]
+layout_mode = 2
+
+[node name="TitleLabel" type="Label" parent="UI/VBoxContainer/HeaderPanel/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Unified Godot Migration System"
+horizontal_alignment = 1
+
+[node name="StatisticsLabel" type="Label" parent="UI/VBoxContainer/HeaderPanel/HBoxContainer"]
+layout_mode = 2
+text = "Migrations: 0 | Tests: 0"
+
+[node name="PathsPanel" type="PanelContainer" parent="UI/VBoxContainer"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/VBoxContainer/PathsPanel"]
+layout_mode = 2
+
+[node name="PathsLabel" type="Label" parent="UI/VBoxContainer/PathsPanel/VBoxContainer"]
+layout_mode = 2
+text = "Project Paths"
+
+[node name="Godot3PathContainer" type="HBoxContainer" parent="UI/VBoxContainer/PathsPanel/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="UI/VBoxContainer/PathsPanel/VBoxContainer/Godot3PathContainer"]
+layout_mode = 2
+text = "Godot 3 Project:"
+
+[node name="LineEdit" type="LineEdit" parent="UI/VBoxContainer/PathsPanel/VBoxContainer/Godot3PathContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "Enter Godot 3 project path"
+
+[node name="BrowseButton" type="Button" parent="UI/VBoxContainer/PathsPanel/VBoxContainer/Godot3PathContainer"]
+layout_mode = 2
+text = "Browse"
+
+[node name="Godot4PathContainer" type="HBoxContainer" parent="UI/VBoxContainer/PathsPanel/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="UI/VBoxContainer/PathsPanel/VBoxContainer/Godot4PathContainer"]
+layout_mode = 2
+text = "Godot 4 Project:"
+
+[node name="LineEdit" type="LineEdit" parent="UI/VBoxContainer/PathsPanel/VBoxContainer/Godot4PathContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "Enter Godot 4 project path"
+
+[node name="BrowseButton" type="Button" parent="UI/VBoxContainer/PathsPanel/VBoxContainer/Godot4PathContainer"]
+layout_mode = 2
+text = "Browse"
+
+[node name="ActionsPanel" type="PanelContainer" parent="UI/VBoxContainer"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/VBoxContainer/ActionsPanel"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="UI/VBoxContainer/ActionsPanel/VBoxContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="StartMigrationButton" type="Button" parent="UI/VBoxContainer/ActionsPanel/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "Start Migration"
+
+[node name="CheckCompatibilityButton" type="Button" parent="UI/VBoxContainer/ActionsPanel/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "Check Compatibility"
+
+[node name="RunTestsButton" type="Button" parent="UI/VBoxContainer/ActionsPanel/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "Run Tests"
+
+[node name="GenerateReportButton" type="Button" parent="UI/VBoxContainer/ActionsPanel/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "Generate Report"
+
+[node name="OptionsPanel" type="PanelContainer" parent="UI/VBoxContainer"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/VBoxContainer/OptionsPanel"]
+layout_mode = 2
+
+[node name="OptionsLabel" type="Label" parent="UI/VBoxContainer/OptionsPanel/VBoxContainer"]
+layout_mode = 2
+text = "Migration Options"
+
+[node name="GridContainer" type="GridContainer" parent="UI/VBoxContainer/OptionsPanel/VBoxContainer"]
+layout_mode = 2
+columns = 2
+
+[node name="BackupCheckBox" type="CheckBox" parent="UI/VBoxContainer/OptionsPanel/VBoxContainer/GridContainer"]
+layout_mode = 2
+button_pressed = true
+text = "Create backup before migration"
+
+[node name="AutoFixCheckBox" type="CheckBox" parent="UI/VBoxContainer/OptionsPanel/VBoxContainer/GridContainer"]
+layout_mode = 2
+button_pressed = true
+text = "Auto-fix deprecated features"
+
+[node name="MigrateResourcesCheckBox" type="CheckBox" parent="UI/VBoxContainer/OptionsPanel/VBoxContainer/GridContainer"]
+layout_mode = 2
+button_pressed = true
+text = "Migrate resources (.tres, .tscn)"
+
+[node name="VerboseLoggingCheckBox" type="CheckBox" parent="UI/VBoxContainer/OptionsPanel/VBoxContainer/GridContainer"]
+layout_mode = 2
+button_pressed = true
+text = "Verbose logging"
+
+[node name="EtherealSupportCheckBox" type="CheckBox" parent="UI/VBoxContainer/OptionsPanel/VBoxContainer/GridContainer"]
+layout_mode = 2
+button_pressed = true
+text = "Enable Ethereal Engine support"
+
+[node name="AkashicIntegrationCheckBox" type="CheckBox" parent="UI/VBoxContainer/OptionsPanel/VBoxContainer/GridContainer"]
+layout_mode = 2
+button_pressed = true
+text = "Enable Akashic integration"
+
+[node name="ResultsPanel" type="PanelContainer" parent="UI/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/VBoxContainer/ResultsPanel"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="UI/VBoxContainer/ResultsPanel/VBoxContainer"]
+layout_mode = 2
+text = "Results"
+
+[node name="ResultsTextEdit" type="TextEdit" parent="UI/VBoxContainer/ResultsPanel/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+editable = false
+wrap_mode = 1
+
+[node name="ProgressBar" type="ProgressBar" parent="UI/VBoxContainer"]
+layout_mode = 2
+max_value = 1.0
+
+[node name="StatusLabel" type="Label" parent="UI/VBoxContainer"]
+layout_mode = 2
+text = "Ready"
+horizontal_alignment = 1
+
+[node name="FileDialog" type="FileDialog" parent="."]
+title = "Open a Directory"
+initial_position = 2
+size = Vector2i(600, 400)
+ok_button_text = "Select Current Folder"
+file_mode = 2
+access = 2

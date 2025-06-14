@@ -1,0 +1,361 @@
+func initialize_menu(record_type: String):
+	
+	var type_of_data : int
+	print(" initalize memories ! 0 : " , record_type)
+	
+	var records_set_name = record_type + "_"
+	var use_cache = false
+	var already_exists = false
+   
+
+
+
+	print(" initalize memories ! 0L0 : " , record_type)
+	if active_r_s_mut.try_lock():
+		print(" initalize memories ! 0L1 : " , record_type)
+		if cached_r_s_mutex.try_lock():
+			print(" initalize memories ! 0L2 : " , record_type)
+		else:
+			print(" initalize memories ! 0L3 : " , record_type)
+	else:
+		print(" initalize memories ! 0L4 : " , record_type)
+		print(" active records set, is actually being used ")
+		
+		
+		
+		
+		var first_stage_of_creation : String = "abort_creation"
+		var stage_of_creation : String = "first"
+		
+		new_function_for_creation_recovery(record_type, first_stage_of_creation, stage_of_creation)
+		
+		
+		
+		if cached_r_s_mutex.try_lock():
+			print(" initalize memories ! 0L5 : " , record_type)
+		else:
+			print(" initalize memories ! 0L6 : " , record_type)
+			
+			
+			var first_stage_of_creation_0 : String = "abort_creation"
+			var stage_of_creation_0 : String = "first"
+			
+			new_function_for_creation_recovery(record_type, first_stage_of_creation_0, stage_of_creation_0)
+			
+			
+			
+			if array_mutex_process.try_lock():
+				print(" initalize memories ! 0L7 : " , record_type)
+			else:
+				print(" initalize memories ! 0L8 : " , record_type)
+				
+				var first_stage_of_creation_1 : String = "abort_creation"
+				var stage_of_creation_1 : String = "first"
+				
+				new_function_for_creation_recovery(record_type, first_stage_of_creation_1, stage_of_creation_1)
+				
+				
+				#array_mutex_process.lock()
+				#
+				#for number_thingy in list_of_sets_to_create:
+					#if number_thingy[0] == record_type:
+						#print(" initialize menu, finish i guess we found the second gate ?")
+						#number_thingy[1] +=6
+						#
+				#array_mutex_process.unlock()
+			
+			
+			
+			
+		
+
+
+
+
+
+	active_r_s_mut.lock()
+	print(" initalize memories ! 0000 : " , record_type)
+	cached_r_s_mutex.lock()
+	print(" initalize memories ! 00000 : " , record_type)
+	
+	# check if it is in active
+	if active_record_sets.has(records_set_name):
+		print(" initalize memories ! 0A : " , record_type)
+		already_exists = true
+		if active_record_sets[records_set_name].has("metadata"):
+			print(" initalize memories ! 0B : " , record_type)
+			if active_record_sets[records_set_name]["metadata"]["container_count"] == BanksCombiner.dataSetLimits[records_set_name]:
+				print(" initalize memories ! 0C : " , record_type)
+				
+				
+				
+				array_mutex_process.lock()
+				for number_thingy in list_of_sets_to_create:
+					if number_thingy[0] == record_type:
+						print(" initialize menu, finish i guess we found the second gate ?")
+						number_thingy[1] +=6
+				array_mutex_process.unlock()
+				
+				
+				
+				active_r_s_mut.unlock()
+				cached_r_s_mutex.unlock()
+				
+				
+				
+				return
+				
+				
+			
+			
+			
+			if active_record_sets[records_set_name]["metadata"]["container_count"] == 1:
+				
+				
+				var number_of_set = active_record_sets[records_set_name]["metadata"]["container_count"]
+				var additional_set_name = record_type + str(number_of_set)
+				var additional_set_name_ = additional_set_name + "_"
+				
+				
+				if !active_record_sets.has(additional_set_name_):
+					
+					
+					if cached_record_sets.has(records_set_name):
+						print(" initalize memories ! :  but cached had copy of that one? ")
+						active_record_sets[additional_set_name_] = cached_record_sets[additional_set_name_]
+						cached_record_sets.erase(additional_set_name_)
+					# missing logic
+					
+					# if cached has it, take it, if not, then do as it was before
+					
+					
+					else:
+						var new_data = recreator(number_of_set, active_record_sets[records_set_name], record_type, additional_set_name_)
+						active_record_sets[additional_set_name_] = new_data.duplicate(true)
+					
+					
+					
+					# up to that line ?
+					
+					# maybe i didnt have to, dunno ghosts demanded it
+					
+					
+					
+					
+					
+					array_mutex_process.lock()
+					for number_thingy in list_of_sets_to_create:
+						if number_thingy[0] == record_type:
+							print(" initialize menu, finish i guess we found the third gate ? ")
+							number_thingy[1] +=1
+							number_thingy[0] = additional_set_name
+					array_mutex_process.unlock()
+					
+					active_record_sets[records_set_name]["metadata"]["container_count"] +=1
+					
+					
+					
+					active_r_s_mut.unlock()
+					cached_r_s_mutex.unlock()
+					
+					
+					
+					
+					return 
+# here we will also need to check if "number_of_set" > max countainer count in
+				# IF WE ALREADY HAD ONE ADDDITIONAL SET MADE BEFORE!!!!
+			if active_record_sets[records_set_name]["metadata"]["container_count"] > 1:
+				#print(" active records set fiasco ? 5")
+				var number_of_set = active_record_sets[records_set_name]["metadata"]["container_count"]
+				var previous_additional_set_name = record_type + str(number_of_set -1)
+				var previous_additional_set_name_underscore = previous_additional_set_name + "_"
+				
+				var additional_set_name = record_type + str(number_of_set)
+				var additional_set_name_ = additional_set_name + "_"
+				
+				if !active_record_sets.has(additional_set_name_):
+					var new_data = recreator(number_of_set, active_record_sets[previous_additional_set_name_underscore], previous_additional_set_name, additional_set_name_)
+					active_record_sets[additional_set_name_] = new_data.duplicate(true)
+					
+					active_record_sets[records_set_name]["metadata"]["container_count"] +=1
+					
+					
+					
+					
+					array_mutex_process.lock()
+					
+					for number_thingy in list_of_sets_to_create:
+						if number_thingy[0] == record_type:
+							print(" initialize menu, finish i guess we found the fourth gate ?")
+							number_thingy[1] +=1
+							number_thingy[0] = additional_set_name
+							
+					array_mutex_process.unlock()
+					
+					
+					
+					active_r_s_mut.unlock()
+					cached_r_s_mutex.unlock()
+					
+					
+					
+					return
+				else:
+					#print(" active records set fiasco ? 7")
+					active_record_sets[records_set_name]["metadata"]["container_count"] +=1
+					
+					# my mind is telling me, we have that already in active and it is additional set? so maybe? we hit the limit number of that additional record set ???
+					
+					# errror
+					
+					
+					# attention
+					
+					
+					
+					array_mutex_process.lock()
+					
+					for number_thingy in list_of_sets_to_create:
+						if number_thingy[0] == record_type:
+							print(" initialize menu, finish i guess we found the fifth gate ?")
+							number_thingy[1] +=1
+							number_thingy[0] = additional_set_name
+							
+					array_mutex_process.unlock()
+					
+					
+					
+					active_r_s_mut.unlock()
+					cached_r_s_mutex.unlock()
+					
+					# almost kurwa there
+					
+					
+					
+					
+					
+				return
+
+		if active_record_sets[records_set_name].is_empty():
+			print(" initalize memories ! 0D : " , record_type)
+			#print(" active records set fiasco ? 8")
+			if cached_record_sets.has(records_set_name):
+				#print(" active records set fiasco ? 9")
+				if !cached_record_sets[records_set_name].is_empty():
+					#print(" active records set fiasco ? 10")
+					active_record_sets[records_set_name] = cached_record_sets[records_set_name].duplicate(true)
+					active_record_sets[records_set_name]["metadata"]["container_count"] +=1
+					cached_record_sets.erase(records_set_name)
+
+					array_mutex_process.lock()
+					
+					for number_thingy in list_of_sets_to_create:
+						if number_thingy[0] == record_type:
+							print(" initialize menu, finish i guess we found the sixth gate ?")
+							number_thingy[1] +=1
+							
+					array_mutex_process.unlock()
+					
+					
+					
+					active_r_s_mut.unlock()
+					cached_r_s_mutex.unlock()
+					
+					
+					
+					return
+
+	active_r_s_mut.unlock()
+	cached_r_s_mutex.unlock()
+
+	print("initalize memories ! 01 we went further ")
+	
+	var datapoint_node
+	var records : Dictionary
+	var current_data_pack_loaded
+	var records_part : String
+	var records_name : String
+#	print(" initialize menu lets check that records_part :  ", records_part)
+	records_part = ""
+#	print(" initialize menu now i tried cleaning it records_part : ", records_part)
+	
+	match record_type:
+		"base":
+			current_data_pack_loaded = BanksCombiner.combination_0
+			records_part = "base_"
+		"menu":
+			current_data_pack_loaded = BanksCombiner.combination_1
+			records_part = "menu_"
+		"settings":
+			current_data_pack_loaded = BanksCombiner.combination_2
+			records_part = "settings_"
+		"keyboard":
+			current_data_pack_loaded = BanksCombiner.combination_3
+			records_part = "keyboard_"
+		"keyboard_left":
+			current_data_pack_loaded = BanksCombiner.combination_4
+			records_part = "keyboard_left_"
+		"keyboard_right":
+			current_data_pack_loaded = BanksCombiner.combination_5
+			records_part = "keyboard_right_"
+		# Add more record sets as needed
+		"things_creation":
+			current_data_pack_loaded = BanksCombiner.combination_6
+			records_part = "things_creation_"
+		"singular_lines":
+			current_data_pack_loaded = BanksCombiner.combination_7
+			records_part = "singular_lines_"
+		_:
+			#print("Unknown record set to find in banks combiner : ", record_type)
+			return {}
+	
+	
+	for data_types in current_data_pack_loaded:
+		#print("data_types : ", data_types[0])
+		type_of_data = data_types[0]
+		# get records by its type :)
+		match type_of_data:
+			0:
+				#print(" zero ?")
+				records = find_record_set(record_type)
+				
+				records_name = records_part + "records" # 0 = "records" , 1 = "instructions" 2 = "scenes"  3 = "interactions"
+			1:
+				#print(" one ? ")
+				records = find_instructions_set(record_type)
+				
+				records_name = records_part + "instructions"
+			2: 
+				#print(" two ? ")
+				records = find_scene_frames(record_type)
+				
+				records_name = records_part + "scenes"
+			3:
+				#print(" three ? ")
+				records = find_interactions_list(record_type)
+				
+				records_name = records_part + "interactions"
+		
+		load_record_set(records_part, records_name, type_of_data, records)
+
+
+
+
+## the outcome from creation
+
+	print(" initialize menu, finish ")
+	
+	
+	
+	array_mutex_process.lock()
+	
+	
+	
+	for number_thingy in list_of_sets_to_create:
+		if number_thingy[0] == record_type:
+			print(" initialize menu, finish i guess we found the first gate ?")
+			number_thingy[1] +=1
+			
+			
+			
+	array_mutex_process.unlock()

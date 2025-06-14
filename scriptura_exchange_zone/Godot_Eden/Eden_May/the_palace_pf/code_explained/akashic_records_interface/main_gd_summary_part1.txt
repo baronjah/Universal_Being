@@ -1,0 +1,148 @@
+# Main.gd Summary - Lines 1-500
+
+## File Overview
+- Path: res://code/gdscript/scripts/Menu_Keyboard_Console/main.gd
+- Primary class: Extends Node3D
+- Contains the core functionality of JSH Ethereal Engine
+
+## Variables and Constants (Lines 74-203)
+### Core System Variables (Lines 75-92)
+- Console and terminal related: jsh_console, cmd_terminal, console, terminal
+- Navigation: tree, snake, apple, direction_movement, rotation_move
+- File system: command, current_operational_system, file_path, files_content, folders_content
+- Display: viewport, mouse_pos, camera
+
+### Element System Components (Lines 94-114)
+- System variables: element_manager, play_button, message_of_delta_start, scan_result
+- State flags: creation_can_happen, mistakes_of_past, deletion_process_can_happen, movement_possible, edit_possible
+- Data structures: edge_table, tri_table
+- Movement: acceleration, target_direction, max_speed, lerp_speed
+- Caching: LRUCache, chunk_cache
+- AI: local_ai, api_key
+- Groups: list_of_groups
+
+### 3D Resources (Lines 115-119)
+- density_texture: Texture3D
+- volume_data: Array
+- Physics: move_quat, velocity
+
+### Configuration and State Variables (Lines 121-139)
+- Mouse: mouse_status
+- Commands and AI: current_command, last_guardian_message, gemma_context, gemma_model_path
+- Reality and paths: current_reality, path, database_folder, container_name, line_word, datapoint_name
+- Tracking: deja_vu_counter
+- Task settings: max_task_duration, ray_distance_set
+
+### System State Flags (Lines 143-155)
+- File system checks: directory_existence, folders_existence, files_existence
+- Loading states: gemma_loaded, game_initialized, transition_in_progress
+- Component states: command_parser, fsc_status, fdc_status, ftc_status
+
+### Concurrency and Threading (Lines 157-213)
+- Dictionary with mutex pairs:
+  - active_record_sets / active_r_s_mut
+  - cached_record_sets / cached_r_s_mutex
+  - scene_tree_jsh / tree_mutex
+  - cached_jsh_tree_branches / cached_tree_mutex
+  - dictionary_of_mistakes / dictionary_of_mistakes_mutex
+  - current_containers_state / mutex_for_container_state
+  - unload_queue / unload_queue_mutex
+  - load_queue / load_queue_mutex
+  - list_of_containers / mutex_containers
+- Arrays with mutex protection for:
+  - nodes_to_be_added
+  - data_to_be_send
+  - things_to_be_moved
+  - nodes_to_be_unloaded
+  - functions_to_be_called
+  - additionals_to_be_called
+  - actions_to_be_called
+  - messages_to_be_called
+- Max items per cycle (all set to 369):
+  - max_nodes_added_per_cycle
+  - max_data_send_per_cycle
+  - max_movements_per_cycle
+  - max_nodes_to_unload_per_cycle
+  - max_functions_called_per_cycle
+  - max_additionals_per_cycle
+  - max_actions_per_cycle
+  - max_messages_per_cycle
+
+### Game State (Lines 214-226)
+- Entity states: player_memory, entity_states
+- Dictionaries for tracking: test_results, download_received, upload_to_send, cache_timestamps, task_timeouts, task_timestamps, task_status
+- Thread data and history: thread_test_data, command_history
+
+### Arrays for Various Game Functions (Lines 229-246)
+- System arrays: first_run_prints, first_run_numbers, init_array, init_array_int
+- Time tracking: blimp_of_time, previous_blimp_of_time, past_deltas_memories, stored_delta_memory
+- Startup arrays: array_of_startup_check, check_settings_data
+- Data handling: array_with_no_mutex, available_directiories, combo_array
+- Visual effects: _highlighted_colliders
+- Data storage: data_storage_comparer, preparer_of_data, test_of_set_list_flow, data_storage_zero_five
+- Queue system: curent_queue (Line 248)
+
+### Integer Counters (Lines 251-259)
+- Progress trackers: int_of_stuff_started, int_of_stuff_finished, turn_number_process, delta_turn_0
+- System settings: max_cache_size_mb
+- Error handling: some_kind_of_issue, just_one_try, int_of_truth_zero_five
+
+### Mutexes and System References (Lines 259-278)
+- Standalone mutexes: reality_mutex, memory_mutex
+- System state: first_start_check
+- Component references: timer_system, gemma_ai
+- Node references (using @onready):
+  - main_node
+  - records_system / JSH_records_system
+  - data_splitter
+  - task_manager
+  - JSH_Threads
+  - JSH_system_check
+  - thread_pool
+
+## Constants and Resources (Lines 284-304)
+- System constants: MAX_RAM_CHUNKS (500), CHUNK_SIZE (32), ISO_LEVEL (0.5)
+- Resource preloads:
+  - DataPointScript
+  - ContainterScript
+  - LineScript
+- Reality states: REALITY_STATES ["physical", "digital", "astral"]
+- Dimension types: DIMENSIONAL_MAGICS ["first" through "eighth"]
+- AI constants: AI_MODEL_PATH, AI_MODEL_SIZE_MB (1500), MAX_MEMORY_ENTRIES (100)
+- Version: VERSION ("1.0.0")
+
+## Signals (Lines 314-321)
+- command_processed
+- main_node_signal
+- reality_shifted
+- guardian_spawned
+- entity_created
+- entity_transformed
+- deja_vu_triggered
+
+## Dictionaries and Data Structures (Lines 330-499)
+- status_symbol: Visual indicators for states
+- word_params: Settings for rendering words in 3D
+- tree_data: Structure to hold scene tree data
+- system_readiness: Flags for system components
+- system_checks: Function names for checks
+- Enums (Lines 368-388):
+  - SystemState: UNKNOWN, INACTIVE, ACTIVE, BUSY, ERROR
+  - CreationStatus: ERROR, SUCCESS, PENDING, INVALID_INPUT, LOCKED
+  - CreationState: INACTIVE, POSSIBLE, IN_PROGRESS, LOCKED, ERROR
+- Configuration settings (Lines 391-409):
+  - Thread allocation percentages
+  - Reality transition settings
+  - AI parameters
+- Memory management (Lines 414-435):
+  - Arrays and dictionaries tracking
+  - Cleanup thresholds
+- System state tracking (Lines 439-499):
+  - core_states
+  - initialization_states
+  - history_tracking
+  - time_tracking
+  - system_states
+  - system_states_0 (partial, cuts off at line 500)
+
+Reading continues from line 500.

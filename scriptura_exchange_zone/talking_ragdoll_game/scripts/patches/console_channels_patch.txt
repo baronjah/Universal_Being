@@ -1,0 +1,196 @@
+extends Node
+
+# Console Channels Patch
+# Add this to console_manager.gd to enable channel filtering
+
+# Add these variables to console_manager.gd:
+var channel_system: Node
+var channel_buttons_container: HBoxContainer
+
+# Channel definitions
+enum Channel {
+	ALL,
+	SYSTEM,
+	GAME,
+	UNIVERSAL,
+	ERROR,
+	DEBUG,
+	PLAYER,
+	RULES
+}
+
+# Add to _ready() function in console_manager.gd:
+func setup_channel_system() -> void:
+	# Create channel buttons at top of console
+	channel_buttons_container = HBoxContainer.new()
+	channel_buttons_container.name = "ChannelButtons"
+	
+	# Create container with background
+	var channel_panel = PanelContainer.new()
+	var panel_style = StyleBoxFlat.new()
+	panel_style.bg_color = Color(0.15, 0.15, 0.15, 0.95)
+	panel_style.content_margin_all = 5
+	channel_panel.add_theme_stylebox_override("panel", panel_style)
+	
+	# Channel label
+	var label = Label.new()
+	label.text = "Filter: "
+	label.add_theme_color_override("font_color", Color(0.8, 0.8, 0.8))
+	channel_buttons_container.add_child(label)
+	
+	# Channel buttons
+	var channels = {
+		"All": Color.WHITE,
+		"System": Color(0.5, 0.5, 0.5),
+		"Game": Color(0, 1, 0),
+		"Universal": Color(0, 1, 1),
+		"Errors": Color(1, 0, 0),
+		"Debug": Color(1, 1, 0),
+		"Player": Color(1, 0, 1),
+		"Rules": Color(0, 1, 0.5)
+	}
+	
+	for channel_name in channels:
+		var btn = Button.new()
+		btn.text = channel_name
+		btn.toggle_mode = true
+		btn.pressed = true
+		btn.custom_minimum_size = Vector2(70, 24)
+		
+		# Button styling
+		var style = StyleBoxFlat.new()
+		style.bg_color = Color(0.2, 0.2, 0.2)
+		style.border_width_all = 1
+		style.border_color = channels[channel_name]
+		style.corner_radius_all = 3
+		
+		var pressed_style = style.duplicate()
+		pressed_style.bg_color = channels[channel_name]
+		pressed_style.bg_color.a = 0.3
+		pressed_style.border_width_all = 2
+		
+		btn.add_theme_stylebox_override("normal", style)
+		btn.add_theme_stylebox_override("pressed", pressed_style)
+		btn.add_theme_stylebox_override("hover", pressed_style)
+		btn.add_theme_color_override("font_color", Color.WHITE)
+		
+		btn.set_meta("channel", channel_name)
+		btn.toggled.connect(_on_channel_toggled.bind(channel_name))
+		
+		channel_buttons_container.add_child(btn)
+	
+	# Add separator
+	channel_buttons_container.add_child(VSeparator.new())
+	
+	# Clear button
+	var clear_btn = Button.new()
+	clear_btn.text = "Clear"
+	clear_btn.custom_minimum_size = Vector2(60, 24)
+	clear_btn.pressed.connect(clear_console)
+	channel_buttons_container.add_child(clear_btn)
+	
+	channel_panel.add_child(channel_buttons_container)
+	
+	# Add to console UI
+	content_vbox.add_child(channel_panel)
+	content_vbox.move_child(channel_panel, 0)  # Put at top
+
+# Channel message storage
+var channel_messages: Dictionary = {
+	"All": [],
+	"System": [],
+	"Game": [],
+	"Universal": [],
+	"Errors": [],
+	"Debug": [],
+	"Player": [],
+	"Rules": []
+}
+
+var active_channels: Dictionary = {
+	"All": true,
+	"System": true,
+	"Game": true,
+	"Universal": true,
+	"Errors": true,
+	"Debug": true,
+	"Player": true,
+	"Rules": true
+}
+
+# Modified print function with channels
+func print_to_channel(message: String, channel: String = "Game") -> void:
+	# Store in channel
+	if channel in channel_messages:
+		channel_messages[channel].append({
+			"text": message,
+			"time": Time.get_ticks_msec()
+		})
+		
+		# Limit history
+		if channel_messages[channel].size() > 500:
+			channel_messages[channel].pop_front()
+	
+	# Store in "All" channel too
+	channel_messages["All"].append({
+		"text": "[" + channel + "] " + message,
+		"time": Time.get_ticks_msec()
+	})
+	
+	# Display if channel is active
+	if active_channels.get(channel, true):
+		_print_to_console("[color=" + _get_channel_color(channel) + "][" + channel + "][/color] " + message)
+
+func _get_channel_color(channel: String) -> String:
+	match channel:
+		"System": return "#808080"
+		"Game": return "#00ff00"
+		"Universal": return "#00ffff"
+		"Errors": return "#ff0000"
+		"Debug": return "#ffff00"
+		"Player": return "#ff00ff"
+		"Rules": return "#00ff80"
+		_: return "#ffffff"
+
+func _on_channel_toggled(pressed: bool, channel: String) -> void:
+	active_channels[channel] = pressed
+	refresh_console_display()
+
+func refresh_console_display() -> void:
+	# Clear display
+	output_display.clear()
+	
+	# Show messages from active channels
+	for msg_data in channel_messages["All"]:
+		var channel = _extract_channel_from_message(msg_data.text)
+		if active_channels.get(channel, true):
+			output_display.append_text(msg_data.text + "\n")
+
+func _extract_channel_from_message(message: String) -> String:
+	# Extract channel from "[Channel] message" format
+	if message.begins_with("[") and "]" in message:
+		var end = message.find("]")
+		return message.substr(1, end - 1)
+	return "Game"
+
+# Convenience functions
+func print_system(msg: String) -> void:
+	print_to_channel(msg, "System")
+
+func print_game(msg: String) -> void:
+	print_to_channel(msg, "Game")
+
+func print_universal(msg: String) -> void:
+	print_to_channel(msg, "Universal")
+
+func print_error(msg: String) -> void:
+	print_to_channel(msg, "Errors")
+
+func print_debug(msg: String) -> void:
+	print_to_channel(msg, "Debug")
+
+func print_player(msg: String) -> void:
+	print_to_channel(msg, "Player")
+
+func print_rules(msg: String) -> void:
+	print_to_channel(msg, "Rules")

@@ -1,0 +1,2 @@
+func find_highest_in_array(numbers: Array) -> int:
+	return numbers.max()

@@ -1,0 +1,25 @@
+func check_if_first_time(set_name_first, the_current_of_energy):
+	
+	#mutex_for_container_state.lock()
+	
+	#if current_containers_state[set_name_first].has("three_i"):
+		#var three_ii = current_containers_state[set_name_first]["three_i"]
+		#print(" three_ii : ", three_ii)
+	
+	#mutex_for_container_state.unlock()
+	
+	mutex_containers.lock()
+	
+	print(" set_name_first  : " , set_name_first , " the_current_of_energy ", the_current_of_energy , " list_of_containers " , list_of_containers)
+	
+	if list_of_containers.has(set_name_first):
+		print(" it have it already")
+	else:
+		list_of_containers[set_name_first] = {}
+		list_of_containers[set_name_first]["status"] = the_current_of_energy
+	
+	list_of_containers
+	
+	mutex_containers.unlock()
+
+# check every container found in a set list

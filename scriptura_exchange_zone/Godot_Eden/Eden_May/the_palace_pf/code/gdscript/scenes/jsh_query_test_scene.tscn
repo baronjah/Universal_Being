@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://b7b4qk6uoh8kd"]
+
+[ext_resource type="Script" path="res://jsh_query_test.gd" id="1_3udnv"]
+
+[node name="JSHQueryTestScene" type="Node"]
+script = ExtResource("1_3udnv")

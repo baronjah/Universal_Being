@@ -1,0 +1,2 @@
+func fifth_impact_of_creation_(data_set_name_4, sets_to_create_4):
+	create_new_task("fifth_impact_right_now", data_set_name_4)

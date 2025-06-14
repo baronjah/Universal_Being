@@ -1,0 +1,12 @@
+func create_datapoint(node_name: String, first_line : Array, data_to_write : Array, group_name : String, version_of_thing : String, information_lines_parsed : Array):
+	var node_path_c_dp = first_line[6][0]
+	var coords = first_line[1]
+	var to_rotate = first_line[2]
+	var data_point = Node3D.new()
+	data_point.set_script(DataPointScript)
+	data_point.setup_main_reference(self)
+	
+	var message_tester 
+	message_tester = data_point.power_up_data_point(node_name, int(version_of_thing), data_to_write)
+	var node_type = "datapoint"
+	node_creation(node_name, data_point, coords, to_rotate, group_name, node_type, node_path_c_dp)

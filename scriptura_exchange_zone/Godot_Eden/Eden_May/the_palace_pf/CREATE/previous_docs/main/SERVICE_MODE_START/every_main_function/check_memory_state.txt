@@ -1,0 +1,29 @@
+func check_memory_state():
+	var current_time = Time.get_ticks_msec()
+	var sizes = {}
+	
+	# Check arrays
+	for array_name in memory_metadata["arrays"].keys():
+		if get_jsh(array_name) != null:
+			var array_size = get_data_structure_size(get_jsh(array_name))
+			sizes[array_name] = array_size
+			
+			if array_size > memory_metadata["cleanup_thresholds"]["array_max"]:
+				clean_array(array_name)
+	
+	# Check dictionaries
+	for dict_name in memory_metadata["dictionaries"].keys():
+		if get_jsh(dict_name) != null:
+			var dict_size = get_data_structure_size(get_jsh(dict_name))
+			sizes[dict_name] = dict_size
+			
+			# Convert to MB
+			var size_mb = dict_size / (1024 * 1024)
+			if size_mb > memory_metadata["cleanup_thresholds"]["dict_max_mb"]:
+				clean_dictionary(dict_name)
+	
+	print("\nMemory State:")
+	for name in sizes:
+		print("%s: %s bytes" % [name, sizes[name]])
+		
+	return sizes

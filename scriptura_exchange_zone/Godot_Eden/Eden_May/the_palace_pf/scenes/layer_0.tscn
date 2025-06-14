@@ -1,0 +1,206 @@
+[gd_scene load_steps=25 format=3 uid="uid://chbt71pm7odky"]
+
+[ext_resource type="Script" uid="uid://dgaw1ylyy8ei8" path="res://code/gdscript/scripts/Menu_Keyboard_Console/main.gd" id="1_g1js0"]
+[ext_resource type="Script" uid="uid://ddj2xmdpr1wi7" path="res://code/gdscript/scripts/Archive_Past_Text/camera_move.gd" id="1_xmlx2"]
+[ext_resource type="Script" uid="uid://dgftwr4d8js6q" path="res://addons/goutte.camera.trackball/trackball_camera.gd" id="2_j52s2"]
+[ext_resource type="Script" uid="uid://lf56vukhj85p" path="res://code/gdscript/scripts/Menu_Keyboard_Console/things_creator.gd" id="2_sfjpe"]
+[ext_resource type="Script" uid="uid://j6nryyjyytyu" path="res://code/gdscript/scripts/Text_Console_Window/jsh_core.gd" id="2_y6jiy"]
+[ext_resource type="Script" uid="uid://di033jpcwljia" path="res://code/gdscript/scripts/Archive_Past_Text/camera_mover.gd" id="3_e3swm"]
+[ext_resource type="Script" uid="uid://dy31kfjl6ws1h" path="res://code/gdscript/scripts/Menu_Keyboard_Console/JSH_mainframe_database.gd" id="5_d7ho3"]
+[ext_resource type="Script" uid="uid://dohm4i4wgl52e" path="res://code/gdscript/scripts/Menu_Keyboard_Console/system_check.gd" id="5_r5swx"]
+[ext_resource type="Script" uid="uid://d22wkt13s3lrk" path="res://code/gdscript/scripts/Menu_Keyboard_Console/jsh_thread_pool_manager.gd" id="7_i3d7i"]
+[ext_resource type="Script" uid="uid://cg8ttqup1pe4w" path="res://code/gdscript/scripts/Menu_Keyboard_Console/record_set_manager.gd" id="7_nwjsy"]
+[ext_resource type="Script" uid="uid://b7ci3r75fglwj" path="res://code/gdscript/scripts/Menu_Keyboard_Console/jsh_data_splitter.gd" id="7_x4ohk"]
+[ext_resource type="Script" uid="uid://dekuk5hgd5gp" path="res://code/gdscript/scripts/akashic_records/JSH_Akashic_Records.gd" id="8_ejjid"]
+[ext_resource type="Script" uid="uid://vnag8tnrc6te" path="res://code/gdscript/scripts/Menu_Keyboard_Console/jsh_scene_tree_system.gd" id="8_kukpa"]
+[ext_resource type="Script" uid="uid://byy22hmtvmnwv" path="res://code/gdscript/scripts/Menu_Keyboard_Console/jsh_task_manager.gd" id="8_p5m75"]
+[ext_resource type="Script" uid="uid://dlbxguvgfdlmy" path="res://code/gdscript/scripts/Menu_Keyboard_Console/jsh_database_system.gd" id="9_0r0h8"]
+[ext_resource type="Script" uid="uid://bt4k2r1vq772m" path="res://code/gdscript/scripts/Menu_Keyboard_Console/JSH_console.gd" id="9_ejjid"]
+[ext_resource type="Script" uid="uid://culhfftx8hoie" path="res://code/gdscript/scripts/Text_Console_Window/jsh_queue_system.gd" id="12_df86n"]
+[ext_resource type="Script" uid="uid://chayd6woll5y0" path="res://code/gdscript/scripts/Text_Console_Window/jsh_turns_system.gd" id="13_4083v"]
+[ext_resource type="Script" uid="uid://dgtg64qad4pi3" path="res://code/gdscript/scripts/Archive_Past_Text/archive_of_past.gd" id="13_mpxcs"]
+[ext_resource type="Script" uid="uid://dk1tgvu6gp703" path="res://code/gdscript/scripts/Menu_Keyboard_Console/godot_timers_system.gd" id="19_sfjpe"]
+[ext_resource type="Script" uid="uid://ciu81c6rddfia" path="res://code/gdscript/scripts/kamisama_home/thing_creator_standalone.gd" id="21_812rp"]
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_sfjpe"]
+
+[sub_resource type="Environment" id="Environment_1bdqd"]
+background_mode = 1
+ambient_light_source = 2
+ambient_light_color = Color(1, 1, 1, 1)
+ambient_light_energy = 0.1
+
+[sub_resource type="SphereMesh" id="SphereMesh_jsqim"]
+
+[node name="main" type="Node3D"]
+script = ExtResource("1_g1js0")
+
+[node name="Node2D" type="Node2D" parent="."]
+
+[node name="TextureRect" type="TextureRect" parent="Node2D"]
+visible = false
+offset_right = 357.0
+offset_bottom = 296.0
+texture = SubResource("PlaceholderTexture2D_sfjpe")
+
+[node name="Things_Creator" type="Node" parent="."]
+script = ExtResource("2_sfjpe")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_1bdqd")
+
+[node name="Player_Head" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 3.41458)
+
+[node name="pointers" type="Node3D" parent="Player_Head"]
+
+[node name="cursor_mouse" type="Node3D" parent="Player_Head/pointers"]
+
+[node name="cursor_left" type="Node3D" parent="Player_Head/pointers"]
+
+[node name="cursor_right" type="Node3D" parent="Player_Head/pointers"]
+
+[node name="cursor_head" type="Node3D" parent="Player_Head/pointers"]
+
+[node name="cursor_body" type="Node3D" parent="Player_Head/pointers"]
+
+[node name="cameramove" type="Node3D" parent="Player_Head"]
+script = ExtResource("1_xmlx2")
+
+[node name="TrackballCamera" type="Camera3D" parent="Player_Head/cameramove"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 6.03419)
+script = ExtResource("2_j52s2")
+
+[node name="CameraMover" type="Node3D" parent="Player_Head/cameramove/TrackballCamera"]
+script = ExtResource("3_e3swm")
+
+[node name="light" type="OmniLight3D" parent="Player_Head/cameramove/TrackballCamera"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.330944)
+omni_range = 10.0
+
+[node name="godot_model" type="MeshInstance3D" parent="Player_Head"]
+visible = false
+mesh = SubResource("SphereMesh_jsqim")
+
+[node name="JSH_records_system" type="Node" parent="."]
+script = ExtResource("7_nwjsy")
+
+[node name="JSH_data_splitter" type="Node" parent="."]
+script = ExtResource("7_x4ohk")
+
+[node name="JSH_ThreadPool_Manager" type="Node" parent="."]
+script = ExtResource("7_i3d7i")
+
+[node name="system_check" type="Node" parent="."]
+script = ExtResource("5_r5swx")
+
+[node name="JSH_console" type="Node" parent="."]
+script = ExtResource("9_ejjid")
+
+[node name="JSH_task_manager" type="Node" parent="."]
+script = ExtResource("8_p5m75")
+
+[node name="JSH_turns_system" type="Node" parent="JSH_task_manager"]
+script = ExtResource("13_4083v")
+
+[node name="JSH_queue_system" type="Node" parent="JSH_task_manager"]
+script = ExtResource("12_df86n")
+
+[node name="JSH_Core" type="Node" parent="."]
+script = ExtResource("2_y6jiy")
+
+[node name="JSH_mainframe_database" type="Node" parent="JSH_Core"]
+script = ExtResource("5_d7ho3")
+
+[node name="JSH_database_system" type="Node" parent="JSH_Core/JSH_mainframe_database"]
+script = ExtResource("9_0r0h8")
+
+[node name="JSH_cache_memory_system" type="Node" parent="JSH_Core/JSH_mainframe_database"]
+script = ExtResource("5_d7ho3")
+
+[node name="JSH_akashic_records" type="Node" parent="JSH_Core/JSH_mainframe_database"]
+script = ExtResource("8_ejjid")
+
+[node name="JSH_Connections" type="Node" parent="JSH_Core/JSH_mainframe_database"]
+
+[node name="JSH_Receive_Data" type="Node" parent="JSH_Core/JSH_mainframe_database"]
+
+[node name="JSH_scene_tree_system" type="Node" parent="JSH_Core"]
+script = ExtResource("8_kukpa")
+
+[node name="camera" type="Node" parent="JSH_Core"]
+
+[node name="JSH_Patch" type="Node" parent="."]
+
+[node name="Archive" type="Node" parent="JSH_Patch"]
+script = ExtResource("13_mpxcs")
+
+[node name="Godot_connections" type="Node" parent="JSH_Patch"]
+
+[node name="godot_timers_system" type="Node" parent="JSH_Patch/Godot_connections"]
+script = ExtResource("19_sfjpe")
+
+[node name="godot_tree_system" type="Node" parent="JSH_Patch/Godot_connections"]
+
+[node name="JSH_multiplayer_files" type="Node" parent="JSH_Patch"]
+
+[node name="gradient" type="Node" parent="JSH_Patch"]
+
+[node name="JSH_World" type="Node" parent="."]
+
+[node name="JSH_Marching_Shapes_System" type="Node" parent="JSH_World"]
+
+[node name="JSH_digital_earthlings" type="Node" parent="JSH_World"]
+
+[node name="JSH_computer_window" type="Node" parent="JSH_World"]
+
+[node name="terminal" type="Node" parent="JSH_World"]
+
+[node name="fog" type="Node" parent="JSH_World"]
+
+[node name="snake" type="Node" parent="JSH_World"]
+
+[node name="object" type="Node" parent="JSH_World"]
+
+[node name="marching_cubes" type="Node" parent="JSH_World"]
+
+[node name="height_map" type="Node" parent="JSH_World"]
+
+[node name="grid_map" type="Node" parent="JSH_World"]
+
+[node name="icon" type="Node" parent="JSH_World"]
+
+[node name="grid" type="Node" parent="JSH_World"]
+
+[node name="clouds" type="Node" parent="JSH_World"]
+
+[node name="grass" type="Node" parent="JSH_World"]
+
+[node name="ground" type="Node" parent="JSH_World"]
+
+[node name="layer" type="Node" parent="JSH_World"]
+
+[node name="shape" type="Node" parent="JSH_World"]
+
+[node name="Dungeons" type="Node3D" parent="JSH_World"]
+
+[node name="Pathway_find" type="Node" parent="JSH_World"]
+
+[node name="site_map_controller" type="Node" parent="JSH_World"]
+
+[node name="Evolution_zone" type="Node" parent="JSH_World"]
+
+[node name="Path_Finder" type="Node3D" parent="JSH_World"]
+
+[node name="Marching_Cubes" type="Node3D" parent="JSH_World"]
+
+[node name="Website_connection" type="Node" parent="JSH_World"]
+
+[node name="Galaxy_Connection_Visualizer" type="Node2D" parent="JSH_World"]
+
+[node name="Site_map_scene" type="Node2D" parent="JSH_World"]
+
+[node name="ThingCreatorStandalone" type="Node" parent="."]
+script = ExtResource("21_812rp")
+
+[connection signal="movement_send" from="Player_Head/cameramove/TrackballCamera/CameraMover" to="Player_Head/cameramove" method="_on_camera_mover_movement_send"]

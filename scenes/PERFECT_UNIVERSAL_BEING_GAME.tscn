@@ -1,0 +1,159 @@
+[gd_scene load_steps=12 format=3 uid="uid://perfect_ub_game"]
+
+[ext_resource type="Script" path="res://beings/player/perfect_plasmoid_player.gd" id="1_perfect_player"]
+[ext_resource type="Script" path="res://core/UniversalInputManager.gd" id="2_input_manager"]
+[ext_resource type="Script" path="res://core/GameConsciousness.gd" id="3_game_consciousness"]
+[ext_resource type="Script" path="res://beings/gemma/gemma_perfect_consciousness.gd" id="4_gemma_perfect"]
+[ext_resource type="Script" path="res://systems/perfect_console_system.gd" id="5_console_system"]
+[ext_resource type="Script" path="res://systems/universal_being_inspector.gd" id="6_inspector"]
+
+[sub_resource type="Environment" id="Environment_perfect"]
+background_mode = 1
+background_color = Color(0.02, 0.02, 0.1, 1)
+ambient_light_source = 2
+ambient_light_color = Color(0.4, 0.4, 0.6, 1)
+ambient_light_energy = 0.3
+fog_enabled = true
+fog_light_color = Color(0.5, 0.3, 0.8, 1)
+fog_sun_scatter = 0.2
+
+[sub_resource type="CylinderMesh" id="PlasmoidMesh"]
+top_radius = 1.0
+bottom_radius = 0.6
+height = 1.8
+radial_segments = 12
+rings = 6
+
+[sub_resource type="StandardMaterial3D" id="PlasmoidMaterial_Pink"]
+albedo_color = Color(1.0, 0.3, 0.8, 0.85)
+metallic = 0.4
+roughness = 0.2
+emission_enabled = true
+emission = Color(0.8, 0.2, 0.6, 1)
+emission_energy = 0.8
+transparency = 1
+flags_transparent = true
+
+[sub_resource type="CylinderShape3D" id="PlasmoidShape"]
+height = 1.8
+top_radius = 1.0
+bottom_radius = 0.6
+
+[sub_resource type="SphereMesh" id="SocketMesh"]
+radius = 0.2
+height = 0.4
+radial_segments = 8
+rings = 4
+
+[sub_resource type="StandardMaterial3D" id="SocketMaterial"]
+albedo_color = Color(0.2, 1.0, 1.0, 1)
+metallic = 0.8
+roughness = 0.1
+emission_enabled = true
+emission = Color(0.1, 0.8, 0.8, 1)
+emission_energy = 1.2
+
+[node name="PERFECT_UNIVERSAL_BEING_GAME" type="Node3D"]
+
+[node name="UniversalInputManager" type="Node" parent="."]
+script = ExtResource("2_input_manager")
+
+[node name="GameConsciousness" type="Node" parent="."]
+script = ExtResource("3_game_consciousness")
+
+[node name="GemmaPerfectConsciousness" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 0)
+script = ExtResource("4_gemma_perfect")
+
+[node name="PerfectConsoleSystem" type="CanvasLayer" parent="."]
+script = ExtResource("5_console_system")
+
+[node name="UniversalBeingInspector" type="CanvasLayer" parent="."]
+script = ExtResource("6_inspector")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_perfect")
+
+[node name="PerfectPlasmoidPlayer" type="CharacterBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 8)
+script = ExtResource("1_perfect_player")
+
+[node name="PlasmoidMesh" type="MeshInstance3D" parent="PerfectPlasmoidPlayer"]
+mesh = SubResource("PlasmoidMesh")
+surface_material_override/0 = SubResource("PlasmoidMaterial_Pink")
+
+[node name="PlasmoidCollision" type="CollisionShape3D" parent="PerfectPlasmoidPlayer"]
+shape = SubResource("PlasmoidShape")
+
+[node name="PlayerSocket" type="Area3D" parent="PerfectPlasmoidPlayer"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2, 0)
+metadata/socket_type = "camera_socket"
+metadata/socket_name = "player_camera_connection"
+
+[node name="SocketMesh" type="MeshInstance3D" parent="PerfectPlasmoidPlayer/PlayerSocket"]
+mesh = SubResource("SocketMesh")
+surface_material_override/0 = SubResource("SocketMaterial")
+
+[node name="SocketArea" type="CollisionShape3D" parent="PerfectPlasmoidPlayer/PlayerSocket"]
+shape = SubResource("SphereShape3D")
+
+[node name="FavouriteCameraSystem" type="Node3D" parent="PerfectPlasmoidPlayer/PlayerSocket"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 3)
+
+[node name="Camera3D" type="Camera3D" parent="PerfectPlasmoidPlayer/PlayerSocket/FavouriteCameraSystem"]
+fov = 75
+
+[node name="CrosshairRay" type="RayCast3D" parent="PerfectPlasmoidPlayer/PlayerSocket/FavouriteCameraSystem/Camera3D"]
+target_position = Vector3(0, 0, -100)
+collision_mask = 1
+
+[node name="PinkPlasmoid1" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 4, -15)
+metadata/being_type = "pink_plasmoid"
+metadata/consciousness_level = 3
+
+[node name="PlasmoidMesh" type="MeshInstance3D" parent="PinkPlasmoid1"]
+mesh = SubResource("PlasmoidMesh")
+surface_material_override/0 = SubResource("PlasmoidMaterial_Pink")
+
+[node name="PlasmoidSocket" type="Area3D" parent="PinkPlasmoid1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2, 0)
+metadata/socket_type = "universal_connection"
+
+[node name="SocketMesh" type="MeshInstance3D" parent="PinkPlasmoid1/PlasmoidSocket"]
+mesh = SubResource("SocketMesh")
+surface_material_override/0 = SubResource("SocketMaterial")
+
+[node name="PinkPlasmoid2" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 6, -20)
+metadata/being_type = "pink_plasmoid"
+metadata/consciousness_level = 4
+
+[node name="PlasmoidMesh" type="MeshInstance3D" parent="PinkPlasmoid2"]
+mesh = SubResource("PlasmoidMesh")
+surface_material_override/0 = SubResource("PlasmoidMaterial_Pink")
+
+[node name="PlasmoidSocket" type="Area3D" parent="PinkPlasmoid2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2, 0)
+metadata/socket_type = "universal_connection"
+
+[node name="SocketMesh" type="MeshInstance3D" parent="PinkPlasmoid2/PlasmoidSocket"]
+mesh = SubResource("SocketMesh")
+surface_material_override/0 = SubResource("SocketMaterial")
+
+[node name="PinkPlasmoid3" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8, -25)
+metadata/being_type = "pink_plasmoid"
+metadata/consciousness_level = 5
+
+[node name="PlasmoidMesh" type="MeshInstance3D" parent="PinkPlasmoid3"]
+mesh = SubResource("PlasmoidMesh")
+surface_material_override/0 = SubResource("PlasmoidMaterial_Pink")
+
+[node name="PlasmoidSocket" type="Area3D" parent="PinkPlasmoid3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2, 0)
+metadata/socket_type = "universal_connection"
+
+[node name="SocketMesh" type="MeshInstance3D" parent="PinkPlasmoid3/PlasmoidSocket"]
+mesh = SubResource("SocketMesh")
+surface_material_override/0 = SubResource("SocketMaterial")

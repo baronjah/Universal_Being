@@ -1,0 +1,23 @@
+func retry_thread_initialization():
+	print("blank")
+
+func first_turn_validation() -> Dictionary:
+	var validation = {
+		"thread_health": check_thread_status(),
+		"memory_state": {
+			"stored_delta_memory": stored_delta_memory.size(),
+			"past_deltas_memories": past_deltas_memories.size()
+		},
+		"task_state": {
+			"started": int_of_stuff_started,
+			"finished": int_of_stuff_finished
+		},
+		"timestamp": Time.get_ticks_msec()
+	}
+	
+	if validation.thread_health == "working":
+		# Your stored_delta_memory tracking looks good
+		# Maybe formalize the timing tracking more:
+		track_delta_timing(validation.timestamp)
+	
+	return validation

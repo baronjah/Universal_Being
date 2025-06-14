@@ -1,0 +1,8 @@
+func newer_even_function_for_dictionary(name_of_container):
+
+	array_counting_mutex.lock()
+	var datapoint_node_newest = array_for_counting_finish[name_of_container]["metadata"]["datapoint_node"]#.duplicate(true)
+	var deep_state_copy_of_apples = array_for_counting_finish[name_of_container].duplicate(true)
+	array_counting_mutex.unlock()
+	#print(" i guess somehow, we get the node, and now, we got some kind of trouble? ", datapoint_node_newest)
+	datapoint_node_newest.new_datapoint_layer_system(deep_state_copy_of_apples)

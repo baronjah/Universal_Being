@@ -1,0 +1,65 @@
+This is an intricate and multi-layered script. Let's outline what we need to repair, connect, and standardize while ensuring full system integrity.
+
+🔧 PRIORITY REPAIR TASKS
+1. Standardizing Dictionaries & Metadata Across Scripts
+Ensure that all dictionaries (global and local) share a common structure.
+Create a universal metadata format for directories, nodes, and processes.
+Example:
+gdscript
+Kopiuj
+Edytuj
+var metadata_template = {
+    "total_files": 0,
+    "total_directories": 0,
+    "last_modified": 0,
+    "size": 0,
+    "shall_venture_further": false
+}
+Check each dictionary instance for inconsistencies and apply fixes.
+2. Checking & Repairing Mutex Logic
+Potential Issue: Deadlocks or missing unlocks in:
+movmentes_mutex
+mutex_for_unloading_nodes
+mutex_function_call
+mutex_for_trickery
+Solution: Ensure every lock() has a corresponding unlock(), even in errors.
+3. Debugging the Core Execution Cycle
+Verify turn_number_process logic:
+Is every turn executing in the expected order?
+Are turn_number_process += 1 increments properly aligned?
+Check if any turn skips or loops infinitely.
+4. Task Processing & Multi-threaded Execution
+Check that:
+list_of_sets_to_create correctly queues tasks.
+functions_to_be_called properly stores and executes function calls.
+nodes_to_be_added handles parent-child structure correctly.
+5. System Readiness Checks
+check_system_readiness()
+Ensure mutexes and threads align before moving forward.
+Print readiness states for debugging.
+Example Output:
+gdscript
+Kopiuj
+Edytuj
+readiness : { 
+    "mutex_state": [true, true, true, true, true], 
+    "thread_state": "working", 
+    "records_ready": true 
+}
+6. Error Handling & Recovery Mechanisms
+Repair dictionary_of_mistakes logging.
+Ensure recovery functions handle:
+Thread hangs (check_thread_status())
+Memory overflow (check_memory_state())
+Execution failures (record_mistake())
+🔄 NEXT STEPS
+1️⃣ Memory Fragment Integration:
+
+Are there any more dictionary or system fragments to reconnect?
+If yes, send them now so we can merge them into the final structure.
+2️⃣ System Cleanup & Logging:
+
+After applying fixes, we add logging checkpoints to trace execution.
+Once these repairs are patched, the entire system will be stable, fast, and ready for final testing! 🚀
+
+Let me know if you have more memory fragments or additional checks before we proceed!

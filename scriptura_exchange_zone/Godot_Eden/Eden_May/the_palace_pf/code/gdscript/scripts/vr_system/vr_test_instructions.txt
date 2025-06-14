@@ -1,0 +1,116 @@
+# VR Test Setup Instructions for Eden Space Game
+
+This document explains how to set up and run the VR test scene to verify that the VR implementation is working correctly with the Akashic Records system.
+
+## Setup Instructions
+
+### 1. Create the Test Scene
+
+1. Open the Godot editor
+2. Create a new scene with a Node3D as the root node
+3. Rename the root node to "VRTestScene"
+4. Attach the script "res://code/gdscript/scripts/vr_system/vr_test_scene.gd" to this node
+5. Save the scene as "vr_test_scene.tscn" in the "res://code/gdscript/scenes/" directory
+
+### 2. Configure Project Settings
+
+1. Open Project Settings in the editor
+2. Go to the "Autoload" tab
+3. Add the following autoloads:
+   - Name: "VRManager", Path: "res://code/gdscript/scripts/vr_system/vr_manager.gd"
+   - Name: "AkashicRecordsManager", Path: "res://code/gdscript/scripts/akashic_records/akashic_records_manager.gd"
+
+4. Go to the "XR" tab and make sure "OpenXR" is enabled
+5. Under "XR Features", enable:
+   - "Hand Tracking"
+   - "Hand Tracking Frequency: HIGH"
+   - "Passthrough"
+
+6. Go to the "Input Map" tab
+7. Add a new action called "toggle_vr"
+8. Add the F8 key as input for this action
+
+### 3. Configure XR Plugin Settings
+
+1. Go to the "Plugins" tab in Project Settings
+2. Enable the "OpenXR" plugin if it's not already enabled
+3. Configure the plugin for Quest 2:
+   - Form factor: "Head Mounted Display"
+   - View configuration: "Stereo"
+   - Reference Space: "Local"
+
+## Running the Test Scene
+
+1. Make sure your Oculus Quest 2 is connected and in developer mode
+2. Run the test scene in the editor
+3. Put on the VR headset
+4. You should see four colored spheres representing the elements: fire, water, wood, and ash
+5. Use the VR controllers to interact with these elements:
+   - Left controller trigger: Interact with elements (push them)
+   - Right controller trigger: Select elements
+   - Grip buttons: Grab and move elements
+   - Primary buttons (A/X): Toggle scale (simulating scale transitions)
+
+## Testing VR Features
+
+### 1. Basic VR Functionality
+
+- Confirm that the VR headset is working correctly
+- Verify that controller tracking and input is functioning
+- Check that the environment renders correctly in VR
+
+### 2. Akashic Records Integration
+
+- The test scene creates basic dictionary entries for the four elements
+- When elements collide, the interaction should be processed by the Akashic Records system
+- Watch for visual effects when elements interact
+- Example interactions:
+  - Fire + Wood should create Ash
+  - Water + Fire should result in Water winning
+  - Water + Ash should potentially create Wood
+
+### 3. Scale Transitions
+
+- Use the controller's primary buttons to simulate scale transitions
+- The scene should respond by displaying a message about the scale change
+- This tests the communication between VR and the Universe Controller
+
+## Troubleshooting
+
+### VR Not Initializing
+
+If VR doesn't initialize:
+
+1. Check that the Oculus Quest 2 is properly connected
+2. Verify that developer mode is enabled on the Quest 2
+3. Ensure the OpenXR plugin is enabled in Project Settings
+4. Check the logs for any error messages
+5. Try toggling VR mode with the F8 key or using the "Toggle VR" button in the UI
+
+### Elements Not Interacting
+
+If elements don't interact properly:
+
+1. Verify that the Akashic Records Manager is initialized
+2. Check the console for interaction logging
+3. Make sure the interaction rules are defined correctly
+
+### Performance Issues
+
+If you experience performance issues:
+
+1. Reduce the "VR Render Scale" setting to 0.8 or lower
+2. Disable any post-processing effects
+3. Simplify the environment by reducing the number of objects
+
+## Next Steps
+
+After successfully testing the VR functionality with this simple scene, you can proceed to integrate VR with the main game:
+
+1. Add the VR integration script to the main game scene
+2. Connect the VR system to the Universe Controller
+3. Implement VR-specific interactions for the Akashic Records
+4. Create VR controls for scale transitions
+5. Build a VR-friendly UI for the dictionary and element interactions
+
+Remember that the world-centered approach is key - keeping the camera stationary while moving and scaling the world around the player will reduce motion sickness in VR.

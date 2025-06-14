@@ -1,0 +1,116 @@
+[gd_scene load_steps=2 format=3 uid="uid://u76fgh5decky"]
+
+[ext_resource type="Script" path="res://jsh_database_test.gd" id="1_joxn1"]
+
+[node name="JSHDatabaseTestScene" type="Node"]
+script = ExtResource("1_joxn1")
+
+[node name="UI" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VSplitContainer" type="VSplitContainer" parent="UI"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+split_offset = 300
+
+[node name="TopPanel" type="Panel" parent="UI/VSplitContainer"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/VSplitContainer/TopPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TestControls" type="HBoxContainer" parent="UI/VSplitContainer/TopPanel/VBoxContainer"]
+layout_mode = 2
+
+[node name="StartButton" type="Button" parent="UI/VSplitContainer/TopPanel/VBoxContainer/TestControls"]
+layout_mode = 2
+text = "Start Test"
+
+[node name="StopButton" type="Button" parent="UI/VSplitContainer/TopPanel/VBoxContainer/TestControls"]
+layout_mode = 2
+text = "Stop Test"
+
+[node name="SaveAllButton" type="Button" parent="UI/VSplitContainer/TopPanel/VBoxContainer/TestControls"]
+layout_mode = 2
+text = "Save All"
+
+[node name="CompactButton" type="Button" parent="UI/VSplitContainer/TopPanel/VBoxContainer/TestControls"]
+layout_mode = 2
+text = "Compact DB"
+
+[node name="ResetButton" type="Button" parent="UI/VSplitContainer/TopPanel/VBoxContainer/TestControls"]
+layout_mode = 2
+text = "Reset Test"
+
+[node name="TestOpsContainer" type="HBoxContainer" parent="UI/VSplitContainer/TopPanel/VBoxContainer"]
+layout_mode = 2
+
+[node name="EntityTestButton" type="Button" parent="UI/VSplitContainer/TopPanel/VBoxContainer/TestOpsContainer"]
+layout_mode = 2
+text = "Test Entity Ops"
+
+[node name="DictionaryTestButton" type="Button" parent="UI/VSplitContainer/TopPanel/VBoxContainer/TestOpsContainer"]
+layout_mode = 2
+text = "Test Dictionary Ops"
+
+[node name="ZoneTestButton" type="Button" parent="UI/VSplitContainer/TopPanel/VBoxContainer/TestOpsContainer"]
+layout_mode = 2
+text = "Test Zone Ops"
+
+[node name="ScrollContainer" type="ScrollContainer" parent="UI/VSplitContainer/TopPanel/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="StatsLabel" type="Label" parent="UI/VSplitContainer/TopPanel/VBoxContainer/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "JSH Database System Test Statistics:"
+autowrap_mode = 3
+
+[node name="BottomPanel" type="Panel" parent="UI/VSplitContainer"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/VSplitContainer/BottomPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="UI/VSplitContainer/BottomPanel/VBoxContainer"]
+layout_mode = 2
+text = "Log:"
+
+[node name="ScrollContainer" type="ScrollContainer" parent="UI/VSplitContainer/BottomPanel/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="LogLabel" type="Label" parent="UI/VSplitContainer/BottomPanel/VBoxContainer/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+autowrap_mode = 3
+
+[connection signal="pressed" from="UI/VSplitContainer/TopPanel/VBoxContainer/TestControls/StartButton" to="." method="_on_start_button_pressed"]
+[connection signal="pressed" from="UI/VSplitContainer/TopPanel/VBoxContainer/TestControls/StopButton" to="." method="_on_stop_button_pressed"]
+[connection signal="pressed" from="UI/VSplitContainer/TopPanel/VBoxContainer/TestControls/SaveAllButton" to="." method="_on_save_all_button_pressed"]
+[connection signal="pressed" from="UI/VSplitContainer/TopPanel/VBoxContainer/TestControls/CompactButton" to="." method="_on_compact_button_pressed"]
+[connection signal="pressed" from="UI/VSplitContainer/TopPanel/VBoxContainer/TestControls/ResetButton" to="." method="_on_reset_button_pressed"]
+[connection signal="pressed" from="UI/VSplitContainer/TopPanel/VBoxContainer/TestOpsContainer/EntityTestButton" to="." method="_on_entity_test_button_pressed"]
+[connection signal="pressed" from="UI/VSplitContainer/TopPanel/VBoxContainer/TestOpsContainer/DictionaryTestButton" to="." method="_on_dictionary_test_button_pressed"]
+[connection signal="pressed" from="UI/VSplitContainer/TopPanel/VBoxContainer/TestOpsContainer/ZoneTestButton" to="." method="_on_zone_test_button_pressed"]

@@ -1,0 +1,276 @@
+[gd_scene load_steps=2 format=3 uid="uid://dtrw3p63g3h6s"]
+
+[ext_resource type="Script" path="res://shape_system_ui.gd" id="1_67qgc"]
+
+[node name="ShapeSystemUI" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_67qgc")
+
+[node name="CanvasContainer" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -300.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ShapeToolsPanel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 11
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -300.0
+grow_horizontal = 0
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ShapeToolsPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = 10.0
+offset_right = -10.0
+offset_bottom = -10.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="ShapeToolsPanel/VBoxContainer"]
+layout_mode = 2
+text = "Shape Tools"
+horizontal_alignment = 1
+
+[node name="HSeparator" type="HSeparator" parent="ShapeToolsPanel/VBoxContainer"]
+layout_mode = 2
+
+[node name="CreateShapesLabel" type="Label" parent="ShapeToolsPanel/VBoxContainer"]
+layout_mode = 2
+text = "Create Shapes"
+
+[node name="GridContainer" type="GridContainer" parent="ShapeToolsPanel/VBoxContainer"]
+layout_mode = 2
+columns = 2
+
+[node name="CreateSquareButton" type="Button" parent="ShapeToolsPanel/VBoxContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Square"
+
+[node name="CreateCircleButton" type="Button" parent="ShapeToolsPanel/VBoxContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Circle"
+
+[node name="CreateTriangleButton" type="Button" parent="ShapeToolsPanel/VBoxContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Triangle"
+
+[node name="CreateHexagonButton" type="Button" parent="ShapeToolsPanel/VBoxContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Hexagon"
+
+[node name="CreateStarButton" type="Button" parent="ShapeToolsPanel/VBoxContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Star"
+
+[node name="HSeparator2" type="HSeparator" parent="ShapeToolsPanel/VBoxContainer"]
+layout_mode = 2
+
+[node name="SizeLabel" type="Label" parent="ShapeToolsPanel/VBoxContainer"]
+layout_mode = 2
+text = "Shape Size:"
+
+[node name="SizeSlider" type="HSlider" parent="ShapeToolsPanel/VBoxContainer"]
+layout_mode = 2
+min_value = 10.0
+max_value = 200.0
+value = 50.0
+
+[node name="HSeparator3" type="HSeparator" parent="ShapeToolsPanel/VBoxContainer"]
+layout_mode = 2
+
+[node name="ActionsLabel" type="Label" parent="ShapeToolsPanel/VBoxContainer"]
+layout_mode = 2
+text = "Actions"
+
+[node name="ActionsGrid" type="GridContainer" parent="ShapeToolsPanel/VBoxContainer"]
+layout_mode = 2
+columns = 2
+
+[node name="CreateZoneButton" type="Button" parent="ShapeToolsPanel/VBoxContainer/ActionsGrid"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Create Zone"
+
+[node name="ConnectButton" type="Button" parent="ShapeToolsPanel/VBoxContainer/ActionsGrid"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Connect"
+
+[node name="AdvanceTurnButton" type="Button" parent="ShapeToolsPanel/VBoxContainer/ActionsGrid"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Advance Turn"
+
+[node name="ResetViewButton" type="Button" parent="ShapeToolsPanel/VBoxContainer/ActionsGrid"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Reset View"
+
+[node name="HSeparator4" type="HSeparator" parent="ShapeToolsPanel/VBoxContainer"]
+layout_mode = 2
+
+[node name="InstructionsLabel" type="Label" parent="ShapeToolsPanel/VBoxContainer"]
+layout_mode = 2
+text = "Instructions:
+- Left click to select
+- Space to toggle creation mode
+- R to rotate selected shape
+- S to scale selected shape
+- C to connect shapes
+- Z to create zone
+- Delete to remove selected"
+
+[node name="DimensionPanel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_right = -300.0
+offset_bottom = 50.0
+grow_horizontal = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="DimensionPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = 10.0
+offset_right = -10.0
+offset_bottom = -10.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="DimensionPanel/HBoxContainer"]
+layout_mode = 2
+text = "Dimension:"
+
+[node name="DimensionSelector" type="OptionButton" parent="DimensionPanel"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -200.0
+offset_top = -15.5
+offset_bottom = 15.5
+grow_horizontal = 0
+grow_vertical = 2
+
+[node name="InfoPanel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -50.0
+offset_right = -300.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="InfoPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = 10.0
+offset_right = -10.0
+offset_bottom = -10.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="CurrentTurnLabel" type="Label" parent="InfoPanel"]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 10.0
+offset_top = -11.5
+offset_right = 200.0
+offset_bottom = 11.5
+grow_vertical = 2
+text = "Turn: 1 / 12"
+
+[node name="CurrentDimensionLabel" type="Label" parent="InfoPanel"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -200.0
+offset_top = -11.5
+offset_right = -10.0
+offset_bottom = 11.5
+grow_horizontal = 0
+grow_vertical = 2
+text = "Color: AZURE"
+horizontal_alignment = 2
+
+[node name="ShapeInfoPanel" type="Panel" parent="."]
+visible = false
+layout_mode = 0
+offset_left = 318.0
+offset_top = 185.0
+offset_right = 618.0
+offset_bottom = 485.0
+
+[node name="ShapeInfoText" type="RichTextLabel" parent="ShapeInfoPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = 10.0
+offset_right = -10.0
+offset_bottom = -10.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Shape Information"
+
+[node name="CloseButton" type="Button" parent="ShapeInfoPanel"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -30.0
+offset_top = 5.0
+offset_right = -5.0
+offset_bottom = 30.0
+grow_horizontal = 0
+text = "X"
+
+[connection signal="pressed" from="ShapeToolsPanel/VBoxContainer/GridContainer/CreateSquareButton" to="." method="_on_create_square_button_pressed"]
+[connection signal="pressed" from="ShapeToolsPanel/VBoxContainer/GridContainer/CreateCircleButton" to="." method="_on_create_circle_button_pressed"]
+[connection signal="pressed" from="ShapeToolsPanel/VBoxContainer/GridContainer/CreateTriangleButton" to="." method="_on_create_triangle_button_pressed"]
+[connection signal="pressed" from="ShapeToolsPanel/VBoxContainer/GridContainer/CreateHexagonButton" to="." method="_on_create_hexagon_button_pressed"]
+[connection signal="pressed" from="ShapeToolsPanel/VBoxContainer/GridContainer/CreateStarButton" to="." method="_on_create_star_button_pressed"]
+[connection signal="value_changed" from="ShapeToolsPanel/VBoxContainer/SizeSlider" to="." method="_on_size_slider_value_changed"]
+[connection signal="pressed" from="ShapeToolsPanel/VBoxContainer/ActionsGrid/CreateZoneButton" to="." method="_on_create_zone_button_pressed"]
+[connection signal="pressed" from="ShapeToolsPanel/VBoxContainer/ActionsGrid/ConnectButton" to="." method="_on_connect_button_pressed"]
+[connection signal="pressed" from="ShapeToolsPanel/VBoxContainer/ActionsGrid/AdvanceTurnButton" to="." method="_on_advance_turn_button_pressed"]
+[connection signal="pressed" from="ShapeToolsPanel/VBoxContainer/ActionsGrid/ResetViewButton" to="." method="_on_reset_view_button_pressed"]
+[connection signal="item_selected" from="DimensionPanel/DimensionSelector" to="." method="_on_dimension_selected"]
+[connection signal="pressed" from="ShapeInfoPanel/CloseButton" to="." method="_on_shape_info_close_button_pressed"]

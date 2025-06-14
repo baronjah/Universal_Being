@@ -1,0 +1,147 @@
+# Eden Space Game - Script Index
+
+## Project Structure Overview
+
+Eden is organized into a modular system with several key directories:
+
+### Core Script Directories
+
+1. **elements_shapes_projection**
+   - Element system with fire, water, wood, and ash elements
+   - Physics interactions between elements
+   - LOD and optimization systems
+
+2. **Galaxy_Star_Planet**
+   - Galaxy and star system generation
+   - Planetary systems and celestial bodies
+   - Space navigation and orbital mechanics
+
+3. **universe_particles_physics**
+   - High-level universe management
+   - Scale transition systems
+   - Resource management across scales
+
+4. **Menu_Keyboard_Console**
+   - Main game interface
+   - User input processing
+   - Console system for commands
+
+### Supporting Systems
+
+5. **Space_Place_Point**
+   - Spatial coordinate systems
+   - 3D positioning helpers
+   - Navigation utility functions
+
+6. **ethereal_engine**
+   - Core engine extensions
+   - Custom system integrations
+   - Performance optimization tools
+
+7. **akashic_records**
+   - Data persistence
+   - Save/load functionality
+   - History tracking
+
+8. **Planet_Cloud_Water_Grass**
+   - Planetary surface details
+   - Environmental systems
+   - Atmosphere simulation
+
+### Additional Modules
+
+9. **Model_Shape_Layer**
+   - 3D model management
+   - Shape generation utilities
+   - Layer organization tools
+
+10. **Text_Console_Window**
+    - Text output systems
+    - Console visualization
+    - Command parsing
+
+11. **Snake_Space_Movement**
+    - Movement algorithms
+    - Path finding
+    - Navigation controls
+
+12. **Time_Repeat_Cycle_Loop_Return_Again**
+    - Time-based systems
+    - Cycle management
+    - Event sequencing
+
+## Key Script Files
+
+### Element System
+- **element_manager.gd** - Central element system controller
+- **element_resource_manager.gd** - Resource management for elements
+- **base_element.gd** - Base class for all element types
+- **fire_element.gd** - Fire element behavior and properties
+- **water_element.gd** - Water element behavior and properties
+- **wood_element.gd** - Wood element behavior and properties
+- **ash_element.gd** - Ash element behavior and properties
+
+### Space System
+- **Galaxies.gd** - Galaxy generation and management
+- **GalaxyCloseUp.gd** - Detailed galaxy view
+- **GalaxySprite.gd** - Galaxy visualization
+- **Star.gd** - Star behavior and properties
+- **CelestialBody.gd** - Base class for space objects
+- **CelestialPlanet.gd** - Planet implementation
+- **GlobalState.gd** - Cross-scale state tracking
+
+### Universe Management
+- **universe_controller.gd** - Multi-scale transition management
+- **scale_manager.gd** - Base class for scale level controllers
+- **resource_manager.gd** - Singleton for resource management
+- **galaxy_manager.gd** - Galaxy scale implementation
+
+### UI System
+- **main.gd** - Main game controller
+- **JSH_console.gd** - Console interface
+- **play_button.gd** - Element world transition
+
+## Integration Points
+
+### Scale Transitions
+The key integration point between the space and element systems is the scale transition mechanism:
+
+1. **UniverseController** in universe_particles_physics manages the transitions
+2. **ScaleManager** provides the interface for each scale level
+3. **GalaxyManager** (extends ScaleManager) handles galaxy scale
+4. **ElementManager** (implements ScaleManager interface) handles element scale
+
+### Resource Management
+Resource limitations and optimization are handled through:
+
+1. **ResourceManager** singleton for global limits
+2. **ElementResourceManager** for element-specific resources
+3. Element LOD system in **ElementManager**
+4. Frustum culling and visibility management in all scales
+
+### State Persistence
+Game state is maintained across scales through:
+
+1. **GlobalState** for cross-scale data
+2. Scale-specific state in each manager
+3. Serialization helpers in multiple systems
+
+## Development Focus Areas
+
+### Active Development
+- Scale transition system
+- Galaxy generation refinement
+- Element optimization
+- Resource management
+
+### Next Priorities
+- Star system implementation
+- Ship control system
+- Camera navigation
+- Transition effects
+
+### Future Work
+- Planet generation
+- Mecha system
+- Resource gathering
+- Construction mechanics

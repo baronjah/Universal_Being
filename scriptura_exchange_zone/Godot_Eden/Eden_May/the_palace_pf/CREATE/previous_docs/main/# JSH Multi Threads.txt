@@ -1,0 +1,21 @@
+#
+# JSH Multi Threads
+#
+#      oooo  .oooooo..o ooooo   ooooo 
+#      `888 d8P'    `Y8 `888'   `888' 
+#       888 Y88bo.       888     888     ┳┳┓  ┓ •  ┏┳┓┓        ┓   ┏┓         
+#       888  `"Y8888o.   888ooooo888     ┃┃┃┓┏┃╋┓   ┃ ┣┓┏┓┏┓┏┓┏┫┏  ┗┓┓┏┏╋┏┓┏┳┓
+#       888      `"Y88b  888     888     ┛ ┗┗┻┗┗┗   ┻ ┛┗┛ ┗ ┗┻┗┻┛  ┗┛┗┫┛┗┗ ┛┗┗
+#       888 oo     .d8P  888     888                                  ┛       
+#   .o. 88P 8""88888P'  o888o   o888o 
+#   `Y888P                            
+#
+# JSH Multi Threads
+#
+
+# creating new tasks, also punishing mortals 
+func create_new_task(function_name: String, data):
+	var new_data_way = str(data)
+	# if data is array, if is string, if is int
+	var task_tag = function_name + "|" + new_data_way + "|" + str(Time.get_ticks_msec())
+	thread_pool.submit_task(self, function_name, data, task_tag)

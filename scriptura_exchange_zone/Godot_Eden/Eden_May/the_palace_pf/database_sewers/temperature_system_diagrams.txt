@@ -1,0 +1,141 @@
+# Temperature System Diagrams
+
+## Component Relationships
+
+```
+┌───────────────────────┐                ┌──────────────────────┐
+│                       │                │                      │
+│   TemperatureSystem   │◄───────────────┤   TurnManager        │
+│   - manage values     │                │   - change dimensions │
+│   - track states      │                │   - cosmic cycle     │
+│                       │                │                      │
+└─────────┬─────────────┘                └──────────────────────┘
+          │
+          │ updates
+          ▼
+┌─────────┴─────────────┐                ┌──────────────────────┐
+│                       │                │                      │
+│TemperatureVisualEffects│◄──────────────┤   BlinkSystem        │
+│   - environmental FX  │                │   - sync with blinks │
+│   - word appearance   │                │   - perception rhythm│
+│                       │                │                      │
+└─────────┬─────────────┘                └──────────────────────┘
+          │
+          │ visual state
+          ▼
+┌─────────┴─────────────┐                ┌──────────────────────┐
+│                       │                │                      │
+│TemperatureWordEffects │◄──────────────┤  DivineWordProcessor │
+│   - transformations   │                │   - word power       │
+│   - physics changes   │                │   - meaning impact   │
+│                       │                │                      │
+└─────────┬─────────────┘                └──────────────────────┘
+          │
+          │ word state
+          ▼
+┌─────────┴─────────────┐                ┌──────────────────────┐
+│                       │                │                      │
+│TemperatureIntegration │◄──────────────┤  RealismRatioSystem  │
+│   - system connections│                │   - perception state │
+│   - UI management     │                │   - L/R brain balance│
+│                       │                │                      │
+└───────────────────────┘                └──────────────────────┘
+```
+
+## Temperature States and Transitions
+
+```
+                     decreasing temp                    increasing temp
+                           ┌──┐                              ┌──┐
+                           │  │                              │  │
+                           │  ▼                              │  ▼
+┌────────────┐  <0°C   ┌───┴─────┐  >5°C   ┌──────────┐  >100°C  ┌──────────┐
+│            │◄────────┤         ├─────────►          ├──────────►          │
+│   FROZEN   │         │ NORMAL  │         │   GAS    │          │  PLASMA   │
+│            │────────►│         │◄────────┤          │◄─────────┤          │
+└────────────┘  >5°C   └─────────┘  <80°C  └──────────┘  <1000°C └──────────┘
+
+Physical States:  SOLID       LIQUID       GASEOUS       ENERGY
+Gravity Effect:  +50%        Normal       -30%          -80%
+Movement:        None        Normal       Float Up      Erratic
+Appearance:      Crystals    Normal       Wispy         Glowing Energy
+Word Power:      x1.5        x1.0         x0.8          x2.0    
+```
+
+## Temperature UI Layout
+
+```
+┌─────────────────────────────────────────────────┐
+│               TEMPERATURE CONTROL               │
+├─────────────────────────────────────────────────┤
+│                                                 │
+│  [ICON]                                  25°C   │
+│                                                 │
+│  ├──────────────── SLIDER ────────────────┤     │
+│                                                 │
+│  Words appear in their natural state,           │
+│  flowing with normal dynamics.                  │
+│                                                 │
+└─────────────────────────────────────────────────┘
+```
+
+## Word Transformation Flow
+
+```
+                 ┌─────────────────────────────────┐
+                 │       Environmental Temp        │
+                 └───────────────┬─────────────────┘
+                                 │
+                                 ▼
+┌───────────────┐     ┌─────────────────────┐     ┌───────────────┐
+│  Word Power   │────►│   Transformation    │◄────┤ Dimension Temp│
+└───────────────┘     │   Threshold Check   │     └───────────────┘
+                      └──────────┬──────────┘
+                                 │
+                                 ▼
+                      ┌─────────────────────┐
+                      │  Word State Change  │
+                      └──────────┬──────────┘
+                                 │
+                  ┌──────────────┼──────────────┐
+                  │              │              │
+                  ▼              ▼              ▼
+         ┌────────────┐  ┌─────────────┐ ┌────────────┐
+         │  Visual    │  │  Physical   │ │  Behavior  │
+         │  Effects   │  │  Properties │ │  Changes   │
+         └────────────┘  └─────────────┘ └────────────┘
+```
+
+## Dimension Temperature Map
+
+```
+              Temperature (°C)
+   -100  -50    0    50   100   500  1000  1500  2000
+    │     │     │     │     │     │     │     │     │
+    │     Iota  │     │     │     │     │     │     │ -50°C Deep Freeze
+    │           │     │     │     │     │     │     │
+    │           Delta │     │     │     │     │     │ -10°C Frozen
+    │           │     │     │     │     │     │     │
+    │           Zeta  │     │     │     │     │     │ 5°C Cold
+    │           │     │     │     │     │     │     │
+    │           Beta  │     │     │     │     │     │ 10°C Cool
+    │           │     │     │     │     │     │     │
+    │           │     Mu    │     │     │     │     │ 20°C Mild
+    │           │     │     │     │     │     │     │
+    │           │     Alpha │     │     │     │     │ 25°C Normal
+    │           │     │     │     │     │     │     │
+    │           │     Lambda│     │     │     │     │ 35°C Warm
+    │           │     │     │     │     │     │     │
+    │           │     Gamma │     │     │     │     │ 40°C Warm
+    │           │     │     │     │     │     │     │
+    │           │     │     Epsilon     │     │     │ 60°C Hot
+    │           │     │     │     │     │     │     │
+    │           │     │     │     Eta   │     │     │ 90°C Near Boiling
+    │           │     │     │     │     │     │     │
+    │           │     │     │     Theta │     │     │ 120°C Boiling
+    │           │     │     │     │     │     │     │
+    │           │     │     │     │     │     Kappa │ 1500°C Plasma
+    │           │     │     │     │     │     │     │
+    
+    FROZEN     COLD   NORMAL  HOT  BOILING     PLASMA
+```

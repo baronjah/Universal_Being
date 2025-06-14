@@ -1,0 +1,1108 @@
+Godot Engine v4.3.stable.official.77dcf97d8 - https://godotengine.org
+Vulkan 1.3.277 - Forward+ - Using Device #0: NVIDIA - Quadro RTX 3000
+
+ ready on each script ? 0 thread_pool.gd
+
+🌱 [INIT] Starting initialization...
+
+ main.gd print tree pretty init 
+ ┖╴
+
+ main.gd print tree pretty should end here
+ stuck status it is string 
+ stuck status something went wrong, starting verified timer error
+ stuck status it is string 
+ stuck status something went wrong, starting verified timer error
+ stuck status Timer started at OS time: 1414
+ init version prepare akashic_records 
+ timer check  first we need a screen, and light state : pending
+ timer check  state now : started
+ check basic if we allign with prophecies of wisest spirits, do we unlock before it is too late 
+ timer check omething went wrong, use a timer
+ timer check 0: @Node@2:<Node#33470547267>
+ timer check 0
+ timer check  0stuff to do :: thread statuses : error
+ timer check  1stuff to do :: thread statuses : error
+  init version prepare akashic_records  timer check  stuff to do :: mutex statuses : [true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true], stuck_status threads status : error and main sets to create["started", [["akashic_records"], ["base"], ["menu"]], { "base_": 1, "menu_": 1, "settings_": 1, "keyboard_": 1, "keyboard_left_": 1, "keyboard_right_": 1, "things_creation_": 2, "singular_lines_": 8 }, ["base", "menu", "settings", "keyboard", "keyboard_left", "keyboard_right", "things_creation", "singular_lines"], ["base_", "menu_", "settings_", "keyboard_", "keyboard_left_", "keyboard_right_", "things_creation_", "singular_lines_"]]
+
+✅ [INIT] Initialization complete. Waiting for _ready()...
+
+ ready on each script ? 4
+ ready on each script ? new system_check.gd 
+
+🚀 [READY] Beginning full system setup...
+
+🖥️ Running on:Windows
+
+🔍 Scanning res:// directory...
+
+📁 .godot
+  📁 editor
+    📄 UJAH_Texts.gd-folding-8f3020088b1cbe0702fbdb5ec4caa22e.cfg
+    📄 banks_combiner.gd-folding-83ad4c54188a073537a8045cf1fcea37.cfg
+    📄 containter.gd-folding-0c23f9505341d0d9266c154a192ac749.cfg
+    📄 create_recent.Node
+    📄 data_point.gd-folding-9cd7554496bea33c1374283588a7bc65.cfg
+    📄 editor_layout.cfg
+    📄 favorites
+    📄 favorites.Node
+    📄 filesystem_cache8
+    📄 filesystem_update4
+    📄 function_metadata.gd-folding-6045d64fb32e0608dde0c41fc67a77a5.cfg
+    📄 functions_database.gd-folding-4b7e905792cd8f928bf7f4818863d9ef.cfg
+    📄 godot_timers_system.gd-folding-7123ecb628d46b4757a06d961177a965.cfg
+    📄 init_function.gd-folding-2ec4962214c83c7a9ebaa1980025b905.cfg
+    📄 instructions_bank.gd-folding-1f7e3ac080e1a09d54ac10653b254f76.cfg
+    📄 interactions_bank.gd-folding-131740f1c7542f4cedcb4db88a1fac30.cfg
+    📄 jsh_data_splitter.gd-folding-467263b1b5fe3309634db82413ecffbc.cfg
+    📄 jsh_data_splitter.gd-folding-62b5e1cd2747059bb845074b7b52189e.cfg
+    📄 jsh_task_manager.gd-folding-0e807f15a600aedd4cabe512683b0016.cfg
+    📄 jsh_task_manager.gd-folding-5c752250645b9f5e0a100ee2922cbcbc.cfg
+    📄 layer_0.tscn-editstate-94c713e732ca712866a396463a5f8f73.cfg
+    📄 layer_0.tscn-folding-94c713e732ca712866a396463a5f8f73.cfg
+    📄 line.gd-folding-7dfc5fa073af5cf50adcf072084f3b0e.cfg
+    📄 main.gd-folding-03e539d133f764e63262ddfd0d659548.cfg
+    📄 pi_number.gd-folding-2214b6ae618d913b2d502f6a23a963af.cfg
+    📄 pi_number.gd-folding-76116a9aae02c5e3e548480610383874.cfg
+    📄 project_architecture.gd-folding-99cccc45cd84bfddbcb2cb73967f4315.cfg
+    📄 project_metadata.cfg
+    📄 recent_dirs
+    📄 record_set_manager.gd-folding-df33086a589f5fd76f98b12072056baa.cfg
+    📄 records_bank.gd-folding-b36d5a70e6b65c922f72b66a690e6171.cfg
+    📄 scenes_bank.gd-folding-0c943729bef0233fd55c77cd5553f522.cfg
+    📄 script_editor_cache.cfg
+    📄 settings_bank.gd-folding-e8a9fb407d543b8f79163d1aecae6789.cfg
+    📄 system_check.gd-folding-2043b00b0272fdfa3c869e2a4caffba1.cfg
+    📄 system_check.gd-folding-363d50fe9bfbe4235b47a1367f330c23.cfg
+    📄 system_interfaces.gd-folding-090c428dbd62c7f595bb25ad26b389c1.cfg
+    📄 thread_pool.gd-folding-67558194747c7010679a4fa7b93440eb.cfg
+    📄 thread_pool_manager.gd-folding-5cbf0d3089944d36e9ae6396e39470bc.cfg
+    📄 trackball_camera.gd-folding-74d1a5ed338de9473a5d57d51a4fadd2.cfg
+    📄 tree_blueprints_bank.gd-folding-badad2267c20e9055df8df4bf14ce173.cfg
+  📁 imported
+    📄 icon.png-d8104086c24314fbd510b502e5d9423c.ctex
+    📄 icon.png-d8104086c24314fbd510b502e5d9423c.md5
+    📄 icon.svg-218a8f2b3041327d8a5756f3a245f83b.ctex
+    📄 icon.svg-218a8f2b3041327d8a5756f3a245f83b.md5
+    📄 icon_trackball_camera.png-1f67d96a7a375568005a510700dba68a.ctex
+    📄 icon_trackball_camera.png-1f67d96a7a375568005a510700dba68a.md5
+    📄 icon_trackball_camera.svg-87202336c371094f2871b6de2f8005f0.ctex
+    📄 icon_trackball_camera.svg-87202336c371094f2871b6de2f8005f0.md5
+    📄 number_1.jpg-bfa542bda86f19a2183c0001985d9192.md5
+    📄 number_1.jpg-bfa542bda86f19a2183c0001985d9192.s3tc.ctex
+    📄 number_2.jpg-dd52ad67be684932e1144185994c5e3c.ctex
+    📄 number_2.jpg-dd52ad67be684932e1144185994c5e3c.md5
+    📄 number_3.jpg-28a537514c6be52c81da42a706cc976a.ctex
+    📄 number_3.jpg-28a537514c6be52c81da42a706cc976a.md5
+    📄 number_4.jpg-5a7731a5b75d838d8f582b920b2349c1.ctex
+    📄 number_4.jpg-5a7731a5b75d838d8f582b920b2349c1.md5
+    📄 number_5.jpg-3407af19f756d850ec224f67eade6fbd.ctex
+    📄 number_5.jpg-3407af19f756d850ec224f67eade6fbd.md5
+    📄 number_6.jpg-3ca079facc6fec8f62a1130f5a86d97d.ctex
+    📄 number_6.jpg-3ca079facc6fec8f62a1130f5a86d97d.md5
+    📄 thread.png-a8c2a33aab16e470fb95550c56d782fe.ctex
+    📄 thread.png-a8c2a33aab16e470fb95550c56d782fe.md5
+  📁 mono
+    📁 metadata
+  📁 shader_cache
+    📁 BestFitNormalShaderRD
+      📁 8ffb22cb537ee4bfd09822c4623c161b33abec186400688d957654c43b13bad5
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+      📁 da50b1ee325fa09e8a9d2278e44bfbc4e716c11aa4475ca5323315d9d3e84d70
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+    📁 BlitShaderRD
+      📁 09b63e5347ccb6779fd79e54b093cfc915ec80510efa1f613c9ada9ff2e0f70d
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+      📁 60b72570245d5a464fb0c04ffcef0e642a15a222ee0de28d468f8a470fcde26c
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+    📁 BokehDofShaderRD
+      📁 39f32133b5111c9c24ab7cd9b202ca96bb3aeb73e0c73ebd7b7a5dae08cb759f
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+      📁 cdc329fb15139dcae19937b183945c48dc854bb644ebb750fcf08352bf58c401
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+    📁 CanvasOcclusionShaderRD
+      📁 42f2245b35206bcace1cda9e39e9282519e9967978ba6d5956472809525b1150
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+      📁 474a127c1342c166158ee6e498e73bdccb349f06c7e54e2552a4f05f02e66f09
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+    📁 CanvasSdfShaderRD
+      📁 77e45c1369b65f0b1756b806d9083ba7ea67c39eba4c61c8658234e08087ab99
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+      📁 f65579ae334cdfb6901aee2527afd18ed626d1067a35c91f12fb632b45ce7f21
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+    📁 CanvasShaderRD
+      📁 165f6964cfc63fea91c4221f04e7b8a54b5dc39d76b5a57aed5f99b20050b148
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+        📄 45fb1ddc6499e56682916a355ce2839e61f42dfe.vulkan.cache
+        📄 6b3b870743b828dcd054fdf31e0034e036dad94f.vulkan.cache
+        📄 7d18bd726a158f1a35b723c8e73e7de5ebb3d37c.vulkan.cache
+        📄 8a7277c8d3ac029b087c3fa9c55de85560be5119.vulkan.cache
+        📄 c0a681ae42aa3e0b5abba232ccae0b036be455e4.vulkan.cache
+        📄 c58570947be7f76937b1582424c0fd3d81be0352.vulkan.cache
+        📄 ddbe30d4d1be5d69b00075293fd27da8decd4af2.vulkan.cache
+        📄 f3e258e8f7ec2e7e740b62f3bc48ecf5c99fb0db.vulkan.cache
+      📁 f83d8068413a45cea6e2b5f546b7ba81ae9e042a37e56866e10dcc51b81661d7
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+        📄 45fb1ddc6499e56682916a355ce2839e61f42dfe.vulkan.cache
+        📄 8a7277c8d3ac029b087c3fa9c55de85560be5119.vulkan.cache
+        📄 c0a681ae42aa3e0b5abba232ccae0b036be455e4.vulkan.cache
+        📄 c58570947be7f76937b1582424c0fd3d81be0352.vulkan.cache
+        📄 ddbe30d4d1be5d69b00075293fd27da8decd4af2.vulkan.cache
+        📄 f3e258e8f7ec2e7e740b62f3bc48ecf5c99fb0db.vulkan.cache
+        📄 f943e8dba7b29a08a2910c2144f7f8a363ecf834.vulkan.cache
+    📁 ClusterDebugShaderRD
+      📁 0fc3a4145fb0593b7979ef24e96686868f96991310c620653f5a5c10d6a8bd58
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+      📁 2546937b6acfcec18164bde1022dd572463c5dc6a8dfb2db860e93b1f8cb6cf1
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+    📁 ClusterRenderShaderRD
+      📁 10486f3b6e58b4dd6351c8a22163a0959da681181f3d91f9b35b21c18af7bbad
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+      📁 e138dfa55627ca222eda3daa0739d50014770edfb2a8fbab0fa51e2130af04e8
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+    📁 ClusterStoreShaderRD
+      📁 44efe54fdfa0811178ad2a7a0207ebc98532c6ae316489503cdc7c5c843a564e
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+      📁 ba2c6bb6486d0065d10feda088721b1ff49a7455afea50c160d59a5e730bd632
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+    📁 CopyShaderRD
+      📁 4a43f34799f84bc5a387aff816d36330149d91299172af9be2d3ab05cc0c4e9d
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+      📁 ba013ccec819557fed345c81ad8d4ade56f581da6144331650bb4846dcfe7a03
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+    📁 CopyToFbShaderRD
+      📁 8668028c5ceed89276611359329de4a0f5d40702546caecc31456f63f6f9ffe8
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+      📁 d71dfa0b7ee1f00185d54ee3a6cf0b63f760936a978b3255f4dc949503a0517c
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+    📁 CubeToDpShaderRD
+      📁 c7eb2150013188f234926912e6a9fd3e7479429a13407a40fef8f24abd6d9746
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+      📁 e3db5adc31b15e80112f4d7497dc8563c39b7d64675a53dcce7f9511c5ca9f80
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+    📁 CubemapDownsamplerShaderRD
+      📁 6376d8aae8d25aa5fed14d9e78a76a69c5566f021773d2b38defa77a573b20f1
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+      📁 bd81c1c46cd619748a80769b66ac4bf7c9ede1f6c031cd92080d4777ae61651c
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+    📁 CubemapFilterShaderRD
+      📁 96fd6d20ed52761601cf4665fa909c5a27f13aeaa25940cf720f4e331158ef8e
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+      📁 d1b866bd82bd6fae2ebb7201890678a540be3a3d2feb86c3050955e1aeeeda44
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+    📁 CubemapRoughnessShaderRD
+      📁 1d72ea29a087908b2262137858ecb047ac60acf75d2e625661f01be4ce0d3ce2
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+      📁 444604ac2dd3bf42987510ab135cc42091874b1a3656135e9f007c79f4491508
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+    📁 Fsr2AccumulatePassShaderRD
+      📁 045b9c553940ce1e6107eda0ae48c9afce3d0e2ac1663e32fe0888d7ab6526a7
+      📁 160fedb5d3ef5cf63f06d76d8bf08e8739978139204922b5f9e4d50a873eef55
+    📁 Fsr2AutogenReactivePassShaderRD
+      📁 a75408a3af2db56d20e213dfbd4c91ede902ba861921d8f2262b8e1d30240a7c
+      📁 dd661f6230e50b82cb23ca149e6f15401a0151912d074fd0bad085910647aeaa
+    📁 Fsr2ComputeLuminancePyramidPassShaderRD
+      📁 282792f9816f8833afe70dd7db442fed7b8c59c72bd4264670f29c2a08e1bfbd
+      📁 91b43885fedcca5ed604c06712cb9ebd6b2e3d2df8e9185e01069bdabda408ab
+    📁 Fsr2DepthClipPassShaderRD
+      📁 6c10a12c0d4664f94cb70b55e4d6948f6040cd68a3c063b9b421c0f7e53204cd
+      📁 f3a7731ebdc135b5cd0910085daa9440b9adba2dccae0797e528638f485437ca
+    📁 Fsr2LockPassShaderRD
+      📁 5562de0986b602167f7e26a8a4e4bf2c371477729ce2ccfe8583672c58a2c813
+      📁 fd7270679041c16c1c160152344dc333e0d4d01a9ea61f5ab1a97a4f148ae642
+    📁 Fsr2RcasPassShaderRD
+      📁 1c81d789b4d2bd0f51f75c03bdd7834fc8ce0050500ea90e2fb5b4973a5c507e
+      📁 891e22cd1d088ddeb9cdbfbce896d6948a0656462542c4d2b70ee85c69366419
+    📁 Fsr2ReconstructPreviousDepthPassShaderRD
+      📁 900e471f384febf63669ecb37c4d78dc514bf2173a97333d1a19cc51fc66a1e9
+      📁 b56b046186e0886ebe0df89f96476a1b6cdd80243d937b9fa3808f57e20326ae
+    📁 Fsr2TcrAutogenPassShaderRD
+      📁 51c41e3962f077bfbb9a7b6dd127c0d38925ace2350a44c93a1cf5e7bb7d9a13
+      📁 846e5bbb1aa3971873d711b0bfb4c593b2aad02dcf3aa098e328786e9ba38c23
+    📁 FsrUpscaleShaderRD
+      📁 362fc0b19d06cf68dc6f6f2d99e1f9ccfd8afaef2a65e38a931df5dd9e183d7d
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+      📁 67c7b37a79c73c32051d8282572f8bb517aea720bada457083761662b5ce7797
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+    📁 GiShaderRD
+      📁 2b51ba5b3e4e6be7fc223f7517a8a8b80c61234f3fbd4ffa229da05d747f020a
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+      📁 5748d22534478c009e298b06926b05c92a300abdd0d60ef4c4f6267c5d2f1024
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+    📁 LuminanceReduceShaderRD
+      📁 2687da76c0ac04fe197e7093fd065958200b5a2e8e378e0f61c445212a1a0ac4
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+      📁 3a39696f235e5cda5d792537f6d86ad0f55e5590c7b9b30df2ef6173379bcee6
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+    📁 MotionVectorsShaderRD
+      📁 231122bcd64c4c4f9fe7368348f3b7ed4e7501eba3bd6a692cf6b3484dcc685d
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+      📁 cbf3cbdcba0d0a2026c9fbf248556f1acd11beacc38a2e8c5ce7009ee49a1560
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+    📁 ParticlesCopyShaderRD
+      📁 2bba87c2af154e36421c5303527840e84b1f64c328b1c48001972ba199e5cb36
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+      📁 69566a7b0235d75ec40f504cd5555856aace22b5273899269166fde57287d26e
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+    📁 ParticlesShaderRD
+      📁 47fcf57848349fdf54197e5c1f64750a69c8d54787d3509ade4781c9faa31654
+        📄 f128cab0b22fb7e0d9f023d6cdb81309be392d95.vulkan.cache
+      📁 5d52df901ee444a19f0ccc4541f8ba8dc2d32b5e681e8dc02f2f235448ec100a
+        📄 f128cab0b22fb7e0d9f023d6cdb81309be392d95.vulkan.cache
+    📁 ResolveShaderRD
+      📁 4c97907291c0ed83c1c9eaa9ddb6d555eb75e67d586dcef0368e8df55eddc35b
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+      📁 4eed9a584e94b3db5e08b3dd178112267127e5cb55e97790e3791fff9eb617f7
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+    📁 SceneForwardClusteredShaderRD
+      📁 1bb11d7a68ceae2e4dcb410d31f63d2d6e82d7e7a77fe2b04591cb9fd30184ee
+        📄 0d94c9ab3b0daf77a0be4fec7e76515326122a05.vulkan.cache
+        📄 0f1bcf11b9f7757773a7866f1cd2e297cb2acf5f.vulkan.cache
+        📄 1d94d7653c04fb7febbe6df8d6c0f471ee8df8ed.vulkan.cache
+        📄 2588520598bd9d4874da441a254a13f346de76ca.vulkan.cache
+        📄 2a6cac6232ca942cc65c3f5369aa219c863c7b8b.vulkan.cache
+        📄 2b83ada958e476cf26531ce107fe1c0d75fac7be.vulkan.cache
+        📄 3a1e499a888b30781cad86a80d4a4e2efe7f2caa.vulkan.cache
+        📄 3ee92779f31d8b7471ea1440cef676bd33f29c3b.vulkan.cache
+        📄 450dbe482b9d8a4dcf60162087f824aee7a10919.vulkan.cache
+        📄 484574d6966da5fa625415ab5c4d35d8a9fde9f7.vulkan.cache
+        📄 4fadd51057bc3bbc8d5803cfec0d57a586c56975.vulkan.cache
+        📄 69f37345aac9aa92afb27631a7f0e3c5fae044eb.vulkan.cache
+        📄 6f0bf1c2e48138a76872e3b8bc99e76f0c85ca5d.vulkan.cache
+        📄 779b64fd3b123ed28bd1f47f73c6950d732d51c3.vulkan.cache
+        📄 7fb66440f65dac23b75016fc52fb82ae26e9393f.vulkan.cache
+        📄 8c386f82e6f16f6675b02a6d94c1cb9b0071d556.vulkan.cache
+        📄 8c4a6577a4ef29bb59d10356dbe5e400d812d8bb.vulkan.cache
+        📄 8e95fae70b8a4ed23d573b5ee48f20484db820a4.vulkan.cache
+        📄 8eb7aeac3861680a0202f049c0bfdcf05b99b274.vulkan.cache
+        📄 964e2bf8e1eed26e7e9ed4b223d256b6a0bda12a.vulkan.cache
+        📄 97eb8bcfe44860ea4eebe84a80ff0d552ce28746.vulkan.cache
+        📄 a6d99b637dfee75712ae57f13dc63ae39e299a45.vulkan.cache
+        📄 aa0086cc160e9e167e95546ad5eb0423d596c5b3.vulkan.cache
+        📄 ab60f8b228c0dad11d9d882c2ab4f61eb6ca2f20.vulkan.cache
+        📄 afe1c0449d843047874ee4b0dda3f797decb0436.vulkan.cache
+        📄 b7b2f398c116e26c751517dd8d44535f700f825f.vulkan.cache
+        📄 b837d7a6ac0e0c13a886299192728ac0467bc8e7.vulkan.cache
+        📄 be3b793c3b635002efb49935f74fe2c91c2766ed.vulkan.cache
+        📄 c4c828897f8a3fe72e3713d35b4ba452d7ed9acf.vulkan.cache
+        📄 c911b2eb203b7525047b1fc26929407fb3d4191d.vulkan.cache
+        📄 d58418debbd92f0e1d07a2a7cbc2fd0299163c13.vulkan.cache
+        📄 d73c4cb5ab0e153ecd1b53a2302511886216d8ad.vulkan.cache
+        📄 da6fcd3d0dff42f32b326f84e3cd4608cc3f19bc.vulkan.cache
+        📄 e05a19456d310bea828a43cb1a4760a5854d7daa.vulkan.cache
+        📄 e8cbd36859c867f678937697144a748a0941fc01.vulkan.cache
+        📄 fe8dec228868b5370e5ab7c53602014f601705fc.vulkan.cache
+        📄 ff3881a3b00e63c90076e133584598ce4fbabfaf.vulkan.cache
+      📁 1ccb74095cf52d34013a88568b9a8ad7527e0a288446a0c152549f3bf8b8518e
+      📁 29edc2f36233c2e08b9662507bec9ae15ecd3ff18670dd6a9d9e3c22bb80d2b9
+        📄 048236defb6bf03aff4593ae5e1ee179e6446005.vulkan.cache
+        📄 0f1bcf11b9f7757773a7866f1cd2e297cb2acf5f.vulkan.cache
+        📄 1d94d7653c04fb7febbe6df8d6c0f471ee8df8ed.vulkan.cache
+        📄 2b83ada958e476cf26531ce107fe1c0d75fac7be.vulkan.cache
+        📄 3ee92779f31d8b7471ea1440cef676bd33f29c3b.vulkan.cache
+        📄 484574d6966da5fa625415ab5c4d35d8a9fde9f7.vulkan.cache
+        📄 7fb66440f65dac23b75016fc52fb82ae26e9393f.vulkan.cache
+        📄 8c4a6577a4ef29bb59d10356dbe5e400d812d8bb.vulkan.cache
+        📄 8eb7aeac3861680a0202f049c0bfdcf05b99b274.vulkan.cache
+        📄 a6d99b637dfee75712ae57f13dc63ae39e299a45.vulkan.cache
+        📄 a8d4cef55e3ab1332d431b88da8465c79f0e608a.vulkan.cache
+        📄 aa0086cc160e9e167e95546ad5eb0423d596c5b3.vulkan.cache
+        📄 ab60f8b228c0dad11d9d882c2ab4f61eb6ca2f20.vulkan.cache
+        📄 afe1c0449d843047874ee4b0dda3f797decb0436.vulkan.cache
+        📄 b7b2f398c116e26c751517dd8d44535f700f825f.vulkan.cache
+        📄 c4c828897f8a3fe72e3713d35b4ba452d7ed9acf.vulkan.cache
+        📄 c911b2eb203b7525047b1fc26929407fb3d4191d.vulkan.cache
+        📄 fe8dec228868b5370e5ab7c53602014f601705fc.vulkan.cache
+      📁 4ca2d5609dc74e4e4c336da247e22619f80c877a2f61b1dfc9cffe6d8f17c8b4
+      📁 6598af838acb7313ff626d40126e27c0f884aa1a40a7cf5a1dd2311b2b83f39f
+      📁 8d5d67c6d3310219a88106e8336290f6e7be7d1cc12a536cef74b57ba697d3dd
+      📁 f5398f5ee40ec9181e6b7a32f1fb76bfcdf58fe6bc342df8891c0be2dc431c2e
+        📄 0d94c9ab3b0daf77a0be4fec7e76515326122a05.vulkan.cache
+        📄 0f1bcf11b9f7757773a7866f1cd2e297cb2acf5f.vulkan.cache
+        📄 1d94d7653c04fb7febbe6df8d6c0f471ee8df8ed.vulkan.cache
+        📄 2a6cac6232ca942cc65c3f5369aa219c863c7b8b.vulkan.cache
+        📄 2b83ada958e476cf26531ce107fe1c0d75fac7be.vulkan.cache
+        📄 3a1e499a888b30781cad86a80d4a4e2efe7f2caa.vulkan.cache
+        📄 3ee92779f31d8b7471ea1440cef676bd33f29c3b.vulkan.cache
+        📄 484574d6966da5fa625415ab5c4d35d8a9fde9f7.vulkan.cache
+        📄 69f37345aac9aa92afb27631a7f0e3c5fae044eb.vulkan.cache
+        📄 6f0bf1c2e48138a76872e3b8bc99e76f0c85ca5d.vulkan.cache
+        📄 779b64fd3b123ed28bd1f47f73c6950d732d51c3.vulkan.cache
+        📄 7fb66440f65dac23b75016fc52fb82ae26e9393f.vulkan.cache
+        📄 8c4a6577a4ef29bb59d10356dbe5e400d812d8bb.vulkan.cache
+        📄 8eb7aeac3861680a0202f049c0bfdcf05b99b274.vulkan.cache
+        📄 964e2bf8e1eed26e7e9ed4b223d256b6a0bda12a.vulkan.cache
+        📄 97eb8bcfe44860ea4eebe84a80ff0d552ce28746.vulkan.cache
+        📄 a6d99b637dfee75712ae57f13dc63ae39e299a45.vulkan.cache
+        📄 aa0086cc160e9e167e95546ad5eb0423d596c5b3.vulkan.cache
+        📄 ab60f8b228c0dad11d9d882c2ab4f61eb6ca2f20.vulkan.cache
+        📄 afe1c0449d843047874ee4b0dda3f797decb0436.vulkan.cache
+        📄 b7b2f398c116e26c751517dd8d44535f700f825f.vulkan.cache
+        📄 b837d7a6ac0e0c13a886299192728ac0467bc8e7.vulkan.cache
+        📄 c4c828897f8a3fe72e3713d35b4ba452d7ed9acf.vulkan.cache
+        📄 c911b2eb203b7525047b1fc26929407fb3d4191d.vulkan.cache
+        📄 d58418debbd92f0e1d07a2a7cbc2fd0299163c13.vulkan.cache
+        📄 e05a19456d310bea828a43cb1a4760a5854d7daa.vulkan.cache
+        📄 e8cbd36859c867f678937697144a748a0941fc01.vulkan.cache
+        📄 fe8dec228868b5370e5ab7c53602014f601705fc.vulkan.cache
+      📁 ff6c4ae20e3f8b8dd34fcdb417869f52a4530caf5116e770d0297554ac18fc6f
+    📁 ScreenSpaceReflectionFilterShaderRD
+      📁 8389baba6db0b301fd1c9f9fa1044cd91ce2412cce119e75c9f73398dbf577cd
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+      📁 dbd56507c7ba6e4548ad94d4267e97184ea703036185204db88001c82b622120
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+    📁 ScreenSpaceReflectionScaleShaderRD
+      📁 e5b92b2248f95dfc9534e9d5ec71a9d1fedfe58dd8fbbb2e903d8606c1ed8e0c
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+      📁 e6ee3f0b6bb7f7197d5122cd0caee7863de96e02450b6fd92aa837305fce7a82
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+    📁 ScreenSpaceReflectionShaderRD
+      📁 722d4571bebbe24c59b13360d89825ac27099da739a27f42e20a004e5e92da73
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+      📁 90333cfa89267fa907fcdb4f7d2108a6d560f2bf1ce588c376111004d68b2f05
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+    📁 SdfgiDebugProbesShaderRD
+      📁 41af92f24cfffd1d870ed50e96e7ae1bfd6c2cc11f728d520ef0a827972a1438
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+      📁 5337782649472851ec89ce7e36adef31918efb798ebe15c0147beb7c25de1adb
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+    📁 SdfgiDebugShaderRD
+      📁 245a7c3be81e911b2adf8c3504b14911a0f0fcdda4fcc98c117b142c77d0e09d
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+      📁 372719c6eef32a8635d4db9b69f2f8b01b907642dbac0cc26f37ea2a76eeb95d
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+    📁 SdfgiDirectLightShaderRD
+      📁 74f7612cee95e0401167a45d973f8e7c202730b425372335e5c3a044755ad4e9
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+      📁 803c48e266e0d9c1590d25424071a668b88abc76bcda6fdde74b8524f298683c
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+    📁 SdfgiIntegrateShaderRD
+      📁 4647045d5ae8023ab209178c191d003ce94a58384c2bf158dfd5d1b256a1feb2
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+      📁 6b7dc48ae7b5ee6aba6fa6d3db45f60227ad2494131848578e8fc8626ffdbabb
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+    📁 SdfgiPreprocessShaderRD
+      📁 42b3acb8f8f580e0ad8624239eada43680eb33d7a90e0279cf34b99bad80ffc9
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+      📁 65a90da4cdbb95286777fe99c404de14a8e4808fbe3dc30d70a652d19d3b4159
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+    📁 ShadowFrustumShaderRD
+      📁 3c60a3230c9afa3578a50021cb101463dbc5e72a269932abc388788a3185f100
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+      📁 c9c1b6421f8f6625effc9ddfa4bb2c09cafda0942b62fb8e1414e90820e18fa0
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+    📁 SkeletonShaderRD
+      📁 4964fd59acf4406110ae7bca4b716f23ae52cc19864e21a8a35aee53e141e17e
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+      📁 87a41572ba7d291323acf772c9d484c833bfae57743206ebaa69f753f0545d5a
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+    📁 SkyShaderRD
+      📁 06629b95fdf2956224d7ba4b404c10f27474d080dd7ab1b6bccf212c7bdc44fe
+        📄 03e3b11c69e24394b2d955a8c0ba85587bb70839.vulkan.cache
+        📄 0a0fb987bd6ede673a5edeb59834f887758ae2a6.vulkan.cache
+        📄 301c34f080b0d9fb9ff1c17636ea175173a43e1c.vulkan.cache
+        📄 de678811d1bad3cad4892a8db7b6ea0be197d51d.vulkan.cache
+      📁 4bc541bfde1c30032df77bb4c98974909ad0368d22557f44e6cf095b26c0490a
+        📄 03e3b11c69e24394b2d955a8c0ba85587bb70839.vulkan.cache
+        📄 0a0fb987bd6ede673a5edeb59834f887758ae2a6.vulkan.cache
+        📄 301c34f080b0d9fb9ff1c17636ea175173a43e1c.vulkan.cache
+        📄 de678811d1bad3cad4892a8db7b6ea0be197d51d.vulkan.cache
+    📁 SortShaderRD
+      📁 0b1e36114ab5330dc340cc740b0b946ed2dbf43098119b8d29cfa0222da18b7a
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+      📁 471f5da1ee4a6b21b56b35a0a6a0c7b2fd2209f54ac37665ef4f60749dc03356
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+    📁 SpecularMergeShaderRD
+      📁 a119881bb41d0ec2f36a7f060866ec38b88afa6d0e484a431c65b35b5a2e820b
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+      📁 a8f0862c3e2fc9beaa6e25804d6a7df97a34d1707d61cb0299450c5aabc9e33e
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+    📁 SsEffectsDownsampleShaderRD
+      📁 5074a5a1bd50cbe5082d34cdc45cc61526a273c2dafde2214f004205c659da92
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+      📁 d85ba7758123b2364d96690db4594bb43feabce176805e46abc91aa54c5874d4
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+    📁 SsaoBlurShaderRD
+      📁 32baf23e3ccb90d5c6840258a705d953d950a779d125df3b5bb979bd1309f4d4
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+      📁 af82da4ed5d9bcfbcf01b6b2317dd537a9c0995f709f7cdafc8ebebb455c8fe0
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+    📁 SsaoImportanceMapShaderRD
+      📁 6d680b1500cda48a2de67225a98a208373d657c0f128c9e34a1528b50b3c2c5b
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+      📁 dcf4410044aaaffada8757132c706b4a3465bfde49077d3e80f87de6442b1376
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+    📁 SsaoInterleaveShaderRD
+      📁 ad5de6d3542ac078185a843939802a82f0a5b2e1cafb294397acf6ecf10af3aa
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+      📁 d3d5b300acaef6d08dcd3d033f393c424ad653c5ab554883703c29ee6eedf528
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+    📁 SsaoShaderRD
+      📁 10348af53d51e568e9a1574f4be3c4bc66eb9b2b464c8e4f061d051e1a6c4de9
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+      📁 6b55b1b4ecb762c287449423e3cfbb7e00eda47ac8698ee4c7002ae18aef3f2c
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+    📁 SsilBlurShaderRD
+      📁 424b9696d111595d6837a686c6d0f7f90eb5529d5b53739fd7d0d74b2756adc5
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+      📁 dc4c027d65e080b2b5b1af257e3733c6bc35899ce02c3f333249db264836bd41
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+    📁 SsilImportanceMapShaderRD
+      📁 4b1bf2803bc67dba51ac662987cef6c51e8cc0cc48435b0fc75392f8bfab622b
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+      📁 abbec59f40ae844d9bbca6d058972ef757a0baf48cdf91ef5836a8960f11569e
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+    📁 SsilInterleaveShaderRD
+      📁 76868dec9e116ecbddcf9a480d808d2509e42cf65d5f7182e4f4cad2e24c9c70
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+      📁 bf9990758208c4453ad9d0919b0d016c5a8e349d249d0ba191beadca252d0571
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+    📁 SsilShaderRD
+      📁 0a88985faa4e43dd8c8b68812be9ef19eb851e2c5715107b4c32fcac16eba76d
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+      📁 20c3a95a7a0528ebb5844939feeb8fe446ac0dcde9d011e24c2fc54af67e6c6d
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+    📁 SubsurfaceScatteringShaderRD
+      📁 43df2517be4d76d26d345b88762bb6d272983e54f79d503331a085ec082a97da
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+      📁 7e9c783f6cdee7982815c8e029846782471ba69582ed951b6a10397c019a249a
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+    📁 TaaResolveShaderRD
+      📁 66482a84ae3398a2cbd07e92185df239a902d24d388424e0dff9fe998af3c0b4
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+      📁 fa9b4c3566ab6d2b0727b54ff9b4289ae3e7c24d25fc7eadd2dc7c131119dc5a
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+    📁 TonemapShaderRD
+      📁 1c4748b3de350503048a1f9eca4f1dc2b308086460692ea0a81bababfd80542a
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+      📁 5b7ab09c8d3b094f00aa4928f7ccfa7430c6f1d2882d3b4e0751db63d52b6407
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+    📁 VolumetricFogProcessShaderRD
+      📁 2c2d7b3b51e66f06069290afb842fc1ee9ee4f60f06a5168b0cee5bd380366bc
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+      📁 d7569be56ea49bd8e051e977e8a60ed9350e3b54283d319af94f40e46e4b6e28
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+    📁 VolumetricFogShaderRD
+      📁 22de546a38a6b3caaa1d02360e0e62d85133e560e5667f2f3f5e34e3145679af
+        📄 9a227745af2d65830f930370a9fbba551fbd6f60.vulkan.cache
+      📁 b092d865b0ce712c1563615275521217e63bcf03b984721b7337e57a32fb45c9
+        📄 9a227745af2d65830f930370a9fbba551fbd6f60.vulkan.cache
+    📁 VoxelGiDebugShaderRD
+      📁 83ec08f78c119345f086a6cbcb0da5d67f664d19fd7ba3259c4948638b76fb8c
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+      📁 f94e88a3595bad778ba61976dcd95755a1038ef6dfbc7ba9e15d465a5514e359
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+    📁 VoxelGiShaderRD
+      📁 1ac508c0080394ecbab0cf258d9f1f121e978085163972e48cb9d59d10ac10b4
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+      📁 8bfb40cf41510d02f432927249e4d6d6708843a0953b4faf61a2f2e3786d4fd0
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+    📁 VrsShaderRD
+      📁 118bb5474f8d4b94f69aebf800ddb63cd06ca0c1e381c113eb2b9c795cb67e40
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+      📁 def705023965d273a669c1ac6acfd7494138bde25b3e3bde0969c3c7a32c3aae
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+  📄 .gdignore
+  📄 global_script_class_cache.cfg
+  📄 scene_groups_cache.cfg
+  📄 uid_cache.bin
+📁 addons
+  📁 goutte.camera.trackball
+    📄 .gitignore
+    📄 README.md
+    📄 icon.png
+    📄 icon.png.import
+    📄 icon_trackball_camera.png
+    📄 icon_trackball_camera.png.import
+    📄 icon_trackball_camera.svg
+    📄 icon_trackball_camera.svg.import
+    📄 plugin.cfg
+    📄 trackball_camera.gd
+    📄 trackball_camera.gd.uid
+    📄 trackball_camera_inspector_plugin.gd
+    📄 trackball_camera_inspector_plugin.gd.uid
+    📄 trackball_camera_plugin.gd
+    📄 trackball_camera_plugin.gd.uid
+  📁 thread_pool
+    📄 fake_thread_pool.gd
+    📄 future_thread_pool.gd
+    📄 plugin.cfg
+    📄 thread.png
+    📄 thread.png.import
+    📄 thread_pool.gd
+    📄 thread_pool_plugin.gd
+📁 eden backup
+  📄 backub_hand_0.txt
+📁 first_files_place
+  📄 pi_dictionary.txt
+  📄 pi_digits.txt
+📁 numbers but meh
+  📄 number_1.jpg
+  📄 number_1.jpg.import
+  📄 number_2.jpg
+  📄 number_2.jpg.import
+  📄 number_3.jpg
+  📄 number_3.jpg.import
+  📄 number_4.jpg
+  📄 number_4.jpg.import
+  📄 number_5.jpg
+  📄 number_5.jpg.import
+  📄 number_6.jpg
+  📄 number_6.jpg.import
+📁 scenes
+  📄 godot_model.gd.uid
+  📄 lay25DC.tmp
+  📄 lay2C4C.tmp
+  📄 lay390A.tmp
+  📄 lay42A.tmp
+  📄 lay494E.tmp
+  📄 lay4F81.tmp
+  📄 lay59A.tmp
+  📄 lay6FC7.tmp
+  📄 lay7D3C.tmp
+  📄 lay855A.tmp
+  📄 lay8764.tmp
+  📄 lay8C87.tmp
+  📄 layB9BF.tmp
+  📄 layBA25.tmp
+  📄 layE597.tmp
+  📄 layE82F.tmp
+  📄 layF1D9.tmp
+  📄 layer_0.tscn
+  📄 layer_0.tscn22617691470.tmp
+  📄 thing.gd.uid
+📁 scripts
+  📄 UJAH_Texts.gd
+  📄 banks_combiner.gd
+  📄 banks_combiner.gd.uid
+  📄 button.gd
+  📄 button.gd.uid
+  📄 camera_move.gd
+  📄 camera_move.gd.uid
+  📄 camera_mover.gd
+  📄 camera_mover.gd.uid
+  📄 containter.gd
+  📄 containter.gd.uid
+  📄 cursor_pc.gd
+  📄 cursor_pc.gd.uid
+  📄 data_point.gd
+  📄 data_point.gd.uid
+  📄 function_metadata.gd
+  📄 functions_database.gd
+  📄 godot_model.gd
+  📄 godot_timers_system.gd
+  📄 init_function.gd
+  📄 instructions_bank.gd
+  📄 instructions_bank.gd.uid
+  📄 interactions_bank.gd
+  📄 interactions_bank.gd.uid
+  📄 jsh_data_splitter.gd
+  📄 jsh_task_manager.gd
+  📄 line.gd
+  📄 line.gd.uid
+  📄 main.gd
+  📄 main.gd.uid
+  📄 pi_number.gd
+  📄 pi_number_creator.gd
+  📄 project_architecture.gd
+  📄 record_set_manager.gd
+  📄 records_bank.gd
+  📄 records_bank.gd.uid
+  📄 scene_tree_check.gd
+  📄 scene_tree_check.gd.uid
+  📄 scenes_bank.gd
+  📄 scenes_bank.gd.uid
+  📄 settings_bank.gd
+  📄 settings_bank.gd.uid
+  📄 system_check.gd
+  📄 system_interfaces.gd
+  📄 text_label.gd
+  📄 text_label.gd.uid
+  📄 thing (2).gd
+  📄 thing.gd
+  📄 thing.gd.uid
+  📄 thread_pool_manager.gd
+  📄 tree_blueprints_bank.gd
+📄 .gitattributes
+📄 .gitignore
+📄 icon.svg
+📄 icon.svg.import
+📄 project.godot
+
+✅ Scan Completed. Files & Directories Indexed.
+
+
+🌳 Scene Tree Before Adjustments:
+ ┖╴main
+    ┠╴@Node@2
+    ┃  ┠╴@Timer@3
+    ┃  ┖╴@Timer@4
+    ┠╴sphere
+    ┃  ┠╴pointers
+    ┃  ┃  ┠╴cursor_mouse
+    ┃  ┃  ┠╴cursor_left
+    ┃  ┃  ┠╴cursor_right
+    ┃  ┃  ┠╴cursor_head
+    ┃  ┃  ┖╴cursor_body
+    ┃  ┠╴cameramove
+    ┃  ┃  ┖╴TrackballCamera
+    ┃  ┃     ┠╴CameraMover
+    ┃  ┃     ┖╴light
+    ┃  ┖╴godot_model
+    ┠╴WorldEnvironment
+    ┠╴system_check
+    ┠╴godot_timers_system
+    ┠╴godot_tree_system
+    ┠╴JSH_records_system
+    ┠╴JSH_scene_tree_system
+    ┠╴JSH_database_system
+    ┠╴JSH_queue_system
+    ┠╴JSH_turns_system
+    ┠╴JSH_cache_memory_system
+    ┠╴JSH_akashic_records
+    ┠╴JSH_multiplayer_files
+    ┠╴JSH_mainframe_database
+    ┠╴JSH_data_splitter
+    ┖╴JSH_task_manager
+
+
+🔄 Delta System State:[true, true, true,[...]
+  [output overflow, print less text!]
+[...]
+  [output overflow, print less text!]
+[...]
+  [output overflow, print less text!]
+[...]
+  [output overflow, print less text!]
+[...]
+  [output overflow, print less text!]
+[...]
+  [output overflow, print less text!]
+[...]
+  [output overflow, print less text!]
+[...]
+  [output overflow, print less text!]
+[...]
+  [output overflow, print less text!]
+[...]
+  [output overflow, print less text!]
+[...]
+  [output overflow, print less text!]
+[...]
+  [output overflow, print less text!]
+ check basic if we allign with prophecies of wisest spirits, do we unlock before it is too late 
+🔓 Checking & Unlocking stuck mutexes...
+
+ check is finished and we didnt get interupted while doing so kurwa 
+ allah akbar, end : list_of_containers {  }
+ delta message start hmm we check if we can push further  
+ we check em again, are they stuck?
+ we have that for example : akashic_records
+ it can even be seen as [0] a
+ checky chicky : a and that counter : -1 , 0 , 0
+ cheecku chicku : load_queue : {  }
+ we have that for example : base
+ it can even be seen as [0] b
+ checky chicky : b and that counter : -1 , 0 , 0
+ cheecku chicku : load_queue : {  }
+ we have that for example : menu
+ it can even be seen as [0] m
+ checky chicky : m and that counter : -1 , 0 , 0
+ cheecku chicku : load_queue : {  }
+ we have that for example : akashic_records
+ it can even be seen as [0] a
+ checky chicky : a and that counter : -1 , 0 , 0
+ cheecku chicku : load_queue : {  }
+ we have that for example : base
+ it can even be seen as [0] b
+ checky chicky : b and that counter : -1 , 0 , 0
+ cheecku chicku : load_queue : {  }
+ we have that for example : menu
+ it can even be seen as [0] m
+ checky chicky : m and that counter : -1 , 0 , 0
+ cheecku chicku : load_queue : {  }
+ we have that for example : akashic_records
+ it can even be seen as [0] a
+ checky chicky : a and that counter : -1 , 0 , 0
+ cheecku chicku : load_queue : {  }
+ we have that for example : base
+ it can even be seen as [0] b
+ checky chicky : b and that counter : -1 , 0 , 0
+ cheecku chicku : load_queue : {  }
+ we have that for example : menu
+ it can even be seen as [0] m
+ checky chicky : m and that counter : -1 , 0 , 0
+ cheecku chicku : load_queue : {  }
+ elquadromadro trying to figure out random problems 
+ process delta 
+ process delta outcome : list_of_containers {  }
+ process delta 
+ process delta outcome : current_containers_state : {  }
+  process delta 
+ process delta mutex chck : [true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true]
+ process delta array with no protection : []
+ array_of_startup_check ["started", [["akashic_records"], ["base"], ["menu"]], { "base_": 1, "menu_": 1, "settings_": 1, "keyboard_": 1, "keyboard_left_": 1, "keyboard_right_": 1, "things_creation_": 2, "singular_lines_": 8 }, ["base", "menu", "settings", "keyboard", "keyboard_left", "keyboard_right", "things_creation", "singular_lines"], ["base_", "menu_", "settings_", "keyboard_", "keyboard_left_", "keyboard_right_", "things_creation_", "singular_lines_"]]
+ array_of_startup_check ["started", [["akashic_records"], ["base"], ["menu"]], { "base_": 1, "menu_": 1, "settings_": 1, "keyboard_": 1, "keyboard_left_": 1, "keyboard_right_": 1, "things_creation_": 2, "singular_lines_": 8 }, ["base", "menu", "settings", "keyboard", "keyboard_left", "keyboard_right", "things_creation", "singular_lines"], ["base_", "menu_", "settings_", "keyboard_", "keyboard_left_", "keyboard_right_", "things_creation_", "singular_lines_"]]
+
+ readiness : { "mutex_state": [true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true], "thread_state": "working", "records_ready": true }
+ delta, turn 0 : { "mutexes": true, "threads": true, "records": true }
+ readiness stuff : ["started", [["akashic_records"], ["base"], ["menu"]], { "base_": 1, "menu_": 1, "settings_": 1, "keyboard_": 1, "keyboard_left_": 1, "keyboard_right_": 1, "things_creation_": 2, "singular_lines_": 8 }, ["base", "menu", "settings", "keyboard", "keyboard_left", "keyboard_right", "things_creation", "singular_lines"], ["base_", "menu_", "settings_", "keyboard_", "keyboard_left_", "keyboard_right_", "things_creation_", "singular_lines_"]]
+
+ shall_execute : 0
+ check basic if we allign with prophecies of wisest spirits, do we unlock before it is too late 
+🔓 Checking & Unlocking stuck mutexes...
+
+ check is finished and we didnt get interupted while doing so kurwa 
+ allah akbar, end : list_of_containers {  }
+ delta message start hmm we check if we can push further  
+ we check em again, are they stuck?
+ we have that for example : akashic_records
+ it can even be seen as [0] a
+ checky chicky : a and that counter : -1 , 0 , 0
+ cheecku chicku : load_queue : {  }
+ we have that for example : base
+ it can even be seen as [0] b
+ checky chicky : b and that counter : -1 , 0 , 0
+ cheecku chicku : load_queue : {  }
+ we have that for example : menu
+ it can even be seen as [0] m
+ checky chicky : m and that counter : -1 , 0 , 0
+ cheecku chicku : load_queue : {  }
+ we have that for example : akashic_records
+ it can even be seen as [0] a
+ checky chicky : a and that counter : -1 , 0 , 0
+ cheecku chicku : load_queue : {  }
+ we have that for example : base
+ it can even be seen as [0] b
+ checky chicky : b and that counter : -1 , 0 , 0
+ cheecku chicku : load_queue : {  }
+ we have that for example : menu
+ it can even be seen as [0] m
+ checky chicky : m and that counter : -1 , 0 , 0
+ cheecku chicku : load_queue : {  }
+ we have that for example : akashic_records
+ it can even be seen as [0] a
+ checky chicky : a and that counter : -1 , 0 , 0
+ cheecku chicku : load_queue : {  }
+ we have that for example : base
+ it can even be seen as [0] b
+ checky chicky : b and that counter : -1 , 0 , 0
+ cheecku chicku : load_queue : {  }
+ we have that for example : menu
+ it can even be seen as [0] m
+ checky chicky : m and that counter : -1 , 0 , 0
+ cheecku chicku : load_queue : {  }
+ we have that for example : akashic_records
+ it can even be seen as [0] a
+ checky chicky : a and that counter : -1 , 0 , 0
+ cheecku chicku : load_queue : {  }
+ we have that for example : base
+ it can even be seen as [0] b
+ checky chicky : b and that counter : -1 , 0 , 0
+ cheecku chicku : load_queue : {  }
+ we have that for example : menu
+ it can even be seen as [0] m
+ checky chicky : m and that counter : -1 , 0 , 0
+ cheecku chicku : load_queue : {  }
+ elquadromadro trying to figure out random problems 
+ process delta 
+ process delta outcome : list_of_containers {  }
+ process delta 
+ process delta outcome : current_containers_state : {  }
+  process delta 
+ process delta mutex chck : [true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true]
+ process delta array with no protection : []
+ array_of_startup_check ["started", [["akashic_records"], ["base"], ["menu"]], { "base_": 1, "menu_": 1, "settings_": 1, "keyboard_": 1, "keyboard_left_": 1, "keyboard_right_": 1, "things_creation_": 2, "singular_lines_": 8 }, ["base", "menu", "settings", "keyboard", "keyboard_left", "keyboard_right", "things_creation", "singular_lines"], ["base_", "menu_", "settings_", "keyboard_", "keyboard_left_", "keyboard_right_", "things_creation_", "singular_lines_"]]
+ array_of_startup_check ["started", [["akashic_records"], ["base"], ["menu"]], { "base_": 1, "menu_": 1, "settings_": 1, "keyboard_": 1, "keyboard_left_": 1, "keyboard_right_": 1, "things_creation_": 2, "singular_lines_": 8 }, ["base", "menu", "settings", "keyboard", "keyboard_left", "keyboard_right", "things_creation", "singular_lines"], ["base_", "menu_", "settings_", "keyboard_", "keyboard_left_", "keyboard_right_", "things_creation_", "singular_lines_"]]
+
+ readiness : { "mutex_state": [true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true], "thread_state": "working", "records_ready": true }
+ delta, turn 0 : { "mutexes": true, "threads": true, "records": true }
+ readiness stuff : ["started", [["akashic_records"], ["base"], ["menu"]], { "base_": 1, "menu_": 1, "settings_": 1, "keyboard_": 1, "keyboard_left_": 1, "keyboard_right_": 1, "things_creation_": 2, "singular_lines_": 8 }, ["base", "menu", "settings", "keyboard", "keyboard_left", "keyboard_right", "things_creation", "singular_lines"], ["base_", "menu_", "settings_", "keyboard_", "keyboard_left_", "keyboard_right_", "things_creation_", "singular_lines_"]]
+
+ shall_execute : 0
+Multi-threaded test finished.
+ check basic if we allign with prophecies of wisest spirits, do we unlock before it is too late 
+🔓 Checking & Unlocking stuck mutexes...
+
+ check is finished and we didnt get interupted while doing so kurwa 
+ allah akbar, end : list_of_containers {  }
+ delta message start hmm we check if we can push further  
+ we check em again, are they stuck?
+ we have that for example : akashic_records
+ it can even be seen as [0] a
+ checky chicky : a and that counter : -1 , 0 , 0
+ cheecku chicku : load_queue : {  }
+ we have that for example : base
+ it can even be seen as [0] b
+ checky chicky : b and that counter : -1 , 0 , 0
+ cheecku chicku : load_queue : {  }
+ we have that for example : menu
+ it can even be seen as [0] m
+ checky chicky : m and that counter : -1 , 0 , 0
+ cheecku chicku : load_queue : {  }
+ we have that for example : akashic_records
+ it can even be seen as [0] a
+ checky chicky : a and that counter : -1 , 0 , 0
+ cheecku chicku : load_queue : {  }
+ we have that for example : base
+ it can even be seen as [0] b
+ checky chicky : b and that counter : -1 , 0 , 0
+ cheecku chicku : load_queue : {  }
+ we have that for example : menu
+ it can even be seen as [0] m
+ checky chicky : m and that counter : -1 , 0 , 0
+ cheecku chicku : load_queue : {  }
+ we have that for example : akashic_records
+ it can even be seen as [0] a
+ checky chicky : a and that counter : -1 , 0 , 0
+ cheecku chicku : load_queue : {  }
+ we have that for example : base
+ it can even be seen as [0] b
+ checky chicky : b and that counter : -1 , 0 , 0
+ cheecku chicku : load_queue : {  }
+ we have that for example : menu
+ it can even be seen as [0] m
+ checky chicky : m and that counter : -1 , 0 , 0
+ cheecku chicku : load_queue : {  }
+ we have that for example : akashic_records
+ it can even be seen as [0] a
+ checky chicky : a and that counter : -1 , 0 , 0
+ cheecku chicku : load_queue : {  }
+ we have that for example : base
+ it can even be seen as [0] b
+ checky chicky : b and that counter : -1 , 0 , 0
+ cheecku chicku : load_queue : {  }
+ we have that for example : menu
+ it can even be seen as [0] m
+ checky chicky : m and that counter : -1 , 0 , 0
+ cheecku chicku : load_queue : {  }
+ we have that for example : akashic_records
+ it can even be seen as [0] a
+ checky chicky : a and that counter : -1 , 0 , 0
+ cheecku chicku : load_queue : {  }
+ we have that for example : base
+ it can even be seen as [0] b
+ checky chicky : b and that counter : -1 , 0 , 0
+ cheecku chicku : load_queue : {  }
+ we have that for example : menu
+ it can even be seen as [0] m
+ checky chicky : m and that counter : -1 , 0 , 0
+ cheecku chicku : load_queue : {  }
+ elquadromadro trying to figure out random problems 
+ process delta 
+ process delta outcome : list_of_containers {  }
+ process delta 
+ process delta outcome : current_containers_state : {  }
+  process delta 
+ process delta mutex chck : [true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true]
+ process delta array with no protection : []
+ array_of_startup_check ["started", [["akashic_records"], ["base"], ["menu"]], { "base_": 1, "menu_": 1, "settings_": 1, "keyboard_": 1, "keyboard_left_": 1, "keyboard_right_": 1, "things_creation_": 2, "singular_lines_": 8 }, ["base", "menu", "settings", "keyboard", "keyboard_left", "keyboard_right", "things_creation", "singular_lines"], ["base_", "menu_", "settings_", "keyboard_", "keyboard_left_", "keyboard_right_", "things_creation_", "singular_lines_"]]
+ array_of_startup_check ["started", [["akashic_records"], ["base"], ["menu"]], { "base_": 1, "menu_": 1, "settings_": 1, "keyboard_": 1, "keyboard_left_": 1, "keyboard_right_": 1, "things_creation_": 2, "singular_lines_": 8 }, ["base", "menu", "settings", "keyboard", "keyboard_left", "keyboard_right", "things_creation", "singular_lines"], ["base_", "menu_", "settings_", "keyboard_", "keyboard_left_", "keyboard_right_", "things_creation_", "singular_lines_"]]
+
+ readiness : { "mutex_state": [true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true], "thread_state": "working", "records_ready": true }
+ delta, turn 0 : { "mutexes": true, "threads": true, "records": true }
+ readiness stuff : ["started", [["akashic_records"], ["base"], ["menu"]], { "base_": 1, "menu_": 1, "settings_": 1, "keyboard_": 1, "keyboard_left_": 1, "keyboard_right_": 1, "things_creation_": 2, "singular_lines_": 8 }, ["base", "menu", "settings", "keyboard", "keyboard_left", "keyboard_right", "things_creation", "singular_lines"], ["base_", "menu_", "settings_", "keyboard_", "keyboard_left_", "keyboard_right_", "things_creation_", "singular_lines_"]]
+
+ shall_execute : 0
+ check basic if we allign with prophecies of wisest spirits, do we unlock before it is too late 
+🔓 Checking & Unlocking stuck mutexes...
+
+ check is finished and we didnt get interupted while doing so kurwa 
+ allah akbar, end : list_of_containers {  }
+ delta message start hmm we check if we can push further  
+ we check em again, are they stuck?
+ we have that for example : akashic_records
+ it can even be seen as [0] a
+ checky chicky : a and that counter : -1 , 0 , 0
+ cheecku chicku : load_queue : {  }
+ we have that for example : base
+ it can even be seen as [0] b
+ checky chicky : b and that counter : -1 , 0 , 0
+ cheecku chicku : load_queue : {  }
+ we have that for example : menu
+ it can even be seen as [0] m
+ checky chicky : m and that counter : -1 , 0 , 0
+ cheecku chicku : load_queue : {  }
+ we have that for example : akashic_records
+ it can even be seen as [0] a
+ checky chicky : a and that counter : -1 , 0 , 0
+ cheecku chicku : load_queue : {  }
+ we have that for example : base
+ it can even be seen as [0] b
+ checky chicky : b and that counter : -1 , 0 , 0
+ cheecku chicku : load_queue : {  }
+ we have that for example : menu
+ it can even be seen as [0] m
+ checky chicky : m and that counter : -1 , 0 , 0
+ cheecku chicku : load_queue : {  }
+ we have that for example : akashic_records
+ it can even be seen as [0] a
+ checky chicky : a and that counter : -1 , 0 , 0
+ cheecku chicku : load_queue : {  }
+ we have that for example : base
+ it can even be seen as [0] b
+ checky chicky : b and that counter : -1 , 0 , 0
+ cheecku chicku : load_queue : {  }
+ we have that for example : menu
+ it can even be seen as [0] m
+ checky chicky : m and that counter : -1 , 0 , 0
+ cheecku chicku : load_queue : {  }
+ we have that for example : akashic_records
+ it can even be seen as [0] a
+ checky chicky : a and that counter : -1 , 0 , 0
+ cheecku chicku : load_queue : {  }
+ we have that for example : base
+ it can even be seen as [0] b
+ checky chicky : b and that counter : -1 , 0 , 0
+ cheecku chicku : load_queue : {  }
+ we have that for example : menu
+ it can even be seen as [0] m
+ checky chicky : m and that counter : -1 , 0 , 0
+ cheecku chicku : load_queue : {  }
+ we have that for example : akashic_records
+ it can even be seen as [0] a
+ checky chicky : a and that counter : -1 , 0 , 0
+ cheecku chicku : load_queue : {  }
+ we have that for example : base
+ it can even be seen as [0] b
+ checky chicky : b and that counter : -1 , 0 , 0
+ cheecku chicku : load_queue : {  }
+ we have that for example : menu
+ it can even be seen as [0] m
+ checky chicky : m and that counter : -1 , 0 , 0
+ cheecku chicku : load_queue : {  }
+ we have that for example : akashic_records
+ it can even be seen as [0] a
+ checky chicky : a and that counter : -1 , 0 , 0
+ cheecku chicku : load_queue : {  }
+ we have that for example : base
+ it can even be seen as [0] b
+ checky chicky : b and that counter : -1 , 0 , 0
+ cheecku chicku : load_queue : {  }
+ we have that for example : menu
+ it can even be seen as [0] m
+ checky chicky : m and that counter : -1 , 0 , 0
+ cheecku chicku : load_queue : {  }
+ elquadromadro trying to figure out random problems 
+ process delta 
+ process delta outcome : list_of_containers {  }
+ process delta 
+ process delta outcome : current_containers_state : {  }
+  process delta 
+ process delta mutex chck : [true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true]
+ process delta array with no protection : []
+ array_of_startup_check ["started", [["akashic_records"], ["base"], ["menu"]], { "base_": 1, "menu_": 1, "settings_": 1, "keyboard_": 1, "keyboard_left_": 1, "keyboard_right_": 1, "things_creation_": 2, "singular_lines_": 8 }, ["base", "menu", "settings", "keyboard", "keyboard_left", "keyboard_right", "things_creation", "singular_lines"], ["base_", "menu_", "settings_", "keyboard_", "keyboard_left_", "keyboard_right_", "things_creation_", "singular_lines_"]]
+ array_of_startup_check ["started", [["akashic_records"], ["base"], ["menu"]], { "base_": 1, "menu_": 1, "settings_": 1, "keyboard_": 1, "keyboard_left_": 1, "keyboard_right_": 1, "things_creation_": 2, "singular_lines_": 8 }, ["base", "menu", "settings", "keyboard", "keyboard_left", "keyboard_right", "things_creation", "singular_lines"], ["base_", "menu_", "settings_", "keyboard_", "keyboard_left_", "keyboard_right_", "things_creation_", "singular_lines_"]]
+
+ readiness : { "mutex_state": [true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true], "thread_state": "working", "records_ready": true }
+ delta, turn 0 : { "mutexes": true, "threads": true, "records": true }
+ readiness stuff : ["started", [["akashic_records"], ["base"], ["menu"]], { "base_": 1, "menu_": 1, "settings_": 1, "keyboard_": 1, "keyboard_left_": 1, "keyboard_right_": 1, "things_creation_": 2, "singular_lines_": 8 }, ["base", "menu", "settings", "keyboard", "keyboard_left", "keyboard_right", "things_creation", "singular_lines"], ["base_", "menu_", "settings_", "keyboard_", "keyboard_left_", "keyboard_right_", "things_creation_", "singular_lines_"]]
+
+ shall_execute : 0
+ check basic if we allign with prophecies of wisest spirits, do we unlock before it is too late 
+🔓 Checking & Unlocking stuck mutexes...
+
+ check is finished and we didnt get interupted while doing so kurwa 
+ allah akbar, end : list_of_containers {  }
+ delta message start hmm we check if we can push further  
+ we check em again, are they stuck?
+ we have that for example : akashic_records
+ it can even be seen as [0] a
+ checky chicky : a and that counter : -1 , 0 , 0
+ cheecku chicku : load_queue : {  }
+ we have that for example : base
+ it can even be seen as [0] b
+ checky chicky : b and that counter : -1 , 0 , 0
+ cheecku chicku : load_queue : {  }
+ we have that for example : menu
+ it can even be seen as [0] m
+ checky chicky : m and that counter : -1 , 0 , 0
+ cheecku chicku : load_queue : {  }
+ we have that for example : akashic_records
+ it can even be seen as [0] a
+ checky chicky : a and that counter : -1 , 0 , 0
+ cheecku chicku : load_queue : {  }
+ we have that for example : base
+ it can even be seen as [0] b
+ checky chicky : b and that counter : -1 , 0 , 0
+ cheecku chicku : load_queue : {  }
+ we have that for example : menu
+ it can even be seen as [0] m
+ checky chicky : m and that counter : -1 , 0 , 0
+ cheecku chicku : load_queue : {  }
+ we have that for example : akashic_records
+ it can even be seen as [0] a
+ checky chicky : a and that counter : -1 , 0 , 0
+ cheecku chicku : load_queue : {  }
+ we have that for example : base
+ it can even be seen as [0] b
+ checky chicky : b and that counter : -1 , 0 , 0
+ cheecku chicku : load_queue : {  }
+ we have that for example : menu
+ it can even be seen as [0] m
+ checky chicky : m and that counter : -1 , 0 , 0
+ cheecku chicku : load_queue : {  }
+ we have that for example : akashic_records
+ it can even be seen as [0] a
+ checky chicky : a and that counter : -1 , 0 , 0
+ cheecku chicku : load_queue : {  }
+ we have that for example : base
+ it can even be seen as [0] b
+ checky chicky : b and that counter : -1 , 0 , 0
+ cheecku chicku : load_queue : {  }
+ we have that for example : menu
+ it can even be seen as [0] m
+ checky chicky : m and that counter : -1 , 0 , 0
+ cheecku chicku : load_queue : {  }
+ we have that for example : akashic_records
+ it can even be seen as [0] a
+ checky chicky : a and that counter : -1 , 0 , 0
+ cheecku chicku : load_queue : {  }
+ we have that for example : base
+ it can even be seen as [0] b
+ checky chicky : b and that counter : -1 , 0 , 0
+ cheecku chicku : load_queue : {  }
+ we have that for example : menu
+ it can even be seen as [0] m
+ checky chicky : m and that counter : -1 , 0 , 0
+ cheecku chicku : load_queue : {  }
+ we have that for example : akashic_records
+ it can even be seen as [0] a
+ checky chicky : a and that counter : -1 , 0 , 0
+ cheecku chicku : load_queue : {  }
+ we have that for example : base
+ it can even be seen as [0] b
+ checky chicky : b and that counter : -1 , 0 , 0
+ cheecku chicku : load_queue : {  }
+ we have that for example : menu
+ it can even be seen as [0] m
+ checky chicky : m and that counter : -1 , 0 , 0
+ cheecku chicku : load_queue : {  }
+ we have that for example : akashic_records
+ it can even be seen as [0] a
+ checky chicky : a and that counter : -1 , 0 , 0
+ cheecku chicku : load_queue : {  }
+ we have that for example : base
+ it can even be seen as [0] b
+ checky chicky : b and that counter : -1 , 0 , 0
+ cheecku chicku : load_queue : {  }
+ we have that for example : menu
+ it can even be seen as [0] m
+ checky chicky : m and that counter : -1 , 0 , 0
+ cheecku chicku : load_queue : {  }
+ elquadromadro trying to figure out random problems 
+ process delta 
+ process delta outcome : list_of_containers {  }
+ process delta 
+ process delta outcome : current_containers_state : {  }
+  process delta 
+ process delta mutex chck : [true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true]
+ process delta array with no protection : []
+ array_of_startup_check ["started", [["akashic_records"], ["base"], ["menu"]], { "base_": 1, "menu_": 1, "settings_": 1, "keyboard_": 1, "keyboard_left_": 1, "keyboard_right_": 1, "things_creation_": 2, "singular_lines_": 8 }, ["base", "menu", "settings", "keyboard", "keyboard_left", "keyboard_right", "things_creation", "singular_lines"], ["base_", "menu_", "settings_", "keyboard_", "keyboard_left_", "keyboard_right_", "things_creation_", "singular_lines_"]]
+ array_of_startup_check ["started", [["akashic_records"], ["base"], ["menu"]], { "base_": 1, "menu_": 1, "settings_": 1, "keyboard_": 1, "keyboard_left_": 1, "keyboard_right_": 1, "things_creation_": 2, "singular_lines_": 8 }, ["base", "menu", "settings", "keyboard", "keyboard_left", "keyboard_right", "things_creation", "singular_lines"], ["base_", "menu_", "settings_", "keyboard_", "keyboard_left_", "keyboard_right_", "things_creation_", "singular_lines_"]]
+
+ readiness : { "mutex_state": [true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true], "thread_state": "working", "records_ready": true }
+ delta, turn 0 : { "mutexes": true, "threads": true, "records": true }
+ readiness stuff : ["started", [["akashic_records"], ["base"], ["menu"]], { "base_": 1, "menu_": 1, "settings_": 1, "keyboard_": 1, "keyboard_left_": 1, "keyboard_right_": 1, "things_creation_": 2, "singular_lines_": 8 }, ["base", "menu", "settings", "keyboard", "keyboard_left", "keyboard_right", "things_creation", "singular_lines"], ["base_", "menu_", "settings_", "keyboard_", "keyboard_left_", "keyboard_right_", "things_creation_", "singular_lines_"]]
+
+ shall_execute : 0

@@ -1,0 +1,251 @@
+[gd_scene load_steps=14 format=3]
+
+[ext_resource type="Script" path="res://pitopia_main.gd" id="1_p48dj"]
+[ext_resource type="Environment" path="res://pitopia_environment.tres" id="2_e8cj9"]
+[ext_resource type="PackedScene" path="res://effects/dimension_transition.tscn" id="3_m42pq"]
+[ext_resource type="PackedScene" path="res://entities/universal_entity.tscn" id="4_b2p6n"]
+[ext_resource type="PackedScene" path="res://ui/word_display.tscn" id="5_f3vgu"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_x3qjd"]
+sky_top_color = Color(0.0196078, 0.0392157, 0.141176, 1)
+sky_horizon_color = Color(0.227451, 0.145098, 0.333333, 1)
+sky_curve = 0.15
+ground_bottom_color = Color(0.0352941, 0.0196078, 0.0666667, 1)
+ground_horizon_color = Color(0.227451, 0.145098, 0.333333, 1)
+ground_curve = 0.15
+sun_angle_max = 60.0
+sun_curve = 0.15
+
+[sub_resource type="Sky" id="Sky_uy3f2"]
+sky_material = SubResource("ProceduralSkyMaterial_x3qjd")
+
+[sub_resource type="Environment" id="Environment_d53gj"]
+background_mode = 2
+sky = SubResource("Sky_uy3f2")
+ambient_light_source = 3
+ambient_light_color = Color(0.196078, 0.196078, 0.352941, 1)
+ambient_light_sky_contribution = 0.5
+ambient_light_energy = 0.2
+tonemap_mode = 2
+glow_enabled = true
+glow_intensity = 0.2
+glow_bloom = 0.1
+glow_blend_mode = 0
+fog_enabled = true
+fog_light_color = Color(0.109804, 0.14902, 0.290196, 1)
+fog_density = 0.005
+fog_sky_affect = 0.2
+adjustment_enabled = true
+adjustment_brightness = 1.1
+adjustment_contrast = 1.2
+adjustment_saturation = 1.1
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ypmx6"]
+bg_color = Color(0.0784314, 0.0784314, 0.0980392, 0.901961)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.2, 0.196078, 0.294118, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+shadow_color = Color(0, 0, 0, 0.25098)
+shadow_size = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_l2wfy"]
+bg_color = Color(0.152941, 0.152941, 0.196078, 0.901961)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.290196, 0.290196, 0.388235, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3dj8j"]
+bg_color = Color(0.0784314, 0.0784314, 0.0980392, 0.901961)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.2, 0.196078, 0.294118, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="Theme" id="Theme_m8t2o"]
+LineEdit/styles/focus = SubResource("StyleBoxFlat_l2wfy")
+LineEdit/styles/normal = SubResource("StyleBoxFlat_3dj8j")
+Panel/styles/panel = SubResource("StyleBoxFlat_ypmx6")
+
+[sub_resource type="GDScript" id="GDScript_kw5rj"]
+script/source = "extends Node3D
+
+# Helper script to make camera look at origin smoothly
+var look_weight = 0.02
+var initial_position = Vector3(0, 1.5, 4)
+var mouse_sensitivity = 0.003
+var is_rotating = false
+var last_mouse_pos = Vector2()
+
+func _ready():
+	if not get_parent() is PitopiaMain:
+		push_warning(\"CameraController: Parent is not PitopiaMain, some functionality may be limited\")
+
+func _process(delta):
+	# Only auto-look when not manually rotating
+	if not is_rotating:
+		var target_pos = Vector3.ZERO
+		
+		# Find average position of entities if any
+		var parent = get_parent()
+		if parent is PitopiaMain and parent.entity_container and parent.entity_container.get_child_count() > 0:
+			var count = 0
+			var total_pos = Vector3.ZERO
+			
+			for entity in parent.entity_container.get_children():
+				if entity is Node3D:
+					total_pos += entity.global_position
+					count += 1
+			
+			if count > 0:
+				target_pos = total_pos / count
+		
+		# Look at target smoothly
+		var current_basis = global_transform.basis
+		var target_transform = global_transform.looking_at(target_pos, Vector3.UP)
+		var target_basis = target_transform.basis
+		
+		# Slerp between current and target rotation
+		var interpolated_basis = current_basis.slerp(target_basis, look_weight)
+		global_transform.basis = interpolated_basis
+
+func _input(event):
+	# Handle mouse input for camera rotation
+	if event is InputEventMouseButton:
+		if event.button_index == MOUSE_BUTTON_RIGHT:
+			is_rotating = event.pressed
+			last_mouse_pos = event.position
+	
+	elif event is InputEventMouseMotion and is_rotating:
+		var delta = event.position - last_mouse_pos
+		last_mouse_pos = event.position
+		
+		# Rotate camera based on mouse movement
+		rotate_y(-delta.x * mouse_sensitivity)
+		rotate_object_local(Vector3.RIGHT, -delta.y * mouse_sensitivity)
+"
+
+[node name="PitopiaScene" type="Node3D"]
+script = ExtResource("1_p48dj")
+pitopia_environment = SubResource("Environment_d53gj")
+dimension_particle_effect_scene = ExtResource("3_m42pq")
+default_entity_scene = ExtResource("4_b2p6n")
+word_display_effect_scene = ExtResource("5_f3vgu")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = ExtResource("2_e8cj9")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.866025, -0.433013, 0.25, 0, 0.5, 0.866025, -0.5, -0.75, 0.433013, 0, 5, 0)
+light_color = Color(0.945098, 0.921569, 1, 1)
+light_energy = 0.8
+shadow_enabled = true
+
+[node name="PlayerCamera" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.965926, 0.258819, 0, -0.258819, 0.965926, 0, 1.5, 4)
+current = true
+fov = 70.0
+script = SubResource("GDScript_kw5rj")
+
+[node name="EntityContainer" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+
+[node name="UI" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_m8t2o")
+
+[node name="DimensionLabel" type="Label" parent="UI"]
+layout_mode = 0
+offset_left = 20.0
+offset_top = 20.0
+offset_right = 146.0
+offset_bottom = 46.0
+text = "Dimension: 3D - Spatial Manifestation"
+
+[node name="WordCountLabel" type="Label" parent="UI"]
+layout_mode = 0
+offset_left = 20.0
+offset_top = 50.0
+offset_right = 178.0
+offset_bottom = 76.0
+text = "Words Manifested: 0"
+
+[node name="HelpLabel" type="Label" parent="UI"]
+layout_mode = 0
+offset_left = 20.0
+offset_top = 80.0
+offset_right = 308.0
+offset_bottom = 106.0
+text = "Press [TAB] for console | 1-9 to change dimension"
+
+[node name="Console" type="Control" parent="."]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_m8t2o")
+
+[node name="Panel" type="Panel" parent="Console"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 0.3
+offset_left = 20.0
+offset_top = 20.0
+offset_right = -20.0
+offset_bottom = 0.0
+
+[node name="CommandInput" type="LineEdit" parent="Console/Panel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.7
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_right = -10.0
+offset_bottom = -10.0
+placeholder_text = "Enter a word or command..."
+
+[node name="OutputLabel" type="RichTextLabel" parent="Console/Panel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 0.7
+offset_left = 10.0
+offset_top = 10.0
+offset_right = -10.0
+offset_bottom = -5.0
+focus_mode = 2
+bbcode_enabled = true
+text = "[color=#9988ff]Welcome to Pitopia[/color]
+Press [TAB] to toggle console
+Type [color=#88ff99]help[/color] for commands
+Use number keys [color=#ff8888]1-9[/color] to change dimension
+Current dimension: [color=#ffdd88]3D[/color]
+"
+scroll_following = true
+selection_enabled = true

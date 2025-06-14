@@ -1,0 +1,64 @@
+[# JSH Ethereal Engine]=[pending]=[check all variants]
+added files
+[# JSH Ethereal Engine]=[pending]=[check all variants]
+function_metadata.gd
+
+[# JSH Ethereal Engine]=[pending]=[check all variants]
+some files from addons? we might not use it yet
+
+# trackball camera stuff
+trackball_camera.gd
+trackball_camera_inspector_plugin.gd
+trackball_camera_plugin.gd
+
+# thread pool stuff
+fake_thread_pool.gd
+future_thread_pool.gd
+thread_pool_plugin.gd
+
+# more pi stuff
+pi_number.gd = parsed consts?
+pi_number (2).gd = that one is working, some pi to some dictionary, even store file
+# need to rewrite the second one, to pi_creator maybe?
+okay it is changed to
+pi_number_creator.gd from pi_number (2).gd
+
+
+files we had, and i didnt care to put them on list, still in project
+button.gd
+camera_move.gd
+camera_mover.gd
+cursor_pc.gd
+godot_model.gd
+scene_tree_check.gd
+system_interfaces.gd
+text_label.gd
+
+we also have
+thing.gd
+and
+thing (2).gd
+
+hmm, both of them are weird, one creates array mesh from points? another have weird vars for basic stuff like speed, memories? type of thing? dunno
+
+[# JSH Ethereal Engine]=[pending]=[check all variants]
+
+so this is first update, we can even list random informations about files
+
+folders:
+addons, eden backup, first_files_plac, numbers_but_meh, scenes, scripts
+
+we are using so far, :
+1. "addons"
+2. "scripts"
+
+in "eden backup" we have text files, like main script in txt
+in "numbers_but_meh" we have jpg files with square and numbers, easy to distinguish directions with it
+in "scenes" we have one scene file "layer_0.tscn"
+in "first_files_place" we will
+
+[# JSH Ethereal Engine]=[pending]=[check all variants]
+
+now we will probably need also some kind of folders structure knowledge
+
+[# JSH Ethereal Engine]=[pending]=[check all variants]

@@ -1,0 +1,74 @@
+func create_button(node_name: String, first_line : Array, data_to_write : Array, group_name : String, version_of_thing : String, information_lines_parsed : Array):
+	var node_path_c_b = first_line[6][0]
+	var coords = first_line[1]
+	var to_rotate = first_line[2]
+	
+	var mesh_name = "shape_" + node_name 
+	var text_label_name = "text_" + node_name
+
+	var color_to_change = float(information_lines_parsed[1][2][0])
+	var opacity_to_change = float(information_lines_parsed[1][3][0])
+
+	var material = StandardMaterial3D.new()
+	var color_to_add_op = get_spectrum_color(color_to_change)
+	color_to_add_op.a = opacity_to_change
+	material.albedo_color = color_to_add_op
+	material.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA_SCISSOR
+	var text_for_label = information_lines_parsed[1][0][0]
+	var size_for_label = int(information_lines_parsed[1][1][0])
+	
+	var button_node = Node3D.new()
+	button_node.name = node_name
+	tasked_children(button_node, node_path_c_b)
+	# Create the flat shape (background)
+	var vertices = PackedVector3Array()
+	var indices = PackedInt32Array()
+	
+	# Convert shape data points to Vector3s
+	var vector_points = []
+	for point in data_to_write:  # First array contains shape points
+		var point_vector = Vector3(float(point[0]), float(point[1]), float(point[2]))
+		vector_points.append(point_vector)
+		vertices.push_back(point_vector)
+	
+	# Create triangles for the flat shape
+	indices.append(0)  # First triangle
+	indices.append(1)
+	indices.append(2)
+	
+	indices.append(0)  # Second triangle
+	indices.append(2)
+	indices.append(3)
+	
+	# Create mesh for the shape
+	var arr_mesh = ArrayMesh.new()
+	var arrays = []
+	arrays.resize(Mesh.ARRAY_MAX)
+	arrays[Mesh.ARRAY_VERTEX] = vertices
+	arrays[Mesh.ARRAY_INDEX] = indices
+	
+	arr_mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, arrays)
+	
+	# Create mesh instance for the shape
+	var mesh_instance = MeshInstance3D.new()
+	mesh_instance.mesh = arr_mesh
+	mesh_instance.name = mesh_name
+	
+	material.cull_mode = BaseMaterial3D.CULL_DISABLED
+	mesh_instance.material_override = material
+	
+	# Create Label3D for the text
+	var text_label = Label3D.new()
+	text_label.name = text_label_name
+	text_label.text = text_for_label
+	text_label.font_size = size_for_label
+	text_label.no_depth_test = true
+	text_label.modulate = Color(1, 1, 1)  # White text
+	text_label.position.z += 0.01  # Slight offset to prevent z-fighting
+	
+	var mesh_path = node_path_c_b + "/" + mesh_name
+	var label_path = node_path_c_b + "/" + text_label_name
+	tasked_children(text_label, label_path)
+	# Use existing node creation for final setup
+	var node_type = "button"
+	node_creation(mesh_name, mesh_instance, coords, to_rotate, group_name, node_type, mesh_path)

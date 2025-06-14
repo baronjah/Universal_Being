@@ -1,0 +1,50 @@
+# Example Scene - Astral Garden
+# Shows how to use new object types with actions
+
+# Ground pathway
+pathway 0 0 0 rotation_y=0
+pathway 0 0 10 rotation_y=0
+pathway 0 0 -10 rotation_y=0
+pathway 10 0 0 rotation_y=90
+pathway -10 0 0 rotation_y=90
+
+# Trees and bushes around the paths
+tree 5 0 5
+tree -5 0 5
+tree 5 0 -5
+tree -5 0 -5
+
+bush 3 0 3
+bush -3 0 3
+bush 3 0 -3
+bush -3 0 -3
+
+# Fruits on the ground
+fruit 2 0.5 2
+fruit -2 0.5 2
+fruit 2 0.5 -2
+fruit -2 0.5 -2
+
+# Sun in the sky
+sun 0 20 0
+
+# Astral beings floating around
+astral_being 0 5 0 action=float
+astral_being 5 3 5 action=follow
+astral_being -5 4 -5 action=illuminate
+
+# Rocks for decoration
+rock 7 0 0
+rock -7 0 0
+rock 0 0 7
+rock 0 0 -7
+
+# The ragdoll character
+ragdoll 0 3 0 action=talk
+
+# Boxes to interact with
+box 3 1 0
+box -3 1 0
+
+# A ramp for fun
+ramp 0 0 15 rotation_y=180

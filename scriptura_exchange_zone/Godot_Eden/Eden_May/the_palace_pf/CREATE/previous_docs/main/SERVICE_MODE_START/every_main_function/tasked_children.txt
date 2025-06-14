@@ -1,0 +1,27 @@
+func tasked_children(node_to_be_added, node_to_be_added_path):
+	var splitted_path = node_to_be_added_path.split("/")
+	var container_name = splitted_path[0]
+	var node_to_be_added_name = splitted_path[-1]
+	var parent_path = "/".join(splitted_path.slice(0, -1)) 
+
+	if splitted_path.size() == 1:
+		var node_type : int = 0
+		
+		mutex_nodes_to_be_added.lock()
+		nodes_to_be_added.append([node_type, node_to_be_added_name, node_to_be_added])
+		mutex_nodes_to_be_added.unlock()
+		
+	elif splitted_path.size() == 2:
+		var node_type : int = 1
+		
+		mutex_nodes_to_be_added.lock()
+		nodes_to_be_added.append([node_type, parent_path, node_to_be_added_name, node_to_be_added])
+		mutex_nodes_to_be_added.unlock()
+		
+	else:
+		var parent_name = splitted_path[1]
+		var node_type : int = 2
+		
+		mutex_nodes_to_be_added.lock()
+		nodes_to_be_added.append([node_type, parent_path, node_to_be_added_name, node_to_be_added, container_name])
+		mutex_nodes_to_be_added.unlock()

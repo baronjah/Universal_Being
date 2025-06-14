@@ -1,0 +1,105 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://12_turns_system/account_visualizer.gd" type="Script" id=1]
+[ext_resource path="res://12_turns_system/dimension_visualizer.gd" type="Script" id=2]
+
+[node name="AccountVisualization" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="2DVisualizer" type="Control" parent="."]
+anchor_right = 1.0
+anchor_bottom = 0.6
+script = ExtResource( 1 )
+
+[node name="TabContainer" type="TabContainer" parent="."]
+anchor_top = 0.6
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="Points" type="Tabs" parent="TabContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 32.0
+margin_right = -4.0
+margin_bottom = -4.0
+
+[node name="PointsDisplay" type="VBoxContainer" parent="TabContainer/Points"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="Label" type="Label" parent="TabContainer/Points/PointsDisplay"]
+margin_right = 1016.0
+margin_bottom = 14.0
+text = "Points by Category"
+align = 1
+
+[node name="Categories" type="GridContainer" parent="TabContainer/Points/PointsDisplay"]
+margin_top = 18.0
+margin_right = 1016.0
+margin_bottom = 18.0
+columns = 5
+
+[node name="Dimensions" type="Tabs" parent="TabContainer"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 32.0
+margin_right = -4.0
+margin_bottom = -4.0
+
+[node name="DimensionDisplay" type="VBoxContainer" parent="TabContainer/Dimensions"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="Label" type="Label" parent="TabContainer/Dimensions/DimensionDisplay"]
+margin_right = 1016.0
+margin_bottom = 14.0
+text = "Dimension Progress"
+align = 1
+
+[node name="Progress" type="ProgressBar" parent="TabContainer/Dimensions/DimensionDisplay"]
+margin_top = 18.0
+margin_right = 1016.0
+margin_bottom = 32.0
+
+[node name="Preferences" type="Tabs" parent="TabContainer"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 32.0
+margin_right = -4.0
+margin_bottom = -4.0
+
+[node name="PreferenceDisplay" type="VBoxContainer" parent="TabContainer/Preferences"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="Label" type="Label" parent="TabContainer/Preferences/PreferenceDisplay"]
+margin_right = 1016.0
+margin_bottom = 14.0
+text = "Your Play Style Preferences"
+align = 1
+
+[node name="PlaystyleLabel" type="Label" parent="TabContainer/Preferences/PreferenceDisplay"]
+margin_top = 18.0
+margin_right = 1016.0
+margin_bottom = 32.0
+text = "Detected Playstyle: Unknown"
+align = 1
+
+[node name="3DVisualization" type="ViewportContainer" parent="."]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 0.6
+
+[node name="Viewport" type="Viewport" parent="3DVisualization"]
+size = Vector2( 1024, 358 )
+handle_input_locally = false
+render_target_update_mode = 3
+
+[node name="DimensionVisualizer" type="Spatial" parent="3DVisualization/Viewport"]
+script = ExtResource( 2 )

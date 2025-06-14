@@ -1,0 +1,19 @@
+func generate_circle_points(radius: float, num_points: int) -> Array:
+	# Ensure minimum 3 points and maximum 33 points
+	num_points = clamp(num_points, 3, 33)
+	var points_to_clean
+	var points = []
+	var points_array = []
+	var angle_step = TAU / num_points  # TAU is 2*PI, for a full circle
+	
+	for i in range(num_points):
+		var angle = i * angle_step
+		# Calculate point position using sin/cos
+		var x : float = radius * cos(angle)
+		var y : float = radius * sin(angle)
+		var z : float
+		# Format the point as a string like your other shape points
+		points_to_clean = "%0.1f,%0.1f,0.0" % [x, y]
+		points_to_clean = points_to_clean.split(",")
+		points.append(points_to_clean)
+	return points

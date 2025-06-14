@@ -1,0 +1,6 @@
+func print_system_metrics():
+	var metrics = get_system_metrics()
+	print("🔍 System Metrics:")
+	for key in metrics:
+		print(key)
+		#print(f"{key}: {metrics[key]}")

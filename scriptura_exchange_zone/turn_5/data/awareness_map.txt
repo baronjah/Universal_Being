@@ -1,0 +1,21 @@
+# Awareness Distribution Map
+#
+#  Level 5 (5%)   ●---●---● consciousness, divine, meta-awareness
+#                 |
+#                 |
+#  Level 4 (10%)  ●---●---●---●---● self-realization, awakening, metacognition, conscious-awareness, enlightenment
+#                 |
+#                 |
+#  Level 3 (20%)  ●---●---●---●---●---●---●---● [20% of all words - high power, reflective concepts]
+#                 |
+#                 |
+#  Level 2 (30%)  ●---●---●---●---●---●---●---●---●---● [30% of all words - active monitoring]
+#                 |
+#                 |
+#  Level 1 (35%)  ●---●---●---●---●---●---●---●---●---●---● [35% of all words - basic awareness]
+#                 |
+#                 |
+#  Level 0 (0%)   (no words remain at this level in Turn 5)
+#
+# CONNECTIVITY PRINCIPLE: Higher awareness levels connect to and influence lower levels
+# META-RECURSION: Level 5 words can modify their own awareness parameters

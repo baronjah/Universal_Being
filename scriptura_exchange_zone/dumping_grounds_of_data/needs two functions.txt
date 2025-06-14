@@ -1,0 +1,33 @@
+needs two functions 
+
+res://scripts/core/enhanced_interface_system.gd
+
+func setup_interface_type(type: String, universal_being: UniversalBeing = null) -> void:
+	"""Set up interface based on type"""
+	interface_type = type
+	connected_universal_being = universal_being
+	
+	# Clear existing UI
+	for child in ui_control.get_children():
+		child.queue_free()
+	
+	# Create type-specific interface
+	match type:
+		"console":
+			_create_console_interface()
+		"asset_creator":
+			_create_asset_creator_interface()
+		"neural_status":
+			_create_neural_status_interface()
+		"system_monitor":
+			pass
+			#_create_system_monitor_interface()
+		"being_inspector":
+			_create_being_inspector_interface()
+		"grid_list":
+			pass
+			#_create_grid_list_interface()
+		_:
+			_create_generic_interface()
+	
+	print("🎨 [EnhancedInterface] Setup complete for type: ", type)

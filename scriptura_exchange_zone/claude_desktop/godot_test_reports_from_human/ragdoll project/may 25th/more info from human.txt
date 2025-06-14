@@ -1,0 +1,16 @@
+#"C:\Users\Percision 15\AppData\Roaming\Godot\app_userdata\Talking Ragdoll Simulator\logs"
+
+#this is the folder where editor logs console, 
+#one i clicked each commands was about 500 kb, 
+#tried cutting the repeatings, 
+#mostly i seen three types of commands repeating, ragdoll talking, the cleaning memory 
+#and later some testing for automation? some hotspots? and reaching token limits, it was fast way to start spamming console
+
+# the console background needs to be transparental so we can see what is behind console too, and maintain balance of seeing text over it, similar to how windows made it
+
+# ragdoll all commands needs an summary, where is every bit and byte, connected to ragdol and what and when he is supposed to do what
+
+# for that we have that project with just 7 models to make bottom parts of humanoid, just bipedal bottom
+
+#its in this folder, we checked it yesterday, and done already some research and understanding, we might need to find files in all our strongholds of data 
+#"D:\Godot Projects\ProceduralWalk-main"

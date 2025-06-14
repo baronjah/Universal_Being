@@ -1,0 +1,90 @@
+# Main.gd Summary - Lines 500-1000
+
+## Continued Data Structures (Lines 500-522)
+- Completion of system_states_0 from previous section (Lines 500-506)
+- verification_data: Structure for tracking system verification (Lines 508-521)
+  - Uses a mutex
+  - Tracks current phase and logs
+  - Has defined verification phases (0-5)
+
+## Commented CommandParser Class (Lines 524-547)
+- A non-functional class commented out because it was "breaking stuff"
+- Would have provided command registration and parsing functionality
+
+## Initialization Methods (Lines 551-802)
+### _init() Function (Lines 569-583)
+- Prints initialization messages
+- Calls print_tree_pretty() to show initial scene tree
+- Checks thread status with check_status_just_timer()
+- Calls prepare_akashic_records_init() and setup_system_checks()
+
+### _ready() Function (Lines 602-804)
+An extensive initialization sequence:
+- Debug build detection and logging (Lines 606-618)
+- OS detection and logging (Lines 619-627)
+- Element system initialization (Line 630)
+- Play button creation (Line 633)
+- Main file loading and structure parsing (Lines 637-649)
+- Directory scanning (Lines 651-664)
+- Scene tree capture and printing (Lines 666-680)
+- Eden directory scanning (Lines 681-698)
+- Thread pool signal connections (Lines 699-707)
+- Settings and modules file checking (Lines 713-728)
+- Camera and viewport setup (Lines 729-748)
+- Scene tree initialization (Lines 750-765)
+- Timer system setup (Lines 771-782)
+- Thread state verification (Lines 783-790)
+- Core testing functions (Lines 791-792)
+- Timer signal connection (Line 793)
+- Directory scanning and results saving (Lines 795-800)
+- Base texture initialization (Line 802)
+
+## Input Handling (Lines 820-848)
+- _input() function: Delegates to _input_event()
+- _input_event() function:
+  - Handles mouse button events (left/right)
+  - Updates mouse status
+  - Processes raycasts from mouse position
+  - Passes input to camera
+
+## Main Loop Functions (Lines 861-903)
+- _process(delta) function (Lines 867-881):
+  - Camera processing
+  - Delta time tracking with each_blimp_of_delta()
+  - Mouse button state checking
+  - System processing via process_system()
+- _physics_process(delta) function (Lines 883-890):
+  - Camera direction handling
+  - Physics movement (with incomplete line 886)
+- process_system() function (Lines 892-902):
+  - Calls 10 separate system processing functions (process_system_0 through process_system_9)
+
+## Time Management Functions (Lines 906-987)
+- each_blimp_of_delta() function (Lines 906-912):
+  - Stores timestamp in memory queue with 10-item limit
+- update_delta_history() function (Lines 932-939):
+  - Thread-safe delta history tracking
+- calculate_time() function (Lines 941-947):
+  - Converts milliseconds to minutes and seconds
+- before_time_blimp() function (Lines 949-951):
+  - Returns current timestamp
+- blimp_time_for_some_reason() function (Line 953):
+  - Prints a cryptic message
+- _on_interval_tick() function (Lines 963-974):
+  - Handles different timing intervals (quick, short, medium, long)
+  - Calls appropriate check functions
+- Track functions and timer setup (Lines 979-990):
+  - track_delta_timing(), _setup_retry_timer(), _on_retry_timer_completed()
+
+Reading continues from line 1000.
+
+## Notable Patterns and Observations
+1. Extensive use of mutex locks for thread safety
+2. Multi-phase initialization with detailed error checking
+3. Artistic ASCII headers for major sections (JSH Ethereal Engine banners)
+4. Frequent timestamp tracking via "blimp" functions
+5. Modular system design with 10 separate process subsystems
+6. Heavy use of arrays and dictionaries for data tracking
+7. Comprehensive error logging with integer status codes
+8. Timer-based interval processing system
+9. Debug printing throughout initialization sequence

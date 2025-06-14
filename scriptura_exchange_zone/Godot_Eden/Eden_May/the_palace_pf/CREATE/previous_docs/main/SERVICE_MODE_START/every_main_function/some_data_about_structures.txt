@@ -1,0 +1,46 @@
+func some_data_about_structures():
+	print(" just info ")
+
+# claude idea of how to change it, i guess for me them mutexes unlocking after we call function, makes sense, maybe it is broken, will figure it out, when i have problem with it, may it be there
+#func print_tree_structure(branch: Dictionary, indent: int = 0):
+	#tree_mutex.lock()
+	#var indent_str = "  ".repeat(indent)
+	#var status = branch.get("status", "pending")
+	#var children_to_process = []
+	#
+	## Get all needed data while locked
+	#print("%s%s (%s) %s" % [
+		#indent_str, 
+		#branch["name"], 
+		#branch["type"],
+		#status_symbol[status]
+	#])
+	#
+	#if branch.has("branches"):
+		#children_to_process = branch["branches"].values()
+	#elif branch.has("children"):
+		#children_to_process = branch["children"].values()
+	#tree_mutex.unlock()
+#
+	## Process children after unlock
+	#for child in children_to_process:
+		#print_tree_structure(child, indent + 1)
+
+
+
+#func jsh_scene_tree_get_children(node_path_get_childs: String) -> Array:
+	#var path_parts = node_path_get_childs.split("/")
+	##tree_mutex.lock()
+	#var current_branch = scene_tree_jsh["main_root"]["branches"]
+	##tree_mutex.unlock()
+	## Navigate to the requested node
+	#for part in path_parts:
+		#if current_branch.has(part):
+			#if path_parts[-1] == part:
+				## We found our node, return its children
+				#return current_branch[part].get("children", {}).keys()
+			#else:
+				## Keep navigating
+				#current_branch = current_branch[part]["children"]
+	#
+	#return []

@@ -1,0 +1,14 @@
+func get_cache_total_size() -> int:
+	var total_size: int = 0
+	
+	
+	cached_r_s_mutex.lock()
+	for records_set in cached_record_sets:
+		for record_type in cached_record_sets[records_set]:
+			var data = cached_record_sets[records_set][record_type]
+			total_size += get_dictionary_memory_size(data)
+	
+	#print("Total cache size in bytes: ", total_size)
+	#print("Total cache size in MB: ", total_size / (1024.0 * 1024.0))
+	cached_r_s_mutex.unlock()
+	return total_size

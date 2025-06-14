@@ -1,0 +1,22 @@
+func find_instructions_set(record_type: String) -> Dictionary:
+	match record_type:
+		"base":
+			return InstructionsBank.instructions_set_0
+		"menu":
+			return InstructionsBank.instructions_set_1
+		"settings":
+			return InstructionsBank.instructions_set_2
+		"keyboard":
+			return InstructionsBank.instructions_set_3
+		"keyboard_left":
+			return InstructionsBank.instructions_set_4
+		"keyboard_right":
+			return InstructionsBank.instructions_set_5
+		"things_creation":
+			return InstructionsBank.instructions_set_6
+		"singular_lines":
+			return InstructionsBank.instructions_set_7
+		# Add more record sets as needed
+		_:
+			#print("Unknown record set: ", record_type)
+			return {}

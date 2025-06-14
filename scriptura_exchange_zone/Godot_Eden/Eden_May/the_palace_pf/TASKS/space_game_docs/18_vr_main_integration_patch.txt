@@ -1,0 +1,107 @@
+# VR Integration Patch for Main.gd
+
+This document provides the code changes needed to integrate the VR system with the main.gd file.
+
+## Instructions
+
+1. Open main.gd in an editor (path: /code/gdscript/scripts/Menu_Keyboard_Console/main.gd)
+2. Find the variables section near the top (around line 70-100)
+3. Add these new variables:
+```gdscript
+# VR system components
+var vr_manager = null
+var vr_integration = null
+var vr_enabled = false
+```
+
+4. Find the _ready() function
+5. Add this code at the end of the _ready() function:
+```gdscript
+# Initialize VR integration
+_initialize_vr_integration()
+```
+
+6. Add this new function after the _ready() function:
+```gdscript
+func _initialize_vr_integration():
+    print("Initializing VR integration...")
+    
+    # Load VR helper
+    var vr_helper = load("res://code/gdscript/scripts/Menu_Keyboard_Console/vr_helper.gd")
+    
+    if vr_helper:
+        # Add VR toggle input
+        vr_helper.add_vr_toggle_input()
+        
+        # Load settings
+        var config = ConfigFile.new()
+        var err = config.load("user://vr_settings.cfg")
+        
+        if err == OK:
+            vr_enabled = config.get_value("vr", "vr_enabled", false)
+        
+        # Initialize VR if enabled
+        if vr_enabled:
+            vr_manager = vr_helper.initialize_vr()
+        
+        # Add VR integration to this node
+        vr_integration = vr_helper.add_vr_integration_to(self)
+        
+        print("VR integration initialized")
+    else:
+        print("VR helper script not found")
+```
+
+7. Find the _process() function
+8. Add this code at the beginning of the _process() function:
+```gdscript
+# Check for VR toggle
+if Input.is_action_just_pressed("toggle_vr"):
+    _toggle_vr()
+```
+
+9. Add this new function after the _process() function:
+```gdscript
+func _toggle_vr():
+    print("Toggling VR mode...")
+    
+    # Load VR helper
+    var vr_helper = load("res://code/gdscript/scripts/Menu_Keyboard_Console/vr_helper.gd")
+    
+    if vr_helper:
+        # Toggle VR
+        var success = vr_helper.toggle_vr()
+        
+        if success:
+            vr_enabled = vr_helper.is_vr_active()
+            print("VR mode: " + ("Enabled" if vr_enabled else "Disabled"))
+        else:
+            print("Failed to toggle VR mode")
+    else:
+        print("VR helper script not found")
+```
+
+10. Find the function that handles settings menu (could be named setup_settings_menu, create_settings, etc.)
+11. Add this code at the end of that function:
+```gdscript
+# Add VR settings
+var vr_helper = load("res://code/gdscript/scripts/Menu_Keyboard_Console/vr_helper.gd")
+if vr_helper:
+    vr_helper.add_vr_options_to_settings(settings_menu)
+```
+
+This patch adds minimal integration with the VR system to the main.gd file, allowing the VR system to be toggled and initialized properly.
+
+## Testing the Integration
+
+After applying these changes:
+
+1. Run the game
+2. Press F8 to toggle VR mode
+3. If an Oculus Quest 2 is connected, the VR mode should initialize
+4. You should be able to access VR settings in the settings menu
+
+If you encounter issues:
+- Check the console for error messages
+- Verify that all the VR system files exist in the correct locations
+- Make sure the Oculus Quest 2 is connected and in developer mode

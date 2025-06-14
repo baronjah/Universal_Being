@@ -1,0 +1,114 @@
+class_name PerformanceMonitor
+extends Node
+
+# Configuration
+var sample_interval: float = 0.5  # seconds
+var samples_to_keep: int = 10
+var target_fps: int = 60
+
+# Monitoring data
+var fps_samples = []
+var time_since_last_sample: float = 0
+var entity_count: int = 0
+var active_cell_count: int = 0
+
+# Monitoring results
+var average_fps: float = 0
+var performance_rating: float = 1.0  # 0.0 (poor) to 1.0 (excellent)
+
+# Debug UI
+var debug_label: Label
+var show_debug_overlay: bool = true
+
+func _ready():
+	# Initialize samples
+	for i in range(samples_to_keep):
+		fps_samples.push_back(target_fps)
+	
+	if show_debug_overlay:
+		_create_debug_overlay()
+
+func _create_debug_overlay():
+	# Create debug UI
+	debug_label = Label.new()
+	debug_label.anchor_right = 1.0
+	debug_label.anchor_bottom = 0.0
+	debug_label.offset_top = 10
+	debug_label.offset_left = 10
+	debug_label.theme_override_colors/font_color = Color(0.2, 1.0, 0.2)
+	debug_label.theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.5)
+	debug_label.theme_override_constants/shadow_offset_x = 1
+	debug_label.theme_override_constants/shadow_offset_y = 1
+	
+	var canvas_layer = CanvasLayer.new()
+	canvas_layer.layer = 100  # Keep it on top
+	add_child(canvas_layer)
+	canvas_layer.add_child(debug_label)
+
+func _process(delta):
+	time_since_last_sample += delta
+	
+	if time_since_last_sample >= sample_interval:
+		# Calculate current FPS
+		var current_fps = Engine.get_frames_per_second()
+		
+		# Add to samples
+		fps_samples.push_back(current_fps)
+		if fps_samples.size() > samples_to_keep:
+			fps_samples.pop_front()
+		
+		# Calculate average
+		var sum = 0
+		for sample in fps_samples:
+			sum += sample
+		average_fps = sum / fps_samples.size()
+		
+		# Calculate performance rating (0.0 to 1.0)
+		performance_rating = min(1.0, average_fps / max(1, target_fps))
+		
+		# Update debug info
+		if show_debug_overlay and debug_label:
+			_update_debug_info()
+		
+		# Reset timer
+		time_since_last_sample = 0
+
+func _update_debug_info():
+	var rating_text = "Excellent"
+	var rating_color = Color(0.0, 1.0, 0.0)  # Green
+	
+	if performance_rating < 0.8:
+		rating_text = "Good"
+		rating_color = Color(0.8, 0.8, 0.0)  # Yellow
+	if performance_rating < 0.6:
+		rating_text = "Fair"
+		rating_color = Color(1.0, 0.5, 0.0)  # Orange
+	if performance_rating < 0.4:
+		rating_text = "Poor"
+		rating_color = Color(1.0, 0.0, 0.0)  # Red
+	
+	debug_label.text = "FPS: %.1f / %d\n" % [average_fps, target_fps]
+	debug_label.text += "Performance: %s (%.2f)\n" % [rating_text, performance_rating]
+	debug_label.text += "Entities: %d\n" % entity_count
+	debug_label.text += "Active Cells: %d" % active_cell_count
+	
+	debug_label.theme_override_colors/font_color = rating_color
+
+func set_target_fps(fps: int):
+	target_fps = fps
+
+func get_performance_rating() -> float:
+	return performance_rating
+
+func get_average_fps() -> float:
+	return average_fps
+
+func update_entity_count(count: int):
+	entity_count = count
+
+func update_active_cell_count(count: int):
+	active_cell_count = count
+
+func toggle_debug_overlay():
+	if debug_label:
+		debug_label.visible = !debug_label.visible

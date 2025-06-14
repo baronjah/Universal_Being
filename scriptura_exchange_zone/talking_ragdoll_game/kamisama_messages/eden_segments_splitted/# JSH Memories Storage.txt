@@ -1,0 +1,47 @@
+#
+# JSH Memories Storage
+#
+#      oooo  .oooooo..o ooooo   ooooo 
+#      `888 d8P'    `Y8 `888'   `888' 
+#       888 Y88bo.       888     888     ┳┳┓         •     ┏┓             ┏┓        
+#       888  `"Y8888o.   888ooooo888     ┃┃┃┏┓┏┳┓┏┓┏┓┓┏┓┏  ┗┓╋┏┓┏┓┏┓┏┓┏┓  ┗┓┓┏┏╋┏┓┏┳┓
+#       888      `"Y88b  888     888     ┛ ┗┗ ┛┗┗┗┛┛ ┗┗ ┛  ┗┛┗┗┛┛ ┗┻┗┫┗   ┗┛┗┫┛┗┗ ┛┗┗
+#       888 oo     .d8P  888     888                                 ┛       ┛      
+#   .o. 88P 8""88888P'  o888o   o888o 
+#   `Y888P                            
+#
+# JSH Memories Storage
+#
+
+
+# node unloading, we also talk with datapoint, to tell it, if and what is there? what is missing?
+# datapoint is smart
+# yeah it is
+func unload_nodes(array_of_thingiess_that_shall_remain):
+	var counter_1 : int = 0
+	var counter_2 : int = 0
+	var data_point_node = array_of_thingiess_that_shall_remain[1][0]
+	var data_point
+	var children_finder = array_of_thingiess_that_shall_remain[0][0].get_children()
+	for children in children_finder:
+		var thing_to_something : int = 0
+		thing_to_something = 0
+		for nodes_to_remain in array_of_thingiess_that_shall_remain:
+			if str(children.name) == str(nodes_to_remain[0]):
+				thing_to_something = 1
+				break
+		match thing_to_something:
+			0:
+				counter_1 +=1
+				print("this thing shall be unloaded :)")
+				print(" children  ", children)
+				find_branch_to_unload(children.get_path())
+				children.queue_free()
+			1:
+				counter_2 +=1
+				if data_point_node == str(children.name):
+					data_point = children
+	if counter_1 <=1:
+		pass
+	#else:
+	#	data_point.update_layer_0_after_freeing()

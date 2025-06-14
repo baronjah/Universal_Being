@@ -1,0 +1,14 @@
+func clear_task_queues():
+	array_mutex_process.lock()
+	list_of_sets_to_create.clear()
+	array_mutex_process.unlock()
+	
+	mutex_nodes_to_be_added.lock() 
+	nodes_to_be_added.clear()
+	mutex_nodes_to_be_added.unlock()
+	
+	# Reset container states
+	mutex_for_container_state.lock()
+	for container in current_containers_state.keys():
+		current_containers_state[container]["status"] = -1
+	mutex_for_container_state.unlock()

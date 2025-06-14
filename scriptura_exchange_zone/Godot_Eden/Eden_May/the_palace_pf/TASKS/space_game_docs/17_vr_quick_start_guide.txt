@@ -1,0 +1,119 @@
+# VR Quick Start Guide for Eden Space Game
+
+This guide provides a quick overview of how to use the VR implementation with the Akashic Records system in Eden Space Game.
+
+## Prerequisites
+
+- Oculus Quest 2 headset with developer mode enabled
+- Godot 4.4 installed with OpenXR plugin
+- Eden Space Game project with the VR system files installed
+
+## Quick Start
+
+### Option 1: Using the Test Scene
+
+1. Open the project in Godot editor
+2. Load the test scene at `res://code/gdscript/scenes/vr_test_scene.tscn`
+3. Run the scene
+4. Put on your VR headset
+5. Use the controllers to interact with the elements
+
+### Option 2: Integrating with Main Game
+
+1. Open the main game scene
+2. Add the VR integration node:
+   ```gdscript
+   var vr_integration = load("res://code/gdscript/scripts/Menu_Keyboard_Console/vr_integration.gd").new()
+   vr_integration.name = "VRIntegration"
+   add_child(vr_integration)
+   ```
+3. Run the game
+4. Toggle VR mode by pressing F8
+5. Put on your VR headset
+
+## VR Controls
+
+### Basic Controls
+
+- **Left Trigger**: Interact with objects/elements
+- **Right Trigger**: Select objects/elements
+- **Left Grip**: Grab and move objects
+- **Right Grip**: Toggle menu display
+- **Left Primary Button (X)**: Scale transition up (zoom out)
+- **Right Primary Button (A)**: Scale transition down (zoom in)
+
+### Gestures
+
+- **Pinch**: Moving controllers together to zoom in (smaller scale)
+- **Spread**: Moving controllers apart to zoom out (larger scale)
+- **Point and Draw**: Create new elements or dictionary entries
+
+## Akashic Records in VR
+
+The VR implementation visualizes the Akashic Records (Dynamic Dictionary) as 3D objects that you can interact with using your controllers.
+
+### Dictionary Visualization
+
+- **Dictionary Entries**: Shown as colorful spheres
+- **Connections**: Represented by lines between related entries
+- **Categories**: Different colors represent different categories
+
+### Interaction
+
+- **View Details**: Point at an entry and press trigger to view details
+- **Create Connections**: Select two entries and perform a pinch gesture
+- **Create Entries**: Use the virtual keyboard to create new entries
+- **Delete Entries**: Select an entry and use the delete gesture
+
+## Scale Transitions in VR
+
+Eden Space Game features seamless transitions between different cosmic scales. In VR, these transitions are specially designed to be comfortable:
+
+1. The camera remains stationary (world-centered approach)
+2. The world scales and moves around you
+3. Visual effects help indicate the scale change
+4. Camera parameters adjust to the new scale
+
+### Scale Levels
+
+- **Universe**: Multiple galaxies view
+- **Galaxy**: Stars within a galaxy
+- **Star System**: Planets orbiting a star
+- **Planet**: Surface of a planet
+- **Element**: Individual elements and their interactions
+
+## Element Interaction in VR
+
+The element system allows physical interaction in VR:
+
+1. Grab elements with the grip buttons
+2. Throw elements with a flicking motion
+3. Combine elements by bringing them together
+4. Create new elements through interactions
+
+### Basic Element Combinations
+
+- **Fire + Wood** → Ash
+- **Water + Fire** → Water (Fire extinguished)
+- **Water + Ash** → Wood (Life from fertility)
+- **Fire + Fire** → Larger Fire
+
+## Performance Tips
+
+- If experiencing performance issues, reduce the render scale in VR settings
+- For better tracking, ensure good lighting in your physical space
+- If motion sickness occurs, enable comfort mode in settings
+- Teleport movement is recommended over continuous movement
+
+## Troubleshooting
+
+- **VR Not Initializing**: Make sure Oculus Quest 2 is connected and in developer mode
+- **Controllers Not Detected**: Restart controllers or reconnect headset
+- **Poor Performance**: Lower render scale and disable visual effects
+- **Scale Transitions Uncomfortable**: Adjust transition speed in settings
+
+## Providing Feedback
+
+As you use the VR system, please note any issues or suggestions for improvement. Your feedback will help refine the VR experience for the Eden Space Game.
+
+Happy exploring!

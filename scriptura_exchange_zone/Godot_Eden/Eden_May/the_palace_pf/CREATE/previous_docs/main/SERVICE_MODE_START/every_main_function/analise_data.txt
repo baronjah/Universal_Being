@@ -1,0 +1,35 @@
+func analise_data(thing_name_, type, data_to_analyze, second_part, group_number, verion_of_thing, information_lines_parsed):
+	var counter = -1
+	for i in RecordsBank.type_of_thing_0:
+		counter +=1
+		
+		if type == i:
+			break
+		else:
+			continue
+
+	match counter:
+		0:
+			create_flat_shape(thing_name_, data_to_analyze, second_part, group_number, verion_of_thing, information_lines_parsed)
+		1:
+			create_text_label(thing_name_, data_to_analyze, second_part, group_number, verion_of_thing, information_lines_parsed)
+		2:
+			create_array_mesh(thing_name_, data_to_analyze, second_part, group_number, verion_of_thing, information_lines_parsed) 
+		3:
+			create_button(thing_name_, data_to_analyze, second_part, group_number, verion_of_thing, information_lines_parsed)
+		4:
+			create_cursor(thing_name_, data_to_analyze, second_part, group_number, verion_of_thing, information_lines_parsed)
+		5:
+			create_connection(thing_name_, data_to_analyze, second_part, group_number, verion_of_thing, information_lines_parsed)
+		6:
+			create_screen(thing_name_, data_to_analyze, second_part, group_number, verion_of_thing, information_lines_parsed)
+		7:
+			create_datapoint(thing_name_, data_to_analyze, second_part, group_number, verion_of_thing, information_lines_parsed)
+		8:
+			create_circle_shape(thing_name_, data_to_analyze, second_part, group_number, verion_of_thing, information_lines_parsed)
+		9:
+			create_container(thing_name_, data_to_analyze, second_part, group_number, verion_of_thing, information_lines_parsed)
+		10:
+			create_textmesh(thing_name_, data_to_analyze, second_part, group_number, verion_of_thing, information_lines_parsed)
+		_:  
+			print("hmmm didnt find the type of thing?")

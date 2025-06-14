@@ -1,0 +1,327 @@
+after talking we decided to change stuff, now at launch we have many things to take care off
+
+Godot Engine v4.5.dev4.mono.official (c) 2007-present Juan Linietsky, Ariel Manzur & Godot Contributors.
+--- Debug adapter server started on port 6006 ---
+--- GDScript language server started on port 6005 ---
+  ERROR: res://scripts/core/floodgate_controller.gd:2 - Parse Error: Class "FloodgateController" hides an autoload singleton.
+  ERROR: res://scripts/core/floodgate_controller.gd:123 - Parse Error: Identifier "max_threads" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:125 - Parse Error: Identifier "thread_pool" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:134 - Parse Error: Identifier "thread_pool" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:171 - Parse Error: Identifier "mutex" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:184 - Parse Error: Identifier "operation_queue" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:185 - Parse Error: Identifier "mutex" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:192 - Parse Error: Identifier "operation_queue" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:193 - Parse Error: Identifier "operation_queue" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:194 - Parse Error: Identifier "operation_queue" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:199 - Parse Error: Identifier "operation_queue" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:204 - Parse Error: Identifier "mutex" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:208 - Parse Error: Identifier "mutex" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:210 - Parse Error: Identifier "operation_queue" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:211 - Parse Error: Identifier "mutex" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:214 - Parse Error: Identifier "operation_queue" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:214 - Parse Error: Identifier "current_operation" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:215 - Parse Error: Identifier "processing_operation" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:217 - Parse Error: Identifier "mutex" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:219 - Parse Error: Identifier "current_operation" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:219 - Parse Error: Identifier "current_operation" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:220 - Parse Error: Identifier "current_operation" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:223 - Parse Error: Identifier "current_operation" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:226 - Parse Error: Identifier "current_operation" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:227 - Parse Error: Identifier "current_operation" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:229 - Parse Error: Identifier "mutex" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:230 - Parse Error: Identifier "current_operation" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:230 - Parse Error: Identifier "operation_history" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:231 - Parse Error: Identifier "operation_history" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:232 - Parse Error: Identifier "operation_history" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:235 - Parse Error: Identifier "current_operation" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:235 - Parse Error: Identifier "failed_operations" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:237 - Parse Error: Identifier "processing_operation" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:238 - Parse Error: Identifier "mutex" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:240 - Parse Error: Identifier "current_operation" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:607 - Parse Error: Cannot return value of type "Dictionary" because the function return type is "bool".
+  ERROR: res://scripts/core/floodgate_controller.gd:725 - Parse Error: Identifier "mutex" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:728 - Parse Error: Identifier "mutex" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:730 - Parse Error: Identifier "mutex" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:733 - Parse Error: Identifier "mutex" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:737 - Parse Error: Identifier "mutex" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:739 - Parse Error: Identifier "mutex" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:1242 - Parse Error: Identifier "operation_history" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:1243 - Parse Error: Identifier "operation_history" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:1243 - Parse Error: Identifier "operation_history" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:1246 - Parse Error: Identifier "failed_operations" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:1247 - Parse Error: Identifier "failed_operations" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:1247 - Parse Error: Identifier "failed_operations" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:1254 - Parse Error: Identifier "current_operation" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:1254 - Parse Error: Identifier "current_operation" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:1255 - Parse Error: Identifier "current_operation" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:1258 - Parse Error: Identifier "operation_queue" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:1263 - Parse Error: Identifier "operation_history" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:1270 - Parse Error: Identifier "operation_queue" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:1291 - Parse Error: Identifier "failed_operations" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:1295 - Parse Error: Identifier "failed_operations" not declared in the current scope.
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://scripts/core/floodgate_controller.gd" with error "Parse error".
+  ERROR: Failed to create an autoload, script 'res://scripts/core/floodgate_controller.gd' is not compiling.
+  ERROR: res://scripts/core/asset_library.gd:2 - Parse Error: Class "AssetLibrary" hides an autoload singleton.
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://scripts/core/asset_library.gd" with error "Parse error".
+  ERROR: Failed to create an autoload, script 'res://scripts/core/asset_library.gd' is not compiling.
+  ERROR: res://scripts/core/floodgate_controller.gd:2 - Parse Error: Class "FloodgateController" hides an autoload singleton.
+  ERROR: res://scripts/core/floodgate_controller.gd:123 - Parse Error: Identifier "max_threads" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:125 - Parse Error: Identifier "thread_pool" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:134 - Parse Error: Identifier "thread_pool" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:171 - Parse Error: Identifier "mutex" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:184 - Parse Error: Identifier "operation_queue" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:185 - Parse Error: Identifier "mutex" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:192 - Parse Error: Identifier "operation_queue" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:193 - Parse Error: Identifier "operation_queue" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:194 - Parse Error: Identifier "operation_queue" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:199 - Parse Error: Identifier "operation_queue" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:204 - Parse Error: Identifier "mutex" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:208 - Parse Error: Identifier "mutex" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:210 - Parse Error: Identifier "operation_queue" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:211 - Parse Error: Identifier "mutex" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:214 - Parse Error: Identifier "operation_queue" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:214 - Parse Error: Identifier "current_operation" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:215 - Parse Error: Identifier "processing_operation" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:217 - Parse Error: Identifier "mutex" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:219 - Parse Error: Identifier "current_operation" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:219 - Parse Error: Identifier "current_operation" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:220 - Parse Error: Identifier "current_operation" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:223 - Parse Error: Identifier "current_operation" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:226 - Parse Error: Identifier "current_operation" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:227 - Parse Error: Identifier "current_operation" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:229 - Parse Error: Identifier "mutex" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:230 - Parse Error: Identifier "current_operation" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:230 - Parse Error: Identifier "operation_history" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:231 - Parse Error: Identifier "operation_history" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:232 - Parse Error: Identifier "operation_history" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:235 - Parse Error: Identifier "current_operation" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:235 - Parse Error: Identifier "failed_operations" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:237 - Parse Error: Identifier "processing_operation" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:238 - Parse Error: Identifier "mutex" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:240 - Parse Error: Identifier "current_operation" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:607 - Parse Error: Cannot return value of type "Dictionary" because the function return type is "bool".
+  ERROR: res://scripts/core/floodgate_controller.gd:725 - Parse Error: Identifier "mutex" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:728 - Parse Error: Identifier "mutex" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:730 - Parse Error: Identifier "mutex" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:733 - Parse Error: Identifier "mutex" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:737 - Parse Error: Identifier "mutex" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:739 - Parse Error: Identifier "mutex" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:1242 - Parse Error: Identifier "operation_history" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:1243 - Parse Error: Identifier "operation_history" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:1243 - Parse Error: Identifier "operation_history" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:1246 - Parse Error: Identifier "failed_operations" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:1247 - Parse Error: Identifier "failed_operations" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:1247 - Parse Error: Identifier "failed_operations" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:1254 - Parse Error: Identifier "current_operation" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:1254 - Parse Error: Identifier "current_operation" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:1255 - Parse Error: Identifier "current_operation" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:1258 - Parse Error: Identifier "operation_queue" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:1263 - Parse Error: Identifier "operation_history" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:1270 - Parse Error: Identifier "operation_queue" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:1291 - Parse Error: Identifier "failed_operations" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:1295 - Parse Error: Identifier "failed_operations" not declared in the current scope.
+  ERROR: res://scripts/core/asset_library.gd:2 - Parse Error: Class "AssetLibrary" hides an autoload singleton.
+  ERROR: res://scripts/autoload/world_builder.gd:0 - Compile Error: Failed to compile depended scripts.
+  ERROR: res://scripts/core/debug_3d_screen.gd:357 - Parse Error: Cannot assign a new value to a constant.
+  ERROR: res://scripts/core/debug_3d_screen.gd:362 - Parse Error: Cannot assign a new value to a constant.
+  ERROR: res://scripts/autoload/console_manager.gd:0 - Compile Error: Failed to compile depended scripts.
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://scripts/autoload/console_manager.gd" with error "Parse error".
+  ERROR: res://scripts/core/floodgate_controller.gd:2 - Parse Error: Class "FloodgateController" hides an autoload singleton.
+  ERROR: res://scripts/core/floodgate_controller.gd:123 - Parse Error: Identifier "max_threads" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:125 - Parse Error: Identifier "thread_pool" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:134 - Parse Error: Identifier "thread_pool" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:171 - Parse Error: Identifier "mutex" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:184 - Parse Error: Identifier "operation_queue" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:185 - Parse Error: Identifier "mutex" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:192 - Parse Error: Identifier "operation_queue" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:193 - Parse Error: Identifier "operation_queue" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:194 - Parse Error: Identifier "operation_queue" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:199 - Parse Error: Identifier "operation_queue" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:204 - Parse Error: Identifier "mutex" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:208 - Parse Error: Identifier "mutex" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:210 - Parse Error: Identifier "operation_queue" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:211 - Parse Error: Identifier "mutex" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:214 - Parse Error: Identifier "operation_queue" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:214 - Parse Error: Identifier "current_operation" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:215 - Parse Error: Identifier "processing_operation" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:217 - Parse Error: Identifier "mutex" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:219 - Parse Error: Identifier "current_operation" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:219 - Parse Error: Identifier "current_operation" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:220 - Parse Error: Identifier "current_operation" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:223 - Parse Error: Identifier "current_operation" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:226 - Parse Error: Identifier "current_operation" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:227 - Parse Error: Identifier "current_operation" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:229 - Parse Error: Identifier "mutex" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:230 - Parse Error: Identifier "current_operation" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:230 - Parse Error: Identifier "operation_history" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:231 - Parse Error: Identifier "operation_history" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:232 - Parse Error: Identifier "operation_history" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:235 - Parse Error: Identifier "current_operation" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:235 - Parse Error: Identifier "failed_operations" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:237 - Parse Error: Identifier "processing_operation" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:238 - Parse Error: Identifier "mutex" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:240 - Parse Error: Identifier "current_operation" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:607 - Parse Error: Cannot return value of type "Dictionary" because the function return type is "bool".
+  ERROR: res://scripts/core/floodgate_controller.gd:725 - Parse Error: Identifier "mutex" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:728 - Parse Error: Identifier "mutex" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:730 - Parse Error: Identifier "mutex" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:733 - Parse Error: Identifier "mutex" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:737 - Parse Error: Identifier "mutex" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:739 - Parse Error: Identifier "mutex" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:1242 - Parse Error: Identifier "operation_history" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:1243 - Parse Error: Identifier "operation_history" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:1243 - Parse Error: Identifier "operation_history" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:1246 - Parse Error: Identifier "failed_operations" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:1247 - Parse Error: Identifier "failed_operations" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:1247 - Parse Error: Identifier "failed_operations" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:1254 - Parse Error: Identifier "current_operation" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:1254 - Parse Error: Identifier "current_operation" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:1255 - Parse Error: Identifier "current_operation" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:1258 - Parse Error: Identifier "operation_queue" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:1263 - Parse Error: Identifier "operation_history" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:1270 - Parse Error: Identifier "operation_queue" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:1291 - Parse Error: Identifier "failed_operations" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:1295 - Parse Error: Identifier "failed_operations" not declared in the current scope.
+  ERROR: res://scripts/core/asset_library.gd:2 - Parse Error: Class "AssetLibrary" hides an autoload singleton.
+  ERROR: res://scripts/test/floodgate_test.gd:0 - Compile Error: Failed to compile depended scripts.
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://scripts/test/floodgate_test.gd" with error "Parse error".
+
+
+
+and after first batch of repairs, we are now at 60 percent? of number it was
+
+
+Godot Engine v4.5.dev4.mono.official (c) 2007-present Juan Linietsky, Ariel Manzur & Godot Contributors.
+--- Debug adapter server started on port 6006 ---
+--- GDScript language server started on port 6005 ---
+  ERROR: res://scripts/core/floodgate_controller.gd:2 - Parse Error: Class "FloodgateController" hides an autoload singleton.
+  ERROR: res://scripts/core/floodgate_controller.gd:123 - Parse Error: Identifier "max_threads" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:125 - Parse Error: Identifier "thread_pool" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:134 - Parse Error: Identifier "thread_pool" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:171 - Parse Error: Identifier "mutex" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:184 - Parse Error: Identifier "operation_queue" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:185 - Parse Error: Identifier "mutex" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:192 - Parse Error: Identifier "operation_queue" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:193 - Parse Error: Identifier "operation_queue" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:194 - Parse Error: Identifier "operation_queue" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:199 - Parse Error: Identifier "operation_queue" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:204 - Parse Error: Identifier "mutex" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:208 - Parse Error: Identifier "mutex" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:210 - Parse Error: Identifier "operation_queue" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:211 - Parse Error: Identifier "mutex" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:214 - Parse Error: Identifier "operation_queue" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:214 - Parse Error: Identifier "current_operation" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:215 - Parse Error: Identifier "processing_operation" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:217 - Parse Error: Identifier "mutex" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:219 - Parse Error: Identifier "current_operation" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:219 - Parse Error: Identifier "current_operation" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:220 - Parse Error: Identifier "current_operation" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:223 - Parse Error: Identifier "current_operation" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:226 - Parse Error: Identifier "current_operation" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:227 - Parse Error: Identifier "current_operation" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:229 - Parse Error: Identifier "mutex" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:230 - Parse Error: Identifier "current_operation" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:230 - Parse Error: Identifier "operation_history" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:231 - Parse Error: Identifier "operation_history" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:232 - Parse Error: Identifier "operation_history" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:235 - Parse Error: Identifier "current_operation" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:235 - Parse Error: Identifier "failed_operations" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:237 - Parse Error: Identifier "processing_operation" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:238 - Parse Error: Identifier "mutex" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:240 - Parse Error: Identifier "current_operation" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:607 - Parse Error: Cannot return value of type "Dictionary" because the function return type is "bool".
+  ERROR: res://scripts/core/floodgate_controller.gd:725 - Parse Error: Identifier "mutex" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:728 - Parse Error: Identifier "mutex" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:730 - Parse Error: Identifier "mutex" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:733 - Parse Error: Identifier "mutex" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:737 - Parse Error: Identifier "mutex" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:739 - Parse Error: Identifier "mutex" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:1242 - Parse Error: Identifier "operation_history" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:1243 - Parse Error: Identifier "operation_history" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:1243 - Parse Error: Identifier "operation_history" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:1246 - Parse Error: Identifier "failed_operations" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:1247 - Parse Error: Identifier "failed_operations" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:1247 - Parse Error: Identifier "failed_operations" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:1254 - Parse Error: Identifier "current_operation" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:1254 - Parse Error: Identifier "current_operation" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:1255 - Parse Error: Identifier "current_operation" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:1258 - Parse Error: Identifier "operation_queue" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:1263 - Parse Error: Identifier "operation_history" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:1270 - Parse Error: Identifier "operation_queue" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:1291 - Parse Error: Identifier "failed_operations" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:1295 - Parse Error: Identifier "failed_operations" not declared in the current scope.
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://scripts/core/floodgate_controller.gd" with error "Parse error".
+  ERROR: Failed to create an autoload, script 'res://scripts/core/floodgate_controller.gd' is not compiling.
+  ERROR: res://scripts/core/asset_library.gd:2 - Parse Error: Class "AssetLibrary" hides an autoload singleton.
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://scripts/core/asset_library.gd" with error "Parse error".
+  ERROR: Failed to create an autoload, script 'res://scripts/core/asset_library.gd' is not compiling.
+  ERROR: res://scripts/core/floodgate_controller.gd:2 - Parse Error: Class "FloodgateController" hides an autoload singleton.
+  ERROR: res://scripts/core/floodgate_controller.gd:123 - Parse Error: Identifier "max_threads" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:125 - Parse Error: Identifier "thread_pool" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:134 - Parse Error: Identifier "thread_pool" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:171 - Parse Error: Identifier "mutex" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:184 - Parse Error: Identifier "operation_queue" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:185 - Parse Error: Identifier "mutex" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:192 - Parse Error: Identifier "operation_queue" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:193 - Parse Error: Identifier "operation_queue" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:194 - Parse Error: Identifier "operation_queue" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:199 - Parse Error: Identifier "operation_queue" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:204 - Parse Error: Identifier "mutex" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:208 - Parse Error: Identifier "mutex" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:210 - Parse Error: Identifier "operation_queue" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:211 - Parse Error: Identifier "mutex" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:214 - Parse Error: Identifier "operation_queue" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:214 - Parse Error: Identifier "current_operation" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:215 - Parse Error: Identifier "processing_operation" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:217 - Parse Error: Identifier "mutex" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:219 - Parse Error: Identifier "current_operation" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:219 - Parse Error: Identifier "current_operation" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:220 - Parse Error: Identifier "current_operation" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:223 - Parse Error: Identifier "current_operation" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:226 - Parse Error: Identifier "current_operation" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:227 - Parse Error: Identifier "current_operation" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:229 - Parse Error: Identifier "mutex" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:230 - Parse Error: Identifier "current_operation" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:230 - Parse Error: Identifier "operation_history" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:231 - Parse Error: Identifier "operation_history" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:232 - Parse Error: Identifier "operation_history" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:235 - Parse Error: Identifier "current_operation" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:235 - Parse Error: Identifier "failed_operations" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:237 - Parse Error: Identifier "processing_operation" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:238 - Parse Error: Identifier "mutex" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:240 - Parse Error: Identifier "current_operation" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:607 - Parse Error: Cannot return value of type "Dictionary" because the function return type is "bool".
+  ERROR: res://scripts/core/floodgate_controller.gd:725 - Parse Error: Identifier "mutex" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:728 - Parse Error: Identifier "mutex" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:730 - Parse Error: Identifier "mutex" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:733 - Parse Error: Identifier "mutex" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:737 - Parse Error: Identifier "mutex" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:739 - Parse Error: Identifier "mutex" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:1242 - Parse Error: Identifier "operation_history" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:1243 - Parse Error: Identifier "operation_history" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:1243 - Parse Error: Identifier "operation_history" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:1246 - Parse Error: Identifier "failed_operations" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:1247 - Parse Error: Identifier "failed_operations" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:1247 - Parse Error: Identifier "failed_operations" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:1254 - Parse Error: Identifier "current_operation" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:1254 - Parse Error: Identifier "current_operation" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:1255 - Parse Error: Identifier "current_operation" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:1258 - Parse Error: Identifier "operation_queue" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:1263 - Parse Error: Identifier "operation_history" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:1270 - Parse Error: Identifier "operation_queue" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:1291 - Parse Error: Identifier "failed_operations" not declared in the current scope.
+  ERROR: res://scripts/core/floodgate_controller.gd:1295 - Parse Error: Identifier "failed_operations" not declared in the current scope.
+  ERROR: res://scripts/core/asset_library.gd:2 - Parse Error: Class "AssetLibrary" hides an autoload singleton.
+  ERROR: res://scripts/autoload/world_builder.gd:0 - Compile Error: Failed to compile depended scripts.
+  ERROR: res://scripts/core/debug_3d_screen.gd:357 - Parse Error: Cannot assign a new value to a constant.
+  ERROR: res://scripts/core/debug_3d_screen.gd:362 - Parse Error: Cannot assign a new value to a constant.
+  ERROR: res://scripts/autoload/console_manager.gd:0 - Compile Error: Failed to compile depended scripts.
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://scripts/autoload/console_manager.gd" with error "Parse error".
+  ERROR: res://scripts/core/game_launcher.gd:155 - Parse Error: Invalid operands to operator *, String and int.
+  ERROR: res://scripts/core/game_launcher.gd:188 - Parse Error: Invalid operands to operator *, String and int.
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://scripts/core/game_launcher.gd" with error "Parse error".
+  ERROR: res://scripts/core/game_launcher.gd:155 - Parse Error: Invalid operands to operator *, String and int.
+  ERROR: res://scripts/core/game_launcher.gd:188 - Parse Error: Invalid operands to operator *, String and int.
+  ERROR: res://scripts/main_game_controller.gd:0 - Compile Error: Failed to compile depended scripts.
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://scripts/main_game_controller.gd" with error "Parse error".
+

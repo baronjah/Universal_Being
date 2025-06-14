@@ -1,0 +1,6 @@
+func each_blimp_of_delta():
+	var each_blimp_time = Time.get_ticks_msec()
+	stored_delta_memory.append(each_blimp_time)
+	if stored_delta_memory.size() > 9:
+		#print(" lets start erasin from here ")
+		var last_delta_to_forget = stored_delta_memory.pop_front()

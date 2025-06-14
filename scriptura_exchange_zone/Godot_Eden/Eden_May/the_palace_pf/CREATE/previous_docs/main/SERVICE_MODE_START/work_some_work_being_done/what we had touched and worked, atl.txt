@@ -1,0 +1,45 @@
+what we had touched and worked, atleast before i started editing it too much, as i predict things happening
+## cube cam
+cubecam is working, generates pictures,generates shader picture, can be applied to skybox, shader can be used, to make it bigger, smaller, make it bigger, vertically, horizontally
+so basics were there, for me to pick on, we pushed project, but we need our own file for our cubecam usage
+## trackball camera
+works already, kinda get process from main _process, and so inputs, have also q and e barell roll
+it have quanternion, and i will probably need it too
+
+
+
+### functions i remember working at first, mostly in different project
+## look_at basis, with the same horizontal direction? no weird rotation for 180 degrees, one of nicer functions
+last seen in planets 2d sprites, mimicking 3d planets
+as we care how we se thing, not how that thing sees itself
+## whip out cube cam, make texture file for skybox
+the same project have that function, we must scavange it from my sea of data
+## shader functions, for skybox, apply it, use it, load a shader into it
+it worked nice, the shader have a bug, as it is calculating how far we need to travel to traverse back
+it was not enlarging in perfect way, probably easy fix, but i know i can edit skybox as i wish
+## the mover for camera, and placement for nodes, i made it once, and didnt really store it in nice way
+it is somewhere, in planets project
+
+
+
+### stuff that need to happen soon, so i can touch my keyboard again
+## real system checks, first some easy
+check folders and files
+if we have them, we read some settings file and config file
+from that we compare data with precodded data from banks of data, we have many already
+we create basic and empty dictionaries, get them metadatas, of root state
+we load data into
+make the storage based on my hallucination, based on akashic records, as spirit are whispering
+based on kinda if we repeat, it is fast, if it is new, we kinda check it for you
+damn, hope it can change, and we can creat some brakes and handles, not for ai, not for machine
+but for ai and for machine, so it wont break, from unknow reasons
+we need file parser
+we need functions reader
+cathegorize all functions in project, in specific txt files, in specific folder, with metadatas, we will be able to make nice lists
+with that and my tag system, that works, and i can see, each tag special effects
+nice 3d stuff
+
+
+### well my next personality just switched
+## now lets continue from different perspective, my perspective
+i write and write, and i think we can start that, by just what i said

@@ -1,0 +1,19 @@
+func some_data_that_was_left_there():
+	print()
+# Helper function to check if creation is possible
+#func is_creation_possible() -> bool:
+	## Add your conditions here
+	#var conditions = {
+		#"mutex_available": not array_mutex_process.is_locked(),
+		#"resources_ready": check_resources_available(),
+		#"system_ready": check_system_state(),
+		## Add more conditions as needed
+	#}
+	#
+	## Log all conditions
+	#for condition in conditions:
+		#if not conditions[condition]:
+			#print("Creation blocked by condition: ", condition)
+			#return false
+	#
+	#return true

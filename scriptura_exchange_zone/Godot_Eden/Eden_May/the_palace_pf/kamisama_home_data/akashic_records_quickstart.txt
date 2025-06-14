@@ -1,0 +1,162 @@
+# Akashic Records Quickstart Guide
+
+Once you've integrated the Akashic Records system into your Eden Space Game, this guide will help you start using its key features.
+
+## Creating Your First Words
+
+1. **Open the Akashic Records UI**:
+   - Launch the game
+   - Go to the "Things" menu
+   - Select "Akashic Records"
+
+2. **Create Basic Elements**:
+   - Click the "Add Word" button
+   - Enter information for your first element:
+     - ID: "fire"
+     - Category: "element"
+   - Click "Confirm"
+
+3. **Add Properties**:
+   - Select "fire" in the word list
+   - Click "Edit Word"
+   - Add properties like:
+     - "heat": 0.8
+     - "energy": 0.9
+     - "light": 0.7
+   - Click "Confirm"
+
+4. **Create More Elements**:
+   - Repeat the process for "water", "earth", and "air" with relevant properties
+   - For example, water could have:
+     - "flow": 0.8
+     - "transparency": 0.7
+     - "temperature": 0.4
+
+## Setting Up Interactions
+
+1. **Create Interaction Rules**:
+   - Select an element (e.g., "fire")
+   - Click "Add Interaction"
+   - Enter:
+     - Target Word: "water"
+     - Result Word: "steam"
+     - Condition: "heat > 0.7"
+   - Click "Confirm"
+
+2. **Create the Result Word**:
+   - Add a new word "steam" with category "derived"
+   - Add appropriate properties:
+     - "density": 0.2
+     - "temperature": 0.9
+     - "visibility": 0.5
+
+3. **Test the Interaction**:
+   - Click "Test Interaction"
+   - Enter:
+     - Word 1: "fire"
+     - Word 2: "water"
+     - Context: "heat=0.8"
+   - Click "Confirm" to see the result
+
+## Exploring Visualization
+
+1. **View the Visualization**:
+   - The right panel shows the 3D visualization of words
+   - Words are represented as nodes with connections
+
+2. **Try Different Layouts**:
+   - Use the layout dropdown to switch between:
+     - Radial: Words arranged in a circle
+     - Spiral: Words arranged in a spiral pattern
+     - Cluster: Words grouped by category or relationship
+
+3. **Interact with Words**:
+   - Click on nodes to see details in the middle panel
+   - Observe how words with relationships are connected
+
+## Setting Up Evolution
+
+1. **Access Evolution Controls**:
+   - Go to "Things" > "Evolution System"
+   - You'll see controls for the evolution parameters
+
+2. **Configure Parameters**:
+   - Evolution Rate: Controls how quickly properties drift (try 0.05)
+   - Evolution Interval: Seconds between cycles (try 60)
+   - Variant Threshold: Usage count needed for variants (try 10)
+   - Variant Probability: Chance of creating variants (try 0.3)
+
+3. **Trigger Evolution**:
+   - You can either:
+     - Wait for automatic evolution after the interval
+     - Click "Trigger Evolution Cycle" for immediate effect
+
+4. **Observe Changes**:
+   - After evolution, you'll see:
+     - Properties gradually changing
+     - New variants appearing for frequently used words
+     - Updated visualization showing relationships
+
+## Testing with Real Usage
+
+1. **Record Word Usage**:
+   - Use words in interactions to increase their usage count
+   - Words with higher usage evolve faster and generate variants
+
+2. **Check Evolution Statistics**:
+   - Watch the Statistics panel for:
+     - Evolution cycles count
+     - Number of variants generated
+     - Word count in the dictionary
+
+3. **Observe Long-term Behavior**:
+   - Over multiple evolution cycles, you'll see:
+     - Property drift creating uniqueness
+     - New relationships forming
+     - Variant lineages developing
+
+## Tips for Best Results
+
+1. **Start Small**:
+   - Begin with 4-5 core elements
+   - Add a few key properties to each
+   - Create basic interactions between them
+
+2. **Use Meaningful Properties**:
+   - Keep properties in the 0.0-1.0 range
+   - Use consistent property names across related words
+   - Consider what properties make sense for each category
+
+3. **Set Reasonable Conditions**:
+   - Make conditions achievable but not trivial
+   - Use a combination of property checks
+   - Consider context in your condition design
+
+4. **Balance Evolution**:
+   - Too fast: chaotic, unpredictable changes
+   - Too slow: nothing interesting happens
+   - Aim for noticeable but gradual evolution
+
+5. **Regular Saving**:
+   - Use the "Save All" button to persist your dictionary
+   - Save after creating important words or interactions
+
+## Next Steps
+
+After getting familiar with the basic system:
+
+1. **Connect to Elements**:
+   - Link dictionary words to physical game elements
+   - Have interactions in-game trigger dictionary interactions
+
+2. **Expand Categories**:
+   - Add "concept", "location", "entity" categories
+   - Create hierarchies with parent-child relationships
+
+3. **Complex Interactions**:
+   - Create multi-step interaction chains
+   - Design emergent properties that appear under special conditions
+
+4. **Custom Visualization**:
+   - Adjust visualization parameters for your specific content
+   - Create specialized views for different word categories

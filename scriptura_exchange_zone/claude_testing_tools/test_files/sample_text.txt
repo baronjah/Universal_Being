@@ -1,0 +1,11 @@
+This is a sample text file for testing Claude's file operations.
+Line 2: Testing multiline content
+Line 3: Special characters !@#$%^&*()
+Line 4: Numbers 123456789
+Line 5: Unicode: ñ ü ç ß α β γ
+Line 6: Empty line follows
+
+Line 8: More content after empty line
+Line 9: Testing for Read tool functionality
+Line 10: End of sample file
+Line 11: Added via Edit tool test

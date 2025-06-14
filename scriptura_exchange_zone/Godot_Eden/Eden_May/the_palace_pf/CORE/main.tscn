@@ -1,0 +1,460 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://Eden_May/eden_core.gd" type="Script" id=1]
+[ext_resource path="res://Eden_May/game_project.gd" type="Script" id=2]
+[ext_resource path="res://Eden_May/word_manager.gd" type="Script" id=3]
+[ext_resource path="res://Eden_May/line_processor.gd" type="Script" id=4]
+
+[node name="EdenMayGame" type="Node"]
+
+[node name="EdenCore" type="Node" parent="."]
+script = ExtResource( 1 )
+
+[node name="GameProject" type="Node" parent="."]
+script = ExtResource( 2 )
+
+[node name="WordManager" type="Node" parent="."]
+script = ExtResource( 3 )
+
+[node name="LineProcessor" type="Node" parent="."]
+script = ExtResource( 4 )
+
+[node name="UI" type="Control" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Background" type="ColorRect" parent="UI"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0.0588235, 0.0588235, 0.0784314, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MainContainer" type="VBoxContainer" parent="UI"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 20.0
+margin_top = 20.0
+margin_right = -20.0
+margin_bottom = -20.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HeaderPanel" type="Panel" parent="UI/MainContainer"]
+margin_right = 984.0
+margin_bottom = 50.0
+rect_min_size = Vector2( 0, 50 )
+
+[node name="HeaderLabel" type="Label" parent="UI/MainContainer/HeaderPanel"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+text = "Eden May - Turn 8: Lines/Temporal Cleansing"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TurnInfo" type="Label" parent="UI/MainContainer/HeaderPanel"]
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 10.0
+margin_top = -14.0
+margin_bottom = 0.0
+text = "Current Turn: 8 - Lines | Progress: 80%"
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HSeparator" type="HSeparator" parent="UI/MainContainer"]
+margin_top = 54.0
+margin_right = 984.0
+margin_bottom = 58.0
+
+[node name="ContentContainer" type="HBoxContainer" parent="UI/MainContainer"]
+margin_top = 62.0
+margin_right = 984.0
+margin_bottom = 496.0
+size_flags_vertical = 3
+
+[node name="MainPanel" type="Panel" parent="UI/MainContainer/ContentContainer"]
+margin_right = 700.0
+margin_bottom = 434.0
+rect_min_size = Vector2( 700, 0 )
+size_flags_vertical = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/MainContainer/ContentContainer/MainPanel"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 10.0
+margin_top = 10.0
+margin_right = -10.0
+margin_bottom = -10.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="OutputLabel" type="Label" parent="UI/MainContainer/ContentContainer/MainPanel/VBoxContainer"]
+margin_right = 680.0
+margin_bottom = 14.0
+text = "Output:"
+
+[node name="OutputScroll" type="ScrollContainer" parent="UI/MainContainer/ContentContainer/MainPanel/VBoxContainer"]
+margin_top = 18.0
+margin_right = 680.0
+margin_bottom = 368.0
+size_flags_vertical = 3
+follow_focus = true
+scroll_horizontal_enabled = false
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="OutputText" type="RichTextLabel" parent="UI/MainContainer/ContentContainer/MainPanel/VBoxContainer/OutputScroll"]
+margin_right = 680.0
+margin_bottom = 350.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+bbcode_enabled = true
+bbcode_text = "[b]Eden May Game System[/b]
+Current Turn: 8 - Lines/Temporal Cleansing
+
+[color=#88ccff]System initialized[/color]
+[color=#88ccff]Word Manager loaded[/color]
+[color=#88ccff]Line Processor active - Current pattern: parallel[/color]
+
+Type 'help' for a list of commands.
+"
+text = "Eden May Game System
+Current Turn: 8 - Lines/Temporal Cleansing
+
+System initialized
+Word Manager loaded
+Line Processor active - Current pattern: parallel
+
+Type 'help' for a list of commands.
+"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HSeparator" type="HSeparator" parent="UI/MainContainer/ContentContainer/MainPanel/VBoxContainer"]
+margin_top = 372.0
+margin_right = 680.0
+margin_bottom = 376.0
+
+[node name="InputContainer" type="HBoxContainer" parent="UI/MainContainer/ContentContainer/MainPanel/VBoxContainer"]
+margin_top = 380.0
+margin_right = 680.0
+margin_bottom = 414.0
+
+[node name="InputLabel" type="Label" parent="UI/MainContainer/ContentContainer/MainPanel/VBoxContainer/InputContainer"]
+margin_top = 10.0
+margin_right = 62.0
+margin_bottom = 24.0
+text = "Command:"
+
+[node name="InputField" type="LineEdit" parent="UI/MainContainer/ContentContainer/MainPanel/VBoxContainer/InputContainer"]
+margin_left = 66.0
+margin_right = 616.0
+margin_bottom = 34.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+caret_blink = true
+caret_blink_speed = 0.5
+
+[node name="SendButton" type="Button" parent="UI/MainContainer/ContentContainer/MainPanel/VBoxContainer/InputContainer"]
+margin_left = 620.0
+margin_right = 680.0
+margin_bottom = 34.0
+rect_min_size = Vector2( 60, 0 )
+text = "Send"
+
+[node name="SidePanel" type="Panel" parent="UI/MainContainer/ContentContainer"]
+margin_left = 704.0
+margin_right = 984.0
+margin_bottom = 434.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/MainContainer/ContentContainer/SidePanel"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 10.0
+margin_top = 10.0
+margin_right = -10.0
+margin_bottom = -10.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="StateLabel" type="Label" parent="UI/MainContainer/ContentContainer/SidePanel/VBoxContainer"]
+margin_right = 260.0
+margin_bottom = 14.0
+text = "Game State"
+
+[node name="HSeparator" type="HSeparator" parent="UI/MainContainer/ContentContainer/SidePanel/VBoxContainer"]
+margin_top = 18.0
+margin_right = 260.0
+margin_bottom = 22.0
+
+[node name="TabContainer" type="TabContainer" parent="UI/MainContainer/ContentContainer/SidePanel/VBoxContainer"]
+margin_top = 26.0
+margin_right = 260.0
+margin_bottom = 414.0
+size_flags_vertical = 3
+tab_align = 0
+
+[node name="Status" type="Tabs" parent="UI/MainContainer/ContentContainer/SidePanel/VBoxContainer/TabContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 32.0
+margin_right = -4.0
+margin_bottom = -4.0
+
+[node name="StatusScroll" type="ScrollContainer" parent="UI/MainContainer/ContentContainer/SidePanel/VBoxContainer/TabContainer/Status"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+scroll_horizontal_enabled = false
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="StatusText" type="RichTextLabel" parent="UI/MainContainer/ContentContainer/SidePanel/VBoxContainer/TabContainer/Status/StatusScroll"]
+margin_right = 252.0
+margin_bottom = 352.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+bbcode_enabled = true
+bbcode_text = "[b]Turn:[/b] 8 - Lines
+[b]Progress:[/b] 80%
+[b]Next Turn:[/b] 9 - Game Creation
+
+[b]Active Pattern:[/b] Parallel
+[b]Automation:[/b] Enabled (80%)
+
+[b]Player:[/b] JSH
+[b]Consciousness:[/b] Level 4
+"
+text = "Turn: 8 - Lines
+Progress: 80%
+Next Turn: 9 - Game Creation
+
+Active Pattern: Parallel
+Automation: Enabled (80%)
+
+Player: JSH
+Consciousness: Level 4
+"
+
+[node name="Words" type="Tabs" parent="UI/MainContainer/ContentContainer/SidePanel/VBoxContainer/TabContainer"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 32.0
+margin_right = -4.0
+margin_bottom = -4.0
+
+[node name="WordsScroll" type="ScrollContainer" parent="UI/MainContainer/ContentContainer/SidePanel/VBoxContainer/TabContainer/Words"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+scroll_horizontal_enabled = false
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="WordsList" type="RichTextLabel" parent="UI/MainContainer/ContentContainer/SidePanel/VBoxContainer/TabContainer/Words/WordsScroll"]
+margin_right = 252.0
+margin_bottom = 352.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+bbcode_enabled = true
+bbcode_text = "[b]Active Spells:[/b]
+[color=#aa88ff]dipata[/color] - Technology (7)
+[color=#aa88ff]pagaai[/color] - AI Autonomy (8)
+
+[b]Discovered Words:[/b]
+game
+lines
+turn
+create
+"
+text = "Active Spells:
+dipata - Technology (7)
+pagaai - AI Autonomy (8)
+
+Discovered Words:
+game
+lines
+turn
+create
+"
+
+[node name="Patterns" type="Tabs" parent="UI/MainContainer/ContentContainer/SidePanel/VBoxContainer/TabContainer"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 32.0
+margin_right = -4.0
+margin_bottom = -4.0
+
+[node name="PatternsScroll" type="ScrollContainer" parent="UI/MainContainer/ContentContainer/SidePanel/VBoxContainer/TabContainer/Patterns"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+scroll_horizontal_enabled = false
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PatternsList" type="RichTextLabel" parent="UI/MainContainer/ContentContainer/SidePanel/VBoxContainer/TabContainer/Patterns/PatternsScroll"]
+margin_right = 252.0
+margin_bottom = 352.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+bbcode_enabled = true
+bbcode_text = "[b]Line Patterns:[/b]
+
+[color=#ffaa44]Parallel[/color] (Power: 8)
+- Horizontal alignment
+- Wide temporal reach
+
+[color=#44aaff]Intersecting[/color] (Power: 4)
+- Cross alignment
+- Focused temporal reach
+
+[color=#ff44aa]Spiral[/color] (Power: 7)
+- Circular alignment
+- Expanding temporal reach
+
+[color=#44ffaa]Fractal[/color] (Power: 9)
+- Recursive alignment
+- Infinite temporal reach
+"
+text = "Line Patterns:
+
+Parallel (Power: 8)
+- Horizontal alignment
+- Wide temporal reach
+
+Intersecting (Power: 4)
+- Cross alignment
+- Focused temporal reach
+
+Spiral (Power: 7)
+- Circular alignment
+- Expanding temporal reach
+
+Fractal (Power: 9)
+- Recursive alignment
+- Infinite temporal reach
+"
+
+[node name="Help" type="Tabs" parent="UI/MainContainer/ContentContainer/SidePanel/VBoxContainer/TabContainer"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 32.0
+margin_right = -4.0
+margin_bottom = -4.0
+
+[node name="HelpScroll" type="ScrollContainer" parent="UI/MainContainer/ContentContainer/SidePanel/VBoxContainer/TabContainer/Help"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+scroll_horizontal_enabled = false
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HelpText" type="RichTextLabel" parent="UI/MainContainer/ContentContainer/SidePanel/VBoxContainer/TabContainer/Help/HelpScroll"]
+margin_right = 252.0
+margin_bottom = 352.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+bbcode_enabled = true
+bbcode_text = "[b]Commands:[/b]
+help - Show this help
+next turn - Advance to next turn
+automation on/off - Control automation
+create game - Create a new game
+
+[b]Spell Words:[/b]
+dipata - Technology advancement
+pagaai - AI autonomy
+zenime - Time pause
+perfefic - Fantasy creation
+shune - Silence restraint
+inca - Spell combination
+exti - Healing
+vaeli - Cleaning
+lemi - Perspective
+pelo - Integration
+
+[b]Special Commands:[/b]
+tldr <text> - Investigate text
+
+You can type any text to process it through the current line pattern.
+"
+text = "Commands:
+help - Show this help
+next turn - Advance to next turn
+automation on/off - Control automation
+create game - Create a new game
+
+Spell Words:
+dipata - Technology advancement
+pagaai - AI autonomy
+zenime - Time pause
+perfefic - Fantasy creation
+shune - Silence restraint
+inca - Spell combination
+exti - Healing
+vaeli - Cleaning
+lemi - Perspective
+pelo - Integration
+
+Special Commands:
+tldr <text> - Investigate text
+
+You can type any text to process it through the current line pattern.
+"
+
+[node name="StatusBar" type="Panel" parent="UI/MainContainer"]
+margin_top = 500.0
+margin_right = 984.0
+margin_bottom = 530.0
+rect_min_size = Vector2( 0, 30 )
+
+[node name="StatusLabel" type="Label" parent="UI/MainContainer/StatusBar"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 10.0
+margin_right = -10.0
+text = "Ready"
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="AutomationLabel" type="Label" parent="UI/MainContainer/StatusBar"]
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -200.0
+margin_right = -10.0
+text = "Automation: Enabled (80%)"
+align = 2
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}

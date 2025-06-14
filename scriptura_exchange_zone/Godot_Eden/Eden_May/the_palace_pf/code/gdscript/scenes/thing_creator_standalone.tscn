@@ -1,0 +1,13 @@
+[gd_scene load_steps=2 format=3 uid="uid://bqk5fcv1mh2w1"]
+
+[ext_resource type="Script" path="res://code/gdscript/scripts/ui/thing_creator_standalone.gd" id="1_hcn6a"]
+
+[node name="ThingCreatorStandalone" type="Node"]
+script = ExtResource("1_hcn6a")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="ToggleButton" type="Button" parent="CanvasLayer"]
+offset_right = 194.0
+offset_bottom = 31.0
+text = "Toggle Thing Creator"

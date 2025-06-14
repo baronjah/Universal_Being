@@ -1,0 +1,11 @@
+# so lets add for todays todos, what we wanna do, as today is 24th of may, 2025, the time is 13:15
+# so we can start thinking of next turns, maybe change of the name of the ragdoll talking game, into something else? 
+# we have nice console there, 
+# the scene system is kinda working, 
+# the next most important part would be to make them astral beings in game, being them points of light, that travel first where something happens in world
+
+# so the scene animations? per thing, per entire scene too? so the astral beings will move them around too
+# that was like line 6th, maybe more like 5th, we just talking about points, there will be a need to make sure we know which files are most important as we go in program from line to line, we just must know the most important to know from which file to which file and how many times we must read something to know what could happen, and what we need to make even better
+# the animation, scene changes, astral being moving around, moving things, can be a part of steps and turn system for first launch and testing the game, loading like tutorial and debug room
+# we also talked about times of stuff moving, the minimums, maximums, the reason for us to see, is to be at the same spectrum of space and time, as it can be behind us, too fast to see, to slow to see move, etc, we must know the times, spaces, directions, the lod is a way to help us with that, as that is like 100% checker where player is and where he is looking, we need some kind of 9 cubes forming box, of debug, so we know where player is looking, and know which chunks, in which directions are most important currently? something like that, we can start with flat worlds of heightmaps, and water, later we can think of better ways, lets focus on console and world we will see move around for us
+# we also need that universal? basic? entity? thing? i think we shall take a look at i think it was 12 turns project?

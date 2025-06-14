@@ -1,0 +1,14 @@
+func check_system_health():
+	# Check thread pool state
+	if int_of_stuff_started > int_of_stuff_finished + 10:
+		log_error_state("thread_pool_backlog", {
+			"started": int_of_stuff_started,
+			"finished": int_of_stuff_finished
+		})
+	
+	# Check container states
+	mutex_for_container_state.lock()
+	for container in current_containers_state:
+		if current_containers_state[container]["status"] == -1:
+			validate_container_state(container)
+	mutex_for_container_state.unlock()

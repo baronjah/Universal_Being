@@ -1,0 +1,29 @@
+func reanimate_all_handles_and_breaks():
+	print(" if this helps, then this helps ")
+	#print()
+	
+	var current_state_mutexes : Array = []
+	var negative_counter : int = -1
+	var positive_counter : int = -1
+	
+	print("🔓 Checking & Unlocking stuck mutexes...")
+
+	var mutex_list = [
+		active_r_s_mut, cached_r_s_mutex, tree_mutex, cached_tree_mutex, 
+		mutex_nodes_to_be_added, mutex_data_to_send, movmentes_mutex, 
+		mutex_for_unloading_nodes, mutex_function_call, array_mutex_process, 
+		menace_mutex, array_counting_mutex, mutex_for_container_state, 
+		mutex_for_trickery, unload_queue_mutex, load_queue_mutex, 
+		mutex_containers, mutex_singular_l_u
+	]
+
+	for mutex in mutex_list:
+		if mutex.try_lock():
+			positive_counter +=1
+		else:
+			negative_counter +=1
+
+	if negative_counter >= 0:
+		return false
+	else:
+		return true

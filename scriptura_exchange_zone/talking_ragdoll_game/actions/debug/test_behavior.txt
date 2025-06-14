@@ -1,0 +1,34 @@
+# DEBUG TEST BEHAVIOR SCRIPT
+# For testing the Logic Connector system with Universal Beings
+# Format: trigger:action
+
+# Basic functionality tests
+test_transform: transform_to_orb
+test_movement: jump
+test_sound: play_sound_beep
+test_animation: dance
+test_glow: glow
+
+# User interaction tests
+on_user_click: transform_to_cube
+on_user_right_click: move_up
+on_user_double_click: bounce
+
+# AI interaction tests
+ai_test_hello: play_sound_chime
+ai_test_status: print_status
+ai_test_transform: transform_to_bird
+
+# Debug information
+show_status: print_status
+show_position: print_status
+debug_info: glow
+
+# Communication tests
+test_ai_help: ask_ai_for_help
+test_gamma_share: share_with_gamma
+
+# Quick action tests
+quick_jump: jump
+quick_spin: spin
+quick_glow: glow

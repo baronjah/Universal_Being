@@ -1,0 +1,327 @@
+# Eden Space Game: Evolution System Integration Guide
+
+## Overview
+
+This guide explains how to integrate the Evolution Manager and Frequency Visualizer systems into the main Eden Space Game project. These systems extend the existing Akashic Records functionality by adding emergent behavior through property evolution and advanced 3D visualization.
+
+## Components
+
+The Evolution System consists of three main components:
+
+1. **Evolution Manager** (`evolution_manager.gd`): Handles automatic evolution of dictionary entries over time
+2. **Frequency Visualizer** (`frequency_visualizer.gd`): Creates 3D visualization of dictionary entries
+3. **Frequency Visualizer Node** (`frequency_visualizer_node.gd`): Individual 3D nodes for each word
+
+## Integration Steps
+
+### Step 1: Add Files to Project
+
+Add the following files to your project structure:
+
+```
+/code/gdscript/scripts/akashic_records/
+  ├── evolution_manager.gd
+  ├── frequency_visualizer.gd
+  └── frequency_visualizer_node.gd
+```
+
+### Step 2: Integrate with Akashic Records
+
+Update your main scene to include the Evolution Manager and connect it to your existing Akashic Records:
+
+```gdscript
+# In your main scene's _ready() function
+func _ready():
+    # Get reference to your existing AkashicRecordsManager
+    var akashic_records = $AkashicRecordsManager
+    
+    # Create and add the Evolution Manager
+    var evolution_manager = preload("res://code/gdscript/scripts/akashic_records/evolution_manager.gd").new()
+    add_child(evolution_manager)
+    
+    # Connect to Akashic Records
+    evolution_manager.akashic_records = akashic_records
+    
+    # Configure evolution parameters
+    evolution_manager.evolution_interval = 60.0  # seconds
+    evolution_manager.evolution_rate = 0.05
+    evolution_manager.variant_threshold = 10
+    evolution_manager.variant_probability = 0.3
+    evolution_manager.auto_evolution = true
+```
+
+### Step 3: Add Visualization to a 3D Scene
+
+Add the Frequency Visualizer to a 3D scene where you want to display the visualization:
+
+```gdscript
+# In your visualization scene's _ready() function
+func _ready():
+    # Get references
+    var akashic_records = get_node("/root/AkashicRecordsManager")  # Adjust path as needed
+    var evolution_manager = get_node("/root/EvolutionManager")  # Adjust path as needed
+    
+    # Create and add the Frequency Visualizer
+    var visualizer = preload("res://code/gdscript/scripts/akashic_records/frequency_visualizer.gd").new()
+    add_child(visualizer)
+    
+    # Connect to Akashic Records and Evolution Manager
+    visualizer.akashic_records = akashic_records
+    visualizer.evolution_manager = evolution_manager
+    
+    # Configure visualization parameters
+    visualizer.auto_update = true
+    visualizer.update_interval = 2.0
+    visualizer.max_words = 100
+    visualizer.layout_type = "radial"  # "radial", "spiral", or "cluster"
+    
+    # Connect signals for interactivity
+    visualizer.word_selected.connect(_on_word_selected)
+```
+
+### Step 4: Adapt WordEntry Class
+
+Ensure your existing WordEntry class has the necessary properties for evolution:
+
+1. Add a `usage_count` property if not already present
+2. Add a `variants` array to track word variants
+3. Add a `parent_id` property to track parent-child relationships
+4. Ensure properties are serializable
+
+Example modifications to your existing WordEntry class:
+
+```gdscript
+# In word_entry.gd
+
+# Add these properties if not already present
+var usage_count: int = 0
+var variants: Array = []
+var parent_id: int = -1  # -1 means no parent
+
+# Update increment_usage method
+func increment_usage():
+    usage_count += 1
+    # Emit signal if you have one
+    usage_changed.emit(usage_count)
+```
+
+### Step 5: Adapt AkashicRecordsManager
+
+Modify your AkashicRecordsManager to support variants:
+
+```gdscript
+# In akashic_records_manager.gd
+
+# Add method to create variants
+func add_variant(parent_word, variant_text, properties={}):
+    # Create a new word
+    var variant = create_word(variant_text, properties)
+    
+    # Set parent-child relationship
+    variant.parent_id = parent_word.id
+    parent_word.variants.append(variant)
+    
+    return variant
+```
+
+### Step 6: VR Integration (Optional)
+
+For VR integration with Oculus Quest 2, connect the Frequency Visualizer to your VR controller system:
+
+```gdscript
+# In your VR manager or controller script
+
+# Reference to the visualizer
+var visualizer
+
+func _ready():
+    # Get reference to visualizer
+    visualizer = get_node("path/to/FrequencyVisualizer")
+    
+    # Connect controller events
+    connect_controller_events()
+
+func connect_controller_events():
+    # Example for XR controller
+    var controller_right = get_node("RightController")
+    controller_right.button_pressed.connect(_on_controller_button_pressed)
+
+func _on_controller_button_pressed(button):
+    # Example: Use trigger to select words
+    if button == "trigger":
+        # Use raycast to find word nodes
+        var result = controller_raycast()
+        if result and result.collider.get_parent() is FrequencyVisualizerNode:
+            var word_node = result.collider.get_parent()
+            word_node.clicked.emit(word_node)
+```
+
+## Usage Examples
+
+### Creating a Standalone Test Scene
+
+To test the systems together, create a scene similar to the `test_evolution_visualizer.tscn`:
+
+1. Create a new 3D scene
+2. Add the Evolution Manager and Frequency Visualizer
+3. Add UI controls for adjusting parameters
+4. Add a test script that populates the system with sample data
+
+### Integrating with Element System
+
+To connect the Evolution System with the Element System:
+
+```gdscript
+# In your integration script
+
+func connect_evolution_to_elements():
+    var evolution_manager = get_node("/root/EvolutionManager")
+    var element_system = get_node("/root/ElementSystem")
+    
+    # Example: When an element is discovered, create a word for it
+    element_system.element_discovered.connect(func(element):
+        var properties = {
+            "energy_level": element.energy,
+            "vibrational_state": element.vibration,
+            "stability_factor": element.stability
+        }
+        
+        # Create word in Akashic Records
+        var word = akashic_records.create_word(element.name, properties)
+        
+        # Associate element with word (store reference)
+        element.associated_word_id = word.id
+    )
+```
+
+## Performance Considerations
+
+1. **Limit Active Words**: Use `max_words` parameter to limit visualization to the most relevant words
+
+2. **Adjust Update Intervals**: Increase `update_interval` for both the visualizer and evolution manager in complex scenes
+
+3. **LOD System**: For very large dictionaries, implement a level-of-detail system:
+
+```gdscript
+# Example LOD adjustment in frequency_visualizer.gd
+
+func _process(_delta):
+    # Get camera distance
+    var camera = get_viewport().get_camera()
+    if not camera:
+        return
+        
+    var distance = camera.global_position.distance_to(global_position)
+    
+    # Adjust LOD based on distance
+    if distance < 10:
+        # High detail - show all nodes
+        max_words = 100
+    elif distance < 20:
+        # Medium detail - fewer nodes
+        max_words = 50
+    else:
+        # Low detail - minimal nodes
+        max_words = 20
+        
+    # Update if LOD changed
+    if max_words != previous_max_words:
+        previous_max_words = max_words
+        update_visualization()
+```
+
+## Saving and Loading Evolution State
+
+Ensure evolution state persists across sessions:
+
+```gdscript
+# In akashic_records_manager.gd
+
+func save_dictionary_to_file(file_path):
+    # Create save data dictionary
+    var save_data = {
+        "words": [],
+        "evolution": {
+            "cycles": evolution_manager.evolution_cycles,
+            "variants_generated": evolution_manager.variants_generated,
+            "last_evolution_time": evolution_manager.last_evolution_time
+        }
+    }
+    
+    # Save each word with its evolution data
+    for word in words:
+        var word_data = {
+            "id": word.id,
+            "text": word.text,
+            "properties": word.properties,
+            "usage_count": word.usage_count,
+            "parent_id": word.parent_id,
+            "variant_ids": []
+        }
+        
+        # Save variant IDs
+        for variant in word.variants:
+            word_data.variant_ids.append(variant.id)
+            
+        save_data.words.append(word_data)
+    
+    # Save to file
+    var file = FileAccess.open(file_path, FileAccess.WRITE)
+    file.store_string(JSON.stringify(save_data))
+    file.close()
+
+func load_dictionary_from_file(file_path):
+    # Load file
+    var file = FileAccess.open(file_path, FileAccess.READ)
+    var json_string = file.get_as_text()
+    file.close()
+    
+    var parse_result = JSON.parse_string(json_string)
+    if parse_result:
+        # Clear existing data
+        words.clear()
+        
+        # Load words
+        var word_data_by_id = {}
+        for word_data in parse_result.words:
+            var word = create_word(word_data.text, word_data.properties)
+            word.id = word_data.id
+            word.usage_count = word_data.usage_count
+            word.parent_id = word_data.parent_id
+            
+            word_data_by_id[word.id] = word_data
+            
+        # Restore variant relationships
+        for word in words:
+            var word_data = word_data_by_id[word.id]
+            for variant_id in word_data.variant_ids:
+                var variant = find_word_by_id(variant_id)
+                if variant:
+                    word.variants.append(variant)
+        
+        # Restore evolution state
+        if "evolution" in parse_result:
+            evolution_manager.evolution_cycles = parse_result.evolution.cycles
+            evolution_manager.variants_generated = parse_result.evolution.variants_generated
+            evolution_manager.last_evolution_time = parse_result.evolution.last_evolution_time
+```
+
+## Troubleshooting
+
+### Common Issues and Solutions
+
+1. **Words not evolving**: Check that `auto_evolution` is enabled and `evolution_interval` is not too long
+
+2. **Visualization not updating**: Verify that `auto_update` is enabled and connections to Akashic Records are valid
+
+3. **Performance problems**: Reduce `max_words`, increase update intervals, or simplify visualization layout
+
+4. **Word nodes overlapping**: Adjust layout parameters like `radial_distance`, `spiral_distance`, etc.
+
+5. **Missing connections**: Check that `show_connections` is enabled and `connection_threshold` is not too high
+
+## Conclusion
+
+The Evolution System adds dynamic behavior to your Akashic Records dictionary, allowing words to evolve properties over time and generate variants. The Frequency Visualizer provides an interactive 3D representation of this evolving dictionary.
+
+By following this integration guide, you can connect these systems to your existing Eden Space Game project, enhancing the player's experience of exploring and interacting with the dynamic dictionary in VR.

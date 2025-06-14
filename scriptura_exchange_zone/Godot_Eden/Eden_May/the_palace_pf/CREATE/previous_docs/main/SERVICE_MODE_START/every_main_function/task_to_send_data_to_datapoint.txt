@@ -1,0 +1,16 @@
+func task_to_send_data_to_datapoint(data_for_sending):
+	#await_for_signal()
+	var current_datatype = data_for_sending[0][0]
+	var first_line_t = data_for_sending[0][1]
+	var parsed_lines_t = data_for_sending[0][2]
+	var data_point_node_t = data_for_sending[0][3]
+	
+	match current_datatype:
+		"instructions_analiser":
+			var container_node_t = data_for_sending[0][4]
+			instructions_analiser(first_line_t, parsed_lines_t[0], parsed_lines_t[1], data_point_node_t, container_node_t)
+		"scene_frame_upload":
+			var container_node_t = data_for_sending[0][4]
+			scene_frames_upload_to_datapoint(first_line_t, parsed_lines_t, data_point_node_t, container_node_t)
+		"interactions_upload":
+			interactions_upload_to_datapoint(first_line_t, parsed_lines_t, data_point_node_t)

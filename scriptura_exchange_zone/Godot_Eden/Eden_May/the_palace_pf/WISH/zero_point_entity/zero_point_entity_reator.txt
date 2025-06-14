@@ -1,0 +1,198 @@
+# Zero Point Entity Creator - Complete Godot Setup Guide
+
+This guide will walk you through setting up your dream game in Godot 4.4 step by step, with careful attention to avoid any API errors.
+
+## Step 1: Create a New Godot Project
+
+1. Open Godot 4.4
+2. Click "New Project"
+3. Enter project name: "ZeroPointEntityCreator"
+4. Choose a project location
+5. Set Renderer to "Forward+"
+6. Click "Create & Edit"
+
+## Step 2: Set Up the Project Structure
+
+Create the following folders in your project via the FileSystem tab:
+
+```
+- scripts/
+  - core/
+  - systems/
+  - ui/
+- scenes/
+  - entities/
+  - player/
+  - ui/
+  - worlds/
+- resources/
+  - materials/
+  - shaders/
+- assets/
+  - textures/
+  - fonts/
+  - sounds/
+```
+
+## Step 3: Set Up Input Map
+
+1. Go to Project → Project Settings → Input Map
+2. Add the following actions:
+   - `move_forward` (W key)
+   - `move_backward` (S key)
+   - `move_left` (A key)
+   - `move_right` (D key)
+   - `jump` (Space key)
+   - `run` (Shift key)
+   - `interact` (E key)
+   - `fly_toggle` (F key)
+   - `crouch` (Control key)
+   - `console_toggle` (Tab key)
+
+## Step 4: Create Core Scripts
+
+### Create Universal Entity Script
+
+1. Right-click on `scripts/core/` in the FileSystem panel
+2. Select "New Script"
+3. Name it `universal_entity.gd`
+4. Copy your code from `universal_entity.txt`
+
+### Create Player Controller Script
+
+1. Create a new script at `scripts/core/player_controller.gd`
+2. Copy your code from `player_controller.txt`
+
+### Create Game Controller Script
+
+1. Create a new script at `scripts/core/game_controller.gd`
+2. Copy your code from `maing_game_controller.txt` (correcting the typo)
+
+## Step 5: Create System Scripts
+
+### Create Word Manifestor Script
+
+1. Create a new script at `scripts/systems/word_manifestor.gd`
+2. Copy your code from `word_manifestor.txt`
+
+### Create Dynamic Map System Script
+
+1. Create a new script at `scripts/systems/dynamic_map_system.gd`
+2. Copy your code from `dynamic_map_system.txt`
+
+### Create Console UI Script
+
+1. Create a new script at `scripts/ui/creation_console.gd`
+2. Extract the CreationConsole class from the game controller script
+
+## Step 6: Create Basic Scenes
+
+### Create Universal Entity Scene
+
+1. Click on the "+" icon in the Scene panel
+2. Add a Node3D as the root node
+3. Rename it to "UniversalEntity"
+4. Attach the universal_entity.gd script to it
+5. Add the following child nodes:
+   - Node3D (rename to "VisualContainer")
+   - Node3D (rename to "EffectContainer")
+   - CollisionShape3D with a SphereShape3D (radius 0.5)
+6. Save scene as `scenes/entities/universal_entity.tscn`
+
+### Create Player Scene
+
+1. Create a new scene with CharacterBody3D as the root
+2. Rename it to "Player"
+3. Attach the player_controller.gd script
+4. Add these child nodes:
+   - CollisionShape3D with a CapsuleShape3D (height 1.8, radius 0.5)
+   - Node3D (name "CameraMount", positioned at y=1.7)
+     - Camera3D as child of CameraMount
+     - RayCast3D (name "InteractionRay", positioned at y=0, z=-0.5, cast_to=0,0,-5)
+   - Node3D (name "FloatingIndicator", visible=false)
+     - MeshInstance3D with TorusMesh
+5. Save scene as `scenes/player/player.tscn`
+
+### Create Console UI Scene
+
+1. Create a new scene with Control as root
+2. Rename it to "CreationConsole"
+3. Attach the creation_console.gd script
+4. Add these child nodes:
+   - VBoxContainer (anchor_right=1, anchor_bottom=1)
+     - RichTextLabel (name "OutputDisplay", size_flags_vertical=3)
+     - HBoxContainer
+       - LineEdit (name "InputField", size_flags_horizontal=3)
+       - Button (name "HistoryButton", text="History")
+       - Button (name "ClearButton", text="Clear")
+5. Save scene as `scenes/ui/creation_console.tscn`
+
+### Create Test World Scene
+
+1. Create a new scene with Node3D as root
+2. Add a DirectionalLight3D (rotated to cast shadows)
+3. Add a PlaneMesh for ground (scale 100x1x100)
+4. Add a StaticBody3D with CollisionShape3D for the ground
+5. Save as `scenes/worlds/test_world.tscn`
+
+## Step 7: Create Main Scene
+
+1. Create a new scene with Node3D as root
+2. Rename it to "Main"
+3. Attach the game_controller.gd script
+4. Add your test_world as an instance
+5. Set exported variables in the Inspector:
+   - player_scene = "res://scenes/player/player.tscn"
+   - creation_console_scene = "res://scenes/ui/creation_console.tscn"
+   - universal_entity_scene = "res://scenes/entities/universal_entity.tscn"
+6. Save as `main.tscn` in the project root
+
+## Step 8: Set the Main Scene
+
+1. Go to Project → Project Settings → Application → Run
+2. Set "Main Scene" to your main.tscn
+
+## Step 9: Fix Any Script References
+
+Search for any preload() or load() functions in your scripts and ensure the paths are correct:
+
+1. In universal_entity.gd, look for particle system resources
+2. In word_manifestor.gd, update: `var universal_entity_scene = preload("res://scenes/entities/universal_entity.tscn")`
+3. In game_controller.gd, ensure all scene references use the correct paths
+
+## Step 10: Test and Run!
+
+1. Click the Play button in the top-right corner
+2. If any errors occur, check the debugger output
+3. Start with simple tests:
+   - Can you move around?
+   - Does the console appear when you press Tab?
+   - Can you create entities by typing words?
+
+## Troubleshooting Common Issues
+
+### Script Error: "The identifier 'X' isn't declared in the current scope"
+- Check for missing class_name statements
+- Ensure scripts are properly attached to nodes
+
+### Error: "Failed to load resource" 
+- Double-check all file paths in preload/load statements
+- Make sure scene names match exactly with your files
+
+### Visual Glitches
+- Check if all containers (VisualContainer, EffectContainer) are properly created
+- Verify material creation code
+
+### Creation Console Not Working
+- Verify the console is properly connected to the word_manifestor
+- Check signal connections
+
+## Important Notes for Perfection
+
+1. All names should follow snake_case convention
+2. Test each system individually before combining them
+3. Create entities gradually - start with simple ones
+4. Keep the console open to see debug messages
+5. Save frequently to avoid losing work
+
+You now have the foundation for your dream game where words create reality!

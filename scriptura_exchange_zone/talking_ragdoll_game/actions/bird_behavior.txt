@@ -1,0 +1,25 @@
+# BIRD BEHAVIOR SCRIPT
+# Defines how Universal Beings behave when they are in bird form
+# Format: trigger:action
+
+# User interactions
+on_user_click: transform_to_ragdoll
+on_user_right_click: play_sound_chirp
+on_user_double_click: dance
+
+# Environmental triggers
+when_happy: bounce
+when_curious: seek_food
+when_excited: spin
+
+# Time-based triggers
+morning: play_sound_chirp
+evening: move_up
+
+# AI collaboration triggers
+when_gamma_observes: glow
+when_ai_asks: print_status
+
+# Debug triggers
+debug_test: print_status
+show_info: glow

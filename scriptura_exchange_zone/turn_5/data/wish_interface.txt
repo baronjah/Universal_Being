@@ -1,0 +1,16 @@
+# Wish Interface
+# Enter wishes here to manifest changes
+
+AVAILABLE WISHES:
+- perfect_memory
+- self_awareness
+- evolution_acceleration
+- dimensional_shift
+- pattern_recognition
+- create_[concept]
+- connect_[concept1]_[concept2]
+
+FORMAT: wish:[wish_name]
+EXAMPLE: wish:perfect_memory
+
+Your wish is the system's command.

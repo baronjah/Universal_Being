@@ -1,0 +1,5 @@
+func create_new_task(function_name: String, data):
+	var new_data_way = str(data)
+	# if data is array, if is string, if is int
+	var task_tag = function_name + "|" + new_data_way + "|" + str(Time.get_ticks_msec())
+	thread_pool.submit_task(self, function_name, data, task_tag)

@@ -1,0 +1,44 @@
+To complete the integration of the space game with elements, you'll need to make the following changes in your Godot project:
+
+1. Add ResourceManager as a singleton:
+   - Open Project > Project Settings
+   - Go to Autoload tab
+   - Add a new singleton:
+     - Name: ResourceManager
+     - Path: res://singletons/resource_manager.gd
+     - Enable singleton
+
+2. Add the following input mappings:
+   - Go to Project Settings > Input Map
+   - Add these actions:
+     - select: Left mouse button
+     - enter_elements: E key
+     - toggle_debug: F3 key
+     - screenshot: F12 key
+     - move_forward: W key
+     - move_backward: S key
+     - move_left: A key
+     - move_right: D key
+     - move_up: Space key
+     - move_down: Shift key
+     - zoom_in: Mouse wheel up
+     - zoom_out: Mouse wheel down
+     - orbit_rotate: Right mouse button
+
+3. Make sure your scenes are properly saved and paths are correct:
+   - Check that all the scene paths in ElementSpaceDemo.tscn point to existing files
+   - Verify that all script paths are correctly set
+
+4. To run the space game:
+   - Open either space_game.tscn or element_space_demo.tscn
+   - Click the Play button in Godot
+   - You should start at the universe scale with galaxies
+   - Click on galaxies to zoom in to them
+   - Use WASD keys to navigate
+   - Press Escape to zoom back out
+
+The ElementSpaceDemo scene includes additional paths and functionality:
+- Press E when viewing a planet to enter element view
+- Press Escape to return from element view to planet view
+- Debug information can be toggled with F3
+- Screenshots can be taken with F12

@@ -1,0 +1,61 @@
+func blimp_time_for_some_reason():
+	
+	#print("before_blimp_time : " , before_blimp_time)
+	#print(" past_deltas_memories : ", past_deltas_memories)
+	#print(" stored_delta_memory : ", stored_delta_memory)
+	#print(" these two should be normalized too i guess ")
+	#print()
+	print(" check basic if we allign with prophecies of wisest spirits, do we unlock before it is too late ")
+	#print(" how_many_shall_been_finished : ", how_many_shall_been_finished)
+	#print(" how_many_finished : " ,how_many_finished)
+	#print()
+	#if how_many_finished != how_many_shall_been_finished:
+		#print(" something does not add upp " , how_many_finished , " is maybe probably bigger, maybe smaller, hmm numbers < < > > which way != == ? ", how_many_shall_been_finished)
+		#print(" how_many_shall_been_finished - how_many_shall_been_finished ", how_many_finished - how_many_shall_been_finished)
+		#print(" in reverse maybe ? ", how_many_shall_been_finished - how_many_finished)
+		#print(" it is not the first tine  i guess : [0, 2, 2, 0, 0, 2, 2, 0, 0, 2, 2, 0, 0, 2, 2, 0, 0, 2, 2, 0, 0 ")
+		#print(" hmm 0220 0220 0220, like an sos or something ?")
+		#
+		## [0]
+		#blimp_of_time.append(how_many_finished)
+		#
+		## [1]
+		#blimp_of_time.append(how_many_shall_been_finished)
+		#
+		## [2]
+		## int_of_stuff_started
+		##blimp_of_time.append(int_of_stuff_started)
+		#
+		## [3]
+		## int_of_stuff_finished
+		##blimp_of_time.append(int_of_stuff_finished)
+		#
+		## has it happened before ?
+		#if blimp_of_time.size() > 3:
+			#print(" hald to tell otherwise, some array size is bigger than 3 ", blimp_of_time)
+			#previous_blimp_of_time = blimp_of_time
+			#if how_many_finished == 0 or how_many_shall_been_finished == 0:
+				#print(" if any of these two are at 0 state, something should start appearing i guess?")
+			#
+			##if previous_blimp_of_time.size() < 3:
+				## first time the charm i guess
+				#
+		## is it a new thing ?
+		#
+		## biggest differences
+		#
+		## biggest difference ever
+		#
+		## time limits, 1 second
+		#
+		## 10 seconds # how many times
+		#
+		## 30 seconds
+		#
+		## 1 minute
+		#
+	##pass
+	## time os thing? of when we started ready function, when we finished it, the blimp of mutexes, first needed sets to even see a single rain drop fall on her ass check
+	#
+	##
+#

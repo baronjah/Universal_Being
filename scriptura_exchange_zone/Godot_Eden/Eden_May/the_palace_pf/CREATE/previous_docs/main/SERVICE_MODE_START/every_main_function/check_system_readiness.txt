@@ -1,0 +1,23 @@
+func check_system_readiness() -> Dictionary:
+	# From console: ["started", [["akashic_records"], ["base"], ["menu"]]]
+	var pending_sets = []
+	if array_of_startup_check.is_empty():
+		print(" thing is empty, better return ?")
+		
+		#pending_sets = array_of_startup_check[3]
+	else:
+		print(" array_of_startup_check " , array_of_startup_check)
+		
+	
+	
+	var status = {
+		"mutex_state": breaks_and_handles_check(),
+		"thread_state": check_thread_status(),
+		"records_ready": array_of_startup_check.size() > 0
+	}
+	
+	system_readiness.mutexes = !status.mutex_state.has(false)
+	system_readiness.threads = status.thread_state == "working"
+	system_readiness.records = status.records_ready
+	
+	return status

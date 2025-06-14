@@ -1,0 +1,91 @@
+message_popup_shown.emit(content, txt_name)
+
+again
+
+
+res://scripts/core/txt_universal_database.gd
+
+line 539
+
+Line 539:Identifier "content" not declared in the current scope.
+
+
+we have no content to emit, or it is named different way
+
+but let me skip
+
+it loaded, and after a while the
+
+
+and where i can see gamma responses? can we make them fancy manga like bubbles of text? gamma was supposed to be there, she can have interface too, interface of text bubble! text cloud? you know what i mean, you remember the "icon" amen
+
+
+OH MY THE WINDOW EVEN HAS, THE AROUND IT THINGY!!!!! THE OUTLINE OF WHOLE WINDOW!!!
+
+
+HERE I Was trying to click stuff in
+
+Select Being Type
+
+two selecting basic or nature
+
+and when i try to click some of these
+
+tree,flower, rock, crystal or magical orb, cube, cylinder
+
+it seems to send some errors
+
+
+🖱️ DIVINE INPUT: InputEventMouseButton processed (main)
+ERROR: Error calling from signal 'item_selected' to callable: 'Control(universal_being_creator_ui.gd)::_on_being_type_selected': Cannot convert argument 1 from int to Object.
+   at: emit_signalp (core/object/object.cpp:1300)
+🖱️ DIVINE INPUT: InputEventMouseButton processed (main)
+🖱️ DIVINE INPUT: InputEventMouseButton processed (main)
+ERROR: Error calling from signal 'item_selected' to callable: 'Control(universal_being_creator_ui.gd)::_on_being_type_selected': Cannot convert argument 1 from int to Object.
+   at: emit_signalp (core/object/object.cpp:1300)
+🖱️ DIVINE INPUT: InputEventMouseButton processed (main)
+🖱️ DIVINE INPUT: InputEventMouseButton processed (main)
+ERROR: Error calling from signal 'item_selected' to callable: 'Control(universal_being_creator_ui.gd)::_on_being_type_selected': Cannot convert argument 1 from int to Object.
+   at: emit_signalp (core/object/object.cpp:1300)
+🖱️ DIVINE INPUT: InputEventMouseButton processed (main)
+🖱️ DIVINE INPUT: InputEventMouseButton processed (main)
+🖱️ DIVINE INPUT: InputEventMouseButton processed (main)
+🖱️ DIVINE INPUT: InputEventMouseButton processed (main)
+🖱️ DIVINE INPUT: InputEventMouseButton processed (main)
+🖱️ DIVINE INPUT: InputEventMouseButton processed (main)
+ERROR: Error calling from signal 'item_selected' to callable: 'Control(universal_being_creator_ui.gd)::_on_being_type_selected': Cannot convert argument 1 from int to Object.
+   at: emit_signalp (core/object/object.cpp:1300)
+🖱️ DIVINE INPUT: InputEventMouseButton processed (main)
+🖱️ DIVINE INPUT: InputEventMouseButton processed (main)
+🖱️ DIVINE INPUT: InputEventMouseButton processed (main)
+🖱️ DIVINE INPUT: InputEventMouseButton processed (main)
+ERROR: Error calling from signal 'item_selected' to callable: 'Control(universal_being_creator_ui.gd)::_on_being_type_selected': Cannot convert argument 1 from int to Object.
+   at: emit_signalp (core/object/object.cpp:1300)
+🖱️ DIVINE INPUT: InputEventMouseButton processed (main)
+[2025-05-31T14:59:01] [SYSTEM] Memory cleanup completed
+[UniversalEntity] 😊 [UniversalEntity] System satisfaction: 100% - You should be happy!
+🖱️ DIVINE INPUT: InputEventMouseButton processed (main)
+🖱️ DIVINE INPUT: InputEventMouseButton processed (main)
+🖱️ DIVINE INPUT: InputEventMouseButton processed (main)
+🖱️ DIVINE INPUT: InputEventMouseButton processed (main)
+[2025-05-31T14:59:06] [SYSTEM] Memory cleanup completed
+[UniversalEntity] 😊 [UniversalEntity] System satisfaction: 100% - You should be happy!
+🖱️ DIVINE INPUT: InputEventMouseButton processed (main)
+ERROR: Error calling from signal 'item_selected' to callable: 'Control(universal_being_creator_ui.gd)::_on_being_type_selected': Cannot convert argument 1 from int to Object.
+   at: emit_signalp (core/object/object.cpp:1300)
+🖱️ DIVINE INPUT: InputEventMouseButton processed (main)
+🖱️ DIVINE INPUT: InputEventMouseButton processed (main)
+ERROR: Error calling from signal 'item_selected' to callable: 'Control(universal_being_creator_ui.gd)::_on_being_type_selected': Cannot convert argument 1 from int to Object.
+   at: emit_signalp (core/object/object.cpp:1300)
+🖱️ DIVINE INPUT: InputEventMouseButton processed (main)
+🖱️ DIVINE INPUT: InputEventMouseButton processed (main)
+ERROR: Error calling from signal 'item_selected' to callable: 'Control(universal_being_creator_ui.gd)::_on_being_type_selected': Cannot convert argument 1 from int to Object.
+
+╭───────────────────────────────────────────────────────────
+
+
+
+
+umm, later i tried playing around with properties, and when i try to change name, the being appears, as ball, color didnt change, size ? nah, it appears when i change name, and when i click clear preview it dissapears :),
+
+tried moving window around, 

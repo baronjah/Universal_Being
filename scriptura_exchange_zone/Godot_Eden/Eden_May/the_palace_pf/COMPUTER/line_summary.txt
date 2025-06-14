@@ -1,0 +1,30 @@
+# Line.gd Summary
+
+## File Overview
+- Path: res://code/gdscript/scripts/Menu_Keyboard_Console/line.gd
+- Primary class: Extends MeshInstance3D
+- A 3D line rendering component that creates visual connections between points
+
+## Functions (Lines 5-31)
+- _ready(): Initialization function that calls send_any_message()
+- change_points_of_line(start_end_points): Updates the line endpoints
+  - Takes an array containing two points (start and end)
+  - Converts input arrays to Vector3 objects
+  - Retrieves the ImmediateMesh from the mesh property
+  - Clears existing surfaces
+  - Creates a new surface using PRIMITIVE_LINES
+  - Adds two vertices to form a line between point1 and point2
+  - Finalizes the surface
+- send_any_message(): Simple debug function that prints the node name
+
+## Technical Implementation
+- Uses Godot's ImmediateMesh system for dynamic line creation
+- Expects input as nested arrays: [[x1,y1,z1],[x2,y2,z2]]
+- Completely regenerates the line mesh when endpoints change
+- Designed for simple point-to-point connections in 3D space
+
+## Notable Features
+- Simple and focused implementation
+- Dynamic line rendering
+- Efficiently clears and rebuilds only when needed
+- Visual connection component for the larger system

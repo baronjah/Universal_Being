@@ -1,0 +1,24 @@
+func secondary_interaction_after_rc(array_of_data):
+	var size_of_array : int = array_of_data.size()
+	var counter_to_know_which : int = 0
+	for interactions_to_do in array_of_data :
+		var array_to_have_fun_with =  array_of_data[counter_to_know_which]
+		counter_to_know_which +=1
+		var counter_inter : int = 0
+		for inter in InteractionsBank.type_of_interactions_0:
+			if array_of_data[0][0] == inter:
+				match counter_inter: # "change_scene", "add_scene", "change_text", "call_function", "unload_container"
+					0: # change_scene
+						counter_inter = -1
+					1: # add_scene
+						counter_inter = -1
+					2: # change_text
+						counter_inter = -1
+					3: # call_function
+						counter_inter = -1
+					4: # unload_container
+						unload_container(array_to_have_fun_with[1])
+						counter_inter = -1
+					5: # dunno, we dont have one yet hehe
+						counter_inter = -1
+			counter_inter +=1

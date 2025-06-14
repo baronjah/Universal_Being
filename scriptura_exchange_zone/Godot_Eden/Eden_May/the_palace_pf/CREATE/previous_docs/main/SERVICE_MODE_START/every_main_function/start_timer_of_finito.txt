@@ -1,0 +1,13 @@
+# functions that worked, kinda, but i turned them off now, i want new, better and smarter way to check stuff
+func start_timer_of_finito():
+	await get_tree().create_timer(0.1).timeout
+	#print(data_timero)
+	#var container_timero
+	#var the_path_of_thing
+	#array_counting_mutex.lock()
+	#if array_for_counting_finish.has(container_timero):
+		#print(" i guess after 1s it still has that ")
+		#array_counting_mutex.unlock()
+	#else:
+		#print(" it was probably send already")
+		#array_counting_mutex.unlock()

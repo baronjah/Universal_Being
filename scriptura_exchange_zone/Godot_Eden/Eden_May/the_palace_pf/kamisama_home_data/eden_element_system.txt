@@ -1,0 +1,151 @@
+# Element System Documentation
+
+## Overview
+The Element System in Eden is a physics-based simulation of elemental interactions. Elements (fire, water, wood, ash) can interact with each other and transform based on physics and proximity.
+
+## Core Components
+
+### 1. ElementManager (element_manager.gd)
+- Main controller for element system
+- Manages creation, deletion, and processing of elements
+- Implements LOD (Level of Detail) system
+- Handles frustum culling for performance
+- Connects to ResourceManager for limiting resources
+- Provides debug visualization
+
+Key methods:
+- `process_element()` - Processes a single element's behavior
+- `create_element()` - Creates a new element of specified type
+- `apply_element_lod()` - Applies LOD optimizations
+- `show_element_details()` - Controls detailed features based on LOD
+- `generate_world()` - Creates initial elements based on settings
+- `adapt_processing_load()` - Dynamically adjusts processing based on performance
+
+### 2. ElementResourceManager (element_resource_manager.gd)
+- Manages resource limits for performance optimization
+- Controls maximum number of:
+  - Active light sources (8)
+  - Particle systems (16)
+  - Visible elements (200)
+  - Physics-processed elements (100)
+- Implements task queue system for resource priority
+- Provides dynamic resource adjustment based on FPS
+
+Key methods:
+- `register_light()` - Registers a light within resource limits
+- `register_particles()` - Registers particle system within limits
+- `register_for_physics()` - Registers element for physics processing
+- `register_for_visibility()` - Registers element for visibility
+- `process_element_tasks()` - Processes queued element tasks
+- `adjust_resource_limits()` - Adjusts resource limits dynamically
+- `prune_resources()` - Removes excess resources when performance suffers
+
+### 3. BaseElement (base_element.gd)
+- Base class for all elements
+- Implements common properties and behaviors
+- Handles physics simulation
+- Provides connection system between elements
+
+Properties:
+- position, velocity, acceleration
+- element_type, mass
+- age, stability, energy
+- connections to other elements
+
+Methods:
+- `process_behavior()` - Main processing function
+- `apply_force()` - Physics force application
+- `connect_to()` - Connect to another element
+- `transform_to()` - Transform to another element type
+- `archive()` - Save element state
+
+### 4. Specific Element Types
+
+#### FireElement (fire_element.gd)
+- Creates light and particles
+- Consumes fuel from wood
+- Flickers realistically
+- Can spread to flammable materials
+- Transforms to ash when extinguished
+
+Key behaviors:
+- Heat generation
+- Light emission with color based on temperature
+- Flickering effect
+- Particle systems (flames, sparks, smoke)
+- Wind interaction
+- LOD implementation
+
+#### WaterElement (water_element.gd)
+- Creates flowing/rippling effects
+- Can extinguish fire
+- Affects neighboring elements with moisture
+- Can freeze or evaporate
+
+Key behaviors:
+- Wave/ripple simulation
+- Flow dynamics
+- Moisture effects on other elements
+- Temperature-based state changes
+- Reflection and refraction effects
+
+#### WoodElement (wood_element.gd)
+- Can be consumed by fire
+- Grows over time
+- Can connect to create structures
+
+Key behaviors:
+- Growth simulation
+- Fuel provision to fire
+- Structural connections
+- Aging and weathering
+
+#### AshElement (ash_element.gd)
+- Created from burned wood/fire
+- Can fertilize wood growth
+- Accumulates and settles
+
+Key behaviors:
+- Settlement physics
+- Gradual decomposition
+- Interaction with water and wood
+
+## Key Technical Implementations
+
+### LOD System (Level of Detail)
+- Four detail levels based on distance from camera
+- Reduces detail for distant elements:
+  - LOD 0: Full detail (closest, <15 units)
+  - LOD 1: Medium detail (<30 units)
+  - LOD 2: Low detail (<60 units)
+  - LOD 3: Minimal detail (<120 units)
+  - Beyond: Not rendered
+- Controls lights, particles, physics processing frequency
+
+### Resource Management
+- Strict limits on resource-intensive elements:
+  - Maximum 8 active lights
+  - Maximum 16 particle systems
+  - Maximum 200 visible elements
+  - Maximum 100 physics elements
+- Priority queue system for resource allocation
+- Dynamic adjustment based on performance metrics
+
+### Performance Optimization
+- Frustum culling to skip off-screen elements
+- Adaptive processing based on FPS
+- Processing elements in chunks each frame
+- Prioritizing nearby elements for detailed processing
+- Removal of oldest elements when limit reached
+
+### Physics Simulation
+- Custom physics implementation
+- Element interactions based on proximity and type
+- Forces including attraction, repulsion, gravity
+- Connection system between elements
+
+### Visualization
+- Debug panel showing performance metrics
+- FPS counter and element statistics
+- Visual representation of LOD levels
+- Resource usage monitoring

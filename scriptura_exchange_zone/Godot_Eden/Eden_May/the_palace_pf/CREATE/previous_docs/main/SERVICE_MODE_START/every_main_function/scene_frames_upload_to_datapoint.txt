@@ -1,0 +1,6 @@
+func scene_frames_upload_to_datapoint(header_line, information_lines, datapointi, containeri):
+	var datapoint_path = header_line[1][0] + "/" + header_line[2][0]
+	var datapoint_selector = datapointi
+	var new_way1 = header_line
+	var new_way2 = information_lines
+	datapoint_selector.upload_scenes_frames(header_line, information_lines)

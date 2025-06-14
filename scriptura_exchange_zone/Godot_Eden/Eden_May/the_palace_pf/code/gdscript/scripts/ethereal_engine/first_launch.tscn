@@ -1,0 +1,69 @@
+[gd_scene load_steps=3 format=3 uid="uid://cw4f1u8h5tksw"]
+
+[ext_resource type="Script" path="res://scenes/first_launch.gd" id="1_4b8vo"]
+[ext_resource type="Theme" uid="uid://dr4w7j0ntrprp" path="res://themes/default_theme.tres" id="2_mxhq2"]
+
+[node name="FirstLaunch" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("2_mxhq2")
+script = ExtResource("1_4b8vo")
+
+[node name="Background" type="ColorRect"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.054902, 0.054902, 0.109804, 1)
+
+[node name="CenterContainer" type="CenterContainer"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="PanelContainer" type="PanelContainer"]
+custom_minimum_size = Vector2(400, 250)
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 20
+alignment = 1
+
+[node name="TitleLabel" type="Label"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "Welcome to Ethereal Engine"
+horizontal_alignment = 1
+
+[node name="InstructionLabel" type="Label"]
+layout_mode = 2
+text = "Please enter your name to begin your journey:"
+horizontal_alignment = 1
+
+[node name="NameInput" type="LineEdit"]
+layout_mode = 2
+placeholder_text = "Enter your name"
+alignment = 1
+max_length = 20
+caret_blink = true
+
+[node name="ErrorLabel" type="Label"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.94902, 0.286275, 0.203922, 1)
+text = "Error message"
+horizontal_alignment = 1
+
+[node name="SaveButton" type="Button"]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Begin"

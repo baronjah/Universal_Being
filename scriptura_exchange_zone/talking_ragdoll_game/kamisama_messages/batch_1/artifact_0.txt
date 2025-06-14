@@ -1,0 +1,70 @@
+extends Node3D
+
+## UniversalBeingSceneContainer is a 3D spatial container with defined boundaries
+## It can hold other Universal Beings and connect via connection points
+
+@export var size: Vector3 = Vector3(4, 4, 4)
+@export var allow_grid_snapping: bool = true
+@export var grid_size: float = 1.0
+
+var connection_points: Array[Node3D] = []
+
+func _ready():
+	_draw_debug_bounds()
+	_create_connection_points()
+
+func _draw_debug_bounds():
+	var box = MeshInstance3D.new()
+	box.mesh = BoxMesh.new()
+	box.mesh.size = size
+	box.material_override = StandardMaterial3D.new()
+	box.material_override.albedo_color = Color(0.3, 0.5, 1.0, 0.15)
+	box.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+	add_child(box)
+
+func _create_connection_points():
+	var half = size * 0.5
+
+	var points = [
+		Vector3(0, 0, 0), # Center
+		Vector3(-half.x, 0, 0), Vector3(half.x, 0, 0), # Left/Right
+		Vector3(0, -half.y, 0), Vector3(0, half.y, 0), # Bottom/Top
+		Vector3(0, 0, -half.z), Vector3(0, 0, half.z), # Back/Front
+	]
+
+	for i in points.size():
+		var marker = Marker3D.new()
+		marker.name = "ConnectionPoint_%d" % i
+		marker.position = points[i]
+		connection_points.append(marker)
+		add_child(marker)
+
+func add_being(being: Node3D, connection_index: int = 0):
+	if connection_index < 0 or connection_index >= connection_points.size():
+		push_error("Invalid connection index.")
+		return
+
+	var point = connection_points[connection_index]
+	being.position = point.global_position
+
+	if allow_grid_snapping:
+		being.position = _snap_to_grid(being.position)
+
+	add_child(being)
+
+func _snap_to_grid(pos: Vector3) -> Vector3:
+	return Vector3(
+		round(pos.x / grid_size) * grid_size,
+		round(pos.y / grid_size) * grid_size,
+		round(pos.z / grid_size) * grid_size
+	)
+
+func get_bounds() -> AABB:
+	return AABB(global_position - size * 0.5, size)
+
+func list_connection_points() -> Array[Vector3]:
+	return connection_points.map(func(p): return p.global_position)
+
+func highlight():
+	# Optional visual glow or animation
+	pass

@@ -1,0 +1,64 @@
+[gd_scene load_steps=2 format=3 uid="uid://dmpd3dcirq0cg"]
+
+[ext_resource type="Script" path="res://jsh_entity_test.gd" id="1_j4r3p"]
+
+[node name="JSHEntityTestScene" type="Node"]
+script = ExtResource("1_j4r3p")
+
+[node name="UI" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel" type="Panel" parent="UI"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ScrollContainer" type="ScrollContainer" parent="UI/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="StatsLabel" type="Label" parent="UI/Panel/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "JSH Entity System Test Statistics:"
+autowrap_mode = 3
+
+[node name="TestControls" type="HBoxContainer" parent="UI"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 40.0
+grow_horizontal = 2
+
+[node name="StartButton" type="Button" parent="UI/TestControls"]
+layout_mode = 2
+text = "Start Test"
+
+[node name="StopButton" type="Button" parent="UI/TestControls"]
+layout_mode = 2
+text = "Stop Test"
+
+[node name="InteractionButton" type="Button" parent="UI/TestControls"]
+layout_mode = 2
+text = "Trigger Interactions"
+
+[node name="ResetButton" type="Button" parent="UI/TestControls"]
+layout_mode = 2
+text = "Reset Test"
+
+[connection signal="pressed" from="UI/TestControls/StartButton" to="." method="_on_start_button_pressed"]
+[connection signal="pressed" from="UI/TestControls/StopButton" to="." method="_on_stop_button_pressed"]
+[connection signal="pressed" from="UI/TestControls/InteractionButton" to="." method="_on_interaction_button_pressed"]
+[connection signal="pressed" from="UI/TestControls/ResetButton" to="." method="_on_reset_button_pressed"]

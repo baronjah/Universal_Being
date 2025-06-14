@@ -1,0 +1,21 @@
+func unload_container(container_to_unload):
+	print(" container_to_unload : " , container_to_unload)
+	cache_tree_branch_fully(container_to_unload)
+	process_to_unload_records(container_to_unload)
+	
+	array_counting_mutex.lock()
+	
+	# if has branch name
+	if array_for_counting_finish.has(container_to_unload):
+		print(" cache branch entire contionaeir now lololo")
+		array_for_counting_finish.erase(container_to_unload)
+		#if array_for_counting_finish[new_path_splitter[0]].has(new_path_splitter[1]):
+		#	print(" cache branch we can unload that node ", new_path_splitter[1])
+		##	array_for_counting_finish[new_path_splitter[0]].erase(new_path_splitter[1])
+		#else:
+		#	print(" cache branch that node does not exist in that container", new_path_splitter[0])
+	else:
+		print(" cache branch that container does not exist")
+		# if has child_name
+	
+	array_counting_mutex.unlock()

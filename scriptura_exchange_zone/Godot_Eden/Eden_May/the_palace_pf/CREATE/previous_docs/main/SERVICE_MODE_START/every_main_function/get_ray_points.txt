@@ -1,0 +1,17 @@
+func get_ray_points(mouse_position: Vector2):
+	# Get the ray from the camera
+	var from = camera.project_ray_origin(mouse_position)
+	var ray_normal = camera.project_ray_normal(mouse_position)
+	var to = from + ray_normal * ray_distance_set
+	
+	#print(get_world_3d())
+	var space_state = get_world_3d().direct_space_state
+	var query = PhysicsRayQueryParameters3D.create(from, to)
+	var result = space_state.intersect_ray(query)
+	
+	var data : Array = []
+	data.append(result)
+	data.append(to)
+	data.append(from)
+	print(" to : " , to , " result : " , result , " from : " , from)
+	create_new_task("ray_cast_data_preparer", data) #

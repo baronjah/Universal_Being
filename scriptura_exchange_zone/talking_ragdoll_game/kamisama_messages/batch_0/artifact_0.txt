@@ -1,0 +1,126 @@
+# Master Process Delta System Design
+
+## Core Concept
+A centralized system that manages ALL game processes in scheduled turns/cycles to maintain stable framerate. Every system must register with the Master Process Delta to get processing time.
+
+## Architecture Components
+
+### 1. MasterProcessDelta (Singleton)
+**Purpose**: Central orchestrator that manages all game processes
+**Location**: Autoload (highest priority)
+
+```gdscript
+# Core responsibilities:
+- Process scheduling and turn management
+- Frame budget management (target: 60fps = 16.67ms per frame)
+- Dynamic LOD system based on performance
+- Process priority queue management
+- Emergency performance throttling
+```
+
+### 2. ProcessFloodgate System
+**Purpose**: All entities must pass through floodgates for processing
+**Integration**: Works with MasterProcessDelta
+
+```gdscript
+# Floodgate types:
+- CreationFloodgate: New entity spawning
+- UpdateFloodgate: Entity updates/logic
+- PhysicsFloodgate: Physics processing
+- RenderFloodgate: Visual updates
+- DestructionFloodgate: Entity removal
+```
+
+### 3. UniversalEntity Integration
+**Purpose**: Every entity (cat, fish, water, ground) registers with the system
+
+```gdscript
+# Required entity properties:
+- process_priority: int (0-10, higher = more important)
+- process_frequency: float (how often it needs updates)
+- process_budget: float (max time in ms per update)
+- lod_level: int (current detail level)
+- floodgate_queue: Array (which floodgates it's waiting for)
+```
+
+## Process Management Flow
+
+### Frame Cycle Management
+```
+1. Start Frame
+2. Check available frame budget (16.67ms - system overhead)
+3. Process high-priority floodgates first
+4. Distribute remaining budget among entities
+5. If budget exceeded, move processes to next frame
+6. End Frame
+```
+
+### LOD System Integration
+```
+Performance Level | Entity Processing | Visual Detail
+Good (>50fps)    | All entities      | Full detail
+Medium (30-50fps)| Essential only    | Reduced detail
+Poor (<30fps)    | Critical only     | Minimal detail
+```
+
+### Floodgate Queue System
+```
+High Priority:
+- Player interactions
+- Critical physics
+- Safety systems
+
+Medium Priority:
+- AI behavior
+- Non-critical updates
+- Visual effects
+
+Low Priority:
+- Background processes
+- Statistics
+- Optimization tasks
+```
+
+## Implementation Strategy
+
+### Phase 1: Core System
+1. Create MasterProcessDelta singleton
+2. Implement basic frame budget management
+3. Create ProcessFloodgate base class
+4. Test with simple entities
+
+### Phase 2: Integration
+1. Modify UniversalEntity to register with MasterProcessDelta
+2. Implement priority queue system
+3. Add dynamic LOD adjustment
+4. Performance monitoring
+
+### Phase 3: Optimization
+1. Advanced scheduling algorithms
+2. Predictive performance management
+3. Custom floodgate types for specific systems
+4. Runtime performance tuning
+
+## Benefits for God/Creation Game
+
+1. **Stable Performance**: Guaranteed frame rate regardless of entity count
+2. **Scalable Complexity**: System automatically adjusts detail levels
+3. **Predictable Behavior**: All processes are scheduled and managed
+4. **Debug Capability**: Central monitoring of all game processes
+5. **Expandable**: Easy to add new systems through floodgate registration
+
+## Console Commands for Management
+```
+- `process_status` - Show current process queue
+- `set_lod_level <level>` - Force LOD level
+- `floodgate_stats` - Show floodgate performance
+- `process_priority <entity> <priority>` - Adjust entity priority
+- `frame_budget <ms>` - Set target frame budget
+```
+
+## Notes for Development
+- Every system must be designed to work in chunks/turns
+- No system should assume it gets called every frame
+- All systems must handle being paused/resumed
+- Emergency throttling must be fail-safe
+- Documentation should track which systems use which floodgates

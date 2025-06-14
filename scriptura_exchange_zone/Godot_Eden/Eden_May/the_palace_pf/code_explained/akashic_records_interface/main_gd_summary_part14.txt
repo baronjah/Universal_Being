@@ -1,0 +1,101 @@
+# Main.gd Summary - Lines 6500-7000
+
+## Texture Management System (Lines 6500-6632)
+- **Base Texture Management** (Lines 6500-6511)
+  - Thread-safe texture creation with mutex protection
+  - Conversion from raw images to usable textures
+  - Storage in shared texture dictionary
+
+- **Rounded Rectangle Generation** (Lines 6514-6597)
+  - Sophisticated procedural texture generation
+  - Corner radius calculation and validation
+  - Pixel-by-pixel image creation
+  - Gradient effects from center to edge
+  - Noise pattern addition for visual interest
+
+- **Material System** (Lines 6605-6632)
+  - Material and texture application to meshes
+  - Dual material storage (plain and textured)
+  - Toggle capability between material types
+  - Metadata-based material reference storage
+
+## Texture Generation Framework (Lines 6633-6724)
+- **Mesh Data Extraction** (Lines 6633-6642)
+  - Retrieves vertex data from meshes
+  - Creates structured data for texture generation
+
+- **Texture Toggle System** (Lines 6643-6659)
+  - Global texture state management
+  - Scene-wide texture application
+  - Group-based object selection
+
+- **Shape-Specific Texture Generation** (Lines 6660-6724)
+  - Parameter extraction from shape data
+  - Type-based texture dispatch
+  - Color value and alpha parsing
+  - Support for multiple shape types:
+    - Flat shapes
+    - Buttons
+    - Screens
+    - Circles
+
+## Advanced Drawing Functions (Lines 6725-6999)
+- **Polygon Texture Generation** (Lines 6726-6782)
+  - Bounds calculation for vertices
+  - Scale and offset computation for centering
+  - Point-in-polygon testing
+  - Gradient application from center to edges
+  - Subtle noise pattern addition
+
+- **Gradient Fill** (Lines 6783-6792)
+  - Vertical color gradient generation
+  - Color interpolation based on position
+
+- **Ring Drawing** (Lines 6794-6812)
+  - Precise ring drawing with thickness control
+  - Alpha-based blend factor calculation
+  - Conditional pixel blending
+
+- **Polygon Testing** (Lines 6814-6826)
+  - Ray casting algorithm for point-in-polygon test
+  - Efficient edge crossing calculation
+
+- **Circle Texture Generation** (Lines 6828-6875)
+  - Radial gradient from center to edge
+  - Multiple concentric rings for visual interest
+  - Sinusoidal ring highlights
+  - Noise pattern for texture
+
+- **Button Texture Generation** (Lines 6877-6951)
+  - Top-to-bottom gradient for 3D button effect
+  - Top highlight and bottom shadow
+  - Edge detection for border effects
+  - Distance-based border darkening
+  - Embossed look with subtle noise
+
+- **Screen Texture Generation** (Lines 6952-6999)
+  - Vignette effect for screen-like appearance
+  - Distance-based darkening at edges
+  - Beginning of scanline effect implementation
+
+## Technical Patterns
+- **Procedural Generation**: Pixel-by-pixel texture creation
+- **Parametric Design**: Shape parameters control visual outcome
+- **Thread Safety**: Mutex protection for shared resources
+- **Gradient Systems**: Multiple gradient techniques (radial, directional)
+- **Effect Layering**: Combined effects (gradient + noise + highlights)
+- **Material Management**: Metadata-based material reference tracking
+
+## Implementation Details
+- **Image Processing**: Direct pixel manipulation for precise control
+- **Color Manipulation**: Spectrum-based color selection with modifications
+- **Visual Effects**: Multiple techniques for depth and realism
+  - Vignette darkening
+  - Radial gradients
+  - Highlight rings
+  - Border detection
+  - Noise patterns
+- **Scaling Logic**: Maintains aspect ratio and proper centering
+- **Memory Efficiency**: Reuses base textures when possible
+
+This section demonstrates the engine's sophisticated procedural texture generation capabilities, providing rich visual customization for various UI elements and shapes through pixel-by-pixel algorithms rather than pre-rendered assets.

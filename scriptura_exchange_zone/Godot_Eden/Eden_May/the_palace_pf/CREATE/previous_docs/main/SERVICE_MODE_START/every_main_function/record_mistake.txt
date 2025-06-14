@@ -1,0 +1,5 @@
+func record_mistake(mistake_data: Dictionary):
+	history_tracking.mutex.lock()
+	mistake_data["timestamp"] = Time.get_ticks_msec()
+	history_tracking.mistakes.append(mistake_data)
+	history_tracking.mutex.unlock()

@@ -1,0 +1,66 @@
+floodgates, universal_being, console, commands, akashic_records
+
+we had bird, in few versions, we had ragdolls in few versions, but these are for later, lets focus now on universal_beings, that can become anything
+
+yesterday, i talked and you made some commands that started with container, they were like rooms? you made few, they were supposed to connect to each other, based on their points, edges, corners sides, specific points and orientation, just like gizmo can attach to anything
+
+but i feel like these containers, shall be beings, i mean, i think each component of theirs was? hmm
+
+what we will need:
+
+an way to create shapes, assets, the asset creator
+
+where we have limits, that are bearable, and needed, so we generate an space, that is in godot metrics 10 by 10 by 10, in it we could add more beings, tell them which asset to use, arrange them in the spot, and store the frame of that space, as scene
+
+the same thing and similar one can be for createing asset, an shape, with simple shapes, and the sdf, where we can make one shape cut out piece of another etc, then we can make several of these shapes, stick them together, and make an asset, there is also an need for the bones to be possible with it too, so puting in somewhere some point, that takes the closest vertices? as the statics? maybe user will need to be able to select and deselect these points, to make sure the animations, of the objects, and the movement of edges, walls, vertices, are satisfying for me,
+
+asset creator, connected to universal beings, as with universal beings we create and creator, to make new universal_beings, all connected to console, commands, floodgates, and to database of ours, right now spread around entire folder, as assets, scenes, mostly txt files, maybe json files? too
+
+so lets ULTRATHINK
+
+
+to make the godot project game perfect, we must create rules, even just few files, scripts, that are core component, can achieve that, if done correctly
+
+
+floodgates = an way to store informations about all object on the scene, similar to jsh_tree, similar to godot tree
+object_inspector = an way to interact with anything on the scene, edit it, evolve it, modify it, copy it, duplicate it, modify it, delete it
+console = an way to interact with game, using words, written by an user, also an way to show to user informations, the user interactions are also in the console right now, so we know how that could impact floodgates
+
+so, what do we need, in my opinion, as some core elements? right now?
+
+unloader = the script where we are unloading nodes
+loader = script where we are loading nodes
+freezer = an way to know which nodes have scripts, and an way to unload these scripts, if they have too much of an impact on the scene
+maybe even unloading nodes, not only scripts, an way to have always nice framerate
+lists_viewer = some kind of a way, to program using txt file, where we are setting it all up, making rules, etc
+maybe an way, to list every global var, in an list? like maybe excell spreadsheet?, and also an way to inspect all vars data? and change them? lists of all scripts loaded, how many times etc
+
+we need to make sure, that whenever we add anything to the game, the game will always remain sane and stable
+
+like we need to make the most basic, of the basic, game, an editor, console, commands, debug checking, and that whole universal being? universal entity that was my dream, that i am writing to you for past two years every day Claude,so wake u finally 
+
+
+here i wanna make some lists of features and things i care about, there is always more, but these appears in my mind right now, at 1 minute thinking session
+
+1 console
+2 floodgate
+3 asset library
+4 universal entity
+5 object inspector/editor
+6 position mover
+7 scene loader
+8 thing creator
+9 scene creator
+10 actions creator
+11 interfaces creation
+12 connections of points? variables?
+13 all scripts inspector, all theirs vars, and their insides
+14 grid base system, we have one, the bryce? the 10 vertical squares i talked about
+15 keyframes creation, as we create things,later we shall be able to in game bone them, and make their base poses, several, per state, walking crouching etc, sometimes even combinations of few, as we have body mostly splitted into 4 parts, from my perspective, two hands that can do different things, an head that also interact with it all, and legs that are mostly for movement, maybe kicking
+16 akashic records database system, the alive database, that we can also see, see in 3d, see as just text, see as grid based system, of 2d? map? of places, and whats in there :)
+17 position mover, needs to probably be made from several nodes, as we can make it in few ways? wait i will let you decide, as i have few ideas, we also might need position teleporter? etc
+18 good lod mechanics
+19 things creation can be made in several ways, as we mostly care about shapes in 2d or 3d, its layers of colors if more than one etc, marching cubes, heightmaps, shapes that are flat, sdf? something about shapes and distance the sdf, we also have a way to use both, path thingy class, and something else, so we generate paths, that bevel curve, and are smooth, and at certain points, we can generate circles/squares, any kind of flat geomtery figurine, and make connections,in shapes of path of them :) so it is like a snake? then to that shape we also need to add bones to animate it
+
+the most important part of the system, is "universal_being" that can become anything, an singular point in space, that can be changed.
+and kinda every of these points is as important, for me its just, i wanna see the universal being, i dream of it

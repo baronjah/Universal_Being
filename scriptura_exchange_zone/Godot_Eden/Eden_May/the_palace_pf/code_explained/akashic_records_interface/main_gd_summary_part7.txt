@@ -1,0 +1,74 @@
+# Main.gd Summary - Lines 3000-3500
+
+## Basic Set Management (Lines 3002-3032)
+- the_basic_sets_creation(): Central function for basic set creation
+- get_every_basic_set() / get_every_basic_set_(): Retrieves set lists from BanksCombiner
+- check_if_every_basic_set_is_loaded(): Validates loaded sets
+- container_finder(): Locates container names in record sets
+
+## Menu Initialization System (Lines 3033-3079)
+- initialize_menu(): Comprehensive menu initialization function
+  - Checks record states in active and cached storage
+  - Manages container counts and limits
+  - Handles different initialization scenarios
+  - Creates new records or loads cached ones
+  - Supports multiset creation (additional sets)
+
+## Record Type Lookup Functions (Lines 3081-3163)
+- find_record_set(): Type-specific record set lookup
+- find_instructions_set(): Type-specific instruction lookup
+- find_scene_frames(): Type-specific scene frame lookup
+- find_interactions_list(): Type-specific interaction lookup
+- Each provides mappings between string types and specific bank objects
+
+## Memory and Record Management (Lines 3165-3203)
+- record_mistake(): Thread-safe error tracking
+- get_record_type_id(): Type to ID conversion
+- get_cache_total_size(): Cache size calculation
+- get_dictionary_memory_size(): Dictionary size calculation
+- find_highest_in_array(): Array maximum finder
+- new_function_for_creation_recovery(): Error recovery system
+
+## Record Creation System (Lines 3205-3500)
+- create_additional_record_set(): Creates derived record sets
+  - Complex cloning and modification of existing sets
+  - Handles container and datapoint references
+  - Manages scene configurations
+- continue_recreation(): Advanced record set rebuilding
+  - Deep traversal and modification of nested structures
+  - Path and reference updating
+  - Name and ID remapping
+- create_record_from_script(): Creates records from predefined scripts
+  - Type-specific record creation
+  - Data source selection based on record type
+  - Multi-stage loading process
+- process_creation_request(): Request handling with status tracking
+- prepare_akashic_records_init(): Initial setup for the records system
+- load_record_set(): Core record loading function
+  - Processes raw records into structured data
+  - Manages headers and content
+  - Handles string splitting and array construction
+  - Sets metadata for record sets
+
+## Notable Patterns
+1. Record Type System: String-to-object mappings for different record types
+2. Multi-Stage Creation: Complex record creation with progressive stages
+3. Thread Safety: Mutex protection for shared data
+4. Reference Remapping: Sophisticated reference updating during cloning
+5. Deep Structure Processing: Recursive processing of nested record structures
+6. Error Tracking: Comprehensive mistake recording
+7. Caching System: Active and cached record management
+8. Type-Specific Banks: Specialized data sources for different record types
+
+## Architectural Design
+The system implements a sophisticated record management architecture with:
+- Records Banks: Storage for primary record data
+- Instructions Banks: Configuration for record behavior
+- Scenes Banks: Visual representation data
+- Actions Banks: Interaction specifications
+- Multi-level caching: Active and cached storage tiers
+- Set limits: Controls on container counts
+- Type systems: String-based type identification
+- Creation pipeline: Multi-stage creation process
+
+Reading continues from line 3500.

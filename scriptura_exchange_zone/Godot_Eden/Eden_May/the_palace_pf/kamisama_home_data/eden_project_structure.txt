@@ -1,0 +1,106 @@
+# Eden Project Structure Overview
+
+## Project Root
+The main project is a Godot 4.4 game called "Eden" with both GDScript and C# components. The project appears to be a space simulation/creation game with elements, galaxies, planets, and various physical interactions.
+
+Main directories:
+- `/code` - Contains all script files
+- `/scenes` - Contains .tscn scene files
+- `/addons` - Godot plugins/addons
+- `/shaders` - Shader files
+- `/docs` - Documentation
+
+## Code Structure
+The code is primarily organized in the `/code/gdscript/scripts/` directory, which contains many themed subdirectories:
+
+### Key Directories:
+
+1. **Menu_Keyboard_Console**
+   - Contains main.gd (over 9500 lines)
+   - Handles the core game loop, UI commands, and general program flow
+   - Contains play_button.gd for transitioning to element world
+
+2. **elements_shapes_projection**
+   - Our primary focus area
+   - Element system with fire, water, wood, and ash elements
+   - Implementation of physics interactions between elements
+   - Contains resource management system for performance
+   - Files:
+     - element_manager.gd - Main manager for element system
+     - element_resource_manager.gd - Resource limits and management
+     - base_element.gd - Base class for all elements
+     - fire_element.gd, water_element.gd, wood_element.gd, ash_element.gd - Element implementations
+     - element_system.gd - Core system functionality
+     - elements.gd - Global element definitions
+
+3. **Galaxy_Star_Planet**
+   - Space simulation with galaxies, stars, planets
+   - Celestial body creation and rendering
+   - Orbital mechanics and gravity simulations
+   - Key files: Galaxies.gd, CelestialBody.gd, Star.gd, GalaxyCloseUp.gd
+
+4. **universe_particles_physics**
+   - Universe simulation
+   - Particle systems
+   - Physics management
+   - Files: universe.gd, particle_system.gd, physics_controller.gd, shape_generator.gd
+
+5. **Space_Place_Point**
+   - Spatial positioning system
+   - Point management in 3D space
+   - Possibly handles coordinate systems
+
+6. **Text_Console_Window**
+   - Console/terminal implementation
+   - Text rendering and command parsing
+
+7. **Future_Past_Present**
+   - Time-based functionality
+   - Timeline management
+   - Possibly historical tracking of game state
+
+8. **akashic_records**
+   - In-game data storage
+   - Record keeping of game events
+   - Database-like functionality
+
+9. **ethereal_engine**
+   - Core engine functionality
+   - Custom engine features
+   - Meta-programming elements
+
+10. **Other Directories**
+    - Ai_Digital_Filter
+    - Archive_Past_Text
+    - Domino_Grid_Chunks
+    - Dungeons
+    - Model_Shape_Layer
+    - Planet_Cloud_Water_Grass
+    - Snake_Space_Movement
+    - Textfile_File_Rules
+    - Thing_Place_Space
+    - Time_Repeat_Cycle_Loop_Return_Again
+
+## Scene Structure
+The scenes directory contains various scene files (.tscn) for celestial objects:
+- CelestialBody.tscn
+- CelestialPlanet.tscn
+- Galaxies.tscn
+- GalaxyCloseUp.tscn
+- And many others related to space simulation
+
+## Current Focus
+Our current focus has been on the element system, specifically:
+1. Managing performance with too many light sources and particles
+2. Implementing LOD (Level of Detail) for distant elements
+3. Creating resource management to control active lights, particles, and physics
+4. Implementing frustum culling to skip processing off-screen elements
+5. Creating visual debugging tools for performance monitoring
+
+## Next Steps
+For the space game integration:
+1. Connect the element system with the galaxy/space simulation
+2. Implement unified resource management across both systems
+3. Optimize rendering for large-scale space views down to detailed element interactions
+4. Create transition mechanics between space view and element view
+5. Unify the universe physics with the element physics system

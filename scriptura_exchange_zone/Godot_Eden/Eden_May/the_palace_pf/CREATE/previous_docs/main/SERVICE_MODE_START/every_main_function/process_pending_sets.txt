@@ -1,0 +1,19 @@
+func process_pending_sets():
+	var creation_state = get_system_state("creation")
+	if creation_state.is_empty():
+		return false
+		
+	creation_state["mutex"].lock()
+	var can_process = true
+	
+	if creation_state["pending_sets"].size() > 0:
+		for set_data in creation_state["pending_sets"]:
+			if check_system_function("creation"):
+				create_new_task("three_stages_of_creation", set_data)
+				creation_state["active_sets"].append(set_data)
+			else:
+				can_process = false
+				break
+	
+	creation_state["mutex"].unlock()
+	return can_process

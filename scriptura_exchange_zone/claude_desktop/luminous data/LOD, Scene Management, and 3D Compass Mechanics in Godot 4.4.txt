@@ -1,0 +1,193 @@
+Level of Detail (LOD) in Godot 4.4
+Level of Detail (LOD) is a technique to optimize 3D rendering by reducing the complexity of distant objects. In Godot 4.4, LOD plays a key role in performance optimization alongside culling techniques
+docs.godotengine.org
+docs.godotengine.org
+. The basic idea is to use high-detail assets up close and simpler (lower-poly or lower-resolution) versions of those assets at a distance, where fine details aren’t perceptible to the player
+docs.godotengine.org
+. This reduces the GPU workload by drawing fewer polygons for far-away objects, with minimal visual impact. Godot 4.4 provides multiple built-in LOD systems to simplify implementation
+docs.godotengine.org
+:
+Automatic Mesh LOD Generation: Godot can automatically generate less-detailed versions of imported 3D meshes using the meshoptimizer library
+docs.godotengine.org
+. When you import a 3D scene (e.g. from glTF, FBX, etc.), the engine can create several LOD meshes (decimated versions of the original) behind the scenes. At runtime, Godot will transparently switch to the appropriate LOD mesh based on the camera distance, with no manual scripting needed
+docs.godotengine.org
+. This greatly simplifies LOD setup for large projects with many assets, as you don’t have to manually prepare each LOD mesh.
+Manual LOD with Visibility Ranges (HLOD): For finer control or artist-crafted LOD models, Godot offers Visibility Range properties on 3D nodes (any node inheriting GeometryInstance3D)
+docs.godotengine.org
+. This allows you to manually specify at what distances an object is visible. You can set up multiple versions of an object (as separate nodes or child scenes) and assign each a Begin and End distance range in the inspector. For example, a detailed MeshInstance3D could have an End distance of 50 (units), and a simplified version (or even a billboard Sprite3D imposter) has a Begin distance of 50
+docs.godotengine.org
+. As the camera moves, Godot will swap the nodes: the near object fades out at 50 while the far object fades in
+docs.godotengine.org
+. The Begin Margin / End Margin properties let you define a hysteresis or fade zone to avoid popping
+docs.godotengine.org
+. In other words, you can smooth the transition by cross-fading or delaying the switch until the camera is a bit past the threshold, preventing flicker when the camera hovers right at the LOD distance
+docs.godotengine.org
+. Visibility ranges work on any renderable node type, which means you could even switch to different techniques at distance (e.g. swap a 3D tree for a 2D Sprite3D impostor far away)
+docs.godotengine.org
+. This is sometimes called hierarchical LOD (HLOD) since you can group multiple objects under a parent and control their visibility collectively.
+Distance-based Effects: Other rendering elements can also use LOD principles. Lights and Decals in Godot 4 have Distance Fade properties
+docs.godotengine.org
+. For instance, a light can gradually fade out beyond a certain distance so that distant lights stop affecting the scene (saving rendering cost), or particle systems can be set to stop emitting far from the player. These are additional tools to reduce the cost of distant objects by either simplifying or disabling them when they are too far away to matter.
+
+
+Example of mesh LOD on a 3D model: The ship is shown at three levels of detail – the full-detail base mesh (left), a medium LOD (center), and a low-detail version for far distance (right). At runtime, Godot can automatically switch to the simpler meshes when the ship is far from the camera, improving performance. In practice, to use LOD in Godot 4.4 you should enable “Generate LODs” when importing complex meshes (for the automatic method) or set up multiple child objects with the Visibility Range settings for manual LOD. These approaches are not mutually exclusive – in fact, they complement each other
+docs.godotengine.org
+docs.godotengine.org
+. For example, you might use automatic mesh LOD on a high-poly tree model and also use a billboarding sprite as an extreme distance impostor. You could also fade out minor objects completely if they’re too far (e.g. small debris or NPCs can disappear beyond a certain range to reduce clutter and processing). The main takeaway is that LOD helps reduce polygon count and shader work for distant content, and Godot 4.4 offers built-in support to implement LOD easily, which you should leverage to keep your game running smoothly
+docs.godotengine.org
+.
+Scene Streaming and Dynamic Loading
+Large game worlds or memory-intensive scenes often benefit from scene streaming – loading and unloading portions of the game world on the fly – rather than having everything loaded at once. Godot 4.4 enables this through its flexible scene system and scripting APIs. The goal is to load game assets (scenes, nodes, textures, etc.) only when needed, unload or hide them when they’re not in use, and thus optimize memory and CPU/GPU usage. Dynamic scene loading/unloading can be achieved with Godot’s PackedScene system and the ResourceLoader. Each .tscn (or .scn/.glb) file in Godot is essentially a resource of type PackedScene which can be loaded at runtime and instantiated as a scene tree of nodes
+docs.godotengine.org
+. There are a few common strategies for dynamic loading in Godot:
+Preloading vs Loading on the fly: Using preload("res://scene.tscn") in a script will load that resource at compile time (essentially when the game starts or the script is loaded)
+docs.godotengine.org
+. This ensures the asset is ready instantly when you need it, but it consumes memory from the start. On the other hand, using load() or ResourceLoader.load() will load at runtime, which can introduce a stall (frame drop) if done during gameplay, because the loading is done on the main thread by default
+docs.godotengine.org
+. If the asset is large, the game may freeze briefly while loading. For small assets, load() is fine; for large scenes or many assets, you’ll want to load them in the background or during a loading screen.
+Background threading for loading: Godot 4 introduced an easier way to load resources on a background thread to avoid freezing the game. You can call ResourceLoader.load_threaded_request(path) to start loading a resource (like a PackedScene) asynchronously
+docs.godotengine.org
+. This immediately returns and lets your game continue running while the loading happens in the background. You can then periodically check if it's done via ResourceLoader.load_threaded_get_status() or simply attempt to retrieve it later with ResourceLoader.load_threaded_get(path) when you’re ready to use it
+docs.godotengine.org
+. Once you call ...load_threaded_get(), if the loading is finished it will return the resource instantly; if not, it will block at that point
+docs.godotengine.org
+. Typically, you would start an async load well before you need the asset (for example, as the player approaches a new zone or when a level starts) and then instantiate the scene at the right moment. Example:
+gdscript
+Copy
+Edit
+# Asynchronously load a scene in advance (e.g., on game start or when near a zone)
+const ENEMY_SCENE_PATH = "res://Enemy.tscn"
+func _ready():
+    ResourceLoader.load_threaded_request(ENEMY_SCENE_PATH)  # begin loading in background
+
+func spawn_enemy():
+    # Retrieve and instantiate the scene once needed (this will block if not fully loaded yet)
+    var packed_scene = ResourceLoader.load_threaded_get(ENEMY_SCENE_PATH)  # PackedScene
+    var enemy_instance = packed_scene.instantiate()  # create an instance of the scene
+    add_child(enemy_instance)  # add the enemy to the active scene
+In the Godot docs, this pattern is shown to load an enemy scene in the background on _ready and then spawn it when a button is pressed
+docs.godotengine.org
+docs.godotengine.org
+. By pre-loading in a thread, the instantiation can happen with minimal delay, avoiding gameplay hitching.
+Unloading and freeing assets: After a dynamically loaded scene is no longer needed, you should free it to release memory. In Godot, freeing a node (by calling queue_free() or remove_child() + free() on it) will dereference all the resources that node was using (meshes, textures, etc.). Once nothing else is referencing those resources, they are released from memory automatically
+docs.godotengine.org
+. Godot’s resource system is reference-counted, so if an object (or its sub-resources) is still referenced elsewhere, it won’t be freed until those references are gone
+forum.godotengine.org
+. This means if you have a reference to a loaded PackedScene or its instances in a script variable, you’ll want to clear it (set it to null) when done. There isn’t a manual unload() function for resources, but by using ResourceLoader.load() with caching disabled or by loading scenes as unique instances, you ensure each area can be freed when not in use
+forum.godotengine.org
+. In cases where Godot’s resource cache might hold onto something (e.g., if you used preload which stays in memory), you can force a fresh load by specifying ResourceLoader.CACHE_MODE_IGNORE in the load call
+forum.godotengine.org
+, though this is advanced usage. In general, design your loading such that each zone/level is a separate scene tree that can be freed whole.
+Hiding vs. removing: Instead of unloading, sometimes you might hide an asset to make it inactive while keeping it in memory. For example, if you have enemies or objects that frequently toggle on and off (or might respawn), it can be more efficient to instantiate them once and then just hide/disable them when not needed, rather than free and reload repeatedly. Toggling a node’s .visible property to false will stop rendering it (Godot won’t draw hidden objects). You can also disable its processing by calling methods like set_physics_process(false) or set_process(false) on that node or by using the built-in VisibleOnScreenEnabler3D node (formerly VisibilityEnabler) to automatically pause a node’s processing when it’s off-camera. Hiding assets saves the cost of rendering and (optionally) simulation, while avoiding the overhead of unloading from and reloading to memory. This pattern is often used for object pooling (e.g., reuse the same 10 enemy nodes by recycling them, instead of constantly instancing and freeing new ones).
+A robust strategy for scene streaming in large worlds is to divide the world into zones or chunks and load/unload them based on the player’s position. For instance, you can make each zone a separate scene (with its terrain, buildings, NPCs, etc.) and use an Area3D (trigger) to detect when the player is near a zone’s boundary. When the player enters a new zone, you load that zone’s scene (possibly add it as a child of a master World node) and also preload adjacent zones. When the player leaves a zone, you can detach or free the ones far behind. A concrete example of this approach is a zone loading system
+github.com
+github.com
+:
+The world is manually split into overlapping zone areas (so that the player is always in at least one loaded zone, and neighboring zones overlap to prevent gaps)
+github.com
+.
+If the player is in Zone A, you ensure Zone A is loaded and any zones adjacent to A (neighbors) are either loaded or in the process of loading. Neighbors can be kept preloaded (in memory but not added to the scene tree yet) for a quick activation
+github.com
+.
+When the player fully enters a new zone (say moves from Zone A to Zone B), you attach Zone B’s scene to the scene tree (making it visible/active). You might also trigger loading of B’s neighbors (if not already loaded) as the new “frontier.”
+github.com
+When a zone is far behind the player and no longer adjacent to the current zone, you detach and free it from the scene tree (unload it) to free memory
+github.com
+. This keeps memory usage bounded to only zones around the player.
+The overlapping design ensures the player never sees an empty world: before entering a zone, it was already loaded just out of sight. You may also use occlusion (e.g., hills, fog) to mask the loading/unloading so the player never notices zones popping in.
+This kind of streaming system allows essentially unlimited world size with no loading screens, at the cost of more complex scene management. It’s important to handle the transition carefully: e.g., use a brief fade-out/in or a buffering region if loading might cause a slight delay, or load in a separate thread to avoid frame drops. Also, consider how to maintain state (like NPC positions, puzzle progress) if a zone is unloaded and later reloaded – more on that below. Tips for efficient scene streaming:
+Keep zones self-contained: Each zone scene should include all nodes needed for that area (or have its own sub-structure), so it can be loaded or freed independently.
+Use placeholders or proxies: For extremely large background elements (like a distant mountain), consider keeping a simplified always-loaded version, or add a proxy in one zone that gets replaced when the actual zone loads.
+Asynchronous loading: Take advantage of background loading for big scenes – e.g., call load_threaded_request for a neighboring zone as soon as the player enters the current zone, so it loads while the player is exploring.
+Loading screens or progress indicators: If you must load a large scene during gameplay (say the player triggers a big area load), consider displaying a loading screen or a progress bar. You can use a “fake” loading zone (an intermediate scene that shows a loading screen UI) while you asynchronously load the real scene, then switch to it.
+Pool frequently used nodes: For objects that spawn often (like bullets, enemies in waves, etc.), pre-instantiate a pool of them and reuse by moving them around and resetting state, instead of creating/freeing each time. This trades memory for speed and avoids garbage collection hitches.
+In summary, load what you need, when you need it, and unload (or hide) what’s not needed. Godot’s scene system is very flexible – you can instantiate scenes at runtime, insert them anywhere in the node tree, or remove them – which makes streaming possible. The combination of careful zone planning, asynchronous loading, and judicious unloading will let you create large, dynamic worlds in Godot 4.4 without bogging down performance.
+Culling and Visibility Management
+Culling is about not rendering or processing objects that the player cannot see, thereby saving performance. Godot 4.4 employs several culling techniques automatically, and also gives you tools to extend culling for complex scenes:
+View Frustum Culling: Out of the box, Godot will not render objects that are completely outside the camera’s view frustum
+docs.godotengine.org
+. This means if an object is behind the camera or far off-screen, the engine skips drawing it. Frustum culling is highly efficient and happens every frame. You generally don’t need to do anything to enable this; it’s automatic. However, keep in mind if you have extremely large objects or a huge number of objects, the engine still has to consider each object to decide if it’s in view, so there is some overhead. Organizing your scene with appropriate spatial nodes (or using octree-like structures via GridMaps or grouping) can help the engine cull faster, but for most cases Godot handles this well internally.
+Occlusion Culling: Frustum culling doesn’t help if an object is within the camera’s broad view cone but hidden behind other objects (e.g., a house behind a hill). By default, the renderer might still attempt to draw all those objects until the depth buffer tests eliminate the hidden ones, which wastes resources
+docs.godotengine.org
+. Godot 4 introduced Occluder nodes to handle occlusion culling – i.e., not rendering objects that are behind a large occluder. You can add an OccluderInstance3D node to your scene and give it an Occluder shape (typically a simplified polygon or box roughly matching a wall, building, or large opaque object)
+docs.godotengine.org
+. In the editor, you bake occlusion once you set up occluders, which computes a spatial occupancy structure (a BVH) for the occluders
+docs.godotengine.org
+. At runtime, Godot uses this to quickly test if objects are behind occluders relative to the camera and will skip drawing those objects entirely
+docs.godotengine.org
+. This can massively reduce the draw calls and fragment shading cost in, say, a city where only the nearest buildings are visible and everything behind them is skipped. Occlusion culling in Godot 4.4 is dynamic to camera movement, but the occluders themselves should be mostly static (moving occluders incur a re-bake cost)
+docs.godotengine.org
+docs.godotengine.org
+. A common practice is to not move OccluderInstance3D nodes during gameplay, or if you have a dynamic occluder like a big door that opens, hide the occluder shape while the door is open
+docs.godotengine.org
+. The engine also allows you to set a cull mask on occluders to control what layers they affect (for example, you might choose not to occlude characters or small props)
+docs.godotengine.org
+. Properly set up, occlusion culling can significantly improve performance in complex scenes – but it may require tweaking your level design (e.g., ensure you have walls, hills, or other occluders to block long views)
+docs.godotengine.org
+ so the player isn’t simultaneously seeing everything.
+Visibility Notifiers & Enablers: Godot provides nodes like VisibleOnScreenNotifier3D and VisibleOnScreenEnabler3D (renamed from VisibilityNotifier/Enabler in Godot 4.0) to help manage what happens when objects go off-screen. A Notifier can send signals when an object becomes visible or hidden to any camera. This is useful for triggering loads or unloads: for example, you could attach a VisibilityNotifier3D to an enemy and connect its screen_exited signal to queue_free() the enemy when it’s far away and not visible. A VisibleOnScreenEnabler3D can automatically toggle certain behaviors on the node when it’s not visible, such as pausing physics processing, animations, or script processing. By adding a VisibleOnScreenEnabler3D and checking the appropriate boxes, you can ensure that when an object is off-camera it’s not consuming CPU for AI or physics. This is a form of CPU culling (not rendering related, but logic related). Use these for objects that don’t need to be active off-screen. For instance, you might disable an NPC’s AI when the player is nowhere near to witness it, or stop animating an off-screen elevator. This complements rendering culling to save overall performance.
+Manual hiding and layers: Aside from automatic culling, you can also organize your objects into layers and manually control their visibility. Godot 4.4 still has the concept of visibility layers (render layers) on VisualInstance3D nodes. You could set far-away scenery to a separate layer and globally toggle that layer off when not needed, though this is a less common approach now that LOD and occlusion are available. In simpler terms, you can also just set node.visible = false on objects that are outside some distance range (if you don’t want to fully free them). For example, you might have a script that iterates through certain far objects and hides them if farther than X units from the player. This could reduce rendering cost (though frustum culling often covers it, explicit hiding can remove them from consideration entirely).
+In summary, Godot’s rendering engine already avoids drawing what you can’t see via frustum culling
+docs.godotengine.org
+, and Godot 4.4 extends this with occlusion culling for hidden surfaces
+docs.godotengine.org
+. Take advantage of occluders in scenes with lots of indoor/outdoor visibility complexity (e.g. corridors, cities) to skip rendering objects behind walls. Use LOD to reduce detail for distant objects, and use visibility notifiers or enablers to turn off unnecessary processing for off-screen objects. Combined, these techniques ensure that at any given time, the engine is only dealing with a manageable amount of content – just what’s visible and relevant – rather than the entire game world.
+Maintaining Object State and Dynamic Scene Changes
+When you dynamically load and unload scenes (or spawn and free nodes at runtime), a critical consideration is maintaining the state of the game world. By default, if you remove a node or unload a scene and later reload it from file, it will reset to its initial setup (the state defined in the scene file). Any changes that happened at runtime – position changes, variables, an enemy’s health, doors opened/closed – would be lost if not handled explicitly. There are several techniques to handle this, ensuring a seamless experience where the world “remembers” what happened:
+Persist data in a Game State singleton: A common approach is to use an Autoload (Singleton) script (for example, a GameState.gd) to store important state information in data structures (dictionaries, arrays) that exist independent of any particular scene. For instance, each object that needs to persist could have a unique ID, and you store a dictionary of state like {"object_id_42": {"position": (10,0,5), "hp": 50, "collected": true}}. When you unload a scene or free an object, before doing so you save any relevant state to this global. Later, when reloading or re-instancing that scene/object, you consult the GameState and reapply the state (move the object to the saved position, set its HP, or remove it entirely if it was marked collected/destroyed). This requires planning – you need to decide what state to track – but gives you full control. Godot’s JSON APIs or Resource serialization can also be used to store this state to disk if needed (for save games), but for runtime streaming, in-memory storage is often enough.
+Don’t unload – instead disable: If memory permits and you want to preserve full state without serialization, another strategy is to never actually free the objects that need persistent state. Instead, detach them from the scene tree or put them under an inactive parent, and disable their processing. For example, rather than freeing an NPC when the player leaves a zone, you could move that NPC node under a placeholder node (or a special “inactive” group) and set it to visible = false and maybe set_physics_process(false). The NPC’s node (and all its variables) remain in memory exactly as they were. Later, when the player comes back, you re-parent the NPC back into the active scene tree and re-show it. This way, the NPC remembers everything (path progress, animation frame, etc.) from last time. The downside is memory usage – if you do this for too many objects, you might negate the benefit of unloading. So this is best for a moderate number of persistent objects or objects that are expensive to fully reset. Often developers choose a hybrid: for critical things that must retain state (e.g., a puzzle that was solved, an enemy that was already killed), store a flag or keep a minimal node, whereas for generic things (like random props) it’s fine if they reset or get reloaded fresh.
+Stateful scene design: Design your scenes in a way that they can accept state parameters on load. For instance, when instancing a zone scene, you might call a function on it (or set some properties) to inform it of the world state – e.g., which treasures have been found in that zone, which doors unlocked. You can have your zone scene check the GameState singleton in its _ready() and immediately destroy certain nodes (like remove treasure chest nodes that were already opened) or move NPCs to saved positions. This way, even a freshly loaded scene will configure itself to the correct state. Godot makes it easy to communicate such data (via singletons or by passing a dictionary to a scene’s script). The key is to give each object a stable identity (an ID or a path) so you can match saved data to scene nodes. You might use node names, or an export var id on certain scripts to identify them.
+Keep track of transforms and physics states: If you unload parts of the world, the player or other dynamic bodies might leave behind “queued” state. For example, if the player pushes a physics object into an unloaded zone, that object might freeze until the zone loads. To handle this, you could temporarily parent such objects to a still-loaded part of the scene or simply record their velocity and position. It’s often easiest to avoid crossing the boundaries with physics – design the zones with slight overlaps and stable boundaries. If an object must cross zones, consider not tying it to a single zone scene (make it its own object that lives globally or in a manager).
+Use unique resource copies if modifying them: One caveat in Godot: if you modify a Resource that was loaded from disk (e.g., you loaded a .tres resource for an item and changed its properties), those changes might persist in memory and affect future instances. To avoid unintended persistence, use Resource.duplicate() for resources that you will modify at runtime, so you’re not modifying the shared resource in the cache
+forum.godotengine.org
+forum.godotengine.org
+. For example, if you load a scene and then programmatically change some sub-resource (like a mesh or material), unloading and reloading could bring back the changed version from cache unless you isolated it. This is an advanced point, but worth noting: freeing a node will free its resources if no one else references them
+docs.godotengine.org
+, but if something was cached and reused, you might get a surprise. Using unique instances or clearing caches as mentioned earlier (CACHE_MODE_IGNORE) can help ensure a truly fresh load if that’s what you want.
+Overall, maintaining state in a streamed world boils down to tracking changes. Decide which changes matter (the player probably doesn’t care if a random rock is in the exact same spot, but does care if a key item was picked up or a boss is dead). For important changes, record them in a permanent place (memory or disk) so they can be reapplied. For less important or very dynamic things, you might let them reset on reload or keep them alive in the background if needed. By thoughtfully combining these methods, you can have a dynamically loading world that still feels persistent and consistent to the player.
+Implementing a 3D Compass (Log Pose Style) in Godot 4.4
+In addition to performance topics, you asked about a compass system with a 3D arrow, akin to One Piece’s Log Pose – essentially a navigational compass that points towards a specific direction or target in the 3D world. Implementing a 3D compass in Godot 4.4 involves orienting an arrow (or needle) in 3D space so that it consistently points toward some reference (for example, a goal location, the world’s North, or any moving target). We’ll focus on the scenario where the compass arrow should point to a particular target position in the world (since the Log Pose points to the next island/destination). Setup: You will have a 3D node for the compass arrow – this could be a MeshInstance3D shaped like an arrow or needle. It might be part of a larger compass model (e.g., enclosed in glass). The arrow should be free to rotate around, typically pivoting about its center. If this compass is something the player carries (like on the UI or a handheld device), you might have it as a child of the player or of a UI 3D scene. For simplicity, let’s assume the arrow node is oriented such that its forward direction (negative Z axis in Godot by convention) is the “pointy” end of the arrow. This is important because look_at() in Godot will rotate a node so that its -Z axis points at the target location. Basic 3D rotation using look_at(): Godot’s Node3D has a method look_at(target_position, up_direction) which is perfect for this use-case. It rotates the node to face towards target_position, using the provided up vector to orient it. In our case, the compass arrow should mostly rotate on a horizontal plane (if it’s like a traditional compass needle that stays level) – so we’ll use the world’s up vector (0,1,0) as the up direction. Suppose you have a reference to the arrow node and the target (perhaps the target is another Node3D like an island or an objective). You can do this each frame:
+gdscript
+Copy
+Edit
+# Assume `arrow` is the Node3D of the arrow, and `target` is a Node3D for the destination.
+func _process(delta):
+    if arrow and target:
+        var arrow_global_pos = arrow.global_transform.origin
+        var target_global_pos = target.global_transform.origin
+        # Option: ignore vertical difference if we want a flat compass
+        target_global_pos.y = arrow_global_pos.y
+        # Rotate arrow to look at the target position
+        arrow.look_at(target_global_pos, Vector3.UP)
+This code will continuously orient the arrow towards the target. We adjust the target’s y-coordinate to be on the same horizontal plane as the arrow if we want the arrow to stay level (not tilt up or down). This is often desired for a compass – the needle stays horizontal, only rotating around the vertical axis. By doing target_global_pos.y = arrow_global_pos.y, we essentially project the target onto the arrow’s horizontal plane before looking at it. The look_at() function will then yaw the arrow towards that point, using Vector3.UP (world up) to keep it from banking or rolling
+forum.godotengine.org
+. If instead you do want a fully 3D pointer (one that can tilt upward if the target is above you, for example), you can skip adjusting the Y. The arrow will then point in the true direction of the target in 3D space. That mimics something like a 3D marker arrow that could point up into the sky or downwards if the target is not at the same elevation as the player. Whether to allow tilt depends on your design: a Log Pose in One Piece likely stays level (since islands are on the same sea level), but in a game you might have objectives at different heights. A few things to note for the compass implementation:
+Local vs Global space: In the code above, we used global_transform.origin to get world coordinates. If the arrow is a child of a moving object (say the player holds it), using global positions is important. arrow.look_at() expects the target position in global space by default. Using target.global_transform.origin ensures we’re giving the correct coordinates
+forum.godotengine.org
+. If the arrow and target share a common parent and you wanted to use local space, Godot also provides look_at_local().
+Stabilizing the arrow: A physical compass needle would also tend to only rotate around one axis (yaw). By constraining the arrow’s rotation to yaw only (which we effectively did by leveling the target’s Y), we avoid it tipping over. If your arrow node’s initial orientation isn’t aligned with the world axes, you might need to adjust. For example, if your arrow model points along a different local axis, you could either reorient it in Blender/Godot beforehand or rotate the basis after look_at(). A common trick: if the arrow appears to point backwards, you might need to target arrow.look_at(position, up) with a reversed direction or adjust by 180 degrees (because look_at makes the -Z face the target). Ensure your model’s forward (the tip) corresponds to -Z local axis for simplicity.
+Compass behavior: A Log Pose compass might not point to a static point in world coordinates but perhaps towards an island that is also drifting or something magical. Generally, though, you’ll have a fixed direction or moving target. If it’s a fixed direction like “north”, your target vector could be derived from the player’s orientation. For example, to always point north (assuming -Z is north in world), you could use a target position like arrow_global_pos + Vector3(0, 0, -1) in global space (with appropriate rotation if your world north differs). For a dynamic target, as above, just reference the target’s position each frame.
+Using quaternions or manual calculation: The look_at method internally handles the math of computing the correct orientation. Under the hood it’s constructing a transformation where the forward axis of the arrow points at the target. You could do this manually by computing the direction vector and using atan2 for yaw, etc., but GDScript makes it easy. For instance, a manual horizontal compass calculation could be:
+gdscript
+Copy
+Edit
+var dir = target_global_pos - arrow_global_pos
+dir.y = 0
+if dir.length_squared() > 0:
+    dir = dir.normalized()
+    # Calculate the yaw angle required (atan2 uses X and Z to get an angle)
+    var angle = atan2(dir.x, dir.z)
+    arrow.rotation.y = angle
+This would also yaw the arrow towards the target. We negate/adjust axes as needed (Godot’s coordinate system might require using atan2(x,z) as shown). However, using look_at is simpler and less error-prone, especially if full 3D orientation is required.
+Compass arrow in UI vs world: If you wanted the compass arrow to be a UI element (say an arrow on the HUD that always points toward the objective in screen space), the approach would differ (you’d project the target position to screen coordinates or rotate a 2D arrow). Since the question specifically mentions a 3D arrow mechanic, we’ve described the in-world 3D compass. Just be aware of the distinction: a world-space compass can be an actual object the player sees in the world, whereas a UI compass could be a 2D overlay or a 3D widget that always faces the camera. For a 3D in-world compass like the Log Pose, you might even mount a Camera or use a Viewport to render it if it’s part of the UI. But in most cases, just putting the compass as a child of the player (so it moves with them) and orienting the arrow as above works fine.
+Putting it together: The compass arrow will likely have a script that knows what it should point to. This could be a fixed global direction or a Node reference to, say, the next objective or island. Every frame (or every few frames, since it doesn’t need to update faster than the needle can visibly move), update the arrow’s orientation using one of the above methods. If using physics or an additive animation (like you want the arrow to wobble and then settle), you might update in _physics_process or even use an Tween for smoothing. But a direct look_at each frame will make it very snappy, which is usually fine for a compass. To emulate the Log Pose behavior more fully, you could add a slight delay or smoothing to the arrow’s movement so it feels like it has inertia (e.g., lerp the angle towards the target angle so it doesn’t snap instantly). This can be done by storing the current angle and interpolating. For example:
+gdscript
+Copy
+Edit
+var current_yaw = arrow.rotation.y
+var target_dir = (target.global_transform.origin - arrow.global_transform.origin).normalized()
+target_dir.y = 0
+var target_yaw = atan2(target_dir.x, target_dir.z)
+# Interpolate angles (small factor for smoothing)
+arrow.rotation.y = lerp_angle(current_yaw, target_yaw, 0.1)
+This way the arrow “swings” toward the target direction more gradually, which might mimic a real compass needle that needs to stabilize. Finally, test the compass in game. Move the target or the player around and ensure the arrow correctly points toward it under all conditions (watch out for edge cases when the target is directly above/below if you allow tilt, etc.). With the above approach, you should have a working 3D compass arrow in Godot 4.4. It’s a straightforward but neat mechanic that adds to player orientation and can be implemented with just a few lines of GDScript leveraging Godot’s built-in transform functions. Enjoy navigating your game world with your new Log Pose-style compass!

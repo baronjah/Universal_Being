@@ -1,0 +1,5 @@
+func file_creation(file_content,  path_for_file, name_for_file):
+	var file = FileAccess.open( path_for_file + "/" + name_for_file + ".txt", FileAccess.WRITE)
+	if file:
+		for line in file_content:
+			file.store_line(line)  # [0] because each line is in its own array

@@ -1,0 +1,148 @@
+# Eden Space Game - Element System
+
+## Core Elements
+
+### Fire Element
+- **Properties**: Heat, light intensity, fuel consumption
+- **Behavior**: Flickers, consumes fuel, spreads to flammable materials
+- **Interactions**: Ignites wood, evaporates water, transforms to ash
+- **Visual Effects**: Dynamic light, flame particles, smoke, embers
+- **LOD Implementation**: Simplified particle effects at distance
+
+### Water Element
+- **Properties**: Flow rate, temperature, volume
+- **Behavior**: Flows downward, forms waves, freezes/evaporates with temperature
+- **Interactions**: Extinguishes fire, erodes earth, nourishes plants
+- **Visual Effects**: Translucent material, ripple effects, splash particles
+- **LOD Implementation**: Simplified surface at distance
+
+### Wood Element
+- **Properties**: Growth rate, density, age, moisture
+- **Behavior**: Grows over time, connects to nearby wood
+- **Interactions**: Burns with fire, decays with water, creates stability
+- **Visual Effects**: Organic textures, growth animations
+- **LOD Implementation**: Simplified geometry at distance
+
+### Ash Element
+- **Properties**: Density, heat retention, fertility
+- **Behavior**: Settles downward, accumulates, breaks down over time
+- **Interactions**: Fertilizes new wood, interacts with water
+- **Visual Effects**: Particle systems, dust effects
+- **LOD Implementation**: Combined particle systems at distance
+
+## Element Physics
+
+### Force System
+- **Gravity**: Affects all elements differently
+- **Attraction/Repulsion**: Between element types
+- **Connections**: Elements can form bonds
+- **Fluid Dynamics**: For water and air-like elements
+
+### Transformation Rules
+- **Fire + Wood → Ash**: Combustion process
+- **Water + Fire → Steam**: Phase change
+- **Wood + Water → Growth**: Enhanced wood growth
+- **Ash + Water → Fertile Soil**: Creates growth medium
+
+### Environmental Effects
+- **Wind**: Affects fire spread, moves particles
+- **Temperature**: Changes element behavior
+- **Pressure**: Affects fluid dynamics
+- **Light**: Creates visual effects, influenced by elements
+
+## Performance Optimization
+
+### Level of Detail (LOD)
+- **LOD 0**: Full detail - All effects, physics, connections (closest)
+- **LOD 1**: Medium detail - Reduced particles, full physics
+- **LOD 2**: Low detail - Minimal particles, simplified physics
+- **LOD 3**: Minimal detail - Visual only, no detailed physics
+- **Beyond**: Not rendered or extremely simplified
+
+### Resource Management
+- **Lights**: Maximum 8 dynamic lights at once
+- **Particles**: Maximum 16 active particle systems
+- **Physics**: Maximum 100 elements with full physics
+- **Visibility**: Maximum 200 visible elements
+
+### Optimization Techniques
+- **Frustum Culling**: Skip off-screen elements
+- **Adaptive Processing**: Adjust processing based on performance
+- **Resource Queuing**: Prioritize important elements
+- **Task Management**: Process elements in chunks
+
+## Visual Implementation
+
+### Particle Systems
+- **Fire Particles**: Flames, sparks, smoke
+- **Water Particles**: Droplets, splashes, mist
+- **Wood Particles**: Leaves, growth effects
+- **Ash Particles**: Dust, embers, falling ash
+
+### Lighting
+- **Fire Lighting**: Dynamic light source with flicker
+- **Environmental Lighting**: From surroundings
+- **Shadow Casting**: For solid elements
+- **Global Illumination**: Ambient lighting effects
+
+### Material Effects
+- **Transparency**: For water and effects
+- **Emission**: For glowing elements like fire
+- **Reflections**: For water surfaces
+- **Normal Mapping**: For surface details
+
+## Element Creation and Management
+
+### Element Generation
+- **Procedural Creation**: Based on rules and environment
+- **User Creation**: Player-triggered element spawning
+- **Natural Formation**: Environmental conditions create elements
+- **Transformation**: Elements changing type through interaction
+
+### Element Lifecycle
+- **Birth**: Initial creation with default properties
+- **Growth/Change**: Properties evolve over time
+- **Interaction**: With other elements and environment
+- **Transformation/Death**: Change to another element or removal
+
+### Memory Management
+- **Element Pooling**: Reuse element objects
+- **Oldest Replacement**: Remove oldest elements when limit reached
+- **Priority System**: More important elements remain longer
+- **Distance Culling**: Remove distant elements first
+
+## Integration with Space System
+
+### Planetary Influence
+- **Planet Type**: Determines default element distribution
+  - Earth-like: Balanced elements
+  - Rocky: More fire and ash
+  - Gas: Mainly fire and air
+  - Ocean: Primarily water
+
+### Gravity Effects
+- **Planet Size**: Affects element physics (physics_intensity)
+- **Atmosphere**: Influences element behavior
+
+### Environmental Conditions
+- **Temperature**: From nearby stars
+- **Weather**: On planetary surfaces
+- **Day/Night Cycle**: Light changes
+
+## Advanced Features
+
+### Element Networks
+- **Connection Systems**: Elements connecting into networks
+- **Emergent Behavior**: Complex interactions from simple rules
+- **Signal Propagation**: Effects traveling through connected elements
+
+### Word Manifestation
+- **Word Visualization**: Creating element patterns from words
+- **Semantic Mapping**: Word meaning influences element types
+- **Interactive Text**: Words influencing element behavior
+
+### User Interaction
+- **Element Creation**: Player can spawn elements
+- **Force Application**: Push/pull elements
+- **Property Adjustment**: Change element parameters
+- **Transformation Triggering**: Cause elements to transform

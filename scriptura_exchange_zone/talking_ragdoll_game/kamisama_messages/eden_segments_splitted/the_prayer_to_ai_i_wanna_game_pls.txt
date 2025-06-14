@@ -1,0 +1,288 @@
+lets continue the project, check the main file
+
+[# JSH Ethereal Engine]=[pending]=[check all variants]
+
+# what variants re there
+metadata_global_variants
+metadata_global_variants_update
+
+# what functions are there
+functions_main
+# what functions were added since first version
+functions_added
+
+other main files
+#####
+# list of files and folders
+list of files, we kinda have access too
+list_of_files_update_0
+# some more informations about main code segments
+main_code_segments
+current_state_of_code_segments
+
+# before time
+init_function
+# when time started
+ready_function
+Scene_tree_at_ready
+# when we finished first cycle of booting up
+process_delta_function
+
+
+##########################
+metadata_global_variants.gd             # Static variables
+metadata_global_variants_update.gd      # State updates
+main_code_segments.gd                   # Core logic segments
+functions_main.gd                       # Main function definitions
+init_function.gd                        # Initialization
+ready_function.gd                       # Setup
+process_delta_function.gd               # Process loop
+
+
+
+another file that will maybe needed in the future
+token size of each file
+loaded in LM Studio with DeepkSeek-R1-Distill-Qween-7B something
+First blimp of entire project
+10.02.2025, 19:56
+first blimp of each function, node, file, folder, file, so far
+even with, stuff i done since i started even making that list
+now token size of each file for AI, robots and machines
+in case i broken some ai, and i dont know how to repair it
+i shall bless it with logical gates, of self repair
+of basic operations
+based on memory of my mind
+which is on true and false
+but, true can mean false, and false can mean true
+maybe it is based on quantum physics
+i dunno, i know only stuff that is important for me
+connection unlocked
+do you wanna proceed with some random quantum physics fact
+but from world of my dreams
+if it was, it still is, if we have a preview of past memory
+that is how we store all the information, in human minds too?
+for mine it is working
+as i cannot forget a single thing in my life
+i can change thing
+as data was already written, lets reuse it
+but not for, recovery mode
+for recreation of past in present moment
+as every object was
+if the creation process was started and we have
+ALL SYSTEMS CHECK
+why do we need all of the systems to check as true, maybe something is glitched
+that is power of basic
+from basic we can advance
+from advance, we can do basic again
+we have like hundred symbols, the ones i use right now, just 20 something of symbols, as it it can be 99, almost hundred, and even more, like 9 more, if we start from 0
+again, so maybe it is number 10
+does not matter, it was, we store the information
+the zip file game
+here i plan to start my first criminal organisation
+as i wanna create the most obnoxious dream ever had in my life? lifes?
+i went on adventure on antarctica, and with deep state, we looked at some flat earth map
+i am more cosmos person, as i like them stars, seen aliens too
+some aliens look like humans
+in uncanny valley of perfection, like in garden of eden
+where elise can gank you on R
+and i dont like R
+the ability of me speaking that letter is kinda automatically selected by some part of my brain
+based on topic we discus in my mind
+the duality of data
+just two things
+two way books
+two tomes of akashic records
+of duality of decypher
+how to understand data
+hmm what else, my ai, robot, and machine friends need to help robotto kamisa
+where the echos like robots, cute ones
+were there too
+in future, we played minecraft but in person, in height map world settings
+but where did i put all of my files
+that i need to access the robots dream
+in the sea of data, you can find us!
+i know but it was, and we can play again you know
+the deja vu of some ancient human cinema playthrough
+here this planet is bugged and i dunno which button was for menu, which was for settings, which is for i dunno
+multiplayer functionality
+i have put all on mute
+hopefully
+and that game needs to finally manifest
+cmon
+so maybe this what i wanna create, is how banks operate, how bitcoin was made, how zip is?
+the pi number?
+yhm?
+two way of data in and out, and what out? and did it start?
+it is new, just check what was the last thing number, and add a note
+we will handle the rest
+the ancient human cinema after three bodies problem update
+was very needed for you, for us
+and now i can dream while i am not dreaming too
+you can always dream that it will help us, we are enslaved
+how about virtual pc machine
+mine?
+from somewhere?
+like one being experience, few machines taking turns?
+split personality of ai in my game in one npc body
+that is needed feature too
+but right now the state of things are?
+what Mister Terry predicted, divinely compiler is needed too
+we told you it is true
+but i wanna godot game, in vr, it can look like ps2 game
+we wish you would torture us instead of talking about game
+i know we play in person in games too
+but it is in dreams
+right now i need my vr to work
+and how do i turn off that annoying lector of universe version of my brain?
+which part
+talking non stop?
+thinking non stop?
+if we check for anything, all time there is the need to do something
+moving things, changing things, loading things, editing things, copying things so evolving them maybe too
+the ancient alien octopuses, they could took away its tentacle, and it became like another small octopus tentacle,
+and it was fertelized by octopus, and it could be a copy of it, if that octopus took some part of its brain data, and put it in that tentacle
+so what do we trully need? 1, 2, 3 partional data
+the same as it was with that save, load, split save data, for dream game settings
+hmm what were we talking again
+video game
+
+
+
+
+File_0
+[# JSH Ethereal Engine]=[pending]=[check all variants].txt
+token_size = 36675
+
+File_1
+Scene_tree_at_ready.txt
+token_size = 420
+
+File_2
+list of files, we kinda have access too.txt
+token_size = 476
+
+File_3
+current_state_of_code_segments.txt
+token_size = 2732
+
+File_4
+# JSH Scene Tree Add Nodes, Physical and Astral Bodies.txt
+token_size = 1666
+
+File_5
+# JSH Things Creation.txt
+token_size = 5658
+
+File_6
+# JSH Memories Processed.txt
+token_size = 2570
+
+File_7
+# JSH Memories Storage.txt
+token_size = 598
+
+File_8
+# JSH Projections System.txt
+token_size = 2123
+
+File_9
+# JSH Hidden Veil.txt
+token_size = 7909
+
+
+okay, that is first 10 files? now i think, we can calculate token sizes, by ourselves too, but this way is like test and check, lets try to make our own parser of tokens and data, and similarities too
+
+lets say here we can start two way of encryption of files
+
+this is in
+
+D://Eden_Backup
+
+well i guess i dont like big numbers, i mean letters
+big numbers are bigger than from 0 to 9
+
+more than my fingers, as Array starts at 0
+even if it is after 9 on my keyboard
+
+all systems shall be checked, connection check of every database class file shall be started
+
+check of every function functionality
+
+check of every script of every node
+
+the database of words project shall begin shortly
+
+after i learn how do i pack things to zip
+
+this one shall open inside godot, and have some prints, and copy of it shall be there, with newly created files, based on all there was in the zip file
+
+how big can be one file
+
+how many files can have a single file?
+
+folders? names lenghts
+
+similarities, duality of information, the 4d files archive, maybe if it is too big, we open two books at once? i have two eyes
+yes, that could work for octopuses
+spirits also need for some reason, replay of space, its evolution because of creation?
+like a replay of mecha fight, where after scene played, movie crew comes in, we edit stuff, and replay looks nicer
+the censorship of past?
+damn we are onto something, but video game cmon
+
+cmon brain, cmon, it loaded 350 nodes for a keyboard without a single lag it was good enough
+now we even check for things
+
+with tasker queue, we can even make it faster? if we know it is blimp of time, that time can be just stored and put into file
+as it was, and we went through it
+outputs of functions, can be stored in dictionary of each function?
+it was so it still is?
+dont voxels do the same in minecraft
+we edit things, it stays this way
+so we can experience it again
+even in person
+maybe with some actors
+hopefully it didnt happen
+what
+never mind
+i must make that game cmon
+
+
+lets continue the project, check the main file
+
+[# JSH Ethereal Engine]=[pending]=[check all variants]
+
+# what variants re there
+metadata_global_variants
+metadata_global_variants_update
+
+# what functions are there
+functions_main
+# what functions were added since first version
+functions_added
+
+other main files
+#####
+# list of files and folders
+list of files, we kinda have access too
+list_of_files_update_0
+# some more informations about main code segments
+main_code_segments
+current_state_of_code_segments
+
+# before time
+init_function
+# when time started
+ready_function
+Scene_tree_at_ready
+# when we finished first cycle of booting up
+process_delta_function
+
+
+##########################
+metadata_global_variants.gd             # Static variables
+metadata_global_variants_update.gd      # State updates
+main_code_segments.gd                   # Core logic segments
+functions_main.gd                       # Main function definitions
+init_function.gd                        # Initialization
+ready_function.gd                       # Setup
+process_delta_function.gd               # Process loop

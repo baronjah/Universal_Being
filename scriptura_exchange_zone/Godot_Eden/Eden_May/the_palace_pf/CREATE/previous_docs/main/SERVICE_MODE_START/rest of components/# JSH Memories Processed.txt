@@ -1,0 +1,235 @@
+#
+# JSH Memories Processed
+#
+#      oooo  .oooooo..o ooooo   ooooo 
+#      `888 d8P'    `Y8 `888'   `888' 
+#       888 Y88bo.       888     888     ┳┳┓         •     ┏┓            ┓  ┏┓         
+#       888  `"Y8888o.   888ooooo888     ┃┃┃┏┓┏┳┓┏┓┏┓┓┏┓┏  ┃┃┏┓┏┓┏┏┓┏┏┏┓┏┫  ┗┓┓┏┏╋┏┓┏┳┓
+#       888      `"Y88b  888     888     ┛ ┗┗ ┛┗┗┗┛┛ ┗┗ ┛  ┣┛┛ ┗┛┗┗ ┛┛┗ ┗┻  ┗┛┗┫┛┗┗ ┛┗┗
+#       888 oo     .d8P  888     888                                           ┛      
+#   .o. 88P 8""88888P'  o888o   o888o 
+#   `Y888P                            
+#
+# JSH Memories Processed
+#
+
+# loading cached data! the newest chicken we have! maybe it is egg already?! as we just need name of data set, that is in active record sets
+func load_cached_data(data_set: String):
+	var type_of_data : int
+	var records_set_name = data_set
+	
+	active_r_s_mut.lock()
+	var cached_data_new = active_record_sets[records_set_name].duplicate(true)
+	active_r_s_mut.unlock()
+	
+	var thing_name
+	var coords_to_place
+	var direction_to_place
+	var thing_type_file
+	var shape_name
+	var root_name
+	var pathway_dna
+	var group_number
+	var counter_to_know : int = 0
+	var first_line : Array = []
+	var lines_parsed : Array = []
+	for data_type in BanksCombiner.combination_new_gen_0:
+		counter_to_know = 0
+		type_of_data = int(data_type[0])
+		var type_num = data_type[0]
+		var data_name = records_set_name + BanksCombiner.data_names_0[type_num]
+		var file_data = cached_data_new[data_name]["content"]
+		var size_of_data = file_data.size()
+	
+		for record in file_data:
+			counter_to_know +=1
+			for lines in record:
+				if lines == record[0]:
+					first_line = record[0]
+				else:
+					lines_parsed.append(lines)
+			match type_of_data:
+				0:
+					# First
+					thing_name = first_line[0][0]
+					# Second
+					coords_to_place = first_line[1][0]
+					# Third
+					direction_to_place = first_line[2][0]
+					# Fourth
+					thing_type_file = first_line[3][0]
+					# Fifth
+					shape_name = first_line[4][0]
+					# Sixth
+					root_name = first_line[5][0]
+					# Seventh
+					pathway_dna = first_line[6][0]
+					# Eight
+					group_number = first_line[7][0]
+				1:
+					pass
+					#print("file loading? 1")
+				2:
+					pass
+					#print("file loading? 2 ")
+				3:
+					pass
+					#print("file loading? 3 " )
+
+			match type_of_data:
+				0:
+					#print( "  thing_name : " , thing_name, " thing_type_file :" , thing_type_file, " metadata_parts : " , first_line, " second_line :" , lines_parsed[0],  " group_number : " , group_number, " shape_name : " , shape_name, "information_lines : " , lines_parsed)
+					analise_data(thing_name, thing_type_file, first_line, lines_parsed[0], group_number, shape_name, lines_parsed)
+				1:
+					print("instruction stuff:")
+				2: 
+					print(" scenes and frames analise : ")
+				3: 
+					print("so we will need to add them to datapoint")
+					if counter_to_know - 666 == size_of_data:
+						var container_node_path = first_line[1][0]
+						var container_node = get_node(container_node_path)
+						var datapoint_node = container_node.get_datapoint()
+						var scene_number: int = 0
+						datapoint_node.move_things_around(scene_number)
+			first_line.clear()
+			lines_parsed.clear()
+
+
+func load_cached_data_second_impact(data_set: String):
+	print(" load cached data start : " , data_set)
+	var type_of_data : int
+	var records_set_name = data_set
+	
+	active_r_s_mut.lock()
+	var cached_data_new = active_record_sets[records_set_name].duplicate(true)
+	active_r_s_mut.unlock()
+	
+	var thing_name
+	var coords_to_place
+	var direction_to_place
+	var thing_type_file
+	var shape_name
+	var root_name
+	var pathway_dna
+	var group_number
+
+	var first_line : Array = []
+	var lines_parsed : Array = []
+	for data_type in BanksCombiner.combination_new_gen_1:
+		type_of_data = int(data_type[0])
+		var type_num = data_type[0]
+		var data_name = records_set_name + BanksCombiner.data_names_0[type_num]
+		var file_data = cached_data_new[data_name]["content"]
+		var size_of_data = file_data.size()
+		for record in file_data:
+			for lines in record:
+				if lines == record[0]:
+					first_line = record[0]
+				else:
+					lines_parsed.append(lines)
+			match type_of_data:
+				0:
+					print("newly_made_dictio here we act re se ")
+				1:
+#					print("instruction stuff:")
+					var thingies_to_make_path = lines_parsed[0]
+					var datapoint_path_l_c_d_s_i =  thingies_to_make_path[0][0] + "/" + thingies_to_make_path[1][0]
+					var data_type_s_i : String = "instructions_analiser"
+					
+					mutex_data_to_send.lock()
+					data_to_be_send.append([data_type_s_i, datapoint_path_l_c_d_s_i, thingies_to_make_path[0][0], first_line.duplicate(true), lines_parsed.duplicate(true)])
+					mutex_data_to_send.unlock()
+
+				2: 
+#					print(" scenes and frames analise : ")
+					var thingies_to_make_path = lines_parsed[0]
+					var datapoint_path_l_c_d_s_i0 =  first_line[1][0] + "/" + first_line[2][0]
+					var data_type_s_i0 : String = "scene_frame_upload"
+					
+					mutex_data_to_send.lock()
+					data_to_be_send.append([data_type_s_i0, datapoint_path_l_c_d_s_i0, first_line[1][0], first_line.duplicate(true), lines_parsed.duplicate(true)])
+					mutex_data_to_send.unlock()
+					
+				3: #interactions
+					var datapoint_path_l_c_d_s_i1 =  first_line[1][0] + "/" + first_line[2][0]
+					var data_type_s_i1 : String = "interactions_upload"
+
+					mutex_data_to_send.lock()
+					data_to_be_send.append([data_type_s_i1, datapoint_path_l_c_d_s_i1, first_line[1][0], first_line.duplicate(true), lines_parsed.duplicate(true)])
+					mutex_data_to_send.unlock()
+
+			first_line.clear()
+			lines_parsed.clear()
+func interactions_upload_to_datapoint(header_line, information_lines, datapoint):
+	var array_of_interactions : Array = []
+	var number_of_interactions = header_line.size() - 5
+	var num_counter : int = 5
+	for num_in in number_of_interactions:
+		array_of_interactions.append(header_line[num_counter])
+		num_counter +=1
+	datapoint.upload_interactions(header_line[3], information_lines, array_of_interactions, number_of_interactions)
+
+
+# uploading scenes to datapoint
+# we first must have container and datapoint for it
+func scene_frames_upload_to_datapoint(header_line, information_lines, datapointi, containeri):
+	var datapoint_path = header_line[1][0] + "/" + header_line[2][0]
+	var datapoint_selector = datapointi
+	var new_way1 = header_line
+	var new_way2 = information_lines
+	datapoint_selector.upload_scenes_frames(header_line, information_lines)
+
+func instructions_analiser(metadata_parts, second_line, third_line, datapoint, container):
+	
+	var type = metadata_parts[1][0]
+	var counter = -1
+	for i in InstructionsBank.type_of_instruction_0:
+		counter +=1
+		if type == i:
+			break
+	match counter:
+		0: # 0 = "assign_priority_to_datapoint"
+			datapoint.datapoint_assign_priority(third_line[0][0])
+		1: # 1 = "assign_things_to_datapoint"
+			datapoint.add_thing_to_datapoint(third_line)
+		2: # 2 = "set_max_things_number", 
+			datapoint.datapoint_max_things_number_setter(third_line[0][0])
+		3: # 3 = "connect_containter_datapoint"
+			container.containter_start_up(0, datapoint)
+		4: # 4 = "add_things_to_container", 
+			print("analise instruction 4, we didnt use it yet, probably putting containers inside containers, so we have like, easy way to use scenes system :)")
+		5: # 5 = "set_the_scene", 
+			var scene_setter_number = int(third_line[0][0])
+			datapoint.scene_to_set_number_later(scene_setter_number)
+		6: # 6 = "rotate_container", 
+			#container.rotation.x -= deg_to_rad(int(third_line[1][0]))
+			var type_of_stuff : String = "rotate"
+			the_fourth_dimensional_magic(type_of_stuff, container, int(third_line[1][0]))
+			
+		7: # 7 = "setup_text_bracet"
+			var action_function_type : String = "single_function"
+			var name_of_function : String = "setup_text_handling"
+			sixth_dimensional_magic(action_function_type, datapoint, name_of_function)
+			#datapoint.setup_text_handling() # = get_node(database_node_path)
+		8: #
+			#print(" interaction single multi mode or whatever" , third_line[0][0] , third_line[1][0])
+			datapoint.set_maximum_interaction_number(third_line[0][0], int(third_line[1][0]))
+			
+		9: #move_container
+			print(" move container " , third_line)
+			var x = float(third_line[1][0])  # "0.0"
+			var y = float(third_line[1][1])  # "-4.5"
+			var z = float(third_line[1][2])  # "0.41"
+			var new_position = Vector3(x, y, z)
+			var type_of_stuff : String = "move"
+			the_fourth_dimensional_magic(type_of_stuff, container, new_position)
+			#container.position = Vector3(x, y, z)
+		10:
+			print(" load_file ")
+			datapoint.initialize_loading_file(third_line)
+			
+
+# here we instead just called datapoint we pulled out, if we wanna add additional things, i guess we can just add stuff here and call it
+func assign_things_to_datapoint():
+	pass

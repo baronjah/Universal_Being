@@ -1,0 +1,170 @@
+# InputManager.gd - The Gatekeeper of Reality
+extends Node
+class_name InputManager
+
+signal input_validated(action: String, data: Dictionary)
+signal input_rejected(reason: String)
+
+# Input queue and threading safety
+var input_queue = []
+var input_mutex = Mutex.new()
+var processing_inputs = false
+
+# Context awareness for your Ethereal Engine
+enum InputContext {
+	COSMIC_NAVIGATION,  # WASD movement, camera
+	WORD_CREATION,      # C, E, G keys  
+	TERMINAL_MODE,      # Tab, typing
+	LAYER_NAVIGATION,   # Mouse scroll, layer switching
+	MENU_MODE          # UI interactions
+}
+
+var current_context = InputContext.COSMIC_NAVIGATION
+var context_stack = []
+
+# Input priority system
+var input_priorities = {
+	"emergency_stop": 1000,
+	"toggle_akashic_navigation": 100,  # Tab key
+	"generate_new_word": 50,           # G key
+	"interact_word": 50,               # E key
+	"cosmic_navigation": 10,           # WASD
+	"layer_navigation": 5,             # Mouse scroll
+	"cosmetic_effects": 1
+}
+
+func _ready():
+	print("🎮 InputManager initialized - Gatekeeper of Reality active")
+
+func process_input(event: InputEvent, engine_state):
+	# Rule #1: All inputs flow through here first
+	if validate_input(event, engine_state):
+		queue_input(event, engine_state)
+	else:
+		emit_signal("input_rejected", "Invalid input for current context")
+
+func validate_input(event: InputEvent, engine_state) -> bool:
+	# Check if we're in the right state to accept this input
+	if engine_state == 4:  # EMERGENCY_MODE
+		return event.is_action_pressed("emergency_stop")
+	
+	# Check context-specific validation
+	if event is InputEventKey:
+		return validate_key_input(event)
+	elif event is InputEventMouseButton or event is InputEventMouseMotion:
+		return validate_mouse_input(event)
+	
+	return true
+
+func validate_key_input(event: InputEventKey) -> bool:
+	match current_context:
+		InputContext.COSMIC_NAVIGATION:
+			return event.keycode in [KEY_W, KEY_A, KEY_S, KEY_D, KEY_Q, KEY_E, KEY_TAB, KEY_G, KEY_C]
+		InputContext.TERMINAL_MODE:
+			return true  # Accept all keys in terminal mode
+		InputContext.WORD_CREATION:
+			return event.keycode in [KEY_ESCAPE, KEY_ENTER, KEY_C, KEY_E]
+		_:
+			return true
+
+func validate_mouse_input(event: InputEvent) -> bool:
+	# Always allow mouse input for camera control
+	return true
+
+func queue_input(event: InputEvent, engine_state):
+	input_mutex.lock()
+	
+	var input_data = {
+		"event": event,
+		"timestamp": Time.get_ticks_msec(),
+		"context": current_context,
+		"engine_state": engine_state,
+		"priority": get_input_priority(event)
+	}
+	
+	input_queue.append(input_data)
+	input_queue.sort_custom(func(a, b): return a.priority > b.priority)
+	
+	input_mutex.unlock()
+
+func get_input_priority(event: InputEvent) -> int:
+	if event is InputEventKey:
+		if event.is_action_pressed("toggle_akashic_navigation"):
+			return input_priorities["toggle_akashic_navigation"]
+		elif event.is_action_pressed("generate_new_word"):
+			return input_priorities["generate_new_word"]
+		elif event.is_action_pressed("interact_word"):
+			return input_priorities["interact_word"]
+		else:
+			return input_priorities["cosmic_navigation"]
+	
+	return input_priorities["cosmetic_effects"]
+
+func _process(delta):
+	process_input_queue()
+
+func process_input_queue():
+	if input_queue.size() == 0:
+		return
+	
+	input_mutex.lock()
+	var inputs_to_process = input_queue.duplicate()
+	input_queue.clear()
+	input_mutex.unlock()
+	
+	for input_data in inputs_to_process:
+		var action = determine_action(input_data.event)
+		if action != "":
+			emit_signal("input_validated", action, input_data)
+
+func determine_action(event: InputEvent) -> String:
+	if event is InputEventKey and event.pressed:
+		if event.keycode == KEY_W:
+			return "move_forward"
+		elif event.keycode == KEY_S:
+			return "move_backward"
+		elif event.keycode == KEY_A:
+			return "move_left"
+		elif event.keycode == KEY_D:
+			return "move_right"
+		elif event.keycode == KEY_Q:
+			return "move_up"
+		elif event.keycode == KEY_E:
+			return "move_down"
+		elif event.keycode == KEY_TAB:
+			return "toggle_akashic_navigation"
+		elif event.keycode == KEY_G:
+			return "generate_new_word"
+		elif event.keycode == KEY_C:
+			return "create_word_at_cursor"
+	
+	elif event is InputEventMouseButton:
+		if event.button_index == MOUSE_BUTTON_WHEEL_UP:
+			return "mouse_scroll_up"
+		elif event.button_index == MOUSE_BUTTON_WHEEL_DOWN:
+			return "mouse_scroll_down"
+		elif event.button_index == MOUSE_BUTTON_RIGHT:
+			return "camera_rotate_start"
+	
+	elif event is InputEventMouseMotion:
+		return "mouse_motion"
+	
+	return ""
+
+func change_context(new_context: InputContext):
+	context_stack.append(current_context)
+	current_context = new_context
+	print("🔄 Input context changed to: ", InputContext.keys()[new_context])
+
+func restore_previous_context():
+	if context_stack.size() > 0:
+		current_context = context_stack.pop_back()
+		print("🔙 Input context restored to: ", InputContext.keys()[current_context])
+
+func emergency_stop():
+	input_mutex.lock()
+	input_queue.clear()
+	input_mutex.unlock()
+	current_context = InputContext.COSMIC_NAVIGATION
+	context_stack.clear()
+	print("🚨 Emergency stop - Input system reset")

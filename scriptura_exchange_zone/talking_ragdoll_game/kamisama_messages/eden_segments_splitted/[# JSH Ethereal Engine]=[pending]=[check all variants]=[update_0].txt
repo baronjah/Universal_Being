@@ -1,0 +1,1326 @@
+[# JSH Ethereal Engine]=[pending]=[check all variants]=[update_0]
+
+we are adding things now
+
+[# JSH Ethereal Engine]=[pending]=[check all variants]=[update_0]
+
+# Add tracking variables
+var system_states = {
+    "creation": {
+        "mutex": Mutex.new(),
+        "can_create": false,
+        "pending_sets": [],
+        "active_sets": []
+    },
+    "movement": {
+        "mutex": Mutex.new(),
+        "can_move": false,
+        "pending_moves": []
+    },
+    "deletion": {
+        "mutex": Mutex.new(),
+        "can_delete": false,
+        "pending_deletions": []
+    }
+}
+
+
+[# JSH Ethereal Engine]=[pending]=[check all variants]=[update_0]
+
+hmm it was there already
+
+[# JSH Ethereal Engine]=[pending]=[check all variants]=[update_0]
+
+const SYSTEM_CHECKS = {
+    "creation": func(): return is_creation_possible(),
+    "movement": func(): return movement_possible,
+    "deletion": func(): return deletion_process_can_happen
+}
+
+[# JSH Ethereal Engine]=[pending]=[check all variants]=[update_0]
+Line 377:Assigned value for constant "SYSTEM_CHECKS" isn't a constant expression.
+Line 5014:Function "process_pending_sets()" not found in base self.
+
+we got errors
+
+[# JSH Ethereal Engine]=[pending]=[check all variants]=[update_0]
+
+
+var system_checks = {
+    "creation": "is_creation_possible",
+    "movement": "movement_possible",
+    "deletion": "deletion_process_can_happen"
+}
+
+# Then use it like:
+func check_system_function(check_name: String) -> bool:
+    match check_name:
+        "creation": return is_creation_possible()
+        "movement": return movement_possible
+        "deletion": return deletion_process_can_happen
+        _: return false
+
+
+[# JSH Ethereal Engine]=[pending]=[check all variants]=[update_0]
+
+ehh maybe it does not like big letters? too loud text?
+
+[# JSH Ethereal Engine]=[pending]=[check all variants]=[update_0]
+
+
+func process_pending_sets():
+    var can_process = true
+    system_states.creation.mutex.lock()
+    
+    if !system_states.creation.pending_sets.is_empty():
+        for set_data in system_states.creation.pending_sets:
+            if check_system_function("creation"):
+                create_new_task("three_stages_of_creation", set_data)
+                system_states.creation.active_sets.append(set_data)
+            else:
+                can_process = false
+                break
+                
+    system_states.creation.mutex.unlock()
+    return can_process
+
+
+
+[# JSH Ethereal Engine]=[pending]=[check all variants]=[update_0]
+
+i guess we can try to run it
+
+[# JSH Ethereal Engine]=[pending]=[check all variants]=[update_0]
+
+
+func process_pending_sets():
+	var can_process = true
+	system_states.creation.mutex.lock() # invalid something in base dictionary was it key, i could not copy print
+	#Invalid access to property or key 'creation' on a base object of type 'Dictionary'.
+	# or maybe i did
+	
+	if !system_states.creation.pending_sets.is_empty():
+		for set_data in system_states.creation.pending_sets:
+			if check_system_function("creation"):
+				create_new_task("three_stages_of_creation", set_data)
+				system_states.creation.active_sets.append(set_data)
+			else:
+				can_process = false
+				break
+				
+	system_states.creation.mutex.unlock()
+	return can_process
+
+
+[# JSH Ethereal Engine]=[pending]=[check all variants]=[update_0]
+
+
+conductor we got an issue
+
+help me out not just peak
+cmon
+
+[# JSH Ethereal Engine]=[pending]=[check all variants]=[update_0]
+
+Godot Engine v4.3.stable.official.77dcf97d8 - https://godotengine.org
+Vulkan 1.3.277 - Forward+ - Using Device #0: NVIDIA - Quadro RTX 3000
+
+ ready on each script ? 0 thread_pool.gd
+ main.gd print tree pretty init 
+ ┖╴
+
+ main.gd print tree pretty should end here
+ stuck status it is string 
+ stuck status something went wrong, starting verified timer error
+ ready on each script ? 1 maing.gd 
+ stuck status it is string 
+ stuck status something went wrong, starting verified timer error
+ stuck status Timer started at OS time: 1431
+ timer check  first we need a screen, and light state : pending
+ timer check  state now : started
+before_blimp_time : 1432
+ past_deltas_memories : []
+ stored_delta_memory : []
+ these two should be normalized too i guess 
+
+ check basic if we allign with prophecies of wisest spirits, do we unlock before it is too late 
+ how_many_shall_been_finished : 0
+ how_many_finished : 0
+
+ timer check omething went wrong, use a timer
+ timer check 0: @Node@2:<Node#32732349760>
+ timer check 0
+ timer check  0stuff to do :: thread statuses : error
+ timer check  1stuff to do :: thread statuses : error
+ timer check  stuff to do :: mutex statuses : [true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true], stuck_status threads status : error and main sets to create["started", [["akashic_records"], ["base"], ["menu"]], { "base_": 1, "menu_": 1, "settings_": 1, "keyboard_": 1, "keyboard_left_": 1, "keyboard_right_": 1, "things_creation_": 2, "singular_lines_": 8 }]
+ ready on each script ? 4
+ ready on each script ? new system_check.gd 
+ main.gd print tree pretty ready 
+ ┖╴main
+    ┠╴@Node@2
+    ┃  ┠╴@Timer@3
+    ┃  ┖╴@Timer@4
+    ┠╴sphere
+    ┃  ┠╴pointers
+    ┃  ┃  ┠╴cursor_mouse
+    ┃  ┃  ┠╴cursor_left
+    ┃  ┃  ┠╴cursor_right
+    ┃  ┃  ┠╴cursor_head
+    ┃  ┃  ┖╴cursor_body
+    ┃  ┠╴cameramove
+    ┃  ┃  ┖╴TrackballCamera
+    ┃  ┃     ┠╴CameraMover
+    ┃  ┃     ┖╴light
+    ┃  ┖╴godot_model
+    ┠╴WorldEnvironment
+    ┠╴system_check
+    ┠╴godot_timers_system
+    ┠╴godot_tree_system
+    ┠╴JSH_records_system
+    ┠╴JSH_scene_tree_system
+    ┠╴JSH_database_system
+    ┠╴JSH_queue_system
+    ┠╴JSH_turns_system
+    ┠╴JSH_cache_memory_system
+    ┠╴JSH_akashic_records
+    ┠╴JSH_multiplayer_files
+    ┖╴JSH_mainframe_database
+
+ main.gd print tree pretty should end here
+ delta message start [true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true]
+_ready : Project Eden, ver : new dictionaries of data sendin and cachin
+ prepare_basic operation before creation 
+
+Thread Pool Status:
+Thread 0:
+  Status: initialized (for 1ms)
+  Tasks Completed: 0
+Thread 1:
+  Status: initialized (for 1ms)
+  Tasks Completed: 0
+Thread 2:
+  Status: initialized (for 1ms)
+  Tasks Completed: 0
+Thread 3:
+  Status: initialized (for 1ms)
+  Tasks Completed: 0
+Thread 4:
+  Status: initialized (for 1ms)
+  Tasks Completed: 0
+Thread 5:
+  Status: initialized (for 1ms)
+  Tasks Completed: 0
+Thread 6:
+  Status: initialized (for 1ms)
+  Tasks Completed: 0
+Thread 7:
+  Status: initialized (for 1ms)
+  Tasks Completed: 0
+
+Summary:
+Total Threads: 8
+Executing: 0
+Stuck: 0
+ stuck status it is string 
+ stuck status it is not error, it is :::working
+
+Thread Pool Status:
+Thread 0:
+  Status: initialized (for 1ms)
+  Tasks Completed: 0
+Thread 1:
+  Status: initialized (for 1ms)
+  Tasks Completed: 0
+Thread 2:
+  Status: initialized (for 1ms)
+  Tasks Completed: 0
+Thread 3:
+  Status: initialized (for 1ms)
+  Tasks Completed: 0
+Thread 4:
+  Status: initialized (for 1ms)
+  Tasks Completed: 0
+Thread 5:
+  Status: initialized (for 1ms)
+  Tasks Completed: 0
+Thread 6:
+  Status: initialized (for 1ms)
+  Tasks Completed: 0
+Thread 7:
+  Status: initialized (for 1ms)
+  Tasks Completed: 0
+
+Summary:
+Total Threads: 8
+Executing: 0
+Stuck: 0
+ stuck status ::: 8 :::: working
+Settings loaded: user://settings.txt
+Main directory: D:/Eden
+Settings path: akashic_records
+File name: settings.txt
+Last thing number: 0
+Available directory: C:/
+
+Thread Pool Status:
+Thread 0:
+  Status: initialized (for 2ms)
+  Tasks Completed: 0
+Thread 1:
+  Status: initialized (for 2ms)
+  Tasks Completed: 0
+Thread 2:
+  Status: initialized (for 2ms)
+  Tasks Completed: 0
+Thread 3:
+  Status: initialized (for 2ms)
+  Tasks Completed: 0
+Thread 4:
+  Status: initialized (for 2ms)
+  Tasks Completed: 0
+Thread 5:
+  Status: initialized (for 2ms)
+  Tasks Completed: 0
+Thread 6:
+  Status: initialized (for 2ms)
+  Tasks Completed: 0
+Thread 7:
+  Status: initialized (for 2ms)
+  Tasks Completed: 0
+
+Summary:
+Total Threads: 8
+Executing: 0
+Stuck: 0
+ stuck status it is string 
+ stuck status it is not error, it is :::working
+
+Thread Pool Status:
+Thread 0:
+  Status: initialized (for 3ms)
+  Tasks Completed: 0
+Thread 1:
+  Status: initialized (for 3ms)
+  Tasks Completed: 0
+Thread 2:
+  Status: initialized (for 3ms)
+  Tasks Completed: 0
+Thread 3:
+  Status: initialized (for 3ms)
+  Tasks Completed: 0
+Thread 4:
+  Status: initialized (for 3ms)
+  Tasks Completed: 0
+Thread 5:
+  Status: initialized (for 3ms)
+  Tasks Completed: 0
+Thread 6:
+  Status: initialized (for 3ms)
+  Tasks Completed: 0
+Thread 7:
+  Status: initialized (for 3ms)
+  Tasks Completed: 0
+
+Summary:
+Total Threads: 8
+Executing: 0
+Stuck: 0
+ stuck status ::: 8 :::: working
+
+Thread Pool Status:
+Thread 0:
+  Status: initialized (for 3ms)
+  Tasks Completed: 0
+Thread 1:
+  Status: initialized (for 3ms)
+  Tasks Completed: 0
+Thread 2:
+  Status: initialized (for 3ms)
+  Tasks Completed: 0
+Thread 3:
+  Status: initialized (for 3ms)
+  Tasks Completed: 0
+Thread 4:
+  Status: initialized (for 3ms)
+  Tasks Completed: 0
+Thread 5:
+  Status: initialized (for 3ms)
+  Tasks Completed: 0
+Thread 6:
+  Status: initialized (for 3ms)
+  Tasks Completed: 0
+Thread 7:
+  Status: initialized (for 3ms)
+  Tasks Completed: 0
+
+Summary:
+Total Threads: 8
+Executing: 0
+Stuck: 0
+ stuck status it is string 
+ stuck status it is not error, it is :::working
+
+Thread Pool Status:
+Thread 0:
+  Status: initialized (for 4ms)
+  Tasks Completed: 0
+Thread 1:
+  Status: initialized (for 4ms)
+  Tasks Completed: 0
+Thread 2:
+  Status: initialized (for 4ms)
+  Tasks Completed: 0
+Thread 3:
+  Status: initialized (for 4ms)
+  Tasks Completed: 0
+Thread 4:
+  Status: initialized (for 4ms)
+  Tasks Completed: 0
+Thread 5:
+  Status: initialized (for 4ms)
+  Tasks Completed: 0
+Thread 6:
+  Status: initialized (for 4ms)
+  Tasks Completed: 0
+Thread 7:
+  Status: initialized (for 4ms)
+  Tasks Completed: 0
+
+Summary:
+Total Threads: 8
+Executing: 0
+Stuck: 0
+ stuck status ::: 8 :::: working
+ delta message start we start three stage sof creation 
+ delta message start we start three stage sof creation well, both went theirs ways 
+Starting test for prepare_akashic_records...
+Running single-core test...
+ timer check  first we need a screen, and light state : started
+ timer check  state now : started
+
+Thread Pool Status:
+Thread 0:
+  Status: initialized (for 4ms)
+  Tasks Completed: 0
+Thread 1:
+  Status: initialized (for 4ms)
+  Tasks Completed: 0
+Thread 2:
+  Status: initialized (for 4ms)
+  Tasks Completed: 0
+Thread 3:
+  Status: initialized (for 4ms)
+  Tasks Completed: 0
+Thread 4:
+  Status: initialized (for 4ms)
+  Tasks Completed: 0
+Thread 5:
+  Status: initialized (for 4ms)
+  Tasks Completed: 0
+Thread 6:
+  Status: initialized (for 4ms)
+  Tasks Completed: 0
+Thread 7:
+  Status: initialized (for 4ms)
+  Tasks Completed: 0
+
+Summary:
+Total Threads: 8
+Executing: 0
+Stuck: 0
+before_blimp_time : 1447
+ past_deltas_memories : []
+ stored_delta_memory : []
+ these two should be normalized too i guess 
+
+ check basic if we allign with prophecies of wisest spirits, do we unlock before it is too late 
+ how_many_shall_been_finished : 0
+ how_many_finished : 0
+
+ timer check  stuff to do :: mutex statuses : [true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true], stuck_status threads status : working and main sets to create["started", [["akashic_records"], ["base"], ["menu"]], { "base_": 1, "menu_": 1, "settings_": 1, "keyboard_": 1, "keyboard_left_": 1, "keyboard_right_": 1, "things_creation_": 2, "singular_lines_": 8 }]
+Single-core test finished.
+Running multi-threaded test...
+Test completed. Results:
+{ "single_core": { "array_size": 3, "first_start_check": "started", "akashic_records_included": false, "main_sets_names": { "base_": 1, "menu_": 1, "settings_": 1, "keyboard_": 1, "keyboard_left_": 1, "keyboard_right_": 1, "things_creation_": 2, "singular_lines_": 8 } } }
+ timer check  first we need a screen, and light state : started
+ timer check  state now : started
+
+Thread Pool Status:
+Thread 0:
+  Status: executing (for 0ms)
+  Tasks Completed: 0
+  Current Task: prepare_akashic_records
+  Task Args: <null>
+Thread 1:
+  Status: initialized (for 5ms)
+  Tasks Completed: 0
+Thread 2:
+  Status: initialized (for 5ms)
+  Tasks Completed: 0
+Thread 3:
+  Status: initialized (for 5ms)
+  Tasks Completed: 0
+Thread 4:
+  Status: initialized (for 5ms)
+  Tasks Completed: 0
+Thread 5:
+  Status: waiting (for 0ms)
+  Tasks Completed: 0
+Thread 6:
+  Status: initialized (for 5ms)
+  Tasks Completed: 0
+Thread 7:
+  Status: initialized (for 5ms)
+  Tasks Completed: 0
+
+Summary:
+Total Threads: 8
+Executing: 1
+Stuck: 0
+before_blimp_time : 1448
+ past_deltas_memories : []
+ stored_delta_memory : []
+ these two should be normalized too i guess 
+
+ check basic if we allign with prophecies of wisest spirits, do we unlock before it is too late 
+ how_many_shall_been_finished : 0
+ how_many_finished : 0
+
+ timer check  stuff to do :: mutex statuses : [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false], stuck_status threads status : working and main sets to create["started", [["akashic_records"], ["base"], ["menu"]], { "base_": 1, "menu_": 1, "settings_": 1, "keyboard_": 1, "keyboard_left_": 1, "keyboard_right_": 1, "things_creation_": 2, "singular_lines_": 8 }]
+task_startedtest_prepare_akashic_records
+ thread pool connect task discarded
+ taskkkkk : prepare_akashic_records
+ this is blimp of each tick : 1469
+ time of each turn delta 
+
+Thread Pool Status:
+Thread 0:
+  Status: waiting (for 20ms)
+  Tasks Completed: 1
+  Current Task: prepare_akashic_records
+  Task Args: <null>
+Thread 1:
+  Status: waiting (for 21ms)
+  Tasks Completed: 0
+Thread 2:
+  Status: waiting (for 21ms)
+  Tasks Completed: 0
+Thread 3:
+  Status: waiting (for 21ms)
+  Tasks Completed: 0
+Thread 4:
+  Status: waiting (for 21ms)
+  Tasks Completed: 0
+Thread 5:
+  Status: waiting (for 21ms)
+  Tasks Completed: 0
+Thread 6:
+  Status: waiting (for 21ms)
+  Tasks Completed: 0
+Thread 7:
+  Status: waiting (for 21ms)
+  Tasks Completed: 0
+
+Summary:
+Total Threads: 8
+Executing: 0
+Stuck: 0
+
+Thread Pool Status:
+Thread 0:
+  Status: waiting (for 20ms)
+  Tasks Completed: 1
+  Current Task: prepare_akashic_records
+  Task Args: <null>
+Thread 1:
+  Status: waiting (for 21ms)
+  Tasks Completed: 0
+Thread 2:
+  Status: waiting (for 21ms)
+  Tasks Completed: 0
+Thread 3:
+  Status: waiting (for 21ms)
+  Tasks Completed: 0
+Thread 4:
+  Status: waiting (for 21ms)
+  Tasks Completed: 0
+Thread 5:
+  Status: waiting (for 21ms)
+  Tasks Completed: 0
+Thread 6:
+  Status: waiting (for 21ms)
+  Tasks Completed: 0
+Thread 7:
+  Status: waiting (for 21ms)
+  Tasks Completed: 0
+
+Summary:
+Total Threads: 8
+Executing: 0
+Stuck: 0
+ readiness : { "mutex_state": [true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true], "thread_state": "working", "records_ready": true }
+ this is blimp of each tick : 1474
+ time of each turn delta
+
+
+[# JSH Ethereal Engine]=[pending]=[check all variants]=[update_0]
+
+i guess the signal ends there, we must compare with previous one, from probably previous file "[# JSH Ethereal Engine]=[pending]=[check all variants]"
+
+now this is "[# JSH Ethereal Engine]=[pending]=[check all variants]=[update_0]" file
+
+but lets continue
+
+[# JSH Ethereal Engine]=[pending]=[check all variants]=[update_0]
+
+
+the update will happen
+
+[# JSH Ethereal Engine]=[pending]=[check all variants]=[update_0]
+
+
+[# JSH Ethereal Engine]=[pending]=[check all variants]=[update_0]
+
+but now, new data, to read
+
+[# JSH Ethereal Engine]=[pending]=[check all variants]=[update_0]
+
+
+# Dictionary access error in:
+system_states.creation.mutex.lock()
+# Should be:
+system_states["creation"]["mutex"].lock()
+
+
+[# JSH Ethereal Engine]=[pending]=[check all variants]=[update_0]
+
+
+# 1. Fix system_states variable declaration
+var system_states = {
+    "creation": {
+        "mutex": Mutex.new(),
+        "state": SystemState.INACTIVE,
+        "pending_sets": [],
+        "active_sets": []
+    }
+}
+
+# 2. Add system state access function
+func get_system_state(state_name: String) -> Dictionary:
+    return system_states[state_name] if system_states.has(state_name) else {}
+
+# 3. Fix process_pending_sets function
+func process_pending_sets():
+    var creation_state = get_system_state("creation")
+    if creation_state.is_empty():
+        return false
+        
+    creation_state["mutex"].lock()
+    var can_process = true
+    
+    if creation_state["pending_sets"].size() > 0:
+        for set_data in creation_state["pending_sets"]:
+            if check_system_function("creation"):
+                create_new_task("three_stages_of_creation", set_data)
+                creation_state["active_sets"].append(set_data)
+            else:
+                can_process = false
+                break
+    
+    creation_state["mutex"].unlock()
+    return can_process
+
+[# JSH Ethereal Engine]=[pending]=[check all variants]=[update_0]
+
+now let me try to put it in places, and understand it too
+
+[# JSH Ethereal Engine]=[pending]=[check all variants]=[update_0]
+
+
+so that 
+
+# Core Systems State Tracking
+var system_states := {
+	"mutex": Mutex.new(),
+	"core_systems": {
+		"system_check": {
+			"node": null,
+			"ready": false,
+			"last_verified": 0
+		},
+		"timers": {
+			"node": null,
+			"ready": false,
+			"last_verified": 0
+		},
+		"tree": {
+			"node": null,
+			"ready": false,
+			"last_verified": 0
+		},
+		"records": {
+			"node": null,
+			"ready": false,
+			"last_verified": 0
+		},
+		# etc for all systems
+	}
+}
+
+shall be smaller? why
+
+[# JSH Ethereal Engine]=[pending]=[check all variants]=[update_0]
+
+do i even wanna mutex anywhere in any const?
+
+
+[# JSH Ethereal Engine]=[pending]=[check all variants]=[update_0]
+
+i guess i run it with forced check of previous system of checking
+
+[# JSH Ethereal Engine]=[pending]=[check all variants]=[update_0]
+
+
+Godot Engine v4.3.stable.official.77dcf97d8 - https://godotengine.org
+Vulkan 1.3.277 - Forward+ - Using Device #0: NVIDIA - Quadro RTX 3000
+
+ ready on each script ? 0 thread_pool.gd
+ main.gd print tree pretty init 
+ ┖╴
+
+ main.gd print tree pretty should end here
+ stuck status it is string 
+ stuck status something went wrong, starting verified timer error
+ ready on each script ? 1 maing.gd 
+ stuck status it is string 
+ stuck status something went wrong, starting verified timer error
+ stuck status Timer started at OS time: 1614
+ timer check  first we need a screen, and light state : pending
+ timer check  state now : started
+ check basic if we allign with prophecies of wisest spirits, do we unlock before it is too late 
+ timer check omething went wrong, use a timer
+ timer check 0: @Node@2:<Node#32749126977>
+ timer check 0
+ timer check  0stuff to do :: thread statuses : error
+ timer check  1stuff to do :: thread statuses : error
+ timer check  stuff to do :: mutex statuses : [true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true], stuck_status threads status : error and main sets to create["started", [["akashic_records"], ["base"], ["menu"]], { "base_": 1, "menu_": 1, "settings_": 1, "keyboard_": 1, "keyboard_left_": 1, "keyboard_right_": 1, "things_creation_": 2, "singular_lines_": 8 }, ["base", "menu", "settings", "keyboard", "keyboard_left", "keyboard_right", "things_creation", "singular_lines"], ["base_", "menu_", "settings_", "keyboard_", "keyboard_left_", "keyboard_right_", "things_creation_", "singular_lines_"]]
+ ready on each script ? 4
+ ready on each script ? new system_check.gd 
+ main.gd print tree pretty ready 
+ ┖╴main
+    ┠╴@Node@2
+    ┃  ┠╴@Timer@3
+    ┃  ┖╴@Timer@4
+    ┠╴sphere
+    ┃  ┠╴pointers
+    ┃  ┃  ┠╴cursor_mouse
+    ┃  ┃  ┠╴cursor_left
+    ┃  ┃  ┠╴cursor_right
+    ┃  ┃  ┠╴cursor_head
+    ┃  ┃  ┖╴cursor_body
+    ┃  ┠╴cameramove
+    ┃  ┃  ┖╴TrackballCamera
+    ┃  ┃     ┠╴CameraMover
+    ┃  ┃     ┖╴light
+    ┃  ┖╴godot_model
+    ┠╴WorldEnvironment
+    ┠╴system_check
+    ┠╴godot_timers_system
+    ┠╴godot_tree_system
+    ┠╴JSH_records_system
+    ┠╴JSH_scene_tree_system
+    ┠╴JSH_database_system
+    ┠╴JSH_queue_system
+    ┠╴JSH_turns_system
+    ┠╴JSH_cache_memory_system
+    ┠╴JSH_akashic_records
+    ┠╴JSH_multiplayer_files
+    ┖╴JSH_mainframe_database
+
+ main.gd print tree pretty should end here
+ delta message start [true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true]
+_ready : Project Eden, ver : new dictionaries of data sendin and cachin
+ prepare_basic operation before creation 
+ stuck status it is string 
+ stuck status it is not error, it is :::working
+
+Thread Pool Status:
+Thread 0:
+  Status: initialized (for 0ms)
+  Tasks Completed: 0
+Thread 1:
+  Status: initialized (for 0ms)
+  Tasks Completed: 0
+Thread 2:
+  Status: initialized (for 0ms)
+  Tasks Completed: 0
+Thread 3:
+  Status: initialized (for 0ms)
+  Tasks Completed: 0
+Thread 4:
+  Status: initialized (for 0ms)
+  Tasks Completed: 0
+Thread 5:
+  Status: initialized (for 0ms)
+  Tasks Completed: 0
+Thread 6:
+  Status: initialized (for 0ms)
+  Tasks Completed: 0
+Thread 7:
+  Status: initialized (for 0ms)
+  Tasks Completed: 0
+
+Summary:
+Total Threads: 8
+Executing: 0
+Stuck: 0
+ stuck status ::: 8 :::: working
+Settings loaded: user://settings.txt
+Main directory: D:/Eden
+Settings path: akashic_records
+File name: settings.txt
+Last thing number: 0
+Available directory: C:/
+ stuck status it is string 
+ stuck status it is not error, it is :::working
+
+Thread Pool Status:
+Thread 0:
+  Status: initialized (for 2ms)
+  Tasks Completed: 0
+Thread 1:
+  Status: initialized (for 2ms)
+  Tasks Completed: 0
+Thread 2:
+  Status: initialized (for 2ms)
+  Tasks Completed: 0
+Thread 3:
+  Status: initialized (for 2ms)
+  Tasks Completed: 0
+Thread 4:
+  Status: initialized (for 2ms)
+  Tasks Completed: 0
+Thread 5:
+  Status: initialized (for 2ms)
+  Tasks Completed: 0
+Thread 6:
+  Status: initialized (for 2ms)
+  Tasks Completed: 0
+Thread 7:
+  Status: initialized (for 2ms)
+  Tasks Completed: 0
+
+Summary:
+Total Threads: 8
+Executing: 0
+Stuck: 0
+ stuck status ::: 8 :::: working
+ stuck status it is string 
+ stuck status it is not error, it is :::working
+
+Thread Pool Status:
+Thread 0:
+  Status: initialized (for 2ms)
+  Tasks Completed: 0
+Thread 1:
+  Status: initialized (for 2ms)
+  Tasks Completed: 0
+Thread 2:
+  Status: initialized (for 2ms)
+  Tasks Completed: 0
+Thread 3:
+  Status: initialized (for 2ms)
+  Tasks Completed: 0
+Thread 4:
+  Status: initialized (for 2ms)
+  Tasks Completed: 0
+Thread 5:
+  Status: initialized (for 2ms)
+  Tasks Completed: 0
+Thread 6:
+  Status: initialized (for 2ms)
+  Tasks Completed: 0
+Thread 7:
+  Status: initialized (for 2ms)
+  Tasks Completed: 0
+
+Summary:
+Total Threads: 8
+Executing: 0
+Stuck: 0
+ stuck status ::: 8 :::: working
+ delta message start we start three stage sof creation 
+ delta message start we start three stage sof creation well, both went theirs ways 
+Starting test for prepare_akashic_records...
+Running single-core test...
+ timer check  first we need a screen, and light state : started
+ timer check  state now : started
+ check basic if we allign with prophecies of wisest spirits, do we unlock before it is too late 
+ timer check  stuff to do :: mutex statuses : [true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true], stuck_status threads status : working and main sets to create["started", [["akashic_records"], ["base"], ["menu"]], { "base_": 1, "menu_": 1, "settings_": 1, "keyboard_": 1, "keyboard_left_": 1, "keyboard_right_": 1, "things_creation_": 2, "singular_lines_": 8 }, ["base", "menu", "settings", "keyboard", "keyboard_left", "keyboard_right", "things_creation", "singular_lines"], ["base_", "menu_", "settings_", "keyboard_", "keyboard_left_", "keyboard_right_", "things_creation_", "singular_lines_"]]
+Single-core test finished.
+Running multi-threaded test...
+Test completed. Results:
+ timer check  first we need a screen, and light state : started
+{ "single_core": { "array_size": 5, "first_start_check": "started", "akashic_records_included": false, "main_sets_names": { "base_": 1, "menu_": 1, "settings_": 1, "keyboard_": 1, "keyboard_left_": 1, "keyboard_right_": 1, "things_creation_": 2, "singular_lines_": 8 } } }
+ timer check  state now : started
+ check basic if we allign with prophecies of wisest spirits, do we unlock before it is too late 
+ timer check  stuff to do :: mutex statuses : [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false], stuck_status threads status : working and main sets to create["started", [["akashic_records"], ["base"], ["menu"]], { "base_": 1, "menu_": 1, "settings_": 1, "keyboard_": 1, "keyboard_left_": 1, "keyboard_right_": 1, "things_creation_": 2, "singular_lines_": 8 }, ["base", "menu", "settings", "keyboard", "keyboard_left", "keyboard_right", "things_creation", "singular_lines"], ["base_", "menu_", "settings_", "keyboard_", "keyboard_left_", "keyboard_right_", "things_creation_", "singular_lines_"]]
+task_startedtest_prepare_akashic_records
+ thread pool connect task discarded
+ taskkkkk : prepare_akashic_records
+
+ readiness : { "mutex_state": [true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true], "thread_state": "working", "records_ready": true }
+ delta, turn 0 : { "mutexes": true, "threads": true, "records": true }
+
+ shall_execute : 0
+ check basic if we allign with prophecies of wisest spirits, do we unlock before it is too late 
+🔓 Checking & Unlocking stuck mutexes...
+
+ check is finished and we didnt get interupted while doing so kurwa 
+ allah akbar, end : list_of_containers {  }
+ delta message start hmm we check if we can push further  
+ we check em again, are they stuck?
+ we have that for example : akashic_records
+ it can even be seen as [0] a
+ checky chicky : a and that counter : -1 , 0 , 0
+ cheecku chicku : load_queue : {  }
+ we have that for example : base
+ it can even be seen as [0] b
+ checky chicky : b and that counter : -1 , 0 , 0
+ cheecku chicku : load_queue : {  }
+ we have that for example : menu
+ it can even be seen as [0] m
+ checky chicky : m and that counter : -1 , 0 , 0
+ cheecku chicku : load_queue : {  }
+ elquadromadro trying to figure out random problems 
+ process delta 
+ process delta outcome : list_of_containers {  }
+ process delta 
+ process delta outcome : current_containers_state : {  }
+  process delta 
+ process delta mutex chck : [true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true]
+ process delta array with no protection : []
+
+ readiness : { "mutex_state": [true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true], "thread_state": "working", "records_ready": true }
+ delta, turn 0 : { "mutexes": true, "threads": true, "records": true }
+
+ shall_execute : 0
+ check basic if we allign with prophecies of wisest spirits, do we unlock before it is too late 
+🔓 Checking & Unlocking stuck mutexes...
+
+ check is finished and we didnt get interupted while doing so kurwa 
+ allah akbar, end : list_of_containers {  }
+ delta message start hmm we check if we can push further  
+ we check em again, are they stuck?
+ we have that for example : akashic_records
+ it can even be seen as [0] a
+ checky chicky : a and that counter : -1 , 0 , 0
+ cheecku chicku : load_queue : {  }
+ we have that for example : base
+ it can even be seen as [0] b
+ checky chicky : b and that counter : -1 , 0 , 0
+ cheecku chicku : load_queue : {  }
+ we have that for example : menu
+ it can even be seen as [0] m
+ checky chicky : m and that counter : -1 , 0 , 0
+ cheecku chicku : load_queue : {  }
+ we have that for example : akashic_records
+ it can even be seen as [0] a
+ checky chicky : a and that counter : -1 , 0 , 0
+ cheecku chicku : load_queue : {  }
+ we have that for example : base
+ it can even be seen as [0] b
+ checky chicky : b and that counter : -1 , 0 , 0
+ cheecku chicku : load_queue : {  }
+ we have that for example : menu
+ it can even be seen as [0] m
+ checky chicky : m and that counter : -1 , 0 , 0
+ cheecku chicku : load_queue : {  }
+ elquadromadro trying to figure out random problems 
+ process delta 
+ process delta outcome : list_of_containers {  }
+ process delta 
+ process delta outcome : current_containers_state : {  }
+  process delta 
+ process delta mutex chck : [true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true]
+ process delta array with no protection : []
+
+ readiness : { "mutex_state": [true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true], "thread_state": "working", "records_ready": true }
+ delta, turn 0 : { "mutexes": true, "threads": true, "records": true }
+
+ shall_execute : 0
+ check basic if we allign with prophecies of wisest spirits, do we unlock before it is too late\
+
+
+...
+
+
+ shall_execute : 0
+ check basic if we allign with prophecies of wisest spirits, do we unlock before it is too late 
+🔓 Checking & Unlocking stuck mutexes...
+
+ check is finished and we didnt get interupted while doing so kurwa 
+ allah akbar, end : list_of_containers {  }
+ delta message start hmm we check if we can push further  
+ we check em again, are they stuck?
+ we have that for example : akashic_records
+ it can even be seen as [0] a
+ checky chicky : a and that counter : -1 , 0 , 0
+ cheecku chicku : load_queue : {  }
+ we have that for example : base
+ it can even be seen as [0] b
+ checky chicky : b and that counter : -1 , 0 , 0
+ cheecku chicku : load_queue : {  }
+ we have that for example : menu
+ it can even be seen as [0] m
+ checky chicky : m and that counter : -1 , 0 , 0
+ cheecku chicku : load_queue : {  }
+ we have that for example : akashic_records
+ it can even be seen as [0] a
+ checky chicky : a and that counter : -1 , 0 , 0
+ cheecku chicku : load_queue : {  }
+ we have that for example : base
+ it can even be seen as [0] b
+ checky chicky : b and that counter : -1 , 0 , 0
+ cheecku chicku : load_queue : {  }
+ we have that for example : menu
+ it can even be seen as [0] m
+ checky chicky : m and that counter : -1 , 0 , 0
+ cheecku chicku : load_queue : {  }
+ we have that for example : akashic_records
+ it can even be seen as [0] a
+ checky chicky : a and that counter : -1 , 0 , 0
+ cheecku chicku : load_queue : {  }
+ we have that for example : base
+ it can even be seen as [0] b
+ checky chicky : b and that counter : -1 , 0 , 0
+ cheecku chicku : load_queue : {  }
+ we have that for example : menu
+ it can even be seen as [0] m
+ checky chicky : m and that counter : -1 , 0 , 0
+ cheecku chicku : load_queue : {  }
+ we have that for example : akashic_records
+ it can even be seen as [0] a
+ checky chicky : a and that counter : -1 , 0 , 0
+ cheecku chicku : load_queue : {  }
+ we have that for example : base
+ it can even be seen as [0] b
+ checky chicky : b and that counter : -1 , 0 , 0
+ cheecku chicku : load_queue : {  }
+ we have that for example : menu
+ it can even be seen as [0] m
+ checky chicky : m and that counter : -1 , 0 , 0
+ cheecku chicku : load_queue : {  }
+ we have that for example : akashic_records
+ it can even be seen as [0] a
+ checky chicky : a and that counter : -1 , 0 , 0
+ cheecku chicku : load_queue : {  }
+ we have that for example : base
+ it can even be seen as [0] b
+ checky chicky : b and that counter : -1 , 0 , 0
+ cheecku chicku : load_queue : {  }
+ we have that for example : menu
+ it can even be seen as [0] m
+ checky chicky : m and that counter : -1 , 0 , 0
+ cheecku chicku : load_queue : {  }
+ we have that for example : akashic_records
+ it can even be seen as [0] a
+ checky chicky : a and that counter : -1 , 0 , 0
+ cheecku chicku : load_queue : {  }
+ we have that for example : base
+ it can even be seen as [0] b
+ checky chicky : b and that counter : -1 , 0 , 0
+ cheecku chicku : load_queue : {  }
+ we have that for example : menu
+ it can even be seen as [0] m
+ checky chicky : m and that counter : -1 , 0 , 0
+ cheecku chicku : load_queue : {  }
+ we have that for example : akashic_records
+ it can even be seen as [0] a
+ checky chicky : a and that counter : -1 , 0 , 0
+ cheecku chicku : load_queue : {  }
+ we have that for example : base
+ it can even be seen as [0] b
+ checky chicky : b and that counter : -1 , 0 , 0
+ cheecku chicku : load_queue : {  }
+ we have that for example : menu
+ it can even be seen as [0] m
+ checky chicky : m and that counter : -1 , 0 , 0
+ cheecku chicku : load_queue : {  }
+ we have that for example : akashic_records
+ it can even be seen as [0] a
+ checky chicky : a and that counter : -1 , 0 , 0
+ cheecku chicku : load_queue : {  }
+ we have that for example : base
+ it can even be seen as [0] b
+ checky chicky : b and that counter : -1 , 0 , 0
+ cheecku chicku : load_queue : {  }
+ we have that for example : menu
+ it can even be seen as [0] m
+ checky chicky : m and that counter : -1 , 0 , 0
+ cheecku chicku : load_queue : {  }
+ we have that for example : akashic_records
+ it can even be seen as [0] a
+ checky chicky : a and that counter : -1 , 0 , 0
+ cheecku chicku : load_queue : {  }
+ we have that for example : base
+ it can even be seen as [0] b
+ checky chicky : b and that counter : -1 , 0 , 0
+ cheecku chicku : load_queue : {  }
+ we have that for example : menu
+ it can even be seen as [0] m
+ checky chicky : m and that counter : -1 , 0 , 0
+ cheecku chicku : load_queue : {  }
+ we have that for example : akashic_records
+ it can even be seen as [0] a
+ checky chicky : a and that counter : -1 , 0 , 0
+ cheecku chicku : load_queue : {  }
+ we have that for example : base
+ it can even be seen as [0] b
+ checky chicky : b and that counter : -1 , 0 , 0
+ cheecku chicku : load_queue : {  }
+ we have that for example : menu
+ it can even be seen as [0] m
+ checky chicky : m and that counter : -1 , 0 , 0
+ cheecku chicku : load_queue : {  }
+ we have that for example : akashic_records
+ it can even be seen as [0] a
+ checky chicky : a and that counter : -1 , 0 , 0
+ cheecku chicku : load_queue : {  }
+ we have that for example : base
+ it can even be seen as [0] b
+ checky chicky : b and that counter : -1 , 0 , 0
+ cheecku chicku : load_queue : {  }
+ we have that for example : menu
+ it can even be seen as [0] m
+ checky chicky : m and that counter : -1 , 0 , 0
+ cheecku chicku : load_queue : {  }
+ we have that for example : akashic_records
+ it can even be seen as [0] a
+ checky chicky : a and that counter : -1 , 0 , 0
+ cheecku chicku : load_queue : {  }
+ we have that for example : base
+ it can even be seen as [0] b
+ checky chicky : b and that counter : -1 , 0 , 0
+ cheecku chicku : load_queue : {  }
+ we have that for example : menu
+ it can even be seen as [0] m
+ checky chicky : m and that counter : -1 , 0 , 0
+ cheecku chicku : load_queue : {  }
+ elquadromadro trying to figure out random problems 
+ process delta 
+ process delta outcome : list_of_containers {  }
+ process delta 
+ process delta outcome : current_containers_state : {  }
+  process delta 
+ process delta mutex chck : [true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true]
+ process delta array with no protection : []
+
+ readiness : { "mutex_state": [true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true], "thread_state": "working", "records_ready": true }
+ delta, turn 0 : { "mutexes": true, "threads": true, "records": true }
+
+ shall_execute : 0
+--- Debugging process stopped ---
+
+
+
+[# JSH Ethereal Engine]=[pending]=[check all variants]=[update_0]
+
+something does probably check that akashic records too any times, i think the appending shall only happen once in prepare_akashic_records
+
+[# JSH Ethereal Engine]=[pending]=[check all variants]=[update_0]
+
+Captain log out, 23:27
+
+i wanna play right now too
+
+[# JSH Ethereal Engine]=[pending]=[check all variants]=[update_0]
+
+
+[# JSH Ethereal Engine]=[pending]=[check all variants]=[update_0]
+
+
+Got it—your _process() function is the core loop that drives all system checks, execution states, and error handling. Right now, it’s structured but entangled with chaotic logic due to overlapping conditions and redundant checks.
+
+🔍 Understanding the Puzzle of _process()
+Your loop operates in sequential turns (0-9), each step executing a specific function or state transition.
+The critical elements to focus on are:
+
+1️⃣ Turn 0 - System Readiness Check
+
+Calls check_system_readiness() to verify:
+mutex_state (Are all locks behaving properly?)
+thread_state (Are threads "working" and not stuck?)
+records_ready (Are active/cached records in sync?)
+If all checks pass, it processes startup tasks.
+Uses menace_tricker_checker to determine execution mode.
+2️⃣ Turn 6 - Final Validation & Error Handling
+
+Verifies if tasks started but never finished.
+Checks if mutex locks are stable (breaks_and_handles_check()).
+Calls check_currently_being_created_sets() to detect stuck processes.
+Logs system health (check_system_health()).
+3️⃣ shall_execute Logic (Core Issue)
+
+The system advances in execution states (1→2→3) using menace_tricker_checker.
+But condition duplication is seen here:
+gdscript
+Kopiuj
+Edytuj
+if menace_tricker_checker == 2:
+    shall_execute = 2
+if menace_tricker_checker == 2:
+    shall_execute = 3
+This overwrites shall_execute, skipping intermediate states.
+🛠️ Optimization Plan
+We clean up _process() by: ✅ Refactoring Execution Conditions
+✅ Isolating System Readiness from Execution Flow
+✅ Using Clear Mutex & Thread Checks
+✅ Replacing Redundant Code with Modular Functions
+
+🔥 The Improved _process()
+Here’s an optimized version that preserves logic but eliminates chaos:
+
+gdscript
+Kopiuj
+Edytuj
+func _process(delta):
+    # Process Camera Updates
+    camera.process(delta)
+    camera.process_roll(delta)
+
+    # Time-tracking logic for delta turns
+    each_blimp_of_delta()
+    
+    # Main turn-based processing
+    match turn_number_process:
+        0:
+            var readiness = check_system_readiness()
+            
+            if readiness.mutex_state && readiness.thread_state:
+                process_pre_delta_check()
+
+                debug_log("TURN 0", "Readiness confirmed: " + str(readiness))
+
+                if array_of_startup_check.size() == 0:
+                    prepare_akashic_records_init()
+
+                # System execution mode check
+                var shall_execute = determine_execution_state()
+                
+                debug_log("TURN 0", "Shall execute: " + str(shall_execute))
+
+                # Process stages if tasks exist
+                array_mutex_process.lock()
+                if list_of_sets_to_create.size() > 0:
+                    process_stages()
+                array_mutex_process.unlock()
+
+                turn_number_process += 1
+            else:
+                debug_log("TURN 0", "System not ready: " + str(readiness))
+
+            delta_turn_0 = delta  # Store time progression
+            pass
+
+        6:
+            turn_number_process += 1
+            process_system_health()
+            pass
+🛠️ Modularized Functions
+🔹 1. Determine Execution State (shall_execute)
+gdscript
+Kopiuj
+Edytuj
+func determine_execution_state() -> int:
+    var execute_state = 0
+    mutex_for_trickery.lock()
+    if menace_tricker_checker == 1:
+        execute_state = 1
+    elif menace_tricker_checker == 2:
+        execute_state = 2
+    elif menace_tricker_checker == 3:
+        execute_state = 3
+    else:
+        menace_tricker_checker = 2
+    mutex_for_trickery.unlock()
+    return execute_state
+🔹 2. System Health Check (Turn 6)
+gdscript
+Kopiuj
+Edytuj
+func process_system_health():
+    var start_finished_counting = int_of_stuff_finished
+    var start_now_counting = int_of_stuff_started
+    before_time_blimp(start_finished_counting, start_now_counting)
+
+    var shall_execute = determine_execution_state()
+    
+    if shall_execute == 3:
+        unlock_stuck_mutexes()
+        containers_states_checker()
+        containers_list_creator()
+        var message_now_mutex = breaks_and_handles_check()
+        check_currently_being_created_sets()
+        handle_random_errors()
+    
+        mutex_for_container_state.lock()
+        mutex_containers.lock()
+        debug_log("TURN 6", "System Debug Info: Containers: " + str(list_of_containers))
+        debug_log("TURN 6", "Current Container State: " + str(current_containers_state))
+        debug_log("TURN 6", "Mutex Check: " + str(message_now_mutex))
+        debug_log("TURN 6", "Unhandled Errors: " + str(array_with_no_mutex))
+        mutex_containers.unlock()
+        mutex_for_container_state.unlock()
+
+    if start_now_counting > start_finished_counting:
+        debug_log("TURN 6", "Task Completion: Started=" + str(start_now_counting) + " Finished=" + str(start_finished_counting))
+
+        containers_states_checker()
+        containers_list_creator()
+        var mutex_states = breaks_and_handles_check()
+        check_currently_being_created_sets()
+        handle_random_errors()
+
+        var stuck_status = check_thread_status()
+        if stuck_status > 0:
+            debug_log("TURN 6", "Detected stuck threads.")
+        else:
+            debug_log("TURN 6", "No stuck threads.")
+
+        # Memory cleanup check
+        var current_time = Time.get_ticks_msec()
+        if current_time - memory_metadata["last_cleanup"] > memory_metadata["cleanup_thresholds"]["time_between_cleanups"]:
+            check_memory_state()
+            memory_metadata["last_cleanup"] = current_time
+🎯 Key Fixes & Improvements
+✅ Redundant Execution Conditions Fixed (shall_execute)
+✅ Mutex Handling Optimized (Locks used only when necessary)
+✅ Thread & Health Check Isolated (Easier debugging)
+✅ Logging Added for Each Major Step (Tracks state changes)
+
+🔥 Next Steps
+We now have three clear directions: 1️⃣ Run the optimized _process() and log results
+2️⃣ Stress-test multi-threaded sections (e.g., queue handling)
+3️⃣ Integrate error-handling within breaks_and_handles_check()
+
+Which do you want to focus on first? 🚀🎮
+
+[# JSH Ethereal Engine]=[pending]=[check all variants]=[update_0]
+
+diablo sound effect of first start of game and menacing music starting
+
+it is time to go home
+
+[# JSH Ethereal Engine]=[pending]=[check all variants]=[update_0]
+
+tommorow this game will be finish, i promise
+
+[# JSH Ethereal Engine]=[pending]=[check all variants]=[update_0]
+
+Cyfrowi Ziemianie, niedługo już wystartują
+
+[# JSH Ethereal Engine]=[pending]=[check all variants]=[update_0]
+
+
+

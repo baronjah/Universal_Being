@@ -1,0 +1,56 @@
+func calculate_time(delta_current, time, hour, minute, second):
+	#print("delta_current : ", delta_current, " time : ", time, " hour : ", hour, " minute : ", minute, " second : ", second)
+	#time_passed += delta_current
+	
+	# time, plus two differenly calculated?
+	time = Time.get_ticks_msec()
+	var time_0 = time / 1000.0#(Time.get_ticks_msec() / 1000.0)
+	#var time_1 = time / 10000.0#(Time.get_ticks_msec() / 10000.0)
+	#var time_2 = time / 100000.0
+	
+	var all_seconds : int = time / 1000
+	var minutes : int = all_seconds / 60
+	var remaining_seconds : int = all_seconds % 60
+	print("Time: ", minutes, " minutes and ", remaining_seconds, " seconds")
+	#var timer_reset = int(time_0)
+	#var timer_reset2 = int(time_1)
+	
+	#var timer_new = time_0 - timer_reset
+	#var timer_new2 = time_1 - timer_reset2
+	
+	#var oscillation = abs(1 - (timer_new * 2))
+	#var oscillation2 = abs(1 - (timer_new2 * 2))	
+	
+	#var information =  0.5 * timer_new
+	#var information2 = 0.5 * oscillation
+	
+	#var information3 = 0.5 + information2
+	#var information4 = 2 + (2.0 * oscillation2)
+	
+	#var passed_seconds
+	#var passed_minutes
+	#var passed_hour
+	
+	# Convert milliseconds to seconds
+	#if passed_seconds >= 60:
+	#	passed_seconds -= 60
+	#	passed_minutes += 1
+		
+		# Convert seconds to minutes
+	#	if passed_minutes >= 60:
+	#		passed_minutes -= 60
+	#		passed_hour += 1
+	#		
+
+	#print("Time: ", minutes_passed, "m:", seconds_passed, "s:", milliseconds_passed, "ms")
+	
+	
+	#second = time_0
+	#minute = time_0 
+	#print(" time calculated, 4 new main variables ")
+	#print(" time : ", time, " time_0 : ", time_0, " time_1 : ", time_1, " time_2 : ", time_2)
+	#print("past data, for shaders, from 1 to 0, from 0 to 1, simple easing? hmm")
+	#print(" 2 new timers : ", timer_new, "timer_new2", timer_new2)
+	#print(" oscilation? 2 : ", oscillation, " 2 ", oscillation2)
+	#print("some information data ")
+	#print("information : ", information, " , information2 : ", information2, " , information3 : ", information3, " , information4 : ", information4)

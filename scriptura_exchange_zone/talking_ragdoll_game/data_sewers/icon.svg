@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128">
+  <!-- Ragdoll body -->
+  <circle cx="64" cy="32" r="20" fill="#FFB6C1" stroke="#FF69B4" stroke-width="2"/>
+  
+  <!-- Eyes -->
+  <circle cx="56" cy="28" r="3" fill="#000"/>
+  <circle cx="72" cy="28" r="3" fill="#000"/>
+  
+  <!-- Smile -->
+  <path d="M 54 38 Q 64 44 74 38" stroke="#000" stroke-width="2" fill="none"/>
+  
+  <!-- Body -->
+  <ellipse cx="64" cy="70" rx="25" ry="35" fill="#FFB6C1" stroke="#FF69B4" stroke-width="2"/>
+  
+  <!-- Arms -->
+  <line x1="39" y1="60" x2="20" y2="80" stroke="#FF69B4" stroke-width="6" stroke-linecap="round"/>
+  <line x1="89" y1="60" x2="108" y2="80" stroke="#FF69B4" stroke-width="6" stroke-linecap="round"/>
+  
+  <!-- Legs -->
+  <line x1="54" y1="100" x2="48" y2="120" stroke="#FF69B4" stroke-width="6" stroke-linecap="round"/>
+  <line x1="74" y1="100" x2="80" y2="120" stroke="#FF69B4" stroke-width="6" stroke-linecap="round"/>
+  
+  <!-- Speech bubble -->
+  <ellipse cx="100" cy="20" rx="25" ry="15" fill="#FFF" stroke="#000" stroke-width="1"/>
+  <path d="M 85 25 L 75 35 L 85 30 Z" fill="#FFF" stroke="#000" stroke-width="1"/>
+  <text x="100" y="24" text-anchor="middle" font-size="10" fill="#000">Hi!</text>
+</svg>

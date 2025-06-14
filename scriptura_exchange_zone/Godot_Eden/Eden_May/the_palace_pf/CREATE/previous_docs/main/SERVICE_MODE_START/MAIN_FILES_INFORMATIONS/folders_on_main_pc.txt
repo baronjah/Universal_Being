@@ -1,0 +1,47 @@
+[
+	{
+		"name": "Eden_project",
+		"rootPath": "D:\\Eden",
+		"paths": [
+			"D:\\Eden_Backup\\second_edition\\second_edition", 
+			"C:\\Users\\Percision 15\\AppData\\Local\\Godot", 
+			"C:\\Users\\Percision 15\\AppData\\Roaming\\Godot", 
+			"D:\\GodotEden\\eden - Copy", "D:\\GodotEden", 
+			"D:\\Eden_Backup", 
+			"D:\\Shin_Eden", 
+			"D:\\GodotEden\\eden - Copy\\scripts"
+		],
+		"tags": [
+			"JSH Memories Processed",
+			"JSH Things Creation",
+			"JSH Scene Tree Add Nodes, Physical and Astral Bodies",
+			"JSH Ethereal Engine",
+			"JSH Ethereal Engine Initialization process",
+			"JSH Ethereal Engine Start up",
+			"JSH Ethereal Engine Repair",
+			"JSH Ethereal Engine check stuff before we proceed",
+			"JSH Etheric Download System",
+			"JSH Etheric Queue",
+			"JSH Records System",
+			"JSH Scene Tree",
+			"JSH Multi Threads",
+			"JSH Files Management",
+			"JSH Memories Management",
+			"JSH Memories Transcription",
+			"JSH Hidden Veil",
+			"JSH Projections System",
+			"JSH Memories Storage",
+			"multi_threads",
+			"time_clock",
+			"file_storing",
+			"file_read",
+			"file_create",
+			"tree_structure",
+			"messages_of_creation",
+			"file_structure",
+			"functions_structure",
+			"singular_function"
+		],
+		"enabled": true
+	}
+]

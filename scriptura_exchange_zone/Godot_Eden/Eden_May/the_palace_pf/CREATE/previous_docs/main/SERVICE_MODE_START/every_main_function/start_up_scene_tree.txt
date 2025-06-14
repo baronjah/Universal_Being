@@ -1,0 +1,11 @@
+func start_up_scene_tree():
+	
+	tree_mutex.lock()
+	scene_tree_jsh = TreeBlueprints.SCENE_TREE_BLUEPRINT.duplicate(true)
+	var name_to_add = self.name
+	scene_tree_jsh["main_root"]["name"] = name_to_add
+	scene_tree_jsh["main_root"]["type"] = self.get_class()
+	scene_tree_jsh["main_root"]["metadata"]["creation_time"] = Time.get_ticks_msec()
+	scene_tree_jsh["main_root"]["node"] = self
+	scene_tree_jsh["main_root"]["status"] = "active"
+	tree_mutex.unlock()

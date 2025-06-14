@@ -1,0 +1,40 @@
+func process_turn_0(delta: float) -> Dictionary:
+	var result = {
+		"status": CreationStatus.ERROR,
+		"message": "",
+		"delta_time": delta,
+		"processed_sets": 0
+	}
+	
+	# Validate delta
+	if delta <= 0:
+		result.message = "Invalid delta time"
+		return result
+	
+	# Check turn number
+	if turn_number_process != 0:
+		result.message = "Wrong turn number"
+		return result
+	
+	# Try to process
+	turn_number_process += 1
+	
+	# Mutex handling with proper cleanup
+	array_mutex_process.lock()
+	
+	# Check if we have sets to create
+	if list_of_sets_to_create.size() > 0:
+		var process_result = process_stages()
+		if process_result:
+			result.status = CreationStatus.SUCCESS
+			result.processed_sets = list_of_sets_to_create.size()
+		else:
+			result.message = "Process stages failed"
+	else:
+		result.message = "No sets to create"
+		result.status = CreationStatus.PENDING
+	
+	array_mutex_process.unlock()
+	result.delta_time = delta
+	
+	return result

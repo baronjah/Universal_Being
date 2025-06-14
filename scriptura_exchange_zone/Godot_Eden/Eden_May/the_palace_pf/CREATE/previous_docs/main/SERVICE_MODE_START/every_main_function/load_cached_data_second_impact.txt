@@ -1,0 +1,65 @@
+func load_cached_data_second_impact(data_set: String):
+	print(" load cached data start : " , data_set)
+	var type_of_data : int
+	var records_set_name = data_set
+	
+	active_r_s_mut.lock()
+	var cached_data_new = active_record_sets[records_set_name].duplicate(true)
+	active_r_s_mut.unlock()
+	
+	var thing_name
+	var coords_to_place
+	var direction_to_place
+	var thing_type_file
+	var shape_name
+	var root_name
+	var pathway_dna
+	var group_number
+
+	var first_line : Array = []
+	var lines_parsed : Array = []
+	for data_type in BanksCombiner.combination_new_gen_1:
+		type_of_data = int(data_type[0])
+		var type_num = data_type[0]
+		var data_name = records_set_name + BanksCombiner.data_names_0[type_num]
+		var file_data = cached_data_new[data_name]["content"]
+		var size_of_data = file_data.size()
+		for record in file_data:
+			for lines in record:
+				if lines == record[0]:
+					first_line = record[0]
+				else:
+					lines_parsed.append(lines)
+			match type_of_data:
+				0:
+					print("newly_made_dictio here we act re se ")
+				1:
+#					print("instruction stuff:")
+					var thingies_to_make_path = lines_parsed[0]
+					var datapoint_path_l_c_d_s_i =  thingies_to_make_path[0][0] + "/" + thingies_to_make_path[1][0]
+					var data_type_s_i : String = "instructions_analiser"
+					
+					mutex_data_to_send.lock()
+					data_to_be_send.append([data_type_s_i, datapoint_path_l_c_d_s_i, thingies_to_make_path[0][0], first_line.duplicate(true), lines_parsed.duplicate(true)])
+					mutex_data_to_send.unlock()
+
+				2: 
+#					print(" scenes and frames analise : ")
+					var thingies_to_make_path = lines_parsed[0]
+					var datapoint_path_l_c_d_s_i0 =  first_line[1][0] + "/" + first_line[2][0]
+					var data_type_s_i0 : String = "scene_frame_upload"
+					
+					mutex_data_to_send.lock()
+					data_to_be_send.append([data_type_s_i0, datapoint_path_l_c_d_s_i0, first_line[1][0], first_line.duplicate(true), lines_parsed.duplicate(true)])
+					mutex_data_to_send.unlock()
+					
+				3: #interactions
+					var datapoint_path_l_c_d_s_i1 =  first_line[1][0] + "/" + first_line[2][0]
+					var data_type_s_i1 : String = "interactions_upload"
+
+					mutex_data_to_send.lock()
+					data_to_be_send.append([data_type_s_i1, datapoint_path_l_c_d_s_i1, first_line[1][0], first_line.duplicate(true), lines_parsed.duplicate(true)])
+					mutex_data_to_send.unlock()
+
+			first_line.clear()
+			lines_parsed.clear()

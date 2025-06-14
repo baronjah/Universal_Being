@@ -1,0 +1,91 @@
+metadata
+extends Node3D
+all variants
+var first_start_check : String = "pending"
+var int_of_stuff_started : int = 0
+var int_of_stuff_finished : int = 0
+var path = "D:/Eden"
+var file_path
+var files_content
+var folders_content
+var directory_existence = false
+var folders_existence = false
+var files_existence = false
+const DataPointScript = preload("res://scripts/data_point.gd")
+const ContainterScript = preload("res://scripts/containter.gd")
+const LineScript = preload("res://scripts/line.gd")
+var ray_distance_set = 20.0
+var viewport
+var mouse_pos
+var camera
+var turn_number_process : int = 0
+var delta_turn_0 : int = 0
+var active_record_sets: Dictionary = {}
+var active_r_s_mut = Mutex.new()
+var cached_record_sets: Dictionary = {}
+var cached_r_s_mutex = Mutex.new()
+var list_of_sets_to_create : Array = []
+var array_mutex_process = Mutex.new()
+var max_nodes_added_per_cycle : int = 369
+var nodes_to_be_added_int : int = 0
+var nodes_to_be_added : Array = []
+var mutex_nodes_to_be_added = Mutex.new()
+var max_data_send_per_cycle : int = 369
+var data_to_be_send : Array = []
+var mutex_data_to_send = Mutex.new()
+var max_movements_per_cycle : int = 369
+var things_to_be_moved : Array = []
+var movmentes_mutex = Mutex.new()
+var max_nodes_to_unload_per_cycle : int = 369
+var nodes_to_be_unloaded : Array = []
+var mutex_for_unloading_nodes = Mutex.new()
+var max_functions_called_per_cycle : int = 369
+var functions_to_be_called : Array = []
+var mutex_function_call = Mutex.new()
+var scene_tree_jsh : Dictionary = {}
+var tree_mutex = Mutex.new()
+var cached_jsh_tree_branches : Dictionary = {}
+var cached_tree_mutex = Mutex.new()
+var status_symbol = {"active": "●", "pending": "○", "disabled": "×"}
+var cache_timestamps: Dictionary = {}
+var max_cache_size_mb: int = 8
+var available_directiories : Array = []
+@onready var thread_pool = get_node("/root/thread_pool_autoload")
+var curent_queue : Array = [[0], [0], [0], [0], [0], [0], [0], [0], [0], [0]] 
+var the_menace_checker : int = 0
+var menace_mutex = Mutex.new()
+var array_for_counting_finish : Dictionary = {}
+var array_counting_mutex = Mutex.new()
+var download_received : Dictionary = {}
+var upload_to_send : Dictionary = {}
+var current_containers_state : Dictionary = {}
+var mutex_for_container_state = Mutex.new()
+var menace_tricker_checker : int = -2
+var mutex_for_trickery = Mutex.new()
+var unload_queue : Dictionary = {}
+var unload_queue_mutex = Mutex.new()
+var load_queue : Dictionary = {}
+var load_queue_mutex = Mutex.new()
+var mutex_containers = Mutex.new()
+var list_of_containers : Dictionary = {}
+var mutex_singular_l_u = Mutex.new()
+var array_with_no_mutex : Array = []
+var dictionary_of_mistakes : Dictionary = {}
+var dictionary_of_mistakes_mutex = Mutex.new()
+var task_timeouts = {}
+var max_task_duration = 50000
+var task_timestamps = {}
+var task_status = {}
+var creation_can_happen
+var mistakes_of_past
+var deletion_process_can_happen
+var movement_possible
+var edit_possible
+var fsc_status = null
+var fdc_status = null
+var ftc_status = null
+enum SystemState {UNKNOWN = -1,INACTIVE = 0,ACTIVE = 1,BUSY = 2,ERROR = 3}
+var message_of_delta_start
+var array_of_startup_check : Array = []
+signal main_node_signal(place)
+var timer_system: GodotTimersSystem

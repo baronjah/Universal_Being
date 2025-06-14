@@ -1,0 +1,88 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://api_interface.tscn" type="PackedScene" id=1]
+
+[sub_resource type="GDScript" id=1]
+script/source = "extends Control
+
+func _ready():
+    # Set window title
+    OS.set_window_title(\"LuminusOS - Multi-API Terminal System\")
+"
+
+[sub_resource type="StyleBoxFlat" id=2]
+bg_color = Color( 0.12549, 0.12549, 0.12549, 1 )
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color( 0.501961, 0.25098, 0.752941, 1 )
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+
+[sub_resource type="StyleBoxFlat" id=3]
+bg_color = Color( 0.156863, 0.156863, 0.176471, 1 )
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color( 0.501961, 0.25098, 0.752941, 0.501961 )
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+
+[sub_resource type="Theme" id=4]
+Panel/styles/panel = SubResource( 2 )
+TextEdit/colors/background_color = Color( 0.14902, 0.14902, 0.14902, 1 )
+TextEdit/colors/font_color = Color( 0.878431, 0.878431, 0.878431, 1 )
+TextEdit/styles/normal = SubResource( 3 )
+
+[node name="MultiAPIDemo" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme = SubResource( 4 )
+script = SubResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ColorRect" type="ColorRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0.0784314, 0.0784314, 0.0980392, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="APIInterface" parent="." instance=ExtResource( 1 )]
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="HeaderLabel" type="Label" parent="."]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -300.0
+margin_top = 8.0
+margin_right = 300.0
+margin_bottom = 39.0
+custom_colors/font_color = Color( 0.501961, 0.25098, 0.752941, 1 )
+text = "LuminusOS - Word Manifestation System"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="FooterLabel" type="Label" parent="."]
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = -24.0
+custom_colors/font_color = Color( 0.501961, 0.25098, 0.752941, 0.501961 )
+text = "Phase 5: Awakening - Terminal Overlay System"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}

@@ -1,0 +1,221 @@
+# Akashic Records Dictionary Structure
+
+This document describes the file and data structure of the Akashic Records system for the Eden Space Game.
+
+## File Organization
+
+### Directory Structure
+
+```
+/dictionary/
+  ├── root_dictionary.json      # Main dictionary file
+  ├── elements/                 # Element-specific dictionaries
+  │   ├── fire_dictionary.json
+  │   ├── water_dictionary.json
+  │   └── ...
+  ├── entities/                 # Entity-specific dictionaries
+  │   ├── star_dictionary.json
+  │   ├── planet_dictionary.json
+  │   └── ...
+  ├── interactions/             # Interaction rule collections
+  │   ├── element_interactions.json
+  │   ├── cosmic_interactions.json
+  │   └── ...
+  └── zones/                    # Spatial organization
+      ├── universe.json
+      ├── universe_0000.json    # Split zones
+      └── ...
+```
+
+### User Directory
+
+For persistent storage across sessions:
+
+```
+user://dictionary/
+  └── user_dictionary.json      # User-created dictionary entries
+```
+
+## Data Formats
+
+### Word Entry JSON Format
+
+```json
+{
+  "id": "fire",
+  "category": "element",
+  "parent_id": "",
+  "children": ["flame", "ember"],
+  "usage_count": 15,
+  "last_used": 1620000000,
+  "properties": {
+    "heat": 0.8,
+    "light": 0.7,
+    "energy": 0.9,
+    "consumption": 0.5
+  },
+  "states": {
+    "flame": {
+      "default": true
+    },
+    "ember": {
+      "properties": {
+        "heat": 0.3,
+        "light": 0.2
+      }
+    }
+  },
+  "current_state": "flame",
+  "interactions": {
+    "water": {
+      "result": "steam",
+      "conditions": {
+        "heat": "> 0.5"
+      }
+    },
+    "wood": {
+      "result": "ash",
+      "conditions": {
+        "consumption": "> 0.3"
+      }
+    }
+  },
+  "file_reference": "",
+  "variant_ids": ["fire-prime", "quasi-fire"]
+}
+```
+
+### Dictionary JSON Format
+
+```json
+{
+  "fire": { /* fire word entry */ },
+  "water": { /* water word entry */ },
+  "earth": { /* earth word entry */ },
+  "air": { /* air word entry */ }
+}
+```
+
+### Zone JSON Format
+
+```json
+{
+  "id": "universe",
+  "bounds": {
+    "position": {"x": -1000, "y": -1000, "z": -1000},
+    "size": {"x": 2000, "y": 2000, "z": 2000}
+  },
+  "entities": {
+    "fire_entity_42": {"x": 10, "y": 20, "z": 30},
+    "water_entity_17": {"x": -15, "y": 5, "z": 8}
+  },
+  "child_zones": ["universe_000", "universe_001", "universe_010", "universe_011"],
+  "parent_zone": "",
+  "entity_count": 2,
+  "active": true
+}
+```
+
+## Core Data Structures
+
+### WordEntry Class
+
+Primary attributes:
+- `id`: Unique identifier for the word
+- `category`: Type classification (element, concept, entity, etc.)
+- `parent_id`: ID of parent word (for hierarchies)
+- `children`: List of child word IDs
+- `usage_count`: How frequently this word is used
+- `last_used`: Timestamp of last usage
+- `properties`: Dictionary of numerical/string properties
+- `states`: Different configurations the word can have
+- `current_state`: Currently active state
+- `interactions`: Rules for interacting with other words
+- `variants`: Evolved variations of this word
+
+### DynamicDictionary Class
+
+Main components:
+- `words`: Dictionary mapping word IDs to WordEntry objects
+- `root_words`: List of top-level words without parents
+- `add_word()`: Adds a new word to the dictionary
+- `remove_word()`: Removes a word and optionally its children
+- `get_word()`: Retrieves a word by ID
+- `update_word()`: Updates an existing word
+- `add_interaction_rule()`: Creates interaction between words
+- `load_dictionary()`: Loads dictionary from file
+- `save_dictionary()`: Saves dictionary to file
+- `split_word_to_file()`: Moves complex word to separate file
+- `search_words()`: Finds words matching criteria
+
+### ZoneManager Class
+
+Key elements:
+- `zones`: Dictionary of all defined zones
+- `active_zones`: Currently loaded zones
+- `create_zone()`: Defines a new spatial zone
+- `add_entity_to_zone()`: Places entity in a zone
+- `get_entities_at_position()`: Spatial query
+- `_split_zone()`: Divides a dense zone into sub-zones
+- `_merge_zones()`: Combines sparse zones for efficiency
+
+## Evolution Parameters
+
+The evolution system uses these key parameters:
+
+- `evolution_interval`: Time between evolution cycles (seconds)
+- `evolution_rate`: Base rate of property drift (0.0-1.0)
+- `variant_threshold`: Usage count needed to generate variants
+- `variant_probability`: Chance of creating a variant
+
+## Visualization Settings
+
+Visualization can be configured with:
+
+- `layout_type`: Organization pattern (radial, spiral, cluster)
+- `max_words`: Maximum number of words to display
+- `show_connections`: Whether to show relationship lines
+- `connection_threshold`: Similarity needed for connection
+
+## Interaction Rules
+
+Interactions have:
+
+- `word1`: First word in interaction
+- `word2`: Second word in interaction
+- `result`: Outcome word ID
+- `conditions`: Dictionary of requirements to be met
+
+Conditions use operators:
+- `> value`: Greater than comparison
+- `< value`: Less than comparison
+- `!= value`: Not equal comparison
+- `== value`: Equality comparison
+- Direct value: Exact match required
+
+## Best Practices
+
+1. **Word IDs**:
+   - Use lowercase, no spaces
+   - Keep IDs short but descriptive
+   - Use hyphen for compound words (e.g., "quasi-fire")
+
+2. **Properties**:
+   - Normalize numeric properties to 0.0-1.0 range
+   - Use consistent property names across related words
+   - Add properties gradually as needed
+
+3. **Categories**:
+   - Use a consistent set of categories
+   - Start with base categories: element, concept, entity
+   - Add subcategories as needed (cosmic-entity, etc.)
+
+4. **Dictionary Management**:
+   - Save regularly
+   - Organize words with parent-child relationships
+   - Use the splitting feature for complex word hierarchies
+
+5. **Evolution**:
+   - Set a reasonable evolution interval (30-120 seconds)
+   - Use moderate evolution rate (0.01-0.1)
+   - Adjust variant probability based on desired emergence rate

@@ -1,0 +1,25 @@
+func scan_eden_directory(directory: String = "D:/Eden", indent: int = 0) -> Dictionary:
+	var dir = DirAccess.open(directory)
+	var scan_results = {
+		"files": [],
+		"directories": [],
+		"status": "pending"
+	}
+
+	if dir:
+		scan_results["status"] = "completed"
+
+		for subdir in dir.get_directories():
+			print("  ".repeat(indent) + "📁 " + subdir)
+			scan_results["directories"].append(subdir)
+			scan_results[subdir] = scan_eden_directory(directory.path_join(subdir), indent + 1)
+
+		for file in dir.get_files():
+			print("  ".repeat(indent) + "📄 " + file)
+			scan_results["files"].append(file)
+
+	else:
+		scan_results["status"] = "failed"
+		print("❌ Could not open directory: " + directory)
+
+	return scan_results

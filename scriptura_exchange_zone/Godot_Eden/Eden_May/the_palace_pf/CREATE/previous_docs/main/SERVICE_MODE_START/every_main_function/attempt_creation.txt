@@ -1,0 +1,9 @@
+func attempt_creation(set_name: String) -> CreationState:
+	if not is_creation_possible():
+		return CreationState.LOCKED
+		
+	array_mutex_process.lock()
+	list_of_sets_to_create.append(set_name)
+	array_mutex_process.unlock()
+	
+	return CreationState.POSSIBLE

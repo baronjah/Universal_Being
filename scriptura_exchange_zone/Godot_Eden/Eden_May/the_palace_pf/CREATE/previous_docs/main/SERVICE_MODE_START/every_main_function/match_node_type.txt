@@ -1,0 +1,18 @@
+func match_node_type(type: String) -> String:
+	match type:
+		"flat_shape", "model", "cursor", "screen", "circle":
+			return "MeshInstance3D"
+		"text":
+			return "Label3D"
+		"button":
+			return "Node3D" 
+		"connection":
+			return "MeshInstance3D"
+		"text_mesh":
+			return "MeshInstance3D"
+		"datapoint":
+			return "Node3D"
+		"container":
+			return "Node3D"
+		_:
+			return "Node3D"

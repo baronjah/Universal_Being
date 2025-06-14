@@ -1,0 +1,478 @@
+# ThreadManager.gd - The Multithreading Orchestrator for Ethereal Engine
+extends Node
+class_name ThreadManager
+
+signal task_completed(task_id: String, result: Dictionary)
+signal task_failed(task_id: String, error: String)
+signal thread_pool_status_changed(active_threads: int, queued_tasks: int)
+
+# Thread pool management
+var thread_pool = []
+var max_threads = 4
+var active_tasks = {}
+var task_queue = []
+
+# Mutexes for thread safety (following our established rules)
+var creation_mutex = Mutex.new()
+var database_mutex = Mutex.new()
+var ui_update_mutex = Mutex.new()
+var container_mutex = Mutex.new()
+var task_queue_mutex = Mutex.new()
+
+# Task management
+var task_counter = 0
+var completed_tasks = {}
+var failed_tasks = {}
+
+# Performance tracking
+var thread_performance = {
+	"tasks_completed": 0,
+	"tasks_failed": 0,
+	"average_task_time": 0.0,
+	"peak_thread_usage": 0
+}
+
+enum TaskType {
+	WORD_CREATION,
+	DATAPOINT_PROCESSING,
+	CONTAINER_MANAGEMENT,
+	COSMIC_NAVIGATION,
+	DATABASE_OPERATION,
+	UI_UPDATE
+}
+
+enum TaskPriority {
+	EMERGENCY = 1000,
+	HIGH = 100,
+	MEDIUM = 50,
+	LOW = 10,
+	BACKGROUND = 1
+}
+
+func _ready():
+	print("🧵 ThreadManager initialized - Multithreading Orchestrator active")
+	initialize_thread_pool()
+	setup_performance_monitoring()
+
+func initialize_thread_pool():
+	# Create worker threads
+	for i in range(max_threads):
+		var worker_thread = WorkerThread.new()
+		worker_thread.thread_id = i
+		worker_thread.task_completed.connect(_on_task_completed)
+		worker_thread.task_failed.connect(_on_task_failed)
+		thread_pool.append(worker_thread)
+		
+	print("🚀 Thread pool initialized with ", max_threads, " workers")
+
+func setup_performance_monitoring():
+	# Monitor thread performance every 5 seconds
+	var timer = Timer.new()
+	timer.wait_time = 5.0
+	timer.timeout.connect(_on_performance_check)
+	timer.autostart = true
+	add_child(timer)
+
+# === TASK SUBMISSION ===
+
+func submit_task(target_object: Object, method_name: String, parameters: Array = [], priority: TaskPriority = TaskPriority.MEDIUM) -> String:
+	var task_id = generate_task_id()
+	
+	var task_data = {
+		"id": task_id,
+		"target": target_object,
+		"method": method_name,
+		"parameters": parameters,
+		"priority": priority,
+		"submitted_at": Time.get_ticks_msec(),
+		"type": determine_task_type(method_name),
+		"retry_count": 0,
+		"max_retries": 3
+	}
+	
+	queue_task(task_data)
+	return task_id
+
+func queue_task(task_data: Dictionary):
+	task_queue_mutex.lock()
+	task_queue.append(task_data)
+	# Sort by priority (higher number = higher priority)
+	task_queue.sort_custom(func(a, b): return a.priority > b.priority)
+	task_queue_mutex.unlock()
+	
+	process_task_queue()
+
+func process_task_queue():
+	task_queue_mutex.lock()
+	
+	while task_queue.size() > 0 and get_available_thread():
+		var task = task_queue.pop_front()
+		var worker = get_available_thread()
+		
+		if worker:
+			assign_task_to_worker(worker, task)
+	
+	task_queue_mutex.unlock()
+	
+	emit_signal("thread_pool_status_changed", get_active_thread_count(), task_queue.size())
+
+func get_available_thread() -> WorkerThread:
+	for worker in thread_pool:
+		if not worker.is_busy:
+			return worker
+	return null
+
+func assign_task_to_worker(worker: WorkerThread, task_data: Dictionary):
+	worker.execute_task(task_data)
+	active_tasks[task_data.id] = {
+		"task": task_data,
+		"worker": worker,
+		"started_at": Time.get_ticks_msec()
+	}
+
+# === SAFE OPERATIONS (Following our programming rules) ===
+
+func safe_create_datapoint(data: Dictionary) -> Dictionary:
+	# Rule #4: Thread safety above all
+	creation_mutex.lock()
+	var result = unsafe_create_datapoint(data)
+	creation_mutex.unlock()
+	return result
+
+func unsafe_create_datapoint(data: Dictionary) -> Dictionary:
+	# Actual datapoint creation logic
+	var datapoint_id = "dp_" + str(Time.get_ticks_msec())
+	var datapoint = {
+		"id": datapoint_id,
+		"position": data.get("position", Vector3.ZERO),
+		"type": data.get("type", "basic"),
+		"created_at": Time.get_datetime_string_from_system(),
+		"frame_id": data.get("frame_id", "a0")
+	}
+	return datapoint
+
+func safe_update_container(container_id: String, updates: Dictionary) -> bool:
+	container_mutex.lock()
+	var success = unsafe_update_container(container_id, updates)
+	container_mutex.unlock()
+	return success
+
+func unsafe_update_container(container_id: String, updates: Dictionary) -> bool:
+	# Actual container update logic
+	print("Updating container: ", container_id, " with: ", updates)
+	return true
+
+func safe_database_write(table: String, record_id: String, data: Dictionary) -> bool:
+	database_mutex.lock()
+	var success = unsafe_database_write(table, record_id, data)
+	database_mutex.unlock()
+	return success
+
+func unsafe_database_write(table: String, record_id: String, data: Dictionary) -> bool:
+	# This would call DataManager in real implementation
+	print("Database write: ", table, ".", record_id)
+	return true
+
+# === MAIN THREAD OPERATIONS ===
+
+func create_word_entity_threaded(word_data: Dictionary):
+	# Process data in thread
+	var processed_data = process_word_data(word_data)
+	
+	# Rule #5: Return to main thread for node creation
+	call_deferred("create_word_entity_main_thread", processed_data)
+
+func create_word_entity_main_thread(data: Dictionary):
+	# Safe to create nodes here - this runs on main thread
+	print("Creating word entity on main thread: ", data.get("word", "unknown"))
+	
+	# This would create actual 3D nodes in your Ethereal Engine
+	var word_node = preload("res://WordEntity.tscn").instantiate() if ResourceLoader.exists("res://WordEntity.tscn") else Node3D.new()
+	word_node.name = "Word_" + data.get("word", "entity")
+	
+	# Add to scene tree safely
+	get_tree().current_scene.add_child(word_node)
+
+func process_word_data(word_data: Dictionary) -> Dictionary:
+	# Heavy processing that can be done in background
+	var processed = word_data.duplicate(true)
+	processed["processed_at"] = Time.get_ticks_msec()
+	processed["thread_id"] = OS.get_thread_caller_id()
+	
+	# Simulate processing time
+	OS.delay_msec(50)
+	
+	return processed
+
+# === TASK TYPE DETERMINATION ===
+
+func determine_task_type(method_name: String) -> TaskType:
+	match method_name:
+		"create_word_entity", "evolve_word", "process_word_data":
+			return TaskType.WORD_CREATION
+		"create_datapoint", "update_datapoint", "process_datapoint":
+			return TaskType.DATAPOINT_PROCESSING
+		"create_container", "update_container", "process_container":
+			return TaskType.CONTAINER_MANAGEMENT
+		"navigate_cosmic", "update_camera", "calculate_position":
+			return TaskType.COSMIC_NAVIGATION
+		"database_write", "database_read", "database_update":
+			return TaskType.DATABASE_OPERATION
+		_:
+			return TaskType.BACKGROUND
+
+# === SIGNAL HANDLERS ===
+
+func _on_task_completed(task_id: String, result: Dictionary):
+	if task_id in active_tasks:
+		var task_info = active_tasks[task_id]
+		var completion_time = Time.get_ticks_msec() - task_info.started_at
+		
+		completed_tasks[task_id] = {
+			"result": result,
+			"completion_time": completion_time,
+			"completed_at": Time.get_ticks_msec()
+		}
+		
+		active_tasks.erase(task_id)
+		thread_performance.tasks_completed += 1
+		update_average_task_time(completion_time)
+		
+		emit_signal("task_completed", task_id, result)
+		
+		# Process next task in queue
+		process_task_queue()
+
+func _on_task_failed(task_id: String, error: String):
+	if task_id in active_tasks:
+		var task_info = active_tasks[task_id]
+		var task_data = task_info.task
+		
+		# Retry logic
+		if task_data.retry_count < task_data.max_retries:
+			task_data.retry_count += 1
+			print("🔄 Retrying task ", task_id, " (attempt ", task_data.retry_count, ")")
+			queue_task(task_data)
+		else:
+			failed_tasks[task_id] = {
+				"error": error,
+				"failed_at": Time.get_ticks_msec(),
+				"retry_count": task_data.retry_count
+			}
+			
+			thread_performance.tasks_failed += 1
+			emit_signal("task_failed", task_id, error)
+		
+		active_tasks.erase(task_id)
+		process_task_queue()
+
+# === PERFORMANCE MONITORING ===
+
+func _on_performance_check():
+	var current_active = get_active_thread_count()
+	if current_active > thread_performance.peak_thread_usage:
+		thread_performance.peak_thread_usage = current_active
+	
+	emit_signal("thread_pool_status_changed", current_active, task_queue.size())
+	
+	# Auto-adjust thread pool if needed
+	if task_queue.size() > 10 and thread_pool.size() < 8:
+		add_worker_thread()
+	elif current_active == 0 and thread_pool.size() > max_threads:
+		remove_excess_threads()
+
+func update_average_task_time(completion_time: int):
+	var total_completed = thread_performance.tasks_completed
+	var current_average = thread_performance.average_task_time
+	
+	thread_performance.average_task_time = (current_average * (total_completed - 1) + completion_time) / total_completed
+
+func add_worker_thread():
+	var new_worker = WorkerThread.new()
+	new_worker.thread_id = thread_pool.size()
+	new_worker.task_completed.connect(_on_task_completed)
+	new_worker.task_failed.connect(_on_task_failed)
+	thread_pool.append(new_worker)
+	print("➕ Added worker thread - Total: ", thread_pool.size())
+
+func remove_excess_threads():
+	# Remove idle threads above max_threads
+	var threads_to_remove = []
+	for i in range(max_threads, thread_pool.size()):
+		if not thread_pool[i].is_busy:
+			threads_to_remove.append(i)
+	
+	for i in threads_to_remove:
+		thread_pool[i].cleanup()
+		thread_pool.remove_at(i)
+	
+	if threads_to_remove.size() > 0:
+		print("➖ Removed ", threads_to_remove.size(), " idle threads")
+
+# === UTILITY FUNCTIONS ===
+
+func generate_task_id() -> String:
+	task_counter += 1
+	return "task_" + str(Time.get_ticks_msec()) + "_" + str(task_counter)
+
+func get_active_thread_count() -> int:
+	var count = 0
+	for worker in thread_pool:
+		if worker.is_busy:
+			count += 1
+	return count
+
+func get_thread_performance() -> Dictionary:
+	return thread_performance.duplicate()
+
+func emergency_stop_all_tasks():
+	# Rule #13: Graceful degradation
+	print("🚨 Emergency stop - Cancelling all tasks")
+	
+	task_queue_mutex.lock()
+	task_queue.clear()
+	task_queue_mutex.unlock()
+	
+	for worker in thread_pool:
+		worker.cancel_current_task()
+	
+	active_tasks.clear()
+
+func _exit_tree():
+	print("🧵 ThreadManager shutting down...")
+	
+	# Wait for active tasks to complete (with timeout)
+	var timeout = 5000  # 5 seconds
+	var start_time = Time.get_ticks_msec()
+	
+	while get_active_thread_count() > 0 and (Time.get_ticks_msec() - start_time) < timeout:
+		OS.delay_msec(100)
+	
+	# Force cleanup
+	for worker in thread_pool:
+		worker.cleanup()
+	
+	# Clean up mutexes
+	creation_mutex = null
+	database_mutex = null
+	ui_update_mutex = null
+	container_mutex = null
+	task_queue_mutex = null
+	
+	print("✅ ThreadManager shutdown complete")
+
+# === WORKER THREAD CLASS ===
+
+class WorkerThread:
+	extends RefCounted
+	
+	signal task_completed(task_id: String, result: Dictionary)
+	signal task_failed(task_id: String, error: String)
+	
+	var thread_id: int
+	var is_busy: bool = false
+	var current_task: Dictionary = {}
+	var thread: Thread
+	
+	func _init():
+		thread = Thread.new()
+	
+	func execute_task(task_data: Dictionary):
+		is_busy = true
+		current_task = task_data
+		
+		# Start thread for heavy operations
+		if task_needs_thread(task_data.type):
+			thread.start(_execute_task_threaded.bind(task_data))
+		else:
+			# Execute on main thread for simple operations
+			call_deferred("_execute_task_main_thread", task_data)
+	
+	func task_needs_thread(task_type: TaskType) -> bool:
+		match task_type:
+			TaskType.WORD_CREATION, TaskType.DATAPOINT_PROCESSING:
+				return true
+			TaskType.UI_UPDATE:
+				return false
+			_:
+				return true
+	
+	func _execute_task_threaded(task_data: Dictionary):
+		var result = {}
+		
+		try:
+			match task_data.type:
+				TaskType.WORD_CREATION:
+					result = _process_word_creation(task_data)
+				TaskType.DATAPOINT_PROCESSING:
+					result = _process_datapoint(task_data)
+				TaskType.CONTAINER_MANAGEMENT:
+					result = _process_container(task_data)
+				_:
+					result = _process_generic_task(task_data)
+			
+			call_deferred("_task_completed", task_data.id, result)
+			
+		except:
+			var error = "Task execution failed: " + str(get_stack())
+			call_deferred("_task_failed", task_data.id, error)
+		
+		is_busy = false
+		thread.wait_to_finish()
+	
+	func _execute_task_main_thread(task_data: Dictionary):
+		var result = _process_generic_task(task_data)
+		_task_completed(task_data.id, result)
+		is_busy = false
+	
+	func _process_word_creation(task_data: Dictionary) -> Dictionary:
+		# Heavy word processing
+		OS.delay_msec(100)  # Simulate processing
+		return {
+			"word_id": "word_" + str(Time.get_ticks_msec()),
+			"processed": true,
+			"thread_id": thread_id
+		}
+	
+	func _process_datapoint(task_data: Dictionary) -> Dictionary:
+		# Datapoint processing
+		OS.delay_msec(50)
+		return {
+			"datapoint_id": "dp_" + str(Time.get_ticks_msec()),
+			"processed": true,
+			"thread_id": thread_id
+		}
+	
+	func _process_container(task_data: Dictionary) -> Dictionary:
+		# Container processing
+		return {
+			"container_id": "container_" + str(Time.get_ticks_msec()),
+			"processed": true,
+			"thread_id": thread_id
+		}
+	
+	func _process_generic_task(task_data: Dictionary) -> Dictionary:
+		# Generic task processing
+		return {
+			"generic_result": true,
+			"task_id": task_data.id,
+			"thread_id": thread_id
+		}
+	
+	func _task_completed(task_id: String, result: Dictionary):
+		emit_signal("task_completed", task_id, result)
+	
+	func _task_failed(task_id: String, error: String):
+		emit_signal("task_failed", task_id, error)
+	
+	func cancel_current_task():
+		if is_busy:
+			print("⚠️ Cancelling task on thread ", thread_id)
+			is_busy = false
+			current_task = {}
+	
+	func cleanup():
+		if thread and thread.is_started():
+			thread.wait_to_finish()
+		is_busy = false
+		current_task = {}

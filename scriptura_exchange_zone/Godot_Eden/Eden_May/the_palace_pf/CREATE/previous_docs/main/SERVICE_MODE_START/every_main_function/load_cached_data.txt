@@ -1,0 +1,80 @@
+func load_cached_data(data_set: String):
+	var type_of_data : int
+	var records_set_name = data_set
+	
+	active_r_s_mut.lock()
+	var cached_data_new = active_record_sets[records_set_name].duplicate(true)
+	active_r_s_mut.unlock()
+	
+	var thing_name
+	var coords_to_place
+	var direction_to_place
+	var thing_type_file
+	var shape_name
+	var root_name
+	var pathway_dna
+	var group_number
+	var counter_to_know : int = 0
+	var first_line : Array = []
+	var lines_parsed : Array = []
+	for data_type in BanksCombiner.combination_new_gen_0:
+		counter_to_know = 0
+		type_of_data = int(data_type[0])
+		var type_num = data_type[0]
+		var data_name = records_set_name + BanksCombiner.data_names_0[type_num]
+		var file_data = cached_data_new[data_name]["content"]
+		var size_of_data = file_data.size()
+	
+		for record in file_data:
+			counter_to_know +=1
+			for lines in record:
+				if lines == record[0]:
+					first_line = record[0]
+				else:
+					lines_parsed.append(lines)
+			match type_of_data:
+				0:
+					# First
+					thing_name = first_line[0][0]
+					# Second
+					coords_to_place = first_line[1][0]
+					# Third
+					direction_to_place = first_line[2][0]
+					# Fourth
+					thing_type_file = first_line[3][0]
+					# Fifth
+					shape_name = first_line[4][0]
+					# Sixth
+					root_name = first_line[5][0]
+					# Seventh
+					pathway_dna = first_line[6][0]
+					# Eight
+					group_number = first_line[7][0]
+				1:
+					pass
+					#print("file loading? 1")
+				2:
+					pass
+					#print("file loading? 2 ")
+				3:
+					pass
+					#print("file loading? 3 " )
+
+			match type_of_data:
+				0:
+					#print( "  thing_name : " , thing_name, " thing_type_file :" , thing_type_file, " metadata_parts : " , first_line, " second_line :" , lines_parsed[0],  " group_number : " , group_number, " shape_name : " , shape_name, "information_lines : " , lines_parsed)
+					analise_data(thing_name, thing_type_file, first_line, lines_parsed[0], group_number, shape_name, lines_parsed)
+				1:
+					print("instruction stuff:")
+				2: 
+					print(" scenes and frames analise : ")
+				3: 
+					print("so we will need to add them to datapoint")
+					if counter_to_know - 666 == size_of_data:
+						var container_node_path = first_line[1][0]
+						var container_node = get_node(container_node_path)
+						var datapoint_node = container_node.get_datapoint()
+						var scene_number: int = 0
+						datapoint_node.move_things_around(scene_number)
+			first_line.clear()
+			lines_parsed.clear()

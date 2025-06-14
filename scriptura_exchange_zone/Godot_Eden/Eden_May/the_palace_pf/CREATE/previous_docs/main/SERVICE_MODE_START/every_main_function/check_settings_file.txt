@@ -1,0 +1,97 @@
+func check_settings_file():
+	var settings_exists = FileAccess.file_exists("user://settings.txt")
+###### i want it on top :
+	scan_available_storage()
+	
+	var file_data_of_settings = SettingsBank.settings_file_blue_print_0
+	var data_of_settings_cleaned : Array = []
+	for entry in file_data_of_settings[0]:
+		var cleansed = entry[0].split("|")
+		data_of_settings_cleaned.append(cleansed)
+		
+	# here we are after cleaning settings thingy, the D eden is : data_of_settings_cleaned[0][1] = lets see now : D:/Eden so here we got string! just string :(
+	var path_for_directory = data_of_settings_cleaned[0][1]
+	var path_for_user_data = "user://" # + data_of_settings_cleaned[1][1]
+	var path_for_database = data_of_settings_cleaned[1][1]
+	var settings_file_name = data_of_settings_cleaned[2][1]
+	var default_directory = DirAccess.dir_exists_absolute(path_for_directory)
+
+
+
+
+
+#### first interpretation of some data
+
+	# Check if directory exists first
+
+	if default_directory == true:
+		print("the directory exist, we can send there file, hmm, damn, i wanted to do it different way, like use res? but lets just do it my way, it even finds")
+	else:
+		scan_available_storage()
+		
+		
+### my first additional check of data
+
+
+	if available_directiories is Array:
+		print(" available directories is an Array, but is it empty?")
+		if available_directiories.is_empty():
+			print(" it is empty " , available_directiories)
+		else:
+			print(" it is not empty ", available_directiories)
+
+
+## here we immediately were checking as it was Array, but maybe it was not Array
+
+
+	if available_directiories[0]:
+		data_of_settings_cleaned.append(["available_directiory" , available_directiories[0]])
+	#return false
+	if !DirAccess.dir_exists_absolute(path_for_user_data + path_for_database):
+	#	# Create directory
+		DirAccess.make_dir_recursive_absolute(path_for_user_data + path_for_database)
+	if !FileAccess.file_exists(path_for_user_data + settings_file_name):
+		var file = FileAccess.open(path_for_user_data + settings_file_name, FileAccess.WRITE)
+		if file:
+			for line in data_of_settings_cleaned:
+				file.store_line(line[0] + " : " + line[1])
+		SettingsBank.load_settings_file(path_for_user_data + settings_file_name)
+	
+
+
+
+
+
+## so what this is supposed to do, check settings file
+	print(" settings file history|file_exist|user://settings.txt ", settings_exists)
+	check_settings_data.append(check_settings_data)
+	if settings_exists:
+		# File exists, we can try to open it
+		var file = FileAccess.open("user://settings.txt", FileAccess.READ)
+		print(" settings file history|if user folder had |settings.txt:", settings_exists)
+		check_settings_data.append(settings_exists)
+
+
+
+# var check_settings_data : Array = []
+		check_settings_data.append(file)
+# a global variant of this function
+
+### the main feature of entire function, one var, just file
+		if file:
+			print("Successfully opened settings file")
+			
+			SettingsBank.load_settings_file("user://settings.txt")
+			
+			return true
+		else:
+			print("File exists but couldn't open it")
+			# whatever it was we appended it already
+			return false
+	else:
+		print("No settings file found in user://")
+		# well we appended that var already
+### here is simple return system file = var on top of function
+	
+	
+	return check_settings_data

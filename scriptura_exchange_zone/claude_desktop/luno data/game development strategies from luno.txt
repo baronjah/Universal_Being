@@ -1,0 +1,333 @@
+Luno's Game Development Strategy with AI Assistant (Claude)
+Introduction
+This document outlines a strategic approach to game development, emphasizing collaboration with an AI assistant (Claude). It provides rules for file management, programming practices, terminal usage, and a phased game creation process. The goal is to establish a clear, efficient, and scalable workflow for developing games, primarily using Godot (with GDScript) but adaptable to other languages and engines.
+
+Part 1: AI Assistant (Claude) Collaboration Protocol
+These rules are designed to guide Claude in assisting with file/folder operations, code generation, and modifications.
+
+1.1. File & Folder Management Rules
+A. Project Root & Structure:
+
+Define a Clear Project Root: Always operate within a clearly defined main project directory (e.g., D:/Games/ProjectName/ or ~/projects/ProjectName/ in WSL/Linux). Claude should always confirm or be reminded of this root.
+
+Consistent Naming Conventions:
+
+Folders: snake_case (e.g., player_scripts, ui_scenes) or PascalCase if it's a direct Godot node/scene group (e.g. Player, UserInterface). Prefer snake_case for general organization.
+
+Files (GDScript): PascalCase.gd for scripts that are class_name (e.g., PlayerController.gd). snake_case.gd for utility scripts or non-class scripts (less common).
+
+Files (Data): snake_case.json, snake_case.csv (e.g., item_database.json).
+
+Files (Scenes - Godot): PascalCase.tscn (e.g., Player.tscn, MainMenu.tscn).
+
+General Text/Markdown: snake_case_descriptive_name.md or .txt.
+
+Standard Directory Structure (Godot Focused):
+
+[ProjectRoot]/
+├── godot_project/      # Contains the actual Godot project (engine.cfg, etc.)
+│   ├── scenes/         # .tscn files
+│   │   ├── player/
+│   │   └── levels/
+│   ├── scripts/        # .gd files
+│   │   ├── player/
+│   │   └── systems/
+│   ├── assets/         # Art, sound, fonts
+│   │   ├── sprites/
+│   │   └── audio/
+│   ├── data/           # .json, .csv game data files
+│   ├── ui/             # UI scenes, themes, assets
+│   ├── shaders/        # .gdshader files
+│   └── addons/         # Third-party plugins
+├── design_documents/   # GDD, story, concept art
+│   └── MyGame_GDD.md
+├── build_exports/      # Exported game builds
+└── tools_and_scripts/  # Utility scripts (Python, shell) for automation
+
+Claude should be instructed to place new files in the appropriate subdirectory.
+
+B. Creating New Files/Folders:
+
+Specify Full Path: When requesting new files/folders, provide the full path relative to the ProjectRoot or the godot_project root.
+
+Example: "Claude, create a new GDScript file at godot_project/scripts/systems/inventory_system.gd."
+
+Define Initial Content (for files): Provide a clear template or outline for new files.
+
+Example: "Create inventory_system.gd with a class_name InventorySystem extending Node, and include basic functions like add_item(item_id: String, quantity: int) and remove_item(item_id: String, quantity: int)."
+
+Confirm Creation: Claude should confirm the creation and path.
+
+C. Modifying Existing Files:
+
+Identify Target File Clearly: Specify the exact file path.
+
+Provide Context: If modifying code, provide the surrounding lines or function for context.
+
+State Changes Precisely: "In Player.gd, in the _physics_process function, change the gravity application from velocity.y += gravity * delta to velocity.y += gravity * delta * 2.0."
+
+"Show Diff" or "Summarize Changes": Request Claude to highlight what was changed, like a diff.
+
+D. Handling Large/Complex Projects:
+
+Modular Tasks: Break down large requests into smaller, focused tasks.
+
+Instead of: "Claude, implement the entire combat system."
+
+Try: "Claude, first, let's define the Damageable component in godot_project/scripts/components/damageable.gd. It should have health, and a take_damage(amount) function."
+
+Focus on Specific Files/Modules: When a project becomes large, instruct Claude to work on one specific part or a few interconnected files at a time.
+
+"Refresh Context": If switching tasks or after a long break, remind Claude of the current focus area or relevant files.
+
+Iterative Refinement: If a generated solution is too complex or doesn't fit, ask Claude to "try again with the current database of files, focusing on [specific part], and simplify the approach by [suggestion]."
+
+E. Iteration and Versioning (Conceptual for AI):
+
+"Save As New Version": If you like a current file but want to explore changes, ask Claude: "Take the content of path/to/file.gd and create a new file path/to/file_v2.gd with the following modifications..."
+
+"Work on Previous Version": "Let's go back to the logic in path/to/file_v1.gd and try this instead..."
+
+Leverage Git: You (Luno) should be using Git for actual version control. Claude's "versions" are just temporary work states or file copies.
+
+F. WSL/Linux Specifics:
+
+Path Separators: Remind Claude to use forward slashes / for paths in WSL/Linux.
+
+Case Sensitivity: Emphasize that filenames and paths are case-sensitive.
+
+Permissions Awareness (Conceptual): While Claude won't directly set permissions, if discussing scripts that might need execution rights (e.g., shell scripts), be aware of this.
+
+Command Line Tools: Claude can help formulate bash commands for file operations within WSL.
+
+1.2. Communication & Tasking Rules for Claude
+Be Explicit and Clear: Avoid ambiguity. Define terms if necessary.
+
+Provide Sufficient Context: Don't assume Claude remembers everything from previous interactions. Briefly restate relevant context for new tasks.
+
+One Major Task at a Time: Especially for coding.
+
+Specify Output Format: "Provide the GDScript code block for..." or "List the steps as a numbered list."
+
+Error Handling & Reporting:
+
+If Claude generates code that seems incorrect or incomplete, point out the specific issue.
+
+Ask Claude to explain its reasoning if a solution is unexpected.
+
+Keywords for Control:
+
+STARTING POINT: (To define the base for a task)
+
+OBJECTIVE: (Clear goal for the task)
+
+CONSTRAINTS: (e.g., "Use GDScript 2.0 features," "Avoid global variables here")
+
+OUTPUT FORMAT: (Code block, list, markdown table, etc.)
+
+Part 2: Core Programming & Architectural Rules
+These are general programming principles and specific considerations for game development.
+
+2.1. General Principles
+DRY (Don't Repeat Yourself): Encapsulate reusable logic in functions, classes, or scenes.
+
+KISS (Keep It Simple, Stupid): Prefer simpler solutions. Avoid over-engineering.
+
+SOLID (If applicable to language/paradigm):
+
+Single Responsibility Principle: Each class/script should have one primary responsibility.
+
+Open/Closed Principle: Entities should be open for extension but closed for modification. (e.g., use inheritance, composition, signals).
+
+(LSP, ISP, DIP are more advanced, apply as understanding grows)
+
+Readability: Write code that is easy for humans (and your future self/Claude) to understand. Use clear names, comments for complex parts, and consistent formatting.
+
+Modularity: Design systems as loosely coupled modules. In Godot, this means using signals, groups, and well-defined scene interfaces.
+
+2.2. Concurrency & Parallelism (Use with Caution)
+Godot's Threading Model:
+
+GDScript is mostly single-threaded for gameplay logic.
+
+Godot provides Thread and Mutex classes for background tasks.
+
+Use threads for tasks that can run independently and won't block the main game loop (e.g., complex calculations, file I/O, network requests).
+
+Rule: Main game logic (physics, input, rendering updates) should stay on the main thread.
+
+Mutexes (Mutual Exclusion):
+
+Purpose: Protect shared data from being accessed and modified by multiple threads simultaneously, preventing race conditions.
+
+Rule: When Claude suggests or implements code that accesses data shared between the main thread and a worker thread, ensure a Mutex is used to lock() before access and unlock() after.
+
+Example (Conceptual GDScript):
+
+var my_mutex = Mutex.new()
+var shared_data = 0
+
+func _process_on_thread(): # Called from a worker thread
+    my_mutex.lock()
+    shared_data += 1
+    # Potentially long calculation
+    my_mutex.unlock()
+
+func get_shared_data_safely(): # Called from main thread
+    my_mutex.lock()
+    var val = shared_data
+    my_mutex.unlock()
+    return val
+
+Multithreading Best Practices:
+
+Minimize Shared Data: The less data shared, the fewer opportunities for race conditions.
+
+Avoid Deadlocks: Occur when threads are waiting for each other to release resources. Keep locking simple and consistent.
+
+Thread Safety: Ensure functions called from multiple threads are themselves thread-safe or protected.
+
+Godot Specific: Use call_deferred() or signals to communicate results from a worker thread back to the main thread for UI updates or gameplay changes. Never directly manipulate scene tree nodes from a worker thread unless explicitly documented as safe.
+
+Task-Based Asynchronous Patterns (Godot 4+ with C# or potentially via GDScript extensions):
+
+If using C# with Godot, async/await can simplify asynchronous operations.
+
+For GDScript, await keyword is used for signals and coroutines, not true async task parallelism in the same way as C#.
+
+2.3. AI in Games (Game Characters/Logic)
+State Machines:
+
+Excellent for defining character behaviors (Idle, Patrol, Chase, Attack).
+
+Rule: Implement states as separate functions or even separate classes/nodes. Use an enum to define states. A central _process or _physics_process function in the AI agent will call the current state's update function.
+
+Behavior Trees (More Advanced):
+
+Offer more complex and flexible AI than simple state machines.
+
+Consider using a Godot addon for behavior trees if complexity warrants it.
+
+Turn-Based Logic:
+
+Rule: Clearly define phases of a turn (e.g., Player Input, Player Action, Enemy Action, End of Turn).
+
+Use signals to transition between phases/turns.
+
+An AIManager or TurnManager (Autoload/Singleton) can orchestrate turns.
+
+Pathfinding:
+
+Godot provides AStar2D / AStar3D and NavigationServer for pathfinding.
+
+Rule: Offload pathfinding calculations to these built-in systems.
+
+2.4. Data Management
+Refer to previous advice on using JSON/CSV for game data.
+
+Custom Resources (Resource): In Godot, define custom resources (.tres or script-based .gd) for structured data like item definitions, character stats, etc. They integrate well with the editor.
+
+Rule: Prefer custom resources over raw dictionaries for data that has a fixed structure and benefits from editor integration or type safety.
+
+Part 3: Terminal & Build Automation Strategy
+Leverage the terminal (especially in WSL/Linux) for efficiency.
+
+3.1. Common Terminal Commands
+File System Navigation: cd, ls, pwd, mkdir, cp, mv, rm. Claude can help formulate these.
+
+Git (Essential):
+
+git clone [repository_url]
+
+git add . or git add [file_path]
+
+git commit -m "Descriptive message"
+
+git push
+
+git pull
+
+git branch [branch_name]
+
+git checkout [branch_name]
+
+git status
+
+git log
+
+Godot CLI (Command Line Interface):
+
+godot --headless --export-debug "Windows Desktop" path/to/export.exe (Export project)
+
+godot --headless --run path/to/project.godot (Run project headlessly, for servers or tests)
+
+godot -s path/to/script.gd (Run a specific script)
+
+Rule: Use the Godot CLI for automated builds and potentially running tests. Claude can help construct these commands.
+
+3.2. Scripting for Automation
+Shell Scripts (.sh in WSL/Linux): For simple sequences of commands (e.g., pull from Git, run Godot export, copy build to a specific folder).
+
+Python Scripts: For more complex automation tasks (e.g., parsing data files, generating code, managing assets).
+
+Rule: Identify repetitive tasks and consider automating them with scripts. Claude can help write these scripts.
+
+Part 4: Holistic Game Creation Scheme (Phased Approach)
+This is a general roadmap. Adapt it to your project's specific needs.
+
+Phase 1: Conception & Prototyping
+
+Idea Refinement: Develop your Game Design Document (GDD).
+
+Claude's Role: Help outline GDD sections, draft text, brainstorm mechanics.
+
+Core Mechanic Prototyping: Rapidly build and test the absolute core gameplay loop. Use placeholder art.
+
+Claude's Role: Generate boilerplate code for player movement, basic interactions, input handling.
+
+Data Structure Definition: Define initial structures for key game data (items, characters) using JSON, CSV, or Godot Custom Resources.
+
+Claude's Role: Generate example JSON/CSV structures based on GDD requirements. Create initial GDScript for custom resources.
+
+Phase 2: Pre-production & Vertical Slice
+
+Detailed Design: Flesh out the GDD with more detail on levels, story, characters.
+
+Art Style & Technical Foundations: Define the visual style. Set up the Godot project with necessary plugins, base scenes, and core systems (e.g., save/load, scene management).
+
+Vertical Slice: Build one complete level or a short section of the game that represents the final quality and includes all core mechanics.
+
+Claude's Role: Assist in coding various systems for the vertical slice, refining data structures.
+
+Phase 3: Production
+
+Content Creation: Develop levels, characters, items, UI elements, audio assets.
+
+System Implementation: Code all remaining game mechanics, AI, and features.
+
+Iterative Development & Playtesting: Regularly build and playtest the game. Gather feedback and iterate.
+
+Claude's Role: Implement features based on the GDD and vertical slice, refactor code, debug issues identified during playtesting.
+
+Phase 4: Post-production & Polish
+
+Bug Fixing: Intensive testing to find and fix bugs.
+
+Optimization: Profile performance and optimize bottlenecks (CPU, GPU, memory).
+
+Balancing: Adjust game difficulty, economy, character abilities, etc.
+
+Final Playtesting: Get fresh eyes on the game.
+
+Claude's Role: Help identify potential areas for optimization, implement balancing changes based on your parameters.
+
+Phase 5: Release & Beyond
+
+Deployment: Prepare and export builds for target platforms.
+
+Marketing & Distribution (Brief Mention): Plan your release.
+
+Post-launch Support: Monitor for critical bugs, consider updates or DLC.
+
+Conclusion
+This strategy provides a framework for organized and efficient game development, particularly when leveraging an AI assistant like Claude. Remember that game development is iterative. Be prepared to adapt these rules and plans as your project evolves and you gain more experience working with Claude. Consistent communication and clear instructions are key to a successful human-AI collaboration.

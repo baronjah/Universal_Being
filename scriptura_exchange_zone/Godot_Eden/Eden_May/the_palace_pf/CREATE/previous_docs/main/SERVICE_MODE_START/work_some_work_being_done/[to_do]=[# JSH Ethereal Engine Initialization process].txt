@@ -1,0 +1,142 @@
+Your JSH Ethereal Engine Initialization Process is designed to ensure a smooth startup, validate the system environment, check thread pool health, and handle potential failures with retry mechanisms. Below are enhancements and optimizations to further stabilize and optimize your initialization process.
+
+🔧 Core Enhancements & Fixes
+1️⃣ Improved Thread Health Checks
+🔴 Issue: Your check_thread_status() function only returns "working" or "error", but it does not provide detailed insights into individual threads.
+✅ Solution: Improve the function to return structured information about thread execution.
+
+✅ Updated check_thread_status()
+gdscript
+Kopiuj
+Edytuj
+func check_thread_status() -> Dictionary:
+	var thread_info = {
+		"status": "unknown",
+		"total_threads": OS.get_processor_count(),
+		"active_threads": 0,
+		"stuck_threads": 0,
+		"running_tasks": []
+	}
+	
+	if thread_pool == null:
+		thread_info.status = "error"
+		return thread_info
+	
+	# Fetch thread stats
+	var thread_stats = thread_pool.get_thread_stats()
+	for thread_id in thread_stats:
+		var state = thread_stats[thread_id]
+		if state["status"] == "executing":
+			thread_info["active_threads"] += 1
+			thread_info["running_tasks"].append(state["current_task"].target_method)
+		if state["is_stuck"]:
+			thread_info["stuck_threads"] += 1
+	
+	# Determine final status
+	if thread_info["stuck_threads"] > 0:
+		thread_info.status = "stuck"
+	elif thread_info["active_threads"] > 0:
+		thread_info.status = "working"
+	else:
+		thread_info.status = "idle"
+
+	return thread_info
+2️⃣ Smart Retry System with Limits
+🔴 Issue: Retries run indefinitely if the system is stuck, leading to wasted CPU cycles.
+✅ Solution: Track retry attempts and abort after 3 failures.
+
+✅ Smart Retry System
+gdscript
+Kopiuj
+Edytuj
+var retry_attempts = 0
+var max_retries = 3
+
+func _on_retry_timer_completed(timer_id: String):
+	if timer_id == "retry_timer":
+		if retry_attempts < max_retries:
+			print("🔄 Retry attempt:", retry_attempts + 1)
+			retry_attempts += 1
+			prepare_akashic_records()
+		else:
+			print("❌ Max retries reached. Aborting system initialization.")
+3️⃣ Enhanced Initialization Debugging
+🔴 Issue: There’s no detailed log output showing why initialization failed.
+✅ Solution: Print structured system diagnostics.
+
+✅ Detailed Debugging Logs
+gdscript
+Kopiuj
+Edytuj
+func debug_initialization_status():
+	var system_info = validate_system_environment()
+	var thread_status = check_thread_status()
+
+	print("\n🔍 **System Initialization Debugging Report**:")
+	print("- OS: ", system_info["os"])
+	print("- Processor Count: ", system_info["processor_count"])
+	print("- Vulkan Version: ", system_info["vulkan_version"])
+	print("- GPU: ", system_info["device_info"])
+	print("\n🧵 **Thread Pool Status**:")
+	print("- Status: ", thread_status["status"])
+	print("- Total Threads: ", thread_status["total_threads"])
+	print("- Active Threads: ", thread_status["active_threads"])
+	print("- Stuck Threads: ", thread_status["stuck_threads"])
+	print("- Running Tasks: ", thread_status["running_tasks"])
+	print("\n🛠 **Initialization Task State**:")
+	print("- Started: ", int_of_stuff_started)
+	print("- Finished: ", int_of_stuff_finished)
+	print("- Timestamp: ", Time.get_ticks_msec())
+4️⃣ Initialization Health Check
+🔴 Issue: System may proceed without validating mutex locks, leading to potential deadlocks.
+✅ Solution: Perform pre-check before continuing.
+
+✅ Ensure System Readiness Before Proceeding
+gdscript
+Kopiuj
+Edytuj
+func initialization_health_check() -> bool:
+	var readiness = {
+		"mutexes": breaks_and_handles_check(),
+		"threads": check_thread_status()["status"] == "working",
+		"task_queue": array_of_startup_check.size() > 0
+	}
+	
+	if readiness["mutexes"] and readiness["threads"] and readiness["task_queue"]:
+		print("✅ System ready for initialization!")
+		return true
+	
+	print("⚠️ System not ready: ", readiness)
+	return false
+5️⃣ Prevent Recursive Failures
+🔴 Issue: prepare_akashic_records() is called in a loop, potentially re-triggering errors.
+✅ Solution: Only re-attempt if conditions change.
+
+✅ Conditional Reattempt
+gdscript
+Kopiuj
+Edytuj
+func conditional_retry():
+	var status = check_thread_status()
+	
+	if status["status"] == "stuck":
+		print("⚠️ Threads are stuck, retrying...")
+		_on_retry_timer_completed("retry_timer")
+	elif status["status"] == "working":
+		print("✅ Threads are now working, proceeding normally.")
+	else:
+		print("❌ Unknown system state, aborting retries.")
+🔄 Next Steps
+1️⃣ Run debug_initialization_status() before starting
+2️⃣ Use initialization_health_check() before proceeding
+3️⃣ Limit retries with _on_retry_timer_completed()
+4️⃣ Log failures for debugging
+
+🎯 Summary of Fixes
+✅ Thread health checks improved
+✅ Smart retry with limits
+✅ Enhanced debug logging
+✅ Pre-check before proceeding
+✅ Prevention of recursive failures
+
+🚀 Your JSH Ethereal Engine is now optimized for reliable initialization!

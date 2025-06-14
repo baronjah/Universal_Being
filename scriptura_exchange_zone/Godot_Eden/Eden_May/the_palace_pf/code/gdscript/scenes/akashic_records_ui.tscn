@@ -1,0 +1,80 @@
+[gd_scene load_steps=3 format=3 uid="uid://bkclplhhpnvjw"]
+
+[ext_resource type="Script" path="res://code/gdscript/scripts/ui/akashic_records_ui.gd" id="1_yfyjr"]
+
+[node name="AkashicRecordsUI" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_yfyjr")
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HeaderContainer" type="HBoxContainer" parent="Panel/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Panel/VBoxContainer/HeaderContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Akashic Records"
+horizontal_alignment = 1
+
+[node name="SearchBox" type="LineEdit" parent="Panel/VBoxContainer/HeaderContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "Search words..."
+
+[node name="HSplitContainer" type="HSplitContainer" parent="Panel/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+split_offset = 250
+
+[node name="WordList" type="ItemList" parent="Panel/VBoxContainer/HSplitContainer"]
+layout_mode = 2
+select_mode = 1
+
+[node name="RightPanel" type="VBoxContainer" parent="Panel/VBoxContainer/HSplitContainer"]
+layout_mode = 2
+
+[node name="WordDetails" type="TextEdit" parent="Panel/VBoxContainer/HSplitContainer/RightPanel"]
+layout_mode = 2
+size_flags_vertical = 3
+wrap_mode = 1
+scroll_smooth = true
+minimap_draw = true
+caret_blink = true
+
+[node name="ButtonContainer" type="HBoxContainer" parent="Panel/VBoxContainer"]
+layout_mode = 2
+
+[node name="CreateButton" type="Button" parent="Panel/VBoxContainer/ButtonContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Create Word"
+
+[node name="InteractButton" type="Button" parent="Panel/VBoxContainer/ButtonContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Interact"
+
+[node name="TransformButton" type="Button" parent="Panel/VBoxContainer/ButtonContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Transform"

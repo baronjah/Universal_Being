@@ -1,0 +1,53 @@
+There are a few ways to empty arrays in GDScript:
+
+Using clear() - Completely empties the array:
+
+gdscriptCopyvar my_array = [1, 2, 3, 4]
+my_array.clear()  # my_array is now []
+
+Setting the array to empty directly:
+
+gdscriptCopyvar my_array = [1, 2, 3, 4]
+my_array = []  # my_array is now []
+
+Resizing to 0:
+
+gdscriptCopyvar my_array = [1, 2, 3, 4]
+my_array.resize(0)  # my_array is now []
+To empty part of an array, you have several options:
+
+Using slice:
+
+gdscriptCopyvar my_array = [1, 2, 3, 4, 5]
+# Remove elements from index 1 to 3
+my_array = my_array.slice(0, 1) + my_array.slice(4)
+
+Using remove_at() for specific indices:
+
+gdscriptCopyvar my_array = [1, 2, 3, 4, 5]
+my_array.remove_at(2)  # Removes element at index 2
+
+Using erase() for specific values:
+
+gdscriptCopyvar my_array = [1, 2, 3, 4, 5]
+my_array.erase(3)  # Removes the value 3 from array
+For your datapoints system, you might want something like:
+gdscriptCopy# Clear all data
+func clear_datapoint_data():
+    data_point_information.clear()
+    data_point_layer_0.clear()
+
+# Clear specific layer
+func clear_layer(layer_array: Array):
+    layer_array.clear()
+
+# Clear specific range in an array
+func clear_range(array: Array, from_index: int, to_index: int):
+    if from_index < 0 or to_index >= array.size():
+        return
+    
+    var before = array.slice(0, from_index)
+    var after = array.slice(to_index + 1)
+    array.clear()
+    array.append_array(before)
+    array.append_array(after)

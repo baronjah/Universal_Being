@@ -1,0 +1,355 @@
+Color in Godot
+I'm starting to explore the fundamentals of color as it relates to game development in Godot. This includes understanding the visible light spectrum and how different color models like RGB and HSL are used to represent it within Godot's `Color` class. I'll also be looking into how these color properties are handled in Godot's materials and shaders, which is crucial for visual effects and customization.
+Understanding Grayscale
+Next, I'm focusing on grayscale, which is essentially the representation of color based on its 'value' or lightness. This is important for various aspects of game design in Godot, such as creating specific art styles (like noir or silhouette), ensuring good visual clarity, and even for UI/UX considerations. I'll be thinking about how contrast in grayscale can impact the player's experience.
+Next Steps
+My next step is to investigate how to convert colors to grayscale within the Godot environment. This will involve understanding how the hue and saturation of a color affect its perceived brightness in grayscale. I also plan to look into different formulas used for this conversion and see if I can find examples of how these are implemented in Godot shaders.
+
+Researching websites
+
+docs.godotengine.org
+Material — Godot Engine (stable) documentation in English
+
+reddit.com
+How to make a likeable UI? : r/godot - Reddit
+
+docs.godotengine.org
+Color — Godot Engine (stable) documentation in English
+
+reddit.com
+how to change an object's material color in godot 4 - Reddit
+
+docs.godotengine.org
+Color — Godot Engine (3.1) documentation in English
+
+docs.godotengine.org
+Converting GLSL to Godot shaders — Godot Engine (stable) documentation in English
+
+artversion.com
+The Impact of Color Contrast for Accessibility and Inclusivity in UI/UX Design - ArtVersion
+
+danielilett.com
+Making Effects with Godot Visual Shaders - Daniel Ilett
+
+reddit.com
+How would you go about implementing this turning into silhouettes in Godot - Reddit
+
+youtube.com
+Simple 2D Silhouette in Godot - YouTube
+
+reddit.com
+Struggling to choose an art style for my game - please share your thoughts : r/godot - Reddit
+
+moldstud.com
+Understanding Godot's Node System - The Core of Game Design Explained - MoldStud
+
+en.wikipedia.org
+Grayscale - Wikipedia
+
+hjcailiang.com
+News - What Is Grayscale? - LED display manufacturer
+
+en.wikipedia.org
+HSL and HSV - Wikipedia
+
+en.wikipedia.org
+en.wikipedia.org
+
+developer.tuya.com
+HSV and RGB - Tuya Developer
+
+mux.com
+What is HSV color model | Video Glossary - Mux
+
+science.nasa.gov
+Visible Light - NASA Science
+
+lumitex.com
+Visible Light Spectrum: From a Lighting Manufacturer's Perspective - Lumitex
+Color Models in Godot
+I've gained a better understanding of how Godot handles colors using its `Color` class. It supports RGBA values and also provides ways to work with the HSV (Hue, Saturation, Value) color model, which can be more intuitive for certain types of color adjustments in game development. I also looked into the foundational concepts of the visible light spectrum and the common color models used to represent it.
+Grasping Grayscale Concepts
+I've clarified the definition of grayscale, which focuses on the intensity or lightness of a color, ranging from black to white. This concept of 'value' is key, and I've learned that contrast within grayscale images is vital for visual clarity, especially in game UI and specific art styles. Godot provides a way to get the grayscale representation of a color.
+Next Steps: Grayscale Conversion in Godot
+Now, I'll be diving deeper into how to actually convert colors to grayscale within Godot, particularly in the context of game development. I'll be looking for techniques and potentially shader examples that demonstrate how different colors translate to shades of gray and how to ensure good contrast in the final grayscale output, which is important for visual clarity and specific art styles like noir or silhouettes.
+
+Researching websites
+
+science.nasa.gov
+Visible Light - NASA Science
+
+en.wikipedia.org
+Grayscale - Wikipedia
+
+docs.godotengine.org
+Material — Godot Engine (stable) documentation in English
+
+en.wikipedia.org
+HSL and HSV - Wikipedia
+
+docs.godotengine.org
+Color — Godot Engine (stable) documentation in English
+Godot Color Properties
+I've been looking into how Godot handles color, and I've found that the `Color` class is quite versatile. It primarily uses RGBA values but also allows for working with HSV, which can be handy for artists. I also see that Godot's materials, especially through `BaseMaterial3D` and `ShaderMaterial`, are where colors are applied to objects in the game world.
+Understanding Grayscale in Godot
+My research confirms that grayscale in Godot revolves around the concept of 'value' or lightness. I noticed that Godot's `Color` class offers a way to get the grayscale value of a color, and there seems to be a distinction between a simple average and a more perceptually accurate luminance calculation. This is important for ensuring that colors translate to grayscale in a way that makes visual sense.
+Next Steps: Grayscale Conversion Techniques
+I'm now focusing on how to actually convert colors to grayscale within Godot for game development purposes. I plan to investigate the specifics of Godot's luminance calculation and explore practical ways to implement grayscale conversion, potentially using Godot shaders. This will also involve thinking about how to choose colors that will maintain good contrast even when converted to grayscale, which is crucial for visual clarity and certain artistic styles.
+
+Researching websites
+
+youtube.com
+How to Make a Simple Greyscale Shader in Godot - YouTube
+
+m.youtube.com
+How To Shader (Fast) - using Godot Engine - YouTube
+
+docs.godotengine.org
+Color — Godot Engine (stable) documentation in English
+
+godot.io.esa.int
+godot/godot/core/util/Color.h Source File
+
+reddit.com
+Colorblind shader, looking for feedback. Other accessibility options? : r/godot - Reddit
+
+forum.godotengine.org
+What's the code to set color? - Archive - Godot Forum
+
+forum.godotengine.org
+Color-blind friendly palette - Help - Godot Forum
+
+github.com
+Relative luminance proposal. · godotengine godot-proposals · Discussion #4246 - GitHub
+
+docs.godotengine.org
+ColorPalette — Godot Engine (stable) documentation in English
+
+m.youtube.com
+Creating Grayscale Shader in Godot Engine - YouTube
+
+landofinterruptions.co.uk
+Formulas for Greyscale - Intro
+
+muthu.co
+Converting Color Images to Grayscale using numpy and some Mathematics - Muthukrishnan
+
+dynamsoft.com
+Color Space Conversion & Binarization for Image Processing | Dynamsoft Blog
+
+web.stanford.edu
+Image-6 Grayscale - CS101 Introduction to Computing Principles
+
+tutorialspoint.com
+Grayscale to RGB Conversion - Tutorialspoint
+
+geeksforgeeks.org
+How to Convert Three Channels of Colored Image into Grayscale Image in MATLAB?
+
+docs.godotengine.org
+Converting GLSL to Godot shaders — Godot Engine (stable) documentation in English
+
+godotshaders.com
+Desaturation - Godot Shaders
+Godot Luminance Calculation
+I've discovered that Godot's `Color` class has a `get_luminance()` method which uses a specific formula (0.2126 * r + 0.7152 * g + 0.0722 * b) to calculate the perceived brightness of a color. Importantly, this method expects the color values to be in a linear color space, so a conversion from the standard sRGB space (common for hex codes and color pickers) using `srgb_to_linear()` is necessary for accurate results. This is a key insight for correctly implementing grayscale conversions in Godot.
+Grayscale Conversion Methods
+My research has highlighted several ways to convert colors to grayscale, including a simple average of the red, green, and blue components, a more perceptually accurate luminosity method (which Godot uses), and a lightness method based on the minimum and maximum color values. The luminosity method is generally preferred as it takes into account the human eye's sensitivity to different colors, providing a more visually natural grayscale representation.
+Next Steps: Implementing Grayscale in Godot
+Now that I have a better understanding of the formulas and Godot's specific approach to luminance, my next step is to find practical ways to implement grayscale conversion within a Godot game. I'll be looking for concrete examples of Godot shaders that perform desaturation or grayscale conversion, as shaders are a powerful way to manipulate colors on the GPU for visual effects. I also want to explore strategies for choosing color palettes that will translate well to grayscale, ensuring good contrast and visual clarity in the final output.
+
+Researching websites
+
+forum.godotengine.org
+a screenreader for your Godot Games - Assets
+
+docs.godotengine.org
+Screen-reading shaders — Godot Engine (stable) documentation in English
+
+docs.godotengine.org
+VisualShaderNodeColorFunc — Godot Engine (stable) documentation in English
+
+kidscancode.org
+Greyscale (monochrome) shader :: Godot 3 Recipes - KidsCanCode
+
+docs.godotengine.org
+ColorPalette — Godot Engine (stable) documentation in English
+
+youtube.com
+Godot 4 C# Addon You Didn't Know You Needed - Color Palettes - YouTube
+
+youtube.com
+How to Make a Simple Greyscale Shader in Godot - YouTube
+
+godotshaders.com
+Desaturation - Godot Shaders
+Godot Grayscale Methods
+I've found that Godot offers a built-in way to get the grayscale value of a color using the `get_luminance()` method in the `Color` class. This method uses a standard formula that considers the different perceived brightness of red, green, and blue light. For the most accurate results, especially when working with standard sRGB colors, it's important to first convert the color to a linear color space using `srgb_to_linear()` before calculating the luminance.
+Shader-Based Grayscale
+I've also looked into using shaders in Godot to achieve grayscale effects. I found examples of GLSL shaders that perform desaturation using different formulas, including the standard luminosity calculation and even a simpler average of the color channels. Godot's Visual Shader also has a Grayscale function, although it seems to operate based on the maximum color component rather than luminance, which might give a different visual outcome. These shader approaches offer flexibility for applying grayscale effects to various parts of a game.
+Palette Design for Grayscale
+Thinking about game development, it's important to choose color palettes that will still have good contrast and visual clarity when converted to grayscale. Different hues and saturations will translate to varying shades of gray, and it's crucial to ensure that important elements remain distinguishable. My next step is to investigate how color gradients behave when converted to grayscale in Godot and to explore techniques for creating gradients that work well in both color and grayscale.
+
+Researching websites
+
+forum.godotengine.org
+Access and change the values of a gradient texture via code - Shaders - Godot Forum
+
+godotshaders.com
+GradientTexture Shader
+
+godotshaders.com
+Gradient Generator - Godot Shaders
+
+godotforums.org
+create a gradient texture that does not change vertically when object is moved
+
+docs.godotengine.org
+3D rendering limitations — Godot Engine (stable) documentation in English
+
+github.com
+Add dithering effect to prevent color banding · Issue #17006 ... - GitHub
+
+m.youtube.com
+Unlock the Power of Gradient Nodes in Godot 4! Quick Tips! - YouTube
+
+m.youtube.com
+[Godot] Procedural Planets (E04 Gradient Texture) - YouTube
+
+graphicdesign.stackexchange.com
+
+learnui.design
+Gradient Generator – CSS & SVG Export - Learn UI Design
+
+forum.godotengine.org
+a screenreader for your Godot Games - Assets - Godot Forum
+
+docs.godotengine.org
+ColorPalette — Godot Engine (stable) documentation in English
+
+docs.godotengine.org
+VisualShaderNodeColorFunc — Godot Engine (stable ...
+
+docs.godotengine.org
+Screen-reading shaders — Godot Engine (stable) documentation in ...
+
+interaction-design.org
+What is Color Harmony? | IxDF - The Interaction Design Foundation
+
+docs.godotengine.org
+GradientTexture1D — Godot Engine (stable) documentation in English
+
+untitledui.com
+The Ultimate Guide to Creating Color Palettes in Figma (free Figma file) | Untitled UI
+
+docs.godotengine.org
+GradientTexture1D — Godot Engine (4.3) documentation in English
+
+docs.unity3d.com
+Grayscale - Unity - Manual
+
+community.wacom.com
+How To Digitally Paint In Grayscale, With Proko - The Wacom Community
+
+forum.godotengine.org
+How to contain an invert shader in a circle mask? - Godot Forum
+
+reddit.com
+Godot 4.3 Color Invert Shader [Beginner Tutorial] - Reddit
+
+docs.godotengine.org
+Color — Godot Engine (3.0) documentation in English
+
+docs.godotengine.org
+Color — Godot Engine (3.1) documentation in English
+
+docs.godotengine.org
+Gradient — Godot Engine (3.3) documentation in English
+
+docs.godotengine.org
+Interpolation — Godot Engine (stable) documentation in English
+
+github.com
+Add gradient dithering · Issue #12295 · godotengine/godot-proposals - GitHub
+
+godotshaders.com
+Better dithered gradient - Godot Shaders
+
+docs.godotengine.org
+Gradient — Godot Engine (stable) documentation in English
+Gradients in Godot
+I've learned that Godot's `Gradient` resource uses color stops with associated offsets and supports different interpolation methods, including linear, constant, and cubic. For smoother grayscale gradients, especially to avoid banding, using the `OKLAB` color space for interpolation is recommended as it's perceptually uniform. Godot also provides `GradientTexture1D` and `GradientTexture2D` to convert these gradients into textures for use in materials or shaders.
+Grayscale-Friendly Gradients
+To create color gradients that translate well to grayscale, it's important to consider the luminance of the colors used. Perceptually uniform color spaces like OKLAB help in this regard. Additionally, techniques like adding noise or using dithering in shaders can help to minimize the appearance of banding in grayscale gradients, especially if the texture resolution is limited. I've even found a specific 'Better dithered gradient' shader for Godot that could be very useful.
+Next Steps: Color Negatives and Tools
+My next focus will be on understanding how color negatives work in the context of grayscale in Godot. I'll also be looking for tools and workflows that can help with visualizing color-to-grayscale conversions and ensuring good contrast, which is particularly important for game development in areas like UI and accessibility.
+
+Researching websites
+
+youtube.com
+How to Make a Simple Greyscale Shader in Godot - YouTube
+
+reddit.com
+This code will turn any texture you give to it and turn it into a gray scale version Idk why I am sharing this I am just really proud of my code lol XD : r/godot - Reddit
+
+en.wikipedia.org
+Color theory - Wikipedia
+
+accessibe.com
+The 15 Best Online Contrast Checker Tools in 2025 - accessiBe
+
+reddit.com
+How can colors be inverted? : r/askscience - Reddit
+
+docs.godotengine.org
+2D — Godot Engine (stable) documentation in English
+
+docs.godotengine.org
+GradientTexture2D — Godot Engine (stable) documentation in English
+
+docs.godotengine.org
+ColorPalette — Godot Engine (stable) documentation in English
+
+docs.godotengine.org
+Editor plugins — Godot Engine (stable) documentation in English
+
+godotshaders.com
+Better dithered gradient - Godot Shaders
+
+reddit.com
+Godot 4.3 Color Invert Shader [Beginner Tutorial] : r/godot - Reddit
+Gradient Interpolation and Textures
+I've found that when creating gradients in Godot, the choice of interpolation method and color space significantly impacts how they appear in grayscale. Using the OKLAB color space for the `Gradient` resource's interpolation is best for achieving smooth and perceptually uniform transitions in grayscale. Godot's `GradientTexture` nodes then allow these gradients to be used in various parts of the game.
+Designing Grayscale-Friendly Gradients
+To ensure color gradients look good when converted to grayscale, it's important to consider the luminance of the starting and ending colors. Techniques like dithering, which I saw in a custom Godot shader, can also help to reduce banding artifacts that might become more apparent in grayscale. This is particularly relevant for maintaining visual quality in game environments and UI.
+Exploring Color Negatives in Grayscale
+I'm now looking into how the negative (inverted) versions of colors appear when converted to grayscale in Godot. I've learned that Godot's `Color` class has an `inverted()` method to get the negative of a color. My next step is to understand how to choose original colors so that both they and their inverted versions, as well as their grayscale representations, remain visually distinct. This is important for creating effects or UI elements that need to be clear in both normal and inverted color schemes.
+
+Researching websites
+
+docs.godotengine.org
+Gradient — Godot Engine (stable) documentation in English
+
+forum.affinity.serif.com
+Feature Request: Color Appearance Model options for Gradient interpolation and Transparency Interpolation - Feedback for the Affinity V2 Suite of Products - Affinity | Forum
+
+accessiblyapp.com
+Accessible Color Contrast
+
+youtube.com
+Godot 4.3 [1-bit] Color Invert Shader - YouTube
+
+github.com
+coderbloke/godot-debug-info-plugin - GitHub
+
+youtube.com
+Godot Invert All Colors on Screen with 1 Shader - YouTube
+
+en.wikipedia.org
+Grayscale - Wikipedia
+
+kehomsforge.com
+Godot Addon - Debug Helper - Kehom's Forge
+
+docs.godotengine.org
+GradientTe

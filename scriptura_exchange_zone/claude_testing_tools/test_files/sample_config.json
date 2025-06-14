@@ -1,0 +1,24 @@
+{
+  "version": "1.0",
+  "name": "Claude Tool Testing Config",
+  "settings": {
+    "debug": true,
+    "timeout": 30,
+    "retry_count": 3
+  },
+  "tools": [
+    "Read",
+    "Write", 
+    "Edit",
+    "MultiEdit",
+    "LS",
+    "Glob",
+    "Grep",
+    "Bash"
+  ],
+  "test_data": {
+    "strings": ["test", "sample", "claude"],
+    "numbers": [1, 2, 3, 4, 5],
+    "boolean": true
+  }
+}

@@ -1,0 +1,8 @@
+func fifth_dimensional_magic(type_of_unloading : String, node_path_for_unload : String):
+	#print(" main script, we got data for unloading , " , node_path_for_unload)
+	var data_for_unloading : Array = []
+	data_for_unloading.append(type_of_unloading)
+	data_for_unloading.append(node_path_for_unload)
+	mutex_for_unloading_nodes.lock()
+	nodes_to_be_unloaded.append(data_for_unloading)
+	mutex_for_unloading_nodes.unlock()

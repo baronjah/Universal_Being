@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://hvmupd2r0phv"]
+
+[ext_resource type="Script" uid="uid://cygjarky3s1mw" path="res://code/gdscript/scripts/Galaxy_Star_Planet/StarCloseUp.gd" id="1_ej2v3"]
+[ext_resource type="Script" uid="uid://thyj6j681w0y" path="res://code/gdscript/scripts/Archive_Past_Text/Camera2.gd" id="2_ooby4"]
+
+[node name="StarCloseUp" type="Node3D"]
+script = ExtResource("1_ej2v3")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+script = ExtResource("2_ooby4")

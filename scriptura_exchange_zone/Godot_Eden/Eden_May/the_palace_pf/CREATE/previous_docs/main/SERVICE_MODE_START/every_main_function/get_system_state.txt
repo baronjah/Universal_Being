@@ -1,0 +1,2 @@
+func get_system_state(state_name: String) -> Dictionary:
+	return system_states[state_name] if system_states.has(state_name) else {}

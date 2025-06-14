@@ -1,0 +1,16 @@
+after spawning few items and using command list
+res://scripts/jsh_framework/core/JSH_console.gd
+line 1400
+	var tree_data = main_node.scene_tree_jsh
+Invalid access to property or key 'scene_tree_jsh' on a base object of type 'Node3D (main_game_controller.gd)'.
+# but it listed items of some sorts
+
+
+
+after using commands from top to bottom after using "load playground"
+res://scripts/core/unified_scene_manager.gd
+line 116
+		static_scene = scene_loader.load_scene(scene_name)
+Trying to assign value of type 'bool' to a variable of type 'Node3D'.
+# it seems to kinda work, but as i talked about,we must know if the bottom ground is flat, or if it is different, maybe lets normalize the flat plane we used, and make it possible to change its shape
+# ragdoll and balls fallen but hover over some number, so does ragdoll, he glitches around trees, hmm maybe he is walking too fast? its three model version, now we have the one that uses 7 for just legs and lower body part

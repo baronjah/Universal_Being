@@ -1,0 +1,109 @@
+# Eden Space Game - Overview
+
+## Core Concept
+Eden Space Game combines cosmic scale exploration with elemental interactions, allowing players to:
+1. Explore a procedural universe with galaxies, stars, and planets
+2. Navigate from universe level down to elemental scale
+3. Interact with elemental systems that simulate physics and transformations
+4. Build and pilot spaceships between cosmic bodies
+5. Construct mechas for planetary exploration
+
+## Scale Levels
+The game seamlessly transitions between multiple scale levels:
+
+1. **Universe Scale**
+   - View of multiple galaxies in space
+   - Navigate between galaxy clusters
+   - Each galaxy has unique properties and element distributions
+
+2. **Galaxy Scale**
+   - Stars visible within a galaxy
+   - Nebulae and cosmic phenomena
+   - Navigation between star systems
+
+3. **Star System Scale**
+   - Planets orbiting stars
+   - Asteroid belts and space phenomena
+   - Planetary orbit visualization
+
+4. **Planet Scale**
+   - Planetary surface features
+   - Atmospheric and environmental conditions
+   - Landing sites and points of interest
+
+5. **Element Scale**
+   - Individual elements (fire, water, wood, ash)
+   - Particle interactions and transformations
+   - Physics simulation of elemental behaviors
+
+## Core Systems
+
+### Space Navigation
+- 3D movement through cosmic environments
+- Scale transitions between universe levels
+- Coordinate mapping between scales
+
+### Element System
+- Physics-based interaction between elements
+- Transformation rules (fire + wood = ash, etc.)
+- LOD (Level of Detail) for performance optimization
+- Resource management for lights, particles, and physics
+
+### Vehicle Construction
+- Spaceship building and customization
+- Mecha construction for planetary exploration
+- Component-based vehicle system
+
+### Resource System
+- Element collection and refinement
+- Crafting and construction materials
+- Energy management and propulsion
+
+## Technical Foundation
+
+### Performance Management
+- Scale-appropriate resource limits
+- LOD system for distant objects
+- Frustum culling and visibility optimization
+- Task queueing and prioritization
+
+### Visual Effects
+- Shader-based cosmic phenomena
+- Particle systems for elemental effects
+- Lighting and atmospheric effects
+- Transition effects between scales
+
+### Physics
+- Multi-scale physics simulation
+- Gravity at cosmic scales
+- Element interactions at small scales
+- Scale-appropriate time dilation
+
+## Development Roadmap
+
+### Phase 1: Core Framework (Current)
+- Scale transition system
+- Element system optimization
+- Resource management
+- Camera controls and navigation
+
+### Phase 2: Space Expansion
+- Spaceship construction and control
+- Improved galaxy and star generation
+- Navigation markers and mapping
+
+### Phase 3: Planetary Systems
+- Detailed planet surfaces
+- Environmental conditions
+- Landing and exploration mechanics
+
+### Phase 4: Mecha Development
+- Mecha construction system
+- Planetary combat and exploration
+- Component customization
+
+### Phase 5: Integration and Polish
+- Unified progression system
+- Quest framework
+- Tutorial systems
+- Performance optimization

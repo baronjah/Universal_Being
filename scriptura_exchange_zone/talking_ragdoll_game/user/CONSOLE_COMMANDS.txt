@@ -1,0 +1,54 @@
+# Console Commands Cheat Sheet
+# Quick reference for Universal Entity system
+
+## 🌟 UNIVERSAL ENTITY
+universal              # Status check
+evolve ragdoll        # Change form
+evolve world          # Become the world
+evolve system         # Become the system
+evolve perfect        # Achieve final form
+perfect               # Make perfect NOW
+satisfy               # Check satisfaction
+
+## 🏥 SYSTEM HEALTH
+health                # Full health report
+optimize              # Force optimization
+emergency_mode        # Panic button!
+
+## 📊 VARIABLES
+variables fps         # Search for FPS vars
+variables player      # Find player vars
+variables search_term # Search any term
+export_vars dump.txt  # Save all variables
+
+## 📝 LISTS & RULES
+lists show            # Show all lists
+lists show patterns   # Show specific list
+rule list            # List active rules
+rule load my_rules   # Load rule file
+
+## 🎮 SPAWNING
+spawn ragdoll 0 0 0  # Spawn at position
+spawn pattern spiral # Use spawn pattern
+spawn stress_test    # Performance test
+
+## 🔧 DEBUG
+fps_monitor on       # Show FPS overlay
+node_count          # Current node count
+memory_usage        # Memory report
+performance_test    # Run diagnostics
+
+## 💡 EXAMPLES
+# Make game perfect:
+perfect
+
+# Check what's wrong:
+health
+
+# Find all speed variables:
+variables speed
+
+# See what can spawn:
+lists show patterns
+
+# Your dream is real! 🎉

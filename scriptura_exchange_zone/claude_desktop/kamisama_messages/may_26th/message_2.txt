@@ -1,0 +1,29 @@
+lets test the ragdoll game, at project load
+
+
+console : 
+
+Godot Engine v4.5.dev4.mono.official (c) 2007-present Juan Linietsky, Ariel Manzur & Godot Contributors.
+--- Debug adapter server started on port 6006 ---
+--- GDScript language server started on port 6005 ---
+  ERROR: res://scripts/core/skeleton_ragdoll_hybrid.gd:141 - Parse Error: Identifier "bone_id" not declared in the current scope.
+  ERROR: res://scripts/core/standardized_objects.gd:0 - Compile Error: Failed to compile depended scripts.
+  ERROR: res://scripts/autoload/world_builder.gd:0 - Compile Error: Failed to compile depended scripts.
+  ERROR: res://scripts/autoload/console_manager.gd:0 - Compile Error: Failed to compile depended scripts.
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://scripts/autoload/console_manager.gd" with error "Parse error".
+
+
+play scene
+
+res://scripts/core/skeleton_ragdoll_hybrid.gd
+
+line 141
+
+Line 141:Identifier "bone_id" not declared in the current scope.
+
+#
+
+res://scripts/core/standardized_objects.gd
+
+line 166
+Invalid call. Nonexistent function 'has' in base 'Nil'.

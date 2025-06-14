@@ -1,0 +1,74 @@
+[gd_scene load_steps=8 format=3 uid="uid://b0l8xj8r4nfda"]
+
+[ext_resource type="Script" path="res://scripts/ai/gamma_controller.gd" id="1_gamma_controller"]
+[ext_resource type="Script" path="res://test_ai_sandbox.gd" id="2_test_sandbox"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_1"]
+radius = 0.3
+height = 0.6
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_1"]
+radius = 0.3
+
+[sub_resource type="Environment" id="Environment_1"]
+background_mode = 1
+background_color = Color(0.3, 0.3, 0.5, 1)
+ambient_light_color = Color(1, 1, 1, 1)
+ambient_light_energy = 0.3
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_1"]
+size = Vector2(20, 20)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1"]
+albedo_color = Color(0.4, 0.6, 0.4, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_1"]
+size = Vector3(20, 0.1, 20)
+
+[node name="GammaAI" type="Node3D"]
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(0.866, -0.35, 0.35, 0, 0.707, 0.707, -0.5, -0.612, 0.612, 5, 5, 5)
+fov = 60.0
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.707, -0.5, 0.5, 0, 0.707, 0.707, -0.707, -0.5, 0.5, 0, 5, 0)
+light_energy = 1.0
+shadow_enabled = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_1")
+
+[node name="Ground" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Ground"]
+mesh = SubResource("PlaneMesh_1")
+surface_material_override/0 = SubResource("StandardMaterial3D_1")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ground"]
+shape = SubResource("BoxShape3D_1")
+
+[node name="GammaController" type="Node" parent="."]
+script = ExtResource("1_gamma_controller")
+
+[node name="TestAISandbox" type="Node" parent="."]
+script = ExtResource("2_test_sandbox")
+
+[node name="NobodyWhoModel" type="NobodyWhoModel" parent="."]
+model_file = "res://ai_models/gamma/gemma-2-2b-it-Q4_K_M.gguf"
+
+[node name="NobodyWhoChat" type="NobodyWhoChat" parent="."]
+model_node = NodePath("../NobodyWhoModel")
+
+[node name="GammaUniversalBeing" type="CharacterBody3D" parent="."]
+position = Vector3(0, 1, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="GammaUniversalBeing"]
+mesh = SubResource("SphereMesh_1")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="GammaUniversalBeing"]
+shape = SubResource("SphereShape3D_1")
+
+[connection signal="response_updated" from="NobodyWhoChat" to="GammaController" method="_on_gamma_token_received"]
+[connection signal="response_finished" from="NobodyWhoChat" to="GammaController" method="_on_gamma_response_finished"]

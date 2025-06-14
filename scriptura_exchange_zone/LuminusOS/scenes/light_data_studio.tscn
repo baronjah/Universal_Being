@@ -1,0 +1,330 @@
+[gd_scene load_steps=11 format=3]
+
+[ext_resource type="Script" path="res://scripts/light_data_transformer.gd" id="1_i4m0s"]
+[ext_resource type="Script" path="res://scripts/light_data_visualizer.gd" id="2_p3f4g"]
+[ext_resource type="Theme" uid="uid://cln5ph3psp0r8" path="res://themes/luminusos_theme.tres" id="3_vmk4t"]
+[ext_resource type="Script" path="res://scripts/terminal.gd" id="4_h5xbt"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_fhc2v"]
+sky_top_color = Color(0.0509804, 0.0705882, 0.152941, 1)
+sky_horizon_color = Color(0.0941176, 0.14902, 0.227451, 1)
+sky_curve = 0.121799
+ground_bottom_color = Color(0.0392157, 0.0588235, 0.121569, 1)
+ground_horizon_color = Color(0.0941176, 0.14902, 0.227451, 1)
+ground_curve = 0.13
+
+[sub_resource type="Sky" id="Sky_6ksla"]
+sky_material = SubResource("ProceduralSkyMaterial_fhc2v")
+
+[sub_resource type="Environment" id="Environment_nhtcw"]
+background_mode = 2
+sky = SubResource("Sky_6ksla")
+ambient_light_source = 3
+ambient_light_color = Color(0.14902, 0.262745, 0.4, 1)
+ambient_light_sky_contribution = 0.7
+tonemap_mode = 2
+glow_enabled = true
+glow_levels/2 = 0.7
+glow_levels/3 = 0.4
+glow_levels/4 = 0.16
+glow_levels/5 = 0.08
+glow_levels/6 = 0.04
+glow_intensity = 0.5
+glow_bloom = 0.3
+glow_blend_mode = 0
+volumetric_fog_enabled = true
+volumetric_fog_density = 0.02
+volumetric_fog_albedo = Color(0.207843, 0.301961, 0.439216, 1)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_kjbco"]
+size = Vector2(20, 20)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_w4r2e"]
+transparency = 1
+albedo_color = Color(0.0784314, 0.14902, 0.270588, 0.439216)
+emission_enabled = true
+emission = Color(0.0784314, 0.14902, 0.270588, 1)
+emission_energy_multiplier = 0.2
+refraction_enabled = true
+refraction_scale = 0.05
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_3ybur"]
+size = Vector3(20, 0.1, 20)
+
+[node name="LightDataStudio" type="Node3D"]
+
+[node name="LightDataTransformer" type="Node" parent="."]
+script = ExtResource("1_i4m0s")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_nhtcw")
+
+[node name="LightDataVisualizer" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 5)
+script = ExtResource("2_p3f4g")
+
+[node name="VisualizationEnvironment" type="Node3D" parent="."]
+
+[node name="Floor" type="StaticBody3D" parent="VisualizationEnvironment"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="VisualizationEnvironment/Floor"]
+mesh = SubResource("PlaneMesh_kjbco")
+surface_material_override/0 = SubResource("StandardMaterial3D_w4r2e")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="VisualizationEnvironment/Floor"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.05, 0)
+shape = SubResource("BoxShape3D_3ybur")
+
+[node name="EnvironmentLights" type="Node3D" parent="VisualizationEnvironment"]
+
+[node name="MainLight" type="DirectionalLight3D" parent="VisualizationEnvironment/EnvironmentLights"]
+transform = Transform3D(0.866025, -0.433013, 0.25, 0, 0.5, 0.866025, -0.5, -0.75, 0.433013, 0, 8, 0)
+light_color = Color(0.827451, 0.882353, 1, 1)
+light_energy = 0.5
+shadow_enabled = true
+
+[node name="AmbientLight" type="OmniLight3D" parent="VisualizationEnvironment/EnvironmentLights"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 0)
+light_color = Color(0.654902, 0.807843, 1, 1)
+light_energy = 0.2
+omni_range = 15.0
+omni_attenuation = 0.5
+
+[node name="Cameras" type="Node3D" parent="."]
+
+[node name="MainCamera" type="Camera3D" parent="Cameras"]
+transform = Transform3D(1, 0, 0, 0, 0.939693, 0.34202, 0, -0.34202, 0.939693, 0, 6, 10)
+current = true
+fov = 50.0
+
+[node name="UI" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("3_vmk4t")
+
+[node name="TopPanel" type="Panel" parent="UI"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 50.0
+grow_horizontal = 2
+
+[node name="Title" type="Label" parent="UI/TopPanel"]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 20.0
+offset_top = -11.5
+offset_right = 179.0
+offset_bottom = 11.5
+grow_vertical = 2
+text = "Light of Data Studio"
+
+[node name="StatsLabel" type="Label" parent="UI/TopPanel"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -170.0
+offset_top = -11.5
+offset_right = -20.0
+offset_bottom = 11.5
+grow_horizontal = 0
+grow_vertical = 2
+text = "Lines: 12 → 22"
+horizontal_alignment = 2
+
+[node name="TerminalPanel" type="Panel" parent="UI"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -200.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="TerminalDisplay" type="RichTextLabel" parent="UI/TerminalPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = 10.0
+offset_right = -10.0
+offset_bottom = -40.0
+grow_horizontal = 2
+grow_vertical = 2
+focus_mode = 2
+bbcode_enabled = true
+scroll_following = true
+selection_enabled = true
+script = ExtResource("4_h5xbt")
+
+[node name="CommandInput" type="LineEdit" parent="UI/TerminalPanel"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = -30.0
+offset_right = -10.0
+offset_bottom = -10.0
+grow_horizontal = 2
+grow_vertical = 0
+placeholder_text = "Enter command..."
+
+[node name="SidePanel" type="Panel" parent="UI"]
+layout_mode = 1
+anchors_preset = 11
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -250.0
+offset_top = 50.0
+offset_bottom = -200.0
+grow_horizontal = 0
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/SidePanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = 10.0
+offset_right = -10.0
+offset_bottom = -10.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="UI/SidePanel/VBoxContainer"]
+layout_mode = 2
+text = "Transformation Controls"
+horizontal_alignment = 1
+
+[node name="HSeparator" type="HSeparator" parent="UI/SidePanel/VBoxContainer"]
+layout_mode = 2
+
+[node name="ModeLabel" type="Label" parent="UI/SidePanel/VBoxContainer"]
+layout_mode = 2
+text = "Transformation Mode:"
+
+[node name="ModeOptionButton" type="OptionButton" parent="UI/SidePanel/VBoxContainer"]
+layout_mode = 2
+item_count = 5
+selected = 0
+popup/item_0/text = "expand"
+popup/item_0/id = 0
+popup/item_1/text = "condense"
+popup/item_1/id = 1
+popup/item_2/text = "illuminate"
+popup/item_2/id = 2
+popup/item_3/text = "refract"
+popup/item_3/id = 3
+popup/item_4/text = "reflect"
+popup/item_4/id = 4
+
+[node name="IntensityLabel" type="Label" parent="UI/SidePanel/VBoxContainer"]
+layout_mode = 2
+text = "Light Intensity:"
+
+[node name="IntensitySlider" type="HSlider" parent="UI/SidePanel/VBoxContainer"]
+layout_mode = 2
+min_value = 1.0
+max_value = 5.0
+value = 3.0
+tick_count = 5
+ticks_on_borders = true
+
+[node name="TargetLinesLabel" type="Label" parent="UI/SidePanel/VBoxContainer"]
+layout_mode = 2
+text = "Target Lines:"
+
+[node name="TargetLinesSpinBox" type="SpinBox" parent="UI/SidePanel/VBoxContainer"]
+layout_mode = 2
+min_value = 12.0
+max_value = 22.0
+value = 22.0
+
+[node name="HSeparator2" type="HSeparator" parent="UI/SidePanel/VBoxContainer"]
+layout_mode = 2
+
+[node name="TransformButton" type="Button" parent="UI/SidePanel/VBoxContainer"]
+layout_mode = 2
+text = "Transform"
+
+[node name="VisualizeButton" type="Button" parent="UI/SidePanel/VBoxContainer"]
+layout_mode = 2
+text = "Visualize"
+
+[node name="StoryIntegrateButton" type="Button" parent="UI/SidePanel/VBoxContainer"]
+layout_mode = 2
+text = "Integrate with Story"
+
+[node name="HSeparator3" type="HSeparator" parent="UI/SidePanel/VBoxContainer"]
+layout_mode = 2
+
+[node name="HistoryLabel" type="Label" parent="UI/SidePanel/VBoxContainer"]
+layout_mode = 2
+text = "Recent Transformations:"
+
+[node name="TransformationList" type="ItemList" parent="UI/SidePanel/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="DataInputDialog" type="Window" parent="UI"]
+title = "Input Data"
+initial_position = 2
+size = Vector2i(600, 400)
+visible = false
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/DataInputDialog"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = 10.0
+offset_right = -10.0
+offset_bottom = -10.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="UI/DataInputDialog/VBoxContainer"]
+layout_mode = 2
+text = "Enter data to transform (12-22 lines):"
+
+[node name="DataTextEdit" type="TextEdit" parent="UI/DataInputDialog/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+placeholder_text = "Enter at least 12 lines of text..."
+wrap_mode = 1
+highlight_current_line = true
+draw_tabs = true
+draw_spaces = true
+
+[node name="HBoxContainer" type="HBoxContainer" parent="UI/DataInputDialog/VBoxContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="CancelButton" type="Button" parent="UI/DataInputDialog/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "Cancel"
+
+[node name="TransformButton" type="Button" parent="UI/DataInputDialog/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "Transform"
+
+[connection signal="pressed" from="UI/SidePanel/VBoxContainer/TransformButton" to="TerminalDisplay" method="_on_transform_button_pressed"]
+[connection signal="pressed" from="UI/SidePanel/VBoxContainer/VisualizeButton" to="TerminalDisplay" method="_on_visualize_button_pressed"]
+[connection signal="pressed" from="UI/SidePanel/VBoxContainer/StoryIntegrateButton" to="TerminalDisplay" method="_on_integrate_button_pressed"]
+[connection signal="pressed" from="UI/DataInputDialog/VBoxContainer/HBoxContainer/CancelButton" to="UI/DataInputDialog" method="hide"]

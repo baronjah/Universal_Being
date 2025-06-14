@@ -1,0 +1,814 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Akashic Records Browser Interface</title>
+    <style>
+        :root {
+            --primary-color: #4a148c;
+            --secondary-color: #7b1fa2;
+            --accent-color: #e91e63;
+            --background-color: #121212;
+            --card-color: #1e1e1e;
+            --text-color: #f5f5f5;
+            --border-color: #333;
+            --success-color: #4caf50;
+            --error-color: #f44336;
+            --warning-color: #ff9800;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+        
+        h1, h2, h3 {
+            margin-top: 0;
+        }
+        
+        .card {
+            background-color: var(--card-color);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            border: 1px solid var(--border-color);
+        }
+        
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        
+        .controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .control-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        button, select, input {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        
+        button:hover {
+            background-color: var(--secondary-color);
+        }
+        
+        input, select {
+            background-color: var(--card-color);
+            border: 1px solid var(--border-color);
+        }
+        
+        input::placeholder {
+            color: #aaa;
+        }
+        
+        .status {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+        }
+        
+        .status-indicator {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: var(--error-color);
+        }
+        
+        .status-indicator.connected {
+            background-color: var(--success-color);
+        }
+        
+        .record-card {
+            position: relative;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        
+        .record-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .record-card h3 {
+            margin-bottom: 10px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
+        .record-card .content {
+            max-height: 100px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .record-card .content::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 30px;
+            background: linear-gradient(transparent, var(--card-color));
+        }
+        
+        .record-card .meta {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+            color: #999;
+            font-size: 12px;
+        }
+        
+        .tag {
+            display: inline-block;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 11px;
+            margin-right: 5px;
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0,0,0,0.8);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .modal-content {
+            background-color: var(--card-color);
+            width: 90%;
+            max-width: 800px;
+            max-height: 90vh;
+            overflow-y: auto;
+            border-radius: 8px;
+            padding: 20px;
+            position: relative;
+        }
+        
+        .close-button {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 20px;
+            cursor: pointer;
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        
+        textarea, input[type="text"] {
+            width: 100%;
+            padding: 8px;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+        }
+        
+        textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+        
+        .tabs {
+            display: flex;
+            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 20px;
+        }
+        
+        .tab {
+            padding: 10px 20px;
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+        }
+        
+        .tab.active {
+            border-bottom: 2px solid var(--accent-color);
+            color: var(--accent-color);
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        .notification {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            padding: 15px 20px;
+            border-radius: 4px;
+            background-color: var(--success-color);
+            color: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            transition: transform 0.3s, opacity 0.3s;
+            transform: translateY(100px);
+            opacity: 0;
+            z-index: 1000;
+        }
+        
+        .notification.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+        
+        .notification.error {
+            background-color: var(--error-color);
+        }
+        
+        .notification.warning {
+            background-color: var(--warning-color);
+        }
+        
+        .floating-button {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background-color: var(--accent-color);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            cursor: pointer;
+            z-index: 100;
+        }
+        
+        .floating-button:hover {
+            background-color: #d81b60;
+        }
+        
+        /* 3D Visualization Container */
+        .visualization-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body>
+    <!-- Visualization Container -->
+    <div id="akashic-visualization" class="visualization-container"></div>
+    
+    <header>
+        <h1>Akashic Records Browser Interface</h1>
+        <p>Access and manage cross-device memory systems</p>
+    </header>
+    
+    <div class="container">
+        <div class="controls">
+            <div class="control-group">
+                <select id="reality-selector">
+                    <option value="physical">Physical Reality</option>
+                    <option value="digital" selected>Digital Reality</option>
+                    <option value="astral">Astral Reality</option>
+                    <option value="memory">Memory Reality</option>
+                    <option value="dream">Dream Reality</option>
+                </select>
+                
+                <select id="dimension-selector">
+                    <option value="1">1D</option>
+                    <option value="2">2D</option>
+                    <option value="3" selected>3D</option>
+                    <option value="4">4D</option>
+                    <option value="5">5D</option>
+                    <option value="7">7D</option>
+                    <option value="9">9D</option>
+                    <option value="12">12D</option>
+                </select>
+            </div>
+            
+            <div class="status">
+                <div id="connection-status" class="status-indicator"></div>
+                <span id="status-text">Connecting...</span>
+            </div>
+            
+            <div class="control-group">
+                <input type="text" id="search-input" placeholder="Search records...">
+                <button id="search-button">Search</button>
+                <button id="sync-button">Sync</button>
+            </div>
+        </div>
+        
+        <div class="tabs">
+            <div class="tab active" data-tab="records">Records</div>
+            <div class="tab" data-tab="memories">Memories</div>
+            <div class="tab" data-tab="connections">Connections</div>
+            <div class="tab" data-tab="files">File Links</div>
+        </div>
+        
+        <div id="records-tab" class="tab-content active">
+            <div id="records-container" class="grid">
+                <div class="card">
+                    <div class="content">Loading records...</div>
+                </div>
+            </div>
+        </div>
+        
+        <div id="memories-tab" class="tab-content">
+            <div id="memories-container" class="grid">
+                <div class="card">
+                    <div class="content">Loading memories...</div>
+                </div>
+            </div>
+        </div>
+        
+        <div id="connections-tab" class="tab-content">
+            <div id="connections-container" class="grid">
+                <div class="card">
+                    <div class="content">Loading connections...</div>
+                </div>
+            </div>
+        </div>
+        
+        <div id="files-tab" class="tab-content">
+            <div id="files-container" class="grid">
+                <div class="card">
+                    <div class="content">Loading file links...</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Record View Modal -->
+    <div id="record-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <h2 id="modal-title">Record Title</h2>
+            <div id="modal-content">
+                <!-- Record content will be displayed here -->
+            </div>
+            <div id="modal-meta" class="meta">
+                <!-- Record metadata will be displayed here -->
+            </div>
+        </div>
+    </div>
+    
+    <!-- Create Record Modal -->
+    <div id="create-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <h2>Create New Record</h2>
+            <form id="create-record-form">
+                <div class="form-group">
+                    <label for="record-title">Title</label>
+                    <input type="text" id="record-title" required>
+                </div>
+                <div class="form-group">
+                    <label for="record-content">Content</label>
+                    <textarea id="record-content" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="record-type">Type</label>
+                    <select id="record-type">
+                        <option value="note">Note</option>
+                        <option value="memory">Memory</option>
+                        <option value="file">File Link</option>
+                        <option value="code">Code Snippet</option>
+                        <option value="image">Image Reference</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="record-tags">Tags (comma separated)</label>
+                    <input type="text" id="record-tags" placeholder="tag1, tag2, tag3">
+                </div>
+                <div class="form-group">
+                    <button type="submit">Save Record</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Floating Action Button -->
+    <div id="create-button" class="floating-button">+</div>
+    
+    <!-- Notification -->
+    <div id="notification" class="notification">Notification message</div>
+    
+    <!-- Scripts -->
+    <script src="akashic_browser_connector.js"></script>
+    <script>
+        // Main App Logic
+        document.addEventListener('DOMContentLoaded', () => {
+            // UI Elements
+            const statusIndicator = document.getElementById('connection-status');
+            const statusText = document.getElementById('status-text');
+            const realitySelector = document.getElementById('reality-selector');
+            const dimensionSelector = document.getElementById('dimension-selector');
+            const searchInput = document.getElementById('search-input');
+            const searchButton = document.getElementById('search-button');
+            const syncButton = document.getElementById('sync-button');
+            const recordsContainer = document.getElementById('records-container');
+            const memoriesContainer = document.getElementById('memories-container');
+            const connectionsContainer = document.getElementById('connections-container');
+            const filesContainer = document.getElementById('files-container');
+            const tabs = document.querySelectorAll('.tab');
+            const tabContents = document.querySelectorAll('.tab-content');
+            const recordModal = document.getElementById('record-modal');
+            const modalTitle = document.getElementById('modal-title');
+            const modalContent = document.getElementById('modal-content');
+            const modalMeta = document.getElementById('modal-meta');
+            const closeButtons = document.querySelectorAll('.close-button');
+            const createButton = document.getElementById('create-button');
+            const createModal = document.getElementById('create-modal');
+            const createForm = document.getElementById('create-record-form');
+            const notification = document.getElementById('notification');
+            
+            // Initialize Akashic Connector
+            const connector = window.akashicConnector;
+            
+            // Register event handlers
+            connector.on('connect', handleConnection);
+            connector.on('disconnect', handleDisconnection);
+            connector.on('error', handleError);
+            connector.on('recordCreated', handleRecordCreated);
+            connector.on('dimensionChange', handleDimensionChange);
+            connector.on('realityChange', handleRealityChange);
+            connector.on('sync', handleSync);
+            
+            // Initial UI setup
+            updateStatus(false, 'Initializing...');
+            loadData();
+            
+            // Event listeners
+            realitySelector.addEventListener('change', () => {
+                connector.changeReality(realitySelector.value);
+            });
+            
+            dimensionSelector.addEventListener('change', () => {
+                connector.changeDimension(parseInt(dimensionSelector.value));
+            });
+            
+            searchButton.addEventListener('click', () => {
+                const query = searchInput.value.trim();
+                if (query) {
+                    searchRecords(query);
+                } else {
+                    loadRecords();
+                }
+            });
+            
+            searchInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    searchButton.click();
+                }
+            });
+            
+            syncButton.addEventListener('click', () => {
+                connector.syncWithCloud().then(result => {
+                    if (result.success) {
+                        showNotification('Sync completed successfully');
+                        loadData();
+                    } else {
+                        showNotification('Sync failed: ' + result.error, 'error');
+                    }
+                });
+            });
+            
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    const tabName = tab.getAttribute('data-tab');
+                    
+                    // Update active tab
+                    tabs.forEach(t => t.classList.remove('active'));
+                    tab.classList.add('active');
+                    
+                    // Update active content
+                    tabContents.forEach(content => {
+                        content.classList.remove('active');
+                    });
+                    document.getElementById(`${tabName}-tab`).classList.add('active');
+                });
+            });
+            
+            closeButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    recordModal.style.display = 'none';
+                    createModal.style.display = 'none';
+                });
+            });
+            
+            // Close modal when clicking outside
+            window.addEventListener('click', (e) => {
+                if (e.target === recordModal) {
+                    recordModal.style.display = 'none';
+                }
+                if (e.target === createModal) {
+                    createModal.style.display = 'none';
+                }
+            });
+            
+            createButton.addEventListener('click', () => {
+                createModal.style.display = 'flex';
+            });
+            
+            createForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                
+                const title = document.getElementById('record-title').value;
+                const content = document.getElementById('record-content').value;
+                const type = document.getElementById('record-type').value;
+                const tagsInput = document.getElementById('record-tags').value;
+                
+                const tags = tagsInput.split(',')
+                    .map(tag => tag.trim())
+                    .filter(tag => tag.length > 0);
+                
+                const record = {
+                    title,
+                    content,
+                    type,
+                    tags,
+                    dimension: parseInt(dimensionSelector.value),
+                    reality: realitySelector.value,
+                    timestamp: Date.now()
+                };
+                
+                connector.storeRecord(record).then(result => {
+                    if (result.success) {
+                        showNotification('Record created successfully');
+                        createModal.style.display = 'none';
+                        createForm.reset();
+                        loadRecords();
+                    } else {
+                        showNotification('Failed to create record: ' + result.error, 'error');
+                    }
+                });
+            });
+            
+            // Functions
+            function handleConnection(data) {
+                updateStatus(true, 'Connected');
+                loadData();
+            }
+            
+            function handleDisconnection() {
+                updateStatus(false, 'Disconnected');
+            }
+            
+            function handleError(error) {
+                updateStatus(false, 'Error: ' + error.message);
+                showNotification(error.message, 'error');
+            }
+            
+            function handleRecordCreated(data) {
+                loadRecords();
+            }
+            
+            function handleDimensionChange(data) {
+                dimensionSelector.value = data.dimension;
+                loadData();
+            }
+            
+            function handleRealityChange(data) {
+                realitySelector.value = data.reality;
+                loadData();
+            }
+            
+            function handleSync(data) {
+                loadData();
+            }
+            
+            function updateStatus(connected, message) {
+                statusIndicator.className = connected ? 
+                    'status-indicator connected' : 
+                    'status-indicator';
+                    
+                statusText.textContent = message;
+            }
+            
+            function loadData() {
+                loadRecords();
+                loadMemories();
+                loadConnections();
+                loadFileLinks();
+            }
+            
+            function loadRecords() {
+                const criteria = {
+                    dimension: parseInt(dimensionSelector.value),
+                    reality: realitySelector.value
+                };
+                
+                const result = connector.queryRecords(criteria);
+                
+                if (result.success) {
+                    displayRecords(result.results);
+                } else {
+                    recordsContainer.innerHTML = `<div class="card"><div class="content">Error loading records: ${result.error}</div></div>`;
+                }
+            }
+            
+            function loadMemories() {
+                // Similar to loadRecords but for memories
+                memoriesContainer.innerHTML = '<div class="card"><div class="content">Memories feature coming soon</div></div>';
+            }
+            
+            function loadConnections() {
+                // Similar to loadRecords but for connections
+                connectionsContainer.innerHTML = '<div class="card"><div class="content">Connections feature coming soon</div></div>';
+            }
+            
+            function loadFileLinks() {
+                // Load records of type 'file'
+                const criteria = {
+                    dimension: parseInt(dimensionSelector.value),
+                    reality: realitySelector.value,
+                    type: 'file'
+                };
+                
+                const result = connector.queryRecords(criteria);
+                
+                if (result.success) {
+                    if (result.results.length > 0) {
+                        displayFileLinks(result.results);
+                    } else {
+                        filesContainer.innerHTML = '<div class="card"><div class="content">No file links found</div></div>';
+                    }
+                } else {
+                    filesContainer.innerHTML = `<div class="card"><div class="content">Error loading file links: ${result.error}</div></div>`;
+                }
+            }
+            
+            function searchRecords(query) {
+                const criteria = {
+                    dimension: parseInt(dimensionSelector.value),
+                    reality: realitySelector.value,
+                    search: query
+                };
+                
+                const result = connector.queryRecords(criteria);
+                
+                if (result.success) {
+                    if (result.results.length > 0) {
+                        displayRecords(result.results);
+                    } else {
+                        recordsContainer.innerHTML = '<div class="card"><div class="content">No matching records found</div></div>';
+                    }
+                } else {
+                    recordsContainer.innerHTML = `<div class="card"><div class="content">Error searching records: ${result.error}</div></div>`;
+                }
+            }
+            
+            function displayRecords(records) {
+                if (records.length === 0) {
+                    recordsContainer.innerHTML = '<div class="card"><div class="content">No records found</div></div>';
+                    return;
+                }
+                
+                recordsContainer.innerHTML = '';
+                
+                records.forEach(record => {
+                    const card = document.createElement('div');
+                    card.className = 'card record-card';
+                    
+                    const tagsHtml = record.tags && record.tags.length > 0 ? 
+                        record.tags.map(tag => `<span class="tag">${tag}</span>`).join('') : '';
+                    
+                    card.innerHTML = `
+                        <h3>${record.title || 'Untitled Record'}</h3>
+                        <div class="content">${record.content || ''}</div>
+                        <div class="meta">
+                            <div>${record.type || 'note'}</div>
+                            <div>${formatDate(record.createdAt)}</div>
+                        </div>
+                        <div class="tags">${tagsHtml}</div>
+                    `;
+                    
+                    card.addEventListener('click', () => {
+                        showRecordModal(record);
+                    });
+                    
+                    recordsContainer.appendChild(card);
+                });
+            }
+            
+            function displayFileLinks(files) {
+                filesContainer.innerHTML = '';
+                
+                files.forEach(file => {
+                    const card = document.createElement('div');
+                    card.className = 'card record-card';
+                    
+                    const filePath = file.content || '';
+                    
+                    card.innerHTML = `
+                        <h3>${file.title || 'Untitled File'}</h3>
+                        <div class="content">${filePath}</div>
+                        <div class="meta">
+                            <div>File Link</div>
+                            <div>${formatDate(file.createdAt)}</div>
+                        </div>
+                    `;
+                    
+                    card.addEventListener('click', () => {
+                        showRecordModal(file);
+                    });
+                    
+                    filesContainer.appendChild(card);
+                });
+            }
+            
+            function showRecordModal(record) {
+                modalTitle.textContent = record.title || 'Untitled Record';
+                modalContent.innerHTML = `<pre>${record.content || ''}</pre>`;
+                
+                const tagsHtml = record.tags && record.tags.length > 0 ? 
+                    record.tags.map(tag => `<span class="tag">${tag}</span>`).join('') : '';
+                
+                modalMeta.innerHTML = `
+                    <div>
+                        <div>Type: ${record.type || 'note'}</div>
+                        <div>Created: ${formatDate(record.createdAt)}</div>
+                        <div>Reality: ${record.reality}</div>
+                        <div>Dimension: ${record.dimension}D</div>
+                    </div>
+                    <div>${tagsHtml}</div>
+                `;
+                
+                recordModal.style.display = 'flex';
+            }
+            
+            function formatDate(timestamp) {
+                if (!timestamp) return 'Unknown';
+                
+                const date = new Date(timestamp);
+                return date.toLocaleString();
+            }
+            
+            function showNotification(message, type = 'success') {
+                notification.textContent = message;
+                notification.className = `notification ${type}`;
+                notification.classList.add('show');
+                
+                setTimeout(() => {
+                    notification.classList.remove('show');
+                }, 3000);
+            }
+        });
+    </script>
+</body>
+</html>

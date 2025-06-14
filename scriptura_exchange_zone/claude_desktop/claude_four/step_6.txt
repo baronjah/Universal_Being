@@ -1,0 +1,171 @@
+# Creation Tools System Implementation
+
+## Features from Recipe:
+- Activated with ` or [`] key
+- Text-based object creation
+- Shape generation (pyramid, cylinder, cube)
+- 3D object placement in grid
+- EmptySpaceforCreationTool
+- Creation commands interpretation
+
+## Implementation Steps:
+
+### Step 1: Creation Tool Manager
+```gdscript
+# CreationToolManager.gd
+extends Control
+
+var is_active: bool = false
+var command_input: LineEdit
+var grid_system: GridSystem
+var current_tool: String = "place"
+
+signal object_created(object)
+signal tool_activated()
+signal tool_deactivated()
+```
+
+### Step 2: Command Parser
+1. Create command interpretation system:
+```gdscript
+func parse_command(command: String) -> Dictionary:
+    # Examples:
+    # "create pyramid" -> {type: "pyramid", params: {}}
+    # "create cylinder height 8" -> {type: "cylinder", params: {height: 8}}
+    # "create cube 7by7 water ice" -> {type: "cube", params: {size: 7, material: "water", state: "solid"}}
+```
+
+### Step 3: Shape Generators
+1. Pyramid generator:
+```gdscript
+func create_pyramid(size: int = 9) -> Node3D:
+    # Generate pyramid with apex at x5,y5,z5
+    # Base corners at x1y1z1, x9y1z1, x1y1z9, x9y1z9
+```
+
+2. Cylinder generator:
+```gdscript
+func create_cylinder(radius: int = 4, height: int = 8) -> Node3D:
+    # Create circle at base
+    # Extend to specified height
+    # Fill interior
+```
+
+3. Cube generator:
+```gdscript
+func create_cube(size: int = 7) -> Node3D:
+    # Create filled cube
+    # Support different materials
+```
+
+### Step 4: Placement System
+1. Grid snapping
+2. Preview mode
+3. Rotation controls
+4. Placement confirmation
+5. Undo/redo system
+
+### Step 5: Material Assignment
+1. Parse material types
+2. Apply visual properties
+3. Set physical properties
+4. Support state changes
+
+## Testing Procedures:
+
+### Test 1: Tool Activation
+- [ ] Press ` key to activate
+- [ ] Verify UI overlay appears
+- [ ] Test [`] alternative key
+- [ ] Test deactivation
+- [ ] Verify input focus
+
+### Test 2: Command Parsing
+- [ ] Test "create pyramid"
+- [ ] Test "create cylinder height 8"
+- [ ] Test "create cube 7by7"
+- [ ] Test invalid commands
+- [ ] Test parameter variations
+
+### Test 3: Object Creation
+- [ ] Create each shape type
+- [ ] Verify correct geometry
+- [ ] Test size parameters
+- [ ] Check grid alignment
+- [ ] Test object boundaries
+
+### Test 4: Material System
+- [ ] Create water cube (ice)
+- [ ] Test material properties
+- [ ] Verify visual representation
+- [ ] Test state assignments
+
+## Command Examples:
+
+### Basic Commands:
+```
+create pyramid
+create cylinder
+create cube
+create sphere radius 3
+```
+
+### Advanced Commands:
+```
+create cylinder height 8 radius 4
+create cube 7by7 water ice
+create pyramid size 5 material stone
+```
+
+## Object Creation Flow:
+```gdscript
+# 1. User enters command
+"create pyramid"
+
+# 2. Parse command
+var cmd = parse_command("create pyramid")
+# Returns: {type: "pyramid", params: {}}
+
+# 3. Generate object
+var obj = create_pyramid()
+
+# 4. Preview placement
+show_preview(obj)
+
+# 5. Confirm placement
+place_in_grid(obj, current_position)
+```
+
+## Visual Representations:
+
+### Pyramid (side view):
+```
+     [5]
+    [4][4]
+   [3][3][3]
+  [2][2][2][2]
+ [1][1][1][1][1]
+```
+
+### Cylinder (side view):
+```
+[3][3][3][3][3]
+[2][2][2][2][2]
+[2][2][2][2][2]
+[2][2][2][2][2]
+[1][1][1][1][1]
+```
+
+## Dependencies:
+- Grid system
+- Input system
+- 3D mesh generation
+- Material system
+- Command parser
+
+## Expected Outcomes:
+- Intuitive creation interface
+- Quick object generation
+- Accurate shape creation
+- Flexible parameter system
+- Smooth placement workflow

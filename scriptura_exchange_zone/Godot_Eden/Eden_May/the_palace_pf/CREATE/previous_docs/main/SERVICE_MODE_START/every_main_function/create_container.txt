@@ -1,0 +1,15 @@
+func create_container(node_name: String, first_line : Array, data_to_write : Array, group_name : String, version_of_thing : String, information_lines_parsed : Array):
+	var node_path_c_con = first_line[6][0]
+	var coords = first_line[1]
+	var to_rotate = first_line[2]
+	var container 
+	container = Node3D.new()
+	
+	container.name = data_to_write[0][0]
+	container.set_script(ContainterScript)
+		# Add initialization with data_to_write if needed
+	if container.has_method("container_initialize"):
+		container.container_initialize(data_to_write)
+
+	var node_type = "container"
+	node_creation(data_to_write[0][0], container, coords, to_rotate, group_name, node_type, node_path_c_con)

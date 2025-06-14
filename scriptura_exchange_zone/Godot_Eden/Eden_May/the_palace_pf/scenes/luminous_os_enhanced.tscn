@@ -1,0 +1,978 @@
+[gd_scene load_steps=25 format=3 uid="uid://bhrmrwgd8a4ot"]
+
+[ext_resource type="Script" path="res://code/gdscript/scripts/luminous_os/luminous_os_controller.gd" id="1_u6s7j"]
+[ext_resource type="Script" path="res://code/gdscript/scripts/luminous_os/luminous_filesystem.gd" id="2_b1qss"]
+[ext_resource type="Script" path="res://code/gdscript/scripts/luminous_os/luminous_ui_controller.gd" id="3_a2qw0"]
+[ext_resource type="Script" path="res://code/gdscript/scripts/luminous_os/luminous_command_processor.gd" id="4_j7qse"]
+[ext_resource type="Script" path="res://code/gdscript/scripts/luminous_os/luminous_data_controller.gd" id="5_1n8gs"]
+[ext_resource type="Script" path="res://code/gdscript/scripts/luminous_os/luminous_game_generator.gd" id="6_c6vgq"]
+[ext_resource type="Script" path="res://code/gdscript/scripts/luminous_os/luminous_neural_processor.gd" id="7_kx4tp"]
+[ext_resource type="Shader" path="res://shaders/gd_shader/LuminousStarfield.gdshader" id="8_gfqb1"]
+
+[sub_resource type="Environment" id="Environment_h7q25"]
+background_mode = 3
+background_color = Color(0, 0, 0.1, 1)
+ambient_light_source = 2
+ambient_light_color = Color(0.2, 0.2, 0.4, 1)
+glow_enabled = true
+glow_intensity = 0.3
+glow_bloom = 0.1
+fog_enabled = true
+fog_light_color = Color(0, 0, 0.1, 1)
+fog_density = 0.001
+volumetric_fog_enabled = true
+volumetric_fog_density = 0.01
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_jvukq"]
+render_priority = 0
+shader = ExtResource("8_gfqb1")
+shader_parameter/base_color = Color(0, 0.05, 0.1, 1)
+shader_parameter/star_color = Color(0.9, 0.9, 1, 1)
+shader_parameter/star_density = 1.0
+shader_parameter/star_brightness = 1.5
+shader_parameter/flicker_speed = 1.0
+shader_parameter/flicker_intensity = 0.2
+shader_parameter/rotation_speed = 0.02
+shader_parameter/parallax_depth = 0.5
+
+[sub_resource type="SphereMesh" id="SphereMesh_r3kln"]
+radius = 100.0
+height = 200.0
+is_hemisphere = true
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_cmgp3"]
+emission_shape = 6
+emission_ring_axis = Vector3(0, 1, 0)
+emission_ring_height = 1.0
+emission_ring_radius = 20.0
+emission_ring_inner_radius = 5.0
+gravity = Vector3(0, 0, 0)
+scale_min = 0.1
+scale_max = 0.3
+color = Color(0.8, 0.4, 1, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xt8m2"]
+transparency = 1
+blend_mode = 1
+shading_mode = 0
+vertex_color_use_as_albedo = true
+albedo_color = Color(0.8, 0.4, 1, 0.5)
+billboard_mode = 3
+billboard_keep_scale = true
+particles_anim_h_frames = 1
+particles_anim_v_frames = 1
+particles_anim_loop = false
+
+[sub_resource type="QuadMesh" id="QuadMesh_7wkpj"]
+material = SubResource("StandardMaterial3D_xt8m2")
+size = Vector2(0.1, 0.1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4y7dr"]
+bg_color = Color(0.0588235, 0.0588235, 0.0980392, 0.901961)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.2, 0.2, 0.4, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5ckve"]
+bg_color = Color(0.0980392, 0.0980392, 0.156863, 0.901961)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.2, 0.2, 0.4, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_v3y7e"]
+bg_color = Color(0, 0, 0.2, 0.8)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.196078, 0.196078, 0.396078, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_t7pgh"]
+bg_color = Color(0.12549, 0, 0.25098, 0.8)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.498039, 0.247059, 0.745098, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+shadow_color = Color(0.458824, 0, 0.74902, 0.2)
+shadow_size = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_m0wxv"]
+bg_color = Color(0, 0.0470588, 0.0941176, 0.901961)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.160784, 0.309804, 0.501961, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[sub_resource type="Theme" id="Theme_sxb76"]
+Panel/styles/panel = SubResource("StyleBoxFlat_m0wxv")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gjk27"]
+bg_color = Color(0.0313726, 0.0588235, 0.196078, 0.901961)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.2, 0.25098, 0.501961, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kpyfl"]
+bg_color = Color(0.0588235, 0, 0.12549, 0.901961)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.301961, 0.133333, 0.45098, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1h5n1"]
+bg_color = Color(0.631373, 0.219608, 0.0980392, 0.952941)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.792157, 0.345098, 0.0784314, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[sub_resource type="Theme" id="Theme_u5xnc"]
+Button/styles/hover = SubResource("StyleBoxFlat_gjk27")
+Button/styles/normal = SubResource("StyleBoxFlat_kpyfl")
+Button/styles/pressed = SubResource("StyleBoxFlat_1h5n1")
+
+[node name="LuminousOS_Enhanced" type="Node3D"]
+script = ExtResource("1_u6s7j")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_h7q25")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.866025, -0.433013, 0.25, 0, 0.5, 0.866025, -0.5, -0.75, 0.433013, 0, 10, 0)
+light_color = Color(0.8, 0.8, 1, 1)
+light_energy = 0.5
+shadow_enabled = true
+
+[node name="Starfield" type="MeshInstance3D" parent="."]
+material_override = SubResource("ShaderMaterial_jvukq")
+mesh = SubResource("SphereMesh_r3kln")
+skeleton = NodePath("")
+
+[node name="BackgroundStars" type="GPUParticles3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+amount = 1000
+lifetime = 10.0
+preprocess = 5.0
+visibility_aabb = AABB(-50, -50, -50, 100, 100, 100)
+process_material = SubResource("ParticleProcessMaterial_cmgp3")
+draw_pass_1 = SubResource("QuadMesh_7wkpj")
+
+[node name="DivineParticles" type="GPUParticles3D" parent="."]
+emitting = false
+amount = 500
+lifetime = 5.0
+visibility_aabb = AABB(-50, -50, -50, 100, 100, 100)
+process_material = SubResource("ParticleProcessMaterial_cmgp3")
+draw_pass_1 = SubResource("QuadMesh_7wkpj")
+
+[node name="CameraController" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 20)
+
+[node name="Camera3D" type="Camera3D" parent="CameraController"]
+current = true
+fov = 70.0
+
+[node name="LuminousFileSystem" type="Node3D" parent="."]
+script = ExtResource("2_b1qss")
+
+[node name="CommandProcessor" type="Node" parent="."]
+script = ExtResource("4_j7qse")
+
+[node name="LuminousDataController" type="Node" parent="."]
+script = ExtResource("5_1n8gs")
+
+[node name="LuminousGameGenerator" type="Node" parent="."]
+script = ExtResource("6_c6vgq")
+
+[node name="LuminousNeuralProcessor" type="Node" parent="."]
+script = ExtResource("7_kx4tp")
+
+[node name="AmbientAudio" type="AudioStreamPlayer" parent="."]
+volume_db = -20.0
+autoplay = true
+bus = &"Ambient"
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.2
+autostart = true
+
+[node name="PerformanceMonitor" type="Timer" parent="."]
+wait_time = 5.0
+autostart = true
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="UIController" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_u5xnc")
+script = ExtResource("3_a2qw0")
+
+[node name="PathBar" type="Panel" parent="CanvasLayer/UIController"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 40.0
+grow_horizontal = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_4y7dr")
+
+[node name="PathDisplay" type="Label" parent="CanvasLayer/UIController/PathBar"]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 10.0
+offset_top = -11.5
+offset_right = 1000.0
+offset_bottom = 11.5
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.8, 0.8, 1, 1)
+text = "/path/to/directory"
+vertical_alignment = 1
+
+[node name="HelpButton" type="Button" parent="CanvasLayer/UIController/PathBar"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -80.0
+offset_top = -15.0
+offset_right = -10.0
+offset_bottom = 15.0
+grow_horizontal = 0
+grow_vertical = 2
+text = "Help (F1)"
+
+[node name="CommandBar" type="Panel" parent="CanvasLayer/UIController"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -40.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_styles/panel = SubResource("StyleBoxFlat_5ckve")
+
+[node name="CommandPrompt" type="Label" parent="CanvasLayer/UIController/CommandBar"]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 10.0
+offset_top = -11.5
+offset_right = 40.0
+offset_bottom = 11.5
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.8, 0.8, 1, 1)
+text = ">>"
+
+[node name="CommandInput" type="LineEdit" parent="CanvasLayer/UIController/CommandBar"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -520.0
+offset_top = -15.0
+offset_right = 520.0
+offset_bottom = 15.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.8, 0.8, 1, 1)
+theme_override_colors/font_placeholder_color = Color(0.4, 0.4, 0.6, 1)
+theme_override_styles/normal = SubResource("StyleBoxFlat_v3y7e")
+placeholder_text = "Enter command..."
+caret_blink = true
+
+[node name="OutputPanel" type="Panel" parent="CanvasLayer/UIController"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = 50.0
+offset_right = -10.0
+offset_bottom = -50.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_4y7dr")
+
+[node name="CommandOutput" type="RichTextLabel" parent="CanvasLayer/UIController/OutputPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = 10.0
+offset_right = -10.0
+offset_bottom = -10.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/default_color = Color(0.8, 0.8, 1, 1)
+bbcode_enabled = true
+scroll_following = true
+
+[node name="DivineMessagePanel" type="Panel" parent="CanvasLayer/UIController"]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -250.0
+offset_top = -50.0
+offset_right = 250.0
+offset_bottom = 50.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_t7pgh")
+
+[node name="MessageLabel" type="Label" parent="CanvasLayer/UIController/DivineMessagePanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 20.0
+offset_top = 20.0
+offset_right = -20.0
+offset_bottom = -20.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 0.8, 1, 1)
+theme_override_colors/font_shadow_color = Color(0.498039, 0, 1, 0.498039)
+theme_override_constants/shadow_offset_x = 2
+theme_override_constants/shadow_offset_y = 2
+theme_override_font_sizes/font_size = 20
+text = "Divine Message Appears Here"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="FilePreviewPanel" type="Panel" parent="CanvasLayer/UIController"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 100.0
+offset_top = 100.0
+offset_right = -100.0
+offset_bottom = -100.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_sxb76")
+
+[node name="TitleBar" type="Panel" parent="CanvasLayer/UIController/FilePreviewPanel"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 40.0
+grow_horizontal = 2
+
+[node name="TitleLabel" type="Label" parent="CanvasLayer/UIController/FilePreviewPanel/TitleBar"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -150.0
+offset_top = -13.0
+offset_right = 150.0
+offset_bottom = 13.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.8, 0.8, 1, 1)
+text = "File Preview"
+horizontal_alignment = 1
+
+[node name="CloseButton" type="Button" parent="CanvasLayer/UIController/FilePreviewPanel/TitleBar"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -80.0
+offset_top = -15.0
+offset_right = -10.0
+offset_bottom = 15.0
+grow_horizontal = 0
+grow_vertical = 2
+text = "Close"
+
+[node name="TextPreview" type="TextEdit" parent="CanvasLayer/UIController/FilePreviewPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = 50.0
+offset_right = -10.0
+offset_bottom = -10.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/background_color = Color(0.0196078, 0.0588235, 0.117647, 1)
+editable = false
+wrap_mode = 1
+
+[node name="ImagePreview" type="TextureRect" parent="CanvasLayer/UIController/FilePreviewPanel"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = 50.0
+offset_right = -10.0
+offset_bottom = -10.0
+grow_horizontal = 2
+grow_vertical = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="ModelPreviewContainer" type="SubViewportContainer" parent="CanvasLayer/UIController/FilePreviewPanel"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = 50.0
+offset_right = -10.0
+offset_bottom = -10.0
+grow_horizontal = 2
+grow_vertical = 2
+stretch = true
+
+[node name="ModelViewport" type="SubViewport" parent="CanvasLayer/UIController/FilePreviewPanel/ModelPreviewContainer"]
+handle_input_locally = false
+size = Vector2i(1004, 448)
+render_target_update_mode = 4
+
+[node name="Camera3D" type="Camera3D" parent="CanvasLayer/UIController/FilePreviewPanel/ModelPreviewContainer/ModelViewport"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2)
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="CanvasLayer/UIController/FilePreviewPanel/ModelPreviewContainer/ModelViewport"]
+transform = Transform3D(0.866025, -0.433013, 0.25, 0, 0.5, 0.866025, -0.5, -0.75, 0.433013, 0, 2, 0)
+
+[node name="ModelHolder" type="Node3D" parent="CanvasLayer/UIController/FilePreviewPanel/ModelPreviewContainer/ModelViewport"]
+
+[node name="AudioPlayer" type="AudioStreamPlayer" parent="CanvasLayer/UIController"]
+
+[node name="HelpPanel" type="Panel" parent="CanvasLayer/UIController"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 150.0
+offset_top = 100.0
+offset_right = -150.0
+offset_bottom = -100.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_4y7dr")
+
+[node name="TitleBar" type="Panel" parent="CanvasLayer/UIController/HelpPanel"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 40.0
+grow_horizontal = 2
+
+[node name="TitleLabel" type="Label" parent="CanvasLayer/UIController/HelpPanel/TitleBar"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -150.0
+offset_top = -13.0
+offset_right = 150.0
+offset_bottom = 13.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.8, 0.8, 1, 1)
+text = "Luminous OS Help"
+horizontal_alignment = 1
+
+[node name="CloseButton" type="Button" parent="CanvasLayer/UIController/HelpPanel/TitleBar"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -80.0
+offset_top = -15.0
+offset_right = -10.0
+offset_bottom = 15.0
+grow_horizontal = 0
+grow_vertical = 2
+text = "Close"
+
+[node name="HelpContent" type="RichTextLabel" parent="CanvasLayer/UIController/HelpPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 20.0
+offset_top = 50.0
+offset_right = -20.0
+offset_bottom = -20.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/default_color = Color(0.8, 0.8, 1, 1)
+bbcode_enabled = true
+text = "[b]LUMINOUS OS ENHANCED EDITION[/b]
+Inspired by TempleOS and cosmic visualization
+
+[b]CORE CAPABILITIES:[/b]
+- [color=#AAFFAA]Cosmic File System[/color]: Folders as stars, files as orbiting planets
+- [color=#AAFFAA]Advanced Game Generator[/color]: Automated game creation
+- [color=#AAFFAA]Neural Processing[/color]: AI-assisted content creation
+- [color=#AAFFAA]Ultra-High Capacity[/color]: Optimized data processing
+
+[b]NAVIGATION:[/b]
+- Click on stars to navigate directories
+- Click on planets to open files
+- Type commands in the command bar
+
+[b]COMMON COMMANDS:[/b]
+[color=#AAFFAA]help[/color] - Display this help information
+[color=#AAFFAA]ls[/color] - List stars (directories) and planets (files)
+[color=#AAFFAA]cd[/color] - Navigate to a different star (directory)
+[color=#AAFFAA]divine[/color] - Toggle divine mode (inspired by TempleOS)
+[color=#AAFFAA]oracle[/color] - Receive a divine message
+[color=#AAFFAA]generate-game[/color] - Create a new game project
+[color=#AAFFAA]neural[/color] - Access neural processing capabilities
+[color=#AAFFAA]process-data[/color] - Run high-capacity data processing
+
+[b]GAME GENERATION:[/b]
+[color=#AAFFAA]generate-game <template> <name>[/color] - Create game from template
+  Available templates: 2d_platformer, top_down_rpg, fps, puzzle
+[color=#AAFFAA]show-templates[/color] - List available game templates
+[color=#AAFFAA]game-status <id>[/color] - Check status of game generation
+
+[b]NEURAL PROCESSING:[/b]
+[color=#AAFFAA]neural-generate <prompt>[/color] - Generate text with AI
+[color=#AAFFAA]neural-image <prompt>[/color] - Generate image concept
+[color=#AAFFAA]neural-load <model>[/color] - Load a neural model
+[color=#AAFFAA]neural-list[/color] - Show available neural models
+
+[b]DATA PROCESSING:[/b]
+[color=#AAFFAA]process-file <file>[/color] - Process file with data controller
+[color=#AAFFAA]process-batch <directory>[/color] - Batch process multiple files
+[color=#AAFFAA]data-stats[/color] - Show data processing statistics
+[color=#AAFFAA]watch-dir <directory>[/color] - Monitor directory for changes
+
+[b]KEYBOARD SHORTCUTS:[/b]
+F1 - Toggle help panel
+ESC - Close panels
+F2 - Toggle performance monitor
+F3 - Toggle data visualization
+F4 - Cycle view modes
+
+[i]In Luminous OS, the digital and divine realms converge. The filesystem becomes a cosmic experience, while advanced AI and data processing bring your digital dreams to life.[/i]"
+
+[node name="GameGeneratorPanel" type="Panel" parent="CanvasLayer/UIController"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 120.0
+offset_top = 80.0
+offset_right = -120.0
+offset_bottom = -80.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_4y7dr")
+
+[node name="TitleBar" type="Panel" parent="CanvasLayer/UIController/GameGeneratorPanel"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 40.0
+grow_horizontal = 2
+
+[node name="TitleLabel" type="Label" parent="CanvasLayer/UIController/GameGeneratorPanel/TitleBar"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -150.0
+offset_top = -13.0
+offset_right = 150.0
+offset_bottom = 13.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.8, 0.8, 1, 1)
+text = "Game Generator"
+horizontal_alignment = 1
+
+[node name="CloseButton" type="Button" parent="CanvasLayer/UIController/GameGeneratorPanel/TitleBar"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -80.0
+offset_top = -15.0
+offset_right = -10.0
+offset_bottom = 15.0
+grow_horizontal = 0
+grow_vertical = 2
+text = "Close"
+
+[node name="TemplateContainer" type="VBoxContainer" parent="CanvasLayer/UIController/GameGeneratorPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 20.0
+offset_top = 50.0
+offset_right = -20.0
+offset_bottom = -100.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="CanvasLayer/UIController/GameGeneratorPanel/TemplateContainer"]
+layout_mode = 2
+text = "Select Game Template:"
+
+[node name="TemplateList" type="ItemList" parent="CanvasLayer/UIController/GameGeneratorPanel/TemplateContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+item_count = 4
+item_0/text = "2D Platformer - A side-scrolling platformer game with jumping, collecting, and enemies"
+item_1/text = "Top-Down RPG - An RPG with quests, combat, inventory, and character progression"
+item_2/text = "First Person Shooter - A 3D shooter with weapons, enemies, and multiple levels"
+item_3/text = "Puzzle Game - A puzzle-solving game with different mechanics and levels"
+
+[node name="SettingsContainer" type="GridContainer" parent="CanvasLayer/UIController/GameGeneratorPanel"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 20.0
+offset_top = -90.0
+offset_right = -20.0
+offset_bottom = -50.0
+grow_horizontal = 2
+grow_vertical = 0
+columns = 2
+
+[node name="NameLabel" type="Label" parent="CanvasLayer/UIController/GameGeneratorPanel/SettingsContainer"]
+layout_mode = 2
+text = "Game Name:"
+
+[node name="NameInput" type="LineEdit" parent="CanvasLayer/UIController/GameGeneratorPanel/SettingsContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "Enter game name"
+
+[node name="GenerateButton" type="Button" parent="CanvasLayer/UIController/GameGeneratorPanel"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 20.0
+offset_top = -40.0
+offset_right = -20.0
+offset_bottom = -10.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "Generate Game"
+
+[node name="DataControlPanel" type="Panel" parent="CanvasLayer/UIController"]
+visible = false
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -300.0
+offset_top = -200.0
+offset_bottom = 200.0
+grow_horizontal = 0
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_4y7dr")
+
+[node name="TitleBar" type="Panel" parent="CanvasLayer/UIController/DataControlPanel"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 40.0
+grow_horizontal = 2
+
+[node name="TitleLabel" type="Label" parent="CanvasLayer/UIController/DataControlPanel/TitleBar"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -150.0
+offset_top = -13.0
+offset_right = 150.0
+offset_bottom = 13.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.8, 0.8, 1, 1)
+text = "Data Processing"
+horizontal_alignment = 1
+
+[node name="MinimizeButton" type="Button" parent="CanvasLayer/UIController/DataControlPanel/TitleBar"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -80.0
+offset_top = -15.0
+offset_right = -10.0
+offset_bottom = 15.0
+grow_horizontal = 0
+grow_vertical = 2
+text = "_"
+
+[node name="StatsContainer" type="VBoxContainer" parent="CanvasLayer/UIController/DataControlPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = 50.0
+offset_right = -10.0
+offset_bottom = -10.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="CanvasLayer/UIController/DataControlPanel/StatsContainer"]
+layout_mode = 2
+text = "Data Processing Stats"
+
+[node name="Stats" type="RichTextLabel" parent="CanvasLayer/UIController/DataControlPanel/StatsContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+bbcode_enabled = true
+text = "[b]Capacity Used:[/b] 24.8 GB / 32.0 GB
+[b]Current Tasks:[/b] 3
+[b]Processed Files:[/b] 1,248
+[b]Cache Performance:[/b] 87.5%
+[b]Processing Speed:[/b] 142.8 MB/s
+
+[b]Active Processes:[/b]
+- Game Generation: 67%
+- Neural Inference: 42%
+- Data Batch Processing: 91%"
+
+[node name="NeuralControlPanel" type="Panel" parent="CanvasLayer/UIController"]
+visible = false
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -350.0
+offset_top = -200.0
+offset_bottom = 200.0
+grow_horizontal = 0
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_4y7dr")
+
+[node name="TitleBar" type="Panel" parent="CanvasLayer/UIController/NeuralControlPanel"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 40.0
+grow_horizontal = 2
+
+[node name="TitleLabel" type="Label" parent="CanvasLayer/UIController/NeuralControlPanel/TitleBar"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -150.0
+offset_top = -13.0
+offset_right = 150.0
+offset_bottom = 13.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.8, 0.8, 1, 1)
+text = "Neural Processing"
+horizontal_alignment = 1
+
+[node name="MinimizeButton" type="Button" parent="CanvasLayer/UIController/NeuralControlPanel/TitleBar"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -80.0
+offset_top = -15.0
+offset_right = -10.0
+offset_bottom = 15.0
+grow_horizontal = 0
+grow_vertical = 2
+text = "_"
+
+[node name="ContentContainer" type="VBoxContainer" parent="CanvasLayer/UIController/NeuralControlPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = 50.0
+offset_right = -10.0
+offset_bottom = -10.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ModelLabel" type="Label" parent="CanvasLayer/UIController/NeuralControlPanel/ContentContainer"]
+layout_mode = 2
+text = "Select Model:"
+
+[node name="ModelSelector" type="OptionButton" parent="CanvasLayer/UIController/NeuralControlPanel/ContentContainer"]
+layout_mode = 2
+item_count = 4
+selected = 0
+popup/item_0/text = "gpt-mini (Text Generation)"
+popup/item_0/id = 0
+popup/item_1/text = "sd-small (Image Generation)"
+popup/item_1/id = 1
+popup/item_2/text = "classifier-base (Classification)"
+popup/item_2/id = 2
+popup/item_3/text = "embedding-small (Embeddings)"
+popup/item_3/id = 3
+
+[node name="PromptLabel" type="Label" parent="CanvasLayer/UIController/NeuralControlPanel/ContentContainer"]
+layout_mode = 2
+text = "Prompt:"
+
+[node name="PromptInput" type="TextEdit" parent="CanvasLayer/UIController/NeuralControlPanel/ContentContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+placeholder_text = "Enter prompt here..."
+wrap_mode = 1
+
+[node name="RunButton" type="Button" parent="CanvasLayer/UIController/NeuralControlPanel/ContentContainer"]
+layout_mode = 2
+text = "Run Inference"
+
+[node name="OutputLabel" type="Label" parent="CanvasLayer/UIController/NeuralControlPanel/ContentContainer"]
+layout_mode = 2
+text = "Output:"
+
+[node name="OutputDisplay" type="TextEdit" parent="CanvasLayer/UIController/NeuralControlPanel/ContentContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+placeholder_text = "Results will appear here..."
+editable = false
+wrap_mode = 1
+
+[node name="SystemStatsPanel" type="Panel" parent="CanvasLayer/UIController"]
+visible = false
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -150.0
+offset_right = 300.0
+offset_bottom = -50.0
+grow_vertical = 0
+theme_override_styles/panel = SubResource("StyleBoxFlat_4y7dr")
+
+[node name="StatsLabel" type="RichTextLabel" parent="CanvasLayer/UIController/SystemStatsPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = 10.0
+offset_right = -10.0
+offset_bottom = -10.0
+grow_horizontal = 2
+grow_vertical = 2
+bbcode_enabled = true
+text = "[b]SYSTEM STATS[/b]
+FPS: 60
+Memory: 1.2 GB
+Nodes: 3,842
+Files Loaded: 128
+Active Threads: 12"
+
+[connection signal="pressed" from="CanvasLayer/UIController/PathBar/HelpButton" to="CanvasLayer/UIController" method="_on_help_button_pressed"]
+[connection signal="text_submitted" from="CanvasLayer/UIController/CommandBar/CommandInput" to="CanvasLayer/UIController" method="_on_command_submitted"]
+[connection signal="pressed" from="CanvasLayer/UIController/FilePreviewPanel/TitleBar/CloseButton" to="CanvasLayer/UIController" method="_on_close_preview_pressed"]
+[connection signal="pressed" from="CanvasLayer/UIController/HelpPanel/TitleBar/CloseButton" to="CanvasLayer/UIController" method="_on_close_help_pressed"]
+[connection signal="pressed" from="CanvasLayer/UIController/GameGeneratorPanel/TitleBar/CloseButton" to="CanvasLayer/UIController" method="_on_game_generator_close_pressed"]
+[connection signal="pressed" from="CanvasLayer/UIController/GameGeneratorPanel/GenerateButton" to="CanvasLayer/UIController" method="_on_generate_button_pressed"]
+[connection signal="pressed" from="CanvasLayer/UIController/DataControlPanel/TitleBar/MinimizeButton" to="CanvasLayer/UIController" method="_on_data_panel_minimize_pressed"]
+[connection signal="pressed" from="CanvasLayer/UIController/NeuralControlPanel/TitleBar/MinimizeButton" to="CanvasLayer/UIController" method="_on_neural_panel_minimize_pressed"]
+[connection signal="pressed" from="CanvasLayer/UIController/NeuralControlPanel/ContentContainer/RunButton" to="CanvasLayer/UIController" method="_on_neural_run_pressed"]

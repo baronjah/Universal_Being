@@ -1,0 +1,63 @@
+# Main.gd Summary - Lines 3500-4000
+
+## Record Set Management (Lines 3500-3514)
+- Continuation of load_record_set() function
+- Stores processed records if records exist
+
+## Record Loading (Lines 3515-3579)
+- load_cached_data(): Loads cached record data
+  - Processes different data types
+  - Handles various record elements (thing_name, coords, etc.)
+  - Type-specific processing (0-3) with different actions
+  - Scene and interaction handling
+
+## Record Transfer and Cache Management (Lines 3580-3689)
+- load_cached_record_to_active(): Transfers records between caches
+- deep_copy_dictionary(): Deep dictionary copying via JSON serialization
+- clean_oldest_dataset(): Age-based cache cleanup
+- process_to_unload_records(): Record unloading preparation
+- unload_record_set(): Transfers records to cache
+- cache_data(): Memory-aware cache storage
+  - Enforces cache size limits
+  - Performs cleanup when needed
+  - Tracks timestamps for cache aging
+
+## Record Modification (Lines 3690-3839)
+- add_container_count(): Updates container counters
+- recreator(): Complex record update function
+  - Handles container and datapoint names
+  - Updates references in nested structures
+  - Pattern-based string updates
+  - Special handling for different data types
+  - Reference maintenance during replication
+
+## Scene Tree System (Lines 3840-3999)
+- Hierarchical tree structure management:
+  - check_if_container_available(): Container existence check
+  - check_if_datapoint_available(): Datapoint existence check
+  - check_if_datapoint_node_available(): Datapoint path retrieval
+  - build_pretty_print(): Hierarchical tree visualization
+  - find_branch_to_unload(): Branch unloading preparation
+  - check_tree_branches(): Tree structure validation
+  - print_tree_structure(): Formatted tree printing
+  - jsh_tree_get_node(): Node retrieval by path
+  - containers_list_creator(): Container state visualization
+
+## Notable Patterns
+1. Data Type Mapping: BanksCombiner for consistent type mapping
+2. Memory Management: Size-aware caching with cleanup
+3. Deep Copying: Structure preservation during transfers
+4. Tree Navigation: Path-based node access and traversal
+5. Pretty Printing: Hierarchical visualization with Unicode characters
+6. Thread Safety: Consistent mutex protection
+7. Error States: Detailed error tracking and reporting
+
+## Technical Architecture
+- Two-tier caching: Active and cached records
+- Time-based eviction: Oldest records removed first
+- Size-controlled cache: Enforced memory limits
+- Graph-based scene representation: Hierarchical node structure
+- Thread-safe operations: Mutex protection throughout
+- Deep structure traversal: Recursive operations on nested data
+
+Reading continues from line 4000.

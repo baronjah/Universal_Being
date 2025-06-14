@@ -1,0 +1,129 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://code/gdscript/scripts/visualization/words_in_space_3d.gd" id="1_a7b3j"]
+[ext_resource type="Script" path="res://code/gdscript/scripts/visualization/words_demo_controller.gd" id="2_c4d5k"]
+
+[node name="WordsInSpaceDemo" type="Node3D"]
+
+[node name="WordsInSpace3D" type="Node3D" parent="."]
+script = ExtResource("1_a7b3j")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.866025, -0.353553, 0.353553, 0, 0.707107, 0.707107, -0.5, -0.612372, 0.612372, 0, 10, 10)
+shadow_enabled = true
+
+[node name="DemoController" type="Node" parent="."]
+script = ExtResource("2_c4d5k")
+
+[node name="UI" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel" type="Panel" parent="UI"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -300.0
+offset_bottom = 400.0
+grow_horizontal = 0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = 10.0
+offset_right = -10.0
+offset_bottom = -10.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="UI/Panel/VBoxContainer"]
+layout_mode = 2
+text = "3D Word Visualization"
+horizontal_alignment = 1
+
+[node name="HSeparator" type="HSeparator" parent="UI/Panel/VBoxContainer"]
+layout_mode = 2
+
+[node name="AddWordLabel" type="Label" parent="UI/Panel/VBoxContainer"]
+layout_mode = 2
+text = "Add Word:"
+
+[node name="WordInput" type="LineEdit" parent="UI/Panel/VBoxContainer"]
+layout_mode = 2
+placeholder_text = "Enter a word..."
+
+[node name="CategoryOption" type="OptionButton" parent="UI/Panel/VBoxContainer"]
+layout_mode = 2
+item_count = 5
+selected = 0
+popup/item_0/text = "concept"
+popup/item_0/id = 0
+popup/item_1/text = "object"
+popup/item_1/id = 1
+popup/item_2/text = "action"
+popup/item_2/id = 2
+popup/item_3/text = "property"
+popup/item_3/id = 3
+popup/item_4/text = "relation"
+popup/item_4/id = 4
+
+[node name="AddWordButton" type="Button" parent="UI/Panel/VBoxContainer"]
+layout_mode = 2
+text = "Add Word"
+
+[node name="HSeparator2" type="HSeparator" parent="UI/Panel/VBoxContainer"]
+layout_mode = 2
+
+[node name="EffectsLabel" type="Label" parent="UI/Panel/VBoxContainer"]
+layout_mode = 2
+text = "Visual Effects:"
+
+[node name="PulseCheckBox" type="CheckBox" parent="UI/Panel/VBoxContainer"]
+layout_mode = 2
+button_pressed = true
+text = "Pulse Effect"
+
+[node name="RotationCheckBox" type="CheckBox" parent="UI/Panel/VBoxContainer"]
+layout_mode = 2
+button_pressed = true
+text = "Rotation Effect"
+
+[node name="GlowCheckBox" type="CheckBox" parent="UI/Panel/VBoxContainer"]
+layout_mode = 2
+button_pressed = true
+text = "Glow Effect"
+
+[node name="GridCheckBox" type="CheckBox" parent="UI/Panel/VBoxContainer"]
+layout_mode = 2
+button_pressed = true
+text = "Show Grid"
+
+[node name="HSeparator3" type="HSeparator" parent="UI/Panel/VBoxContainer"]
+layout_mode = 2
+
+[node name="ConnectLabel" type="Label" parent="UI/Panel/VBoxContainer"]
+layout_mode = 2
+text = "Connect Words:"
+horizontal_alignment = 1
+
+[node name="Word1Option" type="OptionButton" parent="UI/Panel/VBoxContainer"]
+layout_mode = 2
+
+[node name="Word2Option" type="OptionButton" parent="UI/Panel/VBoxContainer"]
+layout_mode = 2
+
+[node name="ConnectButton" type="Button" parent="UI/Panel/VBoxContainer"]
+layout_mode = 2
+text = "Connect Words"
+
+[node name="ExportButton" type="Button" parent="UI/Panel/VBoxContainer"]
+layout_mode = 2
+text = "Export Visualization"

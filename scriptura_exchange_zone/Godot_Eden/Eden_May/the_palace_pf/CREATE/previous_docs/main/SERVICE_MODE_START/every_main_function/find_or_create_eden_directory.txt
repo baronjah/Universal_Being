@@ -1,0 +1,12 @@
+func find_or_create_eden_directory():
+	var available_dirs = scan_available_storage()
+	
+	# Try to find existing Eden folder
+	for dir in available_dirs:
+		if DirAccess.dir_exists_absolute(dir + "/Eden"):
+			return dir + "/Eden"
+	
+	# If not found, create in first available directory
+	var target_dir = available_dirs[0] + "/Eden"
+	DirAccess.make_dir_recursive_absolute(target_dir)
+	return target_dir

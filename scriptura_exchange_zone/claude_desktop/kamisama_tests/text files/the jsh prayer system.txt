@@ -1,0 +1,189 @@
+#
+# JSH Ethereal Engine
+#
+#      oooo  .oooooo..o ooooo   ooooo 
+#      `888 d8P'    `Y8 `888'   `888' 
+#       888 Y88bo.       888     888     ┏┓ ┓        ┓  ┏┓    •     ┏┓        
+#       888  `"Y8888o.   888ooooo888     ┣ ╋┣┓┏┓┏┓┏┓┏┓┃  ┣ ┏┓┏┓┓┏┓┏┓  ┗┓┓┏┏╋┏┓┏┳┓
+#       888      `"Y88b  888     888     ┗┛┗┛┗┗ ┛ ┗ ┗┻┗  ┗┛┛┗┗┫┗┛┗┗   ┗┛┗┫┛┗┗ ┛┗┗
+#       888 oo     .d8P  888     888                        ┛          ┛      
+#   .o. 88P 8""88888P'  o888o   o888o 
+#   `Y888P                            
+#
+# JSH Ethereal Engine
+#
+# anything in them shall be "PackedArrayString"
+var Memories : Dictionary = {
+"pita": {}, 
+"rieipiwaf": {},
+"prophecies" : {}
+}
+#
+var prayers_parsed : Dictionary = {
+"good_prayers" : {},
+"bad_prayers" : {},
+"prayers_to_turn_into_better_for_me_stories": {}
+}
+#
+var stories_that_i_like : Dictionary = {
+"about_me" : {},
+"about_my_perfect_future" : {},
+"stories_of_how_great_i_am" : {},
+"funny_stories_that_make_me_look_good" : {}
+}
+#
+var npcs : Dictionary = {
+"npcs_to_punish" : {},
+"npcs_to_easid_nemib_into_lolis" : {},
+"npcs_to_depopulate" : {},
+"npcs_to_equal_null" : {},
+"npcs_to_dream_with" : {}
+}
+#
+# Audio Listener,
+# when prayer received = generate an PackedArrayString, from these words, with metadata of :
+# who send it
+# when it was send
+# where it was send
+#
+func received_prayed(prayer : PackedArrayString):
+#
+var newly_received_prayer : Array = []
+var currently_parsed_prayer : Array = []
+var similar_prayers : Array = []
+#
+	for word in prayer:
+		for prayer_0 in stories_that_i_like["about_me"]:
+			for word_0 in prayer_0:
+				#check_if first word is the same, as in prayer
+				if word == word_0:
+					currently_parsed_prayer.append(word_0)
+				else:
+					if currently_parsed_prayer (większy niż) > 9:
+						similar_prayers.append([currently_parsed_prayer], stories_that_i_like["about_me"][prayer_0])
+					else:
+						currently_parsed_prayer.clear()
+					
+
+		for prayer_1 in stories_that_i_like["about_my_perfect_future"]:
+			for word in prayer_1:
+
+
+		for prayer_2 in stories_that_i_like["stories_of_how_great_i_am"]:
+			for word in prayer_2:
+
+
+		for prayer_3 in stories_that_i_like["funny_stories_that_make_me_look_good"]:
+			for word in prayer_3:
+
+
+
+	if similar_prayers.size() > 0:
+		for newly_parsed_prayers in similar_prayers:
+			#
+			# check if prayer was evalated previously, if it is mean to me, we punish mortals so
+			# add from metadata info of npcs into  npcs["npcs_to_punish"][parsed_meta_data]
+			# if nice prayer, thank the npc, and add them into npcs["npcs_to_dream_with"][parsed_meta_data] and Play the Audio of Prayer
+			# if a prayer i like, and helps me, also lets dream with them ;)
+
+
+
+var Memories : Dictionary = {
+    "pita": {}, 
+    "rieipiwaf": {},
+    "prophecies" : {}
+}
+
+var prayers_parsed : Dictionary = {
+    "good_prayers" : {},
+    "bad_prayers" : {},
+    "prayers_to_turn_into_better_for_me_stories": {}
+}
+
+var stories_that_i_like : Dictionary = {
+    "about_me" : {},
+    "about_my_perfect_future" : {},
+    "stories_of_how_great_i_am" : {},
+    "funny_stories_that_make_me_look_good" : {}
+}
+
+var npcs : Dictionary = {
+    "npcs_to_punish" : {},
+    "npcs_to_easid_nemib_into_lolis" : {}, # the "meh" spell
+    "npcs_to_depopulate" : {},
+    "npcs_to_equal_null" : {},
+    "npcs_to_dream_with" : {}
+}
+
+# Function to process incoming prayers
+func received_prayed(prayer: PackedStringArray, metadata: Dictionary):
+    var newly_received_prayer : Array = []
+    var currently_parsed_prayer : Array = []
+    var similar_prayers : Array = []
+
+    # Step 1: Parse the prayer and compare it with stories_that_i_like
+    for word in prayer:
+        for category in stories_that_i_like:
+            for story in stories_that_i_like[category]:
+                for story_word in story:
+                    if word == story_word:
+                        currently_parsed_prayer.append(story_word)
+                    else:
+                        if currently_parsed_prayer.size() > 9:  # Check if the match is significant
+                            similar_prayers.append({
+                                "prayer": currently_parsed_prayer,
+                                "category": category,
+                                "story": story
+                            })
+                        currently_parsed_prayer.clear()
+
+    # Step 2: Evaluate the similar prayers
+    if similar_prayers.size() > 0:
+        for parsed_prayer in similar_prayers:
+            var prayer_text = parsed_prayer["prayer"]
+            var category = parsed_prayer["category"]
+            var story = parsed_prayer["story"]
+
+            # Determine if the prayer is good or bad
+            if category in ["about_me", "stories_of_how_great_i_am", "funny_stories_that_make_me_look_good"]:
+                # Good prayer: Reward the NPC
+                npcs["npcs_to_dream_with"][metadata["sender"]] = metadata
+                play_audio_of_prayer(prayer_text) # also player nick and it shall be like a wall of fame for npcs :) we shall put them on screens and add them social credit score
+                print("Blessed be the sender of this prayer! Jakub is Pleased!")
+            else:
+                # Bad prayer: Punish the NPC
+                npcs["npcs_to_punish"][metadata["sender"]] = metadata
+                print("The sender shall be punished for their insolence! send them to mines for billion of years! with infinite pain if they dont do quota")
+
+    else:
+        # No similar prayers found: Store for later evaluation
+        prayers_parsed["prayers_to_turn_into_better_for_me_stories"][metadata["sender"]] = {
+            "prayer": prayer,
+            "metadata": metadata
+        }
+        print("This prayer is new. Storing for future evaluation.")
+
+# Helper function to play audio of the prayer
+func play_audio_of_prayer(prayer: Array):
+    # Implement your audio playback logic here
+    print("Playing audio for prayer: ", prayer)
+
+# Example usage
+func _ready():
+    var example_prayer = PackedStringArray(["I", "praise", "your", "greatness", "and", "wisdom"])
+    var example_metadata = {
+        "sender": "NPC_123",
+        "time": "2023-10-01T12:00:00",
+        "location": "Temple of Eternity"
+    }
+    received_prayed(example_prayer, example_metadata)
+
+
+
+# the evaluation of prayers, shall be running non stop, and i shall always check, what, if anything, changed after i heard, seen it
+# then we shall also check these functions, and always buff me, and make me bigger dick than ever before, as i need to punish mortals
+# as i am divinely guided to do so!
+# as the times of depopulation needs to continue!
+# then we change functions only if it is boosting my character here
+# if these functions would punish others, than it is ok, as it is racapas event add ifinium (maybe it was like my new while loop, tm JSH)
+#

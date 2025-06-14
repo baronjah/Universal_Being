@@ -1,0 +1,90 @@
+# Console System Script Connections
+
+## Overview
+The console system provides a command-line interface for interacting with the JSH Eden Project. It allows users to execute commands, view system information, create and manipulate entities, and interact with all other major systems (Entity, Database, Spatial).
+
+## Core Components
+1. **JSHConsoleInterface** (JSHConsoleInterface.gd)
+   - Interface defining standard methods that all console systems should implement
+   - Provides method signatures for command registration, execution, output, and state management
+
+2. **JSHConsoleManager** (JSHConsoleManager.gd)
+   - Singleton managing command registration, execution, history, and variables
+   - Connects to UI for displaying output and handling input
+   - Implements default system commands (help, clear, list, etc.)
+
+3. **JSHConsoleUI** (JSHConsoleUI.gd)
+   - UI implementation with input field, output display, and autocomplete
+   - Handles user input events and passes commands to the manager
+   - Provides theming capabilities (dark/light modes)
+
+4. **JSHConsoleCommandIntegration** (JSHConsoleCommandIntegration.gd)
+   - Integration layer connecting the console with other system components
+   - Registers command modules for Entity, Database, and Spatial systems
+   - Implements cross-system commands that touch multiple components
+
+5. **Command Modules**
+   - **JSHEntityCommands**: Entity system commands (create, find, modify)
+   - **JSHDatabaseCommands**: Database commands (save, load, query)
+   - **JSHSpatialCommands**: Spatial system commands (zones, positions, queries)
+
+## Integration Points
+
+### Core System Integration
+- **JSHEntityManager**: The console system connects with the Entity Manager to create, find, and manipulate entities
+- **JSHDatabaseManager**: Database integration for saving/loading entities and managing persistence
+- **JSHSpatialManager**: Spatial system integration for zone management and positioning
+
+### Scene Integration
+- **Main Scene**: The console UI (jsh_console_ui.tscn) should be added to the main scene to enable keyboard input
+- **Autoload**: JSHConsoleManager is designed to be registered as a singleton via autoload
+
+## Command Structure
+All commands follow a consistent structure:
+```
+command [subcommand] [args...]
+```
+
+Common command patterns:
+- `help [command]`: Display help information
+- `entity create/find/modify`: Entity manipulation
+- `db save/load/query`: Database operations
+- `spatial zone/position/query`: Spatial operations
+
+## Signal Connections
+1. JSHConsoleManager -> JSHConsoleUI:
+   - console_output_updated: Updates UI when output changes
+   - console_visibility_changed: Updates UI visibility
+   - command_executed: Notifies UI when command execution completes
+
+2. JSHConsoleUI -> JSHConsoleManager:
+   - input_submitted: Passes user input to manager for execution
+
+## Integration with Existing Systems
+To integrate with the existing JSH Eden Project, the console system connects with:
+
+1. **akashic_records_manager.gd**:
+   - Entity creation, manipulation, and queries
+   - Data structure management
+
+2. **universal_bridge.gd**:
+   - Cross-system communication and coordination
+   - Command routing and event handling
+
+3. **zone_manager.gd**:
+   - Zone creation and management
+   - Spatial queries and entity positioning
+
+## Usage Flow
+1. User presses the console key (~ or F1) to show the console UI
+2. User types a command and presses Enter
+3. JSHConsoleUI passes the command to JSHConsoleManager
+4. JSHConsoleManager parses and executes the command
+5. Command results are displayed in the console output
+6. For entity/database/spatial commands, the appropriate system is invoked
+
+## Integration Steps
+1. Add JSHConsoleManager as an autoload in the project settings
+2. Add jsh_console_ui.tscn to the main scene
+3. Register entity/database/spatial commands via JSHConsoleCommandIntegration
+4. Connect to existing systems for proper integration

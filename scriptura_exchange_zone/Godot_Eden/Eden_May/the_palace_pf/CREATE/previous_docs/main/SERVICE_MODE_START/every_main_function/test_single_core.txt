@@ -1,0 +1,20 @@
+func test_single_core():
+
+	print("Running single-core test...")
+	if BanksCombiner.dataSetLimits.is_empty():
+		print("❌ Required data sets not initialized")
+		return
+	
+	# Ensure a clean state before running
+	array_of_startup_check.clear()
+	prepare_akashic_records()
+	
+	# Check if values were stored
+	test_results["single_core"] = {
+		"array_size": array_of_startup_check.size(),
+		"first_start_check": array_of_startup_check[0] if array_of_startup_check.size() > 0 else "missing",
+		"akashic_records_included": "akashic_records" in array_of_startup_check[1] if array_of_startup_check.size() > 1 else "missing",
+		"main_sets_names": array_of_startup_check[2] if array_of_startup_check.size() > 2 else "missing"
+	}
+	
+	print("Single-core test finished.")

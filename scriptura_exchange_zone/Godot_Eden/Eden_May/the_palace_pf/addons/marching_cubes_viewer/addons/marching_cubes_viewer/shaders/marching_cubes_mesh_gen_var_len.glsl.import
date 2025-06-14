@@ -1,0 +1,14 @@
+[remap]
+
+importer="glsl"
+type="RDShaderFile"
+uid="uid://c5h1hby3mfo4w"
+path="res://.godot/imported/marching_cubes_mesh_gen_var_len.glsl-cf4a6c80f8a84724b2fb86ed30717f5b.res"
+
+[deps]
+
+source_file="res://addons/marching_cubes_viewer/addons/marching_cubes_viewer/shaders/marching_cubes_mesh_gen_var_len.glsl"
+dest_files=["res://.godot/imported/marching_cubes_mesh_gen_var_len.glsl-cf4a6c80f8a84724b2fb86ed30717f5b.res"]
+
+[params]
+

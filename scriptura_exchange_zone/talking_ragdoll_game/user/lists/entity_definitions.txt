@@ -1,0 +1,66 @@
+# Entity Definitions List
+# Define properties for different entity types
+
+# === BASIC ENTITIES ===
+entity:ragdoll
+health 100
+speed 5.0
+ai_type passive
+can_talk true
+spawn_sound "pop"
+
+entity:tree
+health 500
+destructible true
+drop_on_death wood amount=2-5
+seasonal_change true
+can_talk true
+
+entity:box
+health 50
+pushable true
+breakable true
+contains random_loot chance=0.3
+
+# === INTERACTIVE ENTITIES ===
+entity:console_trigger
+invisible false
+trigger_radius 3.0
+activation_type proximity
+repeatable true
+
+entity:pickup_health
+heal_amount 25
+respawn_time 30
+glow_color red
+float_height 0.5
+
+entity:pickup_energy
+energy_amount 50
+respawn_time 45
+glow_color blue
+float_height 0.5
+
+# === SPECIAL ENTITIES ===
+entity:universal_fragment
+description "A piece of the Universal Entity"
+behavior quantum
+properties reality_bending
+power_level 9000
+
+entity:dream_keeper
+description "Maintains the perfect game state"
+behavior guardian
+patrol_radius 20
+fix_on_sight true
+
+# === DEBUG ENTITIES ===
+entity:fps_display
+always_visible true
+update_rate 0.1
+color green_if_good red_if_bad
+
+entity:node_counter
+position top_right
+update_rate 1.0
+warning_threshold 500

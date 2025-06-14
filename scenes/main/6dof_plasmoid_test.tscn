@@ -1,0 +1,101 @@
+[gd_scene load_steps=4 format=3 uid="uid://b6dof_plasmoid_test"]
+
+[ext_resource type="Script" path="res://beings/player/plasmoid_player_6dof.gd" id="1_player"]
+[ext_resource type="Script" path="res://core/UniversalInputManager.gd" id="2_input_manager"]
+[ext_resource type="Script" path="res://core/GameConsciousness.gd" id="3_game_consciousness"]
+[ext_resource type="Script" path="res://beings/gemma/gemma_consciousness_awakening.gd" id="4_gemma_awakening"]
+
+[sub_resource type="Environment" id="Environment_space"]
+background_mode = 1
+background_color = Color(0.05, 0.05, 0.15, 1)
+ambient_light_source = 2
+ambient_light_color = Color(0.3, 0.3, 0.5, 1)
+ambient_light_energy = 0.2
+
+[sub_resource type="BoxMesh" id="BoxMesh_test"]
+size = Vector3(2, 2, 2)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_cube"]
+size = Vector3(2, 2, 2)
+
+[sub_resource type="CylinderMesh" id="PlasmoidMesh_green"]
+top_radius = 0.8
+bottom_radius = 0.4
+height = 1.2
+
+[sub_resource type="CylinderShape3D" id="PlasmoidShape_green"]
+height = 1.2
+top_radius = 0.8
+bottom_radius = 0.4
+
+[sub_resource type="StandardMaterial3D" id="GreenPlasmoidMaterial"]
+albedo_color = Color(0.2, 1.0, 0.2, 0.8)
+metallic = 0.3
+roughness = 0.1
+emission_enabled = true
+emission = Color(0.1, 0.6, 0.1, 1)
+emission_energy = 0.5
+transparency = 1
+flags_transparent = true
+
+[node name="6DOF_Plasmoid_Test" type="Node3D"]
+
+[node name="UniversalInputManager" type="Node" parent="."]
+script = ExtResource("2_input_manager")
+
+[node name="GameConsciousness" type="Node" parent="."]
+script = ExtResource("3_game_consciousness")
+
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_space")
+
+[node name="PlasmoidPlayer6DOF" type="CharacterBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
+script = ExtResource("1_player")
+movement_speed = 20.0
+mouse_sensitivity = 0.003
+
+[node name="Camera3D" type="Camera3D" parent="PlasmoidPlayer6DOF"]
+
+[node name="CrosshairRay" type="RayCast3D" parent="PlasmoidPlayer6DOF/Camera3D"]
+target_position = Vector3(0, 0, -100)
+
+[node name="TestCube1" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, -10)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="TestCube1"]
+mesh = SubResource("BoxMesh_test")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="TestCube1"]
+shape = SubResource("BoxShape3D_cube")
+
+[node name="TestCube2" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 3, -8)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="TestCube2"]
+mesh = SubResource("BoxMesh_test")
+
+[node name="GreenPlasmoid1" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 2, -12)
+metadata/socket_type = "plasmoid_connection"
+metadata/plasmoid_color = "green"
+
+[node name="PlasmoidMesh" type="MeshInstance3D" parent="GreenPlasmoid1"]
+mesh = SubResource("PlasmoidMesh_green")
+surface_material_override/0 = SubResource("GreenPlasmoidMaterial")
+
+[node name="PlasmoidCollision" type="CollisionShape3D" parent="GreenPlasmoid1"]
+shape = SubResource("PlasmoidShape_green")
+
+[node name="GreenPlasmoid2" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 4, -20)
+metadata/socket_type = "plasmoid_connection"
+metadata/plasmoid_color = "green"
+
+[node name="PlasmoidMesh" type="MeshInstance3D" parent="GreenPlasmoid2"]
+mesh = SubResource("PlasmoidMesh_green")
+surface_material_override/0 = SubResource("GreenPlasmoidMaterial")
+
+[node name="PlasmoidCollision" type="CollisionShape3D" parent="GreenPlasmoid2"]
+shape = SubResource("PlasmoidShape_green")

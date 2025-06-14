@@ -1,0 +1,969 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Claude Dice Visualizer</title>
+    <style>
+        :root {
+            --primary: #6c5ce7;
+            --secondary: #a29bfe;
+            --accent: #fd79a8;
+            --background: #12151f;
+            --card-bg: #1e2235;
+            --text: #dfe6e9;
+            --success: #00b894;
+            --warning: #fdcb6e;
+            --danger: #ff7675;
+        }
+        
+        body {
+            font-family: 'Segoe UI', 'Roboto', system-ui, sans-serif;
+            background-color: var(--background);
+            color: var(--text);
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            position: relative;
+        }
+        
+        h1 {
+            color: var(--primary);
+            font-size: 2.5rem;
+            margin: 0;
+            text-shadow: 0 0 10px rgba(108, 92, 231, 0.3);
+        }
+        
+        h2 {
+            color: var(--secondary);
+            font-size: 1.5rem;
+            margin: 0 0 20px 0;
+        }
+        
+        .claude-logo {
+            width: 100px;
+            height: 100px;
+            margin: 0 auto 20px;
+            position: relative;
+        }
+        
+        .claude-face {
+            width: 100%;
+            height: 100%;
+            background-color: var(--primary);
+            border-radius: 50%;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .claude-eye {
+            width: 20px;
+            height: 20px;
+            background-color: white;
+            border-radius: 50%;
+            position: absolute;
+            top: 30px;
+        }
+        
+        .claude-eye.left {
+            left: 25px;
+        }
+        
+        .claude-eye.right {
+            right: 25px;
+        }
+        
+        .claude-mouth {
+            width: 40px;
+            height: 20px;
+            border-bottom-left-radius: 40px;
+            border-bottom-right-radius: 40px;
+            background-color: white;
+            position: absolute;
+            bottom: 25px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        .dashboard {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+        
+        .card {
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+        }
+        
+        .card h3 {
+            color: var(--accent);
+            border-bottom: 2px solid var(--accent);
+            padding-bottom: 10px;
+            margin-top: 0;
+        }
+        
+        .dice-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        
+        .dice {
+            width: 80px;
+            height: 80px;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 1.5s ease;
+        }
+        
+        .dice-d6 {
+            width: 80px;
+            height: 80px;
+        }
+        
+        .dice-d20 {
+            width: 80px;
+            height: 80px;
+        }
+        
+        .dice-face {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border: 2px solid var(--secondary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            font-weight: bold;
+            background-color: var(--card-bg);
+            color: var(--text);
+        }
+        
+        .dice-d6 .dice-face {
+            border-radius: 5px;
+        }
+        
+        .dice-d20 .dice-face {
+            clip-path: polygon(50% 0%, 100% 38%, 82% 100%, 18% 100%, 0% 38%);
+            background: linear-gradient(135deg, var(--card-bg), var(--primary));
+        }
+        
+        .dice-d6 .front {
+            transform: translateZ(40px);
+        }
+        
+        .dice-d6 .back {
+            transform: rotateY(180deg) translateZ(40px);
+        }
+        
+        .dice-d6 .right {
+            transform: rotateY(90deg) translateZ(40px);
+        }
+        
+        .dice-d6 .left {
+            transform: rotateY(-90deg) translateZ(40px);
+        }
+        
+        .dice-d6 .top {
+            transform: rotateX(90deg) translateZ(40px);
+        }
+        
+        .dice-d6 .bottom {
+            transform: rotateX(-90deg) translateZ(40px);
+        }
+        
+        .dice-value {
+            font-size: 24px;
+            color: var(--accent);
+            margin-top: 10px;
+        }
+        
+        .controls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 20px;
+            justify-content: center;
+        }
+        
+        button {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+        }
+        
+        button:hover {
+            background-color: var(--secondary);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        input, select {
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid var(--primary);
+            background-color: var(--background);
+            color: var(--text);
+        }
+        
+        .results-container {
+            margin-top: 30px;
+        }
+        
+        .results-log {
+            background-color: #000;
+            border-radius: 10px;
+            padding: 15px;
+            font-family: 'Consolas', 'Monaco', monospace;
+            max-height: 300px;
+            overflow-y: auto;
+            margin-top: 20px;
+            color: #00ff00;
+        }
+
+        .decision-container {
+            margin-top: 30px;
+            text-align: center;
+        }
+        
+        .decision-result {
+            font-size: 24px;
+            font-weight: bold;
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 20px;
+            text-align: center;
+        }
+        
+        .decision-continue {
+            background-color: var(--success);
+        }
+        
+        .decision-modify {
+            background-color: var(--warning);
+        }
+        
+        .decision-preserve {
+            background-color: var(--primary);
+        }
+        
+        .decision-abort {
+            background-color: var(--danger);
+        }
+        
+        .folder-manager {
+            margin-top: 30px;
+        }
+        
+        .folder-list {
+            list-style: none;
+            padding: 0;
+            margin-top: 20px;
+        }
+        
+        .folder-list li {
+            padding: 10px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .folder-list li:hover {
+            background-color: rgba(255, 255, 255, 0.05);
+        }
+        
+        .turn-info {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .turn-indicator {
+            background-color: var(--primary);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+        
+        .dimension-symbol {
+            font-size: 2rem;
+            color: var(--accent);
+        }
+        
+        @keyframes rolling {
+            0% { transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg); }
+            100% { transform: rotateX(360deg) rotateY(720deg) rotateZ(360deg); }
+        }
+        
+        .rolling {
+            animation: rolling 1.5s ease;
+        }
+        
+        .tab-container {
+            margin-top: 30px;
+        }
+        
+        .tabs {
+            display: flex;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .tab {
+            padding: 10px 20px;
+            cursor: pointer;
+            background-color: var(--card-bg);
+            margin-right: 5px;
+            border-top-left-radius: 5px;
+            border-top-right-radius: 5px;
+        }
+        
+        .tab.active {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        .tab-content {
+            display: none;
+            padding: 20px;
+            background-color: var(--card-bg);
+            border-bottom-left-radius: 5px;
+            border-bottom-right-radius: 5px;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        @media (max-width: 768px) {
+            .dashboard {
+                grid-template-columns: 1fr;
+            }
+            
+            .turn-info {
+                flex-direction: column;
+                align-items: center;
+                gap: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="claude-logo">
+                <div class="claude-face">
+                    <div class="claude-eye left"></div>
+                    <div class="claude-eye right"></div>
+                    <div class="claude-mouth"></div>
+                </div>
+            </div>
+            <h1>Claude Dice Visualizer</h1>
+            <h2>12-Turn System Decision Framework</h2>
+            
+            <div class="turn-info">
+                <div>
+                    <h3>Current Turn</h3>
+                    <div class="turn-indicator" id="current-turn">3</div>
+                </div>
+                <div>
+                    <h3>Symbol</h3>
+                    <div class="dimension-symbol" id="current-symbol">γ</div>
+                </div>
+                <div>
+                    <h3>Dimension</h3>
+                    <div id="current-dimension">3D-Space</div>
+                </div>
+            </div>
+        </header>
+        
+        <div class="tab-container">
+            <div class="tabs">
+                <div class="tab active" data-tab="dice">Dice System</div>
+                <div class="tab" data-tab="decisions">Decision Framework</div>
+                <div class="tab" data-tab="folders">Folder Management</div>
+                <div class="tab" data-tab="turns">Turn System</div>
+            </div>
+            
+            <div class="tab-content active" id="dice-tab">
+                <div class="card">
+                    <h3>Dice Roller</h3>
+                    <div class="controls">
+                        <select id="dice-type">
+                            <option value="6">D6</option>
+                            <option value="10">D10</option>
+                            <option value="20">D20</option>
+                            <option value="100">D100</option>
+                        </select>
+                        <input type="number" id="dice-count" min="1" max="10" value="2" placeholder="Number of dice">
+                        <button id="roll-button">Roll Dice</button>
+                    </div>
+                    
+                    <div class="dice-container" id="dice-container">
+                        <!-- Dice will be generated here -->
+                    </div>
+                    
+                    <div class="results-container">
+                        <h3>Results</h3>
+                        <div class="dice-value" id="dice-result">Roll the dice to see results</div>
+                        <div class="results-log" id="dice-log">
+                            Dice system initialized. Ready to roll.
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="tab-content" id="decisions-tab">
+                <div class="card">
+                    <h3>Decision Framework</h3>
+                    <p>Make decisions about plans based on dice rolls against difficulty thresholds.</p>
+                    
+                    <div class="controls">
+                        <input type="text" id="plan-description" placeholder="Plan description">
+                        <input type="number" id="difficulty" min="5" max="30" value="10" placeholder="Difficulty">
+                        <select id="decision-type">
+                            <option value="continue">Continue/Modify</option>
+                            <option value="abort">Preserve/Abort</option>
+                        </select>
+                        <button id="make-decision">Make Decision</button>
+                    </div>
+                    
+                    <div class="decision-container">
+                        <div id="decision-dice-container" class="dice-container">
+                            <!-- Decision dice will be shown here -->
+                        </div>
+                        <div id="decision-result" style="display: none;" class="decision-result">
+                            Decision will appear here
+                        </div>
+                    </div>
+                    
+                    <div class="results-container">
+                        <h3>Decision History</h3>
+                        <div class="results-log" id="decision-log">
+                            Decision system initialized. Ready to evaluate plans.
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="tab-content" id="folders-tab">
+                <div class="card">
+                    <h3>Folder Management</h3>
+                    <p>Create and manage folders for different dimensions and purposes.</p>
+                    
+                    <div class="controls">
+                        <input type="text" id="folder-name" placeholder="Folder name">
+                        <input type="text" id="folder-purpose" placeholder="Purpose">
+                        <button id="create-folder">Create Folder</button>
+                    </div>
+                    
+                    <div class="folder-manager">
+                        <h3>Managed Folders</h3>
+                        <ul class="folder-list" id="folder-list">
+                            <li>
+                                <span>turn_3</span>
+                                <span>Complexity phase data storage</span>
+                            </li>
+                            <li>
+                                <span>quantum_reality</span>
+                                <span>Quantum state experiment data</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="tab-content" id="turns-tab">
+                <div class="card">
+                    <h3>Turn Advancement</h3>
+                    <p>Progress through the 12-turn system with cosmic cycles.</p>
+                    
+                    <div class="dashboard">
+                        <div class="card">
+                            <h3>Turn System</h3>
+                            <div id="turn-indicators" class="dice-container">
+                                <!-- Turn indicators will be generated here -->
+                            </div>
+                            <div class="controls">
+                                <button id="advance-turn">Advance Turn</button>
+                            </div>
+                        </div>
+                        
+                        <div class="card">
+                            <h3>Turn Details</h3>
+                            <div id="turn-details">
+                                <p><strong>Current Turn:</strong> <span id="turn-number">3</span></p>
+                                <p><strong>Symbol:</strong> <span id="turn-symbol">γ</span></p>
+                                <p><strong>Dimension:</strong> <span id="turn-dimension">3D-Space</span></p>
+                                <p><strong>Description:</strong> <span id="turn-description">Systems begin interacting; complexity arises from simplicity.</span></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Configuration and state
+        const config = {
+            maxTurns: 12,
+            currentTurn: 3,
+            turns: [
+                { number: 1, symbol: "α", dimension: "1D-Point", description: "The beginning of all things; raw potential emerges from void." },
+                { number: 2, symbol: "β", dimension: "2D-Line", description: "Basic structures take shape; foundational elements are created." },
+                { number: 3, symbol: "γ", dimension: "3D-Space", description: "Systems begin interacting; complexity arises from simplicity." },
+                { number: 4, symbol: "δ", dimension: "4D-Time", description: "Awareness arises within systems; first feedback loops form." },
+                { number: 5, symbol: "ε", dimension: "5D-Consciousness", description: "Recognition of self and other; boundaries begin to form." },
+                { number: 6, symbol: "ζ", dimension: "6D-Connection", description: "Understanding connections between all elements; insight emerges." },
+                { number: 7, symbol: "η", dimension: "7D-Creation", description: "Bringing forth creation from thought; ideas become reality." },
+                { number: 8, symbol: "θ", dimension: "8D-Network", description: "Building relationships between created elements; networks form." },
+                { number: 9, symbol: "ι", dimension: "9D-Harmony", description: "Balance between all created elements; systems stabilize." },
+                { number: 10, symbol: "κ", dimension: "10D-Unity", description: "All becomes one; unification of created elements." },
+                { number: 11, symbol: "λ", dimension: "11D-Transcendence", description: "Rising beyond initial limitations; transformation occurs." },
+                { number: 12, symbol: "μ", dimension: "12D-Beyond", description: "Moving beyond the current cycle; preparation for renewal." }
+            ],
+            diceHistory: [],
+            decisionHistory: [],
+            folderHistory: [
+                { name: "turn_3", purpose: "Complexity phase data storage", turn: 3 },
+                { name: "quantum_reality", purpose: "Quantum state experiment data", turn: 3 }
+            ]
+        };
+        
+        // DOM Elements
+        const diceContainer = document.getElementById('dice-container');
+        const diceResult = document.getElementById('dice-result');
+        const diceLog = document.getElementById('dice-log');
+        const rollButton = document.getElementById('roll-button');
+        const diceType = document.getElementById('dice-type');
+        const diceCount = document.getElementById('dice-count');
+        
+        const decisionContainer = document.getElementById('decision-dice-container');
+        const decisionResult = document.getElementById('decision-result');
+        const decisionLog = document.getElementById('decision-log');
+        const makeDecisionButton = document.getElementById('make-decision');
+        const planDescription = document.getElementById('plan-description');
+        const difficulty = document.getElementById('difficulty');
+        const decisionType = document.getElementById('decision-type');
+        
+        const folderList = document.getElementById('folder-list');
+        const createFolderButton = document.getElementById('create-folder');
+        const folderName = document.getElementById('folder-name');
+        const folderPurpose = document.getElementById('folder-purpose');
+        
+        const advanceTurnButton = document.getElementById('advance-turn');
+        const turnIndicators = document.getElementById('turn-indicators');
+        const turnNumber = document.getElementById('turn-number');
+        const turnSymbol = document.getElementById('turn-symbol');
+        const turnDimension = document.getElementById('turn-dimension');
+        const turnDescription = document.getElementById('turn-description');
+        
+        const currentTurnDisplay = document.getElementById('current-turn');
+        const currentSymbolDisplay = document.getElementById('current-symbol');
+        const currentDimensionDisplay = document.getElementById('current-dimension');
+        
+        // Initialize the application
+        function initialize() {
+            // Initialize dice system
+            setupDice();
+            
+            // Initialize turn indicators
+            setupTurnIndicators();
+            
+            // Initialize folder list
+            updateFolderList();
+            
+            // Set up event listeners
+            setupEventListeners();
+            
+            // Update turn displays
+            updateTurnDisplays();
+            
+            // Set up tabs
+            setupTabs();
+        }
+        
+        // Set up dice visualization
+        function setupDice() {
+            // Initial dice setup
+            createDice('6', 2);
+        }
+        
+        // Create dice visualization
+        function createDice(type, count) {
+            diceContainer.innerHTML = '';
+            
+            for (let i = 0; i < count; i++) {
+                if (type === '6') {
+                    const dice = document.createElement('div');
+                    dice.className = 'dice dice-d6';
+                    dice.innerHTML = `
+                        <div class="dice-face front">1</div>
+                        <div class="dice-face back">6</div>
+                        <div class="dice-face right">4</div>
+                        <div class="dice-face left">3</div>
+                        <div class="dice-face top">2</div>
+                        <div class="dice-face bottom">5</div>
+                    `;
+                    diceContainer.appendChild(dice);
+                } else {
+                    // Simplified visualization for other dice types
+                    const dice = document.createElement('div');
+                    dice.className = `dice dice-d${type}`;
+                    dice.innerHTML = `
+                        <div class="dice-face front">${type}</div>
+                    `;
+                    diceContainer.appendChild(dice);
+                }
+            }
+        }
+        
+        // Roll the dice
+        function rollDice() {
+            const type = parseInt(diceType.value);
+            const count = parseInt(diceCount.value);
+            
+            // Validate inputs
+            if (count < 1 || count > 10) {
+                alert('Please enter a number of dice between 1 and 10');
+                return;
+            }
+            
+            // Create appropriate number of dice
+            createDice(type.toString(), count);
+            
+            // Roll animation
+            const dice = document.querySelectorAll('.dice');
+            dice.forEach(die => {
+                die.classList.remove('rolling');
+                void die.offsetWidth; // Force reflow
+                die.classList.add('rolling');
+            });
+            
+            // Generate random results
+            const results = [];
+            let total = 0;
+            
+            for (let i = 0; i < count; i++) {
+                const result = Math.floor(Math.random() * type) + 1;
+                results.push(result);
+                total += result;
+            }
+            
+            // Update result display after animation
+            setTimeout(() => {
+                diceResult.textContent = `Results: ${results.join(', ')} = ${total}`;
+                
+                // Log the roll
+                const timestamp = new Date().toLocaleTimeString();
+                diceLog.innerHTML += `\n[${timestamp}] ${count}d${type}: ${results.join(', ')} = ${total}`;
+                diceLog.scrollTop = diceLog.scrollHeight;
+                
+                // Add to history
+                config.diceHistory.push({
+                    timestamp: new Date(),
+                    type,
+                    count,
+                    results,
+                    total
+                });
+            }, 1500);
+        }
+        
+        // Make a decision based on dice roll
+        function makeDecision() {
+            const plan = planDescription.value.trim();
+            const difficultyValue = parseInt(difficulty.value);
+            const type = decisionType.value;
+            
+            // Validate inputs
+            if (!plan) {
+                alert('Please enter a plan description');
+                return;
+            }
+            
+            if (difficultyValue < 5 || difficultyValue > 30) {
+                alert('Please enter a difficulty between 5 and 30');
+                return;
+            }
+            
+            // Clear previous decision
+            decisionContainer.innerHTML = '';
+            
+            // Roll 2d10 for decision
+            createDecisionDice();
+            
+            // Roll animation
+            const dice = document.querySelectorAll('#decision-dice-container .dice');
+            dice.forEach(die => {
+                die.classList.remove('rolling');
+                void die.offsetWidth; // Force reflow
+                die.classList.add('rolling');
+            });
+            
+            // Generate random results
+            const results = [];
+            let total = 0;
+            
+            for (let i = 0; i < 2; i++) {
+                const result = Math.floor(Math.random() * 10) + 1;
+                results.push(result);
+                total += result;
+            }
+            
+            // Add turn bonus
+            const turnBonus = config.currentTurn - 1;
+            const modifiedTotal = total + turnBonus;
+            
+            // Determine outcome
+            let outcome = '';
+            let outcomeClass = '';
+            
+            if (type === 'continue') {
+                if (modifiedTotal >= difficultyValue) {
+                    outcome = 'CONTINUE';
+                    outcomeClass = 'decision-continue';
+                } else {
+                    outcome = 'MODIFY';
+                    outcomeClass = 'decision-modify';
+                }
+            } else {
+                if (modifiedTotal >= difficultyValue) {
+                    outcome = 'PRESERVE';
+                    outcomeClass = 'decision-preserve';
+                } else {
+                    outcome = 'ABORT';
+                    outcomeClass = 'decision-abort';
+                }
+            }
+            
+            // Update decision display after animation
+            setTimeout(() => {
+                // Show decision result
+                decisionResult.textContent = `DECISION: ${outcome}`;
+                decisionResult.className = `decision-result ${outcomeClass}`;
+                decisionResult.style.display = 'block';
+                
+                // Log the decision
+                const timestamp = new Date().toLocaleTimeString();
+                decisionLog.innerHTML += `\n[${timestamp}] Plan: "${plan}" - Roll: ${results.join('+')}+${turnBonus} = ${modifiedTotal} vs Difficulty: ${difficultyValue} - Outcome: ${outcome}`;
+                decisionLog.scrollTop = decisionLog.scrollHeight;
+                
+                // Add to history
+                config.decisionHistory.push({
+                    timestamp: new Date(),
+                    plan,
+                    difficulty: difficultyValue,
+                    roll: total,
+                    modifier: turnBonus,
+                    modifiedTotal,
+                    outcome,
+                    turn: config.currentTurn
+                });
+            }, 1500);
+        }
+        
+        // Create dice for decision visualization
+        function createDecisionDice() {
+            decisionContainer.innerHTML = '';
+            
+            for (let i = 0; i < 2; i++) {
+                const dice = document.createElement('div');
+                dice.className = 'dice dice-d10';
+                dice.innerHTML = `
+                    <div class="dice-face front">10</div>
+                `;
+                decisionContainer.appendChild(dice);
+            }
+        }
+        
+        // Create a new folder
+        function createFolder() {
+            const name = folderName.value.trim();
+            const purpose = folderPurpose.value.trim();
+            
+            // Validate inputs
+            if (!name) {
+                alert('Please enter a folder name');
+                return;
+            }
+            
+            if (!purpose) {
+                alert('Please enter a folder purpose');
+                return;
+            }
+            
+            // Check for duplicates
+            const existingFolder = config.folderHistory.find(f => f.name === name);
+            if (existingFolder) {
+                alert('A folder with this name already exists');
+                return;
+            }
+            
+            // Add to history
+            config.folderHistory.push({
+                name,
+                purpose,
+                turn: config.currentTurn,
+                timestamp: new Date()
+            });
+            
+            // Update folder list
+            updateFolderList();
+            
+            // Clear inputs
+            folderName.value = '';
+            folderPurpose.value = '';
+            
+            // Log creation
+            const timestamp = new Date().toLocaleTimeString();
+            diceLog.innerHTML += `\n[${timestamp}] Created folder: ${name} - Purpose: ${purpose} (Turn ${config.currentTurn})`;
+            diceLog.scrollTop = diceLog.scrollHeight;
+        }
+        
+        // Update folder list display
+        function updateFolderList() {
+            folderList.innerHTML = '';
+            
+            config.folderHistory.forEach(folder => {
+                const li = document.createElement('li');
+                li.innerHTML = `
+                    <span>${folder.name}</span>
+                    <span>${folder.purpose}</span>
+                `;
+                folderList.appendChild(li);
+            });
+        }
+        
+        // Set up turn indicators
+        function setupTurnIndicators() {
+            turnIndicators.innerHTML = '';
+            
+            for (let i = 0; i < config.maxTurns; i++) {
+                const turn = i + 1;
+                const turnItem = document.createElement('div');
+                turnItem.className = 'turn-indicator';
+                turnItem.textContent = turn;
+                
+                if (turn < config.currentTurn) {
+                    turnItem.style.backgroundColor = 'var(--success)';
+                } else if (turn === config.currentTurn) {
+                    turnItem.style.backgroundColor = 'var(--primary)';
+                } else {
+                    turnItem.style.backgroundColor = 'var(--card-bg)';
+                }
+                
+                turnIndicators.appendChild(turnItem);
+            }
+        }
+        
+        // Advance to next turn
+        function advanceTurn() {
+            if (config.currentTurn < config.maxTurns) {
+                config.currentTurn++;
+            } else {
+                config.currentTurn = 1;
+            }
+            
+            // Update turn displays
+            updateTurnDisplays();
+            
+            // Update turn indicators
+            setupTurnIndicators();
+            
+            // Log turn advancement
+            const timestamp = new Date().toLocaleTimeString();
+            diceLog.innerHTML += `\n[${timestamp}] Advanced to Turn ${config.currentTurn}: ${config.turns[config.currentTurn-1].symbol} - ${config.turns[config.currentTurn-1].dimension}`;
+            diceLog.scrollTop = diceLog.scrollHeight;
+        }
+        
+        // Update all turn displays
+        function updateTurnDisplays() {
+            const turn = config.turns[config.currentTurn-1];
+            
+            // Update main header
+            currentTurnDisplay.textContent = config.currentTurn;
+            currentSymbolDisplay.textContent = turn.symbol;
+            currentDimensionDisplay.textContent = turn.dimension;
+            
+            // Update turn tab
+            turnNumber.textContent = config.currentTurn;
+            turnSymbol.textContent = turn.symbol;
+            turnDimension.textContent = turn.dimension;
+            turnDescription.textContent = turn.description;
+        }
+        
+        // Set up tabs
+        function setupTabs() {
+            const tabs = document.querySelectorAll('.tab');
+            const tabContents = document.querySelectorAll('.tab-content');
+            
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    // Remove active class from all tabs and contents
+                    tabs.forEach(t => t.classList.remove('active'));
+                    tabContents.forEach(c => c.classList.remove('active'));
+                    
+                    // Add active class to clicked tab
+                    tab.classList.add('active');
+                    
+                    // Get tab content id
+                    const tabId = tab.getAttribute('data-tab') + '-tab';
+                    
+                    // Show corresponding content
+                    document.getElementById(tabId).classList.add('active');
+                });
+            });
+        }
+        
+        // Set up all event listeners
+        function setupEventListeners() {
+            rollButton.addEventListener('click', rollDice);
+            makeDecisionButton.addEventListener('click', makeDecision);
+            createFolderButton.addEventListener('click', createFolder);
+            advanceTurnButton.addEventListener('click', advanceTurn);
+        }
+        
+        // Initialize on page load
+        window.addEventListener('DOMContentLoaded', initialize);
+    </script>
+</body>
+</html>

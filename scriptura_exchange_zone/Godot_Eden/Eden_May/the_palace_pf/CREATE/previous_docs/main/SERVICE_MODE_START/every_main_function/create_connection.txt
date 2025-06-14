@@ -1,0 +1,50 @@
+func create_connection(node_name: String, first_line : Array, data_to_write : Array, group_name : String, version_of_thing : String, information_lines_parsed : Array):
+	var node_path_cc_c = first_line[6][0]
+	var coords = first_line[1]
+	var to_rotate = first_line[2]
+	var cords_for_line = [data_to_write[0], data_to_write[1]]
+	var color_for_line = data_to_write[2][0]
+	
+	# Convert the line endpoints from data_to_write
+	var point1 = Vector3(
+		float(cords_for_line[0][0]),
+		float(cords_for_line[0][1]),
+		float(cords_for_line[0][2])
+	)
+	
+	var point2 = Vector3(
+		float(cords_for_line[1][0]),
+		float(cords_for_line[1][1]),
+		float(cords_for_line[1][2])
+	)
+
+	var center = point1 + point2 / 2
+	# Create the lines
+	var mesh_instance = MeshInstance3D.new()
+	var immediate_mesh = ImmediateMesh.new()
+	mesh_instance.mesh = immediate_mesh
+	mesh_instance.name = node_name
+	
+	# Set up material
+	var material = StandardMaterial3D.new()
+	material.shading_mode = StandardMaterial3D.SHADING_MODE_UNSHADED
+	var color_line = float(data_to_write[2][0])
+	material.albedo_color = get_spectrum_color(color_line)
+	mesh_instance.material_override = material
+	
+	# Draw the lines
+	immediate_mesh.surface_begin(Mesh.PRIMITIVE_LINES)
+	
+	# Line from point1 to center
+	immediate_mesh.surface_add_vertex(point1 + center)
+	immediate_mesh.surface_add_vertex(center)
+	
+	# Line from center to point2
+	immediate_mesh.surface_add_vertex(center)
+	immediate_mesh.surface_add_vertex(point2 + center)
+	
+	immediate_mesh.surface_end()
+	
+	mesh_instance.set_script(LineScript)
+	var node_type = "connection"
+	node_creation(node_name, mesh_instance, coords, to_rotate, group_name, node_type, node_path_cc_c)

@@ -1,0 +1,208 @@
+MISSION : REPAIR CHECK ENGINE
+
+CONNECTED MISSIONS :
+
+### CORE FUNCTIONS
+CHECK ENGINE
+CHECK SINGLE_THREAD
+CHECK MULTI_THREADS
+CHECK TASK_SYSTEM
+CHECK CLOCKS_AND_WATCHES_SYSTEM
+CHECK OS
+CHECK DIRECTIORIES
+CHECK FOLDERS
+
+
+### LOAD DATA
+CHECK SETTINGS_FILE
+CHECK IF_IT_IS_FIRST_RUN
+CHECK IF_WE_HAVE_DATABASES_ACCESS
+### NOW WE EITHER CREATE FILES, REOPEN FILES, OPEN FILES, RESTART THE SYSTEM
+CHECK FILES
+
+### TO SEE ANYTHING
+CHECK LOAD_BASIC_RECORDS_SETS
+
+
+
+
+print(" scan_results " , scan_result)
+
+
+scan result of project files :
+
+scan_result
+
+
+
+Got it! Your data scavenging phase involves systematically analyzing all four major storage locations for existing resources and ensuring core scripts are properly initialized and connected.
+
+🛠️ Plan for Data Scavenging & Initialization
+📂 ROM (Persistent Storage) - Four Data Locations
+RES Folder (res://) - Game assets, configs, and essential resources.
+USER Folder (user://) - User-generated content, saves, logs, and settings.
+PATH Folder (Custom-defined paths) - External data, mods, or extended libraries.
+BACKUP Folder (Failsafe storage) - Recovery files in case of corruption.
+⚡ RAM (Dynamic Storage)
+Scan every global variable across scripts after all core scripts are initialized.
+Ensure get_node() connectivity to verify script integration.
+✅ Step-by-Step Implementation Plan
+🟢 Initialization (_init())
+Prepare Akashic Records (Handles metadata & storage structure)
+Initialize clocks & timers (Handles time tracking)
+Ensure every core script is accessible (Print debug logs to confirm)
+Log existing files in res:// (first step)
+🟡 Readiness Check (_ready())
+Retry script connections if necessary (Fix early execution issues)
+Expand scavenging to other storage locations (user://, path://, backup://)
+Confirm all scripts are properly linked using get_node()
+Prepare for RAM scan (List all accessible global variables)
+📜 Script Implementation
+✅ Phase 1: Checking RES Folder (res://)
+gdscript
+Kopiuj
+Edytuj
+func scan_res_folder():
+	var dir = DirAccess.open("res://")
+	if dir:
+		print("📂 Scanning RES folder...")
+		var files = []
+		dir.list_dir_begin()
+		var file_name = dir.get_next()
+		while file_name != "":
+			files.append(file_name)
+			file_name = dir.get_next()
+		dir.list_dir_end()
+		print("✅ RES folder contains:", files)
+	else:
+		print("❌ Failed to access RES folder")
+✅ Phase 2: Checking USER Folder (user://)
+gdscript
+Kopiuj
+Edytuj
+func scan_user_folder():
+	var dir = DirAccess.open("user://")
+	if dir:
+		print("📂 Scanning USER folder...")
+		var files = []
+		dir.list_dir_begin()
+		var file_name = dir.get_next()
+		while file_name != "":
+			files.append(file_name)
+			file_name = dir.get_next()
+		dir.list_dir_end()
+		print("✅ USER folder contains:", files)
+	else:
+		print("❌ Failed to access USER folder")
+✅ Phase 3: Checking PATH Folder (Custom Paths)
+gdscript
+Kopiuj
+Edytuj
+func scan_path_folder(path: String):
+	var dir = DirAccess.open(path)
+	if dir:
+		print("📂 Scanning PATH:", path)
+		var files = []
+		dir.list_dir_begin()
+		var file_name = dir.get_next()
+		while file_name != "":
+			files.append(file_name)
+			file_name = dir.get_next()
+		dir.list_dir_end()
+		print("✅ PATH folder contains:", files)
+	else:
+		print("❌ Failed to access PATH:", path)
+✅ Phase 4: Checking BACKUP Folder (user://backup/)
+gdscript
+Kopiuj
+Edytuj
+func scan_backup_folder():
+	var backup_path = "user://backup/"
+	var dir = DirAccess.open(backup_path)
+	if dir:
+		print("📂 Scanning BACKUP folder...")
+		var files = []
+		dir.list_dir_begin()
+		var file_name = dir.get_next()
+		while file_name != "":
+			files.append(file_name)
+			file_name = dir.get_next()
+		dir.list_dir_end()
+		print("✅ BACKUP folder contains:", files)
+	else:
+		print("❌ Failed to access BACKUP folder")
+🔄 Ensuring Script Connections
+✅ Verify All Core Scripts Exist
+gdscript
+Kopiuj
+Edytuj
+func check_core_script_connections():
+	var core_scripts = [
+		"/root/Main",
+		"/root/TimerSystem",
+		"/root/DataManager",
+		"/root/SceneManager"
+	]
+	
+	print("🔍 Checking script connections...")
+	for script_path in core_scripts:
+		if has_node(script_path):
+			print("✅ Connected:", script_path)
+		else:
+			print("❌ Missing:", script_path)
+✅ Ensure get_node() Works for Each Script
+gdscript
+Kopiuj
+Edytuj
+func validate_script_connections():
+	var scripts_to_check = [
+		"res://scripts/main.gd",
+		"res://scripts/timer.gd",
+		"res://scripts/data_manager.gd",
+		"res://scripts/scene_manager.gd"
+	]
+
+	print("🔍 Validating script connections...")
+	for script_path in scripts_to_check:
+		if ResourceLoader.exists(script_path):
+			print("✅ Script found:", script_path)
+		else:
+			print("❌ Script missing:", script_path)
+✅ RAM Scanning - List Global Variables
+gdscript
+Kopiuj
+Edytuj
+func list_global_variables():
+	print("🧠 Scanning global variables...")
+	for key in get_script().get_property_list():
+		print("🔹 Global Var:", key.name, "Type:", key.type)
+🔵 FINAL FUNCTION CALLS
+gdscript
+Kopiuj
+Edytuj
+func _init():
+	print("🚀 Initialization started...")
+	prepare_akashic_records()
+	_setup_retry_timer()
+	scan_res_folder()  # First step in scavenging data
+
+func _ready():
+	print("📌 Readiness check started...")
+	check_core_script_connections()
+	scan_user_folder()
+	scan_path_folder("user://path_data/")  # Example custom path
+	scan_backup_folder()
+	validate_script_connections()
+	list_global_variables()
+🟣 Summary of Steps
+Step	Action
+1️⃣	Initialize Akashic Records, clocks, and timers
+2️⃣	Ensure connection to core scripts (get_node())
+3️⃣	Scan RES Folder (res://)
+4️⃣	Scan USER Folder (user://)
+5️⃣	Scan PATH Folder (Custom-defined paths)
+6️⃣	Scan BACKUP Folder (user://backup/)
+7️⃣	Verify script connections (ResourceLoader.exists())
+8️⃣	Scan all global variables
+🚀 Your scavenging and initialization system is now fully structured!
+

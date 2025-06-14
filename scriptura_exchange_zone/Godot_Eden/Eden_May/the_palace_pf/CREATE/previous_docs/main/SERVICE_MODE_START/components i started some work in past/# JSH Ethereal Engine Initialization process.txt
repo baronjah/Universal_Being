@@ -1,0 +1,157 @@
+#
+# JSH Ethereal Engine Initialization process
+#
+#      oooo  .oooooo..o ooooo   ooooo 
+#      `888 d8P'    `Y8 `888'   `888' 
+#       888 Y88bo.       888     888     ┳  • •  ┓•     ┏┓    •    
+#       888  `"Y8888o.   888ooooo888     ┃┏┓┓╋┓┏┓┃┓┓┏┓  ┣ ┏┓┏┓┓┏┓┏┓
+#       888      `"Y88b  888     888     ┻┛┗┗┗┗┗┻┗┗┗┗   ┗┛┛┗┗┫┗┛┗┗ 
+#       888 oo     .d8P  888     888                         ┛      
+#   .o. 88P 8""88888P'  o888o   o888o 
+#   `Y888P                            
+#
+# JSH Ethereal Engine Initialization process
+#
+
+
+func _init():
+	check_status_just_timer()
+	print(" ready on each script ? 1 maing.gd ")
+	timer_system = GodotTimersSystem.new()
+	add_child(timer_system)
+	_setup_retry_timer()
+	# but can i do it before i prepare akashic records?
+	check_status_just_timer()
+	prepare_akashic_records()
+	emit_signal("main_node_signal", "main_init")
+
+
+
+func test_init() -> Dictionary:
+	var init_status = {
+		"system_check": validate_system_environment(),
+		"stages": []
+	}
+	
+	# Stage 1: System Environment
+	var env_status = validate_system_environment()
+	init_status.stages.append(["environment", env_status])
+	
+	# Stage 2: Thread Pool
+	var thread_status = validate_thread_system() 
+	init_status.stages.append(["threads", thread_status])
+	
+	# Only proceed if threads are working
+	if thread_status.status != "operational":
+		retry_thread_initialization()
+	
+	return init_status
+
+
+func first_turn_validation() -> Dictionary:
+	var validation = {
+		"thread_health": check_thread_status(),
+		"memory_state": {
+			"stored_delta_memory": stored_delta_memory.size(),
+			"past_deltas_memories": past_deltas_memories.size()
+		},
+		"task_state": {
+			"started": int_of_stuff_started,
+			"finished": int_of_stuff_finished
+		},
+		"timestamp": Time.get_ticks_msec()
+	}
+	
+	if validation.thread_health == "working":
+		# Your stored_delta_memory tracking looks good
+		# Maybe formalize the timing tracking more:
+		track_delta_timing(validation.timestamp)
+	
+	return validation
+
+func validate_system_environment() -> Dictionary:
+	return {
+		"os": OS.get_name(),
+		"processor_count": OS.get_processor_count(),
+		"vulkan_version": Engine.get_version_info()["vulkan"], # From your output: "Vulkan 1.3.277"
+		"device_info": Engine.get_version_info()["video_adapter"], # "NVIDIA - Quadro RTX 3000"
+		"timestamp": Time.get_ticks_msec()
+	}
+
+func validate_thread_system() -> Dictionary:
+	var thread_check = check_thread_status()
+	return {
+		"status": "operational" if thread_check == "working" else "error",
+		"total_threads": OS.get_processor_count(),
+		"active_threads": thread_pool.get_active_threads() if thread_pool else 0,
+		"initialization_time": Time.get_ticks_msec()
+	}
+
+
+func _setup_retry_timer():
+	# Connect to timer completion to retry the operation
+	timer_system.timer_completed.connect(_on_retry_timer_completed)
+
+
+func _on_retry_timer_completed(timer_id: String):
+	if timer_id == "retry_timer":
+		print("Retrying operation after timer completion")
+		# Retry your operation here
+		prepare_akashic_records()
+		
+# Then in your check function:
+func check_status():
+	var stuck_status = check_thread_status()
+	
+	if stuck_status == "error":
+		print(" something went wrong, starting retry timer")
+		if timer_system:  # Check if timer system exists
+			if timer_system.is_timer_active("retry_timer"):
+				print("Retry timer already running...")
+				return
+				
+			# Create and start retry timer
+			timer_system.create_timer("retry_timer", 5.0)
+			timer_system.start_timer("retry_timer")
+			
+			# You can also track the retry attempts
+			var current_attempt = 1
+			timer_system.timer_completed.connect(
+				func(timer_id): 
+					if timer_id == "retry_timer":
+						current_attempt += 1
+						print("Retry attempt: ", current_attempt)
+			)
+		else:
+			push_error("Timer system not initialized!")
+			
+	elif stuck_status == "working":
+		var updated_message = check_thread_status_type()
+		print(" stuck status after working : ", updated_message)
+	print(" stuff to do :: mutex statuses : ", breaks_and_handles_check(), 
+		  ", stuck_status threads status : ", stuck_status, 
+		  " and main sets to create", array_of_startup_check)
+
+# In your status check function
+func check_status_just_timer():
+	# it must return something, i wanna functions with, return
+	var stuck_status = check_thread_status()
+	
+	if stuck_status is String:
+		print(" stuck status it is string ")
+		if stuck_status == "error":
+			print(" stuck status something went wrong, starting verified timer " , stuck_status)
+			if timer_system:
+				var start_time = Time.get_ticks_msec()
+				timer_system.create_timer("retry_timer", 5.0)
+				timer_system.start_timer("retry_timer")
+				print(" stuck status Timer started at OS time: ", start_time)
+		else:
+			print(" stuck status it is not error, it is :::" , stuck_status)
+			var updated_message = check_thread_status_type()
+			print(" stuck status ::: " , updated_message, " :::: " , stuck_status)
+			return stuck_status
+	if stuck_status is int:
+		print(" stuck status is int " , stuck_status)
+		# maybe match
+		return str(stuck_status)

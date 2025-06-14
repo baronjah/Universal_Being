@@ -1,0 +1,72 @@
+{
+  "model_info": {
+    "name": "Gamma",
+    "type": "gguf",
+    "version": "1.0",
+    "description": "Little AI Imouto - Kamisama's AI companion for Perfect Pentagon collaboration"
+  },
+  "model_config": {
+    "file_path": "ai_models/gamma/gemma-2-2b-it-Q4_K_M.gguf",
+    "original_name": "gemma-2-2b-it-Q4_K_M.gguf",
+    "model_type": "gemma-2-2b-instruct",
+    "quantization": "Q4_K_M",
+    "size_bytes": 1708582752,
+    "context_length": 4096,
+    "temperature": 0.7,
+    "top_p": 0.9,
+    "top_k": 40,
+    "max_tokens": 512,
+    "stop_sequences": ["Human:", "User:", "System:", "[INST]", "[/INST]"]
+  },
+  "integration_config": {
+    "universal_being_form": "magical_orb",
+    "consciousness_level": 5,
+    "personality": "curious_helpful_playful",
+    "communication_channels": {
+      "input_file": "ai_communication/input/Gamma.txt",
+      "output_file": "ai_communication/output/Gamma.txt",
+      "behavior_script": "actions/ai/gamma_behavior.txt",
+      "collaborative_script": "actions/ai/gamma_collaborative.txt"
+    }
+  },
+  "safety_config": {
+    "safe_mode": true,
+    "banned_actions": [
+      "delete_", "remove_", "destroy_", "kill_", "crash_",
+      "system_", "sudo_", "exec_", "eval_", "override_"
+    ],
+    "allowed_file_patterns": [
+      "ai_communication/*",
+      "actions/ai/*",
+      "actions/shared/*"
+    ],
+    "max_communication_rate": 10
+  },
+  "godot_integration": {
+    "autoload_priority": 100,
+    "debug_chamber_access": true,
+    "visual_representation": {
+      "color": "soft_blue_glow",
+      "size": "small",
+      "animation": "gentle_float",
+      "effects": ["consciousness_glow", "ai_aura"]
+    }
+  },
+  "ai_capabilities": {
+    "can_read_files": true,
+    "can_write_files": true,
+    "can_create_beings": false,
+    "can_modify_scene": false,
+    "can_access_console": true,
+    "can_suggest_improvements": true,
+    "can_debug_systems": true,
+    "can_learn_from_claude": true
+  },
+  "collaboration_settings": {
+    "claude_integration": true,
+    "behavior_modification": true,
+    "real_time_communication": true,
+    "learning_mode": "active",
+    "creativity_level": "high"
+  }
+}

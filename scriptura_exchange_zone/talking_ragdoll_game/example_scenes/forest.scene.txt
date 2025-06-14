@@ -1,0 +1,39 @@
+# Forest Scene
+# A peaceful forest environment
+
+# Trees in a grid pattern
+tree -10 0 -10
+tree -5 0 -10
+tree 0 0 -10
+tree 5 0 -10
+tree 10 0 -10
+
+tree -10 0 -5
+tree 5 0 -5
+tree 10 0 -5
+
+tree -10 0 0
+tree 10 0 0
+
+tree -10 0 5
+tree -5 0 5
+tree 10 0 5
+
+tree -10 0 10
+tree -5 0 10
+tree 0 0 10
+tree 5 0 10
+tree 10 0 10
+
+# Rocks scattered around
+rock -7 0 -3
+rock 3 0 -7
+rock -4 0 6
+rock 6 0 4
+rock 0 0 0
+
+# A box to sit on
+box 0 0.5 3
+
+# Peaceful ragdoll
+ragdoll 0 5 3 walking=false

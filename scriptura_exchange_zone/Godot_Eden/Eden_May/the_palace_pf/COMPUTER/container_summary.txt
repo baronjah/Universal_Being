@@ -1,0 +1,36 @@
+# Container.gd Summary
+
+## File Overview
+- Path: res://code/gdscript/scripts/Menu_Keyboard_Console/container.gd
+- Primary class: Extends Node
+- A simple container class that manages datapoints and container connections
+
+## Variables (Lines 4-7)
+- container_number: Integer identifier (initialized to -1)
+- containter_datapoint: Reference to primary datapoint (null initially)
+- additional_datapoints: Array of secondary datapoints
+- connected_containers: Array of connected container references
+
+## Functions (Lines 9-40)
+- _init(): Basic initialization with debug print
+- containter_start_up(con_num, data): Sets up container with number and datapoint
+  - Assigns container_number from con_num parameter
+  - If containter_datapoint is null, assigns it from data parameter
+  - Otherwise adds to additional_datapoints array
+- get_datapoint(): Returns primary datapoint reference
+- containter_get_data(): Returns array with [container_number, containter_datapoint]
+- container_get_additional_datapoints(): Returns array of additional datapoints
+- containers_connections(data): Adds container connection to connected_containers array
+- get_containers_connected(): Returns array of connected containers
+
+## Notable Features
+- Simple and straightforward container implementation
+- Supports one primary datapoint and multiple additional datapoints
+- Maintains connections to other containers
+- Contains commented out debug prints for troubleshooting
+
+## Design Pattern
+- Acts as a node wrapper around datapoint objects
+- Provides organizational structure for datapoints
+- Enables container-to-container connections
+- Functions primarily as a data-holding parent node

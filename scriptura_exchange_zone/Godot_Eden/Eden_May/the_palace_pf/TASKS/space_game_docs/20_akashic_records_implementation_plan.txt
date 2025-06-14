@@ -1,0 +1,169 @@
+# Akashic Records Implementation Plan
+
+## Overview
+This document outlines the plan for implementing the Akashic Records (Dynamic Dictionary) system for the Eden Space Game. The system will serve as a hierarchical database of words/concepts that can dynamically split into separate files when they become too complex, and provide spatial organization through zones.
+
+## File Structure
+
+### Core Scripts
+```
+/code/gdscript/scripts/akashic_records/
+├── word_entry.gd                # Individual word definitions
+├── dynamic_dictionary.gd        # Dictionary management
+├── interaction_engine.gd        # Rules processing system
+├── zone_manager.gd              # Spatial organization
+├── akashic_records_manager.gd   # Central coordinator
+└── akashic_records_ui.gd        # Test UI for the system
+```
+
+### Data Directories
+```
+/dictionary/
+├── root_dictionary.json         # Main dictionary file
+├── elements/                    # Element-specific dictionaries
+├── entities/                    # Entity-specific dictionaries
+├── interactions/                # Interaction rule dictionaries
+└── zones/                       # Zone data files
+```
+
+## Implementation Phases
+
+### Phase 1: Core Dictionary System
+1. Implement WordEntry (word_entry.gd)
+   - Define properties, states, and interactions
+   - Implement serialization to/from dictionaries
+
+2. Implement DynamicDictionary (dynamic_dictionary.gd)
+   - Create word management functions
+   - Implement loading/saving to files
+   - Add dictionary splitting logic
+
+3. Implement InteractionEngine (interaction_engine.gd)
+   - Create interaction rule processing
+   - Implement condition evaluation
+   - Track interaction history
+
+4. Implement ZoneManager (zone_manager.gd)
+   - Create spatial organization system
+   - Implement zone splitting/merging
+   - Handle entity placement in zones
+
+5. Implement AkashicRecordsManager (akashic_records_manager.gd)
+   - Coordinate all subsystems
+   - Provide simplified API for the game
+   - Create default dictionary entries
+
+### Phase 2: Testing Interface
+1. Implement basic UI for testing (akashic_records_ui.gd)
+   - Word listing and details view
+   - Word creation/editing interface
+   - Interaction testing panel
+   - Spatial visualization
+
+### Phase 3: Integration
+1. Connect with Element System
+   - Link dictionary words to physical elements
+   - Implement property mapping
+
+2. Connect with Space System
+   - Link cosmic objects with dictionary entries
+   - Implement scale-based dictionary access
+
+3. Prepare for VR Integration
+   - Define VR-specific visualization requirements
+   - Plan interaction patterns for VR
+
+## Core Classes Details
+
+### WordEntry
+- **Purpose**: Represent individual words/concepts
+- **Properties**:
+  - ID, category, parent, children
+  - Properties dictionary
+  - States dictionary with current state
+  - Interaction rules
+  - File reference for split dictionaries
+- **Key Methods**:
+  - from_dict/to_dict for serialization
+  - add/remove child
+  - change_state
+  - add_interaction_rule
+  - evaluate_conditions
+
+### DynamicDictionary
+- **Purpose**: Manage the dictionary database
+- **Properties**:
+  - Words dictionary
+  - Root words list
+  - File paths
+- **Key Methods**:
+  - add/remove/update word
+  - load/save dictionary
+  - get word hierarchy
+  - split word to file
+  - load split file
+
+### InteractionEngine
+- **Purpose**: Process interactions between words
+- **Properties**:
+  - Reference to dictionary
+  - Interaction history
+- **Key Methods**:
+  - process_interaction
+  - record_interaction
+
+### ZoneManager
+- **Purpose**: Manage spatial organization of entities
+- **Properties**:
+  - Zones dictionary
+  - Active zones list
+  - Zone limits
+- **Key Methods**:
+  - create/remove zone
+  - add/remove entity to zone
+  - get entities at position
+  - activate/deactivate zone
+  - split/merge zones
+  - load/save zones
+
+### AkashicRecordsManager
+- **Purpose**: Coordinate all subsystems
+- **Properties**:
+  - References to subsystems
+  - File paths
+- **Key Methods**:
+  - create_word
+  - add_word_interaction
+  - process_word_interaction
+  - instantiate_entity
+  - get_entities_near_position
+  - save_all
+
+## Testing Strategy
+1. Create a test scene with the UI
+2. Add the AkashicRecordsManager as an autoload
+3. Test dictionary operations:
+   - Creating words
+   - Adding properties and states
+   - Creating interaction rules
+   - Testing interactions
+4. Test spatial operations:
+   - Creating zones
+   - Adding entities to zones
+   - Testing spatial queries
+5. Test file operations:
+   - Saving and loading dictionaries
+   - Dictionary splitting
+   - Zone splitting
+
+## Integration Points
+1. **Element System**: Connect through element properties and interactions
+2. **Space System**: Map cosmic objects to dictionary entries
+3. **VR System**: Create VR visualization for the dictionary
+
+## Timeline
+- Phase 1 (Core System): 2-3 days
+- Phase 2 (Testing Interface): 1-2 days
+- Phase 3 (Integration): 2-3 days
+
+Total estimated time: 5-8 days

@@ -1,0 +1,73 @@
+[gd_scene load_steps=3 format=3 uid="uid://bm5jqe8mq7dcc"]
+
+[ext_resource type="Script" path="res://scenes/on_screen_keyboard.gd" id="1_l4c5h"]
+[ext_resource type="Theme" uid="uid://dr4w7j0ntrprp" path="res://themes/default_theme.tres" id="2_e01ov"]
+
+[node name="OnScreenKeyboard" type="Control"]
+layout_mode = 3
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -300.0
+grow_horizontal = 2
+grow_vertical = 0
+theme = ExtResource("2_e01ov")
+script = ExtResource("1_l4c5h")
+
+[node name="PanelContainer" type="PanelContainer"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Row1" type="HBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 5
+alignment = 1
+
+[node name="Row2" type="HBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 5
+alignment = 1
+
+[node name="Row3" type="HBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 5
+alignment = 1
+
+[node name="Row4" type="HBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 10
+alignment = 1
+
+[node name="ShiftButton" type="Button"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "shift"
+
+[node name="SpaceButton" type="Button"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 3.0
+text = "space"
+
+[node name="BackspaceButton" type="Button"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "⌫"
+
+[node name="SubmitButton" type="Button"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Done"

@@ -1,0 +1,1740 @@
+#main
+# that arrow thingy tells us what we return from going back from that function! now i know!
+extends Node3D
+
+# Variants
+# path = D:/Eden, file_path, files_content, folders_content, file_name_search, files_amount_counter
+# folders_existence, files_existence, directory_existence
+# array_of_data, amount_of_records,
+# first_pathwaym second_pathway, pathway_version
+
+#region Variants
+
+#thing_0, a square, its in a folder:(
+#var mesh_data_file = "res://akashic_records/thing_0.txt"  # Path to the text file
+var path = "D:/Eden"
+var file_path
+var folder_path
+var file_name_search
+
+var files_content
+var folders_content
+
+var directory_existence = false
+var folders_existence = false
+var files_existence = false
+var array_of_data : Array
+var amount_of_records
+
+var first_pathway : int = 0
+var second_pathway : int = 0
+var pathway_version : int = 0
+
+var files_amount_counter
+var folder_amount_counter
+
+var analyzed_file_type :int = -1
+
+#var number_of_things : int = 2 # probably needs to be minus 1?
+
+#first run helpers
+var current_thing_name_checked
+var path_to_current_thing
+var current_thing_record
+var number_of_record_to_be_created
+
+var state_of_files : int = -1
+
+# Integrity vars
+# func first_run_check(files_found_amount : int, found_files_list : Array):
+var files_found_number : int
+var list_of_found_files : Array
+var list_of_missing_files : Array = []
+var list_of_missing_records_number : Array = []
+
+# the threading stuff
+var delta_buffer := []
+var input_buffer := []
+var thread_positions := {}
+var mutex: Mutex
+var threads: Array[Thread] = []
+
+var just_added_new_node_data: Array = []
+var new_node_added
+
+
+
+# the four points of connection, seen as flat square in 3d space
+#
+#
+#endregion
+
+# Constructors
+# Thing_0, Thing_1, Thing_2
+# Thing_type
+
+
+
+
+#region Constructors, things, header for things
+
+#const things_list = ["thing_0", "thing_1", "thing_2", "thing_3", "thing_4", "thing_5", "thing_6"]
+#var things_list_array : Array = [["thing_0.txt"],["thing_1.txt"],["thing_2.txt"],["thing_3.txt"],["thing_4.txt"],["thing_5.txt"],["thing_6.txt"]]
+
+
+var thing_add_number : String = "thing_"
+var record_add_number : String = "record_"
+
+var instruction_add_number : String = "instruction_"
+var set_add_number : String = "set_"
+
+var txt = ".txt"
+
+var things_checker = {}
+
+var things_found : Array = []
+var things_found_reset : Array = []
+
+
+const DataPointScript = preload("res://scripts/data_point.gd")
+
+
+#endregion
+
+
+
+
+
+# Records list, and records map with each record
+
+
+const type_of_thing = [
+	"flat_shape", "text", "model", "button", "cursor", "connection", "screen", "datapoint", "circle"
+]
+
+const records_map = {
+	0: [ # Square
+		["thing_0|0.0,0.0,5.0|0.0,0.0,0.0|model|square|akashic_records|akashic_records/thing_0|group_0"],
+		["-1,-1,0|1,-1,0|1,1,0|-1,1,0"]
+	],
+	1: [ # Text
+		["thing_1|0.0,0.0,10.0|0.0,0.0,0.0|text|square|akashic_records|akashic_records/thing_1|group_0"],
+		["Akashic_Records|33"]
+	],
+	2: [ # Triangle
+		["thing_2|0.0,0.0,-2.0|0.0,0.0,0.0|cursor|triangle|akashic_records|akashic_records/thing_2|group_0"],
+		["-1,-2,0|1,2,0|-1,3,0|0.19,0.19,0.19"]
+	],
+	3: [ # Line
+		["thing_3|0.0,0.0,0.0|0.0,0.0,0.0|connection|line|akashic_records|akashic_records/thing_3|group_0"],
+		["0.0,0.0,-6.0|0.0,0.0,6.0|0.69"]
+	],
+	4: [ # Screen, like with ratio
+		["thing_4|0.0,0.0,0.0|0.0,0.0,0.0|screen|16:9|akashic_records|akashic_records/thing_4|group_0"],
+		["-8,-4.5,0|8,-4.5,0|8,4.5,0|-8,4.5,0"]
+	],
+	5: [ # Button, like with ratio
+		["thing_5|0.0,0.0,0.0|0.0,0.0,0.0|button|2:2|akashic_records|akashic_records/thing_5|group_0"],
+		["-1,-1,0|1,-1,0|1,1,0|-1,1,0"]
+	], # add comma , 
+	6: [ # Flat_shape
+		["thing_6|0.0,0.0,-1.0|0.0,0.0,0.0|flat_shape|0|akashic_records|akashic_records/thing_6|group_0"],
+		["0,3,0|3,-1,0|2,-3,0|-2,-3,0|-3,-1,0"]
+	], # add comma , 
+	7: [ # data_point
+		["thing_7|0.0,0.0,0.0|0.0,0.0,0.0|datapoint|0|akashic_records|akashic_records/thing_7|datapoints"],
+		["100"]
+	], # add comma , 
+	8: [ # circle
+		["thing_8|0.0,0.0,3.0|0.0,0.0,0.0|circle|0|akashic_records|akashic_records/thing_8|group_0"],
+		["3|8"]
+	] # add comma , 
+	
+}
+
+
+const instructions_set = {
+	0: [ # send things to datapoint
+		["instruction_0|assign_priority_to_datapoint"],
+		["akashic_records|thing_7"],
+		["0"]
+	] ,# add coma ,
+	1: [ # send things to datapoint
+		["instruction_1|assign_things_to_datapoint"],
+		["akashic_records|thing_7"],
+		["akashic_records|thing_0|thing_1|thing_2|thing_3|thing_4|thing_5|thing_6|thing_8"]
+	] ,# add coma ,
+	2:[ # send things to datapoint
+		["instruction_0|set_max_things_number"],
+		["akashic_records|thing_7"],
+		["100"]
+	] # add coma ,
+}
+
+const type_of_instruction = [
+	"assign_priority_to_datapoint", "assign_things_to_datapoint", "set_max_things_number"
+]
+
+
+
+# Stuff needed to be changed from enums
+#region to change
+#Thing types
+enum thing_type {
+	flat_shape = 0,
+	text = 1,
+	model = 2,
+	button = 3,
+	connection = 4,
+	datapoint = 5,
+	text_bar = 6,
+	cursor = 7,
+	screen = 8,
+	text_window = 9,
+	icon = 10,
+	storage = 11,
+	menu = 12,
+	interface = 13,
+	scene = 14
+}
+
+enum flat_shape_edit {
+	add_depth = 0,
+	change_color = 1,
+	change_size = 2,
+	change_shape = 3,
+	change_depth = 4,
+	change_scale = 5,
+
+	change_model = 9,
+}
+
+enum thing_edit {
+	add_interaction = 0,
+	add_connection = 1,
+	add_cycle = 2,
+	set_priority = 3,
+	stop_thing = 4,
+	view_evolution_tree = 5
+}
+
+enum text_edit {
+	change_text = 0,
+	change_font = 1,
+	change_size = 2,
+	change_color = 3
+}
+
+enum evolution_tree {
+	view_part = 0,
+	edit_part = 1,
+	remove_part = 2,
+	add_part = 3,
+	choose_part = 4
+}
+#endregion
+
+# Godot functions, build in
+# ready
+#
+
+var things_container
+var mouse_pos
+var camera
+
+var turn_number_process : int = 0
+var all_turns : int = 0
+var start_time : int = 0
+var end_time : int = 0
+
+var delta_turn_0 : int = 0
+var time : int = 0
+var hour : int = 0
+var minute : int = 0
+var second : int = 0
+var calculated_time : Array = []
+
+var time_passed
+
+var records_data : Array = []
+
+var group_first
+
+
+
+var lod_points_number : int = 0
+var lod_points : Array
+var datapoint_data_checker
+var datapoint_data
+
+var data_send
+var data_received
+
+var group_datapoints
+
+var change_priority
+
+var data_point_data_to_send
+# datapoint_data_checker data_send data_received
+
+var data_point_priority
+var viewport# = get_viewport()
+var viewport_size# = viewport.size
+var ray_distance_set = 10.0
+#region Godot Functions
+
+# Ready
+
+func _ready():
+	print("_ready : Project Eden, ver : things and records")
+	
+	# here we create records data, will evolve into records, instructions, scenes, as this will be my next step!
+	# it will also receive data, instead of being singular function!
+	print("_ready : creating records data")
+	var type_of_data : int = 0
+	records_data = create_records_data(records_map, type_of_data)
+#	print("records_data[0] : ", records_data[0])
+	#print("records_data[0][0] : ", records_data[0][0])
+	
+	# here we had some basic viewport, mouse and camera nodes being take, we wanna make mouse clicker in game too lol
+	mouse_pos = get_viewport().get_mouse_position()
+	camera = get_viewport().get_camera_3d()
+	viewport = get_viewport()
+	#viewport_size = viewport.size
+	# here we generate empty node, where we will be putting records, kinda easier way for me to find things later?
+	things_container = Node3D.new()
+	things_container.name = "akashic_records"
+	add_child(things_container)
+	
+	# we check how many files are missing from that record
+	print("_ready : checking files integrity")
+	var integrity = check_file_integrity()
+#	print("_ready : files_content : ", files_content)
+	print("_ready : first run check")
+
+	# this will need to check, here we shall be sending records_data made from records_map, and we shall be sending both of them, and files content too made in file integrity :)
+	first_run_check(type_of_data)
+	scene_tree()
+	group_first = get_tree().get_nodes_in_group("group_0")
+	group_datapoints = get_tree().get_nodes_in_group("datapoints")
+	#print("_ready : datapoints : ", group_datapoints)
+	#print("_ready : group_first : ", group_first) # res://scripts/data_point.gd
+	
+	# Instructions being understood
+	type_of_data = 1
+	var instructions_data = create_records_data(instructions_set, type_of_data)
+	print("_ready : instructions_data : ", instructions_data)
+	integrity = check_file_integrity()
+	print("_ready : integrity : ", integrity)
+	first_run_check(type_of_data)
+	var testing_message = group_datapoints[0].check_all_things_inside_datapoint()
+	print(" testing_message : ", testing_message)
+	
+
+# the circle thing we made, kinda splitter of circle :)
+#	just_added_new_node_data = ["thing_test", "0,0,0", "0,0,0", "shape", "circle", "akashic_records", "group_0"]
+#	create_circle_shape(3.2, 22, "group_0", "thing_test", "0,0,0", "0,0,0")
+	#create_layers_for_lod()
+
+func create_layers_for_lod():
+	print("creating stuff for later lod, current button clicking")
+	
+
+
+
+func create_records_data(data_to_process, type_of_data):
+
+	var records_map_size : int = data_to_process.size()
+	
+	var empty_space : Array = [0]
+	
+	var things_list : Array = []
+	var things_files_list : Array = []
+	var records_list : Array = []
+	
+	var thing_name_array : Array
+	var thing_file_name_array : Array
+	var record_name_array : Array
+	
+	var counter_for_records_mapping : int = 0
+	var float_to_text = str(counter_for_records_mapping)
+	
+	var thing_name_now : String
+	var file_name_now : String
+	var record_name_now : String
+	
+	var thing_name
+	
+	records_data.clear()
+	things_list.clear()
+	things_files_list.clear()
+	records_list.clear()
+	things_found.clear()
+	things_found_reset.clear()
+	things_checker.clear()
+	thing_name_array.clear()
+	thing_file_name_array.clear()
+	record_name_array.clear()
+	
+	#match_data_type()
+	#print(thing_name_now , file_name_now, record_name_now, thing_name)
+	var match_data_type = func(number, string):
+		float_to_text = str(number)
+		match type_of_data:
+			0: return { 
+				# records map
+				"thing_name_now" : thing_add_number + float_to_text,
+				"file_name_now" : thing_add_number + float_to_text + txt,
+				"record_name_now" : record_add_number + float_to_text,
+				"thing_name" : thing_add_number
+			}
+				#print(thing_name_now , file_name_now, record_name_now, thing_name)
+				
+			1:  return {
+				# instructions set
+				"thing_name_now" : instruction_add_number + float_to_text,
+				"file_name_now" : instruction_add_number + float_to_text + txt,
+				"record_name_now" : set_add_number + float_to_text,
+				"thing_name" : instruction_add_number
+			}
+	
+	var parsed_names = match_data_type.call(counter_for_records_mapping, float_to_text)
+	#print(parsed_names)
+	#print(parsed_names.thing_name_now)
+	#print(thing_name_now , file_name_now, record_name_now, thing_name)
+	records_data.append(records_map_size)
+	for record in data_to_process:
+		thing_name = parsed_names.thing_name + str(counter_for_records_mapping)
+		things_checker[parsed_names.thing_name] = counter_for_records_mapping
+		
+		thing_name_array = [parsed_names.thing_name_now]
+		thing_file_name_array = [parsed_names.file_name_now]
+		record_name_array = [parsed_names.record_name_now]
+		
+		things_list.append(parsed_names.thing_name_now)
+		things_files_list.append(thing_file_name_array)
+		records_list.append(parsed_names.record_name_now)
+		
+		things_found.append(empty_space)
+		things_found_reset.append(empty_space)
+		
+		counter_for_records_mapping += 1
+		
+		parsed_names = match_data_type.call(counter_for_records_mapping, float_to_text)
+		float_to_text = str(counter_for_records_mapping)
+		
+
+	records_data.append(things_list)
+	records_data.append(things_files_list)
+	records_data.append(records_list)
+	
+	#print("records data created : ")
+	#print(records_data)
+	#print("things_checker : ", things_checker)
+	
+	return records_data
+#
+# Process delta
+#
+
+func _process(delta):
+	#print(delta)
+	#lets start with simple turns system
+	#print("turn_number_process : ", turn_number_process)
+	#print("delta               : ", delta)
+	match turn_number_process:
+		0:
+			turn_number_process += 1
+			#print(" turn 0 delta : ", delta)
+			delta_turn_0 = delta
+			calculate_time(delta_turn_0, time, hour, minute, second)
+			pass
+		1:
+			turn_number_process += 1
+			#print("datapoints checking")
+			## datapoint_data_checker data_send data_received
+			check_data_points()
+			pass
+		2:
+			turn_number_process += 1
+			#mouse stuff
+			#check_direction_of_mouse_ray()
+			pass
+		3:
+			turn_number_process += 1
+			pass
+		4:
+			turn_number_process += 1
+			pass
+		5:
+			turn_number_process += 1
+			pass
+		6:
+			turn_number_process += 1
+			pass
+		7:
+			turn_number_process += 1
+			pass
+		8:
+			turn_number_process += 1
+			pass
+		9:
+			turn_number_process = 0
+			pass
+	# Check if any mouse buttons are currently held down
+	if Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
+		pass
+		#print("Left mouse button is held")
+	if Input.is_mouse_button_pressed(MOUSE_BUTTON_RIGHT):
+		pass
+		#print("Right mouse button is held")
+
+func calculate_time(delta_current, time, hour, minute, second):
+	#print("delta_current : ", delta_current, " time : ", time, " hour : ", hour, " minute : ", minute, " second : ", second)
+	#time_passed += delta_current
+	
+	# time, plus two differenly calculated?
+	time = Time.get_ticks_msec()
+	var time_0 = time / 1000.0#(Time.get_ticks_msec() / 1000.0)
+	#var time_1 = time / 10000.0#(Time.get_ticks_msec() / 10000.0)
+	#var time_2 = time / 100000.0
+	
+	var all_seconds : int = time / 1000
+	var minutes : int = all_seconds / 60
+	var remaining_seconds : int = all_seconds % 60
+	print("Time: ", minutes, " minutes and ", remaining_seconds, " seconds")
+	#var timer_reset = int(time_0)
+	#var timer_reset2 = int(time_1)
+	
+	#var timer_new = time_0 - timer_reset
+	#var timer_new2 = time_1 - timer_reset2
+	
+	#var oscillation = abs(1 - (timer_new * 2))
+	#var oscillation2 = abs(1 - (timer_new2 * 2))	
+	
+	#var information =  0.5 * timer_new
+	#var information2 = 0.5 * oscillation
+	
+	#var information3 = 0.5 + information2
+	#var information4 = 2 + (2.0 * oscillation2)
+	
+	#var passed_seconds
+	#var passed_minutes
+	#var passed_hour
+	
+	# Convert milliseconds to seconds
+	#if passed_seconds >= 60:
+	#	passed_seconds -= 60
+	#	passed_minutes += 1
+		
+		# Convert seconds to minutes
+	#	if passed_minutes >= 60:
+	#		passed_minutes -= 60
+	#		passed_hour += 1
+	#		
+
+	#print("Time: ", minutes_passed, "m:", seconds_passed, "s:", milliseconds_passed, "ms")
+	
+	
+	#second = time_0
+	#minute = time_0 
+	#print(" time calculated, 4 new main variables ")
+	#print(" time : ", time, " time_0 : ", time_0, " time_1 : ", time_1, " time_2 : ", time_2)
+	#print("past data, for shaders, from 1 to 0, from 0 to 1, simple easing? hmm")
+	#print(" 2 new timers : ", timer_new, "timer_new2", timer_new2)
+	#print(" oscilation? 2 : ", oscillation, " 2 ", oscillation2)
+	#print("some information data ")
+	#print("information : ", information, " , information2 : ", information2, " , information3 : ", information3, " , information4 : ", information4)
+
+
+
+
+
+
+
+
+
+
+
+
+# DATA POINTS STUFF
+
+
+
+# datapoint_data_checker data_send data_received
+func check_data_points():
+	for datapoint in group_datapoints:
+		print(" datapoint : ", datapoint)
+		data_received = datapoint.datapoint_check()
+		#
+		print("data_received : current pririty, current things number : ", data_received)
+		
+		#checking priority
+		match data_received[0][0]: 
+			-1:
+				# the empty datapoint
+				print("minus one")
+				#data_point_priority = assign_priority(data_received[0][0])
+				#print(" place back?")
+			0:
+				print(" priority check number 0! ")
+			1:
+				pass
+			2:
+				pass
+			3:
+				pass
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+func _input(event):
+	#print("_input")
+	# Handle mouse button events
+	if event is InputEventMouseButton:
+		if event.button_index == MOUSE_BUTTON_LEFT:
+			if event.pressed:
+				print("_input : Left mouse clicked at: ", event.position)
+				var current_ray_points = get_ray_points(event.position)
+			else:
+				print("_input : Left mouse released at: ", event.position)
+		
+		if event.button_index == MOUSE_BUTTON_RIGHT:
+			if event.pressed:
+				pass
+				#print("_input : Right mouse clicked at: ", event.position)
+			else:
+				#print("_input : Right mouse released at: ", event.position)
+				pass
+	# Handle mouse motion
+	if event is InputEventMouseMotion:
+		#print("_input : Mouse moved to: ", event.position)
+		# For relative movement:
+		#print("_input : Mouse movement delta: ", event.relative)
+		pass
+		
+		
+
+func get_ray_points(mouse_position: Vector2) -> Array:
+
+	viewport_size = viewport.size
+
+	
+	# Convert mouse position to normalized device coordinates (NDC)
+	# NDC range from -1 to 1 for both axes
+	var ndc_x = (2.0 * mouse_position.x) / viewport_size.x - 1.0
+	var ndc_y = 1.0 - (2.0 * mouse_position.y) / viewport_size.y
+	
+	
+	var ray_origin = camera.position
+	#var ray_direction# kinda current camera orientation + where mouse clicked, i guess, based on viewport data, of resolution, fov? the vertical and horizontal perspective?
+	#var ray_end #= ray_origin + ray_direction * 1000.0 # Length of the ray dunno if it will be times 1000, but with direction and position, i can shoot thing, and check if it is close enough to different things, so it kinda clicked :)
+	# Create a point in NDC space (near plane)
+	# We use -1 for the z component because Godot uses a right-handed coordinate system
+	var ndc_point = Vector3(ndc_x, ndc_y, -1.0)
+	
+	# Convert NDC to world space
+	# First, get the camera's projection matrix and inverse it
+	var proj_matrix = camera.rotation#camera.get_camera_projection().inverse()
+	#print(" proj_matrix : ", proj_matrix)
+	#print(" camera.basis : ", camera.basis)
+	#print(" camera rotation : ", camera.rotation)
+	
+	# Then get the camera's transform matrix
+	var view_matrix = camera.global_transform
+	
+	# Transform the NDC point to world space
+	var world_point = view_matrix * (proj_matrix * ndc_point)
+	
+	# Calculate ray direction
+	var ray_direction = (world_point - ray_origin).normalized()
+	
+	# Calculate ray end point (1000 units away)
+	var ray_end = ray_origin + ray_direction * ray_distance_set
+	
+	print([ray_origin, ray_end])
+	
+	return [ray_origin, ray_end]
+
+	
+#endregion
+
+# First run check
+# many corridors to unfold basic parts of game
+#
+
+#region First run check
+
+
+
+
+
+func first_run_check(type_of_data):
+	list_of_missing_records_number.clear()
+	list_of_missing_files.clear()
+	var data_type_name: String
+	#print("tyoe of data : ", type_of_data)
+	var counter_for_missing_files : int = -1
+	for files_in in list_of_found_files:
+		counter_for_missing_files = counter_for_missing_files + 1
+		#print("found files         : ", files_in)
+		
+		match type_of_data:
+			0:
+				data_type_name = thing_add_number
+			1:
+				data_type_name = instruction_add_number
+		
+		
+		var float_to_text = str(counter_for_missing_files)
+		var file_name_now : String = data_type_name + float_to_text + txt
+		
+		#print("all files           : " , file_name_now)
+		#print("records_data[2][counter_for_missing_files]", records_data[2][counter_for_missing_files])
+		#print("records_data[2] : ", records_data[2])
+		#print("files_in : " , files_in)
+		if files_in == records_data[2][counter_for_missing_files]:
+			#print(" file found ")
+			continue
+		else:
+			print(" file missing ")
+			# var list_of_missing_files : Array = []
+			
+			
+			list_of_missing_files.append(file_name_now)
+			list_of_missing_records_number.append(counter_for_missing_files)
+	#print("missing files list  : ", list_of_missing_files)
+	#print(" * first run check * ")
+	#existence of types of entries
+	print(" directory existence: ", directory_existence)
+	print(" i folders_existence: ", folders_existence)
+	print(" i files_existence  : ", files_existence)
+	#what is the content of these points of data
+	#print(" i files_content    : ", files_content)
+	#print(" i folders_content  : ", folders_content)
+	#files found
+	#print(" i files_found_number  : ",files_found_number)
+	#print(" i list_of_found_files : ",list_of_found_files)
+	#missing files
+	#print(" i list_of_missing_files : " , list_of_missing_files)
+	var files_content_check = check_files_content(list_of_found_files, records_map)
+	#check if content of found files is correct with our records
+	#1 = all files found, 2 = files missing
+	match state_of_files:
+		1:
+			print(" i all files are there")
+			file_name_search = data_type_name + "0.txt"
+			var files_list = files_content
+			#print("files_content       : ", files_content)
+			file_finder(file_name_search, path, files_list, type_of_data)
+			var counter_thing_list : int = -1
+			for things in list_of_found_files:
+				counter_thing_list = counter_thing_list + 1
+				#print("list_of_found_files : ", list_of_found_files)
+				
+				var thing_ : String = things[0]
+				
+				
+				#print(" thing_             : " , thing_)
+				#print("counter_thing_list  : ", counter_thing_list)
+				#print("things_list_array[n]: ", list_of_found_files[counter_thing_list])
+				file_path = path + "/" + thing_
+				#print("file_path           : " , file_path)
+				load_data_from_file(file_path, type_of_data)
+				#print("just_added_new_node_data : ", just_added_new_node_data)
+				#print("5 : ", just_added_new_node_data[5], " 6 : ",  just_added_new_node_data[6])
+				#print("new_node_added : ", new_node_added)
+				#node_mover(node_name, node_path, node_new_path):
+				#print("crafted_node : ", crafted_node)
+				#just_added_new_node_data[0].reparent(just_added_new_node_data[5])
+			print("all things should been loaded")
+		2:
+			#some files could ben missing
+			print(" i not all files were found, if any at all")
+			missing_files_translate(list_of_missing_files, type_of_data)
+			check_file_integrity()
+			# Create Things
+			file_name_search = data_type_name + "0.txt"
+			var files_list = files_content
+			file_finder(file_name_search, path, files_list, type_of_data)
+			var counter_thing_list : int = -1
+			for things in list_of_found_files:
+				#print("list_of_found_files : ", list_of_found_files)
+				#print("things : ", things)
+				var thing_ : String = things[0]
+				counter_thing_list = counter_thing_list + 1
+				file_path = path + "/" + thing_
+				load_data_from_file(file_path, type_of_data)
+
+
+func check_files_content(files_to_be_checked, files_database):
+	#print("files_to_be_checked : ", files_to_be_checked)
+	#print("files_database : ", files_database)
+	pass
+	
+#endregion
+
+
+func missing_files_translate(missing_ : Array, type_of_data):
+	
+	var data_name
+	var database
+	var counter_missing_file : int
+	
+	counter_missing_file = -1
+	match type_of_data:
+		0:# records
+			database = records_map
+			data_name = thing_add_number
+			
+		1:# instructions
+			database = instructions_set
+			data_name = instruction_add_number
+			
+	
+	
+	
+	#print(" numbers of all records : " , records_data[0])
+	for file_to_create in list_of_missing_files:
+		counter_missing_file = counter_missing_file +1
+		#print(" record to be loaded  :  record_",list_of_missing_records_number[counter_missing_file])
+		number_of_record_to_be_created = list_of_missing_records_number[counter_missing_file]
+		#print("list_of_missing_records_number[counter_missing_file] " ,list_of_missing_records_number[counter_missing_file])
+		#print("number_of_record_to_be_created : " , number_of_record_to_be_created)
+		#print("records[number] : ", records[number_of_record_to_be_created])
+		#print("records_map[number] : ", records_map[number_of_record_to_be_created])
+		print("number_of_record_to_be_created L: ", number_of_record_to_be_created)
+		var record_to_be_created = database[number_of_record_to_be_created]
+		var records_size = database[number_of_record_to_be_created].size()
+		#var string_number =
+		var float_to_text = str(number_of_record_to_be_created)
+		var thing_name_ : String = data_name + float_to_text
+		#print("thing_name_ : ", thing_name_)
+		
+		print("file to be about created ")
+		print(" thing_name_ : ", thing_name_ )
+		create_file(record_to_be_created, records_size, thing_name_)
+
+
+func create_file(array_with_data: Array, lines_amount: int, name_for_file: String):
+
+	var file = FileAccess.open(path + "/" + name_for_file + ".txt", FileAccess.WRITE)
+	if file:
+		# We'll loop from 0 to lines_amount-1 to write each line
+		for line in range(lines_amount):
+			file.store_line(array_with_data[line][0])  # [0] because each line is in its own array
+		print("  i Created file at: ", path + "/" + name_for_file + ".txt  i ")
+		file_path = path + "/" + name_for_file + ".txt"
+	
+	
+func file_finder(file_name, path_to_file, list_of_files, type_of_data):
+	# Let's go through each file
+	#print("finder?")
+	#print("  i pathway_version", pathway_version)
+	#print("  i list_of_files: ", list_of_files)
+	var counter_liste = list_of_files.size()
+	#print(counter_liste)
+	var counter_times : int = 0
+
+	for file in list_of_files:
+		print("Found file: ", file)
+		# Check if this is the file we're looking for
+		#print("file:",file)
+		#print("list_of_files[counter_times] :", list_of_files[counter_times])
+		if file == file_name:
+			print("found file searched")
+			file_path = path_to_file + "/" + file
+
+			
+
+#
+# After we check if it is first run, we check what files we had, we created, put on scene etc? and check if files we used, have the same content as what we would put from construct?
+#
+func check_file_integrity():
+	# check if folder exists, checks how many folders and files are in it, puts all files and folder names into arrays [],[],[]
+	check_folder(path)
+	
+	#print("things we are looking for : ", records_data[2])
+	#print("files_content             : ", files_content)
+	#print("space for memory          : ", things_found)
+	#things_found = things_found_reset
+	#print("things_found_reset        : ", things_found_reset)
+	#print("memory reset              : ", things_found)
+	#print("files_found_number        : ", files_found_number)
+	files_found_number = 0
+	#print("files_found_number reset  :", files_found_number)
+	
+	# counter for loops
+	var counter : int = -1
+	var counter_1 : int = 0
+	
+	# setting counter back so arrays from 0 aligns,  as for loops always adds one
+	#counter = counter - 1
+	
+	# numbers for statistics
+	#var files_found_number : int
+	var things_amount_in_list
+	things_amount_in_list = records_data[0]
+	
+	# two for loops, going throug the same data, few times
+	
+	var counter_for_integrity : int = 0
+	var float_to_text = str(counter_for_integrity)
+	var file_name_now : String = thing_add_number + float_to_text + txt
+	
+	
+	
+	for t in records_data[2]:
+		
+		# counting which array we are going through
+		counter += 1
+		for filn in files_content:
+			# counting number of all times we were in for loop
+			counter_1 += 1
+			# if booth for loops have the same word
+			#print(" t : ", t)
+			#print(" filn : ", filn)
+			if t[0] == filn:
+				# add to succesfuly found files number total
+				files_found_number += 1
+				# change array into name of file
+				#print(" things_found : ", things_found)
+				#print(" filn : ", filn)
+				#print(" things_checker[t] : ", things_checker[t])
+				things_found[counter_for_integrity] = [filn]
+				#print("file found                : ", t)
+				# break each time when file found, as we can proceed to next
+				counter_for_integrity += 1
+				break
+	# for loop ended, results
+	#print("for loops ended")
+	#print("times for loop looped     : ", counter_1)
+	#print("things we are looking for : ", things_list)
+	#print("things_found              : ", things_found)
+	# continue, create missing files, if we have every file, we shall load them!
+#	var files_found_number : int
+#	var list_of_found_files : Array
+	list_of_found_files = things_found
+	#files_found_number
+	if files_found_number == things_amount_in_list:
+		#print("names and amounts are correct")
+		#print(files_found_number , " = ", things_amount_in_list)
+		state_of_files = 1
+		# sending back data
+		return files_found_number
+		
+	else:
+		print("numbers donts add up")
+		#print("files_found_number        : ", files_found_number)
+		#print("we are missing            : " ,things_amount_in_list - files_found_number  , " file ")
+		#print("things needed amount      : ", things_amount_in_list)
+		state_of_files = 2
+		# sending back data
+		return files_found_number
+
+#checks if it is a first run, checks for an akashic_records.txt file
+func check_folder(folder_path):
+	var space_existence = DirAccess.open(folder_path)
+	if space_existence:
+		print("  i Directory exists i  ")
+		check_folder_content(space_existence)
+		directory_existence = true
+	else:
+		print("  i Directory doesn't exist or cannot be accessed i  ")
+		
+func check_folder_content(directory):  # Take DirAccess as parameter
+	files_content = directory.get_files()      # Get array of files
+	folders_content = directory.get_directories()  # Get array of folders
+	
+	# Check if we have any files
+	if files_content.size() > 0:
+		files_existence = true
+		print("  i Files found in directory i  ")
+	else:
+		files_existence = false
+		print("  i No files in directory i  ")
+		
+	# Check if we have any folders
+	if folders_content.size() > 0:
+		folders_existence = true
+		print("  i Folders found in directory i  ")
+	else:
+		folders_existence = false
+		print("  i No folders in directory i    ")
+
+#func count_array_size(data: Array):
+#	print("  i counting array size i  ")
+#	var counter_now: int
+#	for point in data:
+#		counter_now+=1
+#	print("  i counting array size : " , counter_now , " i  ")
+#	return counter_now
+
+# loads data from from file
+func load_data_from_file(path_for_thing, type_of_data):
+	
+	var thing_name
+	var coords_to_place
+	var direction_to_place
+	var thing_type_file
+	var shape_name
+	var root_name
+	var pathway_dna
+	var group_number
+	#load file with function
+	var file_data = load_array_from_file(path_for_thing)
+	if file_data.size() > 1:
+		var metadata = file_data[0]  # First line (metadata)
+		var points_line = file_data[1]  # Second line (points)
+		var third_impact = file_data[2]
+
+		# Parse metadata
+		var metadata_parts = metadata.split("|")
+		# Splitted verse into parts
+		#
+		
+		match type_of_data:
+			0:
+				# First
+				thing_name = metadata_parts[0]
+				# Second
+				coords_to_place = metadata_parts[1]
+				# Third
+				direction_to_place = metadata_parts[2]
+				# Fourth
+				thing_type_file = metadata_parts[3]
+				# Fifth
+				shape_name = metadata_parts[4]
+				# Sixth
+				root_name = metadata_parts[5]
+				# Seventh
+				pathway_dna = metadata_parts[6]
+				# Eight
+				group_number = metadata_parts[7]
+			1:
+				print("file loading?")
+		#print(metadata_parts)
+		#print("Loaded:", thing_name, coords_to_place, direction_to_place, model_type, shape_name, root_name, pathway_dna)
+		var second_line = second_line_split(points_line)
+		var third_line = second_line_split(third_impact)
+		#print(second_line)
+		#print("  i data loaded from file : ", metadata_parts,
+		#"  i second_ line : ", second_line , " i  ")
+		match type_of_data:
+			0:
+				analise_data(thing_name, thing_type_file, metadata_parts, second_line, group_number, shape_name)
+			1:
+				instructions_analiser(metadata_parts, second_line, third_line)
+		#print("did we go back? to bbefore analys")
+		
+
+# Function to load and read the text file
+# lines: file with three lines = ["|", "|", "|"]
+func load_array_from_file(file_path: String) -> Array:
+	var lines = []
+	var file = FileAccess.open(file_path, FileAccess.READ)  # Open the file for reading
+	if file != null:
+		while not file.eof_reached():
+			var line = file.get_line()
+			#if not line.trim_edges().is_empty():  # Trim whitespace and check if empty
+			lines.append(line)
+		file.close()
+	else:
+		print("  i Error: File not found -", file_path)
+	#print("  i file loaded, lines : ", lines)
+	return lines
+
+# line [|] becomes ["","","","","",""]
+# Function to parse points from the second line
+func second_line_split(second_line: String) -> Array:
+	var points = []
+	#var array_of_points = []
+	var point_strings = second_line.split("|")
+	for point in point_strings:
+		var coords = point.split(",")
+		var points_amount = coords.size()
+		points.append(coords)
+		#array_of_points.append(points)
+	#print(array_of_points)
+	return points
+
+
+
+
+
+
+
+
+var current_database_instructed
+var thing_to_add
+var node_path
+var path_directory
+var path_for_the_thing
+
+func instructions_analiser(metadata_parts, second_line, third_line):
+	print("metadata_parts : ", metadata_parts)
+	print("second_line : ", second_line)
+	print("third_line : ", third_line)
+	var type = metadata_parts[1]
+	var counter = -1
+	for i in type_of_instruction:
+		counter +=1
+		if type == i:
+			break
+	match counter:
+		0: # assign_priority_to_datapoint
+			node_path = second_line[0][0] + "/" + second_line[1][0]
+			current_database_instructed = get_node(node_path)
+			#current_database_instructed = get_node_by_path()
+			print(" instruction type 0, node_path :", node_path, " current_database_instructed : " , current_database_instructed )
+			current_database_instructed.datapoint_assign_priority(third_line[0][0])
+		1: # assign_things_to_datapoint
+			var database_node_path = second_line[0][0] + "/" + second_line[1][0]
+			current_database_instructed = get_node(database_node_path)
+			print("instruction type 1")
+			for i in third_line:
+				if third_line[0] == i:
+					path_directory = i[0]
+				else:
+					#path_directory
+					path_for_the_thing = i[0]
+				print("lol : ", i)
+				node_path = str(path_directory) + "/" + str(path_for_the_thing)
+				thing_to_add = get_node(node_path)
+				if thing_to_add != null:
+					print("node_path : ", node_path)
+					print("hmm? != null?")
+					print("we probably goty a thing!!!")
+					print("node in tree : ", thing_to_add)
+					current_database_instructed.add_thing_to_datapoint(node_path, thing_to_add)
+		2: # set_max_things_number
+			print("third_line[0][0] : ", third_line[0][0])
+			current_database_instructed.datapoint_max_things_number_setter(third_line[0][0])
+func assign_priority(database_node, priority_to_assign):
+#func datapoint_assign_priority(send_priority_number)
+	match priority_to_assign: 
+		-1:
+			database_node.datapoint_assign_priority(priority_to_assign)
+		0:
+			database_node.datapoint_assign_priority(priority_to_assign)
+		1:
+			database_node.datapoint_assign_priority(priority_to_assign)
+		2:
+			database_node.datapoint_assign_priority(priority_to_assign)
+		3:
+			database_node.datapoint_assign_priority(priority_to_assign)
+
+func assign_things_to_datapoint():
+	pass
+
+
+
+
+
+
+#region analise_data
+#analise_data(thing_name, thing_type, metadata_parts, second_line)
+func analise_data(thing_name_, type, data_to_analyze, second_part, group_number, verion_of_thing):
+	
+	#print("   i data to be analised: ", data_to_analyze)
+	print("   i name of thing : ",thing_name_)
+	print("   i type of thing : ",type)
+	#print("   i thing to create :  ",second_part)
+	#print("thing_type:", thing_type)
+	#print("   i all types of things : ", type_of_thing)
+	just_added_new_node_data = data_to_analyze
+	#pass
+	var counter = -1
+	for i in type_of_thing:
+		counter +=1
+		
+		if type == i:
+			#print("we done it?")
+			#print(counter)
+			break
+		else:
+			#print("   i counter didnt find type of thing, in possible types i   ")
+			continue
+	#print("analyse function bottom, now match")
+	#["thing_0|0.0,0.0,5.0|0.0,0.0,0.0|model|square|akashic_records|akashic_records/thing_0|group_0"]
+	# 0 = Thing_name | 1 = coords | 2 = rotation | 3 = thing type | 4 = thing type version | 5 = main path |6 = path | 7 = group
+	match counter: # 0 = "flat_shape", 1 = "text", 2 = "model", 3 = "button", 4 ="cursor", 5 = "connection", 6 = "screen", 7 = "datapoint"
+		0:
+			print("   i flat_shape i   ")
+			analyzed_file_type = 0
+			create_flat_shape(second_part, group_number, thing_name_, data_to_analyze[1], data_to_analyze[2], verion_of_thing)
+		1:
+			print("   i text i   ")
+			analyzed_file_type = 1
+			create_text_label(second_part, group_number, thing_name_, data_to_analyze[1], data_to_analyze[2], verion_of_thing)
+		2:
+			print("   i model i   ")
+			analyzed_file_type = 2
+			create_array_mesh(second_part, group_number, thing_name_, data_to_analyze[1], data_to_analyze[2], verion_of_thing) #(points: Array, node_name: String = "", coords: String = "0,0,0", to_rotate: String = "0,0,0"):
+		3:
+			print("   i button i   ")
+			analyzed_file_type = 3
+			create_button(second_part, group_number, thing_name_, data_to_analyze[1], data_to_analyze[2], verion_of_thing)
+		4:
+			print("   i cursor i   ")
+			analyzed_file_type = 4
+			create_cursor(second_part, group_number, thing_name_, data_to_analyze[1], data_to_analyze[2], verion_of_thing)
+		5:
+			print("   i connection i   ")
+			analyzed_file_type = 5
+			create_connection(second_part, group_number, thing_name_, data_to_analyze[1], data_to_analyze[2], verion_of_thing)
+		6:
+			print("   i screen i   ")
+			analyzed_file_type = 6
+			create_screen(second_part, group_number, thing_name_, data_to_analyze[1], data_to_analyze[2], verion_of_thing)
+		7:
+			print("   i datapoint i   ")
+			analyzed_file_type = 7
+			create_datapoint(second_part, group_number, thing_name_, data_to_analyze[1], data_to_analyze[2], verion_of_thing)
+		8:
+			print("creating circle")
+			#print(second_part, group_number, thing_name_, data_to_analyze[1], data_to_analyze[2], verion_of_thing)
+			analyzed_file_type = 8
+			create_circle_shape( float(second_part[0][0]), int(second_part[1][0]), group_number, thing_name_, data_to_analyze[1], data_to_analyze[2], verion_of_thing)
+		_:  
+			print("hmmm")
+#endregion
+
+#region more like ideas and lol
+	
+func scene_tree():
+	print_tree_pretty()
+
+#endregion
+
+# Creation of parsed data into types of things
+# ver 0, 5 things : 
+# 0 = "flat_shape", 1 = "text", 2 = "model", 3 = "button", 4 ="cursor", 5 = "connection"
+
+#region Things Creation
+
+# creating circle
+
+# Example usage:
+func create_circle_shape(radius: float, num_points: int, group_number, node_name: String = "", coords: String = "0,0,0", to_rotate: String = "0,0,0", version_of_thing : String = "0"):
+	var points = generate_circle_points(radius, num_points)
+	var points_string = "|".join(points)
+	#print("points_string : ", points_string)
+	var line_pointed = second_line_split(points_string)
+	
+	# Create the shape using your existing create_flat_shape function
+	create_flat_shape(line_pointed, group_number, node_name, coords, to_rotate)
+
+
+func generate_circle_points(radius: float, num_points: int) -> Array:
+	# Ensure minimum 3 points and maximum 33 points
+	num_points = clamp(num_points, 3, 33)
+	
+	var points = []
+	var points_array = []
+	var angle_step = TAU / num_points  # TAU is 2*PI, for a full circle
+	
+	for i in range(num_points):
+		var angle = i * angle_step
+		# Calculate point position using sin/cos
+		var x : float = radius * cos(angle)
+		var y : float = radius * sin(angle)
+		var z : float
+		# Format the point as a string like your other shape points
+		points.append("%0.1f,%0.1f,0.0" % [x, y])
+		#var array_builder : Array = ["%0.1f,%0.1f,0.0" % [x, y]]
+		#points_array.append(array_builder)
+		#print(points)
+	#print(points)
+	return points
+
+
+
+
+
+
+# flat shape creation
+
+#region flat shape
+
+#creation of flat shapes
+
+func create_flat_shape(data_to_write: Array, group_number, node_name: String = "", coords: String = "0,0,0", to_rotate: String = "0,0,0", version_of_thing : String = "0"):
+	#print("    i creating flat shape, data to write : ", data_to_write, " 
+	#node name : ", node_name, " 
+	#cords : ", coords, " 
+	#rotation : ", to_rotate, " 
+	#version_of_thing : ", version_of_thing)
+	#print(data_to_write[0])
+	#print(data_to_write[0][0])
+	
+	var vertices = PackedVector3Array()
+	var indices = PackedInt32Array()
+	
+	# Add center as first vertex
+	vertices.push_back(Vector3.ZERO)  # Index 0 is center
+
+	# Convert data points to Vector3s
+	var vector_points = []
+	for point in data_to_write:
+		var point_vector = Vector3(float(point[0]), float(point[1]), float(point[2]))
+		vector_points.append(point_vector)
+		vertices.push_back(point_vector)
+
+	# Create triangles - fan triangulation from center
+	for i in range(vector_points.size()):
+		var next_i = (i + 1) % vector_points.size()
+		indices.append(0)              # Center point
+		indices.append(i + 1)          # Current vertex (add 1 because center is at 0)
+		indices.append(next_i + 1)     # Next vertex (add 1 because center is at 0)
+	
+	# Create mesh
+	var arr_mesh = ArrayMesh.new()
+	var arrays = []
+	arrays.resize(Mesh.ARRAY_MAX)
+	arrays[Mesh.ARRAY_VERTEX] = vertices
+	arrays[Mesh.ARRAY_INDEX] = indices
+	
+	#print(vertices)
+	#print(indices)
+	
+	arr_mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, arrays)
+	
+	# Create mesh instance
+	var mesh_instance = MeshInstance3D.new()
+	mesh_instance.mesh = arr_mesh
+	
+	# Setup material
+	var material = StandardMaterial3D.new()
+	material.cull_mode = BaseMaterial3D.CULL_DISABLED # Visible from both sides
+	material.albedo_color = Color(0.8, 0.8, 0.8, 1.0) # Default gray color
+	mesh_instance.material_override = material
+	
+	# Use your existing node creation function
+	node_creation(node_name, mesh_instance, coords, to_rotate, group_number)
+#endregion
+
+# Create Label3D with text
+#region create_text_label
+func create_text_label(data_to_write: Array, group_number, node_name: String = "", coords: String = "0,0,0", to_rotate: String = "0,0,0", version_of_thing : String = "0"):
+	#print("    i creating label, data to write : ", data_to_write, " 
+	#node name : ", node_name, " 
+	#cords : ", coords, " 
+	#rotation : ", to_rotate, " 
+	#version_of_thing : ", version_of_thing)
+	# Create Label3D node
+	var text_label = Label3D.new()
+	
+	# Set the text from data (first element of first array)
+	text_label.text = data_to_write[0][0]  # This will get "Akashic_Records"
+	
+	# Optional: Set font size (from second element of second array)
+	text_label.font_size = int(data_to_write[1][0])  # This will get "33"
+	
+	# Optional: Set other Label3D properties
+	text_label.billboard = BaseMaterial3D.BILLBOARD_ENABLED  # Makes text always face camera
+	text_label.no_depth_test = true  # Ensures text is always visible
+	text_label.modulate = Color(1, 1, 1)  # White color
+	
+	# Now send the configured Label3D to node_creation
+	node_creation(node_name, text_label, coords, to_rotate, group_number)
+#endregion
+
+
+
+# Create mesh from points xyz
+#region create_array_mesh
+func create_array_mesh(points: Array, group_number, node_name: String = "", coords: String = "0,0,0", to_rotate: String = "0,0,0", version_of_thing : String = "0"):
+	var vertices = PackedVector3Array()
+	#print("    i creating model, data to write : ", points, " 
+	#node name : ", node_name, " 
+	#cords : ", coords, " 
+	#rotation : ", to_rotate, " 
+	#version_of_thing : ", version_of_thing)
+	# Convert string coordinates to Vector3
+	var vector_points = []
+	for point in points:
+		vector_points.append(Vector3(float(point[0]), float(point[1]), float(point[2])))
+	
+	# Create triangles
+	vertices.append(vector_points[0])
+	vertices.append(vector_points[1])
+	vertices.append(vector_points[2])
+	
+	vertices.append(vector_points[0])
+	vertices.append(vector_points[2])
+	vertices.append(vector_points[3])
+
+	var arr_mesh = ArrayMesh.new()
+	var arrays = []
+	arrays.resize(Mesh.ARRAY_MAX)
+	arrays[Mesh.ARRAY_VERTEX] = vertices
+	
+	arr_mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, arrays)
+	
+	# Create mesh instance and set properties
+	var mesh_instance = MeshInstance3D.new()
+	mesh_instance.mesh = arr_mesh
+	node_creation(node_name, mesh_instance, coords, to_rotate, group_number)
+#endregion
+
+
+
+#
+#region create_button
+func create_button(data_to_write: Array, group_number, node_name: String = "", coords: String = "0,0,0", to_rotate: String = "0,0,0", version_of_thing : String = "0"):
+	print("    i creating button, data to write : ")#, data_to_write, " 
+	#node name : ", node_name, " 
+	#cords : ", coords, " 
+	#rotation : ", to_rotate, " 
+	#version_of_thing : ", version_of_thing)
+#endregion
+
+
+
+# triangle in space, three points in 3d space, 2d too lol
+#region create_cursor
+func create_cursor(data_to_write: Array, group_number, node_name: String = "", coords: String = "0,0,0", to_rotate: String = "0,0,0", version_of_thing : String = "0"):
+	#print("    i creating cursor, data to write : ", data_to_write, " 
+	#node name : ", node_name, " 
+	#cords : ", coords, " 
+	#rotation : ", to_rotate, " 
+	#version_of_thing : ", version_of_thing)
+	var vertices = PackedVector3Array()
+	#print("points = ",points, " node_name = ", node_name ," coords = ", coords," to_rotate = ", to_rotate)
+	# Convert string coordinates to Vector3
+	var triangle_data : Array = [data_to_write[0],data_to_write[1],data_to_write[2]]
+	var triangle_scale = Array(data_to_write[3])
+	var triangle_scale_vec3 : Vector3 = Vector3(float(triangle_scale[0]), float(triangle_scale[1]), float(triangle_scale[2]))
+	#print("triangle_scale_vec3 : ", triangle_scale_vec3)
+	#triangle_scale_vec3 = (float(triangle_scale[0]) , float(triangle_scale[1]), float(triangle_scale[2]))
+	#print("triangle data :" , triangle_data)
+	#print("triangle scale : " , triangle_scale)
+	var vector_points = []
+	for point in triangle_data:
+		#print(" point : ", point[0][0] , point[1][0] , point[2][0])
+		vector_points.append(Vector3(float(point[0][0]), float(point[1][0]), float(point[2][0])))
+		#print("vector_points :", vector_points)
+	
+	# Create triangles
+	#print(vector_points)
+	vertices.append(vector_points[0])
+	vertices.append(vector_points[1])
+	vertices.append(vector_points[2])
+	
+	#vertices.append(vector_points[0])
+	#vertices.append(vector_points[2])
+	#vertices.append(vector_points[3])
+
+	var arr_mesh = ArrayMesh.new()
+	var arrays = []
+	arrays.resize(Mesh.ARRAY_MAX)
+	arrays[Mesh.ARRAY_VERTEX] = vertices
+	
+	arr_mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, arrays)
+	
+	# Create mesh instance and set properties
+	var mesh_instance = MeshInstance3D.new()
+	mesh_instance.mesh = arr_mesh
+	mesh_instance.scale = triangle_scale_vec3
+	
+	var material = StandardMaterial3D.new()
+	material.cull_mode = StandardMaterial3D.CULL_DISABLED  # This makes it visible from both sides
+	material.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED  # Optional: makes it look flat
+	material.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA  # Optional: if you want transparency
+	material.vertex_color_use_as_albedo = true  # Optional: if you want to use vertex colors
+	material.albedo_color = Color(0.69, 0.69, 0.69, 0.69)  # Set the color (white in this case)
+	
+
+	# Apply the material to the mesh instance
+	mesh_instance.material_override = material
+	#print("hmm?")
+	
+	node_creation(node_name, mesh_instance, coords, to_rotate, group_number)
+	#print("cursor created")
+#endregion
+
+
+#
+
+
+#region create_connection
+
+func create_connection(data_to_write: Array, group_number, node_name: String = "", coords: String = "0,0,0", to_rotate: String = "0,0,0", version_of_thing : String = "0"):
+	#print("    i creating connection, data to write : ", data_to_write, " 
+	#node name : ", node_name, " 
+	#cords : ", coords, " 
+	#rotation : ", to_rotate, " 
+	#version_of_thing : ", version_of_thing)
+	
+	# Convert the coordinate strings to Vector3
+	var center_pos = coords.split(",")
+	var center = Vector3(float(center_pos[0]), float(center_pos[1]), float(center_pos[2]))
+	
+	# Convert the line endpoints from data_to_write
+	var point1 = Vector3(
+		float(data_to_write[0][0]),
+		float(data_to_write[0][1]),
+		float(data_to_write[0][2])
+	)
+	
+	var point2 = Vector3(
+		float(data_to_write[1][0]),
+		float(data_to_write[1][1]),
+		float(data_to_write[1][2])
+	)
+	#print("point1 = ", point1)
+	#print("point2 = ", point2)
+	#print("data_to_write[hmm] : ", data_to_write[2])
+	#get_spectrum_color()
+	# Create the lines
+	var mesh_instance = MeshInstance3D.new()
+	var immediate_mesh = ImmediateMesh.new()
+	#add_child(mesh_instance)
+	mesh_instance.mesh = immediate_mesh
+	mesh_instance.name = node_name
+	
+	# Set up material
+	var material = StandardMaterial3D.new()
+	material.shading_mode = StandardMaterial3D.SHADING_MODE_UNSHADED
+	var color_line = float(data_to_write[2][0])
+	#print("color_line : ", color_line)
+	material.albedo_color = get_spectrum_color(color_line)#Color(0.2, 0.8, 1.0, 1.0)  # Light blue color#get_spectrum_color(data_to_write[2])#
+	mesh_instance.material_override = material
+	
+	# Draw the lines
+	immediate_mesh.surface_begin(Mesh.PRIMITIVE_LINES)
+	
+	# Line from point1 to center
+	immediate_mesh.surface_add_vertex(point1 + center)
+	immediate_mesh.surface_add_vertex(center)
+	
+	# Line from center to point2
+	immediate_mesh.surface_add_vertex(center)
+	immediate_mesh.surface_add_vertex(point2 + center)
+	
+	immediate_mesh.surface_end()
+	
+		# Apply rotation if needed
+	if to_rotate != "0,0,0":
+		var rotation = to_rotate.split(",")
+		mesh_instance.rotation_degrees = Vector3(
+			float(rotation[0]),
+			float(rotation[1]),
+			float(rotation[2])
+		)
+	
+	
+	#
+	node_creation(node_name, mesh_instance, coords, to_rotate, group_number)
+	
+	
+	
+	
+#region create_screen
+
+func create_screen(data_to_write: Array, group_number, node_name: String = "", coords: String = "0,0,0", to_rotate: String = "0,0,0", version_of_thing : String = "0"):
+	var vertices = PackedVector3Array()
+	#print("    i creating screen, data to write : ", data_to_write, " 
+	#node name : ", node_name, " 
+	#cords : ", coords, " 
+	#rotation : ", to_rotate, " 
+	#version_of_thing : ", version_of_thing)
+	# Convert string coordinates to Vector3
+	var vector_points = []
+	for point in data_to_write:
+		#vector_points.append(Vector3(float(point[0]), float(point[1]), float(point[2])))
+		vector_points.append(Vector3(float(point[0]), float(point[1]), float(point[2])))
+	
+	# Create triangles
+	vertices.append(vector_points[0])
+	vertices.append(vector_points[1])
+	vertices.append(vector_points[2])
+	
+	vertices.append(vector_points[0])
+	vertices.append(vector_points[2])
+	vertices.append(vector_points[3])
+
+	var arr_mesh = ArrayMesh.new()
+	var arrays = []
+	arrays.resize(Mesh.ARRAY_MAX)
+	arrays[Mesh.ARRAY_VERTEX] = vertices
+	
+	arr_mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, arrays)
+	
+	# Create mesh instance and set properties
+	var mesh_instance = MeshInstance3D.new()
+	mesh_instance.mesh = arr_mesh
+	node_creation(node_name, mesh_instance, coords, to_rotate, group_number)
+#endregion
+
+
+
+
+#region New Code Region
+func create_datapoint(data_to_write: Array, group_number, node_name: String = "", coords: String = "0,0,0", to_rotate: String = "0,0,0", version_of_thing : String = "0"):
+	#print("    i creating datapoint, data to write : ", data_to_write, " 
+	#node name : ", node_name, " 
+	#cords : ", coords, " 
+	#rotation : ", to_rotate, " 
+	#version_of_thing : ", version_of_thing)
+	
+	var data_point = Node3D.new()
+	data_point.set_script(DataPointScript)
+	
+	var message_tester 
+	message_tester = data_point.power_up_data_point(node_name, int(version_of_thing), data_to_write)
+	print("message_tester : " , message_tester)
+	
+	node_creation(node_name, data_point, coords, to_rotate, group_number)
+#endregion
+
+
+#endregion
+
+
+
+
+#region create color from value
+func get_spectrum_color(value: float) -> Color:
+	# Ensure value is between 0 and 1
+	value = clamp(value, 0.0, 1.0)
+	
+	# Map 0-1 to our 9 color points
+	var color_index = value * 8  # 8 segments for 9 colors
+	
+	# Define our color points
+	var colors = [
+		Color(0.0, 0.0, 0.0),      # 1. Black
+		Color(0.45, 0.25, 0.0),    # 2. Brown
+		Color(1.0, 0.0, 0.0),      # 3. Red
+		Color(1.0, 0.5, 0.0),      # 4. Orange
+		Color(1.0, 1.0, 0.0),      # 5. Yellow
+		Color(1.0, 1.0, 1.0),      # 6. White
+		Color(0.0, 1.0, 0.0),      # 7. Green
+		Color(0.0, 0.0, 1.0),      # 8. Blue
+		Color(0.5, 0.0, 0.5)       # 9. Purple
+	]
+	
+	# Find the two colors to interpolate between
+	var lower_index = floor(color_index)
+	var upper_index = ceil(color_index)
+	
+	# Get interpolation factor between these two colors
+	var t = color_index - lower_index
+	
+	# Interpolate between the two closest colors
+	return colors[lower_index].lerp(colors[min(upper_index, 8)], t)
+#endregion
+
+
+#endregion
+
+
+
+# Editing Scene_tree
+# ver 0, 4 things
+# 0 = add_node, 1 = set position, 2 = set rotation, 3 = add parsed data 
+
+#region node_creation()
+func node_creation(node_name, crafted_data, coords, to_rotate, group_number):
+	# Set position
+	crafted_data.add_to_group(group_number)
+	var pos_parts = coords.split(",")
+	var position = Vector3(float(pos_parts[0]), float(pos_parts[1]), float(pos_parts[2]))
+	#var position2 = Vector3(float(0.0), float(0.0), float(0.0))
+	crafted_data.position = position
+	
+	# Set rotation
+	#print(" to_rotate : ", to_rotate)
+	var rot_parts = to_rotate.split(",")
+	#print(" rot_parts : ", rot_parts)
+	var rotation_euler = Vector3(float(rot_parts[0]), float(rot_parts[1]), float(rot_parts[2]))
+	#print(" rotation_euler : ", rotation_euler)
+	crafted_data.rotation_degrees = rotation_euler
+	#print("before? name? = ", crafted_data.name)
+	# Set name if provided
+	if node_name != "":
+		crafted_data.name = node_name
+	#print(crafted_data.name)
+	add_child(crafted_data)#.reparent(just_added_new_node_data[5]
+	var containter_node = get_node(just_added_new_node_data[5])
+	#print("containter_node : ", containter_node)
+	crafted_data.reparent(containter_node)
+	#print(crafted_data.scale)
+	#print("     i added node at :", coords, " name : ", node_name)
+	new_node_added = crafted_data
+	#print("crafted_data.size : ", crafted_data.scale)
+	#add_collision_to_thing(crafted_data)
+	return crafted_data
+	
+	
+	
+	
+	
+func add_collision_to_thing(thing_node):
+	#print("thing_node.position : ", thing_node.position)
+	var static_body = StaticBody3D.new()
+	#static_body.position = thing_node.position
+	thing_node.add_child(static_body)
+	
+	var collision_shape = CollisionShape3D.new()
+	#collision_shape.position = thing_node.position
+	static_body.add_child(collision_shape)
+	
+#
+	
+	# Turn on visibility
+	#collision_shape.debug_draw = CollisionShape3D.DEBUG_DRAW_ALWAYS  # Always show shape
+	#CollisionShape3D.DEBUG_DRAW_ON_SELECTION# to show only when selected
+	
+	# Get mesh data to determine shape size
+	var mesh_instance = thing_node as MeshInstance3D
+	if mesh_instance and mesh_instance.mesh:
+		var aabb = mesh_instance.mesh.get_aabb()
+		
+		match thing_node.name:
+			"thing_0", "thing_4": # Square/Screen models
+				var shape = BoxShape3D.new()
+				shape.size = aabb.size * thing_node.scale
+				collision_shape.shape = shape
+				
+			"thing_2": # Triangle (cursor)
+				var shape = ConvexPolygonShape3D.new()
+				var vertices = mesh_instance.mesh.get_faces()
+				shape.points = vertices
+				collision_shape.shape = shape
+				
+			"thing_3": # Line (connection)
+				var shape = CapsuleShape3D.new()
+				shape.radius = 0.1  # Thin collision for line
+				shape.height = aabb.size.length()
+				collision_shape.shape = shape
+				
+			_: # Default fallback
+				var shape = BoxShape3D.new()
+				shape.size = aabb.size
+				collision_shape.shape = shape
+	
+	# Enable physics
+	static_body.collision_layer = 1
+	static_body.collision_mask = 1
+	
+func node_mover(node_name, node_path, node_new_path):
+	pass
+	
+#endregion

@@ -1,0 +1,8 @@
+func before_time_blimp(how_many_finished, how_many_shall_been_finished):
+	# how much time after delta?
+	# i dunno, we would need to check it and store it
+	# like clockwork
+	# the warp of space and time
+	# first make one here :
+	#print_tree_pretty()
+	var before_blimp_time = Time.get_ticks_msec()

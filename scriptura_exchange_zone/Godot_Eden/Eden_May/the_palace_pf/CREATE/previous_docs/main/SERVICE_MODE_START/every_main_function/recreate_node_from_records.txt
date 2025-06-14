@@ -1,0 +1,70 @@
+func recreate_node_from_records(container_name: String, node_type: String, records: Dictionary):
+	print("Attempting to recreate %s for container %s" % [node_type, container_name])
+	
+	var records_set_name = container_name + "records"
+	var node_data = null
+	
+	# Find the original node data in records
+	if records.has(records_set_name):
+		for record in records[records_set_name]["content"]:
+			if record[0][3][0] == node_type:  # Check node type
+				node_data = record[0]
+				break
+	
+	if node_data:
+		match node_type:
+			"datapoint":
+				var data_point = Node3D.new()
+				data_point.set_script(DataPointScript)
+				data_point.setup_main_reference(self)
+				
+				# Recreate with original parameters
+				var version = node_data[4][0]  # Version from records
+				var setup_data = node_data[5]  # Setup data from records
+				data_point.power_up_data_point(node_data[0][0], int(version), setup_data)
+				
+				# Add to scene tree
+				var node_path = node_data[6][0]
+				tasked_children(data_point, node_path)
+				
+				# Update tree data
+				tree_mutex.lock()
+				scene_tree_jsh["main_root"]["branches"][container_name]["datapoint"] = {
+					"datapoint_name": node_data[0][0],
+					"datapoint_path": node_path,
+					"node": data_point
+				}
+				tree_mutex.unlock()
+				
+			"container":
+				var container = Node3D.new()
+				container.set_script(ContainterScript)
+				container.name = node_data[0][0]
+				
+				if container.has_method("container_initialize"):
+					container.container_initialize(node_data[5])
+				
+				var node_path = node_data[6][0]
+				tasked_children(container, node_path)
+				
+				tree_mutex.lock()
+				scene_tree_jsh["main_root"]["branches"][container_name]["node"] = container
+				scene_tree_jsh["main_root"]["branches"][container_name]["status"] = "active"
+				tree_mutex.unlock()
+			
+			_:
+				print("Unknown node type for recreation: ", node_type)
+		
+		# Log recovery attempt
+		log_error_state("node_recreation", {
+			"container": container_name,
+			"node_type": node_type,
+			"success": true
+		})
+	else:
+		print("Failed to find data for node recreation")
+		log_error_state("node_recreation_failed", {
+			"container": container_name,
+			"node_type": node_type,
+			"reason": "no_data_found"
+		})

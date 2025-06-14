@@ -1,0 +1,43 @@
+# Universal Entity Rules - The Perfect Game Rules
+# These rules ensure the game remains stable and "sane"
+
+# === PERFORMANCE RULES ===
+# Keep the game running smooth
+WHEN fps < 25 THEN unload_distant_objects
+WHEN fps < 20 THEN force_cleanup
+WHEN fps < 15 THEN emergency_mode
+
+# Memory management
+WHEN memory > 500MB THEN optimize_scene
+WHEN memory > 800MB THEN force_cleanup
+WHEN memory > 1000MB THEN emergency_cleanup
+
+# Node count management
+WHEN node_count > 500 THEN freeze_distant_scripts
+WHEN node_count > 800 THEN unload_decorations
+WHEN node_count > 1000 THEN optimize_scene
+
+# === SPAWNING RULES ===
+# Dynamic world population
+WHEN objects < 20 THEN spawn_from_list advanced_patterns.txt
+WHEN player_near spawn_point THEN spawn_interactive_objects
+WHEN time_of_day == night THEN spawn_night_creatures
+
+# === INTERACTION RULES ===
+# Make the world interactive
+WHEN player_near tree THEN make_tree_talk
+WHEN player_near console_trigger THEN show_console_message
+WHEN player_health < 30 THEN spawn_health_pickup
+
+# === TIME-BASED RULES ===
+# Regular maintenance
+EVERY 10s THEN check_performance
+EVERY 30s THEN update_floodgates
+EVERY 60s THEN save_game_state
+EVERY 120s THEN optimize_resources
+
+# === UNIVERSAL ENTITY SPECIAL RULES ===
+# The dream realized
+WHEN universal_entity_active THEN maintain_perfection
+WHEN satisfaction < 80 THEN improve_performance
+WHEN error_detected THEN self_heal

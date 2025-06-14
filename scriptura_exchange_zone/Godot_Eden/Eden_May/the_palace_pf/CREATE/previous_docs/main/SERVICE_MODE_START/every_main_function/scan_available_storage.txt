@@ -1,0 +1,31 @@
+func scan_available_storage():
+	#print("Scanning available storage...")
+	
+	# For Windows: Check drives A-Z
+	if OS.get_name() == "Windows":
+		for ascii in range(65, 91):  # A-Z in ASCII
+			var drive = char(ascii) + ":/"
+			var dir = DirAccess.open(drive)
+			if dir != null:
+				#print("Found drive: ", drive)
+				available_directiories.append(drive)
+				#print(" available_directiories : " , available_directiories)
+	
+	# For Android: Check common storage paths
+	elif OS.get_name() == "Android":
+		var common_paths = [
+			"/storage/emulated/0/",  # Internal storage
+			"/sdcard/",              # Common symlink to internal storage
+			"/storage/"              # Parent directory for all storage
+		]
+		
+		for path_s_a_s in common_paths:
+			var dir = DirAccess.open(path)
+			if dir != null:
+				#print("Found storage: ", path)
+				# List all storage devices in /storage/
+				if path_s_a_s == "/storage/":
+					var contents = dir.get_directories()
+					for storage in contents:
+						print("Storage device found: /storage/" + storage)
+	return available_directiories

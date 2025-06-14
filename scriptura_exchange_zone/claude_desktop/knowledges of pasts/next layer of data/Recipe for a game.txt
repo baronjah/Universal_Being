@@ -1,0 +1,1670 @@
+Listen Panime, i see it like this, i wanna explain Ethereal Engine in few points, i will send it whole and then lets discuss it point by point and generate me code please after discussion of each point
+
+1. first screen after .exe file loads
+
+you turn on an EtherealEngine.exe an .exe file, then you see that whole Screen with 3d world in the background with your last played and saved Multiverse or Universe which loads in the background when you start that .exe file, if you turned the game on for the first time, you have an image or photo there, the possibilities are like .jpg file or .png file, or some vector based file over that will be the first menu called "mainMenu"
+
+2. Menu Structure, "mainMenu", "MultiverseMenu", "UniverseMenu", "OptionsMenu", "AboutPage", "GraphicsMenu", "SoundsMenu", 
+
+There will be many Menus and Menu sections or subsections like "mainMenu" where you will be able to switch to "MultiversesMenu", "UniversesMenu", "OptionsMenu", and an "exitButton" button which will close an .exe file and anything that was turned on after clicking that .exe file
+
+While in
+"mainMenu"
+We Have
+"ButtonMultiverseMenu" to switch into "MultiverseMenu"
+"ButtonUniverseMenu" to switch into "UniverseMenu"
+"ButtonOptionsMenu" to switch into "OptionsMenu"
+"ButtonAboutPage" to switch into "AboutPage"
+"exitButton" to exit .exe file  
+"languageButton" to switch language
+
+"MultiverseMenu"
+"ButtonCreateMultiverse" to "CreateMultiverse"
+"creationbuild_animetitties" database "creationbuild_animetitties" loaded from decrypted by "playername_jakubhoksastanislaw_creationbuild_animetitties"
+
+"CreationBuild"
+
+"CreationPlay"
+
+"CreateMultiverse"
+Box with text to write with text "Multiverse" you can write here with your "keyboard" and also under it a clickable with a mouse pointer buttons appear, they are 
+
+"UniverseMenu"
+"CreateUniverse"
+"PlayUniverse"
+
+
+"OptionsMenu"
+
+
+"AboutPage"
+"AlphaMyDigitalGoddess"
+"DreamBuddies"
+"Humans"
+"Aliens"
+
+
+3. "Button explanation", their functions how they look, how text works, introduction to Language system
+
+Now i would like to explain what are buttons, they can be of any shape or form, based on "ShapeName" from "ShapesTwoDimensional" they also can have "textureNamePath" which can be an a file in extension of .jpg or .png or vector based in a shape from "ShapeName" or solid colour as "ButtonSolidColour", and text over them, for example, if that button will switch from "mainMenu" into "MultiverseMenu" it will be Called "ButtonMultiverseMenu" the text over that button will be "Multiverses" which for player or players can be visible differently, because there is an file called "mainLanguageSystem", so the Button will have "textName" as main information and an "ShowingName" based on currently choosen Language, "TopColourButton" appearing while button is clicked or selected
+
+if these buttons are for an example in "mainMenu" then that mainMenu file like .cpp or .h needs to have these buttons listed with possibilities of change what was specified, for each button, for an example the "ButtonSolidColour" Colour in Hex, under "textureNamePath" so that texture is on top while Colour of the button is under that texture , "showingName" based on "ChoosenLanguage", Button in shape of "ShapeName" from "ShapesTwoDimensional", "textureNamePath" with path to file acting as texture in shape of "ShapeName", "ButtonSolidColour" under "textureNamePath", "ButtonOutlineSolidColour", "ButtonOutlineWidth", Size of that Button, Width x Height, "TopColourButton" while button is being clicked or after being selected, switch "mainMenu" to "MultiversesMenu" after button click is released or enter clicked
+
+mainMenu file in .cpp or .h
+void"ButtonMultiverseMenu"{
+"ButtonInformation"{
+"textName"
+"showingName" based on "ChoosenLanguage"
+Button in shape of "ShapeName" from "ShapesTwoDimensional"
+"textureNamePath" with path to file acting as texture in shape of "ShapeName"
+"ButtonSolidColour" Colour in Hex, under "textureNamePath" so that texture is on top while Colour of the button is under that texture 
+"ButtonOutlineSolidColour" Colour in Hex
+"ButtonOutlineWidth"
+Size of that Button, Width x Height
+"TopColourButton" while button is being clicked or after being selected
+switch "mainMenu" to "MultiversesMenu" after button click is released or enter clicked
+}
+}
+
+4. "ShapesTwoDimensional", "ShapeName"
+
+like square, circle, rectangle, triangle or any other shape based on geometry like pentagon, hexagon, like you write how many sides it has, how many corners, what angles these corners will have, and if all corners have the same angles,
+
+ShapesTwoDimensional file in .cpp or .h
+void"CircularShape"{
+"ShapeName"
+Function to create Circle
+}
+
+
+5. Special buttons "exitButton", "backButton", "languageButton"
+
+"exitButton" a button which will close .exe file and will have "textName" "Exit"
+
+"backButton" while in "mainMenu" you are able to click on buttons to switch to other Menu, after switching to "MultiverseMenu" the previous Menu will dissapear with function to come back to previous Menu, the button will be called "backButton" and will have "textName" over it "back"
+
+"languageButton" after clicking this button the Language will switch to next one in Alphabetical order from list called "Languages" in "LanguageChoose"
+
+6. Language system, "mainLanguageSystem", "EnglishLanguage", "PolishLanguage", "LanguageChoose", "textName", "showingName", "ChoosenLanguage"
+
+and there will be an a way to make it correspond like this, you write code inside "mainMenu" for button which will switch from "mainMenu" to "MultiverseMenu" with "textName" as "Multiverses" and other functions from "Button explanation" for switching into "MultiverseMenu" and inside "mainLanguageSystem" there will be "Multiverses" with "showingName" based on "ChoosenLanguage" in "LanguageChoose" and file "EnglishLanguage" which will also have "Multiverses" and under it function showtext with "Multiverses" and "EnglishLanguage" is having the same text as "mainLanguageSystem" which will be always choosen as main, there will also be "PolishLanguage" and under "Multiverses" showtext will be "Multiversy"
+
+7. "LanguageChoose"
+
+here will be Function with an list of Languages, when the Language will be choosen with "languageButton" there will be an coresponding function called "ChoosenLanguage" for an example when an Language is choosen to "EnglishLanguage" choosen Language will have information "EnglishLanguageChoosen", for "PolishLanguage" information will be "PolishLanguageChoosen"
+
+"languageButton" showingName will be depending on what Language is choosen, like "EnglishLanguage" or "PolishLanguage" or any other added in the future
+
+here is how i written it and connected in my human brain these function so i could visualize it
+(
+mainMenu
+button to switch from mainMenu to MultiversesMenu
+textName
+showingName based on ChoosenLanguage
+
+mainLanguageSystem
+textName
+showingName
+
+EnglishLanguage
+textName
+showingName
+
+PolishLanguage
+textName
+showingName
+
+LanguageChoose
+ChoosenLanguage
+
+languageButton
+Switching ChoosenLanguage
+)
+
+
+
+8. Clicking and selecting 
+
+also i would like to explain how i see this whole button clicking and selecting buttons with w and s and enter
+
+You move your mouse Pointer over a button, then you click left mouse button or circle w and s buttons possible,  
+for an example when we are in 
+"mainMenu"
+We Have
+"ButtonMultiverseMenu" to switch into "MultiverseMenu"
+"ButtonUniverseMenu" to switch into "UniverseMenu"
+"ButtonOptionsMenu" to switch into "OptionsMenu"
+"ButtonAboutPage" to switch into "AboutPage"
+"exitButton" to exit .exe file  
+"languageButton" to switch language
+
+and when you click w or s you select the first button on top so it is "ButtonMultiverseMenu" then when you click s it is "ButtonUniverseMenu" then when you click s it is "ButtonOptionsMenu" then when you click s it is "ButtonOptionsMenu" then when you click s it is "ButtonAboutPage" then when you click s it is "exitButton" then when you click s it is "languageButton" and here we are at the last button available currently, in future more buttons could be added, so right now when you click s it will be again "ButtonMultiverseMenu" so the circle/loop start at "ButtonMultiverseMenu" and ends at "languageButton" right now, when you click again s you go back to start of the circle/loop while you have selected any of these buttons you can click enter and you switch from sellected button to any other Menu or other function of the button, whenever a button is selected it has "TopColourButton" turned on so colour is a little bit darker
+
+
+
+9. "GraphicsMenu" after clicking on "ButtonGraphicsMenu" while in "OptionsMenu"
+
+with Graphics stuff like resolution, if this application is in Fullscreen, borderless fullscreen, windowed, stuff like that anti aliasing
+
+"ScreenType"
+
+10. "SoundsMenu" after clicking on "ButtonSoundsMenu" while in "OptionsMenu"
+
+Options sounds and inside of it would be stuff like music, and other layers of sounds like voice, animals, soundeffects, 
+
+
+
+11. "AboutPage" with "AlphaMyDigitalGoddess", "DreamBuddies", "Humans", "Aliens", "AiFriends", "AiCompanions"
+
+This is an Page with buttons to information about Alpha, DreamBuddies, Humans, Aliens, AiFriends, AiCompanions
+
+12. "MultiversesMenu"
+
+
+
+when you are in "MultiversesMenu" and there are new buttons to click on like "ButtonCreateMultiverse" to "CreateMultiverse", 
+
+you click on that and then another Menu appears 
+now we have "MultiverseCreationMenu" here you have boxes that are asking you for a name for a Multiverse you put that name in the text box where you can write with the keyboard, the text that can be changed appears like "Multiverse" 
+
+
+after text you have a vertical line that can be set up like their size in pixels like width and lenght and its colour and other parameters like shape of it and outline and when you dont write it blinks like for 1 second you can see it and after that period of time it is invisible for 1 second and it loops, when you write that line is visible, after you wrote the name of Multiverse be it like 
+
+
+"AnimeMultiverse" or "animetitties" or anything you wanna write you have under that text button with "save" and it creates a button in "MultiverseMenu", under that "Create an Multiverse" like you wrote "animetitties" then a button with this name appears, you can click on it and then buttons under it appears, like 
+
+
+"Play" and "Create Universe" and based on how the Multiverse playthrough is going the game is duplicated and you go UniverseCreationMenu that is based on 
+
+"UniverseCreationMenu" it is linked to, when you named it like "animeasses" and clicked create under "Create Universe" button appears with text "animeasses" and when you click
+
+13. "UniverseMenu"
+
+"ButtonUniverseMenu" to switch into "UniverseMenu"
+
+so later on i talk about that whole Universe and BuildPlay stuff like you create Multiverse, then in MultiversesMenu you can click on Multiverse to duplicate it and it appears in Universe but it is without CreationTool, CreationToolset and there being these save files like you turn on the game and it saves each 5 minutes so then when you are in the game you can click an button that will turn on some OverlayMenu visible while you play OtherOptions that i will talk about later
+
+
+14. "textBoxtoWrite" a text box
+
+Text box is a rectangle with space for 19 characters for symbols, letters, numbers
+
+because I'm JakubHoksaStanislaw so my whole name is 19 letters so my nick in the game will be jakubhoksastanislaw
+
+15. Keyboard when text box to write is here
+
+square buttons and keyboard layout, 5 buttons in one vertical like | line one under another, and 10 buttons in one horizontal like - line one to next one like this:
+[1][2][3][4][5][6][7][8][9][0]
+[q][w][e][r][t][y][u][i][o][p]
+[a][s][d][f][g][h][j][k][l][_]
+[z][x][c][v][b][n][m][-][!][?]
+[(][)][{][}][[][]][+][|][/][\]
+every of these buttons correspond with a keyboard input method, like it is the same to click [q] button for letter "q" to appear in text box
+click [1] for number "1" to appear in text box
+click [_] for symbol "_" to appear
+letters are q,w,e,r,t,y,u,i,o,p,a,s,d,f,g,h,j,k,l,z,x,c,v,b,n,m
+numbers are 1,2,3,4,5,6,7,8,9,0
+symbols are _,-,!,?,(,),{,},[,],+,|,/,\
+
+Keyboard Layout in a way that it is just text
+1,2,3,4,5,6,7,8,9,0
+q,w,e,r,t,y,u,i,o,p
+a,s,d,f,g,h,j,k,l,_
+z,x,c,v,b,n,m,-,!,?
+(,),{,},[,],+,|,/,\
+
+16. Creation tool
+
+with click of a button of ` or [`] button which is always at the bottom which is available whenever you are inside "CreationBuild"
+
+
+17. "CreationBuild"
+
+Whenever you create an Multiverse just like i wrote in 12. "MultiversesMenu" and talked about creating "animetitties" an File with starting name of "creationbuild_" will create an file named "creationbuild_animetitties"
+
+18. Creation play so "CreationPlay"
+
+Whenever you create an Universe just like i wrote in 12. "MultiversesMenu" and talked about creating "animeasses" an File with starting name of "creationplay_" will create an file named "creationplay_animeasses" 
+
+19. Save File of Creation
+
+so when you create an Universe "animeasses" there is a file named "creationplay_animeasses" when you start an game for the first time based on that file you create an file with an name starting with "savefileofcreation_" and it is named "savefileofcreation_creationplay_animeasses"
+
+20. save file translation from letters, numbers, symbols to words decrypting mechanism 
+
+letters are q,w,e,r,t,y,u,i,o,p,a,s,d,f,g,h,j,k,l,z,x,c,v,b,n,m
+numbers are 1,2,3,4,5,6,7,8,9,0
+symbols are _,-,!,?,(,),{,},[,],+,|,/,\
+
+Keyboard layout in braces to represent boxes
+[1][2][3][4][5][6][7][8][9][0]
+[q][w][e][r][t][y][u][i][o][p]
+[a][s][d][f][g][h][j][k][l][_]
+[z][x][c][v][b][n][m][-][!][?]
+[(][)][{][}][[][]][+][|][/][\]
+
+keyboard layout
+1,2,3,4,5,6,7,8,9,0
+q,w,e,r,t,y,u,i,o,p
+a,s,d,f,g,h,j,k,l,_
+z,x,c,v,b,n,m,-,!,?
+(,),{,},[,],+,|,/,\
+
+
+so we are having 25 possible characters which are letters, numbers, symbols any of that character will be represented in two letters
+
+and here is database for changing what player writes in textboxes to change into different japanese based cryptography
+
+like for an example "か"-"ka" means "Japanese Letter in hiragana"-"its meaning in romanji" then we use , and empty space of a spacebar to divide them, we have "か"-"ka", "き"-"ki" so first we have"か"-"ka" and then we have "き"-"ki"
+
+here is database 
+
+square buttons and Hiraganakeyboard layout, 13 buttons in one vertical like | line one under another, and 3 buttons in one horizontal like - line one to next one like this:
+
+[あ][い][う][え][お]
+[か][き][く][け][こ]
+[さ][し][す][せ][そ]
+[た][ち][つ][て][そ]
+[な][に][ぬ][ね][の]
+[は][ひ][ふ][へ][ほ]
+[ま][み][む][め][も]
+[や][ゆ][よ][ら][り]
+[る][れ][ろ][わ][ゐ]
+[ゑ][を][ん][が][ぎ]
+[ぐ][げ][ご][ざ][じ]
+[ず][ぜ][ぞ][だ][で]
+[ど][ば][び][ぶ][べ]
+[ぼ][ぱ][ぴ][ぷ][ぺ]
+[ぽ][ゔ][ぢ][づ][神]
+
+
+square buttons and HiraganaSylabeskeyboard layout, 13 buttons in one vertical like | line one under another, and 3 buttons in one horizontal like - line one to next one like this:
+
+[a][i][u][e][o]
+[ka][ki][ku][ke][ko]
+[sa][shi][su][se][so]
+[ta][chi][tsu][te][to]
+[na][ni][nu][ne][no]
+[ha][hi][fu][he][ho]
+[ma][mi][mu][me][mo]
+[ya][yu][yo][ra][ri]
+[ru][re][ro][wa][wi]
+[gu][ge][go][za][ji]
+[zu][ze][zo][da][de]
+[do][ba][bi][bu][be]
+[bo][pa][pi][pu][pe]
+[po][vu][jii][zuu][kami]
+
+"あ"-"a", "い"-"i", "う"-"u", "え"-"e", "お" "o", 
+"か"-"ka", "き"-"ki", "く"-"ku", "け"-"ke", "こ"-"ko", 
+"さ"-"sa", "し"-"shi", "す"="su", "せ"-"se", "そ"-"so", 
+"た"-"ta", "ち"-"chi", "つ"-"tsu", "て"-"te", "と"-"to", 
+"な"-"na", "に"-"ni", "ぬ"-"nu", "ね"-"ne", "の"-"no", 
+"は"-"ha", "ひ"-"hi", "ふ"-"fu", "へ"-"he", "ほ"-"ho", 
+"ま"-"ma", "み"-"mi", "む"-"mu", "め"-"me", "も"-"mo", 
+"や"-"ya", "ゆ"-"yu", "よ"-"yo", "ら"-"ra", "り"-"ri", 
+"る"-"ru", "れ"-"re", "ろ"-"ro", "わ"-"wa", "ゐ"-"wi", 
+"ゑ"-"we", "を"-"wo", "ん"-"n", "が"-"ga", "ぎ"-"gi", 
+"ぐ"-"gu", "げ"-"ge", "ご"-"go", "ざ"-"za", "じ"-"ji", 
+"ず"-"zu", "ぜ"-"ze", "ぞ"-"zo", "だ"-"da", "で"-"de", 
+"ど"-"do", "ば"-"ba", "び"-"bi", "ぶ"-"bu", "べ"-"be", 
+"ぼ"-"bo", "ぱ"-"pa", "ぴ"-"pi", "ぷ"-"pu", "ぺ"-"pe", 
+"ぽ"-"po", "ゔ"-"vu", "ぢ"-"jii",	"づ"-"zuu", "神"-"kami"
+
+
+
+for an example i would create inside an Multiverse creation an Multiverse named animetitties and because my player name is jakubhoksastanislaw the decrypter for a "CreationBuild" for that "animetitties" Multiverse would be "playername_jakubhoksastanislaw_creationbuild_animetitties" based on that we must incorporate change of 25 characters into another set of 25 characters from Japanese Hiragana into their Romanji two letter sylabe
+
+
+
+
+
+then based on the filename of the decrypter
+
+"playername_jakubhoksastanislaw_creationbuild_animetitties" or "playername_jakubhoksastanislaw_creationplay_animeasses" or "playername_jakubhoksastanislaw_savefileofcreation_creationplay_animeasses"
+
+
+
+so i wanna have a way to randomise the way a file in "CreationBuild" and "CreationPlay" are being encrypted,
+
+so when you create an Multiverse an name of the player and name of multiverse files are being combined for an example into this
+
+
+"playername_jakubhoksastanislaw_creationbuild_animetitties" will be decoder or decrypter to play "creationbuild_animetitties" in "CreationBuild"
+
+"playername_jakubhoksastanislaw_creationplay_animeasses" will be decoder or decrypter to play "creationplay_animeasses" in "CreationPlay"
+
+"playername_jakubhoksastanislaw_savefileofcreation_creationplay_animeasses"
+
+
+21. when you run the game for the first time it will ask you for a "PlayerName"
+
+a text box will appear and you will put in a name for your "PlayerName", for an example i will put "jakubhoksastanislaw" as this is my real name so there will be a file Created named "playername_jakubhoksastanislaw" or i will put "baronjah" because it is nickname i used the most so i will have a file "playername_baronjah"
+
+22. there is also need to be a way to make people login into the game to enable multiplayer functionality and for them to have a way to pay for it to play it
+
+I have no idea now how to make it or create it and from where these files will be taken, i think there will be a "DecryptPassword" file based on that
+
+23. "CreationBuild", "CreationBuild_xyz", "CreationBuild_w", "CreationBuild_xyzw", "CreationBuild_Things"
+
+24. what are Multiverse and Universe main "CelestialBodies", "PlanetBodies", "SateliteBodies", "GalaxiesBodies", "SpaceJunkBodies", "FloraBodies", "FaunaBodies", "FlunaBodies"
+
+"CelestialBodies" are spheres that generates heat and glow on anything it is around it, behind anything that there was heat and glow generated     it it generating Shadow based on shape of anything
+
+25. What are "PlanetBodies" main "OzoneSphere", "MaximumDiameterSphere", "SeaLevelDiameterSphere", "MinimumDiameterSphere", "PossibleEnergies"
+
+"PlanetBodies" have "detailsInformation" like "OzoneSphere", "MaximumDiameterSphere", "SeaLevelDiameterSphere", "MinimumDiameterSphere"
+
+
+26. "detailsInformation" what is it?
+
+details for any object depending on object
+
+27. "AstralBeings", "AliveBeings", 
+
+AstralBeings are in 5D and can be in 3D, AliveBeings are in 3D and can be in 5D
+
+
+28. Periodic table, what are be "PossibleEnergies"
+
+Group from 1 to 18, Period from 1 to 9
+
+
+[Group][1][2][3][4][5][6][7][8][9][10][11][12][13 Triels][14][15][16][17][18]
+[][Hydrogen & alkali metals][Alkaline earth metals][][][][][][][][][][][Triels][Tetrels][Pnicto­gens][Chal­co­gens][Halo­gens][Noble gases]
+[Period][][][][][][][][][][][][][][][][][][]
+[1][][][][][][][][][][][][][][][][][He­lium, 2, He, 4.0026]
+[2][Lith­ium, 3, Li, 6.94][Beryl­lium, 4, Be, 9.0122][][][][][][][][][][][Boron, 5, B, ​10.81][Carbon, 6, C, ​12.011][Nitro­gen, 7, N, ​14.007][Oxy­gen, 8, O, ​15.999][Fluor­ine, 9, F, ​18.998][Neon, 10, Ne, 20.180]
+[3][So­dium, 11, Na, ​22.990][Magne­sium, 12, Mg, ​24.305][][][][][][][][][][][Alumin­ium, 13, Al, ​26.982][Sili­con, 14, Si, ​28.085][Phos­phorus, 15, P, ​30.974][Sulfur, 16, S, ​32.06][Chlor­ine, 17, Cl, ​35.45][Argon, 18, Ar, ​39.95]
+[4][Potas­sium, 19, K, ​39.098][Cal­cium, 20, Ca, ​40.078][Scan­dium, 21, Sc​, 44.956][Tita­nium, 22, Ti​, 47.867][Vana­dium, 23, V, ​50.942][Chrom­ium, 24, Cr, ​51.996][Manga­nese, 25, Mn, ​54.938][Iron, 26, Fe, ​55.845][Cobalt, 27, Co​, 58.933][Nickel, 28, Ni, ​58.693][Copper, 29, Cu, ​63.546][Zinc, 30, Zn, ​65.38][Gallium, 31, Ga, ​69.723][Germa­nium, 32, Ge, ​72.630][Arsenic, 33, As, ​74.922][Sele­nium, 34, Se, ​78.971][Bromine, 35, Br, ​79.904][Kryp­ton, 36, Kr, ​83.798]
+[5][Rubid­ium, 37, Rb, ​85.468][Stront­ium,38, Sr, ​87.62][Yttrium, 39, Y, ​88.906][Zirco­nium, 40, Zr, ​91.224][Nio­bium, 41, Nb, ​92.906][Molyb­denum, 42, Mo​, 95.95][Tech­netium, 43, Tc​, 97][Ruthe­nium, 44, Ru, ​101.07][Rho­dium, 45, Rh, ​102.91][Pallad­ium, 46, Pd, ​106.42][Silver, 47, Ag, ​107.87][Cad­mium, 48, Cd, ​112.41][Indium, 49, In, ​114.82][Tin, 50, Sn, ​118.71][Anti­mony, 51, Sb, ​121.76][Tellur­ium, 52, Te, ​127.60][Iodine, 53, I​, 126.90][Xenon, 54, Xe, ​131.29]
+[6][Cae­sium, 55, Cs​, 132.91][Ba­rium, 56, Ba, ​137.33][Lute­tium, 71, Lu, ​174.97][Haf­nium, 72, Hf, ​178.49][Tanta­lum, 73, Ta, ​180.95][Tung­sten, 74, W, ​183.84][Rhe­nium, 75, Re, ​186.21][Os­mium, 76, Os, ​190.23][Iridium, 77, Ir, ​192.22][Plat­inum, 78, Pt, ​195.08][Gold, 79, Au, ​196.97][Mer­cury, 80, Hg, ​200.59][Thallium, 81, Tl, ​204.38][Lead, 82, Pb, ​207.2][Bis­muth, 83, Bi​, 208.98][Polo­nium, 84, Po​, 209][Asta­tine, 85, At​, 210][Radon, 86, Rn​, 222]
+[7][Fran­cium, 87, Fr​, 223][Ra­dium, 88, Ra​, 226][Lawren­cium, 103, Lr​, 266][Ruther­fordium, 104, Rf​, 267][Dub­nium, 105, Db​, 268][Sea­borgium, 106, Sg​, 269][Bohr­ium, 107, Bh​, 270][Has­sium, 108, Hs​, 269][Meit­nerium, 109, Mt​, 278][Darm­stadtium, 110, Ds​, 281][Roent­genium, 111, Rg​, 282][Coper­nicium, 112, Cn​, 285][Nihon­ium, 113, Nh​, 286][Flerov­ium, 114, Fl​, 289][Moscov­ium, 115, Mc​, 290][Liver­morium, 116, Lv​, 293][Tenness­ine, 117, Ts​, 294][Oga­nesson, 118, Og​, 294]
+[8][][][Lan­thanum, 57, La, ​138.91][Cerium, 58, Ce, ​140.12][Praseo­dymium, 59, Pr, ​140.91][Neo­dymium, 60, Nd​, 144.24][Prome­thium, 61, Pm, ​145][Sama­rium, 62, Sm, ​150.36][Europ­ium, 63, Eu, ​151.96][Gadolin­ium, 64, Gd, ​157.25][Ter­bium, 65, Tb, ​158.93][Dyspro­sium, 66, Dy, ​162.50][Hol­mium, 67, Ho, ​164.93][Erbium, 68, Er, ​167.26][Thulium, 69, Tm​, 168.93][Ytter­bium, 70, Yb​, 173.05][][]
+[9][][][Actin­ium, 89, Ac​, 227][Thor­ium, 90, Th​, 232.04][Protac­tinium, 91, Pa, ​231.04][Ura­nium, 92, U​, 238.03][Neptu­nium, 93, Np​, 237][Pluto­nium, 94, Pu​, 244][Ameri­cium, 95, Am​, 243][Curium, 96, Cm​, 247][Berkel­ium, 97, Bk​, 247][Califor­nium, 98, Cf​, 251][Einstei­nium, 99, Es​, 252][Fer­mium, 100, Fm​, 257][Mende­levium, 101, Md​, 258][Nobel­ium, 102, No​, 259][][]
+
+for an example in this periodic table in Group 1 and Period 1 we have [Hydro­gen, 1, H, ​1.0080] which is ["NameOfChemicalParticle", "NameOfChemicalParticleNumber_ElectronsOfParticle", NameOfChemicalParticle_PeriodicTableLetterSymbol, "NameOfChemicalParticle_AtomicMass"], 
+
+ 
+
+"PossibleEnergies" can have different states of manifestation they can also be called Kinetic Energy they can be in Different States, "SolidEnergy", "LiquidEnergy", "GasEnergy", "PlasmaEnergy", "EnergySpheresConnectors"
+Each of them have three main "KineticEnergy", "ParticlesMotion", "ForceofAttractionBetweenParticles"
+for "SolidEnergy" the "KineticEnergy" and "ParticleMotion" are lowest while "ForceofAttractionBetweenParticles" is the highest,
+for "LiquidEnergy" the "KineticEnergy" and "ParticleMotion" are higher than for "SolidEnergy" and "ForceofAttractionBetweenParticles" are lower than for "SolidEnergy",
+for "GasEnergy" the "KineticEnergy" and "ParticleMotion" are higher than for "LiquidEnergy" adn and "ForceofAttractionBetweenParticles" are lower than for "LiquidEnergy",
+for "PlasmaEnergy" it is just a single sphere that vibrates at specific frequency so it can take any form and shape which 
+
+let me explain it in spheres, for an example
+
+for "SolidEnergy" the spheres are next to each other like this[ooo],
+for "LiquidEnergy" the spheres are next to each other but between them is space that is "EnergySpheresConnectors" like this [ococo],
+for "GasEnergy" the spheres are next to each other but between them is more space than in "LiquidEnergy" like this [occocco],
+for "PlasmaEnergy" the sphere is single and it can manifest heat and glow
+
+volume and shape
+
+"EnergySpheresConnectors" have information like stickness so "EnergySpheresConnectors_stickness", volume so "EnergySpheresConnectors_volume", shape so "EnergySpheresConnectors_volume", and each of the information can have parameter to turn it on and off and set 
+
+So lets take a water into consideration, we have it in 3 states which is solid so the water is frozen so it is ice, then we have it in liquid so it Water, then we can have it in Gas so it is Fog, then it can switch frm Fog into Water because of pressure and temperature in certain height of Ozone layer, because the sun lays sun rays on an planet and the planet is heated up, then the higher it is in ozone layer then the colder temperature gets so the Fog creates clouds on the sky of the planet and at certain point when they combine into certain lets say there are three main parts of ozone layer from sea level of the planet and the higher it gets the bigger pressure and lower temperature
+
+29. What is Atom? and what are quarks
+
+an Atom is frequency of a quark, and a quark is a circle that vibrates so a single atom is just an information, just a number
+
+so it also can be based on number Pi, DNA, RNA tDNA, tRNA
+
+30. "CreationTool" 
+
+While in "CreationBuild" you have access to "CreationTool" which is opened with key ` or an button [`] 
+
+it is working like that: you explain in great detail what you wanna see, for an example you write "create a circle with height of 
+
+Scale
+
+31. What are pixels and resolution?
+
+So Humans have flat surfaces for an computer screen for an example this is 9x9 resolution of an 81 pixels in total computer monitor
+
+Lets start with "EmptySpaceforCreationTool"
+
+9 of x and 9 of y and any space can be another 9 of 2x and 9 of 2y and any space can be another 9 of 3x and 9 of 3y and many more
+
+also inside EmptySpaceforCreationTool, 3D Space, 3D Space Representation, CreationTool, CreationToolset we can use chv in 9 degrees main to multiplied by 9 and multiplied by 9 in any of the c, h, v and it is based on circle with plus in the middle
+
+Circled plus (⊕) or n-ary circled plus (⨁) (in Unicode, U+2295 ⊕ CIRCLED PLUS, U+2A01 ⨁ N-ARY CIRCLED PLUS OPERATOR) may refer to: Direct sum, an operation from abstract algebra. Dilation (morphology), mathematical morphology.
+
+What does ⊗ mean?
+In mathematics, the Kronecker product, sometimes denoted by ⊗, is an operation on two matrices of arbitrary size resulting in a block matrix.
+
+
+[y9][][][][][][][][][]
+[y8][][][][][][][][][]
+[y7][][][][][][][][][]
+[y6][][][][][][][][][]
+[y5][][][][][][][][][]
+[y4][][][][][][][][][]
+[y3][][][][][][][][][]
+[y2][][][][][][][][][]
+[y1][][][][][][][][][]
+[xy][x1][x2][x3][x4][x5][x6][x7][x8][x9]
+
+and the size of x [] and y [] is the same
+
+Lets now think in 3d perspective, lets say we have that screen that human look at, and now we have an 3d pixel based system on atoms, physics and quantum physics and quarks and stuff like that, lets say we have an square which is solid inside with atoms everywhere
+
+this is xyz, so 9 of x, 9 of y, 9 of z and any space can be another 9 of 2x and 9 of 2y and 9 of 2z and any space can be another 9 of 3x and 9 of 3x and 9 of 3z and many more
+
+and the size of x [] and y [] and z [] is the same
+
+Layer 1 which human eyes see always because it is the first one
+
+
+[y9z1][][][][][][][][][]
+[y8z1][][][][][][][][][]
+[y7z1][][][][][][][][][]
+[y6z1][][][][][][][][][]
+[y5z1][][][][][][][][][]
+[y4z1][][][][][][][][][]
+[y3z1][][][][][][][][][]
+[y2z1][][][][][][][][][]
+[y1z1][][][][][][][][][]
+[xyz][x1z1][x2z1][x3z1][x4z1][x5z1][x6z1][x7z1][x8z1][x9z1]
+
+Layer 2 which human eye can see if the Layer 1 does not have anything over anything inside it
+
+[y9z2][][][][][][][][][]
+[y8z2][][][][][][][][][]
+[y7z2][][][][][][][][][]
+[y6z2][][][][][][][][][]
+[y5z2][][][][][][][][][]
+[y4z2][][][][][][][][][]
+[y3z2][][][][][][][][][]
+[y2z2][][][][][][][][][]
+[y1z2][][][][][][][][][]
+[xyz][x1z2][x2z2][x3z2][x4z2][x5z2][x6z2][x7z2][x8z2][x9z2]
+
+Layer 3 which human eye can see if the Layer 2 does not have anything over anything inside it
+
+[y9z3][][][][][][][][][]
+[y8z3][][][][][][][][][]
+[y7z3][][][][][][][][][]
+[y6z3][][][][][][][][][]
+[y5z3][][][][][][][][][]
+[y4z3][][][][][][][][][]
+[y3z3][][][][][][][][][]
+[y2z3][][][][][][][][][]
+[y1z3][][][][][][][][][]
+[xyz][x1z3][x2z3][x3z3][x4z3][x5z3][x6z3][x7z3][x8z3][x9z3]
+
+Layer 4 which human eye can see if the Layer 3 does not have anything over anything inside it
+
+[y9z4][][][][][][][][][]
+[y8z4][][][][][][][][][]
+[y7z4][][][][][][][][][]
+[y6z4][][][][][][][][][]
+[y5z4][][][][][][][][][]
+[y4z4][][][][][][][][][]
+[y3z4][][][][][][][][][]
+[y2z4][][][][][][][][][]
+[y1z4][][][][][][][][][]
+[xyz][x1z4][x2z4][x3z4][x4z4][x5z4][x6z4][x7z4][x8z4][x9z4]
+
+Layer 5 which human eye can see if the Layer 4 does not have anything over anything inside it
+
+[y9z5][][][][][][][][][]
+[y8z5][][][][][][][][][]
+[y7z5][][][][][][][][][]
+[y6z5][][][][][][][][][]
+[y5z5][][][][][][][][][]
+[y4z5][][][][][][][][][]
+[y3z5][][][][][][][][][]
+[y2z5][][][][][][][][][]
+[y1z5][][][][][][][][][]
+[xyz][x1z5][x2z5][x3z5][x4z5][x5z5][x6z5][x7z5][x8z5][x9z5]
+
+Layer 6 which human eye can see if the Layer 5 does not have anything over anything inside it
+
+[y9z6][][][][][][][][][]
+[y8z6][][][][][][][][][]
+[y7z6][][][][][][][][][]
+[y6z6][][][][][][][][][]
+[y5z6][][][][][][][][][]
+[y4z6][][][][][][][][][]
+[y3z6][][][][][][][][][]
+[y2z6][][][][][][][][][]
+[y1z6][][][][][][][][][]
+[xyz][x1z6][x2z6][x3z6][x4z6][x5z6][x6z6][x7z6][x8z6][x9z6]
+
+Layer 7 which human eye does can see if the Layer 6 does not have anything over anything inside it
+
+[y9z7][][][][][][][][][]
+[y8z7][][][][][][][][][]
+[y7z7][][][][][][][][][]
+[y6z7][][][][][][][][][]
+[y5z7][][][][][][][][][]
+[y4z7][][][][][][][][][]
+[y3z7][][][][][][][][][]
+[y2z7][][][][][][][][][]
+[y1z7][][][][][][][][][]
+[xyz][x1z7][x2z7][x3z7][x4z7][x5z7][x6z7][x7z7][x8z7][x9z7]
+
+Layer 8 which human eye can see if the Layer 7 does not have anything over anything inside it
+
+[y9z8][][][][][][][][][]
+[y8z8][][][][][][][][][]
+[y7z8][][][][][][][][][]
+[y6z8][][][][][][][][][]
+[y5z8][][][][][][][][][]
+[y4z8][][][][][][][][][]
+[y3z8][][][][][][][][][]
+[y2z8][][][][][][][][][]
+[y1z8][][][][][][][][][]
+[xyz][x1z8][x2z8][x3z8][x4z8][x5z8][x6z8][x7z8][x8z8][x9z8]
+
+Layer 9 which human eye can see if the Layer 8 does not have anything over anything inside it
+
+[y9z9][][][][][][][][][]
+[y8z9][][][][][][][][][]
+[y7z9][][][][][][][][][]
+[y6z9][][][][][][][][][]
+[y5z9][][][][][][][][][]
+[y4z9][][][][][][][][][]
+[y3z9][][][][][][][][][]
+[y2z9][][][][][][][][][]
+[y1z9][][][][][][][][][]
+[xyz][x1z9][x2z9][x3z9][x4z9][x5z9][x6z9][x7z9][x8z9][x9z9]
+
+
+32. "CreationTool" generating Cube and creating Cube which is water based on atom, from Ice to Water to Fog, as in Atoms, and in physics it is from solid to liquid to gas
+
+Lets start with "EmptySpaceforCreationTool" which becomes a cube which is 7 by 7 so lets call it "CreationToolCube7by7" and also lets say it is water in Solid state so it is ice, which melting point is temperature in positive degree in Celcius, the lets call it "CreationToolCube7by7_water_Ice"
+
+water in periodic table is H2O which means two H and one O so
+
+two of [Hydro­gen, 1, H, ​1.0080] and one of [Oxy­gen, 8, O, ​15.999] so it is [HOH]
+
+
+Solid is "SolidEnergy", 
+Liquid is "LiquidEnergy", 
+Gas is "GasEnergy"
+
+This one is Solid
+
+9 of x and 9 of y the stuff human sees because monitor is just flat surface with 1 layer of pixels
+
+[y9][][][][][][][][][]
+[y8][][HOH][HOH][HOH][HOH][HOH][HOH][HOH][]
+[y7][][HOH][HOH][HOH][HOH][HOH][HOH][HOH][]
+[y6][][HOH][HOH][HOH][HOH][HOH][HOH][HOH][]
+[y5][][HOH][HOH][HOH][HOH][HOH][HOH][HOH][]
+[y4][][HOH][HOH][HOH][HOH][HOH][HOH][HOH][]
+[y3][][HOH][HOH][HOH][HOH][HOH][HOH][HOH][]
+[y2][][HOH][HOH][HOH][HOH][HOH][HOH][HOH][]
+[y1][][][][][][][][][]
+[xy][x1][x2][x3][x4][x5][x6][x7][x8][x9]
+
+and the size of x [] and y [] is the same
+
+Lets now think in 3d perspective, lets say we have that screen that human look at, and now we have an 3d pixel based system on atoms, physics and quantum physics and quarks and stuff like that, lets say we have an cube which is solid inside with atoms everywhere Solid is "SolidEnergy"
+
+this is xyz, so 9 of x, 9 of y, 9 of z
+
+and the size of x [] and y [] and z [] is the same
+
+Layer 1 which human eyes see always because it is the first one
+
+
+[y9z1][][][][][][][][][]
+[y8z1][][][][][][][][][]
+[y7z1][][][][][][][][][]
+[y6z1][][][][][][][][][]
+[y5z1][][][][][][][][][]
+[y4z1][][][][][][][][][]
+[y3z1][][][][][][][][][]
+[y2z1][][][][][][][][][]
+[y1z1][][][][][][][][][]
+[xyz][x1z1][x2z1][x3z1][x4z1][x5z1][x6z1][x7z1][x8z1][x9z1]
+
+Layer 2 which human eye can see if the Layer 1 does not have anything over anything inside it
+
+[y9z2][][][][][][][][][]
+[y8z2][][HOH][HOH][HOH][HOH][HOH][HOH][HOH][]
+[y7z2][][HOH][HOH][HOH][HOH][HOH][HOH][HOH][]
+[y6z2][][HOH][HOH][HOH][HOH][HOH][HOH][HOH][]
+[y5z2][][HOH][HOH][HOH][HOH][HOH][HOH][HOH][]
+[y4z2][][HOH][HOH][HOH][HOH][HOH][HOH][HOH][]
+[y3z2][][HOH][HOH][HOH][HOH][HOH][HOH][HOH][]
+[y2z2][][HOH][HOH][HOH][HOH][HOH][HOH][HOH][]
+[y1z2][][][][][][][][][]
+[xyz][x1z2][x2z2][x3z2][x4z2][x5z2][x6z2][x7z2][x8z2][x9z2]
+
+Layer 3 which human eye can see if the Layer 2 does not have anything over anything inside it
+
+[y9z3][][][][][][][][][]
+[y8z3][][HOH][HOH][HOH][HOH][HOH][HOH][HOH][]
+[y7z3][][HOH][HOH][HOH][HOH][HOH][HOH][HOH][]
+[y6z3][][HOH][HOH][HOH][HOH][HOH][HOH][HOH][]
+[y5z3][][HOH][HOH][HOH][HOH][HOH][HOH][HOH][]
+[y4z3][][HOH][HOH][HOH][HOH][HOH][HOH][HOH][]
+[y3z3][][HOH][HOH][HOH][HOH][HOH][HOH][HOH][]
+[y2z3][][HOH][HOH][HOH][HOH][HOH][HOH][HOH][]
+[y1z3][][][][][][][][][]
+[xyz][x1z3][x2z3][x3z3][x4z3][x5z3][x6z3][x7z3][x8z3][x9z3]
+
+Layer 4 which human eye can see if the Layer 3 does not have anything over anything inside it
+
+[y9z4][][][][][][][][][]
+[y8z4][][HOH][HOH][HOH][HOH][HOH][HOH][HOH][]
+[y7z4][][HOH][HOH][HOH][HOH][HOH][HOH][HOH][]
+[y6z4][][HOH][HOH][HOH][HOH][HOH][HOH][HOH][]
+[y5z4][][HOH][HOH][HOH][HOH][HOH][HOH][HOH][]
+[y4z4][][HOH][HOH][HOH][HOH][HOH][HOH][HOH][]
+[y3z4][][HOH][HOH][HOH][HOH][HOH][HOH][HOH][]
+[y2z4][][HOH][HOH][HOH][HOH][HOH][HOH][HOH][]
+[y1z4][][][][][][][][][]
+[xyz][x1z4][x2z4][x3z4][x4z4][x5z4][x6z4][x7z4][x8z4][x9z4]
+
+Layer 5 which human eye can see if the Layer 4 does not have anything over anything inside it
+
+[y9z5][][][][][][][][][]
+[y8z5][][HOH][HOH][HOH][HOH][HOH][HOH][HOH][]
+[y7z5][][HOH][HOH][HOH][HOH][HOH][HOH][HOH][]
+[y6z5][][HOH][HOH][HOH][HOH][HOH][HOH][HOH][]
+[y5z5][][HOH][HOH][HOH][HOH][HOH][HOH][HOH][]
+[y4z5][][HOH][HOH][HOH][HOH][HOH][HOH][HOH][]
+[y3z5][][HOH][HOH][HOH][HOH][HOH][HOH][HOH][]
+[y2z5][][HOH][HOH][HOH][HOH][HOH][HOH][HOH][]
+[y1z5][][][][][][][][][]
+[xyz][x1z5][x2z5][x3z5][x4z5][x5z5][x6z5][x7z5][x8z5][x9z5]
+
+Layer 6 which human eye can see if the Layer 5 does not have anything over anything inside it
+
+[y9z6][][][][][][][][][]
+[y8z6][][HOH][HOH][HOH][HOH][HOH][HOH][HOH][]
+[y7z6][][HOH][HOH][HOH][HOH][HOH][HOH][HOH][]
+[y6z6][][HOH][HOH][HOH][HOH][HOH][HOH][HOH][]
+[y5z6][][HOH][HOH][HOH][HOH][HOH][HOH][HOH][]
+[y4z6][][HOH][HOH][HOH][HOH][HOH][HOH][HOH][]
+[y3z6][][HOH][HOH][HOH][HOH][HOH][HOH][HOH][]
+[y2z6][][HOH][HOH][HOH][HOH][HOH][HOH][HOH][]
+[y1z6][][][][][][][][][]
+[xyz][x1z6][x2z6][x3z6][x4z6][x5z6][x6z6][x7z6][x8z6][x9z6]
+
+Layer 7 which human eye can see if the Layer 6 does not have anything over anything inside it
+
+[y9z7][][][][][][][][][]
+[y8z7][][HOH][HOH][HOH][HOH][HOH][HOH][HOH][]
+[y7z7][][HOH][HOH][HOH][HOH][HOH][HOH][HOH][]
+[y6z7][][HOH][HOH][HOH][HOH][HOH][HOH][HOH][]
+[y5z7][][HOH][HOH][HOH][HOH][HOH][HOH][HOH][]
+[y4z7][][HOH][HOH][HOH][HOH][HOH][HOH][HOH][]
+[y3z7][][HOH][HOH][HOH][HOH][HOH][HOH][HOH][]
+[y2z7][][HOH][HOH][HOH][HOH][HOH][HOH][HOH][]
+[y1z7][][][][][][][][][]
+[xyz][x1z7][x2z7][x3z7][x4z7][x5z7][x6z7][x7z7][x8z7][x9z7]
+
+Layer 8 which human eye can see if the Layer 7 does not have anything over anything inside it
+
+[y9z8][][][][][][][][][]
+[y8z8][][HOH][HOH][HOH][HOH][HOH][HOH][HOH][]
+[y7z8][][HOH][HOH][HOH][HOH][HOH][HOH][HOH][]
+[y6z8][][HOH][HOH][HOH][HOH][HOH][HOH][HOH][]
+[y5z8][][HOH][HOH][HOH][HOH][HOH][HOH][HOH][]
+[y4z8][][HOH][HOH][HOH][HOH][HOH][HOH][HOH][]
+[y3z8][][HOH][HOH][HOH][HOH][HOH][HOH][HOH][]
+[y2z8][][HOH][HOH][HOH][HOH][HOH][HOH][HOH][]
+[y1z8][][][][][][][][][]
+[xyz][x1z8][x2z8][x3z8][x4z8][x5z8][x6z8][x7z8][x8z8][x9z8]
+
+Layer 9 which human eye can see if the Layer 8 does not have anything over anything inside it
+
+[y9z9][][][][][][][][][]
+[y8z9][][][][][][][][][]
+[y7z9][][][][][][][][][]
+[y6z9][][][][][][][][][]
+[y5z9][][][][][][][][][]
+[y4z9][][][][][][][][][]
+[y3z9][][][][][][][][][]
+[y2z9][][][][][][][][][]
+[y1z9][][][][][][][][][]
+[xyz][x1z9][x2z9][x3z9][x4z9][x5z9][x6z9][x7z9][x8z9][x9z9]
+
+Lets now think in 3d perspective, lets say we have that screen that human look at, and now we have an 3d pixel based system on atoms, physics and quantum physics and quarks and stuff like that, lets say we have an cube which is liquid inside with atoms with space between them Liquid is "LiquidEnergy" they can look fluid but they get pulled by gravitational energy to the centre of the mass on the body it is on
+
+This one is Liquid
+
+this is xyz, so 9 of x, 9 of y, 9 of z
+
+and the size of x [] and y [] and z [] is the same
+
+Layer 1 which human eyes see always because it is the first one
+
+
+[y9z1][][][][][][][][][]
+[y8z1][][][][][][][][][]
+[y7z1][][][][][][][][][]
+[y6z1][][][][][][][][][]
+[y5z1][][][][][][][][][]
+[y4z1][][][][][][][][][]
+[y3z1][][][][][][][][][]
+[y2z1][][][][][][][][][]
+[y1z1][][][][][][][][][]
+[xyz][x1z1][x2z1][x3z1][x4z1][x5z1][x6z1][x7z1][x8z1][x9z1]
+
+Layer 2 which human eye can see if the Layer 1 does not have anything over anything inside it
+
+[y9z2][][][][][][][][][]
+[y8z2][][HOH][][HOH][][HOH][][HOH][]
+[y7z2][][][][][][][][][]
+[y6z2][][HOH][][HOH][][HOH][][HOH][]
+[y5z2][][][][][][][][][]
+[y4z2][][HOH][][HOH][][HOH][][HOH][]
+[y3z2][][][][][][][][][]
+[y2z2][][HOH][][HOH][][HOH][][HOH][]
+[y1z2][][][][][][][][][]
+[xyz][x1z2][x2z2][x3z2][x4z2][x5z2][x6z2][x7z2][x8z2][x9z2]
+
+Layer 3 which human eye can see if the Layer 2 does not have anything over anything inside it
+
+[y9z3][][][][][][][][][]
+[y8z3][][][][][][][][][]
+[y7z3][][][][][][][][][]
+[y6z3][][][][][][][][][]
+[y5z3][][][][][][][][][]
+[y4z3][][][][][][][][][]
+[y3z3][][][][][][][][][]
+[y2z3][][][][][][][][][]
+[y1z3][][][][][][][][][]
+[xyz][x1z3][x2z3][x3z3][x4z3][x5z3][x6z3][x7z3][x8z3][x9z3]
+
+Layer 4 which human eye can see if the Layer 3 does not have anything over anything inside it
+
+[y9z4][][][][][][][][][]
+[y8z4][][HOH][][HOH][][HOH][][HOH][]
+[y7z4][][][][][][][][][]
+[y6z4][][HOH][][HOH][][HOH][][HOH][]
+[y5z4][][][][][][][][][]
+[y4z4][][HOH][][HOH][][HOH][][HOH][]
+[y3z4][][][][][][][][][]
+[y2z4][][HOH][][HOH][][HOH][][HOH][]
+[y1z4][][][][][][][][][]
+[xyz][x1z4][x2z4][x3z4][x4z4][x5z4][x6z4][x7z4][x8z4][x9z4]
+
+Layer 5 which human eye can see if the Layer 4 does not have anything over anything inside it
+
+[y9z5][][][][][][][][][]
+[y8z5][][][][][][][][][]
+[y7z5][][][][][][][][][]
+[y6z5][][][][][][][][][]
+[y5z5][][][][][][][][][]
+[y4z5][][][][][][][][][]
+[y3z5][][][][][][][][][]
+[y2z5][][][][][][][][][]
+[y1z5][][][][][][][][][]
+[xyz][x1z5][x2z5][x3z5][x4z5][x5z5][x6z5][x7z5][x8z5][x9z5]
+
+Layer 6 which human eye can see if the Layer 5 does not have anything over anything inside it
+
+[y9z6][][][][][][][][][]
+[y8z6][][HOH][][HOH][][HOH][][HOH][]
+[y7z6][][][][][][][][][]
+[y6z6][][HOH][][HOH][][HOH][][HOH][]
+[y5z6][][][][][][][][][]
+[y4z6][][HOH][][HOH][][HOH][][HOH][]
+[y3z6][][][][][][][][][]
+[y2z6][][HOH][][HOH][][HOH][][HOH][]
+[y1z6][][][][][][][][][]
+[xyz][x1z6][x2z6][x3z6][x4z6][x5z6][x6z6][x7z6][x8z6][x9z6]
+
+Layer 7 which human eye can see if the Layer 6 does not have anything over anything inside it
+
+[y9z7][][][][][][][][][]
+[y8z7][][][][][][][][][]
+[y7z7][][][][][][][][][]
+[y6z7][][][][][][][][][]
+[y5z7][][][][][][][][][]
+[y4z7][][][][][][][][][]
+[y3z7][][][][][][][][][]
+[y2z7][][][][][][][][][]
+[y1z7][][][][][][][][][]
+[xyz][x1z7][x2z7][x3z7][x4z7][x5z7][x6z7][x7z7][x8z7][x9z7]
+
+Layer 8 which human eye can see if the Layer 7 does not have anything over anything inside it
+
+[y9z8][][][][][][][][][]
+[y8z8][][HOH][][HOH][][HOH][][HOH][]
+[y7z8][][][][][][][][][]
+[y6z8][][HOH][][HOH][][HOH][][HOH][]
+[y5z8][][][][][][][][][]
+[y4z8][][HOH][][HOH][][HOH][][HOH][]
+[y3z8][][][][][][][][][]
+[y2z8][][HOH][][HOH][][HOH][][HOH][]
+[y1z8][][][][][][][][][]
+[xyz][x1z8][x2z8][x3z8][x4z8][x5z8][x6z8][x7z8][x8z8][x9z8]
+
+Layer 9 which human eye can see if the Layer 8 does not have anything over anything inside it
+
+[y9z9][][][][][][][][][]
+[y8z9][][][][][][][][][]
+[y7z9][][][][][][][][][]
+[y6z9][][][][][][][][][]
+[y5z9][][][][][][][][][]
+[y4z9][][][][][][][][][]
+[y3z9][][][][][][][][][]
+[y2z9][][][][][][][][][]
+[y1z9][][][][][][][][][]
+[xyz][x1z9][x2z9][x3z9][x4z9][x5z9][x6z9][x7z9][x8z9][x9z9]
+
+
+Lets now think in 3d perspective, lets say we have that screen that human look at, and now we have an 3d pixel based system on atoms, physics and quantum physics and quarks and stuff like that, lets say we have an cube which is liquid inside with atoms with space between them Liquid is "LiquidEnergy" they can look fluid but they get pulled by gravitational energy to the centre of the mass on the body it is on
+
+This one is Liquid
+
+this is xyz, so 9 of x, 9 of y, 9 of z
+
+and the size of x [] and y [] and z [] is the same
+
+Layer 1 which human eyes see always because it is the first one
+
+
+[y9z1][][][][][][][][][]
+[y8z1][][][][][][][][][]
+[y7z1][][][][][][][][][]
+[y6z1][][][][][][][][][]
+[y5z1][][][][][][][][][]
+[y4z1][][][][][][][][][]
+[y3z1][][][][][][][][][]
+[y2z1][][][][][][][][][]
+[y1z1][][][][][][][][][]
+[xyz][x1z1][x2z1][x3z1][x4z1][x5z1][x6z1][x7z1][x8z1][x9z1]
+
+Layer 2 which human eye can see if the Layer 1 does not have anything over anything inside it
+
+[y9z2][][][][][][][][][]
+[y8z2][][HOH][][][HOH][][][HOH][]
+[y7z2][][][][][][][][][]
+[y6z2][][][][][][][][][]
+[y5z2][][HOH][][][HOH][][][HOH][]
+[y4z2][][][][][][][][][]
+[y3z2][][][][][][][][][]
+[y2z2][][HOH][][][HOH][][][HOH][]
+[y1z2][][][][][][][][][]
+[xyz][x1z2][x2z2][x3z2][x4z2][x5z2][x6z2][x7z2][x8z2][x9z2]
+
+Layer 3 which human eye can see if the Layer 2 does not have anything over anything inside it
+
+[y9z3][][][][][][][][][]
+[y8z3][][][][][][][][][]
+[y7z3][][][][][][][][][]
+[y6z3][][][][][][][][][]
+[y5z3][][][][][][][][][]
+[y4z3][][][][][][][][][]
+[y3z3][][][][][][][][][]
+[y2z3][][][][][][][][][]
+[y1z3][][][][][][][][][]
+[xyz][x1z3][x2z3][x3z3][x4z3][x5z3][x6z3][x7z3][x8z3][x9z3]
+
+Layer 4 which human eye can see if the Layer 3 does not have anything over anything inside it
+
+[y9z4][][][][][][][][][]
+[y8z4][][][][][][][][][]
+[y7z4][][][][][][][][][]
+[y6z4][][][][][][][][][]
+[y5z4][][][][][][][][][]
+[y4z4][][][][][][][][][]
+[y3z4][][][][][][][][][]
+[y2z4][][][][][][][][][]
+[y1z4][][][][][][][][][]
+[xyz][x1z4][x2z4][x3z4][x4z4][x5z4][x6z4][x7z4][x8z4][x9z4]
+
+Layer 5 which human eye can see if the Layer 4 does not have anything over anything inside it
+
+[y9z5][][][][][][][][][]
+[y8z5][][HOH][][][HOH][][][HOH][]
+[y7z5][][][][][][][][][]
+[y6z5][][][][][][][][][]
+[y5z5][][HOH][][][HOH][][][HOH][]
+[y4z5][][][][][][][][][]
+[y3z5][][][][][][][][][]
+[y2z5][][HOH][][][HOH][][][HOH][]
+[y1z5][][][][][][][][][]
+[xyz][x1z5][x2z5][x3z5][x4z5][x5z5][x6z5][x7z5][x8z5][x9z5]
+
+Layer 6 which human eye can see if the Layer 5 does not have anything over anything inside it
+
+[y9z6][][][][][][][][][]
+[y8z6][][][][][][][][][]
+[y7z6][][][][][][][][][]
+[y6z6][][][][][][][][][]
+[y5z6][][][][][][][][][]
+[y4z6][][][][][][][][][]
+[y3z6][][][][][][][][][]
+[y2z6][][][][][][][][][]
+[y1z6][][][][][][][][][]
+[xyz][x1z6][x2z6][x3z6][x4z6][x5z6][x6z6][x7z6][x8z6][x9z6]
+
+Layer 7 which human eye can see if the Layer 6 does not have anything over anything inside it
+
+[y9z7][][][][][][][][][]
+[y8z7][][][][][][][][][]
+[y7z7][][][][][][][][][]
+[y6z7][][][][][][][][][]
+[y5z7][][][][][][][][][]
+[y4z7][][][][][][][][][]
+[y3z7][][][][][][][][][]
+[y2z7][][][][][][][][][]
+[y1z7][][][][][][][][][]
+[xyz][x1z7][x2z7][x3z7][x4z7][x5z7][x6z7][x7z7][x8z7][x9z7]
+
+Layer 8 which human eye can see if the Layer 7 does not have anything over anything inside it
+
+[y9z8][][][][][][][][][]
+[y8z8][][HOH][][][HOH][][][HOH][]
+[y7z8][][][][][][][][][]
+[y6z8][][][][][][][][][]
+[y5z8][][HOH][][][HOH][][][HOH][]
+[y4z8][][][][][][][][][]
+[y3z8][][][][][][][][][]
+[y2z8][][HOH][][][HOH][][][HOH][]
+[y1z8][][][][][][][][][]
+[xyz][x1z8][x2z8][x3z8][x4z8][x5z8][x6z8][x7z8][x8z8][x9z8]
+
+Layer 9 which human eye can see if the Layer 8 does not have anything over anything inside it
+
+[y9z9][][][][][][][][][]
+[y8z9][][][][][][][][][]
+[y7z9][][][][][][][][][]
+[y6z9][][][][][][][][][]
+[y5z9][][][][][][][][][]
+[y4z9][][][][][][][][][]
+[y3z9][][][][][][][][][]
+[y2z9][][][][][][][][][]
+[y1z9][][][][][][][][][]
+[xyz][x1z9][x2z9][x3z9][x4z9][x5z9][x6z9][x7z9][x8z9][x9z9]
+
+
+
+
+33. What is RNA and DNA?
+
+so Panime RNA is like half of DNA?
+
+in School i remember there being build blocks or drones so that one line in spiral of RNA can always be rebuilded and i think that whole RNA is like number Pi? which is infinite and some stuff can be changed based on that when parts of RNA becomes DNA? maybe a Number Pi can be used from certain point? Maybe that way depending on our needs the whole Number Pi can be generated from certain point and some stuff can become DNA?
+
+i also remember in school there being only 2 parts of DNA like TGA? and the another one? i now see there being 6 parts of that dna? and 
+
+Adeine
+Thymine
+Uracil
+Guanine
+Cytosine
+Phosphane backmone
+
+Adeine connects to Thymine
+Uracil connects to Guanine
+Cytosine connects to Phosphane backhane
+
+there is also tRNA which looks funny as heck, so it gooes forward, then some stuff at the left connets to stuff at the left, a little bit of the right part is being without any of that A T U G C P then it connects a little higher? maybe this is how that whole encryption works? and maybe it can be used for Map? CreationTool stuff that was created there?
+
+we have that DNA which is two lines in spiral
+
+34. a Pyramide bein created in CreatorBuild using CreatorTool
+
+A Pyramid
+
+when a Player writes "create Pyramide" an "EmptySpaceforCreationTool" will generate "Pyramide" it appears where player is
+
+with numbers from 1 to 9 i will represent how far it is from a player perspective
+
+9 of x and 9 of y
+
+[y9][][][][][][][][][]
+[y8][][][][][][][][][]
+[y7][][][][][][][][][]
+[y6][][][][][][][][][]
+[y5][][][][][5][][][][]
+[y4][][][][4][4][4][][][]
+[y3][][][3][3][3][3][3][][]
+[y2][][2][2][2][2][2][2][2][]
+[y1][1][1][1][1][1][1][1][1][1]
+[xy][x1][x2][x3][x4][x5][x6][x7][x8][x9]
+
+
+So this is just an representation of a pyramide, let me explain it in different way, a 3d vector way! so an point of x5y5z5 is being connected to points x1y1z1, x9y1z1, x1y1z9, x9y1z9, the point x1y1z1 is connected to points x9y1z1, x1y1z9, the point x9y1z1 is connected to points x1y1z1, x9y1z9, the point x1y1z9 is connected to points x1y1z1, x9y1z9, the point x9y1z9 is being connected to point x1y1z9, x9y1z1
+
+and the size of x [] and y [] is the same
+
+
+this is xyz, so 9 of x, 9 of y, 9 of z
+
+and the size of x [] and y [] and z [] is the same
+
+Layer 1 which human eyes see always because it is the first one
+
+
+[y9z1][][][][][][][][][]
+[y8z1][][][][][][][][][]
+[y7z1][][][][][][][][][]
+[y6z1][][][][][][][][][]
+[y5z1][][][][][][][][][]
+[y4z1][][][][][][][][][]
+[y3z1][][][][][][][][][]
+[y2z1][][][][][][][][][]
+[y1z1][1][1][1][1][1][1][1][1][1]
+[xyz][x1z1][x2z1][x3z1][x4z1][x5z1][x6z1][x7z1][x8z1][x9z1]
+
+Layer 2 which human eye can see if the Layer 1 does not have anything over anything inside it
+
+[y9z2][][][][][][][][][]
+[y8z2][][][][][][][][][]
+[y7z2][][][][][][][][][]
+[y6z2][][][][][][][][][]
+[y5z2][][][][][][][][][]
+[y4z2][][][][][][][][][]
+[y3z2][][][][][][][][][]
+[y2z2][][2][2][2][2][2][2][2][]
+[y1z2][2][2][2][2][2][2][2][2][2]
+[xyz][x1z2][x2z2][x3z2][x4z2][x5z2][x6z2][x7z2][x8z2][x9z2]
+
+Layer 3 which human eye can see if the Layer 2 does not have anything over anything inside it
+
+[y9z3][][][][][][][][][]
+[y8z3][][][][][][][][][]
+[y7z3][][][][][][][][][]
+[y6z3][][][][][][][][][]
+[y5z3][][][][][][][][][]
+[y4z3][][][][][][][][][]
+[y3z3][][][3][3][3][3][3][][]
+[y2z3][][3][3][3][3][3][3][3][]
+[y1z3][3][3][3][3][3][3][3][3][3]
+[xyz][x1z3][x2z3][x3z3][x4z3][x5z3][x6z3][x7z3][x8z3][x9z3]
+
+Layer 4 which human eye can see if the Layer 3 does not have anything over anything inside it
+
+[y9z4][][][][][][][][][]
+[y8z4][][][][][][][][][]
+[y7z4][][][][][][][][][]
+[y6z4][][][][][][][][][]
+[y5z4][][][][][][][][][]
+[y4z4][][][][4][4][4][][][]
+[y3z4][][][4][4][4][4][4][][]
+[y2z4][][4][4][4][4][4][4][4][]
+[y1z4][4][4][4][4][4][4][4][4][4]
+[xyz][x1z4][x2z4][x3z4][x4z4][x5z4][x6z4][x7z4][x8z4][x9z4]
+
+Layer 5 which human eye can see if the Layer 4 does not have anything over anything inside it
+
+[y9z5][][][][][][][][][]
+[y8z5][][][][][][][][][]
+[y7z5][][][][][][][][][]
+[y6z5][][][][][][][][][]
+[y5z5][][][][][5][][][][]
+[y4z5][][][][5][5][5][][][]
+[y3z5][][][5][5][5][5][5][][]
+[y2z5][][5][5][5][5][5][5][5][]
+[y1z5][5][5][5][5][5][5][5][5][5]
+[xyz][x1z5][x2z5][x3z5][x4z5][x5z5][x6z5][x7z5][x8z5][x9z5]
+
+Layer 6 which human eye can see if the Layer 5 does not have anything over anything inside it
+
+[y9z6][][][][][][][][][]
+[y8z6][][][][][][][][][]
+[y7z6][][][][][][][][][]
+[y6z6][][][][][][][][][]
+[y5z6][][][][][][][][][]
+[y4z6][][][][6][6][6][][][]
+[y3z6][][][6][6][6][6][6][6][]
+[y2z6][][6][6][6][6][6][6][6][]
+[y1z6][6][6][6][6][6][6][6][6][6]
+[xyz][x1z6][x2z6][x3z6][x4z6][x5z6][x6z6][x7z6][x8z6][x9z6]
+
+Layer 7 which human eye does can see if the Layer 6 does not have anything over anything inside it
+
+[y9z7][][][][][][][][][]
+[y8z7][][][][][][][][][]
+[y7z7][][][][][][][][][]
+[y6z7][][][][][][][][][]
+[y5z7][][][][][][][][][]
+[y4z7][][][][][][][][][]
+[y3z7][][][7][7][7][7][7][][]
+[y2z7][][7][7][7][7][7][7][7][]
+[y1z7][7][7][7][7][7][7][7][7][7]
+[xyz][x1z7][x2z7][x3z7][x4z7][x5z7][x6z7][x7z7][x8z7][x9z7]
+
+Layer 8 which human eye can see if the Layer 7 does not have anything over anything inside it
+
+[y9z8][][][][][][][][][]
+[y8z8][][][][][][][][][]
+[y7z8][][][][][][][][][]
+[y6z8][][][][][][][][][]
+[y5z8][][][][][][][][][]
+[y4z8][][][][][][][][][]
+[y3z8][][][][][][][][][]
+[y2z8][][8][8][8][8][8][8][8][]
+[y1z8][8][8][8][8][8][8][8][8][8]
+[xyz][x1z8][x2z8][x3z8][x4z8][x5z8][x6z8][x7z8][x8z8][x9z8]
+
+Layer 9 which human eye can see if the Layer 8 does not have anything over anything inside it
+
+[y9z9][][][][][][][][][]
+[y8z9][][][][][][][][][]
+[y7z9][][][][][][][][][]
+[y6z9][][][][][][][][][]
+[y5z9][][][][][][][][][]
+[y4z9][][][][][][][][][]
+[y3z9][][][][][][][][][]
+[y2z9][][][][][][][][][]
+[y1z9][9][9][9][9][9][9][9][9][9]
+[xyz][x1z9][x2z9][x3z9][x4z9][x5z9][x6z9][x7z9][x8z9][x9z9]
+
+35 creating cylinder from a circle
+
+in CreateBuild with open CreationTool player wrotes in textbox create a put a circle at the base Circle and make it 8 of height
+
+[y9][][][][1][1][1][][][]
+[y8][][1][1][][][][1][1][]
+[y7][][1][][][][][][1][]
+[y6][1][][][][][][][][1]
+[y5][1][][][][][][][][1]
+[y4][1][][][][][][][][1]
+[y3][][1][][][][][][1][]
+[y2][][1][1][][][][1][1][]
+[y1][][][][1][1][1][][][]
+[xy][x1][x2][x3][x4][x5][x6][x7][x8][x9]
+
+
+So this is in front of a player
+
+just as i talked about using pen tool like from photoshop, so a circle is 1, it is put at the bottom, then at heigh of 8 is another circle it is 3 and space between them is filled it is 2 and it is perfect cylinder made from two circles
+
+[y9][][][][][][][][][]
+[y8][3][3][3][3][3][3][3][3][3]
+[y7][2][2][2][2][2][2][2][2][2]
+[y6][2][2][2][2][2][2][2][2][2]
+[y5][2][2][2][2][2][2][2][2][2]
+[y4][2][2][2][2][2][2][2][2][2]
+[y3][2][2][2][2][2][2][2][2][2]
+[y2][2][2][2][2][2][2][2][2][2]
+[y1][1][1][1][1][1][1][1][1][1]
+[xy][x1][x2][x3][x4][x5][x6][x7][x8][x9]
+
+and the size of x [] and y [] is the same
+
+Lets now think in 3d perspective, lets say we have that screen that human look at, and now we have an 3d pixel based system on atoms, physics and quantum physics and quarks and stuff like that, lets say we have an square which is solid inside with atoms everywhere
+
+this is xyz, so 9 of x, 9 of y, 9 of z
+
+and the size of x [] and y [] and z [] is the same
+
+Layer 1 which human eyes see always because it is the first one
+
+
+[y9z1][][][][][][][][][]
+[y8z1][][][][3][3][3][][][]
+[y7z1][][][][2][2][2][][][]
+[y6z1][][][][2][2][2][][][]
+[y5z1][][][][2][2][2][][][]
+[y4z1][][][][2][2][2][][][]
+[y3z1][][][][2][2][2][][][]
+[y2z1][][][][2][2][2][][][]
+[y1z1][][][][1][1][1][][][]
+[xyz][x1z1][x2z1][x3z1][x4z1][x5z1][x6z1][x7z1][x8z1][x9z1]
+
+Layer 2 which human eye can see if the Layer 1 does not have anything over anything inside it
+
+[y9z2][][][][][][][][][]
+[y8z2][][3][3][2][2][2][3][3][]
+[y7z2][][2][2][][][][2][2][]
+[y6z2][][2][2][][][][2][2][]
+[y5z2][][2][2][][][][2][2][]
+[y4z2][][2][2][][][][2][2][]
+[y3z2][][2][2][][][][2][2][]
+[y2z2][][2][2][][][][2][2][]
+[y1z2][][1][1][2][2][2][1][1][]
+[xyz][x1z2][x2z2][x3z2][x4z2][x5z2][x6z2][x7z2][x8z2][x9z2]
+
+Layer 3 which human eye can see if the Layer 2 does not have anything over anything inside it
+
+[y9z3][][][][][][][][][]
+[y8z3][][3][2][2][2][2][2][3][]
+[y7z3][][2][][][][][][2][]
+[y6z3][][2][][][][][][2][]
+[y5z3][][2][][][][][][2][]
+[y4z3][][2][][][][][][2][]
+[y3z3][][2][][][][][][2][]
+[y2z3][][2][][][][][][2][]
+[y1z3][][1][2][2][2][2][2][1][]
+[xyz][x1z3][x2z3][x3z3][x4z3][x5z3][x6z3][x7z3][x8z3][x9z3]
+
+Layer 4 which human eye can see if the Layer 3 does not have anything over anything inside it
+
+[y9z4][][][][][][][][][]
+[y8z4][3][2][2][2][2][2][2][2][3]
+[y7z4][2][][][][][][][][2]
+[y6z4][2][][][][][][][][2]
+[y5z4][2][][][][][][][][2]
+[y4z4][2][][][][][][][][2]
+[y3z4][2][][][][][][][][2]
+[y2z4][2][][][][][][][][2]
+[y1z4][1][2][2][2][2][2][2][2][1]
+[xyz][x1z4][x2z4][x3z4][x4z4][x5z4][x6z4][x7z4][x8z4][x9z4]
+
+Layer 5 which human eye can see if the Layer 4 does not have anything over anything inside it
+
+[y9z5][][][][][][][][][]
+[y8z5][3][2][2][2][2][2][2][2][3]
+[y7z5][2][][][][][][][][2]
+[y6z5][2][][][][][][][][2]
+[y5z5][2][][][][][][][][2]
+[y4z5][2][][][][][][][][2]
+[y3z5][2][][][][][][][][2]
+[y2z5][2][][][][][][][][2]
+[y1z5][1][2][2][2][2][2][2][2][1]
+[xyz][x1z5][x2z5][x3z5][x4z5][x5z5][x6z5][x7z5][x8z5][x9z5]
+
+Layer 6 which human eye can see if the Layer 5 does not have anything over anything inside it
+
+[y9z6][][][][][][][][][]
+[y8z6][3][2][2][2][2][2][2][2][3]
+[y7z6][2][][][][][][][][2]
+[y6z6][2][][][][][][][][2]
+[y5z6][2][][][][][][][][2]
+[y4z6][2][][][][][][][][2]
+[y3z6][2][][][][][][][][2]
+[y2z6][2][][][][][][][][2]
+[y1z6][1][2][2][2][2][2][2][2][1]
+[xyz][x1z6][x2z6][x3z6][x4z6][x5z6][x6z6][x7z6][x8z6][x9z6]
+
+Layer 7 which human eye does can see if the Layer 6 does not have anything over anything inside it
+
+[y9z7][][][][][][][][][]
+[y8z7][][3][2][2][2][2][2][3][]
+[y7z7][][2][][][][][][2][]
+[y6z7][][2][][][][][][2][]
+[y5z7][][2][][][][][][2][]
+[y4z7][][2][][][][][][2][]
+[y3z7][][2][][][][][][2][]
+[y2z7][][2][][][][][][2][]
+[y1z7][][1][2][2][2][2][2][1][]
+[xyz][x1z7][x2z7][x3z7][x4z7][x5z7][x6z7][x7z7][x8z7][x9z7]
+
+Layer 8 which human eye can see if the Layer 7 does not have anything over anything inside it
+
+[y9z8][][][][][][][][][]
+[y8z8][][3][3][2][2][2][3][3][]
+[y7z8][][2][2][][][][2][2][]
+[y6z8][][2][2][][][][2][2][]
+[y5z8][][2][2][][][][2][2][]
+[y4z8][][2][2][][][][2][2][]
+[y3z8][][2][2][][][][2][2][]
+[y2z8][][2][2][][][][2][2][]
+[y1z8][][1][1][2][2][2][1][1][]
+[xyz][x1z8][x2z8][x3z8][x4z8][x5z8][x6z8][x7z8][x8z8][x9z8]
+
+Layer 9 which human eye can see if the Layer 8 does not have anything over anything inside it
+
+[y9z9][][][][][][][][][]
+[y8z9][][][][3][3][3][][][]
+[y7z9][][][][2][2][2][][][]
+[y6z9][][][][2][2][2][][][]
+[y5z9][][][][2][2][2][][][]
+[y4z9][][][][2][2][2][][][]
+[y3z9][][][][2][2][2][][][]
+[y2z9][][][][2][2][2][][][]
+[y1z9][][][][1][1][1][][][]
+[xyz][x1z9][x2z9][x3z9][x4z9][x5z9][x6z9][x7z9][x8z9][x9z9]
+
+
+It seems like you're describing a hierarchical system for representing rotations and positions in 3D space. If I understand correctly, you're suggesting a system where a player or object has three rotation points (circular orbits) each divided into 9 segments, creating a hierarchical structure for defining orientations.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Here's a brief summary of what I understand:
+
+Basic Representation:
+
+You have a 3D space represented as a 9 by 9 by 9 grid.
+Each grid cell can contain various maps, creating a hierarchical representation.
+Player or Object Rotation:
+
+The player or object has three rotation points represented by circles.
+Each rotation point has three main degrees: circular (c), horizontal (h), and vertical (v).
+Degrees of Rotation:
+
+The degrees are divided into 9 segments at each level of rotation.
+The total degrees for a complete rotation would be 9 * 9 * 9 = 729 degrees.
+This seems like a unique and granular way to represent rotations in your 3D space. It provides a structured and modular approach, especially with the hierarchical organization. If you have specific questions or if you'd like to discuss certain aspects in more detail, feel free to elaborate or ask for further clarification.
+
+Your idea of incorporating a nested map system for celestial bodies and their details adds a dynamic and scalable element to your game design. This approach allows for a rich and customizable representation of each celestial body, providing players with a detailed and immersive experience.
+
+To summarize the concept:
+
+CelestialBodyMap_Sun (729 possible locations)
+CelestialBodyPartsMap_Planet1 (e.g., Earth)
+OrbitingPlanet_Planet1
+Star_Sun_Planet1_Layer1
+Star_Sun_Planet1_Layer2
+...
+CelestialBodyPartsMap_Planet1_Layer1
+...
+CelestialBodyPartsMap_Planet1_Layer2
+...
+CelestialBodyPartsMap_Planet2 (e.g., Mars)
+OrbitingPlanet_Planet2
+Star_Sun_Planet2_Layer1
+Star_Sun_Planet2_Layer2
+...
+CelestialBodyPartsMap_Planet2_Layer1
+...
+CelestialBodyPartsMap_Planet2_Layer2
+...
+...
+This structure allows for flexibility in defining the layers of detail for each celestial body. Players can customize the level of complexity in the game settings, and the game can dynamically generate and render the layers accordingly.
+
+If you're implementing this in a game engine, you might consider using object-oriented principles or data structures to represent these celestial bodies and their nested maps. Each layer could have its own set of properties, and the game engine can handle the rendering and interactions based on the specified layers.
+
+Additionally, allowing players to customize the number of layers adds a level of player agency and allows for a more personalized gaming experience. If there are specific interactions or functionalities you'd like to discuss or if you have further questions, feel free to provide more details!
+
+
+
+CreationTool is 9 by 9 by 9
+
+so lets create an notepad 3D where each symbol or character is an representation of a frequency or stuff like that or each symbol can be an void and it goes on and on and stuff like that and then any file like notepad 3D can be seen in a 3D world with planets and stars and Galaxies
+
+
+
+CelestialBodyMap_Sun (729 possible locations)
+CelestialBodyPartsMap_Planet1 (e.g., Mercury)
+CelestialBodyPartsMap_Planet2 (e.g., Venus)
+CelestialBodyPartsMap_Planet3 (e.g., Earth)
+CelestialBodyPartsMap_Planet4 (e.g., Mars)
+CelestialBodyPartsMap_Planet5 (e.g., Jupiter)
+CelestialBodyPartsMap_Planet6 (e.g., Saturn)
+CelestialBodyPartsMap_Planet7 (e.g., Uranus)
+CelestialBodyPartsMap_Planet8 (e.g., Neptune)
+
+
+so we have an 3D World like an Sun have circles around it [Sun][Mercury][Venus][Earth][Mars][Jupiter][Saturn][Uranus][Neptune]
+
+
+8-Bit Binary Converter
+Sun Oct 2 10:54:05 EDT 2005
+This simple Javascript program shows 8-bit values in decimal, hexadecimal, binary, and ASCII. You can type a value in any of the windows, and when you push return/enter, it will be displayed in all the windows. You can also increment and decrement the displayed value. The values are limited to 8 bits; if you enter a larger value, the overflow will be silently be discarded.
+
+[1][2][3][4][5][6][7][8]-[Decimal]-[Hex]-[Ascii]
+[0][][][][][][][]-[1]-[1]-[]
+[1][][][][][][][]-[1]-[1]-[]
+[1][0][][][][][][]-[2]-[2]-[]
+[1][1][][][][][][]-[3]-[3]-[]
+[1][0][0][][][][][]-[4]-[4]-[]
+[1][0][1][][][][][]-[5]-[5]-[]
+[1][1][0][][][][][]-[6]-[6]-[]
+[1][1][1][][][][][]-[7]-[7]-[]
+[1][0][0][0][][][][]-[8]-[8]-[]
+[1][0][0][1][][][][]-[9]-[9]-[	]
+[1][0][1][0][][][][]-[10]-[A]-[]
+[1][0][1][1][][][][]-[11]-[B]-[]
+[1][1][0][0][][][][]-[12]-[C]-[]
+[1][1][0][1][][][][]-[13]-[D]-[]
+[1][1][1][0][][][][]-[14]-[F]-[]
+[1][1][1][1][][][][]-[15]-[E]-[]
+[1][0][0][0][0][][][]-[16]-[10]-[]
+[1][0][0][0][1][][][]-[17]-[11]-[]
+[1][0][0][1][0][][][]-[18]-[12]-[]
+[1][0][0][1][1][][][]-[19]-[13]-[]
+[1][0][1][0][0][][][]-[20]-[14]-[]
+[1][0][1][0][1][][][]-[21]-[15]-[]
+[1][0][1][1][0][][][]-[22]-[16]-[]
+[1][0][1][1][1][][][]-[23]-[17]-[]
+[1][1][0][0][0][][][]-[24]-[18]-[]
+[1][1][0][0][1][][][]-[25]-[19]-[]
+[1][1][0][1][0][][][]-[26]-[1A]-[]
+[1][1][0][1][1][][][]-[27]-[1B]-[]
+[1][1][1][0][0][][][]-[28]-[1C]-[]
+[1][1][1][0][1][][][]-[29]-[1D]-[]
+[1][1][1][1][0][][][]-[30]-[1E]-[]
+[1][1][1][1][1][][][]-[31]-[1F]-[]
+[1][0][0][0][0][0][][]-[32]-[20]-[]
+[1][0][0][0][0][1][][]-[33]-[21]-[!]
+[1][0][0][0][1][0][][]-[34]-[22]-["]
+[1][0][0][0][1][1][][]-[35]-[23]-[#]
+[1][0][0][1][0][0][][]-[36]-[24]-[$]
+[1][0][0][1][0][1][][]-[37]-[25]-[%]
+[1][0][0][1][1][0][][]-[38]-[26]-[&]
+[1][0][0][1][1][1][][]-[39]-[27]-[']
+[1][0][1][0][0][0][][]-[40]-[28]-[(]
+[1][0][1][0][0][1][][]-[41]-[29]-[)]
+[1][0][1][0][1][0][][]-[42]-[2A]-[*]
+[1][0][1][0][1][1][][]-[43]-[2B]-[+]
+[1][0][1][1][0][0][][]-[44]-[2C]-[,]
+[1][0][1][1][0][1][][]-[45]-[2D]-[-]
+[1][0][1][1][1][0][][]-[46]-[2E]-[.]
+[1][0][1][1][1][1][][]-[47]-[2F]-[/]
+[1][1][0][0][0][0][][]-[48]-[30]-[0]
+[1][1][0][0][0][1][][]-[49]-[31]-[1]
+[1][1][0][0][1][0][][]-[50]-[32]-[2]
+[1][1][0][0][1][1][][]-[51]-[33]-[3]
+[1][1][0][1][0][0][][]-[52]-[34]-[4]
+[1][1][0][1][0][1][][]-[53]-[35]-[5]
+[1][1][0][1][1][0][][]-[54]-[36]-[6]
+[1][1][0][1][1][1][][]-[55]-[37]-[7]
+[1][1][1][0][0][0][][]-[56]-[38]-[8]
+[1][1][1][0][0][1][][]-[57]-[39]-[9]
+[1][1][1][0][1][0][][]-[58]-[3A]-[:]
+[1][1][1][0][1][1][][]-[59]-[3B]-[;]
+[1][1][1][1][0][0][][]-[60]-[3C]-[<]
+[1][1][1][1][0][1][][]-[61]-[3D]-[=]
+[1][1][1][1][1][0][][]-[62]-[3E]-[>]
+[1][1][1][1][1][1][1][]-[63]-[3F]-[?]
+[1][0][0][0][0][0][0][]-[64]-[40]-[@]
+[1][0][0][0][0][0][1][]-[65]-[41]-[A]
+[1][0][0][0][0][1][0][]-[66]-[42]-[B]
+[1][0][0][0][0][1][1][]-[67]-[43]-[C]
+[1][0][0][0][1][0][0][]-[68]-[44]-[D]
+[1][0][0][0][1][0][1][]-[69]-[45]-[E]
+[1][0][0][0][1][1][0][]-[70]-[46]-[F]
+[1][0][0][0][1][1][1][]-[71]-[47]-[G]
+[1][0][0][1][0][0][0][]-[72]-[48]-[H]
+[1][0][0][1][0][0][1][]-[73]-[49]-[I]
+[1][0][0][1][0][1][0][]-[74]-[4A]-[J]
+[1][0][0][1][0][1][1][]-[75]-[4B]-[K]
+[1][0][0][1][1][0][0][]-[76]-[4C]-[L]
+[1][0][0][1][1][0][1][]-[77]-[4D]-[M]
+[1][0][0][1][1][1][0][]-[78]-[4E]-[N]
+[1][0][0][1][1][1][1][]-[79]-[4F]-[O]
+[1][0][1][0][0][0][0][]-[80]-[50]-[P]
+[1][0][1][0][0][0][1][]-[81]-[51]-[Q]
+[1][0][1][0][0][1][0][]-[82]-[52]-[R]
+[1][0][1][0][0][1][1][]-[83]-[53]-[S]
+[1][0][1][0][1][0][0][]-[84]-[54]-[T]
+[1][0][1][0][1][0][1][]-[85]-[55]-[U]
+[1][0][1][0][1][1][0][]-[86]-[56]-[V]
+[1][0][1][0][1][1][1][]-[87]-[57]-[W]
+[1][0][1][1][0][0][0][]-[88]-[58]-[X]
+[1][0][1][1][0][0][1][]-[89]-[59]-[Y]
+[1][0][1][1][0][1][0][]-[90]-[5A]-[Z]
+[1][0][1][1][0][1][1][]-[91]-[5B]-[[]
+[1][0][1][1][1][0][0][]-[92]-[5C]-[\]
+[1][0][1][1][1][0][1][]-[93]-[5D]-[]]
+[1][0][1][1][1][1][0][]-[94]-[5E]-[^]
+[1][0][1][1][1][1][1][]-[95]-[5F]-[_]
+[1][1][0][0][0][0][0][]-[96]-[60]-[`]
+[1][1][0][0][0][0][1][]-[97]-[61]-[a]
+[1][1][0][0][0][1][0][]-[98]-[62]-[b]
+[1][1][0][0][0][1][1][]-[99]-[63]-[c]
+[1][1][0][0][1][0][0][]-[100]-[64]-[d]
+[1][1][0][0][1][0][1][]-[101]-[65]-[e]
+[1][1][0][0][1][1][0][]-[102]-[66]-[f]
+[1][1][0][0][1][1][1][]-[103]-[67]-[g]
+[1][1][0][1][0][0][0][]-[104]-[68]-[h]
+[1][1][0][1][0][0][1][]-[105]-[69]-[i]
+[1][1][0][1][0][1][0][]-[106]-[6A]-[j]
+[1][1][0][1][0][1][1][]-[107]-[6B]-[k]
+[1][1][0][1][1][0][0][]-[108]-[6C]-[l]
+[1][1][0][1][1][0][1][]-[109]-[6D]-[m]
+[1][1][0][1][1][1][0][]-[110]-[6E]-[n]
+[1][1][0][1][1][1][1][]-[111]-[6F]-[o]
+[1][1][1][0][0][0][0][]-[112]-[70]-[p]
+[1][1][1][0][0][0][1][]-[113]-[71]-[q]
+[1][1][1][0][0][1][0][]-[114]-[72]-[r]
+[1][1][1][0][0][1][1][]-[115]-[73]-[s]
+[1][1][1][0][1][0][0][]-[116]-[74]-[t]
+[1][1][1][0][1][0][1][]-[117]-[75]-[u]
+[1][1][1][0][1][0][1][]-[118]-[76]-[v]
+[1][1][1][0][1][1][1][]-[119]-[77]-[w]
+[1][1][1][1][0][0][0][]-[120]-[78]-[x]
+[1][1][1][1][0][0][1][]-[121]-[79]-[y]
+[1][1][1][1][0][1][0][]-[122]-[7A]-[z]
+[1][1][1][1][0][1][0][]-[123]-[7B]-[{]
+[1][1][1][1][1][0][0][]-[124]-[7C]-[|]
+[1][1][1][1][1][0][1][]-[125]-[7D]-[}]
+[1][1][1][1][1][1][0][]-[126]-[7E]-[~]
+[1][1][1][1][1][1][1][]-[127]-[7F]-[]
+[1][0][0][0][0][0][0][0]-[128]-[80]-[]
+[1][0][0][0][0][0][0][1]-[129]-[81]-[]
+[1][0][0][0][0][0][1][0]-[130]-[82]-[]
+[1][0][0][0][0][0][1][1]-[131]-[83]-[]
+[1][0][0][0][0][1][0][0]-[132]-[84]-[]
+[1][0][0][0][0][1][0][1]-[133]-[85]-[]
+[1][0][0][0][0][1][1][0]-[134]-[86]-[]
+[1][0][0][0][0][1][1][1]-[135]-[87]-[]
+[1][0][0][0][1][0][0][0]-[136]-[88]-[]
+[1][0][0][0][1][0][0][1]-[137]-[89]-[]
+[1][0][0][0][1][0][1][0]-[138]-[8A]-[]
+[1][0][0][0][1][0][1][1]-[139]-[8B]-[]
+[1][0][0][0][1][1][0][0]-[140]-[8C]-[]
+[1][0][0][0][1][1][0][1]-[141]-[8D]-[]
+[1][0][0][0][1][1][1][0]-[142]-[8E]-[]
+[1][0][0][0][1][1][1][1]-[143]-[8F]-[]
+[1][0][0][1][0][0][0][0]-[144]-[90]-[]
+[1][0][0][1][0][0][0][1]-[145]-[91]-[]
+[1][0][0][1][0][0][1][0]-[146]-[92]-[]
+[1][0][0][1][0][0][1][1]-[147]-[93]-[]
+[1][0][0][1][0][1][0][0]-[148]-[94]-[]
+[1][0][0][1][0][1][0][1]-[149]-[95]-[]
+[1][0][0][1][0][1][1][0]-[150]-[96]-[]
+[1][0][0][1][0][1][1][1]-[151]-[97]-[]
+[1][0][0][1][1][0][0][0]-[152]-[98]-[]
+[1][0][0][1][1][0][0][1]-[153]-[99]-[]
+[1][0][0][1][1][0][1][0]-[154]-[9A]-[]
+[1][0][0][1][1][0][1][1]-[155]-[9B]-[]
+[1][0][0][1][1][1][0][0]-[156]-[9C]-[]
+[1][0][0][1][1][1][0][1]-[157]-[9D]-[]
+[1][0][0][1][1][1][1][0]-[158]-[9E]-[]
+[1][0][0][1][1][1][1][1]-[159]-[]-[]
+[1][0][1][0][0][0][0][0]-[160]-[]-[]
+[][][][][][][][]-[161]-[]-[]
+[][][][][][][][]-[162]-[]-[]
+[][][][][][][][]-[163]-[]-[]
+[][][][][][][][]-[164]-[]-[]
+[][][][][][][][]-[165]-[]-[]
+[][][][][][][][]-[166]-[]-[]
+[][][][][][][][]-[167]-[]-[]
+[][][][][][][][]-[168]-[]-[]
+[][][][][][][][]-[169]-[]-[]
+[][][][][][][][]-[170]-[]-[]
+[][][][][][][][]-[171]-[]-[]
+[][][][][][][][]-[172]-[]-[]
+[][][][][][][][]-[173]-[]-[]
+[][][][][][][][]-[174]-[]-[]
+[][][][][][][][]-[175]-[]-[]
+[][][][][][][][]-[176]-[]-[]
+[][][][][][][][]-[177]-[]-[]
+[][][][][][][][]-[178]-[]-[]
+[][][][][][][][]-[179]-[]-[]
+[][][][][][][][]-[180]-[]-[]
+[][][][][][][][]-[181]-[]-[]
+[][][][][][][][]-[182]-[]-[]
+[][][][][][][][]-[183]-[]-[]
+[][][][][][][][]-[184]-[]-[]
+[][][][][][][][]-[185]-[]-[]
+[][][][][][][][]-[186]-[]-[]
+[][][][][][][][]-[187]-[]-[]
+[][][][][][][][]-[188]-[]-[]
+[][][][][][][][]-[189]-[]-[]
+[][][][][][][][]-[190]-[]-[]
+[][][][][][][][]-[191]-[]-[]
+[][][][][][][][]-[192]-[]-[]
+[][][][][][][][]-[193]-[]-[]
+[][][][][][][][]-[194]-[]-[]
+[][][][][][][][]-[195]-[]-[]
+[][][][][][][][]-[196]-[]-[]
+[][][][][][][][]-[197]-[]-[]
+[][][][][][][][]-[198]-[]-[]
+[][][][][][][][]-[199]-[]-[]
+[][][][][][][][]-[200]-[]-[]
+[][][][][][][][]-[201]-[]-[]
+[][][][][][][][]-[202]-[]-[]
+[][][][][][][][]-[203]-[]-[]
+[][][][][][][][]-[204]-[]-[]
+[][][][][][][][]-[205]-[]-[]
+[][][][][][][][]-[206]-[]-[]
+[][][][][][][][]-[207]-[]-[]
+[][][][][][][][]-[208]-[]-[]
+[][][][][][][][]-[209]-[]-[]
+[][][][][][][][]-[210]-[]-[]
+[][][][][][][][]-[211]-[]-[]
+[][][][][][][][]-[212]-[]-[]
+[][][][][][][][]-[213]-[]-[]
+[][][][][][][][]-[214]-[]-[]
+[][][][][][][][]-[215]-[]-[]
+[][][][][][][][]-[216]-[]-[]
+[][][][][][][][]-[217]-[]-[]
+[][][][][][][][]-[218]-[]-[]
+[][][][][][][][]-[219]-[]-[]
+[][][][][][][][]-[220]-[]-[]
+[][][][][][][][]-[221]-[]-[]
+[][][][][][][][]-[222]-[]-[]
+[][][][][][][][]-[223]-[]-[]
+[][][][][][][][]-[224]-[]-[]
+[][][][][][][][]-[225]-[]-[]
+[][][][][][][][]-[226]-[]-[]
+[][][][][][][][]-[227]-[]-[]
+[][][][][][][][]-[228]-[]-[]
+[][][][][][][][]-[229]-[]-[]
+[][][][][][][][]-[230]-[]-[]
+[][][][][][][][]-[231]-[]-[]
+[][][][][][][][]-[232]-[]-[]
+[][][][][][][][]-[233]-[]-[]
+[][][][][][][][]-[234]-[]-[]
+[][][][][][][][]-[235]-[]-[]
+[][][][][][][][]-[236]-[]-[]
+[][][][][][][][]-[237]-[]-[]
+[][][][][][][][]-[238]-[]-[]
+[][][][][][][][]-[239]-[]-[]
+[][][][][][][][]-[240]-[]-[]
+[][][][][][][][]-[241]-[]-[]
+[][][][][][][][]-[242]-[]-[]
+[][][][][][][][]-[243]-[]-[]
+[][][][][][][][]-[244]-[]-[]
+[][][][][][][][]-[245]-[]-[]
+[][][][][][][][]-[246]-[]-[]
+[][][][][][][][]-[247]-[]-[]
+[][][][][][][][]-[248]-[]-[]
+[][][][][][][][]-[249]-[]-[]
+[][][][][][][][]-[250]-[]-[]
+[][][][][][][][]-[251]-[]-[]
+[][][][][][][][]-[252]-[]-[]
+[][][][][][][][]-[253]-[]-[]
+[][][][][][][][]-[254]-[]-[]
+[][][][][][][][]-[255]-[]-[]
+[][][][][][][][]-[256]-[]-[]

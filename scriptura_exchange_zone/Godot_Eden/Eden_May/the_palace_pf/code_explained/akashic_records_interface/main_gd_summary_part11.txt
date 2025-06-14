@@ -1,0 +1,108 @@
+# Main.gd Summary - Lines 5000-5500
+
+## Process System Functions Continued (Lines 5000-5384)
+- Continuation of process_system_1() 
+  - Node addition error handling
+  - Task delegation for node completion
+
+- process_system_2() (Lines 5013-5066)
+  - Thread-safe data sending system
+  - Three data type handlers:
+    - "instructions_analiser"
+    - "scene_frame_upload"
+    - "interactions_upload"
+  - Node path validation
+  - Task creation for data handling
+
+- process_system_3() (Lines 5068-5091)
+  - Thread-safe movement processing
+  - Three operation types:
+    - "move": Position updates
+    - "rotate": Rotation adjustments
+    - "write": Text content changes
+
+- process_system_4() (Lines 5093-5132)
+  - Thread-safe node unloading
+  - Two unload types:
+    - "container": Complete container unloading
+    - "just_node": Individual node removal
+  - Validation before unloading
+  - Task creation for cleanup
+
+- process_system_5() (Lines 5134-5181)
+  - Thread-safe function call processing
+  - Four function types:
+    - "single_function": Direct method calls
+    - "call_function_get_node": Node retrieval and method calls
+    - "call_function_single_get_node": Single parameter method calls
+    - "get_nodes_call_function": Multiple node method calls
+  - Special handling for keyboard functions
+
+- process_system_6() (Lines 5183-5233)
+  - Thread-safe additional call processing
+  - Container addition and visibility management
+  - Memory cleanup triggering
+  - Type-specific handlers:
+    - "add_container": Container creation
+    - "change_visibilty": Visibility toggling
+
+- process_system_7() (Lines 5235-5323)
+  - Thread-safe message handling
+  - Three message types:
+    - "singular_lines_text": Text message delivery
+    - "load_a_file": File loading requests
+    - "keyboard_connection": Keyboard setup
+  - Container and datapoint validation
+  - Node movement checking
+
+- process_system_8() (Lines 5325-5331)
+  - Stub function with mutex handling
+
+- process_system_9() (Lines 5333-5383)
+  - Thread-safe texture application
+  - Material creation and configuration
+  - UV mapping management
+  - Mesh property adjustment
+
+## Material and Texture Functions (Lines 5386-5443)
+- change_material_settings(): Standard material configuration
+- apply_texture_with_proper_settings(): Comprehensive texture application
+  - Node type-specific material settings
+  - UV generation for meshes
+  - Different configurations for:
+    - Flat shapes
+    - 3D models
+    - Heightmaps
+    - Text and UI elements
+    - Glass and transparent objects
+    - Vegetation and billboards
+
+## Projection System (Lines 5452-5499)
+- get_ray_points(): Raycasting from mouse position
+  - Camera-based ray generation
+  - Physics state intersection
+  - Task creation for result handling
+- another_ray_cast(): Secondary raycasting and highlighting
+- process_ray_cast(): Mouse movement raycasting
+  - Collision detection and highlighting
+
+## Notable Features
+1. Thread Safety: Comprehensive try_lock pattern for mutex handling
+2. Type-Based Processing: Different behavior for various node types
+3. Task Delegation: Offloads complex operations to tasks
+4. Error Handling: Requeues failed operations
+5. Material System: Type-specific material configuration
+6. Ray Interaction: Camera-based raycasting for 3D interaction
+7. Memory Management: Periodic memory state checking
+8. Node Validation: Thorough node existence checking
+
+## Architectural Patterns
+- Queue-Based Processing: Limited operations per cycle
+- Try-Lock Pattern: Non-blocking mutex checks
+- Type Dispatching: Type-based operation selection
+- Task-Based Architecture: Offloading to task system
+- State-Based Processing: Node state validation
+- Module Communication: Message passing between components
+- Physics Integration: Raycasting for 3D interaction
+
+Reading continues from line 5500.

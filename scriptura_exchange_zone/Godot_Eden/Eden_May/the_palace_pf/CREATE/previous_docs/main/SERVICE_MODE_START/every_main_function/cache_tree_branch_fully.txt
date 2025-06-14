@@ -1,0 +1,23 @@
+func cache_tree_branch_fully(container_to_unload):
+	
+	cached_tree_mutex.lock()
+	
+	print(" new function to cache tree branch fully ", container_to_unload)
+	if !cached_jsh_tree_branches.has(container_to_unload):
+		print(" new function, it doesnt have that branch ", container_to_unload)
+		
+		tree_mutex.lock()
+		if scene_tree_jsh["main_root"]["branches"].has(container_to_unload):
+			print(" the main scene tree thingy got that container in it rn ")
+			tree_mutex.unlock()
+			
+			disable_all_branches(scene_tree_jsh["main_root"]["branches"][container_to_unload])
+			
+			tree_mutex.lock()
+			cached_jsh_tree_branches[container_to_unload] = scene_tree_jsh["main_root"]["branches"][container_to_unload]
+			scene_tree_jsh["main_root"]["branches"].erase(container_to_unload)
+			tree_mutex.unlock()
+		else:
+			tree_mutex.unlock()
+	
+	cached_tree_mutex.unlock()

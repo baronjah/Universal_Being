@@ -1,0 +1,134 @@
+# Save System & Encryption Implementation
+
+## Features from Recipe:
+- Auto-save every 5 minutes
+- Player name integration (jakubhoksastanislaw = 19 characters)
+- Japanese hiragana-based encryption
+- File naming: playername_[name]_creationbuild_[multiverse]
+- Character mapping (25 chars to hiragana syllables)
+- Save files for CreationBuild and CreationPlay
+
+## Implementation Steps:
+
+### Step 1: Create Save Manager
+```gdscript
+# SaveManager.gd
+extends Node
+
+var player_name: String = ""
+var auto_save_timer: Timer
+var save_interval: float = 300.0 # 5 minutes
+
+signal save_completed()
+signal save_failed(reason: String)
+```
+
+### Step 2: Implement Encryption System
+1. Create character mapping table:
+```gdscript
+var char_to_hiragana = {
+    'a': 'ka', 'b': 'ki', 'c': 'ku', 'd': 'ke', 'e': 'ko',
+    'f': 'sa', 'g': 'shi', 'h': 'su', 'i': 'se', 'j': 'so',
+    'k': 'ta', 'l': 'chi', 'm': 'tsu', 'n': 'te', 'o': 'to',
+    'p': 'na', 'q': 'ni', 'r': 'nu', 's': 'ne', 't': 'no',
+    'u': 'ha', 'v': 'hi', 'w': 'fu', 'x': 'he', 'y': 'ho',
+    'z': 'ma',
+    '0': 'mi', '1': 'mu', '2': 'me', '3': 'mo', '4': 'ya',
+    '5': 'yu', '6': 'yo', '7': 'ra', '8': 'ri', '9': 'ru',
+    '_': 're', '-': 'ro', '!': 'wa', '?': 'wi', '(': 'we',
+    ')': 'wo', '{': 'ga', '}': 'gi', '[': 'gu', ']': 'ge'
+}
+```
+
+### Step 3: File Structure Implementation
+1. CreationBuild files:
+   - Base: `creationbuild_[multiverse_name]`
+   - Encrypted: `playername_[name]_creationbuild_[multiverse_name]`
+2. CreationPlay files:
+   - Base: `creationplay_[universe_name]`
+   - Encrypted: `playername_[name]_creationplay_[universe_name]`
+3. Save files:
+   - Format: `savefileofcreation_creationplay_[universe_name]`
+
+### Step 4: Encryption/Decryption Methods
+```gdscript
+func encrypt_filename(base_name: String, player: String) -> String:
+    # Generate encrypted filename using hiragana mapping
+    
+func decrypt_filename(encrypted: String) -> String:
+    # Reverse the encryption process
+    
+func generate_key_from_name(name: String) -> String:
+    # Create encryption key from player + multiverse name
+```
+
+### Step 5: Save/Load Implementation
+1. Create save data structure
+2. Implement binary serialization
+3. Add compression
+4. Create save method
+5. Create load method
+6. Implement auto-save timer
+
+## Testing Procedures:
+
+### Test 1: Encryption System
+- [ ] Test character to hiragana mapping
+- [ ] Encrypt "jakubhoksastanislaw"
+- [ ] Encrypt "animetitties"
+- [ ] Verify decryption accuracy
+- [ ] Test edge cases (special characters)
+
+### Test 2: File Creation
+- [ ] Create CreationBuild file
+- [ ] Create CreationPlay file
+- [ ] Verify file naming convention
+- [ ] Test file permissions
+- [ ] Check file locations
+
+### Test 3: Save/Load Cycle
+- [ ] Save game state
+- [ ] Load saved state
+- [ ] Verify data integrity
+- [ ] Test corrupted save handling
+- [ ] Test missing file handling
+
+### Test 4: Auto-save System
+- [ ] Start auto-save timer
+- [ ] Verify 5-minute intervals
+- [ ] Test save during gameplay
+- [ ] Verify no gameplay interruption
+- [ ] Test timer pause/resume
+
+## Encryption Example:
+```gdscript
+# Input: "jakubhoksastanislaw_creationbuild_animetitties"
+# Process each character:
+# j -> so, a -> ka, k -> ta, u -> ha, b -> ki...
+# Output: "sokatahakisuhotokunekanetatehisuchikanefu..."
+```
+
+## Save File Structure:
+```gdscript
+var save_data = {
+    "version": "1.0",
+    "player_name": "jakubhoksastanislaw",
+    "timestamp": OS.get_unix_time(),
+    "multiverse_data": {},
+    "universe_data": {},
+    "creation_data": {},
+    "settings": {}
+}
+```
+
+## Dependencies:
+- File system access
+- Encryption algorithm
+- Timer system
+- Binary serialization
+
+## Expected Outcomes:
+- Secure save file encryption
+- Reliable auto-save system
+- Fast save/load operations
+- Data integrity preservation

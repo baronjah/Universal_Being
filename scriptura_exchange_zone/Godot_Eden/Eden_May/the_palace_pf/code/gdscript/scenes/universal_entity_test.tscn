@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://b7j8ummtxr2mx"]
+
+[ext_resource type="Script" uid="uid://cgaq6ool707k5" path="res://code/gdscript/scripts/tests/universal_entity_test.gd" id="1_bwge6"]
+
+[node name="CoreUniversalEntityTest" type="Node"]
+script = ExtResource("1_bwge6")

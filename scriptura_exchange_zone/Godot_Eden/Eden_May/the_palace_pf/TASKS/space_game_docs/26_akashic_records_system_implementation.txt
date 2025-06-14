@@ -1,0 +1,293 @@
+# Akashic Records System Implementation Guide
+
+## Overview
+
+The Akashic Records system is a core component of the Eden Space Game, providing a dynamic dictionary of words/concepts that can evolve, interact, and adapt over time. This system drives the game's emergent behaviors and provides a foundation for the element interactions, cosmic entities, and player discoveries.
+
+## Core Components
+
+### 1. Word Entry (word_entry.gd)
+
+The basic building block of the system, representing individual concepts or elements.
+
+**Key Features:**
+- **Properties**: Numerical attributes that define the word's characteristics
+- **States**: Different configurations a word can exist in (e.g., water → liquid, ice, vapor)
+- **Interactions**: Rules for how this word interacts with other words
+- **Hierarchy**: Parent-child relationships between words
+- **Variants**: Evolved variations of base words
+- **Usage Tracking**: Records how frequently a word is used
+
+### 2. Dynamic Dictionary (dynamic_dictionary.gd)
+
+Manages the collection of all words and their relationships.
+
+**Key Features:**
+- **Word Storage**: Efficient storage and retrieval of word entries
+- **Hierarchy Management**: Handling parent-child relationships
+- **Dictionary Splitting**: Automatic splitting of large dictionaries into separate files
+- **Search & Query**: Finding words by properties, categories, etc.
+- **Serialization**: Saving/loading the dictionary to files
+
+### 3. Interaction Engine (interaction_engine.gd)
+
+Processes interactions between words based on defined rules.
+
+**Key Features:**
+- **Rule Evaluation**: Testing if interaction conditions are met
+- **Result Generation**: Creating interaction outcomes
+- **History Tracking**: Recording past interactions
+- **Simulation**: Testing potential interactions
+
+### 4. Zone Manager (zone_manager.gd)
+
+Organizes words/entities in spatial zones for efficient management and queries.
+
+**Key Features:**
+- **Zone Creation**: Defining spatial boundaries
+- **Entity Placement**: Positioning entities within zones
+- **Zone Splitting**: Automatic division of zones that become too dense
+- **Zone Merging**: Combining sparse zones for efficiency
+- **Spatial Queries**: Finding entities at specific positions
+
+### 5. Evolution Manager (evolution_manager.gd)
+
+Manages the automatic evolution of words over time.
+
+**Key Features:**
+- **Property Drift**: Gradual changes to word properties
+- **Variant Generation**: Creating new words based on heavily used ones
+- **Evolution Cycle**: Periodic update of the dictionary
+- **Usage Influence**: More frequently used words evolve faster
+
+### 6. Frequency Visualizer (frequency_visualizer.gd)
+
+Provides a 3D visualization of words and their relationships.
+
+**Key Features:**
+- **Node Representation**: Visual representation of words as 3D nodes
+- **Size Scaling**: Nodes sized by importance/usage
+- **Pulse Animation**: Visual feedback based on properties
+- **Connection Lines**: Visual links between related words
+- **Multiple Layouts**: Different organization patterns (radial, spiral, cluster)
+
+## Integration with Menu Keyboard Console
+
+The integration with the main menu system is handled by the `akashic_records_integration.gd` script, which:
+
+1. Creates menu entries for accessing the Akashic Records
+2. Instantiates and manages the Akashic Records UI
+3. Connects the system to other game components
+4. Provides a clean API for other systems to interact with the dictionary
+
+## Usage Examples
+
+### Creating a New Word
+
+```gdscript
+# Get the Akashic Records Manager
+var akashic_records = get_node("/root/AkashicRecordsManager")
+
+# Create a new element
+akashic_records.create_word(
+    "fire",                       # ID
+    "element",                    # Category
+    {                             # Properties
+        "heat": 0.8,
+        "light": 0.7,
+        "energy": 0.9
+    },
+    ""                            # Parent ID (empty for root words)
+)
+```
+
+### Defining an Interaction
+
+```gdscript
+# Define how fire interacts with water
+akashic_records.add_word_interaction(
+    "fire",                       # Word 1
+    "water",                      # Word 2
+    "steam",                      # Result
+    {"heat": "> 0.6"}             # Conditions
+)
+```
+
+### Processing an Interaction
+
+```gdscript
+# Process interaction between two words
+var result = akashic_records.process_word_interaction(
+    "fire",                       # Word 1
+    "water",                      # Word 2
+    {"heat": 0.8, "pressure": 1.2} # Context
+)
+
+if result.success:
+    print("Interaction produced: " + result.result)
+```
+
+### Visualizing Words
+
+```gdscript
+# Get the frequency visualizer
+var visualizer = get_node("FrequencyVisualizer")
+
+# Set visualization parameters
+visualizer.layout_type = "radial"
+visualizer.max_words = 50
+visualizer.show_connections = true
+
+# Update visualization
+visualizer.update_visualization()
+```
+
+## Data Structure
+
+### Dictionary File Format
+
+Dictionary data is stored in JSON format with the following structure:
+
+```json
+{
+  "word_id": {
+    "id": "word_id",
+    "category": "element",
+    "properties": {
+      "property1": 0.5,
+      "property2": 0.7
+    },
+    "states": {
+      "state1": {"default": true},
+      "state2": {"properties": {"property1": 0.3}}
+    },
+    "interactions": {
+      "target_word_id": {
+        "result": "result_word_id",
+        "conditions": {"property1": "> 0.5"}
+      }
+    },
+    "parent_id": "",
+    "children": ["child_word_id1", "child_word_id2"],
+    "file_reference": "path/to/split_file.json"
+  },
+  "word_id2": {
+    ...
+  }
+}
+```
+
+### Zone File Format
+
+Zone data is stored with spatial and entity information:
+
+```json
+{
+  "id": "zone_id",
+  "bounds": {
+    "position": {"x": -100, "y": -100, "z": -100},
+    "size": {"x": 200, "y": 200, "z": 200}
+  },
+  "entities": {
+    "entity_id1": {"x": 10, "y": 20, "z": 30},
+    "entity_id2": {"x": -15, "y": 5, "z": 8}
+  },
+  "child_zones": ["child_zone_id1", "child_zone_id2"],
+  "parent_zone": "parent_zone_id",
+  "entity_count": 2,
+  "active": true
+}
+```
+
+## Implementation Details
+
+### Dictionary Splitting
+
+When a word accumulates too many children, interactions, or states, it is split into a separate file:
+
+1. A threshold check is performed on each word
+2. When a word exceeds the threshold, it and its children are saved to a new file
+3. The main dictionary keeps a reference to the file
+4. The file is loaded on demand when the word is accessed
+
+### Zone Management
+
+Zones are organized in an octree-like structure:
+
+1. The universe starts as a single zone
+2. As entities are added to a zone, density is tracked
+3. When density exceeds a threshold, the zone splits into 8 sub-zones
+4. Entities are redistributed to the appropriate sub-zones
+5. When zones become sparse, they can be merged back
+
+### Evolution Process
+
+The evolution cycle works as follows:
+
+1. A timer triggers an evolution cycle at regular intervals
+2. Each word's properties gradually drift based on usage patterns
+3. Frequently used words have a chance to generate variants
+4. Variants are new words with slightly different properties
+5. The system tracks evolution statistics for monitoring
+
+## Extension and Customization
+
+### Adding New Property Types
+
+By default, word properties are primarily numeric (0.0-1.0), but you can extend this by:
+
+1. Adding new property types in the WordEntry class
+2. Extending the property evaluation in InteractionEngine
+3. Adding visualization mappings in FrequencyVisualizer
+
+### Creating Custom Layouts
+
+To add new visualization layouts:
+
+1. Add a new layout type string in FrequencyVisualizer
+2. Create a new `_layout_your_type()` method
+3. Add the layout to the match statement in `update_visualization()`
+
+### Connecting to Game Elements
+
+To connect dictionary words to game elements:
+
+1. Add references to physical element scripts
+2. Create listener methods for element events
+3. Synchronize property changes between systems
+
+## Best Practices
+
+1. **Use Meaningful IDs**: Create descriptive, unique IDs for words
+2. **Normalize Properties**: Keep properties in 0.0-1.0 range for consistent behavior
+3. **Define Default States**: Always specify a default state for each word
+4. **Set Clear Conditions**: Make interaction conditions specific and logical
+5. **Balance Evolution Rate**: Too fast evolution causes chaos, too slow feels static
+6. **Save Regularly**: Use `save_all()` to persist dictionary changes
+7. **Limit Visualization**: Keep max_words reasonable (50-100) for performance
+
+## Debugging and Troubleshooting
+
+### Common Issues
+
+1. **Dictionary Loading Fails**: Check file paths and JSON format
+2. **Interactions Not Working**: Verify conditions match context values
+3. **Evolution Too Fast/Slow**: Adjust evolution_rate and variant_probability
+4. **Visualization Lag**: Reduce max_words or disable show_connections
+5. **Zone System Errors**: Check spatial bounds and entity positions
+
+### Debugging Tools
+
+1. Use `akashic_records_manager.get_word(id)` to inspect word state
+2. Check `interaction_engine.interaction_history` for recent interactions
+3. Monitor `evolution_manager.get_stats()` for evolution metrics
+4. Use the Akashic Records UI to visualize and test the system
+
+## Future Enhancements
+
+1. **Enhanced Property Evolution**: More complex property relationships and influences
+2. **Contextual Interactions**: Interactions affected by environmental context
+3. **Neural Connections**: More sophisticated relationships between words
+4. **Temporal Patterns**: Recurring cycles and patterns in word evolution
+5. **User Feedback Loop**: Words evolving based on player interactions
+6. **Visual Effects**: Enhanced visualization with particle effects and transitions

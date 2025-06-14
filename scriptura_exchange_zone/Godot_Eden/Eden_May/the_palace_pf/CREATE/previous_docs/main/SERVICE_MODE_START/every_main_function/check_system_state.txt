@@ -1,0 +1,5 @@
+func check_system_state(state_name: String) -> SystemState:
+	core_states.mutex.lock()
+	var state = core_states.states.get(state_name, SystemState.UNKNOWN)
+	core_states.mutex.unlock()
+	return state

@@ -1,0 +1,19 @@
+func test_init() -> Dictionary:
+	var init_status = {
+		"system_check": validate_system_environment(),
+		"stages": []
+	}
+	
+	# Stage 1: System Environment
+	var env_status = validate_system_environment()
+	init_status.stages.append(["environment", env_status])
+	
+	# Stage 2: Thread Pool
+	var thread_status = validate_thread_system() 
+	init_status.stages.append(["threads", thread_status])
+	
+	# Only proceed if threads are working
+	if thread_status.status != "operational":
+		retry_thread_initialization()
+	
+	return init_status

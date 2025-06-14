@@ -1,0 +1,99 @@
+# Eden Space Game: Test Evolution Visualizer Scene
+
+## Overview
+The Test Evolution Visualizer is a dedicated scene for testing and demonstrating the integration between the Evolution Manager and Frequency Visualizer systems. This scene provides a controlled environment to visualize how dictionary entries evolve over time and how they are represented visually in 3D space.
+
+## Key Components
+
+### Test Evolution Scene Script
+The `test_evolution_scene.gd` script manages the test environment, creating mock data and connecting the Evolution Manager and Frequency Visualizer systems:
+
+- Creates a simplified `AkashicRecordsStub` and `WordEntryStub` for testing
+- Populates the system with sample words related to cosmic and energetic concepts
+- Provides UI controls for adjusting evolution parameters in real-time
+- Displays statistics about the evolution process
+- Shows detailed information about selected words
+- Allows manual triggering of evolution cycles for testing
+
+### Evolution Management
+The scene directly connects to the core Evolution Manager system:
+
+- Controls automatic evolution cycles
+- Adjusts evolution parameters (interval, rate, variant probability)
+- Tracks statistics like word count, evolution cycles, and variants generated
+- Demonstrates property drift mechanics
+- Shows variant generation based on usage patterns
+
+### Visualization Features
+The scene demonstrates all visualization capabilities:
+
+- Shows different layout algorithms (radial, spiral, cluster)
+- Visualizes words as interactive 3D nodes
+- Displays relationships between parent words and variants
+- Updates visualization in real-time as words evolve
+- Allows direct interaction with visualized words
+
+## Usage Instructions
+
+1. **Adding Words**: Click the "Add Random Word" button to add new words with random properties.
+
+2. **Evolution Control**:
+   - Toggle "Auto Evolution" to enable/disable automatic evolution cycles
+   - Adjust "Evolution Interval" to control how frequently cycles occur
+   - Adjust "Evolution Rate" to control how rapidly properties drift
+
+3. **Visualization Options**:
+   - Change the "Layout Type" dropdown to switch between different visualization patterns
+   - Select words in the visualization to view detailed information
+
+4. **Manual Testing**:
+   - Click "Trigger Evolution Cycle" to manually initiate an evolution cycle
+   - Watch the statistics panel to track evolution progress
+
+## Technical Implementation
+
+The test scene creates a self-contained environment that doesn't depend on the full Akashic Records implementation, making it ideal for isolated testing. It uses stubs that mimic the core functionality:
+
+```gdscript
+# Simple stub class for AkashicRecords to use in testing
+class AkashicRecordsStub:
+    var words = []
+    var next_id = 0
+    
+    func create_word(text, properties={}):
+        var word = WordEntryStub.new(next_id, text, properties)
+        next_id += 1
+        words.append(word)
+        return word
+```
+
+This approach allows testing of the Evolution Manager and Frequency Visualizer without the complexity of the full Akashic Records system.
+
+## Integration Notes
+
+This test scene serves as a prototype for how these systems will integrate with the full game:
+
+1. The Evolution Manager will connect to the actual Akashic Records system
+2. The Frequency Visualizer will be integrated with the VR system for immersive exploration
+3. The UI will be replaced with VR-friendly controls in the final implementation
+
+The test scene is designed to verify that the core mechanics work as expected before integrating with the more complex full game systems.
+
+## Performance Considerations
+
+The test scene limits visualization to 50 words maximum (configurable) to maintain good performance. In the full implementation, additional optimization techniques will be needed:
+
+- Level-of-detail adjustments for distant words
+- Frustum culling for words outside the view
+- Instance pooling for word visualizations
+- Throttled updates during heavy evolution cycles
+
+## Next Steps
+
+After testing with this scene, the next steps will be:
+
+1. Integrate the Evolution Manager with the full Akashic Records system
+2. Connect the Frequency Visualizer to the VR interaction system
+3. Implement proper serialization to save/load evolution state
+4. Create VR-friendly UI for controlling evolution parameters
+5. Test with larger dictionaries to evaluate performance

@@ -1,0 +1,24 @@
+func _input(event: InputEvent):
+	if event is InputEventMouseButton:
+		if event.button_index == MOUSE_BUTTON_LEFT:
+			if event.pressed:
+				print("_input : Left mouse clicked at: ", event.position)
+				var current_ray_points = get_ray_points(event.position)
+			else:
+				print("_input : Left mouse released at: ", event.position)
+		
+		if event.button_index == MOUSE_BUTTON_RIGHT:
+			if event.pressed:
+				pass
+				#print("_input : Right mouse clicked at: ", event.position)
+			else:
+				#print("_input : Right mouse released at: ", event.position)
+				pass
+	# Handle mouse motion
+	if event is InputEventMouseMotion:
+		#print("_input : Mouse moved to: ", event.position)
+		# For relative movement:
+		#print("_input : Mouse movement delta: ", event.relative)
+		pass
+		
+	camera.input(event)

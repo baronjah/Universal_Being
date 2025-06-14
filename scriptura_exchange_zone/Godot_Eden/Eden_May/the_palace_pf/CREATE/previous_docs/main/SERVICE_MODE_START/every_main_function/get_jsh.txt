@@ -1,0 +1,4 @@
+func get_jsh(property_name: String):
+	if property_name in self:
+		return self[property_name]
+	return null

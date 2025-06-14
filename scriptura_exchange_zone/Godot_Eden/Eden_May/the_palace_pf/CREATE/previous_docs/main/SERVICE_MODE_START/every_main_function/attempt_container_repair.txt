@@ -1,0 +1,10 @@
+func attempt_container_repair(container_name, missing_nodes):
+	active_r_s_mut.lock()
+	var records_set_name = container_name.split("_")[0] + "_"
+	
+	if active_record_sets.has(records_set_name):
+		var records = active_record_sets[records_set_name]
+		# Attempt to recreate missing nodes from records
+		for node_type in missing_nodes:
+			recreate_node_from_records(container_name, node_type, records) 
+	active_r_s_mut.unlock()

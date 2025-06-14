@@ -1,0 +1,16 @@
+[gd_scene load_steps=5 format=3 uid="uid://d1xe21hmq4dlg"]
+
+[ext_resource type="Shader" uid="uid://bre0wd2k5cab8" path="res://addons/camera360/PanoramaFromCubeMap.gdshader" id="1"]
+[ext_resource type="Script" uid="uid://rhtj8vexxqjf" path="res://addons/camera360/PanoramaFromCubeMap.gd" id="2"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_3mq1g"]
+shader = ExtResource("1")
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_f7fk0"]
+
+[node name="Panorama" type="TextureRect"]
+material = SubResource("ShaderMaterial_3mq1g")
+offset_right = 2048.0
+offset_bottom = 1024.0
+texture = SubResource("PlaceholderTexture2D_f7fk0")
+script = ExtResource("2")

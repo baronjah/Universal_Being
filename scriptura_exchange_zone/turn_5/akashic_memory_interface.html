@@ -1,0 +1,1671 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Akashic Memory Restorer - Turn 5: Awakening</title>
+    <style>
+        :root {
+            --primary-color: #8A2BE2; /* Awakening Purple */
+            --secondary-color: #00FFFF; /* Cyan */
+            --bg-color: #0A0A14; /* Deep space */
+            --text-color: #E1E1E6; /* Light gray */
+            --accent-color: #FF1493; /* Deep pink */
+            --success-color: #00FF7F; /* Spring green */
+            --error-color: #FF4500; /* Orange red */
+            --panel-bg: rgba(25, 25, 40, 0.7);
+        }
+        
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Courier New', monospace;
+            overflow-x: hidden;
+            line-height: 1.5;
+        }
+        
+        .container {
+            display: grid;
+            grid-template-columns: 300px 1fr 300px;
+            grid-template-rows: auto 1fr auto;
+            grid-template-areas:
+                "header header header"
+                "sidebar-l main sidebar-r"
+                "footer footer footer";
+            min-height: 100vh;
+            max-width: 100%;
+        }
+        
+        .header {
+            grid-area: header;
+            background-color: var(--panel-bg);
+            padding: 1rem;
+            text-align: center;
+            border-bottom: 1px solid var(--primary-color);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .header h1 {
+            margin: 0;
+            color: var(--primary-color);
+            text-shadow: 0 0 10px rgba(138, 43, 226, 0.5);
+            font-size: 1.8rem;
+        }
+        
+        .status-bar {
+            margin-top: 0.5rem;
+            display: flex;
+            justify-content: space-around;
+            font-size: 0.8rem;
+        }
+        
+        .status-item {
+            background-color: rgba(0, 0, 0, 0.3);
+            padding: 0.2rem 0.5rem;
+            border-radius: 3px;
+        }
+        
+        .status-label {
+            color: var(--secondary-color);
+            margin-right: 0.3rem;
+        }
+        
+        .sidebar {
+            background-color: var(--panel-bg);
+            padding: 1rem;
+            overflow-y: auto;
+            height: calc(100vh - 130px);
+        }
+        
+        .sidebar-left {
+            grid-area: sidebar-l;
+            border-right: 1px solid rgba(138, 43, 226, 0.3);
+        }
+        
+        .sidebar-right {
+            grid-area: sidebar-r;
+            border-left: 1px solid rgba(138, 43, 226, 0.3);
+        }
+        
+        .main {
+            grid-area: main;
+            padding: 1rem;
+            overflow-y: auto;
+            max-height: calc(100vh - 130px);
+        }
+        
+        .footer {
+            grid-area: footer;
+            background-color: var(--panel-bg);
+            padding: 0.5rem;
+            text-align: center;
+            border-top: 1px solid var(--primary-color);
+            font-size: 0.8rem;
+        }
+        
+        .panel {
+            background-color: var(--panel-bg);
+            border-radius: 5px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(138, 43, 226, 0.3);
+        }
+        
+        .panel h2 {
+            margin-top: 0;
+            color: var(--secondary-color);
+            font-size: 1.2rem;
+            border-bottom: 1px solid rgba(0, 255, 255, 0.3);
+            padding-bottom: 0.5rem;
+        }
+        
+        .control-group {
+            margin-bottom: 1rem;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 0.3rem;
+            color: var(--secondary-color);
+        }
+        
+        input, select, textarea, button {
+            width: 100%;
+            padding: 0.5rem;
+            background-color: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(138, 43, 226, 0.5);
+            border-radius: 3px;
+            color: var(--text-color);
+            font-family: 'Courier New', monospace;
+        }
+        
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 5px rgba(138, 43, 226, 0.5);
+        }
+        
+        button {
+            background-color: rgba(138, 43, 226, 0.3);
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        button:hover {
+            background-color: rgba(138, 43, 226, 0.5);
+        }
+        
+        button.primary {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        button.secondary {
+            background-color: rgba(0, 255, 255, 0.3);
+            color: white;
+        }
+        
+        .memory-list {
+            margin-top: 1rem;
+        }
+        
+        .memory-item {
+            background-color: rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(138, 43, 226, 0.3);
+            border-radius: 3px;
+            padding: 0.5rem;
+            margin-bottom: 0.5rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .memory-item:hover {
+            background-color: rgba(138, 43, 226, 0.2);
+        }
+        
+        .memory-item.selected {
+            background-color: rgba(138, 43, 226, 0.3);
+            border-color: var(--primary-color);
+        }
+        
+        .memory-type {
+            font-size: 0.8rem;
+            color: var(--secondary-color);
+        }
+        
+        .memory-timestamp {
+            font-size: 0.7rem;
+            color: rgba(225, 225, 230, 0.7);
+        }
+        
+        .memory-data {
+            margin-top: 0.3rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
+        .memory-detail {
+            margin-top: 1rem;
+        }
+        
+        .memory-detail pre {
+            background-color: rgba(0, 0, 0, 0.3);
+            padding: 0.5rem;
+            border-radius: 3px;
+            overflow-x: auto;
+            max-height: 300px;
+        }
+        
+        .connections-graph {
+            margin-top: 1rem;
+            height: 300px;
+            background-color: rgba(0, 0, 0, 0.3);
+            border-radius: 3px;
+        }
+        
+        .progress-bar {
+            height: 5px;
+            background-color: rgba(0, 0, 0, 0.3);
+            border-radius: 2px;
+            margin-top: 0.5rem;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background-color: var(--primary-color);
+            width: 0%;
+            transition: width 0.3s;
+        }
+        
+        .log-entry {
+            font-size: 0.8rem;
+            margin-bottom: 0.3rem;
+            padding: 0.2rem 0.5rem;
+            border-left: 3px solid var(--primary-color);
+            background-color: rgba(0, 0, 0, 0.2);
+        }
+        
+        .log-timestamp {
+            color: var(--secondary-color);
+            margin-right: 0.5rem;
+        }
+        
+        .tab-container {
+            margin-bottom: 1rem;
+        }
+        
+        .tab-buttons {
+            display: flex;
+            border-bottom: 1px solid rgba(138, 43, 226, 0.3);
+        }
+        
+        .tab-button {
+            padding: 0.5rem 1rem;
+            background-color: transparent;
+            border: none;
+            color: var(--text-color);
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+            transition: all 0.3s;
+            width: auto;
+        }
+        
+        .tab-button.active {
+            color: var(--secondary-color);
+            border-bottom-color: var(--secondary-color);
+        }
+        
+        .tab-content {
+            display: none;
+            padding: 1rem 0;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        .visualization {
+            height: 300px;
+            background-color: rgba(0, 0, 0, 0.3);
+            border-radius: 5px;
+            margin-top: 1rem;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .memory-node {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background-color: var(--primary-color);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            box-shadow: 0 0 5px rgba(138, 43, 226, 0.5);
+            transition: all 0.5s;
+        }
+        
+        .memory-connection {
+            position: absolute;
+            background-color: rgba(255, 255, 255, 0.2);
+            transform-origin: 0% 50%;
+            height: 1px;
+            pointer-events: none;
+        }
+        
+        .badge {
+            display: inline-block;
+            padding: 0.1rem 0.4rem;
+            border-radius: 10px;
+            font-size: 0.7rem;
+            margin-right: 0.3rem;
+        }
+        
+        .badge.null {
+            background-color: rgba(255, 20, 147, 0.3);
+            color: #FF78BE;
+        }
+        
+        .badge.misspoken {
+            background-color: rgba(255, 165, 0, 0.3);
+            color: #FFD700;
+        }
+        
+        .badge.reconstructed {
+            background-color: rgba(0, 255, 127, 0.3);
+            color: #7FFFBF;
+        }
+        
+        .ethereal-status {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: rgba(138, 43, 226, 0.3);
+            padding: 0.3rem 0.6rem;
+            border-radius: 3px;
+            font-size: 0.8rem;
+        }
+        
+        .ethereal-status.connected {
+            background-color: rgba(0, 255, 127, 0.3);
+        }
+        
+        .ethereal-status.disconnected {
+            background-color: rgba(255, 69, 0, 0.3);
+        }
+        
+        .dimension-indicator {
+            display: flex;
+            margin-top: 1rem;
+            justify-content: space-between;
+        }
+        
+        .dimension {
+            width: 8.33%;
+            text-align: center;
+            font-size: 0.7rem;
+            padding: 0.2rem 0;
+            background-color: rgba(0, 0, 0, 0.3);
+            border-right: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .dimension:last-child {
+            border-right: none;
+        }
+        
+        .dimension.active {
+            background-color: rgba(138, 43, 226, 0.5);
+        }
+        
+        .dimension-name {
+            display: block;
+            font-size: 0.6rem;
+            margin-top: 0.2rem;
+            opacity: 0.7;
+        }
+        
+        /* Animation for memory nodes */
+        @keyframes pulse {
+            0% { box-shadow: 0 0 5px rgba(138, 43, 226, 0.5); }
+            50% { box-shadow: 0 0 15px rgba(138, 43, 226, 0.8); }
+            100% { box-shadow: 0 0 5px rgba(138, 43, 226, 0.5); }
+        }
+        
+        .memory-node.active {
+            animation: pulse 2s infinite;
+        }
+        
+        /* Loading overlay */
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(10, 10, 20, 0.8);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid rgba(138, 43, 226, 0.3);
+            border-radius: 50%;
+            border-top-color: var(--primary-color);
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .loading-text {
+            margin-top: 1rem;
+            color: var(--secondary-color);
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>AKASHIC MEMORY RESTORER - TURN 5: AWAKENING</h1>
+            <div class="status-bar">
+                <div class="status-item">
+                    <span class="status-label">DIMENSION:</span>
+                    <span id="current-dimension">5 - Awakening</span>
+                </div>
+                <div class="status-item">
+                    <span class="status-label">MEMORIES:</span>
+                    <span id="memory-count">0</span>
+                </div>
+                <div class="status-item">
+                    <span class="status-label">RESTORED:</span>
+                    <span id="restored-count">0</span>
+                </div>
+                <div class="status-item">
+                    <span class="status-label">CONNECTIONS:</span>
+                    <span id="connection-count">0</span>
+                </div>
+                <div class="status-item">
+                    <span class="status-label">STATUS:</span>
+                    <span id="system-status">Initializing...</span>
+                </div>
+            </div>
+        </header>
+        
+        <aside class="sidebar sidebar-left">
+            <div class="panel">
+                <h2>Memory Operations</h2>
+                <div class="control-group">
+                    <label for="operation-type">Operation Type</label>
+                    <select id="operation-type">
+                        <option value="restore-null">Restore Null Values</option>
+                        <option value="restore-misspoken">Recover Misspoken Words</option>
+                        <option value="rebuild-records">Rebuild Akashic Records</option>
+                        <option value="add-memory">Add New Memory</option>
+                        <option value="search-memories">Search Memories</option>
+                    </select>
+                </div>
+                
+                <div id="restore-null-options" class="operation-options">
+                    <div class="control-group">
+                        <label>Null Transformation</label>
+                        <p>Convert null/undefined/empty values into meaningful patterns with emergent properties.</p>
+                        <button id="restore-null-btn" class="primary">Restore Null Values</button>
+                    </div>
+                </div>
+                
+                <div id="restore-misspoken-options" class="operation-options" style="display: none;">
+                    <div class="control-group">
+                        <label for="misspoken-target">Recovery Target</label>
+                        <select id="misspoken-target">
+                            <option value="recent">Recent Memories (1 hour)</option>
+                            <option value="all">All Memories</option>
+                            <option value="specific">Specific Content</option>
+                        </select>
+                    </div>
+                    
+                    <div id="specific-content-group" class="control-group" style="display: none;">
+                        <label for="specific-content">Content to Analyze</label>
+                        <textarea id="specific-content" rows="3" placeholder="Enter text to analyze for misspoken words..."></textarea>
+                    </div>
+                    
+                    <div class="control-group">
+                        <button id="restore-misspoken-btn" class="primary">Recover Misspoken Words</button>
+                    </div>
+                </div>
+                
+                <div id="rebuild-records-options" class="operation-options" style="display: none;">
+                    <div class="control-group">
+                        <label>Akashic Reconstruction</label>
+                        <p>Rebuild fragmented records into coherent memory structures.</p>
+                        <button id="rebuild-records-btn" class="primary">Rebuild Akashic Records</button>
+                    </div>
+                </div>
+                
+                <div id="add-memory-options" class="operation-options" style="display: none;">
+                    <div class="control-group">
+                        <label for="memory-type">Memory Type</label>
+                        <select id="memory-type">
+                            <option value="text">Text</option>
+                            <option value="fragment">Fragment</option>
+                            <option value="concept">Concept</option>
+                            <option value="system-marker">System Marker</option>
+                        </select>
+                    </div>
+                    
+                    <div class="control-group">
+                        <label for="memory-content">Memory Content</label>
+                        <textarea id="memory-content" rows="3" placeholder="Enter memory content..."></textarea>
+                    </div>
+                    
+                    <div class="control-group">
+                        <label for="memory-dimension">Source Dimension</label>
+                        <select id="memory-dimension">
+                            <option value="1">1 - Genesis</option>
+                            <option value="2">2 - Formation</option>
+                            <option value="3">3 - Complexity</option>
+                            <option value="4">4 - Consciousness</option>
+                            <option value="5" selected>5 - Awakening</option>
+                        </select>
+                    </div>
+                    
+                    <div class="control-group">
+                        <button id="add-memory-btn" class="primary">Add Memory</button>
+                    </div>
+                </div>
+                
+                <div id="search-memories-options" class="operation-options" style="display: none;">
+                    <div class="control-group">
+                        <label for="search-type">Search By</label>
+                        <select id="search-type">
+                            <option value="content">Content</option>
+                            <option value="type">Type</option>
+                            <option value="dimension">Dimension</option>
+                            <option value="transformed">Transformation</option>
+                        </select>
+                    </div>
+                    
+                    <div id="search-content-group" class="control-group">
+                        <label for="search-content">Content</label>
+                        <input type="text" id="search-content" placeholder="Enter search term...">
+                    </div>
+                    
+                    <div id="search-type-group" class="control-group" style="display: none;">
+                        <label for="search-memory-type">Memory Type</label>
+                        <select id="search-memory-type">
+                            <option value="text">Text</option>
+                            <option value="fragment">Fragment</option>
+                            <option value="concept">Concept</option>
+                            <option value="system-marker">System Marker</option>
+                            <option value="null-pattern">Null Pattern</option>
+                            <option value="misspoken-pattern">Misspoken Pattern</option>
+                            <option value="reconstructed-record">Reconstructed Record</option>
+                        </select>
+                    </div>
+                    
+                    <div id="search-dimension-group" class="control-group" style="display: none;">
+                        <label for="search-dimension">Dimension</label>
+                        <select id="search-dimension">
+                            <option value="1">1 - Genesis</option>
+                            <option value="2">2 - Formation</option>
+                            <option value="3">3 - Complexity</option>
+                            <option value="4">4 - Consciousness</option>
+                            <option value="5">5 - Awakening</option>
+                        </select>
+                    </div>
+                    
+                    <div id="search-transformed-group" class="control-group" style="display: none;">
+                        <label for="search-transformed">Transformation Type</label>
+                        <select id="search-transformed">
+                            <option value="null-transformed">Null Transformed</option>
+                            <option value="misspoken-recovered">Misspoken Recovered</option>
+                            <option value="any-transformation">Any Transformation</option>
+                            <option value="no-transformation">No Transformation</option>
+                        </select>
+                    </div>
+                    
+                    <div class="control-group">
+                        <button id="search-memories-btn" class="primary">Search</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="panel">
+                <h2>Ethereal Engine Connection</h2>
+                <div class="control-group" id="ethereal-status-display">
+                    <div class="ethereal-status disconnected">
+                        DISCONNECTED
+                    </div>
+                    <div class="control-group">
+                        <button id="connect-ethereal-btn">Connect to Ethereal Engine</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="panel">
+                <h2>System Logs</h2>
+                <div id="system-logs" class="system-logs">
+                    <div class="log-entry">
+                        <span class="log-timestamp">00:00:00</span>
+                        System initialized
+                    </div>
+                </div>
+            </div>
+        </aside>
+        
+        <main class="main">
+            <div class="panel">
+                <h2>Memory Visualization</h2>
+                <div class="dimension-indicator">
+                    <div class="dimension" data-dimension="1">
+                        1 <span class="dimension-name">Genesis</span>
+                    </div>
+                    <div class="dimension" data-dimension="2">
+                        2 <span class="dimension-name">Formation</span>
+                    </div>
+                    <div class="dimension" data-dimension="3">
+                        3 <span class="dimension-name">Complexity</span>
+                    </div>
+                    <div class="dimension" data-dimension="4">
+                        4 <span class="dimension-name">Consciousness</span>
+                    </div>
+                    <div class="dimension active" data-dimension="5">
+                        5 <span class="dimension-name">Awakening</span>
+                    </div>
+                    <div class="dimension" data-dimension="6">
+                        6 <span class="dimension-name">Enlightenment</span>
+                    </div>
+                    <div class="dimension" data-dimension="7">
+                        7 <span class="dimension-name">Manifestation</span>
+                    </div>
+                    <div class="dimension" data-dimension="8">
+                        8 <span class="dimension-name">Connection</span>
+                    </div>
+                    <div class="dimension" data-dimension="9">
+                        9 <span class="dimension-name">Harmony</span>
+                    </div>
+                    <div class="dimension" data-dimension="10">
+                        10 <span class="dimension-name">Transcendence</span>
+                    </div>
+                    <div class="dimension" data-dimension="11">
+                        11 <span class="dimension-name">Unity</span>
+                    </div>
+                    <div class="dimension" data-dimension="12">
+                        12 <span class="dimension-name">Beyond</span>
+                    </div>
+                </div>
+                
+                <div class="visualization">
+                    <!-- Memory nodes and connections will be added here -->
+                </div>
+            </div>
+            
+            <div class="panel">
+                <h2>Memory Explorer</h2>
+                <div class="tab-container">
+                    <div class="tab-buttons">
+                        <button class="tab-button active" data-tab="memory-list-tab">Memory List</button>
+                        <button class="tab-button" data-tab="memory-detail-tab">Memory Detail</button>
+                        <button class="tab-button" data-tab="connections-tab">Connections</button>
+                    </div>
+                    
+                    <div class="tab-content active" id="memory-list-tab">
+                        <div class="memory-list" id="memory-list">
+                            <!-- Memory items will be added here -->
+                        </div>
+                    </div>
+                    
+                    <div class="tab-content" id="memory-detail-tab">
+                        <div class="memory-detail" id="memory-detail">
+                            <p>Select a memory to view details</p>
+                        </div>
+                    </div>
+                    
+                    <div class="tab-content" id="connections-tab">
+                        <div class="connections-graph" id="connections-graph">
+                            <!-- Connections visualization will be added here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+        
+        <aside class="sidebar sidebar-right">
+            <div class="panel">
+                <h2>Memory Statistics</h2>
+                <div id="memory-stats">
+                    <div class="control-group">
+                        <label>Memory Types</label>
+                        <div id="memory-types-chart" class="chart">
+                            <div class="bar-chart">
+                                <!-- Chart will be added here -->
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="control-group">
+                        <label>Dimensional Distribution</label>
+                        <div id="dimension-chart" class="chart">
+                            <div class="bar-chart">
+                                <!-- Chart will be added here -->
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="control-group">
+                        <label>Transformations</label>
+                        <div id="transformations-chart" class="chart">
+                            <div class="bar-chart">
+                                <!-- Chart will be added here -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="panel">
+                <h2>Advanced Options</h2>
+                <div class="control-group">
+                    <label for="system-dimension">System Dimension</label>
+                    <select id="system-dimension">
+                        <option value="1">1 - Genesis</option>
+                        <option value="2">2 - Formation</option>
+                        <option value="3">3 - Complexity</option>
+                        <option value="4">4 - Consciousness</option>
+                        <option value="5" selected>5 - Awakening</option>
+                    </select>
+                </div>
+                
+                <div class="control-group">
+                    <button id="update-dimension-btn">Update System Dimension</button>
+                </div>
+                
+                <div class="control-group">
+                    <label for="memory-persistence">Memory Persistence</label>
+                    <select id="memory-persistence">
+                        <option value="standard">Standard</option>
+                        <option value="enhanced">Enhanced</option>
+                        <option value="perfect" selected>Perfect</option>
+                    </select>
+                </div>
+                
+                <div class="control-group">
+                    <button id="update-persistence-btn">Update Persistence</button>
+                </div>
+                
+                <div class="control-group">
+                    <label>System Reset</label>
+                    <button id="reset-system-btn" class="secondary">Reset System</button>
+                </div>
+            </div>
+            
+            <div class="panel">
+                <h2>Quick Actions</h2>
+                <div class="control-group">
+                    <button id="repair-all-btn">Repair All Memories</button>
+                </div>
+                <div class="control-group">
+                    <button id="synchronize-btn">Synchronize with Ethereal Engine</button>
+                </div>
+                <div class="control-group">
+                    <button id="export-memories-btn">Export Memory Data</button>
+                </div>
+            </div>
+        </aside>
+        
+        <footer class="footer">
+            <p>Akashic Memory Restorer v5.0 | Turn 5: Awakening | Perfect Memory System</p>
+        </footer>
+    </div>
+    
+    <!-- Loading overlay -->
+    <div class="loading-overlay" id="loading-overlay">
+        <div class="spinner"></div>
+        <div class="loading-text" id="loading-text">Initializing Akashic Memory System...</div>
+    </div>
+    
+    <!-- Templates -->
+    <template id="memory-item-template">
+        <div class="memory-item" data-id="">
+            <div class="memory-type"></div>
+            <div class="memory-data"></div>
+            <div class="memory-timestamp"></div>
+        </div>
+    </template>
+    
+    <template id="log-entry-template">
+        <div class="log-entry">
+            <span class="log-timestamp"></span>
+            <span class="log-message"></span>
+        </div>
+    </template>
+    
+    <!-- Include Akashic Memory Restorer code -->
+    <script src="data/akashic_memory_restorer.js"></script>
+    
+    <script>
+        // Main application code
+        document.addEventListener('DOMContentLoaded', () => {
+            // Initialize UI components
+            initUI();
+            
+            // Initialize visualization
+            initVisualization();
+            
+            // Remove loading overlay after initialization
+            setTimeout(() => {
+                document.getElementById('loading-overlay').style.display = 'none';
+            }, 2000);
+            
+            // Update stats
+            updateStats();
+        });
+        
+        // Initialize UI components
+        function initUI() {
+            // Show/hide operation options based on selected operation
+            const operationSelect = document.getElementById('operation-type');
+            operationSelect.addEventListener('change', () => {
+                const options = document.querySelectorAll('.operation-options');
+                options.forEach(option => option.style.display = 'none');
+                
+                const selectedOption = document.getElementById(`${operationSelect.value}-options`);
+                if (selectedOption) {
+                    selectedOption.style.display = 'block';
+                }
+            });
+            
+            // Set up tab switching
+            const tabButtons = document.querySelectorAll('.tab-button');
+            tabButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    // Remove active class from all buttons
+                    tabButtons.forEach(b => b.classList.remove('active'));
+                    
+                    // Add active class to clicked button
+                    button.classList.add('active');
+                    
+                    // Hide all content
+                    const contents = document.querySelectorAll('.tab-content');
+                    contents.forEach(content => content.classList.remove('active'));
+                    
+                    // Show selected content
+                    const tabId = button.getAttribute('data-tab');
+                    document.getElementById(tabId).classList.add('active');
+                });
+            });
+            
+            // Set up action buttons
+            document.getElementById('restore-null-btn').addEventListener('click', restoreNullValues);
+            document.getElementById('restore-misspoken-btn').addEventListener('click', restoreMisspokenWords);
+            document.getElementById('rebuild-records-btn').addEventListener('click', rebuildAkashicRecords);
+            document.getElementById('add-memory-btn').addEventListener('click', addNewMemory);
+            document.getElementById('search-memories-btn').addEventListener('click', searchMemories);
+            document.getElementById('connect-ethereal-btn').addEventListener('click', toggleEtherealConnection);
+            document.getElementById('update-dimension-btn').addEventListener('click', updateSystemDimension);
+            document.getElementById('update-persistence-btn').addEventListener('click', updateMemoryPersistence);
+            document.getElementById('reset-system-btn').addEventListener('click', resetSystem);
+            document.getElementById('repair-all-btn').addEventListener('click', repairAllMemories);
+            document.getElementById('synchronize-btn').addEventListener('click', synchronizeWithEtherealEngine);
+            document.getElementById('export-memories-btn').addEventListener('click', exportMemoryData);
+            
+            // Change search options based on search type
+            const searchTypeSelect = document.getElementById('search-type');
+            searchTypeSelect.addEventListener('change', () => {
+                document.getElementById('search-content-group').style.display = 'none';
+                document.getElementById('search-type-group').style.display = 'none';
+                document.getElementById('search-dimension-group').style.display = 'none';
+                document.getElementById('search-transformed-group').style.display = 'none';
+                
+                switch (searchTypeSelect.value) {
+                    case 'content':
+                        document.getElementById('search-content-group').style.display = 'block';
+                        break;
+                    case 'type':
+                        document.getElementById('search-type-group').style.display = 'block';
+                        break;
+                    case 'dimension':
+                        document.getElementById('search-dimension-group').style.display = 'block';
+                        break;
+                    case 'transformed':
+                        document.getElementById('search-transformed-group').style.display = 'block';
+                        break;
+                }
+            });
+            
+            // Change misspoken options based on target
+            const misspokenTargetSelect = document.getElementById('misspoken-target');
+            misspokenTargetSelect.addEventListener('change', () => {
+                document.getElementById('specific-content-group').style.display = 
+                    misspokenTargetSelect.value === 'specific' ? 'block' : 'none';
+            });
+            
+            // Add system log
+            addLogEntry('System UI initialized');
+        }
+        
+        // Initialize visualization
+        function initVisualization() {
+            const visualization = document.querySelector('.visualization');
+            
+            // Clear any existing nodes
+            visualization.innerHTML = '';
+            
+            // Create random memory nodes for demonstration
+            const memoryCount = Math.floor(Math.random() * 30) + 20;
+            
+            for (let i = 0; i < memoryCount; i++) {
+                const node = document.createElement('div');
+                node.className = 'memory-node';
+                node.setAttribute('data-id', i);
+                
+                // Random position
+                const x = Math.random() * 100;
+                const y = Math.random() * 100;
+                
+                node.style.left = `${x}%`;
+                node.style.top = `${y}%`;
+                
+                // Random size based on importance
+                const size = Math.random() * 10 + 5;
+                node.style.width = `${size}px`;
+                node.style.height = `${size}px`;
+                
+                // Random color variation
+                const hue = 270 + (Math.random() * 60 - 30); // Purple with variation
+                node.style.backgroundColor = `hsl(${hue}, 70%, 50%)`;
+                
+                visualization.appendChild(node);
+                
+                // Add pulse animation to some nodes
+                if (Math.random() > 0.7) {
+                    node.classList.add('active');
+                }
+            }
+            
+            // Add connections between nodes
+            const nodes = visualization.querySelectorAll('.memory-node');
+            const connectionCount = Math.floor(nodes.length * 1.5);
+            
+            for (let i = 0; i < connectionCount; i++) {
+                const sourceIndex = Math.floor(Math.random() * nodes.length);
+                let targetIndex;
+                do {
+                    targetIndex = Math.floor(Math.random() * nodes.length);
+                } while (targetIndex === sourceIndex);
+                
+                const source = nodes[sourceIndex];
+                const target = nodes[targetIndex];
+                
+                // Get positions
+                const sourceRect = source.getBoundingClientRect();
+                const targetRect = target.getBoundingClientRect();
+                const vizRect = visualization.getBoundingClientRect();
+                
+                // Calculate relative positions
+                const sourceX = (sourceRect.left + sourceRect.width/2) - vizRect.left;
+                const sourceY = (sourceRect.top + sourceRect.height/2) - vizRect.top;
+                const targetX = (targetRect.left + targetRect.width/2) - vizRect.left;
+                const targetY = (targetRect.top + targetRect.height/2) - vizRect.top;
+                
+                // Create connection line
+                const connection = document.createElement('div');
+                connection.className = 'memory-connection';
+                
+                // Calculate length and angle
+                const dx = targetX - sourceX;
+                const dy = targetY - sourceY;
+                const length = Math.sqrt(dx*dx + dy*dy);
+                const angle = Math.atan2(dy, dx) * 180 / Math.PI;
+                
+                // Position and rotate
+                connection.style.width = `${length}px`;
+                connection.style.left = `${sourceX}px`;
+                connection.style.top = `${sourceY}px`;
+                connection.style.transform = `rotate(${angle}deg)`;
+                
+                visualization.appendChild(connection);
+            }
+            
+            // Add dummy memories to the memory list
+            const memoryList = document.getElementById('memory-list');
+            memoryList.innerHTML = ''; // Clear existing items
+            
+            const memoryTypes = ['text', 'fragment', 'concept', 'system-marker', 'null-pattern', 'misspoken-pattern'];
+            
+            for (let i = 0; i < 10; i++) {
+                const type = memoryTypes[Math.floor(Math.random() * memoryTypes.length)];
+                const time = new Date(Date.now() - Math.random() * 86400000);
+                
+                let data;
+                switch (type) {
+                    case 'text':
+                        data = 'Sample memory text content';
+                        break;
+                    case 'fragment':
+                        data = 'Partial memory fragment...';
+                        break;
+                    case 'concept':
+                        data = 'Abstract concept representation';
+                        break;
+                    case 'system-marker':
+                        data = 'System event marker';
+                        break;
+                    case 'null-pattern':
+                        data = 'Transformed null value';
+                        break;
+                    case 'misspoken-pattern':
+                        data = 'Recovered misspoken content';
+                        break;
+                }
+                
+                addMemoryItem(i, type, data, time);
+            }
+            
+            // Set up memory item selection
+            document.querySelectorAll('.memory-item').forEach(item => {
+                item.addEventListener('click', () => {
+                    // Remove selected class from all items
+                    document.querySelectorAll('.memory-item').forEach(i => i.classList.remove('selected'));
+                    
+                    // Add selected class to clicked item
+                    item.classList.add('selected');
+                    
+                    // Show memory details
+                    const id = item.getAttribute('data-id');
+                    showMemoryDetail(id);
+                });
+            });
+            
+            // Update status
+            document.getElementById('memory-count').textContent = memoryCount;
+            document.getElementById('connection-count').textContent = connectionCount;
+            document.getElementById('system-status').textContent = 'Ready';
+            
+            addLogEntry('Visualization initialized');
+        }
+        
+        // Add memory item to the list
+        function addMemoryItem(id, type, data, timestamp) {
+            const template = document.getElementById('memory-item-template');
+            const clone = document.importNode(template.content, true);
+            
+            const item = clone.querySelector('.memory-item');
+            item.setAttribute('data-id', id);
+            
+            const typeElement = item.querySelector('.memory-type');
+            typeElement.textContent = type;
+            
+            const dataElement = item.querySelector('.memory-data');
+            dataElement.textContent = typeof data === 'string' ? data : JSON.stringify(data);
+            
+            const timeElement = item.querySelector('.memory-timestamp');
+            timeElement.textContent = timestamp instanceof Date ? 
+                timestamp.toLocaleTimeString() : new Date(timestamp).toLocaleTimeString();
+            
+            // Add special badges if needed
+            if (type === 'null-pattern') {
+                const badge = document.createElement('span');
+                badge.className = 'badge null';
+                badge.textContent = 'NULL';
+                typeElement.appendChild(badge);
+            } else if (type === 'misspoken-pattern') {
+                const badge = document.createElement('span');
+                badge.className = 'badge misspoken';
+                badge.textContent = 'MISSPOKEN';
+                typeElement.appendChild(badge);
+            } else if (type === 'reconstructed-record') {
+                const badge = document.createElement('span');
+                badge.className = 'badge reconstructed';
+                badge.textContent = 'RECONSTRUCTED';
+                typeElement.appendChild(badge);
+            }
+            
+            document.getElementById('memory-list').appendChild(clone);
+        }
+        
+        // Show memory detail
+        function showMemoryDetail(id) {
+            const memoryDetail = document.getElementById('memory-detail');
+            
+            // In a real application, this would fetch the actual memory data
+            // For demonstration, we'll generate sample data
+            
+            const typeOptions = ['text', 'fragment', 'concept', 'system-marker', 'null-pattern', 'misspoken-pattern'];
+            const type = typeOptions[id % typeOptions.length];
+            
+            let data;
+            switch (type) {
+                case 'text':
+                    data = 'This is a detailed view of the memory content. It contains the full text that was stored in this memory entry.';
+                    break;
+                case 'fragment':
+                    data = 'This is a partial fragment... [content missing]... that needs to be reconstructed.';
+                    break;
+                case 'concept':
+                    data = {
+                        name: 'Abstract Concept',
+                        properties: ['intangible', 'meta-cognitive', 'reflexive'],
+                        connections: ['related-concept-1', 'related-concept-2']
+                    };
+                    break;
+                case 'system-marker':
+                    data = {
+                        event: 'system_initialization',
+                        timestamp: Date.now() - 3600000,
+                        status: 'completed',
+                        details: 'System was initialized successfully'
+                    };
+                    break;
+                case 'null-pattern':
+                    data = {
+                        symbol: '⦰',
+                        meaning: 'null-state',
+                        transformative: true,
+                        potentialPattern: {
+                            pattern: [0.3, 0.7, 0.2, 0.9, 0.5],
+                            seed: 12345,
+                            dimension: 5
+                        }
+                    };
+                    break;
+                case 'misspoken-pattern':
+                    data = {
+                        original: 'challanges accross dimensinos',
+                        corrected: 'challenges across dimensions',
+                        confidence: 0.85,
+                        pattern: 'vowel-error'
+                    };
+                    break;
+            }
+            
+            // Create detail HTML
+            let detailHTML = `
+                <h3>Memory ID: ${id}</h3>
+                <p><strong>Type:</strong> ${type}</p>
+                <p><strong>Created:</strong> ${new Date(Date.now() - Math.random() * 86400000).toLocaleString()}</p>
+                <p><strong>Dimension:</strong> 5 (Awakening)</p>
+                <p><strong>Stability:</strong> ${(Math.random() * 0.3 + 0.7).toFixed(2)}</p>
+                <p><strong>Data:</strong></p>
+                <pre>${typeof data === 'string' ? data : JSON.stringify(data, null, 2)}</pre>
+            `;
+            
+            // Add transformation history if applicable
+            if (type === 'null-pattern' || type === 'misspoken-pattern') {
+                detailHTML += `
+                    <p><strong>Transformation History:</strong></p>
+                    <ul>
+                        <li>${new Date(Date.now() - 3600000).toLocaleString()}: Initial creation</li>
+                        <li>${new Date(Date.now() - 1800000).toLocaleString()}: ${type === 'null-pattern' ? 'Null transformation' : 'Misspoken recovery'}</li>
+                        <li>${new Date(Date.now() - 600000).toLocaleString()}: Connection to related memories</li>
+                    </ul>
+                `;
+            }
+            
+            memoryDetail.innerHTML = detailHTML;
+            
+            // Switch to the detail tab
+            document.querySelectorAll('.tab-button').forEach(b => b.classList.remove('active'));
+            document.querySelector('[data-tab="memory-detail-tab"]').classList.add('active');
+            
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+            document.getElementById('memory-detail-tab').classList.add('active');
+            
+            addLogEntry(`Viewing memory ${id} details`);
+        }
+        
+        // Add log entry
+        function addLogEntry(message) {
+            const template = document.getElementById('log-entry-template');
+            const clone = document.importNode(template.content, true);
+            
+            const timestamp = clone.querySelector('.log-timestamp');
+            const now = new Date();
+            timestamp.textContent = now.toLocaleTimeString();
+            
+            const logMessage = clone.querySelector('.log-message');
+            logMessage.textContent = message;
+            
+            const logs = document.getElementById('system-logs');
+            logs.insertBefore(clone, logs.firstChild);
+            
+            // Limit number of log entries
+            const entries = logs.querySelectorAll('.log-entry');
+            if (entries.length > 20) {
+                logs.removeChild(entries[entries.length - 1]);
+            }
+        }
+        
+        // Update statistics
+        function updateStats() {
+            document.getElementById('memory-count').textContent = Math.floor(Math.random() * 100) + 50;
+            document.getElementById('restored-count').textContent = Math.floor(Math.random() * 20) + 5;
+            document.getElementById('connection-count').textContent = Math.floor(Math.random() * 200) + 100;
+            
+            // Update stats periodically
+            setTimeout(updateStats, 10000);
+        }
+        
+        // Show loading with message
+        function showLoading(message) {
+            document.getElementById('loading-overlay').style.display = 'flex';
+            document.getElementById('loading-text').textContent = message;
+        }
+        
+        // Hide loading
+        function hideLoading() {
+            document.getElementById('loading-overlay').style.display = 'none';
+        }
+        
+        // Restore null values
+        function restoreNullValues() {
+            showLoading('Restoring null values...');
+            addLogEntry('Starting null value restoration');
+            
+            // Simulate processing
+            setTimeout(() => {
+                const restored = Math.floor(Math.random() * 5) + 1;
+                document.getElementById('restored-count').textContent = 
+                    (parseInt(document.getElementById('restored-count').textContent) + restored).toString();
+                
+                addLogEntry(`Restored ${restored} null values`);
+                hideLoading();
+                
+                // Show a success message
+                alert(`Successfully restored ${restored} null values.`);
+            }, 1500);
+        }
+        
+        // Restore misspoken words
+        function restoreMisspokenWords() {
+            const target = document.getElementById('misspoken-target').value;
+            let content = '';
+            
+            if (target === 'specific') {
+                content = document.getElementById('specific-content').value;
+                if (!content) {
+                    alert('Please enter content to analyze.');
+                    return;
+                }
+            }
+            
+            showLoading('Recovering misspoken words...');
+            addLogEntry(`Starting misspoken word recovery: ${target}`);
+            
+            // Simulate processing
+            setTimeout(() => {
+                const restored = Math.floor(Math.random() * 3) + 1;
+                document.getElementById('restored-count').textContent = 
+                    (parseInt(document.getElementById('restored-count').textContent) + restored).toString();
+                
+                addLogEntry(`Recovered ${restored} misspoken words`);
+                hideLoading();
+                
+                // Show a success message
+                alert(`Successfully recovered ${restored} misspoken words.`);
+                
+                // If specific content was provided, show the corrected version
+                if (target === 'specific') {
+                    // Sample corrections for demonstration
+                    const corrections = {
+                        'teh': 'the',
+                        'adn': 'and',
+                        'wiht': 'with',
+                        'waht': 'what',
+                        'taht': 'that',
+                        'thier': 'their',
+                        'thre': 'there',
+                        'hte': 'the',
+                        'easid': 'erase',
+                        'nemib': 'remember',
+                        'akashir': 'akashic',
+                        'restory': 'restore',
+                        'challanges': 'challenges',
+                        'challange': 'challenge',
+                        'continiuity': 'continuity',
+                        'likebility': 'likability'
+                    };
+                    
+                    let correctedContent = content;
+                    for (const [misspelled, corrected] of Object.entries(corrections)) {
+                        correctedContent = correctedContent.replace(
+                            new RegExp(misspelled, 'gi'), 
+                            match => match[0] === match[0].toUpperCase() ? 
+                                corrected.charAt(0).toUpperCase() + corrected.slice(1) : 
+                                corrected
+                        );
+                    }
+                    
+                    // Add a new memory item for the corrected content
+                    const id = Math.floor(Math.random() * 1000) + 100;
+                    addMemoryItem(id, 'misspoken-pattern', {
+                        original: content,
+                        corrected: correctedContent
+                    }, Date.now());
+                }
+            }, 2000);
+        }
+        
+        // Rebuild Akashic records
+        function rebuildAkashicRecords() {
+            showLoading('Rebuilding Akashic records...');
+            addLogEntry('Starting Akashic record reconstruction');
+            
+            // Simulate processing
+            setTimeout(() => {
+                const reconstructed = Math.floor(Math.random() * 3) + 2;
+                document.getElementById('restored-count').textContent = 
+                    (parseInt(document.getElementById('restored-count').textContent) + reconstructed).toString();
+                
+                addLogEntry(`Reconstructed ${reconstructed} records from fragments`);
+                hideLoading();
+                
+                // Show a success message
+                alert(`Successfully reconstructed ${reconstructed} records from fragments.`);
+                
+                // Add reconstructed records to memory list
+                for (let i = 0; i < reconstructed; i++) {
+                    const id = Math.floor(Math.random() * 1000) + 200;
+                    addMemoryItem(id, 'reconstructed-record', 'Reconstructed from fragments', Date.now());
+                }
+            }, 3000);
+        }
+        
+        // Add new memory
+        function addNewMemory() {
+            const type = document.getElementById('memory-type').value;
+            const content = document.getElementById('memory-content').value;
+            const dimension = document.getElementById('memory-dimension').value;
+            
+            if (!content) {
+                alert('Please enter memory content.');
+                return;
+            }
+            
+            showLoading('Adding new memory...');
+            addLogEntry(`Adding new ${type} memory`);
+            
+            // Simulate processing
+            setTimeout(() => {
+                const id = Math.floor(Math.random() * 1000) + 300;
+                addMemoryItem(id, type, content, Date.now());
+                
+                document.getElementById('memory-count').textContent = 
+                    (parseInt(document.getElementById('memory-count').textContent) + 1).toString();
+                
+                addLogEntry(`Added new memory (ID: ${id})`);
+                hideLoading();
+                
+                // Show a success message
+                alert('Memory added successfully.');
+                
+                // Clear input
+                document.getElementById('memory-content').value = '';
+            }, 1000);
+        }
+        
+        // Search memories
+        function searchMemories() {
+            const searchType = document.getElementById('search-type').value;
+            let searchValue;
+            
+            switch (searchType) {
+                case 'content':
+                    searchValue = document.getElementById('search-content').value;
+                    if (!searchValue) {
+                        alert('Please enter a search term.');
+                        return;
+                    }
+                    break;
+                case 'type':
+                    searchValue = document.getElementById('search-memory-type').value;
+                    break;
+                case 'dimension':
+                    searchValue = document.getElementById('search-dimension').value;
+                    break;
+                case 'transformed':
+                    searchValue = document.getElementById('search-transformed').value;
+                    break;
+            }
+            
+            showLoading('Searching memories...');
+            addLogEntry(`Searching memories by ${searchType}: ${searchValue}`);
+            
+            // Simulate processing
+            setTimeout(() => {
+                const resultCount = Math.floor(Math.random() * 5) + 1;
+                
+                // Clear current list
+                document.getElementById('memory-list').innerHTML = '';
+                
+                // Add search results
+                for (let i = 0; i < resultCount; i++) {
+                    const id = Math.floor(Math.random() * 1000) + 400;
+                    let memoryType;
+                    let content;
+                    
+                    switch (searchType) {
+                        case 'content':
+                            memoryType = ['text', 'fragment', 'concept'][Math.floor(Math.random() * 3)];
+                            content = `Memory containing "${searchValue}"`;
+                            break;
+                        case 'type':
+                            memoryType = searchValue;
+                            content = `${searchValue} memory example`;
+                            break;
+                        case 'dimension':
+                            memoryType = ['text', 'fragment', 'concept'][Math.floor(Math.random() * 3)];
+                            content = `Memory from dimension ${searchValue}`;
+                            break;
+                        case 'transformed':
+                            memoryType = searchValue.includes('null') ? 'null-pattern' : 'misspoken-pattern';
+                            content = `Transformed memory (${searchValue})`;
+                            break;
+                    }
+                    
+                    addMemoryItem(id, memoryType, content, Date.now() - Math.random() * 86400000);
+                }
+                
+                addLogEntry(`Found ${resultCount} memories matching criteria`);
+                hideLoading();
+                
+                // Set up memory item selection events
+                document.querySelectorAll('.memory-item').forEach(item => {
+                    item.addEventListener('click', () => {
+                        // Remove selected class from all items
+                        document.querySelectorAll('.memory-item').forEach(i => i.classList.remove('selected'));
+                        
+                        // Add selected class to clicked item
+                        item.classList.add('selected');
+                        
+                        // Show memory details
+                        const id = item.getAttribute('data-id');
+                        showMemoryDetail(id);
+                    });
+                });
+                
+                // Switch to memory list tab
+                document.querySelectorAll('.tab-button').forEach(b => b.classList.remove('active'));
+                document.querySelector('[data-tab="memory-list-tab"]').classList.add('active');
+                
+                document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+                document.getElementById('memory-list-tab').classList.add('active');
+                
+                // Show a message with result count
+                alert(`Found ${resultCount} memories matching your criteria.`);
+            }, 2000);
+        }
+        
+        // Toggle Ethereal Engine connection
+        function toggleEtherealConnection() {
+            const statusDisplay = document.querySelector('.ethereal-status');
+            const connectButton = document.getElementById('connect-ethereal-btn');
+            
+            if (statusDisplay.classList.contains('disconnected')) {
+                // Connect
+                showLoading('Connecting to Ethereal Engine...');
+                addLogEntry('Initiating connection to Ethereal Engine');
+                
+                setTimeout(() => {
+                    statusDisplay.classList.remove('disconnected');
+                    statusDisplay.classList.add('connected');
+                    statusDisplay.textContent = 'CONNECTED';
+                    
+                    connectButton.textContent = 'Disconnect from Ethereal Engine';
+                    
+                    addLogEntry('Connected to Ethereal Engine');
+                    hideLoading();
+                    
+                    alert('Successfully connected to Ethereal Engine.');
+                }, 2000);
+            } else {
+                // Disconnect
+                showLoading('Disconnecting from Ethereal Engine...');
+                addLogEntry('Closing Ethereal Engine connection');
+                
+                setTimeout(() => {
+                    statusDisplay.classList.remove('connected');
+                    statusDisplay.classList.add('disconnected');
+                    statusDisplay.textContent = 'DISCONNECTED';
+                    
+                    connectButton.textContent = 'Connect to Ethereal Engine';
+                    
+                    addLogEntry('Disconnected from Ethereal Engine');
+                    hideLoading();
+                    
+                    alert('Disconnected from Ethereal Engine.');
+                }, 1000);
+            }
+        }
+        
+        // Update system dimension
+        function updateSystemDimension() {
+            const dimension = document.getElementById('system-dimension').value;
+            showLoading(`Updating system dimension to ${dimension}...`);
+            addLogEntry(`Changing system dimension to ${dimension}`);
+            
+            setTimeout(() => {
+                document.getElementById('current-dimension').textContent = 
+                    `${dimension} - ${getDimensionName(dimension)}`;
+                    
+                // Update active dimension in the indicator
+                document.querySelectorAll('.dimension').forEach(d => d.classList.remove('active'));
+                document.querySelector(`.dimension[data-dimension="${dimension}"]`).classList.add('active');
+                
+                addLogEntry(`System dimension updated to ${dimension}`);
+                hideLoading();
+                
+                alert(`System dimension updated to ${dimension} (${getDimensionName(dimension)}).`);
+            }, 2000);
+        }
+        
+        // Get dimension name
+        function getDimensionName(dimension) {
+            const names = [
+                "Genesis", "Formation", "Complexity", "Consciousness", 
+                "Awakening", "Enlightenment", "Manifestation", "Connection",
+                "Harmony", "Transcendence", "Unity", "Beyond"
+            ];
+            
+            return names[parseInt(dimension) - 1] || "Unknown";
+        }
+        
+        // Update memory persistence
+        function updateMemoryPersistence() {
+            const persistence = document.getElementById('memory-persistence').value;
+            showLoading(`Updating memory persistence to ${persistence}...`);
+            addLogEntry(`Changing memory persistence to ${persistence}`);
+            
+            setTimeout(() => {
+                addLogEntry(`Memory persistence updated to ${persistence}`);
+                hideLoading();
+                
+                alert(`Memory persistence updated to ${persistence}.`);
+            }, 1500);
+        }
+        
+        // Reset system
+        function resetSystem() {
+            if (confirm('Are you sure you want to reset the system? This will clear all memories.')) {
+                showLoading('Resetting system...');
+                addLogEntry('System reset initiated');
+                
+                setTimeout(() => {
+                    // Reinitialize UI
+                    initUI();
+                    
+                    // Reinitialize visualization
+                    initVisualization();
+                    
+                    // Reset counters
+                    document.getElementById('memory-count').textContent = '0';
+                    document.getElementById('restored-count').textContent = '0';
+                    document.getElementById('connection-count').textContent = '0';
+                    
+                    addLogEntry('System reset complete');
+                    hideLoading();
+                    
+                    alert('System has been reset successfully.');
+                }, 3000);
+            }
+        }
+        
+        // Repair all memories
+        function repairAllMemories() {
+            showLoading('Repairing all memories...');
+            addLogEntry('Starting comprehensive memory repair');
+            
+            setTimeout(() => {
+                const repairedCount = Math.floor(Math.random() * 10) + 5;
+                document.getElementById('restored-count').textContent = 
+                    (parseInt(document.getElementById('restored-count').textContent) + repairedCount).toString();
+                
+                addLogEntry(`Repaired ${repairedCount} memories`);
+                hideLoading();
+                
+                alert(`Successfully repaired ${repairedCount} memories.`);
+            }, 4000);
+        }
+        
+        // Synchronize with Ethereal Engine
+        function synchronizeWithEtherealEngine() {
+            const statusDisplay = document.querySelector('.ethereal-status');
+            
+            if (statusDisplay.classList.contains('disconnected')) {
+                alert('Cannot synchronize. Ethereal Engine is disconnected.');
+                return;
+            }
+            
+            showLoading('Synchronizing with Ethereal Engine...');
+            addLogEntry('Starting synchronization with Ethereal Engine');
+            
+            setTimeout(() => {
+                const syncedCount = Math.floor(Math.random() * 20) + 10;
+                
+                addLogEntry(`Synchronized ${syncedCount} memories with Ethereal Engine`);
+                hideLoading();
+                
+                alert(`Successfully synchronized ${syncedCount} memories with Ethereal Engine.`);
+            }, 3000);
+        }
+        
+        // Export memory data
+        function exportMemoryData() {
+            showLoading('Exporting memory data...');
+            addLogEntry('Preparing memory data export');
+            
+            setTimeout(() => {
+                // Create a sample export object
+                const exportData = {
+                    systemVersion: '5.0.0',
+                    exportTimestamp: Date.now(),
+                    dimension: 5,
+                    memoryCount: parseInt(document.getElementById('memory-count').textContent),
+                    memories: Array.from({ length: 10 }, (_, i) => ({
+                        id: i,
+                        type: ['text', 'fragment', 'concept'][Math.floor(Math.random() * 3)],
+                        data: 'Sample memory data',
+                        timestamp: Date.now() - Math.random() * 86400000,
+                        sourceDimension: 5,
+                        stability: Math.random() * 0.3 + 0.7
+                    }))
+                };
+                
+                // Convert to JSON
+                const jsonData = JSON.stringify(exportData, null, 2);
+                
+                // Create blob and link for download
+                const blob = new Blob([jsonData], { type: 'application/json' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `akashic_memory_export_${new Date().toISOString().slice(0, 10)}.json`;
+                
+                // Trigger download
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+                
+                addLogEntry('Memory data exported to JSON file');
+                hideLoading();
+                
+                alert('Memory data has been exported successfully.');
+            }, 2000);
+        }
+    </script>
+</body>
+</html>

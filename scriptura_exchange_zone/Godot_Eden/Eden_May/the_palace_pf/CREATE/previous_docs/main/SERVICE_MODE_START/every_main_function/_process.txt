@@ -1,0 +1,451 @@
+func _process(delta):
+	
+	# handle camera before any turn takes place
+	camera.process(delta)
+	camera.process_roll(delta)
+	
+	# check mutex state before each turn now? or not each turn?
+	# var message_of_delta = breaks_and_handles_check()
+	# print(" message_of_delta : " , message_of_delta)
+	
+	each_blimp_of_delta()
+	##############################################
+	## do we take time blimp here to? with delta time for each of 0 to 9 turns so 10 in total ?
+	 
+	
+	match turn_number_process:
+		0:
+			
+			var readiness = check_system_readiness()
+			if readiness.mutex_state && readiness.thread_state:
+				# Safe to proceed with creation
+				process_pre_delta_check()
+
+
+
+
+
+				print()
+				print(" readiness : " , readiness)
+				print(" delta, turn 0 : " , system_readiness)
+				print(" readiness stuff : " , array_of_startup_check)
+				print()
+				var state_of_records : int = -1
+				
+				print(" JSH_records_system : " , JSH_records_system)
+				if JSH_records_system is Node:
+					print(" JSH_records_system again it is a node")
+					var message = JSH_records_system.check_all_things()
+					print(" JSH_records_system message " , message)
+					if message == true:
+						print(" JSH_records_system true")
+						state_of_records = 0
+					else:
+						print(" there is probem with connecting to JSH_records_system ")
+				
+				
+				if state_of_records == 0:
+					print(" lets check if we even have the sets loaded? ")
+					if task_manager is Node:
+						print(" JSH_task_manager is a node")
+						var message = task_manager.check_all_things()
+						if message == true:
+							print(" JSH_task_manager is a node")
+							state_of_records = 1
+				
+				if state_of_records == 0:
+					print(" lets check next files ")
+						
+				
+				if array_of_startup_check.size() == 0:
+					prepare_akashic_records_init()
+				# readiness : { 
+				#"mutex_state": [true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true], 
+				#"thread_state": "working", 
+				#"records_ready": true }
+				#  delta, turn 0 : 
+				#{ "mutexes": true, 
+				#"threads": true, 
+				#"records": true }
+				#var shall_execute : int = 0
+#
+				#mutex_for_trickery.lock()
+				#if menace_tricker_checker == 1:
+					#shall_execute = 1
+					##menace_tricker_checker = 2
+				#if menace_tricker_checker == 2:
+					#shall_execute = 2
+				#if menace_tricker_checker == 2:
+					#shall_execute = 3
+					#
+				#if shall_execute == 0:
+					#menace_tricker_checker = 2
+					#
+				#mutex_for_trickery.unlock()
+				#print(" shall_execute : " , shall_execute)
+
+
+				# here we can check if we have anything to do
+				turn_number_process += 1
+				array_mutex_process.lock()
+				if list_of_sets_to_create.size() > 0:
+					process_stages()
+					array_mutex_process.unlock()
+				else:
+					array_mutex_process.unlock()
+
+
+
+				#turn_number_process += 1
+			else:
+				# Log state for debugging
+				print("System not ready: ", readiness)
+			
+
+
+			delta_turn_0 = delta
+			#call_some_thingy()
+			#print_tree_pretty()
+			#print_tree_structure(scene_tree_jsh["main_root"]["branches"]["keyboard_right_container"], 0)
+			#print(array_for_counting_finish)
+			
+			pass
+		1:
+			if system_readiness.records:
+				process_pending_sets()
+			   # turn_number_process += 1
+			turn_number_process += 1
+			
+			mutex_nodes_to_be_added.lock()
+			if nodes_to_be_added.size() > 0:
+				for i in range(min(max_nodes_added_per_cycle, nodes_to_be_added.size())):
+					var data_to_process = nodes_to_be_added.pop_front()
+					var data_type = data_to_process[0]
+					match data_type:
+						0:
+							var container_to_add = data_to_process[2]
+							var container_name = data_to_process[1]
+							
+							add_child(container_to_add)
+							
+							var just_added_node = get_node(container_name)
+							if just_added_node:
+								#print(" just adde dnode 0 : ", just_added_node)
+								var data_to_be_checked : Array = []
+								data_to_be_checked.append([container_name, container_name, just_added_node])
+								create_new_task("the_finisher_for_nodes", data_to_be_checked)
+							else:
+								nodes_to_be_added.append(data_to_process)
+								print(" ERROR container was not found ")
+						1:
+							
+							var parent_path = data_to_process[1]
+							var node_name = data_to_process[2]
+							var main_node_to_add = data_to_process[3]
+							var combined_path = parent_path + "/" + node_name
+							
+							
+							var container = get_node(parent_path)
+							if container:
+								container.add_child(main_node_to_add)
+								var just_added_node = get_node(combined_path)
+								if just_added_node:
+									#print(" just adde dnode 1 : ", just_added_node)
+									var data_to_be_checked : Array = []
+									data_to_be_checked.append([combined_path, node_name, just_added_node])
+									create_new_task("the_finisher_for_nodes", data_to_be_checked)
+								else:
+									print("ERROR main node not found")
+									nodes_to_be_added.append(data_to_process)
+								
+							else:
+								print("ERROR container for main node not found")
+								nodes_to_be_added.append(data_to_process)
+						2:
+							var parent_path = data_to_process[1]
+							var node_name = data_to_process[2]
+							var main_node_to_add = data_to_process[3]
+							var container_name = data_to_process[4]
+							var combined_path = parent_path + "/" + node_name
+							
+							var container = get_node(parent_path)
+							if container:
+								container.add_child(main_node_to_add)
+								var just_added_node = get_node(combined_path)
+								if just_added_node:
+									#print(" just adde dnode 2 : ", just_added_node)
+									var data_to_be_checked : Array = []
+									data_to_be_checked.append([combined_path, node_name, just_added_node])
+									create_new_task("the_finisher_for_nodes", data_to_be_checked)
+								else:
+									print(" ERROR sub node not found ")
+									nodes_to_be_added.append(data_to_process)
+								
+							else:
+								print(" ERROR main node for sub node not found ")
+								nodes_to_be_added.append(data_to_process)
+							
+			
+			mutex_nodes_to_be_added.unlock()
+			pass
+		2:
+			turn_number_process += 1
+			mutex_data_to_send.lock()
+			
+			if data_to_be_send.size() > 0:
+				for i in range(min(max_data_send_per_cycle, data_to_be_send.size())):
+					var data_to_be_send_rn = data_to_be_send.pop_front()
+					var current_type_of_data = data_to_be_send_rn[0]
+					var datapoint_path_cur = data_to_be_send_rn[1]
+					match current_type_of_data:
+						"instructions_analiser":
+							var container_path_rn = data_to_be_send_rn[2]
+							var container_node_rn = get_node(container_path_rn)
+							if container_node_rn:
+								var datapoint_node_rn = get_node(datapoint_path_cur)
+								if datapoint_node_rn:
+									var array_of_data_for_threes : Array = []
+									array_of_data_for_threes.append([current_type_of_data, data_to_be_send_rn[3].duplicate(true), data_to_be_send_rn[4].duplicate(true), datapoint_node_rn, container_node_rn])
+									create_new_task("task_to_send_data_to_datapoint", array_of_data_for_threes)
+								else:
+									print(" we didnt find the datapoint we must append stuff ")
+									data_to_be_send.append(data_to_be_send_rn)
+							else:
+								print(" we didnt get container, we must append ")
+								data_to_be_send.append(data_to_be_send_rn)
+						"scene_frame_upload":
+							var container_path_rn = data_to_be_send_rn[2]
+							var container_node_rn = get_node(container_path_rn)
+							if container_node_rn:
+								var datapoint_node_rn = get_node(datapoint_path_cur)
+								if datapoint_node_rn:
+									var array_of_data_for_threes : Array = []
+									array_of_data_for_threes.append([current_type_of_data, data_to_be_send_rn[3].duplicate(true), data_to_be_send_rn[4].duplicate(true), datapoint_node_rn, container_node_rn])
+									create_new_task("task_to_send_data_to_datapoint", array_of_data_for_threes)
+								else:
+									print(" we didnt find the datapoint we must append stuff ")
+									data_to_be_send.append(data_to_be_send_rn)
+							else:
+								print(" we didnt get container, we must append ")
+								data_to_be_send.append(data_to_be_send_rn)
+						"interactions_upload":
+							var datapoint_node_rn = get_node(datapoint_path_cur)
+							if datapoint_node_rn:
+								var array_of_data_for_threes : Array = []
+								array_of_data_for_threes.append([current_type_of_data, data_to_be_send_rn[3].duplicate(true), data_to_be_send_rn[4].duplicate(true), datapoint_node_rn])
+								create_new_task("task_to_send_data_to_datapoint", array_of_data_for_threes)
+							else:
+								print(" we didnt got that datapoint, we gotta apend")
+			mutex_data_to_send.unlock()
+			pass
+		3:
+			turn_number_process += 1
+			
+			movmentes_mutex.lock()
+			if things_to_be_moved.size() > 0:
+				for i in range(min(max_movements_per_cycle, things_to_be_moved.size())):
+					#print()
+					var data_to_process = things_to_be_moved.pop_front()
+					var data_type = data_to_process[0]
+					var node_to_operate = data_to_process[1]
+					var data_for_operation = data_to_process[2]
+					match data_type:
+						"move":
+							#print(" we would move stuff ", node_to_operate)
+							node_to_operate.position = data_for_operation
+						"rotate":
+							#print(" we would rotate stuff ", node_to_operate)
+							node_to_operate.rotation.x -= deg_to_rad(data_for_operation)
+						"write":
+							#print(" here we would change text i guess ")
+							for child in node_to_operate.get_children():
+								if child is Label3D:
+									child.text = data_for_operation
+			movmentes_mutex.unlock()
+
+			pass
+		4:
+			turn_number_process += 1
+			
+			mutex_for_unloading_nodes.lock()
+			if nodes_to_be_unloaded.size() > 0:
+				for i in range(min(max_nodes_to_unload_per_cycle, nodes_to_be_unloaded.size())):
+					var data_to_process = nodes_to_be_unloaded.pop_front()
+					var data_type = data_to_process[0]
+					var path_of_the_node = data_to_process[1]
+					match data_type:
+						"container":
+							print(" we would unload container")
+							var container_to_unload = get_node_or_null(path_of_the_node)
+							if container_to_unload:
+								#print(" the container exist")
+								var sub_path_of_the_node = path_of_the_node.substr(0, path_of_the_node.length() -10)
+								print("taskkkk sub_path_of_the_node ", sub_path_of_the_node)
+								container_to_unload.queue_free()
+								create_new_task("unload_container", path_of_the_node)
+							else:
+								print(" we didnt find that container")
+						"just_node":
+							#print(" we would unload just a node")
+							var node_to_unload = get_node_or_null(path_of_the_node)
+							if node_to_unload:
+								node_to_unload.queue_free()
+								create_new_task("find_branch_to_unload", path_of_the_node)
+							else:
+								print(" i guess we didnt get node unfortunatelly ?")
+			mutex_for_unloading_nodes.unlock()
+			pass
+		5:
+			
+			turn_number_process += 1
+			
+			mutex_function_call.lock()
+			if functions_to_be_called.size() > 0:
+				for i in range(min(max_functions_called_per_cycle, functions_to_be_called.size())):
+					var data_to_process = functions_to_be_called.pop_front()
+					var type_of_functi = data_to_process[0]
+					var node_to_call = data_to_process[1]
+					var function_name = data_to_process[2]
+					match type_of_functi:
+						"single_function":
+							if node_to_call and node_to_call.has_method(function_name):
+								node_to_call.call(function_name)
+						"call_function_get_node":
+							var function_data = data_to_process[3]
+							var node_to_call_now = get_node_or_null(node_to_call)
+							#print(" can i atleast print that thing? ", data_to_process)
+							if node_to_call_now and node_to_call_now.has_method(function_name):
+								#print(" well we did get a node?")
+								node_to_call_now.call(function_name, function_data)
+						"call_function_single_get_node":
+							#print()
+							var node_to_call_now = get_node_or_null(node_to_call)
+							if node_to_call_now and node_to_call_now.has_method(function_name):
+								node_to_call_now.call(function_name)
+						"get_nodes_call_function":
+							#print()
+							if data_to_process.size() > 3:
+								var function_data = data_to_process[3]
+								for nodes in node_to_call:
+									var current_node_to_call = get_node_or_null(nodes)
+									if current_node_to_call and current_node_to_call.has_method(function_name):
+										#print( " we got that node, and it has that function, ", function_data)
+										current_node_to_call.call(function_name, function_data)
+							else:
+								print(" parallel reality somehow it is small size?")
+								
+							#node_to_call_now.call(function_name, function_data)
+							
+			mutex_function_call.unlock()
+			
+			pass
+		6:
+			turn_number_process += 1
+			var start_finished_counting : int = int_of_stuff_finished
+			var start_now_counting : int = int_of_stuff_started
+			before_time_blimp(start_finished_counting, start_now_counting)
+			# check states of containers, and created data already
+			var shall_execute : int = 0
+			mutex_for_trickery.lock()
+			if menace_tricker_checker == 1:
+				shall_execute = 1
+				#menace_tricker_checker = 2
+			if menace_tricker_checker == 2:
+				shall_execute = 2
+			if menace_tricker_checker == 2:
+				shall_execute = 3
+			mutex_for_trickery.unlock()
+			#print(shall_execute)
+			
+			
+			
+			# FATAL ERROR MODE
+			if shall_execute == 3:
+				unlock_stuck_mutexes()
+				containers_states_checker()
+				containers_list_creator()
+				var message_now_mutex = breaks_and_handles_check()
+				check_currently_being_created_sets()
+				handle_random_errors() # array_with_no_mutex
+				
+				mutex_for_container_state.lock()
+				mutex_containers.lock()
+				print(" process delta ")
+				print(" process delta outcome : list_of_containers " , list_of_containers)
+				print(" process delta ")
+				print(" process delta outcome : current_containers_state : ", current_containers_state)
+				print("  process delta ")
+				print(" process delta mutex chck : ", message_now_mutex)
+				print(" process delta array with no protection : " , array_with_no_mutex)
+				mutex_containers.unlock()
+				mutex_for_container_state.unlock()
+				
+				# The pattern shows tasks starting but not finishing (2 started, 0 finished)
+			if start_now_counting > start_finished_counting:
+				print(" Task completion check - Started: ", start_now_counting, " Finished: ", start_finished_counting)
+				
+				# Check container states
+				containers_states_checker()
+				containers_list_creator()
+				
+				# Check mutexes
+				var mutex_states = breaks_and_handles_check()
+				
+				# Check creation progress
+				check_currently_being_created_sets()
+				
+				# Handle any errors
+				handle_random_errors()
+				
+				var stuck_status = check_thread_status()
+				
+				# Debug output
+				mutex_for_container_state.lock()
+				mutex_containers.lock()
+				print(" - Process state check:")
+				print(" - Containers: ", list_of_containers)
+				var container_size = list_of_containers.size()
+				print(" - also container size : " , container_size)
+				if container_size == 0:
+					print(" - potential first container not appearing from task, better to abort the mission, and restart the creation")
+					check_system_health()
+					print(" - task_status : " , task_status)
+					print(" - the first start data : " , array_of_startup_check)
+				print(" - Container states: ", current_containers_state)
+				print(" - Mutex states: ", mutex_states)
+				print(" - Unhandled errors: ", array_with_no_mutex)
+				print(" - stuck_status: ", stuck_status)
+				mutex_containers.unlock()
+				mutex_for_container_state.unlock()
+				
+				if stuck_status > 0:
+					print("0010110 it seems some threads are stuck ?")
+					shall_execute = 3
+				else:
+					print("0010110 no thread seems to be stuck ")
+				
+					# Check memory state periodically
+				var current_time = Time.get_ticks_msec()
+				if current_time - memory_metadata["last_cleanup"] > memory_metadata["cleanup_thresholds"]["time_between_cleanups"]:
+					var memory_state = check_memory_state()
+					print(" memory_state : " , memory_metadata)
+					memory_metadata["last_cleanup"] = current_time
+				
+				
+			pass
+		7:
+			turn_number_process += 1
+			pass
+		8:
+			turn_number_process += 1
+			pass
+		9:
+			turn_number_process = 0
+			pass
+	# Check if any mouse buttons are currently held down
+	if Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
+		pass
+		#print("Left mouse button is held")
+	if Input.is_mouse_button_pressed(MOUSE_BUTTON_RIGHT):
+		pass
+		#print("Right mouse button is held")

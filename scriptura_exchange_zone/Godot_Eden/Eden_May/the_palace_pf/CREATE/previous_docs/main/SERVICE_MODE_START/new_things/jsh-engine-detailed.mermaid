@@ -1,0 +1,66 @@
+graph TD
+    Main[JSH Ethereal Engine] --> Init[Initialization Process]
+    Main --> Startup[Engine Startup]
+    Main --> Repair[Engine Repair]
+    Main --> Check[System Checks]
+    Main --> Downloads[Etheric Download]
+    Main --> Queue[Etheric Queue]
+    Main --> Records[Records System]
+    Main --> SceneTree[Scene Tree]
+    Main --> Threads[Multi Threads]
+    Main --> Files[Files Management]
+    Main --> MemMgmt[Memories Management]
+    Main --> MemTrans[Memories Transcription]
+    Main --> HiddenVeil[Hidden Veil]
+    Main --> Proj[Projections System]
+    Main --> MemStore[Memories Storage]
+    Main --> MemProc[Memories Processed]
+    Main --> Creation[Things Creation]
+    Main --> Nodes[Scene Tree Nodes]
+
+    Init --> |Core| IF["_init()
+    validate_system_environment()
+    validate_thread_system()"]
+
+    HiddenVeil --> |Process| HVF["_process(delta)
+    attempt_creation()
+    check_system_state()"]
+
+    Queue --> |Stages| QF["three_stages_of_creation()
+    process_stages()
+    first_stage_of_creation_()
+    second_stage_of_creation_()"]
+
+    Creation --> |Shapes| CF["create_circle_shape()
+    create_flat_shape()
+    create_container()
+    create_datapoint()"]
+
+    MemMgmt --> |Records| MF["find_record_set()
+    find_instructions_set()
+    initialize_menu()"]
+
+    SceneTree --> |Management| STF["start_up_scene_tree()
+    print_tree_structure()
+    jsh_tree_get_node()"]
+
+    Proj --> |Input| PF["_input()
+    get_ray_points()
+    ray_cast_data_preparer()"]
+
+    MemTrans --> |Data| MTF["load_record_set()
+    cache_data()
+    read_records_data()"]
+
+    Repair --> |Health| RF["check_system_health()
+    handle_random_errors()
+    trigger_deep_repair()"]
+
+    Files --> |Storage| FF["check_folder()
+    setup_settings()
+    scan_available_storage()"]
+
+    style Main fill:#f9f,stroke:#333,stroke-width:4px
+    style HiddenVeil fill:#bbf,stroke:#333,stroke-width:2px
+    style Creation fill:#bfb,stroke:#333,stroke-width:2px
+    style Queue fill:#fbb,stroke:#333,stroke-width:2px

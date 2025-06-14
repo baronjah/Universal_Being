@@ -1,0 +1,42 @@
+# Rock Universal Being Definition
+# Simple interactive rock for testing
+
+[properties]
+name=Rock
+category=mineral
+hardness=8
+weight=heavy
+size=medium
+material=granite
+age=10000
+can_interact=true
+interactive_range=1.5
+display_mode=PURE_3D
+
+[behavior]
+throwable=true
+stackable=true
+weather_resistant=true
+
+[physics]
+collision_enabled=true
+collision_shape=convex
+mass=50.0
+gravity_scale=1.0
+bounce=0.2
+friction=0.8
+
+[audio]
+impact_sound=rock_hit.ogg
+rolling_sound=rock_roll.ogg
+
+[visual]
+mesh_path=models/rock_granite.glb
+texture_path=textures/rock_granite_diffuse.png
+scale=Vector3(1.0, 1.0, 1.0)
+
+[metadata]
+author=UniversalBeingSystem
+version=1.0
+creation_date=2025-05-28
+description=A granite rock that can be thrown and interacted with

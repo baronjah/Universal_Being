@@ -1,0 +1,18 @@
+func create_text_label(node_name: String, first_line : Array, data_to_write : Array, group_name : String, version_of_thing : String, information_lines_parsed : Array):
+	var node_path_c_t_l = first_line[6][0]
+	var coords = first_line[1]
+	var to_rotate = first_line[2]
+	# Create Label3D node
+	var text_label = Label3D.new()
+	
+	# Set the text from data (first element of first array)
+	text_label.text = data_to_write[0][0]  # This will get "Akashic_Records"
+	
+	# Optional: Set font size (from second element of second array)
+	text_label.font_size = int(data_to_write[1][0])  # This will get "33"
+	text_label.no_depth_test = true  # Ensures text is always visible
+	text_label.modulate = Color(1, 1, 1)  # White color
+	
+	# Now send the configured Label3D to node_creation
+	var node_type = "text"
+	node_creation(node_name, text_label, coords, to_rotate, group_name, node_type, node_path_c_t_l)

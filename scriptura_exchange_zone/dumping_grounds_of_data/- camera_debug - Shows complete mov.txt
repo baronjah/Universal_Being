@@ -1,0 +1,3 @@
+  - camera_debug - Shows complete movement system status
+  - camera_info - Camera position and settings
+  - camera_help - Full controls guide

@@ -1,0 +1,1069 @@
+
+#
+# JSH Ethereal Engine Repair
+#
+#      oooo  .oooooo..o ooooo   ooooo 
+#      `888 d8P'    `Y8 `888'   `888' 
+#       888 Y88bo.       888     888     ┳┓      •    ┏┓    •   
+#       888  `"Y8888o.   888ooooo888     ┣┫┏┓┏┓┏┓┓┏┓  ┣ ┏┓┏┓┓┏┓┏┓
+#       888      `"Y88b  888     888     ┛┗┗ ┣┛┗┻┗┛   ┗┛┛┗┗┫┗┛┗┗
+#       888 oo     .d8P  888     888         ┛             ┛   
+#   .o. 88P 8""88888P'  o888o   o888o 
+#   `Y888P                            
+#
+# JSH Ethereal Engine Repair
+#
+#MISSION : REPAIR CHECK ENGINE
+#
+#CONNECTED MISSIONS :
+#
+#### CORE FUNCTIONS
+#CHECK ENGINE
+#CHECK SINGLE_THREAD
+#CHECK MULTI_THREADS
+#CHECK TASK_SYSTEM
+#CHECK CLOCKS_AND_WATCHES_SYSTEM
+#CHECK OS
+#CHECK DIRECTIORIES
+#CHECK FOLDERS
+#
+#
+#### LOAD DATA
+#CHECK SETTINGS_FILE
+#CHECK IF_IT_IS_FIRST_RUN
+#CHECK IF_WE_HAVE_DATABASES_ACCESS
+#### NOW WE EITHER CREATE FILES, REOPEN FILES, OPEN FILES, RESTART THE SYSTEM
+#CHECK FILES
+#
+#### TO SEE ANYTHING
+#CHECK LOAD_BASIC_RECORDS_SETS
+#
+#
+#
+#
+#print(" scan_results " , scan_result)
+#
+#
+#scan result of project files :
+#
+#scan_result
+#
+
+
+###########################
+## the Claude Repair Attempt
+#####################
+
+#var task_timeouts = {}
+#var max_task_duration = 50000 # 50 seconds
+#
+#
+## Should be expanded to:
+#var task_timestamps = {}
+#var task_status = {}
+
+
+# 2. Add system state access function
+func get_system_state(state_name: String) -> Dictionary:
+	return system_states[state_name] if system_states.has(state_name) else {}
+
+# 3. Fix process_pending_sets function
+func process_pending_sets():
+	var creation_state = get_system_state("creation")
+	if creation_state.is_empty():
+		return false
+		
+	creation_state["mutex"].lock()
+	var can_process = true
+	
+	if creation_state["pending_sets"].size() > 0:
+		for set_data in creation_state["pending_sets"]:
+			if check_system_function("creation"):
+				create_new_task("three_stages_of_creation", set_data)
+				creation_state["active_sets"].append(set_data)
+			else:
+				can_process = false
+				break
+	
+	creation_state["mutex"].unlock()
+	return can_process
+
+func process_pre_delta_check() -> bool:
+	var can_proceed = true
+	var readiness = check_system_readiness()
+	
+	# Check creation capability
+	if system_readiness.mutexes and system_readiness.threads:
+		if array_of_startup_check.is_empty():
+			can_proceed = false
+			print(" it is empty we cannot proceed")
+			return can_proceed
+
+		for set_name in array_of_startup_check[1]:
+			# Check if we can start creating this set
+			if is_creation_possible():
+				# Queue for creation
+				list_of_sets_to_create.append(set_name[0])
+	
+	return can_proceed
+
+
+func check_system_readiness() -> Dictionary:
+	# From console: ["started", [["akashic_records"], ["base"], ["menu"]]]
+	var pending_sets = []
+	if array_of_startup_check.is_empty():
+		print(" thing is empty, better return ?")
+		
+		#pending_sets = array_of_startup_check[3]
+	else:
+		print(" array_of_startup_check " , array_of_startup_check)
+		
+	
+	
+	var status = {
+		"mutex_state": breaks_and_handles_check(),
+		"thread_state": check_thread_status(),
+		"records_ready": array_of_startup_check.size() > 0
+	}
+	
+	system_readiness.mutexes = !status.mutex_state.has(false)
+	system_readiness.threads = status.thread_state == "working"
+	system_readiness.records = status.records_ready
+	
+	return status
+
+
+func track_task_status(task_id):
+	task_status[task_id] = {
+		"start_time": Time.get_ticks_msec(),
+		"status": "pending",
+		"retries": 0,
+		"error_count": 0
+	}
+
+
+func track_task_completion(task_id):
+	task_timeouts[task_id] = {
+		"start_time": Time.get_ticks_msec(),
+		"status": "pending"
+	}
+	
+	# Check after max duration
+	await get_tree().create_timer(max_task_duration / 1000.0).timeout
+	if task_timeouts.has(task_id) and task_timeouts[task_id]["status"] == "pending":
+		# Task timed out - attempt recovery
+		handle_task_timeout(task_id)
+
+func handle_task_timeout(task_id):
+	var task_data = task_status[task_id]
+	
+	# Reset stuck mutexes
+	var mutexes_to_check = [
+		active_r_s_mut,
+		cached_r_s_mutex,
+		tree_mutex,
+		mutex_for_container_state
+	]
+	
+	for mutex in mutexes_to_check:
+		if !mutex.try_lock():
+			# Force unlock if stuck
+			mutex.unlock()
+			log_error_state("mutex_stuck", {
+				"task_id": task_id,
+				"mutex": mutex
+			})
+	
+	# Clear queue if needed
+	if task_data["retries"] > 3:
+		clear_task_queues()
+
+func clear_task_queues():
+	array_mutex_process.lock()
+	list_of_sets_to_create.clear()
+	array_mutex_process.unlock()
+	
+	mutex_nodes_to_be_added.lock() 
+	nodes_to_be_added.clear()
+	mutex_nodes_to_be_added.unlock()
+	
+	# Reset container states
+	mutex_for_container_state.lock()
+	for container in current_containers_state.keys():
+		current_containers_state[container]["status"] = -1
+	mutex_for_container_state.unlock()
+
+
+func validate_container_state(container_name):
+	var required_nodes = ["datapoint", "container"]
+	var missing_nodes = []
+	
+	tree_mutex.lock()
+	if scene_tree_jsh["main_root"]["branches"].has(container_name):
+		var container = scene_tree_jsh["main_root"]["branches"][container_name]
+		
+		for node_type in required_nodes:
+			if !container.has(node_type) or !is_instance_valid(container[node_type]["node"]):
+				missing_nodes.append(node_type)
+	tree_mutex.unlock()
+	
+	if missing_nodes.size() > 0:
+		attempt_container_repair(container_name, missing_nodes)
+		
+func attempt_container_repair(container_name, missing_nodes):
+	active_r_s_mut.lock()
+	var records_set_name = container_name.split("_")[0] + "_"
+	
+	if active_record_sets.has(records_set_name):
+		var records = active_record_sets[records_set_name]
+		# Attempt to recreate missing nodes from records
+		for node_type in missing_nodes:
+			recreate_node_from_records(container_name, node_type, records) 
+	active_r_s_mut.unlock()
+	
+	
+
+func log_error_state(error_type, details):
+	dictionary_of_mistakes_mutex.lock()
+	
+	if !dictionary_of_mistakes.has(error_type):
+		dictionary_of_mistakes[error_type] = {
+			"first_seen": Time.get_ticks_msec(),
+			"count": 0,
+			"instances": []
+		}
+	
+	dictionary_of_mistakes[error_type]["count"] += 1
+	dictionary_of_mistakes[error_type]["instances"].append({
+		"time": Time.get_ticks_msec(),
+		"details": details
+	})
+	
+	# If error occurs frequently, trigger deep repair
+	if dictionary_of_mistakes[error_type]["count"] > 5:
+		trigger_deep_repair(error_type)
+		
+	dictionary_of_mistakes_mutex.unlock()
+
+func start_health_checks():
+	while true:
+		await get_tree().create_timer(5.0).timeout
+		check_system_health()
+
+func check_system_health():
+	# Check thread pool state
+	if int_of_stuff_started > int_of_stuff_finished + 10:
+		log_error_state("thread_pool_backlog", {
+			"started": int_of_stuff_started,
+			"finished": int_of_stuff_finished
+		})
+	
+	# Check container states
+	mutex_for_container_state.lock()
+	for container in current_containers_state:
+		if current_containers_state[container]["status"] == -1:
+			validate_container_state(container)
+	mutex_for_container_state.unlock()
+
+
+###################################
+## main functions i guess are needed
+####################################
+
+
+func prepare_akashic_records():
+	print(" prepare akashic_records, what do we check here?")
+	var message_now_mutex = breaks_and_handles_check()
+	var stuck_status = check_thread_status()
+	if stuck_status == "error":
+		print(" timer check omething went wrong, use a timer")
+	else:
+		print(" we dont have error here?")
+
+func prepare_akashic_records_init():
+	print(" init version prepare akashic_records ")
+
+
+	print(" timer check  first we need a screen, and light state : ", first_start_check)
+	first_start_check = "started"
+	print(" timer check  state now : ", first_start_check)
+	var main_sets_names = BanksCombiner.dataSetLimits
+	var main_sets_names_just_names = BanksCombiner.data_sets_names_0
+	var main_sets_names_with_underscore = BanksCombiner.data_sets_names
+
+	
+		#class_name BanksCombiner #BanksCombiner.combination_0
+		#const data_sets_names = [
+			#"base_", "menu_", "settings_", "keyboard_", "keyboard_left_", "keyboard_right_", "things_creation_", "singular_lines_"
+		#]
+		#
+		#const data_sets_names_0 = [
+			#"base", "menu", "settings", "keyboard", "keyboard_left", "keyboard_right", "things_creation", "singular_lines"
+		#]
+	
+	
+	array_of_startup_check.append(first_start_check)
+	array_of_startup_check.append([["akashic_records"],["base"],["menu"]])
+	
+	
+	# lets first check breaks and handles
+	# the stuff i never check, why would i
+	var message_now_mutex = breaks_and_handles_check()
+	var stuck_status = check_thread_status()
+	# check if mutexes are true or false or null
+	# check what threads we got already, how many we should have?
+	before_time_blimp(0, 0)
+	
+	
+	array_of_startup_check.append(main_sets_names)
+	array_of_startup_check.append(main_sets_names_just_names)
+	array_of_startup_check.append(main_sets_names_with_underscore)
+	# the basic_pack_of_records
+	
+	
+	if stuck_status == "error":
+		print(" timer check omething went wrong, use a timer")
+		# and try again
+		
+		# Create a 5-second timer
+		# timer_system is global variant
+		# it is inited in init
+		# how do we check what it is, here :
+		print(" timer check 0: " , timer_system)
+		timer_system.create_timer("my_timer", 5.0)
+		timer_system.timer_completed.connect(func(timer_id): print("Timer ", timer_id, " completed!"))
+		timer_system.start_timer("my_timer")
+		print(" timer check 0")
+		print(" timer check  0stuff to do :: thread statuses : ", stuck_status)
+		message_now_mutex = breaks_and_handles_check()
+		stuck_status = check_thread_status()
+		print(" timer check  1stuff to do :: thread statuses : ", stuck_status)
+	print("  init version prepare akashic_records  timer check  stuff to do :: mutex statuses : ", message_now_mutex , ", stuck_status threads status : " , stuck_status, " and main sets to create", array_of_startup_check)
+	#print(" init version prepare akashic_records ")
+	
+	## the basic and first sets to create,
+	
+	## ping thread_pool and check if it has them threads started
+	
+	
+
+func zippy_unzipper_data_center():
+	print(" the load and unload of zip file is needed ")
+	print(" lets do it three letters system of words ")
+	print(" the gateway of repeats ")
+	print(" one big zip file ")
+
+
+func handle_random_errors(): # array_with_no_mutex
+	print(" elquadromadro trying to figure out random problems ")
+	for current_error in array_with_no_mutex:
+		print(" elquadromadro error to stick to something " , current_error)
+		var name_of_error = current_error[0]
+		var type_of_error = current_error[1]
+		print(" elquadromadro error to stick to something " , name_of_error , " and " , type_of_error)
+		dictionary_of_mistakes_mutex.lock()
+		
+		if dictionary_of_mistakes.has(name_of_error):
+			# that one appeared before
+			
+			print(" elquadromadro we had issues with that one before ")
+			if dictionary_of_mistakes[name_of_error].has(name_of_error):
+				# we had this type of error before
+				#dictionary_of_mistakes[name_of_error][name_of_error].has("status"):
+					#print(" it does have status tho")
+				
+				print(" elquadromadro the same error as we had previously ")
+				if dictionary_of_mistakes[name_of_error][name_of_error].has(type_of_error):
+					print(" elquadromadro the same type of the same error hmm ")
+					# this same stage of error as before
+					
+				
+		else:
+			print(" elquadromadro that is a new trouble maker, why could it not work already ? ")
+			dictionary_of_mistakes[name_of_error] = {}
+			dictionary_of_mistakes[name_of_error]["status"] = "pending"
+			dictionary_of_mistakes[name_of_error]["counter"] = int(1)
+			
+			dictionary_of_mistakes[name_of_error][name_of_error] = {}
+			dictionary_of_mistakes[name_of_error][name_of_error]["status"] = "pending"
+			dictionary_of_mistakes[name_of_error][name_of_error]["counter"] = int(1)
+			
+			dictionary_of_mistakes[name_of_error][name_of_error][type_of_error] = {}
+			dictionary_of_mistakes[name_of_error][name_of_error][type_of_error]["status"] = "pending"
+			dictionary_of_mistakes[name_of_error][name_of_error][type_of_error]["counter"] = int(1)
+		
+		
+		print(" elquadromadro dictionary_of_mistakes_mutex : " , dictionary_of_mistakes_mutex)
+		dictionary_of_mistakes_mutex.unlock()
+
+
+
+#######################
+## Claude continuation
+#######################
+
+func recreate_node_from_records(container_name: String, node_type: String, records: Dictionary):
+	print("Attempting to recreate %s for container %s" % [node_type, container_name])
+	
+	var records_set_name = container_name + "records"
+	var node_data = null
+	
+	# Find the original node data in records
+	if records.has(records_set_name):
+		for record in records[records_set_name]["content"]:
+			if record[0][3][0] == node_type:  # Check node type
+				node_data = record[0]
+				break
+	
+	if node_data:
+		match node_type:
+			"datapoint":
+				var data_point = Node3D.new()
+				data_point.set_script(DataPointScript)
+				data_point.setup_main_reference(self)
+				
+				# Recreate with original parameters
+				var version = node_data[4][0]  # Version from records
+				var setup_data = node_data[5]  # Setup data from records
+				data_point.power_up_data_point(node_data[0][0], int(version), setup_data)
+				
+				# Add to scene tree
+				var node_path = node_data[6][0]
+				tasked_children(data_point, node_path)
+				
+				# Update tree data
+				tree_mutex.lock()
+				scene_tree_jsh["main_root"]["branches"][container_name]["datapoint"] = {
+					"datapoint_name": node_data[0][0],
+					"datapoint_path": node_path,
+					"node": data_point
+				}
+				tree_mutex.unlock()
+				
+			"container":
+				var container = Node3D.new()
+				container.set_script(ContainterScript)
+				container.name = node_data[0][0]
+				
+				if container.has_method("container_initialize"):
+					container.container_initialize(node_data[5])
+				
+				var node_path = node_data[6][0]
+				tasked_children(container, node_path)
+				
+				tree_mutex.lock()
+				scene_tree_jsh["main_root"]["branches"][container_name]["node"] = container
+				scene_tree_jsh["main_root"]["branches"][container_name]["status"] = "active"
+				tree_mutex.unlock()
+			
+			_:
+				print("Unknown node type for recreation: ", node_type)
+		
+		# Log recovery attempt
+		log_error_state("node_recreation", {
+			"container": container_name,
+			"node_type": node_type,
+			"success": true
+		})
+	else:
+		print("Failed to find data for node recreation")
+		log_error_state("node_recreation_failed", {
+			"container": container_name,
+			"node_type": node_type,
+			"reason": "no_data_found"
+		})
+
+func trigger_deep_repair(error_type: String):
+	print("Initiating deep repair for error type: ", error_type)
+	
+	dictionary_of_mistakes_mutex.lock()
+	var error_data = dictionary_of_mistakes[error_type]
+	dictionary_of_mistakes_mutex.unlock()
+	
+	match error_type:
+		"thread_pool_backlog":
+			# Reset thread counters and clear stuck tasks
+			int_of_stuff_started = 0
+			int_of_stuff_finished = 0
+			
+			# Recheck all container states
+			mutex_for_container_state.lock()
+			for container in current_containers_state.keys():
+				current_containers_state[container]["status"] = -1  # Force recheck
+			mutex_for_container_state.unlock()
+			
+			# Trigger container state checker
+			mutex_for_trickery.lock()
+			menace_tricker_checker = 1
+			mutex_for_trickery.unlock()
+		
+		"node_missing":
+			# Scan all containers for missing nodes
+			tree_mutex.lock()
+			for branch_name in scene_tree_jsh["main_root"]["branches"].keys():
+				var branch = scene_tree_jsh["main_root"]["branches"][branch_name]
+				
+				# Check required nodes
+				var missing = []
+				if !branch.has("datapoint") or !branch["datapoint"].has("node"):
+					missing.append("datapoint")
+				if !branch.has("node") or !is_instance_valid(branch["node"]):
+					missing.append("container")
+				
+				if missing.size() > 0:
+					# Get records for reconstruction
+					active_r_s_mut.lock()
+					var records_set = branch_name.split("_")[0] + "_"
+					if active_record_sets.has(records_set):
+						var records = active_record_sets[records_set]
+						for node_type in missing:
+							recreate_node_from_records(branch_name, node_type, records)
+					active_r_s_mut.unlock()
+			tree_mutex.unlock()
+		
+		"container_state_mismatch":
+			# Reset all container states and force revalidation
+			mutex_for_container_state.lock()
+			current_containers_state.clear()
+			mutex_for_container_state.unlock()
+			
+			mutex_containers.lock()
+			list_of_containers.clear()
+			mutex_containers.unlock()
+			
+			# Force recheck of all active records
+			active_r_s_mut.lock()
+			for records_set in active_record_sets.keys():
+				if active_record_sets[records_set].has("metadata"):
+					active_record_sets[records_set]["metadata"]["container_count"] = 0
+			active_r_s_mut.unlock()
+			
+			# Trigger full recheck
+			containers_states_checker()
+			containers_list_creator()
+		
+		_:
+			print("Unknown error type for deep repair: ", error_type)
+	
+	# Clear error history after repair attempt
+	dictionary_of_mistakes_mutex.lock()
+	dictionary_of_mistakes[error_type]["count"] = 0
+	dictionary_of_mistakes[error_type]["instances"].clear()
+	dictionary_of_mistakes_mutex.unlock()
+
+
+func reanimate_all_handles_and_breaks():
+	print(" if this helps, then this helps ")
+
+func unlock_stuck_mutexes():
+	print("🔓 Checking & Unlocking stuck mutexes...")
+
+	var mutex_list = [
+		active_r_s_mut, cached_r_s_mutex, tree_mutex, cached_tree_mutex, 
+		mutex_nodes_to_be_added, mutex_data_to_send, movmentes_mutex, 
+		mutex_for_unloading_nodes, mutex_function_call, array_mutex_process, 
+		menace_mutex, array_counting_mutex, mutex_for_container_state, 
+		mutex_for_trickery, unload_queue_mutex, load_queue_mutex, 
+		mutex_containers, mutex_singular_l_u
+	]
+
+	for mutex in mutex_list:
+		if !mutex.try_lock():
+			print("⚠️ Unlocking:", mutex)
+			mutex.unlock()
+
+func breaks_and_handles_check():
+	#print()
+	
+	var current_state_mutexes : Array = []
+	var negative_counter : int = -1
+	var positive_counter : int = -1
+	
+#####################################################
+		## active_r_s_mut
+	var mutex_check_0 = null
+	if active_r_s_mut.try_lock():
+		mutex_check_0 = active_r_s_mut.try_lock()
+		#############################################
+		positive_counter +=1
+	else:
+		mutex_check_0 = false
+		negative_counter +=1
+		#############################################
+	current_state_mutexes.append(mutex_check_0)
+#####################################################
+	
+#####################################################
+		## cached_r_s_mutex
+	var mutex_check_1 = null
+	if cached_r_s_mutex.try_lock():
+		mutex_check_1 = cached_r_s_mutex.try_lock()
+		#############################################
+		positive_counter +=1
+	else:
+		mutex_check_1 = false
+		negative_counter +=1
+		#############################################
+	current_state_mutexes.append(mutex_check_1)
+#####################################################
+	
+#####################################################
+		## tree_mutex
+	var mutex_check_2 = null
+	if tree_mutex.try_lock():
+		mutex_check_2 = tree_mutex.try_lock()
+		#############################################
+		positive_counter +=1
+	else:
+		mutex_check_2 = false
+		negative_counter +=1
+		#############################################
+	current_state_mutexes.append(mutex_check_2)
+#####################################################
+	
+	
+#####################################################
+		## cached_tree_mutex
+	var mutex_check_3 = null
+	if cached_tree_mutex.try_lock():
+		mutex_check_3 = cached_tree_mutex.try_lock()
+		#############################################
+		positive_counter +=1
+	else:
+		mutex_check_3 = false
+		negative_counter +=1
+		#############################################
+	current_state_mutexes.append(mutex_check_3)
+#####################################################
+	
+	
+#####################################################
+		## mutex_nodes_to_be_added
+	var mutex_check_4 = null
+	if mutex_nodes_to_be_added.try_lock():
+		mutex_check_4 = mutex_nodes_to_be_added.try_lock()
+		#############################################
+		positive_counter +=1
+	else:
+		mutex_check_4 = false
+		negative_counter +=1
+		#############################################
+	current_state_mutexes.append(mutex_check_4)
+#####################################################
+	
+#####################################################
+		## movmentes_mutex
+	var mutex_check_5 = null
+	if movmentes_mutex.try_lock():
+		mutex_check_5 = movmentes_mutex.try_lock()
+		#############################################
+		positive_counter +=1
+	else:
+		mutex_check_5 = false
+		negative_counter +=1
+		#############################################
+	current_state_mutexes.append(mutex_check_5)
+#####################################################
+	
+#####################################################
+		## mutex_data_to_send
+	var mutex_check_6 = null
+	if mutex_data_to_send.try_lock():
+		mutex_check_6 = mutex_data_to_send.try_lock()
+		#############################################
+		positive_counter +=1
+	else:
+		mutex_check_6 = false
+		negative_counter +=1
+		#############################################
+	current_state_mutexes.append(mutex_check_6)
+#####################################################
+	
+#####################################################
+		## mutex_function_call
+	var mutex_check_7 = null
+	if mutex_function_call.try_lock():
+		mutex_check_7 = mutex_function_call.try_lock()
+		#############################################
+		positive_counter +=1
+	else:
+		mutex_check_7 = false
+		negative_counter +=1
+		#############################################
+	current_state_mutexes.append(mutex_check_7)
+#####################################################
+	
+#####################################################
+		## mutex_for_unloading_nodes
+	var mutex_check_8 = null
+	if mutex_for_unloading_nodes.try_lock():
+		mutex_check_8 = mutex_for_unloading_nodes.try_lock()
+		#############################################
+		positive_counter +=1
+	else:
+		mutex_check_8 = false
+		negative_counter +=1
+		#############################################
+	current_state_mutexes.append(mutex_check_8)
+#####################################################
+
+#####################################################
+		## array_mutex_process
+	var mutex_check_9 = null
+	if array_mutex_process.try_lock():
+		mutex_check_9 = array_mutex_process.try_lock()
+		#############################################
+		positive_counter +=1
+	else:
+		mutex_check_9 = false
+		negative_counter +=1
+		#############################################
+	current_state_mutexes.append(mutex_check_9)
+#####################################################
+
+
+
+############################################################
+
+# the cardinal sin of creation beyond number 9
+
+#############################################################
+
+
+#####################################################
+		## menace_mutex
+	var mutex_check_00 = null
+	if menace_mutex.try_lock():
+		mutex_check_00 = menace_mutex.try_lock()
+		#############################################
+		positive_counter +=1
+	else:
+		mutex_check_00 = false
+		negative_counter +=1
+		#############################################
+	current_state_mutexes.append(mutex_check_00)
+#####################################################
+
+#####################################################
+	# array_counting_mutex
+	var mutex_check_01 = null
+	if array_counting_mutex.try_lock():
+		mutex_check_01 = array_counting_mutex.try_lock()
+		#############################################
+		positive_counter +=1
+	else:
+		mutex_check_01 = false
+		negative_counter +=1
+		#############################################
+	current_state_mutexes.append(mutex_check_01)
+#####################################################
+
+#####################################################
+	# mutex_for_container_state
+	var mutex_check_02 = null
+	if mutex_for_container_state.try_lock():
+		mutex_check_02 = mutex_for_container_state.try_lock()
+		#############################################
+		positive_counter +=1
+	else:
+		mutex_check_02 = false
+		negative_counter +=1
+		#############################################
+	current_state_mutexes.append(mutex_check_02)
+#####################################################
+
+#####################################################
+	# mutex_for_trickery
+	var mutex_check_03 = null
+	if mutex_for_trickery.try_lock():
+		mutex_check_03 = mutex_for_trickery.try_lock()
+		#############################################
+		positive_counter +=1
+	else:
+		mutex_check_03 = false
+		negative_counter +=1
+		#############################################
+	current_state_mutexes.append(mutex_check_03)
+#####################################################
+
+#####################################################
+	# unload_queue_mutex
+	var mutex_check_04 = null
+	if unload_queue_mutex.try_lock():
+		mutex_check_04 = unload_queue_mutex.try_lock()
+		#############################################
+		positive_counter +=1
+	else:
+		mutex_check_04 = false
+		negative_counter +=1
+		#############################################
+	current_state_mutexes.append(mutex_check_04)
+#####################################################
+
+#####################################################
+	# mutex_containers
+	var mutex_check_05 = null
+	if mutex_containers.try_lock():
+		mutex_check_05 = mutex_containers.try_lock()
+		#############################################
+		positive_counter +=1
+	else:
+		mutex_check_05 = false
+		negative_counter +=1
+		#############################################
+	current_state_mutexes.append(mutex_check_05)
+#####################################################
+
+#####################################################
+	# mutex_singular_l_u
+	var mutex_check_06 = null
+	if mutex_singular_l_u.try_lock():
+		mutex_check_06 = mutex_singular_l_u.try_lock()
+		#############################################
+		positive_counter +=1
+	else:
+		mutex_check_06 = false
+		negative_counter +=1
+		#############################################
+	current_state_mutexes.append(mutex_check_06)
+#####################################################
+
+
+
+#####################################################
+	# unload_queue_mutex
+	var mutex_check_07 = null
+	if unload_queue_mutex.try_lock():
+		mutex_check_07 = unload_queue_mutex.try_lock()
+		#############################################
+		positive_counter +=1
+	else:
+		mutex_check_07 = false
+		negative_counter +=1
+		#############################################
+	current_state_mutexes.append(mutex_check_07)
+#####################################################
+
+
+#####################################################
+	# load_queue_mutex
+	var mutex_check_08 = null
+	if load_queue_mutex.try_lock():
+		mutex_check_08 = load_queue_mutex.try_lock()
+		#############################################
+		positive_counter +=1
+	else:
+		mutex_check_08 = false
+		negative_counter +=1
+		#############################################
+	current_state_mutexes.append(mutex_check_08)
+#####################################################
+	
+	
+
+	return current_state_mutexes
+	#print(" we check a thing ? " , current_state_mutexes)
+
+
+
+
+# 
+
+
+
+
+
+
+
+
+
+#func _on_task_discarded(task):
+	#print("Task was discarded:", task.tag, " Result:", task.result)
+#func _on_frame_processed():
+	# Signal received
+#	pass
+
+
+
+func before_time_blimp(how_many_finished, how_many_shall_been_finished):
+	# how much time after delta?
+	# i dunno, we would need to check it and store it
+	# like clockwork
+	# the warp of space and time
+	# first make one here :
+	
+	var before_blimp_time = Time.get_ticks_msec()
+	
+
+	
+	#print("before_blimp_time : " , before_blimp_time)
+	#print(" past_deltas_memories : ", past_deltas_memories)
+	#print(" stored_delta_memory : ", stored_delta_memory)
+	#print(" these two should be normalized too i guess ")
+	#print()
+	print(" check basic if we allign with prophecies of wisest spirits, do we unlock before it is too late ")
+	#print(" how_many_shall_been_finished : ", how_many_shall_been_finished)
+	#print(" how_many_finished : " ,how_many_finished)
+	#print()
+	if how_many_finished != how_many_shall_been_finished:
+		print(" something does not add upp " , how_many_finished , " is maybe probably bigger, maybe smaller, hmm numbers < < > > which way != == ? ", how_many_shall_been_finished)
+		print(" how_many_shall_been_finished - how_many_shall_been_finished ", how_many_finished - how_many_shall_been_finished)
+		print(" in reverse maybe ? ", how_many_shall_been_finished - how_many_finished)
+		print(" it is not the first tine  i guess : [0, 2, 2, 0, 0, 2, 2, 0, 0, 2, 2, 0, 0, 2, 2, 0, 0, 2, 2, 0, 0 ")
+		print(" hmm 0220 0220 0220, like an sos or something ?")
+		
+		# [0]
+		blimp_of_time.append(how_many_finished)
+		
+		# [1]
+		blimp_of_time.append(how_many_shall_been_finished)
+		
+		# [2]
+		# int_of_stuff_started
+		#blimp_of_time.append(int_of_stuff_started)
+		
+		# [3]
+		# int_of_stuff_finished
+		#blimp_of_time.append(int_of_stuff_finished)
+		
+		# has it happened before ?
+		if blimp_of_time.size() > 3:
+			print(" hald to tell otherwise, some array size is bigger than 3 ", blimp_of_time)
+			previous_blimp_of_time = blimp_of_time
+			if how_many_finished == 0 or how_many_shall_been_finished == 0:
+				print(" if any of these two are at 0 state, something should start appearing i guess?")
+			
+			#if previous_blimp_of_time.size() < 3:
+				# first time the charm i guess
+				
+		# is it a new thing ?
+		
+		# biggest differences
+		
+		# biggest difference ever
+		
+		# time limits, 1 second
+		
+		# 10 seconds # how many times
+		
+		# 30 seconds
+		
+		# 1 minute
+		
+	#pass
+	# time os thing? of when we started ready function, when we finished it, the blimp of mutexes, first needed sets to even see a single rain drop fall on her ass check
+	
+	#
+
+
+
+func queue_pusher_adder(task):
+	#print("taskkk tag : ",task.tag, " taskkk target instance :  ", task.target_instance, " taskkk result : ", task.result, " taskkk target method : ", task.target_method, " target argument : " , task.target_argument)
+	mutex_singular_l_u.lock()
+	var method_task = task.target_method
+	
+	var completion_time = Time.get_ticks_msec()
+	var task_id = str(task.tag)
+	var target_argument = task.target_argument
+
+	if task_status.has(task_id):
+		var duration = completion_time - task_status[task_id]["start_time"]
+		if duration > 1000: # 1 second timeout
+			handle_task_timeout(task_id)
+	
+	print(" taskkkkk : ", method_task)
+	
+	# Process task
+	match method_task:
+		"three_stages_of_creation":
+			handle_creation_task(target_argument)
+			mutex_for_trickery.lock()
+			menace_tricker_checker = 1
+			mutex_for_trickery.unlock()
+		"unload_container":
+			handle_unload_task(target_argument)
+			mutex_for_trickery.lock()
+			menace_tricker_checker = 1
+			mutex_for_trickery.unlock()
+		"the_finisher_for_nodes":
+			print(" this means, the node is being finished to be whip out baby ")
+	#if method_task == "the_finisher_for_nodes":
+		#
+
+
+func handle_creation_task(target_argument):
+	var type_of_state : int = 1
+	print(" handle_creation_task : ", target_argument)
+	
+	# Check if we can proceed with creation
+	load_queue_mutex.lock()
+	var can_proceed = true
+	if load_queue.has(target_argument):
+		if load_queue[target_argument].has("metadata"):
+			if load_queue[target_argument]["metadata"].has("status"):
+				if load_queue[target_argument]["metadata"]["status"] != 0:
+					can_proceed = false
+	load_queue_mutex.unlock()
+	
+	if can_proceed:
+		# Update tree state
+		the_current_state_of_tree(target_argument, type_of_state)
+		
+		# Trigger recheck
+		mutex_for_trickery.lock()
+		menace_tricker_checker = 1
+		mutex_for_trickery.unlock()
+	else:
+		# Log creation attempt for retry
+		dictionary_of_mistakes_mutex.lock()
+		if !dictionary_of_mistakes.has(target_argument):
+			dictionary_of_mistakes[target_argument] = {
+				"status": "pending",
+				"counter": int(1),
+				"last_attempt": Time.get_ticks_msec()
+			}
+		dictionary_of_mistakes_mutex.unlock()
+
+func handle_unload_task(target_argument):
+	var type_of_state : int = -1
+	var the_shorter_set = target_argument.substr(0, str(target_argument).length() - 10)
+	print(" handle_unload_task : ", target_argument, " shortened to: ", the_shorter_set)
+	
+	# Check unload queue state
+	unload_queue_mutex.lock()
+	if !unload_queue.has(target_argument):
+		unload_queue[target_argument] = {
+			"metadata": {
+				"status": "pending",
+				"tries": 0,
+				"last_attempt": Time.get_ticks_msec()
+			}
+		}
+	else:
+		unload_queue[target_argument]["metadata"]["tries"] += 1
+		unload_queue[target_argument]["metadata"]["last_attempt"] = Time.get_ticks_msec()
+	unload_queue_mutex.unlock()
+	
+	# Update tree state for unloading
+	the_current_state_of_tree(the_shorter_set, type_of_state)
+	
+	# Trigger recheck
+	mutex_for_trickery.lock()
+	menace_tricker_checker = 1
+	mutex_for_trickery.unlock()
+	
+	# Monitor unload progress
+	if unload_queue[target_argument]["metadata"]["tries"] > 3:
+		# Log potential stuck unload
+		dictionary_of_mistakes_mutex.lock()
+		if !dictionary_of_mistakes.has(target_argument):
+			dictionary_of_mistakes[target_argument] = {
+				"status": "stuck_unload",
+				"counter": int(1),
+				"last_attempt": Time.get_ticks_msec()
+			}
+		dictionary_of_mistakes_mutex.unlock()
+
+
+
+

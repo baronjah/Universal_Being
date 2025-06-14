@@ -1,0 +1,11 @@
+func track_task_completion(task_id):
+	task_timeouts[task_id] = {
+		"start_time": Time.get_ticks_msec(),
+		"status": "pending"
+	}
+	
+	# Check after max duration
+	await get_tree().create_timer(max_task_duration / 1000.0).timeout
+	if task_timeouts.has(task_id) and task_timeouts[task_id]["status"] == "pending":
+		# Task timed out - attempt recovery
+		handle_task_timeout(task_id)

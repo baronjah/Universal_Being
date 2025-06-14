@@ -1,0 +1,8 @@
+func the_fourth_dimensional_magic(type_of_operation : String, node : Node, data_of_movement):
+	var data_for_movement : Array = []
+	data_for_movement.append(type_of_operation)
+	data_for_movement.append(node)
+	data_for_movement.append(data_of_movement)
+	movmentes_mutex.lock()
+	things_to_be_moved.append(data_for_movement)
+	movmentes_mutex.unlock()

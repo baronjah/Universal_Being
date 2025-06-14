@@ -1,0 +1,4 @@
+func setup_system_checks():
+	system_readiness.mutexes = false
+	system_readiness.threads = false
+	system_readiness.records = false

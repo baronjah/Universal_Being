@@ -1,0 +1,23 @@
+func handle_task_timeout(task_id):
+	var task_data = task_status[task_id]
+	
+	# Reset stuck mutexes
+	var mutexes_to_check = [
+		active_r_s_mut,
+		cached_r_s_mutex,
+		tree_mutex,
+		mutex_for_container_state
+	]
+	
+	for mutex in mutexes_to_check:
+		if !mutex.try_lock():
+			# Force unlock if stuck
+			mutex.unlock()
+			log_error_state("mutex_stuck", {
+				"task_id": task_id,
+				"mutex": mutex
+			})
+	
+	# Clear queue if needed
+	if task_data["retries"] > 3:
+		clear_task_queues()

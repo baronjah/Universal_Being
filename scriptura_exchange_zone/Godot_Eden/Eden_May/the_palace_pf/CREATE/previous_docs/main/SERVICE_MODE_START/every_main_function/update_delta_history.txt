@@ -1,0 +1,8 @@
+func update_delta_history(delta: float):
+	time_tracking.mutex.lock()
+	time_tracking.delta_history.append({
+		"time": Time.get_ticks_msec(),
+		"delta": delta
+	})
+	time_tracking.last_update = Time.get_ticks_msec()
+	time_tracking.mutex.unlock()

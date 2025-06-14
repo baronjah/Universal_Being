@@ -1,0 +1,166 @@
+[gd_scene load_steps=4 format=3 uid="uid://bq5nygxr4lw8o"]
+
+[ext_resource type="Script" uid="uid://bpwbc4112uvhk" path="res://scripts/core/main_game_controller.gd" id="1_0hdkf"]
+
+[sub_resource type="Environment" id="Environment_1hlvw"]
+background_mode = 1
+background_color = Color(0.05, 0.1, 0.2, 1)
+ambient_light_source = 2
+ambient_light_color = Color(0.3, 0.4, 0.6, 1)
+ambient_light_energy = 0.3
+
+[sub_resource type="Theme" id="Theme_1x8bp"]
+
+[node name="MainGame" type="Node3D"]
+script = ExtResource("1_0hdkf")
+
+[node name="Environment" type="Node3D" parent="."]
+
+[node name="Camera3D" type="Camera3D" parent="Environment"]
+transform = Transform3D(1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, 0, 8, 12)
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="Environment"]
+transform = Transform3D(0.707107, -0.5, 0.5, 0, 0.707107, 0.707107, -0.707107, -0.5, 0.5, 0, 5, 0)
+light_energy = 0.8
+shadow_enabled = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="Environment"]
+environment = SubResource("Environment_1hlvw")
+
+[node name="AkashicNavigation" type="Node3D" parent="."]
+
+[node name="NavigationHub" type="Control" parent="AkashicNavigation"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_1x8bp")
+
+[node name="NavigationPanel" type="Panel" parent="AkashicNavigation/NavigationHub"]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = -150.0
+offset_right = 300.0
+offset_bottom = -10.0
+grow_vertical = 0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="AkashicNavigation/NavigationHub/NavigationPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = 10.0
+offset_right = -10.0
+offset_bottom = -10.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="CurrentLevel" type="Label" parent="AkashicNavigation/NavigationHub/NavigationPanel/VBoxContainer"]
+layout_mode = 2
+text = "Current: Multiverses"
+horizontal_alignment = 1
+
+[node name="HSeparator" type="HSeparator" parent="AkashicNavigation/NavigationHub/NavigationPanel/VBoxContainer"]
+layout_mode = 2
+
+[node name="NavigateUp" type="Button" parent="AkashicNavigation/NavigationHub/NavigationPanel/VBoxContainer"]
+layout_mode = 2
+text = "↑ Up Level"
+
+[node name="NavigateDown" type="Button" parent="AkashicNavigation/NavigationHub/NavigationPanel/VBoxContainer"]
+layout_mode = 2
+text = "↓ Down Level"
+
+[node name="HSeparator2" type="HSeparator" parent="AkashicNavigation/NavigationHub/NavigationPanel/VBoxContainer"]
+layout_mode = 2
+
+[node name="ToggleNav" type="Button" parent="AkashicNavigation/NavigationHub/NavigationPanel/VBoxContainer"]
+layout_mode = 2
+text = "Toggle Navigation (Tab)"
+
+[node name="WordSpace" type="Node3D" parent="."]
+
+[node name="WordContainer" type="Node3D" parent="WordSpace"]
+
+[node name="Notepad3DEnvironment" type="Node3D" parent="."]
+script = "res://scripts/core/notepad3d_environment.gd"
+
+[node name="Interactive3DUI" type="Node3D" parent="."]
+script = "res://scripts/core/interactive_3d_ui_system.gd"
+
+[node name="InteractionManager" type="Node3D" parent="."]
+
+[node name="UI" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="InfoPanel" type="Panel" parent="UI"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -300.0
+offset_top = 10.0
+offset_right = -10.0
+offset_bottom = 200.0
+grow_horizontal = 0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/InfoPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = 10.0
+offset_right = -10.0
+offset_bottom = -10.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Title" type="Label" parent="UI/InfoPanel/VBoxContainer"]
+layout_mode = 2
+text = "Ethereal Engine - Cosmic Creation"
+horizontal_alignment = 1
+
+[node name="HSeparator" type="HSeparator" parent="UI/InfoPanel/VBoxContainer"]
+layout_mode = 2
+
+[node name="Instructions" type="RichTextLabel" parent="UI/InfoPanel/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+bbcode_enabled = true
+text = "[b]Ethereal Engine - Digital Eden:[/b]
+[color=cyan]WASD[/color] - Camera movement
+[color=cyan]Mouse Scroll[/color] - Layer navigation
+[color=cyan]Tab[/color] - Akashic navigation
+[color=cyan]E[/color] - Interact with words/food/tree
+[color=cyan]G[/color] - Generate new word
+[color=cyan]H[/color] - Toggle crosshair
+[color=cyan]I[/color] - Create new words
+[color=yellow]N[/color] - 5-Layer Notepad 3D
+[color=yellow]U[/color] - 3D UI Interface
+[color=yellow]F[/color] - Cinema perspective
+[color=yellow]J[/color] - Garden perspective (Eden view)
+[color=magenta]P[/color] - Player camera mode
+[color=magenta]O[/color] - Overview (scene) mode
+[color=magenta]K[/color] - Cosmic view mode
+[color=lime]9[/color] - 9-Layer Pyramid (729 pos)
+[color=lime]0[/color] - Atomic Creation Tool
+[color=orange]C[/color] - Cosmic Hierarchy
+[color=orange]1-8[/color] - Navigate to planets
+[color=gray]`[/color] - Debug Manager
+[color=purple]L[/color] - Evolution System Test"
+
+[connection signal="pressed" from="AkashicNavigation/NavigationHub/NavigationPanel/VBoxContainer/NavigateUp" to="." method="_on_navigate_up_pressed"]
+[connection signal="pressed" from="AkashicNavigation/NavigationHub/NavigationPanel/VBoxContainer/NavigateDown" to="." method="_on_navigate_down_pressed"]
+[connection signal="pressed" from="AkashicNavigation/NavigationHub/NavigationPanel/VBoxContainer/ToggleNav" to="." method="_on_toggle_nav_pressed"]

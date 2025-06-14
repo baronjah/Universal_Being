@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Genesis System - CSV Galaxy</title>
+   
+    <!-- CSS files -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/terminal.css">
+    <link rel="stylesheet" href="css/keyboard.css">
+    <link rel="stylesheet" href="css/window-styles.css">
+    <link rel="stylesheet" href="css/csv_grid_editor.css">
+    <link rel="stylesheet" href="css/pipeline-components.css">
+    
+    <!-- Third-party libraries -->
+    <script src="lib/papaparse.min.js"></script>
+</head>
+<body>
+    <!-- Main container -->
+    <div id="genesis-container"></div>
+    
+    <!-- Additional containers for components -->
+    <div id="csv-grid-container" class="hidden"></div>
+    <div id="settings-panel" class="settings-panel"></div>
+    <div id="task-manager-container" class="hidden"></div>
+ 
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Load Core JS files -->
+    <script src="js/settings-bank.js"></script>
+    <script src="js/scene-tree.js"></script>
+    <script src="js/records-system.js"></script>
+    <script src="js/data-splitter.js"></script>
+    <script src="js/task-manager.js"></script>
+    <script src="js/object-creator.js"></script>
+    
+    <!-- Load UI JS files -->
+    <script src="js/ui/terminal.js"></script>
+    <script src="js/ui/keyboard.js"></script>
+    <script src="js/ui/datapoint.js"></script>
+    
+    <!-- Load Akashic System JS files -->
+    <script src="js/Akashic_Controller.js"></script>
+    <script src="js/Visualization-engine.js"></script>
+    <script src="js/Data_Connector.js"></script>
+    
+    <!-- Load Integration Components -->
+    <script src="js/SimpleWindowManager.js"></script>
+    <script src="js/TaskManager.js"></script>
+    <script src="js/CSVGridEditor.js"></script>
+    <script src="js/ConnectionManager.js"></script>
+    <script src="js/SettingsManager.js"></script>
+    <script src="js/PipelineManager.js"></script>
+    <script src="js/WindBender.js"></script>
+    
+    <!-- Load the main Genesis system file -->
+    <script src="js/Genesis.js"></script>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Initialize the system -->
+    <!-- Initialize system -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+ 
+ 
+ 
+            // Initialize core Genesis system
+            window.genesis = new Genesis();
+            window.genesis.initialize();
+ 
+            
+
+
+
+
+            // Initialize supporting components
+            window.windowManager = new SimpleWindowManager();
+            window.taskManager = new TaskManager().initialize(document.getElementById('task-manager-container'));
+            window.settingsManager = new SettingsManager().initialize(document.getElementById('settings-panel'));
+            window.csvGridEditor = new CSVGridEditor(document.getElementById('csv-grid-container'), {
+                editable: true,
+                allowAddRows: true,
+                allowAddColumns: true
+            });
+            window.connectionManager = new ConnectionManager();
+ 
+            
+
+
+
+
+            // Initialize pipeline manager to connect everything
+            window.pipelineManager.initialize({
+                genesis: window.genesis,
+                csvEditor: window.csvGridEditor,
+                settingsManager: window.settingsManager,
+                connectionManager: window.connectionManager,
+                windowManager: window.windowManager,
+                taskManager: window.taskManager,
+                visualizationEngine: window.genesis.visualizers?.galaxy
+            });
+ 
+            
+
+
+
+
+            // Run an example task to demonstrate the task manager
+            window.taskManager.createTask({
+                name: 'System Initialization',
+                description: 'Initializing system components and connecting services',
+                execute: async (updateProgress) => {
+                    // Simulated initialization steps
+                    updateProgress(10);
+                    await new Promise(resolve => setTimeout(resolve, 500));
+                    
+                    updateProgress(30);
+                    await new Promise(resolve => setTimeout(resolve, 500));
+                    
+                    updateProgress(60);
+                    await new Promise(resolve => setTimeout(resolve, 500));
+                    
+                    updateProgress(100);
+                    return { status: 'success', message: 'System initialized successfully' };
+                }
+            });
+            
+            // Start the task
+            window.taskManager.startTask('task-1');
+        });
+
+
+
+
+
+
+
+        // Add this after the initialization:
+        // Load system configuration from CSV
+        window.taskManager.createTask({
+            name: 'Load Configuration',
+            description: 'Loading system configuration from CSV template',
+            execute: async (updateProgress) => {
+                updateProgress(20);
+                try {
+                    // Load the configuration template
+                    const config = await window.pipelineManager.loadConfigTemplate('/data/system-config.csv');
+                    updateProgress(60);
+                    
+                    if (config) {
+                        // Apply the configuration to all components
+                        window.pipelineManager.applySettingsToAllComponents(config);
+                        updateProgress(100);
+                        console.log('System configuration loaded:', config);
+                        return { status: 'success', message: 'Configuration loaded successfully' };
+                    } else {
+                        throw new Error('Failed to load configuration');
+                    }
+                } catch (error) {
+                    console.error('Error loading configuration:', error);
+                    return { status: 'error', message: 'Failed to load configuration' };
+                }
+            }
+        }).start();
+
+
+
+
+
+
+
+
+
+
+        </script>
+
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', async function() {
+            // Initialize the WindBender first
+
+            //console.log("Initializing Genesis system with thread support...");
+            window.windBender = new WindBender();
+            
+            // Define core resources needed for the system
+            const coreResources = [
+                { url: 'css/pipeline-components.css', type: 'style' },
+                { url: 'js/settings-bank.js', type: 'script' },
+                { url: 'js/scene-tree.js', type: 'script' },
+                { url: 'js/records-system.js', type: 'script' }
+            ];
+            
+            // Load core resources first
+            await window.windBender.loadBundle(coreResources);
+            console.log('Core resources loaded');
+            
+            // Define additional resources that can be loaded in parallel
+            const secondaryResources = [
+                { url: 'js/Data_Connector.js', type: 'script' },
+                { url: 'js/Visualization-engine.js', type: 'script' },
+                { url: 'js/ui/terminal.js', type: 'script' },
+                { url: 'js/ui/keyboard.js', type: 'script' }
+            ];
+            
+            // Queue the secondary resources to load in the background
+            window.windBender.queueResources(secondaryResources);
+            
+            // Now initialize Genesis - this can happen while secondary resources are loading
+            window.genesis = new Genesis();
+            window.genesis.initialize();
+            
+            // Continue with the rest of your initialization
+            window.windowManager = new SimpleWindowManager();
+            window.taskManager = new TaskManager().initialize(document.getElementById('task-manager-container'));
+            // ... rest of your initialization code
+        
+        
+            console.log("Initializing Genesis system with thread support...");
+    
+            // Initialize the thread pool
+            window.threadPool = new ThreadPoolManager({
+                maxWorkers: navigator.hardwareConcurrency || 4,
+                taskTimeout: 10000 // 10 seconds
+            });
+            
+            // Initialize the dimensional task manager
+            window.dimensionalTasks = new DimensionalTaskManager(window.threadPool);
+            
+            // Initialize the memory manager
+            window.memoryManager = new MemoryManager({
+                maxCacheSize: 100 * 1024 * 1024, // 100MB
+                cleanupInterval: 60000 // 1 minute
+            });
+            
+            // Register dimensional processors
+            dimensionalTasks.registerProcessor('firstDimension', (task) => {
+                console.log(`Processing first dimension task: ${task.type}`);
+                // Handle first dimension task...
+                
+                // For example, if it's a node manipulation:
+                if (task.type === 'addNode' && window.genesis) {
+                    window.genesis.addNode(task.mainNode);
+                }
+            });
+            
+            dimensionalTasks.registerProcessor('fourthDimension', (task) => {
+                console.log(`Processing fourth dimension task: ${task.type}`);
+                // Movement task
+                if (task.type === 'move' && task.node) {
+                    const node = document.querySelector(task.node);
+                    if (node) {
+                        node.style.transform = `translate3d(${task.movementData.x}px, ${task.movementData.y}px, ${task.movementData.z}px)`;
+                    }
+                }
+            });
+            
+            // Similar processors for other dimensions...
+            
+            // Set up processing interval
+            setInterval(() => {
+                dimensionalTasks.processPendingTasks();
+            }, 100); // Process every 100ms
+            
+            // Initialize Genesis
+            window.genesis = new Genesis();
+            window.genesis.initialize();
+            
+            // Add thread pool and task management to Genesis
+            window.genesis.threadPool = window.threadPool;
+            window.genesis.dimensionalTasks = window.dimensionalTasks;
+            window.genesis.memoryManager = window.memoryManager;
+            
+            // Add helper methods to Genesis
+            window.genesis.firstDimensionalMagic = function(type, node, additionalNode) {
+                return window.dimensionalTasks.firstDimensionalMagic(type, node, additionalNode);
+            };
+            
+            window.genesis.fourthDimensionalMagic = function(operationType, node, movementData) {
+                return window.dimensionalTasks.fourthDimensionalMagic(operationType, node, movementData);
+            };
+            
+            window.genesis.sixthDimensionalMagic = function(functionType, node, functionName, additionalData) {
+                return window.dimensionalTasks.sixthDimensionalMagic(functionType, node, functionName, additionalData);
+            };
+            
+            // Add memory management helpers
+            window.genesis.storeData = function(key, data, options) {
+                return window.memoryManager.store(key, data, options);
+            };
+            
+            window.genesis.retrieveData = function(key, options) {
+                return window.memoryManager.retrieve(key, options);
+            };
+            
+            // Add debug info panel
+            createDebugPanel();
+        });
+
+        /**
+         * Create a debug panel for memory and thread stats
+         */
+        function createDebugPanel() {
+            const panel = document.createElement('div');
+            panel.className = 'genesis-debug-panel';
+            panel.style.cssText = `
+                position: fixed;
+                bottom: 10px;
+                right: 10px;
+                width: 300px;
+                background-color: rgba(0, 0, 0, 0.8);
+                color: white;
+                font-family: monospace;
+                font-size: 12px;
+                padding: 10px;
+                border-radius: 5px;
+                z-index: 9999;
+                max-height: 400px;
+                overflow: auto;
+                display: none;
+            `;
+            
+            const header = document.createElement('div');
+            header.innerHTML = `<b>Genesis Debug</b> <span id="genesis-debug-toggle" style="float:right;cursor:pointer">[-]</span>`;
+            panel.appendChild(header);
+            
+            const content = document.createElement('div');
+            content.id = 'genesis-debug-content';
+            panel.appendChild(content);
+            
+            document.body.appendChild(panel);
+            
+            // Toggle button
+            document.getElementById('genesis-debug-toggle').addEventListener('click', function() {
+                const isVisible = content.style.display !== 'none';
+                content.style.display = isVisible ? 'none' : 'block';
+                this.textContent = isVisible ? '[+]' : '[-]';
+            });
+            
+            // Add debug button to show/hide panel
+            const debugBtn = document.createElement('div');
+            debugBtn.className = 'genesis-debug-button';
+            debugBtn.innerHTML = 'DB';
+            debugBtn.style.cssText = `
+                position: fixed;
+                bottom: 10px;
+                right: 10px;
+                width: 30px;
+                height: 30px;
+                background-color: rgba(0, 0, 0, 0.5);
+                color: white;
+                font-family: monospace;
+                font-size: 12px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                border-radius: 50%;
+                cursor: pointer;
+                z-index: 10000;
+            `;
+            
+            document.body.appendChild(debugBtn);
+            
+            debugBtn.addEventListener('click', function() {
+                panel.style.display = panel.style.display === 'none' ? 'block' : 'none';
+            });
+            
+            // Update stats every 2 seconds
+            setInterval(updateDebugInfo, 2000);
+        }
+
+        /**
+         * Update debug information
+         */
+        function updateDebugInfo() {
+            if (!document.getElementById('genesis-debug-content')) return;
+            
+            let html = '<div style="margin-top:10px"><b>Thread Pool</b></div>';
+            
+            // Add thread pool stats
+            if (window.threadPool) {
+                const stats = window.threadPool.getStats();
+                html += `
+                    <div>Active workers: ${stats.activeWorkers}/${stats.maxWorkers}</div>
+                    <div>Queue length: ${stats.queueLength}</div>
+                    <div>Completed tasks: ${stats.completedTasks}</div>
+                    <div style="margin-top:5px"><b>Worker states:</b></div>
+                `;
+                
+                for (const [id, state] of Object.entries(stats.workerStates)) {
+                    html += `
+                        <div>
+                            Worker ${id}: 
+                            <span style="color:${state.status === 'idle' ? '#8f8' : '#f88'}">
+                                ${state.status}
+                            </span>
+                            ${state.taskId ? `(${state.taskType} - ${Math.floor(state.runningTime/1000)}s)` : ''}
+                        </div>
+                    `;
+                }
+            } else {
+                html += '<div>Thread pool not initialized</div>';
+            }
+            
+            // Add dimensional task stats
+            html += '<div style="margin-top:10px"><b>Dimensional Tasks</b></div>';
+            
+            if (window.dimensionalTasks) {
+                const stats = window.dimensionalTasks.getStats();
+                html += `
+                    <div>1st dimension: ${stats.firstDimensionTasks}</div>
+                    <div>4th dimension: ${stats.fourthDimensionTasks}</div>
+                    <div>5th dimension: ${stats.fifthDimensionTasks}</div>
+                    <div>6th dimension: ${stats.sixthDimensionTasks}</div>
+                    <div>7th dimension: ${stats.seventhDimensionTasks}</div>
+                    <div>8th dimension: ${stats.eighthDimensionTasks}</div>
+                `;
+            } else {
+                html += '<div>Dimensional tasks not initialized</div>';
+            }
+            
+            // Add memory stats
+            html += '<div style="margin-top:10px"><b>Memory Manager</b></div>';
+            
+            if (window.memoryManager) {
+                const stats = window.memoryManager.getMemoryStats();
+                html += `
+                    <div>Cache: ${stats.current.cacheSize} (${stats.current.totalCached} items)</div>
+                    <div>Session: ${stats.current.sessionStorageSize} (${stats.current.totalSession} items)</div>
+                    <div>Persistent: ${stats.current.persistentStorageSize} (${stats.current.totalPersistent} items)</div>
+                `;
+            } else {
+                html += '<div>Memory manager not initialized</div>';
+            }
+            
+            document.getElementById('genesis-debug-content').innerHTML = html;
+        }        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        //}
+        
+
+
+
+
+
+
+
+
+
+        </script>
+
+    </body>
+    </html>

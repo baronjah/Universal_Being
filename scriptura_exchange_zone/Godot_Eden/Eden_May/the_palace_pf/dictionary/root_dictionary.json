@@ -1,0 +1,208 @@
+{
+  "ash": {
+    "category": "element",
+    "children": [],
+    "current_state": "powder",
+    "file_reference": "",
+    "id": "ash",
+    "interactions": {
+      "water": {
+        "conditions": {
+
+        },
+        "result": "soil"
+      }
+    },
+    "last_used": 0,
+    "parent_id": "",
+    "properties": {
+      "density": 0.2,
+      "dispersal": 0.8,
+      "fertility": 0.7,
+      "heat_retention": 0.3
+    },
+    "states": {
+      "powder": {
+        "default": true
+      }
+    },
+    "usage_count": 0,
+    "variant_ids": []
+  },
+  "enhanced_wood": {
+    "category": "element",
+    "children": [],
+    "current_state": "",
+    "file_reference": "",
+    "id": "enhanced_wood",
+    "interactions": {
+
+    },
+    "last_used": 0,
+    "parent_id": "",
+    "properties": {
+      "density": 0.6,
+      "flexibility": 0.4,
+      "growth": 0.8,
+      "moisture": 0.9
+    },
+    "states": {
+      "dry": {
+        "properties": {
+          "flexibility": 0.2,
+          "moisture": 0.1
+        }
+      },
+      "living": {
+        "default": true
+      }
+    },
+    "usage_count": 0,
+    "variant_ids": []
+  },
+  "fire": {
+    "category": "element",
+    "children": [],
+    "current_state": "flame",
+    "file_reference": "",
+    "id": "fire",
+    "interactions": {
+      "wood": {
+        "conditions": {
+          "heat": "> 0.5"
+        },
+        "result": "ash"
+      }
+    },
+    "last_used": 0,
+    "parent_id": "",
+    "properties": {
+      "consumption": 0.5,
+      "energy": 0.9,
+      "heat": 0.8,
+      "light": 0.7
+    },
+    "states": {
+      "ember": {
+        "properties": {
+          "heat": 0.3,
+          "light": 0.2
+        }
+      },
+      "flame": {
+        "default": true
+      }
+    },
+    "usage_count": 0,
+    "variant_ids": []
+  },
+  "soil": {
+    "category": "element",
+    "children": [],
+    "current_state": "fertile",
+    "file_reference": "",
+    "id": "soil",
+    "interactions": {
+
+    },
+    "last_used": 0,
+    "parent_id": "",
+    "properties": {
+      "density": 0.8,
+      "fertility": 0.9,
+      "moisture": 0.7,
+      "nutrients": 0.8
+    },
+    "states": {
+      "dry": {
+        "properties": {
+          "fertility": 0.5,
+          "moisture": 0.2
+        }
+      },
+      "fertile": {
+        "default": true
+      }
+    },
+    "usage_count": 0,
+    "variant_ids": []
+  },
+  "water": {
+    "category": "element",
+    "children": [],
+    "current_state": "liquid",
+    "file_reference": "",
+    "id": "water",
+    "interactions": {
+      "fire": {
+        "conditions": {
+          "temperature": "> 0.7"
+        },
+        "result": "vapor"
+      }
+    },
+    "last_used": 0,
+    "parent_id": "",
+    "properties": {
+      "density": 0.6,
+      "flow": 0.8,
+      "temperature": 0.4,
+      "transparency": 0.7
+    },
+    "states": {
+      "ice": {
+        "properties": {
+          "flow": 0.0,
+          "temperature": 0.0
+        }
+      },
+      "liquid": {
+        "default": true
+      },
+      "vapor": {
+        "properties": {
+          "density": 0.1,
+          "flow": 0.9
+        }
+      }
+    },
+    "usage_count": 0,
+    "variant_ids": []
+  },
+  "wood": {
+    "category": "element",
+    "children": [],
+    "current_state": "living",
+    "file_reference": "",
+    "id": "wood",
+    "interactions": {
+      "water": {
+        "conditions": {
+          "moisture": "< 0.8"
+        },
+        "result": "enhanced_wood"
+      }
+    },
+    "last_used": 0,
+    "parent_id": "",
+    "properties": {
+      "density": 0.6,
+      "flexibility": 0.4,
+      "growth": 0.3,
+      "moisture": 0.5
+    },
+    "states": {
+      "dry": {
+        "properties": {
+          "flexibility": 0.2,
+          "moisture": 0.1
+        }
+      },
+      "living": {
+        "default": true
+      }
+    },
+    "usage_count": 0,
+    "variant_ids": []
+  }
+}

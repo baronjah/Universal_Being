@@ -1,0 +1,482 @@
+class_name UniversalEntity
+extends Node3D
+
+# Core identity properties
+var entity_id: String = ""
+var source_word: String = ""
+var manifestation_level: float = 0.0  # 0.0 = potential, 1.0 = fully manifested
+
+# Form and properties
+var current_form: String = "seed"
+var properties: Dictionary = {}
+var evolution_stage: int = 0
+
+# Relationships
+var parent_entity = null
+var child_entities = []
+var connected_entities = []
+
+# Reality context
+var reality_context: String = "physical"
+var dimension_layer: int = 0
+
+# Signals
+signal entity_manifested(entity)
+signal entity_transformed(entity, old_form, new_form)
+signal entity_evolved(entity, old_stage, new_stage)
+signal entity_connected(entity, target_entity, connection_type)
+
+# Visual components
+var visual_container: Node3D
+var effect_container: Node3D
+var particle_systems = {}
+
+func _ready():
+	entity_id = _generate_unique_id()
+	
+	# Create containers for visuals
+	visual_container = Node3D.new()
+	visual_container.name = "VisualContainer"
+	add_child(visual_container)
+	
+	effect_container = Node3D.new()
+	effect_container.name = "EffectContainer"
+	add_child(effect_container)
+	
+	# Initialize with seed form if none specified
+	if current_form == "seed":
+		_update_visual_representation()
+
+# ----- CORE MANIFESTATION SYSTEM -----
+
+func manifest_from_word(word: String, influence: float = 1.0) -> UniversalEntity:
+	"""
+	The core function that creates an entity from a word
+	"""
+	source_word = word
+	properties = _word_to_properties(word)
+	manifestation_level = min(influence, 1.0)
+	
+	# Determine initial form based on word properties
+	current_form = _determine_initial_form()
+	
+	# Update visuals
+	_update_visual_representation()
+	
+	# Emit signal
+	emit_signal("entity_manifested", self)
+	
+	return self
+
+func transform_to(new_form: String, transformation_time: float = 1.0) -> UniversalEntity:
+	"""
+	Transform this entity to a new form
+	"""
+	if new_form == current_form:
+		return self
+		
+	var old_form = current_form
+	current_form = new_form
+	
+	# Create transformation effect
+	var tween = create_tween()
+	tween.tween_method(_set_transformation_progress, 0.0, 1.0, transformation_time)
+	tween.tween_callback(_finalize_transformation)
+	
+	emit_signal("entity_transformed", self, old_form, new_form)
+	
+	return self
+
+func evolve(evolution_factor: float = 0.2) -> UniversalEntity:
+	"""
+	Evolve this entity to the next stage
+	"""
+	var old_stage = evolution_stage
+	
+	# Increase manifestation level
+	manifestation_level = min(manifestation_level + evolution_factor, 1.0)
+	
+	# Calculate new evolution stage based on manifestation level
+	var new_stage = int(manifestation_level * 5)  # 5 possible evolution stages
+	
+	if new_stage > evolution_stage:
+		evolution_stage = new_stage
+		_update_properties_for_evolution()
+		_update_visual_representation()
+		emit_signal("entity_evolved", self, old_stage, evolution_stage)
+	
+	return self
+
+# ----- CONNECTION SYSTEM -----
+
+func connect_to(target_entity: UniversalEntity, connection_type: String = "default") -> bool:
+	"""
+	Connect this entity to another entity
+	"""
+	if target_entity == self or target_entity == null:
+		return false
+	
+	# Check if already connected
+	for entity in connected_entities:
+		if entity.entity_id == target_entity.entity_id:
+			return false
+	
+	# Add to connections
+	connected_entities.append(target_entity)
+	
+	# Visual connection
+	_create_connection_visual(target_entity, connection_type)
+	
+	# Emit signal
+	emit_signal("entity_connected", self, target_entity, connection_type)
+	return true
+
+func become_child_of(parent: UniversalEntity) -> bool:
+	"""
+	Make this entity a child of another entity
+	"""
+	if parent == null or parent == self:
+		return false
+		
+	if parent_entity:
+		parent_entity.child_entities.erase(self)
+	
+	parent_entity = parent
+	parent.child_entities.append(self)
+	
+	# Update visual parent relationship
+	# Could adjust scale, material, etc. to show relationship
+	
+	return true
+
+# ----- WORD TO PROPERTIES CONVERSION -----
+
+func _word_to_properties(word: String) -> Dictionary:
+	"""
+	Convert a word into entity properties
+	"""
+	var props = {}
+	
+	# Basic elemental analysis
+	var elements = {"fire": 0, "water": 0, "earth": 0, "air": 0, "void": 0, "metal": 0, "wood": 0, "light": 0, "dark": 0}
+	
+	for element in elements.keys():
+		if word.to_lower().find(element) >= 0:
+			elements[element] = 1.0
+	
+	# Check vowel ratio for fluidity
+	var vowel_count = 0
+	for c in word.to_lower():
+		if c in "aeiou":
+			vowel_count += 1
+	
+	var fluidity = float(vowel_count) / max(1, word.length())
+	
+	# Complexity based on word length and unique characters
+	var unique_chars = {}
+	for c in word.to_lower():
+		unique_chars[c] = true
+	var complexity = (float(unique_chars.size()) / 26.0 + float(word.length()) / 20.0) / 2.0
+	
+	# First letter influences energy
+	var first_char = word.substr(0, 1).to_lower()
+	var alphabet = "abcdefghijklmnopqrstuvwxyz"
+	var first_char_position = alphabet.find(first_char)
+	var initial_energy = float(first_char_position) / max(1, alphabet.length())
+	
+	# Assign properties
+	props["elements"] = elements
+	props["fluidity"] = fluidity
+	props["complexity"] = complexity
+	props["energy"] = initial_energy
+	props["resonance"] = randf()  # Some randomness for variety
+	
+	return props
+
+func _determine_initial_form() -> String:
+	"""
+	Determine the initial form of this entity based on its properties
+	"""
+	# Check for dominant element
+	var dominant_element = "none"
+	var max_element_value = 0
+	
+	for element in properties["elements"]:
+		if properties["elements"][element] > max_element_value:
+			dominant_element = element
+			max_element_value = properties["elements"][element]
+	
+	# Return form based on properties
+	if max_element_value > 0:
+		match dominant_element:
+			"fire": return "flame"
+			"water": return "droplet"
+			"earth": return "crystal"
+			"air": return "wisp"
+			"void": return "void_spark"
+			"metal": return "orb"
+			"wood": return "sprout"
+			"light": return "light_mote"
+			"dark": return "shadow_essence"
+	
+	# If no dominant element, use other properties
+	if properties["fluidity"] > 0.7:
+		return "flow"
+	elif properties["complexity"] > 0.7:
+		return "pattern"
+	elif properties["energy"] > 0.7:
+		return "spark"
+	
+	# Default to seed
+	return "seed"
+
+# ----- VISUAL REPRESENTATION -----
+
+func _update_visual_representation():
+	"""
+	Update the visual representation based on current form and properties
+	"""
+	# Clear previous visual elements
+	for child in visual_container.get_children():
+		child.queue_free()
+	
+	# Create visuals based on current form
+	match current_form:
+		"seed":
+			_create_seed_visual()
+		"flame":
+			_create_flame_visual()
+		"droplet":
+			_create_droplet_visual()
+		"crystal":
+			_create_crystal_visual()
+		"wisp":
+			_create_wisp_visual()
+		"flow":
+			_create_flow_visual()
+		"void_spark":
+			_create_void_spark_visual()
+		"pattern":
+			_create_pattern_visual()
+		"spark":
+			_create_spark_visual()
+		_:
+			_create_default_visual()
+	
+	# Apply evolution effects
+	_apply_evolution_effects()
+
+func _create_seed_visual():
+	var mesh_instance = MeshInstance3D.new()
+	var sphere_mesh = SphereMesh.new()
+	sphere_mesh.radius = 0.1
+	sphere_mesh.height = 0.2
+	mesh_instance.mesh = sphere_mesh
+	
+	var material = StandardMaterial3D.new()
+	material.albedo_color = Color(0.2, 0.8, 0.2)
+	
+	if evolution_stage > 0:
+		material.emission_enabled = true
+		material.emission = Color(0.4, 0.9, 0.4)
+		material.emission_energy = float(evolution_stage) / 5.0
+	
+	mesh_instance.material_override = material
+	visual_container.add_child(mesh_instance)
+	
+	if evolution_stage > 2:
+		# Add particle effect for more evolved seeds
+		_add_particle_system("seed_glow", Color(0.4, 0.9, 0.4))
+
+func _create_flame_visual():
+	var mesh_instance = MeshInstance3D.new()
+	var cone_mesh = CylinderMesh.new()
+	cone_mesh.top_radius = 0.0
+	cone_mesh.bottom_radius = 0.15
+	cone_mesh.height = 0.4
+	mesh_instance.mesh = cone_mesh
+	
+	var material = StandardMaterial3D.new()
+	material.albedo_color = Color(0.9, 0.4, 0.1)
+	material.emission_enabled = true
+	material.emission = Color(0.9, 0.6, 0.1)
+	material.emission_energy = 1.0 + evolution_stage
+	
+	mesh_instance.material_override = material
+	visual_container.add_child(mesh_instance)
+	
+	# Add flame particles
+	_add_particle_system("flame", Color(0.9, 0.4, 0.1))
+
+# More visual creation methods would be implemented here for each form...
+
+func _add_particle_system(type: String, base_color: Color):
+	var particles = GPUParticles3D.new()
+	particles.name = type + "_particles"
+	
+	var material = ParticleProcessMaterial.new()
+	material.emission_shape = ParticleProcessMaterial.EMISSION_SHAPE_SPHERE
+	material.emission_sphere_radius = 0.1
+	
+	match type:
+		"seed_glow":
+			material.gravity = Vector3(0, 0.1, 0)
+			material.initial_velocity_min = 0.1
+			material.initial_velocity_max = 0.2
+			material.scale_min = 0.01
+			material.scale_max = 0.03
+		"flame":
+			material.gravity = Vector3(0, 1.0, 0)
+			material.initial_velocity_min = 0.2
+			material.initial_velocity_max = 0.5
+			material.scale_min = 0.05
+			material.scale_max = 0.1
+		# More particle types...
+	
+	particles.process_material = material
+	particles.amount = 20 + 10 * evolution_stage
+	particles.lifetime = 1.0
+	
+	effect_container.add_child(particles)
+	particle_systems[type] = particles
+
+func _set_transformation_progress(progress: float):
+	"""
+	Handle visual transformation between forms
+	"""
+	# Scale pulsing effect during transformation
+	var scale_factor = 1.0 + sin(progress * 3.14159 * 2) * 0.3
+	visual_container.scale = Vector3(scale_factor, scale_factor, scale_factor)
+	
+	# Color shift effect
+	for child in visual_container.get_children():
+		if child is MeshInstance3D and child.material_override:
+			var material = child.material_override
+			material.emission_enabled = true
+			material.emission_energy = 1.0 + sin(progress * 3.14159) * 2.0
+
+func _finalize_transformation():
+	"""
+	Called when transformation is complete
+	"""
+	visual_container.scale = Vector3(1, 1, 1)
+	_update_visual_representation()
+
+# ----- EVOLUTION SYSTEM -----
+
+func _update_properties_for_evolution():
+	"""
+	Update properties based on evolution stage
+	"""
+	# Enhance existing properties proportionally to evolution
+	var boost_factor = 1.0 + (evolution_stage * 0.2)
+	
+	# Copy properties to avoid modifying while iterating
+	var prop_keys = properties.keys()
+	
+	# Enhance numeric properties
+	for key in prop_keys:
+		if properties[key] is float or properties[key] is int:
+			properties[key] = properties[key] * boost_factor
+		elif properties[key] is Dictionary:
+			# For nested dictionaries like elements
+			for subkey in properties[key]:
+				if properties[key][subkey] is float or properties[key][subkey] is int:
+					properties[key][subkey] = properties[key][subkey] * boost_factor
+	
+	# Add new properties at certain evolution stages
+	if evolution_stage >= 2 and not properties.has("resonance_field"):
+		properties["resonance_field"] = 0.3
+	
+	if evolution_stage >= 3 and not properties.has("influence_radius"):
+		properties["influence_radius"] = 2.0
+	
+	if evolution_stage >= 4 and not properties.has("transcendence"):
+		properties["transcendence"] = 0.1
+
+func _apply_evolution_effects():
+	"""
+	Apply visual effects based on evolution stage
+	"""
+	# Scale visual container based on evolution
+	var scale_factor = 1.0 + (evolution_stage * 0.15)
+	visual_container.scale = Vector3(scale_factor, scale_factor, scale_factor)
+	
+	# Add glow effect at higher evolution stages
+	for child in visual_container.get_children():
+		if child is MeshInstance3D and child.material_override:
+			var material = child.material_override
+			
+			if evolution_stage >= 1:
+				material.emission_enabled = true
+				material.emission_energy = evolution_stage * 0.5
+			
+			if evolution_stage >= 3:
+				# Add special effects for highly evolved entities
+				material.metallic = 0.3 + (evolution_stage * 0.1)
+				material.roughness = max(0.1, 0.5 - (evolution_stage * 0.1))
+
+# ----- CONNECTION VISUALIZATION -----
+
+func _create_connection_visual(target_entity: UniversalEntity, connection_type: String):
+	"""
+	Create a visual representation of a connection between entities
+	"""
+	# Calculate connection properties
+	var start_pos = global_position
+	var end_pos = target_entity.global_position
+	var connection_length = start_pos.distance_to(end_pos)
+	
+	# Create connection line
+	var connection_visual = MeshInstance3D.new()
+	connection_visual.name = "Connection_" + target_entity.entity_id
+	
+	var cylinder = CylinderMesh.new()
+	cylinder.top_radius = 0.02
+	cylinder.bottom_radius = 0.02
+	cylinder.height = connection_length
+	connection_visual.mesh = cylinder
+	
+	# Rotate and position to connect the two entities
+	var look_at_pos = end_pos
+	connection_visual.look_at_from_position(
+		start_pos.lerp(end_pos, 0.5),  # Position at middle
+		look_at_pos,
+		Vector3.UP
+	)
+	# Rotate 90 degrees to align cylinder properly
+	connection_visual.rotate_object_local(Vector3.RIGHT, PI/2)
+	
+	# Material based on connection type
+	var material = StandardMaterial3D.new()
+	
+	match connection_type:
+		"default":
+			material.albedo_color = Color(0.7, 0.7, 0.7, 0.5)
+		"strong":
+			material.albedo_color = Color(0.2, 0.6, 1.0, 0.7)
+		"conflict":
+			material.albedo_color = Color(1.0, 0.3, 0.2, 0.7)
+		"harmony":
+			material.albedo_color = Color(0.4, 0.9, 0.4, 0.7)
+	
+	material.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
+	connection_visual.material_override = material
+	
+	# Add to scene
+	add_child(connection_visual)
+	
+	# Optional: animate the connection forming
+	var tween = create_tween()
+	connection_visual.scale.y = 0
+	tween.tween_property(connection_visual, "scale:y", 1.0, 0.5)
+
+# ----- UTILITY FUNCTIONS -----
+
+func _generate_unique_id() -> String:
+	"""
+	Generate a unique ID for this entity
+	"""
+	var timestamp = Time.get_unix_time_from_system()
+	var random_part = randi() % 1000000
+	return str(timestamp) + "_" + str(random_part) + "_" + str(source_word.hash())

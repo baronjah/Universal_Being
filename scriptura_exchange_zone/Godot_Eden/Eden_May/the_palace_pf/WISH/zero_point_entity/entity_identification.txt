@@ -1,0 +1,233 @@
+class_name EntityIdentificationSystem
+extends Node
+
+# ----- ID GENERATION SYSTEM -----
+const CHAR_SET = "abcdefghijklmnopqrstuvwxyz0123456789"
+const ELEMENT_CODES = {
+    "fire": "f",
+    "water": "w", 
+    "earth": "e",
+    "air": "a",
+    "metal": "m",
+    "wood": "o",
+    "light": "l",
+    "dark": "d",
+    "void": "v"
+}
+const SHAPE_CODES = {
+    "sphere": "s",
+    "cube": "c",
+    "pyramid": "p",
+    "cylinder": "y",
+    "torus": "t",
+    "cone": "n",
+    "irregular": "i"
+}
+
+# Dictionary to track all entity IDs
+var entity_registry = {}
+var id_counters = {}
+
+# ----- INITIALIZATION -----
+func _ready():
+    # Initialize counters for each prefix
+    for shape in SHAPE_CODES.values():
+        for element in ELEMENT_CODES.values():
+            var prefix = shape + element
+            id_counters[prefix] = 0
+
+# ----- ID GENERATION -----
+func generate_id(entity: UniversalEntity) -> String:
+    """
+    Generate a unique ID for an entity based on its properties
+    Format: [shape][element][number]
+    Examples: sf0 (sphere of fire, first one), wa42 (water entity, 43rd one)
+    """
+    # Determine shape code
+    var shape_code = "i"  # Default irregular
+    if entity.properties.has("shape"):
+        var shape = entity.properties.shape
+        if SHAPE_CODES.has(shape):
+            shape_code = SHAPE_CODES[shape]
+    
+    # Determine element code
+    var element_code = "x"  # Default unknown
+    if entity.properties.has("elements"):
+        # Find dominant element
+        var max_value = 0.0
+        var dominant_element = null
+        
+        for element in entity.properties.elements:
+            if entity.properties.elements[element] > max_value:
+                max_value = entity.properties.elements[element]
+                dominant_element = element
+        
+        if dominant_element and ELEMENT_CODES.has(dominant_element):
+            element_code = ELEMENT_CODES[dominant_element]
+    
+    # Create prefix
+    var prefix = shape_code + element_code
+    
+    # Increment counter
+    if not id_counters.has(prefix):
+        id_counters[prefix] = 0
+        
+    var counter = id_counters[prefix]
+    id_counters[prefix] += 1
+    
+    # Generate ID
+    var id_number = ""
+    if counter < 10:
+        id_number = str(counter)
+    elif counter < 100:
+        id_number = counter_to_base36(counter)
+    else:
+        # For large numbers, use double character format aa0, aa1, etc.
+        var first_char = CHAR_SET[counter % CHAR_SET.length()]
+        var second_char = CHAR_SET[(counter / CHAR_SET.length()) % CHAR_SET.length()]
+        var remainder = counter % 10
+        id_number = first_char + second_char + str(remainder)
+    
+    var entity_id = prefix + id_number
+    
+    # Register the ID
+    entity_registry[entity_id] = entity
+    
+    return entity_id
+
+# ----- LOOKUP FUNCTIONS -----
+func get_entity_by_id(id: String) -> UniversalEntity:
+    """
+    Retrieve an entity by its ID
+    """
+    if entity_registry.has(id):
+        return entity_registry[id]
+    return null
+
+func get_entities_by_prefix(prefix: String) -> Array:
+    """
+    Get all entities that match a prefix (e.g., all fire entities with "sf")
+    """
+    var result = []
+    
+    for id in entity_registry:
+        if id.begins_with(prefix):
+            result.append(entity_registry[id])
+    
+    return result
+
+func parse_id(id: String) -> Dictionary:
+    """
+    Parse an ID into its components
+    """
+    var result = {
+        "shape_code": "",
+        "element_code": "",
+        "number": "",
+        "shape": "unknown",
+        "element": "unknown"
+    }
+    
+    if id.length() < 3:
+        return result
+    
+    result.shape_code = id.substr(0, 1)
+    result.element_code = id.substr(1, 1)
+    result.number = id.substr(2)
+    
+    # Reverse lookup shape
+    for shape in SHAPE_CODES:
+        if SHAPE_CODES[shape] == result.shape_code:
+            result.shape = shape
+            break
+    
+    # Reverse lookup element
+    for element in ELEMENT_CODES:
+        if ELEMENT_CODES[element] == result.element_code:
+            result.element = element
+            break
+    
+    return result
+
+# ----- UTILITY FUNCTIONS -----
+func counter_to_base36(num: int) -> String:
+    """
+    Convert a number to base36 (0-9, a-z)
+    """
+    if num < CHAR_SET.length():
+        return CHAR_SET[num]
+    
+    var result = ""
+    var value = num
+    
+    while value > 0:
+        result = CHAR_SET[value % CHAR_SET.length()] + result
+        value = value / CHAR_SET.length()
+    
+    return result
+
+func unregister_entity(entity_id: String):
+    """
+    Remove an entity from the registry
+    """
+    if entity_registry.has(entity_id):
+        entity_registry.erase(entity_id)
+
+# ----- INTEGRATION FUNCTIONS -----
+func register_existing_entity(entity: UniversalEntity) -> String:
+    """
+    Register an existing entity and assign it an ID
+    """
+    var entity_id = generate_id(entity)
+    entity.entity_id = entity_id
+    return entity_id
+
+func update_entity_id(entity: UniversalEntity) -> String:
+    """
+    Update an entity's ID if its properties change significantly
+    """
+    # Unregister old ID if it exists
+    if entity.entity_id != "" and entity_registry.has(entity.entity_id):
+        unregister_entity(entity.entity_id)
+    
+    # Generate and register new ID
+    return register_existing_entity(entity)
+
+# ----- QUERY FUNCTIONS -----
+func get_entity_count() -> int:
+    """
+    Get total number of registered entities
+    """
+    return entity_registry.size()
+
+func get_entity_count_by_element(element: String) -> int:
+    """
+    Get count of entities of a specific element
+    """
+    var count = 0
+    var element_code = "x"
+    
+    if ELEMENT_CODES.has(element):
+        element_code = ELEMENT_CODES[element]
+    
+    for id in entity_registry:
+        if id.substr(1, 1) == element_code:
+            count += 1
+    
+    return count
+
+func get_entity_count_by_shape(shape: String) -> int:
+    """
+    Get count of entities of a specific shape
+    """
+    var count = 0
+    var shape_code = "i"
+    
+    if SHAPE_CODES.has(shape):
+        shape_code = SHAPE_CODES[shape]
+    
+    for id in entity_registry:
+        if id.substr(0, 1) == shape_code:
+            count += 1
+    
+    return count

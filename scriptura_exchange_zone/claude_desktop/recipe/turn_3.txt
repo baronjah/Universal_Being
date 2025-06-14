@@ -1,0 +1,140 @@
+🧠 Turn 3 | 3D Notepad Interface Layers — The Word Manifestor
+You’ve long envisioned a notepad that isn’t just a static menu, but a living, floating, spatial system of thought. This is your “Word Manifestor”—each word or idea is a node, a shape, a presence in space that interacts with other records, floats, evolves, and may even glow or react to your gaze.
+
+This turn is where the Notepad 3D begins to emerge visually and interactively.
+
+🌌 Goal:
+Spawn and interact with five distinct word layers in 3D space, each layer representing a level of depth in the user's thoughts, records, or database stack. These layers wobble gently, and words (nodes) can be created, selected, moved, and highlighted based on proximity or interaction.
+
+✨ Key Features This Turn:
+1. The Notepad Layers
+Press N to toggle 5 transparent planes/layers.
+
+Each layer is a MeshInstance3D (Plane) or a SubViewport with UI.
+
+Each floats slightly behind the other in Z-depth, forming a layered “sheet stack”.
+
+They glow softly and pulse when hovered or clicked.
+
+2. Words as Objects
+Press C to create a new WordEntity on the active layer.
+
+Each word is a small 3D label (Label3D or billboarded Sprite3D) with metadata linked to records_map.
+
+3. Interaction
+Click to select a word → it expands slightly, pulses, and displays options (like link, edit, delete).
+
+Hover causes glow to intensify or color to change (easing based on distance).
+
+Press E to interact or “enter” a word, zooming into its nested records.
+
+4. Wobble + Ease
+Each layer + word floats in subtle sinusoidal motion (sin(time) based offset).
+
+Interaction affects wobble speed or color hue (like adding “energy”).
+
+🛠️ GDScript Sketches:
+Notepad Layer Setup (manager node):
+gdscript
+Copy
+Edit
+extends Node3D
+const LAYER_COUNT = 5
+var layers = []
+
+func _ready():
+    for i in LAYER_COUNT:
+        var layer = preload("res://Layer3D.tscn").instantiate()
+        layer.translation = Vector3(0, 0, -i * 2.0)
+        add_child(layer)
+        layers.append(layer)
+Word Creation:
+gdscript
+Copy
+Edit
+func _input(event):
+    if event.is_action_pressed("create_word"):
+        var word = preload("res://WordEntity.tscn").instantiate()
+        word.translation = camera.global_transform.origin + camera.global_transform.basis.z * -5.0
+        layers[0].add_child(word)
+🔁 Motion & Visual Feedback:
+In WordEntity.gd:
+
+gdscript
+Copy
+Edit
+extends Node3D
+
+@export var wobble_strength := 0.1
+@export var glow_color := Color(0.2, 0.8, 1.0, 0.5)
+
+func _process(delta):
+    translation.y += sin(Time.get_ticks_msec() / 500.0 + translation.x) * wobble_strength * delta
+    look_at(get_viewport().get_camera_3d().global_position, Vector3.UP)
+
+    var distance = global_transform.origin.distance_to(camera.global_transform.origin)
+    if distance < 3.0:
+        modulate = glow_color.lightened(1.0 - (distance / 3.0))
+🖱️ UI: Floating & Minimal
+Each word can open a radial or vertical action menu:
+
+[Edit]
+
+[Link]
+
+[Delete]
+
+[Expand]
+
+Menu appears only on hover/click.
+
+Pressing F centers camera on selected word with easing.
+
+🧩 Future Connection Hooks (Next Turns)
+These word entities will connect to:
+
+records_map for database interaction.
+
+terminal.gd for modifying values via typed command.
+
+world map / planetary UI for spatial anchoring of thoughts/notes.
+
+voice input or AI memory recall, based on spoken/thought queries.
+
+🧪 Optional Style Shaders for Layers (Hologram feel):
+glsl
+Copy
+Edit
+shader_type spatial;
+render_mode blend_add;
+
+void fragment() {
+    ALBEDO = vec3(0.2, 0.8, 1.0);
+    EMISSION = ALBEDO * 1.5;
+    ALPHA = 0.4 + 0.2 * sin(TIME * 2.0);
+}
+🔲 ASCII Layout — The Word Stack
+sql
+Copy
+Edit
+Layer 1:   |--- Notes, floating gently ---|
+Layer 2:     |--- More Words, half faded ---|
+Layer 3:       |--- Deeper Records ---|
+Layer 4:         |--- Hidden Threads ---|
+Layer 5:           |--- The Akashic Core ---|
+
+Interaction Example:
+        [Word: Aether]
+        Glow ↑   ┌─────┐
+       Select →  │Edit │
+                 │Link │
+                 │Zoom │
+                 └─────┘
+✅ Next Step for You:
+Build the Layer3D scene (plane with transparency, light wobble).
+
+Build a basic WordEntity scene (Label3D or floating mesh).
+
+Connect it to the database for creation + metadata.
+
+When ready, we’ll proceed to Turn 4: The Holographic Terminal UI — where your thoughts become code, commands ripple through reality, and your input changes the world 🌐.

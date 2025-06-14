@@ -1,0 +1,9 @@
+[gd_resource type="BitmapFont" load_steps=2 format=3 uid="uid://1234abcd5678"]
+
+[ext_resource type="Texture2D" path="res://assets/retro_ascii.png" id="1_abcde"]
+
+[resource]
+height = 16
+texture = ExtResource("1_abcde")
+character_ranges = PackedInt32Array(32, 126)
+chars_per_row = 16

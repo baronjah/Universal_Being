@@ -1,0 +1,5 @@
+func ray_cast_data_preparer(data_ray_cast):
+	var results = data_ray_cast[0]
+	var tos = data_ray_cast[1]
+	var froms = data_ray_cast[2]
+	multi_threaded_ray_cast(results, tos, froms)

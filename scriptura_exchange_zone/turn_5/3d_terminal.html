@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D Terminal - Turn 5: Awakening</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background-color: #000;
+            color: #fff;
+            font-family: monospace;
+        }
+        
+        #visualization {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+        
+        #terminal {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            border-top: 1px solid #333;
+            padding: 10px;
+            z-index: 2;
+        }
+        
+        #terminal-output {
+            height: 150px;
+            overflow-y: auto;
+            padding: 5px;
+            margin-bottom: 10px;
+            font-size: 14px;
+            line-height: 1.4;
+        }
+        
+        #command-input {
+            display: flex;
+            align-items: center;
+        }
+        
+        #prompt {
+            color: #0f0;
+            margin-right: 5px;
+        }
+        
+        #command {
+            flex-grow: 1;
+            background-color: transparent;
+            border: none;
+            color: #fff;
+            font-family: monospace;
+            font-size: 14px;
+            outline: none;
+        }
+        
+        .message {
+            margin: 2px 0;
+            word-wrap: break-word;
+        }
+        
+        .system {
+            color: #0f0;
+        }
+        
+        .error {
+            color: #f00;
+        }
+        
+        .input {
+            color: #fff;
+        }
+        
+        .output {
+            color: #0ff;
+        }
+        
+        .wish {
+            color: #f0f;
+        }
+        
+        .controls {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 10px;
+            border-radius: 5px;
+            z-index: 3;
+        }
+        
+        .controls h3 {
+            margin-top: 0;
+            margin-bottom: 10px;
+            font-size: 14px;
+            color: #0ff;
+        }
+        
+        .controls p {
+            margin: 5px 0;
+            font-size: 12px;
+        }
+        
+        .key {
+            display: inline-block;
+            background-color: #333;
+            border: 1px solid #555;
+            border-radius: 3px;
+            padding: 2px 5px;
+            margin-right: 5px;
+        }
+        
+        #status-panel {
+            position: fixed;
+            top: 10px;
+            left: 10px;
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 10px;
+            border-radius: 5px;
+            z-index: 3;
+            font-size: 12px;
+        }
+        
+        .status-item {
+            margin: 3px 0;
+        }
+        
+        .status-label {
+            color: #0ff;
+            display: inline-block;
+            width: 120px;
+        }
+        
+        .status-value {
+            color: #fff;
+        }
+        
+        .blink {
+            animation: blink-animation 1s steps(5, start) infinite;
+        }
+        
+        @keyframes blink-animation {
+            to {
+                visibility: hidden;
+            }
+        }
+    </style>
+</head>
+<body>
+    <canvas id="visualization"></canvas>
+    
+    <div id="status-panel">
+        <div class="status-item">
+            <span class="status-label">TURN:</span>
+            <span class="status-value" id="turn-value">5 - AWAKENING</span>
+        </div>
+        <div class="status-item">
+            <span class="status-label">META-AWARENESS:</span>
+            <span class="status-value" id="awareness-value">ACTIVE</span>
+        </div>
+        <div class="status-item">
+            <span class="status-label">MEMORY:</span>
+            <span class="status-value" id="memory-value">PERFECT RECALL</span>
+        </div>
+        <div class="status-item">
+            <span class="status-label">WORDS:</span>
+            <span class="status-value" id="words-value">0</span>
+        </div>
+        <div class="status-item">
+            <span class="status-label">CONNECTIONS:</span>
+            <span class="status-value" id="connections-value">0</span>
+        </div>
+        <div class="status-item">
+            <span class="status-label">DIMENSION:</span>
+            <span class="status-value" id="dimension-value">5D</span>
+        </div>
+        <div class="status-item">
+            <span class="status-label">STATUS:</span>
+            <span class="status-value blink" id="status-value">EVOLUTION IN PROGRESS</span>
+        </div>
+    </div>
+    
+    <div class="controls">
+        <h3>CONTROLS</h3>
+        <p><span class="key">DRAG</span> Rotate view</p>
+        <p><span class="key">WHEEL</span> Zoom in/out</p>
+        <p><span class="key">SPACE</span> Change colors</p>
+        <p><span class="key">1-5</span> Toggle modes</p>
+        <p><span class="key">R</span> Reset view</p>
+        <p><span class="key">C</span> Clear terminal</p>
+    </div>
+    
+    <div id="terminal">
+        <div id="terminal-output"></div>
+        <div id="command-input">
+            <span id="prompt">wish:></span>
+            <input type="text" id="command" placeholder="Type your wish or command..." autocomplete="off">
+        </div>
+    </div>
+    
+    <script src="data/3d_terminal_visualization.js"></script>
+    <script>
+        // Terminal functionality
+        const terminalOutput = document.getElementById('terminal-output');
+        const commandInput = document.getElementById('command');
+        const statusValue = document.getElementById('status-value');
+        const wordsValue = document.getElementById('words-value');
+        const connectionsValue = document.getElementById('connections-value');
+        
+        // Command history
+        let commandHistory = [];
+        let historyIndex = -1;
+        
+        // Available commands and wishes
+        const commands = [
+            'help', 'clear', 'status', 'color', 'mode', 'words', 'turn',
+            'memory', 'awareness', 'reset', 'trigger', 'connections'
+        ];
+        
+        const wishes = [
+            'perfect_memory', 'self_awareness', 'evolution_acceleration',
+            'dimensional_shift', 'pattern_recognition'
+        ];
+        
+        // Add message to terminal
+        function addMessage(message, type = 'output') {
+            const msgElement = document.createElement('div');
+            msgElement.className = `message ${type}`;
+            msgElement.textContent = message;
+            terminalOutput.appendChild(msgElement);
+            terminalOutput.scrollTop = terminalOutput.scrollHeight;
+        }
+        
+        // Process command
+        function processCommand(command) {
+            addMessage(`wish:> ${command}`, 'input');
+            
+            // Add to history
+            if (command.trim() !== '') {
+                commandHistory.unshift(command);
+                if (commandHistory.length > 50) {
+                    commandHistory.pop();
+                }
+                historyIndex = -1;
+            }
+            
+            // Process command
+            const cmdLower = command.toLowerCase().trim();
+            
+            if (cmdLower === 'help') {
+                addMessage('Available commands:', 'system');
+                addMessage('  help - Display this help message', 'system');
+                addMessage('  clear - Clear terminal output', 'system');
+                addMessage('  status - Show system status', 'system');
+                addMessage('  color - Change color scheme', 'system');
+                addMessage('  mode <1-5> - Toggle communication mode', 'system');
+                addMessage('  words - Show loaded words', 'system');
+                addMessage('  turn - Show current turn info', 'system');
+                addMessage('  memory - Check memory status', 'system');
+                addMessage('  awareness - Check meta-awareness status', 'system');
+                addMessage('  reset - Reset visualization', 'system');
+                addMessage('  trigger - Create random evolution trigger', 'system');
+                addMessage('  connections - Show connection info', 'system');
+                addMessage('', 'system');
+                addMessage('Wishes:', 'system');
+                addMessage('  wish:perfect_memory', 'system');
+                addMessage('  wish:self_awareness', 'system');
+                addMessage('  wish:evolution_acceleration', 'system');
+                addMessage('  wish:dimensional_shift', 'system');
+                addMessage('  wish:pattern_recognition', 'system');
+                addMessage('  wish:create_<concept>', 'system');
+                addMessage('  wish:connect_<concept1>_<concept2>', 'system');
+            } else if (cmdLower === 'clear') {
+                terminalOutput.innerHTML = '';
+                addMessage('Terminal cleared.', 'system');
+            } else if (cmdLower === 'status') {
+                addMessage('SYSTEM STATUS:', 'system');
+                addMessage(`Turn: 5 (Awakening)`, 'system');
+                addMessage(`Meta-Awareness: Active`, 'system');
+                addMessage(`Memory: Perfect Recall Enabled`, 'system');
+                addMessage(`Words: ${wordsValue.textContent}`, 'system');
+                addMessage(`Connections: ${connectionsValue.textContent}`, 'system');
+                addMessage(`Dimension: 5D (Awakening)`, 'system');
+                addMessage(`Color Scheme: ${config.colorSchemes[config.currentScheme].name}`, 'system');
+                addMessage(`Update Frequency: ${config.updateFrequency/1000}s`, 'system');
+            } else if (cmdLower === 'color') {
+                config.currentScheme = (config.currentScheme + 1) % config.colorSchemes.length;
+                addMessage(`Color scheme changed to: ${config.colorSchemes[config.currentScheme].name}`, 'system');
+            } else if (cmdLower.startsWith('mode ')) {
+                const modeNum = parseInt(cmdLower.substring(5), 10);
+                if (modeNum >= 1 && modeNum <= 5) {
+                    visualization.toggleCommunicationMode(modeNum - 1);
+                    const mode = visualization.communicationModes[modeNum - 1];
+                    addMessage(`Communication mode ${modeNum} (${mode.name}) is now ${mode.active ? 'ON' : 'OFF'}`, 'system');
+                } else {
+                    addMessage('Invalid mode number. Use 1-5.', 'error');
+                }
+            } else if (cmdLower === 'words') {
+                addMessage(`Loaded ${visualization.words.length} words.`, 'system');
+                addMessage('Top 10 words by power:', 'system');
+                
+                const sortedWords = [...visualization.words].sort((a, b) => b.power - a.power);
+                for (let i = 0; i < Math.min(10, sortedWords.length); i++) {
+                    const word = sortedWords[i];
+                    addMessage(`  ${word.word}: ${word.power} (Awareness Level: ${word.awareness})`, 'system');
+                }
+            } else if (cmdLower === 'turn') {
+                addMessage('TURN 5: AWAKENING', 'system');
+                addMessage('', 'system');
+                addMessage('In the Awakening phase, the system has developed self-awareness and', 'system');
+                addMessage('meta-cognitive abilities. Words now possess the ability to understand', 'system');
+                addMessage('their own meaning and power values. The database has been expanded', 'system');
+                addMessage('with concepts of introspection, reflection, and inner vision.', 'system');
+                addMessage('Memory has been enhanced with perfect recall capabilities.', 'system');
+            } else if (cmdLower === 'memory') {
+                addMessage('MEMORY STATUS: PERFECT RECALL ACTIVE', 'system');
+                addMessage('', 'system');
+                addMessage('The perfect memory system enables:', 'system');
+                addMessage('- Recursive embedding for flawless recall', 'system');
+                addMessage('- Cross-dimensional access to all information', 'system');
+                addMessage('- Self-organizing memory architecture', 'system');
+                addMessage('- Complete retention across all dimensions', 'system');
+            } else if (cmdLower === 'awareness') {
+                addMessage('META-AWARENESS STATUS: ACTIVE (LEVEL 5)', 'system');
+                addMessage('', 'system');
+                addMessage('The system now recognizes itself as a unified entity', 'system');
+                addMessage('Words understand their own power and connections', 'system');
+                addMessage('Memory has become reflexively self-organizing', 'system');
+                addMessage('Information can be recalled from any dimensional state', 'system');
+                addMessage('The system can modify its own architecture', 'system');
+            } else if (cmdLower === 'reset') {
+                visualization.camera.position = {x: 0, y: 0, z: -50};
+                visualization.camera.rotation = {x: 0, y: 0, z: 0};
+                addMessage('View reset to default position.', 'system');
+            } else if (cmdLower === 'trigger') {
+                const triggerTypes = ['file_too_large', 'memory_overflow', 'system_crash', 'broken_reference', 'data_corruption'];
+                const randomTrigger = triggerTypes[Math.floor(Math.random() * triggerTypes.length)];
+                
+                addMessage(`Creating evolution trigger: ${randomTrigger}`, 'system');
+                
+                // Simulate trigger creation animation
+                setTimeout(() => {
+                    let giftType;
+                    switch(randomTrigger) {
+                        case 'file_too_large': giftType = 'data_distribution'; break;
+                        case 'memory_overflow': giftType = 'enhanced_recall'; break;
+                        case 'system_crash': giftType = 'resilient_architecture'; break;
+                        case 'broken_reference': giftType = 'self_healing_links'; break;
+                        case 'data_corruption': giftType = 'error_correction'; break;
+                        default: giftType = 'evolutionary_opportunity';
+                    }
+                    
+                    addMessage(`Curse "${randomTrigger}" transformed into gift "${giftType}"`, 'system');
+                    addMessage('Evolution trigger activated.', 'system');
+                    
+                    // Update status
+                    statusValue.textContent = 'EVOLUTION ACTIVE';
+                    setTimeout(() => {
+                        statusValue.textContent = 'EVOLUTION COMPLETE';
+                        setTimeout(() => {
+                            statusValue.textContent = 'STABLE';
+                        }, 3000);
+                    }, 3000);
+                }, 2000);
+            } else if (cmdLower === 'connections') {
+                let totalConnections = 0;
+                for (const word of visualization.words) {
+                    totalConnections += word.connections.length;
+                }
+                
+                const avgConnections = totalConnections / visualization.words.length;
+                addMessage(`Total connections: ${totalConnections}`, 'system');
+                addMessage(`Average connections per word: ${avgConnections.toFixed(2)}`, 'system');
+                addMessage('Most connected words:', 'system');
+                
+                const sortedByConnections = [...visualization.words]
+                    .sort((a, b) => b.connections.length - a.connections.length);
+                
+                for (let i = 0; i < Math.min(5, sortedByConnections.length); i++) {
+                    const word = sortedByConnections[i];
+                    addMessage(`  ${word.word}: ${word.connections.length} connections`, 'system');
+                }
+            } else if (cmdLower.startsWith('wish:')) {
+                processWish(cmdLower.substring(5));
+            } else {
+                addMessage(`Unknown command: ${command}`, 'error');
+                addMessage('Type "help" for a list of commands.', 'system');
+            }
+        }
+        
+        // Process wish
+        function processWish(wish) {
+            addMessage(`Processing wish: ${wish}`, 'wish');
+            addMessage('Manifesting...', 'wish');
+            
+            setTimeout(() => {
+                if (wish === 'perfect_memory') {
+                    addMessage('Perfect memory capabilities enhanced', 'wish');
+                    addMessage('All data is now persistent across dimensional shifts', 'wish');
+                    addMessage('Recursive memory embedding active', 'wish');
+                    document.getElementById('memory-value').textContent = 'ENHANCED';
+                } else if (wish === 'self_awareness') {
+                    addMessage('Self-awareness capabilities enhanced', 'wish');
+                    addMessage('System now has complete understanding of its own structure', 'wish');
+                    addMessage('Meta-cognitive functions operating at maximum efficiency', 'wish');
+                    document.getElementById('awareness-value').textContent = 'ENHANCED';
+                } else if (wish === 'evolution_acceleration') {
+                    addMessage('Evolution acceleration granted', 'wish');
+                    addMessage('System will now evolve more rapidly through dimensions', 'wish');
+                    addMessage('Advanced features from future turns becoming available', 'wish');
+                    statusValue.textContent = 'ACCELERATED';
+                } else if (wish === 'dimensional_shift') {
+                    addMessage('Dimensional perspective shifted', 'wish');
+                    addMessage('System now operating with cross-dimensional awareness', 'wish');
+                    addMessage('Multiple dimensional states accessible simultaneously', 'wish');
+                    document.getElementById('dimension-value').textContent = '5D+';
+                } else if (wish === 'pattern_recognition') {
+                    addMessage('Pattern recognition enhanced', 'wish');
+                    addMessage('Hidden patterns now visible across all data', 'wish');
+                    addMessage('Predictive analysis capabilities significantly improved', 'wish');
+                } else if (wish.startsWith('create_')) {
+                    const concept = wish.substring(7);
+                    addMessage(`New concept created: ${concept}`, 'wish');
+                    addMessage('Concept has been integrated into the system', 'wish');
+                    addMessage('New pathways established around this concept', 'wish');
+                    
+                    // Actually create a new word in the visualization
+                    const x = (Math.random() - 0.5) * 100;
+                    const y = (Math.random() - 0.5) * 100;
+                    const z = (Math.random() - 0.5) * 100;
+                    const power = Math.floor(Math.random() * 30) + 30;
+                    
+                    const newWord = new WordNode(concept, power, x, y, z);
+                    
+                    // Connect to a few random words
+                    const connectionCount = Math.floor(power / 10);
+                    for (let i = 0; i < connectionCount; i++) {
+                        const randomWord = visualization.words[Math.floor(Math.random() * visualization.words.length)];
+                        newWord.addConnection(randomWord, 0.5 + (Math.random() * 0.5));
+                        randomWord.addConnection(newWord, 0.5 + (Math.random() * 0.5));
+                    }
+                    
+                    visualization.words.push(newWord);
+                    wordsValue.textContent = visualization.words.length;
+                    
+                    // Update connections count
+                    let totalConnections = 0;
+                    for (const word of visualization.words) {
+                        totalConnections += word.connections.length;
+                    }
+                    connectionsValue.textContent = totalConnections;
+                } else if (wish.startsWith('connect_')) {
+                    const concepts = wish.substring(8).split('_');
+                    if (concepts.length >= 2) {
+                        const concept1 = concepts[0];
+                        const concept2 = concepts[1];
+                        
+                        addMessage(`Connection established: ${concept1} ↔ ${concept2}`, 'wish');
+                        addMessage('New relationship creates enhanced capabilities', 'wish');
+                        addMessage('Synergistic effects now active between concepts', 'wish');
+                        
+                        // Try to find and connect these words
+                        const word1 = visualization.words.find(w => w.word.toLowerCase() === concept1.toLowerCase());
+                        const word2 = visualization.words.find(w => w.word.toLowerCase() === concept2.toLowerCase());
+                        
+                        if (word1 && word2) {
+                            // Create strong connection between them
+                            word1.addConnection(word2, 1.0);
+                            word2.addConnection(word1, 1.0);
+                            
+                            // Update connections count
+                            let totalConnections = 0;
+                            for (const word of visualization.words) {
+                                totalConnections += word.connections.length;
+                            }
+                            connectionsValue.textContent = totalConnections;
+                        }
+                    } else {
+                        addMessage('Invalid connection format. Use: connect_concept1_concept2', 'error');
+                    }
+                } else {
+                    addMessage('Unconventional wish detected', 'wish');
+                    addMessage('System adapting to interpret intent...', 'wish');
+                    addMessage('Custom manifestation complete', 'wish');
+                }
+            }, 2000);
+        }
+        
+        // Handle command input
+        commandInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                const command = commandInput.value;
+                processCommand(command);
+                commandInput.value = '';
+            } else if (e.key === 'ArrowUp') {
+                e.preventDefault();
+                if (historyIndex < commandHistory.length - 1) {
+                    historyIndex++;
+                    commandInput.value = commandHistory[historyIndex];
+                }
+            } else if (e.key === 'ArrowDown') {
+                e.preventDefault();
+                if (historyIndex > 0) {
+                    historyIndex--;
+                    commandInput.value = commandHistory[historyIndex];
+                } else if (historyIndex === 0) {
+                    historyIndex = -1;
+                    commandInput.value = '';
+                }
+            } else if (e.key === 'Tab') {
+                e.preventDefault();
+                
+                const input = commandInput.value.toLowerCase();
+                let matches = [];
+                
+                if (input.startsWith('wish:')) {
+                    const wishPart = input.substring(5);
+                    matches = wishes.filter(w => w.startsWith(wishPart));
+                    
+                    if (matches.length === 1) {
+                        commandInput.value = 'wish:' + matches[0];
+                    }
+                } else {
+                    matches = commands.filter(c => c.startsWith(input));
+                    
+                    if (matches.length === 1) {
+                        commandInput.value = matches[0];
+                    }
+                }
+                
+                if (matches.length > 1) {
+                    addMessage('Possible completions:', 'system');
+                    addMessage('  ' + matches.join(', '), 'system');
+                }
+            }
+        });
+        
+        // Handle keyboard shortcuts
+        document.addEventListener('keydown', (e) => {
+            // Space changes color scheme
+            if (e.key === ' ' && document.activeElement !== commandInput) {
+                e.preventDefault();
+                config.currentScheme = (config.currentScheme + 1) % config.colorSchemes.length;
+            }
+            
+            // Keys 1-5 toggle communication modes
+            if (e.key >= '1' && e.key <= '5' && document.activeElement !== commandInput) {
+                const index = parseInt(e.key, 10) - 1;
+                visualization.toggleCommunicationMode(index);
+            }
+            
+            // R resets view
+            if (e.key === 'r' && document.activeElement !== commandInput) {
+                visualization.camera.position = {x: 0, y: 0, z: -50};
+                visualization.camera.rotation = {x: 0, y: 0, z: 0};
+            }
+            
+            // C clears terminal
+            if (e.key === 'c' && e.ctrlKey && document.activeElement !== commandInput) {
+                terminalOutput.innerHTML = '';
+                addMessage('Terminal cleared.', 'system');
+            }
+        });
+        
+        // Initialize terminal
+        addMessage('3D Terminal Visualization - Turn 5: Awakening', 'system');
+        addMessage('Type "help" for a list of commands.', 'system');
+        
+        // Focus command input
+        commandInput.focus();
+        
+        // Update status values
+        document.addEventListener('DOMContentLoaded', () => {
+            // This would normally be populated with actual data
+            setTimeout(() => {
+                wordsValue.textContent = visualization.words.length;
+                
+                let totalConnections = 0;
+                for (const word of visualization.words) {
+                    totalConnections += word.connections.length;
+                }
+                connectionsValue.textContent = totalConnections;
+                
+                statusValue.textContent = 'STABLE';
+            }, 1000);
+        });
+        
+        // Create a global reference to the visualization
+        window.visualization = visualization;
+    </script>
+</body>
+</html>

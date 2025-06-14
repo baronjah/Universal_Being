@@ -1,0 +1,54 @@
+graph TD
+    subgraph Scene Tree Nodes
+        Main[main] --> Timers[Node with Timers]
+        Main --> Sphere[sphere]
+        Main --> Systems[System Nodes]
+        
+        Timers --> TM["@Timer@3-8"]
+        
+        Sphere --> Pointers[pointers]
+        Sphere --> Camera[cameramove]
+        Sphere --> Model[godot_model]
+        
+        Pointers --> Cursors["cursor_mouse/left/right/head/body"]
+        Camera --> TC[TrackballCamera]
+        TC --> CM[CameraMover]
+        TC --> Light[light]
+        
+        Systems --> Core[Core Systems]
+        Systems --> JSH[JSH Systems]
+        
+        Core --> SysCheck[system_check]
+        Core --> TimerSys["godot_timers_system
+        @Timer@9-12"]
+        Core --> TreeSys[godot_tree_system]
+        
+        JSH --> Records[JSH_records_system]
+        JSH --> SceneTree[JSH_scene_tree_system]
+        JSH --> Database[JSH_database_system]
+        JSH --> Queue[JSH_queue_system]
+        JSH --> Turns[JSH_turns_system]
+        JSH --> Cache[JSH_cache_memory_system]
+        JSH --> Akashic[JSH_akashic_records]
+        JSH --> Multi[JSH_multiplayer_files]
+        JSH --> Mainframe[JSH_mainframe_database]
+        JSH --> Splitter[JSH_data_splitter]
+        JSH --> TaskMgr[JSH_task_manager]
+    end
+
+    subgraph Code Segments
+        CS_Init[Initialization] -.-> SysCheck
+        CS_Queue[Etheric Queue] -.-> Queue
+        CS_Records[Records System] -.-> Records
+        CS_Memory[Memory Management] -.-> Cache
+        CS_Threads[Multi Threads] -.-> TaskMgr
+        CS_Scene[Scene Tree] -.-> SceneTree
+        CS_Hidden[Hidden Veil] -.-> Main
+        CS_Proj[Projections] -.-> Pointers
+    end
+
+    style Main fill:#f9f,stroke:#333,stroke-width:4px
+    style Systems fill:#bbf,stroke:#333,stroke-width:2px
+    style JSH fill:#bfb,stroke:#333,stroke-width:2px
+    linkStyle default stroke:#2b2,stroke-width:2px
+    linkStyle 19,20,21,22,23,24,25,26 stroke:#b22,stroke-width:2px,stroke-dasharray: 5 5

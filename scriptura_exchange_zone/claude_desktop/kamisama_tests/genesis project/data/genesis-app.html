@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Genesis Project - NetSuite Galaxy Console</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Base Styles -->
+    <style>
+        :root {
+            --bg-dark: #1e1e1e;
+            --bg-darker: #151515;
+            --bg-light: #252525;
+            --text-primary: #f0f0f0;
+            --text-secondary: #a0a0a0;
+            --accent-blue: #0078d7;
+            --accent-green: #6a9955;
+            --accent-red: #f14c4c;
+            --accent-yellow: #dcdcaa;
+            --accent-purple: #c586c0;
+            --border-color: #454545;
+        }
+        
+        /* Light theme variables */
+        .light-theme {
+            --bg-dark: #f0f0f0;
+            --bg-darker: #e0e0e0;
+            --bg-light: #ffffff;
+            --text-primary: #333333;
+            --text-secondary: #666666;
+            --border-color: #cccccc;
+        }
+        
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Consolas', monospace;
+            background-color: var(--bg-dark);
+            color: var(--text-primary);
+            overflow: hidden;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        #toolbar {
+            height: 40px;
+            background-color: var(--bg-darker);
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            padding: 0 10px;
+        }
+        
+        #toolbar button {
+            background: transparent;
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            padding: 4px 8px;
+            margin-right: 5px;
+            cursor: pointer;
+            border-radius: 3px;
+        }
+        
+        #toolbar button:hover {
+            background-color: var(--bg-light);
+        }
+        
+        #main-container {
+            flex: 1;
+            display: flex;
+            overflow: hidden;
+        }
+        
+        #content {
+            flex: 1;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        #status-bar {
+            height: 25px;
+            background-color: var(--bg-darker);
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            padding: 0 10px;
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+        
+        /* Window Management System Styles */
+        .layer {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+        }
+
+        .layer.hidden {
+            display: none;
+        }
+
+        .layer-bar {
+            height: 30px;
+            background-color: var(--bg-darker);
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            padding: 0 10px;
+            z-index: 100;
+        }
+
+        .layer-controls {
+            display: flex;
+            align-items: center;
+            width: 100%;
+        }
+
+        .layer-add {
+            background: transparent;
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            border-radius: 3px;
+            margin-right: 5px;
+        }
+
+        .layer-add:hover {
+            background-color: var(--bg-light);
+        }
+
+        .layer-tabs {
+            display: flex;
+            overflow-x: auto;
+            flex: 1;
+        }
+
+        .layer-tab {
+            display: flex;
+            align-items: center;
+            height: 24px;
+            background-color: var(--bg-darker);
+            border: 1px solid var(--border-color);
+            border-radius: 3px;
+            margin-right: 5px;
+            cursor: pointer;
+            padding: 0 5px;
+        }
+
+        .layer-tab.active {
+            background-color: var(--bg-light);
+            border-color: var(--accent-blue);
+        }
+
+        .layer-color {
+            width: 12px;
+            height: 12px;
+            border-radius: 2px;
+            margin-right: 5px;
+        }
+
+        .layer-name {
+            font-size: 12px;
+            white-space: nowrap;
+        }
+
+        .layer-actions {
+            display: flex;
+            margin-left: 5px;
+        }
+
+        .layer-actions button {
+            background: transparent;
+            border: none;
+            color: var(--text-secondary);
+            cursor: pointer;
+            font-size: 10px;
+            padding: 2px;
+        }
+
+        .layer-actions button:hover {
+            color: var(--text-primary);
+        }
+
+        .window {
+            position: absolute;
+            background-color: var(--bg-darker);
+            border: 1px solid var(--border-color);
+            border-radius: 3px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            min-width: 200px;
+            min-height: 150px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+            transition: box-shadow 0.3s, border-color 0.3s;
+        }
+
+        .window.active-window {
+            border-color: var(--accent-blue);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .window.outside-bounds {
+            opacity: 0.8;
+            border-color: var(--accent-yellow);
+        }
+
+        .window-header {
+            padding: 5px 10px;
+            background-color: var(--bg-darker);
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: move;
+            user-select: none;
+        }
+
+        .window-title {
+            font-weight: bold;
+            font-size: 12px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .window-controls {
+            display: flex;
+            align-items: center;
+        }
+
+        .window-controls i {
+            margin-left: 8px;
+            cursor: pointer;
+            color: var(--text-secondary);
+        }
+
+        .window-controls i:hover {
+            color: var(--text-primary);
+        }
+
+        .window-content {
+            flex: 1;
+            overflow: auto;
+            background-color: var(--bg-light);
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Window type selector */
+        .window-type-selector {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .window-type-selector-content {
+            background-color: var(--bg-dark);
+            border: 1px solid var(--border-color);
+            border-radius: 5px;
+            padding: 20px;
+            width: 400px;
+            max-width: 90%;
+        }
+
+        .window-type-selector h3 {
+            margin-top: 0;
+            margin-bottom: 15px;
+            color: var(--text-primary);
+        }
+
+        .window-type-options {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .window-type {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 15px;
+            background-color: var(--bg-light);
+            border: 1px solid var(--border-color);
+            border-radius: 3px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .window-type:hover {
+            background-color: var(--accent-blue);
+            color: white;
+        }
+
+        .window-type i {
+            font-size: 24px;
+            margin-bottom: 8px;
+        }
+
+        .window-type span {
+            font-size: 12px;
+        }
+
+        .cancel-btn {
+            background-color: var(--bg-light);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            padding: 8px 15px;
+            cursor: pointer;
+            border-radius: 3px;
+            width: 100%;
+        }
+
+        .cancel-btn:hover {
+            background-color: var(--border-color);
+        }
+
+        /* Explorer window styles */
+        .explorer-toolbar {
+            display: flex;
+            padding: 5px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .explorer-toolbar button {
+            background: transparent;
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            border-radius: 3px;
+            margin-right: 5px;
+        }
+
+        .explorer-toolbar button:hover {
+            background-color: var(--bg-light);
+        }
+
+        .file-explorer {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            font-size: 12px;
+            overflow-y: auto;
+            flex: 1;
+        }
+
+        .file-explorer li {
+            padding: 3px 10px;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .file-explorer li:hover {
+            background-color: var(--bg-light);
+        }
+
+        .file-explorer .folder {
+            color: var(--accent-yellow);
+            position: relative;
+        }
+
+        .file-explorer .folder:before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 1px;
+            background-color: var(--border-color);
+        }
+
+        .file-explorer .folder > ul {
+            list-style: none;
+            padding-left: 15px;
+            margin: 0;
+        }
+
+        .file-explorer .file {
+            color: var(--text-primary);
+        }
+
+        .file-explorer .active {
+            background-color: var(--accent-blue);
+        }
+        
+        /* Editor window styles */
+        .editor {
+            width: 100%;
+            height: 100%;
+            font-family: 'Consolas', monospace;
+        }
+        
+        /* Console window styles */
+        .console {
+            background-color: var(--bg-darker);
+            font-family: 'Consolas', monospace;
+            padding: 5px;
+            overflow-y: auto;
+            white-space: pre-wrap;
+            flex: 1;
+            font-size: 12px;
+        }
+
+        .console-line {
+            margin: 2px 0;
+            display: flex;
+        }
+
+        .console-prompt {
+            color: var(--accent-green);
+            margin-right: 8px;
+        }
+
+        .console-error {
+            color: var(--accent-red);
+        }
+
+        .console-warning {
+            color: var(--accent-yellow);
+        }
+
+        .console-info {
+            color: var(--accent-blue);
+        }
+
+        .console-success {
+            color: var(--accent-green);
+        }
+        
+        /* Visualization window styles */
+        .visualization-content {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        canvas {
+            max-width: 100%;
+            max-height: 100%;
+        }
+        
+        /* Node tooltip */
+        .node-tooltip {
+            position: absolute;
+            background-color: var(--bg-dark);
+            border: 1px solid var(--border-color);
+            border-radius: 3px;
+            padding: 5px 10px;
+            font-size: 12px;
+            z-index: 1000;
+            pointer-events: none;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .node-tooltip h4 {
+            margin: 0 0 5px 0;
+            color: var(--accent-blue);
+        }
+
+        .node-tooltip p {
+            margin: 2px 0;
+        }
+    </style>
+    
+    <!-- External JavaScript Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.23.4/ace.js"></script>
+</head>
+<body>
+    <div id="toolbar">
+        <button id="run-button" title="Run the current script">
+            <i class="fas fa-play"></i> Run
+        </button>
+        <button id="save-button" title="Save the current file">
+            <i class="fas fa-save"></i> Save
+        </button>
+        <button id="new-button" title="Create a new window">
+            <i class="fas fa-plus"></i> New
+        </button>
+        <span style="flex: 1;"></span>
+        <button id="theme-toggle" title="Toggle theme">
+            <i class="fas fa-moon"></i>
+        </button>
+    </div>
+    
+    <div id="main-container">
+        <div id="content">
+            <!-- Windows will be added here dynamically -->
+        </div>
+    </div>
+    
+    <div id="status-bar">
+        Ready | Genesis Project - NetSuite Galaxy Console | Initializing...
+    </div>
+
+    <!-- Application Scripts -->
+    <script src="js/settings-manager.js"></script>
+    <script src="js/window-manager.js"></script>
+    <script src="js/netsuite-mock.js"></script>
+    <script src="js/netsuite-client.js"></script>
+    <script src="js/sample-data-generator.js"></script>
+    <script src="js/data-parser.js"></script>
+    <script src="js/app-controller.js"></script>
+    
+    <!-- Initialization Script -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Initialize the application
+            window.genesisApp = new GenesisAppController();
+            window.genesisApp.initialize();
+        });
+    </script>
+</body>
+</html>

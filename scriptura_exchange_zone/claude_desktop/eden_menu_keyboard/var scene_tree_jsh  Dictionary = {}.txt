@@ -1,0 +1,955 @@
+var scene_tree_jsh : Dictionary = {}
+
+
+####################
+#
+# JSH Scene Tree System
+
+#
+#      oooo  .oooooo..o ooooo   ooooo 
+#      `888 d8P'    `Y8 `888'   `888' 
+#       888 Y88bo.       888     888     ┏┓         ┏┳┓        ┏┓        
+#       888  `"Y8888o.   888ooooo888     ┗┓┏┏┓┏┓┏┓   ┃ ┏┓┏┓┏┓  ┗┓┓┏┏╋┏┓┏┳┓
+#       888      `"Y88b  888     888     ┗┛┗┗ ┛┗┗    ┻ ┛ ┗ ┗   ┗┛┗┫┛┗┗ ┛┗┗
+#       888 oo     .d8P  888     888                              ┛      
+#   .o. 88P 8""88888P'  o888o   o888o 
+#   `Y888P                            
+
+#
+# JSH Scene Tree System
+# Check Branch/ Leaf
+
+#              ,,                                                                                     ,,             AW                                       ,...
+#  .g8"""bgd `7MM                       `7MM          `7MM"""Yp,                                    `7MM            ,M'     `7MMF'                          .d' ""
+#.dP'     `M   MM                         MM            MM    Yb                                      MM            MV        MM                            dM`   
+#dM'       `   MMpMMMb.  .gP"Ya   ,p6"bo  MM  ,MP'      MM    dP `7Mb,od8 ,6"Yb.  `7MMpMMMb.  ,p6"bo  MMpMMMb.     AW         MM         .gP"Ya   ,6"Yb.   mMMmm  
+#MM            MM    MM ,M'   Yb 6M'  OO  MM ;Y         MM"""bg.   MM' "'8)   MM    MM    MM 6M'  OO  MM    MM    ,M'         MM        ,M'   Yb 8)   MM    MM    
+#MM.           MM    MM 8M"""""" 8M       MM;Mm         MM    `Y   MM     ,pm9MM    MM    MM 8M       MM    MM    MV          MM      , 8M""""""  ,pm9MM    MM    
+#`Mb.     ,'   MM    MM YM.    , YM.    , MM `Mb.       MM    ,9   MM    8M   MM    MM    MM YM.    , MM    MM   AW           MM     ,M YM.    , 8M   MM    MM    
+#  `"bmmmd'  .JMML  JMML.`Mbmmd'  YMbmd'.JMML. YA.    .JMMmmmd9  .JMML.  `Moo9^Yo..JMML  JMML.YMbmd'.JMML  JMML.,M'         .JMMmmmmMMM  `Mbmmd' `Moo9^Yo..JMML.  
+#                                                                                                               MV                                                
+#                                                                                                              AW                                                 
+
+# Check Branch/ Leaf
+
+func check_if_container_available(container):
+	tree_mutex.lock()
+	if scene_tree_jsh["main_root"]["branches"].has(container):
+		tree_mutex.unlock()
+		print(" lets check the structure ")
+		return true
+	else:
+		tree_mutex.unlock()
+		return false
+	tree_mutex.unlock()
+
+func check_if_datapoint_available(container):
+	tree_mutex.lock()
+	if scene_tree_jsh["main_root"]["branches"][container].has("datapoint"):
+		tree_mutex.unlock()
+		return true
+	else:
+		tree_mutex.unlock()
+		return false
+	tree_mutex.unlock()
+
+func check_if_datapoint_node_available(container):
+	tree_mutex.lock()
+	var datapoint_path = scene_tree_jsh["main_root"]["branches"][container]["datapoint"]["datapoint_path"]
+	tree_mutex.unlock()
+	return datapoint_path
+
+func build_pretty_print(node: Node, prefix: String = "", is_last: bool = true) -> String:
+	var output = ""
+	output += prefix
+	output += "┖╴" if is_last else "┠╴"
+	output += node.name + "\n"
+	var children = node.get_children()
+	for i in range(children.size()):
+		var child = children[i]
+		var child_prefix = prefix + ("   " if is_last else "┃  ")
+		var child_is_last = i == children.size() - 1
+		output += build_pretty_print(child, child_prefix, child_is_last)
+	return output
+
+func find_branch_to_unload(thing_path):
+	var new_path_splitter = str(thing_path).split("/")
+	tree_mutex.lock()
+	if scene_tree_jsh["main_root"]["branches"][new_path_splitter[0]]["children"].has(new_path_splitter[1]):
+		var branch_part_to_cache = scene_tree_jsh["main_root"]["branches"][new_path_splitter[0]]["children"][new_path_splitter[1]].duplicate(true)
+		var branch_name_to_cache = new_path_splitter[0]
+		var child_name_to_cache = new_path_splitter[1]
+		tree_mutex.unlock()
+		cache_branch(branch_name_to_cache, child_name_to_cache, branch_part_to_cache)
+		tree_mutex.lock()
+		scene_tree_jsh["main_root"]["branches"][new_path_splitter[0]]["children"].erase(new_path_splitter[1])
+		tree_mutex.unlock()
+	else:
+		tree_mutex.unlock()
+	array_counting_mutex.lock()
+	if array_for_counting_finish.has(new_path_splitter[0]):
+		if array_for_counting_finish[new_path_splitter[0]].has(new_path_splitter[1]):
+			print(" cache branch we can unload that node ", new_path_splitter[1])
+			array_for_counting_finish[new_path_splitter[0]].erase(new_path_splitter[1])
+		else:
+			print(" cache branch that node does not exist in that container", new_path_splitter[0])
+	else:
+		print(" cache branch that container does not exist")
+	array_counting_mutex.unlock()
+
+func check_tree_branches():
+	tree_mutex.lock()
+	if scene_tree_jsh.has("main_root"):
+		if scene_tree_jsh.has("branches"):
+			tree_mutex.unlock()
+			return true
+		else:
+			tree_mutex.unlock()
+			return false
+	else:
+		tree_mutex.unlock()
+		return null
+	tree_mutex.unlock()
+
+func print_tree_structure(branch: Dictionary, indent: int = 0):
+	tree_mutex.lock()
+	var indent_str = "  ".repeat(indent)
+	var status = branch.get("status", "pending") 
+	print("%s%s (%s) %s" % [
+		indent_str, 
+		branch["name"], 
+		branch["type"],
+		status_symbol[status]
+	])
+	if branch.has("metadata"):
+		var metadata = branch["metadata"]
+		if metadata.get("has_collision", false):
+			print("%s  └─ Has Collision" % indent_str)
+		if metadata.get("has_area", false):
+			print("%s  └─ Has Area" % indent_str)
+	if branch.has("branches"):
+		for child in branch["branches"].values():
+			tree_mutex.unlock()
+			print_tree_structure(child, indent + 1)
+	elif branch.has("children"):
+		for child in branch["children"].values():
+			tree_mutex.unlock()
+			print_tree_structure(child, indent + 1)
+	tree_mutex.unlock()
+
+func jsh_tree_get_node(node_path_get_node: String) -> Node:
+	var path_parts = node_path_get_node.split("/")
+	tree_mutex.lock()
+	var current = scene_tree_jsh["main_root"]["branches"]
+	for part in path_parts:
+		if current.has(part):
+			current = current[part]
+			if path_parts[-1] == part:
+				
+				tree_mutex.unlock()
+				return current["node"]
+			else:
+				current = current["children"]
+	tree_mutex.unlock()
+	return null
+
+func containers_list_creator():
+	mutex_for_container_state.lock()
+	if current_containers_state.size() > 0:
+		print(" fatal kurwa error : ", current_containers_state)
+		print("checkerrr bigger list than 0 ")
+		for data_sets_to_check in current_containers_state: 
+			var three_iii : Vector3i
+			var current_state_0 : int = -1
+			var current_state_1 : int = -1
+			var current_state_2 : int = -1
+			three_iii.x = current_state_0
+			three_iii.y = current_state_1
+			three_iii.z = current_state_2
+			var new_information_0 = null
+			print(" first we check basics")
+			var three_ii
+			if current_containers_state[data_sets_to_check].has("three_i"):
+				three_ii = current_containers_state[data_sets_to_check]["three_i"]
+				three_iii.x = 0
+			else:
+				three_ii = null
+				three_iii.x = -2
+			var current_status
+			if current_containers_state[data_sets_to_check].has("status"):
+				print(" allah akbar, three_ii ", three_ii, current_containers_state[data_sets_to_check]["status"])
+				current_status = current_containers_state[data_sets_to_check]["status"]
+				three_iii.x = 1
+			else:
+				current_status = null
+				three_iii.x = -2
+			var current_container_to_check
+			if current_containers_state[data_sets_to_check].has("container_name"):
+				current_container_to_check = current_containers_state[data_sets_to_check]["container_name"]
+				three_iii.x = 2
+			else:
+				current_container_to_check = null
+				three_iii.x = -2
+			
+			if current_container_to_check != null:
+				if current_status != null:
+					check_if_first_time(current_container_to_check, current_status)
+					three_iii.x = -3
+			print(" fatal kurwa error 0 : ", current_container_to_check , ", 1 : " , current_status , ", 2 : " , three_ii)
+			if current_container_to_check == null:
+				if current_status == null:
+					if three_ii == null:
+						print(" FATAL KURWA ERROR WE MUST DO SOMETHING")
+						three_iii.x -4
+			mutex_containers.lock()
+			if list_of_containers.has(current_container_to_check):
+				print("three_ii tree check 011 normal human first check, if it is, not if it isnt ")
+				three_iii.y = 0
+				
+				if list_of_containers[current_container_to_check].has("status"):
+					print(" three_ii tree check 013 status? : ", list_of_containers[current_container_to_check]["status"])
+					three_iii.y = 1
+				
+				if list_of_containers[current_container_to_check].has("three_i"):
+					print(" three_ii tree check 014 ")
+					list_of_containers[current_container_to_check]["three_i"] = three_iii
+					three_iii.y = 2
+				else:
+					print(" three_ii tree check 015 we dont have it there, yet, lets add something to it")
+					list_of_containers[current_container_to_check]["three_i"] = three_iii
+			else:
+				print("three_ii tree check 0112 three_ii what i maybe trully need more?")
+				three_iii.y = -2
+			mutex_containers.unlock()
+			tree_mutex.lock()
+			if scene_tree_jsh.has("main_root"):
+				print(" three_ii tree check 00 ")
+				three_iii.z = 0
+				if scene_tree_jsh["main_root"].has("branches"):
+					print(" three_ii tree check 01")
+					if scene_tree_jsh["main_root"]["branches"].has(current_container_to_check):
+						three_iii.z = 1
+						print(" three_ii tree check 02")
+					else:
+						print(" three_ii tree check 00, we didnt find that container in tree, maybe it will appear, lets add new list of add to queue")
+						new_information_0 = container_finder(data_sets_to_check)
+						three_iii.z = -2
+						print(" new_information_0  : " , new_information_0, " and previous info : " , current_container_to_check)
+						if current_container_to_check != new_information_0:
+							print(" new_information_0 they are not the same how lol ")
+							
+							check_if_first_time(new_information_0, current_status)
+							three_iii.z = -3
+			tree_mutex.unlock()
+			mutex_containers.lock()
+			for container_to_check in list_of_containers:
+				print(" three_ii :" , container_to_check)
+				print()
+				print(list_of_containers[container_to_check])
+				print()
+				if new_information_0 != null:
+					if list_of_containers[container_to_check].has("connected_containers"):
+						
+						if !list_of_containers[container_to_check]["connected_containers"].has(new_information_0):
+							connect_containers(container_to_check, new_information_0)
+					
+					else:
+						connect_containers(current_container_to_check, new_information_0)
+			mutex_containers.unlock()
+			print(" three_ii ",scene_tree_jsh)
+			print(" what we even wanted with these three ? three_ii : " , three_ii , " , ", current_status , " , " , current_container_to_check)
+			if current_containers_state[data_sets_to_check]["status"] == 1:
+				print(" taskkkkl should load = 1 ")
+				if three_ii.x == -1:
+					print(" allah akbar, run again? 0 ")
+					mutex_for_trickery.lock()
+					menace_tricker_checker = 1
+					mutex_for_trickery.unlock()
+				else:
+					print(" it has container? ")
+				if three_ii.y == -1:
+					print(" allah akbar, run again? 1 ")
+					mutex_for_trickery.lock()
+					menace_tricker_checker = 1
+					mutex_for_trickery.unlock()
+				if three_ii.z == -1:
+					print(" allah akbar, run again 2")
+					mutex_for_trickery.lock()
+					menace_tricker_checker = 1
+					mutex_for_trickery.unlock()
+				if three_ii.z == 0:
+					
+					print(" allah akbar, run again 3")
+					mutex_for_trickery.lock()
+					menace_tricker_checker = 1
+					mutex_for_trickery.unlock()
+					
+				if three_ii.z == 1:
+					
+					print(" allah akbar, run again 4")
+					mutex_for_trickery.lock()
+					menace_tricker_checker = 1
+					mutex_for_trickery.unlock()
+				if three_ii.z == 2:
+					continue
+			else:
+				print(" taskkkkl means unload ?")
+				var three_i_update = current_containers_state[data_sets_to_check]["three_i"]
+				three_i_update.x = -1
+				three_i_update.y = -1
+				three_i_update.z = -1
+	print(" allah akbar, end : list_of_containers ", list_of_containers)
+	mutex_for_container_state.unlock()
+
+func validate_container_state(container_name):
+	var required_nodes = ["datapoint", "container"]
+	var missing_nodes = []
+	tree_mutex.lock()
+	if scene_tree_jsh["main_root"]["branches"].has(container_name):
+		var container = scene_tree_jsh["main_root"]["branches"][container_name]
+		for node_type in required_nodes:
+			if !container.has(node_type) or !is_instance_valid(container[node_type]["node"]):
+				missing_nodes.append(node_type)
+	tree_mutex.unlock()
+	if missing_nodes.size() > 0:
+		attempt_container_repair(container_name, missing_nodes)
+
+func capture_tree_state() -> Dictionary:
+	var root = get_tree().get_root()
+	tree_data.structure = capture_node_structure(root)
+	tree_data.snapshot = build_pretty_print(root)
+	tree_data.timestamp = Time.get_unix_time_from_system()
+	return tree_data
+
+func capture_node_structure(node: Node) -> Dictionary:
+	var data = {
+		"name": node.name,
+		"class": node.get_class(),
+		"path": str(node.get_path()),
+		"children": []
+	}
+	for child in node.get_children():
+		data.children.append(capture_node_structure(child))
+		tree_data.node_count += 1
+	return data
+
+
+####################
+# Add Branch/ Leaf
+
+#                    ,,        ,,                                                      ,,             AW                                       ,...
+#      db          `7MM      `7MM      `7MM"""Yp,                                    `7MM            ,M'     `7MMF'                          .d' ""
+#     ;MM:           MM        MM        MM    Yb                                      MM            MV        MM                            dM`   
+#    ,V^MM.     ,M""bMM   ,M""bMM        MM    dP `7Mb,od8 ,6"Yb.  `7MMpMMMb.  ,p6"bo  MMpMMMb.     AW         MM         .gP"Ya   ,6"Yb.   mMMmm  
+#   ,M  `MM   ,AP    MM ,AP    MM        MM"""bg.   MM' "'8)   MM    MM    MM 6M'  OO  MM    MM    ,M'         MM        ,M'   Yb 8)   MM    MM    
+#   AbmmmqMA  8MI    MM 8MI    MM        MM    `Y   MM     ,pm9MM    MM    MM 8M       MM    MM    MV          MM      , 8M""""""  ,pm9MM    MM    
+#  A'     VML `Mb    MM `Mb    MM        MM    ,9   MM    8M   MM    MM    MM YM.    , MM    MM   AW           MM     ,M YM.    , 8M   MM    MM    
+#.AMA.   .AMMA.`Wbmd"MML.`Wbmd"MML.    .JMMmmmd9  .JMML.  `Moo9^Yo..JMML  JMML.YMbmd'.JMML  JMML.,M'         .JMMmmmmMMM  `Mbmmd' `Moo9^Yo..JMML.  
+#                                                                                                MV                                                
+#                                                                                               AW                                                 
+
+
+func start_up_scene_tree():
+	tree_mutex.lock()
+	scene_tree_jsh = TreeBlueprints.SCENE_TREE_BLUEPRINT.duplicate(true)
+	var name_to_add = self.name
+	scene_tree_jsh["main_root"]["name"] = name_to_add
+	scene_tree_jsh["main_root"]["type"] = self.get_class()
+	scene_tree_jsh["main_root"]["metadata"]["creation_time"] = Time.get_ticks_msec()
+	scene_tree_jsh["main_root"]["node"] = self
+	scene_tree_jsh["main_root"]["status"] = "active"
+	tree_mutex.unlock()
+
+func recreator_of_singular_thing(data_set):
+	var cached_data_new = data_set.duplicate(true) 
+	var thing_name
+	var coords_to_place
+	var direction_to_place
+	var thing_type_file
+	var shape_name
+	var root_name
+	var pathway_dna
+	var group_number
+	var first_line : Array = []
+	var lines_parsed : Array = []
+	for lines in cached_data_new:
+		if lines == cached_data_new[0]:
+			first_line = cached_data_new[0]
+		else:
+			lines_parsed.append(lines)
+	thing_name = first_line[0][0]
+	coords_to_place = first_line[1][0]
+	direction_to_place = first_line[2][0]
+	thing_type_file = first_line[3][0]
+	shape_name = first_line[4][0]
+	root_name = first_line[5][0]
+	pathway_dna = first_line[6][0]
+	group_number = first_line[7][0]
+	analise_data(thing_name, thing_type_file, first_line, lines_parsed[0], group_number, shape_name, lines_parsed)
+	first_line.clear()
+	lines_parsed.clear()
+
+func recreate_missing_nodes(array_of_recreation):
+	var container_name = array_of_recreation[0]
+	var path_of_missing_node = array_of_recreation[1]
+	var splitted_path_for_main_thingy = path_of_missing_node.split("/")
+	var node_we_look_for_now : String
+	var set_name_we_look_for : String
+	if splitted_path_for_main_thingy.size() > 1:
+		node_we_look_for_now = splitted_path_for_main_thingy[1]
+		print(" that thingy is bigger than 1, so it is not container ? " , node_we_look_for_now)
+	active_r_s_mut.lock()
+	for current_activ_rec in active_record_sets:
+		for current_avail_rec in active_record_sets[current_activ_rec][current_activ_rec + "records"]["header"]:
+			print("current_avail_rec " , current_avail_rec)
+			if node_we_look_for_now == current_avail_rec:
+				print(" we found that thing " )
+				if scene_tree_jsh["main_root"]["branches"].has(container_name):
+					if scene_tree_jsh["main_root"]["branches"][container_name]["children"].has(node_we_look_for_now):
+						print_tree_pretty()
+						print(" the tree has that branch?")
+						print_tree_structure(scene_tree_jsh["main_root"]["branches"][container_name]["children"][node_we_look_for_now], 0)
+						disable_all_branches_reset_counters(scene_tree_jsh["main_root"]["branches"][container_name]["children"][node_we_look_for_now], container_name)
+						print_tree_structure(scene_tree_jsh["main_root"]["branches"][container_name]["children"][node_we_look_for_now], 0)
+						var path_for_node_to_unload = container_name + "/" + node_we_look_for_now
+						array_counting_mutex.lock()
+						if array_for_counting_finish[container_name].has(node_we_look_for_now):
+							array_for_counting_finish[container_name][node_we_look_for_now]["node"] = []
+						array_counting_mutex.unlock()
+						for singular_thingies in active_record_sets[current_activ_rec][current_activ_rec + "records"]["content"]:
+							print(" singular_thingies : " , singular_thingies[0][0][0])
+							if singular_thingies[0][0][0] == node_we_look_for_now:
+								print(" we found active records part : " , singular_thingies)
+								unload_node_branch(path_for_node_to_unload, singular_thingies)
+								return
+				return
+	active_r_s_mut.unlock()
+
+func unload_node_branch(path_for_node_to_unload, recreation_of_node_data):
+	var node_to_unload_now = jsh_tree_get_node(path_for_node_to_unload)
+	if node_to_unload_now:
+		print(" node_to_unload_now : " , node_to_unload_now)
+		node_to_unload_now.queue_free()
+	print_tree_pretty()
+	recreator_of_singular_thing(recreation_of_node_data)
+
+func attempt_container_repair(container_name, missing_nodes):
+	active_r_s_mut.lock()
+	var records_set_name = container_name.split("_")[0] + "_"
+	if active_record_sets.has(records_set_name):
+		var records = active_record_sets[records_set_name]
+		for node_type in missing_nodes:
+			recreate_node_from_records(container_name, node_type, records) 
+	active_r_s_mut.unlock()
+
+func recreate_node_from_records(container_name: String, node_type: String, records: Dictionary):
+	print("Attempting to recreate %s for container %s" % [node_type, container_name])
+	var records_set_name = container_name + "records"
+	var node_data = null
+	if records.has(records_set_name):
+		for record in records[records_set_name]["content"]:
+			if record[0][3][0] == node_type:  
+				node_data = record[0]
+				break
+	if node_data:
+		match node_type:
+			"datapoint":
+				var data_point = Node3D.new()
+				data_point.set_script(DataPointScript)
+				data_point.setup_main_reference(self)
+				var version = node_data[4][0]  
+				var setup_data = node_data[5]  
+				data_point.power_up_data_point(node_data[0][0], int(version), setup_data)
+				var node_path = node_data[6][0]
+				tasked_children(data_point, node_path)
+				tree_mutex.lock()
+				scene_tree_jsh["main_root"]["branches"][container_name]["datapoint"] = {
+					"datapoint_name": node_data[0][0],
+					"datapoint_path": node_path,
+					"node": data_point
+				}
+				tree_mutex.unlock()
+			"container":
+				var container = Node3D.new()
+				container.set_script(ContainterScript)
+				container.name = node_data[0][0]
+				if container.has_method("container_initialize"):
+					container.container_initialize(node_data[5])
+				var node_path = node_data[6][0]
+				tasked_children(container, node_path)
+				tree_mutex.lock()
+				scene_tree_jsh["main_root"]["branches"][container_name]["node"] = container
+				scene_tree_jsh["main_root"]["branches"][container_name]["status"] = "active"
+				tree_mutex.unlock()
+			_:
+				print("Unknown node type for recreation: ", node_type)
+		log_error_state("node_recreation", {
+			"container": container_name,
+			"node_type": node_type,
+			"success": true
+		})
+	else:
+		print("Failed to find data for node recreation")
+		log_error_state("node_recreation_failed", {
+			"container": container_name,
+			"node_type": node_type,
+			"reason": "no_data_found"
+		})
+
+func tasked_children(node_to_be_added, node_to_be_added_path):
+	var splitted_path = node_to_be_added_path.split("/")
+	var container_name = splitted_path[0]
+	var node_to_be_added_name = splitted_path[-1]
+	var parent_path = "/".join(splitted_path.slice(0, -1)) 
+	if splitted_path.size() == 1:
+		var node_type : int = 0
+		mutex_nodes_to_be_added.lock()
+		nodes_to_be_added.append([node_type, node_to_be_added_name, node_to_be_added])
+		mutex_nodes_to_be_added.unlock()
+	elif splitted_path.size() == 2:
+		var node_type : int = 1
+		mutex_nodes_to_be_added.lock()
+		nodes_to_be_added.append([node_type, parent_path, node_to_be_added_name, node_to_be_added])
+		mutex_nodes_to_be_added.unlock()
+	else:
+		var parent_name = splitted_path[1]
+		var node_type : int = 2
+		mutex_nodes_to_be_added.lock()
+		nodes_to_be_added.append([node_type, parent_path, node_to_be_added_name, node_to_be_added, container_name])
+		mutex_nodes_to_be_added.unlock()
+
+func process_active_records_for_tree(active_records: Dictionary, set_name_to_process : String, container_name_here : String):
+	var records_set_name = set_name_to_process + "records"
+	active_r_s_mut.lock()
+	for record in active_records[set_name_to_process][records_set_name]["content"]:
+		var node_data = record[0]
+		var node_name = node_data[0][0]
+		var node_path_p_a_r_f_t = node_data[6][0]
+		var node_type = node_data[3][0]
+		var godot_type = match_node_type(node_type)
+		if node_type != "container" and node_type != "datapoint":
+			array_counting_mutex.lock()
+			if !array_for_counting_finish[container_name_here].has("metadata"):
+				var counter_before : int = 0
+				var counter_after : int = 0
+				var inty_bolean : int = 0
+				array_for_counting_finish[container_name_here]["metadata"] = {
+					"counter_before" = counter_before,
+					"counter_after" = counter_after,
+					"process_to_send" = inty_bolean
+				}
+			array_counting_mutex.unlock()
+			array_counting_mutex.lock()
+			if !array_for_counting_finish[container_name_here].has(node_name):
+				array_for_counting_finish[container_name_here][node_name] = {
+					"node" = [],
+					"type" = node_type,
+					"g_type" = godot_type
+				}
+			array_counting_mutex.unlock()
+		array_counting_mutex.lock()
+		if !array_for_counting_finish[container_name_here].has("metadata"):
+			var counter_before : int = 0
+			var counter_after : int = 0
+			var inty_bolean : int = 0
+			array_for_counting_finish[container_name_here]["metadata"] = {
+				"counter_before" = counter_before,
+				"counter_after" = counter_after,
+				"process_to_send" = inty_bolean
+			}
+		array_counting_mutex.unlock()
+		if node_type == "datapoint":
+			array_counting_mutex.lock()
+			array_for_counting_finish[container_name_here]["metadata"]["datapoint_path"] = node_path_p_a_r_f_t
+			array_for_counting_finish[container_name_here]["metadata"]["datapoint_name"] = node_name
+			array_counting_mutex.unlock()
+		if node_type == "container":
+			array_counting_mutex.lock()
+			array_for_counting_finish[container_name_here]["metadata"]["container_path"] = node_path_p_a_r_f_t
+			array_for_counting_finish[container_name_here]["metadata"]["container_name"] = node_name
+			array_counting_mutex.unlock()
+		var new_type_thingy = godot_type + "|" + node_type
+		the_pretender_printer(node_name, node_path_p_a_r_f_t, new_type_thingy, node_type)
+		array_counting_mutex.lock()
+		array_for_counting_finish[container_name_here]["metadata"]["counter_before"] +=1
+		array_counting_mutex.unlock()
+		if node_type in ["flat_shape", "model", "cursor", "screen", "circle"]:
+			array_counting_mutex.lock()
+			array_for_counting_finish[container_name_here]["metadata"]["counter_before"] +=4
+			array_counting_mutex.unlock()
+			var static_body_name = "collision_" + node_name
+			var static_body_path = node_path_p_a_r_f_t + "/" + static_body_name
+			the_pretender_printer(static_body_name, static_body_path, "StaticBody3D", "collision")
+			var shape_name = "shape_" + node_name
+			var shape_path = static_body_path + "/" + shape_name
+			the_pretender_printer(shape_name, shape_path, "CollisionShape3D", "collision")
+			var area_name = "aura_" + node_name
+			var area_path = node_path_p_a_r_f_t + "/" + area_name
+			the_pretender_printer(area_name, area_path, "Area3D", "area")
+			var area_shape_name = "collision_aura_" + node_name
+			var area_shape_path = area_path + "/" + area_shape_name
+			the_pretender_printer(area_shape_name, area_shape_path, "CollisionShape3D", "collision")
+		elif node_type == "button":
+			array_counting_mutex.lock()
+			array_for_counting_finish[container_name_here]["metadata"]["counter_before"] +=6
+			array_counting_mutex.unlock()
+			var text_name = "text_" + node_name
+			var text_path = node_path_p_a_r_f_t + "/" + text_name
+			the_pretender_printer(text_name, text_path, "Label3D", "text")
+			var shape_name = "shape_" + node_name
+			var shape_path = node_path_p_a_r_f_t + "/" + shape_name
+			the_pretender_printer(shape_name, shape_path, "MeshInstance3D", "button")
+			var collision_shape_name = "collision_" + shape_name
+			var collision_shape_path = shape_path + "/" + collision_shape_name
+			the_pretender_printer(collision_shape_name, collision_shape_path, "StaticBody3D", "collision")
+			var shape_collision_name = "shape_" + shape_name
+			var shape_collision_path = collision_shape_path + "/" + shape_collision_name
+			the_pretender_printer(shape_collision_name, shape_collision_path, "CollisionShape3D", "collision")
+			var area_name = "aura_" + shape_name
+			var area_path = shape_path + "/" + area_name
+			the_pretender_printer(area_name, area_path, "Area3D", "area")
+			var area_collision_name = "collision_aura_" + shape_name
+			var area_collision_path = area_path + "/" + area_collision_name
+			the_pretender_printer(area_collision_name, area_collision_path, "CollisionShape3D", "collision")
+	active_r_s_mut.unlock()
+
+func match_node_type(type: String) -> String:
+	match type:
+		"flat_shape", "model", "cursor", "screen", "circle":
+			return "MeshInstance3D"
+		"text":
+			return "Label3D"
+		"button":
+			return "Node3D" 
+		"connection":
+			return "MeshInstance3D"
+		"text_mesh":
+			return "MeshInstance3D"
+		"datapoint":
+			return "Node3D"
+		"container":
+			return "Node3D"
+		_:
+			return "Node3D"
+
+func the_pretender_printer(node_name: String, node_path_jsh_tree: String, godot_node_type, node_type: String = "Node3D"):
+	tree_mutex.lock()
+	if !scene_tree_jsh.has("main_root"):
+		scene_tree_jsh = TreeBlueprints.SCENE_TREE_BLUEPRINT.duplicate(true)
+		scene_tree_jsh["main_root"]["name"] = "main"
+		scene_tree_jsh["main_root"]["type"] = "Node3D"
+		scene_tree_jsh["main_root"]["status"] = "active"
+		scene_tree_jsh["main_root"]["node"] = self
+	var path_parts = node_path_jsh_tree.split("/")
+	var current_branch = scene_tree_jsh["main_root"]["branches"]
+	cached_tree_mutex.lock()
+	var cached_current_branch = cached_jsh_tree_branches
+	cached_tree_mutex.unlock()
+	var current_full_path = ""
+	for i in range(path_parts.size()):
+		var part = path_parts[i]
+		current_full_path = current_full_path + "/" + part if current_full_path else part
+		if !current_branch.has(part):
+			if cached_current_branch.has(part):
+				print(" the cached branch has that one ")
+				current_branch[part] = cached_current_branch[part]
+				cached_current_branch.erase(part)
+			else:
+				var new_branch = TreeBlueprints.BRANCH_BLUEPRINT.duplicate(true)
+				new_branch["name"] = part
+				new_branch["type"] = godot_node_type
+				new_branch["jsh_type"] = node_type
+				new_branch["status"] = "pending"
+				new_branch["node"] = null
+				new_branch["metadata"] = {
+					"creation_time": Time.get_ticks_msec(),
+					"full_path": current_full_path,
+					"parent_path": current_full_path.get_base_dir(),
+					"has_collision": false,
+					"has_area": false
+				}
+				if node_type == "datapoint":
+					scene_tree_jsh["main_root"]["branches"][path_parts[0]]["datapoint"] = {
+						"datapoint_name" = new_branch["name"],
+						"datapoint_path" = new_branch["metadata"]["full_path"]
+					}
+				current_branch[part] = new_branch
+		if i < path_parts.size() - 1:
+			if !current_branch[part].has("children"):
+				current_branch[part]["children"] = {}
+			current_branch = current_branch[part]["children"]
+			if cached_current_branch.has(part):
+				if cached_current_branch[part].has("children"):
+					print(" the cached branch had them children")
+					cached_current_branch = cached_current_branch[part]["children"]
+	tree_mutex.unlock()
+
+# Remove Branch/ Leaf
+
+#                                                                                                                   ,,             AW                                       ,...
+#`7MM"""Mq.                                                         `7MM"""Yp,                                    `7MM            ,M'     `7MMF'                          .d' ""
+#  MM   `MM.                                                          MM    Yb                                      MM            MV        MM                            dM`   
+#  MM   ,M9  .gP"Ya `7MMpMMMb.pMMMb.  ,pW"Wq.`7M'   `MF'.gP"Ya        MM    dP `7Mb,od8 ,6"Yb.  `7MMpMMMb.  ,p6"bo  MMpMMMb.     AW         MM         .gP"Ya   ,6"Yb.   mMMmm  
+#  MMmmdM9  ,M'   Yb  MM    MM    MM 6W'   `Wb VA   ,V ,M'   Yb       MM"""bg.   MM' "'8)   MM    MM    MM 6M'  OO  MM    MM    ,M'         MM        ,M'   Yb 8)   MM    MM    
+#  MM  YM.  8M""""""  MM    MM    MM 8M     M8  VA ,V  8M""""""       MM    `Y   MM     ,pm9MM    MM    MM 8M       MM    MM    MV          MM      , 8M""""""  ,pm9MM    MM    
+#  MM   `Mb.YM.    ,  MM    MM    MM YA.   ,A9   VVV   YM.    ,       MM    ,9   MM    8M   MM    MM    MM YM.    , MM    MM   AW           MM     ,M YM.    , 8M   MM    MM    
+#.JMML. .JMM.`Mbmmd'.JMML  JMML  JMML.`Ybmd9'     W     `Mbmmd'     .JMMmmmd9  .JMML.  `Moo9^Yo..JMML  JMML.YMbmd'.JMML  JMML.,M'         .JMMmmmmMMM  `Mbmmd' `Moo9^Yo..JMML.  
+#                                                                                                                             MV                                                
+#                                                                                                                            AW                                                 
+
+# Remove Branch/ Leaf
+
+func unload_container(container_to_unload):
+	var data_sets_names = null
+	if BanksCombiner.container_set_name.has(container_to_unload):
+		data_sets_names = BanksCombiner.container_set_name[container_to_unload]
+	cache_tree_branch_fully(container_to_unload)
+	process_to_unload_records(container_to_unload)
+	array_counting_mutex.lock()
+	if array_for_counting_finish.has(container_to_unload):
+		array_for_counting_finish.erase(container_to_unload)
+	else:
+		print(" cache branch that container does not exist")
+	array_counting_mutex.unlock()
+	if data_sets_names != null:
+		if data_sets_names is String:
+			print(" just singular action , ", data_sets_names )
+		elif data_sets_names is Array:
+			print("unloading philantrophy more than one set in that container ", data_sets_names)
+
+func unload_nodes(array_of_thingiess_that_shall_remain):
+	var counter_1 : int = 0
+	var counter_2 : int = 0
+	var data_point_node = array_of_thingiess_that_shall_remain[1][0]
+	var data_point
+	var children_finder = array_of_thingiess_that_shall_remain[0][0].get_children()
+	for children in children_finder:
+		var thing_to_something : int = 0
+		thing_to_something = 0
+		for nodes_to_remain in array_of_thingiess_that_shall_remain:
+			if str(children.name) == str(nodes_to_remain[0]):
+				thing_to_something = 1
+				break
+		match thing_to_something:
+			0:
+				counter_1 +=1
+				print("this thing shall be unloaded :)")
+				print(" children  ", children)
+				find_branch_to_unload(children.get_path())
+				children.queue_free()
+			1:
+				counter_2 +=1
+				if data_point_node == str(children.name):
+					data_point = children
+	if counter_1 <=1:
+		pass
+
+func cache_tree_branch_fully(container_to_unload):
+	cached_tree_mutex.lock()
+	print(" new function to cache tree branch fully ", container_to_unload)
+	if !cached_jsh_tree_branches.has(container_to_unload):
+		print(" new function, it doesnt have that branch ", container_to_unload)
+		tree_mutex.lock()
+		if scene_tree_jsh["main_root"]["branches"].has(container_to_unload):
+			print(" the main scene tree thingy got that container in it rn ")
+			tree_mutex.unlock()
+			disable_all_branches(scene_tree_jsh["main_root"]["branches"][container_to_unload])
+			tree_mutex.lock()
+			cached_jsh_tree_branches[container_to_unload] = scene_tree_jsh["main_root"]["branches"][container_to_unload]
+			scene_tree_jsh["main_root"]["branches"].erase(container_to_unload)
+			tree_mutex.unlock()
+		else:
+			tree_mutex.unlock()
+	cached_tree_mutex.unlock()
+
+func cache_branch(branch_name, child_name, branch_part):
+	print(" cache branch : ", branch_name, child_name)
+	cached_tree_mutex.lock()
+	if !cached_jsh_tree_branches.has(branch_name):
+		tree_mutex.lock()
+		cached_jsh_tree_branches[branch_name] = {
+			"name" = scene_tree_jsh["main_root"]["branches"][branch_name]["name"],
+			"type" = scene_tree_jsh["main_root"]["branches"][branch_name]["type"],
+			"jsh_type" = scene_tree_jsh["main_root"]["branches"][branch_name]["jsh_type"],
+			"parent" = scene_tree_jsh["main_root"]["branches"][branch_name]["parent"],
+			"status" = "disabled",
+			"node" = null,
+			"metadata" = scene_tree_jsh["main_root"]["branches"][branch_name]["metadata"],
+			"children" = {}
+		}
+		tree_mutex.unlock()
+	if cached_jsh_tree_branches.has(branch_name):
+		if !cached_jsh_tree_branches[branch_name]["children"].has(child_name):
+			disable_all_branches(branch_part)
+			tree_mutex.lock()
+			cached_jsh_tree_branches[branch_name]["children"][child_name] = branch_part
+			tree_mutex.unlock()
+	cached_tree_mutex.unlock()
+
+#                ,,        ,,                                                              ,,             AW                                       ,...
+#`7MMF'  `7MMF'  db      `7MM              `7MM"""Yp,                                    `7MM            ,M'     `7MMF'                          .d' ""
+#  MM      MM              MM                MM    Yb                                      MM            MV        MM                            dM`   
+#  MM      MM  `7MM   ,M""bMM  .gP"Ya        MM    dP `7Mb,od8 ,6"Yb.  `7MMpMMMb.  ,p6"bo  MMpMMMb.     AW         MM         .gP"Ya   ,6"Yb.   mMMmm  
+#  MMmmmmmmMM    MM ,AP    MM ,M'   Yb       MM"""bg.   MM' "'8)   MM    MM    MM 6M'  OO  MM    MM    ,M'         MM        ,M'   Yb 8)   MM    MM    
+#  MM      MM    MM 8MI    MM 8M""""""       MM    `Y   MM     ,pm9MM    MM    MM 8M       MM    MM    MV          MM      , 8M""""""  ,pm9MM    MM    
+#  MM      MM    MM `Mb    MM YM.    ,       MM    ,9   MM    8M   MM    MM    MM YM.    , MM    MM   AW           MM     ,M YM.    , 8M   MM    MM    
+#.JMML.  .JMML..JMML.`Wbmd"MML.`Mbmmd'     .JMMmmmd9  .JMML.  `Moo9^Yo..JMML  JMML.YMbmd'.JMML  JMML.,M'         .JMMmmmmMMM  `Mbmmd' `Moo9^Yo..JMML.  
+#                                                                                                    MV                                                
+#                                                                                                   AW                                                 
+
+# Hide Branch/ Leaf
+
+#                                                                                              ,,             AW                                       ,...
+#`7MMM.     ,MMF'                              `7MM"""Yp,                                    `7MM            ,M'     `7MMF'                          .d' ""
+#  MMMb    dPMM                                  MM    Yb                                      MM            MV        MM                            dM`   
+#  M YM   ,M MM  ,pW"Wq.`7M'   `MF'.gP"Ya        MM    dP `7Mb,od8 ,6"Yb.  `7MMpMMMb.  ,p6"bo  MMpMMMb.     AW         MM         .gP"Ya   ,6"Yb.   mMMmm  
+#  M  Mb  M' MM 6W'   `Wb VA   ,V ,M'   Yb       MM"""bg.   MM' "'8)   MM    MM    MM 6M'  OO  MM    MM    ,M'         MM        ,M'   Yb 8)   MM    MM    
+#  M  YM.P'  MM 8M     M8  VA ,V  8M""""""       MM    `Y   MM     ,pm9MM    MM    MM 8M       MM    MM    MV          MM      , 8M""""""  ,pm9MM    MM    
+#  M  `YM'   MM YA.   ,A9   VVV   YM.    ,       MM    ,9   MM    8M   MM    MM    MM YM.    , MM    MM   AW           MM     ,M YM.    , 8M   MM    MM    
+#.JML. `'  .JMML.`Ybmd9'     W     `Mbmmd'     .JMMmmmd9  .JMML.  `Moo9^Yo..JMML  JMML.YMbmd'.JMML  JMML.,M'         .JMMmmmmMMM  `Mbmmd' `Moo9^Yo..JMML.  
+#                                                                                                        MV                                                
+#                                                                                                       AW                                                 
+
+# Move Branch/ Leaf
+
+#               ,,                                                                                                  ,,             AW                                       ,...
+#   .g8"""bgd `7MM                                                  `7MM"""Yp,                                    `7MM            ,M'     `7MMF'                          .d' ""
+# .dP'     `M   MM                                                    MM    Yb                                      MM            MV        MM                            dM`   
+# dM'       `   MMpMMMb.   ,6"Yb.  `7MMpMMMb.  .P"Ybmmm .gP"Ya        MM    dP `7Mb,od8 ,6"Yb.  `7MMpMMMb.  ,p6"bo  MMpMMMb.     AW         MM         .gP"Ya   ,6"Yb.   mMMmm  
+# MM            MM    MM  8)   MM    MM    MM :MI  I8  ,M'   Yb       MM"""bg.   MM' "'8)   MM    MM    MM 6M'  OO  MM    MM    ,M'         MM        ,M'   Yb 8)   MM    MM    
+# MM.           MM    MM   ,pm9MM    MM    MM  WmmmP"  8M""""""       MM    `Y   MM     ,pm9MM    MM    MM 8M       MM    MM    MV          MM      , 8M""""""  ,pm9MM    MM    
+# `Mb.     ,'   MM    MM  8M   MM    MM    MM 8M       YM.    ,       MM    ,9   MM    8M   MM    MM    MM YM.    , MM    MM   AW           MM     ,M YM.    , 8M   MM    MM    
+#   `"bmmmd'  .JMML  JMML.`Moo9^Yo..JMML  JMML.YMMMMMb  `Mbmmd'     .JMMmmmd9  .JMML.  `Moo9^Yo..JMML  JMML.YMbmd'.JMML  JMML.,M'         .JMMmmmmMMM  `Mbmmd' `Moo9^Yo..JMML.  
+#                                             6'     dP                                                                       MV                                                
+#                                             Ybmmmd'                                                                        AW                                                 
+
+# Change Branch/ Leaf
+
+func the_finisher_for_nodes(data_to_be_parsed):
+	var path_of_node_jsh = data_to_be_parsed[0][0]
+	var node_name_jsh_checker = data_to_be_parsed[0][1]
+	var node_to_be_checker = data_to_be_parsed[0][2]
+	jsh_tree_get_node_status_changer(path_of_node_jsh, node_name_jsh_checker, node_to_be_checker)
+
+func disable_all_branches_reset_counters(branch_to_disable, container_name_for_array):
+	var all_containers : Array = []
+	var all_nodes : Array = []
+	var branches_to_process : Array = []
+	var just_container : Array = []
+	var process_branch = func traverse_branch(branch: Dictionary):
+		if branch["metadata"].has("full_path") and branch["metadata"]["full_path"] != null:
+			all_containers.append(branch["name"])
+			if branch["status"] == "active":
+				array_counting_mutex.lock()
+				array_for_counting_finish[container_name_for_array]["metadata"]["counter_after"] -=1
+				array_counting_mutex.unlock()
+			branch["status"] = "disabled"
+		if branch.has("children"):
+			for child_name in branch["children"]:
+				branches_to_process.append(branch["children"][child_name])
+				if branch["children"][child_name]["status"] == "active":
+					array_counting_mutex.lock()
+					array_for_counting_finish[container_name_for_array]["metadata"]["counter_after"] -=1
+					array_counting_mutex.unlock()
+				branch["children"][child_name]["status"] = "disabled"
+	var process_children = func traverse_branch(branch: Dictionary):
+		if branch.has("metadata"):
+			all_nodes.append(branch["metadata"]["full_path"])
+		if branch.has("children"):
+			for child_name in branch["children"]:
+				branches_to_process.append(branch["children"][child_name])
+				if branch["children"][child_name]["status"] == "active":
+					array_counting_mutex.lock()
+					array_for_counting_finish[container_name_for_array]["metadata"]["counter_after"] -=1
+					array_counting_mutex.unlock()
+				branch["children"][child_name]["status"] = "disabled"
+	process_branch.call(branch_to_disable)
+	var current_branches = branches_to_process.duplicate(false)
+	while branches_to_process.size() > 0:
+		var current_branch = branches_to_process[0]  
+		process_branch.call(current_branch)
+		branches_to_process.remove_at(0)
+
+func jsh_tree_get_node_status_changer(node_path_jsh_tree_status: String, node_name: String, node_to_check: Node):
+	var path_parts_jsh_status_node = node_path_jsh_tree_status.split("/")
+	tree_mutex.lock()
+	var current = scene_tree_jsh["main_root"]["branches"]
+	tree_mutex.unlock()
+	var name_of_container = path_parts_jsh_status_node[0]
+	var name_of_current_thing = path_parts_jsh_status_node[path_parts_jsh_status_node.size() - 1]
+	tree_mutex.lock()
+	array_counting_mutex.lock()
+	for part in path_parts_jsh_status_node:
+		if current.has(part):
+			current = current[part]
+			if path_parts_jsh_status_node[-1] == part:
+				if node_to_check:
+					current["status"] = "active"
+					current["node"] = node_to_check
+					if array_for_counting_finish.has(name_of_container):
+						if array_for_counting_finish[name_of_container].has(name_of_current_thing):
+							array_for_counting_finish[name_of_container][name_of_current_thing]["node"] = node_to_check
+						array_for_counting_finish[path_parts_jsh_status_node[0]]["metadata"]["counter_after"] +=1
+						if array_for_counting_finish[name_of_container]["metadata"]["datapoint_name"] == name_of_current_thing:
+							array_for_counting_finish[name_of_container]["metadata"]["datapoint_node"] = node_to_check
+						if array_for_counting_finish[name_of_container]["metadata"]["container_path"] == name_of_current_thing:
+							array_for_counting_finish[name_of_container]["metadata"]["container_node"] = node_to_check
+						if array_for_counting_finish[name_of_container]["metadata"]["counter_before"] == array_for_counting_finish[name_of_container]["metadata"]["counter_after"]:
+							create_new_task("newer_even_function_for_dictionary", name_of_container)
+					else:
+						print(" dilemafiasco i guess it could like, not find somehow that container? how ?")
+				else: 
+					print(" dilemafiasco new way to check node from proces we are but we didnt get node? on if:")
+			else: 
+				current = current["children"]
+		else:
+			print(" dilemafiasco the new one? ")
+	tree_mutex.unlock()
+	array_counting_mutex.unlock()
+
+func connect_containers(container_name_0, container_name_1):
+	print(" two containers to connect " , container_name_0 , " and : " , container_name_0)
+	var container_data_0
+	var container_data_1
+	mutex_containers.lock()
+	if list_of_containers.has(container_name_0):
+		if list_of_containers[container_name_0].has("connected_containers"):
+			container_data_0 = list_of_containers[container_name_0]
+		else:
+			list_of_containers[container_name_0]["connected_containers"] = {}
+			list_of_containers[container_name_0]["connected_containers"][container_name_1] = {}
+	if list_of_containers.has(container_name_1):
+		if list_of_containers[container_name_1].has("connected_containers"):
+			container_data_1 = list_of_containers[container_name_1]
+		else:
+			list_of_containers[container_name_1]["connected_containers"] = {}
+			list_of_containers[container_name_1]["connected_containers"][container_name_0] = {}
+	mutex_containers.unlock()
+
+func disable_all_branches(branch_to_disable):
+	var all_containers : Array = []
+	var all_nodes : Array = []
+	var branches_to_process : Array = []
+	var just_container : Array = []
+	var process_branch = func traverse_branch(branch: Dictionary):
+		tree_mutex.lock()
+		if branch["metadata"].has("full_path") and branch["metadata"]["full_path"] != null:
+			all_containers.append(branch["name"])
+			branch["status"] = "disabled"
+			branch["node"] = null
+		if branch.has("children"):
+			for child_name in branch["children"]:
+				branches_to_process.append(branch["children"][child_name])
+				branch["children"][child_name]["status"] = "disabled"
+				branch["children"][child_name]["node"] = null 
+		tree_mutex.unlock()
+	process_branch.call(branch_to_disable)
+	var current_branches = branches_to_process.duplicate(false)
+	while branches_to_process.size() > 0:
+		tree_mutex.lock()
+		var current_branch = branches_to_process[0] 
+		tree_mutex.unlock()
+		process_branch.call(current_branch)        
+		tree_mutex.lock()
+		branches_to_process.remove_at(0)            
+		tree_mutex.unlock()

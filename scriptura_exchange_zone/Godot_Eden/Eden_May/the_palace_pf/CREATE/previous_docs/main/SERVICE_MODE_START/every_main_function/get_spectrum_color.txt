@@ -1,0 +1,29 @@
+func get_spectrum_color(value: float) -> Color:
+	# Ensure value is between 0 and 1
+	value = clamp(value, 0.0, 1.0)
+	
+	# Map 0-1 to our 9 color points
+	var color_index = value * 10  # 10 segments for 11 colors
+	
+	# Define our color points
+	var colors = [
+		Color(0.0, 0.0, 0.0),      # 1. Black
+		Color(1.0, 1.0, 1.0),      # 2. White
+		Color(0.0, 0.0, 0.0),      # 3. Black
+		Color(0.45, 0.25, 0.0),    # 4. Brown
+		Color(1.0, 0.0, 0.0),      # 5. Red
+		Color(1.0, 0.5, 0.0),      # 6. Orange
+		Color(1.0, 1.0, 0.0),      # 7. Yellow
+		Color(1.0, 1.0, 1.0),      # 8. White
+		Color(0.0, 1.0, 0.0),      # 9. Green
+		Color(0.0, 0.0, 1.0),      # 10. Blue
+		Color(0.5, 0.0, 0.5)       # 11. Purple
+	]
+	
+	# Find the two colors to interpolate between
+	var lower_index = floor(color_index)
+	var upper_index = ceil(color_index)
+	
+	# Get interpolation factor between these two colors
+	var t = color_index - lower_index
+	return colors[lower_index].lerp(colors[min(upper_index, 8)], t)

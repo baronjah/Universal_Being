@@ -1,0 +1,12 @@
+## 10:15, 12.02.2025
+# the functions database needs to be finished
+Godot Engine v4.3.stable.official (c) 2007-present Juan Linietsky, Ariel Manzur & Godot Contributors.
+--- Debug adapter server started on port 6006 ---
+--- GDScript language server started on port 6005 ---
+  res://scripts/functions_database.gd:168 - Parse Error: Invalid operands "String" and "int" for "*" operator.
+  modules/gdscript/gdscript.cpp:2936 - Failed to load script "res://scripts/functions_database.gd" with error "Parse error". (User)
+  res://scripts/function_metadata.gd:395 - Parse Error: Invalid operands "String" and "int" for "*" operator.
+  modules/gdscript/gdscript.cpp:2936 - Failed to load script "res://scripts/function_metadata.gd" with error "Parse error". (User)
+  res://scripts/thing (2).gd:22 - Parse Error: Expected closing ")" after call arguments.
+  modules/gdscript/gdscript.cpp:2936 - Failed to load script "res://scripts/thing (2).gd" with error "Parse error". (User)
+## these errors are red and scrry, dunno what happened to thing, didnt use it, made it by mistake while clicking

@@ -1,0 +1,509 @@
+
+
+
+
+// Add to the CosmicApp object
+
+// Initialize resize handles
+addResizeHandles: function() {
+    const handles = [
+        { position: 'n', cursor: 'ns-resize' },
+        { position: 'e', cursor: 'ew-resize' },
+        { position: 's', cursor: 'ns-resize' },
+        { position: 'w', cursor: 'ew-resize' },
+        { position: 'ne', cursor: 'nesw-resize' },
+        { position: 'se', cursor: 'nwse-resize' },
+        { position: 'sw', cursor: 'nesw-resize' },
+        { position: 'nw', cursor: 'nwse-resize' }
+    ];
+    
+    // Create resize handles
+    handles.forEach(handle => {
+        const resizeHandle = document.createElement('div');
+        resizeHandle.className = `resize-handle resize-${handle.position}`;
+        resizeHandle.style.cursor = handle.cursor;
+        this.elements.mainWindow.appendChild(resizeHandle);
+        
+        // Add resize event listener
+        this.setupResizeHandleEvents(resizeHandle, handle.position);
+    });
+},
+
+// Set up resize handle events
+setupResizeHandleEvents: function(handle, position) {
+    handle.addEventListener('mousedown', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        
+        this.state.isResizing = true;
+        this.state.resizePosition = position;
+        this.state.resizeStartX = e.clientX;
+        this.state.resizeStartY = e.clientY;
+        
+        // Store original window dimensions and position
+        const rect = this.elements.mainWindow.getBoundingClientRect();
+        this.state.originalWidth = rect.width;
+        this.state.originalHeight = rect.height;
+        this.state.originalLeft = rect.left;
+        this.state.originalTop = rect.top;
+        
+        document.body.style.cursor = handle.style.cursor;
+        
+        // Add a resize overlay to prevent mouse events falling through
+        const overlay = document.createElement('div');
+        overlay.className = 'resize-overlay';
+        overlay.style.position = 'fixed';
+        overlay.style.top = '0';
+        overlay.style.left = '0';
+        overlay.style.width = '100%';
+        overlay.style.height = '100%';
+        overlay.style.zIndex = '9999';
+        document.body.appendChild(overlay);
+        this.elements.resizeOverlay = overlay;
+    });
+},
+
+// Handle resize movement
+handleResize: function(e) {
+    if (!this.state.isResizing) return;
+    
+    const position = this.state.resizePosition;
+    const dx = e.clientX - this.state.resizeStartX;
+    const dy = e.clientY - this.state.resizeStartY;
+    
+    const rect = this.elements.mainWindow.getBoundingClientRect();
+    let newWidth = this.state.originalWidth;
+    let newHeight = this.state.originalHeight;
+    let newLeft = this.state.originalLeft;
+    let newTop = this.state.originalTop;
+    
+    // Resize based on position
+    if (position.includes('e')) {
+        newWidth = this.state.originalWidth + dx;
+    }
+    if (position.includes('w')) {
+        newWidth = this.state.originalWidth - dx;
+        newLeft = this.state.originalLeft + dx;
+    }
+    if (position.includes('s')) {
+        newHeight = this.state.originalHeight + dy;
+    }
+    if (position.includes('n')) {
+        newHeight = this.state.originalHeight - dy;
+        newTop = this.state.originalTop + dy;
+    }
+    
+    // Apply minimum size constraints
+    const minWidth = 300;
+    const minHeight = 200;
+    
+    if (newWidth >= minWidth) {
+        this.elements.mainWindow.style.width = newWidth + 'px';
+        if (position.includes('w')) {
+            this.elements.mainWindow.style.left = newLeft + 'px';
+        }
+    }
+    
+    if (newHeight >= minHeight) {
+        this.elements.mainWindow.style.height = newHeight + 'px';
+        if (position.includes('n')) {
+            this.elements.mainWindow.style.top = newTop + 'px';
+        }
+    }
+    
+    // Remove transform to prevent issues with positioning
+    this.elements.mainWindow.style.transform = 'none';
+},
+
+// End resize
+endResize: function() {
+    if (!this.state.isResizing) return;
+    
+    this.state.isResizing = false;
+    document.body.style.cursor = 'default';
+    
+    // Remove resize overlay
+    if (this.elements.resizeOverlay) {
+        document.body.removeChild(this.elements.resizeOverlay);
+        this.elements.resizeOverlay = null;
+    }
+    
+    // Save updated size as our new base size
+    const rect = this.elements.mainWindow.getBoundingClientRect();
+    this.state.windowSize.width = rect.width + 'px';
+    this.state.windowSize.height = rect.height + 'px';
+    this.state.windowPos.x = rect.left;
+    this.state.windowPos.y = rect.top;
+}
+
+
+
+
+
+
+// Add to event handlers in setupEventListeners
+document.addEventListener('mousemove', (e) => {
+    // Existing mouse tracking code...
+    
+    // Handle window dragging with snapping
+    if (this.state.isWindowDragging) {
+        const newX = e.clientX - this.state.dragOffset.x;
+        const newY = e.clientY - this.state.dragOffset.y;
+        
+        // Snap to screen edges
+        const snapDistance = 20; // pixels
+        const windowRect = this.elements.mainWindow.getBoundingClientRect();
+        const windowWidth = windowRect.width;
+        const windowHeight = windowRect.height;
+        
+        let finalX = newX;
+        let finalY = newY;
+        
+        // Snap to left edge
+        if (newX < snapDistance) {
+            finalX = 0;
+        }
+        
+        // Snap to right edge
+        if (newX + windowWidth > window.innerWidth - snapDistance) {
+            finalX = window.innerWidth - windowWidth;
+        }
+        
+        // Snap to top edge
+        if (newY < snapDistance) {
+            finalY = 0;
+        }
+        
+        // Snap to bottom edge
+        if (newY + windowHeight > window.innerHeight - snapDistance) {
+            finalY = window.innerHeight - windowHeight;
+        }
+        
+        this.elements.mainWindow.style.left = finalX + 'px';
+        this.elements.mainWindow.style.top = finalY + 'px';
+        this.elements.mainWindow.style.transform = 'none';
+        
+        this.state.windowPos.x = finalX;
+        this.state.windowPos.y = finalY;
+    }
+    
+    // Handle resizing if active
+    if (this.state.isResizing) {
+        this.handleResize(e);
+    }
+});
+
+
+
+
+
+
+
+
+
+
+
+
+// Add to CosmicApp
+createCSVBasedComponent: function(type, name, data = {}) {
+    // Generate unique ID for the component
+    const newId = this.state.inventory.length > 0 
+        ? Math.max(...this.state.inventory.map(item => item.id)) + 1 
+        : 1;
+    
+    // Default icons based on type
+    const typeIcons = {
+        'page': '📄',
+        'component': '🧩',
+        'data': '📊',
+        'image': '🖼️',
+        'window': '🪟',
+        'csv': '📋'
+    };
+    
+    // Create CSV structure for the component
+    const csvData = {
+        headers: ['property', 'value', 'type', 'description'],
+        rows: [
+            { property: 'id', value: newId, type: 'number', description: 'Unique ID' },
+            { property: 'name', value: name, type: 'string', description: 'Display name' },
+            { property: 'type', value: type, type: 'string', description: 'Component type' }
+        ]
+    };
+    
+    // Add any custom properties from data
+    Object.entries(data).forEach(([key, value]) => {
+        csvData.rows.push({
+            property: key,
+            value: value,
+            type: typeof value,
+            description: `Custom property: ${key}`
+        });
+    });
+    
+    // Create inventory item
+    const newItem = {
+        id: newId,
+        type: type,
+        name: name,
+        icon: typeIcons[type] || '📦',
+        content: '',
+        data: data,
+        csvData: csvData
+    };
+    
+    // If this is a window component, add window properties
+    if (type === 'window') {
+        newItem.csvData.rows.push(
+            { property: 'width', value: '600px', type: 'string', description: 'Window width' },
+            { property: 'height', value: '400px', type: 'string', description: 'Window height' },
+            { property: 'position', value: 'center', type: 'string', description: 'Initial position' }
+        );
+    }
+    
+    return newItem;
+},
+
+// Add CSV element to inventory
+addCSVElement: function(type, name, data = {}) {
+    const newElement = this.createCSVBasedComponent(type, name, data);
+    this.state.inventory.push(newElement);
+    this.storage.saveItem('inventory', this.state.inventory);
+    this.renderInventory();
+    this.updateStorageInfo();
+    return newElement;
+},
+
+// Open CSV editor for an item
+openCSVEditor: function(item) {
+    // Create a new window for CSV editing
+    const editorWindow = document.createElement('div');
+    editorWindow.className = 'cosmic-window csv-editor-window';
+    editorWindow.style.width = '700px';
+    editorWindow.style.height = '500px';
+    editorWindow.style.left = '50%';
+    editorWindow.style.top = '50%';
+    editorWindow.style.transform = 'translate(-50%, -50%)';
+    editorWindow.style.zIndex = '200';
+    
+    editorWindow.innerHTML = `
+        <div class="window-border window-border-top"></div>
+        <div class="window-border window-border-right"></div>
+        <div class="window-border window-border-bottom"></div>
+        <div class="window-border window-border-left"></div>
+
+        <div class="window-header">
+            <div class="window-title">CSV Editor - ${item.name}</div>
+            <div class="window-controls">
+                <div class="window-button window-minimize"></div>
+                <div class="window-button window-maximize"></div>
+                <div class="window-button window-close"></div>
+            </div>
+        </div>
+        <div class="window-content csv-editor-content">
+            <div class="csv-editor-grid"></div>
+        </div>
+    `;
+    
+    document.body.appendChild(editorWindow);
+    
+    // Make the window draggable
+    const header = editorWindow.querySelector('.window-header');
+    let isDragging = false;
+    let dragOffsetX = 0;
+    let dragOffsetY = 0;
+    
+    header.addEventListener('mousedown', (e) => {
+        isDragging = true;
+        const rect = editorWindow.getBoundingClientRect();
+        dragOffsetX = e.clientX - rect.left;
+        dragOffsetY = e.clientY - rect.top;
+    });
+    
+    document.addEventListener('mousemove', (e) => {
+        if (isDragging) {
+            editorWindow.style.left = (e.clientX - dragOffsetX) + 'px';
+            editorWindow.style.top = (e.clientY - dragOffsetY) + 'px';
+            editorWindow.style.transform = 'none';
+        }
+    });
+    
+    document.addEventListener('mouseup', () => {
+        isDragging = false;
+    });
+    
+    // Close button functionality
+    const closeBtn = editorWindow.querySelector('.window-close');
+    closeBtn.addEventListener('click', () => {
+        document.body.removeChild(editorWindow);
+    });
+    
+    // Render CSV data in the grid
+    const grid = editorWindow.querySelector('.csv-editor-grid');
+    this.renderCSVGrid(grid, item.csvData);
+}
+
+
+
+
+
+
+
+
+
+init: function() {
+    this.createGrid();
+    this.createStars();
+    this.loadFromStorage();
+    this.setupEventListeners();
+    this.updateStorageInfo();
+    this.addResizeHandles(); // Add resize handles
+    
+    // Simulate loading
+    setTimeout(() => {
+        this.elements.loader.style.opacity = '0';
+        setTimeout(() => {
+            this.elements.loader.style.display = 'none';
+        }, 500);
+    }, 1500);
+}
+
+
+
+
+
+
+
+
+
+state: {
+    // Existing properties...
+    isResizing: false,
+    resizePosition: null,
+    resizeStartX: 0,
+    resizeStartY: 0,
+    originalWidth: 0,
+    originalHeight: 0,
+    originalLeft: 0,
+    originalTop: 0
+}
+
+
+
+
+
+
+
+
+
+
+
+/* Resize handles */
+.resize-handle {
+    position: absolute;
+    background: transparent;
+    z-index: 200;
+}
+
+.resize-n {
+    top: -5px;
+    left: 0;
+    right: 0;
+    height: 10px;
+    cursor: ns-resize;
+}
+
+.resize-e {
+    top: 0;
+    right: -5px;
+    bottom: 0;
+    width: 10px;
+    cursor: ew-resize;
+}
+
+.resize-s {
+    bottom: -5px;
+    left: 0;
+    right: 0;
+    height: 10px;
+    cursor: ns-resize;
+}
+
+.resize-w {
+    top: 0;
+    left: -5px;
+    bottom: 0;
+    width: 10px;
+    cursor: ew-resize;
+}
+
+.resize-ne {
+    top: -5px;
+    right: -5px;
+    width: 15px;
+    height: 15px;
+    cursor: nesw-resize;
+}
+
+.resize-se {
+    bottom: -5px;
+    right: -5px;
+    width: 15px;
+    height: 15px;
+    cursor: nwse-resize;
+}
+
+.resize-sw {
+    bottom: -5px;
+    left: -5px;
+    width: 15px;
+    height: 15px;
+    cursor: nesw-resize;
+}
+
+.resize-nw {
+    top: -5px;
+    left: -5px;
+    width: 15px;
+    height: 15px;
+    cursor: nwse-resize;
+}
+
+/* CSV Grid styles */
+.csv-editor-window {
+    opacity: 1;
+    pointer-events: all;
+}
+
+.csv-editor-content {
+    padding: 15px;
+    overflow: auto;
+}
+
+.csv-editor-grid {
+    display: table;
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.csv-row {
+    display: table-row;
+}
+
+.csv-header {
+    background-color: rgba(40, 40, 60, 0.7);
+    font-weight: bold;
+}
+
+.csv-cell {
+    display: table-cell;
+    border: 1px solid var(--window-border);
+    padding: 8px;
+}
+
+.csv-editor-controls {
+    margin-top: 15px;
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}

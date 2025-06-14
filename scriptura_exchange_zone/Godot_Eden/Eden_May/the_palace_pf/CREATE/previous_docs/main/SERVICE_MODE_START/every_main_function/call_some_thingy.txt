@@ -1,0 +1,4 @@
+func call_some_thingy():
+	print()
+	var data_pooint_node_now = get_node("keyboard_right_container/thing_53")
+	data_pooint_node_now.process_delta_fake()

@@ -1,0 +1,307 @@
+# AkashicUI.gd - UI Controller matching your interface design
+extends Control
+class_name AkashicUI
+
+@onready var notepad_3d: AkashicNotepad3D
+
+# UI elements matching your screenshots
+var controls_panel: Panel
+var current_level_label: Label
+var level_buttons: Dictionary = {}
+var navigation_toggle: Button
+
+# Recent words display (consciousness, evolution, manifestation)
+var recent_words_container: HBoxContainer
+var recent_words: Array = ["consciousness", "evolution", "manifestation"]
+
+# Control instructions panel
+var instructions = {
+	"WASD/Arrows": "Navigate",
+	"E/Click": "Interact with words", 
+	"R/Right Click": "Evolve words",
+	"C": "Create new word",
+	"Tab": "Toggle navigation"
+}
+
+func _ready():
+	setup_ui_layout()
+	connect_to_notepad_3d()
+	create_controls_panel()
+	create_level_navigation()
+	create_recent_words_display()
+
+func setup_ui_layout():
+	# Set up the main UI structure
+	set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	
+	# Create the main container
+	var main_container = VBoxContainer.new()
+	add_child(main_container)
+
+func create_controls_panel():
+	# Create the blue controls panel from your screenshots
+	controls_panel = Panel.new()
+	controls_panel.size = Vector2(300, 200)
+	controls_panel.position = Vector2(get_viewport().size.x - 320, 20)
+	
+	# Style to match your blue theme
+	var style_box = StyleBoxFlat.new()
+	style_box.bg_color = Color(0.1, 0.2, 0.4, 0.8)
+	style_box.border_color = Color.CYAN
+	style_box.border_width_left = 2
+	style_box.border_width_right = 2
+	style_box.border_width_top = 2
+	style_box.border_width_bottom = 2
+	controls_panel.add_theme_stylebox_override("panel", style_box)
+	
+	add_child(controls_panel)
+	
+	# Add title
+	var title_label = Label.new()
+	title_label.text = "Akashic Records Notepad 3D"
+	title_label.position = Vector2(10, 10)
+	title_label.add_theme_color_override("font_color", Color.CYAN)
+	controls_panel.add_child(title_label)
+	
+	# Add controls list
+	var controls_label = Label.new()
+	controls_label.text = "Controls:"
+	controls_label.position = Vector2(10, 40)
+	controls_label.add_theme_color_override("font_color", Color.WHITE)
+	controls_panel.add_child(controls_label)
+	
+	# Add instruction lines
+	var y_offset = 65
+	for instruction in instructions:
+		var line_label = Label.new()
+		line_label.text = instruction + " - " + instructions[instruction]
+		line_label.position = Vector2(10, y_offset)
+		line_label.add_theme_color_override("font_color", Color.CYAN)
+		controls_panel.add_child(line_label)
+		y_offset += 20
+
+func create_level_navigation():
+	# Create the bottom navigation panel
+	var nav_panel = Panel.new()
+	nav_panel.size = Vector2(400, 100)
+	nav_panel.position = Vector2(20, get_viewport().size.y - 120)
+	
+	# Style matching your interface
+	var nav_style = StyleBoxFlat.new()
+	nav_style.bg_color = Color(0.05, 0.1, 0.2, 0.9)
+	nav_style.border_color = Color.CYAN
+	nav_style.border_width_left = 1
+	nav_style.border_width_right = 1
+	nav_style.border_width_top = 1
+	nav_style.border_width_bottom = 1
+	nav_panel.add_theme_stylebox_override("panel", nav_style)
+	
+	add_child(nav_panel)
+	
+	# Current level display
+	current_level_label = Label.new()
+	current_level_label.text = "Current: Stars"
+	current_level_label.position = Vector2(10, 10)
+	current_level_label.add_theme_color_override("font_color", Color.WHITE)
+	nav_panel.add_child(current_level_label)
+	
+	# Up/Down level buttons
+	var up_button = Button.new()
+	up_button.text = "↑ Up Level"
+	up_button.position = Vector2(10, 35)
+	up_button.size = Vector2(100, 25)
+	up_button.pressed.connect(_on_up_level_pressed)
+	nav_panel.add_child(up_button)
+	
+	var down_button = Button.new()
+	down_button.text = "↓ Down Level" 
+	down_button.position = Vector2(120, 35)
+	down_button.size = Vector2(100, 25)
+	down_button.pressed.connect(_on_down_level_pressed)
+	nav_panel.add_child(down_button)
+	
+	# Navigation toggle
+	navigation_toggle = Button.new()
+	navigation_toggle.text = "Toggle Navigation (Tab)"
+	navigation_toggle.position = Vector2(10, 65)
+	navigation_toggle.size = Vector2(200, 25)
+	navigation_toggle.pressed.connect(_on_navigation_toggle)
+	nav_panel.add_child(navigation_toggle)
+
+func create_recent_words_display():
+	# Create the recent words panel (like in your image with cosmos, eternal, boundless)
+	var words_panel = Panel.new()
+	words_panel.size = Vector2(600, 80)
+	words_panel.position = Vector2((get_viewport().size.x - 600) / 2, get_viewport().size.y - 100)
+	
+	var words_style = StyleBoxFlat.new()
+	words_style.bg_color = Color(0.1, 0.15, 0.3, 0.7)
+	words_panel.add_theme_stylebox_override("panel", words_style)
+	
+	add_child(words_panel)
+	
+	# Recent words label
+	var words_label = Label.new()
+	words_label.text = "Recent words: [consciousness, evolution, manifestation]"
+	words_label.position = Vector2(10, 10)
+	words_label.add_theme_color_override("font_color", Color.CYAN)
+	words_panel.add_child(words_label)
+	
+	# Create word containers (like the colored boxes in your image)
+	recent_words_container = HBoxContainer.new()
+	recent_words_container.position = Vector2(10, 35)
+	recent_words_container.custom_minimum_size = Vector2(580, 40)
+	words_panel.add_child(recent_words_container)
+	
+	update_recent_words_display()
+
+func update_recent_words_display():
+	# Clear existing word displays
+	for child in recent_words_container.get_children():
+		child.queue_free()
+	
+	# Create word boxes matching your design
+	for i in range(recent_words.size()):
+		var word = recent_words[i]
+		var word_container = create_word_display(word, i)
+		recent_words_container.add_child(word_container)
+
+func create_word_display(word: String, index: int) -> Panel:
+	var word_panel = Panel.new()
+	word_panel.custom_minimum_size = Vector2(150, 35)
+	
+	# Color based on word type (matching your color scheme)
+	var colors = [
+		Color(0.3, 0.5, 0.7),  # Blue-ish for consciousness
+		Color(0.4, 0.7, 0.4),  # Green-ish for evolution  
+		Color(0.6, 0.4, 0.7)   # Purple-ish for manifestation
+	]
+	
+	var word_style = StyleBoxFlat.new()
+	word_style.bg_color = colors[index % colors.size()]
+	word_style.border_color = Color.CYAN
+	word_style.border_width_left = 1
+	word_style.border_width_right = 1
+	word_style.border_width_top = 1
+	word_style.border_width_bottom = 1
+	word_panel.add_theme_stylebox_override("panel", word_style)
+	
+	# Add word label
+	var word_label = Label.new()
+	word_label.text = word
+	word_label.position = Vector2(10, 10)
+	word_label.add_theme_color_override("font_color", Color.WHITE)
+	word_panel.add_child(word_label)
+	
+	# Make clickable
+	var button = Button.new()
+	button.flat = true
+	button.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	button.pressed.connect(_on_word_clicked.bind(word))
+	word_panel.add_child(button)
+	
+	return word_panel
+
+func connect_to_notepad_3d():
+	# Connect to the 3D notepad system
+	var notepad_node = get_node_or_null("../AkashicNotepad3D")
+	if notepad_node:
+		notepad_3d = notepad_node
+		notepad_3d.connect("dimension_changed", _on_dimension_changed)
+		notepad_3d.connect("word_evolved", _on_word_evolved)
+
+# Signal handlers
+func _on_up_level_pressed():
+	if notepad_3d:
+		var current_dim = notepad_3d.current_dimension
+		var hierarchy = notepad_3d.dimension_hierarchy
+		
+		# Find parent dimension
+		for dim in hierarchy:
+			if current_dim in hierarchy[dim].get("children", []):
+				notepad_3d.navigate_to_dimension(dim)
+				break
+
+func _on_down_level_pressed():
+	if notepad_3d:
+		var current_dim = notepad_3d.current_dimension
+		var hierarchy = notepad_3d.dimension_hierarchy
+		
+		# Go to first child dimension
+		if current_dim in hierarchy:
+			var children = hierarchy[current_dim].get("children", [])
+			if children.size() > 0:
+				notepad_3d.navigate_to_dimension(children[0])
+
+func _on_navigation_toggle():
+	# Toggle navigation mode
+	if notepad_3d:
+		print("Navigation mode toggled")
+
+func _on_dimension_changed(from_level: String, to_level: String):
+	# Update UI to reflect dimension change
+	current_level_label.text = "Current: " + to_level.capitalize()
+	
+	# Add visual feedback
+	animate_level_change_feedback()
+
+func animate_level_change_feedback():
+	# Brief flash effect for level change
+	var tween = create_tween()
+	var original_color = current_level_label.get_theme_color("font_color")
+	
+	tween.tween_property(current_level_label, "modulate", Color.YELLOW, 0.2)
+	tween.tween_property(current_level_label, "modulate", Color.WHITE, 0.3)
+
+func _on_word_clicked(word: String):
+	# Handle word interaction
+	print("Word clicked: ", word)
+	if notepad_3d:
+		# Focus on this word in 3D space
+		focus_on_word(word)
+
+func focus_on_word(word: String):
+	# Find and focus camera on the word node
+	if notepad_3d:
+		var word_node = find_word_node(word)
+		if word_node:
+			animate_camera_to_node(word_node)
+
+func find_word_node(word: String) -> Node3D:
+	# Search for word node in the 3D space
+	if notepad_3d:
+		for child in notepad_3d.get_children():
+			if word.to_lower() in child.name.to_lower():
+				return child
+	return null
+
+func animate_camera_to_node(target_node: Node3D):
+	var camera = get_viewport().get_camera_3d()
+	if camera and target_node:
+		var tween = create_tween()
+		var target_pos = target_node.global_position + Vector3(0, 10, 20)
+		tween.tween_property(camera, "global_position", target_pos, 1.0)
+
+func _on_word_evolved(old_word: String, new_word: String):
+	# Update recent words when evolution occurs
+	var index = recent_words.find(old_word)
+	if index != -1:
+		recent_words[index] = new_word
+		update_recent_words_display()
+
+# Terminal input handling
+func _input(event):
+	if event is InputEventKey and event.pressed:
+		match event.keycode:
+			KEY_QUOTELEFT:  # Backtick key for terminal
+				toggle_terminal()
+
+func toggle_terminal():
+	# Show/hide terminal interface
+	print("Terminal toggled")
+	# Implement terminal overlay here
+
+# Connect navigation hierarchy
+func update_navigation_options():
+	# Update available navigation options based on current dimension
+	pass

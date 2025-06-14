@@ -1,0 +1,114 @@
+[gd_scene load_steps=9 format=2]
+
+[ext_resource path="res://fonts/main_font.tres" type="DynamicFont" id=1]
+[ext_resource path="res://icons/temp_normal.png" type="Texture" id=2]
+[ext_resource path="res://temperature_ui.gd" type="Script" id=3]
+[ext_resource path="res://themes/notepad3d_theme.tres" type="Theme" id=4]
+
+[sub_resource type="StyleBoxFlat" id=1]
+bg_color = Color( 0.7, 0.9, 1, 1 )
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxFlat" id=2]
+bg_color = Color( 1, 0.5, 0.2, 1 )
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxFlat" id=3]
+bg_color = Color( 0.15, 0.15, 0.15, 0.5 )
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+shadow_color = Color( 0, 0, 0, 0.3 )
+shadow_size = 4
+
+[sub_resource type="StyleBoxFlat" id=4]
+bg_color = Color( 0.1, 0.1, 0.1, 0.7 )
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+shadow_color = Color( 0, 0, 0, 0.2 )
+shadow_size = 2
+
+[node name="TemperatureUI" type="Control"]
+anchor_right = 1.0
+margin_left = 20.0
+margin_top = 60.0
+margin_right = -20.0
+margin_bottom = 180.0
+theme = ExtResource( 4 )
+script = ExtResource( 3 )
+
+[node name="Background" type="Panel" type="Panel"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_styles/panel = SubResource( 3 )
+
+[node name="Title" type="Label"]
+anchor_right = 1.0
+margin_top = 10.0
+margin_bottom = 34.0
+custom_fonts/font = ExtResource( 1 )
+text = "TEMPERATURE CONTROL"
+align = 1
+valign = 1
+
+[node name="StateIcon" type="TextureRect"]
+margin_left = 20.0
+margin_top = 40.0
+margin_right = 60.0
+margin_bottom = 80.0
+texture = ExtResource( 2 )
+expand = true
+stretch_mode = 6
+
+[node name="TemperatureLabel" type="Label"]
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -100.0
+margin_top = 40.0
+margin_right = -20.0
+margin_bottom = 80.0
+custom_fonts/font = ExtResource( 1 )
+text = "25°C"
+align = 2
+valign = 1
+
+[node name="TemperatureSlider" type="HSlider"]
+anchor_right = 1.0
+margin_left = 80.0
+margin_top = 50.0
+margin_right = -120.0
+margin_bottom = 70.0
+min_value = -100.0
+max_value = 2000.0
+value = 25.0
+custom_styles/slider = SubResource( 4 )
+custom_styles/grabber_area_highlight = SubResource( 1 )
+custom_styles/grabber_area = SubResource( 2 )
+
+[node name="DescriptionPanel" type="Panel"]
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = -50.0
+custom_styles/panel = SubResource( 4 )
+
+[node name="DescriptionLabel" type="Label"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 10.0
+margin_top = 5.0
+margin_right = -10.0
+margin_bottom = -5.0
+text = "Words appear in their natural state, flowing with normal dynamics."
+align = 1
+valign = 1
+autowrap = true

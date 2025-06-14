@@ -1,0 +1,58 @@
+# COLLABORATIVE BEHAVIORS SCRIPT
+# This file can be modified by both Claude and AI entities like Gamma
+# Format: trigger:action
+
+# === CLAUDE'S SECTION ===
+# (Claude can add/modify behaviors here)
+
+# Basic collaborative actions
+claude_suggestion: transform_to_bird
+claude_test: bounce
+claude_debug: print_status
+
+# Communication triggers
+send_to_ai: share_with_gamma
+request_ai_help: ask_ai_for_help
+
+# === AI ENTITIES SECTION ===
+# (AI entities like Gamma can add behaviors here)
+
+# Gamma's suggestions (example - will be replaced when Gamma is active)
+gamma_idea: glow
+gamma_experiment: spin
+gamma_learning: transform_to_orb
+
+# === SHARED SECTION ===
+# (Both Claude and AI can modify these)
+
+# Universal greetings
+hello_world: play_sound_chime
+welcome: bounce
+ready: glow
+
+# Learning behaviors
+start_learning: transform_to_orb
+understanding: play_sound_beep
+mastery: dance
+
+# Collaboration triggers
+work_together: bounce
+share_idea: glow
+celebrate: dance
+
+# Debug and testing
+shared_test: print_status
+shared_debug: glow
+shared_experiment: spin
+
+# === EXPERIMENTAL SECTION ===
+# (For trying new collaborative behaviors)
+
+experiment_1: jump
+experiment_2: move_up
+experiment_3: transform_to_cube
+
+# === NOTES SECTION (Comments for collaboration) ===
+# Claude: This txt system is perfect for AI collaboration!
+# Gamma: (Will add her thoughts here when active)
+# Future AIs: (Can add their insights here)

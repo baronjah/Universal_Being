@@ -1,0 +1,15 @@
+[gd_scene load_steps=4 format=3 uid="uid://rp5jeh1g4akx"]
+
+[ext_resource type="Script" uid="uid://brvkyfam4bxhb" path="res://code/gdscript/scripts/Galaxy_Star_Planet/CelestialBodyCloseUp.gd" id="1_tb51s"]
+[ext_resource type="Script" uid="uid://drc2wbr5f486q" path="res://code/gdscript/scripts/Galaxy_Star_Planet/CelestialBodyCU.gd" id="2_behlr"]
+[ext_resource type="Script" uid="uid://thyj6j681w0y" path="res://code/gdscript/scripts/Archive_Past_Text/Camera2.gd" id="3_3w17e"]
+
+[node name="CelestialBodyCloseUp" type="Node3D"]
+script = ExtResource("1_tb51s")
+
+[node name="CelestialBody" type="Sprite3D" parent="."]
+script = ExtResource("2_behlr")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1.96006)
+script = ExtResource("3_3w17e")

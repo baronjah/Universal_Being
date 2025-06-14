@@ -1,0 +1,5 @@
+func the_finisher_for_nodes(data_to_be_parsed):
+	var path_of_node_jsh = data_to_be_parsed[0][0]
+	var node_name_jsh_checker = data_to_be_parsed[0][1]
+	var node_to_be_checker = data_to_be_parsed[0][2]
+	jsh_tree_get_node_status_changer(path_of_node_jsh, node_name_jsh_checker, node_to_be_checker)

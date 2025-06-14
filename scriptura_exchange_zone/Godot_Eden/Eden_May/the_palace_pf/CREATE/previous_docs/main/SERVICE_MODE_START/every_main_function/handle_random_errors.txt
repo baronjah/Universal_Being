@@ -1,0 +1,41 @@
+func handle_random_errors(): # array_with_no_mutex
+	print(" elquadromadro trying to figure out random problems ")
+	for current_error in array_with_no_mutex:
+		print(" elquadromadro error to stick to something " , current_error)
+		var name_of_error = current_error[0]
+		var type_of_error = current_error[1]
+		print(" elquadromadro error to stick to something " , name_of_error , " and " , type_of_error)
+		dictionary_of_mistakes_mutex.lock()
+		
+		if dictionary_of_mistakes.has(name_of_error):
+			# that one appeared before
+			
+			print(" elquadromadro we had issues with that one before ")
+			if dictionary_of_mistakes[name_of_error].has(name_of_error):
+				# we had this type of error before
+				#dictionary_of_mistakes[name_of_error][name_of_error].has("status"):
+					#print(" it does have status tho")
+				
+				print(" elquadromadro the same error as we had previously ")
+				if dictionary_of_mistakes[name_of_error][name_of_error].has(type_of_error):
+					print(" elquadromadro the same type of the same error hmm ")
+					# this same stage of error as before
+					
+				
+		else:
+			print(" elquadromadro that is a new trouble maker, why could it not work already ? ")
+			dictionary_of_mistakes[name_of_error] = {}
+			dictionary_of_mistakes[name_of_error]["status"] = "pending"
+			dictionary_of_mistakes[name_of_error]["counter"] = int(1)
+			
+			dictionary_of_mistakes[name_of_error][name_of_error] = {}
+			dictionary_of_mistakes[name_of_error][name_of_error]["status"] = "pending"
+			dictionary_of_mistakes[name_of_error][name_of_error]["counter"] = int(1)
+			
+			dictionary_of_mistakes[name_of_error][name_of_error][type_of_error] = {}
+			dictionary_of_mistakes[name_of_error][name_of_error][type_of_error]["status"] = "pending"
+			dictionary_of_mistakes[name_of_error][name_of_error][type_of_error]["counter"] = int(1)
+		
+		
+		print(" elquadromadro dictionary_of_mistakes_mutex : " , dictionary_of_mistakes_mutex)
+		dictionary_of_mistakes_mutex.unlock()

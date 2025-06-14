@@ -1,0 +1,105 @@
+class_name CreationConsole
+extends Control
+
+# UI References
+@onready var output_display: RichTextLabel = $VBoxContainer/OutputDisplay
+@onready var input_field: LineEdit = $VBoxContainer/HBoxContainer/InputField
+@onready var history_button: Button = $VBoxContainer/HBoxContainer/HistoryButton
+@onready var clear_button: Button = $VBoxContainer/HBoxContainer/ClearButton
+
+# Command history
+var command_history = []
+var history_index = -1
+var max_history = 20
+
+# Signals
+signal command_entered(command)
+
+func _ready():
+	# Connect signals
+	input_field.text_submitted.connect(_on_text_submitted)
+	history_button.pressed.connect(_on_history_button_pressed)
+	clear_button.pressed.connect(_on_clear_button_pressed)
+	
+	# Focus input field
+	input_field.grab_focus()
+	
+	# Welcome message
+	display_message("Welcome to the Creation Console.\nType words to create entities or 'help' for commands.")
+
+func _on_text_submitted(text: String):
+	if text.strip_edges().is_empty():
+		return
+	
+	# Add to history
+	command_history.push_front(text)
+	if command_history.size() > max_history:
+		command_history.pop_back()
+	
+	# Reset history index
+	history_index = -1
+	
+	# Display command
+	display_message("> " + text, Color(0.8, 0.9, 1.0))
+	
+	# Emit signal
+	command_entered.emit(text)
+	
+	# Clear input field
+	input_field.text = ""
+
+func _on_history_button_pressed():
+	# Show history popup
+	var popup = PopupMenu.new()
+	add_child(popup)
+	
+	for i in range(command_history.size()):
+		popup.add_item(command_history[i], i)
+	
+	popup.id_pressed.connect(_on_history_selected)
+	popup.position = history_button.global_position + Vector2(0, history_button.size.y)
+	popup.popup()
+
+func _on_history_selected(id: int):
+	input_field.text = command_history[id]
+	input_field.grab_focus()
+	input_field.caret_column = input_field.text.length()
+
+func _on_clear_button_pressed():
+	output_display.text = ""
+
+func display_message(message: String, color: Color = Color.WHITE):
+	var color_hex = color.to_html(false)
+	output_display.append_text("[color=#" + color_hex + "]" + message + "[/color]\n")
+
+func _input(event):
+	if event is InputEventKey and event.pressed:
+		if event.keycode == KEY_UP:
+			# Navigate history upward
+			if command_history.size() > 0:
+				history_index = min(history_index + 1, command_history.size() - 1)
+				input_field.text = command_history[history_index]
+				input_field.caret_column = input_field.text.length()
+			get_viewport().set_input_as_handled()
+		elif event.keycode == KEY_DOWN:
+			# Navigate history downward
+			if history_index > 0:
+				history_index -= 1
+				input_field.text = command_history[history_index]
+			elif history_index == 0:
+				history_index = -1
+				input_field.text = ""
+			input_field.caret_column = input_field.text.length()
+			get_viewport().set_input_as_handled()
+		elif event.keycode == KEY_TAB and not event.echo:
+			# Hide or show console
+			toggle_visibility()
+			get_viewport().set_input_as_handled()
+
+func toggle_visibility():
+	visible = !visible
+	if visible:
+		input_field.grab_focus()
+	else:
+		# Release focus when hiding
+		input_field.release_focus()

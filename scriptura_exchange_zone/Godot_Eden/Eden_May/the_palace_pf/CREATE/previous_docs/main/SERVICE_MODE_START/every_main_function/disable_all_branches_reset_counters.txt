@@ -1,0 +1,56 @@
+func disable_all_branches_reset_counters(branch_to_disable, container_name_for_array):
+	var all_containers : Array = []
+	var all_nodes : Array = []
+	var branches_to_process : Array = []
+	var just_container : Array = []
+
+	var process_branch = func traverse_branch(branch: Dictionary):
+		if branch["metadata"].has("full_path") and branch["metadata"]["full_path"] != null:
+			
+			all_containers.append(branch["name"])
+			if branch["status"] == "active":
+				
+				array_counting_mutex.lock()
+				array_for_counting_finish[container_name_for_array]["metadata"]["counter_after"] -=1
+				array_counting_mutex.unlock()
+				
+			branch["status"] = "disabled"
+		
+		if branch.has("children"):
+			for child_name in branch["children"]:
+				branches_to_process.append(branch["children"][child_name])
+				
+				if branch["children"][child_name]["status"] == "active":
+					
+					array_counting_mutex.lock()
+					array_for_counting_finish[container_name_for_array]["metadata"]["counter_after"] -=1
+					array_counting_mutex.unlock()
+					
+				branch["children"][child_name]["status"] = "disabled"
+
+	# Children finder
+	var process_children = func traverse_branch(branch: Dictionary):
+		if branch.has("metadata"):# we must complete the evaluation evolution and ovulation of this game
+			all_nodes.append(branch["metadata"]["full_path"])
+
+		if branch.has("children"):
+			for child_name in branch["children"]:
+				branches_to_process.append(branch["children"][child_name])
+				
+				if branch["children"][child_name]["status"] == "active":
+					
+					array_counting_mutex.lock()
+					array_for_counting_finish[container_name_for_array]["metadata"]["counter_after"] -=1
+					array_counting_mutex.unlock()
+				
+				branch["children"][child_name]["status"] = "disabled"
+
+	process_branch.call(branch_to_disable)
+
+	var current_branches = branches_to_process.duplicate(false)
+
+	# Process branches until none left
+	while branches_to_process.size() > 0:
+		var current_branch = branches_to_process[0]  # Get first branch
+		process_branch.call(current_branch)        # Process it
+		branches_to_process.remove_at(0)            # Remove it and array shifts automatically

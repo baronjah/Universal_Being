@@ -1,0 +1,286 @@
+[gd_scene load_steps=13 format=3]
+
+[ext_resource type="Script" path="res://12_turns_system/pitopia_main.gd" id="1_pfj2m"]
+[ext_resource type="Script" path="res://12_turns_system/notepad3d_pitopia_integration.gd" id="2_hn7q5"]
+[ext_resource type="Script" path="res://12_turns_system/data_splitter_controller.gd" id="3_e6kmx"]
+[ext_resource type="PackedScene" path="res://12_turns_system/effects/dimension_transition.tscn" id="4_txrpc"]
+[ext_resource type="PackedScene" path="res://12_turns_system/entities/universal_entity.tscn" id="5_yv4ox"]
+[ext_resource type="PackedScene" path="res://12_turns_system/effects/cyber_gate_effect.tscn" id="6_3ey3i"]
+[ext_resource type="PackedScene" path="res://12_turns_system/effects/data_sewer_effect.tscn" id="7_mhmoy"]
+[ext_resource type="PackedScene" path="res://12_turns_system/ui/moon_phase_indicator.tscn" id="8_lwg7i"]
+
+[sub_resource type="Environment" id="Environment_ocd53"]
+background_mode = 2
+ambient_light_color = Color(0.2, 0.2, 0.3, 1)
+ambient_light_energy = 0.5
+glow_enabled = true
+glow_intensity = 0.3
+fog_enabled = true
+fog_light_color = Color(0.219608, 0.219608, 0.309804, 1)
+fog_density = 0.01
+volumetric_fog_enabled = true
+volumetric_fog_density = 0.01
+adjustment_enabled = true
+adjustment_brightness = 1.05
+adjustment_contrast = 1.1
+adjustment_saturation = 1.2
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ypmx6"]
+bg_color = Color(0.0784314, 0.0784314, 0.0980392, 0.901961)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.2, 0.196078, 0.294118, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+shadow_color = Color(0, 0, 0, 0.25098)
+shadow_size = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_l2wfy"]
+bg_color = Color(0.152941, 0.152941, 0.196078, 0.901961)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.290196, 0.290196, 0.388235, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="Theme" id="Theme_m8t2o"]
+LineEdit/styles/focus = SubResource("StyleBoxFlat_l2wfy")
+Panel/styles/panel = SubResource("StyleBoxFlat_ypmx6")
+
+[node name="DataSplitterIntegrationScene" type="Node3D"]
+
+[node name="PitopiaMain" type="Node3D" parent="." groups=["pitopia_main"]]
+script = ExtResource("1_pfj2m")
+auto_initialize = true
+auto_connect_signals = true
+default_dimension = 3
+default_turn_duration = 9.0
+enable_creation_on_words = true
+enable_automatic_dimension_effects = true
+enable_debug_messages = true
+dimension_particle_effect_scene = ExtResource("4_txrpc")
+default_entity_scene = ExtResource("5_yv4ox")
+
+[node name="Notepad3DPitopiaIntegration" type="Node3D" parent="."]
+script = ExtResource("2_hn7q5")
+pitopia_main_path = NodePath("../PitopiaMain")
+turn_system_path = NodePath("../DataSplitterController")
+console_path = NodePath("../Console")
+enable_reality_transitions = true
+enable_cyber_gates = true
+enable_data_sewers = true
+enable_moon_phases = true
+default_reality_type = "Physical"
+word_limit_per_dimension = 100
+auto_initialize = true
+cyber_gate_effect = ExtResource("6_3ey3i")
+data_sewer_effect = ExtResource("7_mhmoy")
+moon_phase_indicator = ExtResource("8_lwg7i")
+
+[node name="DataSplitterController" type="Node3D" parent="."]
+script = ExtResource("3_e6kmx")
+notepad3d_integration_path = NodePath("../Notepad3DPitopiaIntegration")
+pitopia_main_path = NodePath("../PitopiaMain")
+console_path = NodePath("../Console")
+auto_initialize = true
+enable_debug_logs = true
+max_data_streams = 9
+default_data_chunk_size = 16
+default_split_factor = 3
+data_visualization_enabled = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_ocd53")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.866025, -0.433013, 0.25, 0, 0.5, 0.866025, -0.5, -0.75, 0.433013, 0, 5, 0)
+light_color = Color(0.945098, 0.921569, 1, 1)
+light_energy = 0.8
+shadow_enabled = true
+
+[node name="PlayerCamera" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.965926, 0.258819, 0, -0.258819, 0.965926, 0, 1.5, 4)
+current = true
+fov = 70.0
+
+[node name="UI" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_m8t2o")
+
+[node name="DimensionInfo" type="Panel" parent="UI"]
+layout_mode = 0
+offset_left = 20.0
+offset_top = 20.0
+offset_right = 320.0
+offset_bottom = 150.0
+
+[node name="DimensionLabel" type="Label" parent="UI/DimensionInfo"]
+layout_mode = 0
+offset_left = 10.0
+offset_top = 10.0
+offset_right = 290.0
+offset_bottom = 40.0
+text = "Dimension: 3D - Spatial Manifestation"
+
+[node name="TurnLabel" type="Label" parent="UI/DimensionInfo"]
+layout_mode = 0
+offset_left = 10.0
+offset_top = 40.0
+offset_right = 290.0
+offset_bottom = 70.0
+text = "Turn: 1 - γ"
+
+[node name="RealityLabel" type="Label" parent="UI/DimensionInfo"]
+layout_mode = 0
+offset_left = 10.0
+offset_top = 70.0
+offset_right = 290.0
+offset_bottom = 100.0
+text = "Reality: Physical"
+
+[node name="MoonPhaseLabel" type="Label" parent="UI/DimensionInfo"]
+layout_mode = 0
+offset_left = 10.0
+offset_top = 100.0
+offset_right = 290.0
+offset_bottom = 130.0
+text = "Moon Phase: 0/7 (100% stability)"
+
+[node name="DataSplitterPanel" type="Panel" parent="UI"]
+layout_mode = 0
+offset_left = 20.0
+offset_top = 170.0
+offset_right = 320.0
+offset_bottom = 320.0
+
+[node name="TitleLabel" type="Label" parent="UI/DataSplitterPanel"]
+layout_mode = 0
+offset_left = 10.0
+offset_top = 10.0
+offset_right = 290.0
+offset_bottom = 40.0
+text = "Data Splitter System"
+
+[node name="StreamsLabel" type="Label" parent="UI/DataSplitterPanel"]
+layout_mode = 0
+offset_left = 10.0
+offset_top = 40.0
+offset_right = 290.0
+offset_bottom = 70.0
+text = "Active Streams: 0/9"
+
+[node name="ChunksLabel" type="Label" parent="UI/DataSplitterPanel"]
+layout_mode = 0
+offset_left = 10.0
+offset_top = 70.0
+offset_right = 290.0
+offset_bottom = 100.0
+text = "Data Chunks: 0"
+
+[node name="SplitsLabel" type="Label" parent="UI/DataSplitterPanel"]
+layout_mode = 0
+offset_left = 10.0
+offset_top = 100.0
+offset_right = 290.0
+offset_bottom = 130.0
+text = "Active Splits: 0"
+
+[node name="HelpLabel" type="Label" parent="UI"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -50.0
+offset_bottom = -10.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "Press [TAB] for console | 1-9 to change dimension | WASD to move | Type /help for commands"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Console" type="Control" parent="."]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_m8t2o")
+
+[node name="Panel" type="Panel" parent="Console"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 0.4
+offset_left = 20.0
+offset_top = 20.0
+offset_right = -20.0
+offset_bottom = 0.0
+
+[node name="CommandInput" type="LineEdit" parent="Console/Panel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.85
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_right = -10.0
+offset_bottom = -10.0
+placeholder_text = "Enter a word or command... (try /help)"
+
+[node name="OutputLabel" type="RichTextLabel" parent="Console/Panel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 0.85
+offset_left = 10.0
+offset_top = 10.0
+offset_right = -10.0
+offset_bottom = -5.0
+focus_mode = 2
+bbcode_enabled = true
+text = "[color=#9988ff]Welcome to Notepad3D Data Splitter Integration[/color]
+Press [TAB] to toggle console
+Type [color=#88ff99]/help[/color] for commands
+Use number keys [color=#ff8888]1-9[/color] to change dimension
+Current reality: [color=#ffdd88]Physical[/color]
+Use [color=#88ddff]/split [text][/color] to create data splits
+"
+scroll_following = true
+selection_enabled = true
+
+[node name="GridContainer" type="Node3D" parent="."]
+
+[node name="GridLines" type="Node3D" parent="GridContainer"]
+
+[node name="Floor" type="CSGBox3D" parent="GridContainer"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+size = Vector3(20, 1, 20)
+
+[node name="DataSplitterContainer" type="Node3D" parent="."]
+
+[node name="DataStreams" type="Node3D" parent="DataSplitterContainer"]
+
+[node name="DataChunks" type="Node3D" parent="DataSplitterContainer"]
+
+[node name="DataConnections" type="Node3D" parent="DataSplitterContainer"]
+
+[node name="DataVisualizer" type="Node3D" parent="DataSplitterContainer"]
+
+[connection signal="command_entered" from="Console/Panel/CommandInput" to="DataSplitterController" method="process_command"]
+[connection signal="text_submitted" from="Console/Panel/CommandInput" to="DataSplitterController" method="process_command"]

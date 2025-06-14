@@ -1,0 +1,52 @@
+# Advanced Spawn Patterns
+# This list defines various spawn patterns for the Universal Entity system
+
+# Spiral Pattern
+pattern:spiral
+ragdoll 0 0 0
+ragdoll 2 0 1
+ragdoll 1 0 3
+ragdoll -1 0 3
+ragdoll -3 0 1
+ragdoll -3 0 -1
+ragdoll -1 0 -3
+ragdoll 1 0 -3
+ragdoll 3 0 -1
+
+# Wave Pattern
+pattern:wave
+tree -10 0 0 height=5
+tree -8 1 0 height=6
+tree -6 2 0 height=7
+tree -4 1 0 height=6
+tree -2 0 0 height=5
+tree 0 -1 0 height=4
+tree 2 0 0 height=5
+tree 4 1 0 height=6
+tree 6 2 0 height=7
+tree 8 1 0 height=6
+tree 10 0 0 height=5
+
+# Debug Objects
+pattern:debug
+box 0 1 5 color=red size=2
+sphere 5 1 0 color=blue radius=1
+cylinder -5 1 0 color=green height=3
+
+# Interactive Objects
+pattern:interactive
+console_trigger 0 0 10 message="Welcome to the Universal Entity!"
+pickup_health 3 0 3 amount=25
+pickup_energy -3 0 -3 amount=50
+
+# Performance Test Pattern
+pattern:stress_test
+cube 0 0 0
+cube 1 0 0
+cube -1 0 0
+cube 0 0 1
+cube 0 0 -1
+cube 1 0 1
+cube -1 0 1
+cube 1 0 -1
+cube -1 0 -1

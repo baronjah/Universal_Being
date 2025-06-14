@@ -1,0 +1,30 @@
+func container_finder(set_name):
+	
+	#var set_name_check = set_name.find("_")
+	#print(" new_information_0 : ", set_name_check)
+	
+	
+	var wordly_word = set_name + BanksCombiner.data_names_0[0]
+	
+	active_r_s_mut.lock()
+	
+	
+	var container_name_now = "akashic_records"
+	
+	
+	
+	
+	if active_record_sets.has(set_name):
+	
+		if active_record_sets[set_name][wordly_word].has("content") and active_record_sets[set_name][wordly_word]["content"] != []:
+		# it is content = [] so it is still empty
+			active_record_sets[set_name][wordly_word]
+			container_name_now = active_record_sets[set_name][wordly_word]["content"][0][0][6][0]#.duplicate(true)
+		
+		
+	active_r_s_mut.unlock()
+	
+	var container_splitter = container_name_now.split("/")
+	if container_splitter.size() > 1:
+		container_name_now = container_splitter[0]
+	return container_name_now

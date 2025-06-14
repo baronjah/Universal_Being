@@ -1,0 +1,77 @@
+func trigger_deep_repair(error_type: String):
+	print("Initiating deep repair for error type: ", error_type)
+	
+	dictionary_of_mistakes_mutex.lock()
+	var error_data = dictionary_of_mistakes[error_type]
+	dictionary_of_mistakes_mutex.unlock()
+	
+	match error_type:
+		"thread_pool_backlog":
+			# Reset thread counters and clear stuck tasks
+			int_of_stuff_started = 0
+			int_of_stuff_finished = 0
+			
+			# Recheck all container states
+			mutex_for_container_state.lock()
+			for container in current_containers_state.keys():
+				current_containers_state[container]["status"] = -1  # Force recheck
+			mutex_for_container_state.unlock()
+			
+			# Trigger container state checker
+			mutex_for_trickery.lock()
+			menace_tricker_checker = 1
+			mutex_for_trickery.unlock()
+		
+		"node_missing":
+			# Scan all containers for missing nodes
+			tree_mutex.lock()
+			for branch_name in scene_tree_jsh["main_root"]["branches"].keys():
+				var branch = scene_tree_jsh["main_root"]["branches"][branch_name]
+				
+				# Check required nodes
+				var missing = []
+				if !branch.has("datapoint") or !branch["datapoint"].has("node"):
+					missing.append("datapoint")
+				if !branch.has("node") or !is_instance_valid(branch["node"]):
+					missing.append("container")
+				
+				if missing.size() > 0:
+					# Get records for reconstruction
+					active_r_s_mut.lock()
+					var records_set = branch_name.split("_")[0] + "_"
+					if active_record_sets.has(records_set):
+						var records = active_record_sets[records_set]
+						for node_type in missing:
+							recreate_node_from_records(branch_name, node_type, records)
+					active_r_s_mut.unlock()
+			tree_mutex.unlock()
+		
+		"container_state_mismatch":
+			# Reset all container states and force revalidation
+			mutex_for_container_state.lock()
+			current_containers_state.clear()
+			mutex_for_container_state.unlock()
+			
+			mutex_containers.lock()
+			list_of_containers.clear()
+			mutex_containers.unlock()
+			
+			# Force recheck of all active records
+			active_r_s_mut.lock()
+			for records_set in active_record_sets.keys():
+				if active_record_sets[records_set].has("metadata"):
+					active_record_sets[records_set]["metadata"]["container_count"] = 0
+			active_r_s_mut.unlock()
+			
+			# Trigger full recheck
+			containers_states_checker()
+			containers_list_creator()
+		
+		_:
+			print("Unknown error type for deep repair: ", error_type)
+	
+	# Clear error history after repair attempt
+	dictionary_of_mistakes_mutex.lock()
+	dictionary_of_mistakes[error_type]["count"] = 0
+	dictionary_of_mistakes[error_type]["instances"].clear()
+	dictionary_of_mistakes_mutex.unlock()

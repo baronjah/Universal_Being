@@ -1,0 +1,22 @@
+# Godot 4+ specific ignores
+.godot/
+.import/
+
+# Python virtual environment
+lib64/
+__pycache__/
+*.pyc
+*.pyo
+
+# System files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Temporary files
+*.tmp
+*.backup
+*.bak
+*~

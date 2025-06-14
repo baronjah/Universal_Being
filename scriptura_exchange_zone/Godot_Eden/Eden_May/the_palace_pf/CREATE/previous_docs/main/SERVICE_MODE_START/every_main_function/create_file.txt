@@ -1,0 +1,8 @@
+func create_file(array_with_data: Array, lines_amount: int, name_for_file: String):
+
+	var file = FileAccess.open(path + "/" + name_for_file + ".txt", FileAccess.WRITE)
+	if file:
+		# We'll loop from 0 to lines_amount-1 to write each line
+		for line in range(lines_amount):
+			file.store_line(array_with_data[line][0]) 
+		file_path = path + "/" + name_for_file + ".txt"

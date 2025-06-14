@@ -1,0 +1,5 @@
+func _on_retry_timer_completed(timer_id: String):
+	if timer_id == "retry_timer":
+		print("Retrying operation after timer completion")
+		# Retry your operation here
+		prepare_akashic_records()

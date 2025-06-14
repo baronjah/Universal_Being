@@ -1,0 +1,238 @@
+Comprehensive Project Plan: Notepad3D & Akashic Records (Godot + Claude Terminal)
+🌟 Project Overview & Core Idea
+Notepad3D:
+A 3D interactive world for visualizing, creating, and editing textual data spatially. Text evolves, animates, and changes based on interactions and states.
+
+Akashic Records Concept:
+Persistent data stores (words, ideas, databases) that evolve and change dynamically, visualized in 3D/2D with intuitive UI, shaders, and interactive animations.
+
+📂 Project Folder Structure Rules (Claude Terminal)
+Base Folder Structure:
+pgsql
+Copy
+Edit
+C:\ProjectRoot\
+├── 01_Start\
+│   ├── Instructions.md (general guidelines, always updated)
+│   ├── ProjectLog.md (records of actions taken, steps, turns)
+│   └── ClaudeSummaries\
+│       ├── SummaryHeader.md (top 100 lines of instructions)
+│       └── SummaryLog.md (last 100 lines, recent actions and steps)
+│
+├── 02_Modules\
+│   ├── Database\
+│   ├── Shaders\
+│   ├── Scripts\
+│   ├── Terminal\
+│   ├── AI_Interface\
+│   └── Visualization\
+│
+├── 03_Versions\
+│   ├── Stable\
+│   └── Experimental\
+│
+└── 04_Backups\
+    └── YYYY_MM_DD (date folders)
+🗃️ Claude Terminal Interaction Rules
+File Creation & Updates:
+
+Create new files based on clearly labeled instructions from previous files.
+
+Update summaries immediately after every significant step or command.
+
+Always split summaries into two:
+
+Top 100 lines: clear instructions, steps, rules.
+
+Bottom 100 lines: recent history, decisions, next steps.
+
+Version Tracking & Time-Stamping:
+
+Every major change increments a version ID (v1.0, v1.1, etc.).
+
+Clearly log versions and timestamps in ProjectLog.md.
+
+Folder Linking & Interconnection:
+
+Maintain reference links clearly indicating folder connections.
+
+When linking new data from older folders, update both new and original files to reflect changes clearly and immediately.
+
+Task Completion & Checks:
+
+Use numeric counters or timestamps (int steps_completed) clearly marked in logs.
+
+🔗 Programming & Multi-threading Rules
+Mutex & Thread Safety:
+
+All shared resources (files, databases) require mutex locking when accessed by threads.
+
+Clearly mark sections of scripts that require locks.
+
+gdscript
+Copy
+Edit
+var mutex = Mutex.new()
+
+func safe_update():
+    mutex.lock()
+    # critical section, file/database updates here
+    mutex.unlock()
+Multi-threading & Tasking:
+
+Clearly defined tasks (Task_ID) logged in terminal.
+
+Limit threads to clear tasks: visualization, database IO, and shader computations.
+
+Always check thread safety and avoid race conditions.
+
+Steps & Turns for AI:
+
+Clearly log AI turns (AI_Turn: Action) in terminal.
+
+Structure all interactions clearly in a step-by-step manner, logged transparently.
+
+📋 Basic Command Rules (Terminal & AI)
+Simple command structure:
+
+css
+Copy
+Edit
+COMMAND [ARGUMENTS]
+Examples:
+
+pgsql
+Copy
+Edit
+CREATE FILE "name.txt" IN FOLDER "02_Modules/Database"
+UPDATE FILE "shader.gdshader" IN FOLDER "Shaders"
+RENAME FILE "old.txt" TO "new.txt" IN FOLDER "01_Start"
+LOG ACTION "Completed shader test v1.2"
+Feedback & Interaction:
+
+AI provides confirmation feedback clearly in terminal, logs outcome in SummaryLog.md.
+
+Clear error and success messages with timestamps.
+
+🎨 Visualization (Shaders & Animation Rules in Godot)
+2D Shader Rules (center-out direction):
+
+Use UV coordinates radiating from center (0.5, 0.5).
+
+Animate outward from center using TIME uniform.
+
+glsl
+Copy
+Edit
+shader_type canvas_item;
+
+uniform float speed = 1.0;
+
+void fragment() {
+    float dist = distance(UV, vec2(0.5));
+    float alpha = sin(dist * 20.0 - TIME * speed) * 0.5 + 0.5;
+    COLOR = vec4(vec3(alpha), alpha);
+}
+3D Shader Rules (Directional animation):
+
+Vertices animate outward or upward from object origin or center.
+
+Clearly commented shader code.
+
+glsl
+Copy
+Edit
+shader_type spatial;
+
+uniform float speed = 1.0;
+uniform float amplitude = 1.0;
+
+void vertex() {
+    VERTEX.y += amplitude * sin(length(VERTEX.xz) - TIME * speed);
+}
+🧩 Game Creation Workflow (Godot + Claude)
+Core Workflow Steps:
+#	Step	Action
+1	Initialize Claude Terminal	Create new folder & initial files
+2	Set basic instructions	Top 100 lines in summaries
+3	Implement Database Interaction	Define how words evolve/change
+4	Create Shaders	2D & 3D visualization & animation
+5	Link Claude commands to Godot	Use simple terminal structure
+6	Test & Iterate	Update logs & summaries
+7	Backup & Version	Archive to dated backup folder
+
+🌌 Game Specific Ideas: Notepad3D & Akashic Records
+Visualization Techniques:
+Noise-based textures:
+
+Procedurally generated using shaders.
+
+GPU-compute shaders for real-time updates.
+
+Interactive Menus:
+
+Clickable buttons to toggle views on/off.
+
+Animated expansion from center.
+
+Evolution of Words Database:
+
+Words visually evolve as shaders animate (scale, brightness, rotation).
+
+Visualize word connections dynamically (e.g., network graph).
+
+🚩 Performance & Smooth Interaction
+Avoiding Lag & Flicker:
+Limit simultaneous large file operations.
+
+Multi-thread IO operations to avoid UI hangs.
+
+Check terminal refresh rates; avoid heavy rapid updates.
+
+Clearly separate logging from interactive terminal commands.
+
+🎯 Terminal Screen & Interaction Notes
+Terminal outputs and conversations are logged carefully, preventing excessive length.
+
+Clearly marked sections (START OF SECTION, END OF SECTION) for readability.
+
+Use terminal shortcuts (Home, End keys) cautiously to avoid flicker and pop-ups.
+
+🕹️ Claude Project Management: AI-driven Terminal App
+Folder Tracking & Time-based Checks:
+Use integer-based (int) visit counters to each folder:
+
+makefile
+Copy
+Edit
+FOLDER_VISITS:
+01_Start: 12
+02_Modules: 8
+When revisiting older folders, clearly log the actions:
+
+css
+Copy
+Edit
+REVISITED [Folder_ID] AT [Timestamp] FOR [Reason]
+Regularly synchronize all updated data back to main (01_Start) to keep it current.
+
+🧠 Final Checklist for Quick Reference
+✅ Clearly structured folders and subfolders.
+
+✅ Top & bottom summary split for clarity.
+
+✅ Mutex usage for thread-safe operations.
+
+✅ Simple, clear terminal commands.
+
+✅ Multi-language approach ready (Godot, Python, JS, GLSL, etc.).
+
+✅ Visualization-first approach (noise, shaders, procedural textures).
+
+✅ Frequent backups and versioning system.
+
+✅ AI instructions clearly logged and actionable.
+
+✅ Efficient & smooth terminal usage rules.
+
+Following this comprehensive yet clear structure ensures a flexible, scalable project development process, enabling smooth interactions, effective collaboration, and beautiful visualizations for your Notepad3D and Akashic Records concepts. Let me know your thoughts or next steps! 🌟

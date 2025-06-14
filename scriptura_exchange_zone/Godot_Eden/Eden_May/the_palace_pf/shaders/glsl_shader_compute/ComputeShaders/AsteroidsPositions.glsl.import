@@ -1,0 +1,14 @@
+[remap]
+
+importer="glsl"
+type="RDShaderFile"
+uid="uid://bholryjqkwrxo"
+path="res://.godot/imported/AsteroidsPositions.glsl-5918398075561cf0d42eab074bdc2f71.res"
+
+[deps]
+
+source_file="res://shaders/glsl_shader_compute/ComputeShaders/AsteroidsPositions.glsl"
+dest_files=["res://.godot/imported/AsteroidsPositions.glsl-5918398075561cf0d42eab074bdc2f71.res"]
+
+[params]
+

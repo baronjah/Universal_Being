@@ -1,0 +1,38 @@
+func _ready():
+	
+	message_of_delta_start = breaks_and_handles_check()
+	print(" delta message start ", message_of_delta_start)
+	
+	
+	thread_pool.connect("task_discarded", func(task): 
+		print(" thread pool connect task discarded")
+		queue_pusher_adder(task)
+		int_of_stuff_finished +=1
+	)
+	
+	thread_pool.connect("task_started", func(task):
+		print("task_started", task)
+		track_task_status(task)
+		int_of_stuff_started +=1
+		)
+	#connect("frame_processed", Callable(self, "_on_frame_processed"))
+	#frame_signal_connected = true
+	#thread_pool.connect("task_discarded", Callable(self, "_on_task_discarded"))
+	print("_ready : Project Eden, ver : new dictionaries of data sendin and cachin")
+	print(" prepare_basic operation before creation ")
+	#prepare_akashic_records()
+	check_status_just_timer()
+	check_settings_file()
+	mouse_pos = get_viewport().get_mouse_position()
+	camera = get_viewport().get_camera_3d()
+	viewport = get_viewport()
+	check_status_just_timer()
+	start_up_scene_tree()
+	check_status_just_timer()
+	print(" delta message start we start three stage sof creation ")
+	
+	
+	# here we can stop, before stuff is connected
+	#create_new_task("three_stages_of_creation", "base")
+	#create_new_task("three_stages_of_creation", "menu")
+	print(" delta message start we start three stage sof creation well, both went theirs ways ")

@@ -1,0 +1,9 @@
+func _init():
+	check_status_just_timer()
+	timer_system = GodotTimersSystem.new()
+	add_child(timer_system)
+	_setup_retry_timer()
+	check_status_just_timer()
+	prepare_akashic_records_init()
+	emit_signal("main_node_signal", "main_init")
+	setup_system_checks()

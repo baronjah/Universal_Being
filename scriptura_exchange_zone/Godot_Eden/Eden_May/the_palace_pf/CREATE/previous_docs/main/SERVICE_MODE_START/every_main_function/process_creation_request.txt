@@ -1,0 +1,30 @@
+func process_creation_request(set_name: String) -> Dictionary:
+	var result = {
+		"status": CreationStatus.ERROR,
+		"message": "",
+		"timestamp": Time.get_ticks_msec()
+	}
+	
+	# Check if creation is possible
+	if not is_creation_possible():
+		result.status = CreationStatus.LOCKED
+		result.message = "Creation system is not active"
+		return result
+	
+	# Attempt creation
+	var creation_result = whip_out_set_by_its_name(set_name)
+	match creation_result:
+		CreationStatus.SUCCESS:
+			result.status = CreationStatus.SUCCESS
+			result.message = "Set created successfully"
+		CreationStatus.ERROR:
+			record_mistake({
+				"type": "creation_error",
+				"set_name": set_name,
+				"error": "Creation failed"
+			})
+			result.message = "Failed to create set"
+		_:
+			result.message = "Unexpected creation status"
+	
+	return result

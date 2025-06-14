@@ -1,0 +1,956 @@
+
+#
+# JSH Ethereal Engine check stuff before we proceed
+#
+#      oooo  .oooooo..o ooooo   ooooo 
+#      `888 d8P'    `Y8 `888'   `888' 
+#       888 Y88bo.       888     888     ┏┓    •      ┏┓┓    ┓ 
+#       888  `"Y8888o.   888ooooo888     ┣ ┏┓┏┓┓┏┓┏┓  ┃ ┣┓┏┓┏┃┏
+#       888      `"Y88b  888     888     ┗┛┛┗┗┫┗┛┗┗   ┗┛┛┗┗ ┗┛┗   
+#       888 oo     .d8P  888     888          ┛              
+#   .o. 88P 8""88888P'  o888o   o888o 
+#   `Y888P                            
+#
+# JSH Ethereal Engine check stuff before we proceed
+#
+
+
+
+
+
+
+	#if method_task == "three_stages_of_creation":
+		#var target_argument = task.target_argument
+		#var type_of_state : int = 1
+		#print(" taskkk three stages of creation  : " , target_argument , " amd " , method_task)
+		#the_current_state_of_tree(target_argument, type_of_state)
+		#
+		#print(" menace checker after task done ? hmm ")
+		#mutex_for_trickery.lock()
+		#menace_tricker_checker = 1
+		#mutex_for_trickery.unlock()
+		#print(" menace checker after task done ? hmm  2")
+	#
+	#if method_task == "unload_container":
+		#var target_argument = task.target_argument
+		#var type_of_state : int = -1
+		#var the_shorter_set = target_argument.substr(0, str(target_argument).length() - 10)
+		#print(" taskkk unload container : " , target_argument, " method_task " , method_task)
+		#the_current_state_of_tree(the_shorter_set, type_of_state)
+		
+		#unload_queue_mutex.lock()
+		#
+		#if !unload_queue.has(target_argument):
+			#print(" it is freshly added for unloading")
+			#var int_for_counting_tries : int = 0
+			#unload_queue[target_argument] = {
+				#"status" = "pending",
+				#"tries" = int_for_counting_tries
+			#}
+		#else:
+			#unload_queue[target_argument]["tries"] +=1
+		#
+		#unload_queue_mutex.unlock()
+		
+		
+		
+	# mutex_singular_l_u.unlock()
+	# the stuff, that could interrupt, is making the tree, pending
+	
+	# three_stages_of_creation , not really, we could hit limit of active sets, already unloaded?
+	
+	# next one kinda the same
+	
+	# initialize_menu
+	
+	
+	
+
+	# this means, that we have a set to pull out on the scene
+	
+	# second_impact_for_real
+	
+	# the same as above
+	
+	# third_impact_right_now
+	
+	# fourth_impact_right_now
+	
+	# fifth_impact_right_now
+	
+	# this means, that we updated scene tree
+	
+	# the_finisher_for_nodes
+	
+	# task_to_send_data_to_datapoint
+	
+	
+
+	
+	
+	
+	
+	# the ones that unload stuff ?
+
+
+
+# the set first contact with existnce
+
+func the_current_state_of_tree(set_name_now, the_state):
+	
+	mutex_for_container_state.lock()
+	if current_containers_state.has(set_name_now):
+		current_containers_state[set_name_now]["status"] = the_state
+		print("taskkkkl it has it already ", set_name_now, " its status : " , the_state)
+	else:
+		print("taskkkkl does not have ", set_name_now, " its status : " , the_state)
+		current_containers_state[set_name_now] = {
+			"status" = the_state
+		}
+	mutex_for_container_state.unlock()
+
+
+
+	if the_state == 1:
+		print(" to be loaded ")
+		
+		load_queue_mutex.lock()
+		
+		if load_queue.has(set_name_now):
+			
+			print(" we had it before, to be loaded : ", set_name_now)
+		else:
+			load_queue[set_name_now] = {}
+			print(" we have not loaded it before : ", set_name_now)
+		
+		load_queue_mutex.unlock()
+		
+
+
+
+	if the_state == -1:
+		print(" to be unloaded ")
+		
+		unload_queue_mutex.lock()
+		
+		if unload_queue.has(set_name_now):
+			print(" we had it before, to be unloaded : ", set_name_now)
+		else:
+			unload_queue[set_name_now] = {}
+			print(" we have not unloaded it before")
+		
+		unload_queue_mutex.unlock()
+		
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# containers
+
+
+
+func check_if_first_time(set_name_first, the_current_of_energy):
+	
+	#mutex_for_container_state.lock()
+	
+	#if current_containers_state[set_name_first].has("three_i"):
+		#var three_ii = current_containers_state[set_name_first]["three_i"]
+		#print(" three_ii : ", three_ii)
+	
+	#mutex_for_container_state.unlock()
+	
+	mutex_containers.lock()
+	
+	print(" set_name_first  : " , set_name_first , " the_current_of_energy ", the_current_of_energy , " list_of_containers " , list_of_containers)
+	
+	if list_of_containers.has(set_name_first):
+		print(" it have it already")
+	else:
+		list_of_containers[set_name_first] = {}
+		list_of_containers[set_name_first]["status"] = the_current_of_energy
+	
+	list_of_containers
+	
+	mutex_containers.unlock()
+
+# check every container found in a set list
+
+
+func connect_containers(container_name_0, container_name_1):
+	print(" two containers to connect " , container_name_0 , " and : " , container_name_0)
+
+	var container_data_0
+	var container_data_1
+
+	mutex_containers.lock()
+	
+	
+	if list_of_containers.has(container_name_0):
+		# it has that container
+		if list_of_containers[container_name_0].has("connected_containers"):
+			
+			
+			
+			container_data_0 = list_of_containers[container_name_0]
+		else:
+			# it needs connected containers, connection
+			list_of_containers[container_name_0]["connected_containers"] = {}
+			list_of_containers[container_name_0]["connected_containers"][container_name_1] = {}
+		
+	if list_of_containers.has(container_name_1):
+		
+		if list_of_containers[container_name_1].has("connected_containers"):
+			
+			
+			
+			container_data_1 = list_of_containers[container_name_1]
+		else:
+			list_of_containers[container_name_1]["connected_containers"] = {}
+			list_of_containers[container_name_1]["connected_containers"][container_name_0] = {}
+	
+	
+	
+	mutex_containers.unlock()
+
+
+
+
+
+
+
+
+
+
+
+
+func containers_list_creator():
+	# check if we have any containers
+	mutex_for_container_state.lock()
+	
+	if current_containers_state.size() > 0:
+		print(" fatal kurwa error : ", current_containers_state)
+		print("checkerrr bigger list than 0 ")
+		# lets add also there, new status, of what be done before
+		
+		# later if it is already in active state, and its own status, is the same, we dont need to check
+		
+		
+		
+		for data_sets_to_check in current_containers_state: 
+			#print(" alkaida is calling fbi xd  :  ", data_sets_to_check , ", " , current_containers_state[data_sets_to_check]["status"], " but also we got three ints lol ", current_containers_state[data_sets_to_check]["three_i"])
+			
+			
+			var three_iii : Vector3i
+			var current_state_0 : int = -1
+			var current_state_1 : int = -1
+			var current_state_2 : int = -1
+			three_iii.x = current_state_0
+			three_iii.y = current_state_1
+			three_iii.z = current_state_2
+			
+			var new_information_0 = null
+			
+			
+			
+			print(" first we check basics")
+			
+			var three_ii
+			if current_containers_state[data_sets_to_check].has("three_i"):
+				three_ii = current_containers_state[data_sets_to_check]["three_i"]
+				three_iii.x = 0
+			else:
+				three_ii = null
+				three_iii.x = -2
+			
+			
+			
+			var current_status
+			if current_containers_state[data_sets_to_check].has("status"):
+				print(" allah akbar, three_ii ", three_ii, current_containers_state[data_sets_to_check]["status"])
+				current_status = current_containers_state[data_sets_to_check]["status"]
+				three_iii.x = 1
+			else:
+				current_status = null
+				three_iii.x = -2
+				
+			# container of set information exist :
+			
+			var current_container_to_check
+			if current_containers_state[data_sets_to_check].has("container_name"):
+				current_container_to_check = current_containers_state[data_sets_to_check]["container_name"]
+				three_iii.x = 2
+				
+			else:
+				current_container_to_check = null
+				three_iii.x = -2
+				
+				
+			# check if tree has that container
+			if current_container_to_check != null:
+				if current_status != null:
+					check_if_first_time(current_container_to_check, current_status)
+					three_iii.x = -3
+					
+			
+			
+			print(" fatal kurwa error 0 : ", current_container_to_check , ", 1 : " , current_status , ", 2 : " , three_ii)
+			if current_container_to_check == null:
+				if current_status == null:
+					if three_ii == null:
+						print(" FATAL KURWA ERROR WE MUST DO SOMETHING")
+						three_iii.x -4
+			
+			mutex_containers.lock()
+			#
+			if list_of_containers.has(current_container_to_check):
+				print("three_ii tree check 011 normal human first check, if it is, not if it isnt ")
+				three_iii.y = 0
+				# so that container exist, so we can check more things
+				
+				# if status exist there? we can check if it is to load, or to unload
+				
+				
+				if list_of_containers[current_container_to_check].has("status"):
+					print(" three_ii tree check 013 status? : ", list_of_containers[current_container_to_check]["status"])
+					three_iii.y = 1
+					
+				
+				
+				# we can check previous three_i check
+				
+				
+				if list_of_containers[current_container_to_check].has("three_i"):
+					print(" three_ii tree check 014 ")
+					list_of_containers[current_container_to_check]["three_i"] = three_iii
+					three_iii.y = 2
+				else:
+					print(" three_ii tree check 015 we dont have it there, yet, lets add something to it")
+					list_of_containers[current_container_to_check]["three_i"] = three_iii
+					
+					
+			else:
+				print("three_ii tree check 0112 three_ii what i maybe trully need more?")
+				#check_if_first_time()
+				three_iii.y = -2
+			#
+			#
+			mutex_containers.unlock()
+			
+			
+			tree_mutex.lock()
+			
+
+			
+			if scene_tree_jsh.has("main_root"):
+				print(" three_ii tree check 00 ")
+				three_iii.z = 0
+				
+				if scene_tree_jsh["main_root"].has("branches"):
+					print(" three_ii tree check 01")
+					if scene_tree_jsh["main_root"]["branches"].has(current_container_to_check):
+						three_iii.z = 1
+						
+						print(" three_ii tree check 02")
+					else:
+						print(" three_ii tree check 00, we didnt find that container in tree, maybe it will appear, lets add new list of add to queue")
+						new_information_0 = container_finder(data_sets_to_check)
+						three_iii.z = -2
+						print(" new_information_0  : " , new_information_0, " and previous info : " , current_container_to_check)
+						if current_container_to_check != new_information_0:
+							print(" new_information_0 they are not the same how lol ")
+							
+							check_if_first_time(new_information_0, current_status)
+							three_iii.z = -3
+							
+							
+
+						# maybe record name and container names are different
+						
+						# lets recheck container name? by base name
+						
+			
+			tree_mutex.unlock()
+			
+			mutex_containers.lock()
+			
+			
+
+			
+			#
+			for container_to_check in list_of_containers:
+				print(" three_ii :" , container_to_check)
+				print()
+				print(list_of_containers[container_to_check])
+				print()
+				if new_information_0 != null:
+					if list_of_containers[container_to_check].has("connected_containers"):
+						# IF NOT HAVE THAT CONTAINER CONNECTED TO THAT CONTAINER, CONNECT THEM
+						if !list_of_containers[container_to_check]["connected_containers"].has(new_information_0):
+							connect_containers(container_to_check, new_information_0)
+					# IF IT DOES NOT HAVE ANY CONNECTED CONTAINERS AT ALL 
+					else:
+						connect_containers(current_container_to_check, new_information_0)
+				
+				
+			
+			mutex_containers.unlock()
+			
+			
+			print(" three_ii ",scene_tree_jsh)
+			print(" what we even wanted with these three ? three_ii : " , three_ii , " , ", current_status , " , " , current_container_to_check)
+			
+			# container name can be broken, unfortunately
+			
+				#mutex_containers.lock()
+				#
+				#
+				#
+				## if it is new container
+				#
+				#
+				#
+				#if !list_of_containers.has(current_container_to_check):
+					##print(" fatal kurwa error : 0 ", list_of_containers[current_container_to_check])
+					#list_of_containers[current_container_to_check] = {
+						#"record_sets" = {},
+						#"status" = current_containers_state[data_sets_to_check]["status"],
+						#"datapoint_node" = "",
+						#
+					#}
+					##print(" allah akbar, yes ", current_container_to_check)
+					#print(" fatal kurwa error : 0 ", list_of_containers[current_container_to_check])
+					##list_of_containers[current_container_to_check]["record_sets"].append(current_containers_state[data_sets_to_check]["three_i"])
+					#
+					#if !list_of_containers[current_container_to_check]["record_sets"].has(data_sets_to_check):
+						##print(" allah akbar, 0 it new set to add, to that container sets list ", data_sets_to_check , " in container : " , current_container_to_check)
+						#
+						## checks if that container has currently checked record set
+						#
+						## creates entry of that record set in container list
+						#list_of_containers[current_container_to_check]["record_sets"][data_sets_to_check] = current_containers_state[data_sets_to_check]["three_i"]
+						#list_of_containers[current_container_to_check]["status"] = current_containers_state[data_sets_to_check]["status"]
+					##else:
+					##	print(" allah akbar,  0 it is new set to add?")
+					#
+					#
+				#else:
+					#print(" fatal kurwa error : 1 ", list_of_containers[current_container_to_check])
+					#
+					## maybe here i check again if sometihing updated?
+				#
+				#
+				#
+				#
+				#
+					## that container exist already, lets update its current status? if it has container ?
+				#
+				#
+				#
+				#
+				#
+				#
+					#if !list_of_containers[current_container_to_check]["record_sets"].has(data_sets_to_check):
+						#print(" allah akbar,  1 it new set to add, to that container sets list ", data_sets_to_check , " in container : " , current_container_to_check)
+						#
+						#
+						#
+						## container to add
+						#list_of_containers[current_container_to_check]["record_sets"][data_sets_to_check] = current_containers_state[data_sets_to_check]["three_i"]
+						#list_of_containers[current_container_to_check]["status"] = current_containers_state[data_sets_to_check]["status"]
+					#else:
+						#print(" allah akbar, it was like that at creation? : " , list_of_containers[current_container_to_check]["record_sets"][data_sets_to_check])
+						#print(" allah akbar,  1 lets update it ", current_containers_state[data_sets_to_check]["three_i"])
+						#
+						#
+						## update container status
+						#list_of_containers[current_container_to_check]["record_sets"][data_sets_to_check] = current_containers_state[data_sets_to_check]["three_i"]
+						#list_of_containers[current_container_to_check]["status"] = current_containers_state[data_sets_to_check]["status"]
+					#
+					#
+					#
+				#mutex_containers.unlock()
+			#
+			#else:
+				#print(" allah akbar, something went wrong ")
+				#
+				#
+			#
+			#
+			
+
+			
+			# here we can check if the scene tree is created?
+			
+			
+			
+			if current_containers_state[data_sets_to_check]["status"] == 1:
+				print(" taskkkkl should load = 1 ")
+				if three_ii.x == -1:
+					print(" allah akbar, run again? 0 ")
+					
+					
+					mutex_for_trickery.lock()
+					menace_tricker_checker = 1
+					mutex_for_trickery.unlock()
+					
+					#containers_states_checker()
+				else:
+					print(" it has container? ")
+					
+					
+				if three_ii.y == -1:
+					print(" allah akbar, run again? 1 ")
+					
+					mutex_for_trickery.lock()
+					menace_tricker_checker = 1
+					mutex_for_trickery.unlock()
+					
+					
+				if three_ii.z == -1:
+					print(" allah akbar, run again 2")
+					#containers_states_checker()
+					mutex_for_trickery.lock()
+					menace_tricker_checker = 1
+					mutex_for_trickery.unlock()
+					
+				if three_ii.z == 0:
+					# hmm it meant it has anything, and it was container node too?
+					print(" allah akbar, run again 3")
+					#containers_states_checker()
+					mutex_for_trickery.lock()
+					menace_tricker_checker = 1
+					mutex_for_trickery.unlock()
+					
+				if three_ii.z == 1:
+					# hmm, that meant we have also datapoint node
+					print(" allah akbar, run again 4")
+					#containers_states_checker()
+					mutex_for_trickery.lock()
+					menace_tricker_checker = 1
+					mutex_for_trickery.unlock()
+					
+					
+				if three_ii.z == 2:
+					continue
+					# and this one means we also send the dictionary of things here too
+					#print(" we can get container and datapoint node " , current_containers_state[data_sets_to_check]["status"])
+					# current_container_to_check
+					#if current_containers_state[data_sets_to_check]["status"] == 1:
+					## current datapoint to check
+						#if !scene_tree_jsh["main_root"]["branches"].has(current_container_to_check):
+							#print(" it is error")
+							#mutex_for_trickery.lock()
+							#menace_tricker_checker = 1
+							#mutex_for_trickery.unlock()
+							#current_containers_state[data_sets_to_check]["status"] = -2 # probably to be unloaded
+							#
+						#if current_containers_state[data_sets_to_check].has("three_i"):
+							#var three_i_update = current_containers_state[data_sets_to_check]["three_i"]
+							#three_i_update.x = -1
+							#three_i_update.y = -1
+							#three_i_update.z = -1
+							#
+							#
+							#return
+					#
+						#var current_datapoint_path_for_node = scene_tree_jsh["main_root"]["branches"][current_container_to_check]["datapoint"]["datapoint_path"]
+						#var current_datapoint_node_now = get_node_or_null(current_datapoint_path_for_node)
+						#if current_datapoint_node_now:
+							#scene_tree_jsh["main_root"]["branches"][current_container_to_check]["datapoint"]["node"] = current_datapoint_node_now
+							#
+						#
+						#mutex_containers.lock()
+						#
+						#if list_of_containers.has(current_container_to_check):
+							#print(" we have that container, in container list, lets check if it has container)node")
+							#if !list_of_containers[current_container_to_check].has("container_node"):
+								#list_of_containers[current_container_to_check]["container_node"] = scene_tree_jsh["main_root"]["branches"][current_container_to_check]["node"]
+								#print("it has that")
+							#if !list_of_containers[current_container_to_check].has("datapoint_node"):
+								#list_of_containers[current_container_to_check]["datapoint_node"] = scene_tree_jsh["main_root"]["branches"][current_container_to_check]["datapoint"]["node"]
+								#
+						#mutex_containers.unlock()
+			else:
+				print(" taskkkkl means unload ?")
+				var three_i_update = current_containers_state[data_sets_to_check]["three_i"]
+				three_i_update.x = -1
+				three_i_update.y = -1
+				three_i_update.z = -1
+				
+					
+				
+	print(" allah akbar, end : list_of_containers ", list_of_containers)
+	mutex_for_container_state.unlock()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# check every set in list
+
+
+# records sets lists
+
+func containers_states_checker():
+	print()
+	
+	
+	# check if we have any containers
+	mutex_for_container_state.lock()
+	if current_containers_state.size() > 0:
+		print("checkerrr bigger list than 0 ")
+		# lets add also there, new status, of what be done before
+		
+		# later if it is already in active state, and its own status, is the same, we dont need to check
+		
+		for data_sets_to_check in current_containers_state:
+			print(" alkaida is calling fbi xd :  ", data_sets_to_check , ", " , current_containers_state[data_sets_to_check]["status"])
+			#print(" its own status : ",current_containers_state[data_sets_to_check]["status"])
+			
+			var state_of_check_0 : int = -1
+			var state_of_check_1 : int = -1
+			var state_of_check_2 : int = -1
+			
+			var vector_now : Vector3i
+			
+			vector_now.x = state_of_check_0
+			vector_now.y = state_of_check_1
+			vector_now.z = state_of_check_2
+			
+			if !current_containers_state[data_sets_to_check].has("status_tree"):
+				current_containers_state[data_sets_to_check]["status_tree"] = "pending"
+				current_containers_state[data_sets_to_check]["three_i"] = vector_now
+				
+			if current_containers_state[data_sets_to_check]["status"] == -1:
+				print(" we must reset the xyz thingy")
+				current_containers_state[data_sets_to_check]["three_i"] = vector_now
+			#var state_of_check_0 : int = -1
+			#var state_of_check_1 : int = -1
+			#var state_of_check_2 : int = -1
+			var set_name_plus = data_sets_to_check + "_"
+			var container_name_from_data_set : String = ""
+			var datapoint_node_now : Node
+			var container_node_now : Node
+			var data_array_now : Array = []
+			var dictionary_size_now : int
+			# first check if it exist in active record sets
+			active_r_s_mut.lock()
+			if active_record_sets.has(set_name_plus):
+				#print("checkerrr 0 active records set has it")
+				var plus_records = set_name_plus + "records"
+				
+				current_containers_state[data_sets_to_check]["status_tree"] = "started_0"
+				
+				if active_record_sets[set_name_plus].has(plus_records):
+					#print(" we got records in it ", active_record_sets[set_name_plus][plus_records]["content"][0][0][3][0])
+					
+					# we got active records set in that name
+					current_containers_state[data_sets_to_check]["status_tree"] = "started_1"
+					
+					if active_record_sets[set_name_plus][plus_records].has("content"):
+					
+						if active_record_sets[set_name_plus][plus_records]["content"] is Array:
+							print(" hmm " , active_record_sets[set_name_plus][plus_records]["content"])
+							
+							if active_record_sets[set_name_plus][plus_records]["content"] != []:
+							
+								if active_record_sets[set_name_plus][plus_records]["content"][0][0][3][0] is String:
+									if active_record_sets[set_name_plus][plus_records]["content"][0][0][3][0] != "container":
+										#print(" it is not container ", active_record_sets[set_name_plus][plus_records]["content"][0][0][5][0])
+										container_name_from_data_set = active_record_sets[set_name_plus][plus_records]["content"][0][0][5][0]
+										
+										current_containers_state[data_sets_to_check]["status_tree"] = "started_2"
+										
+									else:
+										#print(" it is container " , active_record_sets[set_name_plus][plus_records]["content"][0][0][6][0])
+										container_name_from_data_set = active_record_sets[set_name_plus][plus_records]["content"][0][0][6][0]
+										
+										current_containers_state[data_sets_to_check]["status_tree"] = "started_3"
+								else:
+									print(" FATAL KURWA ERROR, 1")
+							else:
+								print(" FATAL KURWA ERROR, 2",  active_record_sets[set_name_plus][plus_records]["content"])
+						else:
+							print(" FATAL KURWA ERROR, 3")
+						
+					else:
+						print(" FATAL KURWA ERROR, VERY IMPORTANT, DUNNO WHY IT HAPPENED, OH MY ")
+					#else:
+						#print(" FATAL KURWA ERROR, 1")
+				else:
+					print(" FATAL KURWA ERROR, 0")
+				
+				
+				state_of_check_0 = 1
+				current_containers_state[data_sets_to_check]["three_i"].x = state_of_check_0
+				
+				active_r_s_mut.unlock()
+			else:
+				active_r_s_mut.unlock()
+				#print("checkerrr 0 active records set DONT it")
+				# if it should be not active, check if it has its cached version
+				cached_r_s_mutex.lock()
+				if cached_record_sets.has(set_name_plus):
+					#print("checkerrr 0  cached has it ")
+					var plus_records = set_name_plus + "records"
+					
+					current_containers_state[data_sets_to_check]["status_tree"] = "cached_0"
+					
+					if cached_record_sets[set_name_plus].has(plus_records):
+						#print(" we got records in it ", cached_record_sets[set_name_plus][plus_records]["content"][0][0][3][0])
+						
+						current_containers_state[data_sets_to_check]["status_tree"] = "cached_1"
+						
+						if cached_record_sets[set_name_plus][plus_records]["content"][0][0][3][0] != "container":
+							#print(" it is not container ", cached_record_sets[set_name_plus][plus_records]["content"][0][0][5][0])
+							container_name_from_data_set = cached_record_sets[set_name_plus][plus_records]["content"][0][0][5][0]
+							
+							current_containers_state[data_sets_to_check]["status_tree"] = "cached_2"
+							
+						else:
+							#print(" it is container " , cached_record_sets[set_name_plus][plus_records]["content"][0][0][6][0])
+							container_name_from_data_set = cached_record_sets[set_name_plus][plus_records]["content"][0][0][6][0]
+							
+							current_containers_state[data_sets_to_check]["status_tree"] = "cached_3"
+							
+					state_of_check_0 = 0
+					current_containers_state[data_sets_to_check]["three_i"].x = state_of_check_0
+					
+					
+					cached_r_s_mutex.unlock()
+				else:
+					#print("checkerrr 0  cached DONT have it")
+					cached_r_s_mutex.unlock()
+			# now we have state of set having data of creation : 
+			# state_of_check_0
+			# 1 = active
+			# 0 = cached
+			if state_of_check_0 != -1:
+				#print(" checkerrr 1 we can probably check more things")
+				var container_name
+				if container_name_from_data_set != "":
+					#print(" checkerrr we have container name ")
+					container_name = container_name_from_data_set
+				else:
+					container_name = data_sets_to_check + "_container"
+					# then check if it has entry in tree
+				current_containers_state[data_sets_to_check]["container_name"] = container_name
+				
+				
+					# check if the cached tree has entry
+				tree_mutex.lock()
+				if scene_tree_jsh.has("main_root"):
+					if scene_tree_jsh["main_root"]["branches"].has(container_name):
+						#print(" checkerrr 2 it has that thingy")
+						
+						current_containers_state[data_sets_to_check]["status_tree"] = "started_4"
+						
+						if scene_tree_jsh["main_root"]["branches"][container_name].has("node"):
+							print(" it has node, do we unload there ? nah it can go both ways")
+							if is_instance_valid(scene_tree_jsh["main_root"]["branches"][container_name]["node"]):
+								container_node_now = scene_tree_jsh["main_root"]["branches"][container_name]["node"]
+							else:
+								container_node_now = null
+						else:
+							container_node_now = null
+							state_of_check_2 = -1
+						
+						
+						
+						if container_node_now:
+							state_of_check_2 = 0
+							current_containers_state[data_sets_to_check]["three_i"].z = state_of_check_2
+							var container_name_for_trick = scene_tree_jsh["main_root"]["branches"][container_name]["name"]
+							
+							
+							
+							
+							# we got container node first time for 
+							
+							
+							#mutex_containers.lock()
+							#
+							#if !list_of_containers.has(container_name_for_trick):
+								#print("maybe not 0 we dont have that container yet in our list?", container_name_for_trick)
+							#else:
+								#print("maybe not 0 we already kinda have that container in list", container_name_for_trick)
+							#
+							#mutex_containers.unlock()
+							
+
+
+							# if we dont have container thingy rn, we must try again
+							#mutex_for_trickery.lock()
+							#menace_tricker_checker = 1
+							#mutex_for_trickery.unlock()
+
+
+							
+							
+							current_containers_state[data_sets_to_check]["status_tree"] = "started_5"
+							
+							#print(" container node found : " , container_node_now)
+							var datapoint_path_now = scene_tree_jsh["main_root"]["branches"][container_name]["datapoint"]["datapoint_path"]
+							datapoint_node_now = get_node(datapoint_path_now)
+							if datapoint_node_now:
+								
+								
+								# we got datapoint node for containers status first time?
+								
+								
+								
+								current_containers_state[data_sets_to_check]["status_tree"] = "started_6"
+								
+								#print(" datapoint node found = ", datapoint_node_now)
+								state_of_check_2 = 1
+								current_containers_state[data_sets_to_check]["three_i"].z = state_of_check_2
+								if datapoint_node_now.has_method("check_state_of_dictionary_and_three_ints_of_doom"):
+									var data_array_now_ = datapoint_node_now.check_state_of_dictionary_and_three_ints_of_doom()
+									
+									
+									
+									
+									
+									
+									
+									current_containers_state[data_sets_to_check]["status_tree"] = "started_7"
+									
+									if data_array_now_ != null:
+										data_array_now = data_array_now_
+										#print("  kkkdexd it is not null " , data_array_now[0]["metadata"])
+										if data_array_now[0] is Dictionary:
+											#print(" kkkdexd  it is dictionary")
+											
+											current_containers_state[data_sets_to_check]["status_tree"] = "started_8"
+											state_of_check_2 = 2
+											current_containers_state[data_sets_to_check]["three_i"].z = state_of_check_2
+											
+									#	else:
+									#		print("  kkkdexd  it isnt dictionary ")
+									#else:
+									#	print(" kkkdexd it is null ???")
+									#data_array_now.append(data_array_now_)
+									# [0] = the dictionary
+									# [1] = three ints in vec3i xyz ?
+									#if data_array_now[0].has("metadata"):
+									#	print(" the data array [0] has metadata")
+						state_of_check_1 = 1
+						current_containers_state[data_sets_to_check]["three_i"].y = state_of_check_1
+						
+	# check if container node is there
+	
+	# check if datapoint node is there
+	
+	# there should be datapoint and container
+	
+	# var datapoint_node_now : Node
+	
+	# container_node_now : Node
+	
+						tree_mutex.unlock()
+					else:
+						#print(" checkerrr 2 we didnt find the tree branch " , container_name)
+						tree_mutex.unlock()
+						# didnt find it on main tree, lets check cached tree
+						
+						
+						cached_tree_mutex.lock()
+						if cached_jsh_tree_branches.has(container_name):
+							#print(" checkerrr 2 we found it on cached ")
+							
+							
+							current_containers_state[data_sets_to_check]["status_tree"] = "cached_4"
+							
+							state_of_check_1 = 0
+							current_containers_state[data_sets_to_check]["three_i"].y = state_of_check_1
+							
+							cached_tree_mutex.unlock()
+						#else:
+							#print()
+							
+							
+							
+							
+							
+							
+	# check if container node is there
+	
+	# check if datapoint node is there
+	
+	# it should be null
+						else:
+							#print(" checkerrr 2 cached does not have it ")
+							
+							mutex_for_trickery.lock()
+							menace_tricker_checker = 1
+							mutex_for_trickery.unlock()
+							
+							
+							cached_tree_mutex.unlock()
+							
+						
+				else:
+					#print(" checkerrr 2 the tree does not have main_root")
+					
+					current_containers_state[data_sets_to_check]["status_tree"] = "fatal_kurwa_error"
+					
+					tree_mutex.unlock()
+			if state_of_check_1 != -1:
+				#print(" checkerrr 3 we can again continue")
+				if state_of_check_2 != -1:
+					print(" we even got nodes to tinker with")
+			print(" alkaida is calling fbi xd :  ", data_sets_to_check , ", " , current_containers_state[data_sets_to_check]["three_i"])
+	mutex_for_container_state.unlock()
+	
+	mutex_for_trickery.lock()
+	if menace_tricker_checker == 2:
+		print(" check is finished and we didnt get interupted while doing so kurwa ")
+		menace_tricker_checker = 3
+	mutex_for_trickery.unlock()
+	
+
+	
+	
+	
+	# check if container node is there
+	
+	# check if datapoint node is there
+	
+	
+	
+	# check datapoint dictionary of things with metadata
+	
+	# if we dont have it here, lets try to find it in datapoint
+	
+	# if the datapoint node is there
+	
+	# lets also check three ints of truth
+	
+	# probably the mutexes are needed for that in datapoint
+	
+	# check_state_of_dictionary_and_three_ints_of_doom()
+	# return dictionary, vec3i(0, 0, 0)

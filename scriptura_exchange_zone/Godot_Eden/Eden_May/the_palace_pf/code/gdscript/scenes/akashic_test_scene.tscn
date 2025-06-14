@@ -1,0 +1,19 @@
+[gd_scene load_steps=7 format=3]
+
+[ext_resource type="Script" path="res://akashic_test.gd" id="1_j4hkd"]
+[ext_resource type="Script" path="res://JSH_Akashic_Records.gd" id="2_l5k1q"]
+
+[node name="AkashicTestScene" type="Node"]
+
+[node name="AkashicTest" type="Node" parent="."]
+script = ExtResource("1_j4hkd")
+
+[node name="JSH_AkashicRecords" type="Node" parent="."]
+script = ExtResource("2_l5k1q")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 5)
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.866025, -0.433013, 0.25, 0, 0.5, 0.866025, -0.5, -0.75, 0.433013, 0, 5, 0)
+shadow_enabled = true

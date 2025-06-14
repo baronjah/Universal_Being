@@ -1,0 +1,1182 @@
+{
+  "total_files": 178,
+  "classes_used": {
+    "Node": 692,
+    "Node3D": 750,
+    "MeshInstance3D": 432,
+    "Input": 98,
+    "Control": 156,
+    "Timer": 79,
+    "Label": 115,
+    "VBoxContainer": 80,
+    "HBoxContainer": 86,
+    "Button": 169,
+    "LineEdit": 33,
+    "InputEventKey": 38,
+    "RigidBody3D": 280,
+    "CharacterBody3D": 14,
+    "PhysicsServer3D": 2,
+    "Mesh": 93,
+    "Tween": 10,
+    "Panel": 24,
+    "Thread": 27,
+    "Viewport": 7,
+    "InputEvent": 16,
+    "ImmediateMesh": 12,
+    "StandardMaterial3D": 274,
+    "Camera3D": 16,
+    "SkeletonIK3D": 6,
+    "AnimationTree": 4,
+    "AnimationPlayer": 4,
+    "GPUParticles3D": 17,
+    "OmniLight3D": 19,
+    "Area3D": 48,
+    "CollisionShape3D": 105,
+    "Material": 7,
+    "Mutex": 165,
+    "Node2D": 27,
+    "Texture": 5,
+    "ArrayMesh": 52,
+    "StaticBody3D": 12,
+    "PhysicsShapeQueryParameters3D": 4,
+    "Script": 14,
+    "DirectionalLight3D": 6,
+    "SpotLight3D": 2,
+    "PackedScene": 8,
+    "Path3D": 1,
+    "Resource": 7,
+    "GridContainer": 8,
+    "GDScript": 2,
+    "SurfaceTool": 2,
+    "Environment": 3,
+    "AudioStreamPlayer3D": 4,
+    "TextEdit": 4
+  },
+  "unused_important_classes": [
+    "CanvasItem",
+    "PathFollow3D",
+    "CSGShape3D",
+    "MeshDataTool",
+    "Curve3D",
+    "Curve2D",
+    "Geometry3D",
+    "TriangleMesh",
+    "PhysicsBody3D",
+    "PhysicsDirectBodyState3D",
+    "Shape3D",
+    "ShaderMaterial",
+    "HTTPRequest",
+    "Semaphore",
+    "Expression",
+    "SubViewport",
+    "RenderingServer",
+    "VisualInstance3D",
+    "AudioStreamPlayer",
+    "AudioServer",
+    "InputEventMouse"
+  ],
+  "files_using_classes": {
+    "/mnt/c/Users/Percision 15/talking_ragdoll_game/scripts/main_game_controller.gd": {
+      "Node": 17,
+      "Node3D": 8,
+      "MeshInstance3D": 2,
+      "Input": 1
+    },
+    "/mnt/c/Users/Percision 15/talking_ragdoll_game/scripts/autoload/advanced_inspector_loader.gd": {
+      "Node": 3
+    },
+    "/mnt/c/Users/Percision 15/talking_ragdoll_game/scripts/autoload/astral_being_manager.gd": {
+      "Node": 2,
+      "Node3D": 9,
+      "Control": 1
+    },
+    "/mnt/c/Users/Percision 15/talking_ragdoll_game/scripts/autoload/claude_timer_system.gd": {
+      "Node": 2,
+      "Timer": 1
+    },
+    "/mnt/c/Users/Percision 15/talking_ragdoll_game/scripts/autoload/console_manager.gd": {
+      "Control": 30,
+      "Label": 6,
+      "VBoxContainer": 3,
+      "HBoxContainer": 6,
+      "Button": 5,
+      "LineEdit": 3,
+      "Node": 33,
+      "Node3D": 19,
+      "InputEventKey": 4,
+      "RigidBody3D": 8,
+      "CharacterBody3D": 3,
+      "MeshInstance3D": 2,
+      "PhysicsServer3D": 2,
+      "Mesh": 1,
+      "Tween": 3,
+      "Panel": 2,
+      "Timer": 4,
+      "Thread": 4,
+      "Viewport": 1,
+      "Input": 3,
+      "InputEvent": 1
+    },
+    "/mnt/c/Users/Percision 15/talking_ragdoll_game/scripts/autoload/dialogue_system.gd": {
+      "Node": 2
+    },
+    "/mnt/c/Users/Percision 15/talking_ragdoll_game/scripts/autoload/dynamic_viewport_manager.gd": {
+      "Node": 2,
+      "Viewport": 3,
+      "InputEvent": 1
+    },
+    "/mnt/c/Users/Percision 15/talking_ragdoll_game/scripts/autoload/layer_reality_system.gd": {
+      "Node3D": 4,
+      "MeshInstance3D": 3,
+      "ImmediateMesh": 3,
+      "StandardMaterial3D": 5,
+      "Node": 4,
+      "InputEventKey": 2,
+      "Camera3D": 1,
+      "Mesh": 1,
+      "Viewport": 1,
+      "InputEvent": 1
+    },
+    "/mnt/c/Users/Percision 15/talking_ragdoll_game/scripts/autoload/multi_todo_manager.gd": {
+      "Node": 2
+    },
+    "/mnt/c/Users/Percision 15/talking_ragdoll_game/scripts/autoload/scene_loader.gd": {
+      "Node": 2,
+      "Node3D": 2
+    },
+    "/mnt/c/Users/Percision 15/talking_ragdoll_game/scripts/autoload/ui_settings_manager.gd": {
+      "Node": 2
+    },
+    "/mnt/c/Users/Percision 15/talking_ragdoll_game/scripts/autoload/universal_object_manager.gd": {
+      "Node": 17
+    },
+    "/mnt/c/Users/Percision 15/talking_ragdoll_game/scripts/autoload/windows_console_fix.gd": {
+      "Node": 4
+    },
+    "/mnt/c/Users/Percision 15/talking_ragdoll_game/scripts/autoload/world_builder.gd": {
+      "Node3D": 5,
+      "RigidBody3D": 2,
+      "Node": 8
+    },
+    "/mnt/c/Users/Percision 15/talking_ragdoll_game/scripts/components/multi_layer_entity.gd": {
+      "Node3D": 6,
+      "Node": 2
+    },
+    "/mnt/c/Users/Percision 15/talking_ragdoll_game/scripts/core/advanced_being_system.gd": {
+      "SkeletonIK3D": 6,
+      "AnimationTree": 4,
+      "Node3D": 2,
+      "AnimationPlayer": 1
+    },
+    "/mnt/c/Users/Percision 15/talking_ragdoll_game/scripts/core/asset_library.gd": {
+      "Node": 5,
+      "Node3D": 1
+    },
+    "/mnt/c/Users/Percision 15/talking_ragdoll_game/scripts/core/astral_beings_OLD_DEPRECATED.gd": {
+      "GPUParticles3D": 6,
+      "Node3D": 2,
+      "Node": 8,
+      "RigidBody3D": 6
+    },
+    "/mnt/c/Users/Percision 15/talking_ragdoll_game/scripts/core/astral_being_enhanced_OLD_DEPRECATED.gd": {
+      "OmniLight3D": 5,
+      "GPUParticles3D": 3,
+      "StandardMaterial3D": 2,
+      "Area3D": 5,
+      "CollisionShape3D": 2,
+      "Node3D": 18,
+      "Node": 1
+    },
+    "/mnt/c/Users/Percision 15/talking_ragdoll_game/scripts/core/astral_ragdoll_helper.gd": {
+      "Node": 2,
+      "Node3D": 5
+    },
+    "/mnt/c/Users/Percision 15/talking_ragdoll_game/scripts/core/background_process_manager.gd": {
+      "Node": 7
+    },
+    "/mnt/c/Users/Percision 15/talking_ragdoll_game/scripts/core/bird_ai_behavior.gd": {
+      "Node": 2,
+      "Node3D": 10,
+      "RigidBody3D": 2
+    },
+    "/mnt/c/Users/Percision 15/talking_ragdoll_game/scripts/core/console_channel_system.gd": {
+      "HBoxContainer": 3,
+      "Label": 2,
+      "Button": 8,
+      "Node": 2,
+      "Control": 1,
+      "VBoxContainer": 1
+    },
+    "/mnt/c/Users/Percision 15/talking_ragdoll_game/scripts/core/debug_3d_screen.gd": {
+      "MeshInstance3D": 7,
+      "StandardMaterial3D": 5,
+      "Node3D": 12,
+      "Material": 1
+    },
+    "/mnt/c/Users/Percision 15/talking_ragdoll_game/scripts/core/dimensional_ragdoll_system.gd": {
+      "Node": 2,
+      "Node3D": 5,
+      "RigidBody3D": 1
+    },
+    "/mnt/c/Users/Percision 15/talking_ragdoll_game/scripts/core/eden_action_system.gd": {
+      "Node": 9,
+      "Node3D": 4,
+      "RigidBody3D": 3
+    },
+    "/mnt/c/Users/Percision 15/talking_ragdoll_game/scripts/core/enhanced_ragdoll_walker.gd": {
+      "Node3D": 2,
+      "RigidBody3D": 9,
+      "Input": 2
+    },
+    "/mnt/c/Users/Percision 15/talking_ragdoll_game/scripts/core/floodgate_controller.gd": {
+      "Mutex": 26,
+      "Node": 46,
+      "Thread": 2,
+      "StandardMaterial3D": 2,
+      "Node3D": 25,
+      "Node2D": 18,
+      "MeshInstance3D": 2,
+      "Control": 1,
+      "Texture": 3
+    },
+    "/mnt/c/Users/Percision 15/talking_ragdoll_game/scripts/core/game_launcher.gd": {
+      "Node3D": 4,
+      "Node": 2,
+      "Camera3D": 3
+    },
+    "/mnt/c/Users/Percision 15/talking_ragdoll_game/scripts/core/heightmap_world_generator.gd": {
+      "Node3D": 18,
+      "MeshInstance3D": 13,
+      "ArrayMesh": 2,
+      "StandardMaterial3D": 12,
+      "StaticBody3D": 3,
+      "RigidBody3D": 4,
+      "CollisionShape3D": 4,
+      "Area3D": 4,
+      "Mesh": 7
+    },
+    "/mnt/c/Users/Percision 15/talking_ragdoll_game/scripts/core/magical_astral_being.gd": {
+      "MeshInstance3D": 9,
+      "StandardMaterial3D": 12,
+      "OmniLight3D": 5,
+      "GPUParticles3D": 5,
+      "PhysicsShapeQueryParameters3D": 4,
+      "Node3D": 3,
+      "RigidBody3D": 8,
+      "Node": 1,
+      "Tween": 1
+    },
+    "/mnt/c/Users/Percision 15/talking_ragdoll_game/scripts/core/mouse_interaction_system.gd": {
+      "Node": 14,
+      "StandardMaterial3D": 4,
+      "Node3D": 8,
+      "Camera3D": 2,
+      "InputEventKey": 2,
+      "RigidBody3D": 5,
+      "MeshInstance3D": 18,
+      "Panel": 4,
+      "Script": 2,
+      "InputEvent": 1
+    },
+    "/mnt/c/Users/Percision 15/talking_ragdoll_game/scripts/core/multi_layer_record_system.gd": {
+      "Mutex": 5,
+      "Node": 2
+    },
+    "/mnt/c/Users/Percision 15/talking_ragdoll_game/scripts/core/performance_guardian.gd": {
+      "Node": 6,
+      "MeshInstance3D": 2,
+      "Node3D": 4
+    },
+    "/mnt/c/Users/Percision 15/talking_ragdoll_game/scripts/core/physics_state_manager.gd": {
+      "Node": 3,
+      "Node3D": 18,
+      "RigidBody3D": 20,
+      "CharacterBody3D": 6,
+      "CollisionShape3D": 2
+    },
+    "/mnt/c/Users/Percision 15/talking_ragdoll_game/scripts/core/pigeon_input_manager.gd": {
+      "InputEventKey": 2,
+      "Node": 2,
+      "Input": 1
+    },
+    "/mnt/c/Users/Percision 15/talking_ragdoll_game/scripts/core/pigeon_physics_controller.gd": {
+      "Node3D": 18,
+      "MeshInstance3D": 3,
+      "StandardMaterial3D": 2,
+      "CollisionShape3D": 2,
+      "ArrayMesh": 2,
+      "CharacterBody3D": 2,
+      "ImmediateMesh": 1,
+      "Mesh": 5,
+      "Input": 4,
+      "InputEvent": 1
+    },
+    "/mnt/c/Users/Percision 15/talking_ragdoll_game/scripts/core/ragdoll_controller.gd": {
+      "Node3D": 8,
+      "Node": 4,
+      "RigidBody3D": 10,
+      "Control": 2
+    },
+    "/mnt/c/Users/Percision 15/talking_ragdoll_game/scripts/core/scene_editor_integration.gd": {
+      "MeshInstance3D": 6,
+      "DirectionalLight3D": 4,
+      "SpotLight3D": 2,
+      "OmniLight3D": 2,
+      "Camera3D": 2,
+      "PackedScene": 4,
+      "Node3D": 22,
+      "Node": 26,
+      "Control": 1,
+      "CollisionShape3D": 2,
+      "RigidBody3D": 2,
+      "Area3D": 2,
+      "Path3D": 1,
+      "CharacterBody3D": 1,
+      "StaticBody3D": 1
+    },
+    "/mnt/c/Users/Percision 15/talking_ragdoll_game/scripts/core/scene_setup.gd": {
+      "Node3D": 4,
+      "Node": 2
+    },
+    "/mnt/c/Users/Percision 15/talking_ragdoll_game/scripts/core/scene_tree_tracker.gd": {
+      "Mutex": 4,
+      "Node": 9,
+      "Node3D": 2
+    },
+    "/mnt/c/Users/Percision 15/talking_ragdoll_game/scripts/core/seven_part_ragdoll_integration.gd": {
+      "Node3D": 10,
+      "RigidBody3D": 19,
+      "CollisionShape3D": 2,
+      "MeshInstance3D": 2,
+      "StandardMaterial3D": 2,
+      "Timer": 2,
+      "Node": 2
+    },
+    "/mnt/c/Users/Percision 15/talking_ragdoll_game/scripts/core/shape_gesture_system.gd": {
+      "Node": 2
+    },
+    "/mnt/c/Users/Percision 15/talking_ragdoll_game/scripts/core/simple_ragdoll_walker.gd": {
+      "Node3D": 2,
+      "RigidBody3D": 8
+    },
+    "/mnt/c/Users/Percision 15/talking_ragdoll_game/scripts/core/skeleton_ragdoll_hybrid.gd": {
+      "RigidBody3D": 3,
+      "CollisionShape3D": 2,
+      "MeshInstance3D": 2,
+      "StandardMaterial3D": 2,
+      "Node3D": 2
+    },
+    "/mnt/c/Users/Percision 15/talking_ragdoll_game/scripts/core/standardized_objects.gd": {
+      "StaticBody3D": 2,
+      "RigidBody3D": 6,
+      "Node3D": 21,
+      "MeshInstance3D": 6,
+      "StandardMaterial3D": 6,
+      "CollisionShape3D": 2,
+      "DirectionalLight3D": 2
+    },
+    "/mnt/c/Users/Percision 15/talking_ragdoll_game/scripts/core/talking_astral_being.gd": {
+      "OmniLight3D": 5,
+      "GPUParticles3D": 3,
+      "MeshInstance3D": 3,
+      "StandardMaterial3D": 2,
+      "Area3D": 3,
+      "CollisionShape3D": 2,
+      "Node3D": 28,
+      "Node": 8
+    },
+    "/mnt/c/Users/Percision 15/talking_ragdoll_game/scripts/core/triangular_bird_walker.gd": {
+      "RigidBody3D": 14,
+      "CollisionShape3D": 4,
+      "MeshInstance3D": 9,
+      "StandardMaterial3D": 4,
+      "Area3D": 2,
+      "ArrayMesh": 2,
+      "Node3D": 4,
+      "Mesh": 4
+    },
+    "/mnt/c/Users/Percision 15/talking_ragdoll_game/scripts/core/unified_scene_manager.gd": {
+      "Node3D": 23,
+      "StaticBody3D": 2,
+      "CollisionShape3D": 2,
+      "MeshInstance3D": 2,
+      "StandardMaterial3D": 2,
+      "Node": 2
+    },
+    "/mnt/c/Users/Percision 15/talking_ragdoll_game/scripts/core/universal_being.gd": {
+      "OmniLight3D": 2,
+      "MeshInstance3D": 2,
+      "StandardMaterial3D": 2,
+      "Node3D": 4
+    },
+    "/mnt/c/Users/Percision 15/talking_ragdoll_game/scripts/core/upright_ragdoll_controller.gd": {
+      "Node3D": 2,
+      "RigidBody3D": 13
+    },
+    "/mnt/c/Users/Percision 15/talking_ragdoll_game/scripts/core/universal_entity/global_variable_inspector.gd": {
+      "Node": 5
+    },
+    "/mnt/c/Users/Percision 15/talking_ragdoll_game/scripts/core/universal_entity/initialize_universal_entity.gd": {
+      "Node": 2
+    },
+    "/mnt/c/Users/Percision 15/talking_ragdoll_game/scripts/core/universal_entity/lists_viewer_system.gd": {
+      "Timer": 3,
+      "Node": 3
+    },
+    "/mnt/c/Users/Percision 15/talking_ragdoll_game/scripts/core/universal_entity/system_health_monitor.gd": {
+      "Timer": 2,
+      "Node": 5,
+      "Viewport": 2
+    },
+    "/mnt/c/Users/Percision 15/talking_ragdoll_game/scripts/core/universal_entity/universal_entity.gd": {
+      "Timer": 2,
+      "Node": 2
+    },
+    "/mnt/c/Users/Percision 15/talking_ragdoll_game/scripts/core/universal_entity/universal_loader_unloader.gd": {
+      "Node": 16,
+      "Node3D": 4,
+      "MeshInstance3D": 2,
+      "Resource": 1
+    },
+    "/mnt/c/Users/Percision 15/talking_ragdoll_game/scripts/debug/movement_test.gd": {
+      "Node": 2
+    },
+    "/mnt/c/Users/Percision 15/talking_ragdoll_game/scripts/debug/ragdoll_debug_visualizer.gd": {
+      "StandardMaterial3D": 12,
+      "MeshInstance3D": 6,
+      "Node3D": 5,
+      "RigidBody3D": 4,
+      "Material": 2
+    },
+    "/mnt/c/Users/Percision 15/talking_ragdoll_game/scripts/debug/ragdoll_physics_test.gd": {
+      "Node": 5,
+      "RigidBody3D": 9
+    },
+    "/mnt/c/Users/Percision 15/talking_ragdoll_game/scripts/debug/universal_entity_debug.gd": {
+      "Node": 5,
+      "Script": 4
+    },
+    "/mnt/c/Users/Percision 15/talking_ragdoll_game/scripts/effects/blink_animation_controller.gd": {
+      "AnimationPlayer": 3,
+      "Timer": 9,
+      "Node": 4
+    },
+    "/mnt/c/Users/Percision 15/talking_ragdoll_game/scripts/effects/dimensional_color_system.gd": {
+      "Node": 2
+    },
+    "/mnt/c/Users/Percision 15/talking_ragdoll_game/scripts/effects/visual_indicator_system.gd": {
+      "Timer": 9,
+      "Control": 2,
+      "Node": 5
+    },
+    "/mnt/c/Users/Percision 15/talking_ragdoll_game/scripts/jsh_framework/jsh_adapter.gd": {
+      "Node3D": 6,
+      "Node": 9,
+      "Node2D": 2,
+      "Control": 2,
+      "Thread": 1
+    },
+    "/mnt/c/Users/Percision 15/talking_ragdoll_game/scripts/jsh_framework/ai/ai_module.gd": {
+      "Node": 2
+    },
+    "/mnt/c/Users/Percision 15/talking_ragdoll_game/scripts/jsh_framework/core/actions_bank.gd": {
+      "Node3D": 2,
+      "Button": 16,
+      "Input": 1
+    },
+    "/mnt/c/Users/Percision 15/talking_ragdoll_game/scripts/jsh_framework/core/banks_combiner.gd": {
+      "Node3D": 2
+    },
+    "/mnt/c/Users/Percision 15/talking_ragdoll_game/scripts/jsh_framework/core/container.gd": {
+      "Node": 2
+    },
+    "/mnt/c/Users/Percision 15/talking_ragdoll_game/scripts/jsh_framework/core/data_point.gd": {
+      "Mutex": 14,
+      "Timer": 4,
+      "MeshInstance3D": 3,
+      "StandardMaterial3D": 2,
+      "Node3D": 2,
+      "Node": 7
+    },
+    "/mnt/c/Users/Percision 15/talking_ragdoll_game/scripts/jsh_framework/core/functions_database.gd": {
+      "Node": 3
+    },
+    "/mnt/c/Users/Percision 15/talking_ragdoll_game/scripts/jsh_framework/core/function_metadata.gd": {
+      "Node": 8,
+      "Thread": 1,
+      "Script": 1
+    },
+    "/mnt/c/Users/Percision 15/talking_ragdoll_game/scripts/jsh_framework/core/godot_timers_system.gd": {
+      "Timer": 8,
+      "Node": 3
+    },
+    "/mnt/c/Users/Percision 15/talking_ragdoll_game/scripts/jsh_framework/core/init_function.gd": {
+      "Node": 2,
+      "Control": 1
+    },
+    "/mnt/c/Users/Percision 15/talking_ragdoll_game/scripts/jsh_framework/core/instructions_bank.gd": {
+      "Node3D": 2
+    },
+    "/mnt/c/Users/Percision 15/talking_ragdoll_game/scripts/jsh_framework/core/interactions_bank.gd": {
+      "Node3D": 2,
+      "Button": 5
+    },
+    "/mnt/c/Users/Percision 15/talking_ragdoll_game/scripts/jsh_framework/core/JSH_Akashic_Records.gd": {
+      "Node": 2
+    },
+    "/mnt/c/Users/Percision 15/talking_ragdoll_game/scripts/jsh_framework/core/JSH_console.gd": {
+      "Mutex": 4,
+      "Timer": 4,
+      "MeshInstance3D": 48,
+      "Node3D": 110,
+      "StandardMaterial3D": 56,
+      "Control": 10,
+      "Panel": 2,
+      "VBoxContainer": 2,
+      "LineEdit": 3,
+      "Node": 8,
+      "InputEventKey": 6,
+      "Resource": 2,
+      "Thread": 2,
+      "Input": 3
+    },
+    "/mnt/c/Users/Percision 15/talking_ragdoll_game/scripts/jsh_framework/core/jsh_database_system.gd": {
+      "Mutex": 2,
+      "Node": 6,
+      "Thread": 1,
+      "Script": 1
+    },
+    "/mnt/c/Users/Percision 15/talking_ragdoll_game/scripts/jsh_framework/core/jsh_data_splitter.gd": {
+      "Mutex": 2,
+      "Node": 2
+    },
+    "/mnt/c/Users/Percision 15/talking_ragdoll_game/scripts/jsh_framework/core/jsh_digital_earthlings.gd": {
+      "Node3D": 8,
+      "MeshInstance3D": 8,
+      "StandardMaterial3D": 6,
+      "Area3D": 2,
+      "CollisionShape3D": 2,
+      "Node": 4,
+      "Tween": 3,
+      "Button": 1,
+      "GridContainer": 1
+    },
+    "/mnt/c/Users/Percision 15/talking_ragdoll_game/scripts/jsh_framework/core/JSH_digital_earthlings.gd.gd": {
+      "Node": 2
+    },
+    "/mnt/c/Users/Percision 15/talking_ragdoll_game/scripts/jsh_framework/core/JSH_mainframe_database.gd": {
+      "Mutex": 17,
+      "Node": 10,
+      "Resource": 1,
+      "Thread": 1,
+      "GDScript": 1,
+      "Input": 3
+    },
+    "/mnt/c/Users/Percision 15/talking_ragdoll_game/scripts/jsh_framework/core/jsh_marching_shapes_system.gd": {
+      "Timer": 4,
+      "MeshInstance3D": 17,
+      "StandardMaterial3D": 14,
+      "ArrayMesh": 7,
+      "SurfaceTool": 2,
+      "Node3D": 14,
+      "Area3D": 4,
+      "CollisionShape3D": 4,
+      "Node": 4,
+      "Mesh": 10,
+      "Tween": 3,
+      "GridContainer": 1
+    },
+    "/mnt/c/Users/Percision 15/talking_ragdoll_game/scripts/jsh_framework/core/JSH_reality_shaders.gd": {
+      "Mutex": 3,
+      "Environment": 2,
+      "Node": 2
+    },
+    "/mnt/c/Users/Percision 15/talking_ragdoll_game/scripts/jsh_framework/core/jsh_scene_tree_system.gd": {
+      "Mutex": 4,
+      "Timer": 2,
+      "Node": 27,
+      "Node3D": 12,
+      "RigidBody3D": 2,
+      "CharacterBody3D": 2,
+      "MeshInstance3D": 5,
+      "Camera3D": 2,
+      "CollisionShape3D": 2,
+      "Control": 2
+    },
+    "/mnt/c/Users/Percision 15/talking_ragdoll_game/scripts/jsh_framework/core/jsh_snake_game.gd": {
+      "Node3D": 16,
+      "Camera3D": 3,
+      "MeshInstance3D": 13,
+      "StandardMaterial3D": 10,
+      "Node": 6,
+      "ImmediateMesh": 2,
+      "InputEventKey": 4,
+      "Mesh": 3,
+      "Button": 1,
+      "Input": 6
+    },
+    "/mnt/c/Users/Percision 15/talking_ragdoll_game/scripts/jsh_framework/core/jsh_task_manager.gd": {
+      "Mutex": 6,
+      "ArrayMesh": 2,
+      "Node3D": 6,
+      "MeshInstance3D": 3,
+      "StandardMaterial3D": 4,
+      "Node": 2,
+      "ImmediateMesh": 1,
+      "Mesh": 2,
+      "Input": 1
+    },
+    "/mnt/c/Users/Percision 15/talking_ragdoll_game/scripts/jsh_framework/core/jsh_thread_pool_manager.gd": {
+      "Node": 2
+    },
+    "/mnt/c/Users/Percision 15/talking_ragdoll_game/scripts/jsh_framework/core/jsh_world.gd": {
+      "Node": 2
+    },
+    "/mnt/c/Users/Percision 15/talking_ragdoll_game/scripts/jsh_framework/core/line.gd": {
+      "MeshInstance3D": 2,
+      "ImmediateMesh": 3,
+      "Mesh": 1
+    },
+    "/mnt/c/Users/Percision 15/talking_ragdoll_game/scripts/jsh_framework/core/main.gd": {
+      "Mutex": 70,
+      "Node3D": 30,
+      "StandardMaterial3D": 24,
+      "ArrayMesh": 25,
+      "MeshInstance3D": 42,
+      "ImmediateMesh": 2,
+      "StaticBody3D": 4,
+      "CollisionShape3D": 14,
+      "Area3D": 4,
+      "Node": 34,
+      "InputEventKey": 2,
+      "Node2D": 1,
+      "Resource": 1,
+      "Mesh": 31,
+      "Texture": 2,
+      "Environment": 1,
+      "Timer": 2,
+      "Thread": 8,
+      "Input": 2,
+      "InputEvent": 3
+    },
+    "/mnt/c/Users/Percision 15/talking_ragdoll_game/scripts/jsh_framework/core/modules_bank.gd": {
+      "Node": 2
+    },
+    "/mnt/c/Users/Percision 15/talking_ragdoll_game/scripts/jsh_framework/core/pallets_racing_game.gd": {
+      "Node3D": 8,
+      "StandardMaterial3D": 8,
+      "Camera3D": 2,
+      "Input": 5
+    },
+    "/mnt/c/Users/Percision 15/talking_ragdoll_game/scripts/jsh_framework/core/project_architecture.gd": {
+      "Node": 2
+    },
+    "/mnt/c/Users/Percision 15/talking_ragdoll_game/scripts/jsh_framework/core/racing_menu_integrator.gd": {
+      "Node": 2
+    },
+    "/mnt/c/Users/Percision 15/talking_ragdoll_game/scripts/jsh_framework/core/records_bank.gd": {
+      "Node3D": 2,
+      "Button": 29,
+      "Input": 8
+    },
+    "/mnt/c/Users/Percision 15/talking_ragdoll_game/scripts/jsh_framework/core/record_set_manager.gd": {
+      "Mutex": 2,
+      "Node": 2,
+      "Mesh": 2
+    },
+    "/mnt/c/Users/Percision 15/talking_ragdoll_game/scripts/jsh_framework/core/scenes_bank.gd": {
+      "Node3D": 4,
+      "Input": 48,
+      "InputEvent": 1
+    },
+    "/mnt/c/Users/Percision 15/talking_ragdoll_game/scripts/jsh_framework/core/scene_tree_check.gd": {
+      "Node": 2
+    },
+    "/mnt/c/Users/Percision 15/talking_ragdoll_game/scripts/jsh_framework/core/settings_bank.gd": {
+      "Node3D": 2
+    },
+    "/mnt/c/Users/Percision 15/talking_ragdoll_game/scripts/jsh_framework/core/system_check.gd": {
+      "Mutex": 4,
+      "Node": 5
+    },
+    "/mnt/c/Users/Percision 15/talking_ragdoll_game/scripts/jsh_framework/core/system_interfaces.gd": {
+      "Node": 2
+    },
+    "/mnt/c/Users/Percision 15/talking_ragdoll_game/scripts/jsh_framework/core/text_label.gd": {
+      "Node": 2
+    },
+    "/mnt/c/Users/Percision 15/talking_ragdoll_game/scripts/jsh_framework/core/text_screen.gd": {
+      "MeshInstance3D": 126,
+      "StandardMaterial3D": 48,
+      "Timer": 17,
+      "Node3D": 80,
+      "Area3D": 20,
+      "CollisionShape3D": 20,
+      "ArrayMesh": 12,
+      "Node": 10,
+      "InputEventKey": 12,
+      "Mesh": 24,
+      "Input": 2
+    },
+    "/mnt/c/Users/Percision 15/talking_ragdoll_game/scripts/jsh_framework/core/things_creator.gd": {
+      "Node": 2
+    },
+    "/mnt/c/Users/Percision 15/talking_ragdoll_game/scripts/jsh_framework/core/thread_pool_manager.gd": {
+      "Mutex": 2,
+      "Thread": 4,
+      "Node": 2
+    },
+    "/mnt/c/Users/Percision 15/talking_ragdoll_game/scripts/jsh_framework/core/tree_blueprints_bank.gd": {
+      "Node": 2
+    },
+    "/mnt/c/Users/Percision 15/talking_ragdoll_game/scripts/old_implementations/complete_ragdoll.gd": {
+      "RigidBody3D": 6,
+      "MeshInstance3D": 8,
+      "CollisionShape3D": 6,
+      "StandardMaterial3D": 4,
+      "Node3D": 2
+    },
+    "/mnt/c/Users/Percision 15/talking_ragdoll_game/scripts/old_implementations/ragdoll_with_legs.gd": {
+      "RigidBody3D": 17,
+      "MeshInstance3D": 14,
+      "CollisionShape3D": 10,
+      "StandardMaterial3D": 6,
+      "Node3D": 2,
+      "Material": 1
+    },
+    "/mnt/c/Users/Percision 15/talking_ragdoll_game/scripts/old_implementations/simple_walking_ragdoll.gd": {
+      "RigidBody3D": 11,
+      "MeshInstance3D": 4,
+      "StandardMaterial3D": 4,
+      "CollisionShape3D": 4,
+      "Node3D": 2
+    },
+    "/mnt/c/Users/Percision 15/talking_ragdoll_game/scripts/old_implementations/stable_ragdoll.gd": {
+      "RigidBody3D": 12,
+      "MeshInstance3D": 6,
+      "StandardMaterial3D": 6,
+      "CollisionShape3D": 6,
+      "Node3D": 2,
+      "Node": 3
+    },
+    "/mnt/c/Users/Percision 15/talking_ragdoll_game/scripts/old_implementations/talking_ragdoll.gd": {
+      "Node": 5,
+      "Node3D": 4,
+      "RigidBody3D": 2,
+      "AudioStreamPlayer3D": 4,
+      "Area3D": 2,
+      "MeshInstance3D": 10,
+      "InputEvent": 1
+    },
+    "/mnt/c/Users/Percision 15/talking_ragdoll_game/scripts/passive_mode/autonomous_developer.gd": {
+      "Node": 2
+    },
+    "/mnt/c/Users/Percision 15/talking_ragdoll_game/scripts/passive_mode/multi_project_manager.gd": {
+      "Node": 2
+    },
+    "/mnt/c/Users/Percision 15/talking_ragdoll_game/scripts/passive_mode/passive_mode_controller.gd": {
+      "Node": 4
+    },
+    "/mnt/c/Users/Percision 15/talking_ragdoll_game/scripts/passive_mode/passive_mode_test.gd": {
+      "Node": 2
+    },
+    "/mnt/c/Users/Percision 15/talking_ragdoll_game/scripts/passive_mode/threaded_test_system.gd": {
+      "Node": 2
+    },
+    "/mnt/c/Users/Percision 15/talking_ragdoll_game/scripts/passive_mode/version_backup_system.gd": {
+      "Node": 2,
+      "RigidBody3D": 2
+    },
+    "/mnt/c/Users/Percision 15/talking_ragdoll_game/scripts/passive_mode/workflow_manager.gd": {
+      "Node": 2
+    },
+    "/mnt/c/Users/Percision 15/talking_ragdoll_game/scripts/patches/add_commands_directly.gd": {
+      "Node3D": 2,
+      "MeshInstance3D": 2,
+      "Node": 2
+    },
+    "/mnt/c/Users/Percision 15/talking_ragdoll_game/scripts/patches/advanced_inspector_integration.gd": {
+      "Node": 17,
+      "Node3D": 2,
+      "Control": 2
+    },
+    "/mnt/c/Users/Percision 15/talking_ragdoll_game/scripts/patches/biomechanical_walker_commands.gd": {
+      "Node3D": 6,
+      "Node": 3
+    },
+    "/mnt/c/Users/Percision 15/talking_ragdoll_game/scripts/patches/console_command_extension.gd": {
+      "Node3D": 4,
+      "Node": 5,
+      "LineEdit": 6
+    },
+    "/mnt/c/Users/Percision 15/talking_ragdoll_game/scripts/patches/console_debug_overlay.gd": {
+      "Label": 3,
+      "InputEventKey": 2,
+      "Node": 1,
+      "InputEvent": 1
+    },
+    "/mnt/c/Users/Percision 15/talking_ragdoll_game/scripts/patches/console_diagnostic.gd": {
+      "Node": 2
+    },
+    "/mnt/c/Users/Percision 15/talking_ragdoll_game/scripts/patches/console_layer_integration.gd": {
+      "Node": 4
+    },
+    "/mnt/c/Users/Percision 15/talking_ragdoll_game/scripts/patches/console_spam_filter.gd": {
+      "Timer": 3,
+      "Node": 3,
+      "Resource": 1
+    },
+    "/mnt/c/Users/Percision 15/talking_ragdoll_game/scripts/patches/console_ui_fix.gd": {
+      "Node": 6,
+      "Control": 1
+    },
+    "/mnt/c/Users/Percision 15/talking_ragdoll_game/scripts/patches/debug_test_commands.gd": {
+      "Node": 2
+    },
+    "/mnt/c/Users/Percision 15/talking_ragdoll_game/scripts/patches/delayed_command_injector.gd": {
+      "Node3D": 2,
+      "Node": 2
+    },
+    "/mnt/c/Users/Percision 15/talking_ragdoll_game/scripts/patches/floodgate_console_bridge.gd": {
+      "PackedScene": 2,
+      "Node": 21,
+      "Node3D": 1
+    },
+    "/mnt/c/Users/Percision 15/talking_ragdoll_game/scripts/patches/scene_command_injector.gd": {
+      "Node": 4
+    },
+    "/mnt/c/Users/Percision 15/talking_ragdoll_game/scripts/patches/simple_console_test.gd": {
+      "Node": 2
+    },
+    "/mnt/c/Users/Percision 15/talking_ragdoll_game/scripts/patches/unified_walker_commands.gd": {
+      "Node": 4,
+      "Node3D": 2
+    },
+    "/mnt/c/Users/Percision 15/talking_ragdoll_game/scripts/patches/universal_console_helper.gd": {
+      "Node": 2
+    },
+    "/mnt/c/Users/Percision 15/talking_ragdoll_game/scripts/patches/universal_quickfix.gd": {
+      "Node": 2
+    },
+    "/mnt/c/Users/Percision 15/talking_ragdoll_game/scripts/ragdoll/biomechanical_walker.gd": {
+      "RigidBody3D": 23,
+      "CollisionShape3D": 2,
+      "MeshInstance3D": 2,
+      "Node3D": 6,
+      "Control": 1
+    },
+    "/mnt/c/Users/Percision 15/talking_ragdoll_game/scripts/ragdoll/gait_phase_visualizer.gd": {
+      "VBoxContainer": 2,
+      "Label": 4,
+      "Node3D": 2,
+      "Node": 1
+    },
+    "/mnt/c/Users/Percision 15/talking_ragdoll_game/scripts/ragdoll/unified_biomechanical_walker.gd": {
+      "RigidBody3D": 17,
+      "CollisionShape3D": 2,
+      "MeshInstance3D": 2,
+      "StandardMaterial3D": 2,
+      "Node3D": 2
+    },
+    "/mnt/c/Users/Percision 15/talking_ragdoll_game/scripts/ragdoll_v2/advanced_ragdoll_controller.gd": {
+      "Node3D": 2,
+      "RigidBody3D": 5
+    },
+    "/mnt/c/Users/Percision 15/talking_ragdoll_game/scripts/ragdoll_v2/ground_detection_system.gd": {
+      "MeshInstance3D": 3,
+      "StandardMaterial3D": 2,
+      "Node3D": 2,
+      "RigidBody3D": 3
+    },
+    "/mnt/c/Users/Percision 15/talking_ragdoll_game/scripts/ragdoll_v2/ik_solver.gd": {
+      "Node3D": 2,
+      "RigidBody3D": 6
+    },
+    "/mnt/c/Users/Percision 15/talking_ragdoll_game/scripts/ragdoll_v2/keypoint_animation_system.gd": {
+      "Node3D": 2
+    },
+    "/mnt/c/Users/Percision 15/talking_ragdoll_game/scripts/ragdoll_v2/ragdoll_v2_spawner.gd": {
+      "Node3D": 9,
+      "RigidBody3D": 7,
+      "CollisionShape3D": 2,
+      "MeshInstance3D": 2,
+      "StandardMaterial3D": 2,
+      "Control": 1
+    },
+    "/mnt/c/Users/Percision 15/talking_ragdoll_game/scripts/test/automated_warning_fixer.gd": {
+      "Node": 4,
+      "Node2D": 2,
+      "GDScript": 1
+    },
+    "/mnt/c/Users/Percision 15/talking_ragdoll_game/scripts/test/batch_parameter_fixer.gd": {
+      "Node2D": 2,
+      "Button": 1
+    },
+    "/mnt/c/Users/Percision 15/talking_ragdoll_game/scripts/test/debug_scene_inspector.gd": {
+      "Node": 4,
+      "RigidBody3D": 3,
+      "CollisionShape3D": 3,
+      "MeshInstance3D": 3,
+      "Control": 3,
+      "Node3D": 2,
+      "Script": 1
+    },
+    "/mnt/c/Users/Percision 15/talking_ragdoll_game/scripts/test/final_universal_check.gd": {
+      "Node": 2
+    },
+    "/mnt/c/Users/Percision 15/talking_ragdoll_game/scripts/test/fix_knowledge_base.gd": {
+      "Node": 2
+    },
+    "/mnt/c/Users/Percision 15/talking_ragdoll_game/scripts/test/floodgate_test.gd": {
+      "Node3D": 8,
+      "MeshInstance3D": 2,
+      "Node": 4
+    },
+    "/mnt/c/Users/Percision 15/talking_ragdoll_game/scripts/test/function_flow_tracker.gd": {
+      "Node": 3,
+      "Input": 1
+    },
+    "/mnt/c/Users/Percision 15/talking_ragdoll_game/scripts/test/integration_test.gd": {
+      "Node": 2,
+      "Thread": 3
+    },
+    "/mnt/c/Users/Percision 15/talking_ragdoll_game/scripts/test/layer_system_demo.gd": {
+      "Node3D": 8,
+      "MeshInstance3D": 4
+    },
+    "/mnt/c/Users/Percision 15/talking_ragdoll_game/scripts/test/minimal_universal_test.gd": {
+      "Node": 2
+    },
+    "/mnt/c/Users/Percision 15/talking_ragdoll_game/scripts/test/run_warning_fixes.gd": {
+      "Node": 2,
+      "Node2D": 2
+    },
+    "/mnt/c/Users/Percision 15/talking_ragdoll_game/scripts/test/startup_diagnostic.gd": {
+      "Node": 2,
+      "Camera3D": 1,
+      "Input": 1
+    },
+    "/mnt/c/Users/Percision 15/talking_ragdoll_game/scripts/test/startup_test.gd": {
+      "Node": 2
+    },
+    "/mnt/c/Users/Percision 15/talking_ragdoll_game/scripts/test/universal_being_test.gd": {
+      "Node": 2
+    },
+    "/mnt/c/Users/Percision 15/talking_ragdoll_game/scripts/test/universal_entity_test.gd": {
+      "Node": 2,
+      "Script": 1
+    },
+    "/mnt/c/Users/Percision 15/talking_ragdoll_game/scripts/test/universal_launcher.gd": {
+      "Node": 2
+    },
+    "/mnt/c/Users/Percision 15/talking_ragdoll_game/scripts/test/universal_ready_check.gd": {
+      "Node": 2
+    },
+    "/mnt/c/Users/Percision 15/talking_ragdoll_game/scripts/tools/optimize_autoloads.gd": {
+      "Node": 2
+    },
+    "/mnt/c/Users/Percision 15/talking_ragdoll_game/scripts/tools/organize_project_files.gd": {
+      "Node": 2
+    },
+    "/mnt/c/Users/Percision 15/talking_ragdoll_game/scripts/tutorial/tutorial_manager.gd": {
+      "Control": 16,
+      "Panel": 5,
+      "Node": 2
+    },
+    "/mnt/c/Users/Percision 15/talking_ragdoll_game/scripts/ui/advanced_object_inspector.gd": {
+      "VBoxContainer": 22,
+      "HBoxContainer": 37,
+      "Label": 27,
+      "Button": 38,
+      "LineEdit": 5,
+      "TextEdit": 4,
+      "PackedScene": 2,
+      "Control": 27,
+      "Node": 12,
+      "Node3D": 8,
+      "Material": 2,
+      "Mesh": 1,
+      "Panel": 1,
+      "Script": 3
+    },
+    "/mnt/c/Users/Percision 15/talking_ragdoll_game/scripts/ui/bryce_grid_interface.gd": {
+      "Panel": 2,
+      "Label": 4,
+      "Control": 7,
+      "InputEvent": 1
+    },
+    "/mnt/c/Users/Percision 15/talking_ragdoll_game/scripts/ui/console_world_view.gd": {
+      "Control": 2,
+      "InputEventKey": 2,
+      "Input": 1,
+      "InputEvent": 1
+    },
+    "/mnt/c/Users/Percision 15/talking_ragdoll_game/scripts/ui/creative_mode_inventory.gd": {
+      "VBoxContainer": 4,
+      "HBoxContainer": 5,
+      "Label": 4,
+      "Control": 6,
+      "Button": 7,
+      "GridContainer": 3,
+      "Node": 1,
+      "Panel": 1,
+      "InputEvent": 1
+    },
+    "/mnt/c/Users/Percision 15/talking_ragdoll_game/scripts/ui/enhanced_object_inspector.gd": {
+      "Timer": 3,
+      "Panel": 3,
+      "VBoxContainer": 5,
+      "Label": 17,
+      "Button": 4,
+      "HBoxContainer": 10,
+      "LineEdit": 2,
+      "Control": 2,
+      "Node": 7,
+      "Node3D": 5,
+      "RigidBody3D": 6
+    },
+    "/mnt/c/Users/Percision 15/talking_ragdoll_game/scripts/ui/feature_test_panel.gd": {
+      "VBoxContainer": 5,
+      "HBoxContainer": 2,
+      "Label": 7,
+      "Button": 29,
+      "Control": 5,
+      "MeshInstance3D": 2,
+      "RigidBody3D": 2,
+      "CollisionShape3D": 2,
+      "Node": 1,
+      "Panel": 1
+    },
+    "/mnt/c/Users/Percision 15/talking_ragdoll_game/scripts/ui/global_variable_spreadsheet.gd": {
+      "Panel": 3,
+      "VBoxContainer": 20,
+      "HBoxContainer": 10,
+      "Label": 16,
+      "LineEdit": 5,
+      "Button": 7,
+      "Control": 8,
+      "Node": 2,
+      "Resource": 1,
+      "Script": 1
+    },
+    "/mnt/c/Users/Percision 15/talking_ragdoll_game/scripts/ui/grid_list_console_bridge.gd": {
+      "Node": 2,
+      "Input": 1
+    },
+    "/mnt/c/Users/Percision 15/talking_ragdoll_game/scripts/ui/height_map_overlay.gd": {
+      "Control": 2,
+      "InputEvent": 1
+    },
+    "/mnt/c/Users/Percision 15/talking_ragdoll_game/scripts/ui/interactive_tutorial_system.gd": {
+      "VBoxContainer": 9,
+      "Label": 6,
+      "Button": 13,
+      "HBoxContainer": 2,
+      "Control": 2
+    },
+    "/mnt/c/Users/Percision 15/talking_ragdoll_game/scripts/ui/object_inspector.gd": {
+      "VBoxContainer": 5,
+      "HBoxContainer": 9,
+      "Label": 11,
+      "Button": 3,
+      "LineEdit": 5,
+      "Control": 9,
+      "Node": 6,
+      "Material": 1,
+      "Mesh": 1
+    },
+    "/mnt/c/Users/Percision 15/talking_ragdoll_game/scripts/ui/unified_grid_list_system.gd": {
+      "Button": 2,
+      "HBoxContainer": 2,
+      "Label": 8,
+      "LineEdit": 4,
+      "Control": 9,
+      "GridContainer": 3,
+      "VBoxContainer": 2,
+      "Input": 4,
+      "InputEvent": 1
+    }
+  },
+  "most_used": [
+    [
+      "Node3D",
+      750
+    ],
+    [
+      "Node",
+      692
+    ],
+    [
+      "MeshInstance3D",
+      432
+    ],
+    [
+      "RigidBody3D",
+      280
+    ],
+    [
+      "StandardMaterial3D",
+      274
+    ],
+    [
+      "Button",
+      169
+    ],
+    [
+      "Mutex",
+      165
+    ],
+    [
+      "Control",
+      156
+    ],
+    [
+      "Label",
+      115
+    ],
+    [
+      "CollisionShape3D",
+      105
+    ],
+    [
+      "Input",
+      98
+    ],
+    [
+      "Mesh",
+      93
+    ],
+    [
+      "HBoxContainer",
+      86
+    ],
+    [
+      "VBoxContainer",
+      80
+    ],
+    [
+      "Timer",
+      79
+    ],
+    [
+      "ArrayMesh",
+      52
+    ],
+    [
+      "Area3D",
+      48
+    ],
+    [
+      "InputEventKey",
+      38
+    ],
+    [
+      "LineEdit",
+      33
+    ],
+    [
+      "Thread",
+      27
+    ]
+  ]
+}

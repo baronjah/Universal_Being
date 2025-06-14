@@ -1,0 +1,189 @@
+# Akashic Records Usage Guide
+
+This guide explains how to use the Akashic Records (Dynamic Dictionary) system in the Eden Space Game.
+
+## Setup and Configuration
+
+The Akashic Records system is already implemented and integrated into the game. The core files are located in:
+
+```
+/code/gdscript/scripts/akashic_records/
+```
+
+The system uses the following data directories:
+
+```
+/dictionary/
+├── elements/         # Element-specific dictionaries
+├── entities/         # Entity-specific dictionaries
+├── interactions/     # Interaction rule dictionaries
+└── zones/            # Zone data files
+```
+
+## Testing the System
+
+A test scene is provided to explore and experiment with the Akashic Records system:
+
+1. Open the Godot editor
+2. Navigate to `/code/gdscript/scenes/akashic_records_test.tscn`
+3. Run the scene to open the test interface
+
+## Using the Test Interface
+
+The test interface is divided into three panels:
+
+### Left Panel: Word List
+- Displays all words in the dictionary, organized by category
+- Click on a word to view its details
+- Use the search box to find specific words
+- Click the "+" button to add a new word
+
+### Middle Panel: Word Details
+- Shows properties, states, and interactions for the selected word
+- Click the "Edit" button to modify the word's basic information
+- Use the "+" buttons to add properties, states, or interactions
+- Click on a property, state, or interaction to edit or delete it
+
+### Right Panel: Visualization
+- Shows a 3D visualization of the selected word and its relationships
+- The selected word is shown at the center
+- Children are shown in a circle around the word
+- Interaction targets and results are shown in an outer circle
+- Click the "Test" button to test interactions between words
+
+## Core Concepts
+
+### Words
+Words are the basic building blocks of the Akashic Records:
+- Each word has an ID, display name, category, and optional parent
+- Words can have properties, states, and interaction rules
+- Words can be organized in a hierarchy (parent-child relationships)
+
+### Properties
+Properties are key-value pairs associated with a word:
+- Can be numbers, strings, or boolean values
+- Used to define characteristics of the word
+- Can be referenced in interaction conditions
+
+### States
+States represent different conditions a word can be in:
+- Each word can have multiple states
+- One state can be designated as the default
+- States can modify properties when active
+
+### Interactions
+Interactions define how words interact with each other:
+- Each interaction links two words and produces a result
+- Interactions can have conditions based on properties
+- The result of an interaction is another word
+
+### Zones
+Zones organize entities in 3D space:
+- Each zone has boundaries in 3D space
+- Zones can contain entities (instances of words)
+- Zones can split into sub-zones when they become too complex
+- Entities can be queried by position or radius
+
+## Examples
+
+### Creating a Basic Element
+
+1. Click the "+" button in the Word List panel
+2. Enter the following information:
+   - ID: "fire"
+   - Display Name: "Fire"
+   - Category: "element"
+   - Parent: (leave empty)
+3. Click "OK" to create the word
+
+### Adding Properties
+
+1. Select the "Fire" word in the list
+2. Click the "+" button in the Properties section
+3. Enter a property name (e.g., "temperature")
+4. Enter a value (e.g., "800")
+5. Click "OK" to add the property
+
+### Adding States
+
+1. Select the "Fire" word in the list
+2. Click the "+" button in the States section
+3. Enter a state name (e.g., "flame")
+4. Check the "Default" checkbox if this is the default state
+5. Click "OK" to add the state
+
+### Creating an Interaction
+
+1. Create another element (e.g., "water")
+2. Select the "Fire" word in the list
+3. Click the "+" button in the Interactions section
+4. Enter "water" as the target word
+5. Enter "steam" as the result word
+6. Enter a condition if needed (e.g., "temperature > 100")
+7. Click "OK" to add the interaction
+
+### Testing an Interaction
+
+1. Click the "Test" button in the right panel
+2. Enter the two words to interact (e.g., "fire" and "water")
+3. Enter any context values for the interaction (e.g., "temperature: 90")
+4. Click "OK" to test the interaction
+5. View the results in the popup dialog
+
+## Integration with Game Systems
+
+The Akashic Records system can be integrated with other game systems:
+
+### Element System
+- Element types are defined as words in the Akashic Records
+- Element properties control behavior in the element system
+- Element interactions determine transformation rules
+
+### Space System
+- Cosmic objects (galaxies, stars, planets) are linked to dictionary entries
+- Scale transitions link to different categories of words
+- Spatial queries use the zone system to find nearby entities
+
+### VR System
+- The Dictionary can be visualized in 3D space in VR
+- Interactions can be triggered by bringing elements together in VR
+- Gestures can create new words or connections
+
+## Advanced Usage
+
+### Dictionary Splitting
+When a dictionary becomes too complex, it can automatically split into multiple files:
+- Words with many children, properties, or interactions will be split
+- References to the split files are maintained in the main dictionary
+- This improves performance for large dictionaries
+
+### Zone Management
+The zone system manages spatial organization:
+- The world is divided into hierarchical zones
+- Zones split when they contain too many entities
+- Zones merge when they become sparse
+- This enables efficient spatial queries
+
+### Custom Interaction Rules
+Interaction rules can be tailored to specific requirements:
+- Simple conditions like "temperature > 100"
+- More complex conditions referencing multiple properties
+- Special result types like transformations or state changes
+
+## Troubleshooting
+
+### Word Not Found
+- Check that the word ID is correct
+- Ensure the word exists in the dictionary
+- Try using the search function to find the word
+
+### Interaction Not Working
+- Verify both words exist in the dictionary
+- Check that an interaction rule exists between them
+- Ensure all conditions are met in the context
+- Examine the result in the interaction test dialog
+
+### Performance Issues
+- Large dictionaries may need to be split
+- Use the dictionary splitter to manage complexity
+- Consider organizing words in a deeper hierarchy

@@ -1,0 +1,542 @@
+#
+# JSH Things Creation
+#
+#      oooo  .oooooo..o ooooo   ooooo 
+#      `888 d8P'    `Y8 `888'   `888' 
+#       888 Y88bo.       888     888     ┏┳┓┓ •       ┏┓       •      ┏┓        
+#       888  `"Y8888o.   888ooooo888      ┃ ┣┓┓┏┓┏┓┏  ┃ ┏┓┏┓┏┓╋┓┏┓┏┓  ┗┓┓┏┏╋┏┓┏┳┓
+#       888      `"Y88b  888     888      ┻ ┛┗┗┛┗┗┫┛  ┗┛┛ ┗ ┗┻┗┗┗┛┛┗  ┗┛┗┫┛┗┗ ┛┗┗
+#       888 oo     .d8P  888     888              ┛                      ┛       
+#   .o. 88P 8""88888P'  o888o   o888o 
+#   `Y888P                            
+#
+# JSH Things Creation
+#
+
+#analise_data(thing_name, thing_type, metadata_parts, second_line)
+# analise loaded and parsed data, for things creation!
+#manifesting visual periphelia
+func analise_data(thing_name_, type, data_to_analyze, second_part, group_number, verion_of_thing, information_lines_parsed):
+	var counter = -1
+	for i in RecordsBank.type_of_thing_0:
+		counter +=1
+		
+		if type == i:
+			break
+		else:
+			continue
+
+	match counter:
+		0:
+			create_flat_shape(thing_name_, data_to_analyze, second_part, group_number, verion_of_thing, information_lines_parsed)
+		1:
+			create_text_label(thing_name_, data_to_analyze, second_part, group_number, verion_of_thing, information_lines_parsed)
+		2:
+			create_array_mesh(thing_name_, data_to_analyze, second_part, group_number, verion_of_thing, information_lines_parsed) 
+		3:
+			create_button(thing_name_, data_to_analyze, second_part, group_number, verion_of_thing, information_lines_parsed)
+		4:
+			create_cursor(thing_name_, data_to_analyze, second_part, group_number, verion_of_thing, information_lines_parsed)
+		5:
+			create_connection(thing_name_, data_to_analyze, second_part, group_number, verion_of_thing, information_lines_parsed)
+		6:
+			create_screen(thing_name_, data_to_analyze, second_part, group_number, verion_of_thing, information_lines_parsed)
+		7:
+			create_datapoint(thing_name_, data_to_analyze, second_part, group_number, verion_of_thing, information_lines_parsed)
+		8:
+			create_circle_shape(thing_name_, data_to_analyze, second_part, group_number, verion_of_thing, information_lines_parsed)
+		9:
+			create_container(thing_name_, data_to_analyze, second_part, group_number, verion_of_thing, information_lines_parsed)
+		10:
+			create_textmesh(thing_name_, data_to_analyze, second_part, group_number, verion_of_thing, information_lines_parsed)
+		_:  
+			print("hmmm didnt find the type of thing?")
+
+# creating circle
+
+# Example usage:
+# here we are generating points in circular shape, for flat shape thingy
+func create_circle_shape(node_name: String, first_line : Array, data_to_write : Array, group_name : String, version_of_thing : String, information_lines_parsed : Array):
+	var coords = first_line[1]
+	var to_rotate = first_line[2]
+	var radius = data_to_write[0]
+	var num_points = data_to_write[1]
+	var points = generate_circle_points(int(radius[0]), int(num_points[0]))
+	# Create the shape using your existing create_flat_shape function
+	create_flat_shape(node_name, first_line, points, group_name, version_of_thing, information_lines_parsed)
+
+# i mean here, before we mostly take data, and send it here and to flat shape later
+func generate_circle_points(radius: float, num_points: int) -> Array:
+	# Ensure minimum 3 points and maximum 33 points
+	num_points = clamp(num_points, 3, 33)
+	var points_to_clean
+	var points = []
+	var points_array = []
+	var angle_step = TAU / num_points  # TAU is 2*PI, for a full circle
+	
+	for i in range(num_points):
+		var angle = i * angle_step
+		# Calculate point position using sin/cos
+		var x : float = radius * cos(angle)
+		var y : float = radius * sin(angle)
+		var z : float
+		# Format the point as a string like your other shape points
+		points_to_clean = "%0.1f,%0.1f,0.0" % [x, y]
+		points_to_clean = points_to_clean.split(",")
+		points.append(points_to_clean)
+	return points
+
+
+# here we make flat shape, an center point, is main, 0 vertice
+# thing_name_, data_to_analyze, second_part, group_number, verion_of_thing, information_lines_parsed
+func create_flat_shape(node_name: String, first_line : Array, data_to_write : Array, group_name : String, version_of_thing : String, information_lines_parsed : Array):
+	var node_path_c_f_s = first_line[6][0]
+	var coords = first_line[1]
+	var to_rotate = first_line[2]
+	var color_to_change = float(information_lines_parsed[1][0][0])
+	var opacity_to_change = float(information_lines_parsed[1][1][0])
+	var material = StandardMaterial3D.new()
+	var color_to_add_op = get_spectrum_color(color_to_change)
+	color_to_add_op.a = opacity_to_change
+	material.albedo_color = color_to_add_op
+	material.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA_SCISSOR
+	#mesh_instance.material_override = material
+	var vertices = PackedVector3Array()
+	var indices = PackedInt32Array()
+	
+	# Add center as first vertex
+	vertices.push_back(Vector3.ZERO)  # Index 0 is center
+	# Convert data points to Vector3s
+	var vector_points = []
+	for point in data_to_write:
+		var point_vector = Vector3(float(point[0]), float(point[1]), float(point[2]))
+		vector_points.append(point_vector)
+		vertices.push_back(point_vector)
+	for i in range(vector_points.size()):
+		var next_i = (i + 1) % vector_points.size()
+		indices.append(0)              # Center point
+		indices.append(i + 1)          # Current vertex (add 1 because center is at 0)
+		indices.append(next_i + 1)     # Next vertex (add 1 because center is at 0)
+	
+	# Create mesh
+	var arr_mesh = ArrayMesh.new()
+	var arrays = []
+	arrays.resize(Mesh.ARRAY_MAX)
+	arrays[Mesh.ARRAY_VERTEX] = vertices
+	arrays[Mesh.ARRAY_INDEX] = indices
+	
+	arr_mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, arrays)
+	
+	# Create mesh instance
+	var mesh_instance = MeshInstance3D.new()
+	mesh_instance.mesh = arr_mesh
+	
+	material.cull_mode = BaseMaterial3D.CULL_DISABLED # Visible from both sides
+	var node_type = "flat_shape"
+	
+	mesh_instance.material_override = material
+	node_creation(node_name, mesh_instance, coords, to_rotate, group_name, node_type, node_path_c_f_s)
+#endregion
+
+# normal text label, with normal font
+# Create Label3D with text
+#region create_text_label
+func create_text_label(node_name: String, first_line : Array, data_to_write : Array, group_name : String, version_of_thing : String, information_lines_parsed : Array):
+	var node_path_c_t_l = first_line[6][0]
+	var coords = first_line[1]
+	var to_rotate = first_line[2]
+	# Create Label3D node
+	var text_label = Label3D.new()
+	
+	# Set the text from data (first element of first array)
+	text_label.text = data_to_write[0][0]  # This will get "Akashic_Records"
+	
+	# Optional: Set font size (from second element of second array)
+	text_label.font_size = int(data_to_write[1][0])  # This will get "33"
+	text_label.no_depth_test = true  # Ensures text is always visible
+	text_label.modulate = Color(1, 1, 1)  # White color
+	
+	# Now send the configured Label3D to node_creation
+	var node_type = "text"
+	node_creation(node_name, text_label, coords, to_rotate, group_name, node_type, node_path_c_t_l)
+
+
+# here we make array mesh, i call it models, i guess it is similar to flat shape? with a difference that it does not have center point 
+func create_array_mesh(node_name: String, first_line : Array, data_to_write : Array, group_name : String, version_of_thing : String, information_lines_parsed : Array):
+	var node_path_c_a_m = first_line[6][0]
+	var coords = first_line[1]
+	var to_rotate = first_line[2]
+
+	var color_to_change = float(information_lines_parsed[1][0][0])
+	var opacity_to_change = float(information_lines_parsed[1][1][0])
+	
+	var vertices = PackedVector3Array()
+	var vector_points = []
+	for point in data_to_write:
+		vector_points.append(Vector3(float(point[0]), float(point[1]), float(point[2])))
+	
+	# Create triangles
+	vertices.append(vector_points[0])
+	vertices.append(vector_points[2])
+	vertices.append(vector_points[1])
+	
+	vertices.append(vector_points[0])
+	vertices.append(vector_points[3])
+	vertices.append(vector_points[2])
+
+	var arr_mesh = ArrayMesh.new()
+	var arrays = []
+	arrays.resize(Mesh.ARRAY_MAX)
+	arrays[Mesh.ARRAY_VERTEX] = vertices
+	
+	arr_mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, arrays)
+	
+	# Create mesh instance and set properties
+	var mesh_instance = MeshInstance3D.new()
+	mesh_instance.mesh = arr_mesh
+	
+	var material = StandardMaterial3D.new()
+	var color_to_add_op = get_spectrum_color(color_to_change)
+	color_to_add_op.a = opacity_to_change
+	material.albedo_color = color_to_add_op
+	material.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA_SCISSOR
+	mesh_instance.material_override = material
+	var node_type = "model"
+	node_creation(node_name, mesh_instance, coords, to_rotate, group_name, node_type, node_path_c_a_m)
+
+# the fantastic thingy! like the gmod error thingy xD
+func create_textmesh(node_name: String, first_line : Array, data_to_write : Array, group_name : String, version_of_thing : String, information_lines_parsed : Array):
+	var node_path_c_tm = first_line[6][0]
+	var coords = first_line[1]
+	var to_rotate = first_line[2]
+
+	var text_for_label = information_lines_parsed[1][0][0]
+	var size_for_label = int(information_lines_parsed[1][1][0])
+	var depth = float(information_lines_parsed[1][2][0])
+	var pixel_size = float(information_lines_parsed[1][3][0])
+
+	var color_to_change = float(information_lines_parsed[1][4][0])
+	var opacity_to_change = float(information_lines_parsed[1][5][0])
+
+	var material = StandardMaterial3D.new()
+	var color_to_add_op = get_spectrum_color(color_to_change)
+	color_to_add_op.a = opacity_to_change
+	material.albedo_color = color_to_add_op
+	material.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA_DEPTH_PRE_PASS
+
+	
+#	var material = StandardMaterial3D.new()
+	var mesh_instance = MeshInstance3D.new()
+	var text_mesh = TextMesh.new()
+	text_mesh.text = text_for_label
+	text_mesh.font_size = size_for_label
+	text_mesh.depth = depth
+	text_mesh.pixel_size = pixel_size
+	text_mesh.horizontal_alignment = 1
+	text_mesh.vertical_alignment = 1
+	
+	mesh_instance.mesh = text_mesh
+	mesh_instance.name = node_name
+	material.cull_mode = BaseMaterial3D.CULL_DISABLED
+	
+	if text_for_label == "JSH":
+		material.metallic = 1.0
+		material.metallic_specular = 0.52
+		material.roughness = 0.33
+	
+	mesh_instance.material_override = material
+	
+	var node_type = "textmesh"
+	node_creation(node_name, mesh_instance, coords, to_rotate, group_name, node_type, node_path_c_tm)
+
+
+# here we are making buttons! just normal shape, a model, and a label, in one node :) it also has collision shape on model
+func create_button(node_name: String, first_line : Array, data_to_write : Array, group_name : String, version_of_thing : String, information_lines_parsed : Array):
+	var node_path_c_b = first_line[6][0]
+	var coords = first_line[1]
+	var to_rotate = first_line[2]
+	
+	var mesh_name = "shape_" + node_name 
+	var text_label_name = "text_" + node_name
+
+	var color_to_change = float(information_lines_parsed[1][2][0])
+	var opacity_to_change = float(information_lines_parsed[1][3][0])
+
+	var material = StandardMaterial3D.new()
+	var color_to_add_op = get_spectrum_color(color_to_change)
+	color_to_add_op.a = opacity_to_change
+	material.albedo_color = color_to_add_op
+	material.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA_SCISSOR
+	var text_for_label = information_lines_parsed[1][0][0]
+	var size_for_label = int(information_lines_parsed[1][1][0])
+	
+	var button_node = Node3D.new()
+	button_node.name = node_name
+	tasked_children(button_node, node_path_c_b)
+	# Create the flat shape (background)
+	var vertices = PackedVector3Array()
+	var indices = PackedInt32Array()
+	
+	# Convert shape data points to Vector3s
+	var vector_points = []
+	for point in data_to_write:  # First array contains shape points
+		var point_vector = Vector3(float(point[0]), float(point[1]), float(point[2]))
+		vector_points.append(point_vector)
+		vertices.push_back(point_vector)
+	
+	# Create triangles for the flat shape
+	indices.append(0)  # First triangle
+	indices.append(1)
+	indices.append(2)
+	
+	indices.append(0)  # Second triangle
+	indices.append(2)
+	indices.append(3)
+	
+	# Create mesh for the shape
+	var arr_mesh = ArrayMesh.new()
+	var arrays = []
+	arrays.resize(Mesh.ARRAY_MAX)
+	arrays[Mesh.ARRAY_VERTEX] = vertices
+	arrays[Mesh.ARRAY_INDEX] = indices
+	
+	arr_mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, arrays)
+	
+	# Create mesh instance for the shape
+	var mesh_instance = MeshInstance3D.new()
+	mesh_instance.mesh = arr_mesh
+	mesh_instance.name = mesh_name
+	
+	material.cull_mode = BaseMaterial3D.CULL_DISABLED
+	mesh_instance.material_override = material
+	
+	# Create Label3D for the text
+	var text_label = Label3D.new()
+	text_label.name = text_label_name
+	text_label.text = text_for_label
+	text_label.font_size = size_for_label
+	text_label.no_depth_test = true
+	text_label.modulate = Color(1, 1, 1)  # White text
+	text_label.position.z += 0.01  # Slight offset to prevent z-fighting
+	
+	var mesh_path = node_path_c_b + "/" + mesh_name
+	var label_path = node_path_c_b + "/" + text_label_name
+	tasked_children(text_label, label_path)
+	# Use existing node creation for final setup
+	var node_type = "button"
+	node_creation(mesh_name, mesh_instance, coords, to_rotate, group_name, node_type, mesh_path)
+
+
+# just normal three vertices triangle :)
+# i wanna make mouse and moouse curson in vr and use hand tracking because!
+# i can do it!
+func create_cursor(node_name: String, first_line : Array, data_to_write : Array, group_name : String, version_of_thing : String, information_lines_parsed : Array):
+	var node_path_c_c_0 = first_line[6][0]
+	var coords = first_line[1]
+	var to_rotate = first_line[2]
+
+	var color_to_change = float(information_lines_parsed[1][0][0])
+	var opacity_to_change = float(information_lines_parsed[1][1][0])
+
+	var material = StandardMaterial3D.new()
+	var color_to_add_op = get_spectrum_color(color_to_change)
+	color_to_add_op.a = opacity_to_change
+	material.albedo_color = color_to_add_op
+	material.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA_SCISSOR
+	
+	var vertices = PackedVector3Array()
+	var triangle_data = [data_to_write[0], data_to_write[1], data_to_write[2]]
+	var triangle_scale = data_to_write[3]#cursor_thingy[3] 
+	
+	var triangle_scale_vec3 : Vector3 = Vector3(float(triangle_scale[0]), float(triangle_scale[1]), float(triangle_scale[2]))
+	var vector_points = []
+	for point in triangle_data:
+		vector_points.append(Vector3(float(point[0]), float(point[1]), float(point[2])))
+	
+	# Create triangles
+	vertices.append(vector_points[0])
+	vertices.append(vector_points[1])
+	vertices.append(vector_points[2])
+	
+	var arr_mesh = ArrayMesh.new()
+	var arrays = []
+	arrays.resize(Mesh.ARRAY_MAX)
+	arrays[Mesh.ARRAY_VERTEX] = vertices
+	
+	arr_mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, arrays)
+	
+	# Create mesh instance and set properties
+	var mesh_instance = MeshInstance3D.new()
+	mesh_instance.mesh = arr_mesh
+	mesh_instance.scale = triangle_scale_vec3
+	
+	material.cull_mode = StandardMaterial3D.CULL_DISABLED  # This makes it visible from both sides
+	material.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED  # Optional: makes it look flat
+
+	
+	mesh_instance.material_override = material
+	var node_type = "cursor"
+	node_creation(node_name, mesh_instance, coords, to_rotate, group_name, node_type, node_path_c_c_0)
+
+
+# here we are making lines! we need two points between something, to make the lines
+func create_connection(node_name: String, first_line : Array, data_to_write : Array, group_name : String, version_of_thing : String, information_lines_parsed : Array):
+	var node_path_cc_c = first_line[6][0]
+	var coords = first_line[1]
+	var to_rotate = first_line[2]
+	var cords_for_line = [data_to_write[0], data_to_write[1]]
+	var color_for_line = data_to_write[2][0]
+	
+	# Convert the line endpoints from data_to_write
+	var point1 = Vector3(
+		float(cords_for_line[0][0]),
+		float(cords_for_line[0][1]),
+		float(cords_for_line[0][2])
+	)
+	
+	var point2 = Vector3(
+		float(cords_for_line[1][0]),
+		float(cords_for_line[1][1]),
+		float(cords_for_line[1][2])
+	)
+
+	var center = point1 + point2 / 2
+	# Create the lines
+	var mesh_instance = MeshInstance3D.new()
+	var immediate_mesh = ImmediateMesh.new()
+	mesh_instance.mesh = immediate_mesh
+	mesh_instance.name = node_name
+	
+	# Set up material
+	var material = StandardMaterial3D.new()
+	material.shading_mode = StandardMaterial3D.SHADING_MODE_UNSHADED
+	var color_line = float(data_to_write[2][0])
+	material.albedo_color = get_spectrum_color(color_line)
+	mesh_instance.material_override = material
+	
+	# Draw the lines
+	immediate_mesh.surface_begin(Mesh.PRIMITIVE_LINES)
+	
+	# Line from point1 to center
+	immediate_mesh.surface_add_vertex(point1 + center)
+	immediate_mesh.surface_add_vertex(center)
+	
+	# Line from center to point2
+	immediate_mesh.surface_add_vertex(center)
+	immediate_mesh.surface_add_vertex(point2 + center)
+	
+	immediate_mesh.surface_end()
+	
+	mesh_instance.set_script(LineScript)
+	var node_type = "connection"
+	node_creation(node_name, mesh_instance, coords, to_rotate, group_name, node_type, node_path_cc_c)
+
+
+# creating screen, it is just an 4 vertices point thingy
+func create_screen(node_name: String, first_line : Array, data_to_write : Array, group_name : String, version_of_thing : String, information_lines_parsed : Array):
+	var node_path_c_s = first_line[6][0]
+	var coords = first_line[1]
+	var to_rotate = first_line[2]
+
+	var color_to_change = float(information_lines_parsed[1][0][0])
+	var opacity_to_change = float(information_lines_parsed[1][1][0])
+	
+	var material = StandardMaterial3D.new()
+	var color_to_add_op = get_spectrum_color(color_to_change)
+	color_to_add_op.a = opacity_to_change
+	material.albedo_color = color_to_add_op
+	material.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA_DEPTH_PRE_PASS
+
+	var vertices = PackedVector3Array()
+
+	var vector_points = []
+	for point in data_to_write:
+		vector_points.append(Vector3(float(point[0]), float(point[1]), float(point[2])))
+	
+	# Create triangles
+	vertices.append(vector_points[0])
+	vertices.append(vector_points[2])
+	vertices.append(vector_points[1])
+	
+	vertices.append(vector_points[0])
+	vertices.append(vector_points[3])
+	vertices.append(vector_points[2])
+
+	var arr_mesh = ArrayMesh.new()
+	var arrays = []
+	arrays.resize(Mesh.ARRAY_MAX)
+	arrays[Mesh.ARRAY_VERTEX] = vertices
+	
+	arr_mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, arrays)
+	
+	# Create mesh instance and set properties
+	var mesh_instance = MeshInstance3D.new()
+	mesh_instance.mesh = arr_mesh
+	mesh_instance.material_override = material
+	var node_type =  "screen"
+	node_creation(node_name, mesh_instance, coords, to_rotate, group_name, node_type, node_path_c_s)
+
+
+# datapoint creation! one of the nodes i really like :)
+func create_datapoint(node_name: String, first_line : Array, data_to_write : Array, group_name : String, version_of_thing : String, information_lines_parsed : Array):
+	var node_path_c_dp = first_line[6][0]
+	var coords = first_line[1]
+	var to_rotate = first_line[2]
+	var data_point = Node3D.new()
+	data_point.set_script(DataPointScript)
+	data_point.setup_main_reference(self)
+	
+	var message_tester 
+	message_tester = data_point.power_up_data_point(node_name, int(version_of_thing), data_to_write)
+	var node_type = "datapoint"
+	node_creation(node_name, data_point, coords, to_rotate, group_name, node_type, node_path_c_dp)
+
+
+# the container thingy
+func create_container(node_name: String, first_line : Array, data_to_write : Array, group_name : String, version_of_thing : String, information_lines_parsed : Array):
+	var node_path_c_con = first_line[6][0]
+	var coords = first_line[1]
+	var to_rotate = first_line[2]
+	var container 
+	container = Node3D.new()
+	
+	container.name = data_to_write[0][0]
+	container.set_script(ContainterScript)
+		# Add initialization with data_to_write if needed
+	if container.has_method("container_initialize"):
+		container.container_initialize(data_to_write)
+
+	var node_type = "container"
+	node_creation(data_to_write[0][0], container, coords, to_rotate, group_name, node_type, node_path_c_con)
+
+
+# this is one of my ideas of how to make nice color slider, black to white to black to colors, so we got all colors kinda, like stars too, and at beginning we just have black to white hole stuff :)
+func get_spectrum_color(value: float) -> Color:
+	# Ensure value is between 0 and 1
+	value = clamp(value, 0.0, 1.0)
+	
+	# Map 0-1 to our 9 color points
+	var color_index = value * 10  # 10 segments for 11 colors
+	
+	# Define our color points
+	var colors = [
+		Color(0.0, 0.0, 0.0),      # 1. Black
+		Color(1.0, 1.0, 1.0),      # 2. White
+		Color(0.0, 0.0, 0.0),      # 3. Black
+		Color(0.45, 0.25, 0.0),    # 4. Brown
+		Color(1.0, 0.0, 0.0),      # 5. Red
+		Color(1.0, 0.5, 0.0),      # 6. Orange
+		Color(1.0, 1.0, 0.0),      # 7. Yellow
+		Color(1.0, 1.0, 1.0),      # 8. White
+		Color(0.0, 1.0, 0.0),      # 9. Green
+		Color(0.0, 0.0, 1.0),      # 10. Blue
+		Color(0.5, 0.0, 0.5)       # 11. Purple
+	]
+	
+	# Find the two colors to interpolate between
+	var lower_index = floor(color_index)
+	var upper_index = ceil(color_index)
+	
+	# Get interpolation factor between these two colors
+	var t = color_index - lower_index
+	return colors[lower_index].lerp(colors[min(upper_index, 8)], t)

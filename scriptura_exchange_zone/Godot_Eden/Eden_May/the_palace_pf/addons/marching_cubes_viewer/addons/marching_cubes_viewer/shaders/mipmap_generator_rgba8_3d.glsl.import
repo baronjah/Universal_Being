@@ -1,0 +1,14 @@
+[remap]
+
+importer="glsl"
+type="RDShaderFile"
+uid="uid://bf3h7128kq7rv"
+path="res://.godot/imported/mipmap_generator_rgba8_3d.glsl-f0b6702054985967b3f81ce42dcf299c.res"
+
+[deps]
+
+source_file="res://addons/marching_cubes_viewer/addons/marching_cubes_viewer/shaders/mipmap_generator_rgba8_3d.glsl"
+dest_files=["res://.godot/imported/mipmap_generator_rgba8_3d.glsl-f0b6702054985967b3f81ce42dcf299c.res"]
+
+[params]
+

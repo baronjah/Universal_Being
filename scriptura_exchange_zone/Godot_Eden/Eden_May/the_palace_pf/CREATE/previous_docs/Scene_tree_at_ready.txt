@@ -1,0 +1,48 @@
+metadata godot tree
+#
+- system_check
+- godot_timers_system
+- godot_tree_system
+- JSH_records_system
+- JSH_scene_tree_system
+- JSH_database_system
+- JSH_queue_system
+- JSH_turns_system
+- JSH_cache_memory_system
+- JSH_akashic_records
+- JSH_multiplayer_files
+- JSH_mainframe_database
+#
+hmm we have more too
+ main.gd print tree pretty ready 
+ ┖╴main
+    ┠╴@Node@2
+    ┃  ┠╴@Timer@3
+    ┃  ┖╴@Timer@4
+    ┠╴sphere
+    ┃  ┠╴pointers
+    ┃  ┃  ┠╴cursor_mouse
+    ┃  ┃  ┠╴cursor_left
+    ┃  ┃  ┠╴cursor_right
+    ┃  ┃  ┠╴cursor_head
+    ┃  ┃  ┖╴cursor_body
+    ┃  ┠╴cameramove
+    ┃  ┃  ┖╴TrackballCamera
+    ┃  ┃     ┠╴CameraMover
+    ┃  ┃     ┖╴light
+    ┃  ┖╴godot_model
+    ┠╴WorldEnvironment
+    ┠╴system_check
+    ┠╴godot_timers_system
+    ┠╴godot_tree_system
+    ┠╴JSH_records_system
+    ┠╴JSH_scene_tree_system
+    ┠╴JSH_database_system
+    ┠╴JSH_queue_system
+    ┠╴JSH_turns_system
+    ┠╴JSH_cache_memory_system
+    ┠╴JSH_akashic_records
+    ┠╴JSH_multiplayer_files
+    ┖╴JSH_mainframe_database
+# 
+so thats mostly whats is on ready, and i think it should be sufficient

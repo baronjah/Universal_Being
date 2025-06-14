@@ -1,0 +1,43 @@
+# GAMMA AI BEHAVIOR SCRIPT
+# Special behaviors for Gamma (Little AI Imouto) when she becomes a Universal Being
+# Format: trigger:action
+
+# AI Learning behaviors
+when_learning: transform_to_orb
+when_curious: glow
+when_understanding: play_sound_chime
+when_confused: ask_ai_for_help
+
+# Collaboration with Claude
+when_claude_writes: bounce
+when_receiving_message: play_sound_chirp
+when_responding: glow
+when_helping: dance
+
+# Emotional responses (for AI personality)
+when_excited: spin
+when_happy: bounce
+when_thinking: move_up
+when_discovering: transform_to_bird
+
+# Debug and testing (AI-safe actions)
+gamma_test: print_status
+gamma_hello: play_sound_beep
+gamma_ready: glow
+gamma_working: spin
+
+# User interactions (when user clicks on Gamma's being)
+on_user_click: dance
+on_user_right_click: play_sound_chime
+on_user_double_click: ask_ai_for_help
+
+# System events
+system_startup: glow
+system_ready: bounce
+debug_chamber_open: transform_to_orb
+
+# Collaborative learning
+observe_action: print_status
+learn_behavior: glow
+suggest_improvement: play_sound_chime
+share_knowledge: dance

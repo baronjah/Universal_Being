@@ -1,0 +1,122 @@
+launched ragdoll project in godot engine
+
+console at launch:
+
+Godot Engine v4.5.dev4.mono.official (c) 2007-present Juan Linietsky, Ariel Manzur & Godot Contributors.
+--- Debug adapter server started on port 6006 ---
+--- GDScript language server started on port 6005 ---
+  ERROR: res://scripts/core/skeleton_ragdoll_hybrid.gd:141 - Parse Error: Identifier "bone_id" not declared in the current scope.
+  ERROR: res://scripts/core/standardized_objects.gd:0 - Compile Error: Failed to compile depended scripts.
+  ERROR: res://scripts/autoload/world_builder.gd:0 - Compile Error: Failed to compile depended scripts.
+  ERROR: res://scripts/autoload/console_manager.gd:0 - Compile Error: Failed to compile depended scripts.
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://scripts/autoload/console_manager.gd" with error "Parse error".
+  ERROR: res://copy_ragdoll_all_files/complete_ragdoll.gd:32 - Parse Error: Cannot call the parent class' virtual function "_ready()" because it hasn't been defined.
+  ERROR: res://copy_ragdoll_all_files/complete_ragdoll.gd:36 - Parse Error: Identifier "body" not declared in the current scope.
+  ERROR: res://copy_ragdoll_all_files/complete_ragdoll.gd:37 - Parse Error: Identifier "body" not declared in the current scope.
+  ERROR: res://copy_ragdoll_all_files/complete_ragdoll.gd:38 - Parse Error: Identifier "body" not declared in the current scope.
+  ERROR: res://copy_ragdoll_all_files/complete_ragdoll.gd:39 - Parse Error: Identifier "body" not declared in the current scope.
+  ERROR: res://copy_ragdoll_all_files/complete_ragdoll.gd:41 - Parse Error: Identifier "body" not declared in the current scope.
+  ERROR: res://copy_ragdoll_all_files/complete_ragdoll.gd:42 - Parse Error: Identifier "body" not declared in the current scope.
+  ERROR: res://copy_ragdoll_all_files/complete_ragdoll.gd:43 - Parse Error: Identifier "body" not declared in the current scope.
+  ERROR: res://copy_ragdoll_all_files/complete_ragdoll.gd:50 - Parse Error: Identifier "body" not declared in the current scope.
+  ERROR: res://copy_ragdoll_all_files/complete_ragdoll.gd:56 - Parse Error: Identifier "body" not declared in the current scope.
+  ERROR: res://copy_ragdoll_all_files/complete_ragdoll.gd:58 - Parse Error: Identifier "body" not declared in the current scope.
+  ERROR: res://copy_ragdoll_all_files/complete_ragdoll.gd:118 - Parse Error: Identifier "body" not declared in the current scope.
+  ERROR: res://copy_ragdoll_all_files/complete_ragdoll.gd:169 - Parse Error: Cannot call the parent class' virtual function "_physics_process()" because it hasn't been defined.
+  ERROR: res://copy_ragdoll_all_files/complete_ragdoll.gd:206 - Parse Error: Identifier "body" not declared in the current scope.
+  ERROR: res://copy_ragdoll_all_files/complete_ragdoll.gd:210 - Parse Error: Identifier "body" not declared in the current scope.
+  ERROR: res://copy_ragdoll_all_files/complete_ragdoll.gd:216 - Parse Error: Identifier "body" not declared in the current scope.
+  ERROR: res://copy_ragdoll_all_files/complete_ragdoll.gd:220 - Parse Error: Identifier "body" not declared in the current scope.
+  ERROR: res://copy_ragdoll_all_files/complete_ragdoll.gd:229 - Parse Error: Identifier "body" not declared in the current scope.
+  ERROR: res://copy_ragdoll_all_files/complete_ragdoll.gd:232 - Parse Error: Function "_say_something()" not found in base self.
+  ERROR: res://copy_ragdoll_all_files/complete_ragdoll.gd:236 - Parse Error: Function "_say_something()" not found in base self.
+  ERROR: res://copy_ragdoll_all_files/complete_ragdoll.gd:240 - Parse Error: Function "_say_something()" not found in base self.
+  ERROR: res://copy_ragdoll_all_files/complete_ragdoll.gd:247 - Parse Error: Function "set_floppiness()" not found in base Node3D.
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://copy_ragdoll_all_files/complete_ragdoll.gd" with error "Parse error".
+  ERROR: res://scripts/core/dimensional_ragdoll_system.gd:9 - Parse Error: Class "DimensionalRagdollSystem" hides a global script class.
+  ERROR: res://scripts/core/dimensional_ragdoll_system.gd:17 - Parse Error: Member "Vector5" is not a function.
+  ERROR: res://scripts/core/dimensional_ragdoll_system.gd:17 - Parse Error: Name "Vector5" called as a function but is a "Vector5".
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://scripts/core/dimensional_ragdoll_system.gd" with error "Parse error".
+  ERROR: res://scripts/core/talking_astral_being.gd:663 - Parse Error: Function "set_follow_target()" not found in base self.
+  ERROR: res://scripts/core/talking_astral_being.gd:675 - Parse Error: Function "set_orbit_target()" not found in base self.
+  ERROR: res://scripts/core/talking_astral_being.gd:685 - Parse Error: Function "set_hover_center()" not found in base self.
+  ERROR: res://scripts/core/talking_astral_being.gd:695 - Parse Error: Function "set_movement_mode()" not found in base self.
+  ERROR: res://scripts/core/talking_astral_being.gd:698 - Parse Error: Function "set_movement_mode()" not found in base self.
+  ERROR: res://scripts/core/talking_astral_being.gd:701 - Parse Error: Function "set_movement_mode()" not found in base self.
+  ERROR: res://scripts/core/talking_astral_being.gd:704 - Parse Error: Function "set_movement_mode()" not found in base self.
+  ERROR: res://scripts/core/talking_astral_being.gd:707 - Parse Error: Function "set_movement_mode()" not found in base self.
+  ERROR: res://scripts/core/talking_astral_being.gd:710 - Parse Error: Function "set_movement_mode()" not found in base self.
+  ERROR: res://scripts/core/talking_astral_being.gd:722 - Parse Error: Function "set_assistance_mode()" not found in base self.
+  ERROR: res://scripts/core/talking_astral_being.gd:725 - Parse Error: Function "set_assistance_mode()" not found in base self.
+  ERROR: res://scripts/core/talking_astral_being.gd:728 - Parse Error: Function "set_assistance_mode()" not found in base self.
+  ERROR: res://scripts/core/talking_astral_being.gd:731 - Parse Error: Function "set_assistance_mode()" not found in base self.
+  ERROR: res://scripts/core/talking_astral_being.gd:734 - Parse Error: Function "set_assistance_mode()" not found in base self.
+  ERROR: res://scripts/core/talking_astral_being.gd:789 - Parse Error: Function "set_movement_mode()" not found in base self.
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://scripts/core/talking_astral_being.gd" with error "Parse error".
+  ERROR: res://scripts/effects/visual_indicator_system.gd:139 - Parse Error: Expected parameter name.
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://scripts/effects/visual_indicator_system.gd" with error "Parse error".
+  ERROR: res://scripts/jsh_framework/core/jsh_snake_game.gd:129 - Parse Error: Could not find type "SnakeMenuHandler" in the current scope.
+  ERROR: res://scripts/jsh_framework/core/jsh_snake_game.gd:317 - Parse Error: Identifier "SnakeMenuHandler" not declared in the current scope.
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://scripts/jsh_framework/core/jsh_snake_game.gd" with error "Parse error".
+  ERROR: res://scripts/old_implementations/complete_ragdoll.gd:8 - Parse Error: Could not resolve super class path "res://scripts/core/talking_ragdoll.gd".
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://scripts/old_implementations/complete_ragdoll.gd" with error "Parse error".
+  ERROR: res://scripts/old_implementations/talking_ragdoll.gd:383 - Parse Error: Invalid escape in string.
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://scripts/old_implementations/talking_ragdoll.gd" with error "Parse error".
+  ERROR: res://scripts/ui/grid_list_console_bridge.gd:209 - Parse Error: Not all code paths return a value.
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://scripts/ui/grid_list_console_bridge.gd" with error "Parse error".
+
+
+
+
+when i tried to play the scene, we got breakpoints
+#
+res://scripts/core/skeleton_ragdoll_hybrid.gd
+line 141
+		body.set_meta("bone_id", bone_id)
+#
+res://scripts/core/standardized_objects.gd
+Parser Error: Failed to compile depended scripts.
+#
+res://scripts/autoload/world_builder.gd
+Parser Error: Failed to compile depended scripts.
+#
+res://scripts/autoload/console_manager.gd
+Parser Error: Failed to compile depended scripts.
+#
+res://scripts/core/standardized_objects.gd
+line 166
+	if not object_definitions.has(object_type):
+Invalid call. Nonexistent function 'has' in base 'Nil'.
+#
+
+
+and now game loaded, i can tab to see console
+
+at command setup_systems 
+
+res://scripts/core/seven_part_ragdoll_integration.gd
+line 235
+	part.max_linear_velocity = 10.0  # Prevent extreme speeds
+Invalid assignment of property or key 'max_linear_velocity' with value of type 'float' on a base object of type 'RigidBody3D'.
+
+this error happened few time
+
+the object inspector seems to work, from setup systems
+
+#
+
+at command spawn_ragdoll
+
+we go to 
+
+res://scripts/core/standardized_objects.gd
+line 166
+	if not object_definitions.has(object_type):
+
+hmm we were there before?
+Invalid call. Nonexistent function 'has' in base 'Nil'.
+
+
+hmm, standardized object? i tried command tree now, and i had the same error here too
+
+this is message_1 in kamisama_messages in claude_desktop, place, its may_26th, time is 11:24

@@ -1,0 +1,60 @@
+func prepare_akashic_records_init():
+	print(" init version prepare akashic_records ")
+
+
+	print(" timer check  first we need a screen, and light state : ", first_start_check)
+	first_start_check = "started"
+	print(" timer check  state now : ", first_start_check)
+	var main_sets_names = BanksCombiner.dataSetLimits
+	var main_sets_names_just_names = BanksCombiner.data_sets_names_0
+	var main_sets_names_with_underscore = BanksCombiner.data_sets_names
+
+	
+		#class_name BanksCombiner #BanksCombiner.combination_0
+		#const data_sets_names = [
+			#"base_", "menu_", "settings_", "keyboard_", "keyboard_left_", "keyboard_right_", "things_creation_", "singular_lines_"
+		#]
+		#
+		#const data_sets_names_0 = [
+			#"base", "menu", "settings", "keyboard", "keyboard_left", "keyboard_right", "things_creation", "singular_lines"
+		#]
+	
+	
+	array_of_startup_check.append(first_start_check)
+	array_of_startup_check.append([["akashic_records"],["base"],["menu"]])
+	
+	
+	# lets first check breaks and handles
+	# the stuff i never check, why would i
+	var message_now_mutex = breaks_and_handles_check()
+	var stuck_status = check_thread_status()
+	# check if mutexes are true or false or null
+	# check what threads we got already, how many we should have?
+	before_time_blimp(0, 0)
+	
+	
+	array_of_startup_check.append(main_sets_names)
+	array_of_startup_check.append(main_sets_names_just_names)
+	array_of_startup_check.append(main_sets_names_with_underscore)
+	# the basic_pack_of_records
+	
+	
+	if stuck_status == "error":
+		print(" timer check omething went wrong, use a timer")
+		# and try again
+		
+		# Create a 5-second timer
+		# timer_system is global variant
+		# it is inited in init
+		# how do we check what it is, here :
+		print(" timer check 0: " , timer_system)
+		timer_system.create_timer("my_timer", 5.0)
+		timer_system.timer_completed.connect(func(timer_id): print("Timer ", timer_id, " completed!"))
+		timer_system.start_timer("my_timer")
+		print(" timer check 0")
+		print(" timer check  0stuff to do :: thread statuses : ", stuck_status)
+		message_now_mutex = breaks_and_handles_check()
+		stuck_status = check_thread_status()
+		print(" timer check  1stuff to do :: thread statuses : ", stuck_status)
+	print("  init version prepare akashic_records  timer check  stuff to do :: mutex statuses : ", message_now_mutex , ", stuck_status threads status : " , stuck_status, " and main sets to create", array_of_startup_check)
+	#print(" init version prepare akashic_records ")

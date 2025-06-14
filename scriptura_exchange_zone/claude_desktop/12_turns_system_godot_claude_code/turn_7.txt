@@ -1,0 +1,149 @@
+# Turn 3: Complete Setup Guide
+## 3D Notepad Interface Layers Implementation
+
+## 🎮 Input Map Setup (Project Settings → Input Map)
+
+Add these actions in Godot:
+
+| Action Name | Assigned Keys | Description |
+|-------------|---------------|-------------|
+| `toggle_notepad` | **N** | Show/hide notepad layers |
+| `create_word` | **C** | Create new word at cursor |
+| `interact` | **E** | Interact with nearest word |
+| `cycle_layer_up` | **Mouse Wheel Up** | Next layer |
+| `cycle_layer_down` | **Mouse Wheel Down** | Previous layer |
+
+## 🏗️ Scene Structure
+
+Create this scene hierarchy in Godot:
+
+```
+Main (Node3D)
+├── Player (from Turn 2)
+│   ├── CameraPivot (Node3D)
+│   │   └── Camera3D
+│   └── CollisionShape3D (CharacterBody3D collision)
+├── WordManifestor (Node3D) [Attach WordManifestor.gd]
+└── Environment
+    ├── WorldEnvironment (with cosmic background)
+    └── DirectionalLight3D
+```
+
+## 🌌 Environment Setup
+
+### 1. Cosmic Background Shader
+Create a new **Sky** resource in WorldEnvironment:
+
+```glsl
+// cosmic_sky.gdshader
+shader_type sky;
+
+uniform vec4 color_top : source_color = vec4(0.1, 0.2, 0.4, 1.0);
+uniform vec4 color_bottom : source_color = vec4(0.05, 0.1, 0.2, 1.0);
+uniform float star_density : hint_range(0.0, 1.0) = 0.1;
+
+float random(vec2 uv) {
+    return fract(sin(dot(uv, vec2(12.9898, 78.233))) * 43758.5453);
+}
+
+void sky() {
+    float t = 1.0 - clamp(VERTEX.y / 1000.0, 0.0, 1.0);
+    vec3 gradient = mix(color_top.rgb, color_bottom.rgb, t);
+    
+    // Add stars
+    vec2 star_uv = VERTEX.xz * star_density;
+    float star = step(0.99, random(floor(star_uv)));
+    
+    COLOR = gradient + vec3(star * 0.8);
+}
+```
+
+### 2. Ambient Lighting
+Set up DirectionalLight3D:
+- **Energy**: 0.5
+- **Color**: Slightly blue tint (0.9, 0.95, 1.0)
+- **Rotation**: (-30°, 45°, 0°)
+
+## 🎯 Testing Checklist
+
+### ✅ Basic Functionality
+- [ ] Press **N** to toggle notepad visibility
+- [ ] See 5 translucent blue layers stacked in depth
+- [ ] Initial words appear: "consciousness", "evolution", "manifestation"
+- [ ] Words gently float with wobble animation
+
+### ✅ Interaction Tests
+- [ ] Press **C** near layers to create new words
+- [ ] Click on words to select them (scale animation)
+- [ ] Right-click shows context menu message
+- [ ] Words glow brighter when camera approaches
+
+### ✅ Layer Navigation
+- [ ] Mouse wheel cycles through active layers
+- [ ] Active layer glows brighter than others
+- [ ] Layer colors progress: Cyan → Blue → Indigo → Purple → Violet
+
+### ✅ Visual Polish
+- [ ] Words are billboard-enabled (always face camera)
+- [ ] Translucent spheres behind text for readability
+- [ ] Smooth animations for all interactions
+- [ ] Cosmic background with star field
+
+## 🔗 Integration Points
+
+### Connection to Turn 2 (Navigation)
+The WordManifestor works with your existing CosmicNavigator:
+
+```gdscript
+# In your main scene script
+func _ready():
+    var navigator = $Player
+    var manifester = $WordManifestor
+    
+    # Connect signals for integrated experience
+    manifester.word_selected.connect(_on_word_selected)
+    manifester.layer_changed.connect(_on_layer_changed)
+
+func _on_word_selected(word_entity: Node3D):
+    # Auto-frame camera on selected word (Turn 10 preview)
+    var camera = $Player/CameraPivot/Camera3D
+    var tween = create_tween()
+    var target_pos = word_entity.global_position + Vector3(0, 2, 5)
+    tween.tween_property(camera, "global_position", target_pos, 1.0)
+```
+
+### Integration with Evolution System
+Connect to your existing AkashicNotepad3D:
+
+```gdscript
+# In WordManifestor.gd, add this function:
+func connect_to_evolution_system(akashic_system: AkashicNotepad3D):
+    word_created.connect(akashic_system._on_word_created)
+    word_selected.connect(akashic_system._on_word_selected)
+    
+    # Enable evolution commands
+    akashic_system.word_evolved.connect(_on_word_evolved_externally)
+```
+
+## 🚀 Ready for Turn 4!
+
+Once Turn 3 is working, you'll have:
+- ✅ **Living 3D notepad** with floating layers
+- ✅ **Interactive word entities** that respond to proximity
+- ✅ **Cosmic atmosphere** matching your vision
+- ✅ **Foundation for terminal integration** (Turn 4)
+
+### Next: Turn 4 Preview
+Turn 4 will add the holographic terminal that:
+- Appears with **Tab** key
+- Accepts text commands
+- Controls word creation and evolution
+- Integrates with AI collaboration system
+
+The terminal will float in 3D space and connect directly to your word entities, allowing you to type commands like:
+- `create consciousness layer_2`
+- `evolve manifestation AIRNA`
+- `connect consciousness evolution`
+- `ai collaborate enhancement Claude`
+
+Ready to implement Turn 3? Let me know if you need any clarification on the setup!

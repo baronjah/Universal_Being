@@ -1,0 +1,43 @@
+{
+  "center": "story_2_1747905704",
+  "created_at": "2025-05-22T11:26:06.249421",
+  "layers": {
+    "layer_0": [
+      {
+        "id": "story_2_1747905704",
+        "name": "Active_Implementation_Hub",
+        "phase": "manifestation",
+        "energy": 0.7162834381537514,
+        "connections": 2
+      }
+    ],
+    "layer_1": [
+      {
+        "id": "story_1_1747905566",
+        "name": "Desktop_Wisdom_Archive",
+        "phase": "genesis",
+        "energy": 0.9730552856124197,
+        "connections": 2
+      },
+      {
+        "id": "story_3_1747905733",
+        "name": "Infinite_Potential_Engine",
+        "phase": "transcendence",
+        "energy": 0.6539635137051285,
+        "connections": 2
+      }
+    ],
+    "layer_2": []
+  },
+  "total_stories": 3,
+  "energy_distribution": {
+    "total_energy": 2.3433022374712995,
+    "average_energy": 0.7811007458237665,
+    "energy_per_layer": {
+      "layer_0": 0.7162834381537514,
+      "layer_1": 1.6270187993175482,
+      "layer_2": 0
+    }
+  },
+  "connection_density": 2.0
+}

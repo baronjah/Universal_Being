@@ -1,0 +1,56 @@
+func multi_threaded_ray_cast(result, to, from):
+	print(" are we even at begining?")
+	if result:
+		to = result.position
+		var collider = result.collider
+		# Get the parent "thing" node
+		var parent = collider.get_parent()
+		var containter = parent.get_parent()
+		var get_container = func(node: Node, method_name: String):
+			while node:
+				if node.has_method(method_name):
+					return node
+				node = node.get_parent()
+			return null
+		#print(" maytbe there?")
+		var container = get_container.call(containter, "get_datapoint")
+		
+#		print("containter : ", container)
+		var datapoint = container.get_datapoint()
+		var current_node = collider
+		#print("current_node : " , current_node)
+		#await self.get_tree().process_frame
+		while current_node != null and not current_node.name.begins_with("thing_"):
+			current_node = current_node.get_parent()
+		
+		if current_node:
+			#var array_of_things_that_shall_remain = 
+			if datapoint:
+				datapoint.thing_interaction(current_node)
+			else:
+				print(" somehow we didnt get that datapoint, but we got different kinds of data :) " , container.name)
+				var stringy_container = str(container.name)
+				tree_mutex.lock()
+				var datapoint_path_ray_cast = scene_tree_jsh["main_root"]["branches"][stringy_container]["datapoint"]["datapoint_path"]
+				#print(scene_tree_jsh["main_root"]["branches"][stringy_container]["datapoint"]["datapoint_path"])
+				tree_mutex.unlock()
+				datapoint = jsh_tree_get_node(datapoint_path_ray_cast)
+				if datapoint:
+					datapoint.thing_interaction(current_node)
+				else:
+					print(" i guess it didn work out ?")
+			#if array_of_things_that_shall_remain != null:
+				#var array_size = array_of_things_that_shall_remain[1].size()
+				#if array_size > 0:
+					#secondary_interaction_after_rc(array_of_things_that_shall_remain[1])
+				#unload_nodes(array_of_things_that_shall_remain[0][0])
+	
+	#print(" do we ray cast? ")
+	var line_node_now = jsh_tree_get_node("akashic_records/thing_3")
+	if line_node_now:
+		var start_end_points : Array = [from, to]
+		#print(line_node_now.get_script())
+		#print(line_node_now.has_method("change_points_of_line"))
+		if line_node_now.has_method("change_points_of_line"):
+			line_node_now.change_points_of_line(start_end_points)
+			return [from, to]

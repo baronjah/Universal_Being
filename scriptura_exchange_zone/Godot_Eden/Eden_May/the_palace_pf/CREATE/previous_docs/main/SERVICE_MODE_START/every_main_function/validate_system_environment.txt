@@ -1,0 +1,8 @@
+func validate_system_environment() -> Dictionary:
+	return {
+		"os": OS.get_name(),
+		"processor_count": OS.get_processor_count(),
+		"vulkan_version": Engine.get_version_info()["vulkan"], # From your output: "Vulkan 1.3.277"
+		"device_info": Engine.get_version_info()["video_adapter"], # "NVIDIA - Quadro RTX 3000"
+		"timestamp": Time.get_ticks_msec()
+	}

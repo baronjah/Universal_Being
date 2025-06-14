@@ -1,0 +1,69 @@
+# Main.gd Summary - Lines 1500-2000
+
+## Data Processing Continued (Lines 1500-1547)
+- Continuation of data handling functions from previous section
+- Nested loops for processing different data types using BanksCombiner
+- Thread-safe operations for data types 0-3
+- First line and parsed lines handling for different record types
+- Data clearing after processing
+
+## Instructions Analyzer (Lines 1546-1586)
+- Function instructions_analiser() processes instructions based on type
+- Uses InstructionsBank.type_of_instruction_0 for mapping
+- Handles 11 different instruction types (0-10):
+  0. Setting datapoint priority
+  1. Adding things to datapoint
+  2. Setting maximum things number
+  3. Container startup
+  4. Container nesting (commented as future functionality)
+  5. Scene number setting
+  6. Rotation operations
+  7. Single function setup
+  8. Interaction number setting
+  9. Container movement
+  10. File loading
+
+## Data Processing Functions (Lines 1587-1634)
+- data_to_be_send_processing(): Thread-safe data organization with complex nesting
+- check_type_of_container(): Checks instruction type for containers
+- check_scene_container(): Identifies scene-specific containers
+
+## Thread Management System (Lines 1674-1801)
+- test_single_core(): Simple test function
+- test_multi_threaded(): Test for threaded operation
+- check_thread_status(): Basic thread pool state checking
+- check_thread_status_type(): Detailed thread statistics
+- multi_threads_start_checker(): Thread comparison check
+- prepare_akashic_records(): Thread ID tracking
+- create_new_task(): Task submission with tagging
+- create_new_task_empty(): Task submission without parameters
+- check_three_tries_for_threads(): Thread stability checking
+- validate_thread_system(): Comprehensive thread system validation
+
+## Creation Queue System (Lines 1825-1952)
+- three_stages_of_creation(): Main creation function
+  - Includes 9-stage creation process
+  - Thread-safe operations
+  - Creation task handling
+- check_if_we_are_adding_container(): Container addition validation
+- check_if_already_loading_one(): Loading state checking
+- the_current_state_of_tree(): Container state management
+  - Handles loading and unloading states
+  - Updates queue status
+- change_creation_set_name(): Renames creation sets
+
+## Queue Processing Functions (Lines 1964-1999)
+- process_creation_further(): Increments creation progress
+- whip_out_set_by_its_name(): Creation attempt with status reporting
+- attempt_creation(): Creation possibility checking
+- queue_pusher_adder(): Task completion handling
+
+## Notable Features
+1. ASCII Art Headers: Decorative headers for major sections
+2. Thread-Safe Operations: Extensive use of mutexes
+3. Creation States: Complex multi-stage creation process
+4. Thread Pool Integration: Comprehensive thread management
+5. Data Organization: Structured approach to data handling
+6. Container Management: Thread-safe container state tracking
+
+Reading continues from line 2000.

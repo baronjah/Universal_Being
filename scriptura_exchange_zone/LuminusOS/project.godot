@@ -1,0 +1,41 @@
+; Engine configuration file.
+; It's best edited using the editor UI and not directly,
+; since the parameters that go here are not all obvious.
+;
+; Format:
+;   [section] ; section goes between []
+;   param=value ; assign values to parameters
+
+config_version=5
+
+[application]
+
+config/name="LuminusOS"
+run/main_scene="res://scenes/main.tscn"
+config/features=PackedStringArray("4.4")
+config/icon="res://assets/icon.png"
+
+[autoload]
+
+GlobalCommands="*res://scripts/global_commands.gd"
+FileSystem="*res://scripts/file_system.gd"
+ScriptInterpreter="*res://scripts/script_interpreter.gd"
+VersionUpdater="*res://scripts/version_updater.gd"
+MultiCoreSystem="*res://scripts/multi_core_system.gd"
+WordStorySystem="*res://scripts/word_story_system.gd"
+MagicSystem="*res://scripts/magic_system.gd"
+AutomationSystem="*res://scripts/automation_system.gd"
+
+[display]
+
+window/size/viewport_width=1280
+window/size/viewport_height=720
+window/size/resizable=true
+
+[gui]
+
+theme/custom="res://themes/luminusos_theme.tres"
+
+[rendering]
+
+environment/defaults/default_clear_color=Color(0, 0, 0.2, 1)

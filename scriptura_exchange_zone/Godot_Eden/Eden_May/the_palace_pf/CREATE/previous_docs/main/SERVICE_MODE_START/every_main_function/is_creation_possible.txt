@@ -1,0 +1,59 @@
+func is_creation_possible() -> bool:
+	# Quick preliminary checks without mutex locks
+	if thread_pool == null or first_start_check != "started":
+		print("Basic system check failed")
+		return false
+	
+	# Begin mutex-protected checks
+	var creation_allowed := true
+	var block_reason := ""
+	
+	# Check process mutex
+	array_mutex_process.lock()
+	var process_check = list_of_sets_to_create.size() < max_nodes_added_per_cycle
+	array_mutex_process.unlock()
+	
+	if not process_check:
+		creation_allowed = false
+		block_reason = "Creation queue full"
+	
+	# Check container state
+	mutex_for_container_state.lock()
+	var container_check = current_containers_state.size() < max_nodes_added_per_cycle
+	mutex_for_container_state.unlock()
+	
+	if not container_check:
+		creation_allowed = false
+		block_reason = "Container state limit reached"
+	
+	# Check resource availability
+	array_counting_mutex.lock()
+	var resource_check = array_for_counting_finish.size() < max_nodes_added_per_cycle
+	array_counting_mutex.unlock()
+	
+	if not resource_check:
+		creation_allowed = false
+		block_reason = "Resource limit reached"
+	
+	# Check if we're not in error state
+	dictionary_of_mistakes_mutex.lock()
+	var error_check = dictionary_of_mistakes.is_empty()
+	dictionary_of_mistakes_mutex.unlock()
+	
+	if not error_check:
+		creation_allowed = false
+		block_reason = "System has unresolved errors"
+	
+	if not creation_allowed:
+		print("Creation blocked: ", block_reason)
+		
+		# Record the blocking reason if needed
+		dictionary_of_mistakes_mutex.lock()
+		dictionary_of_mistakes[Time.get_ticks_msec()] = {
+			"type": "creation_blocked",
+			"reason": block_reason,
+			"status": "pending"
+		}
+		dictionary_of_mistakes_mutex.unlock()
+	
+	return creation_allowed

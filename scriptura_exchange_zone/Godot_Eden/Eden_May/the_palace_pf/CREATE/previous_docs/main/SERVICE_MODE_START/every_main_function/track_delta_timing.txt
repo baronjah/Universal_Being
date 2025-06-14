@@ -1,0 +1,2 @@
+func track_delta_timing(validation):
+	print("blink")

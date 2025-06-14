@@ -1,0 +1,31 @@
+# Add these commands to console_manager.gd if Universal Entity commands don't register
+
+# In the commands dictionary (around line 50), add:
+"universal": _cmd_universal_fallback,
+"perfect": _cmd_perfect_fallback,
+
+# Then add these functions at the end of console_manager.gd:
+
+func _cmd_universal_fallback(_args: Array) -> void:
+	var universal = get_node_or_null("/root/UniversalEntity") 
+	if universal and universal.has_method("_cmd_universal_status"):
+		universal._cmd_universal_status(_args)
+	else:
+		_print_to_console("[color=#ffff00]Universal Entity not loaded yet. Attempting to load...[/color]")
+		# Try to manually instance it
+		var script = load("res://scripts/core/universal_entity/universal_entity.gd")
+		if script:
+			var instance = Node.new()
+			instance.set_script(script)
+			instance.name = "UniversalEntity"
+			get_tree().root.add_child(instance)
+			_print_to_console("[color=#00ff00]Universal Entity loaded! Try the command again.[/color]")
+		else:
+			_print_to_console("[color=#ff0000]Failed to load Universal Entity script.[/color]")
+
+func _cmd_perfect_fallback(_args: Array) -> void:
+	var universal = get_node_or_null("/root/UniversalEntity")
+	if universal and universal.has_method("_cmd_make_perfect"):
+		universal._cmd_make_perfect(_args)
+	else:
+		_print_to_console("[color=#ff0000]Universal Entity not available. Type 'universal' first.[/color]")

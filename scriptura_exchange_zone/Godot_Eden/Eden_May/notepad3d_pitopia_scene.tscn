@@ -1,0 +1,208 @@
+[gd_scene load_steps=12 format=3]
+
+[ext_resource type="Script" path="res://pitopia_main.gd" id="1_bsqma"]
+[ext_resource type="Script" path="res://notepad3d_pitopia_integration.gd" id="2_w5trl"]
+[ext_resource type="Environment" path="res://pitopia_environment.tres" id="3_67kc1"]
+[ext_resource type="PackedScene" path="res://effects/dimension_transition.tscn" id="4_eghlk"]
+[ext_resource type="PackedScene" path="res://entities/universal_entity.tscn" id="5_6vixr"]
+[ext_resource type="PackedScene" path="res://effects/cyber_gate_effect.tscn" id="6_vf3ky"]
+[ext_resource type="PackedScene" path="res://effects/data_sewer_effect.tscn" id="7_v6imx"]
+[ext_resource type="PackedScene" path="res://ui/moon_phase_indicator.tscn" id="8_mffaa"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ypmx6"]
+bg_color = Color(0.0784314, 0.0784314, 0.0980392, 0.901961)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.2, 0.196078, 0.294118, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+shadow_color = Color(0, 0, 0, 0.25098)
+shadow_size = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_l2wfy"]
+bg_color = Color(0.152941, 0.152941, 0.196078, 0.901961)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.290196, 0.290196, 0.388235, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="Theme" id="Theme_m8t2o"]
+LineEdit/styles/focus = SubResource("StyleBoxFlat_l2wfy")
+Panel/styles/panel = SubResource("StyleBoxFlat_ypmx6")
+
+[node name="Notepad3DPitopiaScene" type="Node3D"]
+
+[node name="PitopiaMain" type="Node3D" parent="." groups=["pitopia_main"]]
+script = ExtResource("1_bsqma")
+auto_initialize = true
+auto_connect_signals = true
+default_dimension = 3
+default_turn_duration = 9.0
+enable_creation_on_words = true
+enable_automatic_dimension_effects = true
+enable_debug_messages = true
+pitopia_environment = ExtResource("3_67kc1")
+dimension_particle_effect_scene = ExtResource("4_eghlk")
+default_entity_scene = ExtResource("5_6vixr")
+
+[node name="Notepad3DPitopiaIntegration" type="Node3D" parent="."]
+script = ExtResource("2_w5trl")
+pitopia_main_path = NodePath("../PitopiaMain")
+enable_reality_transitions = true
+enable_cyber_gates = true
+enable_data_sewers = true
+enable_moon_phases = true
+default_reality_type = "Physical"
+word_limit_per_dimension = 100
+auto_initialize = true
+cyber_gate_effect = ExtResource("6_vf3ky")
+data_sewer_effect = ExtResource("7_v6imx")
+moon_phase_indicator = ExtResource("8_mffaa")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = ExtResource("3_67kc1")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.866025, -0.433013, 0.25, 0, 0.5, 0.866025, -0.5, -0.75, 0.433013, 0, 5, 0)
+light_color = Color(0.945098, 0.921569, 1, 1)
+light_energy = 0.8
+shadow_enabled = true
+
+[node name="PlayerCamera" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.965926, 0.258819, 0, -0.258819, 0.965926, 0, 1.5, 4)
+current = true
+fov = 70.0
+
+[node name="UI" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_m8t2o")
+
+[node name="DimensionInfo" type="Panel" parent="UI"]
+layout_mode = 0
+offset_left = 20.0
+offset_top = 20.0
+offset_right = 320.0
+offset_bottom = 150.0
+
+[node name="DimensionLabel" type="Label" parent="UI/DimensionInfo"]
+layout_mode = 0
+offset_left = 10.0
+offset_top = 10.0
+offset_right = 290.0
+offset_bottom = 40.0
+text = "Dimension: 3D - Spatial Manifestation"
+
+[node name="TurnLabel" type="Label" parent="UI/DimensionInfo"]
+layout_mode = 0
+offset_left = 10.0
+offset_top = 40.0
+offset_right = 290.0
+offset_bottom = 70.0
+text = "Turn: 1 - γ"
+
+[node name="RealityLabel" type="Label" parent="UI/DimensionInfo"]
+layout_mode = 0
+offset_left = 10.0
+offset_top = 70.0
+offset_right = 290.0
+offset_bottom = 100.0
+text = "Reality: Physical"
+
+[node name="MoonPhaseLabel" type="Label" parent="UI/DimensionInfo"]
+layout_mode = 0
+offset_left = 10.0
+offset_top = 100.0
+offset_right = 290.0
+offset_bottom = 130.0
+text = "Moon Phase: 0/7 (100% stability)"
+
+[node name="HelpLabel" type="Label" parent="UI"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -50.0
+offset_bottom = -10.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "Press [TAB] for console | 1-9 to change dimension | WASD to move | Type /help for commands"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Console" type="Control" parent="."]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_m8t2o")
+
+[node name="Panel" type="Panel" parent="Console"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 0.4
+offset_left = 20.0
+offset_top = 20.0
+offset_right = -20.0
+offset_bottom = 0.0
+
+[node name="CommandInput" type="LineEdit" parent="Console/Panel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.85
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_right = -10.0
+offset_bottom = -10.0
+placeholder_text = "Enter a word or command... (try /help)"
+
+[node name="OutputLabel" type="RichTextLabel" parent="Console/Panel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 0.85
+offset_left = 10.0
+offset_top = 10.0
+offset_right = -10.0
+offset_bottom = -5.0
+focus_mode = 2
+bbcode_enabled = true
+text = "[color=#9988ff]Welcome to Notepad3D - The Game of Moon Man[/color]
+Press [TAB] to toggle console
+Type [color=#88ff99]/help[/color] for commands
+Use number keys [color=#ff8888]1-9[/color] to change dimension
+Current reality: [color=#ffdd88]Physical[/color]
+"
+scroll_following = true
+selection_enabled = true
+
+[node name="GridContainer" type="Node3D" parent="."]
+
+[node name="GridLines" type="Node3D" parent="GridContainer"]
+
+[node name="Floor" type="CSGBox3D" parent="GridContainer"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+size = Vector3(20, 1, 20)
+material = SubResource("StandardMaterial3D_6f33s")
+
+[connection signal="command_entered" from="Console/Panel/CommandInput" to="Notepad3DPitopiaIntegration" method="process_command"]
+[connection signal="text_submitted" from="Console/Panel/CommandInput" to="Notepad3DPitopiaIntegration" method="process_command"]

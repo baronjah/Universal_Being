@@ -1,0 +1,65 @@
+# Main.gd Summary - Lines 2000-2500
+
+## Task Management Continued (Lines 2000-2004)
+- Continuation of queue_pusher_adder() function
+- Task duration checking and timeout handling
+
+## Creation Set Management (Lines 2005-2062)
+- check_currently_being_created_sets(): Extensive checking of creation states
+  - Complex nested conditions for set state tracking
+  - Thread-safe operations with multiple mutexes
+  - Load queue status management
+
+## Multi-Stage Creation Pipeline (Lines 2063-2223)
+- process_stages(): Main orchestrator for creation stages
+  - Manages a 7-stage creation pipeline (0-6)
+  - Uses curent_queue for state tracking
+  - Thread-safe processing with mutexes
+- Stage-specific functions:
+  - first_stage_of_creation_(): Initializes menu
+  - second_stage_of_creation_() / second_impact_for_real(): Container setup
+  - third_stage_of_creation_() / third_impact_right_now(): Data loading
+  - fourth_impact_of_creation_() / fourth_impact_right_now(): Secondary data loading
+  - fifth_impact_of_creation_() / fifth_impact_right_now(): Progress tracking
+  - sixth_impact_of_creation() / sixth_impact_right_now(): Finalization
+  - Each stage runs in a separate thread via create_new_task()
+
+## File Management System (Lines 2225-2478)
+- File creation functions:
+  - file_creation(): Creates file with given content
+  - create_file(): Creates file from array data
+  - save_file_list_text(): Saves directory scan results as text
+  - create_default_settings(): Creates default settings file
+  - save_file_list_json(): Saves scan results as JSON
+- Directory and file checking:
+  - find_or_create_eden_directory(): Locates or creates Eden directory
+  - file_finder(): Finds file in a list
+  - check_folder() / check_folder_content(): Directory verification
+- Settings management:
+  - check_settings_file(): Comprehensive settings file management
+  - Handles both settings.txt and modules.txt
+  - Creates default settings if not present
+  - Updates paths based on settings
+- Path management:
+  - update_main_path(): Updates main path variable
+  - update_database_path(): Updates database folder variable
+
+## Data Type Demonstration (Lines 2346-2388)
+- Extensive showcase of GDScript data types with comments:
+  - Strings (empty and non-empty)
+  - Arrays and Dictionaries
+  - Numeric types (int and float)
+  - Vector types (Vector2/3/4 and their integer variants)
+  - Basis and Quaternion types
+  - Each with explanatory comments
+
+## Notable Patterns
+1. Multi-Stage Processing: Seven-stage creation pipeline
+2. Thread Safety: Extensive use of mutexes to protect shared data
+3. File System Integration: Comprehensive directory and file management
+4. Settings Management: Default creation and loading
+5. Task Delegation: Each major operation runs in a separate thread
+6. Progress Tracking: Detailed state management for creation stages
+7. ASCII Art Headers: Decorative section headers throughout
+
+Reading continues from line 2500.

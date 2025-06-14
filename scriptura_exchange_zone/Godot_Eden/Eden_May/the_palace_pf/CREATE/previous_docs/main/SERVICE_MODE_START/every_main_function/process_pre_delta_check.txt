@@ -1,0 +1,18 @@
+func process_pre_delta_check() -> bool:
+	var can_proceed = true
+	var readiness = check_system_readiness()
+	
+	# Check creation capability
+	if system_readiness.mutexes and system_readiness.threads:
+		if array_of_startup_check.is_empty():
+			can_proceed = false
+			print(" it is empty we cannot proceed")
+			return can_proceed
+
+		for set_name in array_of_startup_check[1]:
+			# Check if we can start creating this set
+			if is_creation_possible():
+				# Queue for creation
+				list_of_sets_to_create.append(set_name[0])
+	
+	return can_proceed

@@ -1,0 +1,17 @@
+func clean_array(array_name: String):
+	match array_name:
+		"stored_delta_memory":
+			# Keep only last 100 entries
+			if stored_delta_memory.size() > 100:
+				stored_delta_memory = stored_delta_memory.slice(-100)
+				
+		"blimp_of_time":
+			if blimp_of_time.size() > 50:
+				blimp_of_time = blimp_of_time.slice(-50)
+		
+		"array_with_no_mutex":
+			# Clean old errors
+			var current_time = Time.get_ticks_msec()
+			array_with_no_mutex = array_with_no_mutex.filter(
+				func(error): return current_time - error.time < 300000 # 5 minutes
+			)

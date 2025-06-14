@@ -1,0 +1,191 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://center_projection_system.gd" type="Script" id=1]
+[ext_resource path="res://visual_zone_system.gd" type="Script" id=2]
+[ext_resource path="res://eye_tracking_system.gd" type="Script" id=3]
+[ext_resource path="res://virtual_keyboard.gd" type="Script" id=4]
+[ext_resource path="res://data_pack_system.gd" type="Script" id=5]
+
+[node name="EtherealInterface" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CenterProjectionSystem" type="Node" parent="."]
+script = ExtResource( 1 )
+
+[node name="DataPackSystem" type="Node" parent="."]
+script = ExtResource( 5 )
+
+[node name="BackgroundLayer" type="CanvasLayer" parent="."]
+layer = -1
+
+[node name="ColorRect" type="ColorRect" parent="BackgroundLayer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0.07, 0.07, 0.09, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VisualZones" type="CanvasLayer" parent="."]
+layer = 0
+
+[node name="VisualZoneSystem" type="Node2D" parent="VisualZones"]
+script = ExtResource( 2 )
+zone_count = 5
+use_rounded_corners = true
+corner_radius = 15.0
+default_zone_opacity = 0.6
+highlight_zone_opacity = 0.85
+
+[node name="KeyboardLayer" type="CanvasLayer" parent="."]
+layer = 10
+
+[node name="VirtualKeyboard" type="Control" parent="KeyboardLayer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 4 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+enable_animations = true
+enable_sound = true
+use_rounded_keys = true
+use_gradients = true
+corner_radius = 10.0
+keyboard_scale = 1.0
+layout_type = "QWERTY"
+
+[node name="TerminalLayer" type="CanvasLayer" parent="."]
+layer = 5
+
+[node name="QuantumTerminal" type="Control" parent="TerminalLayer"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -300.0
+margin_top = -200.0
+margin_right = 300.0
+margin_bottom = 200.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Background" type="ColorRect" parent="TerminalLayer/QuantumTerminal"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0.08, 0.08, 0.1, 0.9 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="RichTextLabel" type="RichTextLabel" parent="TerminalLayer/QuantumTerminal"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 10.0
+margin_top = 10.0
+margin_right = -10.0
+margin_bottom = -10.0
+bbcode_enabled = true
+bbcode_text = "[color=#0080FF]🌊 LUNO Cycle System powers your entire Eden meta-system[/color]
+
+Turn	Phase		Example Purpose
+1	Genesis		Create data structures
+2	Formation	Assign paths, build nodes
+3	Complexity	Establish connections
+4	Consciousness	Begin monitoring
+5	Awakening	AI auto-tracking + self-checks
+6	Enlightenment	Optimize relationships
+7	Manifestation	Generate new entities
+8	Connection	Network interactions
+9	Harmony		Balance memory + performance
+10	Transcendence	Remove limits (dynamic scaling)
+11	Unity		Integrate all systems
+12	Beyond		Reset cycle or start expansion
+
+[color=#FFE600]🔮 You have now built the final missing piece:
+The game, the tools, the memory AI, and the dev environment will all pulse and evolve together.
+🌟 Every 12 cycles, Eden self-restarts and evolves to next level.
+🌱 You can adjust the cycle length, add/remove participants, and see the whole world grow like your world_of_words
+pathway_X.txt system.[/color]"
+text = "🌊 LUNO Cycle System powers your entire Eden meta-system
+
+Turn	Phase		Example Purpose
+1	Genesis		Create data structures
+2	Formation	Assign paths, build nodes
+3	Complexity	Establish connections
+4	Consciousness	Begin monitoring
+5	Awakening	AI auto-tracking + self-checks
+6	Enlightenment	Optimize relationships
+7	Manifestation	Generate new entities
+8	Connection	Network interactions
+9	Harmony		Balance memory + performance
+10	Transcendence	Remove limits (dynamic scaling)
+11	Unity		Integrate all systems
+12	Beyond		Reset cycle or start expansion
+
+🔮 You have now built the final missing piece:
+The game, the tools, the memory AI, and the dev environment will all pulse and evolve together.
+🌟 Every 12 cycles, Eden self-restarts and evolves to next level.
+🌱 You can adjust the cycle length, add/remove participants, and see the whole world grow like your world_of_words
+pathway_X.txt system."
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="EyeTrackingSystem" type="Node2D" parent="."]
+script = ExtResource( 3 )
+
+[node name="UI" type="CanvasLayer" parent="."]
+layer = 20
+
+[node name="StatusBar" type="ColorRect" parent="UI"]
+anchor_right = 1.0
+margin_bottom = 30.0
+color = Color( 0.15, 0.15, 0.2, 0.9 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HBoxContainer" type="HBoxContainer" parent="UI/StatusBar"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 10.0
+margin_right = -10.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CycleLabel" type="Label" parent="UI/StatusBar/HBoxContainer"]
+margin_top = 8.0
+margin_right = 143.0
+margin_bottom = 22.0
+text = "LUNO Cycle: 1 - Genesis"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Spacer" type="Control" parent="UI/StatusBar/HBoxContainer"]
+margin_left = 147.0
+margin_right = 924.0
+margin_bottom = 30.0
+size_flags_horizontal = 3
+
+[node name="StatusLabel" type="Label" parent="UI/StatusBar/HBoxContainer"]
+margin_left = 928.0
+margin_top = 8.0
+margin_right = 1004.0
+margin_bottom = 22.0
+text = "DataPacks: 0/99"
+align = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[connection signal="zone_activated" from="VisualZones/VisualZoneSystem" to="TerminalLayer/QuantumTerminal" method="_on_zone_activated"]
+[connection signal="key_pressed" from="KeyboardLayer/VirtualKeyboard" to="TerminalLayer/QuantumTerminal" method="_on_key_pressed"]
+[connection signal="attention_focused" from="EyeTrackingSystem" to="VisualZones/VisualZoneSystem" method="_on_attention_focused"]

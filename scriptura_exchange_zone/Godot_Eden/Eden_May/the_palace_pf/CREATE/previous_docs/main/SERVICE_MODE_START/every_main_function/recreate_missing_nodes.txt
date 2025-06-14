@@ -1,0 +1,36 @@
+func recreate_missing_nodes(array_of_recreation):
+	var container_name = array_of_recreation[0]
+	var path_of_missing_node = array_of_recreation[1]
+	var splitted_path_for_main_thingy = path_of_missing_node.split("/")
+	var node_we_look_for_now : String
+	var set_name_we_look_for : String
+	if splitted_path_for_main_thingy.size() > 1:
+		node_we_look_for_now = splitted_path_for_main_thingy[1]
+		print(" that thingy is bigger than 1, so it is not container ? " , node_we_look_for_now)
+	
+	active_r_s_mut.lock()
+	for current_activ_rec in active_record_sets:
+		for current_avail_rec in active_record_sets[current_activ_rec][current_activ_rec + "records"]["header"]:
+			print("current_avail_rec " , current_avail_rec)
+			if node_we_look_for_now == current_avail_rec:
+				print(" we found that thing " )
+				if scene_tree_jsh["main_root"]["branches"].has(container_name):
+					if scene_tree_jsh["main_root"]["branches"][container_name]["children"].has(node_we_look_for_now):
+						print_tree_pretty()
+						print(" the tree has that branch?")
+						print_tree_structure(scene_tree_jsh["main_root"]["branches"][container_name]["children"][node_we_look_for_now], 0)
+						disable_all_branches_reset_counters(scene_tree_jsh["main_root"]["branches"][container_name]["children"][node_we_look_for_now], container_name)
+						print_tree_structure(scene_tree_jsh["main_root"]["branches"][container_name]["children"][node_we_look_for_now], 0)
+						var path_for_node_to_unload = container_name + "/" + node_we_look_for_now
+						array_counting_mutex.lock()
+						if array_for_counting_finish[container_name].has(node_we_look_for_now):
+							array_for_counting_finish[container_name][node_we_look_for_now]["node"] = []
+						array_counting_mutex.unlock()
+						for singular_thingies in active_record_sets[current_activ_rec][current_activ_rec + "records"]["content"]:
+							print(" singular_thingies : " , singular_thingies[0][0][0])
+							if singular_thingies[0][0][0] == node_we_look_for_now:
+								print(" we found active records part : " , singular_thingies)
+								unload_node_branch(path_for_node_to_unload, singular_thingies)
+								return
+				return
+	active_r_s_mut.unlock()

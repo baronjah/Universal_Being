@@ -1,0 +1,4 @@
+func get_every_basic_set_():
+# BanksCombiner.data_sets_names "base_"
+# BanksCombiner.data_sets_names_0 "base"
+	return BanksCombiner.data_sets_names

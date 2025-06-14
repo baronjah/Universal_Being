@@ -1,0 +1,101 @@
+; Engine configuration file.
+; It's best edited using the editor UI and not directly,
+; since the properties are organized in sections here.
+
+[application]
+
+config/name="Eden Evolution Engine - Magnum Opus"
+config/description="Multi-dimensional evolution game with Akashic Records, JSH Console, and 12-turn system"
+run/main_scene="res://main.tscn"
+config/icon="res://icon.png"
+config/version="4.0-SONNET-OPUS"
+
+[autoload]
+
+AkashicCore="*res://akashic_records/akashic_core.gd"
+JSHCore="*res://jsh_console/jsh_core.gd"
+EvolutionCore="*res://evolution_core/evolution_engine.gd"
+UniverseGenerator="*res://universe_generator/universe_factory.gd"
+TwelveTurns="*res://twelve_turns_system/turns_manager.gd"
+Notepad3D="*res://notepad3d_system/notepad_3d.gd"
+
+[display]
+
+window/size/width=1920
+window/size/height=1080
+window/size/resizable=true
+window/dpi/allow_hidpi=true
+window/vsync/use_vsync=true
+window/stretch/mode="viewport"
+window/stretch/aspect="expand"
+
+[editor_plugins]
+
+enabled=PoolStringArray( "res://addons/eden_tools/" )
+
+[global]
+
+version="4.0"
+multicore=true
+api_connections=[ "claude-opus-4", "gpt-4", "local" ]
+
+[gui]
+
+theme/use_hidpi=true
+theme/custom="res://themes/eden_theme.tres"
+
+[input]
+
+ui_console={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":96,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
+ ]
+}
+ui_evolve={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":69,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
+ ]
+}
+ui_create={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":67,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
+ ]
+}
+ui_memory={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":77,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
+ ]
+}
+ui_turn={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":84,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
+ ]
+}
+
+[memory]
+
+pools=6
+pool_capacity=333
+fractal_depth=37
+dimension_layers=9
+
+[physics]
+
+common/enable_pause_aware_picking=true
+3d/default_gravity=9.8
+
+[rendering]
+
+quality/driver/driver_name="GLES3"
+vram_compression/import_etc=true
+vram_compression/import_etc2=false
+environment/default_clear_color=Color( 0.05, 0.05, 0.1, 1 )
+environment/default_environment="res://default_env.tres"
+
+[universe]
+
+max_universes=9
+evolution_cycles=12
+quantum_states=37
+time_seeds=[ 1427, 430, 123, 899 ]
+default_mutation_rate=0.1

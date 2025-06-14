@@ -1,0 +1,43 @@
+# Tree Universal Being Definition
+# This is a test asset for the Universal Being system
+
+[properties]
+name=Tree
+category=nature
+health=100
+growth_stage=mature
+age=150
+wood_type=oak
+leaves_density=0.8
+height=5.0
+trunk_radius=0.5
+can_interact=true
+interactive_range=2.0
+display_mode=PURE_3D
+
+[behavior]
+sway_in_wind=true
+drop_leaves=seasonal
+provides_shade=true
+bird_nesting=possible
+
+[physics]
+collision_enabled=true
+collision_shape=cylinder
+mass=1000.0
+gravity_scale=1.0
+
+[audio]
+wind_sound=tree_wind_rustle.ogg
+footstep_sound=leaves_crunch.ogg
+
+[visual]
+mesh_path=models/tree_oak.glb
+texture_path=textures/tree_bark_oak.png
+scale=Vector3(1.0, 1.0, 1.0)
+
+[metadata]
+author=UniversalBeingSystem
+version=1.0
+creation_date=2025-05-28
+description=A mature oak tree that can sway in wind and provide interactive shade

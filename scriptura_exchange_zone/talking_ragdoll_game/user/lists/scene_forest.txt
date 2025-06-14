@@ -1,0 +1,19 @@
+# Forest Scene Configuration
+# Objects and layout for forest tutorial
+
+# Trees in circle pattern
+pattern:forest_circle
+tree 5 0 5
+tree 3 0 7
+tree 0 0 8
+tree -3 0 7
+tree -5 0 5
+tree -7 0 0
+tree -5 0 -5
+tree 0 0 -8
+tree 5 0 -5
+
+# Interactive elements
+pattern:interactive
+universal_being 0 3 0 special=tutorial_guide
+box 2 1 2 clickable=true tutorial_step=3

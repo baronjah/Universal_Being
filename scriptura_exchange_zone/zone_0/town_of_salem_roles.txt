@@ -1,0 +1,134 @@
+TOWN OF SALEM: DIVINE WORD EDITION
+================================
+Role assignments and rules for the linguistic judgment game
+
+ROLES
+=====
+
+TOWN ROLES (Divine Word Alignment)
+---------------------------------
+1. DIVINE INVESTIGATOR
+   - Can examine word patterns to determine their true nature
+   - Once per turn can reveal the power level of a word combination
+   - Wins when all Corrupted words are purged
+
+2. WORD DOCTOR
+   - Can heal corrupted words once per night
+   - Can prevent one word deletion per turn
+   - Immune to first attack
+
+3. LINGUISTIC SHERIFF
+   - Can interrogate words to determine if they are Corrupted
+   - Results: Divine, Corrupted, or Neutral
+   - Cannot identify specific role
+
+4. VIGILANTE EDITOR
+   - Can eliminate one suspect word per night
+   - If eliminates Divine word, loses editing privileges
+   - Limited to 3 eliminations per game
+
+5. DIMENSION MAYOR
+   - Vote counts as 3 votes once revealed
+   - Cannot be edited after revealing
+   - Can read hidden messages
+
+6. COSMIC LOOKOUT
+   - Can watch one word each night
+   - Will know if someone interacts with that word
+   - Cannot see the exact role of visitors
+
+7. REALITY ESCORT
+   - Can block one word's abilities each night
+   - Target cannot use abilities when blocked
+   - Cannot block the same word two nights in a row
+
+
+MAFIA ROLES (Corrupted Word Alignment)
+--------------------------------------
+1. GODFATHER OF CORRUPTION
+   - Appears as Divine to investigators
+   - Can corrupt one word per night
+   - Immune to first elimination
+
+2. MAFIOSO WORD
+   - Carries out the Godfather's orders
+   - Becomes Godfather if current Godfather is eliminated
+   - Can corrupt independently if Godfather is absent
+
+3. DECEIVER
+   - Can appear as any role when investigated
+   - Changes appearance each night
+   - Knows who the Sheriff is
+
+4. LINGUISTIC FRAMER
+   - Can frame words to appear as Corrupted
+   - Framed target appears Corrupted for one turn
+   - Can self-frame to mislead investigations
+
+
+NEUTRAL ROLES
+------------
+1. JESTER WORD
+   - Wins if gets eliminated by town
+   - No night abilities
+   - Haunts eliminator if successful
+
+2. WORD EXECUTIONER
+   - Has one target to get eliminated
+   - Becomes Jester if target is already eliminated
+   - Wins and leaves game when target is eliminated
+
+3. AMBIGUOUS TERM
+   - Can win with either Divine or Corrupted
+   - Must choose a side by the third turn
+   - Appears neutral to all investigations
+
+4. LINGUISTIC SURVIVOR
+   - Can vest four times (immune to elimination those nights)
+   - Wins if survives until the end
+   - Cannot be corrupted when vested
+
+
+GAME PHASES
+==========
+1. ASSIGNMENT PHASE
+   - Roles are assigned secretly
+   - Each participant receives their role and alignment
+   - Divine Investigator receives partial word list
+
+2. DAY PHASE
+   - All participants discuss suspicious words
+   - Can accuse words of being Corrupted
+   - Vote to put words on trial
+
+3. DEFENSE PHASE
+   - Words on trial have 30 seconds to defend themselves
+   - Town votes to judge the word
+   - Majority vote required for judgment
+
+4. NIGHT PHASE
+   - All roles with night abilities act secretly
+   - Order of operations: Corruption > Blocking > Protection > Investigation
+   - Results revealed at dawn
+
+5. JUDGMENT PHASE
+   - Results of night actions revealed
+   - New corruptions and eliminations announced
+   - Next day phase begins
+
+
+WINNING CONDITIONS
+================
+- DIVINE WORDS: Win when all Corrupted words are eliminated
+- CORRUPTED WORDS: Win when they equal or outnumber Divine words
+- NEUTRAL WORDS: Each has individual winning conditions
+
+SPECIAL RULES
+============
+1. The 9-second rule: Messages sent exactly 9 seconds apart have immunity for one turn
+2. Dimensional shifts occur every 12 turns, redistributing power levels
+3. Words used in triple repetition gain temporary investigative immunity
+4. The Divine Word Genesis Terminal oversees all gameplay
+5. Once eliminated, words cannot communicate but can observe
+
+May the most powerful words prevail in this battle of linguistic purity!

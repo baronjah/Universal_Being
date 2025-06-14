@@ -1,0 +1,29 @@
+# Universal Being 3D Interface Blueprint: Asset Creator
+# Format: element_type|position_x|position_y|position_z|size_x|size_y|rotation|text|color|properties
+
+# Main panel background
+panel|0|0|0|4|3|0|Asset Creator|dark_blue|transparent:0.9,rounded:10
+
+# Title bar
+text_3d|0|1.3|0.1|2|0.3|0|Universal Asset Creator|white|font_size:24,glow:true
+
+# Create buttons section
+button_3d|-1.5|0.5|0.1|1.2|0.4|0|Create Cube|orange|action:create_cube,glow:orange
+button_3d|0|0.5|0.1|1.2|0.4|0|Create Sphere|green|action:create_sphere,glow:green
+button_3d|1.5|0.5|0.1|1.2|0.4|0|Create Tree|brown|action:create_tree,glow:brown
+
+# Material section
+text_3d|0|0|0.1|1.5|0.2|0|Materials|cyan|font_size:16
+button_3d|-1.5|-0.5|0.1|1|0.3|0|Metal|gray|action:set_material_metal
+button_3d|-0.5|-0.5|0.1|1|0.3|0|Wood|brown|action:set_material_wood
+button_3d|0.5|-0.5|0.1|1|0.3|0|Glass|blue|action:set_material_glass
+button_3d|1.5|-0.5|0.1|1|0.3|0|Crystal|purple|action:set_material_crystal
+
+# Size controls
+slider_3d|-1|-1|0.1|2|0.2|0|Size|yellow|min:0.1,max:5.0,default:1.0,action:set_size
+
+# Close button
+button_3d|1.7|1.3|0.1|0.4|0.4|0|X|red|action:close_interface
+
+# Particle effects
+particles_3d|0|0|0.2|0.5|0.5|0|Energy|orange|count:20,lifetime:2.0,spread:0.3

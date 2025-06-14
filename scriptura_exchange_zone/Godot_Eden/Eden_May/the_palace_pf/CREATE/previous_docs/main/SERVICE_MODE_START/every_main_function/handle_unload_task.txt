@@ -1,0 +1,39 @@
+func handle_unload_task(target_argument):
+	var type_of_state : int = -1
+	var the_shorter_set = target_argument.substr(0, str(target_argument).length() - 10)
+	print(" handle_unload_task : ", target_argument, " shortened to: ", the_shorter_set)
+	
+	# Check unload queue state
+	unload_queue_mutex.lock()
+	if !unload_queue.has(target_argument):
+		unload_queue[target_argument] = {
+			"metadata": {
+				"status": "pending",
+				"tries": 0,
+				"last_attempt": Time.get_ticks_msec()
+			}
+		}
+	else:
+		unload_queue[target_argument]["metadata"]["tries"] += 1
+		unload_queue[target_argument]["metadata"]["last_attempt"] = Time.get_ticks_msec()
+	unload_queue_mutex.unlock()
+	
+	# Update tree state for unloading
+	the_current_state_of_tree(the_shorter_set, type_of_state)
+	
+	# Trigger recheck
+	mutex_for_trickery.lock()
+	menace_tricker_checker = 1
+	mutex_for_trickery.unlock()
+	
+	# Monitor unload progress
+	if unload_queue[target_argument]["metadata"]["tries"] > 3:
+		# Log potential stuck unload
+		dictionary_of_mistakes_mutex.lock()
+		if !dictionary_of_mistakes.has(target_argument):
+			dictionary_of_mistakes[target_argument] = {
+				"status": "stuck_unload",
+				"counter": int(1),
+				"last_attempt": Time.get_ticks_msec()
+			}
+		dictionary_of_mistakes_mutex.unlock()

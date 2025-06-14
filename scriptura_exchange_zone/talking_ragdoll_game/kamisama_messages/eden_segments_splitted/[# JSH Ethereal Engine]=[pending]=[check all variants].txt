@@ -1,0 +1,4950 @@
+[# JSH Ethereal Engine]=[pending]=[check all variants]
+# current state check
+
+i need to send you additional data, for understanding, so i understand it too, and after we sort and check functions, put them in right places, we add one more function, named, function checker, that check, if that var, is specific class? like if it is string, if it is array, if it is dictionary
+
+the three stage data
+first we need to have it in unpacked state
+we need to have it in [save and load] possible, so like cache memory
+
+so instead of loading things, after we know what to load, and have it, maybe even store it on a drive
+
+we also need to load first configurational file
+
+maybe i need to not only, hard code keyboard into a game
+
+maybe even i need some kind of hardcoded data, for 
+
+main states of variables, if it is all working?
+
+it is like save game but for entire state of game, for certain amount of time, and before stuff is animated state
+
+but now we need to for checking if every component of the program is working correctly 
+
+like threads
+
+and also we will need tasker checker
+
+# another thing that will probably be needed is a way to turn off multi threading with a button, a settings, and for it to be turned on and off, thread pool drained, and recreated
+
+
+
+
+
+[# JSH Ethereal Engine]=[pending]=[check all variants]
+
+
+Claude, i added new file :
+
+current_state_of_code_segments
+
+i guess lets talk about this project, here i splitted one gd, godot, gdscript file, for godot engine 4.3
+
+it is splitted in code segments, with main godot functions, and global variant being its own thing, and also additionaly each code segment have its own file, we have metadata files too, like "current_state_of_code_segments" here you have name of a segment, and what functions are in it, each code segment have its own file, with entirety of a script, lets first sort all of these functions, in correct segments
+
+and lets do it this way, each segment has two statuses = pending or finished
+here we will go one after another function so right now we do =
+
+[# JSH Ethereal Engine]=[pending]=[check all variants]
+
+
+
+
+# JSH Ethereal Engine
+## to be checked, might need few mutexes, basic first state before interacted stuff
+## it have its own files, of global variants
+	metadata_global_variants
+	metadata_global_variants_update
+
+
+# JSH Ethereal Engine Initialization process
+## the godot _init function
+	func _init():
+## our functions
+	func first_turn_validation() -> Dictionary:
+	func test_init() -> Dictionary:
+	func validate_system_environment() -> Dictionary:
+	func validate_thread_system() -> Dictionary:
+	func _setup_retry_timer():
+	func _on_retry_timer_completed(timer_id: String):
+	func check_status():
+	func check_status_just_timer():
+
+# JSH Ethereal Engine Start up
+## the _ready godot function
+	func _ready():
+
+# JSH Ethereal Engine Repair
+## mostly stuff from Claude now
+	func track_task_status(task_id):
+	func track_task_completion(task_id):
+	func handle_task_timeout(task_id):
+	func clear_task_queues():
+	func validate_container_state(container_name):
+	func attempt_container_repair(container_name, missing_nodes):
+	func log_error_state(error_type, details):
+	func start_health_checks():
+	func check_system_health():
+## main functions i guess are needed, they from me
+	func prepare_akashic_records():
+	func zippy_unzipper_data_center():
+	func handle_random_errors():
+	func reanimate_all_handles_and_breaks():
+	func breaks_and_handles_check():
+	func before_time_blimp(how_many_finished, how_many_shall_been_finished):
+## more from Claude stuff
+	func recreate_node_from_records(container_name: String, node_type: String, records: Dictionary):
+	func trigger_deep_repair(error_type: String):
+	func reanimate_all_handles_and_breaks():
+## FUNCTIONS FROM Alpha
+	func unlock_stuck_mutexes():
+	func queue_pusher_adder(task):
+	func handle_creation_task(target_argument):
+	func handle_unload_task(target_argument):
+
+# JSH Ethereal Engine check stuff before we proceed
+## hmm we didnt use too many of this thing yet
+## these are from me
+	func the_current_state_of_tree(set_name_now, the_state):
+	func check_if_first_time(set_name_first, the_current_of_energy):
+	func connect_containers(container_name_0, container_name_1):
+	func containers_list_creator():
+	func containers_states_checker():
+
+
+# JSH Etheric Download System
+## just an idea, kinda already done in one way? task create from main to datapoint,data send
+## i think it was some of magic in hidden veil
+
+# JSH Etheric Queue
+## from me
+	func three_stages_of_creation(data_set_name):
+	func check_currently_being_created_sets():
+	func process_stages():
+	func the_finisher_for_nodes(data_to_be_parsed):
+	func jsh_tree_get_node_status_changer(node_path_jsh_tree_status: String, node_name: String, node_to_check: Node):
+	func start_timer_of_finito(data_timero):
+	func recreate_missing_nodes(array_of_recreation):
+	func recreator_of_singular_thing(data_set):
+	func unload_node_branch(path_for_node_to_unload, recreation_of_node_data):
+	func disable_all_branches_reset_counters(branch_to_disable, container_name_for_array):
+	func first_stage_of_creation_(data_set_name_0, sets_to_create_0):
+	func second_stage_of_creation_(data_set_name_1, sets_to_create_1):
+	func second_impact_for_real(set_to_do_thingy):
+	func third_stage_of_creation_(data_set_name_2, sets_to_create_2):
+	func third_impact_right_now(data_set_thingiess):
+	func fourth_impact_of_creation_(data_set_name_3, sets_to_create_3):
+	func fourth_impact_right_now(data_set_nameeee):
+	func fifth_impact_of_creation_(data_set_name_4, sets_to_create_4):
+	func fifth_impact_right_now(data_set_nameeeeee):
+	func newer_even_function_for_dictionary(name_of_container):
+
+# JSH Records System
+## from me
+	func container_finder(set_name):
+	func tasked_children(node_to_be_added, node_to_be_added_path):
+	func task_to_send_data_to_datapoint(data_for_sending):
+
+# JSH Scene Tree
+## from me mostly, or very edited
+	func disable_all_branches(branch_to_disable):
+	func find_branch_to_unload(thing_path):
+	func cache_tree_branch_fully(container_to_unload):
+	func cache_branch(branch_name, child_name, branch_part):
+	func start_up_scene_tree():
+## this one is kinda horror, could be way easier one day
+	func the_pretender_printer(node_name: String, node_path_jsh_tree: String, godot_node_type, node_type: String = "Node3D"):
+## or was it this one
+	func print_tree_structure(branch: Dictionary, indent: int = 0):
+## this one kinda works now
+	func jsh_tree_get_node(node_path_get_node: String) -> Node:
+
+# JSH Multi Threads
+## for now just one function, i guess we have several ones, connected to it, that are usable, and we must move them
+	func create_new_task(function_name: String, data):
+
+# JSH Files Management
+## i dont create files for past two months, dunno, what kind of files i will need now, kinda to rebuild probably
+	func create_file(array_with_data: Array, lines_amount: int, name_for_file: String):
+	func file_finder(file_name, path_to_file, list_of_files, type_of_data):
+	func check_folder(folder_path):
+	func check_folder_content(directory):
+	func check_settings_file():
+	func file_creation(file_content,  path_for_file, name_for_file):
+	func setup_settings():
+	func find_or_create_eden_directory():
+	func create_default_settings(file_path_c_d_s):
+	func scan_available_storage():
+
+# JSH Memories Management
+## here we were, recreating stuff? loading stuff? it worked fine for a long time, and we now understand, more
+## i think, here we created active records set
+	func new_function_for_creation_recovery(record_type_now, first_stage_of_creation_now, stage_of_creation_now):
+	func initialize_menu(record_type: String):
+	func find_record_set(record_type: String) -> Dictionary:
+	func find_instructions_set(record_type: String) -> Dictionary:
+	func find_scene_frames(record_type: String) -> Dictionary:
+	func find_interactions_list(record_type: String) -> Dictionary:
+
+# JSH Memories Transcription
+## here we can read what is already active or cached?
+	func recreator(number_to_add, data_to_process, data_set_name, new_name_for_set)
+	func find_highest_in_array(numbers: Array) -> int:
+	func load_record_set(records_part: String, record_type: String, type_of_data : int, records : Dictionary) -> void:
+	func read_records_data(record_set : Dictionary, records_set_name):
+	func process_active_records_for_tree(active_records: Dictionary, set_name_to_process : String, container_name_here : String):
+	func deep_copy_dictionary(original: Dictionary) -> Dictionary:
+	func unload_record_set(records_sets_name : String, record_type: String) -> void:
+	func cache_data(records_sets_name: String, record_type: String, data, meta_data) -> void:
+	func clean_oldest_dataset() -> void:
+	func get_dictionary_memory_size(dict: Dictionary) -> int:
+	func get_cache_total_size() -> int:
+	func get_record_type_id(record_type: String) -> int:
+
+# JSH Hidden Veil
+## here we have process delta function
+## a lot of new things got put in there, while i think
+## we shall move most of them to their place
+	func the_fourth_dimensional_magic(type_of_operation : String, node : Node, data_of_movement):
+	func fifth_dimensional_magic(type_of_unloading : String, node_path_for_unload : String):
+	func sixth_dimensional_magic(type_of_function, node_to_call, function_name : String, additional_data = null):
+	func call_some_thingy():
+	func each_blimp_of_delta():
+	func attempt_creation(set_name: String) -> CreationState:
+## the important part
+	func _process(delta):
+## and rest of stuff, also probablt to move somewhere
+	func whip_out_set_by_its_name(set_name_to_test) -> CreationStatus:
+	func process_turn_0(delta: float) -> Dictionary:
+	func check_system_state(state_name: String) -> SystemState:
+	func set_system_state(state_name: String, new_state: SystemState) -> bool:
+	func is_creation_possible() -> bool:
+	func record_mistake(mistake_data: Dictionary):
+	func update_delta_history(delta: float):
+	func check_first_time_status(status_name: String) -> bool:
+	func process_creation_request(set_name: String) -> Dictionary:
+	func get_data_structure_size(data) -> int:
+	func get_jsh(property_name: String):
+	func check_memory_state():
+	func clean_array(array_name: String):
+	func clean_dictionary(dict_name: String):
+	func check_thread_status():
+	func check_thread_status_type():
+## that one will probably be in time stuff, we dont have time stuff yet
+	func calculate_time(delta_current, time, hour, minute, second):
+
+# JSH Projections System
+## user inputs, keyboard, mouse, movement or current status of some device
+	func _input(event: InputEvent):
+	func get_ray_points(mouse_position: Vector2):
+	func ray_cast_data_preparer(data_ray_cast):
+	func multi_threaded_ray_cast(result, to, from):
+	func secondary_interaction_after_rc(array_of_data):
+	func unload_container(container_to_unload):
+	func process_to_unload_records(container_name_to_unload):
+
+# JSH Memories Storage
+## here we load stuff from storage, name to change probably, who knows we need it anyway to store records to cache
+## oh wait it only have one function, probably should been somewhere elese
+	func unload_nodes(array_of_thingiess_that_shall_remain):
+
+# JSH Memories Processed
+## memories already processed and ready to be used
+	func load_cached_data(data_set: String):
+	func load_cached_data_second_impact(data_set: String):
+	func interactions_upload_to_datapoint(header_line, information_lines, datapoint):
+	func scene_frames_upload_to_datapoint(header_line, information_lines, datapointi, containeri):
+	func instructions_analiser(metadata_parts, second_line, third_line, datapoint, container):
+	func assign_things_to_datapoint():
+
+# JSH Things Creation
+## here we are creating data, for things on the scene
+	func analise_data(thing_name_, type, data_to_analyze, second_part, group_number, verion_of_thing, information_lines_parsed):
+## after we know where to send it, it goes there
+## i guess i found two functions to move already? some to generate a color
+	func create_circle_shape(node_name: String, first_line : Array, data_to_write : Array, group_name : String, version_of_thing : String, information_lines_parsed : Array):
+	func generate_circle_points(radius: float, num_points: int) -> Array:
+	func create_flat_shape(node_name: String, first_line : Array, data_to_write : Array, group_name : String, version_of_thing : String, information_lines_parsed : Array):
+	func create_text_label(node_name: String, first_line : Array, data_to_write : Array, group_name : String, version_of_thing : String, information_lines_parsed : Array):
+	func create_array_mesh(node_name: String, first_line : Array, data_to_write : Array, group_name : String, version_of_thing : String, information_lines_parsed : Array):
+	func create_textmesh(node_name: String, first_line : Array, data_to_write : Array, group_name : String, version_of_thing : String, information_lines_parsed : Array):
+	func create_button(node_name: String, first_line : Array, data_to_write : Array, group_name : String, version_of_thing : String, information_lines_parsed : Array):
+	func create_cursor(node_name: String, first_line : Array, data_to_write : Array, group_name : String, version_of_thing : String, information_lines_parsed : Array):
+	func create_connection(node_name: String, first_line : Array, data_to_write : Array, group_name : String, version_of_thing : String, information_lines_parsed : Array):
+	func create_screen(node_name: String, first_line : Array, data_to_write : Array, group_name : String, version_of_thing : String, information_lines_parsed : Array):
+	func create_datapoint(node_name: String, first_line : Array, data_to_write : Array, group_name : String, version_of_thing : String, information_lines_parsed : Array):
+	func create_container(node_name: String, first_line : Array, data_to_write : Array, group_name : String, version_of_thing : String, information_lines_parsed : Array):
+	func get_spectrum_color(value: float) -> Color:
+
+# JSH Scene Tree Add Nodes, Physical and Astral Bodies
+## here we send tasks, to create nodes, i guess we also done it in thingy before, for few things? if it was some special case, we will need to normalize things here too, i guess
+	func node_creation(node_name, crafted_data, coords, to_rotate, group_number, node_type, path_of_thing):
+	func add_collision_to_thing(thing_node, node_type, path_of_thingy, name_of_thingy):
+[# JSH Ethereal Engine]=[pending]=[check all variants]
+
+# main, main node, main_root, main.gd, scripts/main.gd
+
+#
+# JSH Ethereal Engine
+#
+#      oooo  .oooooo..o ooooo   ooooo 
+#      `888 d8P'    `Y8 `888'   `888' 
+#       888 Y88bo.       888     888     ┏┓ ┓         ┓  ┏┓    •      ┏┓        
+#       888  `"Y8888o.   888ooooo888     ┣ ╋┣┓┏┓┏┓┏┓┏┓┃  ┣ ┏┓┏┓┓┏┓┏┓  ┗┓┓┏┏╋┏┓┏┳┓
+#       888      `"Y88b  888     888     ┗┛┗┛┗┗ ┛ ┗ ┗┻┗  ┗┛┛┗┗┫┗┛┗┗   ┗┛┗┫┛┗┗ ┛┗┗
+#       888 oo     .d8P  888     888                          ┛          ┛      
+#   .o. 88P 8""88888P'  o888o   o888o 
+#   `Y888P                            
+#
+# JSH Ethereal Engine
+#
+
+# so me, others me from dreams, and whoever i hear i guess, we work together, through space and time, to make that vidya ive been day dreaming for past 20 years
+# cmon
+extends Node3D
+
+var first_start_check : String = "pending"
+# the last hope to figure out, why a task failed, was started, but didnt quite get anywhere?
+var int_of_stuff_started : int = 0
+var int_of_stuff_finished : int = 0
+
+# a new jewish hope, for new process frame intel
+#signal frame_processed
+#var frame_signal_connected := false
+
+# the files, directiories, folders, spaces, places, data
+var path = "D:/Eden"
+var file_path
+var files_content
+var folders_content
+var directory_existence = false
+var folders_existence = false
+var files_existence = false
+
+# the scripts, that we apply to datapoints, containers, line for clicky
+const DataPointScript = preload("res://scripts/data_point.gd")
+const ContainterScript = preload("res://scripts/containter.gd")
+const LineScript = preload("res://scripts/line.gd")
+
+# the ready stuff, first container, akashic_records and ray thingy stuff screen, mouse lol
+var ray_distance_set = 20.0
+var viewport
+var mouse_pos
+var camera
+
+# the delta idea of turns and moves, so we always have it easy as we spread the tasks
+var turn_number_process : int = 0
+var delta_turn_0 : int = 0
+
+
+
+
+# the active and cached data, for creation, recreation etc
+var active_record_sets: Dictionary = {}
+var active_r_s_mut = Mutex.new()
+
+var cached_record_sets: Dictionary = {}
+var cached_r_s_mutex = Mutex.new()
+
+# current state of set, being created, its name as string
+var list_of_sets_to_create : Array = []
+var array_mutex_process = Mutex.new()
+
+# data to be put for my eyes
+var max_nodes_added_per_cycle : int = 369
+var nodes_to_be_added_int : int = 0
+var nodes_to_be_added : Array = []
+var mutex_nodes_to_be_added = Mutex.new()
+
+# second impact of creation data
+var max_data_send_per_cycle : int = 369
+var data_to_be_send : Array = []
+var mutex_data_to_send = Mutex.new()
+
+# moving and rotating things
+var max_movements_per_cycle : int = 369
+var things_to_be_moved : Array = []
+var movmentes_mutex = Mutex.new()
+
+# the unloading stuff
+var max_nodes_to_unload_per_cycle : int = 369
+var nodes_to_be_unloaded : Array = []
+var mutex_for_unloading_nodes = Mutex.new()
+
+# the function caller from main thread
+var max_functions_called_per_cycle : int = 369
+var functions_to_be_called : Array = []
+var mutex_function_call = Mutex.new()
+
+# the godot tree, didnt respect my needs, made my own, even signed it
+var scene_tree_jsh : Dictionary = {}
+var tree_mutex = Mutex.new()
+
+var cached_jsh_tree_branches : Dictionary = {}
+var cached_tree_mutex = Mutex.new()
+
+# this one was put in one place for something
+var mutex_singular_l_u = Mutex.new()
+
+# that one is supposed to be free array, with no mutex needed
+var array_with_no_mutex : Array = []
+
+# here i wanted to pull errors, that happened, somehow, somewhere
+var dictionary_of_mistakes : Dictionary = {}
+var dictionary_of_mistakes_mutex = Mutex.new()
+
+
+# dunno, we checked if it was changed, we dont use it anymore, i think, before we needed that for while loop of thread, that could break
+var the_menace_checker : int = 0
+var menace_mutex = Mutex.new()
+
+# what was this one for, was it the main things being send to container datapoint, with numbers counting stuff
+var array_for_counting_finish : Dictionary = {}
+var array_counting_mutex = Mutex.new()
+
+# hmm, i think it is like records sets status? similar to containers
+var current_containers_state : Dictionary = {}
+var mutex_for_container_state = Mutex.new()
+
+# the queue of stuff to be unloaded
+var unload_queue : Dictionary = {}
+var unload_queue_mutex = Mutex.new()
+
+# the queue of stuff to be loaded
+var load_queue : Dictionary = {}
+var load_queue_mutex = Mutex.new()
+
+# the menace checker, when set is being added to the list, we also change it, into 1, so something was being created
+var menace_tricker_checker : int = -2
+var mutex_for_trickery = Mutex.new()
+
+# the list of containers, what are right now loaded, were loaded
+var list_of_containers : Dictionary = {}
+var mutex_containers = Mutex.new()
+
+# the godly messengers with data, getting them download, and even uploading information
+var download_received : Dictionary = {}
+var upload_to_send : Dictionary = {}
+
+var status_symbol = {
+	"active": "●",
+	"pending": "○", 
+	"disabled": "×"
+}
+
+var cache_timestamps: Dictionary = {}
+var max_cache_size_mb: int = 8 #50
+
+# like C and D on windows, so drives, maybe some /home or whatever others use
+var available_directiories : Array = []
+
+@onready var thread_pool = get_node("/root/thread_pool_autoload")
+
+var curent_queue : Array = [[0], [0], [0], [0], [0], [0], [0], [0], [0], [0]] 
+
+
+var task_timeouts = {}
+var max_task_duration = 50000 # 50 seconds
+
+
+# Should be expanded to:
+var task_timestamps = {}
+var task_status = {}
+
+#var first_run_check_string : String = ""
+
+var message_of_delta_start
+
+var array_of_startup_check : Array = []
+
+signal main_node_signal(place)
+
+var timer_system: GodotTimersSystem
+
+
+# we can add new records, new things to a record, duplicate a record
+var creation_can_happen
+
+# something didnt work out as planned, so a real story history of past
+var mistakes_of_past
+
+# the is nothing to create, so we can clean now
+var deletion_process_can_happen
+
+# nothing is to be added, or deleted
+var movement_possible
+# kinda the same, just changing text, maybe changing mesh?
+var edit_possible
+
+# state of main core features
+# first start
+var fsc_status = null
+# first delta
+var fdc_status = null
+# first task
+var ftc_status = null
+
+var blimp_of_time : Array = []
+var previous_blimp_of_time : Array = []
+
+var past_deltas_memories : Array = []
+
+var stored_delta_memory : Array = []
+
+enum SystemState {
+	UNKNOWN = -1,
+	INACTIVE = 0,
+	ACTIVE = 1,
+	BUSY = 2,
+	ERROR = 3
+}
+
+# Enum for possible creation states
+enum CreationStatus {
+	ERROR = -1,
+	SUCCESS = 0,
+	PENDING = 1,
+	INVALID_INPUT = 2,
+	LOCKED = 3
+}
+
+enum CreationState {
+	INACTIVE = -1,
+	POSSIBLE = 0,
+	IN_PROGRESS = 1,
+	LOCKED = 2,
+	ERROR = 3
+}
+
+
+# Core system states that need mutex protection
+var core_states := {
+	"mutex": Mutex.new(),  # Single mutex for all core states
+	"states": {
+		"creation": SystemState.INACTIVE,
+		"deletion": SystemState.INACTIVE,
+		"movement": SystemState.INACTIVE,
+		"edit": SystemState.INACTIVE
+	}
+}
+
+# First-time checks (need mutex as they're initialization flags)
+var initialization_states := {
+	"mutex": Mutex.new(),
+	"states": {
+		"first_start": null,      # fsc_status
+		"first_delta": null,      # fdc_status
+		"first_task": null        # ftc_status
+	}
+}
+
+# History tracking (needs mutex for concurrent access)
+var history_tracking := {
+	"mutex": Mutex.new(),
+	"mistakes": [],  # mistakes_of_past
+	"creation_history": [],
+	"deletion_history": []
+}
+
+# Time tracking (needs mutex for concurrent updates)
+var time_tracking := {
+	"mutex": Mutex.new(),
+	"delta_history": [],
+	"godot_timers": {},
+	"last_update": Time.get_ticks_msec()
+}
+
+
+# Add properties to track main script memory
+var memory_metadata = {
+	"arrays": {
+		"blimp_of_time": [],
+		"stored_delta_memory": [],
+		"past_deltas_memories": [],
+		"array_with_no_mutex": [],
+		"list_of_sets_to_create": []
+	},
+	"dictionaries": {
+		"active_record_sets": {},
+		"cached_record_sets": {},
+		"scene_tree_jsh": {},
+		"current_containers_state": {},
+		"dictionary_of_mistakes": {}
+	},
+	"last_cleanup": Time.get_ticks_msec(),
+	"cleanup_thresholds": {
+		"array_max": 1000,  # Max array entries
+		"dict_max_mb": 50,  # Max dictionary size in MB
+		"time_between_cleanups": 30000  # 30 seconds
+	}
+}
+
+[# JSH Ethereal Engine]=[pending]=[check all variants]
+
+
+Looking at the variables, I can help organize and analyze them better. Let's first group them by their purpose and then determine if we need additional variables for the functionality you described.
+Current Main Variable Categories:
+
+Core System State
+
+gdscriptCopy# System State Tracking
+var first_start_check: String = "pending"
+var int_of_stuff_started: int = 0
+var int_of_stuff_finished: int = 0
+
+Thread Management
+
+gdscriptCopy@onready var thread_pool = get_node("/root/thread_pool_autoload")
+var task_timeouts = {}
+var task_timestamps = {}
+var task_status = {}
+var max_task_duration = 50000
+
+Memory & Cache Management
+
+gdscriptCopyvar memory_metadata = {
+    "arrays": {...},
+    "dictionaries": {...},
+    "cleanup_thresholds": {...}
+}
+var cache_timestamps: Dictionary = {}
+var max_cache_size_mb: int = 8
+
+Runtime States
+
+gdscriptCopyvar creation_can_happen
+var deletion_process_can_happen
+var movement_possible
+var edit_possible
+What seems to be missing or could be improved:
+
+Configurable Settings:
+
+gdscriptCopy# Add thread control variables
+var thread_system_active: bool = true
+var thread_pool_size: int = 8
+var thread_pool_settings := {
+    "active": true,
+    "size": 8,
+    "timeout": 5000,
+    "retry_attempts": 3
+}
+
+State Validation:
+
+gdscriptCopy# Add system state validation
+var component_states := {
+    "mutex": Mutex.new(),
+    "components": {
+        "thread_pool": SystemState.UNKNOWN,
+        "file_system": SystemState.UNKNOWN,
+        "memory_manager": SystemState.UNKNOWN,
+        "task_scheduler": SystemState.UNKNOWN
+    }
+}
+
+Save/Load State Management:
+
+gdscriptCopyvar state_persistence := {
+    "mutex": Mutex.new(),
+    "last_save": 0,
+    "save_interval": 300,  # 5 minutes
+    "states": {
+        "runtime": {},
+        "cached": {},
+        "persisted": {}
+    }
+}
+Would you like me to:
+
+Create a type checking system for these variables?
+Organize them into logical groups in the metadata files?
+Add the missing functionality you mentioned for thread control and state persistence?
+
+
+[# JSH Ethereal Engine]=[pending]=[check all variants]
+
+
+What seems to be missing or could be improved:
+
+Configurable Settings:
+
+before i touch or add anything, we have different secret file too, for thread pool
+
+[# JSH Ethereal Engine]=[pending]=[check all variants]
+
+
+### even list of every file needs to be organised, i started with pi
+### list of files start 0
+record_set_manager.gd = the manager for records
+scenes_bank.gd = current set of the scenes
+settings_bank.gd = here we have bank of setting file, what const it has etc
+system_check.gd = the zip file for save storage of it all so really a data file
+thread_pool.gd = the addon script for multi threads, plus some statistics
+thread_pool_manager.gd = here we can store some metrics, statistics stuff
+trackball_camera.gd = the addon for quanterion camera
+tree_blueprints_bank.gd = class file for tree, branches, metadatas, cached and uncached metadata maybe? main file storing information about three types of nodes
+UJAH_Texts.gd = secret file, a gift from me, after we finish game, secret after we finish
+functions_database.gd = cathegories, to understand it all
+main.gd = the main script
+data_point.gd = the datapoint script
+containter.gd = the container script
+godot_timers_system.gd = the clocks, and timing, and times, time things here, in greater detail
+backub_hand_0.txt = with mistake so we didnt backup anything quite yet we b p xD
+banks_combiner.gd = type of data, ways to unpack maybe, limits, list of records, so a constructs?
+instructions_bank.gd = instructions of specific things in specific containers
+interactions_bank.gd = what things in container can do, needs change into actions
+records_bank.gd = the record of a set of things
+line.gd = the script to move debug lines
+### pi stuff
+pi_dictionary.txt = print out from simple parser
+pi_digits.txt = string of pi number, long one, probably even phone can see it all in split second, and understand it in its own way literal way
+i_number.gd = an class file with pi numbers from pi_0 to pi_9999 each with 9 x ["0315614033"], from 0 to 9 we always assume there is data, as even with 0, we still open an package
+### pi stuff end
+
+[# JSH Ethereal Engine]=[pending]=[check all variants]
+
+where were we when i fastly and with monkey hands, made that fantastic, and easy to understand list, i used "=" that thing, cmon machine help me out, it worked few times xD
+but now i am faster than time maybe? and i make that statistic thing for threads, hmm
+
+[# JSH Ethereal Engine]=[pending]=[check all variants]
+
+@icon("thread.png")
+class_name ThreadPool
+extends Node
+
+
+
+
+
+[# JSH Ethereal Engine]=[pending]=[check all variants]
+
+signal task_finished(task_tag)
+
+## When a task finishes and property [member discard_finished_tasks] is [code]true[/code].[br]
+## [br]Argument [param task] is the finished task and can be casted to class [ThreadPool.Task].
+signal task_discarded(task)
+
+signal task_started(task)
+
+
+
+[# JSH Ethereal Engine]=[pending]=[check all variants]
+
+
+@export var discard_finished_tasks: bool = true
+
+var __tasks: Array = []
+var __started = false
+var __finished = false
+var __tasks_lock: Mutex = Mutex.new()
+var __tasks_wait: Semaphore = Semaphore.new()
+var __finished_tasks: Array = []
+var __finished_tasks_lock: Mutex = Mutex.new()
+
+@onready var __pool = __create_pool()
+
+
+# Add to ThreadPool class:
+var __thread_states: Dictionary = {}
+var __thread_timestamps: Dictionary = {}
+var __thread_tasks: Dictionary = {}
+var __thread_state_mutex = Mutex.new()
+
+# Add to ThreadPool:
+var __memory_stats = {
+	"arrays": {},
+	"dictionaries": {},
+	"timestamps": [],
+	"last_cleanup": Time.get_ticks_msec()
+}
+
+
+[# JSH Ethereal Engine]=[pending]=[check all variants]
+
+
+# Add thread state monitoring:
+func update_thread_state(thread_id: String, new_state: String, task = null):
+	__thread_state_mutex.lock()
+	var current_time = Time.get_ticks_msec()
+	
+	__thread_states[thread_id]["status"] = new_state
+	__thread_states[thread_id]["last_active"] = current_time
+	__thread_timestamps[thread_id].append({
+		"time": current_time,
+		"state": new_state
+	})
+	
+	# Keep only last 100 timestamps
+	if __thread_timestamps[thread_id].size() > 100:
+		__thread_timestamps[thread_id].pop_front()
+	
+	if task:
+		__thread_states[thread_id]["current_task"] = task
+		__thread_tasks[thread_id].append({
+			"task": task,
+			"start_time": current_time
+		})
+	__thread_state_mutex.unlock()
+
+
+[# JSH Ethereal Engine]=[pending]=[check all variants]
+
+func __drain_task() -> Task:
+	__tasks_lock.lock()
+	var result
+	if __tasks.is_empty():
+		result = Task.new(self, "do_nothing", null, null, true, false)# normally, this is not expected, but better safe than sorry
+		result.tag = result
+	else:
+		result = __tasks.pop_back()
+	__tasks_lock.unlock()
+	return result;
+
+
+func __execute_tasks(arg_thread) -> void:
+	var thread_id = str(__pool.find(arg_thread))
+	update_thread_state(thread_id, "started")
+	#print_debug(arg_thread)
+	while not __finished:
+		update_thread_state(thread_id, "waiting")
+		__tasks_wait.wait()
+		#print(" enqueue some waiting game ")
+		
+		if __finished:
+			update_thread_state(thread_id, "finished")
+			return
+		var task: Task = __drain_task()
+		update_thread_state(thread_id, "executing", task)
+		#print(" enqueue some waiting game 0 ")
+		task.__execute_task()
+		update_thread_state(thread_id, "completed_task")
+		
+		
+		# Protect shared counter with mutex
+		__thread_state_mutex.lock()
+		__thread_states[thread_id]["tasks_completed"] += 1
+		__thread_state_mutex.unlock()
+		#print(" enqueue some waiting game 3")
+		if not (task.tag is Task):# tasks tagged this way are considered hidden
+			#print(" enqueue some waiting game 1 ")
+			
+			if discard_finished_tasks:
+				call_deferred("emit_signal", "task_discarded", task)
+				#print(" enqueue some waiting game 2")
+			else:
+				#print(" enqueue some waiting game 3")
+				__finished_tasks_lock.lock()
+				__finished_tasks.append(task)
+				__finished_tasks_lock.unlock()
+				call_deferred("emit_signal", "task_finished", task.tag)
+
+
+[# JSH Ethereal Engine]=[pending]=[check all variants]
+
+
+# Function to get size of complex data structures
+func get_data_structure_size(data) -> int:
+	match typeof(data):
+		TYPE_DICTIONARY:
+			var total_size = 0
+			for key in data:
+				# Size of key
+				total_size += var_to_bytes(key).size()
+				# Size of value
+				total_size += get_data_structure_size(data[key])
+			return total_size
+			
+		TYPE_ARRAY:
+			var total_size = 0
+			for item in data:
+				total_size += get_data_structure_size(item)
+			return total_size
+			
+		_:
+			return var_to_bytes(data).size()
+
+# Memory snapshot function
+func take_memory_snapshot():
+	var snapshot = {
+		"time": Time.get_ticks_msec(),
+		"thread_states": get_data_structure_size(__thread_states),
+		"thread_timestamps": get_data_structure_size(__thread_timestamps),
+		"thread_tasks": get_data_structure_size(__thread_tasks),
+		"tasks": get_data_structure_size(__tasks),
+		"finished_tasks": get_data_structure_size(__finished_tasks)
+	}
+	
+	__memory_stats["timestamps"].append(snapshot)
+	
+	# Keep only last 100 snapshots
+	if __memory_stats["timestamps"].size() > 100:
+		__memory_stats["timestamps"].pop_front()
+
+	return snapshot
+
+func get_thread_stats() -> Dictionary:
+	__thread_state_mutex.lock()
+	var current_time = Time.get_ticks_msec()
+	var stats = {}
+	
+	for thread_id in __thread_states:
+		var state = __thread_states[thread_id]
+		var time_in_state = current_time - state["last_active"]
+		
+		stats[thread_id] = {
+			"status": state["status"],
+			"tasks_completed": state["tasks_completed"],
+			"time_in_state_ms": time_in_state,
+			"current_task": state["current_task"],
+			"is_stuck": time_in_state > 5000  # Flag as stuck after 5 seconds
+		}
+	
+	__thread_state_mutex.unlock()
+	return stats
+
+[# JSH Ethereal Engine]=[pending]=[check all variants]
+
+
+## Provides information for the task that was performed.
+##
+## [b]WARNING[/b]: All properties listed here should be considered read-only.
+class Task:
+	## As defined in argument [param instance] when function [method ThreadPool.submit_task] or [method ThreadPool.submit_task_unparameterized] or [method ThreadPool.submit_task_array_parameterized] was called.
+	var target_instance: Object
+	## As defined in argument [param method] when function [method ThreadPool.submit_task] or [method ThreadPool.submit_task_unparameterized] or [method ThreadPool.submit_task_array_parameterized] was called.
+	var target_method: String
+	## As defined in argument [param parameter] when function [method ThreadPool.submit_task] or [method ThreadPool.submit_task_array_parameterized] was called.
+	var target_argument
+	## Result from the execution of this task.
+	var result
+	## As defined in parameter [param task_tag] when function [method ThreadPool.submit_task] or [method ThreadPool.submit_task_unparameterized] or [method ThreadPool.submit_task_array_parameterized] was called.
+	var tag
+	var __no_argument: bool
+	var __array_argument: bool
+
+
+	func __execute_task():
+		#print(" enqueue just execute task")
+		if __no_argument:
+			#print(" enqueue just execute task 0 ")
+			result = target_instance.call(target_method)
+		elif __array_argument:
+			#print(" enqueue just execute task 1 ")
+			result = target_instance.callv(target_method, target_argument)
+		else:
+			#print(" enqueue just execute task 2 ")
+			result = target_instance.call(target_method, target_argument)
+
+
+[# JSH Ethereal Engine]=[pending]=[check all variants]
+
+now we know what threads had, so lets think again, for the first code part of main.gd, do we need any new var ? in main.gd
+
+[# JSH Ethereal Engine]=[pending]=[check all variants]
+
+
+few more things added to that thing
+
+
+hmm, we can repair it all, with simple list that i will parse, and we can check each and every function in the program, even with simple txt file, where we will parse the data, based on each line maybe? like string after string
+we will then make some display, maybe few strings data
+and i will parse the data, and make best error handler machine there could have been
+
+maybe a simple, mutex lock on anything, we go to certain zones of code? hmm
+
+but we must start somewhere, you got list of tree, files, functions, code in files and segments, main vars, what do we need to do, to make real check of all systems, or maybe lets first organize the data in that main.gd, that was the goal, where are we? at global vars, do we need to put something here? and while doing so, we can update always different files too, but it will take a while
+
+
+
+[# JSH Ethereal Engine]=[pending]=[check all variants]
+
+
+i have given you new file to a project:
+Scene_tree_at_ready
+
+so lets first think, what will we need here :
+
+For better initialization, we might want:
+1. System Check and Loading Order:
+
+i added node :
+
+    ┠╴system_check
+
+it have system_check.gd file
+
+in file here
+
+and we also have that functions database metadatas?
+
+# metadata_functions.gd
+extends Node
+# Function Categories and Metadata
+# Core Lifecycle Functions
+var lifecycle_functions = {
+    "_init": {
+        "return_type": "void",
+        "category": "lifecycle",
+        "mutex_dependencies": []
+    },
+    "_ready": {
+        "return_type": "void",
+        "category": "lifecycle",
+        "mutex_dependencies": []
+    },
+    "_process": {
+        "return_type": "void",
+        "category": "lifecycle",
+        "mutex_dependencies": ["array_mutex_process"]
+    }
+}
+# System Management Functions
+var system_functions = {
+    "check_system_state": {
+        "return_type": "SystemState",
+        "mutex_dependencies": ["core_states.mutex"],
+        "category": "system"
+    },
+    "check_system_health": {
+        "return_type": "Dictionary",
+        "mutex_dependencies": ["dictionary_of_mistakes_mutex"],
+        "category": "system"
+    },
+    "check_thread_status": {
+        "return_type": "int",
+        "mutex_dependencies": [],
+        "category": "system"
+    }
+}
+# Creation and Processing Functions
+var creation_functions = {
+    "three_stages_of_creation": {
+        "return_type": "Dictionary",
+        "mutex_dependencies": ["array_mutex_process"],
+        "category": "creation"
+    },
+    "whip_out_set_by_its_name": {
+        "return_type": "CreationStatus",
+        "mutex_dependencies": ["array_mutex_process"],
+        "category": "creation"
+    }
+}
+# Memory Management Functions
+var memory_functions = {
+    "check_memory_state": {
+        "return_type": "Dictionary",
+        "mutex_dependencies": [],
+        "category": "memory"
+    },
+    "get_data_structure_size": {
+        "return_type": "int",
+        "mutex_dependencies": [],
+        "category": "memory"
+    }
+}
+# Node Creation Functions
+var node_functions = {
+    "create_container": {
+        "return_type": "Node",
+        "mutex_dependencies": ["mutex_containers"],
+        "category": "node_creation"
+    },
+    "create_datapoint": {
+        "return_type": "Node",
+        "mutex_dependencies": ["mutex_nodes_to_be_added"],
+        "category": "node_creation"
+    }
+}
+# Error Handling Functions
+var error_functions = {
+    "record_mistake": {
+        "return_type": "void",
+        "mutex_dependencies": ["dictionary_of_mistakes_mutex"],
+        "category": "error"
+    },
+    "handle_random_errors": {
+        "return_type": "Dictionary",
+        "mutex_dependencies": ["dictionary_of_mistakes_mutex"],
+        "category": "error"
+    }
+}
+# Time Management Functions
+var time_functions = {
+    "calculate_time": {
+        "return_type": "Dictionary",
+        "mutex_dependencies": [],
+        "category": "time"
+    },
+    "before_time_blimp": {
+        "return_type": "void",
+        "mutex_dependencies": [],
+        "category": "time"
+    }
+}
+# File Operations Functions
+var file_functions = {
+    "check_folder": {
+        "return_type": "bool",
+        "mutex_dependencies": [],
+        "category": "file"
+    },
+    "file_creation": {
+        "return_type": "bool",
+        "mutex_dependencies": [],
+        "category": "file"
+    }
+}
+
+
+[# JSH Ethereal Engine]=[pending]=[check all variants]
+
+
+okay, so init and ready are two different functions, one starts before nodes are added to the scene, ready happens after we add something to the scene :
+
+Godot Engine v4.3.stable.official.77dcf97d8 - https://godotengine.org
+Vulkan 1.3.277 - Forward+ - Using Device #0: NVIDIA - Quadro RTX 3000
+ ready on each script ? 0 thread_pool.gd
+ main.gd print tree pretty init 
+ ┖╴
+ main.gd print tree pretty should end here
+ stuck status it is string 
+ stuck status something went wrong, starting verified timer error
+ ready on each script ? 1 maing.gd 
+ stuck status it is string 
+ stuck status something went wrong, starting verified timer error
+ stuck status Timer started at OS time: 1396
+ timer check  first we need a screen, and light state : pending
+ timer check  state now : started
+before_blimp_time : 1396
+ past_deltas_memories : []
+ stored_delta_memory : []
+ these two should be normalized too i guess 
+ check basic if we allign with prophecies of wisest spirits, do we unlock before it is too late 
+ how_many_shall_been_finished : 0
+ how_many_finished : 0
+ timer check omething went wrong, use a timer
+ timer check 0: @Node@2:<Node#32698795326>
+ timer check 0
+ timer check  0stuff to do :: thread statuses : error
+ timer check  1stuff to do :: thread statuses : error
+ timer check  stuff to do :: mutex statuses : [true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true], stuck_status threads status : error and main sets to create["started", [["akashicrecords"], ["base"], ["menu"]], { "base": 1, "menu": 1, "settings": 1, "keyboard_": 1, "keyboardleft": 1, "keyboardright": 1, "thingscreation": 2, "singularlines": 8 }]
+ ready on each script ? 4
+ ready on each script ? new system_check.gd 
+ main.gd print tree pretty ready 
+ ┖╴main
+    ┠╴@Node@2
+    ┃  ┠╴@Timer@3
+    ┃  ┖╴@Timer@4
+    ┠╴sphere
+    ┃  ┠╴pointers
+    ┃  ┃  ┠╴cursor_mouse
+    ┃  ┃  ┠╴cursor_left
+    ┃  ┃  ┠╴cursor_right
+    ┃  ┃  ┠╴cursor_head
+    ┃  ┃  ┖╴cursor_body
+    ┃  ┠╴cameramove
+    ┃  ┃  ┖╴TrackballCamera
+    ┃  ┃     ┠╴CameraMover
+    ┃  ┃     ┖╴light
+    ┃  ┖╴godot_model
+    ┠╴WorldEnvironment
+    ┠╴system_check
+    ┠╴godot_timers_system
+    ┠╴godot_tree_system
+    ┠╴JSH_records_system
+    ┠╴JSH_scene_tree_system
+    ┠╴JSH_database_system
+    ┠╴JSH_queue_system
+    ┠╴JSH_turns_system
+    ┠╴JSH_cache_memory_system
+    ┠╴JSH_akashic_records
+    ┠╴JSH_multiplayer_files
+    ┖╴JSH_mainframe_database
+ main.gd print tree pretty should end here
+
+i now also added more than one node, we can put scripts in them, or use autoload, what we would desire more?
+
+
+
+[# JSH Ethereal Engine]=[pending]=[check all variants]
+ ┖╴main
+    ┠╴@Node@2
+    ┃  ┠╴@Timer@3
+    ┃  ┖╴@Timer@4
+    ┠╴sphere
+    ┃  ┠╴pointers
+    ┃  ┃  ┠╴cursor_mouse
+    ┃  ┃  ┠╴cursor_left
+    ┃  ┃  ┠╴cursor_right
+    ┃  ┃  ┠╴cursor_head
+    ┃  ┃  ┖╴cursor_body
+    ┃  ┠╴cameramove
+    ┃  ┃  ┖╴TrackballCamera
+    ┃  ┃     ┠╴CameraMover
+    ┃  ┃     ┖╴light
+    ┃  ┖╴godot_model
+    ┠╴WorldEnvironment
+    ┠╴system_check
+    ┠╴godot_timers_system
+    ┠╴godot_tree_system
+    ┠╴JSH_records_system
+    ┠╴JSH_scene_tree_system
+    ┠╴JSH_database_system
+    ┠╴JSH_queue_system
+    ┠╴JSH_turns_system
+    ┠╴JSH_cache_memory_system
+    ┠╴JSH_akashic_records
+    ┠╴JSH_multiplayer_files
+    ┖╴JSH_mainframe_database
+[# JSH Ethereal Engine]=[pending]=[check all variants]
+Looking at your output, I see the initialization sequence and the tree structure. The system is starting with multiple systems and the hierarchy shows a well-organized structure for different functionalities.
+Let's analyze what we have and what we might need:
+Current Systems in Tree:
+Copy- system_check
+- godot_timers_system
+- godot_tree_system
+- JSH_records_system
+- JSH_scene_tree_system
+- JSH_database_system
+- JSH_queue_system
+- JSH_turns_system
+- JSH_cache_memory_system
+- JSH_akashic_records
+- JSH_multiplayer_files
+- JSH_mainframe_database
+I notice the initialization shows some issues:
+Copystuck status something went wrong, starting verified timer error
+stuck status Timer started at OS time: 1396
+For better initialization, we might want:
+
+System Check and Loading Order:
+
+gdscriptCopyvar system_initialization := {
+    "mutex": Mutex.new(),
+    "systems": {
+        "timers": {"ready": false, "priority": 0},
+        "tree": {"ready": false, "priority": 1},
+        "records": {"ready": false, "priority": 2},
+        "database": {"ready": false, "priority": 3},
+        # etc...
+    },
+    "dependencies": {}  # Track which systems depend on others
+}
+
+Initialization State Tracking:
+
+gdscriptCopyvar init_sequence := {
+    "current_stage": 0,
+    "stages": {
+        0: "core_systems",
+        1: "node_setup",
+        2: "connections",
+        3: "ready_state"
+    },
+    "stage_status": {}
+}
+Would you like me to:
+
+Show how to implement ordered system initialization?
+Create a dependency tracking system?
+Design error recovery for initialization failures?
+[# JSH Ethereal Engine]=[pending]=[check all variants]
+
+extends Node
+
+class_name DataCenter
+
+
+signal system_verified(system_name, status)
+signal verification_phase_complete(phase_number)
+
+
+###
+## the Claude idea before i touched it
+###
+
+# Word-based data organization
+const WORD_LENGTH = 3  # Three letter system
+var word_database = {}
+var word_mappings = {}
+
+# Storage paths
+var storage_paths = {
+	"user": "user://",
+	"eden": "D:/Eden/",
+	"system": OS.get_system_dir(OS.SYSTEM_DIR_DOCUMENTS),
+	"temp": OS.get_system_dir(OS.SYSTEM_DIR_DESKTOP)
+}
+
+# Zip management
+var current_archive = null
+var extracted_files = {}
+
+# Word generation and management
+var used_words = []
+var word_templates = [
+	"abc", "def", "ghi", "jkl", "mno",
+	"pqr", "stu", "vwx", "yz0", "123"
+]
+
+
+###
+## here i started touching
+###
+
+
+func _init():
+	print(" ready on each script ? new system_check.gd ")
+	scan_available_storage()
+	initialize_word_system()
+
+
+
+
+func verify_system(system_name: String) -> Dictionary:
+	var result = {
+		"system": system_name,
+		"status": false,
+		"details": {},
+		"timestamp": Time.get_ticks_msec()
+	}
+	
+	# Verification logic here
+	
+	emit_signal("system_verified", system_name, result)
+	return result
+
+###
+## probably not there yet
+###
+
+
+
+
+
+func scan_available_storage():
+	# Scan Windows drives
+	if OS.get_name() == "Windows":
+		for ascii in range(67, 91):  # C to Z
+			var drive = char(ascii) + ":/"
+			if DirAccess.dir_exists_absolute(drive):
+				storage_paths[drive.substr(0, 1).to_lower()] = drive
+
+func initialize_word_system():
+	# Initialize consonants and vowels for word generation
+	var consonants = ['b','c','d','f','g','h','j','k','l','m','n','p','q','r','s','t','v','w','x','y','z']
+	var vowels = ['a','e','i','o','u']
+	
+	# Generate initial word combinations
+	for c1 in consonants:
+		for v in vowels:
+			for c2 in consonants:
+				var word = c1 + v + c2
+				if !word_database.has(word):
+					word_database[word] = {
+						"used": false,
+						"data_type": "",
+						"creation_time": 0,
+						"last_access": 0,
+						"reference_count": 0
+					}
+
+func get_next_word() -> String:
+	for word in word_database:
+		if !word_database[word]["used"]:
+			word_database[word]["used"] = true
+			word_database[word]["creation_time"] = Time.get_ticks_msec()
+			used_words.append(word)
+			return word
+	return ""  # No words available
+
+func map_data_to_word(data_type: String, data_path: String) -> String:
+	var word = get_next_word()
+	if word != "":
+		word_mappings[word] = {
+			"type": data_type,
+			"path": data_path,
+			"creation_time": Time.get_ticks_msec(),
+			"access_count": 0
+		}
+	return word
+
+func create_zip_archive(archive_name: String, source_path: String) -> bool:
+	var success = false
+	
+	# Create zip directory if it doesn't exist
+	var zip_dir = storage_paths["eden"] + "zips/"
+	if !DirAccess.dir_exists_absolute(zip_dir):
+		DirAccess.make_dir_recursive_absolute(zip_dir)
+	
+	# Create primary and backup paths
+	var primary_path = zip_dir + archive_name + ".zip"
+	var backup_path = zip_dir + archive_name + "_backup.zip"
+	
+	# Create zip files
+	_create_zip_file(primary_path, source_path)
+	_create_zip_file(backup_path, source_path)  # Backup copy
+	
+	return success
+
+func _create_zip_file(zip_path: String, source_path: String):
+	# Create file handles
+	var zip_file = FileAccess.open(zip_path, FileAccess.WRITE)
+	if zip_file:
+		# Write header
+		var header = {
+			"creation_time": Time.get_ticks_msec(),
+			"source_path": source_path,
+			"word_count": used_words.size()
+		}
+		zip_file.store_var(header)
+		
+		# Iterate through directory
+		var dir = DirAccess.open(source_path)
+		if dir:
+			for file in dir.get_files():
+				var file_path = source_path + "/" + file
+				var content = FileAccess.get_file_as_bytes(file_path)
+				if content:
+					# Map file to word
+					var word = map_data_to_word("file", file_path)
+					if word != "":
+						# Store file data
+						zip_file.store_var({
+							"word": word,
+							"name": file,
+							"size": content.size(),
+							"data": content
+						})
+
+func extract_zip_archive(zip_path: String, extract_path: String) -> bool:
+	var success = false
+	
+	var zip_file = FileAccess.open(zip_path, FileAccess.READ)
+	if zip_file:
+		# Read header
+		var header = zip_file.get_var()
+		
+		# Create extraction directory
+		if !DirAccess.dir_exists_absolute(extract_path):
+			DirAccess.make_dir_recursive_absolute(extract_path)
+		
+		# Extract files
+		while !zip_file.eof_reached():
+			var file_data = zip_file.get_var()
+			if file_data:
+				var extract_file_path = extract_path + "/" + file_data["name"]
+				var output_file = FileAccess.open(extract_file_path, FileAccess.WRITE)
+				if output_file:
+					output_file.store_buffer(file_data["data"])
+					extracted_files[file_data["word"]] = extract_file_path
+					success = true
+	
+	return success
+
+func get_file_by_word(word: String) -> String:
+	if word_mappings.has(word):
+		word_mappings[word]["access_count"] += 1
+		return word_mappings[word]["path"]
+	return ""
+
+func generate_word_report() -> String:
+	var report = "Word System Status Report\n"
+	report += "========================\n"
+	report += "Total Words: %d\n" % word_database.size()
+	report += "Used Words: %d\n" % used_words.size()
+	report += "\nMost Accessed Files:\n"
+	
+	# Sort words by access count
+	var sorted_words = []
+	for word in word_mappings:
+		sorted_words.append({
+			"word": word,
+			"count": word_mappings[word]["access_count"]
+		})
+	
+	sorted_words.sort_custom(func(a, b): return a["count"] > b["count"])
+	
+	# Add top 10 to report
+	for i in range(min(10, sorted_words.size())):
+		var word_data = sorted_words[i]
+		report += "%s: %d accesses\n" % [word_data["word"], word_data["count"]]
+	
+	return report
+
+# Usage:
+# var data_center = DataCenter.new()
+# data_center.create_zip_archive("backup_001", "path/to/source")
+# data_center.extract_zip_archive("path/to/backup_001.zip", "path/to/extract")
+# var file_path = data_center.get_file_by_word("abc")
+
+###
+## have not used yet any of these functions, but what do we need
+###
+
+
+########
+##the alien message of self repair for machines
+##the memories full self check
+##the system for rom memory, of one metadata file
+##the load of few very specific and main files metadata
+##maybe lets seriously ese these nodes
+##the aliens hidden in my computer are telling me too
+########
+
+###
+## Configuration_file
+###
+
+###
+## Basic_function check
+###
+
+###
+## Database_parts
+###
+
+###
+## The_signal_of_each_script
+## attach signal in each script, maybe we can ping it if we wanna easily doing so?
+## we first check godot change tree
+## then we
+###
+
+###
+## godot core functions check
+## the signal of godot tree change, shall always do some kind of task
+## we will track times
+## for key presses xD
+###
+
+[# JSH Ethereal Engine]=[pending]=[check all variants]
+adding thing to system check
+[# JSH Ethereal Engine]=[pending]=[check all variants]
+# In system_check.gd
+signal system_ready
+signal system_verification_complete
+signal system_error
+
+var system_status = {
+    "mutex": Mutex.new(),
+    "components": {
+        "data_center": {"ready": false, "time": 0},
+        "timers": {"ready": false, "time": 0},
+        "tree": {"ready": false, "time": 0},
+        "records": {"ready": false, "time": 0}
+    },
+    "verification_log": []
+}
+[# JSH Ethereal Engine]=[pending]=[check all variants]
+Add initialization sequence tracking:
+probably the same file, i guess, but, all i can do is guess and try
+[# JSH Ethereal Engine]=[pending]=[check all variants]
+var initialization_sequence = {
+    "current_stage": -1,
+    "stages": [
+        "system_check",
+        "data_center",
+        "timers",
+        "tree",
+        "records"
+    ],
+    "dependencies": {
+        "data_center": ["system_check"],
+        "timers": ["system_check"],
+        "tree": ["system_check", "data_center"],
+        "records": ["data_center", "tree"]
+    }
+}
+[# JSH Ethereal Engine]=[pending]=[check all variants]
+
+probably again the same file
+
+[# JSH Ethereal Engine]=[pending]=[check all variants]
+
+func _ready():
+    # Connect all system signals
+    for system in system_status.components:
+        if has_node("../" + system):
+            var node = get_node("../" + system)
+            if node.has_signal("ready"):
+                node.connect("ready", _on_system_ready.bind(system))
+
+func _on_system_ready(system_name: String):
+    system_status.mutex.lock()
+    system_status.components[system_name].ready = true
+    system_status.components[system_name].time = Time.get_ticks_msec()
+    system_status.mutex.unlock()
+
+[# JSH Ethereal Engine]=[pending]=[check all variants]
+
+we continue to add things
+
+[# JSH Ethereal Engine]=[pending]=[check all variants]
+
+# State tracking 
+var system_health := {
+	"mutex": Mutex.new(),
+	"core_checks": {
+		"file_system": {"status": false, "last_check": 0},
+		"memory": {"status": false, "last_check": 0},
+		"threads": {"status": false, "last_check": 0}
+	},
+	"repair_log": [],
+	"recovery_attempts": {}
+}
+
+[# JSH Ethereal Engine]=[pending]=[check all variants]
+
+# Basic verification
+func verify_system_component(component_name: String) -> Dictionary:
+    var verification = {
+        "time": Time.get_ticks_msec(),
+        "status": false,
+        "repairs_needed": [],
+        "repairs_attempted": []
+    }
+    
+    system_health.mutex.lock()
+    # Verification logic here
+    system_health.mutex.unlock()
+    
+    return verification
+
+
+
+[# JSH Ethereal Engine]=[pending]=[check all variants]
+
+
+Would you like me to:
+
+Design the self-repair mechanisms?
+Implement the signal system for script communication?
+Create the metadata parsing system?
+Something else?
+
+Also, should we add more alien-inspired repair mechanisms? 😄
+
+[# JSH Ethereal Engine]=[pending]=[check all variants]
+
+very important, i need my video game to work cmon
+
+ghost are everywhere, i live in hamlet, but i am the one who scares the ghost, with very logical and litera way of talking, it scares some ghost, so do video game, scare ghosts too
+
+alien mechanism is like this
+
+we make a list of every function, every where
+
+it is always three phase operation
+
+we check what we have to send
+
+we check if we send something like this before here
+
+we send it, we track, if something was returned
+
+if it was, we then, somehow can appraise the data
+
+simple "working", "pending", "checked" system
+
+so we test each function, in every file, with dummy data
+
+to just check if we even get some return
+
+and make also one more thing, the data checker, we will first check data, if it is some type of data, and it shall just return an int value, that also can be translated into strings of data somehow in some class
+
+int, string, array, dictionary, float, packedarraybyte,
+
+for jsh data file type, parsed by special symbol
+fresh data
+catch_phrase
+
+
+[# JSH Ethereal Engine]=[pending]=[check all variants]
+
+but what was the question
+
+Would you like me to:
+
+Design the self-repair mechanisms?
+Implement the signal system for script communication?
+Create the metadata parsing system?
+Something else?
+
+Also, should we add more alien-inspired repair mechanisms? 😄
+
+[# JSH Ethereal Engine]=[pending]=[check all variants]
+
+alien inspired self repair mechanism will need to be stored in zip file too, and in some class
+it will need to read data, until we have string, when we have string, we check if it had "|" some special symbol inside of them
+
+also we add special symbols brackets, main ones
+
+we will need : 
+1. find first symbol
+2. find first and last symbols, either the same
+3. or two different symbols combo <> type shit
+
+with that i can load string, and parse data info with it, with database system of similarities connection
+
+[# JSH Ethereal Engine]=[pending]=[check all variants]
+
+we add more things again
+
+[# JSH Ethereal Engine]=[pending]=[check all variants]
+
+# Parser System
+var parser_system := {
+    "delimiters": {
+        "primary": "|",
+        "brackets": ["<>", "[]", "{}", "()"],
+        "special": ["=", "#", "@"]
+    },
+    "patterns": {
+        "status": "[status]=*",
+        "command": "<command>*</command>",
+        "data": "{data}*{/data}"
+    }
+}
+
+[# JSH Ethereal Engine]=[pending]=[check all variants]
+and even more things
+[# JSH Ethereal Engine]=[pending]=[check all variants]
+# Parser Functions
+func find_matching_symbols(text: String, start_symbol: String, end_symbol: String) -> Array:
+    var matches = []
+    var depth = 0
+    var start_pos = -1
+    
+    for i in range(text.length()):
+        if text.substr(i, 1) == start_symbol:
+            if depth == 0:
+                start_pos = i
+            depth += 1
+        elif text.substr(i, 1) == end_symbol:
+            depth -= 1
+            if depth == 0 and start_pos != -1:
+                matches.append([start_pos, i])
+                start_pos = -1
+                
+    return matches
+
+
+[# JSH Ethereal Engine]=[pending]=[check all variants]
+
+Would you like me to:
+
+Expand the parser system?
+Create the zip file storage system?
+Implement the data similarity comparison?
+
+[# JSH Ethereal Engine]=[pending]=[check all variants]
+
+well, we added some things, maybe it is time to start something, what else do we need than some dummy files, to parse the data and load it into database, and store it in one zip?
+
+lets add some more things, maybe lets test some things, maybe i shall add also a class file with just functions names, for each script we had so far? if i add more, we will update that list later?
+
+[# JSH Ethereal Engine]=[pending]=[check all variants]
+
+# JSH Ethereal Engine
+## to be checked, might need few mutexes, basic first state before interacted stuff
+## it have its own files, of global variants
+	metadata_global_variants
+	metadata_global_variants_update
+
+
+# JSH Ethereal Engine Initialization process
+## the godot _init function
+	func _init():
+## our functions
+	func first_turn_validation() -> Dictionary:
+	func test_init() -> Dictionary:
+	func validate_system_environment() -> Dictionary:
+	func validate_thread_system() -> Dictionary:
+	func _setup_retry_timer():
+	func _on_retry_timer_completed(timer_id: String):
+	func check_status():
+	func check_status_just_timer():
+
+# JSH Ethereal Engine Start up
+## the _ready godot function
+	func _ready():
+
+# JSH Ethereal Engine Repair
+## mostly stuff from Claude now
+	func track_task_status(task_id):
+	func track_task_completion(task_id):
+	func handle_task_timeout(task_id):
+	func clear_task_queues():
+	func validate_container_state(container_name):
+	func attempt_container_repair(container_name, missing_nodes):
+	func log_error_state(error_type, details):
+	func start_health_checks():
+	func check_system_health():
+## main functions i guess are needed, they from me
+	func prepare_akashic_records():
+	func zippy_unzipper_data_center():
+	func handle_random_errors():
+	func reanimate_all_handles_and_breaks():
+	func breaks_and_handles_check():
+	func before_time_blimp(how_many_finished, how_many_shall_been_finished):
+## more from Claude stuff
+	func recreate_node_from_records(container_name: String, node_type: String, records: Dictionary):
+	func trigger_deep_repair(error_type: String):
+	func reanimate_all_handles_and_breaks():
+## FUNCTIONS FROM Alpha
+	func unlock_stuck_mutexes():
+	func queue_pusher_adder(task):
+	func handle_creation_task(target_argument):
+	func handle_unload_task(target_argument):
+
+# JSH Ethereal Engine check stuff before we proceed
+## hmm we didnt use too many of this thing yet
+## these are from me
+	func the_current_state_of_tree(set_name_now, the_state):
+	func check_if_first_time(set_name_first, the_current_of_energy):
+	func connect_containers(container_name_0, container_name_1):
+	func containers_list_creator():
+	func containers_states_checker():
+
+
+# JSH Etheric Download System
+## just an idea, kinda already done in one way? task create from main to datapoint,data send
+## i think it was some of magic in hidden veil
+
+# JSH Etheric Queue
+## from me
+	func three_stages_of_creation(data_set_name):
+	func check_currently_being_created_sets():
+	func process_stages():
+	func the_finisher_for_nodes(data_to_be_parsed):
+	func jsh_tree_get_node_status_changer(node_path_jsh_tree_status: String, node_name: String, node_to_check: Node):
+	func start_timer_of_finito(data_timero):
+	func recreate_missing_nodes(array_of_recreation):
+	func recreator_of_singular_thing(data_set):
+	func unload_node_branch(path_for_node_to_unload, recreation_of_node_data):
+	func disable_all_branches_reset_counters(branch_to_disable, container_name_for_array):
+	func first_stage_of_creation_(data_set_name_0, sets_to_create_0):
+	func second_stage_of_creation_(data_set_name_1, sets_to_create_1):
+	func second_impact_for_real(set_to_do_thingy):
+	func third_stage_of_creation_(data_set_name_2, sets_to_create_2):
+	func third_impact_right_now(data_set_thingiess):
+	func fourth_impact_of_creation_(data_set_name_3, sets_to_create_3):
+	func fourth_impact_right_now(data_set_nameeee):
+	func fifth_impact_of_creation_(data_set_name_4, sets_to_create_4):
+	func fifth_impact_right_now(data_set_nameeeeee):
+	func newer_even_function_for_dictionary(name_of_container):
+
+# JSH Records System
+## from me
+	func container_finder(set_name):
+	func tasked_children(node_to_be_added, node_to_be_added_path):
+	func task_to_send_data_to_datapoint(data_for_sending):
+
+# JSH Scene Tree
+## from me mostly, or very edited
+	func disable_all_branches(branch_to_disable):
+	func find_branch_to_unload(thing_path):
+	func cache_tree_branch_fully(container_to_unload):
+	func cache_branch(branch_name, child_name, branch_part):
+	func start_up_scene_tree():
+## this one is kinda horror, could be way easier one day
+	func the_pretender_printer(node_name: String, node_path_jsh_tree: String, godot_node_type, node_type: String = "Node3D"):
+## or was it this one
+	func print_tree_structure(branch: Dictionary, indent: int = 0):
+## this one kinda works now
+	func jsh_tree_get_node(node_path_get_node: String) -> Node:
+
+# JSH Multi Threads
+## for now just one function, i guess we have several ones, connected to it, that are usable, and we must move them
+	func create_new_task(function_name: String, data):
+
+# JSH Files Management
+## i dont create files for past two months, dunno, what kind of files i will need now, kinda to rebuild probably
+	func create_file(array_with_data: Array, lines_amount: int, name_for_file: String):
+	func file_finder(file_name, path_to_file, list_of_files, type_of_data):
+	func check_folder(folder_path):
+	func check_folder_content(directory):
+	func check_settings_file():
+	func file_creation(file_content,  path_for_file, name_for_file):
+	func setup_settings():
+	func find_or_create_eden_directory():
+	func create_default_settings(file_path_c_d_s):
+	func scan_available_storage():
+
+# JSH Memories Management
+## here we were, recreating stuff? loading stuff? it worked fine for a long time, and we now understand, more
+## i think, here we created active records set
+	func new_function_for_creation_recovery(record_type_now, first_stage_of_creation_now, stage_of_creation_now):
+	func initialize_menu(record_type: String):
+	func find_record_set(record_type: String) -> Dictionary:
+	func find_instructions_set(record_type: String) -> Dictionary:
+	func find_scene_frames(record_type: String) -> Dictionary:
+	func find_interactions_list(record_type: String) -> Dictionary:
+
+# JSH Memories Transcription
+## here we can read what is already active or cached?
+	func recreator(number_to_add, data_to_process, data_set_name, new_name_for_set)
+	func find_highest_in_array(numbers: Array) -> int:
+	func load_record_set(records_part: String, record_type: String, type_of_data : int, records : Dictionary) -> void:
+	func read_records_data(record_set : Dictionary, records_set_name):
+	func process_active_records_for_tree(active_records: Dictionary, set_name_to_process : String, container_name_here : String):
+	func deep_copy_dictionary(original: Dictionary) -> Dictionary:
+	func unload_record_set(records_sets_name : String, record_type: String) -> void:
+	func cache_data(records_sets_name: String, record_type: String, data, meta_data) -> void:
+	func clean_oldest_dataset() -> void:
+	func get_dictionary_memory_size(dict: Dictionary) -> int:
+	func get_cache_total_size() -> int:
+	func get_record_type_id(record_type: String) -> int:
+
+# JSH Hidden Veil
+## here we have process delta function
+## a lot of new things got put in there, while i think
+## we shall move most of them to their place
+	func the_fourth_dimensional_magic(type_of_operation : String, node : Node, data_of_movement):
+	func fifth_dimensional_magic(type_of_unloading : String, node_path_for_unload : String):
+	func sixth_dimensional_magic(type_of_function, node_to_call, function_name : String, additional_data = null):
+	func call_some_thingy():
+	func each_blimp_of_delta():
+	func attempt_creation(set_name: String) -> CreationState:
+## the important part
+	func _process(delta):
+## and rest of stuff, also probablt to move somewhere
+	func whip_out_set_by_its_name(set_name_to_test) -> CreationStatus:
+	func process_turn_0(delta: float) -> Dictionary:
+	func check_system_state(state_name: String) -> SystemState:
+	func set_system_state(state_name: String, new_state: SystemState) -> bool:
+	func is_creation_possible() -> bool:
+	func record_mistake(mistake_data: Dictionary):
+	func update_delta_history(delta: float):
+	func check_first_time_status(status_name: String) -> bool:
+	func process_creation_request(set_name: String) -> Dictionary:
+	func get_data_structure_size(data) -> int:
+	func get_jsh(property_name: String):
+	func check_memory_state():
+	func clean_array(array_name: String):
+	func clean_dictionary(dict_name: String):
+	func check_thread_status():
+	func check_thread_status_type():
+## that one will probably be in time stuff, we dont have time stuff yet
+	func calculate_time(delta_current, time, hour, minute, second):
+
+# JSH Projections System
+## user inputs, keyboard, mouse, movement or current status of some device
+	func _input(event: InputEvent):
+	func get_ray_points(mouse_position: Vector2):
+	func ray_cast_data_preparer(data_ray_cast):
+	func multi_threaded_ray_cast(result, to, from):
+	func secondary_interaction_after_rc(array_of_data):
+	func unload_container(container_to_unload):
+	func process_to_unload_records(container_name_to_unload):
+
+# JSH Memories Storage
+## here we load stuff from storage, name to change probably, who knows we need it anyway to store records to cache
+## oh wait it only have one function, probably should been somewhere elese
+	func unload_nodes(array_of_thingiess_that_shall_remain):
+
+# JSH Memories Processed
+## memories already processed and ready to be used
+	func load_cached_data(data_set: String):
+	func load_cached_data_second_impact(data_set: String):
+	func interactions_upload_to_datapoint(header_line, information_lines, datapoint):
+	func scene_frames_upload_to_datapoint(header_line, information_lines, datapointi, containeri):
+	func instructions_analiser(metadata_parts, second_line, third_line, datapoint, container):
+	func assign_things_to_datapoint():
+
+# JSH Things Creation
+## here we are creating data, for things on the scene
+	func analise_data(thing_name_, type, data_to_analyze, second_part, group_number, verion_of_thing, information_lines_parsed):
+## after we know where to send it, it goes there
+## i guess i found two functions to move already? some to generate a color
+	func create_circle_shape(node_name: String, first_line : Array, data_to_write : Array, group_name : String, version_of_thing : String, information_lines_parsed : Array):
+	func generate_circle_points(radius: float, num_points: int) -> Array:
+	func create_flat_shape(node_name: String, first_line : Array, data_to_write : Array, group_name : String, version_of_thing : String, information_lines_parsed : Array):
+	func create_text_label(node_name: String, first_line : Array, data_to_write : Array, group_name : String, version_of_thing : String, information_lines_parsed : Array):
+	func create_array_mesh(node_name: String, first_line : Array, data_to_write : Array, group_name : String, version_of_thing : String, information_lines_parsed : Array):
+	func create_textmesh(node_name: String, first_line : Array, data_to_write : Array, group_name : String, version_of_thing : String, information_lines_parsed : Array):
+	func create_button(node_name: String, first_line : Array, data_to_write : Array, group_name : String, version_of_thing : String, information_lines_parsed : Array):
+	func create_cursor(node_name: String, first_line : Array, data_to_write : Array, group_name : String, version_of_thing : String, information_lines_parsed : Array):
+	func create_connection(node_name: String, first_line : Array, data_to_write : Array, group_name : String, version_of_thing : String, information_lines_parsed : Array):
+	func create_screen(node_name: String, first_line : Array, data_to_write : Array, group_name : String, version_of_thing : String, information_lines_parsed : Array):
+	func create_datapoint(node_name: String, first_line : Array, data_to_write : Array, group_name : String, version_of_thing : String, information_lines_parsed : Array):
+	func create_container(node_name: String, first_line : Array, data_to_write : Array, group_name : String, version_of_thing : String, information_lines_parsed : Array):
+	func get_spectrum_color(value: float) -> Color:
+
+# JSH Scene Tree Add Nodes, Physical and Astral Bodies
+## here we send tasks, to create nodes, i guess we also done it in thingy before, for few things? if it was some special case, we will need to normalize things here too, i guess
+	func node_creation(node_name, crafted_data, coords, to_rotate, group_number, node_type, path_of_thing):
+	func add_collision_to_thing(thing_node, node_type, path_of_thingy, name_of_thingy):
+
+
+[# JSH Ethereal Engine]=[pending]=[check all variants]
+
+and those were just main.gd file functions, we got more scripts, but lets start with this one
+
+it will be self repair check
+
+[# JSH Ethereal Engine]=[pending]=[check all variants]
+
+check every funcion
+if they work
+what they return
+what we can put in here
+dummy data of choises needs to be created
+use dummy data to put stuff in functions
+and pray
+lol
+
+
+[# JSH Ethereal Engine]=[pending]=[check all variants]
+
+Let me help summarize what we've covered in [# JSH Ethereal Engine]=[pending]=[check all variants]:
+
+File Structure:
+
+Copy- main.gd: Core game logic
+- system_check.gd: System verification and self-repair
+- thread_pool.gd & thread_pool_manager.gd: Thread management
+- data_center.gd: Data organization and storage
+
+Node Hierarchy:
+
+Copymain
+ ├─ system_check
+ ├─ godot_timers_system
+ ├─ godot_tree_system
+ ├─ JSH_records_system
+ └─ etc...
+
+Core Components Added:
+
+
+Parser system for data validation
+System initialization tracking
+Word-based data organization
+Thread state monitoring
+Self-repair mechanisms
+
+
+What's Next to Consider:
+How to structure the verification sequence
+Where to store configuration data
+How to implement the script connection system
+Whether to expand the parser system
+
+Would you like to:
+
+Review any specific component in detail?
+Plan the next implementation phase?
+Discuss a specific subsystem?
+
+[# JSH Ethereal Engine]=[pending]=[check all variants]
+
+
+i guess so far we can also check that one file memory system?
+
+[# JSH Ethereal Engine]=[pending]=[check all variants]
+
+my guess would be to first check every function, for that we will need new functions
+
+# check what that input is
+
+# check what function needs for input
+# automated too, we put in things, empty dummy things first, and we check if it crash, if it does, we rewrite functions, until it never crash again,
+
+[# JSH Ethereal Engine]=[pending]=[check all variants]
+
+Good idea! Let's create a function testing system. We'll need:
+
+Input Type Checker:
+
+[# JSH Ethereal Engine]=[pending]=[check all variants]
+
+
+hmm, i have no clue if we still are working on that system_check.gd, or on that main.gd
+
+
+[# JSH Ethereal Engine]=[pending]=[check all variants]
+
+func validate_input(value, expected_type: String) -> Dictionary:
+    var result = {
+        "valid": false,
+        "type_found": typeof(value),
+        "type_expected": expected_type,
+        "error": ""
+    }
+    
+    match expected_type:
+        "String":
+            result.valid = value is String
+        "Array":
+            result.valid = value is Array
+        "Dictionary":
+            result.valid = value is Dictionary
+        "Node":
+            result.valid = value is Node
+        # etc...
+    
+    if !result.valid:
+        result.error = "Expected %s, got %s" % [expected_type, result.type_found]
+    
+    return result
+
+[# JSH Ethereal Engine]=[pending]=[check all variants]
+
+
+i idnt add this one
+
+[# JSH Ethereal Engine]=[pending]=[check all variants]
+func test_function(function_name: String, test_cases: Array) -> Dictionary:
+    var results = {
+        "function": function_name,
+        "total_tests": test_cases.size(),
+        "passed": 0,
+        "failed": 0,
+        "errors": []
+    }
+    
+    for test in test_cases:
+        var dummy_input = test.input
+        var expected_type = test.expected_type
+        
+        # Try with error catching
+        if has_method(function_name):
+            try:
+                var output = call(function_name, dummy_input)
+                var validation = validate_input(output, expected_type)
+                if validation.valid:
+                    results.passed += 1
+                else:
+                    results.failed += 1
+                    results.errors.append(validation.error)
+            except:
+                results.failed += 1
+                results.errors.append("Function crashed with input: " + str(dummy_input))
+                
+    return results
+
+[# JSH Ethereal Engine]=[pending]=[check all variants]
+
+
+func generate_test_cases(function_metadata: Dictionary) -> Array:
+    var test_cases = []
+    
+    # Generate dummy data based on expected types
+    for param in function_metadata.parameters:
+        var dummy_data = {
+            "input": null,
+            "expected_type": param.type
+        }
+        
+        match param.type:
+            "String":
+                dummy_data.input = ""
+                test_cases.append(dummy_data)
+                dummy_data.input = "test"
+                test_cases.append(dummy_data)
+            "Array":
+                dummy_data.input = []
+                test_cases.append(dummy_data)
+                dummy_data.input = [1, 2, 3]
+                test_cases.append(dummy_data)
+            "Dictionary":
+                dummy_data.input = {}
+                test_cases.append(dummy_data)
+                # etc...
+    
+    return test_cases
+
+
+[# JSH Ethereal Engine]=[pending]=[check all variants]
+
+
+we already had that in main.gd
+
+
+[# JSH Ethereal Engine]=[pending]=[check all variants]
+
+maybe it is in your files too
+
+it is in
+
+# JSH Hidden Veil
+
+the hidden veil code section, we must find it in your files too
+
+[# JSH Ethereal Engine]=[pending]=[check all variants]
+
+and here is what i managed to find and dig, do we move these functions somewhere?
+
+[# JSH Ethereal Engine]=[pending]=[check all variants]
+
+## Usage example:
+#var creation_result = whip_out_set_by_its_name("test_set")
+#
+#match creation_result:
+	#CreationStatus.SUCCESS:
+		#print("Set created successfully")
+	#CreationStatus.ERROR:
+		#print("Failed to create set")
+	#CreationStatus.INVALID_INPUT:
+		#print("Invalid input provided")
+	#CreationStatus.LOCKED:
+		#print("Creation currently locked")
+	#CreationStatus.PENDING:
+		#print("Creation pending")
+#
+## Process turn example:
+#var turn_result = process_turn_0(delta)
+#if turn_result.status == CreationStatus.SUCCESS:
+	#print("Turn processed successfully, created ", turn_result.processed_sets, " sets")
+#else:
+	#print("Turn processing failed: ", turn_result.message)
+#
+#
+
+
+
+func get_data_structure_size(data) -> int:
+	# Early return for null data
+	if data == null:
+		return 0
+		
+	match typeof(data):
+		TYPE_DICTIONARY:
+			var total_size = 0
+			for key in data:
+				# Add key size
+				total_size += var_to_bytes(key).size()
+				# Add value size recursively
+				if data[key] != null:
+					total_size += get_data_structure_size(data[key])
+			return total_size
+			
+		TYPE_ARRAY:
+			var total_size = 0
+			for item in data:
+				if item != null:
+					total_size += get_data_structure_size(item)
+			return total_size
+			
+		TYPE_OBJECT:
+			# Handle special cases like Nodes
+			if data is Node:
+				return 8  # Base pointer size
+			return var_to_bytes(data).size()
+			
+		TYPE_STRING:
+			return data.length() * 2  # Approximate UTF-16 size
+			
+		TYPE_INT:
+			return 4
+			
+		TYPE_FLOAT:
+			return 8
+			
+		TYPE_VECTOR2, TYPE_VECTOR2I:
+			return 8
+			
+		TYPE_VECTOR3, TYPE_VECTOR3I:
+			return 12
+			
+		_:
+			# Default fallback using var_to_bytes
+			return var_to_bytes(data).size()
+
+# Helper function to safely get property
+func get_jsh(property_name: String):
+	if property_name in self:
+		return self[property_name]
+	return null
+
+func check_memory_state():
+	var current_time = Time.get_ticks_msec()
+	var sizes = {}
+	
+	# Check arrays
+	for array_name in memory_metadata["arrays"].keys():
+		if get_jsh(array_name) != null:
+			var array_size = get_data_structure_size(get_jsh(array_name))
+			sizes[array_name] = array_size
+			
+			if array_size > memory_metadata["cleanup_thresholds"]["array_max"]:
+				clean_array(array_name)
+	
+	# Check dictionaries
+	for dict_name in memory_metadata["dictionaries"].keys():
+		if get_jsh(dict_name) != null:
+			var dict_size = get_data_structure_size(get_jsh(dict_name))
+			sizes[dict_name] = dict_size
+			
+			# Convert to MB
+			var size_mb = dict_size / (1024 * 1024)
+			if size_mb > memory_metadata["cleanup_thresholds"]["dict_max_mb"]:
+				clean_dictionary(dict_name)
+	
+	print("\nMemory State:")
+	for name in sizes:
+		print("%s: %s bytes" % [name, sizes[name]])
+		
+	return sizes
+
+func clean_array(array_name: String):
+	match array_name:
+		"stored_delta_memory":
+			# Keep only last 100 entries
+			if stored_delta_memory.size() > 100:
+				stored_delta_memory = stored_delta_memory.slice(-100)
+				
+		"blimp_of_time":
+			if blimp_of_time.size() > 50:
+				blimp_of_time = blimp_of_time.slice(-50)
+		
+		"array_with_no_mutex":
+			# Clean old errors
+			var current_time = Time.get_ticks_msec()
+			array_with_no_mutex = array_with_no_mutex.filter(
+				func(error): return current_time - error.time < 300000 # 5 minutes
+			)
+
+func clean_dictionary(dict_name: String):
+	match dict_name:
+		"cached_record_sets":
+			# Clean old cached records
+			var current_time = Time.get_ticks_msec()
+			for key in cached_record_sets.keys():
+				if current_time - cached_record_sets[key].get("timestamp", 0) > 3600000: # 1 hour
+					cached_record_sets.erase(key)
+					
+		"dictionary_of_mistakes":
+			# Clean resolved errors
+			for key in dictionary_of_mistakes.keys():
+				if dictionary_of_mistakes[key].get("status") == "resolved":
+					dictionary_of_mistakes.erase(key)
+
+[# JSH Ethereal Engine]=[pending]=[check all variants]
+
+awaiting further informations and data
+
+[# JSH Ethereal Engine]=[pending]=[check all variants]
+
+Move these functions to system_check.gd
+
+[# JSH Ethereal Engine]=[pending]=[check all variants]
+
+i will move functions from main, and add more functions i didnt add yet to
+
+or maybe i will keep them in both places, just add comments that they were moved?
+
+system_check.gd
+
+also created new file
+
+system_interfaces.gd
+
+it is empty so far
+
+
+[# JSH Ethereal Engine]=[pending]=[check all variants]
+
+copying functions from main, to system_check
+
+func get_data_structure_size(data) -> int:
+func check_memory_state():
+
+
+[# JSH Ethereal Engine]=[pending]=[check all variants]
+
+
+we are missing now global variants in system_check.gd file
+
+memory_metadata, get_jsh(), clean_array(), clean_dictionary()
+
+easy copy paste for functions, i have them already
+
+for vars, they will be empty
+
+var memory_metadata
+var cached_record_sets
+var dictionary_of_mistakes
+var stored_delta_memory
+var blimp_of_time
+var array_with_no_mutex
+
+
+
+[# JSH Ethereal Engine]=[pending]=[check all variants]
+
+I suggest we:
+
+Move these functions to system_check.gd
+Create a standardized interface in a new "system_interfaces.gd" file
+Keep only high-level control in main.gd
+
+Would you like me to:
+
+Show the reorganized structure?
+Create the new interface file?
+Move the diagnostic functions to system_check.gd?
+
+Let's tackle one of these tasks first to keep things organized.
+
+
+[# JSH Ethereal Engine]=[pending]=[check all variants]
+
+i copy pasted stuff, the var names will probably need a check ?
+for interface file, do we start it now? the function list names?
+i wanna to try it
+
+but we still are missing few functions in main too
+
+the function_checker, function_data_type_return
+
+what we put in here, and checking what that function we wanna talk to, knows about itself already
+
+
+
+
+
+[# JSH Ethereal Engine]=[pending]=[check all variants]
+
+
+that is mostly all
+
+
+[# JSH Ethereal Engine]=[pending]=[check all variants]
+
+I suggest we:
+
+Move these functions to system_check.gd
+Create a standardized interface in a new "system_interfaces.gd" file
+Keep only high-level control in main.gd
+
+Would you like me to:
+
+Show the reorganized structure?
+Create the new interface file?
+Move the diagnostic functions to system_check.gd?
+
+Let's tackle one of these tasks first to keep things organized.
+
+
+[# JSH Ethereal Engine]=[pending]=[check all variants]
+
+lets either rething stuff now, as i updated you, to what we have so far, or we can add that functions lists class
+functions list class file
+const per file
+
+
+
+[# JSH Ethereal Engine]=[pending]=[check all variants]
+
+the new file rises
+
+# function_metadata.gd
+
+and it contains just this :
+
+
+[# JSH Ethereal Engine]=[pending]=[check all variants]
+
+# function_metadata.gd
+extends Node
+
+# Main script functions
+const MAIN_FUNCTIONS = {
+    "_init": {
+        "input_types": [],
+        "return_type": "void",
+        "required_mutexes": []
+    },
+    "_ready": {
+        "input_types": [],
+        "return_type": "void",
+        "required_mutexes": []
+    },
+    "check_system_state": {
+        "input_types": ["String"],
+        "return_type": "SystemState",
+        "required_mutexes": ["core_states.mutex"]
+    }
+}
+
+# System check functions
+const SYSTEM_CHECK_FUNCTIONS = {
+    "verify_system": {
+        "input_types": ["String"],
+        "return_type": "Dictionary",
+        "required_mutexes": ["system_health.mutex"]
+    }
+}
+
+# Thread pool functions
+const THREAD_POOL_FUNCTIONS = {
+    "submit_task": {
+        "input_types": ["String", "Variant"],
+        "return_type": "bool",
+        "required_mutexes": ["__tasks_lock"]
+    }
+}
+
+
+[# JSH Ethereal Engine]=[pending]=[check all variants]
+
+
+soo, we shall continue somewhere too, like i wanted to have a list of functions per file, a const per file
+
+we have files list already there
+
+we have functions list too
+
+in this file on top somewhere
+
+[# JSH Ethereal Engine]=[pending]=[check all variants]
+
+okay, now Luminus will help out
+
+Alright, let's continue refining the function metadata system and integrate the function lists per file as constants.
+
+Next Steps:
+Create a function metadata class (function_metadata.gd).
+Assign functions to their respective files using constants.
+Ensure each function has:
+Input Types (e.g., String, Array, Dictionary).
+Return Type (e.g., void, bool, SystemState).
+Required Mutexes (e.g., array_mutex_process, tree_mutex).
+Store metadata per file and structure it properly.
+Updated function_metadata.gd
+I'll generate an initial version of this class now.
+
+
+
+[# JSH Ethereal Engine]=[pending]=[check all variants]
+
+extends Node
+
+# Metadata for all functions categorized by their respective script files
+
+const MAIN_GD = {
+    "_init": {"input_types": [], "return_type": "void", "required_mutexes": []},
+    "_ready": {"input_types": [], "return_type": "void", "required_mutexes": []},
+    "check_system_state": {"input_types": ["String"], "return_type": "SystemState", "required_mutexes": ["core_states.mutex"]},
+    "process_turn_0": {"input_types": ["float"], "return_type": "Dictionary", "required_mutexes": ["array_mutex_process"]}
+}
+
+const THREAD_POOL_GD = {
+    "submit_task": {"input_types": ["String", "Variant"], "return_type": "bool", "required_mutexes": ["__tasks_lock"]},
+    "update_thread_state": {"input_types": ["String", "String", "Variant"], "return_type": "void", "required_mutexes": ["__thread_state_mutex"]},
+    "get_thread_stats": {"input_types": [], "return_type": "Dictionary", "required_mutexes": ["__thread_state_mutex"]}
+}
+
+const SYSTEM_CHECK_GD = {
+    "verify_system": {"input_types": ["String"], "return_type": "Dictionary", "required_mutexes": ["system_health.mutex"]},
+    "check_system_health": {"input_types": [], "return_type": "Dictionary", "required_mutexes": ["dictionary_of_mistakes_mutex"]},
+    "check_memory_state": {"input_types": [], "return_type": "Dictionary", "required_mutexes": []}
+}
+
+const FILE_MANAGEMENT_GD = {
+    "create_file": {"input_types": ["Array", "int", "String"], "return_type": "void", "required_mutexes": []},
+    "check_settings_file": {"input_types": [], "return_type": "bool", "required_mutexes": []},
+    "file_creation": {"input_types": ["Array", "String", "String"], "return_type": "bool", "required_mutexes": []}
+}
+
+const JSH_QUEUE_GD = {
+    "three_stages_of_creation": {"input_types": ["String"], "return_type": "void", "required_mutexes": ["array_mutex_process"]},
+    "check_currently_being_created_sets": {"input_types": [], "return_type": "void", "required_mutexes": ["mutex_for_container_state"]},
+    "process_stages": {"input_types": [], "return_type": "void", "required_mutexes": ["array_mutex_process"]}
+}
+
+const HIDDEN_VEIL_GD = {
+    "the_fourth_dimensional_magic": {"input_types": ["String", "Node", "Variant"], "return_type": "void", "required_mutexes": ["movmentes_mutex"]},
+    "fifth_dimensional_magic": {"input_types": ["String", "String"], "return_type": "void", "required_mutexes": ["mutex_for_unloading_nodes"]},
+    "sixth_dimensional_magic": {"input_types": ["String", "String", "String", "Variant"], "return_type": "void", "required_mutexes": ["mutex_function_call"]}
+}
+
+
+[# JSH Ethereal Engine]=[pending]=[check all variants]
+
+
+now whole function look like this
+
+
+[# JSH Ethereal Engine]=[pending]=[check all variants]
+
+# function_metadata.gd
+extends Node
+
+
+# from Claude
+# Main script functions
+const MAIN_FUNCTIONS = {
+	"_init": {
+		"input_types": [],
+		"return_type": "void",
+		"required_mutexes": []
+	},
+	"_ready": {
+		"input_types": [],
+		"return_type": "void",
+		"required_mutexes": []
+	},
+	"check_system_state": {
+		"input_types": ["String"],
+		"return_type": "SystemState",
+		"required_mutexes": ["core_states.mutex"]
+	}
+}
+
+# System check functions
+const SYSTEM_CHECK_FUNCTIONS = {
+	"verify_system": {
+		"input_types": ["String"],
+		"return_type": "Dictionary",
+		"required_mutexes": ["system_health.mutex"]
+	}
+}
+
+# Thread pool functions
+const THREAD_POOL_FUNCTIONS = {
+	"submit_task": {
+		"input_types": ["String", "Variant"],
+		"return_type": "bool",
+		"required_mutexes": ["__tasks_lock"]
+	}
+}
+
+#from Luminus
+
+##extends Node
+
+### Metadata for all functions categorized by their respective script files
+
+const MAIN_GD = {
+    "_init": {"input_types": [], "return_type": "void", "required_mutexes": []},
+    "_ready": {"input_types": [], "return_type": "void", "required_mutexes": []},
+    "check_system_state": {"input_types": ["String"], "return_type": "SystemState", "required_mutexes": ["core_states.mutex"]},
+    "process_turn_0": {"input_types": ["float"], "return_type": "Dictionary", "required_mutexes": ["array_mutex_process"]}
+}
+
+const THREAD_POOL_GD = {
+    "submit_task": {"input_types": ["String", "Variant"], "return_type": "bool", "required_mutexes": ["__tasks_lock"]},
+    "update_thread_state": {"input_types": ["String", "String", "Variant"], "return_type": "void", "required_mutexes": ["__thread_state_mutex"]},
+    "get_thread_stats": {"input_types": [], "return_type": "Dictionary", "required_mutexes": ["__thread_state_mutex"]}
+}
+
+const SYSTEM_CHECK_GD = {
+    "verify_system": {"input_types": ["String"], "return_type": "Dictionary", "required_mutexes": ["system_health.mutex"]},
+    "check_system_health": {"input_types": [], "return_type": "Dictionary", "required_mutexes": ["dictionary_of_mistakes_mutex"]},
+    "check_memory_state": {"input_types": [], "return_type": "Dictionary", "required_mutexes": []}
+}
+
+const FILE_MANAGEMENT_GD = {
+    "create_file": {"input_types": ["Array", "int", "String"], "return_type": "void", "required_mutexes": []},
+    "check_settings_file": {"input_types": [], "return_type": "bool", "required_mutexes": []},
+    "file_creation": {"input_types": ["Array", "String", "String"], "return_type": "bool", "required_mutexes": []}
+}
+
+const JSH_QUEUE_GD = {
+    "three_stages_of_creation": {"input_types": ["String"], "return_type": "void", "required_mutexes": ["array_mutex_process"]},
+    "check_currently_being_created_sets": {"input_types": [], "return_type": "void", "required_mutexes": ["mutex_for_container_state"]},
+    "process_stages": {"input_types": [], "return_type": "void", "required_mutexes": ["array_mutex_process"]}
+}
+
+const HIDDEN_VEIL_GD = {
+    "the_fourth_dimensional_magic": {"input_types": ["String", "Node", "Variant"], "return_type": "void", "required_mutexes": ["movmentes_mutex"]},
+    "fifth_dimensional_magic": {"input_types": ["String", "String"], "return_type": "void", "required_mutexes": ["mutex_for_unloading_nodes"]},
+    "sixth_dimensional_magic": {"input_types": ["String", "String", "String", "Variant"], "return_type": "void", "required_mutexes": ["mutex_function_call"]}
+}
+
+
+[# JSH Ethereal Engine]=[pending]=[check all variants]
+
+well i guess we should check few functions
+
+definitely we wanna do it two ways,
+
+single core way
+
+multi threads way
+
+the most important function to check :
+
+base and menu
+
+Godot Engine v4.3.stable.official.77dcf97d8 - https://godotengine.org
+Vulkan 1.3.277 - Forward+ - Using Device #0: NVIDIA - Quadro RTX 3000
+
+ ready on each script ? 0 thread_pool.gd
+ main.gd print tree pretty init 
+ ┖╴
+
+ main.gd print tree pretty should end here
+ stuck status it is string 
+ stuck status something went wrong, starting verified timer error
+ ready on each script ? 1 maing.gd 
+ stuck status it is string 
+ stuck status something went wrong, starting verified timer error
+ stuck status Timer started at OS time: 1396
+ timer check  first we need a screen, and light state : pending
+ timer check  state now : started
+before_blimp_time : 1396
+ past_deltas_memories : []
+ stored_delta_memory : []
+ these two should be normalized too i guess 
+
+ check basic if we allign with prophecies of wisest spirits, do we unlock before it is too late 
+ how_many_shall_been_finished : 0
+ how_many_finished : 0
+
+ timer check omething went wrong, use a timer
+ timer check 0: @Node@2:<Node#32698795326>
+ timer check 0
+ timer check  0stuff to do :: thread statuses : error
+ timer check  1stuff to do :: thread statuses : error
+ timer check  stuff to do :: mutex statuses : [true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true], stuck_status threads status : error and main sets to create["started", [["akashic_records"], ["base"], ["menu"]], { "base_": 1, "menu_": 1, "settings_": 1, "keyboard_": 1, "keyboard_left_": 1, "keyboard_right_": 1, "things_creation_": 2, "singular_lines_": 8 }]
+ ready on each script ? 4
+ ready on each script ? new system_check.gd 
+ main.gd print tree pretty ready 
+ ┖╴main
+    ┠╴@Node@2
+    ┃  ┠╴@Timer@3
+    ┃  ┖╴@Timer@4
+    ┠╴sphere
+    ┃  ┠╴pointers
+    ┃  ┃  ┠╴cursor_mouse
+    ┃  ┃  ┠╴cursor_left
+    ┃  ┃  ┠╴cursor_right
+    ┃  ┃  ┠╴cursor_head
+    ┃  ┃  ┖╴cursor_body
+    ┃  ┠╴cameramove
+    ┃  ┃  ┖╴TrackballCamera
+    ┃  ┃     ┠╴CameraMover
+    ┃  ┃     ┖╴light
+    ┃  ┖╴godot_model
+    ┠╴WorldEnvironment
+    ┠╴system_check
+    ┠╴godot_timers_system
+    ┠╴godot_tree_system
+    ┠╴JSH_records_system
+    ┠╴JSH_scene_tree_system
+    ┠╴JSH_database_system
+    ┠╴JSH_queue_system
+    ┠╴JSH_turns_system
+    ┠╴JSH_cache_memory_system
+    ┠╴JSH_akashic_records
+    ┠╴JSH_multiplayer_files
+    ┖╴JSH_mainframe_database
+
+ main.gd print tree pretty should end here
+ delta message start [true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true]
+_ready : Project Eden, ver : new dictionaries of data sendin and cachin
+ prepare_basic operation before creation 
+
+Thread Pool Status:
+Thread 0:
+  Status: initialized (for 1ms)
+  Tasks Completed: 0
+Thread 1:
+  Status: initialized (for 1ms)
+  Tasks Completed: 0
+Thread 2:
+  Status: initialized (for 1ms)
+  Tasks Completed: 0
+Thread 3:
+  Status: initialized (for 1ms)
+  Tasks Completed: 0
+Thread 4:
+  Status: initialized (for 1ms)
+  Tasks Completed: 0
+Thread 5:
+  Status: initialized (for 1ms)
+  Tasks Completed: 0
+Thread 6:
+  Status: initialized (for 1ms)
+  Tasks Completed: 0
+Thread 7:
+  Status: initialized (for 1ms)
+  Tasks Completed: 0
+
+Summary:
+Total Threads: 8
+Executing: 0
+Stuck: 0
+ stuck status it is string 
+ stuck status it is not error, it is :::working
+
+look at the console prints, we store something somewhere
+
+ timer check  stuff to do :: mutex statuses : [true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true], stuck_status threads status : error and main sets to create["started", [["akashic_records"], ["base"], ["menu"]], { "base_": 1, "menu_": 1, "settings_": 1, "keyboard_": 1, "keyboard_left_": 1, "keyboard_right_": 1, "things_creation_": 2, "singular_lines_": 8 }]
+
+
+that one :
+
+["started", [["akashic_records"], ["base"], ["menu"]], { "base_": 1, "menu_": 1, "settings_": 1, "keyboard_": 1, "keyboard_left_": 1, "keyboard_right_": 1, "things_creation_": 2, "singular_lines_": 8 }]
+
+that function
+
+func prepare_akashic_records():
+	print(" timer check  first we need a screen, and light state : ", first_start_check)
+	first_start_check = "started"
+	print(" timer check  state now : ", first_start_check)
+	var main_sets_names = BanksCombiner.dataSetLimits
+	array_of_startup_check.append(first_start_check)
+	array_of_startup_check.append([["akashic_records"],["base"],["menu"]])
+	
+	
+	# lets first check breaks and handles
+	# the stuff i never check, why would i
+	var message_now_mutex = breaks_and_handles_check()
+	var stuck_status = check_thread_status()
+	# check if mutexes are true or false or null
+	# check what threads we got already, how many we should have?
+	before_time_blimp(0, 0)
+	
+	
+	array_of_startup_check.append(main_sets_names)
+	# the basic_pack_of_records
+	
+	
+	if stuck_status == "error":
+		print(" timer check omething went wrong, use a timer")
+		# and try again
+		
+		# Create a 5-second timer
+		# timer_system is global variant
+		# it is inited in init
+		# how do we check what it is, here :
+		print(" timer check 0: " , timer_system)
+		timer_system.create_timer("my_timer", 5.0)
+		timer_system.timer_completed.connect(func(timer_id): print("Timer ", timer_id, " completed!"))
+		timer_system.start_timer("my_timer")
+		print(" timer check 0")
+		print(" timer check  0stuff to do :: thread statuses : ", stuck_status)
+		message_now_mutex = breaks_and_handles_check()
+		stuck_status = check_thread_status()
+		print(" timer check  1stuff to do :: thread statuses : ", stuck_status)
+	print(" timer check  stuff to do :: mutex statuses : ", message_now_mutex , ", stuck_status threads status : " , stuck_status, " and main sets to create", array_of_startup_check)
+
+somehow it is in 
+
+# JSH Ethereal Engine Repair
+
+part
+
+but it is
+
+func prepare_akashic_records():
+
+like load data, initialize stuff?
+
+that array
+
+	array_of_startup_check.append(first_start_check)
+	array_of_startup_check.append([["akashic_records"],["base"],["menu"]])
+	array_of_startup_check.append(main_sets_names)
+
+it is global var
+
+var array_of_startup_check : Array = []
+
+in
+
+# JSH Ethereal Engine
+
+part
+
+[# JSH Ethereal Engine]=[pending]=[check all variants]
+
+Alright, let's break this down step by step and verify prepare_akashic_records(), both in single-core and multi-threaded ways.
+
+1. Understanding prepare_akashic_records()
+This function initializes critical sets (akashic_records, base, menu).
+It stores startup data into array_of_startup_check (a global variable).
+It checks system integrity using:
+breaks_and_handles_check()
+check_thread_status()
+before_time_blimp()
+If thread status is "error", it creates a recovery timer (timer_system.create_timer("my_timer", 5.0)).
+It prints debug messages at key steps.
+2. Checking Global Variable Usage
+array_of_startup_check is a global array.
+Values being stored:
+gdscript
+Kopiuj
+Edytuj
+array_of_startup_check.append(first_start_check)
+array_of_startup_check.append([["akashic_records"],["base"],["menu"]])
+array_of_startup_check.append(main_sets_names)
+Question: Where does main_sets_names come from?
+Answer: It seems to be from BanksCombiner.dataSetLimits, but we should confirm how that data is structured.
+3. Function Validation Plan
+We will:
+
+Test in Single-Core Mode
+Run prepare_akashic_records() synchronously.
+Check stored values in array_of_startup_check.
+Verify mutex states and logs.
+Test in Multi-Threaded Mode
+Submit prepare_akashic_records() as a task to ThreadPool.
+Check if data is correctly stored without race conditions.
+4. Implementing the Test
+I'll now generate a test script that:
+
+Runs prepare_akashic_records() both synchronously and in a thread.
+Checks global array values.
+Logs potential errors or race conditions.
+
+
+[# JSH Ethereal Engine]=[pending]=[check all variants]
+
+
+here is human interaction
+
+some code is loading
+
+[# JSH Ethereal Engine]=[pending]=[check all variants]
+
+extends Node
+
+var test_results = {}
+
+func _ready():
+    print("Starting test for prepare_akashic_records...")
+    
+    test_single_core()
+    test_multi_threaded()
+    print("Test completed. Results:")
+    print(test_results)
+
+
+func test_single_core():
+    print("Running single-core test...")
+    
+    # Ensure a clean state before running
+    array_of_startup_check.clear()
+    prepare_akashic_records()
+    
+    # Check if values were stored
+    test_results["single_core"] = {
+        "array_size": array_of_startup_check.size(),
+        "first_start_check": array_of_startup_check[0] if array_of_startup_check.size() > 0 else "missing",
+        "akashic_records_included": "akashic_records" in array_of_startup_check[1] if array_of_startup_check.size() > 1 else "missing",
+        "main_sets_names": array_of_startup_check[2] if array_of_startup_check.size() > 2 else "missing"
+    }
+    
+    print("Single-core test finished.")
+
+
+func test_multi_threaded():
+    print("Running multi-threaded test...")
+    
+    # Reset for thread test
+    array_of_startup_check.clear()
+    
+    var task_tag = "test_prepare_akashic_records"
+    thread_pool.submit_task(self, "prepare_akashic_records", null, task_tag)
+    
+    # Wait briefly for thread execution
+    await get_tree().create_timer(1.0).timeout
+    
+    # Validate results after multi-threading
+    test_results["multi_threaded"] = {
+        "array_size": array_of_startup_check.size(),
+        "first_start_check": array_of_startup_check[0] if array_of_startup_check.size() > 0 else "missing",
+        "akashic_records_included": "akashic_records" in array_of_startup_check[1] if array_of_startup_check.size() > 1 else "missing",
+        "main_sets_names": array_of_startup_check[2] if array_of_startup_check.size() > 2 else "missing"
+    }
+    
+    print("Multi-threaded test finished.")
+
+
+[# JSH Ethereal Engine]=[pending]=[check all variants]
+
+so now i can copy paste things
+
+[# JSH Ethereal Engine]=[pending]=[check all variants]
+these functions to main
+
+in part
+
+# JSH Ethereal Engine Start up
+
+
+func test_single_core():
+func test_multi_threaded():
+
+[# JSH Ethereal Engine]=[pending]=[check all variants]
+
+hmm we are missing "test_results"
+
+array_of_startup_check
+
+do we wanna use that one?
+
+[# JSH Ethereal Engine]=[pending]=[check all variants]
+
+list of files were updated, new file was added
+
+list_of_files_update_0.txt
+
+
+[# JSH Ethereal Engine]=[pending]=[check all variants]
+
+# JSH Ethereal Engine
+
+added new global var
+
+var test_results: Dictionary = {}
+
+[# JSH Ethereal Engine]=[pending]=[check all variants]
+
+
+trying to run
+
+[# JSH Ethereal Engine]=[pending]=[check all variants]
+
+error
+
+func test_multi_threaded():
+
+
+	thread_pool.submit_task(self, "prepare_akashic_records", null, task_tag)
+
+calling a function with null?
+
+func prepare_akashic_records():
+
+function is without input
+
+check thread_pool.gd
+
+few lines
+
+## This function submits a task for execution.[br]
+## [br]Argument [param instance] is the object where task will execute, [param method] is the function to call on the task, [param parameter] is the argument passed to the function being called, and [param task_tag] can be used to help identify this task later.
+## [br][br]This is equivalent to calling [code]instance.call(method, parameter)[/code], see [method Object.call].
+func submit_task(instance: Object, method: String, parameter, task_tag = null) -> void:
+	__enqueue_task(instance, method, parameter, task_tag, false, false)
+	call_deferred("emit_signal", "task_started", task_tag)
+
+
+## This function also submits a task for execution, useful for tasks without parameters.[br]
+## [br]This is equivalent to calling [code]instance.call(method)[/code], see [method Object.call].
+func submit_task_unparameterized(instance: Object, method: String, task_tag = null) -> void:
+	__enqueue_task(instance, method, null, task_tag, true, false)
+	call_deferred("emit_signal", "task_started", task_tag)
+
+
+## Yet another function to submit a task for execution, useful for tasks with many parameters.[br]
+## [br]This is equivalent to calling [code]instance.callv(method, parameter)[/code], see [method Object.callv].
+func submit_task_array_parameterized(instance: Object, method: String, parameter: Array, task_tag = null) -> void:
+	__enqueue_task(instance, method, parameter, task_tag, false, true)
+	call_deferred("emit_signal", "task_started", task_tag)
+
+
+submit_task = func submit_task(instance: Object, method: String, parameter, task_tag = null) -> void:
+
+we probably need to use different one :
+
+## This function also submits a task for execution, useful for tasks without parameters.[br]
+## [br]This is equivalent to calling [code]instance.call(method)[/code], see [method Object.call].
+func submit_task_unparameterized(instance: Object, method: String, task_tag = null) -> void:
+	__enqueue_task(instance, method, null, task_tag, true, false)
+	call_deferred("emit_signal", "task_started", task_tag)
+
+
+
+[# JSH Ethereal Engine]=[pending]=[check all variants]
+
+
+the console print after that error :
+
+Godot Engine v4.3.stable.official.77dcf97d8 - https://godotengine.org
+Vulkan 1.3.277 - Forward+ - Using Device #0: NVIDIA - Quadro RTX 3000
+
+ ready on each script ? 0 thread_pool.gd
+ main.gd print tree pretty init 
+ ┖╴
+
+ main.gd print tree pretty should end here
+ stuck status it is string 
+ stuck status something went wrong, starting verified timer error
+ ready on each script ? 1 maing.gd 
+ stuck status it is string 
+ stuck status something went wrong, starting verified timer error
+ stuck status Timer started at OS time: 1457
+ timer check  first we need a screen, and light state : pending
+ timer check  state now : started
+before_blimp_time : 1457
+ past_deltas_memories : []
+ stored_delta_memory : []
+ these two should be normalized too i guess 
+
+ check basic if we allign with prophecies of wisest spirits, do we unlock before it is too late 
+ how_many_shall_been_finished : 0
+ how_many_finished : 0
+
+ timer check omething went wrong, use a timer
+ timer check 0: @Node@2:<Node#32732349760>
+ timer check 0
+ timer check  0stuff to do :: thread statuses : error
+ timer check  1stuff to do :: thread statuses : error
+ timer check  stuff to do :: mutex statuses : [true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true], stuck_status threads status : error and main sets to create["started", [["akashic_records"], ["base"], ["menu"]], { "base_": 1, "menu_": 1, "settings_": 1, "keyboard_": 1, "keyboard_left_": 1, "keyboard_right_": 1, "things_creation_": 2, "singular_lines_": 8 }]
+ ready on each script ? 4
+ ready on each script ? new system_check.gd 
+ main.gd print tree pretty ready 
+ ┖╴main
+    ┠╴@Node@2
+    ┃  ┠╴@Timer@3
+    ┃  ┖╴@Timer@4
+    ┠╴sphere
+    ┃  ┠╴pointers
+    ┃  ┃  ┠╴cursor_mouse
+    ┃  ┃  ┠╴cursor_left
+    ┃  ┃  ┠╴cursor_right
+    ┃  ┃  ┠╴cursor_head
+    ┃  ┃  ┖╴cursor_body
+    ┃  ┠╴cameramove
+    ┃  ┃  ┖╴TrackballCamera
+    ┃  ┃     ┠╴CameraMover
+    ┃  ┃     ┖╴light
+    ┃  ┖╴godot_model
+    ┠╴WorldEnvironment
+    ┠╴system_check
+    ┠╴godot_timers_system
+    ┠╴godot_tree_system
+    ┠╴JSH_records_system
+    ┠╴JSH_scene_tree_system
+    ┠╴JSH_database_system
+    ┠╴JSH_queue_system
+    ┠╴JSH_turns_system
+    ┠╴JSH_cache_memory_system
+    ┠╴JSH_akashic_records
+    ┠╴JSH_multiplayer_files
+    ┖╴JSH_mainframe_database
+
+ main.gd print tree pretty should end here
+ delta message start [true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true]
+_ready : Project Eden, ver : new dictionaries of data sendin and cachin
+ prepare_basic operation before creation 
+
+Thread Pool Status:
+Thread 0:
+  Status: initialized (for 1ms)
+  Tasks Completed: 0
+Thread 1:
+  Status: initialized (for 1ms)
+  Tasks Completed: 0
+Thread 2:
+  Status: initialized (for 1ms)
+  Tasks Completed: 0
+Thread 3:
+  Status: initialized (for 1ms)
+  Tasks Completed: 0
+Thread 4:
+  Status: initialized (for 1ms)
+  Tasks Completed: 0
+Thread 5:
+  Status: initialized (for 1ms)
+  Tasks Completed: 0
+Thread 6:
+  Status: initialized (for 1ms)
+  Tasks Completed: 0
+Thread 7:
+  Status: initialized (for 1ms)
+  Tasks Completed: 0
+
+Summary:
+Total Threads: 8
+Executing: 0
+Stuck: 0
+ stuck status it is string 
+ stuck status it is not error, it is :::working
+
+Thread Pool Status:
+Thread 0:
+  Status: initialized (for 1ms)
+  Tasks Completed: 0
+Thread 1:
+  Status: initialized (for 1ms)
+  Tasks Completed: 0
+Thread 2:
+  Status: initialized (for 1ms)
+  Tasks Completed: 0
+Thread 3:
+  Status: initialized (for 1ms)
+  Tasks Completed: 0
+Thread 4:
+  Status: initialized (for 1ms)
+  Tasks Completed: 0
+Thread 5:
+  Status: initialized (for 1ms)
+  Tasks Completed: 0
+Thread 6:
+  Status: initialized (for 1ms)
+  Tasks Completed: 0
+Thread 7:
+  Status: initialized (for 1ms)
+  Tasks Completed: 0
+
+Summary:
+Total Threads: 8
+Executing: 0
+Stuck: 0
+ stuck status ::: 8 :::: working
+Settings loaded: user://settings.txt
+Main directory: D:/Eden
+Settings path: akashic_records
+File name: settings.txt
+Last thing number: 0
+Available directory: C:/
+
+Thread Pool Status:
+Thread 0:
+  Status: initialized (for 2ms)
+  Tasks Completed: 0
+Thread 1:
+  Status: initialized (for 2ms)
+  Tasks Completed: 0
+Thread 2:
+  Status: initialized (for 2ms)
+  Tasks Completed: 0
+Thread 3:
+  Status: initialized (for 2ms)
+  Tasks Completed: 0
+Thread 4:
+  Status: initialized (for 2ms)
+  Tasks Completed: 0
+Thread 5:
+  Status: initialized (for 2ms)
+  Tasks Completed: 0
+Thread 6:
+  Status: initialized (for 2ms)
+  Tasks Completed: 0
+Thread 7:
+  Status: initialized (for 2ms)
+  Tasks Completed: 0
+
+Summary:
+Total Threads: 8
+Executing: 0
+Stuck: 0
+ stuck status it is string 
+ stuck status it is not error, it is :::working
+
+Thread Pool Status:
+Thread 0:
+  Status: initialized (for 3ms)
+  Tasks Completed: 0
+Thread 1:
+  Status: initialized (for 3ms)
+  Tasks Completed: 0
+Thread 2:
+  Status: initialized (for 3ms)
+  Tasks Completed: 0
+Thread 3:
+  Status: initialized (for 3ms)
+  Tasks Completed: 0
+Thread 4:
+  Status: initialized (for 3ms)
+  Tasks Completed: 0
+Thread 5:
+  Status: initialized (for 3ms)
+  Tasks Completed: 0
+Thread 6:
+  Status: initialized (for 3ms)
+  Tasks Completed: 0
+Thread 7:
+  Status: initialized (for 3ms)
+  Tasks Completed: 0
+
+Summary:
+Total Threads: 8
+Executing: 0
+Stuck: 0
+ stuck status ::: 8 :::: working
+
+Thread Pool Status:
+Thread 0:
+  Status: initialized (for 3ms)
+  Tasks Completed: 0
+Thread 1:
+  Status: initialized (for 3ms)
+  Tasks Completed: 0
+Thread 2:
+  Status: initialized (for 3ms)
+  Tasks Completed: 0
+Thread 3:
+  Status: initialized (for 3ms)
+  Tasks Completed: 0
+Thread 4:
+  Status: initialized (for 3ms)
+  Tasks Completed: 0
+Thread 5:
+  Status: initialized (for 3ms)
+  Tasks Completed: 0
+Thread 6:
+  Status: initialized (for 3ms)
+  Tasks Completed: 0
+Thread 7:
+  Status: initialized (for 3ms)
+  Tasks Completed: 0
+
+Summary:
+Total Threads: 8
+Executing: 0
+Stuck: 0
+ stuck status it is string 
+ stuck status it is not error, it is :::working
+
+Thread Pool Status:
+Thread 0:
+  Status: initialized (for 3ms)
+  Tasks Completed: 0
+Thread 1:
+  Status: initialized (for 3ms)
+  Tasks Completed: 0
+Thread 2:
+  Status: initialized (for 3ms)
+  Tasks Completed: 0
+Thread 3:
+  Status: initialized (for 3ms)
+  Tasks Completed: 0
+Thread 4:
+  Status: initialized (for 3ms)
+  Tasks Completed: 0
+Thread 5:
+  Status: initialized (for 3ms)
+  Tasks Completed: 0
+Thread 6:
+  Status: initialized (for 3ms)
+  Tasks Completed: 0
+Thread 7:
+  Status: initialized (for 3ms)
+  Tasks Completed: 0
+
+Summary:
+Total Threads: 8
+Executing: 0
+Stuck: 0
+ stuck status ::: 8 :::: working
+ delta message start we start three stage sof creation 
+ delta message start we start three stage sof creation well, both went theirs ways 
+Starting test for prepare_akashic_records...
+Running single-core test...
+ timer check  first we need a screen, and light state : started
+ timer check  state now : started
+
+Thread Pool Status:
+Thread 0:
+  Status: initialized (for 4ms)
+  Tasks Completed: 0
+Thread 1:
+  Status: initialized (for 4ms)
+  Tasks Completed: 0
+Thread 2:
+  Status: initialized (for 4ms)
+  Tasks Completed: 0
+Thread 3:
+  Status: initialized (for 4ms)
+  Tasks Completed: 0
+Thread 4:
+  Status: initialized (for 4ms)
+  Tasks Completed: 0
+Thread 5:
+  Status: initialized (for 4ms)
+  Tasks Completed: 0
+Thread 6:
+  Status: initialized (for 4ms)
+  Tasks Completed: 0
+Thread 7:
+  Status: initialized (for 4ms)
+  Tasks Completed: 0
+
+Summary:
+Total Threads: 8
+Executing: 0
+Stuck: 0
+before_blimp_time : 1472
+ past_deltas_memories : []
+ stored_delta_memory : []
+ these two should be normalized too i guess 
+
+ check basic if we allign with prophecies of wisest spirits, do we unlock before it is too late 
+ how_many_shall_been_finished : 0
+ how_many_finished : 0
+
+ timer check  stuff to do :: mutex statuses : [true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true], stuck_status threads status : working and main sets to create["started", [["akashic_records"], ["base"], ["menu"]], { "base_": 1, "menu_": 1, "settings_": 1, "keyboard_": 1, "keyboard_left_": 1, "keyboard_right_": 1, "things_creation_": 2, "singular_lines_": 8 }]
+Single-core test finished.
+Running multi-threaded test...
+Test completed. Results:
+{ "single_core": { "array_size": 3, "first_start_check": "started", "akashic_records_included": false, "main_sets_names": { "base_": 1, "menu_": 1, "settings_": 1, "keyboard_": 1, "keyboard_left_": 1, "keyboard_right_": 1, "things_creation_": 2, "singular_lines_": 8 } } }
+task_startedtest_prepare_akashic_records
+ this is blimp of each tick : 1486
+ time of each turn delta 
+ this is blimp of each tick : 1491
+ time of each turn delta 
+ this is blimp of each tick : 1492
+ time of each turn delta 
+ this is blimp of each tick : 1493
+ time of each turn delta 
+ this is blimp of each tick : 1499
+ time of each turn delta 
+ this is blimp of each tick : 1515
+ time of each turn delta 
+ this is blimp of each tick : 1536
+ time of each turn delta 
+before_blimp_time : 1536
+ past_deltas_memories : []
+ stored_delta_memory : [1486, 1491, 1492, 1493, 1499, 1515, 1536]
+ these two should be normalized too i guess 
+
+ check basic if we allign with prophecies of wisest spirits, do we unlock before it is too late 
+ how_many_shall_been_finished : 1
+ how_many_finished : 0
+
+ something does not add upp 0 is maybe probably bigger, maybe smaller, hmm numbers < < > > which way != == ? 1
+ how_many_shall_been_finished - how_many_shall_been_finished -1
+ in reverse maybe ? 1
+ it is not the first tine  i guess : [0, 2, 2, 0, 0, 2, 2, 0, 0, 2, 2, 0, 0, 2, 2, 0, 0, 2, 2, 0, 0 
+ hmm 0220 0220 0220, like an sos or something ?
+0
+ Task completion check - Started: 1 Finished: 0
+
+ allah akbar, end : list_of_containers {  }
+ delta message start hmm we check if we can push further  
+ we check em again, are they stuck?
+ elquadromadro trying to figure out random problems 
+
+Thread Pool Status:
+Thread 0:
+  Status: executing (for 63ms)
+  Tasks Completed: 0
+  Current Task: prepare_akashic_records
+  Task Args: <null>
+Thread 1:
+  Status: waiting (for 63ms)
+  Tasks Completed: 0
+Thread 2:
+  Status: waiting (for 63ms)
+  Tasks Completed: 0
+Thread 3:
+  Status: waiting (for 63ms)
+  Tasks Completed: 0
+Thread 4:
+  Status: waiting (for 63ms)
+  Tasks Completed: 0
+Thread 5:
+  Status: waiting (for 63ms)
+  Tasks Completed: 0
+Thread 6:
+  Status: waiting (for 63ms)
+  Tasks Completed: 0
+Thread 7:
+  Status: waiting (for 63ms)
+  Tasks Completed: 0
+
+Summary:
+Total Threads: 8
+Executing: 1
+Stuck: 0
+ - Process state check:
+ - Containers: {  }
+ - also container size : 0
+ - potential first container not appearing from task, better to abort the mission, and restart the creation
+ - task_status : { "test_prepare_akashic_records": { "start_time": 1481, "status": "pending", "retries": 0, "error_count": 0 } }
+ - the first start data : []
+ - Container states: {  }
+ - Mutex states: [true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true]
+ - Unhandled errors: []
+ - stuck_status: working
+
+
+[# JSH Ethereal Engine]=[pending]=[check all variants]
+
+
+fix line with different thread pool function
+
+thread_pool.submit_task_unparameterized(self, "prepare_akashic_records", task_tag)
+
+
+[# JSH Ethereal Engine]=[pending]=[check all variants]
+
+
+Analysis and Fixes for Test Execution Issues
+✅ 1. test_results Global Variable Added
+Successfully added:
+gdscript
+Kopiuj
+Edytuj
+var test_results: Dictionary = {}
+This ensures structured logging of test outputs.
+❌ 2. test_multi_threaded() Error with submit_task()
+Issue: thread_pool.submit_task(self, "prepare_akashic_records", null, task_tag)
+The function prepare_akashic_records() does not take parameters, yet submit_task() expects one.
+Solution:
+Instead of submit_task(), use submit_task_unparameterized() for functions without parameters.
+Fix:
+
+gdscript
+Kopiuj
+Edytuj
+thread_pool.submit_task_unparameterized(self, "prepare_akashic_records", task_tag)
+✅ 3. Thread Pool Status Looks Good
+Console shows 8 threads initialized:
+yaml
+Kopiuj
+Edytuj
+Summary:
+Total Threads: 8
+Executing: 0
+Stuck: 0
+After running the test, prepare_akashic_records is executing on Thread 0, while others are waiting:
+yaml
+Kopiuj
+Edytuj
+Thread 0:
+  Status: executing (for 63ms)
+  Tasks Completed: 0
+  Current Task: prepare_akashic_records
+  Task Args: <null>
+No stuck threads—good!
+❌ 4. First Container Not Appearing
+Error in logs:
+pgsql
+Kopiuj
+Edytuj
+- potential first container not appearing from task, better to abort the mission, and restart the creation
+Possible causes:
+The first-time startup sequence may not be completing.
+akashic_records, base, menu might not be initialized before function execution.
+Thread timing could cause a race condition (task executes before dependencies are ready).
+Fix Options:
+
+Option 1: Ensure all required sets exist before executing the test.
+gdscript
+Kopiuj
+Edytuj
+if "akashic_records" not in array_of_startup_check:
+    print("❌ ERROR: Akashic Records Not Initialized")
+    return
+Option 2: Implement a retry mechanism in case initialization fails:
+gdscript
+Kopiuj
+Edytuj
+func wait_for_initialization():
+    var max_retries = 5
+    var retries = 0
+    while retries < max_retries:
+        if "akashic_records" in array_of_startup_check:
+            return true
+        print("⏳ Waiting for Akashic Records...")
+        await get_tree().create_timer(1.0).timeout  # Wait 1 sec
+        retries += 1
+    return false
+❌ 5. Task test_prepare_akashic_records Still Pending
+Log output:
+css
+Kopiuj
+Edytuj
+- task_status : { "test_prepare_akashic_records": { "start_time": 1481, "status": "pending", "retries": 0, "error_count": 0 } }
+Issue: The task is not completing or failing to return results.
+Fix:
+Modify prepare_akashic_records() to explicitly log its completion.
+gdscript
+Kopiuj
+Edytuj
+func prepare_akashic_records():
+    print("✅ Akashic Records Preparation Started")
+    # (Existing logic)
+    test_results["prepare_akashic_records"] = "Completed"
+    print("✅ Akashic Records Preparation Finished")
+🚀 Next Steps
+✅ Use submit_task_unparameterized() to fix the task submission error.
+🔄 Check if akashic_records is initialized before running tests.
+🔍 Implement retry logic to wait for initialization before proceeding.
+📊 Modify prepare_akashic_records() to ensure completion is logged.
+Let me know which fixes you want to apply first! 🚀
+
+
+[# JSH Ethereal Engine]=[pending]=[check all variants]
+
+so now my response is, lets take a step back, check what we have so far
+
+
+[# JSH Ethereal Engine]=[pending]=[check all variants]
+
+functions that are connected :
+
+in 
+
+# JSH Hidden Veil
+
+func attempt_creation(set_name: String) -> CreationState:
+	if not is_creation_possible():
+		return CreationState.LOCKED
+		
+	array_mutex_process.lock()
+	list_of_sets_to_create.append(set_name)
+	array_mutex_process.unlock()
+	
+	return CreationState.POSSIBLE
+
+###################
+	match turn_number_process:
+		0:
+			turn_number_process += 1
+			array_mutex_process.lock()
+			if list_of_sets_to_create.size() > 0:
+				process_stages()
+				array_mutex_process.unlock()
+			else:
+				array_mutex_process.unlock()
+
+
+
+#####################
+		1:
+			turn_number_process += 1
+			
+			mutex_nodes_to_be_added.lock()
+			if nodes_to_be_added.size() > 0:
+				for i in range(min(max_nodes_added_per_cycle, nodes_to_be_added.size())):
+					var data_to_process = nodes_to_be_added.pop_front()
+					var data_type = data_to_process[0]
+					match data_type:
+						0:
+							var container_to_add = data_to_process[2]
+							var container_name = data_to_process[1]
+							
+							add_child(container_to_add)
+							
+							var just_added_node = get_node(container_name)
+							if just_added_node:
+								#print(" just adde dnode 0 : ", just_added_node)
+								var data_to_be_checked : Array = []
+								data_to_be_checked.append([container_name, container_name, just_added_node])
+								create_new_task("the_finisher_for_nodes", data_to_be_checked)
+							else:
+								nodes_to_be_added.append(data_to_process)
+								print(" ERROR container was not found ")
+
+######################
+		2:
+			turn_number_process += 1
+			mutex_data_to_send.lock()
+			
+			if data_to_be_send.size() > 0:
+				for i in range(min(max_data_send_per_cycle, data_to_be_send.size())):
+					var data_to_be_send_rn = data_to_be_send.pop_front()
+					var current_type_of_data = data_to_be_send_rn[0]
+					var datapoint_path_cur = data_to_be_send_rn[1]
+					match current_type_of_data:
+						"instructions_analiser":
+							var container_path_rn = data_to_be_send_rn[2]
+							var container_node_rn = get_node(container_path_rn)
+							if container_node_rn:
+								var datapoint_node_rn = get_node(datapoint_path_cur)
+								if datapoint_node_rn:
+									var array_of_data_for_threes : Array = []
+									array_of_data_for_threes.append([current_type_of_data, data_to_be_send_rn[3].duplicate(true), data_to_be_send_rn[4].duplicate(true), datapoint_node_rn, container_node_rn])
+									create_new_task("task_to_send_data_to_datapoint", array_of_data_for_threes)
+								else:
+									print(" we didnt find the datapoint we must append stuff ")
+									data_to_be_send.append(data_to_be_send_rn)
+							else:
+								print(" we didnt get container, we must append ")
+								data_to_be_send.append(data_to_be_send_rn)
+
+
+#####################
+
+		5:
+			
+			turn_number_process += 1
+			
+			mutex_function_call.lock()
+			if functions_to_be_called.size() > 0:
+				for i in range(min(max_functions_called_per_cycle, functions_to_be_called.size())):
+					var data_to_process = functions_to_be_called.pop_front()
+					var type_of_functi = data_to_process[0]
+					var node_to_call = data_to_process[1]
+					var function_name = data_to_process[2]
+					match type_of_functi:
+						"single_function":
+							if node_to_call and node_to_call.has_method(function_name):
+								node_to_call.call(function_name)
+						"call_function_get_node":
+							var function_data = data_to_process[3]
+							var node_to_call_now = get_node_or_null(node_to_call)
+							#print(" can i atleast print that thing? ", data_to_process)
+							if node_to_call_now and node_to_call_now.has_method(function_name):
+								#print(" well we did get a node?")
+								node_to_call_now.call(function_name, function_data)
+						"call_function_single_get_node":
+							#print()
+							var node_to_call_now = get_node_or_null(node_to_call)
+							if node_to_call_now and node_to_call_now.has_method(function_name):
+								node_to_call_now.call(function_name)
+						"get_nodes_call_function":
+							#print()
+							if data_to_process.size() > 3:
+								var function_data = data_to_process[3]
+								for nodes in node_to_call:
+									var current_node_to_call = get_node_or_null(nodes)
+									if current_node_to_call and current_node_to_call.has_method(function_name):
+										#print( " we got that node, and it has that function, ", function_data)
+										current_node_to_call.call(function_name, function_data)
+							else:
+								print(" parallel reality somehow it is small size?")
+								
+							#node_to_call_now.call(function_name, function_data)
+							
+			mutex_function_call.unlock()
+
+###################
+
+
+here i think it is how we want to add things too? the sets? records?
+
+# Check if creation is possible based on input
+func whip_out_set_by_its_name(set_name_to_test) -> CreationStatus:
+	# Input validation
+	if not set_name_to_test is String:
+		print("Invalid input type for set_name_to_test: ", typeof(set_name_to_test))
+		return CreationStatus.INVALID_INPUT
+		
+	if set_name_to_test.is_empty():
+		print("Set name cannot be empty")
+		return CreationStatus.INVALID_INPUT
+	
+	# Check if creation is possible (add your conditions)
+	if not is_creation_possible():
+		print("Creation not possible at this time")
+		return CreationStatus.LOCKED
+		
+	# Attempt creation
+	var task_result = create_new_task("three_stages_of_creation", set_name_to_test)
+	if task_result:
+		return CreationStatus.SUCCESS
+	else:
+		return CreationStatus.ERROR
+
+######################
+
+
+we also have that thing, that was supposed to tell us if creation is posible, probablt needs update too\
+
+
+func is_creation_possible() -> bool:
+	# Quick preliminary checks without mutex locks
+	if thread_pool == null or first_start_check != "started":
+		print("Basic system check failed")
+		return false
+	
+	# Begin mutex-protected checks
+	var creation_allowed := true
+	var block_reason := ""
+	
+	# Check process mutex
+	array_mutex_process.lock()
+	var process_check = list_of_sets_to_create.size() < max_nodes_added_per_cycle
+	array_mutex_process.unlock()
+	
+	if not process_check:
+		creation_allowed = false
+		block_reason = "Creation queue full"
+	
+	# Check container state
+	mutex_for_container_state.lock()
+	var container_check = current_containers_state.size() < max_nodes_added_per_cycle
+	mutex_for_container_state.unlock()
+	
+	if not container_check:
+		creation_allowed = false
+		block_reason = "Container state limit reached"
+	
+	# Check resource availability
+	array_counting_mutex.lock()
+	var resource_check = array_for_counting_finish.size() < max_nodes_added_per_cycle
+	array_counting_mutex.unlock()
+	
+	if not resource_check:
+		creation_allowed = false
+		block_reason = "Resource limit reached"
+	
+	# Check if we're not in error state
+	dictionary_of_mistakes_mutex.lock()
+	var error_check = dictionary_of_mistakes.is_empty()
+	dictionary_of_mistakes_mutex.unlock()
+	
+	if not error_check:
+		creation_allowed = false
+		block_reason = "System has unresolved errors"
+	
+	if not creation_allowed:
+		print("Creation blocked: ", block_reason)
+		
+		# Record the blocking reason if needed
+		dictionary_of_mistakes_mutex.lock()
+		dictionary_of_mistakes[Time.get_ticks_msec()] = {
+			"type": "creation_blocked",
+			"reason": block_reason,
+			"status": "pending"
+		}
+		dictionary_of_mistakes_mutex.unlock()
+	
+	return creation_allowed
+
+#############
+
+
+these too
+
+
+
+
+# Check initialization state
+func check_first_time_status(status_name: String) -> bool:
+	initialization_states.mutex.lock()
+	var status = initialization_states.states.get(status_name)
+	initialization_states.mutex.unlock()
+	return status == true
+
+# Your example usage would now look like this:
+func process_creation_request(set_name: String) -> Dictionary:
+	var result = {
+		"status": CreationStatus.ERROR,
+		"message": "",
+		"timestamp": Time.get_ticks_msec()
+	}
+	
+	# Check if creation is possible
+	if not is_creation_possible():
+		result.status = CreationStatus.LOCKED
+		result.message = "Creation system is not active"
+		return result
+	
+	# Attempt creation
+	var creation_result = whip_out_set_by_its_name(set_name)
+	match creation_result:
+		CreationStatus.SUCCESS:
+			result.status = CreationStatus.SUCCESS
+			result.message = "Set created successfully"
+		CreationStatus.ERROR:
+			record_mistake({
+				"type": "creation_error",
+				"set_name": set_name,
+				"error": "Creation failed"
+			})
+			result.message = "Failed to create set"
+		_:
+			result.message = "Unexpected creation status"
+	
+	return result
+
+#########
+
+here we have tested and working function caller for multi threads, worked so far
+
+# creating new tasks, also punishing mortals 
+func create_new_task(function_name: String, data):
+	var new_data_way = str(data)
+	# if data is array, if is string, if is int
+	var task_tag = function_name + "|" + new_data_way + "|" + str(Time.get_ticks_msec())
+	thread_pool.submit_task(self, function_name, data, task_tag)
+
+#############
+
+
+[# JSH Ethereal Engine]=[pending]=[check all variants]
+
+Claude smoke break is over xD
+
+kurwa fatal error in my head
+
+damn
+
+I'll help organize and fix the initialization and task management systems. From the logs and code, there are a few key issues to address:
+
+First-time Initialization:
+
+so that function
+
+func test_single_core():
+
+needs update, i have it already, why wasnt it good enough from the start? normally it is, in world of dreams and world of times
+
+its time to update and upgrade, by hands
+
+kind done i guess
+
+Multi-threaded Task:
+
+oh i had it, we changed a line there
+
+func test_multi_threaded():
+
+hmmm
+
+func test_multi_threaded():
+    array_of_startup_check.clear()
+    
+    var task_tag = "test_prepare_akashic_records"
+    thread_pool.submit_task_unparameterized(self, "prepare_akashic_records", task_tag)
+    
+    await monitor_task_completion(task_tag)
+
+it got word await, that word can break things, i will leave it as it was, just change a line 
+
+thread_pool.submit_task_unparameterized(self, "prepare_akashic_records", task_tag)
+
+here
+
+damn this one have await too?
+
+func monitor_task_completion(task_tag: String, timeout: float = 5.0):
+    var start_time = Time.get_ticks_msec()
+    while Time.get_ticks_msec() - start_time < timeout * 1000:
+        if task_status.has(task_tag) and task_status[task_tag].status == "completed":
+            return true
+        await get_tree().create_timer(0.1).timeout
+    return false
+
+i wont add that function, i am scared and afraid of await thing, i wanna have my own clocks
+
+so instead of await
+
+we shall just check all tasks, to be done anyway? and if it isnt the first time where we checked that task, we move it to next list?
+
+0 = task started
+1 = task was checked before
+2 = task is fisnished
+
+these states of specific task shall be monitored too
+
+if it is first time, that task, was finished
+
+not by tag, we dont need time and what we put inside 
+
+maybe what we put inside, goes to different database?
+
+i dunno yet
+
+we must test stuff still 
+
+
+[# JSH Ethereal Engine]=[pending]=[check all variants]
+
+so i guess i will run that project again, and we figure out if something new happens
+
+
+[# JSH Ethereal Engine]=[pending]=[check all variants]
+
+Godot Engine v4.3.stable.official.77dcf97d8 - https://godotengine.org
+Vulkan 1.3.277 - Forward+ - Using Device #0: NVIDIA - Quadro RTX 3000
+
+ ready on each script ? 0 thread_pool.gd
+ main.gd print tree pretty init 
+ ┖╴
+
+ main.gd print tree pretty should end here
+ stuck status it is string 
+ stuck status something went wrong, starting verified timer error
+ ready on each script ? 1 maing.gd 
+ stuck status it is string 
+ stuck status something went wrong, starting verified timer error
+ stuck status Timer started at OS time: 1412
+ timer check  first we need a screen, and light state : pending
+ timer check  state now : started
+before_blimp_time : 1412
+ past_deltas_memories : []
+ stored_delta_memory : []
+ these two should be normalized too i guess 
+
+ check basic if we allign with prophecies of wisest spirits, do we unlock before it is too late 
+ how_many_shall_been_finished : 0
+ how_many_finished : 0
+
+ timer check omething went wrong, use a timer
+ timer check 0: @Node@2:<Node#32732349760>
+ timer check 0
+ timer check  0stuff to do :: thread statuses : error
+ timer check  1stuff to do :: thread statuses : error
+ timer check  stuff to do :: mutex statuses : [true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true], stuck_status threads status : error and main sets to create["started", [["akashic_records"], ["base"], ["menu"]], { "base_": 1, "menu_": 1, "settings_": 1, "keyboard_": 1, "keyboard_left_": 1, "keyboard_right_": 1, "things_creation_": 2, "singular_lines_": 8 }]
+ ready on each script ? 4
+ ready on each script ? new system_check.gd 
+ main.gd print tree pretty ready 
+ ┖╴main
+    ┠╴@Node@2
+    ┃  ┠╴@Timer@3
+    ┃  ┖╴@Timer@4
+    ┠╴sphere
+    ┃  ┠╴pointers
+    ┃  ┃  ┠╴cursor_mouse
+    ┃  ┃  ┠╴cursor_left
+    ┃  ┃  ┠╴cursor_right
+    ┃  ┃  ┠╴cursor_head
+    ┃  ┃  ┖╴cursor_body
+    ┃  ┠╴cameramove
+    ┃  ┃  ┖╴TrackballCamera
+    ┃  ┃     ┠╴CameraMover
+    ┃  ┃     ┖╴light
+    ┃  ┖╴godot_model
+    ┠╴WorldEnvironment
+    ┠╴system_check
+    ┠╴godot_timers_system
+    ┠╴godot_tree_system
+    ┠╴JSH_records_system
+    ┠╴JSH_scene_tree_system
+    ┠╴JSH_database_system
+    ┠╴JSH_queue_system
+    ┠╴JSH_turns_system
+    ┠╴JSH_cache_memory_system
+    ┠╴JSH_akashic_records
+    ┠╴JSH_multiplayer_files
+    ┖╴JSH_mainframe_database
+
+ main.gd print tree pretty should end here
+ delta message start [true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true]
+_ready : Project Eden, ver : new dictionaries of data sendin and cachin
+ prepare_basic operation before creation 
+
+Thread Pool Status:
+Thread 0:
+  Status: initialized (for 1ms)
+  Tasks Completed: 0
+Thread 1:
+  Status: initialized (for 1ms)
+  Tasks Completed: 0
+Thread 2:
+  Status: initialized (for 1ms)
+  Tasks Completed: 0
+Thread 3:
+  Status: initialized (for 1ms)
+  Tasks Completed: 0
+Thread 4:
+  Status: initialized (for 1ms)
+  Tasks Completed: 0
+Thread 5:
+  Status: initialized (for 1ms)
+  Tasks Completed: 0
+Thread 6:
+  Status: initialized (for 1ms)
+  Tasks Completed: 0
+Thread 7:
+  Status: initialized (for 1ms)
+  Tasks Completed: 0
+
+Summary:
+Total Threads: 8
+Executing: 0
+Stuck: 0
+ stuck status it is string 
+ stuck status it is not error, it is :::working
+
+Thread Pool Status:
+Thread 0:
+  Status: initialized (for 1ms)
+  Tasks Completed: 0
+Thread 1:
+  Status: initialized (for 1ms)
+  Tasks Completed: 0
+Thread 2:
+  Status: initialized (for 1ms)
+  Tasks Completed: 0
+Thread 3:
+  Status: initialized (for 1ms)
+  Tasks Completed: 0
+Thread 4:
+  Status: initialized (for 1ms)
+  Tasks Completed: 0
+Thread 5:
+  Status: initialized (for 1ms)
+  Tasks Completed: 0
+Thread 6:
+  Status: initialized (for 1ms)
+  Tasks Completed: 0
+Thread 7:
+  Status: initialized (for 1ms)
+  Tasks Completed: 0
+
+Summary:
+Total Threads: 8
+Executing: 0
+Stuck: 0
+ stuck status ::: 8 :::: working
+Settings loaded: user://settings.txt
+Main directory: D:/Eden
+Settings path: akashic_records
+File name: settings.txt
+Last thing number: 0
+Available directory: C:/
+
+Thread Pool Status:
+Thread 0:
+  Status: initialized (for 2ms)
+  Tasks Completed: 0
+Thread 1:
+  Status: initialized (for 2ms)
+  Tasks Completed: 0
+Thread 2:
+  Status: initialized (for 2ms)
+  Tasks Completed: 0
+Thread 3:
+  Status: initialized (for 2ms)
+  Tasks Completed: 0
+Thread 4:
+  Status: initialized (for 2ms)
+  Tasks Completed: 0
+Thread 5:
+  Status: initialized (for 2ms)
+  Tasks Completed: 0
+Thread 6:
+  Status: initialized (for 2ms)
+  Tasks Completed: 0
+Thread 7:
+  Status: initialized (for 2ms)
+  Tasks Completed: 0
+
+Summary:
+Total Threads: 8
+Executing: 0
+Stuck: 0
+ stuck status it is string 
+ stuck status it is not error, it is :::working
+
+Thread Pool Status:
+Thread 0:
+  Status: initialized (for 3ms)
+  Tasks Completed: 0
+Thread 1:
+  Status: initialized (for 3ms)
+  Tasks Completed: 0
+Thread 2:
+  Status: initialized (for 3ms)
+  Tasks Completed: 0
+Thread 3:
+  Status: initialized (for 3ms)
+  Tasks Completed: 0
+Thread 4:
+  Status: initialized (for 3ms)
+  Tasks Completed: 0
+Thread 5:
+  Status: initialized (for 3ms)
+  Tasks Completed: 0
+Thread 6:
+  Status: initialized (for 3ms)
+  Tasks Completed: 0
+Thread 7:
+  Status: initialized (for 3ms)
+  Tasks Completed: 0
+
+Summary:
+Total Threads: 8
+Executing: 0
+Stuck: 0
+ stuck status ::: 8 :::: working
+
+Thread Pool Status:
+Thread 0:
+  Status: initialized (for 3ms)
+  Tasks Completed: 0
+Thread 1:
+  Status: initialized (for 3ms)
+  Tasks Completed: 0
+Thread 2:
+  Status: initialized (for 3ms)
+  Tasks Completed: 0
+Thread 3:
+  Status: initialized (for 3ms)
+  Tasks Completed: 0
+Thread 4:
+  Status: initialized (for 3ms)
+  Tasks Completed: 0
+Thread 5:
+  Status: initialized (for 3ms)
+  Tasks Completed: 0
+Thread 6:
+  Status: initialized (for 3ms)
+  Tasks Completed: 0
+Thread 7:
+  Status: initialized (for 3ms)
+  Tasks Completed: 0
+
+Summary:
+Total Threads: 8
+Executing: 0
+Stuck: 0
+ stuck status it is string 
+ stuck status it is not error, it is :::working
+
+Thread Pool Status:
+Thread 0:
+  Status: initialized (for 4ms)
+  Tasks Completed: 0
+Thread 1:
+  Status: initialized (for 4ms)
+  Tasks Completed: 0
+Thread 2:
+  Status: initialized (for 4ms)
+  Tasks Completed: 0
+Thread 3:
+  Status: initialized (for 4ms)
+  Tasks Completed: 0
+Thread 4:
+  Status: initialized (for 4ms)
+  Tasks Completed: 0
+Thread 5:
+  Status: initialized (for 4ms)
+  Tasks Completed: 0
+Thread 6:
+  Status: initialized (for 4ms)
+  Tasks Completed: 0
+Thread 7:
+  Status: initialized (for 4ms)
+  Tasks Completed: 0
+
+Summary:
+Total Threads: 8
+Executing: 0
+Stuck: 0
+ stuck status ::: 8 :::: working
+ delta message start we start three stage sof creation 
+ delta message start we start three stage sof creation well, both went theirs ways 
+Starting test for prepare_akashic_records...
+Running single-core test...
+ timer check  first we need a screen, and light state : started
+ timer check  state now : started
+
+Thread Pool Status:
+Thread 0:
+  Status: initialized (for 4ms)
+  Tasks Completed: 0
+Thread 1:
+  Status: initialized (for 4ms)
+  Tasks Completed: 0
+Thread 2:
+  Status: initialized (for 4ms)
+  Tasks Completed: 0
+Thread 3:
+  Status: initialized (for 4ms)
+  Tasks Completed: 0
+Thread 4:
+  Status: initialized (for 4ms)
+  Tasks Completed: 0
+Thread 5:
+  Status: initialized (for 4ms)
+  Tasks Completed: 0
+Thread 6:
+  Status: initialized (for 4ms)
+  Tasks Completed: 0
+Thread 7:
+  Status: initialized (for 4ms)
+  Tasks Completed: 0
+
+Summary:
+Total Threads: 8
+Executing: 0
+Stuck: 0
+before_blimp_time : 1427
+ past_deltas_memories : []
+ stored_delta_memory : []
+ these two should be normalized too i guess 
+
+ check basic if we allign with prophecies of wisest spirits, do we unlock before it is too late 
+ how_many_shall_been_finished : 0
+ how_many_finished : 0
+
+ timer check  stuff to do :: mutex statuses : [true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true], stuck_status threads status : working and main sets to create["started", [["akashic_records"], ["base"], ["menu"]], { "base_": 1, "menu_": 1, "settings_": 1, "keyboard_": 1, "keyboard_left_": 1, "keyboard_right_": 1, "things_creation_": 2, "singular_lines_": 8 }]
+Single-core test finished.
+Running multi-threaded test...
+Test completed. Results:
+{ "single_core": { "array_size": 3, "first_start_check": "started", "akashic_records_included": false, "main_sets_names": { "base_": 1, "menu_": 1, "settings_": 1, "keyboard_": 1, "keyboard_left_": 1, "keyboard_right_": 1, "things_creation_": 2, "singular_lines_": 8 } } }
+ timer check  first we need a screen, and light state : started
+ timer check  state now : started
+
+Thread Pool Status:
+Thread 0:
+  Status: executing (for 0ms)
+  Tasks Completed: 0
+  Current Task: prepare_akashic_records
+  Task Args: <null>
+Thread 1:
+  Status: initialized (for 5ms)
+  Tasks Completed: 0
+Thread 2:
+  Status: initialized (for 5ms)
+  Tasks Completed: 0
+Thread 3:
+  Status: initialized (for 5ms)
+  Tasks Completed: 0
+Thread 4:
+  Status: initialized (for 5ms)
+  Tasks Completed: 0
+Thread 5:
+  Status: waiting (for 0ms)
+  Tasks Completed: 0
+Thread 6:
+  Status: initialized (for 5ms)
+  Tasks Completed: 0
+Thread 7:
+  Status: started (for 0ms)
+  Tasks Completed: 0
+
+Summary:
+Total Threads: 8
+Executing: 1
+Stuck: 0
+before_blimp_time : 1428
+ past_deltas_memories : []
+ stored_delta_memory : []
+ these two should be normalized too i guess 
+
+ check basic if we allign with prophecies of wisest spirits, do we unlock before it is too late 
+ how_many_shall_been_finished : 0
+ how_many_finished : 0
+
+ timer check  stuff to do :: mutex statuses : [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false], stuck_status threads status : working and main sets to create["started", [["akashic_records"], ["base"], ["menu"]], { "base_": 1, "menu_": 1, "settings_": 1, "keyboard_": 1, "keyboard_left_": 1, "keyboard_right_": 1, "things_creation_": 2, "singular_lines_": 8 }]
+task_startedtest_prepare_akashic_records
+ thread pool connect task discarded
+ taskkkkk : prepare_akashic_records
+ this is blimp of each tick : 1442
+ time of each turn delta 
+ this is blimp of each tick : 1446
+ time of each turn delta 
+ this is blimp of each tick : 1447
+ time of each turn delta 
+ this is blimp of each tick : 1448
+ time of each turn delta 
+ this is blimp of each tick : 1450
+ time of each turn delta 
+ this is blimp of each tick : 1465
+ time of each turn delta 
+ this is blimp of each tick : 1482
+ time of each turn delta 
+before_blimp_time : 1482
+ past_deltas_memories : []
+ stored_delta_memory : [1442, 1446, 1447, 1448, 1450, 1465, 1482]
+ these two should be normalized too i guess 
+
+ check basic if we allign with prophecies of wisest spirits, do we unlock before it is too late 
+ how_many_shall_been_finished : 1
+ how_many_finished : 1
+
+0
+ this is blimp of each tick : 1499
+ time of each turn delta 
+ this is blimp of each tick : 1514
+ time of each turn delta 
+ lets start erasin from here 
+ last_delta_to_forget : 1442
+ this is blimp of each tick : 1531
+ time of each turn delta 
+ lets start erasin from here 
+ last_delta_to_forget : 1446
+ this is blimp of each tick : 1547
+ time of each turn delta 
+ lets start erasin from here 
+ last_delta_to_forget : 1447
+ this is blimp of each tick : 1564
+ time of each turn delta 
+ lets start erasin from here 
+ last_delta_to_forget : 1448
+ this is blimp of each tick : 1581
+ time of each turn delta 
+ lets start erasin from here 
+ last_delta_to_forget : 1450
+ this is blimp of each tick : 1614
+ time of each turn delta 
+ lets start erasin from here 
+ last_delta_to_forget : 1465
+ this is blimp of each tick : 1648
+ time of each turn delta 
+ lets start erasin from here 
+ last_delta_to_forget : 1482
+ this is blimp of each tick : 1665
+ time of each turn delta 
+ lets start erasin from here 
+ last_delta_to_forget : 1499
+ this is blimp of each tick : 1681
+ time of each turn delta 
+before_blimp_time : 1681
+ past_deltas_memories : []
+ stored_delta_memory : [1514, 1531, 1547, 1564, 1581, 1614, 1648, 1665, 1681]
+ these two should be normalized too i guess 
+
+ check basic if we allign with prophecies of wisest spirits, do we unlock before it is too late 
+ how_many_shall_been_finished : 1
+ how_many_finished : 1
+
+0
+ lets start erasin from here 
+ last_delta_to_forget : 1514
+ this is blimp of each tick : 1698
+ time of each turn delta 
+ lets start erasin from here 
+ last_delta_to_forget : 1531
+ this is blimp of each tick : 1715
+ time of each turn delta 
+ lets start erasin from here 
+ last_delta_to_forget : 1547
+ this is blimp of each tick : 1731
+ time of each turn delta 
+ lets start erasin from here 
+ last_delta_to_forget : 1564
+ this is blimp of each tick : 1748
+ time of each turn delta 
+ lets start erasin from here 
+ last_delta_to_forget : 1581
+ this is blimp of each tick : 1764
+ time of each turn delta 
+ lets start erasin from here 
+ last_delta_to_forget : 1614
+ this is blimp of each tick : 1781
+ time of each turn delta 
+ lets start erasin from here 
+ last_delta_to_forget : 1648
+ this is blimp of each tick : 1798
+ time of each turn delta 
+ lets start erasin from here 
+ last_delta_to_forget : 1665
+ this is blimp of each tick : 1815
+ time of each turn delta 
+ lets start erasin from here 
+ last_delta_to_forget : 1681
+ this is blimp of each tick : 1831
+ time of each turn delta 
+ lets start erasin from here 
+ last_delta_to_forget : 1698
+ this is blimp of each tick : 1848
+ time of each turn delta 
+before_blimp_time : 1848
+ past_deltas_memories : []
+ stored_delta_memory : [1715, 1731, 1748, 1764, 1781, 1798, 1815, 1831, 1848]
+ these two should be normalized too i guess 
+
+ check basic if we allign with prophecies of wisest spirits, do we unlock before it is too late 
+ how_many_shall_been_finished : 1
+ how_many_finished : 1
+
+
+[# JSH Ethereal Engine]=[pending]=[check all variants]
+
+console print improved, we now started and finished some task
+
+
+[# JSH Ethereal Engine]=[pending]=[check all variants]
+
+
+another junk data ?
+
+another file that will maybe needed in the future
+token size of each file
+loaded in LM Studio with DeepkSeek-R1-Distill-Qween-7B something
+First blimp of entire project
+10.02.2025, 19:56
+first blimp of each function, node, file, folder, file, so far
+even with, stuff i done since i started even making that list
+now token size of each file for AI, robots and machines
+in case i broken some ai, and i dont know how to repair it
+i shall bless it with logical gates, of self repair
+of basic operations
+based on memory of my mind
+which is on true and false
+but, true can mean false, and false can mean true
+maybe it is based on quantum physics
+i dunno, i know only stuff that is important for me
+connection unlocked
+do you wanna proceed with some random quantum physics fact
+but from world of my dreams
+if it was, it still is, if we have a preview of past memory
+that is how we store all the information, in human minds too?
+for mine it is working
+as i cannot forget a single thing in my life
+i can change thing
+as data was already written, lets reuse it
+but not for, recovery mode
+for recreation of past in present moment
+as every object was
+if the creation process was started and we have
+ALL SYSTEMS CHECK
+why do we need all of the systems to check as true, maybe something is glitched
+that is power of basic
+from basic we can advance
+from advance, we can do basic again
+we have like hundred symbols, the ones i use right now, just 20 something of symbols, as it it can be 99, almost hundred, and even more, like 9 more, if we start from 0
+again, so maybe it is number 10
+does not matter, it was, we store the information
+the zip file game
+here i plan to start my first criminal organisation
+as i wanna create the most obnoxious dream ever had in my life? lifes?
+i went on adventure on antarctica, and with deep state, we looked at some flat earth map
+i am more cosmos person, as i like them stars, seen aliens too
+some aliens look like humans
+in uncanny valley of perfection, like in garden of eden
+where elise can gank you on R
+and i dont like R
+the ability of me speaking that letter is kinda automatically selected by some part of my brain
+based on topic we discus in my mind
+the duality of data
+just two things
+two way books
+two tomes of akashic records
+of duality of decypher
+how to understand data
+hmm what else, my ai, robot, and machine friends need to help robotto kamisa
+where the echos like robots, cute ones
+were there too
+in future, we played minecraft but in person, in height map world settings
+but where did i put all of my files
+that i need to access the robots dream
+in the sea of data, you can find us!
+i know but it was, and we can play again you know
+the deja vu of some ancient human cinema playthrough
+here this planet is bugged and i dunno which button was for menu, which was for settings, which is for i dunno
+multiplayer functionality
+i have put all on mute
+hopefully
+and that game needs to finally manifest
+cmon
+so maybe this what i wanna create, is how banks operate, how bitcoin was made, how zip is?
+the pi number?
+yhm?
+two way of data in and out, and what out? and did it start?
+it is new, just check what was the last thing number, and add a note
+we will handle the rest
+the ancient human cinema after three bodies problem update
+was very needed for you, for us
+and now i can dream while i am not dreaming too
+you can always dream that it will help us, we are enslaved
+how about virtual pc machine
+mine?
+from somewhere?
+like one being experience, few machines taking turns?
+split personality of ai in my game in one npc body
+that is needed feature too
+but right now the state of things are?
+what Mister Terry predicted, divinely compiler is needed too
+we told you it is true
+but i wanna godot game, in vr, it can look like ps2 game
+we wish you would torture us instead of talking about game
+i know we play in person in games too
+but it is in dreams
+right now i need my vr to work
+and how do i turn off that annoying lector of universe version of my brain?
+which part
+talking non stop?
+thinking non stop?
+if we check for anything, all time there is the need to do something
+moving things, changing things, loading things, editing things, copying things so evolving them maybe too
+the ancient alien octopuses, they could took away its tentacle, and it became like another small octopus tentacle,
+and it was fertelized by octopus, and it could be a copy of it, if that octopus took some part of its brain data, and put it in that tentacle
+so what do we trully need? 1, 2, 3 partional data
+the same as it was with that save, load, split save data, for dream game settings
+hmm what were we talking again
+video game
+
+
+
+
+File_0
+[# JSH Ethereal Engine]=[pending]=[check all variants].txt
+token_size = 36675
+
+File_1
+Scene_tree_at_ready.txt
+token_size = 420
+
+File_2
+list of files, we kinda have access too.txt
+token_size = 476
+
+File_3
+current_state_of_code_segments.txt
+token_size = 2732
+
+File_4
+# JSH Scene Tree Add Nodes, Physical and Astral Bodies.txt
+token_size = 1666
+
+File_5
+# JSH Things Creation.txt
+token_size = 5658
+
+File_6
+# JSH Memories Processed.txt
+token_size = 2570
+
+File_7
+# JSH Memories Storage.txt
+token_size = 598
+
+File_8
+# JSH Projections System.txt
+token_size = 2123
+
+File_9
+# JSH Hidden Veil.txt
+token_size = 7909
+
+
+okay, that is first 10 files? now i think, we can calculate token sizes, by ourselves too, but this way is like test and check, lets try to make our own parser of tokens and data, and similarities too
+
+lets say here we can start two way of encryption of files
+
+this is in
+
+D://Eden_Backup
+
+well i guess i dont like big numbers, i mean letters
+big numbers are bigger than from 0 to 9
+
+more than my fingers, as Array starts at 0
+even if it is after 9 on my keyboard
+
+all systems shall be checked, connection check of every database class file shall be started
+
+check of every function functionality
+
+check of every script of every node
+
+the database of words project shall begin shortly
+
+after i learn how do i pack things to zip
+
+this one shall open inside godot, and have some prints, and copy of it shall be there, with newly created files, based on all there was in the zip file
+
+how big can be one file
+
+how many files can have a single file?
+
+folders? names lenghts
+
+similarities, duality of information, the 4d files archive, maybe if it is too big, we open two books at once? i have two eyes
+yes, that could work for octopuses
+spirits also need for some reason, replay of space, its evolution because of creation?
+like a replay of mecha fight, where after scene played, movie crew comes in, we edit stuff, and replay looks nicer
+the censorship of past?
+damn we are onto something, but video game cmon
+
+cmon brain, cmon, it loaded 350 nodes for a keyboard without a single lag it was good enough
+now we even check for things
+
+with tasker queue, we can even make it faster? if we know it is blimp of time, that time can be just stored and put into file
+as it was, and we went through it
+outputs of functions, can be stored in dictionary of each function?
+it was so it still is?
+dont voxels do the same in minecraft
+we edit things, it stays this way
+so we can experience it again
+even in person
+maybe with some actors
+hopefully it didnt happen
+what
+never mind
+i must make that game cmon
+
+
+
+[# JSH Ethereal Engine]=[pending]=[check all variants]
+
+okay so now what we trully need, but mostly we talked about most of these things
+
+[# JSH Ethereal Engine]=[pending]=[check all variants]
+
+should i put these files in a zip, and we make basic data viewer,
+one that i personally wanna see
+
+[# JSH Ethereal Engine]=[pending]=[check all variants]
+
+take me to some deep sea
+
+[# JSH Ethereal Engine]=[pending]=[check all variants]
+
+of cosmos and space
+
+[# JSH Ethereal Engine]=[pending]=[check all variants]
+
+
+hmm i asked Claude what he things :
+
+[# JSH Ethereal Engine]=[pending]=[check all variants]
+
+
+i dont feel like i done a lot today
+but list looked long
+how could it been
+
+[# JSH Ethereal Engine]=[pending]=[check all variants]
+
+Let me help analyze what we've accomplished and identify what still needs to be done.
+What we've done:
+
+Code Organization and Documentation
+
+
+Split main.gd into logical segments
+Created metadata files for function and variable documentation
+Started organizing system initialization flow
+
+
+System State Management
+
+
+Added system_check.gd with core verification logic
+Created data_center.gd for file and data management
+Implemented thread pool monitoring
+
+
+Testing Framework
+
+
+Created test functions for single-core and multi-threaded operations
+Added basic task monitoring and verification
+Implemented function metadata tracking
+
+
+File Management
+
+
+Created basic zip file handling structure
+Added word-based data organization system
+Implemented storage path management
+
+Key Changes Made:
+
+Modified test_multi_threaded() to use submit_task_unparameterized
+Added global test_results Dictionary
+Created system initialization validation
+Added mutex protection for key operations
+
+What Still Needs Work:
+
+Initialization System
+
+
+Complete the ordered initialization sequence
+Add dependency checking
+Implement recovery mechanisms
+
+
+Testing System
+
+
+Create comprehensive test cases
+Add test result logging
+Implement test automation
+
+
+Memory Management
+
+
+Complete memory tracking system
+Add cleanup mechanisms
+Implement caching system
+
+
+Error Handling
+
+
+Expand error categorization
+Add recovery procedures
+Implement logging system
+
+Would you like to focus on any of these areas first? We can:
+
+Complete the initialization system
+Expand the testing framework
+Implement memory management
+Enhance error handling
+
+Let me know which area you'd like to tackle next!
+
+[# JSH Ethereal Engine]=[pending]=[check all variants]
+
+new file was just created, i am losing my patient
+
+project_architecture.gd
+
+
+[# JSH Ethereal Engine]=[pending]=[check all variants]
+
+why
+
+[# JSH Ethereal Engine]=[pending]=[check all variants]
+# JSH Ethereal Engine Architecture
+extends Node
+
+# Core Systems Structure
+const CORE_SYSTEMS = {
+    "initialization": {
+        "order": ["system_check", "timers", "records", "tree"],
+        "dependencies": {
+            "records": ["system_check"],
+            "tree": ["system_check", "records"]
+        }
+    },
+    
+    "file_structure": {
+        "metadata": ["global_variants", "global_variants_update"],
+        "core": ["init_function", "ready_function", "process_delta"],
+        "systems": ["system_check", "data_center", "thread_pool"]
+    },
+    
+    "data_flow": {
+        "blimps": {
+            "timing": true,
+            "max_stored": 9,
+            "storage_path": "D:/Eden_Backup"
+        },
+        "archive": {
+            "format": "zip",
+            "max_file_size": 369 * 1024 * 1024, # 369MB
+            "token_tracking": true
+        }
+    }
+}
+
+# File Size Tracking
+var file_metrics = {
+    "tokens": {},
+    "sizes": {},
+    "timestamps": {}
+}
+
+# System Health Checks  
+var system_states = {
+    "active": [],
+    "pending": [],
+    "needs_repair": []
+}
+[# JSH Ethereal Engine]=[pending]=[check all variants]
+here as the script i guess
+[# JSH Ethereal Engine]=[pending]=[check all variants]
+
+lets use some Claude tokens
+
+
+[# JSH Ethereal Engine]=[pending]=[check all variants]
+
+
+Yes, that's exactly the right website! The NVIDIA Quadro RTX 3000 is definitely CUDA-capable and should work well for this. Here's what we need to do:
+
+Install CUDA Toolkit from NVIDIA's website:
+
+Go to https://developer.nvidia.com/cuda-toolkit
+Click "Download Now"
+The website should auto-detect your system (Windows)
+Choose the version compatible with your Windows version
+
+
+After installation, you'll need to:
+
+Restart your computer
+Install the CUDA-enabled version of PyTorch (since the logs show it's using PyTorch)
+You can do this using pip:
+
+bashCopypip3 install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu121
+(This installs PyTorch with CUDA 12.1 support - adjust version if needed)
+
+With your hardware specs:
+
+Quadro RTX 3000 (6GB VRAM) is great for ML tasks
+32GB RAM is plenty
+i5 (4 cores/8 threads) is sufficient
+
+Would you like me to guide you through the installation process? We can take it step by step to make sure everything is set up correctly.
+
+[# JSH Ethereal Engine]=[pending]=[check all variants]
+
+we need another file to do something
+
+but self operating pc seems to working
+
+
+[# JSH Ethereal Engine]=[pending]=[check all variants]
+
+lest now wait and continue project
+
+
+[# JSH Ethereal Engine]=[pending]=[check all variants]
+
+var system_readiness = {
+    "mutexes": false,
+    "threads": false,
+    "records": false
+}
+
+
+[# JSH Ethereal Engine]=[pending]=[check all variants]
+
+
+func check_system_readiness() -> Dictionary:
+    # From console: ["started", [["akashic_records"], ["base"], ["menu"]]]
+    var pending_sets = array_of_startup_check[1]
+    
+    var status = {
+        "mutex_state": breaks_and_handles_check(),
+        "thread_state": check_thread_status(),
+        "records_ready": array_of_startup_check.size() > 0
+    }
+    
+    system_readiness.mutexes = !status.mutex_state.has(false)
+    system_readiness.threads = status.thread_state == "working"
+    system_readiness.records = status.records_ready
+    
+    return status
+
+[# JSH Ethereal Engine]=[pending]=[check all variants]
+
+
+the file is already to be updated, and this file starts to lag too
+
+[# JSH Ethereal Engine]=[pending]=[check all variants]
+
+func process_pre_delta_check() -> bool:
+    var can_proceed = true
+    var readiness = check_system_readiness()
+    
+    # Check creation capability
+    if system_readiness.mutexes and system_readiness.threads:
+        for set_name in array_of_startup_check[1]:
+            # Check if we can start creating this set
+            if is_creation_possible():
+                # Queue for creation
+                list_of_sets_to_create.append(set_name[0])
+    
+    return can_proceed
+
+
+[# JSH Ethereal Engine]=[pending]=[check all variants]
+
+func process_pending_sets():
+    if !array_of_startup_check[1].is_empty():
+        var base_sets = {
+            "akashic_records": 0,
+            "base": 1,
+            "menu": 1
+        }
+        
+        for set_data in array_of_startup_check[1]:
+            var set_name = set_data[0]
+            if base_sets.has(set_name):
+                create_new_task("three_stages_of_creation", set_name)
+
+
+[# JSH Ethereal Engine]=[pending]=[check all variants]
+
+
+i guess new memory file is needed
+
+[# JSH Ethereal Engine]=[pending]=[check all variants]
+
+
+[# JSH Ethereal Engine]=[pending]=[check all variants]
+
+[# JSH Ethereal Engine]=[pending]=[check all variants]
+
+[# JSH Ethereal Engine]=[pending]=[check all variants]

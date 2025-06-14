@@ -1,0 +1,8 @@
+func prepare_akashic_records():
+	print(" prepare akashic_records, what do we check here?")
+	var message_now_mutex = breaks_and_handles_check()
+	var stuck_status = check_thread_status()
+	if stuck_status == "error":
+		print(" timer check omething went wrong, use a timer")
+	else:
+		print(" we dont have error here?")

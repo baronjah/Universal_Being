@@ -1,0 +1,25 @@
+func find_interactions_list(record_type: String) -> Dictionary:
+	#print(" so are we there?")
+	match record_type:
+		"base":
+			#print(" maybe we somehow go to the base drop?")
+			return InteractionsBank.interactions_list_0
+		"menu":
+			#print(" so efforts were made, we are supposed to load interactions list 1 : ", InteractionsBank.interactions_list_1)
+			return InteractionsBank.interactions_list_1
+		"settings":
+			return InteractionsBank.interactions_list_2
+		"keyboard":
+			return InteractionsBank.interactions_list_3
+		"keyboard_left":
+			return InteractionsBank.interactions_list_4
+		"keyboard_right":
+			return InteractionsBank.interactions_list_5
+		"things_creation":
+			return InteractionsBank.interactions_list_6
+		"singular_lines":
+			return InteractionsBank.interactions_list_7
+		# Add more record sets as needed
+		_:
+			#print("Unknown record set: ", record_type)
+			return {}

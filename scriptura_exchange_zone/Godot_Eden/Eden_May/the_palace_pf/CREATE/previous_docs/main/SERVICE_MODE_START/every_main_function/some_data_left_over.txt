@@ -1,0 +1,61 @@
+func some_data_left_over():
+	print(" data left over ")
+#func scan_eden_directory_new(directory: String = "D:/Eden", indent: int = 0, max_depth: int = 2) -> Dictionary:
+	#var dir = DirAccess.open(directory)
+	#var scan_results = {
+		#"files": [],
+		#"directories": [],
+		#"status": "pending",
+		#"total_files": 0,
+		#"total_directories": 0
+	#}
+#
+	#if dir:
+		#scan_results["status"] = "completed"
+#
+		## Limit recursion depth
+		#if indent >= max_depth:
+			#print("  ".repeat(indent) + "📁 Max depth reached for: " + directory)
+			#return scan_results
+#
+		## Limit number of directories and files printed
+		#var dir_count = 0
+		#var file_count = 0
+		#var max_print = 10  # Limit to 10 directories and files per level
+#
+		#for subdir in dir.get_directories():
+			#if dir_count < max_print:
+				#print("  ".repeat(indent) + "📁 " + subdir)
+				#dir_count += 1
+			#
+			#scan_results["directories"].append(subdir)
+			#scan_results["total_directories"] += 1
+			#
+			## Only recurse if we haven't exceeded max depth
+			#if indent + 1 < max_depth:
+				#var subdir_results = scan_eden_directory(
+					#directory.path_join(subdir), 
+					#indent + 1, 
+					#max_depth
+				#)
+				#scan_results[subdir] = subdir_results
+#
+		#for file in dir.get_files():
+			#if file_count < max_print:
+				#print("  ".repeat(indent) + "📄 " + file)
+				#file_count += 1
+			#
+			#scan_results["files"].append(file)
+			#scan_results["total_files"] += 1
+#
+		## If more items exist, indicate this
+		#if dir.get_directories().size() > max_print:
+			#print("  ".repeat(indent) + "📁 ... and more directories")
+		#if dir.get_files().size() > max_print:
+			#print("  ".repeat(indent) + "📄 ... and more files")
+#
+	#else:
+		#scan_results["status"] = "failed"
+		#print("❌ Could not open directory: " + directory)
+#
+	#return scan_results

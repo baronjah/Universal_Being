@@ -1,0 +1,7 @@
+func track_task_status(task_id):
+	task_status[task_id] = {
+		"start_time": Time.get_ticks_msec(),
+		"status": "pending",
+		"retries": 0,
+		"error_count": 0
+	}

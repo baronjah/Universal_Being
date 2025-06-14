@@ -1,0 +1,21 @@
+func whip_out_set_by_its_name(set_name_to_test) -> CreationStatus:
+	# Input validation
+	if not set_name_to_test is String:
+		print("Invalid input type for set_name_to_test: ", typeof(set_name_to_test))
+		return CreationStatus.INVALID_INPUT
+		
+	if set_name_to_test.is_empty():
+		print("Set name cannot be empty")
+		return CreationStatus.INVALID_INPUT
+	
+	# Check if creation is possible (add your conditions)
+	if not is_creation_possible():
+		print("Creation not possible at this time")
+		return CreationStatus.LOCKED
+		
+	# Attempt creation
+	var task_result = create_new_task("three_stages_of_creation", set_name_to_test)
+	if task_result:
+		return CreationStatus.SUCCESS
+	else:
+		return CreationStatus.ERROR

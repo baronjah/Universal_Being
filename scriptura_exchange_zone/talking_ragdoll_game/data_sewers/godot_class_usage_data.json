@@ -1,0 +1,6480 @@
+{
+  "scripts": {
+    "scripts/autoload/claude_timer_system.gd": {
+      "path": "scripts/autoload/claude_timer_system.gd",
+      "extends": "Node",
+      "class_name": "",
+      "instantiated_classes": {},
+      "method_calls": {
+        "Time.get_ticks_msec": [
+          40,
+          48,
+          66,
+          74,
+          83,
+          99,
+          122,
+          135,
+          180
+        ],
+        "user_wait_threshold_reached.connect": [
+          45
+        ],
+        "user_wait_threshold_reached.emit": [
+          59
+        ],
+        "autonomous_project_queue.append": [
+          119
+        ],
+        "autonomous_project_queue.sort_custom": [
+          124
+        ],
+        "autonomous_project_queue.size": [
+          130
+        ],
+        "autonomous_work_started.emit": [
+          139
+        ]
+      },
+      "signal_connections": {
+        "defines:user_wait_threshold_reached": [
+          35
+        ],
+        "defines:autonomous_work_started": [
+          36
+        ],
+        "defines:session_metrics_updated": [
+          37
+        ],
+        "_on_user_wait_threshold": [
+          45
+        ]
+      },
+      "property_accesses": {},
+      "annotations": {},
+      "groups": []
+    },
+    "scripts/autoload/console_manager.gd": {
+      "path": "scripts/autoload/console_manager.gd",
+      "extends": "Node",
+      "class_name": "",
+      "instantiated_classes": {
+        "PassiveController": [
+          229
+        ],
+        "ThreadedTestSystem": [
+          237
+        ],
+        "PhysicsStateManager": [
+          245
+        ],
+        "MultiProjectManager": [
+          254
+        ],
+        "ClaudeTimer": [
+          263
+        ],
+        "MultiTodoManager": [
+          277
+        ],
+        "WindowsConsoleFix": [
+          286
+        ],
+        "Control": [
+          314
+        ],
+        "ColorRect": [
+          320
+        ],
+        "CenterContainer": [
+          327
+        ],
+        "PanelContainer": [
+          333
+        ],
+        "StyleBoxFlat": [
+          339,
+          417
+        ],
+        "VBoxContainer": [
+          360
+        ],
+        "HBoxContainer": [
+          364,
+          403
+        ],
+        "Label": [
+          367,
+          406
+        ],
+        "Button": [
+          375,
+          429
+        ],
+        "HSeparator": [
+          382
+        ],
+        "ScrollContainer": [
+          386
+        ],
+        "RichTextLabel": [
+          393
+        ],
+        "LineEdit": [
+          412
+        ],
+        "CanvasLayer": [
+          435
+        ],
+        "Node": [
+          884,
+          987,
+          2179,
+          2341
+        ],
+        "Node3D": [
+          1223,
+          2228
+        ]
+      },
+      "method_calls": {
+        "settings_changed.connect": [
+          189
+        ],
+        "ResourceLoader.exists": [
+          227,
+          235,
+          243,
+          252,
+          261,
+          275,
+          284
+        ],
+        "root.add_child": [
+          247,
+          887,
+          990,
+          2182
+        ],
+        "multi_project_manager.start_waiting_for_user": [
+          256,
+          549
+        ],
+        "claude_timer.add_autonomous_project": [
+          268,
+          269,
+          270
+        ],
+        "windows_console_fix.patch_console_manager": [
+          291
+        ],
+        "event.is_action_pressed": [
+          297,
+          302,
+          305,
+          308
+        ],
+        "console_container.set_anchors_and_offsets_preset": [
+          315
+        ],
+        "bg_overlay.set_anchors_and_offsets_preset": [
+          321
+        ],
+        "console_container.add_child": [
+          324,
+          330
+        ],
+        "center_container.set_anchors_and_offsets_preset": [
+          328
+        ],
+        "center_container.add_child": [
+          336
+        ],
+        "console_panel.add_theme_stylebox_override": [
+          357
+        ],
+        "console_panel.add_child": [
+          361
+        ],
+        "content_vbox.add_child": [
+          365,
+          383,
+          390,
+          404
+        ],
+        "title.add_theme_font_size_override": [
+          369
+        ],
+        "title.add_theme_color_override": [
+          370
+        ],
+        "title_bar.add_child": [
+          371,
+          379
+        ],
+        "title_bar.add_spacer": [
+          373
+        ],
+        "pressed.connect": [
+          378,
+          431
+        ],
+        "output_display.add_theme_color_override": [
+          399
+        ],
+        "output_scroll.add_child": [
+          400
+        ],
+        "prompt.add_theme_color_override": [
+          408
+        ],
+        "input_container.add_child": [
+          409,
+          426,
+          432
+        ],
+        "text_submitted.connect": [
+          415
+        ],
+        "input_field.add_theme_stylebox_override": [
+          425
+        ],
+        "root.call_deferred": [
+          438
+        ],
+        "canvas_layer.call_deferred": [
+          439
+        ],
+        "UISettingsManager.get_console_rect": [
+          453
+        ],
+        "output_display.add_theme_font_size_override": [
+          458
+        ],
+        "tween.kill": [
+          478
+        ],
+        "tween.set_ease": [
+          481
+        ],
+        "tween.set_trans": [
+          482
+        ],
+        "tween.parallel": [
+          489,
+          491,
+          504,
+          506
+        ],
+        "finished.connect": [
+          494,
+          509
+        ],
+        "input_field.grab_focus": [
+          497
+        ],
+        "input_field.clear": [
+          498,
+          552,
+          577
+        ],
+        "text.strip_edges": [
+          515
+        ],
+        "multi_project_manager.user_responded": [
+          520
+        ],
+        "claude_timer.user_message_received": [
+          522
+        ],
+        "command_history.append": [
+          525
+        ],
+        "command_history.size": [
+          526,
+          528,
+          571,
+          573
+        ],
+        "command_history.pop_front": [
+          527
+        ],
+        "text.split": [
+          534
+        ],
+        "parts.is_empty": [
+          535
+        ],
+        "parts.slice": [
+          539
+        ],
+        "commands.has": [
+          541
+        ],
+        "command_executed.emit": [
+          555
+        ],
+        "output_lines.append": [
+          559
+        ],
+        "output_lines.size": [
+          560
+        ],
+        "output_lines.pop_front": [
+          561
+        ],
+        "output_display.clear": [
+          563
+        ],
+        "output_display.append_text": [
+          565
+        ],
+        "command_history.is_empty": [
+          568
+        ],
+        "text.length": [
+          575
+        ],
+        "args.is_empty": [
+          673,
+          682,
+          692,
+          803,
+          817,
+          844,
+          853,
+          862,
+          873,
+          900,
+          1025,
+          1051,
+          1063,
+          1082,
+          1090,
+          1104,
+          1111,
+          1117,
+          1139,
+          1147,
+          1180,
+          1243,
+          1320,
+          1342,
+          1432,
+          1470,
+          1503
+        ],
+        "UISettingsManager.set_console_position": [
+          678
+        ],
+        "UISettingsManager.set_ui_scale": [
+          688
+        ],
+        "WorldBuilder.create_tree": [
+          725
+        ],
+        "WorldBuilder.create_rock": [
+          732
+        ],
+        "WorldBuilder.create_box": [
+          739
+        ],
+        "WorldBuilder.create_ball": [
+          746
+        ],
+        "WorldBuilder.create_ramp": [
+          753
+        ],
+        "args.size": [
+          762,
+          769,
+          995,
+          1037,
+          1041,
+          1045,
+          1057,
+          1069,
+          1074,
+          1096,
+          1100,
+          1130,
+          1160,
+          1165,
+          1171,
+          1186,
+          1229,
+          1280,
+          1300,
+          1326,
+          1331,
+          1332,
+          1363,
+          1440,
+          1448,
+          1476,
+          1509,
+          1512,
+          1515,
+          1524,
+          1534,
+          1545,
+          1563,
+          1815,
+          1886,
+          1919,
+          1975,
+          2000,
+          2015,
+          2032,
+          2131,
+          2185,
+          2216,
+          2224,
+          2240,
+          2299,
+          2316,
+          2345
+        ],
+        "scene_manager.clear_current_scene": [
+          765
+        ],
+        "scene_manager.restore_default_scene": [
+          772
+        ],
+        "WorldBuilder.clear_all_objects": [
+          779
+        ],
+        "WorldBuilder.get_spawned_objects": [
+          788
+        ],
+        "objects.is_empty": [
+          789
+        ],
+        "WorldBuilder.delete_object": [
+          808
+        ],
+        "ragdolls.is_empty": [
+          822,
+          911
+        ],
+        "ragdoll.has_method": [
+          832,
+          916,
+          918
+        ],
+        "ragdoll.get_body": [
+          833
+        ],
+        "ProjectSettings.get_setting": [
+          845
+        ],
+        "PhysicsServer3D.area_set_param": [
+          849
+        ],
+        "root.get_world_3d": [
+          849
+        ],
+        "DialogueSystem.make_ragdoll_say": [
+          858
+        ],
+        "SceneLoader.list_available_scenes": [
+          863
+        ],
+        "scene_manager.set_script": [
+          886,
+          989
+        ],
+        "scene_manager.load_static_scene": [
+          890
+        ],
+        "SceneLoader.load_scene": [
+          894
+        ],
+        "SceneLoader.save_current_scene": [
+          901,
+          906
+        ],
+        "ragdoll.toggle_walking": [
+          917
+        ],
+        "ragdoll.stop_walking": [
+          920
+        ],
+        "ragdoll.start_walking": [
+          923
+        ],
+        "WorldBuilder.create_ragdoll": [
+          930
+        ],
+        "WorldBuilder.create_sun": [
+          937
+        ],
+        "WorldBuilder.create_astral_being": [
+          944
+        ],
+        "WorldBuilder.create_pathway": [
+          951
+        ],
+        "WorldBuilder.create_bush": [
+          958
+        ],
+        "WorldBuilder.create_fruit": [
+          965
+        ],
+        "WorldBuilder.create_pigeon": [
+          972
+        ],
+        "scene_manager.generate_procedural_world": [
+          1002
+        ],
+        "scene_manager.get_current_scene_info": [
+          1016
+        ],
+        "passive_controller.get_status": [
+          1026,
+          1035,
+          1079,
+          1112
+        ],
+        "passive_controller.start_passive_mode": [
+          1031
+        ],
+        "passive_controller.stop_passive_mode": [
+          1033
+        ],
+        "passive_controller.set_auto_commit": [
+          1038
+        ],
+        "passive_controller.set_require_approval": [
+          1042
+        ],
+        "passive_controller.set_token_budget": [
+          1046
+        ],
+        "passive_controller.add_task": [
+          1060
+        ],
+        "passive_controller.create_branch": [
+          1070
+        ],
+        "passive_controller.switch_branch": [
+          1075
+        ],
+        "passive_controller.commit": [
+          1087
+        ],
+        "args.slice": [
+          1097,
+          1477,
+          1514,
+          1537
+        ],
+        "passive_controller.create_mr": [
+          1098
+        ],
+        "passive_controller.approve_mr": [
+          1101
+        ],
+        "passive_controller.merge": [
+          1108
+        ],
+        "passive_controller.show_diff": [
+          1114
+        ],
+        "version_backup.run_full_test_suite": [
+          1119
+        ],
+        "version_backup.get_test_status": [
+          1124
+        ],
+        "version_backup.run_zone_test": [
+          1131
+        ],
+        "physics_state_manager.get_state_info": [
+          1148
+        ],
+        "physics_state_manager.set_scene_zero_point": [
+          1162
+        ],
+        "physics_state_manager.set_gravity_center": [
+          1168
+        ],
+        "multi_project_manager.list_projects": [
+          1181
+        ],
+        "multi_project_manager.switch_project": [
+          1187
+        ],
+        "multi_project_manager.get_current_project_status": [
+          1192
+        ],
+        "multi_project_manager.get_all_projects_status": [
+          1204
+        ],
+        "multi_project_manager.get_timing_report": [
+          1215
+        ],
+        "debug_screen.set_script": [
+          1224
+        ],
+        "current_scene.add_child": [
+          1226,
+          2230
+        ],
+        "debug_screen.queue_free": [
+          1230
+        ],
+        "objects.size": [
+          1247,
+          1258,
+          1391
+        ],
+        "target.is_valid_int": [
+          1255,
+          1388
+        ],
+        "target.to_int": [
+          1256,
+          1389
+        ],
+        "name.to_lower": [
+          1265,
+          1396
+        ],
+        "target.to_lower": [
+          1265,
+          1396
+        ],
+        "debug_screen.call": [
+          1270,
+          1290,
+          1310,
+          1335
+        ],
+        "physics_state_manager.get_object_state": [
+          1351,
+          1381
+        ],
+        "physics_state_manager.set_object_state": [
+          1353,
+          1382
+        ],
+        "claude_timer.get_timer_report": [
+          1433,
+          1438
+        ],
+        "claude_timer.switch_project": [
+          1441
+        ],
+        "claude_timer.set_wait_threshold": [
+          1450
+        ],
+        "claude_timer.get_session_metrics": [
+          1455,
+          1489
+        ],
+        "claude_timer.start_task": [
+          1478
+        ],
+        "claude_timer.complete_task": [
+          1483
+        ],
+        "multi_todo_manager.get_formatted_todos": [
+          1504,
+          1510
+        ],
+        "multi_todo_manager.add_todo": [
+          1516
+        ],
+        "multi_todo_manager.complete_todo": [
+          1527
+        ],
+        "multi_todo_manager.modify_todo": [
+          1538
+        ],
+        "multi_todo_manager.step_back_todo": [
+          1548
+        ],
+        "multi_todo_manager.get_session_summary": [
+          1555,
+          1585
+        ],
+        "multi_todo_manager.get_priority_todos": [
+          1565
+        ],
+        "priority.to_upper": [
+          1566
+        ],
+        "multi_todo_manager.balance_workload": [
+          1579
+        ],
+        "actions_to_be_called.size": [
+          1603
+        ],
+        "nodes_to_be_added.size": [
+          1604
+        ],
+        "data_to_be_send.size": [
+          1605
+        ],
+        "things_to_be_moved.size": [
+          1606
+        ],
+        "nodes_to_be_unloaded.size": [
+          1607
+        ],
+        "functions_to_be_called.size": [
+          1608
+        ],
+        "messages_to_be_called.size": [
+          1609
+        ],
+        "texture_storage.size": [
+          1610
+        ],
+        "main_scene.has_method": [
+          1624,
+          1631,
+          1657,
+          1790
+        ],
+        "main_scene.run_health_check": [
+          1625
+        ],
+        "main_scene.test_floodgate": [
+          1632
+        ],
+        "main_scene.is_ready": [
+          1658
+        ],
+        "current_scene.get_node_or_null": [
+          1683,
+          1706,
+          2243
+        ],
+        "ragdoll_controller.has_method": [
+          1714,
+          1722,
+          1730,
+          1738,
+          1746
+        ],
+        "ragdoll_controller.cmd_ragdoll_come_here": [
+          1715
+        ],
+        "ragdoll_controller.cmd_ragdoll_pickup_nearest": [
+          1723
+        ],
+        "ragdoll_controller.cmd_ragdoll_drop": [
+          1731
+        ],
+        "ragdoll_controller.cmd_ragdoll_organize": [
+          1739
+        ],
+        "ragdoll_controller.cmd_ragdoll_patrol": [
+          1747
+        ],
+        "astral_beings.has_method": [
+          1756,
+          1764,
+          1772,
+          1780
+        ],
+        "astral_beings.cmd_beings_status": [
+          1757
+        ],
+        "astral_beings.cmd_beings_help_ragdoll": [
+          1765
+        ],
+        "astral_beings.cmd_beings_organize": [
+          1773
+        ],
+        "astral_beings.cmd_beings_harmony": [
+          1781
+        ],
+        "main_scene._setup_ragdoll_system": [
+          1791
+        ],
+        "main_scene._setup_mouse_interaction": [
+          1793
+        ],
+        "main_scene.get_node_or_null": [
+          1805
+        ],
+        "mouse_system.has_method": [
+          1809,
+          2087
+        ],
+        "mouse_system.cmd_toggle_debug_panel": [
+          1810
+        ],
+        "search_nodes.size": [
+          1825
+        ],
+        "search_nodes.pop_front": [
+          1826
+        ],
+        "search_nodes.append_array": [
+          1830
+        ],
+        "node.get_children": [
+          1830,
+          2295
+        ],
+        "found_object.get_class": [
+          1838
+        ],
+        "linear_velocity.length": [
+          1853
+        ],
+        "found_object.get_groups": [
+          1855
+        ],
+        "groups.size": [
+          1856
+        ],
+        "def.has": [
+          1875,
+          1877
+        ],
+        "required_components.size": [
+          1877
+        ],
+        "action_system.queue_action": [
+          1913
+        ],
+        "action_system.process_combo_input": [
+          1933,
+          1935,
+          1937,
+          1939,
+          1942
+        ],
+        "node.has_method": [
+          1967
+        ],
+        "dimensional_system.shift_dimension": [
+          1994
+        ],
+        "dimension_name.capitalize": [
+          1995
+        ],
+        "dimensional_system.add_consciousness_experience": [
+          2011
+        ],
+        "dimensional_system.set_emotion": [
+          2028
+        ],
+        "dimensional_system.cast_spell": [
+          2044
+        ],
+        "dimensional_system.get_state": [
+          2055
+        ],
+        "spells.size": [
+          2061
+        ],
+        "panel.get_parent": [
+          2095,
+          2096
+        ],
+        "viewport.get_visible_rect": [
+          2100
+        ],
+        "floodgate.get_object_statistics": [
+          2114
+        ],
+        "objects_by_type.size": [
+          2120
+        ],
+        "beings.is_empty": [
+          2127
+        ],
+        "being.has_method": [
+          2136,
+          2149,
+          2161
+        ],
+        "being.speak": [
+          2144
+        ],
+        "responses.size": [
+          2144
+        ],
+        "beings.size": [
+          2147,
+          2157
+        ],
+        "being.get_status": [
+          2150,
+          2162
+        ],
+        "personalities.get": [
+          2164
+        ],
+        "personalities.size": [
+          2166
+        ],
+        "personality.capitalize": [
+          2169
+        ],
+        "helper.set_script": [
+          2181
+        ],
+        "helper.stop_helping": [
+          2186
+        ],
+        "helper.start_helping_ragdoll": [
+          2189
+        ],
+        "current_scene.get_children": [
+          2235
+        ],
+        "child.get_child_count": [
+          2236,
+          2237
+        ],
+        "container.queue_free": [
+          2245
+        ],
+        "get_node": [
+          {
+            "line": 2252,
+            "path": "/root/JSHThreadPool"
+          },
+          {
+            "line": 2267,
+            "path": "/root/JSHSceneTree"
+          },
+          {
+            "line": 2304,
+            "path": "/root/AkashicRecords"
+          },
+          {
+            "line": 2321,
+            "path": "/root/AkashicRecords"
+          }
+        ],
+        "thread_pool.has_method": [
+          2255
+        ],
+        "thread_pool.get_status": [
+          2256
+        ],
+        "status.get": [
+          2257,
+          2258,
+          2259
+        ],
+        "OS.get_processor_count": [
+          2261
+        ],
+        "akashic.has_method": [
+          2305,
+          2322
+        ],
+        "akashic.save_scene_state": [
+          2307
+        ],
+        "akashic.load_scene_state": [
+          2324
+        ],
+        "physics_tester.set_script": [
+          2342
+        ],
+        "physics_tester.queue_free": [
+          2349,
+          2357
+        ],
+        "physics_tester.handle_physics_command": [
+          2352
+        ]
+      },
+      "signal_connections": {
+        "defines:command_executed": [
+          9
+        ],
+        "_on_settings_changed": [
+          189
+        ],
+        "toggle_console": [
+          378
+        ],
+        "_on_command_submitted": [
+          415
+        ],
+        "func(": [
+          431,
+          494,
+          509
+        ]
+      },
+      "property_accesses": {
+        "visible": [
+          317,
+          485,
+          511,
+          1234,
+          1235,
+          2092
+        ],
+        "position": [
+          454,
+          2093
+        ],
+        "modulate": [
+          486
+        ],
+        "scale": [
+          487,
+          1845
+        ],
+        "global_position": [
+          796,
+          830,
+          839,
+          1841
+        ],
+        "linear_velocity": [
+          835,
+          1853
+        ],
+        "angular_velocity": [
+          836
+        ],
+        "rotation": [
+          1843
+        ]
+      },
+      "annotations": {},
+      "groups": []
+    },
+    "scripts/autoload/dialogue_system.gd": {
+      "path": "scripts/autoload/dialogue_system.gd",
+      "extends": "Node",
+      "class_name": "",
+      "instantiated_classes": {
+        "Label3D": [
+          48
+        ]
+      },
+      "method_calls": {
+        "custom_dialogue_queue.append": [
+          21
+        ],
+        "ragdolls.is_empty": [
+          25
+        ],
+        "ragdoll.has_method": [
+          27
+        ],
+        "ragdoll._say_something_custom": [
+          28
+        ],
+        "custom_dialogue_queue.is_empty": [
+          31
+        ],
+        "custom_dialogue_queue.pop_front": [
+          33
+        ],
+        "root.add_child": [
+          58
+        ],
+        "tween.set_parallel": [
+          62
+        ],
+        "tween.tween_property": [
+          63,
+          64
+        ],
+        "tween.chain": [
+          65
+        ]
+      },
+      "signal_connections": {},
+      "property_accesses": {
+        "modulate": [
+          54
+        ],
+        "position": [
+          55
+        ]
+      },
+      "annotations": {},
+      "groups": []
+    },
+    "scripts/autoload/multi_todo_manager.gd": {
+      "path": "scripts/autoload/multi_todo_manager.gd",
+      "extends": "Node",
+      "class_name": "",
+      "instantiated_classes": {},
+      "method_calls": {
+        "Time.get_ticks_msec": [
+          42,
+          71,
+          90,
+          114,
+          169,
+          195
+        ],
+        "all_tasks.append": [
+          77
+        ],
+        "todos.size": [
+          87
+        ],
+        "pending.append": [
+          150
+        ],
+        "priority_todos.append": [
+          159
+        ],
+        "project_todos.size": [
+          164
+        ],
+        "all_tasks.size": [
+          165
+        ]
+      },
+      "signal_connections": {},
+      "property_accesses": {},
+      "annotations": {},
+      "groups": []
+    },
+    "scripts/autoload/scene_loader.gd": {
+      "path": "scripts/autoload/scene_loader.gd",
+      "extends": "Node",
+      "class_name": "",
+      "instantiated_classes": {},
+      "method_calls": {
+        "DirAccess.open": [
+          22,
+          393
+        ],
+        "dir.dir_exists": [
+          23
+        ],
+        "dir.make_dir": [
+          24
+        ],
+        "FileAccess.file_exists": [
+          30,
+          149,
+          178
+        ],
+        "FileAccess.open": [
+          150,
+          171,
+          191,
+          336,
+          405
+        ],
+        "file.store_string": [
+          151,
+          172,
+          406
+        ],
+        "file.close": [
+          152,
+          173,
+          205,
+          355,
+          407
+        ],
+        "WorldBuilder.clear_all_objects": [
+          183
+        ],
+        "ragdoll.queue_free": [
+          188
+        ],
+        "file.eof_reached": [
+          194
+        ],
+        "file.get_line": [
+          196
+        ],
+        "line.begins_with": [
+          199
+        ],
+        "line.is_empty": [
+          199,
+          347
+        ],
+        "line.split": [
+          211
+        ],
+        "parts.size": [
+          212,
+          224
+        ],
+        "prop.split": [
+          227
+        ],
+        "WorldBuilder.create_tree": [
+          265
+        ],
+        "WorldBuilder.create_rock": [
+          267
+        ],
+        "WorldBuilder.create_box": [
+          269
+        ],
+        "WorldBuilder.create_ball": [
+          271
+        ],
+        "WorldBuilder.create_ramp": [
+          273
+        ],
+        "WorldBuilder.create_sun": [
+          275
+        ],
+        "WorldBuilder.create_astral_being": [
+          277
+        ],
+        "WorldBuilder.create_pathway": [
+          279
+        ],
+        "WorldBuilder.create_bush": [
+          281
+        ],
+        "WorldBuilder.create_fruit": [
+          283
+        ],
+        "WorldBuilder.get_spawned_objects": [
+          289,
+          344
+        ],
+        "objects.is_empty": [
+          290
+        ],
+        "existing_ragdolls.is_empty": [
+          297
+        ],
+        "WorldBuilder.create_ragdoll": [
+          304
+        ],
+        "ragdolls.is_empty": [
+          310
+        ],
+        "properties.has": [
+          313
+        ],
+        "ragdoll.has_method": [
+          316,
+          319
+        ],
+        "ragdoll.start_walking": [
+          317
+        ],
+        "ragdoll._speak_random_dialogue": [
+          320
+        ],
+        "file.store_line": [
+          339,
+          340,
+          341,
+          348,
+          353
+        ],
+        "Time.get_datetime_string_from_system": [
+          340
+        ],
+        "dir.list_dir_begin": [
+          395
+        ],
+        "dir.get_next": [
+          396,
+          400
+        ],
+        "file_name.ends_with": [
+          398
+        ],
+        "scenes.append": [
+          399
+        ],
+        "file_name.replace": [
+          399
+        ]
+      },
+      "signal_connections": {
+        "defines:scene_loaded": [
+          9
+        ],
+        "defines:scene_saved": [
+          10
+        ]
+      },
+      "property_accesses": {
+        "rotation": [
+          326,
+          328,
+          330,
+          378,
+          379,
+          380,
+          381,
+          382,
+          383,
+          384
+        ],
+        "scale": [
+          333
+        ],
+        "global_position": [
+          353,
+          375
+        ]
+      },
+      "annotations": {},
+      "groups": []
+    },
+    "scripts/autoload/ui_settings_manager.gd": {
+      "path": "scripts/autoload/ui_settings_manager.gd",
+      "extends": "Node",
+      "class_name": "",
+      "instantiated_classes": {
+        "ConfigFile": [
+          36,
+          62
+        ]
+      },
+      "method_calls": {
+        "size_changed.connect": [
+          33
+        ],
+        "config.load": [
+          37
+        ],
+        "config.get_value": [
+          45,
+          46,
+          47,
+          48,
+          49,
+          50,
+          51,
+          54,
+          55,
+          56,
+          57
+        ],
+        "config.set_value": [
+          65,
+          66,
+          67,
+          68,
+          69,
+          70,
+          71,
+          74,
+          75,
+          76,
+          77
+        ],
+        "config.save": [
+          80
+        ]
+      },
+      "signal_connections": {
+        "defines:settings_changed": [
+          9
+        ],
+        "_on_viewport_size_changed": [
+          33
+        ]
+      },
+      "property_accesses": {},
+      "annotations": {},
+      "groups": []
+    },
+    "scripts/autoload/windows_console_fix.gd": {
+      "path": "scripts/autoload/windows_console_fix.gd",
+      "extends": "Node",
+      "class_name": "",
+      "instantiated_classes": {},
+      "method_calls": {
+        "OS.get_name": [
+          77
+        ],
+        "OS.execute": [
+          80
+        ],
+        "test_output.size": [
+          81
+        ],
+        "OS.get_environment": [
+          87
+        ],
+        "env_cols.to_int": [
+          89
+        ],
+        "result.replace": [
+          101
+        ],
+        "text.length": [
+          110
+        ],
+        "char.unicode_at": [
+          112
+        ],
+        "title_line.length": [
+          136
+        ],
+        "project.to_upper": [
+          161
+        ],
+        "manager.has_method": [
+          170
+        ],
+        "manager._print_to_console": [
+          171
+        ],
+        "console_manager.has_method": [
+          202
+        ],
+        "console_manager.set_meta": [
+          203,
+          204
+        ]
+      },
+      "signal_connections": {},
+      "property_accesses": {},
+      "annotations": {},
+      "groups": []
+    },
+    "scripts/autoload/world_builder.gd": {
+      "path": "scripts/autoload/world_builder.gd",
+      "extends": "Node",
+      "class_name": "",
+      "instantiated_classes": {
+        "PhysicsRayQueryParameters3D": [
+          87
+        ],
+        "Node3D": [
+          223
+        ],
+        "RigidBody3D": [
+          282
+        ],
+        "Node": [
+          295
+        ]
+      },
+      "method_calls": {
+        "get_node": [
+          {
+            "line": 49,
+            "path": "/root/FloodgateController"
+          },
+          {
+            "line": 50,
+            "path": "/root/AssetLibrary"
+          }
+        ],
+        "camera.project_ray_origin": [
+          83
+        ],
+        "camera.project_ray_normal": [
+          84
+        ],
+        "root.get_world_3d": [
+          86
+        ],
+        "space_state.intersect_ray": [
+          92
+        ],
+        "StandardizedObjects.create_object": [
+          106,
+          120,
+          132,
+          148,
+          164,
+          180,
+          198,
+          207,
+          249,
+          256,
+          263,
+          367,
+          374,
+          381,
+          388
+        ],
+        "floodgate.second_dimensional_magic": [
+          113,
+          138,
+          154,
+          170,
+          186,
+          237,
+          303
+        ],
+        "spawned_objects.append": [
+          114,
+          124,
+          139,
+          155,
+          171,
+          187,
+          211,
+          239,
+          243,
+          253,
+          260,
+          267,
+          304,
+          308,
+          344,
+          371,
+          378,
+          385,
+          392
+        ],
+        "root.add_child": [
+          123,
+          201,
+          210,
+          242,
+          252,
+          259,
+          266,
+          307,
+          370,
+          377,
+          384,
+          391
+        ],
+        "existing_ragdolls.is_empty": [
+          193
+        ],
+        "ragdoll.queue_free": [
+          196
+        ],
+        "obj.has_method": [
+          213
+        ],
+        "obj.set_freeze_enabled": [
+          214
+        ],
+        "astral_being.set_script": [
+          224
+        ],
+        "astral_being.add_to_group": [
+          226,
+          227
+        ],
+        "personality_values.size": [
+          231
+        ],
+        "object_counter.get": [
+          232,
+          289
+        ],
+        "bird.set_script": [
+          283
+        ],
+        "bird.add_to_group": [
+          285,
+          286
+        ],
+        "ai.set_script": [
+          297
+        ],
+        "bird.add_child": [
+          298
+        ],
+        "ai.setup": [
+          299
+        ],
+        "spawned_objects.size": [
+          314
+        ],
+        "floodgate.fifth_dimensional_magic": [
+          320,
+          352
+        ],
+        "obj.get_path": [
+          320,
+          352
+        ],
+        "obj.queue_free": [
+          325,
+          356
+        ],
+        "spawned_objects.clear": [
+          327
+        ],
+        "spawned_objects.filter": [
+          338
+        ],
+        "spawned_objects.erase": [
+          359
+        ]
+      },
+      "signal_connections": {},
+      "property_accesses": {
+        "position": [
+          94,
+          225,
+          284
+        ],
+        "global_position": [
+          97
+        ],
+        "global_transform": [
+          97
+        ]
+      },
+      "annotations": {},
+      "groups": [
+        "astral_beings",
+        "spawned_objects",
+        "birds"
+      ]
+    },
+    "scripts/core/asset_library.gd": {
+      "path": "scripts/core/asset_library.gd",
+      "extends": "Node",
+      "class_name": "",
+      "instantiated_classes": {
+        "JSON": [
+          454
+        ]
+      },
+      "method_calls": {
+        "asset_approval_needed.connect": [
+          148
+        ],
+        "asset_catalog.has": [
+          154,
+          169,
+          180,
+          185,
+          299,
+          463
+        ],
+        "asset_info.has": [
+          158,
+          158,
+          194,
+          221,
+          329
+        ],
+        "asset_catalog.erase": [
+          174
+        ],
+        "results.append": [
+          195,
+          212,
+          224,
+          234
+        ],
+        "search_term.to_lower": [
+          204
+        ],
+        "asset_id.to_lower": [
+          211
+        ],
+        "tag.to_lower": [
+          223
+        ],
+        "category.to_lower": [
+          233
+        ],
+        "asset_info.is_empty": [
+          246,
+          318
+        ],
+        "loaded_assets.has": [
+          252,
+          281,
+          324,
+          429,
+          433
+        ],
+        "approved_assets.append": [
+          258,
+          362
+        ],
+        "floodgate.queue_operation": [
+          261,
+          287,
+          333
+        ],
+        "loaded_assets.erase": [
+          294
+        ],
+        "assets.size": [
+          310
+        ],
+        "parent.get_path": [
+          337
+        ],
+        "asset_entry.is_empty": [
+          351
+        ],
+        "pending_approval.append": [
+          355
+        ],
+        "pending_approval.size": [
+          359,
+          369,
+          382
+        ],
+        "floodgate.approve_asset": [
+          363
+        ],
+        "pending_approval.remove_at": [
+          364,
+          374
+        ],
+        "rejected_assets.append": [
+          372
+        ],
+        "floodgate.reject_asset": [
+          373
+        ],
+        "pending_approval.duplicate": [
+          379
+        ],
+        "floodgate.set_asset_approval_required": [
+          386
+        ],
+        "loaded_assets.keys": [
+          426
+        ],
+        "FileAccess.open": [
+          438,
+          447
+        ],
+        "file.store_string": [
+          442
+        ],
+        "JSON.stringify": [
+          442
+        ],
+        "file.close": [
+          443,
+          452
+        ],
+        "file.get_as_text": [
+          451
+        ],
+        "json.parse": [
+          455
+        ]
+      },
+      "signal_connections": {
+        "defines:asset_catalog_updated": [
+          130
+        ],
+        "defines:asset_loaded": [
+          131
+        ],
+        "defines:asset_unloaded": [
+          132
+        ],
+        "defines:asset_approval_requested": [
+          133
+        ],
+        "defines:asset_approved": [
+          134
+        ],
+        "defines:asset_rejected": [
+          135
+        ],
+        "_on_asset_approval_needed": [
+          148
+        ]
+      },
+      "property_accesses": {},
+      "annotations": {},
+      "groups": []
+    },
+    "scripts/core/astral_beings_OLD_DEPRECATED.gd": {
+      "path": "scripts/core/astral_beings_OLD_DEPRECATED.gd",
+      "extends": "Node3D",
+      "class_name": "",
+      "instantiated_classes": {
+        "GPUParticles3D": [
+          76,
+          230
+        ],
+        "ParticleProcessMaterial": [
+          81,
+          234
+        ],
+        "SphereMesh": [
+          95
+        ]
+      },
+      "method_calls": {
+        "get_node": [
+          {
+            "line": 48,
+            "path": "/root/FloodgateController"
+          }
+        ],
+        "ragdoll_controller.connect": [
+          55,
+          56,
+          57
+        ],
+        "astral_beings.size": [
+          59,
+          77,
+          291,
+          309,
+          310
+        ],
+        "astral_beings.append": [
+          70
+        ],
+        "ragdoll_controller.get": [
+          139
+        ],
+        "ragdoll_body.has_method": [
+          144
+        ],
+        "ragdoll_body.get_body": [
+          145
+        ],
+        "ragdoll_body.apply_central_impulse": [
+          166
+        ],
+        "ragdoll_body.apply_torque_impulse": [
+          174
+        ],
+        "obj.is_in_group": [
+          187
+        ],
+        "obj.apply_central_force": [
+          192
+        ],
+        "all_objects.size": [
+          198,
+          199
+        ],
+        "random_object.apply_central_impulse": [
+          210
+        ],
+        "Time.get_ticks_msec": [
+          215
+        ],
+        "temp_particles.queue_free": [
+          248
+        ],
+        "modes.has": [
+          304
+        ]
+      },
+      "signal_connections": {
+        "\"player_needs_help\", _on_player_needs_help": [
+          55
+        ],
+        "\"object_picked_up\", _on_object_interaction": [
+          56
+        ],
+        "\"object_dropped\", _on_object_interaction": [
+          57
+        ]
+      },
+      "property_accesses": {
+        "scale": [
+          86,
+          87
+        ],
+        "position": [
+          103,
+          115,
+          116,
+          120,
+          177,
+          215
+        ],
+        "global_position": [
+          103,
+          120,
+          151,
+          184,
+          201,
+          232
+        ],
+        "rotation": [
+          154,
+          170,
+          172
+        ],
+        "angular_velocity": [
+          188
+        ],
+        "linear_velocity": [
+          191
+        ]
+      },
+      "annotations": {},
+      "groups": []
+    },
+    "scripts/core/astral_being_enhanced_OLD_DEPRECATED.gd": {
+      "path": "scripts/core/astral_being_enhanced_OLD_DEPRECATED.gd",
+      "extends": "Node3D",
+      "class_name": "",
+      "instantiated_classes": {
+        "OmniLight3D": [
+          62,
+          264
+        ],
+        "GPUParticles3D": [
+          70
+        ],
+        "ParticleProcessMaterial": [
+          76
+        ],
+        "SphereMesh": [
+          88
+        ],
+        "StandardMaterial3D": [
+          94
+        ],
+        "Area3D": [
+          105
+        ],
+        "CollisionShape3D": [
+          106
+        ],
+        "SphereShape3D": [
+          107
+        ],
+        "Node3D": [
+          262
+        ]
+      },
+      "method_calls": {
+        "area_detector.add_child": [
+          110
+        ],
+        "body_entered.connect": [
+          114
+        ],
+        "body_exited.connect": [
+          115
+        ],
+        "area_entered.connect": [
+          116
+        ],
+        "area_exited.connect": [
+          117
+        ],
+        "Time.get_ticks_msec": [
+          139
+        ],
+        "nearby_objects.is_empty": [
+          149
+        ],
+        "global_position.distance_to": [
+          151,
+          278
+        ],
+        "global_position.lerp": [
+          169
+        ],
+        "creation_particles.size": [
+          187,
+          193,
+          196
+        ],
+        "creation_particles.append": [
+          190
+        ],
+        "connected_objects.clear": [
+          227
+        ],
+        "connected_objects.append": [
+          232
+        ],
+        "connected_objects.size": [
+          235
+        ],
+        "obj.get_parent": [
+          249
+        ],
+        "orbit_target.get_parent": [
+          251
+        ],
+        "obj.get_groups": [
+          255
+        ],
+        "orbit_target.is_in_group": [
+          256
+        ],
+        "trail.add_child": [
+          268
+        ],
+        "global_position.angle_to": [
+          289
+        ],
+        "target.has_method": [
+          292
+        ],
+        "target.get_bounding_box": [
+          293
+        ],
+        "size.length": [
+          293
+        ],
+        "particle.queue_free": [
+          308
+        ],
+        "creation_particles.clear": [
+          309
+        ],
+        "physics_state_manager.prepare_object_for_manipulation": [
+          316
+        ],
+        "physics_state_manager.set_object_state": [
+          318
+        ],
+        "physics_state_manager.astral_being_manipulate": [
+          323
+        ],
+        "nearby_objects.append": [
+          332
+        ],
+        "nearby_objects.erase": [
+          335
+        ],
+        "area.get_parent": [
+          340,
+          345
+        ],
+        "touching_objects.append": [
+          342
+        ],
+        "touching_objects.erase": [
+          347
+        ]
+      },
+      "signal_connections": {
+        "_on_body_entered": [
+          114
+        ],
+        "_on_body_exited": [
+          115
+        ],
+        "_on_area_entered": [
+          116
+        ],
+        "_on_area_exited": [
+          117
+        ]
+      },
+      "property_accesses": {
+        "angular_velocity": [
+          80,
+          81
+        ],
+        "scale": [
+          82,
+          83
+        ],
+        "global_position": [
+          151,
+          162,
+          172,
+          278,
+          289
+        ],
+        "position": [
+          189,
+          200
+        ]
+      },
+      "annotations": {},
+      "groups": []
+    },
+    "scripts/core/astral_ragdoll_helper.gd": {
+      "path": "scripts/core/astral_ragdoll_helper.gd",
+      "extends": "Node",
+      "class_name": "",
+      "instantiated_classes": {},
+      "method_calls": {
+        "astral_beings.is_empty": [
+          48
+        ],
+        "active_helpers.clear": [
+          53,
+          75
+        ],
+        "astral_beings.size": [
+          54
+        ],
+        "helper_positions.size": [
+          54
+        ],
+        "active_helpers.append": [
+          56,
+          165
+        ],
+        "being.has_method": [
+          59,
+          72,
+          118,
+          166
+        ],
+        "being.start_assisting": [
+          60,
+          167
+        ],
+        "active_helpers.size": [
+          64,
+          99
+        ],
+        "being.set_movement_mode": [
+          73
+        ],
+        "ragdoll_target.has_method": [
+          88
+        ],
+        "ragdoll_target.get_body": [
+          89
+        ],
+        "ragdoll_target.get": [
+          90
+        ],
+        "ragdoll_body.has_method": [
+          92,
+          111,
+          114
+        ],
+        "ragdoll_body.get_body": [
+          93
+        ],
+        "being.has_property": [
+          107
+        ],
+        "ragdoll_body.get_linear_velocity": [
+          112
+        ],
+        "ragdoll_body.apply_central_impulse": [
+          115
+        ],
+        "being.speak": [
+          120
+        ],
+        "main_scene.get_node_or_null": [
+          137
+        ],
+        "ragdolls.is_empty": [
+          143
+        ],
+        "spawned.is_empty": [
+          148
+        ]
+      },
+      "signal_connections": {},
+      "property_accesses": {
+        "global_position": [
+          104
+        ]
+      },
+      "annotations": {},
+      "groups": []
+    },
+    "scripts/core/bird_ai_behavior.gd": {
+      "path": "scripts/core/bird_ai_behavior.gd",
+      "extends": "Node",
+      "class_name": "",
+      "instantiated_classes": {},
+      "method_calls": {
+        "bird_body.has_method": [
+          106,
+          123,
+          163,
+          220
+        ],
+        "global_position.distance_to": [
+          129,
+          169,
+          236,
+          252
+        ],
+        "target_object.has_method": [
+          147
+        ],
+        "target_object.queue_free": [
+          148
+        ],
+        "bird_body.set_ai_state": [
+          221
+        ],
+        "AIState.keys": [
+          265
+        ]
+      },
+      "signal_connections": {},
+      "property_accesses": {
+        "global_position": [
+          99,
+          124,
+          129,
+          164,
+          169,
+          236,
+          252
+        ]
+      },
+      "annotations": {},
+      "groups": []
+    },
+    "scripts/core/complete_ragdoll.gd": {
+      "path": "scripts/core/complete_ragdoll.gd",
+      "extends": "",
+      "class_name": "",
+      "instantiated_classes": {
+        "RigidBody3D": [
+          37,
+          66,
+          89
+        ],
+        "MeshInstance3D": [
+          46,
+          74,
+          97
+        ],
+        "BoxMesh": [
+          47,
+          75,
+          98
+        ],
+        "CollisionShape3D": [
+          52,
+          81,
+          104
+        ],
+        "BoxShape3D": [
+          53,
+          82,
+          105
+        ],
+        "Generic6DOFJoint3D": [
+          115
+        ],
+        "HingeJoint3D": [
+          131
+        ],
+        "StandardMaterial3D": [
+          149,
+          154
+        ]
+      },
+      "method_calls": {
+        "super._ready": [
+          32
+        ],
+        "body.add_child": [
+          50,
+          56
+        ],
+        "side.capitalize": [
+          67,
+          90,
+          116,
+          132
+        ],
+        "upper_leg.add_child": [
+          79,
+          86
+        ],
+        "lower_leg.add_child": [
+          102,
+          109
+        ],
+        "body.get_path": [
+          118
+        ],
+        "upper_leg.get_path": [
+          119,
+          134
+        ],
+        "hip_joint.set_param_x": [
+          123,
+          124
+        ],
+        "hip_joint.set_param_y": [
+          125,
+          126
+        ],
+        "hip_joint.set_param_z": [
+          127,
+          128
+        ],
+        "lower_leg.get_path": [
+          135
+        ],
+        "knee_joint.set_param": [
+          139,
+          140,
+          141,
+          142
+        ],
+        "part.get_child": [
+          161,
+          163,
+          165
+        ],
+        "super._physics_process": [
+          169
+        ],
+        "angular_velocity.length": [
+          174
+        ],
+        "angular_velocity.normalized": [
+          175
+        ],
+        "body_parts.has": [
+          197,
+          201
+        ],
+        "left_foot.apply_central_force": [
+          199
+        ],
+        "right_foot.apply_central_force": [
+          203
+        ],
+        "body.apply_central_force": [
+          206
+        ],
+        "body.apply_torque": [
+          216
+        ],
+        "body.apply_central_impulse": [
+          229
+        ],
+        "super.set_floppiness": [
+          247
+        ],
+        "joint.set_param": [
+          253
+        ]
+      },
+      "signal_connections": {},
+      "property_accesses": {
+        "position": [
+          71,
+          78,
+          85,
+          94,
+          101,
+          108,
+          120,
+          136
+        ],
+        "angular_velocity": [
+          174,
+          175,
+          220
+        ],
+        "rotation": [
+          210
+        ]
+      },
+      "annotations": {},
+      "groups": [
+        "ragdoll"
+      ]
+    },
+    "scripts/core/debug_3d_screen.gd": {
+      "path": "scripts/core/debug_3d_screen.gd",
+      "extends": "Node3D",
+      "class_name": "",
+      "instantiated_classes": {
+        "MeshInstance3D": [
+          53,
+          94,
+          119
+        ],
+        "PlaneMesh": [
+          54
+        ],
+        "StandardMaterial3D": [
+          63,
+          109
+        ],
+        "ImageTexture": [
+          71
+        ],
+        "Node3D": [
+          83
+        ],
+        "CylinderMesh": [
+          95
+        ],
+        "SphereMesh": [
+          120
+        ]
+      },
+      "method_calls": {
+        "Image.create": [
+          69
+        ],
+        "debug_image.fill": [
+          70,
+          135
+        ],
+        "debug_texture.set_image": [
+          72,
+          147
+        ],
+        "debug_gizmo.add_child": [
+          116,
+          127
+        ],
+        "debug_info.clear": [
+          153
+        ],
+        "world_builder.has_method": [
+          167
+        ],
+        "world_builder.get_spawned_objects": [
+          168
+        ],
+        "all_objects.append_array": [
+          169,
+          173
+        ],
+        "object_counts.get": [
+          178
+        ],
+        "all_objects.size": [
+          181
+        ],
+        "name.to_lower": [
+          185,
+          387,
+          387
+        ],
+        "debug_info.get": [
+          214,
+          222,
+          232,
+          381,
+          385
+        ],
+        "object_colors.get": [
+          216,
+          238,
+          278
+        ],
+        "objects.size": [
+          235,
+          248,
+          249
+        ],
+        "text.length": [
+          302
+        ],
+        "debug_image.get_width": [
+          304,
+          311
+        ],
+        "debug_image.get_height": [
+          304,
+          311
+        ],
+        "debug_image.set_pixel": [
+          312
+        ]
+      },
+      "signal_connections": {},
+      "property_accesses": {
+        "position": [
+          59,
+          102,
+          124,
+          370
+        ],
+        "rotation": [
+          60,
+          104,
+          106
+        ],
+        "global_position": [
+          244,
+          263,
+          293,
+          316,
+          325,
+          333,
+          334,
+          338,
+          339
+        ],
+        "global_transform": [
+          297
+        ],
+        "visible": [
+          317,
+          319
+        ],
+        "scale": [
+          357,
+          358,
+          362,
+          363
+        ]
+      },
+      "annotations": {},
+      "groups": []
+    },
+    "scripts/core/dimensional_ragdoll_system.gd": {
+      "path": "scripts/core/dimensional_ragdoll_system.gd",
+      "extends": "Node",
+      "class_name": "DimensionalRagdollSystem",
+      "instantiated_classes": {},
+      "method_calls": {
+        "Dimension.keys": [
+          109,
+          110,
+          337
+        ],
+        "interaction_history.append": [
+          159,
+          256
+        ],
+        "Time.get_ticks_msec": [
+          163,
+          259
+        ],
+        "known_spells.append": [
+          196
+        ],
+        "interaction_history.size": [
+          287
+        ],
+        "interaction_history.slice": [
+          291
+        ],
+        "ragdoll_body.apply_impulse": [
+          309
+        ],
+        "Dimension.size": [
+          336,
+          342
+        ]
+      },
+      "signal_connections": {
+        "defines:dimension_changed": [
+          11
+        ],
+        "defines:consciousness_evolved": [
+          12
+        ],
+        "defines:emotion_changed": [
+          13
+        ],
+        "defines:spell_learned": [
+          14
+        ]
+      },
+      "property_accesses": {
+        "global_position": [
+          331,
+          332
+        ]
+      },
+      "annotations": {},
+      "groups": []
+    },
+    "scripts/core/eden_action_system.gd": {
+      "path": "scripts/core/eden_action_system.gd",
+      "extends": "Node",
+      "class_name": "EdenActionSystem",
+      "instantiated_classes": {},
+      "method_calls": {
+        "action_definitions.has": [
+          90
+        ],
+        "Time.get_ticks_msec": [
+          108,
+          117,
+          150
+        ],
+        "action_queue.append": [
+          112
+        ],
+        "combo_buffer.append": [
+          119
+        ],
+        "combo_buffer.filter": [
+          126,
+          151
+        ],
+        "combo_buffer.clear": [
+          133
+        ],
+        "action_def.has": [
+          138,
+          143
+        ],
+        "target.is_class": [
+          140
+        ],
+        "selected_targets.size": [
+          143,
+          310
+        ],
+        "action_queue.is_empty": [
+          155
+        ],
+        "action_queue.pop_front": [
+          158
+        ],
+        "active_actions.append": [
+          164
+        ],
+        "steps.size": [
+          173
+        ],
+        "active_actions.size": [
+          203
+        ],
+        "active_actions.erase": [
+          214
+        ],
+        "combo_buffer.size": [
+          228,
+          231
+        ],
+        "pattern_array.size": [
+          228,
+          231,
+          233
+        ],
+        "pattern.has": [
+          237,
+          253
+        ],
+        "targets.append": [
+          249
+        ],
+        "target.get_class": [
+          263
+        ],
+        "target.get_groups": [
+          265
+        ],
+        "params.has": [
+          270
+        ],
+        "target.set_freeze_enabled": [
+          278
+        ],
+        "target.has_method": [
+          291
+        ],
+        "target.activate": [
+          292
+        ],
+        "selected_targets.clear": [
+          299,
+          306
+        ],
+        "selected_targets.append": [
+          303
+        ],
+        "selected_targets.duplicate": [
+          314
+        ]
+      },
+      "signal_connections": {
+        "defines:action_started": [
+          6
+        ],
+        "defines:action_completed": [
+          7
+        ],
+        "defines:action_failed": [
+          8
+        ],
+        "defines:combo_triggered": [
+          9
+        ]
+      },
+      "property_accesses": {
+        "global_position": [
+          264
+        ],
+        "position": [
+          282
+        ]
+      },
+      "annotations": {},
+      "groups": []
+    },
+    "scripts/core/floodgate_controller.gd": {
+      "path": "scripts/core/floodgate_controller.gd",
+      "extends": "Node",
+      "class_name": "var",
+      "instantiated_classes": {
+        "Mutex": [
+          65,
+          66,
+          67,
+          68,
+          69,
+          70,
+          71,
+          72,
+          73,
+          74,
+          98
+        ],
+        "SceneTreeTracker": [
+          138
+        ],
+        "Thread": [
+          149
+        ],
+        "StandardMaterial3D": [
+          1179
+        ]
+      },
+      "method_calls": {
+        "FileAccess.open": [
+          143
+        ],
+        "Time.get_datetime_string_from_system": [
+          145,
+          799
+        ],
+        "thread_pool.append": [
+          150
+        ],
+        "thread.is_started": [
+          160
+        ],
+        "thread.wait_to_finish": [
+          161
+        ],
+        "log_file.close": [
+          166
+        ],
+        "Time.get_ticks_msec": [
+          177,
+          1116,
+          1368
+        ],
+        "stored_delta_memory.append": [
+          178
+        ],
+        "stored_delta_memory.size": [
+          179,
+          1282
+        ],
+        "stored_delta_memory.pop_front": [
+          180
+        ],
+        "mutex.lock": [
+          196,
+          233,
+          254,
+          759,
+          764,
+          771
+        ],
+        "Time.get_unix_time_from_system": [
+          203,
+          252,
+          546,
+          738,
+          839,
+          842
+        ],
+        "operation_queue.size": [
+          209,
+          217,
+          235,
+          1314
+        ],
+        "mutex.unlock": [
+          210,
+          229,
+          236,
+          242,
+          263,
+          762,
+          767,
+          773
+        ],
+        "operation_queue.insert": [
+          219
+        ],
+        "operation_queue.append": [
+          224
+        ],
+        "operation_queue.pop_front": [
+          239
+        ],
+        "operation_history.append": [
+          255
+        ],
+        "operation_history.size": [
+          256,
+          1286
+        ],
+        "operation_history.pop_front": [
+          257
+        ],
+        "failed_operations.append": [
+          260
+        ],
+        "params.has": [
+          309,
+          309,
+          326,
+          332,
+          349,
+          368,
+          368,
+          386,
+          391,
+          403,
+          403,
+          421,
+          426,
+          438,
+          438,
+          464,
+          464,
+          517,
+          517,
+          555,
+          579,
+          579,
+          579,
+          610,
+          610,
+          629,
+          640,
+          647,
+          647,
+          662,
+          671,
+          671,
+          671,
+          671,
+          704,
+          704,
+          704,
+          704
+        ],
+        "ClassDB.instantiate": [
+          320
+        ],
+        "node.has": [
+          328,
+          589
+        ],
+        "node.set": [
+          329,
+          600
+        ],
+        "node.get_parent": [
+          339,
+          492,
+          495
+        ],
+        "parent.add_child": [
+          340
+        ],
+        "node.get_path": [
+          345,
+          736,
+          741,
+          749,
+          758,
+          770,
+          1328
+        ],
+        "node.queue_free": [
+          362
+        ],
+        "node.has_method": [
+          377,
+          377,
+          620,
+          1079
+        ],
+        "params.get": [
+          484,
+          697
+        ],
+        "old_parent.remove_child": [
+          494
+        ],
+        "new_parent.add_child": [
+          496
+        ],
+        "loaded_assets.has": [
+          525,
+          561
+        ],
+        "approved_assets.has": [
+          530
+        ],
+        "pending_assets.append": [
+          532
+        ],
+        "loaded_assets.erase": [
+          570
+        ],
+        "node.get": [
+          597
+        ],
+        "node.callv": [
+          630,
+          1080
+        ],
+        "node.call": [
+          632
+        ],
+        "node.has_signal": [
+          657
+        ],
+        "node.emit_signal": [
+          663,
+          665
+        ],
+        "source.has_signal": [
+          687
+        ],
+        "target.has_method": [
+          692
+        ],
+        "source.connect": [
+          698
+        ],
+        "source.is_connected": [
+          723
+        ],
+        "source.disconnect": [
+          724
+        ],
+        "node.get_class": [
+          737
+        ],
+        "registered_nodes.erase": [
+          748
+        ],
+        "node.get_children": [
+          753
+        ],
+        "node_operation_locks.has": [
+          761
+        ],
+        "OS.delay_msec": [
+          763
+        ],
+        "node_operation_locks.erase": [
+          772
+        ],
+        "pending_assets.erase": [
+          778,
+          790
+        ],
+        "approved_assets.append": [
+          779
+        ],
+        "caller_info.has": [
+          803,
+          803
+        ],
+        "log_buffer.append": [
+          813
+        ],
+        "log_buffer.is_empty": [
+          816
+        ],
+        "log_file.store_line": [
+          820
+        ],
+        "log_file.flush": [
+          822
+        ],
+        "log_buffer.clear": [
+          823
+        ],
+        "stack.size": [
+          828
+        ],
+        "source.get_file": [
+          831
+        ],
+        "mutex_actions.try_lock": [
+          864
+        ],
+        "mutex_actions.unlock": [
+          866,
+          868,
+          897,
+          1199
+        ],
+        "mutex_actions.lock": [
+          871,
+          1197
+        ],
+        "actions_to_be_called.size": [
+          872,
+          873,
+          874
+        ],
+        "actions_to_be_called.pop_front": [
+          875
+        ],
+        "data_to_process.size": [
+          878,
+          971,
+          1069,
+          1099
+        ],
+        "target_node.has": [
+          893,
+          979
+        ],
+        "target_node.set": [
+          894,
+          980
+        ],
+        "mutex_nodes_to_be_added.try_lock": [
+          901
+        ],
+        "mutex_nodes_to_be_added.unlock": [
+          903,
+          905,
+          954,
+          1211
+        ],
+        "mutex_nodes_to_be_added.lock": [
+          908,
+          1209
+        ],
+        "nodes_to_be_added.size": [
+          909,
+          910
+        ],
+        "nodes_to_be_added.pop_front": [
+          911
+        ],
+        "container_to_add.get_parent": [
+          925
+        ],
+        "root.add_child": [
+          926
+        ],
+        "scene_tree_tracker.track_node": [
+          932
+        ],
+        "parent_node.add_child": [
+          942
+        ],
+        "mutex_data_to_send.try_lock": [
+          958
+        ],
+        "mutex_data_to_send.unlock": [
+          960,
+          962,
+          991,
+          1221
+        ],
+        "mutex_data_to_send.lock": [
+          965,
+          1219
+        ],
+        "data_to_be_send.size": [
+          966,
+          967
+        ],
+        "data_to_be_send.pop_front": [
+          968
+        ],
+        "data_payload.has": [
+          982
+        ],
+        "data_payload.get": [
+          984
+        ],
+        "target_node.has_method": [
+          985,
+          1074
+        ],
+        "target_node.callv": [
+          986,
+          1075
+        ],
+        "data_to_be_send.append": [
+          989,
+          1220
+        ],
+        "movmentes_mutex.try_lock": [
+          995
+        ],
+        "movmentes_mutex.unlock": [
+          997,
+          999,
+          1026,
+          1231
+        ],
+        "movmentes_mutex.lock": [
+          1002,
+          1229
+        ],
+        "things_to_be_moved.size": [
+          1003,
+          1004
+        ],
+        "things_to_be_moved.pop_front": [
+          1005
+        ],
+        "mutex_for_unloading_nodes.try_lock": [
+          1030
+        ],
+        "mutex_for_unloading_nodes.unlock": [
+          1032,
+          1034,
+          1051,
+          1240
+        ],
+        "mutex_for_unloading_nodes.lock": [
+          1037,
+          1238
+        ],
+        "nodes_to_be_unloaded.size": [
+          1038,
+          1039
+        ],
+        "nodes_to_be_unloaded.pop_front": [
+          1040
+        ],
+        "target_node.queue_free": [
+          1047
+        ],
+        "mutex_function_call.try_lock": [
+          1055
+        ],
+        "mutex_function_call.unlock": [
+          1057,
+          1059,
+          1082,
+          1251
+        ],
+        "mutex_function_call.lock": [
+          1062,
+          1249
+        ],
+        "functions_to_be_called.size": [
+          1063,
+          1064
+        ],
+        "functions_to_be_called.pop_front": [
+          1065
+        ],
+        "mutex_additionals_call.try_lock": [
+          1086
+        ],
+        "mutex_additionals_call.unlock": [
+          1088,
+          1090,
+          1113,
+          1261
+        ],
+        "mutex_additionals_call.lock": [
+          1093,
+          1259
+        ],
+        "additionals_to_be_called.size": [
+          1094,
+          1095
+        ],
+        "additionals_to_be_called.pop_front": [
+          1096
+        ],
+        "ResourceLoader.exists": [
+          1104
+        ],
+        "mutex_messages_call.try_lock": [
+          1123
+        ],
+        "mutex_messages_call.unlock": [
+          1125,
+          1127,
+          1155,
+          1271
+        ],
+        "mutex_messages_call.lock": [
+          1130,
+          1269
+        ],
+        "messages_to_be_called.size": [
+          1131,
+          1132
+        ],
+        "messages_to_be_called.pop_front": [
+          1133
+        ],
+        "message_content.has": [
+          1142
+        ],
+        "message_content.get": [
+          1144
+        ],
+        "receiver_node.has_signal": [
+          1145
+        ],
+        "receiver_node.emit_signal": [
+          1146
+        ],
+        "receiver_node.has": [
+          1150
+        ],
+        "receiver_node.set": [
+          1151
+        ],
+        "messages_to_be_called.append": [
+          1154,
+          1270
+        ],
+        "mutex_for_container_state.try_lock": [
+          1159
+        ],
+        "mutex_for_container_state.unlock": [
+          1161,
+          1163
+        ],
+        "texture_storage_mutex.try_lock": [
+          1171
+        ],
+        "texture_storage.size": [
+          1173,
+          1174
+        ],
+        "texture_data.has": [
+          1180
+        ],
+        "texture_storage.erase": [
+          1183
+        ],
+        "texture_storage_mutex.unlock": [
+          1186,
+          1188,
+          1277
+        ],
+        "action_array.append": [
+          1194,
+          1195,
+          1196
+        ],
+        "actions_to_be_called.append": [
+          1198
+        ],
+        "creation_array.append": [
+          1204,
+          1205,
+          1206,
+          1208
+        ],
+        "nodes_to_be_added.append": [
+          1210
+        ],
+        "data_array.append": [
+          1216,
+          1217,
+          1218
+        ],
+        "movement_array.append": [
+          1226,
+          1227,
+          1228
+        ],
+        "things_to_be_moved.append": [
+          1230
+        ],
+        "unload_array.append": [
+          1236,
+          1237
+        ],
+        "nodes_to_be_unloaded.append": [
+          1239
+        ],
+        "function_array.append": [
+          1245,
+          1246,
+          1247,
+          1248
+        ],
+        "functions_to_be_called.append": [
+          1250
+        ],
+        "additional_array.append": [
+          1256,
+          1257,
+          1258
+        ],
+        "additionals_to_be_called.append": [
+          1260
+        ],
+        "message_array.append": [
+          1266,
+          1267,
+          1268
+        ],
+        "texture_storage_mutex.lock": [
+          1275
+        ],
+        "stored_delta_memory.slice": [
+          1283
+        ],
+        "operation_history.slice": [
+          1287
+        ],
+        "failed_operations.size": [
+          1290
+        ],
+        "failed_operations.slice": [
+          1291
+        ],
+        "loaded_assets.keys": [
+          1317
+        ],
+        "pending_assets.duplicate": [
+          1320
+        ],
+        "failed_operations.clear": [
+          1335
+        ],
+        "failed_operations.duplicate": [
+          1339
+        ],
+        "node.is_in_group": [
+          1345,
+          1345,
+          1353,
+          1370
+        ],
+        "node.has_meta": [
+          1347
+        ],
+        "astral_beings.size": [
+          1355,
+          1462
+        ],
+        "tracked_objects.size": [
+          1361,
+          1381,
+          1391,
+          1425,
+          1460,
+          1465
+        ],
+        "astral_beings.append": [
+          1371
+        ],
+        "node.get_meta": [
+          1377
+        ],
+        "tracked_objects.append": [
+          1379
+        ],
+        "object_creation_order.append": [
+          1380
+        ],
+        "tracked_objects.is_empty": [
+          1384
+        ],
+        "node_to_remove.queue_free": [
+          1404
+        ],
+        "tracked_objects.remove_at": [
+          1407,
+          1428
+        ],
+        "object_creation_order.erase": [
+          1408
+        ],
+        "astral_beings.is_empty": [
+          1411
+        ],
+        "oldest_being.has_method": [
+          1416
+        ],
+        "oldest_being.speak": [
+          1417
+        ],
+        "oldest_being.queue_free": [
+          1420
+        ],
+        "astral_beings.remove_at": [
+          1421
+        ],
+        "object_creation_order.filter": [
+          1431
+        ],
+        "astral_beings.filter": [
+          1435
+        ],
+        "being.has_method": [
+          1440
+        ],
+        "being.speak": [
+          1447
+        ],
+        "messages.size": [
+          1447
+        ],
+        "type_counts.get": [
+          1457
+        ]
+      },
+      "signal_connections": {
+        "defines:operation_queued": [
+          124
+        ],
+        "defines:operation_started": [
+          125
+        ],
+        "defines:operation_completed": [
+          126
+        ],
+        "defines:operation_failed": [
+          127
+        ],
+        "defines:asset_loaded": [
+          128
+        ],
+        "defines:asset_approval_needed": [
+          129
+        ],
+        "defines:node_registered": [
+          130
+        ],
+        "defines:node_unregistered": [
+          131
+        ],
+        "defines:missing": [
+          648,
+          672,
+          705
+        ],
+        "defines:emission": [
+          653
+        ],
+        "signal_name, Callable(target, method": [
+          698
+        ]
+      },
+      "property_accesses": {
+        "position": [
+          387,
+          389,
+          392,
+          394,
+          399,
+          883,
+          1014,
+          1016
+        ],
+        "global_position": [
+          387,
+          392
+        ],
+        "rotation": [
+          422,
+          424,
+          427,
+          429,
+          434,
+          886,
+          1019,
+          1021
+        ],
+        "scale": [
+          455,
+          460,
+          889,
+          1024
+        ],
+        "global_transform": [
+          487,
+          489,
+          504,
+          506
+        ]
+      },
+      "annotations": {},
+      "groups": []
+    },
+    "scripts/core/game_launcher.gd": {
+      "path": "scripts/core/game_launcher.gd",
+      "extends": "Node",
+      "class_name": "GameLauncher",
+      "instantiated_classes": {
+        "Node3D": [
+          239,
+          246
+        ]
+      },
+      "method_calls": {
+        "error_log.append": [
+          57,
+          83,
+          92,
+          110,
+          122,
+          125,
+          141,
+          151
+        ],
+        "actions_to_be_called.size": [
+          73
+        ],
+        "nodes_to_be_added.size": [
+          74
+        ],
+        "things_to_be_moved.size": [
+          75
+        ],
+        "functions_to_be_called.size": [
+          76
+        ],
+        "asset_library.get_catalog_summary": [
+          87
+        ],
+        "main_node.get_node_or_null": [
+          115
+        ],
+        "ResourceLoader.exists": [
+          137
+        ],
+        "script_path.get_file": [
+          138,
+          140
+        ],
+        "StandardizedObjects.create_object": [
+          144,
+          151
+        ],
+        "test_object.queue_free": [
+          147
+        ],
+        "system_status.size": [
+          157
+        ],
+        "status.contains": [
+          163
+        ],
+        "status.is_empty": [
+          165
+        ],
+        "error_log.is_empty": [
+          170
+        ],
+        "error_log.size": [
+          176,
+          180
+        ],
+        "Time.get_datetime_string_from_system": [
+          196
+        ],
+        "Engine.get_version_info": [
+          200
+        ],
+        "FileAccess.open": [
+          203
+        ],
+        "file.store_string": [
+          205
+        ],
+        "JSON.stringify": [
+          205
+        ],
+        "file.close": [
+          206
+        ],
+        "system_status.duplicate": [
+          211
+        ],
+        "error_log.duplicate": [
+          214
+        ],
+        "root.add_child": [
+          241
+        ],
+        "floodgate.first_dimensional_magic": [
+          243
+        ],
+        "floodgate.second_dimensional_magic": [
+          248
+        ],
+        "test_node.queue_free": [
+          254
+        ]
+      },
+      "signal_connections": {
+        "defines:systems_ready": [
+          11
+        ],
+        "defines:startup_error": [
+          12
+        ]
+      },
+      "property_accesses": {
+        "global_position": [
+          106
+        ]
+      },
+      "annotations": {},
+      "groups": []
+    },
+    "scripts/core/heightmap_world_generator.gd": {
+      "path": "scripts/core/heightmap_world_generator.gd",
+      "extends": "Node3D",
+      "class_name": "",
+      "instantiated_classes": {
+        "FastNoiseLite": [
+          63
+        ],
+        "Node3D": [
+          72,
+          77,
+          82,
+          315,
+          365
+        ],
+        "MeshInstance3D": [
+          137,
+          320,
+          334,
+          370,
+          402,
+          472
+        ],
+        "ArrayMesh": [
+          142
+        ],
+        "StandardMaterial3D": [
+          210,
+          328,
+          341,
+          377,
+          407,
+          478
+        ],
+        "StaticBody3D": [
+          219
+        ],
+        "CylinderMesh": [
+          321
+        ],
+        "SphereMesh": [
+          335,
+          371,
+          403
+        ],
+        "RigidBody3D": [
+          398
+        ],
+        "CollisionShape3D": [
+          416,
+          487
+        ],
+        "SphereShape3D": [
+          417
+        ],
+        "Area3D": [
+          467
+        ],
+        "PlaneMesh": [
+          473
+        ],
+        "BoxShape3D": [
+          488
+        ]
+      },
+      "method_calls": {
+        "terrain_generated.emit": [
+          105
+        ],
+        "heightmap_data.clear": [
+          109
+        ],
+        "heightmap_data.resize": [
+          110
+        ],
+        "noise.get_noise_2d": [
+          118
+        ],
+        "get_node": [
+          {
+            "line": 139,
+            "path": "Terrain"
+          },
+          {
+            "line": 231,
+            "path": "Vegetation"
+          },
+          {
+            "line": 232,
+            "path": "/root/WorldBuilder"
+          },
+          {
+            "line": 435,
+            "path": "Water"
+          }
+        ],
+        "arrays.resize": [
+          144
+        ],
+        "vertices.append": [
+          160
+        ],
+        "uvs.append": [
+          161
+        ],
+        "colors.append": [
+          176
+        ],
+        "vertices.size": [
+          179
+        ],
+        "normals.append": [
+          180
+        ],
+        "indices.append": [
+          189,
+          190,
+          191,
+          194,
+          195,
+          196
+        ],
+        "array_mesh.add_surface_from_arrays": [
+          206
+        ],
+        "terrain_mesh_instance.add_child": [
+          221
+        ],
+        "terrain_mesh_instance.create_trimesh_collision": [
+          224
+        ],
+        "vegetation_placed.emit": [
+          248
+        ],
+        "container.add_child": [
+          275,
+          305
+        ],
+        "world_builder.register_world_object": [
+          280,
+          310
+        ],
+        "tree_root.add_child": [
+          331,
+          344,
+          359
+        ],
+        "tree_root.add_to_group": [
+          361
+        ],
+        "bush_root.add_child": [
+          380,
+          392
+        ],
+        "bush_root.add_to_group": [
+          394
+        ],
+        "fruit.add_child": [
+          413,
+          420
+        ],
+        "fruit.add_to_group": [
+          425,
+          426
+        ],
+        "water_container.add_child": [
+          464
+        ],
+        "mesh.rotate_x": [
+          476
+        ],
+        "water.add_child": [
+          484,
+          492
+        ],
+        "water.add_to_group": [
+          494
+        ]
+      },
+      "signal_connections": {
+        "defines:terrain_generated": [
+          10
+        ],
+        "defines:vegetation_placed": [
+          11
+        ]
+      },
+      "property_accesses": {
+        "position": [
+          316,
+          326,
+          339,
+          354,
+          366,
+          375,
+          387,
+          468,
+          491
+        ]
+      },
+      "annotations": {},
+      "groups": [
+        "trees",
+        "bushes",
+        "fruit",
+        "food",
+        "water"
+      ]
+    },
+    "scripts/core/mouse_interaction_system.gd": {
+      "path": "scripts/core/mouse_interaction_system.gd",
+      "extends": "Node",
+      "class_name": "",
+      "instantiated_classes": {
+        "PanelContainer": [
+          105
+        ],
+        "StyleBoxFlat": [
+          110
+        ],
+        "RichTextLabel": [
+          119
+        ],
+        "CanvasLayer": [
+          132
+        ],
+        "StandardMaterial3D": [
+          423
+        ]
+      },
+      "method_calls": {
+        "debug_panel.get_parent": [
+          88
+        ],
+        "canvas_layer.get_parent": [
+          89,
+          90
+        ],
+        "canvas_layer.queue_free": [
+          91
+        ],
+        "viewport.get_camera_3d": [
+          97
+        ],
+        "panel_style.set_border_width_all": [
+          113
+        ],
+        "panel_style.set_corner_radius_all": [
+          114
+        ],
+        "panel_style.set_content_margin_all": [
+          115
+        ],
+        "debug_panel.add_theme_stylebox_override": [
+          116
+        ],
+        "debug_panel.add_child": [
+          126
+        ],
+        "main_viewport.add_child": [
+          137
+        ],
+        "canvas_layer.add_child": [
+          138
+        ],
+        "camera.project_ray_origin": [
+          195,
+          374
+        ],
+        "camera.project_ray_normal": [
+          196,
+          375
+        ],
+        "camera.get_world_3d": [
+          199,
+          377
+        ],
+        "PhysicsRayQueryParameters3D.create": [
+          200,
+          378
+        ],
+        "space_state.intersect_ray": [
+          205,
+          383
+        ],
+        "target.get_parent": [
+          223,
+          223,
+          224,
+          225
+        ],
+        "selected_object.get_class": [
+          248
+        ],
+        "linear_velocity.length": [
+          267
+        ],
+        "angular_velocity.length": [
+          268
+        ],
+        "selected_object.get_meta_list": [
+          274
+        ],
+        "meta_list.size": [
+          275
+        ],
+        "selected_object.get_meta": [
+          277
+        ],
+        "selected_object.get_groups": [
+          283
+        ],
+        "groups.size": [
+          284
+        ],
+        "selected_object.get_child_count": [
+          288
+        ],
+        "selected_object.get_child": [
+          292
+        ],
+        "child.get_class": [
+          293
+        ],
+        "selected_object.get_script": [
+          298,
+          299
+        ],
+        "script_path.get_file": [
+          300
+        ],
+        "all_objects.size": [
+          339
+        ],
+        "highlighted_colliders.append": [
+          390
+        ],
+        "meshes_to_highlight.append": [
+          397,
+          402,
+          408,
+          411
+        ],
+        "collider.get_children": [
+          400,
+          455
+        ],
+        "meshes_to_highlight.is_empty": [
+          405
+        ],
+        "collider.get_parent": [
+          405,
+          406,
+          460,
+          461
+        ],
+        "parent.get_children": [
+          409,
+          464
+        ],
+        "mesh.has_meta": [
+          416,
+          470
+        ],
+        "mesh.get_surface_override_material": [
+          417
+        ],
+        "mesh.surface_get_material": [
+          418,
+          419
+        ],
+        "mesh.set_meta": [
+          420
+        ],
+        "mesh.get_meta": [
+          424,
+          471
+        ],
+        "mesh.set_surface_override_material": [
+          441,
+          472,
+          476
+        ],
+        "meshes_to_reset.append": [
+          452,
+          457,
+          463,
+          466
+        ],
+        "mesh.remove_meta": [
+          473
+        ],
+        "highlighted_colliders.clear": [
+          478
+        ],
+        "Time.get_ticks_msec": [
+          483
+        ],
+        "combo_array.is_empty": [
+          486
+        ],
+        "combo_array.append": [
+          491
+        ],
+        "combo_array.size": [
+          494,
+          500,
+          506
+        ],
+        "combo_array.pop_front": [
+          495
+        ],
+        "display.append": [
+          521
+        ],
+        "node.is_in_group": [
+          532
+        ],
+        "action_system.queue_action": [
+          536
+        ],
+        "result.has": [
+          548,
+          551
+        ],
+        "ragdoll.has_method": [
+          578
+        ],
+        "ragdoll.cast_spell": [
+          579
+        ]
+      },
+      "signal_connections": {},
+      "property_accesses": {
+        "visible": [
+          107,
+          233,
+          237,
+          323,
+          329,
+          330,
+          331,
+          568
+        ],
+        "position": [
+          145,
+          173,
+          175,
+          188,
+          308,
+          314,
+          315,
+          332
+        ],
+        "global_position": [
+          251,
+          341
+        ],
+        "rotation": [
+          255
+        ],
+        "scale": [
+          259
+        ],
+        "linear_velocity": [
+          267
+        ],
+        "angular_velocity": [
+          268
+        ]
+      },
+      "annotations": {},
+      "groups": []
+    },
+    "scripts/core/multi_layer_record_system.gd": {
+      "path": "scripts/core/multi_layer_record_system.gd",
+      "extends": "Node",
+      "class_name": "",
+      "instantiated_classes": {
+        "Mutex": [
+          19
+        ]
+      },
+      "method_calls": {
+        "layer_mutex.lock": [
+          47,
+          82,
+          194,
+          215,
+          248,
+          279
+        ],
+        "record_layers.has": [
+          50,
+          50,
+          245
+        ],
+        "layer_mutex.unlock": [
+          51,
+          56,
+          64,
+          98,
+          202,
+          234,
+          262,
+          288,
+          291
+        ],
+        "data.is_empty": [
+          90,
+          92,
+          225,
+          227
+        ],
+        "to_remove.append": [
+          224,
+          226,
+          228
+        ],
+        "Time.get_ticks_msec": [
+          253,
+          254,
+          285
+        ],
+        "wrapped.has": [
+          282,
+          284
+        ]
+      },
+      "signal_connections": {
+        "defines:state_changed": [
+          37
+        ],
+        "defines:layer_transition": [
+          38
+        ]
+      },
+      "property_accesses": {},
+      "annotations": {},
+      "groups": []
+    },
+    "scripts/core/physics_state_manager.gd": {
+      "path": "scripts/core/physics_state_manager.gd",
+      "extends": "Node",
+      "class_name": "",
+      "instantiated_classes": {},
+      "method_calls": {
+        "state_change_queue.append": [
+          64
+        ],
+        "Time.get_ticks_msec": [
+          69
+        ],
+        "object_states.get": [
+          79
+        ],
+        "state_change_queue.size": [
+          108
+        ],
+        "completed_transitions.append": [
+          115
+        ],
+        "completed_transitions.size": [
+          121
+        ],
+        "state_change_queue.remove_at": [
+          122
+        ],
+        "object.has_method": [
+          146,
+          203
+        ],
+        "object.set_physics_process": [
+          171,
+          181,
+          190
+        ],
+        "shapes.append": [
+          220
+        ],
+        "node.get_children": [
+          222
+        ],
+        "shapes.append_array": [
+          223
+        ],
+        "gravity_center.distance_to": [
+          250
+        ],
+        "object.apply_central_force": [
+          257
+        ],
+        "target_object.apply_central_force": [
+          285
+        ],
+        "result.append": [
+          309
+        ],
+        "object_states.size": [
+          327
+        ],
+        "PhysicsState.values": [
+          332
+        ]
+      },
+      "signal_connections": {
+        "defines:state_changed": [
+          37
+        ],
+        "defines:gravity_modified": [
+          38
+        ]
+      },
+      "property_accesses": {
+        "modulate": [
+          148,
+          204
+        ],
+        "global_position": [
+          249,
+          250,
+          280
+        ]
+      },
+      "annotations": {},
+      "groups": []
+    },
+    "scripts/core/pigeon_input_manager.gd": {
+      "path": "scripts/core/pigeon_input_manager.gd",
+      "extends": "Node",
+      "class_name": "",
+      "instantiated_classes": {
+        "InputEventKey": [
+          32
+        ]
+      },
+      "method_calls": {
+        "InputMap.has_action": [
+          28
+        ],
+        "InputMap.add_action": [
+          29
+        ],
+        "InputMap.action_add_event": [
+          34
+        ]
+      },
+      "signal_connections": {},
+      "property_accesses": {},
+      "annotations": {},
+      "groups": []
+    },
+    "scripts/core/pigeon_physics_controller.gd": {
+      "path": "scripts/core/pigeon_physics_controller.gd",
+      "extends": "CharacterBody3D",
+      "class_name": "",
+      "instantiated_classes": {
+        "Node3D": [
+          88,
+          94,
+          98,
+          103,
+          107,
+          112
+        ],
+        "MeshInstance3D": [
+          118
+        ],
+        "StandardMaterial3D": [
+          126
+        ],
+        "CollisionShape3D": [
+          133
+        ],
+        "CapsuleShape3D": [
+          134
+        ],
+        "ArrayMesh": [
+          288
+        ]
+      },
+      "method_calls": {
+        "Input.get_vector": [
+          194,
+          221
+        ],
+        "Input.is_action_pressed": [
+          229,
+          231
+        ],
+        "Time.get_ticks_msec": [
+          250
+        ],
+        "vertices.append": [
+          302,
+          303,
+          304,
+          307,
+          308,
+          309
+        ],
+        "normals.append": [
+          313
+        ],
+        "colors.append": [
+          328
+        ],
+        "arrays.resize": [
+          332
+        ],
+        "mesh.clear_surfaces": [
+          337
+        ],
+        "mesh.add_surface_from_arrays": [
+          338
+        ],
+        "mode_changed.emit": [
+          346
+        ],
+        "event.is_action_pressed": [
+          370,
+          373,
+          378
+        ]
+      },
+      "signal_connections": {
+        "defines:mode_changed": [
+          10
+        ],
+        "defines:balance_shifted": [
+          11
+        ]
+      },
+      "property_accesses": {
+        "position": [
+          90,
+          114,
+          181,
+          182,
+          186,
+          187,
+          191,
+          212,
+          213,
+          217,
+          218,
+          242,
+          243,
+          254,
+          255,
+          278,
+          279,
+          295,
+          296,
+          297,
+          298,
+          299,
+          360,
+          361,
+          362,
+          363
+        ]
+      },
+      "annotations": {},
+      "groups": []
+    },
+    "scripts/core/ragdoll_controller.gd": {
+      "path": "scripts/core/ragdoll_controller.gd",
+      "extends": "Node3D",
+      "class_name": "",
+      "instantiated_classes": {
+        "CharacterBody3D": [
+          72
+        ]
+      },
+      "method_calls": {
+        "get_node": [
+          {
+            "line": 52,
+            "path": "/root/FloodgateController"
+          },
+          {
+            "line": 53,
+            "path": "/root/WorldBuilder"
+          }
+        ],
+        "ragdoll_body.set_script": [
+          74
+        ],
+        "current_scene.add_child": [
+          78
+        ],
+        "ragdoll_nodes.size": [
+          87
+        ],
+        "ragdoll_body.has_method": [
+          91,
+          191,
+          196,
+          302,
+          316,
+          323,
+          330,
+          408,
+          411
+        ],
+        "nearby_objects.size": [
+          130,
+          162
+        ],
+        "patrol_points.size": [
+          136,
+          153
+        ],
+        "ragdoll_pos.distance_to": [
+          145,
+          234
+        ],
+        "ragdoll_body.get_body": [
+          197
+        ],
+        "body.apply_central_force": [
+          208
+        ],
+        "direction.length": [
+          211
+        ],
+        "body.apply_torque": [
+          216
+        ],
+        "ragdoll_body.start_walking": [
+          219,
+          409
+        ],
+        "nearby_objects.append": [
+          236
+        ],
+        "nearby_objects.sort_custom": [
+          239
+        ],
+        "global_position.distance_to": [
+          239,
+          239,
+          292,
+          362
+        ],
+        "ragdoll_body.come_to_position": [
+          308,
+          310
+        ],
+        "ragdoll_body.pick_up_nearest_object": [
+          317
+        ],
+        "ragdoll_body.handle_console_command": [
+          324
+        ],
+        "ragdoll_body.organize_nearby_objects": [
+          331
+        ],
+        "object.add_to_group": [
+          370
+        ],
+        "held_object.remove_from_group": [
+          391
+        ],
+        "ragdoll_body.stop_walking": [
+          412
+        ],
+        "nearby.size": [
+          433
+        ]
+      },
+      "signal_connections": {
+        "defines:object_picked_up": [
+          42
+        ],
+        "defines:object_dropped": [
+          43
+        ],
+        "defines:movement_started": [
+          44
+        ],
+        "defines:movement_completed": [
+          45
+        ],
+        "defines:player_needs_help": [
+          46
+        ]
+      },
+      "property_accesses": {
+        "position": [
+          75
+        ],
+        "global_position": [
+          144,
+          203,
+          227,
+          234,
+          239,
+          247,
+          250,
+          268,
+          292,
+          306,
+          354,
+          362,
+          379,
+          386,
+          427
+        ],
+        "rotation": [
+          213
+        ],
+        "linear_velocity": [
+          251,
+          387
+        ],
+        "angular_velocity": [
+          254,
+          388
+        ],
+        "global_transform": [
+          306,
+          427
+        ]
+      },
+      "annotations": {
+        "@onready": [
+          {
+            "line": 11,
+            "var": "ragdoll_body",
+            "value": "null"
+          }
+        ]
+      },
+      "groups": [
+        "carried"
+      ]
+    },
+    "scripts/core/ragdoll_with_legs.gd": {
+      "path": "scripts/core/ragdoll_with_legs.gd",
+      "extends": "Node3D",
+      "class_name": "",
+      "instantiated_classes": {
+        "RigidBody3D": [
+          46,
+          64,
+          85,
+          102,
+          121
+        ],
+        "MeshInstance3D": [
+          51,
+          70,
+          91,
+          108,
+          127
+        ],
+        "BoxMesh": [
+          52,
+          71,
+          109
+        ],
+        "CollisionShape3D": [
+          57,
+          77,
+          96,
+          114,
+          131
+        ],
+        "BoxShape3D": [
+          58,
+          78,
+          115
+        ],
+        "Generic6DOFJoint3D": [
+          137,
+          151
+        ],
+        "HingeJoint3D": [
+          164,
+          174
+        ],
+        "StandardMaterial3D": [
+          185,
+          190
+        ]
+      },
+      "method_calls": {
+        "body.add_child": [
+          55,
+          61
+        ],
+        "left_leg.add_child": [
+          75,
+          82
+        ],
+        "right_leg.add_child": [
+          94,
+          99
+        ],
+        "left_foot.add_child": [
+          112,
+          118
+        ],
+        "right_foot.add_child": [
+          129,
+          133
+        ],
+        "body.get_path": [
+          140,
+          154
+        ],
+        "left_leg.get_path": [
+          141,
+          167
+        ],
+        "left_hip_joint.set_param_x": [
+          145,
+          146
+        ],
+        "left_hip_joint.set_param_z": [
+          147,
+          148
+        ],
+        "right_leg.get_path": [
+          155,
+          177
+        ],
+        "right_hip_joint.set_param_x": [
+          158,
+          159
+        ],
+        "right_hip_joint.set_param_z": [
+          160,
+          161
+        ],
+        "left_foot.get_path": [
+          168
+        ],
+        "left_knee_joint.set_param": [
+          170,
+          171
+        ],
+        "right_foot.get_path": [
+          178
+        ],
+        "right_knee_joint.set_param": [
+          180,
+          181
+        ],
+        "body.get_child": [
+          195,
+          196
+        ],
+        "leg.get_child": [
+          199,
+          200
+        ],
+        "left_foot.apply_central_force": [
+          223
+        ],
+        "right_foot.apply_central_force": [
+          224
+        ],
+        "body.apply_central_force": [
+          227
+        ],
+        "body.apply_torque": [
+          233
+        ],
+        "body.apply_central_impulse": [
+          242
+        ]
+      },
+      "signal_connections": {},
+      "property_accesses": {
+        "position": [
+          67,
+          74,
+          81,
+          88,
+          93,
+          98,
+          105,
+          124,
+          142,
+          156,
+          169,
+          179
+        ],
+        "rotation": [
+          231
+        ]
+      },
+      "annotations": {},
+      "groups": [
+        "ragdoll"
+      ]
+    },
+    "scripts/core/scene_setup.gd": {
+      "path": "scripts/core/scene_setup.gd",
+      "extends": "Node",
+      "class_name": "",
+      "instantiated_classes": {
+        "Node3D": [
+          30
+        ]
+      },
+      "method_calls": {
+        "ragdoll_controller.set_script": [
+          32
+        ],
+        "main_scene.add_child": [
+          37
+        ],
+        "ragdoll.is_in_group": [
+          73,
+          75
+        ],
+        "ragdoll.add_to_group": [
+          76,
+          79
+        ],
+        "get_node": [
+          {
+            "line": 85,
+            "path": "/root/WorldBuilder"
+          }
+        ],
+        "world_builder.create_tree_at_position": [
+          92
+        ],
+        "world_builder.create_box_at_position": [
+          96
+        ]
+      },
+      "signal_connections": {},
+      "property_accesses": {},
+      "annotations": {},
+      "groups": [
+        "objects",
+        "enhanced_ragdoll"
+      ]
+    },
+    "scripts/core/scene_tree_tracker.gd": {
+      "path": "scripts/core/scene_tree_tracker.gd",
+      "extends": "Node",
+      "class_name": "SceneTreeTracker",
+      "instantiated_classes": {
+        "Mutex": [
+          13
+        ]
+      },
+      "method_calls": {
+        "tree_mutex.lock": [
+          61,
+          73,
+          122,
+          130,
+          195,
+          253
+        ],
+        "SCENE_TREE_BLUEPRINT.duplicate": [
+          62
+        ],
+        "root_node.get_class": [
+          65
+        ],
+        "Time.get_ticks_msec": [
+          66,
+          99
+        ],
+        "tree_mutex.unlock": [
+          69,
+          118,
+          125,
+          140,
+          148,
+          151,
+          154,
+          197,
+          255
+        ],
+        "node.get_path": [
+          75,
+          123
+        ],
+        "node_path.split": [
+          76
+        ],
+        "filtered_parts.append": [
+          82,
+          216
+        ],
+        "path_parts.size": [
+          88,
+          95,
+          106,
+          134,
+          137,
+          227
+        ],
+        "current_branch.has": [
+          92
+        ],
+        "BRANCH_BLUEPRINT.duplicate": [
+          93
+        ],
+        "node.get_class": [
+          95,
+          109
+        ],
+        "current_full_path.get_base_dir": [
+          101
+        ],
+        "node_path_get.split": [
+          129
+        ],
+        "current.has": [
+          136,
+          145,
+          229,
+          240
+        ],
+        "start_branch.is_empty": [
+          159
+        ],
+        "status_symbol.get": [
+          165
+        ],
+        "start_branch.get": [
+          167,
+          168
+        ],
+        "all_items.keys": [
+          177
+        ],
+        "keys.size": [
+          178,
+          182
+        ],
+        "branch.get": [
+          204,
+          204,
+          270
+        ],
+        "nodes.append": [
+          205
+        ],
+        "branch.has": [
+          207,
+          275
+        ],
+        "path.split": [
+          212
+        ],
+        "filtered_parts.is_empty": [
+          218
+        ],
+        "parent_branches.append": [
+          230
+        ],
+        "current.erase": [
+          241
+        ],
+        "by_type.has": [
+          271
+        ]
+      },
+      "signal_connections": {},
+      "property_accesses": {},
+      "annotations": {},
+      "groups": []
+    },
+    "scripts/core/seven_part_ragdoll_integration.gd": {
+      "path": "scripts/core/seven_part_ragdoll_integration.gd",
+      "extends": "CharacterBody3D",
+      "class_name": "",
+      "instantiated_classes": {
+        "Node3D": [
+          112
+        ],
+        "RigidBody3D": [
+          123
+        ],
+        "CollisionShape3D": [
+          127
+        ],
+        "CapsuleShape3D": [
+          128
+        ],
+        "BoxShape3D": [
+          134,
+          146
+        ],
+        "MeshInstance3D": [
+          157
+        ],
+        "BoxMesh": [
+          160
+        ],
+        "CapsuleMesh": [
+          164
+        ],
+        "StandardMaterial3D": [
+          170
+        ],
+        "Generic6DOFJoint3D": [
+          189,
+          195
+        ],
+        "HingeJoint3D": [
+          202,
+          208,
+          215,
+          221
+        ],
+        "Timer": [
+          266
+        ]
+      },
+      "method_calls": {
+        "Time.get_unix_time_from_system": [
+          54
+        ],
+        "SimpleWalker.stand_up": [
+          59,
+          385
+        ],
+        "created_parts.has": [
+          87
+        ],
+        "leg_bones.append": [
+          96
+        ],
+        "foot_bones.append": [
+          98
+        ],
+        "spine_bones.append": [
+          100
+        ],
+        "walker.set_script": [
+          114
+        ],
+        "part.add_child": [
+          154,
+          181
+        ],
+        "parts.has": [
+          188,
+          188,
+          194,
+          194,
+          201,
+          201,
+          207,
+          207,
+          214,
+          214,
+          220,
+          220
+        ],
+        "joint.set_node_a": [
+          190,
+          196,
+          203,
+          209,
+          216,
+          222
+        ],
+        "joint.set_node_b": [
+          191,
+          197,
+          204,
+          210,
+          217,
+          223
+        ],
+        "main_controller.has_method": [
+          232
+        ],
+        "timeout.connect": [
+          268
+        ],
+        "phrases.size": [
+          282
+        ],
+        "ragdoll_dialogue_started.emit": [
+          286,
+          394
+        ],
+        "SimpleWalker.start_walking": [
+          302
+        ],
+        "global_position.distance_to": [
+          309,
+          319,
+          351
+        ],
+        "Time.get_ticks_msec": [
+          315
+        ],
+        "ragdoll_state_changed.emit": [
+          327,
+          339,
+          360,
+          375
+        ],
+        "SimpleWalker.stop_walking": [
+          337
+        ],
+        "objects.size": [
+          370
+        ],
+        "ragdoll_position_updated.emit": [
+          387
+        ],
+        "args.size": [
+          410,
+          430
+        ]
+      },
+      "signal_connections": {
+        "defines:ragdoll_state_changed": [
+          32
+        ],
+        "defines:ragdoll_position_updated": [
+          33
+        ],
+        "defines:ragdoll_dialogue_started": [
+          34
+        ],
+        "_speak_random_phrase": [
+          268
+        ]
+      },
+      "property_accesses": {
+        "position": [
+          84
+        ],
+        "global_position": [
+          351,
+          359,
+          373
+        ]
+      },
+      "annotations": {},
+      "groups": [
+        "ragdoll"
+      ]
+    },
+    "scripts/core/shape_gesture_system.gd": {
+      "path": "scripts/core/shape_gesture_system.gd",
+      "extends": "Node",
+      "class_name": "ShapeGestureSystem",
+      "instantiated_classes": {},
+      "method_calls": {
+        "gesture_points.clear": [
+          79
+        ],
+        "gesture_points.append": [
+          80,
+          97
+        ],
+        "Time.get_ticks_msec": [
+          81,
+          90
+        ],
+        "pos.distance_to": [
+          96
+        ],
+        "gesture_points.size": [
+          101,
+          110
+        ],
+        "gesture_points.pop_front": [
+          102
+        ],
+        "points.size": [
+          127,
+          149,
+          156,
+          162,
+          169,
+          211,
+          219,
+          229,
+          248,
+          255,
+          270,
+          300,
+          305,
+          307,
+          317,
+          322,
+          324
+        ],
+        "p.distance_to": [
+          161,
+          167,
+          241
+        ],
+        "corners.size": [
+          179,
+          189,
+          208,
+          208
+        ],
+        "line_dir.dot": [
+          240
+        ],
+        "start.distance_to": [
+          244
+        ],
+        "last_dir.angle_to": [
+          258
+        ],
+        "corners.append": [
+          277
+        ],
+        "v1.dot": [
+          284
+        ],
+        "max_p.distance_to": [
+          296
+        ],
+        "simplified.append": [
+          325
+        ]
+      },
+      "signal_connections": {
+        "defines:shape_detected": [
+          11
+        ],
+        "defines:gesture_completed": [
+          12
+        ],
+        "defines:spell_gesture_recognized": [
+          13
+        ]
+      },
+      "property_accesses": {},
+      "annotations": {},
+      "groups": []
+    },
+    "scripts/core/simple_ragdoll_walker.gd": {
+      "path": "scripts/core/simple_ragdoll_walker.gd",
+      "extends": "Node3D",
+      "class_name": "",
+      "instantiated_classes": {},
+      "method_calls": {
+        "body_parts.size": [
+          40,
+          68,
+          184,
+          196
+        ],
+        "parts_dict.has": [
+          46
+        ],
+        "body_parts.append": [
+          48,
+          55,
+          74
+        ],
+        "body_parts.is_empty": [
+          58
+        ],
+        "name.to_lower": [
+          64
+        ],
+        "node.get_children": [
+          76
+        ],
+        "move_direction.length": [
+          107,
+          148
+        ],
+        "pelvis.apply_central_force": [
+          120,
+          145
+        ],
+        "rotation.length": [
+          124
+        ],
+        "global_position.distance_to": [
+          131
+        ],
+        "body.apply_central_force": [
+          134
+        ],
+        "ragdoll_root.move_and_slide": [
+          140
+        ],
+        "look_direction.length": [
+          151
+        ],
+        "ragdoll_root.look_at": [
+          152
+        ],
+        "direction.normalized": [
+          166
+        ]
+      },
+      "signal_connections": {},
+      "property_accesses": {
+        "global_position": [
+          115,
+          131,
+          133,
+          152,
+          178,
+          187,
+          198
+        ],
+        "rotation": [
+          123,
+          125,
+          179,
+          188
+        ],
+        "angular_velocity": [
+          126,
+          162,
+          181,
+          190
+        ],
+        "linear_velocity": [
+          161,
+          180,
+          189
+        ]
+      },
+      "annotations": {},
+      "groups": []
+    },
+    "scripts/core/simple_walking_ragdoll.gd": {
+      "path": "scripts/core/simple_walking_ragdoll.gd",
+      "extends": "Node3D",
+      "class_name": "",
+      "instantiated_classes": {
+        "RigidBody3D": [
+          42,
+          78
+        ],
+        "MeshInstance3D": [
+          52,
+          89
+        ],
+        "BoxMesh": [
+          53,
+          90
+        ],
+        "StandardMaterial3D": [
+          56,
+          95
+        ],
+        "CollisionShape3D": [
+          62,
+          101
+        ],
+        "BoxShape3D": [
+          63,
+          102
+        ],
+        "PinJoint3D": [
+          109
+        ]
+      },
+      "method_calls": {
+        "body.add_child": [
+          59,
+          66
+        ],
+        "leg.add_child": [
+          98,
+          106
+        ],
+        "body.get_path": [
+          110
+        ],
+        "leg.get_path": [
+          111
+        ],
+        "current_up.dot": [
+          126
+        ],
+        "body.apply_central_force": [
+          127
+        ],
+        "leg.apply_central_impulse": [
+          150
+        ],
+        "body.apply_central_impulse": [
+          153
+        ],
+        "dialogue_pool.size": [
+          157
+        ],
+        "DialogueSystem.show_dialogue": [
+          160,
+          168,
+          173
+        ]
+      },
+      "signal_connections": {},
+      "property_accesses": {
+        "position": [
+          85,
+          93,
+          105,
+          112
+        ],
+        "global_transform": [
+          125
+        ]
+      },
+      "annotations": {},
+      "groups": []
+    },
+    "scripts/core/stable_ragdoll.gd": {
+      "path": "scripts/core/stable_ragdoll.gd",
+      "extends": "Node3D",
+      "class_name": "",
+      "instantiated_classes": {
+        "RigidBody3D": [
+          71,
+          98,
+          151
+        ],
+        "MeshInstance3D": [
+          80,
+          107,
+          160
+        ],
+        "BoxMesh": [
+          81,
+          161
+        ],
+        "StandardMaterial3D": [
+          85,
+          112,
+          166
+        ],
+        "CollisionShape3D": [
+          91,
+          118,
+          172
+        ],
+        "BoxShape3D": [
+          92,
+          173
+        ],
+        "SphereMesh": [
+          108
+        ],
+        "SphereShape3D": [
+          119
+        ],
+        "Generic6DOFJoint3D": [
+          129
+        ],
+        "HingeJoint3D": [
+          180
+        ]
+      },
+      "method_calls": {
+        "body.add_to_group": [
+          76
+        ],
+        "body.add_child": [
+          88,
+          95
+        ],
+        "head.add_child": [
+          115,
+          122
+        ],
+        "body.get_path": [
+          130,
+          181
+        ],
+        "head.get_path": [
+          131
+        ],
+        "neck_joint.set": [
+          136,
+          137,
+          138,
+          139,
+          140,
+          141,
+          142,
+          143,
+          144
+        ],
+        "body_entered.connect": [
+          147,
+          148,
+          201
+        ],
+        "leg.add_child": [
+          169,
+          177
+        ],
+        "leg.get_path": [
+          182
+        ],
+        "hip_joint.set": [
+          187,
+          188,
+          189,
+          190,
+          191,
+          192
+        ],
+        "_on_leg_collision.bind": [
+          201
+        ],
+        "linear_velocity.length": [
+          206
+        ],
+        "linear_velocity.normalized": [
+          207
+        ],
+        "angular_velocity.length": [
+          208
+        ],
+        "angular_velocity.normalized": [
+          209
+        ],
+        "target_leg.apply_central_impulse": [
+          229
+        ],
+        "body.apply_central_impulse": [
+          233
+        ],
+        "dialogue_pool.size": [
+          244
+        ],
+        "DialogueSystem.show_dialogue": [
+          247,
+          252,
+          256,
+          261,
+          266,
+          270,
+          280
+        ],
+        "other_body.is_in_group": [
+          250,
+          255,
+          259
+        ],
+        "COLLISION_DIALOGUE.size": [
+          251
+        ]
+      },
+      "signal_connections": {
+        "defines:dialogue_spoken": [
+          34
+        ],
+        "_on_body_collision": [
+          147
+        ],
+        "_on_head_collision": [
+          148
+        ],
+        "_on_leg_collision.bind(is_left": [
+          201
+        ]
+      },
+      "property_accesses": {
+        "position": [
+          101,
+          132,
+          154,
+          164,
+          176,
+          183
+        ],
+        "linear_velocity": [
+          206,
+          207
+        ],
+        "angular_velocity": [
+          208,
+          209
+        ],
+        "global_position": [
+          256
+        ]
+      },
+      "annotations": {},
+      "groups": [
+        "ragdoll_body"
+      ]
+    },
+    "scripts/core/standardized_objects.gd": {
+      "path": "scripts/core/standardized_objects.gd",
+      "extends": "Resource",
+      "class_name": "StandardizedObjects",
+      "instantiated_classes": {
+        "StaticBody3D": [
+          166
+        ],
+        "RigidBody3D": [
+          168
+        ],
+        "PhysicsMaterial": [
+          171
+        ],
+        "Node3D": [
+          175,
+          177,
+          179,
+          181
+        ],
+        "MeshInstance3D": [
+          222,
+          236,
+          250
+        ],
+        "BoxMesh": [
+          226
+        ],
+        "SphereMesh": [
+          230,
+          251
+        ],
+        "CylinderMesh": [
+          237
+        ],
+        "StandardMaterial3D": [
+          244,
+          256,
+          265
+        ],
+        "CollisionShape3D": [
+          276
+        ],
+        "BoxShape3D": [
+          280
+        ],
+        "SphereShape3D": [
+          284
+        ],
+        "CylinderShape3D": [
+          288
+        ],
+        "DirectionalLight3D": [
+          316
+        ]
+      },
+      "method_calls": {
+        "object_definitions.has": [
+          156
+        ],
+        "def.get": [
+          169,
+          191,
+          216,
+          216,
+          227,
+          267,
+          270,
+          281
+        ],
+        "def.has": [
+          170
+        ],
+        "obj.add_to_group": [
+          186,
+          187
+        ],
+        "obj.set_meta": [
+          190,
+          191,
+          330,
+          331
+        ],
+        "obj.add_child": [
+          247,
+          259,
+          273,
+          294,
+          320
+        ],
+        "obj.set_script": [
+          312,
+          326
+        ],
+        "obj.get_meta": [
+          343
+        ],
+        "object_type.capitalize": [
+          350
+        ],
+        "Engine.get_main_loop": [
+          351
+        ],
+        "scene.find_child": [
+          359
+        ]
+      },
+      "signal_connections": {},
+      "property_accesses": {
+        "position": [
+          185,
+          242,
+          254,
+          292
+        ],
+        "rotation": [
+          299,
+          301,
+          303,
+          319
+        ],
+        "scale": [
+          305
+        ]
+      },
+      "annotations": {},
+      "groups": [
+        "spawned_objects"
+      ]
+    },
+    "scripts/core/talking_astral_being.gd": {
+      "path": "scripts/core/talking_astral_being.gd",
+      "extends": "Node3D",
+      "class_name": "TalkingAstralBeing",
+      "instantiated_classes": {
+        "OmniLight3D": [
+          190,
+          547
+        ],
+        "GPUParticles3D": [
+          198
+        ],
+        "ParticleProcessMaterial": [
+          206
+        ],
+        "MeshInstance3D": [
+          217
+        ],
+        "SphereMesh": [
+          219
+        ],
+        "StandardMaterial3D": [
+          225
+        ],
+        "Area3D": [
+          235
+        ],
+        "CollisionShape3D": [
+          239
+        ],
+        "SphereShape3D": [
+          240
+        ],
+        "Node3D": [
+          544
+        ]
+      },
+      "method_calls": {
+        "ragdoll_controller.has_signal": [
+          183
+        ],
+        "ragdoll_controller.connect": [
+          184
+        ],
+        "area_detector.add_child": [
+          243
+        ],
+        "body_entered.connect": [
+          246
+        ],
+        "body_exited.connect": [
+          247
+        ],
+        "personality_data.get": [
+          250
+        ],
+        "data.get": [
+          253,
+          262,
+          263,
+          264,
+          265,
+          266
+        ],
+        "Time.get_ticks_msec": [
+          309,
+          390
+        ],
+        "global_position.lerp": [
+          313,
+          336,
+          374,
+          383
+        ],
+        "global_position.distance_to": [
+          318,
+          560
+        ],
+        "creation_particles.size": [
+          351,
+          357,
+          360
+        ],
+        "creation_particles.append": [
+          354
+        ],
+        "ragdoll_controller.get": [
+          416,
+          647
+        ],
+        "ragdoll_body.has_method": [
+          417
+        ],
+        "ragdoll_body.get_body": [
+          418
+        ],
+        "main_body.apply_central_impulse": [
+          422
+        ],
+        "obj.has_method": [
+          428
+        ],
+        "obj.get_linear_velocity": [
+          429
+        ],
+        "vel.length": [
+          430
+        ],
+        "obj.apply_central_impulse": [
+          431
+        ],
+        "from.lerp": [
+          496
+        ],
+        "connected_objects.size": [
+          521,
+          540
+        ],
+        "nearby_objects.size": [
+          538
+        ],
+        "vocabulary.size": [
+          539
+        ],
+        "trail.add_child": [
+          551
+        ],
+        "assistance_target.has_method": [
+          572
+        ],
+        "assistance_target.receive_assistance": [
+          573
+        ],
+        "recent_messages.append": [
+          605
+        ],
+        "recent_messages.size": [
+          606
+        ],
+        "recent_messages.pop_front": [
+          607
+        ],
+        "being_spoke.emit": [
+          610
+        ],
+        "being_action_taken.emit": [
+          617
+        ],
+        "nearby_objects.append": [
+          633
+        ],
+        "body.is_in_group": [
+          636
+        ],
+        "body.has_method": [
+          636
+        ],
+        "connected_objects.append": [
+          637
+        ],
+        "connection_made.emit": [
+          638
+        ],
+        "nearby_objects.erase": [
+          641
+        ],
+        "connected_objects.erase": [
+          642
+        ],
+        "touching_objects.erase": [
+          643
+        ]
+      },
+      "signal_connections": {
+        "defines:being_spoke": [
+          11
+        ],
+        "defines:being_action_taken": [
+          12
+        ],
+        "defines:connection_made": [
+          13
+        ],
+        "defines:assistance_completed": [
+          14
+        ],
+        "\"player_needs_help\", _on_player_needs_help": [
+          184
+        ],
+        "_on_body_entered": [
+          246
+        ],
+        "_on_body_exited": [
+          247
+        ]
+      },
+      "property_accesses": {
+        "angular_velocity": [
+          210,
+          211
+        ],
+        "scale": [
+          212,
+          213
+        ],
+        "global_position": [
+          318,
+          329,
+          339,
+          340,
+          373,
+          382,
+          560
+        ],
+        "position": [
+          353,
+          364
+        ],
+        "linear_velocity": [
+          421
+        ]
+      },
+      "annotations": {},
+      "groups": []
+    },
+    "scripts/core/talking_ragdoll.gd": {
+      "path": "scripts/core/talking_ragdoll.gd",
+      "extends": "RigidBody3D",
+      "class_name": "",
+      "instantiated_classes": {
+        "PhysicsRayQueryParameters3D": [
+          176
+        ],
+        "Node": [
+          283
+        ],
+        "Node3D": [
+          322
+        ]
+      },
+      "method_calls": {
+        "body_entered.connect": [
+          92
+        ],
+        "speech_bubble.look_at": [
+          144
+        ],
+        "event.is_action_pressed": [
+          147
+        ],
+        "global_position.distance_to": [
+          150
+        ],
+        "event.is_action_released": [
+          156
+        ],
+        "camera.project_ray_origin": [
+          172
+        ],
+        "camera.project_ray_normal": [
+          173,
+          188
+        ],
+        "space_state.intersect_ray": [
+          182
+        ],
+        "plane.intersects_ray": [
+          188
+        ],
+        "dialogue_pool.size": [
+          210
+        ],
+        "timeout.connect": [
+          218,
+          269
+        ],
+        "body.is_in_group": [
+          229
+        ],
+        "linear_velocity.length": [
+          234
+        ],
+        "blink_controller.set_script": [
+          284
+        ],
+        "blink_controller.has_signal": [
+          299
+        ],
+        "blink_started.connect": [
+          300
+        ],
+        "blink_comments.size": [
+          311
+        ],
+        "visual_indicator.set_script": [
+          323
+        ],
+        "visual_indicator.has_method": [
+          328,
+          349,
+          373
+        ],
+        "visual_indicator.setup_indicator": [
+          329
+        ],
+        "visual_indicator.update_status": [
+          350
+        ],
+        "visual_indicator.update_health": [
+          374
+        ]
+      },
+      "signal_connections": {
+        "_on_body_entered": [
+          92
+        ],
+        "func(": [
+          218,
+          269
+        ],
+        "_on_blink_started": [
+          300
+        ]
+      },
+      "property_accesses": {
+        "visible": [
+          141,
+          215,
+          218,
+          266,
+          269
+        ],
+        "global_position": [
+          144
+        ],
+        "position": [
+          184
+        ],
+        "modulate": [
+          355,
+          357,
+          359,
+          361,
+          363
+        ]
+      },
+      "annotations": {
+        "@onready": [
+          {
+            "line": 61,
+            "var": "dialogue_audio",
+            "value": "$DialogueAudio"
+          },
+          {
+            "line": 62,
+            "var": "collision_audio",
+            "value": "$CollisionAudio"
+          },
+          {
+            "line": 63,
+            "var": "drag_area",
+            "value": "$DragArea"
+          },
+          {
+            "line": 64,
+            "var": "speech_bubble",
+            "value": "$SpeechBubble"
+          },
+          {
+            "line": 65,
+            "var": "blink_controller",
+            "value": "null  # Will be created dynamically"
+          },
+          {
+            "line": 66,
+            "var": "left_eye",
+            "value": "null  # Eye meshes if available"
+          },
+          {
+            "line": 67,
+            "var": "right_eye",
+            "value": "null"
+          },
+          {
+            "line": 68,
+            "var": "visual_indicator",
+            "value": "null  # Health/name/status display"
+          },
+          {
+            "line": 69,
+            "var": "health_bar",
+            "value": "null"
+          },
+          {
+            "line": 70,
+            "var": "name_label",
+            "value": "null"
+          },
+          {
+            "line": 71,
+            "var": "status_label",
+            "value": "null"
+          }
+        ]
+      },
+      "groups": []
+    },
+    "scripts/core/triangular_bird_walker.gd": {
+      "path": "scripts/core/triangular_bird_walker.gd",
+      "extends": "RigidBody3D",
+      "class_name": "",
+      "instantiated_classes": {
+        "RigidBody3D": [
+          100
+        ],
+        "CollisionShape3D": [
+          106,
+          172
+        ],
+        "SphereShape3D": [
+          107,
+          170
+        ],
+        "MeshInstance3D": [
+          113,
+          146,
+          151
+        ],
+        "SphereMesh": [
+          114
+        ],
+        "PinJoint3D": [
+          138
+        ],
+        "StandardMaterial3D": [
+          156,
+          161
+        ],
+        "Area3D": [
+          168
+        ],
+        "ArrayMesh": [
+          329
+        ]
+      },
+      "method_calls": {
+        "body.add_child": [
+          110,
+          118
+        ],
+        "body_a.get_path": [
+          139
+        ],
+        "body_b.get_path": [
+          140
+        ],
+        "food_detector.add_child": [
+          174
+        ],
+        "body_entered.connect": [
+          178
+        ],
+        "body_exited.connect": [
+          179
+        ],
+        "food_in_range.size": [
+          207
+        ],
+        "global_position.distance_to": [
+          224
+        ],
+        "left_leg_body.apply_central_force": [
+          243,
+          244,
+          246,
+          254,
+          272
+        ],
+        "right_leg_body.apply_central_force": [
+          247,
+          250,
+          251,
+          253,
+          273
+        ],
+        "head_body.apply_central_force": [
+          257,
+          278,
+          283,
+          295
+        ],
+        "left_wing_body.apply_central_force": [
+          260,
+          268
+        ],
+        "right_wing_body.apply_central_force": [
+          261,
+          269
+        ],
+        "Time.get_ticks_msec": [
+          265,
+          277,
+          282
+        ],
+        "tail_body.apply_central_force": [
+          291
+        ],
+        "arrays.resize": [
+          321
+        ],
+        "mesh.clear_surfaces": [
+          331
+        ],
+        "mesh.add_surface_from_arrays": [
+          333
+        ],
+        "body.is_in_group": [
+          340,
+          340,
+          342
+        ],
+        "food_in_range.append": [
+          341
+        ],
+        "water_in_range.append": [
+          343
+        ],
+        "food_in_range.erase": [
+          346
+        ],
+        "water_in_range.erase": [
+          347
+        ]
+      },
+      "signal_connections": {
+        "defines:found_food": [
+          10
+        ],
+        "defines:drinking_water": [
+          11
+        ],
+        "_on_food_detected": [
+          178
+        ],
+        "_on_food_lost": [
+          179
+        ]
+      },
+      "property_accesses": {
+        "position": [
+          103,
+          141,
+          304,
+          305,
+          306,
+          311,
+          312,
+          313,
+          355,
+          356,
+          357,
+          358,
+          359,
+          360
+        ],
+        "global_position": [
+          208,
+          272,
+          273,
+          287,
+          288,
+          294
+        ]
+      },
+      "annotations": {},
+      "groups": []
+    },
+    "scripts/core/unified_scene_manager.gd": {
+      "path": "scripts/core/unified_scene_manager.gd",
+      "extends": "Node",
+      "class_name": "",
+      "instantiated_classes": {
+        "Node3D": [
+          41,
+          52,
+          56,
+          60,
+          138
+        ]
+      },
+      "method_calls": {
+        "root.add_child": [
+          43,
+          141
+        ],
+        "scene_root.add_child": [
+          54,
+          58,
+          62
+        ],
+        "main_scene.get_node_or_null": [
+          68
+        ],
+        "main_scene.get_children": [
+          71
+        ],
+        "name.to_lower": [
+          72,
+          72
+        ],
+        "procedural_world.queue_free": [
+          85
+        ],
+        "static_scene.queue_free": [
+          90
+        ],
+        "terrain_container.get_children": [
+          94
+        ],
+        "child.queue_free": [
+          95,
+          97
+        ],
+        "objects_container.get_children": [
+          96
+        ],
+        "world_cleared.emit": [
+          101
+        ],
+        "get_node": [
+          {
+            "line": 114,
+            "path": "/root/SceneLoader"
+          }
+        ],
+        "scene_loader.has_method": [
+          115
+        ],
+        "scene_loader.load_scene": [
+          116
+        ],
+        "terrain_container.add_child": [
+          118,
+          147,
+          195
+        ],
+        "scene_changed.emit": [
+          121,
+          155,
+          184
+        ],
+        "world_gen.set_script": [
+          140
+        ],
+        "world_gen.get_parent": [
+          145,
+          146
+        ],
+        "world_gen.generate_world": [
+          150
+        ],
+        "creatures_container.add_child": [
+          193
+        ],
+        "objects_container.add_child": [
+          197
+        ],
+        "procedural_world.has_method": [
+          205,
+          215
+        ],
+        "procedural_world.get_height_at_position": [
+          206,
+          216
+        ],
+        "SceneType.keys": [
+          227
+        ],
+        "objects_container.get_child_count": [
+          230
+        ],
+        "creatures_container.get_child_count": [
+          231
+        ]
+      },
+      "signal_connections": {
+        "defines:scene_changed": [
+          10
+        ],
+        "defines:world_cleared": [
+          11
+        ]
+      },
+      "property_accesses": {
+        "visible": [
+          111,
+          131,
+          180,
+          238
+        ]
+      },
+      "annotations": {},
+      "groups": []
+    },
+    "scripts/core/upright_ragdoll_controller.gd": {
+      "path": "scripts/core/upright_ragdoll_controller.gd",
+      "extends": "Node3D",
+      "class_name": "",
+      "instantiated_classes": {},
+      "method_calls": {
+        "pelvis.apply_central_force": [
+          109,
+          150,
+          188
+        ],
+        "global_basis.get_euler": [
+          112
+        ],
+        "pelvis.apply_torque": [
+          115
+        ],
+        "walk_direction.length": [
+          149
+        ],
+        "part.apply_central_force": [
+          162
+        ],
+        "body.apply_torque": [
+          167
+        ],
+        "direction.normalized": [
+          201
+        ]
+      },
+      "signal_connections": {},
+      "property_accesses": {
+        "global_position": [
+          105,
+          158,
+          174,
+          180,
+          186,
+          232
+        ],
+        "rotation": [
+          165,
+          233
+        ],
+        "linear_velocity": [
+          234
+        ],
+        "angular_velocity": [
+          235
+        ]
+      },
+      "annotations": {},
+      "groups": []
+    }
+  },
+  "class_to_scripts": {
+    "Node": [
+      "scripts/core/astral_ragdoll_helper.gd",
+      "scripts/autoload/console_manager.gd",
+      "scripts/autoload/ui_settings_manager.gd",
+      "scripts/autoload/dialogue_system.gd",
+      "scripts/core/shape_gesture_system.gd",
+      "scripts/core/eden_action_system.gd",
+      "scripts/core/scene_tree_tracker.gd",
+      "scripts/autoload/windows_console_fix.gd",
+      "scripts/core/asset_library.gd",
+      "scripts/autoload/claude_timer_system.gd",
+      "scripts/core/dimensional_ragdoll_system.gd",
+      "scripts/core/mouse_interaction_system.gd",
+      "scripts/core/bird_ai_behavior.gd",
+      "scripts/core/scene_setup.gd",
+      "scripts/core/pigeon_input_manager.gd",
+      "scripts/core/floodgate_controller.gd",
+      "scripts/core/physics_state_manager.gd",
+      "scripts/autoload/scene_loader.gd",
+      "scripts/autoload/multi_todo_manager.gd",
+      "scripts/autoload/world_builder.gd",
+      "scripts/core/multi_layer_record_system.gd",
+      "scripts/core/game_launcher.gd",
+      "scripts/core/unified_scene_manager.gd"
+    ],
+    "Node3D": [
+      "scripts/core/talking_astral_being.gd",
+      "scripts/core/upright_ragdoll_controller.gd",
+      "scripts/core/simple_walking_ragdoll.gd",
+      "scripts/core/debug_3d_screen.gd",
+      "scripts/core/heightmap_world_generator.gd",
+      "scripts/core/ragdoll_with_legs.gd",
+      "scripts/core/astral_beings_OLD_DEPRECATED.gd",
+      "scripts/core/astral_being_enhanced_OLD_DEPRECATED.gd",
+      "scripts/core/stable_ragdoll.gd",
+      "scripts/core/simple_ragdoll_walker.gd",
+      "scripts/core/ragdoll_controller.gd"
+    ],
+    "CharacterBody3D": [
+      "scripts/core/seven_part_ragdoll_integration.gd",
+      "scripts/core/pigeon_physics_controller.gd"
+    ],
+    "Resource": [
+      "scripts/core/standardized_objects.gd"
+    ],
+    "RigidBody3D": [
+      "scripts/core/talking_ragdoll.gd",
+      "scripts/core/triangular_bird_walker.gd"
+    ]
+  },
+  "summary": {
+    "total_scripts": 40,
+    "unique_extends": 5
+  }
+}

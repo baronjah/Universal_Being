@@ -1,0 +1,50 @@
+{
+  "terminal_colors": {
+    "dimension_1": {"color": "PURPLE", "symbol": "α", "name": "Genesis"},
+    "dimension_2": {"color": "BLUE", "symbol": "β", "name": "Duality"},
+    "dimension_3": {"color": "CYAN", "symbol": "γ", "name": "Expression"},
+    "dimension_4": {"color": "GREEN", "symbol": "δ", "name": "Stability"},
+    "dimension_5": {"color": "YELLOW", "symbol": "ε", "name": "Consciousness"},
+    "dimension_6": {"color": "RED", "symbol": "ζ", "name": "Connection"},
+    "dimension_7": {"color": "PURPLE", "symbol": "η", "name": "Creation"},
+    "dimension_8": {"color": "BLUE", "symbol": "θ", "name": "Network"},
+    "dimension_9": {"color": "CYAN", "symbol": "ι", "name": "Harmony"},
+    "dimension_10": {"color": "GREEN", "symbol": "κ", "name": "Unity"},
+    "dimension_11": {"color": "YELLOW", "symbol": "λ", "name": "Transcendence"},
+    "dimension_12": {"color": "RED", "symbol": "μ", "name": "Beyond"}
+  },
+  "visual_preferences": {
+    "use_symbols": true,
+    "use_colors": true,
+    "use_animations": true,
+    "display_mode": "full", 
+    "word_highlight": true,
+    "show_power_values": true,
+    "terminal_theme": "dark",
+    "font_size": "medium",
+    "show_progress_bar": true,
+    "dimension_transition_effect": "fade",
+    "sound_effects": true
+  },
+  "godot_visualization": {
+    "3d_word_visualization": true,
+    "particle_effects": true,
+    "color_scheme": "vibrant",
+    "render_quality": "high",
+    "show_dimensional_boundaries": true,
+    "word_animation_speed": 1.0,
+    "camera_perspective": "third_person",
+    "show_power_auras": true,
+    "reality_density": 0.8,
+    "word_scale_factor": 1.0
+  },
+  "word_display_rules": {
+    "sacred_words_style": "glowing",
+    "banned_words_style": "redacted",
+    "power_visualization": "size_and_glow", 
+    "dimension_specific_formatting": true,
+    "highlight_target_words": true,
+    "show_word_connections": true,
+    "word_history_length": 20
+  }
+}

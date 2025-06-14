@@ -1,0 +1,144 @@
+# Menu Terminal Integration Guide
+
+## Overview
+
+This guide explains how the Akashic Records system integrates with the existing Menu Keyboard Console system in the Eden Space Game. The integration allows players to create, manage, and visualize dictionary entries directly from the game's main interface.
+
+## Integration Components
+
+### 1. AkashicRecordsIntegration (akashic_records_integration.gd)
+
+This is the bridge between the main console and the Akashic Records system. It:
+
+- Initializes the Akashic Records Manager
+- Registers menu entries for accessing the system
+- Handles UI navigation and views
+- Provides an API for other systems to access the dictionary
+
+### 2. Menu Entries
+
+The integration adds the following entries to the console menu system:
+
+- **Akashic Records**: Main entry point to the dictionary system
+- **Dictionary Words**: For browsing and managing word entries
+- **Word Interactions**: For defining and testing interactions
+- **Evolution System**: For configuring evolution parameters
+- **Visualization**: For viewing relationships in 3D space
+
+### 3. UI Connection
+
+The integration handles loading and displaying the Akashic Records UI in the console's view area, allowing for:
+
+- Seamless transitions between menu and dictionary interface
+- Consistent visual styling with the rest of the game
+- Clear navigation paths for users
+
+## User Flow
+
+1. **Access**: User selects "Akashic Records" from the "Things" menu
+2. **Navigation**: The system loads the Akashic Records UI
+3. **Interaction**: User can create, modify, and visualize dictionary entries
+4. **Return**: User can return to the main menu at any time
+
+## Technical Implementation
+
+### Main Console Integration
+
+The integration connects to the main console by:
+
+1. Registering as a system through `register_system()`
+2. Adding menu entries via `add_menu_entry()`
+3. Displaying UI content in the console's view area
+
+### UI Management
+
+The integration manages UI states by:
+
+1. Instantiating the Akashic Records UI scene
+2. Adding it to the console's view area
+3. Cleaning up previous UI instances when switching views
+
+### System Access
+
+Other game systems can access the Akashic Records through:
+
+```gdscript
+# Get the integration
+var akashic_integration = main_console.get_system("AkashicRecords")
+
+# Access the manager
+var akashic_manager = akashic_integration.get_akashic_records_manager()
+
+# Use the API
+akashic_integration.create_word("example", "concept", {"importance": 0.8})
+```
+
+## Element System Connection
+
+The integration provides a connection to the element system by:
+
+1. Listening for element creation/destruction events
+2. Creating corresponding dictionary entries for elements
+3. Processing interactions in the dictionary when elements interact
+4. Updating element properties based on dictionary evolution
+
+## Implementation Steps
+
+To integrate the Akashic Records with the Menu Keyboard Console:
+
+1. Add the AkashicRecordsIntegration script to your project
+2. Initialize it in your main console script's `_ready()` function
+3. Register it as a system with the console
+4. Ensure the console has a view area for displaying UI content
+5. Connect it to other systems (elements, etc.) if needed
+
+## Custom Extensions
+
+You can customize the integration by:
+
+1. Adding new menu entries for specific dictionary functions
+2. Creating custom UI views for different dictionary aspects
+3. Extending the API for specific game needs
+4. Adding special visualization modes for different word types
+
+## Troubleshooting
+
+### Common Issues
+
+1. **UI not displaying**: Verify the view area is properly set up
+2. **Menu entries not appearing**: Check registration with console
+3. **Manager not initializing**: Ensure script paths are correct
+4. **Connections not working**: Verify signal connections between systems
+
+### Solutions
+
+1. Use `print()` statements to track initialization flow
+2. Check console logs for script loading errors
+3. Verify that paths to scenes and scripts are correct
+4. Ensure the console's view area is properly set up
+
+## Example Implementation
+
+```gdscript
+# In main.gd or similar script
+func _ready():
+    # Initialize console components
+    # ...
+    
+    # Initialize Akashic Records integration
+    var akashic_integration = AkashicRecordsIntegration.new()
+    add_child(akashic_integration)
+    akashic_integration.initialize(self)
+    
+    # Connect to element system
+    if element_system:
+        akashic_integration.connect_to_element_system(element_system)
+```
+
+## Future Enhancements
+
+1. **Quick Access Commands**: Add keyboard shortcuts for common dictionary operations
+2. **Context Menu Integration**: Right-click options for element interactions
+3. **Status Indicators**: Show dictionary status in the main console
+4. **Search Integration**: Add search functionality to the main console for finding words
+5. **Notification System**: Alert user when significant evolution events occur

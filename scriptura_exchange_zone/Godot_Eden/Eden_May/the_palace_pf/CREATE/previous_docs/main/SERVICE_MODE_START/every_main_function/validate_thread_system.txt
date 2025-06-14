@@ -1,0 +1,8 @@
+func validate_thread_system() -> Dictionary:
+	var thread_check = check_thread_status()
+	return {
+		"status": "operational" if thread_check == "working" else "error",
+		"total_threads": OS.get_processor_count(),
+		"active_threads": thread_pool.get_active_threads() if thread_pool else 0,
+		"initialization_time": Time.get_ticks_msec()
+	}

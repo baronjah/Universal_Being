@@ -1,0 +1,774 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D Quantum Notepad</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #000;
+            color: #fff;
+        }
+        
+        #canvas-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+        
+        #info-panel {
+            position: fixed;
+            top: 10px;
+            left: 10px;
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 15px;
+            border-radius: 10px;
+            max-width: 300px;
+            box-shadow: 0 0 20px rgba(0, 128, 255, 0.5);
+            z-index: 100;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(0, 128, 255, 0.3);
+        }
+        
+        #turn-indicator {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 0 20px rgba(0, 128, 255, 0.5);
+            z-index: 100;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(0, 128, 255, 0.3);
+        }
+        
+        #controls {
+            position: fixed;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 0 20px rgba(0, 128, 255, 0.5);
+            z-index: 100;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(0, 128, 255, 0.3);
+            display: flex;
+            gap: 15px;
+        }
+        
+        button {
+            background-color: #0066cc;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+        
+        button:hover {
+            background-color: #0099ff;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 153, 255, 0.4);
+        }
+        
+        .symbol {
+            font-size: 2em;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .dimension {
+            font-size: 1.5em;
+            margin-bottom: 10px;
+            color: #00ccff;
+        }
+        
+        .turn-number {
+            font-size: 3em;
+            font-weight: bold;
+            margin: 5px 0;
+            text-shadow: 0 0 10px rgba(0, 153, 255, 0.8);
+        }
+        
+        .note-input {
+            position: fixed;
+            bottom: 80px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80%;
+            max-width: 600px;
+            display: none; /* Hidden by default */
+            z-index: 101;
+            background-color: rgba(0, 0, 0, 0.8);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 30px rgba(0, 128, 255, 0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(0, 128, 255, 0.5);
+        }
+        
+        .note-input textarea {
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+            background-color: rgba(0, 20, 40, 0.8);
+            color: #fff;
+            border: 1px solid rgba(0, 128, 255, 0.5);
+            font-family: inherit;
+            margin-bottom: 10px;
+            height: 100px;
+            resize: none;
+        }
+        
+        .note-input .note-buttons {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+        }
+        
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+        }
+        
+        .loading-spinner {
+            border: 5px solid rgba(0, 128, 255, 0.3);
+            border-radius: 50%;
+            border-top: 5px solid #0099ff;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin-bottom: 20px;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .loading-text {
+            font-size: 1.5em;
+            color: #00ccff;
+            text-shadow: 0 0 10px rgba(0, 204, 255, 0.5);
+        }
+        
+        .turn-progress {
+            height: 4px;
+            width: 100%;
+            background-color: rgba(0, 128, 255, 0.3);
+            border-radius: 2px;
+            margin-top: 10px;
+            overflow: hidden;
+        }
+        
+        .progress-bar {
+            height: 100%;
+            width: 0%; /* Will be updated via JS */
+            background-color: #00ccff;
+            box-shadow: 0 0 10px rgba(0, 204, 255, 0.8);
+            transition: width 0.083s linear; /* Match turn speed */
+        }
+        
+        .notification {
+            position: fixed;
+            bottom: 80px;
+            right: 20px;
+            background-color: rgba(0, 20, 40, 0.9);
+            color: #fff;
+            padding: 15px 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 153, 255, 0.5);
+            transform: translateX(120%);
+            transition: transform 0.3s ease;
+            z-index: 200;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(0, 128, 255, 0.3);
+        }
+        
+        .notification.show {
+            transform: translateX(0);
+        }
+    </style>
+</head>
+<body>
+    <div id="canvas-container"></div>
+    
+    <div id="info-panel">
+        <h3>Quantum Turn System</h3>
+        <p>Navigate the 3D notepad in 12 dimensions (α to μ)</p>
+        <p>Current speed: <span id="speed-display">12 turns/second</span></p>
+        <p>Active symbols:</p>
+        <div id="symbols-container"></div>
+        <p>Use WASD to move, mouse to look.</p>
+        <p>Click to interact with notes.</p>
+    </div>
+    
+    <div id="turn-indicator">
+        <div class="symbol" id="turn-symbol">γ</div>
+        <div class="dimension" id="turn-dimension">3D</div>
+        <div class="turn-number" id="current-turn">3</div>
+        <div id="turn-concept">Space</div>
+        <div class="turn-progress">
+            <div class="progress-bar" id="progress-bar"></div>
+        </div>
+    </div>
+    
+    <div id="controls">
+        <button id="add-note-btn">Add 3D Note</button>
+        <button id="advance-turn-btn">Advance Turn</button>
+        <button id="quantum-loop-btn">Start Quantum Loop</button>
+        <button id="clean-sewers-btn">Clean Data Sewers</button>
+        <button id="export-godot-btn">Export to Godot</button>
+    </div>
+    
+    <div class="note-input" id="note-input">
+        <h3>Create 3D Note</h3>
+        <textarea id="note-text" placeholder="Enter your note..."></textarea>
+        <div class="note-buttons">
+            <button id="cancel-note-btn">Cancel</button>
+            <button id="save-note-btn">Save Note</button>
+        </div>
+    </div>
+    
+    <div class="notification" id="notification">
+        Note created successfully!
+    </div>
+    
+    <div class="loading-overlay" id="loading-overlay">
+        <div class="loading-spinner"></div>
+        <div class="loading-text">Initializing 3D Quantum Notepad...</div>
+        <div id="loading-turn">Loading Turn 3: γ - 3D - Space</div>
+    </div>
+    
+    <!-- Three.js library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    
+    <script>
+        // Configuration
+        const config = {
+            maxTurns: 12,
+            currentTurn: 3,
+            turnSpeed: 0.083, // 1/12 second for 12 turns/second
+            turnSymbols: ["α", "β", "γ", "δ", "ε", "ζ", "η", "θ", "ι", "κ", "λ", "μ"],
+            turnDimensions: ["1D", "2D", "3D", "4D", "5D", "6D", "7D", "8D", "9D", "10D", "11D", "12D"],
+            turnConcepts: ["Point", "Line", "Space", "Time", "Consciousness", "Connection", "Creation", "Network", "Harmony", "Unity", "Transcendence", "Infinity"],
+            cDrivePath: '/mnt/c/Users/Percision 15/12_turns_system',
+            systemPath: 'C:/Users/Percision 15/12_turns_system',
+            isQuantumLoop: false
+        };
+        
+        // DOM Elements
+        const loadingOverlay = document.getElementById('loading-overlay');
+        const turnSymbol = document.getElementById('turn-symbol');
+        const turnDimension = document.getElementById('turn-dimension');
+        const currentTurnDisplay = document.getElementById('current-turn');
+        const turnConcept = document.getElementById('turn-concept');
+        const progressBar = document.getElementById('progress-bar');
+        const symbolsContainer = document.getElementById('symbols-container');
+        const speedDisplay = document.getElementById('speed-display');
+        const addNoteBtn = document.getElementById('add-note-btn');
+        const advanceTurnBtn = document.getElementById('advance-turn-btn');
+        const quantumLoopBtn = document.getElementById('quantum-loop-btn');
+        const cleanSewersBtn = document.getElementById('clean-sewers-btn');
+        const exportGodotBtn = document.getElementById('export-godot-btn');
+        const noteInput = document.getElementById('note-input');
+        const noteText = document.getElementById('note-text');
+        const saveNoteBtn = document.getElementById('save-note-btn');
+        const cancelNoteBtn = document.getElementById('cancel-note-btn');
+        const notification = document.getElementById('notification');
+        const loadingTurn = document.getElementById('loading-turn');
+        
+        // ThreeJS Variables
+        let scene, camera, renderer;
+        let notes = [];
+        let clock = new THREE.Clock();
+        
+        // Initialize 3D Environment
+        function init3DEnvironment() {
+            // Create scene
+            scene = new THREE.Scene();
+            scene.background = new THREE.Color(0x000814);
+            
+            // Create camera
+            camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            camera.position.z = 5;
+            
+            // Create renderer
+            renderer = new THREE.WebGLRenderer({ antialias: true });
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.setPixelRatio(window.devicePixelRatio);
+            document.getElementById('canvas-container').appendChild(renderer.domElement);
+            
+            // Add lighting
+            const ambientLight = new THREE.AmbientLight(0x404040);
+            scene.add(ambientLight);
+            
+            const directionalLight = new THREE.DirectionalLight(0xffffff, 0.5);
+            directionalLight.position.set(0, 1, 1);
+            scene.add(directionalLight);
+            
+            // Add grid for reference
+            const gridHelper = new THREE.GridHelper(20, 20, 0x0066cc, 0x003366);
+            scene.add(gridHelper);
+            
+            // Add origin marker
+            const originGeometry = new THREE.SphereGeometry(0.1, 16, 16);
+            const originMaterial = new THREE.MeshBasicMaterial({ color: 0xff0000 });
+            const origin = new THREE.Mesh(originGeometry, originMaterial);
+            scene.add(origin);
+            
+            // Add dimension axes
+            addDimensionAxes();
+            
+            // Add turn symbols
+            createTurnSymbols();
+            
+            // Handle window resize
+            window.addEventListener('resize', () => {
+                camera.aspect = window.innerWidth / window.innerHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(window.innerWidth, window.innerHeight);
+            });
+            
+            // Start animation loop
+            animate();
+        }
+        
+        // Add dimension axes
+        function addDimensionAxes() {
+            // X axis - red
+            const xAxis = new THREE.Line(
+                new THREE.BufferGeometry().setFromPoints([
+                    new THREE.Vector3(-10, 0, 0),
+                    new THREE.Vector3(10, 0, 0)
+                ]),
+                new THREE.LineBasicMaterial({ color: 0xff0000 })
+            );
+            scene.add(xAxis);
+            
+            // Y axis - green
+            const yAxis = new THREE.Line(
+                new THREE.BufferGeometry().setFromPoints([
+                    new THREE.Vector3(0, -10, 0),
+                    new THREE.Vector3(0, 10, 0)
+                ]),
+                new THREE.LineBasicMaterial({ color: 0x00ff00 })
+            );
+            scene.add(yAxis);
+            
+            // Z axis - blue
+            const zAxis = new THREE.Line(
+                new THREE.BufferGeometry().setFromPoints([
+                    new THREE.Vector3(0, 0, -10),
+                    new THREE.Vector3(0, 0, 10)
+                ]),
+                new THREE.LineBasicMaterial({ color: 0x0000ff })
+            );
+            scene.add(zAxis);
+        }
+        
+        // Create turn symbols in 3D space
+        function createTurnSymbols() {
+            const loader = new THREE.TextureLoader();
+            const fontLoader = new THREE.FontLoader();
+            
+            // Create a point cloud of symbols
+            for (let i = 0; i < config.turnSymbols.length; i++) {
+                const symbol = config.turnSymbols[i];
+                const dimension = config.turnDimensions[i];
+                
+                // Create a floating symbol text
+                const geometry = new THREE.PlaneGeometry(1, 1);
+                const canvas = document.createElement('canvas');
+                canvas.width = 256;
+                canvas.height = 256;
+                const context = canvas.getContext('2d');
+                context.fillStyle = '#000033';
+                context.fillRect(0, 0, canvas.width, canvas.height);
+                context.font = 'Bold 120px Arial';
+                context.textAlign = 'center';
+                context.textBaseline = 'middle';
+                context.fillStyle = '#00aaff';
+                context.fillText(symbol, canvas.width / 2, canvas.height / 2);
+                context.font = '40px Arial';
+                context.fillStyle = '#ffffff';
+                context.fillText(dimension, canvas.width / 2, canvas.height / 2 + 80);
+                
+                const texture = new THREE.CanvasTexture(canvas);
+                const material = new THREE.MeshBasicMaterial({
+                    map: texture,
+                    transparent: true,
+                    side: THREE.DoubleSide,
+                    opacity: i === (config.currentTurn - 1) ? 0.9 : 0.3
+                });
+                
+                const plane = new THREE.Mesh(geometry, material);
+                
+                // Position each symbol in a circle
+                const angle = (i / config.maxTurns) * Math.PI * 2;
+                const radius = 8;
+                plane.position.x = Math.cos(angle) * radius;
+                plane.position.y = Math.sin(angle) * radius;
+                plane.position.z = 0;
+                
+                // Look at the center
+                plane.lookAt(0, 0, 0);
+                
+                // Store the turn information
+                plane.userData = {
+                    turn: i + 1,
+                    symbol: symbol,
+                    dimension: dimension,
+                    concept: config.turnConcepts[i]
+                };
+                
+                scene.add(plane);
+                
+                // Add to symbols display
+                const symbolDiv = document.createElement('div');
+                symbolDiv.style.display = 'inline-block';
+                symbolDiv.style.margin = '0 5px';
+                symbolDiv.style.fontSize = '1.5em';
+                symbolDiv.style.color = i === (config.currentTurn - 1) ? '#00ccff' : '#666';
+                symbolDiv.style.textShadow = i === (config.currentTurn - 1) ? '0 0 10px rgba(0, 204, 255, 0.8)' : 'none';
+                symbolDiv.textContent = symbol;
+                symbolsContainer.appendChild(symbolDiv);
+            }
+        }
+        
+        // Create a 3D note
+        function create3DNote(text, position, color, size) {
+            // Create a 3D note representation
+            const geometry = new THREE.BoxGeometry(size, size, size * 0.2);
+            const material = new THREE.MeshLambertMaterial({ color: color ? color : 0x00aaff });
+            const note = new THREE.Mesh(geometry, material);
+            
+            // Position the note
+            if (position) {
+                note.position.set(position.x, position.y, position.z);
+            } else {
+                note.position.set(
+                    (Math.random() - 0.5) * 10,
+                    (Math.random() - 0.5) * 10,
+                    (Math.random() - 0.5) * 10
+                );
+            }
+            
+            // Rotate randomly
+            note.rotation.x = Math.random() * Math.PI;
+            note.rotation.y = Math.random() * Math.PI;
+            note.rotation.z = Math.random() * Math.PI;
+            
+            // Create a canvas for the note text
+            const canvas = document.createElement('canvas');
+            canvas.width = 256;
+            canvas.height = 256;
+            const context = canvas.getContext('2d');
+            context.fillStyle = color ? color : '#00aaff';
+            context.fillRect(0, 0, canvas.width, canvas.height);
+            context.font = '24px Arial';
+            context.textAlign = 'center';
+            context.textBaseline = 'middle';
+            context.fillStyle = '#ffffff';
+            
+            // Wrap text to fit canvas
+            const maxWidth = 240;
+            const lineHeight = 30;
+            const words = text.split(' ');
+            let line = '';
+            let y = 40;
+            
+            for (let n = 0; n < words.length; n++) {
+                const testLine = line + words[n] + ' ';
+                const metrics = context.measureText(testLine);
+                const testWidth = metrics.width;
+                
+                if (testWidth > maxWidth) {
+                    context.fillText(line, canvas.width / 2, y);
+                    line = words[n] + ' ';
+                    y += lineHeight;
+                    
+                    if (y > canvas.height - 40) {
+                        line += '...';
+                        break;
+                    }
+                } else {
+                    line = testLine;
+                }
+            }
+            context.fillText(line, canvas.width / 2, y);
+            
+            // Add dimension marker at bottom
+            context.font = 'Bold 18px Arial';
+            context.fillText(`${config.turnSymbols[config.currentTurn-1]} - ${config.turnDimensions[config.currentTurn-1]}`, canvas.width / 2, canvas.height - 30);
+            
+            // Add text texture to note
+            const texture = new THREE.CanvasTexture(canvas);
+            const textMaterial = new THREE.MeshBasicMaterial({
+                map: texture,
+                transparent: true
+            });
+            
+            const textPlane = new THREE.Mesh(
+                new THREE.PlaneGeometry(size * 1.5, size * 1.5),
+                textMaterial
+            );
+            textPlane.position.z = size * 0.11;
+            
+            note.add(textPlane);
+            
+            // Store note data
+            note.userData = {
+                text: text,
+                turn: config.currentTurn,
+                symbol: config.turnSymbols[config.currentTurn-1],
+                dimension: config.turnDimensions[config.currentTurn-1],
+                timestamp: new Date().toISOString()
+            };
+            
+            // Add to scene
+            scene.add(note);
+            notes.push(note);
+            
+            return note;
+        }
+        
+        // Animation loop
+        function animate() {
+            requestAnimationFrame(animate);
+            
+            const delta = clock.getDelta();
+            
+            // Animate turn symbols
+            scene.children.forEach(child => {
+                if (child.userData && child.userData.turn !== undefined) {
+                    // Spin slowly
+                    child.rotation.z += delta * 0.1;
+                    
+                    // Pulse the active turn symbol
+                    if (child.userData.turn === config.currentTurn) {
+                        const time = Date.now() * 0.001;
+                        child.scale.set(
+                            1 + Math.sin(time * 2) * 0.1,
+                            1 + Math.sin(time * 2) * 0.1,
+                            1
+                        );
+                        child.material.opacity = 0.8 + Math.sin(time * 2) * 0.2;
+                    }
+                }
+            });
+            
+            // Animate 3D notes
+            notes.forEach(note => {
+                note.rotation.y += delta * 0.2;
+            });
+            
+            // Render scene
+            renderer.render(scene, camera);
+        }
+        
+        // Update turn displays
+        function updateTurnDisplay() {
+            const turnIndex = config.currentTurn - 1;
+            
+            turnSymbol.textContent = config.turnSymbols[turnIndex];
+            turnDimension.textContent = config.turnDimensions[turnIndex];
+            currentTurnDisplay.textContent = config.currentTurn;
+            turnConcept.textContent = config.turnConcepts[turnIndex];
+            
+            // Update symbol highlights
+            Array.from(symbolsContainer.children).forEach((symbolDiv, index) => {
+                symbolDiv.style.color = index === turnIndex ? '#00ccff' : '#666';
+                symbolDiv.style.textShadow = index === turnIndex ? '0 0 10px rgba(0, 204, 255, 0.8)' : 'none';
+            });
+            
+            // Update 3D symbols
+            scene.children.forEach(child => {
+                if (child.userData && child.userData.turn !== undefined) {
+                    // Update material opacity based on current turn
+                    if (child.material) {
+                        child.material.opacity = child.userData.turn === config.currentTurn ? 0.9 : 0.3;
+                    }
+                }
+            });
+        }
+        
+        // Show notification
+        function showNotification(message) {
+            notification.textContent = message;
+            notification.classList.add('show');
+            
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 3000);
+        }
+        
+        // Advance turn
+        function advanceTurn() {
+            config.currentTurn = (config.currentTurn % config.maxTurns) + 1;
+            updateTurnDisplay();
+            
+            // Execute the quantum turn system script
+            executeWSLCommand(`${config.cDrivePath}/quantum_turn_system.sh advance`);
+            
+            // Show notification
+            showNotification(`Advanced to turn ${config.currentTurn}: ${config.turnSymbols[config.currentTurn-1]} - ${config.turnDimensions[config.currentTurn-1]}`);
+            
+            // Special handling for turn 3 (3D)
+            if (config.currentTurn === 3) {
+                // Create special 3D note
+                create3DNote("This is the 3D space (T symbol) turn. Here we can manipulate objects in 3D space.", { x: 0, y: 0, z: 2 }, "#00cc99", 1.5);
+            }
+        }
+        
+        // Start/stop quantum loop
+        function toggleQuantumLoop() {
+            if (config.isQuantumLoop) {
+                // Stop loop
+                executeWSLCommand(`${config.cDrivePath}/quantum_turn_system.sh stop-loop`);
+                quantumLoopBtn.textContent = "Start Quantum Loop";
+                speedDisplay.textContent = "Manual mode";
+                config.isQuantumLoop = false;
+                clearInterval(progressInterval);
+                progressBar.style.width = "0%";
+                
+                showNotification("Quantum loop stopped");
+            } else {
+                // Start loop
+                executeWSLCommand(`${config.cDrivePath}/quantum_turn_system.sh start-loop 120`); // 10 seconds
+                quantumLoopBtn.textContent = "Stop Quantum Loop";
+                speedDisplay.textContent = "12 turns/second";
+                config.isQuantumLoop = true;
+                
+                // Setup progress bar animation
+                let progress = 0;
+                progressBar.style.width = "0%";
+                
+                const progressInterval = setInterval(() => {
+                    progress += (100 / config.maxTurns);
+                    if (progress >= 100) {
+                        progress = 0;
+                        // Advance turn in the UI
+                        config.currentTurn = (config.currentTurn % config.maxTurns) + 1;
+                        updateTurnDisplay();
+                    }
+                    progressBar.style.width = `${progress}%`;
+                }, config.turnSpeed * 1000);
+                
+                showNotification("Quantum loop started - 12 turns/second");
+            }
+        }
+        
+        // Execute WSL command
+        function executeWSLCommand(command) {
+            console.log(`Executing: ${command}`);
+            
+            // In a real implementation, this would use fetch to call a server endpoint
+            // that executes the command and returns the result
+            // For this demo, we'll simulate the execution
+            
+            return new Promise((resolve) => {
+                setTimeout(() => {
+                    console.log(`Command executed: ${command}`);
+                    resolve({
+                        success: true,
+                        output: `Executed: ${command}`
+                    });
+                }, 500);
+            });
+        }
+        
+        // Event Listeners
+        addNoteBtn.addEventListener('click', () => {
+            noteInput.style.display = 'block';
+            noteText.focus();
+        });
+        
+        cancelNoteBtn.addEventListener('click', () => {
+            noteInput.style.display = 'none';
+            noteText.value = '';
+        });
+        
+        saveNoteBtn.addEventListener('click', () => {
+            const text = noteText.value.trim();
+            if (text) {
+                // Create 3D note
+                create3DNote(text);
+                
+                // Store note via WSL command
+                executeWSLCommand(`${config.cDrivePath}/quantum_turn_system.sh note "${text}"`);
+                
+                // Hide input
+                noteInput.style.display = 'none';
+                noteText.value = '';
+                
+                // Show notification
+                showNotification("3D note created!");
+            }
+        });
+        
+        advanceTurnBtn.addEventListener('click', advanceTurn);
+        
+        quantumLoopBtn.addEventListener('click', toggleQuantumLoop);
+        
+        cleanSewersBtn.addEventListener('click', () => {
+            executeWSLCommand(`${config.cDrivePath}/quantum_turn_system.sh clean`);
+            showNotification("Data sewers cleaned");
+        });
+        
+        exportGodotBtn.addEventListener('click', () => {
+            executeWSLCommand(`${config.cDrivePath}/quantum_turn_system.sh godot`);
+            showNotification("Exported to Godot project");
+        });
+        
+        // Initialize the application
+        window.addEventListener('DOMContentLoaded', () => {
+            // Initialize 3D environment
+            init3DEnvironment();
+            
+            // Load current turn
+            executeWSLCommand(`${config.cDrivePath}/quantum_turn_system.sh status`).then(result => {
+                // In a real implementation, parse the output to get current turn
+                
+                // Update turn display
+                updateTurnDisplay();
+                
+                // Create some initial notes
+                create3DNote("Welcome to the 3D Quantum Notepad. This is turn 3: Space.", { x: 0, y: 0, z: 2 }, "#00aaff", 1.2);
+                create3DNote("Use the Add Note button to create new notes in the current dimension.", { x: 2, y: 1, z: -1 }, "#ff9900", 1);
+                create3DNote("Each turn represents a different dimension from 1D to 12D.", { x: -2, y: -1, z: 1 }, "#66cc00", 0.8);
+                
+                // Hide loading overlay
+                setTimeout(() => {
+                    loadingOverlay.style.opacity = 0;
+                    setTimeout(() => {
+                        loadingOverlay.style.display = 'none';
+                    }, 500);
+                }, 1500);
+            });
+        });
+    </script>
+</body>
+</html>

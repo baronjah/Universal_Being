@@ -1,0 +1,44 @@
+func the_current_state_of_tree(set_name_now, the_state):
+	
+	mutex_for_container_state.lock()
+	if current_containers_state.has(set_name_now):
+		current_containers_state[set_name_now]["status"] = the_state
+		print("taskkkkl it has it already ", set_name_now, " its status : " , the_state)
+	else:
+		print("taskkkkl does not have ", set_name_now, " its status : " , the_state)
+		current_containers_state[set_name_now] = {
+			"status" = the_state
+		}
+	mutex_for_container_state.unlock()
+
+
+
+	if the_state == 1:
+		print(" to be loaded ")
+		
+		load_queue_mutex.lock()
+		
+		if load_queue.has(set_name_now):
+			
+			print(" we had it before, to be loaded : ", set_name_now)
+		else:
+			load_queue[set_name_now] = {}
+			print(" we have not loaded it before : ", set_name_now)
+		
+		load_queue_mutex.unlock()
+		
+
+
+
+	if the_state == -1:
+		print(" to be unloaded ")
+		
+		unload_queue_mutex.lock()
+		
+		if unload_queue.has(set_name_now):
+			print(" we had it before, to be unloaded : ", set_name_now)
+		else:
+			unload_queue[set_name_now] = {}
+			print(" we have not unloaded it before")
+		
+		unload_queue_mutex.unlock()

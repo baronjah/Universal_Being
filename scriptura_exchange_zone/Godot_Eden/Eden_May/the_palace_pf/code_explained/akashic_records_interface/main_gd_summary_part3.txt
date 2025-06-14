@@ -1,0 +1,64 @@
+# Main.gd Summary - Lines 1000-1500
+
+## Task Management System (Lines 1004-1221)
+### Task Creation Functions (Lines 1020-1102)
+- ready_for_once() function (Lines 1020-1027): 
+  - One-time execution for creating base and menu tasks
+- process_pending_sets() function (Lines 1029-1044):
+  - Thread-safe processing of pending creation sets
+  - Uses mutexes to protect shared data
+- handle_creation_task() function (Lines 1046-1071):
+  - Manages creation tasks with locking mechanisms
+  - Tracks mistakes in a thread-safe dictionary
+- handle_unload_task() function (Lines 1072-1102):
+  - Manages unloading tasks with mutex protection
+  - Tracks unload attempts and errors
+
+### Task Status Functions (Lines 1115-1182)
+- check_status() function (Lines 1115-1140):
+  - Checks thread status and handles retries with timers
+- check_status_just_timer() function (Lines 1142-1161):
+  - Simplified status check with timer handling
+- track_task_status() function (Lines 1162-1168):
+  - Records start time and status for a task
+- track_task_completion() function (Lines 1170-1177):
+  - Sets up task timeout monitoring
+- handle_task_timeout() function (Lines 1179-1181):
+  - Stub for timeout handling
+
+## Dimensional Magic System (Lines 1223-1360)
+A set of "dimensional magic" functions that appear to be abstraction layers for various operations:
+
+- first_dimensional_magic() (Lines 1249-1257): Actions queue management
+- the_fourth_dimensional_magic() (Lines 1258-1266): Movement operations
+- fifth_dimensional_magic() (Lines 1267-1274): Node unloading
+- sixth_dimensional_magic() (Lines 1275-1285): Function calls
+- seventh_dimensional_magic() (Lines 1286-1295): Special actions
+- check_magical_array() (Lines 1296-1315): Array modification checks
+- eight_dimensional_magic() (Lines 1316-1327): Messaging system
+- ninth_dimensional_magic() (Lines 1330-1360): Texture operations (partially commented out)
+
+## Data Processing Functions (Lines 1373-1499)
+- newer_even_function_for_dictionary() (Lines 1373-1378):
+  - Thread-safe dictionary operation
+- task_to_send_data_to_datapoint() (Lines 1380-1395):
+  - Dispatches data to datapoints based on type
+- Data upload functions (Lines 1396-1406):
+  - interactions_upload_to_datapoint()
+  - scene_frames_upload_to_datapoint()
+- Data loading functions (Lines 1424-1499):
+  - load_cached_data_second_impact(): Processes cached data from record sets
+  - Includes extensive type-specific data processing
+  - Tracks and handles different data types (0-3)
+  - Uses mutex locks for thread safety
+  - Begins showing load_cached_data_second_impact_old() (incomplete)
+
+## Notable Features
+1. ASCII Art Headers: Decorative ASCII art headers for major sections
+2. Thread Safety: Extensive use of mutexes for concurrent operations
+3. Dimensional Magic Metaphor: Operations are organized as "dimensional magics"
+4. Queue-Based Architecture: Most operations add items to thread-safe queues
+5. Error Tracking: Comprehensive error tracking and retry mechanisms
+6. Task Timeout System: Tasks have maximum duration with timeout handling
+
+Reading continues from line 1500.

@@ -1,0 +1,80 @@
+
+func add_collision_to_thing(thing_node, node_type):
+	# First, add the regular flat collision (StaticBody3D)
+	var static_body = StaticBody3D.new()
+	thing_node.add_child(static_body)
+	
+	var collision_shape = CollisionShape3D.new()
+	static_body.add_child(collision_shape)
+	
+	# Enable debug visualization for the collision shape
+	collision_shape.debug_color = Color(1, 0, 0)  # Red for visibility
+	collision_shape.debug_fill = false  # Enable filled debug shapes
+	
+	# Add an Area3D for interaction
+	var area = Area3D.new()
+	thing_node.add_child(area)
+	
+	var area_collision_shape = CollisionShape3D.new()
+	area.add_child(area_collision_shape)
+	
+	# Enable debug visualization for the Area3D collision shape
+	area_collision_shape.debug_color = Color(0, 1, 0)  # Green for clarity
+	area_collision_shape.debug_fill = true
+	
+	# Get mesh data to determine shape size
+	var mesh_instance = thing_node as MeshInstance3D
+	if mesh_instance and mesh_instance.mesh:
+		var vertices = mesh_instance.mesh.get_faces()
+		
+		match node_type:
+			"flat_shape", "model", "button", "cursor", "screen", "circle":
+				# Create flat collision shape for StaticBody
+				var flat_shape = ConvexPolygonShape3D.new()
+				flat_shape.points = vertices
+				collision_shape.shape = flat_shape
+				
+				# Create larger shape for Area3D
+				var area_shape = ConvexPolygonShape3D.new()
+				var expanded_vertices = PackedVector3Array()
+				
+				# Expand vertices for area collision
+				var expansion_distance = 0.2
+				for vert in vertices:
+					expanded_vertices.push_back(vert + Vector3(0, 0, expansion_distance))
+					expanded_vertices.push_back(vert - Vector3(0, 0, expansion_distance))
+				
+				area_shape.points = expanded_vertices
+				area_collision_shape.shape = area_shape
+				#collision_shape.debug_color = Color(1, 0, 0)  # Red color
+				#collision_shape.debug_fill = true  # Enable filled debug shape
+				
+			"heightmap":
+				# Create flat collision shape for StaticBody
+				var flat_shape = ConvexPolygonShape3D.new()
+				flat_shape.points = vertices
+				collision_shape.shape = flat_shape
+				
+				# Create larger shape for Area3D
+				var area_shape = ConvexPolygonShape3D.new()
+				var expanded_vertices = PackedVector3Array()
+				
+				# Expand vertices for heightmap
+				var expansion_distance = 0.2
+				for vert in vertices:
+					expanded_vertices.push_back(vert + Vector3(0, expansion_distance, 0))
+					expanded_vertices.push_back(vert - Vector3(0, expansion_distance, 0))
+				
+				area_shape.points = expanded_vertices
+				area_collision_shape.shape = area_shape
+				
+			_:
+				print("Node type not recognized for collision: ", node_type)
+				return
+	
+	# Configure collision layers and masks
+	static_body.collision_layer = 1
+	static_body.collision_mask = 1
+	
+	area.collision_layer = 2
+	area.collision_mask = 2

@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>12-Turn Creation System</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #0c0c14;
+            color: #ddd;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        h1, h2 {
+            text-align: center;
+            color: #8be9fd;
+        }
+        .turn-system {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .turn {
+            width: 220px;
+            margin: 10px;
+            padding: 15px;
+            border-radius: 8px;
+            background-color: #1e1e2e;
+            transition: all 0.3s;
+            position: relative;
+        }
+        .turn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+        }
+        .turn.active {
+            border: 2px solid #50fa7b;
+            background-color: #2c2c3c;
+        }
+        .turn.completed {
+            border: 2px solid #bd93f9;
+        }
+        .turn.future {
+            border: 2px solid #44475a;
+            opacity: 0.7;
+        }
+        .turn-number {
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background-color: #ff79c6;
+            color: #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+        .turn-phase {
+            font-size: 1.2em;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #f1fa8c;
+            text-align: center;
+        }
+        .turn-desc {
+            font-size: 0.9em;
+            margin-top: 15px;
+        }
+        .status-bar {
+            height: 30px;
+            background: #44475a;
+            margin: 20px 0;
+            border-radius: 15px;
+            overflow: hidden;
+            position: relative;
+        }
+        .progress {
+            height: 100%;
+            background: linear-gradient(90deg, #8be9fd, #50fa7b);
+            width: 25%; /* Current turn 3 of 12 */
+            transition: width 1s;
+        }
+        .controls {
+            display: flex;
+            justify-content: center;
+            margin: 20px 0;
+        }
+        button {
+            background-color: #6272a4;
+            color: #f8f8f2;
+            border: none;
+            padding: 10px 20px;
+            margin: 0 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        button:hover {
+            background-color: #8be9fd;
+            color: #282a36;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>12-Turn Creation System</h1>
+        
+        <div class="status-bar">
+            <div class="progress"></div>
+        </div>
+        
+        <div class="controls">
+            <button id="prev-turn">Previous Turn</button>
+            <button id="advance-turn">Advance Turn</button>
+            <button id="check-files">Check Files</button>
+        </div>
+        
+        <div class="turn-system" id="turns-container">
+            <!-- Turn containers will be generated via JavaScript -->
+        </div>
+    </div>
+
+    <script>
+        // Turn data
+        const currentTurn = 3;
+        const maxTurns = 12;
+        const phases = [
+            "Genesis", "Formation", "Complexity", "Consciousness", 
+            "Awakening", "Enlightenment", "Manifestation", "Connection", 
+            "Harmony", "Transcendence", "Unity", "Beyond"
+        ];
+        
+        const descriptions = [
+            "The beginning of all things; raw potential emerges from void.",
+            "Basic structures take shape; foundational elements are created.",
+            "Systems begin interacting; complexity arises from simplicity.",
+            "Awareness arises within systems; first feedback loops form.",
+            "Recognition of self and other; boundaries begin to form.",
+            "Understanding connections between all elements; insight emerges.",
+            "Bringing forth creation from thought; ideas become reality.",
+            "Building relationships between created elements; networks form.",
+            "Balance between all created elements; systems stabilize.",
+            "Rising beyond initial limitations; transformation occurs.",
+            "All becomes one; unification of created elements.",
+            "Moving beyond the current cycle; preparation for renewal."
+        ];
+        
+        // Generate turn elements
+        const turnsContainer = document.getElementById('turns-container');
+        
+        for (let i = 1; i <= maxTurns; i++) {
+            const turnDiv = document.createElement('div');
+            let status = '';
+            
+            if (i < currentTurn) {
+                status = 'completed';
+            } else if (i === currentTurn) {
+                status = 'active';
+            } else {
+                status = 'future';
+            }
+            
+            turnDiv.className = `turn ${status}`;
+            turnDiv.innerHTML = `
+                <div class="turn-number">${i}</div>
+                <div class="turn-phase">${phases[i-1]}</div>
+                <div class="turn-desc">${descriptions[i-1]}</div>
+            `;
+            
+            turnsContainer.appendChild(turnDiv);
+        }
+        
+        // Update progress bar
+        document.querySelector('.progress').style.width = `${(currentTurn / maxTurns) * 100}%`;
+        
+        // Button functionality (placeholders)
+        document.getElementById('advance-turn').addEventListener('click', () => {
+            alert('This would advance to the next turn in a real implementation.');
+        });
+        
+        document.getElementById('prev-turn').addEventListener('click', () => {
+            alert('This would go back to the previous turn in a real implementation.');
+        });
+        
+        document.getElementById('check-files').addEventListener('click', () => {
+            alert('This would check file sizes in a real implementation.');
+        });
+    </script>
+</body>
+</html>

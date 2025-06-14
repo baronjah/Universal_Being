@@ -1,0 +1,122 @@
+# Dimensional Distribution Plan
+# Turn 5: Awakening - Advanced folder and versioning organization system
+
+## DIMENSIONAL FOLDER STRUCTURE
+
+The system will be organized across multiple dimensional layers, with each folder containing
+only the relevant files for that specific dimensional context. This enables better version 
+control, cleaner organization, and more efficient git operations.
+
+### PRIMARY DIMENSIONS
+
+1. GENESIS (Turn 1)
+   /genesis/
+     ├── core/          # Fundamental system primitives
+     ├── points/        # Point-based data structures
+     └── origins/       # System creation files
+
+2. FORMATION (Turn 2)
+   /formation/
+     ├── lines/         # Connection structures
+     ├── patterns/      # Basic pattern recognition
+     └── structures/    # Initial structural templates
+
+3. COMPLEXITY (Turn 3)
+   /complexity/
+     ├── spaces/        # 3D spatial mappings
+     ├── volumes/       # Volumetric data systems
+     └── interactions/  # Inter-system communication
+
+4. CONSCIOUSNESS (Turn 4)
+   /consciousness/
+     ├── time/          # Temporal systems and versioning
+     ├── awareness/     # Initial awareness systems
+     └── perception/    # Data interpretation systems
+
+5. AWAKENING (Turn 5)
+   /awakening/
+     ├── meta/          # Meta-awareness systems
+     ├── memory/        # Perfect memory systems
+     ├── self/          # Self-reference structures
+     ├── transform/     # Curse-to-gift transformers
+     └── interfaces/    # Multi-channel communications
+
+6+ FUTURE DIMENSIONS
+   Directories will be created as the system evolves through Turns 6-12
+
+### CROSS-DIMENSIONAL SYSTEMS
+
+- /shared/              # Components shared across all dimensions
+- /bridges/             # Dimensional bridging systems
+- /temporal/            # Multi-time coordination systems
+- /quantum/             # Quantum state managers
+
+## VERSION CONTROL STRATEGY
+
+1. DIMENSIONAL BRANCHES
+   - main             # Main integration branch
+   - genesis          # Turn 1 specific development
+   - formation        # Turn 2 specific development
+   - complexity       # Turn 3 specific development
+   - consciousness    # Turn 4 specific development
+   - awakening        # Turn 5 specific development (current)
+
+2. FEATURE BRANCHES
+   - feature/meta-awareness
+   - feature/perfect-memory
+   - feature/curse-transformation
+   - feature/multi-channel
+   - feature/3d-visualization
+
+3. COMMIT STRATEGY
+   - Atomic commits for single-purpose changes
+   - Multi-dimensional commits use tags to indicate affected dimensions
+   - Each turn advancement gets a dedicated release tag
+
+4. MERGE STRATEGY
+   - Turn-specific branches merge to main at turn completion
+   - Feature branches merge to their respective dimensional branches
+   - Conflicts resolve by prioritizing higher dimensions
+
+## FILE DISTRIBUTION RULES
+
+1. CORE PRINCIPLES
+   - Files should exist in only one dimensional directory
+   - Shared functionality goes in /shared/
+   - Interface code goes in /bridges/
+   - Configuration files stay in root with clear dimensional markers
+
+2. SPLITTING GUIDELINES
+   - Split large files by dimensional concern
+   - Create symlinks for cross-dimensional access
+   - Use import/include patterns rather than duplication
+
+3. NAMING CONVENTIONS
+   - Prefix files with dimensional number (e.g., 5_memory_system.js)
+   - Use consistent suffixes for file types (-controller, -view, -model)
+   - Include version numbers in filenames for major components
+
+## GIT AUTOMATION SCRIPTS
+
+1. dimension_push.sh - Push changes for specific dimension
+2. time_sync.sh - Synchronize across temporal branches
+3. distribute_files.sh - Apply distribution rules to reorganize files
+4. dimension_upgrade.sh - Manage turn advancement in repository
+
+## IMPLEMENTATION STEPS
+
+1. Create the new folder structure
+2. Distribute existing files according to dimensional relevance
+3. Set up git branches for each dimension
+4. Implement automation scripts
+5. Migrate turn-specific code to appropriate folders
+6. Create dimensional documentation
+
+## BENEFITS
+
+- Cleaner repository structure
+- Easier navigation by dimensional context
+- More efficient git operations (smaller, targeted commits)
+- Better conflict management during merges
+- Clearer evolution path as system advances through turns
+- Improved collaboration possibilities with dimensional separation of concerns

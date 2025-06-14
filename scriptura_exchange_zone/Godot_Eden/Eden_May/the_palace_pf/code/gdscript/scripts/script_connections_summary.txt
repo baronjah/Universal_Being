@@ -1,0 +1,97 @@
+# Project Regenesis - Eden System Integration Map
+# DATE: 2025-05-09
+
+## System Architecture Overview
+
+This document maps the connections between the major systems of Project Regenesis. Each system plays a specific role in implementing the "every object is a point that can become anything" philosophy.
+
+### Core Systems and Their Relationships
+
+1. **Akashic Records System** (akashic_records/)
+   - **Central Role**: Acts as the "memory" of the universe, storing all definitions, relationships, and history
+   - **Key Components**:
+     - `UniversalEntity`: The base class representing the fundamental "point" concept
+     - `AkashicRecordsManager`: Central manager coordinating all database operations
+     - `DynamicDictionary`: Self-evolving database that can split when entries get too complex
+     - `WordEntry`: The basic data unit representing a concept or thing
+     - `ZoneManager`: Manages spatial organization of entities with dynamic chunking
+     - `InteractionEngine`: Processes interactions between concepts/words
+     - `InteractionMatrix`: Defines detailed interaction rules
+
+2. **Element System** (elements_shapes_projection/)
+   - **Central Role**: Provides visual representation of elements in the world
+   - **Key Components**:
+     - `ElementManager`: Manages creation and lifecycle of all elements
+     - `BaseElement`: Foundation class for all element types
+     - `FireElement`, `WaterElement`, etc.: Specific element implementations with unique behaviors
+
+3. **Console System** (Menu_Keyboard_Console/)
+   - **Central Role**: User interface for interacting with all systems
+   - **Key Components**:
+     - `JSHConsole`: Main console interface for command processing
+     - `AkashicRecordsIntegration`: Bridges console with Akashic Records
+     - `ThingCreatorIntegration`: Bridges console with visual entity creation
+
+4. **Integration Bridges**
+   - `UniversalBridge`: Central connection point for all systems
+   - `AkashicDatabaseIntegrator`: Connects database systems with Akashic Records
+   - `ThingCreator`: Bridges concepts from Akashic Records to visual entities
+
+### Data Flow Diagram
+
+```
+[User Input] → [JSHConsole] → [Integration Modules] → [Core Systems]
+                                 |                      |
+[Visual Output] ← [Elements] ← [ThingCreator] ← [AkashicRecordsManager]
+                                                     |
+                                            [Database Systems]
+                                               (split when needed)
+```
+
+### Key Connection Points
+
+1. **Word to Entity Flow**:
+   - Word defined in `DynamicDictionary`
+   - User creates entity via `ThingCreator`
+   - `ElementManager` creates visual representation
+   - Entity registered in `ZoneManager` for spatial tracking
+
+2. **Interaction Flow**:
+   - Two elements interact in the visual world
+   - `ElementManager` detects interaction
+   - `UniversalBridge` translates to word interaction
+   - `InteractionEngine` processes based on rules
+   - Result returned and applied to visual elements
+
+3. **Evolution Flow**:
+   - `EvolutionManager` monitors word usage
+   - Properties evolve based on interactions
+   - New variants can be generated
+   - Visual elements can transform to match evolved concepts
+
+## Integration Architecture Decisions
+
+1. **Singleton Pattern**:
+   - Core managers (AkashicRecordsManager, ElementManager) implement singleton pattern
+   - Allows access from any system while maintaining single source of truth
+
+2. **Signal-Based Communication**:
+   - Systems communicate via signals to maintain loose coupling
+   - Key signals: entity_transformed, word_interaction_processed, word_evolution_occurred
+
+3. **Component Architecture**:
+   - Each system consists of highly specialized components
+   - Components can be replaced or extended independently
+
+4. **Dynamic Loading**:
+   - Dictionary entries can be loaded/unloaded as needed
+   - Zones can be activated/deactivated based on player proximity
+   - Resource management for optimal performance
+
+## Next Steps for Integration
+
+1. Finalize the core APIs for each system to ensure consistent interfaces
+2. Implement the UniversalBridge as a central connection point
+3. Create an initialization sequence that properly loads all systems
+4. Develop a comprehensive test suite for system interactions
+5. Implement performance monitoring and optimization

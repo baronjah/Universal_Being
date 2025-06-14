@@ -1,0 +1,214 @@
+ragdoll game test 2
+
+Godot Engine v4.5.dev4.mono.official (c) 2007-present Juan Linietsky, Ariel Manzur & Godot Contributors.
+--- Debug adapter server started on port 6006 ---
+--- GDScript language server started on port 6005 ---
+  ERROR: res://scripts/core/debug_3d_screen.gd:357 - Parse Error: Cannot assign a new value to a constant.
+  ERROR: res://scripts/core/debug_3d_screen.gd:362 - Parse Error: Cannot assign a new value to a constant.
+  ERROR: res://scripts/autoload/console_manager.gd:0 - Compile Error: Failed to compile depended scripts.
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://scripts/autoload/console_manager.gd" with error "Parse error".
+
+
+the script res://scripts/core/debug_3d_screen.gd
+
+these lines 
+
+func scale_selected_object(scale_factor: Vector3) -> void:
+	if selected_object:
+		selected_object.global_scale *= scale_factor
+		print("Scaled " + selected_object.name + " to " + str(selected_object.global_scale))
+
+func set_selected_object_scale(new_scale: Vector3) -> bool:
+	if selected_object:
+		selected_object.global_scale = new_scale
+		print("Scaled " + selected_object.name + " to " + str(selected_object.global_scale))
+		return true
+	return false
+
+
+maybe we want to change an node? when i used multi threading i made tasks to move it around, scale, rotate, even to use function get_node() i gad to do so, check the main.gd of the eden project, menu_keyboard we talked in the morning, here you can check the dimensional magics and turns systems of what i done and how if you wanna
+
+
+Line 357:Cannot assign a new value to a constant.
+Line 362:Cannot assign a new value to a constant.
+
+
+
+the next script 
+
+res://scripts/autoload/console_manager.gd
+
+after line 88
+
+
+	"todos": _cmd_multi_todos,
+	"balance": _cmd_balance_workload#,#here we need to repair it
+	#"calibrate": _cmd_terminal_calibration # Line 89:Identifier "_cmd_terminal_calibration" not declared in the current scope.
+
+}
+
+i commented out something that didnt work
+
+
+also some connected script need some work 
+
+Parser Error: Failed to compile depended scripts.
+
+
+after that project load
+
+can whip out console with tab
+
+can put in help and i wanted to copy paste the text, but couldnt touch first few lines and last few too, its about viewport maybe?
+
+
+
+ to Ragdoll Console!
+Type 'help' for commands, Tab to toggle, Esc to close
+> help
+Available Commands:
+  create/spawn <object> - Create an object at mouse position
+  tree - Spawn a tree
+  rock - Spawn a rock
+  box - Spawn a box
+  ball - Spawn a ball
+  ramp - Spawn a ramp
+  sun - Spawn a sun (light source)
+  astral/astral_being - Spawn an astral being
+  pathway/path - Spawn a pathway
+  bush - Spawn a bush
+  fruit - Spawn a fruit
+  clear - Remove all spawned objects
+  list - List all spawned objects
+  delete <id> - Delete specific object
+  ragdoll <command> - Control ragdoll (reset/position)
+  gravity <value> - Set gravity (default: 9.8)
+  physics - Physics state control
+  say <text> - Make ragdoll say something
+  console <position> - Set console position (center/top/bottom/left/right)
+  scale <value> - Set UI scale (0.5-2.0)
+  scene list - List available scenes
+  load <scene> - Load a scene
+  save [name] - Save current scene
+  walk - Make ragdoll walk/stop
+  spawn_ragdoll - Spawn a new ragdoll character
+
+Debug Commands:
+  debug [off] - Toggle/disable debug 3D screen
+  select <name|id> - Select object for manipulation
+  move <x> <y> <z> - Move selected object
+  rotate <x> <y> <z> - Rotate selected object (degrees)
+  scale_obj <scale> - Scale selected object
+
+Light Being Commands:
+  awaken <name|id> - Awaken static object to begin movement
+  state <name|id> <state> - Change object physics state
+  States: static, awakening, kinematic, dynamic, ethereal, light_being
+
+Timer & Task Commands:
+  timer - Show timer report
+  timer project <name> - Switch active project
+  timer threshold <seconds> - Set autonomous work trigger
+  task start <name> - Start timing a task
+  task complete - Complete current task
+
+Multi-Todo Commands:
+  todos - Show all project todos
+  todos add <project> <content> - Add todo to project
+  todos complete <project> <id> - Complete todo
+  todos modify <project> <id> <content> - Modify todo
+  todos stepback <project> <id> - Undo last modification
+  balance - Show workload balance recommendations
+
+Passive Mode Commands:
+  passive start - Start autonomous development mode
+  passive stop - Stop passive mode
+  passive status - Show passive mode status
+  add_task <name> [priority] - Add task to queue
+  branch create <name> - Create feature branch
+  branch switch <name> - Switch branch
+  commit <message> - Commit changes
+  mr create <title> - Create merge request
+  mr approve <id> - Approve merge request
+  merge <mr-id> - Merge approved MR
+  workflow - Show workflow status
+
+
+
+tried to use command create tree
+
+but got send to that script 
+
+res://scripts/core/standardized_objects.gd
+
+Invalid assignment of property or key 'radius' with value of type 'float' on a base object of type 'CylinderMesh'.
+
+at line 234
+
+cylinder.radius = def["size"].x / 2.0
+
+
+,
+rock appeared,but hower on skies
+
+box appears and falls
+
+ball appears and falls down and bounces 
+
+ramp like rock hover over scene
+
+sun appears nd is on the same starting height and stays there, even makes light
+
+astral beings appeared i think, i see some white like rain in skies
+
+pathway and bush appears but hover on skies
+
+fruit appears and falls
+
+
+Bush created!
+> fruit
+Fruit created!
+> list
+Spawned Objects:
+  - Tree at (-22.1178, 10.0, -4.349102)
+  - Rock at (-19.78006, 10.0, -2.187841)
+  - Box at (-19.95352, 0.7472, -0.965247)
+  - Ball at (-14.91341, 0.249051, -0.515783)
+  - Ramp at (-33.12887, 10.0, -23.71361)
+  - Sun at (24.35366, 10.0, -12.01667)
+  - Astral Being at (-10.72801, 10.4204, 4.18833)
+  - @Node3D@41 at (18.09274, 10.84791, 1.028341)
+  - Pathway at (-16.48012, 10.0, 2.199286)
+  - Bush at (14.47762, 10.0, 6.820978)
+  - Fruit at (0.0, -2412.085, 19.77199)
+
+
+
+> scene list
+Available Scenes:
+  - default
+  - forest
+  - physics_test
+  - playground
+Current scene: default
+
+
+loaded physics test as it was new
+
+put in command walk, but seen the ragdoll fall forward
+
+
+at load forest i am here
+
+res://scripts/core/standardized_objects.gd
+
+line 234
+
+Invalid assignment of property or key 'radius' with value of type 'float' on a base object of type 'CylinderMesh'.
+
+oh its the tree problem again
+
+it kinda loaded ow but witg no trees, maybe we must move trees around so from my perspective they are more on the sides and further back, where my bottom and centers shall be what we call center of the scene, i am looking at, unless we make movable camera of some kinda, as you remember he idea was to showcase each part of the game, in tutorial, first load scene, which i will be debuging and telling you what i see, also we wanted to add the console logs, into files, with dates of run, so you can check newests of my tests, and we can start to debug it even better
+
+

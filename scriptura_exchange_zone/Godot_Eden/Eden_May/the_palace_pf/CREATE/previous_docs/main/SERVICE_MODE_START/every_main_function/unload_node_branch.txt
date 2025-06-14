@@ -1,0 +1,7 @@
+func unload_node_branch(path_for_node_to_unload, recreation_of_node_data):
+	var node_to_unload_now = jsh_tree_get_node(path_for_node_to_unload)
+	if node_to_unload_now:
+		print(" node_to_unload_now : " , node_to_unload_now)
+		node_to_unload_now.queue_free()
+	print_tree_pretty()
+	recreator_of_singular_thing(recreation_of_node_data)

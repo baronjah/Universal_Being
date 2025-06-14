@@ -1,0 +1,25 @@
+func another_data_chunk():
+	print()
+## Usage example:
+#var creation_result = whip_out_set_by_its_name("test_set")
+#
+#match creation_result:
+	#CreationStatus.SUCCESS:
+		#print("Set created successfully")
+	#CreationStatus.ERROR:
+		#print("Failed to create set")
+	#CreationStatus.INVALID_INPUT:
+		#print("Invalid input provided")
+	#CreationStatus.LOCKED:
+		#print("Creation currently locked")
+	#CreationStatus.PENDING:
+		#print("Creation pending")
+#
+## Process turn example:
+#var turn_result = process_turn_0(delta)
+#if turn_result.status == CreationStatus.SUCCESS:
+	#print("Turn processed successfully, created ", turn_result.processed_sets, " sets")
+#else:
+	#print("Turn processing failed: ", turn_result.message)
+#
+#

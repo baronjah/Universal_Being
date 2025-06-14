@@ -1,0 +1,118 @@
+# ADD THIS TO console_manager.gd TO ENABLE CHANNELS
+
+# 1. Add these variables at the top with other variables:
+var channel_buttons: Dictionary = {}
+var active_channels: Dictionary = {
+	"All": true,
+	"System": true,
+	"Game": true, 
+	"Universal": true,
+	"Errors": false,  # Hide errors by default
+	"Debug": true,
+	"Player": true
+}
+var channel_container: HBoxContainer
+
+# 2. Add to _setup_ui() after creating content_vbox:
+func _setup_channel_buttons() -> void:
+	# Channel filter container
+	var channel_panel = PanelContainer.new()
+	var panel_style = StyleBoxFlat.new()
+	panel_style.bg_color = Color(0.1, 0.1, 0.1, 0.9)
+	panel_style.content_margin_all = 5
+	channel_panel.add_theme_stylebox_override("panel", panel_style)
+	
+	channel_container = HBoxContainer.new()
+	channel_container.add_theme_constant_override("separation", 5)
+	
+	# Add label
+	var label = Label.new()
+	label.text = "Channels: "
+	label.add_theme_color_override("font_color", Color.GRAY)
+	channel_container.add_child(label)
+	
+	# Channel definitions with colors
+	var channels = {
+		"System": "#808080",
+		"Game": "#00ff00",
+		"Universal": "#00ffff",
+		"Errors": "#ff0000",
+		"Debug": "#ffff00",
+		"Player": "#ff00ff"
+	}
+	
+	# Create toggle buttons
+	for ch_name in channels:
+		var btn = Button.new()
+		btn.text = ch_name
+		btn.toggle_mode = true
+		btn.pressed = active_channels.get(ch_name, true)
+		btn.custom_minimum_size = Vector2(70, 22)
+		btn.toggled.connect(_on_channel_toggled.bind(ch_name))
+		
+		# Style
+		var style = StyleBoxFlat.new()
+		style.bg_color = Color(0.2, 0.2, 0.2, 0.8)
+		style.border_width_all = 1
+		style.border_color = Color.from_html(channels[ch_name])
+		style.corner_radius_all = 3
+		
+		btn.add_theme_stylebox_override("normal", style)
+		btn.add_theme_font_size_override("font_size", 12)
+		
+		channel_container.add_child(btn)
+		channel_buttons[ch_name] = btn
+	
+	# Add clear button
+	var sep = VSeparator.new()
+	channel_container.add_child(sep)
+	
+	var clear_btn = Button.new()
+	clear_btn.text = "Clear"
+	clear_btn.pressed.connect(clear_console)
+	channel_container.add_child(clear_btn)
+	
+	channel_panel.add_child(channel_container)
+	content_vbox.add_child(channel_panel)
+	content_vbox.move_child(channel_panel, 1)  # After title
+
+# 3. Add channel toggle handler:
+func _on_channel_toggled(pressed: bool, channel: String) -> void:
+	active_channels[channel] = pressed
+
+# 4. Modify _print_to_console to support channels:
+func print_to_channel(text: String, channel: String = "Game") -> void:
+	# Skip if channel is hidden
+	if not active_channels.get(channel, true):
+		return
+		
+	var color = "#ffffff"
+	match channel:
+		"System": color = "#808080"
+		"Game": color = "#00ff00"
+		"Universal": color = "#00ffff"
+		"Errors": color = "#ff0000"
+		"Debug": color = "#ffff00"
+		"Player": color = "#ff00ff"
+	
+	var formatted = "[color=%s][%s][/color] %s" % [color, channel, text]
+	_print_to_console(formatted)
+
+# 5. Add these helper functions:
+func print_error(text: String) -> void:
+	print_to_channel(text, "Errors")
+
+func print_system(text: String) -> void:
+	print_to_channel(text, "System")
+
+func print_universal(text: String) -> void:
+	print_to_channel(text, "Universal")
+
+func print_debug(text: String) -> void:
+	print_to_channel(text, "Debug")
+
+# 6. In _ready(), add:
+_setup_channel_buttons()
+
+# 7. To fix the LOADER spam, modify wherever those errors come from to use:
+# print_error("Resource not found: " + path) instead of _print_to_console()

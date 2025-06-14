@@ -1,0 +1,31 @@
+graph TD
+    Main[JSH Ethereal Engine] --> Init[Initialization & Startup]
+    Main --> Health[System Health & Repair]
+    Main --> Memory[Memory Management]
+    Main --> Queue[Queue & Threading]
+    Main --> Tree[Scene Tree Management]
+    Main --> Creation[Things Creation]
+
+    Init --> |Functions| IF[_init<br/>_ready<br/>setup_settings<br/>start_up_scene_tree]
+    
+    Health --> |Functions| HF[check_system_health<br/>trigger_deep_repair<br/>handle_random_errors<br/>check_status<br/>breaks_and_handles_check]
+    
+    Memory --> Records[Records System]
+    Memory --> Cache[Cache System]
+    Records --> |Functions| RF[prepare_akashic_records<br/>find_record_set<br/>load_record_set<br/>unload_record_set]
+    Cache --> |Functions| CF[cache_data<br/>clean_oldest_dataset<br/>load_cached_data]
+    
+    Queue --> Tasks[Task Management]
+    Queue --> Threads[Thread Control]
+    Tasks --> |Functions| TF[create_new_task<br/>track_task_status<br/>handle_task_timeout<br/>queue_pusher_adder]
+    Threads --> |Functions| ThF[multi_threaded_ray_cast<br/>check_thread_status]
+    
+    Tree --> Structure[Tree Structure]
+    Tree --> Nodes[Node Management]
+    Structure --> |Functions| SF[print_tree_structure<br/>jsh_tree_get_node<br/>containers_list_creator]
+    Nodes --> |Functions| NF[recreate_node_from_records<br/>node_creation<br/>unload_node_branch]
+
+    Creation --> Objects[Objects Creation]
+    Creation --> Interactions[Interaction System]
+    Objects --> |Functions| OF[create_circle_shape<br/>create_flat_shape<br/>create_container<br/>create_datapoint]
+    Interactions --> |Functions| InF[ray_cast_data_preparer<br/>secondary_interaction_after_rc]

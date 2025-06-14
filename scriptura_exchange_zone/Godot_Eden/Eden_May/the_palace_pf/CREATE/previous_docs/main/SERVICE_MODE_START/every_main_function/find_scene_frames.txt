@@ -1,0 +1,22 @@
+func find_scene_frames(record_type: String) -> Dictionary:
+	match record_type:
+		"base":
+			return ScenesBank.scenes_frames_0
+		"menu":
+			return ScenesBank.scenes_frames_1
+		"settings":
+			return ScenesBank.scenes_frames_2
+		"keyboard":
+			return ScenesBank.scenes_frames_3
+		"keyboard_left":
+			return ScenesBank.scenes_frames_4
+		"keyboard_right":
+			return ScenesBank.scenes_frames_5
+		"things_creation":
+			return ScenesBank.scenes_frames_6
+		"singular_lines":
+			return ScenesBank.scenes_frames_7
+		# Add more record sets as needed
+		_:
+			#print("Unknown record set: ", record_type)
+			return {}

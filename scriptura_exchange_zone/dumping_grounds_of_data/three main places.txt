@@ -1,0 +1,3 @@
+C:\Users\Percision 15
+C:\Users\Percision 15\Desktop\claude_desktop
+\\wsl.localhost\Ubuntu\home

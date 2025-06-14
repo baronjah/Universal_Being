@@ -1,0 +1,122 @@
+[gd_scene load_steps=6 format=3 uid="uid://bnhkn2r1dqfj4"]
+
+[ext_resource type="Script" path="res://ethereal_tunnel.gd" id="1_jtde2"]
+[ext_resource type="Script" path="res://tunnel_visualizer.gd" id="2_x8h7r"]
+[ext_resource type="Script" path="res://tunnel_controller.gd" id="3_lsqn5"]
+[ext_resource type="Script" path="res://tunnel_ui.gd" id="4_yt2wk"]
+
+[sub_resource type="Environment" id="Environment_s7uqf"]
+background_mode = 1
+background_color = Color(0.0588235, 0.0588235, 0.0980392, 1)
+ambient_light_source = 2
+ambient_light_color = Color(0.309804, 0.309804, 0.439216, 1)
+ambient_light_energy = 0.5
+glow_enabled = true
+glow_intensity = 0.6
+glow_bloom = 0.1
+glow_blend_mode = 0
+adjustment_enabled = true
+adjustment_contrast = 1.1
+adjustment_saturation = 1.1
+
+[node name="CompactTunnelScene" type="Node3D"]
+
+[node name="EtherealTunnelManager" type="Node" parent="." groups=["tunnel_managers"]]
+script = ExtResource("1_jtde2")
+
+[node name="TunnelVisualizer" type="Node3D" parent="." groups=["tunnel_visualizers"]]
+script = ExtResource("2_x8h7r")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.939693, 0.34202, 0, -0.34202, 0.939693, 0, 4, 10)
+current = true
+fov = 60.0
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_s7uqf")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.866025, -0.35355, 0.35355, 0, 0.707107, 0.707107, -0.5, -0.612372, 0.612372, 0, 5, 0)
+light_energy = 0.8
+shadow_enabled = true
+
+[node name="TunnelController" type="Node" parent="." groups=["tunnel_controllers"]]
+script = ExtResource("3_lsqn5")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="TunnelUI" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("4_yt2wk")
+
+[node name="OriginMarker" type="CSGSphere3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+radius = 0.2
+radial_segments = 16
+rings = 8
+
+[node name="Label3D" type="Label3D" parent="OriginMarker"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, 0)
+text = "Origin (0,0,0)"
+font_size = 12
+
+[node name="CameraController" type="Node" parent="."]
+
+[node name="InitialSetup" type="Node" parent="."]
+script = ExtResource("setup_script")
+
+[gd_resource type="GDScript" id="GDScript_setup"]
+resource_name = "setup_script"
+script/source = "extends Node
+
+func _ready():
+    # Wait one frame to ensure all nodes are properly initialized
+    await get_tree().process_frame
+    
+    # Get references to our main components
+    var tunnel_manager = $\"/root/CompactTunnelScene/EtherealTunnelManager\"
+    var tunnel_visualizer = $\"/root/CompactTunnelScene/TunnelVisualizer\"
+    var tunnel_controller = $\"/root/CompactTunnelScene/TunnelController\"
+    var tunnel_ui = $\"/root/CompactTunnelScene/CanvasLayer/TunnelUI\"
+    
+    # Set up references between components
+    tunnel_visualizer.set_tunnel_manager(tunnel_manager)
+    tunnel_controller.ethereal_tunnel_manager = tunnel_manager
+    tunnel_controller.tunnel_visualizer = tunnel_visualizer
+    tunnel_ui.set_controller(tunnel_controller)
+    
+    # Create some initial dimensional anchors
+    var anchors = [
+        {\"id\": \"project_main\", \"coordinates\": Vector3(0, 0, 0), \"type\": \"core\"},
+        {\"id\": \"connector_system\", \"coordinates\": Vector3(3, 1, 2), \"type\": \"module\"},
+        {\"id\": \"visual_system\", \"coordinates\": Vector3(-2, 0, 4), \"type\": \"module\"},
+        {\"id\": \"data_processor\", \"coordinates\": Vector3(4, -1, -3), \"type\": \"service\"},
+        {\"id\": \"terminal_bridge\", \"coordinates\": Vector3(-3, -2, 1), \"type\": \"interface\"},
+        {\"id\": \"word_manifestor\", \"coordinates\": Vector3(1, 3, 5), \"type\": \"service\"},
+        {\"id\": \"ethereal_engine\", \"coordinates\": Vector3(5, 4, 0), \"type\": \"core\"},
+        {\"id\": \"dimensional_processor\", \"coordinates\": Vector3(-4, 2, -2), \"type\": \"module\"},
+        {\"id\": \"akashic_records\", \"coordinates\": Vector3(0, 5, -5), \"type\": \"storage\"}
+    ]
+    
+    # Register anchors
+    for anchor_data in anchors:
+        tunnel_manager.register_anchor(anchor_data.id, anchor_data.coordinates, anchor_data.type)
+    
+    # Establish some initial tunnels
+    tunnel_controller.establish_tunnel(\"project_main\", \"connector_system\")
+    tunnel_controller.establish_tunnel(\"project_main\", \"visual_system\")
+    tunnel_controller.establish_tunnel(\"project_main\", \"data_processor\")
+    tunnel_controller.establish_tunnel(\"ethereal_engine\", \"word_manifestor\")
+    tunnel_controller.establish_tunnel(\"ethereal_engine\", \"dimensional_processor\")
+    
+    # Log initial setup complete
+    tunnel_ui._on_connection_status_changed(\"success\", \"Compact tunnel system initialized\")
+"
+
+[resource]
+script = SubResource("GDScript_setup")

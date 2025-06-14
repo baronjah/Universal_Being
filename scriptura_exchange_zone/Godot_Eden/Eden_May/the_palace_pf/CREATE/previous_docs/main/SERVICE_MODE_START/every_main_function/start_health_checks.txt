@@ -1,0 +1,4 @@
+func start_health_checks():
+	while true:
+		await get_tree().create_timer(5.0).timeout
+		check_system_health()

@@ -1,0 +1,13 @@
+key,value,description
+theme,dark,UI theme (dark or light)
+fontSize,14,Base font size in pixels
+accentColor,#0078d7,Accent color for UI elements
+defaultView,galaxy,Default visualization view
+enableAutoScan,true,Automatically scan for files on startup
+enableAutoConnections,true,Automatically suggest connections
+enableEvolution,false,Enable auto-evolution of data connections
+galaxyNodeSize,30,Size of nodes in galaxy visualization
+showConnectionLabels,true,Show labels on connections
+autoSaveChanges,false,Automatically save changes to CSV files
+maxRowsInGrid,1000,Maximum number of rows to display in grid view
+csvDelimiter,",",(Comma) The delimiter used in CSV files

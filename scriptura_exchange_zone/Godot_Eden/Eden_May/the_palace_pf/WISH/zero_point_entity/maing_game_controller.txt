@@ -1,0 +1,408 @@
+extends Node3D
+
+# ----- SCENE REFERENCES -----
+@export var player_scene: PackedScene
+@export var creation_console_scene: PackedScene
+@export var universal_entity_scene: PackedScene
+
+# ----- SYSTEM COMPONENTS -----
+var map_system: DynamicMapSystem
+var word_manifestor: WordManifestor
+
+# ----- NODES -----
+var player: Node3D
+var console: Control
+
+# ----- GAME STATE -----
+var current_reality: String = "physical"
+var performance_monitor: PerformanceMonitor
+var settings = {
+	"draw_distance": 200.0,
+	"max_entities": 500,
+	"physics_quality": 2  # 0-low, 1-medium, 2-high
+}
+
+# ----- SIGNALS -----
+signal reality_changed(old_reality, new_reality)
+signal entity_created(entity)
+signal game_state_saved()
+signal game_state_loaded()
+
+func _ready():
+	# Initialize systems
+	_initialize_systems()
+	
+	# Create player
+	_spawn_player()
+	
+	# Create console interface
+	_create_console()
+	
+	# Start performance monitoring
+	_start_performance_monitoring()
+	
+	# Initial manifested words
+	_manifest_starter_words()
+
+func _process(delta):
+	# Update any systems that need per-frame updates
+	if performance_monitor:
+		performance_monitor.update(delta)
+		
+		# Adapt settings based on performance
+		_adapt_settings_to_performance()
+
+# ----- INITIALIZATION -----
+func _initialize_systems():
+	# Create map system
+	map_system = DynamicMapSystem.new()
+	map_system.name = "MapSystem"
+	add_child(map_system)
+	
+	# Create word manifestor
+	word_manifestor = WordManifestor.new()
+	word_manifestor.name = "WordManifestor"
+	add_child(word_manifestor)
+
+func _spawn_player():
+	player = player_scene.instantiate()
+	player.name = "Player"
+	add_child(player)
+	
+	# Position at origin
+	player.global_position = Vector3(0, 1, 0)
+	
+	# Initialize systems with player reference
+	map_system.initialize_with_player(player)
+	word_manifestor.initialize(map_system, player)
+
+func _create_console():
+	console = creation_console_scene.instantiate()
+	add_child(console)
+	
+	# Connect console signals
+	console.connect("command_entered", _on_console_command)
+
+func _start_performance_monitoring():
+	performance_monitor = PerformanceMonitor.new()
+	add_child(performance_monitor)
+	
+	# Set initial targets
+	performance_monitor.set_target_fps(60)
+
+# ----- WORD MANIFESTATION -----
+func _manifest_starter_words():
+	var starter_positions = [
+		Vector3(5, 0, 0),   # Fire
+		Vector3(-5, 0, 0),  # Water
+		Vector3(0, 0, 5),   # Earth
+		Vector3(0, 0, -5)   # Air
+	]
+	
+	var starter_words = ["fire", "water", "earth", "air"]
+	
+	for i in range(starter_words.size()):
+		word_manifestor.manifest_word(starter_words[i], starter_positions[i])
+
+# ----- CONSOLE COMMANDS -----
+func _on_console_command(command: String):
+	# Process the command through the word manifestor
+	var result = word_manifestor.process_command(command)
+	
+	# Display result to player
+	if result.success:
+		console.display_message(result.message)
+		
+		if result.entity:
+			emit_signal("entity_created", result.entity)
+	else:
+		console.display_message("Error: " + result.message)
+
+# ----- REALITY MANAGEMENT -----
+func change_reality(new_reality: String):
+	if new_reality == current_reality:
+		return
+		
+	var old_reality = current_reality
+	current_reality = new_reality
+	
+	# Notify all entities about reality change
+	_notify_entities_reality_change(old_reality, new_reality)
+	
+	emit_signal("reality_changed", old_reality, new_reality)
+
+func _notify_entities_reality_change(old_reality: String, new_reality: String):
+	# Find all universal entities and notify them
+	for cell_coords in map_system.active_cells:
+		var cell = map_system.active_cells[cell_coords]
+		
+		for entity in cell.get_entities():
+			if entity is UniversalEntity:
+				entity.shift_reality_context(new_reality)
+
+# ----- PERFORMANCE ADAPTATION -----
+func _adapt_settings_to_performance():
+	var performance_rating = performance_monitor.get_performance_rating()
+	
+	# Adapt draw distance
+	if performance_rating < 0.5:  # Poor performance
+		settings.draw_distance = max(100.0, settings.draw_distance - 10.0)
+		map_system.ACTIVE_RADIUS = settings.draw_distance
+	elif performance_rating > 0.8:  # Good performance
+		settings.draw_distance = min(300.0, settings.draw_distance + 5.0)
+		map_system.ACTIVE_RADIUS = settings.draw_distance
+	
+	# Adapt physics quality
+	if performance_rating < 0.3:  # Very poor performance
+		settings.physics_quality = 0
+	elif performance_rating < 0.7:
+		settings.physics_quality = 1
+	else:
+		settings.physics_quality = 2
+	
+	# Apply physics quality setting
+	Engine.physics_ticks_per_second = 30 if settings.physics_quality < 2 else 60
+
+# ----- SAVING & LOADING -----
+func save_game():
+	# Save map system data
+	map_system.save_map_metadata()
+	
+	# Save all cells
+	for cell_coords in map_system.cells:
+		var cell = map_system.cells[cell_coords]
+		cell.save_to_file()
+	
+	# Save word manifestor data
+	word_manifestor.save_word_database()
+	word_manifestor.save_concept_map()
+	
+	# Save game settings
+	var game_data = {
+		"current_reality": current_reality,
+		"settings": settings,
+		"player_position": {
+			"x": player.global_position.x,
+			"y": player.global_position.y,
+			"z": player.global_position.z
+		}
+	}
+	
+	var file = FileAccess.open("user://game_state.json", FileAccess.WRITE)
+	if file:
+		file.store_string(JSON.stringify(game_data))
+	else:
+		print("Error saving game state: ", FileAccess.get_open_error())
+	
+	emit_signal("game_state_saved")
+
+func load_game():
+	var file = FileAccess.open("user://game_state.json", FileAccess.READ)
+	if file:
+		var json_text = file.get_as_text()
+		var json_result = JSON.parse_string(json_text)
+		
+		if json_result:
+			# Load game settings
+			current_reality = json_result.get("current_reality", "physical")
+			settings = json_result.get("settings", settings)
+			
+			# Load player position
+			if json_result.has("player_position"):
+				var pos = json_result.player_position
+				player.global_position = Vector3(pos.x, pos.y, pos.z)
+			
+			# Reload map around player
+			map_system.load_cells_around_position(player.global_position)
+			
+			emit_signal("game_state_loaded")
+		else:
+			print("Error parsing game state JSON")
+	else:
+		print("No saved game found or error loading: ", FileAccess.get_open_error())
+
+# ----- PERFORMANCE MONITOR CLASS -----
+class PerformanceMonitor extends Node:
+	# Configuration
+	var sample_interval: float = 0.5  # seconds
+	var samples_to_keep: int = 10
+	var target_fps: int = 60
+	
+	# Monitoring data
+	var fps_samples = []
+	var time_since_last_sample: float = 0
+	var entity_count: int = 0
+	var active_cell_count: int = 0
+	
+	# Monitoring results
+	var average_fps: float = 0
+	var performance_rating: float = 1.0  # 0.0 (poor) to 1.0 (excellent)
+	
+	func _ready():
+		# Initialize samples
+		for i in range(samples_to_keep):
+			fps_samples.push_back(target_fps)
+	
+	func update(delta: float):
+		time_since_last_sample += delta
+		
+		if time_since_last_sample >= sample_interval:
+			# Calculate current FPS
+			var current_fps = Engine.get_frames_per_second()
+			
+			# Add to samples
+			fps_samples.push_back(current_fps)
+			if fps_samples.size() > samples_to_keep:
+				fps_samples.pop_front()
+			
+			# Calculate average
+			var sum = 0
+			for sample in fps_samples:
+				sum += sample
+			average_fps = sum / fps_samples.size()
+			
+			# Calculate performance rating (0.0 to 1.0)
+			performance_rating = min(1.0, average_fps / max(1, target_fps))
+			
+			# Reset timer
+			time_since_last_sample = 0
+	
+	func set_target_fps(fps: int):
+		target_fps = fps
+	
+	func get_performance_rating() -> float:
+		return performance_rating
+	
+	func get_average_fps() -> float:
+		return average_fps
+	
+	func update_entity_count(count: int):
+		entity_count = count
+	
+	func update_active_cell_count(count: int):
+		active_cell_count = count
+
+# ----- CREATION CONSOLE UI -----
+class CreationConsole extends Control:
+	# UI References
+	var input_field: LineEdit
+	var output_display: RichTextLabel
+	var history_button: Button
+	var clear_button: Button
+	
+	# Command history
+	var command_history = []
+	var history_index = -1
+	
+	# Signals
+	signal command_entered(command)
+	
+	func _ready():
+		# Create UI layout
+		var vbox = VBoxContainer.new()
+		vbox.anchor_right = 1.0
+		vbox.anchor_bottom = 1.0
+		add_child(vbox)
+		
+		# Output display
+		output_display = RichTextLabel.new()
+		output_display.bbcode_enabled = true
+		output_display.scroll_following = true
+		output_display.size_flags_vertical = Control.SIZE_EXPAND_FILL
+		vbox.add_child(output_display)
+		
+		# Input area (horizontal layout)
+		var hbox = HBoxContainer.new()
+		vbox.add_child(hbox)
+		
+		# Input field
+		input_field = LineEdit.new()
+		input_field.placeholder_text = "Enter word or command..."
+		input_field.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		hbox.add_child(input_field)
+		
+		# History button
+		history_button = Button.new()
+		history_button.text = "History"
+		hbox.add_child(history_button)
+		
+		# Clear button
+		clear_button = Button.new()
+		clear_button.text = "Clear"
+		hbox.add_child(clear_button)
+		
+		# Connect signals
+		input_field.connect("text_submitted", _on_text_submitted)
+		history_button.connect("pressed", _on_history_button)
+		clear_button.connect("pressed", _on_clear_button)
+		
+		# Focus input field
+		input_field.grab_focus()
+		
+		# Welcome message
+		display_message("Welcome to the Creation Console.\nType 'help' for commands.")
+	
+	func _on_text_submitted(text: String):
+		if text.strip_edges().is_empty():
+			return
+		
+		# Add to history
+		command_history.push_front(text)
+		if command_history.size() > 20:
+			command_history.pop_back()
+		
+		# Reset history index
+		history_index = -1
+		
+		# Display command
+		display_message("> " + text, Color(0.8, 0.9, 1.0))
+		
+		# Emit signal
+		emit_signal("command_entered", text)
+		
+		# Clear input field
+		input_field.text = ""
+	
+	func _on_history_button():
+		# Show history popup
+		var popup = PopupMenu.new()
+		add_child(popup)
+		
+		for i in range(command_history.size()):
+			popup.add_item(command_history[i], i)
+		
+		popup.connect("id_pressed", _on_history_selected)
+		popup.position = history_button.global_position + Vector2(0, history_button.size.y)
+		popup.popup()
+	
+	func _on_history_selected(id: int):
+		input_field.text = command_history[id]
+		input_field.grab_focus()
+		input_field.caret_column = input_field.text.length()
+	
+	func _on_clear_button():
+		output_display.text = ""
+	
+	func display_message(message: String, color: Color = Color.WHITE):
+		var color_hex = color.to_html(false)
+		output_display.append_text("[color=#" + color_hex + "]" + message + "[/color]\n")
+	
+	func _input(event):
+		if event is InputEventKey and event.pressed:
+			if event.keycode == KEY_UP:
+				# Navigate history upward
+				if command_history.size() > 0:
+					history_index = min(history_index + 1, command_history.size() - 1)
+					input_field.text = command_history[history_index]
+					input_field.caret_column = input_field.text.length()
+				get_viewport().set_input_as_handled()
+			elif event.keycode == KEY_DOWN:
+				# Navigate history downward
+				if history_index > 0:
+					history_index -= 1
+					input_field.text = command_history[history_index]
+				elif history_index == 0:
+					history_index = -1
+					input_field.text = ""
+				input_field.caret_column = input_field.text.length()
+				get_viewport().set_input_as_handled()

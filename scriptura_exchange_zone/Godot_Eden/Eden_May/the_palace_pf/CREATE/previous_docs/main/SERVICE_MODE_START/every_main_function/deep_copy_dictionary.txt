@@ -1,0 +1,6 @@
+func deep_copy_dictionary(original: Dictionary) -> Dictionary:
+	# First, convert to JSON string (this breaks all references)
+	var json_string = JSON.stringify(original)
+	# Then parse back to dictionary (creates entirely new data structure)
+	var parsed = JSON.parse_string(json_string)
+	return parsed

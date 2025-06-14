@@ -1,0 +1,8 @@
+func create_circle_shape(node_name: String, first_line : Array, data_to_write : Array, group_name : String, version_of_thing : String, information_lines_parsed : Array):
+	var coords = first_line[1]
+	var to_rotate = first_line[2]
+	var radius = data_to_write[0]
+	var num_points = data_to_write[1]
+	var points = generate_circle_points(int(radius[0]), int(num_points[0]))
+	# Create the shape using your existing create_flat_shape function
+	create_flat_shape(node_name, first_line, points, group_name, version_of_thing, information_lines_parsed)

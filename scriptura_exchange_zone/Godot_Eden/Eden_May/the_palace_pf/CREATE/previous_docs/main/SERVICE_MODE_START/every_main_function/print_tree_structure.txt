@@ -1,0 +1,27 @@
+func print_tree_structure(branch: Dictionary, indent: int = 0):
+	tree_mutex.lock()
+	var indent_str = "  ".repeat(indent)
+	var status = branch.get("status", "pending")  # Default to pending if no status
+	print("%s%s (%s) %s" % [
+		indent_str, 
+		branch["name"], 
+		branch["type"],
+		status_symbol[status]
+	])
+	
+	if branch.has("metadata"):
+		var metadata = branch["metadata"]
+		if metadata.get("has_collision", false):
+			print("%s  └─ Has Collision" % indent_str)
+		if metadata.get("has_area", false):
+			print("%s  └─ Has Area" % indent_str)
+	
+	if branch.has("branches"):
+		for child in branch["branches"].values():
+			tree_mutex.unlock()
+			print_tree_structure(child, indent + 1)
+	elif branch.has("children"):
+		for child in branch["children"].values():
+			tree_mutex.unlock()
+			print_tree_structure(child, indent + 1)
+	tree_mutex.unlock()

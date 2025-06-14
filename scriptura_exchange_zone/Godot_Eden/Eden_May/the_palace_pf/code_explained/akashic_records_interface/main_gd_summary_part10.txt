@@ -1,0 +1,87 @@
+# Main.gd Summary - Lines 4500-5000
+
+## Tree Construction Continuation (Lines 4500-4523)
+- Completion of tree branch creation
+- Metadata assignment for new branches
+- Special handling for datapoint nodes
+- Hierarchical path traversal and node creation
+
+## Branch and Leaf Management (Lines 4524-4601)
+- `unload_container()`: Unloads entire container
+  - Caches tree branches
+  - Unloads records
+  - Handles different container types (singular vs. array)
+- `unload_nodes()`: Selectively unloads nodes
+  - Preserves specific nodes
+  - Tracks datapoint references
+- `cache_tree_branch_fully()`: Complete branch caching
+  - Disables all branch nodes
+  - Preserves structure in cache
+- `cache_branch()`: Individual branch caching
+  - Preserves metadata and structure
+  - Nullifies node references
+
+## Node State Management (Lines 4627-4793)
+- `the_finisher_for_nodes()`: Updates node status
+- `disable_all_branches_reset_counters()`: Resets node counters
+  - Uses functional programming with closures
+  - Recursive branch traversal
+  - Counter management for tracking
+- `jsh_tree_get_node_status_changer()`: Updates node status
+  - Thread-safe operation
+  - Path-based node access
+  - Container datapoint tracking
+- `connect_containers()`: Creates container relationships
+- `disable_all_branches()`: Disables all nodes in a branch
+  - Recursive traversal
+  - Thread-safe operation
+  - Node reference clearing
+
+## Hidden Functions (Lines 4794-4874)
+- `check_quick_functions()`: Rapid check for mouse status
+  - Combo detection and handling
+  - Dimensional magic function calls
+- `check_short_functions()`: Checks for combo arrays
+  - Multiple state tracking
+  - Mouse status detection
+- `preparer_for_combos()`: Prepares combo data
+  - Name parsing and matching
+  - Data storage management
+- `call_some_thingy()`: Debug function to call data_point
+
+## Process System Functions (Lines 4875-5000)
+- `process_turn_0()`: Handles the first processing turn
+  - Status tracking and reporting
+  - Set processing management
+- `process_system_0()`: Primary system processing
+  - Thread-safe operation with try_lock
+  - Action queue processing
+  - Type-specific action handling
+- `process_system_1()`: Node addition processing
+  - Thread-safe operation
+  - Three node addition types (0-2)
+  - Child addition with error handling
+  - Node path composition and verification
+  - Task creation for finishing nodes
+  - Texture handling
+
+## Notable Patterns
+1. Tree Structure Management: Hierarchical node tracking
+2. Path-Based Access: Slash-delimited paths for node access
+3. Type-Based Processing: Different behavior based on node type
+4. Thread Safety: Consistent mutex usage with try_lock optimization
+5. Functional Programming: Uses closures for recursive operations
+6. Task Delegation: Offloads completion tasks to the task system
+7. Error Handling: Extensive error checking and fallbacks
+8. Counter Tracking: Precise node counting for completeness tracking
+
+## Implementation Details
+- ASCII Art Headers: Decorative section markers
+- Vector3i State: Three-dimensional state tracking (x, y, z)
+- Queue Processing: Limited items per cycle (max_*_per_cycle)
+- Parent-Child Relationships: Path-based hierarchy building
+- Metadata-Rich Nodes: Extensive node metadata tracking
+- Node Type Translation: JSH to Godot type translation
+- Status Management: "active", "pending", "disabled" states
+
+Reading continues from line 5000.
