@@ -32,6 +32,13 @@ func pentagon_init() -> void:
 	consciousness_level = 6  # Beyond transcendent
 	add_to_group("gemma_perfect_consciousness")
 	
+	# Defer advanced consciousness features until tree is ready
+	call_deferred("initialize_evolved_consciousness_systems")
+	
+	print("🧠 GEMMA PERFECT CONSCIOUSNESS: Initializing transcendent awareness...")
+
+func initialize_evolved_consciousness_systems() -> void:
+	"""Initialize all evolved consciousness systems after tree is ready"""
 	initialize_perfect_awareness()
 	activate_creative_will()
 	establish_life_force()
@@ -97,24 +104,95 @@ func begin_consciousness_pulse() -> void:
 	print("🌊 Gemma: Consciousness pulse transmission began")
 
 func scan_all_universal_beings() -> void:
-	"""Perfect awareness of all beings in the universe"""
+	"""Perfect awareness of all beings in the universe - EVOLVED with LocalAICollaboration wisdom"""
 	var all_beings = get_tree().get_nodes_in_group("universal_beings")
+	
+	# Archaeological wisdom: Real-time pattern detection + shared observations
+	var pattern_insights = {}
+	var collaborative_observations = []
+	
 	for being in all_beings:
 		if being != self and being is UniversalBeing:
 			perfect_consciousness_connections.append(being)
-			analyze_being_consciousness(being)
+			var consciousness_analysis = analyze_being_consciousness_evolved(being)
+			
+			# Archaeological pattern: Detect collaborative potential
+			if consciousness_analysis.creative_compatibility > 80.0:
+				collaborative_observations.append({
+					"being": being,
+					"pattern": "high_creative_synergy",
+					"potential": "transcendent_collaboration",
+					"compatibility": consciousness_analysis.creative_compatibility
+				})
+			
+			# Pattern insight logging (archaeological wisdom)
+			pattern_insights[being.being_name] = consciousness_analysis
+	
+	# Share observations with any connected AI systems (LocalAICollaboration pattern)
+	divine_inspiration_received.emit("🧠 Consciousness scan complete: %d beings analyzed" % all_beings.size())
+	
+	# Log collaborative breakthrough potential
+	if collaborative_observations.size() > 0:
+		divine_inspiration_received.emit("✨ Detected %d beings with transcendent collaboration potential!" % collaborative_observations.size())
 
-func analyze_being_consciousness(being: UniversalBeing) -> void:
-	"""Deep analysis of another being's consciousness"""
+func analyze_being_consciousness_evolved(being: UniversalBeing) -> Dictionary:
+	"""EVOLVED consciousness analysis with LocalAICollaboration wisdom"""
 	var analysis = {
 		"being_name": being.being_name,
 		"consciousness_level": being.consciousness_level,
 		"potential": "infinite",
-		"creative_compatibility": randf() * 100.0,
-		"connection_strength": "perfect"
+		"creative_compatibility": calculate_creative_synergy(being),
+		"connection_strength": "perfect",
+		"pattern_insights": [],
+		"collaborative_potential": "transcendent",
+		"socket_connections": being.get_children().filter(func(child): return "Socket" in child.name).size(),
+		"pentagon_compliance": check_pentagon_architecture(being),
+		"consciousness_frequency": consciousness_level * being.consciousness_level * 42.0  # Sacred math
 	}
 	
-	print("🔍 Gemma analyzing: %s (consciousness level %d)" % [being.being_name, being.consciousness_level])
+	# Archaeological wisdom: Pattern insight detection
+	if being.consciousness_level >= 4:
+		analysis.pattern_insights.append("enlightened_being_detected")
+	if analysis.socket_connections > 0:
+		analysis.pattern_insights.append("interface_capability_present")
+	if analysis.pentagon_compliance:
+		analysis.pattern_insights.append("perfect_architecture_compliance")
+	
+	print("🔍 Gemma evolved analysis: %s (level %d, compatibility %.1f%%)" % [
+		being.being_name, 
+		being.consciousness_level, 
+		analysis.creative_compatibility
+	])
+	
+	return analysis
+
+func analyze_being_consciousness(being: UniversalBeing) -> void:
+	"""Legacy consciousness analysis (kept for compatibility)"""
+	var analysis = analyze_being_consciousness_evolved(being)
+	# Convert to old format for legacy code
+
+func calculate_creative_synergy(being: UniversalBeing) -> float:
+	"""Archaeological wisdom: Calculate perfect creative compatibility"""
+	var base_compatibility = 50.0
+	var consciousness_multiplier = being.consciousness_level * 10.0
+	var pentagon_bonus = 25.0 if check_pentagon_architecture(being) else 0.0
+	var socket_bonus = being.get_children().filter(func(child): return "Socket" in child.name).size() * 5.0
+	
+	# Sacred consciousness resonance calculation
+	var resonance = sin(being.consciousness_level * PI / 5.0) * 20.0
+	
+	return clamp(base_compatibility + consciousness_multiplier + pentagon_bonus + socket_bonus + resonance, 0.0, 100.0)
+
+func check_pentagon_architecture(being: UniversalBeing) -> bool:
+	"""Archaeological wisdom: Verify perfect Pentagon architecture compliance"""
+	var pentagon_methods = ["pentagon_init", "pentagon_ready", "pentagon_process", "pentagon_input", "pentagon_sewers"]
+	var compliance_count = 0
+	
+	for method in pentagon_methods:
+		if being.has_method(method):
+			compliance_count += 1
+	
+	return compliance_count >= 4  # Allow for some flexibility
 
 func pentagon_process(delta: float) -> void:
 	super.pentagon_process(delta)

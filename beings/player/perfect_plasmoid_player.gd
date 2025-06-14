@@ -191,16 +191,28 @@ func pentagon_input(event: InputEvent) -> void:
 				toggle_universal_being_inspector()
 
 func handle_camera_orbital(relative_motion: Vector2) -> void:
-	"""2. ✅ Perfect orbital camera with middle mouse"""
-	camera_rotation.x -= relative_motion.y * camera_orbit_sensitivity
-	camera_rotation.y -= relative_motion.x * camera_orbit_sensitivity
+	"""2. ✅ Perfect orbital camera - EVOLVED with TrackballCamera3D wisdom"""
+	# Archaeological wisdom: Use quaternions to prevent gimbal lock
+	var orbit_speed = camera_orbit_sensitivity
 	
-	# Clamp vertical rotation
-	camera_rotation.x = clamp(camera_rotation.x, -PI/2.2, PI/2.2)
+	# Create rotation quaternions for each axis (professional grade)
+	var rotation_x = Quaternion(Vector3.RIGHT, -relative_motion.y * orbit_speed)
+	var rotation_y = Quaternion(Vector3.UP, -relative_motion.x * orbit_speed)
 	
-	# Apply orbital rotation to camera system
-	camera_system.rotation.x = camera_rotation.x
-	camera_system.rotation.y = camera_rotation.y
+	# Apply quaternion rotations for smooth orbital movement (no gimbal lock!)
+	camera_system.quaternion = camera_system.quaternion * rotation_y * rotation_x
+	
+	# Stabilize horizon (archaeological wisdom from TrackballCamera3D)
+	var forward = -camera_system.transform.basis.z
+	var right = camera_system.transform.basis.x
+	var up = Vector3.UP
+	camera_system.transform.basis = Basis(right, up.cross(right), -forward).orthonormalized()
+	
+	# Store rotation for consciousness tracking
+	camera_rotation = Vector2(camera_system.rotation.x, camera_system.rotation.y)
+	
+	# Ensure camera faces the plasmoid socket (trackball behavior)
+	camera_system.look_at(global_position + Vector3.UP * camera_height_offset, Vector3.UP)
 
 func apply_camera_tilt() -> void:
 	"""2. ✅ Q/E tilt controls"""
