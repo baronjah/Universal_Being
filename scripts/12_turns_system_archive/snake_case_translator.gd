@@ -13,6 +13,7 @@ var claude_mappings = {
   "claude_terminal_interface.sh": "claude_terminal_interface",
   "claude_ethereal_bridge.gd": "claude_ethereal_bridge",
   "claude_integration_bridge.gd": "claude_integration_main",
+}
   
   # Memory systems to snake_case
   "word_memory_system.gd": "word_memory_system",
@@ -37,7 +38,7 @@ var claude_mappings = {
   
   # Main controllers to snake_case
   "main.gd": "main_controller"
-}
+
 
 # Categorize files by your specified categories
 var category_mappings = {
@@ -50,6 +51,7 @@ var category_mappings = {
     "datapoint_js_main",
     "main_controller"
   ],
+}
   
   "datapoint": [
     "datapoint_js_main",
@@ -85,7 +87,6 @@ var category_mappings = {
     "notepad_3d_visualizer",
     "notepad_3d_manifesto"
   ]
-}
 
 # Reference to the file connection system
 var file_connection_system
@@ -106,6 +107,7 @@ func _ready():
   file_connection_system = get_node("../FileConnectionSystem")
   if file_connection_system == null:
     print("WARNING: FileConnectionSystem not found, some functionality will be limited")
+	
 
 # Translate a file name to snake_case
 func translate_to_snake_case(file_name: String) -> String:
@@ -152,7 +154,7 @@ func create_connection_string(source: String, target: String) -> String:
 
 # Build a complete connection map using hash symbols
 func build_hash_connection_map() -> Dictionary:
-  var connection_map = {}
+  var connection_map = {
   
   # Create connections for each category
   for category in category_mappings:
@@ -190,6 +192,7 @@ func generate_hash_connection_report() -> String:
         continue
         
       report += "### " + source + " connects to:\n\n"
+	}
       
       for target in connection_map[source]:
         var connection = create_connection_string(source, target)

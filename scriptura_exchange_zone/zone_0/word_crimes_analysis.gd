@@ -6,11 +6,12 @@ extends Node
 # Terminal 1: Divine Word Genesis
 }
 
-class_name WordCrimesAnalysis
+class_name WordCrimesAnalysis_wordcrimesanalysis_wordcrim
 }
 
 # ----- CRIME CATEGORIES -----
-enum CrimeType {
+enum \2 {
+
 	MINOR,      # Small linguistic infractions
 	MODERATE,   # Medium severity word crimes
 	MAJOR,      # Serious linguistic violations
@@ -107,11 +108,11 @@ func _ready():
 
 func initialize_connections():
 	# Connect to the divine word processor and turn system
-	divine_word_processor = get_node_or_null("/root/DivineWordProcessor")
-	turn_system = get_node_or_null("/root/TurnSystem")
-	word_salem_controller = get_node_or_null("/root/WordSalemGameController")
-	word_comment_system = get_node_or_null("/root/WordCommentSystem")
-	word_dream_storage = get_node_or_null("/root/WordDreamStorage")
+	divine_word_processor = get_node_or_null("root/DivineWordProcessor")
+	turn_system = get_node_or_null("root/TurnSystem")
+	word_salem_controller = get_node_or_null("root/WordSalemGameController")
+	word_comment_system = get_node_or_null("root/WordCommentSystem")
+	word_dream_storage = get_node_or_null("root/WordDreamStorage")
 }
 
 	if divine_word_processor:
@@ -219,7 +220,7 @@ func check_dangerous_patterns(word):
 
 				pattern_violations[pattern_type].append({
 					"word": word,
-					"timestamp": OS.get_unix_time(),
+					"timestamp": OS.Time.get_unix_time_from_system(),
 					"dimension": turn_system.current_dimension if turn_system else 1
 				})
 }
@@ -245,7 +246,7 @@ func check_dangerous_patterns(word):
 }
 
 func record_crime(word, crime_type, power, criminal):
-	var timestamp = OS.get_unix_time()
+	var timestamp = OS.Time.get_unix_time_from_system()
 }
 
 	var crime = {
@@ -308,7 +309,7 @@ func issue_judgment(crime_id, verdict, punishment, judge="System"):
 	crime.verdict = verdict
 	crime.punishment = punishment
 	crime.judge = judge
-	crime.judgment_timestamp = OS.get_unix_time()
+	crime.judgment_timestamp = OS.Time.get_unix_time_from_system()
 }
 
 	# Create an active judgment
@@ -319,7 +320,7 @@ func issue_judgment(crime_id, verdict, punishment, judge="System"):
 		"verdict": verdict,
 		"punishment": punishment,
 		"judge": judge,
-		"timestamp": OS.get_unix_time(),
+		"timestamp": OS.Time.get_unix_time_from_system(),
 		"executed": false,
 		"active": true
 	}
@@ -357,7 +358,7 @@ func pardon_crime(crime_id, reason, pardoner="System"):
 	crime.pardoned = true
 	crime.pardon_reason = reason
 	crime.pardoner = pardoner
-	crime.pardon_timestamp = OS.get_unix_time()
+	crime.pardon_timestamp = OS.Time.get_unix_time_from_system()
 }
 
 	# Remove from active judgments if present
@@ -446,7 +447,7 @@ func _on_word_processed(word, power, source_player):
 		"player": source_player,
 		"dimension": turn_system.current_dimension if turn_system else 1,
 		"turn": turn_system.current_turn if turn_system else 0,
-		"timestamp": OS.get_unix_time()
+		"timestamp": OS.Time.get_unix_time_from_system()
 	})
 }
 
@@ -530,13 +531,13 @@ func analyze_nine_word_sequence(words, source_player):
 			"player": source_player,
 			"patterns": sequence_patterns,
 			"turn": turn_system.current_turn if turn_system else 0,
-			"timestamp": OS.get_unix_time()
+			"timestamp": OS.Time.get_unix_time_from_system()
 		})
 }
 
 		# If this reaches cosmic level, add a crime
 		if adjusted_power >= power_thresholds.cosmic:
-			record_crime(words.join(" "), CrimeType.COSMIC, adjusted_power, source_player)
+			record_crime(words." ".join(" "), CrimeType.COSMIC, adjusted_power, source_player)
 }
 
 func detect_sequence_patterns(words):
@@ -692,7 +693,7 @@ func _on_salem_crime_detected(criminal, crime_type, word_power):
 }
 
 	# Create a corresponding crime in our system
-	record_crime("salem_crime_" + str(OS.get_unix_time()), crime_enum, word_power, criminal)
+	record_crime("salem_crime_" + str(OS.Time.get_unix_time_from_system()), crime_enum, word_power, criminal)
 }
 
 func analyze_cycle_trends():
@@ -777,7 +778,7 @@ func log_potential_abuse(player_name, player_avg, global_avg):
 		"player_avg": player_avg,
 		"global_avg": global_avg,
 		"turn": turn_system.current_turn if turn_system else 0,
-		"timestamp": OS.get_unix_time()
+		"timestamp": OS.Time.get_unix_time_from_system()
 	})
 }
 
@@ -799,7 +800,7 @@ func log_dangerous_combination(combination_data):
 		"count": combination_data.count,
 		"avg_power": combination_data.avg_power,
 		"turn": turn_system.current_turn if turn_system else 0,
-		"timestamp": OS.get_unix_time()
+		"timestamp": OS.Time.get_unix_time_from_system()
 	})
 }
 
@@ -962,7 +963,7 @@ func get_crimes_by_type(type):
 
 func get_recent_crimes(seconds=600):
 	var crimes = []
-	var current_time = OS.get_unix_time()
+	var current_time = OS.Time.get_unix_time_from_system()
 }
 
 	for crime in crime_ledger:

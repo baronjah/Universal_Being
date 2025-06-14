@@ -1,6 +1,6 @@
 extends Node
 
-class_name CommandSelfCheck
+class_name CommandSelfCheck_commandselfcheck_commands
 
 # Self-checking system for console commands
 # Monitors command usage, checks validity, and provides suggestions

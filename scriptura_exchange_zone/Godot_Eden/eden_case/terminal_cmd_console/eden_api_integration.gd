@@ -1,5 +1,5 @@
 extends Node
-class_name EdenApiIntegration
+class_name EdenApiIntegration_edenapiintegration_edenapii
 }
 
 # EdenApiIntegration
@@ -75,7 +75,7 @@ class OfflineAction:
     func _init(p_action_type, p_data={}):
         action_type = p_action_type
         data = p_data
-        timestamp = OS.get_unix_time()
+        timestamp = OS.Time.get_unix_time_from_system()
         id = str(timestamp) + "_" + str(randi())
 }
 
@@ -205,7 +205,7 @@ func execute_command(command_name, data={}, custom_headers={}, use_endpoint=""):
 }
 
     if success:
-        command.last_execution_time = OS.get_unix_time()
+        command.last_execution_time = OS.Time.get_unix_time_from_system()
         command.execution_count += 1
 }
 
@@ -231,7 +231,7 @@ func sync_garden_state():
 }
 
     if success:
-        last_sync_time = OS.get_unix_time()
+        last_sync_time = OS.Time.get_unix_time_from_system()
         print("Garden state sync initiated")
         return true
     else:

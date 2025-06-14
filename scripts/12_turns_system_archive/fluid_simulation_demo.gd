@@ -214,6 +214,7 @@ func _process(delta):
             _fps_display.text = "FPS: " + str(int(avg_fps))
             _particle_count_display.text = "Particles: " + str(simulation.get_particle_count())
             _simulation_time_display.text = "Sim Time: " + str(sim_time_ms).pad_decimals(1) + "ms"
+			
     
     # Update demo-specific effects
     if _demo_running:
@@ -583,7 +584,7 @@ func _add_physics_objects(count):
             "velocity": Vector3.ZERO,
             "radius": randf_range(0.3, 0.7),
             "mass": 1.0
-        }
+			}
         
         _physics_objects.append(obj)
 

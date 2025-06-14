@@ -113,6 +113,7 @@ func _check_socket_proximity() -> void:
 	var bodies = []
 	for body in get_tree().get_nodes_in_group("sockets"):
 		if body is Marker3D and body.has_meta("socket_type"):
+
 			var distance = global_position.distance_to(body.global_position)
 			if distance < connection_distance:
 				hovering_socket = body
@@ -161,6 +162,7 @@ func _connect_sockets(socket_a: Marker3D, socket_b: Marker3D) -> void:
 			input_being.connect_to_input(output_being)
 		
 		print("🔗 Connected: ", output_being.being_name, " -> ", input_being.being_name)
+
 
 func _find_parent_being(node: Node) -> UniversalBeing:
 	pass
@@ -222,5 +224,4 @@ func ai_interface() -> Dictionary:
 		"position": global_position,
 		"hovering": hovering_socket != null,
 		"selected": selected_socket != null
-	}
 	return base

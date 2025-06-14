@@ -28,12 +28,12 @@ const LANGUAGE_CODES = {
     "ar": "Arabic",
     "hi": "Hindi",
     "code": "Programming Code"
-}
+	}
 
 # ----- STATE VARIABLES -----
-var translation_cache = {}
+var translation_cache = {
 var current_request_id = 0
-var pending_translations = {}
+var pending_translations = {
 var is_loading_cache = false
 var turn_controller = null
 var color_system = null
@@ -72,6 +72,7 @@ func _ready():
     
     print("Translation System initialized")
     print("Default languages: " + default_source_language + " -> " + default_target_language)
+	}
     
     # Apply turn specific settings if turn controller is available
     if turn_controller:
@@ -114,10 +115,10 @@ func _load_cache():
             emit_signal("cache_loaded", translation_cache.size())
         else:
             print("Error parsing translation cache: " + json_result.error_string)
-            translation_cache = {}
+            translation_cache = {
     else:
         print("No cache file found, starting with empty cache")
-        translation_cache = {}
+        translation_cache = {
         emit_signal("cache_loaded", 0)
     
     is_loading_cache = false
@@ -144,13 +145,13 @@ func translate(text: String, target_language: String = "", source_language: Stri
         print("Translation system is disabled")
         return -1
     
-    if text.strip_edges().empty():
+    if text.strip_edges().is_empty():
         print("Empty text provided for translation")
         return -1
     
     # Use defaults if languages not specified
-    var source_lang = source_language if not source_language.empty() else default_source_language
-    var target_lang = target_language if not target_language.empty() else default_target_language
+    var source_lang = source_language if not source_language.is_empty() else default_source_language
+    var target_lang = target_language if not target_language.is_empty() else default_target_language
     
     # Don't translate if source and target are the same
     if source_lang == target_lang:
@@ -171,6 +172,7 @@ func translate(text: String, target_language: String = "", source_language: Stri
         
         print("Using cached translation for: " + text.substr(0, 30) + 
               (text.length() > 30 ? "..." : ""))
+			}
         
         return -1
     
@@ -185,7 +187,7 @@ func translate(text: String, target_language: String = "", source_language: Stri
         "target_language": target_lang,
         "cache_key": cache_key,
         "timestamp": OS.get_unix_time()
-    }
+		}
     
     print("Translating text: " + text.substr(0, 30) + (text.length() > 30 ? "..." : ""))
     print("From " + source_lang + " to " + target_lang)
@@ -205,7 +207,7 @@ func translate_code(code: String, target_language: String = "") -> int:
         return -1
     
     # Use default target language if not specified
-    var target_lang = target_language if not target_language.empty() else default_target_language
+    var target_lang = target_language if not target_language.is_empty() else default_target_language
     
     # Call general translation with code as source language
     return translate(code, target_lang, "code")
@@ -215,7 +217,7 @@ func detect_language(text: String) -> String:
     # In a real implementation, would use a language detection service
     # For this simulation, we'll just return English if the text contains mostly Latin characters
     
-    if text.strip_edges().empty():
+    if text.strip_edges().is_empty():
         return "unknown"
     
     # Count different character types
@@ -296,7 +298,7 @@ func _process_online_translation(request_id: int):
                 "source_language": request.source_language,
                 "target_language": request.target_language,
                 "timestamp": OS.get_unix_time()
-            }
+				}
             
             # Prune cache if needed
             if translation_cache.size() > max_cached_entries:
@@ -318,6 +320,7 @@ func _process_online_translation(request_id: int):
                    error, request.source_language, request.target_language)
         
         print("Translation failed for request " + str(request_id) + ": " + error)
+		}
     
     # Remove from pending
     pending_translations.erase(request_id)
@@ -346,7 +349,7 @@ func _process_offline_translation(request_id: int):
             "source_language": request.source_language,
             "target_language": request.target_language,
             "timestamp": OS.get_unix_time()
-        }
+			}
         
         # Prune cache if needed
         if translation_cache.size() > max_cached_entries:
@@ -379,6 +382,7 @@ func _generate_fake_translation(text: String, source_lang: String, target_lang: 
     
     match target_lang:
         "fr":
+		}
             # Simulate French
             result = text.replace("the ", "le ").replace("The ", "Le ")
             result = result.replace("a ", "un ").replace("A ", "Un ")
@@ -386,6 +390,7 @@ func _generate_fake_translation(text: String, source_lang: String, target_lang: 
             result = result.replace("are ", "sont ").replace("Are ", "Sont ")
             result = result + " (en français)"
         "de":
+		
             # Simulate German
             result = text.replace("the ", "die ").replace("The ", "Die ")
             result = result.replace("a ", "ein ").replace("A ", "Ein ")
@@ -393,6 +398,7 @@ func _generate_fake_translation(text: String, source_lang: String, target_lang: 
             result = result.replace("are ", "sind ").replace("Are ", "Sind ")
             result = result + " (auf Deutsch)"
         "es":
+		
             # Simulate Spanish
             result = text.replace("the ", "el ").replace("The ", "El ")
             result = result.replace("a ", "un ").replace("A ", "Un ")
@@ -400,9 +406,11 @@ func _generate_fake_translation(text: String, source_lang: String, target_lang: 
             result = result.replace("are ", "son ").replace("Are ", "Son ")
             result = result + " (en español)"
         "ja":
+		
             # Simulate Japanese
             result = text + " (日本語)"
         "zh":
+		
             # Simulate Chinese
             result = text + " (中文)"
         _:
@@ -446,8 +454,7 @@ func _get_offline_dictionary(source_lang: String, target_lang: String) -> Dictio
             "yes": "oui",
             "no": "non",
             "please": "s'il vous plaît",
-            "thank you": "merci"
-        }
+            "thank you": "merci"}
     elif source_lang == "en" and target_lang == "es":
         return {
             "the": "el",
@@ -459,8 +466,7 @@ func _get_offline_dictionary(source_lang: String, target_lang: String) -> Dictio
             "yes": "sí",
             "no": "no",
             "please": "por favor",
-            "thank you": "gracias"
-        }
+            "thank you": "gracias"}
     elif source_lang == "en" and target_lang == "de":
         return {
             "the": "die",
@@ -472,8 +478,7 @@ func _get_offline_dictionary(source_lang: String, target_lang: String) -> Dictio
             "yes": "ja",
             "no": "nein",
             "please": "bitte",
-            "thank you": "danke"
-        }
+            "thank you": "danke"}
     elif source_lang == "code" and target_lang == "en":
         return {
             "function": "process",
@@ -489,12 +494,12 @@ func _get_offline_dictionary(source_lang: String, target_lang: String) -> Dictio
             "else": "alternative",
             "for": "repeat",
             "while": "loop"
-        }
+			}
     
     # Default to empty dictionary
-    return {}
+    return {
 
-func _translate_code_to_human(code: String, target_lang: String) -> String:
+func _translate_code_to_human(code: String, target_lang: String) -> String:}
     # Translate programming code to human language description
     
     # Look for common code patterns
@@ -546,7 +551,7 @@ func _translate_human_to_code(text: String, source_lang: String) -> String:
     
     for line in lines:
         var cleaned_line = line.strip_edges()
-        if cleaned_line.empty():
+        if cleaned_line.is_empty():
             continue
         
         // Add indented comment
@@ -574,6 +579,7 @@ func _translate_human_to_code(text: String, source_lang: String) -> String:
 func _generate_cache_key(text: String, source_lang: String, target_lang: String) -> String:
     # Generate a cache key for a translation
     return source_lang + ":" + target_lang + ":" + text.hash()
+	
 
 func _prune_cache():
     # Remove oldest entries from the cache
@@ -591,7 +597,7 @@ func _prune_cache():
         })
     
     # Sort by timestamp (oldest first)
-    cache_entries.sort_custom(Callable(self, "_sort_by_timestamp"))
+    cache_entries.sort_custom(Callable(self."_sort_by_timestamp"))
     
     # Remove oldest entries
     for i in range(min(entries_to_remove, cache_entries.size())):
@@ -652,6 +658,7 @@ func set_languages(source_lang: String, target_lang: String) -> bool:
     emit_signal("languages_changed", default_source_language, default_target_language)
     
     print("Default languages set to: " + default_source_language + " -> " + default_target_language)
+	
     
     return true
 

@@ -186,7 +186,7 @@ func transform_data(args_text):
     # Parse arguments
     var args = args_text.split(" ")
     
-    if args.size() < 1 or args[0].empty():
+    if args.size() < 1 or args[0].is_empty():
         append_bbcode("Usage: transform <data_id> [mode] [target_lines]\n")
         return
     
@@ -226,7 +226,7 @@ func _get_data_content(data_id):
         content = memory_system.get_memory(data_id)
     
     # Use sample content if empty
-    if content.empty():
+    if content.is_empty():
         content = _generate_sample_content(12)
     
     return content
@@ -275,7 +275,7 @@ func visualize_data(args_text):
     # Parse arguments
     var args = args_text.split(" ")
     
-    if args.size() < 1 or args[0].empty():
+    if args.size() < 1 or args[0].is_empty():
         append_bbcode("Usage: visualize <transformation_id>\n")
         return
     
@@ -298,7 +298,7 @@ func integrate_with_story(args_text):
     # Parse arguments
     var args = args_text.split(" ")
     
-    if args.size() < 1 or args[0].empty():
+    if args.size() < 1 or args[0].is_empty():
         append_bbcode("Usage: integrate <transformation_id> [story_type]\n")
         return
     
@@ -347,7 +347,7 @@ func set_light_intensity(args_text):
     # Parse arguments
     var args = args_text.split(" ")
     
-    if args.size() < 1 or args[0].empty():
+    if args.size() < 1 or args[0].is_empty():
         // Show current intensity
         var current_level = light_data_system.config.default_intensity
         var level_name = light_data_system.LIGHT_INTENSITY_LEVELS[current_level]

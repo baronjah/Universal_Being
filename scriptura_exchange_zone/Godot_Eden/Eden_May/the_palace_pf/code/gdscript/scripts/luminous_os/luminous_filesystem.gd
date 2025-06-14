@@ -1,5 +1,5 @@
 extends Node3D
-class_name LuminousFileSystem
+class_name LuminousFileSystem_luminousfilesystem_luminous
 
 # Signals
 signal filesystem_loaded
@@ -19,8 +19,8 @@ const FILE_TYPES = {
 }
 
 # The root filesystem path to visualize
-var root_path: String = "/"
-var current_path: String = "/"
+var root_path: String = ""
+var current_path: String = ""
 var navigation_history: Array = []
 
 # Visual representation
@@ -52,7 +52,7 @@ func _ready():
 	asteroid_scene = preload("res://scenes/CelestialAsteroid.tscn")
 	
 	# Set the root path to the project directory if not specified
-	if root_path == "/":
+	if root_path == "":
 		root_path = OS.get_executable_path().get_base_dir()
 		current_path = root_path
 	

@@ -53,18 +53,22 @@ func _run_example_batch():
 	print("Batch started with %d tasks" % task_ids.size())
 	print("Processing words: %s" % words)
 
+
 # Task completion handlers
 func _on_task_completed(task_id, result):
 	if result is Dictionary and result.has("word") and result.has("power"):
+
 		# This is a word power calculation result
 		var word = result.word
 		var power = result.power
 		var tier = result.tier
 		
 		print("Word processed: %s = %.2f power (%s tier)" % [word, power, tier])
+
 	
 func _on_task_failed(task_id, error):
 	print("Task %s failed with error: %s" % [task_id, error])
+
 
 func _on_task_group_completed(group_id):
 	if group_id == "example_batch":

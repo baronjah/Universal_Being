@@ -17,7 +17,7 @@ const DIRECTION_VECTORS = {
     "outward": Vector3(0.5, 0.5, 0.5),
     "clockwise": Vector3(0.7, 0.7, 0),
     "counterclockwise": Vector3(-0.7, 0.7, 0)
-}
+	}
 
 const ACTION_TYPES = {
     "create": 0,
@@ -32,7 +32,7 @@ const ACTION_TYPES = {
     "transform": 9,
     "shift": 10,
     "pause": 11
-}
+	}
 
 const WORD_CATEGORIES = {
     "noun": 0,
@@ -47,7 +47,7 @@ const WORD_CATEGORIES = {
     "symbol": 9,
     "command": 10,
     "query": 11
-}
+	}
 
 const ACTIVATION_THRESHOLDS = {
     "word": 5.0,
@@ -55,22 +55,22 @@ const ACTIVATION_THRESHOLDS = {
     "action": 4.0,
     "pattern": 7.0,
     "composite": 10.0
-}
+	}
 
 # Direction tracking and analysis
-var word_directions = {}
+var word_directions = {
 var action_history = []
-var pattern_detections = {}
-var direction_strengths = {}
+var pattern_detections = {
+var direction_strengths = {
 var active_directions = []
 var current_direction = "forward"
 var direction_momentum = 0.0
 var pattern_memory = []
 var global_direction_vector = Vector3(0, 0, 1) # Default forward
-var infrastructure_map = {}
-var word_clusters = {}
+var infrastructure_map = {
+var word_clusters = {
 var program_flow_paths = []
-var activation_levels = {}
+var activation_levels = {
 
 # System connection
 var investment_system = null
@@ -113,12 +113,13 @@ func _ready():
     var timer = Timer.new()
     timer.wait_time = analysis_frequency
     timer.autostart = true
-    timer.connect("timeout", self, "_on_analysis_timer")
+    timer.connect(_on_analysis_timer)
     add_child(timer)
     
     print("Word Direction Tracker initialized")
     print("Current direction: " + current_direction)
     print("Analysis frequency: " + str(analysis_frequency) + " seconds")
+	}
 
 func _process(delta):
     # Update visualization if enabled
@@ -131,13 +132,13 @@ func _process(delta):
 func connect_to_memory_system():
     # Connect to ProjectMemorySystem if available
     if has_node("/root/ProjectMemorySystem") or get_node_or_null("/root/ProjectMemorySystem"):
-        memory_system = get_node("/root/ProjectMemorySystem")
+        memory_system = get_node("\1") as Node
         print("Connected to ProjectMemorySystem")
         return true
     
     # Try SmartAccountSystem path
     if has_node("/root/SmartAccountSystem/ProjectMemorySystem") or get_node_or_null("/root/SmartAccountSystem/ProjectMemorySystem"):
-        memory_system = get_node("/root/SmartAccountSystem/ProjectMemorySystem")
+        memory_system = get_node("\1") as Node
         print("Connected to ProjectMemorySystem under SmartAccountSystem")
         return true
     
@@ -146,13 +147,13 @@ func connect_to_memory_system():
 func connect_to_investment_system():
     # Connect to MemoryInvestmentSystem if available
     if has_node("/root/MemoryInvestmentSystem") or get_node_or_null("/root/MemoryInvestmentSystem"):
-        investment_system = get_node("/root/MemoryInvestmentSystem")
+        investment_system = get_node("\1") as Node
         print("Connected to MemoryInvestmentSystem")
         return true
     
     # Try SmartAccountSystem path
     if has_node("/root/SmartAccountSystem/MemoryInvestmentSystem") or get_node_or_null("/root/SmartAccountSystem/MemoryInvestmentSystem"):
-        investment_system = get_node("/root/SmartAccountSystem/MemoryInvestmentSystem")
+        investment_system = get_node("\1") as Node
         print("Connected to MemoryInvestmentSystem under SmartAccountSystem")
         return true
     
@@ -170,7 +171,7 @@ func _initialize_activation_levels():
 
 func analyze_word(word, category = "noun"):
     # Skip empty words
-    if word.empty():
+    if word.is_empty():
         return null
     
     # Validate category
@@ -204,7 +205,7 @@ func analyze_word(word, category = "noun"):
         "vector": DIRECTION_VECTORS[direction],
         "associations": [],
         "patterns": []
-    }
+		}
     
     # Strengthen this direction
     direction_strengths[direction] += 1.0
@@ -221,6 +222,7 @@ func analyze_word(word, category = "noun"):
     
     # Invest in the word if investment system is available
     if investment_system and investment_system.has_method("invest_word"):
+	}
         var rarity = _determine_word_rarity(word)
         var value = _calculate_word_value(word, category, rarity)
         investment_system.invest_word(word, "directional", value, rarity)
@@ -253,7 +255,7 @@ func track_action(action, source = "", target = ""):
         "timestamp": OS.get_unix_time(),
         "direction": current_direction,
         "global_vector": global_direction_vector
-    }
+		}
     
     # Add to action history
     action_history.append(action_data)
@@ -325,7 +327,7 @@ func detect_pattern(words):
         "strength": pattern_strength,
         "detected_at": OS.get_unix_time(),
         "vector": pattern_vector
-    }
+		}
     
     # Add to memory
     pattern_memory.append(pattern_id)
@@ -355,7 +357,7 @@ func map_infrastructure(depth = 2):
         "connections": {},
         "clusters": {},
         "flows": []
-    }
+		}
     
     # Add words as nodes
     for word in word_directions:
@@ -365,7 +367,7 @@ func map_infrastructure(depth = 2):
             "vector": word_directions[word]["vector"],
             "strength": word_directions[word]["count"],
             "connections": []
-        }
+			}
     
     # Add patterns as nodes
     for pattern_id in pattern_detections:
@@ -376,7 +378,7 @@ func map_infrastructure(depth = 2):
             "strength": pattern["strength"],
             "vector": pattern["vector"],
             "connections": []
-        }
+			}
     
     # Build connections
     for word in word_directions:
@@ -418,6 +420,7 @@ func associate_words(word1, word2):
         word_directions[word2]["associations"].append(word1)
     
     print("Associated words: " + word1 + " <-> " + word2)
+	}
     
     # See if this creates any new patterns
     var potential_pattern = []
@@ -442,7 +445,7 @@ func analyze_sentence(sentence):
     for word in words:
         # Clean word
         word = word.strip_edges().to_lower()
-        if word.empty():
+        if word.is_empty():
             continue
         
         # Guess word category
@@ -470,7 +473,7 @@ func analyze_sentence(sentence):
         "words": analyzed_words,
         "direction": sentence_direction,
         "strength": analyzed_words.size()
-    }
+		}
 
 func get_recommended_direction():
     # Calculate which direction would be most beneficial to explore next
@@ -489,7 +492,7 @@ func get_recommended_direction():
             })
     
     # Sort by value
-    directions.sort_custom(self, "_sort_by_direction_value")
+    directions.sort_custom(self."_sort_by_direction_value")
     
     if directions.size() > 0:
         return directions[0]["direction"]
@@ -510,14 +513,14 @@ func get_word_cloud(max_words = 20):
         })
     
     # Sort by count
-    words.sort_custom(self, "_sort_by_word_count")
+    words.sort_custom(self."_sort_by_word_count")
     
     # Return top words
     return words.slice(0, min(max_words - 1, words.size() - 1))
 
 func get_direction_summary():
     # Generate a summary of active directions
-    var summary = {}
+    var summary = {
     
     # Summarize direction strengths
     for direction in direction_strengths:
@@ -526,7 +529,7 @@ func get_direction_summary():
             "is_active": direction in active_directions,
             "is_current": direction == current_direction,
             "vector": DIRECTION_VECTORS[direction]
-        }
+			}
     
     summary["global_vector"] = global_direction_vector
     summary["momentum"] = direction_momentum
@@ -570,7 +573,7 @@ func _on_analysis_timer():
         "time": current_time,
         "patterns": pattern_detections.size(),
         "directions": active_directions.size()
-    }
+		}
 
 func _update_direction_momentum(delta):
     # Gradually reduce momentum over time
@@ -659,7 +662,7 @@ func _determine_word_direction(word):
 
 func _determine_sentence_direction(analyzed_words):
     # Count directions
-    var direction_counts = {}
+    var direction_counts = {
     
     for direction in DIRECTION_VECTORS:
         direction_counts[direction] = 0
@@ -765,7 +768,7 @@ func _determine_pattern_type(words):
         return "progression"
     
     # Check for cluster pattern
-    var categories = {}
+    var categories = {
     for word in words:
         if word in word_directions:
             var category = word_directions[word]["category"]
@@ -876,23 +879,29 @@ func _update_activation_levels(action_type):
 func _trigger_activation(activation_type):
     # React to activation threshold being reached
     print("ACTIVATION: " + activation_type + " threshold reached")
+	}
     
     match activation_type:
         "word":
+		}
             # Generate a new word direction recommendation
             var recommended = get_recommended_direction()
             print("Word activation suggests direction: " + recommended)
         "direction":
+		}
             # Potential direction shift
             var intensity = direction_strengths[current_direction]
             emit_signal("critical_mass_reached", current_direction, intensity)
         "action":
+		}
             # Recommend an action
             print("Action activation suggests analyzing recent patterns")
         "pattern":
+		}
             # Find emergent patterns
             _find_emergent_patterns()
         "composite":
+		}
             # Update infrastructure map
             map_infrastructure()
 
@@ -926,13 +935,13 @@ func _find_emergent_patterns():
 func _update_infrastructure_with_pattern(pattern_id, words, pattern_type):
     # Update infrastructure map with new pattern
     if not "patterns" in infrastructure_map:
-        infrastructure_map["patterns"] = {}
+        infrastructure_map["patterns"] = {
     
     infrastructure_map["patterns"][pattern_id] = {
         "words": words,
         "type": pattern_type,
         "connections": []
-    }
+		}
     
     # Connect pattern to words
     for word in words:
@@ -947,7 +956,7 @@ func _add_infrastructure_connection(source, target, connection_type):
         "source": source,
         "target": target,
         "type": connection_type
-    }
+		}
     
     # Add to node connection lists
     if source in infrastructure_map["nodes"]:
@@ -958,7 +967,7 @@ func _add_infrastructure_connection(source, target, connection_type):
 
 func _build_word_clusters():
     # Build clusters of related words
-    var clusters = {}
+    var clusters = {
     var unclustered_words = []
     
     # Start with all words unclustered
@@ -989,7 +998,7 @@ func _build_word_clusters():
                 "words": cluster,
                 "size": cluster.size(),
                 "direction": _determine_cluster_direction(cluster)
-            }
+				}
     
     # Store clusters
     word_clusters = clusters
@@ -999,7 +1008,7 @@ func _build_word_clusters():
 
 func _determine_cluster_direction(words):
     # Determine dominant direction for a cluster
-    var direction_counts = {}
+    var direction_counts = {
     
     for direction in DIRECTION_VECTORS:
         direction_counts[direction] = 0
@@ -1029,9 +1038,11 @@ func _generate_flow_paths(depth):
     
     for word in word_directions:
         if word in infrastructure_map["nodes"]:
+		}
             var has_incoming = false
             
             for connection_id in infrastructure_map["nodes"][word]["connections"]:
+			}
                 var connection = infrastructure_map["connections"][connection_id]
                 if connection["target"] == word:
                     has_incoming = true
@@ -1073,6 +1084,7 @@ func _generate_path_from_word(word, max_depth, current_path = []):
     var outgoing = []
     
     for connection_id in infrastructure_map["nodes"][word]["connections"]:
+	}
         var connection = infrastructure_map["connections"][connection_id]
         if connection["source"] == word:
             outgoing.append(connection["target"])
@@ -1123,7 +1135,7 @@ func _add_visualization_point(word, direction):
         ),
         "color": visualization_color,
         "size": 1.0
-    }
+		}
     
     visualization_points.append(point)
 
@@ -1142,7 +1154,7 @@ func _start_new_trail():
 func _determine_word_rarity(word):
     # Determine rarity of a word
     var length = word.length()
-    var unique_chars = {}
+    var unique_chars = {
     
     for c in word:
         unique_chars[c] = true

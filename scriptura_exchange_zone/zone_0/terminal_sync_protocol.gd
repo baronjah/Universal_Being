@@ -6,11 +6,12 @@ extends Node
 # Terminal 1: Divine Word Genesis
 }
 
-class_name TerminalSyncProtocol
+class_name TerminalSyncProtocol_terminalsyncprotocol_terminal
 }
 
 # ----- TERMINAL DEFINITIONS -----
-enum TerminalType {
+enum \2 {
+
 	GENESIS,       # Terminal 1: Divine Word Genesis - Word creation and processing
 	OBSERVER,      # Terminal 2: Dimensional Observer - Monitors cross-dimensional effects
 	ARCHIVIST,     # Terminal 3: Memory Archivist - Manages the three-tier memory system
@@ -135,24 +136,24 @@ func _process(delta):
 
 func connect_systems():
 	# Connect to the turn system
-	turn_system = get_node_or_null("/root/TurnSystem")
+	turn_system = get_node_or_null("root/TurnSystem")
 	if turn_system:
 		turn_system.connect(_on_turn_completed)
 		turn_system.connect(_on_dimension_changed)
 }
 
 	# Connect to the divine word processor
-	divine_word_processor = get_node_or_null("/root/DivineWordProcessor")
+	divine_word_processor = get_node_or_null("root/DivineWordProcessor")
 	if divine_word_processor:
 		divine_word_processor.connect(_on_word_processed)
 }
 
 	# Connect to other systems
-	word_comment_system = get_node_or_null("/root/WordCommentSystem")
-	word_salem_controller = get_node_or_null("/root/WordSalemGameController")
-	word_dream_storage = get_node_or_null("/root/WordDreamStorage")
-	royal_blessing_system = get_node_or_null("/root/RoyalBlessingSystem")
-	interdimensional_scheming_system = get_node_or_null("/root/InterdimensionalSchemingSystem")
+	word_comment_system = get_node_or_null("root/WordCommentSystem")
+	word_salem_controller = get_node_or_null("root/WordSalemGameController")
+	word_dream_storage = get_node_or_null("root/WordDreamStorage")
+	royal_blessing_system = get_node_or_null("root/RoyalBlessingSystem")
+	interdimensional_scheming_system = get_node_or_null("root/InterdimensionalSchemingSystem")
 }
 
 func initialize_channels():
@@ -166,15 +167,15 @@ func initialize_channels():
 
 func register_current_terminal(terminal_type):
 	# Generate a unique terminal ID
-	var terminal_id = "terminal_" + str(terminal_type) + "_" + str(OS.get_unix_time())
+	var terminal_id = "terminal_" + str(terminal_type) + "_" + str(OS.Time.get_unix_time_from_system())
 }
 
 	# Register this terminal
 	active_terminals[terminal_id] = {
 		"type": terminal_type,
 		"name": terminal_properties[terminal_type].name,
-		"registered_at": OS.get_unix_time(),
-		"last_sync": OS.get_unix_time(),
+		"registered_at": OS.Time.get_unix_time_from_system(),
+		"last_sync": OS.Time.get_unix_time_from_system(),
 		"status": "active",
 		"dimension": turn_system.current_dimension if turn_system else terminal_properties[terminal_type].primary_dimension,
 		"sync_count": 0
@@ -188,13 +189,13 @@ func register_current_terminal(terminal_type):
 	# Update sync status
 	sync_status[terminal_id] = {
 		"channels_synced": {},
-		"last_successful_sync": OS.get_unix_time(),
+		"last_successful_sync": OS.Time.get_unix_time_from_system(),
 		"sync_errors": 0
 	}
 }
 
 	for channel in channels.keys():
-		sync_status[terminal_id].channels_synced[channel] = OS.get_unix_time()
+		sync_status[terminal_id].channels_synced[channel] = OS.Time.get_unix_time_from_system()
 }
 
 	# Emit signal
@@ -222,7 +223,7 @@ func unregister_terminal(terminal_id):
 
 	# Mark as inactive
 	terminal_info.status = "inactive"
-	terminal_info.unregistered_at = OS.get_unix_time()
+	terminal_info.unregistered_at = OS.Time.get_unix_time_from_system()
 }
 
 	# Remove from sync status
@@ -330,13 +331,13 @@ func sync_terminal(terminal_id):
 			all_channels_synced = false
 }
 
-	// Update sync status
-	terminal_info.last_sync = OS.get_unix_time()
+# // Update sync status
+	terminal_info.last_sync = OS.Time.get_unix_time_from_system()
 	terminal_info.sync_count += 1
 }
 
 	if all_channels_synced:
-		sync_status[terminal_id].last_successful_sync = OS.get_unix_time()
+		sync_status[terminal_id].last_successful_sync = OS.Time.get_unix_time_from_system()
 		sync_status[terminal_id].sync_errors = 0
 	else:
 		sync_status[terminal_id].sync_errors += 1
@@ -353,22 +354,22 @@ func sync_channel(terminal_id, channel):
 	var terminal_info = active_terminals[terminal_id]
 }
 
-	// Process any pending messages in this channel
+# // Process any pending messages in this channel
 	var success = true
 }
 
 	for message in channel_buffers[channel]:
 		if not message.processed_by.has(terminal_id):
-			// Process this message
+# // Process this message
 			if process_message(terminal_id, channel, message):
 				message.processed_by.append(terminal_id)
 			else:
 				success = false
 }
 
-	// Update sync status
+# // Update sync status
 	if success:
-		sync_status[terminal_id].channels_synced[channel] = OS.get_unix_time()
+		sync_status[terminal_id].channels_synced[channel] = OS.Time.get_unix_time_from_system()
 }
 
 	return success
@@ -378,29 +379,29 @@ func process_message(terminal_id, channel, message):
 	var terminal_info = active_terminals[terminal_id]
 }
 
-	// Check if this terminal has capability to process this channel
+# // Check if this terminal has capability to process this channel
 	var terminal_type = terminal_info.type
 }
 
-	// Enhanced processing for specialized terminals
+# // Enhanced processing for specialized terminals
 	var success = true
 }
 
 	match channel:
 		"words":
-			// Word processing is enhanced in Terminal 1
+# // Word processing is enhanced in Terminal 1
 			if terminal_type == TerminalType.GENESIS:
-				// Apply word processor effects
+# // Apply word processor effects
 				if divine_word_processor and message.data.has("word"):
 					divine_word_processor.process_word(message.data.word, "Terminal_" + str(terminal_type))
 }
 
 		"dimensions":
-			// Dimension monitoring is enhanced in Terminal 2
+# // Dimension monitoring is enhanced in Terminal 2
 			if terminal_type == TerminalType.OBSERVER:
-				// Apply dimensional observation effects
+# // Apply dimensional observation effects
 				if message.data.has("dimension_change"):
-					// Record detailed dimension transition data
+# // Record detailed dimension transition data
 					if word_comment_system:
 						word_comment_system.add_comment("dimension_observation",
 							"DIMENSIONAL SHIFT OBSERVED: " + str(message.data.from_dimension) + "D → " + str(message.data.to_dimension) + "D",
@@ -408,11 +409,11 @@ func process_message(terminal_id, channel, message):
 }
 
 		"memory":
-			// Memory processing is enhanced in Terminal 3
+# // Memory processing is enhanced in Terminal 3
 			if terminal_type == TerminalType.ARCHIVIST:
-				// Apply archivist effects
+# // Apply archivist effects
 				if word_dream_storage and message.data.has("memory_operation"):
-					// Handle memory operations
+# // Handle memory operations
 					var tier = message.data.tier if message.data.has("tier") else 1
 }
 
@@ -422,29 +423,29 @@ func process_message(terminal_id, channel, message):
 							"text": message.data.content,
 							"type": message.data.type if message.data.has("type") else 0,
 							"terminal_source": message.source_terminal,
-							"timestamp": OS.get_unix_time()
+							"timestamp": OS.Time.get_unix_time_from_system()
 						}, tier)
 }
 
 		"judgment":
-			// Judgment processing is enhanced in Terminal 4
+# // Judgment processing is enhanced in Terminal 4
 			if terminal_type == TerminalType.JUDGMENT:
-				// Apply judgment hall effects
+# // Apply judgment hall effects
 				if word_salem_controller and message.data.has("judgment_action"):
-					// Handle judgment operations
+# // Handle judgment operations
 					if message.data.judgment_action == "accusation" and message.data.has("accused") and message.data.has("crime"):
-						// Process accusation
+# // Process accusation
 						word_salem_controller.record_accusation(message.data.accused, message.data.crime)
 }
 
 		"royal":
-			// Royal court processing is enhanced in Terminal 5
+# // Royal court processing is enhanced in Terminal 5
 			if terminal_type == TerminalType.ROYAL_COURT:
-				// Apply royal court effects
+# // Apply royal court effects
 				if royal_blessing_system and message.data.has("royal_action"):
-					// Handle royal operations
+# // Handle royal operations
 					if message.data.royal_action == "blessing_request" and message.data.has("word") and message.data.has("blessing_type"):
-						// Process blessing request
+# // Process blessing request
 						royal_blessing_system.grant_blessing(
 							message.data.player if message.data.has("player") else "System",
 							message.data.word,
@@ -454,11 +455,11 @@ func process_message(terminal_id, channel, message):
 }
 
 		"dreams":
-			// Dream processing is enhanced in Terminal 6
+# // Dream processing is enhanced in Terminal 6
 			if terminal_type == TerminalType.DREAM_WEAVER:
-				// Apply dream weaver effects
+# // Apply dream weaver effects
 				if word_comment_system and message.data.has("dream_text"):
-					// Record dream
+# // Record dream
 					word_comment_system.record_dream_fragment(
 						message.data.word if message.data.has("word") else "dream_sync",
 						message.data.dream_text
@@ -466,11 +467,11 @@ func process_message(terminal_id, channel, message):
 }
 
 		"scheming":
-			// Scheming is processed by all terminals
+# // Scheming is processed by all terminals
 			if interdimensional_scheming_system and message.data.has("scheme_action"):
-				// Handle scheme operations
+# // Handle scheme operations
 				if message.data.scheme_action == "detection_attempt" and message.data.has("target"):
-					// Process scheme detection
+# // Process scheme detection
 					interdimensional_scheming_system.attempt_scheme_detection(
 						"Terminal_" + str(terminal_type),
 						message.data.target,
@@ -482,24 +483,24 @@ func process_message(terminal_id, channel, message):
 }
 
 func on_complete_synchronization():
-	// Special effects when all terminals are in perfect sync
+# // Special effects when all terminals are in perfect sync
 }
 
-	// Check if current dimension is 9 (judgment)
+# // Check if current dimension is 9 (judgment)
 	var current_dimension = turn_system.current_dimension if turn_system else 1
 }
 
 	if current_dimension == 9:
-		// In judgment dimension, synchronization reveals all schemes
+# // In judgment dimension, synchronization reveals all schemes
 		if interdimensional_scheming_system:
-			// Create a divine revelation
+# // Create a divine revelation
 			if word_comment_system:
 				word_comment_system.add_comment("divine_revelation",
 					"DIVINE REVELATION: Perfect terminal synchronization in Dimension 9 reveals all schemes",
 					word_comment_system.CommentType.DIVINE)
 }
 
-			// Reveal all schemes to everyone
+# // Reveal all schemes to everyone
 			var all_schemes = interdimensional_scheming_system.get_active_schemes()
 			var terminals = []
 }
@@ -510,29 +511,29 @@ func on_complete_synchronization():
 
 			for scheme_id in all_schemes:
 				for terminal in terminals:
-					// Add to discovered schemes
+# // Add to discovered schemes
 					if not all_schemes[scheme_id].discovered_by.has(terminal):
 						all_schemes[scheme_id].discovered_by.append(terminal)
 }
 
-						// Emit scheme discovered signal
+# // Emit scheme discovered signal
 						interdimensional_scheming_system.emit_signal("scheme_discovered", scheme_id, terminal)
 }
 
-	// Check if we have at least 6 terminals in sync (all terminals)
+# // Check if we have at least 6 terminals in sync (all terminals)
 	if active_terminals.size() >= 6:
-		// Grant a royal blessing to a random word
+# // Grant a royal blessing to a random word
 		if royal_blessing_system and divine_word_processor:
-			// Get recent words
+# // Get recent words
 			var recent_words = divine_word_processor.get_recent_words(9)
 }
 
 			if recent_words.size() > 0:
-				// Select a word
+# // Select a word
 				var chosen_word = recent_words[randi() % recent_words.size()]
 }
 
-				// Grant blessing
+# // Grant blessing
 				royal_blessing_system.grant_blessing(
 					"Synchronized_Terminals",
 					chosen_word,
@@ -541,7 +542,7 @@ func on_complete_synchronization():
 				)
 }
 
-				// Create divine comment
+# // Create divine comment
 				if word_comment_system:
 					word_comment_system.add_comment("perfect_sync",
 						"PERFECT SYNCHRONIZATION: All 6 terminals in harmony have granted a royal blessing to '" + chosen_word + "'",
@@ -556,29 +557,29 @@ func transmit_message(channel, message_data, target_terminal=null):
 		return false
 }
 
-	// Create message object
+# // Create message object
 	var message = {
-		"id": "msg_" + str(OS.get_unix_time()) + "_" + str(randi() % 1000),
+		"id": "msg_" + str(OS.Time.get_unix_time_from_system()) + "_" + str(randi() % 1000),
 		"channel": channel,
 		"data": message_data,
 		"source_terminal": current_terminal,
 		"target_terminal": target_terminal,
-		"timestamp": OS.get_unix_time(),
+		"timestamp": OS.Time.get_unix_time_from_system(),
 		"processed_by": [],
 		"current_dimension": turn_system.current_dimension if turn_system else 1
 	}
 }
 
-	// Add to channel buffer
+# // Add to channel buffer
 	channel_buffers[channel].append(message)
 }
 
-	// Apply 9-second delay if quantum entanglement is active
+# // Apply 9-second delay if quantum entanglement is active
 	if quantum_entanglement_active:
-		// Message will process on next sync cycle
+# // Message will process on next sync cycle
 		pass
 	else:
-		// Process immediately for current terminal
+# // Process immediately for current terminal
 		var terminal_id = "self"
 }
 
@@ -593,7 +594,7 @@ func transmit_message(channel, message_data, target_terminal=null):
 			message.processed_by.append(terminal_id)
 }
 
-	// Emit signal
+# // Emit signal
 	emit_signal("message_transmitted", channel, message, current_terminal, target_terminal)
 }
 
@@ -601,64 +602,64 @@ func transmit_message(channel, message_data, target_terminal=null):
 }
 
 func word_relay(word, source_player="System", target_terminal=null):
-	// Transmit a word to another terminal
+# // Transmit a word to another terminal
 	return transmit_message("words", {
 		"word": word,
 		"player": source_player,
-		"relay_timestamp": OS.get_unix_time()
+		"relay_timestamp": OS.Time.get_unix_time_from_system()
 	}, target_terminal)
 }
 
 func memory_operation(operation, content, tier=1, type=0, target_terminal=null):
-	// Transmit a memory operation
+# // Transmit a memory operation
 	return transmit_message("memory", {
 		"memory_operation": operation,
 		"content": content,
 		"tier": tier,
 		"type": type,
-		"operation_timestamp": OS.get_unix_time()
+		"operation_timestamp": OS.Time.get_unix_time_from_system()
 	}, target_terminal)
 }
 
 func judgment_action(action, accused=null, crime=null, evidence=null, target_terminal=null):
-	// Transmit a judgment action
+# // Transmit a judgment action
 	return transmit_message("judgment", {
 		"judgment_action": action,
 		"accused": accused,
 		"crime": crime,
 		"evidence": evidence,
-		"judgment_timestamp": OS.get_unix_time()
+		"judgment_timestamp": OS.Time.get_unix_time_from_system()
 	}, target_terminal)
 }
 
 func royal_request(action, word=null, blessing_type=null, player=null, target_terminal=null):
-	// Transmit a royal court request
+# // Transmit a royal court request
 	return transmit_message("royal", {
 		"royal_action": action,
 		"word": word,
 		"blessing_type": blessing_type,
 		"player": player,
-		"request_timestamp": OS.get_unix_time()
+		"request_timestamp": OS.Time.get_unix_time_from_system()
 	}, target_terminal)
 }
 
 func dream_transmission(dream_text, word=null, target_terminal=null):
-	// Transmit a dream
+# // Transmit a dream
 	return transmit_message("dreams", {
 		"dream_text": dream_text,
 		"word": word,
-		"dream_timestamp": OS.get_unix_time()
+		"dream_timestamp": OS.Time.get_unix_time_from_system()
 	}, target_terminal)
 }
 
 func scheme_operation(action, target=null, word=null, scheme_id=null, target_terminal=null):
-	// Transmit a scheme operation
+# // Transmit a scheme operation
 	return transmit_message("scheming", {
 		"scheme_action": action,
 		"target": target,
 		"word": word,
 		"scheme_id": scheme_id,
-		"scheme_timestamp": OS.get_unix_time()
+		"scheme_timestamp": OS.Time.get_unix_time_from_system()
 	}, target_terminal)
 }
 
@@ -666,7 +667,7 @@ func scheme_operation(action, target=null, word=null, scheme_id=null, target_ter
 }
 
 func check_terminal_violations(terminal_type, action, data=null):
-	// Check if a terminal is attempting to perform an action outside its capabilities
+# // Check if a terminal is attempting to perform an action outside its capabilities
 	var violations = []
 }
 
@@ -701,7 +702,7 @@ func check_terminal_violations(terminal_type, action, data=null):
 				violations.append("Terminal " + str(terminal_type) + " attempted unauthorized dream alteration")
 }
 
-	// Report violations
+# // Report violations
 	for violation in violations:
 		emit_signal("terminal_violation", terminal_type, action, violation)
 }
@@ -719,7 +720,7 @@ func check_terminal_violations(terminal_type, action, data=null):
 }
 
 func create_dimensional_tunnel(source_dimension, target_dimension, duration=3):
-	// Create a tunnel between dimensions for direct communication
+# // Create a tunnel between dimensions for direct communication
 	if not turn_system:
 		return false
 }
@@ -727,7 +728,7 @@ func create_dimensional_tunnel(source_dimension, target_dimension, duration=3):
 	var current_dimension = turn_system.current_dimension
 }
 
-	// Check if source dimension is current dimension
+# // Check if source dimension is current dimension
 	if current_dimension != source_dimension:
 		if word_comment_system:
 			word_comment_system.add_comment("tunnel_error",
@@ -737,30 +738,30 @@ func create_dimensional_tunnel(source_dimension, target_dimension, duration=3):
 		return false
 }
 
-	// Create tunnel data
-	var tunnel_id = "tunnel_" + str(source_dimension) + "_" + str(target_dimension) + "_" + str(OS.get_unix_time())
+# // Create tunnel data
+	var tunnel_id = "tunnel_" + str(source_dimension) + "_" + str(target_dimension) + "_" + str(OS.Time.get_unix_time_from_system())
 }
 
 	var tunnel_data = {
 		"id": tunnel_id,
 		"source_dimension": source_dimension,
 		"target_dimension": target_dimension,
-		"created_at": OS.get_unix_time(),
-		"expires_at": OS.get_unix_time() + (duration * 9), // Duration in terms of 9-second intervals
+		"created_at": OS.Time.get_unix_time_from_system(),
+		"expires_at": OS.Time.get_unix_time_from_system() + (duration * 9), // Duration in terms of 9-second intervals
 		"created_by": current_terminal,
 		"messages_sent": 0,
 		"active": true
 	}
 }
 
-	// Store tunnel data
+# // Store tunnel data
 	if word_dream_storage:
 		word_dream_storage.save_dimension_record(source_dimension, {
 			"tunnel": tunnel_data
 		})
 }
 
-	// Create comment
+# // Create comment
 	if word_comment_system:
 		word_comment_system.add_comment("tunnel_" + tunnel_id,
 			"DIMENSIONAL TUNNEL CREATED: From Dimension " + str(source_dimension) + 
@@ -772,12 +773,12 @@ func create_dimensional_tunnel(source_dimension, target_dimension, duration=3):
 }
 
 func send_through_tunnel(tunnel_id, message_data):
-	// Send data through an existing dimensional tunnel
+# // Send data through an existing dimensional tunnel
 	if not word_dream_storage:
 		return false
 }
 
-	// Check if tunnel exists and is active
+# // Check if tunnel exists and is active
 	var tunnel_records = []
 }
 
@@ -801,8 +802,8 @@ func send_through_tunnel(tunnel_id, message_data):
 	var tunnel = tunnel_records[0].tunnel
 }
 
-	// Check if tunnel has expired
-	if OS.get_unix_time() > tunnel.expires_at:
+# // Check if tunnel has expired
+	if OS.Time.get_unix_time_from_system() > tunnel.expires_at:
 		if word_comment_system:
 			word_comment_system.add_comment("tunnel_error",
 				"TUNNEL ERROR: Tunnel " + tunnel_id + " has expired",
@@ -810,11 +811,11 @@ func send_through_tunnel(tunnel_id, message_data):
 		return false
 }
 
-	// Send message through tunnel
+# // Send message through tunnel
 	var target_dimension = tunnel.target_dimension
 }
 
-	// Find terminal in target dimension
+# // Find terminal in target dimension
 	var target_terminal = null
 }
 
@@ -832,17 +833,17 @@ func send_through_tunnel(tunnel_id, message_data):
 		return false
 }
 
-	// Create tunnel message
+# // Create tunnel message
 	var tunnel_message = {
 		"tunnel_id": tunnel_id,
 		"source_dimension": tunnel.source_dimension,
 		"target_dimension": tunnel.target_dimension,
 		"data": message_data,
-		"timestamp": OS.get_unix_time()
+		"timestamp": OS.Time.get_unix_time_from_system()
 	}
 }
 
-	// Transmit to target terminal - bypassing the 9-second delay
+# // Transmit to target terminal - bypassing the 9-second delay
 	var channel = "words" // Default channel
 }
 
@@ -853,11 +854,11 @@ func send_through_tunnel(tunnel_id, message_data):
 	var message_id = transmit_message(channel, message_data, target_terminal)
 }
 
-	// Update tunnel usage
+# // Update tunnel usage
 	tunnel.messages_sent += 1
 }
 
-	// Create comment
+# // Create comment
 	if word_comment_system:
 		word_comment_system.add_comment("tunnel_message_" + tunnel_id,
 			"TUNNEL MESSAGE SENT: Through tunnel " + tunnel_id + " to Dimension " + str(target_dimension),
@@ -898,7 +899,7 @@ func disable_multi_core():
 
 func execute_parallel_operations(operations):
 	if not multi_core_enabled:
-		// Execute operations serially
+# // Execute operations serially
 		var results = []
 }
 
@@ -909,11 +910,11 @@ func execute_parallel_operations(operations):
 
 		return results
 	else:
-		// Simulate parallel execution
+# // Simulate parallel execution
 		var results = []
 }
 
-		// Group operations by terminal
+# // Group operations by terminal
 		var terminal_operations = {}
 }
 
@@ -928,7 +929,7 @@ func execute_parallel_operations(operations):
 			terminal_operations[terminal].append(operation)
 }
 
-		// Execute operations for each terminal
+# // Execute operations for each terminal
 		for terminal in terminal_operations:
 			for operation in terminal_operations[terminal]:
 				var result = execute_operation(operation)
@@ -1057,12 +1058,12 @@ func execute_operation(operation):
 }
 
 func parse_terminal_command(text):
-	// Check if text contains a terminal command
-	if text.to_lower().find("/terminal") != 0:
+# // Check if text contains a terminal command
+	if text.to_lower().find("terminal") != 0:
 		return null
 }
 
-	// Extract command and arguments
+# // Extract command and arguments
 	var args = text.substr(10).strip_edges().split(" ", false)
 }
 
@@ -1079,7 +1080,7 @@ func parse_terminal_command(text):
 
 	match command:
 		"sync":
-			// Synchronize terminals
+# // Synchronize terminals
 			result = {
 				"success": true,
 				"message": "Terminal synchronization initiated",
@@ -1088,7 +1089,7 @@ func parse_terminal_command(text):
 }
 
 		"register":
-			// Register a new terminal
+# // Register a new terminal
 			if args.size() < 2:
 				return {
 					"success": false,
@@ -1122,7 +1123,7 @@ func parse_terminal_command(text):
 }
 
 		"tunnel":
-			// Create a dimensional tunnel
+# // Create a dimensional tunnel
 			if args.size() < 3:
 				return {
 					"success": false,
@@ -1153,7 +1154,7 @@ func parse_terminal_command(text):
 }
 
 		"entangle":
-			// Toggle quantum entanglement
+# // Toggle quantum entanglement
 			if quantum_entanglement_active:
 				stop_sync_timer()
 				result = {
@@ -1169,7 +1170,7 @@ func parse_terminal_command(text):
 }
 
 		"multicore":
-			// Toggle multi-core processing
+# // Toggle multi-core processing
 			if args.size() < 2:
 				return {
 					"success": false,
@@ -1197,7 +1198,7 @@ func parse_terminal_command(text):
 }
 
 		"list":
-			// List active terminals
+# // List active terminals
 			var terminals = []
 }
 
@@ -1236,9 +1237,9 @@ func parse_terminal_command(text):
 }
 
 func _on_turn_completed(turn_number):
-	// Special handling for turns divisible by 9
+# // Special handling for turns divisible by 9
 	if turn_number % 9 == 0:
-		// Force synchronization on 9th turns
+# // Force synchronization on 9th turns
 		sync_all_terminals()
 }
 
@@ -1249,14 +1250,14 @@ func _on_turn_completed(turn_number):
 }
 
 func _on_dimension_changed(new_dimension, old_dimension):
-	// Update current terminal's dimension
+# // Update current terminal's dimension
 	for terminal_id in active_terminals:
 		if active_terminals[terminal_id].type == current_terminal:
 			active_terminals[terminal_id].dimension = new_dimension
 			break
 }
 
-	// Special handling for primary dimensions of each terminal
+# // Special handling for primary dimensions of each terminal
 	var primary_terminal_type = -1
 }
 
@@ -1275,45 +1276,45 @@ func _on_dimension_changed(new_dimension, old_dimension):
 				word_comment_system.CommentType.DIVINE)
 }
 
-		// Enhanced synchronization for primary dimension
+# // Enhanced synchronization for primary dimension
 		for terminal_id in active_terminals:
 			if active_terminals[terminal_id].type == primary_terminal_type:
-				// Apply special sync boost
+# // Apply special sync boost
 				sync_status[terminal_id].sync_errors = 0
 }
 
-				// Synchronize all channels immediately
+# // Synchronize all channels immediately
 				for channel in channels.keys():
-					sync_status[terminal_id].channels_synced[channel] = OS.get_unix_time()
+					sync_status[terminal_id].channels_synced[channel] = OS.Time.get_unix_time_from_system()
 }
 
 				break
 }
 
 func _on_word_processed(word, power, source_player):
-	// Check if word is a terminal command
+# // Check if word is a terminal command
 	var command_result = parse_terminal_command(word)
 }
 
 	if command_result != null:
-		// Terminal command processed
+# // Terminal command processed
 		return
 }
 
-	// Special handling for words containing "terminal" and a number
+# // Special handling for words containing "terminal" and a number
 	var regex = RegEx.new()
 	regex.compile("terminal\\s+([1-6])")
 	var result = regex.search(word.to_lower())
 }
 
 	if result:
-		// Reference to a specific terminal detected
+# // Reference to a specific terminal detected
 		var terminal_number = int(result.get_string(1))
 		var terminal_type = terminal_number - 1 # Convert from 1-based to 0-based
 }
 
 		if terminal_type >= 0 and terminal_type < TerminalType.size():
-			// Relay word to the specified terminal
+# // Relay word to the specified terminal
 			word_relay(word, source_player, terminal_type)
 }
 

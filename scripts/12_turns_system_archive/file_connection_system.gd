@@ -9,6 +9,7 @@ var file_connections = {
   # Main system files
   "main_controller": "/mnt/c/Users/Percision 15/12_turns_system/main.gd",
   "desktop_main": "/mnt/c/Users/Percision 15/Desktop/main.gd",
+}
   
   # Claude core files
   "claude_config": "/mnt/c/Users/Percision 15/CLAUDE.md",
@@ -46,7 +47,7 @@ var file_connections = {
   # Archive files
   "memory_archive_system": "/mnt/c/Users/Percision 15/12_turns_system/memory_archive_system.gd",
   "past_memory_archive": "/mnt/c/Users/Percision 15/12_turns_system/past_memory_archive.gd"
-}
+
 
 # Logical groupings of files
 var file_groups = {
@@ -58,6 +59,7 @@ var file_groups = {
     "claude_ethereal_bridge",
     "claude_integration_bridge"
   ],
+}
   
   "memory_systems": [
     "word_memory_system",
@@ -90,7 +92,6 @@ var file_groups = {
     "main_controller",
     "desktop_main"
   ]
-}
 
 # Connection links between files - directional links showing which files reference others
 var file_connections_map = {
@@ -128,6 +129,7 @@ func _verify_file_existence():
   print("Found " + str(existing_files) + " existing files")
   if missing_files.size() > 0:
     print("Missing " + str(missing_files.size()) + " files: " + str(missing_files))
+	
 
 # Get a file path by its snake_case key
 func get_file_path(key: String) -> String:
@@ -202,6 +204,7 @@ func generate_markdown_report() -> String:
   report += "## Overview\n\n"
   report += "Total files: " + str(file_connections.size()) + "\n"
   report += "File groups: " + str(file_groups.size()) + "\n\n"
+
   
   # Groups
   report += "## File Groups\n\n"

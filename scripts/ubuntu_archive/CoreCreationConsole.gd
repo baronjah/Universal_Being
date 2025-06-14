@@ -45,6 +45,7 @@ func _connect_to_word_manifestor():
 	else:
 		print("CoreCreationConsole: Word manifestor not found")
 
+
 func _on_text_submitted(text: String):
 	if text.strip_edges().is_empty():
 		return

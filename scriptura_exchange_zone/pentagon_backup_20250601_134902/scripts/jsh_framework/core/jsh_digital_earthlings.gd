@@ -3,9 +3,8 @@
 # Created: May 31, 2025, 23:28 CEST
 # Purpose: Ragdoll physics and behavior system
 # Connection: Part of Pentagon Architecture migration
-
 extends UniversalBeingBase
-# res://code/gdscript/scripts/Menu_Keyboard_Console/jsh_digital_earthlings.gd
+# res://scripts/gdscript/scripts/Menu_Keyboard_Console/jsh_digital_earthlings.gd
 # JSH_World/JSH_digital_earthlings
 ####################
 #
@@ -29,9 +28,9 @@ extends UniversalBeingBase
 
 
 # Node references
-@onready var main_node = get_node("/root/main")
-@onready var records_system = get_node_or_null("/root/main/JSH_records_system")
-@onready var thread_pool = get_node_or_null("/root/thread_pool_autoload")
+@onready var main_node = get_node("root/main")
+@onready var records_system = get_node_or_null("root/main/JSH_records_system")
+@onready var thread_pool = get_node_or_null("root/thread_pool_autoload")
 
 # Internal state
 const VERSION = "1.0.0"
@@ -91,7 +90,7 @@ signal command_processed(command, result)
 
 
 #extends UniversalBeingBase
-#class_name JSHDataGrid
+#class_name JSHDataGrid_jshdigit
 
 # Signals
 signal grid_updated
@@ -143,7 +142,7 @@ func _ready_add():
 	initialize_grid()
 	
 	# Connect to task manager if available
-	task_manager = get_node_or_null("/root/JSHTaskManager")
+	task_manager = get_node_or_null("root/JSHTaskManager")
 	if task_manager:
 		print("Data grid connected to task manager")
 
@@ -815,7 +814,7 @@ func setup_main_reference(main_ref):
 # Integration with RecordsBank
 func create_from_records(record_map_id, record_index):
 	if not records_bank:
-		records_bank = get_node_or_null("/root/RecordsBank")
+		records_bank = get_node_or_null("root/RecordsBank")
 		if not records_bank:
 			print("RecordsBank not found!")
 			return false
@@ -1002,7 +1001,7 @@ func show_welcome_message():
 
 func find_interface_text_node():
 	# Find the command text node in the hierarchy
-	var container = get_node_or_null("/root/main/digital_earthlings_container")
+	var container = get_node_or_null("root/main/digital_earthlings_container")
 	if container:
 		return container.get_node_or_null("thing_3")
 	return null
@@ -1148,7 +1147,7 @@ func _cmd_transform(args):
 	
 	# Transform entity in current reality
 	var container_path = current_reality + "_reality_container"
-	var entity_path = container_path + "/" + entity_name
+	var entity_path = container_path + "" + entity_name
 	
 	# Use JSH's transformation system
 	if main_node and main_node.has_method("the_fourth_dimensional_magic"):
@@ -1346,12 +1345,12 @@ func shift_reality(new_reality):
 	print("🔄 Shifting reality from " + old_reality + " to " + new_reality)
 	
 	# Update reality text
-	var reality_text_node = get_node_or_null("/root/main/digital_earthlings_container/thing_6")
+	var reality_text_node = get_node_or_null("root/main/digital_earthlings_container/thing_6")
 	if reality_text_node and reality_text_node is Label3D:
 		reality_text_node.text = new_reality.to_upper()
 	
 	# Update reality indicator color
-	var reality_indicator = get_node_or_null("/root/main/digital_earthlings_container/thing_5")
+	var reality_indicator = get_node_or_null("root/main/digital_earthlings_container/thing_5")
 	if reality_indicator and reality_indicator is MeshInstance3D:
 		var material = reality_indicator.get_surface_material(0)
 		if material:
@@ -1365,7 +1364,7 @@ func shift_reality(new_reality):
 	if main_node and main_node.has_method("sixth_dimensional_magic"):
 		main_node.sixth_dimensional_magic(
 			"call_function_single_get_node",
-			"/root/main",
+			"root/main",
 			"create_glitch_effect",
 			["visuals", 50, "2s"]
 		)
@@ -1378,12 +1377,12 @@ func shift_reality(new_reality):
 
 func toggle_reality_containers(old_reality, new_reality):
 	# Hide old reality container
-	var old_container = get_node_or_null("/root/main/" + old_reality + "_reality_container")
+	var old_container = get_node_or_null("root/main/" + old_reality + "_reality_container")
 	if old_container:
 		old_container.visible = false
 	
 	# Show new reality container
-	var new_container = get_node_or_null("/root/main/" + new_reality + "_reality_container")
+	var new_container = get_node_or_null("root/main/" + new_reality + "_reality_container")
 	if new_container:
 		new_container.visible = true
 

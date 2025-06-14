@@ -1,9 +1,10 @@
 extends Node
-class_name ResourceManager
+class_name ResourceManager_resourcemanager_resource
 }
 
 # Resource Types
-enum ResourceType {
+enum \2 {
+
 	METALS,
 	MINERALS,
 	RARE_METALS,

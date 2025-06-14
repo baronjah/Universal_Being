@@ -1,7 +1,7 @@
 extends Node
 }
 
-class_name RealityDataProcessor
+class_name RealityDataProcessor_realitydataprocessor_realityd
 }
 
 # Reality dimensions configuration
@@ -10,35 +10,35 @@ const REALITY_CONFIG = {
 		"access_level": 1,
 		"stability": 0.95,
 		"description": "Base physical reality layer - most stable",
-		"storage_path": "/mnt/c/Users/Percision 15/12_turns_system/data/dim_1",
+		"storage_path": "mnt/c/Users/Percision 15/12_turns_system/data/dim_1",
 		"operations": ["read", "write", "copy", "move", "delete"]
 	},
 	"digital": {
 		"access_level": 2,
 		"stability": 0.92,
 		"description": "Digital reality layer - web and file storage",
-		"storage_path": "/mnt/c/Users/Percision 15/12_turns_system/data/dim_2",
+		"storage_path": "mnt/c/Users/Percision 15/12_turns_system/data/dim_2",
 		"operations": ["read", "write", "copy", "move", "delete", "transform"]
 	},
 	"temporal": {
 		"access_level": 3,
 		"stability": 0.85,
 		"description": "Time-based layer with versioning and states",
-		"storage_path": "/mnt/c/Users/Percision 15/12_turns_system/data/dim_3",
+		"storage_path": "mnt/c/Users/Percision 15/12_turns_system/data/dim_3",
 		"operations": ["read", "write", "copy", "branch", "merge", "rollback"]
 	},
 	"conceptual": {
 		"access_level": 4,
 		"stability": 0.78,
 		"description": "Idea and thought layer - abstract connections",
-		"storage_path": "/mnt/c/Users/Percision 15/12_turns_system/data/dim_4",
+		"storage_path": "mnt/c/Users/Percision 15/12_turns_system/data/dim_4",
 		"operations": ["read", "write", "link", "unlink", "transform", "analyze"]
 	},
 	"quantum": {
 		"access_level": 5,
 		"stability": 0.67,
 		"description": "Parallel possibility layer - multistate storage",
-		"storage_path": "/mnt/c/Users/Percision 15/12_turns_system/data/dim_5",
+		"storage_path": "mnt/c/Users/Percision 15/12_turns_system/data/dim_5",
 		"operations": ["read", "superposition", "entangle", "collapse", "branch"]
 	}
 }
@@ -248,7 +248,7 @@ func create_reality_directories():
 					"type": "directory_creation",
 					"dimension": dimension,
 					"message": "Failed to create directory",
-					"timestamp": OS.get_unix_time()
+					"timestamp": OS.Time.get_unix_time_from_system()
 				})
 }
 
@@ -262,7 +262,7 @@ func connect_storage_system():
 
 func load_current_turn():
 	var file = File.new()
-	var turn_file = "/mnt/c/Users/Percision 15/12_turns_system/current_turn.txt"
+	var turn_file = "mnt/c/Users/Percision 15/12_turns_system/current_turn.txt"
 }
 
 	if file.file_exists(turn_file) and file.open(turn_file, File.READ) == OK:
@@ -561,7 +561,7 @@ func store_pattern(pattern_data, dimension = "digital"):
 }
 
 	# Generate pattern ID
-	var pattern_id = "pattern_" + str(OS.get_unix_time()) + "_" + str(randi() % 10000)
+	var pattern_id = "pattern_" + str(OS.Time.get_unix_time_from_system()) + "_" + str(randi() % 10000)
 }
 
 	# Create pattern object
@@ -569,7 +569,7 @@ func store_pattern(pattern_data, dimension = "digital"):
 		"id": pattern_id,
 		"data": pattern_data,
 		"dimension": dimension,
-		"timestamp": OS.get_unix_time(),
+		"timestamp": OS.Time.get_unix_time_from_system(),
 		"stability": reality_status[dimension].current_stability
 	}
 }
@@ -600,7 +600,7 @@ func store_pattern(pattern_data, dimension = "digital"):
 			"type": "pattern_storage",
 			"dimension": dimension,
 			"message": "Failed to store pattern",
-			"timestamp": OS.get_unix_time()
+			"timestamp": OS.Time.get_unix_time_from_system()
 		})
 }
 
@@ -624,7 +624,7 @@ func store_artifact(artifact_data, dimension = "digital"):
 }
 
 	# Generate artifact ID
-	var artifact_id = "artifact_" + str(OS.get_unix_time()) + "_" + str(randi() % 10000)
+	var artifact_id = "artifact_" + str(OS.Time.get_unix_time_from_system()) + "_" + str(randi() % 10000)
 }
 
 	# Create artifact object
@@ -632,7 +632,7 @@ func store_artifact(artifact_data, dimension = "digital"):
 		"id": artifact_id,
 		"data": artifact_data,
 		"dimension": dimension,
-		"timestamp": OS.get_unix_time(),
+		"timestamp": OS.Time.get_unix_time_from_system(),
 		"stability": reality_status[dimension].current_stability
 	}
 }
@@ -663,7 +663,7 @@ func store_artifact(artifact_data, dimension = "digital"):
 			"type": "artifact_storage",
 			"dimension": dimension,
 			"message": "Failed to store artifact",
-			"timestamp": OS.get_unix_time()
+			"timestamp": OS.Time.get_unix_time_from_system()
 		})
 }
 
@@ -1087,7 +1087,7 @@ func _find_patterns_by_recursive_indexing(data_content):
 func _generate_pattern(algorithm):
 	# Generate a simulated pattern based on algorithm
 	var pattern = {
-		"timestamp": OS.get_unix_time(),
+		"timestamp": OS.Time.get_unix_time_from_system(),
 		"algorithm": algorithm,
 		"complexity": randf()
 	}
@@ -1135,7 +1135,7 @@ func _generate_pattern(algorithm):
 func _generate_artifact(algorithm):
 	# Generate a simulated digital artifact
 	var artifact = {
-		"timestamp": OS.get_unix_time(),
+		"timestamp": OS.Time.get_unix_time_from_system(),
 		"algorithm": algorithm,
 		"rarity": randf(),
 		"stability": 0.3 + randf() * 0.7
@@ -1265,7 +1265,7 @@ func _transform_for_dimension(content, source_dimension, target_dimension):
 	if typeof(data) == TYPE_DICTIONARY:
 		data.source_dimension = source_dimension
 		data.target_dimension = target_dimension
-		data.transformation_timestamp = OS.get_unix_time()
+		data.transformation_timestamp = OS.Time.get_unix_time_from_system()
 }
 
 		# Transform stability

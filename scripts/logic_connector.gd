@@ -12,16 +12,17 @@ class_name LogicConnector
 # ===== ENHANCED CAPABILITIES =====
 
 # Registry of all possible actions from Akashic Records
-static var akashic_action_registry: Dictionary = {}
-static var socket_connections: Dictionary = {}
+static var akashic_action_registry: Dictionary = {
+static var socket_connections: Dictionary = {
 static var active_logic_flows: Array[Dictionary] = []
+}
 
 # Connection visualization
 static var connection_visualizer: Node = null
 
 # ===== SINGLETON REGISTRY (from Luminus's elegant system) =====
 
-static var _registry: Dictionary = {}   # Object → Debuggable
+static var _registry: Dictionary = {}}   # Object → Debuggable
 
 # Registry management
 static func register(o: Object) -> void:
@@ -29,6 +30,7 @@ static func register(o: Object) -> void:
 	if o.has_method("get_debug_payload") and o.has_method("set_debug_field") and o.has_method("get_debug_actions"):
 		_registry[o] = o
 		print("🔌 Registered debuggable: %s" % o.name if o.has_method("get") else str(o))
+
 
 static func deregister(o: Object) -> void:
 	"""Deregister an object from debug registry"""
@@ -56,6 +58,7 @@ static func raypick(camera: Camera3D) -> Object:
 	if hit:
 		var collider = hit.get("collider")
 		print("🎯 Raycast hit: %s" % collider)
+
 		
 		# First check if the collider itself is debuggable
 		if collider in _registry:
@@ -64,6 +67,7 @@ static func raypick(camera: Camera3D) -> Object:
 		
 		# Check if the collider has a debuggable parent meta
 		if collider.has_meta("debuggable_parent"):
+
 			var parent = collider.get_meta("debuggable_parent")
 			if parent in _registry.values():
 				print("✅ Hit object's parent is debuggable!")
@@ -114,6 +118,7 @@ static func print_registry_status() -> void:
 	print("  Total Objects: %d" % _registry.size())
 	print("  Debuggable Types: %s" % str(get_debuggable_types()))
 
+
 # ===== CONNECTOR INTERFACE =====
 
 # Standard interface that every Universal Being script should implement
@@ -128,7 +133,7 @@ static func get_debug_interface(object: Node) -> Dictionary:
 		"pentagon_status": get_pentagon_status(object),
 		"consciousness_data": get_consciousness_data(object),
 		"debug_capabilities": get_debug_capabilities(object)
-	}
+}
 	
 	return interface
 
@@ -144,7 +149,7 @@ static func get_object_info(object: Node) -> Dictionary:
 		"position": Vector3.ZERO,
 		"children_count": object.get_child_count(),
 		"groups": object.get_groups()
-	}
+}
 	
 	# Script information
 	if object.get_script():
@@ -173,41 +178,50 @@ static func get_available_actions(object: Node) -> Array[Dictionary]:
 			{"name": "pentagon_ready", "description": "Ready Universal Being", "category": "lifecycle"},
 			{"name": "pentagon_process", "description": "Process Universal Being", "category": "lifecycle"},
 			{"name": "pentagon_input", "description": "Handle input", "category": "lifecycle"},
-			{"name": "pentagon_sewers", "description": "Cleanup Universal Being", "category": "lifecycle"}
+			{"name": "pentagon_sewers", "description": "Cleanup Universal Being", "category": "lifecycle"
 		])
 	
 	# Evolution actions
 	if object.has_method("evolve_to"):
 		actions.append({"name": "evolve_to", "description": "Evolve to new form", "category": "evolution"})
+}
 	
 	if object.has_method("can_evolve_to"):
 		actions.append({"name": "can_evolve_to", "description": "Check evolution possibility", "category": "evolution"})
+
 	
 	# Consciousness actions
 	if object.has_method("set_consciousness_level"):
 		actions.append({"name": "set_consciousness_level", "description": "Change consciousness level", "category": "consciousness"})
+
 	
 	# Component actions
 	if object.has_method("add_component"):
 		actions.append({"name": "add_component", "description": "Add component to being", "category": "components"})
+
 	
 	if object.has_method("remove_component"):
 		actions.append({"name": "remove_component", "description": "Remove component", "category": "components"})
+
 	
 	# Chunk-specific actions
 	if object.has_method("add_being_to_chunk"):
 		actions.append({"name": "add_being_to_chunk", "description": "Add being to chunk", "category": "spatial"})
+
 	
 	if object.has_method("generate_content_in_chunk"):
 		actions.append({"name": "generate_content_in_chunk", "description": "Generate chunk content", "category": "generation"})
+
 	
 	# Scene control actions
 	if object.has_method("load_scene"):
 		actions.append({"name": "load_scene", "description": "Load scene into being", "category": "scene"})
+
 	
 	# AI interface actions
 	if object.has_method("ai_interface"):
 		actions.append({"name": "ai_interface", "description": "Get AI interface", "category": "ai"})
+
 	
 	# Custom script methods
 	var custom_actions = get_custom_methods(object)
@@ -250,7 +264,7 @@ static func get_current_state(object: Node) -> Dictionary:
 		"active": true,
 		"process_mode": object.process_mode,
 		"variables": get_state_variables(object)
-	}
+}
 	
 	# Universal Being state
 	if object.has_method("get"):
@@ -271,7 +285,7 @@ static func get_current_state(object: Node) -> Dictionary:
 
 static func get_state_variables(object: Node) -> Dictionary:
 	"""Get all state variables from the object"""
-	var variables = {}
+	var variables = {
 	
 	if object.get_script():
 		var property_list = object.get_property_list()
@@ -314,6 +328,7 @@ static func get_connection_points(object: Node) -> Array[Dictionary]:
 	
 	# Universal Being specific connections
 	if object.has_method("get_connected_beings"):
+}
 		var connected_beings = object.get_connected_beings()
 		for being in connected_beings:
 			connections.append({
@@ -324,6 +339,7 @@ static func get_connection_points(object: Node) -> Array[Dictionary]:
 	
 	# Chunk connections
 	if object.has_method("get") and "stored_beings" in object:
+
 		var stored_beings = object.get("stored_beings")
 		if stored_beings is Array:
 			for being in stored_beings:
@@ -365,30 +381,36 @@ static func get_possible_interactions(object: Node) -> Array[Dictionary]:
 	interactions.append_array([
 		{"action": "inspect", "description": "Inspect object properties", "category": "debug"},
 		{"action": "move", "description": "Change position", "category": "transform"},
-		{"action": "rename", "description": "Change object name", "category": "basic"}
+		{"action": "rename", "description": "Change object name", "category": "basic"
 	])
 	
 	# Universal Being interactions
 	if object.has_method("evolve_to"):
 		interactions.append({"action": "evolve", "description": "Evolve to new form", "category": "evolution"})
+}
 	
 	if object.has_method("add_component"):
 		interactions.append({"action": "add_component", "description": "Add new component", "category": "components"})
+
 	
 	if object.has_method("set_consciousness_level"):
 		interactions.append({"action": "consciousness", "description": "Change consciousness level", "category": "consciousness"})
+
 	
 	# Chunk interactions
 	if object.has_method("generate_content_in_chunk"):
 		interactions.append({"action": "generate", "description": "Generate chunk content", "category": "generation"})
+
 	
 	# Scene interactions
 	if object.has_method("load_scene"):
 		interactions.append({"action": "load_scene", "description": "Load scene into being", "category": "scene"})
+
 	
 	# AI interactions
 	if object.has_method("ai_interface"):
 		interactions.append({"action": "ai_command", "description": "Send AI command", "category": "ai"})
+
 	
 	return interactions
 
@@ -401,7 +423,7 @@ static func get_pentagon_status(object: Node) -> Dictionary:
 		"pentagon_methods": [],
 		"lifecycle_stage": "unknown",
 		"pentagon_active": false
-	}
+}
 	
 	if status.is_universal_being:
 		# Check which pentagon methods exist
@@ -433,7 +455,7 @@ static func get_consciousness_data(object: Node) -> Dictionary:
 		"color": Color.GRAY,
 		"evolution_paths": [],
 		"awareness_range": 0.0
-	}
+}
 	
 	if object.has_method("get"):
 		consciousness.level = object.get("consciousness_level") if "consciousness_level" in object else 0
@@ -443,6 +465,7 @@ static func get_consciousness_data(object: Node) -> Dictionary:
 		if object.has_method("get_evolution_paths"):
 			consciousness.evolution_paths = object.get_evolution_paths()
 		elif "evolution_state" in object:
+
 			var evolution_state = object.get("evolution_state")
 			if evolution_state and "can_become" in evolution_state:
 				consciousness.evolution_paths = evolution_state.can_become
@@ -462,7 +485,7 @@ static func get_debug_capabilities(object: Node) -> Dictionary:
 		"can_add_components": object.has_method("add_component"),
 		"has_visual_feedback": object is Node3D,
 		"supports_ai_commands": object.has_method("ai_interface")
-	}
+}
 	
 	return capabilities
 
@@ -474,7 +497,7 @@ static func execute_action(object: Node, action_name: String, parameters: Array 
 		"success": false,
 		"message": "",
 		"return_value": null
-	}
+}
 	
 	if not object.has_method(action_name):
 		result.message = "Method '%s' not found" % action_name
@@ -493,7 +516,7 @@ static func set_variable(object: Node, variable_name: String, value) -> Dictiona
 		"success": false,
 		"message": "",
 		"old_value": null
-	}
+}
 	
 	# Get old value
 	if object.has_method("get"):

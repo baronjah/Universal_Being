@@ -4,9 +4,8 @@
 # PURPOSE: Inspect and edit any object with transform gizmo controls
 # CREATED: 2025-05-29 - Fixed version with proper UI initialization
 # ==================================================
-
 extends UniversalBeingBase
-class_name UniversalObjectInspector
+class_name UniversalObjectInspector_universa
 
 signal property_changed(object: Node, property: String, new_value: Variant)
 signal inspector_closed()
@@ -530,7 +529,7 @@ func handle_command(command: String, args: Array) -> String:
 		"inspect":
 			if args.is_empty():
 				return "Usage: inspect <object_name>"
-			var obj = get_node_or_null("/root/MainGame/" + args[0])
+			var obj = get_node_or_null("root/MainGame/" + args[0])
 			if obj:
 				inspect_object(obj)
 				return "Inspecting: " + obj.name

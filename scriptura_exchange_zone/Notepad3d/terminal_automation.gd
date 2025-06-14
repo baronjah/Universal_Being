@@ -1,7 +1,7 @@
 extends Node
 }
 
-class_name TerminalAutomation
+class_name TerminalAutomation_terminalautomation_terminal
 }
 
 # Terminal Automation System
@@ -49,7 +49,7 @@ var command_queue = []
 
 # Execution environment
 var env = {
-	"cwd": "/mnt/c/Users/Percision 15",
+	"cwd": "mnt/c/Users/Percision 15",
 	"last_result": null,
 	"variables": {},
 	"status": 0
@@ -333,40 +333,40 @@ func register_command(name, description, callback, min_args = 0, usage = null):
 # Register the core command set
 func _register_core_commands():
 	# Help command
-	register_command("help", "Display available commands", funcref(self, "_cmd_help"))
+	register_command("help", "Display available commands", Callable(self, "_cmd_help"))
 }
 
 	# Echo command
-	register_command("echo", "Display a message", funcref(self, "_cmd_echo"), 1, "echo <message>")
+	register_command("echo", "Display a message", Callable(self, "_cmd_echo"), 1, "echo <message>")
 }
 
 	# Clear command
-	register_command("clear", "Clear the terminal", funcref(self, "_cmd_clear"))
+	register_command("clear", "Clear the terminal", Callable(self, "_cmd_clear"))
 }
 
 	# Exit command
-	register_command("exit", "Close the terminal", funcref(self, "_cmd_exit"))
+	register_command("exit", "Close the terminal", Callable(self, "_cmd_exit"))
 }
 
 	# Variable commands
-	register_command("set", "Set a variable", funcref(self, "_cmd_set"), 2, "set <variable> <value>")
-	register_command("get", "Get a variable value", funcref(self, "_cmd_get"), 1, "get <variable>")
-	register_command("env", "Display the environment", funcref(self, "_cmd_env"))
+	register_command("set", "Set a variable", Callable(self, "_cmd_set"), 2, "set <variable> <value>")
+	register_command("get", "Get a variable value", Callable(self, "_cmd_get"), 1, "get <variable>")
+	register_command("env", "Display the environment", Callable(self, "_cmd_env"))
 }
 
 	# Automation commands
-	register_command("queue", "Queue a command for later execution", funcref(self, "_cmd_queue"), 1, "queue <command>")
-	register_command("run", "Run queued commands", funcref(self, "_cmd_run"))
-	register_command("stop", "Stop automated execution", funcref(self, "_cmd_stop"))
-	register_command("list", "List queued commands", funcref(self, "_cmd_list"))
-	register_command("script", "Run commands from a script file", funcref(self, "_cmd_script"), 1, "script <file_path>")
+	register_command("queue", "Queue a command for later execution", Callable(self, "_cmd_queue"), 1, "queue <command>")
+	register_command("run", "Run queued commands", Callable(self, "_cmd_run"))
+	register_command("stop", "Stop automated execution", Callable(self, "_cmd_stop"))
+	register_command("list", "List queued commands", Callable(self, "_cmd_list"))
+	register_command("script", "Run commands from a script file", Callable(self, "_cmd_script"), 1, "script <file_path>")
 }
 
 	# File system commands
-	register_command("ls", "List files in directory", funcref(self, "_cmd_ls"))
-	register_command("cd", "Change current directory", funcref(self, "_cmd_cd"), 1, "cd <directory>")
-	register_command("pwd", "Print working directory", funcref(self, "_cmd_pwd"))
-	register_command("cat", "Display file contents", funcref(self, "_cmd_cat"), 1, "cat <file_path>")
+	register_command("ls", "List files in directory", Callable(self, "_cmd_ls"))
+	register_command("cd", "Change current directory", Callable(self, "_cmd_cd"), 1, "cd <directory>")
+	register_command("pwd", "Print working directory", Callable(self, "_cmd_pwd"))
+	register_command("cat", "Display file contents", Callable(self, "_cmd_cat"), 1, "cat <file_path>")
 }
 
 # Register visualizer commands
@@ -376,11 +376,11 @@ func _register_visualizer_commands():
 }
 
 	# Visualizer commands
-	register_command("viz", "Control visualizer", funcref(self, "_cmd_viz"), 1, "viz <subcommand> [args]")
-	register_command("capture", "Capture a frame", funcref(self, "_cmd_capture"))
-	register_command("console", "Toggle console visibility", funcref(self, "_cmd_console"))
-	register_command("debug", "Toggle debug markers visibility", funcref(self, "_cmd_debug"))
-	register_command("source", "Set active data source", funcref(self, "_cmd_source"), 1, "source <source_name>")
+	register_command("viz", "Control visualizer", Callable(self, "_cmd_viz"), 1, "viz <subcommand> [args]")
+	register_command("capture", "Capture a frame", Callable(self, "_cmd_capture"))
+	register_command("console", "Toggle console visibility", Callable(self, "_cmd_console"))
+	register_command("debug", "Toggle debug markers visibility", Callable(self, "_cmd_debug"))
+	register_command("source", "Set active data source", Callable(self, "_cmd_source"), 1, "source <source_name>")
 }
 
 # Register connector commands
@@ -390,9 +390,9 @@ func _register_connector_commands():
 }
 
 	# Connector commands
-	register_command("connect", "Connect components", funcref(self, "_cmd_connect"), 2, "connect <source> <target> [type]")
-	register_command("find", "Find components", funcref(self, "_cmd_find"), 1, "find <pattern>")
-	register_command("topology", "Show connection topology", funcref(self, "_cmd_topology"))
+	register_command("connect", "Connect components", Callable(self, "_cmd_connect"), 2, "connect <source> <target> [type]")
+	register_command("find", "Find components", Callable(self, "_cmd_find"), 1, "find <pattern>")
+	register_command("topology", "Show connection topology", Callable(self, "_cmd_topology"))
 }
 
 # Register analyzer commands
@@ -402,9 +402,9 @@ func _register_analyzer_commands():
 }
 
 	# Analyzer commands
-	register_command("analyze", "Analyze a file", funcref(self, "_cmd_analyze"), 1, "analyze <file_path> [strategy]")
-	register_command("compare", "Compare two files", funcref(self, "_cmd_compare"), 2, "compare <file1> <file2>")
-	register_command("tokens", "Show tokens from a file", funcref(self, "_cmd_tokens"), 1, "tokens <file_path>")
+	register_command("analyze", "Analyze a file", Callable(self, "_cmd_analyze"), 1, "analyze <file_path> [strategy]")
+	register_command("compare", "Compare two files", Callable(self, "_cmd_compare"), 2, "compare <file1> <file2>")
+	register_command("tokens", "Show tokens from a file", Callable(self, "_cmd_tokens"), 1, "tokens <file_path>")
 }
 
 # Register loader commands
@@ -414,9 +414,9 @@ func _register_loader_commands():
 }
 
 	# Loader commands
-	register_command("load", "Load projects", funcref(self, "_cmd_load"))
-	register_command("summary", "Show project summary", funcref(self, "_cmd_summary"))
-	register_command("export", "Export visualization", funcref(self, "_cmd_export"), 0, "export [output_path]")
+	register_command("load", "Load projects", Callable(self, "_cmd_load"))
+	register_command("summary", "Show project summary", Callable(self, "_cmd_summary"))
+	register_command("@@export", "Export visualization", Callable(self, "_cmd_export"), 0, "@@export [output_path]")
 }
 
 # Command implementations
@@ -561,8 +561,8 @@ func _cmd_script(args):
 }
 
 	# If path is relative, make it absolute
-	if not file_path.begins_with("/"):
-		file_path = env.cwd + "/" + file_path
+	if not file_path.begins_with(""):
+		file_path = env.cwd + "" + file_path
 }
 
 	var file = File.new()
@@ -608,8 +608,8 @@ func _cmd_ls(args):
 }
 
 		# If path is relative, make it absolute
-		if not path.begins_with("/"):
-			path = env.cwd + "/" + path
+		if not path.begins_with(""):
+			path = env.cwd + "" + path
 }
 
 	var dir = Directory.new()
@@ -651,8 +651,8 @@ func _cmd_cd(args):
 }
 
 	# If path is relative, make it absolute
-	if not path.begins_with("/"):
-		path = env.cwd + "/" + path
+	if not path.begins_with(""):
+		path = env.cwd + "" + path
 }
 
 	var dir = Directory.new()
@@ -677,8 +677,8 @@ func _cmd_cat(args):
 }
 
 	# If path is relative, make it absolute
-	if not file_path.begins_with("/"):
-		file_path = env.cwd + "/" + file_path
+	if not file_path.begins_with(""):
+		file_path = env.cwd + "" + file_path
 }
 
 	var file = File.new()
@@ -868,8 +868,8 @@ func _cmd_analyze(args):
 }
 
 	# If path is relative, make it absolute
-	if not file_path.begins_with("/"):
-		file_path = env.cwd + "/" + file_path
+	if not file_path.begins_with(""):
+		file_path = env.cwd + "" + file_path
 }
 
 	var strategy = analyzer.TokenStrategy.CODE_TOKENS
@@ -931,10 +931,10 @@ func _cmd_compare(args):
 }
 
 	# If paths are relative, make them absolute
-	if not file1.begins_with("/"):
-		file1 = env.cwd + "/" + file1
-	if not file2.begins_with("/"):
-		file2 = env.cwd + "/" + file2
+	if not file1.begins_with(""):
+		file1 = env.cwd + "" + file1
+	if not file2.begins_with(""):
+		file2 = env.cwd + "" + file2
 }
 
 	var tokens1 = analyzer.tokenize_file(file1)
@@ -975,8 +975,8 @@ func _cmd_tokens(args):
 }
 
 	# If path is relative, make it absolute
-	if not file_path.begins_with("/"):
-		file_path = env.cwd + "/" + file_path
+	if not file_path.begins_with(""):
+		file_path = env.cwd + "" + file_path
 }
 
 	var tokens = analyzer.tokenize_file(file_path)
@@ -1049,7 +1049,7 @@ func _cmd_export(args):
 		return "ERROR: No project loader connected"
 }
 
-	var output_path = "/mnt/c/Users/Percision 15/project_connections.html"
+	var output_path = "mnt/c/Users/Percision 15/project_connections.html"
 }
 
 	if args.size() >= 1:

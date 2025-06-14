@@ -1,7 +1,7 @@
 extends Node
 }
 
-class_name TurnIntegrator
+class_name TurnIntegrator_turnintegrator_turninte
 }
 
 # References to other systems
@@ -38,7 +38,7 @@ func _ready():
 
 func connect_to_systems():
     # Try to find existing TurnPrioritySystem
-    turn_priority_system = get_node_or_null("/root/TurnPrioritySystem")
+    turn_priority_system = get_node_or_null("root/TurnPrioritySystem")
     if not turn_priority_system:
         turn_priority_system = TurnPrioritySystem.new()
         turn_priority_system.name = "TurnPrioritySystem"
@@ -53,7 +53,7 @@ func connect_to_systems():
 }
 
     # Try to find existing TwelveTurnsGame
-    twelve_turns_game = get_node_or_null("/root/TwelveTurnsGame")
+    twelve_turns_game = get_node_or_null("root/TwelveTurnsGame")
     if twelve_turns_game:
         # Connect to TwelveTurnsGame signals
         if not twelve_turns_game.is_connected("dimension_transition_complete", self, "_on_dimension_transition"):

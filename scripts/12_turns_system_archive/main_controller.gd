@@ -269,9 +269,11 @@ func _on_capture_completed(capture_id, image_path):
 
 func _on_capture_failed(capture_id, error):
 	print("Capture failed: " + error)
+
 	
 	if debug_mode:
 		print_debug("Capture failure details: ID=" + capture_id + ", Error=" + error)
+
 
 func _on_ocr_completed(image_id, results):
 	print("OCR completed for image: " + image_id)
@@ -282,9 +284,11 @@ func _on_ocr_completed(image_id, results):
 		print_debug("OCR results: " + results.text.substr(0, 100) + "...")
 		print_debug("OCR confidence: " + str(results.confidence))
 
+
 func _on_ocr_failed(image_id, error):
 	print("OCR failed for image: " + image_id)
 	print("Error: " + error)
+
 	
 	# Try offline OCR as fallback
 	if offline_ocr:
@@ -299,9 +303,11 @@ func _on_offline_ocr_failed(image_id, error):
 	print("Offline OCR failed for image: " + image_id)
 	print("Error: " + error)
 
+
 func _on_update_available(version, release_notes):
 	print("Update available: " + version)
 	print("Release notes: " + release_notes)
+
 	
 	# Auto-download if enabled
 	if enable_auto_updates and auto_updater:
@@ -310,9 +316,11 @@ func _on_update_available(version, release_notes):
 func _on_update_check_failed(error):
 	print("Update check failed: " + error)
 
+
 func _on_connection_status_changed(type, status):
 	print("Connection status changed: " + type + " -> " + status)
 	emit_signal("connection_status_changed", type + ":" + status)
+
 
 func _on_all_connections_established():
 	print("All connections established")
@@ -323,6 +331,7 @@ func _on_theme_changed(theme_name):
 
 func _on_transition_completed(id, type, task):
 	print("Transition completed: " + str(id) + " to task " + task)
+
 
 # ----- PUBLIC API -----
 func capture_screen() -> void:
@@ -375,7 +384,7 @@ func get_system_status() -> Dictionary:
 		"animations_enabled": task_animator.enabled if task_animator else false,
 		"auto_updates_enabled": auto_updater.auto_download_updates if auto_updater else false,
 		"auto_connection_enabled": auto_connector.auto_connect_on_startup if auto_connector else false,
-	}
+}
 	
 	return status
 
@@ -511,6 +520,7 @@ func _update_debug_info() -> void:
 		var word_count = _get_word_count()
 		
 		debug_label.text = "FPS: %d\nThreads: %s\nWords: %d" % [fps, thread_info, word_count]
+
 
 func _get_thread_info() -> String:
 	var thread_manager = get_node_or_null("/root/ThreadManager")

@@ -4,8 +4,7 @@
 # PURPOSE: Keep console clean and performant
 # CREATED: 2025-05-28 - Console optimization
 # ==================================================
-
-extends UniversalBeingBase
+extends \2
 # Message tracking
 var message_counts = {}
 var last_message_time = {}
@@ -18,7 +17,8 @@ var spam_threshold = 5
 var cleanup_interval = 60.0  # seconds
 
 # Message categories
-enum MessagePriority {
+enum \2 {
+
 	CRITICAL,    # Always show
 	IMPORTANT,   # Show with minimal filtering  
 	NORMAL,      # Standard filtering
@@ -43,7 +43,7 @@ var console_manager: Node
 var cleanup_timer: Timer
 
 func _ready() -> void:
-	console_manager = get_node_or_null("/root/ConsoleManager")
+	console_manager = get_node_or_null("root/ConsoleManager")
 	
 	# Setup cleanup timer
 	cleanup_timer = TimerManager.get_timer()

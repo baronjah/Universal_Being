@@ -19,6 +19,7 @@ signal system_error(system_name, error_message)
 func _ready():
 	# Initialize all systems
 	print("CoreGameController: Initializing system components...")
+
 	
 	# Set up components in the correct order
 	var success = true
@@ -35,6 +36,7 @@ func _ready():
 	else:
 		player = null
 		print("CoreGameController: No player node found, some positioning features will be disabled")
+
 	
 	# Connect systems together
 	_connect_systems()
@@ -48,8 +50,10 @@ func _ready():
 	else:
 		print("CoreGameController: Initialization completed with errors")
 
+
 func _initialize_entity_system() -> bool:
 	print("CoreGameController: Initializing entity system...")
+
 	
 	# Try to get entity manager instance
 	if ClassDB.class_exists("CoreEntityManager"):
@@ -69,6 +73,7 @@ func _initialize_entity_system() -> bool:
 
 func _initialize_word_system() -> bool:
 	print("CoreGameController: Initializing word manifestation system...")
+
 	
 	# Try to get word manifestor instance
 	if ClassDB.class_exists("CoreWordManifestor"):
@@ -86,6 +91,7 @@ func _initialize_word_system() -> bool:
 
 func _initialize_map_system() -> bool:
 	print("CoreGameController: Initializing map system...")
+
 	
 	# Try to find map system in the scene
 	var map_nodes = get_tree().get_nodes_in_group("map_system")
@@ -96,6 +102,7 @@ func _initialize_map_system() -> bool:
 	
 	# If no map system found in scene, check for class
 	if ClassDB.class_exists("DynamicMapSystem"):
+
 		# Try to create a map system
 		map_system = Node.new()
 		map_system.set_script(load("res://DynamicMapSystem.gd"))
@@ -126,12 +133,14 @@ func _initialize_map_system() -> bool:
 	
 	add_child(map_system)
 	print("CoreGameController: Created dummy map system")
+
 	
 	# Not a fatal error, just reduced functionality
 	return true
 
 func _initialize_ui_system() -> bool:
 	print("CoreGameController: Initializing UI system...")
+
 	
 	# Create creation console UI
 	creation_console = console_scene.instantiate()
@@ -142,22 +151,28 @@ func _initialize_ui_system() -> bool:
 
 func _connect_systems() -> void:
 	print("CoreGameController: Connecting systems...")
+
 	
 	# Connect word manifestor to map system and player
 	if word_manifestor and word_manifestor.has_method("initialize"):
 		word_manifestor.initialize(map_system, player)
 		print("CoreGameController: Connected word manifestor to map system and player")
+
 	
 	# Connect console to word manifestor
 	if creation_console and creation_console.has_signal("command_entered"):
+
 		# Connect creation console to word manifestor
 		print("CoreGameController: Connected creation console to word manifestor")
+
 	
 	print("CoreGameController: System connections complete")
+
 
 func _setup_input_handling() -> void:
 	# Check for existing input map action for console toggle
 	if not InputMap.has_action("toggle_console"):
+
 		# Create action for console toggle
 		InputMap.add_action("toggle_console")
 		
@@ -167,6 +182,7 @@ func _setup_input_handling() -> void:
 		InputMap.action_add_event("toggle_console", event)
 		
 		print("CoreGameController: Added input mapping for toggle_console")
+
 
 # Public API to toggle console visibility
 func toggle_console() -> void:
@@ -183,7 +199,8 @@ func manifest_word(word: String, position = null) -> Object:
 func process_command(command: String) -> Dictionary:
 	if word_manifestor:
 		return word_manifestor.process_command(command)
-	return {"success": false, "message": "Word manifestor not available", "entity": null}
+	return {"success": false, "message": "Word manifestor not available", "entity": null
+}
 
 func _input(event):
 	# Check for toggle console input

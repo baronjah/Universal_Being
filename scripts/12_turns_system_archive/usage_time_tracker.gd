@@ -60,6 +60,7 @@ func _ready():
     
     print("Usage Time Tracker initialized")
     print("Total usage time: " + format_time(total_usage_time))
+	
 
 # ----- TIMER SETUP -----
 func _initialize_timers():
@@ -115,6 +116,7 @@ func _process(delta):
     
     # Update turn information if turn system is available
     if turn_system and turn_system.has_method("get_current_turn"):
+	
         var new_turn = turn_system.get_current_turn()
         if new_turn != current_turn:
             current_turn = new_turn
@@ -157,10 +159,11 @@ func _log_turn_change(new_turn):
         "turn": new_turn,
         "session_time": current_session_time,
         "total_time": total_usage_time
-    }
+		}
     
     # We would save this to a turn log file
     print("Turn changed to: " + str(new_turn) + " at session time: " + format_time(current_session_time))
+	
 
 # ----- DATA MANAGEMENT -----
 func _save_usage_data():
@@ -178,14 +181,12 @@ func _save_usage_data():
                 "duration": current_session_time,
                 "end_time": lucky_timestamp,
                 "is_lucky_session": is_lucky
-            }
         ],
         "lucky_stats": {
             "lucky_number": lucky_number,
             "proximity": lucky_check,
             "is_lucky": is_lucky
-        }
-    }
+			}
     
     var file = FileAccess.open(usage_data_path, FileAccess.WRITE)
     if file:
@@ -250,6 +251,7 @@ func format_time(seconds: float) -> String:
         return "%02d:%02d:%02d" % [hours, minutes, secs]
     else:
         return "%02d:%02d" % [minutes, secs]
+		}
 
 func get_color_for_current_time() -> Color:
     return color_layers[current_color_layer]
@@ -277,8 +279,7 @@ func get_usage_summary() -> Dictionary:
             "is_lucky": is_lucky,
             "proximity": lucky_proximity,
             "proximity_percent": (1.0 - (float(lucky_proximity) / float(lucky_number))) * 100.0
-        }
-    }
+			}
 
 # ----- PUBLIC API -----
 func reset_session():

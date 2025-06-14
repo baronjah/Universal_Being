@@ -3,8 +3,7 @@
 # DESCRIPTION: Enhanced ragdoll with legs that can walk/stumble
 # CREATED: 2025-05-23 - Adding legs to our talking friend
 # ==================================================
-
-extends UniversalBeingBase
+extends \2
 # Components
 var body: RigidBody3D
 var left_leg: RigidBody3D

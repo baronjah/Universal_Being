@@ -91,7 +91,7 @@ func _connect_systems():
     # Connect to Terminal API Bridge
     terminal_bridge = get_node_or_null("/root/TerminalAPIBridge")
     if terminal_bridge:
-        terminal_bridge.connect("data_received", self, "_on_terminal_data_received")
+        terminal_bridge.connect(_on_terminal_data_received)
     
     # Connect to Claude Bridge
     claude_bridge = get_node_or_null("/root/ClaudeAkashicBridge")
@@ -101,13 +101,13 @@ func _connect_systems():
     # Connect to Spatial Linguistic Connector
     spatial_connector = get_node_or_null("/root/SpatialLinguisticConnector")
     if spatial_connector:
-        spatial_connector.connect("linguistic_mapped", self, "_on_linguistic_mapped")
-        spatial_connector.connect("spatial_structured", self, "_on_spatial_structured")
+        spatial_connector.connect(_on_linguistic_mapped)
+        spatial_connector.connect(_on_spatial_structured)
     
     # Connect to Auto Agent Mode
     auto_agent = get_node_or_null("/root/AutoAgentMode")
     if auto_agent:
-        auto_agent.connect("transform_applied", self, "_on_transform_applied")
+        auto_agent.connect(_on_transform_applied)
     
     # Connect to Ethereal Bridge
     ethereal_bridge = get_node_or_null("/root/EtherealAkashicBridge")
@@ -118,7 +118,7 @@ func _connect_systems():
     # Connect to Turn System
     turn_system = get_node_or_null("/root/TurnSystem")
     if turn_system:
-        turn_system.connect("turn_advanced", self, "_on_turn_advanced")
+        turn_system.connect(_on_turn_advanced)
 
 func _initialize_queues():
     # Create a queue for each flow direction

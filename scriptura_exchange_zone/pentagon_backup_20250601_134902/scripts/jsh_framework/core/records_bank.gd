@@ -25,9 +25,8 @@
 # where we split as it is large maybe?
 # stars and chunks and layers and lod is connected for a game, for me to see
 # my eyes are cursed with knowledge
-
 extends UniversalBeingBase
-class_name RecordsBank # RecordsBank.records_map_0 # RecordsBank.type_of_thing_0
+class_name RecordsBank_recordsb # RecordsBank.records_map_0 # RecordsBank.type_of_thing_0
 
 var thing_add_number : String = "thing_"
 var record_add_number : String = "record_"
@@ -1004,12 +1003,12 @@ const records_map_terminal = {
 		["thing_304|0.0,4.25,0.2|0.0,0.0,0.0|text|terminal|terminal_container|terminal_container/thing_304|terminal_container|instruction_set_terminal"],
 		["JSH Terminal|28"]
 	],
-	5: [ # Output Area Background
+	5: [ # Output Area3D Background
 		["thing_305|0.0,0.55,0.1|0.0,0.0,0.0|model|square|terminal_container|terminal_container/thing_305|terminal_container|instruction_set_terminal"],
 		["-7.75,-3.45,0|7.75,-3.45,0|7.75,3.45,0|-7.75,3.45,0"],
 		["0.11|0.9"]
 	],
-	6: [ # Terminal Output Text Area
+	6: [ # Terminal Output Text Area3D
 		["thing_306|0.0,0.55,0.2|0.0,0.0,0.0|text_mesh|terminal|terminal_container|terminal_container/thing_306|terminal_container|instruction_set_terminal"],
 		["Terminal_Output"],
 		["JSH Terminal v1.0\nInitializing system...\nSystem ready.\n>_|600|0.025|0.02|0.75|1.0"]
@@ -1113,12 +1112,12 @@ const records_map_terminal = {
 		#["thing_304|0.0,4.25,0.2|0.0,0.0,0.0|text|terminal|terminal_container|terminal_container/thing_304|terminal_container|instruction_set_terminal"],
 		#["JSH Terminal|28"]
 	#],
-	#5: [ # Output Area Background
+	#5: [ # Output Area3D Background
 		#["thing_305|0.0,0.55,0.1|0.0,0.0,0.0|model|square|terminal_container|terminal_container/thing_305|terminal_container|instruction_set_terminal"],
 		#["-7.75,-3.45,0|7.75,-3.45,0|7.75,3.45,0|-7.75,3.45,0"],
 		#["0.11|0.9"]
 	#],
-	#6: [ # Terminal Output Text Area
+	#6: [ # Terminal Output Text Area3D
 		#["thing_306|0.0,0.55,0.2|0.0,0.0,0.0|text_mesh|terminal|terminal_container|terminal_container/thing_306|terminal_container|instruction_set_terminal"],
 		#["Terminal_Output"],
 		#["JSH Terminal v1.0\nInitializing system...\nSystem ready.\n>_|600|0.025|0.02|0.75|1.0"]
@@ -1213,7 +1212,7 @@ const records_map_terminal_ = {
 		["-8,-4.5,0|8,-4.5,0|8,4.5,0|-8,4.5,0"],
 		["0.033|0.69"]
 	],
-	3: [ # Terminal Output Text Area
+	3: [ # Terminal Output Text Area3D
 		["thing_203|0.0,0.0,0.0|0.0,0.0,0.0|text_mesh|terminal|terminal_container|terminal_container/thing_203|terminal_container|instruction_set_terminal"],
 		["Terminal_Output"],
 		["Console Ready...|240|0.03|0.02|0.75|1.0"]

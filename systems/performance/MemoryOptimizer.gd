@@ -109,7 +109,7 @@ func get_stats() -> Dictionary:
 		"tracked_objects": tracked_objects.size(),
 		"history": memory_usage_history,
 		"average_usage": _calculate_average(memory_usage_history)
-	}
+}
 
 func _calculate_average(arr: Array[float]) -> float:
 	if arr.is_empty():

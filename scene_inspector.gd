@@ -12,6 +12,7 @@ func _ready():
 	_print_tree(get_tree().root, 0)
 	
 	print("\n🎮 NODES WITH 'CONSOLE' IN NAME:")
+
 	var console_nodes = _find_console_nodes(get_tree().root)
 	for node in console_nodes:
 		print("  - %s (%s) at %s" % [node.name, node.get_class(), node.get_path()])
@@ -21,11 +22,13 @@ func _ready():
 			print("    ❌ No deploy_consciousness_revolution method")
 	
 	print("\n🎯 NODES WITH 'UNIVERSAL' IN NAME:")
+
 	var universal_nodes = _find_nodes_with_text(get_tree().root, "universal")
 	for node in universal_nodes:
 		print("  - %s (%s)" % [node.name, node.get_class()])
 	
 	print("\n📱 NODES WITH 'UI' IN NAME:")
+
 	var ui_nodes = _find_nodes_with_text(get_tree().root, "ui")
 	for node in ui_nodes:
 		print("  - %s (%s)" % [node.name, node.get_class()])

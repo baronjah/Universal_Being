@@ -40,6 +40,7 @@ func pentagon_init() -> void:
 	if get_parent():
 		host_being = get_parent()
 		print("🎨 Chunk Generator attached to: %s" % host_being.name)
+
 	
 	# Setup generation based on host consciousness level
 	setup_generation_capabilities()
@@ -100,10 +101,12 @@ func setup_generation_capabilities() -> void:
 	
 	print("🎨 Generator configured for consciousness level %d: %s" % [consciousness, content_types])
 
+
 func set_generation_rules(new_rules: Dictionary) -> void:
 	"""Set custom generation rules"""
 	generation_rules.merge(new_rules, true)
 	print("🎨 Generation rules updated: %s" % new_rules.keys())
+
 
 # ===== CHUNK MONITORING =====
 
@@ -218,7 +221,7 @@ func generate_content_in_chunk(chunk: Node) -> void:
 func choose_content_type() -> String:
 	"""Choose what type of content to generate"""
 	var total_weight = 0.0
-	var weights = {}
+	var weights = {
 	
 	for content_type in content_types:
 		var probability_key = content_type + "_probability"
@@ -370,7 +373,7 @@ func get_generation_capability() -> Dictionary:
 		"consciousness_influence": consciousness_influence,
 		"auto_generate": auto_generate,
 		"generation_history_count": generation_history.size()
-	}
+}
 
 # ===== AI INTERFACE =====
 
@@ -393,6 +396,7 @@ func set_auto_generation(enabled: bool) -> void:
 	"""Enable/disable automatic generation"""
 	auto_generate = enabled
 	print("🎨 Auto generation: %s" % ("enabled" if enabled else "disabled"))
+}
 
 func recharge_generation_energy() -> void:
 	"""Instantly recharge generation energy"""

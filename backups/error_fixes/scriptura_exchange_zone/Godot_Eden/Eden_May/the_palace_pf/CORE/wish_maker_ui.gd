@@ -28,14 +28,14 @@ func _ready():
 	update_token_display()
 	
 	# Connect signals
-	token_slider.connect("value_changed", self, "_on_token_slider_changed")
-	wish_button.connect("pressed", self, "_on_wish_button_pressed")
-	wish_input.connect("text_changed", self, "_on_wish_text_changed")
+	token_slider.connect(_on_token_slider_changed)
+	wish_button.connect(_on_wish_button_pressed)
+	wish_input.connect(_on_wish_text_changed)
 	
 	if wish_maker:
-		wish_maker.connect("wish_granted", self, "_on_wish_granted")
-		wish_maker.connect("wish_failed", self, "_on_wish_failed")
-		wish_maker.connect("token_balance_changed", self, "_on_token_balance_changed")
+		wish_maker.connect(_on_wish_granted)
+		wish_maker.connect(_on_wish_failed)
+		wish_maker.connect(_on_token_balance_changed)
 
 func initialize_connections():
 	# Get reference to WishMaker

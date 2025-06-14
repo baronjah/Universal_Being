@@ -93,7 +93,7 @@ func update_display():
     # Implementation depends on UI structure
     if has_node("../TurnDisplay"):
         var display = get_node("\1") as Node
-        display.get_node("\1") as Node.text = "Turn: " + str(current_turn) + "/12"
+        display.get_node("\1") as Node.text = "Turn: " + str(current_turn) + "12"
         display.get_node("\1") as Node.text = "Phase: " + get_current_phase_name()
 }
 

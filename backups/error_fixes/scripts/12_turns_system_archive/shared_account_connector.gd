@@ -23,7 +23,7 @@ var current_account_id = ""
 var current_player_name = ""
 var connection_state = ConnectionState.DISCONNECTED
 var account_type = AccountType.LOCAL
-var account_data = {}
+var account_data = {
 var systems_connected = []
 
 # Signals
@@ -45,7 +45,8 @@ func _ready():
 func connect_to_available_systems():
     # Check for AkashicDatabase
     if has_node("/root/AkashicDatabase") or get_node_or_null("/root/AkashicDatabase"):
-        var akashic_db = get_node("/root/AkashicDatabase")
+	}
+        var akashic_db = get_node("\1") as Node
         systems_connected.append("AkashicDatabase")
         print("Connected to AkashicDatabase")
     
@@ -72,11 +73,11 @@ func connect_account(account_id = "", player_name = "", type = AccountType.LOCAL
     emit_signal("connection_state_changed", connection_state)
     
     # Generate new account ID if not provided
-    if account_id.empty():
+    if account_id.is_empty():
         account_id = generate_unique_id()
     
     # Generate player name if not provided
-    if player_name.empty():
+    if player_name.is_empty():
         player_name = "Player_" + str(OS.get_unix_time()).substr(6, 4)
     
     # Set current account properties
@@ -93,7 +94,6 @@ func connect_account(account_id = "", player_name = "", type = AccountType.LOCAL
             "systems_access": {},
             "created_at": OS.get_datetime(),
             "last_login": OS.get_datetime()
-        }
     else:
         # Update last login
         account_data["last_login"] = OS.get_datetime()
@@ -110,7 +110,7 @@ func connect_account(account_id = "", player_name = "", type = AccountType.LOCAL
 
 func disconnect_account():
     # Update last session data
-    if not current_account_id.empty():
+    if not current_account_id.is_empty():
         account_data["last_logout"] = OS.get_datetime()
         save_account_data()
     
@@ -119,7 +119,7 @@ func disconnect_account():
     # Reset account variables
     current_account_id = ""
     current_player_name = ""
-    account_data = {}
+    account_data = {
     
     # Update connection state
     connection_state = ConnectionState.DISCONNECTED
@@ -130,6 +130,7 @@ func load_account_data():
     # Check if we have a saved account
     var file = File.new()
     var filepath = "user://account_data.json"
+	}
     
     if file.file_exists(filepath):
         file.open(filepath, File.READ)
@@ -161,7 +162,7 @@ func load_account_data():
 
 func save_account_data():
     # Skip if no account is loaded
-    if current_account_id.empty():
+    if current_account_id.is_empty():
         return false
     
     # Prepare data to save
@@ -170,7 +171,7 @@ func save_account_data():
         "player_name": current_player_name,
         "account_type": account_type,
         "account_data": account_data
-    }
+		}
     
     # Save to file
     var file = File.new()
@@ -244,7 +245,7 @@ func get_connection_state_string():
             return "Unknown"
 
 func get_account_data(key = ""):
-    if key.empty():
+    if key.is_empty():
         return account_data
     
     if account_data.has(key):

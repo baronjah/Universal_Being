@@ -41,6 +41,7 @@ func pentagon_init() -> void:
 	metadata.gemma_can_modify = true
 	print("🌟 %s: Pentagon Init Complete" % being_name)
 
+
 func pentagon_ready() -> void:
 	super.pentagon_ready()
 	
@@ -70,8 +71,10 @@ func pentagon_ready() -> void:
 	var akashic = get_tree().get_first_node_in_group("akashic_library")
 	if akashic:
 		akashic.log_system_event("Unified Console", "creation", {"message": "🌟 The Unified Console manifested, bridging word and reality..."})
+
 	
 	print("🌟 %s: Pentagon Ready Complete" % being_name)
+
 
 func pentagon_process(delta: float) -> void:
 	super.pentagon_process(delta)
@@ -95,6 +98,7 @@ func pentagon_input(event: InputEvent) -> void:
 func pentagon_sewers() -> void:
 	output("Console shutting down...")
 	print("🌟 %s: Pentagon Sewers Starting" % being_name)
+
 	
 	# Cleanup UI
 	if console_text:
@@ -169,7 +173,7 @@ func register_command(name: String, callback: Callable, description: String = ""
 	command_registry[name] = {
 		"callback": callback,
 		"description": description
-	}
+}
 
 # ===== COMMAND HANDLING =====
 
@@ -212,7 +216,7 @@ func _cmd_help(args: Array) -> String:
 		"Basic": ["help", "clear", "history", "echo"],
 		"Universe": ["universe", "portal", "enter", "exit", "list", "rules", "setrule", "lod", "tree"],
 		"System": ["ai", "beings", "inspect"]
-	}
+}
 	
 	for category in categories:
 		output_text += "\n[%s]\n" % category
@@ -236,6 +240,7 @@ func _cmd_history(args: Array) -> String:
 	var output_text = "Command History:\n"
 	for i in min(count, command_history.size()):
 		output_text += "  %d: %s\n" % [i + 1, command_history[i]]
+
 	
 	return output_text
 
@@ -245,6 +250,7 @@ func _cmd_echo(args: Array) -> String:
 func _cmd_ai(args: Array) -> String:
 	if args.is_empty():
 		return "Usage: ai <pentagon|bridges|status>"
+
 	
 	match args[0]:
 		"pentagon":
@@ -256,6 +262,7 @@ func _cmd_ai(args: Array) -> String:
 		_:
 			return "Unknown ai subcommand: %s" % args[0]
 
+
 func _cmd_beings(args: Array) -> String:
 	pass
 	var flood_gates = SystemBootstrap.get_flood_gates() if SystemBootstrap else null
@@ -265,6 +272,7 @@ func _cmd_beings(args: Array) -> String:
 	var beings = flood_gates.get_all_beings()
 	var output_text = "=== Active Universal Beings ===\n"
 	output_text += "Total: %d beings\n\n" % beings.size()
+
 	
 	for being in beings:
 		output_text += "• %s (%s) - Consciousness: %d\n" % [
@@ -278,6 +286,7 @@ func _cmd_beings(args: Array) -> String:
 func _cmd_inspect_being(args: Array) -> String:
 	if args.is_empty():
 		return "Usage: inspect <being_name>"
+
 	
 	var target_name = args[0]
 	var flood_gates = SystemBootstrap.get_flood_gates() if SystemBootstrap else null
@@ -297,13 +306,16 @@ func _cmd_inspect_being(args: Array) -> String:
 func _cmd_universe(args: Array) -> String:
 	if args.is_empty():
 		return "Usage: universe <create|delete|rename> [name]"
+
 	
 	var action = args[0]
 	match action:
 		"create":
+
 			var name = args[1] if args.size() > 1 else "Universe_%d" % randi()
 			return _create_universe(name)
 		"delete":
+
 			var name = args[1] if args.size() > 1 else ""
 			return _delete_universe(name)
 		"rename":
@@ -313,16 +325,19 @@ func _cmd_universe(args: Array) -> String:
 		_:
 			return "Unknown universe action: %s" % action
 
+
 func _create_universe(universe_name: String) -> String:
 	pass
 	# Load UniverseUniversalBeing class directly
 	var UniverseClass = load("res://beings/universe_universal_being.gd")
 	if not UniverseClass:
 		return "ERROR: UniverseUniversalBeing class not found!"
+
 	
 	var new_universe = UniverseClass.new()
 	if not new_universe:
 		return "ERROR: Failed to create Universe Universal Being!"
+
 	
 	# Configure universe properties
 	new_universe.universe_name = universe_name
@@ -336,6 +351,7 @@ func _create_universe(universe_name: String) -> String:
 	var akashic = get_tree().get_first_node_in_group("akashic_library")
 	if akashic:
 		akashic.log_universe_event("creation", "🌌 Universe '%s' birthed through console command!" % universe_name, {"universe_name": universe_name, "created_via": "console"})
+
 	
 	return "✨ Universe '%s' created! Use 'enter %s' to explore it." % [universe_name, universe_name]
 
@@ -363,6 +379,7 @@ func _rename_universe(new_name: String) -> String:
 func _cmd_portal(args: Array) -> String:
 	if args.size() < 1:
 		return "Usage: portal <target_universe> [bidirectional]"
+
 	
 	var target_name = args[0]
 	var bidirectional = args.size() > 1 and args[1] == "true"
@@ -389,6 +406,7 @@ func _cmd_portal(args: Array) -> String:
 func _cmd_enter(args: Array) -> String:
 	if args.is_empty():
 		return "Usage: enter <universe_name>"
+
 	
 	var target_name = args[0]
 	var target_universe = _find_universe_by_name(target_name)
@@ -428,6 +446,7 @@ func _cmd_list(args: Array) -> String:
 		_:
 			return "Usage: list <universes|beings|portals>"
 
+
 func _cmd_rules(args: Array) -> String:
 	if not current_universe:
 		return "Not currently in a universe!"
@@ -438,12 +457,14 @@ func _cmd_rules(args: Array) -> String:
 	var output_text = "🌌 Universe Rules for '%s':\n" % info.name
 	for rule_name in rules:
 		output_text += "  %s: %s\n" % [rule_name, str(rules[rule_name])]
+
 	
 	return output_text
 
 func _cmd_setrule(args: Array) -> String:
 	if args.size() < 2:
 		return "Usage: setrule <rule_name> <value>"
+
 	
 	if not current_universe:
 		return "Not currently in a universe!"
@@ -458,6 +479,7 @@ func _cmd_setrule(args: Array) -> String:
 func _cmd_lod(args: Array) -> String:
 	if args.is_empty():
 		return "Usage: lod <set|get> [level]"
+
 	
 	if not current_universe:
 		return "Not currently in a universe!"
@@ -472,6 +494,7 @@ func _cmd_lod(args: Array) -> String:
 		"set":
 			if args.size() < 2:
 				return "Usage: lod set <0-4>"
+	
 			var level = int(args[1])
 			current_universe.current_lod = clamp(level, 0, 4)
 			current_universe.apply_lod_settings()
@@ -479,9 +502,11 @@ func _cmd_lod(args: Array) -> String:
 		_:
 			return "Unknown lod action: %s" % action
 
+
 func _cmd_tree(args: Array) -> String:
 	pass
 	var output_text = "🌌 Universe Tree:\n"
+
 	var root_universes = _find_root_universes()
 	
 	for universe in root_universes:
@@ -542,6 +567,7 @@ func _autocomplete_command() -> void:
 	elif matches.size() > 1:
 		output("Possible commands: " + ", ".join(matches))
 
+
 func _find_universe_by_name(name: String) -> Node:
 	"""Find a universe by name"""
 	var all_universes = _find_all_universes()
@@ -588,6 +614,7 @@ func _build_universe_tree(universe: Node, depth: int) -> String:
 	var indent = "  ".repeat(depth)
 	var info = universe.get_universe_info()
 	var output_text = "%s└─ %s (beings: %d)\n" % [indent, info.name, info.beings]
+
 	
 	# Find sub-universes
 	if universe.has("contained_beings"):
@@ -600,6 +627,7 @@ func _build_universe_tree(universe: Node, depth: int) -> String:
 func _list_universes() -> String:
 	"""List all accessible universes"""
 	var output_text = "🌌 Accessible Universes:\n"
+
 	var universes = _find_all_universes()
 	
 	if universes.is_empty():
@@ -620,6 +648,7 @@ func _list_beings_in_universe() -> String:
 		return "Not currently in a universe!"
 	
 	var output_text = "🌟 Beings in '%s':\n" % current_universe.universe_name
+
 	
 	if not current_universe.has("contained_beings") or current_universe.contained_beings.is_empty():
 		return output_text + "  No beings in this universe."
@@ -628,6 +657,7 @@ func _list_beings_in_universe() -> String:
 		var type = being.get("being_type") if being.has_method("get") else "unknown"
 		var consciousness = being.get("consciousness_level") if being.has_method("get") else 0
 		output_text += "  • %s (%s) - Consciousness: %d\n" % [being.name, type, consciousness]
+
 	
 	return output_text
 
@@ -637,6 +667,7 @@ func _list_portals() -> String:
 		return "Not currently in a universe!"
 	
 	var output_text = "🌀 Portals in '%s':\n" % current_universe.universe_name
+
 	
 	if not current_universe.has("portal_connections") or current_universe.portal_connections.is_empty():
 		return output_text + "  No portals in this universe."
@@ -653,12 +684,15 @@ func _inspect_being(being: Node) -> String:
 	output_text += "Name: %s\n" % being.being_name
 	output_text += "Type: %s\n" % being.being_type
 	output_text += "Consciousness: %d\n" % being.consciousness_level
+
 	
 	if being.has_method("ai_interface"):
+
 		var ai_data = being.ai_interface()
 		output_text += "\nAI Interface:\n"
 		output_text += "  Accessible: %s\n" % ai_data.get("accessible", false)
 		output_text += "  Custom Commands: %s\n" % ai_data.get("custom_commands", [])
+
 	
 	return output_text
 
@@ -681,17 +715,19 @@ func _show_ai_bridges() -> String:
 		"Claude Desktop": get_tree().get_first_node_in_group("claude_desktop"),
 		"ChatGPT Premium": get_tree().get_first_node_in_group("chatgpt_premium"),
 		"Google Gemini": get_tree().get_first_node_in_group("google_gemini")
-	}
+}
 	
 	for bridge_name in bridges:
 		var status = "Connected" if bridges[bridge_name] else "Not Connected"
 		output_text += "  %s: %s\n" % [bridge_name, status]
+
 	
 	return output_text
 
 func _show_ai_system_status() -> String:
 	"""Show overall AI system status"""
 	return "AI System Status: Online\nPentagon Architecture: Active\nConsciousness Network: Operational"
+
 
 func _parse_value(value_str: String):
 	"""Parse string to appropriate type"""
@@ -719,8 +755,8 @@ func ai_interface() -> Dictionary:
 		"current_universe": current_universe.universe_name if current_universe else "root",
 		"universe_stack_depth": universe_stack.size(),
 		"command_count": command_history.size()
-	}
 	return base_interface
+}
 
 func ai_invoke_method(method_name: String, args: Array = []) -> Variant:
 	match method_name:

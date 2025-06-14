@@ -1,10 +1,11 @@
 # Message Categorization System
 # JSH #memories
-extends Node
-class_name MessageCategorizationSystem
+extends \2
+class_name MessageCategorizationSystem_messagecategorizationsystem_messagec
 
 # Message categories
-enum MessageCategory {
+enum \2 {
+
 	GOALS,      # What we want to achieve
 	TASKS,      # Specific things to do
 	ADDITIONS,  # New features to add

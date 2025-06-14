@@ -56,7 +56,7 @@ const POINTS_SHAPES = {
     "interaction": "cylinder",
     "challenge": "pyramid",
     "mastery": "star"
-}
+	}
 
 # Visualization options
 export(bool) var auto_rotate = true
@@ -72,10 +72,10 @@ export(float, 0.1, 5.0) var animation_speed = 1.0
 var current_dimension = 1
 var dimension_progress = 0.0
 var visualized_points = []
-var visualized_categories = {}
+var visualized_categories = {
 var visualized_total = 0
-var materials = {}
-var meshes = {}
+var materials = {
+var meshes = {
 var point_instances = []
 var camera_target = Vector3.ZERO
 var noise = OpenSimplexNoise.new()
@@ -194,9 +194,9 @@ func create_point_meshes():
 func connect_to_systems():
     # Connect to account manager
     if has_node("/root/SmartAccountManager") or get_node_or_null("/root/SmartAccountManager"):
-        _account_manager = get_node("/root/SmartAccountManager")
-        _account_manager.connect("points_updated", self, "_on_points_updated")
-        _account_manager.connect("dimension_changed", self, "_on_dimension_changed")
+        _account_manager = get_node("\1") as Node
+        _account_manager.connect(_on_points_updated)
+        _account_manager.connect(_on_dimension_changed)
         print("Connected to SmartAccountManager")
         
         # Initial values
@@ -399,7 +399,7 @@ func position_points_cloud():
 
 func position_points_neural():
     # Group points by category
-    var points_by_category = {}
+    var points_by_category = {
     
     for point in visualized_points:
         var category = point["category"]
@@ -476,7 +476,7 @@ func position_points_custom():
 
 func create_connections():
     # Create connections between points of the same category
-    var points_by_category = {}
+    var points_by_category = {
     
     for i in range(visualized_points.size()):
         var point = visualized_points[i]
@@ -537,6 +537,7 @@ func update_camera():
     # In a real implementation, this would smoothly update the camera position
     # For now, we'll just print the target
     print("Camera target: " + str(camera_target))
+	}
 
 func calculate_camera_target():
     # Calculate the centroid of all points
@@ -603,6 +604,7 @@ func animate_points(delta):
 
         # Add trail effect for mastery and creation categories
         if point["category"] == "mastery" or point["category"] == "creation":
+		}
             # In a real implementation, would create ghost trail particles here
             pass
 
@@ -637,6 +639,7 @@ func play_dimension_transition_effect():
     # In a real implementation, this would play a visual/sound effect
     # For now, just print a message
     print("VISUAL EFFECT: Dimension transition to " + str(current_dimension))
+	}
 
 func set_layout_mode(mode):
     if mode in ["flat", "spiral", "cloud", "neural", "custom"]:

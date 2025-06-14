@@ -49,7 +49,6 @@ var thought_forms: Dictionary = {
 		"color": Color(0.5, 0.5, 0.6),
 		"resonance": 0.3,
 		"action": "_dissolve_into_void"
-	}
 }
 
 # Memory persistence in the quantum field
@@ -200,16 +199,19 @@ func _manifest_thought_crystal(id: String, data: Dictionary) -> void:
 	float_tween.set_loops()
 	float_tween.tween_property(crystal, "position:y", data.position.y + 0.3, 2.0 + randf())
 	float_tween.tween_property(crystal, "position:y", data.position.y - 0.3, 2.0 + randf())
+}
 	
 	# Rotation based on resonance
 	var rotate_tween = create_tween()
 	rotate_tween.set_loops()
 	rotate_tween.tween_property(crystal, "rotation:y", TAU, 10.0 / data.resonance)
+}
 	
 	# Fade in
 	var appear_tween = create_tween()
 	appear_tween.tween_property(material, "emission_energy", data.resonance * 0.5, 1.0)
 	appear_tween.tween_property(label, "modulate:a", 1.0, 0.5)
+
 
 func _on_crystal_focused(id: String) -> void:
 	var crystal = get_node(id)
@@ -277,13 +279,16 @@ func _dissolve_menu_into_action(chosen_id: String) -> void:
 	tween.parallel().tween_property(consciousness_light, "light_energy", 10.0, 1.0)
 	tween.tween_property(chosen, "modulate:a", 0.0, 0.5)
 
+
 # Action implementations
 func _initiate_genesis() -> void:
 	consciousness_state = ConsciousnessState.CREATING_WORLD
 	print("Genesis initiated with seed: ", reality_seed)
+
 	# Transition to world creation scene
 	_save_quantum_state()
 	get_tree().change_scene_to_file("res://scenes/world_genesis.tscn")
+
 
 func _load_memory_stream() -> void:
 	print("Loading quantum memory stream...")
@@ -342,6 +347,7 @@ func _input(event: InputEvent) -> void:
 		if event.is_action_pressed("ui_accept"):
 			print("Current state: ", consciousness_state)
 			print("Quantum memory: ", quantum_memory)
+
 
 # Notes for 3D Interface Evolution:
 # - Menu exists as crystalline thought-forms in the void

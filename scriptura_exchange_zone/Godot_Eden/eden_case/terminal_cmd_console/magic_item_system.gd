@@ -1,5 +1,5 @@
 extends Node
-class_name MagicItemSystem
+class_name MagicItemSystem_magicitemsystem_magicite
 }
 
 # MagicItemSystem
@@ -62,11 +62,11 @@ class MagicItem:
 }
 
     func _init(p_name="", p_type="wand", p_rarity="common"):
-        id = str(OS.get_unix_time()) + "_" + str(randi() % 1000)
+        id = str(OS.Time.get_unix_time_from_system()) + "_" + str(randi() % 1000)
         name = p_name
         type = p_type
         rarity = p_rarity
-        creation_timestamp = OS.get_unix_time()
+        creation_timestamp = OS.Time.get_unix_time_from_system()
 }
 
         # Set cost based on rarity
@@ -222,10 +222,10 @@ class Spell:
 }
 
     func _init(p_name="", p_difficulty=1):
-        id = str(OS.get_unix_time()) + "_spell_" + str(randi() % 1000)
+        id = str(OS.Time.get_unix_time_from_system()) + "_spell_" + str(randi() % 1000)
         name = p_name
         difficulty = p_difficulty
-        creation_timestamp = OS.get_unix_time()
+        creation_timestamp = OS.Time.get_unix_time_from_system()
 }
 
         # Set stability requirement based on difficulty
@@ -406,11 +406,11 @@ class ShopTransaction:
 }
 
     func _init(p_item_id="", p_cost=0, p_type="purchase"):
-        id = str(OS.get_unix_time()) + "_trans_" + str(randi() % 1000)
+        id = str(OS.Time.get_unix_time_from_system()) + "_trans_" + str(randi() % 1000)
         item_id = p_item_id
         cost = p_cost
         transaction_type = p_type
-        timestamp = OS.get_unix_time()
+        timestamp = OS.Time.get_unix_time_from_system()
 }
 
     func to_dict():
@@ -1119,14 +1119,14 @@ func add_to_craft_queue(name, type, rarity, creator="player"):
 }
 
     var craft_item = {
-        "id": str(OS.get_unix_time()) + "_craft_" + str(randi() % 1000),
+        "id": str(OS.Time.get_unix_time_from_system()) + "_craft_" + str(randi() % 1000),
         "name": name,
         "type": type,
         "rarity": rarity,
         "creator": creator,
         "progress": 0,
         "required_turns": required_turns,
-        "timestamp": OS.get_unix_time()
+        "timestamp": OS.Time.get_unix_time_from_system()
     }
 }
 
@@ -1151,7 +1151,7 @@ func save_system_state():
         "player_inventory": player_inventory,
         "known_spells": known_spells,
         "craft_queue": craft_queue,
-        "timestamp": OS.get_unix_time()
+        "timestamp": OS.Time.get_unix_time_from_system()
     }
 }
 

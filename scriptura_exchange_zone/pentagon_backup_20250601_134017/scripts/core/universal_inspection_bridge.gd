@@ -4,8 +4,7 @@
 # PURPOSE: Bridge floodgates, console, and inspector for perfect harmony
 # CREATED: 2025-05-28 - Neural network awakening day
 # ==================================================
-
-extends UniversalBeingBase
+extends \2
 signal object_made_inspectable(object: Node, source: String)
 signal inspection_bridge_ready()
 
@@ -30,9 +29,9 @@ func _connect_to_systems() -> void:
 	"""Connect to all object creation systems"""
 	
 	# Find all the systems
-	console_manager = get_node_or_null("/root/ConsoleManager")
-	floodgate_controller = get_node_or_null("/root/FloodgateController")
-	universal_object_manager = get_node_or_null("/root/UniversalObjectManager")
+	console_manager = get_node_or_null("root/ConsoleManager")
+	floodgate_controller = get_node_or_null("root/FloodgateController")
+	universal_object_manager = get_node_or_null("root/UniversalObjectManager")
 	
 	# Find inspector in scene
 	await get_tree().process_frame
@@ -274,7 +273,7 @@ func _cmd_inspect_by_name(args: Array) -> void:
 			console_manager._print_to_console("Inspecting: " + found_object.name)
 		else:
 			# Try to find enhanced inspector
-			var enhanced_inspector = get_node_or_null("/root/EnhancedObjectInspector")
+			var enhanced_inspector = get_node_or_null("root/EnhancedObjectInspector")
 			if enhanced_inspector and enhanced_inspector.has_method("inspect_object"):
 				enhanced_inspector.inspect_object(found_object)
 				console_manager._print_to_console("Inspecting with Enhanced Inspector: " + found_object.name)
@@ -311,9 +310,9 @@ func _find_and_list_inspectors() -> void:
 	
 	# Check common paths
 	var common_paths = [
-		"/root/EnhancedObjectInspector",
-		"/root/UniversalObjectInspector", 
-		"/root/AdvancedObjectInspector"
+		"root/EnhancedObjectInspector",
+		"root/UniversalObjectInspector", 
+		"root/AdvancedObjectInspector"
 	]
 	
 	for path in common_paths:

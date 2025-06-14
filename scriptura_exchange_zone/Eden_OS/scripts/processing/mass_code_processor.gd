@@ -1,6 +1,6 @@
 extends Node
 
-class_name MassCodeProcessor
+class_name MassCodeProcessor_masscodeprocessor_masscode
 
 # Mass Code Processing System for Eden_OS
 # Handles processing and execution of 500-1000 lines of code per turn
@@ -74,7 +74,7 @@ func _create_language_detector(language):
     
     match language:
         "gdscript":
-            detector["keywords"] = ["extends", "func", "var", "onready", "export", "class_name", "signal"]
+            detector["keywords"] = ["extends", "func", "var", "onready", "@export", "class_name", "signal"]
             detector["extensions"] = [".gd"]
             detector["comment"] = "#"
         "python":
@@ -82,7 +82,7 @@ func _create_language_detector(language):
             detector["extensions"] = [".py"]
             detector["comment"] = "#"
         "javascript":
-            detector["keywords"] = ["function", "const", "let", "var", "import", "export", "class", "=>"]
+            detector["keywords"] = ["function", "const", "let", "var", "import", "@export", "class", "=>"]
             detector["extensions"] = [".js", ".mjs"]
             detector["comment"] = "//"
         "c_sharp":

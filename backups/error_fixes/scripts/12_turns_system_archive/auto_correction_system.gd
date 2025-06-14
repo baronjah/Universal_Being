@@ -21,12 +21,12 @@ var last_correction_time = 0
 var correction_history = []
 var enjoyment_readings = []
 var detected_playstyle = ""
-var detected_preferences = {}
+var detected_preferences = {
 var enjoyment_model = {
     "baseline": 1.0,
     "trend": 0.0,
     "variance": 0.1
-}
+	}
 
 # References
 var _preference_analyzer = null
@@ -42,19 +42,19 @@ func _ready():
     var timer = Timer.new()
     timer.wait_time = CORRECTION_INTERVAL
     timer.autostart = true
-    timer.connect("timeout", self, "_on_correction_interval")
+    timer.connect(_on_correction_interval)
     add_child(timer)
     
     # Connect to preference analyzer if available
     if has_node("/root/PlayerPreferenceAnalyzer") or get_node_or_null("/root/PlayerPreferenceAnalyzer"):
-        _preference_analyzer = get_node("/root/PlayerPreferenceAnalyzer")
-        _preference_analyzer.connect("preferences_updated", self, "_on_preferences_updated")
-        _preference_analyzer.connect("enjoyment_factor_changed", self, "_on_enjoyment_factor_changed")
+        _preference_analyzer = get_node("\1") as Node
+        _preference_analyzer.connect(_on_preferences_updated)
+        _preference_analyzer.connect(_on_enjoyment_factor_changed)
         print("Connected to PlayerPreferenceAnalyzer")
     
     # Connect to account manager if available
     if has_node("/root/SmartAccountManager") or get_node_or_null("/root/SmartAccountManager"):
-        _account_manager = get_node("/root/SmartAccountManager")
+        _account_manager = get_node("\1") as Node
         print("Connected to SmartAccountManager")
     
     # Initialize
@@ -129,6 +129,7 @@ func detect_playstyle():
         detected_playstyle = playstyle
         emit_signal("playstyle_detected", detected_playstyle)
         print("Detected playstyle: " + detected_playstyle)
+		}
 
 func hybrid_playstyle_name(primary, secondary):
     var style_map = {
@@ -161,8 +162,7 @@ func hybrid_playstyle_name(primary, secondary):
             "creation": "Collector",
             "exploration": "Discoverer",
             "social": "Status Seeker"
-        }
-    }
+			}
     
     if primary in style_map and secondary in style_map[primary]:
         return style_map[primary][secondary]
@@ -272,13 +272,16 @@ func send_correction_notification(amount, category, level):
     else:
         # Obvious notification
         message = "AUTO-CORRECTION: Added " + str(int(amount)) + " points to " + category.capitalize() + " category based on your play style."
+		}
     
     # In a real game, would send to notification system
     print("NOTIFICATION: " + message)
+	
 
 func adjust_settings_based_on_feedback(feedback_type, value):
     match feedback_type:
         "enjoyment":
+		
             # Adjust settings based on enjoyment feedback
             if value < ENJOYMENT_THRESHOLD and adjustment_intensity > 0.1:
                 adjustment_intensity -= AUTO_ADJUST_STEP
@@ -286,13 +289,17 @@ func adjust_settings_based_on_feedback(feedback_type, value):
             elif value > ENJOYMENT_THRESHOLD and adjustment_intensity < 0.9:
                 adjustment_intensity += AUTO_ADJUST_STEP
                 print("Increased adjustment intensity to: " + str(adjustment_intensity))
+				
         
         "notification":
+		
             # Adjust notification level based on feedback
             notification_level = clamp(int(value), 0, 2)
             print("Set notification level to: " + str(notification_level))
+			
         
         "auto_correct":
+		
             # Toggle auto-correction
             auto_correction_enabled = bool(value)
             print("Auto-correction " + ("enabled" if auto_correction_enabled else "disabled"))

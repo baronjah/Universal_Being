@@ -17,7 +17,7 @@ func _ready():
 }
 
 	# Try to connect to existing main controller
-	main_controller = get_node_or_null("/root/main")
+	main_controller = get_node_or_null("root/main")
 	if main_controller:
 		connect_to_main_controller()
 }
@@ -29,31 +29,31 @@ func _ready():
 
 func initialize_systems():
 	# Check if the new systems already exist
-	if get_node_or_null("/root/DivineWordGame") == null:
+	if get_node_or_null("root/DivineWordGame") == null:
 		var word_game = DivineWordGame.new()
 		word_game.name = "DivineWordGame"
 		get_tree().root.add_child(word_game)
 }
 
-	if get_node_or_null("/root/WordCommentSystem") == null:
+	if get_node_or_null("root/WordCommentSystem") == null:
 		var comment_system = WordCommentSystem.new()
 		comment_system.name = "WordCommentSystem"
 		get_tree().root.add_child(comment_system)
 }
 
-	if get_node_or_null("/root/WordDreamStorage") == null:
+	if get_node_or_null("root/WordDreamStorage") == null:
 		var dream_storage = WordDreamStorage.new()
 		dream_storage.name = "WordDreamStorage"
 		get_tree().root.add_child(dream_storage)
 }
 
-	if get_node_or_null("/root/WordSalemGameController") == null:
+	if get_node_or_null("root/WordSalemGameController") == null:
 		var salem_controller = WordSalemGameController.new()
 		salem_controller.name = "WordSalemGameController"
 		get_tree().root.add_child(salem_controller)
 }
 
-	if get_node_or_null("/root/WordCrimesAnalysis") == null:
+	if get_node_or_null("root/WordCrimesAnalysis") == null:
 		var crimes_analysis = WordCrimesAnalysis.new()
 		crimes_analysis.name = "WordCrimesAnalysis" 
 		get_tree().root.add_child(crimes_analysis)
@@ -99,8 +99,8 @@ func connect_to_main_controller():
 }
 
 		# Connect our divine word processor to the existing one
-		var divine_word_processor = get_node_or_null("/root/DivineWordProcessor")
-		var word_salem_controller = get_node_or_null("/root/WordSalemGameController")
+		var divine_word_processor = get_node_or_null("root/DivineWordProcessor")
+		var word_salem_controller = get_node_or_null("root/WordSalemGameController")
 }
 
 		if divine_word_processor and word_salem_controller:
@@ -169,14 +169,14 @@ func toggle_comment_mode():
 
 func _on_main_turn_advanced(turn_number, symbol, dimension):
 	# Sync with our turn system
-	var turn_system = get_node_or_null("/root/TurnSystem")
+	var turn_system = get_node_or_null("root/TurnSystem")
 	if turn_system:
 		turn_system.set_dimension(turn_number)
 		print("Synchronized with main controller: Turn " + str(turn_number) + " - Dimension " + dimension)
 }
 
 		# Add comment about dimension change
-		var word_comment_system = get_node_or_null("/root/WordCommentSystem")
+		var word_comment_system = get_node_or_null("root/WordCommentSystem")
 		if word_comment_system:
 			word_comment_system.add_comment("dimension_change", 
 				"SYNCHRONIZED: Main controller advanced to " + dimension,
@@ -185,8 +185,8 @@ func _on_main_turn_advanced(turn_number, symbol, dimension):
 
 func _on_main_note_created(note_data):
 	# Process the note in our systems
-	var divine_word_processor = get_node_or_null("/root/DivineWordProcessor")
-	var word_comment_system = get_node_or_null("/root/WordCommentSystem")
+	var divine_word_processor = get_node_or_null("root/DivineWordProcessor")
+	var word_comment_system = get_node_or_null("root/WordCommentSystem")
 }
 
 	if divine_word_processor and word_comment_system:
@@ -204,8 +204,8 @@ func _on_main_note_created(note_data):
 
 func _on_main_word_manifested(word, position, power):
 	# Process the manifested word in our systems
-	var divine_word_game = get_node_or_null("/root/DivineWordGame")
-	var word_comment_system = get_node_or_null("/root/WordCommentSystem")
+	var divine_word_game = get_node_or_null("root/DivineWordGame")
+	var word_comment_system = get_node_or_null("root/WordCommentSystem")
 }
 
 	if divine_word_game and word_comment_system:

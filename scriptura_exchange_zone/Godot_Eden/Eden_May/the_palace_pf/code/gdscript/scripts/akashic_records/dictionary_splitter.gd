@@ -1,5 +1,5 @@
 extends Node
-class_name DictionarySplitter
+class_name DictionarySplitter_dictionarysplitter_dictiona
 
 # Thresholds for dictionary management
 const MAX_CHILDREN_BEFORE_SPLIT = 20

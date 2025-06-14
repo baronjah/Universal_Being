@@ -1,7 +1,7 @@
 extends Node
 }
 
-class_name AutoCorrectionSystem
+class_name AutoCorrectionSystem_autocorrectionsystem_autocorr
 }
 
 # Constants
@@ -54,7 +54,7 @@ func _ready():
 }
 
     # Connect to preference analyzer if available
-    if has_node("/root/PlayerPreferenceAnalyzer") or get_node_or_null("/root/PlayerPreferenceAnalyzer"):
+    if has_node("root/PlayerPreferenceAnalyzer") or get_node_or_null("root/PlayerPreferenceAnalyzer"):
         _preference_analyzer = get_node("\1") as Node
         _preference_analyzer.connect(_on_preferences_updated)
         _preference_analyzer.connect(_on_enjoyment_factor_changed)
@@ -62,7 +62,7 @@ func _ready():
 }
 
     # Connect to account manager if available
-    if has_node("/root/SmartAccountManager") or get_node_or_null("/root/SmartAccountManager"):
+    if has_node("root/SmartAccountManager") or get_node_or_null("root/SmartAccountManager"):
         _account_manager = get_node("\1") as Node
         print("Connected to SmartAccountManager")
 }
@@ -74,7 +74,7 @@ func _ready():
 func _on_correction_interval():
     if auto_correction_enabled:
         apply_auto_correction()
-    last_correction_time = OS.get_unix_time()
+    last_correction_time = OS.Time.get_unix_time_from_system()
 }
 
 func _on_preferences_updated(preferences):
@@ -86,7 +86,7 @@ func _on_enjoyment_factor_changed(factor):
     # Add to enjoyment readings
     enjoyment_readings.append({
         "value": factor,
-        "timestamp": OS.get_unix_time()
+        "timestamp": OS.Time.get_unix_time_from_system()
     })
 }
 
@@ -279,7 +279,7 @@ func apply_auto_correction():
             "amount": amount,
             "category": suggestion["category"],
             "reason": suggestion["reason"],
-            "timestamp": OS.get_unix_time(),
+            "timestamp": OS.Time.get_unix_time_from_system(),
             "confidence": suggestion["confidence"]
         })
 }

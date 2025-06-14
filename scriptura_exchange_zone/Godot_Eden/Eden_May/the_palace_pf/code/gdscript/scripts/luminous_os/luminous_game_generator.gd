@@ -1,5 +1,5 @@
 extends Node
-class_name LuminousGameGenerator
+class_name LuminousGameGenerator_luminousgamegenerator_luminous
 
 # Signals
 signal generation_progress(current_step, total_steps, message)
@@ -502,7 +502,7 @@ func _finalize_project():
     # Create a main.gd script that brings everything together
     _add_text_file("res://scripts/main.gd", _generate_main_script())
     
-    # Create a default export preset configuration
+    # Create a default @@export preset configuration
     _add_text_file("res://export_presets.cfg", _generate_export_presets())
     
     # Create a basic .gitignore file
@@ -641,10 +641,10 @@ Created with Luminous OS Game Generator
     template.description,
     template.name,
     template.name,
-    ", ".join(template.base_entities),
-    ", ".join(template.base_levels),
-    ", ".join(template.systems),
-    ", ".join(template.ui_screens),
+    ", "." ".join(template.base_entities),
+    ", "." ".join(template.base_levels),
+    ", "." ".join(template.systems),
+    ", "." ".join(template.ui_screens),
     current_generation.config.creator
 ]
 
@@ -685,8 +685,8 @@ func _generate_globals_script() -> String:
 # Global variables and constants accessible throughout the game
 
 signal game_state_changed(new_state)
-
-enum GameState {MAIN_MENU, PLAYING, PAUSED, GAME_OVER, VICTORY}
+enum \2 {
+MAIN_MENU, PLAYING, PAUSED, GAME_OVER, VICTORY}
 
 var current_game_state: GameState = GameState.MAIN_MENU
 var player_data := {
@@ -810,7 +810,7 @@ func _generate_event_bus_script() -> String:
 
 func _ready():
     pass
-""" % signals.join("\n")
+""" % signals." ".join("\n")
 
 func _generate_game_manager_script() -> String:
     return """extends Node
@@ -998,9 +998,9 @@ func clear_resource(path: String) -> void:
 
 func _generate_logger_script() -> String:
     return """extends Node
-class_name Logger
-
-enum LogLevel {DEBUG, INFO, WARNING, ERROR, NONE}
+class_name Logger_luminousgamegenerator_luminous
+enum \2 {
+DEBUG, INFO, WARNING, ERROR, NONE}
 
 static var current_level := LogLevel.INFO
 static var enable_file_logging := false
@@ -1055,7 +1055,7 @@ static func _log(level: String, message: String, context: String) -> void:
 
 func _generate_math_utils_script() -> String:
     return """extends Node
-class_name MathUtils
+class_name MathUtils_luminousgamegenerator_luminous
 
 static func lerp_angle(from: float, to: float, weight: float) -> float:
     return from + _short_angle_dist(from, to) * weight
@@ -1095,7 +1095,7 @@ static func remap(value: float, input_from: float, input_to: float, output_from:
 
 func _generate_object_pool_script() -> String:
     return """extends Node
-class_name ObjectPool
+class_name ObjectPool_luminousgamegenerator_luminous
 
 var _scene: PackedScene
 var _pool: Array = []
@@ -1168,7 +1168,7 @@ func _generate_entity_script(entity_name: String) -> String:
     # Generate properties
     for prop_name in template_config.properties:
         var prop_type = template_config.properties[prop_name]
-        properties.append("@export var %s: %s" % [prop_name, prop_type])
+        properties.append("@@@export var %s: %s" % [prop_name, prop_type])
     
     # Generate methods
     for method_name in template_config.methods:
@@ -1196,7 +1196,8 @@ class_name %s
 signal %s_state_changed(new_state)
 
 # State enum
-enum State {IDLE, ACTIVE, DISABLED}
+enum \2 {
+IDLE, ACTIVE, DISABLED}
 var current_state: State = State.IDLE
 
 func _ready():
@@ -1240,10 +1241,10 @@ func _process_active(delta: float) -> void:
 """ % [
     base_node,
     entity_name.capitalize(),
-    properties.join("\n"),
+    properties." ".join("\n"),
     entity_name,
     entity_name,
-    methods.join("\n")
+    methods." ".join("\n")
 ]
 
 func _generate_entity_scene(entity_name: String) -> String:
@@ -1300,7 +1301,7 @@ func _generate_level_script(level_name: String, template_key: String) -> String:
         elif prop_name == "difficulty":
             default_value = "1"
         
-        properties.append("@export var %s: %s = %s" % [prop_name, prop_type, default_value])
+        properties.append("@@@export var %s: %s = %s" % [prop_name, prop_type, default_value])
     
     # Determine base node type
     var base_node = "Node2D"
@@ -1308,7 +1309,7 @@ func _generate_level_script(level_name: String, template_key: String) -> String:
         base_node = "Node3D"
     
     return """extends %s
-class_name Level
+class_name Level_luminousgamegenerator_luminous
 
 # Level properties
 %s
@@ -1426,7 +1427,7 @@ func _on_player_died():
         GameManager.game_over()
 """ % [
     base_node,
-    properties.join("\n"),
+    properties." ".join("\n"),
     level_name,
     level_name,
     level_name,
@@ -1573,9 +1574,7 @@ func _get_class_name_from_file(file_name: String) -> String:
     for part in name_parts:
         class_name += part.capitalize()
     
-    return class_name
-
-func _generate_ui_script(ui_name: String) -> String:
+    return class_name func_luminousgamegenerator_luminous _generate_ui_script(ui_name: String) -> String:
     var ui_info = ui_templates[ui_name]
     
     # Generate script based on UI type
@@ -1957,7 +1956,7 @@ func _generate_gitignore() -> String:
     return """# Godot-specific ignores
 .godot/
 .import/
-export.cfg
+@@export.cfg
 export_presets.cfg
 
 # Imported translations (automatically generated from CSV files)

@@ -22,7 +22,7 @@ func _ready():
 	# Create Big Bang button
 	var big_bang_button = Button.new()
 	big_bang_button.text = "Big Bang"
-	big_bang_button.connect("pressed", self, "_on_big_bang_button_pressed")
+	big_bang_button.connect(_on_big_bang_button_pressed)
 	add_child(big_bang_button)
 
 func _create_menu():

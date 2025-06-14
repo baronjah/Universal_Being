@@ -1,5 +1,5 @@
 extends Node
-class_name ThingCreatorCommands
+class_name ThingCreatorCommands_thingcreatorcommands_thingcre
 
 # References
 var jsh_console = null
@@ -11,15 +11,15 @@ func initialize(p_jsh_console) -> void:
 	jsh_console = p_jsh_console
 	
 	# Find ThingCreator
-	if has_node("/root/ThingCreator"):
-		thing_creator = get_node("/root/ThingCreator")
+	if has_node("root/ThingCreator"):
+		thing_creator = get_node("root/ThingCreator")
 	else:
 		push_error("ThingCreator not found! Make sure it's initialized.")
 		return
 	
 	# Find AkashicRecordsManager
-	if has_node("/root/AkashicRecordsManager"):
-		akashic_records_manager = get_node("/root/AkashicRecordsManager")
+	if has_node("root/AkashicRecordsManager"):
+		akashic_records_manager = get_node("root/AkashicRecordsManager")
 	else:
 		push_error("AkashicRecordsManager not found! Make sure it's initialized.")
 		return

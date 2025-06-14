@@ -1,6 +1,6 @@
 extends Node
 
-# res://code/gdscript/scripts/Menu_Keyboard_Console/jsh_world.gd
+# res://scripts/gdscript/scripts/Menu_Keyboard_Console/jsh_world.gd
 
 #    oooo  .oooooo..o ooooo   ooooo 
 #    `888 d8P'    `Y8 `888'   `888' 

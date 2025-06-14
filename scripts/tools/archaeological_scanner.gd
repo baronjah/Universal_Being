@@ -41,7 +41,6 @@ static var KNOWN_VARIABLE_SHADOWING_LOCATIONS = [
 		"suggested_fix": "being_name = \"GemmaAI\"",
 		"severity": "HIGH",
 		"archaeological_note": "AI system shadowing"
-	}
 ]
 
 static var KNOWN_UNUSED_SIGNALS = [
@@ -69,7 +68,6 @@ static var KNOWN_UNUSED_SIGNALS = [
 		"archaeological_purpose": "Consciousness state broadcasting designed",
 		"missing_connection": "Visual indicators, consciousness meters, other beings",
 		"priority": "MEDIUM"
-	}
 ]
 
 static var KNOWN_SOCKET_ENUM_ISSUES = [
@@ -89,7 +87,6 @@ static var KNOWN_SOCKET_ENUM_ISSUES = [
 		"archaeological_insight": "Same pattern as line 194",
 		"fix_needed": "Consistent with line 194 fix",
 		"priority": "HIGH"
-	}
 ]
 
 static var KNOWN_UNUSED_PARAMETERS = [
@@ -119,7 +116,6 @@ static var KNOWN_UNUSED_PARAMETERS = [
 		"archaeological_insight": "Advanced command parsing designed but not implemented",
 		"designed_purpose": "Complex commands with arguments",
 		"missing_implementation": "Argument parsing and advanced command logic"
-	}
 ]
 
 # ===== SCANNER METHODS =====
@@ -207,6 +203,7 @@ static func _scan_for_variable_shadowing(report: ArchaeologicalReport, base_path
 			print("  ✅ Confirmed: %s:%d - %s" % [known_issue.file, known_issue.line, known_issue.violation])
 		else:
 			print("  ❓ Not found: %s:%d - May have been fixed or moved" % [known_issue.file, known_issue.line])
+}
 
 static func _scan_for_unused_signals(report: ArchaeologicalReport, base_path: String) -> void:
 	"""Scan for unused signals from archaeological analysis"""
@@ -231,6 +228,7 @@ static func _scan_for_unused_signals(report: ArchaeologicalReport, base_path: St
 			print("  ✅ Signal connected: %s in %s" % [signal_info.signal_name, signal_info.file])
 		else:
 			print("  ❓ Signal not found: %s in %s" % [signal_info.signal_name, signal_info.file])
+}
 
 static func _scan_for_socket_enum_issues(report: ArchaeologicalReport, base_path: String) -> void:
 	"""Scan for socket enum -1 issues"""
@@ -250,6 +248,7 @@ static func _scan_for_socket_enum_issues(report: ArchaeologicalReport, base_path
 				"verified": true
 			})
 			print("  ✅ Confirmed enum issue: %s:%d" % [enum_issue.file, enum_issue.line])
+}
 
 static func _scan_for_unused_parameters(report: ArchaeologicalReport, base_path: String) -> void:
 	"""Scan for unused parameters from incomplete implementations"""
@@ -269,6 +268,7 @@ static func _scan_for_unused_parameters(report: ArchaeologicalReport, base_path:
 				"instances_found": pattern_found
 			})
 			print("  ✅ Confirmed pattern: %s" % param_issue.category)
+}
 
 static func _generate_archaeological_insights(report: ArchaeologicalReport) -> void:
 	"""Generate insights from archaeological discoveries"""
@@ -382,6 +382,7 @@ static func _check_unused_parameter_pattern(base_path: String, pattern_info: Dic
 	
 	for file in all_files:
 		if pattern_info.file_pattern.contains("*"):
+
 			# Wildcard pattern matching
 			var pattern = pattern_info.file_pattern.replace("*", "")
 			if not pattern in file:
@@ -417,6 +418,7 @@ static func _count_unused_socket_functions(content: String) -> int:
 	for i in range(lines.size()):
 		var line = lines[i]
 		if "func " in line and "socket" in line and "socket:" in line:
+
 			# Check if socket parameter is used in function body
 			var socket_used = false
 			for j in range(i + 1, min(i + 20, lines.size())):  # Check next 20 lines
@@ -439,6 +441,7 @@ static func _count_unused_delta_functions(content: String) -> int:
 	for i in range(lines.size()):
 		var line = lines[i]
 		if "func " in line and "delta" in line and "delta:" in line:
+
 			# Check if delta parameter is used in function body
 			var delta_used = false
 			for j in range(i + 1, min(i + 20, lines.size())):
@@ -461,6 +464,7 @@ static func _count_unused_args_functions(content: String) -> int:
 	for i in range(lines.size()):
 		var line = lines[i]
 		if "func " in line and "args" in line and ("args:" in line or "args = " in line):
+
 			# Check if args parameter is used in function body
 			var args_used = false
 			for j in range(i + 1, min(i + 20, lines.size())):
@@ -491,6 +495,7 @@ static func _scan_directory_for_gd_files(path: String, files: Array[String]) -> 
 	var file_name = dir.get_next()
 	
 	while file_name != "":
+
 		var full_path = path.path_join(file_name)
 		
 		if dir.current_is_dir() and not file_name.begins_with("."):
@@ -535,6 +540,7 @@ static func main():
 	var args = OS.get_cmdline_args()
 	
 	if "--archaeological-scan" in args:
+
 		var report = perform_archaeological_scan()
 		print(report.generate_summary())
 		
@@ -544,8 +550,10 @@ static func main():
 			report_file.store_string(report.generate_summary())
 			report_file.close()
 			print("\n📄 Detailed report saved to: archaeological_scan_report.txt")
+
 	
 	elif "--generate-fixes" in args:
+
 		var fix_script = generate_quick_fix_script()
 		var script_file = FileAccess.open("quick_archaeological_fixes.sh", FileAccess.WRITE)
 		if script_file:
@@ -553,6 +561,7 @@ static func main():
 			script_file.close()
 			print("🔧 Quick fix script generated: quick_archaeological_fixes.sh")
 			print("Run: chmod +x quick_archaeological_fixes.sh && ./quick_archaeological_fixes.sh")
+
 	
 	else:
 		print("🏺 Universal Being Archaeological Scanner")

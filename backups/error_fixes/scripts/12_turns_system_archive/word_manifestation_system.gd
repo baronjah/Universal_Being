@@ -28,9 +28,9 @@ const POWER_MASS_FACTOR = 0.1  # Mass increases with power
 const MAX_WORDS_PER_DIMENSION = 100
 
 # ----- SYSTEM STATE -----
-var manifested_words = {}
+var manifested_words = {
 var word_connections = []
-var dimension_word_counts = {}
+var dimension_word_counts = {
 var total_manifested_power = 0
 var manifestation_enabled = true
 
@@ -121,7 +121,7 @@ func manifest_word(word_text, position=null, power=null, source="manual"):
 		"evolution_stage": 1,
 		"connections": [],
 		"source": source
-	}
+}
 	
 	# Store in manifested words dictionary
 	manifested_words[word_id] = word_data
@@ -136,6 +136,7 @@ func manifest_word(word_text, position=null, power=null, source="manual"):
 	emit_signal("word_manifested", word_data)
 	
 	print("Word manifested: '%s' with power %d in %s" % [word_text, power, current_dimension])
+}
 	
 	# Check if we need to cull words in this dimension
 	check_dimension_limit(current_dimension)
@@ -172,7 +173,7 @@ func connect_words(word1_id, word2_id, connection_strength=1.0):
 		"ideal_distance": word1.size.length() + word2.size.length() + 0.5,
 		"color": Color.from_hsv(randf(), 0.7, 0.9),
 		"active": true
-	}
+}
 	
 	# Add to connections list
 	word_connections.append(connection)
@@ -185,6 +186,7 @@ func connect_words(word1_id, word2_id, connection_strength=1.0):
 	emit_signal("words_connected", word1_id, word2_id)
 	
 	print("Connected words: '%s' and '%s' with strength %.2f" % [word1.text, word2.text, natural_strength])
+}
 	
 	return connection
 
@@ -228,6 +230,7 @@ func evolve_word(word_id):
 	emit_signal("word_evolved", word_id, old_state, word)
 	
 	print("Word evolved: '%s' to stage %d with power %.1f" % [word.text, word.evolution_stage, word.power])
+
 	
 	return true
 
@@ -256,6 +259,7 @@ func delete_word(word_id):
 	manifested_words.erase(word_id)
 	
 	print("Word deleted: '%s'" % word.text)
+
 	
 	return true
 
@@ -428,7 +432,7 @@ func calculate_word_affinity(word1, word2):
 
 func evolve_random_word():
 	# Randomly evolve a word if possible
-	if manifested_words.empty():
+	if manifested_words.is_empty():
 		return
 	
 	# Get random word
@@ -473,7 +477,7 @@ func cull_oldest_words(dimension):
 			dimension_words.append(manifested_words[word_id])
 	
 	# Sort by creation time (oldest first)
-	dimension_words.sort_custom(self, "_sort_words_by_age")
+	dimension_words.sort_custom(self."_sort_words_by_age")
 	
 	# Delete oldest words until under limit
 	var to_delete = dimension_words.size() - MAX_WORDS_PER_DIMENSION
@@ -491,6 +495,7 @@ func update_dimension(turn, dimension, symbol):
 	current_dimension = dimension
 	current_symbol = symbol
 	print("Word Manifestation System now operating in dimension: %s (Turn %d: %s)" % [dimension, turn, symbol])
+
 
 # ----- PUBLIC API -----
 func get_word_list():

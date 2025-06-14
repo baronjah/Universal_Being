@@ -1,5 +1,5 @@
 extends Node
-class_name DataPathProtector
+class_name DataPathProtector_DataPathProtector_DataPath
 
 # Constants
 const SECURITY_LEVELS = ["BASIC", "ENHANCED", "ADVANCED", "QUANTUM", "TRANSCENDENT"]
@@ -30,9 +30,9 @@ func initialize_firewall():
     security_level = 0
     
     # Base system paths to protect
-    add_protected_path("/mnt/d/", 1)
-    add_protected_path("/user/data/", 1)
-    add_protected_path("/system/core/", 2)
+    add_protected_path("mnt/d/", 1)
+    add_protected_path("user/data/", 1)
+    add_protected_path("system/core/", 2)
     
     # Create basic word-based rules
     create_word_rule("deny_unsafe", ["delete", "format", "destroy", "overwrite"], 3)
@@ -143,12 +143,12 @@ func upgrade_security_level():
 func _apply_security_features(level):
     match level:
         1:  # ENHANCED
-            add_protected_path("/memory/", 2)
+            add_protected_path("memory/", 2)
             create_word_rule("protect_system", ["system", "kernel", "root"], 3)
             intrusion_detection_active = true
         
         2:  # ADVANCED
-            add_protected_path("/network/", 3)
+            add_protected_path("network/", 3)
             create_word_rule("restrict_execute", ["execute", "run", "spawn"], 3)
             resource_consumption = 0.2
         

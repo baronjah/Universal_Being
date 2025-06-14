@@ -56,7 +56,7 @@ func create_word_crime_trial(criminal, word, power, crime_type):
 		"votes": {},
 		"status": "pending",
 		"verdict": null
-	}
+}
 	
 	# Announce the trial
 	controller.town_meeting_log.append({
@@ -81,6 +81,7 @@ func start_automatic_word_crime_trials():
 	# Find all cosmic word crimes without trials
 	for crime in controller.word_crimes_ledger:
 		if crime.type == "cosmic" and not crime.has("trial_id"):
+
 			var trial_id = create_word_crime_trial(crime.player, crime.word, crime.power, "cosmic")
 			crime.trial_id = trial_id
 
@@ -159,6 +160,7 @@ func apply_punishment(player_name, punishment):
 		
 	match punishment.to_lower():
 		"linguistic correction required":
+
 			# Minor punishment - Silence for a day
 			controller.players[player_name].silenced_tonight = true
 			
@@ -167,6 +169,7 @@ func apply_punishment(player_name, punishment):
 					"You have been silenced for linguistic correction!", 
 					controller.word_comment_system.CommentType.WARNING)
 		"word power reduction":
+
 			# Moderate punishment - Reduce word power
 			controller.players[player_name].word_power = max(0, controller.players[player_name].word_power / 2)
 			
@@ -175,11 +178,13 @@ func apply_punishment(player_name, punishment):
 					"Your word power has been reduced as punishment!", 
 					controller.word_comment_system.CommentType.WARNING)
 		"linguistic execution":
+
 			# Major punishment - Execute player
 			if player_name in controller.living_players:
 				if controller.word_salem_day_night:
 					controller.word_salem_day_night.execute_player(player_name, "Linguistic Judgment")
 		"dimension banishment":
+
 			# Cosmic punishment - Remove player from game entirely
 			if player_name in controller.living_players:
 				if controller.word_salem_day_night:
@@ -285,6 +290,7 @@ func process_defense_statement(word, defense_text):
 	
 	# Add defense chance bonus
 	if controller.players[controller.accused_player].role == "Jester":
+
 		# Jesters have a better chance of being found innocent to prolong the game
 		for voter in controller.votes.keys():
 			if randf() < 0.6:  # 60% chance for each voter to be swayed
@@ -390,7 +396,6 @@ func divine_judgment(judge_name, criminal_name, verdict, punishment):
 func get_trial_statistics():
 	if !controller:
 		return {}
-		
 	var stats = {
 		"total_trials": controller.word_crime_trials.size(),
 		"pending_trials": 0,
@@ -400,7 +405,7 @@ func get_trial_statistics():
 		"major_trials": 0,
 		"moderate_trials": 0,
 		"minor_trials": 0
-	}
+}
 	
 	for trial_id in controller.word_crime_trials:
 		var trial = controller.word_crime_trials[trial_id]

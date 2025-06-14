@@ -31,6 +31,7 @@ func pentagon_init() -> void:
     metadata.gemma_can_modify = true
     
     print("🌟 %s: Pentagon Init Complete" % being_name)
+	
 
 func pentagon_ready() -> void:
     super.pentagon_ready()  # 🔄 ALWAYS CALL SUPER FIRST
@@ -44,11 +45,13 @@ func pentagon_ready() -> void:
         call_deferred("_start_automation_sequence")
     else:
         print("⚠️ %s: Main controller not found, retrying..." % being_name)
+		
         # Retry after a short delay
         await get_tree().create_timer(0.5).timeout
         pentagon_ready()
     
     print("🌟 %s: Pentagon Ready Complete" % being_name)
+	
 
 func pentagon_process(delta: float) -> void:
     super.pentagon_process(delta)  # ⚡ ALWAYS CALL SUPER FIRST
@@ -57,6 +60,7 @@ func pentagon_process(delta: float) -> void:
     if not startup_executed and main_controller:
         # Check if we should trigger automation
         if main_controller.has_method("get_status_info"):
+		
             var status = main_controller.get_status_info()
             if status.systems_ready:
                 _start_automation_sequence()
@@ -114,6 +118,7 @@ func _start_automation_sequence() -> void:
     
     startup_executed = true
     print("🚀 %s: Executing automated F4 + F7 sequence!" % being_name)
+	
     
     # Wait for initial delay
     await get_tree().create_timer(startup_delay).timeout
@@ -129,10 +134,12 @@ func _start_automation_sequence() -> void:
         await get_tree().create_timer(cursor_delay).timeout
     
     print("✅ %s: Startup sequence completed!" % being_name)
+	
     
     # Notify AI if available
     if GemmaAI and GemmaAI.has_method("ai_message"):
         GemmaAI.ai_message.emit("🚀 Auto-startup completed: Camera + Cursor beings are now active!")
+		
 
 func _execute_f4_camera() -> void:
     """Execute F4 camera automation"""
@@ -141,12 +148,14 @@ func _execute_f4_camera() -> void:
         return
     
     print("🎥 %s: Auto-executing F4 - Camera Universal Being..." % being_name)
+	
     var camera_being = main_controller.create_camera_universal_being()
     
     if camera_being:
         print("✅ %s: Camera Universal Being created automatically!" % being_name)
     else:
         push_error("❌ %s: Failed to create Camera Universal Being" % being_name)
+		
 
 func _execute_f7_cursor() -> void:
     """Execute F7 cursor automation"""
@@ -155,17 +164,20 @@ func _execute_f7_cursor() -> void:
         return
     
     print("🎯 %s: Auto-executing F7 - Cursor Universal Being..." % being_name)
+	
     var cursor_being = main_controller.create_cursor_universal_being()
     
     if cursor_being:
         print("✅ %s: Cursor Universal Being created automatically!" % being_name)
     else:
         push_error("❌ %s: Failed to create Cursor Universal Being" % being_name)
+		
 
 func reset_automation() -> void:
     """Reset automation state for manual re-trigger"""
     startup_executed = false
     print("🔄 %s: Automation reset - can trigger again" % being_name)
+	
 
 # ===== AI INTEGRATION =====
 
@@ -184,8 +196,8 @@ func ai_interface() -> Dictionary:
         "auto_camera": auto_camera,
         "auto_cursor": auto_cursor,
         "startup_delay": startup_delay
-    }
     return base_interface
+}
 
 func ai_invoke_method(method_name: String, args: Array = []) -> Variant:
     """Allow AI to control startup automation"""
@@ -225,8 +237,7 @@ func get_automation_status() -> Dictionary:
             "startup": startup_delay,
             "camera": camera_delay,
             "cursor": cursor_delay
-        }
-    }
+			}
 
 func _to_string() -> String:
     return "AutoStartupUniversalBeing<%s> [Camera:%s, Cursor:%s, Executed:%s]" % [being_name, auto_camera, auto_cursor, startup_executed]

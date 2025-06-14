@@ -27,6 +27,7 @@ func pentagon_init() -> void:
 	
 	print("🚀 %s: Revolution Spawner initialized!" % being_name)
 
+
 func pentagon_ready() -> void:
 	super.pentagon_ready()
 	
@@ -34,6 +35,7 @@ func pentagon_ready() -> void:
 	call_deferred("_deploy_consciousness_revolution")
 	
 	print("🌟 %s: Ready to revolutionize consciousness!" % being_name)
+
 
 func pentagon_process(delta: float) -> void:
 	super.pentagon_process(delta)
@@ -57,6 +59,7 @@ var evolution_queue
 func _emergency_shutdown() -> void:
 	"""Emergency shutdown of consciousness revolution"""
 	print("🛑 EMERGENCY SHUTDOWN: Halting all consciousness evolution!")
+
 	# Stop all spawning
 	spawn_enabled = false
 	# Clear all evolving beings
@@ -147,6 +150,7 @@ func _connect_systems() -> void:
 	
 	# Connect all beings to ripple system
 	if ripple_system and ripple_system.has_method("_on_consciousness_ripple_created"):
+
 		var beings = get_tree().get_nodes_in_group("universal_beings")
 		for being in beings:
 			if being.has_signal("consciousness_ripple_created"):
@@ -226,6 +230,7 @@ func _input(event: InputEvent) -> void:
 	# Manual consciousness ripple creation
 	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
 		if ripple_system and ripple_system.has_method("create_click_ripple"):
+
 			var camera = get_viewport().get_camera_3d()
 			if camera:
 				var mouse_pos = get_viewport().get_mouse_position()
@@ -245,14 +250,13 @@ func get_revolution_status() -> Dictionary:
 		"revolution_active": revolution_active,
 		"ripple_system_ready": ripple_system != null,
 		"gemma_ready": gemma_companion != null,
-		"phase_names": {
+		"phase_names": {}
 			0: "Initializing",
 			1: "Creating Ripple System", 
 			2: "Manifesting Gemma",
 			3: "Connecting Systems",
 			4: "Revolution Active"
-		}
-	}
+}
 
 func force_activate_revolution() -> void:
 	"""Force activate revolution if something went wrong"""

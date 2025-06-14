@@ -1,5 +1,5 @@
 extends Node
-class_name MemorySystemConverter
+class_name MemorySystemConverter_memorysystemconverter_memorysy
 
 # Memory Systems Comment Style Converter
 # Transforms / and // style comments to # style for better visual organization
@@ -7,15 +7,15 @@ class_name MemorySystemConverter
 
 # Constants
 const TARGET_FILES = [
-    "/mnt/c/Users/Percision 15/12_turns_system/memory_investment_system.gd",
-    "/mnt/c/Users/Percision 15/memory_channel_system.gd",
-    "/mnt/c/Users/Percision 15/wish_knowledge_system.gd",
-    "/mnt/c/Users/Percision 15/WordMemorySystem.gd"
+    "mnt/c/Users/Percision 15/12_turns_system/memory_investment_system.gd",
+    "mnt/c/Users/Percision 15/memory_channel_system.gd",
+    "mnt/c/Users/Percision 15/wish_knowledge_system.gd",
+    "mnt/c/Users/Percision 15/WordMemorySystem.gd"
 ]
 
 const COMMENT_PATTERNS = {
     "//": "#",  # Single line comment
-    "/*": "# /*", # Multi-line comment start
+    "*": "# /*", # Multi-line comment start
     "*/": "# */", # Multi-line comment end
 }
 
@@ -24,9 +24,9 @@ const SECTION_MARKERS = {
     "// SECTION:": "# SECTION:",
     "// BEGIN:": "# BEGIN:",
     "// END:": "# END:",
-    "/* SECTION:": "# /* SECTION:",
-    "/* BEGIN:": "# /* BEGIN:",
-    "/* END:": "# /* END:" 
+    "* SECTION:": "# /* SECTION:",
+    "* BEGIN:": "# /* BEGIN:",
+    "* END:": "# /* END:" 
 }
 
 # Memory Keywords to enhance with special formatting
@@ -144,8 +144,8 @@ func convert_comments(content: String) -> String:
                 _conversion_stats.comments_converted += 1
             
             # Multi-line comments
-            if line.strip_edges().begins_with("/*"):
-                modified_line = line.replace("/*", "# /*", 1)
+            if line.strip_edges().begins_with("*"):
+                modified_line = line.replace("*", "# /*", 1)
                 _conversion_stats.comments_converted += 1
             
             if line.strip_edges().ends_with("*/"):

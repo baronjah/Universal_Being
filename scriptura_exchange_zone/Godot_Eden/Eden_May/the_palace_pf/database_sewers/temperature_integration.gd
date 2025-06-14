@@ -32,16 +32,16 @@ func _ready():
 # Initialize integration with all systems
 func initialize_integration():
     # Get references to all temperature systems
-    temperature_system = get_node_or_null("/root/TemperatureSystem")
-    temperature_visual_effects = get_node_or_null("/root/TemperatureVisualEffects")
-    temperature_word_effects = get_node_or_null("/root/TemperatureWordEffects")
+    temperature_system = get_node_or_null("root/TemperatureSystem")
+    temperature_visual_effects = get_node_or_null("root/TemperatureVisualEffects")
+    temperature_word_effects = get_node_or_null("root/TemperatureWordEffects")
 }
 
     # Get references to core systems
-    turn_manager = get_node_or_null("/root/TurnManager")
-    divine_word_processor = get_node_or_null("/root/DivineWordProcessor")
-    realism_ratio_system = get_node_or_null("/root/RealismRatioSystem")
-    blink_system = get_node_or_null("/root/BlinkSystem")
+    turn_manager = get_node_or_null("root/TurnManager")
+    divine_word_processor = get_node_or_null("root/DivineWordProcessor")
+    realism_ratio_system = get_node_or_null("root/RealismRatioSystem")
+    blink_system = get_node_or_null("root/BlinkSystem")
 }
 
     # Load UI

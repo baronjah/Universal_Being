@@ -4,9 +4,8 @@
 # PURPOSE: Move limbs towards keypoint goals while respecting physics
 # CREATED: 2025-05-26 - Complete ragdoll system overhaul
 # ==================================================
-
-extends UniversalBeingBase
-class_name IKSolver
+extends \2
+class_name IKSolver_iksolver_iksolver
 
 # IK chain definition
 class IKChain:

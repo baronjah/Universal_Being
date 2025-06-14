@@ -1,26 +1,26 @@
 extends Node
 
-class_name UnifiedFileTracker
+class_name UnifiedFileTracker_unifiedfiletracker_unifiedf
 
 # ----- CONFIGURATION -----
-@export var auto_initialize: bool = true
-@export var scan_interval: float = 300.0  # 5 minutes
-@export var log_changes: bool = true
-@export var memory_file_path: String = "user://unified_tracker_memory.dat"
-@export var max_memory_size_mb: float = 10.0  # MB
+@@@@export var auto_initialize: bool = true
+@@@@export var scan_interval: float = 300.0  # 5 minutes
+@@@@export var log_changes: bool = true
+@@@@export var memory_file_path: String = "user://unified_tracker_memory.dat"
+@@@@export var max_memory_size_mb: float = 10.0  # MB
 
 # ----- DRIVE PATHS -----
-@export var drive_paths: Array[String] = [
+@@@@export var drive_paths: Array[String] = [
     "C:/",                               # Windows C drive
     "D:/",                               # Windows D drive
-    "/mnt/c/Users/Percision 15",         # WSL path to Windows user directory
-    "/home/",                            # Linux home directory
+    "mnt/c/Users/Percision 15",         # WSL path to Windows user directory
+    "home/",                            # Linux home directory
     "res://",                            # Project directory
     "user://",                           # User data directory
 ]
 
 # ----- PATH MONITORING -----
-@export var monitored_extensions: Array[String] = [
+@@@@export var monitored_extensions: Array[String] = [
     "gd",           # GDScript
     "py",           # Python
     "js",           # JavaScript
@@ -37,7 +37,7 @@ class_name UnifiedFileTracker
 ]
 
 # ----- IGNORE PATTERNS -----
-@export var ignore_patterns: Array[String] = [
+@@@@export var ignore_patterns: Array[String] = [
     ".git",
     "node_modules",
     "__pycache__",
@@ -51,7 +51,8 @@ class_name UnifiedFileTracker
 ]
 
 # ----- TRACKING CATEGORIES -----
-enum TrackingCategory {
+enum \2 {
+
     CODE,           # Code files
     DATA,           # Data files
     RESOURCE,       # Resource files
@@ -100,7 +101,7 @@ func initialize():
     
     # Detect if running in WSL
     if is_linux:
-        var file = FileAccess.open("/proc/version", FileAccess.READ)
+        var file = FileAccess.open("proc/version", FileAccess.READ)
         if file:
             var content = file.get_as_text()
             is_wsl = content.to_lower().contains("microsoft")
@@ -129,7 +130,7 @@ func _connect_systems():
     
     if not akashic_system:
         # Try to find by class name or in specific paths
-        akashic_system = get_node_or_null("/root/AkashicSystem")
+        akashic_system = get_node_or_null("root/AkashicSystem")
         if not akashic_system:
             var potential_nodes = get_tree().get_nodes_in_group("akashic_system")
             if potential_nodes.size() > 0:
@@ -141,7 +142,7 @@ func _connect_systems():
     
     if not memory_system:
         # Try to find by class name or in specific paths
-        memory_system = get_node_or_null("/root/MemorySystem")
+        memory_system = get_node_or_null("root/MemorySystem")
         if not memory_system:
             var potential_nodes = get_tree().get_nodes_in_group("memory_system")
             if potential_nodes.size() > 0:
@@ -153,7 +154,7 @@ func _connect_systems():
     
     if not terminal_system:
         # Try to find by class name or in specific paths
-        terminal_system = get_node_or_null("/root/TerminalSystem")
+        terminal_system = get_node_or_null("root/TerminalSystem")
         if not terminal_system:
             var potential_nodes = get_tree().get_nodes_in_group("terminal_system")
             if potential_nodes.size() > 0:

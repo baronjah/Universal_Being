@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://b0ee1qqnhkfnb"]
+
+[ext_resource type="Script" path="res://scripts/migration/class_name_fixer.gd" id="1_2k3m4"]
+
+[node name="ClassNameFixer" type="Node"]
+script = ExtResource("1_2k3m4") 

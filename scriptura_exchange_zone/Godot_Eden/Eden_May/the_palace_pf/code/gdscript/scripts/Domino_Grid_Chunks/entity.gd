@@ -1,7 +1,7 @@
 # entity.gd
-extends Node2D
+extends \2
 
-class_name Entity
+class_name Entity_entity_entity
 
 # Basic properties all entities have
 var entity_id: String
@@ -69,7 +69,7 @@ func move_to(new_position: Vector2i):
 	position_vec2i = new_position
 	
 	# Get world node to update entity positions
-	var world = get_node("/root/World")
+	var world = get_node("root/World")
 	world.move_entity(self, old_position, new_position)
 	
 	emit_signal("entity_moved", self, old_position, new_position)

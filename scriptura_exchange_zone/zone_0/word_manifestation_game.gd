@@ -1,7 +1,7 @@
 extends Node
 }
 
-class_name WordManifestationGame
+class_name WordManifestationGame_wordmanifestationgame_wordmani
 }
 
 # ----- GAME CONFIGURATION -----
@@ -242,7 +242,7 @@ func process_text(text, terminal_id=null):
         # Add to word history
         terminal_windows[terminal_id].word_history.append({
             "text": result.corrected,
-            "timestamp": OS.get_unix_time(),
+            "timestamp": OS.Time.get_unix_time_from_system(),
             "power": result.total_power,
             "powerful_words": result.powerful_words
         })
@@ -267,7 +267,7 @@ func process_text(text, terminal_id=null):
 # Manifest a powerful word in the game world
 func manifest_word(word, power, terminal_id):
     # Create unique ID for this word
-    var word_id = "word_" + str(OS.get_unix_time()) + "_" + str(randi() % 10000)
+    var word_id = "word_" + str(OS.Time.get_unix_time_from_system()) + "_" + str(randi() % 10000)
 }
 
     # Determine color based on terminal
@@ -295,7 +295,7 @@ func manifest_word(word, power, terminal_id):
         "turn": current_turn,
         "dimension": turn_dimensions[current_turn-1],
         "symbol": turn_symbols[current_turn-1],
-        "timestamp": OS.get_unix_time(),
+        "timestamp": OS.Time.get_unix_time_from_system(),
         "evolution_stage": 1
     }
 }
@@ -427,7 +427,7 @@ func create_word_connections(new_word_data):
                 "word2_id": existing_word.id,
                 "strength": strength,
                 "color": connection_color,
-                "timestamp": OS.get_unix_time(),
+                "timestamp": OS.Time.get_unix_time_from_system(),
                 "turn": current_turn
             }
 }
@@ -462,7 +462,7 @@ func check_reality_formation():
     # Check if we've reached reality threshold
     if total_power > REALITY_THRESHOLD:
         # Create reality
-        var reality_id = "reality_" + str(OS.get_unix_time())
+        var reality_id = "reality_" + str(OS.Time.get_unix_time_from_system())
 }
 
         var reality_data = {
@@ -473,7 +473,7 @@ func check_reality_formation():
             "turn": current_turn,
             "dimension": turn_dimensions[current_turn-1],
             "symbol": turn_symbols[current_turn-1],
-            "timestamp": OS.get_unix_time(),
+            "timestamp": OS.Time.get_unix_time_from_system(),
             "terminal_contributions": get_terminal_contributions()
         }
 }
@@ -686,7 +686,7 @@ func roll_dice(terminal_id=null, dice_type=null, dice_count=null):
         "total": total,
         "turn_bonus": turn_bonus,
         "final_total": final_total,
-        "timestamp": OS.get_unix_time()
+        "timestamp": OS.Time.get_unix_time_from_system()
     }
 }
 
@@ -894,14 +894,14 @@ func save_game_state(name="auto_save"):
         "manifested_words": manifested_words,
         "word_connections": word_connections,
         "terminal_windows": terminal_windows,
-        "timestamp": OS.get_unix_time(),
+        "timestamp": OS.Time.get_unix_time_from_system(),
         "date": OS.get_datetime()
     }
 }
 
     # Save to file
     var file = File.new()
-    var save_path = "user://word_game_saves/" + name + "_" + str(OS.get_unix_time()) + ".json"
+    var save_path = "user://word_game_saves/" + name + "_" + str(OS.Time.get_unix_time_from_system()) + ".json"
 }
 
     # Ensure directory exists

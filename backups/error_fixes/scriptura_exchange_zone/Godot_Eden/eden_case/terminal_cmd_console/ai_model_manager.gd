@@ -314,11 +314,11 @@ func _ready():
     load_system_state()
     
     # Set up default models if none exist
-    if loaded_models.empty():
+    if loaded_models.is_empty():
         _create_default_models()
     
     # Set up default mecha interfaces if none exist
-    if mecha_interfaces.empty():
+    if mecha_interfaces.is_empty():
         _create_default_mecha_interfaces()
     
     print("AI Model Manager initialized with %d models and %d mecha interfaces" % [
@@ -332,7 +332,7 @@ func _setup_turn_timer():
     var timer = Timer.new()
     timer.wait_time = 1.0  # Update every second
     timer.one_shot = false
-    timer.connect("timeout", self, "_on_turn_timer_timeout")
+    timer.connect(_on_turn_timer_timeout)
     add_child(timer)
     timer.start()
 
@@ -1080,7 +1080,7 @@ func add_audio_track(title, path, tags=[]):
     return track
 
 func play_music():
-    if audio_playlist.empty():
+    if audio_playlist.is_empty():
         print("Audio playlist is empty")
         return false
     
@@ -1130,7 +1130,7 @@ func stop_music():
     return true
 
 func next_track():
-    if audio_playlist.empty():
+    if audio_playlist.is_empty():
         print("Audio playlist is empty")
         return false
     
@@ -1203,7 +1203,7 @@ func activate_mecha_interface(index):
     active_mecha = index
     
     # Check if linked to a model
-    if not mecha_interfaces[index].model_id.empty():
+    if not mecha_interfaces[index].model_id.is_empty():
         # Find model
         for i in range(loaded_models.size()):
             if loaded_models[i].id == mecha_interfaces[index].model_id:
@@ -1447,11 +1447,11 @@ func _create_default_models():
 
 func run_demo_cycle():
     # Create models if none exist
-    if loaded_models.empty():
+    if loaded_models.is_empty():
         _create_default_models()
     
     # Create mecha interfaces if none exist
-    if mecha_interfaces.empty():
+    if mecha_interfaces.is_empty():
         _create_default_mecha_interfaces()
     
     # Make sure we have a model active

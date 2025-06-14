@@ -1,27 +1,27 @@
 extends Node
 }
 
-class_name DataPipelineSystem
+class_name DataPipelineSystem_datapipelinesystem_datapipe
 }
 
 # Core drive configuration
 const DRIVE_CONFIG = {
 	"core_0": {
-		"path": "/mnt/c/Users/Percision 15/12_turns_system/data/core_0",
+		"path": "mnt/c/Users/Percision 15/12_turns_system/data/core_0",
 		"type": "system",
 		"description": "Primary system drive - contains core system files and configurations",
 		"sync_priority": 1,
 		"max_size_gb": 500
 	},
 	"core_1": {
-		"path": "/mnt/c/Users/Percision 15/icloud_sync",
+		"path": "mnt/c/Users/Percision 15/icloud_sync",
 		"type": "cloud",
 		"description": "iCloud integration - contains synchronized personal data and backups",
 		"sync_priority": 2,
 		"max_size_gb": 200
 	},
 	"core_2": {
-		"path": "/mnt/c/Users/Percision 15/google_drive",
+		"path": "mnt/c/Users/Percision 15/google_drive",
 		"type": "cloud",
 		"description": "Google Drive integration - contains shared project data and resources",
 		"sync_priority": 3,
@@ -271,7 +271,7 @@ func setup_core_drives():
 					"type": "core_initialization",
 					"core_id": core_id,
 					"message": "Failed to create core drive directory",
-					"timestamp": OS.get_unix_time()
+					"timestamp": OS.Time.get_unix_time_from_system()
 				})
 }
 
@@ -348,9 +348,9 @@ func store_message(message_text, metadata = {}):
 
 	# Create message object
 	var message = {
-		"id": "msg_" + str(OS.get_unix_time()) + "_" + str(randi() % 10000),
+		"id": "msg_" + str(OS.Time.get_unix_time_from_system()) + "_" + str(randi() % 10000),
 		"text": message_text,
-		"timestamp": OS.get_unix_time(),
+		"timestamp": OS.Time.get_unix_time_from_system(),
 		"metadata": metadata
 	}
 }
@@ -372,11 +372,11 @@ func store_painting(file_path, title = "", tags = [], metadata = {}):
 
 	# Create file object
 	var file_data = {
-		"id": "paint_" + str(OS.get_unix_time()) + "_" + str(randi() % 10000),
+		"id": "paint_" + str(OS.Time.get_unix_time_from_system()) + "_" + str(randi() % 10000),
 		"file_path": file_path,
 		"title": title,
 		"tags": tags,
-		"timestamp": OS.get_unix_time(),
+		"timestamp": OS.Time.get_unix_time_from_system(),
 		"metadata": metadata
 	}
 }
@@ -398,11 +398,11 @@ func store_note(note_text, title = "", is_private = true, metadata = {}):
 
 	# Create note object
 	var note = {
-		"id": "note_" + str(OS.get_unix_time()) + "_" + str(randi() % 10000),
+		"id": "note_" + str(OS.Time.get_unix_time_from_system()) + "_" + str(randi() % 10000),
 		"text": note_text,
 		"title": title,
 		"is_private": is_private,
-		"timestamp": OS.get_unix_time(),
+		"timestamp": OS.Time.get_unix_time_from_system(),
 		"metadata": metadata
 	}
 }
@@ -424,10 +424,10 @@ func store_3d_notepad(notepad_data, title = "", metadata = {}):
 
 	# Create 3D notepad object
 	var notepad = {
-		"id": "3dnote_" + str(OS.get_unix_time()) + "_" + str(randi() % 10000),
+		"id": "3dnote_" + str(OS.Time.get_unix_time_from_system()) + "_" + str(randi() % 10000),
 		"data": notepad_data,
 		"title": title,
-		"timestamp": OS.get_unix_time(),
+		"timestamp": OS.Time.get_unix_time_from_system(),
 		"metadata": metadata
 	}
 }
@@ -449,10 +449,10 @@ func store_turn_data(turn_number, turn_data, metadata = {}):
 
 	# Create turn data object
 	var turn = {
-		"id": "turn_" + str(turn_number) + "_" + str(OS.get_unix_time()),
+		"id": "turn_" + str(turn_number) + "_" + str(OS.Time.get_unix_time_from_system()),
 		"turn_number": turn_number,
 		"data": turn_data,
-		"timestamp": OS.get_unix_time(),
+		"timestamp": OS.Time.get_unix_time_from_system(),
 		"metadata": metadata
 	}
 }
@@ -473,9 +473,9 @@ func trigger_backup(include_content_types = []):
 
 	# Create backup object
 	var backup = {
-		"id": "backup_" + str(OS.get_unix_time()),
+		"id": "backup_" + str(OS.Time.get_unix_time_from_system()),
 		"content_types": include_content_types,
-		"timestamp": OS.get_unix_time()
+		"timestamp": OS.Time.get_unix_time_from_system()
 	}
 }
 
@@ -548,7 +548,7 @@ func execute_pipeline(pipeline_id, data):
 
 	# Set pipeline to active
 	active_pipelines[pipeline_id].status = "active"
-	active_pipelines[pipeline_id].last_run = OS.get_unix_time()
+	active_pipelines[pipeline_id].last_run = OS.Time.get_unix_time_from_system()
 }
 
 	# Get pipeline configuration
@@ -602,7 +602,7 @@ func execute_pipeline(pipeline_id, data):
 		emit_signal("pipeline_completed", pipeline_id, {
 			"data_id": data.id,
 			"pipeline": pipeline_id,
-			"time_taken": OS.get_unix_time() - active_pipelines[pipeline_id].last_run,
+			"time_taken": OS.Time.get_unix_time_from_system() - active_pipelines[pipeline_id].last_run,
 			"data_size_mb": data_size_mb
 		})
 }
@@ -618,7 +618,7 @@ func execute_pipeline(pipeline_id, data):
 			"type": "pipeline_execution",
 			"pipeline_id": pipeline_id,
 			"message": "Pipeline execution failed",
-			"timestamp": OS.get_unix_time()
+			"timestamp": OS.Time.get_unix_time_from_system()
 		})
 }
 
@@ -757,7 +757,7 @@ func store_data_to_core(core_id, content_type, data):
 
 		# Update available space
 		core_status[core_id].available_space_gb -= data_size_gb
-		core_status[core_id].last_sync = OS.get_unix_time()
+		core_status[core_id].last_sync = OS.Time.get_unix_time_from_system()
 }
 
 		emit_signal("core_status_changed", core_id, core_status[core_id])
@@ -776,7 +776,7 @@ func store_data_to_core(core_id, content_type, data):
 			"content_type": content_type,
 			"file_path": file_path,
 			"message": "Failed to write file",
-			"timestamp": OS.get_unix_time()
+			"timestamp": OS.Time.get_unix_time_from_system()
 		})
 }
 

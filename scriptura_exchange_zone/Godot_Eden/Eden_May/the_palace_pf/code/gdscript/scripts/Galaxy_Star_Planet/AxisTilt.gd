@@ -1,6 +1,6 @@
 #AxisTilt
 @tool
-extends Node3D
+extends \2
 
 var tilt_angle: float = 23.5
 

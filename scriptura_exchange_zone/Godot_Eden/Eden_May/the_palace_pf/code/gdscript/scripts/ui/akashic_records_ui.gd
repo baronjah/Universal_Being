@@ -1,5 +1,5 @@
 extends Control
-class_name AkashicRecordsUI
+class_name AkashicRecordsUI_akashicrecordsui_akashicr
 
 # References
 var akashic_records_manager = null

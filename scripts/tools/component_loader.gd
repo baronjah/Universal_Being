@@ -18,14 +18,13 @@ static func load_component(zip_path: String) -> Dictionary:
 	if err != OK:
 		push_error("Failed to open component ZIP: %s" % zip_path)
 		return {}
-	
 	var component_data = {
 		"path": zip_path,
 		"manifest": {},
 		"scripts": {},
 		"resources": {},
-		"scenes": {}
-	}
+		"scenes": {
+}
 	
 	# Read manifest first
 	var manifest_data = reader.read_file("manifest.json")
@@ -41,12 +40,15 @@ static func load_component(zip_path: String) -> Dictionary:
 	var files = reader.get_files()
 	for file in files:
 		if file.ends_with(".gd"):
+}
 			var script_data = reader.read_file(file)
 			component_data.scripts[file] = script_data.get_string_from_utf8()
 		elif file.ends_with(".tres") or file.ends_with(".res"):
+
 			# For now, store raw data - in real implementation would deserialize
 			component_data.resources[file] = reader.read_file(file)
 		elif file.ends_with(".tscn"):
+
 			# For now, store raw data - in real implementation would parse scene
 			component_data.scenes[file] = reader.read_file(file)
 	
@@ -69,14 +71,17 @@ static func apply_component_to_being(being: UniversalBeing, component_data: Dict
 	
 	# Load main script if exists
 	if component_data.scripts.has("scripts/main.gd"):
+
 		var script_source = component_data.scripts["scripts/main.gd"]
 		# In production, would compile and attach script
 		print("Component script loaded: %d bytes" % script_source.length())
+
 	
 	# Register component
 	being.component_data[component_data.path] = manifest
 	
 	print("🔌 Component applied: %s" % manifest.get("name", "Unknown"))
+
 
 static func create_component_template(output_path: String, component_name: String) -> void:
 	var manifest = {
@@ -92,7 +97,7 @@ static func create_component_template(output_path: String, component_name: Strin
 		"properties": [],
 		"methods": [],
 		"signals": []
-	}
+}
 	
 	var writer = ZIPPacker.new()
 	var err = writer.open(output_path)

@@ -44,6 +44,7 @@ func find_element_manager() -> void:
         print("UniversalBridge: Found element manager")
     else:
         print("UniversalBridge: Element manager not found")
+		
 
 # Safely access element manager functionality
 func apply_element_effect(entity: Node, element_type: String) -> bool:
@@ -68,13 +69,16 @@ func initialize(records_manager: Node, records_system: Node, database_system: No
         find_element_manager()
 
     print("UniversalBridge: Initialized with system references")
+	
 
 # Entity creation and management
 func create_entity(type: String = "primordial", properties: Dictionary = {}) -> Node:
     print("UniversalBridge: Creating entity of type: ", type)
+	
     
     # Load the UniversalEntity class
     var UniversalEntity = load("res://universal_entity.gd")
+	
     
     # Create the entity
     var entity = UniversalEntity.new("", type, properties)
@@ -90,6 +94,7 @@ func create_entity(type: String = "primordial", properties: Dictionary = {}) -> 
 
 func transform_entity(entity: Node, new_type: String) -> bool:
     print("UniversalBridge: Transforming entity ", entity.get_id(), " to ", new_type)
+	
     
     if entity == null or not entity is UniversalEntity:
         print("UniversalBridge: Invalid entity for transformation")
@@ -113,10 +118,12 @@ func transform_entity(entity: Node, new_type: String) -> bool:
 # Interaction processing
 func process_interaction(entity1: Node, entity2: Node) -> Dictionary:
     print("UniversalBridge: Processing interaction between entities")
+	
     
     if entity1 == null or entity2 == null or not entity1 is UniversalEntity or not entity2 is UniversalEntity:
         print("UniversalBridge: Invalid entities for interaction")
-        return {"success": false, "effect": "invalid_entities"}
+        return {"success": false, "effect": "invalid_entities"
+		}
     
     # Get entity types
     var type1 = entity1.get_type()
@@ -128,6 +135,7 @@ func process_interaction(entity1: Node, entity2: Node) -> Dictionary:
         effect = interaction_matrix.get_interaction_effect(type1, type2)
     
     print("UniversalBridge: Interaction effect: ", effect)
+	
     
     # Process the interaction effect
     var result = process_interaction_effect(entity1, entity2, effect)
@@ -148,25 +156,29 @@ func process_interaction_effect(entity1: Node, entity2: Node, effect: String) ->
         "target_type": entity2.get_type(),
         "transformations": [],
         "new_entities": []
-    }
+		}
 
     # Process different effects
     match effect:
         "none":
+		
             # No effect
             result["success"] = true
         
         "intensify":
+		
             # Intensify the source entity
             var intensity = entity1.get_property("intensity", 1)
             entity1.set_property("intensity", intensity + 1)
         
         "diminish":
+		
             # Diminish the target entity
             var intensity = entity2.get_property("intensity", 1)
             entity2.set_property("intensity", max(1, intensity - 1))
         
         "consume":
+		
             # Source consumes target
             var energy1 = entity1.get_property("energy", 10)
             var energy2 = entity2.get_property("energy", 5)
@@ -184,6 +196,7 @@ func process_interaction_effect(entity1: Node, entity2: Node, effect: String) ->
                 })
         
         "fuse":
+		
             # Fuse both entities into a new one
             var new_entity = create_entity("fused", {
                 "energy": entity1.get_property("energy", 10) + entity2.get_property("energy", 10),
@@ -197,6 +210,7 @@ func process_interaction_effect(entity1: Node, entity2: Node, effect: String) ->
             entity2.add_reference("fused_into", new_entity.get_id())
         
         "transform":
+		
             # Transform source entity based on target
             var new_type = "transformed_" + entity1.get_type()
             
@@ -208,6 +222,7 @@ func process_interaction_effect(entity1: Node, entity2: Node, effect: String) ->
                 })
         
         "split":
+		
             # Split the target entity into two
             var new_entity1 = create_entity(entity2.get_type(), {
                 "energy": entity2.get_property("energy", 10) / 2,
@@ -228,6 +243,7 @@ func process_interaction_effect(entity1: Node, entity2: Node, effect: String) ->
             entity2.add_reference("split_into", new_entity2.get_id())
         
         "transmute":
+		
             # Both entities transform into new types
             var new_type1 = "transmuted_" + entity1.get_type()
             var new_type2 = "transmuted_" + entity2.get_type()
@@ -247,6 +263,7 @@ func process_interaction_effect(entity1: Node, entity2: Node, effect: String) ->
                 })
         
         "create":
+		
             # Create a new entity from the interaction
             var new_type = entity1.get_type() + "_" + entity2.get_type()
             var new_entity = create_entity(new_type, {

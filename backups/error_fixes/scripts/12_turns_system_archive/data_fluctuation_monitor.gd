@@ -85,6 +85,7 @@ class FluctuationEvent:
 			FluctuationPattern.MERGED: return "Merged"
 			FluctuationPattern.SPLIT: return "Split"
 			_: return "Unknown"
+}
 	
 	func get_level_string() -> String:
 		match level:
@@ -94,6 +95,7 @@ class FluctuationEvent:
 			FluctuationLevel.SIGNIFICANT: return "Significant"
 			FluctuationLevel.CRITICAL: return "Critical"
 			_: return "Unknown"
+}
 	
 	func get_resonance_string() -> String:
 		match resonance_type:
@@ -103,6 +105,7 @@ class FluctuationEvent:
 			ResonanceType.GAMMA: return "Gamma (25-100 Hz)"
 			ResonanceType.CUSTOM: return "Custom (" + str(frequency) + " Hz)"
 			_: return "Unknown"
+}
 	
 	func get_resonance_frequency(type: int) -> float:
 		match type:
@@ -181,10 +184,10 @@ func _ready():
 	
 	if terminal:
 		if terminal.has_node("storage_system"):
-			storage_system = terminal.get_node("storage_system")
+			storage_system = terminal.get_node("\1") as Node
 		
 		if terminal.has_node("symbol_system"):
-			symbol_system = terminal.get_node("symbol_system")
+			symbol_system = terminal.get_node("\1") as Node
 		
 		log_message("Data Fluctuation Monitor initialized.", "system")
 	
@@ -192,7 +195,7 @@ func _ready():
 	monitor_timer = Timer.new()
 	monitor_timer.wait_time = monitoring_interval
 	monitor_timer.autostart = true
-	monitor_timer.connect("timeout", self, "_scan_for_fluctuations")
+	monitor_timer.connect(_scan_for_fluctuations)
 	add_child(monitor_timer)
 	
 	# Initial baseline generation
@@ -251,6 +254,7 @@ func process_fluctuation_command(args):
 			display_fluctuation_help()
 		_:
 			log_message("Unknown fluctuation command: " + subcmd, "error")
+}
 
 # Process advanced fluctuation commands
 func process_advanced_fluctuation_command(args):
@@ -286,6 +290,7 @@ func process_advanced_fluctuation_command(args):
 			display_advanced_fluctuation_help()
 		_:
 			log_message("Unknown advanced fluctuation command: " + subcmd, "error")
+}
 
 # Process system fluctuation commands
 func process_system_fluctuation_command(args):
@@ -316,6 +321,7 @@ func process_system_fluctuation_command(args):
 		_:
 			log_message("Unknown system fluctuation command: " + subcmd, "error")
 
+
 # Show fluctuation status
 func show_fluctuation_status():
 	log_message("Data Fluctuation Monitor Status:", "fluctuation")
@@ -331,6 +337,7 @@ func show_fluctuation_status():
 	log_message("- Merge Mode: " + _get_merge_mode_string(merge_mode), "fluctuation")
 	log_message("- Split Mode: " + _get_split_mode_string(split_mode), "fluctuation")
 	log_message("- Clean on Split: " + ("Enabled" if clean_data_on_split else "Disabled"), "fluctuation")
+
 	
 	var recent_count = 0
 	var critical_count = 0
@@ -344,6 +351,7 @@ func show_fluctuation_status():
 	log_message("- Recent Events (1h): " + str(recent_count), "fluctuation")
 	log_message("- Critical Events: " + str(critical_count), "fluctuation")
 	log_message("- Total Events: " + str(fluctuation_events.size()), "fluctuation")
+
 
 # Scan for fluctuations
 func scan_for_fluctuations():
@@ -394,6 +402,7 @@ func show_fluctuation_history():
 		return
 		
 	log_message("Fluctuation Event History:", "fluctuation")
+
 	
 	var displayed_count = min(10, fluctuation_events.size())  # Show most recent 10 events
 	var start_index = fluctuation_events.size() - displayed_count
@@ -407,7 +416,7 @@ func show_fluctuation_history():
 
 # Show resonance information
 func show_resonance_info(resonance_type=""):
-	if resonance_type.empty() or resonance_type == "current":
+	if resonance_type.is_empty() or resonance_type == "current":
 		log_message("Current Resonance:", "fluctuation")
 		log_message("- Type: " + _get_resonance_string(default_resonance), "fluctuation")
 		log_message("- Frequency: " + str(current_resonance) + " Hz", "fluctuation")
@@ -442,9 +451,10 @@ func show_resonance_info(resonance_type=""):
 			log_message("Unknown resonance type: " + resonance_type, "error")
 			log_message("Available types: schumann, theta, alpha, gamma, all", "system")
 
+
 # Merge data
 func merge_data(mode_str=""):
-	if !mode_str.empty():
+	if !mode_str.is_empty():
 		set_merge_mode(mode_str)
 		
 	log_message("Merging data using " + _get_merge_mode_string(merge_mode) + " mode...", "fluctuation")
@@ -452,7 +462,7 @@ func merge_data(mode_str=""):
 	# In a real implementation, this would merge actual data
 	# For this mock-up, we'll simulate it
 	
-	yield(get_tree().create_timer(1.0), "timeout")
+	await(get_tree().create_timer(1.0), "timeout")
 	
 	var affected_files = []
 	var affected_count = randi() % 5 + 1  # 1 to 5 files
@@ -465,7 +475,7 @@ func merge_data(mode_str=""):
 
 # Split data
 func split_data(mode_str=""):
-	if !mode_str.empty():
+	if !mode_str.is_empty():
 		set_split_mode(mode_str)
 		
 	log_message("Splitting data using " + _get_split_mode_string(split_mode) + " mode...", "fluctuation")
@@ -473,7 +483,7 @@ func split_data(mode_str=""):
 	# In a real implementation, this would split actual data
 	# For this mock-up, we'll simulate it
 	
-	yield(get_tree().create_timer(1.0), "timeout")
+	await(get_tree().create_timer(1.0), "timeout")
 	
 	var affected_files = []
 	var affected_count = randi() % 5 + 1  # 1 to 5 files
@@ -485,14 +495,14 @@ func split_data(mode_str=""):
 	
 	if clean_data_on_split:
 		log_message("Cleaning split data...", "fluctuation")
-		yield(get_tree().create_timer(0.5), "timeout")
+		await(get_tree().create_timer(0.5), "timeout")
 		log_message("Split data cleaned.", "fluctuation")
 	
 	emit_signal("data_split", affected_files, split_mode)
 
 # Toggle monitoring
 func toggle_monitoring(enabled_str=""):
-	if enabled_str.empty():
+	if enabled_str.is_empty():
 		enabled = !enabled
 	else:
 		enabled = (enabled_str.to_lower() == "on" or enabled_str.to_lower() == "true" or enabled_str == "1")
@@ -508,7 +518,7 @@ func toggle_monitoring(enabled_str=""):
 
 # Apply resonance correction
 func apply_resonance_correction(resonance_str=""):
-	if !resonance_str.empty():
+	if !resonance_str.is_empty():
 		set_resonance_type(resonance_str)
 		
 	log_message("Applying " + _get_resonance_string(default_resonance) + " resonance correction...", "fluctuation")
@@ -516,7 +526,7 @@ func apply_resonance_correction(resonance_str=""):
 	# In a real implementation, this would apply actual corrections
 	# For this mock-up, we'll simulate it
 	
-	yield(get_tree().create_timer(1.0), "timeout")
+	await(get_tree().create_timer(1.0), "timeout")
 	
 	var affected_files = []
 	
@@ -533,6 +543,7 @@ func apply_resonance_correction(resonance_str=""):
 	
 	log_message("Resonance correction applied to " + str(affected_files.size()) + " files.", "fluctuation")
 	log_message("Correction strength: " + str(int(resonance_correction_strength * 100)) + "%", "fluctuation")
+
 	
 	emit_signal("resonance_corrected", affected_files, current_resonance)
 
@@ -544,7 +555,7 @@ func visualize_fluctuation(type_str=""):
 		
 	var pattern = FluctuationPattern.OSCILLATING
 	
-	if !type_str.empty():
+	if !type_str.is_empty():
 		match type_str.to_lower():
 			"random": pattern = FluctuationPattern.RANDOM
 			"oscillating": pattern = FluctuationPattern.OSCILLATING
@@ -558,6 +569,7 @@ func visualize_fluctuation(type_str=""):
 		pattern = fluctuation_events[fluctuation_events.size() - 1].pattern
 	
 	log_message("Visualizing " + _get_pattern_string(pattern) + " fluctuation pattern:", "fluctuation")
+
 	
 	match pattern:
 		FluctuationPattern.RANDOM:
@@ -579,12 +591,13 @@ func visualize_fluctuation(type_str=""):
 
 # Analyze fluctuation pattern
 func analyze_fluctuation_pattern(file_path=""):
-	log_message("Analyzing fluctuation pattern" + (file_path.empty() ? "" : " in " + file_path) + "...", "fluctuation")
+	log_message("Analyzing fluctuation pattern" + (file_path.is_empty() ? "" : " in " + file_path) + "...", "fluctuation")
+
 	
 	# In a real implementation, this would analyze actual data
 	# For this mock-up, we'll simulate it
 	
-	yield(get_tree().create_timer(1.0), "timeout")
+	await(get_tree().create_timer(1.0), "timeout")
 	
 	var pattern = _get_random_pattern()
 	var level = _get_random_level()
@@ -595,10 +608,12 @@ func analyze_fluctuation_pattern(file_path=""):
 	log_message("- Fluctuation Level: " + _get_level_string(level), "fluctuation")
 	log_message("- Dominant Frequency: " + str(dominant_frequency) + " Hz", "fluctuation")
 	log_message("- Temporal Stability: " + str(int(randf() * 100)) + "%", "fluctuation")
+
 	
 	if level >= warning_threshold:
 		log_message("WARNING: Fluctuation level exceeds threshold!", "warning")
 		log_message("Recommendation: Apply resonance correction.", "fluctuation")
+
 
 # Set warning threshold
 func set_warning_threshold(level_str):
@@ -617,6 +632,7 @@ func set_warning_threshold(level_str):
 	
 	warning_threshold = level
 	log_message("Warning threshold set to: " + _get_level_string(level), "fluctuation")
+
 
 # Set monitoring interval
 func set_monitoring_interval(interval_str):
@@ -640,21 +656,23 @@ func establish_baseline():
 	# In a real implementation, this would create a baseline from actual data
 	# For this mock-up, we'll simulate it
 	
-	yield(get_tree().create_timer(1.5), "timeout")
+	await(get_tree().create_timer(1.5), "timeout")
 	
 	baseline_hash = "bf3a2c7e9d8f1a6b5c4d2e0f"  # Simulated hash
 	
 	log_message("Baseline established successfully.", "fluctuation")
 	log_message("Baseline Hash: " + baseline_hash, "fluctuation")
 
+
 # Compare to baseline
 func compare_to_baseline(target=""):
-	log_message("Comparing current data to baseline" + (target.empty() ? "" : " for " + target) + "...", "fluctuation")
+	log_message("Comparing current data to baseline" + (target.is_empty() ? "" : " for " + target) + "...", "fluctuation")
+
 	
 	# In a real implementation, this would compare actual data
 	# For this mock-up, we'll simulate it
 	
-	yield(get_tree().create_timer(1.0), "timeout")
+	await(get_tree().create_timer(1.0), "timeout")
 	
 	var divergence = randf() * 100  # 0% to 100% divergence
 	var changed_files = int(randf() * 10)  # 0 to 9 changed files
@@ -662,6 +680,7 @@ func compare_to_baseline(target=""):
 	log_message("Comparison Results:", "fluctuation")
 	log_message("- Divergence: " + str(int(divergence)) + "%", "fluctuation")
 	log_message("- Changed Files: " + str(changed_files), "fluctuation")
+
 	
 	if divergence > 50:
 		log_message("WARNING: Significant divergence from baseline detected!", "warning")
@@ -702,6 +721,7 @@ func set_resonance_type(type_str):
 	default_resonance = resonance_type
 	log_message("Resonance type set to: " + _get_resonance_string(resonance_type) + " (" + str(current_resonance) + " Hz)", "fluctuation")
 
+
 # Set correction strength
 func set_correction_strength(strength_str):
 	var strength = float(strength_str)
@@ -713,14 +733,16 @@ func set_correction_strength(strength_str):
 	resonance_correction_strength = strength
 	log_message("Resonance correction strength set to: " + str(int(strength * 100)) + "%", "fluctuation")
 
+
 # Toggle clean data
 func toggle_clean_data(enabled_str=""):
-	if enabled_str.empty():
+	if enabled_str.is_empty():
 		clean_data_on_split = !clean_data_on_split
 	else:
 		clean_data_on_split = (enabled_str.to_lower() == "on" or enabled_str.to_lower() == "true" or enabled_str == "1")
 	
 	log_message("Clean data on split: " + ("Enabled" if clean_data_on_split else "Disabled"), "fluctuation")
+
 
 # Set merge/split mode
 func set_merge_split_mode(args):
@@ -742,6 +764,7 @@ func set_merge_split_mode(args):
 			log_message("Invalid mode type: " + mode_type, "error")
 			log_message("Valid types: merge, split", "system")
 
+
 # Set merge mode
 func set_merge_mode(mode_str):
 	var mode = merge_mode
@@ -760,6 +783,7 @@ func set_merge_mode(mode_str):
 	merge_mode = mode
 	log_message("Merge mode set to: " + _get_merge_mode_string(mode), "fluctuation")
 
+
 # Set split mode
 func set_split_mode(mode_str):
 	var mode = split_mode
@@ -777,6 +801,7 @@ func set_split_mode(mode_str):
 	
 	split_mode = mode
 	log_message("Split mode set to: " + _get_split_mode_string(mode), "fluctuation")
+
 
 # Reset fluctuation monitor
 func reset_fluctuation_monitor():
@@ -809,12 +834,13 @@ func reset_fluctuation_monitor():
 
 # Toggle archive fluctuations
 func toggle_archive_fluctuations(enabled_str=""):
-	if enabled_str.empty():
+	if enabled_str.is_empty():
 		archive_fluctuations = !archive_fluctuations
 	else:
 		archive_fluctuations = (enabled_str.to_lower() == "on" or enabled_str.to_lower() == "true" or enabled_str == "1")
 	
 	log_message("Archive fluctuations: " + ("Enabled" if archive_fluctuations else "Disabled"), "fluctuation")
+
 
 # Purge fluctuation history
 func purge_fluctuation_history():
@@ -827,28 +853,32 @@ func purge_fluctuation_history():
 
 # Export fluctuation data
 func export_fluctuation_data(path):
-	if path.empty():
+	if path.is_empty():
 		path = "user://fluctuation_data.dat"
+
 		
 	log_message("Exporting fluctuation data to: " + path, "fluctuation")
+
 	
 	# In a real implementation, this would save to a file
 	# For this mock-up, we'll simulate it
 	
-	yield(get_tree().create_timer(0.8), "timeout")
+	await(get_tree().create_timer(0.8), "timeout")
 	log_message("Fluctuation data exported successfully.", "fluctuation")
 
 # Import fluctuation data
 func import_fluctuation_data(path):
-	if path.empty():
+	if path.is_empty():
 		path = "user://fluctuation_data.dat"
+
 		
 	log_message("Importing fluctuation data from: " + path, "fluctuation")
+
 	
 	# In a real implementation, this would load from a file
 	# For this mock-up, we'll simulate it
 	
-	yield(get_tree().create_timer(0.8), "timeout")
+	await(get_tree().create_timer(0.8), "timeout")
 	log_message("Fluctuation data imported successfully.", "fluctuation")
 
 # Simulate quantum fluctuation
@@ -1014,6 +1044,7 @@ func _get_pattern_string(pattern):
 		FluctuationPattern.SPLIT: return "Split"
 		_: return "Unknown"
 
+
 func _get_level_string(level):
 	match level:
 		FluctuationLevel.NONE: return "None"
@@ -1022,6 +1053,7 @@ func _get_level_string(level):
 		FluctuationLevel.SIGNIFICANT: return "Significant"
 		FluctuationLevel.CRITICAL: return "Critical"
 		_: return "Unknown"
+
 
 func _get_resonance_string(resonance_type):
 	match resonance_type:
@@ -1032,6 +1064,7 @@ func _get_resonance_string(resonance_type):
 		ResonanceType.CUSTOM: return "Custom"
 		_: return "Unknown"
 
+
 func _get_merge_mode_string(mode):
 	match mode:
 		MergeMode.APPEND: return "Append"
@@ -1041,6 +1074,7 @@ func _get_merge_mode_string(mode):
 		MergeMode.REPLACE: return "Replace"
 		_: return "Unknown"
 
+
 func _get_split_mode_string(mode):
 	match mode:
 		SplitMode.EVEN: return "Even"
@@ -1049,6 +1083,7 @@ func _get_split_mode_string(mode):
 		SplitMode.TEMPORAL: return "Temporal"
 		SplitMode.RANDOM: return "Random"
 		_: return "Unknown"
+
 
 func _format_timestamp(timestamp):
 	if timestamp == 0:

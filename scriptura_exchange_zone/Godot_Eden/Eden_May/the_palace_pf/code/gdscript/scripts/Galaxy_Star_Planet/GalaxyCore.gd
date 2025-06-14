@@ -1,6 +1,6 @@
 #GalaxyCore.gd in scene GalaxyCore, here we are generating a core for galaxy, right now it is the same color as galaxy fog, size was done in some way in Galaxies scene if i remember correctly
 @tool
-extends Sprite3D
+extends \2
 
 var shader_material: ShaderMaterial
 var pending_parameters: Dictionary = {}

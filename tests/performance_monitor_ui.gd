@@ -39,6 +39,7 @@ func _ready():
 func _create_ui_structure():
 	"""Create UI elements if not already in scene"""
 	if not has_node("VBoxContainer"):
+
 		var vbox = VBoxContainer.new()
 		vbox.name = "VBoxContainer"
 		add_child(vbox)
@@ -112,10 +113,12 @@ func _update_display():
 	# Update chunk count
 	var chunk_count = stats.get("active_chunks", 0)
 	chunks_label.text = "Active Chunks: %d" % chunk_count
+
 	
 	# Update generation mode
 	var mode = stats.get("current_mode", "Unknown")
 	mode_label.text = "Mode: %s" % mode
+
 	
 	# Update status
 	if stats.get("emergency_mode", false):
@@ -132,6 +135,7 @@ func _on_emergency_triggered(fps: float):
 	"""Show emergency warning"""
 	emergency_panel.visible = true
 	emergency_label.text = "🚨 EMERGENCY OPTIMIZATION 🚨\nFPS: %.1f\nAll generation paused!" % fps
+
 
 func _on_performance_recovered():
 	"""Hide emergency warning"""

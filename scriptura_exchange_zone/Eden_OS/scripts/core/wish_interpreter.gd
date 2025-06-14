@@ -1,6 +1,6 @@
 extends Node
 
-class_name WishInterpreter
+class_name WishInterpreter_wishinterpreter_wishinte
 
 # Wish/Whim-based Command Interpreter for Eden_OS
 # Translates natural wishes and whims into system commands
@@ -96,14 +96,14 @@ func _ready():
 
 func initialize_wish_system():
     # Connect to other systems
-    if get_node_or_null("/root/EdenCore"):
-        eden_core = get_node("/root/EdenCore")
+    if get_node_or_null("root/EdenCore"):
+        eden_core = get_node("root/EdenCore")
     
-    if get_node_or_null("/root/MagicSystem"):
-        magic_system = get_node("/root/MagicSystem")
+    if get_node_or_null("root/MagicSystem"):
+        magic_system = get_node("root/MagicSystem")
     
-    if get_node_or_null("/root/AISpells"):
-        ai_spells = get_node("/root/AISpells")
+    if get_node_or_null("root/AISpells"):
+        ai_spells = get_node("root/AISpells")
     
     # Initialize special commands that affect interpretation level
     if ai_spells:
@@ -457,8 +457,8 @@ func grant_wish(wish_text, user="JSH"):
             if dimension_name == "":
                 dimension_name = "wish_dimension_" + str(wish_history.size())
             
-            if get_node_or_null("/root/DimensionEngine"):
-                var dimension_engine = get_node("/root/DimensionEngine")
+            if get_node_or_null("root/DimensionEngine"):
+                var dimension_engine = get_node("root/DimensionEngine")
                 
                 # Create if it doesn't exist
                 if not dimension_engine.active_dimensions.has(dimension_name):
@@ -483,8 +483,8 @@ func grant_wish(wish_text, user="JSH"):
             var token_type = "CREATION"
             var token_amount = int(10 * wish_granting_power)
             
-            if get_node_or_null("/root/TokenSystem"):
-                var token_system = get_node("/root/TokenSystem")
+            if get_node_or_null("root/TokenSystem"):
+                var token_system = get_node("root/TokenSystem")
                 token_system.add_tokens(user, token_type, token_amount)
                 
                 result += "Generated " + str(token_amount) + " " + token_type + " tokens"
@@ -496,8 +496,8 @@ func grant_wish(wish_text, user="JSH"):
             
             result += "Knowledge magic applied\n"
             if info_target:
-                if get_node_or_null("/root/WordSystem"):
-                    var word_system = get_node("/root/WordSystem")
+                if get_node_or_null("root/WordSystem"):
+                    var word_system = get_node("root/WordSystem")
                     var info = word_system.get_word_info(info_target)
                     result += "Information: " + info
             

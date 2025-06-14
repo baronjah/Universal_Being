@@ -1,5 +1,5 @@
 @tool
-extends Node3D
+extends \2
 
 var combiner: int
 var camera: Camera3D

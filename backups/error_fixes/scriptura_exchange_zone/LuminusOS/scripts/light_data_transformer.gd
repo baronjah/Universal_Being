@@ -273,7 +273,7 @@ func _condense_data(lines, target_lines):
     var lines_removed = 0
     while lines_removed < lines_to_remove and removal_candidates.size() > 0:
         # Sort candidates by removal priority (higher values first)
-        removal_candidates.sort_custom(func(a, b): return a.priority > b.priority)
+        removal_candidates.sort_custom(func(a.b): return a.priority > b.priority)
         
         # Get highest priority candidate
         var candidate = removal_candidates.pop_front()
@@ -330,7 +330,7 @@ func _refract_data(lines, target_lines):
     # Process each line for refraction
     for line in lines:
         # Skip empty lines
-        if line.strip_edges().empty():
+        if line.strip_edges().is_empty():
             result.append(line)
             continue
         
@@ -408,7 +408,7 @@ func _find_expansion_points(lines):
         var curr_line = lines[i]
         
         # Check for paragraph breaks or conceptual shifts
-        if prev_line.strip_edges().empty() or curr_line.strip_edges().empty():
+        if prev_line.strip_edges().is_empty() or curr_line.strip_edges().is_empty():
             points.append(i)
         elif prev_line.ends_with(".") or prev_line.ends_with("!") or prev_line.ends_with("?"):
             points.append(i)
@@ -483,7 +483,7 @@ func _find_removal_candidates(lines):
         var priority = 0
         
         # Empty lines are highest priority for removal
-        if line.strip_edges().empty():
+        if line.strip_edges().is_empty():
             priority = 10
         # Short lines are good candidates
         elif line.length() < 20:
@@ -856,7 +856,7 @@ func get_transformation_history(limit=5):
     var keys = light_data_store.transformations.keys()
     
     # Sort keys by timestamp (newest first)
-    keys.sort_custom(func(a, b): 
+    keys.sort_custom(func(a.b): 
         return light_data_store.transformations[a].timestamp > light_data_store.transformations[b].timestamp
     )
     

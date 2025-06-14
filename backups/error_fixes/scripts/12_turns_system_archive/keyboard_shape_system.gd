@@ -13,7 +13,7 @@ enum KeyboardLayout {
 	DVORAK, 
 	COLEMAK, 
 	WORKMAN,
-	CUSTOM 
+	CUSTOM
 }
 
 # Keyboard visualization modes
@@ -52,7 +52,7 @@ var special_keys = {
 	"win": {"symbol": "⊞", "emoji": "🪟", "color": Color(0.3, 0.7, 0.3)},
 	"cmd": {"symbol": "⌘", "emoji": "🍎", "color": Color(0.7, 0.3, 0.7)},
 	"fn": {"symbol": "ƒn", "emoji": "🔣", "color": Color(0.5, 0.5, 0.7)},
-	"hash": {"symbol": "#", "emoji": "#️⃣", "color": Color(0.7, 0.7, 0.3)}
+	"hash": {"symbol": "#", "emoji": "#️⃣", "color": Color(0.7, 0.7, 0.3)
 }
 
 var terminal = null
@@ -85,7 +85,6 @@ var layouts = {
 		["@", "q", "w", "e", "r", "t", "y", "u", "i", "o"],
 		["<", ">", "z", "x", "c", "v", "b", "n", "m", "p"]
 	]
-}
 
 # Custom shapes for special visualizations
 var shapes = {
@@ -131,7 +130,7 @@ func _ready():
 	terminal = get_node_or_null("/root/IntegratedTerminal")
 	
 	if terminal and terminal.has_node("symbol_system"):
-		symbol_system = terminal.get_node("symbol_system")
+		symbol_system = terminal.get_node("\1") as Node
 		
 	if terminal and terminal.has_method("add_text"):
 		terminal.add_text("Keyboard Shape System initialized.", "system")
@@ -192,6 +191,7 @@ func process_keyboard_command(args):
 			display_keyboard_help()
 		_:
 			log_message("Unknown keyboard command: " + subcmd, "error")
+}
 
 # Process basic shape commands
 func process_shape_command(args):
@@ -215,6 +215,7 @@ func process_shape_command(args):
 			display_shape_help()
 		_:
 			log_message("Unknown shape command: " + subcmd, "error")
+}
 
 # Process advanced keyboard commands
 func process_advanced_keyboard_command(args):
@@ -238,6 +239,7 @@ func process_advanced_keyboard_command(args):
 			display_advanced_keyboard_help()
 		_:
 			log_message("Unknown advanced keyboard command: " + subcmd, "error")
+}
 
 # Process advanced shape commands
 func process_advanced_shape_command(args):
@@ -261,6 +263,7 @@ func process_advanced_shape_command(args):
 			display_advanced_shape_help()
 		_:
 			log_message("Unknown advanced shape command: " + subcmd, "error")
+}
 
 # Process system keyboard commands
 func process_system_keyboard_command(args):
@@ -284,6 +287,7 @@ func process_system_keyboard_command(args):
 			display_system_keyboard_help()
 		_:
 			log_message("Unknown system keyboard command: " + subcmd, "error")
+}
 
 # Process system shape commands
 func process_system_shape_command(args):
@@ -308,9 +312,10 @@ func process_system_shape_command(args):
 		_:
 			log_message("Unknown system shape command: " + subcmd, "error")
 
+
 # Show keyboard visualization
 func show_keyboard(layout_name=""):
-	if !layout_name.empty():
+	if !layout_name.is_empty():
 		set_keyboard_layout(layout_name)
 	
 	var layout_text = ""
@@ -320,8 +325,10 @@ func show_keyboard(layout_name=""):
 		KeyboardLayout.COLEMAK: layout_text = "Colemak"
 		KeyboardLayout.WORKMAN: layout_text = "Workman"
 		KeyboardLayout.CUSTOM: layout_text = "Custom"
+
 	
 	log_message("Keyboard Layout: " + layout_text, "keyboard")
+
 	
 	var keyboard = generate_keyboard_visualization()
 	for line in keyboard:
@@ -349,6 +356,7 @@ func set_keyboard_layout(layout_name):
 			log_message("Unknown keyboard layout: " + layout_name, "error")
 			log_message("Available layouts: qwerty, dvorak, colemak, workman, custom", "system")
 
+
 # Set visualization mode
 func set_visual_mode(mode_name):
 	match mode_name.to_lower():
@@ -371,6 +379,7 @@ func set_visual_mode(mode_name):
 			log_message("Unknown visual mode: " + mode_name, "error")
 			log_message("Available modes: text, unicode, emoji, color, advanced", "system")
 
+
 # Show key combination visualization
 func show_key_combo(combo):
 	var keys = combo.split("+")
@@ -380,6 +389,7 @@ func show_key_combo(combo):
 		return
 	
 	log_message("Key Combination: " + combo, "keyboard")
+
 	
 	var combo_str = ""
 	
@@ -403,10 +413,11 @@ func show_key_combo(combo):
 			combo_str += " + "
 			
 	log_message("Visualization: " + combo_str, "keyboard")
+
 	
 	# Also highlight in keyboard if it's a simple key
 	if keys.size() == 1 and keys[0].length() == 1:
-		var highlight_map = {}
+		var highlight_map = {
 		highlight_map[keys[0].strip_edges().to_lower()] = Color(1, 0.5, 0.5)
 		show_keyboard_with_highlights(highlight_map)
 
@@ -425,13 +436,15 @@ func show_key_info(key):
 		log_message("Key Information: " + key.to_upper(), "keyboard")
 		log_message("- ASCII Code: " + str(key.to_ascii()[0]), "keyboard")
 		log_message("- Hex: 0x" + "%X" % key.to_ascii()[0], "keyboard")
+}
 		
 		# Also highlight in keyboard
-		var highlight_map = {}
+		var highlight_map = {
 		highlight_map[key] = Color(1, 0.5, 0.5)
 		show_keyboard_with_highlights(highlight_map)
 	else:
 		log_message("Unknown key: " + key, "error")
+}
 
 # List keyboard options
 func list_keyboard_options(option_type=""):
@@ -456,6 +469,7 @@ func list_keyboard_options(option_type=""):
 				log_message("- " + key + ": " + special_keys[key].symbol, "system")
 		_:
 			log_message("Available option types: layouts, modes, specials", "system")
+
 
 # Show a predefined shape
 func show_shape(shape_name):
@@ -527,6 +541,7 @@ func show_ascii_art(art_name):
 			log_message("Unknown ASCII art: " + art_name, "error")
 			log_message("Available options: keyboard, hash, computer, crooked", "system")
 
+
 # Highlight specific keys on the keyboard
 func highlight_keys(key_list):
 	var keys = key_list.split(",")
@@ -535,7 +550,7 @@ func highlight_keys(key_list):
 		log_message("Please specify keys to highlight (e.g. 'a,s,d,f')", "error")
 		return
 	
-	var highlight_map = {}
+	var highlight_map = {
 	for key in keys:
 		var clean_key = key.strip_edges().to_lower()
 		highlight_map[clean_key] = Color(1, 0.5, 0.5)  # Default highlight color
@@ -549,17 +564,19 @@ func animate_keyboard(animation_type):
 		"typing":
 			log_message("Typing Animation:", "keyboard")
 			log_message("Press keys in sequence: H → E → L → L → O", "keyboard")
+}
 			
 			var highlight_sequence = ["h", "e", "l", "l", "o"]
 			for key in highlight_sequence:
-				var highlight_map = {}
+				var highlight_map = {
 				highlight_map[key] = Color(1, 0.5, 0.5)
 				show_keyboard_with_highlights(highlight_map)
-				yield(get_tree().create_timer(0.5), "timeout")
+				await(get_tree().create_timer(0.5), "timeout")
 				
 			log_message("Animation complete: 'HELLO'", "keyboard")
 		"wave":
 			log_message("Wave Animation:", "keyboard")
+}
 			
 			var wave_sequences = [
 				["q", "w", "e", "r", "t", "y", "u", "i", "o", "p"],
@@ -568,11 +585,11 @@ func animate_keyboard(animation_type):
 			]
 			
 			for row in wave_sequences:
-				var highlight_map = {}
+				var highlight_map = {
 				for key in row:
 					highlight_map[key] = Color(0.5, 0.5, 1)
 				show_keyboard_with_highlights(highlight_map)
-				yield(get_tree().create_timer(0.3), "timeout")
+				await(get_tree().create_timer(0.3), "timeout")
 				
 			log_message("Wave animation complete", "keyboard")
 		"rainbow":
@@ -582,6 +599,7 @@ func animate_keyboard(animation_type):
 		_:
 			log_message("Unknown animation type: " + animation_type, "error")
 			log_message("Available animations: typing, wave, rainbow", "system")
+}
 
 # Customize a key's appearance
 func customize_key(args):
@@ -596,7 +614,8 @@ func customize_key(args):
 	var value = parts[2]
 	
 	if !special_keys.has(key):
-		special_keys[key] = {"symbol": key, "emoji": key, "color": Color(0.8, 0.8, 0.8)}
+		special_keys[key] = {"symbol": key, "emoji": key, "color": Color(0.8, 0.8, 0.8)
+}
 	
 	match property:
 		"symbol":
@@ -606,6 +625,7 @@ func customize_key(args):
 			special_keys[key].emoji = value
 			log_message("Updated emoji for key '" + key + "' to: " + value, "system")
 		"color":
+
 			var color_parts = value.split(",")
 			if color_parts.size() >= 3:
 				var r = float(color_parts[0]) / 255.0
@@ -618,6 +638,7 @@ func customize_key(args):
 		_:
 			log_message("Unknown property: " + property, "error")
 			log_message("Available properties: symbol, emoji, color", "system")
+
 
 # Create a custom shape
 func create_custom_shape(args):
@@ -662,19 +683,23 @@ func modify_shape(args):
 	match operation.to_lower():
 		"rotate":
 			log_message("Rotating shape: " + shape_name, "system")
+
 			# In a real implementation, this would actually rotate the shape
 			log_message("Shape rotated", "system")
 		"mirror":
 			log_message("Mirroring shape: " + shape_name, "system")
+
 			# In a real implementation, this would actually mirror the shape
 			log_message("Shape mirrored", "system")
 		"scale":
 			log_message("Scaling shape: " + shape_name, "system")
+
 			# In a real implementation, this would actually scale the shape
 			log_message("Shape scaled", "system")
 		_:
 			log_message("Unknown operation: " + operation, "error")
 			log_message("Available operations: rotate, mirror, scale", "system")
+
 
 # Animate a shape (simulated)
 func animate_shape(args):
@@ -692,14 +717,15 @@ func animate_shape(args):
 		return
 	
 	log_message("Animating shape: " + shape_name + " (" + animation + ")", "system")
+
 	
 	# Show the shape multiple times to simulate animation
 	for i in range(3):
 		for line in shapes[shape_name]:
 			log_message(line, "shape")
-		yield(get_tree().create_timer(0.5), "timeout")
+		await(get_tree().create_timer(0.5), "timeout")
 		log_message("", "shape")  # Empty line as separator
-		yield(get_tree().create_timer(0.2), "timeout")
+		await(get_tree().create_timer(0.2), "timeout")
 	
 	log_message("Animation complete", "system")
 
@@ -722,35 +748,39 @@ func reset_keyboard_settings():
 		"win": {"symbol": "⊞", "emoji": "🪟", "color": Color(0.3, 0.7, 0.3)},
 		"cmd": {"symbol": "⌘", "emoji": "🍎", "color": Color(0.7, 0.3, 0.7)},
 		"fn": {"symbol": "ƒn", "emoji": "🔣", "color": Color(0.5, 0.5, 0.7)},
-		"hash": {"symbol": "#", "emoji": "#️⃣", "color": Color(0.7, 0.7, 0.3)}
-	}
+		"hash": {"symbol": "#", "emoji": "#️⃣", "color": Color(0.7, 0.7, 0.3)
+}
 	
 	log_message("Keyboard settings reset to defaults", "system")
 
 # Export keyboard layout
 func export_keyboard_layout(path):
-	if path.empty():
+	if path.is_empty():
 		path = "user://keyboard_layout.dat"
+}
 	
 	log_message("Exporting keyboard layout to: " + path, "system")
+
 	
 	# In a real implementation, this would save to a file
 	# For this mock-up, we'll just simulate it
 	
-	yield(get_tree().create_timer(0.5), "timeout")
+	await(get_tree().create_timer(0.5), "timeout")
 	log_message("Keyboard layout exported successfully", "system")
 
 # Import keyboard layout
 func import_keyboard_layout(path):
-	if path.empty():
+	if path.is_empty():
 		path = "user://keyboard_layout.dat"
+
 	
 	log_message("Importing keyboard layout from: " + path, "system")
+
 	
 	# In a real implementation, this would load from a file
 	# For this mock-up, we'll just simulate it
 	
-	yield(get_tree().create_timer(0.5), "timeout")
+	await(get_tree().create_timer(0.5), "timeout")
 	log_message("Keyboard layout imported successfully", "system")
 
 # Reset shapes
@@ -791,34 +821,38 @@ func reset_shapes():
 			" \\  / ",
 			"  \\/  "
 		]
-	}
+}
 	
 	log_message("Shapes reset to defaults", "system")
 
 # Export shapes
 func export_shapes(path):
-	if path.empty():
+	if path.is_empty():
 		path = "user://shapes.dat"
+
 	
 	log_message("Exporting shapes to: " + path, "system")
+
 	
 	# In a real implementation, this would save to a file
 	# For this mock-up, we'll just simulate it
 	
-	yield(get_tree().create_timer(0.5), "timeout")
+	await(get_tree().create_timer(0.5), "timeout")
 	log_message("Shapes exported successfully", "system")
 
 # Import shapes
 func import_shapes(path):
-	if path.empty():
+	if path.is_empty():
 		path = "user://shapes.dat"
+
 	
 	log_message("Importing shapes from: " + path, "system")
+
 	
 	# In a real implementation, this would load from a file
 	# For this mock-up, we'll just simulate it
 	
-	yield(get_tree().create_timer(0.5), "timeout")
+	await(get_tree().create_timer(0.5), "timeout")
 	log_message("Shapes imported successfully", "system")
 
 # Generate keyboard visualization

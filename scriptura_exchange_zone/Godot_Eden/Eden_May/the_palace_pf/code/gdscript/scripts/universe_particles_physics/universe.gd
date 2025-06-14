@@ -1,5 +1,5 @@
 # universe.gd - Main scene controller
-extends Node3D
+extends \2
 }
 
 # References to sub-systems
@@ -75,7 +75,7 @@ func _process(delta):
 }
 
 # Main scene controller for the Universe Simulation
-extends Node3D
+extends \2
 }
 
 # References to sub-systems

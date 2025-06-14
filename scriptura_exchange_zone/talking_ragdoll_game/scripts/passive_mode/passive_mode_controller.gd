@@ -3,7 +3,6 @@
 # DESCRIPTION: Console commands for controlling passive development
 # CREATED: 2025-05-23 - User interface for autonomous system
 # ==================================================
-
 extends UniversalBeingBase
 var autonomous_dev: Node
 var workflow_mgr: Node
@@ -70,7 +69,7 @@ func get_status() -> String:
 	report += "State: " + _state_to_string(status["state"]) + "\n"
 	report += "Current Task: " + (status["current_task"].get("name", "None") if not status["current_task"].is_empty() else "None") + "\n"
 	report += "Queue Size: " + str(status["queue_size"]) + "\n"
-	report += "Tokens: " + str(status["tokens_used"]) + " / " + str(status["tokens_used"] + status["tokens_remaining"]) + "\n"
+	report += "Tokens: " + str(status["tokens_used"]) + "  " + str(status["tokens_used"] + status["tokens_remaining"]) + "\n"
 	report += "Hours Worked: " + str(status["hours_worked"]) + "\n"
 	report += "Tasks Completed: " + str(status["completed_tasks"]) + "\n\n"
 	

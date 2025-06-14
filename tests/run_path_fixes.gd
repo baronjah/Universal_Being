@@ -12,6 +12,7 @@ var path_fixer: PathReferenceFixer
 
 func _ready() -> void:
 	print("🔧 Path Reference Fix Runner: Starting...")
+
 	
 	# Load and create path fixer
 	var fixer_script = load("res://tools/path_reference_fixer.gd")
@@ -58,6 +59,7 @@ func _on_fix_progress(current: int, total: int) -> void:
 	"""Handle fix progress updates"""
 	if current % 25 == 0 or current == total:
 		print("🔧 Progress: %d/%d files processed" % [current, total])
+
 
 func _on_fix_complete(fixes_count: int) -> void:
 	"""Handle fix completion"""

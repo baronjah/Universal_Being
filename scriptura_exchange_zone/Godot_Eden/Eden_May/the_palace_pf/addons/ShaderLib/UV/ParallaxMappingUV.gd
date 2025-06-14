@@ -1,5 +1,6 @@
 @tool
-class_name VisualShaderNodeUVParallaxMapping extends VisualShaderNodeCustom
+class_name VisualShaderNodeUVParallaxMapping_ParallaxMappingUV_Parallax
+extends \2
 
 func _get_name() -> String:
 	return "ParallaxMapping"

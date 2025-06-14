@@ -30,9 +30,11 @@ func update_debug_ui():
 	if chunk_count_label and chunk_system:
 		var debug_info = chunk_system.get_debug_info()
 		chunk_count_label.text = "Visible Chunks: %d" % debug_info.visible_chunks
+
 	
 	if fps_label:
 		fps_label.text = "FPS: %d" % Engine.get_frames_per_second()
+
 
 func _input(event):
 	if event is InputEventKey and event.pressed:
@@ -48,6 +50,7 @@ func _input(event):
 				if chunk_system:
 					var debug_info = chunk_system.get_debug_info()
 					print("🔍 Debug Info: %s" % debug_info)
+	
 			
 			KEY_F3:
 				# Save current chunk as zip

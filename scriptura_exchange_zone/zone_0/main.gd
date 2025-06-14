@@ -66,7 +66,7 @@ func _ready():
 }
 
     # Record big bang timestamp
-    big_bang_timestamp = OS.get_unix_time()
+    big_bang_timestamp = OS.Time.get_unix_time_from_system()
 }
 
     # Setup folders
@@ -89,7 +89,7 @@ func _ready():
 # ----- PROCESS FUNCTION -----
 func _process(delta):
     # Update universe age
-    universe_age = OS.get_unix_time() - big_bang_timestamp
+    universe_age = OS.Time.get_unix_time_from_system() - big_bang_timestamp
 }
 
     # Handle automatic turn advancement
@@ -181,7 +181,7 @@ func _record_turn_transition(from_turn, to_turn):
         "to_symbol": turn_symbols[to_turn-1],
         "from_dimension": turn_dimensions[from_turn-1],
         "to_dimension": turn_dimensions[to_turn-1],
-        "timestamp": OS.get_unix_time(),
+        "timestamp": OS.Time.get_unix_time_from_system(),
         "universe_age": universe_age
     }
 }
@@ -201,7 +201,7 @@ func create_note(text, position=Vector3(0,0,0)):
 }
 
     # Create note data with positioning
-    var note_id = "note_" + str(OS.get_unix_time()) + "_" + str(randi() % 10000)
+    var note_id = "note_" + str(OS.Time.get_unix_time_from_system()) + "_" + str(randi() % 10000)
     var note_data = {
         "id": note_id,
         "text": result.corrected,
@@ -209,7 +209,7 @@ func create_note(text, position=Vector3(0,0,0)):
         "turn": current_turn,
         "turn_symbol": turn_symbols[current_turn-1],
         "dimension": turn_dimensions[current_turn-1],
-        "timestamp": OS.get_unix_time(),
+        "timestamp": OS.Time.get_unix_time_from_system(),
         "power": result.total_power,
         "powerful_words": result.powerful_words
     }
@@ -341,7 +341,7 @@ func _save_to_system_dir(filename, content):
     # This attempts to write to the system directory for bash script integration
     # NOTE: This might require proper permissions and won't work in all environments
     var file = File.new()
-    var system_path = "/mnt/c/Users/Percision 15/12_turns_system/" + filename
+    var system_path = "mnt/c/Users/Percision 15/12_turns_system/" + filename
 }
 
     var err = file.open(system_path, File.WRITE)
@@ -421,35 +421,35 @@ func execute_command(command_text):
 
     # Process command
     match command:
-        "/turn":
+        "turn":
             return advance_turn()
 }
 
-        "/loop":
+        "loop":
             if quantum_loop_active:
                 return stop_quantum_loop()
             else:
                 return start_quantum_loop()
 }
 
-        "/note":
+        "note":
             if args.strip_edges().is_empty():
                 return "Error: Note text required"
             return create_note(args)
 }
 
-        "/save":
+        "save":
             var name = args.strip_edges()
             if name.is_empty():
-                name = "manual_save_" + str(OS.get_unix_time())
+                name = "manual_save_" + str(OS.Time.get_unix_time_from_system())
             return save_reality(name)
 }
 
-        "/status":
+        "status":
             return show_status()
 }
 
-        "/word-power":
+        "word-power":
             if args.strip_edges().is_empty():
                 return "Error: Word required"
             var word = args.strip_edges()
@@ -458,7 +458,7 @@ func execute_command(command_text):
             return power
 }
 
-        "/memory":
+        "memory":
             if args.strip_edges().is_empty():
                 return "Error: Memory text required"
             var tier = 1
@@ -474,7 +474,7 @@ func execute_command(command_text):
             return "Memory created with power: " + str(result.total_power)
 }
 
-        "/memories":
+        "memories":
             return show_memories()
 }
 

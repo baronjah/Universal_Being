@@ -11,18 +11,21 @@ func _ready() -> void:
 	check_file("res://core/FloodGates.gd") 
 	check_file("res://systems/storage/AkashicRecordsSystem.gd")
 	check_file("res://autoloads/SystemBootstrap.gd")
+
 	
 	# Try loading classes
 	print("\n📦 Load Test:")
 	test_load("res://core/UniversalBeing.gd", "UniversalBeing")
 	test_load("res://core/FloodGates.gd", "FloodGates")
 	test_load("res://systems/storage/AkashicRecordsSystem.gd", "AkashicRecordsSystemSystem")
+
 	
 	# Check SystemBootstrap
 	print("\n🚀 SystemBootstrap Check:")
 	if SystemBootstrap:
 		print("✅ SystemBootstrap exists")
 		print("   Ready: %s" % SystemBootstrap.is_system_ready())
+
 		var status = SystemBootstrap.get_system_status()
 		print("   Core Loaded: %s" % status.core_loaded)
 		print("   Errors: %d" % status.errors.size())

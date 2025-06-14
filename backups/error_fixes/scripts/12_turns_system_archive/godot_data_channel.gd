@@ -24,9 +24,9 @@ var config = {
 }
 
 # Channel states
-var active_channels = {}
-var channel_buffers = {}
-var time_markers = {}
+var active_channels = {
+var channel_buffers = {
+var time_markers = {
 
 # Dimension tracking
 var current_dimension = 3 # Default to 3D space
@@ -39,7 +39,7 @@ var TURN_DIMENSIONS = ["1D", "2D", "3D", "4D", "5D", "6D", "7D", "8D", "9D", "10
 var TURN_CONCEPTS = ["Point", "Line", "Space", "Time", "Consciousness", "Connection", "Creation", "Network", "Harmony", "Unity", "Transcendence", "Infinity"]
 
 # Device connection registry
-var connected_devices = {}
+var connected_devices = {
 
 # ===== INITIALIZATION =====
 
@@ -63,7 +63,7 @@ func _setup_connection_monitor():
 	var timer = Timer.new()
 	timer.wait_time = 5.0
 	timer.autostart = true
-	timer.connect("timeout", self, "_check_device_connections")
+	timer.connect(_check_device_connections)
 	add_child(timer)
 
 func _initialize_buffers():
@@ -75,6 +75,7 @@ func _initialize_buffers():
 func _load_config():
 	var file = File.new()
 	var config_path = "user://godot_data_channel_config.json"
+}
 	
 	if file.file_exists(config_path):
 		file.open(config_path, File.READ)
@@ -99,8 +100,8 @@ func _connect_to_turn_system():
 	
 	if turn_system:
 		# Connect to the turn system signals
-		turn_system.connect("dimension_changed", self, "_on_dimension_changed")
-		turn_system.connect("token_advanced", self, "_on_token_advanced")
+		turn_system.connect(_on_dimension_changed)
+		turn_system.connect(_on_token_advanced)
 		
 		# Sync current dimension
 		current_dimension = turn_system.current_dimension
@@ -125,7 +126,7 @@ func open_channel(device_id, device_type, auth_token = ""):
 		"dimension": current_dimension,
 		"auth_token": auth_token,
 		"packet_count": 0
-	}
+}
 	
 	# Store in active channels
 	active_channels[channel_id] = channel
@@ -135,12 +136,13 @@ func open_channel(device_id, device_type, auth_token = ""):
 		"last_seen": OS.get_unix_time(),
 		"type": device_type,
 		"channels": [channel_id]
-	}
+}
 	
 	# Emit signal
 	emit_signal("channel_opened", device_id, channel_id)
 	
 	print("Channel opened for device: " + device_id + " (Type: " + device_type + ")")
+}
 	
 	return channel_id
 
@@ -160,13 +162,14 @@ func close_channel(channel_id):
 				device.channels.erase(channel_id)
 			
 			# Remove device if no more channels
-			if device.channels.empty() and not config.persistent_channels:
+			if device.channels.is_empty() and not config.persistent_channels:
 				connected_devices.erase(channel.device_id)
 		
 		# Emit signal
 		emit_signal("channel_closed", channel.device_id, channel_id)
 		
 		print("Channel closed: " + channel_id)
+}
 		
 		return true
 	
@@ -209,7 +212,7 @@ func send_data(channel_id, data, metadata = {}):
 		"token": current_token,
 		"data": data,
 		"metadata": metadata
-	}
+}
 	
 	# Process packet based on dimension rules
 	_process_packet(packet, channel)
@@ -229,7 +232,7 @@ func receive_data(device_id, data, metadata = {}):
 	
 	if connected_devices.has(device_id):
 		var device = connected_devices[device_id]
-		if not device.channels.empty():
+		if not device.channels.is_empty():
 			channel_id = device.channels[0]
 	
 	# Create channel if needed and allowed
@@ -299,8 +302,8 @@ func _process_packet(packet, channel):
 				"token": current_token,
 				"total_packets": channel_buffers[dimension].size(),
 				"device_count": connected_devices.size()
-			}
 			channel_buffers[dimension].append(packet)
+}
 			
 		6: # Connection - link related data across dimensions
 			# Add connection references
@@ -339,12 +342,12 @@ func _process_packet(packet, channel):
 				"connections": connected_devices.size(),
 				"position": channel_buffers[dimension].size(),
 				"links": []
-			}
+	}
 			
 			# Create links to related packets
 			var link_count = min(3, channel_buffers[dimension].size())
 			for i in range(link_count):
-				if not channel_buffers[dimension].empty():
+				if not channel_buffers[dimension].is_empty():
 					var index = channel_buffers[dimension].size() - 1 - i
 					if index >= 0:
 						var linked_packet = channel_buffers[dimension][index]
@@ -369,7 +372,7 @@ func _process_packet(packet, channel):
 				"balance_score": clamp(1.0 - (float(imbalance) / max(1, max_size)), 0.0, 1.0),
 				"imbalance": imbalance,
 				"dimensions_active": 0
-			}
+	}
 			
 			# Count active dimensions
 			for d in range(1, 13):
@@ -380,18 +383,18 @@ func _process_packet(packet, channel):
 			
 		10: # Unity - combine aspects of all dimensions
 			# Create unified view
-			packet.unified_view = {}
+			packet.unified_view = {
 			
 			# Sample from each dimension
 			for d in range(1, 13):
-				if not channel_buffers[d].empty():
+				if not channel_buffers[d].is_empty():
 					# Get most recent packet from this dimension
 					var sample = channel_buffers[d].back()
 					packet.unified_view[str(d)] = {
 						"id": sample.id,
 						"timestamp": sample.timestamp,
 						"source": sample.source
-					}
+	}
 			
 			channel_buffers[dimension].append(packet)
 			
@@ -416,8 +419,8 @@ func _process_packet(packet, channel):
 						"original_dimension": dimension,
 						"original_id": packet.id,
 						"data": packet.data
-					}
 					channel_buffers[d].append(reference)
+}
 			
 		12: # Infinity - no limits
 			# Add to all possible buffers, past and future
@@ -506,6 +509,7 @@ func _check_device_connections():
 		
 		if time_diff > timeout_threshold:
 			print("Device timed out: " + device_id)
+}
 			
 			# Close all channels for this device
 			for channel_id in device.channels:
@@ -519,6 +523,7 @@ func _check_device_connections():
 func save_config():
 	var file = File.new()
 	var config_path = "user://godot_data_channel_config.json"
+}
 	
 	file.open(config_path, File.WRITE)
 	file.store_string(JSON.print(config, "  "))
@@ -540,7 +545,7 @@ func get_current_dimension_info():
 		"active_channels": get_active_channels().size(),
 		"connected_devices": connected_devices.size(),
 		"data_packets": channel_buffers[current_dimension].size()
-	}
+}
 
 # Get channel statistics
 func get_channel_stats():
@@ -550,7 +555,7 @@ func get_channel_stats():
 		"total_devices": connected_devices.size(),
 		"packets_by_dimension": {},
 		"total_packets": 0
-	}
+}
 	
 	# Count active channels
 	for channel_id in active_channels.keys():
@@ -585,7 +590,7 @@ func export_device_data(device_id):
 		"channels": [],
 		"packets": [],
 		"exported_at": OS.get_datetime()
-	}
+}
 	
 	# Add channel information
 	for channel_id in connected_devices[device_id].channels:
@@ -607,10 +612,10 @@ func clear_all_data():
 		channel_buffers[d] = []
 	
 	# Reset active channels
-	active_channels = {}
+	active_channels = {
 	
 	# Reset connected devices
-	connected_devices = {}
+	connected_devices = {
 	
 	# Reset counters
 	tokens_completed = 0

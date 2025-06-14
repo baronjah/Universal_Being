@@ -36,7 +36,6 @@ var cursor_colors = {
 	CursorMode.PLASMOID_ENERGY: Color.MAGENTA,
 	CursorMode.TEXT_SELECTION: Color.YELLOW,
 	CursorMode.COSMIC_NAVIGATION: Color.WHITE
-}
 
 # Cursor configuration
 var cursor_size: float = 0.5
@@ -52,12 +51,14 @@ func pentagon_init():
 	being_name = "3D Cursor Universal Being"
 	consciousness_level = 2
 	print("🎯 3D Cursor: Initializing plasmoid crosshair system...")
+}
 
 func pentagon_ready():
 	super.pentagon_ready()
 	create_3d_cursor_system()
 	set_cursor_mode(CursorMode.NORMAL)
 	print("✨ 3D Cursor: Plasmoid energy cursor ready!")
+}
 
 func pentagon_process(delta: float):
 	super.pentagon_process(delta)
@@ -352,6 +353,7 @@ func set_cursor_mode(new_mode: CursorMode):
 	cursor_mode_changed.emit(get_mode_name(new_mode))
 	print("🎯 Cursor mode changed to: " + get_mode_name(new_mode))
 
+
 func get_mode_name(mode: CursorMode) -> String:
 	"""Get human-readable mode name"""
 	match mode:
@@ -385,6 +387,7 @@ func set_target_object(target: Node3D, hit_position: Vector3):
 		distance_indicator.visible = true
 		var distance = global_position.distance_to(hit_position)
 		distance_indicator.text = "🎯 TARGET: " + target.name + "\nDistance: %.1f" % distance
+
 	
 	target_acquired.emit(target)
 
@@ -416,11 +419,13 @@ func show_cursor():
 	visible = true
 	print("🎯 3D Cursor: Visible")
 
+
 func hide_cursor():
 	"""Hide the cursor"""
 	is_visible = false
 	visible = false
 	print("👻 3D Cursor: Hidden")
+
 
 func toggle_cursor_visibility():
 	"""Toggle cursor visibility"""
@@ -522,4 +527,3 @@ func get_cursor_info() -> Dictionary:
 		"visible": is_visible,
 		"energy_intensity": energy_intensity,
 		"adaptive_distance": _calculate_adaptive_distance(_estimate_world_scale(), 1.0)
-	}

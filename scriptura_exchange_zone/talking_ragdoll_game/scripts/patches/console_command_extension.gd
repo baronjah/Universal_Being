@@ -3,7 +3,6 @@
 # Created: May 31, 2025, 23:28 CEST
 # Purpose: Ragdoll physics and behavior system
 # Connection: Part of Pentagon Architecture migration
-
 extends UniversalBeingBase
 # Console Command Extension - Adds new commands via monkey patching
 
@@ -16,7 +15,7 @@ func _ready() -> void:
 func pentagon_ready() -> void:
 	super.pentagon_ready()
 	# Get console manager
-	console = get_node_or_null("/root/ConsoleManager")
+	console = get_node_or_null("root/ConsoleManager")
 	if not console:
 		push_error("[CommandExtension] ConsoleManager not found!")
 		return
@@ -146,7 +145,7 @@ func _cmd_walker_debug(args: Array) -> void:
 func _cmd_layers(_args: Array) -> void:
 	_print("[color=#00ffff]=== Layer System Status ===[/color]")
 	
-	var layer_system = get_node_or_null("/root/LayerRealitySystem")
+	var layer_system = get_node_or_null("root/LayerRealitySystem")
 	if layer_system:
 		_print("[color=#00ff00]Layer Reality System: ACTIVE[/color]")
 		_print("F1: Console (this)")
@@ -162,7 +161,7 @@ func _cmd_layer(args: Array) -> void:
 		_print("Usage: layer [show|hide|toggle] [text|map|debug|full]")
 		return
 	
-	var layer_system = get_node_or_null("/root/LayerRealitySystem")
+	var layer_system = get_node_or_null("root/LayerRealitySystem")
 	if not layer_system:
 		_print("[color=#ff0000]Layer system not available[/color]")
 		return

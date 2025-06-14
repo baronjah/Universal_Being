@@ -1,6 +1,6 @@
 extends Node
 
-class_name StorageManager
+class_name StorageManager_storagemanager_storagem
 
 # Storage Manager for LuminusOS
 # Handles large-scale storage operations, optimization, and access for games and data
@@ -87,7 +87,7 @@ func allocate_game_storage(game_id, size_mb=DEFAULT_GAME_ALLOCATION):
         return "ERROR: Insufficient storage. Available: " + format_size(storage_stats.available_mb)
     
     # Create game directory
-    var game_path = games_path + game_id + "/"
+    var game_path = games_path + game_id + ""
     _ensure_directory_exists(game_path)
     
     # Create allocation record
@@ -145,7 +145,7 @@ func create_game_backup(game_id, label=""):
         return "ERROR: Insufficient storage for backup. Need " + format_size(game_size)
     
     # Create backup directory
-    var backup_path = backups_path + backup_id + "/"
+    var backup_path = backups_path + backup_id + ""
     _ensure_directory_exists(backup_path)
     
     # Create backup record

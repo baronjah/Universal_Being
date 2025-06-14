@@ -3,16 +3,16 @@
 # Created: May 31, 2025, 23:28 CEST
 # Purpose: Ragdoll physics and behavior system
 # Connection: Part of Pentagon Architecture migration
-
-extends UniversalBeingBase
-class_name ConsoleChannelSystem
+extends \2
+class_name ConsoleChannelSystem_consolechannelsystem_consolec
 
 # Console Channel System - Organize console output by channels
 
 signal channel_changed(channel: String)
 
 # Channel definitions
-enum Channel {
+enum \2 {
+
 	ALL,
 	SYSTEM,
 	GAME,

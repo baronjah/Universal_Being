@@ -6,7 +6,7 @@
 
 @tool
 extends UniversalBeingBase
-class_name Zone
+class_name Zone_zone
 ## Base class for all zones in the 3D block coding system
 ## Zones are spatial areas that process and transform data
 
@@ -15,9 +15,9 @@ signal zone_connected(other_zone: Zone)
 signal processing_started()
 signal processing_completed()
 
-@export var zone_size: Vector3 = Vector3(10, 10, 10)
-@export var zone_color: Color = Color(0.5, 0.5, 1.0, 0.3)
-@export var zone_name: String = "Zone"
+@@export var zone_size: Vector3 = Vector3(10, 10, 10)
+@@export var zone_color: Color = Color(0.5, 0.5, 1.0, 0.3)
+@@export var zone_name: String = "Zone"
 
 var zone_id: String = ""
 var zone_data: Dictionary = {}

@@ -1,5 +1,5 @@
 extends Node
-class_name JSH_AkashicRecords
+class_name JSH_AkashicRecords_JSHAkashicRecords_JSHAkash
 
 # Main entry point for the Akashic Records system
 # Add this script to your main scene to integrate everything
@@ -269,8 +269,8 @@ func _connect_to_element_system() -> void:
 	# Find Element Manager
 	var element_manager = null
 	
-	if has_node("/root/ElementManager"):
-		element_manager = get_node("/root/ElementManager")
+	if has_node("root/ElementManager"):
+		element_manager = get_node("root/ElementManager")
 	else:
 		var nodes = get_tree().get_nodes_in_group("element_manager")
 		if nodes.size() > 0:
@@ -301,8 +301,8 @@ func _connect_to_menu_system() -> void:
 	# Find main menu system
 	var menu_system = null
 	
-	if has_node("/root/main"):
-		menu_system = get_node("/root/main")
+	if has_node("root/main"):
+		menu_system = get_node("root/main")
 		
 		# Find JSH console if available
 		if menu_system.has_node("JSH_console"):

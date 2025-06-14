@@ -127,12 +127,12 @@ func _ready():
 	# Set up timers
 	next_turn_timer = Timer.new()
 	next_turn_timer.one_shot = true
-	next_turn_timer.connect("timeout", self, "_on_next_turn_timer")
+	next_turn_timer.connect(_on_next_turn_timer)
 	add_child(next_turn_timer)
 	
 	pause_timer = Timer.new()
 	pause_timer.one_shot = true
-	pause_timer.connect("timeout", self, "_on_pause_timer")
+	pause_timer.connect(_on_pause_timer)
 	add_child(pause_timer)
 	
 	# Connect to other systems
@@ -160,13 +160,13 @@ func _process(delta):
 func connect_to_memory_system():
 	# Connect to ProjectMemorySystem if available
 	if has_node("/root/ProjectMemorySystem") or get_node_or_null("/root/ProjectMemorySystem"):
-		memory_system = get_node("/root/ProjectMemorySystem")
+		memory_system = get_node("\1") as Node
 		print("Connected to ProjectMemorySystem")
 		return true
 	
 	# Try SmartAccountSystem path
 	if has_node("/root/SmartAccountSystem/ProjectMemorySystem") or get_node_or_null("/root/SmartAccountSystem/ProjectMemorySystem"):
-		memory_system = get_node("/root/SmartAccountSystem/ProjectMemorySystem")
+		memory_system = get_node("\1") as Node
 		print("Connected to ProjectMemorySystem under SmartAccountSystem")
 		return true
 	
@@ -193,7 +193,7 @@ func connect_to_turn_system():
 
 func invest_word(word, category = "conceptual", initial_value = 10.0, rarity = "common"):
 	# Validate inputs
-	if word.empty():
+	if word.is_empty():
 		print("Cannot invest empty word")
 		return null
 	
@@ -448,7 +448,7 @@ func get_top_investments(count = 5):
 		investments.append(active_investments[investment_id])
 	
 	# Sort by current value
-	investments.sort_custom(self, "_sort_by_value")
+	investments.sort_custom(self."_sort_by_value")
 	
 	# Return top investments
 	return investments.slice(0, min(count - 1, investments.size() - 1))
@@ -534,7 +534,7 @@ func _on_next_turn_timer():
 	if auto_next_turn and not is_system_paused:
 		# Pause briefly before advancing turn
 		pause_system(3.0) # Short pause for break
-		yield(get_tree().create_timer(3.0), "timeout")
+		await(get_tree().create_timer(3.0), "timeout")
 		advance_turn()
 
 func _on_pause_timer():

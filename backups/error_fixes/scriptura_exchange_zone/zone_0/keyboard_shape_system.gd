@@ -131,7 +131,7 @@ func _ready():
 	terminal = get_node_or_null("/root/IntegratedTerminal")
 	
 	if terminal and terminal.has_node("symbol_system"):
-		symbol_system = terminal.get_node("symbol_system")
+		symbol_system = terminal.get_node("\1") as Node
 		
 	if terminal and terminal.has_method("add_text"):
 		terminal.add_text("Keyboard Shape System initialized.", "system")
@@ -310,7 +310,7 @@ func process_system_shape_command(args):
 
 # Show keyboard visualization
 func show_keyboard(layout_name=""):
-	if !layout_name.empty():
+	if !layout_name.is_empty():
 		set_keyboard_layout(layout_name)
 	
 	var layout_text = ""
@@ -555,7 +555,7 @@ func animate_keyboard(animation_type):
 				var highlight_map = {}
 				highlight_map[key] = Color(1, 0.5, 0.5)
 				show_keyboard_with_highlights(highlight_map)
-				yield(get_tree().create_timer(0.5), "timeout")
+				await(get_tree().create_timer(0.5), "timeout")
 				
 			log_message("Animation complete: 'HELLO'", "keyboard")
 		"wave":
@@ -572,7 +572,7 @@ func animate_keyboard(animation_type):
 				for key in row:
 					highlight_map[key] = Color(0.5, 0.5, 1)
 				show_keyboard_with_highlights(highlight_map)
-				yield(get_tree().create_timer(0.3), "timeout")
+				await(get_tree().create_timer(0.3), "timeout")
 				
 			log_message("Wave animation complete", "keyboard")
 		"rainbow":
@@ -697,9 +697,9 @@ func animate_shape(args):
 	for i in range(3):
 		for line in shapes[shape_name]:
 			log_message(line, "shape")
-		yield(get_tree().create_timer(0.5), "timeout")
+		await(get_tree().create_timer(0.5), "timeout")
 		log_message("", "shape")  # Empty line as separator
-		yield(get_tree().create_timer(0.2), "timeout")
+		await(get_tree().create_timer(0.2), "timeout")
 	
 	log_message("Animation complete", "system")
 
@@ -729,7 +729,7 @@ func reset_keyboard_settings():
 
 # Export keyboard layout
 func export_keyboard_layout(path):
-	if path.empty():
+	if path.is_empty():
 		path = "user://keyboard_layout.dat"
 	
 	log_message("Exporting keyboard layout to: " + path, "system")
@@ -737,12 +737,12 @@ func export_keyboard_layout(path):
 	# In a real implementation, this would save to a file
 	# For this mock-up, we'll just simulate it
 	
-	yield(get_tree().create_timer(0.5), "timeout")
+	await(get_tree().create_timer(0.5), "timeout")
 	log_message("Keyboard layout exported successfully", "system")
 
 # Import keyboard layout
 func import_keyboard_layout(path):
-	if path.empty():
+	if path.is_empty():
 		path = "user://keyboard_layout.dat"
 	
 	log_message("Importing keyboard layout from: " + path, "system")
@@ -750,7 +750,7 @@ func import_keyboard_layout(path):
 	# In a real implementation, this would load from a file
 	# For this mock-up, we'll just simulate it
 	
-	yield(get_tree().create_timer(0.5), "timeout")
+	await(get_tree().create_timer(0.5), "timeout")
 	log_message("Keyboard layout imported successfully", "system")
 
 # Reset shapes
@@ -797,7 +797,7 @@ func reset_shapes():
 
 # Export shapes
 func export_shapes(path):
-	if path.empty():
+	if path.is_empty():
 		path = "user://shapes.dat"
 	
 	log_message("Exporting shapes to: " + path, "system")
@@ -805,12 +805,12 @@ func export_shapes(path):
 	# In a real implementation, this would save to a file
 	# For this mock-up, we'll just simulate it
 	
-	yield(get_tree().create_timer(0.5), "timeout")
+	await(get_tree().create_timer(0.5), "timeout")
 	log_message("Shapes exported successfully", "system")
 
 # Import shapes
 func import_shapes(path):
-	if path.empty():
+	if path.is_empty():
 		path = "user://shapes.dat"
 	
 	log_message("Importing shapes from: " + path, "system")
@@ -818,7 +818,7 @@ func import_shapes(path):
 	# In a real implementation, this would load from a file
 	# For this mock-up, we'll just simulate it
 	
-	yield(get_tree().create_timer(0.5), "timeout")
+	await(get_tree().create_timer(0.5), "timeout")
 	log_message("Shapes imported successfully", "system")
 
 # Generate keyboard visualization

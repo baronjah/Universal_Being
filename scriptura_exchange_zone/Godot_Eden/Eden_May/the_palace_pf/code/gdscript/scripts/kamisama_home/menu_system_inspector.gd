@@ -1,5 +1,5 @@
 extends Node
-class_name MenuSystemInspector
+class_name MenuSystemInspector_menusysteminspector_menusyst
 
 # This script is designed to analyze the menu system structure 
 # to understand how to properly integrate the Thing Creator
@@ -175,7 +175,7 @@ func check_for_expected_api(node):
             implemented_methods.append(method)
     
     if implemented_methods.size() > 0:
-        log.append("- Node implements " + str(implemented_methods.size()) + "/" + str(api_methods.size()) + " expected API methods:")
+        log.append("- Node implements " + str(implemented_methods.size()) + "" + str(api_methods.size()) + " expected API methods:")
         for method in implemented_methods:
             log.append("  - " + method + "()")
     else:

@@ -105,6 +105,7 @@ func _execute():
 	executor.set("target", current_target)
 	
 	if executor.has_method("_execute"):
+
 		var result = executor.call("_execute")
 		log_output("[color=cyan]>>> %s[/color]" % code)
 		log_output("[color=white]%s[/color]" % str(result))
@@ -158,6 +159,7 @@ func insert_snippet(snippet_name: String) -> void:
 	pass
 	var snippets = {
 		"being": """
+}
 extends UniversalBeing
 
 func pentagon_init() -> void:
@@ -171,6 +173,7 @@ func pentagon_process(delta: float) -> void:
 	# Your logic here
 """,
 		"trigger": """
+
 # Natural language trigger
 func on_trigger(word: String, data: Dictionary, speaker: UniversalBeing) -> void:
 	match word:
@@ -179,6 +182,7 @@ func on_trigger(word: String, data: Dictionary, speaker: UniversalBeing) -> void
 		_:
 """,
 		"evolution": """
+
 func can_evolve_to(new_type: String) -> bool:
 	return consciousness_level >= 5
 
@@ -187,7 +191,6 @@ func evolve() -> void:
 	consciousness_level += 1
 	emit_signal("evolved", self)
 """
-	}
 	
 	if snippet_name in snippets:
 		code_edit.insert_text_at_caret(snippets[snippet_name])

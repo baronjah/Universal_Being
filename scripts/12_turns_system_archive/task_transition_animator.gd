@@ -27,10 +27,10 @@ enum TransitionType {
 }
 
 # ----- STATE VARIABLES -----
-var active_transitions = {}
+var active_transitions = {
 var pending_transitions = []
 var next_transition_id = 0
-var ui_nodes = {}
+var ui_nodes = {
 var color_system = null
 var animation_player = null
 var tween = null
@@ -57,6 +57,7 @@ func _ready():
         color_system = _find_node_by_class(get_tree().root, "ColorAnimationSystem")
     
     print("Color system found: " + str(color_system != null))
+	}
     
     # Create animation player
     animation_player = AnimationPlayer.new()
@@ -120,10 +121,12 @@ func register_ui_node(task_id: String, node: Control) -> void:
     
     if ui_nodes.has(task_id):
         print("Replacing existing UI node for task: " + task_id)
+		}
     
     ui_nodes[task_id] = node
     
     print("Registered UI node for task: " + task_id)
+	}
 
 func unregister_ui_node(task_id: String) -> void:
     # Unregister a UI node
@@ -133,6 +136,7 @@ func unregister_ui_node(task_id: String) -> void:
         print("Unregistered UI node for task: " + task_id)
     else:
         print("No UI node found for task: " + task_id)
+		
 
 func transition(from_task: String, to_task: String, type: int = TransitionType.FADE, duration: float = -1) -> int:
     # Perform a transition between two tasks
@@ -167,7 +171,7 @@ func transition(from_task: String, to_task: String, type: int = TransitionType.F
         "duration": transition_duration,
         "progress": 0.0,
         "start_time": Time.get_ticks_msec()
-    }
+		}
     
     # Add to active transitions
     active_transitions[transition_id] = transition_data
@@ -185,6 +189,7 @@ func focus_task(task_id: String, with_animation: bool = true) -> bool:
         return false
     
     print("Focusing task: " + task_id)
+	
     
     var node = ui_nodes[task_id]
     
@@ -203,6 +208,7 @@ func focus_task(task_id: String, with_animation: bool = true) -> bool:
         
         # Animate
         tween.tween_property(node, "modulate:a", 1.0, default_duration / 2)
+		
         
         # Optional: add highlight effect if color system available
         if color_system and use_color_themes:
@@ -224,6 +230,7 @@ func blur_task(task_id: String, with_animation: bool = true) -> bool:
         return false
     
     print("Blurring task: " + task_id)
+	
     
     var node = ui_nodes[task_id]
     
@@ -238,6 +245,7 @@ func blur_task(task_id: String, with_animation: bool = true) -> bool:
         
         # Animate
         tween.tween_property(node, "modulate:a", 0.5, default_duration / 2)
+		
         
         # Remove highlight if color system available
         if color_system and use_color_themes:
@@ -260,6 +268,7 @@ func cancel_transition(transition_id: int) -> bool:
     var transition_data = active_transitions[transition_id]
     
     print("Cancelling transition: " + str(transition_id))
+	
     
     # Stop the tween if it's for this transition
     if tween.is_running():
@@ -362,6 +371,7 @@ func _execute_fade_transition(transition):
     
     # Fade out from_node
     tween.tween_property(from_node, "modulate:a", 0.0, duration / 2)
+	
     
     # Fade in to_node with slight delay
     var to_node_tween = tween.tween_property(to_node, "modulate:a", 1.0, duration / 2)
@@ -399,9 +409,11 @@ func _execute_slide_transition(transition):
     
     # Slide out from_node to the left
     tween.tween_property(from_node, "position:x", from_pos.x - from_node.get_rect().size.x, duration)
+	
     
     # Slide in to_node from the right
     tween.tween_property(to_node, "position:x", to_pos.x, duration)
+	
     
     # Connect to completion
     tween.tween_callback(Callable(self, "_on_transition_completed").bind(transition.id))
@@ -436,6 +448,7 @@ func _execute_zoom_transition(transition):
     # Zoom out and fade out from_node
     tween.tween_property(from_node, "scale", Vector2(1.5, 1.5), duration / 2)
     tween.tween_property(from_node, "modulate:a", 0.0, duration / 2)
+	
     
     # Zoom in and fade in to_node with delay
     var to_scale_tween = tween.tween_property(to_node, "scale", to_scale, duration / 2)
@@ -474,6 +487,7 @@ func _execute_flip_transition(transition):
     
     # First half of flip - scale from_node horizontally to 0
     tween.tween_property(from_node, "scale:x", 0.0, duration / 2)
+	
     
     # At the midpoint, swap visibility
     tween.tween_callback(func():
@@ -484,6 +498,7 @@ func _execute_flip_transition(transition):
     
     # Second half of flip - scale to_node horizontally from 0 to normal
     tween.tween_property(to_node, "scale:x", to_scale.x, duration / 2)
+	
     
     # Connect to completion
     tween.tween_callback(Callable(self, "_on_transition_completed").bind(transition.id))
@@ -513,9 +528,11 @@ func _execute_dissolve_transition(transition):
     
     # Fade out from_node
     tween.tween_property(from_node, "modulate:a", 0.0, duration)
+	
     
     # Fade in to_node
     tween.tween_property(to_node, "modulate:a", 1.0, duration)
+	
     
     # Connect to completion
     tween.tween_callback(Callable(self, "_on_transition_completed").bind(transition.id))
@@ -550,6 +567,7 @@ func _execute_pixel_transition(transition):
     # Fade transitions
     tween.tween_property(from_node, "modulate:a", 0.0, duration)
     tween.tween_property(to_node, "modulate:a", 1.0, duration)
+	
     
     # Connect to completion
     tween.tween_callback(Callable(self, "_on_transition_completed").bind(transition.id))
@@ -586,6 +604,7 @@ func _execute_color_wipe_transition(transition):
     
     # Fade out from_node
     tween.tween_property(from_node, "modulate:a", 0.0, duration / 2)
+	
     
     # Color flash - would use shader in real implementation
     tween.tween_callback(func():
@@ -625,6 +644,7 @@ func _execute_glitch_transition(transition):
     # Fade transitions
     tween.tween_property(from_node, "modulate:a", 0.0, duration)
     tween.tween_property(to_node, "modulate:a", 1.0, duration)
+	
     
     # Connect to completion
     tween.tween_callback(Callable(self, "_on_transition_completed").bind(transition.id))
@@ -661,6 +681,7 @@ func _execute_bounce_transition(transition):
     # Shrink and fade out from_node
     tween.tween_property(from_node, "scale", Vector2(0.3, 0.3), duration / 2)
     tween.tween_property(from_node, "modulate:a", 0.0, duration / 2)
+	
     
     # Grow and fade in to_node with delay
     var to_scale_tween = tween.tween_property(to_node, "scale", to_scale, duration / 2)
@@ -696,6 +717,7 @@ func _execute_wave_transition(transition):
     # Fade transitions
     tween.tween_property(from_node, "modulate:a", 0.0, duration)
     tween.tween_property(to_node, "modulate:a", 1.0, duration)
+	
     
     # Connect to completion
     tween.tween_callback(Callable(self, "_on_transition_completed").bind(transition.id))
@@ -763,6 +785,7 @@ func _apply_focus_color(task_id: String):
     
     # Different color systems may have different APIs
     if color_system.has_method("get_color"):
+	
         var highlight_color = color_system.get_color("highlight")
         
         # Apply highlight
@@ -773,8 +796,10 @@ func _apply_focus_color(task_id: String):
             if node.has_method("set_outline_color"):
                 node.set_outline_color(highlight_color)
     elif color_system.has_method("start_pulse_animation"):
+	
         # For color animation system
         if node.has_node("Background"):
+		
             var bg = node.get_node("Background")
             color_system.start_pulse_animation(task_id, bg.color, Color(0.4, 0.6, 1.0))
 
@@ -790,6 +815,7 @@ func _remove_focus_color(task_id: String):
     
     # Different color systems may have different APIs
     if color_system.has_method("get_color"):
+	
         var normal_color = color_system.get_color("border")
         
         # Remove highlight
@@ -800,6 +826,7 @@ func _remove_focus_color(task_id: String):
             if node.has_method("set_outline_color"):
                 node.set_outline_color(normal_color)
     elif color_system.has_method("stop_animation"):
+	
         # For color animation system
         color_system.stop_animation(task_id)
 

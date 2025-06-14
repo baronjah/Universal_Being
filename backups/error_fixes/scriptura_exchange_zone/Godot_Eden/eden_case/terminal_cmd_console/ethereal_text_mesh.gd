@@ -358,7 +358,7 @@ func connect_to_earth(location: String = "") -> bool:
     earth_connection.active = true
     
     # Select specific location if provided
-    if not location.empty():
+    if not location.is_empty():
         for point in earth_connection.connection_points:
             if point.name.to_lower() == location.to_lower():
                 earth_connection.frequency = point.frequency

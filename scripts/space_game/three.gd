@@ -28,7 +28,6 @@ varying float angular_position;
 float orbital_velocity(float r) {
 	// v ∝ 1/√r for Keplerian disk
 	return 1.0 / sqrt(r / inner_radius);
-}
 
 // Disk density profile
 float disk_density(float r) {
@@ -44,13 +43,11 @@ float disk_density(float r) {
 	density *= smoothstep(0.0, 0.1, normalized_r);
 	
 	return density;
-}
 
 // Temperature profile (hotter near black hole)
 float disk_temperature(float r) {
 	// T ∝ r^(-3/4) for standard thin disk
 	return pow(inner_radius / r, 0.75);
-}
 
 void vertex() {
 	world_position = (MODEL_MATRIX * vec4(VERTEX, 1.0)).xyz;
@@ -59,7 +56,6 @@ void vertex() {
 	// Cylindrical coordinates
 	radial_distance = length(vec2(VERTEX.x, VERTEX.z));
 	angular_position = atan(VERTEX.z, VERTEX.x);
-}
 
 void fragment() {
 	// Current position in disk coordinates
@@ -71,7 +67,6 @@ void fragment() {
 	float density = disk_density(r);
 	if (density < 0.001) {
 		discard;
-	}
 	
 	// Disk rotation
 	float orbital_period = 2.0 * PI * sqrt(r * r * r / (inner_radius * inner_radius * inner_radius));
@@ -126,4 +121,3 @@ void fragment() {
 	ALBEDO = final_color;
 	EMISSION = final_color;
 	ALPHA = min(final_density * opacity, 1.0);
-}

@@ -43,19 +43,23 @@ func pentagon_init() -> void:
 	add_component("res://components/universe_physics.ub.zip")
 	add_component("res://components/universe_time.ub.zip")
 	add_component("res://components/universe_lod.ub.zip")
+
 	
 	print("🎮 %s: Pentagon Init Complete" % being_name)
+
 
 func pentagon_ready() -> void:
 	super.pentagon_ready()
 	
 	# Load console scene
 	load_scene("res://scenes/console/creation_console.tscn")
+
 	
 	# Initialize console UI
 	setup_console_interface()
 	
 	print("🎮 %s: Pentagon Ready Complete" % being_name)
+
 
 func pentagon_process(delta: float) -> void:
 	super.pentagon_process(delta)
@@ -85,6 +89,7 @@ func pentagon_sewers() -> void:
 	
 	super.pentagon_sewers()
 	print("🎮 %s: Pentagon Sewers Complete" % being_name)
+
 
 # ===== CONSOLE INTERFACE =====
 
@@ -172,6 +177,7 @@ func execute_command(command: String, args: Array = []) -> void:
 		_:
 			push_error("Unknown command: " + command)
 
+
 # ===== UNIVERSE MANAGEMENT =====
 
 func create_new_universe(name: String) -> void:
@@ -184,6 +190,7 @@ func create_new_universe(name: String) -> void:
 	universe.add_component("res://components/universe_physics.ub.zip")
 	universe.add_component("res://components/universe_time.ub.zip")
 	universe.add_component("res://components/universe_lod.ub.zip")
+
 	
 	# Log creation
 	if SystemBootstrap and SystemBootstrap.is_system_ready():
@@ -191,7 +198,7 @@ func create_new_universe(name: String) -> void:
 		if akashic:
 			akashic.log_universe_event("creation", 
 				"🌟 A new universe '%s' emerges from the cosmic forge..." % name,
-				{"universe": universe.being_uuid, "creator": being_uuid}
+				{"universe": universe.being_uuid, "creator": being_uuid
 			)
 	
 	# Set as active universe
@@ -225,6 +232,7 @@ func modify_active_universe(modifications: Dictionary) -> void:
 				active_universe.set_lod_level(modifications.lod)
 			_:
 				push_error("Unknown modification type: " + key)
+	}
 	
 	# Log modification
 	if SystemBootstrap and SystemBootstrap.is_system_ready():
@@ -232,7 +240,7 @@ func modify_active_universe(modifications: Dictionary) -> void:
 		if akashic:
 			akashic.log_universe_event("modification",
 				"🔧 The cosmic forge reshapes universe '%s'..." % active_universe.being_name,
-				{"universe": active_universe.being_uuid, "modifications": modifications}
+				{"universe": active_universe.being_uuid, "modifications": modifications
 			)
 
 func observe_universe(universe_uuid: String) -> void:
@@ -242,6 +250,7 @@ func observe_universe(universe_uuid: String) -> void:
 		if flood_gates:
 			var universe = flood_gates.get_being_by_uuid(universe_uuid)
 			if universe and universe.get_script().resource_path == "res://beings/universe_universal_being.gd":
+}
 				# Update viewport
 				var universe_view = get_scene_node("UniverseView")
 				if universe_view:
@@ -254,7 +263,7 @@ func observe_universe(universe_uuid: String) -> void:
 				if akashic:
 					akashic.log_universe_event("observation",
 						"👁️ The cosmic eye turns its gaze upon universe '%s'..." % universe.being_name,
-						{"universe": universe.being_uuid, "observer": being_uuid}
+						{"universe": universe.being_uuid, "observer": being_uuid
 					)
 
 # ===== BEING EVOLUTION =====
@@ -274,7 +283,7 @@ func evolve_being(being_uuid: String, target_type: String) -> void:
 					var akashic = SystemBootstrap.get_akashic_library()
 					if akashic:
 						akashic.log_being_event(being, "evolution",
-							{"new_form": target_type, "catalyst": being_uuid}
+							{"new_form": target_type, "catalyst": being_uuid
 						)
 
 # ===== PHYSICS & TIME CONTROL =====
@@ -290,13 +299,14 @@ func modify_physics(parameters: Dictionary) -> void:
 			if akashic:
 				akashic.log_universe_event("modification",
 					"⚡ The laws of physics shift in universe '%s'..." % active_universe.being_name,
-					{"universe": active_universe.being_uuid, "physics": parameters}
+					{"universe": active_universe.being_uuid, "physics": parameters
 				)
 
 func adjust_time(scale: float) -> void:
 	"""Adjust time scale of active universe"""
 	if active_universe:
 		active_universe.set_time_parameters({"time_scale": scale})
+}
 		
 		# Log modification
 		if SystemBootstrap and SystemBootstrap.is_system_ready():
@@ -304,7 +314,7 @@ func adjust_time(scale: float) -> void:
 			if akashic:
 				akashic.log_universe_event("modification",
 					"⏳ The flow of time alters in universe '%s'..." % active_universe.being_name,
-					{"universe": active_universe.being_uuid, "time_scale": scale}
+					{"universe": active_universe.being_uuid, "time_scale": scale
 				)
 
 func set_lod_level(level: int) -> void:
@@ -318,7 +328,7 @@ func set_lod_level(level: int) -> void:
 			if akashic:
 				akashic.log_universe_event("modification",
 					"🔍 The level of detail shifts in universe '%s'..." % active_universe.being_name,
-					{"universe": active_universe.being_uuid, "lod_level": level}
+					{"universe": active_universe.being_uuid, "lod_level": level
 				)
 
 # ===== PORTAL SYSTEM =====
@@ -332,6 +342,7 @@ func open_portal(from_universe: String, to_universe: String) -> void:
 			var to_uni = flood_gates.get_being_by_uuid(to_universe)
 			
 			if from_uni and to_uni and from_uni.get_script().resource_path == "res://beings/universe_universal_being.gd" and to_uni.get_script().resource_path == "res://beings/universe_universal_being.gd":
+}
 				# Create portal
 				var portal = PortalUniversalBeing.new()
 				portal.connect_universes(from_uni, to_uni)
@@ -346,7 +357,6 @@ func open_portal(from_universe: String, to_universe: String) -> void:
 							"from_universe": from_universe,
 							"to_universe": to_universe,
 							"portal": portal.being_uuid
-						}
 					)
 
 # ===== HISTORY & QUERIES =====
@@ -438,9 +448,10 @@ func save_console_state() -> void:
 		"creation_history": creation_history,
 		"console_mode": console_mode,
 		"ai_collaboration": ai_collaboration_enabled
-	}
+}
 	
 	var save_path = "user://console_state.json"
+}
 	var file = FileAccess.open(save_path, FileAccess.WRITE)
 	if file:
 		file.store_string(JSON.stringify(save_data))

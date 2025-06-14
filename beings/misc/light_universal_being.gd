@@ -33,6 +33,7 @@ func pentagon_init() -> void:
 	
 	print("💡 %s: Pentagon Init - Light awakens" % being_name)
 
+
 func pentagon_ready() -> void:
 	super.pentagon_ready()
 	
@@ -43,6 +44,7 @@ func pentagon_ready() -> void:
 	_create_light_body()
 	
 	print("💡 %s: Pentagon Ready - Illuminating the world" % being_name)
+
 
 func pentagon_process(delta: float) -> void:
 	super.pentagon_process(delta)
@@ -143,6 +145,7 @@ func toggle_shadows(enabled: bool) -> void:
 func on_interaction(interactor: UniversalBeing) -> void:
 	"""When someone interacts with the light"""
 	print("💡 %s: 'I illuminate with consciousness level %d'" % [being_name, consciousness_level])
+
 	
 	# Pulse brightly as acknowledgment
 	var tween = create_tween()

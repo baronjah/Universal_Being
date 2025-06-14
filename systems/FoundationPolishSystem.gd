@@ -29,14 +29,14 @@ var polish_tasks: Array = [
 	{"name": "Resolve circular dependencies", "priority": "high", "progress": 0},
 	{"name": "Add comprehensive error handling", "priority": "medium", "progress": 0},
 	{"name": "Optimize Akashic Records queries", "priority": "medium", "progress": 0},
-	{"name": "Pentagon Architecture validation", "priority": "high", "progress": 0}
+	{"name": "Pentagon Architecture validation", "priority": "high", "progress": 0
 ]
 
 # Strategic features (20% focus)
 var strategic_features: Array = [
 	{"name": "Visual Pentagon debugger", "priority": "medium", "progress": 0},
 	{"name": "Being health monitor", "priority": "low", "progress": 0},
-	{"name": "Consciousness visualization", "priority": "medium", "progress": 0}
+	{"name": "Consciousness visualization", "priority": "medium", "progress": 0
 ]
 
 signal foundation_issue_detected(issue: Dictionary)
@@ -58,7 +58,7 @@ func setup_health_monitoring() -> void:
 		"broken_super_chains": [],
 		"missing_methods": [],
 		"error_rate": 0.0
-	}
+}
 	
 	# Monitor Akashic Records performance
 	akashic_performance = {
@@ -66,7 +66,7 @@ func setup_health_monitoring() -> void:
 		"memory_usage": 0,
 		"compression_ratio": 0.0,
 		"timeline_branches": 0
-	}
+}
 	
 	# Monitor being stability
 	being_stability = {
@@ -74,7 +74,7 @@ func setup_health_monitoring() -> void:
 		"stable_beings": 0,
 		"beings_with_errors": [],
 		"consciousness_coherence": 0.0
-	}
+}
 	
 	print("📊 Foundation health monitoring active")
 
@@ -119,12 +119,14 @@ func check_pentagon_integrity(being: Node) -> Dictionary:
 		"pentagon_input", "pentagon_sewers"
 	]
 	
-	var status = {"complete": true, "issues": []}
+	var status = {"complete": true, "issues": []
+}
 	
 	for method in pentagon_methods:
 		if not being.has_method(method):
 			status.complete = false
 			status.issues.append("Missing method: %s" % method)
+}
 	
 	# Check if it extends UniversalBeing
 	if not being is UniversalBeing:
@@ -194,13 +196,14 @@ func analyze_compilation_status() -> void:
 	# This would be enhanced to actually scan for compilation errors
 	compilation_errors = [
 		{"file": "player_universal_being.gd", "error": "velocity redefined", "fixed": true},
-		{"file": "core/GameStateSocketManager.gd", "error": "wrong node reference", "fixed": true}
+		{"file": "core/GameStateSocketManager.gd", "error": "wrong node reference", "fixed": true
 	]
 	
 	runtime_warnings = []
 	performance_issues = []
 	
 	print("⚠️ Compilation analysis: %d errors found" % compilation_errors.size())
+}
 
 func generate_foundation_report() -> void:
 	"""Generate comprehensive foundation health report"""
@@ -216,7 +219,7 @@ func generate_foundation_report() -> void:
 			"performance_issues": performance_issues.size()
 		},
 		"recommendations": generate_recommendations()
-	}
+}
 	
 	print_foundation_report()
 
@@ -312,6 +315,7 @@ func print_foundation_report() -> void:
 	print("💡 Recommendations:")
 	for rec in foundation_health.recommendations:
 		print("  [%s] %s: %s" % [rec.priority.to_upper(), rec.area, rec.action])
+}
 	
 	print("=".repeat(60))
 
@@ -372,6 +376,7 @@ func polish_foundation_task(task: Dictionary) -> void:
 	if task.progress >= 100:
 		polish_task_completed.emit(task.name)
 		print("✅ Polish task completed: %s" % task.name)
+
 
 func fix_compilation_errors(task: Dictionary) -> void:
 	"""Fix compilation errors in the codebase"""
@@ -438,6 +443,7 @@ func implement_strategic_feature(feature: Dictionary) -> void:
 	if feature.progress >= 100:
 		print("🌟 Strategic feature completed: %s" % feature.name)
 
+
 func create_pentagon_debugger(feature: Dictionary) -> void:
 	"""Create visual Pentagon Architecture debugger"""
 	
@@ -488,7 +494,7 @@ func get_polish_progress() -> Dictionary:
 		"completion_percentage": float(completed_tasks) / total_tasks * 100.0,
 		"polish_focus": 80.0,
 		"features_focus": 20.0
-	}
+}
 
 func force_foundation_analysis() -> void:
 	"""Force immediate foundation analysis"""

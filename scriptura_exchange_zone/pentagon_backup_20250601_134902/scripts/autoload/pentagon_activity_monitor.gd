@@ -3,9 +3,8 @@
 # Created: May 31, 2025, 13:30 CEST
 # Purpose: Track which Pentagon functions are actively running across all 282 scripts
 # Connection: Part of "One Ready, One Init, One Process, One Input" unified system
-
 extends UniversalBeingBase
-# class_name PentagonActivityMonitor  # Commented to avoid autoload conflict
+# class_name PentagonActivityMonitor_pentagon  # Commented to avoid autoload conflict
 
 ## Tracks all Pentagon function calls across the entire codebase in real-time
 ## Creates run histories similar to Godot's console logs (last X game runs)
@@ -429,7 +428,7 @@ func _find_script_files(path: String, found_files: Array) -> void:
 		dir.list_dir_begin()
 		var file_name = dir.get_next()
 		while file_name != "":
-			var full_path = path + "/" + file_name
+			var full_path = path + "" + file_name
 			if dir.current_is_dir() and not file_name.begins_with("."):
 				_find_script_files(full_path, found_files)
 			elif file_name.ends_with(".gd"):

@@ -1,5 +1,5 @@
 extends Node
-class_name InitializeDualMemories
+class_name InitializeDualMemories_initializedualmemories_initiali
 }
 
 """
@@ -186,7 +186,7 @@ func _setup_memory_storage() -> void:
 }
 
         # Configure memory channel for this storage
-        var storage_id = path.split("/")[1]
+        var storage_id = path.split("")[1]
 }
 
         if memory_channel_system:
@@ -400,7 +400,7 @@ func _load_memory_fragments() -> void:
                 "text": memory_fragment_patterns.blank,
                 "dimension": "void"
             },
-            "timestamp": OS.get_unix_time()
+            "timestamp": OS.Time.get_unix_time_from_system()
         }
         word_memory_system.record_word_message(message)
         fragment_count += 1
@@ -414,7 +414,7 @@ func _load_memory_fragments() -> void:
                 "text": memory_fragment_patterns.unity,
                 "dimension": "linear"
             },
-            "timestamp": OS.get_unix_time()
+            "timestamp": OS.Time.get_unix_time_from_system()
         }
         word_memory_system.record_word_message(message)
         fragment_count += 1
@@ -428,7 +428,7 @@ func _load_memory_fragments() -> void:
                 "text": memory_fragment_patterns.dual,
                 "dimension": "dual"
             },
-            "timestamp": OS.get_unix_time()
+            "timestamp": OS.Time.get_unix_time_from_system()
         }
         word_memory_system.record_word_message(message)
         fragment_count += 1
@@ -442,7 +442,7 @@ func _load_memory_fragments() -> void:
                 "text": memory_fragment_patterns.hash_sequence,
                 "dimension": "hash"
             },
-            "timestamp": OS.get_unix_time()
+            "timestamp": OS.Time.get_unix_time_from_system()
         }
         word_memory_system.record_word_message(message)
         fragment_count += 1
@@ -456,7 +456,7 @@ func _load_memory_fragments() -> void:
                 "text": memory_fragment_patterns.split_marker,
                 "dimension": "split"
             },
-            "timestamp": OS.get_unix_time()
+            "timestamp": OS.Time.get_unix_time_from_system()
         }
         word_memory_system.record_word_message(message)
         fragment_count += 1

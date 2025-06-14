@@ -55,6 +55,7 @@ func pentagon_init() -> void:
 	
 	show_ub_visual("⚡ %s: Pentagon Init - Energy consciousness awakens" % being_name)
 
+
 func pentagon_ready() -> void:
 	super.pentagon_ready()
 	
@@ -85,6 +86,7 @@ func pentagon_ready() -> void:
 			cursor.set_player_reference(self)
 	
 	show_ub_visual("⚡ %s: Pentagon Ready - Plasmoid controls active" % being_name)
+
 
 func pentagon_process(delta: float) -> void:
 	super.pentagon_process(delta)
@@ -340,6 +342,7 @@ func _preview_being_interaction(being: UniversalBeing) -> void:
 	# Send preview info to Gemma AI
 	var gemma_ai = get_node_or_null("/root/GemmaAI")
 	if gemma_ai and gemma_ai.has_method("ai_message"):
+
 		var preview_message = "👁️ Plasmoid vision: Looking at %s (%s) - Consciousness Level %d" % [
 			being.being_name, 
 			being.being_type, 
@@ -348,9 +351,11 @@ func _preview_being_interaction(being: UniversalBeing) -> void:
 		
 		# Add evolution possibilities
 		if being.has_method("get") and being.get("evolution_state"):
+
 			var evolution_state = being.get("evolution_state")
 			if evolution_state.has("can_become") and evolution_state.can_become.size() > 0:
 				preview_message += " - Can evolve to: %s" % str(evolution_state.can_become)
+	
 		
 		# Only send preview every 60 frames to avoid spam
 		if Engine.get_process_frames() % 60 == 0:
@@ -391,6 +396,7 @@ func _clear_highlight() -> void:
 func _interact_with_being(being: UniversalBeing) -> void:
 	"""Magical lightning interaction with a Universal Being"""
 	show_ub_visual("⚡ Plasmoid casting lightning toward: %s" % being.being_name)
+
 	
 	# Cast lightning to being's position
 	_cast_lightning_to_target(being.global_position)
@@ -401,6 +407,7 @@ func _interact_with_being(being: UniversalBeing) -> void:
 func _complete_interaction(being: UniversalBeing) -> void:
 	"""Complete the interaction after lightning effect"""
 	show_ub_visual("⚡ Lightning connection established with: %s" % being.being_name)
+
 	
 	# Open inspector for the being
 	var console_nodes = get_tree().get_nodes_in_group("console")
@@ -434,6 +441,7 @@ func set_consciousness_level(level: int) -> void:
 	
 	# Update visual representation
 	if has_node("ConsciousnessLight"):
+
 		var light = $ConsciousnessLight
 		match level:
 			0: light.light_color = Color(0.5, 0.5, 0.5)  # Dormant

@@ -1,5 +1,5 @@
 extends Node
-class_name DynamicDictionary
+class_name DynamicDictionary_dynamicdictionary_dynamicd
 
 # Dictionary storage
 var words: Dictionary = {}

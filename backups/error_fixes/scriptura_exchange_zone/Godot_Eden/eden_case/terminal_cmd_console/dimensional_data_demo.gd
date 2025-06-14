@@ -54,22 +54,22 @@ func _setup_dimension_dropdown():
             break
 
 func _connect_signals():
-    transform_button.connect("pressed", self, "_on_transform_pressed")
-    chain_transform_button.connect("pressed", self, "_on_chain_transform_pressed")
-    activate_button.connect("pressed", self, "_on_activate_pressed")
-    deactivate_button.connect("pressed", self, "_on_deactivate_pressed")
-    refresh_status_button.connect("pressed", self, "_refresh_status")
-    save_button.connect("pressed", self, "_on_save_pressed")
-    load_button.connect("pressed", self, "_on_load_pressed")
-    clear_button.connect("pressed", self, "_on_clear_pressed")
+    transform_button.connect(_on_transform_pressed)
+    chain_transform_button.connect(_on_chain_transform_pressed)
+    activate_button.connect(_on_activate_pressed)
+    deactivate_button.connect(_on_deactivate_pressed)
+    refresh_status_button.connect(_refresh_status)
+    save_button.connect(_on_save_pressed)
+    load_button.connect(_on_load_pressed)
+    clear_button.connect(_on_clear_pressed)
     
     # Connect dimensional bridge signals
-    dimension_bridge.connect("dimension_changed", self, "_on_dimension_changed")
-    dimension_bridge.connect("transformation_completed", self, "_on_transformation_completed")
+    dimension_bridge.connect(_on_dimension_changed)
+    dimension_bridge.connect(_on_transformation_completed)
 
 func _on_transform_pressed():
     var text_input = input_text.text
-    if text_input.empty():
+    if text_input.is_empty():
         _show_error("Please enter some text to transform.")
         return
     
@@ -85,7 +85,7 @@ func _on_transform_pressed():
 
 func _on_chain_transform_pressed():
     var text_input = input_text.text
-    if text_input.empty():
+    if text_input.is_empty():
         _show_error("Please enter some text to transform.")
         return
     
@@ -123,7 +123,7 @@ func _on_deactivate_pressed():
 
 func _on_save_pressed():
     var text_input = input_text.text
-    if text_input.empty():
+    if text_input.is_empty():
         _show_error("Please enter some text to save.")
         return
     

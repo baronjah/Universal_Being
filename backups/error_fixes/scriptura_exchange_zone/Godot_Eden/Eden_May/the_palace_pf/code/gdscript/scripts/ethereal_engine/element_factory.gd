@@ -27,7 +27,7 @@ static func create_element(type, properties):
 				
 		# Create the element instance
 		var element_scene = load("res://elements/" + type + ".tscn")
-		var element = element_scene.instance()
+		var element = element_scene.instantiate()
 		
 		# Configure the element
 		element.initialize(base_properties)

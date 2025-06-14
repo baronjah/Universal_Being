@@ -4,7 +4,6 @@
 # PURPOSE: Test the new Universal Being consciousness system
 # CREATED: 2025-05-30 - Neural evolution testing
 # ==================================================
-
 extends UniversalBeingBase
 # Console command registration
 func _ready() -> void:
@@ -12,7 +11,7 @@ func _ready() -> void:
 
 func pentagon_ready() -> void:
 	super.pentagon_ready()
-	var console = get_node_or_null("/root/Console")
+	var console = get_node_or_null("root/Console")
 	if console and console.has_method("register_command"):
 		console.register_command("neural_evolve", _cmd_neural_evolve, "Evolve a Universal Being to have consciousness")
 		console.register_command("neural_status", _cmd_neural_status, "Show consciousness status of all beings")

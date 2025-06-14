@@ -33,7 +33,7 @@ func get_debug_payload() -> Dictionary:
 		# Core Universal Being properties
 		"being_name": being_name,
 		"being_type": being_type,
-		"consciousness_level": consciousness_level,
+		"consciousness_level": consciousness_level,}
 		
 		# Node3D properties (if applicable)
 		"global_position": global_position if self is Node3D else Vector3.ZERO,
@@ -45,7 +45,7 @@ func get_debug_payload() -> Dictionary:
 		# Evolution properties
 		"can_evolve": evolution_state.can_become.size() > 0 if evolution_state else false,
 		"evolution_paths": evolution_state.can_become if evolution_state else []
-	}
+
 
 func set_debug_field(key: String, value) -> void:
 	"""Handle debug field changes"""
@@ -55,29 +55,35 @@ func set_debug_field(key: String, value) -> void:
 				being_name = value
 				name = value  # Also update node name
 				print("📝 Being name changed to: %s" % value)
+	
 		
 		"being_type":
 			if value is String:
 				being_type = value
 				print("🏷️ Being type changed to: %s" % value)
+	
 		
 		"consciousness_level":
 			if value is int:
 				consciousness_level = clampi(value, 0, 5)
 				print("🧠 Consciousness level changed to: %d" % consciousness_level)
+	
 		
 		"global_position":
 			if value is Vector3 and self is Node3D:
 				global_position = value
 				print("📍 Position changed to: %s" % value)
+	
 		
 		"rotation":
 			if value is Vector3 and self is Node3D:
 				rotation = value
 				print("🔄 Rotation changed to: %s" % value)
+	
 		
 		_:
 			print("⚠️ Unknown debug field: %s" % key)
+
 
 func get_debug_actions() -> Dictionary:
 	"""Standard Universal Being debug actions"""
@@ -86,7 +92,7 @@ func get_debug_actions() -> Dictionary:
 		"Reset Position": reset_position,
 		"Increase Consciousness": increase_consciousness,
 		"Decrease Consciousness": decrease_consciousness
-	}
+}
 	
 	# Add evolution actions if applicable
 	if evolution_state and evolution_state.can_become.size() > 0:
@@ -110,6 +116,7 @@ func print_being_info() -> void:
 	print("  Position: %s" % (global_position if self is Node3D else "N/A"))
 	print("  Pentagon Active: %s" % (pentagon_active if "pentagon_active" in self else "Unknown"))
 	print("  Evolution Paths: %s" % (evolution_state.can_become if evolution_state else []))
+
 
 func reset_position() -> void:
 	"""Reset position to origin"""
@@ -157,6 +164,7 @@ func evolve_to_first_path() -> void:
 func list_components() -> void:
 	"""List attached components"""
 	if has_method("get_components"):
+
 		var components = get_components()
 		print("🧩 Components attached to %s:" % being_name)
 		for component in components:

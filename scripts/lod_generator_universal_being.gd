@@ -134,6 +134,7 @@ func _generate_next_layer() -> void:
 	
 	print("🌍 Generated new layer at distance: ", layers.size())
 
+
 func _update_layer_visibility() -> void:
 	for i in range(layers.size()):
 		if not layers[i]:
@@ -143,6 +144,7 @@ func _update_layer_visibility() -> void:
 		
 		# Fade based on distance
 		if layers[i].has_node("MeshInstance3D"):
+
 			var mesh = layers[i].get_node("MeshInstance3D")
 			if mesh and mesh.material_override:
 				var alpha = clamp(1.0 - (distance / (generation_distance * 2)), 0.0, 1.0)
@@ -156,12 +158,14 @@ func get_text_representation() -> String:
 	text += "Direction: %s\n" % _get_direction_name()
 	text += "Active Layers: %d/%d\n" % [layers.size(), max_layers]
 	text += "Viewer Distance: %.1f\n" % viewer_position.distance_to(global_position)
+
 	
 	text += "\nLAYERS:\n"
 	for i in range(layers.size()):
 		if layers[i]:
 			var dist = layers[i].position.length()
 			text += "  [%d] Distance: %.1f Scale: %.1fx\n" % [i, dist, layers[i].scale.x]
+
 	
 	text += "====================\n"
 	return text
@@ -185,6 +189,5 @@ func ai_interface() -> Dictionary:
 		"layers": layers.size(),
 		"direction": _get_direction_name(),
 		"viewer_distance": viewer_position.distance_to(global_position)
-	}
 	base.text_representation = get_text_representation()
 	return base

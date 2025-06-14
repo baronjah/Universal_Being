@@ -4,8 +4,7 @@
 # PURPOSE: Point A to B movement with magical effects
 # CREATED: 2025-05-28 - Magic-based task system
 # ==================================================
-
-extends UniversalBeingBase
+extends \2
 signal task_completed(task_name: String)
 signal teleported(from: Vector3, to: Vector3)
 signal magic_used(spell_name: String)

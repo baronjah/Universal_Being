@@ -258,7 +258,7 @@ func _run_basic_transformation_scenario() -> void:
     process_input("I wish for a magical sword that freezes enemies")
     
     # Allow time for processing
-    yield(get_tree().create_timer(2.0), "timeout")
+    await(get_tree().create_timer(2.0), "timeout")
     
     # Process with dimensional content
     process_input("This text spans across multiple dimensions")
@@ -270,13 +270,13 @@ func _run_catchphrase_detection_scenario() -> void:
     process_input("The hatching of data begins now")
     
     # Allow time for processing
-    yield(get_tree().create_timer(2.0), "timeout")
+    await(get_tree().create_timer(2.0), "timeout")
     
     # Another catchphrase
     process_input("We need the catchphrase system to identify special patterns")
     
     # Allow time for processing
-    yield(get_tree().create_timer(2.0), "timeout")
+    await(get_tree().create_timer(2.0), "timeout")
     
     # Special character patterns
     process_input("This is a zone boundary: ####")
@@ -288,13 +288,13 @@ func _run_memory_sequence_scenario() -> void:
     process_input("0000000000000000000000000000000000000000000000000000000000000")
     
     # Allow time for processing
-    yield(get_tree().create_timer(3.0), "timeout")
+    await(get_tree().create_timer(3.0), "timeout")
     
     # Another memory sequence
     process_input("11111111111111111111111111111111111111111111111@")
     
     # Allow time for processing
-    yield(get_tree().create_timer(3.0), "timeout")
+    await(get_tree().create_timer(3.0), "timeout")
     
     # Final memory sequence
     process_input("22222222222222222222222222222222222222####")
@@ -310,7 +310,7 @@ func _run_terminal_split_scenario() -> void:
     process_input("The dual memories system requires terminal splitting")
     
     # Allow time for processing
-    yield(get_tree().create_timer(2.0), "timeout")
+    await(get_tree().create_timer(2.0), "timeout")
     
     # Switch to quad mode
     if terminal_split_controller:
@@ -330,13 +330,13 @@ func _run_full_system_demo() -> void:
     process_input("The hatching of data creates infinite ways to shape integration across dimensions")
     
     # Allow time for processing
-    yield(get_tree().create_timer(3.0), "timeout")
+    await(get_tree().create_timer(3.0), "timeout")
     
     # Include a memory sequence
     process_input("The threefold memory system: 0000000000000000000000000000000000000000000000000000000000000#111111111111111111111111111111111111111111111@#222222222222222222222222222222222222####")
     
     # Allow time for processing
-    yield(get_tree().create_timer(3.0), "timeout")
+    await(get_tree().create_timer(3.0), "timeout")
     
     # Final complex input
     process_input("connect Claude, claude code, desktop app, the console and editor projects, for desktop split for data seeing and buttons reasons, the whim and greed")
@@ -416,24 +416,24 @@ func _init_ui_components() -> void:
 func _connect_signals() -> void:
     # Connect DualMemoriesCoordinator signals
     if dual_memories_coordinator:
-        dual_memories_coordinator.connect("meaning_transformed", self, "_on_meaning_transformed")
-        dual_memories_coordinator.connect("memory_hatched", self, "_on_memory_hatched")
-        dual_memories_coordinator.connect("catchphrase_detected", self, "_on_catchphrase_detected")
+        dual_memories_coordinator.connect(_on_meaning_transformed)
+        dual_memories_coordinator.connect(_on_memory_hatched)
+        dual_memories_coordinator.connect(_on_catchphrase_detected)
     
     # Connect MeaningTransformationPipeline signals
     if meaning_transformation_pipeline:
-        meaning_transformation_pipeline.connect("pipeline_completed", self, "_on_pipeline_completed")
-        meaning_transformation_pipeline.connect("pattern_detected", self, "_on_pattern_detected")
+        meaning_transformation_pipeline.connect(_on_pipeline_completed)
+        meaning_transformation_pipeline.connect(_on_pattern_detected)
     
     # Connect TerminalSplitController signals
     if terminal_split_controller:
-        terminal_split_controller.connect("terminal_data_updated", self, "_on_terminal_data_updated")
-        terminal_split_controller.connect("split_mode_changed", self, "_on_split_mode_changed")
+        terminal_split_controller.connect(_on_terminal_data_updated)
+        terminal_split_controller.connect(_on_split_mode_changed)
     
     # Connect CatchphraseSystem signals
     if catchphrase_system:
-        catchphrase_system.connect("memory_sequence_revealed", self, "_on_memory_sequence_revealed")
-        catchphrase_system.connect("catchphrase_activated", self, "_on_catchphrase_activated")
+        catchphrase_system.connect(_on_memory_sequence_revealed)
+        catchphrase_system.connect(_on_catchphrase_activated)
 
 # Load demo data
 func _load_demo_data() -> void:

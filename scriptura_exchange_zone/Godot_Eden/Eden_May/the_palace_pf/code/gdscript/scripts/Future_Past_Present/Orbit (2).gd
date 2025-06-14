@@ -1,6 +1,6 @@
 #Orbit.gd in new test scene
 @tool
-extends Node3D
+extends \2
 
 var orbit_speed: float = 0.5
 var orbit_radius: float = 10.0

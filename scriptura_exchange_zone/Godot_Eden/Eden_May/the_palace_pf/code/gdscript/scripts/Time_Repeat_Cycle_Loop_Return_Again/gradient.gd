@@ -1,7 +1,7 @@
 extends Node
-class_name JSHGradientSystem
+class_name JSHGradientSystem_gradient_gradient
 # gradient.gd
-# res://code/gdscript/scripts/Time_Repeat_Cycle_Loop_Return_Again/gradient.gd
+# res://scripts/gdscript/scripts/Time_Repeat_Cycle_Loop_Return_Again/gradient.gd
 # JSH_Patch/gradient
 ####################
 #
@@ -26,7 +26,8 @@ signal gradient_created(gradient_id)
 signal gradient_removed(gradient_id)
 
 # Gradient types
-enum GradientType {
+enum \2 {
+
 	LINEAR,
 	RADIAL,
 	CONICAL,
@@ -37,7 +38,8 @@ enum GradientType {
 }
 
 # Gradient space types
-enum GradientSpace {
+enum \2 {
+
 	LOCAL,       # Local to object
 	WORLD,       # World space
 	SCREEN,      # Screen space
@@ -47,7 +49,8 @@ enum GradientSpace {
 }
 
 # Color models
-enum ColorModel {
+enum \2 {
+
 	RGB,
 	HSV,
 	LAB

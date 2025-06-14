@@ -5,7 +5,7 @@ extends Node
 # This script integrates the API Coordinator with the existing Eden_May systems
 }
 
-class_name APIIntegration
+class_name APIIntegration_apiintegration_apiinteg
 }
 
 # References to game systems
@@ -61,7 +61,7 @@ func initialize(core_system):
 func find_systems():
 	# Find Eden Core if not provided
 	if not eden_core:
-		eden_core = get_node_or_null("/root/EdenMayGame/EdenCore")
+		eden_core = get_node_or_null("root/EdenMayGame/EdenCore")
 }
 
 	# Find other systems through Eden Core or direct node paths
@@ -72,21 +72,21 @@ func find_systems():
 		line_processor = eden_core.get_node_or_null("../LineProcessor")
 	else:
 		# Direct node paths as fallback
-		game_project = get_node_or_null("/root/EdenMayGame/GameProject")
-		word_manager = get_node_or_null("/root/EdenMayGame/WordManager")
-		line_processor = get_node_or_null("/root/EdenMayGame/LineProcessor")
+		game_project = get_node_or_null("root/EdenMayGame/GameProject")
+		word_manager = get_node_or_null("root/EdenMayGame/WordManager")
+		line_processor = get_node_or_null("root/EdenMayGame/LineProcessor")
 }
 
 	# Find or create Wish Maker
-	wish_maker = get_node_or_null("/root/EdenMayGame/WishMaker")
+	wish_maker = get_node_or_null("root/EdenMayGame/WishMaker")
 	if not wish_maker:
-		wish_maker = get_node_or_null("/root/WishMakerSystem/WishMaker")
+		wish_maker = get_node_or_null("root/WishMakerSystem/WishMaker")
 }
 
 	# Find or create API Coordinator
-	api_coordinator = get_node_or_null("/root/EdenMayGame/APICoordinator")
+	api_coordinator = get_node_or_null("root/EdenMayGame/APICoordinator")
 	if not api_coordinator:
-		api_coordinator = get_node_or_null("/root/APICoordinatorSystem/APICoordinator")
+		api_coordinator = get_node_or_null("root/APICoordinatorSystem/APICoordinator")
 }
 
 	if not api_coordinator:
@@ -226,7 +226,7 @@ func _send_api_request(api_name, request_text):
 		return "API Coordinator not available"
 }
 
-	var request_id = "cmd_" + str(OS.get_unix_time())
+	var request_id = "cmd_" + str(OS.Time.get_unix_time_from_system())
 	var result = api_coordinator.send_request(api_name, request_text, request_id)
 }
 
@@ -272,13 +272,13 @@ func _show_color_info():
 func _show_api_help():
 	return """
 API Coordinator Commands:
-/api connect <api_name or 'all'> - Connect to API
-/api disconnect <api_name or 'all'> - Disconnect from API
-/api status - Show API connection status
-/api request <api_name> <text> - Send request to API
-/api show - Open API Coordinator UI
-/api colors - Show color progression information
-/api help - Show this help
+# /api connect <api_name or 'all'> - Connect to API
+# /api disconnect <api_name or 'all'> - Disconnect from API
+# /api status - Show API connection status
+# /api request <api_name> <text> - Send request to API
+# /api show - Open API Coordinator UI
+# /api colors - Show color progression information
+# /api help - Show this help
 """
 }
 
@@ -343,7 +343,7 @@ func enhance_wish_maker():
 
 	# Add the process_api_response method if it doesn't exist
 	if not wish_maker.has_method("process_api_response"):
-		wish_maker.process_api_response = funcref(self, "_wish_maker_process_api_response")
+		wish_maker.process_api_response = Callable(self, "_wish_maker_process_api_response")
 }
 
 	# Connect coordinator signal to wish maker
@@ -435,7 +435,7 @@ func integrate_with_layer_0(layer_0_node):
 	# Define function to show API coordinator UI
 	if layer_0_node.has_method("add_to_view_area"):
 		# Create a funcref to show the UI
-		var show_api_ui_func = funcref(self, "_show_api_ui_in_view_area")
+		var show_api_ui_func = Callable(self, "_show_api_ui_in_view_area")
 }
 
 		# Attach it to the layer_0_node

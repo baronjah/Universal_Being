@@ -6,7 +6,7 @@ extends Node
 # Connects the word manifestation and dimensional systems across projects
 }
 
-class_name EdenPitopiaIntegration
+class_name EdenPitopiaIntegration_edenpitopiaintegration_edenpito
 }
 
 # ----- COMPONENT REFERENCES -----
@@ -28,13 +28,13 @@ var color_system = null
 }
 
 # ----- CONFIGURATION -----
-export var auto_initialize = true
-export var default_dimension = 3
-export var auto_sync_dimensions = true
-export var record_words_to_akashic = true
-export var enable_dimension_effects = true
-export var enable_turn_system_integration = true
-export var debug_mode = false
+@@export var auto_initialize = true
+@@export var default_dimension = 3
+@@export var auto_sync_dimensions = true
+@@export var record_words_to_akashic = true
+@@export var enable_dimension_effects = true
+@@export var enable_turn_system_integration = true
+@@export var debug_mode = false
 }
 
 # ----- STATE VARIABLES -----
@@ -120,7 +120,7 @@ func find_system_integrator():
 
     # If not found, try to find it globally
     if not integrator:
-        if has_node("/root/SystemIntegrator"):
+        if has_node("root/SystemIntegrator"):
             integrator = get_node("\1") as Node
 }
 
@@ -246,10 +246,10 @@ func connect_to_pitopia():
 func load_script_file(script_name):
     # Check in several locations for the script
     var potential_paths = [
-        "/mnt/c/Users/Percision 15/Godot_Eden/Eden_May/" + script_name,
-        "/mnt/c/Users/Percision 15/Godot_Eden/Eden_May/the_palace_pf/code/gdscript/scripts/" + script_name,
-        "/mnt/c/Users/Percision 15/12_turns_system/" + script_name,
-        "/mnt/c/Users/Percision 15/Eden_OS/scripts/" + script_name,
+        "mnt/c/Users/Percision 15/Godot_Eden/Eden_May/" + script_name,
+        "mnt/c/Users/Percision 15/Godot_Eden/Eden_May/the_palace_pf/code/gdscript/scripts/" + script_name,
+        "mnt/c/Users/Percision 15/12_turns_system/" + script_name,
+        "mnt/c/Users/Percision 15/Eden_OS/scripts/" + script_name,
         "res://" + script_name,
         "res://scripts/" + script_name,
         "res://addons/" + script_name
@@ -264,7 +264,7 @@ func load_script_file(script_name):
 }
 
     # If not found, try to search for it
-    for base_dir in ["/mnt/c/Users/Percision 15/12_turns_system", "/mnt/c/Users/Percision 15/Godot_Eden/Eden_May", "/mnt/c/Users/Percision 15/Eden_OS"]:
+    for base_dir in ["mnt/c/Users/Percision 15/12_turns_system", "mnt/c/Users/Percision 15/Godot_Eden/Eden_May", "mnt/c/Users/Percision 15/Eden_OS"]:
         var script_path = search_for_script(base_dir, script_name)
         if script_path:
             if debug_mode:
@@ -291,7 +291,7 @@ func search_for_script(base_dir, script_name):
 
         var file_name = dir.get_next()
         while file_name != "":
-            var full_path = base_dir + "/" + file_name
+            var full_path = base_dir + "" + file_name
 }
 
             if dir.current_is_dir():
@@ -428,7 +428,7 @@ func apply_dimensional_effects(dimension_number):
 
     if pitopia_main and pitopia_main.has_method("get_environment"):
         environment = pitopia_main.get_environment()
-    elif has_node("/root/WorldEnvironment"):
+    elif has_node("root/WorldEnvironment"):
         environment = get_node("\1") as Node.environment
 }
 
@@ -494,8 +494,8 @@ func get_dimension_properties(dimension_number):
             dimension_data.background_color = Color(0.05, 0.05, 0.01)
 }
 
-        3: # Spatial Manifestation (3D)
-            dimension_data.name = "Spatial Manifestation"
+        3: # Node3D Manifestation (3D)
+            dimension_data.name = "Node3D Manifestation"
             dimension_data.symbol = "γ"
             dimension_data.fog_color = Color(0.05, 0.1, 0.05)
             dimension_data.fog_density = {"begin": 20.0, "end": 60.0}
@@ -616,7 +616,7 @@ func manifest_word(word, system_name = "integration", dimension = 0):
             "entity_ids": {},
             "power": 50,
             "dimension": dimension,
-            "timestamp": OS.get_unix_time()
+            "timestamp": OS.Time.get_unix_time_from_system()
         }
 }
 
@@ -701,7 +701,7 @@ func manifest_word(word, system_name = "integration", dimension = 0):
             "word": word,
             "system": system_name,
             "dimension": dimension,
-            "created_at": OS.get_unix_time()
+            "created_at": OS.Time.get_unix_time_from_system()
         }
 }
 
@@ -730,7 +730,7 @@ func manifest_word(word, system_name = "integration", dimension = 0):
                     "original_system": system_name,
                     "original_id": entity_id,
                     "dimension": dimension,
-                    "created_at": OS.get_unix_time()
+                    "created_at": OS.Time.get_unix_time_from_system()
                 }
 }
 
@@ -896,14 +896,14 @@ func advance_turn():
     var advanced = false
 }
 
-    // Try integrated system first
+# // Try integrated system first
     if integrated_game_system and integrated_game_system.has_method("set_current_dimension"):
         var next_turn = (active_dimension % 12) + 1
         advanced = integrated_game_system.set_current_dimension(next_turn)
         active_dimension = next_turn
 }
 
-    // Try Eden Harmony
+# // Try Eden Harmony
     elif harmony_connector and harmony_connector.has_method("advance_turn"):
         advanced = harmony_connector.advance_turn()
         if harmony_connector.has_method("get_current_turn"):
@@ -911,14 +911,14 @@ func advance_turn():
             active_dimension = harmony_dimension
 }
 
-    // Try turn system directly
+# // Try turn system directly
     elif turn_system and turn_system.has_method("advance_turn"):
         advanced = turn_system.advance_turn()
         if turn_system.has_method("get_current_turn"):
             active_dimension = turn_system.get_current_turn()
 }
 
-    // Try Pitopia
+# // Try Pitopia
     elif pitopia_main and pitopia_main.has_method("advance_turn"):
         advanced = pitopia_main.advance_turn()
         if pitopia_main.has_method("get_current_turn"):
@@ -926,12 +926,12 @@ func advance_turn():
             active_dimension = pitopia_dimension
 }
 
-    // Synchronize dimensions
+# // Synchronize dimensions
     if advanced and auto_sync_dimensions:
         synchronize_dimensions(active_dimension)
 }
 
-    // Emit signal
+# // Emit signal
     emit_signal("turn_advanced", active_dimension)
 }
 
@@ -987,7 +987,7 @@ func _on_harmony_word_manifested(word, entity_id):
         "word": word,
         "system": "harmony",
         "dimension": harmony_dimension,
-        "created_at": OS.get_unix_time()
+        "created_at": OS.Time.get_unix_time_from_system()
     }
 }
 
@@ -1037,7 +1037,7 @@ func _on_harmony_entity_created(entity_id, entity_data):
         "system": "harmony",
         "dimension": harmony_dimension,
         "data": entity_data,
-        "created_at": OS.get_unix_time()
+        "created_at": OS.Time.get_unix_time_from_system()
     }
 }
 
@@ -1055,7 +1055,7 @@ func _on_pitopia_word_manifested(word, entity_id):
         "word": word,
         "system": "pitopia",
         "dimension": pitopia_dimension,
-        "created_at": OS.get_unix_time()
+        "created_at": OS.Time.get_unix_time_from_system()
     }
 }
 
@@ -1116,7 +1116,7 @@ func _on_integrated_entity_created(entity_id, entity_type, entity_data):
         "type": entity_type,
         "dimension": active_dimension,
         "data": entity_data,
-        "created_at": OS.get_unix_time()
+        "created_at": OS.Time.get_unix_time_from_system()
     }
 }
 
@@ -1149,7 +1149,7 @@ func _on_akashic_record_created(record_id):
                 "dimension": record.position.dimension,
                 "power": record.position.power,
                 "tags": record.tags,
-                "created_at": OS.get_unix_time()
+                "created_at": OS.Time.get_unix_time_from_system()
             }
 }
 
@@ -1191,7 +1191,7 @@ func get_dimension_names():
     return [
         "Linear Expression",
         "Planar Reflection",
-        "Spatial Manifestation",
+        "Node3D Manifestation",
         "Temporal Flow",
         "Probability Waves",
         "Phase Resonance",

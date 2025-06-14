@@ -42,6 +42,7 @@ func _ready() -> void:
 	print("🔥 GPU POWER MANAGER: 50/50 power sharing initialized!")
 	print("   🌌 Galaxy: %.0f%% | 🤖 AI: %.0f%%" % [galaxy_power_allocation*100, ai_power_allocation*100])
 
+
 func initialize_power_monitoring() -> void:
 	"""Initialize GPU power monitoring systems"""
 	# Start monitoring timer
@@ -89,6 +90,7 @@ func find_and_connect_ai() -> void:
 func monitor_galaxy_performance(galaxy: Node) -> void:
 	"""Monitor galaxy rendering performance"""
 	if galaxy.has_method("get_performance_metrics"):
+
 		var metrics = galaxy.get_performance_metrics()
 		galaxy_fps = metrics.get("fps", 60.0)
 		galaxy_workload_heavy = metrics.get("star_count", 0) > 10000
@@ -140,6 +142,7 @@ func check_thermal_protection() -> void:
 func activate_thermal_throttle(reason: String) -> void:
 	"""Activate thermal throttling to prevent damage"""
 	print("🌡️ THERMAL THROTTLE ACTIVATED: %s" % reason)
+
 	
 	# Reduce power to both systems
 	galaxy_power_allocation = min(galaxy_power_allocation, 0.3)  # Max 30% when hot
@@ -276,6 +279,7 @@ func emergency_ai_priority() -> void:
 	
 	print("🚨 EMERGENCY AI PRIORITY: AI gets 80% power!")
 
+
 func emergency_galaxy_priority() -> void:
 	"""Emergency: Give galaxy priority for critical rendering"""
 	current_galaxy_power = 0.8
@@ -283,6 +287,7 @@ func emergency_galaxy_priority() -> void:
 	apply_power_allocations()
 	
 	print("🚨 EMERGENCY GALAXY PRIORITY: Galaxy gets 80% power!")
+
 
 # Public API
 func get_power_status() -> Dictionary:
@@ -295,7 +300,7 @@ func get_power_status() -> Dictionary:
 		"galaxy_workload_heavy": galaxy_workload_heavy,
 		"thermal_throttle_active": gpu_temperature > max_gpu_temperature,
 		"power_balance": "OPTIMAL" if abs(current_galaxy_power - 0.5) < 0.1 else "UNBALANCED"
-	}
+}
 
 func get_performance_report() -> String:
 	"""Get detailed performance report"""
@@ -304,18 +309,22 @@ func get_performance_report() -> String:
 	report += "⚖️ CURRENT ALLOCATION:\n"
 	report += "   🌌 Galaxy: %.0f%% (%.2f)\n" % [current_galaxy_power * 100, current_galaxy_power]
 	report += "   🤖 AI: %.0f%% (%.2f)\n\n" % [current_ai_power * 100, current_ai_power]
+
 	
 	report += "📊 SYSTEM STATUS:\n"
 	report += "   🌡️ GPU Temperature: %.1f°C\n" % gpu_temperature
 	report += "   🎮 Galaxy FPS: %.1f\n" % galaxy_fps
 	report += "   🧠 AI Inference: %.3fs\n\n" % ai_inference_time
+
 	
 	report += "🚥 WORKLOAD STATUS:\n"
 	report += "   🌌 Galaxy Heavy: %s\n" % ("YES" if galaxy_workload_heavy else "NO")
 	report += "   🤖 AI Active: %s\n" % ("YES" if ai_workload_detected else "NO")
+
 	
 	if gpu_temperature > max_gpu_temperature:
 		report += "\n🔥 WARNING: THERMAL THROTTLING ACTIVE!"
+
 	
 	return report
 
@@ -326,6 +335,7 @@ func _input(event: InputEvent) -> void:
 			KEY_P:  # Toggle power balance mode
 				adaptive_balancing = !adaptive_balancing
 				print("⚖️ Adaptive balancing: %s" % ("ON" if adaptive_balancing else "OFF"))
+	
 			
 			KEY_1:  # Force 50/50
 				force_50_50_split()

@@ -1,5 +1,5 @@
 extends Node
-class_name VRRealityBridge
+class_name VRRealityBridge_vrrealitybridge_vrrealit
 
 # Singleton instance
 static var _instance = null
@@ -84,8 +84,8 @@ func _ready():
     vr_manager = VRManager.get_instance() if ClassDB.class_exists("VRManager") else null
     
     # Look for other components in /root/main
-    if has_node("/root/main"):
-        var main = get_node("/root/main")
+    if has_node("root/main"):
+        var main = get_node("root/main")
         if main:
             if main.has_method("get_word_manifestor"):
                 word_manifestor = main.get_word_manifestor()
@@ -95,8 +95,8 @@ func _ready():
                 records_system = main.get_records_system()
     
     # Get thread pool
-    if has_node("/root/thread_pool_autoload"):
-        thread_pool = get_node("/root/thread_pool_autoload")
+    if has_node("root/thread_pool_autoload"):
+        thread_pool = get_node("root/thread_pool_autoload")
     
     # Connect to VR Manager signals if available
     if vr_manager:

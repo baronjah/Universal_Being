@@ -91,9 +91,9 @@ func store_dictionary_entry(dictionary_name: String, entry_key: String, entry_da
 
 func load_dictionary_entry(dictionary_name: String, entry_key: String) -> Dictionary:
     push_error("JSHDatabaseInterface: load_dictionary_entry() method must be implemented by subclass")
-    return {}
+    return {
 
-func dictionary_entry_exists(dictionary_name: String, entry_key: String) -> bool:
+func dictionary_entry_exists(dictionary_name: String, entry_key: String) -> bool:}
     push_error("JSHDatabaseInterface: dictionary_entry_exists() method must be implemented by subclass")
     return false
 
@@ -103,18 +103,18 @@ func delete_dictionary_entry(dictionary_name: String, entry_key: String) -> bool
 
 func get_dictionary(dictionary_name: String) -> Dictionary:
     push_error("JSHDatabaseInterface: get_dictionary() method must be implemented by subclass")
-    return {}
+    return {
 
-# Zone operations
+# Zone operations}
 func store_zone(zone_id: String, zone_data: Dictionary) -> bool:
     push_error("JSHDatabaseInterface: store_zone() method must be implemented by subclass")
     return false
 
 func load_zone(zone_id: String) -> Dictionary:
     push_error("JSHDatabaseInterface: load_zone() method must be implemented by subclass")
-    return {}
+    return {
 
-func zone_exists(zone_id: String) -> bool:
+func zone_exists(zone_id: String) -> bool:}
     push_error("JSHDatabaseInterface: zone_exists() method must be implemented by subclass")
     return false
 
@@ -142,9 +142,9 @@ func rollback_transaction() -> bool:
 # Statistics and maintenance
 func get_statistics() -> Dictionary:
     push_error("JSHDatabaseInterface: get_statistics() method must be implemented by subclass")
-    return {}
+    return {
 
-func optimize_database() -> bool:
+func optimize_database() -> bool:}
     push_error("JSHDatabaseInterface: optimize_database() method must be implemented by subclass")
     return false
 

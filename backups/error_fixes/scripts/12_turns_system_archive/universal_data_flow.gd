@@ -17,7 +17,6 @@ const FLOW_DIRECTIONS = {
     "GAME_TO_TERMINAL": 5,
     "CIRCULAR": 6,
     "OMNIDIRECTIONAL": 7
-}
 const FLOW_TYPES = {
     "COMMAND": 0,
     "RESPONSE": 1,
@@ -27,7 +26,6 @@ const FLOW_TYPES = {
     "NEGATIVE": 5,
     "DIFFERENCE": 6,
     "UNIVERSAL": 7
-}
 const SHAPE_DIMENSIONS = {
     "SPACE": 0,
     "TIME": 1,
@@ -37,7 +35,7 @@ const SHAPE_DIMENSIONS = {
     "POTENTIAL": 5,
     "NEGATION": 6,
     "REVERSAL": 7
-}
+	}
 
 # ----- SYSTEM REFERENCES -----
 var terminal_bridge = null
@@ -59,7 +57,7 @@ var difference_matrices = {} # Matrices of differences between elements
 # ----- STATE TRACKING -----
 var active_flows = []
 var paused_flows = []
-var shape_operations = {}
+var shape_operations = {
 var simultaneous_mode = false
 var negative_mode = false
 var difference_mode = false
@@ -91,7 +89,7 @@ func _connect_systems():
     # Connect to Terminal API Bridge
     terminal_bridge = get_node_or_null("/root/TerminalAPIBridge")
     if terminal_bridge:
-        terminal_bridge.connect("data_received", self, "_on_terminal_data_received")
+        terminal_bridge.connect(_on_terminal_data_received)
     
     # Connect to Claude Bridge
     claude_bridge = get_node_or_null("/root/ClaudeAkashicBridge")
@@ -101,13 +99,13 @@ func _connect_systems():
     # Connect to Spatial Linguistic Connector
     spatial_connector = get_node_or_null("/root/SpatialLinguisticConnector")
     if spatial_connector:
-        spatial_connector.connect("linguistic_mapped", self, "_on_linguistic_mapped")
-        spatial_connector.connect("spatial_structured", self, "_on_spatial_structured")
+        spatial_connector.connect(_on_linguistic_mapped)
+        spatial_connector.connect(_on_spatial_structured)
     
     # Connect to Auto Agent Mode
     auto_agent = get_node_or_null("/root/AutoAgentMode")
     if auto_agent:
-        auto_agent.connect("transform_applied", self, "_on_transform_applied")
+        auto_agent.connect(_on_transform_applied)
     
     # Connect to Ethereal Bridge
     ethereal_bridge = get_node_or_null("/root/EtherealAkashicBridge")
@@ -118,7 +116,7 @@ func _connect_systems():
     # Connect to Turn System
     turn_system = get_node_or_null("/root/TurnSystem")
     if turn_system:
-        turn_system.connect("turn_advanced", self, "_on_turn_advanced")
+        turn_system.connect(_on_turn_advanced)
 
 func _initialize_queues():
     # Create a queue for each flow direction
@@ -171,8 +169,7 @@ func _initialize_universal_shapes():
             },
             "affects_all": true,
             "has_negative": true
-        }
-    }
+			}
     
     # Generate negative shapes
     for shape_name in universal_shapes:
@@ -184,7 +181,7 @@ func _initialize_universal_shapes():
                 "affects_all": shape.affects_all,
                 "has_negative": false,
                 "is_negative_of": shape_name
-            }
+				}
             
             # Create inverse dimensions
             for dimension in shape.dimensions:
@@ -219,7 +216,7 @@ func queue_data(direction, data_type, content, metadata=null):
         "transformed": false,
         "has_negative": false,
         "has_difference": false
-    }
+		}
     
     # Add to queue
     flow_queues[direction].append(flow_data)
@@ -369,7 +366,8 @@ func _route_claude_to_terminal(flow_data):
         FLOW_TYPES.RESPONSE:
             # Forward Claude response to terminal
             if terminal_bridge.has_method("process_api_response"):
-                var data = {"response": flow_data.content}
+			}
+                var data = {"response": flow_data.content
                 if flow_data.metadata and flow_data.metadata.has("api_name"):
                     terminal_bridge._process_api_response(flow_data.metadata.api_name, {}, data)
         
@@ -483,8 +481,9 @@ func _route_circular(flow_data):
                         emit_signal("universal_flow_completed", flow_data.id, 3)
             else:
                 # Start at terminal
-                flow_data.metadata = {"stage": 0}
+                flow_data.metadata = {"stage": 0
                 _route_circular(flow_data)
+}
         
         FLOW_TYPES.SHAPE:
             # Shapes affect all systems
@@ -667,7 +666,7 @@ func _generate_negative_text(text):
     return negative
 
 func _generate_negative_dictionary(dict):
-    var negative = {}
+    var negative = {
     
     # Invert keys and values where possible
     for key in dict:
@@ -740,7 +739,7 @@ func _calculate_differences(flow_data):
             related_items.append(message_history[i])
     
     # Calculate differences for up to 3 items
-    var differences = {}
+    var differences = {
     for i in range(min(3, related_items.size())):
         var item = related_items[i]
         var diff_id = "diff_" + flow_data.id + "_" + item.id
@@ -750,7 +749,7 @@ func _calculate_differences(flow_data):
             "target_id": item.id,
             "timestamp": OS.get_unix_time(),
             "difference": _calculate_difference(flow_data.content, item.content)
-        }
+			}
     
     # Store in difference matrices
     if differences.size() > 0:
@@ -794,14 +793,14 @@ func _calculate_text_difference(a, b):
         "unique_to_a": in_a_not_b.strip_edges(),
         "unique_to_b": in_b_not_a.strip_edges(),
         "length_diff": a.length() - b.length()
-    }
+		}
 
 func _calculate_dict_difference(a, b):
     var difference = {
         "keys_only_in_a": [],
         "keys_only_in_b": [],
-        "value_differences": {}
-    }
+        "value_differences": {
+		}
     
     # Keys only in a
     for key in a:
@@ -819,7 +818,7 @@ func _calculate_dict_difference(a, b):
             difference.value_differences[key] = {
                 "a_value": a[key],
                 "b_value": b[key]
-            }
+				}
     
     return difference
 
@@ -829,7 +828,7 @@ func _calculate_array_difference(a, b):
         "items_only_in_b": [],
         "length_diff": a.size() - b.size(),
         "position_differences": []
-    }
+		}
     
     # Find items only in a
     for item in a:
@@ -865,7 +864,9 @@ func _calculate_array_difference(a, b):
 func _on_terminal_data_received(api_name, data):
     # Queue data from terminal to appropriate destinations
     if data.has("type") and data.has("content"):
-        var metadata = {"api_name": api_name}
+	}
+        var metadata = {"api_name": api_name
+		}
         var type = FLOW_TYPES.DATA
         
         # Determine data type
@@ -887,7 +888,7 @@ func _on_linguistic_mapped(word, space_type, coordinates):
         "word": word,
         "space_type": space_type,
         "coordinates": coordinates
-    }
+		}
     
     # Queue to Claude
     queue_data(FLOW_DIRECTIONS.GAME_TO_CLAUDE, FLOW_TYPES.DATA, data)
@@ -901,7 +902,7 @@ func _on_spatial_structured(structure_id, shape_type, boundaries):
         "structure_id": structure_id,
         "shape": shape_type,
         "boundaries": boundaries
-    }
+		}
     
     # Queue as shape to all directions
     queue_data(FLOW_DIRECTIONS.OMNIDIRECTIONAL, FLOW_TYPES.SHAPE, data)
@@ -912,7 +913,7 @@ func _on_transform_applied(word, action, result):
         "word": word,
         "action": action,
         "result": result
-    }
+		}
     
     # Queue to all systems
     queue_data(FLOW_DIRECTIONS.OMNIDIRECTIONAL, FLOW_TYPES.TRANSFORM, data)
@@ -991,7 +992,7 @@ func register_shape_operation(shape_name, operation):
             },
             "affects_all": true,
             "has_negative": true
-        }
+			}
     
     return shape_operations.has(shape_name)
 
@@ -1001,11 +1002,11 @@ func create_universal_shape(shape_name, dimensions):
         "dimensions": dimensions,
         "affects_all": true,
         "has_negative": true
-    }
+		}
     
     # Generate its negative automatically
     var negative_name = "negative_" + shape_name
-    var negative_dimensions = {}
+    var negative_dimensions = {
     
     for dimension in dimensions:
         negative_dimensions[dimension] = 1.0 - dimensions[dimension]
@@ -1015,7 +1016,7 @@ func create_universal_shape(shape_name, dimensions):
         "affects_all": true,
         "has_negative": false,
         "is_negative_of": shape_name
-    }
+		}
     
     # Add to negatives map
     negative_maps[shape_name] = negative_name
@@ -1049,8 +1050,8 @@ func get_flow_statistics():
         "simultaneous_mode": simultaneous_mode,
         "negative_mode": negative_mode,
         "difference_mode": difference_mode,
-        "queue_sizes": {}
-    }
+        "queue_sizes": {
+		}
     
     # Get queue sizes
     for direction in flow_queues:
@@ -1071,7 +1072,7 @@ class ShapeTransformer:
     
     func _init(name, rules=null):
         shape_name = name
-        transform_rules = rules if rules else {}
+        transform_rules = rules if rules else {
     
     func transform(content, shape):
         # Apply transformation based on content type
@@ -1091,6 +1092,7 @@ class ShapeTransformer:
         
         # Check transformation rules
         if transform_rules.has("text_transform"):
+		}
             var rule = transform_rules.text_transform
             
             if rule == "uppercase":
@@ -1126,6 +1128,7 @@ class ShapeTransformer:
         
         # Check array-specific rules
         if transform_rules.has("array_transform"):
+		}
             var rule = transform_rules.array_transform
             
             if rule == "reverse":
@@ -1170,7 +1173,7 @@ class DifferenceCalculator:
             "a_unique": a.length() - lcs.length(),
             "b_unique": b.length() - lcs.length(),
             "similarity": float(lcs.length()) / max(a.length(), b.length())
-        }
+			}
     
     func _dict_difference(a, b):
         var result = {
@@ -1178,7 +1181,7 @@ class DifferenceCalculator:
             "keys_only_in_b": [],
             "different_values": {},
             "similarity": 0.0
-        }
+			}
         
         # Keys only in a
         for key in a:
@@ -1196,7 +1199,7 @@ class DifferenceCalculator:
                 result.different_values[key] = {
                     "a_value": a[key],
                     "b_value": b[key]
-                }
+					}
         
         # Calculate similarity
         var total_keys = a.size() + b.size()
@@ -1212,7 +1215,7 @@ class DifferenceCalculator:
             "items_only_in_a": [],
             "items_only_in_b": [],
             "similarity": 0.0
-        }
+			}
         
         # Items only in a
         for item in a:

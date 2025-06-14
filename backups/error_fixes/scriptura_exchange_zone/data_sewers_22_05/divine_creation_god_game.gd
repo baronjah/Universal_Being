@@ -118,7 +118,7 @@ func _initialize_thread_pool():
 	thread_pool = preload("res://addons/thread_pool/thread_pool.gd").new()
 	add_child(thread_pool)
 	
-	thread_pool.connect("task_finished", self, "_on_creation_task_finished")
+	thread_pool.connect(_on_creation_task_finished)
 	thread_pool.discard_finished_tasks = false
 	
 	print("🧵 Thread Pool initialized for efficient creation processing")

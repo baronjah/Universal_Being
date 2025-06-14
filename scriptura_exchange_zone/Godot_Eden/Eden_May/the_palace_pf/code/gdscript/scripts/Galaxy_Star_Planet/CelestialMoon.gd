@@ -1,6 +1,6 @@
 # CelestialMoon.gd
 @tool
-extends Sprite3D
+extends \2
 
 var shader_material: ShaderMaterial
 var moon_id: int

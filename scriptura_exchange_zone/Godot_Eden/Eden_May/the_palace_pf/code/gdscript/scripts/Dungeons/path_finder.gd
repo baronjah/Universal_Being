@@ -1,19 +1,19 @@
-class_name DungeonPathfinder
-extends Node3D
+class_name DungeonPathfinder_pathfinder_pathfind
+extends \2
 
 # References
-@export var grid_map: GridMap
-@export var navigation_map: NavigationRegion3D
+@@@export var grid_map: GridMap
+@@@export var navigation_map: NavigationRegion3D
 
 # Map cell IDs
-@export var floor_cell: int = 0
-@export var wall_cell: int = 1
-@export var door_cell: int = 2
+@@@export var floor_cell: int = 0
+@@@export var wall_cell: int = 1
+@@@export var door_cell: int = 2
 
 # Path settings
-@export var path_width: int = 1
-@export var apply_noise: bool = true
-@export var noise_amount: float = 0.3
+@@@export var path_width: int = 1
+@@@export var apply_noise: bool = true
+@@@export var noise_amount: float = 0.3
 
 var rooms: Array = []
 var nav_mesh: NavigationMesh

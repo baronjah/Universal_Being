@@ -15,8 +15,8 @@ var vr_auto_initialize = false
 var vr_passthrough_enabled = false
 
 # Paths
-const VR_MANAGER_PATH = "res://code/gdscript/scripts/vr_system/vr_manager.gd"
-const VR_SCENE_SETUP_PATH = "res://code/gdscript/scripts/vr_system/vr_scene_setup.gd"
+const VR_MANAGER_PATH = "res://scripts/gdscript/scripts/vr_system/vr_manager.gd"
+const VR_SCENE_SETUP_PATH = "res://scripts/gdscript/scripts/vr_system/vr_scene_setup.gd"
 const SETTINGS_FILE = "user://settings.cfg"
 
 # Ready function
@@ -84,7 +84,7 @@ func initialize_vr():
 # Find or create universe controller
 func find_universe_controller():
 	# Try to find existing controller
-	universe_controller = get_node_or_null("/root/UniverseController")
+	universe_controller = get_node_or_null("root/UniverseController")
 	
 	if not universe_controller:
 		# Look through the scene tree
@@ -100,7 +100,7 @@ func find_universe_controller():
 # Initialize Akashic Records
 func initialize_akashic_records():
 	# Try to get existing Akashic Records manager
-	akashic_records = get_node_or_null("/root/AkashicRecordsManager")
+	akashic_records = get_node_or_null("root/AkashicRecordsManager")
 	
 	if not akashic_records:
 		# Try to find through script access

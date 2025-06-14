@@ -3,25 +3,25 @@ extends Node
 # Simple virtual file system for LuminusOS
 
 var root_directory = {
-	"name": "/",
+	"name": "",
 	"type": "directory",
 	"children": {}
 }
 
-var current_directory_path = "/"
+var current_directory_path = ""
 var current_directory = root_directory
 
 func _ready():
 	# Initialize some default directories and files
-	create_directory("/Home")
-	create_directory("/Home/Documents")
-	create_directory("/Home/Programs")
-	create_directory("/System")
+	create_directory("Home")
+	create_directory("Home/Documents")
+	create_directory("Home/Programs")
+	create_directory("System")
 	
 	# Create some sample files
-	write_file("/Home/welcome.txt", "Welcome to LuminusOS!\nThis is a sample text file.")
-	write_file("/Home/Programs/hello.ls", "// LuminusOS Script\nfunc main() {\n  Print(\"Hello, World!\");\n  return 0;\n}")
-	write_file("/System/about.txt", "LuminusOS v1.0\nInspired by TempleOS\nCreated with Godot 4.4")
+	write_file("Home/welcome.txt", "Welcome to LuminusOS!\nThis is a sample text file.")
+	write_file("Home/Programs/hello.ls", "// LuminusOS Script\nfunc main() {\n  Print(\"Hello, World!\");\n  return 0;\n}")
+	write_file("System/about.txt", "LuminusOS v1.0\nInspired by TempleOS\nCreated with Godot 4.4")
 
 # File system navigation
 func get_current_directory():
@@ -33,13 +33,13 @@ func get_current_path():
 func change_directory(path):
 	var target_dir = get_directory(path)
 	if target_dir:
-		if path.begins_with("/"):
+		if path.begins_with(""):
 			current_directory_path = path
 		else:
-			if current_directory_path.ends_with("/"):
+			if current_directory_path.ends_with(""):
 				current_directory_path += path
 			else:
-				current_directory_path += "/" + path
+				current_directory_path += "" + path
 		current_directory = target_dir
 		return true
 	return false
@@ -95,17 +95,17 @@ func list_directory(path=""):
 
 # Helper functions
 func get_directory(path):
-	if path == "" or path == "/":
+	if path == "" or path == "":
 		return root_directory
 		
 	var normalized_path = path
-	if not normalized_path.begins_with("/"):
-		if current_directory_path.ends_with("/"):
+	if not normalized_path.begins_with(""):
+		if current_directory_path.ends_with(""):
 			normalized_path = current_directory_path + normalized_path
 		else:
-			normalized_path = current_directory_path + "/" + normalized_path
+			normalized_path = current_directory_path + "" + normalized_path
 	
-	var parts = normalized_path.split("/")
+	var parts = normalized_path.split("")
 	parts = parts.filter(func(part): return part != "")
 	
 	var current = root_directory
@@ -135,20 +135,20 @@ func get_file(path):
 	return null
 
 func get_parent_path(path):
-	if path == "/" or path == "":
-		return "/"
+	if path == "" or path == "":
+		return ""
 		
-	var parts = path.split("/")
+	var parts = path.split("")
 	parts = parts.filter(func(part): return part != "")
 	
 	if parts.size() <= 1:
-		return "/"
+		return ""
 		
 	parts.pop_back()
-	return "/" + "/".join(parts)
+	return "" + "".join(parts)
 
 func get_name_from_path(path):
-	var parts = path.split("/")
+	var parts = path.split("")
 	parts = parts.filter(func(part): return part != "")
 	
 	if parts.size() == 0:

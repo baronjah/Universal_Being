@@ -1,14 +1,14 @@
 extends Node
 
-class_name TurnSystem
+class_name TurnSystem_godotturnsystem_godottur
 
 # ----- TURN SYSTEM SETTINGS -----
 @export_category("Turn System Settings")
-@export var turns_enabled: bool = true
-@export var max_turns: int = 12
-@export var current_turn: int = 3
-@export var time_per_turn: float = 300.0  # 5 minutes per turn
-@export var auto_advance: bool = true
+@@@export var turns_enabled: bool = true
+@@@export var max_turns: int = 12
+@@@export var current_turn: int = 3
+@@@export var time_per_turn: float = 300.0  # 5 minutes per turn
+@@@export var auto_advance: bool = true
 
 # ----- COMPONENT REFERENCES -----
 var game_controller: Node
@@ -158,12 +158,12 @@ func save_turn_data(turn_number: int):
         }
     
     # Save to C drive
-    var c_drive_file = c_drive_path + "/turn_" + str(turn_number) + "/data/turn_data.json"
+    var c_drive_file = c_drive_path + "turn_" + str(turn_number) + "data/turn_data.json"
     _save_json_file(c_drive_file, turn_data)
     
     # Also save to D drive if it exists
-    var d_drive_dir = d_drive_path + "/turn_" + str(turn_number) + "/data"
-    var d_drive_file = d_drive_dir + "/turn_data.json"
+    var d_drive_dir = d_drive_path + "turn_" + str(turn_number) + "data"
+    var d_drive_file = d_drive_dir + "turn_data.json"
     
     if DirAccess.dir_exists_absolute(d_drive_path):
         if not DirAccess.dir_exists_absolute(d_drive_dir):
@@ -191,7 +191,7 @@ func _save_json_file(file_path: String, data):
 func _ensure_directories_exist():
     # Create C drive directories
     for i in range(1, max_turns + 1):
-        var dir_path = c_drive_path + "/turn_" + str(i) + "/data"
+        var dir_path = c_drive_path + "turn_" + str(i) + "data"
         if not DirAccess.dir_exists_absolute(dir_path):
             DirAccess.make_dir_recursive_absolute(dir_path)
     
@@ -202,14 +202,14 @@ func _ensure_directories_exist():
 
 func _capture_screenshots(turn_number: int):
     # Create screenshot directory if it doesn't exist
-    var screenshot_dir = screenshots_path + "/turn_" + str(turn_number)
+    var screenshot_dir = screenshots_path + "turn_" + str(turn_number)
     if not DirAccess.dir_exists_absolute(screenshot_dir):
         DirAccess.make_dir_recursive_absolute(screenshot_dir)
     
     # Capture viewport screenshot
     var image = get_viewport().get_texture().get_image()
     var time_str = Time.get_datetime_string_from_system().replace(":", "-").replace(" ", "_")
-    var file_name = screenshot_dir + "/turn" + str(turn_number) + "_" + time_str + ".png"
+    var file_name = screenshot_dir + "turn" + str(turn_number) + "_" + time_str + ".png"
     image.save_png(file_name)
 
 # ----- BASH INTEGRATION -----
@@ -239,7 +239,7 @@ func _sync_with_bash_system():
 
 func _save_current_turn():
     # Save current turn to file
-    var file_path = c_drive_path + "/current_turn.txt"
+    var file_path = c_drive_path + "current_turn.txt"
     var file = FileAccess.open(file_path, FileAccess.WRITE)
     if file:
         file.store_string(str(current_turn))
@@ -249,7 +249,7 @@ func _save_current_turn():
 
 func _load_current_turn():
     # Load current turn from file if it exists
-    var file_path = c_drive_path + "/current_turn.txt"
+    var file_path = c_drive_path + "current_turn.txt"
     if FileAccess.file_exists(file_path):
         var file = FileAccess.open(file_path, FileAccess.READ)
         if file:
@@ -422,7 +422,7 @@ func on_cycle_completed():
 func _archive_previous_cycle():
     # Create archive directory with timestamp
     var timestamp = Time.get_datetime_string_from_system().replace(":", "-").replace(" ", "_")
-    var archive_dir = c_drive_path + "/cycles/cycle_" + timestamp
+    var archive_dir = c_drive_path + "cycles/cycle_" + timestamp
     
     # Ensure the directory exists
     if not DirAccess.dir_exists_absolute(archive_dir):

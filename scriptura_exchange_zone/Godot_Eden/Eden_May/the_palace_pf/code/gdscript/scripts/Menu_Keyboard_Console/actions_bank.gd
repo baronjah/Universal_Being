@@ -26,9 +26,8 @@
 
 # folder path classname node file_name
 # path container thing node name directory
-
-extends Node3D
-class_name ActionsBank
+extends \2
+class_name ActionsBank_actionsbank_actionsb
 
 #
 
@@ -725,7 +724,7 @@ const interactions_list_4 = {
 		["scene_2"],
 		["thing_42"],
 		["write"],
-		["/"]
+		[""]
 	], # add comma ,
 	43: [
 		["interaction_60|keyboard_left_container|thing_34"],

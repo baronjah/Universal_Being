@@ -4,15 +4,14 @@
 # PURPOSE: Make Universal Beings use proper assets from the library
 # CREATED: 2025-05-29 - Direct asset integration
 # ==================================================
-
 extends UniversalBeingBase
-class_name UniversalBeingAssetConnector
+# DISABLED DUPLICATE: class_name UniversalBeingAssetConnector_universa
 
 # Static function to enhance Universal Being with proper asset
 static func enhance_being_with_asset(being: Node3D, asset_type: String) -> void:
 	"""Make a Universal Being use the proper asset from StandardizedObjects"""
 	
-	var std_objects = being.get_node_or_null("/root/StandardizedObjects")
+	var std_objects = being.get_node_or_null("root/StandardizedObjects")
 	if not std_objects:
 		print("[AssetConnector] StandardizedObjects not found!")
 		return
@@ -55,7 +54,7 @@ static func get_available_assets() -> Array:
 	
 	var std_objects = Engine.get_singleton("StandardizedObjects") if Engine.has_singleton("StandardizedObjects") else null
 	if not std_objects:
-		std_objects = Engine.get_main_loop().root.get_node_or_null("/root/StandardizedObjects")
+		std_objects = Engine.get_main_loop().root.get_node_or_null("root/StandardizedObjects")
 	
 	if not std_objects:
 		return []

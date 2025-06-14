@@ -1,5 +1,5 @@
 extends Node
-class_name EdenGardenSystem
+class_name EdenGardenSystem_edengardensystem_edengard
 
 """
 Eden Garden System
@@ -175,7 +175,7 @@ class EchoHatch:
         id = p_id
         source_type = p_source_type
         content = p_content
-        creation_time = OS.get_unix_time()
+        creation_time = OS.Time.get_unix_time_from_system()
         last_echo_time = creation_time
         
         # Check if this is a command echo
@@ -191,7 +191,7 @@ class EchoHatch:
             is_ctrl_activated = true
     
     func echo() -> void:
-        last_echo_time = OS.get_unix_time()
+        last_echo_time = OS.Time.get_unix_time_from_system()
         echo_count += 1
     
     func connect_hatch(hatch_id: String) -> void:
@@ -234,7 +234,7 @@ class Fruit:
         type = p_type
         name = p_name
         seed_content = p_seed_content
-        planting_time = OS.get_unix_time()
+        planting_time = OS.Time.get_unix_time_from_system()
     
     func add_nutrient(nutrient_type: String, amount: float) -> void:
         if not nutrients.has(nutrient_type):
@@ -262,7 +262,7 @@ class Fruit:
     func harvest() -> bool:
         if ripened and not harvested:
             harvested = true
-            harvest_time = OS.get_unix_time()
+            harvest_time = OS.Time.get_unix_time_from_system()
             return true
         return false
     
@@ -302,7 +302,7 @@ class GardenCraft:
         category = p_category
         name = p_name
         description = p_description
-        creation_time = OS.get_unix_time()
+        creation_time = OS.Time.get_unix_time_from_system()
         creator_type = "human"  # Default
     
     func add_material(material: String) -> void:
@@ -414,11 +414,11 @@ class EdenMemory:
         id = p_id
         type = p_type
         content = p_content
-        creation_time = OS.get_unix_time()
+        creation_time = OS.Time.get_unix_time_from_system()
         last_access_time = creation_time
     
     func access() -> void:
-        last_access_time = OS.get_unix_time()
+        last_access_time = OS.Time.get_unix_time_from_system()
         access_count += 1
     
     func add_association(memory_id: String) -> void:
@@ -469,7 +469,7 @@ class TokenPhysics:
     
     func _init(p_model: int):
         model = p_model
-        last_update_time = OS.get_unix_time()
+        last_update_time = OS.Time.get_unix_time_from_system()
         
         # Initialize state based on model
         _initialize_state()
@@ -535,7 +535,7 @@ class TokenPhysics:
                 }
     
     func update(delta_time: float) -> void:
-        last_update_time = OS.get_unix_time()
+        last_update_time = OS.Time.get_unix_time_from_system()
         
         # Update model-specific physics
         match model:
@@ -713,7 +713,7 @@ class Button:
         type = p_type
         label = p_label
         action = p_action
-        creation_time = OS.get_unix_time()
+        creation_time = OS.Time.get_unix_time_from_system()
         
         # Default appearance
         position = Vector2(0, 0)
@@ -722,7 +722,7 @@ class Button:
     
     func press() -> bool:
         press_count += 1
-        last_press_time = OS.get_unix_time()
+        last_press_time = OS.Time.get_unix_time_from_system()
         
         # For toggle buttons, switch state
         if type == BUTTON_TYPES.TOGGLE:
@@ -777,18 +777,18 @@ class PhaseTodo:
         title = p_title
         description = p_description
         phase = p_phase
-        creation_time = OS.get_unix_time()
+        creation_time = OS.Time.get_unix_time_from_system()
     
     func start() -> void:
         state = "in_progress"
     
     func complete() -> void:
         state = "completed"
-        completion_time = OS.get_unix_time()
+        completion_time = OS.Time.get_unix_time_from_system()
     
     func cancel() -> void:
         state = "cancelled"
-        completion_time = OS.get_unix_time()
+        completion_time = OS.Time.get_unix_time_from_system()
     
     func add_dependency(todo_id: String) -> void:
         if not dependencies.has(todo_id):
@@ -815,7 +815,7 @@ class PhaseTodo:
 
 # Initialization
 func _ready():
-    _phase_start_time = OS.get_unix_time()
+    _phase_start_time = OS.Time.get_unix_time_from_system()
     
     # Initialize default garden plot
     _create_garden_plot(Vector2(3, 3), _current_phase)
@@ -950,7 +950,7 @@ func create_craft(name: String, category: int, description: String, materials: A
 
 # Store Eden memory
 func store_memory(content: String, type: int = EDEN_MEMORY_TYPES.EPISODIC) -> String:
-    var memory_id = "memory_" + str(OS.get_unix_time()) + "_" + str(randi() % 10000)
+    var memory_id = "memory_" + str(OS.Time.get_unix_time_from_system()) + "_" + str(randi() % 10000)
     
     var memory = EdenMemory.new(memory_id, type, content)
     memory.retention_factor = _config.echo_retention_factor
@@ -1042,7 +1042,7 @@ func change_phase(new_phase: int) -> bool:
     
     var old_phase = _current_phase
     _current_phase = new_phase
-    _phase_start_time = OS.get_unix_time()
+    _phase_start_time = OS.Time.get_unix_time_from_system()
     
     # Update all garden plots to new phase
     for plot_id in _garden_plots:
@@ -1102,7 +1102,7 @@ func get_phase_info() -> Dictionary:
         "phase": _current_phase,
         "name": _get_phase_name(_current_phase),
         "start_time": _phase_start_time,
-        "elapsed_time": OS.get_unix_time() - _phase_start_time,
+        "elapsed_time": OS.Time.get_unix_time_from_system() - _phase_start_time,
         "todos_count": todos_in_phase,
         "completed_todos": completed_todos,
         "next_phase": (_current_phase + 1) % GARDEN_PHASES.size(),
@@ -1355,22 +1355,22 @@ func _update_garden(delta: float) -> void:
     for memory_id in _active_memory_echoes.keys():
         var memory = _active_memory_echoes[memory_id]
         
-        // Memory decay based on retention factor
+# // Memory decay based on retention factor
         var decay_amount = 0.01 * delta
         memory.decay(decay_amount)
         
-        // Remove very faded memories
+# // Remove very faded memories
         if memory.clarity < 0.1:
             _active_memory_echoes.erase(memory_id)
     }
 
 # Check for phase progression
 func _check_phase_progression() -> void:
-    var current_time = OS.get_unix_time()
+    var current_time = OS.Time.get_unix_time_from_system()
     var elapsed_hours = (current_time - _phase_start_time) / 3600.0
     
     if elapsed_hours >= _config.phase_duration_hours:
-        // Check if phase tasks are complete
+# // Check if phase tasks are complete
         var can_progress = true
         
         if _planning_todos.has(_current_phase):
@@ -1386,25 +1386,25 @@ func _check_phase_progression() -> void:
             _current_phase = (_current_phase + 1) % GARDEN_PHASES.size()
             _phase_start_time = current_time
             
-            // Update all garden plots to new phase
+# // Update all garden plots to new phase
             for plot_id in _garden_plots:
                 _garden_plots[plot_id].current_phase = _current_phase
             
-            // Create phase transition echo
+# // Create phase transition echo
             create_echo("Garden has transitioned from " + _get_phase_name(old_phase) + 
                        " to " + _get_phase_name(_current_phase), ECHO_SOURCE_TYPES.GARDEN)
             
-            // Emit signal
+# // Emit signal
             emit_signal("garden_phase_changed", old_phase, _current_phase, "Automatic progression")
         }
     }
 
 # Update energy level
 func _update_energy(delta: float) -> void:
-    // Natural regeneration
+# // Natural regeneration
     _energy_level = min(1.0, _energy_level + _config.energy_regeneration_rate * delta)
     
-    // Update token physics energy
+# // Update token physics energy
     if _token_physics_state:
         _token_physics_state.current_energy = _energy_level
     }
@@ -1414,7 +1414,7 @@ func _check_offline_sync() -> void:
     if _sync_status != SYNC_MODES.OFFLINE:
         return
     
-    var current_time = OS.get_unix_time()
+    var current_time = OS.Time.get_unix_time_from_system()
     var hours_since_sync = (current_time - _last_sync_time) / 3600.0
     
     if hours_since_sync >= _config.offline_sync_frequency:
@@ -1423,46 +1423,46 @@ func _check_offline_sync() -> void:
 
 # Perform offline sync
 func _perform_offline_sync() -> Dictionary:
-    var sync_id = "sync_" + str(OS.get_unix_time())
+    var sync_id = "sync_" + str(OS.Time.get_unix_time_from_system())
     var start_time = OS.get_ticks_msec()
     
-    // Create transitional state
+# // Create transitional state
     _sync_status = SYNC_MODES.TRANSITIONING
     
-    // Simulate sync operations
+# // Simulate sync operations
     var success_rate = randf()
     
-    // Sync operations would go here in a real implementation
+# // Sync operations would go here in a real implementation
     
-    // Refresh memories
+# // Refresh memories
     for memory_id in _active_memory_echoes:
         var memory = _active_memory_echoes[memory_id]
         memory.refresh()
     }
     
-    // Restore energy
+# // Restore energy
     _energy_level = min(1.0, _energy_level + 0.3)
     
-    // Update token physics
+# // Update token physics
     if _token_physics_state:
         _token_physics_state.current_energy = _energy_level
     }
     
-    // Create memory of the sync
+# // Create memory of the sync
     store_memory("Performed offline sync with " + str(int(success_rate * 100)) + "% success", 
                 EDEN_MEMORY_TYPES.PROCEDURAL)
     
-    // Create echo
+# // Create echo
     create_echo("Offline sync completed. Memory integrity at " + 
                str(int(success_rate * 100)) + "%", ECHO_SOURCE_TYPES.SYSTEM)
     
-    // Complete transition
+# // Complete transition
     _sync_status = SYNC_MODES.ONLINE
-    _last_sync_time = OS.get_unix_time()
+    _last_sync_time = OS.Time.get_unix_time_from_system()
     
     var duration = (OS.get_ticks_msec() - start_time) / 1000.0
     
-    // Emit signal
+# // Emit signal
     emit_signal("offline_sync_completed", sync_id, duration, success_rate)
     
     return {
@@ -1476,7 +1476,7 @@ func _perform_offline_sync() -> Dictionary:
 
 # Process command echo
 func _process_command_echo(hatch: EchoHatch) -> void:
-    // Check hash count for refresh commands
+# // Check hash count for refresh commands
     var hash_count = 0
     var content = hatch.content
     
@@ -1484,22 +1484,22 @@ func _process_command_echo(hatch: EchoHatch) -> void:
         hash_count += 1
     
     if hash_count > 0:
-        // Use the hash count to determine refresh intensity
+# // Use the hash count to determine refresh intensity
         var refresh_intensity = min(hash_count / 7.0, 1.0)
         
-        // Apply refresh with the given intensity
+# // Apply refresh with the given intensity
         _apply_refresh(refresh_intensity)
         
-        // Add to command history
+# // Add to command history
         _command_history.append({
             "type": "refresh",
             "hash_count": hash_count,
             "intensity": refresh_intensity,
-            "timestamp": OS.get_unix_time()
+            "timestamp": OS.Time.get_unix_time_from_system()
         })
     }
     
-    // Check for other command types
+# // Check for other command types
     if content.begins_with("!"):
         var command_text = content.substr(1).strip_edges()
         var command_parts = command_text.split(" ", false)
@@ -1507,31 +1507,31 @@ func _process_command_echo(hatch: EchoHatch) -> void:
         if command_parts.size() > 0:
             match command_parts[0]:
                 "phase":
-                    // Change garden phase
+# // Change garden phase
                     if command_parts.size() > 1:
                         var phase_num = int(command_parts[1])
                         if phase_num >= 0 and phase_num < GARDEN_PHASES.size():
                             change_phase(phase_num)
                 
                 "sync":
-                    // Toggle sync mode
+# // Toggle sync mode
                     toggle_sync_mode()
                 
                 "physics":
-                    // Change physics model
+# // Change physics model
                     if command_parts.size() > 1:
                         var model_num = int(command_parts[1])
                         if model_num >= 0 and model_num < TOKEN_PHYSICS_MODELS.size():
                             _change_physics_model(model_num)
                 
                 "todo":
-                    // Create a to-do item
+# // Create a to-do item
                     if command_parts.size() > 1:
                         var todo_title = command_text.substr(5).strip_edges()
                         create_todo(todo_title, "Command-generated todo")
                 
                 "plant":
-                    // Plant a fruit
+# // Plant a fruit
                     if command_parts.size() > 1:
                         var fruit_name = command_text.substr(6).strip_edges()
                         plant_fruit(fruit_name, FRUIT_TYPES.CONCEPT, "Command-planted " + fruit_name)
@@ -1539,30 +1539,30 @@ func _process_command_echo(hatch: EchoHatch) -> void:
 
 # Apply refresh to the garden
 func _apply_refresh(intensity: float) -> void:
-    // Refresh garden resources
+# // Refresh garden resources
     _garden_resources.water = min(1.0, _garden_resources.water + 0.2 * intensity)
     _garden_resources.nutrients = min(1.0, _garden_resources.nutrients + 0.2 * intensity)
     _garden_resources.energy = min(1.0, _garden_resources.energy + 0.3 * intensity)
     
-    // Update energy level
+# // Update energy level
     _energy_level = min(1.0, _energy_level + 0.3 * intensity)
     
-    // Refresh memories
+# // Refresh memories
     for memory_id in _active_memory_echoes:
         _active_memory_echoes[memory_id].refresh()
     }
     
-    // Create echo
+# // Create echo
     create_echo("Garden refreshed with intensity " + str(intensity), ECHO_SOURCE_TYPES.SYSTEM)
     
-    // Create refresh memory
+# // Create refresh memory
     store_memory("Garden refreshed at " + str(OS.get_time().hour) + ":" + 
                 str(OS.get_time().minute), EDEN_MEMORY_TYPES.PROCEDURAL)
 }
 
 # Handle Ctrl activation
 func _handle_ctrl_activation(hatch: EchoHatch) -> void:
-    // Find Ctrl button
+# // Find Ctrl button
     var ctrl_button_id = ""
     
     for button_id in _active_buttons:
@@ -1573,14 +1573,14 @@ func _handle_ctrl_activation(hatch: EchoHatch) -> void:
     }
     
     if ctrl_button_id != "":
-        // Press the Ctrl button
+# // Press the Ctrl button
         press_button(ctrl_button_id)
     }
     
-    // Create Ctrl-associated memory
+# // Create Ctrl-associated memory
     store_memory("Ctrl activation: " + hatch.content, EDEN_MEMORY_TYPES.PROCEDURAL)
     
-    // Connect this hatch to other Ctrl-activated hatches
+# // Connect this hatch to other Ctrl-activated hatches
     for other_id in _echo_hatches:
         if other_id != hatch.id and _echo_hatches[other_id].is_ctrl_activated:
             hatch.connect_hatch(other_id)
@@ -1590,58 +1590,58 @@ func _handle_ctrl_activation(hatch: EchoHatch) -> void:
 
 # Connect all Ctrl-related elements
 func _connect_ctrl_elements() -> void:
-    // Find all Ctrl-activated elements
+# // Find all Ctrl-activated elements
     var ctrl_hatches = []
     var ctrl_memories = []
     
-    // Find hatches
+# // Find hatches
     for hatch_id in _echo_hatches:
         if _echo_hatches[hatch_id].is_ctrl_activated:
             ctrl_hatches.append(hatch_id)
     }
     
-    // Find memories
+# // Find memories
     for memory_id in _active_memory_echoes:
         if _active_memory_echoes[memory_id].is_ctrl_associated:
             ctrl_memories.append(memory_id)
     }
     
-    // Connect hatches to each other
+# // Connect hatches to each other
     for i in range(ctrl_hatches.size()):
         for j in range(i + 1, ctrl_hatches.size()):
             _echo_hatches[ctrl_hatches[i]].connect_hatch(ctrl_hatches[j])
             _echo_hatches[ctrl_hatches[j]].connect_hatch(ctrl_hatches[i])
     }
     
-    // Connect memories to each other
+# // Connect memories to each other
     for i in range(ctrl_memories.size()):
         for j in range(i + 1, ctrl_memories.size()):
             _active_memory_echoes[ctrl_memories[i]].add_association(ctrl_memories[j])
             _active_memory_echoes[ctrl_memories[j]].add_association(ctrl_memories[i])
     }
     
-    // Create connection echo
+# // Create connection echo
     var connection_count = ctrl_hatches.size() + ctrl_memories.size()
     create_echo("Connected " + str(connection_count) + " Ctrl elements", ECHO_SOURCE_TYPES.SYSTEM)
 }
 
 # Refresh the garden
 func _refresh_garden() -> void:
-    // Water all plots
+# // Water all plots
     for plot_id in _garden_plots:
         _garden_plots[plot_id].water_level = 1.0
     }
     
-    // Accelerate all fruits
+# // Accelerate all fruits
     for fruit_id in _fruits:
         if not _fruits[fruit_id].harvested:
             _fruits[fruit_id].mature(0.1)
     }
     
-    // Replenish energy
+# // Replenish energy
     _energy_level = 1.0
     
-    // Create echo
+# // Create echo
     create_echo("Garden fully refreshed!", ECHO_SOURCE_TYPES.GARDEN)
 }
 
@@ -1649,20 +1649,20 @@ func _refresh_garden() -> void:
 func _cycle_physics_model() -> int:
     _current_physics_model = (_current_physics_model + 1) % TOKEN_PHYSICS_MODELS.size()
     
-    // Create new physics state
+# // Create new physics state
     _token_physics_state = TokenPhysics.new(_current_physics_model)
     _token_physics_state.set_token_count(100)
     _token_physics_state.current_energy = _energy_level
     
-    // Create echo
+# // Create echo
     create_echo("Physics model changed to " + _get_physics_model_name(_current_physics_model), 
                ECHO_SOURCE_TYPES.SYSTEM)
     
-    // Create memory
+# // Create memory
     store_memory("Token physics model changed to " + _get_physics_model_name(_current_physics_model), 
                 EDEN_MEMORY_TYPES.PROCEDURAL)
     
-    // Emit signal
+# // Emit signal
     emit_signal("token_physics_updated", _current_physics_model, _energy_level)
     
     return _current_physics_model
@@ -1675,16 +1675,16 @@ func _change_physics_model(model: int) -> int:
     
     _current_physics_model = model
     
-    // Create new physics state
+# // Create new physics state
     _token_physics_state = TokenPhysics.new(_current_physics_model)
     _token_physics_state.set_token_count(100)
     _token_physics_state.current_energy = _energy_level
     
-    // Create echo
+# // Create echo
     create_echo("Physics model set to " + _get_physics_model_name(_current_physics_model), 
                ECHO_SOURCE_TYPES.SYSTEM)
     
-    // Emit signal
+# // Emit signal
     emit_signal("token_physics_updated", _current_physics_model, _energy_level)
     
     return _current_physics_model
@@ -1700,19 +1700,19 @@ func _calculate_emotional_valence(text: String) -> float:
     
     var text_lower = text.to_lower()
     
-    // Count positive words
+# // Count positive words
     for word in positive_words:
         if text_lower.find(word) >= 0:
             positive_count += 1
     }
     
-    // Count negative words
+# // Count negative words
     for word in negative_words:
         if text_lower.find(word) >= 0:
             negative_count += 1
     }
     
-    // Calculate valence (-1.0 to 1.0)
+# // Calculate valence (-1.0 to 1.0)
     var valence = 0.0
     var total_count = positive_count + negative_count
     

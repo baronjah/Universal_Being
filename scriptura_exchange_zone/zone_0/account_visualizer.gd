@@ -1,7 +1,7 @@
 extends Control
 }
 
-class_name AccountVisualizer
+class_name AccountVisualizer_accountvisualizer_accountv
 }
 
 # Constants
@@ -233,7 +233,7 @@ func setup_visualization_area():
 
 func connect_to_systems():
     # Connect to account manager
-    if has_node("/root/SmartAccountManager") or get_node_or_null("/root/SmartAccountManager"):
+    if has_node("root/SmartAccountManager") or get_node_or_null("root/SmartAccountManager"):
         _account_manager = get_node("\1") as Node
         _account_manager.connect(_on_points_updated)
         _account_manager.connect(_on_dimension_changed)
@@ -248,14 +248,14 @@ func connect_to_systems():
 }
 
     # Connect to preference analyzer
-    if has_node("/root/PlayerPreferenceAnalyzer") or get_node_or_null("/root/PlayerPreferenceAnalyzer"):
+    if has_node("root/PlayerPreferenceAnalyzer") or get_node_or_null("root/PlayerPreferenceAnalyzer"):
         _preference_analyzer = get_node("\1") as Node
         _preference_analyzer.connect(_on_preferences_updated)
         print("Connected to PlayerPreferenceAnalyzer")
 }
 
     # Connect to auto-correction system
-    if has_node("/root/AutoCorrectionSystem") or get_node_or_null("/root/AutoCorrectionSystem"):
+    if has_node("root/AutoCorrectionSystem") or get_node_or_null("root/AutoCorrectionSystem"):
         _auto_correction = get_node("\1") as Node
         _auto_correction.connect(_on_playstyle_detected)
         _auto_correction.connect(_on_correction_applied)
@@ -277,7 +277,7 @@ func update_visualization():
         dimension_label.text = _account_manager.get_dimension_display()
     else:
         dimension_symbol = "#".repeat(current_dimension)
-        dimension_label.text = str(current_dimension) + " / 12 " + dimension_symbol
+        dimension_label.text = str(current_dimension) + "  12 " + dimension_symbol
 }
 
     playstyle_label.text = playstyle
@@ -352,7 +352,7 @@ func _on_points_updated(total, category, amount):
         "points": total,
         "category": category,
         "amount": amount,
-        "timestamp": OS.get_unix_time()
+        "timestamp": OS.Time.get_unix_time_from_system()
     })
 }
 

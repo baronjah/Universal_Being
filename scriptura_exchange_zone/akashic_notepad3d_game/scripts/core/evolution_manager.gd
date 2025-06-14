@@ -8,9 +8,8 @@
 # CHANGES: Dynamic code generation, smart loading, performance optimization
 # CONNECTION: Bridges all AI systems with intelligent resource management
 # ═══════════════════════════════════════════════════════════════════════════════════
-
-extends Node
-class_name EvolutionManager
+extends \2
+class_name EvolutionManager_evolutionmanager_evolutio
 
 # ─────────────────────────────────────────────────────────────────────────────────
 # 🌟 CORE SIGNALS - AI COLLABORATION NETWORK
@@ -182,7 +181,7 @@ func commit_change(file_path: String, description: String, ai_author: String = "
 		"hash": generate_hash(file_path + description + str(Time.get_unix_time_from_system())),
 		"author": ai_author,
 		"branch": get_current_branch(),
-		"file_size": get_file_size(file_path),
+		"file_size": FileAccess.get_file_as_bytes(file_path),
 		"lines_changed": count_lines_changed(file_path),
 		"performance_impact": calculate_performance_impact(file_path),
 		"dependencies": find_file_dependencies(file_path)
@@ -235,7 +234,7 @@ func load_context_appropriate_files(scene_context: String):
 			else:
 				print("⚠️ Failed to load: ", target_class)
 		
-		print("✅ Loaded ", loaded_count, "/", context_files[scene_context].size(), " scripts for ", scene_context)
+		print("✅ Loaded ", loaded_count, "", context_files[scene_context].size(), " scripts for ", scene_context)
 		return loaded_count
 	else:
 		print("❌ Unknown context: ", scene_context)
@@ -368,7 +367,7 @@ func start_full_analysis():
 	}
 	
 	print("✅ Analysis complete. System health: ", analysis_report.system_health, "%")
-	print("🚀 Innovation score: ", analysis_report.innovation_score, "/100")
+	print("🚀 Innovation score: ", analysis_report.innovation_score, "100")
 	
 	emit_signal("evolution_complete", analysis_report)
 	return analysis_report
@@ -451,7 +450,7 @@ func find_related_classes(target_class: String) -> Array:
 func get_current_branch() -> String:
 	return "main"
 
-func get_file_size(file_path: String) -> int:
+func FileAccess.get_file_as_bytes(file_path: String) -> int:
 	return 1024  # Placeholder
 
 func count_lines_changed(file_path: String) -> int:

@@ -96,7 +96,7 @@ func _start_story_cycle():
 	# Schedule story advancement
 	var timer = Timer.new()
 	timer.wait_time = 60.0  # Check for story advancement every minute
-	timer.connect("timeout", self, "_on_story_cycle_timer")
+	timer.connect(_on_story_cycle_timer)
 	add_child(timer)
 	timer.start()
 
@@ -370,9 +370,9 @@ func generate_next_fragment(story_data: Dictionary, last_fragment: String) -> St
 				key_nouns.append(word)
 	
 	# Make sure we have something to work with
-	if key_nouns.empty():
+	if key_nouns.is_empty():
 		key_nouns = ["entity", "traveler", story_data.archetype]
-	if key_verbs.empty():
+	if key_verbs.is_empty():
 		key_verbs = ["moved", "discovered", "created"]
 	
 	# Get a random noun and verb

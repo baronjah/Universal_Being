@@ -109,6 +109,7 @@ func create_nested_universe() -> void:
 		main_node.add_child(universe)
 	else:
 		print("Warning: No main_node set for Genesis Machine")
+
 	
 	print("🌌 Universe '%s' created with %d beings!" % [universe.name, 3])
 	

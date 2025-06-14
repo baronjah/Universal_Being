@@ -23,6 +23,7 @@ signal database_split(file_path, new_files)
 
 func _ready() -> void:
     print("JSH_AkashicRecords: Initializing...")
+	
     # First, try to find existing JSH systems in the scene
     find_existing_systems()
     # Then initialize our components
@@ -38,6 +39,7 @@ func _input(event: InputEvent) -> void:
 # Register commands with JSH console
 func register_console_commands(jsh_console) -> void:
     print("JSH_AkashicRecords: Registering console commands...")
+	
 
     if jsh_console == null:
         print("JSH_AkashicRecords: No console to register commands with")
@@ -69,7 +71,6 @@ func register_console_commands(jsh_console) -> void:
             "name": "akashic_interact",
             "description": "Make two entities interact",
             "callback": Callable(self, "cmd_interact_entities")
-        }
     ]
 
     # Register the commands
@@ -94,6 +95,7 @@ func register_console_commands(jsh_console) -> void:
 
 func find_existing_systems() -> void:
     print("JSH_AkashicRecords: Looking for existing JSH systems...")
+	}
 
     # Try to find systems in the scene tree
     var tree = get_tree()
@@ -114,6 +116,7 @@ func find_existing_systems() -> void:
         elif system.name.begins_with("JSH_database_system"):
             jsh_database_system = system
             print("Found JSH database system: ", system.name)
+			
 
     # If we didn't find the systems in the group, try with known paths
     if jsh_records_system == null and tree.root != null:
@@ -121,23 +124,28 @@ func find_existing_systems() -> void:
         if node:
             jsh_records_system = node
             print("Found JSH records system by path: ", node.name)
+			
 
     if jsh_data_splitter == null and tree.root != null:
         var node = tree.root.find_node("JSH_data_splitter", true, false)
         if node:
             jsh_data_splitter = node
             print("Found JSH data splitter by path: ", node.name)
+			
 
     if jsh_database_system == null and tree.root != null:
         var node = tree.root.find_node("JSH_database_system", true, false)
         if node:
             jsh_database_system = node
             print("Found JSH database system by path: ", node.name)
+			
 
     print("JSH_AkashicRecords: System finding completed")
+	
 
 func initialize() -> void:
     print("JSH_AkashicRecords: Setting up systems...")
+	
 
     # Create placeholder systems if they weren't found in the scene
     if jsh_records_system == null:
@@ -161,9 +169,11 @@ func initialize() -> void:
 
     emit_signal("system_initialized")
     print("JSH_AkashicRecords: Initialization complete!")
+	
 
 func _initialize_records_system() -> void:
     print("JSH_AkashicRecords: Initializing records system...")
+	
     # In a real implementation, you would get reference to your existing systems
     # For now, creating a placeholder
     jsh_records_system = Node.new()
@@ -173,6 +183,7 @@ func _initialize_records_system() -> void:
 
 func _initialize_database_system() -> void:
     print("JSH_AkashicRecords: Initializing database system...")
+	
     # In a real implementation, you would get reference to your existing systems
     # For now, creating a placeholder
     jsh_database_system = Node.new()
@@ -182,6 +193,7 @@ func _initialize_database_system() -> void:
 
 func _initialize_data_splitter() -> void:
     print("JSH_AkashicRecords: Initializing data splitter...")
+	
     # In a real implementation, you would get reference to your existing systems
     # For now, creating a placeholder
     jsh_data_splitter = Node.new()
@@ -191,10 +203,12 @@ func _initialize_data_splitter() -> void:
 
 func _initialize_akashic_records_manager() -> void:
     print("JSH_AkashicRecords: Initializing records manager...")
+	
 
     # Initialize Akashic Records Manager safely
     # Try to use get_instance() if available
     if ClassDB.class_exists("AkashicRecordsManagerA"):
+	
         var script = load("res://akashic_records_manager.gd")
         if script and script.has_method("get_instance"):
             akashic_records_manager = script.call("get_instance")
@@ -215,6 +229,7 @@ func _initialize_akashic_records_manager() -> void:
                 print("Akashic records manager initialized directly")
     else:
         print("WARNING: AkashicRecordsManagerA class not found")
+		
 
     # Make sure the manager is marked as initialized
     if akashic_records_manager != null:
@@ -224,10 +239,12 @@ func _initialize_akashic_records_manager() -> void:
 
 func _initialize_thing_creator() -> void:
     print("JSH_AkashicRecords: Initializing thing creator...")
+	
 
     # Initialize Thing Creator safely
     # Try to use get_instance() if available
     if ClassDB.class_exists("ThingCreatorA"):
+	
         var script = load("res://thing_creator.gd")
         if script and script.has_method("get_instance"):
             thing_creator = script.call("get_instance")
@@ -239,11 +256,13 @@ func _initialize_thing_creator() -> void:
             print("Thing creator created directly")
     else:
         print("WARNING: ThingCreatorA class not found")
+		
 
     print("Thing creator initialized")
 
 func _initialize_universal_bridge() -> void:
     print("JSH_AkashicRecords: Initializing universal bridge...")
+	
     # Load and instance the UniversalBridge class
     var UniversalBridge = load("res://universal_bridge.gd")
     universal_bridge = UniversalBridge.new()
@@ -270,6 +289,7 @@ func _initialize_universal_bridge() -> void:
 
 func _initialize_database_integrator() -> void:
     print("JSH_AkashicRecords: Initializing database integrator...")
+	
     
     # Load and instance the AkashicDatabaseIntegrator class
     var AkashicDatabaseIntegrator = load("res://database_integrator.gd")
@@ -292,6 +312,7 @@ func _initialize_database_integrator() -> void:
 
 func _initialize_debug_ui() -> void:
     print("JSH_AkashicRecords: Initializing debug UI...")
+	
     
     # Load and instance the DebugUI class
     var DebugUI = load("res://debug_ui.gd")
@@ -317,6 +338,7 @@ func toggle_debug_ui() -> void:
     debug_ui_visible = !debug_ui_visible
     debug_ui.visible = debug_ui_visible
     print("Debug UI visibility: ", debug_ui_visible)
+	
 
 # Signal handlers
 func _on_entity_created(entity) -> void:
@@ -349,9 +371,9 @@ func transform_entity(entity: Node, new_type: String) -> bool:
 func process_interaction(entity1: Node, entity2: Node) -> Dictionary:
     if universal_bridge != null:
         return universal_bridge.process_interaction(entity1, entity2)
-    return {}
+    return {
 
-func get_entity_by_id(entity_id: String) -> Node:
+func get_entity_by_id(entity_id: String) -> Node:}
     if akashic_records_manager != null:
         return akashic_records_manager.get_entity_by_id(entity_id)
     return null
@@ -374,9 +396,10 @@ func trigger_database_check() -> void:
 func cmd_create_entity(args: Array) -> String:
     if args.size() < 1:
         return "Usage: akashic_create <type> [property1=value1] [property2=value2] ..."
+		
 
     var type = args[0]
-    var properties = {}
+    var properties = {
 
     # Parse properties from arguments
     for i in range(1, args.size()):
@@ -400,6 +423,7 @@ func cmd_list_entities(args: Array) -> String:
     var result = ""
 
     if type == "all":
+	}
         # List all entity types and counts
         var all_types = []
         if akashic_records_manager != null:
@@ -420,6 +444,7 @@ func cmd_list_entities(args: Array) -> String:
 
         if entities.size() == 0:
             return "No entities found of type: " + type
+			
 
         result = "Entities of type '" + type + "':\n"
         for entity in entities:
@@ -430,17 +455,20 @@ func cmd_list_entities(args: Array) -> String:
 func cmd_entity_info(args: Array) -> String:
     if args.size() < 1:
         return "Usage: akashic_info <entity_id>"
+		
 
     var entity_id = args[0]
     var entity = get_entity_by_id(entity_id)
 
     if entity == null:
         return "Entity not found: " + entity_id
+		
 
     var result = "Entity Info:\n"
     result += "ID: " + entity.get_id() + "\n"
     result += "Type: " + entity.get_type() + "\n"
     result += "Created: " + entity.get_creation_timestamp() + "\n"
+	
 
     # List properties
     var properties = entity.get_properties()
@@ -457,12 +485,14 @@ func cmd_entity_info(args: Array) -> String:
         result += "Transformation History:\n"
         for t in transformations:
             result += "- " + t.timestamp + ": " + t.action + " from " + t.from_type + " to " + t.to_type + "\n"
+			
 
     return result
 
 func cmd_transform_entity(args: Array) -> String:
     if args.size() < 2:
         return "Usage: akashic_transform <entity_id> <new_type>"
+		
 
     var entity_id = args[0]
     var new_type = args[1]
@@ -470,6 +500,7 @@ func cmd_transform_entity(args: Array) -> String:
     var entity = get_entity_by_id(entity_id)
     if entity == null:
         return "Entity not found: " + entity_id
+		
 
     var old_type = entity.get_type()
     var success = transform_entity(entity, new_type)
@@ -482,6 +513,7 @@ func cmd_transform_entity(args: Array) -> String:
 func cmd_interact_entities(args: Array) -> String:
     if args.size() < 2:
         return "Usage: akashic_interact <entity_id1> <entity_id2>"
+		
 
     var entity_id1 = args[0]
     var entity_id2 = args[1]
@@ -493,10 +525,12 @@ func cmd_interact_entities(args: Array) -> String:
         return "Entity not found: " + entity_id1
     if entity2 == null:
         return "Entity not found: " + entity_id2
+		
 
     var result = process_interaction(entity1, entity2)
 
     if result.has("success") and result.success:
+	
         var effect = result.effect
         return "Interaction between " + entity_id1 + " and " + entity_id2 + " resulted in: " + effect
     else:
@@ -505,6 +539,7 @@ func cmd_interact_entities(args: Array) -> String:
 # Demo entries for Akashic Records
 func _create_demo_entries() -> void:
     print("JSH_AkashicRecords: Creating demo entries...")
+	
 
     # Check if akashic_records_manager is available
     if akashic_records_manager == null:

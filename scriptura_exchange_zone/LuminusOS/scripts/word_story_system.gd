@@ -1,6 +1,6 @@
 extends Node
 
-class_name WordStorySystem
+class_name WordStorySystem_wordstorysystem_wordstor
 
 # Word and Story generation system for LuminusOS
 # Inspired by TempleOS's divine random number generator

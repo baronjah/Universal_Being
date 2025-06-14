@@ -43,7 +43,7 @@ func _ready():
     auto_save_timer = Timer.new()
     auto_save_timer.wait_time = AUTO_SAVE_INTERVAL
     auto_save_timer.one_shot = false
-    auto_save_timer.connect("timeout", self, "_on_auto_save_timer")
+    auto_save_timer.connect(_on_auto_save_timer)
     add_child(auto_save_timer)
     
     if memory_enabled:
@@ -147,7 +147,7 @@ func _record_word_update(payload, timestamp):
     
     # Record evolution
     if payload.has("evolution_stage") and (
-        memory.evolution_history.empty() or 
+        memory.evolution_history.is_empty() or 
         memory.evolution_history[memory.evolution_history.size() - 1].stage != payload.evolution_stage
     ):
         memory.evolution_history.append({
@@ -158,7 +158,7 @@ func _record_word_update(payload, timestamp):
     
     # Record dimension change
     if payload.has("dimension") and (
-        memory.dimension_history.empty() or 
+        memory.dimension_history.is_empty() or 
         memory.dimension_history[memory.dimension_history.size() - 1].dimension != payload.dimension
     ):
         memory.dimension_history.append({
@@ -235,7 +235,7 @@ func _record_dimension_change(payload, timestamp):
                 var memory = word_memories[word_id]
                 
                 # Record dimension change if different from last
-                if memory.dimension_history.empty() or 
+                if memory.dimension_history.is_empty() or 
                    memory.dimension_history[memory.dimension_history.size() - 1].dimension != dimension:
                     memory.dimension_history.append({
                         "timestamp": timestamp,
@@ -274,7 +274,7 @@ func _add_connection_to_word(word_id, connected_id, connection_data, timestamp):
     # Limit connections to prevent excessive memory usage
     if memory.connections.size() > MAX_CONNECTIONS_PER_WORD:
         # Sort by strength and recency
-        memory.connections.sort_custom(self, "_sort_connections_by_importance")
+        memory.connections.sort_custom(self."_sort_connections_by_importance")
         
         # Remove least important connections
         while memory.connections.size() > MAX_CONNECTIONS_PER_WORD:
@@ -538,7 +538,7 @@ func get_recent_memories(count = 10):
     var word_ids = word_memories.keys()
     
     # Sort by last update time
-    word_ids.sort_custom(self, "_sort_words_by_recency")
+    word_ids.sort_custom(self."_sort_words_by_recency")
     
     # Take most recent
     for i in range(min(count, word_ids.size())):
@@ -592,7 +592,7 @@ func remember_word(word_text):
     # If we found partial matches, return the best one
     if matches.size() > 0:
         # Sort by match quality
-        matches.sort_custom(self, "_sort_matches_by_quality")
+        matches.sort_custom(self."_sort_matches_by_quality")
         
         var best_match = matches[0]
         emit_signal("word_remembered", best_match.memory.id, best_match.quality)
@@ -636,7 +636,7 @@ func connect_to_word_drive(drive):
     word_drive = drive
     
     if word_drive:
-        word_drive.connect("word_message_sent", self, "_on_word_message")
+        word_drive.connect(_on_word_message)
         
         # Register with WordDrive
         word_drive.send_message("system_command", {

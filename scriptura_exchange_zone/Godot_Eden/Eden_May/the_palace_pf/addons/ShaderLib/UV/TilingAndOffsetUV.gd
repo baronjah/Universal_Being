@@ -1,5 +1,6 @@
 @tool
-class_name VisualShaderNodeUVTilingAndOffset extends VisualShaderNodeCustom
+class_name VisualShaderNodeUVTilingAndOffset_TilingAndOffsetUV_TilingAn
+extends \2
 
 func _init() -> void:
 	output_port_for_preview = 0

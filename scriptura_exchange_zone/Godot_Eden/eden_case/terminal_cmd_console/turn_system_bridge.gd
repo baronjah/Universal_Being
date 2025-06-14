@@ -1,6 +1,6 @@
 extends Node
 
-class_name TurnSystemBridge
+class_name TurnSystemBridge_turnsystembridge_turnsyst
 
 # TurnSystemBridge - Connects LUMINUS CORE with the 12-Turn System
 # Handles dimensional transitions and data synchronization
@@ -161,7 +161,7 @@ func _save_current_turn():
 # Load persistent turn data
 func _load_persistent_turn_data():
 	for turn in range(1, TURN_COUNT + 1):
-		var turn_file = turn_data_dir + "/turn_" + str(turn) + "_data.json"
+		var turn_file = turn_data_dir + "turn_" + str(turn) + "_data.json"
 		
 		if FileAccess.file_exists(turn_file):
 			var file = FileAccess.open(turn_file, FileAccess.READ)
@@ -182,7 +182,7 @@ func _save_persistent_turn_data(turn):
 	if not persistent_turn_data.has(turn):
 		return
 	
-	var turn_file = turn_data_dir + "/turn_" + str(turn) + "_data.json"
+	var turn_file = turn_data_dir + "turn_" + str(turn) + "_data.json"
 	var file = FileAccess.open(turn_file, FileAccess.WRITE)
 	
 	if file:

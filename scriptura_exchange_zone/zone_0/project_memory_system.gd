@@ -1,7 +1,7 @@
 extends Node
 }
 
-class_name ProjectMemorySystem
+class_name ProjectMemorySystem_projectmemorysystem_projectm
 }
 
 # Project Memory System with dynamic color shifting and terminal overlay
@@ -218,8 +218,8 @@ func add_memory(content, category, tags = []):
         "content": content,
         "category": category,
         "tags": tags,
-        "created_at": OS.get_unix_time(),
-        "last_accessed": OS.get_unix_time(),
+        "created_at": OS.Time.get_unix_time_from_system(),
+        "last_accessed": OS.Time.get_unix_time_from_system(),
         "access_count": 0,
         "importance": 0.5,
         "connections": [],
@@ -237,7 +237,7 @@ func add_memory(content, category, tags = []):
 }
 
     # Update memory bank last accessed
-    memory_banks[category]["last_accessed"] = OS.get_unix_time()
+    memory_banks[category]["last_accessed"] = OS.Time.get_unix_time_from_system()
 }
 
     # Emit signal
@@ -256,12 +256,12 @@ func recall_memory(memory_id):
 }
 
             # Update access metrics
-            memory["last_accessed"] = OS.get_unix_time()
+            memory["last_accessed"] = OS.Time.get_unix_time_from_system()
             memory["access_count"] += 1
 }
 
             # Update bank access time
-            memory_banks[category]["last_accessed"] = OS.get_unix_time()
+            memory_banks[category]["last_accessed"] = OS.Time.get_unix_time_from_system()
 }
 
             # Set as current focus
@@ -295,7 +295,7 @@ func forget_memory(memory_id):
             forgotten_memories.append({
                 "id": memory_id,
                 "category": category,
-                "forgotten_at": OS.get_unix_time()
+                "forgotten_at": OS.Time.get_unix_time_from_system()
             })
 }
 
@@ -355,7 +355,7 @@ func connect_memories(source_id, target_id, connection_type = "related"):
         "type": connection_type,
         "source_category": source_category,
         "target_category": target_category,
-        "created_at": OS.get_unix_time(),
+        "created_at": OS.Time.get_unix_time_from_system(),
         "strength": 0.5
     }
 }
@@ -424,7 +424,7 @@ func get_memory_paths():
         "nodes": nodes,
         "edges": edges,
         "categories": categories,
-        "generated_at": OS.get_unix_time()
+        "generated_at": OS.Time.get_unix_time_from_system()
     }
 }
 
@@ -527,7 +527,7 @@ func advance_project_shift():
         # Process the shift phase
         var phase_data = {
             "phase": current_shift_phase,
-            "time": OS.get_unix_time(),
+            "time": OS.Time.get_unix_time_from_system(),
             "color": overlay_color,
             "active_memories": active_memories.size()
         }
@@ -546,12 +546,12 @@ func advance_project_shift():
 
 func _generate_memory_id():
     # Generate unique memory ID
-    return "mem_" + str(OS.get_unix_time()) + "_" + str(randi() % 10000)
+    return "mem_" + str(OS.Time.get_unix_time_from_system()) + "_" + str(randi() % 10000)
 }
 
 func _generate_project_hash():
     # Generate a hash for this project instance
-    var time = OS.get_unix_time()
+    var time = OS.Time.get_unix_time_from_system()
     var random_component = randi() % 1000000
     var hash_input = str(time) + "_" + str(random_component) + "_EVE_SHIFT"
 }

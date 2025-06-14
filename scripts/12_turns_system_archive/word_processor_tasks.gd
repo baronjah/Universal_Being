@@ -11,7 +11,7 @@ const POWER_TIERS = {
 	"MINOR": {"min": 10, "max": 50, "color": Color(0.0, 0.7, 1.0)},
 	"MAJOR": {"min": 50, "max": 100, "color": Color(0.0, 1.0, 0.5)},
 	"EXCEPTIONAL": {"min": 100, "max": 200, "color": Color(1.0, 0.8, 0.0)},
-	"DIVINE": {"min": 200, "max": 1000, "color": Color(1.0, 1.0, 1.0)}
+	"DIVINE": {"min": 200, "max": 1000, "color": Color(1.0, 1.0, 1.0)
 }
 
 # Special word power dictionary
@@ -53,7 +53,7 @@ const EVOLUTION_STAGES = {
 	1: {"name": "Forming", "multiplier": 1.5},
 	2: {"name": "Manifesting", "multiplier": 2.0},
 	3: {"name": "Stabilizing", "multiplier": 2.5},
-	4: {"name": "Transcendent", "multiplier": 3.0}
+	4: {"name": "Transcendent", "multiplier": 3.0
 }
 
 # Dimension multipliers for word power
@@ -107,7 +107,7 @@ func calculate_word_power(params: Dictionary) -> Dictionary:
 		"dimension": dimension,
 		"size": 0.5 + (power / 100.0),
 		"mass": 0.2 + (power / 50.0)
-	}
+}
 
 # Task: Calculate word connections
 # Find potential connections between a word and existing words
@@ -173,7 +173,7 @@ func calculate_word_connections(params: Dictionary) -> Dictionary:
 	return {
 		"word": word,
 		"connections": connections
-	}
+}
 
 # Task: Calculate word physics
 # Determine physical properties and behavior in the current dimension
@@ -190,7 +190,7 @@ func calculate_word_physics(params: Dictionary) -> Dictionary:
 		"mass": 1.0,
 		"gravity_scale": 1.0,
 		"constraints": []
-	}
+}
 	
 	# Set mass based on word power
 	physics_properties.mass = 0.2 + (word_data.get("power", 0) / 50.0)
@@ -259,7 +259,7 @@ func calculate_word_physics(params: Dictionary) -> Dictionary:
 	return {
 		"word": word_data.get("word", ""),
 		"physics": physics_properties
-	}
+}
 
 # Task: Calculate word evolution
 # Determine how a word evolves over time
@@ -298,7 +298,7 @@ func calculate_word_evolution(params: Dictionary) -> Dictionary:
 		"color": tier_info.color,
 		"size": 0.5 + (power / 100.0),
 		"mass": 0.2 + (power / 50.0)
-	}
+}
 
 # Task: Process text input
 # Split text into words and prepare for processing
@@ -324,7 +324,7 @@ func process_text_input(params: Dictionary) -> Dictionary:
 		"words": processed_words,
 		"word_count": processed_words.size(),
 		"dimension": dimension
-	}
+}
 
 # Helper: Get base power for a word
 func _get_base_power(word: String) -> float:
@@ -378,10 +378,10 @@ func _get_power_tier(power: float) -> Dictionary:
 			return {
 				"tier": tier_name,
 				"color": tier.color
-			}
+	}
 	
 	# Default to highest tier if exceeded
 	return {
 		"tier": "DIVINE",
 		"color": POWER_TIERS.DIVINE.color
-	}
+}

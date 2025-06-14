@@ -3,9 +3,8 @@
 # Created: May 31, 2025, 23:37 CEST
 # Purpose: Universal Being specialized for system managers and controllers
 # Connection: Pentagon Architecture - System consciousness
-
 extends UniversalBeingBase
-class_name UniversalBeingSystem
+# DISABLED DUPLICATE: class_name UniversalBeingSystem_universa
 
 ## Universal Being specialized for system components
 ## Managers, controllers, and autoload systems inherit from this
@@ -126,16 +125,16 @@ func check_system_health() -> Dictionary:
 ## System integration points
 func integrate_with_pentagon() -> void:
 	# Register with Pentagon Activity Monitor
-	var monitor = get_node_or_null("/root/PentagonActivityMonitor")
+	var monitor = get_node_or_null("root/PentagonActivityMonitor")
 	if monitor:
 		store_memory("pentagon_integrated", true)
 	
 	# Register with Floodgate Controller
-	var floodgate = get_node_or_null("/root/FloodgateController")
+	var floodgate = get_node_or_null("root/FloodgateController")
 	if floodgate:
 		store_memory("floodgate_integrated", true)
 	
 	# Register with Logic Connector
-	var logic_connector = get_node_or_null("/root/LogicConnector")
+	var logic_connector = get_node_or_null("root/LogicConnector")
 	if logic_connector:
 		store_memory("logic_connector_integrated", true)

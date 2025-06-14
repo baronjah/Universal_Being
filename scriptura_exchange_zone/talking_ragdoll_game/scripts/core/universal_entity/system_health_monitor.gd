@@ -4,9 +4,8 @@
 # PURPOSE: Keep the universal entity stable and performant
 # CREATED: 2025-05-27 - The Universal Entity Core
 # ==================================================
-
 extends UniversalBeingBase
-class_name SystemHealthMonitor
+class_name SystemHealthMonitor_systemhe
 
 signal health_check_complete(report: Dictionary)
 signal system_warning(severity: String, message: String)
@@ -55,8 +54,8 @@ func pentagon_ready() -> void:
 	name = "SystemHealthMonitor"
 	
 	# Get system references
-	console = get_node_or_null("/root/ConsoleManager")
-	floodgate = get_node_or_null("/root/FloodgateController")
+	console = get_node_or_null("root/ConsoleManager")
+	floodgate = get_node_or_null("root/FloodgateController")
 	
 	# Start health monitoring
 	var timer = TimerManager.get_timer()

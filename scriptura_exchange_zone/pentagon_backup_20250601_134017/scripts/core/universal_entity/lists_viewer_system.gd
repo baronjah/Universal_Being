@@ -4,9 +4,8 @@
 # PURPOSE: Allow game rules and behavior to be defined in simple text
 # CREATED: 2025-05-27 - The Universal Entity Core
 # ==================================================
-
 extends UniversalBeingBase
-class_name ListsViewerSystem
+class_name ListsViewerSystem_listsvie
 
 signal rule_loaded(rule_name: String)
 signal rule_executed(rule_name: String, result)
@@ -35,8 +34,8 @@ var floodgate: FloodgateController
 func _ready() -> void:
 	name = "ListsViewerSystem"
 	
-	console = get_node_or_null("/root/ConsoleManager")
-	floodgate = get_node_or_null("/root/FloodgateController")
+	console = get_node_or_null("root/ConsoleManager")
+	floodgate = get_node_or_null("root/FloodgateController")
 	
 	# Create directories
 	_ensure_directories()
@@ -463,22 +462,22 @@ func _execute_action(action: String, rule_id: String) -> void:
 	
 	match action:
 		"unload_distant_objects":
-			if has_node("/root/UniversalEntity"):
+			if has_node("root/UniversalEntity"):
 				var player = get_tree().get_first_node_in_group("player")
 				var center = player.global_position if player else Vector3.ZERO
-				get_node("/root/UniversalEntity").loader.unload_nodes_by_distance(center, 30.0)
+				get_node("root/UniversalEntity").loader.unload_nodes_by_distance(center, 30.0)
 		
 		"optimize_scene":
-			if has_node("/root/UniversalEntity"):
-				get_node("/root/UniversalEntity").loader.force_cleanup()
+			if has_node("root/UniversalEntity"):
+				get_node("root/UniversalEntity").loader.force_cleanup()
 		
 		"force_cleanup":
-			if has_node("/root/UniversalEntity"):
-				get_node("/root/UniversalEntity").loader.force_cleanup(true)
+			if has_node("root/UniversalEntity"):
+				get_node("root/UniversalEntity").loader.force_cleanup(true)
 		
 		"check_performance":
-			if has_node("/root/UniversalEntity"):
-				get_node("/root/UniversalEntity").health_monitor.force_health_check()
+			if has_node("root/UniversalEntity"):
+				get_node("root/UniversalEntity").health_monitor.force_health_check()
 		
 		"save_game_state":
 			_save_game_state()
@@ -534,7 +533,7 @@ func _spawn_object(item: Dictionary) -> void:
 			properties[key] = item[key]
 	
 	# Check if UniversalObjectManager is available
-	var uom = get_node_or_null("/root/UniversalObjectManager")
+	var uom = get_node_or_null("root/UniversalObjectManager")
 	if uom:
 		# Perfect path - uses StandardizedObjects with colors and materials!
 		var obj = uom.create_object(obj_type, position, properties)
@@ -551,28 +550,28 @@ func _spawn_object(item: Dictionary) -> void:
 			_print("[SPAWN] Created " + obj_type + " with StandardizedObjects")
 			
 			# Manual registration with systems
-			var floodgate_node = get_node_or_null("/root/FloodgateController")
+			var floodgate_node = get_node_or_null("root/FloodgateController")
 			if floodgate:
 				floodgate.second_dimensional_magic(0, obj.name, obj)
 			
 			# Connect to Universal Inspection Bridge for clicking
-			var bridge = get_node_or_null("/root/UniversalInspectionBridge") 
+			var bridge = get_node_or_null("root/UniversalInspectionBridge") 
 			if not bridge:
 				bridge = get_tree().get_first_node_in_group("inspection_bridge")
 			if bridge and bridge.has_method("make_object_inspectable"):
 				bridge.make_object_inspectable(obj, "lists_viewer")
 				_print("[LISTS] Made " + obj.name + " clickable through bridge")
 			
-			var world_builder = get_node_or_null("/root/WorldBuilder")
+			var world_builder = get_node_or_null("root/WorldBuilder")
 			if world_builder and "spawned_objects" in world_builder:
 				world_builder.spawned_objects.append(obj)
 
 func _spawn_object_old_method(item: Dictionary) -> void:
 	"""Old spawning method - kept as fallback"""
-	if not has_node("/root/UniversalEntity"):
+	if not has_node("root/UniversalEntity"):
 		return
 	
-	var loader = get_node("/root/UniversalEntity").loader
+	var loader = get_node("root/UniversalEntity").loader
 	var obj_type = item.get("type", "box")
 	var position = item.get("position", Vector3.ZERO)
 	

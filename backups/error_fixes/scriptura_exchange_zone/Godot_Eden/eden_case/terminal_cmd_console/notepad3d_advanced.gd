@@ -110,7 +110,7 @@ class MemoryNodeData:
         size = 1.0
         color = DIMENSION_COLORS[dimension]
         highlight = false
-        creation_time = OS.get_ticks_msec() / 1000.0
+        creation_time = OS.Time.get_ticks_msec() / 1000.0
         
         # Adjust color based on tags
         if tags.size() > 0:
@@ -259,7 +259,7 @@ func setup_ui():
     command_input.placeholder_text = "# Enter memory command..."
     command_input.rect_position = Vector2(20, get_viewport().size.y - 50)
     command_input.rect_size = Vector2(get_viewport().size.x - 40, 30)
-    command_input.connect("text_entered", self, "_on_command_entered")
+    command_input.connect(_on_command_entered)
     ui_layer.add_child(command_input)
     
     # Help text
@@ -475,8 +475,8 @@ func create_connection_visualization(source_id, target_id):
     # Get memory data
     var source_node = memory_nodes[source_id]
     var target_node = memory_nodes[target_id]
-    var source_color = source_node.get_node("MemoryMesh").material_override.albedo_color
-    var target_color = target_node.get_node("MemoryMesh").material_override.albedo_color
+    var source_color = source_node.get_node("\1") as Node.material_override.albedo_color
+    var target_color = target_node.get_node("\1") as Node.material_override.albedo_color
     
     # Set properties
     connection.material_override = material
@@ -609,8 +609,8 @@ func update_memory_visuals(delta):
         # Update connection appearance
         var source_node = memory_nodes[source_id]
         var target_node = memory_nodes[target_id]
-        var source_mesh = source_node.get_node("MemoryMesh")
-        var target_mesh = target_node.get_node("MemoryMesh")
+        var source_mesh = source_node.get_node("\1") as Node
+        var target_mesh = target_node.get_node("\1") as Node
         
         update_connection(
             connection, 
@@ -623,7 +623,7 @@ func update_memory_visuals(delta):
     # Highlight selected memory
     if selected_memory_id and memory_nodes.has(selected_memory_id):
         var node = memory_nodes[selected_memory_id]
-        var mesh = node.get_node("MemoryMesh")
+        var mesh = node.get_node("\1") as Node
         var material = mesh.material_override
         
         # Create pulsing highlight effect
@@ -973,7 +973,7 @@ func select_memory(memory_id):
                 break
         
         // Reset material
-        var mesh = node.get_node("MemoryMesh")
+        var mesh = node.get_node("\1") as Node
         if mesh and mesh.material_override:
             mesh.material_override.emission_energy = 0.5
     
@@ -1005,7 +1005,7 @@ func select_memory(memory_id):
 func process_command(command):
     // Skip empty commands
     command = command.strip_edges()
-    if command.empty():
+    if command.is_empty():
         return null
     
     print("# Processing command: " + command + " #")

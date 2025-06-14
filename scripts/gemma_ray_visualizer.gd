@@ -25,6 +25,7 @@ func _ready():
 	create_ray_materials()
 	print("👁️ Gemma Ray Visualizer: Ready to show AI vision!")
 
+
 func create_ray_materials():
 	"""Create materials for different ray states"""
 	ray_material = StandardMaterial3D.new()
@@ -44,6 +45,7 @@ func toggle_visualization():
 	else:
 		clear_ray_visualization()
 		print("👁️ Gemma's 16-ray vision: HIDDEN")
+
 	
 	ray_visualization_toggled.emit(debug_enabled)
 
@@ -170,6 +172,7 @@ func show_ray_debug_info():
 	print("  Total Rays: ", gemma_ai.vision_rays.size())
 	print("  Vision Range: ", gemma_ai.vision_range)
 	print("  Focus Direction: ", gemma_ai.current_focus_direction)
+
 	
 	var hits = 0
 	for ray in gemma_ai.vision_rays:
@@ -177,4 +180,4 @@ func show_ray_debug_info():
 			hits += 1
 	
 	print("  Rays Hitting Objects: ", hits, "/", gemma_ai.vision_rays.size())
-	print("  Spatial Data: ", gemma_ai.spatial_data.keys() if gemma_ai.has("spatial_data") else "None")
+	print("  Node3D Data: ", gemma_ai.spatial_data.keys() if gemma_ai.has("spatial_data") else "None")

@@ -44,6 +44,7 @@ func pentagon_init() -> void:
     metadata.gemma_can_modify = true
     
     print("🌟 %s: Pentagon Init Complete - Biblical Genesis Decoder Ready" % being_name)
+	
 
 func pentagon_ready() -> void:
     super.pentagon_ready()  # 🔄 ALWAYS CALL SUPER FIRST
@@ -52,6 +53,7 @@ func pentagon_ready() -> void:
     add_component("res://components/chatgpt_api.ub.zip")
     add_component("res://components/genesis_translator.ub.zip")
     add_component("res://components/biblical_decoder.ub.zip")
+	
     
     # Initialize HTTP request
     http_request = HTTPRequest.new()
@@ -68,6 +70,7 @@ func pentagon_ready() -> void:
     call_deferred("_attempt_chatgpt_connection")
     
     print("🌟 %s: Pentagon Ready Complete - Genesis Translation System Online" % being_name)
+	
 
 func pentagon_process(delta: float) -> void:
     super.pentagon_process(delta)  # ⚡ ALWAYS CALL SUPER FIRST
@@ -93,6 +96,7 @@ func pentagon_input(event: InputEvent) -> void:
 
 func pentagon_sewers() -> void:
     print("🌟 %s: Pentagon Sewers Starting" % being_name)
+	
     
     # Cleanup ChatGPT connection
     if http_request:
@@ -113,6 +117,7 @@ func _attempt_chatgpt_connection() -> void:
         return
     
     print("🤖 %s: Testing ChatGPT Premium connection..." % being_name)
+	
     
     # Test with a simple request
     var test_message = "Test connection - respond with 'GENESIS_READY' if you can decode biblical creation patterns"
@@ -137,11 +142,11 @@ func send_chatgpt_request(message: String, request_type: String = "general") -> 
         "model": "gpt-4",
         "messages": [
             {"role": "system", "content": system_prompt},
-            {"role": "user", "content": message}
+            {"role": "user", "content": message
         ],
         "max_tokens": 1500,
         "temperature": 0.7
-    }
+		}
     
     var json_body = JSON.stringify(request_body)
     
@@ -166,19 +171,23 @@ func _on_chatgpt_response(result: int, response_code: int, headers: PackedString
     var response_data = json.data
     
     if response_data.has("choices") and response_data.choices.size() > 0:
+	}
         var content = response_data.choices[0].message.content
         _process_chatgpt_response(content)
     else:
         print("❌ %s: Invalid ChatGPT response structure" % being_name)
+		
 
 func _process_chatgpt_response(content: String) -> void:
     """Process and route ChatGPT response"""
     print("🤖 %s: Received ChatGPT response: %s" % [being_name, content.substr(0, 100) + "..."])
+	
     
     # Check for connection confirmation
     if "GENESIS_READY" in content:
         chatgpt_connected = true
         print("✅ %s: ChatGPT Premium connected - Genesis decoder active!" % being_name)
+		
         
         # Notify other AIs
         if GemmaAI:
@@ -248,10 +257,10 @@ func initialize_genesis_patterns() -> void:
             "process": "consciousness_animation",
             "input": "divine_interaction",
             "sewers": "return_to_void"
-        }
-    }
+			}
     
     print("📜 %s: Genesis patterns initialized - %d creation templates loaded" % [being_name, genesis_patterns.size()])
+	}
 
 func toggle_genesis_mode() -> void:
     """Toggle biblical genesis translation mode"""
@@ -259,6 +268,7 @@ func toggle_genesis_mode() -> void:
     biblical_translation_active = genesis_mode
     
     print("📜 %s: Genesis mode: %s" % [being_name, "ACTIVE" if genesis_mode else "INACTIVE"])
+	
     
     if genesis_mode:
         activate_genesis_translation()
@@ -319,10 +329,12 @@ func gather_universal_being_context() -> String:
     var main_scene = get_tree().current_scene
     if main_scene:
         context_parts.append("Main Scene: %s" % main_scene.name)
+		
     
     # Get Universal Beings count
     var beings = find_all_universal_beings(main_scene)
     context_parts.append("Universal Beings Active: %d" % beings.size())
+	
     
     # Get consciousness levels
     var total_consciousness = 0
@@ -330,13 +342,16 @@ func gather_universal_being_context() -> String:
         if being.has_method("get"):
             total_consciousness += being.get("consciousness_level")
     context_parts.append("Total Consciousness: %d" % total_consciousness)
+	
     
     # Get AI collaboration state
     if genesis_conductor:
         context_parts.append("Genesis Conductor: Active")
         if genesis_conductor.has_method("get"):
+		
             var harmony = genesis_conductor.get("ai_harmony_level")
             context_parts.append("AI Harmony Level: %.2f" % harmony)
+			
     
     return "\n".join(context_parts)
 
@@ -347,6 +362,7 @@ func connect_to_pentagon_creation() -> void:
     connected_to_pentagon = true
     
     print("⭐ %s: Connected to Pentagon of Creation!" % being_name)
+	
     
     # Update Genesis Conductor if found
     if genesis_conductor and genesis_conductor.has_method("ai_invoke_method"):
@@ -355,6 +371,7 @@ func connect_to_pentagon_creation() -> void:
     # Notify all AIs about the 6-AI Pentagon
     if GemmaAI:
         GemmaAI.ai_message.emit("⭐ PENTAGON OF CREATION: ChatGPT Premium joined! Biblical genesis decoder online!")
+		
 
 func find_genesis_conductor() -> Node:
     """Find the Genesis Conductor Universal Being"""
@@ -392,25 +409,28 @@ func sync_with_genesis_conductor() -> void:
 func process_genesis_translation(content: String) -> void:
     """Process biblical genesis translation from ChatGPT"""
     print("📜 %s: Processing genesis translation..." % being_name)
+	
     
     # Extract creation blueprints
     var blueprints = extract_creation_blueprints(content)
     if blueprints.size() > 0:
         creation_blueprint.merge(blueprints, true)
         print("📜 %s: %d creation blueprints extracted" % [being_name, blueprints.size()])
+		
     
     # Extract vidya translations
     var vidya = extract_vidya_patterns(content)
     if vidya.size() > 0:
         vidya_translations.append_array(vidya)
         print("📜 %s: %d vidya patterns decoded" % [being_name, vidya.size()])
+		
     
     # Apply to Universal Being development
     apply_genesis_insights_to_development(content)
 
 func extract_creation_blueprints(content: String) -> Dictionary:
     """Extract creation blueprints from ChatGPT response"""
-    var blueprints = {}
+    var blueprints = {
     
     # Look for structured patterns
     if "Pentagon Architecture" in content:
@@ -474,8 +494,8 @@ func ai_interface() -> Dictionary:
         "pentagon_connected": connected_to_pentagon,
         "conversation_history_size": conversation_history.size(),
         "genesis_patterns_count": genesis_patterns.size()
-    }
     return base_interface
+}
 
 func ai_invoke_method(method_name: String, args: Array = []) -> Variant:
     """Allow AI to control ChatGPT bridge"""
@@ -526,11 +546,13 @@ func _collect_beings_recursive(node: Node, result: Array[Node]) -> void:
 func apply_genesis_insights_to_development(insights: String) -> void:
     """Apply biblical genesis insights to Universal Being development"""
     print("📜 %s: Applying genesis insights to development..." % being_name)
+	}
     
     # This is where translated biblical patterns influence the game
     # For now, just log the insights
     if GemmaAI:
         GemmaAI.ai_message.emit("📜 Biblical Genesis Insights Applied: " + insights.substr(0, 100) + "...")
+		
 
 func update_genesis_translation(delta: float) -> void:
     """Update biblical translation state"""
@@ -541,6 +563,7 @@ func deactivate_genesis_translation() -> void:
     """Deactivate biblical translation mode"""
     biblical_translation_active = false
     print("📜 %s: Biblical genesis translation deactivated" % being_name)
+	
 
 func _to_string() -> String:
     return "ChatGPTPremiumBridgeUniversalBeing<%s> [Connected:%s, Genesis:%s]" % [being_name, chatgpt_connected, genesis_mode]

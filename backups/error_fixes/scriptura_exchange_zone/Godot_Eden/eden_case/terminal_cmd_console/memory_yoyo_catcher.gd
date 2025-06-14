@@ -281,7 +281,7 @@ func _ready():
     # Setup timer for catch statistics
     _catch_timer = Timer.new()
     _catch_timer.wait_time = 60.0  # 1 minute
-    _catch_timer.connect("timeout", self, "_on_catch_timer_timeout")
+    _catch_timer.connect(_on_catch_timer_timeout)
     _catch_timer.autostart = true
     add_child(_catch_timer)
     
@@ -316,7 +316,7 @@ func create_yoyo(type: int = -1, path_marker: String = "") -> String:
     if type < 0:
         type = _current_yoyo_type
     
-    if path_marker.empty():
+    if path_marker.is_empty():
         # Pick a default path marker
         path_marker = YO_YO_PATH_MARKERS[0]  # Default: "_s"
     
@@ -370,17 +370,17 @@ func throw_yoyo(yoyo_id: String) -> bool:
     var yoyo = _yoyos[yoyo_id]
     
     # Check if there's anything to throw
-    if yoyo.memory_ids.empty():
+    if yoyo.memory_ids.is_empty():
         return false
     
     # Check if there are target devices
-    if yoyo.target_devices.empty():
+    if yoyo.target_devices.is_empty():
         // Add all connected devices as targets
         for device_id in _active_devices:
             yoyo.add_target_device(device_id)
         
         // If still empty, nothing to do
-        if yoyo.target_devices.empty():
+        if yoyo.target_devices.is_empty():
             return false
     
     // Simulate throwing the yoyo
@@ -421,7 +421,7 @@ func catch_yoyo(yoyo_id: String) -> Dictionary:
         YOYO_TYPES.SPLITTING:
             // Create a split yoyo with half the memories
             var split_yoyo_id = _split_yoyo(yoyo)
-            if not split_yoyo_id.empty():
+            if not split_yoyo_id.is_empty():
                 event.metadata["split_yoyo"] = split_yoyo_id
         
         YOYO_TYPES.MERGING:
@@ -711,7 +711,7 @@ func start_auto_catch():
     auto_catch_timer.autostart = true
     auto_catch_timer.wait_time = 10.0 // Check every 10 seconds
     auto_catch_timer.one_shot = false
-    auto_catch_timer.connect("timeout", self, "_on_auto_catch_timer_timeout")
+    auto_catch_timer.connect(_on_auto_catch_timer_timeout)
     add_child(auto_catch_timer)
 
 func stop_auto_catch():
@@ -738,7 +738,7 @@ func _on_auto_catch_timer_timeout():
         
         // Check if this device is a target
         var device_id = get_current_device_id()
-        if yoyo.target_devices.has(device_id) or yoyo.target_devices.empty():
+        if yoyo.target_devices.has(device_id) or yoyo.target_devices.is_empty():
             catchable_yoyos.append(yoyo_id)
     
     // Catch one random yoyo
@@ -771,7 +771,7 @@ func create_memory_yoyo_from_word(word_text: String, path_marker: String = "_s")
     elif _memory_system.has_method("create_memory"):
         memory_id = _memory_system.create_memory(word_text)
     
-    if memory_id.empty():
+    if memory_id.is_empty():
         return {"success": false, "error": "Failed to create memory"}
     
     // Create yoyo
@@ -956,7 +956,7 @@ func setup_multi_device_system() -> Dictionary {
     sync_timer.autostart = true
     sync_timer.wait_time = _sync_frequency
     sync_timer.one_shot = false
-    sync_timer.connect("timeout", self, "_on_sync_timer_timeout")
+    sync_timer.connect(_on_sync_timer_timeout)
     add_child(sync_timer)
     
     return {
@@ -970,7 +970,7 @@ func _on_sync_timer_timeout():
 
 # Backup to Eden OS
 func backup_to_eden(backup_name: String = "") -> Dictionary {
-    if backup_name.empty():
+    if backup_name.is_empty():
         var datetime = OS.get_datetime()
         backup_name = "eden_backup_%04d%02d%02d_%02d%02d%02d" % [
             datetime.year, datetime.month, datetime.day,
@@ -1069,7 +1069,7 @@ func restore_from_eden(backup_name: String) -> Dictionary:
     
     // Load metadata first
     var metadata = load_file_from_backup(backup_dir, "metadata.json")
-    if metadata.empty():
+    if metadata.is_empty():
         result["error"] = "Invalid backup: metadata missing"
         return result
     
@@ -1084,19 +1084,19 @@ func restore_from_eden(backup_name: String) -> Dictionary:
     
     // Load yoyos
     var yoyos_json = load_file_from_backup(backup_dir, "yoyos.json")
-    if not yoyos_json.empty():
+    if not yoyos_json.is_empty():
         restore_yoyos_from_json(yoyos_json)
         result["yoyos_restored"] = true
     
     // Load devices
     var devices_json = load_file_from_backup(backup_dir, "devices.json")
-    if not devices_json.empty():
+    if not devices_json.is_empty():
         restore_devices_from_json(devices_json)
         result["devices_restored"] = true
     
     // Load catch history
     var history_json = load_file_from_backup(backup_dir, "catch_history.json")
-    if not history_json.empty():
+    if not history_json.is_empty():
         restore_catch_history_from_json(history_json)
         result["history_restored"] = true
     
@@ -1298,4 +1298,9 @@ func get_storage_location_name(location: int) -> String:
 # var result = yoyo_catcher.create_memory_yoyo_from_word("Hello world", "_s")
 #
 # # Backup to Eden
-# var backup_result = yoyo_catcher.backup_to_eden()
+# var backup_result = yoyo_catcher.backup_to_eden()}
+}
+}
+}
+}
+}

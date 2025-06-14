@@ -1,6 +1,6 @@
 extends Node
 
-class_name MagicSystem
+class_name MagicSystem_magicsystem_magicsys
 
 # Multi-dimensional Magic System for LuminusOS
 # Inspired by TempleOS's divine random number generator
@@ -419,12 +419,12 @@ func trigger_dimensional_anomaly():
 				var spell_to_copy = spell_keys[randi() % spell_keys.size()]
 				var spell = dimensions[current_dimension]["spells"][spell_to_copy]
 				
-				// Generate a new name for the echo
+# // Generate a new name for the echo
 				var prefix = spell_prefixes[randi() % spell_prefixes.size()]
 				var suffix = spell_suffixes[randi() % spell_suffixes.size()]
 				var echo_name = prefix + suffix
 				
-				// Only create if the name doesn't already exist
+# // Only create if the name doesn't already exist
 				if not dimensions[current_dimension]["spells"].has(echo_name):
 					var echo_spell = spell.duplicate()
 					echo_spell["name"] = echo_name
@@ -521,9 +521,9 @@ func cmd_magic(args):
 					amount = float(args[2])
 				
 				regenerate_mana(amount)
-				return "Restored " + str(int(amount)) + " mana. Current: " + str(int(mana)) + "/" + str(int(max_mana))
+				return "Restored " + str(int(amount)) + " mana. Current: " + str(int(mana)) + "" + str(int(max_mana))
 			else:
-				return "Mana: " + str(int(mana)) + "/" + str(int(max_mana))
+				return "Mana: " + str(int(mana)) + "" + str(int(max_mana))
 				
 		"stability":
 			return "Dimensional stability: " + str(int(dimensional_stability * 100)) + "%"
@@ -538,11 +538,11 @@ func cmd_magic(args):
 			if args.size() >= 3 and dimensions.has(args[2]):
 				dimension_name = args[2]
 			
-			// Check if spell exists
+# // Check if spell exists
 			if dimensions[dimension_name]["spells"].has(spell_name):
 				return "Spell already exists in " + dimension_name
 			
-			// Create custom spell
+# // Create custom spell
 			var effect = spell_effects[dimension_name][randi() % spell_effects[dimension_name].size()]
 			var target = spell_targets[dimension_name][randi() % spell_targets[dimension_name].size()]
 			
@@ -552,7 +552,7 @@ func cmd_magic(args):
 			if args.size() >= 5 and args[4] in spell_targets[dimension_name]:
 				target = args[4]
 			
-			// Calculate spell properties
+# // Calculate spell properties
 			var power = 20.0
 			var mana_cost = power
 			var stability_effect = 0.0
@@ -565,7 +565,7 @@ func cmd_magic(args):
 			if args.size() >= 7 and args[6] == "dimensional":
 				is_dimensional = true
 			
-			// Create spell data
+# // Create spell data
 			var spell = {
 				"name": spell_name,
 				"dimension": dimension_name,
@@ -579,7 +579,7 @@ func cmd_magic(args):
 				"discovered": true
 			}
 			
-			// Add to dimension's spell list
+# // Add to dimension's spell list
 			dimensions[dimension_name]["spells"][spell_name] = spell
 			stats["spells_discovered"] += 1
 			
@@ -633,7 +633,7 @@ func cmd_tick(args):
 func get_magic_status():
 	var status = "Magic System Status:\n"
 	status += "Current dimension: " + dimensions[current_dimension]["name"] + "\n"
-	status += "Mana: " + str(int(mana)) + "/" + str(int(max_mana)) + "\n"
+	status += "Mana: " + str(int(mana)) + "" + str(int(max_mana)) + "\n"
 	status += "Dimensional stability: " + str(int(dimensional_stability * 100)) + "%\n"
 	status += "Available spells: " + str(dimensions[current_dimension]["spells"].size()) + "\n"
 	status += "Connected dimensions: " + ", ".join(dimensions[current_dimension]["connected_to"]) + "\n"

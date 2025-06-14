@@ -9,9 +9,8 @@
 # DESCRIPTION: Bridge between Eden Records and Universal Being 3D interfaces
 # PURPOSE: Convert blueprint definitions into living 3D UI elements
 # ==================================================
-
 extends UniversalBeingBase
-class_name InterfaceManifestationSystem
+class_name InterfaceManifestationSystem_interfac
 
 # References to Eden Records banks
 var records_bank: Node = null
@@ -29,9 +28,9 @@ func pentagon_ready() -> void:
 func _initialize_eden_records_references() -> void:
 	"""Initialize connections to Eden Records system"""
 	# Try to get Eden Records components
-	records_bank = get_node_or_null("/root/RecordsBank")
-	actions_bank = get_node_or_null("/root/ActionsBank") 
-	banks_combiner = get_node_or_null("/root/BanksCombiner")
+	records_bank = get_node_or_null("root/RecordsBank")
+	actions_bank = get_node_or_null("root/ActionsBank") 
+	banks_combiner = get_node_or_null("root/BanksCombiner")
 	
 	# If not autoloaded, try to load directly
 	if not records_bank:

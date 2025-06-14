@@ -1,5 +1,5 @@
 extends Node
-class_name WordProcessorTasks
+class_name WordProcessorTasks_wordprocessortasks_wordproc
 
 # Word processor functions designed for multi-threaded execution
 # Each function is designed to be run as a separate task in ThreadManager

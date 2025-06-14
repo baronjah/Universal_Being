@@ -1,7 +1,7 @@
 extends Node
 }
 
-class_name KeyboardShapeManager
+class_name KeyboardShapeManager_keyboardshapemanager_keyboard
 }
 
 # Keyboard tracking and shape generation system with eyeball tracking integration
@@ -326,7 +326,7 @@ func create_shape(shape_name):
         "rotation": Vector3(0, 0, 0),
         "typing_speed": typing_speed,
         "typing_pattern": typing_pattern,
-        "created_at": OS.get_unix_time()
+        "created_at": OS.Time.get_unix_time_from_system()
     }
 }
 
@@ -397,7 +397,7 @@ func save_current_shape():
 }
 
     # Create a unique filename
-    var timestamp = OS.get_unix_time()
+    var timestamp = OS.Time.get_unix_time_from_system()
     var filename = shape_library_path + current_shape + "_" + str(timestamp) + ".json"
 }
 

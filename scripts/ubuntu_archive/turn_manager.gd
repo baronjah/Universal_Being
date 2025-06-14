@@ -73,6 +73,7 @@ func _ready():
 	
 	print("Turn System initialized: Turn %d - %s" % [current_turn, get_current_phase_name()])
 
+
 func initialize(start_turn: int = 3):
 	current_turn = clamp(start_turn, 1, max_turns)
 	time_in_current_turn = 0.0
@@ -204,7 +205,7 @@ func save_turn_data(turn_number: int):
 		"timestamp": Time.get_unix_time_from_system(),
 		"quantum_active": quantum_loop_active,
 		"notes": []
-	}
+}
 	
 	# Save to JSON
 	var file_path = "%s/turn_%d.json" % [data_path, turn_number]
@@ -225,7 +226,7 @@ func _save_current_turn():
 	var data = {
 		"current_turn": current_turn,
 		"timestamp": Time.get_unix_time_from_system()
-	}
+}
 	
 	var json_string = JSON.stringify(data)
 	var file = FileAccess.open(file_path, FileAccess.WRITE)
@@ -252,6 +253,7 @@ func _load_saved_turn():
 				if data.has("current_turn"):
 					current_turn = clamp(data["current_turn"], 1, max_turns)
 					print("Loaded saved turn: %d" % current_turn)
+	
 
 func _archive_current_cycle():
 	var cycle_dir = "%s/cycles/cycle_%d" % [data_path, int(Time.get_unix_time_from_system())]
@@ -320,6 +322,7 @@ func get_formatted_time_remaining() -> String:
 	seconds = seconds % 60
 	return "%02d:%02d" % [minutes, seconds]
 
+
 func get_turn_info() -> Dictionary:
 	return {
 		"current_turn": current_turn,
@@ -333,7 +336,7 @@ func get_turn_info() -> Dictionary:
 		"total_progress": get_total_progress(),
 		"auto_advance": auto_advance,
 		"quantum_active": quantum_loop_active
-	}
+}
 
 func manually_advance_turn():
 	advance_turn()

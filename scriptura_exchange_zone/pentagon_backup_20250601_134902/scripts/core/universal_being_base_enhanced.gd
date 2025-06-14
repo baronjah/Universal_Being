@@ -4,9 +4,8 @@
 # PURPOSE: Add queue system support to UniversalBeingBase
 # CREATED: 2025-06-01 - Pentagon dependency resolution enhancement
 # ==================================================
-
 extends UniversalBeingBase
-class_name UniversalBeingBaseEnhanced
+# DISABLED DUPLICATE: class_name UniversalBeingBaseEnhanced_universa
 
 # Pentagon dependency queue integration
 var pentagon_queue: PentagonInitializationQueue = null
@@ -19,7 +18,7 @@ func _ready() -> void:
 func pentagon_ready() -> void:
 	super.pentagon_ready()
 	# Get Pentagon queue system
-	pentagon_queue = get_node_or_null("/root/PentagonInitializationQueue")
+	pentagon_queue = get_node_or_null("root/PentagonInitializationQueue")
 	if pentagon_queue:
 		print("🏛️ [%s] Connected to Pentagon Initialization Queue" % name)
 	
@@ -73,7 +72,7 @@ func _delayed_pentagon_ready() -> bool:
 
 func get_pentagon_dependencies() -> Array[String]:
 	"""Override this to specify required node paths"""
-	# Example return: ["/root/ConsoleManager", "/root/FloodgateController", "SomeChildNode"]
+	# Example return: ["root/ConsoleManager", "root/FloodgateController", "SomeChildNode"]
 	return []
 
 func pentagon_ready() -> void:
@@ -94,13 +93,13 @@ func require_node(node_path: String) -> Node:
 
 func require_autoload(autoload_name: String) -> Node:
 	"""Safe autoload getter"""
-	return require_node("/root/" + autoload_name)
+	return require_node("root/" + autoload_name)
 
 func wait_for_node(node_path: String, callback: Callable) -> void:
 	"""Wait for a specific node to exist, then call callback"""
 	if pentagon_queue:
 		pentagon_queue.register_pentagon_dependency(
-			name + "_wait_" + node_path.replace("/", "_"),
+			name + "_wait_" + node_path.replace("", "_"),
 			[node_path],
 			callback,
 			self

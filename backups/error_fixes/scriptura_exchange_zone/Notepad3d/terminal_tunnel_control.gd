@@ -313,7 +313,7 @@ func update_status():
                        "Energy: " + str(int(energy_info.current)) + "/" + str(int(energy_info.max))
 
 func _on_command_submitted(text):
-    if text.strip_edges().empty() or input_locked:
+    if text.strip_edges().is_empty() or input_locked:
         return
     
     # Add to output
@@ -357,11 +357,11 @@ func _on_input_key(event):
         
         elif event.keycode == KEY_TAB:
             # Auto-completion
-            if command_suggestions.empty():
+            if command_suggestions.is_empty():
                 # Generate suggestions based on current input
                 generate_suggestions()
             
-            if not command_suggestions.empty():
+            if not command_suggestions.is_empty():
                 # Cycle through suggestions
                 current_suggestion_index = (current_suggestion_index + 1) % command_suggestions.size()
                 command_input.text = command_suggestions[current_suggestion_index]
@@ -384,7 +384,7 @@ func generate_suggestions():
     var input_text = command_input.text.strip_edges()
     command_suggestions.clear()
     
-    if input_text.empty():
+    if input_text.is_empty():
         return
     
     # Check for partial command
@@ -789,7 +789,7 @@ func _cmd_tunnels(args = []):
     
     var filtered_tunnels = []
     for tunnel_id in tunnels:
-        if filter.empty() or tunnel_id.find(filter) >= 0:
+        if filter.is_empty() or tunnel_id.find(filter) >= 0:
             filtered_tunnels.push_back(tunnel_id)
     
     print_line("Tunnels (" + str(filtered_tunnels.size()) + "/" + str(tunnels.size()) + "):", "info")

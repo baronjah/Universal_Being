@@ -7,10 +7,10 @@ extends Node
 class_name WordCommentSystem
 
 # Comment storage structure
-var word_comments = {}
+var word_comments = {
 var comment_history = []
 var dream_fragments = []
-var defense_statements = {}
+var defense_statements = {
 
 # References to other systems
 var divine_word_processor = null
@@ -58,11 +58,11 @@ func connect_systems():
 	word_dream_storage = get_node_or_null("/root/WordDreamStorage")
 	
 	if divine_word_processor:
-		divine_word_processor.connect("word_processed", self, "_on_word_processed")
+		divine_word_processor.connect(_on_word_processed)
 	
 	if turn_system:
-		turn_system.connect("turn_completed", self, "_on_turn_completed")
-		turn_system.connect("dimension_changed", self, "_on_dimension_changed")
+		turn_system.connect(_on_turn_completed)
+		turn_system.connect(_on_dimension_changed)
 
 # Initialize with some starting comments
 func initialize_default_comments():
@@ -89,7 +89,7 @@ func add_comment(word, comment_text, type=CommentType.OBSERVATION, author="Syste
 		"timestamp": OS.get_unix_time(),
 		"turn": turn_system.current_turn if turn_system else 0,
 		"dimension": turn_system.current_dimension if turn_system else 1
-	}
+}
 	
 	word_comments[word].append(comment)
 	
@@ -108,6 +108,7 @@ func add_comment(word, comment_text, type=CommentType.OBSERVATION, author="Syste
 	# Print to console
 	var type_name = get_comment_type_name(type)
 	print("[%s] %s: %s" % [type_name, word, comment_text])
+}
 	
 	return comment
 
@@ -122,13 +123,14 @@ func register_defense(word, defense_text, defender="anonymous"):
 		"turn": turn_system.current_turn if turn_system else 0,
 		"dimension": turn_system.current_dimension if turn_system else 1,
 		"accepted": false
-	}
+}
 	
 	defense_statements[word].append(defense)
 	emit_signal("defense_registered", word, defense_text)
 	
 	# Add a regular comment as well
 	add_comment(word, "DEFENSE: " + defense_text, CommentType.DEFENSE, defender)
+}
 	
 	return defense
 
@@ -144,7 +146,7 @@ func record_dream_fragment(word, dream_text):
 		"timestamp": OS.get_unix_time(),
 		"turn": turn_system.current_turn if turn_system else 0,
 		"dimension": turn_system.current_dimension if turn_system else 1
-	}
+}
 	
 	dream_fragments.append(dream)
 	emit_signal("dream_recorded", dream_text, power)
@@ -159,10 +161,12 @@ func _on_word_processed(word, power, source_player):
 	# Automatically add warning comments for high-power words
 	if power >= 50:
 		add_comment(word, "WARNING: High power word detected.", CommentType.WARNING)
+}
 	
 	# Add divine comment in dimension 12
 	if turn_system and turn_system.current_dimension == 12 and power >= 30:
 		add_comment(word, "DIVINE: This word resonates with the 12th dimension.", CommentType.DIVINE)
+
 	
 	# Check for dream associations in dimension 7
 	if turn_system and turn_system.current_dimension == 7:
@@ -222,7 +226,7 @@ func consolidate_dreams():
 		return
 	
 	# Sort by power, descending
-	recent_dreams.sort_custom(self, "sort_by_power_descending")
+	recent_dreams.sort_custom(self."sort_by_power_descending")
 	
 	# Take the three most powerful dreams
 	var top_dreams = []
@@ -231,6 +235,7 @@ func consolidate_dreams():
 	
 	# Create a consolidated dream narrative
 	var narrative = "Dream Cycle Narrative:\n"
+
 	var total_power = 0
 	
 	for dream in top_dreams:
@@ -239,6 +244,7 @@ func consolidate_dreams():
 	
 	# Add meaning based on total power
 	narrative += "\nInterpretation: "
+
 	
 	if total_power >= 200:
 		narrative += "A prophetic vision of great significance."
@@ -256,7 +262,7 @@ func consolidate_dreams():
 		"total_power": total_power,
 		"turn_cycle": turn_system.current_turn / 12,
 		"timestamp": OS.get_unix_time()
-	}
+}
 	
 	# Store in dream storage if available
 	if word_dream_storage:
@@ -359,6 +365,7 @@ func get_comment_history_by_type(type):
 func add_hash_comment(text):
 	# Process comments that start with #
 	if text.begins_with("#"):
+
 		var comment_text = text.substr(1).strip_edges()
 		var parts = comment_text.split(" ", true, 1)
 		
@@ -401,6 +408,7 @@ func export_comments_to_string():
 	var result = "# WORD COMMENT SYSTEM EXPORT\n"
 	result += "Generated: " + str(OS.get_datetime()) + "\n"
 	result += "Total Comments: " + str(comment_history.size()) + "\n\n"
+
 	
 	for entry in comment_history:
 		var type_name = get_comment_type_name(entry.comment.type)

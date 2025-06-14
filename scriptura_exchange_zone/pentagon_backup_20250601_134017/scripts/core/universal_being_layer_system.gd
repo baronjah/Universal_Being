@@ -4,12 +4,12 @@
 # PURPOSE: Ensure gizmos and UI beings are always visible, even through ground
 # CREATED: 2025-05-30
 # ==================================================
-
-extends UniversalBeingBase
-class_name UniversalBeingLayerSystem
+extends \2
+# DISABLED DUPLICATE: class_name UniversalBeingLayerSystem_universalbeinglayersystem_universa
 
 # Layer definitions
-enum LayerType {
+enum \2 {
+
 	WORLD,      # Normal objects - can be occluded
 	INTERFACE,  # Gizmos, UI elements - always visible
 	OVERLAY     # Top-most layer - always on absolute top
@@ -35,7 +35,7 @@ func _ready() -> void:
 
 func _register_commands() -> void:
 	"""Register layer system commands"""
-	var console = get_node_or_null("/root/ConsoleManager")
+	var console = get_node_or_null("root/ConsoleManager")
 	if console:
 		console.register_command("layer_add", cmd_layer_add, "Add object to layer")
 		console.register_command("layer_list", cmd_layer_list, "List objects in layers")

@@ -36,11 +36,11 @@ var initialized = false
 var active_dimension = 3
 var pitopia_dimension = 3
 var harmony_dimension = 3
-var manifested_words = {}
-var entity_mappings = {}
+var manifested_words = {
+var entity_mappings = {
 var dimension_sync_active = true
-var akashic_record_cache = {}
-var turn_callbacks = {}
+var akashic_record_cache = {
+var turn_callbacks = {
 var dimensional_transition_active = false
 
 # ----- SIGNALS -----
@@ -101,7 +101,7 @@ func find_system_integrator():
     # If not found, try to find it globally
     if not integrator:
         if has_node("/root/SystemIntegrator"):
-            integrator = get_node("/root/SystemIntegrator")
+            integrator = get_node("\1") as Node
     
     return integrator
 
@@ -220,6 +220,7 @@ func load_script_file(script_name):
     
     # If not found, try to search for it
     for base_dir in ["/mnt/c/Users/Percision 15/12_turns_system", "/mnt/c/Users/Percision 15/Godot_Eden/Eden_May", "/mnt/c/Users/Percision 15/Eden_OS"]:
+	}
         var script_path = search_for_script(base_dir, script_name)
         if script_path:
             if debug_mode:
@@ -241,6 +242,7 @@ func search_for_script(base_dir, script_name):
         
         var file_name = dir.get_next()
         while file_name != "":
+		}
             var full_path = base_dir + "/" + file_name
             
             if dir.current_is_dir():
@@ -264,40 +266,40 @@ func connect_signals():
     # Connect signals from Eden Harmony
     if harmony_connector:
         if harmony_connector.has_signal("word_manifested"):
-            harmony_connector.connect("word_manifested", self, "_on_harmony_word_manifested")
+            harmony_connector.connect(_on_harmony_word_manifested)
         
         if harmony_connector.has_signal("dimension_changed"):
-            harmony_connector.connect("dimension_changed", self, "_on_harmony_dimension_changed")
+            harmony_connector.connect(_on_harmony_dimension_changed)
         
         if harmony_connector.has_signal("turn_advanced"):
-            harmony_connector.connect("turn_advanced", self, "_on_harmony_turn_advanced")
+            harmony_connector.connect(_on_harmony_turn_advanced)
         
         if harmony_connector.has_signal("entity_created"):
-            harmony_connector.connect("entity_created", self, "_on_harmony_entity_created")
+            harmony_connector.connect(_on_harmony_entity_created)
     
     # Connect signals from Pitopia
     if pitopia_main:
         if pitopia_main.has_signal("word_manifested"):
-            pitopia_main.connect("word_manifested", self, "_on_pitopia_word_manifested")
+            pitopia_main.connect(_on_pitopia_word_manifested)
         
         if pitopia_main.has_signal("dimension_changed"):
-            pitopia_main.connect("dimension_changed", self, "_on_pitopia_dimension_changed")
+            pitopia_main.connect(_on_pitopia_dimension_changed)
         
         if pitopia_main.has_signal("turn_advanced"):
-            pitopia_main.connect("turn_advanced", self, "_on_pitopia_turn_advanced")
+            pitopia_main.connect(_on_pitopia_turn_advanced)
     
     # Connect signals from integrated game system
     if integrated_game_system:
         if integrated_game_system.has_signal("dimension_changed"):
-            integrated_game_system.connect("dimension_changed", self, "_on_integrated_dimension_changed")
+            integrated_game_system.connect(_on_integrated_dimension_changed)
         
         if integrated_game_system.has_signal("entity_created"):
-            integrated_game_system.connect("entity_created", self, "_on_integrated_entity_created")
+            integrated_game_system.connect(_on_integrated_entity_created)
     
     # Connect signals from akashic controller
     if akashic_controller:
         if akashic_controller.has_signal("record_created"):
-            akashic_controller.connect("record_created", self, "_on_akashic_record_created")
+            akashic_controller.connect(_on_akashic_record_created)
 
 # ----- DIMENSION MANAGEMENT -----
 func synchronize_dimensions(dimension_number):
@@ -352,7 +354,7 @@ func apply_dimensional_effects(dimension_number):
     if pitopia_main and pitopia_main.has_method("get_environment"):
         environment = pitopia_main.get_environment()
     elif has_node("/root/WorldEnvironment"):
-        environment = get_node("/root/WorldEnvironment").environment
+        environment = get_node("\1") as Node.environment
     
     if environment:
         # Update fog color
@@ -386,7 +388,7 @@ func get_dimension_properties(dimension_number):
         "ambient_color": Color(0.1, 0.1, 0.2),
         "ambient_energy": 0.3,
         "background_color": Color(0.01, 0.01, 0.05)
-    }
+		}
     
     # Set dimension-specific properties
     match dimension_number:
@@ -394,115 +396,127 @@ func get_dimension_properties(dimension_number):
             dimension_data.name = "Linear Expression"
             dimension_data.symbol = "α"
             dimension_data.fog_color = Color(0.1, 0.05, 0.05)
-            dimension_data.fog_density = {"begin": 10.0, "end": 30.0}
+            dimension_data.fog_density = {"begin": 10.0, "end": 30.0
             dimension_data.ambient_color = Color(0.2, 0.1, 0.1)
             dimension_data.ambient_energy = 0.2
             dimension_data.background_color = Color(0.05, 0.01, 0.01)
+}
             
         2: # Planar Reflection (2D)
             dimension_data.name = "Planar Reflection"
             dimension_data.symbol = "β"
             dimension_data.fog_color = Color(0.1, 0.1, 0.05)
-            dimension_data.fog_density = {"begin": 15.0, "end": 40.0}
+            dimension_data.fog_density = {"begin": 15.0, "end": 40.0
             dimension_data.ambient_color = Color(0.2, 0.2, 0.1)
             dimension_data.ambient_energy = 0.25
             dimension_data.background_color = Color(0.05, 0.05, 0.01)
+}
             
         3: # Spatial Manifestation (3D)
             dimension_data.name = "Spatial Manifestation"
             dimension_data.symbol = "γ"
             dimension_data.fog_color = Color(0.05, 0.1, 0.05)
-            dimension_data.fog_density = {"begin": 20.0, "end": 60.0}
+            dimension_data.fog_density = {"begin": 20.0, "end": 60.0
             dimension_data.ambient_color = Color(0.1, 0.2, 0.1)
             dimension_data.ambient_energy = 0.3
             dimension_data.background_color = Color(0.01, 0.05, 0.01)
+}
             
         4: # Temporal Flow (4D)
             dimension_data.name = "Temporal Flow"
             dimension_data.symbol = "δ"
             dimension_data.fog_color = Color(0.05, 0.05, 0.1)
-            dimension_data.fog_density = {"begin": 25.0, "end": 70.0}
+            dimension_data.fog_density = {"begin": 25.0, "end": 70.0
             dimension_data.ambient_color = Color(0.1, 0.1, 0.2)
             dimension_data.ambient_energy = 0.35
             dimension_data.background_color = Color(0.01, 0.01, 0.05)
+}
             
         5: # Probability Waves (5D)
             dimension_data.name = "Probability Waves"
             dimension_data.symbol = "ε"
             dimension_data.fog_color = Color(0.1, 0.05, 0.1)
-            dimension_data.fog_density = {"begin": 30.0, "end": 80.0}
+            dimension_data.fog_density = {"begin": 30.0, "end": 80.0
             dimension_data.ambient_color = Color(0.2, 0.1, 0.2)
             dimension_data.ambient_energy = 0.4
             dimension_data.background_color = Color(0.05, 0.01, 0.05)
+}
             
         6: # Phase Resonance (6D)
             dimension_data.name = "Phase Resonance"
             dimension_data.symbol = "ζ"
             dimension_data.fog_color = Color(0.05, 0.1, 0.1)
-            dimension_data.fog_density = {"begin": 30.0, "end": 100.0}
+            dimension_data.fog_density = {"begin": 30.0, "end": 100.0
             dimension_data.ambient_color = Color(0.1, 0.2, 0.2)
             dimension_data.ambient_energy = 0.45
             dimension_data.background_color = Color(0.01, 0.05, 0.05)
+}
             
         7: # Dream Weaving (7D)
             dimension_data.name = "Dream Weaving"
             dimension_data.symbol = "η"
             dimension_data.fog_color = Color(0.1, 0.05, 0.15)
-            dimension_data.fog_density = {"begin": 40.0, "end": 120.0}
+            dimension_data.fog_density = {"begin": 40.0, "end": 120.0
             dimension_data.ambient_color = Color(0.2, 0.1, 0.3)
             dimension_data.ambient_energy = 0.5
             dimension_data.background_color = Color(0.05, 0.01, 0.1)
+}
             
         8: # Interconnection (8D)
             dimension_data.name = "Interconnection"
             dimension_data.symbol = "θ"
             dimension_data.fog_color = Color(0.05, 0.15, 0.1)
-            dimension_data.fog_density = {"begin": 50.0, "end": 150.0}
+            dimension_data.fog_density = {"begin": 50.0, "end": 150.0
             dimension_data.ambient_color = Color(0.1, 0.3, 0.2)
             dimension_data.ambient_energy = 0.55
             dimension_data.background_color = Color(0.01, 0.1, 0.05)
+}
             
         9: # Divine Judgment (9D)
             dimension_data.name = "Divine Judgment"
             dimension_data.symbol = "ι"
             dimension_data.fog_color = Color(0.15, 0.15, 0.05)
-            dimension_data.fog_density = {"begin": 70.0, "end": 200.0}
+            dimension_data.fog_density = {"begin": 70.0, "end": 200.0
             dimension_data.ambient_color = Color(0.3, 0.3, 0.1)
             dimension_data.ambient_energy = 0.6
             dimension_data.background_color = Color(0.1, 0.1, 0.01)
+}
             
         10: # Harmonic Convergence (10D)
             dimension_data.name = "Harmonic Convergence"
             dimension_data.symbol = "κ"
             dimension_data.fog_color = Color(0.15, 0.05, 0.15)
-            dimension_data.fog_density = {"begin": 100.0, "end": 300.0}
+            dimension_data.fog_density = {"begin": 100.0, "end": 300.0
             dimension_data.ambient_color = Color(0.3, 0.1, 0.3)
             dimension_data.ambient_energy = 0.7
             dimension_data.background_color = Color(0.1, 0.01, 0.1)
+}
             
         11: # Conscious Reflection (11D)
             dimension_data.name = "Conscious Reflection"
             dimension_data.symbol = "λ"
             dimension_data.fog_color = Color(0.05, 0.15, 0.15)
-            dimension_data.fog_density = {"begin": 150.0, "end": 400.0}
+            dimension_data.fog_density = {"begin": 150.0, "end": 400.0
             dimension_data.ambient_color = Color(0.1, 0.3, 0.3)
             dimension_data.ambient_energy = 0.8
             dimension_data.background_color = Color(0.01, 0.1, 0.1)
+}
             
         12: # Divine Manifestation (12D)
             dimension_data.name = "Divine Manifestation"
             dimension_data.symbol = "μ"
             dimension_data.fog_color = Color(0.15, 0.15, 0.15)
-            dimension_data.fog_density = {"begin": 200.0, "end": 500.0}
+            dimension_data.fog_density = {"begin": 200.0, "end": 500.0
             dimension_data.ambient_color = Color(0.3, 0.3, 0.3)
             dimension_data.ambient_energy = 1.0
             dimension_data.background_color = Color(0.1, 0.1, 0.1)
+}
     
     return dimension_data
 
 # ----- WORD MANIFESTATION -----
 func manifest_word(word, system_name = "integration", dimension = 0):
-    if word.empty():
+    if word.is_empty():
         return null
     
     if dimension == 0:
@@ -517,7 +531,7 @@ func manifest_word(word, system_name = "integration", dimension = 0):
             "power": 50,
             "dimension": dimension,
             "timestamp": OS.get_unix_time()
-        }
+			}
     
     # Try to manifest using the appropriate system
     match system_name:
@@ -541,6 +555,7 @@ func manifest_word(word, system_name = "integration", dimension = 0):
                 
         "akashic":
             if akashic_controller and akashic_controller.has_method("create_akashic_entry"):
+			}
                 var position = Vector3(
                     randf() * 10 - 5,
                     randf() * 5,
@@ -570,6 +585,7 @@ func manifest_word(word, system_name = "integration", dimension = 0):
                 entity_id = pitopia_main.manifest_word(word)
             # Fallback to akashic records
             elif akashic_controller and akashic_controller.has_method("create_akashic_entry"):
+			}
                 var position = Vector3(
                     randf() * 10 - 5,
                     randf() * 5,
@@ -593,10 +609,11 @@ func manifest_word(word, system_name = "integration", dimension = 0):
             "system": system_name,
             "dimension": dimension,
             "created_at": OS.get_unix_time()
-        }
+			}
         
         # Create akashic record if enabled
         if record_words_to_akashic and akashic_controller and system_name != "akashic":
+		
             var position = Vector3(
                 randf() * 10 - 5,
                 randf() * 5,
@@ -619,7 +636,7 @@ func manifest_word(word, system_name = "integration", dimension = 0):
                     "original_id": entity_id,
                     "dimension": dimension,
                     "created_at": OS.get_unix_time()
-                }
+					}
         
         # Emit signal
         emit_signal("word_manifested", word, entity_id, system_name)
@@ -660,6 +677,7 @@ func connect_entities(entity1_id, entity2_id, connection_type = "default"):
     # Cross-system connection - create a record of the connection in akashic records
     else:
         if akashic_controller and akashic_controller.has_method("create_akashic_entry"):
+		
             var word1 = entity1.word
             var word2 = entity2.word
             var dimension = max(entity1.dimension, entity2.dimension)
@@ -721,8 +739,10 @@ func evolve_entity(entity_id):
                 evolved = integrated_game_system.evolve_entity(entity_id)
                 
         "akashic":
+		
             # Can't directly evolve akashic entities, but can create a new evolved version
             if akashic_controller and akashic_controller.has_method("create_akashic_entry"):
+			
                 var position = Vector3(
                     randf() * 10 - 5,
                     randf() * 5 + 2,  # Slightly higher to represent evolution
@@ -755,6 +775,7 @@ func advance_turn():
     
     // Try integrated system first
     if integrated_game_system and integrated_game_system.has_method("set_current_dimension"):
+	
         var next_turn = (active_dimension % 12) + 1
         advanced = integrated_game_system.set_current_dimension(next_turn)
         active_dimension = next_turn
@@ -822,6 +843,7 @@ func process_turn_callbacks(turn_number):
 func _on_harmony_word_manifested(word, entity_id):
     if debug_mode:
         print("Eden Harmony word manifested: %s (Entity ID: %s)" % [word, entity_id])
+		
     
     # Record the mapping
     entity_mappings[entity_id] = {
@@ -829,7 +851,7 @@ func _on_harmony_word_manifested(word, entity_id):
         "system": "harmony",
         "dimension": harmony_dimension,
         "created_at": OS.get_unix_time()
-    }
+		}
     
     # Create akashic record if enabled
     if record_words_to_akashic and akashic_controller:
@@ -841,6 +863,7 @@ func _on_harmony_word_manifested(word, entity_id):
 func _on_harmony_dimension_changed(new_dimension, old_dimension):
     if debug_mode:
         print("Eden Harmony dimension changed: %d -> %d" % [old_dimension, new_dimension])
+		
     
     harmony_dimension = new_dimension
     
@@ -851,6 +874,7 @@ func _on_harmony_dimension_changed(new_dimension, old_dimension):
 func _on_harmony_turn_advanced(turn_number):
     if debug_mode:
         print("Eden Harmony turn advanced: %d" % turn_number)
+		
     
     # Process turn callbacks
     process_turn_callbacks(turn_number)
@@ -861,6 +885,7 @@ func _on_harmony_turn_advanced(turn_number):
 func _on_harmony_entity_created(entity_id, entity_data):
     if debug_mode:
         print("Eden Harmony entity created: %s" % entity_id)
+		
     
     # Record the mapping
     entity_mappings[entity_id] = {
@@ -869,7 +894,7 @@ func _on_harmony_entity_created(entity_id, entity_data):
         "dimension": harmony_dimension,
         "data": entity_data,
         "created_at": OS.get_unix_time()
-    }
+		}
     
     # Emit signal
     emit_signal("entity_created", entity_id, entity_data, "harmony")
@@ -877,6 +902,7 @@ func _on_harmony_entity_created(entity_id, entity_data):
 func _on_pitopia_word_manifested(word, entity_id):
     if debug_mode:
         print("Pitopia word manifested: %s (Entity ID: %s)" % [word, entity_id])
+		
     
     # Record the mapping
     entity_mappings[entity_id] = {
@@ -884,7 +910,7 @@ func _on_pitopia_word_manifested(word, entity_id):
         "system": "pitopia",
         "dimension": pitopia_dimension,
         "created_at": OS.get_unix_time()
-    }
+		}
     
     # Create akashic record if enabled
     if record_words_to_akashic and akashic_controller:
@@ -896,6 +922,7 @@ func _on_pitopia_word_manifested(word, entity_id):
 func _on_pitopia_dimension_changed(new_dimension, old_dimension):
     if debug_mode:
         print("Pitopia dimension changed: %d -> %d" % [old_dimension, new_dimension])
+		
     
     pitopia_dimension = new_dimension
     
@@ -906,6 +933,7 @@ func _on_pitopia_dimension_changed(new_dimension, old_dimension):
 func _on_pitopia_turn_advanced(turn_number):
     if debug_mode:
         print("Pitopia turn advanced: %d" % turn_number)
+		
     
     # Process turn callbacks
     process_turn_callbacks(turn_number)
@@ -916,6 +944,7 @@ func _on_pitopia_turn_advanced(turn_number):
 func _on_integrated_dimension_changed(turn_number, symbol, dimension_name):
     if debug_mode:
         print("Integrated system dimension changed: %d (%s - %s)" % [turn_number, symbol, dimension_name])
+		
     
     # Synchronize dimensions if enabled
     if auto_sync_dimensions and not dimensional_transition_active:
@@ -924,6 +953,7 @@ func _on_integrated_dimension_changed(turn_number, symbol, dimension_name):
 func _on_integrated_entity_created(entity_id, entity_type, entity_data):
     if debug_mode:
         print("Integrated system entity created: %s (Type: %s)" % [entity_id, entity_type])
+		
     
     # Record the mapping
     entity_mappings[entity_id] = {
@@ -933,12 +963,13 @@ func _on_integrated_entity_created(entity_id, entity_type, entity_data):
         "dimension": active_dimension,
         "data": entity_data,
         "created_at": OS.get_unix_time()
-    }
+		}
     
     # Create akashic record if enabled and entity type is word
     if record_words_to_akashic and akashic_controller and entity_type == "word":
+	
         var word = entity_data.get("text", "")
-        if not word.empty():
+        if not word.is_empty():
             manifest_word(word, "akashic", active_dimension)
     
     # Emit signal
@@ -947,9 +978,11 @@ func _on_integrated_entity_created(entity_id, entity_type, entity_data):
 func _on_akashic_record_created(record_id):
     if debug_mode:
         print("Akashic record created: %s" % record_id)
+		
     
     # Get the record
     if akashic_controller and akashic_controller.has_method("get_akashic_entry"):
+	
         var record = akashic_controller.get_akashic_entry(record_id)
         
         if record:
@@ -961,7 +994,7 @@ func _on_akashic_record_created(record_id):
                 "power": record.position.power,
                 "tags": record.tags,
                 "created_at": OS.get_unix_time()
-            }
+				}
             
             # Emit signal
             emit_signal("akashic_record_created", record_id, record.content, record.tags)
@@ -1007,7 +1040,7 @@ func get_dimension_names():
 
 # ----- COMMAND PROCESSING -----
 func process_command(command_text):
-    if command_text.empty():
+    if command_text.is_empty():
         return "Please enter a command"
     
     # Split command and arguments
@@ -1044,12 +1077,15 @@ func process_command(command_text):
                 var entity_id = manifest_word(command_text)
                 if entity_id:
                     return "Manifested word: %s (Entity ID: %s)" % [command_text, entity_id]
+					
             
             return "Unknown command: " + cmd
+			
 
 func process_manifest_command(args):
-    if args.empty():
+    if args.is_empty():
         return "Usage: manifest <word> [system]"
+		
     
     var parts = args.split(" ")
     var word = parts[0]
@@ -1061,9 +1097,10 @@ func process_manifest_command(args):
         return "Manifested word '%s' in %s system (Entity ID: %s)" % [word, system, entity_id]
     else:
         return "Failed to manifest word: " + word
+		
 
 func process_dimension_command(args):
-    if args.empty():
+    if args.is_empty():
         return "Current dimension: %d (%s - %s)" % [
             active_dimension,
             get_dimension_symbols()[active_dimension - 1],
@@ -1085,15 +1122,18 @@ func process_dimension_command(args):
             return "Failed to change dimension"
     
     return "Usage: dimension [1-12]"
+	
 
 func process_connect_command(args):
-    if args.empty():
+    if args.is_empty():
         return "Usage: connect <entity1_id> <entity2_id> [connection_type]"
+		
     
     var parts = args.split(" ")
     
     if parts.size() < 2:
         return "Usage: connect <entity1_id> <entity2_id> [connection_type]"
+		
     
     var entity1_id = parts[0]
     var entity2_id = parts[1]
@@ -1105,8 +1145,9 @@ func process_connect_command(args):
         return "Failed to connect entities"
 
 func process_evolve_command(args):
-    if args.empty():
+    if args.is_empty():
         return "Usage: evolve <entity_id>"
+		
     
     var entity_id = args
     
@@ -1114,9 +1155,10 @@ func process_evolve_command(args):
         return "Evolved entity: " + entity_id
     else:
         return "Failed to evolve entity: " + entity_id
+		
 
 func process_turn_command(args):
-    if args == "advance" or args.empty():
+    if args == "advance" or args.is_empty():
         if advance_turn():
             return "Advanced to turn %d: %s (%s)" % [
                 active_dimension,
@@ -1127,10 +1169,12 @@ func process_turn_command(args):
             return "Failed to advance turn"
     
     return "Usage: turn [advance]"
+	
 
 func process_sync_command(args):
-    if args.empty():
+    if args.is_empty():
         return "Dimension sync is currently: " + ("ON" if dimension_sync_active else "OFF")
+		
     
     match args:
         "on":
@@ -1144,6 +1188,7 @@ func process_sync_command(args):
             return "Forced dimension synchronization to: " + str(active_dimension)
         _:
             return "Usage: sync [on|off|force]"
+			
 
 func get_help_text():
     return """

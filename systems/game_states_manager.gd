@@ -60,6 +60,7 @@ func _ready():
 	initialize_default_states()
 	setup_state_monitoring()
 	print("✅ Game States Manager: Ready to track all universal states!")
+}
 
 func initialize_default_states():
 	"""Initialize all default states"""
@@ -98,6 +99,7 @@ func _monitor_input_changes():
 	"""Monitor and track input state changes"""
 	var current_mouse_mode = str(Input.mouse_mode)
 	if current_states.get("mouse_mode", "") != current_mouse_mode:
+}
 		var old_mode = current_states.get("mouse_mode", "")
 		current_states["mouse_mode"] = current_mouse_mode
 		state_changed.emit("input", old_mode, current_mouse_mode)
@@ -105,6 +107,7 @@ func _monitor_input_changes():
 		# Determine keyboard focus based on mouse mode
 		var keyboard_focus = "console" if Input.mouse_mode == Input.MOUSE_MODE_VISIBLE else "game"
 		if current_states.get("keyboard_focus", "") != keyboard_focus:
+}
 			var old_focus = current_states.get("keyboard_focus", "")
 			current_states["keyboard_focus"] = keyboard_focus
 			state_changed.emit("input", old_focus, keyboard_focus)
@@ -122,6 +125,7 @@ func set_interface_state(interface_name: String, new_state: String):
 	interface_toggled.emit(interface_name, active_interfaces[interface_name])
 	
 	print("🔄 Interface '%s': %s → %s" % [interface_name, old_state, new_state])
+}
 
 func get_interface_state(interface_name: String) -> String:
 	"""Get current interface state"""
@@ -142,6 +146,7 @@ func set_input_mode(new_mode: String):
 	
 	print("⌨️ Input Mode: %s → %s" % [old_mode, new_mode])
 
+
 func get_input_mode() -> String:
 	"""Get current input mode"""
 	return current_states.get("input_mode", "normal_3d")
@@ -154,6 +159,7 @@ func set_game_mode(new_mode: String):
 	
 	state_changed.emit("game_mode", old_mode, new_mode)
 	print("🎮 Game Mode: %s → %s" % [old_mode, new_mode])
+
 
 func get_game_mode() -> String:
 	"""Get current game mode"""
@@ -253,8 +259,8 @@ func log_state_change(category: String, old_state: String, new_state: String):
 		"category": category,
 		"old_state": old_state,
 		"new_state": new_state
-	}
 	state_history.append(log_entry)
+}
 	
 	# Limit history size
 	if state_history.size() > 1000:
@@ -281,12 +287,13 @@ func get_state_summary() -> Dictionary:
 		},
 		"active_interfaces": active_interfaces,
 		"history_entries": state_history.size()
-	}
+}
 
 func get_formatted_state_report() -> String:
 	"""Get formatted state report for console display"""
 	var summary = get_state_summary()
 	var report = "🔄 UNIVERSAL BEING STATES:\n\n"
+
 	
 	# Interface states
 	report += "INTERFACES:\n"
@@ -294,20 +301,24 @@ func get_formatted_state_report() -> String:
 		var state = summary.interfaces[interface]
 		var active = "✅" if active_interfaces.get(interface, false) else "⭕"
 		report += "  %s %s: %s\n" % [active, interface.capitalize(), state]
+
 	
 	# Input states
 	report += "\nINPUT:\n"
 	for input_key in summary.input.keys():
 		var value = summary.input[input_key]
 		report += "  • %s: %s\n" % [input_key.capitalize(), value]
+
 	
 	# Game states
 	report += "\nGAME:\n"
 	for game_key in summary.game.keys():
 		var value = summary.game[game_key]
 		report += "  • %s: %s\n" % [game_key.capitalize(), value]
+
 	
 	report += "\n📊 State History: %d entries\n" % summary.history_entries
+
 	
 	return report
 
@@ -325,6 +336,7 @@ func register_interface(interface_name: String, interface_node: Node3D):
 			debug_chamber_ref = interface_node
 	
 	print("📝 Registered interface: " + interface_name)
+
 
 # Quick Access Functions
 func is_console_active() -> bool:

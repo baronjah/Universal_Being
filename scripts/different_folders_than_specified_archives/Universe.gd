@@ -29,6 +29,7 @@ func _ready() -> void:
 	
 	# Register this scene with universe manager
 	if has_node("/root/UniverseManager"):
+
 		var universe_manager = get_node("/root/UniverseManager")
 		if universe_manager.active_universe:
 			universe_manager.active_universe.scene_root = self
@@ -79,11 +80,13 @@ func _setup_ui() -> void:
 func _input(event: InputEvent) -> void:
 	"""Handle input events"""
 	if event.is_action_pressed("toggle_console"):
+
 		# Toggle command console
 		if command_console:
 			command_console.toggle_console()
 	
 	if event.is_action_pressed("ui_f1"):
+
 		# Toggle universe console
 		universe_console.toggle_console()
 	

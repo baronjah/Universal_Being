@@ -17,4 +17,4 @@ func initialize_component() -> void:
 	print("👁️‍🗨️ Dimensional Sight initialized")
 
 func get_component_info() -> Dictionary:
-	return {"name": "Dimensional Sight", "ready": sight_ready}
+	return {"name": "Dimensional Sight", "ready": sight_ready

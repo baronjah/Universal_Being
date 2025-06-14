@@ -1,6 +1,6 @@
 extends Node
 
-class_name EdenHarmonyConnector
+class_name EdenHarmonyConnector_edenharmonyconnector_edenharm
 
 # ----- CONSTANTS -----
 const VERSION = "1.0.0"
@@ -16,13 +16,13 @@ var ui_controller = null
 
 # ----- COMPONENT PATHS -----
 var component_paths = {
-	"turn_system": "/root/TurnSystem",
-	"turn_controller": "/root/TurnController",
-	"word_manifestor": "/root/CoreWordManifestor",
-	"ethereal_integration": "/root/JshEtherealIntegration",
-	"entity_manager": "/root/CoreEntityManager",
-	"dimensional_color_system": "/root/DimensionalColorSystem",
-	"ui_controller": "/root/EtherealEngineUI"
+	"turn_system": "root/TurnSystem",
+	"turn_controller": "root/TurnController",
+	"word_manifestor": "root/CoreWordManifestor",
+	"ethereal_integration": "root/JshEtherealIntegration",
+	"entity_manager": "root/CoreEntityManager",
+	"dimensional_color_system": "root/DimensionalColorSystem",
+	"ui_controller": "root/EtherealEngineUI"
 }
 
 # ----- SIGNAL INTEGRATION -----
@@ -314,7 +314,7 @@ func _apply_dimensional_properties(entity, dimension: int):
 			2: # Planar
 				entity.set_property("dimensionality", "planar")
 				entity.set_property("manifestation_clarity", 0.5)
-			3: # Spatial
+			3: # Node3D
 				entity.set_property("dimensionality", "spatial")
 				entity.set_property("manifestation_clarity", 0.7)
 			4: # Temporal
@@ -379,7 +379,7 @@ func get_dimension_name(dimension: int = -1) -> String:
 	var dimension_names = [
 		"Linear Expression",      # 1D
 		"Planar Reflection",      # 2D
-		"Spatial Manifestation",  # 3D
+		"Node3D Manifestation",  # 3D
 		"Temporal Flow",          # 4D
 		"Probability Waves",      # 5D
 		"Phase Resonance",        # 6D
@@ -427,8 +427,8 @@ func update_ui():
 			ui_controller.update_display(ui_data)
 	
 	# Update console if available
-	if get_node_or_null("/root/creation_console"):
-		var console = get_node("/root/creation_console")
+	if get_node_or_null("root/creation_console"):
+		var console = get_node("root/creation_console")
 		if console.has_method("add_message"):
 			console.add_message("Turn: " + str(get_current_turn()) + " | Dimension: " + str(get_current_dimension()) + "D - " + get_dimension_name())
 
@@ -521,6 +521,6 @@ func _input(event):
 	
 func toggle_console():
 	# Find and toggle console visibility if available
-	var console = get_node_or_null("/root/creation_console")
+	var console = get_node_or_null("root/creation_console")
 	if console and console.has_method("toggle_visibility"):
 		console.toggle_visibility()

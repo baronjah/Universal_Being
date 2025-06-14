@@ -91,12 +91,12 @@ func _ready():
     var timer = Timer.new()
     timer.wait_time = ANALYSIS_INTERVAL
     timer.autostart = true
-    timer.connect("timeout", self, "_on_analysis_interval")
+    timer.connect(_on_analysis_interval)
     add_child(timer)
     
     # Find account manager if available
     if has_node("/root/SmartAccountManager") or get_node_or_null("/root/SmartAccountManager"):
-        _account_manager = get_node("/root/SmartAccountManager")
+        _account_manager = get_node("\1") as Node
         print("Connected to SmartAccountManager")
 
 func _on_analysis_interval():

@@ -54,7 +54,6 @@ const AI_AGENTS = {
 		"color": Color(1.0, 0.5, 0.0),  # Orange
 		"position": Vector2(-87, -50),  # Top-left
 		"capabilities": ["analysis", "patterns", "insights", "predictions"]
-	}
 }
 
 # Connection strength between AI agents (0.0 - 1.0)
@@ -79,7 +78,7 @@ signal network_updated()
 func _init():
 	# Initialize all possible connections with base strength
 	for from in AIAgent.values():
-		connections[from] = {}
+		connections[from] = {
 		for to in AIAgent.values():
 			if from != to:
 				connections[from][to] = 0.1  # Base connection
@@ -112,7 +111,7 @@ func start_collaboration(agents: Array[AIAgent], task: String, being_type: Strin
 		"start_time": Time.get_ticks_msec(),
 		"status": "active",
 		"connections_strengthened": []
-	}
+}
 	
 	# Strengthen connections between collaborating agents
 	for i in range(agents.size()):
@@ -221,7 +220,7 @@ func get_network_visualization_data() -> Dictionary:
 		"edges": edges,
 		"stats": network_stats,
 		"active_collaborations": active_collaborations
-	}
+}
 
 func calculate_agent_connection_strength(agent: AIAgent) -> float:
 	pass
@@ -245,7 +244,7 @@ func update_network_stats() -> void:
 	pass
 	var total_strength = 0.0
 	var connection_count = 0
-	var agent_strengths = {}
+	var agent_strengths = {
 	
 	for from in AIAgent.values():
 		agent_strengths[from] = 0.0
@@ -269,7 +268,7 @@ func update_network_stats() -> void:
 		"average_strength": total_strength / connection_count if connection_count > 0 else 0.0,
 		"most_connected": most_connected,
 		"collaboration_count": active_collaborations.size()
-	}
+}
 	
 	network_updated.emit()
 
@@ -280,14 +279,16 @@ func generate_collaboration_id() -> String:
 func suggest_next_collaboration() -> Dictionary:
 	pass
 	# Find weakest connections that could be strengthened
-	var weakest_connection = {"from": null, "to": null, "strength": 1.0}
+	var weakest_connection = {"from": null, "to": null, "strength": 1.0
+}
 	
 	for from in AIAgent.values():
 		for to in AIAgent.values():
 			if from < to:
 				var strength = get_connection_strength(from, to)
 				if strength < weakest_connection.strength:
-					weakest_connection = {"from": from, "to": to, "strength": strength}
+					weakest_connection = {"from": from, "to": to, "strength": strength
+	}
 	
 	# Suggest a task that would involve these agents
 	var suggested_agents = [weakest_connection.from, weakest_connection.to]
@@ -301,7 +302,7 @@ func suggest_next_collaboration() -> Dictionary:
 		"agents": suggested_agents,
 		"reason": "Strengthen weak connections",
 		"suggested_task": generate_task_for_agents(suggested_agents)
-	}
+}
 
 func find_bridge_agent(agent1: AIAgent, agent2: AIAgent) -> AIAgent:
 	pass

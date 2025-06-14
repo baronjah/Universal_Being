@@ -1,6 +1,6 @@
 extends Control
 
-class_name DebugComboTerminal
+class_name DebugComboTerminal_debugcomboterminal_debugcom
 
 """
 Debug Combo Terminal
@@ -334,7 +334,7 @@ func _list_directory(cmd_parts):
     var path = current_path
     if cmd_parts.size() > 1:
         path = cmd_parts[1]
-        if not path.begins_with("/"):
+        if not path.begins_with(""):
             path = current_path.path_join(path)
     
     var dir = DirAccess.open(path)
@@ -359,7 +359,7 @@ func _list_directory(cmd_parts):
         
         # Display directories first
         for directory in directories:
-            _print_line("📁 " + directory + "/", "system")
+            _print_line("📁 " + directory + "", "system")
         
         # Then display files
         for file in files:
@@ -393,7 +393,7 @@ func _change_directory(cmd_parts):
         return current_path
     
     var new_path = cmd_parts[1]
-    if not new_path.begins_with("/"):
+    if not new_path.begins_with(""):
         new_path = current_path.path_join(new_path)
     
     var dir = DirAccess.open(new_path)
@@ -466,7 +466,7 @@ func _display_file(cmd_parts):
         return null
     
     var file_path = cmd_parts[1]
-    if not file_path.begins_with("/"):
+    if not file_path.begins_with(""):
         file_path = current_path.path_join(file_path)
     
     var file = FileAccess.open(file_path, FileAccess.READ)
@@ -495,7 +495,7 @@ func _hex_view(cmd_parts):
         return null
     
     var file_path = cmd_parts[1]
-    if not file_path.begins_with("/"):
+    if not file_path.begins_with(""):
         file_path = current_path.path_join(file_path)
     
     var file = FileAccess.open(file_path, FileAccess.READ)
@@ -642,7 +642,7 @@ func _go_to_path():
     _print_line("Go To Path - Enter path:", "system")
     # Simulate input
     _print_line("$ /mnt/c/Users", "command")
-    _change_directory(["cd", "/mnt/c/Users"])
+    _change_directory(["cd", "mnt/c/Users"])
 
 func _show_history():
     _print_line("Command History:", "system")
@@ -681,7 +681,7 @@ func _display_directory_tree(path, level):
                 var indent = "  ".repeat(level)
                 
                 if dir.current_is_dir():
-                    _print_line(indent + "📁 " + file_name + "/", "system")
+                    _print_line(indent + "📁 " + file_name + "", "system")
                     
                     # Limit recursion depth
                     if level < 2:
@@ -695,7 +695,8 @@ func _advanced_find():
     _print_line("Advanced Find - Enter search criteria:", "system")
     _print_line("Path: " + current_path, "path")
     _print_line("Pattern: *.gd", "data")
-    _print_line("Content: extends Node", "data")
+    _print_line("Content:
+extends \2", "data")
     _print_line("Searching...", "system")
     
     # Simulate search results
@@ -712,7 +713,7 @@ func _save_results():
         return
     
     # Simulate saving
-    _print_line("Results saved to: " + current_path + "/search_results.txt", "success")
+    _print_line("Results saved to: " + current_path + "search_results.txt", "success")
 
 func _load_session():
     _print_line("Loading saved session...", "system")
@@ -738,7 +739,7 @@ func _deep_scan():
     
     # Simulate progress
     for i in range(5):
-        _print_line("Scanning sector " + str(i+1) + "/5...", "system")
+        _print_line("Scanning sector " + str(i+1) + "5...", "system")
     
     # Simulate results
     _print_line("Deep scan complete!", "success")
@@ -865,8 +866,8 @@ func _get_path_completions(partial_path):
     var search_pattern = partial_path
     
     # If partial path contains a directory separator, extract the directory part
-    if partial_path.find("/") >= 0:
-        var last_separator = partial_path.rfind("/")
+    if partial_path.find("") >= 0:
+        var last_separator = partial_path.rfind("")
         dir_path = current_path.path_join(partial_path.substr(0, last_separator))
         search_pattern = partial_path.substr(last_separator + 1)
     
@@ -879,7 +880,7 @@ func _get_path_completions(partial_path):
         while file_name != "":
             if file_name.begins_with(search_pattern):
                 if dir.current_is_dir():
-                    completions.append(file_name + "/")
+                    completions.append(file_name + "")
                 else:
                     completions.append(file_name)
             

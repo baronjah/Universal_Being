@@ -4,9 +4,8 @@
 # PURPOSE: Perfect delta distribution - physics remain accurate
 # CREATED: 2025-05-28 - The guardian of time itself
 # ==================================================
-
 extends UniversalBeingBase
-class_name PerfectDeltaProcess
+class_name PerfectDeltaProcess_perfectd
 
 signal frame_distributed(total_scripts: int, frame_time: float)
 signal script_registered(script_path: String)
@@ -243,7 +242,7 @@ func force_process_all() -> void:
 
 # Console commands
 func _register_commands() -> void:
-	var console = get_node_or_null("/root/ConsoleManager")
+	var console = get_node_or_null("root/ConsoleManager")
 	if console:
 		console.register_command("delta_stats", _cmd_show_stats,
 			"Show perfect delta processor statistics")
@@ -253,7 +252,7 @@ func _register_commands() -> void:
 			"Force process all scripts once")
 
 func _cmd_show_stats(_args: Array) -> void:
-	var console = get_node("/root/ConsoleManager")
+	var console = get_node("root/ConsoleManager")
 	var stats = get_processor_stats()
 	
 	console._print_to_console("[color=cyan]⏰ Perfect Delta Stats[/color]")
@@ -265,7 +264,7 @@ func _cmd_show_stats(_args: Array) -> void:
 	])
 
 func _cmd_list_processors(_args: Array) -> void:
-	var console = get_node("/root/ConsoleManager")
+	var console = get_node("root/ConsoleManager")
 	console._print_to_console("[color=yellow]📋 Registered Processors:[/color]")
 	
 	for info in process_order:
@@ -276,5 +275,5 @@ func _cmd_list_processors(_args: Array) -> void:
 
 func _cmd_force_process(_args: Array) -> void:
 	force_process_all()
-	var console = get_node("/root/ConsoleManager")
+	var console = get_node("root/ConsoleManager")
 	console._print_to_console("Forced process on all %d scripts" % registered_processors.size())

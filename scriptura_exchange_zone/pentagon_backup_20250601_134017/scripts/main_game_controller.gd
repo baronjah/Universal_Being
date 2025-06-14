@@ -175,8 +175,8 @@ func _ready() -> void:
 	print("🌱 [MainGameController] Gemma awakened and manifested in physical form!")
 	
 	# Connect Gemma's physical form to her awakened consciousness
-	if has_node("/root/GemmaVisionSystem"):
-		var gemma_consciousness = get_node("/root/GemmaVisionSystem")
+	if has_node("root/GemmaVisionSystem"):
+		var gemma_consciousness = get_node("root/GemmaVisionSystem")
 		print("🧠 [MainGameController] Connecting Gemma's physical form to awakened consciousness...")
 		# Physical form will communicate with consciousness through FloodGate
 	
@@ -230,7 +230,7 @@ func _on_jsh_branch_added(branch_path: String, _branch_data: Dictionary) -> void
 	# print("🌱 [MainGameController] New JSH branch: %s" % branch_path)  # DISABLED - causes massive spam
 	# Simple floodgate checker - only process important branches
 	if branch_path.contains("Universal") or branch_path.contains("Created"):
-		var floodgate = get_node_or_null("/root/FloodgateController") 
+		var floodgate = get_node_or_null("root/FloodgateController") 
 		if floodgate:
 			# Could add floodgate logic here if needed
 			pass
@@ -431,8 +431,8 @@ func _setup_layer_system():
 	add_child(console_integration)
 	
 	# Register layer commands
-	if has_node("/root/LayerRealitySystem"):
-		var layer_system = get_node("/root/LayerRealitySystem")
+	if has_node("root/LayerRealitySystem"):
+		var layer_system = get_node("root/LayerRealitySystem")
 		layer_system.register_console_commands()
 		print("✨ [MainGameController] Layer Reality System ready!")
 		print("   - Press F1-F4 to toggle layers")
@@ -484,7 +484,7 @@ func _setup_akashic_bridge():
 # Quick test to add commands directly
 func _add_quick_test_commands() -> void:
 	# Try immediately
-	var console = get_node_or_null("/root/ConsoleManager")
+	var console = get_node_or_null("root/ConsoleManager")
 	if console and "commands" in console:
 		print("🚀 [MainGameController] Adding quick test commands...")
 		_add_test_commands_to_console(console)
@@ -493,7 +493,7 @@ func _add_quick_test_commands() -> void:
 		# Wait and retry
 		for i in range(5):
 			await get_tree().process_frame
-			console = get_node_or_null("/root/ConsoleManager")
+			console = get_node_or_null("root/ConsoleManager")
 			if console and "commands" in console:
 				print("✅ [MainGameController] Console ready after " + str(i+1) + " frames")
 				_add_test_commands_to_console(console)
@@ -513,7 +513,7 @@ func _add_test_commands_to_console(console: Node) -> void:
 	
 	console.commands["test_layers"] = func(_args):
 		console._print_to_console("[color=#00ffff]Layer system test[/color]")
-		var layer_sys = get_node_or_null("/root/LayerRealitySystem") 
+		var layer_sys = get_node_or_null("root/LayerRealitySystem") 
 		if layer_sys:
 			console._print_to_console("Layer system found!")
 		else:
@@ -522,7 +522,7 @@ func _add_test_commands_to_console(console: Node) -> void:
 	# Add Universal Being command
 	console.commands["spawn_universal_being"] = func(_args):
 		console._print_to_console("[color=#FFD700]⭐ Creating Universal Being...[/color]")
-		var universal_manager = get_node_or_null("/root/UniversalObjectManager")
+		var universal_manager = get_node_or_null("root/UniversalObjectManager")
 		if universal_manager and universal_manager.has_method("create_object"):
 			var being_properties = {
 				"name": "TestUniversalBeing",
@@ -606,7 +606,7 @@ func _add_test_commands_to_console(console: Node) -> void:
 	console.commands["akashic_connect"] = func(_args):
 		console._print_to_console("[color=#FFD700]🌌 Connecting to Akashic Records...[/color]")
 		# Remove any existing bridge first
-		var existing_bridge = get_node_or_null("/root/AkashicBridgeSystem")
+		var existing_bridge = get_node_or_null("root/AkashicBridgeSystem")
 		if existing_bridge:
 			console._print_to_console("🔄 Removing existing bridge...")
 			existing_bridge.queue_free()
@@ -622,7 +622,7 @@ func _add_test_commands_to_console(console: Node) -> void:
 	
 	console.commands["akashic_tutorial"] = func(_args):
 		console._print_to_console("[color=#FFD700]📚 Starting Akashic Tutorial...[/color]")
-		var bridge = get_node_or_null("/root/AkashicBridgeSystem")
+		var bridge = get_node_or_null("root/AkashicBridgeSystem")
 		if bridge and bridge.has_method("_cmd_tutorial"):
 			return bridge._cmd_tutorial([])
 		else:

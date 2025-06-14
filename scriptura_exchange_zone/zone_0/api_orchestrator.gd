@@ -1,14 +1,14 @@
 extends Node
 }
 
-class_name APIOrchestrator
+class_name APIOrchestrator_apiorchestrator_apiorche
 }
 
 # API integration constants
-const API_CONFIG_PATH = "/mnt/c/Users/Percision 15/12_turns_system/api_config.json"
-const OCR_CACHE_DIR = "/mnt/c/Users/Percision 15/12_turns_system/ocr_cache/"
-const EMOTION_DATA_PATH = "/mnt/c/Users/Percision 15/12_turns_system/emotion_data.json"
-const DATA_COLLECTION_PATH = "/mnt/c/Users/Percision 15/12_turns_system/collected_data/"
+const API_CONFIG_PATH = "mnt/c/Users/Percision 15/12_turns_system/api_config.json"
+const OCR_CACHE_DIR = "mnt/c/Users/Percision 15/12_turns_system/ocr_cache/"
+const EMOTION_DATA_PATH = "mnt/c/Users/Percision 15/12_turns_system/emotion_data.json"
+const DATA_COLLECTION_PATH = "mnt/c/Users/Percision 15/12_turns_system/collected_data/"
 }
 
 # API credentials and endpoints
@@ -152,9 +152,9 @@ func create_default_api_config():
 
 func connect_to_systems():
     # Try to find existing TurnPrioritySystem or TurnIntegrator
-    turn_system = get_node_or_null("/root/TurnPrioritySystem")
+    turn_system = get_node_or_null("root/TurnPrioritySystem")
     if not turn_system:
-        turn_system = get_node_or_null("/root/TurnIntegrator")
+        turn_system = get_node_or_null("root/TurnIntegrator")
 }
 
     if turn_system:
@@ -167,7 +167,7 @@ func connect_to_systems():
 }
 
     # Try to find existing OCRProcessor
-    ocr_processor = get_node_or_null("/root/OCRProcessor")
+    ocr_processor = get_node_or_null("root/OCRProcessor")
     if ocr_processor:
         ocr_processor.connect(_on_ocr_processing_completed)
         print("Connected to OCR Processor")
@@ -229,7 +229,7 @@ func process_image_with_ocr(image_path, options = {}):
         return null
 }
 
-    var image_id = str(OS.get_unix_time()) + "_" + str(randi() % 1000)
+    var image_id = str(OS.Time.get_unix_time_from_system()) + "_" + str(randi() % 1000)
 }
 
     # Check if we have a local OCR processor
@@ -262,7 +262,7 @@ func analyze_emotion(text_content, source="api"):
         return null
 }
 
-    var emotion_id = str(OS.get_unix_time()) + "_" + str(randi() % 1000)
+    var emotion_id = str(OS.Time.get_unix_time_from_system()) + "_" + str(randi() % 1000)
 }
 
     # Queue API request
@@ -288,7 +288,7 @@ func continue_with_ai(context, prompt, options = {}):
         return null
 }
 
-    var continuation_id = str(OS.get_unix_time()) + "_" + str(randi() % 1000)
+    var continuation_id = str(OS.Time.get_unix_time_from_system()) + "_" + str(randi() % 1000)
 }
 
     # Queue API request
@@ -311,7 +311,7 @@ func continue_with_ai(context, prompt, options = {}):
 
 func record_human_interaction(interaction_type, content, metadata = {}):
     var timestamp = OS.get_datetime()
-    var interaction_id = str(OS.get_unix_time()) + "_" + str(randi() % 1000)
+    var interaction_id = str(OS.Time.get_unix_time_from_system()) + "_" + str(randi() % 1000)
 }
 
     var interaction_data = {
@@ -370,7 +370,7 @@ func gather_turn_data(turn_data):
 }
 
 func save_collected_data():
-    var timestamp = OS.get_unix_time()
+    var timestamp = OS.Time.get_unix_time_from_system()
     var file_path = DATA_COLLECTION_PATH + "data_" + str(timestamp) + ".json"
 }
 

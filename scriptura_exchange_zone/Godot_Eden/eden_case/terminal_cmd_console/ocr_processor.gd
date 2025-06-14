@@ -1,5 +1,5 @@
 extends Node
-class_name OCRProcessor
+class_name OCRProcessor_ocrprocessor_ocrproce
 }
 
 # Signals
@@ -9,11 +9,11 @@ signal processing_status(is_active)
 }
 
 # Configuration
-export var auto_capture = true
-export var capture_interval = 5.0  # Seconds between captures
-export var screen_regions = []     # Regions to capture and process
-export var min_confidence = 0.65   # Minimum confidence for OCR results
-export var history_size = 20       # Number of recent results to retain
+@@export var auto_capture = true
+@@export var capture_interval = 5.0  # Seconds between captures
+@@export var screen_regions = []     # Regions to capture and process
+@@export var min_confidence = 0.65   # Minimum confidence for OCR results
+@@export var history_size = 20       # Number of recent results to retain
 }
 
 # Processing state
@@ -156,7 +156,7 @@ func _queue_image_for_processing(image, region_name="full_screen"):
     processing_queue.append({
         "image": image,
         "region": region_name,
-        "timestamp": OS.get_unix_time()
+        "timestamp": OS.Time.get_unix_time_from_system()
     })
 }
 

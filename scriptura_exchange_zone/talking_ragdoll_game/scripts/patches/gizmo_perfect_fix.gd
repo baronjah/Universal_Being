@@ -10,14 +10,13 @@
 # PURPOSE: Ensure gizmo is always visible and functional
 # CREATED: 2025-05-30
 # ==================================================
-
 extends UniversalBeingBase
 func _ready() -> void:
 	pentagon_ready()
 
 func pentagon_ready() -> void:
 	super.pentagon_ready()
-	var console = get_node_or_null("/root/ConsoleManager")
+	var console = get_node_or_null("root/ConsoleManager")
 	if console:
 		console.register_command("perfect_gizmo", cmd_perfect_gizmo, "Make gizmo perfect and visible")
 		console.register_command("gizmo_show", cmd_gizmo_show, "Force show gizmo on selected object")

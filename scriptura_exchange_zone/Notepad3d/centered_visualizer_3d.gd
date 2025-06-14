@@ -1,6 +1,6 @@
-extends Spatial
+extends Node3D
 
-class_name CenteredVisualizer3D
+class_name CenteredVisualizer3D_centeredvisualizer3d_centered
 
 # Centered 3D Visualizer with console integration
 # Creates a visualization space for multi-source data with frame capture
@@ -15,23 +15,23 @@ var data_parser
 var text_overlay
 
 # Visualization settings
-export var center_color = Color(1.0, 1.0, 0.0)  # Yellow
-export var corner_color = Color(0.7, 0.7, 0.7)  # Light gray
-export var background_color = Color(0.1, 0.1, 0.1)  # Very dark gray
-export var console_color = Color(1.0, 1.0, 0.0, 0.8)  # Yellow with transparency
-export var line_color = Color(0.5, 0.5, 0.5)  # Medium gray
+@@export var center_color = Color(1.0, 1.0, 0.0)  # Yellow
+@@export var corner_color = Color(0.7, 0.7, 0.7)  # Light gray
+@@export var background_color = Color(0.1, 0.1, 0.1)  # Very dark gray
+@@export var console_color = Color(1.0, 1.0, 0.0, 0.8)  # Yellow with transparency
+@@export var line_color = Color(0.5, 0.5, 0.5)  # Medium gray
 
 # Frame capture settings
-export var capture_interval = 0.5  # Seconds between frame captures
-export var max_frames = 12  # Maximum frames to store (12 turn system)
-export var frame_spacing = 1.5  # Space between frames
+@@export var capture_interval = 0.5  # Seconds between frame captures
+@@export var max_frames = 12  # Maximum frames to store (12 turn system)
+@@export var frame_spacing = 1.5  # Space between frames
 var current_frame = 0
 var frames = []
 var capture_timer = 0
 
 # Console settings
-export var max_console_lines = 20
-export var console_fade_time = 10.0
+@@export var max_console_lines = 20
+@@export var console_fade_time = 10.0
 var console_lines = []
 var console_active = true
 
@@ -198,7 +198,7 @@ func _add_corner_lines():
 # Create frame display nodes
 func _create_frame_displays():
 	# Create a parent node for all frames
-	var frames_node = Spatial.new()
+	var frames_node = Node3D.new()
 	frames_node.name = "Frames"
 	add_child(frames_node)
 	
@@ -223,7 +223,7 @@ func _create_frame_displays():
 # Create a single frame display object
 func _create_frame_display():
 	# Create parent for the frame
-	var frame_node = Spatial.new()
+	var frame_node = Node3D.new()
 	
 	# Create quad for display
 	var quad = MeshInstance.new()
@@ -326,7 +326,7 @@ func capture_frame():
 		"number": current_frame,
 		"data": frame_data,
 		"source": active_source,
-		"timestamp": OS.get_unix_time()
+		"timestamp": OS.Time.get_unix_time_from_system()
 	}
 	
 	# Update visual frame
@@ -559,7 +559,7 @@ func connect_token_analyzer(analyzer):
 		return false
 	
 	# Register a new data source that uses the analyzer
-	register_data_source("tokens", "Token Analysis", funcref(self, "_get_token_data_from_analyzer"))
+	register_data_source("tokens", "Token Analysis", Callable(self, "_get_token_data_from_analyzer"))
 	
 	# Store the analyzer reference
 	data_parser = analyzer
@@ -587,7 +587,7 @@ func connect_project_connector(connector):
 		return false
 	
 	# Register a new data source that uses the connector
-	register_data_source("projects", "Project Connections", funcref(self, "_get_project_data_from_connector"))
+	register_data_source("projects", "Project Connections", Callable(self, "_get_project_data_from_connector"))
 	
 	# Store the connector reference (reusing data_parser variable)
 	data_parser = connector

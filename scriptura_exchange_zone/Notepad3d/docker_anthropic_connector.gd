@@ -1,6 +1,6 @@
 extends Node
 
-class_name DockerAnthropicConnector
+class_name DockerAnthropicConnector_dockeranthropicconnector_dockeran
 
 # Anthropic API constants
 const ANTHROPIC_API_URL = "https://api.anthropic.com/v1/messages"
@@ -85,7 +85,7 @@ func _connect_to_terminal_bridge():
         print("Connected to TerminalVisualBridge")
     else:
         print("TerminalVisualBridge not available, trying to load directly")
-        var script = load("/mnt/c/Users/Percision 15/terminal_visual_bridge.gd")
+        var script = load("mnt/c/Users/Percision 15/terminal_visual_bridge.gd")
         if script:
             terminal_bridge = script.new()
             print("Loaded TerminalVisualBridge directly")
@@ -308,7 +308,7 @@ func _store_in_memory(content):
     var memory = {
         "id": memory_id,
         "content": content,
-        "timestamp": OS.get_unix_time(),
+        "timestamp": OS.Time.get_unix_time_from_system(),
         "type": "anthropic_response"
     }
     
@@ -329,7 +329,7 @@ func _store_in_memory(content):
 
 func _generate_memory_id():
     # Generate a unique memory ID
-    return "anthropic_" + str(OS.get_unix_time()) + "_" + str(randi() % 1000000)
+    return "anthropic_" + str(OS.Time.get_unix_time_from_system()) + "_" + str(randi() % 1000000)
 
 func connect_to_drive(drive_id):
     # Add drive to memory drives list

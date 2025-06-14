@@ -38,6 +38,7 @@ func generate_ufo():
 		return
 	
 	print("🛸 Generating UFO with type: %s" % UFOType.keys()[ufo_type])
+}
 	
 	# Step 1: Generate 3D volume data using SDF
 	volume_data = _generate_volume_data()
@@ -113,6 +114,7 @@ func _get_ufo_sdf(pos: Vector3) -> float:
 
 func _classic_ufo_sdf(pos: Vector3) -> float:
 	"""Classic UFO: dome + disc"""
+
 	# Main disc body
 	var disc = _ellipsoid_sdf(pos, Vector3(1.0, 0.3, 1.0))
 	
@@ -215,6 +217,7 @@ func _smooth_min(a: float, b: float, k: float) -> float:
 func _create_volume_zip(texture: ImageTexture3D) -> String:
 	"""Create temporary ZIP file for marching cubes addon"""
 	var zip_path = "user://temp_ufo_volume.zip"
+
 	
 	# TODO: Implement ZIP creation from ImageTexture3D
 	# For now, return a placeholder path
@@ -286,6 +289,7 @@ func set_consciousness_level(level: int):
 func attach_to_universal_being(being: Node):
 	"""Attach this UFO generator to a Universal Being"""
 	if being.has_method("get") and being.has_method("set"):
+
 		var consciousness = being.get("consciousness_level")
 		set_consciousness_level(consciousness)
 		

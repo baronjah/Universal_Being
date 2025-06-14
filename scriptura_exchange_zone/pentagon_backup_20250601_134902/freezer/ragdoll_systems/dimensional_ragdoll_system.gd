@@ -10,9 +10,8 @@
 # PURPOSE: Implement Eden's 5D positioning and evolution mechanics
 # BASED ON: Eden project's dimensional magic system
 # ==================================================
-
 extends UniversalBeingBase
-# Note: Removed class_name to avoid global conflict
+# Note: Removed class_name to_dimensio avoid global conflict
 
 signal dimension_changed(from: int, to: int)
 signal consciousness_evolved(level: String, value: float)

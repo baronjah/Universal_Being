@@ -4,9 +4,8 @@
 # PURPOSE: Live tutorial system, file sync, and project consciousness
 # CREATED: 2025-05-28 - The Akashic Records Bridge awakens
 # ==================================================
-
-extends UniversalBeingBase
-class_name AkashicBridgeSystem
+extends \2
+class_name AkashicBridgeSystem_akashicbridgesystem_akashicb
 
 # Bridge communication
 signal server_connected()
@@ -90,7 +89,7 @@ func _attempt_server_connection() -> void:
 	_print("🔌 Attempting connection to Akashic server...")
 	
 	# First try HTTP ping
-	_send_http_request("/ping", {}, HTTPClient.METHOD_GET)
+	_send_http_request("ping", {}, HTTPClient.METHOD_GET)
 
 func _on_http_response(result: int, response_code: int, headers: PackedStringArray, body: PackedByteArray) -> void:
 	"""Handle HTTP responses"""
@@ -165,7 +164,7 @@ func _register_with_server() -> void:
 		"monitored_files": monitored_files
 	}
 	
-	_send_http_request("/register", registration_data, HTTPClient.METHOD_POST)
+	_send_http_request("register", registration_data, HTTPClient.METHOD_POST)
 
 func _send_http_request(endpoint: String, data: Dictionary, method: HTTPClient.Method) -> void:
 	"""Send HTTP request to server"""
@@ -219,7 +218,7 @@ func _handle_server_message(message: String) -> void:
 func _execute_console_command(command: String) -> void:
 	"""Execute a console command from the server"""
 	_print("🔍 Looking for ConsoleManager...")
-	var console = get_node_or_null("/root/ConsoleManager")
+	var console = get_node_or_null("root/ConsoleManager")
 	if console:
 		_print("✅ Found ConsoleManager at /root/ConsoleManager")
 		# Use the correct command submission method
@@ -249,7 +248,7 @@ func _start_tutorial(steps: Array) -> void:
 	_print("📚 Starting tutorial with " + str(steps.size()) + " steps")
 	
 	# Notify console
-	var console = get_node_or_null("/root/ConsoleManager")
+	var console = get_node_or_null("root/ConsoleManager")
 	if console and console.has_method("_print_to_console"):
 		console._print_to_console("📚 [Akashic] Tutorial started!")
 		console._print_to_console("  " + str(steps.size()) + " steps to complete")
@@ -303,7 +302,7 @@ func _tutorial_spawn_object(step_data: Dictionary) -> void:
 	var position = Vector3(step_data.get("x", 0), step_data.get("y", 1), step_data.get("z", 0))
 	
 	# Use Universal Object Manager
-	var uom = get_node_or_null("/root/UniversalObjectManager")
+	var uom = get_node_or_null("root/UniversalObjectManager")
 	if uom:
 		var obj = uom.create_object(object_type, position)
 		if obj:
@@ -327,9 +326,9 @@ func _tutorial_check_system(step_data: Dictionary) -> void:
 	
 	match check_method:
 		"exists":
-			system_ok = has_node("/root/" + system)
+			system_ok = has_node("root/" + system)
 		"autoload":
-			system_ok = get_node_or_null("/root/" + system) != null
+			system_ok = get_node_or_null("root/" + system) != null
 		"group":
 			system_ok = get_tree().get_nodes_in_group(system).size() > 0
 	
@@ -342,7 +341,7 @@ func _tutorial_check_system(step_data: Dictionary) -> void:
 
 func _show_tutorial_message(message: String) -> void:
 	"""Show tutorial message to player"""
-	var console = get_node_or_null("/root/ConsoleManager")
+	var console = get_node_or_null("root/ConsoleManager")
 	if console and console.has_method("_print_to_console"):
 		console._print_to_console("[color=#FFD700]📚 [Tutorial] " + message + "[/color]")
 
@@ -380,7 +379,7 @@ func _complete_tutorial() -> void:
 	tutorial_active = false
 	_print("🎉 Tutorial completed!")
 	
-	var console = get_node_or_null("/root/ConsoleManager")
+	var console = get_node_or_null("root/ConsoleManager")
 	if console and console.has_method("_print_to_console"):
 		console._print_to_console("[color=#00FF00]🎉 [Tutorial] All steps completed![/color]")
 		console._print_to_console("🚀 Your talking ragdoll game is ready!")
@@ -483,9 +482,9 @@ func _update_project_state() -> void:
 func _get_systems_status() -> Dictionary:
 	"""Get status of all major systems"""
 	return {
-		"floodgate": get_node_or_null("/root/FloodgateController") != null,
-		"console": get_node_or_null("/root/ConsoleManager") != null,
-		"universal_objects": get_node_or_null("/root/UniversalObjectManager") != null,
+		"floodgate": get_node_or_null("root/FloodgateController") != null,
+		"console": get_node_or_null("root/ConsoleManager") != null,
+		"universal_objects": get_node_or_null("root/UniversalObjectManager") != null,
 		"inspection_bridge": get_tree().get_first_node_in_group("inspection_bridge") != null
 	}
 
@@ -507,7 +506,7 @@ func _count_nodes_recursive(node: Node) -> int:
 func _get_available_commands() -> Array:
 	"""Get list of available console commands"""
 	var commands = []
-	var console = get_node_or_null("/root/ConsoleManager")
+	var console = get_node_or_null("root/ConsoleManager")
 	if console and "commands" in console:
 		commands = console.commands.keys()
 	return commands
@@ -545,7 +544,7 @@ func pentagon_sewers() -> void:
 	pass
 func register_console_commands() -> void:
 	"""Register Akashic Bridge console commands"""
-	var console = get_node_or_null("/root/ConsoleManager")
+	var console = get_node_or_null("root/ConsoleManager")
 	if console and console.has_method("add_command"):
 		console.add_command("akashic_connect", _cmd_connect, "Connect to Akashic server")
 		console.add_command("akashic_status", _cmd_status, "Show Akashic Bridge status")
@@ -572,7 +571,7 @@ func _cmd_sync(_args: Array) -> String:
 
 func _cmd_tutorial(_args: Array) -> String:
 	if tutorial_active:
-		return "📚 Tutorial already active (step " + str(current_step + 1) + "/" + str(tutorial_steps.size()) + ")"
+		return "📚 Tutorial already active (step " + str(current_step + 1) + "" + str(tutorial_steps.size()) + ")"
 	else:
 		# Request tutorial from server
 		_send_websocket_message({"command": "request_tutorial"})

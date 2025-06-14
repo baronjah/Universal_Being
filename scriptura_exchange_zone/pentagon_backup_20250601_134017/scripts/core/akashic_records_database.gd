@@ -1,8 +1,8 @@
 # Akashic Records Database - The Text Foundation of Reality
 # From text, all forms emerge - 2D visualizations, 3D manifestations
 # Perfect LOD: Show only what needs to be seen
-extends UniversalBeingBase
-class_name AkashicRecordsDatabase
+extends \2
+class_name AkashicRecordsDatabase_akashicrecordsdatabase_akashicr
 
 # The eternal records - pure text data
 var records: Dictionary = {
@@ -203,7 +203,7 @@ func _manifest_as_text(record: Dictionary) -> Node:
 	# Add a script that returns text representation
 	var script = GDScript.new()
 	script.source_code = """
-extends UniversalBeingBase
+extends \2
 func get_text_representation() -> String:
 	var text = "RECORD: " + name + "\\n"
 	for meta in get_meta_list():

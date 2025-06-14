@@ -1,6 +1,6 @@
 extends Node
 
-class_name EmotionAPIIntegration
+class_name EmotionAPIIntegration_emotionpricingintegration_emotionp
 
 """
 Emotion API Integration
@@ -58,13 +58,13 @@ func _ready():
 
 func _connect_to_systems():
     # Connect to MultiAccountManager
-    if has_node("/root/MultiAccountManager") or get_node_or_null("/root/MultiAccountManager"):
-        account_manager = get_node("/root/MultiAccountManager")
+    if has_node("root/MultiAccountManager") or get_node_or_null("root/MultiAccountManager"):
+        account_manager = get_node("root/MultiAccountManager")
         print("Connected to MultiAccountManager")
     
     # Connect to MultiAccountAPIController
-    if has_node("/root/MultiAccountAPIController") or get_node_or_null("/root/MultiAccountAPIController"):
-        api_controller = get_node("/root/MultiAccountAPIController")
+    if has_node("root/MultiAccountAPIController") or get_node_or_null("root/MultiAccountAPIController"):
+        api_controller = get_node("root/MultiAccountAPIController")
         print("Connected to MultiAccountAPIController")
         
         # Connect to API controller signals
@@ -73,8 +73,8 @@ func _connect_to_systems():
             api_controller.api_response_received.connect(_on_api_response_received)
     
     # Connect to MultiAccount3DVisualizer
-    if has_node("/root/MultiAccount3DVisualizer") or get_node_or_null("/root/MultiAccount3DVisualizer"):
-        visualizer = get_node("/root/MultiAccount3DVisualizer")
+    if has_node("root/MultiAccount3DVisualizer") or get_node_or_null("root/MultiAccount3DVisualizer"):
+        visualizer = get_node("root/MultiAccount3DVisualizer")
         print("Connected to MultiAccount3DVisualizer")
 
 func process_emotional_content(account_id, api_name, content, task_type="general"):

@@ -79,7 +79,7 @@ func _initialize_composition() -> void:
 		"medium": 500.0,
 		"large": 2000.0,
 		"giant": 10000.0
-	}
+}
 	
 	total_ore_amount = base_amounts.get(size_class, 500.0) * ore_richness
 	
@@ -365,14 +365,14 @@ func get_composition() -> Dictionary:
 	return composition.duplicate()
 
 func get_detailed_composition() -> Dictionary:
-	var detailed = {}
+	var detailed = {
 	for ore_type in composition:
 		detailed[ore_type] = {
 			"amount": composition[ore_type],
 			"percentage": (composition[ore_type] / total_ore_amount) * 100.0,
 			"quality": _determine_ore_quality(ore_type)
-		}
 	return detailed
+}
 
 func _determine_ore_quality(ore_type: String) -> String:
 	var amount_ratio = composition[ore_type] / initial_composition.get(ore_type, 1.0)
@@ -443,8 +443,8 @@ func _save_asteroid_state() -> void:
 			"composition": composition,
 			"is_scanned": is_scanned,
 			"depletion_ratio": 1.0 - (get_total_ore_amount() / total_ore_amount)
-		}
 		AkashicRecordsSystem.save_asteroid_data(get_instance_id(), save_data)
+}
 
 func load_asteroid_state(data: Dictionary) -> void:
 	global_position = data.get("position", global_position)
@@ -480,7 +480,7 @@ func get_asteroid_info() -> Dictionary:
 		"contains_consciousness": contains_consciousness_ore,
 		"is_depleted": is_depleted(),
 		"scan_status": is_scanned
-	}
+}
 
 # Special asteroid variations
 static func create_consciousness_asteroid(ore_type: String) -> Asteroid:

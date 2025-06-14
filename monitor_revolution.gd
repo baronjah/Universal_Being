@@ -70,6 +70,7 @@ func _check_revolution_status():
 	if spawner:
 		_log("✅ Revolution Spawner DETECTED!")
 		if spawner.has_method("get_revolution_status"):
+
 			var status = spawner.get_revolution_status()
 			_log("Revolution Status: Phase %d - %s" % [
 				status.spawning_phase,
@@ -103,12 +104,15 @@ func _finish_monitoring():
 	# Final status check
 	var beings = get_tree().get_nodes_in_group("universal_beings")
 	_log("Total Universal Beings: %d" % beings.size())
+
 	
 	for being in beings:
 		if being.has_method("get") and being.has_property("being_type"):
+
 			var being_type = being.get("being_type")
 			if being_type in ["revolution_spawner", "gemma_ai_companion", "consciousness_ripple"]:
 				_log("Found: %s (%s)" % [being.name, being_type])
+	
 	
 	if log_file:
 		log_file.close()

@@ -1,6 +1,6 @@
 extends Node3D
 
-class_name Notepad3DPitopiaIntegration
+class_name Notepad3DPitopiaIntegration_notepad3dpitopiaintegration_notepad3
 
 # ----- NODE PATHS -----
 @export_node_path var pitopia_main_path: NodePath
@@ -26,21 +26,21 @@ var cyber_gate_parent: Node3D
 var data_sewer_parent: Node3D
 
 # ----- CONFIGURATION -----
-@export var enable_reality_transitions: bool = true
-@export var enable_cyber_gates: bool = true
-@export var enable_data_sewers: bool = true
-@export var enable_moon_phases: bool = true
-@export var default_reality_type: String = "Physical"
-@export var word_limit_per_dimension: int = 100
-@export var auto_initialize: bool = true
+@@@export var enable_reality_transitions: bool = true
+@@@export var enable_cyber_gates: bool = true
+@@@export var enable_data_sewers: bool = true
+@@@export var enable_moon_phases: bool = true
+@@@export var default_reality_type: String = "Physical"
+@@@export var word_limit_per_dimension: int = 100
+@@@export var auto_initialize: bool = true
 @export_group("Visual Settings")
-@export var word_font: Font
-@export var word_material: StandardMaterial3D
-@export var connection_material: StandardMaterial3D
-@export var reality_transition_effect: PackedScene
-@export var cyber_gate_effect: PackedScene
-@export var data_sewer_effect: PackedScene
-@export var moon_phase_indicator: PackedScene
+@@@export var word_font: Font
+@@@export var word_material: StandardMaterial3D
+@@@export var connection_material: StandardMaterial3D
+@@@export var reality_transition_effect: PackedScene
+@@@export var cyber_gate_effect: PackedScene
+@@@export var data_sewer_effect: PackedScene
+@@@export var moon_phase_indicator: PackedScene
 
 # ----- STATE VARIABLES -----
 var initialized: bool = false
@@ -110,7 +110,7 @@ func _resolve_component_paths():
     
     # Try to find in scene if not specified
     if not pitopia_main:
-        pitopia_main = get_node_or_null("/root/PitopiaMain")
+        pitopia_main = get_node_or_null("root/PitopiaMain")
         if not pitopia_main:
             var nodes = get_tree().get_nodes_in_group("pitopia_main")
             if nodes.size() > 0:
@@ -542,7 +542,7 @@ func _apply_reality_context_to_entity(entity, reality_type: String, dimension: i
             2: # Planar
                 entity.set_property("dimensionality", "planar")
                 entity.set_property("movement_constraint", "plane")
-            3: # Spatial
+            3: # Node3D
                 entity.set_property("dimensionality", "spatial")
                 entity.set_property("movement_constraint", "volume")
             4: # Time
@@ -1066,7 +1066,7 @@ func process_command(command: String) -> Dictionary:
         params = parts[1]
     
     match cmd:
-        "/word-power":
+        "word-power":
             # Check power of a word
             var power = _calculate_word_power(params)
             return {
@@ -1075,7 +1075,7 @@ func process_command(command: String) -> Dictionary:
                 "power": power
             }
             
-        "/note":
+        "note":
             # Create a 3D note in space
             var entity = manifest_word(params)
             if entity:
@@ -1090,7 +1090,7 @@ func process_command(command: String) -> Dictionary:
                     "message": "Failed to create note"
                 }
                 
-        "/save":
+        "save":
             # Save current reality state
             var save_name = params if not params.is_empty() else "auto_save"
             _save_reality(save_name)
@@ -1099,7 +1099,7 @@ func process_command(command: String) -> Dictionary:
                 "message": "Saved reality as: " + save_name
             }
             
-        "/memory":
+        "memory":
             # Create tiered memory
             var mem_parts = params.split(" ", false, 1)
             var tier = 1
@@ -1116,14 +1116,14 @@ func process_command(command: String) -> Dictionary:
                 "memory": memory
             }
             
-        "/status":
+        "status":
             # View divine status
             return {
                 "success": true,
                 "message": _generate_status_report()
             }
             
-        "/turn":
+        "turn":
             # Advance turn manually
             advance_turn()
             return {
@@ -1131,7 +1131,7 @@ func process_command(command: String) -> Dictionary:
                 "message": "Advanced to turn " + str(current_turn) + " (" + current_symbol + ")"
             }
             
-        "/loop":
+        "loop":
             # Toggle quantum loop
             # For this implementation, we'll just trigger multiple turns
             for i in range(5):
@@ -1142,7 +1142,7 @@ func process_command(command: String) -> Dictionary:
                 "message": "Quantum loop: Advanced 5 turns"
             }
             
-        "/reality":
+        "reality":
             # Change reality
             var reality_name = params
             if reality_contexts.has(reality_name):
@@ -1163,7 +1163,7 @@ func process_command(command: String) -> Dictionary:
                     "message": "Reality '" + reality_name + "' not found. " + available
                 }
                 
-        "/gate":
+        "gate":
             # Create cyber gate between realities
             var gate_parts = params.split(" ", false, 1)
             
@@ -1195,7 +1195,7 @@ func process_command(command: String) -> Dictionary:
                     "message": result.message
                 }
                 
-        "/sewer":
+        "sewer":
             # Create data sewer
             var sewer_result = create_data_sewer(current_reality_type, 1000.0, Vector3(3, 0, -3))
             
@@ -1211,7 +1211,7 @@ func process_command(command: String) -> Dictionary:
                     "message": sewer_result.message
                 }
                 
-        "/connect":
+        "connect":
             # Connect two words
             var connect_parts = params.split(" to ", false)
             
@@ -1247,7 +1247,7 @@ func process_command(command: String) -> Dictionary:
                     "message": "Failed to connect words"
                 }
                 
-        "/help":
+        "help":
             # Display available commands
             return {
                 "success": true,
@@ -1282,7 +1282,7 @@ func _generate_status_report() -> String:
     report += "Turn: " + str(current_turn) + "\n"
     
     if enable_moon_phases:
-        report += "Moon Phase: " + str(current_moon_phase) + "/7 (stability: " + str(_calculate_moon_phase_stability(current_moon_phase) * 100) + "%)\n"
+        report += "Moon Phase: " + str(current_moon_phase) + "7 (stability: " + str(_calculate_moon_phase_stability(current_moon_phase) * 100) + "%)\n"
     
     report += "----------------\n"
     report += "Words in current reality: " + str(reality_contexts[current_reality_type]["words"].size()) + "\n"
@@ -1306,18 +1306,18 @@ func _generate_help_text() -> String:
     # Generate help text for available commands
     var help = "NOTEPAD3D COMMANDS:\n"
     help += "----------------\n"
-    help += "/word-power [word] - Check power of a word\n"
-    help += "/note [text] - Create a 3D note in space\n"
-    help += "/save [name] - Save current reality state\n"
-    help += "/memory [tier] [text] - Create tiered memory\n"
-    help += "/status - View divine status\n"
-    help += "/turn - Advance turn manually\n"
-    help += "/loop - Trigger quantum loop (5 turns)\n"
-    help += "/reality [name] - Change reality\n"
-    help += "/gate [target] - Create cyber gate to target reality\n"
-    help += "/sewer - Create data sewer in current reality\n"
-    help += "/connect [word1] to [word2] - Connect two words\n"
-    help += "/help - Display this help\n"
+    help += "word-power [word] - Check power of a word\n"
+    help += "note [text] - Create a 3D note in space\n"
+    help += "save [name] - Save current reality state\n"
+    help += "memory [tier] [text] - Create tiered memory\n"
+    help += "status - View divine status\n"
+    help += "turn - Advance turn manually\n"
+    help += "loop - Trigger quantum loop (5 turns)\n"
+    help += "reality [name] - Change reality\n"
+    help += "gate [target] - Create cyber gate to target reality\n"
+    help += "sewer - Create data sewer in current reality\n"
+    help += "connect [word1] to [word2] - Connect two words\n"
+    help += "help - Display this help\n"
     help += "----------------\n"
     help += "You can also enter any word to manifest it\n"
     help += "Use number keys 1-9/0/-/= to change dimensions\n"
@@ -1418,7 +1418,7 @@ func _process_word_reality_impacts(word: String, entity: Object):
             settings.ambient_light = settings.ambient_light.lightened(0.2)
             
             # Update environment if available
-            var world_env = get_node_or_null("/root/WorldEnvironment")
+            var world_env = get_node_or_null("root/WorldEnvironment")
             if world_env and world_env.environment:
                 world_env.environment.ambient_light_color = settings.ambient_light
         

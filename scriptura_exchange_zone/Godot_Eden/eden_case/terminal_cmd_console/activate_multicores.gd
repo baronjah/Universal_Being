@@ -29,7 +29,7 @@ func _ready():
 		"id": 2,
 		"type": "io",
 		"operation": "read",
-		"path": "/system/welcome.txt"
+		"path": "system/welcome.txt"
 	}
 	
 	var memory_task = {

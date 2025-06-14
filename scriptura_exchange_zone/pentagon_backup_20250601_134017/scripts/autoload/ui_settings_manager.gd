@@ -3,8 +3,7 @@
 # DESCRIPTION: Manages UI scaling and user preferences
 # CREATED: 2025-05-23 - Scalable UI system
 # ==================================================
-
-extends UniversalBeingBase
+extends \2
 signal settings_changed()
 
 # Settings file path (in user://settings/)

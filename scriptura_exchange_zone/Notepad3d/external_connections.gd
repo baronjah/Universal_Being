@@ -1,7 +1,7 @@
 extends Node
 }
 
-class_name ExternalConnections
+class_name ExternalConnections_externalconnections_external
 }
 
 # External Connections System
@@ -14,9 +14,9 @@ var config = {
     "google_drive_token_path": "user://google_drive_token.json",
     "windows_drives": ["C:", "D:"],
     "memory_paths": {
-        "primary": "/mnt/c/Users/Percision 15/memory",
-        "secondary": "/mnt/c/Users/Percision 15/OneDrive/memory",
-        "tertiary": "/mnt/d/memory_backup"
+        "primary": "mnt/c/Users/Percision 15/memory",
+        "secondary": "mnt/c/Users/Percision 15/OneDrive/memory",
+        "tertiary": "mnt/d/memory_backup"
     }
 }
 }
@@ -87,13 +87,13 @@ func connect_terminal(term):
 }
 
     # Register commands
-    terminal.register_command("connect", "Connect to external service", funcref(self, "_cmd_connect"), 1, "connect <service>")
-    terminal.register_command("disconnect", "Disconnect from external service", funcref(self, "_cmd_disconnect"), 1, "disconnect <service>")
-    terminal.register_command("status", "Check connection status", funcref(self, "_cmd_status"))
-    terminal.register_command("sync", "Synchronize memory paths", funcref(self, "_cmd_sync"), 0, "sync [source] [target]")
-    terminal.register_command("drive", "Manage Google Drive", funcref(self, "_cmd_drive"), 1, "drive <subcommand> [args]")
-    terminal.register_command("claude", "Interact with Claude API", funcref(self, "_cmd_claude"), 1, "claude <subcommand> [args]")
-    terminal.register_command("memory", "Access memory paths", funcref(self, "_cmd_memory"), 1, "memory <subcommand> [args]")
+    terminal.register_command("connect", "Connect to external service", Callable(self, "_cmd_connect"), 1, "connect <service>")
+    terminal.register_command("disconnect", "Disconnect from external service", Callable(self, "_cmd_disconnect"), 1, "disconnect <service>")
+    terminal.register_command("status", "Check connection status", Callable(self, "_cmd_status"))
+    terminal.register_command("sync", "Synchronize memory paths", Callable(self, "_cmd_sync"), 0, "sync [source] [target]")
+    terminal.register_command("drive", "Manage Google Drive", Callable(self, "_cmd_drive"), 1, "drive <subcommand> [args]")
+    terminal.register_command("claude", "Interact with Claude API", Callable(self, "_cmd_claude"), 1, "claude <subcommand> [args]")
+    terminal.register_command("memory", "Access memory paths", Callable(self, "_cmd_memory"), 1, "memory <subcommand> [args]")
 }
 
     return true
@@ -105,9 +105,9 @@ func connect_visualizer(vis):
 }
 
     # Register data sources
-    visualizer.register_data_source("claude", "Claude API", funcref(self, "_get_claude_data"))
-    visualizer.register_data_source("gdrive", "Google Drive", funcref(self, "_get_gdrive_data"))
-    visualizer.register_data_source("memory", "Memory Paths", funcref(self, "_get_memory_data"))
+    visualizer.register_data_source("claude", "Claude API", Callable(self, "_get_claude_data"))
+    visualizer.register_data_source("gdrive", "Google Drive", Callable(self, "_get_gdrive_data"))
+    visualizer.register_data_source("memory", "Memory Paths", Callable(self, "_get_memory_data"))
 }
 
     return true
@@ -174,7 +174,7 @@ func check_windows_drives():
 
     for drive in config.windows_drives:
         var dir = Directory.new()
-        var path = "/mnt/" + drive.to_lower().replace(":", "")
+        var path = "mnt/" + drive.to_lower().replace(":", "")
         var exists = dir.dir_exists(path)
 }
 
@@ -231,12 +231,12 @@ func create_memory_directories():
         if not dir.dir_exists(path):
             # Create directory recursively
             var current_path = ""
-            var parts = path.split("/")
+            var parts = path.split("")
 }
 
             for part in parts:
                 if part.is_empty():
-                    current_path = "/"
+                    current_path = ""
                     continue
 }
 
@@ -422,7 +422,7 @@ func send_claude_prompt(prompt, model = "claude-3-5-sonnet-20240620"):
 }
 
 # List files in Google Drive
-func list_google_drive_files(folder_path = "/"):
+func list_google_drive_files(folder_path = ""):
     if not connection_states.google_drive:
         return {
             "success": false,
@@ -717,7 +717,7 @@ func _get_gdrive_data():
         "connected": connection_states.google_drive,
         "files": 25,
         "space_used": 1024 * 1024 * 50,  # 50 MB
-        "last_sync": OS.get_unix_time()
+        "last_sync": OS.Time.get_unix_time_from_system()
     }
 }
 
@@ -744,7 +744,7 @@ func _get_memory_data():
         "connected_paths": connection_states.memory_paths.size(),
         "files": total_files,
         "size": total_size,
-        "last_sync": OS.get_unix_time()
+        "last_sync": OS.Time.get_unix_time_from_system()
     }
 }
 
@@ -783,7 +783,7 @@ func _cmd_connect(args):
                     connected += 1
 }
 
-            return "Connected to " + str(connected) + "/" + str(connection_states.windows_drives.size()) + " Windows drives"
+            return "Connected to " + str(connected) + "" + str(connection_states.windows_drives.size()) + " Windows drives"
 }
 
         "memory":
@@ -797,7 +797,7 @@ func _cmd_connect(args):
                     connected += 1
 }
 
-            return "Connected to " + str(connected) + "/" + str(connection_states.memory_paths.size()) + " memory paths"
+            return "Connected to " + str(connected) + "" + str(connection_states.memory_paths.size()) + " memory paths"
 }
 
         _:
@@ -900,7 +900,7 @@ func _cmd_drive(args):
 
     match subcommand:
         "ls", "list":
-            var path = "/"
+            var path = ""
 }
 
             if subargs.size() >= 1:

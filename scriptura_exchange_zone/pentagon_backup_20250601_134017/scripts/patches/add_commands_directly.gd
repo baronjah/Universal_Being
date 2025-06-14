@@ -3,8 +3,7 @@
 # Created: May 31, 2025, 23:28 CEST
 # Purpose: Ragdoll physics and behavior system
 # Connection: Part of Pentagon Architecture migration
-
-extends UniversalBeingBase
+extends \2
 # Direct command injection for console - temporary fix
 
 func _ready() -> void:
@@ -12,7 +11,7 @@ func _ready() -> void:
 	await get_tree().process_frame
 	await get_tree().process_frame  # Extra frame for safety
 	
-	var console = get_node_or_null("/root/ConsoleManager")
+	var console = get_node_or_null("root/ConsoleManager")
 	if not console:
 		push_error("[AddCommands] ConsoleManager not found!")
 		return
@@ -64,7 +63,7 @@ func _cmd_walker_debug(args: Array) -> void:
 func _cmd_layers(_args: Array) -> void:
 	_print("[color=#00ffff]=== Layer System Status ===[/color]")
 	
-	var layer_system = get_node_or_null("/root/LayerRealitySystem")
+	var layer_system = get_node_or_null("root/LayerRealitySystem")
 	if layer_system:
 		_print("[color=#00ff00]Layer Reality System: ACTIVE[/color]")
 		_print("Press F1-F4 to toggle layers")
@@ -81,7 +80,7 @@ func _cmd_layer(args: Array) -> void:
 	_print("[color=#00ffff]Layer command: " + args[0] + " " + args[1] + "[/color]")
 
 func _print(text: String) -> void:
-	var console = get_node("/root/ConsoleManager")
+	var console = get_node("root/ConsoleManager")
 	if console and console.has_method("_print_to_console"):
 		console._print_to_console(text)
 

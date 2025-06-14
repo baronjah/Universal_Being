@@ -1,5 +1,5 @@
 extends RefCounted
-class_name JSHDatabaseInterface
+class_name JSHDatabaseInterface_JSHDatabaseInterface_JSHDatab
 
 # Database interface defines standard methods that all database systems should implement
 

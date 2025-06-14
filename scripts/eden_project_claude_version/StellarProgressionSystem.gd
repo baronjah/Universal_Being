@@ -76,7 +76,7 @@ class StarSystem:
 			"mass": 1.0,
 			"temperature": 5778,
 			"luminosity": 1.0
-		}
+}
 	
 	func get_info() -> Dictionary:
 		return {
@@ -87,7 +87,7 @@ class StarSystem:
 			"discovered": discovered,
 			"visited": visited,
 			"consciousness_level": consciousness_level
-		}
+}
 
 class Planet:
 	var name: String
@@ -186,6 +186,7 @@ func _initialize_galaxy_seed() -> void:
 	# Set random seed for consistent galaxy generation
 	seed(galaxy_seed)
 	print("Stellar Progression System initialized with galaxy seed: ", galaxy_seed)
+
 
 func _create_visual_components() -> void:
 	# 3D star map visualization
@@ -380,6 +381,7 @@ func _generate_planet_resources(planet: Planet) -> void:
 			if randf() < 0.5: planet.resources["Rare Metals"] = randi_range(200, 800)
 			if randf() < 0.1: planet.resources["Consciousness Crystals"] = randi_range(10, 100)
 
+
 func _initialize_sol_system() -> void:
 	# Create our solar system
 	var sol = StarSystem.new("Sol", Vector3.ZERO)
@@ -404,29 +406,34 @@ func _initialize_sol_system() -> void:
 # Navigation
 func travel_to_system(target_system_name: String) -> Dictionary:
 	if not discovered_systems.has(target_system_name):
-		return {"success": false, "reason": "System not discovered"}
+		return {"success": false, "reason": "System not discovered"
+}
 	
 	var target = discovered_systems[target_system_name]
 	var distance = current_system.position.distance_to(target.position)
 	
 	if distance > max_warp_range * warp_drive_level:
-		return {"success": false, "reason": "System out of range"}
+		return {"success": false, "reason": "System out of range"
+}
 	
 	# Check energy
 	var player = get_tree().get_first_node_in_group("player")
 	if player and player.energy < warp_energy_cost:
-		return {"success": false, "reason": "Insufficient energy"}
+		return {"success": false, "reason": "Insufficient energy"
+}
 	
 	# Calculate route if needed
 	if distance > max_warp_range:
 		active_route = navigation_computer.calculate_route(current_system, target, max_warp_range)
 		if active_route.is_empty():
-			return {"success": false, "reason": "No valid route found"}
+			return {"success": false, "reason": "No valid route found"
+}
 	
 	# Initiate warp
 	_initiate_warp_jump(target)
 	
-	return {"success": true, "travel_time": distance / (warp_drive_level * 100.0)}
+	return {"success": true, "travel_time": distance / (warp_drive_level * 100.0)
+}
 
 func _initiate_warp_jump(target: StarSystem) -> void:
 	is_warping = true
@@ -557,7 +564,6 @@ func _generate_stellar_phenomenon() -> Dictionary:
 			"description": "A convergence point of universal consciousness",
 			"effect": "awareness_expansion",
 			"value": 1
-		}
 	]
 	
 	return types[randi() % types.size()]
@@ -569,8 +575,8 @@ func _create_consciousness_beacon(system: StarSystem) -> void:
 		"frequency": randf_range(400, 500),
 		"message": _generate_beacon_message(),
 		"discovered": false
-	}
 	consciousness_beacons.append(beacon)
+}
 
 func _generate_beacon_message() -> String:
 	var messages = [
@@ -598,6 +604,7 @@ func _check_consciousness_beacons(delta: float) -> void:
 	# Check if player is near any beacons
 	for beacon in consciousness_beacons:
 		if beacon["discovered"] and beacon["system"] == current_system:
+}
 			# Player is at beacon system
 			_activate_consciousness_beacon(beacon)
 
@@ -605,6 +612,7 @@ func _activate_consciousness_beacon(beacon: Dictionary) -> void:
 	# Connect to other discovered beacons
 	for other_beacon in consciousness_beacons:
 		if other_beacon != beacon and other_beacon["discovered"]:
+
 			var key = beacon["system"].name + "-" + other_beacon["system"].name
 			if not beacon_connections.has(key):
 				beacon_connections[key] = true
@@ -659,7 +667,7 @@ func _create_star_marker(system: StarSystem) -> Node3D:
 		"F-Type": Color(1.0, 1.0, 0.9),
 		"A-Type": Color(0.9, 0.9, 1.0),
 		"B-Type": Color(0.7, 0.8, 1.0)
-	}
+}
 	
 	var material = StandardMaterial3D.new()
 	material.albedo_color = star_colors.get(system.star_data["type"], Color.WHITE)
@@ -717,13 +725,14 @@ func get_visited_systems_count() -> int:
 # Save/Load
 func _save_stellar_data() -> void:
 	if AkashicRecordsSystem: # Line 719:Could not resolve class "AkashicRecordsSystem", because of a parser error hmm we must take a look at that class too, where it was??
+
 		var save_data = {
 			"current_system": current_system.name if current_system else "",
 			"discovered_systems": {},
 			"visited_systems": visited_systems,
 			"warp_drive_level": warp_drive_level,
 			"stellar_knowledge": stellar_knowledge
-		}
+}
 		
 		# Save discovered systems
 		for name in discovered_systems:

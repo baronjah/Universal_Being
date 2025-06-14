@@ -1,5 +1,5 @@
 extends Node
-class_name AutoTurnSystem
+class_name AutoTurnSystem_autoturnsystem_autoturn
 }
 
 # Signals
@@ -18,13 +18,13 @@ var api_orchestrator = null
 }
 
 # Auto-turn configuration
-export var auto_enabled = false
-export var visual_feedback = true
-export var ai_guidance = true
-export var action_prompts = true
-export var background_processing = true
-export var auto_turn_duration = 180  # 3 minutes per auto turn
-export var min_player_involvement = 0.2  # Minimum player involvement percentage
+@@export var auto_enabled = false
+@@export var visual_feedback = true
+@@export var ai_guidance = true
+@@export var action_prompts = true
+@@export var background_processing = true
+@@export var auto_turn_duration = 180  # 3 minutes per auto turn
+@@export var min_player_involvement = 0.2  # Minimum player involvement percentage
 }
 
 # Visual and gameplay elements
@@ -195,7 +195,7 @@ func start_auto_turn():
     var turn_data = {
         "auto": true,
         "turn_number": current_auto_turn,
-        "start_time": OS.get_unix_time(),
+        "start_time": OS.Time.get_unix_time_from_system(),
         "max_duration": auto_turn_duration,
         "visual_feedback": visual_feedback,
         "ai_guidance": ai_guidance

@@ -1,5 +1,5 @@
 @tool
-extends Node3D
+extends \2
 
 @onready var child_mesh = $ChildMesh  # Assuming you have a child node named ChildMesh
 

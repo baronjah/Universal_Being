@@ -24,8 +24,8 @@ const TRANSFORM_ACTIONS = {
     "push": {"energy": 2, "impact": "forceful", "direction": "away"},
     "pull": {"energy": 2, "impact": "attractive", "direction": "toward"},
     "boomerang": {"energy": 4, "impact": "returning", "direction": "circular"},
-    "yoyo": {"energy": 3, "impact": "oscillating", "direction": "bidirectional"}
-}
+    "yoyo": {"energy": 3, "impact": "oscillating", "direction": "bidirectional"
+	}
 
 # ----- SYSTEM REFERENCES -----
 var terminal_api_bridge = null
@@ -39,13 +39,13 @@ var akashic_system = null
 var active_turn = 1
 var auto_mode_enabled = false
 var processing_interval = 5.0 # seconds
-var word_trajectories = {}
+var word_trajectories = {
 var transform_history = []
-var project_centers = {}
+var project_centers = {
 var session_start_time = 0
 var current_operation = null
-var word_power_levels = {}
-var trajectory_shapes = {}
+var word_power_levels = {
+var trajectory_shapes = {
 
 # ----- SIGNALS -----
 signal auto_mode_toggled(enabled)
@@ -88,7 +88,7 @@ func _connect_systems():
     # Connect to Turn System
     turn_system = get_node_or_null("/root/TurnSystem")
     if turn_system:
-        turn_system.connect("turn_advanced", self, "_on_turn_advanced")
+        turn_system.connect(_on_turn_advanced)
         active_turn = turn_system.get_current_turn()
     
     # Connect to Divine Word Processor
@@ -103,7 +103,7 @@ func _setup_processing_timer():
     timer.one_shot = false
     timer.autostart = false
     timer.name = "AutoProcessingTimer"
-    timer.connect("timeout", self, "_on_processing_timer")
+    timer.connect(_on_processing_timer)
     add_child(timer)
 
 func _initialize_word_powers():
@@ -206,7 +206,7 @@ func _perform_turn_operations(turn):
         "turn": turn,
         "start_time": OS.get_unix_time(),
         "actions": []
-    }
+		}
     
     # Perform different operations based on turn number
     match turn % 12:
@@ -250,6 +250,7 @@ func _process_terminal_input():
         
         # Process last input if it hasn't been processed
         if monitor.has("last_input") and monitor.last_input:
+		}
             var input_text = monitor.last_input
             
             # Only process if it's a new input that contains a core word
@@ -281,10 +282,11 @@ func _process_command(command, core_id):
         if word in CORE_WORDS:
             core_words_found.append(word)
     
-    if core_words_found.empty():
+    if core_words_found.is_empty():
         return
     
     print("Auto Agent processing command with core words: " + str(core_words_found))
+	}
     
     # Create operation record
     var operation = {
@@ -294,7 +296,7 @@ func _process_command(command, core_id):
         "core_words": core_words_found,
         "start_time": OS.get_unix_time(),
         "transforms": []
-    }
+		}
     
     current_operation = operation
     
@@ -330,7 +332,7 @@ func _process_word_transformations():
             "word": word,
             "start_time": OS.get_unix_time(),
             "transforms": []
-        }
+			}
         
         current_operation = operation
         
@@ -353,6 +355,7 @@ func _apply_transformation(word, context=""):
         return null
     
     print("Applying transformation for word: " + word)
+	}
     
     # Get transform parameters
     var transform_params = TRANSFORM_ACTIONS[word]
@@ -370,7 +373,7 @@ func _apply_transformation(word, context=""):
         "timestamp": OS.get_unix_time(),
         "affected_trajectories": [],
         "affected_projects": []
-    }
+		}
     
     # Apply effect based on the word
     match word:
@@ -466,7 +469,7 @@ func _transform_upgrade(transform):
 
 func _transform_merge(transform):
     # Merge combines similar trajectories
-    var merge_candidates = {}
+    var merge_candidates = {
     
     # Find similar trajectories by direction
     for word in word_trajectories:
@@ -497,7 +500,7 @@ func _transform_merge(transform):
                 "shape": word_trajectories[word1].shape,
                 "points": word_trajectories[word1].points + word_trajectories[word2].points,
                 "created": OS.get_unix_time()
-            }
+				}
             
             # Set power level for merged word
             word_power_levels[merged_word] = word_power_levels.get(word1, 1) + word_power_levels.get(word2, 1)
@@ -544,7 +547,7 @@ func _transform_split(transform):
                     "shape": _random_shape(),
                     "points": int(word_trajectories[word].points / parts.size()),
                     "created": OS.get_unix_time()
-                }
+					}
                 
                 // Set power level for part
                 word_power_levels[part] = int(word_power_levels.get(word, 2) / 2)
@@ -620,7 +623,7 @@ func _transform_multiply(transform):
                 "shape": original_trajectories[word].shape,
                 "points": original_trajectories[word].points + int(randf() * 10),
                 "created": OS.get_unix_time()
-            }
+				}
             
             // Set power level
             word_power_levels[new_word] = int(word_power_levels.get(word, 5) * (0.6 + randf() * 0.8))
@@ -779,7 +782,7 @@ func _transform_boomerang(transform):
                 "progress": trajectory.progress,
                 "quality": trajectory.quality,
                 "direction": trajectory.direction
-            }
+}
         else:
             // If return point exists, return to it
             var return_point = trajectory.return_point
@@ -868,7 +871,7 @@ func _initialize_all_trajectories():
                 "shape": _random_shape(),
                 "points": 10,
                 "created": OS.get_unix_time()
-            }
+				}
             
             trajectory_shapes[word] = _random_shape()
             emit_signal("word_trajectory_created", word, word_trajectories[word])
@@ -884,7 +887,7 @@ func _initialize_all_trajectories():
                 "shape": _random_shape(),
                 "points": 15,
                 "created": OS.get_unix_time()
-            }
+				}
             
             trajectory_shapes[term] = _random_shape()
             emit_signal("word_trajectory_created", term, word_trajectories[term])
@@ -959,7 +962,7 @@ func _consolidate_transformations():
         return
     
     // Group similar transformations
-    var word_impacts = {}
+    var word_impacts = {
     
     for transform in transform_history:
         if transform.has("transforms"):
@@ -971,7 +974,7 @@ func _consolidate_transformations():
                         "total_energy": 0,
                         "affected_trajectories": [],
                         "affected_projects": []
-                    }
+						}
                 
                 word_impacts[word].count += 1
                 word_impacts[word].total_energy += sub_transform.energy
@@ -1044,7 +1047,7 @@ func get_auto_agent_status():
         "project_count": project_centers.size(),
         "transform_count": transform_history.size(),
         "current_operation": current_operation
-    }
+		}
 
 func create_trajectory(word, initial_progress=0.1, shape=null):
     if not shape:
@@ -1057,7 +1060,7 @@ func create_trajectory(word, initial_progress=0.1, shape=null):
         "shape": shape,
         "points": 10,
         "created": OS.get_unix_time()
-    }
+		}
     
     trajectory_shapes[word] = shape
     emit_signal("word_trajectory_created", word, word_trajectories[word])

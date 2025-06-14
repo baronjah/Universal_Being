@@ -24,10 +24,10 @@ const PULSE_SPEED = 0.8
 const ROTATION_SPEED = 0.1
 
 # Visualization elements
-var dimensions = {}
-var connections = {}
-var memory_flows = {}
-var resonances = {}
+var dimensions = {
+var connections = {
+var memory_flows = {
+var resonances = {
 
 # References to required components
 var claude_ethereal_bridge
@@ -95,7 +95,7 @@ func _setup_dimensions():
 			"active": true,
 			"pulse_phase": randf() * PI * 2,
 			"angle": angle
-		}
+}
 	
 	# Ethereal dimensions (outer circle)
 	var ethereal_dimensions = ["Memory", "Command", "Visual", "Data", "Temporal", "Astral", "Ethereal"]
@@ -113,7 +113,7 @@ func _setup_dimensions():
 			"active": true,
 			"pulse_phase": randf() * PI * 2,
 			"angle": angle
-		}
+}
 	
 	print("🔵 Initialized " + str(dimensions.size()) + " dimensions")
 
@@ -167,7 +167,7 @@ func _add_connection(source: String, target: String):
 		"active": true,
 		"flow_particles": [],
 		"resonance": 0.0
-	}
+}
 	
 	print("🔗 Added connection: " + connection_id)
 	return connections[connection_id]
@@ -193,7 +193,7 @@ func create_memory_flow(source: String, target: String, size: float = 1.0):
 		"speed": FLOW_SPEED * (0.8 + randf() * 0.4), # Randomize speed slightly
 		"active": true,
 		"completion_callback": null
-	}
+}
 	
 	print("💫 Created memory flow: " + flow_id)
 	return flow_id
@@ -219,7 +219,7 @@ func create_resonance(source: String, target: String, strength: float = 0.8):
 		"lifetime": 10.0, # Seconds until resonance fades
 		"remaining_time": 10.0,
 		"active": true
-	}
+}
 	
 	# Update connection resonance
 	connections[connection_id].resonance = strength
@@ -261,6 +261,7 @@ func highlight_dimension(dimension: String, duration: float = 1.0):
 	timer.start()
 	
 	print("🔆 Highlighting dimension: " + dimension)
+}
 
 func _on_highlight_timeout(dimension: String, original_size: float):
 	if dimension in dimensions:

@@ -89,7 +89,7 @@ func _ready():
     sync_timer = Timer.new()
     sync_timer.wait_time = sync_interval
     sync_timer.one_shot = false
-    sync_timer.connect("timeout", self, "_on_sync_timer_timeout")
+    sync_timer.connect(_on_sync_timer_timeout)
     add_child(sync_timer)
     
     # Load offline actions
@@ -116,16 +116,16 @@ func initialize(api_manager_node, eden_garden_node):
     eden_garden = eden_garden_node
     
     # Connect API manager signals
-    api_manager.connect("api_switched", self, "_on_api_switched")
-    api_manager.connect("connection_state_changed", self, "_on_connection_state_changed")
-    api_manager.connect("request_completed", self, "_on_api_request_completed")
+    api_manager.connect(_on_api_switched)
+    api_manager.connect(_on_connection_state_changed)
+    api_manager.connect(_on_api_request_completed)
     
     # Connect Eden Garden signals
-    eden_garden.connect("garden_state_changed", self, "_on_garden_state_changed")
-    eden_garden.connect("fruit_added", self, "_on_fruit_added")
-    eden_garden.connect("echo_created", self, "_on_echo_created")
-    eden_garden.connect("system_went_offline", self, "_on_system_went_offline")
-    eden_garden.connect("system_went_online", self, "_on_system_went_online")
+    eden_garden.connect(_on_garden_state_changed)
+    eden_garden.connect(_on_fruit_added)
+    eden_garden.connect(_on_echo_created)
+    eden_garden.connect(_on_system_went_offline)
+    eden_garden.connect(_on_system_went_online)
     
     print("EdenApiIntegration initialized")
     
@@ -209,7 +209,7 @@ func import_garden_state():
     return execute_command("get_garden_state")
 
 func process_offline_actions():
-    if not api_manager.is_in_online_mode() or offline_actions.empty():
+    if not api_manager.is_in_online_mode() or offline_actions.is_empty():
         return false
     
     print("Processing %d offline actions..." % offline_actions.size())

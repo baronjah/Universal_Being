@@ -15,7 +15,7 @@
 #Caching active elements and managing file resources
 #
 #
-#Spatial Relationships
+#Node3D Relationships
 #
 #Distance calculations between objects
 #Multiple reference points within the game world
@@ -39,91 +39,91 @@
 #
 #<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600">
   #<!-- Background -->
-  #<rect width="800" height="600" fill="#f8f9fa" />
+  #<rect width="800" height="600" fill="#f8f9fa" >
   #
   #<!-- Main Game Loop Section -->
-  #<rect x="50" y="50" width="700" height="150" rx="10" fill="#e3f2fd" stroke="#2196f3" stroke-width="2" />
+  #<rect x="50" y="50" width="700" height="150" rx="10" fill="#e3f2fd" stroke="#2196f3" stroke-width="2" >
   #<text x="375" y="80" font-family="Arial" font-size="18" text-anchor="middle" font-weight="bold">Game Loop Processing</text>
   #
   #<!-- Game Loop Components -->
-  #<rect x="80" y="100" width="120" height="80" rx="5" fill="#bbdefb" stroke="#1976d2" stroke-width="1" />
+  #<rect x="80" y="100" width="120" height="80" rx="5" fill="#bbdefb" stroke="#1976d2" stroke-width="1" >
   #<text x="140" y="140" font-family="Arial" font-size="14" text-anchor="middle">Input Processing</text>
   #<text x="140" y="160" font-family="Arial" font-size="12" text-anchor="middle">Keyboard + Mouse</text>
   #
-  #<rect x="230" y="100" width="120" height="80" rx="5" fill="#bbdefb" stroke="#1976d2" stroke-width="1" />
+  #<rect x="230" y="100" width="120" height="80" rx="5" fill="#bbdefb" stroke="#1976d2" stroke-width="1" >
   #<text x="290" y="140" font-family="Arial" font-size="14" text-anchor="middle">State Update</text>
   #<text x="290" y="160" font-family="Arial" font-size="12" text-anchor="middle">Entity Awareness</text>
   #
-  #<rect x="380" y="100" width="120" height="80" rx="5" fill="#bbdefb" stroke="#1976d2" stroke-width="1" />
+  #<rect x="380" y="100" width="120" height="80" rx="5" fill="#bbdefb" stroke="#1976d2" stroke-width="1" >
   #<text x="440" y="140" font-family="Arial" font-size="14" text-anchor="middle">Physics/Collision</text>
   #<text x="440" y="160" font-family="Arial" font-size="12" text-anchor="middle">Distance Checks</text>
   #
-  #<rect x="530" y="100" width="120" height="80" rx="5" fill="#bbdefb" stroke="#1976d2" stroke-width="1" />
+  #<rect x="530" y="100" width="120" height="80" rx="5" fill="#bbdefb" stroke="#1976d2" stroke-width="1" >
   #<text x="590" y="140" font-family="Arial" font-size="14" text-anchor="middle">Render Frame</text>
   #<text x="590" y="160" font-family="Arial" font-size="12" text-anchor="middle">Shapes + UI</text>
   #
   #<!-- Arrows between components -->
-  #<path d="M200 140 L230 140" stroke="#1976d2" stroke-width="2" fill="none" marker-end="url(#arrow)" />
-  #<path d="M350 140 L380 140" stroke="#1976d2" stroke-width="2" fill="none" marker-end="url(#arrow)" />
-  #<path d="M500 140 L530 140" stroke="#1976d2" stroke-width="2" fill="none" marker-end="url(#arrow)" />
-  #<path d="M650 140 C680 140, 690 50, 50 50 C30 50, 30 140, 80 140" stroke="#1976d2" stroke-width="2" stroke-dasharray="5,5" fill="none" marker-end="url(#arrow)" />
+  #<path d="M200 140 L230 140" stroke="#1976d2" stroke-width="2" fill="none" marker-end="url(#arrow)" >
+  #<path d="M350 140 L380 140" stroke="#1976d2" stroke-width="2" fill="none" marker-end="url(#arrow)" >
+  #<path d="M500 140 L530 140" stroke="#1976d2" stroke-width="2" fill="none" marker-end="url(#arrow)" >
+  #<path d="M650 140 C680 140, 690 50, 50 50 C30 50, 30 140, 80 140" stroke="#1976d2" stroke-width="2" stroke-dasharray="5,5" fill="none" marker-end="url(#arrow)" >
   #
   #<!-- UI System Section -->
-  #<rect x="50" y="230" width="340" height="320" rx="10" fill="#e8f5e9" stroke="#4caf50" stroke-width="2" />
+  #<rect x="50" y="230" width="340" height="320" rx="10" fill="#e8f5e9" stroke="#4caf50" stroke-width="2" >
   #<text x="220" y="260" font-family="Arial" font-size="18" text-anchor="middle" font-weight="bold">UI System (TX)</text>
   #
   #<!-- UI Components -->
-  #<rect x="80" y="280" width="120" height="80" rx="5" fill="#c8e6c9" stroke="#388e3c" stroke-width="1" />
+  #<rect x="80" y="280" width="120" height="80" rx="5" fill="#c8e6c9" stroke="#388e3c" stroke-width="1" >
   #<text x="140" y="310" font-family="Arial" font-size="14" text-anchor="middle">Icon System</text>
   #<text x="140" y="330" font-family="Arial" font-size="12" text-anchor="middle">Collapsible Data</text>
   #
-  #<rect x="230" y="280" width="120" height="80" rx="5" fill="#c8e6c9" stroke="#388e3c" stroke-width="1" />
+  #<rect x="230" y="280" width="120" height="80" rx="5" fill="#c8e6c9" stroke="#388e3c" stroke-width="1" >
   #<text x="290" y="310" font-family="Arial" font-size="14" text-anchor="middle">Text Windows</text>
   #<text x="290" y="330" font-family="Arial" font-size="12" text-anchor="middle">Multi-panel Display</text>
   #
-  #<rect x="80" y="390" width="120" height="80" rx="5" fill="#c8e6c9" stroke="#388e3c" stroke-width="1" />
+  #<rect x="80" y="390" width="120" height="80" rx="5" fill="#c8e6c9" stroke="#388e3c" stroke-width="1" >
   #<text x="140" y="420" font-family="Arial" font-size="14" text-anchor="middle">Change Lists</text>
   #<text x="140" y="440" font-family="Arial" font-size="12" text-anchor="middle">State Tracking</text>
   #
-  #<rect x="230" y="390" width="120" height="80" rx="5" fill="#c8e6c9" stroke="#388e3c" stroke-width="1" />
+  #<rect x="230" y="390" width="120" height="80" rx="5" fill="#c8e6c9" stroke="#388e3c" stroke-width="1" >
   #<text x="290" y="420" font-family="Arial" font-size="14" text-anchor="middle">Context Menus</text>
   #<text x="290" y="440" font-family="Arial" font-size="12" text-anchor="middle">Right-click Actions</text>
   #
   #<!-- Entity System Section -->
-  #<rect x="410" y="230" width="340" height="320" rx="10" fill="#fff3e0" stroke="#ff9800" stroke-width="2" />
+  #<rect x="410" y="230" width="340" height="320" rx="10" fill="#fff3e0" stroke="#ff9800" stroke-width="2" >
   #<text x="580" y="260" font-family="Arial" font-size="18" text-anchor="middle" font-weight="bold">Entity System (RX)</text>
   #
   #<!-- Entity Components -->
-  #<rect x="440" y="280" width="120" height="80" rx="5" fill="#ffe0b2" stroke="#f57c00" stroke-width="1" />
+  #<rect x="440" y="280" width="120" height="80" rx="5" fill="#ffe0b2" stroke="#f57c00" stroke-width="1" >
   #<text x="500" y="310" font-family="Arial" font-size="14" text-anchor="middle">Shape Awareness</text>
   #<text x="500" y="330" font-family="Arial" font-size="12" text-anchor="middle">Boundaries + Collision</text>
   #
-  #<rect x="590" y="280" width="120" height="80" rx="5" fill="#ffe0b2" stroke="#f57c00" stroke-width="1" />
+  #<rect x="590" y="280" width="120" height="80" rx="5" fill="#ffe0b2" stroke="#f57c00" stroke-width="1" >
   #<text x="650" y="310" font-family="Arial" font-size="14" text-anchor="middle">Distance Tracking</text>
-  #<text x="650" y="330" font-family="Arial" font-size="12" text-anchor="middle">Spatial Relationships</text>
+  #<text x="650" y="330" font-family="Arial" font-size="12" text-anchor="middle">Node3D Relationships</text>
   #
-  #<rect x="440" y="390" width="120" height="80" rx="5" fill="#ffe0b2" stroke="#f57c00" stroke-width="1" />
+  #<rect x="440" y="390" width="120" height="80" rx="5" fill="#ffe0b2" stroke="#f57c00" stroke-width="1" >
   #<text x="500" y="420" font-family="Arial" font-size="14" text-anchor="middle">Processing Limits</text>
   #<text x="500" y="440" font-family="Arial" font-size="12" text-anchor="middle">Per-frame Capacity</text>
   #
-  #<rect x="590" y="390" width="120" height="80" rx="5" fill="#ffe0b2" stroke="#f57c00" stroke-width="1" />
+  #<rect x="590" y="390" width="120" height="80" rx="5" fill="#ffe0b2" stroke="#f57c00" stroke-width="1" >
   #<text x="650" y="420" font-family="Arial" font-size="14" text-anchor="middle">Size Management</text>
   #<text x="650" y="440" font-family="Arial" font-size="12" text-anchor="middle">Scaling + Bounds</text>
   #
   #<!-- Bidirectional flow between UI and Entity -->
-  #<path d="M350 390 C380 390, 380 390, 410 390" stroke="#9e9e9e" stroke-width="3" fill="none" marker-end="url(#arrow)" />
-  #<path d="M410 420 C380 420, 380 420, 350 420" stroke="#9e9e9e" stroke-width="3" fill="none" marker-end="url(#arrow)" />
+  #<path d="M350 390 C380 390, 380 390, 410 390" stroke="#9e9e9e" stroke-width="3" fill="none" marker-end="url(#arrow)" >
+  #<path d="M410 420 C380 420, 380 420, 350 420" stroke="#9e9e9e" stroke-width="3" fill="none" marker-end="url(#arrow)" >
   #<text x="380" y="380" font-family="Arial" font-size="12" text-anchor="middle">RX</text>
   #<text x="380" y="440" font-family="Arial" font-size="12" text-anchor="middle">TX</text>
   #
   #<!-- Processing Flow Indicators -->
-  #<path d="M220 50 L220 230" stroke="#9e9e9e" stroke-width="2" stroke-dasharray="5,5" fill="none" marker-end="url(#arrow)" />
-  #<path d="M580 50 L580 230" stroke="#9e9e9e" stroke-width="2" stroke-dasharray="5,5" fill="none" marker-end="url(#arrow)" />
+  #<path d="M220 50 L220 230" stroke="#9e9e9e" stroke-width="2" stroke-dasharray="5,5" fill="none" marker-end="url(#arrow)" >
+  #<path d="M580 50 L580 230" stroke="#9e9e9e" stroke-width="2" stroke-dasharray="5,5" fill="none" marker-end="url(#arrow)" >
   #
   #<!-- Arrow Definitions -->
   #<defs>
 	#<marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
-	  #<path d="M0,0 L0,6 L9,3 z" fill="#1976d2" />
+	  #<path d="M0,0 L0,6 L9,3 z" fill="#1976d2" >
 	#</marker>
   #</defs>
 #</svg>

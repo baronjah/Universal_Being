@@ -28,6 +28,7 @@ func pentagon_init() -> void:
 	
 	print("🌟 %s: Pentagon Init Complete" % being_name)
 
+
 func pentagon_ready() -> void:
 	super.pentagon_ready()  # 🔄 ALWAYS CALL SUPER FIRST
 	
@@ -48,6 +49,7 @@ func pentagon_ready() -> void:
 		area_3d.mouse_exited.connect(_on_mouse_exited)
 	
 	print("🌟 %s: Pentagon Ready Complete" % being_name)
+
 
 func pentagon_process(delta: float) -> void:
 	super.pentagon_process(delta)  # ⚡ ALWAYS CALL SUPER FIRST
@@ -84,6 +86,7 @@ func _on_button_clicked() -> void:
 	update_consciousness_visual()
 	
 	print("🔘 %s clicked! Count: %d, Consciousness: %d" % [being_name, click_count, consciousness_level])
+
 	
 	# Visual feedback - pulse effect
 	if mesh_instance:
@@ -111,8 +114,8 @@ func ai_interface() -> Dictionary:
 	base.button_state = {
 		"clicks": click_count,
 		"is_3d": true
-	}
 	return base
+}
 
 func _to_string() -> String:
 	return "Button3DUniversalBeing<%s> [Clicks:%d, Consciousness:%d]" % [being_name, click_count, consciousness_level]

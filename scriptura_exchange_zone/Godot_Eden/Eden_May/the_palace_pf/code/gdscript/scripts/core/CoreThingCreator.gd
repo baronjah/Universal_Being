@@ -1,5 +1,5 @@
 extends Node
-class_name CoreThingCreator
+class_name CoreThingCreator_CoreThingCreator_CoreThin
 
 # Singleton pattern
 static var _instance = null
@@ -41,12 +41,12 @@ func _ready():
 
 func _load_required_classes():
 	# Load the CoreUniversalEntity class
-	universal_entity_class = load("res://code/gdscript/scripts/core/CoreUniversalEntity.gd")
+	universal_entity_class = load("res://scripts/gdscript/scripts/core/CoreUniversalEntity.gd")
 	if not universal_entity_class:
 		push_error("CoreUniversalEntity class not found!")
 	
 	# Find or create word manifestor
-	var word_manifestor_script = load("res://code/gdscript/scripts/core/CoreWordManifestor.gd")
+	var word_manifestor_script = load("res://scripts/gdscript/scripts/core/CoreWordManifestor.gd")
 	if word_manifestor_script:
 		word_manifestor = word_manifestor_script.new()
 	else:
@@ -54,17 +54,17 @@ func _load_required_classes():
 
 func _initialize_akashic_records():
 	# Find or load AkashicRecordsManager
-	if has_node("/root/AkashicRecordsManager"):
-		akashic_records_manager = get_node("/root/AkashicRecordsManager")
+	if has_node("root/AkashicRecordsManager"):
+		akashic_records_manager = get_node("root/AkashicRecordsManager")
 	else:
-		var akashic_class = load("res://code/gdscript/scripts/core/core_akashic_records_manager.gd")
+		var akashic_class = load("res://scripts/gdscript/scripts/core/core_akashic_records_manager.gd")
 		if akashic_class:
 			akashic_records_manager = akashic_class.new()
 			akashic_records_manager.name = "AkashicRecordsManager"
 			get_tree().root.add_child(akashic_records_manager)
 		else:
 			# Try alternate path
-			akashic_class = load("res://code/gdscript/scripts/akashic_records/core_akashic_records_manager.gd")
+			akashic_class = load("res://scripts/gdscript/scripts/akashic_records/core_akashic_records_manager.gd")
 			if akashic_class:
 				akashic_records_manager = akashic_class.new()
 				akashic_records_manager.name = "AkashicRecordsManager"

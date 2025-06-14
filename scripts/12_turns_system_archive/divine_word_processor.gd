@@ -29,7 +29,7 @@ var word_power_dictionary = {
     "limitless": 29,
     "almighty": 43,
     "sacred": 19
-}
+	}
 
 var typo_corrections = {
     "tiyr": "tier",
@@ -61,14 +61,13 @@ var typo_corrections = {
     "creat": "create",
     "divin": "divine",
     "eternl": "eternal"
-}
+	}
 
 # ----- MEMORY STORAGE -----
 var memories = {
     1: [], # Tier 1 - recent and vivid
     2: [], # Tier 2 - important but older
     3: []  # Tier 3 - archived foundational
-}
 
 # ----- REALITY STORAGE -----
 var realities = []
@@ -79,7 +78,7 @@ var divine_account = {
     "divine_level": 1,
     "word_count": 0,
     "reality_count": 0
-}
+	}
 
 # ----- SIGNALS -----
 signal word_processed(word, power)
@@ -100,6 +99,7 @@ func process_text(text, source="manual", tier=1):
     # Only record if text changed
     if corrected_text != text:
         print("Divine autocorrect applied: '%s' → '%s'" % [text, corrected_text])
+		}
     
     # Split into words
     var words = extract_words(corrected_text)
@@ -117,6 +117,7 @@ func process_text(text, source="manual", tier=1):
             
             if power > POWER_THRESHOLD:
                 powerful_words.append({"word": word, "power": power})
+				
         
         # Emit signal for each processed word
         emit_signal("word_processed", word, power)
@@ -141,7 +142,7 @@ func process_text(text, source="manual", tier=1):
         "word_count": words.size(),
         "powerful_words": powerful_words,
         "total_power": total_power
-    }
+		}
 
 # Extract words from text
 func extract_words(text):
@@ -188,7 +189,7 @@ func create_memory(text, tier, powerful_words, power):
         "powerful_words": powerful_words,
         "power": power,
         "linked_realities": []
-    }
+		}
     
     # Store in appropriate tier
     if tier >= 1 and tier <= 3:
@@ -242,7 +243,7 @@ func create_reality_impact(source_text, powerful_words, total_power):
         "is_persistent": is_persistent,
         "duration": duration,
         "active": true
-    }
+		}
     
     # Add to realities list
     realities.append(reality)
@@ -274,16 +275,18 @@ func save_reality_state(name):
         "realities": realities.duplicate(),
         "active_manifestations": active_manifestations.duplicate(),
         "divine_account": divine_account.duplicate()
-    }
+		}
     
     # Save to a JSON file
     var file = File.new()
     var save_path = "user://divine_saves/" + name + "_" + str(timestamp) + ".json"
+	
     
     # Ensure directory exists
     var dir = Directory.new()
     if !dir.dir_exists("user://divine_saves"):
         dir.make_dir_recursive("user://divine_saves")
+		
     
     # Save file
     file.open(save_path, File.WRITE)
@@ -292,6 +295,7 @@ func save_reality_state(name):
     
     print("Divine reality state saved as '%s'" % name)
     print("Save location: %s" % save_path)
+	
     
     return save_data
 
@@ -317,7 +321,7 @@ func get_divine_status():
         "words_processed": divine_account.word_count,
         "realities_created": divine_account.reality_count,
         "memory_count": get_all_memories().size()
-    }
+		}
 
 # Print divine status to console
 func print_divine_status():
@@ -328,13 +332,16 @@ func print_divine_status():
     print("Words Processed: %d" % status.words_processed)
     print("Realities Created: %d" % status.realities_created)
     print("Memories Stored: %d" % status.memory_count)
+	
     
     # Print memory breakdown
     print("\nMemory Tiers:")
     for tier in memories:
         print("- Tier %d: %d memories" % [tier, memories[tier].size()])
+		
     
     # Print active manifestations
     print("\nActive Reality Manifestations: %d" % active_manifestations.size())
+	
     
     return status

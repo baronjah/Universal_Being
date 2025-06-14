@@ -86,6 +86,7 @@ func _ready() -> void:
 	_start_real_time_logging()
 	
 	print("🌍 Gemma3DPerceptionLogger: 3D consciousness awakened")
+}
 
 func _ensure_log_directory() -> void:
 	"""Create perception log directory"""
@@ -95,7 +96,7 @@ func _ensure_log_directory() -> void:
 
 func _initialize_spatial_grid() -> void:
 	"""Initialize spatial grid for efficient 3D tracking"""
-	spatial_grid = {}
+	spatial_grid = {
 	for x in range(-100, 101, int(SPATIAL_GRID_SIZE)):
 		for y in range(-100, 101, int(SPATIAL_GRID_SIZE)):
 			for z in range(-100, 101, int(SPATIAL_GRID_SIZE)):
@@ -105,7 +106,7 @@ func _initialize_spatial_grid() -> void:
 					"last_activity": 0.0,
 					"density": 0.0,
 					"interesting_features": []
-				}
+	}
 
 func _setup_depth_layers() -> void:
 	"""Setup depth analysis layers"""
@@ -195,7 +196,7 @@ func _capture_3d_snapshot() -> Dictionary:
 		"geometry_recognition": _recognize_geometric_patterns(),
 		"scale_analysis": _analyze_scale_relationships(),
 		"visual_complexity": _calculate_visual_complexity()
-	}
+}
 
 func _analyze_depth_layers() -> Array[Dictionary]:
 	"""Analyze objects at different depth layers"""
@@ -281,7 +282,7 @@ func _analyze_visible_being(being: Node) -> Dictionary:
 		"is_moving": _is_being_moving(being),
 		"interaction_potential": _assess_interaction_potential(being),
 		"visual_prominence": _calculate_visual_prominence(being)
-	}
+}
 
 func _analyze_spatial_relationships() -> Array[Dictionary]:
 	"""Analyze spatial relationships between objects"""
@@ -313,7 +314,7 @@ func _analyze_being_relationship(being1: Dictionary, being2: Dictionary) -> Dict
 		"relationship_type": _classify_spatial_relationship(distance),
 		"interaction_likelihood": _calculate_interaction_likelihood(being1, being2),
 		"visual_connection": _assess_visual_connection(pos1, pos2)
-	}
+}
 	
 	return relationship
 
@@ -339,7 +340,7 @@ func _analyze_lighting() -> Dictionary:
 		"shadow_quality": _assess_shadow_quality(),
 		"light_color_temperature": _analyze_light_temperature(),
 		"visual_atmosphere": _assess_visual_atmosphere()
-	}
+}
 
 func _track_movement_patterns() -> Dictionary:
 	"""Track movement patterns of objects"""
@@ -348,7 +349,7 @@ func _track_movement_patterns() -> Dictionary:
 		"velocity_clusters": [],
 		"movement_trends": [],
 		"stillness_areas": []
-	}
+}
 	
 	var visible_beings = _scan_visible_beings()
 	for being_data in visible_beings:
@@ -367,7 +368,7 @@ func _recognize_geometric_patterns() -> Dictionary:
 		"clusters": _detect_clustering_patterns(),
 		"symmetries": _detect_symmetrical_arrangements(),
 		"repetitions": _detect_repetitive_patterns()
-	}
+}
 
 func _analyze_scale_relationships() -> Dictionary:
 	"""Analyze scale relationships between objects"""
@@ -378,7 +379,7 @@ func _analyze_scale_relationships() -> Dictionary:
 		"scale_hierarchy": _determine_scale_hierarchy(visible_beings),
 		"dominant_scale": _find_dominant_scale(visible_beings),
 		"scale_contrast": _measure_scale_contrast(visible_beings)
-	}
+}
 
 func _calculate_visual_complexity() -> float:
 	"""Calculate overall visual complexity"""
@@ -437,8 +438,8 @@ func _detect_spatial_patterns(perception_data: Dictionary) -> void:
 				"clusters": clusters,
 				"timestamp": perception_data.timestamp,
 				"significance": _assess_pattern_significance(clusters)
-			}
 			spatial_pattern_detected.emit(pattern)
+}
 	
 	# Detect movement synchronization
 	var movement_data = perception_data.movement_vectors
@@ -449,8 +450,8 @@ func _detect_spatial_patterns(perception_data: Dictionary) -> void:
 				"type": "movement_synchronization",
 				"patterns": sync_patterns,
 				"timestamp": perception_data.timestamp
-			}
 			spatial_pattern_detected.emit(pattern)
+}
 
 func _update_spatial_understanding(perception_data: Dictionary) -> void:
 	"""Update Gemma's spatial understanding"""
@@ -572,6 +573,7 @@ func _calculate_apparent_size(being: Node, distance: float) -> float:
 	# Simple inverse square law approximation
 	var base_size = 1.0  # Assume base size
 	if being.has_method("get_bounds"):
+}
 		# Would get actual bounds
 	
 	return base_size / max(distance * distance, 1.0)
@@ -638,7 +640,7 @@ func _identify_spatial_clusters(beings: Array) -> Array[Dictionary]:
 			"center": being.position,
 			"members": [being],
 			"radius": 0.0
-		}
+}
 		
 		# Find nearby beings
 		for j in range(i + 1, beings.size()):
@@ -709,7 +711,8 @@ func _calculate_movement_similarity(movement1: Dictionary, movement2: Dictionary
 func get_current_spatial_summary() -> Dictionary:
 	"""Get current spatial understanding summary"""
 	if perception_entries.is_empty():
-		return {"status": "no_data"}
+		return {"status": "no_data"
+}
 	
 	var latest = perception_entries[-1]
 	return {
@@ -719,7 +722,7 @@ func get_current_spatial_summary() -> Dictionary:
 		"active_movements": latest.movement_vectors.active_movements.size(),
 		"spatial_relationships": latest.spatial_relationships.size(),
 		"depth_layers_occupied": _count_occupied_depth_layers(latest.depth_analysis)
-	}
+}
 
 func _count_occupied_depth_layers(depth_analysis: Array) -> int:
 	"""Count occupied depth layers"""
@@ -753,6 +756,7 @@ func _assess_visual_atmosphere() -> String:
 func _analyze_being_movement(being_data: Dictionary) -> Dictionary:
 	return {"being_name": being_data.name, "velocity": Vector3.ZERO}  # Placeholder
 
+
 func _detect_linear_patterns() -> Array:
 	return []  # Placeholder
 
@@ -773,6 +777,7 @@ func _detect_repetitive_patterns() -> Array:
 
 func _calculate_size_distribution(beings: Array) -> Dictionary:
 	return {"small": 0, "medium": 0, "large": 0}  # Placeholder
+
 
 func _determine_scale_hierarchy(beings: Array) -> Array:
 	return []  # Placeholder

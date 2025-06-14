@@ -69,7 +69,6 @@ var genesis_days := [
         "meaning": "Pentagon Sewers (Transformation)",
         "pentagon": "pentagon_sewers",
         "implementation": "Death, evolution, rebirth cycle"
-    }
 ]
 
 func log_genesis_pattern() -> void:
@@ -124,3 +123,4 @@ func apply_genesis_blessing(being: UniversalBeing) -> void:
 # Static helper for easy access
 static func create() -> GenesisPattern:
     return preload("res://core/genesis_pattern.gd").new()
+	}

@@ -1042,7 +1042,7 @@ func _test_evolution_manager_full() -> void:
 	
 	print("\n📊 EVOLUTION ANALYSIS RESULTS:")
 	print("🏥 System Health: ", analysis.system_health, "%")
-	print("🚀 Innovation Score: ", analysis.innovation_score, "/100")
+	print("🚀 Innovation Score: ", analysis.innovation_score, "100")
 	print("📁 Total Files: ", analysis.total_files)
 	print("🔄 Active Scripts: ", analysis.active_scripts)
 	print("❓ Missing Functions: ", analysis.missing_functions)
@@ -1097,5 +1097,5 @@ func _on_ai_collaboration_needed(task: Dictionary) -> void:
 func _on_evolution_complete(analysis: Dictionary) -> void:
 	print("✅ Evolution Analysis Complete!")
 	print("📊 System Health: ", analysis.system_health, "%")
-	print("🎯 Innovation Score: ", analysis.innovation_score, "/100")
+	print("🎯 Innovation Score: ", analysis.innovation_score, "100")
 	print("📈 Total Opportunities: ", analysis.evolution_opportunities.total_opportunities if "evolution_opportunities" in analysis else "N/A")

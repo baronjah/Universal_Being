@@ -26,13 +26,13 @@ const SPECIAL_PATTERNS = {
     "<->": "teleporter",
     "/*\\": "time_rune",
     "|/\\|": "dimension_gate"
-}
+	}
 
 # ----- GRID CELLS -----
 var grid_cells = []
 var grid_elements = []
 var recent_patterns = []
-var saved_grids = {}
+var saved_grids = {
 
 # ----- SHAPE CATEGORIES -----
 enum ShapeCategory {
@@ -79,6 +79,7 @@ func _ready():
     
     print("Terminal Grid Creator initialized")
     print("Grid size: " + str(grid_width) + "x" + str(grid_height))
+	}
 
 func _initialize_grid():
     grid_cells = []
@@ -91,7 +92,7 @@ func _initialize_grid():
                 "symbol": default_symbol,
                 "element_id": -1,  # No element
                 "color": Color(1, 1, 1),
-                "properties": {}
+                "properties": {
             })
         grid_cells.append(row)
 
@@ -99,8 +100,8 @@ func _connect_to_game_systems():
     # Connect to dual core terminal
     dual_core_terminal = get_node_or_null("/root/DualCoreTerminal")
     if dual_core_terminal:
-        dual_core_terminal.connect("special_pattern_detected", self, "_on_special_pattern_detected")
-        dual_core_terminal.connect("time_state_changed", self, "_on_time_state_changed")
+        dual_core_terminal.connect(_on_special_pattern_detected)
+        dual_core_terminal.connect(_on_time_state_changed)
     
     # Connect to divine word game
     divine_word_game = get_node_or_null("/root/DivineWordGame")
@@ -108,7 +109,7 @@ func _connect_to_game_systems():
     # Connect to turn system
     turn_system = get_node_or_null("/root/TurnSystem")
     if turn_system:
-        turn_system.connect("dimension_changed", self, "_on_dimension_changed")
+        turn_system.connect(_on_dimension_changed)
 
 # ----- GRID MANAGEMENT -----
 func create_grid(width, height, default_sym = "."):
@@ -119,7 +120,7 @@ func create_grid(width, height, default_sym = "."):
             "elements": grid_elements.duplicate(true),
             "width": grid_width,
             "height": grid_height
-        }
+			}
     
     # Update grid properties
     grid_width = width
@@ -175,7 +176,7 @@ func place_pattern(x, y, pattern, category, properties = {}):
         "height": height,
         "properties": properties.duplicate(),
         "cells": []
-    }
+		}
     
     # Place each symbol
     for dy in range(height):
@@ -192,6 +193,7 @@ func place_pattern(x, y, pattern, category, properties = {}):
             
             # Track cells in element
             element.cells.append({"x": x + dx, "y": y + dy})
+			}
     
     # Add element
     grid_elements.append(element)
@@ -216,7 +218,7 @@ func remove_element(element_id):
         if x >= 0 and x < grid_width and y >= 0 and y < grid_height:
             grid_cells[y][x].symbol = default_symbol
             grid_cells[y][x].element_id = -1
-            grid_cells[y][x].properties = {}
+            grid_cells[y][x].properties = {
     
     # Remove element
     grid_elements[element_id] = null  # Keep array indices intact
@@ -232,7 +234,7 @@ func save_grid(name):
         "height": grid_height,
         "default_symbol": default_symbol,
         "saved_time": OS.get_unix_time()
-    }
+		}
     
     saved_grids[name] = grid_data
     
@@ -350,7 +352,7 @@ func _create_miracle_portal(x, y):
         "active": true,
         "created_at": OS.get_unix_time(),
         "color": Color(1, 0.5, 1)  # Purple glow
-    }
+		}
     
     # Create portal pattern
     var portal_pattern = "#$%$#@@\n@#$%$#@\n@$#%$#@"
@@ -370,7 +372,7 @@ func _create_teleporter(x, y):
         "created_at": OS.get_unix_time(),
         "destination_x": randi() % grid_width,
         "destination_y": randi() % grid_height
-    }
+		}
     
     place_pattern(x, y, "<->", ShapeCategory.SPECIAL, teleporter_properties)
 
@@ -381,7 +383,7 @@ func _create_time_rune(x, y):
         "active": true,
         "created_at": OS.get_unix_time(),
         "time_state": TimeState.PRESENT
-    }
+		}
     
     place_pattern(x, y, "/*\\", ShapeCategory.SPECIAL, time_rune_properties)
 
@@ -393,7 +395,7 @@ func _create_dimension_gate(x, y):
         "created_at": OS.get_unix_time(),
         "current_dimension": turn_system.current_dimension if turn_system else 3,
         "target_dimension": (turn_system.current_dimension + 1) % (turn_system.max_turns + 1) if turn_system else 4
-    }
+		}
     
     place_pattern(x, y, "|/\\|", ShapeCategory.SPECIAL, dimension_gate_properties)
 
@@ -406,13 +408,14 @@ func apply_time_effect(time_state):
         TimeState.PAST:
             # Show older versions of elements
             if saved_grids.has("previous_grid"):
+			}
                 # Temporarily load past version
                 var current = {
                     "cells": grid_cells.duplicate(true),
                     "elements": grid_elements.duplicate(true),
                     "width": grid_width,
                     "height": grid_height
-                }
+					}
                 
                 # Load previous grid
                 grid_cells = saved_grids.previous_grid.cells.duplicate(true)
@@ -456,7 +459,7 @@ func apply_time_effect(time_state):
                 "elements": grid_elements.duplicate(true),
                 "width": grid_width,
                 "height": grid_height
-            }
+				}
             
             # Add future elements
             for element in future_elements:
@@ -486,7 +489,7 @@ func apply_time_effect(time_state):
                 "elements": grid_elements.duplicate(true),
                 "width": grid_width,
                 "height": grid_height
-            }
+				}
             
             # Blend past and future if available
             if saved_grids.has("previous_grid"):
@@ -838,6 +841,7 @@ func generate_space_map(ships=3, bases=2):
         var x = randi() % grid_width
         var y = randi() % grid_height
         place_symbol(x, y, ".", -1, {"type": "star"})
+		}
     
     # Add ships
     var ship_types = ["small", "medium", "large", "alien"]

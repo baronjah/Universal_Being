@@ -79,7 +79,7 @@ func create_semantic_id(concept_path: String) -> String:
 		"navigation.camera.free": "cam.free",
 		"manifestation.word.create": "create.word",
 		"interaction.energy.touch": "touch.energy"
-	}
+}
 	
 	if semantic_map.has(concept_path):
 		return semantic_map[concept_path] + "." + generate_compact_id("semantic")
@@ -89,14 +89,15 @@ func create_semantic_id(concept_path: String) -> String:
 func decode_semantic_meaning(semantic_id: String) -> Dictionary:
 	var parts = semantic_id.split(".")
 	if parts.size() < 2:
-		return {"error": "invalid_semantic_id"}
+		return {"error": "invalid_semantic_id"
+}
 	
 	var meaning = {
 		"domain": parts[0],
 		"concept": parts[1] if parts.size() > 1 else "",
 		"instance": parts[2] if parts.size() > 2 else "",
 		"full_path": semantic_id
-	}
+}
 	
 	return meaning
 

@@ -76,17 +76,17 @@ func _ready():
     sync_timer.wait_time = 5.0 # Sync every 5 seconds
     sync_timer.one_shot = false
     sync_timer.autostart = true
-    sync_timer.connect("timeout", self, "_on_sync_timer_timeout")
+    sync_timer.connect(_on_sync_timer_timeout)
     add_child(sync_timer)
     
     print("Terminal API Bridge initialized")
 
 func _connect_terminal_signals():
     if dual_core_terminal:
-        dual_core_terminal.connect("core_switched", self, "_on_core_switched")
-        dual_core_terminal.connect("input_processed", self, "_on_terminal_input_processed")
-        dual_core_terminal.connect("special_pattern_detected", self, "_on_special_pattern_detected")
-        dual_core_terminal.connect("miracle_triggered", self, "_on_miracle_triggered")
+        dual_core_terminal.connect(_on_core_switched)
+        dual_core_terminal.connect(_on_terminal_input_processed)
+        dual_core_terminal.connect(_on_special_pattern_detected)
+        dual_core_terminal.connect(_on_miracle_triggered)
         
         # Initialize monitors for existing cores
         var cores = dual_core_terminal.get_all_cores()
@@ -103,7 +103,7 @@ func _connect_game_systems():
     # Connect to turn system
     turn_system = get_node_or_null("/root/TurnSystem")
     if turn_system:
-        turn_system.connect("turn_advanced", self, "_on_turn_advanced")
+        turn_system.connect(_on_turn_advanced)
     
     # Connect to word comment system
     word_comment_system = get_node_or_null("/root/WordCommentSystem")

@@ -10,7 +10,6 @@
 # PURPOSE: Help diagnose and fix gizmo clicking issues
 # CREATED: 2025-05-30
 # ==================================================
-
 extends UniversalBeingBase
 func _ready() -> void:
 	pentagon_ready()
@@ -22,7 +21,7 @@ func pentagon_ready() -> void:
 
 func _register_debug_commands() -> void:
 	"""Register debug commands with console"""
-	var console = get_node_or_null("/root/ConsoleManager")
+	var console = get_node_or_null("root/ConsoleManager")
 	if not console:
 		print("[GizmoDebug] Console not found!")
 		return
@@ -143,7 +142,7 @@ func cmd_show_gizmo_layers(_args: Array) -> String:
 	output += "\n"
 	
 	# Check mouse interaction system
-	var mouse_system = get_node_or_null("/root/MainGame/MouseInteractionSystem")
+	var mouse_system = get_node_or_null("root/MainGame/MouseInteractionSystem")
 	if mouse_system:
 		output += "✅ MouseInteractionSystem found\n"
 		# Check what layers it's detecting

@@ -23,6 +23,7 @@ class RippleInstance:
 	var color: Color = Color.CYAN
 	var affected_beings: Array[String] = []
 	var ripple_type: String = "thought"
+
 	var mesh_instance: MeshInstance3D
 	var propagation_speed: float = 5.0
 	var decay_rate: float = 0.1
@@ -34,12 +35,14 @@ class RippleInstance:
 func _ready() -> void:
 	name = "ConsciousnessRippleSystem"
 	print("🌊 Consciousness Ripple System: Initializing...")
+
 	
 	_initialize_ripple_meshes()
 	_create_ripple_material()
 	_connect_to_beings()
 	
 	print("🌊 Consciousness Ripple System: Active - Reality will ripple with every thought!")
+
 
 func _initialize_ripple_meshes() -> void:
 	"""Create pool of ripple meshes for performance"""
@@ -109,6 +112,7 @@ func create_consciousness_ripple(origin: Vector3, ripple_type: String, intensity
 	active_ripples.append(ripple)
 	
 	print("🌊 Consciousness Ripple: %s at %v (intensity: %.2f)" % [ripple_type, origin, intensity])
+
 
 func _configure_ripple_by_type(ripple: RippleInstance) -> void:
 	"""Configure ripple properties based on type"""
@@ -200,6 +204,7 @@ func _propagate_to_beings(ripple: RippleInstance, delta: float) -> void:
 func _trigger_consciousness_response(being: UniversalBeing, ripple: RippleInstance, intensity: float) -> void:
 	"""Trigger consciousness response in affected being"""
 	print("🌊 Consciousness Impact: %s affected by %s ripple (intensity: %.2f)" % [being.being_name, ripple.ripple_type, intensity])
+
 	
 	# Different responses based on ripple type and being state
 	match ripple.ripple_type:
@@ -209,6 +214,7 @@ func _trigger_consciousness_response(being: UniversalBeing, ripple: RippleInstan
 				if being.has_method("change_state"):
 					being.change_state(UniversalBeing.BeingState.THINKING, "inspired by creation ripple")
 				print("✨ %s awakened by creation ripple! Consciousness: %d" % [being.being_name, being.consciousness_level])
+	
 				
 		"evolution":
 			if being.has_method("get_current_state") and being.get_current_state() == UniversalBeing.BeingState.IDLE:
@@ -217,6 +223,7 @@ func _trigger_consciousness_response(being: UniversalBeing, ripple: RippleInstan
 				print("🦋 %s begins evolving from evolution ripple!" % being.being_name)
 				
 		"interaction":
+
 			# Create visual connection
 			_create_consciousness_thread(ripple.origin, being.global_position, ripple.color)
 			if being.has_method("change_state"):
@@ -224,6 +231,7 @@ func _trigger_consciousness_response(being: UniversalBeing, ripple: RippleInstan
 			print("🔗 %s connected by interaction ripple!" % being.being_name)
 			
 		"thought":
+
 			# Thought contagion - beings start thinking similar thoughts
 			if being.consciousness_level >= 2:
 				if being.has_method("change_state"):
@@ -231,17 +239,20 @@ func _trigger_consciousness_response(being: UniversalBeing, ripple: RippleInstan
 				print("💭 %s caught thought ripple - now thinking!" % being.being_name)
 				
 		"transcendence":
+
 			# Massive consciousness boost
 			if being.consciousness_level < 7:
 				being.consciousness_level = min(7, being.consciousness_level + 2)
 				if being.has_method("change_state"):
 					being.change_state(UniversalBeing.BeingState.TRANSCENDING, "transcendence ripple enlightenment")
 				print("🌟 %s transcends from ripple! Consciousness: %d" % [being.being_name, being.consciousness_level])
+	
 
 func _create_consciousness_thread(from: Vector3, to: Vector3, color: Color) -> void:
 	"""Create visual thread connecting consciousness"""
 	# This could be enhanced with a beam/line renderer
 	print("🧵 Consciousness thread: %v → %v" % [from, to])
+
 
 # ===== MESH POOL MANAGEMENT =====
 
@@ -298,6 +309,7 @@ func get_ripple_count() -> int:
 
 func get_ripple_info() -> Array[Dictionary]:
 	"""API: Get info about all active ripples"""
+
 	var info: Array[Dictionary] = []
 	for ripple in active_ripples:
 		info.append({

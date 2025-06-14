@@ -10,11 +10,10 @@
 # PURPOSE: Fix gizmo when it disappears or stops working
 # CREATED: 2025-05-30
 # ==================================================
-
-extends UniversalBeingBase
+extends \2
 func _ready() -> void:
 	print("[GizmoReset] Adding gizmo reset command...")
-	var console = get_node_or_null("/root/ConsoleManager")
+	var console = get_node_or_null("root/ConsoleManager")
 	if console:
 		console.register_command("gizmo_reset", cmd_gizmo_reset, "Reset and recreate gizmo system")
 		console.register_command("gizmo_create", cmd_gizmo_create, "Force create new gizmo")

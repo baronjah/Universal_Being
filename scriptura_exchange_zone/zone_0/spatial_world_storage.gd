@@ -1,10 +1,10 @@
 extends Node
 
-# Spatial World Storage System
+# Node3D World Storage System
 # Handles storage and management of 3D spaces, maps and akashic record data
 # Terminal 1: Divine Word Genesis
 
-class_name SpatialWorldStorage
+class_name SpatialWorldStorage_spatialworldstorage_spatialw
 
 # Coordinate system definitions
 const MAX_DIMENSION = 12
@@ -38,7 +38,7 @@ class DimensionalPoint:
 		coordinate = coord
 		dimension = dim
 		power = pwr
-		timestamp = OS.get_unix_time()
+		timestamp = OS.Time.get_unix_time_from_system()
 	
 	func to_dict():
 		return {
@@ -71,7 +71,7 @@ class AkashicEntry:
 		author = auth
 		tags = entry_tags
 		connections = []
-		entry_id = "entry_%d_%d" % [OS.get_unix_time(), randi() % 10000]
+		entry_id = "entry_%d_%d" % [OS.Time.get_unix_time_from_system(), randi() % 10000]
 	
 	func to_dict():
 		var conn_ids = []
@@ -101,12 +101,12 @@ class SpatialMap:
 		dimension = dim
 		grid = {}
 		entities = {}
-		creation_time = OS.get_unix_time()
+		creation_time = OS.Time.get_unix_time_from_system()
 		last_update = creation_time
 	
 	func add_point(key, point_data):
 		grid[key] = point_data
-		last_update = OS.get_unix_time()
+		last_update = OS.Time.get_unix_time_from_system()
 	
 	func get_point(key):
 		if grid.has(key):
@@ -115,7 +115,7 @@ class SpatialMap:
 	
 	func add_entity(entity_id, entity_data):
 		entities[entity_id] = entity_data
-		last_update = OS.get_unix_time()
+		last_update = OS.Time.get_unix_time_from_system()
 	
 	func to_dict():
 		var grid_data = {}
@@ -143,8 +143,8 @@ class Notepad3DCell:
 		position = pos
 		content = cont
 		color = col
-		cell_id = "cell_%d_%d" % [OS.get_unix_time(), randi() % 10000]
-		last_edit = OS.get_unix_time()
+		cell_id = "cell_%d_%d" % [OS.Time.get_unix_time_from_system(), randi() % 10000]
+		last_edit = OS.Time.get_unix_time_from_system()
 	
 	func to_dict():
 		return {
@@ -175,13 +175,13 @@ class Notepad3D:
 	func _init(notebook_name, notebook_tags = []):
 		name = notebook_name
 		cells = {}
-		creation_time = OS.get_unix_time()
+		creation_time = OS.Time.get_unix_time_from_system()
 		last_update = creation_time
 		tags = notebook_tags
 	
 	func add_cell(cell):
 		cells[cell.cell_id] = cell
-		last_update = OS.get_unix_time()
+		last_update = OS.Time.get_unix_time_from_system()
 	
 	func get_cell(cell_id):
 		if cells.has(cell_id):
@@ -314,7 +314,7 @@ func load_akashic_records():
 			
 			akashic_entries = temp_entries
 
-# Spatial Maps functions
+# Node3D Maps functions
 func create_spatial_map(name, dimension = 1):
 	var map = SpatialMap.new(name, dimension)
 	spatial_maps[name] = map

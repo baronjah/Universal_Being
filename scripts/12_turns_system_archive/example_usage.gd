@@ -14,6 +14,7 @@ func _ready():
   # Get summary of integration
   var summary = integrator.get_integration_summary()
   print("\nIntegration Summary:\n" + summary)
+
   
   # Get files with hash symbols
   var files_with_hash = integrator.get_files_with_hash_symbols()
@@ -24,6 +25,7 @@ func _ready():
   # Generate hash visual map
   var hash_map = integrator.generate_hash_visual_map()
   print("\nHash Visual Map:\n" + hash_map)
+
   
   # Example: Initialize files for a specific category
   var category = "main"

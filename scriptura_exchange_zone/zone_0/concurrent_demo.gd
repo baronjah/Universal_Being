@@ -147,7 +147,7 @@ func check_system_status():
 func prepare_data():
 	terminal_memory.add_memory_text("Step 1: Preparing data...", "system")
 	await(get_tree().create_timer(0.5), "timeout")
-	return {"status": "prepared", "timestamp": OS.get_unix_time()}
+	return {"status": "prepared", "timestamp": OS.Time.get_unix_time_from_system()}
 }
 
 # Chain example: Step 2 - Process data

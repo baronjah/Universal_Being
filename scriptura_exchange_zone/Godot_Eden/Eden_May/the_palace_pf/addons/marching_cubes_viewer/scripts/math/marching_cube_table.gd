@@ -22,8 +22,8 @@
 # SOFTWARE.
 
 @tool
-extends Resource
-class_name MarchingCubeTable
+extends \2
+class_name MarchingCubeTable_marchingcubetable_marching
 
 static func get_tessellation_table()->Array:
 	return triangles

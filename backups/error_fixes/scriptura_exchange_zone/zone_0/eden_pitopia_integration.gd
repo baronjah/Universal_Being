@@ -101,7 +101,7 @@ func find_system_integrator():
     # If not found, try to find it globally
     if not integrator:
         if has_node("/root/SystemIntegrator"):
-            integrator = get_node("/root/SystemIntegrator")
+            integrator = get_node("\1") as Node
     
     return integrator
 
@@ -264,40 +264,40 @@ func connect_signals():
     # Connect signals from Eden Harmony
     if harmony_connector:
         if harmony_connector.has_signal("word_manifested"):
-            harmony_connector.connect("word_manifested", self, "_on_harmony_word_manifested")
+            harmony_connector.connect(_on_harmony_word_manifested)
         
         if harmony_connector.has_signal("dimension_changed"):
-            harmony_connector.connect("dimension_changed", self, "_on_harmony_dimension_changed")
+            harmony_connector.connect(_on_harmony_dimension_changed)
         
         if harmony_connector.has_signal("turn_advanced"):
-            harmony_connector.connect("turn_advanced", self, "_on_harmony_turn_advanced")
+            harmony_connector.connect(_on_harmony_turn_advanced)
         
         if harmony_connector.has_signal("entity_created"):
-            harmony_connector.connect("entity_created", self, "_on_harmony_entity_created")
+            harmony_connector.connect(_on_harmony_entity_created)
     
     # Connect signals from Pitopia
     if pitopia_main:
         if pitopia_main.has_signal("word_manifested"):
-            pitopia_main.connect("word_manifested", self, "_on_pitopia_word_manifested")
+            pitopia_main.connect(_on_pitopia_word_manifested)
         
         if pitopia_main.has_signal("dimension_changed"):
-            pitopia_main.connect("dimension_changed", self, "_on_pitopia_dimension_changed")
+            pitopia_main.connect(_on_pitopia_dimension_changed)
         
         if pitopia_main.has_signal("turn_advanced"):
-            pitopia_main.connect("turn_advanced", self, "_on_pitopia_turn_advanced")
+            pitopia_main.connect(_on_pitopia_turn_advanced)
     
     # Connect signals from integrated game system
     if integrated_game_system:
         if integrated_game_system.has_signal("dimension_changed"):
-            integrated_game_system.connect("dimension_changed", self, "_on_integrated_dimension_changed")
+            integrated_game_system.connect(_on_integrated_dimension_changed)
         
         if integrated_game_system.has_signal("entity_created"):
-            integrated_game_system.connect("entity_created", self, "_on_integrated_entity_created")
+            integrated_game_system.connect(_on_integrated_entity_created)
     
     # Connect signals from akashic controller
     if akashic_controller:
         if akashic_controller.has_signal("record_created"):
-            akashic_controller.connect("record_created", self, "_on_akashic_record_created")
+            akashic_controller.connect(_on_akashic_record_created)
 
 # ----- DIMENSION MANAGEMENT -----
 func synchronize_dimensions(dimension_number):
@@ -352,7 +352,7 @@ func apply_dimensional_effects(dimension_number):
     if pitopia_main and pitopia_main.has_method("get_environment"):
         environment = pitopia_main.get_environment()
     elif has_node("/root/WorldEnvironment"):
-        environment = get_node("/root/WorldEnvironment").environment
+        environment = get_node("\1") as Node.environment
     
     if environment:
         # Update fog color
@@ -502,7 +502,7 @@ func get_dimension_properties(dimension_number):
 
 # ----- WORD MANIFESTATION -----
 func manifest_word(word, system_name = "integration", dimension = 0):
-    if word.empty():
+    if word.is_empty():
         return null
     
     if dimension == 0:
@@ -938,7 +938,7 @@ func _on_integrated_entity_created(entity_id, entity_type, entity_data):
     # Create akashic record if enabled and entity type is word
     if record_words_to_akashic and akashic_controller and entity_type == "word":
         var word = entity_data.get("text", "")
-        if not word.empty():
+        if not word.is_empty():
             manifest_word(word, "akashic", active_dimension)
     
     # Emit signal
@@ -1007,7 +1007,7 @@ func get_dimension_names():
 
 # ----- COMMAND PROCESSING -----
 func process_command(command_text):
-    if command_text.empty():
+    if command_text.is_empty():
         return "Please enter a command"
     
     # Split command and arguments
@@ -1048,7 +1048,7 @@ func process_command(command_text):
             return "Unknown command: " + cmd
 
 func process_manifest_command(args):
-    if args.empty():
+    if args.is_empty():
         return "Usage: manifest <word> [system]"
     
     var parts = args.split(" ")
@@ -1063,7 +1063,7 @@ func process_manifest_command(args):
         return "Failed to manifest word: " + word
 
 func process_dimension_command(args):
-    if args.empty():
+    if args.is_empty():
         return "Current dimension: %d (%s - %s)" % [
             active_dimension,
             get_dimension_symbols()[active_dimension - 1],
@@ -1087,7 +1087,7 @@ func process_dimension_command(args):
     return "Usage: dimension [1-12]"
 
 func process_connect_command(args):
-    if args.empty():
+    if args.is_empty():
         return "Usage: connect <entity1_id> <entity2_id> [connection_type]"
     
     var parts = args.split(" ")
@@ -1105,7 +1105,7 @@ func process_connect_command(args):
         return "Failed to connect entities"
 
 func process_evolve_command(args):
-    if args.empty():
+    if args.is_empty():
         return "Usage: evolve <entity_id>"
     
     var entity_id = args
@@ -1116,7 +1116,7 @@ func process_evolve_command(args):
         return "Failed to evolve entity: " + entity_id
 
 func process_turn_command(args):
-    if args == "advance" or args.empty():
+    if args == "advance" or args.is_empty():
         if advance_turn():
             return "Advanced to turn %d: %s (%s)" % [
                 active_dimension,
@@ -1129,7 +1129,7 @@ func process_turn_command(args):
     return "Usage: turn [advance]"
 
 func process_sync_command(args):
-    if args.empty():
+    if args.is_empty():
         return "Dimension sync is currently: " + ("ON" if dimension_sync_active else "OFF")
     
     match args:

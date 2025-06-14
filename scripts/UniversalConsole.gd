@@ -79,9 +79,9 @@ func pentagon_sewers() -> void:
         var state = {
             "command_history": command_history,
             "ai_channel_active": ai_channel_active
-        }
         akashic_records.save_record("console_state", "system", state)
     super.pentagon_sewers()
+}
 
 func _setup_ui() -> void:
     """Create console UI"""
@@ -218,6 +218,7 @@ func process_console_command(cmd: String) -> void:
                 load_session(args)
             else:
                 output_line("Usage: /load <session_name>")
+				
         
         "macro":
             process_macro_command(args)
@@ -236,6 +237,7 @@ func process_console_command(cmd: String) -> void:
         
         _:
             output_line("Unknown console command: /%s" % command)
+			
 
 func process_ai_command(args: String) -> void:
     """Handle AI-specific commands"""
@@ -254,12 +256,14 @@ func process_ai_command(args: String) -> void:
                 output_line("[color=purple][Gemma] %s[/color]" % message)
             else:
                 output_line("Usage: /ai say <message>")
+				
         
         "think":
             if message:
                 output_line("[color=purple][Gemma Thinking] %s[/color]" % message)
             else:
                 output_line("Usage: /ai think <thought>")
+				
         
         "act":
             if message:
@@ -268,6 +272,7 @@ func process_ai_command(args: String) -> void:
                     output_line("[color=purple][Gemma Action] %s[/color]" % str(result))
             else:
                 output_line("Usage: /ai act <command>")
+				
 
 func process_macro_command(args: String) -> void:
     """Handle macro subcommands"""
@@ -290,6 +295,7 @@ func process_macro_command(args: String) -> void:
                 output_line("🔴 Recording macro: %s" % macro_args)
             else:
                 output_line("Usage: /macro record <name>")
+				
         
         "stop":
             if macro_system.stop_recording():
@@ -303,8 +309,10 @@ func process_macro_command(args: String) -> void:
                 output_line("▶️ Playing macro: %s" % macro_args)
             else:
                 output_line("Usage: /macro play <name>")
+				
         
         "list":
+		
             var macros = macro_system.list_macros()
             output_line("Available macros:")
             for macro in macros:
@@ -349,6 +357,7 @@ func show_tutorial() -> void:
     output_line("")
     
     output_line("Try: [color=green]create being TestSubject[/color]")
+	
 
 func reload_reality() -> void:
     """Hot reload the entire game while running"""
@@ -378,8 +387,8 @@ func capture_reality_state() -> Dictionary:
         "beings": [],
         "gravity": ProjectSettings.get_setting("physics/2d/default_gravity"),
         "time_scale": Engine.time_scale,
-        "triggers": command_processor.natural_triggers.duplicate() if command_processor else {}
-    }
+        "triggers": command_processor.natural_triggers.duplicate() if command_processor else {
+		}
     
     # Capture all beings
     for being in get_tree().get_nodes_in_group("universal_beings"):
@@ -409,8 +418,8 @@ func save_session() -> void:
             "timestamp": Time.get_unix_time_from_system(),
             "commands": command_history,
             "reality_state": capture_reality_state()
-        }
         akashic_records.save_record("console_session", "system", session_data)
+}
 
 func load_session(name: String) -> void:
     """Load session from Akashic Records"""
@@ -419,6 +428,7 @@ func load_session(name: String) -> void:
         if data:
             restore_reality_state(data.reality_state)
             output_line("Session loaded: %s" % name)
+			}
 
 func _load_console_state() -> void:
     """Load saved console state"""

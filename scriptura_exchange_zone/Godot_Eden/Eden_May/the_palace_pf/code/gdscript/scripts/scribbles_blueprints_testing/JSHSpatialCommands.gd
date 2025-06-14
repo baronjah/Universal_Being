@@ -1,7 +1,7 @@
 extends Node
-class_name JSHSpatialCommands
+class_name JSHSpatialCommands_JSHSpatialCommands_JSHSpati
 
-# Spatial system console commands
+# Node3D system console commands
 var console_manager: JSHConsoleManager = null
 var spatial_manager: JSHSpatialManager = null
 var commands: Dictionary = {}
@@ -25,7 +25,7 @@ func register_commands() -> void:
             "arg_descriptions": ["Subcommand: list, create, delete, info, entities, transition, activate, subdivide"]
         },
         "spatial": {
-            "description": "Spatial query commands",
+            "description": "Node3D query commands",
             "usage": "spatial <subcommand> [arguments]",
             "callback": Callable(self, "cmd_spatial"),
             "min_args": 1,
@@ -366,7 +366,7 @@ func cmd_zone_subdivide(self, args: Array) -> Dictionary:
         console_manager.print_error("Failed to subdivide zone: " + zone_id)
         return {"success": false, "message": "Failed to subdivide zone"}
 
-# Spatial command handler
+# Node3D command handler
 func cmd_spatial(self, args: Array) -> Dictionary:
     if args.size() < 1:
         console_manager.print_error("Missing subcommand for spatial")
@@ -391,7 +391,7 @@ func cmd_spatial(self, args: Array) -> Dictionary:
             console_manager.print_line("Available subcommands: radius, box, nearest, ray, stats")
             return {"success": false, "message": "Unknown subcommand: " + subcommand}
 
-# Spatial subcommands
+# Node3D subcommands
 func cmd_spatial_radius(self, args: Array) -> Dictionary:
     if args.size() < 4:
         console_manager.print_error("Usage: spatial radius <x> <y> <z> <radius> [type/tag] [value]")
@@ -535,18 +535,18 @@ func cmd_spatial_ray(self, args: Array) -> Dictionary:
 func cmd_spatial_stats(self, args: Array) -> Dictionary:
     var stats = spatial_manager.get_zone_statistics()
     
-    console_manager.print_line("Spatial System Statistics:")
+    console_manager.print_line("Node3D System Statistics:")
     console_manager.print_line("  Total Zones: " + str(stats.total_zones))
     console_manager.print_line("  Loaded Zones: " + str(stats.loaded_zones))
     console_manager.print_line("  Visible Entities: " + str(stats.visible_entities))
     console_manager.print_line("  Active Zone: " + str(stats.active_zone))
     console_manager.print_line("  Entity Positions: " + str(stats.entity_positions))
-    console_manager.print_line("  Spatial Queries: " + str(stats.spatial_queries))
+    console_manager.print_line("  Node3D Queries: " + str(stats.spatial_queries))
     console_manager.print_line("  Zone Transitions: " + str(stats.zone_transitions))
     
     return {
         "success": true,
-        "message": "Spatial statistics displayed",
+        "message": "Node3D statistics displayed",
         "stats": stats
     }
 

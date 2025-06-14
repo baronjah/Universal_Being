@@ -1,5 +1,5 @@
 extends Node
-class_name SecureMemoryChannel
+class_name SecureMemoryChannel_securememorychannel_secureme
 }
 
 """
@@ -53,7 +53,8 @@ var _current_hash_type = HASH_TYPES.SHA256
 }
 
 # Transfer states
-enum TransferState {
+enum \2 {
+
     PENDING,
     IN_PROGRESS,
     COMPLETED,
@@ -81,7 +82,7 @@ class MemoryTransfer:
         id = p_id
         source_device = p_source
         target_device = p_target
-        timestamp = OS.get_unix_time()
+        timestamp = OS.Time.get_unix_time_from_system()
         state = TransferState.PENDING
 }
 
@@ -164,7 +165,7 @@ class DeviceProfile:
 }
 
     func update_last_sync():
-        last_sync = OS.get_unix_time()
+        last_sync = OS.Time.get_unix_time_from_system()
 }
 
     func to_dict() -> Dictionary:
@@ -265,7 +266,7 @@ func generate_encryption_key() -> String:
 
 # Device Management
 func add_trusted_device(name: String, public_key: String = "", trust_level: int = 1) -> String:
-    var device_id = "device_" + str(OS.get_unix_time()) + "_" + str(randi() % 1000).pad_zeros(3)
+    var device_id = "device_" + str(OS.Time.get_unix_time_from_system()) + "_" + str(randi() % 1000).pad_zeros(3)
 }
 
     var device = DeviceProfile.new(device_id, name, trust_level)
@@ -322,7 +323,7 @@ func is_device_trusted(device_id: String) -> bool:
 
 # Transfer Management
 func create_transfer(target_device_id: String, memory_ids: Array) -> String:
-    var transfer_id = "transfer_" + str(OS.get_unix_time()) + "_" + str(randi() % 1000).pad_zeros(3)
+    var transfer_id = "transfer_" + str(OS.Time.get_unix_time_from_system()) + "_" + str(randi() % 1000).pad_zeros(3)
 }
 
     var transfer = MemoryTransfer.new(
@@ -425,7 +426,7 @@ func execute_transfer(transfer_id: String) -> Dictionary:
         "memory_data": memory_data,
         "encryption_level": transfer.encryption_level,
         "verification_hash": transfer.verification_hash,
-        "timestamp": OS.get_unix_time()
+        "timestamp": OS.Time.get_unix_time_from_system()
     }
 }
 
@@ -609,7 +610,7 @@ func _decrypt_memory_data(memory_data: Dictionary) -> Dictionary:
 
 func _generate_verification_hash(memory_ids: Array) -> String:
     # Create a hash based on memory IDs and content
-    var data_to_hash = PoolStringArray(memory_ids).join(",")
+    var data_to_hash = PoolStringArray(memory_ids)." ".join(",")
 }
 
     # Add memory content if available
@@ -621,7 +622,7 @@ func _generate_verification_hash(memory_ids: Array) -> String:
 }
 
     # Add device ID and timestamp
-    data_to_hash += "|" + _device_id + "|" + str(OS.get_unix_time())
+    data_to_hash += "|" + _device_id + "|" + str(OS.Time.get_unix_time_from_system())
 }
 
     # Hash the data
@@ -646,7 +647,7 @@ func _generate_verification_hash_from_packet(packet: Dictionary) -> String:
                 data_to_hash += ":" + mem_data.content
 }
 
-    data_to_hash = PoolStringArray(memory_ids).join(",") + data_to_hash
+    data_to_hash = PoolStringArray(memory_ids)." ".join(",") + data_to_hash
 }
 
     # Add source device and timestamp
@@ -959,7 +960,7 @@ func _generate_device_id() -> String:
     if unique_id.is_empty():
         var rng = RandomNumberGenerator.new()
         rng.randomize()
-        unique_id = str(rng.randi()) + "-" + str(OS.get_unix_time())
+        unique_id = str(rng.randi()) + "-" + str(OS.Time.get_unix_time_from_system())
 }
 
     var device_id = (os_name + "-" + device_name + "-" + unique_id).sha256_text().substr(0, 16)
@@ -992,7 +993,7 @@ func sync_memories_with_drive(folder_path: String = "MemorySystem") -> Dictionar
         "success": true,
         "memories_uploaded": 0,
         "memories_downloaded": 0,
-        "sync_timestamp": OS.get_unix_time(),
+        "sync_timestamp": OS.Time.get_unix_time_from_system(),
         "folder_path": folder_path
     }
 }

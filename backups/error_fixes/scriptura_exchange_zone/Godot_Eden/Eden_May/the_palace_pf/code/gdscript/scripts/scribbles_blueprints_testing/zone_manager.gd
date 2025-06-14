@@ -56,7 +56,7 @@ func update_zone(zone_id: String, zone_name: String = "", boundaries: Dictionary
         print("ZoneManager: Cannot update non-existent zone: ", zone_id)
         return false
     
-    if not zone_name.empty():
+    if not zone_name.is_empty():
         zones[zone_id]["name"] = zone_name
     
     if not boundaries.is_empty():

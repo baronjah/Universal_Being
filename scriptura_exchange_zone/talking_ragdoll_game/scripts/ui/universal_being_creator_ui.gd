@@ -4,7 +4,6 @@
 # Created: May 31st, 2025 | Interface Revolution
 # Location: scripts/ui/universal_being_creator_ui.gd
 ################################################################
-
 extends UniversalBeingBase
 ################################################################
 # CORE VARIABLES - UI ELEMENTS
@@ -115,8 +114,8 @@ func _ready():
 	print("🎨 UNIVERSAL BEING CREATOR UI: Initializing visual interface...")
 	
 	# Register with Perfect Pentagon system instead of direct initialization
-	if has_node("/root/PerfectReady"):
-		var perfect_ready = get_node("/root/PerfectReady")
+	if has_node("root/PerfectReady"):
+		var perfect_ready = get_node("root/PerfectReady")
 		if perfect_ready.has_method("register_ready"):
 			perfect_ready.register_ready("UniversalBeingCreatorUI", _perfect_pentagon_init, [])
 	else:
@@ -583,8 +582,8 @@ func _create_being_at_position(position: Vector3):
 	final_properties["name"] = final_properties.get("name", selected_being_type + "_created")
 	
 	# Create through Universal Object Manager
-	if has_node("/root/UniversalObjectManager"):
-		var uom = get_node("/root/UniversalObjectManager")
+	if has_node("root/UniversalObjectManager"):
+		var uom = get_node("root/UniversalObjectManager")
 		var being = uom.create_object(selected_being_type, position, final_properties)
 		
 		if being:
@@ -665,8 +664,8 @@ func _connect_to_systems():
 	"""Connect to other game systems"""
 	
 	# Connect to console for commands
-	if has_node("/root/ConsoleManager"):
-		var console = get_node("/root/ConsoleManager")
+	if has_node("root/ConsoleManager"):
+		var console = get_node("root/ConsoleManager")
 		if "commands" in console:
 			console.commands["open_being_creator"] = _console_open_interface
 			console.commands["create_being"] = _console_create_being

@@ -13,7 +13,7 @@ var terminal_interface = null
 var storage_system = null
 
 # ----- SYSTEM LOADERS -----
-var systems_loaded = {}
+var systems_loaded = {
 var required_systems = [
     "AkashicNumberSystem",
     "DimensionalColorSystem",
@@ -37,7 +37,7 @@ var config = {
     "color_frequency": 99,
     "dimensional_depth": 1,
     "migration_backup": true
-}
+	}
 
 # ----- SIGNALS -----
 signal system_loaded(system_name)
@@ -360,6 +360,7 @@ func set_interface(interface_name):
                 visual_system.toggle_enabled()
         _:
             print("Unknown interface: " + interface_name)
+			}
     
     emit_signal("interface_ready", interface_name)
 
@@ -369,6 +370,7 @@ func show_welcome():
     message += "Current Turn: " + str(config.starting_turn) + "\n"
     message += "Dimensional Depth: " + str(config.dimensional_depth) + "\n"
     message += "Base Frequency: " + str(config.color_frequency) + "\n"
+	
     
     if terminal_interface and terminal_interface.has_method("print_message"):
         terminal_interface.print_message(message)
@@ -385,6 +387,7 @@ func process_wish(wish_text, priority = "normal", metadata = {}):
         var wish = storage_system.create_wish(wish_text, priority, metadata)
         
         if wish and ethereal_bridge and ethereal_bridge.has_method("update_wish"):
+		
             # Update wish in Akashic Records
             ethereal_bridge.update_wish(wish.id, "pending", {
                 "text": wish_text,
@@ -407,9 +410,11 @@ func execute_command(command):
 # ----- SIGNAL HANDLERS -----
 func _on_storage_connected(platform, status):
     print("Storage connected: " + platform + " - " + str(status))
+	
 
 func _on_wish_created(wish_id, wish_text):
     print("Wish created: " + wish_id + " - " + wish_text)
+	
     
     # Highlight in color system
     if color_animation_system:
@@ -417,24 +422,30 @@ func _on_wish_created(wish_id, wish_text):
 
 func _on_wish_completed(wish_id):
     print("Wish completed: " + wish_id)
+	
 
 func _on_word_stored(word, power, metadata):
     print("Word stored: " + word + " (power: " + str(power) + ")")
+	
     
     # Highlight in color system
     if color_system and color_system.has_method("start_pulse_animation"):
+	
         var frequency = 99 + (power * 10)  # Scale power to frequency
         frequency = clamp(frequency, 99, 999)
         color_system.start_pulse_animation(frequency, 3.0)
 
 func _on_gate_status_changed(gate_name, status):
     print("Gate status changed: " + gate_name + " - " + str(status))
+	
 
 func _on_wish_updated(wish_id, new_status):
     print("Wish updated: " + wish_id + " -> " + new_status)
+	
 
 func _on_firewall_breached(breach_info):
     print("FIREWALL BREACH: " + breach_info.type + " - " + breach_info.message)
+	
     
     # Flash warning in visual system
     if visual_system and visual_system.has_method("set_mode"):
@@ -443,6 +454,7 @@ func _on_firewall_breached(breach_info):
 func _on_command_executed(command, result):
     if config.debug_mode:
         print("Command executed: " + command)
+		
     
     # Highlight command in color system
     if color_animation_system:
@@ -450,9 +462,11 @@ func _on_command_executed(command, result):
 
 func _on_wish_processed(wish_id, result):
     print("Wish processed: " + wish_id)
+	
 
 func _on_interface_changed(interface_name):
     print("Interface changed to: " + interface_name)
+	
 
 func _on_terminal_ready():
     print("Terminal interface ready")
@@ -470,6 +484,7 @@ func change_turn(new_turn):
         color_animation_system.update_turn(new_turn, 12)
     
     if ethereal_bridge and ethereal_bridge.has_method("update_firewall"):
+	
         var firewall_level = "standard"
         if new_turn > 7:
             firewall_level = "divine"
@@ -538,6 +553,7 @@ func _log(message, is_error = false):
             push_error("EnhancedSystemLauncher: " + message)
         else:
             print("EnhancedSystemLauncher: " + message)
+			
 
 # ----- PUBLIC API -----
 func is_system_loaded(system_name):
@@ -557,7 +573,7 @@ func get_system_status():
         "current_turn": config.starting_turn,
         "dimensional_depth": config.dimensional_depth,
         "base_frequency": config.color_frequency
-    }
+		}
     
     # Add storage status if available
     if storage_system and storage_system.has_method("get_storage_status"):

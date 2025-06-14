@@ -1,9 +1,10 @@
 extends Node
 
-class_name DimensionalColorSystem
+class_name DimensionalColorSystem_dimensionalcolorsystem_dimensio
 
 # The 9 base dimensional colors + 3 extension colors
-enum DimColor {
+enum \2 {
+
 	AZURE,     # Dimension 1 - Foundation, associated with basic reality perception
 	EMERALD,   # Dimension 2 - Growth, associated with expansion and evolution
 	AMBER,     # Dimension 3 - Energy, associated with vital force and power

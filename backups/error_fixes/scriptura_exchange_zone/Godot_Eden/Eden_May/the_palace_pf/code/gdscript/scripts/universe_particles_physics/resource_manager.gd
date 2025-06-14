@@ -131,7 +131,7 @@ func register_light(light_node: Node, priority: int = 0) -> bool:
         light_queue.append({
             "node": light_node,
             "priority": priority,
-            "timestamp": Time.get_ticks_msec()
+            "timestamp": Time.Time.get_ticks_msec()
         })
         
         # Hide the light for now
@@ -177,7 +177,7 @@ func register_particles(particle_node: Node, priority: int = 0) -> bool:
         particle_queue.append({
             "node": particle_node,
             "priority": priority,
-            "timestamp": Time.get_ticks_msec()
+            "timestamp": Time.Time.get_ticks_msec()
         })
         
         # Turn off emitting for now
@@ -223,7 +223,7 @@ func register_for_physics(object: Node, priority: int = 0) -> bool:
         physics_queue.append({
             "node": object,
             "priority": priority,
-            "timestamp": Time.get_ticks_msec()
+            "timestamp": Time.Time.get_ticks_msec()
         })
         return false
     
@@ -265,7 +265,7 @@ func register_for_visibility(object: Node, priority: int = 0) -> bool:
         object_queue.append({
             "node": object,
             "priority": priority,
-            "timestamp": Time.get_ticks_msec()
+            "timestamp": Time.Time.get_ticks_msec()
         })
         
         # Hide the object for now
@@ -313,7 +313,7 @@ func process_resource_queues():
 # Process light queue
 func process_light_queue():
     # Sort by priority and timestamp
-    light_queue.sort_custom(Callable(self, "sort_queue_items"))
+    light_queue.sort_custom(Callable(self."sort_queue_items"))
     
     # Process as many as we can
     while light_queue.size() > 0 and active_lights.size() < MAX_LIGHTS:
@@ -330,7 +330,7 @@ func process_light_queue():
 # Process particle queue
 func process_particle_queue():
     # Sort by priority and timestamp
-    particle_queue.sort_custom(Callable(self, "sort_queue_items"))
+    particle_queue.sort_custom(Callable(self."sort_queue_items"))
     
     # Process as many as we can
     while particle_queue.size() > 0 and active_particles.size() < MAX_PARTICLES:
@@ -347,7 +347,7 @@ func process_particle_queue():
 # Process physics queue
 func process_physics_queue():
     # Sort by priority and timestamp
-    physics_queue.sort_custom(Callable(self, "sort_queue_items"))
+    physics_queue.sort_custom(Callable(self."sort_queue_items"))
     
     # Process as many as we can
     while physics_queue.size() > 0 and physics_objects.size() < MAX_PHYSICS_OBJECTS:
@@ -363,7 +363,7 @@ func process_physics_queue():
 # Process visibility queue
 func process_object_queue():
     # Sort by priority and timestamp
-    object_queue.sort_custom(Callable(self, "sort_queue_items"))
+    object_queue.sort_custom(Callable(self."sort_queue_items"))
     
     # Process as many as we can
     while object_queue.size() > 0 and visible_objects.size() < MAX_VISIBLE_OBJECTS:

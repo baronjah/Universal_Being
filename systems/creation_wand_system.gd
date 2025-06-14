@@ -106,7 +106,7 @@ func _modify_current_being() -> void:
         "scale": Vector3(1.1, 1.1, 1.1),
         "color": Color(randf(), randf(), randf(), 1.0),
         "consciousness": current_being.consciousness_level + 0.1
-    }
+		}
     
     emit_signal("being_modified", current_being, modification)
     _apply_modification(current_being, modification)
@@ -122,6 +122,7 @@ func _apply_modification(being: Node, modification: Dictionary) -> void:
     
     # Apply color
     if "color" in modification:
+	
         var mesh = being.get_node_or_null("MeshInstance3D")
         if mesh and mesh.mesh:
             var material = StandardMaterial3D.new()

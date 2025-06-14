@@ -7,8 +7,8 @@ var command_history = []
 
 func _ready():
 	# Initialize UI components
-	$CommandInput.connect("text_submitted", self, "_on_command_submitted")
-	$ElementSelector.connect("item_selected", self, "_on_element_selected")
+	$CommandInput.connect(_on_command_submitted)
+	$ElementSelector.connect(_on_element_selected)
 	
 func _on_command_submitted(command):
 	# Parse and execute command

@@ -1,5 +1,6 @@
 @tool
-class_name VisualShaderNodeMathsNoiseSineWave extends VisualShaderNodeCustom
+class_name VisualShaderNodeMathsNoiseSineWave_NoiseSineWave_NoiseSin
+extends \2
 
 func _get_name() -> String:
 	return "NoiseSineWave"

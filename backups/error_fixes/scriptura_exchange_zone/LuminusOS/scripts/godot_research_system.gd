@@ -121,9 +121,9 @@ func search_code(search_term, filters = {}):
             })
     
     # Sort results by relevance
-    results.files.sort_custom(func(a, b): return a.relevance > b.relevance)
-    results.classes.sort_custom(func(a, b): return a.relevance > b.relevance)
-    results.functions.sort_custom(func(a, b): return a.relevance > b.relevance)
+    results.files.sort_custom(func(a.b): return a.relevance > b.relevance)
+    results.classes.sort_custom(func(a.b): return a.relevance > b.relevance)
+    results.functions.sort_custom(func(a.b): return a.relevance > b.relevance)
     
     # Add usage examples for top results
     if results.functions.size() > 0:
@@ -239,7 +239,7 @@ func search_for_function(func_name):
             })
     
     # Sort by relevance
-    results.functions.sort_custom(func(a, b): return a.relevance > b.relevance)
+    results.functions.sort_custom(func(a.b): return a.relevance > b.relevance)
     
     # Add usage examples for top result
     if results.functions.size() > 0:
@@ -280,7 +280,7 @@ func search_for_signal(signal_name):
             })
     
     # Sort by relevance
-    results.signals.sort_custom(func(a, b): return a.relevance > b.relevance)
+    results.signals.sort_custom(func(a.b): return a.relevance > b.relevance)
     
     # Add emit and connect examples for top result
     if results.signals.size() > 0:
@@ -305,7 +305,7 @@ func search_inherited_classes(base_class):
             })
     
     # Sort alphabetically
-    results.derived_classes.sort_custom(func(a, b): return a.name < b.name)
+    results.derived_classes.sort_custom(func(a.b): return a.name < b.name)
     
     return results
 
@@ -408,7 +408,7 @@ func build_class_hierarchy():
     # First pass: identify base classes (those that don't inherit from anything or inherit from Object)
     for class_name in class_index:
         var inherits = class_index[class_name].inherits
-        if inherits.empty() or inherits == "Object" or inherits == "Reference":
+        if inherits.is_empty() or inherits == "Object" or inherits == "Reference":
             hierarchy[class_name] = {
                 "inherits": inherits,
                 "children": []
@@ -422,7 +422,7 @@ func build_class_hierarchy():
         var inherits = class_index[class_name].inherits
         
         # Skip if inherits is empty (should have been handled in the first pass)
-        if inherits.empty():
+        if inherits.is_empty():
             continue
         
         # Add class to its parent's children
@@ -451,7 +451,7 @@ func build_class_hierarchy():
 func visualize_code_structure(file_path = ""):
     var structure = []
     
-    if file_path.empty():
+    if file_path.is_empty():
         # Visualize overall code structure
         structure = _generate_overall_structure()
     else:
@@ -472,7 +472,7 @@ func index_godot_source(source_path = ""):
     if thread == null:
         thread = Thread.new()
     
-    if source_path.empty():
+    if source_path.is_empty():
         # Try to use default locations
         var potential_paths = [
             "/mnt/c/Users/Percision 15/Desktop/JustStuff/godot 4.2.2 sourcecode/godot-4.2/",
@@ -486,7 +486,7 @@ func index_godot_source(source_path = ""):
                 source_path = path
                 break
         
-        if source_path.empty():
+        if source_path.is_empty():
             indexing_in_progress = false
             return {"error": "Could not find Godot source code. Please specify a path."}
     
@@ -781,7 +781,7 @@ func _parse_file_content(file_path, lines):
         # C++ class definition: class ClassName {
         if (trimmed.begins_with("class ") or trimmed.find(" class ") > 0) and (trimmed.find("{") > 0 or trimmed.ends_with(":")):
             var class_name = _extract_class_name(trimmed)
-            if not class_name.empty():
+            if not class_name.is_empty():
                 current_class = class_name
                 in_class = true
                 class_match = true
@@ -864,7 +864,7 @@ func _parse_file_content(file_path, lines):
             continue
         
         # If not a doc comment, clear the pending comments
-        if not trimmed.empty() and not trimmed.begins_with("#") and not class_match:
+        if not trimmed.is_empty() and not trimmed.begins_with("#") and not class_match:
             pending_doc_comment = []
         
         # Handle function definitions
@@ -873,7 +873,7 @@ func _parse_file_content(file_path, lines):
                         trimmed.find("(") > 0 and (trimmed.find("{") > 0 or trimmed.ends_with(":"))):
             
             var func_name = _extract_function_name(trimmed)
-            if not func_name.empty() and not func_name.begins_with("_") and func_name.is_valid_identifier():
+            if not func_name.is_empty() and not func_name.begins_with("_") and func_name.is_valid_identifier():
                 var return_type = ""
                 var arguments = _extract_function_arguments(trimmed)
                 
@@ -905,7 +905,7 @@ func _parse_file_content(file_path, lines):
         # Handle signal definitions
         if in_class and trimmed.begins_with("signal "):
             var signal_name = _extract_signal_name(trimmed)
-            if not signal_name.empty():
+            if not signal_name.is_empty():
                 var arguments = []
                 
                 # Extract signal arguments
@@ -1039,7 +1039,7 @@ func _extract_function_arguments(line):
             if arg_parts.size() > 1:
                 arg_type = arg_parts[1].strip_edges()
             
-            if not arg_name.empty():
+            if not arg_name.is_empty():
                 arguments.append({
                     "name": arg_name,
                     "type": arg_type
@@ -1074,7 +1074,7 @@ func _parse_signal_arguments(arg_str):
         if arg_parts.size() > 1:
             arg_type = arg_parts[1].strip_edges()
         
-        if not arg_name.empty():
+        if not arg_name.is_empty():
             arguments.append({
                 "name": arg_name,
                 "type": arg_type
@@ -1096,7 +1096,7 @@ func _format_doc_comment(comments):
         text = text.replace("#", "").replace("//", "")
         text = text.strip_edges()
         
-        if not text.empty():
+        if not text.is_empty():
             formatted += text + "\n"
     
     return formatted.strip_edges()
@@ -1336,7 +1336,7 @@ func _extract_class_documentation(file_path, line_number):
                 in_doc_comment = false
         elif line.begins_with("//") or line.begins_with("#"):
             docs.append(line)
-        elif line.empty():
+        elif line.is_empty():
             # Skip empty lines
             continue
         else:
@@ -1421,7 +1421,7 @@ func _generate_file_structure(file_path):
         var trimmed = line.strip_edges()
         
         # Skip empty lines and comments
-        if trimmed.empty() or trimmed.begins_with("#") or trimmed.begins_with("//"):
+        if trimmed.is_empty() or trimmed.begins_with("#") or trimmed.begins_with("//"):
             continue
         
         # Calculate indentation
@@ -1431,7 +1431,7 @@ func _generate_file_structure(file_path):
         if trimmed.begins_with("class ") or trimmed.begins_with("class_name "):
             var class_name = _extract_class_name(trimmed)
             
-            if not class_name.empty():
+            if not class_name.is_empty():
                 var node = {
                     "type": "class",
                     "name": class_name,
@@ -1455,7 +1455,7 @@ func _generate_file_structure(file_path):
         elif trimmed.begins_with("func ") or trimmed.begins_with("static func "):
             var func_name = _extract_function_name(trimmed)
             
-            if not func_name.empty():
+            if not func_name.is_empty():
                 var node = {
                     "type": "function",
                     "name": func_name,
@@ -1479,7 +1479,7 @@ func _generate_file_structure(file_path):
         elif trimmed.begins_with("signal "):
             var signal_name = _extract_signal_name(trimmed)
             
-            if not signal_name.empty():
+            if not signal_name.is_empty():
                 var node = {
                     "type": "signal",
                     "name": signal_name,
@@ -1500,7 +1500,7 @@ func _format_hierarchy_for_visualization(hierarchy):
     for class_name in hierarchy:
         var class_data = hierarchy[class_name]
         
-        if class_data.inherits.empty() or class_data.inherits == "Object" or class_data.inherits == "Reference":
+        if class_data.inherits.is_empty() or class_data.inherits == "Object" or class_data.inherits == "Reference":
             var node = _build_hierarchy_node(class_name, hierarchy)
             result.append(node)
     
@@ -1626,7 +1626,7 @@ func _cmd_class(args):
     var result = "Class: " + results.classes[0].name + "\n"
     result += "File: " + results.classes[0].file + "\n"
     
-    if not results.classes[0].inherits.empty():
+    if not results.classes[0].inherits.is_empty():
         result += "Inherits: " + results.classes[0].inherits + "\n"
     
     if results.derived_classes.size() > 0:
@@ -1642,11 +1642,11 @@ func _cmd_class(args):
                 if args_str.length() > 0:
                     args_str += ", "
                 args_str += arg.name
-                if not arg.type.empty():
+                if not arg.type.is_empty():
                     args_str += ": " + arg.type
             
             result += "- " + method.name + "(" + args_str + ")"
-            if not method.return_type.empty():
+            if not method.return_type.is_empty():
                 result += " -> " + method.return_type
             result += "\n"
     
@@ -1658,7 +1658,7 @@ func _cmd_class(args):
                 if args_str.length() > 0:
                     args_str += ", "
                 args_str += arg.name
-                if not arg.type.empty():
+                if not arg.type.is_empty():
                     args_str += ": " + arg.type
             
             result += "- " + signal_data.name + "(" + args_str + ")\n"
@@ -1683,11 +1683,11 @@ func _cmd_function(args):
             if args_str.length() > 0:
                 args_str += ", "
             args_str += arg.name
-            if not arg.type.empty():
+            if not arg.type.is_empty():
                 args_str += ": " + arg.type
         
         result += func_data.class + "." + func_data.name + "(" + args_str + ")"
-        if not func_data.return_type.empty():
+        if not func_data.return_type.is_empty():
             result += " -> " + func_data.return_type
         result += "\n"
         result += "File: " + func_data.file + ":" + str(func_data.line) + "\n\n"
@@ -1718,7 +1718,7 @@ func _cmd_signal(args):
             if args_str.length() > 0:
                 args_str += ", "
             args_str += arg.name
-            if not arg.type.empty():
+            if not arg.type.is_empty():
                 args_str += ": " + arg.type
         
         result += signal_data.class + "." + signal_data.name + "(" + args_str + ")\n"
@@ -1792,7 +1792,7 @@ func _cmd_visualize(args):
     # Return a text representation of the structure
     var output = "Code Structure Visualization:\n\n"
     
-    if file_path.empty():
+    if file_path.is_empty():
         # Overall structure
         for module in structure.children:
             output += "Module: " + module.name + "\n"
@@ -1855,7 +1855,7 @@ func _cmd_extract(args):
     
     var documentation = get_documentation(type, name)
     
-    if documentation.empty():
+    if documentation.is_empty():
         return "No documentation found for " + type + " '" + name + "'"
     
     return "Documentation for " + type + " '" + name + "':\n\n" + documentation
@@ -1877,4 +1877,10 @@ func _cmd_help():
            "- class:Name       - Search for specific class\n" + \
            "- func:Name        - Search for specific function\n" + \
            "- signal:Name      - Search for specific signal\n" + \
-           "- extends:Name     - Find classes inheriting from base class"
+           "- extends:Name     - Find classes inheriting from base class"}
+}
+}
+}
+}
+}
+}

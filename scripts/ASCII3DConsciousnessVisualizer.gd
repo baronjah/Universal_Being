@@ -21,6 +21,7 @@ func _ready():
 	print("🖥️ ASCII 3D Consciousness Visualizer initialized")
 	print("📟 Terminal dimensions: %dx%d" % [terminal_width, terminal_height])
 	print("🌌 THE ASCII LANGUAGE: 0=far/dark → 9=close/bright")
+
 	
 	# Initialize quantum consciousness structures
 	_initialize_consciousness_structures()
@@ -33,19 +34,19 @@ func _initialize_consciousness_structures():
 		{"pos": Vector3(0, 0, 0), "intensity": 9, "type": "core"},
 		{"pos": Vector3(10, 5, -5), "intensity": 7, "type": "thought"},
 		{"pos": Vector3(-8, 3, 8), "intensity": 6, "type": "memory"},
-		{"pos": Vector3(5, -2, 12), "intensity": 5, "type": "dream"}
+		{"pos": Vector3(5, -2, 12), "intensity": 5, "type": "dream"
 	]
 	
 	# Consciousness planes (flat thingies)
 	consciousness_planes = [
 		{"center": Vector3(0, -5, 0), "normal": Vector3.UP, "size": 15, "type": "reality"},
-		{"center": Vector3(0, 10, 0), "normal": Vector3.DOWN, "size": 12, "type": "possibility"}
+		{"center": Vector3(0, 10, 0), "normal": Vector3.DOWN, "size": 12, "type": "possibility"
 	]
 	
 	# Consciousness tunnels (cylinders)
 	consciousness_tunnels = [
 		{"start": Vector3(-20, 0, 0), "end": Vector3(20, 0, 0), "radius": 3, "type": "flow"},
-		{"start": Vector3(0, -15, 0), "end": Vector3(0, 15, 0), "radius": 2, "type": "axis"}
+		{"start": Vector3(0, -15, 0), "end": Vector3(0, 15, 0), "radius": 2, "type": "axis"
 	]
 
 func render_consciousness_frame(camera_pos: Vector3 = Vector3.ZERO, camera_rot: Vector3 = Vector3.ZERO) -> Array:
@@ -196,6 +197,7 @@ func print_ascii_frame(frame: Array):
 	
 	print(border)
 	print("🌌 THE ASCII LANGUAGE: 0=far/dark → 9=close/bright")
+}
 
 # API methods for consciousness revolution
 func create_consciousness_ripple(position: Vector3, intensity: float = 8.0):

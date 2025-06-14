@@ -1,6 +1,7 @@
 extends UniversalBeingBase
 # Console Layer Integration - Adds layer system commands to console
-# This is a patch that extends ConsoleManager with layer functionality
+# This is a patch that
+extends \2 with layer functionality
 
 var console_manager: Node
 var layer_system: Node
@@ -9,8 +10,8 @@ func _ready() -> void:
 	# Wait for autoloads
 	await get_tree().process_frame
 	
-	console_manager = get_node_or_null("/root/ConsoleManager")
-	layer_system = get_node_or_null("/root/LayerRealitySystem")
+	console_manager = get_node_or_null("root/ConsoleManager")
+	layer_system = get_node_or_null("root/LayerRealitySystem")
 	
 	if console_manager and layer_system:
 		_register_layer_commands()
@@ -83,7 +84,7 @@ func _cmd_layers(_args: Array) -> void:
 			active_count += 1
 	
 	_print("\nView Mode: " + _get_view_mode_name())
-	_print("Active Layers: " + str(active_count) + "/4")
+	_print("Active Layers: " + str(active_count) + "4")
 	
 	# Show keyboard shortcuts
 	_print("\n[color=#888888]Shortcuts: F1-F4 (toggle layers), F5 (cycle view mode)[/color]")

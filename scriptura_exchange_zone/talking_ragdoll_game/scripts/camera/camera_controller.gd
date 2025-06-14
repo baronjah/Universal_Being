@@ -4,9 +4,8 @@
 # PURPOSE: Create trackball camera orbiting around a central target node
 # CREATED: 2025-05-31 - Camera system integration
 # ==================================================
-
 extends UniversalBeingBase
-class_name CameraMovementSystem
+class_name CameraMovementSystem_cameraco
 
 # Camera components
 var camera_target: Node3D = null
@@ -14,15 +13,15 @@ var trackball_camera: Camera3D = null
 var camera_mount: Node3D = null
 
 # Camera settings
-@export var default_distance: float = 15.0
-@export var look_at_center: Vector3 = Vector3.ZERO
-@export var camera_enabled: bool = true
+@@@export var default_distance: float = 15.0
+@@@export var look_at_center: Vector3 = Vector3.ZERO
+@@@export var camera_enabled: bool = true
 
 # Movement settings
-@export var movement_speed: float = 10.0
-@export var movement_acceleration: float = 20.0
-@export var movement_friction: float = 15.0
-@export var fast_movement_multiplier: float = 3.0
+@@@export var movement_speed: float = 10.0
+@@@export var movement_acceleration: float = 20.0
+@@@export var movement_friction: float = 15.0
+@@@export var fast_movement_multiplier: float = 3.0
 
 # Movement state
 var movement_velocity: Vector3 = Vector3.ZERO
@@ -324,7 +323,7 @@ func _create_cursor_universal_being() -> void:
 func _register_camera_commands() -> void:
 	"""Register camera control commands with the console"""
 	print("🎮 [CameraMovementSystem] Looking for console manager...")
-	var console = get_node_or_null("/root/ConsoleManager")
+	var console = get_node_or_null("root/ConsoleManager")
 	if not console:
 		print("❌ [CameraMovementSystem] Console manager not found!")
 		return
@@ -758,7 +757,7 @@ func _cmd_camera_create_cursor(_args: Array) -> String:
 	"""Create cursor Universal Being manually"""
 	print("🖱️ [CameraMovementSystem] Manual cursor creation command called!")
 	
-	var universal_manager = get_node_or_null("/root/UniversalObjectManager")
+	var universal_manager = get_node_or_null("root/UniversalObjectManager")
 	if not universal_manager:
 		return "❌ Universal Object Manager not found"
 	

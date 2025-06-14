@@ -4,7 +4,6 @@
 # CREATED: 2025-05-23 - Track what worked when
 # ==================================================
 }
-
 extends UniversalBeingBase
 # Version tracking
 var current_version: Dictionary = {
@@ -178,7 +177,7 @@ func _test_feature(feature: String) -> Dictionary:
 
 func _test_console_system() -> Dictionary:
 	# Test if console opens and accepts commands
-	var console = get_node_or_null("/root/ConsoleManager")
+	var console = get_node_or_null("root/ConsoleManager")
 	if not console:
 		return {"working": false, "error": "Console not found"}
 }
@@ -193,7 +192,7 @@ func _test_console_system() -> Dictionary:
 
 func _test_object_spawning() -> Dictionary:
 	# Test if objects can be spawned
-	var world_builder = get_node_or_null("/root/WorldBuilder")
+	var world_builder = get_node_or_null("root/WorldBuilder")
 	if not world_builder:
 		return {"working": false, "error": "WorldBuilder not found"}
 }
@@ -214,7 +213,7 @@ func _test_ragdoll_physics() -> Dictionary:
 	var ragdolls = get_tree().get_nodes_in_group("ragdolls")
 	if ragdolls.is_empty():
 		# Check if spawning capability exists without actually spawning
-		var world_builder = get_node_or_null("/root/WorldBuilder")
+		var world_builder = get_node_or_null("root/WorldBuilder")
 		if world_builder and world_builder.has_method("create_ragdoll"):
 			return {"working": true, "details": "Ragdoll spawner available"}
 		else:
@@ -246,7 +245,7 @@ func _test_ragdoll_walking() -> Dictionary:
 
 func _test_scene_loading() -> Dictionary:
 	# Test scene loading system
-	var scene_loader = get_node_or_null("/root/SceneLoader")
+	var scene_loader = get_node_or_null("root/SceneLoader")
 	if not scene_loader:
 		return {"working": false, "error": "SceneLoader not found"}
 }
@@ -262,7 +261,7 @@ func _test_scene_loading() -> Dictionary:
 
 func _test_scene_saving() -> Dictionary:
 	# Test scene saving
-	var scene_loader = get_node_or_null("/root/SceneLoader")
+	var scene_loader = get_node_or_null("root/SceneLoader")
 	if scene_loader and scene_loader.has_method("save_current_scene"):
 		return {"working": true, "details": "Save method exists"}
 }
@@ -272,7 +271,7 @@ func _test_scene_saving() -> Dictionary:
 
 func _test_dialogue_system() -> Dictionary:
 	# Test dialogue display
-	var dialogue_system = get_node_or_null("/root/DialogueSystem")
+	var dialogue_system = get_node_or_null("root/DialogueSystem")
 	if not dialogue_system:
 		return {"working": false, "error": "DialogueSystem not found"}
 }
@@ -286,7 +285,7 @@ func _test_dialogue_system() -> Dictionary:
 
 func _test_astral_beings() -> Dictionary:
 	# Test astral being creation
-	var world_builder = get_node_or_null("/root/WorldBuilder")
+	var world_builder = get_node_or_null("root/WorldBuilder")
 	if world_builder and world_builder.has_method("create_astral_being"):
 		return {"working": true, "details": "Astral being spawner exists"}
 }
@@ -296,7 +295,7 @@ func _test_astral_beings() -> Dictionary:
 
 func _test_passive_mode() -> Dictionary:
 	# Test passive mode system
-	var console = get_node_or_null("/root/ConsoleManager")
+	var console = get_node_or_null("root/ConsoleManager")
 	if console and console.has_node("passive_controller"):
 		return {"working": true, "details": "Passive mode integrated"}
 }

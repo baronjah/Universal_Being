@@ -172,8 +172,8 @@ func connect_scriptura_to_eden():
 	print("Connecting Scriptura to Eden Core")
 	
 	# Connect signals
-	scriptura_turn_system.connect("turn_advanced", self, "_on_turn_advanced")
-	scriptura_turn_system.connect("turn_progress_updated", self, "_on_turn_progress_updated")
+	scriptura_turn_system.connect(_on_turn_advanced)
+	scriptura_turn_system.connect(_on_turn_progress_updated)
 	
 	# Set references
 	scriptura_turn_system.word_manager = word_manager
@@ -209,7 +209,7 @@ func connect_ocr_to_scriptura():
 	
 	# Connect with simple_ocr if available
 	if simple_ocr:
-		scriptura_turn_system.connect("ocr_result_ready", self, "_on_ocr_result_ready")
+		scriptura_turn_system.connect(_on_ocr_result_ready)
 	
 	return true
 
@@ -254,10 +254,10 @@ func setup_ocr_pipeline():
 	
 	# Connect OCR signals
 	if scriptura_turn_system:
-		scriptura_turn_system.connect("ocr_result_ready", self, "_on_ocr_result_ready")
+		scriptura_turn_system.connect(_on_ocr_result_ready)
 	
 	if simple_ocr:
-		simple_ocr.connect("ocr_completed", self, "_on_simple_ocr_completed")
+		simple_ocr.connect(_on_simple_ocr_completed)
 	
 	return true
 
@@ -389,7 +389,7 @@ func _show_scriptura_ui():
 	if scriptura_turn_system:
 		var scene = load("res://Eden_May/scriptura_turn_system.tscn")
 		if scene:
-			var instance = scene.instance()
+			var instance = scene.instantiate()
 			get_tree().root.add_child(instance)
 			return "Opened Scriptura Turn System UI"
 	

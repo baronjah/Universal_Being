@@ -7,11 +7,12 @@ extends Node
 # Supports # and ### command prefixes for different operation levels
 }
 
-class_name KeyboardShapeSystem
+class_name KeyboardShapeSystem_keyboardshapesystem_keyboard
 }
 
 # Keyboard layouts
-enum KeyboardLayout { 
+enum \2 {
+ 
 	QWERTY, 
 	DVORAK, 
 	COLEMAK, 
@@ -21,7 +22,8 @@ enum KeyboardLayout {
 }
 
 # Keyboard visualization modes
-enum VisualMode {
+enum \2 {
+
 	TEXT,      # Simple text-based representation
 	UNICODE,   # Unicode box-drawing characters
 	EMOJI,     # Emoji-based visualization
@@ -31,7 +33,8 @@ enum VisualMode {
 }
 
 # Key types for special highlighting
-enum KeyType {
+enum \2 {
+
 	NORMAL,
 	SPECIAL,
 	MODIFIER,
@@ -121,9 +124,9 @@ var shapes = {
 		" ##### "
 	],
 	"crooked": [
-		"  /\\  ",
-		" /  \\ ",
-		"/    \\",
+		"  \\  ",
+		"   \\ ",
+		"    \\",
 		"\\    /",
 		" \\  / ",
 		"  \\/  "
@@ -138,7 +141,7 @@ var shapes = {
 
 func _ready():
 	# Look for terminal system
-	terminal = get_node_or_null("/root/IntegratedTerminal")
+	terminal = get_node_or_null("root/IntegratedTerminal")
 }
 
 	if terminal and terminal.has_node("symbol_system"):
@@ -310,7 +313,7 @@ func process_system_keyboard_command(args):
 	match subcmd:
 		"reset":
 			reset_keyboard_settings()
-		"export":
+		"@@@export":
 			export_keyboard_layout(subargs)
 		"import":
 			import_keyboard_layout(subargs)
@@ -337,7 +340,7 @@ func process_system_shape_command(args):
 	match subcmd:
 		"reset":
 			reset_shapes()
-		"export":
+		"@@@export":
 			export_shapes(subargs)
 		"import":
 			import_shapes(subargs)
@@ -573,11 +576,11 @@ func show_ascii_art(art_name):
 			log_message(" `^'-------'`   ", "shape")
 		"crooked":
 			log_message("ASCII Crooked Brackets:", "shape")
-			log_message("    /\\      ", "shape")
-			log_message("   /  \\     ", "shape")
-			log_message("  /    \\    ", "shape")
-			log_message(" /      \\   ", "shape")
-			log_message("/        \\  ", "shape")
+			log_message("    \\      ", "shape")
+			log_message("     \\     ", "shape")
+			log_message("      \\    ", "shape")
+			log_message("       \\   ", "shape")
+			log_message("        \\  ", "shape")
 			log_message("\\        /  ", "shape")
 			log_message(" \\      /   ", "shape")
 			log_message("  \\    /    ", "shape")
@@ -885,9 +888,9 @@ func reset_shapes():
 			" ##### "
 		],
 		"crooked": [
-			"  /\\  ",
-			" /  \\ ",
-			"/    \\",
+			"  \\  ",
+			"   \\ ",
+			"    \\",
 			"\\    /",
 			" \\  / ",
 			"  \\/  "
@@ -1161,7 +1164,7 @@ func display_advanced_shape_help():
 func display_system_keyboard_help():
 	log_message("System Keyboard Commands:", "system")
 	log_message("  ###keyboard reset - Reset keyboard settings", "system")
-	log_message("  ###keyboard export [path] - Export keyboard layout", "system")
+	log_message("  ###keyboard @@@export [path] - Export keyboard layout", "system")
 	log_message("  ###keyboard import [path] - Import keyboard layout", "system")
 	log_message("  ###keyboard help - Display this help", "system")
 }
@@ -1170,7 +1173,7 @@ func display_system_keyboard_help():
 func display_system_shape_help():
 	log_message("System Shape Commands:", "system")
 	log_message("  ###shape reset - Reset shapes to defaults", "system")
-	log_message("  ###shape export [path] - Export shapes", "system")
+	log_message("  ###shape @@@export [path] - Export shapes", "system")
 	log_message("  ###shape import [path] - Import shapes", "system")
 	log_message("  ###shape help - Display this help", "system")
 }

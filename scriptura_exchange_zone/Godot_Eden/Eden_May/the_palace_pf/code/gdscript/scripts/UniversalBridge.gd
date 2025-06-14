@@ -1,5 +1,5 @@
 extends Node
-class_name UniversalBridgeSystem
+class_name UniversalBridgeSystem_UniversalBridge_Universa
 
 # This class serves as the central connection point between all major systems:
 # - Akashic Records (Dictionary)
@@ -74,12 +74,12 @@ func _find_system_references() -> void:
 	# for safety in our initial attempt
 
 	# Find Akashic Records Manager (only if it already exists)
-	if has_node("/root/AkashicRecordsManager"):
-		akashic_records_manager = get_node("/root/AkashicRecordsManager")
+	if has_node("root/AkashicRecordsManager"):
+		akashic_records_manager = get_node("root/AkashicRecordsManager")
 
 	# Find Element Manager (only if it already exists)
-	if has_node("/root/ElementManager"):
-		element_manager = get_node("/root/ElementManager")
+	if has_node("root/ElementManager"):
+		element_manager = get_node("root/ElementManager")
 	elif is_inside_tree():
 		var tree = get_tree()
 		if tree != null:
@@ -88,15 +88,15 @@ func _find_system_references() -> void:
 				element_manager = nodes[0]
 
 	# Find Thing Creator (only if it already exists)
-	if has_node("/root/ThingCreator"):
-		thing_creator = get_node("/root/ThingCreator")
+	if has_node("root/ThingCreator"):
+		thing_creator = get_node("root/ThingCreator")
 
 	# Find Console System (only if it already exists)
-	if has_node("/root/JSH_Console") or has_node("/root/main/JSH_console"):
-		if has_node("/root/JSH_Console"):
-			console_system = get_node("/root/JSH_Console")
+	if has_node("root/JSH_Console") or has_node("root/main/JSH_console"):
+		if has_node("root/JSH_Console"):
+			console_system = get_node("root/JSH_Console")
 		else:
-			console_system = get_node("/root/main/JSH_console")
+			console_system = get_node("root/main/JSH_console")
 
 	# Print found systems for debugging
 	if debug_mode:
@@ -114,7 +114,7 @@ func _initialize_missing_systems() -> void:
 	# Comment out the previous implementation for safety
 	# Initialize Akashic Records Manager if needed
 	#if not akashic_records_manager:
-	#	var akashic_manager_script = load("res://code/gdscript/scripts/akashic_records/akashic_records_manager.gd")
+	#	var akashic_manager_script = load("res://scripts/gdscript/scripts/akashic_records/akashic_records_manager.gd")
 	#	if akashic_manager_script:
 	#		akashic_records_manager = akashic_manager_script.new()
 	#		akashic_records_manager.name = "AkashicRecordsManager"
@@ -122,7 +122,7 @@ func _initialize_missing_systems() -> void:
 	#
 	## Initialize Thing Creator if needed
 	#if not thing_creator:
-	#	var thing_creator_script = load("res://code/gdscript/scripts/akashic_records/thing_creator.gd")
+	#	var thing_creator_script = load("res://scripts/gdscript/scripts/akashic_records/thing_creator.gd")
 	#	if thing_creator_script:
 	#		thing_creator = thing_creator_script.new()
 	#		thing_creator.name = "ThingCreator"

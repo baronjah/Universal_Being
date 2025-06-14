@@ -182,10 +182,12 @@ func connect_all_systems():
 func _on_awareness_expanded(level: int):
 	# Expanded awareness affects all systems
 	if game_systems.has("stellar"):
+
 		var stellar = game_systems["stellar"]
 		stellar.navigation_skill *= 1.1  # Better navigation
 		
 	if game_systems.has("mining"):
+
 		var mining = game_systems["mining"]
 		mining.mining_skill *= 1.05  # Better resource detection
 		
@@ -203,6 +205,7 @@ func _on_rare_ore_discovered(ore_type: String, location: Vector3):
 		
 		# Companions react
 		if game_systems.has("companion"):
+
 			var companions = game_systems["companion"].companions
 			for companion in companions:
 				companion.current_emotion = "excited"
@@ -217,7 +220,6 @@ func _on_system_discovered(system_data: Dictionary):
 			"description": "The history of " + system_data["name"],
 			"knowledge": "stellar_navigation",
 			"star_data": system_data["data"]
-		}
 	)
 	
 func _on_pattern_discovered(pattern: String):

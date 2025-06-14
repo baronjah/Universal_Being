@@ -3,9 +3,8 @@
 # Created: May 31, 2025, 23:28 CEST
 # Purpose: Ragdoll physics and behavior system
 # Connection: Part of Pentagon Architecture migration
-
 extends UniversalBeingBase
-class_name ModulesBank
+class_name ModulesBank_modulesb
 
 
 static var multi_threading: bool

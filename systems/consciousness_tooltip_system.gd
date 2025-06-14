@@ -21,7 +21,7 @@ const TOOLTIPS := {
     5: "Life dances: 'All forms flow through me!'",
     6: "Image reflects: 'I see myself in creation...'",
     7: "Rest breathes: 'Complete, yet ever-beginning...'"
-}
+	}
 
 const CONSCIOUSNESS_COLORS := {
     0: Color.GRAY,
@@ -32,7 +32,7 @@ const CONSCIOUSNESS_COLORS := {
     5: Color("ffffff"),
     6: Color("ff4256"),
     7: Color("a27dff")
-}
+	}
 
 const ICON_PATH_FORMAT := "res://assets/icons/consciousness/level_%d.png"
 
@@ -96,7 +96,6 @@ func _create_tooltip_ui():
             vec4 col = COLOR;
             col.rgb += vec3(0.10, 0.12, 0.16) * pulse;
             COLOR = col;
-        }
     "
     add_child(_bg)
     _bg.hide()

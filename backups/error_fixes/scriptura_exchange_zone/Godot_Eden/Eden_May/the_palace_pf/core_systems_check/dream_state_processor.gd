@@ -84,7 +84,7 @@ func _start_dream_cycle():
 	var timer = Timer.new()
 	timer.wait_time = 10.0  # Initial delay
 	timer.one_shot = true
-	timer.connect("timeout", self, "_on_dream_cycle_timer")
+	timer.connect(_on_dream_cycle_timer)
 	add_child(timer)
 	timer.start()
 
@@ -102,7 +102,7 @@ func _on_dream_cycle_timer():
 	var timer = Timer.new()
 	timer.wait_time = next_time
 	timer.one_shot = true
-	timer.connect("timeout", self, "_on_dream_cycle_timer")
+	timer.connect(_on_dream_cycle_timer)
 	add_child(timer)
 	timer.start()
 

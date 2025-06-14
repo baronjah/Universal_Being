@@ -1,6 +1,6 @@
 extends Node
 
-class_name DataEvolutionSystem
+class_name DataEvolutionSystem_dataevolutionsystem_dataevol
 
 # Data Evolution System for LuminusOS
 # Tracks game data changes, provides progression tracking, and enables automatic evolution
@@ -170,7 +170,7 @@ func get_evolution_status(game_name):
     var status = evolution_state[game_name]
     var result = "Evolution Status for " + game_name + ":\n\n"
     
-    result += "Stage: " + EVOLUTION_STAGES[status.stage] + " (" + str(status.stage + 1) + "/" + str(EVOLUTION_STAGES.size()) + ")\n"
+    result += "Stage: " + EVOLUTION_STAGES[status.stage] + " (" + str(status.stage + 1) + "" + str(EVOLUTION_STAGES.size()) + ")\n"
     result += "Progress to next stage: " + str(int(status.progress * 100)) + "%\n\n"
     
     result += "Metrics:\n"
@@ -210,7 +210,7 @@ func get_storage_info():
     var result = "Storage Usage Information:\n\n"
     var usage_percent = (storage_usage.current / float(storage_usage.max)) * 100
     
-    result += "Total Usage: " + _format_size(storage_usage.current) + " / " + _format_size(storage_usage.max) + " (" + str(int(usage_percent)) + "%)\n\n"
+    result += "Total Usage: " + _format_size(storage_usage.current) + "  " + _format_size(storage_usage.max) + " (" + str(int(usage_percent)) + "%)\n\n"
     
     result += "Allocation:\n"
     for category in storage_usage.allocation:
@@ -301,7 +301,7 @@ func cmd_evolve(args):
             if args.size() < 2:
                 return "Usage: evolve snapshot <game_name>"
                 
-            var game_creator = get_node_or_null("/root/GameCreator")
+            var game_creator = get_node_or_null("root/GameCreator")
             if not game_creator:
                 return "GameCreator not available"
                 
@@ -347,7 +347,7 @@ func cmd_evolve(args):
 
 # Timer callbacks
 func _on_snapshot_timer_timeout():
-    var game_creator = get_node_or_null("/root/GameCreator")
+    var game_creator = get_node_or_null("root/GameCreator")
     if not game_creator:
         return
         
@@ -360,7 +360,7 @@ func _on_pattern_detection_timer_timeout():
     _run_pattern_detection()
 
 func _on_hour_snapshot_timer_timeout():
-    var game_creator = get_node_or_null("/root/GameCreator")
+    var game_creator = get_node_or_null("root/GameCreator")
     if not game_creator:
         return
         

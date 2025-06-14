@@ -3,8 +3,7 @@
 # Created: May 31, 2025, 23:28 CEST
 # Purpose: Resource management system
 # Connection: Part of Pentagon Architecture migration
-
-extends UniversalBeingBase
+extends \2
 ## Background Process Manager
 ## Controls and limits per-frame calculations
 ## Created: 2025-05-26

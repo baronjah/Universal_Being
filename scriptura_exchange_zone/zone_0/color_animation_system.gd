@@ -1,14 +1,14 @@
-class_name ColorAnimationSystem
-extends Node
+class_name ColorAnimationSystem_coloranimationsystem_colorani
+extends \2
 
 # ----- COLOR ANIMATION SETTINGS -----
 @export_category("Animation Settings")
-@export var enabled: bool = true
-@export var update_interval: float = 0.05  # 20 FPS update rate
-@export var default_duration: float = 1.0  # Default animation duration in seconds
-@export var base_frequency: int = 99  # Starting frequency (maps to special frequencies)
-@export var color_intensity: float = 0.8  # Color intensity (0-1)
-@export var max_active_animations: int = 30  # Maximum concurrent animations
+@@@@export var enabled: bool = true
+@@@@export var update_interval: float = 0.05  # 20 FPS update rate
+@@@@export var default_duration: float = 1.0  # Default animation duration in seconds
+@@@@export var base_frequency: int = 99  # Starting frequency (maps to special frequencies)
+@@@@export var color_intensity: float = 0.8  # Color intensity (0-1)
+@@@@export var max_active_animations: int = 30  # Maximum concurrent animations
 
 # ----- COLOR FREQUENCY CONSTANTS -----
 const HARMONIC_FREQUENCIES = {
@@ -36,7 +36,8 @@ const SYMBOL_FREQUENCIES = {
 }
 
 # ----- ANIMATION TYPES -----
-enum AnimationType {
+enum \2 {
+
     FADE,        # Smooth fade between colors
     PULSE,       # Pulsing animation (fade in/out)
     RAINBOW,     # Cycling through rainbow colors
@@ -133,12 +134,12 @@ func _create_color_for_frequency(frequency: int, type: String = "primary") -> Co
 
 func _find_components():
     # Find Color System
-    color_system = get_node_or_null("/root/DimensionalColorSystem")
+    color_system = get_node_or_null("root/DimensionalColorSystem")
     if not color_system:
         color_system = _find_node_by_class(get_tree().root, "DimensionalColorSystem")
     
     # Find Visual Indicator
-    visual_indicator = get_node_or_null("/root/VisualIndicatorSystem")
+    visual_indicator = get_node_or_null("root/VisualIndicatorSystem")
     if not visual_indicator:
         visual_indicator = _find_node_by_class(get_tree().root, "VisualIndicatorSystem")
     
@@ -302,7 +303,7 @@ func _update_flash_animation(animation, progress: float):
     var flash_active = phase < 0.5
     
     # Choose appropriate color
-    var current_color = flash_active ? flash_color : base_color
+    var current_color = flash_color if flash_active else base_color
     animation.current_color = current_color
     
     # Apply to target

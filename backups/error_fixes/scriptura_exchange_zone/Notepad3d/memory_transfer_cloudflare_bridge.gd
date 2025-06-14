@@ -78,13 +78,13 @@ func _ready():
 	add_child(ping_timer)
 	
 	# Auto-connect if API key is set
-	if not api_key.empty():
+	if not api_key.is_empty():
 		connect_to_worker()
 
 func _initialize_components():
 	# Find memory transfer system
 	if has_node("/root/MemoryTransferSystem") or get_node_or_null("/root/MemoryTransferSystem"):
-		memory_transfer_system = get_node("/root/MemoryTransferSystem")
+		memory_transfer_system = get_node("\1") as Node
 		print("Connected to MemoryTransferSystem")
 	else:
 		print("WARNING: MemoryTransferSystem not found")
@@ -119,7 +119,7 @@ func connect_to_worker():
 		print("Already connected to worker")
 		return true
 	
-	if api_key.empty():
+	if api_key.is_empty():
 		print("ERROR: API key not set")
 		return false
 	

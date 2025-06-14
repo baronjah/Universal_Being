@@ -7,11 +7,11 @@ extends Node3D
 }
 
 # ------ Configuration ------
-export var transition_speed: float = 1.5
-export var shape_complexity_max: int = 5
-export var use_procedural_generation: bool = true
-export var connect_to_word_system: bool = true
-export var enable_dream_shapes: bool = true
+@export var transition_speed: float = 1.5
+@export var shape_complexity_max: int = 5
+@export var use_procedural_generation: bool = true
+@export var connect_to_word_system: bool = true
+@export var enable_dream_shapes: bool = true
 }
 
 # ------ Shape Libraries ------
@@ -230,7 +230,7 @@ func create_default_animations():
 
 func connect_word_system():
 	# Connect to word manifestor if available in scene
-	word_manifestor = get_node_or_null("/root/WordManifestor")
+	word_manifestor = get_node_or_null("root/WordManifestor")
 	if not word_manifestor:
 		word_manifestor = get_node_or_null("../WordManifestor")
 }

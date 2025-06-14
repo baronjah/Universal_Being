@@ -4,8 +4,7 @@
 # PURPOSE: Bridge between complex JSH systems and simple ragdoll needs
 # CREATED: 2025-05-25 - Making JSH work in new context
 # ==================================================
-
-extends UniversalBeingBase
+extends \2
 ## Initialize JSH systems with safe defaults
 # INPUT: None
 # PROCESS: Sets up JSH components to work without original dependencies

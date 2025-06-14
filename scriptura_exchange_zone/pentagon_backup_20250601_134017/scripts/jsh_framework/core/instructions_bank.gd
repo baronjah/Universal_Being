@@ -35,10 +35,8 @@
 
 #
 # instruction is like a first push and rocked fuel we need to start a thing
-
-
 extends Node3D#
-class_name InstructionsBank # InstructionsBank.instructions_set_0   InstructionsBank.type_of_instruction_0#
+class_name InstructionsBank_instruct # InstructionsBank.instructions_set_0   InstructionsBank.type_of_instruction_0#
 
 
 var instruction_add_number : String = "instruction_"#

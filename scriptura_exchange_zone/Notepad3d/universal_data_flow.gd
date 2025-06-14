@@ -1,6 +1,6 @@
 extends Node
 
-class_name UniversalDataFlow
+class_name UniversalDataFlow_universaldataflow_universa
 
 # Universal Data Flow
 # Manages bidirectional data flow between Terminal, Claude, and game components

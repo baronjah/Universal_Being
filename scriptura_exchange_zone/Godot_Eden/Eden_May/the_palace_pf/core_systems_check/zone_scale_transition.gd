@@ -4,14 +4,15 @@ extends Node3D
 # Handles transitions between different scale levels and reality zones
 
 # Configuration
-export var transition_duration: float = 2.0
-export var transition_smoothing: float = 0.3
-export var enable_visual_effects: bool = true
-export var enable_audio_effects: bool = true
-export var enable_physics_adaptation: bool = true
+@@export var transition_duration: float = 2.0
+@@export var transition_smoothing: float = 0.3
+@@export var enable_visual_effects: bool = true
+@@export var enable_audio_effects: bool = true
+@@export var enable_physics_adaptation: bool = true
 
 # Scale Levels (from smallest to largest)
-enum ScaleLevel {
+enum \2 {
+
 	QUANTUM,     # Subatomic particles, quantum effects
 	MICRO,       # Cellular, microscopic
 	HUMAN,       # Human-scale objects
@@ -23,7 +24,8 @@ enum ScaleLevel {
 }
 
 # Zone Types
-enum ZoneType {
+enum \2 {
+
 	PHYSICAL,    # Normal physics rules
 	DIGITAL,     # Information-based reality
 	ASTRAL,      # Consciousness-based reality
@@ -208,7 +210,7 @@ func _process(delta):
 
 func initialize_references():
 	# Find player and camera
-	player = get_node_or_null("/root/Player")
+	player = get_node_or_null("root/Player")
 	if not player:
 		player = get_node_or_null("../Player")
 	
@@ -216,16 +218,16 @@ func initialize_references():
 		camera = player.get_node_or_null("CameraMount/Camera3D")
 	
 	# Find environment
-	world_environment = get_node_or_null("/root/WorldEnvironment")
+	world_environment = get_node_or_null("root/WorldEnvironment")
 	if not world_environment:
 		world_environment = get_node_or_null("../WorldEnvironment")
 	
 	# Connect to other systems
-	shape_visualizer = get_node_or_null("/root/MultiverseShapeVisualizer")
+	shape_visualizer = get_node_or_null("root/MultiverseShapeVisualizer")
 	if not shape_visualizer:
 		shape_visualizer = get_node_or_null("../MultiverseShapeVisualizer")
 	
-	multiverse_system = get_node_or_null("/root/MultiverseSystemIntegration")
+	multiverse_system = get_node_or_null("root/MultiverseSystemIntegration")
 	if not multiverse_system:
 		multiverse_system = get_node_or_null("../MultiverseSystemIntegration")
 
@@ -475,8 +477,8 @@ func change_scale_and_zone(new_scale: int, new_zone: int):
 	emit_signal("transition_started", old_scale, new_scale, old_zone, new_zone)
 	
 	print("JSH Zone Scale System: Beginning scale and zone transition from " + 
-		get_scale_name(old_scale) + "/" + get_zone_name(old_zone) + " to " + 
-		get_scale_name(new_scale) + "/" + get_zone_name(new_zone))
+		get_scale_name(old_scale) + "" + get_zone_name(old_zone) + " to " + 
+		get_scale_name(new_scale) + "" + get_zone_name(new_zone))
 	
 	return true
 
@@ -537,7 +539,7 @@ func complete_transition():
 		update_physics_rules()
 	
 	print("JSH Zone Scale System: Transition complete. Now at " + 
-		get_scale_name(current_scale) + "/" + get_zone_name(current_zone_type))
+		get_scale_name(current_scale) + "" + get_zone_name(current_zone_type))
 
 # ========== Property Application ==========
 

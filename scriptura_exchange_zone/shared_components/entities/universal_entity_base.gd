@@ -4,7 +4,7 @@
 # CREATED: 2025-05-23 - Unified entity system
 # ==================================================
 
-class_name UniversalEntityBase
+class_name UniversalEntityBase_universa
 extends Node3D
 
 # Signals for cross-project communication
@@ -14,11 +14,11 @@ signal color_attuned(entity: UniversalEntityBase, color: Color)
 signal entity_merged(entity1: UniversalEntityBase, entity2: UniversalEntityBase, result: UniversalEntityBase)
 
 # Entity Properties
-@export var entity_name: String = "Unknown"
-@export var entity_type: EntityType = EntityType.WORD
-@export var current_dimension: int = 3
-@export var evolution_stage: int = 0
-@export var dimensional_color: Color = Color.CYAN
+@@export var entity_name: String = "Unknown"
+@@export var entity_type: EntityType = EntityType.WORD
+@@export var current_dimension: int = 3
+@@export var evolution_stage: int = 0
+@@export var dimensional_color: Color = Color.CYAN
 
 # Evolution Systems
 enum EntityType {

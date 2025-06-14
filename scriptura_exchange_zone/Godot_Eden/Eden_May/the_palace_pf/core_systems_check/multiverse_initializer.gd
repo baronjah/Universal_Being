@@ -7,10 +7,10 @@ extends Node
 }
 
 # Node Paths
-export(NodePath) var multiverse_evolution_system_path
-export(NodePath) var akashic_records_manager_path
-export(NodePath) var player_controller_path
-export(NodePath) var time_progression_system_path
+@export var multiverse_evolution_system_path
+@export var akashic_records_manager_path
+@export var player_controller_path
+@export var time_progression_system_path
 }
 
 # UI References
@@ -26,9 +26,9 @@ var time_progression_system = null
 }
 
 # Configuration
-export var auto_initialize = true
-export var toggle_key = KEY_F8
-export var log_to_console = true
+@export var auto_initialize = true
+@export var toggle_key = KEY_F8
+@export var log_to_console = true
 }
 
 # ========== Initialization ==========
@@ -102,19 +102,19 @@ func setup_system_references():
 
 	# Fallback to autoloads
 	if not multiverse_evolution_system:
-		multiverse_evolution_system = get_node_or_null("/root/MultiverseEvolutionSystem")
+		multiverse_evolution_system = get_node_or_null("root/MultiverseEvolutionSystem")
 }
 
 	if not akashic_records_manager:
-		akashic_records_manager = get_node_or_null("/root/AkashicRecordsManager")
+		akashic_records_manager = get_node_or_null("root/AkashicRecordsManager")
 }
 
 	if not player_controller:
-		player_controller = get_node_or_null("/root/JSHPlayerController")
+		player_controller = get_node_or_null("root/JSHPlayerController")
 }
 
 	if not time_progression_system:
-		time_progression_system = get_node_or_null("/root/TimeProgressionSystem")
+		time_progression_system = get_node_or_null("root/TimeProgressionSystem")
 }
 
 	# Log available systems
@@ -352,7 +352,7 @@ func _on_universe_changed(old_universe_id, new_universe_id):
 		akashic_records_manager.record_event("universe_travel", {
 			"from": old_universe_id,
 			"to": new_universe_id,
-			"timestamp": OS.get_unix_time()
+			"timestamp": OS.Time.get_unix_time_from_system()
 		})
 }
 
@@ -366,7 +366,7 @@ func _on_access_point_discovered(access_point):
 		akashic_records_manager.record_event("access_point_discovered", {
 			"target_universe": access_point.target_universe.name,
 			"stability": access_point.stability,
-			"timestamp": OS.get_unix_time()
+			"timestamp": OS.Time.get_unix_time_from_system()
 		})
 }
 
@@ -386,7 +386,7 @@ func _on_cosmic_turn_advanced(turn_data):
 		akashic_records_manager.record_event("cosmic_turn_advanced", {
 			"turn": turn_data.turn,
 			"age": turn_data.age,
-			"timestamp": OS.get_unix_time()
+			"timestamp": OS.Time.get_unix_time_from_system()
 		})
 }
 

@@ -121,6 +121,7 @@ func _on_migration_completed(stats):
           ", Modified: " + str(stats.files_modified) + 
           ", Errors: " + str(stats.errors_encountered) + 
           ", Warnings: " + str(stats.warnings_generated))
+		
     
     emit_signal("migration_completed", stats)
     
@@ -140,6 +141,7 @@ func _on_test_completed(results):
     print("Test run completed - Total tests: " + str(results.total) + 
           ", Passed: " + str(results.passed) + 
           ", Failed: " + str(results.failed))
+		
     
     emit_signal("test_run_completed", results)
     
@@ -255,7 +257,7 @@ func migrate_project(from_path: String, to_path: String) -> Dictionary:
         return {
             "success": false,
             "error": "Migration tool not initialized"
-        }
+			}
     
     emit_signal("migration_started", from_path, to_path)
     
@@ -266,7 +268,7 @@ func run_all_tests() -> Dictionary:
         return {
             "success": false,
             "error": "Migration tester not initialized"
-        }
+			}
     
     return migration_tester.run_all_tests()
 
@@ -275,7 +277,7 @@ func generate_compatibility_report(project_path: String) -> Dictionary:
         return {
             "success": false,
             "error": "Migration tool not initialized"
-        }
+			}
     
     return migration_tool.generate_migration_report(project_path)
 
@@ -285,7 +287,7 @@ func get_migration_statistics() -> Dictionary:
         "test_runs_performed": test_runs_performed,
         "last_migration_stats": last_migration_stats,
         "last_test_stats": last_test_stats
-    }
+		}
 
 # ----- LAUNCHER SCENE -----
 func create_launcher_scene() -> Window:

@@ -1,30 +1,30 @@
 extends Node
 
-class_name ExtendedColorThemeSystem
+class_name ExtendedColorThemeSystem_extendedcolorthemesystem_extended
 
 # ----- COLOR DEPTH SETTINGS -----
 @export_category("Color Depth Settings")
-@export var color_depth: int = 24  # 16, 24, or 32 bits
-@export var use_hdr_colors: bool = false  # Enable HDR colors (32-bit)
-@export var enable_color_correction: bool = true  # Apply sRGB correction
-@export var dithering_enabled: bool = false  # Enable dithering for lower bit depths
+@@export var color_depth: int = 24  # 16, 24, or 32 bits
+@@export var use_hdr_colors: bool = false  # Enable HDR colors (32-bit)
+@@export var enable_color_correction: bool = true  # Apply sRGB correction
+@@export var dithering_enabled: bool = false  # Enable dithering for lower bit depths
 
 # ----- THEME CONFIGURATION -----
 @export_category("Theme Settings")
-@export var current_theme: String = "default"
-@export var auto_theme_switching: bool = false
-@export var time_based_themes: bool = false
-@export var theme_transition_duration: float = 0.5  # seconds
-@export var enable_contrast_adjustment: bool = true
-@export var contrast_ratio_target: float = 4.5  # WCAG AA standard
+@@export var current_theme: String = "default"
+@@export var auto_theme_switching: bool = false
+@@export var time_based_themes: bool = false
+@@export var theme_transition_duration: float = 0.5  # seconds
+@@export var enable_contrast_adjustment: bool = true
+@@export var contrast_ratio_target: float = 4.5  # WCAG AA standard
 
 # ----- COLOR HARMONICS -----
 @export_category("Color Harmonics")
-@export var primary_color: Color = Color(0.1, 0.4, 0.9, 1.0)  # Base blue
-@export var secondary_color: Color = Color(0.9, 0.3, 0.1, 1.0)  # Accent orange
-@export var tertiary_color: Color = Color(0.1, 0.7, 0.3, 1.0)  # Highlight green
-@export var neutral_color: Color = Color(0.2, 0.2, 0.25, 1.0)  # Base neutral
-@export var background_color: Color = Color(0.05, 0.05, 0.1, 1.0)  # Dark background
+@@export var primary_color: Color = Color(0.1, 0.4, 0.9, 1.0)  # Base blue
+@@export var secondary_color: Color = Color(0.9, 0.3, 0.1, 1.0)  # Accent orange
+@@export var tertiary_color: Color = Color(0.1, 0.7, 0.3, 1.0)  # Highlight green
+@@export var neutral_color: Color = Color(0.2, 0.2, 0.25, 1.0)  # Base neutral
+@@export var background_color: Color = Color(0.05, 0.05, 0.1, 1.0)  # Dark background
 
 # ----- STATE VARIABLES -----
 var themes = {}

@@ -67,15 +67,15 @@ func setup_connections():
 		return
 	
 	# Connect signals
-	api_coordinator.connect("connection_status_changed", self, "_on_connection_status_changed")
-	api_coordinator.connect("color_state_changed", self, "_on_color_state_changed")
-	api_coordinator.connect("api_response_received", self, "_on_api_response_received")
-	api_coordinator.connect("data_parsed", self, "_on_data_parsed")
+	api_coordinator.connect(_on_connection_status_changed)
+	api_coordinator.connect(_on_color_state_changed)
+	api_coordinator.connect(_on_api_response_received)
+	api_coordinator.connect(_on_data_parsed)
 	
 	# Connect UI buttons
-	$ConnectionPanel/ConnectAllButton.connect("pressed", self, "_on_connect_all_pressed")
-	$RequestPanel/SendRequestButton.connect("pressed", self, "_on_send_request_pressed")
-	$DataPanel/ParseDataButton.connect("pressed", self, "_on_parse_data_pressed")
+	$ConnectionPanel/ConnectAllButton.connect(_on_connect_all_pressed)
+	$RequestPanel/SendRequestButton.connect(_on_send_request_pressed)
+	$DataPanel/ParseDataButton.connect(_on_parse_data_pressed)
 	
 	# Connect individual API connect buttons
 	for api_name in api_indicators:

@@ -38,9 +38,9 @@ var score = 0
 var move_count = 0
 var miracle_count = 0
 var time_shifts = 0
-var saved_shapes = {}
+var saved_shapes = {
 var shape_history = []
-var function_keys_active = {}
+var function_keys_active = {
 
 # ----- TIME MANAGEMENT -----
 enum TimeState {
@@ -91,17 +91,18 @@ func _ready():
     
     print("Terminal Shape Game initialized")
     print("Current state: " + GameState.keys()[current_state])
+	}
 
 func _connect_to_systems():
     # Connect to DualCoreTerminal
     dual_core_terminal = get_node_or_null("/root/DualCoreTerminal")
     if dual_core_terminal:
-        dual_core_terminal.connect("input_processed", self, "_on_terminal_input_processed")
-        dual_core_terminal.connect("core_switched", self, "_on_core_switched")
-        dual_core_terminal.connect("special_pattern_detected", self, "_on_special_pattern_detected")
-        dual_core_terminal.connect("miracle_triggered", self, "_on_miracle_triggered")
-        dual_core_terminal.connect("time_state_changed", self, "_on_time_state_changed")
-        dual_core_terminal.connect("snake_case_detected", self, "_on_snake_case_detected")
+        dual_core_terminal.connect(_on_terminal_input_processed)
+        dual_core_terminal.connect(_on_core_switched)
+        dual_core_terminal.connect(_on_special_pattern_detected)
+        dual_core_terminal.connect(_on_miracle_triggered)
+        dual_core_terminal.connect(_on_time_state_changed)
+        dual_core_terminal.connect(_on_snake_case_detected)
     
     # Connect to TerminalAPIBridge
     terminal_api_bridge = get_node_or_null("/root/TerminalAPIBridge")
@@ -109,21 +110,21 @@ func _connect_to_systems():
     # Connect to TerminalGridCreator
     terminal_grid_creator = get_node_or_null("/root/TerminalGridCreator")
     if terminal_grid_creator:
-        terminal_grid_creator.connect("grid_created", self, "_on_grid_created")
-        terminal_grid_creator.connect("grid_element_added", self, "_on_grid_element_added")
-        terminal_grid_creator.connect("special_pattern_detected", self, "_on_special_pattern_detected")
-        terminal_grid_creator.connect("miracle_portal_created", self, "_on_miracle_portal_created")
+        terminal_grid_creator.connect(_on_grid_created)
+        terminal_grid_creator.connect(_on_grid_element_added)
+        terminal_grid_creator.connect(_on_special_pattern_detected)
+        terminal_grid_creator.connect(_on_miracle_portal_created)
     
     # Connect to divine word game
     divine_word_game = get_node_or_null("/root/DivineWordGame")
     if divine_word_game:
-        divine_word_game.connect("word_target_completed", self, "_on_word_target_completed")
+        divine_word_game.connect(_on_word_target_completed)
     
     # Connect to turn system
     turn_system = get_node_or_null("/root/TurnSystem")
     if turn_system:
-        turn_system.connect("turn_advanced", self, "_on_turn_advanced")
-        turn_system.connect("dimension_changed", self, "_on_dimension_changed")
+        turn_system.connect(_on_turn_advanced)
+        turn_system.connect(_on_dimension_changed)
     
     # Connect to word comment system
     word_comment_system = get_node_or_null("/root/WordCommentSystem")
@@ -216,7 +217,7 @@ func save_shape(name=""):
         return false
     
     # Generate a name if none provided
-    if name.empty():
+    if name.is_empty():
         name = "shape_" + str(OS.get_unix_time())
     
     # Get shape from grid creator
@@ -229,6 +230,7 @@ func save_shape(name=""):
             
             emit_signal("shape_saved", current_shape_id, name)
             print("Shape saved as: " + name)
+			}
             
             return true
     
@@ -252,6 +254,7 @@ func load_shape(name):
             
             emit_signal("shape_loaded", element_id, name)
             print("Shape loaded: " + name)
+			}
             
             return true
     
@@ -269,6 +272,7 @@ func complete_level():
     
     emit_signal("level_completed", current_level, level_score)
     print("Level " + str(current_level) + " completed with score: " + str(level_score))
+	}
     
     # Increment level
     current_level += 1
@@ -311,6 +315,7 @@ func create_shape(pattern, category, properties={}):
             
             emit_signal("shape_created", element_id, category, pattern)
             print("Shape created with ID: " + str(element_id))
+			}
             
             // Try to process the pattern for special effects
             _check_pattern_for_special_effects(pattern)
@@ -326,6 +331,7 @@ func _check_pattern_for_special_effects(pattern):
     
     // Check if pattern has snake_case format
     if "_" in pattern:
+	
         var snake_case = pattern.strip_edges()
         var is_snake_case = true
         
@@ -368,6 +374,7 @@ func edit_shape(shape_id, new_pattern):
         
         emit_signal("shape_edited", element_id, new_pattern)
         print("Shape edited: " + str(shape_id) + " -> " + str(element_id))
+		
         
         return true
     
@@ -405,6 +412,7 @@ func move_player(direction):
             
             // Place player at new position
             terminal_grid_creator.place_symbol(new_position.x, new_position.y, "@", -1, {"type": "player"})
+			
         
         emit_signal("player_moved", old_position, new_position)
         
@@ -474,8 +482,10 @@ func _place_player_at_start():
     // Place player at position
     if terminal_grid_creator:
         terminal_grid_creator.place_symbol(player_position.x, player_position.y, "@", -1, {"type": "player"})
+		
     
     print("Player placed at: " + str(player_position))
+	
 
 func _check_player_position():
     if not terminal_grid_creator:
@@ -493,6 +503,7 @@ func _check_player_position():
                 "teleporter":
                     // Teleport to destination
                     if cell.properties.has("destination_x") and cell.properties.has("destination_y"):
+					
                         var dest = Vector2(cell.properties.destination_x, cell.properties.destination_y)
                         var old_pos = player_position
                         player_position = dest
@@ -500,6 +511,7 @@ func _check_player_position():
                         // Move player on grid
                         terminal_grid_creator.place_symbol(old_pos.x, old_pos.y, ".", -1)
                         terminal_grid_creator.place_symbol(dest.x, dest.y, "@", -1, {"type": "player"})
+						
                         
                         emit_signal("player_moved", old_pos, dest)
                 
@@ -539,6 +551,7 @@ func _trigger_miracle():
     
     emit_signal("miracle_triggered", miracle_count)
     print("Miracle triggered! Count: " + str(miracle_count))
+	
     
     // Notify word comment system if available
     if word_comment_system:
@@ -629,14 +642,17 @@ func _on_terminal_input_processed(core_id, input_text, result):
         
         // Check for function commands
         if "save" in lower_text:
+		
             var name = "shape_" + str(OS.get_unix_time())
             if "save as" in lower_text:
+			
                 var parts = lower_text.split("save as ", true, 1)
                 if parts.size() > 1:
                     name = parts[1].strip_edges()
             
             save_shape(name)
         elif "load" in lower_text:
+		
             var parts = lower_text.split("load ", true, 1)
             if parts.size() > 1:
                 var name = parts[1].strip_edges()
@@ -728,6 +744,7 @@ func _on_time_expired():
 func _on_special_pattern_detected(pattern, effect):
     // Handle special patterns
     print("Special pattern detected: " + pattern + " -> " + effect)
+	
     
     // Check for specific pattern effects
     if pattern == "#$%$#@@":
@@ -759,6 +776,7 @@ func _on_time_state_changed(old_state, new_state):
 func _on_snake_case_detected(text, cleaned_text):
     // Handle snake case detection
     print("Snake case detected: " + cleaned_text)
+	
     
     // Check for special snake cases
     if cleaned_text == "i_might_see":
@@ -780,6 +798,7 @@ func _on_snake_case_detected(text, cleaned_text):
 func _on_grid_created(grid_id, width, height):
     // Handle grid creation
     print("Grid created: " + grid_id + " (" + str(width) + "x" + str(height) + ")")
+	
     
     // If in play mode, place player
     if current_state == GameState.PLAY_MODE:
@@ -814,6 +833,7 @@ func _on_miracle_portal_created(x, y):
 func _on_word_target_completed(word, power):
     // Handle word target completion from divine word game
     print("Word target completed: " + word + " (Power: " + str(power) + ")")
+	
     
     // Add bonus score
     score += power
@@ -980,6 +1000,7 @@ func generate_random_shape(complexity=1):
     // Create the shape
     var category = terminal_grid_creator.ShapeCategory.SPECIAL
     return create_shape(pattern, category, {"generated": true, "complexity": complexity})
+	
 
 func get_shape_history(limit=5):
     if shape_history.size() <= limit:

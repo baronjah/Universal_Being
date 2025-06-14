@@ -1,5 +1,5 @@
 # encryption_key_generator.gd
-extends Node
+extends \2
 
 # Generate an encryption key based on player name and world name
 func generate_key(player_name, world_name):

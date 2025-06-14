@@ -1,6 +1,6 @@
 extends Node
 
-class_name EtherealEngineAkashicBridge
+class_name EtherealEngineAkashicBridge_etherealengineakashicbridge_ethereal
 
 # Ethereal Engine Akashic Bridge
 # Connects the Ethereal Engine with the Akashic Records system
@@ -17,7 +17,8 @@ signal word_power_measured(word, power)
 signal akashic_synchronization_completed(stats)
 
 # Ethereal reality states
-enum RealityState {
+enum \2 {
+
 	NORMAL,       # Standard reality
 	FLUID,        # Reality is malleable
 	ETHEREAL,     # Fully ethereal state
@@ -30,7 +31,8 @@ enum RealityState {
 }
 
 # Dimensional relationship types
-enum DimRelationType {
+enum \2 {
+
 	PARALLEL,     # Dimensions exist alongside each other
 	NESTED,       # One dimension contained within another
 	INTERSECTING, # Dimensions overlap partially
@@ -103,8 +105,8 @@ func _ready():
 
 func _find_required_systems():
 	# Find Akashic Records
-	if has_node("/root/AkashicRecords") or get_node_or_null("/root/AkashicRecords"):
-		akashic_records = get_node("/root/AkashicRecords")
+	if has_node("root/AkashicRecords") or get_node_or_null("root/AkashicRecords"):
+		akashic_records = get_node("root/AkashicRecords")
 		print("Connected to AkashicRecords")
 	else:
 		var potential_records = get_tree().get_nodes_in_group("akashic_records")
@@ -113,8 +115,8 @@ func _find_required_systems():
 			print("Found AkashicRecords in group")
 	
 	# Find Dimension Controller
-	if has_node("/root/ShapeDimensionController") or get_node_or_null("/root/ShapeDimensionController"):
-		dimension_controller = get_node("/root/ShapeDimensionController")
+	if has_node("root/ShapeDimensionController") or get_node_or_null("root/ShapeDimensionController"):
+		dimension_controller = get_node("root/ShapeDimensionController")
 		print("Connected to ShapeDimensionController")
 	else:
 		var potential_controllers = get_tree().get_nodes_in_group("dimension_controllers")
@@ -123,8 +125,8 @@ func _find_required_systems():
 			print("Found ShapeDimensionController in group")
 	
 	# Find Turn Cycle Manager
-	if has_node("/root/TurnCycleManager") or get_node_or_null("/root/TurnCycleManager"):
-		turn_cycle_manager = get_node("/root/TurnCycleManager")
+	if has_node("root/TurnCycleManager") or get_node_or_null("root/TurnCycleManager"):
+		turn_cycle_manager = get_node("root/TurnCycleManager")
 		print("Connected to TurnCycleManager")
 	else:
 		var potential_managers = get_tree().get_nodes_in_group("turn_managers")
@@ -133,8 +135,8 @@ func _find_required_systems():
 			print("Found TurnCycleManager in group")
 	
 	# Find Astral Entity System
-	if has_node("/root/AstralEntitySystem") or get_node_or_null("/root/AstralEntitySystem"):
-		astral_entity_system = get_node("/root/AstralEntitySystem")
+	if has_node("root/AstralEntitySystem") or get_node_or_null("root/AstralEntitySystem"):
+		astral_entity_system = get_node("root/AstralEntitySystem")
 		print("Connected to AstralEntitySystem")
 	else:
 		var potential_systems = get_tree().get_nodes_in_group("entity_systems")
@@ -143,8 +145,8 @@ func _find_required_systems():
 			print("Found AstralEntitySystem in group")
 	
 	# Find Word Manifestor
-	if has_node("/root/CoreWordManifestor") or get_node_or_null("/root/CoreWordManifestor"):
-		word_manifestor = get_node("/root/CoreWordManifestor")
+	if has_node("root/CoreWordManifestor") or get_node_or_null("root/CoreWordManifestor"):
+		word_manifestor = get_node("root/CoreWordManifestor")
 		print("Connected to CoreWordManifestor")
 	else:
 		var potential_manifestors = get_tree().get_nodes_in_group("word_manifestors")

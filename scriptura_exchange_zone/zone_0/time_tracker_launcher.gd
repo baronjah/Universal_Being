@@ -1,6 +1,6 @@
 extends Node
 
-class_name TimeTrackerLauncher
+class_name TimeTrackerLauncher_timetrackerlauncher_timetrac
 
 # ----- COMPONENT REFERENCES -----
 var usage_time_tracker: UsageTimeTracker
@@ -10,9 +10,9 @@ var turn_system: Node = null
 
 # ----- CONFIGURATION -----
 @export_category("Tracker Settings")
-@export var auto_launch_on_ready: bool = true
-@export var hourly_limit: float = 1.0
-@export var initial_visual_mode: int = 2  # Detailed by default
+@@export var auto_launch_on_ready: bool = true
+@@export var hourly_limit: float = 1.0
+@@export var initial_visual_mode: int = 2  # Detailed by default
 
 # ----- SYSTEM PATHS -----
 var usage_tracker_path: String = "res://usage_time_tracker.gd"

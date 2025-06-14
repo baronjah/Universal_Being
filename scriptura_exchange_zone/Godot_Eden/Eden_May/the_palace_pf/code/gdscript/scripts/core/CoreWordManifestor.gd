@@ -1,5 +1,5 @@
-class_name CoreWordManifestor
-extends Node
+class_name CoreWordManifestor_CoreWordManifestor_CoreWord
+extends \2
 
 # ----- CONSTANTS -----
 const MAX_WORD_HISTORY = 100
@@ -584,7 +584,7 @@ func _add_word_combination(words: Array, result: String) -> void:
     if not concept_relationships.has("combinations"):
         concept_relationships["combinations"] = {}
     
-    var combo_key = " + ".join(words)
+    var combo_key = " + "." ".join(words)
     concept_relationships["combinations"][combo_key] = result
     
     save_concept_map()

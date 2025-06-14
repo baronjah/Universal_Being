@@ -356,9 +356,9 @@ func _initialize_default_notebook():
 		return
 }
 
-	// Check if default notebook exists
+# // Check if default notebook exists
 	if spatial_storage.get_notepad(DEFAULT_NOTEBOOK_NAME) == null:
-		// Create default notebook
+# // Create default notebook
 		spatial_storage.create_notepad(DEFAULT_NOTEBOOK_NAME, ["default", "system"])
 		print("Created default notebook: %s" % DEFAULT_NOTEBOOK_NAME)
 }
@@ -450,11 +450,11 @@ func _process_sacred_synergies(synergies):
 		total_power += synergy.strength
 }
 
-		// Connect entries if not already connected
+# // Connect entries if not already connected
 		spatial_storage.connect_entries(synergy.entry_a, synergy.entry_b)
 }
 
-	// Calculate dimension power
+# // Calculate dimension power
 	var dimension_power = total_power * main_controller.current_turn
 }
 
@@ -462,7 +462,7 @@ func _process_sacred_synergies(synergies):
 	emit_signal("dimension_power_calculated", main_controller.current_turn, dimension_power)
 }
 
-	// Create special entry to mark the synergy
+# // Create special entry to mark the synergy
 	var synergy_position = Vector3(0, total_power / 10.0, 0)
 	create_akashic_entry(
 		"Dimensional synergy detected in the Harmony dimension with power: " + str(dimension_power),
@@ -476,7 +476,7 @@ func _extract_tags_from_text(text):
 	var tags = []
 }
 
-	// Look for hashtags in text
+# // Look for hashtags in text
 	var regex = RegEx.new()
 	regex.compile("#\\w+")
 	var results = regex.search_all(text)
@@ -488,14 +488,14 @@ func _extract_tags_from_text(text):
 			tags.append(tag)
 }
 
-	// If no tags found, add some based on content
+# // If no tags found, add some based on content
 	if tags.is_empty():
-		// Add dimension tag
+# // Add dimension tag
 		if main_controller:
 			tags.append("dim" + str(main_controller.current_turn))
 }
 
-		// Check for keywords
+# // Check for keywords
 		var keywords = ["reality", "akashic", "divine", "word", "notepad", "dimension", "sacred"]
 		for keyword in keywords:
 			if text.to_lower().find(keyword) >= 0:
@@ -507,7 +507,7 @@ func _extract_tags_from_text(text):
 }
 
 func _generate_spiral_position():
-	// Generate a position in a spiral pattern
+# // Generate a position in a spiral pattern
 	var angle = last_note_position.length() * 0.5
 	var radius = 5.0 + (last_note_position.length() * 0.1)
 	var height = last_note_position.y + 0.5
@@ -525,7 +525,7 @@ func _generate_spiral_position():
 }
 
 func _sort_entries_by_power(a, b):
-	// Sort in descending order of power
+# // Sort in descending order of power
 	return a.position.power > b.position.power
 }
 
@@ -539,13 +539,13 @@ func _on_turn_advanced(turn_number, symbol, dimension):
 	active_dimension = turn_number
 }
 
-	// Visualize akashic records for new dimension
+# // Visualize akashic records for new dimension
 	if not current_visualized_entries.is_empty():
 		visualize_akashic_record(turn_number)
 }
 
 func _on_word_manifested(word, position, power):
-	// Create akashic entry for significant manifestations
+# // Create akashic entry for significant manifestations
 	if power > 75:
 		create_akashic_entry(
 			"The word '" + word + "' manifested with divine power", 
@@ -556,13 +556,13 @@ func _on_word_manifested(word, position, power):
 }
 
 func _on_entry_added(entry_id):
-	// Check for synergies when new entries are added
+# // Check for synergies when new entries are added
 	if auto_process_entries:
 		_check_for_synergies()
 }
 
 func _on_notebook_updated(notebook_name):
-	// Update visualization if this is the active notebook
+# // Update visualization if this is the active notebook
 	if notebook_name == active_notebook and integration:
 		integration.visualize_notebook(notebook_name)
 }

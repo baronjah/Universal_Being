@@ -32,7 +32,6 @@ const EXCAVATION_CONFIG = {
 			"stability_impact": 0.5,
 			"discovery_rate": 0.9,
 			"max_duration_minutes": 720
-		}
 	},
 	"algorithms": {
 		"standard_hash": {
@@ -58,7 +57,6 @@ const EXCAVATION_CONFIG = {
 			"power_efficiency": 0.2,
 			"reward_factor": 1.8,
 			"stability_coefficient": 0.2
-		}
 	},
 	"targets": {
 		"numerical": {
@@ -84,8 +82,6 @@ const EXCAVATION_CONFIG = {
 			"value_multiplier": 3.0,
 			"difficulty": 0.95,
 			"description": "Reality fragments with quantum uncertainty properties"
-		}
-	}
 }
 
 # Digital resources configuration
@@ -119,7 +115,6 @@ const RESOURCE_CONFIG = {
 		"value": 500,
 		"stability": 0.3,
 		"description": "Keys to fundamental quantum states of digital existence"
-	}
 }
 
 # Excavation status
@@ -201,7 +196,7 @@ func setup_timer():
 	excavation_timer = Timer.new()
 	add_child(excavation_timer)
 	excavation_timer.wait_time = update_interval_seconds
-	excavation_timer.connect("timeout", self, "_on_excavation_update")
+	excavation_timer.connect(_on_excavation_update)
 	excavation_timer.set_paused(true)
 
 func connect_to_reality_processor():
@@ -328,7 +323,7 @@ func stop_excavation(reason = "user"):
 		"resources_discovered": metrics.total_discoveries,
 		"total_value": metrics.total_value_discovered,
 		"stop_reason": reason
-	}
+}
 	
 	# Mark as inactive
 	excavation_status.active = false
@@ -362,9 +357,8 @@ func get_excavation_status():
 		"energy_consumption": excavation_status.energy_consumption,
 		"stability_level": excavation_status.stability_level,
 		"progress": excavation_status.progress,
-		"estimated_completion": excavation_status.active ? 
+		"estimated_completion": excavation_status.active ?}
 			_estimate_completion_time() : 0
-	}
 
 # Get resource inventory
 func get_resource_inventory():
@@ -375,7 +369,7 @@ func get_resource_inventory():
 		"reality_shards": resource_inventory.reality_shards,
 		"quantum_keys": resource_inventory.quantum_keys,
 		"total_value": resource_inventory.total_value
-	}
+}
 
 # Get excavation metrics
 func get_excavation_metrics():
@@ -388,7 +382,7 @@ func get_excavation_metrics():
 		"longest_excavation_minutes": metrics.longest_excavation_minutes,
 		"current_turn": current_turn,
 		"max_accessible_depth": current_turn
-	}
+}
 
 # Get discovery log
 func get_discovery_log(max_entries = 10):
@@ -450,7 +444,7 @@ func process_discovery_attempt():
 			"value": total_value,
 			"depth": excavation_status.current_depth,
 			"stability": excavation_status.stability_level
-		}
+}
 		
 		discovery_log.append(discovery)
 		
@@ -458,6 +452,7 @@ func process_discovery_attempt():
 		emit_signal("resource_discovered", resource_type, amount, total_value)
 		
 		print("Resource discovered: " + str(amount) + " " + resource_type + " (Value: " + str(total_value) + ")")
+}
 		
 		return discovery
 	
@@ -589,6 +584,7 @@ func _update_stability():
 		emit_signal("stability_changed", old_stability, excavation_status.stability_level)
 		
 		print("Stability incident: " + str(old_stability) + " -> " + str(excavation_status.stability_level))
+}
 	
 	# Critical stability warning
 	if excavation_status.stability_level < 0.2:
@@ -607,7 +603,7 @@ func _determine_resource_type(depth, target_type):
 		"pattern_matrices": 0,
 		"reality_shards": 0,
 		"quantum_keys": 0
-	}
+}
 	
 	# Base weights by depth
 	if depth <= 2:
@@ -638,6 +634,7 @@ func _determine_resource_type(depth, target_type):
 	# Adjust based on target type
 	match target_type:
 		"standard":
+}
 			# No adjustment
 			pass
 		"advanced":
@@ -680,35 +677,42 @@ func _apply_resource_effect(resource_type, amount):
 	var effect = {
 		"success": true,
 		"description": ""
-	}
+}
 	
 	match resource_type:
 		"data_fragments":
+}
 			# Slight stability boost
 			var old_stability = excavation_status.stability_level
 			excavation_status.stability_level += 0.05 * amount
 			excavation_status.stability_level = min(excavation_status.stability_level, 1.0)
 			effect.description = "Stability improved: " + str(old_stability) + " -> " + str(excavation_status.stability_level)
+}
 		
 		"code_crystals":
+
 			# Energy efficiency boost
 			var energy_reduction = 0.1 * amount
 			excavation_status.energy_consumption = max(excavation_status.energy_consumption * (1.0 - energy_reduction), 0)
 			effect.description = "Energy consumption reduced by " + str(energy_reduction * 100) + "%"
 		
 		"pattern_matrices":
+
 			# Discovery rate boost
 			# This is handled implicitly in the next discovery attempt
 			effect.description = "Discovery rate temporarily increased"
 		
 		"reality_shards":
+
 			# Major stability restoration
 			var old_stability = excavation_status.stability_level
 			excavation_status.stability_level += 0.2 * amount
 			excavation_status.stability_level = min(excavation_status.stability_level, 1.0)
 			effect.description = "Stability significantly improved: " + str(old_stability) + " -> " + str(excavation_status.stability_level)
+
 		
 		"quantum_keys":
+
 			# Dimensional shift - access higher depths temporarily
 			excavation_status.current_depth += amount
 			effect.description = "Excavation depth increased to " + str(excavation_status.current_depth)

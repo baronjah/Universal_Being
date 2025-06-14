@@ -124,4 +124,3 @@ func get_time_state() -> Dictionary:
         "time_enabled": time_enabled,
         "active_loops": time_loops.size(),
         "pending_events": temporal_events.size()
-    } 

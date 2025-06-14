@@ -49,7 +49,7 @@
 #
 #Let me outline a potential implementation structure:Evolving Elements System - Godot 4.4 ImplementationCode 
 ## Element.gd - Base class for all atomic elements
-#class_name Element
+#class_name Element_elements_elements
 #extends Node3D
 #
 ## Basic properties
@@ -99,8 +99,8 @@
 #Let me know which direction you'd like to go next, and I can help you build out this system piece by piece.
 
 
-class_name Element
-extends Node3D
+class_name Element_elements_elements
+extends \2
 
 # Basic properties
 var element_type: String = "neutral"  # water, fire, earth, etc.
@@ -293,8 +293,8 @@ func evolve():
 # code at once, and connection can happen easy peasy
 
 # ElementZone.gd - Manages a collection of elements
-class_name ElementZone
-extends Node3D
+class_name ElementZone_elements_elements
+extends \2
 
 var zone_id: String
 var elements = []
@@ -414,16 +414,16 @@ func load_zone():
 
 
 # ZoneResource.gd - Resource for saving/loading zone data
-class_name ZoneResource
-extends Resource
+class_name ZoneResource_elements_elements
+extends \2
 
-@export var zone_id: String
-@export var element_data: Array
+@@@export var zone_id: String
+@@@export var element_data: Array
 
 
 # WorldManager.gd - Manages all zones and handles global interactions
-class_name WorldManager
-extends Node3D
+class_name WorldManager_elements_elements
+extends \2
 
 var zones = {}
 var active_zone_radius = 100.0  # Distance from camera to keep zones active
@@ -477,7 +477,7 @@ func save_all_zones():
 
 
 # Main.gd - Main scene script
-extends Node3D
+extends \2
 
 var world_manager: WorldManager
 var selected_element_type = "water"

@@ -55,6 +55,7 @@ func _ready():
 	
 	print("Ethereal Engine initialized. Reality: %s, Dimension: %dD" % [active_reality, active_dimension])
 
+
 func _connect_signals():
 	if turn_manager:
 		turn_manager.connect("turn_advanced", _on_turn_advanced)
@@ -108,7 +109,7 @@ func get_engine_status() -> Dictionary:
 		"entity_count": entity_count,
 		"word_power": word_power_accumulator,
 		"quantum_loop": quantum_loop_active
-	}
+}
 
 func shift_reality(new_reality: String) -> bool:
 	if not new_reality in REALITY_TYPES:
@@ -127,6 +128,7 @@ func shift_reality(new_reality: String) -> bool:
 	
 	emit_signal("reality_shifted", old_reality, new_reality)
 	print("Reality shifted: %s → %s" % [old_reality, new_reality])
+
 	
 	return true
 
@@ -148,6 +150,7 @@ func change_dimension(new_dimension: int) -> bool:
 	
 	emit_signal("dimension_changed", old_dimension, new_dimension)
 	print("Dimension changed: %dD → %dD" % [old_dimension, new_dimension])
+
 	
 	return true
 
@@ -185,6 +188,7 @@ func get_word_power(word: String) -> float:
 		"QUANTUM": reality_factor = 2.0
 		"DREAM": reality_factor = 1.8
 		"MEMORY": reality_factor = 1.2
+
 	
 	# Moon phase factor
 	var moon_factor = 1.0 + (float(moon_phase) / 8.0)
@@ -198,6 +202,7 @@ func get_word_power(word: String) -> float:
 # ----- EVENT HANDLERS -----
 func _on_turn_advanced(old_turn, new_turn):
 	print("Turn advanced: %d → %d" % [old_turn, new_turn])
+
 	
 	# Sync dimension with turn
 	if active_dimension != new_turn:

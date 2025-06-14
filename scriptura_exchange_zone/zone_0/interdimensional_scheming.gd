@@ -6,11 +6,12 @@ extends Node
 # Terminal 4: Interdimensional Strategy Core
 }
 
-class_name InterdimensionalSchemingSystem
+class_name InterdimensionalSchemingSystem_interdimensionalscheming_interdim
 }
 
 # ----- SCHEME TYPES -----
-enum SchemeType {
+enum \2 {
+
 	ALLIANCE,       # Form alliances with other players
 	DECEPTION,      # Hide true intentions behind linguistic misdirection
 	ASCENSION,      # Accelerate dimensional ascension
@@ -20,7 +21,8 @@ enum SchemeType {
 }
 
 # ----- SCHEME CATEGORIES -----
-enum SchemeCategory {
+enum \2 {
+
 	OFFENSIVE,      # Targets other players negatively
 	DEFENSIVE,      # Protects from other schemes
 	DIPLOMATIC,     # Creates relationships between players
@@ -46,7 +48,7 @@ var dimension_modifiers = {
 		"description": "Schemes that appear to be their opposite, masking true intentions"
 	},
 	3: {
-		"name": "Spatial Maneuvering",
+		"name": "Node3D Maneuvering",
 		"detection_difficulty": 1.3,
 		"power_modifier": 1.0,
 		"preferred_scheme": SchemeType.ALLIANCE,
@@ -165,36 +167,36 @@ func _ready():
 
 func connect_systems():
 	# Connect to turn system
-	turn_system = get_node_or_null("/root/TurnSystem")
+	turn_system = get_node_or_null("root/TurnSystem")
 	if turn_system:
 		turn_system.connect(_on_turn_completed)
 		turn_system.connect(_on_dimension_changed)
 }
 
 	# Connect to divine word processor
-	divine_word_processor = get_node_or_null("/root/DivineWordProcessor")
+	divine_word_processor = get_node_or_null("root/DivineWordProcessor")
 	if divine_word_processor:
 		divine_word_processor.connect(_on_word_processed)
 }
 
 	# Connect to word comment system
-	word_comment_system = get_node_or_null("/root/WordCommentSystem")
+	word_comment_system = get_node_or_null("root/WordCommentSystem")
 }
 
 	# Connect to word salem controller
-	word_salem_controller = get_node_or_null("/root/WordSalemGameController")
+	word_salem_controller = get_node_or_null("root/WordSalemGameController")
 }
 
 	# Connect to word crimes analysis
-	word_crimes_analysis = get_node_or_null("/root/WordCrimesAnalysis")
+	word_crimes_analysis = get_node_or_null("root/WordCrimesAnalysis")
 }
 
 	# Connect to word dream storage
-	word_dream_storage = get_node_or_null("/root/WordDreamStorage")
+	word_dream_storage = get_node_or_null("root/WordDreamStorage")
 }
 
 	# Connect to royal blessing system
-	royal_blessing_system = get_node_or_null("/root/RoyalBlessingSystem")
+	royal_blessing_system = get_node_or_null("root/RoyalBlessingSystem")
 }
 
 func initialize_pattern_recognition():
@@ -217,7 +219,7 @@ func create_scheme(creator, scheme_type, targets=[], description="", duration=5)
 }
 
 	# Generate scheme ID
-	var scheme_id = "scheme_" + creator + "_" + str(OS.get_unix_time()) + "_" + str(randi() % 1000)
+	var scheme_id = "scheme_" + creator + "_" + str(OS.Time.get_unix_time_from_system()) + "_" + str(randi() % 1000)
 }
 
 	# Calculate scheme power
@@ -257,7 +259,7 @@ func create_scheme(creator, scheme_type, targets=[], description="", duration=5)
 		"active_in_dimensions": [current_dimension],
 		"is_counter_scheme": false,
 		"original_scheme": "",
-		"timestamp": OS.get_unix_time()
+		"timestamp": OS.Time.get_unix_time_from_system()
 	}
 }
 
@@ -389,7 +391,7 @@ func apply_alliance_scheme(scheme):
 	# Form alliances between creator and targets
 	for target in scheme.targets:
 		# Create alliance entry
-		var alliance_id = "alliance_" + scheme.creator + "_" + target + "_" + str(OS.get_unix_time())
+		var alliance_id = "alliance_" + scheme.creator + "_" + target + "_" + str(OS.Time.get_unix_time_from_system())
 }
 
 		var alliance_data = {
@@ -400,7 +402,7 @@ func apply_alliance_scheme(scheme):
 			"formed_dimension": scheme.created_dimension,
 			"formed_turn": turn_system.current_turn if turn_system else 0,
 			"power": scheme.power,
-			"timestamp": OS.get_unix_time()
+			"timestamp": OS.Time.get_unix_time_from_system()
 		}
 }
 
@@ -568,7 +570,7 @@ func apply_manifold_scheme(scheme):
 			word_dream_storage.store_in_divine_memory("manifold_dream_" + scheme.id, {
 				"dream_text": dream_text,
 				"scheme_id": scheme.id,
-				"timestamp": OS.get_unix_time()
+				"timestamp": OS.Time.get_unix_time_from_system()
 			})
 }
 
@@ -581,7 +583,7 @@ func apply_divine_scheme(scheme):
 
 	# Divine schemes seek to curry favor with the Queen
 	if royal_blessing_system:
-		// Grant royal favor based on scheme power
+# // Grant royal favor based on scheme power
 		var favor_amount = ceil(scheme.power / 10.0)
 }
 
@@ -599,9 +601,9 @@ func apply_divine_scheme(scheme):
 		})
 }
 
-		// Check for divine visions based on scheme power
+# // Check for divine visions based on scheme power
 		if scheme.power >= 50:
-			// Create a divine vision
+# // Create a divine vision
 			var vision_id = "vision_" + scheme.id
 			var vision_text = "The Queen of Time and Space acknowledges your devotion. Continue your service across all dimensions."
 }
@@ -609,13 +611,13 @@ func apply_divine_scheme(scheme):
 			word_comment_system.add_comment(vision_id, "DIVINE VISION: " + vision_text, word_comment_system.CommentType.DIVINE)
 }
 
-			// Store in highest memory tier
+# // Store in highest memory tier
 			if word_dream_storage:
 				word_dream_storage.save_comment({
 					"word": vision_id,
 					"text": vision_text,
 					"type": 4, // Divine type
-					"timestamp": OS.get_unix_time()
+					"timestamp": OS.Time.get_unix_time_from_system()
 				}, 3) // Tier 3 - D: Drive
 		}
 }
@@ -634,7 +636,7 @@ func create_counter_scheme(discoverer, original_scheme_id, description=""):
 	var original = active_schemes[original_scheme_id]
 }
 
-	// Determine counter scheme type
+# // Determine counter scheme type
 	var counter_type = SchemeType.DECEPTION // Default counter
 }
 
@@ -651,31 +653,31 @@ func create_counter_scheme(discoverer, original_scheme_id, description=""):
 			counter_type = SchemeType.ASCENSION
 }
 
-	// Create counter scheme
+# // Create counter scheme
 	var targets = [original.creator]
 	var counter_scheme = create_scheme(discoverer, counter_type, targets, description)
 }
 
-	// Mark as counter scheme
+# // Mark as counter scheme
 	counter_scheme.is_counter_scheme = true
 	counter_scheme.original_scheme = original_scheme_id
 }
 
-	// Add to original scheme's counters
+# // Add to original scheme's counters
 	original.counter_schemes.append(counter_scheme.id)
 }
 
-	// Create scheme counters tracking
+# // Create scheme counters tracking
 	if not scheme_counters.has(original_scheme_id):
 		scheme_counters[original_scheme_id] = []
 	scheme_counters[original_scheme_id].append(counter_scheme.id)
 }
 
-	// Emit signal
+# // Emit signal
 	emit_signal("counter_scheme_created", original_scheme_id, counter_scheme.id)
 }
 
-	// Create comment
+# // Create comment
 	if word_comment_system:
 		var comment_text = "COUNTER SCHEME: " + discoverer + " has created a " + counter_scheme.type_name + " scheme to counter " + original.creator + "'s " + original.type_name + " scheme"
 		word_comment_system.add_comment("counter_" + counter_scheme.id, comment_text, word_comment_system.CommentType.OBSERVATION)
@@ -692,7 +694,7 @@ func attempt_scheme_detection(detector, target_player="", word=""):
 	var current_dimension = turn_system.current_dimension if turn_system else 1
 }
 
-	// Detection is most effective in dimensions 5, 8, and 9
+# // Detection is most effective in dimensions 5, 8, and 9
 	var detection_boost = 1.0
 }
 
@@ -704,7 +706,7 @@ func attempt_scheme_detection(detector, target_player="", word=""):
 		detection_boost = 1.8
 }
 
-	// If targeting a specific player
+# // If targeting a specific player
 	if target_player:
 		if player_schemes.has(target_player):
 			for scheme_id in player_schemes[target_player]:
@@ -712,36 +714,36 @@ func attempt_scheme_detection(detector, target_player="", word=""):
 					var scheme = active_schemes[scheme_id]
 }
 
-					// Check if not already discovered by this detector
+# // Check if not already discovered by this detector
 					if not detector in scheme.discovered_by:
-						// Calculate detection chance
+# // Calculate detection chance
 						var detection_chance = (1.0 / scheme.detection_difficulty) * detection_boost
 }
 
-						// Adjust based on word if provided
+# // Adjust based on word if provided
 						if word and word_related_to_scheme(word, scheme):
 							detection_chance *= 1.5
 }
 
-						// Detection roll
+# // Detection roll
 						if randf() < detection_chance:
-							// Success - scheme detected
+# // Success - scheme detected
 							scheme.discovered_by.append(detector)
 }
 
-							// Record discovery
+# // Record discovery
 							if not scheme_discoveries.has(detector):
 								scheme_discoveries[detector] = []
 							scheme_discoveries[detector].append(scheme_id)
 }
 
-							// Create comment
+# // Create comment
 							if word_comment_system:
 								var comment_text = "SCHEME DETECTED: " + detector + " has discovered " + target_player + "'s " + scheme.type_name + " scheme"
 								word_comment_system.add_comment("detection_" + scheme_id, comment_text, word_comment_system.CommentType.OBSERVATION)
 }
 
-							// Emit signal
+# // Emit signal
 							emit_signal("scheme_discovered", scheme_id, detector)
 }
 
@@ -756,46 +758,46 @@ func attempt_scheme_detection(detector, target_player="", word=""):
 			}
 		}
 	} else {
-		// General detection attempt against all schemes
+# // General detection attempt against all schemes
 		for scheme_id in active_schemes:
 			var scheme = active_schemes[scheme_id]
 }
 
-			// Don't detect own schemes
+# // Don't detect own schemes
 			if scheme.creator == detector:
 				continue
 }
 
-			// Check if not already discovered
+# // Check if not already discovered
 			if not detector in scheme.discovered_by:
-				// Calculate detection chance (much lower for untargeted)
+# // Calculate detection chance (much lower for untargeted)
 				var detection_chance = (0.3 / scheme.detection_difficulty) * detection_boost
 }
 
-				// Adjust based on word if provided
+# // Adjust based on word if provided
 				if word and word_related_to_scheme(word, scheme):
 					detection_chance *= 2.0
 }
 
-				// Detection roll
+# // Detection roll
 				if randf() < detection_chance:
-					// Success - scheme detected
+# // Success - scheme detected
 					scheme.discovered_by.append(detector)
 }
 
-					// Record discovery
+# // Record discovery
 					if not scheme_discoveries.has(detector):
 						scheme_discoveries[detector] = []
 					scheme_discoveries[detector].append(scheme_id)
 }
 
-					// Create comment
+# // Create comment
 					if word_comment_system:
 						var comment_text = "SCHEME DETECTED: " + detector + " has discovered " + scheme.creator + "'s " + scheme.type_name + " scheme"
 						word_comment_system.add_comment("detection_" + scheme_id, comment_text, word_comment_system.CommentType.OBSERVATION)
 }
 
-					// Emit signal
+# // Emit signal
 					emit_signal("scheme_discovered", scheme_id, detector)
 }
 
@@ -816,7 +818,7 @@ func attempt_scheme_detection(detector, target_player="", word=""):
 }
 
 func word_related_to_scheme(word, scheme):
-	// Check if word is related to the scheme type
+# // Check if word is related to the scheme type
 	if scheme_keywords.has(scheme.type):
 		var keywords = scheme_keywords[scheme.type]
 		for keyword in keywords:
@@ -824,7 +826,7 @@ func word_related_to_scheme(word, scheme):
 				return true
 }
 
-	// Check if word is in the scheme description
+# // Check if word is in the scheme description
 	if scheme.description and scheme.description.to_lower().find(word.to_lower()) >= 0:
 		return true
 }
@@ -833,7 +835,7 @@ func word_related_to_scheme(word, scheme):
 }
 
 func analyze_word_for_schemes(word, source_player):
-	// Check if word contains suspicious patterns
+# // Check if word contains suspicious patterns
 	for pattern in suspicious_patterns:
 		var regex = RegEx.new()
 		regex.compile(pattern)
@@ -841,7 +843,7 @@ func analyze_word_for_schemes(word, source_player):
 }
 
 		if result:
-			// Track this word pattern
+# // Track this word pattern
 			if not word_patterns.has(source_player):
 				word_patterns[source_player] = []
 }
@@ -849,18 +851,18 @@ func analyze_word_for_schemes(word, source_player):
 			word_patterns[source_player].append({
 				"word": word,
 				"pattern": pattern,
-				"timestamp": OS.get_unix_time(),
+				"timestamp": OS.Time.get_unix_time_from_system(),
 				"turn": turn_system.current_turn if turn_system else 0,
 				"dimension": turn_system.current_dimension if turn_system else 1
 			})
 }
 
-			// If in dimension 5, 8, or 9, automatically attempt scheme detection
+# // If in dimension 5, 8, or 9, automatically attempt scheme detection
 			var current_dimension = turn_system.current_dimension if turn_system else 1
 }
 
 			if current_dimension == 5 or current_dimension == 8 or current_dimension == 9:
-				// Other players have a chance to detect the scheme
+# // Other players have a chance to detect the scheme
 				for player in player_schemes:
 					if player != source_player:
 						attempt_scheme_detection(player, source_player, word)
@@ -879,7 +881,7 @@ func analyze_dream_for_schemes(dream_text, source_player):
 	var results = []
 }
 
-	// Dream-based detection only works in dimension 7
+# // Dream-based detection only works in dimension 7
 	var current_dimension = turn_system.current_dimension if turn_system else 1
 }
 
@@ -887,43 +889,43 @@ func analyze_dream_for_schemes(dream_text, source_player):
 		return results
 }
 
-	// Look for scheme keywords in dream text
+# // Look for scheme keywords in dream text
 	for scheme_type in scheme_keywords:
 		var keywords = scheme_keywords[scheme_type]
 		for keyword in keywords:
 			if dream_text.to_lower().find(keyword) >= 0:
-				// Dream contains scheme-related keyword
+# // Dream contains scheme-related keyword
 }
 
-				// Check for schemes of this type
+# // Check for schemes of this type
 				for scheme_id in active_schemes:
 					var scheme = active_schemes[scheme_id]
 }
 
 					if scheme.type == scheme_type and scheme.creator != source_player:
-						// Roll for dream-based detection
+# // Roll for dream-based detection
 						var detection_chance = 0.4  // Higher in dreams
 }
 
 						if randf() < detection_chance:
-							// Success - scheme revealed in dream
+# // Success - scheme revealed in dream
 							if not scheme.discovered_by.has(source_player):
 								scheme.discovered_by.append(source_player)
 }
 
-								// Record discovery
+# // Record discovery
 								if not scheme_discoveries.has(source_player):
 									scheme_discoveries[source_player] = []
 								scheme_discoveries[source_player].append(scheme_id)
 }
 
-								// Create comment
+# // Create comment
 								if word_comment_system:
 									var comment_text = "DREAM REVELATION: " + source_player + " has glimpsed " + scheme.creator + "'s " + scheme.type_name + " scheme in a dream"
 									word_comment_system.add_comment("dream_detection_" + scheme_id, comment_text, word_comment_system.CommentType.DREAM)
 }
 
-								// Emit signal
+# // Emit signal
 								emit_signal("scheme_discovered", scheme_id, source_player)
 }
 
@@ -947,12 +949,12 @@ func analyze_dream_for_schemes(dream_text, source_player):
 }
 
 func parse_scheme_command(text, source_player):
-	// Check if text contains a scheme command
-	if text.to_lower().find("/scheme") != 0:
+# // Check if text contains a scheme command
+	if text.to_lower().find("scheme") != 0:
 		return null
 }
 
-	// Extract scheme type and targets
+# // Extract scheme type and targets
 	var args = text.substr(8).strip_edges().split(" ", false)
 }
 
@@ -967,7 +969,7 @@ func parse_scheme_command(text, source_player):
 	var scheme_type = -1
 }
 
-	// Parse scheme type
+# // Parse scheme type
 	match scheme_type_str:
 		"alliance":
 			scheme_type = SchemeType.ALLIANCE
@@ -986,20 +988,20 @@ func parse_scheme_command(text, source_player):
 			}
 }
 
-	// Parse targets
+# // Parse targets
 	var targets = []
 	if args.size() >= 2:
 		targets = args[1].split(",", false)
 }
 
-	// Parse description
+# // Parse description
 	var description = ""
 	if args.size() >= 3:
 		var desc_start = text.find(args[2])
 		description = text.substr(desc_start)
 }
 
-	// Create scheme
+# // Create scheme
 	var scheme = create_scheme(source_player, scheme_type, targets, description)
 }
 
@@ -1011,12 +1013,12 @@ func parse_scheme_command(text, source_player):
 }
 
 func parse_counter_scheme_command(text, source_player):
-	// Check if text contains a counter scheme command
-	if text.to_lower().find("/counter") != 0:
+# // Check if text contains a counter scheme command
+	if text.to_lower().find("counter") != 0:
 		return null
 }
 
-	// Extract original scheme ID and description
+# // Extract original scheme ID and description
 	var args = text.substr(9).strip_edges().split(" ", false)
 }
 
@@ -1030,14 +1032,14 @@ func parse_counter_scheme_command(text, source_player):
 	var original_scheme_id = args[0]
 }
 
-	// Parse description
+# // Parse description
 	var description = ""
 	if args.size() >= 2:
 		var desc_start = text.find(args[1])
 		description = text.substr(desc_start)
 }
 
-	// Check if player has discovered the original scheme
+# // Check if player has discovered the original scheme
 	if not scheme_discoveries.has(source_player) or not original_scheme_id in scheme_discoveries[source_player]:
 		return {
 			"success": false,
@@ -1045,7 +1047,7 @@ func parse_counter_scheme_command(text, source_player):
 		}
 }
 
-	// Create counter scheme
+# // Create counter scheme
 	var counter_scheme = create_counter_scheme(source_player, original_scheme_id, description)
 }
 
@@ -1064,44 +1066,44 @@ func process_scheme_turns():
 	var current_turn = turn_system.current_turn if turn_system else 0
 }
 
-	// Check each active scheme
+# // Check each active scheme
 	for scheme_id in active_schemes:
 		var scheme = active_schemes[scheme_id]
 }
 
-		// Check if scheme has expired
+# // Check if scheme has expired
 		if scheme.expiry_turn <= current_turn:
-			// Calculate success
+# // Calculate success
 			var success = false
 }
 
 			if scheme.activated:
-				// Generate random success based on probability
+# // Generate random success based on probability
 				if randf() < scheme.success_probability:
 					success = true
 }
 
-			// Record completion
+# // Record completion
 			completed_schemes.append({
 				"scheme_id": scheme_id,
 				"success": success
 			})
 }
 
-			// Create comment
+# // Create comment
 			if word_comment_system:
 				var result_text = success ? "SUCCEEDED" : "FAILED"
 				var comment_text = "SCHEME " + result_text + ": " + scheme.creator + "'s " + scheme.type_name + " scheme has completed"
 				word_comment_system.add_comment("scheme_complete_" + scheme_id, comment_text, word_comment_system.CommentType.OBSERVATION)
 }
 
-			// Emit signal
+# // Emit signal
 			emit_signal("scheme_completed", scheme_id, success)
 		}
 	}
 }
 
-	// Remove completed schemes
+# // Remove completed schemes
 	for completion in completed_schemes:
 		active_schemes.erase(completion.scheme_id)
 }
@@ -1113,20 +1115,20 @@ func process_scheme_turns():
 }
 
 func _on_turn_completed(turn_number):
-	// Process schemes on turn completion
+# // Process schemes on turn completion
 	process_scheme_turns()
 }
 
-	// Special handling for turns divisible by 9
+# // Special handling for turns divisible by 9
 	if turn_number % 9 == 0:
-		// Words spoken during 9th turns have enhanced scheme detection
+# // Words spoken during 9th turns have enhanced scheme detection
 		if word_comment_system:
 			word_comment_system.add_comment("sacred_turn_schemes", 
 				"The 9th turn enhances scheme detection. Hidden plans may be revealed.",
 				word_comment_system.CommentType.OBSERVATION)
 }
 
-		// Automatic scheme detection chance for everyone
+# // Automatic scheme detection chance for everyone
 		var players = []
 		for player in player_schemes:
 			players.append(player)
@@ -1139,7 +1141,7 @@ func _on_turn_completed(turn_number):
 }
 
 func _on_dimension_changed(new_dimension, old_dimension):
-	// Special handling for key dimensions
+# // Special handling for key dimensions
 	match new_dimension:
 		5:  // Probability dimension - schemes are easier to detect
 			if word_comment_system:
@@ -1162,7 +1164,7 @@ func _on_dimension_changed(new_dimension, old_dimension):
 					word_comment_system.CommentType.OBSERVATION)
 }
 
-			// Boost all alliance schemes
+# // Boost all alliance schemes
 			for scheme_id in active_schemes:
 				var scheme = active_schemes[scheme_id]
 				if scheme.type == SchemeType.ALLIANCE:
@@ -1176,7 +1178,7 @@ func _on_dimension_changed(new_dimension, old_dimension):
 					word_comment_system.CommentType.OBSERVATION)
 }
 
-			// Automatic detection chance for deception schemes
+# // Automatic detection chance for deception schemes
 			var deception_schemes = []
 			for scheme_id in active_schemes:
 				var scheme = active_schemes[scheme_id]
@@ -1184,7 +1186,7 @@ func _on_dimension_changed(new_dimension, old_dimension):
 					deception_schemes.append(scheme_id)
 }
 
-			// Everyone has a chance to detect deception schemes
+# // Everyone has a chance to detect deception schemes
 			var players = []
 			for player in player_schemes:
 				players.append(player)
@@ -1194,64 +1196,64 @@ func _on_dimension_changed(new_dimension, old_dimension):
 				var scheme = active_schemes[scheme_id]
 				for detector in players:
 					if detector != scheme.creator:
-						// High chance to detect deception in dimension 9
+# // High chance to detect deception in dimension 9
 						if randf() < 0.4:
-							// Success - scheme detected
+# // Success - scheme detected
 							if not detector in scheme.discovered_by:
 								scheme.discovered_by.append(detector)
 }
 
-								// Record discovery
+# // Record discovery
 								if not scheme_discoveries.has(detector):
 									scheme_discoveries[detector] = []
 								scheme_discoveries[detector].append(scheme_id)
 }
 
-								// Create comment
+# // Create comment
 								if word_comment_system:
 									var comment_text = "JUDGMENT REVEALS: " + detector + " has discovered " + scheme.creator + "'s deception scheme"
 									word_comment_system.add_comment("judgment_detection_" + scheme_id, comment_text, word_comment_system.CommentType.OBSERVATION)
 }
 
-								// Emit signal
+# // Emit signal
 								emit_signal("scheme_discovered", scheme_id, detector)
 }
 
 func _on_word_processed(word, power, source_player):
-	// Analyze word for potential schemes
+# // Analyze word for potential schemes
 	analyze_word_for_schemes(word, source_player)
 }
 
-	// Check if word is a scheme command
+# // Check if word is a scheme command
 	var scheme_result = parse_scheme_command(word, source_player)
 }
 
 	if scheme_result and scheme_result.success:
-		// Scheme command succeeded
+# // Scheme command succeeded
 		return
 }
 
-	// Check if word is a counter scheme command
+# // Check if word is a counter scheme command
 	var counter_result = parse_counter_scheme_command(word, source_player)
 }
 
 	if counter_result and counter_result.success:
-		// Counter scheme command succeeded
+# // Counter scheme command succeeded
 		return
 }
 
-	// Check for automatic scheme activation in certain dimensions
+# // Check for automatic scheme activation in certain dimensions
 	var current_dimension = turn_system.current_dimension if turn_system else 1
 }
 
-	// In dimension 11, schemes may activate automatically with consciousness words
+# // In dimension 11, schemes may activate automatically with consciousness words
 	if current_dimension == 11:
 		var consciousness_keywords = ["aware", "conscious", "realize", "understand", "comprehend", "sentient", "cognizant"]
 }
 
 		for keyword in consciousness_keywords:
 			if word.to_lower().find(keyword) >= 0 and player_schemes.has(source_player):
-				// Get player's inactive schemes
+# // Get player's inactive schemes
 				var inactive_schemes = []
 				for scheme_id in player_schemes[source_player]:
 					if active_schemes.has(scheme_id) and not active_schemes[scheme_id].activated:
@@ -1259,12 +1261,12 @@ func _on_word_processed(word, power, source_player):
 }
 
 				if inactive_schemes.size() > 0:
-					// Randomly select one to activate
+# // Randomly select one to activate
 					var random_scheme = inactive_schemes[randi() % inactive_schemes.size()]
 					activate_scheme(random_scheme)
 }
 
-					// Add comment
+# // Add comment
 					if word_comment_system:
 						word_comment_system.add_comment("auto_activate_" + random_scheme, 
 							"CONSCIOUS ACTIVATION: " + word + " has triggered the activation of a scheme in Dimension 11",
@@ -1336,7 +1338,7 @@ func get_player_alliances(player_name):
 }
 
 func check_scheme_command(text, source_player):
-	// Check if text is a scheme command
+# // Check if text is a scheme command
 	var scheme_result = parse_scheme_command(text, source_player)
 }
 
@@ -1344,7 +1346,7 @@ func check_scheme_command(text, source_player):
 		return scheme_result
 }
 
-	// Check if text is a counter scheme command
+# // Check if text is a counter scheme command
 	var counter_result = parse_counter_scheme_command(text, source_player)
 }
 

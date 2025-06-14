@@ -5,6 +5,7 @@ class_name AkashicFixer
 
 func _ready() -> void:
     print("AkashicFixer: Starting fixes...")
+	
     # Wait for one frame to ensure scene tree is ready
     await get_tree().process_frame
     # Run all fixes
@@ -15,6 +16,7 @@ func _ready() -> void:
     fix_register_command_issues()
     fix_zone_manager_issues()
     print("AkashicFixer: All fixes applied. You can remove this node now.")
+	
 
 # Issue 1: get_tree() might return null in _ready()
 func fix_get_tree_issues() -> void:
@@ -30,10 +32,12 @@ func fix_get_tree_issues() -> void:
             # Replace direct tree access patterns with null check
             var pattern1 = "var nodes = get_tree().get_nodes_in_group"
             var replacement1 = "var tree = get_tree()\nif tree:\n\tvar nodes = tree.get_nodes_in_group"
+			
             
             # Replace other direct tree access
             var pattern2 = "get_tree().root.find_node"
             var replacement2 = "var tree = get_tree()\nif tree and tree.root:\n\tvar node = tree.root.find_node"
+			
             
             content = content.replace(pattern1, replacement1)
             content = content.replace(pattern2, replacement2)
@@ -177,6 +181,7 @@ func find_files_with_pattern(pattern: String) -> Array:
         var file_name = dir.get_next()
         while file_name != "":
             if file_name.ends_with(".gd") and !dir.current_is_dir():
+			
                 var file = FileAccess.open("res://" + file_name, FileAccess.READ)
                 if file:
                     var content = file.get_as_text()

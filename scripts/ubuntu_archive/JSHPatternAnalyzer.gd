@@ -11,7 +11,7 @@ var pattern_weights = {
     "progression": 0.2,     # Weight of progressive patterns
     "alternation": 0.15,    # Weight of alternating patterns
     "clustering": 0.1       # Weight of character clusters
-}
+	}
 
 # Pattern types and their baseline power
 var pattern_power = {
@@ -23,7 +23,7 @@ var pattern_power = {
     "reduplication": 0.8,   # Repeating syllables (e.g., "murmur")
     "anagram": 0.6,         # Rearrangements of same letters
     "chiasmus": 0.7         # Crosswise arrangement (e.g., AB-BA pattern)
-}
+	}
 
 # Static accessor for singleton
 static func get_instance():
@@ -46,7 +46,7 @@ func analyze(word: String) -> Dictionary:
         "character_stats": {},      # Statistics about character usage
         "sequence_patterns": [],    # Identified sequence patterns
         "visual_balance": 0.0       # Visual balance/harmony (0.0-1.0)
-    }
+		}
     
     # Calculate character statistics
     var char_stats = _calculate_char_stats(text)
@@ -73,7 +73,7 @@ func analyze(word: String) -> Dictionary:
 
 # Function to calculate character statistics
 func _calculate_char_stats(word: String) -> Dictionary:
-    var char_counts = {}
+    var char_counts = {
     var result = {
         "total_chars": word.length(),
         "unique_chars": 0,
@@ -83,8 +83,8 @@ func _calculate_char_stats(word: String) -> Dictionary:
         },
         "repetitions": 0,
         "unique_ratio": 0.0,
-        "char_counts": {}
-    }
+        "char_counts": {
+		}
     
     # Count character occurrences
     for c in word:
@@ -190,7 +190,7 @@ func _identify_patterns(word: String, char_stats: Dictionary) -> Array:
             vowel_sequence += c
     
     if vowel_sequence.length() > 1:
-        var vowel_counts = {}
+        var vowel_counts = {
         for v in vowel_sequence:
             if not vowel_counts.has(v):
                 vowel_counts[v] = 0
@@ -215,7 +215,7 @@ func _identify_patterns(word: String, char_stats: Dictionary) -> Array:
             consonant_sequence += c
     
     if consonant_sequence.length() > 1:
-        var consonant_counts = {}
+        var consonant_counts = {
         for c in consonant_sequence:
             if not consonant_counts.has(c):
                 consonant_counts[c] = 0

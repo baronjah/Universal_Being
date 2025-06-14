@@ -6,14 +6,14 @@
 #       888      `"Y88b  888     888     ┗┛┗ ┗ ┛┗┗┫┛┗┗┗    ┗┛┗┗┛┗┫┛ 
 #       888 oo     .d8P  888     888               ┛                ┛      
 #   .o. 88P 8""88888P'  o888o   o888o 
-#   `Y888P      
-extends Node
-class_name JSHConsole
+#   `Y888P
+extends \2
+class_name JSHConsole_JSHconsole_JSHconso
 
 
-@onready var console_gui = get_node("res://code/gdscript/scripts/Text_Console_Window/console_window_ui.gd")
+@onready var console_gui = get_node("res://scripts/gdscript/scripts/Text_Console_Window/console_window_ui.gd")
 
-#class_name JSHConsoleSystem
+#class_name JSHConsoleSystem_JSHconsole_JSHconso
 
 var command_history = []
 var command_handlers = {}
@@ -43,7 +43,7 @@ const COMMAND_ALIASES = {
 # JSH Ethereal Terminal System
 
 #extends Node3D
-#class_name JSH_Terminal
+#class_name JSH_Terminal_JSHconsole_JSHconso
 
 #      oooo  .oooooo..o ooooo   ooooo 
 #      `888 d8P'    `Y8 `888'   `888' 
@@ -55,9 +55,9 @@ const COMMAND_ALIASES = {
 #   `Y888P                            
 
 # References to main systems
-@onready var thread_pool = get_node("/root/thread_pool_autoload")
-@onready var task_manager = get_node("/root/main/JSH_task_manager")
-@onready var main_node = get_node("/root/main")
+@onready var thread_pool = get_node("root/thread_pool_autoload")
+@onready var task_manager = get_node("root/main/JSH_task_manager")
+@onready var main_node = get_node("root/main")
 
 # Terminal visual nodes
 var terminal_container : Node3D = null
@@ -187,7 +187,7 @@ var terminal_node: Node3D
 
 
 
-## res://code/gdscript/scripts/Text_Console_Window/console_window_ui.gd
+## res://scripts/gdscript/scripts/Text_Console_Window/console_window_ui.gd
 #
 
 var word_network := {}
@@ -360,8 +360,9 @@ var colors = {
 #       888      `"Y88b  888     888     ┗┛┗ ┗ ┛┗┗┫┛┗┗┗    ┗┛┗┗┛┗┫┛ 
 #       888 oo     .d8P  888     888               ┛                ┛      
 #   .o. 88P 8""88888P'  o888o   o888o 
-#   `Y888P      
-enum LogType {
+#   `Y888P
+enum \2 {
+
 	INFO,
 	WARNING,
 	ERROR,
@@ -462,7 +463,7 @@ var terminal_commands = {
 # Create a new script file with this code
 
 #extends Node3D
-#class_name TerminalManager
+#class_name TerminalManager_JSHconsole_JSHconso
 
 # References to important nodes
 var terminal_containerr : Node3D
@@ -811,9 +812,9 @@ func _init():
 
 func _readyyy():
 	# Set up references
-	thread_pool = get_node_or_null("/root/thread_pool_autoload")
+	thread_pool = get_node_or_null("root/thread_pool_autoload")
 	camera = get_viewport().get_camera_3d()
-	main_node = get_node_or_null("/root/main")
+	main_node = get_node_or_null("root/main")
 	
 	if main_node and main_node.has_node("JSH_task_manager"):
 		task_manager = main_node.get_node("JSH_task_manager")
@@ -1386,21 +1387,21 @@ func show_command_history() -> String:
 
 func list_things(args: Array) -> String:
 	# Customize this based on your game's object system
-	var path = "/"
+	var path = ""
 	if args.size() > 1:
 		path = args[1]
 	
 	var output = "Available things in " + path + ":\n"
 	var tree_data = main_node.scene_tree_jsh
 	
-	if path == "/":
+	if path == "":
 		# List main tree branches
 		if tree_data.has("main_root") and tree_data["main_root"].has("branches"):
 			for branch in tree_data["main_root"]["branches"]:
-				output += "  " + branch + "/\n"
+				output += "  " + branch + "\n"
 	else:
 		# Try to find the specified path
-		var parts = path.split("/", false)
+		var parts = path.split("", false)
 		var current = tree_data
 		
 		for part in parts:
@@ -1573,7 +1574,7 @@ func find_objects(query: String) -> String:
 		if branch.has("things"):
 			for thing_name in branch["things"]:
 				if thing_name.to_lower().contains(query.to_lower()):
-					result += "  Thing: " + branch_name + "/" + thing_name + "\n"
+					result += "  Thing: " + branch_name + "" + thing_name + "\n"
 					found_count += 1
 	
 	if found_count == 0:
@@ -2020,11 +2021,11 @@ func _cmd_shape(args: Array):
 			return "Shape changed to: " + shape_name
 		else:
 			add_text_line("Unknown|shape:|" + shape_name)
-			add_text_line("Available|shapes:|" + "|".join(shape_transforms))
+			add_text_line("Available|shapes:|" + "|"." ".join(shape_transforms))
 			return "Unknown shape"
 	else:
 		add_text_line("Current|shape:|" + current_shape)
-		add_text_line("Available|shapes:|" + "|".join(shape_transforms))
+		add_text_line("Available|shapes:|" + "|"." ".join(shape_transforms))
 		return "Shape info displayed"
 
 func _cmd_snake(_args: Array):
@@ -2051,7 +2052,7 @@ func _cmd_snake(_args: Array):
 
 
 # JSH_console.gd
-# res://code/gdscript/scripts/Menu_Keyboard_Console/JSH_console.gd
+# res://scripts/gdscript/scripts/Menu_Keyboard_Console/JSH_console.gd
 #
 # JSH_World/JSH_computer_window
 
@@ -2099,7 +2100,7 @@ func _cmd_snake(_args: Array):
 
 func _ready_older():
 	setup_terminal_container()
-	thread_pool = get_node_or_null("/root/thread_pool_autoload")
+	thread_pool = get_node_or_null("root/thread_pool_autoload")
 	camera = get_viewport().get_camera_3d()
 	add_text_line("JSH|Ethereal|Engine|3D|Terminal")
 	add_text_line("Type|'help'|for|available|commands")
@@ -2117,7 +2118,7 @@ func _ready_older():
 
 func _ready_old():
 	setup_terminal_container()
-	thread_pool = get_node_or_null("/root/thread_pool_autoload")
+	thread_pool = get_node_or_null("root/thread_pool_autoload")
 	camera = get_viewport().get_camera_3d()
 	add_text_line("JSH|Ethereal|Engine|3D|Terminal")
 	add_text_line("Type|'help'|for|available|commands")
@@ -2129,7 +2130,7 @@ func _ready_old():
 func _ready_new_v1():
 	setup_containers()
 	setup_material_cache()
-	thread_pool = get_node_or_null("/root/thread_pool_autoload")
+	thread_pool = get_node_or_null("root/thread_pool_autoload")
 	camera = get_viewport().get_camera_3d()
 	
 	# Setup combo rules
@@ -2153,9 +2154,9 @@ func _ready_new_v1():
 
 func _ready_new():
 	# Set up references
-	thread_pool = get_node_or_null("/root/thread_pool_autoload")
+	thread_pool = get_node_or_null("root/thread_pool_autoload")
 	camera = get_viewport().get_camera_3d()
-	main_node = get_node_or_null("/root/main")
+	main_node = get_node_or_null("root/main")
 	if main_node and main_node.has_node("JSH_task_manager"):
 		task_manager = main_node.get_node("JSH_task_manager")
 	
@@ -2925,7 +2926,7 @@ func remove_floating_word_new_v1(text: String):
 
 
 func launch_snake_game_new():
-	var main_node = get_node_or_null("/root/main")
+	var main_node = get_node_or_null("root/main")
 	if main_node and main_node.has_method("show_snake_game"):
 		main_node.show_snake_game()
 	elif has_method("create_snake_game"):
@@ -3739,7 +3740,7 @@ func clear_terminal_n3():
 	terminal_text.clear()
 
 func launch_snake_game():
-	var main_node = get_node_or_null("/root/main")
+	var main_node = get_node_or_null("root/main")
 	if main_node and main_node.has_method("show_snake_game"):
 		main_node.show_snake_game()
 	elif has_method("create_snake_game"):
@@ -5009,11 +5010,11 @@ func process_keywords(text: String):
 	var words = text.split(config.delimiter, false)
 	for word in words:
 		# Process file paths
-		if word.begins_with("res://") or word.begins_with("/root/") or word.begins_with("D:/"):
+		if word.begins_with("res://") or word.begins_with("root/") or word.begins_with("D:/"):
 			add_path_to_network(word)
 			
 		# Process nodes
-		elif word.find("/") != -1 and not word.begins_with("res://") and not word.begins_with("D:/"):
+		elif word.find("") != -1 and not word.begins_with("res://") and not word.begins_with("D:/"):
 			add_node_to_network(word)
 
 
@@ -5277,7 +5278,7 @@ func log_messag(message: String, type: int = LogType.INFO):
 		var lines = current_text.split("\n")
 		var excess_lines = lines.size() - max_output_lines
 		if excess_lines > 0:
-			output_text.text = "\n".join(lines.slice(excess_lines))
+			output_text.text = "\n"." ".join(lines.slice(excess_lines))
 	
 	emit_signal("log_added", message, type)
 
@@ -5341,7 +5342,7 @@ func _cmd_history(_args: Array):
 
 ## cmd
 func _cmd_echo(args: Array):
-	return " ".join(args)
+	return " "." ".join(args)
 
 func _cmd_status(_args: Array):
 	if not main_node:
@@ -5516,7 +5517,7 @@ func _cmd_statu(_args: Array):
 			add_text_line("Threads:|" + str(thread_stats.size()) + "|active")
 	
 	# Check database system state
-	var db_system = get_node_or_null("/root/JSH_database_system")
+	var db_system = get_node_or_null("root/JSH_database_system")
 	if db_system and db_system.has_method("get_parse_stats"):
 		var stats = db_system.get_parse_stats()
 		add_text_line("Database:|" + str(stats.files_processed) + "|files|processed")

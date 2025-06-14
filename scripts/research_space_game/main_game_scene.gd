@@ -32,12 +32,13 @@
 	## Initialize all game systems
 	#var systems = {
 		#"consciousness": game_systems.get_node("ConsciousnessSystem"),
+}
 		#"akashic": game_systems.get_node("AkashicRecordsSystem"),
 		#"stellar": game_systems.get_node("StellarProgressionSystem"),
 		#"mining": game_systems.get_node("MiningSystem"),
 		#"companion": game_systems.get_node("AICompanionSystem"),
 		#"pentagon": game_systems.get_node("PentagonArchitecture")
-	#}
+	#
 	#
 	#integration_hub.game_systems = systems
 	#integration_hub.connect_all_systems()
@@ -152,10 +153,11 @@
 	## Visual indicators for each system
 	#var monitors = {
 		#"consciousness": create_consciousness_monitor(),
+}
 		#"companions": create_companion_monitor(),
 		#"resources": create_resource_monitor(),
 		#"stellar": create_stellar_map_mini()
-	#}
+	#
 	#
 	#for monitor_name in monitors:
 		#ui_manager.add_monitor(monitor_name, monitors[monitor_name])
@@ -283,14 +285,14 @@
 #
 #func compile_save_data() -> Dictionary:
 	#return {
-		#"player": player_ship,
+		#"player": player_ship,}
 		#"consciousness": game_systems.get_node("ConsciousnessSystem"),
 		#"companions": game_systems.get_node("AICompanionSystem"),
 		#"stellar": game_systems.get_node("StellarProgressionSystem"),
 		#"akashic": game_systems.get_node("AkashicRecordsSystem"),
 		#"mining": game_systems.get_node("MiningSystem"),
 		#"pentagon": game_systems.get_node("PentagonArchitecture")
-	#}
+	#
 #
 #func check_for_save() -> bool:
 	#return FileAccess.file_exists(SaveSystem.SAVE_PATH)
@@ -377,7 +379,7 @@ func initialize_game():
 		"mining": game_systems.get_node("MiningSystem"),
 		"companion": game_systems.get_node("AICompanionSystem"),
 		"pentagon": game_systems.get_node("PentagonArchitecture")
-	}
+}
 	
 	integration_hub.game_systems = systems
 	integration_hub.connect_all_systems()
@@ -404,3 +406,4 @@ func _on_player_frequency_changed(frequency: float):
 func show_companion_dialogue(companion: AICompanion, message: String):
 	# UI implementation would go here
 	print(companion.name + ": " + message)
+

@@ -58,7 +58,7 @@ func _ready():
         "3.x_to_4.0": 0,
         "3.x_to_4.5": 0,
         "3.x_to_4.x_ethereal": 0
-    }
+		}
     
     emit_signal("unified_system_initialized")
     
@@ -176,6 +176,7 @@ func _on_migration_started(total_files):
 func _on_migration_completed(stats):
     print("Migration completed - Files processed: " + str(stats.files_processed) + 
           ", Modified: " + str(stats.files_modified))
+		
     
     migration_count += 1
     migrations_by_version["3.x_to_4.5"] += 1
@@ -192,6 +193,7 @@ func _on_ethereal_migration_completed(stats):
     print("Ethereal migration completed - Ethereal nodes: " + str(stats.ethereal_nodes_migrated) + 
           ", Reality contexts: " + str(stats.reality_contexts_migrated) + 
           ", Word manifestations: " + str(stats.word_manifestations_migrated))
+		
     
     ethereal_migration_count += 1
     migrations_by_version["3.x_to_4.x_ethereal"] += 1
@@ -202,13 +204,16 @@ func _on_ethereal_migration_completed(stats):
 
 func _on_reality_transition_migrated(reality_type):
     print("Reality transition migrated: " + reality_type)
+	
     
     if enable_akashic_integration and akashic_system and akashic_system.has_method("register_number"):
+	
         var reality_hash = reality_type.hash()
         akashic_system.register_number(reality_hash, "migrated_reality_" + reality_type)
 
 func _on_word_manifestation_migrated(word, position):
     print("Word manifestation migrated: " + word + " at " + str(position))
+	
     
     if enable_color_system and color_system and color_system.has_method("visualize_word"):
         color_system.visualize_word(word, position)
@@ -225,6 +230,7 @@ func _on_launcher_test_completed(results):
     print("Test run completed - Total tests: " + str(results.total) + 
           ", Passed: " + str(results.passed) + 
           ", Failed: " + str(results.failed))
+		
     
     test_run_count += 1
     
@@ -242,13 +248,14 @@ func _record_migration_stats(stats):
     
     # Record in akashic system
     if enable_akashic_integration and akashic_system and akashic_system.has_method("register_number"):
+	
         var migration_numbers = {
             "timestamp": Time.get_unix_time_from_system(),
             "files_processed": stats.files_processed,
             "files_modified": stats.files_modified,
             "errors": stats.errors_encountered if stats.has("errors_encountered") else 0,
             "warnings": stats.warnings_generated if stats.has("warnings_generated") else 0
-        }
+			}
         
         akashic_system.register_number(migration_numbers.timestamp, "migration_timestamp")
         akashic_system.register_number(migration_numbers.files_processed, "files_processed")
@@ -258,6 +265,7 @@ func _record_migration_stats(stats):
     
     # Update color system
     if enable_color_system and color_system and color_system.has_method("visualize_data"):
+	
         var success_rate = 0.0
         if stats.files_processed > 0:
             success_rate = float(stats.files_modified) / stats.files_processed
@@ -273,6 +281,7 @@ func _record_ethereal_migration_stats(stats):
     
     # Record in akashic system
     if enable_akashic_integration and akashic_system and akashic_system.has_method("register_number"):
+	
         var ethereal_numbers = {
             "timestamp": Time.get_unix_time_from_system(),
             "ethereal_nodes": stats.ethereal_nodes_migrated,
@@ -280,7 +289,7 @@ func _record_ethereal_migration_stats(stats):
             "word_manifestations": stats.word_manifestations_migrated,
             "datapoints": stats.datapoints_migrated,
             "records": stats.records_migrated
-        }
+			}
         
         akashic_system.register_number(ethereal_numbers.timestamp, "ethereal_migration_timestamp")
         akashic_system.register_number(ethereal_numbers.ethereal_nodes, "ethereal_nodes_migrated")
@@ -301,12 +310,13 @@ func _record_test_stats(stats):
     
     # Record in akashic system
     if enable_akashic_integration and akashic_system and akashic_system.has_method("register_number"):
+	
         var test_numbers = {
             "timestamp": Time.get_unix_time_from_system(),
             "total_tests": stats.total,
             "passed_tests": stats.passed,
             "failed_tests": stats.failed
-        }
+			}
         
         akashic_system.register_number(test_numbers.timestamp, "test_run_timestamp")
         akashic_system.register_number(test_numbers.total_tests, "total_tests_run")
@@ -316,6 +326,7 @@ func _record_test_stats(stats):
     
     # Update color system
     if enable_color_system and color_system and color_system.has_method("visualize_data"):
+	
         var success_rate = 0.0
         if stats.total > 0:
             success_rate = float(stats.passed) / stats.total
@@ -331,13 +342,13 @@ func start_migration() -> Dictionary:
         return {
             "success": false,
             "error": "Migration tool not initialized"
-        }
+			}
     
     if godot3_project_path == "" or godot4_project_path == "":
         return {
             "success": false,
             "error": "Project paths not specified"
-        }
+			}
     
     var result = null
     
@@ -360,7 +371,7 @@ func run_all_tests() -> Dictionary:
         return {
             "success": false,
             "error": "Test components not initialized"
-        }
+			}
 
 func start_ui() -> Node:
     if enhanced_launcher:
@@ -375,7 +386,7 @@ func generate_compatibility_report(project_path: String = "") -> Dictionary:
         return {
             "success": false,
             "error": "Project path not specified"
-        }
+			}
     
     if enable_ethereal_engine_support and ethereal_bridge and _is_ethereal_engine_project(target_path):
         return ethereal_bridge.generate_ethereal_migration_report(target_path)
@@ -385,7 +396,7 @@ func generate_compatibility_report(project_path: String = "") -> Dictionary:
         return {
             "success": false,
             "error": "Migration components not initialized"
-        }
+			}
 
 func get_statistics() -> Dictionary:
     var runtime = Time.get_unix_time_from_system() - start_time
@@ -399,7 +410,7 @@ func get_statistics() -> Dictionary:
         "runtime_seconds": runtime,
         "akashic_integration": enable_akashic_integration && akashic_system != null,
         "color_system_integration": enable_color_system && color_system != null
-    }
+		}
 
 func set_project_paths(godot3_path: String, godot4_path: String) -> void:
     godot3_project_path = godot3_path
@@ -454,6 +465,7 @@ func _get_script_files_in_dir(dir_path: String, max_count: int = 10) -> Array:
         var file_name = dir.get_next()
         
         while file_name != "" and files.size() < max_count:
+		
             var full_path = dir_path.path_join(file_name)
             
             if file_name.ends_with(".gd"):

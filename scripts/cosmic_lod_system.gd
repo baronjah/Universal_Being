@@ -16,7 +16,8 @@ var cosmic_objects: Dictionary = {}  # Vector3i -> CosmicObject
 var player: Node3D = null
 var camera: Camera3D = null
 
-enum CosmicType { GALAXY, STAR_CLUSTER, SOLAR_SYSTEM, PLANET, SURFACE }
+enum CosmicType { GALAXY, STAR_CLUSTER, SOLAR_SYSTEM, PLANET, SURFACE
+}
 
 class CosmicObject:
 	var position: Vector3
@@ -304,6 +305,7 @@ func cleanup_distant_objects():
 		# Less spam in console
 		if removed_count == 1:
 			print("🌌 COSMIC CLEANUP: Removing %d distant objects..." % objects_to_remove.size())
+}
 
 func get_cosmic_stats() -> Dictionary:
 	"""Get cosmic system statistics"""
@@ -313,4 +315,4 @@ func get_cosmic_stats() -> Dictionary:
 		"galaxy_distance": galaxy_distance,
 		"star_distance": star_distance,
 		"planet_distance": planet_distance
-	}
+}

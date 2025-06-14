@@ -1,5 +1,5 @@
 extends Node3D
-class_name SpaceSnake
+class_name SpaceSnake_spacesnake_spacesna
 
 # Snake body segments
 var segments = []

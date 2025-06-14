@@ -1,39 +1,39 @@
 extends Node2D
 
-class_name Fluid2DRenderer
+class_name Fluid2DRenderer_fluid2drenderer_fluid2dr
 
 # Reference to fluid simulation
 var simulation: FluidSimulationCore = null
 
 # Rendering properties
 @export_category("Rendering Properties")
-@export var particle_size: float = 20.0
-@export var smoothing: bool = true
-@export var use_metaballs: bool = true
-@export var metaball_threshold: float = 0.5
-@export var metaball_falloff: float = 0.8
-@export var use_shader: bool = true
+@@export var particle_size: float = 20.0
+@@export var smoothing: bool = true
+@@export var use_metaballs: bool = true
+@@export var metaball_threshold: float = 0.5
+@@export var metaball_falloff: float = 0.8
+@@export var use_shader: bool = true
 @export_color var gradient_top_color: Color = Color(0.0, 0.6, 1.0, 0.8)
 @export_color var gradient_bottom_color: Color = Color(0.0, 0.4, 0.8, 0.9)
 
 # Custom rendering options
 @export_category("Visual Effects")
-@export var add_ripples: bool = true
-@export var ripple_frequency: float = 3.0
-@export var ripple_amplitude: float = 0.2
-@export var add_caustics: bool = true
-@export var add_foam: bool = true
-@export var foam_threshold: float = 0.7
+@@export var add_ripples: bool = true
+@@export var ripple_frequency: float = 3.0
+@@export var ripple_amplitude: float = 0.2
+@@export var add_caustics: bool = true
+@@export var add_foam: bool = true
+@@export var foam_threshold: float = 0.7
 @export_color var foam_color: Color = Color(1.0, 1.0, 1.0, 0.7)
 @export_color var outline_color: Color = Color(0.0, 0.3, 0.6, 0.4)
-@export var outline_width: float = 2.0
+@@export var outline_width: float = 2.0
 
 # Optimization
 @export_category("Optimization")
-@export var render_quality: float = 1.0 # 0.0-1.0 multiplier
-@export var max_particles_to_render: int = 2000
-@export var cull_offscreen_particles: bool = true
-@export var use_instancing: bool = true
+@@export var render_quality: float = 1.0 # 0.0-1.0 multiplier
+@@export var max_particles_to_render: int = 2000
+@@export var cull_offscreen_particles: bool = true
+@@export var use_instancing: bool = true
 
 # Internal variables
 var particle_shader: Shader = null
@@ -497,10 +497,10 @@ func _get_default_particle_shader_code():
     void fragment() {
         float dist = distance(UV, vec2(0.5));
         
-        // Circular shape with soft edges
+# // Circular shape with soft edges
         float alpha = smoothstep(0.5, inner_radius, dist);
         
-        // Interpolate between inner and outer color
+# // Interpolate between inner and outer color
         vec4 color = mix(outer_color, inner_color, alpha);
         
         COLOR = color;
@@ -520,19 +520,19 @@ func _get_default_metaball_shader_code():
     uniform float time_offset = 0.0;
     
     void fragment() {
-        // Vertical gradient
+# // Vertical gradient
         float t = UV.y;
         vec4 base_color = mix(top_color, bottom_color, t);
         
-        // Add wave effect
+# // Add wave effect
         float wave = sin((UV.x * wave_frequency) + time_offset * wave_speed) * 
                     sin((UV.y * wave_frequency * 0.5) + time_offset * wave_speed * 0.7) * 
                     wave_amplitude;
         
-        // Apply wave effect
+# // Apply wave effect
         base_color = base_color * (1.0 + wave);
         
-        // Add highlights at top
+# // Add highlights at top
         if (UV.y < 0.15) {
             base_color = base_color * (1.0 + (0.15 - UV.y) * 2.0);
         }

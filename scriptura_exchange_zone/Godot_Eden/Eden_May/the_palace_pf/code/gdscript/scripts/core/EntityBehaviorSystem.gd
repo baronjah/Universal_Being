@@ -1,5 +1,5 @@
 extends Node
-class_name EntityBehaviorSystem
+class_name EntityBehaviorSystem_EntityBehaviorSystem_EntityBe
 
 # Singleton instance
 static var _instance = null
@@ -114,72 +114,72 @@ var behavior_definitions = {
 
 # Movement patterns
 var movement_patterns = {
-	"none": funcref(self, "_movement_none"),
-	"slight_bob": funcref(self, "_movement_slight_bob"),
-	"gentle_wave": funcref(self, "_movement_gentle_wave"),
-	"drift": funcref(self, "_movement_drift"),
-	"erratic_float": funcref(self, "_movement_erratic_float"),
-	"slow_rotation": funcref(self, "_movement_slow_rotation"),
-	"stationary_with_slight_rotation": funcref(self, "_movement_stationary_with_slight_rotation"),
-	"slow_orbit": funcref(self, "_movement_slow_orbit")
+	"none": Callable(self, "_movement_none"),
+	"slight_bob": Callable(self, "_movement_slight_bob"),
+	"gentle_wave": Callable(self, "_movement_gentle_wave"),
+	"drift": Callable(self, "_movement_drift"),
+	"erratic_float": Callable(self, "_movement_erratic_float"),
+	"slow_rotation": Callable(self, "_movement_slow_rotation"),
+	"stationary_with_slight_rotation": Callable(self, "_movement_stationary_with_slight_rotation"),
+	"slow_orbit": Callable(self, "_movement_slow_orbit")
 }
 
 # Behavior responses
 var behavior_responses = {
 	# Hover responses
-	"highlight": funcref(self, "_response_highlight"),
-	"grow": funcref(self, "_response_grow"),
-	"ripple": funcref(self, "_response_ripple"),
-	"rumble": funcref(self, "_response_rumble"),
-	"wisp": funcref(self, "_response_wisp"),
-	"glow": funcref(self, "_response_glow"),
-	"brighten": funcref(self, "_response_brighten"),
-	"distort": funcref(self, "_response_distort"),
+	"highlight": Callable(self, "_response_highlight"),
+	"grow": Callable(self, "_response_grow"),
+	"ripple": Callable(self, "_response_ripple"),
+	"rumble": Callable(self, "_response_rumble"),
+	"wisp": Callable(self, "_response_wisp"),
+	"glow": Callable(self, "_response_glow"),
+	"brighten": Callable(self, "_response_brighten"),
+	"distort": Callable(self, "_response_distort"),
 	
 	# Click responses
-	"bounce": funcref(self, "_response_bounce"),
-	"flame_burst": funcref(self, "_response_flame_burst"),
-	"splash": funcref(self, "_response_splash"),
-	"crack": funcref(self, "_response_crack"),
-	"gust": funcref(self, "_response_gust"),
-	"refract": funcref(self, "_response_refract"),
-	"flash": funcref(self, "_response_flash"),
-	"implode": funcref(self, "_response_implode"),
+	"bounce": Callable(self, "_response_bounce"),
+	"flame_burst": Callable(self, "_response_flame_burst"),
+	"splash": Callable(self, "_response_splash"),
+	"crack": Callable(self, "_response_crack"),
+	"gust": Callable(self, "_response_gust"),
+	"refract": Callable(self, "_response_refract"),
+	"flash": Callable(self, "_response_flash"),
+	"implode": Callable(self, "_response_implode"),
 	
 	# Nearby responses
-	"diminish": funcref(self, "_response_diminish"),
-	"spread": funcref(self, "_response_spread"),
-	"intensify": funcref(self, "_response_intensify"),
-	"evaporate": funcref(self, "_response_evaporate"),
-	"flow_around": funcref(self, "_response_flow_around"),
-	"be_absorbed": funcref(self, "_response_be_absorbed"),
-	"erode": funcref(self, "_response_erode"),
-	"harden": funcref(self, "_response_harden"),
-	"enrich": funcref(self, "_response_enrich"),
-	"fan": funcref(self, "_response_fan"),
-	"create_mist": funcref(self, "_response_create_mist"),
-	"dust_cloud": funcref(self, "_response_dust_cloud"),
-	"amplify": funcref(self, "_response_amplify"),
-	"absorb": funcref(self, "_response_absorb"),
-	"resonate": funcref(self, "_response_resonate"),
-	"consume": funcref(self, "_response_consume"),
-	"pull": funcref(self, "_response_pull"),
+	"diminish": Callable(self, "_response_diminish"),
+	"spread": Callable(self, "_response_spread"),
+	"intensify": Callable(self, "_response_intensify"),
+	"evaporate": Callable(self, "_response_evaporate"),
+	"flow_around": Callable(self, "_response_flow_around"),
+	"be_absorbed": Callable(self, "_response_be_absorbed"),
+	"erode": Callable(self, "_response_erode"),
+	"harden": Callable(self, "_response_harden"),
+	"enrich": Callable(self, "_response_enrich"),
+	"fan": Callable(self, "_response_fan"),
+	"create_mist": Callable(self, "_response_create_mist"),
+	"dust_cloud": Callable(self, "_response_dust_cloud"),
+	"amplify": Callable(self, "_response_amplify"),
+	"absorb": Callable(self, "_response_absorb"),
+	"resonate": Callable(self, "_response_resonate"),
+	"consume": Callable(self, "_response_consume"),
+	"pull": Callable(self, "_response_pull"),
 	
 	# Autonomous behaviors
-	"idle": funcref(self, "_behavior_idle"),
-	"flicker": funcref(self, "_behavior_flicker"),
-	"emit_particles": funcref(self, "_behavior_emit_particles"),
-	"flow": funcref(self, "_behavior_flow"),
-	"shimmer": funcref(self, "_behavior_shimmer"),
-	"settle": funcref(self, "_behavior_settle"),
-	"erode": funcref(self, "_behavior_erode"),
-	"swirl": funcref(self, "_behavior_swirl"),
-	"dissipate": funcref(self, "_behavior_dissipate"),
-	"pulse": funcref(self, "_behavior_pulse"),
-	"hum": funcref(self, "_behavior_hum"),
-	"orbit": funcref(self, "_behavior_orbit"),
-	"pulse_negative": funcref(self, "_behavior_pulse_negative"),
-	"draw_in": funcref(self, "_behavior_draw_in")
+	"idle": Callable(self, "_behavior_idle"),
+	"flicker": Callable(self, "_behavior_flicker"),
+	"emit_particles": Callable(self, "_behavior_emit_particles"),
+	"flow": Callable(self, "_behavior_flow"),
+	"shimmer": Callable(self, "_behavior_shimmer"),
+	"settle": Callable(self, "_behavior_settle"),
+	"erode": Callable(self, "_behavior_erode"),
+	"swirl": Callable(self, "_behavior_swirl"),
+	"dissipate": Callable(self, "_behavior_dissipate"),
+	"pulse": Callable(self, "_behavior_pulse"),
+	"hum": Callable(self, "_behavior_hum"),
+	"orbit": Callable(self, "_behavior_orbit"),
+	"pulse_negative": Callable(self, "_behavior_pulse_negative"),
+	"draw_in": Callable(self, "_behavior_draw_in")
 }
 
 func _init():
@@ -187,10 +187,10 @@ func _init():
 
 func _ready():
 	# Find the thing creator
-	if has_node("/root/CoreThingCreator"):
-		thing_creator = get_node("/root/CoreThingCreator")
+	if has_node("root/CoreThingCreator"):
+		thing_creator = get_node("root/CoreThingCreator")
 	else:
-		var ThingCreator = load("res://code/gdscript/scripts/core/CoreThingCreator.gd")
+		var ThingCreator = load("res://scripts/gdscript/scripts/core/CoreThingCreator.gd")
 		if ThingCreator:
 			thing_creator = ThingCreator.get_instance()
 			
@@ -475,10 +475,10 @@ func _get_entity_under_mouse():
 func find_camera():
 	# Look for main camera paths
 	var camera_paths = [
-		"/root/main/Player_Head/cameramove/TrackballCamera",
-		"/root/layer_0/Player_Head/cameramove/TrackballCamera",
-		"/root/Main/Camera",
-		"/root/Camera"
+		"root/main/Player_Head/cameramove/TrackballCamera",
+		"root/layer_0/Player_Head/cameramove/TrackballCamera",
+		"root/Main/Camera",
+		"root/Camera"
 	]
 	
 	for path in camera_paths:

@@ -26,6 +26,7 @@ var current_selected_star: Node3D = null
 
 func _ready():
 	print("🌌 Cosmic Debug Chamber: Initializing the scriptura cosmos...")
+
 	
 	# Get Akashic Records for star position storage
 	if SystemBootstrap and SystemBootstrap.is_system_ready():
@@ -56,6 +57,7 @@ func _initialize_cosmic_debug_chamber():
 	
 	print("🌟 Cosmic Debug Chamber: Ready for exploration!")
 
+
 func _create_script_stars():
 	"""Convert every GDScript file into a navigable star"""
 	var script_files = _find_all_gdscript_files()
@@ -69,6 +71,7 @@ func _create_script_stars():
 		add_child(star_node)
 		
 		print("⭐ Created star for: %s at %v" % [script_path.get_file(), star_position])
+
 
 func _create_star_for_script(script_path: String, position: Vector3) -> Node3D:
 	"""Create a 3D star representation of a script"""
@@ -119,6 +122,7 @@ func _create_md_note_walls():
 		add_child(wall_node)
 		
 		print("📝 Created note wall for: %s" % md_path.get_file())
+
 
 func _create_md_wall(md_path: String, position: Vector3) -> Node3D:
 	"""Create a floating wall with MD file content"""
@@ -257,6 +261,7 @@ func _scan_directory_for_gd_files(path: String, files: Array):
 		dir.list_dir_begin()
 		var file_name = dir.get_next()
 		while file_name != "":
+
 			var full_path = path + "/" + file_name
 			if dir.current_is_dir() and not file_name.begins_with("."):
 				_scan_directory_for_gd_files(full_path, files)
@@ -271,6 +276,7 @@ func _scan_directory_for_md_files(path: String, files: Array):
 		dir.list_dir_begin()
 		var file_name = dir.get_next()
 		while file_name != "":
+
 			var full_path = path + "/" + file_name
 			if dir.current_is_dir() and not file_name.begins_with("."):
 				_scan_directory_for_md_files(full_path, files)
@@ -290,6 +296,7 @@ func _analyze_script_dependencies(script_path: String) -> Array:
 		var lines = content.split("\n")
 		for line in lines:
 			if "extends " in line or "load(" in line or "preload(" in line:
+
 				# Simple dependency detection - can be enhanced
 				pass
 	
@@ -334,6 +341,7 @@ func _on_md_wall_clicked(md_path: String, camera: Node, event: InputEvent, posit
 func _display_script_content(script_path: String):
 	"""Display script content in 3D space with scriptura confession"""
 	print("📜 Displaying script content for: %s" % script_path)
+
 	
 	# Create 3D debugging interface around the selected star
 	_create_criminal_investigation_interface(script_path)
@@ -354,6 +362,7 @@ func fly_to_star(script_path: String):
 		# Smooth camera movement implementation
 		print("🚀 Flying to star: %s" % script_path.get_file())
 
+
 func find_nearest_stars(position: Vector3, count: int = 5) -> Array:
 	"""Find nearest script stars to a position"""
 	var star_distances = []
@@ -361,6 +370,7 @@ func find_nearest_stars(position: Vector3, count: int = 5) -> Array:
 		var star = script_stars[script_path]
 		var distance = position.distance_to(star.position)
 		star_distances.append({"path": script_path, "distance": distance})
+
 	
 	star_distances.sort_custom(func(a, b): return a["distance"] < b["distance"])
 	return star_distances.slice(0, count)
@@ -376,13 +386,14 @@ func _inspect_layer_0_safety():
 		"AkashicRecords": _check_system_status("AkashicRecords"),
 		"UniversalBeing": _check_core_class("UniversalBeing"),
 		"Pentagon": _check_pentagon_compliance()
-	}
+}
 	
 	print("🛡️ Foundation Systems Status:")
 	for system in foundation_status.keys():
 		var status = foundation_status[system]
 		var icon = "✅" if status else "⚠️"
 		print("  %s %s: %s" % [icon, system, "STABLE" if status else "NEEDS_ATTENTION"])
+
 	
 	# Visual layer_0 indicator
 	_create_layer_0_indicator(foundation_status)
@@ -396,6 +407,7 @@ func _inspect_layer_0_safety():
 		print("🌟 LAYER_0 SAFETY: ALL SYSTEMS STABLE - BLESSINGS CAN BE REVEALED")
 	else:
 		print("⚠️ LAYER_0 SAFETY: SOME SYSTEMS NEED ATTENTION")
+
 	
 	return all_safe
 
@@ -480,6 +492,7 @@ func _create_criminal_investigation_interface(script_path: String):
 	add_child(investigation_zone)
 	print("🔍 Criminal investigation interface created for: %s" % script_path.get_file())
 
+
 func _create_evidence_walls(script_path: String, parent: Node3D):
 	"""Create walls showing script evidence like in criminal investigation movies"""
 	var file = FileAccess.open(script_path, FileAccess.READ)
@@ -547,6 +560,7 @@ func _create_evidence_wall(title: String, evidence: Array, position: Vector3, pa
 func _initiate_scriptura_confession(script_path: String):
 	"""Make the scriptura confess its sins through voice/text"""
 	print("🎭 SCRIPTURA CONFESSION INITIATED FOR: %s" % script_path.get_file())
+
 	
 	var file = FileAccess.open(script_path, FileAccess.READ)
 	if not file:
@@ -659,6 +673,7 @@ func _extract_functions_from_script(content: String) -> Array:
 	
 	for line in lines:
 		if line.strip_edges().begins_with("func "):
+
 			var func_name = line.split("func ")[1].split("(")[0].strip_edges()
 			functions.append(func_name)
 	
@@ -672,6 +687,7 @@ func _extract_variables_from_script(content: String) -> Array:
 	for line in lines:
 		var stripped = line.strip_edges()
 		if stripped.begins_with("var ") or stripped.begins_with("@export var "):
+
 			var var_name = stripped.split("var ")[1].split(":")[0].split("=")[0].strip_edges()
 			variables.append(var_name)
 	
@@ -690,6 +706,7 @@ func _extract_errors_from_script(content: String) -> Array:
 			errors.append("Line %d: %s" % [i + 1, line.strip_edges()])
 		if "# TODO" in line or "# FIXME" in line:
 			errors.append("Line %d: %s" % [i + 1, line.strip_edges()])
+
 	
 	return errors
 
@@ -714,7 +731,7 @@ func _show_star_interaction_menu(script_path: String):
 		{"text": "📜 VIEW SOURCE", "action": "source", "color": Color.GREEN},
 		{"text": "✨ EDIT FUNCTIONS", "action": "functions", "color": Color.YELLOW},
 		{"text": "🔥 HOTLOAD STATUS", "action": "hotload", "color": Color.ORANGE},
-		{"text": "❌ CLOSE", "action": "close", "color": Color.WHITE}
+		{"text": "❌ CLOSE", "action": "close", "color": Color.WHITE
 	]
 	
 	for i in range(options.size()):
@@ -788,6 +805,7 @@ func _on_interaction_clicked(script_path: String, action: String, camera: Node, 
 func _execute_star_action(script_path: String, action: String):
 	"""Execute the selected action on a script star"""
 	print("🎬 Executing action '%s' on: %s" % [action, script_path.get_file()])
+}
 	
 	match action:
 		"debug":
@@ -808,6 +826,7 @@ func _execute_star_action(script_path: String, action: String):
 func _launch_scriptura_cinema(script_path: String):
 	"""Launch the Scriptura Cinema for line-by-line analysis"""
 	print("🎬 LAUNCHING SCRIPTURA CINEMA FOR: %s" % script_path.get_file())
+
 	
 	# Create cinema instance
 	var cinema = ScripturaCinema.new()
@@ -842,6 +861,7 @@ func _launch_scriptura_cinema(script_path: String):
 func _display_source_code(script_path: String):
 	"""Display the source code in 3D space"""
 	print("📜 Displaying source code for: %s" % script_path.get_file())
+
 	
 	var file = FileAccess.open(script_path, FileAccess.READ)
 	if not file:
@@ -902,6 +922,7 @@ func _close_interaction_menus():
 func _on_cinema_analysis_complete(script_path: String, score: float):
 	"""Handle cinema analysis completion"""
 	print("🎊 Cinema analysis complete for %s: Score %.2f" % [script_path.get_file(), score])
+
 	
 	# Update star color based on analysis score
 	if script_stars.has(script_path):
@@ -916,6 +937,7 @@ func _on_cinema_analysis_complete(script_path: String, score: float):
 func _on_cinema_line_judged(line_number: int, judgment: String, appreciation_level: float):
 	"""Handle individual line judgments from cinema"""
 	print("⚖️ Line %d judged: %s (%.2f)" % [line_number, judgment, appreciation_level])
+
 
 func _scan_all_file_times():
 	"""Scan all script and MD files for modification times"""
@@ -974,6 +996,7 @@ func _refresh_script_star(script_path: String):
 		
 		print("⭐ Updated script star: " + script_path.get_file())
 
+
 func _refresh_md_wall(md_path: String):
 	"""Refresh an MD wall when file changes"""
 	if md_note_walls.has(md_path):
@@ -988,9 +1011,11 @@ func _refresh_md_wall(md_path: String):
 		
 		print("📝 Updated MD wall: " + md_path.get_file())
 
+
 func _create_direct_function_editor(script_path: String, function_name: String, line_number: int):
 	"""Create direct function editing interface in 3D space"""
 	print("✨ Creating direct function editor for: " + function_name)
+
 	
 	var star = script_stars[script_path]
 	var editor_position = star.position + Vector3(0, 8, 0)
@@ -1112,7 +1137,7 @@ func _create_function_editor_buttons(editor: Node3D, script_path: String, functi
 		{"text": "💾 SAVE CHANGES", "action": "save", "color": Color.GREEN},
 		{"text": "🔄 RELOAD ORIGINAL", "action": "reload", "color": Color.YELLOW},
 		{"text": "🧪 TEST FUNCTION", "action": "test", "color": Color.CYAN},
-		{"text": "❌ CLOSE EDITOR", "action": "close", "color": Color.RED}
+		{"text": "❌ CLOSE EDITOR", "action": "close", "color": Color.RED
 	]
 	
 	for i in range(buttons.size()):
@@ -1215,6 +1240,7 @@ func _open_line_editor(script_path: String, function_name: String, line_index: i
 func _execute_editor_action(script_path: String, function_name: String, action: String):
 	"""Execute function editor action"""
 	print("🎬 Executing editor action: " + action)
+}
 	
 	match action:
 		"save":
@@ -1229,6 +1255,7 @@ func _execute_editor_action(script_path: String, function_name: String, action: 
 func _save_function_changes(script_path: String, function_name: String):
 	"""Save function changes back to file"""
 	print("💾 Saving function changes: " + function_name)
+
 	# This would implement actual file writing
 	show_cosmic_message("💾 Function saved! Hotload will update stars...")
 
@@ -1268,14 +1295,17 @@ func _extract_functions_from_script_for_menu(script_path: String) -> Array:
 	for i in range(lines.size()):
 		var line = lines[i].strip_edges()
 		if line.begins_with("func ") and not line.begins_with("func _") and ":" in line:
+
 			var func_name = line.split("func ")[1].split("(")[0].strip_edges()
 			functions.append({"name": func_name, "line": i + 1})
+
 	
 	return functions
 
 func _show_function_list(script_path: String):
 	"""Show list of functions for direct editing"""
 	print("✨ Showing function list for: " + script_path.get_file())
+
 	
 	var star = script_stars[script_path]
 	var functions = _extract_functions_from_script_for_menu(script_path)
@@ -1370,6 +1400,7 @@ func _on_function_button_clicked(script_path: String, function_name: String, lin
 func _show_hotload_status(script_path: String):
 	"""Show hotload status for this script"""
 	print("🔥 Showing hotload status for: " + script_path.get_file())
+
 	
 	var star = script_stars[script_path]
 	var file_times = get_meta("file_mod_times", {})
@@ -1381,11 +1412,13 @@ func _show_hotload_status(script_path: String):
 	status_text += "Watching: " + ("✅ YES" if hotload_enabled else "❌ NO") + "\n"
 	status_text += "Last Check: " + Time.get_datetime_string_from_unix_time(last_modified) + "\n"
 	status_text += "Current Time: " + Time.get_datetime_string_from_unix_time(current_time) + "\n"
+
 	
 	if current_time > last_modified:
 		status_text += "Status: 🔥 FILE CHANGED - RELOAD PENDING"
 	else:
 		status_text += "Status: ✅ UP TO DATE"
+
 	
 	# Create status display
 	var status_display = Node3D.new()
@@ -1441,3 +1474,4 @@ func _reload_function_original(script_path: String, function_name: String):
 
 func _class_name():
 	print("🌌 CosmicDebugChamber: The scriptura cosmos awaits exploration!")
+

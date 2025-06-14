@@ -18,7 +18,7 @@ enum DriveType {
 }
 
 # Connection state
-var connected_drives = {}
+var connected_drives = {
 var active_memory_paths = []
 var memory_fragments = []
 var sync_in_progress = false
@@ -45,7 +45,7 @@ var config = {
     "fragment_threshold": 5,
     "ethereal_enabled": true,
     "directional_scanning": true
-}
+	}
 
 func _ready():
     # Load configuration
@@ -99,7 +99,7 @@ func connect_drive(path, type = DriveType.LOCAL):
         "connected_at": Time.get_unix_time_from_system(),
         "fragments_found": 0,
         "last_sync": 0
-    }
+		}
     
     # Add to active paths
     active_memory_paths.append(path)
@@ -157,6 +157,7 @@ func _scan_physical_drive(path):
             else:
                 # Recursively scan subdirectories if not . or ..
                 if file_name != "." and file_name != ".." and config.directional_scanning:
+				}
                     var subdir_path = path.path_join(file_name)
                     fragments_found += _scan_physical_drive(subdir_path)
             
@@ -193,6 +194,7 @@ func _generate_ethereal_fragment(source):
     ethereal.is_ethereal = true
     ethereal.origin_path = source.path
     ethereal.path = "ethereal://" + str(randi() % 1000000) + "/" + source.name
+	}
     
     # Add dimensional shift
     if ethereal.has("dimensions"):
@@ -202,6 +204,7 @@ func _generate_ethereal_fragment(source):
     
     # Add blue tint to color if present
     if ethereal.has("color"):
+	
         var color = Color(ethereal.color)
         color = color.lerp(Color(0.5, 0.7, 0.9), 0.3)
         ethereal.color = color.to_html()
@@ -290,7 +293,7 @@ func sync_memory_fragments():
         "found": found,
         "unique": unique_fragments.size(),
         "synced": 0
-    }
+		}
     
     # Sync to all drives
     for fragment in unique_fragments:
@@ -312,7 +315,7 @@ func sync_memory_fragments():
 
 func _identify_unique_fragments():
     var unique = []
-    var fragment_hashes = {}
+    var fragment_hashes = {
     
     for fragment in memory_fragments:
         # Create a simplified version for hashing
@@ -340,8 +343,8 @@ func get_drive_stats():
         "drives": connected_drives.size(),
         "fragments": memory_fragments.size(),
         "paths": active_memory_paths
-    }
     return stats
+}
 
 func create_fragment_from_investment(word, category, value, directional_data):
     var fragment = {
@@ -359,7 +362,7 @@ func create_fragment_from_investment(word, category, value, directional_data):
             "w": directional_data.get("inward", 0) - directional_data.get("outward", 0)
         },
         "color": _get_category_color(category)
-    }
+		}
     
     return fragment
 

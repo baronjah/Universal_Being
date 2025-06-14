@@ -85,11 +85,11 @@ func initialize(dual_mem_coordinator: DualMemoriesCoordinator,
     
     # Connect signals
     if dual_memories_coordinator:
-        dual_memories_coordinator.connect("meaning_transformed", self, "_on_meaning_transformed")
-        dual_memories_coordinator.connect("catchphrase_detected", self, "_on_catchphrase_detected")
+        dual_memories_coordinator.connect(_on_meaning_transformed)
+        dual_memories_coordinator.connect(_on_catchphrase_detected)
     
     if terminal:
-        terminal.connect("input_processed", self, "_on_terminal_input")
+        terminal.connect(_on_terminal_input)
         
     # Initialize pattern mapping table    
     _initialize_pattern_mapping()

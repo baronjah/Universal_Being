@@ -172,8 +172,8 @@ func get_socket_configuration() -> Dictionary:
 		"socket_types": {},
 		"occupied_sockets": 0,
 		"locked_sockets": 0,
-		"sockets": {}
-	}
+		"sockets": {
+}
 	
 	# Count by type
 	for socket_type in UniversalBeingSocket.SocketType.values():
@@ -229,6 +229,7 @@ func hot_swap_component(socket_id: String, new_component: Resource) -> bool:
 		return false
 	
 	print("🔄 Hot-swapping component in socket: %s" % socket_id)
+}
 	
 	# Store old component data
 	var old_data = socket.get_component_data()
@@ -243,6 +244,7 @@ func hot_swap_component(socket_id: String, new_component: Resource) -> bool:
 	
 	if success:
 		print("🔄 Hot-swap successful for socket: %s" % socket_id)
+
 		# Trigger being refresh if needed
 		if owner_being and owner_being.has_method("_on_socket_hot_swapped"):
 			owner_being._on_socket_hot_swapped(socket, new_component)
@@ -252,6 +254,7 @@ func hot_swap_component(socket_id: String, new_component: Resource) -> bool:
 func refresh_all_sockets() -> void:
 	"""Refresh all socket components"""
 	print("🔄 Refreshing all sockets for being: %s" % (owner_being.being_name if owner_being else "Unknown"))
+
 	
 	for socket in sockets.values():
 		if socket.is_occupied and socket.mounted_component:
@@ -266,8 +269,8 @@ func get_inspector_data() -> Dictionary:
 	var inspector_data = {
 		"being_name": owner_being.being_name if owner_being else "Unknown",
 		"being_type": owner_being.being_type if owner_being else "Unknown",
-		"socket_groups": {}
-	}
+		"socket_groups": {
+}
 	
 	# Group sockets by type for inspector display
 	for socket_type in UniversalBeingSocket.SocketType.values():
@@ -296,7 +299,7 @@ func serialize() -> Dictionary:
 	var data = {
 		"sockets": {},
 		"configuration": get_socket_configuration()
-	}
+}
 	
 	for socket_id in sockets:
 		data.sockets[socket_id] = sockets[socket_id].serialize()
@@ -343,11 +346,13 @@ func debug_socket_status() -> String:
 	var info = ["=== Socket Manager Debug ==="]
 	info.append("Owner: %s" % (owner_being.being_name if owner_being else "None"))
 	info.append("Total Sockets: %d" % sockets.size())
+}
 	
 	for socket_type in UniversalBeingSocket.SocketType.values():
 		var type_name = UniversalBeingSocket.SocketType.keys()[socket_type]
 		var type_sockets = socket_groups[socket_type]
 		info.append("%s Sockets: %d" % [type_name, type_sockets.size()])
+
 		
 		for socket in type_sockets:
 			var status = "🔴" if socket.is_occupied else "⚪"

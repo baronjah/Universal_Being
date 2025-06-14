@@ -51,10 +51,10 @@ func _ready():
 func initialize_systems():
 	# Connect to required systems
 	if has_node("/root/MemorySystem"):
-		memory_system = get_node("/root/MemorySystem")
+		memory_system = get_node("\1") as Node
 	
 	if has_node("/root/WorldOfWords"):
-		world_of_words_connector = get_node("/root/WorldOfWords")
+		world_of_words_connector = get_node("\1") as Node
 		
 	# Initialize dimension tracking
 	dimension_tracker = preload("res://dimension_tracker.gd").new()
@@ -209,7 +209,7 @@ func unlock_new_dimension():
 		dimension_tracker.unlock_random_dimension()
 
 func create_reality_fragment():
-	var fragment = preload("res://reality_fragment.tscn").instance()
+	var fragment = preload("res://reality_fragment.tscn").instantiate()
 	get_tree().get_root().add_child(fragment)
 	fragment.global_transform.origin = Vector3(0, 2, 0)
 
@@ -219,12 +219,12 @@ func create_memory_crystal():
 
 func award_wisdom_point():
 	if has_node("/root/PlayerStats"):
-		var stats = get_node("/root/PlayerStats")
+		var stats = get_node("\1") as Node
 		stats.add_wisdom(1)
 
 func grant_creation_energy():
 	if has_node("/root/CreationSystem"):
-		var creation = get_node("/root/CreationSystem")
+		var creation = get_node("\1") as Node
 		creation.add_energy(50)
 
 # 3D Text Mesh Visualization
@@ -432,7 +432,7 @@ func process_quest_command(parts):
 		"list":
 			var result = "Active Quests:\n"
 			
-			if active_quests.empty():
+			if active_quests.is_empty():
 				return "No active quests."
 			
 			for id in active_quests:

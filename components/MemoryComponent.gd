@@ -17,9 +17,11 @@ func pentagon_init() -> void:
     # No super, as this is a component
     memory_log.clear()
     print("🧠 MemoryComponent: Initialized memory log.")
+	
 
 func pentagon_ready() -> void:
     print("🧠 MemoryComponent: Ready for memory operations.")
+	
 
 func pentagon_process(delta: float) -> void:
     # Could be used for memory decay, scheduled recall, etc.
@@ -40,6 +42,7 @@ func remember(event: Dictionary) -> void:
     if memory_log.size() > max_memory:
         memory_log.pop_front()
     print("🧠 MemoryComponent: Remembered event: %s" % str(event))
+	
 
 func recall(filter: String = "") -> Array:
     if filter == "":

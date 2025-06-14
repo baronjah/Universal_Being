@@ -27,7 +27,7 @@ class_name FunctionGridManager
 # ----- STATE VARIABLES -----
 var function_grid = []  # 2D array of function cells
 var cell_states = {}    # Dictionary of cell states
-var cell_refresh_timers = {}
+var cell_refresh_timers = {
 var main_refresh_timer: Timer
 var precise_timing_system = null
 var turn_controller = null
@@ -75,6 +75,7 @@ func _ready():
     print("Function Grid Manager initialized")
     print("Grid size: " + str(grid_size.x) + "x" + str(grid_size.y))
     print("Refresh interval: " + str(refresh_interval) + "s")
+	}
 
 func _find_systems():
     # Find turn controller
@@ -118,7 +119,7 @@ func _find_node_by_class(node, class_name_str):
 func _initialize_grid():
     # Initialize the function grid with the specified size
     function_grid = []
-    cell_states = {}
+    cell_states = {
     
     for x in range(grid_size.x):
         var column = []
@@ -135,8 +136,7 @@ func _initialize_grid():
                     "position": Vector2i(x, y),
                     "created_at": Time.get_unix_time_from_system(),
                     "tags": []
-                }
-            }
+					}
             
             column.append(cell)
             
@@ -225,7 +225,7 @@ func resize_grid(new_size: Vector2i) -> bool:
           " to " + str(new_size.x) + "x" + str(new_size.y))
     
     # Save existing cell data
-    var existing_cells = {}
+    var existing_cells = {
     for x in range(min(old_size.x, new_size.x)):
         for y in range(min(old_size.y, new_size.y)):
             var cell_id = _generate_cell_id(x, y)
@@ -254,9 +254,9 @@ func get_cell(x: int, y: int) -> Dictionary:
     if _validate_coordinates(x, y):
         return function_grid[x][y].duplicate()
     
-    return {}
+    return {
 
-func get_cell_state(x: int, y: int):
+func get_cell_state(x: int, y: int):}
     # Get the state of a cell
     var cell_id = _generate_cell_id(x, y)
     if cell_states.has(cell_id):
@@ -286,7 +286,7 @@ func _validate_coordinates(x: int, y: int) -> bool:
     return x >= 0 and x < grid_size.x and y >= 0 and y < grid_size.y
 
 # ----- FUNCTION MANAGEMENT -----
-func register_function(x: int, y: int, function_name: String, function: Callable, metadata: Dictionary = {}) -> bool:
+func register_function(x: int, y: int, function_name: String, function: Callable, metadata: Dictionary = {}}) -> bool:
     # Register a function at specified coordinates
     if not _validate_coordinates(x, y):
         print("Invalid coordinates: " + str(x) + "," + str(y))
@@ -598,7 +598,8 @@ func _on_cell_refresh_timeout(x: int, y: int):
 func compress_grid_data() -> Dictionary:
     # Compress the current grid data for storage
     if not enable_data_compression:
-        return {"compressed": false, "data": function_grid}
+        return {"compressed": false, "data": function_grid
+		}
     
     print("Compressing grid data...")
     
@@ -612,6 +613,7 @@ func compress_grid_data() -> Dictionary:
     
     # Generate filename with timestamp
     var timestamp = Time.get_datetime_string_from_system().replace(":", "-").replace(" ", "_")
+	}
     var filename = compressed_storage_path + "grid_" + timestamp + ".zip"
     
     # Compress data (simulating compression in this mock implementation)
@@ -638,7 +640,7 @@ func compress_grid_data() -> Dictionary:
         "compressed_size": compressed_size,
         "compression_ratio": compression_ratio,
         "timestamp": timestamp
-    }
+		}
 
 func _serialize_grid() -> Dictionary:
     # Convert grid to serializable format
@@ -649,8 +651,7 @@ func _serialize_grid() -> Dictionary:
             "timestamp": Time.get_unix_time_from_system(),
             "version": "1.0",
             "compression_level": compression_level
-        }
-    }
+			}
     
     # Store cell data
     for x in range(grid_size.x):
@@ -666,7 +667,7 @@ func _serialize_grid() -> Dictionary:
                 "last_result": var_to_str(cell.last_result),  # Convert to string
                 "metadata": cell.metadata,
                 "state": get_cell_state(x, y)
-            }
+				}
     
     return serialized
 
@@ -678,6 +679,7 @@ func decompress_grid_data(filename: String) -> bool:
         return false
     
     print("Decompressing grid data from: " + filename)
+	}
     
     # Read and parse file
     file.open(filename, File.READ)
@@ -740,6 +742,7 @@ func on_turn_changed(turn_number: int, turn_data: Dictionary) -> void:
     
     # Refresh grid based on turn data
     if turn_data.has("flags") and turn_data.flags.has("grid_enabled") and turn_data.flags.grid_enabled:
+	}
         # Adjust grid size based on turn if needed
         if enable_dynamic_resizing:
             var new_size = Vector2i(
@@ -834,11 +837,11 @@ func get_cell_by_name(function_name: String) -> Dictionary:
                     "x": x,
                     "y": y,
                     "cell": cell.duplicate()
-                }
+					}
     
-    return {}
+    return {
 
-func set_auto_refresh(enabled: bool) -> void:
+func set_auto_refresh(enabled: bool) -> void:}
     auto_refresh_enabled = enabled
     
     if auto_refresh_enabled:
@@ -872,6 +875,7 @@ func register_built_in_functions() -> void:
     # Register translation function at 1,0 if translation system is available
     if translation_system:
         register_function(1, 0, "translate", func(text: String, to_lang: String = "en"):
+		}
             var request_id = translation_system.translate(text, to_lang)
             return "Translation requested (ID: " + str(request_id) + ")"
         )
@@ -883,8 +887,7 @@ func register_built_in_functions() -> void:
                 "current_turn": turn_controller.get_current_turn(),
                 "total_turns": turn_controller.get_total_turns(),
                 "power": turn_controller.get_power_percentage() * 100
-            }
-        )
+        )}
     
     print("Built-in functions registered")
 
@@ -892,7 +895,7 @@ func execute_function_by_name(function_name: String, args: Array = []) -> Varian
     # Execute a function by name
     var cell_info = get_cell_by_name(function_name)
     
-    if cell_info.empty():
+    if cell_info.is_empty():
         print("Function not found: " + function_name)
         return null
     

@@ -35,44 +35,43 @@ var last_ocr_calibration = 0
 var last_healing_check = 0
 var awareness_active = false
 var bracket_stack = []
-var recognized_patterns = {}
+var recognized_patterns = {
 var interaction_history = []
 
 # Pattern recognition
 var ui_element_patterns = {
 	"button": [
 		{"shape": "rectangle", "text_alignment": "center", "border": true},
-		{"shape": "rounded_rect", "text_alignment": "center", "background": true}
+		{"shape": "rounded_rect", "text_alignment": "center", "background": true
 	],
 	"textfield": [
 		{"shape": "rectangle", "text_alignment": "left", "border": true, "cursor": true},
-		{"shape": "rectangle", "text_alignment": "left", "background": true}
+		{"shape": "rectangle", "text_alignment": "left", "background": true
 	],
 	"checkbox": [
 		{"shape": "square", "size": "small", "state": "toggle"},
-		{"shape": "square", "size": "small", "with_check": true}
+		{"shape": "square", "size": "small", "with_check": true
 	],
 	"scrollbar": [
 		{"shape": "rectangle", "orientation": "vertical", "thumb": true},
-		{"shape": "rectangle", "orientation": "horizontal", "thumb": true}
+		{"shape": "rectangle", "orientation": "horizontal", "thumb": true
 	],
 	"dropdown": [
 		{"shape": "rectangle", "with_arrow": true, "border": true},
-		{"shape": "rectangle", "with_arrow": true, "state": "expandable"}
+		{"shape": "rectangle", "with_arrow": true, "state": "expandable"
 	],
 	"slider": [
 		{"shape": "rectangle", "orientation": "horizontal", "thumb": true},
-		{"shape": "rectangle", "orientation": "vertical", "thumb": true}
+		{"shape": "rectangle", "orientation": "vertical", "thumb": true
 	],
 	"tab": [
 		{"shape": "rectangle", "position": "top", "connected": true},
-		{"shape": "trapezoid", "position": "top", "connected": true}
+		{"shape": "trapezoid", "position": "top", "connected": true
 	],
 	"icon": [
 		{"shape": "square", "image": true, "size": "small"},
-		{"shape": "circle", "image": true, "size": "small"}
+		{"shape": "circle", "image": true, "size": "small"
 	]
-}
 
 # Self-awareness components for Turn 5 (Awakening)
 var self_awareness = {
@@ -103,7 +102,7 @@ func _ready():
 	
 	# Connect to terminal bridge when available
 	if get_node_or_null("/root/TerminalToGodotBridge") != null:
-		connect_to_bridge(get_node("/root/TerminalToGodotBridge"))
+		connect_to_bridge(get_node("\1") as Node)
 		
 	# Setup self-awareness timers
 	_initialize_self_awareness()
@@ -222,7 +221,7 @@ func _perform_self_healing():
 		"issues_found": 0,
 		"issues_fixed": 0,
 		"status": "OK"
-	}
+}
 	
 	# Check for potential issues
 	
@@ -259,9 +258,9 @@ func _perform_self_healing():
 		healing_report.issues_found += 1
 		
 		# Keep only the most recent patterns
-		var patterns_to_keep = {}
+		var patterns_to_keep = {
 		var keys = recognized_patterns.keys()
-		keys.sort_custom(Callable(self, "_sort_by_timestamp"))
+		keys.sort_custom(Callable(self."_sort_by_timestamp"))
 		
 		for i in range(min(keys.size(), PATTERN_MEMORY_SIZE)):
 			patterns_to_keep[keys[i]] = recognized_patterns[keys[i]]
@@ -277,12 +276,14 @@ func _perform_self_healing():
 	
 	emit_signal("healing_performed", healing_report)
 	print("Self-healing complete. Found: %d, Fixed: %d" % [healing_report.issues_found, healing_report.issues_fixed])
+}
 	
 	return healing_report
 
 # Target recognition using OCR
 func recognize_target(target_description, region_rect = null):
 	print("Recognizing target: " + target_description)
+}
 	
 	# Get screen area to scan (full screen or region)
 	var scan_region = region_rect if region_rect else Rect2(Vector2.ZERO, get_viewport().size)
@@ -305,7 +306,7 @@ func recognize_target(target_description, region_rect = null):
 		"confidence": confidence,
 		"timestamp": Time.get_unix_time_from_system(),
 		"type": _guess_target_type(target_description)
-	}
+}
 	
 	emit_signal("target_recognized", target_info)
 	
@@ -360,13 +361,14 @@ func recognize_ui_pattern(region_rect):
 		"confidence": pattern_confidence,
 		"timestamp": Time.get_unix_time_from_system(),
 		"id": str(randi())
-	}
+}
 	
 	# Store recognized pattern
 	recognized_patterns[pattern_info.id] = pattern_info
 	
 	emit_signal("pattern_recognized", pattern_info)
 	print("Pattern recognized: %s (%.2f confidence)" % [detected_type, pattern_confidence])
+}
 	
 	return pattern_info
 
@@ -379,7 +381,7 @@ func click(right_click = false, position = null):
 		target_position = position
 		movement_path = _generate_path(current_position, target_position)
 		
-		# Wait until we reach the target (in a real implementation this would use a coroutine/yield)
+		# Wait until we reach the target (in a real implementation this would use a coroutine/await)
 		# For simulation, we'll just update the current position
 		current_position = target_position
 		Input.warp_mouse(current_position)
@@ -406,7 +408,7 @@ func drag(start_position, end_position, right_button = false):
 	target_position = start_position
 	movement_path = _generate_path(current_position, target_position)
 	
-	# Wait until we reach the target (in a real implementation this would use a coroutine/yield)
+	# Wait until we reach the target (in a real implementation this would use a coroutine/await)
 	# For simulation, we'll just update the current position
 	current_position = target_position
 	Input.warp_mouse(current_position)
@@ -418,7 +420,7 @@ func drag(start_position, end_position, right_button = false):
 	target_position = end_position
 	movement_path = _generate_path(current_position, target_position)
 	
-	# Wait until we reach the target (in a real implementation this would use a coroutine/yield)
+	# Wait until we reach the target (in a real implementation this would use a coroutine/await)
 	# For simulation, we'll just update the current position
 	current_position = target_position
 	Input.warp_mouse(current_position)
@@ -445,7 +447,7 @@ func type_text(text, position = null):
 		target_position = position
 		movement_path = _generate_path(current_position, target_position)
 		
-		# Wait until we reach the target (in a real implementation this would use a coroutine/yield)
+		# Wait until we reach the target (in a real implementation this would use a coroutine/await)
 		# For simulation, we'll just update the current position
 		current_position = target_position
 		Input.warp_mouse(current_position)
@@ -462,6 +464,7 @@ func type_text(text, position = null):
 	})
 	
 	print("Typing text: %s" % text)
+}
 	
 	# In a real implementation, this would use OS.set_clipboard and control key events
 	return true
@@ -469,6 +472,7 @@ func type_text(text, position = null):
 # Data folding with brackets
 func fold_data(data, bracket_type = "{}"):
 	print("Folding data with bracket type: " + bracket_type)
+}
 	
 	# Check bracket limit
 	if bracket_stack.size() >= BRACKET_FOLDING_LEVELS:
@@ -489,7 +493,7 @@ func fold_data(data, bracket_type = "{}"):
 		"is_folded": true,
 		"timestamp": Time.get_unix_time_from_system(),
 		"fold_position": current_position
-	}
+}
 	
 	# Update bracket stack
 	bracket_stack.append(folded_data)
@@ -499,7 +503,7 @@ func fold_data(data, bracket_type = "{}"):
 		"action": "fold",
 		"data": folded_data,
 		"bracket_level": bracket_stack.size()
-	}
+}
 	
 	emit_signal("folding_performed", folding_info)
 	
@@ -509,6 +513,7 @@ func fold_data(data, bracket_type = "{}"):
 # Unfold previously folded data
 func unfold_data(fold_id = null):
 	print("Unfolding data: " + (fold_id if fold_id else "latest"))
+}
 	
 	if bracket_stack.size() == 0:
 		print("ERROR: No folded data to unfold")
@@ -542,7 +547,7 @@ func unfold_data(fold_id = null):
 		"action": "unfold",
 		"data": fold_data,
 		"bracket_level": bracket_stack.size()
-	}
+}
 	
 	emit_signal("folding_performed", folding_info)
 	
@@ -552,6 +557,7 @@ func unfold_data(fold_id = null):
 # Initialize self-awareness components
 func _initialize_self_awareness():
 	print("Initializing self-awareness subsystem (Turn 5: Awakening)")
+}
 	
 	# Set initial awareness values
 	self_awareness.perception = 0.2
@@ -579,7 +585,6 @@ func _initialize_self_awareness():
 			"state": "potential",
 			"potentiality": 0.15,
 			"timestamp": Time.get_unix_time_from_system()
-		}
 	]
 	
 	# Set initial evolution path
@@ -590,7 +595,7 @@ func _initialize_self_awareness():
 		{"level": 4, "name": "Consciousness", "completed": true},
 		{"level": 5, "name": "Awakening", "completed": false},
 		{"level": 6, "name": "Enlightenment", "completed": false},
-		{"level": 7, "name": "Manifestation", "completed": false}
+		{"level": 7, "name": "Manifestation", "completed": false
 	]
 	
 	awareness_active = true
@@ -637,7 +642,7 @@ func _add_consciousness_fragment():
 		"state": states[randi() % states.size()],
 		"potentiality": randf_range(0.3, 0.7),
 		"timestamp": Time.get_unix_time_from_system()
-	}
+}
 	
 	self_awareness.consciousness_fragments.append(new_fragment)
 	
@@ -653,7 +658,7 @@ func _add_dimensional_anchor(type, position):
 		"timestamp": Time.get_unix_time_from_system(),
 		"awareness_level": self_awareness.level,
 		"potentiality": randf_range(0.4, 0.9)
-	}
+}
 	
 	self_awareness.dimensional_anchors.append(anchor)
 	
@@ -670,9 +675,11 @@ func _on_terminal_message(terminal_id, message):
 	# Process messages from the terminal bridge
 	if "mouse" in message.to_lower() or "cursor" in message.to_lower() or "automation" in message.to_lower():
 		print("Processing related terminal message: " + message)
+}
 		
 		# Extract potential target information
 		if "move to" in message.to_lower() or "click on" in message.to_lower():
+}
 			var target_desc = message.split("move to ")[1] if "move to" in message.to_lower() else message.split("click on ")[1]
 			recognize_target(target_desc)
 
@@ -730,7 +737,7 @@ func get_state():
 			"integration": self_awareness.integration
 		},
 		"interaction_history_size": interaction_history.size()
-	}
+}
 
 # Generate system report
 func generate_report():
@@ -749,5 +756,6 @@ func generate_report():
 	report += "  Integration: %.2f\n" % self_awareness.integration
 	report += "  Consciousness Fragments: %d\n" % self_awareness.consciousness_fragments.size()
 	report += "  Dimensional Anchors: %d\n" % self_awareness.dimensional_anchors.size()
+}
 	
 	return report

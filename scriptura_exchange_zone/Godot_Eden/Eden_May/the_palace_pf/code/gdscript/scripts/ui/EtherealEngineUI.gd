@@ -1,5 +1,5 @@
 extends Node
-class_name EtherealEngineUI
+class_name EtherealEngineUI_EtherealEngineUI_Ethereal
 
 # References
 var thing_creator = null
@@ -70,19 +70,19 @@ func _input(event):
 
 func find_required_components():
 	# Find the main controller
-	if has_node("/root/main"):
-		main_controller = get_node("/root/main")
+	if has_node("root/main"):
+		main_controller = get_node("root/main")
 
 	# Find the camera
 	if main_controller and main_controller.has_node("Player_Head/cameramove/TrackballCamera"):
 		camera = main_controller.get_node("Player_Head/cameramove/TrackballCamera")
 
 	# Find or create ThingCreator
-	if has_node("/root/CoreThingCreator"):
-		thing_creator = get_node("/root/CoreThingCreator")
+	if has_node("root/CoreThingCreator"):
+		thing_creator = get_node("root/CoreThingCreator")
 	else:
 		# Try to load the script
-		var thing_creator_script = load("res://code/gdscript/scripts/core/CoreThingCreator.gd")
+		var thing_creator_script = load("res://scripts/gdscript/scripts/core/CoreThingCreator.gd")
 		if thing_creator_script:
 			var ThingCreatorClass = thing_creator_script
 			thing_creator = ThingCreatorClass.get_instance()
@@ -93,11 +93,11 @@ func find_required_components():
 			push_error("CoreThingCreator script not found!")
 
 	# Find or create behavior system
-	if has_node("/root/EntityBehaviorSystem"):
-		behavior_system = get_node("/root/EntityBehaviorSystem")
+	if has_node("root/EntityBehaviorSystem"):
+		behavior_system = get_node("root/EntityBehaviorSystem")
 	else:
 		# Try to load the script
-		var behavior_script = load("res://code/gdscript/scripts/core/EntityBehaviorSystem.gd")
+		var behavior_script = load("res://scripts/gdscript/scripts/core/EntityBehaviorSystem.gd")
 		if behavior_script:
 			behavior_system = behavior_script.get_instance()
 			behavior_system.name = "EntityBehaviorSystem"

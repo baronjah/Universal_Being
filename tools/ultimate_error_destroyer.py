@@ -51,11 +51,32 @@ class UltimateErrorDestroyer:
                 "description": "sort_custom(obj, method) → sort_custom(Callable)"
             },
             
-            # Missing closing braces (simple cases)
-            "missing_closing_brace": {
-                "pattern": r'\n\s*$',
-                "replacement": r'\n}\n',
-                "description": "Add missing closing braces"
+            # get_ticks_msec() → Time.get_ticks_msec()
+            "get_ticks_msec_fix": {
+                "pattern": r'\bget_ticks_msec\(\)',
+                "replacement": r'Time.get_ticks_msec()',
+                "description": "get_ticks_msec() → Time.get_ticks_msec()"
+            },
+            
+            # funcref() → Callable
+            "funcref_to_callable": {
+                "pattern": r'\bfuncref\(',
+                "replacement": r'Callable(',
+                "description": "funcref() → Callable()"
+            },
+            
+            # Spatial → Node3D
+            "spatial_to_node3d": {
+                "pattern": r'\bSpatial\b',
+                "replacement": r'Node3D',
+                "description": "Spatial → Node3D"
+            },
+            
+            # RigidBody → RigidBody3D
+            "rigidbody_to_rigidbody3d": {
+                "pattern": r'\bRigidBody\b',
+                "replacement": r'RigidBody3D',
+                "description": "RigidBody → RigidBody3D"
             },
             
             # _ready() → _ready():

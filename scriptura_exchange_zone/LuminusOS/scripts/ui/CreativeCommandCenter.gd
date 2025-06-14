@@ -1,5 +1,5 @@
 extends Control
-class_name CreativeCommandCenter
+class_name CreativeCommandCenter_CreativeCommandCenter_Creative
 
 # UI Components
 var terminal_input: LineEdit
@@ -23,7 +23,7 @@ var command_history_index: int = -1
 # Current state
 var current_command_mode: String = "creative"  # creative, terminal, hybrid
 var last_command_result: String = ""
-var working_directory: String = "/"
+var working_directory: String = ""
 var api_in_use: String = "openai"  # openai, claude, gemini
 
 # Command prefixes
@@ -210,7 +210,7 @@ func _setup_ui():
 
 func _connect_to_systems():
 	# Connect to OpenAI Gateway
-	openai_gateway = get_node_or_null("/root/OpenAIGateway")
+	openai_gateway = get_node_or_null("root/OpenAIGateway")
 	if not openai_gateway:
 		var gateway_instance = load("res://scripts/api/OpenAIGateway.gd").new()
 		gateway_instance.name = "OpenAIGateway"
@@ -230,12 +230,12 @@ func _connect_to_systems():
 	idea_visualizer.word_selected.connect(_on_word_selected)
 	
 	# Connect to memory manager if available
-	memory_manager = get_node_or_null("/root/MemoryEvolutionManager")
+	memory_manager = get_node_or_null("root/MemoryEvolutionManager")
 	if memory_manager:
 		memory_manager.word_caught.connect(_on_word_caught)
 	
 	# Connect to word translator if available
-	word_translator = get_node_or_null("/root/WordTranslator")
+	word_translator = get_node_or_null("root/WordTranslator")
 
 func _register_command_handlers():
 	# Register commands for different modes
@@ -383,11 +383,11 @@ func _process_hybrid_command(command: String) -> String:
 			return _save_to_file(content, file_path)
 	
 	# If no specific hybrid command matches, try processing it creatively
-	// First check if it looks like a terminal command
+# // First check if it looks like a terminal command
 	if command.begins_with("ls") || command.begins_with("cd") || command.begins_with("cat"):
 		return _process_terminal_command(command)
 	else:
-		// Otherwise treat as creative
+# // Otherwise treat as creative
 		return _process_creative_command(command)
 
 func _process_visualize_command(command: String) -> String:
@@ -590,7 +590,7 @@ func _list_directory(args: Array) -> String:
 		var file_name = dir.get_next()
 		while file_name != "":
 			if dir.current_is_dir():
-				directories.append(file_name + "/")
+				directories.append(file_name + "")
 			else:
 				files.append(file_name)
 			file_name = dir.get_next()
@@ -652,7 +652,7 @@ func _connect_to_system(system_name: String) -> String:
 			if memory_manager:
 				return "Already connected to memory system"
 			else:
-				memory_manager = get_node_or_null("/root/MemoryEvolutionManager")
+				memory_manager = get_node_or_null("root/MemoryEvolutionManager")
 				if memory_manager:
 					memory_manager.word_caught.connect(_on_word_caught)
 					return "Connected to memory system"
@@ -663,7 +663,7 @@ func _connect_to_system(system_name: String) -> String:
 			if word_translator:
 				return "Already connected to word translator"
 			else:
-				word_translator = get_node_or_null("/root/WordTranslator")
+				word_translator = get_node_or_null("root/WordTranslator")
 				if word_translator:
 					return "Connected to word translator"
 				else:
@@ -702,13 +702,13 @@ func _set_visualization_mode(mode: String) -> String:
 	return "Visualization mode set to: " + result
 
 func _resolve_path(path: String) -> String:
-	if path.begins_with("/"):
+	if path.begins_with(""):
 		return path
 	else:
-		if working_directory.ends_with("/"):
+		if working_directory.ends_with(""):
 			return working_directory + path
 		else:
-			return working_directory + "/" + path
+			return working_directory + "" + path
 
 func _display_welcome_message():
 	var welcome_text = """

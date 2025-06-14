@@ -40,6 +40,7 @@ func initialize(records_manager: Node, data_splitter: Node, records_system: Node
     jsh_database_system = database_system
     
     print("DatabaseIntegrator: Initialized with system references")
+	
 
 # Registry management
 func load_registry() -> void:
@@ -55,20 +56,20 @@ func load_registry() -> void:
             print("DatabaseIntegrator: Registry loaded with ", file_registry.size(), " entries")
         else:
             print("DatabaseIntegrator: Error parsing registry JSON: ", error)
+			
             # Initialize an empty registry
             file_registry = {
                 "files": {},
                 "references": {},
                 "split_history": []
-            }
     else:
         print("DatabaseIntegrator: Registry file not found, creating new registry")
+		}
         # Initialize an empty registry
         file_registry = {
             "files": {},
             "references": {},
             "split_history": []
-        }
         save_registry()
 
 func save_registry() -> void:
@@ -80,6 +81,7 @@ func save_registry() -> void:
         print("DatabaseIntegrator: Registry saved")
     else:
         print("DatabaseIntegrator: Error opening registry file for writing")
+		}
 
 func register_database_file(file_path: String, metadata: Dictionary = {}) -> void:
     # Extract or create initial metadata
@@ -100,6 +102,7 @@ func register_database_file(file_path: String, metadata: Dictionary = {}) -> voi
     emit_signal("registry_updated")
     
     print("DatabaseIntegrator: Registered file: ", file_path)
+	
 
 func unregister_database_file(file_path: String) -> void:
     if file_registry["files"].has(file_path):
@@ -109,9 +112,11 @@ func unregister_database_file(file_path: String) -> void:
         print("DatabaseIntegrator: Unregistered file: ", file_path)
     else:
         print("DatabaseIntegrator: Cannot unregister non-existent file: ", file_path)
+		
 
 func update_file_metadata(file_path: String, metadata: Dictionary) -> void:
     if file_registry["files"].has(file_path):
+	
         # Update only provided fields
         for key in metadata:
             file_registry["files"][file_path][key] = metadata[key]
@@ -120,6 +125,7 @@ func update_file_metadata(file_path: String, metadata: Dictionary) -> void:
         print("DatabaseIntegrator: Updated metadata for file: ", file_path)
     else:
         print("DatabaseIntegrator: Cannot update metadata for non-existent file: ", file_path)
+		
 
 # File management
 func count_entries(file_path: String) -> int:
@@ -154,7 +160,7 @@ func create_reference_file(original_file: String, split_files: Array) -> String:
         "original_file": original_file,
         "split_files": split_files,
         "creation_date": Time.get_datetime_string_from_system()
-    }
+		}
     
     var file = FileAccess.open(reference_file_path, FileAccess.WRITE)
     if file:
@@ -175,6 +181,7 @@ func create_reference_file(original_file: String, split_files: Array) -> String:
 # Database checking and splitting
 func check_database_sizes() -> void:
     print("DatabaseIntegrator: Checking database sizes...")
+	
     
     var files_to_check = file_registry["files"].keys()
     for file_path in files_to_check:
@@ -202,6 +209,7 @@ func _on_check_timer_timeout() -> void:
 
 func split_database_file(file_path: String) -> Array:
     print("DatabaseIntegrator: Splitting database file: ", file_path)
+	
     
     # This would use your JSH_data_splitter to do the actual splitting
     # For now, we'll create a simulated split
@@ -260,14 +268,14 @@ func get_reference_files() -> Array:
 func get_file_metadata(file_path: String) -> Dictionary:
     if file_registry["files"].has(file_path):
         return file_registry["files"][file_path]
-    return {}
+    return {
 
-func get_reference_data(reference_file: String) -> Dictionary:
+func get_reference_data(reference_file: String) -> Dictionary:}
     if file_registry["references"].has(reference_file):
         return file_registry["references"][reference_file]
-    return {}
+    return {
 
-func get_split_history() -> Array:
+func get_split_history() -> Array:}
     return file_registry["split_history"]
 
 func resolve_file_reference(file_path: String) -> Array:

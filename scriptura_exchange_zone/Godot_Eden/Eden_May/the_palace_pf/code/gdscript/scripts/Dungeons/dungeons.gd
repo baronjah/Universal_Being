@@ -1,21 +1,21 @@
-class_name DungeonGenerator
-extends Node3D
+class_name DungeonGenerator_dungeons_dungeons
+extends \2
 
 # Settings for the dungeon
-@export var width: int = 20
-@export var height: int = 20
-@export var room_min_size: int = 4
-@export var room_max_size: int = 8
-@export var max_rooms: int = 15
-@export var min_room_distance: int = 2
+@@@export var width: int = 20
+@@@export var height: int = 20
+@@@export var room_min_size: int = 4
+@@@export var room_max_size: int = 8
+@@@export var max_rooms: int = 15
+@@@export var min_room_distance: int = 2
 
 # GridMap reference
-@export var grid_map: GridMap
+@@@export var grid_map: GridMap
 
 # MeshLibrary cell IDs
-@export var floor_cell: int = 0
-@export var wall_cell: int = 1
-@export var door_cell: int = 2
+@@@export var floor_cell: int = 0
+@@@export var wall_cell: int = 1
+@@@export var door_cell: int = 2
 
 # Generation data
 var rooms: Array = []

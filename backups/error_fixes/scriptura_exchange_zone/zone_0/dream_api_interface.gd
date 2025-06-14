@@ -70,7 +70,7 @@ func _ready():
     sync_timer.wait_time = dream_sync_interval
     sync_timer.one_shot = false
     sync_timer.autostart = true
-    sync_timer.connect("timeout", self, "_on_dream_sync_timer")
+    sync_timer.connect(_on_dream_sync_timer)
     add_child(sync_timer)
     
     print("Dream API Interface initialized")
@@ -80,9 +80,9 @@ func _connect_to_systems():
     # Connect to dual core terminal
     dual_core_terminal = get_node_or_null("/root/DualCoreTerminal")
     if dual_core_terminal:
-        dual_core_terminal.connect("miracle_triggered", self, "_on_miracle_triggered")
-        dual_core_terminal.connect("time_state_changed", self, "_on_time_state_changed")
-        dual_core_terminal.connect("snake_case_detected", self, "_on_snake_case_detected")
+        dual_core_terminal.connect(_on_miracle_triggered)
+        dual_core_terminal.connect(_on_time_state_changed)
+        dual_core_terminal.connect(_on_snake_case_detected)
     
     # Connect to divine word game
     divine_word_game = get_node_or_null("/root/DivineWordGame")
@@ -95,7 +95,7 @@ func _connect_to_systems():
     # Connect to word comment system
     word_comment_system = get_node_or_null("/root/WordCommentSystem")
     if word_comment_system:
-        word_comment_system.connect("dream_recorded", self, "_on_dream_recorded")
+        word_comment_system.connect(_on_dream_recorded)
     
     # Connect to word dream storage
     word_dream_storage = get_node_or_null("/root/WordDreamStorage")
@@ -103,7 +103,7 @@ func _connect_to_systems():
     # Connect to turn system
     turn_system = get_node_or_null("/root/TurnSystem")
     if turn_system:
-        turn_system.connect("dimension_changed", self, "_on_dimension_changed")
+        turn_system.connect(_on_dimension_changed)
 
 func _initialize_dream_cache():
     dream_cache = []

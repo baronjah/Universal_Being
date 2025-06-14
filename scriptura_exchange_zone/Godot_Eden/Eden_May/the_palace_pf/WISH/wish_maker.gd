@@ -3,7 +3,7 @@ extends Node
 # Wish Maker System for Eden_May Game
 # Integrates with Gemini API and token management
 
-class_name WishMaker
+class_name WishMaker_wishmaker_wishmake
 
 # API connections
 var gemini_api_connection = null
@@ -78,7 +78,7 @@ func make_wish(wish_text, token_amount=token_cost_per_wish):
 		"tokens": token_amount,
 		"api": api_choice,
 		"turn": current_turn,
-		"timestamp": OS.get_unix_time(),
+		"timestamp": OS.Time.get_unix_time_from_system(),
 		"result": result.success,
 		"response": result.response
 	}

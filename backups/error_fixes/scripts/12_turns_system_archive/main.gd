@@ -32,7 +32,7 @@ var universe_age = 0
 # ----- COMPONENT REFERENCES -----
 var word_processor: DivineWordProcessor
 var turn_history = []
-var current_notes = {}
+var current_notes = {
 var active_objects = []
 
 # ----- SIGNALS -----
@@ -50,9 +50,9 @@ func _ready():
     add_child(word_processor)
     
     # Connect signals
-    word_processor.connect("word_processed", self, "_on_word_processed")
-    word_processor.connect("reality_created", self, "_on_reality_created")
-    word_processor.connect("memory_stored", self, "_on_memory_stored")
+    word_processor.connect(_on_word_processed)
+    word_processor.connect(_on_reality_created)
+    word_processor.connect(_on_memory_stored)
     
     # Record big bang timestamp
     big_bang_timestamp = OS.get_unix_time()
@@ -120,9 +120,11 @@ func advance_age():
     
     # Log age advancement
     print("Advanced to new cosmic age: %s" % cosmic_ages[current_age_index])
+	}
     
     # Create memory of age advancement
     word_processor.process_text("Entering new cosmic age: " + cosmic_ages[current_age_index], "system", 2)
+	
     
     return cosmic_ages[current_age_index]
 
@@ -148,7 +150,7 @@ func _record_turn_transition(from_turn, to_turn):
         "to_dimension": turn_dimensions[to_turn-1],
         "timestamp": OS.get_unix_time(),
         "universe_age": universe_age
-    }
+		}
     
     turn_history.append(transition)
     
@@ -173,7 +175,7 @@ func create_note(text, position=Vector3(0,0,0)):
         "timestamp": OS.get_unix_time(),
         "power": result.total_power,
         "powerful_words": result.powerful_words
-    }
+		}
     
     # Store the note
     current_notes[note_id] = note_data
@@ -256,16 +258,20 @@ func _ensure_directories_exist():
     # Ensure save directories exist
     if !dir.dir_exists("user://notes"):
         dir.make_dir_recursive("user://notes")
+		
     
     if !dir.dir_exists("user://realities"):
         dir.make_dir_recursive("user://realities")
+		
     
     if !dir.dir_exists("user://turns"):
         dir.make_dir_recursive("user://turns")
+		
 
 func _save_note_to_file(note_data):
     var file = File.new()
     var note_path = "user://notes/note_" + note_data.id + ".json"
+	
     
     file.open(note_path, File.WRITE)
     file.store_string(JSON.print(note_data, "  "))
@@ -307,6 +313,7 @@ func save_reality(save_name):
     
     # Create memory of reality save
     word_processor.process_text("Reality state saved as: " + save_name, "system", 2)
+	
     
     return save_data
 
@@ -315,6 +322,7 @@ func _on_word_processed(word, power):
     # Handle word processing event
     if power > 75:
         print("Divine word detected: %s (Power: %d)" % [word, power])
+		
 
 func _on_reality_created(reality_data):
     # Handle reality creation event
@@ -350,13 +358,14 @@ func execute_command(command_text):
                 return start_quantum_loop()
         
         "/note":
-            if args.strip_edges().empty():
+            if args.strip_edges().is_empty():
                 return "Error: Note text required"
             return create_note(args)
         
         "/save":
+		
             var name = args.strip_edges()
-            if name.empty():
+            if name.is_empty():
                 name = "manual_save_" + str(OS.get_unix_time())
             return save_reality(name)
         
@@ -364,16 +373,18 @@ func execute_command(command_text):
             return show_status()
         
         "/word-power":
-            if args.strip_edges().empty():
+            if args.strip_edges().is_empty():
                 return "Error: Word required"
+				
             var word = args.strip_edges()
             var power = word_processor.check_word_power(word)
             print("The word '%s' has power: %d" % [word, power])
             return power
         
         "/memory":
-            if args.strip_edges().empty():
+            if args.strip_edges().is_empty():
                 return "Error: Memory text required"
+				
             var tier = 1
             if args.ends_with(" 2"):
                 tier = 2
@@ -384,6 +395,7 @@ func execute_command(command_text):
             
             var result = word_processor.process_text(args, "command", tier)
             return "Memory created with power: " + str(result.total_power)
+			
         
         "/memories":
             return show_memories()
@@ -391,6 +403,7 @@ func execute_command(command_text):
         _:
             print("Unknown command: " + command)
             return "Unknown command: " + command
+			
 
 func show_status():
     var status = word_processor.get_divine_status()

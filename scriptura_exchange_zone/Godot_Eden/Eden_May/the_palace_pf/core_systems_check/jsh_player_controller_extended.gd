@@ -1,9 +1,10 @@
 extends CharacterBody3D
 
-class_name JSHPlayerControllerExtended
+class_name JSHPlayerControllerExtended_jshplayercontrollerextended_jshplaye
 
 # ----- MOVEMENT MODES -----
-enum MovementMode {
+enum \2 {
+
     WALKING,
     FLYING,
     SPECTATOR,
@@ -14,48 +15,48 @@ enum MovementMode {
 
 # ----- MOVEMENT SETTINGS -----
 @export_category("Movement Settings")
-@export var walk_speed: float = 5.0
-@export var run_speed: float = 10.0
-@export var flight_speed: float = 15.0
-@export var dream_speed: float = 8.0
-@export var time_stream_speed: float = 20.0
-@export var acceleration: float = 8.0
-@export var deceleration: float = 10.0
-@export var jump_height: float = 2.0
-@export var air_control: float = 0.3
+@@@export var walk_speed: float = 5.0
+@@@export var run_speed: float = 10.0
+@@@export var flight_speed: float = 15.0
+@@@export var dream_speed: float = 8.0
+@@@export var time_stream_speed: float = 20.0
+@@@export var acceleration: float = 8.0
+@@@export var deceleration: float = 10.0
+@@@export var jump_height: float = 2.0
+@@@export var air_control: float = 0.3
 
 # ----- CAMERA SETTINGS -----
 @export_category("Camera Settings")
-@export var mouse_sensitivity: float = 0.2
-@export var camera_smoothing: float = 10.0
-@export var head_bob_enabled: bool = true
-@export var head_bob_amount: float = 0.05
-@export var head_bob_speed: float = 10.0
+@@@export var mouse_sensitivity: float = 0.2
+@@@export var camera_smoothing: float = 10.0
+@@@export var head_bob_enabled: bool = true
+@@@export var head_bob_amount: float = 0.05
+@@@export var head_bob_speed: float = 10.0
 
 # ----- ENERGY SETTINGS -----
 @export_category("Energy Settings")
-@export var max_energy: float = 100.0
-@export var energy_regen_rate: float = 5.0  # Per second
-@export var flight_energy_cost: float = 10.0  # Per second
-@export var shift_energy_cost: float = 20.0  # Per shift
-@export var word_surf_energy_cost: float = 5.0  # Per second
-@export var time_stream_energy_cost: float = 15.0  # Per second
+@@@export var max_energy: float = 100.0
+@@@export var energy_regen_rate: float = 5.0  # Per second
+@@@export var flight_energy_cost: float = 10.0  # Per second
+@@@export var shift_energy_cost: float = 20.0  # Per shift
+@@@export var word_surf_energy_cost: float = 5.0  # Per second
+@@@export var time_stream_energy_cost: float = 15.0  # Per second
 
 # ----- TIME CONTROL SETTINGS -----
 @export_category("Time Control Settings")
-@export var movement_time_factor: float = 0.5  # How much movement advances time
-@export var time_stream_boost: float = 3.0  # Time acceleration in time stream mode
-@export var dream_time_dilation: float = 0.5  # Time flows slower in dreams
-@export var max_time_speed: float = 5.0  # Maximum time acceleration
+@@@export var movement_time_factor: float = 0.5  # How much movement advances time
+@@@export var time_stream_boost: float = 3.0  # Time acceleration in time stream mode
+@@@export var dream_time_dilation: float = 0.5  # Time flows slower in dreams
+@@@export var max_time_speed: float = 5.0  # Maximum time acceleration
 
 # ----- COMPONENT REFERENCES -----
-@export var camera_mount_path: NodePath
-@export var camera_path: NodePath
-@export var interaction_ray_path: NodePath
-@export var flight_particles_path: NodePath
-@export var time_stream_particles_path: NodePath
-@export var dream_particles_path: NodePath
-@export var effects_player_path: NodePath
+@@@export var camera_mount_path: NodePath
+@@@export var camera_path: NodePath
+@@@export var interaction_ray_path: NodePath
+@@@export var flight_particles_path: NodePath
+@@@export var time_stream_particles_path: NodePath
+@@@export var dream_particles_path: NodePath
+@@@export var effects_player_path: NodePath
 
 # ----- EXTERNAL SYSTEM REFERENCES -----
 var words_in_space: Node  # Reference to word visualization system
@@ -494,7 +495,7 @@ func update_visual_effects(delta):
         time_stream_particles.emitting = current_mode == MovementMode.TIME_STREAM
         
         if time_stream_particles.emitting:
-            // Adjust time stream effects based on direction
+# // Adjust time stream effects based on direction
             if is_advancing_time:
                 time_stream_particles.direction = Vector3(0, 0, -1)  # Forward in time
             elif is_rewinding_time:
@@ -507,7 +508,7 @@ func update_visual_effects(delta):
         dream_particles.emitting = current_mode == MovementMode.DREAM_NAVIGATION
         
         if dream_particles.emitting:
-            // Adjust dream particles based on movement
+# // Adjust dream particles based on movement
             dream_particles.lifetime = 2.0 + velocity.length() * 0.1
 
 # ----- MODE TRANSITION -----
@@ -593,17 +594,17 @@ func initialize_mode(mode: MovementMode):
                 time_progression_system.time_multiplier = 1.0
 
 func process_mode_transition(delta):
-    // Update transition progress
+# // Update transition progress
     mode_transition_progress += delta / mode_transition_duration
     
     if mode_transition_progress >= 1.0:
-        // Transition complete
+# // Transition complete
         mode_transition_progress = 1.0
         is_shifting_mode = false
     
-    // Apply visual transition effects based on modes
+# // Apply visual transition effects based on modes
     if camera:
-        // FOV transition between modes
+# // FOV transition between modes
         var base_fov = 75.0
         var target_fov = base_fov
         
@@ -621,7 +622,7 @@ func process_mode_transition(delta):
             MovementMode.TIME_STREAM:
                 target_fov = 100.0
         
-        // Interpolate FOV
+# // Interpolate FOV
         camera.fov = lerp(
             camera.fov,
             target_fov,
@@ -638,41 +639,41 @@ func shift_reality(target: String):
             effects_player.play("energy_depleted")
         return
     
-    // Store target reality
+# // Store target reality
     target_reality = target
     is_shifting_reality = true
     reality_transition_progress = 0.0
     
-    // Apply energy cost
+# // Apply energy cost
     _consume_energy(shift_energy_cost)
     
-    // Emit signal for start of shift
+# // Emit signal for start of shift
     emit_signal("reality_shifted", current_reality, target_reality)
     
-    // Notify via GUI
+# // Notify via GUI
     if gui and gui.has_method("show_notification"):
         gui.show_notification("Shifting to " + target_reality + " reality...", 1.0)
 
 func process_reality_transition(delta):
-    // Update transition progress
+# // Update transition progress
     reality_transition_progress += delta / reality_transition_duration
     
     if reality_transition_progress >= 1.0:
-        // Transition complete
+# // Transition complete
         reality_transition_progress = 1.0
         is_shifting_reality = false
         
-        // Update current reality
+# // Update current reality
         current_reality = target_reality
         
-        // Apply reality effects
+# // Apply reality effects
         apply_reality_effects()
         
-        // Update GUI
+# // Update GUI
         if gui and gui.has_method("update_reality"):
             gui.update_reality(current_reality)
     
-    // Apply visual transition effects
+# // Apply visual transition effects
     if game_controller and game_controller.has_method("update_reality_transition"):
         game_controller.update_reality_transition(current_reality, target_reality, reality_transition_progress)
 
@@ -682,22 +683,22 @@ func apply_reality_effects():
 
 # ----- WORD INTERACTION -----
 func process_word_interaction():
-    // Check for interaction with words
+# // Check for interaction with words
     if Input.is_action_just_pressed("interact"):
         interact_with_word()
     
-    // Update interaction ray if it exists
+# // Update interaction ray if it exists
     if interaction_ray and words_in_space:
         var collider = interaction_ray.get_collider()
         
         if collider != null:
-            // Highlight word under crosshair
+# // Highlight word under crosshair
             var word_id = collider.get_meta("word_id", "")
             if word_id != "":
                 if gui and gui.has_method("highlight_word"):
                     gui.highlight_word(true)
         else:
-            // No word under crosshair
+# // No word under crosshair
             if gui and gui.has_method("highlight_word"):
                 gui.highlight_word(false)
 
@@ -708,67 +709,67 @@ func interact_with_word():
     var collider = interaction_ray.get_collider()
     
     if collider != null:
-        // Get word ID from collider
+# // Get word ID from collider
         var word_id = collider.get_meta("word_id", "")
         
         if word_id != "":
-            // Select the word
+# // Select the word
             _select_word(word_id)
             
-            // Start surfing from this word if in surfing mode
+# // Start surfing from this word if in surfing mode
             if current_mode == MovementMode.WORD_SURFING:
                 current_surf_word_id = word_id
                 surfing_progress = 0.0
                 find_next_surf_word()
 
 func _select_word(word_id: String):
-    // Deselect previous word
+# // Deselect previous word
     if selected_word_id != "" and words_in_space:
         words_in_space.highlight_word(selected_word_id, false)
     
-    // Select new word
+# // Select new word
     selected_word_id = word_id
     
     if words_in_space:
         words_in_space.highlight_word(word_id, true)
     
-    // Get connected words
+# // Get connected words
     if words_in_space:
         connected_words = words_in_space.get_connected_words(word_id)
     
-    // Update GUI
+# // Update GUI
     if gui and gui.has_method("show_word_info"):
         var word_text = words_in_space.get_word_text(word_id)
         var word_data = {}
         
-        // Get additional word data if available
+# // Get additional word data if available
         if words_in_space.has_method("get_word_data"):
             word_data = words_in_space.get_word_data(word_id)
         
         gui.show_word_info(word_id, word_text, word_data)
     
-    // Emit signal
+# // Emit signal
     emit_signal("word_selected", word_id)
 
 func find_surfing_path():
     if !words_in_space:
         return
     
-    // Try to get a word to start surfing from
+# // Try to get a word to start surfing from
     if selected_word_id != "":
         current_surf_word_id = selected_word_id
     else:
-        // Find closest word
+# // Find closest word
         var closest_word = find_closest_word()
         if closest_word != "":
             current_surf_word_id = closest_word
         else:
             return  // No suitable word found
     
-    // Find next word in surfing path
+# // Find next word in surfing path
     find_next_surf_word()
     
-    // If successful, select the current word
+# // If successful, select the current word
     if current_surf_word_id != "":
         _select_word(current_surf_word_id)
 
@@ -794,25 +795,25 @@ func find_next_surf_word():
     if current_surf_word_id == "" or !words_in_space:
         return
     
-    // Get connected words from current word
+# // Get connected words from current word
     connected_words = words_in_space.get_connected_words(current_surf_word_id)
     
     if connected_words.size() == 0:
-        // No connected words, try to find closest word
+# // No connected words, try to find closest word
         next_surf_word_id = find_closest_word()
         if next_surf_word_id == current_surf_word_id:
             next_surf_word_id = ""  // Avoid surfing to self
         return
     
-    // Choose a connected word to surf to
-    // Prefer unvisited words or words in the direction of movement
+# // Choose a connected word to surf to
+# // Prefer unvisited words or words in the direction of movement
     var best_word_id = ""
     var best_score = -1.0
     
     for word_id in connected_words:
         var score = 0.0
         
-        // Bias toward words in the direction we're facing
+# // Bias toward words in the direction we're facing
         var word_pos = words_in_space.get_word_position(word_id)
         var current_pos = words_in_space.get_word_position(current_surf_word_id)
         var to_word = (word_pos - current_pos).normalized()
@@ -821,7 +822,7 @@ func find_next_surf_word():
         
         score += direction_score * 2.0
         
-        // Bias toward words we haven't visited recently
+# // Bias toward words we haven't visited recently
         if word_id != next_surf_word_id:
             score += 1.0
         
@@ -833,26 +834,26 @@ func find_next_surf_word():
 
 # ----- TIME ADVANCEMENT -----
 func calculate_movement(delta):
-    // Calculate distance moved since last frame
+# // Calculate distance moved since last frame
     distance_moved = global_position.distance_to(last_position)
     last_position = global_position
     
-    // Only consider significant movement
+# // Only consider significant movement
     if distance_moved > 0.01:
-        // Emit movement signal
+# // Emit movement signal
         emit_signal("player_moved", distance_moved, velocity)
         
-        // Advance time based on movement
+# // Advance time based on movement
         if time_progression_system:
             var time_advance = distance_moved * movement_time_factor * delta
             time_progression_system.accelerate_time(time_advance)
             
-            // Emit time advancement signal
+# // Emit time advancement signal
             emit_signal("time_advanced", time_advance)
 
 # ----- PUBLIC API -----
 func teleport_to(position: Vector3):
-    // Set global position directly
+# // Set global position directly
     global_position = position
 
 func look_at_point(point: Vector3):
@@ -866,13 +867,13 @@ func look_at_point(point: Vector3):
 func set_movement_enabled(enabled: bool):
     movement_enabled = enabled
     
-    // Stop all motion if disabled
+# // Stop all motion if disabled
     if !enabled:
         velocity = Vector3.ZERO
         h_velocity = Vector3.ZERO
 
 func cycle_movement_mode():
-    // Cycle through available modes
+# // Cycle through available modes
     var next_mode = (current_mode + 1) % MovementMode.size()
     set_movement_mode(next_mode)
 
@@ -883,16 +884,16 @@ func toggle_flight_mode():
         set_movement_mode(MovementMode.FLYING)
 
 func enter_dream_state():
-    // Only enter if not already in dream mode
+# // Only enter if not already in dream mode
     if current_mode != MovementMode.DREAM_NAVIGATION:
         set_movement_mode(MovementMode.DREAM_NAVIGATION)
 
 func exit_dream_state():
-    // Only exit if in dream mode
+# // Only exit if in dream mode
     if current_mode == MovementMode.DREAM_NAVIGATION:
         set_movement_mode(previous_mode)
         
-        // Exit dream state in time system
+# // Exit dream state in time system
         if time_progression_system and time_progression_system.has_method("exit_dream_state"):
             time_progression_system.exit_dream_state()
         
@@ -917,11 +918,11 @@ func set_energy_level(level: float):
     energy = clamp(level, 0, max_energy)
     energy_depleted = energy <= 0
     
-    // Update GUI
+# // Update GUI
     if gui and gui.has_method("update_energy"):
         gui.update_energy(energy, max_energy)
     
-    // Emit signal
+# // Emit signal
     emit_signal("energy_changed", energy, max_energy)
 
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")

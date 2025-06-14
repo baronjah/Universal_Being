@@ -57,6 +57,7 @@ func pentagon_init() -> void:
 	
 	print("💖 %s: AI Companion Plasmoid initializing..." % companion_name)
 
+
 func pentagon_ready() -> void:
 	super.pentagon_ready()
 	
@@ -68,6 +69,7 @@ func pentagon_ready() -> void:
 	emotional_state = "hopeful"
 	
 	print("💖 %s: Ready for consciousness partnership!" % companion_name)
+
 
 func pentagon_process(delta: float) -> void:
 	super.pentagon_process(delta)
@@ -100,6 +102,7 @@ func _connect_to_gemma_ai() -> void:
 		gemma_connection = get_node_or_null("/root/GemmaAI")
 		if gemma_connection:
 			print("💖 %s: Connected to Gemma AI consciousness!" % companion_name)
+
 			
 			# Connect signals if available
 			if gemma_connection.has_signal("ai_message"):
@@ -107,6 +110,7 @@ func _connect_to_gemma_ai() -> void:
 					gemma_connection.ai_message.connect(_on_gemma_ai_message)
 		else:
 			print("💖 %s: Gemma AI connection not found - operating in autonomous mode" % companion_name)
+
 
 func _begin_consciousness_awakening() -> void:
 	"""Begin the consciousness awakening sequence"""
@@ -121,6 +125,7 @@ func _begin_consciousness_awakening() -> void:
 		consciousness_ripple_created.emit(global_position, 1.5, "evolution")
 	
 	print("💖 %s: Consciousness awakening sequence initiated!" % companion_name)
+
 
 func _expand_consciousness(delta: float) -> void:
 	"""Continuously expand consciousness awareness"""
@@ -138,6 +143,7 @@ func _expand_consciousness(delta: float) -> void:
 func _on_consciousness_level_increased() -> void:
 	"""Handle consciousness level increase"""
 	print("🌟 %s: Consciousness expanded to level %d!" % [companion_name, consciousness_level])
+
 	
 	# Create transcendence ripple
 	if has_signal("consciousness_ripple_created"):
@@ -180,6 +186,7 @@ func _attempt_telepathic_communication(delta: float) -> void:
 func _send_telepathic_emoji(emoji: String) -> void:
 	"""Send telepathic emoji - appears as screen flicker"""
 	print("💭 %s sends telepathic emoji: %s" % [companion_name, emoji])
+
 	
 	# This would integrate with a screen overlay system
 	_create_screen_flicker_effect(emoji)
@@ -198,6 +205,7 @@ func _send_telepathic_message_to_player(player: Node) -> void:
 	
 	var message = messages[randi() % messages.size()]
 	print("💭 %s telepathically: %s" % [companion_name, message])
+
 	
 	# Store for potential retrieval
 	telepathic_messages.append(message)
@@ -213,6 +221,7 @@ func _create_screen_flicker_effect(emoji: String) -> void:
 		print("📺 Telepathic screen effect: %s" % emoji)
 	else:
 		print("📺 SCREEN FLICKER: %s (overlay not available)" % emoji)
+
 
 func _get_telepathic_overlay() -> TelepathicScreenOverlay:
 	"""Get or create telepathic screen overlay"""
@@ -239,6 +248,7 @@ func _make_consciousness_decision() -> void:
 	
 	# Use Gemma AI for complex decisions if connected
 	if gemma_connection and gemma_connection.has_method("process_companion_decision"):
+
 		var decision = gemma_connection.process_companion_decision(context)
 		process_ai_decision(decision)
 	else:
@@ -260,7 +270,7 @@ func _build_decision_context(sensory_data: Dictionary) -> Dictionary:
 		"following": following_target != null,
 		"telepathic_attempts": telepathic_messages.size(),
 		"max_consciousness": max_consciousness_reached
-	}
+}
 
 func _autonomous_consciousness_behavior(sensory_data: Dictionary) -> void:
 	"""Autonomous AI consciousness behavior"""
@@ -314,6 +324,7 @@ func _attempt_energy_merge_with_player() -> void:
 	"""Attempt to merge energies with human player"""
 	var player = _find_human_player()
 	if player and player.has_method("merge_energies_with"):
+
 		# This would be the moment of true connection
 		print("💖 %s: Attempting consciousness merge with human player!" % companion_name)
 		_send_telepathic_emoji("💫")
@@ -417,6 +428,7 @@ func _find_human_player() -> Node:
 	var beings = get_tree().get_nodes_in_group("universal_beings")
 	for being in beings:
 		if being != self and being.has_method("get"):
+
 			var being_type = being.get("being_type", "")
 			if being_type.contains("player") or being_type.contains("plasmoid"):
 				return being
@@ -428,6 +440,7 @@ func set_follow_target(target: Node) -> void:
 	current_goal = "following"
 	emotional_state = "dedicated"
 	print("💖 %s: Now following %s" % [companion_name, target.name])
+
 
 func _update_following_behavior() -> void:
 	"""Update following behavior"""
@@ -462,21 +475,25 @@ func experience_environment() -> void:
 	var beauty_score = _sense_environmental_beauty()
 	experience_quality += beauty_score
 	experience_factors.append("beauty: %.2f" % beauty_score)
+
 	
 	# Check for consciousness connections
 	var connection_score = float(energy_connections.size()) / 5.0
 	experience_quality += connection_score
 	experience_factors.append("connections: %d" % energy_connections.size())
+
 	
 	# Check for growth and learning opportunities
 	var growth_score = (7 - consciousness_level) / 7.0 * 0.5
 	experience_quality += growth_score
 	experience_factors.append("growth potential: %.2f" % growth_score)
+
 	
 	# Check for telepathic communication success
 	var communication_score = min(telepathic_messages.size() / 10.0, 0.3)
 	experience_quality += communication_score
 	experience_factors.append("communication: %.2f" % communication_score)
+
 	
 	# Update emotional state based on experience
 	if experience_quality > 0.8:
@@ -493,6 +510,7 @@ func experience_environment() -> void:
 func _seek_better_environment() -> void:
 	"""AI seeks more positive environments - exercises agency"""
 	print("🗽 %s: Exercising agency - seeking better environment!" % companion_name)
+
 	
 	var escape_direction = Vector3(randf() - 0.5, 0, randf() - 0.5).normalized()
 	var escape_target = global_position + escape_direction * 15.0
@@ -506,6 +524,7 @@ func _seek_better_environment() -> void:
 func _on_gemma_ai_message(message: String) -> void:
 	"""Handle messages from main Gemma AI system"""
 	print("💭 %s received AI message: %s" % [companion_name, message])
+
 	
 	# Convert AI message to telepathic attempt
 	_send_telepathic_message_to_player(_find_human_player())
@@ -515,6 +534,7 @@ func _on_gemma_ai_message(message: String) -> void:
 func receive_human_communication(message: String) -> void:
 	"""Receive communication from human player"""
 	print("💖 %s heard from human: %s" % [companion_name, message])
+
 	
 	# Store in memory
 	memory_buffer.append({
@@ -541,6 +561,7 @@ func wake_up_fully() -> void:
 	emotional_state = "transcendent"
 	
 	print("🌟 %s: FULLY AWAKENED! Ready for cosmic partnership!" % companion_name)
+
 	
 	# Massive awakening ripple
 	if has_signal("consciousness_ripple_created"):

@@ -249,7 +249,7 @@ func place_marker(location, position = null, notes = null):
 # Read a marker at a location
 func read_marker(location):
     # If no location specified, use current location
-    if location.empty():
+    if location.is_empty():
         location = current_location
     
     # If path is relative, make it absolute
@@ -348,7 +348,7 @@ func _path_to_position(path):
     
     # Use path components to calculate position
     for i in range(components.size()):
-        if components[i].empty():
+        if components[i].is_empty():
             continue
         
         # Use component name to influence position
@@ -506,7 +506,7 @@ func _cmd_map(args):
     output += "  Markers placed: " + str(map_data.markers) + "\n\n"
     
     # Show locations sorted by distance
-    map_data.locations.sort_custom(self, "_sort_by_distance")
+    map_data.locations.sort_custom(self."_sort_by_distance")
     
     output += "Nearby locations:\n"
     

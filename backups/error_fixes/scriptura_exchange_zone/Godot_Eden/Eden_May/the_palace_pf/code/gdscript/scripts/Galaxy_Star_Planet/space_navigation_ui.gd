@@ -275,7 +275,7 @@ func update_minimap():
 
 func update_resource_display():
 	if resource_display and resource_display.visible:
-		var resource_list = resource_display.get_node("ResourceList")
+		var resource_list = resource_display.get_node("\1") as Node
 		if resource_list:
 			var selected_object = selection_system.current_selection
 			
@@ -295,7 +295,7 @@ func update_resource_display():
 			elif selected_object.has_method("get_element_resources"):
 				resources = selected_object.get_element_resources()
 			
-			if resources.empty():
+			if resources.is_empty():
 				resource_list.text = "No resources available"
 				return
 			
@@ -316,12 +316,12 @@ func _on_object_selected(object):
 	target_info_panel.visible = true
 	
 	# Set panel title
-	var title_label = target_info_panel.get_node("TitleLabel")
+	var title_label = target_info_panel.get_node("\1") as Node
 	if title_label:
 		title_label.text = object.name.to_upper()
 	
 	# Set panel content based on object type
-	var content_label = target_info_panel.get_node("ContentLabel")
+	var content_label = target_info_panel.get_node("\1") as Node
 	if content_label:
 		var info_text = ""
 		

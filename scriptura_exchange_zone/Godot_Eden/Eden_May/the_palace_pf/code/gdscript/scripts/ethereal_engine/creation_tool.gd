@@ -1,5 +1,5 @@
 # creation_tool.gd
-extends Control
+extends \2
 }
 
 var active_tool = "select"

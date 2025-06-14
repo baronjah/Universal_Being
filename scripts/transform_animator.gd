@@ -51,7 +51,7 @@ func get_component_info() -> Dictionary:
 		"name": "Transform Animator",
 		"type": "action",
 		"active": enabled
-	}
+}
 
 func remove_from_being() -> void:
 	stop_animation()

@@ -1,5 +1,5 @@
 extends Node
-class_name OfflineCryptoMiner
+class_name OfflineCryptoMiner_offlinecryptominer_offlinec
 
 signal mining_status_changed(status: Dictionary)
 signal earnings_updated(earnings: Dictionary)
@@ -102,7 +102,7 @@ func _ready():
 
 func _connect_to_luno():
     # Connect to LUNO cycle system
-    luno_manager = get_node_or_null("/root/LunoCycleManager")
+    luno_manager = get_node_or_null("root/LunoCycleManager")
     if luno_manager:
         print("✓ Connected to LUNO Cycle Manager")
         luno_manager.register_participant("OfflineMiner", Callable(self, "_on_luno_tick"))
@@ -124,7 +124,7 @@ func _initialize_mining_settings():
     earnings.per_cycle = _calculate_earnings_per_cycle()
     
     # Set last active timestamp
-    mining_config.last_active = OS.get_unix_time()
+    mining_config.last_active = OS.Time.get_unix_time_from_system()
     
     # Initialize memory split system
     _initialize_memory_split()
@@ -150,8 +150,8 @@ func _initialize_memory_split():
             "name": segment_names[i],
             "size": segment_sizes[i],
             "efficiency": 1.0,
-            "creation_time": OS.get_unix_time(),
-            "last_access": OS.get_unix_time(),
+            "creation_time": OS.Time.get_unix_time_from_system(),
+            "last_access": OS.Time.get_unix_time_from_system(),
             "access_count": 0
         })
     
@@ -223,7 +223,7 @@ func _calculate_ai_costs():
     else:
         ai_cost.roi = 0.0
     
-    ai_cost.last_calculation = OS.get_unix_time()
+    ai_cost.last_calculation = OS.Time.get_unix_time_from_system()
     
     print("💵 AI Cost Calculation:")
     print("   Daily Cost: $%.2f" % ai_cost.daily_cost)
@@ -262,7 +262,7 @@ func _check_schedule_start():
     # Apply divine timing adjustment if enabled
     if mining_config.divine_timing_enabled:
         # The divine algorithm - provides slightly different results based on cosmic harmony
-        var divine_factor = sin(OS.get_unix_time() / 3600.0) * 0.5 + 0.5
+        var divine_factor = sin(OS.Time.get_unix_time_from_system() / 3600.0) * 0.5 + 0.5
         should_mine = should_mine or (divine_factor > 0.85)  # Divine override when factor is high
     
     # Start or stop mining as needed
@@ -279,7 +279,7 @@ func _perform_system_update():
     
     # Create update info
     var update_info = {
-        "timestamp": OS.get_unix_time(),
+        "timestamp": OS.Time.get_unix_time_from_system(),
         "version": VERSION,
         "hash_power_before": mining_config.hash_power,
         "temperature_before": system_stats.temperature,
@@ -329,7 +329,7 @@ func start_mining() -> bool:
         return false
     
     mining_config.active = true
-    mining_config.last_active = OS.get_unix_time()
+    mining_config.last_active = OS.Time.get_unix_time_from_system()
     
     # Reset current cycle
     mining_config.current_cycle = 0
@@ -356,7 +356,7 @@ func stop_mining() -> bool:
         return false
     
     # Calculate final earnings for this session
-    var session_duration = OS.get_unix_time() - mining_config.last_active
+    var session_duration = OS.Time.get_unix_time_from_system() - mining_config.last_active
     var session_cycles = mining_config.current_cycle
     var session_earnings = session_cycles * earnings.per_cycle
     
@@ -416,7 +416,7 @@ func complete_mining_cycle() -> Dictionary:
     # Create cycle info
     var cycle_info = {
         "cycle_number": mining_config.current_cycle,
-        "timestamp": OS.get_unix_time(),
+        "timestamp": OS.Time.get_unix_time_from_system(),
         "duration": 10 + randi() % 5,  # 10-15 minutes
         "earnings": cycle_earnings,
         "coin": mining_config.preferred_coin,
@@ -607,7 +607,7 @@ func _process_payment():
     
     var payment = {
         "amount": payment_amount,
-        "date": OS.get_unix_time(),
+        "date": OS.Time.get_unix_time_from_system(),
         "coin": mining_config.preferred_coin,
         "exchange_rate": 0.0,
         "status": "completed"
@@ -621,7 +621,7 @@ func _process_payment():
     
     # Add to payment history
     earnings.payment_history.append(payment)
-    earnings.last_payment = OS.get_unix_time()
+    earnings.last_payment = OS.Time.get_unix_time_from_system()
     
     print("💰 Payment processed: $%.2f" % payment_amount)
     print("   Exchange rate: $%.2f per %s" % [payment.exchange_rate, mining_config.preferred_coin])
@@ -673,11 +673,11 @@ func _process_memory_split_cycle():
     # Process each segment
     for segment in memory_split.current_segments:
         # Update last access
-        segment.last_access = OS.get_unix_time()
+        segment.last_access = OS.Time.get_unix_time_from_system()
         segment.access_count += 1
         
         # Adjust efficiency based on access patterns
-        var time_factor = (OS.get_unix_time() - segment.creation_time) / 3600.0  # Hours
+        var time_factor = (OS.Time.get_unix_time_from_system() - segment.creation_time) / 3600.0  # Hours
         segment.efficiency = min(1.0, 0.7 + (segment.access_count / (time_factor + 10.0)) * 0.3)
     
     # Calculate overall split efficiency
@@ -700,8 +700,8 @@ func _process_memory_split_cycle():
                 "name": segment_to_split.name + "_split" + str(memory_split.splits),
                 "size": new_size,
                 "efficiency": 0.9,
-                "creation_time": OS.get_unix_time(),
-                "last_access": OS.get_unix_time(),
+                "creation_time": OS.Time.get_unix_time_from_system(),
+                "last_access": OS.Time.get_unix_time_from_system(),
                 "access_count": 1
             }
             

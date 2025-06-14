@@ -1,7 +1,7 @@
 # Master File Navigator - Maps ALL Claude Files Across PC
 # JSH #memories
-extends Node
-class_name MasterFileNavigator
+extends \2
+class_name MasterFileNavigator_masterfilenavigator_masterfi
 
 signal file_discovered(path: String, category: String)
 signal connection_found(from: String, to: String, strength: float)
@@ -19,16 +19,16 @@ var file_database = {
 
 # Known project locations
 var project_roots = [
-	"/mnt/c/Users/Percision 15/",
-	"/mnt/c/Users/Percision 15/Desktop/",
-	"/mnt/c/Users/Percision 15/Desktop/claude_desktop/",
-	"/mnt/c/claude/",
-	"/mnt/c/eden/",
-	"/mnt/c/kamisama/",
-	"/mnt/d/Eden/",
-	"/mnt/d/Eden_Backup/",
-	"/mnt/d/Godot Projects/",
-	"/mnt/d/Luminus/"
+	"mnt/c/Users/Percision 15/",
+	"mnt/c/Users/Percision 15/Desktop/",
+	"mnt/c/Users/Percision 15/Desktop/claude_desktop/",
+	"mnt/c/claude/",
+	"mnt/c/eden/",
+	"mnt/c/kamisama/",
+	"mnt/d/Eden/",
+	"mnt/d/Eden_Backup/",
+	"mnt/d/Godot Projects/",
+	"mnt/d/Luminus/"
 ]
 
 # File patterns to track
@@ -229,7 +229,7 @@ func analyze_godot_imports(file_path: String):
 	var content = file.get_as_text()
 	file.close()
 	
-	# Look for preload, load, class_name references
+	# Look for preload, load, class_name references_masterfilenavigator_masterfi
 	var patterns = [
 		"preload\\(\"([^\"]+)\"\\)",
 		"load\\(\"([^\"]+)\"\\)",

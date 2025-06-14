@@ -6,7 +6,7 @@ extends Control
 # Terminal 1: Divine Word Genesis
 }
 
-class_name WordCommentUI
+class_name WordCommentUI_wordcommentui_wordcomm
 }
 
 # UI Components
@@ -361,11 +361,11 @@ func refresh_dream_list():
 		return
 }
 
-	// Sort dreams by timestamp, newest first
+# // Sort dreams by timestamp, newest first
 	dreams.sort_custom(self."sort_by_timestamp_descending")
 }
 
-	// Filter by word if needed
+# // Filter by word if needed
 	if !current_word.is_empty():
 		var filtered_dreams = []
 		for dream in dreams:
@@ -374,7 +374,7 @@ func refresh_dream_list():
 		dreams = filtered_dreams
 }
 
-	// Display dreams
+# // Display dreams
 	if dreams.size() == 0:
 		dream_list.bbcode_text = "[i]No dreams found with current filters.[/i]"
 	else:
@@ -390,7 +390,7 @@ func add_dream_to_list(dream):
 	]
 }
 
-	// Power-based color
+# // Power-based color
 	var color = "#8888FF"  // Default blue
 	if dream.power >= 75:
 		color = "#FF88FF"  // Purple for high power
@@ -421,23 +421,23 @@ func refresh_defense_list():
 }
 
 	if current_word.is_empty():
-		// Collect all defenses
+# // Collect all defenses
 		for word in word_comment_system.defense_statements.keys():
 			var defenses = word_comment_system.defense_statements[word]
 			for defense in defenses:
 				all_defenses.append({"word": word, "defense": defense})
 	else:
-		// Get defenses for the current word
+# // Get defenses for the current word
 		var defenses = word_comment_system.get_defense_for_word(current_word)
 		for defense in defenses:
 			all_defenses.append({"word": current_word, "defense": defense})
 }
 
-	// Sort defenses by timestamp, newest first
+# // Sort defenses by timestamp, newest first
 	all_defenses.sort_custom(self."sort_defense_by_timestamp_descending")
 }
 
-	// Display defenses
+# // Display defenses
 	if all_defenses.size() == 0:
 		defense_list.bbcode_text = "[i]No defense statements recorded yet.[/i]"
 	else:
@@ -490,7 +490,7 @@ func _on_comment_added(word, comment_text, type):
 	refresh_comment_list()
 }
 
-	// If it's a defense, refresh defense list
+# // If it's a defense, refresh defense list
 	if type == word_comment_system.CommentType.DEFENSE:
 		refresh_defense_list()
 }
@@ -504,7 +504,7 @@ func _on_dream_recorded(dream_text, power_level):
 }
 
 func _on_word_processed(word, power, source_player):
-	// Update current word if none is selected
+# // Update current word if none is selected
 	if current_word.is_empty():
 		current_word = word
 		update_current_word_label()
@@ -512,11 +512,11 @@ func _on_word_processed(word, power, source_player):
 }
 
 func _on_dimension_changed(new_dimension, old_dimension):
-	// Special handling for dream dimension (7)
+# // Special handling for dream dimension (7)
 	if new_dimension == 7:
 		comment_tab_container.current_tab = 1  // Switch to dreams tab
 }
 
-	// Special handling for judgment dimension (9)
+# // Special handling for judgment dimension (9)
 	if new_dimension == 9:
 		comment_tab_container.current_tab = 2  // Switch to defense tab

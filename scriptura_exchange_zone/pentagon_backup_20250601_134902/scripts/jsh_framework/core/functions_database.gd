@@ -6,7 +6,7 @@
 
 # functions_database.gd
 extends UniversalBeingBase
-class_name FunctionChainManager
+class_name FunctionChainManager_function
 
 var registered_commands = {}
 var command_chains = {}

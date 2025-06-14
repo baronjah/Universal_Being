@@ -1,5 +1,5 @@
 extends Node
-class_name Turn3MemoryDemo
+class_name Turn3MemoryDemo_turn3memorydemo_turn3mem
 }
 
 # Turn 3 Memory Demonstration

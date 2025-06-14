@@ -1,5 +1,5 @@
 extends Control
-class_name LuminousUIController
+class_name LuminousUIController_luminousuicontroller_luminous
 
 # UI Components
 @onready var path_display: Label = $PathBar/PathDisplay
@@ -43,7 +43,7 @@ func _ready():
 	divine_theme.set_stylebox("normal", "Button", divine_style)
 	
 	# Initialize with empty path
-	set_path_display("/")
+	set_path_display("")
 
 func _input(event):
 	if event is InputEventKey:

@@ -6,7 +6,7 @@ extends Node
 # Handles authentication, data transfer, and synchronization between cores
 }
 
-class_name TerminalAPIBridge
+class_name TerminalAPIBridge_terminalapibridge_terminal
 }
 
 # ----- API CONNECTION CONSTANTS -----
@@ -18,7 +18,8 @@ const DEFAULT_PORT = 5000
 }
 
 # ----- API STATE ENUMS -----
-enum APIState {
+enum \2 {
+
     DISCONNECTED,
     CONNECTING,
     CONNECTED,
@@ -74,7 +75,7 @@ func _ready():
 }
 
     # Connect to terminal system
-    dual_core_terminal = get_node_or_null("/root/DualCoreTerminal")
+    dual_core_terminal = get_node_or_null("root/DualCoreTerminal")
     if dual_core_terminal:
         _connect_terminal_signals()
         print("Connected to Dual Core Terminal system")
@@ -112,21 +113,21 @@ func _connect_terminal_signals():
 
 func _connect_game_systems():
     # Connect to divine word game
-    divine_word_game = get_node_or_null("/root/DivineWordGame")
+    divine_word_game = get_node_or_null("root/DivineWordGame")
 }
 
     # Connect to divine word processor
-    divine_word_processor = get_node_or_null("/root/DivineWordProcessor")
+    divine_word_processor = get_node_or_null("root/DivineWordProcessor")
 }
 
     # Connect to turn system
-    turn_system = get_node_or_null("/root/TurnSystem")
+    turn_system = get_node_or_null("root/TurnSystem")
     if turn_system:
         turn_system.connect(_on_turn_advanced)
 }
 
     # Connect to word comment system
-    word_comment_system = get_node_or_null("/root/WordCommentSystem")
+    word_comment_system = get_node_or_null("root/WordCommentSystem")
 }
 
 func _initialize_core_monitor(core_id):
@@ -135,7 +136,7 @@ func _initialize_core_monitor(core_id):
         "last_input": null,
         "last_output": null,
         "connection_status": {},
-        "last_activity": OS.get_unix_time(),
+        "last_activity": OS.Time.get_unix_time_from_system(),
         "data_stats": {
             "sent_bytes": 0,
             "received_bytes": 0,
@@ -237,7 +238,7 @@ func _process_transfer_queue():
                     if terminal_monitors.has(core_id):
                         var data_size = str(data).length()
                         terminal_monitors[core_id].data_stats.sent_bytes += data_size
-                        terminal_monitors[core_id].data_stats.last_transfer = OS.get_unix_time()
+                        terminal_monitors[core_id].data_stats.last_transfer = OS.Time.get_unix_time_from_system()
 }
 
                         emit_signal("data_transferred", core_id, api_name, data_size)
@@ -271,7 +272,7 @@ func _process_transfer_queue():
 
 func _check_connection_timeouts():
     # Check for connection timeouts
-    var current_time = OS.get_unix_time()
+    var current_time = OS.Time.get_unix_time_from_system()
 }
 
     for api_name in connection_timeouts:
@@ -354,7 +355,7 @@ func _connect_to_api(api_name, host, port, core_id):
 }
 
     # Set timeout
-    connection_timeouts[api_name] = OS.get_unix_time() + API_TIMEOUT
+    connection_timeouts[api_name] = OS.Time.get_unix_time_from_system() + API_TIMEOUT
 }
 
     # Reset retry count
@@ -396,7 +397,7 @@ func _authenticate(api_name):
 }
 
     # Send auth request
-    var err = connection.connection.request("POST", "/auth", headers, data)
+    var err = connection.connection.request("POST", "auth", headers, data)
 }
 
     if err != OK:
@@ -468,7 +469,7 @@ func _process_api_response(api_name, headers, body):
             if connection.has("core_id") and terminal_monitors.has(connection.core_id):
                 var data_size = body.size()
                 terminal_monitors[connection.core_id].data_stats.received_bytes += data_size
-                terminal_monitors[connection.core_id].data_stats.last_transfer = OS.get_unix_time()
+                terminal_monitors[connection.core_id].data_stats.last_transfer = OS.Time.get_unix_time_from_system()
 }
 
             # Check for pending response handlers
@@ -530,19 +531,19 @@ func send_data(api_name, endpoint, data, method="POST", core_id=null):
         core_id = dual_core_terminal.get_current_core_id()
 }
 
-    // Add to transfer queue
+# // Add to transfer queue
     transfer_queue.append({
         "api_name": api_name,
         "endpoint": endpoint,
         "data": data,
         "method": method,
         "core_id": core_id,
-        "timestamp": OS.get_unix_time(),
+        "timestamp": OS.Time.get_unix_time_from_system(),
         "retry_count": 0
     })
 }
 
-    // If connection doesn't exist yet, try to establish it
+# // If connection doesn't exist yet, try to establish it
     if not active_connections.has(api_name):
         emit_signal("connection_error", api_name, 0, "No active connection")
         return false
@@ -555,12 +556,12 @@ func register_response_handler(api_name, target, method):
     pending_responses[api_name] = {
         "target": target,
         "method": method,
-        "timestamp": OS.get_unix_time()
+        "timestamp": OS.Time.get_unix_time_from_system()
     }
 }
 
 func synchronize_cores(core_ids=null):
-    // If no core IDs specified, sync all connected cores
+# // If no core IDs specified, sync all connected cores
     if core_ids == null:
         core_ids = connected_cores
 }
@@ -568,13 +569,13 @@ func synchronize_cores(core_ids=null):
     var sync_data = {}
 }
 
-    // Gather data from each core
+# // Gather data from each core
     for core_id in core_ids:
         if dual_core_terminal and dual_core_terminal.cores.has(core_id):
             var core_info = dual_core_terminal.get_core_info(core_id)
 }
 
-            // Extract relevant data for sync
+# // Extract relevant data for sync
             sync_data[core_id] = {
                 "name": core_info.name,
                 "state": core_info.state,
@@ -586,8 +587,8 @@ func synchronize_cores(core_ids=null):
             }
 }
 
-    // Record sync time
-    last_sync_time = OS.get_unix_time()
+# // Record sync time
+    last_sync_time = OS.Time.get_unix_time_from_system()
 }
 
     emit_signal("cores_synchronized", core_ids)
@@ -595,13 +596,13 @@ func synchronize_cores(core_ids=null):
 }
 
 func _on_sync_timer_timeout():
-    // Auto-sync cores every 5 seconds
+# // Auto-sync cores every 5 seconds
     synchronize_cores()
 }
 
 # ----- EVENT HANDLERS -----
 func _on_core_switched(old_core_id, new_core_id):
-    // Update active API connections for the new core
+# // Update active API connections for the new core
     for api_name in active_connections:
         var connection = active_connections[api_name]
 }
@@ -610,26 +611,26 @@ func _on_core_switched(old_core_id, new_core_id):
             connection.core_id = new_core_id
 }
 
-            // Update monitor
+# // Update monitor
             if terminal_monitors.has(new_core_id):
                 terminal_monitors[new_core_id].connection_status[api_name] = connection.state
 }
 
 func _on_terminal_input_processed(core_id, input_text, result):
-    // Update terminal monitor
+# // Update terminal monitor
     if terminal_monitors.has(core_id):
         terminal_monitors[core_id].last_input = input_text
         terminal_monitors[core_id].last_output = result
-        terminal_monitors[core_id].last_activity = OS.get_unix_time()
+        terminal_monitors[core_id].last_activity = OS.Time.get_unix_time_from_system()
 }
 
-        // If input contains API-related commands, process them
+# // If input contains API-related commands, process them
         if "#api" in input_text:
             _process_api_command(core_id, input_text)
 }
 
 func _process_api_command(core_id, input_text):
-    // Parse API command from input text
+# // Parse API command from input text
     var parts = input_text.split("#api", true, 1)
 }
 
@@ -650,7 +651,7 @@ func _process_api_command(core_id, input_text):
 
     match cmd:
         "connect":
-            // #api connect api_name host [port]
+# // #api connect api_name host [port]
             if command_parts.size() >= 3:
                 var api_name = command_parts[1]
                 var host = command_parts[2]
@@ -665,7 +666,7 @@ func _process_api_command(core_id, input_text):
 }
 
         "auth":
-            // #api auth api_name token
+# // #api auth api_name token
             if command_parts.size() >= 3:
                 var api_name = command_parts[1]
                 var token = command_parts[2]
@@ -675,14 +676,14 @@ func _process_api_command(core_id, input_text):
 }
 
         "send":
-            // #api send api_name endpoint data
+# // #api send api_name endpoint data
             if command_parts.size() >= 4:
                 var api_name = command_parts[1]
                 var endpoint = command_parts[2]
-                var data_str = command_parts.slice(3, command_parts.size() - 1).join(" ")
+                var data_str = command_parts.slice(3, command_parts.size() - 1)." ".join(" ")
 }
 
-                // Try to parse data as JSON
+# // Try to parse data as JSON
                 var json = JSON.parse(data_str)
                 var data = data_str
 }
@@ -695,7 +696,7 @@ func _process_api_command(core_id, input_text):
 }
 
         "disconnect":
-            // #api disconnect api_name
+# // #api disconnect api_name
             if command_parts.size() >= 2:
                 var api_name = command_parts[1]
 }
@@ -719,63 +720,63 @@ func _process_api_command(core_id, input_text):
 }
 
 func _on_special_pattern_detected(pattern, effect):
-    // Special handling for API patterns
+# // Special handling for API patterns
     if pattern == "<->" or pattern == "|/\\|":
-        // These patterns indicate dimensional connections or gates
-        // Could trigger API sync across dimensions
+# // These patterns indicate dimensional connections or gates
+# // Could trigger API sync across dimensions
         for api_name in active_connections:
             var connection = active_connections[api_name]
 }
 
             if connection.state >= APIState.CONNECTED:
-                // Send special pattern data
+# // Send special pattern data
                 var data = {
                     "pattern": pattern,
                     "effect": effect,
                     "dimension": turn_system.current_dimension if turn_system else 0,
-                    "timestamp": OS.get_unix_time()
+                    "timestamp": OS.Time.get_unix_time_from_system()
                 }
 }
 
-                send_data(api_name, "/pattern", data, "POST", connection.core_id)
+                send_data(api_name, "pattern", data, "POST", connection.core_id)
 }
 
 func _on_miracle_triggered(core_id):
-    // When a miracle is triggered, notify all connected APIs
+# // When a miracle is triggered, notify all connected APIs
     for api_name in active_connections:
         var connection = active_connections[api_name]
 }
 
         if connection.state >= APIState.CONNECTED:
-            // Send miracle notification
+# // Send miracle notification
             var data = {
                 "event": "miracle",
                 "core_id": core_id,
                 "dimension": turn_system.current_dimension if turn_system else 0,
-                "timestamp": OS.get_unix_time()
+                "timestamp": OS.Time.get_unix_time_from_system()
             }
 }
 
-            send_data(api_name, "/event", data, "POST", connection.core_id)
+            send_data(api_name, "event", data, "POST", connection.core_id)
 }
 
 func _on_turn_advanced(old_turn, new_turn):
-    // When turn advances, update all connected APIs
+# // When turn advances, update all connected APIs
     for api_name in active_connections:
         var connection = active_connections[api_name]
 }
 
         if connection.state >= APIState.CONNECTED:
-            // Send turn update
+# // Send turn update
             var data = {
                 "event": "turn_advanced",
                 "old_turn": old_turn,
                 "new_turn": new_turn,
-                "timestamp": OS.get_unix_time()
+                "timestamp": OS.Time.get_unix_time_from_system()
             }
 }
 
-            send_data(api_name, "/event", data, "POST", connection.core_id)
+            send_data(api_name, "event", data, "POST", connection.core_id)
 }
 
 # ----- PUBLIC API -----
@@ -832,12 +833,12 @@ func set_account_api_value(core_id, value):
         dual_core_terminal.cores[core_id].account_value = value
 }
 
-        // If account value reached max, set special state
+# // If account value reached max, set special state
         if value == MAX_ACCOUNT_API_VALUE:
             dual_core_terminal.cores[core_id].state = dual_core_terminal.WindowState.MAX_ACCOUNT
 }
 
-            // Add comment about max account value reached
+# // Add comment about max account value reached
             if word_comment_system:
                 word_comment_system.add_comment("account_" + str(core_id),
                     "Core " + str(core_id) + " reached MAX_ACCOUNT value (" + str(value) + ")!",

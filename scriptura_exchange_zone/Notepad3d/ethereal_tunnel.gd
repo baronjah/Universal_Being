@@ -1,6 +1,6 @@
 extends Node
 
-class_name EtherealTunnel
+class_name EtherealTunnel_etherealtunnel_ethereal
 
 # ======================================================================
 # ETHEREAL TUNNEL SYSTEM
@@ -18,11 +18,11 @@ const TURN_CYCLE = 12
 
 # === Project connection paths ===
 const PROJECT_PATHS = {
-	"ethereal_engine": "/mnt/c/Users/Percision 15/12_turns_system/ethereal_akashic_bridge.gd",
-	"akashic_records": "/mnt/c/Users/Percision 15/12_turns_system/akashic_database.js",
-	"dimensional_color": "/mnt/c/Users/Percision 15/Eden_OS/dimensional_color_system.gd",
-	"luminus_os": "/mnt/c/Users/Percision 15/LuminusOS/scripts/light_terminal.gd",
-	"word_system": "/mnt/c/Users/Percision 15/12_turns_system/word_manifestation_system.gd"
+	"ethereal_engine": "mnt/c/Users/Percision 15/12_turns_system/ethereal_akashic_bridge.gd",
+	"akashic_records": "mnt/c/Users/Percision 15/12_turns_system/akashic_database.js",
+	"dimensional_color": "mnt/c/Users/Percision 15/Eden_OS/dimensional_color_system.gd",
+	"luminus_os": "mnt/c/Users/Percision 15/LuminusOS/scripts/light_terminal.gd",
+	"word_system": "mnt/c/Users/Percision 15/12_turns_system/word_manifestation_system.gd"
 }
 
 # === Dimensional anchors ===
@@ -123,7 +123,7 @@ func establish_tunnel(source, target, dimension = 3, color_spectrum = null):
 		"target": target,
 		"dimension": dimension,
 		"length": tunnel_length,
-		"established": OS.get_unix_time(),
+		"established": OS.Time.get_unix_time_from_system(),
 		"stability": stability,
 		"color_spectrum": spectrum,
 		"waypoints": _generate_tunnel_waypoints(source_coords, target_coords, dimension),
@@ -152,7 +152,7 @@ func _setup_dimensional_anchors():
 			"path": PROJECT_PATHS[project_name],
 			"coordinates": coords,
 			"dimension": current_dimension,
-			"established": OS.get_unix_time(),
+			"established": OS.Time.get_unix_time_from_system(),
 			"connected_tunnels": [],
 			"color_affinity": _get_color_affinity_for_project(project_name),
 			"word_resonance": _get_word_resonance_for_project(project_name)
@@ -591,7 +591,7 @@ func _collapse_tunnel(tunnel_id, reason):
 	# Mark tunnel as inactive
 	tunnel.active = false
 	tunnel.collapsed_reason = reason
-	tunnel.collapsed_time = OS.get_unix_time()
+	tunnel.collapsed_time = OS.Time.get_unix_time_from_system()
 	
 	emit_signal("tunnel_collapsed", reason)
 
@@ -711,7 +711,7 @@ func _setup_anchor_for_project(project_name):
 		"path": PROJECT_PATHS[project_name],
 		"coordinates": coords,
 		"dimension": current_dimension,
-		"established": OS.get_unix_time(),
+		"established": OS.Time.get_unix_time_from_system(),
 		"connected_tunnels": [],
 		"color_affinity": _get_color_affinity_for_project(project_name),
 		"word_resonance": _get_word_resonance_for_project(project_name)
@@ -740,7 +740,7 @@ func create_dimensional_gateway(source_dim, target_dim):
 		if not negative_dimensions.has(negative_dim):
 			negative_dimensions[negative_dim] = {
 				"dimension": -negative_dim,
-				"created_at": OS.get_unix_time(),
+				"created_at": OS.Time.get_unix_time_from_system(),
 				"stability": bridge_stability * 0.7,  # Less stable
 				"anchors": {}
 			}
@@ -757,7 +757,7 @@ func create_dimensional_gateway(source_dim, target_dim):
 						"name": anchor_name + "_negative",
 						"coordinates": inverse_coords,
 						"dimension": -negative_dim,
-						"established": OS.get_unix_time()
+						"established": OS.Time.get_unix_time_from_system()
 					}
 		}
 	
@@ -768,7 +768,7 @@ func create_dimensional_gateway(source_dim, target_dim):
 		"id": gateway_id,
 		"source_dimension": source_dim,
 		"target_dimension": target_dim,
-		"created_at": OS.get_unix_time(),
+		"created_at": OS.Time.get_unix_time_from_system(),
 		"stability": bridge_stability,
 		"active": true
 	}
@@ -832,14 +832,14 @@ func create_word_trajectory(word, steps = 12, dimension = current_dimension):
 		trajectory.append(position)
 	
 	# Store trajectory
-	var trajectory_id = word + "_trajectory_" + str(OS.get_unix_time())
+	var trajectory_id = word + "_trajectory_" + str(OS.Time.get_unix_time_from_system())
 	
 	word_trajectories[trajectory_id] = {
 		"id": trajectory_id,
 		"word": word,
 		"dimension": dimension,
 		"steps": trajectory,
-		"created_at": OS.get_unix_time(),
+		"created_at": OS.Time.get_unix_time_from_system(),
 		"power": power,
 		"completed": false
 	}
@@ -857,13 +857,13 @@ func apply_universal_shape(shape_type, components = null):
 		components = dimensional_anchors.keys()
 	
 	# Create the shape
-	var shape_id = "shape_" + str(shape_type) + "_" + str(OS.get_unix_time())
+	var shape_id = "shape_" + str(shape_type) + "_" + str(OS.Time.get_unix_time_from_system())
 	
 	universal_shapes.append({
 		"id": shape_id,
 		"type": shape_type,
 		"affected_components": components,
-		"created_at": OS.get_unix_time(),
+		"created_at": OS.Time.get_unix_time_from_system(),
 		"dimension": current_dimension,
 		"active": true
 	})

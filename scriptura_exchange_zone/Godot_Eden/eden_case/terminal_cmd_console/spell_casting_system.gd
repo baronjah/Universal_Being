@@ -1,5 +1,5 @@
 extends Node
-class_name SpellCastingSystem
+class_name SpellCastingSystem_spellcastingsystem_spellcas
 }
 
 # SpellCastingSystem
@@ -58,11 +58,11 @@ class SpellCast:
 }
 
     func _init(p_spell_id="", p_spell_name="", p_caster="player"):
-        id = str(OS.get_unix_time()) + "_cast_" + str(randi() % 1000)
+        id = str(OS.Time.get_unix_time_from_system()) + "_cast_" + str(randi() % 1000)
         spell_id = p_spell_id
         spell_name = p_spell_name
         caster = p_caster
-        timestamp = OS.get_unix_time()
+        timestamp = OS.Time.get_unix_time_from_system()
 }
 
     func to_dict():
@@ -95,11 +95,11 @@ class FrequencyEvent:
 }
 
     func _init(p_previous=1.0, p_new=1.0, p_cause="manual"):
-        id = str(OS.get_unix_time()) + "_freq_" + str(randi() % 1000)
+        id = str(OS.Time.get_unix_time_from_system()) + "_freq_" + str(randi() % 1000)
         previous_frequency = p_previous
         new_frequency = p_new
         cause = p_cause
-        timestamp = OS.get_unix_time()
+        timestamp = OS.Time.get_unix_time_from_system()
 }
 
     func to_dict():
@@ -132,7 +132,7 @@ class NPCCaster:
 }
 
     func _init(p_name="", p_type="apprentice", p_level=1):
-        id = str(OS.get_unix_time()) + "_npc_" + str(randi() % 1000)
+        id = str(OS.Time.get_unix_time_from_system()) + "_npc_" + str(randi() % 1000)
         name = p_name
         type = p_type
         level = p_level
@@ -217,7 +217,7 @@ class WizardEvolution:
         wizard_name = p_wizard_name
         current_stage = p_current_stage
         target_stage = p_target_stage
-        timestamp = OS.get_unix_time()
+        timestamp = OS.Time.get_unix_time_from_system()
 }
 
         # Set required progress based on target stage
@@ -253,11 +253,11 @@ class WitchEmergence:
 }
 
     func _init(p_source_id="", p_source_name="", p_source_type="mage"):
-        id = str(OS.get_unix_time()) + "_emergence_" + str(randi() % 1000)
+        id = str(OS.Time.get_unix_time_from_system()) + "_emergence_" + str(randi() % 1000)
         source_id = p_source_id
         source_name = p_source_name
         source_type = p_source_type
-        timestamp = OS.get_unix_time()
+        timestamp = OS.Time.get_unix_time_from_system()
 }
 
     func to_dict():
@@ -426,7 +426,7 @@ func add_energy(energy_type, amount, source="spell"):
                 "previous_value": previous,
                 "current_value": energy_levels[energy_type],
                 "source": source,
-                "timestamp": OS.get_unix_time()
+                "timestamp": OS.Time.get_unix_time_from_system()
             }
 }
 
@@ -719,7 +719,7 @@ func create_npc_caster(name, type="apprentice", level=1):
 }
 
         var spell = {
-            "id": str(OS.get_unix_time()) + "_spell_" + str(randi() % 1000),
+            "id": str(OS.Time.get_unix_time_from_system()) + "_spell_" + str(randi() % 1000),
             "name": _generate_spell_name(npc.type, npc.specialization),
             "level": spell_level,
             "energy_type": ENERGY_TYPES[randi() % ENERGY_TYPES.size()],
@@ -877,7 +877,7 @@ func trigger_npc_casting(energy_type=""):
         for i in range(npc_casters.size()):
             if npc_casters[i].id == npc.id:
                 npc_casters[i].casting_cooldown = cooldown
-                npc_casters[i].last_cast_timestamp = OS.get_unix_time()
+                npc_casters[i].last_cast_timestamp = OS.Time.get_unix_time_from_system()
 }
 
                 # Chance to gain evolution progress for wizards
@@ -1086,7 +1086,7 @@ func _progress_witch_emergence(npc_id, npc_name, npc_type, cast_power):
         if cast_power > 1.0:
             emergence.catalyst_spells.append({
                 "power": cast_power,
-                "timestamp": OS.get_unix_time()
+                "timestamp": OS.Time.get_unix_time_from_system()
             })
 }
 
@@ -1368,7 +1368,7 @@ func save_system_state():
         "wizard_evolution_stages": wizard_evolution_stages,
         "witch_emergence_factors": witch_emergence_factors,
         "spell_stability_factors": spell_stability_factors,
-        "timestamp": OS.get_unix_time()
+        "timestamp": OS.Time.get_unix_time_from_system()
     }
 }
 
@@ -1452,7 +1452,7 @@ func run_demo_cycle():
 }
 
     # Create a spell
-    var spell_id = "demo_spell_" + str(OS.get_unix_time())
+    var spell_id = "demo_spell_" + str(OS.Time.get_unix_time_from_system())
     cast_spell(spell_id, "player", "demo_target", 2.0)
 }
 

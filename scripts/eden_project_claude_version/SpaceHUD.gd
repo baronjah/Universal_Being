@@ -425,9 +425,11 @@ func _update_status_display() -> void:
 	# Update text
 	velocity_label.text = "Velocity: %.1f m/s" % status["velocity"]
 	position_label.text = "Position: (%.0f, %.0f, %.0f)" % [status["position"].x, status["position"].y, status["position"].z]
+
 	
 	# Frequency
 	frequency_label.text = "Frequency: %.1f Hz" % status["consciousness_frequency"]
+
 	
 	# Consciousness level
 	if consciousness_system:
@@ -436,6 +438,7 @@ func _update_status_display() -> void:
 	# Current system
 	if stellar_system and stellar_system.get_current_system():
 		system_label.text = "System: " + stellar_system.get_current_system().name
+
 
 func _update_target_info() -> void:
 	if not current_target or not is_instance_valid(current_target):
@@ -446,8 +449,10 @@ func _update_target_info() -> void:
 	
 	# Update name
 	if current_target.has_method("get_asteroid_info"):
+
 		var info = current_target.get_asteroid_info()
 		target_name.text = "Target: " + info["name"]
+
 		
 		# Update composition
 		target_composition.clear()
@@ -455,11 +460,13 @@ func _update_target_info() -> void:
 			target_composition.add_item(ore)
 	else:
 		target_name.text = "Target: " + current_target.name
+
 	
 	# Update distance
 	if player_ship:
 		var distance = player_ship.global_position.distance_to(current_target.global_position)
 		target_distance.text = "Distance: %.1fm" % distance
+
 
 func _update_messages(delta: float) -> void:
 	# Process message queue
@@ -529,10 +536,12 @@ func set_consciousness_level(level: int) -> void:
 func set_frequency(freq: float) -> void:
 	frequency_label.text = "Frequency: %.1f Hz" % freq
 
+
 func update_resources(resources: Dictionary) -> void:
 	for resource in resources:
 		if resource_labels.has(resource):
 			resource_labels[resource].text = resource + ": " + str(int(resources[resource]))
+
 
 func add_message(text: String, color: Color = Color.WHITE) -> void:
 	var label = Label.new()
@@ -557,6 +566,7 @@ func show_notification(text: String, duration: float = 3.0) -> void:
 	var tween = create_tween()
 	tween.tween_property(notif, "modulate:a", 1.0, 0.3)
 
+
 func flash_bar(bar: ProgressBar, color: Color) -> void:
 	bar.modulate = color
 	var key = bar.name.replace("Bar", "").to_lower()
@@ -569,6 +579,7 @@ func _on_frequency_changed(frequency: float) -> void:
 func _on_target_acquired(target: Node3D) -> void:
 	current_target = target
 	add_message("Target acquired: " + target.name, hud_color)
+
 
 func _on_energy_depleted() -> void:
 	add_message("WARNING: Energy depleted!", critical_color)
@@ -585,14 +596,17 @@ func _on_awareness_expanded(level: int) -> void:
 func _on_perception_unlocked(perception: String) -> void:
 	show_notification("New perception unlocked: " + perception)
 
+
 func _on_warp_initiated(from_system: String, to_system: String) -> void:
 	add_message("Initiating warp jump: " + from_system + " → " + to_system, hud_color)
+
 
 func _on_warp_completed() -> void:
 	add_message("Warp jump complete", hud_color)
 
 func _on_system_discovered(system_data: Dictionary) -> void:
 	show_notification("New system discovered: " + system_data["name"])
+
 
 func _on_companion_message(companion: AICompanion, message: String) -> void:
 	companion_panel.visible = true

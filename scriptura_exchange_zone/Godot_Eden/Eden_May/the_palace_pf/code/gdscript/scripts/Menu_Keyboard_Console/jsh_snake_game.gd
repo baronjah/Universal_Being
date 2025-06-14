@@ -1,16 +1,14 @@
 #
-# res://code/gdscript/scripts/Menu_Keyboard_Console/jsh_snake_game.gd
+# res://scripts/gdscript/scripts/Menu_Keyboard_Console/jsh_snake_game.gd
 #
 # JSH_World/snake
-# 
-
-
-extends Node
-class_name JSHSnakeGame
+#
+extends \2
+class_name JSHSnakeGame_jshsnakegame_jshsnake
 
 # JSH_World/game
 #
-# res://code/gdscript/scripts/Snake_Space_Movement/snake_game.gd
+# res://scripts/gdscript/scripts/Snake_Space_Movement/snake_game.gd
 # Snake game implementation for JSH system
 
 # References
@@ -20,7 +18,8 @@ var thread_pool = null
 var keyboard_handler = null
 
 # Game state
-enum GameState { MENU, READY, PLAYING, GAME_OVER }
+enum \2 {
+ MENU, READY, PLAYING, GAME_OVER }
 var current_state = GameState.READY
 var score = 0
 var high_score = 0
@@ -116,7 +115,7 @@ var speed_multipliers = {
 #
 #
 #extends Node3D
-#class_name JSHIntegratedSystem
+#class_name JSHIntegratedSystem_jshsnakegame_jshsnake
 #
 ## JSH_World/integrated_system
 #
@@ -200,7 +199,7 @@ func _ready_add0():
 		main_ref = scene_root.get_node("main")
 	
 	# Initialize thread pool
-	thread_pool = get_node_or_null("/root/thread_pool_autoload")
+	thread_pool = get_node_or_null("root/thread_pool_autoload")
 	
 	# Initialize visual components
 	initialize_materials()
@@ -294,7 +293,7 @@ func initialize_keyboard():
 	# Setup datapoint for keyboard
 	var datapoint = Node3D.new()
 	datapoint.name = "thing_24"  # Standard name from JSH system
-	datapoint.script = load("res://code/gdscript/scripts/Menu_Keyboard_Console/data_point.gd")
+	datapoint.script = load("res://scripts/gdscript/scripts/Menu_Keyboard_Console/data_point.gd")
 	keyboard_container.add_child(datapoint)
 	
 	# Store reference
@@ -355,7 +354,7 @@ func initialize_camera():
 
 func initialize_thread_system():
 	# Get global thread pool if available
-	thread_pool = get_node_or_null("/root/thread_pool_autoload")
+	thread_pool = get_node_or_null("root/thread_pool_autoload")
 	
 	# Create task manager
 	task_manager = Node.new()
@@ -363,13 +362,13 @@ func initialize_thread_system():
 	add_child(task_manager)
 	
 	# Add task tracking functionality
-	task_manager.set_script(load("res://code/gdscript/scripts/Menu_Keyboard_Console/jsh_thread_pool_manager.gd"))
+	task_manager.set_script(load("res://scripts/gdscript/scripts/Menu_Keyboard_Console/jsh_thread_pool_manager.gd"))
 
 func initialize_records_system():
 	# Create records system
 	records_system = Node.new()
 	records_system.name = "JSH_records_system"
-	records_system.set_script(load("res://code/gdscript/scripts/Menu_Keyboard_Console/JSH_records_system.gd"))
+	records_system.set_script(load("res://scripts/gdscript/scripts/Menu_Keyboard_Console/JSH_records_system.gd"))
 	add_child(records_system)
 
 # ======== WINDOW MANAGEMENT ========
@@ -529,7 +528,7 @@ func create_snake_game(difficulty = "normal"):
 	add_child(container)
 	
 	# Create game
-	snake_game = load("res://code/gdscript/scripts/Snake_Space_Movement/snake_game.gd").new()
+	snake_game = load("res://scripts/gdscript/scripts/Snake_Space_Movement/snake_game.gd").new()
 	snake_game.name = "snake_game"
 	container.add_child(snake_game)
 	
@@ -727,7 +726,7 @@ func fifth_dimensional_magic(type_of_unload, container_name):
 		container.visible = false
 
 func sixth_dimensional_magic(type_of_action, node_path_or_nodes, function_name, data = null):
-	log_message("Sixth dimensional magic: " + type_of_action + " / " + function_name, "system")
+	log_message("Sixth dimensional magic: " + type_of_action + "  " + function_name, "system")
 	
 	match type_of_action:
 		"call_function_get_node":
@@ -1013,7 +1012,7 @@ func add_snake_segment(grid_pos, is_head = false):
 
 func initialize_animator():
 	# Create and set up animator
-	animator = load("res://code/gdscript/scripts/Snake_Space_Movement/snake_animation.gd").new()
+	animator = load("res://scripts/gdscript/scripts/Snake_Space_Movement/snake_animation.gd").new()
 	animator.name = "snake_animator"
 	add_child(animator)
 	

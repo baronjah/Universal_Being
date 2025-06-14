@@ -3,9 +3,8 @@
 # Created: May 31, 2025, 23:28 CEST
 # Purpose: Ragdoll physics and behavior system
 # Connection: Part of Pentagon Architecture migration
-
 extends UniversalBeingBase
-class_name PalletsRacingGame
+class_name PalletsRacingGame_palletsr
 
 # References
 var main_node = null
@@ -240,7 +239,7 @@ func _process(delta):
 		var race_info = race_ui.get_node("RaceInfo")
 		if race_info:
 			var time_text = "Time: " + str(snapped(race_time, 0.01))
-			var lap_text = "Lap: " + str(lap_count) + "/" + str(total_laps)
+			var lap_text = "Lap: " + str(lap_count) + "" + str(total_laps)
 			race_info.text = time_text + "\n" + lap_text
 		
 		# Check if race is complete

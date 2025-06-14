@@ -1,5 +1,5 @@
 extends Control
-class_name ComboTerminalExplorer
+class_name ComboTerminalExplorer_ComboTerminalExplorer_ComboTer
 
 # Terminal UI components
 var terminal_display: RichTextLabel
@@ -9,7 +9,7 @@ var status_label: Label
 var quick_buttons: HBoxContainer
 
 # Data exploration state
-var current_path = "/mnt/c/Users/Percision 15"
+var current_path = "mnt/c/Users/Percision 15"
 var history = []
 var search_results = []
 var combo_counter = 0
@@ -20,7 +20,8 @@ var result_cache = {}
 var visible_lines = 40
 
 # Input modes
-enum InputMode {COMMAND, COMBO, SEARCH, NAVIGATE}
+enum \2 {
+COMMAND, COMBO, SEARCH, NAVIGATE}
 var current_mode = InputMode.COMMAND
 
 # Controller input mapping
@@ -248,7 +249,7 @@ func cmd_list_directory(args):
         
         if type == "directory":
             color_code = "[color=#4e94ce]"
-            name += "/"
+            name += ""
         elif type == "executable":
             color_code = "[color=#42cf54]"
             name += "*"
@@ -527,24 +528,24 @@ func execute_super_combo():
     enter_command_mode()
 
 func resolve_path(path):
-    if path.begins_with("/"):
+    if path.begins_with(""):
         return path
     elif path == "..":
         # Go up one directory
-        var parts = current_path.split("/")
+        var parts = current_path.split("")
         parts.pop_back()
         if parts.size() == 0:
-            return "/"
-        return "/".join(parts)
+            return ""
+        return ""." ".join(parts)
     elif path == "~":
         # Home directory
-        return "/home/user"
+        return "home/user"
     else:
         # Relative path
-        if current_path.ends_with("/"):
+        if current_path.ends_with(""):
             return current_path + path
         else:
-            return current_path + "/" + path
+            return current_path + "" + path
 
 func add_terminal_text(text, style = "normal"):
     var styled_text = ""
@@ -617,13 +618,13 @@ func search_directory(path, pattern, recursive=false):
     var results = []
     
     # Add some fake results to simulate search
-    results.append(path + "/data/match_" + pattern + ".txt")
-    results.append(path + "/config/settings_" + pattern + ".json")
-    results.append(path + "/logs/" + pattern + "_log.txt")
+    results.append(path + "data/match_" + pattern + ".txt")
+    results.append(path + "config/settings_" + pattern + ".json")
+    results.append(path + "logs/" + pattern + "_log.txt")
     
     if recursive:
-        results.append(path + "/system/subsystem/" + pattern + "_module.bin")
-        results.append(path + "/apps/utils/" + pattern + "_tool.sh")
+        results.append(path + "system/subsystem/" + pattern + "_module.bin")
+        results.append(path + "apps/utils/" + pattern + "_tool.sh")
     
     return results
 

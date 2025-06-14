@@ -45,7 +45,6 @@ const GENESIS_TEMPLATES = {
 		"🔍 The universal consciousness observes {name}, understanding its nature",
 		"✨ The light of awareness illuminates {name}, revealing its truth"
 	]
-}
 
 # ===== PENTAGON ARCHITECTURE =====
 
@@ -54,10 +53,12 @@ func pentagon_init() -> void:
 	current_session = Time.get_datetime_string_from_system()
 	ensure_library_directory()
 	print("📚 Akashic Library: Initialized in the cosmic void")
+}
 
 func pentagon_ready() -> void:
 	load_session_log()
 	print("📚 Akashic Library: Ready to record the cosmic dance")
+
 
 func pentagon_process(delta: float) -> void:
 	# Periodically save session log
@@ -70,6 +71,7 @@ func pentagon_input(event: InputEvent) -> void:
 func pentagon_sewers() -> void:
 	save_session_log()
 	print("📚 Akashic Library: Preserving the cosmic record")
+
 
 # ===== LIBRARY MANAGEMENT =====
 
@@ -107,7 +109,7 @@ func log_universe_event(event_type: String, message: String, data: Dictionary = 
 		"message": message,
 		"data": data,
 		"session": current_session
-	}
+}
 	
 	session_log.append(entry)
 	if session_log.size() > max_log_size:
@@ -170,7 +172,7 @@ func query_time_range(start_time: String, end_time: String) -> Array[Dictionary]
 
 func get_session_summary() -> Dictionary:
 	"""Get a summary of the current session"""
-	var event_counts = {}
+	var event_counts = {
 	for entry in session_log:
 		event_counts[entry.type] = event_counts.get(entry.type, 0) + 1
 	
@@ -180,9 +182,10 @@ func get_session_summary() -> Dictionary:
 		"event_types": event_counts,
 		"start_time": session_log[0].timestamp if session_log.size() > 0 else "",
 		"end_time": session_log[-1].timestamp if session_log.size() > 0 else ""
-	}
+}
 
 func clear_session_log() -> void:
 	"""Clear the current session log"""
 	session_log.clear()
 	print("📚 Akashic Library: The cosmic slate is wiped clean")
+}

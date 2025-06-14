@@ -5,8 +5,7 @@
 # CREATED: 2025-06-01 - Universal Being Conversion System
 # AUTHOR: JSH + Claude Code
 # ==================================================
-
-extends Node
+extends \2
 
 # Universal Being capabilities for any node
 var form: String = "wrapped_being"
@@ -169,7 +168,7 @@ func get_spatial_position() -> Vector3:
 		return global_position
 	else:
 		# Return position relative to scene tree
-		var path_depth = str(get_path()).count("/")
+		var path_depth = str(get_path()).count("")
 		return Vector3(path_depth, get_index(), 0)
 
 func get_scene_tree_position() -> Dictionary:
@@ -179,7 +178,7 @@ func get_scene_tree_position() -> Dictionary:
 		"parent": get_parent().name if get_parent() else "ROOT",
 		"children": get_child_count(),
 		"index": get_index(),
-		"depth": str(get_path()).count("/"),
+		"depth": str(get_path()).count(""),
 		"spatial_position": get_spatial_position()
 	}
 
@@ -212,7 +211,7 @@ func _react_to_low_need(need_name: String) -> void:
 func universal_add_child(child: Node, parent: Node = null) -> void:
 	"""Wrapped universal_add_child for compatibility"""
 	var target_parent = parent if parent else self
-	var floodgate = get_node_or_null("/root/FloodgateController")
+	var floodgate = get_node_or_null("root/FloodgateController")
 	
 	if floodgate and floodgate.has_method("universal_add_child"):
 		floodgate.universal_add_child(child, target_parent)

@@ -1,5 +1,6 @@
 @tool
-class_name VisualShaderNodeVectorProjectOnPlane extends VisualShaderNodeCustom
+class_name VisualShaderNodeVectorProjectOnPlane_ProjectOnPlane_ProjectO
+extends \2
 
 func _get_name() -> String:
 	return "ProjectOnPlane"

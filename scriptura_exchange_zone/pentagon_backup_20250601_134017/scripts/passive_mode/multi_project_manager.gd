@@ -3,13 +3,12 @@
 # DESCRIPTION: Manages multiple projects with timing awareness
 # CREATED: 2025-05-23 - Project switching and time tracking
 # ==================================================
-
-extends UniversalBeingBase
+extends \2
 # Project definitions
 var projects: Dictionary = {
 	"talking_ragdoll": {
 		"name": "Talking Ragdoll Game",
-		"path": "/mnt/c/Users/Percision 15/talking_ragdoll_game/",
+		"path": "mnt/c/Users/Percision 15/talking_ragdoll_game/",
 		"status": "active",
 		"priority": "high",
 		"last_worked": 0.0,
@@ -19,7 +18,7 @@ var projects: Dictionary = {
 	},
 	"data_sewers": {
 		"name": "Data Sewers Project",
-		"path": "/mnt/c/Users/Percision 15/data_sewers_22_05/",
+		"path": "mnt/c/Users/Percision 15/data_sewers_22_05/",
 		"status": "background",
 		"priority": "medium",
 		"last_worked": 0.0,
@@ -29,7 +28,7 @@ var projects: Dictionary = {
 	},
 	"twelve_turns": {
 		"name": "12 Turns System",
-		"path": "/mnt/c/Users/Percision 15/12_turns_system/",
+		"path": "mnt/c/Users/Percision 15/12_turns_system/",
 		"status": "planning",
 		"priority": "medium",
 		"last_worked": 0.0,

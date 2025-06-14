@@ -22,8 +22,8 @@
 # SOFTWARE.
 
 @tool
-extends Resource
-class_name ImageGradient
+extends \2
+class_name ImageGradient_imagegradient_imagegra
 
 var gradients:Array[Vector3]
 #var gradients:PackedVector3Array

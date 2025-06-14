@@ -4,7 +4,6 @@
 # PURPOSE: Quick testing and status reporting
 # CREATED: 2025-05-28 - Feature testing UI
 # ==================================================
-
 extends UniversalBeingBase
 # signal test_completed(feature: String, success: bool)  # Currently unused but kept for future expansion
 
@@ -178,7 +177,7 @@ func _create_buttons() -> void:
 		FloodgateController.universal_add_child(Control.new(, button_container))
 
 func _setup_references() -> void:
-	console_manager = get_node_or_null("/root/ConsoleManager")
+	console_manager = get_node_or_null("root/ConsoleManager")
 
 func _on_button_pressed(button: Button) -> void:
 	var feature = button.get_meta("feature")
@@ -316,7 +315,7 @@ func _test_clear_scene(button: Button) -> void:
 	_mark_success(button)
 
 func _test_floodgate_status(button: Button) -> void:
-	var floodgate = get_node_or_null("/root/FloodgateController")
+	var floodgate = get_node_or_null("root/FloodgateController")
 	if floodgate:
 		_update_status("Floodgate: Active", Color.GREEN)
 		_mark_success(button)
@@ -325,7 +324,7 @@ func _test_floodgate_status(button: Button) -> void:
 		_mark_failure(button)
 
 func _test_floodgate_queue(button: Button) -> void:
-	var floodgate = get_node_or_null("/root/FloodgateController")
+	var floodgate = get_node_or_null("root/FloodgateController")
 	if floodgate and floodgate.has_method("queue_operation"):
 		# Queue a test operation
 		floodgate.queue_operation({

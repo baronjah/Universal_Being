@@ -30,6 +30,7 @@ var divine_words = {
 	"transcendence": 90,
 	"unity": 95,
 	"beyond": 100,
+}
 	
 	# Divine concepts
 	"divine": 85,
@@ -96,7 +97,7 @@ var divine_words = {
 	"planet": 50,
 	"galaxy": 65,
 	"cosmos": 70
-}
+
 
 # ----- STATE VARIABLES -----
 var active_words = {}  # Currently manifested words
@@ -106,7 +107,6 @@ var memories = {
 	1: [],  # Tier 1: Temporary/recent
 	2: [],  # Tier 2: Important
 	3: []   # Tier 3: Eternal/fundamental
-}
 
 # Divine account stats
 var divine_stats = {
@@ -140,7 +140,7 @@ func process_text(text: String, source: String = "user", tier: int = 1) -> Dicti
 		"powerful_words": [],
 		"source": source,
 		"timestamp": Time.get_unix_time_from_system()
-	}
+}
 	
 	# Skip empty text
 	if text.strip_edges().is_empty():
@@ -214,6 +214,7 @@ func calculate_word_power(word: String) -> float:
 		"QUANTUM": reality_factor = 1.5
 		"MEMORY": reality_factor = 1.2
 		"DREAM": reality_factor = 1.8
+}
 	
 	# Calculate final power
 	var power = base_power * length_factor * capital_factor * dimension_factor * reality_factor
@@ -242,7 +243,7 @@ func manifest_word(word: String, position: Vector3 = Vector3.ZERO) -> Dictionary
 		"reality": current_reality,
 		"dimension": current_dimension,
 		"connections": []
-	}
+}
 	
 	# Add to active words
 	active_words[word_id] = word_data
@@ -277,7 +278,7 @@ func _create_memory(text: String, tier: int, power: float, powerful_words: Array
 		"timestamp": Time.get_unix_time_from_system(),
 		"reality": current_reality,
 		"dimension": current_dimension
-	}
+}
 	
 	# Store in appropriate tier
 	memories[tier].append(memory)
@@ -301,13 +302,13 @@ func _create_memory(text: String, tier: int, power: float, powerful_words: Array
 func _manage_memory_tiers():
 	# Tier 1: Keep only most recent 100
 	if memories[1].size() > 100:
-		memories[1].sort_custom(func(a, b): return a.timestamp > b.timestamp)
+		memories[1].sort_custom(func(a.b): return a.timestamp > b.timestamp)
 		while memories[1].size() > 100:
 			memories[1].pop_back()
 	
 	# Tier 2: Keep only most recent 50
 	if memories[2].size() > 50:
-		memories[2].sort_custom(func(a, b): return a.timestamp > b.timestamp)
+		memories[2].sort_custom(func(a.b): return a.timestamp > b.timestamp)
 		while memories[2].size() > 50:
 			memories[2].pop_back()
 	
@@ -333,7 +334,7 @@ func _create_reality_impact(source_text: String, powerful_words: Array, total_po
 		"active": true,
 		"reality_type": current_reality,
 		"dimension": current_dimension
-	}
+}
 	
 	# Add to realities list
 	active_realities.append(reality)
@@ -399,6 +400,7 @@ func _check_level_increase(power_gained: float):
 		emit_signal("divine_level_increased", old_level, divine_stats.level)
 		print("Divine level increased: %d → %d" % [old_level, divine_stats.level])
 
+
 # ----- STATE MANAGEMENT -----
 func _save_state():
 	var save_data = {
@@ -407,7 +409,7 @@ func _save_state():
 		"active_realities": active_realities,
 		"memories": memories,
 		"timestamp": Time.get_unix_time_from_system()
-	}
+}
 	
 	var dir = DirAccess.open("user://")
 	if not dir:
@@ -452,6 +454,7 @@ func _load_state():
 	else:
 		push_error("JSON Parse Error: " + json.get_error_message())
 
+
 # ----- PUBLIC API -----
 func get_active_words() -> Dictionary:
 	return active_words
@@ -488,12 +491,13 @@ func get_divine_status() -> Dictionary:
 		"memory_tier3": memories[3].size(),
 		"active_words": active_words.size(),
 		"active_realities": active_realities.size()
-	}
+}
 
 func set_reality_context(reality: String, dimension: int):
 	current_reality = reality
 	current_dimension = dimension
 	print("Word processor context: Reality=%s, Dimension=%d" % [reality, dimension])
+
 
 func save_game() -> void:
 	_save_state()

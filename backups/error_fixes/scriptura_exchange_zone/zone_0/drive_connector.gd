@@ -86,7 +86,7 @@ func _ready():
 	if terminal_memory and terminal_memory.has_method("add_memory_text"):
 		terminal_memory.add_memory_text("Drive Connector initialized with local drive.", "system")
 		if terminal_memory.has_node("processor"):
-			processor = terminal_memory.get_node("processor")
+			processor = terminal_memory.get_node("\1") as Node
 
 # Add a new drive to the system
 func add_drive(name: String, type: int, path: String, emoji: String = "💾") -> bool:
@@ -309,22 +309,22 @@ func process_command(command: String) -> void:
 	
 	match cmd:
 		"#connect":
-			if args.empty():
+			if args.is_empty():
 				connect_all_drives()
 			else:
 				connect_drive(args)
 		"#disconnect":
-			if args.empty():
+			if args.is_empty():
 				_log("Please specify a drive to disconnect.")
 			else:
 				disconnect_drive(args)
 		"#sync":
-			if args.empty():
+			if args.is_empty():
 				sync_all_drives()
 			else:
 				sync_drive(args)
 		"#active":
-			if args.empty():
+			if args.is_empty():
 				_log("Current active drive: %s" % get_drive_summary(active_drive))
 			else:
 				set_active_drive(args)
@@ -489,7 +489,7 @@ func _process_system_drive_command(args: String) -> void:
 
 # Reset a drive or all drives
 func _reset_drive(drive_name: String) -> void:
-	if drive_name.empty() or drive_name == "all":
+	if drive_name.is_empty() or drive_name == "all":
 		_log("Resetting all drives...")
 		drives.clear()
 		add_drive("local", DriveType.LOCAL, "user://", "💻")
@@ -671,7 +671,7 @@ func _connect_local_drive(drive: DriveConfig) -> bool:
 func _connect_icloud_drive(drive: DriveConfig) -> bool:
 	# Simulate connection to iCloud
 	_log("Connecting to iCloud Drive: %s" % drive.name)
-	yield(get_tree().create_timer(0.5), "timeout")
+	await(get_tree().create_timer(0.5), "timeout")
 	
 	# Create the directory for our simulated iCloud
 	var dir = Directory.new()
@@ -694,7 +694,7 @@ func _connect_icloud_drive(drive: DriveConfig) -> bool:
 func _connect_google_drive(drive: DriveConfig) -> bool:
 	# Simulate connection to Google Drive
 	_log("Connecting to Google Drive: %s" % drive.name)
-	yield(get_tree().create_timer(0.7), "timeout")
+	await(get_tree().create_timer(0.7), "timeout")
 	
 	# Create the directory for our simulated Google Drive
 	var dir = Directory.new()
@@ -717,7 +717,7 @@ func _connect_google_drive(drive: DriveConfig) -> bool:
 func _connect_remote_drive(drive: DriveConfig) -> bool:
 	# Simulate connection to a remote drive
 	_log("Connecting to Remote Drive: %s" % drive.name)
-	yield(get_tree().create_timer(1.0), "timeout")
+	await(get_tree().create_timer(1.0), "timeout")
 	
 	# Simulate random connection failure (20% chance)
 	if randf() < 0.2:
@@ -749,7 +749,7 @@ func _sync_local_drive(drive: DriveConfig) -> bool:
 
 func _sync_icloud_drive(drive: DriveConfig) -> bool:
 	_log("Synchronizing iCloud Drive: %s" % drive.name)
-	yield(get_tree().create_timer(0.5), "timeout")
+	await(get_tree().create_timer(0.5), "timeout")
 	
 	# In a real implementation, this would sync with the iCloud API
 	drive.last_sync = OS.get_unix_time()
@@ -760,7 +760,7 @@ func _sync_icloud_drive(drive: DriveConfig) -> bool:
 
 func _sync_google_drive(drive: DriveConfig) -> bool:
 	_log("Synchronizing Google Drive: %s" % drive.name)
-	yield(get_tree().create_timer(0.7), "timeout")
+	await(get_tree().create_timer(0.7), "timeout")
 	
 	# In a real implementation, this would sync with the Google Drive API
 	drive.last_sync = OS.get_unix_time()
@@ -771,7 +771,7 @@ func _sync_google_drive(drive: DriveConfig) -> bool:
 
 func _sync_remote_drive(drive: DriveConfig) -> bool:
 	_log("Synchronizing Remote Drive: %s" % drive.name)
-	yield(get_tree().create_timer(1.0), "timeout")
+	await(get_tree().create_timer(1.0), "timeout")
 	
 	# Simulate random sync failure (10% chance)
 	if randf() < 0.1:
@@ -817,7 +817,7 @@ func _save_to_icloud_drive(data, drive: DriveConfig) -> bool:
 	_log("Saving data to iCloud Drive: %s" % drive.name)
 	
 	# Simulate iCloud save
-	yield(get_tree().create_timer(0.5), "timeout")
+	await(get_tree().create_timer(0.5), "timeout")
 	
 	# Actually save to our simulated iCloud directory
 	var file = File.new()
@@ -846,7 +846,7 @@ func _save_to_google_drive(data, drive: DriveConfig) -> bool:
 	_log("Saving data to Google Drive: %s" % drive.name)
 	
 	# Simulate Google Drive save
-	yield(get_tree().create_timer(0.7), "timeout")
+	await(get_tree().create_timer(0.7), "timeout")
 	
 	# Actually save to our simulated Google Drive directory
 	var file = File.new()
@@ -875,7 +875,7 @@ func _save_to_remote_drive(data, drive: DriveConfig) -> bool:
 	_log("Saving data to Remote Drive: %s" % drive.name)
 	
 	# Simulate remote save
-	yield(get_tree().create_timer(1.0), "timeout")
+	await(get_tree().create_timer(1.0), "timeout")
 	
 	# Simulate random save failure (15% chance)
 	if randf() < 0.15:
@@ -931,7 +931,7 @@ func _load_from_icloud_drive(drive: DriveConfig) -> Dictionary:
 	_log("Loading data from iCloud Drive: %s" % drive.name)
 	
 	# Simulate iCloud load
-	yield(get_tree().create_timer(0.5), "timeout")
+	await(get_tree().create_timer(0.5), "timeout")
 	
 	# Actually load from our simulated iCloud directory
 	var file = File.new()
@@ -956,7 +956,7 @@ func _load_from_google_drive(drive: DriveConfig) -> Dictionary:
 	_log("Loading data from Google Drive: %s" % drive.name)
 	
 	# Simulate Google Drive load
-	yield(get_tree().create_timer(0.7), "timeout")
+	await(get_tree().create_timer(0.7), "timeout")
 	
 	# Actually load from our simulated Google Drive directory
 	var file = File.new()
@@ -981,7 +981,7 @@ func _load_from_remote_drive(drive: DriveConfig) -> Dictionary:
 	_log("Loading data from Remote Drive: %s" % drive.name)
 	
 	# Simulate remote load
-	yield(get_tree().create_timer(1.0), "timeout")
+	await(get_tree().create_timer(1.0), "timeout")
 	
 	# Simulate random load failure (15% chance)
 	if randf() < 0.15:

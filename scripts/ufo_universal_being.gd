@@ -49,6 +49,7 @@ func pentagon_init() -> void:
     _update_size_from_consciousness()
     
     print("🛸 %s: Pentagon Init Complete" % being_name)
+	
 
 func pentagon_ready() -> void:
     super.pentagon_ready()
@@ -72,6 +73,7 @@ func pentagon_ready() -> void:
     ufo_generator.generate_ufo()
     
     print("🛸 %s: Pentagon Ready - UFO manifestation active" % being_name)
+	
 
 func pentagon_process(delta: float) -> void:
     super.pentagon_process(delta)
@@ -110,6 +112,7 @@ func pentagon_input(event: InputEvent) -> void:
 
 func pentagon_sewers() -> void:
     print("🛸 %s: Pentagon Sewers - UFO consciousness transcending" % being_name)
+	
     
     # Clean up UFO generator
     if ufo_generator:
@@ -168,11 +171,13 @@ func _process_morphing(delta: float):
     is_morphing = false
     
     print("🛸 %s: Morphing complete to %s" % [being_name, AdvancedUFOGenerator.UFOType.keys()[current_form]])
+	
 
 func toggle_morphing_mode():
     """Toggle consciousness-based auto-morphing"""
     consciousness_morphing = not consciousness_morphing
     print("🛸 %s: Consciousness morphing %s" % [being_name, "enabled" if consciousness_morphing else "disabled"])
+	
 
 # ===== VISUAL EFFECTS =====
 
@@ -228,11 +233,13 @@ func _on_ufo_generated(mesh_instance: MeshInstance3D):
         mesh_instance.material_override = glow_material
     
     print("🛸 %s: UFO mesh generated!" % being_name)
+	
 
 func _on_evolution_complete(new_type: AdvancedUFOGenerator.UFOType):
     """Handle UFO evolution completion"""
     current_form = new_type
     print("🛸 %s: Evolution to %s complete!" % [being_name, AdvancedUFOGenerator.UFOType.keys()[new_type]])
+	
 
 func _on_consciousness_changed(new_level: int):
     """Handle consciousness level changes"""
@@ -266,8 +273,8 @@ func ai_interface() -> Dictionary:
         "resolution": mesh_resolution,
         "is_morphing": is_morphing,
         "consciousness_morphing": consciousness_morphing
-    }
     return base
+}
 
 func ai_invoke_method(method_name: String, args: Array = []) -> Variant:
     """Allow AI to control UFO morphing"""

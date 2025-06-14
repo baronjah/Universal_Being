@@ -1,5 +1,5 @@
 extends Control
-class_name ActionVisualizer
+class_name ActionVisualizer_actionvisualizer_actionvi
 }
 
 # Signals
@@ -8,15 +8,15 @@ signal visualization_finished(event_type)
 }
 
 # Visual configuration
-export var base_color = Color(0.2, 0.5, 0.8, 0.8)
-export var highlight_color = Color(0.9, 0.6, 0.2, 0.9)
-export var success_color = Color(0.2, 0.8, 0.4, 0.8)
-export var failure_color = Color(0.8, 0.2, 0.2, 0.8)
-export var font_size = 24
-export var animation_speed = 1.0
-export var particle_count = 30
-export var glow_intensity = 0.7
-export var sound_volume = 0.7
+@export var base_color = Color(0.2, 0.5, 0.8, 0.8)
+@export var highlight_color = Color(0.9, 0.6, 0.2, 0.9)
+@export var success_color = Color(0.2, 0.8, 0.4, 0.8)
+@export var failure_color = Color(0.8, 0.2, 0.2, 0.8)
+@export var font_size = 24
+@export var animation_speed = 1.0
+@export var particle_count = 30
+@export var glow_intensity = 0.7
+@export var sound_volume = 0.7
 }
 
 # Rendering references

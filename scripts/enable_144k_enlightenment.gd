@@ -95,6 +95,7 @@ func _show_enlightenment_status(quantum_flood_gates: Node) -> void:
 		status.performance.target_frame_time_ms
 	])
 	print("✨ Mystical Readiness: %s" % ("YES" if status.mystical_readiness else "Not yet"))
+
 	
 	if status.enlightenment_percentage >= 100.0:
 		print("🌌 FULL ENLIGHTENMENT ACHIEVED! 144,000 souls united!")

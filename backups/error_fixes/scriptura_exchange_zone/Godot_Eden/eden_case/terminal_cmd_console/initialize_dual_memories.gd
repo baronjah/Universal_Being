@@ -270,9 +270,9 @@ func _initialize_visual_systems() -> void:
         dynamic_color_system.set_color_palette(DEFAULT_COLOR_PALETTE, false)
         
         # Connect signals
-        dynamic_color_system.connect("message_weight_detected", self, "_on_message_weight_detected")
-        dynamic_color_system.connect("hash_marker_processed", self, "_on_hash_marker_processed")
-        dynamic_color_system.connect("rainbow_mode_toggled", self, "_on_rainbow_mode_toggled")
+        dynamic_color_system.connect(_on_message_weight_detected)
+        dynamic_color_system.connect(_on_hash_marker_processed)
+        dynamic_color_system.connect(_on_rainbow_mode_toggled)
 
 # Configure catchphrase patterns from updated memory fragments
 func _configure_catchphrase_patterns() -> void:

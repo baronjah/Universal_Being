@@ -1,5 +1,5 @@
 extends Node
-class_name LuminousCommandProcessor
+class_name LuminousCommandProcessor_luminouscommandprocessor_luminous
 
 signal command_registered(command_name, description)
 
@@ -69,14 +69,14 @@ func _cmd_help(args: String) -> String:
 func _cmd_ls(args: String) -> String:
 	var path = os_controller.current_path
 	if args.strip_edges() != "":
-		path = args.strip_edges() if args.strip_edges().begins_with("/") else path.path_join(args.strip_edges())
+		path = args.strip_edges() if args.strip_edges().begins_with("") else path.path_join(args.strip_edges())
 	
 	var dir_data = os_controller.filesystem.scan_directory(path)
 	
 	var result = "[b]Stars and Planets in: " + path + "[/b]\n\n"
 	
 	# Add parent directory option
-	if path != "/":
+	if path != "":
 		result += "[color=#AAAAAA].. (Parent Star)[/color]\n"
 	
 	# Add directories
@@ -120,7 +120,7 @@ func _cmd_cat(args: String) -> String:
 		return "Usage: cat <filename>"
 	
 	var file_path = args.strip_edges()
-	if not file_path.begins_with("/"):
+	if not file_path.begins_with(""):
 		file_path = os_controller.current_path.path_join(file_path)
 	
 	if FileAccess.file_exists(file_path):
@@ -192,7 +192,7 @@ func _cmd_mkdir(args: String) -> String:
 		return "Usage: mkdir <directory_name>"
 	
 	var dir_name = args.strip_edges()
-	var dir_path = dir_name if dir_name.begins_with("/") else os_controller.current_path.path_join(dir_name)
+	var dir_path = dir_name if dir_name.begins_with("") else os_controller.current_path.path_join(dir_name)
 	
 	var dir = DirAccess.open(os_controller.current_path)
 	if dir:
@@ -210,7 +210,7 @@ func _cmd_touch(args: String) -> String:
 		return "Usage: touch <filename>"
 	
 	var file_name = args.strip_edges()
-	var file_path = file_name if file_name.begins_with("/") else os_controller.current_path.path_join(file_name)
+	var file_path = file_name if file_name.begins_with("") else os_controller.current_path.path_join(file_name)
 	
 	var file = FileAccess.open(file_path, FileAccess.WRITE)
 	if file:

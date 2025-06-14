@@ -1,15 +1,15 @@
 extends Node
-class_name LunoCycleManager
+class_name LunoCycleManager_lunocyclemanager_lunocycl
 
 signal cycle_started(turn: int)
 signal cycle_completed(turn: int)
 signal participant_tick(participant_name: String, turn: int)
 
-@export var cycle_interval: float = 5.0 # Time between turns (can be changed live)
-@export var auto_start: bool = true
-@export var offline_mode: bool = false # Controls whether system operates offline
-@export var min_turn_duration: int = 9 # Minimum turn duration (seconds)
-@export var max_turn_duration: int = 19 # Maximum turn duration (seconds)
+@@@export var cycle_interval: float = 5.0 # Time between turns (can be changed live)
+@@@export var auto_start: bool = true
+@@@export var offline_mode: bool = false # Controls whether system operates offline
+@@@export var min_turn_duration: int = 9 # Minimum turn duration (seconds)
+@@@export var max_turn_duration: int = 19 # Maximum turn duration (seconds)
 
 var current_turn: int = 1
 var participants: Dictionary = {} # {name: Callable}
@@ -66,7 +66,7 @@ func _initialize_diagnostics():
         "memory_usage": 0,
         "api_connections": {},
         "active_systems": [],
-        "last_check": OS.get_unix_time(),
+        "last_check": OS.Time.get_unix_time_from_system(),
         "health_status": "unknown"
     }
     perform_system_diagnostics()
@@ -176,7 +176,7 @@ func perform_system_diagnostics():
     
     # Update basic diagnostic info
     system_diagnostics.memory_usage = OS.get_static_memory_usage()
-    system_diagnostics.last_check = OS.get_unix_time()
+    system_diagnostics.last_check = OS.Time.get_unix_time_from_system()
     
     # Check API connections
     _check_api_connections()
@@ -196,7 +196,7 @@ func _check_api_connections():
         system_diagnostics.api_connections[api] = {
             "connected": not offline_mode,
             "health": "good" if not offline_mode else "offline",
-            "last_response": OS.get_unix_time() if not offline_mode else 0
+            "last_response": OS.Time.get_unix_time_from_system() if not offline_mode else 0
         }
 
 func _evaluate_system_health():
@@ -224,7 +224,7 @@ func check_firewall():
     print("🔒 Checking firewall status...")
     
     # Simulate checking firewall rules
-    firewall_status.last_check = OS.get_unix_time()
+    firewall_status.last_check = OS.Time.get_unix_time_from_system()
     
     # In a real implementation, this would check actual firewall settings
     # For demonstration, we'll just update the status
@@ -263,7 +263,7 @@ func _evolve_system():
     
     # Create evolution log
     var evolution_log = {
-        "timestamp": OS.get_unix_time(),
+        "timestamp": OS.Time.get_unix_time_from_system(),
         "cycle_number": turn_stats.completed_cycles,
         "total_turns": turn_stats.total_turns,
         "active_participants": system_diagnostics.active_systems.size(),
@@ -309,7 +309,7 @@ func get_dream_state() -> Dictionary:
 # In other systems, access and register with:
 #
 # func _ready():
-#     var luno = get_node("/root/LunoCycleManager")
+#     var luno = get_node("root/LunoCycleManager")
 #     if luno:
 #         luno.register_participant("MySystem", Callable(self, "_on_luno_tick"))
 #

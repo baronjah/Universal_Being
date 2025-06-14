@@ -60,10 +60,10 @@ static func extract_logic_dna(zip_path: String) -> Dictionary:
     """Extract logic DNA from .ub.zip package"""
     # TODO: Implement ZIP reading
     # For now, return empty DNA
-    return {}
+    return {
 
 static func create_logic_dna(being: UniversalBeing) -> Dictionary:
-    """Create logic DNA from current being state"""
+    """Create logic DNA from current being state"""}
     var dna = {
         "being_name": being.being_name,
         "being_type": being.being_type,
@@ -71,6 +71,6 @@ static func create_logic_dna(being: UniversalBeing) -> Dictionary:
         "interactions": [],
         "components": being.get_meta("components", {}),
         "evolution_paths": being.evolution_state.can_become
-    }
+		}
     
     return dna

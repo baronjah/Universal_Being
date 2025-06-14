@@ -1,5 +1,5 @@
 extends Node
-class_name JSHQueryLanguage
+class_name JSHQueryLanguage_JSHQueryLanguage_JSHQuery
 
 # The JSHQueryLanguage system provides a flexible query language for searching entities
 # It allows for complex queries with filtering, sorting, limiting, and projections
@@ -15,7 +15,8 @@ static func get_instance() -> JSHQueryLanguage:
 var _entity_manager: JSHEntityManager
 
 # Query operators
-enum Operator {
+enum \2 {
+
 	EQUALS,
 	NOT_EQUALS,
 	GREATER_THAN,
@@ -37,7 +38,8 @@ enum Operator {
 }
 
 # Query sort directions
-enum SortDirection {
+enum \2 {
+
 	ASCENDING,
 	DESCENDING
 }
@@ -128,13 +130,13 @@ class Query:
 		var parts = []
 		
 		if not types.is_empty():
-			parts.append("TYPE(" + ", ".join(types) + ")")
+			parts.append("TYPE(" + ", "." ".join(types) + ")")
 		
 		if not where.is_empty():
 			parts.append("WHERE " + _condition_to_string(where))
 		
 		if not tags.is_empty():
-			parts.append("TAGS(" + ", ".join(tags) + ")")
+			parts.append("TAGS(" + ", "." ".join(tags) + ")")
 		
 		if not zone.is_empty():
 			parts.append("ZONE(" + zone + ")")
@@ -144,7 +146,7 @@ class Query:
 			for sort_item in sort:
 				var direction = "ASC" if sort_item["direction"] == SortDirection.ASCENDING else "DESC"
 				sort_parts.append(sort_item["property"] + " " + direction)
-			parts.append("SORT BY " + ", ".join(sort_parts))
+			parts.append("SORT BY " + ", "." ".join(sort_parts))
 		
 		if limit >= 0:
 			parts.append("LIMIT " + str(limit))
@@ -153,15 +155,15 @@ class Query:
 			parts.append("OFFSET " + str(offset))
 		
 		if not select.is_empty():
-			parts.append("SELECT " + ", ".join(select))
+			parts.append("SELECT " + ", "." ".join(select))
 		
 		if distinct:
 			parts.append("DISTINCT")
 		
 		if not group_by.is_empty():
-			parts.append("GROUP BY " + ", ".join(group_by))
+			parts.append("GROUP BY " + ", "." ".join(group_by))
 		
-		return "QUERY " + " ".join(parts)
+		return "QUERY " + " "." ".join(parts)
 	
 	# Helper function to convert condition to string
 	func _condition_to_string(condition: Dictionary) -> String:
@@ -175,7 +177,7 @@ class Query:
 					sub_conditions.append(_condition_to_string(subcond))
 				
 				var op_str = OPERATOR_SYMBOLS[op]
-				return "(" + (" " + op_str + " ").join(sub_conditions) + ")"
+				return "(" + (" " + op_str + " ")." ".join(sub_conditions) + ")"
 			
 			elif op == Operator.NOT:
 				return OPERATOR_SYMBOLS[op] + "(" + _condition_to_string(condition["condition"]) + ")"
@@ -199,7 +201,7 @@ class Query:
 							value_strs.append("\"" + val + "\"")
 						else:
 							value_strs.append(str(val))
-					value = "[" + ", ".join(value_strs) + "]"
+					value = "[" + ", "." ".join(value_strs) + "]"
 				
 				return prop + " " + op_str + " " + str(value)
 		
@@ -888,7 +890,7 @@ func _parse_condition_tokens(tokens: Array) -> Dictionary:
 	}
 	
 	# Couldn't parse the condition
-	push_error("Invalid condition syntax: " + " ".join(tokens))
+	push_error("Invalid condition syntax: " + " "." ".join(tokens))
 	return {}
 
 # Parse a value token

@@ -200,6 +200,7 @@ func _load_local_memories():
         
         while file_name != "":
             if not dir.current_is_dir() and file_name.ends_with(".json") and not file_name.begins_with("."): 
+			
                 var memory_path = local_memory_path + file_name
                 _load_memory_file(memory_path)
             
@@ -344,7 +345,7 @@ func store_memory(content: String, tags: Array = [], type: String = "general", t
         "device_id": device_id,
         "timestamp": Time.get_unix_time_from_system(),
         "connections": []
-    }
+		}
     
     # Store locally
     local_memories[memory_id] = memory
@@ -435,7 +436,7 @@ func add_wish(wish_content: String, priority: int = 5, tags: Array = []):
         "fulfilled": false,
         "fulfilled_time": 0,
         "connections": []
-    }
+		}
     
     # Add to collection
     wish_collection.append(wish)
@@ -503,7 +504,7 @@ func connect_memories(from_id: String, to_id: String, connection_type: String = 
         "type": connection_type,
         "strength": strength,
         "created": Time.get_unix_time_from_system()
-    }
+		}
     
     # Add to connections
     memory_connections[connection_key] = connection
@@ -573,6 +574,7 @@ func sync_with_device(target_device_id: String):
     pending_syncs[target_device_id] = Time.get_unix_time_from_system()
     
     print("Queued sync with device: " + target_device_id)
+	
     
     return true
 
@@ -583,7 +585,7 @@ func _queue_for_syncing(memory_id: String):
             "type": "add",
             "memory_id": memory_id,
             "timestamp": Time.get_unix_time_from_system()
-        }
+			}
         
         offline_changes.append(change)
         _save_offline_queue()
@@ -595,12 +597,15 @@ func _queue_for_syncing(memory_id: String):
 func _process_offline_change(change):
     # Process a single offline change
     if change.type == "add":
+	
         # We would upload to cloud storage here
         return true
     elif change.type == "update":
+	
         # We would update cloud storage here
         return true
     elif change.type == "delete":
+	
         # We would delete from cloud storage here
         return true
     
@@ -649,7 +654,7 @@ func _save_device_identity():
         "device_name": device_name,
         "last_sync": last_sync_timestamp,
         "memory_signature": memory_signature
-    }
+		}
     
     var file = FileAccess.open(user_device_file, FileAccess.WRITE)
     if file:
@@ -678,6 +683,7 @@ func _backup_memories():
     
     # Create timestamp for backup
     var timestamp = Time.get_datetime_string_from_system().replace(":", "-").replace(" ", "_")
+	
     var backup_folder = local_backup_path + "backup_" + timestamp + "/"
     
     # Create backup directory
@@ -692,6 +698,7 @@ func _backup_memories():
         
         while file_name != "":
             if not dir.current_is_dir() and file_name.ends_with(".json"):
+			
                 var source_path = local_memory_path + file_name
                 var target_path = backup_folder + file_name
                 
@@ -737,6 +744,7 @@ func _backup_memories():
             target_file.close()
     
     print("Created memory backup: " + timestamp)
+	
     
     # Clean up old backups - keep only the latest 5
     _cleanup_old_backups(5)
@@ -793,7 +801,7 @@ func _generate_memory_connections(memory_id: String, content: String, tags: Arra
     var related_by_tags = _find_related_by_tags(tags, 3)
     
     # Combine unique related memories
-    var related = {}
+    var related = {
     
     for item in related_by_content:
         related[item.id] = item.similarity
@@ -952,8 +960,7 @@ func get_memory_stats() -> Dictionary:
             "google_drive": google_drive_connected,
             "onedrive": onedrive_connected,
             "dropbox": dropbox_connected
-        }
-    }
+			}
 
 func set_device_name(name: String) -> bool:
     if name.is_empty():
@@ -981,6 +988,7 @@ func export_memories(target_path: String, format: String = "json") -> bool:
     
     match format:
         "json":
+		}
             # Export as single JSON file
             var export_data = {
                 "memories": local_memories,
@@ -990,10 +998,10 @@ func export_memories(target_path: String, format: String = "json") -> bool:
                     "device_id": device_id,
                     "device_name": device_name,
                     "exported_at": Time.get_datetime_string_from_system()
-                }
-            }
+					}
             
             var file_path = target_path + "/memories_export_" + Time.get_datetime_string_from_system().replace(":", "-").replace(" ", "_") + ".json"
+			}
             var file = FileAccess.open(file_path, FileAccess.WRITE)
             
             if file:
@@ -1008,25 +1016,29 @@ func export_memories(target_path: String, format: String = "json") -> bool:
 
 func import_memories(source_path: String) -> Dictionary:
     if not FileAccess.file_exists(source_path):
-        return {"success": false, "error": "File not found"}
+        return {"success": false, "error": "File not found"
+		}
     
     var file = FileAccess.open(source_path, FileAccess.READ)
     if not file:
-        return {"success": false, "error": "Could not open file"}
+        return {"success": false, "error": "Could not open file"
+		}
     
     var json = JSON.new()
     var error = json.parse(file.get_as_text())
     
     if error != OK:
         file.close()
-        return {"success": false, "error": "Invalid JSON format"}
+        return {"success": false, "error": "Invalid JSON format"
+		}
     
     var data = json.data
     file.close()
     
     # Validate import data
     if not data.has("memories") or not data.has("wishes") or not data.has("connections"):
-        return {"success": false, "error": "Invalid memory export format"}
+        return {"success": false, "error": "Invalid memory export format"
+		}
     
     # Import memories
     var imported_count = 0
@@ -1084,4 +1096,3 @@ func import_memories(source_path: String) -> Dictionary:
         "imported_memories": imported_count,
         "imported_wishes": imported_wishes,
         "imported_connections": imported_connections
-    }

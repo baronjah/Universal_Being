@@ -4,7 +4,6 @@
 # PURPOSE: Find and upgrade all scripts to follow universal rules
 # CREATED: 2025-05-28 - Unifying the dream architecture
 # ==================================================
-
 extends UniversalBeingBase
 signal migration_complete(total_scripts: int, migrated: int)
 signal script_analyzed(path: String, needs_migration: bool)
@@ -78,7 +77,7 @@ func _scan_directory(path: String) -> void:
 	var file_name = dir.get_next()
 	
 	while file_name != "":
-		var full_path = path + "/" + file_name
+		var full_path = path + "" + file_name
 		
 		if dir.current_is_dir() and not file_name.begins_with("."):
 			_scan_directory(full_path)
@@ -274,7 +273,7 @@ func get_migration_report() -> String:
 
 # Console commands
 func register_console_commands() -> void:
-	var console = get_node_or_null("/root/ConsoleManager")
+	var console = get_node_or_null("root/ConsoleManager")
 	if console:
 		console.register_command("migrate_scan", _cmd_scan_scripts,
 			"Scan all scripts for migration needs")
@@ -284,7 +283,7 @@ func register_console_commands() -> void:
 			"Automatically migrate all scripts")
 
 func _cmd_scan_scripts(_args: Array) -> void:
-	var console = get_node("/root/ConsoleManager")
+	var console = get_node("root/ConsoleManager")
 	var result = scan_all_scripts()
 	
 	console._print_to_console("[color=cyan]🔍 Script Migration Scan[/color]")
@@ -293,7 +292,7 @@ func _cmd_scan_scripts(_args: Array) -> void:
 	console._print_to_console("Already clean: %d" % result.clean_scripts)
 
 func _cmd_show_report(_args: Array) -> void:
-	var console = get_node("/root/ConsoleManager") 
+	var console = get_node("root/ConsoleManager") 
 	scan_all_scripts()  # Refresh data
 	
 	console._print_to_console("[color=yellow]📋 Migration Report[/color]")
@@ -303,6 +302,6 @@ func _cmd_show_report(_args: Array) -> void:
 		])
 
 func _cmd_migrate_all(_args: Array) -> void:
-	var console = get_node("/root/ConsoleManager")
+	var console = get_node("root/ConsoleManager")
 	console._print_to_console("[color=orange]🚀 Starting automatic migration...[/color]")
 	migrate_all_scripts()

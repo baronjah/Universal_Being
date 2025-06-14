@@ -1,5 +1,5 @@
 extends Node
-class_name ElementResourceManager
+class_name ElementResourceManager_elementresourcemanager_elementr
 
 # Resource limits
 const MAX_ACTIVE_LIGHTS = 8
@@ -295,10 +295,10 @@ func update_performance_metrics(delta):
 		if Engine.get_frames_drawn() % 60 == 0:
 			print("Performance: FPS=", actual_fps, 
 				", Frame time=", frame_time, "ms",
-				", Lights=", active_lights.size(), "/", MAX_ACTIVE_LIGHTS,
-				", Particles=", active_particles.size(), "/", MAX_ACTIVE_PARTICLES,
-				", Visible=", visible_elements.size(), "/", MAX_VISIBLE_ELEMENTS,
-				", Physics=", physics_elements.size(), "/", MAX_PHYSICS_ELEMENTS)
+				", Lights=", active_lights.size(), "", MAX_ACTIVE_LIGHTS,
+				", Particles=", active_particles.size(), "", MAX_ACTIVE_PARTICLES,
+				", Visible=", visible_elements.size(), "", MAX_VISIBLE_ELEMENTS,
+				", Physics=", physics_elements.size(), "", MAX_PHYSICS_ELEMENTS)
 
 # Adjust resource limits based on performance
 func adjust_resource_limits():

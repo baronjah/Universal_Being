@@ -36,6 +36,7 @@ func _ready():
 func _initialize_audio_systems():
 	"""Initialize Gemma's audio perception systems"""
 	print("🎵 GemmaAudio: Initializing audio perception...")
+
 	
 	# Setup audio analysis
 	audio_spectrum_analyzer = AudioEffectSpectrumAnalyzer.new()
@@ -46,9 +47,10 @@ func _initialize_audio_systems():
 		"interface_sounds": [],
 		"environment_ambient": [],
 		"creation_sounds": []
-	}
+}
 	
 	print("🎵 GemmaAudio: Audio systems ready")
+
 
 func _start_audio_monitoring():
 	"""Start monitoring audio environment"""
@@ -72,7 +74,7 @@ func _capture_audio_snapshot() -> Dictionary:
 		"dominant_frequency": dominant_frequency,
 		"spectrum_data": _get_spectrum_analysis(),
 		"detected_patterns": _detect_audio_patterns()
-	}
+}
 
 func _get_spectrum_analysis() -> Dictionary:
 	"""Get detailed spectrum analysis"""
@@ -81,7 +83,7 @@ func _get_spectrum_analysis() -> Dictionary:
 		"mid_freq": _get_frequency_magnitude(250.0, 4000.0),
 		"high_freq": _get_frequency_magnitude(4000.0, 20000.0),
 		"peak_frequency": dominant_frequency
-	}
+}
 
 func _get_frequency_magnitude(freq_min: float, freq_max: float) -> float:
 	"""Get magnitude for frequency range"""
@@ -142,8 +144,8 @@ func _check_for_audio_patterns(audio_data: Dictionary):
 			"patterns": patterns,
 			"audio_context": audio_data,
 			"confidence": _calculate_pattern_confidence(patterns)
-		}
 		sound_pattern_detected.emit(pattern_data)
+}
 
 func _calculate_pattern_confidence(patterns: Array) -> float:
 	"""Calculate confidence level for detected patterns"""
@@ -154,7 +156,8 @@ func _calculate_pattern_confidence(patterns: Array) -> float:
 func get_audio_summary() -> Dictionary:
 	"""Get summary of recent audio activity"""
 	if audio_memory.is_empty():
-		return {"status": "no_audio_data", "summary": "No recent audio activity"}
+		return {"status": "no_audio_data", "summary": "No recent audio activity"
+}
 	
 	var recent_audio = audio_memory.slice(-10)  # Last 10 samples
 	var avg_volume = 0.0
@@ -174,7 +177,7 @@ func get_audio_summary() -> Dictionary:
 		"detected_patterns": detected_patterns,
 		"sample_count": recent_audio.size(),
 		"dominant_activity": _determine_dominant_activity(detected_patterns)
-	}
+}
 
 func _determine_dominant_activity(patterns: Array) -> String:
 	"""Determine the most prominent audio activity"""
@@ -190,6 +193,7 @@ func _determine_dominant_activity(patterns: Array) -> String:
 func listen_for_specific_pattern(pattern_name: String, duration: float = 5.0):
 	"""Listen for a specific audio pattern for a duration"""
 	print("🎵 Gemma listening for pattern: %s" % pattern_name)
+
 	# Implementation for focused listening
 	
 func simulate_audio_perception(audio_description: String):
@@ -201,7 +205,8 @@ func simulate_audio_perception(audio_description: String):
 		"description": audio_description,
 		"detected_patterns": ["simulated_pattern"],
 		"simulated": true
-	}
+}
 	
 	_process_audio_data(simulated_data)
 	print("🎵 Gemma simulated audio: %s" % audio_description)
+

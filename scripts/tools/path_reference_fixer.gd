@@ -18,6 +18,7 @@ var path_mappings = {
 	"res://scripts/core/UniversalBeing.gd": "res://core/UniversalBeing.gd",
 	"res://core/flood_gates.gd": "res://core/FloodGates.gd",
 	"res://core/akashic_records.gd": "res://systems/storage/AkashicRecordsSystem.gd",
+}
 	
 	# Logic Connector fixes
 	"res://debug/logic_connector.gd": "res://systems/debug/logic_connector_singleton.gd",
@@ -34,7 +35,7 @@ var path_mappings = {
 	"res://core/CursorUniversalBeing_Enhanced.gd": "res://beings/cursor/CursorUniversalBeing.gd",
 	"res://core/CursorUniversalBeing_Fixed.gd": "res://beings/cursor/CursorUniversalBeing.gd",
 	"res://core/CursorUniversalBeing_Final.gd": "res://beings/cursor/CursorUniversalBeing.gd"
-}
+
 
 # Files to scan for path references
 var files_to_fix: Array[String] = []
@@ -47,12 +48,14 @@ func _ready() -> void:
 	name = "PathReferenceFixer"
 	print("🔧 Path Reference Fixer: Ready to repair broken paths")
 
+
 func scan_and_fix_all() -> void:
 	"""Scan entire project and fix all broken path references"""
 	print("🔧 Starting comprehensive path reference fix...")
 	
 	# Find all .gd files that might have path references
 	_find_all_gdscript_files("res://")
+
 	
 	print("🔧 Found %d files to scan for path references" % files_to_fix.size())
 	
@@ -105,6 +108,7 @@ func fix_path_references_in_file(file_path: String) -> int:
 				})
 				print("🔧 Fixed %d references: %s → %s in %s" % [fixed_count, old_path, new_path, file_path.get_file()])
 	
+	
 	# Write back if changes were made
 	if content != original_content:
 		var write_file = FileAccess.open(file_path, FileAccess.WRITE)
@@ -124,7 +128,9 @@ func _find_all_gdscript_files(path: String) -> void:
 	var file_name = dir.get_next()
 	
 	while file_name != "":
+
 		var full_path = path + "/" + file_name if path != "res://" else "res://" + file_name
+
 		
 		if dir.current_is_dir() and not file_name.begins_with("."):
 			_find_all_gdscript_files(full_path)
@@ -152,7 +158,7 @@ func validate_critical_paths() -> Dictionary:
 		"total": critical_paths.size(),
 		"existing": 0,
 		"missing": []
-	}
+}
 	
 	for path in critical_paths:
 		if ResourceLoader.exists(path) or FileAccess.file_exists(path):
@@ -161,9 +167,11 @@ func validate_critical_paths() -> Dictionary:
 		else:
 			results.missing.append(path)
 			print("❌ Critical path missing: %s" % path)
+
 	
 	var health_percentage = (results.existing / float(results.total)) * 100
 	print("🔧 Critical path health: %.1f%% (%d/%d)" % [health_percentage, results.existing, results.total])
+
 	
 	return results
 
@@ -174,6 +182,7 @@ func generate_fix_report() -> String:
 	report += "## Summary\n\n"
 	report += "- Total fixes applied: %d\n" % fixes_applied.size()
 	report += "- Files modified: %d\n\n" % files_to_fix.size()
+
 	
 	if fixes_applied.size() > 0:
 		report += "## Fixes Applied\n\n"

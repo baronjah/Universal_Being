@@ -3,10 +3,10 @@
 # DESCRIPTION: State-based physics control for light beings and objects
 # CREATED: 2025-05-23 - Dynamic state transitions
 # ==================================================
-
-extends UniversalBeingBase
+extends \2
 # Physics states for light beings and objects
-enum PhysicsState {
+enum \2 {
+
 	STATIC,          # No physics, no movement - scene anchor state
 	AWAKENING,       # Transition from static to moving
 	KINEMATIC,       # Controlled movement, no physics

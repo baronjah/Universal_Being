@@ -1,5 +1,5 @@
 extends Node
-class_name AIModelManager
+class_name AIModelManager_aimodelmanager_aimodelm
 }
 
 # AIModelManager
@@ -74,11 +74,11 @@ class AIModel:
 }
 
     func _init(p_name="", p_type="text", p_capabilities=[]):
-        id = str(OS.get_unix_time()) + "_model_" + str(randi() % 1000)
+        id = str(OS.Time.get_unix_time_from_system()) + "_model_" + str(randi() % 1000)
         name = p_name
         type = p_type
         capabilities = p_capabilities
-        loaded_at = OS.get_unix_time()
+        loaded_at = OS.Time.get_unix_time_from_system()
 }
 
         # Initialize default energy levels
@@ -139,11 +139,11 @@ class ModelAction:
 }
 
     func _init(p_model_id="", p_model_name="", p_action_type=""):
-        id = str(OS.get_unix_time()) + "_action_" + str(randi() % 1000)
+        id = str(OS.Time.get_unix_time_from_system()) + "_action_" + str(randi() % 1000)
         model_id = p_model_id
         model_name = p_model_name
         action_type = p_action_type
-        timestamp = OS.get_unix_time()
+        timestamp = OS.Time.get_unix_time_from_system()
 }
 
     func to_dict():
@@ -177,11 +177,11 @@ class TurnData:
 
     func _init(p_turn_number=0):
         turn_number = p_turn_number
-        start_time = OS.get_unix_time()
+        start_time = OS.Time.get_unix_time_from_system()
 }
 
     func complete_turn():
-        end_time = OS.get_unix_time()
+        end_time = OS.Time.get_unix_time_from_system()
 }
 
     func to_dict():
@@ -211,7 +211,7 @@ class AudioTrack:
 }
 
     func _init(p_title="", p_path=""):
-        id = str(OS.get_unix_time()) + "_track_" + str(randi() % 1000)
+        id = str(OS.Time.get_unix_time_from_system()) + "_track_" + str(randi() % 1000)
         title = p_title
         path = p_path
 }
@@ -246,7 +246,7 @@ class MechaInterface:
 }
 
     func _init(p_name="", p_model_id=""):
-        id = str(OS.get_unix_time()) + "_mecha_" + str(randi() % 1000)
+        id = str(OS.Time.get_unix_time_from_system()) + "_mecha_" + str(randi() % 1000)
         name = p_name
         model_id = p_model_id
 }
@@ -296,11 +296,11 @@ class TerminalCommand:
 }
 
     func _init(p_command="", p_parameters=[], p_source="terminal"):
-        id = str(OS.get_unix_time()) + "_cmd_" + str(randi() % 1000)
+        id = str(OS.Time.get_unix_time_from_system()) + "_cmd_" + str(randi() % 1000)
         command = p_command
         parameters = p_parameters
         source_model = p_source
-        timestamp = OS.get_unix_time()
+        timestamp = OS.Time.get_unix_time_from_system()
 }
 
     func to_dict():
@@ -479,7 +479,7 @@ func complete_turn():
 }
 
     # Set end time
-    turn_data.end_time = OS.get_unix_time()
+    turn_data.end_time = OS.Time.get_unix_time_from_system()
 }
 
     # Record final energy levels
@@ -531,7 +531,7 @@ func complete_cycle():
         "model_actions": {},
         "resources_consumed": {},
         "cooperation_score": _calculate_cycle_cooperation_score(),
-        "timestamp": OS.get_unix_time()
+        "timestamp": OS.Time.get_unix_time_from_system()
     }
 }
 
@@ -890,7 +890,7 @@ func perform_model_action(model_index, action_type, target="", parameters={}):
 }
 
     # Record action
-    model.last_action_at = OS.get_unix_time()
+    model.last_action_at = OS.Time.get_unix_time_from_system()
 }
 
     # Update model data
@@ -940,7 +940,7 @@ func _process_action_result(action_type, parameters):
 
         "create":
             result.output = "Creation process completed"
-            result.asset_id = str(OS.get_unix_time()) + "_asset_" + str(randi() % 1000)
+            result.asset_id = str(OS.Time.get_unix_time_from_system()) + "_asset_" + str(randi() % 1000)
 }
 
         "modify":
@@ -1013,9 +1013,9 @@ func execute_terminal_command(command, parameters=[], source="terminal"):
 }
 
     # Process command
-    var start_time = OS.get_unix_time()
+    var start_time = OS.Time.get_unix_time_from_system()
     var result = _process_terminal_command(command, parameters)
-    cmd.execution_time = OS.get_unix_time() - start_time
+    cmd.execution_time = OS.Time.get_unix_time_from_system() - start_time
     cmd.result = result
 }
 
@@ -1266,7 +1266,7 @@ func play_music():
 
     var track = audio_playlist[current_audio_track]
     track.play_count += 1
-    track.last_played = OS.get_unix_time()
+    track.last_played = OS.Time.get_unix_time_from_system()
 }
 
     print("Playing audio track: %s" % track.title)
@@ -1396,7 +1396,7 @@ func activate_mecha_interface(index):
 
     # Activate new mecha
     mecha_interfaces[index].status = "active"
-    mecha_interfaces[index].activation_time = OS.get_unix_time()
+    mecha_interfaces[index].activation_time = OS.Time.get_unix_time_from_system()
     active_mecha = index
 }
 
@@ -1443,7 +1443,7 @@ func control_active_mecha(command, parameters=[]):
     var control_data = {
         "command": command,
         "parameters": parameters,
-        "timestamp": OS.get_unix_time(),
+        "timestamp": OS.Time.get_unix_time_from_system(),
         "success": true,
         "energy_used": {},
         "result": {}
@@ -1612,7 +1612,7 @@ func save_system_state():
         "active_mecha": active_mecha,
         "shared_resources": shared_resources,
         "cooperation_metrics": cooperation_metrics,
-        "timestamp": OS.get_unix_time()
+        "timestamp": OS.Time.get_unix_time_from_system()
     }
 }
 

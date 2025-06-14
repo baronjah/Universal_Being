@@ -13,6 +13,7 @@ func setup_project_settings() -> void:
 	ProjectSettings.set_setting("application/run/main_scene", "res://scenes/SpaceGameScene.tscn")
 	ProjectSettings.set_setting("application/config/features", PackedStringArray(["4.2", "Forward Plus"]))
 	ProjectSettings.set_setting("application/config/icon", "res://icon.svg")
+
 	
 	# Display settings
 	ProjectSettings.set_setting("display/window/size/viewport_width", 1920)
@@ -44,6 +45,7 @@ func setup_project_settings() -> void:
 	# Autoloads
 	ProjectSettings.set_setting("autoload/FloodGates", {"path": "res://core/FloodGates.gd", "singleton": true})
 	ProjectSettings.set_setting("autoload/AkashicRecordsSystem", {"path": "res://systems/storage/AkashicRecordsSystem.gd", "singleton": true})
+
 	
 	# Configure all input mappings
 	setup_input_map()
@@ -161,31 +163,24 @@ window/stretch/mode="viewport"
 thrust_forward={
 "deadzone": 0.5,
 "events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":87,"key_label":0,"unicode":119,"echo":false,"script":null)]
-}
 thrust_backward={
 "deadzone": 0.5,
 "events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":83,"key_label":0,"unicode":115,"echo":false,"script":null)]
-}
 strafe_left={
 "deadzone": 0.5,
 "events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":65,"key_label":0,"unicode":97,"echo":false,"script":null)]
-}
 strafe_right={
 "deadzone": 0.5,
 "events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":68,"key_label":0,"unicode":100,"echo":false,"script":null)]
-}
 thrust_up={
 "deadzone": 0.5,
 "events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":4194325,"key_label":0,"unicode":0,"echo":false,"script":null)]
-}
 thrust_down={
 "deadzone": 0.5,
 "events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":4194326,"key_label":0,"unicode":0,"echo":false,"script":null)]
-}
 mining_beam={
 "deadzone": 0.5,
 "events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":69,"key_label":0,"unicode":101,"echo":false,"script":null)]
-}
 toggle_notepad3d={
 "deadzone": 0.5,
 "events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":4194306,"key_label":0,"unicode":0,"echo":false,"script":null)]
@@ -237,7 +232,7 @@ func _ready():
 		"first_run": true,
 		"version": "1.0.0",
 		"created_date": Time.get_datetime_string_from_system()
-	}
+}
 	
 	AkashicRecordsSystem.save_game_state("initial_state", initial_state)
 	

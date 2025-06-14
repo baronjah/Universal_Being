@@ -211,7 +211,7 @@ func register_directory_as_anchor(directory_path, anchor_id = ""):
         return null
     
     # Generate anchor ID if not provided
-    if anchor_id.empty():
+    if anchor_id.is_empty():
         var dir_name = directory_path.get_file()
         anchor_id = dir_name.to_lower().replace(" ", "_") + "_anchor"
     
@@ -300,7 +300,7 @@ func transfer_file(source_file, target_file, tunnel_id = ""):
         dir_access.make_dir_recursive(target_dir)
     
     # If tunnel not specified, find appropriate tunnel
-    if tunnel_id.empty():
+    if tunnel_id.is_empty():
         var source_dir = source_file.get_base_dir()
         var target_dir = target_file.get_base_dir()
         

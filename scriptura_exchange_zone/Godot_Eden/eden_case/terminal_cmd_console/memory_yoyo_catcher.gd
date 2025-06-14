@@ -1,5 +1,5 @@
 extends Node
-class_name MemoryYoyoCatcher
+class_name MemoryYoyoCatcher_memoryyoyocatcher_memoryyo
 }
 
 """
@@ -54,7 +54,7 @@ const YO_YO_PATH_MARKERS = [
     "<----",          # Return path
     "<-->",           # Bidirectional path
     "~~~~",           # Wave path
-    "/\\",            # Angular path
+    "\\",            # Angular path
     "[]",             # Contained path
     "()",             # Grouped path
     "{}"              # Block path
@@ -102,7 +102,7 @@ class MemoryYoYo:
         id = p_id
         type = p_type
         path_marker = p_marker
-        creation_time = OS.get_unix_time()
+        creation_time = OS.Time.get_unix_time_from_system()
         velocity = DEFAULT_THROW_VELOCITY
 }
 
@@ -117,19 +117,19 @@ class MemoryYoYo:
 }
 
     func catch():
-        last_catch_time = OS.get_unix_time()
+        last_catch_time = OS.Time.get_unix_time_from_system()
         catch_count += 1
 }
 
     func time_since_last_catch() -> int:
         if last_catch_time < 0:
             return -1
-        return OS.get_unix_time() - last_catch_time
+        return OS.Time.get_unix_time_from_system() - last_catch_time
 }
 
     func time_in_flight() -> int:
         if last_catch_time < 0:
-            return OS.get_unix_time() - creation_time
+            return OS.Time.get_unix_time_from_system() - creation_time
         return last_catch_time - creation_time
 }
 
@@ -194,7 +194,7 @@ class DeviceConnection:
 
     func connect():
         is_connected = true
-        last_connection = OS.get_unix_time()
+        last_connection = OS.Time.get_unix_time_from_system()
         connection_count += 1
 }
 
@@ -257,7 +257,7 @@ class CatchEvent:
         id = p_id
         yoyo_id = p_yoyo_id
         device_id = p_device_id
-        catch_time = OS.get_unix_time()
+        catch_time = OS.Time.get_unix_time_from_system()
 }
 
     func add_memory(memory_id: String):
@@ -365,7 +365,7 @@ func create_yoyo(type: int = -1, path_marker: String = "") -> String:
         path_marker = YO_YO_PATH_MARKERS[0]  # Default: "_s"
 }
 
-    var yoyo_id = "yoyo_" + str(OS.get_unix_time()) + "_" + str(randi() % 1000).pad_zeros(3)
+    var yoyo_id = "yoyo_" + str(OS.Time.get_unix_time_from_system()) + "_" + str(randi() % 1000).pad_zeros(3)
     var yoyo = MemoryYoYo.new(yoyo_id, type, path_marker)
 }
 
@@ -438,18 +438,18 @@ func throw_yoyo(yoyo_id: String) -> bool:
 
     # Check if there are target devices
     if yoyo.target_devices.is_empty():
-        // Add all connected devices as targets
+# // Add all connected devices as targets
         for device_id in _active_devices:
             yoyo.add_target_device(device_id)
 }
 
-        // If still empty, nothing to do
+# // If still empty, nothing to do
         if yoyo.target_devices.is_empty():
             return false
 }
 
-    // Simulate throwing the yoyo
-    // In a real implementation, this would involve network communication
+# // Simulate throwing the yoyo
+# // In a real implementation, this would involve network communication
 }
 
     return true
@@ -463,12 +463,12 @@ func catch_yoyo(yoyo_id: String) -> Dictionary:
     var yoyo = _yoyos[yoyo_id]
 }
 
-    // Create catch event
-    var event_id = "catch_" + str(OS.get_unix_time()) + "_" + str(randi() % 1000).pad_zeros(3)
+# // Create catch event
+    var event_id = "catch_" + str(OS.Time.get_unix_time_from_system()) + "_" + str(randi() % 1000).pad_zeros(3)
     var event = CatchEvent.new(event_id, yoyo_id, get_current_device_id())
 }
 
-    // Process memory retrieval
+# // Process memory retrieval
     var memories_caught = []
     var catch_success = true
 }
@@ -477,51 +477,51 @@ func catch_yoyo(yoyo_id: String) -> Dictionary:
         event.add_memory(memory_id)
 }
 
-        // In a real system, this would retrieve memory data from storage
+# // In a real system, this would retrieve memory data from storage
         memories_caught.append(memory_id)
 }
 
-    // Update yoyo status
+# // Update yoyo status
     yoyo.catch()
 }
 
-    // Check if this is a returning yoyo
+# // Check if this is a returning yoyo
     var is_returning = false
     if yoyo.type == YOYO_TYPES.RETURNING:
         is_returning = true
 }
 
-    // Handle specific yoyo types
+# // Handle specific yoyo types
     match yoyo.type:
         YOYO_TYPES.SPLITTING:
-            // Create a split yoyo with half the memories
+# // Create a split yoyo with half the memories
             var split_yoyo_id = _split_yoyo(yoyo)
             if not split_yoyo_id.is_empty():
                 event.metadata["split_yoyo"] = split_yoyo_id
 }
 
         YOYO_TYPES.MERGING:
-            // Look for other yoyos to merge with
+# // Look for other yoyos to merge with
             var merge_result = _find_and_merge_yoyos(yoyo)
             if merge_result.merged:
                 event.metadata["merged_with"] = merge_result.merged_with
 }
 
         YOYO_TYPES.LOOPING:
-            // Automatically throw again
+# // Automatically throw again
             throw_yoyo(yoyo_id)
             event.metadata["auto_thrown"] = true
 }
 
-    // Mark event as successful
+# // Mark event as successful
     event.succeed()
 }
 
-    // Add to catch history
+# // Add to catch history
     _catch_history.append(event)
 }
 
-    // Save data
+# // Save data
     save_yoyos()
 }
 
@@ -537,12 +537,12 @@ func catch_yoyo(yoyo_id: String) -> Dictionary:
 }
 
 func _split_yoyo(yoyo: MemoryYoYo) -> String:
-    // Create a new yoyo with half the memories
+# // Create a new yoyo with half the memories
     var split_yoyo_id = create_yoyo(yoyo.type, yoyo.path_marker)
     var split_yoyo = _yoyos[split_yoyo_id]
 }
 
-    // Split memories
+# // Split memories
     var memory_count = yoyo.memory_ids.size()
     var split_point = memory_count / 2
 }
@@ -551,12 +551,12 @@ func _split_yoyo(yoyo: MemoryYoYo) -> String:
         split_yoyo.add_memory(yoyo.memory_ids[i])
 }
 
-    // Remove split memories from original
+# // Remove split memories from original
     for i in range(memory_count - 1, split_point - 1, -1):
         yoyo.memory_ids.remove(i)
 }
 
-    // Copy target devices
+# // Copy target devices
     for device_id in yoyo.target_devices:
         split_yoyo.add_target_device(device_id)
 }
@@ -571,7 +571,7 @@ func _find_and_merge_yoyos(yoyo: MemoryYoYo) -> Dictionary {
     }
 }
 
-    // Find other merging yoyos
+# // Find other merging yoyos
     for other_id in _yoyos:
         if other_id == yoyo.id:
             continue
@@ -579,13 +579,13 @@ func _find_and_merge_yoyos(yoyo: MemoryYoYo) -> Dictionary {
 
         var other = _yoyos[other_id]
         if other.type == YOYO_TYPES.MERGING and other.is_active:
-            // Merge memories
+# // Merge memories
             for memory_id in other.memory_ids:
                 if not yoyo.memory_ids.has(memory_id):
                     yoyo.add_memory(memory_id)
 }
 
-            // Deactivate the other yoyo
+# // Deactivate the other yoyo
             other.is_active = false
 }
 
@@ -602,13 +602,13 @@ func register_current_device():
     var device_id = "device_" + device_name.sha256_text().substr(0, 8)
 }
 
-    // Check if already registered
+# // Check if already registered
     if _device_registry.has(device_id):
         _device_registry[device_id].connect()
         return device_id
 }
 
-    // Create new device registration
+# // Create new device registration
     var device = DeviceConnection.new(
         device_id,
         device_name,
@@ -617,7 +617,7 @@ func register_current_device():
     )
 }
 
-    // Set device capabilities
+# // Set device capabilities
     device.add_capability("memory_storage")
     device.add_capability("yoyo_catching")
 }
@@ -638,20 +638,20 @@ func register_current_device():
         device.add_capability("secure_channel")
 }
 
-    // Connect device
+# // Connect device
     device.connect()
 }
 
-    // Add to registry
+# // Add to registry
     _device_registry[device_id] = device
 }
 
-    // Add to active devices
+# // Add to active devices
     if not _active_devices.has(device_id):
         _active_devices.append(device_id)
 }
 
-    // Save registry
+# // Save registry
     save_device_registry()
 }
 
@@ -665,7 +665,7 @@ func register_device(name: String, type: int, storage_location: int) -> String {
     var device_id = "device_" + name.sha256_text().substr(0, 8)
 }
 
-    // Create new device registration
+# // Create new device registration
     var device = DeviceConnection.new(
         device_id,
         name,
@@ -674,7 +674,7 @@ func register_device(name: String, type: int, storage_location: int) -> String {
     )
 }
 
-    // Set device capabilities based on type
+# // Set device capabilities based on type
     match type:
         DEVICE_TYPES.DESKTOP, DEVICE_TYPES.LAPTOP:
             device.add_capability("memory_storage")
@@ -698,11 +698,11 @@ func register_device(name: String, type: int, storage_location: int) -> String {
             device.add_capability("command_processing")
 }
 
-    // Add to registry
+# // Add to registry
     _device_registry[device_id] = device
 }
 
-    // Save registry
+# // Save registry
     save_device_registry()
 }
 
@@ -717,12 +717,12 @@ func connect_device(device_id: String) -> bool:
     _device_registry[device_id].connect()
 }
 
-    // Add to active devices
+# // Add to active devices
     if not _active_devices.has(device_id):
         _active_devices.append(device_id)
 }
 
-    // Save registry
+# // Save registry
     save_device_registry()
 }
 
@@ -740,12 +740,12 @@ func disconnect_device(device_id: String) -> bool:
     _device_registry[device_id].disconnect()
 }
 
-    // Remove from active devices
+# // Remove from active devices
     if _active_devices.has(device_id):
         _active_devices.erase(device_id)
 }
 
-    // Save registry
+# // Save registry
     save_device_registry()
 }
 
@@ -800,21 +800,21 @@ func sync_with_device(device_id: String) -> Dictionary:
         return {"success": false, "error": "Device not connected"}
 }
 
-    // Simulate synchronization
-    var storage_id = "storage_" + device_id + "_" + str(OS.get_unix_time())
+# // Simulate synchronization
+    var storage_id = "storage_" + device_id + "_" + str(OS.Time.get_unix_time_from_system())
 }
 
     var result = {
         "success": true,
         "storage_id": storage_id,
         "device_id": device_id,
-        "timestamp": OS.get_unix_time(),
+        "timestamp": OS.Time.get_unix_time_from_system(),
         "yoyos_synced": 0,
         "memories_synced": 0
     }
 }
 
-    // Get active yoyos
+# // Get active yoyos
     var active_yoyos = []
     for yoyo_id in _yoyos:
         var yoyo = _yoyos[yoyo_id]
@@ -825,7 +825,7 @@ func sync_with_device(device_id: String) -> Dictionary:
     result.yoyos_synced = active_yoyos.size()
 }
 
-    // Count memories
+# // Count memories
     var all_memories = []
     for yoyo in active_yoyos:
         for memory_id in yoyo.memory_ids:
@@ -836,11 +836,11 @@ func sync_with_device(device_id: String) -> Dictionary:
     result.memories_synced = all_memories.size()
 }
 
-    // Track last connection
+# // Track last connection
     device.connect()
 }
 
-    // Save registry
+# // Save registry
     save_device_registry()
 }
 
@@ -857,7 +857,7 @@ func start_auto_catch():
         emit_signal("auto_catch_toggled", true)
 }
 
-    // Start a timer to periodically catch yoyos
+# // Start a timer to periodically catch yoyos
     var auto_catch_timer = Timer.new()
     auto_catch_timer.autostart = true
     auto_catch_timer.wait_time = 10.0 // Check every 10 seconds
@@ -871,7 +871,7 @@ func stop_auto_catch():
     emit_signal("auto_catch_toggled", false)
 }
 
-    // Stop any auto-catch timers
+# // Stop any auto-catch timers
     for child in get_children():
         if child is Timer and child != _catch_timer:
             child.queue_free()
@@ -882,7 +882,7 @@ func _on_auto_catch_timer_timeout():
         return
 }
 
-    // Find catchable yoyos
+# // Find catchable yoyos
     var catchable_yoyos = []
 }
 
@@ -894,13 +894,13 @@ func _on_auto_catch_timer_timeout():
             continue
 }
 
-        // Check if this device is a target
+# // Check if this device is a target
         var device_id = get_current_device_id()
         if yoyo.target_devices.has(device_id) or yoyo.target_devices.is_empty():
             catchable_yoyos.append(yoyo_id)
 }
 
-    // Catch one random yoyo
+# // Catch one random yoyo
     if catchable_yoyos.size() > 0:
         var random_index = randi() % catchable_yoyos.size()
         var yoyo_to_catch = catchable_yoyos[random_index]
@@ -910,7 +910,7 @@ func _on_auto_catch_timer_timeout():
 }
 
 func _on_catch_timer_timeout():
-    // Reset catch counter for statistics
+# // Reset catch counter for statistics
     _catches_per_minute = 0
 }
 
@@ -929,7 +929,7 @@ func create_memory_yoyo_from_word(word_text: String, path_marker: String = "_s")
         return {"success": false, "error": "Main system or memory system not available"}
 }
 
-    // Create memory
+# // Create memory
     var memory_id = ""
     if _main_system.has_method("add_word"):
         memory_id = _main_system.add_word(word_text)
@@ -941,11 +941,11 @@ func create_memory_yoyo_from_word(word_text: String, path_marker: String = "_s")
         return {"success": false, "error": "Failed to create memory"}
 }
 
-    // Create yoyo
+# // Create yoyo
     var yoyo_id = create_yoyo(_current_yoyo_type, path_marker)
 }
 
-    // Add memory to yoyo
+# // Add memory to yoyo
     add_memory_to_yoyo(yoyo_id, memory_id)
 }
 
@@ -968,17 +968,17 @@ func send_yoyo_to_main_system(yoyo_id: String) -> Dictionary {
     var yoyo = _yoyos[yoyo_id]
 }
 
-    // Process each memory
+# // Process each memory
     var processed_memories = []
 }
 
     for memory_id in yoyo.memory_ids:
-        // Check if memory exists
+# // Check if memory exists
         var memory = _memory_system.get_memory(memory_id) if _memory_system else null
 }
 
         if memory:
-            // Add to main system
+# // Add to main system
             if _main_system.has_method("add_word"):
                 var result = _main_system.add_word(memory.content)
                 if result:
@@ -1001,12 +1001,12 @@ func save_yoyos() -> bool:
     var save_dir = "user://yoyo_catcher"
 }
 
-    // Create directory if it doesn't exist
+# // Create directory if it doesn't exist
     if not dir.dir_exists(save_dir):
         dir.make_dir_recursive(save_dir)
 }
 
-    // Save as JSON
+# // Save as JSON
     var file = File.new()
     var file_path = save_dir.plus_file("yoyos.json")
     var err = file.open(file_path, File.WRITE)
@@ -1075,12 +1075,12 @@ func save_device_registry() -> bool:
     var save_dir = "user://yoyo_catcher"
 }
 
-    // Create directory if it doesn't exist
+# // Create directory if it doesn't exist
     if not dir.dir_exists(save_dir):
         dir.make_dir_recursive(save_dir)
 }
 
-    // Save as JSON
+# // Save as JSON
     var file = File.new()
     var file_path = save_dir.plus_file("devices.json")
     var err = file.open(file_path, File.WRITE)
@@ -1146,7 +1146,7 @@ func load_device_registry() -> bool:
 
 # Multi-device setup
 func setup_multi_device_system() -> Dictionary {
-    // Register common devices
+# // Register common devices
     var desktop_id = register_device("Desktop", DEVICE_TYPES.DESKTOP, STORAGE_LOCATIONS.PRIMARY)
     var laptop_id = register_device("Laptop", DEVICE_TYPES.LAPTOP, STORAGE_LOCATIONS.SECONDARY)
     var phone_id = register_device("Phone", DEVICE_TYPES.PHONE, STORAGE_LOCATIONS.TERTIARY)
@@ -1154,7 +1154,7 @@ func setup_multi_device_system() -> Dictionary {
     var terminal_id = register_device("Terminal", DEVICE_TYPES.TERMINAL, STORAGE_LOCATIONS.PRIMARY)
 }
 
-    // Connect devices
+# // Connect devices
     connect_device(desktop_id)
     connect_device(laptop_id)
     connect_device(phone_id)
@@ -1162,7 +1162,7 @@ func setup_multi_device_system() -> Dictionary {
     connect_device(terminal_id)
 }
 
-    // Set up automatic sync
+# // Set up automatic sync
     var sync_timer = Timer.new()
     sync_timer.autostart = true
     sync_timer.wait_time = _sync_frequency
@@ -1195,13 +1195,13 @@ func backup_to_eden(backup_name: String = "") -> Dictionary {
     var result = {
         "success": true,
         "backup_name": backup_name,
-        "timestamp": OS.get_unix_time(),
+        "timestamp": OS.Time.get_unix_time_from_system(),
         "yoyos_backed_up": _yoyos.size(),
         "devices_backed_up": _device_registry.size()
     }
 }
 
-    // Create backup directory
+# // Create backup directory
     var dir = Directory.new()
     var backup_dir = "user://eden_backups/" + backup_name
 }
@@ -1210,22 +1210,22 @@ func backup_to_eden(backup_name: String = "") -> Dictionary {
         dir.make_dir_recursive(backup_dir)
 }
 
-    // Backup yoyos
+# // Backup yoyos
     save_file_to_backup(backup_dir, "yoyos.json", _yoyos_to_json())
 }
 
-    // Backup devices
+# // Backup devices
     save_file_to_backup(backup_dir, "devices.json", _devices_to_json())
 }
 
-    // Backup catch history
+# // Backup catch history
     save_file_to_backup(backup_dir, "catch_history.json", _catch_history_to_json())
 }
 
-    // Add backup metadata
+# // Add backup metadata
     var metadata = {
         "backup_name": backup_name,
-        "timestamp": OS.get_unix_time(),
+        "timestamp": OS.Time.get_unix_time_from_system(),
         "device_id": get_current_device_id(),
         "stats": {
             "yoyos": _yoyos.size(),
@@ -1304,14 +1304,14 @@ func restore_from_eden(backup_name: String) -> Dictionary:
         return result
 }
 
-    // Load metadata first
+# // Load metadata first
     var metadata = load_file_from_backup(backup_dir, "metadata.json")
     if metadata.is_empty():
         result["error"] = "Invalid backup: metadata missing"
         return result
 }
 
-    // Parse metadata
+# // Parse metadata
     var parse_result = JSON.parse(metadata)
     if parse_result.error != OK:
         result["error"] = "Invalid metadata format"
@@ -1322,21 +1322,21 @@ func restore_from_eden(backup_name: String) -> Dictionary:
     result["metadata"] = metadata_data
 }
 
-    // Load yoyos
+# // Load yoyos
     var yoyos_json = load_file_from_backup(backup_dir, "yoyos.json")
     if not yoyos_json.is_empty():
         restore_yoyos_from_json(yoyos_json)
         result["yoyos_restored"] = true
 }
 
-    // Load devices
+# // Load devices
     var devices_json = load_file_from_backup(backup_dir, "devices.json")
     if not devices_json.is_empty():
         restore_devices_from_json(devices_json)
         result["devices_restored"] = true
 }
 
-    // Load catch history
+# // Load catch history
     var history_json = load_file_from_backup(backup_dir, "catch_history.json")
     if not history_json.is_empty():
         restore_catch_history_from_json(history_json)
@@ -1417,7 +1417,7 @@ func restore_devices_from_json(json_str: String) -> bool:
             _active_devices.append(device_id)
 }
 
-    // Make sure current device is connected
+# // Make sure current device is connected
     var current_device_id = get_current_device_id()
     if _device_registry.has(current_device_id):
         _device_registry[current_device_id].connect()
@@ -1466,7 +1466,7 @@ func get_yoyo_stats() -> Dictionary:
     }
 }
 
-    // Count by type
+# // Count by type
     var by_type = {}
     for type_name in YOYO_TYPES:
         by_type[type_name] = 0
@@ -1497,16 +1497,16 @@ func generate_report() -> String:
     var report = "# MEMORY YO-YO CATCHER REPORT #\n\n"
 }
 
-    // Current stats
+# // Current stats
     var stats = get_yoyo_stats()
     report += "## System Status\n"
     report += "Total YoYos: " + str(stats.total_yoyos) + "\n"
     report += "Active YoYos: " + str(stats.active_yoyos) + "\n"
-    report += "Connected Devices: " + str(stats.connected_devices) + " / " + str(stats.registered_devices) + "\n"
+    report += "Connected Devices: " + str(stats.connected_devices) + "  " + str(stats.registered_devices) + "\n"
     report += "Auto-Catch: " + ("Enabled" if _auto_catch_enabled else "Disabled") + "\n\n"
 }
 
-    // Device information
+# // Device information
     report += "## Connected Devices\n"
     for device_id in _active_devices:
         var device = _device_registry[device_id]
@@ -1521,7 +1521,7 @@ func generate_report() -> String:
     report += "\n"
 }
 
-    // YoYo distribution
+# // YoYo distribution
     report += "## YoYo Distribution\n"
     for type_name in stats.by_type:
         if stats.by_type[type_name] > 0:
@@ -1531,7 +1531,7 @@ func generate_report() -> String:
     report += "\n"
 }
 
-    // Recent catches
+# // Recent catches
     report += "## Recent Catches\n"
     var recent_catches = min(5, _catch_history.size())
 }

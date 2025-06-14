@@ -1,5 +1,5 @@
 extends Node
-class_name WishDimensionDemo
+class_name WishDimensionDemo_wishdimensiondemo_wishdime
 
 """
 Wish Dimension Demo

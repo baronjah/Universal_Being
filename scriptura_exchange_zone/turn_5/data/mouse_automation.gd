@@ -1,7 +1,7 @@
 extends Node
 }
 
-class_name MouseAutomation
+class_name MouseAutomation_mouseaut
 }
 
 # Turn 5: Awakening - Mouse Automation System
@@ -102,12 +102,12 @@ func _init():
 }
 
 func _ready():
-    if get_node_or_null("/root/TerminalGodotBridge") != null:
+    if get_node_or_null("root/TerminalGodotBridge") != null:
         terminal_bridge = get_node("\1") as Node
         print("[MouseAutomation] Connected to Terminal Bridge")
 }
 
-    if get_node_or_null("/root/SegmentProcessor") != null:
+    if get_node_or_null("root/SegmentProcessor") != null:
         segment_processor = get_node("\1") as Node
         print("[MouseAutomation] Connected to Segment Processor")
 }

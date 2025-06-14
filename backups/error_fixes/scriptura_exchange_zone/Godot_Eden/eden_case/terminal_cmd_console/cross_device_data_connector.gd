@@ -62,7 +62,7 @@ func initialize_system():
 	var timer = Timer.new()
 	timer.wait_time = 60 # Check every minute
 	timer.autostart = true
-	timer.connect("timeout", self, "check_connections")
+	timer.connect(check_connections)
 	add_child(timer)
 
 func generate_device_id():
@@ -84,7 +84,7 @@ func generate_device_id():
 func connect_to_managers():
 	# Connect to DatapoolSyncManager if available
 	if has_node("/root/DatapoolSyncManager"):
-		data_pool_manager = get_node("/root/DatapoolSyncManager")
+		data_pool_manager = get_node("\1") as Node
 		print("Connected to DatapoolSyncManager")
 	else:
 		# Try to create it
@@ -97,15 +97,15 @@ func connect_to_managers():
 	
 	# Connect to memory system
 	if has_node("/root/MemorySystem"):
-		memory_manager = get_node("/root/MemorySystem")
+		memory_manager = get_node("\1") as Node
 		print("Connected to MemorySystem")
 	elif has_node("/root/MemoryManager"):
-		memory_manager = get_node("/root/MemoryManager")
+		memory_manager = get_node("\1") as Node
 		print("Connected to MemoryManager")
 	
 	# Connect to EtherealEngineConnector if available
 	if has_node("/root/EtherealEngineConnector"):
-		ethereal_connector = get_node("/root/EtherealEngineConnector")
+		ethereal_connector = get_node("\1") as Node
 		print("Connected to EtherealEngineConnector")
 
 # Device discovery and connection
@@ -909,7 +909,7 @@ func process_device_command(parts):
 		"list":
 			var device_list = "Connected Devices:\n"
 			
-			if connected_devices.empty():
+			if connected_devices.is_empty():
 				device_list += "No devices connected\n"
 			else:
 				for id in connected_devices:
@@ -1062,7 +1062,7 @@ func process_transfer_queue(device_id):
 	
 	var device = connected_devices[device_id]
 	
-	if device.transfer_queue.empty():
+	if device.transfer_queue.is_empty():
 		return true
 	
 	print("Processing transfer queue for device " + device_id + ": " + str(device.transfer_queue.size()) + " items")

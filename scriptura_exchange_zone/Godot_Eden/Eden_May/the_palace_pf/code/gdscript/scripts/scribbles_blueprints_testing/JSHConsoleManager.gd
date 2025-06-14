@@ -1,5 +1,5 @@
 extends Node
-class_name JSHConsoleManager
+class_name JSHConsoleManager_JSHConsoleManager_JSHConso
 
 # Singleton pattern
 static var _instance: JSHConsoleManager = null
@@ -531,7 +531,7 @@ func _cmd_info(self, args = []) -> Dictionary:
         print_line("Date: " + "%04d-%02d-%02d" % [datetime.year, datetime.month, datetime.day])
     
     if subsystem == "entity" or subsystem == "entities":
-        var entity_manager = get_node_or_null("/root/JSHEntityManager") or JSHEntityManager.get_instance()
+        var entity_manager = get_node_or_null("root/JSHEntityManager") or JSHEntityManager.get_instance()
         
         if entity_manager:
             var stats = entity_manager.get_statistics()
@@ -552,7 +552,7 @@ func _cmd_info(self, args = []) -> Dictionary:
             print_error("Entity Manager not found")
     
     if subsystem == "db" or subsystem == "database":
-        var db_manager = get_node_or_null("/root/JSHDatabaseManager") or JSHDatabaseManager.get_instance()
+        var db_manager = get_node_or_null("root/JSHDatabaseManager") or JSHDatabaseManager.get_instance()
         
         if db_manager:
             var stats = db_manager.get_database_statistics()
@@ -571,7 +571,7 @@ func _cmd_info(self, args = []) -> Dictionary:
             print_error("Database Manager not found")
     
     if subsystem == "spatial" or subsystem == "space":
-        var spatial_manager = get_node_or_null("/root/JSHSpatialManager") or JSHSpatialManager.get_instance()
+        var spatial_manager = get_node_or_null("root/JSHSpatialManager") or JSHSpatialManager.get_instance()
         
         if spatial_manager:
             var stats = spatial_manager.get_zone_statistics()
@@ -594,6 +594,6 @@ func _cmd_info(self, args = []) -> Dictionary:
                 print_line("  Transition Count: " + str(zone_stats.transition_count))
                 print_line("  Child Zones: " + str(zone_stats.child_count))
         else:
-            print_error("Spatial Manager not found")
+            print_error("Node3D Manager not found")
     
     return { "success": true, "message": "System information displayed" }

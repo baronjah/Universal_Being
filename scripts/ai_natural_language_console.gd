@@ -29,9 +29,11 @@ func pentagon_init() -> void:
 	
 	print("🌟 %s: AI Natural Language Console Init Complete" % being_name)
 
+
 func pentagon_ready() -> void:
 	super.pentagon_ready()
 	print("🌟 %s: AI Natural Language Console Ready Complete" % being_name)
+
 
 func pentagon_process(delta: float) -> void:
 	super.pentagon_process(delta)
@@ -69,11 +71,13 @@ func interpret_creation_request(command: String) -> String:
 	
 	# Check for butterfly variations
 	if lower_command.contains("butterfly") or lower_command.contains("moth"):
+
 		var color = parse_color_from_command(lower_command)
 		return create_ai_butterfly(color)
 	
 	# Check for tree variations
 	elif lower_command.contains("tree") or lower_command.contains("plant"):
+
 		var tree_type = parse_tree_type(lower_command)
 		return create_ai_tree(tree_type)
 	
@@ -87,6 +91,7 @@ func interpret_creation_request(command: String) -> String:
 	
 	return "🤖 I can create: butterfly, tree, bird, flower, star\n" + \
 		   "🤖 Try: 'create blue butterfly' or 'make a tall tree'"
+	
 
 func parse_color_from_command(command: String) -> Color:
 	"""Extract color from natural language"""
@@ -101,7 +106,7 @@ func parse_color_from_command(command: String) -> Color:
 		"cyan": Color.CYAN,
 		"white": Color.WHITE,
 		"black": Color.BLACK
-	}
+}
 	
 	for color_name in colors:
 		if command.contains(color_name):
@@ -177,6 +182,7 @@ func create_ai_tree(tree_type: String) -> String:
 		"pine": emoji = "🌲"
 		"willow": emoji = "🌿"
 		"cherry": emoji = "🌸"
+
 	
 	var visual = Label.new()
 	visual.text = emoji
@@ -199,7 +205,7 @@ func create_ai_being(type: String, color: Color) -> String:
 		"bird": "🐦",
 		"flower": "🌸",
 		"star": "⭐"
-	}
+}
 	
 	var being = SystemBootstrap.create_universal_being()
 	if not being:
@@ -243,8 +249,8 @@ func ai_interface() -> Dictionary:
 		"color": ai_color,
 		"energy": ai_energy,
 		"creation_words": creation_words
-	}
 	return base_interface
+}
 
 func ai_invoke_method(method_name: String, args: Array = []) -> Variant:
 	match method_name:

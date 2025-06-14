@@ -6,11 +6,12 @@ extends Node
 # Terminal 1: Divine Word Genesis
 }
 
-class_name RoyalBlessingSystem
+class_name RoyalBlessingSystem_royalblessing_royalble
 }
 
 # ----- BLESSING TYPES -----
-enum BlessingType {
+enum \2 {
+
 	GENESIS,       # Creates new dimensional pockets
 	CHRONOS,       # Manipulates time flow
 	HARMONY,       # Aligns words into patterns
@@ -89,24 +90,24 @@ func _ready():
 
 func connect_systems():
 	# Connect to the turn system
-	turn_system = get_node_or_null("/root/TurnSystem")
+	turn_system = get_node_or_null("root/TurnSystem")
 	if turn_system:
 		turn_system.connect(_on_turn_completed)
 		turn_system.connect(_on_dimension_changed)
 }
 
 	# Connect to the divine word processor
-	divine_word_processor = get_node_or_null("/root/DivineWordProcessor")
+	divine_word_processor = get_node_or_null("root/DivineWordProcessor")
 	if divine_word_processor:
 		divine_word_processor.connect(_on_word_processed)
 }
 
 	# Connect to the comment system
-	word_comment_system = get_node_or_null("/root/WordCommentSystem")
+	word_comment_system = get_node_or_null("root/WordCommentSystem")
 }
 
 	# Connect to the dream storage
-	word_dream_storage = get_node_or_null("/root/WordDreamStorage")
+	word_dream_storage = get_node_or_null("root/WordDreamStorage")
 }
 
 func initialize_royal_titles():
@@ -186,7 +187,7 @@ func grant_blessing(player_name, word, blessing_type, requester="system"):
 
 	# Create blessing data
 	var duration = blessing_properties[blessing_type].duration_turns
-	var blessing_id = word + "_" + str(blessing_type) + "_" + str(OS.get_unix_time())
+	var blessing_id = word + "_" + str(blessing_type) + "_" + str(OS.Time.get_unix_time_from_system())
 }
 
 	var blessing_data = {
@@ -199,7 +200,7 @@ func grant_blessing(player_name, word, blessing_type, requester="system"):
 		"granted_dimension": turn_system.current_dimension if turn_system else 1,
 		"expires_turn": (turn_system.current_turn if turn_system else 0) + duration,
 		"requester": requester,
-		"timestamp": OS.get_unix_time()
+		"timestamp": OS.Time.get_unix_time_from_system()
 	}
 }
 
@@ -235,7 +236,7 @@ func grant_blessing(player_name, word, blessing_type, requester="system"):
 			"text": decree_text,
 			"type": 4,  # Divine type
 			"blessing_data": save_data,
-			"timestamp": OS.get_unix_time()
+			"timestamp": OS.Time.get_unix_time_from_system()
 		}, 3)  # Tier 3 - D: Drive
 }
 
@@ -253,7 +254,7 @@ func record_royal_decree(decree_text, blessing_type, player_name, word):
 		"type": blessing_type,
 		"player": player_name,
 		"word": word,
-		"timestamp": OS.get_unix_time(),
+		"timestamp": OS.Time.get_unix_time_from_system(),
 		"turn": turn_system.current_turn if turn_system else 0,
 		"dimension": turn_system.current_dimension if turn_system else 1
 	}
@@ -380,7 +381,7 @@ func get_royal_favor(player_name):
 }
 
 func check_royal_titles(player_name):
-	// Check if player has earned any new titles
+# // Check if player has earned any new titles
 	var current_favor = get_royal_favor(player_name)
 	var current_dimension = turn_system.current_dimension if turn_system else 1
 	var titles_granted = []
@@ -390,9 +391,9 @@ func check_royal_titles(player_name):
 		var title_data = royal_titles[title]
 }
 
-		// Check if requirements are met
+# // Check if requirements are met
 		if current_favor >= title_data.favor_required and current_dimension >= title_data.dimension_required:
-			// Check if player already has this title
+# // Check if player already has this title
 			var has_title = false
 }
 
@@ -423,7 +424,7 @@ func grant_royal_title(player_name, title):
 	var title_data = royal_titles[title]
 }
 
-	// Create decree
+# // Create decree
 	var decree_text = "By royal decree, the Queen of Time and Space has granted " + 
 					  player_name + " the royal title of " + title + ": " + 
 					  title_data.description
@@ -433,7 +434,7 @@ func grant_royal_title(player_name, title):
 	emit_signal("royal_title_granted", player_name, title)
 }
 
-	// Apply title benefits
+# // Apply title benefits
 	apply_title_benefits(player_name, title)
 }
 
@@ -453,56 +454,56 @@ func apply_title_benefits(player_name, title):
 	var title_data = royal_titles[title]
 }
 
-	// Apply benefits based on title
+# // Apply benefits based on title
 	match title:
 		"Wordweaver":
-			// Apply 10% word power boost
+# // Apply 10% word power boost
 			if divine_word_processor:
 				divine_word_processor.add_player_modifier(player_name, "title_wordweaver", 1.1)
 }
 
 		"Dreamshaper":
-			// Enhanced dream storage
+# // Enhanced dream storage
 			if word_dream_storage:
-				// Allow direct tier 3 dream storage
-				// Will be handled in word processing
+# // Allow direct tier 3 dream storage
+# // Will be handled in word processing
 				pass
 }
 
 		"Justice Arbiter":
-			// Enhanced judgment influence
-			// Will be handled in word salem controller
+# // Enhanced judgment influence
+# // Will be handled in word salem controller
 			pass
 }
 
 		"Harmony Weaver":
-			// Pattern recognition boost
+# // Pattern recognition boost
 			if divine_word_processor:
 				divine_word_processor.add_player_modifier(player_name, "title_harmony", 1.5)
 }
 
 		"Dimensional Duke":
-			// Dimensional pocket creation
-			// Special handling for royal blessing cost reduction
+# // Dimensional pocket creation
+# // Special handling for royal blessing cost reduction
 			var blessing_costs = blessing_properties.duplicate(true)
 			for blessing_type in blessing_costs:
 				blessing_costs[blessing_type].favor_cost *= 0.8
 }
 
 		"Royal Vizier":
-			// Blessing cost reduction
+# // Blessing cost reduction
 			var blessing_costs = blessing_properties.duplicate(true)
 			for blessing_type in blessing_costs:
 				blessing_costs[blessing_type].favor_cost *= 0.5
 }
 
 		"Divine Aspirant":
-			// All lesser title powers plus reality creation
+# // All lesser title powers plus reality creation
 			if divine_word_processor:
 				divine_word_processor.add_player_modifier(player_name, "title_divine", 2.0)
 }
 
-			// Reality creation will be handled in word processing
+# // Reality creation will be handled in word processing
 }
 
 	return true
@@ -516,7 +517,7 @@ func get_player_titles(player_name):
 		var comments = word_comment_system.get_comments_for_word(player_name)
 		for comment in comments:
 			if comment.text.find("granted the royal title of ") >= 0:
-				// Extract title from comment
+# // Extract title from comment
 				var title_start = comment.text.find("royal title of ") + 15
 				var title_end = comment.text.find(":", title_start)
 				if title_end >= 0:
@@ -531,12 +532,12 @@ func get_player_titles(player_name):
 }
 
 func parse_royal_decree(text, source_player):
-	// Check if text contains a royal decree
+# // Check if text contains a royal decree
 	if text.to_lower().find("by royal decree") < 0:
 		return null
 }
 
-	// Extract the blessed word and blessing type
+# // Extract the blessed word and blessing type
 	var word_start = text.find("bless ") + 6
 	var word_end = text.find(" with ", word_start)
 }
@@ -546,7 +547,7 @@ func parse_royal_decree(text, source_player):
 		var blessing_type_text = text.substr(word_end + 6).strip_edges()
 }
 
-		// Determine blessing type
+# // Determine blessing type
 		var blessing_type = -1
 }
 
@@ -563,7 +564,7 @@ func parse_royal_decree(text, source_player):
 }
 
 		if blessing_type >= 0:
-			// Check if player has sufficient favor
+# // Check if player has sufficient favor
 			return grant_blessing(source_player, word, blessing_type, source_player)
 	}
 }
@@ -582,26 +583,26 @@ func apply_blessing_effects(word, power, source_player):
 	for blessing in word_blessings:
 		match blessing.type:
 			BlessingType.GENESIS:
-				// Power multiplier for new dimensional pockets
+# // Power multiplier for new dimensional pockets
 				total_modifier *= blessing_properties[BlessingType.GENESIS].power_multiplier
 }
 
 			BlessingType.HARMONY:
-				// Pattern bonus for harmonic alignment
+# // Pattern bonus for harmonic alignment
 				total_modifier *= blessing_properties[BlessingType.HARMONY].pattern_bonus
 }
 
 			BlessingType.TRANSCENDENCE:
-				// Dimension bonus for transcending boundaries
+# // Dimension bonus for transcending boundaries
 				total_modifier *= blessing_properties[BlessingType.TRANSCENDENCE].dimension_bonus
 }
 
-	// Apply dimension-specific modifications
+# // Apply dimension-specific modifications
 	if turn_system:
 		var dimension = turn_system.current_dimension
 }
 
-		// Blessings are especially powerful in dimensions 7, 9, and the dimension they were granted in
+# // Blessings are especially powerful in dimensions 7, 9, and the dimension they were granted in
 		for blessing in word_blessings:
 			if blessing.granted_dimension == dimension:
 				total_modifier *= 1.5
@@ -619,7 +620,7 @@ func apply_blessing_effects(word, power, source_player):
 				total_modifier *= 2.0
 }
 
-	// Return the modified power
+# // Return the modified power
 	return power * total_modifier
 }
 
@@ -627,7 +628,7 @@ func apply_blessing_effects(word, power, source_player):
 }
 
 func apply_chronos_blessing(word, source_player):
-	// Check if the word has a Chronos blessing
+# // Check if the word has a Chronos blessing
 	var has_chronos = false
 	var word_blessings = get_active_blessings_for_word(word)
 }
@@ -639,12 +640,12 @@ func apply_chronos_blessing(word, source_player):
 }
 
 	if has_chronos and turn_system:
-		// Modify turn duration for the next turn
+# // Modify turn duration for the next turn
 		var time_multiplier = blessing_properties[BlessingType.CHRONOS].time_multiplier
 		turn_system.modify_next_turn_duration(time_multiplier)
 }
 
-		// Add comment
+# // Add comment
 		if word_comment_system:
 			word_comment_system.add_comment(word, 
 				"The Blessing of Chronos alters the flow of time. Next turn duration: " + 
@@ -659,7 +660,7 @@ func apply_chronos_blessing(word, source_player):
 }
 
 func apply_judgment_blessing(word, target_player, source_player):
-	// Check if the word has a Judgment blessing
+# // Check if the word has a Judgment blessing
 	var has_judgment = false
 	var word_blessings = get_active_blessings_for_word(word)
 }
@@ -671,11 +672,11 @@ func apply_judgment_blessing(word, target_player, source_player):
 }
 
 	if has_judgment:
-		// Get judgment power
+# // Get judgment power
 		var judgment_power = blessing_properties[BlessingType.JUDGMENT].judgment_power
 }
 
-		// Add comment
+# // Add comment
 		if word_comment_system:
 			word_comment_system.add_comment(target_player, 
 				"The Blessing of Judgment grants " + source_player + " the power to judge " + target_player +
@@ -683,8 +684,8 @@ func apply_judgment_blessing(word, target_player, source_player):
 				word_comment_system.CommentType.DIVINE)
 }
 
-		// Apply judgment effects (will be handled by Salem controller)
-		var salem_controller = get_node_or_null("/root/WordSalemGameController")
+# // Apply judgment effects (will be handled by Salem controller)
+		var salem_controller = get_node_or_null("root/WordSalemGameController")
 		if salem_controller:
 			salem_controller.apply_judgment_influence(source_player, target_player, judgment_power)
 }
@@ -699,13 +700,13 @@ func apply_judgment_blessing(word, target_player, source_player):
 }
 
 func _on_turn_completed(turn_number):
-	// Check for expired blessings
+# // Check for expired blessings
 	check_blessing_expiration()
 }
 
-	// Special handling for 9th turn
+# // Special handling for 9th turn
 	if turn_number % 9 == 0:
-		// Words spoken during 9th turns have enhanced blessing potential
+# // Words spoken during 9th turns have enhanced blessing potential
 		if word_comment_system:
 			word_comment_system.add_comment("sacred_turn", 
 				"The 9th turn enhances royal blessing potential. Words spoken now resonate with divine power.",
@@ -713,20 +714,21 @@ func _on_turn_completed(turn_number):
 }
 
 func _on_dimension_changed(new_dimension, old_dimension):
-	// Special handling for key dimensions
+# // Special handling for key dimensions
 	match new_dimension:
 		9:  // Judgment dimension - enhance judgment blessings
 			for blessing_id in active_blessings:
 				var blessing = active_blessings[blessing_id]
 				if blessing.type == BlessingType.JUDGMENT:
-					// Double the duration in dimension 9
+# // Double the duration in dimension 9
 					blessing.expires_turn += blessing_properties[BlessingType.JUDGMENT].duration_turns
 }
 
-					// Add comment
+# // Add comment
 					if word_comment_system:
 						word_comment_system.add_comment(blessing.word, 
-							"The Judgment dimension extends the duration of the Blessing of Judgment.",
+							"The Judgment dimension
+extends \2 duration of the Blessing of Judgment.",
 							word_comment_system.CommentType.DIVINE)
 }
 
@@ -735,36 +737,37 @@ func _on_dimension_changed(new_dimension, old_dimension):
 				var blessing = active_blessings[blessing_id]
 }
 
-				// Add extra turns to all blessings in dimension 12
+# // Add extra turns to all blessings in dimension 12
 				blessing.expires_turn += 3
 }
 
-				// Add comment
+# // Add comment
 				if word_comment_system:
 					word_comment_system.add_comment(blessing.word, 
-						"The Divine dimension extends the duration of the " + blessing.type_name + ".",
+						"The Divine dimension
+extends \2 duration of the " + blessing.type_name + ".",
 						word_comment_system.CommentType.DIVINE)
 }
 
 func _on_word_processed(word, power, source_player):
-	// Check if this is a royal decree
+# // Check if this is a royal decree
 	var decree_result = parse_royal_decree(word, source_player)
 }
 
 	if decree_result and decree_result.success:
-		// Royal decree succeeded
+# // Royal decree succeeded
 		adjust_royal_favor(source_player, 10, "successfully issuing a royal decree")
 }
 
-	// Apply active blessing effects
+# // Apply active blessing effects
 	var modified_power = apply_blessing_effects(word, power, source_player)
 }
 
-	// Apply special blessing effects
+# // Apply special blessing effects
 	apply_chronos_blessing(word, source_player)
 }
 
-	// Check for royal favor increase based on word power
+# // Check for royal favor increase based on word power
 	var favor_gain = 0
 }
 

@@ -1,7 +1,7 @@
 extends Node
 ## LOD (Level of Detail) Manager
 ## Manages word display detail based on camera distance and viewing angle
-class_name LODManager
+class_name LODManager_lodmanager_lodmanag
 
 # LOD distance thresholds
 const LOD_CLOSE = 15.0      # High detail - full text, glow, animation

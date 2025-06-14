@@ -1,6 +1,6 @@
 extends Node
 
-class_name UserProfiles
+class_name UserProfiles_userprofiles_userprof
 
 # User Profile System for Eden_OS
 # Manages user identities, permissions, and preferences

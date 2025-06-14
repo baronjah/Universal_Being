@@ -29,11 +29,11 @@ var current_dimension = "3D"
 var current_cosmic_age = "Complexity"
 var current_project = "12_turns_system"
 var visualization_active = false
-var current_entities = {}
+var current_entities = {
 var entity_types = ["word", "note", "akashic", "shape", "terminal", "node"]
 var evolution_stages = ["seed", "sprout", "sapling", "tree", "transcendent"]
 var active_folder_paths = []
-var connected_folders = {}
+var connected_folders = {
 
 # ----- SIGNAL HANDLING -----
 signal system_initialized
@@ -83,7 +83,7 @@ func setup_components():
         main_controller.name = "MainController"
         add_child(main_controller)
     else:
-        main_controller = get_node("/root/MainController")
+        main_controller = get_node("\1") as Node
     
     # Create terminal UI
     terminal_ui = Control.new()
@@ -150,22 +150,22 @@ func connect_components():
     
     # Connect signals from main controller
     if main_controller:
-        main_controller.connect("turn_advanced", self, "_on_turn_advanced")
-        main_controller.connect("note_created", self, "_on_note_created")
-        main_controller.connect("word_manifested", self, "_on_word_manifested")
+        main_controller.connect(_on_turn_advanced)
+        main_controller.connect(_on_note_created)
+        main_controller.connect(_on_word_manifested)
         
         if main_controller.has_signal("reality_changed"):
-            main_controller.connect("reality_changed", self, "_on_reality_changed")
+            main_controller.connect(_on_reality_changed)
     
     # Connect signals from universal connector
-    universal_connector.connect("system_connected", self, "_on_system_connected")
-    universal_connector.connect("dimension_accessed", self, "_on_dimension_accessed")
-    universal_connector.connect("record_transferred", self, "_on_record_transferred")
+    universal_connector.connect(_on_system_connected)
+    universal_connector.connect(_on_dimension_accessed)
+    universal_connector.connect(_on_record_transferred)
     
     # Connect signals from akashic controller
-    akashic_controller.connect("record_created", self, "_on_record_created")
-    akashic_controller.connect("akashic_synergy_detected", self, "_on_akashic_synergy_detected")
-    akashic_controller.connect("dimension_power_calculated", self, "_on_dimension_power_calculated")
+    akashic_controller.connect(_on_record_created)
+    akashic_controller.connect(_on_akashic_synergy_detected)
+    akashic_controller.connect(_on_dimension_power_calculated)
 
 func setup_ui():
     # Create the main layout
@@ -206,7 +206,7 @@ func setup_ui():
     folder_list.size_flags_vertical = Control.SIZE_EXPAND_FILL
     folder_list.size_flags_horizontal = Control.SIZE_EXPAND_FILL
     folder_list.rect_min_size = Vector2(0, 100)
-    folder_list.connect("item_selected", self, "_on_folder_selected")
+    folder_list.connect(_on_folder_selected)
     main_layout.add_child(folder_list)
     
     # Add command line
@@ -215,7 +215,7 @@ func setup_ui():
     command_line.placeholder_text = "Enter command..."
     command_line.clear_button_enabled = true
     command_line.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-    command_line.connect("text_entered", self, "_on_command_entered")
+    command_line.connect(_on_command_entered)
     main_layout.add_child(command_line)
     
     # Add visualization toggle
@@ -226,19 +226,19 @@ func setup_ui():
     var vis_button = Button.new()
     vis_button.name = "VisualizationButton"
     vis_button.text = "Toggle 3D View"
-    vis_button.connect("pressed", self, "_on_visualization_button_pressed")
+    vis_button.connect(_on_visualization_button_pressed)
     button_container.add_child(vis_button)
     
     var evolution_button = Button.new()
     evolution_button.name = "EvolutionButton"
     evolution_button.text = "Evolve Entities"
-    evolution_button.connect("pressed", self, "_on_evolution_button_pressed")
+    evolution_button.connect(_on_evolution_button_pressed)
     button_container.add_child(evolution_button)
     
     var connect_folder_button = Button.new()
     connect_folder_button.name = "ConnectFolderButton"
     connect_folder_button.text = "Connect Folder"
-    connect_folder_button.connect("pressed", self, "_on_connect_folder_button_pressed")
+    connect_folder_button.connect(_on_connect_folder_button_pressed)
     button_container.add_child(connect_folder_button)
     
     # Update folder list
@@ -255,6 +255,7 @@ func connect_folder(folder_path, connection_type = "standard"):
         return true
     
     print("Connecting folder: %s" % folder_path)
+	}
     
     # Register the folder
     connected_folders[folder_path] = {
@@ -264,7 +265,7 @@ func connect_folder(folder_path, connection_type = "standard"):
         "godot_files": 0,
         "entities": [],
         "synced": false
-    }
+		}
     
     # Add to active paths
     if not active_folder_paths.has(folder_path):
@@ -310,6 +311,7 @@ func disconnect_folder(folder_path):
         return false
     
     print("Disconnecting folder: %s" % folder_path)
+	}
     
     # Remove from connected folders
     var folder_data = connected_folders[folder_path]
@@ -358,6 +360,7 @@ func _scan_directory(directory_path, file_count, godot_files):
         
         var file_name = dir.get_next()
         while file_name != "":
+		
             var full_path = directory_path.plus_file(file_name)
             
             if dir.current_is_dir():
@@ -401,11 +404,11 @@ func _register_script_with_connector(script_path, script_name):
 # ----- VISUALIZATION -----
 func setup_visualization_scene():
     # Create akashic scene
-    akashic_scene = load("res://akashic_notepad_scene.tscn").instance()
+    akashic_scene = load("res://akashic_notepad_scene.tscn").instantiate()
     add_child(akashic_scene)
     
     # Get notepad visualizer reference
-    notepad_visualizer = akashic_scene.get_node("VisualizationContainer/Notepad3DVisualizer")
+    notepad_visualizer = akashic_scene.get_node("\1") as Node
     
     # Connect visualizer to akashic controller
     if notepad_visualizer and akashic_controller:
@@ -423,12 +426,12 @@ func toggle_visualization(active = true):
     
     if akashic_scene:
         # Toggle visibility of visualization elements
-        var vis_container = akashic_scene.get_node("VisualizationContainer")
+        var vis_container = akashic_scene.get_node("\1") as Node
         if vis_container:
             vis_container.visible = active
         
         # Toggle camera
-        var camera = akashic_scene.get_node("VisualizationContainer/VisualizationCamera")
+        var camera = akashic_scene.get_node("\1") as Node
         if camera:
             camera.current = active
     
@@ -436,6 +439,7 @@ func toggle_visualization(active = true):
     var vis_button = terminal_ui.find_node("VisualizationButton", true, false)
     if vis_button:
         vis_button.text = "3D View: %s" % ("ON" if active else "OFF")
+		
     
     return active
 
@@ -460,7 +464,7 @@ func create_entity(entity_type, data):
         "stage": "seed",
         "evolution_points": 0,
         "connections": []
-    }
+		}
     
     # Add to entity manager
     current_entities[entity_id] = entity
@@ -525,6 +529,7 @@ func create_entity_visualization(entity):
     match entity.type:
         "word":
             if "text" in entity.data:
+			
                 var position = Vector3(
                     randf() * 10 - 5,
                     randf() * 2 + 1,
@@ -545,6 +550,7 @@ func create_entity_visualization(entity):
         
         "note":
             if "content" in entity.data:
+			
                 var position = Vector3(
                     randf() * 10 - 5,
                     randf() * 2 + 3,
@@ -562,11 +568,13 @@ func create_entity_visualization(entity):
                 entity.visualization_id = entity.data.content
         
         "akashic":
+		
             # Already visualized directly
             pass
         
         "shape":
             if "dimensions" in entity.data:
+			
                 var notebook_name = "shapes_%d" % current_turn
                 
                 # Create notepad if needed
@@ -583,12 +591,14 @@ func create_entity_visualization(entity):
                         for z in range(depth):
                             var cell_pos = Vector3(x, y, z)
                             var content = "Shape: %s" % entity.id
+							
                             var color = entity.data.get("color", Color.white)
                             
                             akashic_controller.add_notepad_cell(notebook_name, cell_pos, content, color)
         
         "terminal":
             if "command" in entity.data:
+			
                 var position = Vector3(
                     randf() * 10 - 5,
                     randf() * 2 + 5,
@@ -604,6 +614,7 @@ func create_entity_visualization(entity):
         
         "node":
             if "script_path" in entity.data:
+			
                 var position = Vector3(
                     randf() * 10 - 5,
                     randf() * 2 + 7,
@@ -632,6 +643,7 @@ func update_entity_count_label():
     var entity_count_label = terminal_ui.find_node("EntityCountLabel", true, false)
     if entity_count_label:
         entity_count_label.text = "Entities: %d" % current_entities.size()
+		
 
 # ----- DIMENSION MANAGEMENT -----
 func set_current_dimension(turn_number):
@@ -656,10 +668,12 @@ func set_current_dimension(turn_number):
     var dimension_label = terminal_ui.find_node("DimensionLabel", true, false)
     if dimension_label:
         dimension_label.text = "%s: %s (%s)" % [current_turn, current_symbol, current_dimension]
+		
     
     var turn_label = terminal_ui.find_node("TurnLabel", true, false)
     if turn_label:
         turn_label.text = "Turn: %d" % current_turn
+		
     
     # Update visualization
     if visualization_active and akashic_controller:
@@ -676,7 +690,7 @@ func set_current_dimension(turn_number):
 
 # ----- COMMAND PROCESSING -----
 func process_command(command_text):
-    if command_text.empty():
+    if command_text.is_empty():
         return "Please enter a command"
     
     # Split command and arguments
@@ -721,15 +735,18 @@ func process_command(command_text):
                     return result
             
             if main_controller and main_controller.has_method("execute_command"):
+			
                 var result = main_controller.execute_command(command_text)
                 if result and typeof(result) == TYPE_STRING and not result.begins_with("Unknown command"):
                     return result
             
             return "Unknown command: " + cmd
+			
 
 func process_connect_command(args):
-    if args.empty():
+    if args.is_empty():
         return "Usage: connect <folder_path> [connection_type]"
+		
     
     var parts = args.split(" ", false, 1)
     var folder_path = parts[0]
@@ -739,10 +756,12 @@ func process_connect_command(args):
         return "Successfully connected folder: " + folder_path
     else:
         return "Failed to connect folder: " + folder_path
+		
 
 func process_dimension_command(args):
-    if args.empty():
+    if args.is_empty():
         return "Current dimension: %s: %s (%s)" % [current_turn, current_symbol, current_dimension]
+		
     
     var parts = args.split(" ")
     var subcommand = parts[0]
@@ -751,6 +770,7 @@ func process_dimension_command(args):
         "goto", "set", "change":
             if parts.size() < 2 or not parts[1].is_valid_integer():
                 return "Usage: dimension goto <1-12>"
+				
             
             var turn = int(parts[1])
             if turn < 1 or turn > 12:
@@ -758,19 +778,24 @@ func process_dimension_command(args):
             
             set_current_dimension(turn)
             return "Dimension changed to %d: %s (%s)" % [current_turn, current_symbol, current_dimension]
+			
         
         "next":
+		
             var next_turn = (current_turn % 12) + 1
             set_current_dimension(next_turn)
             return "Advanced to dimension %d: %s (%s)" % [current_turn, current_symbol, current_dimension]
+			
         
         "prev", "previous":
+		
             var prev_turn = current_turn - 1
             if prev_turn < 1:
                 prev_turn = 12
             
             set_current_dimension(prev_turn)
             return "Went back to dimension %d: %s (%s)" % [current_turn, current_symbol, current_dimension]
+			
         
         "info":
             return "Dimension %d: %s (%s)\nCosmic Age: %s" % [
@@ -779,41 +804,45 @@ func process_dimension_command(args):
         
         _:
             return "Unknown dimension subcommand: " + subcommand
+			
 
 func process_create_command(args):
-    if args.empty():
+    if args.is_empty():
         return "Usage: create <entity_type> <data>"
+		
     
     var parts = args.split(" ", false, 1)
     if parts.size() < 2:
         return "Usage: create <entity_type> <data>"
+		
     
     var entity_type = parts[0]
     var data_text = parts[1]
     
     if not entity_type in entity_types:
         return "Invalid entity type. Valid types: " + str(entity_types)
+		
     
     # Create entity based on type
-    var entity_data = {}
+    var entity_data = {
     
     match entity_type:
         "word":
             entity_data = {
                 "text": data_text,
                 "power": 50 + (current_turn * 5)
-            }
+				}
         
         "note":
             entity_data = {
                 "content": data_text
-            }
+				}
         
         "akashic":
             entity_data = {
                 "content": data_text,
                 "tags": ["user_created", current_dimension.to_lower()]
-            }
+				}
             
             # Create actual akashic entry
             if akashic_controller:
@@ -831,11 +860,13 @@ func process_create_command(args):
                 )
         
         "shape":
+		}
             # Parse dimensions from format like 3x3x3
             var dimensions = Vector3(1, 1, 1)
             var color = Color.white
             
             if data_text.find("x") >= 0:
+			
                 var dim_parts = data_text.split("x")
                 
                 if dim_parts.size() >= 3:
@@ -854,17 +885,17 @@ func process_create_command(args):
             entity_data = {
                 "dimensions": dimensions,
                 "color": color
-            }
+				}
         
         "terminal":
             entity_data = {
                 "command": data_text
-            }
+				}
         
         "node":
             entity_data = {
                 "script_path": data_text
-            }
+				}
     
     var entity_id = create_entity(entity_type, entity_data)
     
@@ -874,14 +905,16 @@ func process_create_command(args):
         return "Failed to create entity"
 
 func process_evolve_command(args):
-    if args.empty():
+    if args.is_empty():
         return "Usage: evolve <entity_id or 'all'> [target_stage]"
+		
     
     var parts = args.split(" ")
     var entity_id = parts[0]
     var target_stage = parts[1] if parts.size() > 1 else ""
     
     if entity_id == "all":
+	
         var evolved_count = 0
         
         for id in current_entities:
@@ -892,6 +925,7 @@ func process_evolve_command(args):
     else:
         if not current_entities.has(entity_id):
             return "Entity not found: " + entity_id
+			
         
         if evolve_entity(entity_id, target_stage):
             var entity = current_entities[entity_id]
@@ -900,21 +934,27 @@ func process_evolve_command(args):
             return "Entity did not evolve (insufficient evolution points)"
 
 func process_list_command(args):
-    if args.empty():
+    if args.is_empty():
         return "Usage: list <entities|folders|dimensions|projects>"
+		
     
     match args:
         "entities":
+		
             var result = "Entities (%d):\n" % current_entities.size()
+			
             
             for entity_id in current_entities:
                 var entity = current_entities[entity_id]
                 result += "- %s (%s): Stage %s\n" % [entity_id, entity.type, entity.stage]
+				
             
             return result
         
         "folders":
+		
             var result = "Connected Folders (%d):\n" % connected_folders.size()
+			
             
             for folder_path in connected_folders:
                 var folder_data = connected_folders[folder_path]
@@ -925,7 +965,9 @@ func process_list_command(args):
             return result
         
         "dimensions":
+		
             var result = "Available Dimensions:\n"
+			
             
             for i in range(1, 13):
                 var turn_symbols = ["α", "β", "γ", "δ", "ε", "ζ", "η", "θ", "ι", "κ", "λ", "μ"]
@@ -941,7 +983,9 @@ func process_list_command(args):
             return result
         
         "projects":
+		
             var result = "Available Projects:\n"
+			
             
             var projects = ["12_turns_system", "Eden_OS", "LuminusOS"]
             for project in projects:
@@ -954,9 +998,10 @@ func process_list_command(args):
         
         _:
             return "Unknown list type. Valid types: entities, folders, dimensions, projects"
+			
 
 func process_visualize_command(args):
-    if args.empty():
+    if args.is_empty():
         visualize_all_entities()
         return "Visualizing all entities"
     
@@ -988,12 +1033,15 @@ func process_visualize_command(args):
             if current_entities.has(args):
                 update_entity_visualization(current_entities[args])
                 return "Visualizing entity: " + args
+				
             
             return "Unknown visualization option or entity ID: " + args
+			
 
 func process_project_command(args):
-    if args.empty():
+    if args.is_empty():
         return "Current project: " + current_project
+		
     
     var old_project = current_project
     current_project = args
@@ -1013,9 +1061,10 @@ func process_project_command(args):
     else:
         current_project = old_project
         return "Project directory not found: " + project_path
+		
 
 func process_synergy_command(args):
-    if args.empty() or args == "detect":
+    if args.is_empty() or args == "detect":
         if akashic_controller:
             # Force synergy detection
             akashic_controller._check_for_synergies()
@@ -1023,6 +1072,7 @@ func process_synergy_command(args):
     
     match args:
         "connect":
+		
             # Connect all entities to form synergies
             var connections_made = 0
             
@@ -1037,6 +1087,7 @@ func process_synergy_command(args):
             return "Created %d synergistic connections" % connections_made
         
         "evolve":
+		
             # Evolve entities with many connections
             var evolved_count = 0
             
@@ -1055,6 +1106,7 @@ func process_synergy_command(args):
         
         _:
             return "Unknown synergy subcommand: " + args
+			
 
 func visualize_all_entities():
     if not visualization_active:
@@ -1125,15 +1177,19 @@ func _on_word_manifested(word, position, power):
 func _on_reality_changed(reality_data):
     # Update based on reality change
     print("Reality changed: ", reality_data)
+	
 
 func _on_system_connected(system_id, system_type):
     print("Connected to %s system: %s" % [system_type, system_id])
+	
 
 func _on_dimension_accessed(dimension_id, access_level):
     print("Dimension accessed: %s (level %s)" % [dimension_id, access_level])
+	
 
 func _on_record_transferred(record_id, source_system, target_system):
     print("Record transferred: %s from %s to %s" % [record_id, source_system, target_system])
+	
 
 func _on_record_created(entry_id):
     # Create entity from akashic record
@@ -1157,6 +1213,7 @@ func _on_akashic_synergy_detected(synergies):
         var entity = current_entities[entity_id]
         
         if entity.type == "akashic" and entity.stage != "transcendent":
+		
             # Give a chance to evolve based on number of synergies
             var evolution_chance = min(0.2 + (synergies.size() * 0.05), 0.8)
             
@@ -1169,6 +1226,7 @@ func _on_akashic_synergy_detected(synergies):
 
 func _on_dimension_power_calculated(dimension, power):
     print("Dimension %d power calculated: %f" % [dimension, power])
+	
     
     # Chance to evolve entities in this dimension
     var evolved_count = 0
@@ -1177,6 +1235,7 @@ func _on_dimension_power_calculated(dimension, power):
         var entity = current_entities[entity_id]
         
         if entity.turn == dimension and entity.stage != "transcendent":
+		
             var evolution_chance = min(0.1 + (power / 1000.0), 0.9)
             
             if randf() < evolution_chance:
@@ -1205,6 +1264,7 @@ func _on_folder_selected(index):
             var command_line = terminal_ui.find_node("CommandLine", true, false)
             if command_line:
                 command_line.text = "create note Connected to folder: " + folder_path
+				
 
 func _on_command_entered(text):
     var result = process_command(text)
@@ -1225,7 +1285,7 @@ func _on_command_entered(text):
         command_line.placeholder_text = result
         
         # Reset placeholder after delay
-        yield(get_tree().create_timer(3.0), "timeout")
+        await(get_tree().create_timer(3.0), "timeout")
         command_line.placeholder_text = "Enter command..."
 
 func _on_visualization_button_pressed():
@@ -1244,7 +1304,7 @@ func _on_evolution_button_pressed():
         command_line.placeholder_text = "Evolved %d entities" % evolved_count
         
         # Reset placeholder after delay
-        yield(get_tree().create_timer(2.0), "timeout")
+        await(get_tree().create_timer(2.0), "timeout")
         command_line.placeholder_text = "Enter command..."
 
 func _on_connect_folder_button_pressed():

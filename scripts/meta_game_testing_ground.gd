@@ -25,6 +25,7 @@ class TestData:
 	var start_time: int
 	var end_time: int
 	var status: String  # "running", "completed", "failed"
+
 	var results: Dictionary
 	var created_by: String
 	
@@ -35,7 +36,7 @@ class TestData:
 		start_time = Time.get_unix_time_from_system()
 		end_time = 0
 		status = "running"
-		results = {}
+		results = {
 		created_by = p_created_by
 	
 	func complete(p_results: Dictionary = {}) -> void:
@@ -46,7 +47,8 @@ class TestData:
 	func fail(p_error: String) -> void:
 		end_time = Time.get_unix_time_from_system()
 		status = "failed"
-		results = {"error": p_error}
+		results = {"error": p_error
+}
 	
 	func to_dict() -> Dictionary:
 		return {
@@ -59,7 +61,7 @@ class TestData:
 			"results": results,
 			"created_by": created_by,
 			"duration": end_time - start_time if end_time > 0 else 0
-		}
+}
 	
 	static func from_dict(data: Dictionary) -> TestData:
 		var test = TestData.new(
@@ -83,6 +85,7 @@ func pentagon_init() -> void:
 	consciousness_level = 3  # High consciousness for AI testing
 	
 	print("🧪 Meta Game Testing Ground: Pentagon Init Complete")
+}
 
 func pentagon_ready() -> void:
 	super.pentagon_ready()
@@ -97,6 +100,7 @@ func pentagon_ready() -> void:
 	load_testing_ground()
 	
 	print("🧪 Meta Game Testing Ground: Pentagon Ready Complete")
+
 
 func pentagon_process(delta: float) -> void:
 	super.pentagon_process(delta)
@@ -153,6 +157,7 @@ func start_test(being_type: String, parameters: Dictionary = {}, created_by: Str
 	if SystemBootstrap and SystemBootstrap.is_system_ready():
 		var flood_gates = SystemBootstrap.get_flood_gates()
 		if flood_gates and flood_gates.has_method("create_being"):
+
 			var being = flood_gates.create_being(being_type, parameters)
 			if being:
 				test.results["being_uuid"] = being.being_uuid
@@ -201,6 +206,7 @@ func process_active_tests() -> void:
 			if SystemBootstrap and SystemBootstrap.is_system_ready():
 				var flood_gates = SystemBootstrap.get_flood_gates()
 				if flood_gates and flood_gates.has_method("get_being"):
+	
 					var being = flood_gates.get_being(test.results["being_uuid"])
 					if not being:
 						test.fail("Test being was destroyed")
@@ -219,6 +225,7 @@ func update_test_results(test: TestData) -> void:
 	if SystemBootstrap and SystemBootstrap.is_system_ready():
 		var flood_gates = SystemBootstrap.get_flood_gates()
 		if flood_gates and flood_gates.has_method("get_being"):
+
 			var being = flood_gates.get_being(test.results["being_uuid"])
 			if being:
 				# Collect being state
@@ -227,8 +234,8 @@ func update_test_results(test: TestData) -> void:
 					"rotation": being.rotation if being.has_method("get_rotation") else Vector3.ZERO,
 					"scale": being.scale if being.has_method("get_scale") else Vector3.ONE,
 					"consciousness": being.consciousness_level if being.has_method("get_consciousness") else 0,
-					"components": being.component_data if being.has_method("get_components") else {}
-				}
+					"components": being.component_data if being.has_method("get_components") else {
+	}
 
 func add_to_history(test: TestData) -> void:
 	"""Add a test to history"""
@@ -252,10 +259,10 @@ func get_test_info(test_id: String) -> Dictionary:
 		if test.test_id == test_id:
 			return test.to_dict()
 	
-	return {}
+	return {
 
 func list_active_tests() -> Array[Dictionary]:
-	"""List all active tests"""
+	"""List all active tests"""}
 	var test_list: Array[Dictionary] = []
 	for test in active_tests.values():
 		test_list.append(test.to_dict())
@@ -275,6 +282,7 @@ func save_test_history() -> void:
 	if SystemBootstrap and SystemBootstrap.is_system_ready():
 		var akashic = SystemBootstrap.get_akashic_records()
 		if akashic and akashic.has_method("save_data"):
+}
 			var history_data = []
 			for test in test_history:
 				history_data.append(test.to_dict())
@@ -285,6 +293,7 @@ func load_test_history() -> void:
 	if SystemBootstrap and SystemBootstrap.is_system_ready():
 		var akashic = SystemBootstrap.get_akashic_records()
 		if akashic and akashic.has_method("load_data"):
+
 			var history_data = akashic.load_data("test_history", [])
 			for test_data in history_data:
 				test_history.append(TestData.from_dict(test_data))
@@ -299,7 +308,7 @@ func ai_interface() -> Dictionary:
 		"active_tests": active_tests.size(),
 		"history_size": test_history.size(),
 		"scene_loaded": current_scene != null
-	}
+}
 	
 	base_interface["capabilities"] = [
 		"test_creation",
@@ -330,6 +339,6 @@ func ai_invoke_method(method_name: String, args: Array = []) -> Variant:
 		"get_test_info":
 			if args.size() > 0:
 				return get_test_info(args[0])
-			return {}
-		_:
+			return {
+		_:}
 			return super.ai_invoke_method(method_name, args) 

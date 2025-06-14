@@ -1,15 +1,15 @@
 #StarCloseUp.gd a Node3D, just a startpoint, it should be a next scene, where in first we generate galaxies, then we go to a single galaxy made from stars, and then we go to a single star that was made in second scene
-extends Node3D
+extends \2
 
 var cube_cam
-var star_scene = preload("res://Scenes/CelestialBody.tscn")
+var star_scene = preload("res://scenes/CelestialBody.tscn")
 var Cassiopeia_offset_system
 var camera_distance = 100.0
 var star_seed
 var rng = RandomNumberGenerator.new()
 var planet_seed
-var planet_scene = preload("res://Scenes/CelestialPlanet.tscn")
-var orbit_scene = preload("res://Scenes/Orbit.tscn")
+var planet_scene = preload("res://scenes/CelestialPlanet.tscn")
+var orbit_scene = preload("res://scenes/Orbit.tscn")
 var planets = []
 var furthest_planet_distance = 0
 var last_planet_distance = 50
@@ -89,7 +89,7 @@ func apply_skybox():
 
 # the thingy where we add environment, i kinda dunno why we need it as we already are just adding image as our world? maybe the lights and ambients are there
 func get_environment():
-	var world = get_viewport().get_world_3d()
+	var world = get_viewport().get_viewport().get_world_3d()
 	if not world.environment:
 		world.environment = Environment.new()
 	return world.environment
@@ -127,7 +127,7 @@ func transition_to_galaxy():
 		"previous_star_coordinates": GlobalState.current_star_data.position
 	})
 	GlobalState.update_elapsed_time()
-	get_tree().change_scene_to_file("res://Scenes/GalaxyCloseUp.tscn")
+	get_tree().change_scene_to_file("res://scenes/GalaxyCloseUp.tscn")
 
 # generate planets! take that tasty seed from my star! then make me them planets
 func generate_planets():
@@ -288,4 +288,4 @@ func transition_to_planet(current_planet_data: Dictionary):
 	})
 	
 	# Transition to the CelestialBodyCloseUp scene
-	#get_tree().change_scene_to_file("res://Scenes/CelestialBodyCloseUp.tscn")
+	#get_tree().change_scene_to_file("res://scenes/CelestialBodyCloseUp.tscn")

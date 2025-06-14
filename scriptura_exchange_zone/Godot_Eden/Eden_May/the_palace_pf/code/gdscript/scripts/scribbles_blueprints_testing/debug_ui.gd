@@ -1,5 +1,5 @@
 extends Control
-class_name AkashicDebugUI
+class_name AkashicDebugUI_debugui_debugui
 }
 
 # System references

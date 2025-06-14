@@ -10,15 +10,14 @@
 # PURPOSE: Diagnose and fix all gizmo-related issues
 # CREATED: 2025-05-30
 # ==================================================
-
-extends UniversalBeingBase
+extends \2
 func _ready() -> void:
 	print("[GizmoDiagnostics] Comprehensive gizmo diagnostics loading...")
 	_register_commands()
 
 func _register_commands() -> void:
 	"""Register comprehensive diagnostic commands"""
-	var console = get_node_or_null("/root/ConsoleManager")
+	var console = get_node_or_null("root/ConsoleManager")
 	if console:
 		console.register_command("gizmo_full_diagnosis", cmd_full_diagnosis, "Complete gizmo system diagnosis")
 		console.register_command("gizmo_emergency_fix", cmd_emergency_fix, "Emergency gizmo repair")
@@ -127,7 +126,7 @@ func cmd_full_diagnosis(_args: Array) -> String:
 	output += "\n🖱️ Phase 5: Mouse System\n"
 	output += "------------------------\n"
 	
-	var mouse_system = get_node_or_null("/root/MainGame/MouseInteractionSystem")
+	var mouse_system = get_node_or_null("root/MainGame/MouseInteractionSystem")
 	if mouse_system:
 		output += "✅ Mouse system found\n"
 	else:
@@ -284,7 +283,7 @@ func cmd_connection_test(_args: Array) -> String:
 		var from = camera.project_ray_origin(center)
 		var to = from + camera.project_ray_normal(center) * 100
 		
-		var space_state = camera.get_world_3d().direct_space_state
+		var space_state = camera.get_viewport().get_world_3d().direct_space_state
 		var query = PhysicsRayQueryParameters3D.create(from, to)
 		query.collision_mask = 2  # Gizmo layer
 		query.collide_with_areas = true
@@ -299,7 +298,7 @@ func cmd_connection_test(_args: Array) -> String:
 	
 	# Test 4: Console Commands
 	output += "\n⌨️ Console Commands Test:\n"
-	var console = get_node_or_null("/root/ConsoleManager")
+	var console = get_node_or_null("root/ConsoleManager")
 	if console and "commands" in console:
 		var gizmo_commands = []
 		for cmd in console.commands:

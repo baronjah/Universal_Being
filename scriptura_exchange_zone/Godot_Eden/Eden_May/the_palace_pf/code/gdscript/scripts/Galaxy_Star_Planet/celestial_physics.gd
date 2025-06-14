@@ -1,11 +1,12 @@
 extends Node
-class_name CelestialPhysics
+class_name CelestialPhysics_celestialphysics_celestia
 
 # Gravitational constant (scaled for game)
 const G = 6.67430e-11 * 1e9  # Scale up for better gameplay
 
 # Interaction types
-enum InteractionType {
+enum \2 {
+
 	GRAVITATIONAL,
 	TIDAL,
 	MAGNETIC,

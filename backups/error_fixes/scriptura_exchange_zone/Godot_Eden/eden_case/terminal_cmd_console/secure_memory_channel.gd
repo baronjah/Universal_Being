@@ -178,7 +178,7 @@ signal security_level_changed(new_level)
 # System Initialization
 func _ready():
     # Generate device ID if not already set
-    if _device_id.empty():
+    if _device_id.is_empty():
         _device_id = _generate_device_id()
     
     # Load trusted devices
@@ -205,7 +205,7 @@ func set_security_level(level: int) -> bool:
     return true
 
 func set_encryption_key(key: String) -> bool:
-    if key.empty():
+    if key.is_empty():
         return false
     
     _encryption_key = key
@@ -228,7 +228,7 @@ func add_trusted_device(name: String, public_key: String = "", trust_level: int 
     var device_id = "device_" + str(OS.get_unix_time()) + "_" + str(randi() % 1000).pad_zeros(3)
     
     var device = DeviceProfile.new(device_id, name, trust_level)
-    if not public_key.empty():
+    if not public_key.is_empty():
         device.public_key = public_key
     
     _trusted_devices.append(device)
@@ -784,7 +784,7 @@ func _generate_device_id() -> String:
     var unique_id = OS.get_unique_id()
     
     # If unique ID not available, create a random one
-    if unique_id.empty():
+    if unique_id.is_empty():
         var rng = RandomNumberGenerator.new()
         rng.randomize()
         unique_id = str(rng.randi()) + "-" + str(OS.get_unix_time())
@@ -851,7 +851,7 @@ func visualize_memory_security_patterns(date: String = "") -> Dictionary:
     # Add trajectory points
     for point_type in trajectory.points:
         var point = trajectory.points[point_type]
-        if not point.memory_id.empty():
+        if not point.memory_id.is_empty():
             if point_type == _trajectory_system.TRAJECTORY_POINTS.START:
                 pattern.past_memories.append({
                     "id": point.memory_id,
@@ -945,7 +945,7 @@ func _get_recent_transfers(count: int) -> Array:
     all_transfers.append_array(_pending_transfers)
     
     # Sort by timestamp (most recent first)
-    all_transfers.sort_custom(self, "_sort_transfers_by_time")
+    all_transfers.sort_custom(self."_sort_transfers_by_time")
     
     # Take only the requested count
     var result = []

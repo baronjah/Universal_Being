@@ -36,6 +36,7 @@ func pentagon_init() -> void:
 	
 	print("🎥 CameraUniversalBeing: Pentagon camera initialization")
 
+
 func pentagon_ready() -> void:
 	# Call parent ready
 	super()
@@ -67,6 +68,7 @@ func pentagon_sewers() -> void:
 	# Camera cleanup
 	if trackball_camera:
 		print("🎥 CameraUniversalBeing: Cleaning up camera")
+
 	
 	# Call parent cleanup
 	super()
@@ -84,11 +86,13 @@ func setup_trackball_camera() -> void:
 	
 	if trackball_camera:
 		print("🎥 CameraUniversalBeing: Trackball camera found - %s" % trackball_camera.name)
+
 		
 		# Get the trackball script
 		camera_script = trackball_camera.get_script()
 		if camera_script:
 			print("🎥 CameraUniversalBeing: Trackball script detected")
+
 		
 		# Make this camera current
 		trackball_camera.current = true
@@ -100,6 +104,7 @@ func setup_trackball_camera() -> void:
 		print("🎥 Controls: Mouse wheel (zoom), Q/E (roll), Middle mouse (orbit)")
 	else:
 		push_error("🎥 CameraUniversalBeing: No trackball camera found in scene")
+
 
 func setup_camera_effects() -> void:
 	# Setup consciousness-based camera effects
@@ -118,6 +123,7 @@ func setup_camera_effects() -> void:
 		print("🎥 Effects will activate based on consciousness level (%d)" % consciousness_level)
 	else:
 		push_warning("🎥 CameraUniversalBeing: Camera effects component not found")
+
 
 func find_trackball_camera_recursive(node: Node) -> Camera3D:
 	# Recursively find trackball camera in scene
@@ -142,6 +148,7 @@ func find_camera_target() -> void:
 	camera_target = find_node_recursive(controlled_scene, "MeshInstance3D")
 	if camera_target:
 		print("🎥 CameraUniversalBeing: Camera target found - %s" % camera_target.name)
+
 
 func find_node_recursive(node: Node, type_name: String) -> Node:
 	# Recursively find node of specific type
@@ -185,6 +192,7 @@ func set_camera_enabled(enabled: bool) -> void:
 	
 	print("🎥 CameraUniversalBeing: Camera %s" % ("enabled" if enabled else "disabled"))
 
+
 func get_camera_info() -> Dictionary:
 	pass
 	# Get camera information for AI/debug
@@ -193,7 +201,7 @@ func get_camera_info() -> Dictionary:
 		"camera_current": trackball_camera.current if trackball_camera else false,
 		"input_enabled": camera_input_enabled,
 		"pentagon_active": pentagon_camera_active
-	}
+}
 	
 	if trackball_camera:
 		info["camera_position"] = trackball_camera.global_position
@@ -269,6 +277,7 @@ func set_effects_enabled(enabled: bool) -> void:
 		camera_effects.set_effects_enabled(enabled)
 	print("🎥 Camera effects: %s" % ("enabled" if enabled else "disabled"))
 
+
 func reset_camera_position() -> void:
 	# Reset camera to default position
 	if trackball_camera:
@@ -286,12 +295,15 @@ func debug_camera_info() -> String:
 	info.append("Camera Found: %s" % str(trackball_camera != null))
 	info.append("Pentagon Active: %s" % str(pentagon_camera_active))
 	info.append("Input Enabled: %s" % str(camera_input_enabled))
+
 	
 	if trackball_camera:
 		info.append("Camera Current: %s" % str(trackball_camera.current))
 		info.append("Camera Position: %s" % str(trackball_camera.global_position))
+
 	
 	if camera_target:
 		info.append("Target: %s at %s" % [camera_target.name, str(camera_target.global_position)])
+
 	
 	return "\n".join(info)

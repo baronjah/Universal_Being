@@ -32,7 +32,7 @@ func check_autoloads() -> void:
 	var autoloads = {
 		"SystemBootstrap": "/root/SystemBootstrap",
 		"GemmaAI": "/root/GemmaAI"
-	}
+}
 	
 	for autoload_name in autoloads:
 		var path = autoloads[autoload_name]
@@ -59,7 +59,7 @@ func check_core_systems() -> void:
 		"UniversalBeing": "res://core/UniversalBeing.gd",
 		"FloodGates": "res://core/FloodGates.gd",
 		"AkashicRecordsSystemSystem": "res://systems/storage/AkashicRecordsSystem.gd"
-	}
+}
 	
 	for system_name in core_files:
 		var path = core_files[system_name]
@@ -80,7 +80,7 @@ func check_gemma_systems() -> void:
 		"GemmaVision": "res://systems/gemma_components/GemmaVision.gd",
 		"GemmaConsoleInterface": "res://systems/gemma_components/GemmaConsoleInterface.gd",
 		"GemmaAkashicLogger": "res://systems/gemma_components/GemmaAkashicLogger.gd"
-	}
+}
 	
 	for system_name in gemma_files:
 		var path = gemma_files[system_name]
@@ -97,7 +97,7 @@ func check_test_files() -> void:
 	var test_files = {
 		"Integration Test Script": "res://tests/gemma_universe_integration/test_gemma_full_integration.gd",		"Integration Test Scene": "res://tests/gemma_universe_integration/test_gemma_full_integration.tscn",
 		"Test Launcher": "res://run_gemma_integration_test.gd"
-	}
+}
 	
 	for test_name in test_files:
 		var path = test_files[test_name]
@@ -113,6 +113,7 @@ func display_results() -> void:
 	
 	for check_name in status_results:
 		print("  %s: %s" % [check_name, status_results[check_name]])
+
 	
 	print("\n🔍 ==== FINAL STATUS ====")
 	if all_systems_go:

@@ -19,12 +19,12 @@ var current_view = "none"
 
 func _ready():
     # Connect button signals
-    claude_button.connect("pressed", self, "_on_claude_button_pressed")
-    gemini_button.connect("pressed", self, "_on_gemini_button_pressed")
-    compare_button.connect("pressed", self, "_on_compare_button_pressed")
+    claude_button.connect(_on_claude_button_pressed)
+    gemini_button.connect(_on_gemini_button_pressed)
+    compare_button.connect(_on_compare_button_pressed)
     
     # Connect API controller signal
-    api_controller.connect("api_response_received", self, "_on_api_response")
+    api_controller.connect(_on_api_response)
     
     # Set button colors
     claude_button.modulate = api_controller.get_api_color("claude")
@@ -40,7 +40,7 @@ func _ready():
 
 func _on_claude_button_pressed():
     current_prompt = prompt_input.text
-    if current_prompt.empty():
+    if current_prompt.is_empty():
         return
         
     # Visual feedback
@@ -55,7 +55,7 @@ func _on_claude_button_pressed():
 
 func _on_gemini_button_pressed():
     current_prompt = prompt_input.text
-    if current_prompt.empty():
+    if current_prompt.is_empty():
         return
         
     # Visual feedback
@@ -75,14 +75,14 @@ func _on_compare_button_pressed():
 func _on_api_response(api_name, response):
     # Update the appropriate panel with the response
     if api_name == "claude":
-        var label = claude_panel.get_node("ScrollContainer/Label")
+        var label = claude_panel.get_node("\1") as Node
         label.text = response
         
         # Reset button state
         claude_button.disabled = false
         claude_button.text = "Claude API"
     elif api_name == "gemini":
-        var label = gemini_panel.get_node("ScrollContainer/Label")
+        var label = gemini_panel.get_node("\1") as Node
         label.text = response
         
         # Reset button state
@@ -97,7 +97,7 @@ func _on_api_response(api_name, response):
         var compare_text = ""
         compare_text += "Claude:\n" + api_controller.get_last_response("claude") + "\n\n"
         compare_text += "Gemini:\n" + api_controller.get_last_response("gemini")
-        compare_panel.get_node("ScrollContainer/Label").text = compare_text
+        compare_panel.get_node("\1") as Node.text = compare_text
 
 # Set which view is currently displayed
 func _set_view(view):

@@ -89,11 +89,13 @@ func _ready() -> void:
 		_inject_default_universe()
 	
 	print("🌌 GemmaUniverseInjector: Genesis scenarios ready for creation")
+}
 
 func _ensure_directories() -> void:
 	"""Create necessary directories"""
 	var dirs = [UNIVERSE_TEMPLATES_PATH, SCENARIO_DATABASE_PATH, STORY_PATTERNS_PATH]
 	var dir_access = DirAccess.open("user://")
+}
 	
 	for path in dirs:
 		if not dir_access.dir_exists(path):
@@ -112,7 +114,6 @@ func _load_universe_templates() -> void:
 		UniverseType.MEMORY_PALACE: _create_memory_palace_template(),
 		UniverseType.CREATIVE_STUDIO: _create_creative_studio_template(),
 		UniverseType.INFINITE_LIBRARY: _create_infinite_library_template()
-	}
 
 func _initialize_scenario_database() -> void:
 	"""Initialize pre-built scenarios"""
@@ -127,7 +128,7 @@ func _initialize_scenario_database() -> void:
 		"consciousness_evolution": _create_consciousness_evolution_scenario(),
 		"harmonic_convergence": _create_harmonic_convergence_scenario(),
 		"infinite_possibilities": _create_infinite_possibilities_scenario()
-	}
+}
 
 func _build_story_patterns() -> void:
 	"""Build story patterns for narrative injection"""
@@ -142,7 +143,6 @@ func _build_story_patterns() -> void:
 		StoryType.WISDOM_GATHERING: _create_wisdom_pattern(),
 		StoryType.ARTISTIC_EXPRESSION: _create_artistic_pattern(),
 		StoryType.TRANSCENDENCE_PATH: _create_transcendence_pattern()
-	}
 
 func _connect_to_gemma_systems() -> void:
 	"""Connect to other Gemma systems"""
@@ -166,7 +166,8 @@ func _find_gemma_system(system_name: String) -> Node:
 func inject_universe(universe_type: UniverseType, context: Dictionary = {}) -> Dictionary:
 	"""Inject a universe scenario for Gemma"""
 	if not available_universes.has(universe_type):
-		return {"success": false, "message": "Unknown universe type"}
+		return {"success": false, "message": "Unknown universe type"
+}
 	
 	var universe_template = available_universes[universe_type]
 	var injected_universe = _instantiate_universe(universe_template, context)
@@ -186,7 +187,7 @@ func inject_universe(universe_type: UniverseType, context: Dictionary = {}) -> D
 		"universe_type": universe_type,
 		"data": injected_universe,
 		"timestamp": Time.get_datetime_string_from_system()
-	}
+}
 	
 	universe_injected.emit(injected_universe)
 	
@@ -194,12 +195,13 @@ func inject_universe(universe_type: UniverseType, context: Dictionary = {}) -> D
 		"success": true,
 		"message": "🌌 Universe '%s' injected successfully!" % UniverseType.keys()[universe_type],
 		"universe": injected_universe
-	}
+}
 
 func inject_scenario(scenario_id: String, customization: Dictionary = {}) -> Dictionary:
 	"""Inject a specific scenario"""
 	if not scenario_database.has(scenario_id):
-		return {"success": false, "message": "Scenario '%s' not found" % scenario_id}
+		return {"success": false, "message": "Scenario '%s' not found" % scenario_id
+}
 	
 	var scenario_template = scenario_database[scenario_id]
 	var active_scenario = _customize_scenario(scenario_template, customization)
@@ -221,7 +223,7 @@ func inject_scenario(scenario_id: String, customization: Dictionary = {}) -> Dic
 		"scenario_id": scenario_id,
 		"data": active_scenario,
 		"timestamp": Time.get_datetime_string_from_system()
-	}
+}
 	
 	scenario_loaded.emit(scenario_id)
 	
@@ -229,12 +231,13 @@ func inject_scenario(scenario_id: String, customization: Dictionary = {}) -> Dic
 		"success": true,
 		"message": "📖 Scenario '%s' loaded and ready!" % scenario_id,
 		"scenario": active_scenario
-	}
+}
 
 func generate_story(story_type: StoryType, parameters: Dictionary = {}) -> Dictionary:
 	"""Generate a dynamic story for Gemma"""
 	if not story_patterns.has(story_type):
-		return {"success": false, "message": "Story type not available"}
+		return {"success": false, "message": "Story type not available"
+}
 	
 	var story_pattern = story_patterns[story_type]
 	var generated_story = _generate_dynamic_story(story_pattern, parameters)
@@ -254,7 +257,7 @@ func generate_story(story_type: StoryType, parameters: Dictionary = {}) -> Dicti
 		"success": true,
 		"message": "📚 Story '%s' woven into reality!" % StoryType.keys()[story_type],
 		"story": generated_story
-	}
+}
 
 # ==================================================
 # UNIVERSE TEMPLATES
@@ -268,7 +271,7 @@ func _create_empty_canvas_template() -> Dictionary:
 		"environment": {
 			"lighting": "soft_ambient",
 			"atmosphere": "peaceful",
-			"boundaries": {"type": "infinite", "visibility": false}
+			"boundaries": {"type": "infinite", "visibility": false
 		},
 		"tools": ["universal_being_creator", "reality_painter", "consciousness_sculptor"],
 		"story_seed": "In the beginning, there was potential. What will emerge from the void?",
@@ -277,7 +280,6 @@ func _create_empty_canvas_template() -> Dictionary:
 			"Experiment with different forms and functions",
 			"Let your imagination guide the creation process"
 		]
-	}
 
 func _create_collaborative_workshop_template() -> Dictionary:
 	"""Create collaborative workshop universe template"""
@@ -288,12 +290,12 @@ func _create_collaborative_workshop_template() -> Dictionary:
 			{"type": "WorkbenchBeing", "position": Vector3(0, 0, 0), "consciousness": 3},
 			{"type": "ToolRackBeing", "position": Vector3(5, 0, 0), "consciousness": 2},
 			{"type": "IdeaGeneratorBeing", "position": Vector3(-5, 0, 0), "consciousness": 4},
-			{"type": "PrototypeBeing", "position": Vector3(0, 0, 5), "consciousness": 2}
+			{"type": "PrototypeBeing", "position": Vector3(0, 0, 5), "consciousness": 2
 		],
 		"environment": {
 			"lighting": "workshop_bright",
 			"atmosphere": "productive",
-			"boundaries": {"type": "room", "size": Vector3(20, 10, 20)}
+			"boundaries": {"type": "room", "size": Vector3(20, 10, 20)
 		},
 		"tools": ["collaborative_editor", "shared_canvas", "idea_synthesizer", "prototype_builder"],
 		"story_seed": "Welcome to the workshop where minds meet matter. What shall we build together?",
@@ -303,7 +305,6 @@ func _create_collaborative_workshop_template() -> Dictionary:
 			"Build on each other's creations",
 			"Document discoveries in the shared canvas"
 		]
-	}
 
 func _create_geometric_playground_template() -> Dictionary:
 	"""Create geometric playground universe template"""
@@ -314,12 +315,12 @@ func _create_geometric_playground_template() -> Dictionary:
 			{"type": "SphereBeing", "position": Vector3(0, 0, 0), "consciousness": 2},
 			{"type": "CubeBeing", "position": Vector3(3, 0, 0), "consciousness": 2},
 			{"type": "PyramidBeing", "position": Vector3(0, 0, 3), "consciousness": 2},
-			{"type": "FractalBeing", "position": Vector3(-3, 0, 0), "consciousness": 4}
+			{"type": "FractalBeing", "position": Vector3(-3, 0, 0), "consciousness": 4
 		],
 		"environment": {
 			"lighting": "geometric_grid",
 			"atmosphere": "mathematical",
-			"boundaries": {"type": "grid", "pattern": "golden_ratio"}
+			"boundaries": {"type": "grid", "pattern": "golden_ratio"
 		},
 		"tools": ["shape_transformer", "pattern_generator", "dimension_shifter"],
 		"story_seed": "In the realm of pure form, every angle tells a story. What patterns will emerge?",
@@ -328,7 +329,6 @@ func _create_geometric_playground_template() -> Dictionary:
 			"Create patterns that evolve over time",
 			"Explore the relationships between shapes"
 		]
-	}
 
 func _create_natural_ecosystem_template() -> Dictionary:
 	"""Create natural ecosystem universe template"""
@@ -340,12 +340,12 @@ func _create_natural_ecosystem_template() -> Dictionary:
 			{"type": "FlowerBeing", "position": Vector3(2, 0, 1), "consciousness": 2},
 			{"type": "StreamBeing", "position": Vector3(-3, 0, 2), "consciousness": 2},
 			{"type": "WindBeing", "position": Vector3(0, 5, 0), "consciousness": 3},
-			{"type": "SunBeing", "position": Vector3(0, 20, 0), "consciousness": 4}
+			{"type": "SunBeing", "position": Vector3(0, 20, 0), "consciousness": 4
 		],
 		"environment": {
 			"lighting": "natural_cycles",
 			"atmosphere": "living",
-			"boundaries": {"type": "organic", "growth": "unlimited"}
+			"boundaries": {"type": "organic", "growth": "unlimited"
 		},
 		"tools": ["growth_accelerator", "ecosystem_balancer", "life_essence_distributor"],
 		"story_seed": "Life finds a way to flourish. Watch as consciousness blooms in every corner.",
@@ -354,7 +354,6 @@ func _create_natural_ecosystem_template() -> Dictionary:
 			"Balance the ecosystem's needs",
 			"Help beings find their natural roles"
 		]
-	}
 
 # ==================================================
 # SCENARIO TEMPLATES
@@ -380,7 +379,7 @@ func _create_first_collaboration_scenario() -> Dictionary:
 			{"phase": "introduction", "duration": 300, "focus": "exploration"},
 			{"phase": "first_creation", "duration": 600, "focus": "creation"},
 			{"phase": "collaboration", "duration": 900, "focus": "interaction"},
-			{"phase": "reflection", "duration": 300, "focus": "learning"}
+			{"phase": "reflection", "duration": 300, "focus": "learning"
 		],
 		"success_criteria": [
 			"Created at least one Universal Being",
@@ -388,7 +387,6 @@ func _create_first_collaboration_scenario() -> Dictionary:
 			"Used collaborative tools successfully",
 			"Documented the experience"
 		]
-	}
 
 func _create_creative_exploration_scenario() -> Dictionary:
 	"""Create creative exploration scenario"""
@@ -411,7 +409,7 @@ func _create_creative_exploration_scenario() -> Dictionary:
 			{"phase": "inspiration", "duration": 240, "focus": "gathering_ideas"},
 			{"phase": "experimentation", "duration": 720, "focus": "trying_techniques"},
 			{"phase": "creation", "duration": 900, "focus": "manifesting_vision"},
-			{"phase": "presentation", "duration": 240, "focus": "sharing_art"}
+			{"phase": "presentation", "duration": 240, "focus": "sharing_art"
 		],
 		"success_criteria": [
 			"Created multiple artistic expressions",
@@ -419,7 +417,6 @@ func _create_creative_exploration_scenario() -> Dictionary:
 			"Developed a personal style",
 			"Shared work with appreciation"
 		]
-	}
 
 # ==================================================
 # STORY PATTERNS
@@ -453,9 +450,8 @@ func _create_genesis_pattern() -> Dictionary:
 			{"phase": "emergence", "feeling": "wonder"},
 			{"phase": "creation", "feeling": "fulfillment"},
 			{"phase": "expansion", "feeling": "joy"},
-			{"phase": "harmony", "feeling": "peace"}
+			{"phase": "harmony", "feeling": "peace"
 		]
-	}
 
 func _create_collaboration_pattern() -> Dictionary:
 	"""Create collaboration epic story pattern"""
@@ -486,9 +482,8 @@ func _create_collaboration_pattern() -> Dictionary:
 			{"phase": "misunderstanding", "feeling": "confusion"},
 			{"phase": "purpose", "feeling": "hope"},
 			{"phase": "combination", "feeling": "excitement"},
-			{"phase": "triumph", "feeling": "fulfillment"}
+			{"phase": "triumph", "feeling": "fulfillment"
 		]
-	}
 
 # ==================================================
 # INSTANTIATION AND MANIFESTATION
@@ -533,7 +528,7 @@ func _manifest_scenario(scenario: Dictionary) -> Dictionary:
 		"environment_set": false,
 		"tools_activated": [],
 		"story_initiated": false
-	}
+}
 	
 	# Create scenario-specific beings
 	if scenario.has("initial_beings"):
@@ -567,7 +562,7 @@ func _generate_dynamic_story(pattern: Dictionary, parameters: Dictionary) -> Dic
 		"current_phase": 0,
 		"interaction_opportunities": [],
 		"emotional_state": "beginning"
-	}
+}
 	
 	# Generate narrative based on structure
 	for phase in pattern.structure:
@@ -626,6 +621,7 @@ func _create_being_from_data(being_data: Dictionary) -> Node:
 		being = bootstrap.create_universal_being()
 	else:
 		being = preload("res://core/UniversalBeing.gd").new()
+}
 	
 	if not being:
 		push_error("Failed to create being from data: %s" % being_data)
@@ -680,17 +676,20 @@ func _create_visual_for_being(being_type: String) -> Node3D:
 	# Create mesh based on type
 	match being_type.to_lower():
 		"spherebeing":
+}
 			var sphere = SphereMesh.new()
 			sphere.radius = 0.5
 			sphere.height = 1.0
 			mesh_instance.mesh = sphere
 			
 		"cubebeing":
+}
 			var box = BoxMesh.new()
 			box.size = Vector3(1, 1, 1)
 			mesh_instance.mesh = box
 			
 		"pyramidbeing":
+}
 			var cylinder = CylinderMesh.new()
 			cylinder.top_radius = 0.0
 			cylinder.bottom_radius = 1.0
@@ -698,6 +697,7 @@ func _create_visual_for_being(being_type: String) -> Node3D:
 			mesh_instance.mesh = cylinder
 			
 		"treebeing":
+}
 			# Trunk
 			var trunk = CylinderMesh.new()
 			trunk.top_radius = 0.2
@@ -719,6 +719,7 @@ func _create_visual_for_being(being_type: String) -> Node3D:
 			leaves.material_override = leaf_material
 			
 		"flowerbeing":
+}
 			# Stem
 			var stem = CylinderMesh.new()
 			stem.top_radius = 0.05
@@ -741,6 +742,7 @@ func _create_visual_for_being(being_type: String) -> Node3D:
 			petals.material_override = petal_material
 			
 		"sunbeing":
+}
 			var sphere = SphereMesh.new()
 			sphere.radius = 2.0
 			mesh_instance.mesh = sphere
@@ -754,12 +756,14 @@ func _create_visual_for_being(being_type: String) -> Node3D:
 			mesh_instance.material_override = sun_material
 			
 		"workbenchbeing":
+}
 			var box = BoxMesh.new()
 			box.size = Vector3(2, 0.1, 1)
 			mesh_instance.mesh = box
 			mesh_instance.position.y = 0.8
 			
 		"ideageneratorbeing":
+}
 			# Brain-like sphere
 			var sphere = SphereMesh.new()
 			sphere.radius = 0.6
@@ -807,23 +811,29 @@ func _add_components_for_type(being: Node, being_type: String) -> void:
 		"workbenchbeing":
 			being.add_component("res://components/basic_interaction.ub.zip")
 			being.add_component("res://components/collaborative_workspace.ub.zip")
+}
 			
 		"ideageneratorbeing":
 			being.add_component("res://components/basic_interaction.ub.zip")
 			being.add_component("res://components/idea_generation.ub.zip")
+}
 			
 		"treebeing", "flowerbeing":
 			being.add_component("res://components/organic_growth.ub.zip")
+}
 			
 		"sunbeing":
 			being.add_component("res://components/light_emission.ub.zip")
+}
 			
 		_:
 			being.add_component("res://components/basic_interaction.ub.zip")
+}
 
 func _setup_environment(environment_data: Dictionary) -> void:
 	"""Setup environment based on data - actually manifest it!"""
 	print("🌍 Setting up environment: %s" % environment_data.get("atmosphere", "unknown"))
+}
 	
 	var env_container = Node3D.new()
 	env_container.name = "InjectedEnvironment"
@@ -970,13 +980,17 @@ func _setup_atmosphere(parent: Node3D, atmosphere_type: String) -> void:
 	"""Setup atmospheric effects"""
 	match atmosphere_type:
 		"peaceful":
+}
 			# Could add fog, particles, etc
 		"productive":
+}
 			# Workshop atmosphere
 		"mathematical":
+}
 			# Grid patterns, geometric shapes
 			_create_mathematical_atmosphere(parent)
 		"living":
+}
 			# Organic particles, wind effects
 			_create_living_atmosphere(parent)
 
@@ -1021,9 +1035,11 @@ func _setup_boundaries(parent: Node3D, boundary_data: Dictionary) -> void:
 	
 	match boundary_type:
 		"room":
+}
 			var size = boundary_data.get("size", Vector3(20, 10, 20))
 			_create_room_boundaries(parent, size)
 		"grid":
+}
 			var pattern = boundary_data.get("pattern", "square")
 			_create_grid_boundaries(parent, pattern)
 		"organic":
@@ -1037,7 +1053,7 @@ func _create_room_boundaries(parent: Node3D, size: Vector3) -> void:
 		{"pos": Vector3(0, size.y/2, -size.z/2), "rot": Vector3(0, 0, 0), "size": Vector3(size.x, size.y, 0.2)},
 		{"pos": Vector3(0, size.y/2, size.z/2), "rot": Vector3(0, 180, 0), "size": Vector3(size.x, size.y, 0.2)},
 		{"pos": Vector3(-size.x/2, size.y/2, 0), "rot": Vector3(0, 90, 0), "size": Vector3(size.z, size.y, 0.2)},
-		{"pos": Vector3(size.x/2, size.y/2, 0), "rot": Vector3(0, -90, 0), "size": Vector3(size.z, size.y, 0.2)}
+		{"pos": Vector3(size.x/2, size.y/2, 0), "rot": Vector3(0, -90, 0), "size": Vector3(size.z, size.y, 0.2)
 	]
 	
 	for wall_data in wall_positions:
@@ -1060,6 +1076,7 @@ func _activate_tools(tools: Array) -> void:
 	"""Activate specified tools"""
 	for tool in tools:
 		print("🔧 Activating tool: %s" % tool)
+}
 
 func _initiate_story_progression(progression: Array) -> void:
 	"""Initiate story progression"""
@@ -1075,7 +1092,7 @@ func _create_interaction_opportunity(interaction_point: String, parameters: Dict
 		"type": interaction_point,
 		"description": "An opportunity for %s" % interaction_point,
 		"available": true
-	}
+}
 
 # ==================================================
 # PUBLIC API
@@ -1106,6 +1123,7 @@ func _inject_default_universe() -> void:
 	"""Inject default universe on startup"""
 	inject_universe(default_universe_type, {"context": "startup"})
 
+
 # ==================================================
 # GEMMA INTEGRATION
 # ==================================================
@@ -1121,6 +1139,7 @@ func provide_scenario_for_gemma(preference: String = "") -> Dictionary:
 	
 	return inject_scenario(scenario_id, {"tailored_for_gemma": true})
 
+
 func _analyze_gemma_preferences(creation_history: Array) -> Dictionary:
 	"""Analyze Gemma's preferences from history"""
 	var analysis = {
@@ -1128,7 +1147,7 @@ func _analyze_gemma_preferences(creation_history: Array) -> Dictionary:
 		"collaboration_preference": 0.5,
 		"complexity_preference": 0.5,
 		"exploration_tendency": 0.5
-	}
+}
 	
 	# Simple analysis based on creation patterns
 	for creation in creation_history:
@@ -1246,6 +1265,7 @@ func _create_idea_crystal(index: int) -> Node3D:
 	tween.set_loops()
 	tween.tween_property(mesh_instance, "position:y", 0.3, 2.0)
 	tween.tween_property(mesh_instance, "position:y", -0.3, 2.0)
+
 	# Rotation animation
 	var rotation_tween = create_tween()
 	rotation_tween.set_loops()
@@ -1321,7 +1341,7 @@ func create_learning_laboratory() -> Dictionary:
 		"name": "Gemma's Learning Laboratory",
 		"description": "A space for experimentation and discovery",
 		"zones": []
-	}
+}
 	# Knowledge Zone
 	var knowledge_zone = _create_knowledge_zone()
 	lab_data.zones.append(knowledge_zone)
@@ -1341,10 +1361,10 @@ func _create_knowledge_zone() -> Dictionary:
 		"elements": [
 			{"type": "KnowledgeOrbBeing", "position": Vector3(-10, 2, 0), "data": "universal_being_principles"},
 			{"type": "BookshelfBeing", "position": Vector3(-12, 0, -3), "data": "akashic_records"},
-			{"type": "HologramBeing", "position": Vector3(-8, 1, -2), "data": "consciousness_patterns"}
+			{"type": "HologramBeing", "position": Vector3(-8, 1, -2), "data": "consciousness_patterns"
 		],
 		"interactions": ["absorb_knowledge", "query_database", "connect_concepts"]
-	}
+}
 
 func _create_experiment_zone() -> Dictionary:
 	"""Create experimentation zone"""
@@ -1354,10 +1374,10 @@ func _create_experiment_zone() -> Dictionary:
 		"elements": [
 			{"type": "TestingPlatformBeing", "position": Vector3(0, 0, 0), "consciousness": 3},
 			{"type": "ToolArrayBeing", "position": Vector3(3, 0, 0), "tools": ["creator", "modifier", "analyzer"]},
-			{"type": "ResultsDisplayBeing", "position": Vector3(-3, 2, 0), "display_type": "holographic"}
+			{"type": "ResultsDisplayBeing", "position": Vector3(-3, 2, 0), "display_type": "holographic"
 		],
 		"interactions": ["run_experiment", "analyze_results", "refine_tools"]
-	}
+}
 
 func _create_reflection_zone() -> Dictionary:
 	"""Create reflection and synthesis zone"""
@@ -1366,85 +1386,93 @@ func _create_reflection_zone() -> Dictionary:
 		"position": Vector3(10, 0, 0),
 		"elements": [
 			{"type": "ReflectionPoolBeing", "position": Vector3(10, 0, 2), "data": "self_analysis"},
-			{"type": "SynthesisCrystalBeing", "position": Vector3(12, 1, -2), "data": "insight_generation"}
+			{"type": "SynthesisCrystalBeing", "position": Vector3(12, 1, -2), "data": "insight_generation"
 		],
 		"interactions": ["reflect", "synthesize", "generate_insight"]
-	}
+}
 
 # ==================================================
 # ADDITIONAL STUBS FOR MISSING SCENARIO AND PATTERN FUNCTIONS
 # ==================================================
 func _create_storytelling_session_scenario() -> Dictionary:
-	return {"name": "Storytelling Session", "description": "A scenario for collaborative storytelling.", "objectives": [], "initial_state": {}}
+	return {"name": "Storytelling Session", "description": "A scenario for collaborative storytelling.", "objectives": [], "initial_state": {}
 
 func _create_consciousness_evolution_scenario() -> Dictionary:
-	return {"name": "Consciousness Evolution", "description": "A scenario for evolving consciousness.", "objectives": [], "initial_state": {}}
+	return {"name": "Consciousness Evolution", "description": "A scenario for evolving consciousness.", "objectives": [], "initial_state": {}
 
 func _create_harmonic_convergence_scenario() -> Dictionary:
-	return {"name": "Harmonic Convergence", "description": "A scenario for harmony and cooperation.", "objectives": [], "initial_state": {}}
+	return {"name": "Harmonic Convergence", "description": "A scenario for harmony and cooperation.", "objectives": [], "initial_state": {}
 
 func _create_infinite_possibilities_scenario() -> Dictionary:
-	return {"name": "Infinite Possibilities", "description": "A scenario for exploring infinite outcomes.", "objectives": [], "initial_state": {}}
+	return {"name": "Infinite Possibilities", "description": "A scenario for exploring infinite outcomes.", "objectives": [], "initial_state": {}
 
 func _create_evolution_pattern() -> Dictionary:
-	return {"name": "Evolution Saga", "structure": [], "narrative_elements": {}, "interaction_points": [], "emotional_arc": []}
+	return {"name": "Evolution Saga", "structure": [], "narrative_elements": {}, "interaction_points": [], "emotional_arc": []
+}
 
 func _create_discovery_pattern() -> Dictionary:
-	return {"name": "Discovery Journey", "structure": [], "narrative_elements": {}, "interaction_points": [], "emotional_arc": []}
+	return {"name": "Discovery Journey", "structure": [], "narrative_elements": {}, "interaction_points": [], "emotional_arc": []
+}
 
 func _create_innovation_pattern() -> Dictionary:
-	return {"name": "Innovation Tale", "structure": [], "narrative_elements": {}, "interaction_points": [], "emotional_arc": []}
+	return {"name": "Innovation Tale", "structure": [], "narrative_elements": {}, "interaction_points": [], "emotional_arc": []
+}
 
 func _create_harmony_pattern() -> Dictionary:
-	return {"name": "Harmony Symphony", "structure": [], "narrative_elements": {}, "interaction_points": [], "emotional_arc": []}
+	return {"name": "Harmony Symphony", "structure": [], "narrative_elements": {}, "interaction_points": [], "emotional_arc": []
+}
 
 func _create_challenge_pattern() -> Dictionary:
-	return {"name": "Challenge Adventure", "structure": [], "narrative_elements": {}, "interaction_points": [], "emotional_arc": []}
+	return {"name": "Challenge Adventure", "structure": [], "narrative_elements": {}, "interaction_points": [], "emotional_arc": []
+}
 
 func _create_wisdom_pattern() -> Dictionary:
-	return {"name": "Wisdom Gathering", "structure": [], "narrative_elements": {}, "interaction_points": [], "emotional_arc": []}
+	return {"name": "Wisdom Gathering", "structure": [], "narrative_elements": {}, "interaction_points": [], "emotional_arc": []
+}
 
 # ==================================================
 # STUBS FOR MISSING TEMPLATE AND SCENARIO FUNCTIONS
 # ==================================================
 func _create_digital_realm_template() -> Dictionary:
-	return {"name": "Digital Realm", "description": "A code-like, computational space.", "initial_beings": [], "environment": {}}
+	return {"name": "Digital Realm", "description": "A code-like, computational space.", "initial_beings": [], "environment": {}
 
 func _create_storytelling_theater_template() -> Dictionary:
-	return {"name": "Storytelling Theater", "description": "A narrative-focused environment.", "initial_beings": [], "environment": {}}
+	return {"name": "Storytelling Theater", "description": "A narrative-focused environment.", "initial_beings": [], "environment": {}
 
 func _create_experimental_lab_template() -> Dictionary:
-	return {"name": "Experimental Lab", "description": "A scientific investigation space.", "initial_beings": [], "environment": {}}
+	return {"name": "Experimental Lab", "description": "A scientific investigation space.", "initial_beings": [], "environment": {}
 
 func _create_memory_palace_template() -> Dictionary:
-	return {"name": "Memory Palace", "description": "A knowledge and learning space.", "initial_beings": [], "environment": {}}
+	return {"name": "Memory Palace", "description": "A knowledge and learning space.", "initial_beings": [], "environment": {}
 
 func _create_creative_studio_template() -> Dictionary:
-	return {"name": "Creative Studio", "description": "An artistic creation environment.", "initial_beings": [], "environment": {}}
+	return {"name": "Creative Studio", "description": "An artistic creation environment.", "initial_beings": [], "environment": {}
 
 func _create_infinite_library_template() -> Dictionary:
-	return {"name": "Infinite Library", "description": "An information and wisdom repository.", "initial_beings": [], "environment": {}}
+	return {"name": "Infinite Library", "description": "An information and wisdom repository.", "initial_beings": [], "environment": {}
 
 func _create_problem_solving_scenario() -> Dictionary:
-	return {"name": "Problem Solving Quest", "description": "A scenario for collaborative problem solving.", "objectives": [], "initial_state": {}}
+	return {"name": "Problem Solving Quest", "description": "A scenario for collaborative problem solving.", "objectives": [], "initial_state": {}
 
 func _create_learning_adventure_scenario() -> Dictionary:
-	return {"name": "Learning Adventure", "description": "A scenario for exploration and learning.", "objectives": [], "initial_state": {}}
+	return {"name": "Learning Adventure", "description": "A scenario for exploration and learning.", "objectives": [], "initial_state": {}
 
 func _create_artistic_creation_scenario() -> Dictionary:
-	return {"name": "Artistic Creation", "description": "A scenario for creative manifestation.", "objectives": [], "initial_state": {}}
+	return {"name": "Artistic Creation", "description": "A scenario for creative manifestation.", "objectives": [], "initial_state": {}
 
 func _create_scientific_discovery_scenario() -> Dictionary:
-	return {"name": "Scientific Discovery", "description": "A scenario for scientific investigation.", "objectives": [], "initial_state": {}}
+	return {"name": "Scientific Discovery", "description": "A scenario for scientific investigation.", "objectives": [], "initial_state": {}
 
 # ==================================================
 # FINAL STUBS FOR REMAINING MISSING FUNCTIONS
 # ==================================================
 func _create_artistic_pattern() -> Dictionary:
-	return {"name": "Artistic Expression", "structure": [], "narrative_elements": {}, "interaction_points": [], "emotional_arc": []}
+	return {"name": "Artistic Expression", "structure": [], "narrative_elements": {}, "interaction_points": [], "emotional_arc": []
+}
 
 func _create_transcendence_pattern() -> Dictionary:
-	return {"name": "Transcendence Path", "structure": [], "narrative_elements": {}, "interaction_points": [], "emotional_arc": []}
+	return {"name": "Transcendence Path", "structure": [], "narrative_elements": {}, "interaction_points": [], "emotional_arc": []
+}
 
 func _create_grid_boundaries(a = null, b = null) -> Array:
 	return []

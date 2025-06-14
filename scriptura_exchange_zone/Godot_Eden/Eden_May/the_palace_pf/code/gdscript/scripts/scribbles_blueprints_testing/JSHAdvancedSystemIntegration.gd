@@ -1,5 +1,5 @@
 extends Node
-class_name JSHAdvancedSystemIntegration
+class_name JSHAdvancedSystemIntegration_JSHAdvancedSystemIntegration_JSHAdvan
 
 # The JSHAdvancedSystemIntegration ties together all the advanced systems
 # It provides a unified interface for working with the advanced features
@@ -430,13 +430,13 @@ func _cmd_run_query(args: Array) -> String:
 	
 	# Check if results are entities or dictionaries (from projection)
 	if results[0] is Dictionary:
-		// Handle projection results
+# // Handle projection results
 		for i in range(min(results.size(), 10)):
 			response += "Result " + str(i + 1) + ":\n"
 			for key in results[i]:
 				response += "  " + key + ": " + str(results[i][key]) + "\n"
 	else:
-		// Handle entity results
+# // Handle entity results
 		for i in range(min(results.size(), 10)):
 			var entity = results[i]
 			response += "Result " + str(i + 1) + ": " + entity.entity_type + " (ID: " + entity.entity_id + ")\n"

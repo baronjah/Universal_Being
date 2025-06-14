@@ -80,6 +80,7 @@ func pentagon_init() -> void:
 	
 	print("🌟 %s: Universe Rules Init Complete" % being_name)
 
+
 func pentagon_ready() -> void:
 	super.pentagon_ready()
 	
@@ -99,6 +100,7 @@ func pentagon_ready() -> void:
 			})
 	
 	print("🌟 %s: Universe Rules Ready Complete" % being_name)
+
 
 func pentagon_process(delta: float) -> void:
 	super.pentagon_process(delta)
@@ -277,7 +279,7 @@ func reset_rules_to_default() -> void:
 		"collision_enabled": true,
 		"friction": 0.1,
 		"restitution": 0.5
-	}
+}
 	
 	lod_laws = {
 		"levels": 3,
@@ -285,7 +287,7 @@ func reset_rules_to_default() -> void:
 		"distance_multiplier": 2.0,
 		"detail_reduction": 0.5,
 		"auto_adjust": true
-	}
+}
 	
 	consciousness_laws = {
 		"min_level": 1,
@@ -293,14 +295,14 @@ func reset_rules_to_default() -> void:
 		"evolution_enabled": true,
 		"ai_integration": true,
 		"memory_persistence": true
-	}
+}
 	
 	portal_laws = {
 		"max_portals": 10,
 		"stability_required": true,
 		"consciousness_cost": 1,
 		"cooldown_time": 5.0
-	}
+}
 	
 	# Track the reset as a change
 	track_rule_change()
@@ -346,8 +348,8 @@ func ai_interface() -> Dictionary:
 		"consciousness_laws": consciousness_laws,
 		"portal_laws": portal_laws,
 		"universe_constants": universe_constants
-	}
 	return base_interface
+}
 
 func ai_invoke_method(method_name: String, args: Array = []) -> Variant:
 	"""Handle AI method invocations for rule management"""

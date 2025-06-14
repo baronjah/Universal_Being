@@ -1,5 +1,5 @@
 #@tool
-extends Node3D
+extends \2
 
 func _on_mover_movement_send(current_origin):
 	global_transform.origin = current_origin

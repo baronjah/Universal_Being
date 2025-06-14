@@ -1,6 +1,6 @@
 extends Control
 
-class_name LetterPaintUI
+class_name LetterPaintUI_letterpaintui_letterpa
 
 # References to systems
 var letter_paint_system: LetterPaintSystem
@@ -33,19 +33,19 @@ var auto_recognize = true
 
 func _ready():
 	# Get references to systems
-	letter_paint_system = get_node_or_null("/root/LetterPaintSystem")
+	letter_paint_system = get_node_or_null("root/LetterPaintSystem")
 	if not letter_paint_system:
 		letter_paint_system = LetterPaintSystem.new()
 		add_child(letter_paint_system)
 	
-	paint_system = get_node_or_null("/root/PaintSystem")
+	paint_system = get_node_or_null("root/PaintSystem")
 	if not paint_system:
 		paint_system = PaintSystem.new()
 		add_child(paint_system)
 	
-	dimensional_color_system = get_node_or_null("/root/DimensionalColorSystem")
-	turn_cycle_manager = get_node_or_null("/root/TurnCycleManager")
-	astral_entity_system = get_node_or_null("/root/AstralEntitySystem")
+	dimensional_color_system = get_node_or_null("root/DimensionalColorSystem")
+	turn_cycle_manager = get_node_or_null("root/TurnCycleManager")
+	astral_entity_system = get_node_or_null("root/AstralEntitySystem")
 	
 	# Connect signals
 	letter_paint_system.letter_painted.connect(_on_letter_painted)
@@ -378,7 +378,8 @@ func _input(event):
 		# Handle pan gesture
 		paint_canvas.pan_view(event.delta * 10.0)
 
-class LetterSelectDialog extends Window:
+class LetterSelectDialog
+extends \2:
 	signal letter_selected(letter)
 	
 	var letter_buttons = []
@@ -436,7 +437,8 @@ class LetterSelectDialog extends Window:
 		emit_signal("letter_selected", letter)
 		hide()
 
-class WordInputDialog extends Window:
+class WordInputDialog
+extends \2:
 	signal word_entered(word)
 	
 	var line_edit: LineEdit

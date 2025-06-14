@@ -64,7 +64,7 @@ static func save_chunk(chunk: LuminusChunkUniversalBeing) -> void:
 		"contained_beings": [],
 		"creation_timestamp": Time.get_ticks_msec(),
 		"last_modified": Time.get_ticks_msec()
-	}
+}
 	
 	# Save stored data if available
 	if chunk.has_method("get") and chunk.get("stored_data"):
@@ -82,6 +82,7 @@ static func restore_contained_beings(chunk: LuminusChunkUniversalBeing, beings_d
 	"""Restore beings from saved data"""
 	for being_data in beings_data:
 		if being_data.has("being_type") and SystemBootstrap.is_system_ready():
+
 			var being = SystemBootstrap.create_universal_being()
 			if being:
 				# Restore basic properties
@@ -92,6 +93,7 @@ static func restore_contained_beings(chunk: LuminusChunkUniversalBeing, beings_d
 				# Add to chunk
 				chunk.add_child(being)
 				print("🔄 Restored being: %s" % being.being_name)
+	
 
 static func get_contained_beings_data(chunk: LuminusChunkUniversalBeing) -> Array:
 	"""Get data for all beings contained in chunk"""
@@ -111,11 +113,12 @@ static func get_contained_beings_data(chunk: LuminusChunkUniversalBeing) -> Arra
 
 static func get_being_properties(being: Node) -> Dictionary:
 	"""Extract saveable properties from a being"""
-	var properties = {}
+	var properties = {
 	
 	if being.has_method("get_akashic_data"):
 		properties = being.get_akashic_data()
 	elif being.has_method("get") and being.has_method("get_property_list"):
+}
 		# Extract basic Universal Being properties
 		var prop_list = being.get_property_list()
 		for prop in prop_list:
@@ -128,16 +131,18 @@ static func get_being_properties(being: Node) -> Dictionary:
 
 static func save_chunk_to_file(chunk: LuminusChunkUniversalBeing) -> void:
 	"""Fallback: save chunk to user directory as .tres file"""
+
 	var chunk_data = {
 		"coords": chunk.coords,
 		"being_name": chunk.being_name,
 		"consciousness_level": chunk.consciousness_level,
 		"timestamp": Time.get_ticks_msec()
-	}
+}
 	
 	var dir_path = "user://chunks/"
 	if not DirAccess.dir_exists_absolute(dir_path):
 		DirAccess.open("user://").make_dir_recursive("chunks")
+
 	
 	var file_path = "%schunk_%d_%d_%d.tres" % [dir_path, chunk.coords.x, chunk.coords.y, chunk.coords.z]
 	var file = FileAccess.open(file_path, FileAccess.WRITE)
@@ -146,9 +151,12 @@ static func save_chunk_to_file(chunk: LuminusChunkUniversalBeing) -> void:
 		file.close()
 		print("💾 Saved chunk to file: %s" % file_path)
 
+
 static func load_chunk_from_file(coords: Vector3i) -> Dictionary:
 	"""Fallback: load chunk from user directory .tres file"""
+
 	var file_path = "user://chunks/chunk_%d_%d_%d.tres" % [coords.x, coords.y, coords.z]
+
 	
 	if FileAccess.file_exists(file_path):
 		var file = FileAccess.open(file_path, FileAccess.READ)
@@ -162,9 +170,9 @@ static func load_chunk_from_file(coords: Vector3i) -> Dictionary:
 				print("📖 Loaded chunk from file: %s" % file_path)
 				return json.data
 	
-	return {}
+	return {
 
-# ===== UTILITY FUNCTIONS =====
+# ===== UTILITY FUNCTIONS =====}
 
 static func clear_chunk_cache() -> void:
 	"""Clear all saved chunk data (for testing)"""
@@ -202,6 +210,7 @@ static func list_saved_chunks() -> Array[Vector3i]:
 		var file_name = dir.get_next()
 		while file_name != "":
 			if file_name.ends_with(".tres") and file_name.begins_with("chunk_"):
+
 				var coords_str = file_name.replace("chunk_", "").replace(".tres", "")
 				var coords_parts = coords_str.split("_")
 				if coords_parts.size() == 3:

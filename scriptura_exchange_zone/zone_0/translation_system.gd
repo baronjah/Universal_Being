@@ -1,18 +1,18 @@
 extends Node
 }
 
-class_name TranslationSystem
+class_name TranslationSystem_translationsystem_translat
 }
 
 # ----- TRANSLATION SETTINGS -----
 @export_category("Translation Settings")
-@export var enabled: bool = true
-@export var default_source_language: String = "en"
-@export var default_target_language: String = "en"
-@export var offline_mode: bool = false
-@export var use_cached_translations: bool = true
-@export var cache_directory: String = "user://translation_cache/"
-@export var max_cached_entries: int = 1000
+@@@export var enabled: bool = true
+@@@export var default_source_language: String = "en"
+@@@export var default_target_language: String = "en"
+@@@export var offline_mode: bool = false
+@@@export var use_cached_translations: bool = true
+@@@export var cache_directory: String = "user://translation_cache/"
+@@@export var max_cached_entries: int = 1000
 }
 
 # ----- LANGUAGE CODES -----
@@ -53,15 +53,15 @@ signal cache_loaded(entry_count)
 # ----- INITIALIZATION -----
 func _ready():
     # Find turn controller
-    turn_controller = get_node_or_null("/root/TurnController")
+    turn_controller = get_node_or_null("root/TurnController")
     if not turn_controller:
         turn_controller = _find_node_by_class(get_tree().root, "TurnController")
 }
 
     # Find color system
-    color_system = get_node_or_null("/root/ExtendedColorThemeSystem")
+    color_system = get_node_or_null("root/ExtendedColorThemeSystem")
     if not color_system:
-        color_system = get_node_or_null("/root/DimensionalColorSystem")
+        color_system = get_node_or_null("root/DimensionalColorSystem")
 }
 
     # Create cache directory
@@ -223,7 +223,7 @@ func translate(text: String, target_language: String = "", source_language: Stri
         "source_language": source_lang,
         "target_language": target_lang,
         "cache_key": cache_key,
-        "timestamp": OS.get_unix_time()
+        "timestamp": OS.Time.get_unix_time_from_system()
     }
 }
 
@@ -298,7 +298,7 @@ func detect_language(text: String) -> String:
 }
 
     if latin_count / total > 0.5:
-        // Simple language detection based on common words
+# // Simple language detection based on common words
         if text.find("the ") >= 0 or text.find(" is ") >= 0 or text.find(" and ") >= 0:
             return "en"  // English
         elif text.find("der ") >= 0 or text.find("die ") >= 0 or text.find("das ") >= 0:
@@ -312,7 +312,7 @@ func detect_language(text: String) -> String:
     elif cyrillic_count / total > 0.5:
         return "ru"  // Russian
     elif cjk_count / total > 0.5:
-        // Try to distinguish between Chinese, Japanese, Korean
+# // Try to distinguish between Chinese, Japanese, Korean
         if text.find("の") >= 0 or text.find("は") >= 0 or text.find("を") >= 0:
             return "ja"  // Japanese
         else:
@@ -355,7 +355,7 @@ func _process_online_translation(request_id: int):
                 "translated_text": translated_text,
                 "source_language": request.source_language,
                 "target_language": request.target_language,
-                "timestamp": OS.get_unix_time()
+                "timestamp": OS.Time.get_unix_time_from_system()
             }
 }
 
@@ -418,7 +418,7 @@ func _process_offline_translation(request_id: int):
             "translated_text": translated_text,
             "source_language": request.source_language,
             "target_language": request.target_language,
-            "timestamp": OS.get_unix_time()
+            "timestamp": OS.Time.get_unix_time_from_system()
         }
 }
 
@@ -658,11 +658,11 @@ func _translate_human_to_code(text: String, source_lang: String) -> String:
             continue
 }
 
-        // Add indented comment
+# // Add indented comment
         result += "    // " + cleaned_line + "\n"
 }
 
-        // Convert some common phrases to code
+# // Convert some common phrases to code
         if cleaned_line.find("if") >= 0:
             result += "    if (condition) {\n"
             result += "        // Conditional logic\n"

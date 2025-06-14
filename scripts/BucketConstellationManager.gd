@@ -13,8 +13,8 @@ var current_layer: int = 0  # Layer_0 = debug, Layer_1+ = perfected game
 var chunk_inspector_active: bool = false
 
 # Variable inspection system
-var var_watchers: Dictionary = {}  # script_path -> {var_name -> watcher_node}
-var large_var_chunks: Dictionary = {}  # For chunked inspection of big variables
+var var_watchers: Dictionary = {}  # script_path -> {var_name -> watcher_node
+var large_var_chunks: Dictionary = {}}  # For chunked inspection of big variables
 
 func _ready():
 	print("🪣 Bucket Constellation Manager: Organizing the cosmic debug cosmos...")
@@ -72,8 +72,7 @@ func _initialize_bucket_constellations():
 			"color": Color.WHITE,
 			"position_offset": Vector3(0, 0, 100),
 			"description": "Memory systems and evolution patterns"
-		}
-	}
+}
 	
 	# Create bucket constellations
 	for bucket_name in bucket_definitions.keys():
@@ -107,10 +106,11 @@ func _create_bucket_constellation(bucket_name: String, bucket_data: Dictionary):
 		"constellation": constellation,
 		"scripts": matching_scripts,
 		"data": bucket_data
-	}
+}
 	
 	add_child(constellation)
 	print("🪣 Created bucket constellation: %s with %d stars" % [bucket_name, matching_scripts.size()])
+}
 
 func _create_debug_star(script_path: String, position: Vector3, color: Color) -> Node3D:
 	"""Create a debug-enabled star with variable inspection capabilities"""
@@ -208,6 +208,7 @@ func _analyze_script_variables(script_path: String) -> Array:
 			
 			# Look for variable declarations
 			if line.begins_with("var ") or line.begins_with("@export var "):
+
 				var var_info = _parse_variable_declaration(line)
 				if var_info:
 					variables.append(var_info)
@@ -216,7 +217,7 @@ func _analyze_script_variables(script_path: String) -> Array:
 
 func _parse_variable_declaration(line: String) -> Dictionary:
 	"""Parse a variable declaration line"""
-	var var_info = {}
+	var var_info = {
 	
 	# Extract variable name and type
 	var parts = line.split(":")
@@ -235,10 +236,10 @@ func _parse_variable_declaration(line: String) -> Dictionary:
 		
 		return var_info
 	
-	return {}
+	return {
 
 func _is_potentially_large_var(type: String, name: String) -> bool:
-	"""Determine if variable might be large and need chunked inspection"""
+	"""Determine if variable might be large and need chunked inspection"""}
 	var large_types = ["Array", "Dictionary", "PackedByteArray", "String"]
 	var large_names = ["chunk", "data", "content", "buffer", "cache"]
 	
@@ -356,6 +357,7 @@ func _open_script_debug_panel(script_path: String):
 	# Check if script is currently loaded/instantiated
 	var is_loaded = _is_script_loaded(script_path)
 	print("  ⚡ Runtime status: %s" % ("ACTIVE" if is_loaded else "INACTIVE"))
+}
 
 func _is_script_loaded(script_path: String) -> bool:
 	"""Check if script is currently loaded in the game"""
@@ -387,6 +389,7 @@ func _scan_directory_recursive(path: String, files: Array, extension: String):
 		dir.list_dir_begin()
 		var file_name = dir.get_next()
 		while file_name != "":
+
 			var full_path = path + "/" + file_name
 			if dir.current_is_dir() and not file_name.begins_with("."):
 				_scan_directory_recursive(full_path, files, extension)
@@ -404,6 +407,7 @@ func switch_to_layer(layer_num: int):
 		print("🔍 Debug mode: All stars show variable inspection interfaces")
 	else:
 		print("🎮 Game mode: Walking around the perfected universe")
+
 
 # Chunk inspection for large variables
 func inspect_large_variable_in_chunks(var_data: Variant, chunk_size: int = 100):

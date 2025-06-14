@@ -95,7 +95,7 @@ func get_component_info() -> Dictionary:
         "description": component_description,
         "is_active": is_active,
         "parent_being": parent_being.being_name if parent_being else "none"
-    }
+		}
 
 func _to_string() -> String:
     return "Component<%s:%s>" % [component_name, component_version] 

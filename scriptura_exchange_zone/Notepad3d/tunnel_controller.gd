@@ -1,7 +1,7 @@
 extends Node
 }
 
-class_name TunnelController
+class_name TunnelController_tunnelcontroller_tunnelco
 }
 
 signal connection_status_changed(status, message)

@@ -85,7 +85,7 @@ func _setup_timers():
 	connection_timer.wait_time = 5.0
 	connection_timer.one_shot = false
 	connection_timer.autostart = true
-	connection_timer.connect("timeout", self, "_on_connection_timer_timeout")
+	connection_timer.connect(_on_connection_timer_timeout)
 	add_child(connection_timer)
 	
 	# Synchronization timer (every 30 seconds)
@@ -93,7 +93,7 @@ func _setup_timers():
 	sync_timer.wait_time = 30.0
 	sync_timer.one_shot = false
 	sync_timer.autostart = true
-	sync_timer.connect("timeout", self, "_on_sync_timer_timeout")
+	sync_timer.connect(_on_sync_timer_timeout)
 	add_child(sync_timer)
 	
 	# Cleanup timer (every 5 minutes)
@@ -101,7 +101,7 @@ func _setup_timers():
 	cleanup_timer.wait_time = 300.0
 	cleanup_timer.one_shot = false
 	cleanup_timer.autostart = true
-	cleanup_timer.connect("timeout", self, "_on_cleanup_timer_timeout")
+	cleanup_timer.connect(_on_cleanup_timer_timeout)
 	add_child(cleanup_timer)
 	
 	# Transfer queue timer (every 1 second)
@@ -109,7 +109,7 @@ func _setup_timers():
 	transfer_timer.wait_time = 1.0
 	transfer_timer.one_shot = false
 	transfer_timer.autostart = true
-	transfer_timer.connect("timeout", self, "_on_transfer_timer_timeout")
+	transfer_timer.connect(_on_transfer_timer_timeout)
 	add_child(transfer_timer)
 
 func _find_systems():
@@ -324,7 +324,7 @@ func _try_connect_system(system_id, system_type, path):
 # ----- REGISTRATION AND CONNECTION -----
 func _register_system(system_id, system_node, system_type=""):
 	# Determine system type if not provided
-	if system_type.empty():
+	if system_type.is_empty():
 		system_type = _detect_system_type(system_node)
 	
 	# Store system information
@@ -567,7 +567,7 @@ func retrieve_record(record_id, source_system_id=""):
 			return record_cache[level][record_id]
 	
 	# If source system specified, try it first
-	if not source_system_id.empty() and connected_systems.has(source_system_id):
+	if not source_system_id.is_empty() and connected_systems.has(source_system_id):
 		var record = _retrieve_from_system(record_id, source_system_id)
 		if record:
 			return record

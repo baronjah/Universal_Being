@@ -17,10 +17,10 @@ var banks_combiner = null
 var word_manager = null
 
 # ----- MIGRATION RECORDS -----
-var migration_records = {}
+var migration_records = {
 var migration_timestamp = 0
 var migration_reality = "digital_migration"
-var migration_memory = {}
+var migration_memory = {
 var active_record_sets = []
 
 # ----- MIGRATION STATISTICS -----
@@ -124,7 +124,7 @@ func _setup_record_sets():
         "godot4_version": "4.5",
         "reality_context": migration_reality,
         "engine_type": "JSH Ethereal Engine"
-    }
+		}
     
     migration_records["migration_metadata"].append(metadata)
     
@@ -145,7 +145,7 @@ func _setup_record_sets():
         "node_type": [],
         "reality_transition": [],
         "word_manifestation": []
-    }
+		}
 
 # ----- ETHEREAL MIGRATION FUNCTIONS -----
 func migrate_ethereal_project(from_path: String, to_path: String) -> Dictionary:
@@ -153,7 +153,7 @@ func migrate_ethereal_project(from_path: String, to_path: String) -> Dictionary:
         return {
             "success": false,
             "error": "Migration tool not found"
-        }
+			}
     
     # Reset statistics
     ethereal_nodes_migrated = 0
@@ -263,6 +263,7 @@ func _process_ethereal_script(file_path: String, output_path: String) -> void:
         ethereal_nodes_migrated += 1
         
         print("Updated Ethereal Engine script: " + output_path)
+		}
 
 func _update_banks_combiner_patterns(content: String) -> String:
     var updated_content = content
@@ -357,6 +358,7 @@ func _update_records_system_patterns(content: String) -> String:
     # Pattern 5: get_records_from_set updates
     regex = RegEx.new()
     regex.compile("get_records_from_set\\(([^,)]+)(?:,\\s*([^)]+))?\\)")
+	}
     
     matches = regex.search_all(updated_content)
     for match_result in matches:
@@ -375,7 +377,8 @@ func _update_reality_transitions(content: String) -> String:
     
     # Pattern 1: Reality transitions
     var regex = RegEx.new()
-    regex.compile("remember\\(\\s*[\"']reality_shift[\"']\\s*,\\s*\\{\\s*[\"']new_reality[\"']\\s*:\\s*([^}]+)\\}\\)")
+    regex.compile("remember\\(\\s*[\"']reality_shift[\"']\\s*,\\s*\\{\\s*[\"']new_reality[\"']\\s*:\\s*([^]+)\\}\\)")
+	
     
     var matches = regex.search_all(updated_content)
     for match_result in matches:
@@ -389,7 +392,8 @@ func _update_reality_transitions(content: String) -> String:
     
     # Pattern 2: Reality context in memory
     regex = RegEx.new()
-    regex.compile("(player_memory\\[[^\\]]+\\]\\.append\\(\\{[^}]*)[\"']reality[\"']\\s*:\\s*current_reality([^}]*\\})")
+    regex.compile("(player_memory\\[[^\\]]+\\]\\.append\\(\\{[^]*)[\"']reality[\"']\\s*:\\s*current_reality([^]*\\})")
+	
     
     matches = regex.search_all(updated_content)
     for match_result in matches:
@@ -406,7 +410,8 @@ func _update_word_manifestation_patterns(content: String) -> String:
     
     # Pattern 1: Word manifestation arrays
     var regex = RegEx.new()
-    regex.compile("\\{\\s*[\"']word[\"']\\s*:\\s*[\"']([^\"']+)[\"']\\s*,\\s*[\"']position[\"']\\s*:\\s*([^}]+)\\}")
+    regex.compile("\\{\\s*[\"']word[\"']\\s*:\\s*[\"']([^\"']+)[\"']\\s*,\\s*[\"']position[\"']\\s*:\\s*([^]+)\\}")
+	
     
     var matches = regex.search_all(updated_content)
     for match_result in matches:
@@ -424,7 +429,7 @@ func _update_datapoint_system(content: String) -> String:
     
     # Pattern 1: DataPoint state serialization
     var regex = RegEx.new()
-    regex.compile("var\\s+datapoint_state\\s*=\\s*\\{[^}]*\\}")
+    regex.compile("var\\s+datapoint_state\\s*=\\s*\\{[^]*\\}")
     
     var matches = regex.search_all(updated_content)
     for match_result in matches:
@@ -476,8 +481,7 @@ func _migrate_record_sets(from_path: String, to_path: String) -> void:
                 "count": migration_records[set_name].size(),
                 "timestamp": migration_timestamp,
                 "reality_context": migration_reality
-            }
-        }
+				}
         
         var json_text = JSON.stringify(set_data, "  ")
         
@@ -491,6 +495,7 @@ func _migrate_record_sets(from_path: String, to_path: String) -> void:
             records_migrated += 1
         else:
             print("Failed to save record set: " + set_file)
+			}
 
 func _migrate_reality_contexts(from_path: String, to_path: String) -> void:
     # Create directory for reality contexts
@@ -515,7 +520,7 @@ func _migrate_reality_contexts(from_path: String, to_path: String) -> void:
             "migration_timestamp": migration_timestamp,
             "migration_reality": migration_reality,
             "preserved_records": 0
-        }
+			}
         
         # Check for migrated records of this reality
         for record in migration_records["reality_migrations"]:
@@ -533,6 +538,7 @@ func _migrate_reality_contexts(from_path: String, to_path: String) -> void:
             print("Saved reality context: " + reality_file)
         else:
             print("Failed to save reality context: " + reality_file)
+			
 
 func _migrate_word_manifestations(from_path: String, to_path: String) -> void:
     # Create directory for word manifestations
@@ -554,8 +560,7 @@ func _migrate_word_manifestations(from_path: String, to_path: String) -> void:
             "count": migration_records["word_migrations"].size(),
             "timestamp": migration_timestamp,
             "reality_context": migration_reality
-        }
-    }
+			}
     
     var json_text = JSON.stringify(words_data, "  ")
     
@@ -568,6 +573,7 @@ func _migrate_word_manifestations(from_path: String, to_path: String) -> void:
         print("Saved word manifestations: " + words_file)
     else:
         print("Failed to save word manifestations: " + words_file)
+		}
 
 func _save_migration_records(to_path: String) -> void:
     # Create directory for dimensional records
@@ -597,8 +603,7 @@ func _save_migration_records(to_path: String) -> void:
             "godot3_version": "3.5",
             "godot4_version": "4.5",
             "engine_type": "JSH Ethereal Engine"
-        }
-    }
+			}
     
     var json_text = JSON.stringify(summary_data, "  ")
     
@@ -611,6 +616,7 @@ func _save_migration_records(to_path: String) -> void:
         print("Saved migration summary: " + summary_file)
     else:
         print("Failed to save migration summary: " + summary_file)
+		}
 
 # ----- RECORD MANAGEMENT -----
 func _record_node_migration(node_path: String, node_type: String) -> void:
@@ -620,7 +626,7 @@ func _record_node_migration(node_path: String, node_type: String) -> void:
         "timestamp": Time.get_unix_time_from_system(),
         "godot3_type": node_type,
         "godot4_type": node_type
-    }
+		}
     
     migration_records["node_migrations"].append(record)
     
@@ -635,7 +641,7 @@ func _record_reality_transition_migration(reality_type: String) -> void:
         "reality_type": reality_type,
         "timestamp": Time.get_unix_time_from_system(),
         "transition_count": 1
-    }
+		}
     
     # Update existing record if already tracked
     var found = false
@@ -663,7 +669,7 @@ func _record_word_manifestation_migration(word: String, position: String) -> voi
         "position": position,
         "timestamp": Time.get_unix_time_from_system(),
         "reality_context": migration_reality
-    }
+		}
     
     migration_records["word_migrations"].append(record)
     word_manifestations_migrated += 1
@@ -681,7 +687,7 @@ func _record_record_set_migration(set_name: String) -> void:
         "set_name": set_name,
         "timestamp": Time.get_unix_time_from_system(),
         "record_count": 1
-    }
+		}
     
     # Update existing record if already tracked
     var found = false
@@ -706,9 +712,11 @@ func _get_all_script_files(path: String) -> Array:
         var file_name = dir.get_next()
         
         while file_name != "":
+		
             var full_path = path.path_join(file_name)
             
             if dir.current_is_dir() and file_name != "." and file_name != "..":
+			
                 # Recursively process subdirectories
                 files.append_array(_get_all_script_files(full_path))
             elif file_name.ends_with(".gd"):
@@ -717,6 +725,7 @@ func _get_all_script_files(path: String) -> Array:
             file_name = dir.get_next()
     else:
         push_error("Failed to open directory: " + path)
+		
     
     return files
 
@@ -731,7 +740,7 @@ func check_ethereal_compatibility(file_path: String) -> Dictionary:
             "is_ethereal": false,
             "ethereal_patterns": 0,
             "error": "File does not exist"
-        }
+			}
     
     # Read file content
     var file = FileAccess.open(file_path, FileAccess.READ)
@@ -740,14 +749,14 @@ func check_ethereal_compatibility(file_path: String) -> Dictionary:
             "is_ethereal": false,
             "ethereal_patterns": 0,
             "error": "Failed to open file"
-        }
+			}
     
     var content = file.get_as_text()
     file.close()
     
     # Check for JSH Ethereal Engine patterns
     var ethereal_patterns = 0
-    var pattern_matches = {}
+    var pattern_matches = {
     
     # Pattern 1: BanksCombiner
     if content.find("BanksCombiner") != -1:
@@ -779,7 +788,7 @@ func check_ethereal_compatibility(file_path: String) -> Dictionary:
         "ethereal_patterns": ethereal_patterns,
         "pattern_matches": pattern_matches,
         "file_path": file_path
-    }
+		}
 
 func generate_ethereal_migration_report(project_path: String) -> Dictionary:
     var report = {
@@ -796,7 +805,7 @@ func generate_ethereal_migration_report(project_path: String) -> Dictionary:
             "word_manifestation": 0
         },
         "files": []
-    }
+		}
     
     # Find all script files
     var script_files = _get_all_script_files(project_path)
@@ -825,7 +834,6 @@ func generate_ethereal_migration_report(project_path: String) -> Dictionary:
             
             if file_report.pattern_matches.has("word_manifestation") and file_report.pattern_matches.word_manifestation:
                 report.pattern_distribution.word_manifestation += 1
-        }
         
         # Add file info to report
         var rel_path = file_path.replace(project_path, "")
@@ -834,7 +842,7 @@ func generate_ethereal_migration_report(project_path: String) -> Dictionary:
             "path": rel_path,
             "is_ethereal": file_report.is_ethereal,
             "patterns_count": file_report.ethereal_patterns,
-            "patterns": file_report.pattern_matches if file_report.is_ethereal else {}
+            "patterns": file_report.pattern_matches if file_report.is_ethereal else {
         })
     
     return report
@@ -846,7 +854,7 @@ func apply_post_migration_enhancements(project_path: String) -> Dictionary:
         "akashic_integration": 0,
         "reality_enhancements": 0,
         "word_enhancements": 0
-    }
+		}
     
     # 1. Enhance Akashic integration
     var akashic_result = _enhance_akashic_integration(project_path)
@@ -940,7 +948,7 @@ func _on_record_set_created(set_name):
     
     return {
         "count": count
-    }
+		}
 
 func _enhance_reality_transitions(project_path: String) -> Dictionary:
     # Enhances reality transition system for Godot 4
@@ -1023,6 +1031,7 @@ func transition_to_reality(reality_type: String):
     
     # Record in akashic system if available
     if enable_akashic_recording and akashic_system and akashic_system.has_method("register_number"):
+	}
         var transition_hash = (old_reality + "_to_" + reality_type).hash()
         akashic_system.register_number(transition_hash, "reality_transition")
     
@@ -1128,7 +1137,6 @@ void fragment() {
     final_color.a = max(base_color.a, edge_color.a);
     
     COLOR = final_color;
-}
 """
             
             var shader_f = FileAccess.open(shader_file, FileAccess.WRITE)
@@ -1143,7 +1151,7 @@ void fragment() {
     
     return {
         "count": count
-    }
+		}
 
 func _enhance_word_manifestations(project_path: String) -> Dictionary:
     # Enhances word manifestation system for Godot 4
@@ -1167,7 +1175,7 @@ signal word_dematerialized(word, position)
 var akashic_system = null
 var records_system = null
 var reality_system = null
-var manifested_words = {}
+var manifested_words = {
 var manifestation_timer = 0.0
 var word_scene = preload("res://word_manifestation.tscn") if FileAccess.file_exists("res://word_manifestation.tscn") else null
 
@@ -1217,7 +1225,7 @@ func manifest_word(word: String, position: Vector3) -> Node3D:
         "position": position,
         "timestamp": Time.get_unix_time_from_system(),
         "reality": reality_system.get_current_reality() if reality_system else "unknown"
-    }
+		}
     
     # Record in records system if available
     if records_system and records_system.has_method("create_memory_record"):
@@ -1230,6 +1238,7 @@ func manifest_word(word: String, position: Vector3) -> Node3D:
     
     # Record in akashic system if available
     if enable_akashic_recording and akashic_system and akashic_system.has_method("register_number"):
+	}
         var word_hash = word.hash()
         akashic_system.register_number(word_hash, "word_manifestation")
     
@@ -1470,4 +1479,3 @@ func play_transformation_effect():
     
     return {
         "count": count
-    }

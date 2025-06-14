@@ -1,16 +1,16 @@
-class_name MarchingCubesTerrain
-extends Node3D
+class_name MarchingCubesTerrain_marchingcubes_marching
+extends \2
 
 # Marching cubes settings
-@export var grid_size: Vector3i = Vector3i(32, 16, 32)
-@export var cube_size: float = 1.0
-@export var iso_level: float = 0.5
-@export var smooth_normals: bool = true
+@@@export var grid_size: Vector3i = Vector3i(32, 16, 32)
+@@@export var cube_size: float = 1.0
+@@@export var iso_level: float = 0.5
+@@@export var smooth_normals: bool = true
 
 # Noise settings for terrain generation
-@export var noise: FastNoiseLite
-@export var noise_scale: float = 0.1
-@export var noise_amplitude: float = 1.0
+@@@export var noise: FastNoiseLite
+@@@export var noise_scale: float = 0.1
+@@@export var noise_amplitude: float = 1.0
 
 # Mesh resource
 var mesh_instance: MeshInstance3D

@@ -40,12 +40,12 @@ func _ready():
     # Initialize timers
     break_timer = Timer.new()
     break_timer.one_shot = true
-    break_timer.connect("timeout", self, "_on_break_timer_timeout")
+    break_timer.connect(_on_break_timer_timeout)
     add_child(break_timer)
     
     turn_timer = Timer.new()
     turn_timer.one_shot = true
-    turn_timer.connect("timeout", self, "_on_turn_timer_timeout")
+    turn_timer.connect(_on_turn_timer_timeout)
     add_child(turn_timer)
     
     # Initialize session data
@@ -394,7 +394,7 @@ func save_session_state(file_path="user://turn_system/session_state.json"):
     return true
 
 func save_turn_state(turn_data, file_path=""):
-    if file_path.empty():
+    if file_path.is_empty():
         file_path = "user://turn_system/turns/turn_" + str(current_cycle) + "_" + str(current_turn) + ".json"
     
     _ensure_directory_exists(file_path.get_base_dir())
@@ -411,7 +411,7 @@ func save_turn_state(turn_data, file_path=""):
     return true
 
 func save_cycle_summary(cycle_summary, file_path=""):
-    if file_path.empty():
+    if file_path.is_empty():
         file_path = "user://turn_system/cycles/cycle_" + str(current_cycle) + ".json"
     
     _ensure_directory_exists(file_path.get_base_dir())

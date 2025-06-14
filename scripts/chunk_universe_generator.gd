@@ -56,6 +56,7 @@ func pentagon_init() -> void:
 	_initialize_generation_system()
 	
 	print("🌌 %s: Pentagon Init - Reality generator awakens" % being_name)
+}
 
 func pentagon_ready() -> void:
 	super.pentagon_ready()
@@ -67,6 +68,7 @@ func pentagon_ready() -> void:
 	generation_thread = Thread.new()
 	
 	print("🌌 %s: Pentagon Ready - Infinite cosmos awaits" % being_name)
+
 
 func pentagon_process(delta: float) -> void:
 	super.pentagon_process(delta)
@@ -177,6 +179,7 @@ func _generate_chunk_at(coords: Vector3i) -> void:
 	"""Generate a chunk at specific coordinates"""
 	# Create chunk Universal Being
 	var ChunkBeingClass = load("res://systems/chunks/luminus_chunk_universal_being.gd")
+
 	var chunk_being = Node3D.new()
 	chunk_being.set_script(ChunkBeingClass)
 	chunk_being.name = "Chunk_%d_%d_%d" % [coords.x, coords.y, coords.z]
@@ -329,6 +332,7 @@ func set_universe_type(new_type: UniverseType) -> void:
 	universe_rules.type = new_type
 	print("🌌 Universe type set to: %s" % UniverseType.keys()[new_type])
 
+
 func set_gravity(gravity: Vector3) -> void:
 	"""Set universe gravity"""
 	universe_rules.gravity = gravity
@@ -389,6 +393,7 @@ func _process_generation_queue() -> void:
 func set_universe_rules(rules_data: Dictionary) -> void:
 	"""Set universe rules from the Universe Rules Editor"""
 	if rules_data.has("rules"):
+
 		var new_rules = rules_data.rules
 		print("🌌 Applying %d universe rules from editor" % new_rules.size())
 		
@@ -397,8 +402,10 @@ func set_universe_rules(rules_data: Dictionary) -> void:
 			_apply_generation_rule(rule)
 	
 	if rules_data.has("layer_interactions"):
+
 		var interactions = rules_data.layer_interactions
 		print("🌌 Applying layer interactions: %s" % interactions)
+
 		
 		# Store interaction settings
 		set_meta("layer_interactions", interactions)
@@ -423,7 +430,7 @@ func _apply_generation_rule(rule: Dictionary) -> void:
 		"height_range": Vector2(height_from, height_to),
 		"density": density / 100.0,  # Convert percentage to 0-1
 		"active": true
-	}
+}
 	
 	# Store in universe rules
 	if not universe_rules.has("custom_rules"):
@@ -497,8 +504,8 @@ func get_current_rules() -> Dictionary:
 				"height_from": int(rule.height_range.x),
 				"height_to": int(rule.height_range.y),
 				"density": int(rule.density * 100)
-			}
 			rules_array.append(editor_rule)
+}
 	
 	var interactions = get_meta("layer_interactions", {
 		"water_over_ground": true,
@@ -510,7 +517,7 @@ func get_current_rules() -> Dictionary:
 	return {
 		"rules": rules_array,
 		"layer_interactions": interactions
-	}
+}
 
 func _get_layer_type_index(layer_type: String) -> int:
 	"""Convert internal layer type to editor index"""

@@ -1,5 +1,5 @@
 extends Node
-class_name WordPhysics
+class_name WordPhysics_WordPhysics_WordPhys
 
 # ------------------------------------
 # WordPhysics - Physics engine for the World of Words system
@@ -78,7 +78,7 @@ signal force_applied(word_id, force, source)
 # Initialize physics engine
 func _ready():
     print("WordPhysics initialized")
-    last_physics_time = OS.get_unix_time()
+    last_physics_time = OS.Time.get_unix_time_from_system()
 
 # Process physics
 func process_physics(delta):
@@ -97,7 +97,7 @@ func process_physics(delta):
     var connections = word_drive.get_all_connections()
     
     # Update physics timestamp
-    last_physics_time = OS.get_unix_time()
+    last_physics_time = OS.Time.get_unix_time_from_system()
     
     # Process each word
     for word_id in words:
@@ -517,16 +517,16 @@ func _apply_rigid_effect(from_id, to_id, connection, delta):
     var from_physics = word_physics_state[from_id]
     var to_physics = word_physics_state[to_id]
     
-    // More rigid connections attempt to maintain exact distance
+# // More rigid connections attempt to maintain exact distance
     var direction = (from_physics.position - to_physics.position).normalized()
     var current_distance = from_physics.position.distance_to(to_physics.position)
     var ideal_distance = connection.get("ideal_distance", CONNECTION_DISTANCE_DEFAULT)
     
-    // Strong correction factor
+# // Strong correction factor
     var correction_factor = 0.5
     var correction = (current_distance - ideal_distance) * correction_factor
     
-    // Apply correction to positions
+# // Apply correction to positions
     var total_mass = from_physics.mass + to_physics.mass
     var from_ratio = to_physics.mass / total_mass
     var to_ratio = from_physics.mass / total_mass
@@ -534,7 +534,7 @@ func _apply_rigid_effect(from_id, to_id, connection, delta):
     from_physics.position -= direction * correction * from_ratio
     to_physics.position += direction * correction * to_ratio
     
-    // Transfer some angular momentum
+# // Transfer some angular momentum
     var angular_transfer = from_physics.angular_velocity - to_physics.angular_velocity
     from_physics.angular_velocity -= angular_transfer * 0.01
     to_physics.angular_velocity += angular_transfer * 0.01
@@ -547,17 +547,17 @@ func _apply_magnetic_effect(from_id, to_id, connection, delta):
     var from_physics = word_physics_state[from_id]
     var to_physics = word_physics_state[to_id]
     
-    // Magnetic effect applies force only when certain distance is exceeded
+# // Magnetic effect applies force only when certain distance is exceeded
     var direction = (from_physics.position - to_physics.position).normalized()
     var current_distance = from_physics.position.distance_to(to_physics.position)
     var ideal_distance = connection.get("ideal_distance", CONNECTION_DISTANCE_DEFAULT)
     
-    // Only attract when further than ideal distance
+# // Only attract when further than ideal distance
     if current_distance > ideal_distance:
         var strength = connection.get("strength", 1.0) * 0.5
         var force = direction * strength
         
-        // Apply weaker forces for magnetic connections
+# // Apply weaker forces for magnetic connections
         word_physics_state[from_id].forces.append(-force * 0.5)
         word_physics_state[to_id].forces.append(force * 0.5)
     }
@@ -570,22 +570,22 @@ func _apply_energy_transfer(from_id, to_id, connection, delta):
     var from_physics = word_physics_state[from_id]
     var to_physics = word_physics_state[to_id]
     
-    // Energy transfer gradually balances kinetic energy
+# // Energy transfer gradually balances kinetic energy
     var from_energy = from_physics.velocity.length_squared()
     var to_energy = to_physics.velocity.length_squared()
     
-    // Transfer a small amount of energy in each update
+# // Transfer a small amount of energy in each update
     if from_energy > to_energy:
         var transfer_amount = 0.05
         var energy_transfer = (from_energy - to_energy) * transfer_amount
         
-        // Apply slight boost to slower object
+# // Apply slight boost to slower object
         if to_physics.velocity.length() > 0.01:
             var boost_direction = to_physics.velocity.normalized()
             var boost = boost_direction * sqrt(energy_transfer)
             to_physics.velocity += boost
             
-            // Corresponding reduction in energy for the faster object
+# // Corresponding reduction in energy for the faster object
             if from_physics.velocity.length() > 0.01:
                 var slow_direction = from_physics.velocity.normalized()
                 var reduction = slow_direction * sqrt(energy_transfer)
@@ -594,13 +594,13 @@ func _apply_energy_transfer(from_id, to_id, connection, delta):
         var transfer_amount = 0.05
         var energy_transfer = (to_energy - from_energy) * transfer_amount
         
-        // Apply slight boost to slower object
+# // Apply slight boost to slower object
         if from_physics.velocity.length() > 0.01:
             var boost_direction = from_physics.velocity.normalized()
             var boost = boost_direction * sqrt(energy_transfer)
             from_physics.velocity += boost
             
-            // Corresponding reduction in energy for the faster object
+# // Corresponding reduction in energy for the faster object
             if to_physics.velocity.length() > 0.01:
                 var slow_direction = to_physics.velocity.normalized()
                 var reduction = slow_direction * sqrt(energy_transfer)
@@ -659,7 +659,7 @@ func add_force_effect(effect_type, position, strength, radius, duration, additio
         "strength": strength,
         "radius": radius,
         "duration": duration,
-        "creation_time": OS.get_unix_time()
+        "creation_time": OS.Time.get_unix_time_from_system()
     }
     
     # Add any additional properties

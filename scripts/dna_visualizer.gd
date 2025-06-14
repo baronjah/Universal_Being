@@ -30,7 +30,7 @@ var strand_colors: Dictionary = {
     "consciousness": Color(0.8, 0.2, 0.8, 0.8),  # Purple
     "interaction": Color(0.2, 0.2, 0.8, 0.8),  # Blue
     "essence": Color(0.8, 0.8, 0.2, 0.8)  # Yellow
-}
+	}
 
 # ===== CORE FUNCTIONS =====
 
@@ -196,9 +196,8 @@ func get_trait_at_position(position: Vector2) -> Dictionary:
             return {
                 "category": parts[0],
                 "trait": parts[1],
-                "value": trait_colors[trait_key].v
-            }
-    return {}
+                "value": trait_colors[trait_key].v}
+    return {
 
 # ===== SIGNALS =====
 

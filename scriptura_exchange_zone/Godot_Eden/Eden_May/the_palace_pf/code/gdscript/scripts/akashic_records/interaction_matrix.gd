@@ -1,5 +1,5 @@
 extends Node
-class_name InteractionMatrix
+class_name InteractionMatrix_interactionmatrix_interact
 
 # Interaction Matrix defines how different entity types interact with each other
 # This class provides a structured way to define and access interaction rules

@@ -1,5 +1,5 @@
-class_name EnhancedSystemLauncher
-extends Node
+class_name EnhancedSystemLauncher_enhancedsystemlauncher_enhanced
+extends \2
 
 # ----- CORE COMPONENTS -----
 var akashic_system = null
@@ -130,7 +130,7 @@ func _initialize_systems():
 
 func _load_system(system_name: String):
     # Check if system already exists in scene tree
-    var node = get_node_or_null("/root/" + system_name)
+    var node = get_node_or_null("root/" + system_name)
     if node:
         _log("Found existing " + system_name)
         return node

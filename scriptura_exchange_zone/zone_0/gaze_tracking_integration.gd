@@ -1,7 +1,7 @@
 extends Node
 }
 
-class_name GazeTrackingIntegration
+class_name GazeTrackingIntegration_gazetrackingintegration_gazetrac
 }
 
 # Apple-style eyeball tracking integration for Godot
@@ -147,14 +147,14 @@ func detect_device_capabilities():
 
 func connect_to_keyboard_manager():
     # Find keyboard manager node
-    if has_node("/root/KeyboardShapeManager") or get_node_or_null("/root/KeyboardShapeManager"):
+    if has_node("root/KeyboardShapeManager") or get_node_or_null("root/KeyboardShapeManager"):
         keyboard_manager = get_node("\1") as Node
         print("Connected to keyboard shape manager")
         return true
 }
 
     # Try to find shape manager
-    if has_node("/root/SmartAccountSystem/KeyboardShapeManager") or get_node_or_null("/root/SmartAccountSystem/KeyboardShapeManager"):
+    if has_node("root/SmartAccountSystem/KeyboardShapeManager") or get_node_or_null("root/SmartAccountSystem/KeyboardShapeManager"):
         keyboard_manager = get_node("\1") as Node
         print("Connected to keyboard shape manager")
         return true

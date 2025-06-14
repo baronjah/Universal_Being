@@ -4,9 +4,8 @@
 # PURPOSE: From chaos to harmony, like scribbles becoming UFOs
 # CREATED: 2025-05-28 - Where miracles are orchestrated
 # ==================================================
-
 extends UniversalBeingUI
-class_name ScriptOrchestraInterface
+class_name ScriptOrchestraInterface_scriptor
 
 signal script_selected(script_path: String)
 signal harmony_achieved()
@@ -146,12 +145,12 @@ func _setup_monitoring() -> void:
 	update_timer.start()
 	
 	# Connect to systems
-	if has_node("/root/DeltaFrameGuardian"):
-		var guardian = get_node("/root/DeltaFrameGuardian")
+	if has_node("root/DeltaFrameGuardian"):
+		var guardian = get_node("root/DeltaFrameGuardian")
 		# Monitor performance events
 	
-	if has_node("/root/ArchitectureHarmony"):
-		var harmony = get_node("/root/ArchitectureHarmony")
+	if has_node("root/ArchitectureHarmony"):
+		var harmony = get_node("root/ArchitectureHarmony")
 		# Monitor architectural events
 
 func _update_orchestra() -> void:
@@ -368,7 +367,7 @@ func get_orchestra_report() -> Dictionary:
 
 # Console commands
 func _ready_console_commands() -> void:
-	var console = get_node_or_null("/root/ConsoleManager")
+	var console = get_node_or_null("root/ConsoleManager")
 	if console:
 		console.register_command("orchestra", _cmd_toggle_orchestra,
 			"Toggle script orchestra view")
@@ -377,11 +376,11 @@ func _ready_console_commands() -> void:
 
 func _cmd_toggle_orchestra(_args: Array) -> void:
 	toggle_visibility()
-	var console = get_node("/root/ConsoleManager")
+	var console = get_node("root/ConsoleManager")
 	console._print_to_console("Orchestra view: %s" % ("ON" if visible else "OFF"))
 
 func _cmd_create_miracle(_args: Array) -> void:
-	var console = get_node("/root/ConsoleManager")
+	var console = get_node("root/ConsoleManager")
 	console._print_to_console("[color=yellow]✨ Creating miracle...[/color]")
 	
 	# Find a scribble to transform

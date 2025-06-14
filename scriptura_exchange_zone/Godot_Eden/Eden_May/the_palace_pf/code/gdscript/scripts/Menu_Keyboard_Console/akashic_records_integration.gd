@@ -1,5 +1,5 @@
 extends Node
-class_name AkashicRecordsIntegration
+class_name AkashicRecordsIntegration_akashicrecordsintegration_akashicr
 
 # References
 var main_console = null
@@ -12,7 +12,7 @@ func initialize(p_main_console) -> void:
 	main_console = p_main_console
 	
 	# Load the Akashic Records UI scene
-	akashic_records_ui_scene = load("res://code/gdscript/scenes/akashic_records_ui.tscn")
+	akashic_records_ui_scene = load("res://scripts/gdscript/scenes/akashic_records_ui.tscn")
 	
 	# Get or create AkashicRecordsManager
 	_ensure_akashic_records_manager()
@@ -28,7 +28,7 @@ func _ensure_akashic_records_manager() -> void:
 	
 	if not akashic_records_manager:
 		# Create new manager if one doesn't exist
-		var akashic_records_manager_script = load("res://code/gdscript/scripts/akashic_records/akashic_records_manager.gd")
+		var akashic_records_manager_script = load("res://scripts/gdscript/scripts/akashic_records/akashic_records_manager.gd")
 		if akashic_records_manager_script:
 			akashic_records_manager = akashic_records_manager_script.new()
 			akashic_records_manager.name = "AkashicRecordsManager"

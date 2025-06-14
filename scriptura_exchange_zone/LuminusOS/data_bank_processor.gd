@@ -57,9 +57,9 @@ var word_animator
 # Initialize system
 func _ready():
     # Get references to other systems
-    data_sea_controller = get_node_or_null("/root/Main/DataSeaController")
-    memory_manager = get_node_or_null("/root/Main/MemoryEvolutionManager")
-    word_animator = get_node_or_null("/root/Main/WordAnimator")
+    data_sea_controller = get_node_or_null("root/Main/DataSeaController")
+    memory_manager = get_node_or_null("root/Main/MemoryEvolutionManager")
+    word_animator = get_node_or_null("root/Main/WordAnimator")
 }
 
     # Register error handlers
@@ -77,7 +77,7 @@ func ingest_data(data, dataset_id="default", data_type="text"):
             "type": data_type,
             "items": [],
             "metadata": {
-                "timestamp": OS.get_unix_time(),
+                "timestamp": OS.Time.get_unix_time_from_system(),
                 "source": "manual_input",
                 "original_size": 0
             }
@@ -389,7 +389,7 @@ func cleanse_data(dataset_id):
             "type": data_bank["raw"][dataset_id]["type"],
             "items": [],
             "metadata": {
-                "timestamp": OS.get_unix_time(),
+                "timestamp": OS.Time.get_unix_time_from_system(),
                 "source_dataset": dataset_id,
                 "original_count": data_bank["raw"][dataset_id]["items"].size(),
                 "cleansed_count": 0
@@ -630,7 +630,7 @@ func segment_data(dataset_id, segmentation_type="auto"):
             "type": data_bank["cleansed"][dataset_id]["type"],
             "segments": {},
             "metadata": {
-                "timestamp": OS.get_unix_time(),
+                "timestamp": OS.Time.get_unix_time_from_system(),
                 "source_dataset": dataset_id,
                 "segmentation_type": segmentation_type,
                 "segment_count": 0
@@ -799,8 +799,8 @@ func _segment_by_pattern(dataset_id, items):
 }
 
         # Check if it's a date
-        elif content.find("/") != -1 or content.find("-") != -1:
-            var date_parts = content.split("/")
+        elif content.find("") != -1 or content.find("-") != -1:
+            var date_parts = content.split("")
             if date_parts.size() == 3:
                 pattern = "date"
             else:
@@ -932,7 +932,7 @@ func identify_patterns(dataset_id):
         data_bank["patterns"][dataset_id] = {
             "patterns": [],
             "metadata": {
-                "timestamp": OS.get_unix_time(),
+                "timestamp": OS.Time.get_unix_time_from_system(),
                 "source_dataset": dataset_id,
                 "pattern_count": 0
             }
@@ -1446,7 +1446,7 @@ func save_data_to_file(dataset_id, stage="cleansed", format="json", file_path=""
     print("Saving dataset to file: " + dataset_id)
 }
 
-    # Get export data
+    # Get @export data
     var export_data = export_data(dataset_id, stage, format)
 }
 
@@ -1456,7 +1456,7 @@ func save_data_to_file(dataset_id, stage="cleansed", format="json", file_path=""
 
     # Generate file path if not provided
     if file_path.is_empty():
-        var timestamp = OS.get_unix_time()
+        var timestamp = OS.Time.get_unix_time_from_system()
         file_path = "user://data_bank_" + dataset_id + "_" + stage + "_" + str(timestamp) + "." + format
 }
 
@@ -1568,7 +1568,7 @@ func _log_error(error_type, message, details={}):
         "type": error_type,
         "message": message,
         "details": details,
-        "timestamp": OS.get_unix_time()
+        "timestamp": OS.Time.get_unix_time_from_system()
     }
 }
 
@@ -1678,16 +1678,16 @@ func _register_error_handlers():
     # Add basic handlers for common errors
     var handlers = {
         "syntax": {
-            "check": funcref(self, "_check_syntax_errors"),
-            "fix": funcref(self, "_fix_syntax_errors")
+            "check": Callable(self, "_check_syntax_errors"),
+            "fix": Callable(self, "_fix_syntax_errors")
         },
         "semantic": {
-            "check": funcref(self, "_check_semantic_errors"),
-            "fix": funcref(self, "_fix_semantic_errors")
+            "check": Callable(self, "_check_semantic_errors"),
+            "fix": Callable(self, "_fix_semantic_errors")
         },
         "boundary": {
-            "check": funcref(self, "_check_boundary_errors"),
-            "fix": funcref(self, "_fix_boundary_errors")
+            "check": Callable(self, "_check_boundary_errors"),
+            "fix": Callable(self, "_fix_boundary_errors")
         }
     }
 }

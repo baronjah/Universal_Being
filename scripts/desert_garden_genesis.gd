@@ -23,7 +23,7 @@ const ZONES = {
 	"flower_meadow": {"center": Vector2(0, 30), "radius": 25},
 	"vegetable_patch": {"center": Vector2(-20, -10), "radius": 12},
 	"meditation_circle": {"center": Vector2(20, -10), "radius": 8},
-	"water_spring": {"center": Vector2(0, 0), "radius": 6}
+	"water_spring": {"center": Vector2(0, 0), "radius": 6
 }
 
 # ===== UNIVERSAL BEING COMPONENTS =====
@@ -194,7 +194,7 @@ func _create_garden_walls() -> void:
 		# East wall
 		{"start": Vector3(50, 0, -50), "end": Vector3(50, 0, 50), "direction": Vector3.FORWARD},
 		# West wall
-		{"start": Vector3(-50, 0, -50), "end": Vector3(-50, 0, 50), "direction": Vector3.FORWARD}
+		{"start": Vector3(-50, 0, -50), "end": Vector3(-50, 0, 50), "direction": Vector3.FORWARD
 	]
 	
 	for wall in wall_positions:
@@ -345,7 +345,7 @@ func _create_project_areas() -> void:
 		{"name": "expansion_north", "pos": Vector3(0, 0, 45), "purpose": "northern_expansion"},
 		{"name": "expansion_east", "pos": Vector3(45, 0, 0), "purpose": "eastern_expansion"},
 		{"name": "expansion_west", "pos": Vector3(-45, 0, 0), "purpose": "western_expansion"},
-		{"name": "central_project", "pos": Vector3(0, 0, 15), "purpose": "special_creation"}
+		{"name": "central_project", "pos": Vector3(0, 0, 15), "purpose": "special_creation"
 	]
 	
 	for spot in project_spots:

@@ -3,7 +3,6 @@
 # Created: May 31, 2025, 23:28 CEST
 # Purpose: Ragdoll physics and behavior system
 # Connection: Part of Pentagon Architecture migration
-
 extends UniversalBeingBase
 # Quick launcher for Universal Entity commands
 # Add this to any scene to get quick access to commands
@@ -15,8 +14,8 @@ func _ready():
 	await get_tree().create_timer(2.0).timeout
 	
 	# Check status
-	var ue = get_node_or_null("/root/UniversalEntity")
-	var console = get_node_or_null("/root/ConsoleManager")
+	var ue = get_node_or_null("root/UniversalEntity")
+	var console = get_node_or_null("root/ConsoleManager")
 	
 	if ue and console:
 		print("✅ Universal Entity is READY!")

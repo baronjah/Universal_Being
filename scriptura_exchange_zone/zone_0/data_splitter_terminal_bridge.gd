@@ -1,6 +1,6 @@
 extends Node
 
-class_name DataSplitterTerminalBridge
+class_name DataSplitterTerminalBridge_datasplitterterminalbridge_dataspli
 
 # ----- NODE PATHS -----
 @export_node_path var data_splitter_controller_path: NodePath
@@ -13,28 +13,28 @@ var terminal_bridge_connector = null
 var console = null
 
 # ----- CONFIGURATION -----
-@export var auto_initialize: bool = true
-@export var enable_debug_logs: bool = true
-@export var max_command_history: int = 50
-@export var enable_color_output: bool = true
-@export var attach_to_turn_system: bool = true
+@@@export var auto_initialize: bool = true
+@@@export var enable_debug_logs: bool = true
+@@@export var max_command_history: int = 50
+@@@export var enable_color_output: bool = true
+@@@export var attach_to_turn_system: bool = true
 
 # ----- BRIDGE SETTINGS -----
-@export var terminal_poll_interval: float = 0.5  # seconds
-@export var data_sewer_path: String = "user://data_sewers"
-@export var terminal_data_path: String = "user://terminal_data"
-@export var terminal_file_extension: String = ".terminal"
-@export var bridge_active: bool = false
+@@@export var terminal_poll_interval: float = 0.5  # seconds
+@@@export var data_sewer_path: String = "user://data_sewers"
+@@@export var terminal_data_path: String = "user://terminal_data"
+@@@export var terminal_file_extension: String = ".terminal"
+@@@export var bridge_active: bool = false
 
 # ----- COMMAND PREFIXES -----
-const CMD_DATA_SPLIT = "/split"
-const CMD_DATA_STREAM = "/stream"
-const CMD_DATA_CHUNK = "/chunk"
-const CMD_DATA_MERGE = "/merge"
-const CMD_DATA_LIST = "/list"
-const CMD_DATA_ANALYZE = "/analyze"
-const CMD_DATA_VISUALIZE = "/visualize"
-const CMD_DATA_HELP = "/help"
+const CMD_DATA_SPLIT = "split"
+const CMD_DATA_STREAM = "stream"
+const CMD_DATA_CHUNK = "chunk"
+const CMD_DATA_MERGE = "merge"
+const CMD_DATA_LIST = "list"
+const CMD_DATA_ANALYZE = "analyze"
+const CMD_DATA_VISUALIZE = "visualize"
+const CMD_DATA_HELP = "help"
 
 # ----- COMMUNICATION STATE -----
 var last_poll_time = 0
@@ -88,7 +88,7 @@ func _resolve_component_paths():
 		data_splitter_controller = get_node_or_null(data_splitter_controller_path)
 		
 	if not data_splitter_controller:
-		data_splitter_controller = get_node_or_null("/root/DataSplitterController")
+		data_splitter_controller = get_node_or_null("root/DataSplitterController")
 		if not data_splitter_controller:
 			var nodes = get_tree().get_nodes_in_group("data_splitter")
 			if nodes.size() > 0:
@@ -99,7 +99,7 @@ func _resolve_component_paths():
 		terminal_bridge_connector = get_node_or_null(terminal_bridge_connector_path)
 		
 	if not terminal_bridge_connector:
-		terminal_bridge_connector = get_node_or_null("/root/TerminalBridgeConnector")
+		terminal_bridge_connector = get_node_or_null("root/TerminalBridgeConnector")
 		if not terminal_bridge_connector:
 			var nodes = get_tree().get_nodes_in_group("terminal_bridge")
 			if nodes.size() > 0:
@@ -138,7 +138,7 @@ func _create_directories():
 func _init_terminal_data():
 	# Create terminal data files for multiple terminals
 	for i in range(6):  # Support 6 terminal windows
-		var terminal_file = terminal_data_path + "/terminal_" + str(i) + terminal_file_extension
+		var terminal_file = terminal_data_path + "terminal_" + str(i) + terminal_file_extension
 		
 		if not FileAccess.file_exists(terminal_file):
 			var file = FileAccess.open(terminal_file, FileAccess.WRITE)
@@ -214,7 +214,7 @@ func _process(delta):
 func _poll_terminal_files():
 	# Check terminal files for changes
 	for terminal_id in active_terminal_windows:
-		var terminal_file = terminal_data_path + "/terminal_" + str(terminal_id) + terminal_file_extension
+		var terminal_file = terminal_data_path + "terminal_" + str(terminal_id) + terminal_file_extension
 		
 		if FileAccess.file_exists(terminal_file):
 			# Check if file has been modified
@@ -243,7 +243,7 @@ func _process_terminal_data(data):
 		emit_signal("terminal_message_received", terminal_id, last_message)
 		
 		# Check if it's a data splitter command
-		if last_message.begins_with("/"):
+		if last_message.begins_with(""):
 			_process_command(last_message, terminal_id)
 	
 	# Process data operations
@@ -291,11 +291,11 @@ func _process_command(command: String, terminal_id: int):
 			result = _handle_analyze_command(params)
 		CMD_DATA_VISUALIZE:
 			result = _handle_visualize_command(params)
-		CMD_DATA_HELP, "/data-help":
+		CMD_DATA_HELP, "data-help":
 			result = _handle_help_command(params)
 		_:
 			# Check if command might be for data splitter
-			if command.begins_with("/data-"):
+			if command.begins_with("data-"):
 				var custom_cmd = command.substr(6)
 				result = _handle_custom_command(custom_cmd)
 			else:
@@ -730,14 +730,14 @@ func _handle_visualize_command(params: String) -> Dictionary:
 func _handle_help_command(params: String) -> Dictionary:
 	# Help command: /help
 	var help_text = "[color=#88ff99]Data Splitter Terminal Bridge Commands:[/color]\n"
-	help_text += "/split [chunk_id] [split_factor] - Split a data chunk\n"
-	help_text += "/stream [stream_id] [data_type] [size] - Create a new data stream\n"
-	help_text += "/chunk [chunk_id] [parent_stream] [content] - Create a new data chunk\n"
-	help_text += "/merge [chunk_id1,chunk_id2,...] [merge_type] - Merge multiple chunks\n"
-	help_text += "/list [streams|chunks|splits|all] - List data elements\n"
-	help_text += "/analyze [text] - Analyze text for data splitting\n"
-	help_text += "/visualize [chunk_id|stream_id] [dimension] - Visualize data in terminal\n"
-	help_text += "/help - Display this help\n"
+	help_text += "split [chunk_id] [split_factor] - Split a data chunk\n"
+	help_text += "stream [stream_id] [data_type] [size] - Create a new data stream\n"
+	help_text += "chunk [chunk_id] [parent_stream] [content] - Create a new data chunk\n"
+	help_text += "merge [chunk_id1,chunk_id2,...] [merge_type] - Merge multiple chunks\n"
+	help_text += "list [streams|chunks|splits|all] - List data elements\n"
+	help_text += "analyze [text] - Analyze text for data splitting\n"
+	help_text += "visualize [chunk_id|stream_id] [dimension] - Visualize data in terminal\n"
+	help_text += "help - Display this help\n"
 	
 	_log_message(help_text)
 	
@@ -798,7 +798,7 @@ func _send_operation_result_to_terminal(terminal_id: int, result: Dictionary):
 	_send_message_to_terminal(terminal_id, message)
 	
 	# Add result to terminal data file
-	var terminal_file = terminal_data_path + "/terminal_" + str(terminal_id) + terminal_file_extension
+	var terminal_file = terminal_data_path + "terminal_" + str(terminal_id) + terminal_file_extension
 	if FileAccess.file_exists(terminal_file):
 		var file_access = FileAccess.open(terminal_file, FileAccess.READ)
 		if file_access:
@@ -822,7 +822,7 @@ func _send_operation_result_to_terminal(terminal_id: int, result: Dictionary):
 					file_access.store_string(JSON.stringify(json))
 
 func _send_message_to_terminal(terminal_id: int, message: String):
-	var terminal_file = terminal_data_path + "/terminal_" + str(terminal_id) + terminal_file_extension
+	var terminal_file = terminal_data_path + "terminal_" + str(terminal_id) + terminal_file_extension
 	
 	if FileAccess.file_exists(terminal_file):
 		var file_access = FileAccess.open(terminal_file, FileAccess.READ)
@@ -921,7 +921,7 @@ func _generate_stream_visualization(stream_id: String, dimension: int) -> String
 				visualization += " "
 			visualization += side + "\n"
 			
-			// Stream type line
+# // Stream type line
 			var type_text = "Type: " + stream_data.type
 			padding = " " * ((width - 2 - type_text.length()) / 2)
 			visualization += side + padding + type_text + padding
@@ -929,7 +929,7 @@ func _generate_stream_visualization(stream_id: String, dimension: int) -> String
 				visualization += " "
 			visualization += side + "\n"
 			
-			// Stream size line
+# // Stream size line
 			var size_text = "Size: " + str(stream_data.size)
 			padding = " " * ((width - 2 - size_text.length()) / 2)
 			visualization += side + padding + size_text + padding
@@ -937,7 +937,7 @@ func _generate_stream_visualization(stream_id: String, dimension: int) -> String
 				visualization += " "
 			visualization += side + "\n"
 			
-			// Chunk count line
+# // Chunk count line
 			var chunk_text = "Chunks: " + str(stream_data.chunks.size())
 			padding = " " * ((width - 2 - chunk_text.length()) / 2)
 			visualization += side + padding + chunk_text + padding
@@ -947,21 +947,21 @@ func _generate_stream_visualization(stream_id: String, dimension: int) -> String
 			
 			visualization += top_bottom + "[/color]"
 			
-			// If chunks exist, list them
+# // If chunks exist, list them
 			if stream_data.has("chunks") and stream_data.chunks.size() > 0:
 				visualization += "\nChunks:\n"
 				for chunk_id in stream_data.chunks:
 					visualization += "- " + chunk_id + "\n"
 		
 		3, _:
-			// 3D+ visualization - more detailed ASCII art
+# // 3D+ visualization - more detailed ASCII art
 			var width = min(60, stream_data.size + 20)
 			
-			// Top
+# // Top
 			visualization += "[color=#aaaaff]" + "    " + "_" * (width - 8) + "\n"
-			visualization += "   /|" + " " * (width - 8) + "|\n"
+			visualization += "   |" + " " * (width - 8) + "|\n"
 			
-			// Stream ID line
+# // Stream ID line
 			var stream_id_padded = stream_id
 			if stream_id.length() < width - 12:
 				var padding = (width - 12 - stream_id.length()) / 2
@@ -969,21 +969,21 @@ func _generate_stream_visualization(stream_id: String, dimension: int) -> String
 			else:
 				stream_id_padded = stream_id.substr(0, width - 15) + "..."
 			
-			visualization += "  / |  " + stream_id_padded + "  |\n"
+			visualization += "   |  " + stream_id_padded + "  |\n"
 			
-			// Stream properties
+# // Stream properties
 			var type_text = "Type: " + stream_data.type
 			var size_text = "Size: " + str(stream_data.size)
 			var chunk_text = "Chunks: " + str(stream_data.chunks.size())
 			
-			visualization += " /__|" + "_" * (width - 8) + "|\n"
+			visualization += " __|" + "_" * (width - 8) + "|\n"
 			visualization += "|   |" + " " * (width - 8) + "|\n"
 			visualization += "|   |  " + type_text + " " * (width - 12 - type_text.length()) + "|\n"
 			visualization += "|   |  " + size_text + " " * (width - 12 - size_text.length()) + "|\n"
 			visualization += "|   |  " + chunk_text + " " * (width - 12 - chunk_text.length()) + "|\n"
 			visualization += "|___|" + "_" * (width - 8) + "|[/color]\n"
 			
-			// Show dimensions based on dimension count
+# // Show dimensions based on dimension count
 			if dimension >= 4:
 				var dimension_text = "Dimensions: " + str(dimension) + "D"
 				visualization += "\n[color=#ffaaaa]" + dimension_text + "[/color]\n"
@@ -991,7 +991,7 @@ func _generate_stream_visualization(stream_id: String, dimension: int) -> String
 				for d in range(4, dimension + 1):
 					visualization += "  Dimension " + str(d) + ": " + _get_dimension_property(d) + "\n"
 			
-			// If chunks exist, list them with ASCII connection
+# // If chunks exist, list them with ASCII connection
 			if stream_data.has("chunks") and stream_data.chunks.size() > 0:
 				visualization += "\n[color=#aaffaa]Connected Chunks:[/color]\n"
 				visualization += "    |\n"
@@ -1007,7 +1007,7 @@ func _generate_chunk_visualization(chunk_id: String, dimension: int) -> String:
 	var visualization = ""
 	var chunk_data = null
 	
-	// Get chunk data
+# // Get chunk data
 	if data_splitter_controller.has_method("get_data_chunks"):
 		var chunks = data_splitter_controller.get_data_chunks()
 		if chunks.has(chunk_id):
@@ -1019,10 +1019,10 @@ func _generate_chunk_visualization(chunk_id: String, dimension: int) -> String:
 	if not chunk_data:
 		return "Chunk data not found"
 	
-	// Generate visualization based on dimension
+# // Generate visualization based on dimension
 	match dimension:
 		1:
-			// 1D visualization - simple representation
+# // 1D visualization - simple representation
 			visualization += "[color=#ffaaaa][" + chunk_id + ":" + str(chunk_data.size) + "][/color]\n"
 			
 			if chunk_data.has("content") and chunk_data.content.length() > 0:
@@ -1032,23 +1032,23 @@ func _generate_chunk_visualization(chunk_id: String, dimension: int) -> String:
 				visualization += "Content: " + content
 		
 		2:
-			// 2D visualization - box
+# // 2D visualization - box
 			var width = min(40, chunk_data.size + 10)
 			var top_bottom = "+" + "-" * (width - 2) + "+\n"
 			
 			visualization += "[color=#ffaaaa]" + top_bottom
 			
-			// Create content lines
+# // Create content lines
 			var side = "|"
 			
-			// Chunk ID line
+# // Chunk ID line
 			var padding = " " * ((width - 2 - chunk_id.length()) / 2)
 			visualization += side + padding + chunk_id + padding
 			if (width - 2 - chunk_id.length()) % 2 != 0:
 				visualization += " "
 			visualization += side + "\n"
 			
-			// Parent stream line
+# // Parent stream line
 			var stream_text = "Stream: " + chunk_data.parent_stream
 			padding = " " * ((width - 2 - stream_text.length()) / 2)
 			visualization += side + padding + stream_text + padding
@@ -1056,7 +1056,7 @@ func _generate_chunk_visualization(chunk_id: String, dimension: int) -> String:
 				visualization += " "
 			visualization += side + "\n"
 			
-			// Size line
+# // Size line
 			var size_text = "Size: " + str(chunk_data.size)
 			padding = " " * ((width - 2 - size_text.length()) / 2)
 			visualization += side + padding + size_text + padding
@@ -1066,7 +1066,7 @@ func _generate_chunk_visualization(chunk_id: String, dimension: int) -> String:
 			
 			visualization += top_bottom + "[/color]"
 			
-			// Show content
+# // Show content
 			if chunk_data.has("content") and chunk_data.content.length() > 0:
 				visualization += "\nContent:\n"
 				var content = chunk_data.content
@@ -1075,14 +1075,14 @@ func _generate_chunk_visualization(chunk_id: String, dimension: int) -> String:
 				visualization += content + "\n"
 		
 		3, _:
-			// 3D+ visualization - more detailed ASCII art
+# // 3D+ visualization - more detailed ASCII art
 			var width = min(60, chunk_data.size + 20)
 			
-			// Top
+# // Top
 			visualization += "[color=#ffaaaa]" + "    " + "_" * (width - 8) + "\n"
-			visualization += "   /|" + " " * (width - 8) + "|\n"
+			visualization += "   |" + " " * (width - 8) + "|\n"
 			
-			// Chunk ID line
+# // Chunk ID line
 			var chunk_id_padded = chunk_id
 			if chunk_id.length() < width - 12:
 				var padding = (width - 12 - chunk_id.length()) / 2
@@ -1090,20 +1090,20 @@ func _generate_chunk_visualization(chunk_id: String, dimension: int) -> String:
 			else:
 				chunk_id_padded = chunk_id.substr(0, width - 15) + "..."
 			
-			visualization += "  / |  " + chunk_id_padded + "  |\n"
+			visualization += "   |  " + chunk_id_padded + "  |\n"
 			
-			// Chunk properties
+# // Chunk properties
 			var stream_text = "Stream: " + chunk_data.parent_stream
 			var size_text = "Size: " + str(chunk_data.size)
 			var created_text = "Created: " + _format_timestamp(chunk_data.created_at)
 			
-			visualization += " /__|" + "_" * (width - 8) + "|\n"
+			visualization += " __|" + "_" * (width - 8) + "|\n"
 			visualization += "|   |" + " " * (width - 8) + "|\n"
 			visualization += "|   |  " + stream_text + " " * (width - 12 - stream_text.length()) + "|\n"
 			visualization += "|   |  " + size_text + " " * (width - 12 - size_text.length()) + "|\n"
 			visualization += "|   |  " + created_text + " " * (width - 12 - created_text.length()) + "|\n"
 			
-			// Content preview
+# // Content preview
 			if chunk_data.has("content") and chunk_data.content.length() > 0:
 				var content = chunk_data.content
 				if content.length() > width - 15:
@@ -1114,7 +1114,7 @@ func _generate_chunk_visualization(chunk_id: String, dimension: int) -> String:
 			
 			visualization += "|___|" + "_" * (width - 8) + "|[/color]\n"
 			
-			// Show dimensions based on dimension count
+# // Show dimensions based on dimension count
 			if dimension >= 4:
 				var dimension_text = "Dimensions: " + str(dimension) + "D"
 				visualization += "\n[color=#ffaaaa]" + dimension_text + "[/color]\n"
@@ -1122,7 +1122,7 @@ func _generate_chunk_visualization(chunk_id: String, dimension: int) -> String:
 				for d in range(4, dimension + 1):
 					visualization += "  Dimension " + str(d) + ": " + _get_dimension_property(d) + "\n"
 			
-			// Display properties
+# // Display properties
 			if chunk_data.has("properties"):
 				visualization += "\n[color=#aaffaa]Properties:[/color]\n"
 				for prop in chunk_data.properties:
@@ -1250,7 +1250,7 @@ func _send_message_to_all_terminals(message: String):
 		_send_message_to_terminal(terminal_id, message)
 
 func process_direct_command(command: String) -> Dictionary:
-	if command.begins_with("/"):
+	if command.begins_with(""):
 		return _process_command(command, current_terminal_id)
 	else:
 		# Not a command

@@ -95,4 +95,4 @@ func get_performance_stats() -> Dictionary:
 	var coordinator = get_node_or_null("/root/Main/GenerationCoordinator")
 	if coordinator and coordinator.has_method("get_performance_stats"):
 		return coordinator.get_performance_stats()
-	return {}
+	return {

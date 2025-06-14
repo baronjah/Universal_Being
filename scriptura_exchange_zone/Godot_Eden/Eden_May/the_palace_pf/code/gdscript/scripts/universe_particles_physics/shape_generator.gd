@@ -1,5 +1,5 @@
 # ShapeGenerator.gd - Creates geometric shapes
-extends Node3D
+extends \2
 
 var config
 var shapes = []
@@ -77,7 +77,7 @@ func update_shapes(delta):
 
 
 # Creates geometric shapes in the universe
-extends Node3D
+extends \2
 
 var config: Dictionary
 var shapes: Array[Node3D] = []

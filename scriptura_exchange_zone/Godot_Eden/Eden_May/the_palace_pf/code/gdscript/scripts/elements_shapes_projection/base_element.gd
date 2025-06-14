@@ -1,6 +1,6 @@
 # base_element.gd
 # Base class for all elements in the system
-extends Node3D
+extends \2
 
 # Core properties
 var element_type = "generic"
@@ -439,7 +439,7 @@ func transform_to(target_type):
 		return null
 	
 	# Create the new element
-	var new_script = load("res://code/gdscript/scripts/elements_shapes_projection/%s_element.gd" % target_type)
+	var new_script = load("res://scripts/gdscript/scripts/elements_shapes_projection/%s_element.gd" % target_type)
 	if new_script:
 		var new_element = new_script.new()
 		new_element.global_position = global_position

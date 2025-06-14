@@ -1,6 +1,6 @@
 extends Node
 
-class_name TurnSystem
+class_name TurnSystem_turnsystem_turnsyst
 
 # Turn System for Eden_OS
 # Implements the 12-turns-per-turn concept for multi-dimensional game progression
@@ -178,7 +178,7 @@ func complete_main_turn(turn_id):
         
         return "Turn " + str(turn_id) + " completed"
     else:
-        return "Turn " + str(turn_id) + " not completed - " + str(turn_history[turn_id]["subturns_completed"]) + "/" + str(TURNS_PER_CYCLE) + " subturns done"
+        return "Turn " + str(turn_id) + " not completed - " + str(turn_history[turn_id]["subturns_completed"]) + "" + str(TURNS_PER_CYCLE) + " subturns done"
 
 func generate_turn_summary(turn_id):
     # Generate a summary of the entire turn
@@ -370,7 +370,7 @@ func process_command(args):
             return "Unknown turn command: " + args[0]
 
 func get_turn_status():
-    var status = "Current turn: " + str(current_main_turn) + "." + str(current_subturn) + " (" + str(current_subturn) + "/" + str(TURNS_PER_CYCLE) + ")\n"
+    var status = "Current turn: " + str(current_main_turn) + "." + str(current_subturn) + " (" + str(current_subturn) + "" + str(TURNS_PER_CYCLE) + ")\n"
     status += "State: " + current_turn_state + "\n"
     
     # Add time tracking
@@ -397,7 +397,7 @@ func get_turn_detail(main_turn=null, subturn=null):
         if turn_data:
             var detail = "Turn " + str(main_turn) + " Details:\n"
             detail += "State: " + turn_data["state"] + "\n"
-            detail += "Subturns completed: " + str(turn_data["subturns_completed"]) + "/" + str(TURNS_PER_CYCLE) + "\n"
+            detail += "Subturns completed: " + str(turn_data["subturns_completed"]) + "" + str(TURNS_PER_CYCLE) + "\n"
             
             if turn_data["state"] == "completed":
                 detail += "\n" + turn_data["summary"]

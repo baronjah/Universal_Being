@@ -47,8 +47,8 @@ func setup_performance_monitoring() -> void:
 		"error_count": 0,
 		"memory_usage": 0,
 		"chunk_performance": {},
-		"ai_response_times": {}
-	}
+		"ai_response_times": {
+}
 
 func setup_artifact_system() -> void:
 	"""Initialize collaborative artifact creation"""
@@ -57,7 +57,7 @@ func setup_artifact_system() -> void:
 		"gemma_orbs": [],
 		"human_fragments": [],
 		"collaboration_nodes": []
-	}
+}
 
 func start_self_monitoring() -> void:
 	"""Begin continuous self-monitoring"""
@@ -136,6 +136,7 @@ func initiate_repair(issues: Array) -> void:
 	
 	# Send repair command to Python bridge
 	send_bridge_command("repair", {"issues": issues})
+}
 
 func send_bridge_command(command: String, data: Dictionary = {}) -> void:
 	"""Send command to Akashic Bridge Python server"""
@@ -144,13 +145,15 @@ func send_bridge_command(command: String, data: Dictionary = {}) -> void:
 		"data": data,
 		"source": "SelfRepairSystem",
 		"timestamp": Time.get_ticks_msec()
-	}
+}
 	
 	var json_string = JSON.stringify(request_data)
 	var headers = ["Content-Type: application/json"]
+
 	
 	bridge_connection.request(bridge_url, headers, HTTPClient.METHOD_POST, json_string)
 	print("📡 Bridge command sent: %s" % command)
+
 
 func _on_bridge_response(result: int, response_code: int, headers: PackedStringArray, body: PackedByteArray) -> void:
 	"""Handle response from Akashic Bridge"""
@@ -163,6 +166,7 @@ func _on_bridge_response(result: int, response_code: int, headers: PackedStringA
 	else:
 		print("❌ Bridge communication error: %d" % response_code)
 
+
 func handle_bridge_response(data: Dictionary) -> void:
 	"""Process response from Python bridge"""
 	match data.get("status", ""):
@@ -170,6 +174,7 @@ func handle_bridge_response(data: Dictionary) -> void:
 			repair_active = false
 			repair_completed.emit(data.get("success", false))
 			print("✅ Repair completed: %s" % data.get("message", ""))
+
 			
 			# Create completion artifact
 			create_gemma_orb("repair_completed", data)
@@ -183,6 +188,7 @@ func handle_bridge_response(data: Dictionary) -> void:
 		_:
 			print("📥 Bridge response: %s" % data)
 
+
 # ===== COLLABORATIVE ARTIFACT SYSTEM =====
 
 func create_claude_crystal(event_type: String, data: Dictionary) -> void:
@@ -195,13 +201,14 @@ func create_claude_crystal(event_type: String, data: Dictionary) -> void:
 		"position": get_random_world_position(),
 		"visual_style": "crystalline_blue",
 		"created_at": Time.get_ticks_msec()
-	}
+}
 	
 	artifact_registry.claude_crystals.append(crystal)
 	spawn_visual_artifact(crystal)
 	artifact_created.emit("claude_crystal", crystal)
 	
 	print("💎 Claude Crystal created: %s" % event_type)
+
 
 func create_gemma_orb(observation_type: String, data: Dictionary) -> void:
 	"""Create Gemma's observation orb artifact"""
@@ -213,13 +220,14 @@ func create_gemma_orb(observation_type: String, data: Dictionary) -> void:
 		"position": get_random_world_position(),
 		"visual_style": "flowing_purple",
 		"created_at": Time.get_ticks_msec()
-	}
+}
 	
 	artifact_registry.gemma_orbs.append(orb)
 	spawn_visual_artifact(orb)
 	artifact_created.emit("gemma_orb", orb)
 	
 	print("🔮 Gemma Orb created: %s" % observation_type)
+
 
 func create_human_fragment(creative_input: String, data: Dictionary) -> void:
 	"""Create human's creative fragment artifact"""
@@ -231,13 +239,14 @@ func create_human_fragment(creative_input: String, data: Dictionary) -> void:
 		"position": get_random_world_position(),
 		"visual_style": "golden_light",
 		"created_at": Time.get_ticks_msec()
-	}
+}
 	
 	artifact_registry.human_fragments.append(fragment)
 	spawn_visual_artifact(fragment)
 	artifact_created.emit("human_fragment", fragment)
 	
 	print("✨ Human Fragment created: %s" % creative_input)
+
 
 func create_collaboration_node(participants: Array, result: String) -> void:
 	"""Create artifact representing successful collaboration"""
@@ -249,13 +258,14 @@ func create_collaboration_node(participants: Array, result: String) -> void:
 		"position": get_random_world_position(),
 		"visual_style": "rainbow_nexus",
 		"created_at": Time.get_ticks_msec()
-	}
+}
 	
 	artifact_registry.collaboration_nodes.append(node)
 	spawn_visual_artifact(node)
 	artifact_created.emit("collaboration_node", node)
 	
 	print("🌈 Collaboration Node created: %s" % result)
+
 
 func spawn_visual_artifact(artifact: Dictionary) -> void:
 	"""Spawn visual representation of artifact in game world"""
@@ -369,7 +379,7 @@ func create_performance_artifact() -> void:
 		"memory": performance_monitor.memory_usage,
 		"chunks_loaded": get_chunk_count(),
 		"ai_responsive": is_ai_responsive()
-	}
+}
 	
 	if performance_data.fps > 50:
 		create_gemma_orb("performance_excellent", performance_data)
@@ -418,12 +428,15 @@ func take_screenshot() -> void:
 	"""Request screenshot via computer control"""
 	request_computer_control("screenshot", {"save_path": "game_screenshot.png"})
 
+
 func move_mouse_to(position: Vector2) -> void:
 	"""Move computer mouse to specific position"""
 	request_computer_control("move_mouse", {"x": position.x, "y": position.y})
 
+
 func click_at(position: Vector2) -> void:
 	"""Click at specific screen position"""
 	request_computer_control("click", {"x": position.x, "y": position.y})
+
 
 print("🔧 Self-Repair System: Ready for autonomous maintenance!")

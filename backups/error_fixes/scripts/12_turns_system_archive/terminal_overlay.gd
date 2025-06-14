@@ -69,7 +69,7 @@ func _ready():
     # Setup cursor blink timer
     var timer = Timer.new()
     timer.wait_time = 0.5
-    timer.connect("timeout", self, "_on_cursor_blink")
+    timer.connect(_on_cursor_blink)
     add_child(timer)
     timer.start()
     
@@ -99,17 +99,17 @@ func _initialize_shift_colors():
 func connect_to_memory_system():
     # Find memory system node
     if has_node("/root/ProjectMemorySystem") or get_node_or_null("/root/ProjectMemorySystem"):
-        memory_system = get_node("/root/ProjectMemorySystem")
-        memory_system.connect("color_shifted", self, "_on_memory_color_shifted")
-        memory_system.connect("overlay_updated", self, "_on_overlay_updated")
+        memory_system = get_node("\1") as Node
+        memory_system.connect(_on_memory_color_shifted)
+        memory_system.connect(_on_overlay_updated)
         print("Connected to ProjectMemorySystem")
         return true
     
     # Try SmartAccountSystem path
     if has_node("/root/SmartAccountSystem/ProjectMemorySystem") or get_node_or_null("/root/SmartAccountSystem/ProjectMemorySystem"):
-        memory_system = get_node("/root/SmartAccountSystem/ProjectMemorySystem")
-        memory_system.connect("color_shifted", self, "_on_memory_color_shifted")
-        memory_system.connect("overlay_updated", self, "_on_overlay_updated")
+        memory_system = get_node("\1") as Node
+        memory_system.connect(_on_memory_color_shifted)
+        memory_system.connect(_on_overlay_updated)
         print("Connected to ProjectMemorySystem under SmartAccountSystem")
         return true
     
@@ -356,6 +356,7 @@ func process_command(command):
             else:
                 add_text("Current color: " + get_current_color_name())
                 add_text("Usage: color [light_blue|eve_blue|shift_blue|deep_blue|ethereal_blue]")
+				
         
         "shift":
             if memory_system:
@@ -377,6 +378,7 @@ func process_command(command):
             else:
                 add_text("Current opacity: " + str(terminal_opacity))
                 add_text("Usage: opacity [0.1-1.0]")
+				
         
         "memory":
             if cmd_parts.size() > 1:
@@ -435,6 +437,7 @@ func process_memory_command(cmd_parts):
                     add_text("Failed to add memory")
             else:
                 add_text("Usage: memory add [content] [category]")
+				
         
         "recall":
             if cmd_parts.size() >= 3:
@@ -446,6 +449,7 @@ func process_memory_command(cmd_parts):
                     add_text("Memory not found")
             else:
                 add_text("Usage: memory recall [id]")
+				
         
         "forget":
             if cmd_parts.size() >= 3:
@@ -457,40 +461,49 @@ func process_memory_command(cmd_parts):
                     add_text("Memory not found")
             else:
                 add_text("Usage: memory forget [id]")
+				
         
         "list":
+		
             var category = "project_structure"
             if cmd_parts.size() >= 3:
                 category = cmd_parts[2]
             
             var memories = memory_system.get_memories_by_category(category)
             add_text("Memories in category " + category + ":")
+			
             
             for memory in memories:
                 add_text("  " + memory["id"] + ": " + memory["content"])
+				
             
             if memories.size() == 0:
                 add_text("  No memories found")
         
         "stats":
             add_text("Memory system statistics:")
+			
             
             var total_memories = 0
             for category in memory_system.memory_banks:
                 var count = memory_system.memory_banks[category]["memories"].size()
                 total_memories += count
                 add_text("  " + category + ": " + str(count) + " memories")
+				
             
             add_text("Total memories: " + str(total_memories))
             add_text("Forgotten memories: " + str(memory_system.forgotten_memories.size()))
+			
             
             if memory_system.current_memory_focus:
                 add_text("Current focus: " + memory_system.current_memory_focus)
+				
             
             if memory_system.project_eve_shift_active:
                 add_text("EVE Shift: Active (Phase " + str(memory_system.current_shift_phase) + ")")
             else:
                 add_text("EVE Shift: Inactive")
+				
         
         _:
             add_text("Unknown memory command: " + action)
@@ -595,6 +608,7 @@ func set_opacity(opacity):
         memory_system.set_overlay_opacity(terminal_opacity)
     
     add_text("Opacity set to: " + str(terminal_opacity))
+	
 
 func set_wave_parameter(param, value):
     match param:
@@ -609,6 +623,7 @@ func set_wave_parameter(param, value):
             add_text("Pulse intensity set to: " + str(pulse_intensity))
         _:
             add_text("Unknown wave parameter: " + param)
+			
 
 func hide_terminal():
     # Hide terminal

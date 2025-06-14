@@ -30,15 +30,15 @@ var active_particles = {}
 
 func _ready():
     # Get references to required systems
-    temperature_system = get_node("/root/TemperatureSystem")
-    word_manifestation_system = get_node("/root/WordManifestationSystem")
+    temperature_system = get_node("\1") as Node
+    word_manifestation_system = get_node("\1") as Node
     
     # Connect to temperature change signal
-    temperature_system.connect("temperature_changed", self, "_on_temperature_changed")
+    temperature_system.connect(_on_temperature_changed)
     
     # Connect to word creation signal
-    word_manifestation_system.connect("word_created", self, "_on_word_created")
-    word_manifestation_system.connect("word_removed", self, "_on_word_removed")
+    word_manifestation_system.connect(_on_word_created)
+    word_manifestation_system.connect(_on_word_removed)
     
     # Apply initial temperature effects
     apply_global_temperature_effects(temperature_system.current_temperature_state)
@@ -118,7 +118,7 @@ func apply_temperature_particles(word_node, temp_state, word_id):
             particle_scene = particle_scenes["PLASMA"]
     
     if particle_scene:
-        var particles = particle_scene.instance()
+        var particles = particle_scene.instantiate()
         word_node.add_child(particles)
         active_particles[word_id] = particles
 

@@ -55,7 +55,7 @@ var transform_matrices: Dictionary = {
     "scale_down": Transform2D(Vector2(0.8, 0), Vector2(0, 0.8), Vector2.ZERO),
     "shear_x": Transform2D(Vector2(1, 0.2), Vector2(0, 1), Vector2.ZERO),
     "shear_y": Transform2D(Vector2(1, 0), Vector2(0.2, 1), Vector2.ZERO)
-}
+	}
 
 # ----- WINDOW PATTERNS -----
 var window_patterns: Dictionary = {
@@ -94,8 +94,7 @@ var window_patterns: Dictionary = {
             Vector2(0.2, 0.2), Vector2(1.2, 0.2), Vector2(1.2, 1.2), Vector2(0.2, 1.2)  # Back face
         ],
         "transform_sequence": ["identity", "rotate_90", "rotate_180", "rotate_270", "mirror_x", "mirror_y", "shear_x", "shear_y"]
-    }
-}
+		}
 
 # ----- SIGNALS -----
 signal window_transformed(window_id, transform_type)
@@ -161,7 +160,7 @@ func _initialize_window_references():
         "state": WindowState.NORMAL,
         "dimension": current_dimension,
         "transform": Transform2D.IDENTITY
-    }
+		}
     
     window_references.append(main_window)
     window_states["main"] = WindowState.NORMAL
@@ -200,6 +199,7 @@ func create_window(window_id: String, size: Vector2 = Vector2.ZERO, position: Ve
         window.size = Vector2i(size)
         window.position = Vector2i(position)
         window.title = "Dimensional Window: " + window_id
+		}
         
         var new_window = {
             "id": window_id,
@@ -209,7 +209,7 @@ func create_window(window_id: String, size: Vector2 = Vector2.ZERO, position: Ve
             "state": WindowState.NORMAL,
             "dimension": current_dimension,
             "transform": Transform2D.IDENTITY
-        }
+			}
         
         window_references.append(new_window)
         window_states[window_id] = WindowState.NORMAL
@@ -226,6 +226,7 @@ func create_window(window_id: String, size: Vector2 = Vector2.ZERO, position: Ve
 func close_window(window_id: String):
     for i in range(window_references.size()):
         if window_references[i].id == window_id and window_id != "main":
+		}
             var window_ref = window_references[i]
             
             if window_ref.has("window") and is_instance_valid(window_ref.window):
@@ -261,7 +262,7 @@ func transform_window(window_id: String, transform_type: String):
         "progress": 0.0,
         "duration": window_transition_duration,
         "transform_type": transform_type
-    }
+		}
     
     return true
 
@@ -359,6 +360,7 @@ func change_window_dimension(window_id: String, dimension_key: String):
     
     # Check if dimension exists in ethereal bridge
     if ethereal_bridge and ethereal_bridge.has_method("get_dimension_fractal"):
+	
         var dim_fractal = ethereal_bridge.get_dimension_fractal(dimension_key)
         if dim_fractal == null:
             print("Dimension not found: " + dimension_key)
@@ -407,10 +409,12 @@ func _sync_window_transforms():
             
             # Apply transform to window shader or canvas item
             if window_id == "main":
+			
                 # Apply to main window via shader or canvas
                 if get_viewport().has_method("set_canvas_transform"):
                     get_viewport().set_canvas_transform(transform)
             elif window_ref.has("window") and is_instance_valid(window_ref.window):
+			
                 # Apply to sub-window
                 if window_ref.window.has_method("set_canvas_transform"):
                     window_ref.window.set_canvas_transform(transform)
@@ -452,16 +456,19 @@ func _update_window_color(window_id: String, dimension_key: String):
         
         match dimension_color_mode:
             "frequential":
+			
                 # Higher frequency = more blue
                 var freq = properties.frequency
                 color = Color(1.0 - freq, 1.0 - freq/2.0, freq)
             
             "stability":
+			
                 # Higher stability = more green
                 var stability = properties.stability
                 color = Color(1.0 - stability, stability, 1.0 - stability/2.0)
             
             "hybrid":
+			
                 # Combine frequency and stability
                 var freq = properties.frequency
                 var stability = properties.stability
@@ -492,6 +499,7 @@ func _update_dimension_data():
     
     # Get fractal data
     if ethereal_bridge.has_method("get_fractal_visualization_data"):
+	
         var fractal_data = ethereal_bridge.get_fractal_visualization_data()
         
         if fractal_data.has("points"):
@@ -504,7 +512,7 @@ func _update_dimension_data():
                         "frequency": point.frequency,
                         "stability": point.stability,
                         "position": point.position
-                    }
+						}
 
 func _on_fractal_data_updated(points):
     fractal_points = points.duplicate()
@@ -516,7 +524,7 @@ func _on_fractal_data_updated(points):
                 "frequency": point.frequency,
                 "stability": point.stability,
                 "position": point.position
-            }
+				}
     
     emit_signal("fractal_data_updated", fractal_points)
 
@@ -629,6 +637,7 @@ func combine_windows(window_ids: Array, pattern_name: String = ""):
     
     # If pattern provided, arrange windows in that pattern first
     if pattern_name != "" and window_patterns.has(pattern_name):
+	
         var pattern = window_patterns[pattern_name]
         var points = pattern.points
         var transforms = pattern.transform_sequence

@@ -6,7 +6,7 @@ extends Node
 # into a complete game experience with unified interface and gameplay
 }
 
-class_name IntegratedGameSystem
+class_name IntegratedGameSystem_integratedgamesystem_integrat
 }
 
 # ----- COMPONENT REFERENCES -----
@@ -94,7 +94,7 @@ func setup_components():
 }
 
     # Create main controller if needed
-    if not has_node("/root/MainController"):
+    if not has_node("root/MainController"):
         main_controller = load("res://main.gd").new()
         main_controller.name = "MainController"
         add_child(main_controller)
@@ -119,9 +119,9 @@ func setup_components():
 func initialize_folder_connections():
     # Define important folders to connect
     var folders_to_connect = [
-        "/mnt/c/Users/Percision 15/12_turns_system",
-        "/mnt/c/Users/Percision 15/Eden_OS",
-        "/mnt/c/Users/Percision 15/LuminusOS"
+        "mnt/c/Users/Percision 15/12_turns_system",
+        "mnt/c/Users/Percision 15/Eden_OS",
+        "mnt/c/Users/Percision 15/LuminusOS"
     ]
 }
 
@@ -131,10 +131,10 @@ func initialize_folder_connections():
 }
 
     # Connect subdirectories for deeper integration
-    connect_folder("/mnt/c/Users/Percision 15/12_turns_system/data")
-    connect_folder("/mnt/c/Users/Percision 15/12_turns_system/core")
-    connect_folder("/mnt/c/Users/Percision 15/12_turns_system/messages")
-    connect_folder("/mnt/c/Users/Percision 15/LuminusOS/scripts")
+    connect_folder("mnt/c/Users/Percision 15/12_turns_system/data")
+    connect_folder("mnt/c/Users/Percision 15/12_turns_system/core")
+    connect_folder("mnt/c/Users/Percision 15/12_turns_system/messages")
+    connect_folder("mnt/c/Users/Percision 15/LuminusOS/scripts")
 }
 
 func finalize_initialization():
@@ -310,7 +310,7 @@ func connect_folder(folder_path, connection_type = "standard"):
     # Register the folder
     connected_folders[folder_path] = {
         "connection_type": connection_type,
-        "connected_at": OS.get_unix_time(),
+        "connected_at": OS.Time.get_unix_time_from_system(),
         "file_count": 0,
         "godot_files": 0,
         "entities": [],
@@ -542,7 +542,7 @@ func create_entity(entity_type, data):
 }
 
     # Generate entity ID
-    var entity_id = "entity_%s_%d" % [entity_type, OS.get_unix_time()]
+    var entity_id = "entity_%s_%d" % [entity_type, OS.Time.get_unix_time_from_system()]
 }
 
     # Create entity data
@@ -550,7 +550,7 @@ func create_entity(entity_type, data):
         "id": entity_id,
         "type": entity_type,
         "data": data,
-        "created_at": OS.get_unix_time(),
+        "created_at": OS.Time.get_unix_time_from_system(),
         "turn": current_turn,
         "dimension": current_dimension,
         "symbol": current_symbol,
@@ -1222,7 +1222,7 @@ func process_project_command(args):
 }
 
     # Change active folder
-    var project_path = "/mnt/c/Users/Percision 15/" + current_project
+    var project_path = "mnt/c/Users/Percision 15/" + current_project
 }
 
     if Directory.new().dir_exists(project_path):

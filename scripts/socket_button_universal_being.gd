@@ -126,10 +126,12 @@ func connect_to_input(source_node: Node) -> void:
 		connected_inputs.append(source_node)
 		print("🔌 Connected input from: ", source_node.name)
 
+
 func connect_to_output(target_node: Node) -> void:
 	if target_node and target_node not in connected_outputs:
 		connected_outputs.append(target_node)
 		print("🔌 Connected output to: ", target_node.name)
+
 
 func disconnect_from_input(source_node: Node) -> void:
 	connected_inputs.erase(source_node)
@@ -147,6 +149,7 @@ func _process_input_signal() -> void:
 	# Check all connected inputs for signals
 	for node in connected_inputs:
 		if node.has_method("get_output_value"):
+
 			var value = node.get_output_value()
 			if value:
 				receive_input_signal(true)
@@ -203,7 +206,7 @@ func get_socket_info() -> Dictionary:
 		"input_connections": connected_inputs.size(),
 		"output_connections": connected_outputs.size(),
 		"current_state": output_value
-	}
+}
 
 # ===== AI INTEGRATION =====
 

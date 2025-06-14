@@ -24,7 +24,6 @@ const DRIVE_CONFIG = {
 		"description": "Google Drive integration - contains shared project data and resources",
 		"sync_priority": 3,
 		"max_size_gb": 100
-	}
 }
 
 # Content types with storage rules
@@ -91,7 +90,6 @@ const CONTENT_TYPES = {
 		"encryption": "light",
 		"retention": "permanent",
 		"indexing": true
-	}
 }
 
 # Pipeline configuration
@@ -143,7 +141,6 @@ const PIPELINES = {
 		"output_cores": ["core_0", "core_1", "core_2"],
 		"schedule": "daily",
 		"parallel": true
-	}
 }
 
 # Core access status
@@ -165,11 +162,10 @@ var core_status = {
 		"available_space_gb": 0,
 		"total_space_gb": 0,
 		"last_sync": 0
-	}
 }
 
 # Active pipelines
-var active_pipelines = {}
+var active_pipelines = {
 
 # Integration references
 var storage_system = null
@@ -251,6 +247,7 @@ func setup_core_drives():
 				})
 				
 				emit_signal("error_occurred", "core_initialization", "Failed to create core drive: " + core_id)
+	}
 		
 		# Emit status signal
 		emit_signal("core_status_changed", core_id, core_status[core_id])
@@ -271,6 +268,7 @@ func create_directory_structure():
 					if not dir.dir_exists(content_path):
 						dir.make_dir_recursive(content_path)
 						print("Created directory for " + content_type + " on " + core_id + ": " + content_path)
+	}
 
 func connect_integration_systems():
 	# Connect to Storage System if available
@@ -296,9 +294,10 @@ func initialize_pipelines():
 			"last_run": 0,
 			"items_processed": 0,
 			"config": pipeline
-		}
+}
 		
 		print("Initialized pipeline: " + pipeline_id)
+}
 
 # Public API methods
 
@@ -315,7 +314,7 @@ func store_message(message_text, metadata = {}):
 		"text": message_text,
 		"timestamp": OS.get_unix_time(),
 		"metadata": metadata
-	}
+}
 	
 	# Start message pipeline
 	execute_pipeline("message_storage", message)
@@ -337,7 +336,7 @@ func store_painting(file_path, title = "", tags = [], metadata = {}):
 		"tags": tags,
 		"timestamp": OS.get_unix_time(),
 		"metadata": metadata
-	}
+}
 	
 	# Start painting pipeline
 	execute_pipeline("painting_sync", file_data)
@@ -359,7 +358,7 @@ func store_note(note_text, title = "", is_private = true, metadata = {}):
 		"is_private": is_private,
 		"timestamp": OS.get_unix_time(),
 		"metadata": metadata
-	}
+}
 	
 	# Start note pipeline
 	execute_pipeline("note_processor", note)
@@ -380,7 +379,7 @@ func store_3d_notepad(notepad_data, title = "", metadata = {}):
 		"title": title,
 		"timestamp": OS.get_unix_time(),
 		"metadata": metadata
-	}
+}
 	
 	# Start 3D notepad pipeline
 	execute_pipeline("3d_notepad_sync", notepad)
@@ -401,7 +400,7 @@ func store_turn_data(turn_number, turn_data, metadata = {}):
 		"data": turn_data,
 		"timestamp": OS.get_unix_time(),
 		"metadata": metadata
-	}
+}
 	
 	# Start turn cycle pipeline
 	execute_pipeline("turn_cycle", turn)
@@ -411,7 +410,7 @@ func store_turn_data(turn_number, turn_data, metadata = {}):
 # Trigger system backup
 func trigger_backup(include_content_types = []):
 	# Default to all content types if none specified
-	if include_content_types.empty():
+	if include_content_types.is_empty():
 		include_content_types = CONTENT_TYPES.keys()
 	
 	# Create backup object
@@ -419,7 +418,7 @@ func trigger_backup(include_content_types = []):
 		"id": "backup_" + str(OS.get_unix_time()),
 		"content_types": include_content_types,
 		"timestamp": OS.get_unix_time()
-	}
+}
 	
 	# Start backup pipeline
 	execute_pipeline("system_backup", backup)
@@ -428,7 +427,7 @@ func trigger_backup(include_content_types = []):
 
 # Get status of all cores
 func get_cores_status():
-	var status = {}
+	var status = {
 	
 	for core_id in core_status:
 		status[core_id] = {
@@ -439,14 +438,13 @@ func get_cores_status():
 			"last_sync": core_status[core_id].last_sync,
 			"type": DRIVE_CONFIG[core_id].type,
 			"description": DRIVE_CONFIG[core_id].description
-		}
-	}
+}
 	
 	return status
 
 # Get status of all pipelines
 func get_pipelines_status():
-	var status = {}
+	var status = {
 	
 	for pipeline_id in active_pipelines:
 		status[pipeline_id] = {
@@ -454,8 +452,7 @@ func get_pipelines_status():
 			"last_run": active_pipelines[pipeline_id].last_run,
 			"items_processed": active_pipelines[pipeline_id].items_processed,
 			"description": PIPELINES[pipeline_id].description
-		}
-	}
+}
 	
 	return status
 
@@ -470,7 +467,7 @@ func get_system_stats():
 		"error_count": errors.size(),
 		"cores": get_cores_status(),
 		"pipelines": get_pipelines_status()
-	}
+}
 
 # Execute pipeline for data processing
 func execute_pipeline(pipeline_id, data):
@@ -541,6 +538,7 @@ func execute_pipeline(pipeline_id, data):
 		})
 		
 		emit_signal("error_occurred", "pipeline_execution", "Pipeline execution failed: " + pipeline_id)
+}
 		
 		return false
 
@@ -564,15 +562,19 @@ func process_pipeline_steps(pipeline, data):
 	for step in pipeline.steps:
 		match step:
 			"parse":
+}
 				# Parse data into appropriate format
 				pass
 			"filter":
+}
 				# Filter data for security or privacy
 				pass
 			"process":
+}
 				# Process data for storage
 				pass
 			"store":
+
 				# Store data in appropriate cores
 				var primary_core = CONTENT_TYPES[content_type].primary_core
 				
@@ -584,38 +586,48 @@ func process_pipeline_steps(pipeline, data):
 					if store_data_to_core(backup_core, content_type, data):
 						stored_cores.append(backup_core)
 			"index":
+
 				# Index data for searching
 				pass
 			"encrypt":
+
 				# Encrypt sensitive data
 				pass
 			"compress":
+
 				# Compress data for storage efficiency
 				pass
 			"archive":
+
 				# Archive data for long-term storage
 				pass
 			"optimize":
+
 				# Optimize data (for images, etc.)
 				pass
 			"tag":
+
 				# Add tags for better organization
 				pass
 			"categorize":
+
 				# Categorize data
 				pass
 			"validate":
+
 				# Validate data integrity
 				pass
 			"render":
+
 				# Render data (for 3D, etc.)
 				pass
 			"select":
+
 				# Select data for backup
 				pass
 	
 	# Emit signal for successful storage
-	if not stored_cores.empty():
+	if not stored_cores.is_empty():
 		emit_signal("data_stored", content_type, data.id, stored_cores)
 	
 	return true
@@ -664,6 +676,7 @@ func store_data_to_core(core_id, content_type, data):
 		return true
 	else:
 		push_error("Failed to write file: " + file_path)
+
 		
 		# Log error
 		errors.append({
@@ -676,6 +689,7 @@ func store_data_to_core(core_id, content_type, data):
 		})
 		
 		emit_signal("error_occurred", "file_write", "Failed to write file: " + file_path)
+
 		
 		return false
 	

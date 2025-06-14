@@ -1,6 +1,6 @@
 extends Node
 
-class_name ProjectConnectorSystem
+class_name ProjectConnectorSystem_projectconnectorsystem_projectc
 
 # Project Connector System
 # Manages project merging, file synchronization, and cross-application integration
@@ -65,22 +65,22 @@ func _ready():
 
 func _connect_systems():
     # Connect to Akashic system
-    akashic_system = get_node_or_null("/root/AkashicNumberSystem")
+    akashic_system = get_node_or_null("root/AkashicNumberSystem")
     
     # Connect to Ethereal Bridge
-    ethereal_bridge = get_node_or_null("/root/EtherealAkashicBridge")
+    ethereal_bridge = get_node_or_null("root/EtherealAkashicBridge")
     
     # Connect to Terminal Bridge
-    terminal_bridge = get_node_or_null("/root/TerminalAPIBridge")
+    terminal_bridge = get_node_or_null("root/TerminalAPIBridge")
     
     # Connect to Auto Agent
-    auto_agent = get_node_or_null("/root/AutoAgentMode")
+    auto_agent = get_node_or_null("root/AutoAgentMode")
     
-    # Connect to Spatial Connector
-    spatial_connector = get_node_or_null("/root/SpatialLinguisticConnector")
+    # Connect to Node3D Connector
+    spatial_connector = get_node_or_null("root/SpatialLinguisticConnector")
     
     # Connect to Universal Flow
-    universal_flow = get_node_or_null("/root/UniversalDataFlow")
+    universal_flow = get_node_or_null("root/UniversalDataFlow")
 
 func _initialize_managers():
     # Initialize file synchronizer
@@ -101,29 +101,29 @@ func _initialize_managers():
 
 func _scan_for_projects():
     # Scan for Godot projects
-    _scan_directory("/mnt/c/Users/Percision 15", ["project.godot"], "godot")
+    _scan_directory("mnt/c/Users/Percision 15", ["project.godot"], "godot")
     
     # Scan for Python projects
-    _scan_directory("/mnt/c/Users/Percision 15", ["requirements.txt", "setup.py"], "python")
+    _scan_directory("mnt/c/Users/Percision 15", ["requirements.txt", "setup.py"], "python")
     
     # Scan for JS projects
-    _scan_directory("/mnt/c/Users/Percision 15", ["package.json"], "js")
+    _scan_directory("mnt/c/Users/Percision 15", ["package.json"], "js")
     
     # Scan for akashic projects
-    _scan_directory("/mnt/c/Users/Percision 15", ["akashic_database.js", "akashic_record_connector.gd"], "akashic")
+    _scan_directory("mnt/c/Users/Percision 15", ["akashic_database.js", "akashic_record_connector.gd"], "akashic")
     
     # Scan for ethereal projects
-    _scan_directory("/mnt/c/Users/Percision 15", ["ethereal_engine.gd", "ethereal_tunnel.gd"], "ethereal")
+    _scan_directory("mnt/c/Users/Percision 15", ["ethereal_engine.gd", "ethereal_tunnel.gd"], "ethereal")
     
     print("Found " + str(registered_projects.size()) + " projects")
 
 func _map_drives():
     # Map C drive
-    _register_drive("c", "/mnt/c")
+    _register_drive("c", "mnt/c")
     
     # Check for D drive
-    if Directory.new().dir_exists("/mnt/d"):
-        _register_drive("d", "/mnt/d")
+    if Directory.new().dir_exists("mnt/d"):
+        _register_drive("d", "mnt/d")
     
     # Check for mapped network drives
     _scan_network_drives()
@@ -137,12 +137,12 @@ func _map_drives():
 func _scan_network_drives():
     # Implement network drive scanning
     var network_paths = [
-        "/mnt/c/Users/Percision 15/OneDrive"
+        "mnt/c/Users/Percision 15/OneDrive"
     ]
     
     for path in network_paths:
         if Directory.new().dir_exists(path):
-            var drive_name = path.split("/")[-1].to_lower()
+            var drive_name = path.split("")[-1].to_lower()
             _register_drive(drive_name, path)
 
 func _scan_directory(base_path, indicator_files, project_type):
@@ -156,14 +156,14 @@ func _scan_directory(base_path, indicator_files, project_type):
         
         var file_name = dir.get_next()
         while file_name != "":
-            var full_path = base_path + "/" + file_name
+            var full_path = base_path + "" + file_name
             
             if dir.current_is_dir():
                 # Check if this directory contains indicator files
                 var is_project = false
                 
                 for indicator in indicator_files:
-                    if File.new().file_exists(full_path + "/" + indicator):
+                    if File.new().file_exists(full_path + "" + indicator):
                         is_project = true
                         break
                 
@@ -171,7 +171,7 @@ func _scan_directory(base_path, indicator_files, project_type):
                     _register_project(file_name, full_path, project_type)
                 else:
                     # Recursively scan subdirectories, but limit depth
-                    var depth = base_path.split("/").size() - 3 # Starting from /mnt/c
+                    var depth = base_path.split("").size() - 3 # Starting from /mnt/c
                     if depth < MAX_MERGE_DEPTH:
                         _scan_directory(full_path, indicator_files, project_type)
             
@@ -194,7 +194,7 @@ func _register_project(name, path, type):
         "type": type,
         "files": [],
         "connections": [],
-        "last_update": OS.get_unix_time(),
+        "last_update": OS.Time.get_unix_time_from_system(),
         "versions": [],
         "sounds": [],
         "dimensions": []
@@ -234,7 +234,7 @@ func _register_drive(drive_name, path):
         "type": "physical",
         "connected": true,
         "projects": [],
-        "last_scan": OS.get_unix_time()
+        "last_scan": OS.Time.get_unix_time_from_system()
     }
     
     # Scan for projects on this drive
@@ -254,7 +254,7 @@ func _register_virtual_drive(drive_name, url):
         "type": "virtual",
         "connected": true,
         "projects": [],
-        "last_scan": OS.get_unix_time()
+        "last_scan": OS.Time.get_unix_time_from_system()
     }
     
     emit_signal("drive_connected", drive_name, url)
@@ -272,11 +272,11 @@ func _scan_for_sounds(path, project_id):
         
         var file_name = dir.get_next()
         while file_name != "":
-            var full_path = path + "/" + file_name
+            var full_path = path + "" + file_name
             
             if dir.current_is_dir():
                 # Recursively scan subdirectories, but limit depth
-                var depth = path.split("/").size() - 3 # Starting from /mnt/c
+                var depth = path.split("").size() - 3 # Starting from /mnt/c
                 if depth < 3: # Limit sound scanning depth
                     _scan_for_sounds(full_path, project_id)
             else:
@@ -298,7 +298,7 @@ func _register_sound(name, path, format, project_id):
         "path": path,
         "format": format,
         "projects": [project_id],
-        "registered": OS.get_unix_time(),
+        "registered": OS.Time.get_unix_time_from_system(),
         "duration": _get_sound_duration(path, format),
         "processed": false
     }
@@ -343,7 +343,7 @@ func _create_version(project_id, label):
         "id": version_id,
         "project_id": project_id,
         "label": label,
-        "timestamp": OS.get_unix_time(),
+        "timestamp": OS.Time.get_unix_time_from_system(),
         "files": _snapshot_files(project.path),
         "connections": project.connections.duplicate(),
         "sounds": project.sounds.duplicate()
@@ -374,7 +374,7 @@ func _snapshot_files(path):
         
         var file_name = dir.get_next()
         while file_name != "":
-            var full_path = path + "/" + file_name
+            var full_path = path + "" + file_name
             
             if dir.current_is_dir():
                 # Recursively snapshot subdirectories
@@ -432,7 +432,7 @@ func connect_projects(source_id, target_id, connection_type="direct"):
         "source_id": source_id,
         "target_id": target_id,
         "type": connection_type,
-        "established": OS.get_unix_time(),
+        "established": OS.Time.get_unix_time_from_system(),
         "status": "active",
         "data_flows": [],
         "shared_files": [],
@@ -503,14 +503,14 @@ func merge_projects(projects, strategy="combine", label="merged"):
             return null
     
     # Generate merge ID
-    var merge_id = "merge_" + str(OS.get_unix_time())
+    var merge_id = "merge_" + str(OS.Time.get_unix_time_from_system())
     
     # Create merge data
     active_merges[merge_id] = {
         "projects": projects,
         "strategy": strategy,
         "label": label,
-        "start_time": OS.get_unix_time(),
+        "start_time": OS.Time.get_unix_time_from_system(),
         "status": "in_progress",
         "result_id": null
     }
@@ -534,7 +534,7 @@ func merge_projects(projects, strategy="combine", label="merged"):
     
     # Update merge data
     active_merges[merge_id].status = "completed"
-    active_merges[merge_id].end_time = OS.get_unix_time()
+    active_merges[merge_id].end_time = OS.Time.get_unix_time_from_system()
     active_merges[merge_id].result_id = result_id
     
     emit_signal("merge_completed", merge_id, result_id)
@@ -575,7 +575,7 @@ func _merge_overwrite(projects, merge_id, label):
 
 func _merge_combine(projects, merge_id, label):
     # Combine all projects, maintaining directory structure
-    var target_path = "/mnt/c/Users/Percision 15/merged_projects/" + label
+    var target_path = "mnt/c/Users/Percision 15/merged_projects/" + label
     var dir = Directory.new()
     
     if not dir.dir_exists(target_path):
@@ -584,7 +584,7 @@ func _merge_combine(projects, merge_id, label):
     # Copy each project to target, in project-specific subdirectories
     for project_id in projects:
         var project = registered_projects[project_id]
-        var sub_path = target_path + "/" + project.name
+        var sub_path = target_path + "" + project.name
         
         if not dir.dir_exists(sub_path):
             dir.make_dir(sub_path)
@@ -605,33 +605,33 @@ func _merge_combine(projects, merge_id, label):
 
 func _merge_selective(projects, merge_id, label):
     # Selectively merge specific elements
-    var target_path = "/mnt/c/Users/Percision 15/merged_projects/" + label + "_selective"
+    var target_path = "mnt/c/Users/Percision 15/merged_projects/" + label + "_selective"
     var dir = Directory.new()
     
     if not dir.dir_exists(target_path):
         dir.make_dir_recursive(target_path)
     
     # Create directory structure
-    dir.make_dir(target_path + "/code")
-    dir.make_dir(target_path + "/assets")
-    dir.make_dir(target_path + "/sounds")
-    dir.make_dir(target_path + "/data")
+    dir.make_dir(target_path + "code")
+    dir.make_dir(target_path + "assets")
+    dir.make_dir(target_path + "sounds")
+    dir.make_dir(target_path + "data")
     
     # Copy selective content from each project
     for project_id in projects:
         var project = registered_projects[project_id]
         
         # Copy code files
-        _copy_files_by_extension(project.path, target_path + "/code", ["gd", "py", "js", "cs"])
+        _copy_files_by_extension(project.path, target_path + "code", ["gd", "py", "js", "cs"])
         
         # Copy asset files
-        _copy_files_by_extension(project.path, target_path + "/assets", ["png", "jpg", "svg", "tscn"])
+        _copy_files_by_extension(project.path, target_path + "assets", ["png", "jpg", "svg", "tscn"])
         
         # Copy sound files
-        _copy_files_by_extension(project.path, target_path + "/sounds", SOUND_FORMATS)
+        _copy_files_by_extension(project.path, target_path + "sounds", SOUND_FORMATS)
         
         # Copy data files
-        _copy_files_by_extension(project.path, target_path + "/data", ["json", "csv", "xml", "txt"])
+        _copy_files_by_extension(project.path, target_path + "data", ["json", "csv", "xml", "txt"])
     
     # Create unified project structure
     _create_unified_project_files(target_path, projects)
@@ -647,7 +647,7 @@ func _merge_selective(projects, merge_id, label):
 
 func _merge_version(projects, merge_id, label):
     # Merge projects while maintaining version history
-    var target_path = "/mnt/c/Users/Percision 15/merged_projects/" + label + "_versioned"
+    var target_path = "mnt/c/Users/Percision 15/merged_projects/" + label + "_versioned"
     var dir = Directory.new()
     
     if not dir.dir_exists(target_path):
@@ -656,7 +656,7 @@ func _merge_version(projects, merge_id, label):
     # Copy each project to target
     for project_id in projects:
         var project = registered_projects[project_id]
-        var sub_path = target_path + "/" + project.name
+        var sub_path = target_path + "" + project.name
         
         if not dir.dir_exists(sub_path):
             dir.make_dir(sub_path)
@@ -666,14 +666,14 @@ func _merge_version(projects, merge_id, label):
         # Copy version history
         for version_id in project.versions:
             if version_history.has(version_id):
-                var version_path = target_path + "/versions/" + version_id
+                var version_path = target_path + "versions/" + version_id
                 
                 if not dir.dir_exists(version_path):
                     dir.make_dir_recursive(version_path)
                 
                 # Create version info file
                 var file = File.new()
-                file.open(version_path + "/info.json", File.WRITE)
+                file.open(version_path + "info.json", File.WRITE)
                 file.store_string(JSON.print(version_history[version_id]))
                 file.close()
     
@@ -688,7 +688,7 @@ func _merge_version(projects, merge_id, label):
 
 func _merge_dimensional(projects, merge_id, label):
     # Merge using ethereal dimensional approach
-    var target_path = "/mnt/c/Users/Percision 15/merged_projects/" + label + "_dimensional"
+    var target_path = "mnt/c/Users/Percision 15/merged_projects/" + label + "_dimensional"
     var dir = Directory.new()
     
     if not dir.dir_exists(target_path):
@@ -698,7 +698,7 @@ func _merge_dimensional(projects, merge_id, label):
     for i in range(projects.size()):
         var project_id = projects[i]
         var project = registered_projects[project_id]
-        var dim_path = target_path + "/dimension_" + str(i)
+        var dim_path = target_path + "dimension_" + str(i)
         
         if not dir.dir_exists(dim_path):
             dir.make_dir(dim_path)
@@ -736,7 +736,7 @@ func _create_unified_project_files(target_path, projects):
     # Create a metadata file describing the merge
     var metadata = {
         "merged_projects": [],
-        "merged_time": OS.get_unix_time(),
+        "merged_time": OS.Time.get_unix_time_from_system(),
         "project_count": projects.size()
     }
     
@@ -752,7 +752,7 @@ func _create_unified_project_files(target_path, projects):
     
     # Write metadata file
     var file = File.new()
-    file.open(target_path + "/merged_project.json", File.WRITE)
+    file.open(target_path + "merged_project.json", File.WRITE)
     file.store_string(JSON.print(metadata, "  "))
     file.close()
     
@@ -780,7 +780,7 @@ func _create_unified_project_files(target_path, projects):
 func _create_godot_project_file(target_path):
     # Create minimal project.godot file
     var file = File.new()
-    file.open(target_path + "/project.godot", File.WRITE)
+    file.open(target_path + "project.godot", File.WRITE)
     file.store_string("""
 [application]
 config/name="Merged Project"
@@ -797,7 +797,7 @@ vram_compression/import_etc=true
     file.close()
     
     # Create main scene
-    file.open(target_path + "/main.tscn", File.WRITE)
+    file.open(target_path + "main.tscn", File.WRITE)
     file.store_string("""
 [gd_scene format=2]
 
@@ -806,9 +806,9 @@ vram_compression/import_etc=true
     file.close()
     
     # Create project connector script
-    file.open(target_path + "/project_connector.gd", File.WRITE)
+    file.open(target_path + "project_connector.gd", File.WRITE)
     file.store_string("""
-extends Node
+extends \2
 
 func _ready():
     print("Merged project connector initialized")
@@ -819,7 +819,7 @@ func _ready():
 func _create_python_project_file(target_path):
     # Create minimal setup.py file
     var file = File.new()
-    file.open(target_path + "/setup.py", File.WRITE)
+    file.open(target_path + "setup.py", File.WRITE)
     file.store_string("""
 from setuptools import setup, find_packages
 
@@ -832,7 +832,7 @@ setup(
     file.close()
     
     # Create requirements.txt
-    file.open(target_path + "/requirements.txt", File.WRITE)
+    file.open(target_path + "requirements.txt", File.WRITE)
     file.store_string("""
 # Merged project requirements
     """)
@@ -841,7 +841,7 @@ setup(
 func _create_js_project_file(target_path):
     # Create minimal package.json file
     var file = File.new()
-    file.open(target_path + "/package.json", File.WRITE)
+    file.open(target_path + "package.json", File.WRITE)
     file.store_string("""
 {
   "name": "merged-project",
@@ -856,19 +856,19 @@ func _create_js_project_file(target_path):
     file.close()
     
     # Create index.js
-    file.open(target_path + "/index.js", File.WRITE)
+    file.open(target_path + "index.js", File.WRITE)
     file.store_string("""
 console.log('Merged project initialized');
-// Auto-connect to source projects
+# // Auto-connect to source projects
     """)
     file.close()
 
 func _create_akashic_project_file(target_path):
     # Create minimal akashic connector file
     var file = File.new()
-    file.open(target_path + "/akashic_connector.gd", File.WRITE)
+    file.open(target_path + "akashic_connector.gd", File.WRITE)
     file.store_string("""
-extends Node
+extends \2
 
 # Akashic Connector for merged project
 func _ready():
@@ -880,9 +880,9 @@ func _ready():
 func _create_ethereal_project_file(target_path):
     # Create minimal ethereal connector file
     var file = File.new()
-    file.open(target_path + "/ethereal_connector.gd", File.WRITE)
+    file.open(target_path + "ethereal_connector.gd", File.WRITE)
     file.store_string("""
-extends Node
+extends \2
 
 # Ethereal Connector for merged project
 func _ready():
@@ -894,7 +894,7 @@ func _ready():
 func _create_dimension_connections(target_path, projects):
     # Create connection files between dimensions
     var file = File.new()
-    file.open(target_path + "/dimension_connections.json", File.WRITE)
+    file.open(target_path + "dimension_connections.json", File.WRITE)
     
     var connections = []
     
@@ -912,9 +912,9 @@ func _create_dimension_connections(target_path, projects):
     file.close()
     
     # Create dimension bridge script
-    file.open(target_path + "/dimension_bridge.gd", File.WRITE)
+    file.open(target_path + "dimension_bridge.gd", File.WRITE)
     file.store_string("""
-extends Node
+extends \2
 
 # Dimension Bridge for merged project
 func _ready():
@@ -954,8 +954,8 @@ func _copy_directory(from_dir, to_dir, overwrite=false):
         
         var file_name = dir.get_next()
         while file_name != "":
-            var from_path = from_dir + "/" + file_name
-            var to_path = to_dir + "/" + file_name
+            var from_path = from_dir + "" + file_name
+            var to_path = to_dir + "" + file_name
             
             if dir.current_is_dir():
                 # Recurse into subdirectory
@@ -983,7 +983,7 @@ func _copy_files_by_extension(from_dir, to_dir, extensions):
         
         var file_name = dir.get_next()
         while file_name != "":
-            var from_path = from_dir + "/" + file_name
+            var from_path = from_dir + "" + file_name
             
             if dir.current_is_dir():
                 # Recurse into subdirectory
@@ -992,7 +992,7 @@ func _copy_files_by_extension(from_dir, to_dir, extensions):
                 # Check extension
                 var ext = file_name.get_extension().to_lower()
                 if extensions.has(ext):
-                    var to_path = to_dir + "/" + file_name
+                    var to_path = to_dir + "" + file_name
                     dir.copy(from_path, to_path)
             
             file_name = dir.get_next()
@@ -1036,7 +1036,7 @@ class VersionControl:
     func register_version(version_id, project_id, version_data):
         versions[version_id] = {
             "project_id": project_id,
-            "timestamp": OS.get_unix_time(),
+            "timestamp": OS.Time.get_unix_time_from_system(),
             "data": version_data
         }
         
@@ -1113,7 +1113,7 @@ class DriveConnector:
             "path": path,
             "type": type,
             "connected": true,
-            "last_connected": OS.get_unix_time()
+            "last_connected": OS.Time.get_unix_time_from_system()
         }
         
         emit_signal("drive_connected", drive_id, path)
@@ -1125,7 +1125,7 @@ class DriveConnector:
             return false
         
         connected_drives[drive_id].connected = false
-        connected_drives[drive_id].last_disconnected = OS.get_unix_time()
+        connected_drives[drive_id].last_disconnected = OS.Time.get_unix_time_from_system()
         
         emit_signal("drive_disconnected", drive_id)
         

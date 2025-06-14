@@ -17,7 +17,7 @@ var phonetic_patterns = {
     "nasal": ["m", "n", "ng"],
     "liquid": ["l", "r"],
     "glide": ["w", "y"]
-}
+	}
 
 # Element affinities for phonetic patterns
 var element_affinities = {
@@ -30,8 +30,8 @@ var element_affinities = {
     "fricative": {"primary": "air", "secondary": "lightning"},
     "nasal": {"primary": "water", "secondary": "earth"},
     "liquid": {"primary": "water", "secondary": "air"},
-    "glide": {"primary": "air", "secondary": "fire"}
-}
+    "glide": {"primary": "air", "secondary": "fire"
+	}
 
 # Power characteristics for patterns
 var pattern_power = {
@@ -40,7 +40,7 @@ var pattern_power = {
     "VC": 0.5,     # Vowel-Consonant (medium structure)
     "VV": 0.3,     # Vowel-Vowel (flowing but weak)
     "CC": 0.7      # Consonant-Consonant (powerful but harsh)
-}
+	}
 
 # Static accessor for singleton
 static func get_instance():
@@ -64,7 +64,7 @@ func analyze(word: String) -> Dictionary:
         "element_affinity": {},    # Primary and secondary element affinities
         "sound_qualities": {},     # Various sound qualities
         "dominant_patterns": []    # Dominant phonetic patterns
-    }
+		}
     
     # Extract vowels and consonants
     for i in range(text.length()):
@@ -101,7 +101,7 @@ func analyze(word: String) -> Dictionary:
 
 # Function to extract pattern sequences (like CVC, CV, etc.) from a CV pattern
 func _extract_pattern_sequences(pattern: String) -> Dictionary:
-    var sequences = {}
+    var sequences = {
     
     # Common pattern types to look for
     var pattern_types = ["CVC", "CV", "VC", "VV", "CC"]
@@ -206,7 +206,7 @@ func _calculate_resonance(word: String, pattern: String) -> float:
         base_resonance += alternation_ratio * 0.4
     
     # Repeated sounds can increase resonance in moderation
-    var char_counts = {}
+    var char_counts = {
     for c in word:
         if not char_counts.has(c):
             char_counts[c] = 0
@@ -240,7 +240,7 @@ func _determine_element_affinity(vowels: Array, consonants: Array) -> Dictionary
         "air": 0,
         "lightning": 0,
         "ice": 0
-    }
+		}
     
     # Process vowels
     for vowel in vowels:
@@ -254,7 +254,7 @@ func _determine_element_affinity(vowels: Array, consonants: Array) -> Dictionary
             affinities[secondary] += 1
     
     # Process consonants by type
-    var consonant_types = {}
+    var consonant_types = {
     for pattern_type in phonetic_patterns:
         consonant_types[pattern_type] = 0
     
@@ -292,7 +292,7 @@ func _determine_element_affinity(vowels: Array, consonants: Array) -> Dictionary
         "primary": primary_element,
         "secondary": secondary_element,
         "affinities": affinities
-    }
+		}
 
 # Function to determine various sound qualities
 func _determine_sound_qualities(word: String, vowels: Array, consonants: Array, pattern: String) -> Dictionary:
@@ -303,7 +303,7 @@ func _determine_sound_qualities(word: String, vowels: Array, consonants: Array, 
         "heavy": 0.0,    # Heavy, substantial sound
         "light": 0.0,    # Light, airy sound
         "mystical": 0.0  # Unusual, magical-sounding
-    }
+		}
     
     # Flowing quality (more vowels, liquid consonants)
     var vowel_ratio = float(vowels.size()) / max(1, word.length())
@@ -359,7 +359,7 @@ func _determine_sound_qualities(word: String, vowels: Array, consonants: Array, 
 
 # Function to identify dominant phonetic patterns
 func _identify_dominant_patterns(consonants: Array) -> Array:
-    var pattern_counts = {}
+    var pattern_counts = {
     
     # Count occurrences of each pattern type
     for pattern_type in phonetic_patterns:

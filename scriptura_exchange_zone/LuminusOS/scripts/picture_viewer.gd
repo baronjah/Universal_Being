@@ -1,6 +1,6 @@
 extends Control
 
-class_name PictureViewer
+class_name PictureViewer_pictureviewer_picturev
 
 signal image_loaded(path, texture)
 signal zoom_changed(level)
@@ -177,7 +177,7 @@ func _update_zoom_label():
 # Update navigation label
 func _update_navigation_label():
     if image_list.size() > 0:
-        navigation_label.text = str(current_index + 1) + " / " + str(image_list.size())
+        navigation_label.text = str(current_index + 1) + "  " + str(image_list.size())
     else:
         navigation_label.text = ""
 

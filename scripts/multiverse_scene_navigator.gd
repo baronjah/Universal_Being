@@ -25,7 +25,9 @@ signal multiverse_loaded(orb_count: int)
 
 class MultiverseOrb extends RigidBody3D:
 	var scene_path: String = ""
+
 	var scene_name: String = ""
+
 	var orb_mesh: MeshInstance3D
 	var label: Label3D
 	var particles: GPUParticles3D
@@ -137,9 +139,11 @@ func scan_available_scenes():
 	var scenes_dir = DirAccess.open("res://scenes/")
 	if scenes_dir:
 		scan_directory_recursive(scenes_dir, "res://scenes/", scene_paths)
+
 	
 	# Add main scene
 	scene_paths.append("res://main.tscn")
+
 	
 	print("🌌 Found %d scenes for multiverse navigation" % scene_paths.size())
 
@@ -149,9 +153,11 @@ func scan_directory_recursive(dir: DirAccess, path: String, found_scenes: Array)
 	var file_name = dir.get_next()
 	
 	while file_name != "":
+
 		var full_path = path + file_name
 		
 		if dir.current_is_dir() and not file_name.begins_with("."):
+
 			var sub_dir = DirAccess.open(full_path)
 			if sub_dir:
 				scan_directory_recursive(sub_dir, full_path + "/", found_scenes)
@@ -184,6 +190,7 @@ func create_multiverse_layout():
 	
 	multiverse_loaded.emit(scene_orbs.size())
 	print("🌌 Multiverse created: %d scene orbs in %d rings" % [scene_orbs.size(), rings_needed])
+
 
 func create_scene_orb(scene_path: String, position: Vector3, index: int):
 	"""Create a glowing orb for a scene"""
@@ -249,6 +256,7 @@ func create_transition_effect():
 	tween.tween_property(effect, "modulate:a", 1.0, 0.5)
 	tween.tween_property(effect, "modulate:a", 0.0, 0.5)
 
+
 func get_scene_info(scene_path: String) -> Dictionary:
 	"""Get information about a scene"""
 	return {
@@ -256,7 +264,7 @@ func get_scene_info(scene_path: String) -> Dictionary:
 		"name": scene_path.get_file().get_basename(),
 		"consciousness_level": calculate_scene_consciousness(scene_path),
 		"category": get_scene_category(scene_path)
-	}
+}
 
 func get_scene_category(scene_path: String) -> String:
 	"""Categorize scene by type"""

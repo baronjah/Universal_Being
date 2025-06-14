@@ -4,9 +4,8 @@
 # PURPOSE: Ensure all Universal Beings benefit from Floodgate management
 # CREATED: 2025-05-29 - Proper integration with existing systems
 # ==================================================
-
-extends UniversalBeingBase
-class_name UniversalBeingFloodgateIntegration
+extends \2
+# DISABLED DUPLICATE: class_name UniversalBeingFloodgateIntegration_universalbeingfloodgateintegration_universa
 
 # References
 var floodgate_controller: Node = null
@@ -19,10 +18,10 @@ func _ready() -> void:
 
 func _setup_references() -> void:
 	"""Get references to required systems"""
-	floodgate_controller = get_node_or_null("/root/FloodgateController")
-	asset_library = get_node_or_null("/root/AssetLibrary")
-	standardized_objects = get_node_or_null("/root/StandardizedObjects")
-	unified_being_system = get_node_or_null("/root/UnifiedBeingSystem")
+	floodgate_controller = get_node_or_null("root/FloodgateController")
+	asset_library = get_node_or_null("root/AssetLibrary")
+	standardized_objects = get_node_or_null("root/StandardizedObjects")
+	unified_being_system = get_node_or_null("root/UnifiedBeingSystem")
 	
 	if not floodgate_controller:
 		print("[UniversalBeingFloodgate] Warning: FloodgateController not found!")
@@ -133,7 +132,7 @@ func _create_being_directly(type: String, position: Vector3, properties: Diction
 static func enhance_universal_being(being: UniversalBeing, asset_type: String) -> void:
 	"""Enhance a Universal Being with proper asset from library"""
 	
-	var std_objects = being.get_node_or_null("/root/StandardizedObjects")
+	var std_objects = being.get_node_or_null("root/StandardizedObjects")
 	if not std_objects:
 		return
 	

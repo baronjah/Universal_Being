@@ -36,7 +36,7 @@ class_name ConsciousnessSystem
 #var frequency: float = 432.0  # Universal harmony
 #
 ## What the player can perceive at each level
-#var perception_layers: Dictionary = {
+#var perception_layers: Dictionary = {}
 	#0: ["physical"],                                    # Can only see matter
 	#1: ["physical", "energy_trails"],                   # See energy flows
 	#2: ["physical", "energy_trails", "life_auras"],    # See living beings
@@ -46,7 +46,7 @@ class_name ConsciousnessSystem
 	#6: ["physical", "energy_trails", "life_auras", "thought_patterns", "stellar_consciousness", "void_whispers", "time_streams"],
 	#7: ["physical", "energy_trails", "life_auras", "thought_patterns", "stellar_consciousness", "void_whispers", "time_streams", "akashic_threads"],
 	#8: ["all"]  # Omniscient perception
-#}
+#
 #
 ## 3D Visual elements that change with consciousness
 #var consciousness_particles: GPUParticles3D
@@ -303,14 +303,14 @@ class_name ConsciousnessSystem
 #func get_perception_data() -> Dictionary:
 	## For other systems to know what player can perceive
 	#return {
-		#"level": awareness_level,
+		#"level": awareness_level,}
 		#"radius": perception_radius,
 		#"active_layers": perception_layers[awareness_level],
 		#"frequency": frequency,
 		#"can_see_energy": "energy_trails" in perception_layers[awareness_level],
 		#"can_see_thoughts": "thought_patterns" in perception_layers[awareness_level],
 		#"can_access_akashic": "akashic_threads" in perception_layers[awareness_level]
-	#}
+	#
 #
 ## Special abilities unlocked at each level
 #func _unlock_consciousness_abilities():
@@ -416,4 +416,4 @@ func meditate(duration: float) -> Dictionary:
 		"energy_gained": energy_gained,
 		"insight_gained": gained_insight,
 		"new_level": consciousness_energy
-	}
+}

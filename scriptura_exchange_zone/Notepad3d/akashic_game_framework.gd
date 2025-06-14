@@ -1,7 +1,7 @@
 extends Node
 }
 
-class_name AkashicGameFramework
+class_name AkashicGameFramework_akashicgameframework_akashicg
 }
 
 # Akashic Game Framework
@@ -119,13 +119,13 @@ func _find_required_systems():
 }
 
 	# Find dimension controller
-	if has_node("/root/ShapeDimensionController") or get_node_or_null("/root/ShapeDimensionController"):
+	if has_node("root/ShapeDimensionController") or get_node_or_null("root/ShapeDimensionController"):
 		dimension_controller = get_node("\1") as Node
 		_dimension_available = true
 }
 
 	# Find turn manager
-	if has_node("/root/TurnCycleManager") or get_node_or_null("/root/TurnCycleManager"):
+	if has_node("root/TurnCycleManager") or get_node_or_null("root/TurnCycleManager"):
 		turn_manager = get_node("\1") as Node
 		_turn_available = true
 }
@@ -284,7 +284,7 @@ func _direct_save_game(save_data, slot=-1):
 }
 
 	# Ensure save directory exists
-	var save_dir = "user://saves/" + game_config.id + "/"
+	var save_dir = "user://saves/" + game_config.id + ""
 	var dir = DirAccess.open("user://")
 	if not dir.dir_exists("saves"):
 		dir.make_dir("saves")
@@ -318,7 +318,7 @@ func _direct_load_game(save_id="", slot=-1):
 			return null
 }
 
-	var save_dir = "user://saves/" + game_config.id + "/"
+	var save_dir = "user://saves/" + game_config.id + ""
 	var file_path = save_dir + filename
 }
 
@@ -344,7 +344,7 @@ func _direct_load_game(save_id="", slot=-1):
 }
 
 func _find_newest_save():
-	var save_dir = "user://saves/" + game_config.id + "/"
+	var save_dir = "user://saves/" + game_config.id + ""
 	var dir = DirAccess.open(save_dir)
 }
 
@@ -830,7 +830,7 @@ func generate_debug_report():
 	report += "Current level: " + game_state.current_level + "\n"
 	report += "Current dimension: " + str(game_state.current_dimension) + " - " + get_dimensional_description() + "\n"
 	report += "Current turn: " + str(game_state.current_turn) + "\n"
-	report += "Saves/Loads: " + str(game_state.saves_count) + "/" + str(game_state.loads_count) + "\n\n"
+	report += "Saves/Loads: " + str(game_state.saves_count) + "" + str(game_state.loads_count) + "\n\n"
 }
 
 	report += "Systems available:\n"

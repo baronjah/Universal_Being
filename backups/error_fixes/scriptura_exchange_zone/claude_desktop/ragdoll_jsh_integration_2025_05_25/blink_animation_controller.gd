@@ -478,7 +478,7 @@ func unregister_node(node_name: String) -> bool:
 
 func trigger_blink(node_name: String = "", blink_count: int = 1) -> bool:
     # Trigger a blink on a specific node (or all if empty)
-    if node_name.empty():
+    if node_name.is_empty():
         # Blink all registered nodes
         for name in registered_nodes:
             _blink_node(name, blink_count)
@@ -492,7 +492,7 @@ func trigger_blink(node_name: String = "", blink_count: int = 1) -> bool:
 
 func trigger_wink(node_name: String = "", is_left: bool = true) -> bool:
     # Trigger a wink on a specific node (or all if empty)
-    if node_name.empty():
+    if node_name.is_empty():
         # Wink all registered nodes
         for name in registered_nodes:
             _wink_node(name, is_left)
@@ -506,7 +506,7 @@ func trigger_wink(node_name: String = "", is_left: bool = true) -> bool:
 
 func trigger_flicker(node_name: String = "", flicker_count: int = 3) -> bool:
     # Trigger a flicker on a specific node (or all if empty)
-    if node_name.empty():
+    if node_name.is_empty():
         # Flicker all registered nodes
         for name in registered_nodes:
             _flicker_node(name, flicker_count)

@@ -1,8 +1,5 @@
 # thread_pool_manager.gd
-
-
-
-extends Node
+extends \2
 
 # Thread pool configuration
 const MAX_THREADS = 8

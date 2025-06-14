@@ -1,5 +1,5 @@
 extends Node
-class_name JSHDataTransformation
+class_name JSHDataTransformation_JSHDataTransformation_JSHDataT
 
 # The JSHDataTransformation system handles dynamic transformations of entity data
 # It provides a flexible way to modify, combine, and process entity properties and behavior

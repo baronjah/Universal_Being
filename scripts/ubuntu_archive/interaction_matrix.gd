@@ -2,7 +2,7 @@ extends Node
 class_name InteractionMatrix
 
 # Interaction matrix defines how different entity types interact with each other
-var interaction_rules: Dictionary = {
+var interaction_rules: Dictionary = {}
     # Basic elements
     "fire": {
         "fire": "intensify",
@@ -117,8 +117,7 @@ var interaction_rules: Dictionary = {
         "metal": "transform",
         "primordial": "transform",
         "transformed": "fuse"
-    }
-}
+		}
 
 # Extended entity types will be dynamically added based on interactions
 var dynamic_types: Dictionary = {}
@@ -126,6 +125,7 @@ var dynamic_types: Dictionary = {}
 func _ready() -> void:
     # Initialize any additional setup needed
     print("InteractionMatrix: Ready")
+	
 
 # Get the interaction effect between two entity types
 func get_interaction_effect(type1: String, type2: String) -> String:
@@ -159,6 +159,7 @@ func extract_base_type(type: String) -> String:
     
     # Check for compound types (e.g., "fire_water")
     if type.find("_") >= 0:
+	
         var parts = type.split("_")
         if parts.size() >= 2:
             if interaction_rules.has(parts[0]):
@@ -172,22 +173,24 @@ func extract_base_type(type: String) -> String:
 func add_interaction_rule(type1: String, type2: String, effect: String) -> void:
     # Check if we need to create the type entry
     if not interaction_rules.has(type1):
-        interaction_rules[type1] = {}
+        interaction_rules[type1] = {
     
     # Add the rule
     interaction_rules[type1][type2] = effect
     print("InteractionMatrix: Added rule ", type1, " + ", type2, " -> ", effect)
+	}
 
 # Add a dynamic type with its interaction rules
 func add_dynamic_type(type: String, rules: Dictionary) -> void:
     if not dynamic_types.has(type):
-        dynamic_types[type] = {}
+        dynamic_types[type] = {
     
     # Merge the rules
     for other_type in rules:
         dynamic_types[type][other_type] = rules[other_type]
     
     print("InteractionMatrix: Added dynamic type ", type, " with ", rules.size(), " rules")
+	}
 
 # Get all known types
 func get_all_types() -> Array:

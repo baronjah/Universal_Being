@@ -40,6 +40,7 @@ class MemoryCrystal extends RigidBody3D:
 	var memory_data: Dictionary = {}
 	var crystal_frequency: float = 432.0
 	var memory_type: String = ""
+
 	var luminosity: float = 1.0
 	var accessed: bool = false
 	
@@ -264,7 +265,8 @@ class PatternConstellation extends Node3D:
 		
 		for i in range(num_nodes):
 			var node = PatternNode.new()
-			node.node_data = {"index": i, "pattern": pattern_name}
+			node.node_data = {"index": i, "pattern": pattern_name
+}
 			
 			# Arrange in meaningful patterns
 			var angle = (i / float(num_nodes)) * TAU
@@ -287,12 +289,14 @@ class PatternConstellation extends Node3D:
 	func _generate_pattern_connections():
 		match pattern_name:
 			"emergence":
+
 				# Connect each node to its neighbors
 				for i in range(pattern_nodes.size()):
 					var next_i = (i + 1) % pattern_nodes.size()
 					_create_connection(pattern_nodes[i], pattern_nodes[next_i])
 					
 			"cycles":
+
 				# Circular connections with cross-links
 				for i in range(pattern_nodes.size()):
 					var next_i = (i + 1) % pattern_nodes.size()
@@ -302,12 +306,14 @@ class PatternConstellation extends Node3D:
 						_create_connection(pattern_nodes[i], pattern_nodes[cross_i])
 						
 			"fractals":
+
 				# Hierarchical connections
 				for i in range(1, pattern_nodes.size()):
 					var parent_i = (i - 1) / 2
 					_create_connection(pattern_nodes[parent_i], pattern_nodes[i])
 					
 			"unity":
+
 				# All nodes connect to center
 				var center_node = pattern_nodes[0]
 				for i in range(1, pattern_nodes.size()):
@@ -526,7 +532,6 @@ func _populate_universal_memories():
 			"content": "The Membrane Touch - When parallel worlds first kissed",
 			"frequency": 741.0,
 			"position": Vector3(0, 20, -30)
-		}
 	]
 	
 	for memory_data in universal_memories:
@@ -544,6 +549,7 @@ func _populate_universal_memories():
 		var start_y = crystal.position.y
 		tween.tween_property(crystal, "position:y", start_y + randf_range(1, 3), randf_range(3, 6))
 		tween.tween_property(crystal, "position:y", start_y, randf_range(3, 6))
+}
 		
 func _create_pattern_web():
 	# The web of universal patterns

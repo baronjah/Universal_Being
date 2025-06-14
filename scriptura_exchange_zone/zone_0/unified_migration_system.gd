@@ -1,5 +1,5 @@
-class_name UnifiedMigrationSystem
-extends Node
+class_name UnifiedMigrationSystem_unifiedmigrationsystem_unifiedm
+extends \2
 
 # ----- SYSTEM COMPONENTS -----
 var migration_tool = null
@@ -13,13 +13,13 @@ var color_system = null
 
 # ----- CONFIGURATION -----
 @export_category("Unified Migration Settings")
-@export var auto_start: bool = false
-@export var godot3_project_path: String = ""
-@export var godot4_project_path: String = ""
-@export var enable_ethereal_engine_support: bool = true
-@export var enable_akashic_integration: bool = true
-@export var enable_color_system: bool = true
-@export var enable_statistics: bool = true
+@@@@export var auto_start: bool = false
+@@@@export var godot3_project_path: String = ""
+@@@@export var godot4_project_path: String = ""
+@@@@export var enable_ethereal_engine_support: bool = true
+@@@@export var enable_akashic_integration: bool = true
+@@@@export var enable_color_system: bool = true
+@@@@export var enable_statistics: bool = true
 
 # ----- PATHS -----
 const MIGRATION_TOOL_PATH = "res://12_turns_system/godot4_migration_tool.gd"
@@ -69,7 +69,7 @@ func _ready():
 
 func _find_or_create_components():
     # 1. Find or create the migration tool
-    migration_tool = get_node_or_null("/root/Godot4MigrationTool")
+    migration_tool = get_node_or_null("root/Godot4MigrationTool")
     if not migration_tool:
         migration_tool = _find_node_by_class(get_tree().root, "Godot4MigrationTool")
     
@@ -85,7 +85,7 @@ func _find_or_create_components():
             add_child(migration_tool)
     
     # 2. Find or create the ethereal bridge
-    ethereal_bridge = get_node_or_null("/root/EtherealMigrationBridge")
+    ethereal_bridge = get_node_or_null("root/EtherealMigrationBridge")
     if not ethereal_bridge:
         ethereal_bridge = _find_node_by_class(get_tree().root, "EtherealMigrationBridge")
     
@@ -101,7 +101,7 @@ func _find_or_create_components():
             add_child(ethereal_bridge)
     
     # 3. Find or create the enhanced launcher
-    enhanced_launcher = get_node_or_null("/root/EnhancedMigrationLauncher")
+    enhanced_launcher = get_node_or_null("root/EnhancedMigrationLauncher")
     if not enhanced_launcher:
         enhanced_launcher = _find_node_by_class(get_tree().root, "EnhancedMigrationLauncher")
     
@@ -119,11 +119,11 @@ func _find_or_create_components():
             add_child(enhanced_launcher)
     
     # 4. Find supporting systems
-    akashic_system = get_node_or_null("/root/AkashicNumberSystem")
+    akashic_system = get_node_or_null("root/AkashicNumberSystem")
     if not akashic_system:
         akashic_system = _find_node_by_class(get_tree().root, "AkashicNumberSystem")
     
-    color_system = get_node_or_null("/root/DimensionalColorSystem")
+    color_system = get_node_or_null("root/DimensionalColorSystem")
     if not color_system:
         color_system = _find_node_by_class(get_tree().root, "DimensionalColorSystem")
     
@@ -413,11 +413,11 @@ func set_project_paths(godot3_path: String, godot4_path: String) -> void:
 func _is_ethereal_engine_project(project_path: String) -> bool:
     # Check for key files that indicate JSH Ethereal Engine
     var indicators = [
-        "/CORE/eden_core.gd",
-        "/JSH_records_system.gd",
-        "/BanksCombiner.gd",
-        "/scripts/reality_transition.gd",
-        "/word_manifestation.gd"
+        "CORE/eden_core.gd",
+        "JSH_records_system.gd",
+        "BanksCombiner.gd",
+        "scripts/reality_transition.gd",
+        "word_manifestation.gd"
     ]
     
     for indicator in indicators:
@@ -426,10 +426,10 @@ func _is_ethereal_engine_project(project_path: String) -> bool:
     
     # Scan key directories for JSH patterns
     var potential_dirs = [
-        "/scripts",
-        "/CORE",
-        "/code",
-        "/scenes"
+        "scripts",
+        "CORE",
+        "code",
+        "scenes"
     ]
     
     for dir_path in potential_dirs:

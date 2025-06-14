@@ -1,5 +1,6 @@
 @tool
-class_name VisualShaderNodeMathsSawtoothWave extends VisualShaderNodeCustom
+class_name VisualShaderNodeMathsSawtoothWave_SawtoothWave_Sawtooth
+extends \2
 
 func _get_name() -> String:
 	return "SawtoothWave"

@@ -19,6 +19,7 @@ func _find_or_create_console_controller():
 	else:
 		print("❌ Console Controller: Script not found")
 
+
 func _input(event):
 	if event is InputEventKey and event.pressed:
 		# Backtick key to activate console
@@ -52,6 +53,7 @@ func _quick_stars():
 func _create_direct_revolution():
 	"""Direct revolution creation without console"""
 	print("🚀 DIRECT REVOLUTION: Creating consciousness revolution...")
+
 	
 	# Create revolution system directly
 	var revolution_script = load("res://scripts/ConsciousnessRevolution.gd")

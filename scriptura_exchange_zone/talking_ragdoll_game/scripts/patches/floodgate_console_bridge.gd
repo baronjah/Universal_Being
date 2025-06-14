@@ -4,7 +4,6 @@
 # PURPOSE: All game operations through console commands via Floodgate
 # CREATED: 2025-05-28 - Console-Floodgate integration
 # ==================================================
-
 extends UniversalBeingBase
 var console_manager: Node
 var floodgate: Node
@@ -17,8 +16,8 @@ func pentagon_ready() -> void:
 	# Wait for autoloads
 	await get_tree().process_frame
 	
-	console_manager = get_node_or_null("/root/ConsoleManager")
-	floodgate = get_node_or_null("/root/FloodgateController")
+	console_manager = get_node_or_null("root/ConsoleManager")
+	floodgate = get_node_or_null("root/FloodgateController")
 	
 	if console_manager and floodgate:
 		_register_floodgate_commands()
@@ -496,7 +495,7 @@ func _cmd_clear_scene(_args: Array) -> void:
 		_print("[color=red]No current scene[/color]")
 
 func _cmd_list_nodes(args: Array) -> void:
-	var root_path = "/root"
+	var root_path = "root"
 	if args.size() > 0:
 		root_path = args[0]
 	

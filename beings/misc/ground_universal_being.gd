@@ -37,6 +37,7 @@ func pentagon_init() -> void:
 	
 	print("🌍 %s: Pentagon Init - The ground awakens" % being_name)
 
+
 func pentagon_ready() -> void:
 	super.pentagon_ready()
 	
@@ -51,11 +52,13 @@ func pentagon_ready() -> void:
 	
 	print("🌍 %s: Pentagon Ready - Supporting all beings" % being_name)
 
+
 func pentagon_process(delta: float) -> void:
 	super.pentagon_process(delta)
 	
 	# Animate consciousness patterns in the ground material
 	if ground_material and ground_material.has_meta("consciousness_shader"):
+
 		var time = Time.get_ticks_msec() * 0.001
 		ground_material.set_shader_parameter("consciousness_flow", time * consciousness_pattern_speed)
 	
@@ -163,7 +166,7 @@ func _remember_being(being: UniversalBeing) -> void:
 		"being_type": being.being_type,
 		"timestamp": Time.get_ticks_msec(),
 		"position": being.global_position
-	}
+}
 	
 	memories.append(memory)
 	
@@ -195,6 +198,7 @@ func evolve_to_terrain(new_type: String) -> void:
 			consciousness_level = 2
 			being_name = "Conscious Waters"
 		"consciousness_grid":
+
 			# This would load a special shader
 			consciousness_level = 4
 			being_name = "The Grid of Awareness"
@@ -204,6 +208,7 @@ func evolve_to_terrain(new_type: String) -> void:
 func on_interaction(interactor: UniversalBeing) -> void:
 	"""When someone interacts with the ground"""
 	print("🌍 %s speaks: 'I have supported %d beings upon my surface'" % [being_name, get_meta("surface_memory", []).size()])
+
 	
 	# The ground can share its memories
 	if interactor.has_method("receive_ground_memories"):
@@ -212,5 +217,6 @@ func on_interaction(interactor: UniversalBeing) -> void:
 func set_highlighted(highlighted: bool) -> void:
 	"""Visual feedback when highlighted"""
 	if has_node("GroundAura"):
+
 		var aura = $GroundAura
 		aura.light_energy = 0.8 if highlighted else 0.3

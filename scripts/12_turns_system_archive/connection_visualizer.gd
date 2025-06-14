@@ -41,7 +41,7 @@ var category_node_sizes = {
 }
 
 # File nodes by category
-var file_nodes = {}
+var file_nodes = {
 
 # Connection lines
 var connection_lines = []
@@ -114,7 +114,7 @@ func _create_file_nodes():
         "position": Vector2(start_x + (i * spacing), base_position.y),
         "size": node_size,
         "category": category
-      }
+		}
       
       file_nodes[category].append(file_node)
 
@@ -149,7 +149,7 @@ func _create_connection_lines():
         "source": source,
         "target": target,
         "hash_symbol": hash_symbol
-      }
+		}
       
       connection_lines.append(connection)
 
@@ -160,9 +160,9 @@ func _find_node_by_name(name: String) -> Dictionary:
       if node.name == name:
         return node
   
-  return {}
+  return {
 
-# Save visualization as image
+# Save visualization as image}
 func save_visualization(path: String) -> bool:
   # Request redraw to ensure everything is updated
   queue_redraw()

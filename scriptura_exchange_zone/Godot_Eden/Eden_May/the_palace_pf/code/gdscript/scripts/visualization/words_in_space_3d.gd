@@ -1,5 +1,5 @@
 extends Node3D
-class_name WordsInSpace3D
+class_name WordsInSpace3D_wordsinspace3d_wordsins
 
 # 3D Word Visualization System - Displays words in 3D space with Excel-like functionality
 # This can be shown to Luminus as a demonstration of your word-based reality system
@@ -221,8 +221,8 @@ func _create_text_label(text, position, scale_factor=1.0, color=Color(1,1,1)):
 # Find word-related systems in the scene
 func _find_word_systems():
     # Look for word manifestor
-    if has_node("/root/main"):
-        var main = get_node("/root/main")
+    if has_node("root/main"):
+        var main = get_node("root/main")
         if main.has_method("get_word_manifestor"):
             word_manifestor = main.get_word_manifestor()
         

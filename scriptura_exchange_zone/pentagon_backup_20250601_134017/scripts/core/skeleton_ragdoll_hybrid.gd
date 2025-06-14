@@ -4,8 +4,7 @@
 # PURPOSE: Upgrade our ragdoll with proper skeletal structure
 # CREATED: 2025-05-26 - Practical implementation
 # ==================================================
-
-extends UniversalBeingBase
+extends \2
 # This is a practical upgrade path from our 7-part ragdoll
 # Uses Skeleton3D for proper bone hierarchy but keeps physics simple
 
@@ -13,17 +12,18 @@ signal ragdoll_state_changed(new_state: String)
 signal bone_impacted(bone_name: String, force: Vector3)
 
 # Ragdoll state
-enum RagdollMode {
+enum \2 {
+
 	ANIMATED,     # Skeleton controls pose
 	PHYSICS,      # Physics bodies control
 	BLENDED       # Mix of both
 }
 
 # Configuration
-@export var start_mode: RagdollMode = RagdollMode.PHYSICS
-@export var bone_radius: float = 0.08
-@export var bone_mass: float = 1.0
-@export var use_simple_shapes: bool = true  # Capsules vs complex
+@@export var start_mode: RagdollMode = RagdollMode.PHYSICS
+@@export var bone_radius: float = 0.08
+@@export var bone_mass: float = 1.0
+@@export var use_simple_shapes: bool = true  # Capsules vs complex
 
 # Components
 var skeleton: Skeleton3D

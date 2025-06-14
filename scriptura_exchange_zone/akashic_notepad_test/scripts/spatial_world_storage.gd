@@ -1,7 +1,7 @@
 extends Node
 
-# Remove class_name to avoid conflict with autoload
-# class_name SpatialWorldStorage
+# Remove class_name to_spatialworldstorage_spatialw avoid conflict with autoload
+# class_name SpatialWorldStorage_spatialworldstorage_spatialw
 
 # ----- SPATIAL WORLD STORAGE -----
 # Simplified implementation for testing
@@ -105,7 +105,7 @@ signal notebook_updated(notebook_name)
 
 # ----- INITIALIZATION -----
 func _ready():
-    print("Spatial World Storage initialized")
+    print("Node3D World Storage initialized")
 
 # ----- AKASHIC RECORDS FUNCTIONS -----
 func add_akashic_entry(dim_point: DimensionalPoint, content: String, author: String = "system", tags: Array = []) -> String:

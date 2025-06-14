@@ -95,6 +95,7 @@ func _ready():
 	print("[SHIP] Conscious vessel initialized")
 	print("- Consciousness Level: %d" % consciousness_level)
 	print("- Movement Mode: PHYSICAL")
+}
 
 func _create_ship_components():
 	# Hull mesh
@@ -191,7 +192,7 @@ func _initialize_ship_systems():
 	# Simplified ship shape
 	add_child(collision_shape)
 	
-	# Area for consciousness detection
+	# Area3D for consciousness detection
 	var area = Area3D.new()
 	area.name = "ConsciousnessField"
 	var area_shape = CollisionShape3D.new()
@@ -218,6 +219,7 @@ func _input(event):
 	if event.is_action_pressed("scan_mode"):
 		is_scanning = !is_scanning
 		print("[SHIP] Scan mode: %s" % ("ON" if is_scanning else "OFF"))
+
 	
 	# Movement mode switching (with required consciousness level)
 	if event.is_action_pressed("movement_mode_thought") and consciousness_level >= 2:
@@ -229,6 +231,7 @@ func _input(event):
 	elif event.is_action_pressed("movement_mode_physical"):
 		current_movement_mode = MovementMode.PHYSICAL
 		print("[SHIP] Movement mode: PHYSICAL")
+
 	
 	# Consciousness jump
 	if event.is_action_pressed("consciousness_jump") and abilities["consciousness_jump"]:
@@ -359,6 +362,7 @@ func _perform_consciousness_jump():
 		if target == self:
 			continue
 		if target.has_meta("consciousness_level"):
+
 			var level = target.get_meta("consciousness_level")
 			if level > best_consciousness:
 				best_consciousness = level
@@ -387,6 +391,7 @@ func _manifest_dream():
 	var dream_type = dream_types[randi() % dream_types.size()]
 	
 	print("[SHIP] Manifesting dream: %s" % dream_type)
+
 	
 	# Create dream entity at forward position
 	var dream_pos = global_position - transform.basis.z * 20
@@ -510,6 +515,7 @@ func form_consciousness_bond(entity: Node3D):
 func receive_consciousness(data: Dictionary):
 	# Receive consciousness from another entity
 	print("[SHIP] Receiving consciousness data: %s" % data)
+
 	
 	if data.has("memories"):
 		for memory in data["memories"]:
@@ -559,8 +565,10 @@ func _on_consciousness_detected(body: Node3D):
 		return
 		
 	if body.has_meta("consciousness_level"):
+
 		var level = body.get_meta("consciousness_level")
 		print("[SHIP] Consciousness detected: %s (Level %d)" % [body.name, level])
+
 		
 		# Void thoughts are attracted at level 2+
 		if abilities["void_thought_attraction"] and body.has_meta("thought_type"):
@@ -576,7 +584,7 @@ func save_state() -> Dictionary:
 		"abilities": abilities,
 		"position": global_position,
 		"rotation": global_rotation
-	}
+}
 
 func load_state(state: Dictionary):
 	consciousness_level = state.get("consciousness_level", 1)

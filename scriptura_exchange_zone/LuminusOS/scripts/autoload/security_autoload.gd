@@ -29,8 +29,8 @@ func _on_firewall_initialized():
     
     # Add default protected paths for all drives
     var paths_to_protect = [
-        "/mnt/c/Users/Percision 15/",
-        "/mnt/d/"
+        "mnt/c/Users/Percision 15/",
+        "mnt/d/"
     ]
     
     for path in paths_to_protect:

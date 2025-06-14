@@ -210,25 +210,25 @@ func update_emitters():
 # Create particle scene instances for different temperatures
 
 static func create_frozen_particles():
-    var scene = preload("res://particles/frozen_particles.tscn").instance()
+    var scene = preload("res://particles/frozen_particles.tscn").instantiate()
     return scene
 
 static func create_cold_particles():
-    var scene = preload("res://particles/cold_particles.tscn").instance()
+    var scene = preload("res://particles/cold_particles.tscn").instantiate()
     return scene
 
 static func create_warm_particles():
-    var scene = preload("res://particles/warm_particles.tscn").instance()
+    var scene = preload("res://particles/warm_particles.tscn").instantiate()
     return scene
 
 static func create_hot_particles():
-    var scene = preload("res://particles/hot_particles.tscn").instance()
+    var scene = preload("res://particles/hot_particles.tscn").instantiate()
     return scene
 
 static func create_boiling_particles():
-    var scene = preload("res://particles/boiling_particles.tscn").instance()
+    var scene = preload("res://particles/boiling_particles.tscn").instantiate()
     return scene
 
 static func create_plasma_particles():
-    var scene = preload("res://particles/plasma_particles.tscn").instance()
+    var scene = preload("res://particles/plasma_particles.tscn").instantiate()
     return scene

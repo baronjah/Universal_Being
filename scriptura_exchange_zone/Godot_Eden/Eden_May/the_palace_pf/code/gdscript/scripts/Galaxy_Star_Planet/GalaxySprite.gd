@@ -1,6 +1,6 @@
 # GalaxySprite.gd in scene GalaxySprite, here we are generating with help of a shader a Galaxy, with fog and arms
 @tool
-extends Sprite3D
+extends \2
 
 var shader_material: ShaderMaterial
 var pending_parameters: Dictionary = {}

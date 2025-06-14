@@ -32,7 +32,7 @@ var required_files = {
     "user://time_data/current_session.json": "{}",
     "user://time_data/total_usage.json": "{\"total_time\": 0, \"sessions\": 0}",
     "user://time_data/triggers.json": "[]"
-}
+	}
 
 # ----- INITIALIZATION -----
 func _ready():
@@ -59,11 +59,13 @@ func _find_systems():
     time_tracker = _find_node_by_class(get_tree().root, "UsageTimeTracker")
     if time_tracker:
         log_message("Found time tracker: " + time_tracker.name)
+		
     
     # Find visual system
     visual_system = _find_node_by_class(get_tree().root, "VisualIndicatorSystem")
     if visual_system:
         log_message("Found visual system: " + visual_system.name)
+		
     
     # Find turn system
     turn_system = _find_node_by_class(get_tree().root, "TurnSystem")
@@ -71,6 +73,7 @@ func _find_systems():
         turn_system = _find_node_by_class(get_tree().root, "TurnCycleController")
     if turn_system:
         log_message("Found turn system: " + turn_system.name)
+		
 
 func _find_node_by_class(node, class_name):
     if node.get_class() == class_name:
@@ -94,12 +97,14 @@ func _ensure_files_exist():
     for file_path in required_files:
         if not FileAccess.file_exists(file_path):
             log_message("Creating file: " + file_path)
+			
             var file = FileAccess.open(file_path, FileAccess.WRITE)
             if file:
                 file.store_string(required_files[file_path])
                 file.close()
             else:
                 log_message("Error creating file: " + file_path)
+				
 
 # ----- UPDATE LOGIC -----
 func _on_update_timer_timeout():
@@ -126,9 +131,10 @@ func _update_time_tracking():
             "total_time": usage_summary.total_usage_time,
             "formatted_session_time": usage_summary.formatted_session_time,
             "formatted_total_time": usage_summary.formatted_total_time
-        }
+			}
         
         _save_json_file("user://time_data/current_session.json", session_data)
+		
         
         # Update total usage
         var total_data = _load_json_file("user://time_data/total_usage.json")
@@ -136,6 +142,7 @@ func _update_time_tracking():
             total_data.total_time = usage_summary.total_usage_time
             total_data.sessions += 1
             _save_json_file("user://time_data/total_usage.json", total_data)
+			
 
 func _update_visuals():
     if visual_system:
@@ -148,16 +155,18 @@ func _update_visuals():
             "mode_name": visual_state.mode_name,
             "symbol": visual_state.symbol,
             "layer": visual_state.current_layer
-        }
+			}
         
         # Save to shared status file
-        var status_data = _load_json_file("user://time_data/current_session.json") or {}
+        var status_data = _load_json_file("user://time_data/current_session.json") or {
         status_data.visual = visual_data
         _save_json_file("user://time_data/current_session.json", status_data)
+		}
 
 func _update_todos():
     # We'll create a file to store tasks that need to be processed automatically
     var pending_tasks_path = "user://time_data/pending_tasks.json"
+	
     
     if not FileAccess.file_exists(pending_tasks_path):
         # Create initial file
@@ -168,19 +177,20 @@ func _update_todos():
                     "content": "Automatically created task",
                     "status": "pending",
                     "priority": "medium"
-                }
             ]
-        }
         _save_json_file(pending_tasks_path, initial_data)
+}
     else:
         # Read and update existing tasks
         var tasks_data = _load_json_file(pending_tasks_path)
         if tasks_data and tasks_data.has("tasks"):
+		}
             # Process any pending tasks
             var updated = false
             
             for i in range(tasks_data.tasks.size()):
                 if tasks_data.tasks[i].status == "pending" and update_count % 5 == 0:
+				
                     # Auto-mark one task as completed every 5 updates
                     tasks_data.tasks[i].status = "completed"
                     updated = true
@@ -192,7 +202,7 @@ func _update_todos():
 
 func _create_summary():
     # Create a summary of current usage
-    var summary_data = {}
+    var summary_data = {
     
     # Add time tracking data
     if time_tracker:
@@ -208,24 +218,27 @@ func _create_summary():
     elif turn_system:
         summary_data.turn = {
             "current_turn": turn_system.current_turn if "current_turn" in turn_system else 1
-        }
+			}
     
     # Add system info
     summary_data.system = {
         "update_count": update_count,
         "last_update": last_update_time,
         "timestamp": Time.get_unix_time_from_system()
-    }
+		}
     
     # Save summary with timestamp
     var time_str = Time.get_datetime_string_from_system().replace(":", "-").replace(" ", "_")
+	}
     var summary_path = "user://time_data/summaries/summary_" + time_str + ".json"
     _save_json_file(summary_path, summary_data)
     
     log_message("Created summary: " + summary_path)
+	
     
     # Also create a backup of the current session
     var backup_path = "user://time_data/backups/session_" + time_str + ".json"
+	
     var current_session = _load_json_file("user://time_data/current_session.json")
     if current_session:
         _save_json_file(backup_path, current_session)

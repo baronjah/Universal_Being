@@ -1,5 +1,5 @@
 @tool
-extends EditorScript
+extends \2
 
 # This script updates import paths in all scripts to reference the new file locations
 # Run it in the Godot editor to update paths throughout the project
@@ -9,17 +9,17 @@ func _run():
 	
 	# Define mappings for old paths to new paths
 	var path_mappings = {
-		"res://code/gdscript/scripts/akashic_records/thing_creator.gd": "res://code/gdscript/scripts/core/core_thing_creator.gd",
-		"res://code/gdscript/scripts/akashic_records/akashic_records_manager.gd": "res://code/gdscript/scripts/core/core_akashic_records_manager.gd",
-		"res://code/gdscript/scripts/UniversalBridge.gd": "res://code/gdscript/scripts/core/universal_bridge.gd",
-		"res://code/gdscript/scripts/akashic_records/thing_creator_ui.gd": "res://code/gdscript/scripts/ui/thing_creator_ui.gd",
-		"res://code/gdscript/scripts/akashic_records/thing_creator_standalone.gd": "res://code/gdscript/scripts/ui/thing_creator_standalone.gd",
-		"res://code/gdscript/scripts/kamisama_home/thing_creator_standalone.gd": "res://code/gdscript/scripts/ui/thing_creator_standalone.gd",
-		"res://code/gdscript/scripts/akashic_records/console_integration_helper.gd": "res://code/gdscript/scripts/integration/console_integration_helper.gd",
+		"res://scripts/gdscript/scripts/akashic_records/thing_creator.gd": "res://scripts/gdscript/scripts/core/core_thing_creator.gd",
+		"res://scripts/gdscript/scripts/akashic_records/akashic_records_manager.gd": "res://scripts/gdscript/scripts/core/core_akashic_records_manager.gd",
+		"res://scripts/gdscript/scripts/UniversalBridge.gd": "res://scripts/gdscript/scripts/core/universal_bridge.gd",
+		"res://scripts/gdscript/scripts/akashic_records/thing_creator_ui.gd": "res://scripts/gdscript/scripts/ui/thing_creator_ui.gd",
+		"res://scripts/gdscript/scripts/akashic_records/thing_creator_standalone.gd": "res://scripts/gdscript/scripts/ui/thing_creator_standalone.gd",
+		"res://scripts/gdscript/scripts/kamisama_home/thing_creator_standalone.gd": "res://scripts/gdscript/scripts/ui/thing_creator_standalone.gd",
+		"res://scripts/gdscript/scripts/akashic_records/console_integration_helper.gd": "res://scripts/gdscript/scripts/integration/console_integration_helper.gd",
 		# New Core paths
-		"res://code/gdscript/scripts/core/thing_creator.gd": "res://code/gdscript/scripts/core/core_thing_creator.gd",
-		"res://code/gdscript/scripts/core/akashic_records_manager.gd": "res://code/gdscript/scripts/core/core_akashic_records_manager.gd",
-		"res://code/gdscript/scripts/core/universal_bridge.gd": "res://code/gdscript/scripts/core/universal_bridge.gd"
+		"res://scripts/gdscript/scripts/core/thing_creator.gd": "res://scripts/gdscript/scripts/core/core_thing_creator.gd",
+		"res://scripts/gdscript/scripts/core/akashic_records_manager.gd": "res://scripts/gdscript/scripts/core/core_akashic_records_manager.gd",
+		"res://scripts/gdscript/scripts/core/universal_bridge.gd": "res://scripts/gdscript/scripts/core/universal_bridge.gd"
 	}
 	
 	# Define class name mappings (old to new)
@@ -46,9 +46,9 @@ func _run():
 	# Update each script
 	for script_path in scripts:
 		# Skip the scripts we just created
-		if script_path.begins_with("res://code/gdscript/scripts/core/") or \
-		   script_path.begins_with("res://code/gdscript/scripts/ui/") or \
-		   script_path.begins_with("res://code/gdscript/scripts/integration/"):
+		if script_path.begins_with("res://scripts/gdscript/scripts/core/") or \
+		   script_path.begins_with("res://scripts/gdscript/scripts/ui/") or \
+		   script_path.begins_with("res://scripts/gdscript/scripts/integration/"):
 			continue
 			
 		var updated = _update_script_imports(script_path, path_mappings, class_mappings)
@@ -67,7 +67,7 @@ func _find_all_scripts(path):
 		var file_name = dir.get_next()
 		
 		while file_name != "":
-			var full_path = path + "/" + file_name
+			var full_path = path + "" + file_name
 			
 			if dir.current_is_dir() and not file_name.begins_with("."):
 				scripts.append_array(_find_all_scripts(full_path))

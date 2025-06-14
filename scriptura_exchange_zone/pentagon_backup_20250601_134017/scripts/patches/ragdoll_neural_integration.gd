@@ -4,13 +4,12 @@
 # PURPOSE: Bridge yesterday's dreams with today's perfect delta reality
 # CREATED: 2025-05-28 - Neural network awakens
 # ==================================================
-
-extends UniversalBeingBase
+extends \2
 signal neural_memory_activated(system: String)
 signal ragdoll_evolved(from_state: String, to_state: String)
 
 # Neural network file paths
-const NEURAL_NETWORK_PATH = "/mnt/c/Users/Percision 15/Desktop/claude_desktop/ragdoll_jsh_integration_2025_05_25/"
+const NEURAL_NETWORK_PATH = "mnt/c/Users/Percision 15/Desktop/claude_desktop/ragdoll_jsh_integration_2025_05_25/"
 const BLINK_CONTROLLER = "blink_animation_controller.gd"
 const VISUAL_INDICATORS = "visual_indicator_system.gd"
 const DIMENSIONAL_COLORS = "dimensional_color_system.gd"
@@ -28,7 +27,7 @@ func _ready() -> void:
 	_scan_integration_status()
 
 func _register_neural_commands() -> void:
-	var console = get_node_or_null("/root/ConsoleManager")
+	var console = get_node_or_null("root/ConsoleManager")
 	if console:
 		console.register_command("neural_activate", _cmd_activate_neural,
 			"Activate neural network memories")
@@ -172,7 +171,7 @@ func _migrate_to_perfect_delta(ragdoll: Node) -> void:
 	"""Migrate ragdoll to PerfectDelta system"""
 	if ragdoll.has_method("_physics_process"):
 		# Register with PerfectDelta if available
-		var perfect_delta = get_node_or_null("/root/PerfectDelta")
+		var perfect_delta = get_node_or_null("root/PerfectDelta")
 		if perfect_delta:
 			perfect_delta.register_process(ragdoll, ragdoll._physics_process, 90, "physics")
 			ragdoll.set_physics_process(false)
@@ -183,7 +182,7 @@ func spawn_perfect_ragdoll() -> Node3D:
 	print("🚀 [RagdollNeural] Spawning perfect evolved ragdoll...")
 	
 	# Use existing spawn system
-	var world_builder = get_node_or_null("/root/WorldBuilder")
+	var world_builder = get_node_or_null("root/WorldBuilder")
 	if not world_builder:
 		print("   ❌ WorldBuilder not found")
 		return null
@@ -216,7 +215,7 @@ func spawn_perfect_ragdoll() -> Node3D:
 
 # Console commands
 func _cmd_activate_neural(_args: Array) -> void:
-	var console = get_node("/root/ConsoleManager")
+	var console = get_node("root/ConsoleManager")
 	console._print_to_console("[color=cyan]🧠 Activating neural network memories...[/color]")
 	
 	# Copy files first
@@ -231,7 +230,7 @@ func _cmd_activate_neural(_args: Array) -> void:
 		console._print_to_console("❌ Failed to copy neural files")
 
 func _cmd_neural_status(_args: Array) -> void:
-	var console = get_node("/root/ConsoleManager")
+	var console = get_node("root/ConsoleManager")
 	console._print_to_console("[color=yellow]🧠 Neural Network Status:[/color]")
 	
 	_scan_integration_status()
@@ -240,7 +239,7 @@ func _cmd_neural_status(_args: Array) -> void:
 		console._print_to_console("  %s: %s" % [system, status])
 
 func _cmd_copy_neural_files(_args: Array) -> void:
-	var console = get_node("/root/ConsoleManager")
+	var console = get_node("root/ConsoleManager")
 	console._print_to_console("[color=cyan]📡 Copying neural network files...[/color]")
 	
 	var success = copy_neural_files()
@@ -251,7 +250,7 @@ func _cmd_copy_neural_files(_args: Array) -> void:
 		console._print_to_console("❌ Some files failed to copy")
 
 func _cmd_spawn_perfect_ragdoll(_args: Array) -> void:
-	var console = get_node("/root/ConsoleManager")
+	var console = get_node("root/ConsoleManager")
 	console._print_to_console("[color=green]🚀 Spawning perfect evolved ragdoll...[/color]")
 	
 	var perfect_ragdoll = await spawn_perfect_ragdoll()

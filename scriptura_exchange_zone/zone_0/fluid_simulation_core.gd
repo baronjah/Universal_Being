@@ -1,6 +1,6 @@
 extends Node
 
-class_name FluidSimulationCore
+class_name FluidSimulationCore_fluidsimulationcore_fluidsim
 
 # Fluid simulation parameters
 var gravity = Vector3(0, -9.8, 0)

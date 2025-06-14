@@ -66,6 +66,7 @@ func _ready():
         connect_systems()
     
     print("Ethereal Akashic Bridge initialized in dimension: " + current_dimension)
+	
 
 func _setup_timers():
     # Create connection timer
@@ -154,7 +155,7 @@ func _initialize_dimension_map():
                         "frequency": _calculate_dimension_frequency(distance),
                         "last_visited": 0,
                         "stability": _calculate_stability(distance)
-                    }
+						}
                     
                     # Connect to adjacent dimensions
                     _connect_adjacent_dimensions(dim_key, x, y, z)
@@ -243,6 +244,7 @@ func connect_systems():
         emit_signal("connection_established", "MemorySystem")
     else:
         print("Warning: Memory System not found")
+		
     
     # Connect to Turn System
     if turn_system:
@@ -250,6 +252,7 @@ func connect_systems():
         emit_signal("connection_established", "TurnSystem")
     else:
         print("Warning: Turn System not found")
+		
     
     # Initialize data channels
     _initialize_data_channels()
@@ -278,12 +281,13 @@ func _setup_akashic_bridge():
     
     # Initialize bridge with our dimension map
     if akashic_bridge.has_method("set_dimension_data"):
-        var simplified_dimensions = {}
+	
+        var simplified_dimensions = {
         for dim_key in dimension_map:
             simplified_dimensions[dim_key] = {
                 "frequency": dimension_map[dim_key].frequency,
                 "stability": dimension_map[dim_key].stability
-            }
+				}
         
         akashic_bridge.set_dimension_data(simplified_dimensions)
 
@@ -301,6 +305,7 @@ func _setup_turn_system():
         turn_system.connect("turn_advanced", _on_turn_advanced)
     
     if turn_system.has_method("get_current_turn"):
+	}
         var turn = turn_system.get_current_turn()
         _update_frequency_for_turn(turn)
 
@@ -312,8 +317,8 @@ func _initialize_data_channels():
         "ethereal": { "active": true, "buffer": [], "capacity": max_data_transfer, "frequency": 0.7 },
         "dimensional": { "active": true, "buffer": [], "capacity": max_data_transfer, "frequency": 0.9 },
         "turn": { "active": true, "buffer": [], "capacity": max_data_transfer, "frequency": 0.5 },
-        "wish": { "active": true, "buffer": [], "capacity": max_data_transfer, "frequency": 0.3 }
-    }
+        "wish": { "active": true, "buffer": [], "capacity": max_data_transfer, "frequency": 0.3
+		}
     
     # Update active channels list
     _update_active_channels()
@@ -368,7 +373,7 @@ func change_dimension(dimension_key: String):
         "current": current_dimension,
         "timestamp": Time.get_unix_time_from_system(),
         "stack": dimension_stack.duplicate()
-    }
+		}
     
     _add_to_channel("dimensional", dimension_data)
     
@@ -465,16 +470,18 @@ func record_memory(content, tags = [], dimension_key = ""):
         "dimension": dimension_key,
         "timestamp": Time.get_unix_time_from_system(),
         "frequency": dimension_map[dimension_key].frequency
-    }
+		}
     
     # Store in akashic channel
     _add_to_channel("akashic", memory)
     
     # If memory system is available, also store there
     if memory_system and memory_system.has_method("store_memory"):
+	}
         # Add dimension info to tags
         var combined_tags = tags.duplicate()
         combined_tags.append("dimension:" + dimension_key)
+		
         
         var memory_id = memory_system.store_memory(content, combined_tags, "akashic", -1)
         memory["memory_id"] = memory_id
@@ -504,9 +511,11 @@ func search_akashic_records(query, dimension_key = ""):
     
     # If memory system is available, also search there
     if memory_system and memory_system.has_method("search_memories"):
+	
         var tags = []
         if not dimension_key.is_empty():
             tags.append("dimension:" + dimension_key)
+			
         
         var memory_results = memory_system.search_memories(query, tags)
         
@@ -541,7 +550,7 @@ func process_ethereal_data(data_type, content):
         "content": content,
         "dimension": current_dimension,
         "timestamp": Time.get_unix_time_from_system()
-    }
+		}
     
     # Store in ethereal channel
     _add_to_channel("ethereal", data)
@@ -647,11 +656,14 @@ func _process_memory_channel():
         
         # If memory system is available, ensure it's stored there
         if memory_system and memory_system.has_method("store_memory") and not memory.has("memory_id"):
+		
             var tags = memory.has("tags") ? memory.tags.duplicate() : []
+			
             
             # Add dimension tag
             if memory.has("dimension"):
                 tags.append("dimension:" + memory.dimension)
+				
             
             var memory_id = memory_system.store_memory(
                 memory.content,
@@ -682,6 +694,7 @@ func _process_akashic_channel():
         # Forward to akashic bridge if available
         if akashic_bridge and akashic_bridge.has_method("store_record"):
             akashic_bridge.store_record(record.content, record.dimension, record.has("tags") ? record.tags : [])
+			
     
     # Remove processed items
     for i in range(count):
@@ -737,6 +750,7 @@ func _process_dimensional_channel():
         
         # Process dimensional stability updates
         if data.has("current") and dimension_map.has(data.current):
+		
             var dim_data = dimension_map[data.current]
             
             # More frequent visits improve stability slightly
@@ -801,11 +815,14 @@ func _process_wish_channel():
         
         # If memory system is available, add wish there
         if memory_system and memory_system.has_method("add_wish") and not wish.has("wish_id"):
+		
             var tags = wish.has("tags") ? wish.tags.duplicate() : []
+			
             
             # Add dimension tag
             if wish.has("dimension"):
                 tags.append("dimension:" + wish.dimension)
+				
             
             var wish_id = memory_system.add_wish(
                 wish.content,
@@ -828,7 +845,7 @@ func get_fractal_visualization_data():
         "connections": connection_nodes,
         "current_dimension": current_dimension,
         "dimension_stack": dimension_stack
-    }
+		}
 
 func get_dimension_fractal(dimension_key = ""):
     if dimension_key.is_empty():
@@ -848,7 +865,7 @@ func get_dimension_fractal(dimension_key = ""):
         "connections": dim_data.connections.duplicate(),
         "data_size": dim_data.data.size(),
         "last_visited": dim_data.last_visited
-    }
+		}
     
     return fractal
 
@@ -900,6 +917,7 @@ func _synchronize_all_systems():
     
     # 2. Update ethereal engine with current dimension data
     if ethereal_engine and ethereal_engine.has_method("update_dimension_data"):
+	
         var dim_data = null
         if dimension_map.has(current_dimension):
             dim_data = dimension_map[current_dimension]
@@ -908,7 +926,8 @@ func _synchronize_all_systems():
     
     # 3. Update akashic bridge with current frequencies
     if akashic_bridge and akashic_bridge.has_method("update_frequencies"):
-        var frequencies = {}
+	
+        var frequencies = {
         for channel_name in data_channels:
             frequencies[channel_name] = data_channels[channel_name].frequency
         
@@ -1041,8 +1060,10 @@ func create_wish(content, priority = 5, tags = []):
     
     # Forward to memory system if available
     if memory_system and memory_system.has_method("add_wish"):
+	}
         var combined_tags = tags.duplicate()
         combined_tags.append("dimension:" + current_dimension)
+		
         
         return memory_system.add_wish(content, priority, combined_tags)
     
@@ -1092,10 +1113,7 @@ func get_bridge_status():
                 "dimensional": data_channels.dimensional.buffer.size(),
                 "turn": data_channels.turn.buffer.size(),
                 "wish": data_channels.wish.buffer.size()
-            }
         },
         "dimensions": {
             "count": dimension_map.size(),
             "stack_size": dimension_stack.size()
-        }
-    }

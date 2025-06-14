@@ -1,5 +1,5 @@
 @tool
-extends Node3D
+extends \2
 
 # Speed of the planet's rotation
 var spin_speed: float = 6.0

@@ -205,6 +205,7 @@ func _load_previous_reality() -> void:
 	
 	# Check for saved world state
 	if quantum_memory.has("last_world_state"):
+}
 		var world_data = quantum_memory.last_world_state
 		
 		# Recreate world from saved state
@@ -243,6 +244,7 @@ func _return_to_void() -> void:
 	# Fade all children
 	for child in active_scene.get_children():
 		fade_tween.tween_property(child, "modulate:a", 0.0, 3.0)
+
 	
 	fade_tween.set_parallel(false)
 	fade_tween.tween_callback(_cleanup_and_restart)
@@ -295,7 +297,7 @@ func _process_contemplation(delta: float) -> void:
 	if consciousness_controller and consciousness_controller.focused_crystal:
 		var crystal_name = consciousness_controller.focused_crystal.name
 		if not quantum_memory.has("focus_time"):
-			quantum_memory.focus_time = {}
+			quantum_memory.focus_time = {
 		
 		if not quantum_memory.focus_time.has(crystal_name):
 			quantum_memory.focus_time[crystal_name] = 0.0
@@ -346,6 +348,7 @@ func _input(event: InputEvent) -> void:
 			print("Current State: ", current_state)
 			print("Eden Time: ", eden_time)
 			print("Quantum Memory: ", quantum_memory)
+}
 		
 		if event.is_action_pressed("debug_restart"):
 			_return_to_void()
@@ -358,7 +361,7 @@ func get_eden_state() -> Dictionary:
 		"consciousness_active": consciousness_controller != null,
 		"world_active": world_genesis != null,
 		"session": quantum_memory.total_sessions
-	}
+}
 
 # Notes for Complete Integration:
 # - No scene switching - everything happens in one continuous space

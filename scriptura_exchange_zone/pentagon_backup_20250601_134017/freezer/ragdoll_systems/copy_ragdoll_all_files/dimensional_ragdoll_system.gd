@@ -4,9 +4,8 @@
 # PURPOSE: Implement Eden's 5D positioning and evolution mechanics
 # BASED ON: Eden project's dimensional magic system
 # ==================================================
-
-extends Node
-class_name DimensionalRagdollSystem
+extends \2
+class_name DimensionalRagdollSystem_dimensionalragdollsystem_dimensio
 
 signal dimension_changed(from: int, to: int)
 signal consciousness_evolved(level: String, value: float)
@@ -24,7 +23,8 @@ var position_5d: Dictionary = {
 }
 
 ## Dimensional States
-enum Dimension {
+enum \2 {
+
 	PHYSICAL = 0,    # Normal warehouse reality
 	DREAM = 1,       # Floaty, surreal dimension
 	MEMORY = 2,      # Past echoes, time loops

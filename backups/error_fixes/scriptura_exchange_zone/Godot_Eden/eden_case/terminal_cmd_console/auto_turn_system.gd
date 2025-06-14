@@ -41,7 +41,7 @@ func _ready():
     background_timer = Timer.new()
     background_timer.wait_time = auto_turn_duration
     background_timer.one_shot = true
-    background_timer.connect("timeout", self, "_on_background_timer_timeout")
+    background_timer.connect(_on_background_timer_timeout)
     add_child(background_timer)
     
     # Initialize visual events
@@ -421,7 +421,7 @@ func _process_guidance_queue():
         var timer = Timer.new()
         timer.wait_time = 20 + randf() * 30  # 20-50 seconds between guidance
         timer.one_shot = true
-        timer.connect("timeout", self, "_process_guidance_queue")
+        timer.connect(_process_guidance_queue)
         add_child(timer)
         timer.start()
 

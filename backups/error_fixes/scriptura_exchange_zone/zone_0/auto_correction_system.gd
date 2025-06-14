@@ -42,19 +42,19 @@ func _ready():
     var timer = Timer.new()
     timer.wait_time = CORRECTION_INTERVAL
     timer.autostart = true
-    timer.connect("timeout", self, "_on_correction_interval")
+    timer.connect(_on_correction_interval)
     add_child(timer)
     
     # Connect to preference analyzer if available
     if has_node("/root/PlayerPreferenceAnalyzer") or get_node_or_null("/root/PlayerPreferenceAnalyzer"):
-        _preference_analyzer = get_node("/root/PlayerPreferenceAnalyzer")
-        _preference_analyzer.connect("preferences_updated", self, "_on_preferences_updated")
-        _preference_analyzer.connect("enjoyment_factor_changed", self, "_on_enjoyment_factor_changed")
+        _preference_analyzer = get_node("\1") as Node
+        _preference_analyzer.connect(_on_preferences_updated)
+        _preference_analyzer.connect(_on_enjoyment_factor_changed)
         print("Connected to PlayerPreferenceAnalyzer")
     
     # Connect to account manager if available
     if has_node("/root/SmartAccountManager") or get_node_or_null("/root/SmartAccountManager"):
-        _account_manager = get_node("/root/SmartAccountManager")
+        _account_manager = get_node("\1") as Node
         print("Connected to SmartAccountManager")
     
     # Initialize

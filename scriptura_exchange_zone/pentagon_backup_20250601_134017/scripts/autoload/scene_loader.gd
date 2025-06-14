@@ -3,8 +3,7 @@
 # DESCRIPTION: Loads and saves scene configurations from text files
 # CREATED: 2025-05-23 - Dynamic scene creation system
 # ==================================================
-
-extends UniversalBeingBase
+extends \2
 signal scene_loaded(scene_name: String)
 signal scene_saved(scene_name: String)
 

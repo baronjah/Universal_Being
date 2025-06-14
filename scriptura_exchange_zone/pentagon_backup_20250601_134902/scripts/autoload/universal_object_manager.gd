@@ -4,7 +4,6 @@
 # PURPOSE: Perfect unification - every object tracked, registered, inspectable
 # CREATED: 2025-05-27 - The perfect system realized
 # ==================================================
-
 extends UniversalBeingBase
 # Signals for system-wide awareness
 signal object_created(uuid: String, data: Dictionary)
@@ -53,10 +52,10 @@ func _log(message: String, level: String = "INFO") -> void:
 func _connect_to_systems() -> void:
 	"""Connect to all existing systems"""
 	# These will be available as autoloads
-	floodgate = get_node_or_null("/root/FloodgateController")
-	world_builder = get_node_or_null("/root/WorldBuilder")
-	asset_library = get_node_or_null("/root/AssetLibrary")
-	console_manager = get_node_or_null("/root/ConsoleManager")
+	floodgate = get_node_or_null("root/FloodgateController")
+	world_builder = get_node_or_null("root/WorldBuilder")
+	asset_library = get_node_or_null("root/AssetLibrary")
+	console_manager = get_node_or_null("root/ConsoleManager")
 
 # ========== CREATION SYSTEM ==========
 
@@ -143,7 +142,7 @@ func create_object(type: String, position: Vector3, properties: Dictionary = {})
 	
 	# Add to scene tree (if not already parented)
 	if not obj.is_inside_tree():
-		get_node("/root/FloodgateController").universal_add_child(obj, get_tree().current_scene)
+		get_node("root/FloodgateController").universal_add_child(obj, get_tree().current_scene)
 	
 	print("✨ [UniversalObjectManager] Created " + type + " (UUID: " + uuid + ")")
 	

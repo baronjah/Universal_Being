@@ -1,5 +1,5 @@
 extends Node
-class_name ThreadManager
+class_name ThreadManager_threadmanager_threadma
 
 # Thread Manager for the 12 Turns System
 # Handles multi-threaded processing across cores

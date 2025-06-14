@@ -291,7 +291,7 @@ func _process(delta):
 
 # Update resonance patterns
 func _update_resonance(delta):
-    var time = OS.get_ticks_msec() / 1000.0
+    var time = OS.Time.get_ticks_msec() / 1000.0
     
     # Calculate overall resonance amplitude for each dimension
     for dim in dimension_states:
@@ -356,7 +356,7 @@ func _update_stability(delta):
         # Check for instability
         if dim_state.stability < STABILITY_THRESHOLD:
             var cause = "energy_imbalance"
-            if dim_state.connected_dimensions.empty():
+            if dim_state.connected_dimensions.is_empty():
                 cause = "isolation"
             elif dim_state.stability < STABILITY_THRESHOLD * 0.5:
                 cause = "critical_decay"

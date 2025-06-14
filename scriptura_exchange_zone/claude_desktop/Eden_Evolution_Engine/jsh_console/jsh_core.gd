@@ -2,7 +2,7 @@ extends Node
 # JSH CONSOLE CORE - Advanced Terminal Integration
 # Multi-core processing with API connections
 
-class_name JSHCore
+class_name JSHCore_jshcore_jshcore
 
 # ========== CONSTANTS ==========
 const MAX_HISTORY = 1000
@@ -40,7 +40,7 @@ var built_in_commands = {
 	"history": {"func": "cmd_history", "desc": "Show command history"},
 	"multicore": {"func": "cmd_multicore", "desc": "Toggle multi-core processing"},
 	"model": {"func": "cmd_model", "desc": "Switch AI model"},
-	"export": {"func": "cmd_export", "desc": "Export data"},
+	"@@export": {"func": "cmd_export", "desc": "Export data"},
 	"import": {"func": "cmd_import", "desc": "Import data"},
 	"analyze": {"func": "cmd_analyze", "desc": "Analyze game state"},
 	"fractal": {"func": "cmd_fractal", "desc": "Generate fractal patterns"},
@@ -95,7 +95,7 @@ func execute(command_string):
 	# Add to history
 	command_history.append({
 		"command": command_string,
-		"timestamp": OS.get_unix_time()
+		"timestamp": OS.Time.get_unix_time_from_system()
 	})
 	
 	# Limit history size
@@ -114,7 +114,7 @@ func execute(command_string):
 	if command_registry.has(command):
 		var cmd_data = command_registry[command]
 		cmd_data.usage_count += 1
-		cmd_data.last_used = OS.get_unix_time()
+		cmd_data.last_used = OS.Time.get_unix_time_from_system()
 		
 		var result = cmd_data.callback.call_func(args)
 		emit_signal("command_executed", command, result)
@@ -168,7 +168,7 @@ func cmd_memory(args):
 		return "Usage: memory <operation> [args...]"
 	
 	var operation = args[0]
-	var akashic = get_node("/root/AkashicCore")
+	var akashic = get_node("root/AkashicCore")
 	
 	match operation:
 		"store":
@@ -203,7 +203,7 @@ func cmd_connect(args):
 	var endpoint = args[0]
 	if active_connections.has(endpoint):
 		active_connections[endpoint].connected = true
-		active_connections[endpoint].last_ping = OS.get_unix_time()
+		active_connections[endpoint].last_ping = OS.Time.get_unix_time_from_system()
 		emit_signal("api_connected", endpoint)
 		return "Connected to " + endpoint
 	else:
@@ -257,10 +257,10 @@ func cmd_model(args):
 
 func cmd_export(args):
 	if args.size() < 1:
-		return "Usage: export <type> [filename]"
+		return "Usage: @@export <type> [filename]"
 	
 	var type = args[0]
-	var filename = "export_" + str(OS.get_unix_time()) + ".json" if args.size() < 2 else args[1]
+	var filename = "export_" + str(OS.Time.get_unix_time_from_system()) + ".json" if args.size() < 2 else args[1]
 	
 	match type:
 		"memory":
@@ -270,7 +270,7 @@ func cmd_export(args):
 			# Export universe data
 			return "Exported universes to " + filename
 		_:
-			return "Unknown export type: " + type
+			return "Unknown @@export type: " + type
 
 func cmd_import(args):
 	if args.size() < 1:
@@ -289,7 +289,7 @@ func cmd_analyze(args):
 	if parent:
 		analysis += "Universes: " + str(parent.universes.size()) + "\n"
 		analysis += "Evolution State: " + str(parent.evolution_state) + "\n"
-		analysis += "Current Turn: " + str(parent.twelve_turns.current_turn) + "/" + str(parent.TURN_SYSTEM) + "\n"
+		analysis += "Current Turn: " + str(parent.twelve_turns.current_turn) + "" + str(parent.TURN_SYSTEM) + "\n"
 	
 	return analysis
 

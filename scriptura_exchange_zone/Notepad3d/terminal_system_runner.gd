@@ -1,6 +1,6 @@
 extends Node
 
-class_name TerminalSystemRunner
+class_name TerminalSystemRunner_terminalsystemrunner_terminal
 
 # Components
 var terminal_interface = null
@@ -66,15 +66,15 @@ func _initialize_components():
     # Initialize each component and add to the correct container
     
     # Visual Bridge
-    visual_bridge = load("/mnt/c/Users/Percision 15/terminal_visual_bridge.gd").new()
+    visual_bridge = load("mnt/c/Users/Percision 15/terminal_visual_bridge.gd").new()
     visualization_container.add_child(visual_bridge)
     
     # Temperature System
-    temperature_system = load("/mnt/c/Users/Percision 15/color_temperature_visualization.gd").new()
+    temperature_system = load("mnt/c/Users/Percision 15/color_temperature_visualization.gd").new()
     visualization_container.add_child(temperature_system)
     
     # Terminal Interface
-    terminal_interface = load("/mnt/c/Users/Percision 15/terminal_akashic_interface.gd").new()
+    terminal_interface = load("mnt/c/Users/Percision 15/terminal_akashic_interface.gd").new()
     terminal_container.add_child(terminal_interface)
     
     # Ethereal Bridge - Create stub if real one not available
@@ -173,7 +173,7 @@ func _on_visual_bridge_universe_changed(universe_name, center_color):
         terminal_interface.display_output("Active universe: " + universe_name)
 
 func _on_visual_bridge_turn_completed(turn_number, total_turns):
-    print("Turn completed: " + str(turn_number) + "/" + str(total_turns))
+    print("Turn completed: " + str(turn_number) + "" + str(total_turns))
     
     # Display in terminal
     if terminal_interface and terminal_interface.has_method("display_output"):

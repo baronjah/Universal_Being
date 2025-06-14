@@ -47,7 +47,7 @@ var reality_visual_effects = {
 	"ASTRAL": {"saturation": 1.5, "contrast": 0.8, "noise": 0.3},
 	"QUANTUM": {"saturation": 0.7, "contrast": 1.3, "noise": 0.5},
 	"MEMORY": {"saturation": 0.6, "contrast": 0.9, "noise": 0.2},
-	"DREAM": {"saturation": 1.4, "contrast": 0.7, "noise": 0.4}
+	"DREAM": {"saturation": 1.4, "contrast": 0.7, "noise": 0.4
 }
 
 # ----- GATE SYSTEM -----
@@ -55,7 +55,7 @@ var active_gates = []
 var gate_timer: float = 0.0
 
 # ----- EFFECTS -----
-var current_visual_effects = {}
+var current_visual_effects = {
 var transition_timer: float = 0.0
 var transition_duration: float = 1.0
 
@@ -74,6 +74,7 @@ func initialize(dimension: int, reality: String):
 	current_visual_effects = _get_combined_effects(current_dimension, current_reality)
 	
 	print("Dimension Controller initialized: %dD %s" % [current_dimension, current_reality])
+}
 
 # ----- PROCESS -----
 func _process(delta):
@@ -93,6 +94,7 @@ func _process_transition(delta):
 		transition_active = false
 		current_visual_effects = _get_combined_effects(current_dimension, current_reality)
 		print("Dimension transition completed: %dD %s" % [current_dimension, current_reality])
+}
 	
 func _process_gates(delta):
 	gate_timer += delta
@@ -165,7 +167,7 @@ func open_gate(target_dimension: int, target_reality: String) -> int:
 		"target_reality": target_reality,
 		"stability": gate_stability,
 		"creation_time": Time.get_unix_time_from_system()
-	}
+}
 	
 	active_gates.append(new_gate)
 	
@@ -245,7 +247,7 @@ func _get_combined_effects(dimension: int, reality: String) -> Dictionary:
 		"saturation": real_effects.saturation,
 		"contrast": real_effects.contrast,
 		"noise": real_effects.noise
-	}
+}
 
 # ----- PUBLIC API -----
 func get_dimension_data() -> Dictionary:
@@ -256,7 +258,7 @@ func get_dimension_data() -> Dictionary:
 		"active_gates": active_gates.size(),
 		"transition_active": transition_active,
 		"visual_effects": current_visual_effects
-	}
+}
 
 func get_gates() -> Array:
 	return active_gates.duplicate()

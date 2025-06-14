@@ -139,6 +139,7 @@ class TimerData:
 	var callback: Callable
 	var user_data: Variant
 	var consciousness_category: String = ""
+
 	
 	func _init(p_timer: Timer, p_duration: float, p_callback: Callable = Callable(), p_user_data: Variant = null):
 		timer = p_timer
@@ -402,8 +403,8 @@ func get_consciousness_timer_stats() -> Dictionary:
 		"gemma_thoughts_active": gemma_thought_stream_active,
 		"console_summaries_active": console_summary_active,
 		"turn_based_active": turn_based_active
-	}
 	return stats
+}
 
 # ===== TIMER CALLBACK HANDLER =====
 

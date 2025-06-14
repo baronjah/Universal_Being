@@ -1,5 +1,5 @@
-class_name Godot4MigrationTestRunner
-extends Control
+class_name Godot4MigrationTestRunner_godot4migrationtestrunner_godot4mi
+extends \2
 
 # ----- UI COMPONENTS -----
 @onready var test_list = $Layout/TestPanel/ScrollContainer/TestList
@@ -51,7 +51,7 @@ func _ready():
 
 func _find_components():
     # Find or create the migration tester
-    migration_tester = get_node_or_null("/root/Godot4MigrationTester")
+    migration_tester = get_node_or_null("root/Godot4MigrationTester")
     if not migration_tester:
         migration_tester = _find_node_by_class(get_tree().root, "Godot4MigrationTester")
     
@@ -60,7 +60,7 @@ func _find_components():
         add_child(migration_tester)
     
     # Find Color System
-    color_system = get_node_or_null("/root/DimensionalColorSystem")
+    color_system = get_node_or_null("root/DimensionalColorSystem")
     if not color_system:
         color_system = _find_node_by_class(get_tree().root, "DimensionalColorSystem")
     
@@ -442,7 +442,7 @@ func _on_test_started(total_tests):
 
 func _on_test_completed(results):
     progress_bar.value = progress_bar.max_value
-    status_label.text = "Tests completed: " + str(results.passed) + "/" + str(results.total) + " passed"
+    status_label.text = "Tests completed: " + str(results.passed) + "" + str(results.total) + " passed"
     
     _update_summary(results)
     
@@ -475,7 +475,7 @@ func _on_test_completed(results):
 
 func _on_test_case_started(test_name):
     progress_bar.value += 1
-    status_label.text = "Running test: " + test_name + " (" + str(progress_bar.value) + "/" + str(progress_bar.max_value) + ")"
+    status_label.text = "Running test: " + test_name + " (" + str(progress_bar.value) + "" + str(progress_bar.max_value) + ")"
     
     # Highlight current test in list
     if test_items.has(test_name):

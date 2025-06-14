@@ -10,8 +10,8 @@
 #   .o. 88P 8""88888P'  o888o   o888o 
 #   `Y888P                            
 #
-extends Node
-class_name GridSystem
+extends \2
+class_name GridSystem_Snakegrid_Snakegri
 # References
 
 #
@@ -24,8 +24,8 @@ class_name GridSystem
 #   .o. 88P 8""88888P'  o888o   o888o 
 #   `Y888P                            
 #
-# res://code/gdscript/scripts/Snake_Space_Movement/Snake_grid.gd
-# res://code/gdscript/scripts/Snake_Space_Movement/Snake_grid.gd
+# res://scripts/gdscript/scripts/Snake_Space_Movement/Snake_grid.gd
+# res://scripts/gdscript/scripts/Snake_Space_Movement/Snake_grid.gd
 #
 # JSH_World/marching_cubes
 #

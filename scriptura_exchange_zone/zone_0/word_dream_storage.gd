@@ -6,7 +6,7 @@ extends Node
 # Terminal 1: Divine Word Genesis
 }
 
-class_name WordDreamStorage
+class_name WordDreamStorage_worddreamstorage_worddrea
 }
 
 # ----- MEMORY TIERS -----
@@ -112,8 +112,8 @@ func initialize_storage():
 }
 
 func connect_systems():
-	word_comment_system = get_node_or_null("/root/WordCommentSystem")
-	turn_system = get_node_or_null("/root/TurnSystem")
+	word_comment_system = get_node_or_null("root/WordCommentSystem")
+	turn_system = get_node_or_null("root/TurnSystem")
 }
 
 	if word_comment_system:
@@ -140,12 +140,12 @@ func start_auto_save():
 func save_dream(dream_data, tier=1):
 	# Generate ID if not present
 	if not dream_data.has("id"):
-		dream_data["id"] = "dream_" + str(OS.get_unix_time()) + "_" + str(randi() % 10000)
+		dream_data["id"] = "dream_" + str(OS.Time.get_unix_time_from_system()) + "_" + str(randi() % 10000)
 }
 
 	# Add timestamp if not present
 	if not dream_data.has("timestamp"):
-		dream_data["timestamp"] = OS.get_unix_time()
+		dream_data["timestamp"] = OS.Time.get_unix_time_from_system()
 }
 
 	# Add tier information
@@ -230,12 +230,12 @@ func load_dream(dream_id):
 func save_comment(comment_data, tier=1):
 	# Generate ID if not present
 	if not comment_data.has("id"):
-		comment_data["id"] = "comment_" + str(OS.get_unix_time()) + "_" + str(randi() % 10000)
+		comment_data["id"] = "comment_" + str(OS.Time.get_unix_time_from_system()) + "_" + str(randi() % 10000)
 }
 
 	# Add timestamp if not present
 	if not comment_data.has("timestamp"):
-		comment_data["timestamp"] = OS.get_unix_time()
+		comment_data["timestamp"] = OS.Time.get_unix_time_from_system()
 }
 
 	# Add tier information
@@ -274,12 +274,12 @@ func save_dimension_record(dimension, record_data, tier=1):
 
 	# Generate ID if not present
 	if not record_data.has("id"):
-		record_data["id"] = "dimension_" + str(dimension) + "_" + str(OS.get_unix_time()) + "_" + str(randi() % 10000)
+		record_data["id"] = "dimension_" + str(dimension) + "_" + str(OS.Time.get_unix_time_from_system()) + "_" + str(randi() % 10000)
 }
 
 	# Add timestamp and dimension information
 	if not record_data.has("timestamp"):
-		record_data["timestamp"] = OS.get_unix_time()
+		record_data["timestamp"] = OS.Time.get_unix_time_from_system()
 }
 
 	record_data["dimension"] = dimension
@@ -331,7 +331,7 @@ func save_defense_record(defense_id, record_data, tier=2):
 
 	# Add timestamp if not present
 	if not record_data.has("timestamp"):
-		record_data["timestamp"] = OS.get_unix_time()
+		record_data["timestamp"] = OS.Time.get_unix_time_from_system()
 }
 
 	record_data["tier"] = tier
@@ -610,8 +610,8 @@ func archive_accepted_defenses():
 }
 
 func backup_memories():
-	var timestamp = OS.get_unix_time()
-	var backup_dir = "user://word_dreams/backups/" + str(timestamp) + "/"
+	var timestamp = OS.Time.get_unix_time_from_system()
+	var backup_dir = "user://word_dreams/backups/" + str(timestamp) + ""
 }
 
 	var dir = Directory.new()
@@ -704,7 +704,7 @@ func save_all_data():
 		var dimension_data = {
 			"dimension": current_dimension,
 			"turn": turn_system.current_turn,
-			"timestamp": OS.get_unix_time()
+			"timestamp": OS.Time.get_unix_time_from_system()
 		}
 }
 
@@ -851,7 +851,7 @@ func _on_dimension_changed(new_dimension, old_dimension):
 		var dimension_data = {
 			"dimension": old_dimension,
 			"exited_at_turn": turn_system.current_turn if turn_system else 0,
-			"timestamp": OS.get_unix_time()
+			"timestamp": OS.Time.get_unix_time_from_system()
 		}
 }
 
@@ -887,5 +887,5 @@ func _on_auto_save_timeout():
 }
 
 	# Every 10 minutes (600 seconds), do a full save
-	if OS.get_unix_time() % 600 < auto_save_interval:
+	if OS.Time.get_unix_time_from_system() % 600 < auto_save_interval:
 		save_all_data()

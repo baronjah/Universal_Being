@@ -5,7 +5,7 @@ extends Node
 # It serves as the integration layer for Turn 5: Awakening
 }
 
-class_name MouseAutomationIntegration
+class_name MouseAutomationIntegration_mouseaut
 }
 
 var terminal_bridge
@@ -34,7 +34,7 @@ func _ready():
 
 func _connect_to_dependencies():
     # Find and connect to TerminalGodotBridge
-    if get_node_or_null("/root/TerminalGodotBridge") != null:
+    if get_node_or_null("root/TerminalGodotBridge") != null:
         terminal_bridge = get_node("\1") as Node
         print("[MouseAutomationIntegration] Connected to Terminal Bridge")
 }
@@ -45,7 +45,7 @@ func _connect_to_dependencies():
 }
 
     # Find and connect to MouseAutomation
-    if get_node_or_null("/root/MouseAutomation") != null:
+    if get_node_or_null("root/MouseAutomation") != null:
         mouse_automation = get_node("\1") as Node
         print("[MouseAutomationIntegration] Connected to Mouse Automation")
     else:
@@ -57,7 +57,7 @@ func _connect_to_dependencies():
 }
 
     # Find and connect to SegmentProcessor
-    if get_node_or_null("/root/SegmentProcessor") != null:
+    if get_node_or_null("root/SegmentProcessor") != null:
         segment_processor = get_node("\1") as Node
         print("[MouseAutomationIntegration] Connected to Segment Processor")
 }

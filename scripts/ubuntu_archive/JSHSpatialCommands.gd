@@ -1,7 +1,7 @@
 extends Node
 class_name JSHSpatialCommands
 
-# Spatial system console commands
+# Node3D system console commands
 var console_manager: JSHConsoleManager = null
 var spatial_manager: JSHSpatialManager = null
 var commands: Dictionary = {}
@@ -25,7 +25,7 @@ func register_commands() -> void:
             "arg_descriptions": ["Subcommand: list, create, delete, info, entities, transition, activate, subdivide"]
         },
         "spatial": {
-            "description": "Spatial query commands",
+            "description": "Node3D query commands",
             "usage": "spatial <subcommand> [arguments]",
             "callback": Callable(self, "cmd_spatial"),
             "min_args": 1,
@@ -41,8 +41,7 @@ func register_commands() -> void:
             "max_args": -1,
             "arg_types": [TYPE_STRING],
             "arg_descriptions": ["Subcommand: get, set, move"]
-        }
-    }
+			}
     
     # Register with console manager
     for cmd_name in commands:
@@ -52,7 +51,8 @@ func register_commands() -> void:
 func cmd_zone(self, args: Array) -> Dictionary:
     if args.size() < 1:
         console_manager.print_error("Missing subcommand for zone")
-        return {"success": false, "message": "Missing subcommand"}
+        return {"success": false, "message": "Missing subcommand"
+		}
     
     var subcommand = args[0].to_lower()
     var subargs = args.slice(1)
@@ -77,7 +77,8 @@ func cmd_zone(self, args: Array) -> Dictionary:
         _:
             console_manager.print_error("Unknown zone subcommand: " + subcommand)
             console_manager.print_line("Available subcommands: list, create, delete, info, entities, transition, activate, subdivide")
-            return {"success": false, "message": "Unknown subcommand: " + subcommand}
+            return {"success": false, "message": "Unknown subcommand: " + subcommand
+			}
 
 # Zone subcommands
 func cmd_zone_list(self, args: Array) -> Dictionary:
@@ -86,6 +87,7 @@ func cmd_zone_list(self, args: Array) -> Dictionary:
     var visible_zones = spatial_manager.get_visible_zones()
     
     console_manager.print_line("Zones:")
+	}
     
     for zone_id in zones:
         var zone = spatial_manager.get_zone(zone_id)
@@ -99,6 +101,7 @@ func cmd_zone_list(self, args: Array) -> Dictionary:
         var entity_count = spatial_manager.get_entities_in_zone(zone_id).size()
         
         console_manager.print_line("  " + zone_id + ": " + str(zone.name if zone.has("name") else zone_id) + status + " (" + str(entity_count) + " entities)")
+		
     
     return {
         "success": true,
@@ -106,12 +109,13 @@ func cmd_zone_list(self, args: Array) -> Dictionary:
         "zones": zones,
         "active_zone": active_zone,
         "visible_zones": visible_zones
-    }
+		}
 
 func cmd_zone_create(self, args: Array) -> Dictionary:
     if args.size() < 3:
         console_manager.print_error("Usage: zone create <zone_id> <name> <min_x,min_y,min_z,max_x,max_y,max_z>")
-        return {"success": false, "message": "Invalid arguments"}
+        return {"success": false, "message": "Invalid arguments"
+		}
     
     var zone_id = args[0]
     var zone_name = args[1]
@@ -119,7 +123,8 @@ func cmd_zone_create(self, args: Array) -> Dictionary:
     
     if bounds_str.size() < 6:
         console_manager.print_error("Invalid bounds format. Expected: min_x,min_y,min_z,max_x,max_y,max_z")
-        return {"success": false, "message": "Invalid bounds format"}
+        return {"success": false, "message": "Invalid bounds format"
+		}
     
     var min_x = float(bounds_str[0])
     var min_y = float(bounds_str[1])
@@ -142,8 +147,8 @@ func cmd_zone_create(self, args: Array) -> Dictionary:
         "level": 0,
         "is_root": args.size() >= 4 and args[3].to_lower() == "root",
         "autoload": false,
-        "properties": {}
-    }
+        "properties": {
+		}
     
     # Parse additional properties
     for i in range(4, args.size()):
@@ -171,16 +176,17 @@ func cmd_zone_create(self, args: Array) -> Dictionary:
             "success": true,
             "message": "Zone created",
             "zone_id": zone_id,
-            "zone_data": zone_data
-        }
+            "zone_data": zone_data}
     else:
         console_manager.print_error("Failed to create zone: " + zone_id)
-        return {"success": false, "message": "Failed to create zone"}
+        return {"success": false, "message": "Failed to create zone"
+		}
 
 func cmd_zone_delete(self, args: Array) -> Dictionary:
     if args.size() < 1:
         console_manager.print_error("Zone ID required")
-        return {"success": false, "message": "Zone ID required"}
+        return {"success": false, "message": "Zone ID required"
+		}
     
     var zone_id = args[0]
     
@@ -189,48 +195,55 @@ func cmd_zone_delete(self, args: Array) -> Dictionary:
         return {
             "success": true,
             "message": "Zone deleted",
-            "zone_id": zone_id
-        }
+            "zone_id": zone_id}
     else:
         console_manager.print_error("Failed to delete zone: " + zone_id)
-        return {"success": false, "message": "Failed to delete zone"}
+        return {"success": false, "message": "Failed to delete zone"
+		}
 
 func cmd_zone_info(self, args: Array) -> Dictionary:
     if args.size() < 1:
         console_manager.print_error("Zone ID required")
-        return {"success": false, "message": "Zone ID required"}
+        return {"success": false, "message": "Zone ID required"
+		}
     
     var zone_id = args[0]
     var zone = spatial_manager.get_zone(zone_id)
     
     if zone.is_empty():
         console_manager.print_error("Zone not found: " + zone_id)
-        return {"success": false, "message": "Zone not found"}
+        return {"success": false, "message": "Zone not found"
+		}
     
     var zone_stats = spatial_manager.get_zone_statistics(zone_id)
     var hierarchy = {
         "parent": spatial_manager.get_parent_zone(zone_id),
         "children": spatial_manager.get_child_zones(zone_id)
-    }
+		}
     
     console_manager.print_line("Zone: " + zone_id)
     console_manager.print_line("  Name: " + str(zone.name if zone.has("name") else zone_id))
+	}
     
     if zone.has("bounds"):
+	
         var bounds = zone.bounds
         console_manager.print_line("  Bounds:")
         console_manager.print_line("    X: " + str(bounds.min_x) + " to " + str(bounds.max_x))
         console_manager.print_line("    Y: " + str(bounds.min_y) + " to " + str(bounds.max_y))
         console_manager.print_line("    Z: " + str(bounds.min_z) + " to " + str(bounds.max_z))
+		
     
     console_manager.print_line("  Entity Count: " + str(zone_stats.entity_count))
     console_manager.print_line("  Entity Density: " + str(snappedf(zone_stats.entity_density, 0.001)))
+	
     
     console_manager.print_line("  Hierarchy:")
     console_manager.print_line("    Level: " + str(zone.level if zone.has("level") else 0))
     console_manager.print_line("    Root: " + str(zone.is_root if zone.has("is_root") else false))
     console_manager.print_line("    Parent: " + (hierarchy.parent if not hierarchy.parent.is_empty() else "None"))
     console_manager.print_line("    Children: " + str(hierarchy.children.size()))
+	
     
     for child in hierarchy.children:
         console_manager.print_line("      - " + child)
@@ -258,17 +271,19 @@ func cmd_zone_info(self, args: Array) -> Dictionary:
         "zone_stats": zone_stats,
         "hierarchy": hierarchy,
         "transitions": transitions
-    }
+		}
 
 func cmd_zone_entities(self, args: Array) -> Dictionary:
     if args.size() < 1:
         console_manager.print_error("Zone ID required")
-        return {"success": false, "message": "Zone ID required"}
+        return {"success": false, "message": "Zone ID required"
+		}
     
     var zone_id = args[0]
     var entities = spatial_manager.get_entities_in_zone(zone_id)
     
     console_manager.print_line("Entities in zone " + zone_id + ":")
+	
     
     if entities.size() > 0:
         for entity in entities:
@@ -281,12 +296,13 @@ func cmd_zone_entities(self, args: Array) -> Dictionary:
         "message": str(entities.size()) + " entities in zone",
         "count": entities.size(),
         "entities": entities
-    }
+		}
 
 func cmd_zone_transition(self, args: Array) -> Dictionary:
     if args.size() < 2:
         console_manager.print_error("Usage: zone transition <source_zone> <target_zone> [type] [bidirectional]")
-        return {"success": false, "message": "Invalid arguments"}
+        return {"success": false, "message": "Invalid arguments"
+		}
     
     var source_zone = args[0]
     var target_zone = args[1]
@@ -294,7 +310,7 @@ func cmd_zone_transition(self, args: Array) -> Dictionary:
     var transition_data = {
         "type": "portal",
         "bidirectional": true
-    }
+		}
     
     if args.size() >= 3:
         transition_data.type = args[2]
@@ -309,16 +325,17 @@ func cmd_zone_transition(self, args: Array) -> Dictionary:
             "message": "Transition registered",
             "source_zone": source_zone,
             "target_zone": target_zone,
-            "transition_data": transition_data
-        }
+            "transition_data": transition_data}
     else:
         console_manager.print_error("Failed to register transition: " + source_zone + " -> " + target_zone)
-        return {"success": false, "message": "Failed to register transition"}
+        return {"success": false, "message": "Failed to register transition"
+		}
 
 func cmd_zone_activate(self, args: Array) -> Dictionary:
     if args.size() < 1:
         console_manager.print_error("Zone ID required")
-        return {"success": false, "message": "Zone ID required"}
+        return {"success": false, "message": "Zone ID required"
+		}
     
     var zone_id = args[0]
     
@@ -327,16 +344,17 @@ func cmd_zone_activate(self, args: Array) -> Dictionary:
         return {
             "success": true,
             "message": "Active zone set",
-            "zone_id": zone_id
-        }
+            "zone_id": zone_id}
     else:
         console_manager.print_error("Failed to set active zone: " + zone_id)
-        return {"success": false, "message": "Failed to set active zone"}
+        return {"success": false, "message": "Failed to set active zone"
+		}
 
 func cmd_zone_subdivide(self, args: Array) -> Dictionary:
     if args.size() < 1:
         console_manager.print_error("Zone ID required")
-        return {"success": false, "message": "Zone ID required"}
+        return {"success": false, "message": "Zone ID required"
+		}
     
     var zone_id = args[0]
     
@@ -352,6 +370,7 @@ func cmd_zone_subdivide(self, args: Array) -> Dictionary:
     if child_zones.size() > 0:
         console_manager.print_success("Zone subdivided: " + zone_id)
         console_manager.print_line("Created " + str(child_zones.size()) + " child zones:")
+		
         
         for child_id in child_zones:
             console_manager.print_line("  " + child_id)
@@ -360,17 +379,18 @@ func cmd_zone_subdivide(self, args: Array) -> Dictionary:
             "success": true,
             "message": "Zone subdivided",
             "zone_id": zone_id,
-            "child_zones": child_zones
-        }
+            "child_zones": child_zones}
     else:
         console_manager.print_error("Failed to subdivide zone: " + zone_id)
-        return {"success": false, "message": "Failed to subdivide zone"}
+        return {"success": false, "message": "Failed to subdivide zone"
+		}
 
-# Spatial command handler
+# Node3D command handler
 func cmd_spatial(self, args: Array) -> Dictionary:
     if args.size() < 1:
         console_manager.print_error("Missing subcommand for spatial")
-        return {"success": false, "message": "Missing subcommand"}
+        return {"success": false, "message": "Missing subcommand"
+		}
     
     var subcommand = args[0].to_lower()
     var subargs = args.slice(1)
@@ -389,18 +409,20 @@ func cmd_spatial(self, args: Array) -> Dictionary:
         _:
             console_manager.print_error("Unknown spatial subcommand: " + subcommand)
             console_manager.print_line("Available subcommands: radius, box, nearest, ray, stats")
-            return {"success": false, "message": "Unknown subcommand: " + subcommand}
+            return {"success": false, "message": "Unknown subcommand: " + subcommand
+			}
 
-# Spatial subcommands
+# Node3D subcommands
 func cmd_spatial_radius(self, args: Array) -> Dictionary:
     if args.size() < 4:
         console_manager.print_error("Usage: spatial radius <x> <y> <z> <radius> [type/tag] [value]")
-        return {"success": false, "message": "Invalid arguments"}
+        return {"success": false, "message": "Invalid arguments"
+		}
     
     var position = Vector3(float(args[0]), float(args[1]), float(args[2]))
     var radius = float(args[3])
     
-    var filter = {}
+    var filter = {
     
     if args.size() >= 6:
         var filter_type = args[4]
@@ -411,6 +433,7 @@ func cmd_spatial_radius(self, args: Array) -> Dictionary:
     var entities = spatial_manager.get_entities_in_radius(position, radius, filter)
     
     console_manager.print_line("Entities within " + str(radius) + " units of " + str(position) + ":")
+	}
     
     if entities.size() > 0:
         for entity in entities:
@@ -425,17 +448,18 @@ func cmd_spatial_radius(self, args: Array) -> Dictionary:
         "message": str(entities.size()) + " entities found",
         "count": entities.size(),
         "entities": entities
-    }
+		}
 
 func cmd_spatial_box(self, args: Array) -> Dictionary:
     if args.size() < 6:
         console_manager.print_error("Usage: spatial box <min_x> <min_y> <min_z> <max_x> <max_y> <max_z> [type/tag] [value]")
-        return {"success": false, "message": "Invalid arguments"}
+        return {"success": false, "message": "Invalid arguments"
+		}
     
     var min_bounds = Vector3(float(args[0]), float(args[1]), float(args[2]))
     var max_bounds = Vector3(float(args[3]), float(args[4]), float(args[5]))
     
-    var filter = {}
+    var filter = {
     
     if args.size() >= 8:
         var filter_type = args[6]
@@ -446,6 +470,7 @@ func cmd_spatial_box(self, args: Array) -> Dictionary:
     var entities = spatial_manager.get_entities_in_box(min_bounds, max_bounds, filter)
     
     console_manager.print_line("Entities in box from " + str(min_bounds) + " to " + str(max_bounds) + ":")
+	}
     
     if entities.size() > 0:
         for entity in entities:
@@ -459,18 +484,19 @@ func cmd_spatial_box(self, args: Array) -> Dictionary:
         "message": str(entities.size()) + " entities found",
         "count": entities.size(),
         "entities": entities
-    }
+		}
 
 func cmd_spatial_nearest(self, args: Array) -> Dictionary:
     if args.size() < 5:
         console_manager.print_error("Usage: spatial nearest <x> <y> <z> <count> <max_distance> [type/tag] [value]")
-        return {"success": false, "message": "Invalid arguments"}
+        return {"success": false, "message": "Invalid arguments"
+		}
     
     var position = Vector3(float(args[0]), float(args[1]), float(args[2]))
     var count = int(args[3])
     var max_distance = float(args[4])
     
-    var filter = {}
+    var filter = {
     
     if args.size() >= 7:
         var filter_type = args[5]
@@ -481,6 +507,7 @@ func cmd_spatial_nearest(self, args: Array) -> Dictionary:
     var entities = spatial_manager.get_nearest_entities(position, count, max_distance, filter)
     
     console_manager.print_line("Nearest " + str(count) + " entities to " + str(position) + ":")
+	}
     
     if entities.size() > 0:
         for entity in entities:
@@ -495,17 +522,18 @@ func cmd_spatial_nearest(self, args: Array) -> Dictionary:
         "message": str(entities.size()) + " entities found",
         "count": entities.size(),
         "entities": entities
-    }
+		}
 
 func cmd_spatial_ray(self, args: Array) -> Dictionary:
     if args.size() < 6:
         console_manager.print_error("Usage: spatial ray <start_x> <start_y> <start_z> <end_x> <end_y> <end_z> [type/tag] [value]")
-        return {"success": false, "message": "Invalid arguments"}
+        return {"success": false, "message": "Invalid arguments"
+		}
     
     var start = Vector3(float(args[0]), float(args[1]), float(args[2]))
     var end = Vector3(float(args[3]), float(args[4]), float(args[5]))
     
-    var filter = {}
+    var filter = {
     
     if args.size() >= 8:
         var filter_type = args[6]
@@ -516,6 +544,7 @@ func cmd_spatial_ray(self, args: Array) -> Dictionary:
     var result = spatial_manager.cast_ray(start, end, filter)
     
     console_manager.print_line("Ray cast from " + str(start) + " to " + str(end) + ":")
+	}
     
     if result.hit:
         console_manager.print_line("  Hit entity: " + result.entity.get_id().substr(0, 8) + " (" + result.entity.get_type() + ")")
@@ -530,31 +559,33 @@ func cmd_spatial_ray(self, args: Array) -> Dictionary:
         "message": "Ray cast completed",
         "hit": result.hit,
         "result": result
-    }
+		}
 
 func cmd_spatial_stats(self, args: Array) -> Dictionary:
     var stats = spatial_manager.get_zone_statistics()
     
-    console_manager.print_line("Spatial System Statistics:")
+    console_manager.print_line("Node3D System Statistics:")
     console_manager.print_line("  Total Zones: " + str(stats.total_zones))
     console_manager.print_line("  Loaded Zones: " + str(stats.loaded_zones))
     console_manager.print_line("  Visible Entities: " + str(stats.visible_entities))
     console_manager.print_line("  Active Zone: " + str(stats.active_zone))
     console_manager.print_line("  Entity Positions: " + str(stats.entity_positions))
-    console_manager.print_line("  Spatial Queries: " + str(stats.spatial_queries))
+    console_manager.print_line("  Node3D Queries: " + str(stats.spatial_queries))
     console_manager.print_line("  Zone Transitions: " + str(stats.zone_transitions))
+	
     
     return {
         "success": true,
-        "message": "Spatial statistics displayed",
+        "message": "Node3D statistics displayed",
         "stats": stats
-    }
+		}
 
 # Position command handler
 func cmd_position(self, args: Array) -> Dictionary:
     if args.size() < 1:
         console_manager.print_error("Missing subcommand for position")
-        return {"success": false, "message": "Missing subcommand"}
+        return {"success": false, "message": "Missing subcommand"
+		}
     
     var subcommand = args[0].to_lower()
     var subargs = args.slice(1)
@@ -569,13 +600,15 @@ func cmd_position(self, args: Array) -> Dictionary:
         _:
             console_manager.print_error("Unknown position subcommand: " + subcommand)
             console_manager.print_line("Available subcommands: get, set, move")
-            return {"success": false, "message": "Unknown subcommand: " + subcommand}
+            return {"success": false, "message": "Unknown subcommand: " + subcommand
+			}
 
 # Position subcommands
 func cmd_position_get(self, args: Array) -> Dictionary:
     if args.size() < 1:
         console_manager.print_error("Entity ID required")
-        return {"success": false, "message": "Entity ID required"}
+        return {"success": false, "message": "Entity ID required"
+		}
     
     var entity_id = args[0]
     
@@ -595,18 +628,20 @@ func cmd_position_get(self, args: Array) -> Dictionary:
     console_manager.print_line("  X: " + str(position.x))
     console_manager.print_line("  Y: " + str(position.y))
     console_manager.print_line("  Z: " + str(position.z))
+	
     
     return {
         "success": true,
         "message": "Entity position retrieved",
         "entity_id": full_id,
         "position": position
-    }
+		}
 
 func cmd_position_set(self, args: Array) -> Dictionary:
     if args.size() < 4:
         console_manager.print_error("Usage: position set <entity_id> <x> <y> <z>")
-        return {"success": false, "message": "Invalid arguments"}
+        return {"success": false, "message": "Invalid arguments"
+		}
     
     var entity_id = args[0]
     var position = Vector3(float(args[1]), float(args[2]), float(args[3]))
@@ -627,16 +662,17 @@ func cmd_position_set(self, args: Array) -> Dictionary:
             "success": true,
             "message": "Entity position set",
             "entity_id": full_id,
-            "position": position
-        }
+            "position": position}
     else:
         console_manager.print_error("Failed to set entity position")
-        return {"success": false, "message": "Failed to set entity position"}
+        return {"success": false, "message": "Failed to set entity position"
+		}
 
 func cmd_position_move(self, args: Array) -> Dictionary:
     if args.size() < 4:
         console_manager.print_error("Usage: position move <entity_id> <x> <y> <z>")
-        return {"success": false, "message": "Invalid arguments"}
+        return {"success": false, "message": "Invalid arguments"
+		}
     
     var entity_id = args[0]
     var position = Vector3(float(args[1]), float(args[2]), float(args[3]))
@@ -655,20 +691,21 @@ func cmd_position_move(self, args: Array) -> Dictionary:
     
     if spatial_manager.move_entity(full_id, position):
         console_manager.print_success("Entity moved: " + str(old_position) + " -> " + str(position))
+		
         
         # Get zones after move
         var entity = entity_manager.get_entity(full_id)
         if entity:
             var zones = entity.get_zones()
             console_manager.print_line("Current zones: " + str(zones))
+			
         
         return {
             "success": true,
             "message": "Entity moved",
             "entity_id": full_id,
             "old_position": old_position,
-            "new_position": position
-        }
+            "new_position": position}
     else:
         console_manager.print_error("Failed to move entity")
-        return {"success": false, "message": "Failed to move entity"}
+        return {"success": false, "message": "Failed to move entity"

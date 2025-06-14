@@ -1,8 +1,9 @@
 extends Camera3D
-class_name SpaceCameraController
+class_name SpaceCameraController_spacecameracontroller_spacecam
 
 # Camera states
-enum CameraState {
+enum \2 {
+
 	FREE,
 	FOLLOW,
 	TRANSITION,
@@ -10,12 +11,12 @@ enum CameraState {
 }
 
 # Camera properties
-@export var move_speed: float = 10.0
-@export var zoom_speed: float = 1.0
-@export var rotation_speed: float = 0.5
-@export var smooth_factor: float = 0.1
-@export var orbit_height: float = 3.0
-@export var orbit_distance: float = 10.0
+@@@export var move_speed: float = 10.0
+@@@export var zoom_speed: float = 1.0
+@@@export var rotation_speed: float = 0.5
+@@@export var smooth_factor: float = 0.1
+@@@export var orbit_height: float = 3.0
+@@@export var orbit_distance: float = 10.0
 
 var current_state = CameraState.FREE
 var follow_target = null

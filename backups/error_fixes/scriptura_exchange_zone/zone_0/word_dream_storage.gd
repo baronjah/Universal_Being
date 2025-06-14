@@ -97,19 +97,19 @@ func connect_systems():
 	turn_system = get_node_or_null("/root/TurnSystem")
 	
 	if word_comment_system:
-		word_comment_system.connect("dream_recorded", self, "_on_dream_recorded")
-		word_comment_system.connect("comment_added", self, "_on_comment_added")
-		word_comment_system.connect("defense_registered", self, "_on_defense_registered")
+		word_comment_system.connect(_on_dream_recorded)
+		word_comment_system.connect(_on_comment_added)
+		word_comment_system.connect(_on_defense_registered)
 	
 	if turn_system:
-		turn_system.connect("dimension_changed", self, "_on_dimension_changed")
-		turn_system.connect("turn_completed", self, "_on_turn_completed")
+		turn_system.connect(_on_dimension_changed)
+		turn_system.connect(_on_turn_completed)
 
 func start_auto_save():
 	auto_save_timer = Timer.new()
 	auto_save_timer.wait_time = auto_save_interval
 	auto_save_timer.one_shot = false
-	auto_save_timer.connect("timeout", self, "_on_auto_save_timeout")
+	auto_save_timer.connect(_on_auto_save_timeout)
 	add_child(auto_save_timer)
 	auto_save_timer.start()
 

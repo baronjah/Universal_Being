@@ -23,6 +23,7 @@ func pentagon_init() -> void:
     metadata.ai_accessible = true
     metadata.gemma_can_modify = true
     print("🌟 %s: Pentagon Init Complete" % being_name)
+	
 
 func pentagon_ready() -> void:
     super.pentagon_ready()  # 🔄 ALWAYS CALL SUPER FIRST
@@ -30,6 +31,7 @@ func pentagon_ready() -> void:
     load_scene("res://scenes/socket_grid_scene.tscn")
     initialize_grid()
     print("🌟 %s: Pentagon Ready Complete" % being_name)
+	
 
 func pentagon_process(delta: float) -> void:
     super.pentagon_process(delta)  # ⚡ ALWAYS CALL SUPER FIRST
@@ -47,6 +49,7 @@ func pentagon_input(event: InputEvent) -> void:
 
 func pentagon_sewers() -> void:
     print("🌟 %s: Pentagon Sewers Starting" % being_name)
+	
     # Cleanup cells
     for cell in cells:
         if cell and cell.has_method("pentagon_sewers"):
@@ -81,8 +84,8 @@ func ai_interface() -> Dictionary:
     base_interface.custom_properties = {
         "grid_size": grid_size,
         "cell_count": cells.size()
-    }
     return base_interface
+}
 
 func ai_invoke_method(method_name: String, args: Array = []) -> Variant:
     match method_name:

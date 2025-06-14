@@ -1,5 +1,5 @@
 extends Node
-class_name AkashicRecordsManagerA
+class_name AkashicRecordsManagerA_akashicrecordsmanager_akashicr
 
 # Singleton pattern
 static var _instance: AkashicRecordsManagerA = null

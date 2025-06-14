@@ -1,6 +1,6 @@
 @tool
 extends UniversalBeingBase
-class_name AssetCreator
+class_name AssetCreator_assetcre
 ## Enhanced Asset Creator - Creates Universal Beings from shapes
 ## Connected to Asset Library, Zones, and Floodgates
 ## The missing piece of the Universal Being dream
@@ -10,9 +10,9 @@ signal shape_added(shape_data: Dictionary)
 signal bone_placed(bone_data: Dictionary)
 
 # Creation workspace
-@export var workspace_size: Vector3 = Vector3(10, 10, 10)
-@export var grid_snap: float = 0.1
-@export var show_grid: bool = true
+@@@export var workspace_size: Vector3 = Vector3(10, 10, 10)
+@@@export var grid_snap: float = 0.1
+@@@export var show_grid: bool = true
 
 # Shape creation
 var current_shapes: Array[Dictionary] = []
@@ -38,9 +38,9 @@ func pentagon_ready() -> void:
 	name = "AssetCreator"
 	
 	# Get system connections
-	asset_library = get_node_or_null("/root/AssetLibrary")
-	floodgate = get_node_or_null("/root/FloodgateController")
-	akashic_records = get_node_or_null("/root/AkashicRecords")
+	asset_library = get_node_or_null("root/AssetLibrary")
+	floodgate = get_node_or_null("root/FloodgateController")
+	akashic_records = get_node_or_null("root/AkashicRecords")
 	
 	# Setup workspace
 	_create_workspace()

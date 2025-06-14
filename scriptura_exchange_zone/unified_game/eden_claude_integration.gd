@@ -1,6 +1,6 @@
 extends Node
 
-class_name EdenClaudeIntegration
+class_name EdenClaudeIntegration_edenclaudeintegration_edenclau
 
 # 🌟 Eden-Claude Integration System
 # Connects Eden project main version with Claude database and knowledge systems
@@ -39,7 +39,8 @@ var concept_weight_multipliers = {
 }
 
 # Luno 12-Turn Cycle System
-enum LunoPhase {
+enum \2 {
+
     GENESIS,        # Create data structures
     FORMATION,      # Assign paths, build nodes
     COMPLEXITY,     # Establish connections
@@ -101,7 +102,7 @@ func initialize_eden_claude_bridge():
 
 func find_eden_datapoint_system():
     # Try to find Eden's main datapoint system
-    var eden_main_path = "/mnt/c/Users/Percision 15/Godot_Eden/Eden_May/the_palace_pf/code/gdscript/scripts/Menu_Keyboard_Console/main.gd"
+    var eden_main_path = "mnt/c/Users/Percision 15/Godot_Eden/Eden_May/the_palace_pf/code/gdscript/scripts/Menu_Keyboard_Console/main.gd"
     
     # Since we can't directly load the massive file, create interface connection
     return create_eden_interface_connection()

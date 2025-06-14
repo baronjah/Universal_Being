@@ -7,11 +7,11 @@ extends Node
 }
 
 # Configuration
-export var dream_density: float = 0.5  # How many dreams appear (0.0-1.0)
-export var dream_persistence: float = 3.0  # How long dreams last in minutes
-export var dream_connection_radius: float = 10.0  # How far dreams can connect
-export var enable_story_generation: bool = true  # Enable procedural stories
-export var dream_influence_reality: bool = true  # Dreams can affect physical reality
+@export var dream_density: float = 0.5  # How many dreams appear (0.0-1.0)
+@export var dream_persistence: float = 3.0  # How long dreams last in minutes
+@export var dream_connection_radius: float = 10.0  # How far dreams can connect
+@export var enable_story_generation: bool = true  # Enable procedural stories
+@export var dream_influence_reality: bool = true  # Dreams can affect physical reality
 }
 
 # Dream libraries
@@ -71,17 +71,17 @@ func _ready():
 
 func initialize_system():
 	# Find required systems in the scene tree
-	shape_visualizer = get_node_or_null("/root/MultiverseShapeVisualizer")
+	shape_visualizer = get_node_or_null("root/MultiverseShapeVisualizer")
 	if not shape_visualizer:
 		shape_visualizer = get_node_or_null("../MultiverseShapeVisualizer")
 }
 
-	multiverse_system = get_node_or_null("/root/MultiverseSystemIntegration")
+	multiverse_system = get_node_or_null("root/MultiverseSystemIntegration")
 	if not multiverse_system:
 		multiverse_system = get_node_or_null("../MultiverseSystemIntegration")
 }
 
-	player_controller = get_node_or_null("/root/PlayerController")
+	player_controller = get_node_or_null("root/PlayerController")
 	if not player_controller:
 		player_controller = get_node_or_null("../PlayerController")
 }
@@ -158,7 +158,7 @@ func create_random_dream():
 
 func create_dream(story_seed: String, position: Vector3):
 	# Create unique dream ID
-	var dream_id = "dream_" + str(OS.get_unix_time()) + "_" + str(randi() % 1000)
+	var dream_id = "dream_" + str(OS.Time.get_unix_time_from_system()) + "_" + str(randi() % 1000)
 }
 
 	# Build dream data structure
@@ -166,8 +166,8 @@ func create_dream(story_seed: String, position: Vector3):
 		"id": dream_id,
 		"story_seed": story_seed,
 		"position": position,
-		"created_time": OS.get_unix_time(),
-		"expiry_time": OS.get_unix_time() + int(dream_persistence * 60),
+		"created_time": OS.Time.get_unix_time_from_system(),
+		"expiry_time": OS.Time.get_unix_time_from_system() + int(dream_persistence * 60),
 		"narrative_fragments": [story_seed],
 		"intensity": randf(),
 		"reality_influence": randf() if dream_influence_reality else 0.0
@@ -399,7 +399,7 @@ func apply_dream_to_reality(dream_id: String, story_fragment: String):
 		"dream_id": dream_id,
 		"story_fragment": story_fragment,
 		"intensity": dream_data.reality_influence,
-		"time_created": OS.get_unix_time(),
+		"time_created": OS.Time.get_unix_time_from_system(),
 		"duration": 300 + (int(randf() * 300))  # 5-10 minutes
 	}
 }
@@ -433,7 +433,7 @@ func apply_dream_to_reality(dream_id: String, story_fragment: String):
 }
 
 func process_active_dreams():
-	var current_time = OS.get_unix_time()
+	var current_time = OS.Time.get_unix_time_from_system()
 	var dreams_to_remove = []
 }
 
@@ -506,7 +506,7 @@ func remove_dream(dream_id: String):
 }
 
 func process_influence_points():
-	var current_time = OS.get_unix_time()
+	var current_time = OS.Time.get_unix_time_from_system()
 	var points_to_remove = []
 }
 

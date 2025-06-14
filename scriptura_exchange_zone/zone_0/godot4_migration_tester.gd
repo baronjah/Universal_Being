@@ -1,13 +1,13 @@
-class_name Godot4MigrationTester
-extends Node
+class_name Godot4MigrationTester_godot4migrationtester_godot4mi
+extends \2
 }
 
 # ----- TESTING SETTINGS -----
 @export_category("Testing Settings")
-@export var test_scripts_path: String = "res://tests/migration_test_scripts"
-@export var output_path: String = "res://tests/migration_output"
-@export var verbose_logging: bool = true
-@export var run_tests_on_start: bool = false
+@@@@export var test_scripts_path: String = "res://tests/migration_test_scripts"
+@@@@export var output_path: String = "res://tests/migration_output"
+@@@@export var verbose_logging: bool = true
+@@@@export var run_tests_on_start: bool = false
 }
 
 # ----- INTEGRATION POINTS -----
@@ -20,17 +20,17 @@ var akashic_system = null
 var test_cases = {
     "node_renames": {
         "input": """
-extends Spatial
+extends \2
 }
 
 func _ready():
-    var body = $KinematicBody
+    var body = $CharacterBody3D
     var mesh = $MeshInstance
-    var area = $Area
+    var area = $Area3D
     var ray = $RayCast
 """,
         "expected": """
-extends Node3D
+extends \2
 }
 
 func _ready() -> void:
@@ -90,7 +90,7 @@ func update_ui() -> void:
 
     "onready_vars": {
         "input": """
-extends Node
+extends \2
 }
 
 onready var label = $Label
@@ -102,7 +102,7 @@ func _ready():
     label.text = "Hello"
 """,
         "expected": """
-extends Node
+extends \2
 }
 
 @onready var label = $Label
@@ -118,11 +118,11 @@ func _ready() -> void:
 
     "exports": {
         "input": """
-extends Node
+extends \2
 }
 
 export(int, 0, 100) var health = 100
-export(String) var player_name = "Player"
+@@@export var player_name = "Player"
 export(float, 0.5, 2.0) var scale_factor = 1.0
 export(Color, RGB) var base_color = Color.white
 }
@@ -131,13 +131,13 @@ func _ready():
     print(health)
 """,
         "expected": """
-extends Node
+extends \2
 }
 
-@export var health = 100
-@export var player_name = "Player"
-@export var scale_factor = 1.0
-@export var base_color = Color.white
+@@@@export var health = 100
+@@@@export var player_name = "Player"
+@@@@export var scale_factor = 1.0
+@@@@export var base_color = Color.white
 }
 
 func _ready() -> void:
@@ -148,7 +148,7 @@ func _ready() -> void:
 
     "signals": {
         "input": """
-extends Node
+extends \2
 }
 
 signal health_changed(amount)
@@ -164,7 +164,7 @@ func update_health(damage):
         emit_signal("player_died")
 """,
         "expected": """
-extends Node
+extends \2
 }
 
 signal health_changed(amount)
@@ -214,7 +214,7 @@ func create_inventory() -> void:
 
     "physics_bodies": {
         "input": """
-extends RigidBody
+extends \2
 }
 
 func _ready():
@@ -225,7 +225,7 @@ func _physics_process(delta):
     apply_impulse(Vector3.ZERO, Vector3(0, 10, 0))
 """,
         "expected": """
-extends RigidBody3D
+extends \2
 }
 
 func _ready() -> void:
@@ -240,7 +240,7 @@ func _physics_process(delta: float) -> void:
 
     "characterbody": {
         "input": """
-extends KinematicBody
+extends \2
 }
 
 func _physics_process(delta):
@@ -254,7 +254,7 @@ func _physics_process(delta):
         print(collision.collider.name)
 """,
         "expected": """
-extends CharacterBody3D
+extends \2
 }
 
 func _physics_process(delta: float) -> void:
@@ -273,10 +273,10 @@ func _physics_process(delta: float) -> void:
     "tool_script": {
         "input": """
 tool
-extends Node
+extends \2
 }
 
-export(Color) var editor_color = Color.blue
+@@@export var editor_color = Color.blue
 }
 
 func _ready():
@@ -284,10 +284,10 @@ func _ready():
 """,
         "expected": """
 @tool
-extends Node
+extends \2
 }
 
-@export var editor_color = Color.blue
+@@@@export var editor_color = Color.blue
 }
 
 func _ready() -> void:
@@ -298,7 +298,7 @@ func _ready() -> void:
 
     "networking_terms": {
         "input": """
-extends Node
+extends \2
 }
 
 func _ready():
@@ -316,7 +316,7 @@ master func master_func():
     print("I'm the master")
 """,
         "expected": """
-extends Node
+extends \2
 }
 
 func _ready() -> void:
@@ -359,7 +359,7 @@ func _ready():
 
 func _find_components():
     # Find Migration Tool
-    migration_tool = get_node_or_null("/root/Godot4MigrationTool")
+    migration_tool = get_node_or_null("root/Godot4MigrationTool")
     if not migration_tool:
         migration_tool = _find_node_by_class(get_tree().root, "Godot4MigrationTool")
 }
@@ -370,13 +370,13 @@ func _find_components():
 }
 
     # Find Color System
-    color_system = get_node_or_null("/root/DimensionalColorSystem")
+    color_system = get_node_or_null("root/DimensionalColorSystem")
     if not color_system:
         color_system = _find_node_by_class(get_tree().root, "DimensionalColorSystem")
 }
 
     # Find Akashic System
-    akashic_system = get_node_or_null("/root/AkashicNumberSystem")
+    akashic_system = get_node_or_null("root/AkashicNumberSystem")
     if not akashic_system:
         akashic_system = _find_node_by_class(get_tree().root, "AkashicNumberSystem")
 }
@@ -545,7 +545,7 @@ func _normalize_script(script_text):
             normalized_lines.append(trimmed)
 }
 
-    return "\n".join(normalized_lines)
+    return "\n"." ".join(normalized_lines)
 }
 
 func _print_test_results(results):

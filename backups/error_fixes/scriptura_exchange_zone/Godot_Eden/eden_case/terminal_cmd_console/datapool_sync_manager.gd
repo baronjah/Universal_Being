@@ -80,7 +80,7 @@ func setup_auto_sync():
 		var timer = Timer.new()
 		timer.wait_time = sync_interval
 		timer.autostart = true
-		timer.connect("timeout", self, "auto_sync_all_pools")
+		timer.connect(auto_sync_all_pools)
 		add_child(timer)
 
 func scan_connected_drives():
@@ -88,19 +88,19 @@ func scan_connected_drives():
 	
 	# Look for drive connector implementations
 	if has_node("/root/GoogleDriveConnector"):
-		var google_drive = get_node("/root/GoogleDriveConnector")
+		var google_drive = get_node("\1") as Node
 		register_drive_connector("google_drive_main", google_drive)
 	
 	if has_node("/root/DriveConnector"):
-		var drive = get_node("/root/DriveConnector")
+		var drive = get_node("\1") as Node
 		register_drive_connector("drive_main", drive)
 	
 	if has_node("/root/DriveMemoryConnector"):
-		var memory_drive = get_node("/root/DriveMemoryConnector")
+		var memory_drive = get_node("\1") as Node
 		register_drive_connector("memory_drive", memory_drive)
 	
 	if has_node("/root/MemoryDriveConnector"):
-		var alt_memory_drive = get_node("/root/MemoryDriveConnector")
+		var alt_memory_drive = get_node("\1") as Node
 		register_drive_connector("alt_memory_drive", alt_memory_drive)
 	
 	print("Found " + str(drive_connectors.size()) + " drive connectors")
@@ -348,7 +348,7 @@ func sync_pool(pool_id):
 	for drive_id in pool.drives:
 		sorted_drives.append({"id": drive_id, "priority": pool.drives[drive_id].priority})
 	
-	sorted_drives.sort_custom(self, "sort_by_priority")
+	sorted_drives.sort_custom(self."sort_by_priority")
 	
 	# Sync with each drive
 	for drive_data in sorted_drives:
@@ -798,7 +798,7 @@ func process_pool_command(parts):
 		"list":
 			var result = "Data Pools:\n"
 			
-			if active_pools.empty():
+			if active_pools.is_empty():
 				return "No data pools found"
 			
 			for id in active_pools:
@@ -875,7 +875,7 @@ func process_pool_command(parts):
 			result += "Storage Path: " + pool.storage_path + "\n\n"
 			
 			result += "Attached Drives:\n"
-			if pool.drives.empty():
+			if pool.drives.is_empty():
 				result += "No drives attached\n"
 			else:
 				for drive_id in pool.drives:
@@ -901,7 +901,7 @@ func process_drive_command(parts):
 		"list":
 			var result = "Drive Connectors:\n"
 			
-			if drive_connectors.empty():
+			if drive_connectors.is_empty():
 				return "No drive connectors found"
 			
 			for id in drive_connectors:
@@ -1024,7 +1024,7 @@ func process_google_command(parts):
 			
 			var result = "Google Drive Accounts:\n"
 			
-			if google_drive_accounts.empty():
+			if google_drive_accounts.is_empty():
 				return "No Google accounts found"
 			
 			for id in google_drive_accounts:

@@ -4,8 +4,7 @@
 # Created: May 31st, 2025 | Akashic Text Bridge Revolution  
 # Location: scripts/core/txt_universal_database.gd
 ################################################################
-
-extends UniversalBeingBase
+extends \2
 ################################################################
 # TXT UNIVERSAL BEING DATABASE SYSTEM
 ################################################################
@@ -37,8 +36,8 @@ func _register_console_commands():
 	"""Register console commands for debugging"""
 	print("🔍 TXT DATABASE: Attempting to register console commands...")
 	
-	if has_node("/root/ConsoleManager"):
-		var console = get_node("/root/ConsoleManager")
+	if has_node("root/ConsoleManager"):
+		var console = get_node("root/ConsoleManager")
 		print("📡 TXT DATABASE: Found ConsoleManager")
 		
 		if console.has_method("register_command"):
@@ -123,14 +122,14 @@ func _console_emergency_reset(_args: Array) -> String:
 	_console_close_all_popups([])
 	
 	# Reset UI systems
-	if has_node("/root/UniversalBeingCreatorUI"):
-		var ui = get_node("/root/UniversalBeingCreatorUI")
+	if has_node("root/UniversalBeingCreatorUI"):
+		var ui = get_node("root/UniversalBeingCreatorUI")
 		if ui.has_method("_console_reset_interface"):
 			ui._console_reset_interface([])
 	
 	# Clear console if needed
-	if has_node("/root/ConsoleManager"):
-		var console = get_node("/root/ConsoleManager")
+	if has_node("root/ConsoleManager"):
+		var console = get_node("root/ConsoleManager")
 		if console.has_method("clear_console"):
 			console.clear_console()
 	
@@ -184,7 +183,7 @@ func _console_create_custom_window(args: Array) -> String:
 	var content_area = _create_window_content(custom_data)
 	FloodgateController.universal_add_child(content_area, popup)
 	
-	get_node("/root/FloodgateController").universal_add_child(popup, get_tree().current_scene)
+	get_node("root/FloodgateController").universal_add_child(popup, get_tree().current_scene)
 	active_popups.append(popup)
 	
 	return "✨ Custom window '%s' created - move it around!" % title
@@ -437,7 +436,7 @@ func _parse_txt_file(file_path: String) -> Dictionary:
 			data["buttons"].append(line.substr(1).strip_edges())
 	
 	if content_lines.size() > 0:
-		data["content"] = "\n".join(content_lines)
+		data["content"] = "\n"." ".join(content_lines)
 	
 	return data
 
@@ -554,7 +553,7 @@ func _create_popup_from_txt(txt_name: String) -> Window:
 	FloodgateController.universal_add_child(content_area, popup)
 	
 	# Add to scene
-	get_node("/root/FloodgateController").universal_add_child(popup, get_tree().current_scene)
+	get_node("root/FloodgateController").universal_add_child(popup, get_tree().current_scene)
 	active_popups.append(popup)
 	
 	# Auto-close timer if specified
@@ -696,8 +695,8 @@ func _create_status_window_from_txt(txt_name: String) -> Window:
 	var txt_data = txt_database[txt_name]
 	
 	# Create status window (implement with EnhancedInterfaceSystem)
-	if has_node("/root/UniversalObjectManager"):
-		var uom = get_node("/root/UniversalObjectManager")
+	if has_node("root/UniversalObjectManager"):
+		var uom = get_node("root/UniversalObjectManager")
 		var status_being = uom.create_object("status_display", Vector3(5, 2, 0), {
 			"name": txt_data.get("name", "Status Display"),
 			"txt_source": txt_name,
@@ -727,8 +726,8 @@ func _create_3d_object_from_txt(txt_name: String, position: Vector3) -> Node3D:
 	"""Create 3D object from TXT"""
 	
 	# Use Universal Object Manager for 3D creation
-	if has_node("/root/UniversalObjectManager"):
-		var uom = get_node("/root/UniversalObjectManager")
+	if has_node("root/UniversalObjectManager"):
+		var uom = get_node("root/UniversalObjectManager")
 		var txt_data = txt_database[txt_name]
 		
 		return uom.create_object("txt_based_object", position, {
@@ -773,13 +772,13 @@ func _execute_button_action(action: String, txt_data: Dictionary):
 	"""Execute button action from TXT"""
 	match action:
 		"open_being_creator":
-			if has_node("/root/UniversalBeingCreatorUI"):
-				get_node("/root/UniversalBeingCreatorUI").toggle_interface()
+			if has_node("root/UniversalBeingCreatorUI"):
+				get_node("root/UniversalBeingCreatorUI").toggle_interface()
 		"system_status":
 			_create_popup_from_txt("system_status") 
 		"open_console":
-			if has_node("/root/ConsoleManager"):
-				get_node("/root/ConsoleManager").toggle_console()
+			if has_node("root/ConsoleManager"):
+				get_node("root/ConsoleManager").toggle_console()
 		"create_being_at_cursor":
 			print("🎯 Creating being at cursor position...")
 		_:

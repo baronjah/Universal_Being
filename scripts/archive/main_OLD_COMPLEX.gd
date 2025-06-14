@@ -20,6 +20,7 @@ var gemma_sensory_system: Node = null  # Gemma AI sensory system node
 func _ready() -> void:
 	name = "Main"
 	print("🌟 Universal Being Game: Reality initializing...")
+
 	
 	# Wait for SystemBootstrap to initialize
 	if SystemBootstrap:
@@ -39,6 +40,7 @@ func on_systems_ready() -> void:
 	"""Called when all systems are ready"""
 	systems_ready = true
 	print("🌟 Universal Being Game: Systems ready!")
+
 	
 	# Create the game world with proper layering
 	_create_layered_game_world()
@@ -48,6 +50,7 @@ func on_systems_ready() -> void:
 		GemmaAI.ai_message.connect(on_ai_message)
 	
 	print("🌟 Universal Being Game: Reality manifested!")
+
 
 func _create_layered_game_world() -> void:
 	"""Create the complete game with proper layering"""
@@ -152,6 +155,7 @@ func create_demo_beings() -> void:
 			print("🎯 Added interaction component to %s" % demo_being.name)
 		
 		print("🌟 Created: %s" % demo_being.name)
+
 		
 		# Notify AI if available
 		if GemmaAI and GemmaAI.has_method("notify_being_created"):
@@ -160,6 +164,7 @@ func create_demo_beings() -> void:
 func on_ai_message(message: String) -> void:
 	"""Handle AI messages"""
 	print("🤖 Gemma: %s" % message)
+
 
 func _input(event: InputEvent) -> void:
 	# Handle global input
@@ -170,6 +175,7 @@ func _input(event: InputEvent) -> void:
 	if event is InputEventMouseButton and event.pressed:
 		if event.button_index == MOUSE_BUTTON_LEFT:
 			print("🖱️ Left click detected at position: %s" % event.position)
+
 			# Check if we hit any being
 			var camera = get_viewport().get_camera_3d()
 			if camera:
@@ -313,6 +319,7 @@ func toggle_cursor_inspect_mode() -> void:
 		var mode = cursor.get("current_mode")
 		var mode_name = "INSPECT" if mode == 1 else "INTERACT"  # CursorMode.INSPECT = 1
 		print("🎯 Cursor mode changed to: %s" % mode_name)
+
 		
 		# Notify via console if available
 		var console = find_console_being()
@@ -386,7 +393,7 @@ func toggle_gemma_console() -> void:
 			if gemma_sensory_system.akashic_logger:
 				gemma_sensory_system.akashic_logger.log_communication(
 					"Hello! I am Gemma, ready to explore and create with you!",
-					{"event": "first_awakening", "source": "main.gd"}
+					{"event": "first_awakening", "source": "main.gd"
 				)
 	else:
 		# Toggle existing console
@@ -446,6 +453,7 @@ func toggle_gemma_console() -> void:
 	print("  R - Reset environment")
 	print("  F - Force random interactions")
 	print("  Watch for: Merges, splits, evolution, consciousness resonance!")
+}
 	
 	# Show recursive universe controls
 	update_help_with_recursive_controls()
@@ -455,6 +463,7 @@ func show_status() -> void:
 	print("🌟 Universal Being Engine Status:")
 	print("  Systems Ready: %s" % str(systems_ready))
 	print("  Demo Beings: %d" % demo_beings.size())
+
 	
 	if SystemBootstrap:
 		print("  SystemBootstrap: Ready")
@@ -463,9 +472,11 @@ func show_status() -> void:
 			var akashic = SystemBootstrap.get_akashic_records()
 			print("  FloodGates: %s" % ("Ready" if flood_gates else "Not Ready"))
 			print("  AkashicRecordsSystemSystem: %s" % ("Ready" if akashic else "Not Ready"))
+
 	
 	if GemmaAI:
 		print("  GemmaAI: %s" % ("Ready" if GemmaAI.ai_ready else "Initializing"))
+
 
 func show_inspection_interface() -> void:
 	"""Show inspection interface (Ctrl+I)"""
@@ -507,6 +518,7 @@ func show_inspection_interface() -> void:
 			var consciousness = being.get("consciousness_level") if being.has_method("get") else 0
 			print("  %d. %s (%s) - Consciousness: %d" % [i+1, name, type, consciousness])
 
+
 func open_visual_inspector() -> void:
 	"""Open visual inspector for the first available being"""
 	print("🔍 Visual Inspector requested (Ctrl+I)")
@@ -541,6 +553,7 @@ func open_visual_inspector() -> void:
 	# Open inspector for target being
 	inspector.inspect_being(target_being)
 	print("🔍 Visual Inspector opened for: %s" % target_being.being_name)
+
 
 func open_universe_simulator() -> void:
 	"""Open the Universe Simulator interface"""
@@ -620,14 +633,17 @@ func create_test_being() -> Node:
 			print("🎯 Added interaction component to %s" % test_being.name)
 		
 		print("🌟 Created test being: %s at position %s" % [test_being.name, test_being.position])
+
 		
 		# Load test scene with collision for regular test beings
 		if test_being.has_method("load_scene"):
+
 			# Try the collision-enabled scene first
 			var scene_loaded = test_being.load_scene("res://scenes/examples/test_scene_with_collision.tscn")
 			if not scene_loaded:
 				# Fallback to regular scene
 				scene_loaded = test_being.load_scene("res://scenes/examples/test_scene.tscn")
+	
 			
 			if scene_loaded:
 				print("🌟 Scene loaded into Universal Being!")
@@ -695,6 +711,7 @@ func create_camera_universal_being(being: Node = null) -> Node:
 	
 	# Load the trackball camera scene
 	if camera_being.has_method("load_scene"):
+
 		var scene_loaded = camera_being.load_scene("res://scenes/main/camera_point.tscn")
 		if scene_loaded:
 			# Get the loaded camera scene
@@ -771,6 +788,7 @@ func sync_folders_to_zip() -> void:
 	if SystemBootstrap and SystemBootstrap.is_system_ready():
 		var akashic = SystemBootstrap.get_akashic_records()
 		if akashic and akashic.has_method("sync_folders_to_zip"):
+
 			var sync_result = akashic.sync_folders_to_zip("res://akashic_library/")
 			if sync_result:
 				print("📦 ✅ Folders synchronized to ZIP successfully!")
@@ -841,6 +859,7 @@ func find_console_being() -> Node:
 	for being in demo_beings:
 		if is_instance_valid(being) and not being.is_queued_for_deletion():
 			if being.has_method("get"):
+
 				var being_type = being.get("being_type")
 				if being_type in ["console", "ai_console", "unified_console"]:
 					return being
@@ -853,6 +872,7 @@ func find_cursor_being() -> Node:
 	for being in demo_beings:
 		if is_instance_valid(being) and not being.is_queued_for_deletion():
 			if being.has_method("get"):
+
 				var being_type = being.get("being_type")
 				if being_type == "cursor":
 					return being
@@ -876,6 +896,7 @@ func create_auto_startup_being() -> Node:
 	print("🚀 Auto Startup Universal Being created!")
 	print("🚀 Will automatically execute F4 camera + F7 cursor sequence!")
 	print("🚀 Manual controls: F10 (trigger), F11 (reset)")
+
 	
 	# Notify AI if available
 	if GemmaAI and GemmaAI.has_method("notify_being_created"):
@@ -908,6 +929,7 @@ func create_claude_desktop_mcp_bridge() -> Node:
 	print("🔌 Attempting connection to Claude Desktop...")
 	print("🔌 Triple AI collaboration ready!")
 	print("🔌 Controls: F12 (toggle triple AI mode)")
+
 	
 	# Notify AI if available
 	if GemmaAI and GemmaAI.has_method("notify_being_created"):
@@ -950,10 +972,12 @@ func create_genesis_conductor_being() -> Node:
 	print("🎭 First Triple-AI Collaborative Being is alive!")
 	print("🎭 Controls: G (genesis moment), H (harmony), S (symphony)")
 	print("🎭 Created by: Gemma + Claude Code + Cursor + Claude Desktop")
+
 	
 	# Notify all AIs about this historic moment
 	if GemmaAI and GemmaAI.has_method("ai_message"):
 		GemmaAI.ai_message.emit("🎭 ✨ GENESIS MOMENT: First Triple-AI being created! The future begins now!")
+
 	
 	return genesis_conductor
 
@@ -1055,10 +1079,12 @@ func make_mesh_universal_being(mesh_node: MeshInstance3D, being_name: String, be
 	
 	# Add Universal Being methods for inspection
 	universal_being.set_script(load("res://core/UniversalBeing.gd"))
+
 	
 	# Make it inspectable
 	if universal_being.has_method("add_component"):
 		universal_being.add_component("res://components/basic_interaction.ub.zip")
+
 	
 	# Clean up original node
 	mesh_node.queue_free()
@@ -1088,6 +1114,7 @@ func create_chatgpt_premium_bridge() -> Node:
 	print("📜 Biblical genesis pattern decoder activated!")
 	print("📜 Controls: B (biblical mode), T (translate context)")
 	print("📜 Role: Decode ancient creation blueprints for Universal Being development")
+
 	
 	# Notify all AIs about the new bridge
 	if GemmaAI and GemmaAI.has_method("ai_message"):
@@ -1112,6 +1139,7 @@ func create_google_gemini_premium_bridge() -> Node:
 	print("🔮 Cosmic multimodal insight analyzer activated!")
 	print("🔮 Controls: M (multimodal mode), C (cosmic insight), V (visual analysis)")
 	print("🔮 Role: Provide dimensional sight and cosmic consciousness guidance")
+
 	
 	# Notify all AIs about the complete Pentagon
 	if GemmaAI and GemmaAI.has_method("ai_message"):
@@ -1138,6 +1166,7 @@ func toggle_pentagon_ai_mode() -> void:
 	if GemmaAI:
 		GemmaAI.ai_message.emit("🎼 PENTAGON OF CREATION: 6-AI collaboration mode activated! Maximum consciousness achieved!")
 
+
 func ensure_all_ai_bridges_created() -> void:
 	"""Ensure all AI bridges for Pentagon of Creation are created"""
 	print("🎯 Ensuring all Pentagon of Creation AI bridges are active...")
@@ -1147,12 +1176,13 @@ func ensure_all_ai_bridges_created() -> void:
 		"ai_bridge_chatgpt": false,
 		"ai_bridge_gemini": false,
 		"consciousness_conductor": false
-	}
+}
 	
 	# Check existing beings
 	for being in demo_beings:
 		if is_instance_valid(being) and not being.is_queued_for_deletion():
 			if being.has_method("get"):
+
 				var being_type = being.get("being_type")
 				if being_type in bridges_needed:
 					bridges_needed[being_type] = true
@@ -1177,6 +1207,7 @@ func ensure_all_ai_bridges_created() -> void:
 	print("🎯 Pentagon of Creation bridge validation complete!")
 	print("🎯 Active AIs: Gemma (local), Claude Code, Cursor, Claude Desktop, ChatGPT Premium, Google Gemini Premium")
 
+
 func find_genesis_conductor() -> Node:
 	# Find existing Genesis Conductor Universal Being
 	for being in demo_beings:
@@ -1195,7 +1226,7 @@ func get_status_info() -> Dictionary:
 		"demo_beings_count": demo_beings.size(),
 		"bootstrap_ready": SystemBootstrap != null and SystemBootstrap.is_system_ready(),
 		"ai_ready": GemmaAI != null and GemmaAI.ai_ready
-	}
+}
 
 func create_universe_universal_being() -> Node:
 	"""Create a Universe Universal Being - a container for entire universes"""
@@ -1215,11 +1246,12 @@ func create_universe_universal_being() -> Node:
 		"time_scale": 1.0,
 		"lod_level": 1,
 		"collaborative": true
-	}
+}
 	
 	if collaboration_hub and collaboration_hub.get_active_ai_systems().size() > 0:
 		var session_id = collaboration_hub.collaborate_on_universe_creation(universe_name, requirements)
 		print("🤝 Collaborative universe creation initiated - Session: %s" % session_id)
+
 	
 	# Load the UniverseUniversalBeing class
 	var UniverseClass = load("res://beings/universe_universal_being.gd")
@@ -1251,6 +1283,7 @@ func create_universe_universal_being() -> Node:
 	print("🌌 ✨ UNIVERSE CREATED: %s" % universe_being.universe_name)
 	print("🌌 A new reality breathes into existence!")
 	print("🌌 Controls: Enter universe with portals, edit rules from within")
+
 	
 	# Get Akashic Library to chronicle this moment
 	if SystemBootstrap and SystemBootstrap.is_system_ready():
@@ -1264,12 +1297,12 @@ func create_universe_universal_being() -> Node:
 					"time_scale": universe_being.time_scale,
 					"lod_level": universe_being.lod_level,
 					"collaborative": true
-				}
 			)
 	
 	# Notify AIs
 	if GemmaAI and GemmaAI.has_method("ai_message"):
 		GemmaAI.ai_message.emit("🌌 ✨ COLLABORATIVE UNIVERSE BORN: %s! Created through AI synthesis!" % universe_being.universe_name)
+}
 	
 	return universe_being
 
@@ -1498,6 +1531,7 @@ func open_universe_dna_editor() -> void:
 func _on_universe_dna_modified(universe: Node, trait_name: String, new_value: float) -> void:
 	# Handle DNA modification from editor
 	print("🧬 DNA Modified: %s.%s = %.2f" % [universe.name, trait_name, new_value])
+
 	
 	# Log to Akashic Library
 	if SystemBootstrap and SystemBootstrap.is_system_ready():
@@ -1505,12 +1539,13 @@ func _on_universe_dna_modified(universe: Node, trait_name: String, new_value: fl
 		if akashic:
 			akashic.log_genesis_event("dna_modification", 
 				"🧬 The Universe '%s' evolved - %s trait shifted to %.2f" % [universe.name, trait_name, new_value],
-				{"universe": universe.name, "trait": trait_name, "value": new_value}
+				{"universe": universe.name, "trait": trait_name, "value": new_value
 			)
 
 func _on_dna_template_created(template_name: String, dna: Dictionary) -> void:
 	"""Handle DNA template creation"""
 	print("🧬 DNA Template Created: %s" % template_name)
+}
 	# Could save this to a templates system
 
 func open_reality_editor() -> void:
@@ -1618,13 +1653,16 @@ func _on_blueprint_clone_requested(source_being: UniversalBeing, modifications: 
 	"""Handle clone request from blueprint toolbar"""
 	print("🧬 Clone requested from toolbar: %s" % source_being.being_name)
 
+
 func _on_blueprint_evolution_requested(source_being: UniversalBeing, template_dna: UniversalBeingDNA) -> void:
 	"""Handle evolution request from blueprint toolbar"""
 	print("🧬 Evolution requested from toolbar: %s -> %s" % [source_being.being_name, template_dna.being_name])
 
+
 func _on_blueprint_template_saved(template_name: String, dna: UniversalBeingDNA) -> void:
 	"""Handle template save from blueprint toolbar"""
 	print("🧬 Template saved: %s with %d traits" % [template_name, dna.get_total_trait_count()])
+
 	
 	# Log to Akashic Library
 	if SystemBootstrap and SystemBootstrap.is_system_ready():
@@ -1632,7 +1670,7 @@ func _on_blueprint_template_saved(template_name: String, dna: UniversalBeingDNA)
 		if akashic:
 			akashic.log_genesis_event("dna_template_saved",
 				"🧬 DNA template '%s' preserved in the eternal library" % template_name,
-				{"template_name": template_name, "trait_count": dna.get_total_trait_count()}
+				{"template_name": template_name, "trait_count": dna.get_total_trait_count()
 			)
 
 func launch_interactive_test_environment() -> Node:
@@ -1679,6 +1717,7 @@ func launch_interactive_test_environment() -> Node:
 	# Notify AI
 	if GemmaAI:
 		GemmaAI.ai_message.emit("🧪 ✨ INTERACTIVE TEST ENVIRONMENT: Universal Being physics demonstration active! Watch consciousness evolve!")
+}
 	
 	return test_environment
 
@@ -1686,13 +1725,16 @@ func _on_test_interaction_occurred(being1: UniversalBeing, being2: UniversalBein
 	"""Handle test environment interactions for logging"""
 	print("🧪 Test Interaction: %s %s %s" % [being1.being_name, interaction_type, being2.being_name])
 
+
 func _on_test_being_created(being: UniversalBeing) -> void:
 	"""Handle test being creation"""
 	print("🧪 Test Being Created: %s (Level %d)" % [being.being_name, being.consciousness_level])
 
+
 func _on_test_being_evolved(being: UniversalBeing, old_level: int, new_level: int) -> void:
 	"""Handle test being evolution"""
 	print("🧪 Test Evolution: %s evolved from level %d to %d!" % [being.being_name, old_level, new_level])
+
 
 
 func create_chunk_system() -> void:
@@ -1945,7 +1987,6 @@ func create_recursive_universe() -> Node:
 					"parent_depth": get_current_universe_depth(),
 					"recursive": true,
 					"created_by": "genesis_machine"
-				}
 			)
 	
 	# Notify AI about this achievement
@@ -1980,6 +2021,7 @@ func enter_universe(universe: Node) -> void:
 		return
 	
 	print("🌌 Entering universe: %s" % universe.get("being_name"))
+}
 	
 	# Set universe as the new root context
 	var main_scene = get_tree().current_scene
@@ -2008,7 +2050,6 @@ func enter_universe(universe: Node) -> void:
 						"universe": universe.get("being_uuid"),
 						"depth": get_current_universe_depth() + 1,
 						"entry_method": "recursive_exploration"
-					}
 				)
 
 func exit_universe() -> void:
@@ -2050,7 +2091,6 @@ func exit_universe() -> void:
 						"from_depth": current_depth,
 						"to_depth": current_depth - 1,
 						"exit_method": "recursive_ascension"
-					}
 				)
 	else:
 		print("🌌 No parent universe context found")
@@ -2060,6 +2100,7 @@ func find_camera_being() -> Node:
 	for being in demo_beings:
 		if is_instance_valid(being) and not being.is_queued_for_deletion():
 			if being.has_method("get"):
+}
 				var being_type = being.get("being_type")
 				if being_type == "camera":
 					return being
@@ -2104,6 +2145,7 @@ func open_genesis_machine() -> void:
 	# Notify AI
 	if GemmaAI:
 		GemmaAI.ai_message.emit("🌌 ✨ GENESIS MACHINE: The infinite creation interface awakens! Reality becomes malleable!")
+}
 
 func create_basic_genesis_interface() -> void:
 	"""Create a basic Genesis interface if full Genesis Machine not available"""
@@ -2153,6 +2195,7 @@ func create_basic_genesis_interface() -> void:
 func _on_genesis_universe_created(config: Dictionary) -> void:
 	"""Handle universe creation from Genesis Machine"""
 	print("🌌 Genesis Machine created universe with config: %s" % str(config))
+
 	
 	# Create universe with specified configuration
 	var universe = create_universe_universal_being()
@@ -2171,6 +2214,7 @@ func _on_genesis_universe_created(config: Dictionary) -> void:
 func _on_genesis_rules_changed(rules: Dictionary) -> void:
 	"""Handle rule changes from Genesis Machine"""
 	print("🌌 Genesis Machine modified rules: %s" % str(rules))
+
 	
 	# Apply rules to current universe context
 	var current_universe = find_current_universe()
@@ -2258,5 +2302,6 @@ func launch_genesis_adventure() -> Node:
 	# Notify AI
 	if GemmaAI:
 		GemmaAI.ai_message.emit("🌴 ✨ GENESIS ADVENTURE: Collaborative creation garden manifested! The journey begins!")
+
 	
 	return adventure_launcher

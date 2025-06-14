@@ -36,8 +36,7 @@ var dna_traits: Dictionary = {
         "potential": 0.5,  # 0.0 = limited, 1.0 = infinite
         "wisdom": 0.5,  # 0.0 = naive, 1.0 = enlightened
         "harmony": 0.5  # 0.0 = discordant, 1.0 = resonant
-    }
-}
+		}
 
 ## DNA Evolution
 var evolution_path: Array[String] = []
@@ -59,6 +58,7 @@ func pentagon_init() -> void:
     component_version = "1.0.0"
     component_description = "Visual DNA system for Universal Beings"
     print("🧬 BeingDNA: Pentagon Init Complete")
+	}
 
 func pentagon_ready() -> void:
     super.pentagon_ready()
@@ -70,6 +70,7 @@ func pentagon_ready() -> void:
     calculate_evolution_potential()
     
     print("🧬 BeingDNA: Pentagon Ready Complete")
+	
 
 func pentagon_process(delta: float) -> void:
     super.pentagon_process(delta)
@@ -118,6 +119,7 @@ func create_dna_visualizer() -> void:
             dna_helix.scale = Vector2.ONE * helix_scale
             dna_helix.modulate.a = helix_opacity
             print("🧬 BeingDNA: Visualizer created")
+			
 
 func update_dna_visualization(delta: float) -> void:
     # Update DNA helix animation and appearance
@@ -151,7 +153,7 @@ func get_trait_color(category_key: String, trait_key: String, trait_value: float
         "consciousness": Color(0.8, 0.2, 0.8),  # Purple
         "interaction": Color(0.2, 0.2, 0.8),  # Blue
         "essence": Color(0.8, 0.8, 0.2)  # Yellow
-    }
+		}
     
     var base_color = base_colors.get(category_key, Color.WHITE)
     return base_color.lightened(trait_value)
@@ -178,7 +180,7 @@ func calculate_trait_potential(category: String, trait_name: String, value: floa
         "max": 1.0,
         "mutation_rate": mutation_rate,
         "evolution_paths": []
-    }
+		}
     
     # Add possible evolution paths
     if value < 0.5:
@@ -313,8 +315,7 @@ func ai_interface() -> Dictionary:
             "evolve_trait": Callable(self, "evolve_trait"),
             "get_trait_value": Callable(self, "get_trait_value"),
             "calculate_potential": Callable(self, "calculate_evolution_potential")
-        }
-    }
+			}
 
 func get_trait_value(category: String, trait_name: String) -> float:
     # Get current value of a trait

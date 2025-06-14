@@ -4,9 +4,8 @@
 # PURPOSE: The dream realized - a self-regulating, perfect game entity
 # CREATED: 2025-05-27 - Your vision made real
 # ==================================================
-
 extends UniversalBeingBase
-class_name UniversalEntitySystem
+class_name UniversalEntitySystem_universa
 
 signal entity_ready()
 signal entity_evolved(new_form: String)
@@ -82,7 +81,7 @@ func _initialize_core_systems() -> void:
 
 func _register_universal_commands() -> void:
 	"""Register console commands for the universal entity"""
-	var console = get_node_or_null("/root/ConsoleManager")
+	var console = get_node_or_null("root/ConsoleManager")
 	if not console:
 		_print("[UniversalEntity] WARNING: ConsoleManager not found!")
 		return
@@ -247,10 +246,10 @@ func _cmd_health_check(_args: Array) -> void:
 func _cmd_list_variables(args: Array) -> void:
 	if args.is_empty():
 		_print("Usage: variables [search_term]")
-		_print("Or: variables export <filename>")
+		_print("Or: variables @@export <filename>")
 		return
 	
-	if args[0] == "export":
+	if args[0] == "@@export":
 		var filename = args[1] if args.size() > 1 else "variables_dump.txt"
 		variable_inspector.export_to_txt("user://" + filename)
 	else:
@@ -290,7 +289,7 @@ func _on_rule_executed(rule_name: String, _result) -> void:
 func _print(message: String) -> void:
 	print("[UniversalEntity] " + message)  # Always print to Godot console
 	
-	var console = get_node_or_null("/root/ConsoleManager")
+	var console = get_node_or_null("root/ConsoleManager")
 	if console and console.has_method("_print_to_console"):
 		console._print_to_console(message)
 

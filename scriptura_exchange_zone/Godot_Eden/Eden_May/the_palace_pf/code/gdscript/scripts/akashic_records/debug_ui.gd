@@ -1,5 +1,5 @@
 extends Control
-class_name AkashicDebugUI
+class_name AkashicDebugUI_debugui_debugui
 
 # UI for testing and debugging the Akashic Records system
 # This provides a simple interface to create entities, inspect them, and test interactions
@@ -440,7 +440,7 @@ func refresh_word_list() -> void:
 		return
 	
 	word_list.clear()
-	# res://code/gdscript/scripts/akashic_records/debug_ui.gd
+	# res://scripts/gdscript/scripts/akashic_records/debug_ui.gd
 	# Invalid call. Nonexistent function 'get_dictionary_stats' in base 'Node (AkashicRecordsManagerA)'.
 	var stats = akashic_records_manager.get_dictionary_stats()
 	if stats.has("words"):

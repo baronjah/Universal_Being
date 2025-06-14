@@ -1,5 +1,5 @@
-class_name CoreCreationConsole
-extends Control
+class_name CoreCreationConsole_CoreCreationConsole_CoreCrea
+extends \2
 
 # UI References
 @onready var output_display: RichTextLabel = $VBoxContainer/OutputDisplay

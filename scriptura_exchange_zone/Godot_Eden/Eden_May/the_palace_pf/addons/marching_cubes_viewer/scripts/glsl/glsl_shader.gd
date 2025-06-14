@@ -30,8 +30,8 @@
 # transform any of the 256 possibilites into one of the root forms.
 
 @tool
-extends RefCounted
-class_name GLSLShader
+extends \2
+class_name GLSLShader_glslshader_glslshad
 
 # Due to the bug https://github.com/godotengine/godot/issues/31166, this
 # wil not be automatically cleaned up with it does out of scope.  Call

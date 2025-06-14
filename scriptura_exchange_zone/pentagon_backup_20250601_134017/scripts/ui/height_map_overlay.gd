@@ -1,5 +1,5 @@
 extends UniversalBeingBase
-class_name HeightMapOverlay
+class_name HeightMapOverlay_heightma
 # 2D Height Map Overlay - Shows world from above with height as colors
 # Part of Layer 1 visualization
 
@@ -212,6 +212,6 @@ func _gui_input(event: InputEvent) -> void:
 			print("Map clicked at world position: ", world_pos)
 			
 			# Emit signal or call method to focus camera on this position
-			if has_node("/root/LayerRealitySystem"):
-				get_node("/root/LayerRealitySystem").call("focus_on_world_position", 
+			if has_node("root/LayerRealitySystem"):
+				get_node("root/LayerRealitySystem").call("focus_on_world_position", 
 					Vector3(world_pos.x, 0, world_pos.y))

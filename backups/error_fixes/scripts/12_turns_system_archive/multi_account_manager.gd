@@ -48,27 +48,26 @@ const TIER_SPECS = {
         "price_monthly": 100,
         "max_dimensions": 12,
         "custom_dimensions": true
-    }
-}
+		}
 
 # Account instances
-var accounts = {}
+var accounts = {
 var active_account_id = ""
-var thread_pools = {}
+var thread_pools = {
 
 # Storage integration
-var storage_usage = {}
+var storage_usage = {
 var luno_storage_linked = false
 var additional_storage_gb = 0
 
 # API connection
-var api_usage_counter = {}
-var api_usage_time = {}
-var api_keys = {}
+var api_usage_counter = {
+var api_usage_time = {
+var api_keys = {
 
 # Threads and processing
-var active_threads = {}
-var thread_usage = {}
+var active_threads = {
+var thread_usage = {
 var thread_mutex = Mutex.new()
 
 # References
@@ -90,25 +89,25 @@ func _ready():
     var storage_timer = Timer.new()
     storage_timer.wait_time = 300 # 5 minutes
     storage_timer.autostart = true
-    storage_timer.connect("timeout", self, "_on_storage_monitor")
+    storage_timer.connect(_on_storage_monitor)
     add_child(storage_timer)
     
     # Initialize API usage monitor
     var api_timer = Timer.new()
     api_timer.wait_time = 60 # 1 minute
     api_timer.autostart = true
-    api_timer.connect("timeout", self, "_on_api_usage_reset")
+    api_timer.connect(_on_api_usage_reset)
     add_child(api_timer)
 
 func connect_to_systems():
     # Connect to SmartAccountManager
     if has_node("/root/SmartAccountManager") or get_node_or_null("/root/SmartAccountManager"):
-        _smart_account_manager = get_node("/root/SmartAccountManager")
+        _smart_account_manager = get_node("\1") as Node
         print("Connected to SmartAccountManager")
     
     # Connect to SharedAccountConnector
     if has_node("/root/SharedAccountConnector") or get_node_or_null("/root/SharedAccountConnector"):
-        _account_connector = get_node("/root/SharedAccountConnector")
+        _account_connector = get_node("\1") as Node
         print("Connected to SharedAccountConnector")
 
 func create_account(display_name, tier = AccountTier.FREE, api_key = ""):
@@ -135,7 +134,7 @@ func create_account(display_name, tier = AccountTier.FREE, api_key = ""):
         "active_threads": [],
         "thread_history": [],
         "color_scheme": _generate_tier_colors(tier)
-    }
+		}
     
     # Store account data
     accounts[account_id] = account_data
@@ -146,7 +145,7 @@ func create_account(display_name, tier = AccountTier.FREE, api_key = ""):
     api_usage_time[account_id] = OS.get_unix_time()
     
     # Store API key if provided
-    if not api_key.empty():
+    if not api_key.is_empty():
         api_keys[api_key] = account_id
     
     # Initialize thread pool for this account
@@ -179,6 +178,7 @@ func switch_account(account_id):
     accounts[account_id]["last_active"] = OS.get_datetime()
     
     print("Switched to account: " + accounts[account_id]["display_name"])
+	}
     
     # Notify the SmartAccountManager
     if _smart_account_manager:
@@ -405,7 +405,7 @@ func link_luno_storage(account_id, storage_size_gb = 2000):
 
 func get_account_data(account_id = ""):
     # Use active account if none specified
-    if account_id.empty():
+    if account_id.is_empty():
         account_id = active_account_id
     
     if not account_id in accounts:
@@ -427,7 +427,7 @@ func get_thread_status(account_id, thread_id):
 
 func get_account_colors(account_id = ""):
     # Use active account if none specified
-    if account_id.empty():
+    if account_id.is_empty():
         account_id = active_account_id
     
     if not account_id in accounts:
@@ -443,6 +443,7 @@ func _on_storage_monitor():
         # In a real implementation, would actually check storage usage
         # For now, simulate storage usage growth for active accounts
         if account["active_threads"].size() > 0:
+		}
             var usage_growth = randf() * 0.1 # 0-0.1 GB per check for active accounts
             update_storage_usage(account_id, usage_growth * 1024) # Convert to MB
 
@@ -464,32 +465,28 @@ func _generate_tier_colors(tier):
                 "secondary": Color(0.2, 0.5, 0.7, 0.7),
                 "text": Color(0.9, 0.9, 0.9),
                 "accent": Color(0.4, 0.8, 1.0),
-                "glow_intensity": 0.5
-            }
+                "glow_intensity": 0.5}
         AccountTier.PLUS:
             return {
                 "primary": Color(0.3, 0.8, 0.3, 0.9), # Green
                 "secondary": Color(0.2, 0.6, 0.2, 0.7),
                 "text": Color(0.9, 0.9, 0.9),
                 "accent": Color(0.4, 1.0, 0.4),
-                "glow_intensity": 0.7
-            }
+                "glow_intensity": 0.7}
         AccountTier.MAX:
             return {
                 "primary": Color(0.8, 0.3, 0.8, 0.9), # Purple
                 "secondary": Color(0.6, 0.2, 0.6, 0.7),
                 "text": Color(0.9, 0.9, 0.9),
                 "accent": Color(1.0, 0.4, 1.0),
-                "glow_intensity": 0.9
-            }
+                "glow_intensity": 0.9}
         AccountTier.ENTERPRISE:
             return {
                 "primary": Color(0.9, 0.8, 0.2, 0.9), # Gold
                 "secondary": Color(0.7, 0.6, 0.1, 0.7),
                 "text": Color(0.9, 0.9, 0.9),
                 "accent": Color(1.0, 0.9, 0.3),
-                "glow_intensity": 1.0
-            }
+                "glow_intensity": 1.0}
         _:
             return {
                 "primary": Color(0.7, 0.7, 0.7, 0.9), # Gray
@@ -497,4 +494,3 @@ func _generate_tier_colors(tier):
                 "text": Color(0.9, 0.9, 0.9),
                 "accent": Color(0.8, 0.8, 0.8),
                 "glow_intensity": 0.5
-            }

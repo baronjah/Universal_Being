@@ -80,6 +80,7 @@ func create_evolution_animation():
 	tween.tween_property(glow_effect, "modulate:a", 1.0, 0.2)
 	tween.tween_property(glow_effect, "modulate:a", 0.3, 0.3)
 
+
 func pulse_consciousness():
 	pass
 	# Create a consciousness pulse effect

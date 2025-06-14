@@ -69,7 +69,8 @@ class_name CubeSymmetries
 # +------2------+
 
 #Operations we can apply to the cube to change it's vertex coloring
-enum Operations { ROT_X_90, ROT_Y_90, ROT_Z_90, MIRROR_X, MIRROR_Y, MIRROR_Z }
+enum Operations { ROT_X_90, ROT_Y_90, ROT_Z_90, MIRROR_X, MIRROR_Y, MIRROR_Z
+}
 
 #enum CubeEdge { A, B, C, D, E, F, G, H, I, J, K, L }
 
@@ -377,15 +378,18 @@ static func print_table(colorings:Array[PeerColoring]):
 		if !coloring.prev:
 			#Root coloring
 			print("Root coloring: %x" % [coloring.coloring])
+}
 		
 	colorings.sort_custom(func(a:PeerColoring, b:PeerColoring): return a.coloring < b.coloring)
 	for coloring in colorings:
 		print("Coloring: %02x  Source: %02x  Xform: %s  Rev Winding: %s Ops: %s " % [coloring.coloring, coloring.get_root_coloring().coloring, str(coloring.calc_tranform()), coloring.reverse_winding(), format_op_list(coloring.operations)])
+
 			
 static func format_table_as_code(colorings:Array[PeerColoring])->String:
 	colorings.sort_custom(func(a:PeerColoring, b:PeerColoring): return a.coloring < b.coloring)
 
 	var result:String = ""
+
 	
 	for c_idx in colorings.size():
 		var coloring:PeerColoring = colorings[c_idx]
@@ -424,6 +428,7 @@ static func format_table_as_glsl_code_fixed_width(colorings:Array[PeerColoring])
 	colorings.sort_custom(func(a:PeerColoring, b:PeerColoring): return a.coloring < b.coloring)
 
 	var result:String = ""
+
 	
 	for c_idx in colorings.size():
 		var coloring:PeerColoring = colorings[c_idx]
@@ -469,7 +474,9 @@ static func format_table_as_glsl_code_var_width(colorings:Array[PeerColoring])->
 
 	var size_list:PackedInt32Array
 	var result_tess_size:String = ""
+
 	var result_tess:String = ""
+
 	var vertex_index:int = 0
 	
 	for c_idx in colorings.size():

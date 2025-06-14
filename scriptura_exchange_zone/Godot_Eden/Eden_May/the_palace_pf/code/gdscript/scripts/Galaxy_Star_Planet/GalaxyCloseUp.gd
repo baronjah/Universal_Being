@@ -1,13 +1,13 @@
 # GalaxyCloseUp.gd in GalaxyCloseUp scene
-extends Node3D
+extends \2
 
-@export var visible_star_distance: float = 50.0
-@export var transition_distance: float = 5.0
+@@export var visible_star_distance: float = 50.0
+@@export var transition_distance: float = 5.0
 
 var closest_star = null
 var closest_distance = INF
 
-var star_scene = preload("res://Scenes/Star.tscn")
+var star_scene = preload("res://scenes/Star.tscn")
 var rd: RenderingDevice
 var shader: RID
 var pipeline: RID
@@ -186,7 +186,7 @@ func apply_skybox():
 		env.background_color = Color(1, 0, 0)  # Red background for debugging
 
 func get_environment():
-	var world = get_viewport().get_world_3d()
+	var world = get_viewport().get_viewport().get_world_3d()
 	if not world.environment:
 		world.environment = Environment.new()
 	return world.environment
@@ -397,7 +397,7 @@ func transition_to_galaxies():
 		GlobalState.current_galaxy_data
 	)
 	GlobalState.update_elapsed_time()
-	get_tree().change_scene_to_file("res://Scenes/Galaxies.tscn")
+	get_tree().change_scene_to_file("res://scenes/Galaxies.tscn")
 
 
 
@@ -426,7 +426,7 @@ func store_star_skybox_texture(target_star):
 	var image = sub_viewport.get_texture().get_image()
 	var skybox_texture = ImageTexture.create_from_image(image)
 	GlobalState.store_star_skybox_texture(skybox_texture)
-	#get_tree().change_scene_to_file("res://Scenes/StarCloseUp.tscn")
+	#get_tree().change_scene_to_file("res://scenes/StarCloseUp.tscn")
 	store_star_offset_skybox_texture(target_star)
 # changing the skybox panorama into second panorama from galaxies scene
 func change_skybox():
@@ -472,7 +472,7 @@ func store_star_offset_skybox_texture(target_star):
 	var skybox_texture = ImageTexture.create_from_image(image)
 	GlobalState.store_star_skybox_texture(skybox_texture)
 	GlobalState.update_elapsed_time()
-	get_tree().change_scene_to_file("res://Scenes/StarCloseUp.tscn") 
+	get_tree().change_scene_to_file("res://scenes/StarCloseUp.tscn") 
 	
 
 # changing texture to third panorma from first scene

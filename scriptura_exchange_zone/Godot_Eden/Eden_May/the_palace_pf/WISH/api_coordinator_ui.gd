@@ -62,7 +62,7 @@ func find_coordinator():
 	# Try to find the API Coordinator
 	api_coordinator = get_node_or_null("../APICoordinator")
 	if not api_coordinator:
-		api_coordinator = get_node_or_null("/root/EdenMayGame/APICoordinator")
+		api_coordinator = get_node_or_null("root/EdenMayGame/APICoordinator")
 }
 
 	if not api_coordinator:
@@ -199,7 +199,7 @@ func _on_send_request_pressed():
 }
 
 	# Send the request
-	var request_id = str(OS.get_unix_time())
+	var request_id = str(OS.Time.get_unix_time_from_system())
 	var result = api_coordinator.send_request(api_name, request_text, request_id)
 }
 

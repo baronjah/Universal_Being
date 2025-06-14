@@ -1,5 +1,5 @@
 extends Node
-class_name InteractionMatrix
+class_name InteractionMatrix_interactionmatrix_interact
 
 # Interaction matrix defines how different entity types interact with each other
 var interaction_rules: Dictionary = {

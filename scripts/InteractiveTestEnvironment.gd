@@ -50,6 +50,7 @@ func pentagon_init() -> void:
 	print("🧪 Interactive Test Environment: Initialized")
 	print("🧪 Arena size: %s" % test_arena_size)
 
+
 func pentagon_ready() -> void:
 	super.pentagon_ready()
 	
@@ -234,7 +235,7 @@ func _spawn_initial_beings() -> void:
 		{"level": 2, "position": Vector3(5, 2, -5)},
 		{"level": 3, "position": Vector3(-5, 2, 5)},
 		{"level": 4, "position": Vector3(5, 2, 5)},
-		{"level": 2, "position": Vector3(0, 2, 0)}
+		{"level": 2, "position": Vector3(0, 2, 0)
 	]
 	
 	for being_data in initial_beings:
@@ -242,6 +243,7 @@ func _spawn_initial_beings() -> void:
 		if being:
 			being.position = being_data.position
 			_log_interaction("🌟 Spawned initial being: %s (Level %d)" % [being.being_name, being.consciousness_level])
+}
 
 func _spawn_test_being(consciousness_level: int) -> UniversalBeing:
 	"""Spawn a test being with specified consciousness level"""
@@ -314,6 +316,7 @@ func _on_being_state_changed(being: UniversalBeing, old_state: UniversalBeing.Be
 	var old_name = being._state_to_string(old_state)
 	var new_name = being._state_to_string(new_state)
 	_log_interaction("🧠 %s: %s → %s" % [being.being_name, old_name, new_name])
+
 	
 	# Special handling for evolution
 	if new_state == UniversalBeing.BeingState.EVOLVING:
@@ -323,6 +326,7 @@ func _on_being_proximity_entered(being: UniversalBeing, other_being: UniversalBe
 	"""Handle proximity detection"""
 	var resonance = being._calculate_consciousness_resonance(other_being)
 	_log_interaction("📡 Proximity: %s ↔ %s (Resonance: %.2f)" % [being.being_name, other_being.being_name, resonance])
+
 	
 	# Create visual connection if resonance is high
 	if resonance > 0.6 and interaction_visualization:
@@ -398,7 +402,7 @@ func _update_ui_displays() -> void:
 	if stats_display:
 		var active_beings = test_beings.size()
 		var total_consciousness = 0
-		var state_counts = {}
+		var state_counts = {
 		
 		for being in test_beings:
 			if is_instance_valid(being):
@@ -418,6 +422,7 @@ Auto-spawn: %s
 		
 		for state_name in state_counts:
 			stats_text += "\n%s: %d" % [state_name, state_counts[state_name]]
+}
 		
 		stats_display.text = stats_text
 
@@ -468,10 +473,12 @@ func _toggle_auto_spawn() -> void:
 	auto_spawn_enabled = !auto_spawn_enabled
 	_log_interaction("🎲 Auto-spawn: %s" % ("ENABLED" if auto_spawn_enabled else "DISABLED"))
 
+
 func _toggle_interaction_visualization() -> void:
 	"""Toggle interaction visualization"""
 	interaction_visualization = !interaction_visualization
 	_log_interaction("👁️ Interaction visualization: %s" % ("ENABLED" if interaction_visualization else "DISABLED"))
+
 
 func _reset_environment() -> void:
 	"""Reset the entire test environment"""
@@ -517,7 +524,7 @@ func get_test_summary() -> Dictionary:
 		"consciousness_levels": {},
 		"active_states": {},
 		"resonance_connections": resonance_indicators.size()
-	}
+}
 	
 	for being in test_beings:
 		if is_instance_valid(being):

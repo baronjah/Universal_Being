@@ -15,12 +15,12 @@ const MAX_CACHE_SIZE_MB: int = 100   # Maximum cache size in MB
 const FRAME_BUDGET_MS: float = 2.0   # 2ms per frame budget
 
 # ===== MEMORY MANAGEMENT =====
-var active_packages: Dictionary = {}  # package_id -> {data, last_access, memory_usage}
-var cache_layer: Dictionary = {}      # asset_id -> {data, size, last_access}
+var active_packages: Dictionary = {}  # package_id -> {data, last_access, memory_usage
+var cache_layer: Dictionary = {}}      # asset_id -> {data, size, last_access
 var queue_system: Array[Dictionary] = []  # Pending package operations
 
 # ===== VALIDATION STATE =====
-var validation_results: Dictionary = {}  # package_id -> validation_data
+var validation_results: Dictionary = {}}  # package_id -> validation_data
 var validation_queue: Array[String] = []  # Packages waiting for validation
 var current_validation: String = ""  # Currently validating package
 
@@ -45,10 +45,12 @@ func pentagon_init() -> void:
     consciousness_level = 3  # High consciousness for AI accessibility
     
     print("📚 AkashicLoader: Pentagon Init Complete")
+	
 
 func pentagon_ready() -> void:
     super.pentagon_ready()
     print("📚 AkashicLoader: Pentagon Ready Complete")
+	
 
 func pentagon_process(delta: float) -> void:
     super.pentagon_process(delta)
@@ -75,17 +77,19 @@ func pentagon_sewers() -> void:
     
     super.pentagon_sewers()
     print("📚 AkashicLoader: Pentagon Sewers Complete")
+	
 
 # ===== VALIDATION PIPELINE =====
 
 func test_manifest_integrity(package_path: String) -> Dictionary:
     """Stage 1: Validate package manifest structure and content"""
+	
     var results = {
         "valid": false,
         "errors": [],
         "warnings": [],
-        "manifest_data": {}
-    }
+        "manifest_data": {
+		}
     
     if not FileAccess.file_exists(package_path):
         results.errors.append("Package file not found: " + package_path)
@@ -112,11 +116,13 @@ func test_manifest_integrity(package_path: String) -> Dictionary:
     for field in required_fields:
         if not manifest.has(field):
             results.errors.append("Missing required field: " + field)
+			}
     
     # Validate consciousness level
     var level = manifest.get("consciousness_level", -1)
     if level < 0 or level > 7:
         results.errors.append("Invalid consciousness level: " + str(level))
+		
     
     results.manifest_data = manifest
     results.valid = results.errors.is_empty()
@@ -124,13 +130,14 @@ func test_manifest_integrity(package_path: String) -> Dictionary:
 
 func test_component_compatibility(package_path: String) -> Dictionary:
     """Stage 2: Validate component compatibility and dependencies"""
+	
     var results = {
         "valid": false,
         "errors": [],
         "warnings": [],
         "dependencies": [],
         "compatible_components": []
-    }
+		}
     
     # Get manifest data from previous stage
     var manifest_results = validation_results.get(package_path, {}).get("manifest", {})
@@ -155,12 +162,14 @@ func test_component_compatibility(package_path: String) -> Dictionary:
                 results.compatible_components.append(comp)
             else:
                 results.warnings.append("Incompatible component: " + comp)
+				
     
     results.valid = results.errors.is_empty()
     return results
 
 func test_performance_impact(package_path: String) -> Dictionary:
     """Stage 3: Analyze performance impact of package"""
+	
     var results = {
         "valid": false,
         "errors": [],
@@ -169,8 +178,7 @@ func test_performance_impact(package_path: String) -> Dictionary:
             "estimated_memory_mb": 0,
             "load_time_ms": 0,
             "frame_impact_ms": 0
-        }
-    }
+			}
     
     # Get previous validation results
     var manifest_results = validation_results.get(package_path, {}).get("manifest", {})
@@ -187,6 +195,7 @@ func test_performance_impact(package_path: String) -> Dictionary:
     
     var package_files = zip_manager.read_selective_files(package_path, ["file_list.json"])
     if package_files.has("file_list.json"):
+	}
         var file_list = JSON.parse_string(package_files["file_list.json"])
         if file_list:
             # Estimate memory usage
@@ -209,6 +218,7 @@ func test_performance_impact(package_path: String) -> Dictionary:
 
 func test_memory_footprint(package_path: String) -> Dictionary:
     """Stage 4: Validate memory management and cleanup"""
+	
     var results = {
         "valid": false,
         "errors": [],
@@ -217,8 +227,7 @@ func test_memory_footprint(package_path: String) -> Dictionary:
             "active_memory_mb": 0,
             "cache_memory_mb": 0,
             "total_memory_mb": 0
-        }
-    }
+			}
     
     # Get previous validation results
     var perf_results = validation_results.get(package_path, {}).get("performance", {})
@@ -284,7 +293,7 @@ func _manage_memory() -> void:
 func _validate_package(package_path: String) -> void:
     """Run full validation pipeline on a package"""
     current_validation = package_path
-    validation_results[package_path] = {}
+    validation_results[package_path] = {
     
     # Stage 1: Manifest Integrity
     validation_progress.emit(package_path, "manifest", 0.0)
@@ -438,7 +447,7 @@ func get_memory_metrics() -> Dictionary:
         "total_memory_mb": total_memory_usage / (1024.0 * 1024.0),
         "active_packages": active_packages.size(),
         "cached_assets": cache_layer.size()
-    }
+		}
 
 func clear_validation_results() -> void:
     """Clear all validation results"""

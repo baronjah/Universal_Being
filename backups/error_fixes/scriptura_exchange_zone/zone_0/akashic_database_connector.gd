@@ -33,18 +33,18 @@ func _ready():
     # Register callback for dimension unlock
     if _gd_akashic:
         if _gd_akashic.has_method("connect"):
-            _gd_akashic.connect("dimension_unlocked", self, "_on_dimension_unlocked")
+            _gd_akashic.connect(_on_dimension_unlocked)
 
 func connect_to_akashic_systems():
     # Try to connect to GDScript implementation
     if has_node("/root/AkashicRecordsSystem") or get_node_or_null("/root/AkashicRecordsSystem"):
-        _gd_akashic = get_node("/root/AkashicRecordsSystem")
+        _gd_akashic = get_node("\1") as Node
         print("Connected to GDScript AkashicRecordsSystem")
         is_connected = true
     
     # Initialize JavaScript bridge if available
     if has_node("/root/JavaScriptBridge") or get_node_or_null("/root/JavaScriptBridge"):
-        _js_interface = get_node("/root/JavaScriptBridge")
+        _js_interface = get_node("\1") as Node
         initialize_js_database()
     
     if is_connected:
@@ -129,7 +129,7 @@ func unlock_dimension(dimension):
 func add_word(word, power = 50, metadata = {}):
     # Validate parameters
     word = str(word).strip_edges()
-    if word.empty():
+    if word.is_empty():
         return false
     
     # Clamp power between min and max
@@ -175,7 +175,7 @@ func add_word(word, power = 50, metadata = {}):
 
 func search_word(word):
     word = str(word).strip_edges()
-    if word.empty():
+    if word.is_empty():
         return null
     
     # Try GDScript implementation first

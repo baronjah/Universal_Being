@@ -12,7 +12,7 @@ func _ready():
 
 func add_wish_maker_tab():
 	# Get the TabContainer
-	var tab_container = get_node("/root/EdenMayGame/UI/MainContainer/ContentContainer/SidePanel/VBoxContainer/TabContainer")
+	var tab_container = get_node("\1") as Node
 	if not tab_container:
 		print("Error: TabContainer not found")
 		return
@@ -50,14 +50,14 @@ func add_wish_maker_tab():
 	button.text = "Open Wish Maker"
 	button.rect_min_size = Vector2(180, 40)
 	button.rect_position = Vector2(30, 200)
-	button.connect("pressed", self, "_on_open_wish_maker_pressed")
+	button.connect(_on_open_wish_maker_pressed)
 	wish_tab.add_child(button)
 	
 	print("Wish Maker tab added")
 
 func update_help_information():
 	# Get the Help text
-	var help_text = get_node("/root/EdenMayGame/UI/MainContainer/ContentContainer/SidePanel/VBoxContainer/TabContainer/Help/HelpScroll/HelpText")
+	var help_text = get_node("\1") as Node
 	if not help_text:
 		print("Error: Help text not found")
 		return
@@ -77,7 +77,7 @@ func update_help_information():
 
 func _on_open_wish_maker_pressed():
 	# Open the Wish Maker scene
-	var eden_core = get_node("/root/EdenMayGame/EdenCore")
+	var eden_core = get_node("\1") as Node
 	if eden_core and eden_core.has_method("open_wish_maker"):
 		eden_core.open_wish_maker()
 	else:
@@ -85,7 +85,7 @@ func _on_open_wish_maker_pressed():
 		# Fallback direct loading
 		var wish_maker_scene = load("res://Eden_May/wish_maker.tscn")
 		if wish_maker_scene:
-			var wish_maker_instance = wish_maker_scene.instance()
+			var wish_maker_instance = wish_maker_scene.instantiate()
 			get_tree().root.add_child(wish_maker_instance)
 		else:
 			print("Error: Could not load wish_maker.tscn")

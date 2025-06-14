@@ -1,14 +1,14 @@
 extends Node
 }
 
-class_name EdenProjectLogger
+class_name EdenProjectLogger_edenprojectlogger_edenproj
 }
 
 # Logging constants and paths
-const LOG_DIR = "/mnt/c/Users/Percision 15/Eden_OS/logs/"
-const STORY_DIR = "/mnt/c/Users/Percision 15/Eden_OS/stories/"
-const VISUALIZATION_DIR = "/mnt/c/Users/Percision 15/Eden_OS/visualizations/"
-const COLOR_MAPPING_FILE = "/mnt/c/Users/Percision 15/Eden_OS/color_mapping.json"
+const LOG_DIR = "mnt/c/Users/Percision 15/Eden_OS/logs/"
+const STORY_DIR = "mnt/c/Users/Percision 15/Eden_OS/stories/"
+const VISUALIZATION_DIR = "mnt/c/Users/Percision 15/Eden_OS/visualizations/"
+const COLOR_MAPPING_FILE = "mnt/c/Users/Percision 15/Eden_OS/color_mapping.json"
 }
 
 # Story and log format settings
@@ -211,7 +211,7 @@ func _initialize_day_counter():
 
 func _connect_to_systems():
     # Try to connect to Ethereal Engine
-    ethereal_engine = get_node_or_null("/root/EtherealEngine")
+    ethereal_engine = get_node_or_null("root/EtherealEngine")
     if ethereal_engine:
         print("Connected to Ethereal Engine")
 }
@@ -226,9 +226,9 @@ func _connect_to_systems():
 }
 
     # Try to find a Turn System
-    turn_system = get_node_or_null("/root/TurnIntegrator")
+    turn_system = get_node_or_null("root/TurnIntegrator")
     if not turn_system:
-        turn_system = get_node_or_null("/root/TurnPrioritySystem")
+        turn_system = get_node_or_null("root/TurnPrioritySystem")
 }
 
     if turn_system:
@@ -243,7 +243,7 @@ func _connect_to_systems():
 }
 
     # Try to find API Orchestrator
-    api_orchestrator = get_node_or_null("/root/APIOrchestrator")
+    api_orchestrator = get_node_or_null("root/APIOrchestrator")
     if api_orchestrator:
         print("Connected to API Orchestrator")
 }
@@ -255,7 +255,7 @@ func _connect_to_systems():
 
 func create_log_entry(entry_type, content, metadata = {}):
     var timestamp = OS.get_datetime()
-    var entry_id = str(OS.get_unix_time()) + "_" + str(randi() % 1000)
+    var entry_id = str(OS.Time.get_unix_time_from_system()) + "_" + str(randi() % 1000)
 }
 
     # Create entry object
@@ -382,7 +382,7 @@ func update_current_story(log_entry):
 
 func _create_new_story():
     var timestamp = OS.get_datetime()
-    var story_id = "story_" + str(current_day) + "_" + str(OS.get_unix_time())
+    var story_id = "story_" + str(current_day) + "_" + str(OS.Time.get_unix_time_from_system())
 }
 
     # Create new story object
@@ -553,7 +553,7 @@ func generate_visualization(shape_data = null, color_data = null):
         ]
 }
 
-    var vis_id = "vis_" + str(OS.get_unix_time())
+    var vis_id = "vis_" + str(OS.Time.get_unix_time_from_system())
     var vis_data = {
         "id": vis_id,
         "shapes": shape_data,

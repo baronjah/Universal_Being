@@ -1,7 +1,7 @@
 # ripple_system.gd
-extends Node
+extends \2
 
-class_name RippleSystem
+class_name RippleSystem_ripplesystem_ripplesy
 
 # Event queue for processing changes
 var event_queue = []
@@ -66,7 +66,7 @@ func process_event(event):
 # Example event processors
 func process_temperature_change(event):
 	var pos = event.position
-	var world = get_node("/root/World")  # Reference to your world node
+	var world = get_node("root/World")  # Reference to your world node
 	
 	# Apply temperature change
 	world.temperature_layer[pos.x][pos.y] += event.data.amount

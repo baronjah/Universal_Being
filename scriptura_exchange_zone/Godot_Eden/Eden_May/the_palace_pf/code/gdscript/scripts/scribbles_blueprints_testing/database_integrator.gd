@@ -1,5 +1,5 @@
 extends Node
-class_name AkashicDatabaseIntegrator
+class_name AkashicDatabaseIntegrator_databaseintegrator_database
 
 # System references
 var akashic_records_manager: Node = null
@@ -88,7 +88,7 @@ func register_database_file(file_path: String, metadata: Dictionary = {}) -> voi
     if !metadata.has("entry_count"):
         metadata["entry_count"] = count_entries(file_path)
     if !metadata.has("byte_size"):
-        metadata["byte_size"] = get_file_size(file_path)
+        metadata["byte_size"] = FileAccess.get_file_as_bytes(file_path)
     if !metadata.has("parent_file"):
         metadata["parent_file"] = ""
     if !metadata.has("child_files"):
@@ -138,7 +138,7 @@ func count_entries(file_path: String) -> int:
         return entry_count
     return 0
 
-func get_file_size(file_path: String) -> int:
+func FileAccess.get_file_as_bytes(file_path: String) -> int:
     var file = FileAccess.open(file_path, FileAccess.READ)
     if file:
         var size = file.get_length()
@@ -182,7 +182,7 @@ func check_database_sizes() -> void:
         if file_registry["files"][file_path].has("is_split") and file_registry["files"][file_path]["is_split"]:
             continue
             
-        var size = get_file_size(file_path)
+        var size = FileAccess.get_file_as_bytes(file_path)
         var entry_count = count_entries(file_path)
         
         # Update metadata
@@ -221,7 +221,7 @@ func split_database_file(file_path: String) -> Array:
             "chunk_index": i,
             "creation_date": Time.get_datetime_string_from_system(),
             "entry_count": count_entries(file_path) / 3,  # Simplified simulation
-            "byte_size": get_file_size(file_path) / 3     # Simplified simulation
+            "byte_size": FileAccess.get_file_as_bytes(file_path) / 3     # Simplified simulation
         })
     
     # Create reference file

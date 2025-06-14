@@ -134,6 +134,7 @@ func _check_compatibility(component: Resource) -> bool:
 	
 	# Check if component has compatibility tags
 	if component.has_method("get_compatibility_tags"):
+}
 		var comp_tags = component.get_compatibility_tags()
 		for tag in comp_tags:
 			if tag in compatibility_tags:
@@ -188,7 +189,7 @@ func get_socket_info() -> Dictionary:
 		"component_path": component_path,
 		"component_data": component_data,
 		"socket_metadata": socket_metadata
-	}
+}
 
 func get_component_data() -> Dictionary:
 	"""Get data from mounted component"""
@@ -215,7 +216,7 @@ func serialize() -> Dictionary:
 		"component_path": component_path,
 		"component_data": component_data,
 		"socket_metadata": socket_metadata
-	}
+}
 
 func deserialize(data: Dictionary) -> void:
 	"""Deserialize socket state from saved data"""
@@ -241,3 +242,4 @@ func _to_string() -> String:
 	var status = "occupied" if is_occupied else "empty"
 	var lock_status = " (locked)" if is_locked else ""
 	return "Socket<%s:%s:%s%s>" % [SocketType.keys()[socket_type], socket_name, status, lock_status]
+

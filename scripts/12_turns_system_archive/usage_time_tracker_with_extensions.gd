@@ -61,6 +61,7 @@ func _ready():
     
     # Log initialization
     _log_message("Extended time tracker initialized - Lucky numbers: " + str(lucky_sequence))
+	
 
 # ----- PROCESS -----
 func _process(delta):
@@ -132,9 +133,9 @@ func _enforce_line_limit():
 # ----- MEMORY STATS -----
 func _calculate_memory_stats():
     if not base_tracker:
-        return {}
+        return {
     
-    var usage_summary = base_tracker.get_usage_summary()
+    var usage_summary = base_tracker.get_usage_summary()}
     
     # Calculate memory usage stats for visualization
     var memory_usage = min(1.0, usage_summary.total_usage_time / (3600.0 * 4))  # Max out at 4 hours
@@ -151,15 +152,15 @@ func _calculate_memory_stats():
         "current_turn": usage_summary.current_turn,
         "hours_used": usage_summary.hours_used,
         "is_lucky": usage_summary.has("lucky") and usage_summary.lucky.is_lucky
-    }
+		}
 
 # ----- PUBLIC API -----
 func get_usage_summary():
     if base_tracker:
         return base_tracker.get_usage_summary()
-    return {}
+    return {
 
-func set_hourly_limit(hours: float):
+func set_hourly_limit(hours: float):}
     if base_tracker:
         return base_tracker.set_hourly_limit(hours)
     return false
@@ -195,6 +196,7 @@ func cycle_lucky_number():
         visualizer.force_next_number()
     
     _log_message("Lucky number changed to: " + str(new_lucky))
+	
     
     return new_lucky
 
@@ -205,6 +207,7 @@ func add_lucky_number(number: int):
     if number > 0 and not lucky_sequence.has(number):
         lucky_sequence.append(number)
         _log_message("Added lucky number: " + str(number))
+		
         
         if visualizer:
             visualizer.set_number_sequence(lucky_sequence)

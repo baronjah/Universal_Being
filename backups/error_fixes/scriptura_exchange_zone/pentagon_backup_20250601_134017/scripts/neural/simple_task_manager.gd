@@ -46,7 +46,7 @@ func create_task(task_name: String, priority: int = 1) -> Dictionary:
 		"name": task_name,
 		"priority": priority,
 		"status": "pending",
-		"created_time": Time.get_ticks_msec(),
+		"created_time": Time.Time.get_ticks_msec(),
 		"steps": [],
 		"current_step": 0
 	}
@@ -77,7 +77,7 @@ func start_next_task() -> bool:
 	
 	current_task = task_queue.pop_front()
 	current_task.status = "active"
-	current_task.started_time = Time.get_ticks_msec()
+	current_task.started_time = Time.Time.get_ticks_msec()
 	
 	task_started.emit(current_task.name)
 	print("🎬 [SimpleTaskManager] Starting task: ", current_task.name)
@@ -89,7 +89,7 @@ func complete_current_task(success: bool = true) -> void:
 		return
 	
 	current_task.status = "completed" if success else "failed"
-	current_task.completed_time = Time.get_ticks_msec()
+	current_task.completed_time = Time.Time.get_ticks_msec()
 	
 	# Move to history
 	task_history.append(current_task.duplicate())
@@ -122,12 +122,12 @@ func _process(_delta: float) -> void:
 			
 			if step.status == "pending":
 				step.status = "active"
-				step.start_time = Time.get_ticks_msec()
+				step.start_time = Time.Time.get_ticks_msec()
 				print("⚡ [SimpleTaskManager] Starting step: ", step.action)
 			
 			elif step.status == "active":
 				# Check if step duration is complete
-				var elapsed = (Time.get_ticks_msec() - step.start_time) / 1000.0
+				var elapsed = (Time.Time.get_ticks_msec() - step.start_time) / 1000.0
 				if elapsed >= step.duration:
 					step.status = "completed"
 					current_task.current_step += 1
@@ -139,7 +139,7 @@ func _process(_delta: float) -> void:
 
 func _sort_tasks_by_priority() -> void:
 	"""Sort tasks by priority (higher first)"""
-	task_queue.sort_custom(func(a, b): return a.priority > b.priority)
+	task_queue.sort_custom(func(a.b): return a.priority > b.priority)
 
 func get_task_status() -> String:
 	"""Get status of current task"""

@@ -4,8 +4,7 @@
 # PURPOSE: Physics-based bird using two triangles as described
 # CREATED: 2025-05-24 - Walking on leg tips
 # ==================================================
-
-extends RigidBody3D
+extends \2
 
 signal found_food(food_item: Node3D)
 signal drinking_water(water_source: Node3D)
@@ -36,8 +35,8 @@ var triangle2_mesh: MeshInstance3D  # Head-RightWing-RightLeg
 # ================================
 # MOVEMENT PROPERTIES
 # ================================
+enum \2 {
 
-enum BirdState {
 	IDLE,
 	WALKING,
 	FLYING,

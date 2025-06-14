@@ -32,7 +32,7 @@ const RESOURCE_TYPES = {
 	"energy": {"color": Color.YELLOW, "value": 2, "density": 0.3},
 	"crystals": {"color": Color.CYAN, "value": 5, "density": 0.15},
 	"quantum": {"color": Color.PURPLE, "value": 10, "density": 0.05},
-	"consciousness": {"color": Color.WHITE, "value": 100, "density": 0.01}
+	"consciousness": {"color": Color.WHITE, "value": 100, "density": 0.01
 }
 
 # ============================================================================
@@ -370,7 +370,7 @@ class MiningBeam extends Node3D:
 		
 		# Extract resources
 		var resources = current_target.get_meta("resources", {})
-		var extracted = {}
+		var extracted = {
 		
 		for resource in resources:
 			var amount = min(mining_power * delta, resources[resource])
@@ -430,7 +430,8 @@ class MiningBeam extends Node3D:
 # CELESTIAL BODY SYSTEM - PERFECT PHYSICS
 # ============================================================================
 class CelestialBody extends RigidBody3D:
-	enum BodyType { ASTEROID, PLANET, STAR, BLACK_HOLE, NEBULA, STATION }
+	enum BodyType { ASTEROID, PLANET, STAR, BLACK_HOLE, NEBULA, STATION
+}
 	
 	@export var body_type: BodyType = BodyType.ASTEROID
 	@export var body_mass: float = 1000.0
@@ -720,7 +721,6 @@ class CelestialBody extends RigidBody3D:
 				resources = {
 					"metal": randi_range(50, 200),
 					"crystals": randi_range(0, 50)
-				}
 				if randf() < 0.1:  # 10% chance for rare resources
 					resources["quantum"] = randi_range(5, 20)
 			BodyType.PLANET:
@@ -728,12 +728,11 @@ class CelestialBody extends RigidBody3D:
 					"metal": randi_range(500, 2000),
 					"energy": randi_range(100, 500),
 					"crystals": randi_range(50, 200)
-				}
 			BodyType.NEBULA:
 				resources = {
 					"energy": randi_range(200, 1000),
 					"consciousness": randi_range(1, 10)
-				}
+	}
 	
 	func _generate_icosphere_vertices(subdivisions: int) -> Array:
 		# Generate icosphere vertices for irregular shapes
@@ -794,9 +793,11 @@ class AICompanion extends CharacterBody3D:
 	signal discovered_resource(resource: Node3D)
 	signal danger_detected(threat: Node3D)
 	
-	enum AIState { IDLE, FOLLOWING, MINING, EXPLORING, DEFENDING, BUILDING }
+	enum AIState { IDLE, FOLLOWING, MINING, EXPLORING, DEFENDING, BUILDING
+}
 	
 	var companion_name: String = "AI_Companion"
+}
 	var ai_state: AIState = AIState.FOLLOWING
 	var consciousness_level: int = 0
 	var loyalty: float = 1.0
@@ -964,9 +965,11 @@ class AICompanion extends CharacterBody3D:
 		else:
 			# Mine
 			if target.has_method("extract_resources"):
+}
 				var extracted = target.extract_resources(10.0 * efficiency * delta)
 				if extracted.size() > 0:
 					communicate("Extracted: " + str(extracted))
+	}
 					# Store in memory
 					memory_bank.append({
 						"action": "mined",
@@ -982,6 +985,7 @@ class AICompanion extends CharacterBody3D:
 		
 		# Random walk within area
 		if not current_task.has("exploration_target"):
+}
 			var angle = randf() * TAU
 			var distance = randf_range(50, current_task["exploration_radius"])
 			current_task["exploration_target"] = current_task["area_center"] + Vector3(
@@ -1028,6 +1032,7 @@ class AICompanion extends CharacterBody3D:
 				if consciousness_level >= 3:
 					var resources = collider.get_meta("resources", {})
 					communicate("Contains: " + str(resources))
+	}
 			
 			# Check if threat
 			elif collider.is_in_group("hostile"):
@@ -1263,6 +1268,7 @@ class ConsciousnessVisualizer extends Node3D:
 			
 			# Rotate ring
 			tween.parallel().tween_property(ring, "rotation:y", TAU, 2.0)
+}
 		
 		# Pulse field
 		var field_tween = create_tween()
@@ -1290,7 +1296,7 @@ class AkashicLibrary extends Node:
 			"data": data,
 			"timestamp": timestamp,
 			"consciousness_level": get_parent().consciousness_level if get_parent() else 0
-		}
+}
 		
 		timeline.append(record)
 		
@@ -1355,7 +1361,7 @@ class AkashicLibrary extends Node:
 			"timeline": timeline.slice(-1000),  # Keep last 1000 events
 			"consciousness_history": consciousness_history,
 			"discovered_knowledge": discovered_knowledge
-		}
+}
 		
 		var file = FileAccess.open("user://akashic_records.save", FileAccess.WRITE)
 		if file:
@@ -1364,6 +1370,7 @@ class AkashicLibrary extends Node:
 	
 	func _load_records():
 		if FileAccess.file_exists("user://akashic_records.save"):
+
 			var file = FileAccess.open("user://akashic_records.save", FileAccess.READ)
 			if file:
 				var save_data = file.get_var()
@@ -1724,6 +1731,7 @@ func _on_companion_discovered_resource(resource: Node3D):
 
 func _on_companion_detected_danger(threat: Node3D):
 	stellar_hud.display_message("DANGER: " + threat.name, Color.RED)
+
 
 # ============================================================================
 # ENTRY POINT

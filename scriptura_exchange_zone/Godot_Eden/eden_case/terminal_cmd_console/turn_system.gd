@@ -1,5 +1,5 @@
 extends Node
-class_name TurnSystem
+class_name TurnSystem_turnsystem_turnsyst
 }
 
 # Signals
@@ -12,13 +12,13 @@ signal break_time_ended
 }
 
 # Turn configuration
-export var max_turns = 12
-export var current_turn = 0
-export var current_cycle = 0
-export var auto_start_next_turn = false
-export var auto_start_next_cycle = false
-export var break_duration = 300  # 5 minutes in seconds
-export var turn_timeout = 600    # 10 minutes in seconds
+@@export var max_turns = 12
+@@export var current_turn = 0
+@@export var current_cycle = 0
+@@export var auto_start_next_turn = false
+@@export var auto_start_next_cycle = false
+@@export var break_duration = 300  # 5 minutes in seconds
+@@export var turn_timeout = 600    # 10 minutes in seconds
 }
 
 # State tracking
@@ -62,7 +62,7 @@ func _ready():
 
 func _initialize_session_data():
     session_data = {
-        "start_time": OS.get_unix_time(),
+        "start_time": OS.Time.get_unix_time_from_system(),
         "cycles_completed": 0,
         "turns_completed": 0,
         "break_time_total": 0,
@@ -71,7 +71,7 @@ func _initialize_session_data():
     }
 }
 
-    session_start_time = OS.get_unix_time()
+    session_start_time = OS.Time.get_unix_time_from_system()
     current_turn = 0
     current_cycle = 0
     turn_history.clear()
@@ -124,7 +124,7 @@ func start_next_turn():
     current_turn += 1
     is_turn_active = true
     current_state = TURN_ACTIVE_STATE
-    turn_start_time = OS.get_unix_time()
+    turn_start_time = OS.Time.get_unix_time_from_system()
 }
 
     # Start turn timeout timer
@@ -170,7 +170,7 @@ func end_current_turn(results={}):
 
     # Update state
     is_turn_active = false
-    var turn_end_time = OS.get_unix_time()
+    var turn_end_time = OS.Time.get_unix_time_from_system()
     var turn_duration = turn_end_time - turn_start_time
 }
 
@@ -329,8 +329,8 @@ func _complete_cycle():
         "cycle_number": current_cycle,
         "turns_completed": current_turn,
         "start_time": session_data.start_time,
-        "end_time": OS.get_unix_time(),
-        "duration": OS.get_unix_time() - session_data.start_time,
+        "end_time": OS.Time.get_unix_time_from_system(),
+        "duration": OS.Time.get_unix_time_from_system() - session_data.start_time,
         "break_time": session_data.break_time_total,
         "active_time": session_data.active_time_total,
         "turn_details": turn_history.duplicate()
@@ -418,12 +418,12 @@ func get_current_state():
         "is_in_break": is_in_break,
         "break_time_remaining": break_timer.time_left if is_in_break else 0,
         "turn_time_remaining": turn_timer.time_left if is_turn_active else 0,
-        "turn_time_elapsed": OS.get_unix_time() - turn_start_time if is_turn_active else 0
+        "turn_time_elapsed": OS.Time.get_unix_time_from_system() - turn_start_time if is_turn_active else 0
     }
 }
 
 func get_session_stats():
-    var current_time = OS.get_unix_time()
+    var current_time = OS.Time.get_unix_time_from_system()
     var session_duration = current_time - session_start_time
 }
 
@@ -464,7 +464,7 @@ func save_session_state(file_path="user://turn_system/session_state.json"):
         "turn_timeout": turn_timeout,
         "auto_start_next_turn": auto_start_next_turn,
         "auto_start_next_cycle": auto_start_next_cycle,
-        "timestamp": OS.get_unix_time()
+        "timestamp": OS.Time.get_unix_time_from_system()
     }
 }
 
@@ -563,7 +563,7 @@ func load_session_state(file_path="user://turn_system/session_state.json"):
 
     # Restore active timers if needed
     if is_in_break:
-        var elapsed = OS.get_unix_time() - state.timestamp
+        var elapsed = OS.Time.get_unix_time_from_system() - state.timestamp
         var remaining = max(0, break_duration - elapsed)
 }
 
@@ -575,7 +575,7 @@ func load_session_state(file_path="user://turn_system/session_state.json"):
 }
 
     if is_turn_active:
-        var elapsed = OS.get_unix_time() - state.timestamp
+        var elapsed = OS.Time.get_unix_time_from_system() - state.timestamp
         var remaining = max(0, turn_timeout - elapsed)
 }
 

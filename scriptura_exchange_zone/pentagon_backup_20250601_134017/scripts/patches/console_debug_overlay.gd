@@ -10,8 +10,7 @@
 # PURPOSE: Help debug console visibility issues
 # CREATED: 2025-05-26
 # ==================================================
-
-extends CanvasLayer
+extends \2
 
 var debug_label: Label
 var console_manager: Node
@@ -32,7 +31,7 @@ func _ready() -> void:
 	
 	# Wait for console manager
 	await get_tree().process_frame
-	console_manager = get_node_or_null("/root/ConsoleManager")
+	console_manager = get_node_or_null("root/ConsoleManager")
 	
 	if console_manager:
 		debug_label.text = "Console Manager: Found ✅"
@@ -63,7 +62,7 @@ func _process(_delta: float) -> void:
 	if "is_animating" in console_manager:
 		status.append("is_animating: " + str(console_manager.is_animating))
 	
-	debug_label.text = "\n".join(status)
+	debug_label.text = "\n"." ".join(status)
 
 func _input(event: InputEvent) -> void:
 	if event is InputEventKey and event.pressed and event.keycode == KEY_F12:

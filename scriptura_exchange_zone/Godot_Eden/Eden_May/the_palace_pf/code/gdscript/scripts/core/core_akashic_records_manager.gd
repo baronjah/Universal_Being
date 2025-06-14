@@ -1,5 +1,5 @@
 extends Node
-class_name CoreAkashicRecordsManager
+class_name CoreAkashicRecordsManager_coreakashicrecordsmanager_coreakas
 
 # Singleton instance
 static var _instance = null
@@ -44,7 +44,7 @@ func _ready():
 
 # Initialize the dictionary system
 func _initialize_dictionary() -> void:
-	var DynamicDictionary = load("res://code/gdscript/scripts/akashic_records/dynamic_dictionary.gd")
+	var DynamicDictionary = load("res://scripts/gdscript/scripts/akashic_records/dynamic_dictionary.gd")
 	if not DynamicDictionary:
 		print("Failed to load dynamic_dictionary.gd script")
 		# Create a minimal dictionary implementation to avoid crashes
@@ -73,7 +73,7 @@ func _initialize_dictionary() -> void:
 
 # Initialize the interaction engine
 func _initialize_interaction_engine() -> void:
-	var InteractionEngine = load("res://code/gdscript/scripts/akashic_records/interaction_engine.gd")
+	var InteractionEngine = load("res://scripts/gdscript/scripts/akashic_records/interaction_engine.gd")
 	if not InteractionEngine:
 		print("Failed to load interaction_engine.gd script")
 		# Create a minimal interaction engine to avoid crashes
@@ -93,7 +93,7 @@ func _initialize_interaction_engine() -> void:
 
 # Initialize the zone manager
 func _initialize_zone_manager() -> void:
-	var ZoneManager = load("res://code/gdscript/scripts/akashic_records/zone_manager.gd")
+	var ZoneManager = load("res://scripts/gdscript/scripts/akashic_records/zone_manager.gd")
 	if not ZoneManager:
 		print("Failed to load zone_manager.gd script")
 		# Create a minimal zone manager to avoid crashes
@@ -213,7 +213,7 @@ func _create_basic_interactions() -> void:
 
 # Initialize the evolution system
 func _initialize_evolution_system() -> void:
-	var EvolutionManager = load("res://code/gdscript/scripts/akashic_records/evolution_manager.gd")
+	var EvolutionManager = load("res://scripts/gdscript/scripts/akashic_records/evolution_manager.gd")
 	if not EvolutionManager:
 		print("Failed to load evolution_manager.gd script")
 		# Create a minimal evolution manager to avoid crashes

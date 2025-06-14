@@ -1,5 +1,5 @@
 extends Node
-class_name ThingCreatorAutoIntegrator
+class_name ThingCreatorAutoIntegrator_thingcreatorautointegrator_thingcre
 
 # This script automatically diagnoses and integrates the Thing Creator system
 # into your layer_0.tscn without requiring modification of main.gd
@@ -81,8 +81,8 @@ func has_menu_methods(node):
 func find_akashic_records():
     log.append("Searching for AkashicRecordsManager...")
     
-    if has_node("/root/AkashicRecordsManager"):
-        akashic_records_manager = get_node("/root/AkashicRecordsManager")
+    if has_node("root/AkashicRecordsManager"):
+        akashic_records_manager = get_node("root/AkashicRecordsManager")
         log.append("✓ Found AkashicRecordsManager at: /root/AkashicRecordsManager")
         return
     
@@ -101,12 +101,12 @@ func find_jsh_console():
     
     # Common paths to try
     var possible_paths = [
-        "/root/Main/JSH_console",
-        "/root/Main/CanvasLayer/JSH_console",
-        "/root/Main/UI/JSH_console",
-        "/root/layer_0/JSH_console",
-        "/root/layer_0/CanvasLayer/JSH_console", 
-        "/root/layer_0/UI/JSH_console"
+        "root/Main/JSH_console",
+        "root/Main/CanvasLayer/JSH_console",
+        "root/Main/UI/JSH_console",
+        "root/layer_0/JSH_console",
+        "root/layer_0/CanvasLayer/JSH_console", 
+        "root/layer_0/UI/JSH_console"
     ]
     
     # Try each path
@@ -226,7 +226,7 @@ func _is_suitable_container(node):
     # Prefer Panel, VBoxContainer, Control nodes
     var suitable_classes = ["Panel", "PanelContainer", "VBoxContainer", "HBoxContainer", "Control"]
     
-    for class_name in suitable_classes:
+    for class_name in_thingcreatorautointegrator_thingcre suitable_classes:
         if node.is_class(class_name):
             return true
     
@@ -294,13 +294,13 @@ func setup_thing_creator():
     log.append("Setting up Thing Creator...")
     
     # Check if already exists
-    if has_node("/root/ThingCreator"):
-        thing_creator = get_node("/root/ThingCreator")
+    if has_node("root/ThingCreator"):
+        thing_creator = get_node("root/ThingCreator")
         log.append("✓ ThingCreator already exists at /root/ThingCreator")
         return
     
     # Create new instance
-    var ThingCreatorClass = load("res://code/gdscript/scripts/akashic_records/thing_creator.gd")
+    var ThingCreatorClass = load("res://scripts/gdscript/scripts/akashic_records/thing_creator.gd")
     if ThingCreatorClass:
         thing_creator = ThingCreatorClass.new()
         thing_creator.name = "ThingCreator"
@@ -318,7 +318,7 @@ func setup_integration():
         return
     
     # Create integration
-    var IntegrationClass = load("res://code/gdscript/scripts/Menu_Keyboard_Console/thing_creator_integration.gd")
+    var IntegrationClass = load("res://scripts/gdscript/scripts/Menu_Keyboard_Console/thing_creator_integration.gd")
     if IntegrationClass:
         thing_creator_integration = IntegrationClass.new()
         thing_creator_integration.name = "ThingCreatorIntegration"
@@ -343,7 +343,7 @@ func setup_jsh_commands():
         return
     
     # Create commands
-    var CommandsClass = load("res://code/gdscript/scripts/Menu_Keyboard_Console/thing_creator_commands.gd")
+    var CommandsClass = load("res://scripts/gdscript/scripts/Menu_Keyboard_Console/thing_creator_commands.gd")
     if CommandsClass:
         thing_creator_commands = CommandsClass.new()
         thing_creator_commands.name = "ThingCreatorCommands"
@@ -361,10 +361,10 @@ func setup_jsh_commands():
 # Add proxy methods to the main console if needed
 func add_proxy_methods_to_main_console():
     var required_methods = {
-        "register_system": funcref(self, "_proxy_register_system"),
-        "add_menu_entry": funcref(self, "_proxy_add_menu_entry"),
-        "add_to_view_area": funcref(self, "_proxy_add_to_view_area"),
-        "show_message": funcref(self, "_proxy_show_message")
+        "register_system": Callable(self, "_proxy_register_system"),
+        "add_menu_entry": Callable(self, "_proxy_add_menu_entry"),
+        "add_to_view_area": Callable(self, "_proxy_add_to_view_area"),
+        "show_message": Callable(self, "_proxy_show_message")
     }
     
     for method in required_methods:
@@ -510,7 +510,7 @@ func print_report():
     if jsh_console:
         print("- JSH Console: " + str(jsh_console.get_path()))
     if view_area:
-        print("- View Area: " + str(view_area.get_path()))
+        print("- View Area3D: " + str(view_area.get_path()))
     
     print("\nQUICK TEST COMMANDS:")
     if jsh_ready:

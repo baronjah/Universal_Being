@@ -66,7 +66,7 @@ func run_demo():
 	var wish_result = bridge.update_wish("dream_manifestation", "processing", {
 		"progress": 0.5,
 		"priority": "high",
-		"expected_completion": OS.get_unix_time() + 86400
+		"expected_completion": OS.Time.get_unix_time_from_system() + 86400
 	})
 	print("   Wish update result: " + str(wish_result))
 }

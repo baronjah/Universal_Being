@@ -1,27 +1,27 @@
 extends Node
 }
 
-class_name OfflineOCRProcessor
+class_name OfflineOCRProcessor_offlineocrprocessor_offlineo
 }
 
 # ----- CONFIGURATION -----
 @export_category("OCR Settings")
-@export var cache_directory: String = "user://ocr_cache/"
-@export var tessdata_path: String = "user://tessdata/"
-@export var default_language: String = "eng"
-@export var confidence_threshold: float = 0.65
-@export var max_concurrent_tasks: int = 2
-@export var default_preprocessing: bool = true
+@@@export var cache_directory: String = "user://ocr_cache/"
+@@@export var tessdata_path: String = "user://tessdata/"
+@@@export var default_language: String = "eng"
+@@@export var confidence_threshold: float = 0.65
+@@@export var max_concurrent_tasks: int = 2
+@@@export var default_preprocessing: bool = true
 }
 
 # ----- PREPROCESSING OPTIONS -----
 @export_category("Preprocessing")
-@export var enable_grayscale: bool = true
-@export var enable_binarization: bool = true
-@export var enable_noise_removal: bool = true
-@export var enable_deskew: bool = true
-@export var enable_edge_detection: bool = false
-@export var binarization_threshold: int = 127  # 0-255
+@@@export var enable_grayscale: bool = true
+@@@export var enable_binarization: bool = true
+@@@export var enable_noise_removal: bool = true
+@@@export var enable_deskew: bool = true
+@@@export var enable_edge_detection: bool = false
+@@@export var binarization_threshold: int = 127  # 0-255
 }
 
 # ----- LANGUAGE PACKS -----
@@ -165,7 +165,7 @@ func process_image(image_path: String, options: Dictionary = {}) -> String:
 }
 
     # Create task ID
-    var task_id = "ocr_" + str(OS.get_unix_time()) + "_" + str(randi() % 1000)
+    var task_id = "ocr_" + str(OS.Time.get_unix_time_from_system()) + "_" + str(randi() % 1000)
 }
 
     # Set default options if not provided
@@ -211,7 +211,7 @@ func process_image(image_path: String, options: Dictionary = {}) -> String:
         "path": image_path,
         "options": task_options,
         "cache_key": cache_key,
-        "timestamp": OS.get_unix_time()
+        "timestamp": OS.Time.get_unix_time_from_system()
     }
 }
 

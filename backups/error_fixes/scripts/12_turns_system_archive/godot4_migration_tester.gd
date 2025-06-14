@@ -17,6 +17,7 @@ var akashic_system = null
 var test_cases = {
     "node_renames": {
         "input": """
+		}
 extends Spatial
 
 func _ready():
@@ -26,6 +27,7 @@ func _ready():
     var ray = $RayCast
 """,
         "expected": """
+		}
 extends Node3D
 
 func _ready() -> void:
@@ -34,19 +36,21 @@ func _ready() -> void:
     var area = $Area3D
     var ray = $RayCast3D
 """
-    },
+    ,
     
     "method_renames": {
         "input": """
+		}
 func test_methods():
     var pos = get_translation()
     set_translation(Vector3(0, 1, 0))
     if is_network_master():
         rpc_id(1, "update")
         rpc_unreliable("update_pos")
-    var result = yield(get_tree(), "idle_frame")
+    var result = await(get_tree(), "idle_frame")
 """,
         "expected": """
+		
 func test_methods() -> void:
     var pos = get_position()
     set_position(Vector3(0, 1, 0))
@@ -55,10 +59,11 @@ func test_methods() -> void:
         rpc("update_pos")
     var result = await get_tree().idle_frame
 """
-    },
+    ,
     
     "property_renames": {
         "input": """
+		}
 func update_ui():
     $Label.rect_size = Vector2(100, 50)
     $Label.rect_position = Vector2(10, 10)
@@ -69,6 +74,7 @@ func update_ui():
     $Panel.margin_bottom = 45
 """,
         "expected": """
+		
 func update_ui() -> void:
     $Label.size = Vector2(100, 50)
     $Label.position = Vector2(10, 10)
@@ -78,10 +84,11 @@ func update_ui() -> void:
     $Panel.position.y = 5
     $Panel.size.y + position.y = 45
 """
-    },
+    ,
     
     "onready_vars": {
         "input": """
+		}
 extends Node
 
 onready var label = $Label
@@ -92,6 +99,7 @@ func _ready():
     label.text = "Hello"
 """,
         "expected": """
+		
 extends Node
 
 @onready var label = $Label
@@ -101,10 +109,11 @@ extends Node
 func _ready() -> void:
     label.text = "Hello"
 """
-    },
+    ,
     
     "exports": {
         "input": """
+		}
 extends Node
 
 export(int, 0, 100) var health = 100
@@ -116,6 +125,7 @@ func _ready():
     print(health)
 """,
         "expected": """
+		
 extends Node
 
 @export var health = 100
@@ -126,10 +136,11 @@ extends Node
 func _ready() -> void:
     print(health)
 """
-    },
+    ,
     
     "signals": {
         "input": """
+		}
 extends Node
 
 signal health_changed(amount)
@@ -143,6 +154,7 @@ func update_health(damage):
         emit_signal("player_died")
 """,
         "expected": """
+		
 extends Node
 
 signal health_changed(amount)
@@ -155,10 +167,11 @@ func update_health(damage) -> void:
     if health <= 0:
         player_died.emit()
 """
-    },
+    ,
     
     "typed_arrays": {
         "input": """
+		}
 func create_inventory():
     var items = []
     var weapons = []
@@ -168,9 +181,9 @@ func create_inventory():
         "items": items,
         "weapons": weapons,
         "prices": prices
-    }
 """,
         "expected": """
+		}
 func create_inventory() -> void:
     var items: Array = []
     var weapons: Array = []
@@ -180,12 +193,12 @@ func create_inventory() -> void:
         "items": items,
         "weapons": weapons,
         "prices": prices
-    }
 """
     },
     
     "physics_bodies": {
         "input": """
+		}
 extends RigidBody
 
 func _ready():
@@ -195,6 +208,7 @@ func _physics_process(delta):
     apply_impulse(Vector3.ZERO, Vector3(0, 10, 0))
 """,
         "expected": """
+		
 extends RigidBody3D
 
 func _ready() -> void:
@@ -203,10 +217,11 @@ func _ready() -> void:
 func _physics_process(delta: float) -> void:
     apply_impulse(Vector3.ZERO, Vector3(0, 10, 0))
 """
-    },
+    ,
     
     "characterbody": {
         "input": """
+		}
 extends KinematicBody
 
 func _physics_process(delta):
@@ -219,6 +234,7 @@ func _physics_process(delta):
         print(collision.collider.name)
 """,
         "expected": """
+		
 extends CharacterBody3D
 
 func _physics_process(delta: float) -> void:
@@ -230,7 +246,7 @@ func _physics_process(delta: float) -> void:
         var collision = get_slide_collision(0)
         print(collision.collider.name)
 """
-    },
+    ,
     
     "tool_script": {
         "input": """
@@ -255,6 +271,7 @@ func _ready() -> void:
     
     "networking_terms": {
         "input": """
+		}
 extends Node
 
 func _ready():
@@ -270,6 +287,7 @@ master func master_func():
     print("I'm the master")
 """,
         "expected": """
+		
 extends Node
 
 func _ready() -> void:
@@ -284,8 +302,6 @@ puppet func slave_func() -> void:
 authority func master_func() -> void:
     print("I'm the master")
 """
-    }
-}
 
 # ----- SIGNALS -----
 signal test_started(total_tests)
@@ -345,10 +361,12 @@ func _create_test_directories():
     if not DirAccess.dir_exists_absolute(test_scripts_path):
         DirAccess.make_dir_recursive_absolute(test_scripts_path)
         print("Created test scripts directory: " + test_scripts_path)
+		
     
     if not DirAccess.dir_exists_absolute(output_path):
         DirAccess.make_dir_recursive_absolute(output_path)
         print("Created output directory: " + output_path)
+		
 
 # ----- TEST EXECUTION -----
 func run_all_tests():
@@ -360,8 +378,8 @@ func run_all_tests():
         "total": test_cases.size(),
         "passed": 0,
         "failed": 0,
-        "details": {}
-    }
+        "details": {
+		}
     
     emit_signal("test_started", test_cases.size())
     
@@ -400,6 +418,7 @@ func _generate_test_scripts():
                 print("Generated test script: " + script_path)
         else:
             push_error("Failed to create test script: " + script_path)
+			}
 
 func _run_test(test_name):
     var input_path = test_scripts_path.path_join(test_name + ".gd")
@@ -407,6 +426,7 @@ func _run_test(test_name):
     
     if verbose_logging:
         print("Running test: " + test_name)
+		
     
     # Run migration on the test script
     var migration_result = migration_tool.migrate_single_file(input_path, output_path_file)
@@ -417,7 +437,7 @@ func _run_test(test_name):
             "migration_error": migration_result.error,
             "expected": test_cases[test_name].expected,
             "actual": null
-        }
+			}
     
     # Read the migrated output
     var file = FileAccess.open(output_path_file, FileAccess.READ)
@@ -427,7 +447,7 @@ func _run_test(test_name):
             "error": "Failed to read migrated output file",
             "expected": test_cases[test_name].expected,
             "actual": null
-        }
+			}
     
     var actual_output = file.get_as_text()
     file.close()
@@ -445,7 +465,7 @@ func _run_test(test_name):
         "actual": normalized_actual,
         "warnings": migration_result.warnings,
         "errors": migration_result.errors
-    }
+		}
 
 func _normalize_script(script_text):
     # Normalize script text for comparison (removes extra whitespace, etc.)
@@ -465,11 +485,13 @@ func _print_test_results(results):
     print("Passed: " + str(results.passed))
     print("Failed: " + str(results.failed))
     print("\nDetailed Results:")
+	
     
     for test_name in results.details.keys():
         var test_result = results.details[test_name]
         var status = "✓ PASSED" if test_result.passed else "✗ FAILED"
         print("\n" + test_name + ": " + status)
+		
         
         if not test_result.passed:
             print("\nExpected:")
@@ -479,6 +501,7 @@ func _print_test_results(results):
             
             if test_result.has("migration_error"):
                 print("\nMigration Error: " + test_result.migration_error)
+				
         
         if test_result.has("warnings") and test_result.warnings.size() > 0:
             print("\nWarnings:")
@@ -500,10 +523,11 @@ func create_custom_test_case(name: String, input_script: String, expected_output
     test_cases[name] = {
         "input": input_script,
         "expected": expected_output
-    }
+		}
     
     if verbose_logging:
         print("Added custom test case: " + name)
+		
     
     return true
 
@@ -519,8 +543,10 @@ func run_single_test(test_name: String):
     
     # Print result
     print("\n----- TEST RESULT: " + test_name + " -----")
+	
     var status = "✓ PASSED" if test_result.passed else "✗ FAILED"
     print("Status: " + status)
+	
     
     if not test_result.passed:
         print("\nExpected:")
@@ -530,6 +556,7 @@ func run_single_test(test_name: String):
         
         if test_result.has("migration_error"):
             print("\nMigration Error: " + test_result.migration_error)
+			
     
     return test_result
 
@@ -545,7 +572,7 @@ func test_custom_script(script_content: String) -> Dictionary:
         return {
             "success": false,
             "error": "Failed to create temporary test file"
-        }
+			}
     
     file.store_string(script_content)
     file.close()
@@ -557,7 +584,7 @@ func test_custom_script(script_content: String) -> Dictionary:
         return {
             "success": false,
             "error": migration_result.error
-        }
+			}
     
     # Read the migrated output
     file = FileAccess.open(output_path_file, FileAccess.READ)
@@ -565,7 +592,7 @@ func test_custom_script(script_content: String) -> Dictionary:
         return {
             "success": false,
             "error": "Failed to read migrated output file"
-        }
+			}
     
     var migrated_content = file.get_as_text()
     file.close()
@@ -581,7 +608,7 @@ func test_custom_script(script_content: String) -> Dictionary:
         "migrated": migrated_content,
         "warnings": migration_result.warnings,
         "errors": migration_result.errors
-    }
+		}
 
 func generate_test_report(file_path: String = "") -> String:
     # Generate a detailed test report and optionally save to file
@@ -594,6 +621,7 @@ func generate_test_report(file_path: String = "") -> String:
     report += "- Passed: " + str(results.passed) + "\n"
     report += "- Failed: " + str(results.failed) + "\n"
     report += "- Success Rate: " + str(float(results.passed) / results.total * 100) + "%\n\n"
+	
     
     report += "## Detailed Results\n\n"
     
@@ -602,6 +630,7 @@ func generate_test_report(file_path: String = "") -> String:
         var status = "✅ PASSED" if test_result.passed else "❌ FAILED"
         
         report += "### " + test_name + ": " + status + "\n\n"
+		
         
         if not test_result.passed:
             report += "#### Expected Output\n\n```gdscript\n" + test_result.expected + "\n```\n\n"
@@ -624,6 +653,7 @@ func generate_test_report(file_path: String = "") -> String:
     
     # Save to file if path is provided
     if file_path != "":
+	
         var file = FileAccess.open(file_path, FileAccess.WRITE)
         if file:
             file.store_string(report)
@@ -631,6 +661,7 @@ func generate_test_report(file_path: String = "") -> String:
             print("Test report saved to: " + file_path)
         else:
             push_error("Failed to save test report to: " + file_path)
+			
     
     return report
 
@@ -642,8 +673,8 @@ func batch_test_directory(directory_path: String) -> Dictionary:
         "total_files": files.size(),
         "successful_migrations": 0,
         "failed_migrations": 0,
-        "details": {}
-    }
+        "details": {
+		}
     
     for file_path in files:
         var file_name = file_path.get_file()
@@ -669,9 +700,11 @@ func _get_all_script_files(path: String) -> Array:
         var file_name = dir.get_next()
         
         while file_name != "":
+		}
             var full_path = path.path_join(file_name)
             
             if dir.current_is_dir() and file_name != "." and file_name != "..":
+			
                 # Recursively process subdirectories
                 files.append_array(_get_all_script_files(full_path))
             elif file_name.ends_with(".gd"):
@@ -680,6 +713,7 @@ func _get_all_script_files(path: String) -> Array:
             file_name = dir.get_next()
     else:
         push_error("Failed to open directory: " + path)
+		
     
     return files
 
@@ -691,7 +725,7 @@ func test_migration_with_color_system():
         return {
             "success": false,
             "error": "Color system not found"
-        }
+			}
     
     # Run a test that would generate color-coded output when integrated with color system
     var test_results = run_all_tests()
@@ -719,4 +753,3 @@ func test_migration_with_color_system():
         "properties_migrated": properties_migrated,
         "total_passed": test_results.passed,
         "total_failed": test_results.failed
-    }

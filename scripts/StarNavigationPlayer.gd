@@ -277,9 +277,11 @@ func _interact_with_highlighted_star() -> void:
 		return
 	
 	print("⭐ Interacting with star: %s" % highlighted_star.name)
+
 	
 	# Get script information if available
 	if highlighted_star.has_method("get_script_info"):
+
 		var script_info = highlighted_star.get_script_info()
 		_display_script_info(script_info)
 	
@@ -290,6 +292,7 @@ func _interact_with_highlighted_star() -> void:
 func _display_script_info(script_info: Dictionary) -> void:
 	"""Display script information in console or UI"""
 	print("📜 Script Info: %s" % script_info)
+
 	
 	# Send to console if available
 	var console_nodes = get_tree().get_nodes_in_group("console")
@@ -298,6 +301,7 @@ func _display_script_info(script_info: Dictionary) -> void:
 		if console.has_method("display_message"):
 			console.display_message("📜 Script: %s" % script_info.get("name", "Unknown"))
 			console.display_message("📁 Path: %s" % script_info.get("path", "Unknown"))
+
 
 # ===== UI UPDATES =====
 
@@ -308,10 +312,12 @@ func _update_ui_display() -> void:
 		var color = Color.GREEN if fps >= 60 else Color.YELLOW if fps >= 45 else Color.RED
 		fps_display.add_theme_color_override("font_color", color)
 		fps_display.text = "FPS: %d" % fps
+
 	
 	if velocity_display:
 		var speed = Vector3(velocity.x, 0, velocity.z).length()
 		velocity_display.text = "Speed: %.1f" % speed
+
 
 # ===== PUBLIC API =====
 

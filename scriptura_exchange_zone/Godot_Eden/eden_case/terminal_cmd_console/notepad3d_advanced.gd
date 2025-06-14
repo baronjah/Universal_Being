@@ -1,5 +1,5 @@
-extends Spatial
-class_name Notepad3DAdvanced
+extends Node3D
+class_name Notepad3DAdvanced_notepad3dadvanced_notepad3
 }
 
 # Notepad3D Advanced - Dimensional Memory Visualization System
@@ -15,18 +15,18 @@ var current_dimension = 1 # Active dimension (1-12)
 }
 
 # Visualization Settings
-export var memory_node_mesh: Mesh
-export var memory_font: Font
-export var memory_material: Material
-export var connection_material: Material
-export var environment_mesh: Mesh
+@export var memory_node_mesh: Mesh
+@export var memory_font: Font
+@export var memory_material: Material
+@export var connection_material: Material
+@export var environment_mesh: Mesh
 }
 
 # Color Mapping
 const DIMENSION_COLORS = {
     1: Color(1.0, 0.1, 0.1),  # Red - Reality
     2: Color(1.0, 0.5, 0.1),  # Orange - Linear
-    3: Color(1.0, 1.0, 0.1),  # Yellow - Spatial
+    3: Color(1.0, 1.0, 0.1),  # Yellow - Node3D
     4: Color(0.1, 1.0, 0.1),  # Green - Temporal
     5: Color(0.1, 1.0, 1.0),  # Cyan - Consciousness
     6: Color(0.1, 0.1, 1.0),  # Blue - Connection
@@ -60,8 +60,8 @@ var camera: Camera
 var environment: Environment
 var world_environment: WorldEnvironment
 var main_light: DirectionalLight
-var memory_parent: Spatial
-var connection_parent: Spatial
+var memory_parent: Node3D
+var connection_parent: Node3D
 var ui_layer: CanvasLayer
 var dimension_label: Label
 var device_label: Label
@@ -70,7 +70,7 @@ var command_input: LineEdit
 }
 
 # Scene State
-var memory_nodes = {} # id -> Spatial
+var memory_nodes = {} # id -> Node3D
 var connection_nodes = {}
 var device_containers = [] # Array of 4 containers for each device
 var is_transitioning = false
@@ -174,12 +174,12 @@ func _process(delta):
 # Setup Functions
 func setup_scene():
     # Create scene structure
-    memory_parent = Spatial.new()
+    memory_parent = Node3D.new()
     memory_parent.name = "Memories"
     add_child(memory_parent)
 }
 
-    connection_parent = Spatial.new()
+    connection_parent = Node3D.new()
     connection_parent.name = "Connections"
     connection_parent.z_index = -1  # Ensure connections render behind memories
     add_child(connection_parent)
@@ -309,7 +309,7 @@ func setup_ui():
 func setup_device_containers():
     # Create a container for each device
     for i in range(4):
-        var container = Spatial.new()
+        var container = Node3D.new()
         container.name = "Device_" + str(i)
         memory_parent.add_child(container)
         device_containers.append(container)
@@ -327,7 +327,7 @@ func create_memory_visualization(memory_data):
 }
 
     # Create the memory node
-    var node = Spatial.new()
+    var node = Node3D.new()
     node.name = "Memory_" + memory_data.id
     node.translation = memory_data.position
 }
@@ -348,7 +348,7 @@ func create_memory_visualization(memory_data):
 }
 
     # Add collision for interaction
-    var area = Area.new()
+    var area = Area3D.new()
     var collision = CollisionShape.new()
     var shape = SphereShape.new()
     shape.radius = memory_data.size * 0.5
@@ -482,7 +482,7 @@ func create_memory_label(memory_data):
 }
 
     # Create the complete label system
-    var label_parent = Spatial.new()
+    var label_parent = Node3D.new()
     label_parent.name = "Label"
     label_parent.add_child(viewport)
     label_parent.add_child(sprite)
@@ -1111,7 +1111,7 @@ func connect_memories(source_id, target_id):
 
             return true
     elif memory_ultra_advanced and memory_nodes.has(source_id) and memory_nodes.has(target_id):
-        // Find the memory word objects
+# // Find the memory word objects
         var source_word = null
         var target_word = null
 }
@@ -1134,7 +1134,7 @@ func connect_memories(source_id, target_id):
             print("# Connected memory words: " + source_word + " <-> " + target_word + " #")
 }
 
-            // Create visual connection
+# // Create visual connection
             create_connection_visualization(source_id, target_id)
 }
 
@@ -1148,45 +1148,45 @@ func connect_memories(source_id, target_id):
 }
 
 func select_memory(memory_id):
-    // Deselect previous memory
+# // Deselect previous memory
     if selected_memory_id and memory_nodes.has(selected_memory_id):
         var node = memory_nodes[selected_memory_id]
 }
 
-        // Remove selection spotlight
+# // Remove selection spotlight
         for child in node.get_children():
             if child is SpotLight and child.name == "SelectionLight":
                 child.queue_free()
                 break
 }
 
-        // Reset material
+# // Reset material
         var mesh = node.get_node("\1") as Node
         if mesh and mesh.material_override:
             mesh.material_override.emission_energy = 0.5
 }
 
-    // Update selected memory
+# // Update selected memory
     selected_memory_id = memory_id
 }
 
-    // Get memory data
+# // Get memory data
     var memory_data = null
 }
 
     if memory_rehab_system and selected_memory_id:
         memory_data = memory_rehab_system.get_memory(selected_memory_id)
     elif memory_ultra_advanced and selected_memory_id:
-        // We don't have direct access to memory data in ultra mode,
-        // so we'll just emit the signal with the ID
+# // We don't have direct access to memory data in ultra mode,
+# // so we'll just emit the signal with the ID
         pass
 }
 
-    // Emit signal with memory data
+# // Emit signal with memory data
     emit_signal("memory_selected", selected_memory_id, memory_data)
 }
 
-    // Update status label
+# // Update status label
     if selected_memory_id:
         status_label.text = "# SELECTED: " + selected_memory_id + " #"
     else:
@@ -1196,9 +1196,9 @@ func select_memory(memory_id):
     return true
 }
 
-// Command Processing
+# // Command Processing
 func process_command(command):
-    // Skip empty commands
+# // Skip empty commands
     command = command.strip_edges()
     if command.is_empty():
         return null
@@ -1207,76 +1207,76 @@ func process_command(command):
     print("# Processing command: " + command + " #")
 }
 
-    // Add # prefix if not present
+# // Add # prefix if not present
     if not command.begins_with("#"):
         command = "# " + command
 }
 
-    // Parse command and arguments
+# // Parse command and arguments
     var parts = command.split(" ", false)
     var cmd = parts[0].to_lower()
 }
 
-    // Get arguments
+# // Get arguments
     var args = []
     if parts.size() > 1:
         args = parts.slice(1, parts.size() - 1)
 }
 
-    // Process command
+# // Process command
     var result = null
 }
 
     match cmd:
         "#", "##":
-            // Create new memory with core tag
+# // Create new memory with core tag
             if args.size() > 0:
                 var content = PoolStringArray(args).join(" ")
                 result = create_memory(content, ["##"])
 }
 
         "#-":
-            // Create new memory with fragment tag
+# // Create new memory with fragment tag
             if args.size() > 0:
                 var content = PoolStringArray(args).join(" ")
                 result = create_memory(content, ["#-"])
 }
 
         "#>":
-            // Connect selected memory to another
+# // Connect selected memory to another
             if selected_memory_id and args.size() > 0:
                 var target_id = args[0]
                 result = connect_memories(selected_memory_id, target_id)
 }
 
         "#dimension", "#dim":
-            // Change dimension
+# // Change dimension
             if args.size() > 0 and args[0].is_valid_integer():
                 var dim = int(args[0])
                 result = change_dimension(dim)
 }
 
         "#device", "#dev":
-            // Change device
+# // Change device
             if args.size() > 0 and args[0].is_valid_integer():
                 var dev = int(args[0])
                 result = change_device(dev)
 }
 
         "#select":
-            // Select memory by ID
+# // Select memory by ID
             if args.size() > 0:
                 result = select_memory(args[0])
 }
 
         "#clear":
-            // Clear all visualizations
+# // Clear all visualizations
             clear_visualizations()
             result = true
 }
 
         "#refresh":
-            // Reload memories
+# // Reload memories
             if memory_rehab_system:
                 load_memories_from_rehab_system()
             elif memory_ultra_advanced:
@@ -1285,13 +1285,13 @@ func process_command(command):
 }
 
         "#physics":
-            // Toggle physics simulation
+# // Toggle physics simulation
             physics_enabled = !physics_enabled
             result = physics_enabled
 }
 
         "#help":
-            // Show help
+# // Show help
             result = {
                 "commands": [
                     "# <text> - Create core memory",
@@ -1309,24 +1309,24 @@ func process_command(command):
 }
 
         _:
-            // Default: create memory with content
+# // Default: create memory with content
             result = create_memory(command)
 }
 
-    // Update command input
+# // Update command input
     command_input.text = ""
 }
 
-    // Emit signal
+# // Emit signal
     emit_signal("command_executed", command, result)
 }
 
     return result
 }
 
-// Input Handling
+# // Input Handling
 func _input(event):
-    // Handle keyboard navigation
+# // Handle keyboard navigation
     if event is InputEventKey and event.pressed:
         match event.scancode:
             KEY_W:  // Forward
@@ -1362,7 +1362,7 @@ func _input(event):
                 select_memory(null)
 }
 
-    // Handle mouse wheel for zoom
+# // Handle mouse wheel for zoom
     if event is InputEventMouseButton:
         if event.button_index == BUTTON_WHEEL_UP:
             camera.translation.z -= 1
@@ -1370,7 +1370,7 @@ func _input(event):
             camera.translation.z += 1
 }
 
-    // Handle mouse rotation
+# // Handle mouse rotation
     if event is InputEventMouseMotion and Input.is_mouse_button_pressed(BUTTON_RIGHT):
         var sensitivity = 0.005
         camera.rotation.y -= event.relative.x * sensitivity
@@ -1387,20 +1387,20 @@ func _on_memory_input_event(camera, event, click_position, click_normal, shape_i
         if event.button_index == BUTTON_LEFT:
             select_memory(memory_id)
         elif event.button_index == BUTTON_RIGHT and selected_memory_id and selected_memory_id != memory_id:
-            // Connect selected memory to clicked memory
+# // Connect selected memory to clicked memory
             connect_memories(selected_memory_id, memory_id)
 }
 
-// Example usage:
-// var notepad = Notepad3DAdvanced.new()
-// add_child(notepad)
-// 
-// // Connect to MemoryRehabSystem
-// var rehab_system = MemoryRehabSystem.new()
-// add_child(rehab_system)
-// notepad.connect_memory_rehab_system(rehab_system)
-// 
-// // OR connect to MemoryUltraAdvanced
-// var ultra_system = MemoryUltraAdvanced.new()
-// add_child(ultra_system)
-// notepad.connect_memory_ultra_advanced(ultra_system)
+# // Example usage:
+# // var notepad = Notepad3DAdvanced.new()
+# // add_child(notepad)
+# // 
+# // // Connect to MemoryRehabSystem
+# // var rehab_system = MemoryRehabSystem.new()
+# // add_child(rehab_system)
+# // notepad.connect_memory_rehab_system(rehab_system)
+# // 
+# // // OR connect to MemoryUltraAdvanced
+# // var ultra_system = MemoryUltraAdvanced.new()
+# // add_child(ultra_system)
+# // notepad.connect_memory_ultra_advanced(ultra_system)

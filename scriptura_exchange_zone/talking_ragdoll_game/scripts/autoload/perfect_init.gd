@@ -4,7 +4,6 @@
 # Created: May 31st, 2025 | Perfect Pentagon Architecture
 # Location: scripts/autoload/perfect_init.gd
 ################################################################
-
 extends UniversalBeingBase
 ################################################################
 # CORE VARIABLES
@@ -249,9 +248,9 @@ func _finalize_initialization() -> void:
 	emit_signal("all_init_complete")
 	
 	# Connect to Perfect Ready if it exists
-	if has_node("/root/PerfectReady"):
+	if has_node("root/PerfectReady"):
 		print("🔗 PERFECT INIT: Triggering Perfect Ready system...")
-		get_node("/root/PerfectReady").execute_ready_sequence()
+		get_node("root/PerfectReady").execute_ready_sequence()
 
 ################################################################
 # STATUS AND DEBUG FUNCTIONS

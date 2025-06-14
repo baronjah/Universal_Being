@@ -1,17 +1,18 @@
 extends Node
 
-class_name TripleMemoryConnector
+class_name TripleMemoryConnector_triplememoryconnector_tripleme
 
 # ----- CONNECTOR SETTINGS -----
 @export_category("Memory Connector Settings")
-@export var enabled: bool = true
-@export var auto_connect: bool = true
-@export var synchronize_frequency: float = 0.5  # How often to sync memories (in seconds)
-@export var max_sync_entries: int = 888
-@export var memory_compression_level: int = 6  # 0-9 scale, higher = more compression
+@@@export var enabled: bool = true
+@@@export var auto_connect: bool = true
+@@@export var synchronize_frequency: float = 0.5  # How often to sync memories (in seconds)
+@@@export var max_sync_entries: int = 888
+@@@export var memory_compression_level: int = 6  # 0-9 scale, higher = more compression
 
 # ----- MEMORY SYSTEMS -----
-enum MemorySystem {
+enum \2 {
+
     LOCAL,      # Device storage
     ETHEREAL,   # Ethereal Engine storage
     AKASHIC     # Akashic Records storage
@@ -125,7 +126,7 @@ func _find_system_references():
     performance_optimizer = _find_node_by_class(get_tree().root, "PerformanceOptimizer")
 
 func _find_node_by_class(node, class_name):
-    if node.get_class() == class_name or (node.get_script() and node.get_script().get_path().find(class_name.to_lower()) >= 0):
+    if node.get_class() == class_name or_triplememoryconnector_tripleme (node.get_script() and node.get_script().get_path().find(class_name.to_lower()) >= 0):
         return node
     
     for child in node.get_children():
@@ -729,7 +730,7 @@ func _find_memories_related_to_content(content):
         if matches >= 2 or memory_content.find(content.to_lower()) >= 0:
             related_ids.append(memory_id)
     
-    // Limit number of related memories
+# // Limit number of related memories
     if related_ids.size() > 5:
         related_ids = related_ids.slice(0, 5)
     

@@ -1,6 +1,6 @@
 extends Node
 
-class_name CyberGateController
+class_name CyberGateController_cybergatecontroller_cybergat
 
 # ----- CYBER GATE CONTROLLER -----
 # Manages transitions between realities, dimensions, and data sewers
@@ -102,7 +102,7 @@ func create_gate(position, gate_type="standard", source_reality=null, target_rea
         return null
     
     # Generate unique gate ID
-    var gate_id = "gate_" + str(OS.get_unix_time()) + "_" + str(randi() % 10000)
+    var gate_id = "gate_" + str(OS.Time.get_unix_time_from_system()) + "_" + str(randi() % 10000)
     
     # Calculate stability based on moon phase and gate type
     var base_stability = 0.7
@@ -124,7 +124,7 @@ func create_gate(position, gate_type="standard", source_reality=null, target_rea
         "source_reality": source_reality,
         "target_reality": target_reality,
         "type": gate_type,
-        "creation_time": OS.get_unix_time(),
+        "creation_time": OS.Time.get_unix_time_from_system(),
         "stability": stability,
         "active": true,
         "uses": 0,
@@ -175,7 +175,7 @@ func activate_gate(gate_id):
     
     # Update gate usage stats
     gate.uses += 1
-    gate.last_used = OS.get_unix_time()
+    gate.last_used = OS.Time.get_unix_time_from_system()
     
     # Emit signal
     emit_signal("gate_activated", gate_id)
@@ -370,7 +370,7 @@ func initialize_sewers():
             "capacity": 1024 * 1024 * 10, # 10MB initial capacity
             "used": 0,
             "packets": [],
-            "last_cleaned": OS.get_unix_time(),
+            "last_cleaned": OS.Time.get_unix_time_from_system(),
             "corruption_level": 0.0
         }
     
@@ -435,7 +435,7 @@ func process_data_packet(packet):
     processed_data[packet.id] = {
         "original": packet,
         "result": result,
-        "timestamp": OS.get_unix_time()
+        "timestamp": OS.Time.get_unix_time_from_system()
     }
     
     # Direct to sewer if needed
@@ -479,7 +479,7 @@ func create_data_packet(type, data, size=null):
             size = DATA_PACKET_SIZES[randi() % DATA_PACKET_SIZES.size()]
     
     # Generate unique packet ID
-    var packet_id = "packet_" + str(OS.get_unix_time()) + "_" + str(randi() % 10000)
+    var packet_id = "packet_" + str(OS.Time.get_unix_time_from_system()) + "_" + str(randi() % 10000)
     
     # Create packet data
     var packet = {
@@ -487,7 +487,7 @@ func create_data_packet(type, data, size=null):
         "type": type,
         "data": data,
         "size": size,
-        "creation_time": OS.get_unix_time(),
+        "creation_time": OS.Time.get_unix_time_from_system(),
         "reality": active_reality,
         "moon_phase": moon_phase,
         "cycle_time": current_cycle_time
@@ -522,7 +522,7 @@ func clean_sewer(reality):
     
     # Remove oldest packets first
     var packets_to_keep = []
-    var keep_threshold = OS.get_unix_time() - (86400 * 3) # Keep last 3 days
+    var keep_threshold = OS.Time.get_unix_time_from_system() - (86400 * 3) # Keep last 3 days
     
     for packet in sewer.packets:
         if packet.creation_time > keep_threshold:
@@ -537,7 +537,7 @@ func clean_sewer(reality):
         sewer.used += packet.size
     
     # Update last cleaned time
-    sewer.last_cleaned = OS.get_unix_time()
+    sewer.last_cleaned = OS.Time.get_unix_time_from_system()
     
     # Calculate cleaned amount
     var packets_removed = packets_before - sewer.packets.size()
@@ -736,12 +736,12 @@ func extract_command_from_data(data):
     # Extract command from data
     # Simple implementation - extract command if string data
     if typeof(data) == TYPE_STRING:
-        if data.begins_with("/"):
+        if data.begins_with(""):
             return data
         else:
-            return "/note " + data
+            return "note " + data
     
-    return "/status"
+    return "status"
 
 func extract_gate_type_from_data(data):
     # Extract gate type from data

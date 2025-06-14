@@ -32,6 +32,7 @@ func pentagon_init() -> void:
 	
 	# Load manifest data
 	var manifest_path = "res://components/camera_effects/manifest.json"
+
 	var manifest_file = FileAccess.open(manifest_path, FileAccess.READ)
 	if manifest_file:
 		var json = JSON.new()
@@ -40,11 +41,13 @@ func pentagon_init() -> void:
 			_manifest_data = json.get_data()
 		else:
 			push_error("Failed to parse camera effects manifest: %s" % json.get_error_message())
+
 	
 	# Initialize shader materials dictionary
 	_initialize_shader_materials()
 	
 	print("🌟 CameraEffectsComponent: Pentagon Init Complete")
+
 
 func pentagon_ready() -> void:
 	super.pentagon_ready()
@@ -67,6 +70,7 @@ func pentagon_ready() -> void:
 		_camera_being.consciousness_changed.connect(_on_consciousness_changed)
 	
 	print("🌟 CameraEffectsComponent: Pentagon Ready Complete")
+
 
 func pentagon_process(delta: float) -> void:
 	super.pentagon_process(delta)
@@ -100,6 +104,7 @@ func pentagon_sewers() -> void:
 	super.pentagon_sewers()
 	print("🌟 CameraEffectsComponent: Pentagon Sewers Complete")
 
+
 # ===== PUBLIC INTERFACE =====
 
 func initialize(camera_being: Node) -> void:
@@ -109,6 +114,7 @@ func initialize(camera_being: Node) -> void:
 	
 	# Set initial consciousness level
 	if _camera_being.has_method("get_consciousness_level"):
+
 		var level = _camera_being.get_consciousness_level()
 		_apply_consciousness_level(level)
 
@@ -123,6 +129,7 @@ func set_performance_mode(mode: String) -> void:
 func _initialize_shader_materials() -> void:
 	"""Initialize all shader materials from the manifest"""
 	for shader_path in _manifest_data.get("files", {}).get("shaders", []):
+
 		var shader = load("res://components/camera_effects/" + shader_path)
 		if shader:
 			var material = ShaderMaterial.new()
@@ -182,6 +189,7 @@ func _apply_consciousness_level(level: int) -> void:
 func _apply_effect(effect_name: String) -> void:
 	"""Apply a specific effect to the post-process layer"""
 	if effect_name == "all_effects":
+
 		# Apply all effects for level 7
 		for effect in _shader_materials.keys():
 			_current_effects.append(effect)
@@ -239,11 +247,13 @@ func _update_effect_parameters(delta: float) -> void:
 	
 	# Update camera movement parameters
 	if _camera_being.has_method("get_velocity"):
+
 		var velocity = _camera_being.get_velocity()
 		material.set_shader_parameter("camera_velocity", velocity)
 	
 	# Update consciousness pulse
 	if _camera_being.has_method("get_consciousness_pulse"):
+
 		var pulse = _camera_being.get_consciousness_pulse()
 		material.set_shader_parameter("consciousness_pulse", pulse)
 
@@ -305,6 +315,7 @@ func _get_color_from_name(color_name: String) -> Color:
 		"cyan": return Color(0, 1, 1)
 		"red": return Color(1, 0, 0)
 		"rainbow": 
+
 			var time = Time.get_ticks_msec() / 1000.0
 			return Color.from_hsv(fmod(time * 0.1, 1.0), 1.0, 1.0)
 		_: return Color(1, 1, 1)
@@ -323,5 +334,5 @@ func ai_interface() -> Dictionary:
 		"performance_mode": performance_mode,
 		"use_subviewport": use_subviewport,
 		"current_effects": _current_effects
-	}
-	return base_interface 
+	return base_interface
+}

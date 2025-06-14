@@ -1,5 +1,5 @@
 extends Node
-class_name JSHMultiRealityIntegration
+class_name JSHMultiRealityIntegration_jshmultirealityintegration_jshmulti
 
 # This script integrates VR, iPhone LiDAR, and laptop systems for the JSH Ethereal Engine
 
@@ -48,8 +48,8 @@ func initialize() -> bool:
     print("JSH Multi-Reality Integration: Initializing...")
     
     # Find main controller in the scene
-    if has_node("/root/main"):
-        main_controller = get_node("/root/main")
+    if has_node("root/main"):
+        main_controller = get_node("root/main")
     
     # Find core systems
     if main_controller:

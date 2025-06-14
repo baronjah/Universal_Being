@@ -69,6 +69,7 @@ func _ready():
 	# Notify of initialized state
 	print("Turn System initialized: Current Turn " + str(current_turn) + " - " + get_current_phase_name())
 
+
 # ----- PROCESS -----
 func _process(delta):
 	if not turns_enabled:
@@ -134,8 +135,8 @@ func save_turn_data(turn_number: int):
 		"phase": turn_phases[turn_number - 1],
 		"time_spent": time_in_current_turn,
 		"timestamp": Time.get_unix_time_from_system(),
-		"game_state": {}
-	}
+		"game_state": {
+}
 	
 	# Add game state if game controller exists
 	if game_controller and game_controller.has_method("get_game_state"):
@@ -147,7 +148,7 @@ func save_turn_data(turn_number: int):
 			"current_time": time_progression_system.get_current_time(),
 			"story_segment": time_progression_system.get_current_story_segment(),
 			"story_arc": time_progression_system.get_current_story_arc()
-		}
+}
 	
 	# Add multiverse data if available
 	if multiverse_evolution_system:
@@ -155,7 +156,7 @@ func save_turn_data(turn_number: int):
 			"current_universe": multiverse_evolution_system.get_current_universe_id(),
 			"universe_count": multiverse_evolution_system.get_universe_count(),
 			"current_age": multiverse_evolution_system.get_current_age()
-		}
+}
 	
 	# Save to C drive
 	var c_drive_file = c_drive_path + "/turn_" + str(turn_number) + "/data/turn_data.json"
@@ -187,6 +188,7 @@ func _save_json_file(file_path: String, data):
 		file.close()
 	else:
 		push_error("Failed to save turn data to: " + file_path)
+}
 
 func _ensure_directories_exist():
 	# Create C drive directories
@@ -209,6 +211,7 @@ func _capture_screenshots(turn_number: int):
 	# Capture viewport screenshot
 	var image = get_viewport().get_texture().get_image()
 	var time_str = Time.get_datetime_string_from_system().replace(":", "-").replace(" ", "_")
+
 	var file_name = screenshot_dir + "/turn" + str(turn_number) + "_" + time_str + ".png"
 	image.save_png(file_name)
 
@@ -237,6 +240,7 @@ func _sync_with_bash_system():
 	if exit_code != 0:
 		push_error("Failed to sync with bash system: " + str(output))
 
+
 func _save_current_turn():
 	# Save current turn to file
 	var file_path = c_drive_path + "/current_turn.txt"
@@ -246,6 +250,7 @@ func _save_current_turn():
 		file.close()
 	else:
 		push_error("Failed to save current turn to: " + file_path)
+
 
 func _load_current_turn():
 	# Load current turn from file if it exists
@@ -422,6 +427,7 @@ func on_cycle_completed():
 func _archive_previous_cycle():
 	# Create archive directory with timestamp
 	var timestamp = Time.get_datetime_string_from_system().replace(":", "-").replace(" ", "_")
+
 	var archive_dir = c_drive_path + "/cycles/cycle_" + timestamp
 	
 	# Ensure the directory exists
@@ -452,6 +458,7 @@ func _archive_previous_cycle():
 	var output = []
 	OS.execute("bash", ["-c", bash_script], output, true)
 	print("Cycle archived: " + str(output))
+
 
 # ----- EVENTS -----
 func _on_save_timer_timeout():
@@ -502,6 +509,7 @@ func get_formatted_time_remaining() -> String:
 	seconds = seconds % 60
 	return "%02d:%02d" % [minutes, seconds]
 
+
 func get_turn_info() -> Dictionary:
 	return {
 		"current_turn": current_turn,
@@ -511,7 +519,7 @@ func get_turn_info() -> Dictionary:
 		"progress": get_turn_progress(),
 		"total_progress": get_total_progress(),
 		"auto_advance": auto_advance
-	}
+}
 
 func set_references(game_ctrl, time_prog, multiverse_evol):
 	game_controller = game_ctrl

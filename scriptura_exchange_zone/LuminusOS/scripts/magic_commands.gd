@@ -3,7 +3,7 @@ extends Node
 # Magic command system for LuminusOS
 # Handles special word commands and incantations
 
-class_name MagicCommands
+class_name MagicCommands_magiccommands_magiccom
 
 signal spell_activated(spell_name, power_level)
 signal dimension_changed(dimension_name)

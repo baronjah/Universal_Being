@@ -61,6 +61,7 @@ func _initialize_game_systems() -> void:
 	consciousness_system = preload("res://systems/consciousness/ConsciousnessSystem.gd").new()
 	stellar_system = preload("res://systems/stellar/StellarProgressionSystem.gd").new()
 	ai_companion = preload("res://systems/ai/AICompanionSystem.gd").new()
+
 	
 	# Get akashic records from autoload
 	akashic_integration = AkashicRecordsSystem
@@ -141,7 +142,7 @@ func _initialize_new_game() -> void:
 		"minerals": 0,
 		"consciousness_crystals": 0,
 		"akashic_fragments": 0
-	}
+}
 	
 	# Create starting environment
 	_generate_starting_sector()
@@ -362,7 +363,7 @@ func _quick_save_state() -> void:
 		"companion_data": ai_companion.export_companion_data(),
 		"discovered_systems": stellar_system.get_discovered_systems(),
 		"timestamp": Time.get_unix_time_from_system()
-	}
+}
 	
 	akashic_integration.save_game_state("space_game_save", save_data)
 	print("Game saved to Akashic Records")
@@ -472,7 +473,6 @@ func _create_tutorial_notes() -> void:
 			"title": "Consciousness",
 			"content": "Your awareness grows through:\n- Mining consciousness crystals\n- Bonding with AI companion\n- Discovering new systems\n- Creating and connecting notes",
 			"position": Vector3(50, 10, -10)
-		}
 	]
 	
 	for note in tutorial_notes:

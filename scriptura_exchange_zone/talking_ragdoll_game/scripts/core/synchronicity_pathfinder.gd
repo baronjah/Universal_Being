@@ -1,7 +1,7 @@
 # Synchronicity Pathfinder - The Flow of Creation
 # Like an RPG book where paths connect pages, our code flows through connected points
 extends UniversalBeingBase
-class_name SynchronicityPathfinder
+class_name SynchronicityPathfinder_synchron
 
 # The paths through our code - like pages in an RPG book
 var execution_paths: Dictionary = {}  # function -> [possible_next_functions]
@@ -132,10 +132,10 @@ func _update_mirror(location: String, value: Variant):
 	var property_path = parts[1]
 	
 	# Find the node
-	var node = get_node_or_null("/root/" + node_name)
+	var node = get_node_or_null("root/" + node_name)
 	if not node:
 		# Try autoload
-		node = get_node_or_null("/root/Autoload/" + node_name)
+		node = get_node_or_null("root/Autoload/" + node_name)
 	
 	if node:
 		# Handle nested properties
@@ -229,9 +229,9 @@ func _get_mirror_value(location: String) -> Variant:
 	if parts.size() < 2:
 		return null
 		
-	var node = get_node_or_null("/root/" + parts[0])
+	var node = get_node_or_null("root/" + parts[0])
 	if not node:
-		node = get_node_or_null("/root/Autoload/" + parts[0])
+		node = get_node_or_null("root/Autoload/" + parts[0])
 		
 	if node:
 		return node.get(parts[1])

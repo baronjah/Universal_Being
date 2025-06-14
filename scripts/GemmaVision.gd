@@ -39,6 +39,7 @@ func _ready() -> void:
 	name = "GemmaVision"
 	print("👁️ GemmaVision: Visual perception system ready")
 
+
 # ===== VISUAL CAPTURE =====
 
 func capture_visual_frame() -> Dictionary:
@@ -52,7 +53,7 @@ func capture_visual_frame() -> Dictionary:
 		"consciousness_map": [],
 		"spatial_layout": {},
 		"visual_summary": ""
-	}
+}
 	
 	# Scan current scene
 	_scan_visual_field(frame_data)
@@ -127,7 +128,7 @@ func _create_object_reference(node: Node) -> Dictionary:
 		"name": node.name,
 		"type": node.get_class(),
 		"is_universal_being": node.has_method("pentagon_init")
-	}
+}
 
 func _analyze_visual_object(object_ref: Dictionary) -> Dictionary:
 	"""Analyze visual properties of an object"""
@@ -145,7 +146,7 @@ func _analyze_visual_object(object_ref: Dictionary) -> Dictionary:
 		"consciousness_indicators": {},
 		"visual_effects": [],
 		"gemma_description": ""
-	}
+}
 	
 	# Get spatial data
 	if node is Node3D:
@@ -174,7 +175,7 @@ func _analyze_visual_object(object_ref: Dictionary) -> Dictionary:
 func _analyze_scene_colors(frame_data: Dictionary) -> void:
 	"""Analyze color composition of the scene"""
 	var color_palette = []
-	var color_frequencies = {}
+	var color_frequencies = {
 	
 	for object_data in frame_data.detected_objects:
 		var colors = object_data.color_data
@@ -195,7 +196,7 @@ func _analyze_scene_colors(frame_data: Dictionary) -> void:
 
 func _extract_color_data(node: Node) -> Dictionary:
 	"""Extract color information from a node"""
-	var colors = {}
+	var colors = {
 	
 	# Check for consciousness color
 	if node.has_method("get_consciousness_color"):
@@ -274,7 +275,7 @@ func _map_consciousness_levels(frame_data: Dictionary) -> void:
 
 func _analyze_consciousness_visual(node: Node) -> Dictionary:
 	"""Analyze visual indicators of consciousness"""
-	var indicators = {}
+	var indicators = {
 	
 	if node.has_method("get") and node.has_property("consciousness_level"):
 		indicators["level"] = node.get("consciousness_level")
@@ -293,6 +294,7 @@ func _describe_consciousness_level(level: int) -> String:
 		4: return "golden enlightened aura"
 		5: return "transcendent white brilliance"
 		_: return "unknown consciousness state"
+}
 
 # ===== VISUAL DESCRIPTION =====
 
@@ -308,6 +310,7 @@ func _describe_object_shape(node: Node) -> String:
 				"CylinderMesh": return "cylindrical structure"
 				"PlaneMesh": return "flat plane"
 				_: return "complex geometric form"
+	}
 	
 	if node is Node3D:
 		return "3D spatial entity"
@@ -386,11 +389,13 @@ func enable_debug_visualization() -> void:
 	"""Enable visual debugging of Gemma's vision"""
 	debug_visualization_enabled = true
 	print("👁️ GemmaVision: Debug visualization enabled")
+}
 
 func disable_debug_visualization() -> void:
 	"""Disable visual debugging"""
 	debug_visualization_enabled = false
 	print("👁️ GemmaVision: Debug visualization disabled")
+
 
 # ===== PUBLIC API =====
 
@@ -408,10 +413,10 @@ func focus_on_object(object_name: String) -> Dictionary:
 	for obj_data in current_frame_data.get("detected_objects", []):
 		if obj_data.name == object_name:
 			return obj_data
-	return {}
+	return {
 
 func search_for_consciousness_level(target_level: int) -> Array[Dictionary]:
-	"""Search for beings with specific consciousness level"""
+	"""Search for beings with specific consciousness level"""}
 	var matches = []
 	for obj_data in current_frame_data.get("detected_objects", []):
 		if obj_data.consciousness_indicators.get("level", -1) == target_level:

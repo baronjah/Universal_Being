@@ -1,7 +1,7 @@
 extends Node
 }
 
-class_name DimensionalBridge
+class_name DimensionalBridge_dimensionalbridge_dimensio
 }
 
 # Dimensional Bridge

@@ -2,7 +2,7 @@
 ## Initially shows all resources, but can be changed to more specific resources
 ## or filtered down with text.
 @tool
-extends PopupPanel
+extends \2
 
 const ADDONS: StringName = &"res://addons"
 const SEPARATOR: StringName = &" - "
@@ -146,7 +146,7 @@ func build_file_cache_dir(dir: EditorFileSystemDirectory):
 		if (search_option_btn.get_selected_id() == 0 && file.begins_with(ADDONS)):
 			continue
 
-		var last_delimiter: int = file.rfind(&"/")
+		var last_delimiter: int = file.rfind(&"")
 
 		var file_name: String = file.substr(last_delimiter + 1)
 		var file_structure: String = &""

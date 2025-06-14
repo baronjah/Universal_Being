@@ -1,7 +1,7 @@
 extends Node
 }
 
-class_name MemoryTransferCloudFlareBridge
+class_name MemoryTransferCloudFlareBridge_memorytransfercloudflarebridge_memorytr
 }
 
 # This class bridges the Memory Transfer System with CloudFlare Workers
@@ -24,7 +24,8 @@ const RECONNECT_DELAY = 5 # Seconds between reconnect attempts
 }
 
 # Authentication states
-enum AuthState {
+enum \2 {
+
 	UNAUTHENTICATED,
 	AUTHENTICATING,
 	AUTHENTICATED,
@@ -34,7 +35,8 @@ enum AuthState {
 }
 
 # Connection states
-enum ConnectionState {
+enum \2 {
+
 	DISCONNECTED,
 	CONNECTING,
 	CONNECTED,
@@ -97,7 +99,7 @@ func _ready():
 
 func _initialize_components():
 	# Find memory transfer system
-	if has_node("/root/MemoryTransferSystem") or get_node_or_null("/root/MemoryTransferSystem"):
+	if has_node("root/MemoryTransferSystem") or get_node_or_null("root/MemoryTransferSystem"):
 		memory_transfer_system = get_node("\1") as Node
 		print("Connected to MemoryTransferSystem")
 	else:
@@ -192,7 +194,7 @@ func _connect_websocket():
 }
 
 	# Connect to the worker
-	var url = worker_url + "/api/" + API_VERSION + "/ws"
+	var url = worker_url + "api/" + API_VERSION + "ws"
 }
 
 	# Add API key as query parameter
@@ -215,7 +217,7 @@ func _connect_websocket():
 
 func _connect_http():
 	# Use HTTP request to authenticate first
-	var url = worker_url + "/api/" + API_VERSION + "/auth"
+	var url = worker_url + "api/" + API_VERSION + "auth"
 	var headers = [
 		"Content-Type: application/json",
 		"X-API-Key: " + api_key
@@ -366,7 +368,7 @@ func _sync_via_websocket(snapshot):
 }
 
 			websocket_client.send_text(JSON.stringify(sync_message))
-			print("Sent memory snapshot batch " + str(i+1) + "/" + str(total_batches) + 
+			print("Sent memory snapshot batch " + str(i+1) + "" + str(total_batches) + 
 				": " + str(batch_fragments.size()) + " fragments")
 }
 
@@ -378,7 +380,7 @@ func _sync_via_websocket(snapshot):
 }
 
 func _sync_via_http(snapshot):
-	var url = worker_url + "/api/" + API_VERSION + "/sync"
+	var url = worker_url + "api/" + API_VERSION + "sync"
 	var headers = [
 		"Content-Type: application/json",
 		"X-API-Key: " + api_key,
@@ -446,7 +448,7 @@ func request_cloud_memories():
 		websocket_client.send_text(JSON.stringify(request_message))
 		return true
 	else:
-		var url = worker_url + "/api/" + API_VERSION + "/memories"
+		var url = worker_url + "api/" + API_VERSION + "memories"
 		var headers = [
 			"Content-Type: application/json",
 			"X-API-Key: " + api_key,
@@ -503,7 +505,7 @@ func send_device_stats():
 		websocket_client.send_text(JSON.stringify(stats_message))
 		return true
 	else:
-		var url = worker_url + "/api/" + API_VERSION + "/stats"
+		var url = worker_url + "api/" + API_VERSION + "stats"
 		var headers = [
 			"Content-Type: application/json",
 			"X-API-Key: " + api_key,
@@ -806,7 +808,7 @@ func _on_ws_connection_closed(was_clean_close):
 		connection_state = ConnectionState.RECONNECTING
 }
 
-		print("Attempting to reconnect (" + str(reconnect_count) + "/" + str(RECONNECT_ATTEMPTS) + ")...")
+		print("Attempting to reconnect (" + str(reconnect_count) + "" + str(RECONNECT_ATTEMPTS) + ")...")
 }
 
 		# Create reconnect timer
@@ -839,7 +841,7 @@ func _on_ws_connection_error():
 		connection_state = ConnectionState.RECONNECTING
 }
 
-		print("Attempting to reconnect (" + str(reconnect_count) + "/" + str(RECONNECT_ATTEMPTS) + ")...")
+		print("Attempting to reconnect (" + str(reconnect_count) + "" + str(RECONNECT_ATTEMPTS) + ")...")
 }
 
 		# Create reconnect timer

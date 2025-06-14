@@ -93,6 +93,7 @@ func visualize_merge(merge_data: Dictionary) -> String:
 # Generate list visualization for streams
 func visualize_stream_list(streams: Array) -> String:
     var result = COLOR_HEADER + "Streams (" + str(streams.size()) + "):" + COLOR_RESET + "\n"
+	
     
     for stream in streams:
         result += "- " + stream.id + " (" + stream.type + ", " + str(stream.size) + " bytes, " + 
@@ -103,6 +104,7 @@ func visualize_stream_list(streams: Array) -> String:
 # Generate list visualization for chunks
 func visualize_chunk_list(chunks: Dictionary) -> String:
     var result = COLOR_HEADER + "Chunks (" + str(chunks.size()) + "):" + COLOR_RESET + "\n"
+	
     
     var count = 0
     for chunk_id in chunks:
@@ -117,6 +119,7 @@ func visualize_chunk_list(chunks: Dictionary) -> String:
 # Generate list visualization for splits
 func visualize_split_list(splits: Dictionary) -> String:
     var result = COLOR_HEADER + "Splits (" + str(splits.size()) + "):" + COLOR_RESET + "\n"
+	
     
     var count = 0
     for split_id in splits:
@@ -135,8 +138,8 @@ func visualize_text_analysis(text: String) -> String:
         "total_chars": text.length(),
         "word_count": text.split(" ", false).size(),
         "line_count": text.split("\n", false).size(),
-        "special_chars": {}
-    }
+        "special_chars": {
+		}
     
     # Count special characters
     var special_chars = ["[", "]", "=", "|", "#", "@", "$", "%", "^", "&", "*"]
@@ -163,11 +166,13 @@ func visualize_text_analysis(text: String) -> String:
     result += "Characters: " + str(analysis.total_chars) + "\n"
     result += "Words: " + str(analysis.word_count) + "\n"
     result += "Lines: " + str(analysis.line_count) + "\n"
+	}
     
     if analysis.special_chars.size() > 0:
         result += "\n" + COLOR_STREAM + "Special Characters:" + COLOR_RESET + "\n"
         for char in analysis.special_chars:
             result += "- '" + char + "': " + str(analysis.special_chars[char]) + "\n"
+			
     
     if natural_splits.size() > 0:
         result += "\n" + COLOR_SPLIT + "Suggested Split Methods:" + COLOR_RESET + "\n"
@@ -213,6 +218,7 @@ func _visualize_stream_1d(stream_data: Dictionary) -> String:
     if stream_data.has("chunks") and stream_data.chunks.size() > 0:
         visualization += "-" * 40 + "\n"
         visualization += "Chunks: "
+		
         
         for i in range(stream_data.chunks.size()):
             if i > 0:
@@ -232,14 +238,17 @@ func _visualize_stream_2d(stream_data: Dictionary) -> String:
     var id_extra = " " if (width - 2 - stream_id.length()) % 2 != 0 else ""
     
     var type_text = "Type: " + stream_data.type
+	
     var type_padding = " " * ((width - 2 - type_text.length()) / 2)
     var type_extra = " " if (width - 2 - type_text.length()) % 2 != 0 else ""
     
     var size_text = "Size: " + str(stream_data.size)
+	
     var size_padding = " " * ((width - 2 - size_text.length()) / 2)
     var size_extra = " " if (width - 2 - size_text.length()) % 2 != 0 else ""
     
     var chunk_text = "Chunks: " + str(stream_data.chunks.size())
+	
     var chunk_padding = " " * ((width - 2 - chunk_text.length()) / 2)
     var chunk_extra = " " if (width - 2 - chunk_text.length()) % 2 != 0 else ""
     
@@ -284,8 +293,11 @@ func _visualize_stream_3d(stream_data: Dictionary, dimension: int) -> String:
     
     # Stream properties
     var type_text = "  Type: " + stream_data.type
+	
     var size_text = "  Size: " + str(stream_data.size)
+	
     var chunk_text = "  Chunks: " + str(stream_data.chunks.size())
+	
     
     # Pad properties to fit width
     type_text += " " * (width - 8 - type_text.length())
@@ -310,9 +322,11 @@ func _visualize_stream_3d(stream_data: Dictionary, dimension: int) -> String:
     # Show dimensions based on dimension count
     if dimension >= 4:
         visualization += "\n" + COLOR_DIMENSION + "Dimensions: " + str(dimension) + "D" + COLOR_RESET + "\n"
+		
         
         for d in range(4, dimension + 1):
             visualization += "  Dimension " + str(d) + ": " + _get_dimension_property(d) + "\n"
+			
     
     # If chunks exist, list them with ASCII connection
     if stream_data.has("chunks") and stream_data.chunks.size() > 0:
@@ -346,10 +360,12 @@ func _visualize_chunk_1d(chunk_data: Dictionary) -> String:
     
     # Add content preview if present
     if chunk_data.has("content") and chunk_data.content.length() > 0:
+	
         var content = chunk_data.content
         if content.length() > 40:
             content = content.substr(0, 37) + "..."
         visualization += "Content: " + content
+		
     
     return visualization
 
@@ -364,10 +380,12 @@ func _visualize_chunk_2d(chunk_data: Dictionary) -> String:
     var id_extra = " " if (width - 2 - chunk_id.length()) % 2 != 0 else ""
     
     var stream_text = "Stream: " + chunk_data.parent_stream
+	
     var stream_padding = " " * ((width - 2 - stream_text.length()) / 2)
     var stream_extra = " " if (width - 2 - stream_text.length()) % 2 != 0 else ""
     
     var size_text = "Size: " + str(chunk_data.size)
+	
     var size_padding = " " * ((width - 2 - size_text.length()) / 2)
     var size_extra = " " if (width - 2 - size_text.length()) % 2 != 0 else ""
     
@@ -376,10 +394,12 @@ func _visualize_chunk_2d(chunk_data: Dictionary) -> String:
     visualization += BOX_TEMPLATE_2D[1].format({"title_line": id_padding + chunk_id + id_padding + id_extra}) + "\n"
     visualization += BOX_TEMPLATE_2D[2].format({"content1": stream_padding + stream_text + stream_padding + stream_extra}) + "\n"
     visualization += BOX_TEMPLATE_2D[3].format({"content2": size_padding + size_text + size_padding + size_extra}) + "\n"
+	
     
     # Content preview
     var content_line = ""
     if chunk_data.has("content") and chunk_data.content.length() > 0:
+	
         var content = chunk_data.content
         if content.length() > width - 12:
             content = content.substr(0, width - 15) + "..."
@@ -419,8 +439,11 @@ func _visualize_chunk_3d(chunk_data: Dictionary, dimension: int) -> String:
     
     # Chunk properties
     var stream_text = "  Stream: " + chunk_data.parent_stream
+	
     var size_text = "  Size: " + str(chunk_data.size)
+	
     var created_text = "  Created: " + _format_timestamp(chunk_data.created_at)
+	
     
     # Pad properties to fit width
     stream_text += " " * (width - 8 - stream_text.length())
@@ -430,6 +453,7 @@ func _visualize_chunk_3d(chunk_data: Dictionary, dimension: int) -> String:
     # Content preview
     var content_line = ""
     if chunk_data.has("content") and chunk_data.content.length() > 0:
+	
         var content = chunk_data.content
         if content.length() > width - 12:
             content = content.substr(0, width - 15) + "..."
@@ -454,15 +478,18 @@ func _visualize_chunk_3d(chunk_data: Dictionary, dimension: int) -> String:
     # Show dimensions based on dimension count
     if dimension >= 4:
         visualization += "\n" + COLOR_DIMENSION + "Dimensions: " + str(dimension) + "D" + COLOR_RESET + "\n"
+		
         
         for d in range(4, dimension + 1):
             visualization += "  Dimension " + str(d) + ": " + _get_dimension_property(d) + "\n"
+			
     
     # Display properties if available
     if chunk_data.has("properties"):
         visualization += "\n" + COLOR_SPLIT + "Properties:" + COLOR_RESET + "\n"
         for prop in chunk_data.properties:
             visualization += "  " + prop + ": " + str(chunk_data.properties[prop]) + "\n"
+			
     
     return visualization
 
@@ -475,6 +502,7 @@ func _generate_split_visualization(split_data: Dictionary) -> String:
     var visualization = COLOR_SUCCESS + "Split Operation:" + COLOR_RESET + "\n"
     visualization += "Original Chunk: " + original_chunk + "\n"
     visualization += "Split Factor: " + str(factor) + "\n\n"
+	
     
     # Generate ASCII art visualization
     visualization += COLOR_CHUNK + original_chunk + COLOR_RESET + "\n"
@@ -497,6 +525,7 @@ func _generate_merge_visualization(merge_data: Dictionary) -> String:
     
     var visualization = COLOR_SUCCESS + "Merge Operation:" + COLOR_RESET + "\n"
     visualization += "Merge Type: " + merge_type + "\n\n"
+	
     
     # Generate ASCII art for source chunks
     for i in range(source_chunks.size()):

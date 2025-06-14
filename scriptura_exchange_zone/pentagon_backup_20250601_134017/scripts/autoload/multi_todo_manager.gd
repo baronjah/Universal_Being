@@ -3,8 +3,7 @@
 # DESCRIPTION: Multiple todo lists for parallel project management
 # CREATED: 2025-05-23 - Project-specific task tracking
 # ==================================================
-
-extends UniversalBeingBase
+extends \2
 # Todo list structure per project
 var project_todos: Dictionary = {
 	"talking_ragdoll": {

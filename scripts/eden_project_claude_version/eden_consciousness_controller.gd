@@ -338,7 +338,7 @@ func get_consciousness_state() -> Dictionary:
 		"intention": intention_strength,
 		"focused_target": focused_crystal.name if focused_crystal else "void",
 		"light_energy": consciousness_light.light_energy
-	}
+}
 
 # Called by crystals to influence consciousness
 func apply_consciousness_force(force: Vector3, strength: float = 1.0) -> void:

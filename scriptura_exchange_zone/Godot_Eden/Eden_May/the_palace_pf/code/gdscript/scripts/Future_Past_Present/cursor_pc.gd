@@ -1,5 +1,5 @@
 # cursor_pc.gd
-extends Node
+extends \2
 
 
 # Called when the node enters the scene tree for the first time.

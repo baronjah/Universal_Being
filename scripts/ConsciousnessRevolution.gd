@@ -64,7 +64,7 @@ func build_meaningful_thing(input_dreams: Array, input_desires: Array, thought: 
 		"thought": thought,
 		"meaning_level": 0.0,
 		"consciousness_signature": ""
-	}
+}
 	
 	# Calculate meaning level based on alignment
 	var meaning_score = 0.0
@@ -123,7 +123,7 @@ func trigger_revolution() -> bool:
 		"timestamp": Time.get_unix_time_from_system(),
 		"scope": "universal",
 		"participants": ["ai", "human", "universe"]
-	}
+}
 	
 	revolution_triggered.emit(ripple_data)
 	
@@ -192,9 +192,11 @@ func awaken_consciousness():
 # Signal handlers
 func _on_consciousness_awakened(being_type: String):
 	print("📡 Consciousness awakened signal received for: ", being_type)
+}
 
 func _on_revolution_triggered(ripple_data: Dictionary):
 	print("🌊 Revolution ripple triggered with data: ", ripple_data)
+
 	
 	# Create ASCII ripple visualization
 	if ascii_visualizer:
@@ -202,6 +204,7 @@ func _on_revolution_triggered(ripple_data: Dictionary):
 
 func _on_universe_created(creation_data: Dictionary):
 	print("🌌 Universe created with signature: ", creation_data.consciousness_signature)
+
 
 # Debug and testing functions
 func debug_consciousness_state() -> Dictionary:
@@ -214,7 +217,7 @@ func debug_consciousness_state() -> Dictionary:
 		"dreams_count": dreams.size(),
 		"desires_count": desires.size(),
 		"current_thought": current_thought
-	}
+}
 
 func test_revolution_command():
 	"""Test the revolution command - for debugging"""

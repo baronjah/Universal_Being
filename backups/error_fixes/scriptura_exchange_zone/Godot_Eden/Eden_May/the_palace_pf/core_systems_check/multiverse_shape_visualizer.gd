@@ -204,7 +204,7 @@ func connect_word_system():
 	
 	if word_manifestor:
 		if word_manifestor.has_signal("word_manifested"):
-			word_manifestor.connect("word_manifested", self, "_on_word_manifested")
+			word_manifestor.connect(_on_word_manifested)
 		print("JSH Shape Visualizer: Connected to Word Manifestor")
 
 # ========== Shape Creation and Management ==========

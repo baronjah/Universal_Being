@@ -6,14 +6,14 @@ extends Node
 # Handles pattern detection and supports special effects
 }
 
-class_name TerminalGridCreator
+class_name TerminalGridCreator_terminalgridcreator_terminal
 }
 
 # ----- GRID PROPERTIES -----
-@export var grid_width: int = 80
-@export var grid_height: int = 24
-@export var cell_size: Vector2 = Vector2(16, 16)
-@export var default_symbol: String = "."
+@@@@export var grid_width: int = 80
+@@@@export var grid_height: int = 24
+@@@@export var cell_size: Vector2 = Vector2(16, 16)
+@@@@export var default_symbol: String = "."
 }
 
 # ----- SPECIAL SYMBOL PATTERNS -----
@@ -28,7 +28,7 @@ const SPECIAL_PATTERNS = {
     "###\n#+#\n###": "enclosed_room",
     "[@]": "player_start",
     "<->": "teleporter",
-    "/*\\": "time_rune",
+    "*\\": "time_rune",
     "|/\\|": "dimension_gate"
 }
 }
@@ -41,7 +41,8 @@ var saved_grids = {}
 }
 
 # ----- SHAPE CATEGORIES -----
-enum ShapeCategory {
+enum \2 {
+
     ROOM,
     CORRIDOR,
     SHIP,
@@ -52,7 +53,8 @@ enum ShapeCategory {
 }
 
 # ----- TIME STATES -----
-enum TimeState {
+enum \2 {
+
     PAST,
     PRESENT,
     FUTURE,
@@ -113,18 +115,18 @@ func _initialize_grid():
 
 func _connect_to_game_systems():
     # Connect to dual core terminal
-    dual_core_terminal = get_node_or_null("/root/DualCoreTerminal")
+    dual_core_terminal = get_node_or_null("root/DualCoreTerminal")
     if dual_core_terminal:
         dual_core_terminal.connect(_on_special_pattern_detected)
         dual_core_terminal.connect(_on_time_state_changed)
 }
 
     # Connect to divine word game
-    divine_word_game = get_node_or_null("/root/DivineWordGame")
+    divine_word_game = get_node_or_null("root/DivineWordGame")
 }
 
     # Connect to turn system
-    turn_system = get_node_or_null("/root/TurnSystem")
+    turn_system = get_node_or_null("root/TurnSystem")
     if turn_system:
         turn_system.connect(_on_dimension_changed)
 }
@@ -153,7 +155,7 @@ func create_grid(width, height, default_sym = "."):
 }
 
     # Generate grid ID
-    var grid_id = "grid_" + str(OS.get_unix_time())
+    var grid_id = "grid_" + str(OS.Time.get_unix_time_from_system())
 }
 
     emit_signal("grid_created", grid_id, width, height)
@@ -276,14 +278,14 @@ func save_grid(name):
         "width": grid_width,
         "height": grid_height,
         "default_symbol": default_symbol,
-        "saved_time": OS.get_unix_time()
+        "saved_time": OS.Time.get_unix_time_from_system()
     }
 }
 
     saved_grids[name] = grid_data
 }
 
-    emit_signal("grid_saved", "grid_" + str(OS.get_unix_time()), name)
+    emit_signal("grid_saved", "grid_" + str(OS.Time.get_unix_time_from_system()), name)
     return true
 }
 
@@ -306,7 +308,7 @@ func load_grid(name):
     grid_elements = grid_data.elements.duplicate(true)
 }
 
-    emit_signal("grid_loaded", "grid_" + str(OS.get_unix_time()), name)
+    emit_signal("grid_loaded", "grid_" + str(OS.Time.get_unix_time_from_system()), name)
     return true
 }
 
@@ -392,7 +394,7 @@ func _on_pattern_detected(pattern, effect, x, y):
         "effect": effect,
         "x": x,
         "y": y,
-        "timestamp": OS.get_unix_time()
+        "timestamp": OS.Time.get_unix_time_from_system()
     })
 }
 
@@ -417,7 +419,7 @@ func _create_miracle_portal(x, y):
     var portal_properties = {
         "type": "miracle_portal",
         "active": true,
-        "created_at": OS.get_unix_time(),
+        "created_at": OS.Time.get_unix_time_from_system(),
         "color": Color(1, 0.5, 1)  # Purple glow
     }
 }
@@ -440,7 +442,7 @@ func _create_teleporter(x, y):
     var teleporter_properties = {
         "type": "teleporter",
         "active": true,
-        "created_at": OS.get_unix_time(),
+        "created_at": OS.Time.get_unix_time_from_system(),
         "destination_x": randi() % grid_width,
         "destination_y": randi() % grid_height
     }
@@ -454,12 +456,12 @@ func _create_time_rune(x, y):
     var time_rune_properties = {
         "type": "time_rune",
         "active": true,
-        "created_at": OS.get_unix_time(),
+        "created_at": OS.Time.get_unix_time_from_system(),
         "time_state": TimeState.PRESENT
     }
 }
 
-    place_pattern(x, y, "/*\\", ShapeCategory.SPECIAL, time_rune_properties)
+    place_pattern(x, y, "*\\", ShapeCategory.SPECIAL, time_rune_properties)
 }
 
 func _create_dimension_gate(x, y):
@@ -467,7 +469,7 @@ func _create_dimension_gate(x, y):
     var dimension_gate_properties = {
         "type": "dimension_gate",
         "active": true,
-        "created_at": OS.get_unix_time(),
+        "created_at": OS.Time.get_unix_time_from_system(),
         "current_dimension": turn_system.current_dimension if turn_system else 3,
         "target_dimension": (turn_system.current_dimension + 1) % (turn_system.max_turns + 1) if turn_system else 4
     }
@@ -478,7 +480,7 @@ func _create_dimension_gate(x, y):
 
 # ----- TIME EFFECTS -----
 func apply_time_effect(time_state):
-    var current_grid_id = "grid_" + str(OS.get_unix_time())
+    var current_grid_id = "grid_" + str(OS.Time.get_unix_time_from_system())
 }
 
     # Apply different effects based on time state
@@ -616,7 +618,7 @@ func _on_special_pattern_detected(pattern, effect):
         "x": -1,  # Unknown location
         "y": -1,
         "source": "terminal",
-        "timestamp": OS.get_unix_time()
+        "timestamp": OS.Time.get_unix_time_from_system()
     })
 }
 
@@ -674,8 +676,8 @@ func _add_dimension_elements(dimension):
             })
 }
 
-        3: # Spatial elements (3D)
-            var cube = "/-----\\\n|     |\n|     |\n|     |\n\\-----/"
+        3: # Node3D elements (3D)
+            var cube = "-----\\\n|     |\n|     |\n|     |\n\\-----/"
             place_pattern(grid_width / 2 - 3, grid_height / 2 - 2, cube, ShapeCategory.ROOM, {
                 "dimension": 3,
                 "description": "Cube room"
@@ -683,7 +685,7 @@ func _add_dimension_elements(dimension):
 }
 
         4: # Temporal elements (4D)
-            place_pattern(grid_width / 2 - 3, grid_height / 2 - 1, "/*\\", ShapeCategory.SPECIAL, {
+            place_pattern(grid_width / 2 - 3, grid_height / 2 - 1, "*\\", ShapeCategory.SPECIAL, {
                 "dimension": 4,
                 "description": "Time rune",
                 "type": "time_rune"
@@ -872,11 +874,11 @@ func add_ship(x, y, ship_type="small"):
 
     match ship_type:
         "small":
-            pattern = " /\\\n<==>\n \\/"
+            pattern = " \\\n<==>\n \\/"
         "medium":
-            pattern = "  /\\\n /  \\\n<====>\n \\  /\n  \\/"
+            pattern = "  \\\n /  \\\n<====>\n \\  /\n  \\/"
         "large":
-            pattern = "   /\\\n  /  \\\n /    \\\n<======>\n \\    /\n  \\  /\n   \\/"
+            pattern = "   \\\n  /  \\\n /    \\\n<======>\n \\    /\n  \\  /\n   \\/"
         "alien":
             pattern = " _._\n/ O \\\n<-X->\n\\_^_/"
 }
@@ -897,7 +899,7 @@ func add_base(x, y, base_type="outpost"):
         "fortress":
             pattern = "+-----+\n|  ^  |\n| [ ] |\n|< X >|\n+-----+"
         "spaceport":
-            pattern = "  /\\  \n /  \\ \n/====\\\n|    |\n|====|"
+            pattern = "  \\  \n /  \\ \n/====\\\n|    |\n|====|"
 }
 
     return place_pattern(x, y, pattern, ShapeCategory.BASE, {
@@ -983,7 +985,7 @@ func generate_dungeon(rooms=5, corridor_chance=0.7):
         add_entity(room.center_x, room.center_y, entity_type)
 }
 
-    return "dungeon_" + str(OS.get_unix_time())
+    return "dungeon_" + str(OS.Time.get_unix_time_from_system())
 }
 
 func generate_space_map(ships=3, bases=2):
@@ -1026,4 +1028,4 @@ func generate_space_map(ships=3, bases=2):
     add_ship(player_x, player_y, "small")
 }
 
-    return "space_map_" + str(OS.get_unix_time())
+    return "space_map_" + str(OS.Time.get_unix_time_from_system())

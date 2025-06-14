@@ -1,5 +1,5 @@
 extends Node3D
-class_name ElementManager
+class_name ElementManager_elementmanager_elementm
 
 # Scale manager properties (for universe integration)
 var scale_level: String = "element"
@@ -28,10 +28,10 @@ const PROCESSING_ZONES = [
 
 # References to element scene/script paths
 var element_scripts = {
-	"fire": load("res://code/gdscript/scripts/elements_shapes_projection/fire_element.gd"),
-	"water": load("res://code/gdscript/scripts/elements_shapes_projection/water_element.gd"),
-	"wood": load("res://code/gdscript/scripts/elements_shapes_projection/wood_element.gd"),
-	"ash": load("res://code/gdscript/scripts/elements_shapes_projection/ash_element.gd")
+	"fire": load("res://scripts/gdscript/scripts/elements_shapes_projection/fire_element.gd"),
+	"water": load("res://scripts/gdscript/scripts/elements_shapes_projection/water_element.gd"),
+	"wood": load("res://scripts/gdscript/scripts/elements_shapes_projection/wood_element.gd"),
+	"ash": load("res://scripts/gdscript/scripts/elements_shapes_projection/ash_element.gd")
 }
 
 # World state
@@ -593,22 +593,22 @@ func _on_resource_status_changed(resource_type, count, max_count):
 			"lights":
 				var label = panel.get_node_or_null("LightsLabel")
 				if label:
-					label.text = "  Lights: " + str(count) + "/" + str(max_count)
+					label.text = "  Lights: " + str(count) + "" + str(max_count)
 			
 			"particles":
 				var label = panel.get_node_or_null("ParticlesLabel")
 				if label:
-					label.text = "  Particles: " + str(count) + "/" + str(max_count)
+					label.text = "  Particles: " + str(count) + "" + str(max_count)
 			
 			"visible":
 				var label = panel.get_node_or_null("VisibleLabel")
 				if label:
-					label.text = "  Visible: " + str(count) + "/" + str(max_count)
+					label.text = "  Visible: " + str(count) + "" + str(max_count)
 			
 			"physics":
 				var label = panel.get_node_or_null("PhysicsLabel")
 				if label:
-					label.text = "  Physics: " + str(count) + "/" + str(max_count)
+					label.text = "  Physics: " + str(count) + "" + str(max_count)
 
 # Manifest a word as elements
 func manifest_word(word, position=Vector3.ZERO, size=10.0):

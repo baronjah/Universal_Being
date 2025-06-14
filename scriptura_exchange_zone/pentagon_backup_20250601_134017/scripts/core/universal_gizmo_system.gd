@@ -4,9 +4,8 @@
 # PURPOSE: Everything is a Universal Being, even the tools we use to manipulate objects
 # CREATED: 2025-05-29 - The gizmo arrows have consciousness!
 # ==================================================
-
-extends UniversalBeingBase
-class_name UniversalGizmoSystem
+extends \2
+class_name UniversalGizmoSystem_universalgizmosystem_universa
 
 signal transform_started(axis: String, mode: String)
 signal transform_updated(delta: Vector3)
@@ -140,7 +139,7 @@ func _unhandled_input(event: InputEvent) -> void:
 				var from = camera.project_ray_origin(event.position)
 				var to = from + camera.project_ray_normal(event.position) * 1000.0
 				
-				var space_state = camera.get_world_3d().direct_space_state
+				var space_state = camera.get_viewport().get_world_3d().direct_space_state
 				var query = PhysicsRayQueryParameters3D.create(from, to)
 				query.collision_mask = 0xFFFFFFFF
 				query.collide_with_areas = true
@@ -163,7 +162,7 @@ func _unhandled_input(event: InputEvent) -> void:
 func _create_translation_gizmos() -> void:
 	"""Create arrow Universal Beings for translation"""
 	
-	var unified_system = get_node_or_null("/root/UnifiedBeingSystem")
+	var unified_system = get_node_or_null("root/UnifiedBeingSystem")
 	if not unified_system:
 		print("[UniversalGizmoSystem] Error: UnifiedBeingSystem not found!")
 		return
@@ -640,7 +639,7 @@ func set_mode(mode: String) -> void:
 
 # Console commands
 func _ready_commands() -> void:
-	var console = get_node_or_null("/root/ConsoleManager")
+	var console = get_node_or_null("root/ConsoleManager")
 	if console:
 		console.register_command("gizmo", _cmd_gizmo, "Control Universal Gizmo")
 		console.register_command("gizmo_scale", _cmd_gizmo_scale, "Set gizmo scale")
@@ -735,8 +734,8 @@ func _connect_to_mouse_system() -> void:
 	# Try multiple paths to find the mouse system
 	var mouse_system = null
 	var paths_to_try = [
-		"/root/MouseInteractionSystem",  # As autoload
-		"/root/MainGame/MouseInteractionSystem",  # As child of MainGame
+		"root/MouseInteractionSystem",  # As autoload
+		"root/MainGame/MouseInteractionSystem",  # As child of MainGame
 		"//MouseInteractionSystem"  # Search from root
 	]
 	
@@ -896,7 +895,7 @@ func _end_drag() -> void:
 	transform_completed.emit()
 	
 	# Notify console about the transformation
-	var console = get_node_or_null("/root/ConsoleManager")
+	var console = get_node_or_null("root/ConsoleManager")
 	if console and target_object:
 		var msg = "Gizmo " + drag_mode + " on " + drag_axis + " axis complete"
 		console._print_to_console(msg)

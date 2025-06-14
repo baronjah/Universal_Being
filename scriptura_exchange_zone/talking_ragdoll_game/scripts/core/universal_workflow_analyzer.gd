@@ -2,7 +2,7 @@
 # Traces every path, every function, every connection
 # Helps combine duplicate files into perfect unified versions
 extends UniversalBeingBase
-class_name UniversalWorkflowAnalyzer
+class_name UniversalWorkflowAnalyzer_universa
 
 # Complete workflow mapping
 var all_scripts: Dictionary = {}  # script_path -> script_data
@@ -92,7 +92,7 @@ func _scan_directory_recursive(dir: DirAccess, path: String):
 	var file_name = dir.get_next()
 	
 	while file_name != "":
-		var full_path = path + "/" + file_name
+		var full_path = path + "" + file_name
 		
 		if dir.current_is_dir() and not file_name.begins_with("."):
 			var subdir = DirAccess.open(full_path)
@@ -138,7 +138,7 @@ func _analyze_script(script_path: String):
 	
 	# Extract variables
 	var var_regex = RegEx.new()
-	var_regex.compile("(?:var|@export|@onready)\\s+(?:var\\s+)?(\\w+)")
+	var_regex.compile("(?:var|@@@export|@onready)\\s+(?:var\\s+)?(\\w+)")
 	for match in var_regex.search_all(content):
 		var var_name = match.get_string(1)
 		script_data.variables.append(var_name)

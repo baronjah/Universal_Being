@@ -1,17 +1,17 @@
 extends Node
 
-class_name PerformanceOptimizer
+class_name PerformanceOptimizer_performanceoptimizer_performa
 
 # ----- PERFORMANCE SETTINGS -----
 @export_category("Performance Configuration")
-@export var enabled: bool = true
-@export var max_performance_mode: bool = false
-@export var freemium_optimization: bool = true
-@export var hourly_magic_cycles: bool = true
-@export var turn_duration_minutes: int = 5  # 5 minutes per turn = 1 hour for 12 turns
-@export var memory_limit_mb: int = 512  # Memory limit in MB
-@export var max_threads: int = 4  # Max thread count for parallel processing
-@export var ethereal_engine_priority: int = 10  # Higher priority for Ethereal Engine
+@@export var enabled: bool = true
+@@export var max_performance_mode: bool = false
+@@export var freemium_optimization: bool = true
+@@export var hourly_magic_cycles: bool = true
+@@export var turn_duration_minutes: int = 5  # 5 minutes per turn = 1 hour for 12 turns
+@@export var memory_limit_mb: int = 512  # Memory limit in MB
+@@export var max_threads: int = 4  # Max thread count for parallel processing
+@@export var ethereal_engine_priority: int = 10  # Higher priority for Ethereal Engine
 
 # ----- RESOURCE MANAGEMENT -----
 var resource_allocation: Dictionary = {
@@ -140,7 +140,7 @@ func _find_system_references():
     time_tracker = _find_node_by_class(get_tree().root, "UsageTimeTracker")
 
 func _find_node_by_class(node, class_name):
-    if node.get_class() == class_name or (node.get_script() and node.get_script().get_path().find(class_name.to_lower()) >= 0):
+    if node.get_class() == class_name or_performanceoptimizer_performa (node.get_script() and node.get_script().get_path().find(class_name.to_lower()) >= 0):
         return node
     
     for child in node.get_children():

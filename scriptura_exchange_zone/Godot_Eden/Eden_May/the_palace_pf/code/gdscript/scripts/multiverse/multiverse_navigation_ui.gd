@@ -1,5 +1,5 @@
 extends Control
-class_name MultiverseNavigationUI
+class_name MultiverseNavigationUI_multiversenavigationui_multiver
 }
 
 # References to required systems
@@ -63,10 +63,10 @@ func _ready():
 
 func initialize_dependencies():
     # Try to find Akashic Records Manager
-    if has_node("/root/AkashicRecordsManager"):
+    if has_node("root/AkashicRecordsManager"):
         akashic_records_manager = get_node("\1") as Node
     else:
-        var akashic_records_script = load("res://code/gdscript/scripts/akashic/akashic_records_manager.gd")
+        var akashic_records_script = load("res://scripts/gdscript/scripts/akashic/akashic_records_manager.gd")
         if akashic_records_script:
             akashic_records_manager = akashic_records_script.new()
             akashic_records_manager.name = "AkashicRecordsManager"
@@ -77,10 +77,10 @@ func initialize_dependencies():
 }
 
     # Try to find Database System
-    if has_node("/root/DatabaseSystem"):
+    if has_node("root/DatabaseSystem"):
         database_system = get_node("\1") as Node
     else:
-        var database_script = load("res://code/gdscript/scripts/database/JSHDatabaseManager.gd")
+        var database_script = load("res://scripts/gdscript/scripts/database/JSHDatabaseManager.gd")
         if database_script:
             database_system = database_script.new()
             database_system.name = "DatabaseSystem"
@@ -91,10 +91,10 @@ func initialize_dependencies():
 }
 
     # Try to find Entity Evolution
-    if has_node("/root/EntityEvolution"):
+    if has_node("root/EntityEvolution"):
         entity_evolution = get_node("\1") as Node
     else:
-        var evolution_script = load("res://code/gdscript/scripts/entity/JSHEntityEvolution.gd")
+        var evolution_script = load("res://scripts/gdscript/scripts/entity/JSHEntityEvolution.gd")
         if evolution_script:
             entity_evolution = evolution_script.get_instance()
             entity_evolution.name = "EntityEvolution"
@@ -105,10 +105,10 @@ func initialize_dependencies():
 }
 
     # Try to find Universal Bridge
-    if has_node("/root/UniversalBridge"):
+    if has_node("root/UniversalBridge"):
         universal_bridge = get_node("\1") as Node
     else:
-        var bridge_script = load("res://code/gdscript/scripts/core/universal_bridge.gd")
+        var bridge_script = load("res://scripts/gdscript/scripts/core/universal_bridge.gd")
         if bridge_script:
             universal_bridge = bridge_script.new()
             universal_bridge.name = "UniversalBridge"

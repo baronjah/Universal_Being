@@ -1,6 +1,6 @@
 extends Node
 
-class_name TurnSystem
+class_name TurnSystem_turnsystem_turnsyst
 
 # ----- TURN CONFIGURATION -----
 var turn_duration = 9.0  # The sacred 9-second interval
@@ -35,7 +35,7 @@ var turn_symbols = [
 var dimension_names = [
 	"Linear Expression",      # 1D
 	"Planar Reflection",      # 2D
-	"Spatial Manifestation",  # 3D
+	"Node3D Manifestation",  # 3D
 	"Temporal Flow",          # 4D
 	"Probability Waves",      # 5D
 	"Phase Resonance",        # 6D

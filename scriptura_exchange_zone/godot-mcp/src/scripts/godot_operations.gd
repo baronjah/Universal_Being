@@ -1,5 +1,5 @@
 #!/usr/bin/env -S godot --headless --script
-extends SceneTree
+extends \2
 
 # Debug mode flag
 var debug_mode = false
@@ -381,7 +381,7 @@ func create_scene(params):
                     printerr("Scene file not found after save. Trying to diagnose the issue...")
                     
                     # Try to write a test file to the same directory
-                    var test_scene_file_path = scene_dir_res + "/test_scene_file.tmp"
+                    var test_scene_file_path = scene_dir_res + "test_scene_file.tmp"
                     var test_scene_file = FileAccess.open(test_scene_file_path, FileAccess.WRITE)
                     
                     if test_scene_file:
@@ -883,7 +883,7 @@ func find_files(path, extension):
         
         while file_name != "":
             if dir.current_is_dir() and not file_name.begins_with("."):
-                files.append_array(find_files(path + file_name + "/", extension))
+                files.append_array(find_files(path + file_name + "", extension))
             elif file_name.ends_with(extension):
                 files.append(path + file_name)
             
@@ -974,8 +974,8 @@ func resave_resources(params):
         project_path = params.project_path
         if not project_path.begins_with("res://"):
             project_path = "res://" + project_path
-        if not project_path.ends_with("/"):
-            project_path += "/"
+        if not project_path.ends_with(""):
+            project_path += ""
     
     if debug_mode:
         print("Using project path: " + project_path)

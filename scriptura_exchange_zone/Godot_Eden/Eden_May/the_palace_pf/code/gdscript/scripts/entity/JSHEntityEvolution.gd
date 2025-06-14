@@ -1,5 +1,5 @@
 extends Node
-class_name JSHEntityEvolution
+class_name JSHEntityEvolution_JSHEntityEvolution_JSHEntit
 
 # The JSHEntityEvolution system manages the evolution of entities over time
 # It handles evolution stages, triggers, conditions, and transformations

@@ -2,13 +2,13 @@
 #
 # JSH_Core/JSH_task_manager
 #
-# res://code/gdscript/scripts/Menu_Keyboard_Console/jsh_task_manager.gd
+# res://scripts/gdscript/scripts/Menu_Keyboard_Console/jsh_task_manager.gd
 #
-# res://code/gdscript/scripts/Menu_Keyboard_Console/jsh_task_manager.gd
+# res://scripts/gdscript/scripts/Menu_Keyboard_Console/jsh_task_manager.gd
 #
 # root/JSH_task_manager
 # JSH_Core/JSH_task_manager
-# res://code/gdscript/scripts/Menu_Keyboard_Console/jsh_task_manager.gd
+# res://scripts/gdscript/scripts/Menu_Keyboard_Console/jsh_task_manager.gd
 #
 #    oooo  .oooooo..o ooooo   ooooo 
 #    `888 d8P'    `Y8 `888'   `888' 
@@ -19,8 +19,7 @@
 # .o. 88P 8""88888P'  o888o   o888o 
 # `Y888P                            
 #
-
-extends Node
+extends \2
 
 var rng
 var ram_data
@@ -127,7 +126,8 @@ const TASK_CATEGORIES = {
 	}
 }
 # Task status enum
-enum TaskStatus {
+enum \2 {
+
 	PENDING,
 	RUNNING,
 	COMPLETED,
@@ -163,7 +163,7 @@ class ProceduralEngine:
 		# Simplify mesh based on LOD level
 		return shape
 
-# Spatial Containers
+# Node3D Containers
 class SpatialContainer:
 	var uuid : String
 	var position : Vector3
@@ -218,7 +218,7 @@ class SpatialContainer:
 	## last time
 func _ready():
 
-	#initialize_world_seed(OS.get_unix_time())
+	#initialize_world_seed(OS.Time.get_unix_time_from_system())
 	initialize_task_system()
 	print("JSH Task Manager initialized")
 	# Create visualization container if needed
@@ -653,7 +653,7 @@ func parse_code_structure(content: String) -> Dictionary:
 		line = line.strip_edges()
 		if line.begins_with("# JSH"):
 			if current_system != "":
-				structure.systems[current_system]["description"] = "\n".join(current_description)
+				structure.systems[current_system]["description"] = "\n"." ".join(current_description)
 			current_system = line.substr(2).strip_edges()
 			structure.systems[current_system] = {
 				"functions": [],
@@ -1051,11 +1051,11 @@ func save_container_states_old():
 #		print(" the info was not new ")		#print(" it was there before ")		#print(" it is new function ")	#print(" JSH_task_manager check connection " , array_for_tasks , " and also dictionary : " , dictionary_of_functions)
 
 # Core System Architecture
-#class_name SpatialEvolutionSystem
+#class_name SpatialEvolutionSystem_jshtaskmanager_jshtaskm
 #extends Node3D
 
 # we had one already
 #func _ready():
-	#initialize_world_seed(OS.get_unix_time())
+	#initialize_world_seed(OS.Time.get_unix_time_from_system())
 	#initialize_task_system()
 	

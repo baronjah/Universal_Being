@@ -159,6 +159,7 @@ func _on_command_entered(text: String) -> void:
 		_:
 			output_line("AI: " + text)
 			output_line("Creating game element: " + text)
+
 	
 	# Clear input
 	input_line.text = ""
@@ -167,6 +168,7 @@ func _on_command_entered(text: String) -> void:
 				load_session(args)
 			else:
 				output_line("Usage: /load <session_name>")
+	
 		
 		"macro":
 			process_macro_command(args)
@@ -182,6 +184,7 @@ func _on_command_entered(text: String) -> void:
 		
 		_:
 			output_line("Unknown console command: /%s" % command)
+
 
 func process_macro_command(args: String) -> void:
 	"""Handle macro subcommands"""
@@ -200,6 +203,7 @@ func process_macro_command(args: String) -> void:
 				output_line("🔴 Recording macro: %s" % macro_args)
 			else:
 				output_line("Usage: /macro record <name>")
+	
 		
 		"stop":
 			if macro_system.stop_recording():
@@ -213,8 +217,10 @@ func process_macro_command(args: String) -> void:
 				output_line("▶️ Playing macro: %s" % macro_args)
 			else:
 				output_line("Usage: /macro play <name>")
+	
 		
 		"list":
+
 			var macros = macro_system.list_macros()
 			output_line("Available macros:")
 			for macro in macros:
@@ -256,6 +262,7 @@ func show_tutorial() -> void:
 	
 	output_line("Try: [color=green]create being TestSubject[/color]")
 
+
 func reload_reality() -> void:
 	"""Hot reload the entire game while running"""
 	output_line("🔄 Reloading reality...")
@@ -285,7 +292,7 @@ func capture_reality_state() -> Dictionary:
 		"gravity": ProjectSettings.get_setting("physics/2d/default_gravity"),
 		"time_scale": Engine.time_scale,
 		"triggers": command_processor.natural_triggers.duplicate()
-	}
+}
 	
 	# Capture all beings
 	for being in get_tree().get_nodes_in_group("universal_beings"):
@@ -320,8 +327,8 @@ func save_session() -> void:
 			"timestamp": Time.get_unix_time_from_system(),
 			"commands": command_history,
 			"reality_state": capture_reality_state()
-		}
 		akashic_records.save_record("console_session", "system", session_data)
+}
 
 func load_session(name: String) -> void:
 	"""Load session from Akashic Records"""
@@ -330,6 +337,7 @@ func load_session(name: String) -> void:
 		if data:
 			restore_reality_state(data.reality_state)
 			output_line("Session loaded: %s" % name)
+
 
 func output_line(text: String) -> void:
 	output_area.append_text(text + "\n")

@@ -158,7 +158,7 @@ func process_wish(wish_text, priority = "normal", metadata = {}):
 			akashic_bridge.update_wish(wish.id, "pending", {
 				"text": wish_text,
 				"priority": priority,
-				"created": OS.get_unix_time()
+				"created": OS.Time.get_unix_time_from_system()
 			})
 }
 

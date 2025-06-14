@@ -7,7 +7,7 @@
 # jsh_thread_pool_manager.gd
 # root/JSH_ThreadPool_Manager
 
-# res://code/gdscript/scripts/Menu_Keyboard_Console/jsh_thread_pool_manager.gd
+# res://scripts/gdscript/scripts/Menu_Keyboard_Console/jsh_thread_pool_manager.gd
 #
 
 #    oooo  .oooooo..o ooooo   ooooo 
@@ -19,7 +19,6 @@
 # .o. 88P 8""88888P'  o888o   o888o 
 # `Y888P                            
 #
-
 extends UniversalBeingBase
 # Simple thread pool manager for ragdoll game
 var thread_pool = null  # We'll create our own simple thread pool if needed

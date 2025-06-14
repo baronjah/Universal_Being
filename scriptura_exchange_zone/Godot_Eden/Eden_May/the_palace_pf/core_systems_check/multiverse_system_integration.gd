@@ -57,15 +57,15 @@ func initialize(evolution_system = null, records_manager = null, player = null, 
 
 	# If any systems are null, try to find them in the scene
 	if not multiverse_evolution_system:
-		multiverse_evolution_system = get_node_or_null("/root/MultiverseEvolutionSystem")
+		multiverse_evolution_system = get_node_or_null("root/MultiverseEvolutionSystem")
 }
 
 	if not akashic_records_manager:
-		akashic_records_manager = get_node_or_null("/root/AkashicRecordsManager")
+		akashic_records_manager = get_node_or_null("root/AkashicRecordsManager")
 }
 
 	if not time_progression_system:
-		time_progression_system = get_node_or_null("/root/TimeProgressionSystem")
+		time_progression_system = get_node_or_null("root/TimeProgressionSystem")
 }
 
 	# Set up initial state

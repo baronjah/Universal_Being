@@ -1,5 +1,5 @@
-extends Spatial
-class_name HexGridVisualizer
+extends Node3D
+class_name HexGridVisualizer_HexGridVisualizer_HexGridV
 }
 
 # ------------------------------------
@@ -24,7 +24,8 @@ const HEX_CORNER_ANGLES = [0, 60, 120, 180, 240, 300] # in degrees
 }
 
 # Visualization modes
-enum GridMode {
+enum \2 {
+
     FLAT,           # Traditional flat hex grid
     SPHERE,         # Wrapped onto a sphere 
     INFINITE,       # Infinitely scrolling grid
@@ -144,7 +145,7 @@ func _input(event):
 
 # Create hex cell template
 func _create_hex_cell_template():
-    hex_cell_scene = Spatial.new()
+    hex_cell_scene = Node3D.new()
     hex_cell_scene.name = "HexCellTemplate"
 }
 
@@ -161,7 +162,7 @@ func _create_hex_cell_template():
 }
 
     # Create collision shape for interactions
-    var collision = Area.new()
+    var collision = Area3D.new()
     collision.name = "ClickArea"
     var shape = CollisionShape.new()
     var cylinder_shape = CylinderShape.new()
@@ -1273,7 +1274,7 @@ func transform_sphere_to_flat(duration = 1.0):
         var initial_pos = cell.translation
 }
 
-        // Calculate target flat position
+# // Calculate target flat position
         var q = coord.x
         var r = coord.y
         var target_pos = axial_to_position(q, r)
@@ -1289,7 +1290,7 @@ func transform_sphere_to_flat(duration = 1.0):
     }
 }
 
-    // Setup camera tween
+# // Setup camera tween
     var cam_initial_pos = camera.translation
     var cam_target_pos = Vector3(0, 15, 15)
     var cam_initial_rot = camera.rotation
@@ -1302,7 +1303,7 @@ func transform_sphere_to_flat(duration = 1.0):
         duration, Tween.TRANS_SINE, Tween.EASE_IN_OUT)
 }
 
-    // Start all tweens for cell positions and orientations
+# // Start all tweens for cell positions and orientations
     for coord in cells_data:
         var data = cells_data[coord]
         tween.interpolate_method(self, "_update_cell_flat_transform", 
@@ -1317,7 +1318,7 @@ func transform_sphere_to_flat(duration = 1.0):
     tween.start()
 }
 
-    // When complete, switch to flat mode
+# // When complete, switch to flat mode
     await(tween, "tween_all_completed")
     current_mode = GridMode.FLAT
     emit_signal("view_changed", current_mode, grid_center, grid_rotation, grid_scale)
@@ -1334,12 +1335,12 @@ func _update_cell_flat_transform(data):
     var progress = data.progress
 }
 
-    // Interpolate position
+# // Interpolate position
     var new_pos = start_pos.linear_interpolate(end_pos, progress)
     cell.translation = new_pos
 }
 
-    // Interpolate orientation using quaternions
+# // Interpolate orientation using quaternions
     var start_quat = Quat(start_basis)
     var end_quat = Quat(end_basis)
     var interpolated_quat = start_quat.slerp(end_quat, progress)
@@ -1358,12 +1359,12 @@ func roll_grid(direction, duration = 1.0):
     add_child(tween)
 }
 
-    // Calculate rotation axis perpendicular to direction
+# // Calculate rotation axis perpendicular to direction
     var axis = Vector3(-direction.y, 0, direction.x).normalized()
     var angle = PI/2 // 90 degree rotation
 }
 
-    // Track how far each cell should move
+# // Track how far each cell should move
     var grid_size = GRID_FLAT_SIZE * HEX_SIZE * 2
     var cells_data = {}
 }
@@ -1373,13 +1374,13 @@ func roll_grid(direction, duration = 1.0):
         var initial_pos = cell.translation
 }
 
-        // Calculate position after rolling
+# // Calculate position after rolling
         var rotation_transform = Transform()
         rotation_transform.basis = Basis(axis, angle)
         var rotated_pos = rotation_transform.xform(initial_pos)
 }
 
-        // Determine if this cell will be hidden (rotated to back side)
+# // Determine if this cell will be hidden (rotated to back side)
         var dot_product = initial_pos.normalized().dot(direction)
         var will_be_hidden = dot_product > 0
 }
@@ -1393,7 +1394,7 @@ func roll_grid(direction, duration = 1.0):
     }
 }
 
-    // Setup global rotation tween
+# // Setup global rotation tween
     var rotation_data = {
         "progress": 0.0,
         "axis": axis,
@@ -1411,7 +1412,7 @@ func roll_grid(direction, duration = 1.0):
     tween.start()
 }
 
-    // When complete, reorganize the grid
+# // When complete, reorganize the grid
     await(tween, "tween_all_completed")
     _finalize_grid_roll(direction)
     tween.queue_free()
@@ -1425,24 +1426,24 @@ func _update_roll_transform(data):
     var cells = data.cells
 }
 
-    // Apply rotation to all cells
+# // Apply rotation to all cells
     for coord in cells:
         var cell_data = cells[coord]
         var cell = cell_data.cell
         var initial_pos = cell_data.initial_pos
 }
 
-        // Create rotation transform
+# // Create rotation transform
         var rotation_transform = Transform()
         rotation_transform.basis = Basis(axis, angle)
         var rotated_pos = rotation_transform.xform(initial_pos)
 }
 
-        // Apply position
+# // Apply position
         cell.translation = rotated_pos
 }
 
-        // Update visibility (fade out cells rotating to back)
+# // Update visibility (fade out cells rotating to back)
         if cell_data.will_be_hidden:
             var opacity = 1.0 - progress
             var mesh = cell.get_node("\1") as Node
@@ -1457,23 +1458,23 @@ func _update_roll_transform(data):
 
 # Finalize grid after rolling animation
 func _finalize_grid_roll(direction):
-    // This would reorganize the grid after rolling
-    // For a real implementation, you'd recalculate cell positions based on the new state
-    // and possibly load/create new cells for the side that's now visible
+# // This would reorganize the grid after rolling
+# // For a real implementation, you'd recalculate cell positions based on the new state
+# // and possibly load/create new cells for the side that's now visible
 }
 
-    // For now, we'll just reset to flat mode as placeholder
+# // For now, we'll just reset to flat mode as placeholder
     switch_to_mode(GridMode.FLAT)
 }
 
 # Main API: Update with search results
 func update_with_search_results(search_results):
-    // Get list of cells in order
+# // Get list of cells in order
     var cell_coords = grid_cells.keys()
     cell_coords.sort()
 }
 
-    // Clear existing assignments
+# // Clear existing assignments
     for coord in cell_coords:
         var cell = grid_cells[coord]
         var label = cell.get_node("\1") as Node
@@ -1488,7 +1489,7 @@ func update_with_search_results(search_results):
     word_cells.clear()
 }
 
-    // Assign search results to cells
+# // Assign search results to cells
     var result_idx = 0
     for coord in cell_coords:
         if result_idx >= search_results.size():
@@ -1520,6 +1521,6 @@ func transform_to_mode(target_mode, duration = 1.0):
         [GridMode.SPHERE, GridMode.FLAT]:
             transform_sphere_to_flat(duration)
         _:
-            // For other transitions, just switch directly
+# // For other transitions, just switch directly
             switch_to_mode(target_mode)
 }

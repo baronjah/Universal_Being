@@ -308,7 +308,7 @@ func generate_flat_grid(size):
                 grid_cells[coord] = cell
                 
                 # Connect signals
-                var area = cell.get_node("ClickArea")
+                var area = cell.get_node("\1") as Node
                 if area:
                     area.connect("mouse_entered", self, "_on_cell_mouse_entered", [coord])
                     area.connect("mouse_exited", self, "_on_cell_mouse_exited", [coord])
@@ -357,7 +357,7 @@ func generate_sphere_grid(size):
                 grid_cells[coord] = cell
                 
                 # Connect signals
-                var area = cell.get_node("ClickArea")
+                var area = cell.get_node("\1") as Node
                 if area:
                     area.connect("mouse_entered", self, "_on_cell_mouse_entered", [coord])
                     area.connect("mouse_exited", self, "_on_cell_mouse_exited", [coord])
@@ -408,7 +408,7 @@ func generate_cylinder_grid(size):
                 grid_cells[coord] = cell
                 
                 # Connect signals
-                var area = cell.get_node("ClickArea")
+                var area = cell.get_node("\1") as Node
                 if area:
                     area.connect("mouse_entered", self, "_on_cell_mouse_entered", [coord])
                     area.connect("mouse_exited", self, "_on_cell_mouse_exited", [coord])
@@ -462,7 +462,7 @@ func generate_torus_grid(size):
                 grid_cells[coord] = cell
                 
                 # Connect signals
-                var area = cell.get_node("ClickArea")
+                var area = cell.get_node("\1") as Node
                 if area:
                     area.connect("mouse_entered", self, "_on_cell_mouse_entered", [coord])
                     area.connect("mouse_exited", self, "_on_cell_mouse_exited", [coord])
@@ -508,7 +508,7 @@ func _populate_visible_region(center_pos, size):
                 grid_cells[coord] = cell
                 
                 # Connect signals
-                var area = cell.get_node("ClickArea")
+                var area = cell.get_node("\1") as Node
                 if area:
                     area.connect("mouse_entered", self, "_on_cell_mouse_entered", [coord])
                     area.connect("mouse_exited", self, "_on_cell_mouse_exited", [coord])
@@ -550,7 +550,7 @@ func set_cell_data(coord, data):
     var cell = grid_cells[coord]
     
     # Update label
-    var label = cell.get_node("Label")
+    var label = cell.get_node("\1") as Node
     if label and data.has("text"):
         label.text = data.text
         
@@ -775,7 +775,7 @@ func _update_grid_scale(delta):
             cell.scale = Vector3(grid_scale, grid_scale, grid_scale)
         else:
             # For 3D shapes, scale is applied differently to preserve the shape
-            var mesh = cell.get_node("HexMesh")
+            var mesh = cell.get_node("\1") as Node
             if mesh:
                 mesh.scale = Vector3(1, grid_scale, 1)
 
@@ -832,14 +832,14 @@ func select_cell(coord):
     # Deselect previous cell
     if selected_cell and grid_cells.has(selected_cell):
         var prev_cell = grid_cells[selected_cell]
-        var prev_mesh = prev_cell.get_node("HexMesh")
+        var prev_mesh = prev_cell.get_node("\1") as Node
         if prev_mesh:
             prev_mesh.material_override = highlight_material if selected_cell == focused_cell else cell_material
     
     # Select new cell
     selected_cell = coord
     var cell = grid_cells[coord]
-    var mesh = cell.get_node("HexMesh")
+    var mesh = cell.get_node("\1") as Node
     if mesh:
         mesh.material_override = selected_material
     
@@ -861,7 +861,7 @@ func _on_cell_mouse_entered(coord):
         return
     
     var cell = grid_cells[coord]
-    var mesh = cell.get_node("HexMesh")
+    var mesh = cell.get_node("\1") as Node
     if mesh:
         mesh.material_override = highlight_material
     
@@ -884,7 +884,7 @@ func _on_cell_mouse_exited(coord):
         return
     
     var cell = grid_cells[coord]
-    var mesh = cell.get_node("HexMesh")
+    var mesh = cell.get_node("\1") as Node
     if mesh:
         mesh.material_override = cell_material
 
@@ -918,7 +918,7 @@ func connect_to_word_drive(drive):
         update_grid_with_words(words)
         
         # Connect to messages for updates
-        word_drive.connect("word_message_sent", self, "_on_word_message")
+        word_drive.connect(_on_word_message)
 
 # Process word messages for updates
 func _on_word_message(msg_type, payload, source):
@@ -952,7 +952,7 @@ func _on_word_message(msg_type, payload, source):
                 
                 # Clear cell data
                 var cell = grid_cells[coord]
-                var label = cell.get_node("Label")
+                var label = cell.get_node("\1") as Node
                 if label:
                     label.text = ""
                 
@@ -1005,7 +1005,7 @@ func transform_flat_to_sphere(duration = 1.0):
     tween.start()
     
     # When complete, switch to sphere mode
-    yield(tween, "tween_all_completed")
+    await(tween, "tween_all_completed")
     current_mode = GridMode.SPHERE
     emit_signal("view_changed", current_mode, grid_center, grid_rotation, grid_scale)
     tween.queue_free()
@@ -1097,7 +1097,7 @@ func transform_sphere_to_flat(duration = 1.0):
     tween.start()
     
     // When complete, switch to flat mode
-    yield(tween, "tween_all_completed")
+    await(tween, "tween_all_completed")
     current_mode = GridMode.FLAT
     emit_signal("view_changed", current_mode, grid_center, grid_rotation, grid_scale)
     tween.queue_free()
@@ -1175,7 +1175,7 @@ func roll_grid(direction, duration = 1.0):
     tween.start()
     
     // When complete, reorganize the grid
-    yield(tween, "tween_all_completed")
+    await(tween, "tween_all_completed")
     _finalize_grid_roll(direction)
     tween.queue_free()
 
@@ -1203,7 +1203,7 @@ func _update_roll_transform(data):
         // Update visibility (fade out cells rotating to back)
         if cell_data.will_be_hidden:
             var opacity = 1.0 - progress
-            var mesh = cell.get_node("HexMesh")
+            var mesh = cell.get_node("\1") as Node
             if mesh and mesh.material_override:
                 var material = mesh.material_override
                 var color = material.albedo_color
@@ -1230,7 +1230,7 @@ func update_with_search_results(search_results):
     // Clear existing assignments
     for coord in cell_coords:
         var cell = grid_cells[coord]
-        var label = cell.get_node("Label")
+        var label = cell.get_node("\1") as Node
         if label:
             label.text = ""
         

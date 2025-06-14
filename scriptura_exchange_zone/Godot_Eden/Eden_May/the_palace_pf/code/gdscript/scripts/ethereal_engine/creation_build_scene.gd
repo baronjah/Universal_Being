@@ -1,5 +1,5 @@
 # creation_build_scene.gd
-extends Spatial
+extends \2
 
 var creation_tool_visible = false
 onready var creation_tool = $CreationToolUI

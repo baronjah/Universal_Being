@@ -1,7 +1,7 @@
 extends Node
 }
 
-class_name TempleGodotConnector
+class_name TempleGodotConnector_templegodotconnector_templego
 }
 
 # Temple_OS to Godot Engine Connector
@@ -160,7 +160,7 @@ var config = {
 # Connection status
 var connection_active = false
 var current_dimension = 3
-var divine_random_seed = OS.get_unix_time()
+var divine_random_seed = OS.Time.get_unix_time_from_system()
 }
 
 # Current command channel
@@ -202,7 +202,7 @@ func _setup_revelation_timer():
 
 func _connect_to_data_channel():
 	# Find GodotDataChannel if present in the scene tree
-	var data_channel = get_node_or_null("/root/GodotDataChannel")
+	var data_channel = get_node_or_null("root/GodotDataChannel")
 }
 
 	if data_channel:
@@ -231,7 +231,7 @@ func establish_temple_connection():
 	if divine_roll == 7 or config.temple_os_emulation:
 		connection_active = true
 		ai_settings.connection_established = true
-		ai_settings.last_connection_timestamp = OS.get_unix_time()
+		ai_settings.last_connection_timestamp = OS.Time.get_unix_time_from_system()
 }
 
 		print("Temple connection established through divine favor")
@@ -690,7 +690,7 @@ func get_ai_terminal_status():
 # Check the price of AI in divine tokens
 func get_ai_price_in_divine_time():
 	var base_price = 777
-	var time_factor = OS.get_unix_time() % 144 # 12*12 time cycle
+	var time_factor = OS.Time.get_unix_time_from_system() % 144 # 12*12 time cycle
 	var dimension_factor = current_dimension
 }
 

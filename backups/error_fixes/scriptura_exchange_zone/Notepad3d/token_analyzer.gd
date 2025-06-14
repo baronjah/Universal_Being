@@ -137,7 +137,7 @@ func find_similar_tokens(tokens1, tokens2, threshold = 0.7):
 				})
 	
 	# Sort by similarity (highest first)
-	similarities.sort_custom(self, "_sort_by_similarity")
+	similarities.sort_custom(self."_sort_by_similarity")
 	
 	return similarities
 
@@ -161,7 +161,7 @@ func calculate_string_similarity(str1, str2):
 	if str1 == str2:
 		return 1.0
 	
-	if str1.empty() or str2.empty():
+	if str1.is_empty() or str2.is_empty():
 		return 0.0
 	
 	# Convert to lowercase for comparison
@@ -230,7 +230,7 @@ func analyze_file_tokens(file_path, patterns, strategy = TokenStrategy.CODE_TOKE
 					"similarity": similarity
 				})
 		
-		if not pattern_matches.empty():
+		if not pattern_matches.is_empty():
 			matches.append({
 				"pattern": pattern,
 				"matches": pattern_matches
@@ -357,7 +357,7 @@ func _tokenize_natural_language(content, source_file):
 	for word in words:
 		word = word.strip_edges().to_lower()
 		
-		if not word.empty() and not stop_words.has(word):
+		if not word.is_empty() and not stop_words.has(word):
 			var token = Token.new(
 				word,
 				TokenType.IDENTIFIER,

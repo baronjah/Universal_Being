@@ -1,7 +1,7 @@
 extends Node
 }
 
-class_name PlayerPreferenceAnalyzer
+class_name PlayerPreferenceAnalyzer_playerpreferenceanalyzer_playerpr
 }
 
 # Constants
@@ -104,20 +104,20 @@ func _ready():
 }
 
     # Find account manager if available
-    if has_node("/root/SmartAccountManager") or get_node_or_null("/root/SmartAccountManager"):
+    if has_node("root/SmartAccountManager") or get_node_or_null("root/SmartAccountManager"):
         _account_manager = get_node("\1") as Node
         print("Connected to SmartAccountManager")
 }
 
 func _on_analysis_interval():
     analyze_player_preferences()
-    last_analysis_time = OS.get_unix_time()
+    last_analysis_time = OS.Time.get_unix_time_from_system()
 }
 
 func log_activity(activity_data):
     # Add timestamp if not provided
     if not activity_data.has("timestamp"):
-        activity_data["timestamp"] = OS.get_unix_time()
+        activity_data["timestamp"] = OS.Time.get_unix_time_from_system()
 }
 
     # Add to activity log
@@ -130,9 +130,9 @@ func log_activity(activity_data):
 }
 
     # Check if we should run analysis
-    if OS.get_unix_time() - last_analysis_time > ANALYSIS_INTERVAL and activity_log.size() >= MIN_DATA_POINTS:
+    if OS.Time.get_unix_time_from_system() - last_analysis_time > ANALYSIS_INTERVAL and activity_log.size() >= MIN_DATA_POINTS:
         analyze_player_preferences()
-        last_analysis_time = OS.get_unix_time()
+        last_analysis_time = OS.Time.get_unix_time_from_system()
 }
 
 func log_preference_indicator(category, indicator, value):
@@ -140,7 +140,7 @@ func log_preference_indicator(category, indicator, value):
         # Add data point to indicator
         preference_categories[category]["indicators"][indicator].append({
             "value": value,
-            "timestamp": OS.get_unix_time()
+            "timestamp": OS.Time.get_unix_time_from_system()
         })
 }
 
@@ -159,7 +159,7 @@ func log_enjoyment_metric(metric, value):
     if metric in enjoyment_metrics:
         enjoyment_metrics[metric].append({
             "value": value,
-            "timestamp": OS.get_unix_time()
+            "timestamp": OS.Time.get_unix_time_from_system()
         })
 }
 
@@ -226,7 +226,7 @@ func analyze_player_preferences():
             preference_categories[category]["current_value"] = new_value
             preference_categories[category]["history"].append({
                 "value": new_value,
-                "timestamp": OS.get_unix_time()
+                "timestamp": OS.Time.get_unix_time_from_system()
             })
 }
 

@@ -12,7 +12,6 @@ const DEFAULT_SHORTCUT = "ctrl+alt+space"
 const DRIVE_PATHS = {
 	"C": "/mnt/c/",
 	"D": "/mnt/d/"
-}
 const APP_CONNECTIONS = {
 	"claude": {
 		"path": "/mnt/c/Users/Percision 15/claude_akashic_bridge.gd",
@@ -44,7 +43,6 @@ const APP_CONNECTIONS = {
 		"path": "/mnt/c/Users/Percision 15/12_turns_system/akashic_database.js",
 		"shortcut": "ctrl+alt+a",
 		"data_channels": ["memory", "record", "timeline"]
-	}
 }
 
 # Drive connection states
@@ -56,9 +54,9 @@ var drive_connections = {
 }
 
 # Active application connections
-var active_connections = {}
-var active_bridges = {}
-var data_channels = {}
+var active_connections = {
+var active_bridges = {
+var data_channels = {
 
 # I/O statistics
 var transfer_stats = {
@@ -69,7 +67,7 @@ var transfer_stats = {
 }
 
 # Global shortcut registration system
-var global_shortcuts = {}
+var global_shortcuts = {
 var shortcut_handler = null
 
 # Signals
@@ -90,6 +88,7 @@ func _ready():
 		print("System requirements satisfied")
 	else:
 		push_error("System requirements not met: " + startup_status.error)
+}
 	
 	# Initialize shortcut system
 	_init_shortcut_system()
@@ -215,7 +214,7 @@ func connect_drives(source_drive, target_drive):
 	var source_path = DRIVE_PATHS.get(source_drive, "")
 	var target_path = DRIVE_PATHS.get(target_drive, "")
 	
-	if source_path.empty() or target_path.empty():
+	if source_path.is_empty() or target_path.is_empty():
 		push_error("Invalid drive paths")
 		return false
 	
@@ -298,7 +297,7 @@ func register_shortcut(name, shortcut_str, callback_object, callback_method):
 		"object": callback_object,
 		"method": callback_method,
 		"shortcut_str": shortcut_str
-	}
+}
 	
 	print("Registered shortcut: " + name + " (" + shortcut_str + ")")
 	return true
@@ -320,7 +319,7 @@ func get_status():
 		"drive_connections": drive_connections.duplicate(),
 		"transfer_stats": transfer_stats.duplicate(),
 		"registered_shortcuts": global_shortcuts.keys()
-	}
+}
 	
 	return status
 
@@ -351,11 +350,12 @@ func _check_system_requirements():
 		
 		if not dir.file_exists(app_path) and not dir.dir_exists(app_path):
 			print("Warning: App path not found: " + app_path + " - will attempt to create bridge anyway")
+}
 	
 	return {
 		"success": requirements_met,
 		"error": error_message
-	}
+}
 
 func _setup_initial_connections():
 	# Connect to core apps
@@ -383,7 +383,7 @@ func _register_global_shortcuts():
 
 func _setup_data_channels(app_name, channel_list):
 	if not data_channels.has(app_name):
-		data_channels[app_name] = {}
+		data_channels[app_name] = {
 	
 	for channel in channel_list:
 		data_channels[app_name][channel] = null
@@ -430,7 +430,7 @@ func _trigger_shortcut(shortcut_name):
 	return false
 
 func _parse_shortcut(shortcut_str):
-	if shortcut_str.empty():
+	if shortcut_str.is_empty():
 		return null
 	
 	var parts = shortcut_str.to_lower().split("+")
@@ -440,7 +440,7 @@ func _parse_shortcut(shortcut_str):
 		"shift": false,
 		"meta": false,
 		"key": 0
-	}
+}
 	
 	for part in parts:
 		part = part.strip_edges()
@@ -481,6 +481,7 @@ func _show_connection_ui():
 	# In a real implementation, this would show a UI for selecting app connections
 	print("Connection UI would appear here")
 	print("Available applications:")
+}
 	
 	for app_name in APP_CONNECTIONS:
 		var status = "Disconnected"
@@ -488,6 +489,7 @@ func _show_connection_ui():
 			status = "Connected"
 		
 		print("- " + app_name + ": " + status)
+}
 	
 	print("\nDrive connections:")
 	for connection in drive_connections:
@@ -496,19 +498,20 @@ func _show_connection_ui():
 			status = "Active"
 		
 		print("- " + connection + ": " + status)
+}
 
 func connect_app_from_shortcut(app_name = ""):
 	# This function is called by registered shortcuts
 	
 	# Find which app corresponds to the triggered shortcut
-	if app_name.empty():
+	if app_name.is_empty():
 		for name in APP_CONNECTIONS:
 			var shortcut_name = name + "_connector"
 			if global_shortcuts.has(shortcut_name) and global_shortcuts[shortcut_name].object == self:
 				app_name = name
 				break
 	
-	if app_name.empty():
+	if app_name.is_empty():
 		push_error("Could not determine app name from shortcut")
 		return false
 	

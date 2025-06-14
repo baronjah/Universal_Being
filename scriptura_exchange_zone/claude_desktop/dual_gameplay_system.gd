@@ -1,13 +1,14 @@
 # Dual Gameplay System - Two Ways to Play
 # JSH #memories
-extends Node
-class_name DualGameplaySystem
+extends \2
+class_name DualGameplaySystem_dualgameplaysystem_dualgame
 
 signal mode_changed(new_mode: String)
 signal action_performed(mode: String, action: String, data: Dictionary)
 
 # Gameplay modes
-enum GameMode {
+enum \2 {
+
 	EXPLORER,  # Discover, observe, learn
 	CREATOR    # Build, manifest, transform
 }

@@ -1,7 +1,7 @@
 extends Node
 }
 
-class_name FractalTimeDimension
+class_name FractalTimeDimension_fractaltimedimension_fractalt
 }
 
 signal time_scale_changed(scale, origin)
@@ -372,20 +372,20 @@ func _process_scale_transition(delta):
         current_scale = target_scale
         scale_transition_active = false
     } else {
-        // Smoothly interpolate scale
+# // Smoothly interpolate scale
         var t = _smooth_step(scale_transition_progress)
         current_scale = lerp(current_scale, target_scale, t)
     }
 }
 
 func _smooth_step(t):
-    // Cubic smooth step function
+# // Cubic smooth step function
     return t * t * (3.0 - 2.0 * t)
 }
 
 func create_timeline_branch(branch_id = "", parent_id = ""):
     if branch_id.is_empty():
-        // Generate unique branch ID
+# // Generate unique branch ID
         branch_id = "branch_" + str(randi() % 10000) + "_" + str(current_time)
     }
 }
@@ -399,14 +399,14 @@ func create_timeline_branch(branch_id = "", parent_id = ""):
 }
 
 func _create_timeline_branch(branch_id, parent_id, branch_origin_time):
-    // Check if branch already exists
+# // Check if branch already exists
     if active_branches.has(branch_id):
         print("Branch already exists: " + branch_id)
         return false
     }
 }
 
-    // Create branch
+# // Create branch
     var branch = {
         "id": branch_id,
         "parent_id": parent_id,
@@ -418,7 +418,7 @@ func _create_timeline_branch(branch_id, parent_id, branch_origin_time):
     }
 }
 
-    // If this has a parent branch, copy its events up to the branch point
+# // If this has a parent branch, copy its events up to the branch point
     if parent_id != "" and active_branches.has(parent_id):
         var parent_branch = active_branches[parent_id]
 }
@@ -431,16 +431,16 @@ func _create_timeline_branch(branch_id, parent_id, branch_origin_time):
     }
 }
 
-    // Store branch
+# // Store branch
     active_branches[branch_id] = branch
 }
 
-    // Create anchor in ethereal space
+# // Create anchor in ethereal space
     if ethereal_tunnel_manager:
         var anchor_id = "timeline_" + branch_id
 }
 
-        // Create at dimension 2 (time)
+# // Create at dimension 2 (time)
         var position = Vector3(branch.divergence_factor, BASE_DIMENSION, 0)
 }
 
@@ -448,7 +448,7 @@ func _create_timeline_branch(branch_id, parent_id, branch_origin_time):
             ethereal_tunnel_manager.register_anchor(anchor_id, position, "timeline")
 }
 
-            // Create tunnel to parent if it exists
+# // Create tunnel to parent if it exists
             if parent_id != "" and active_branches.has(parent_id):
                 var parent_anchor_id = "timeline_" + parent_id
 }
@@ -466,7 +466,7 @@ func _create_timeline_branch(branch_id, parent_id, branch_origin_time):
     }
 }
 
-    // Create word pattern for branch
+# // Create word pattern for branch
     if word_pattern_visualizer:
         var pattern_text = "timeline_" + branch_id
         var energy = 25.0
@@ -477,14 +477,14 @@ func _create_timeline_branch(branch_id, parent_id, branch_origin_time):
     }
 }
 
-    // Create numeric token
+# // Create numeric token
     if numeric_token_system:
         var token_value = int(branch_origin_time % 10000)
         numeric_token_system.create_token(token_value, "TIME", "timeline_branch")
     }
 }
 
-    // Record in Akashic records
+# // Record in Akashic records
     if akashic_record_connector:
         var branch_data = {
             "branch_id": branch_id,
@@ -498,7 +498,7 @@ func _create_timeline_branch(branch_id, parent_id, branch_origin_time):
     }
 }
 
-    // Emit signal
+# // Emit signal
     emit_signal("timeline_branch_created", branch_id, parent_id, branch_origin_time)
 }
 
@@ -512,27 +512,27 @@ func switch_timeline_branch(branch_id):
     }
 }
 
-    // Store current branch state
+# // Store current branch state
     if active_branches.has(current_branch_id):
         active_branches[current_branch_id].current_time = current_time
     }
 }
 
-    // Switch branch
+# // Switch branch
     var old_branch_id = current_branch_id
     current_branch_id = branch_id
 }
 
-    // Update time from branch
+# // Update time from branch
     var branch = active_branches[branch_id]
     current_time = branch.current_time
 }
 
-    // Record time echo
+# // Record time echo
     create_temporal_echo(current_time, old_branch_id, branch_id)
 }
 
-    // Create word pattern for branch switch
+# // Create word pattern for branch switch
     if word_pattern_visualizer:
         var pattern_text = "timeline_switch_" + old_branch_id + "_to_" + branch_id
         var energy = 15.0
@@ -565,12 +565,12 @@ func merge_timeline_branches(source_branch_id, target_branch_id = ""):
     var target_branch = active_branches[target_branch_id]
 }
 
-    // Merge events
+# // Merge events
     var new_events = []
     for event in source_branch.events:
-        // Only add events that occurred after the source branch origin
+# // Only add events that occurred after the source branch origin
         if event.timestamp > source_branch.origin_time:
-            // Check if event already exists in target
+# // Check if event already exists in target
             var event_exists = false
             for target_event in target_branch.events:
                 if target_event.id == event.id:
@@ -587,17 +587,17 @@ func merge_timeline_branches(source_branch_id, target_branch_id = ""):
     }
 }
 
-    // Add new events to target branch
+# // Add new events to target branch
     for event in new_events:
         target_branch.events.push_back(event)
     }
 }
 
-    // Sort events by timestamp
+# // Sort events by timestamp
     target_branch.events.sort_custom(Callable(self."_sort_events_by_time"))
 }
 
-    // Add merge record
+# // Add merge record
     var merge_data = {
         "source_branch": source_branch_id,
         "target_branch": target_branch_id,
@@ -609,17 +609,17 @@ func merge_timeline_branches(source_branch_id, target_branch_id = ""):
     target_branch.merges.push_back(merge_data)
 }
 
-    // Create temporal echo at merge point
+# // Create temporal echo at merge point
     create_temporal_echo(current_time, source_branch_id, target_branch_id, 2.0)
 }
 
-    // Record in Akashic records
+# // Record in Akashic records
     if akashic_record_connector:
         akashic_record_connector.record_dimensional_data(BASE_DIMENSION, merge_data, "timeline_merge")
     }
 }
 
-    // Create word pattern for merge
+# // Create word pattern for merge
     if word_pattern_visualizer:
         var pattern_text = "timeline_merge_" + source_branch_id + "_to_" + target_branch_id
         var energy = 30.0
@@ -630,7 +630,7 @@ func merge_timeline_branches(source_branch_id, target_branch_id = ""):
     }
 }
 
-    // Create ethereal tunnel merge
+# // Create ethereal tunnel merge
     if ethereal_tunnel_manager:
         var source_anchor = "timeline_" + source_branch_id
         var target_anchor = "timeline_" + target_branch_id
@@ -647,7 +647,7 @@ func merge_timeline_branches(source_branch_id, target_branch_id = ""):
     }
 }
 
-    // Emit signal
+# // Emit signal
     emit_signal("timeline_branch_merged", source_branch_id, target_branch_id, current_time)
 }
 
@@ -669,7 +669,7 @@ func record_timeline_event(event_data, branch_id = ""):
     var branch = active_branches[branch_id]
 }
 
-    // Create event record
+# // Create event record
     var event = {
         "id": "event_" + str(randi() % 100000) + "_" + str(current_time),
         "timestamp": current_time,
@@ -677,15 +677,15 @@ func record_timeline_event(event_data, branch_id = ""):
     }
 }
 
-    // Add to branch events
+# // Add to branch events
     branch.events.push_back(event)
 }
 
-    // Sort events
+# // Sort events
     branch.events.sort_custom(Callable(self."_sort_events_by_time"))
 }
 
-    // Create memory imprint
+# // Create memory imprint
     create_temporal_imprint(event.id, event_data)
 }
 
@@ -713,17 +713,17 @@ func get_timeline_events(branch_id = "", start_time = 0, end_time = 0):
 }
 
     if start_time == 0 and end_time == 0:
-        // Return all events
+# // Return all events
         return branch.events
     } else if end_time == 0:
-        // Return events after start_time
+# // Return events after start_time
         for event in branch.events:
             if event.timestamp >= start_time:
                 events.push_back(event)
             }
         }
     } else {
-        // Return events between start_time and end_time
+# // Return events between start_time and end_time
         for event in branch.events:
             if event.timestamp >= start_time and event.timestamp <= end_time:
                 events.push_back(event)
@@ -751,7 +751,7 @@ func get_branch_info(branch_id = ""):
 }
 
 func create_temporal_echo(echo_time, source_id, target_id, intensity = 1.0):
-    // Create a temporal echo at the specified time
+# // Create a temporal echo at the specified time
     var echo_id = "echo_" + str(randi() % 10000) + "_" + str(current_time)
 }
 
@@ -770,7 +770,7 @@ func create_temporal_echo(echo_time, source_id, target_id, intensity = 1.0):
     temporal_echoes[echo_id] = echo
 }
 
-    // Create word pattern for echo
+# // Create word pattern for echo
     if word_pattern_visualizer:
         var pattern_text = "temporal_echo_" + echo_id
         var energy = 10.0 * intensity
@@ -781,7 +781,7 @@ func create_temporal_echo(echo_time, source_id, target_id, intensity = 1.0):
     }
 }
 
-    // Record in Akashic records
+# // Record in Akashic records
     if akashic_record_connector:
         var echo_data = {
             "echo_id": echo_id,
@@ -796,7 +796,7 @@ func create_temporal_echo(echo_time, source_id, target_id, intensity = 1.0):
     }
 }
 
-    // Emit signal
+# // Emit signal
     emit_signal("temporal_echo_detected", echo_id, echo_time, current_time, intensity)
 }
 
@@ -818,7 +818,7 @@ func _process_temporal_echoes(delta):
             echoes_to_remove.push_back(echo_id)
 }
 
-            // Remove word pattern if it exists
+# // Remove word pattern if it exists
             if word_pattern_visualizer and word_pattern_visualizer.has_method("remove_word_pattern"):
                 word_pattern_visualizer.remove_word_pattern("temporal_echo_" + echo_id)
             }
@@ -853,7 +853,7 @@ func activate_visualization(parent_node = null):
         return
 }
 
-    // Create visualization node
+# // Create visualization node
     visualization_node = Node3D.new()
     visualization_node.name = "FractalTimeVisualization"
 }
@@ -865,7 +865,7 @@ func activate_visualization(parent_node = null):
     }
 }
 
-    // Initialize visualization
+# // Initialize visualization
     _initialize_visualization()
 }
 
@@ -877,7 +877,7 @@ func deactivate_visualization():
         return
 }
 
-    // Remove visualization node
+# // Remove visualization node
     if visualization_node:
         visualization_node.queue_free()
         visualization_node = null
@@ -892,23 +892,23 @@ func _initialize_visualization():
         return
 }
 
-    // Create time scale markers
+# // Create time scale markers
     for scale_id in FRACTAL_DIMENSIONS:
         var scale_data = FRACTAL_DIMENSIONS[scale_id]
 }
 
-        // Create visual marker
+# // Create visual marker
         var marker = CSGSphere3D.new()
         marker.radius = 0.2 + (scale_data.scale * 0.05)
         marker.name = "TimeScale_" + scale_id
 }
 
-        // Position based on scale
+# // Position based on scale
         var log_scale = log(scale_data.scale) / log(10)  // Logarithmic scale for better spacing
         marker.position = Vector3(log_scale * 3.0, 0, 0)
 }
 
-        // Set color
+# // Set color
         var material = StandardMaterial3D.new()
         material.albedo_color = scale_data.color
         material.emission_enabled = true
@@ -917,7 +917,7 @@ func _initialize_visualization():
         marker.material = material
 }
 
-        // Add label
+# // Add label
         var label = Label3D.new()
         label.text = scale_id + " (" + str(scale_data.scale) + "x)"
         label.position = Vector3(0, 0.3, 0)
@@ -928,13 +928,13 @@ func _initialize_visualization():
     }
 }
 
-    // Create timeline branches
+# // Create timeline branches
     for branch_id in active_branches:
         _create_branch_visualization(branch_id)
     }
 }
 
-    // Create time axis
+# // Create time axis
     var time_axis = CSGCylinder3D.new()
     time_axis.radius = 0.05
     time_axis.height = 10.0
@@ -949,7 +949,7 @@ func _initialize_visualization():
     visualization_node.add_child(time_axis)
 }
 
-    // Create current time indicator
+# // Create current time indicator
     var current_time_marker = CSGSphere3D.new()
     current_time_marker.radius = 0.15
     current_time_marker.name = "CurrentTimeMarker"
@@ -974,7 +974,7 @@ func _create_branch_visualization(branch_id):
     var branch = active_branches[branch_id]
 }
 
-    // Create branch path
+# // Create branch path
     var branch_path = Path3D.new()
     branch_path.name = "Branch_" + branch_id
 }
@@ -982,13 +982,13 @@ func _create_branch_visualization(branch_id):
     var curve = Curve3D.new()
 }
 
-    // Start at branch origin
+# // Start at branch origin
     var start_time = branch.origin_time
     var end_time = branch.current_time
     var duration = end_time - start_time
 }
 
-    // Create curve points
+# // Create curve points
     var point_count = 10
     for i in range(point_count + 1):
         var t = float(i) / point_count
@@ -1004,14 +1004,14 @@ func _create_branch_visualization(branch_id):
     branch_path.curve = curve
 }
 
-    // Create branch line
+# // Create branch line
     var branch_line = CSGPolygon3D.new()
     branch_line.polygon = _create_branch_profile()
     branch_line.mode = CSGPolygon3D.MODE_PATH
     branch_line.path_node = NodePath(".")
 }
 
-    // Set material
+# // Set material
     var line_material = StandardMaterial3D.new()
     var color = Color(0.3, 0.7, 1.0) if branch_id == current_branch_id else Color(0.5, 0.5, 0.5)
     line_material.albedo_color = color
@@ -1031,14 +1031,14 @@ func _create_branch_visualization(branch_id):
     visualization_node.add_child(branch_path)
 }
 
-    // Create event markers
+# // Create event markers
     for event in branch.events:
         _create_event_visualization(event, branch_path)
     }
 }
 
 func _create_event_visualization(event, branch_path):
-    // Position based on time
+# // Position based on time
     var branch = active_branches[current_branch_id]
     var t = inverse_lerp(branch.origin_time, branch.current_time, event.timestamp)
     t = clamp(t, 0.0, 1.0)
@@ -1048,14 +1048,14 @@ func _create_event_visualization(event, branch_path):
     var position = branch_path.curve.sample_baked(t * path_length)
 }
 
-    // Create marker
+# // Create marker
     var event_marker = CSGSphere3D.new()
     event_marker.radius = 0.1
     event_marker.name = "Event_" + event.id
     event_marker.position = position
 }
 
-    // Set material
+# // Set material
     var marker_material = StandardMaterial3D.new()
     marker_material.albedo_color = Color(1, 0.7, 0.2)
     marker_material.emission_enabled = true
@@ -1087,7 +1087,7 @@ func _update_visualization(delta):
         return
 }
 
-    // Update current time marker
+# // Update current time marker
     var current_marker = visualization_node.get_node("\1") as Node
     if current_marker:
         var branch = active_branches[current_branch_id]
@@ -1105,21 +1105,21 @@ func _update_visualization(delta):
     }
 }
 
-    // Update time scale indicators
+# // Update time scale indicators
     var scale_marker = visualization_node.get_node("TimeScale_" + current_scale_id)
     if scale_marker:
         scale_marker.scale = Vector3(1.0, 1.0, 1.0) * (1.0 + 0.1 * sin(oscillation_phase))
     }
 }
 
-    // Update temporal echoes
+# // Update temporal echoes
     for echo_id in temporal_echoes:
         var echo = temporal_echoes[echo_id]
         var echo_marker = visualization_node.get_node_or_null("Echo_" + echo_id)
 }
 
         if not echo_marker:
-            // Create echo visualization
+# // Create echo visualization
             echo_marker = CSGSphere3D.new()
             echo_marker.name = "Echo_" + echo_id
             echo_marker.radius = 0.2 * echo.intensity
@@ -1134,7 +1134,7 @@ func _update_visualization(delta):
             echo_marker.material = material
 }
 
-            // Position between source and target
+# // Position between source and target
             var source_branch = visualization_node.get_node_or_null("Branch_" + echo.source_id)
             var target_branch = visualization_node.get_node_or_null("Branch_" + echo.target_id)
 }
@@ -1149,14 +1149,14 @@ func _update_visualization(delta):
 
             visualization_node.add_child(echo_marker)
         } else {
-            // Update existing marker
+# // Update existing marker
             var t = echo.remaining_time / (10.0 * echo.intensity)
             var mat = echo_marker.material
             mat.albedo_color.a = t * 0.7
             mat.emission_energy = t * echo.intensity
 }
 
-            // Pulsate effect
+# // Pulsate effect
             echo_marker.scale = Vector3(1, 1, 1) * (1.0 + 0.2 * sin(oscillation_phase * 2.0))
         }
     }
@@ -1172,11 +1172,11 @@ func set_fractal_dimension(scale_id, value):
     data.scale = value
 }
 
-    // Update oscillation rate based on scale
+# // Update oscillation rate based on scale
     data.oscillation_rate = 1.0 / value
 }
 
-    // Update current scale if active
+# // Update current scale if active
     if current_scale_id == scale_id:
         target_scale = value
 }

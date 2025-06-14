@@ -1,6 +1,6 @@
 # command_parser.gd
-class_name CommandParser
-extends Node
+class_name CommandParser_commandparser_commandp
+extends \2
 
 static func parse_command(command_text):
 	# Basic structure: ACTION TARGET [PARAMETERS]

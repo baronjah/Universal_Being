@@ -33,8 +33,8 @@ func _ready() -> void:
 func _initialize_logging_system() -> void:
 	# Set up logging directory structure
 	log_directory = "res://logs"
-	metadata_file_path = log_directory + "/evolution_metadata.json"
-	connections_file_path = log_directory + "/pathway_connections.json"
+	metadata_file_path = log_directory + "evolution_metadata.json"
+	connections_file_path = log_directory + "pathway_connections.json"
 	
 	# Create logs directory if it doesn't exist
 	var dir = DirAccess.open("res://")
@@ -68,28 +68,28 @@ func _create_pathway_documentation() -> void:
 	var entrances = [
 		{
 			"type": "main_entry",
-			"path": "/akashic_notepad3d_game/project.godot",
+			"path": "akashic_notepad3d_game/project.godot",
 			"description": "Primary Godot project file",
 			"access_method": "Open in Godot 4.4+",
 			"dependencies": ["Godot Engine 4.4+"]
 		},
 		{
 			"type": "scene_entry", 
-			"path": "/scenes/main_game.tscn",
+			"path": "scenes/main_game.tscn",
 			"description": "Main game scene",
 			"access_method": "Load scene in Godot",
 			"dependencies": ["main_game_controller.gd"]
 		},
 		{
 			"type": "code_entry",
-			"path": "/scripts/core/main_game_controller.gd",
+			"path": "scripts/core/main_game_controller.gd",
 			"description": "Core game logic entry point",
 			"access_method": "Direct script editing",
 			"dependencies": ["autoload scripts"]
 		},
 		{
 			"type": "documentation_entry",
-			"path": "/HEPTAGON_EVOLUTION_README.md",
+			"path": "HEPTAGON_EVOLUTION_README.md",
 			"description": "System documentation and usage guide",
 			"access_method": "Text editor/markdown viewer",
 			"dependencies": ["none"]
@@ -223,7 +223,7 @@ func calibrate_turn_system(current_turn: int, project_changes: Array) -> void:
 
 func _document_project_structure() -> void:
 	var structure = {
-		"root_directory": "/akashic_notepad3d_game/",
+		"root_directory": "akashic_notepad3d_game/",
 		"subdirectories": {
 			"scenes": {"purpose": "Game scenes", "key_files": ["main_game.tscn"]},
 			"scripts": {"purpose": "All game scripts", "subdivisions": ["autoload", "core"]},

@@ -13,17 +13,17 @@ func _ready():
 	add_child(bridge)
 	
 	# Connect signals
-	bridge.connect("word_stored", self, "_on_word_stored")
-	bridge.connect("word_rejected", self, "_on_word_rejected")
-	bridge.connect("gate_status_changed", self, "_on_gate_status_changed")
-	bridge.connect("wish_updated", self, "_on_wish_updated")
-	bridge.connect("firewall_breached", self, "_on_firewall_breached")
+	bridge.connect(_on_word_stored)
+	bridge.connect(_on_word_rejected)
+	bridge.connect(_on_gate_status_changed)
+	bridge.connect(_on_wish_updated)
+	bridge.connect(_on_firewall_breached)
 	
 	# Print initial status
 	print_status()
 	
 	# Wait a moment for initialization
-	yield(get_tree().create_timer(1.0), "timeout")
+	await(get_tree().create_timer(1.0), "timeout")
 	
 	# Run demo operations
 	run_demo()

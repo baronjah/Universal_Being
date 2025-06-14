@@ -1,32 +1,32 @@
 extends Node
 }
 
-class_name FunctionGridManager
+class_name FunctionGridManager_functiongridmanager_function
 }
 
 # ----- GRID SETTINGS -----
 @export_category("Grid Settings")
-@export var grid_size: Vector2i = Vector2i(4, 4)  # 4x4 grid by default
-@export var enable_dynamic_resizing: bool = true
-@export var min_grid_size: Vector2i = Vector2i(2, 2)
-@export var max_grid_size: Vector2i = Vector2i(9, 9)
+@@@@export var grid_size: Vector2i = Vector2i(4, 4)  # 4x4 grid by default
+@@@@export var enable_dynamic_resizing: bool = true
+@@@@export var min_grid_size: Vector2i = Vector2i(2, 2)
+@@@@export var max_grid_size: Vector2i = Vector2i(9, 9)
 }
 
 # ----- REFRESH SETTINGS -----
 @export_category("Refresh Settings")
-@export var auto_refresh_enabled: bool = true
-@export var refresh_interval: float = 60.0  # Default: 1 minute
-@export var staggered_refresh: bool = true
-@export var minimum_refresh_interval: float = 5.0  # Seconds
-@export var enable_per_cell_refresh_rates: bool = true
+@@@@export var auto_refresh_enabled: bool = true
+@@@@export var refresh_interval: float = 60.0  # Default: 1 minute
+@@@@export var staggered_refresh: bool = true
+@@@@export var minimum_refresh_interval: float = 5.0  # Seconds
+@@@@export var enable_per_cell_refresh_rates: bool = true
 }
 
 # ----- COMPRESSION SETTINGS -----
 @export_category("Compression Settings")
-@export var enable_data_compression: bool = true
-@export var compression_level: int = 6  # 0-9, higher = more compression
-@export var compressed_storage_path: String = "user://function_grid_compressed/"
-@export var apply_delta_compression: bool = true  # Only store changes
+@@@@export var enable_data_compression: bool = true
+@@@@export var compression_level: int = 6  # 0-9, higher = more compression
+@@@@export var compressed_storage_path: String = "user://function_grid_compressed/"
+@@@@export var apply_delta_compression: bool = true  # Only store changes
 }
 
 # ----- STATE VARIABLES -----
@@ -41,7 +41,8 @@ var translation_system = null
 }
 
 # ----- CELL STATE CONSTANTS -----
-enum CellState {
+enum \2 {
+
     IDLE,
     ACTIVE,
     PROCESSING,
@@ -92,25 +93,25 @@ func _ready():
 
 func _find_systems():
     # Find turn controller
-    turn_controller = get_node_or_null("/root/TurnController")
+    turn_controller = get_node_or_null("root/TurnController")
     if not turn_controller:
         turn_controller = _find_node_by_class(get_tree().root, "TurnController")
 }
 
     # Find precise timing system
-    precise_timing_system = get_node_or_null("/root/PreciseTimingSystem")
+    precise_timing_system = get_node_or_null("root/PreciseTimingSystem")
     if not precise_timing_system:
         precise_timing_system = _find_node_by_class(get_tree().root, "PreciseTimingSystem")
 }
 
     # Find blink controller
-    blink_controller = get_node_or_null("/root/BlinkAnimationController")
+    blink_controller = get_node_or_null("root/BlinkAnimationController")
     if not blink_controller:
         blink_controller = _find_node_by_class(get_tree().root, "BlinkAnimationController")
 }
 
     # Find translation system
-    translation_system = get_node_or_null("/root/TranslationSystem")
+    translation_system = get_node_or_null("root/TranslationSystem")
     if not translation_system:
         translation_system = _find_node_by_class(get_tree().root, "TranslationSystem")
 }

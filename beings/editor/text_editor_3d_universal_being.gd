@@ -42,11 +42,13 @@ func pentagon_init():
 	consciousness_level = 4
 	print("📝 3D Text Editor: Initializing spatial text interface...")
 
+
 func pentagon_ready():
 	super.pentagon_ready()
 	create_3d_text_editor_interface()
 	load_default_content()
 	print("✨ 3D Text Editor: Ready for spatial text creation!")
+
 
 func pentagon_process(delta: float):
 	super.pentagon_process(delta)
@@ -465,4 +467,3 @@ func get_cursor_info() -> Dictionary:
 		"line": cursor_line,
 		"column": cursor_column,
 		"total_lines": text_lines.size()
-	}

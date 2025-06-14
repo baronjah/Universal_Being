@@ -6,7 +6,7 @@ extends Node
 # Terminal 1: Divine Word Genesis
 }
 
-class_name WordCommentSystem
+class_name WordCommentSystem_wordcommentsystem_wordcomm
 }
 
 # Comment storage structure
@@ -29,7 +29,8 @@ var comment_filter = CommentType.OBSERVATION
 }
 
 # Comment types
-enum CommentType {
+enum \2 {
+
 	OBSERVATION,   # General observations about words
 	DEFENSE,       # Defense statements for word crimes
 	ACCUSATION,    # Accusations against specific words
@@ -62,10 +63,10 @@ func _ready():
 }
 
 func connect_systems():
-	divine_word_processor = get_node_or_null("/root/DivineWordProcessor")
-	word_salem_controller = get_node_or_null("/root/WordSalemGameController")
-	turn_system = get_node_or_null("/root/TurnSystem")
-	word_dream_storage = get_node_or_null("/root/WordDreamStorage")
+	divine_word_processor = get_node_or_null("root/DivineWordProcessor")
+	word_salem_controller = get_node_or_null("root/WordSalemGameController")
+	turn_system = get_node_or_null("root/TurnSystem")
+	word_dream_storage = get_node_or_null("root/WordDreamStorage")
 }
 
 	if divine_word_processor:
@@ -103,7 +104,7 @@ func add_comment(word, comment_text, type=CommentType.OBSERVATION, author="Syste
 		"text": comment_text,
 		"type": type,
 		"author": author,
-		"timestamp": OS.get_unix_time(),
+		"timestamp": OS.Time.get_unix_time_from_system(),
 		"turn": turn_system.current_turn if turn_system else 0,
 		"dimension": turn_system.current_dimension if turn_system else 1
 	}
@@ -143,7 +144,7 @@ func register_defense(word, defense_text, defender="anonymous"):
 	var defense = {
 		"text": defense_text,
 		"defender": defender,
-		"timestamp": OS.get_unix_time(),
+		"timestamp": OS.Time.get_unix_time_from_system(),
 		"turn": turn_system.current_turn if turn_system else 0,
 		"dimension": turn_system.current_dimension if turn_system else 1,
 		"accepted": false
@@ -171,7 +172,7 @@ func record_dream_fragment(word, dream_text):
 		"word": word,
 		"dream_text": dream_text,
 		"power": power,
-		"timestamp": OS.get_unix_time(),
+		"timestamp": OS.Time.get_unix_time_from_system(),
 		"turn": turn_system.current_turn if turn_system else 0,
 		"dimension": turn_system.current_dimension if turn_system else 1
 	}
@@ -307,7 +308,7 @@ func consolidate_dreams():
 		"dreams": top_dreams,
 		"total_power": total_power,
 		"turn_cycle": turn_system.current_turn / 12,
-		"timestamp": OS.get_unix_time()
+		"timestamp": OS.Time.get_unix_time_from_system()
 	}
 }
 

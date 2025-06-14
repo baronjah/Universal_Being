@@ -22,7 +22,7 @@ class_name AutoUpdater
     "auth": "https://api.example.com/auth",
     "status": "https://api.example.com/status",
     "config": "https://api.example.com/config"
-}
+	}
 
 # ----- STATE VARIABLES -----
 var current_version: String = "1.0.0"
@@ -74,6 +74,7 @@ func _ready():
     print("Auto Updater initialized")
     print("Current version: " + current_version)
     print("Update channel: " + update_channel)
+	
 
 func _ensure_temp_directory():
     var dir = Directory.new()
@@ -102,6 +103,7 @@ func check_for_updates() -> void:
     print("Checking for updates...")
     print("Current version: " + current_version)
     print("Update channel: " + update_channel)
+	
     
     # In a real implementation, would make an HTTP request to the update server
     # For this mock-up, we'll simulate the request
@@ -197,6 +199,7 @@ func download_update() -> void:
     emit_signal("download_started", latest_version)
     
     print("Downloading update: " + latest_version)
+	
     
     # In a real implementation, would download the update file
     # For this mock-up, we'll simulate the download
@@ -222,6 +225,7 @@ func _simulate_update_download():
         emit_signal("download_progress_changed", download_progress)
         
         print("Download progress: " + str(int(download_progress * 100)) + "%")
+		
     
     # Randomly determine if download succeeds (90% chance)
     var success = randf() < 0.9
@@ -236,6 +240,7 @@ func _simulate_update_download():
         emit_signal("download_completed", update_file_path)
         
         print("Download completed: " + update_file_path)
+		
         
         # Automatically install if configured
         if auto_download_updates:
@@ -248,11 +253,13 @@ func _simulate_update_download():
         emit_signal("download_failed", download_error)
         
         print("Download failed: " + download_error)
+		
 
 func install_update(update_file_path: String) -> bool:
     # Install the downloaded update
     
     print("Installing update from: " + update_file_path)
+	
     
     # In a real implementation, would launch the installer or apply the update
     # For this mock-up, we'll simulate the installation
@@ -322,12 +329,14 @@ func _simulate_authentication():
         _connect_to_services()
     else:
         var error = "Authentication failed: invalid credentials"
+		
         
         connection_status = "error"
         emit_signal("auth_failed", error)
         emit_signal("connection_status_changed", connection_status)
         
         print("Authentication failed: " + error)
+		
         
         # Try to reconnect if enabled
         if auto_reconnect and connection_attempt < max_reconnect_attempts:
@@ -347,7 +356,7 @@ func _connect_to_services():
     # Connect to individual services
     var services = [
         {"name": "status", "url": api_endpoints.status},
-        {"name": "config", "url": api_endpoints.config}
+        {"name": "config", "url": api_endpoints.config
     ]
     
     var pending_services = services.size()
@@ -355,6 +364,7 @@ func _connect_to_services():
     for service in services:
         # Simulate connecting to each service
         print("Connecting to service: " + service.name)
+		}
         
         _simulate_service_connection(service.name, service.url, func(success, name):
             if success:
@@ -363,6 +373,7 @@ func _connect_to_services():
                 print("Connected to service: " + name)
             else:
                 print("Failed to connect to service: " + name)
+				
             
             pending_services -= 1
             
@@ -426,6 +437,7 @@ func disconnect_from_services():
         if connected_services[service]:
             emit_signal("service_disconnected", service)
             print("Disconnected from service: " + service)
+			
     
     # Reset state
     is_connected = false
@@ -476,6 +488,7 @@ func set_update_channel(channel: String) -> void:
         print("Update channel set to " + update_channel)
     else:
         print("Invalid update channel: " + channel)
+		
 
 func enable_auto_download(enabled: bool) -> void:
     auto_download_updates = enabled
@@ -493,7 +506,7 @@ func get_connection_status() -> Dictionary:
         "is_authenticated": auth_token != "",
         "connection_attempts": connection_attempt,
         "last_connection_time": last_connection_time
-    }
+		}
 
 func get_update_status() -> Dictionary:
     return {
@@ -504,7 +517,7 @@ func get_update_status() -> Dictionary:
         "is_downloading": is_downloading_update,
         "download_progress": download_progress,
         "last_check_time": update_check_time
-    }
+		}
 
 func parse_version_string(version: String) -> Dictionary:
     var parts = version.split(".")
@@ -514,13 +527,13 @@ func parse_version_string(version: String) -> Dictionary:
             "major": int(parts[0]),
             "minor": int(parts[1]),
             "patch": int(parts[2])
-        }
+			}
     
     return {
         "major": 0,
         "minor": 0,
         "patch": 0
-    }
+		}
 
 func compare_versions(version_a: String, version_b: String) -> int:
     # Compare two version strings

@@ -1,5 +1,5 @@
 extends Node
-class_name JSHEntityManager
+class_name JSHEntityManager_JSHEntityManager_JSHEntit
 
 # Singleton pattern
 static var _instance: JSHEntityManager = null

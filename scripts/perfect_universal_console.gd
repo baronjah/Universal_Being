@@ -49,6 +49,7 @@ func pentagon_init() -> void:
 	metadata.gemma_can_modify = true
 	print("🌟 %s: Pentagon Init Complete - THE PERFECT CONSOLE" % being_name)
 
+
 func pentagon_ready() -> void:
 	super.pentagon_ready()
 	
@@ -340,6 +341,7 @@ func load_interface(interface_path: String, tab_index: int) -> void:
 	
 	add_message("system", "🌟 Loaded interface: %s into tab %d" % [interface_path, tab_index])
 
+
 func connect_to_gemma_vision(interface_node: Node) -> void:
 	"""Connect any interface to Gemma's vision systems"""
 	if not gemma_ai:
@@ -380,6 +382,7 @@ func observe_interface(interface_node: Node) -> void:
 	if not interface_node in observed_interfaces:
 		observed_interfaces.append(interface_node)
 		print("🤖 Gemma: Now observing interface: ", interface_node.name)
+
 		
 		# Connect to interface signals if available
 		if interface_node.has_signal("interface_updated"):
@@ -394,6 +397,7 @@ func unobserve_interface(interface_node: Node) -> void:
 
 func _on_interface_updated(data: Dictionary, interface: Node) -> void:
 	print("🤖 Gemma: Interface updated - ", interface.name, " - ", data)
+
 	# Process interface changes
 	"""
 	
@@ -405,14 +409,17 @@ func load_default_interfaces() -> void:
 	# Tab 0 is AI Conversation - load AI chat interface
 	if ResourceLoader.exists("res://interfaces/ai_chat_interface.gd"):
 		load_interface("res://interfaces/ai_chat_interface.gd", 0)
+
 	
 	# Tab 1 is Universe Manager
 	if ResourceLoader.exists("res://interfaces/universe_builder_interface.gd"):
 		load_interface("res://interfaces/universe_builder_interface.gd", 1)
+
 	
 	# Tab 2 is Inspector
 	if ResourceLoader.exists("res://interfaces/being_inspector_interface.gd"):
 		load_interface("res://interfaces/being_inspector_interface.gd", 2)
+
 	
 	# Tab 3 is Macros - already has content
 
@@ -437,14 +444,15 @@ func add_message(sender: String, message: String) -> void:
 		"sender": sender,
 		"message": message,
 		"timestamp": timestamp
-	}
 	conversation_history.append(entry)
+}
 	
 	# Format message for display
 	var color = _get_sender_color(sender)
 	var time_parts = timestamp.split(" ")
 	var time_str = time_parts[1] if time_parts.size() > 1 else timestamp
 	var formatted_message = "[color=%s][%s] %s:[/color] %s\\n" % [color, time_str, sender, message]
+
 	
 	if conversation_display:
 		conversation_display.append_text(formatted_message)
@@ -485,6 +493,7 @@ func _send_message(message: String) -> void:
 	if macro_recording:
 		current_macro.append(message)
 		add_message("system", "📝 Added to macro: " + message)
+
 	
 	# Process enhanced commands first
 	if _process_enhanced_commands(message):
@@ -512,12 +521,15 @@ func _send_to_gemma(message: String) -> void:
 	# Build perfect conversation context
 	var context = _build_conversation_context()
 	var full_prompt = "%s\\n\\nUser: %s\\n\\nRespond naturally as Gemma AI in the Universal Being world:" % [context, message]
+
 	
 	# Check if Gemma has the method to send messages
 	if gemma_ai.has_method("generate_ai_response"):
+
 		var response = await gemma_ai.generate_ai_response(message)
 		add_message("gemma", response)
 	elif gemma_ai.has_method("ai_message"):
+
 		# Emit to Gemma's signal system
 		gemma_ai.ai_message.emit("User says: " + message)
 		add_message("gemma", "I heard you! Let me think about that...")
@@ -542,7 +554,7 @@ func _setup_perfect_triggers() -> void:
 		"macro_operations": ["record macro", "stop macro", "play macro", "list macros"],
 		"gemma_manifest": ["manifest yourself", "appear as sphere", "show yourself"],
 		"help_request": ["help", "what can you do", "how do I", "commands"]
-	}
+}
 
 func _process_enhanced_commands(message: String) -> bool:
 	"""Process enhanced commands - returns true if command was handled"""
@@ -594,6 +606,7 @@ func _handle_slash_commands(message: String) -> bool:
 			_show_loaded_interfaces()
 		_:
 			add_message("system", "❌ Unknown command: " + command + " - Type /help for available commands")
+
 	
 	return true
 
@@ -607,17 +620,20 @@ func _handle_macro_commands(message: String) -> bool:
 	var action = parts[1]
 	match action:
 		"record":
+
 			var macro_name = parts[2] if parts.size() > 2 else "unnamed_macro"
 			_start_macro_recording(macro_name)
 		"stop":
 			_stop_macro_recording()
 		"play":
+
 			var macro_name = parts[2] if parts.size() > 2 else ""
 			_play_macro(macro_name)
 		"list":
 			_list_macros()
 		_:
 			add_message("system", "📝 Unknown macro action: " + action)
+
 	
 	return true
 
@@ -761,6 +777,7 @@ func _handle_reload_interface_command(args: Array) -> void:
 func _show_loaded_interfaces() -> void:
 	"""Show all loaded interfaces"""
 	add_message("system", "🌟 Loaded Interfaces:")
+
 	
 	for i in range(channel_tabs.get_child_count()):
 		var tab_name = channel_tabs.get_tab_title(i)
@@ -771,6 +788,7 @@ func _show_loaded_interfaces() -> void:
 		else:
 			add_message("system", "  Tab %d (%s): No custom interface loaded" % [i, tab_name])
 
+
 func _start_macro_recording(macro_name: String) -> void:
 	if macro_recording:
 		add_message("system", "📝 Already recording macro. Stop current recording first.")
@@ -779,6 +797,7 @@ func _start_macro_recording(macro_name: String) -> void:
 	macro_recording = true
 	current_macro = []
 	add_message("system", "🔴 Recording macro: " + macro_name)
+
 
 func _stop_macro_recording() -> void:
 	if not macro_recording:
@@ -891,3 +910,4 @@ func _save_console_state() -> void:
 func _on_being_created(being: UniversalBeing) -> void:
 	"""Handle new Universal Being creation"""
 	add_message("system", "New being created: %s (%s)" % [being.being_name, being.being_type])
+

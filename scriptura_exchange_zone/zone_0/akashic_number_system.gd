@@ -1,5 +1,5 @@
-class_name AkashicNumberSystem
-extends Node
+class_name AkashicNumberSystem_akashicnumbersystem_akashicn
+extends \2
 
 # Core number limits
 const NUMERIC_BOUNDARIES = {
@@ -108,7 +108,7 @@ func process_text(text: String) -> String:
         
         processed_lines.append(line)
     
-    return "\n".join(processed_lines)
+    return "\n"." ".join(processed_lines)
 
 # Apply precision cutting to maintain semantic integrity
 func apply_precision_cutting(line: String) -> String:

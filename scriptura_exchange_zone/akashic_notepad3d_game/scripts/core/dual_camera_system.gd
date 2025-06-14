@@ -21,7 +21,7 @@ extends Node3D
 # ═══════════════════════════════════════════════════════════════════════════════════════════════
 
 ## Dual Camera System class for player/scene separation
-class_name DualCameraSystem
+class_name DualCameraSystem_dualcamerasystem_dualcame
 
 # ─────────────────────────────────────────────────────────────────────────────────
 # 🎯 CAMERA REFERENCES AND STATE

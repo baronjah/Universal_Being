@@ -51,6 +51,7 @@ func _find_player_and_gemma():
 	if gemma_ref:
 		print("✅ Found Gemma at: %v" % gemma_ref.global_position)
 
+
 func _calculate_generation_zones():
 	"""Calculate optimal generation zones based on distance"""
 	if not player_ref or not gemma_ref:
@@ -73,6 +74,7 @@ func _calculate_generation_zones():
 
 func _calculate_two_ball_distribution(pos1: Vector3, pos2: Vector3, max_radius: float) -> Dictionary:
 	"""Mathematical solution: Distribute one max ball into two optimal balls"""
+
 	
 	var distance = pos1.distance_to(pos2)
 	var midpoint = (pos1 + pos2) / 2.0
@@ -92,8 +94,7 @@ func _calculate_two_ball_distribution(pos1: Vector3, pos2: Vector3, max_radius: 
 				"radius": shared_radius,
 				"priority": 0.8,
 				"chunk_density": 0.8
-			}
-		}
+	}
 	
 	# Case 2: Moderate distance (overlap zones)
 	elif distance < max_radius * 1.5:
@@ -113,8 +114,7 @@ func _calculate_two_ball_distribution(pos1: Vector3, pos2: Vector3, max_radius: 
 				"radius": gemma_radius,
 				"priority": 0.7,
 				"chunk_density": _calculate_density_by_fps() * 0.7
-			}
-		}
+	}
 	
 	# Case 3: Far apart (separate zones)
 	else:
@@ -136,8 +136,7 @@ func _calculate_two_ball_distribution(pos1: Vector3, pos2: Vector3, max_radius: 
 				"radius": max_radius * gemma_ratio * performance_modifier,
 				"priority": 0.6,
 				"chunk_density": _calculate_density_by_fps() * 0.6
-			}
-		}
+	}
 
 func _calculate_density_by_fps() -> float:
 	"""Calculate chunk density based on current FPS"""
@@ -191,6 +190,7 @@ func _reduce_generation_complexity():
 	max_generation_radius *= 0.9  # Reduce by 10%
 	max_generation_radius = max(max_generation_radius, min_generation_radius)
 	print("🔧 Reduced generation radius to: %.1f" % max_generation_radius)
+}
 
 func _increase_generation_quality():
 	"""Increase generation quality when FPS allows"""
@@ -210,6 +210,7 @@ func get_distance_between() -> float:
 func set_target_fps(new_target: int):
 	target_fps = new_target
 	print("🎯 Target FPS updated to: %d" % target_fps)
+}
 
 func get_zone_overlap_area() -> float:
 	"""Calculate overlapping area between zones"""

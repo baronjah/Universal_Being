@@ -24,7 +24,7 @@ enum FunctionNodeType {
 }
 
 # Node management
-var function_nodes: Dictionary = {}  # node_id -> node_data
+var function_nodes: Dictionary = {}}  # node_id -> node_data
 var data_connections: Array = []     # connection data
 var active_calculations: Array = []  # running calculations
 var visual_arrows: Array = []        # visual connection arrows
@@ -42,12 +42,14 @@ func pentagon_init():
 	consciousness_level = 4
 	print("🧮 Visual Calculator: Initializing data flow programming system...")
 
+
 func pentagon_ready():
 	super.pentagon_ready()
 	create_calculator_workspace()
 	create_function_node_palette()
 	create_example_calculation()
 	print("✨ Visual Calculator: Ready for visual programming!")
+
 
 func pentagon_process(delta: float):
 	super.pentagon_process(delta)
@@ -111,7 +113,7 @@ func create_function_node_palette():
 		{"type": FunctionNodeType.TRANSFORM, "name": "TRANSFORM", "color": Color.CYAN},
 		{"type": FunctionNodeType.SPLIT, "name": "SPLIT", "color": Color.YELLOW},
 		{"type": FunctionNodeType.MERGE, "name": "MERGE", "color": Color.MAGENTA},
-		{"type": FunctionNodeType.INSPECTOR, "name": "INSPECT", "color": Color.WHITE}
+		{"type": FunctionNodeType.INSPECTOR, "name": "INSPECT", "color": Color.WHITE
 	]
 	
 	for i in range(node_types.size()):
@@ -202,8 +204,8 @@ func create_function_node(type: FunctionNodeType, position: Vector3, label: Stri
 		"position": position,
 		"inputs": {},
 		"outputs": {},
-		"properties": {}
-	}
+		"properties": {
+}
 	
 	# Visual representation
 	var node_visual = create_node_visual(type, label)
@@ -218,6 +220,7 @@ func create_function_node(type: FunctionNodeType, position: Vector3, label: Stri
 	
 	function_node_created.emit(node_id, get_node_type_name(type))
 	print("📦 Created function node: " + label)
+}
 	
 	return function_node
 
@@ -375,7 +378,7 @@ func create_data_connection(from_node: Node3D, from_output: String, to_node: Nod
 		"to_input": to_input,
 		"data_type": "number",  # Could be inferred
 		"active": true
-	}
+}
 	
 	data_connections.append(connection_data)
 	
@@ -386,6 +389,7 @@ func create_data_connection(from_node: Node3D, from_output: String, to_node: Nod
 	
 	connection_established.emit(from_output, to_input)
 	print("🔗 Connected: " + from_node.name + "." + from_output + " → " + to_node.name + "." + to_input)
+}
 
 func create_connection_arrow(from_pos: Vector3, to_pos: Vector3) -> Node3D:
 	"""Create visual arrow showing data connection"""
@@ -468,6 +472,7 @@ func _propagate_data_from_node(node_id: String):
 	"""Propagate data from a specific node"""
 	var node_data = function_nodes[node_id]
 	print("📤 Propagating data from: " + node_data.label)
+
 	
 	# This would implement the actual data flow logic
 	data_flow_started.emit(node_id, "output", node_data.get("value", 0))
@@ -512,7 +517,7 @@ func create_data_type_legend():
 		{"name": "String", "color": Color.GREEN},
 		{"name": "Boolean", "color": Color.RED},
 		{"name": "Array", "color": Color.YELLOW},
-		{"name": "Object", "color": Color.PURPLE}
+		{"name": "Object", "color": Color.PURPLE
 	]
 	
 	var legend_title = Label3D.new()
@@ -577,6 +582,7 @@ func get_node_type_name(type: FunctionNodeType) -> String:
 		FunctionNodeType.CONDITIONAL: return "Conditional"
 		FunctionNodeType.INSPECTOR: return "Inspector"
 		_: return "Unknown"
+}
 
 func reset_calculator():
 	"""Reset calculator workspace"""
@@ -604,4 +610,3 @@ func get_workspace_info() -> Dictionary:
 		"data_connections": data_connections.size(),
 		"active_calculations": active_calculations.size(),
 		"workspace_center": workspace_center
-	}

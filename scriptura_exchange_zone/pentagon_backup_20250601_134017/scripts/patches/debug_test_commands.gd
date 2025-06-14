@@ -3,14 +3,13 @@
 # Created: May 31, 2025, 23:28 CEST
 # Purpose: Ragdoll physics and behavior system
 # Connection: Part of Pentagon Architecture migration
-
-extends UniversalBeingBase
+extends \2
 # Quick debug test to verify console commands are working
 
 func _ready() -> void:
 	await get_tree().process_frame
 	
-	var console = get_node_or_null("/root/ConsoleManager")
+	var console = get_node_or_null("root/ConsoleManager")
 	if console:
 		print("[DebugTest] Registering test command...")
 		
@@ -34,8 +33,8 @@ func _ready() -> void:
 
 func _test_command(args: Array) -> void:
 	print("[TEST] Command works! Args: " + str(args))
-	if has_node("/root/ConsoleManager"):
-		get_node("/root/ConsoleManager")._print_to_console("[color=#00ff00]✓ Test command executed successfully![/color]")
+	if has_node("root/ConsoleManager"):
+		get_node("root/ConsoleManager")._print_to_console("[color=#00ff00]✓ Test command executed successfully![/color]")
 
 func _init() -> void:
 	pentagon_init()

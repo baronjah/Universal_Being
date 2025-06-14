@@ -42,7 +42,7 @@ const NODE_RENAMES = {
     "PathFollow": "PathFollow3D",
     "AnimatedSprite": "AnimatedSprite2D",
     "RemoteTransform": "RemoteTransform3D"
-}
+	}
 
 # Method name changes from Godot 3 to 4
 const METHOD_RENAMES = {
@@ -56,7 +56,7 @@ const METHOD_RENAMES = {
     "rpc_unreliable_id": "rpc_id",
     "rpc": "rpc",  # No change but usage differs
     "rpc_unreliable": "rpc",
-    "yield": "await",
+    "await": "await",
     "is_action_pressed": "is_action_pressed",  # No change, included for completeness
     "is_action_just_pressed": "is_action_just_pressed",  # No change, included for completeness
     "get_slide_count": "get_slide_collision_count",
@@ -64,7 +64,7 @@ const METHOD_RENAMES = {
     "connect": "connect",  # No change but syntax differs
     "emit_signal": "emit_signal",  # No change but can be replaced with direct call
     "get_node": "get_node"  # No change, included for completeness
-}
+	}
 
 # Property name changes from Godot 3 to 4
 const PROPERTY_RENAMES = {
@@ -84,7 +84,7 @@ const PROPERTY_RENAMES = {
     "mesh_library": "mesh_library",  # No change, included for completeness
     "ray_length": "target_position.length()",  # For RayCast
     "cast_to": "target_position"
-}
+	}
 
 # Physics layers handling changes
 const PHYSICS_LAYER_NAMES = [
@@ -117,12 +117,13 @@ const INPUT_MAP_CHANGES = {
     "BUTTON_": "Button",
     "MOTION_": "Motion",
     "MOUSE_": "Mouse"
-}
+	}
 
 # Common patterns that need updating
 const CODE_PATTERNS_TO_UPDATE = {
-    # Await replacement for yield
-    "yield\\s*\\(([^,]+)\\s*,\\s*[\"\']([^\"\']+)[\"\']\\s*\\)": "await $1.$2",
+    # Await replacement for await
+    "await\\s*\\(([^,]+)\\s*,\\s*[\"\']([^\"\']+)[\"\']\\s*\\)": "await $1.$2",
+}
     # Direct signal emission
     "emit_signal\\s*\\([\"\']([^\"\']+)[\"\'](?:,\\s*([^)]+))?\\)": "$1.emit($2)",
     # _physics_process delta parameter type
@@ -141,7 +142,7 @@ const CODE_PATTERNS_TO_UPDATE = {
     "Vector3\\s*\\(\\s*([^,]+)\\s*,\\s*([^,]+)\\s*,\\s*([^)]+)\\s*\\)": "Vector3($1, $2, $3)",
     # Add typed array declarations
     "var\\s+([a-zA-Z0-9_]+)\\s*=\\s*\\[\\]": "var $1: Array = []"
-}
+	
 
 # ----- COMPONENT REFERENCES -----
 var file_system = null
@@ -262,7 +263,7 @@ func start_migration() -> bool:
         "files_modified": files_modified,
         "errors_encountered": errors_encountered,
         "warnings_generated": warnings_generated
-    }
+		}
     
     print("Migration completed. Stats: " + str(stats))
     emit_signal("migration_completed", stats)
@@ -278,9 +279,11 @@ func _get_all_script_files(path: String) -> Array:
         var file_name = dir.get_next()
         
         while file_name != "":
+		
             var full_path = path.path_join(file_name)
             
             if dir.current_is_dir() and file_name != "." and file_name != "..":
+			
                 # Recursively process subdirectories
                 files.append_array(_get_all_script_files(full_path))
             elif file_name.ends_with(".gd"):
@@ -289,12 +292,14 @@ func _get_all_script_files(path: String) -> Array:
             file_name = dir.get_next()
     else:
         push_error("Failed to open directory: " + path)
+		
     
     return files
 
 func _create_backup(path: String) -> void:
     # Create a backup directory
     var timestamp = Time.get_datetime_string_from_system().replace(":", "-").replace(" ", "_")
+	
     var backup_path = path + "_backup_" + timestamp
     
     var dir = DirAccess.open(path.get_base_dir())
@@ -314,6 +319,7 @@ func _create_backup(path: String) -> void:
             print("Backup created at: " + backup_path)
     else:
         push_error("Failed to open directory for backup: " + path.get_base_dir())
+		
 
 func _process_script_file(file_path: String) -> Dictionary:
     # Initialize result
@@ -321,7 +327,7 @@ func _process_script_file(file_path: String) -> Dictionary:
         "modified": false,
         "errors": [],
         "warnings": []
-    }
+		}
     
     # Read file
     var file = FileAccess.open(file_path, FileAccess.READ)
@@ -362,6 +368,7 @@ func _process_script_file(file_path: String) -> Dictionary:
         
         result.modified = true
         print("Updated: " + output_path)
+		
     
     return result
 
@@ -406,7 +413,9 @@ func _update_node_references(content: String, result: Dictionary) -> String:
         
         # Update preload and load statements
         var preload_pattern = "preload\\(\"res://.*/" + old_name + ".gd\"\\)"
+		
         var load_pattern = "load\\(\"res://.*/" + old_name + ".gd\"\\)"
+		
         
         # These would need regex for more accurate replacement
         # For simplicity, we're looking for exact pattern matches
@@ -440,7 +449,7 @@ func _update_method_calls(content: String, result: Dictionary) -> String:
             continue
         
         # This is a simplified approach for straightforward replacements
-        # More complex cases like yield->await need special handling
+        # More complex cases like await->await need special handling
         var method_pattern = "\\." + old_method + "\\("
         updated_content = updated_content.replace(method_pattern, "." + new_method + "(")
     
@@ -517,6 +526,7 @@ func _handle_special_cases(content: String, file_path: String, result: Dictionar
             
             # Add a warning because export parameters need manual conversion
             result.warnings.append("Export hint converted. Please check @export parameters manually: " + old_text)
+			
     
     # Handle tool annotation
     if auto_fix_deprecated:
@@ -536,6 +546,7 @@ func _add_type_hints(content: String, result: Dictionary) -> String:
     # Add return type void to functions without return types
     var func_regex = RegEx.new()
     func_regex.compile("func\\s+([a-zA-Z0-9_]+)\\s*\\(([^)]*)\\)\\s*:")
+	
     
     var matches = func_regex.search_all(updated_content)
     for match_result in matches:
@@ -567,7 +578,7 @@ func _add_type_hints(content: String, result: Dictionary) -> String:
         "index": "int",
         "name": "String",
         "text": "String"
-    }
+		}
     
     matches = param_regex.search_all(updated_content)
     for match_result in matches:
@@ -596,6 +607,7 @@ func _add_type_hints(content: String, result: Dictionary) -> String:
                 if param_name == common_name:
                     var type_hint = common_param_types[common_name]
                     typed_param = param_name + ": " + type_hint
+					
                     
                     # Re-add default value if it was there
                     if param.find("=") != -1:
@@ -644,6 +656,7 @@ func _migrate_project_settings() -> void:
     output_file.close()
     
     print("Project settings migrated: " + godot4_project_file)
+	
 
 func _migrate_resources() -> void:
     # Get all resource files (.tres, .tscn, etc.)
@@ -667,9 +680,11 @@ func _get_files_with_extension(path: String, extension: String) -> Array:
         var file_name = dir.get_next()
         
         while file_name != "":
+		
             var full_path = path.path_join(file_name)
             
             if dir.current_is_dir() and file_name != "." and file_name != "..":
+			
                 # Recursively process subdirectories
                 files.append_array(_get_files_with_extension(full_path, extension))
             elif file_name.ends_with(extension):
@@ -678,6 +693,7 @@ func _get_files_with_extension(path: String, extension: String) -> Array:
             file_name = dir.get_next()
     else:
         push_error("Failed to open directory: " + path)
+		
     
     return files
 
@@ -729,6 +745,7 @@ func _migrate_resource_file(file_path: String) -> void:
     output_file.close()
     
     print("Migrated resource: " + output_path)
+	
 
 # ----- PUBLIC API -----
 func migrate_project(from_path: String, to_path: String) -> Dictionary:
@@ -741,13 +758,12 @@ func migrate_project(from_path: String, to_path: String) -> Dictionary:
             "files_processed": files_processed,
             "files_modified": files_modified,
             "errors": errors_encountered,
-            "warnings": warnings_generated
-        }
+            "warnings": warnings_generated}
     else:
         return {
             "success": false,
             "error": "Migration failed to start"
-        }
+			}
 
 func migrate_single_file(file_path: String, output_path: String = "") -> Dictionary:
     # Check if file exists
@@ -755,7 +771,7 @@ func migrate_single_file(file_path: String, output_path: String = "") -> Diction
         return {
             "success": false,
             "error": "File does not exist: " + file_path
-        }
+			}
     
     # Determine output path
     var actual_output_path = output_path
@@ -767,7 +783,7 @@ func migrate_single_file(file_path: String, output_path: String = "") -> Diction
         "modified": false,
         "errors": [],
         "warnings": []
-    }
+		}
     
     # Read file
     var file = FileAccess.open(file_path, FileAccess.READ)
@@ -775,7 +791,7 @@ func migrate_single_file(file_path: String, output_path: String = "") -> Diction
         return {
             "success": false,
             "error": "Failed to open file for reading: " + file_path
-        }
+			}
     
     var content = file.get_as_text()
     file.close()
@@ -791,13 +807,14 @@ func migrate_single_file(file_path: String, output_path: String = "") -> Diction
             return {
                 "success": false,
                 "error": "Failed to open file for writing: " + actual_output_path
-            }
+				}
         
         output_file.store_string(content)
         output_file.close()
         
         result.modified = true
         print("Updated: " + actual_output_path)
+		
     
     return {
         "success": true,
@@ -805,7 +822,7 @@ func migrate_single_file(file_path: String, output_path: String = "") -> Diction
         "warnings": result.warnings,
         "errors": result.errors,
         "output_path": actual_output_path
-    }
+		}
 
 func check_compatibility(file_path: String) -> Dictionary:
     # Check a file for Godot 4 compatibility without modifying it
@@ -815,14 +832,14 @@ func check_compatibility(file_path: String) -> Dictionary:
         return {
             "success": false,
             "error": "File does not exist: " + file_path
-        }
+			}
     
     # Initialize result
     var result = {
         "modified": false,
         "errors": [],
         "warnings": []
-    }
+		}
     
     # Read file
     var file = FileAccess.open(file_path, FileAccess.READ)
@@ -830,7 +847,7 @@ func check_compatibility(file_path: String) -> Dictionary:
         return {
             "success": false,
             "error": "Failed to open file for reading: " + file_path
-        }
+			}
     
     var content = file.get_as_text()
     file.close()
@@ -846,20 +863,23 @@ func check_compatibility(file_path: String) -> Dictionary:
     for old_name in NODE_RENAMES:
         if old_name != NODE_RENAMES[old_name] and content.find(old_name) != -1:
             compatibility_issues.append("Uses deprecated node type: " + old_name)
+			
     
     # Check for method names
     for old_method in METHOD_RENAMES:
         if old_method != METHOD_RENAMES[old_method] and content.find("." + old_method + "(") != -1:
             compatibility_issues.append("Uses deprecated method: " + old_method)
+			
     
     # Check for properties
     for old_prop in PROPERTY_RENAMES:
         if old_prop != PROPERTY_RENAMES[old_prop] and content.find("." + old_prop) != -1:
             compatibility_issues.append("Uses deprecated property: " + old_prop)
+			
     
-    # Check for yield pattern
-    if content.find("yield") != -1:
-        compatibility_issues.append("Uses yield, which should be replaced with await")
+    # Check for await pattern
+    if content.find("await") != -1:
+        compatibility_issues.append("Uses await, which should be replaced with await")
     
     return {
         "success": true,
@@ -867,7 +887,7 @@ func check_compatibility(file_path: String) -> Dictionary:
         "issues": compatibility_issues,
         "warnings": result.warnings,
         "errors": result.errors
-    }
+		}
 
 func generate_migration_report(directory_path: String) -> Dictionary:
     # Generate a report of all files in a directory and their Godot 4 compatibility
@@ -876,7 +896,7 @@ func generate_migration_report(directory_path: String) -> Dictionary:
         "compatible_files": 0,
         "incompatible_files": 0,
         "file_details": []
-    }
+		}
     
     # Get all script files
     var script_files = _get_all_script_files(directory_path)

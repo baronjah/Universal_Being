@@ -1,5 +1,5 @@
 extends Node
-class_name DynamicColorSystem
+class_name DynamicColorSystem_dynamiccolorsystem_dynamicc
 }
 
 """

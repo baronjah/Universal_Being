@@ -1,6 +1,6 @@
 extends Control
 
-class_name PaintUI
+class_name PaintUI_paintui_paintui
 
 # References to systems
 var paint_system: PaintSystem
@@ -29,14 +29,14 @@ var selected_texture_id: String = ""
 
 func _ready():
 	# Get references to systems
-	paint_system = get_node_or_null("/root/PaintSystem")
+	paint_system = get_node_or_null("root/PaintSystem")
 	if not paint_system:
 		paint_system = PaintSystem.new()
 		add_child(paint_system)
 	
-	shape_system = get_node_or_null("/root/ShapeSystem")
-	dimensional_color_system = get_node_or_null("/root/DimensionalColorSystem")
-	turn_cycle_manager = get_node_or_null("/root/TurnCycleManager")
+	shape_system = get_node_or_null("root/ShapeSystem")
+	dimensional_color_system = get_node_or_null("root/DimensionalColorSystem")
+	turn_cycle_manager = get_node_or_null("root/TurnCycleManager")
 	
 	# Connect signals
 	paint_canvas.brush_changed.connect(_on_brush_changed)

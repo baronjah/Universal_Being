@@ -21,7 +21,6 @@ const UNIVERSE_TEMPLATES = {
 			"allow_destruction": true,
 			"physics_enabled": true,
 			"ai_entities": true
-		}
 	},
 	"narrative": {
 		"name": "Story Realm",
@@ -33,7 +32,6 @@ const UNIVERSE_TEMPLATES = {
 			"character_persistence": true,
 			"event_logging": true,
 			"cinematic_camera": true
-		}
 	},
 	"quantum": {
 		"name": "Quantum Playground",
@@ -45,7 +43,6 @@ const UNIVERSE_TEMPLATES = {
 			"probability_fields": true,
 			"superposition": true,
 			"observation_collapse": true
-		}
 	},
 	"paradise": {
 		"name": "Paradise Garden",
@@ -57,8 +54,6 @@ const UNIVERSE_TEMPLATES = {
 			"infinite_resources": true,
 			"harmony_mode": true,
 			"beauty_generation": true
-		}
-	}
 }
 
 # ===== UNIVERSE DNA SYSTEM =====
@@ -153,6 +148,7 @@ func create_recursive_universe(depth: int = 1, universes_per_level: int = 2) -> 
 	_create_universe_children(root_universe, depth - 1, universes_per_level, created_universes)
 	
 	_log_genesis_event("🌌 A fractal cosmos unfolds: %d universes nested in recursive beauty..." % created_universes.size())
+}
 	
 	return created_universes
 
@@ -165,14 +161,14 @@ func _initialize_dna_system() -> void:
 		"time_elasticity": randf_range(0.5, 2.0),
 		"matter_density": randf_range(0.1, 10.0),
 		"energy_flow": randf_range(0.1, 5.0)
-	}
+}
 	
 	universe_dna.consciousness_traits = {
 		"awareness_level": randi_range(1, 7),
 		"creativity_factor": randf(),
 		"harmony_tendency": randf(),
 		"evolution_speed": randf_range(0.1, 3.0)
-	}
+}
 
 func _create_child_dna(parent_dna: Dictionary) -> Dictionary:
 	"""Create DNA for child universe with mutations"""
@@ -238,8 +234,7 @@ func _register_universe_commands() -> void:
 		"universe simulate <years>": {
 			"description": "Fast-forward universe simulation",
 			"callback": _cmd_universe_simulate
-		}
-	}
+}
 	
 	# Register commands with console if attached
 	if attached_being and attached_being.has_method("register_commands"):
@@ -250,6 +245,7 @@ func _register_universe_commands() -> void:
 func _cmd_universe_template(args: Array) -> String:
 	if args.size() < 1:
 		return "❌ Usage: universe template <name> [custom_name]"
+}
 	
 	var template_name = args[0]
 	var custom_name = args[1] if args.size() > 1 else ""
@@ -274,6 +270,7 @@ func _cmd_universe_recursive(args: Array) -> String:
 func _cmd_universe_dna(args: Array) -> String:
 	pass
 	var dna_report = "🧬 Universe DNA Report:\n"
+}
 	
 	for category in universe_dna:
 		if category == "parent_dna":
@@ -283,18 +280,21 @@ func _cmd_universe_dna(args: Array) -> String:
 		if universe_dna[category] is Dictionary:
 			for trait_name in universe_dna[category]:
 				dna_report += "  %s: %s\n" % [trait_name, universe_dna[category][trait_name]]
+	}
 	
 	return dna_report
 
 func _cmd_universe_time(args: Array) -> String:
 	if args.size() < 1:
 		return "❌ Usage: universe time <speed>"
+}
 	
 	var time_speed = float(args[0])
 	time_speed = clamp(time_speed, 0.1, 10.0)
 	
 	# Apply to current universe
 	if attached_being and attached_being.has_method("get_parent"):
+}
 		var parent = attached_being.get_parent()
 		if parent is UniverseUniversalBeing:
 			parent.time_scale = time_speed
@@ -348,6 +348,7 @@ func _update_universe_stats() -> void:
 		return
 	
 	var stats_text = "[b]Universe Statistics:[/b]\n\n"
+
 	
 	# Find current universe
 	var current_universe = _find_current_universe()
@@ -357,9 +358,11 @@ func _update_universe_stats() -> void:
 		stats_text += "[color=green]Physics Scale:[/color] %.2fx\n" % current_universe.physics_scale
 		stats_text += "[color=magenta]LOD Level:[/color] %d\n" % current_universe.lod_level
 		stats_text += "[color=white]Child Universes:[/color] %d\n" % current_universe.child_universes.size()
+
 		
 		# DNA traits
 		if current_universe.has_method("get_universe_dna"):
+
 			var dna = current_universe.get_universe_dna()
 			if dna and dna.has("consciousness_traits"):
 				stats_text += "\n[b]Consciousness Traits:[/b]\n"
@@ -441,16 +444,14 @@ func ai_create_universe(params: Dictionary) -> Dictionary:
 		return {
 			"success": true,
 			"universes_created": universes.size(),
-			"message": "Created %d recursive universes" % universes.size()
-		}
+			"message": "Created %d recursive universes" % universes.size()}
 	else:
 		var universe = create_universe_from_template(template, name)
 		return {
 			"success": universe != null,
 			"universe": universe,
 			"message": "Universe '%s' created" % universe.being_name if universe else "Failed to create universe"
-		}
-	}
+}
 
 func ai_modify_universe_dna(trait_path: String, value: Variant) -> bool:
 	"""AI interface for DNA modification"""

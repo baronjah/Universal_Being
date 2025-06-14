@@ -1,7 +1,7 @@
 extends Node3D
 ## Notepad 3D Environment Controller
 ## Creates layered 3D terminal interface with walkable environment
-class_name Notepad3DEnvironment
+class_name Notepad3DEnvironment_notepad3denvironment_notepad3
 
 # Environment configuration
 const LAYER_COUNT = 5

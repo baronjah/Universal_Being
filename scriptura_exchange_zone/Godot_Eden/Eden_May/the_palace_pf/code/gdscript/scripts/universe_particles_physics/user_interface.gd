@@ -1,5 +1,5 @@
 # user_interface.gd - Manages game UI
-extends Control
+extends \2
 }
 
 var config
@@ -52,7 +52,7 @@ func _on_big_bang_button_pressed():
 }
 
 # Manages game UI for the universe simulation
-extends Control
+extends \2
 }
 
 var config: Dictionary

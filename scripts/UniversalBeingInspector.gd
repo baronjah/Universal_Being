@@ -221,6 +221,7 @@ func inspect_being(being: UniversalBeing) -> void:
 	
 	print("🔍 Inspecting Universal Being: %s" % being.being_name)
 
+
 func _refresh_inspector() -> void:
 	"""Refresh all inspector panels"""
 	if not current_being:
@@ -375,17 +376,20 @@ func _create_property_editor(property_name: String, value: Variant, type_hint: S
 	"""Create appropriate editor for property type"""
 	match type_hint:
 		"bool":
+
 			var checkbox = CheckBox.new()
 			checkbox.button_pressed = value
 			checkbox.toggled.connect(_on_property_changed.bind(property_name))
 			return checkbox
 		"int":
+
 			var spinbox = SpinBox.new()
 			spinbox.value = value
 			spinbox.step = 1
 			spinbox.value_changed.connect(_on_property_changed.bind(property_name))
 			return spinbox
 		"float":
+
 			var spinbox = SpinBox.new()
 			spinbox.value = value
 			spinbox.step = 0.1
@@ -556,6 +560,7 @@ func _on_property_changed(property_name: String, value: Variant) -> void:
 	
 	# Apply property change
 	if property_name.begins_with("socket_"):
+
 		# Socket manager property
 	else:
 		# Core being property
@@ -563,6 +568,7 @@ func _on_property_changed(property_name: String, value: Variant) -> void:
 	
 	property_changed.emit(property_name, value)
 	print("🔧 Property changed: %s = %s" % [property_name, str(value)])
+
 
 	if property_name == "visual_layer":
 		current_being.visual_layer = int(value)
@@ -599,9 +605,8 @@ func get_ai_interface() -> Dictionary:
 			{"name": "remove_logic_connection", "desc": "Remove a logic connection."},
 			{"name": "list_logic_connections", "desc": "List all logic connections for the current being."},
 			{"name": "edit_timeline", "desc": "Edit the scenario/timeline for the current being."},
-			{"name": "refresh_inspector", "desc": "Force refresh the inspector UI."}
+			{"name": "refresh_inspector", "desc": "Force refresh the inspector UI."
 		]
-	}
 
 # --- AI method invocation handler ---
 # Handles all AI/agent commands. Returns true/false or data as appropriate.
@@ -662,8 +667,8 @@ func _ai_hot_swap_component(socket_id: String, component_path: String) -> bool:
 
 func _ai_get_socket_info() -> Dictionary:
 	if not current_being:
-		return {}
-	return current_being.socket_manager.get_all_socket_info()
+		return {
+	return current_being.socket_manager.get_all_socket_info()}
 
 func _ai_add_logic_connection(event: String, target_being: UniversalBeing, action: String) -> bool:
 	# TODO: Integrate with LogicConnector system

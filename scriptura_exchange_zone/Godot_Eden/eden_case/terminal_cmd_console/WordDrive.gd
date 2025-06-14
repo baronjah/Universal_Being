@@ -1,5 +1,5 @@
 extends Node
-class_name WordDrive
+class_name WordDrive_WordDrive_WordDriv
 }
 
 # ------------------------------------
@@ -51,7 +51,7 @@ const SYSTEM_VERSION = "1.0.0"
 func _ready():
     print("WordDrive initialized (v%s)" % SYSTEM_VERSION)
     _setup_dimension_states()
-    system_status.last_activity_timestamp = OS.get_unix_time()
+    system_status.last_activity_timestamp = OS.Time.get_unix_time_from_system()
 }
 
 # Primary API: Send a message through the central word bus
@@ -92,7 +92,7 @@ func send_message(msg_type: String, payload: Variant, source: String = "system")
 
     # Update status
     system_status.total_message_count += 1
-    system_status.last_activity_timestamp = OS.get_unix_time()
+    system_status.last_activity_timestamp = OS.Time.get_unix_time_from_system()
 }
 
     # Broadcast message
@@ -126,7 +126,7 @@ func _process_word_creation(payload: Dictionary, source: String) -> void:
 }
 
     # Set creation metadata
-    payload.creation_time = OS.get_unix_time()
+    payload.creation_time = OS.Time.get_unix_time_from_system()
     payload.creator = source
     payload.turn = system_status.current_turn
 }
@@ -162,7 +162,7 @@ func _process_word_update(payload: Dictionary, source: String) -> void:
 }
 
     # Mark as modified
-    active_words[word_id].last_modified = OS.get_unix_time()
+    active_words[word_id].last_modified = OS.Time.get_unix_time_from_system()
     active_words[word_id].last_modifier = source
 }
 
@@ -245,7 +245,7 @@ func _process_connection_creation(payload: Dictionary, source: String) -> void:
 }
 
     # Set creation metadata
-    payload.creation_time = OS.get_unix_time()
+    payload.creation_time = OS.Time.get_unix_time_from_system()
     payload.creator = source
 }
 
@@ -291,7 +291,7 @@ func _process_connection_update(payload: Dictionary, source: String) -> void:
 }
 
     # Mark as modified
-    word_connections[connection_id].last_modified = OS.get_unix_time()
+    word_connections[connection_id].last_modified = OS.Time.get_unix_time_from_system()
     word_connections[connection_id].last_modifier = source
 }
 
@@ -435,7 +435,7 @@ func _record_message(msg_type: String, payload: Variant, source: String) -> void
         "type": msg_type,
         "payload": payload,
         "source": source,
-        "timestamp": OS.get_unix_time()
+        "timestamp": OS.Time.get_unix_time_from_system()
     }
 }
 
@@ -500,14 +500,14 @@ func _validate_message(msg_type: String, payload: Variant) -> bool:
 
 # Generate unique word ID
 func _generate_word_id(text: String) -> String:
-    var timestamp = OS.get_unix_time()
+    var timestamp = OS.Time.get_unix_time_from_system()
     var random = randi() % 10000
     return "word_" + text.substr(0, 3).to_lower() + "_" + str(timestamp) + "_" + str(random)
 }
 
 # Generate unique connection ID
 func _generate_connection_id(from_id: String, to_id: String) -> String:
-    var timestamp = OS.get_unix_time()
+    var timestamp = OS.Time.get_unix_time_from_system()
     var random = randi() % 10000
     return "conn_" + str(timestamp) + "_" + str(random)
 }
@@ -557,7 +557,7 @@ func _setup_dimension_states() -> void:
             "gravity_factor": 1.0,
             "connection_limit": 12,
             "color_scheme": "vibrant",
-            "description": "Spatial dimension - words exist in 3D space with full physics"
+            "description": "Node3D dimension - words exist in 3D space with full physics"
         },
         "4D": {
             "physics_enabled": true,

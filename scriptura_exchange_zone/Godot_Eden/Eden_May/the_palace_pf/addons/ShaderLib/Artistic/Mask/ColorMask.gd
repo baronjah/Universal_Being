@@ -1,5 +1,6 @@
 @tool
-class_name VisualShaderNodeMaskColorMask extends VisualShaderNodeCustom
+class_name VisualShaderNodeMaskColorMask_ColorMask_ColorMas
+extends \2
 
 func _get_name() -> String:
 	return "ColorMask"

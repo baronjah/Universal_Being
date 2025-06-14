@@ -3,9 +3,8 @@
 # Created: May 31, 2025, 23:45 CEST
 # Purpose: Centralized material resource management for Pentagon architecture
 # Connection: Prevents MaterialLibrary.get_material("default") violations
-
-extends UniversalBeingBase
-# class_name MaterialLibrary  # Commented to avoid autoload conflict
+extends \2
+# class_name MaterialLibrary_materiallibrary_material  # Commented to avoid autoload conflict
 
 ## Centralized material resource management
 ## Prevents memory waste from creating new materials repeatedly

@@ -195,7 +195,7 @@ func start_up_scene_tree():
 	scene_tree_jsh["main_root"]["name"] = name_to_add
 	scene_tree_jsh["main_root"]["type"] = "Node"
 	scene_tree_jsh["main_root"]["jsh_type"] = "root"
-	scene_tree_jsh["main_root"]["metadata"]["creation_time"] = Time.get_ticks_msec()
+	scene_tree_jsh["main_root"]["metadata"]["creation_time"] = Time.Time.get_ticks_msec()
 	scene_tree_jsh["main_root"]["node"] = main_ref
 	scene_tree_jsh["main_root"]["status"] = "active"
 	tree_mutex.unlock()
@@ -436,7 +436,7 @@ func validate_branch_nodes(branch_path: String) -> Array:
 	var branch = get_branch(branch_path)
 	var missing_nodes = []
 	
-	if branch.empty():
+	if branch.is_empty():
 		return ["branch_not_found"]
 	
 	if !branch.has("node") or !is_instance_valid(branch["node"]):
@@ -725,7 +725,7 @@ func jsh_tree_get_node_status_changer(node_path: String, _node_name: String, nod
 				#new_branch["status"] = "pending"
 				#new_branch["node"] = null
 				#new_branch["metadata"] = {
-					#"creation_time": Time.get_ticks_msec(),
+					#"creation_time": Time.Time.get_ticks_msec(),
 					#"full_path": current_full_path,
 					#"parent_path": current_full_path.get_base_dir(),
 					#"has_collision": node_type == "collision",
@@ -937,7 +937,7 @@ func _create_branch_data_from_node(node: Node) -> Dictionary:
 		branch_data["metadata"]["rotation"] = node.rotation
 	
 	# Add creation time
-	branch_data["metadata"]["creation_time"] = Time.get_ticks_msec()
+	branch_data["metadata"]["creation_time"] = Time.Time.get_ticks_msec()
 	
 	return branch_data
 
@@ -983,7 +983,7 @@ func get_sync_status() -> Dictionary:
 		"godot_nodes": godot_node_count,
 		"jsh_nodes": jsh_node_count,
 		"sync_ratio": float(jsh_node_count) / float(godot_node_count) if godot_node_count > 0 else 0.0,
-		"last_sync": Time.get_ticks_msec()
+		"last_sync": Time.Time.get_ticks_msec()
 	}
 
 func _count_godot_nodes(node: Node) -> int:

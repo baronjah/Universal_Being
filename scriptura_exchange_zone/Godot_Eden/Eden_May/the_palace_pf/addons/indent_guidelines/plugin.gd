@@ -1,5 +1,5 @@
 @tool
-extends EditorPlugin
+extends \2
 
 signal sig_plugin_disabled
 const META_KEY: String = "has_indent_guideline_plugin"
@@ -34,7 +34,8 @@ const SETTINGS_4_4: IndentGuidelinesSettings = preload("./Settings_4_4.tres")
 
 
 # Based on https://github.com/godotengine/godot/pull/65757
-class CodeEditorGuideLine extends Node:
+class CodeEditorGuideLine
+extends \2:
 
   var SETTINGS: IndentGuidelinesSettings = SETTINGS_4_3 if Engine.get_version_info().hex <= 0x040300 else SETTINGS_4_4
 

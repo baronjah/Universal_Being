@@ -1,5 +1,6 @@
 @tool
-class_name VisualShaderNodeProceduralRectangle extends VisualShaderNodeCustom
+class_name VisualShaderNodeProceduralRectangle_Rectangle_Rectangl
+extends \2
 
 func _init() -> void:
 	output_port_for_preview = 0

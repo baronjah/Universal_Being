@@ -67,8 +67,8 @@ func create_consciousness_materials() -> void:
 		4: {"color": Color(1.0, 0.84, 0.0), "name": "enlightened"},
 		5: {"color": Color.WHITE, "name": "transcendent"},
 		6: {"color": Color(1.0, 0.2, 0.2), "name": "beyond"},
-		7: {"color": Color(0.8, 0.3, 1.0), "name": "universal"}
-	}
+		7: {"color": Color(0.8, 0.3, 1.0), "name": "universal"
+}
 	
 	for level in levels:
 		var material = ParticleProcessMaterial.new()
@@ -108,7 +108,7 @@ func setup_audio_system() -> void:
 		5: "res://akashic_library/sounds/consciousness/transcendent.ogg",
 		6: "res://akashic_library/sounds/consciousness/beyond.ogg",
 		7: "res://akashic_library/sounds/consciousness/universal.ogg"
-	}
+}
 	
 	print("🎵 Consciousness audio system ready")
 
@@ -266,6 +266,7 @@ func trigger_narrative_moment(event_data: Dictionary) -> void:
 	
 	# Focus camera if specified
 	if event_data.has("camera_focus") and camera_ref:
+}
 		var focus_target = event_data.camera_focus
 		if focus_target is Node3D:
 			# Smooth camera movement toward target
@@ -286,6 +287,7 @@ func trigger_narrative_moment(event_data: Dictionary) -> void:
 	narrative_moment.emit(event_data)
 	
 	print("📖 Narrative moment: %s" % title)
+
 
 func _smooth_camera_look_at(start_pos: Vector3, target_pos: Vector3, weight: float) -> void:
 	"""Smoothly orient camera toward target"""
@@ -335,6 +337,7 @@ func _on_being_evolved(being: UniversalBeing, old_form: String, new_form: String
 	})
 	
 	print("🦋 Evolution feedback: %s → %s" % [old_form, new_form])
+
 
 # ===== PUBLIC API =====
 

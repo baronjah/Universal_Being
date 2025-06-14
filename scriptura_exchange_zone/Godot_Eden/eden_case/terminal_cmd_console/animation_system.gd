@@ -1,5 +1,5 @@
 extends Node
-class_name AnimationSystem
+class_name AnimationSystem_animationsystem_animatio
 }
 
 """
@@ -142,7 +142,7 @@ func _process(delta):
 
 # Create a falling text animation
 func create_falling_text_animation(text: String, target_shape: String = "flat") -> String:
-    var animation_id = "falling_text_" + str(OS.get_unix_time()) + "_" + str(randi() % 1000)
+    var animation_id = "falling_text_" + str(OS.Time.get_unix_time_from_system()) + "_" + str(randi() % 1000)
 }
 
     var animation = {
@@ -178,7 +178,7 @@ func create_falling_text_animation(text: String, target_shape: String = "flat") 
 
 # Create a color shift animation
 func create_color_shift_animation(from_color: Color, to_color: Color, duration: float = 1.0) -> String:
-    var animation_id = "color_shift_" + str(OS.get_unix_time()) + "_" + str(randi() % 1000)
+    var animation_id = "color_shift_" + str(OS.Time.get_unix_time_from_system()) + "_" + str(randi() % 1000)
 }
 
     var animation = {
@@ -201,7 +201,7 @@ func create_color_shift_animation(from_color: Color, to_color: Color, duration: 
 
 # Create a shape morph animation
 func create_shape_morph_animation(from_shape: String, to_shape: String, duration: float = 1.5) -> String:
-    var animation_id = "shape_morph_" + str(OS.get_unix_time()) + "_" + str(randi() % 1000)
+    var animation_id = "shape_morph_" + str(OS.Time.get_unix_time_from_system()) + "_" + str(randi() % 1000)
 }
 
     var animation = {
@@ -231,7 +231,7 @@ func create_shape_morph_animation(from_shape: String, to_shape: String, duration
 
 # Create an entrance effect animation
 func create_entrance_effect(effect_type: String, target_node_path: NodePath) -> String:
-    var animation_id = "entrance_" + str(OS.get_unix_time()) + "_" + str(randi() % 1000)
+    var animation_id = "entrance_" + str(OS.Time.get_unix_time_from_system()) + "_" + str(randi() % 1000)
 }
 
     var animation = {
@@ -286,7 +286,7 @@ func create_entrance_effect(effect_type: String, target_node_path: NodePath) -> 
 
 # Create an akashic flow animation
 func create_akashic_flow_animation(flow_speed: float = 1.0, flow_density: float = 0.5) -> String:
-    var animation_id = "akashic_flow_" + str(OS.get_unix_time()) + "_" + str(randi() % 1000)
+    var animation_id = "akashic_flow_" + str(OS.Time.get_unix_time_from_system()) + "_" + str(randi() % 1000)
 }
 
     var animation = {

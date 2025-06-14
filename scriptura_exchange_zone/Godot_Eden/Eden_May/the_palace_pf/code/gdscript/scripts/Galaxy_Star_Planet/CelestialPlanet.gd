@@ -1,6 +1,5 @@
 #OrbitStabilizer a CelestialPlanet.gd
-
-extends Node3D
+extends \2
 
 var planet_sprite: Sprite3D
 

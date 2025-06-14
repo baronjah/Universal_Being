@@ -24,7 +24,7 @@ var is_editable: bool = true
 var creation_time: float = 0.0  # Time when universe was created
 
 # Universe DNA System - Enhanced with full genetic traits
-var universe_dna: Dictionary = {
+var universe_dna: Dictionary = {}
 	# Physics traits
 	"gravity": 1.0,
 	"friction": 1.0,
@@ -43,7 +43,7 @@ var universe_dna: Dictionary = {
 	"chaos_level": 0.2,
 	"order_tendency": 0.8,
 	"emergence_probability": 0.5
-}
+
 
 var parent_dna: Dictionary = {}  # DNA inherited from parent universe
 
@@ -75,6 +75,7 @@ func pentagon_init() -> void:
 	add_component("res://components/universe_physics.ub.zip")
 	add_component("res://components/universe_time.ub.zip")
 	add_component("res://components/universe_lod.ub.zip")
+
 	
 	# Log universe creation in Akashic Library
 	log_universe_creation()
@@ -86,6 +87,7 @@ func pentagon_ready() -> void:
 	
 	# Load universe scene template
 	load_scene("res://scenes/universe/universe_template.tscn")
+
 	
 	# Connect to parent universe if exists
 	if not parent_universe.is_empty():
@@ -164,7 +166,7 @@ func initialize_universe_parameters() -> void:
 		"spatial_scale": 1.0,
 		"particle_density": 1.0,
 		"quantum_fluctuation": 0.1
-	}
+}
 
 # ===== UNIVERSE INTERACTION METHODS =====
 
@@ -196,8 +198,8 @@ func ai_interface() -> Dictionary:
 		"time_scale": time_scale,
 		"lod_level": lod_level,
 		"child_count": child_universes.size()
-	}
 	return base_interface
+}
 
 # ===== AKASHIC LIBRARY INTEGRATION =====
 
@@ -280,8 +282,10 @@ func get_universe_dna() -> Dictionary:
 func _apply_dna_effects() -> void:
 	"""Apply DNA traits to universe properties"""
 	if universe_dna.has("physics_traits"):
+
 		var physics = universe_dna.physics_traits
 		if physics.has("gravity_variance"):
+
 			# Apply gravity to physics components
 			if component_data.has("universe_physics"):
 				component_data.universe_physics.set_gravity(9.8 * physics.gravity_variance)
@@ -290,8 +294,10 @@ func _apply_dna_effects() -> void:
 			time_scale *= physics.time_elasticity
 	
 	if universe_dna.has("consciousness_traits"):
+
 		var consciousness = universe_dna.consciousness_traits
 		if consciousness.has("awareness_level"):
+
 			# Higher awareness = more conscious beings spawn
 			consciousness_level = consciousness.awareness_level
 
@@ -315,19 +321,24 @@ func _apply_rule(rule: String, value: Variant) -> void:
 	"""Apply a rule change to the universe"""
 	match rule:
 		"allow_creation":
+
 			# Enable/disable being creation
 			set_meta("allow_creation", value)
 		"allow_destruction":
+
 			# Enable/disable being destruction
 			set_meta("allow_destruction", value)
 		"physics_enabled":
+
 			# Enable/disable physics
 			if component_data.has("universe_physics"):
 				component_data.universe_physics.set_enabled(value)
 		"ai_entities":
+
 			# Enable/disable AI beings
 			set_meta("ai_entities", value)
 		"gravity":
+
 			# Set gravity value
 			if component_data.has("universe_physics"):
 				component_data.universe_physics.set_gravity(float(value))
@@ -426,7 +437,7 @@ func _apply_dna_trait(trait_name: String, value: float) -> void:
 
 func get_dna_difference(other_dna: Dictionary) -> Dictionary:
 	"""Calculate the difference between this universe's DNA and another"""
-	var differences = {}
+	var differences = {
 	for trait_name in universe_dna:
 		if trait_name in other_dna:
 			var diff = universe_dna[trait_name] - other_dna[trait_name]
@@ -435,5 +446,5 @@ func get_dna_difference(other_dna: Dictionary) -> Dictionary:
 					"current": universe_dna[trait_name],
 					"other": other_dna[trait_name],
 					"difference": diff
-				}
 	return differences
+}

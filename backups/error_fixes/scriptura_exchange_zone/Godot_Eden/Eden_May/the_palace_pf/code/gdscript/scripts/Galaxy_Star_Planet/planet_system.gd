@@ -133,7 +133,7 @@ var element_composition: Dictionary = {}
 var surface_features: Array = []
 
 func _init(planet_data: Dictionary = {}):
-	if planet_data.empty():
+	if planet_data.is_empty():
 		return
 		
 	# Set basic properties from data

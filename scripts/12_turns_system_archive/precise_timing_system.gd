@@ -32,15 +32,15 @@ class_name PreciseTimingSystem
     "11": {"hour": 20, "minute": 0},
     "12": {"hour": 22, "minute": 0},
     "15": {"hour": 15, "minute": 0}  # Special turn 15
-}
+	}
 
 # ----- STATE VARIABLES -----
 var precise_timer: Timer
 var time_offset: float = 0.0
 var last_sync_time: int = 0
 var current_turn: int = 1
-var registered_callbacks = {}
-var active_timers = {}
+var registered_callbacks = {
+var active_timers = {
 var turn_controller = null
 var blink_controller = null
 
@@ -82,6 +82,7 @@ func _ready():
     print("Precise Timing System initialized")
     print("Timing resolution: " + str(timing_resolution * 1000) + "ms")
     print("Current turn: " + str(current_turn))
+	}
 
 func _find_node_by_class(node, class_name_str):
     if node.get_class() == class_name_str or (node.get_script() and node.get_script().get_path().find(class_name_str.to_lower()) >= 0):
@@ -211,6 +212,7 @@ func _handle_turn_time_trigger(turn_number):
     # If turn controller exists, notify it
     if turn_controller:
         if turn_controller.has_method("set_turn"):
+		}
             # Wait a moment for dramatic effect
             await get_tree().create_timer(1.0).timeout
             turn_controller.set_turn(turn_number)
@@ -298,6 +300,7 @@ func register_time_callback(hour: int, minute: int, second: int, callback: Calla
     registered_callbacks[key].append(callback)
     
     print("Registered callback for time " + str(hour) + ":" + str(minute) + ":" + str(second))
+	
     
     return true
 
@@ -324,6 +327,7 @@ func register_minute_callback(hour: int, minute: int, callback: Callable) -> boo
     registered_callbacks[key].append(callback)
     
     print("Registered callback for time " + str(hour) + ":" + str(minute))
+	
     
     return true
 
@@ -336,7 +340,7 @@ func create_timer(duration_ms: int, callback: Callable = Callable()) -> int:
         "end_time": OS.get_ticks_msec() + duration_ms,
         "duration": duration_ms,
         "callback": callback
-    }
+		}
     
     return timer_id
 

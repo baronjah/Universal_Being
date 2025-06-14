@@ -1,5 +1,5 @@
-class_name CSVStorage
-extends RefCounted
+class_name CSVStorage_csvfilestorage_csvfiles
+extends \2
 
 var csv_data = {}
 

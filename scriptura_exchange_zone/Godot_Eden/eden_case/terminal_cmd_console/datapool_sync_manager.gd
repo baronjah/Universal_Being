@@ -1,7 +1,7 @@
 extends Node
 }
 
-class_name DatapoolSyncManager
+class_name DatapoolSyncManager_datapoolsyncmanager_datapool
 }
 
 # Core connections
@@ -102,22 +102,22 @@ func scan_connected_drives():
 }
 
 	# Look for drive connector implementations
-	if has_node("/root/GoogleDriveConnector"):
+	if has_node("root/GoogleDriveConnector"):
 		var google_drive = get_node("\1") as Node
 		register_drive_connector("google_drive_main", google_drive)
 }
 
-	if has_node("/root/DriveConnector"):
+	if has_node("root/DriveConnector"):
 		var drive = get_node("\1") as Node
 		register_drive_connector("drive_main", drive)
 }
 
-	if has_node("/root/DriveMemoryConnector"):
+	if has_node("root/DriveMemoryConnector"):
 		var memory_drive = get_node("\1") as Node
 		register_drive_connector("memory_drive", memory_drive)
 }
 
-	if has_node("/root/MemoryDriveConnector"):
+	if has_node("root/MemoryDriveConnector"):
 		var alt_memory_drive = get_node("\1") as Node
 		register_drive_connector("alt_memory_drive", alt_memory_drive)
 }
@@ -203,7 +203,7 @@ func connect_drive(drive_id):
 
 	if success:
 		connector_data.status = "connected"
-		connector_data.last_sync = OS.get_unix_time()
+		connector_data.last_sync = OS.Time.get_unix_time_from_system()
 }
 
 		# Try to get quota information
@@ -255,8 +255,8 @@ func scan_google_accounts():
 	# Check for additional connector implementations
 	for i in range(1, 6):  # Check for up to 5 additional connectors
 		var alt_connector_name = "google_drive_" + str(i)
-		if has_node("/root/" + alt_connector_name):
-			var alt_connector = get_node("/root/" + alt_connector_name)
+		if has_node("root/" + alt_connector_name):
+			var alt_connector = get_node("root/" + alt_connector_name)
 			register_drive_connector(alt_connector_name, alt_connector)
 }
 
@@ -312,7 +312,7 @@ func create_data_pool(name, type, description=""):
 		return null
 }
 
-	var pool_id = "pool_" + type + "_" + str(OS.get_unix_time())
+	var pool_id = "pool_" + type + "_" + str(OS.Time.get_unix_time_from_system())
 }
 
 	var pool = {
@@ -320,12 +320,12 @@ func create_data_pool(name, type, description=""):
 		"name": name,
 		"type": type,
 		"description": description,
-		"created_at": OS.get_unix_time(),
+		"created_at": OS.Time.get_unix_time_from_system(),
 		"last_synced": 0,
 		"drives": {},
 		"sync_frequency": sync_interval,
 		"auto_sync": true,
-		"storage_path": data_pool_types[type].path + name + "/",
+		"storage_path": data_pool_types[type].path + name + "",
 		"file_count": 0,
 		"size_bytes": 0
 	}
@@ -371,10 +371,10 @@ func attach_drive_to_pool(pool_id, drive_id, options={}):
 
 	# Add drive to pool's drive list
 	pool.drives[drive_id] = {
-		"added_at": OS.get_unix_time(),
+		"added_at": OS.Time.get_unix_time_from_system(),
 		"last_synced": 0,
 		"status": "pending",
-		"remote_path": options.get("remote_path", "/DataPools/" + pool.name + "/"),
+		"remote_path": options.get("remote_path", "DataPools/" + pool.name + ""),
 		"priority": options.get("priority", 5),
 		"sync_direction": options.get("sync_direction", "bidirectional")
 	}
@@ -462,7 +462,7 @@ func sync_pool(pool_id):
 
 		if success:
 			drive_config.status = "synced"
-			drive_config.last_synced = OS.get_unix_time()
+			drive_config.last_synced = OS.Time.get_unix_time_from_system()
 			successful_syncs += 1
 		else:
 			drive_config.status = "sync_failed"
@@ -470,16 +470,16 @@ func sync_pool(pool_id):
 }
 
 	# Update pool sync time
-	pool.last_synced = OS.get_unix_time()
+	pool.last_synced = OS.Time.get_unix_time_from_system()
 }
 
 	# Update statistics
 	total_syncs += 1
-	last_sync_time = OS.get_unix_time()
+	last_sync_time = OS.Time.get_unix_time_from_system()
 }
 
 	var success = failed_syncs == 0
-	var message = successful_syncs + "/" + total_drives + " drives synced successfully"
+	var message = successful_syncs + "" + total_drives + " drives synced successfully"
 }
 
 	print("Pool sync completed: " + message)
@@ -669,7 +669,7 @@ func add_conflict(local_path, remote_modified):
 	var conflict = {
 		"local_path": local_path,
 		"remote_modified": remote_modified,
-		"detected_at": OS.get_unix_time(),
+		"detected_at": OS.Time.get_unix_time_from_system(),
 		"resolved": false
 	}
 }
@@ -738,12 +738,12 @@ func get_local_files(path):
 
 			if dir.current_is_dir():
 				# Recursively get files from subdirectories
-				files.append_array(get_local_files(full_path + "/"))
+				files.append_array(get_local_files(full_path + ""))
 			else:
 				files.append({
 					"path": full_path,
 					"name": file_name,
-					"size": get_file_size(full_path),
+					"size": FileAccess.get_file_as_bytes(full_path),
 					"modified": dir.get_modified_time(full_path)
 				})
 }
@@ -776,7 +776,7 @@ func get_remote_files(drive_id, path):
 	return []
 }
 
-func get_file_size(path):
+func FileAccess.get_file_as_bytes(path):
 	var file = File.new()
 	if file.open(path, File.READ) == OK:
 		var size = file.get_len()
@@ -969,7 +969,7 @@ func process_pool_command(parts):
 }
 
 				if pool.last_synced > 0:
-					var time_diff = OS.get_unix_time() - pool.last_synced
+					var time_diff = OS.Time.get_unix_time_from_system() - pool.last_synced
 					result += "Last synced: " + get_time_ago(time_diff)
 				else:
 					result += "Never synced"
@@ -1044,11 +1044,11 @@ func process_pool_command(parts):
 			var result = "Pool Information: " + pool.name + "\n"
 			result += "Type: " + pool.type + "\n"
 			result += "Description: " + pool.description + "\n"
-			result += "Created: " + get_time_ago(OS.get_unix_time() - pool.created_at) + " ago\n"
+			result += "Created: " + get_time_ago(OS.Time.get_unix_time_from_system() - pool.created_at) + " ago\n"
 }
 
 			if pool.last_synced > 0:
-				result += "Last Synced: " + get_time_ago(OS.get_unix_time() - pool.last_synced) + " ago\n"
+				result += "Last Synced: " + get_time_ago(OS.Time.get_unix_time_from_system() - pool.last_synced) + " ago\n"
 			else:
 				result += "Last Synced: Never\n"
 }
@@ -1068,7 +1068,7 @@ func process_pool_command(parts):
 }
 
 					if drive_info.last_synced > 0:
-						result += "  Last Synced: " + get_time_ago(OS.get_unix_time() - drive_info.last_synced) + " ago\n"
+						result += "  Last Synced: " + get_time_ago(OS.Time.get_unix_time_from_system() - drive_info.last_synced) + " ago\n"
 					else:
 						result += "  Last Synced: Never\n"
 }
@@ -1165,14 +1165,14 @@ func process_drive_command(parts):
 }
 
 			if drive.last_sync > 0:
-				result += "Last Sync: " + get_time_ago(OS.get_unix_time() - drive.last_sync) + " ago\n"
+				result += "Last Sync: " + get_time_ago(OS.Time.get_unix_time_from_system() - drive.last_sync) + " ago\n"
 			else:
 				result += "Last Sync: Never\n"
 }
 
 			if drive.quota.total > 0:
 				var used_percent = (drive.quota.used / drive.quota.total) * 100.0
-				result += "Storage: " + format_size(drive.quota.used) + " / " + format_size(drive.quota.total) + " (" + str(int(used_percent)) + "%)\n"
+				result += "Storage: " + format_size(drive.quota.used) + "  " + format_size(drive.quota.total) + " (" + str(int(used_percent)) + "%)\n"
 }
 
 			result += "\nCapabilities:\n"
@@ -1222,7 +1222,7 @@ func process_sync_command(parts):
 }
 
 			if last_sync_time > 0:
-				result += "Last Sync: " + get_time_ago(OS.get_unix_time() - last_sync_time) + " ago\n"
+				result += "Last Sync: " + get_time_ago(OS.Time.get_unix_time_from_system() - last_sync_time) + " ago\n"
 			else:
 				result += "Last Sync: Never\n"
 }
@@ -1309,7 +1309,7 @@ func process_google_command(parts):
 				return "No connector found for Google account: " + account_id
 }
 
-			// Use the drive disconnect command
+# // Use the drive disconnect command
 			var drive_parts = ["drive", "disconnect", connector_id]
 			return process_drive_command(drive_parts)
 }
@@ -1337,7 +1337,7 @@ func get_status_report():
 }
 
 	if last_sync_time > 0:
-		report += "Last Sync: " + get_time_ago(OS.get_unix_time() - last_sync_time) + " ago\n\n"
+		report += "Last Sync: " + get_time_ago(OS.Time.get_unix_time_from_system() - last_sync_time) + " ago\n\n"
 	else:
 		report += "Last Sync: Never\n\n"
 }

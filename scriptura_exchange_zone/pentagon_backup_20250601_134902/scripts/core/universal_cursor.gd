@@ -5,9 +5,8 @@
 # CREATED: 2025-06-01 - Universal Cursor Implementation
 # AUTHOR: JSH + Claude Code
 # ==================================================
-
 extends UniversalBeingBase
-class_name UniversalCursor
+class_name UniversalCursor_universa
 
 signal interface_clicked(interface: Node, pixel_position: Vector2)
 signal interface_hovered(interface: Node, pixel_position: Vector2)
@@ -142,7 +141,7 @@ func _setup_trail_effects() -> void:
 
 func _connect_to_systems() -> void:
 	"""Connect to mouse system and camera"""
-	mouse_system = get_node_or_null("/root/MouseInteractionSystem")
+	mouse_system = get_node_or_null("root/MouseInteractionSystem")
 	if not mouse_system:
 		# Try to find mouse system in scene
 		var scene = get_tree().current_scene

@@ -100,6 +100,7 @@ func pentagon_input(event: InputEvent) -> void:
 				if event.ctrl_pressed:
 					debug_visualization = !debug_visualization
 					print("🧊 Grid visualization: %s" % ("ON" if debug_visualization else "OFF"))
+	
 
 # ===== GRID INITIALIZATION =====
 
@@ -113,6 +114,7 @@ func initialize_grid_system() -> void:
 	world_seed = Time.get_ticks_msec() % 1000000
 	
 	print("🧊 Grid system initialized with seed: %d" % world_seed)
+
 
 func setup_generation_rules() -> void:
 	"""Setup rules for different Y levels and chunk types"""
@@ -140,8 +142,7 @@ func setup_generation_rules() -> void:
 			"features": ["stars", "cosmic_entities", "void_structures", "dimensional_rifts"],
 			"density": 0.1,
 			"consciousness_level": 4
-		}
-	}
+}
 
 func setup_chunk_templates() -> void:
 	"""Setup templates for different chunk types"""
@@ -159,8 +160,7 @@ func setup_chunk_templates() -> void:
 		"special": {
 			"features": ["unique_generation", "artifacts"],
 			"consciousness_level": 3
-		}
-	}
+}
 
 # ===== ENTITY TRACKING =====
 
@@ -204,6 +204,7 @@ func track_entity(entity: Node, entity_type: String) -> void:
 				ai_companion_beings.append(entity)
 		
 		print("🎯 Now tracking %s: %s" % [entity_type, entity.name])
+}
 
 func update_observer_positions() -> void:
 	"""Update positions of all tracked entities"""
@@ -433,6 +434,7 @@ func make_entity_generator(entity: Node, generator_type: String = "basic") -> vo
 	
 	# Add generator component to the entity
 	if entity.has_method("add_component"):
+}
 		var component_path = "res://components/chunk_generator_%s.ub.zip" % generator_type
 		entity.add_component(component_path)
 		print("🎨 Made %s into a %s chunk generator" % [entity.name, generator_type])
@@ -464,7 +466,7 @@ func get_grid_status() -> Dictionary:
 		"render_distance": render_distance,
 		"generation_distance": generation_distance,
 		"auto_generate": auto_generate
-	}
+}
 
 func print_grid_status() -> void:
 	"""Print current grid status"""
@@ -473,15 +475,18 @@ func print_grid_status() -> void:
 	for key in status.keys():
 		print("  %s: %s" % [key, status[key]])
 
+
 # ===== SIGNAL HANDLERS =====
 
 func _on_chunk_activated(chunk: ChunkUniversalBeing) -> void:
 	"""Handle chunk activation"""
 	print("🔥 Chunk activated: %s" % chunk.being_name)
 
+
 func _on_chunk_deactivated(chunk: ChunkUniversalBeing) -> void:
 	"""Handle chunk deactivation"""
 	print("❄️ Chunk deactivated: %s" % chunk.being_name)
+
 
 func _on_chunk_content_generated(chunk: ChunkUniversalBeing, content_type: String) -> void:
 	"""Handle chunk content generation"""
@@ -498,10 +503,12 @@ func set_render_distance(new_distance: int) -> void:
 	render_distance = new_distance
 	print("🧊 Render distance set to: %d" % render_distance)
 
+
 func set_generation_distance(new_distance: int) -> void:
 	"""Set new generation distance for the grid"""
 	generation_distance = new_distance
 	print("🧊 Generation distance set to: %d" % generation_distance)
+
 
 func get_chunks_around_position(world_pos: Vector3, radius: int) -> Array[ChunkUniversalBeing]:
 	"""Get all chunks within radius of a world position"""

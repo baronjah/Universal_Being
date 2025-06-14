@@ -16,8 +16,8 @@
 # layer, turn, process
 
 # settings_bank.gd
-extends Node3D
-class_name SettingsBank
+extends \2
+class_name SettingsBank_settingsbank_settings
 
 # Static variables to store settings
 static var page: String = "settings"

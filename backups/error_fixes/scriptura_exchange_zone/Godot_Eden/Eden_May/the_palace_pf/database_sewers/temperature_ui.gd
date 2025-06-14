@@ -35,14 +35,14 @@ const PLASMA_COLOR = Color(0.8, 0.4, 1.0)
 
 func _ready():
     # Get references to required systems
-    temperature_system = get_node("/root/TemperatureSystem")
-    temperature_visual_system = get_node("/root/TemperatureVisualEffects")
+    temperature_system = get_node("\1") as Node
+    temperature_visual_system = get_node("\1") as Node
     
     # Connect to temperature change signal
-    temperature_system.connect("temperature_changed", self, "_on_temperature_changed")
+    temperature_system.connect(_on_temperature_changed)
     
     # Connect UI elements
-    temperature_slider.connect("value_changed", self, "_on_slider_value_changed")
+    temperature_slider.connect(_on_slider_value_changed)
     
     # Initialize UI with current temperature
     update_temperature_ui(

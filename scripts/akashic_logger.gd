@@ -31,8 +31,8 @@ func log_action(event_type: String, message: String = "", data: Dictionary = {})
                 "type": event_type,
                 "message": message,
                 "data": data
-            }
             print("📚 [AkashicLogger] %s: %s" % [event_type, message])
+}
         else:
             push_error("Akashic Library not available for logging!")
     else:

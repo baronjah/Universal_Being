@@ -64,6 +64,7 @@ func _ready():
     print("Screen Capture Utility initialized")
     print("Default save path: " + default_save_path)
     print("OCR Engine: " + ocr_engine)
+	
 
 func _ensure_capture_directory():
     var dir = Directory.new()
@@ -111,6 +112,7 @@ func _check_installed_languages():
         languages_installed.append(additional_languages[i])
     
     print("OCR languages available: " + str(languages_installed))
+	
 
 func _find_components():
     # Find Color System
@@ -215,6 +217,7 @@ func capture_from_clipboard(destination: String = "") -> String:
 func _simulate_screen_capture(capture_id: String, method: String, save_path: String):
     # Simulate a screen capture
     print("Simulating screen capture with method: " + method)
+	
     
     # Add slight delay to simulate processing time
     await get_tree().create_timer(0.5).timeout
@@ -244,6 +247,7 @@ func _simulate_screen_capture(capture_id: String, method: String, save_path: Str
 func _simulate_window_capture(capture_id: String, window_title: String, method: String, save_path: String):
     # Simulate a window capture
     print("Simulating window capture for window: " + (window_title if window_title else "Active Window"))
+	
     
     # Add slight delay to simulate processing time
     await get_tree().create_timer(0.6).timeout
@@ -402,6 +406,7 @@ func set_capture_interval(seconds: float) -> void:
     capture_timer.wait_time = capture_interval
     
     print("Capture interval set to: " + str(capture_interval) + " seconds")
+	
 
 func _on_capture_timer_timeout():
     # Called when the auto-capture timer expires
@@ -412,6 +417,7 @@ func _on_capture_timer_timeout():
 func _generate_capture_path() -> String:
     # Generate a unique file path for the capture
     var timestamp = Time.get_datetime_string_from_system().replace(":", "-").replace(" ", "_")
+	
     var filename = "capture_" + timestamp + "." + capture_format
     return default_save_path + filename
 
@@ -427,11 +433,12 @@ func get_capture_statistics() -> Dictionary:
         "is_capturing": is_capturing,
         "is_processing_ocr": is_processing_ocr,
         "ocr_history_count": ocr_history.size()
-    }
+		}
 
 # ----- EVENT HANDLERS -----
 func _on_ocr_processing_started(image_id):
     print("OCR processing started for image: " + image_id)
+	
 
 func _on_ocr_processing_completed(image_id, results):
     is_processing_ocr = false
@@ -454,6 +461,7 @@ func _on_ocr_processing_completed(image_id, results):
     
     print("OCR processing completed for image: " + image_id)
     print("Recognized text: " + results.text.substr(0, 50) + (results.text.length() > 50 ? "..." : ""))
+	
 
 func _on_ocr_processing_failed(image_id, error):
     is_processing_ocr = false
@@ -461,6 +469,7 @@ func _on_ocr_processing_failed(image_id, error):
     
     print("OCR processing failed for image: " + image_id)
     print("Error: " + error)
+	
 
 # ----- PUBLIC API -----
 func get_recognized_text() -> String:
@@ -479,10 +488,12 @@ func set_capture_format(format: String) -> void:
         print("Capture format set to: " + capture_format)
     else:
         print("Unsupported capture format: " + format)
+		
 
 func set_capture_quality(quality: int) -> void:
     capture_quality = clamp(quality, 10, 100)
     print("Capture quality set to: " + str(capture_quality))
+	
 
 func set_ocr_engine(engine: String) -> void:
     if engine in ["tesseract", "easyocr", "windows"]:
@@ -490,6 +501,7 @@ func set_ocr_engine(engine: String) -> void:
         print("OCR engine set to: " + ocr_engine)
     else:
         print("Unsupported OCR engine: " + engine)
+		
 
 func set_default_capture_method(method: String) -> void:
     if method in ["native", "gdi", "directx"]:

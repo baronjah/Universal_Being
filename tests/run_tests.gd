@@ -40,6 +40,7 @@ func _init():
         print("✅ Total Passed: %d" % total_passed)
         print("❌ Total Failed: %d" % total_failed)
         print("Success Rate: %.1f%%" % (float(total_passed) / float(total_tests) * 100.0))
+		
 	
 	# Detailed results
 	if total_failed > 0:
@@ -48,6 +49,7 @@ func _init():
 			for detail in result.details:
 				if not detail.passed:
 					print("   - %s: %s" % [detail.test, detail.assertion])
+	
 	
 	# Exit with appropriate code
 	quit(0 if total_failed == 0 else 1)

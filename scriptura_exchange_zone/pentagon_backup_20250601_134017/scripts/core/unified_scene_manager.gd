@@ -4,16 +4,15 @@
 # PURPOSE: Unify scene loading and world generation
 # CREATED: 2025-05-24 - Scene management overhaul
 # ==================================================
-
-extends UniversalBeingBase
+extends \2
 signal scene_changed(scene_name: String)
 signal world_cleared
 
 # ================================
 # SCENE STATE
 # ================================
+enum \2 {
 
-enum SceneType {
 	STATIC,      # Pre-made scenes
 	PROCEDURAL,  # Generated worlds
 	HYBRID       # Both combined
@@ -144,7 +143,7 @@ func load_static_scene(scene_name: String) -> void:
 		# original_ground.visible = false  # Commented out - keep ground
 	
 	# Load the scene (SceneLoader.load_scene returns bool, not Node3D)
-	var scene_loader = get_node("/root/SceneLoader")
+	var scene_loader = get_node("root/SceneLoader")
 	if scene_loader and scene_loader.has_method("load_scene"):
 		var load_success = scene_loader.load_scene(scene_name)
 		if load_success:
@@ -172,7 +171,7 @@ func generate_procedural_world(size: int = 128) -> void:
 		original_ground.visible = false
 	
 	# Create world generator
-	var world_gen = get_node_or_null("/root/HeightmapWorldGenerator")
+	var world_gen = get_node_or_null("root/HeightmapWorldGenerator")
 	if not world_gen:
 		var gen_script = load("res://scripts/core/heightmap_world_generator.gd")
 		if gen_script:

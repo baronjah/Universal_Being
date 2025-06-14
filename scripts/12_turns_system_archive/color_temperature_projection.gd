@@ -44,8 +44,7 @@ const COLOR_TEMPERATURES = {
         "color": Color(1.0, 0.2, 0.0, 1.0),  # Dark red-orange
         "frequency": 33,
         "energy_state": "intense"
-    }
-}
+		}
 
 const LIGHT_SPECTRUM = {
     "ULTRAVIOLET": {
@@ -95,8 +94,7 @@ const LIGHT_SPECTRUM = {
         "visible": false,
         "color": Color(0.5, 0.0, 0.0, 0.5),  # Dark red with transparency (not visible)
         "energy": "thermal"
-    }
-}
+		}
 
 const LUCKY_NUMBERS = [9, 33, 89, 99, 333, 389, 555, 777, 999]
 
@@ -193,15 +191,16 @@ func _initialize_projection():
     
     # Register colors with color system if available
     if color_system and color_system.has_method("register_color_palette"):
+	}
         # Register temperature colors
-        var temp_colors = {}
+        var temp_colors = {
         for temp_key in COLOR_TEMPERATURES:
             temp_colors[temp_key] = COLOR_TEMPERATURES[temp_key].color
         
         color_system.register_color_palette("temperature", temp_colors)
         
         # Register light spectrum
-        var spectrum_colors = {}
+        var spectrum_colors = {
         for spectrum_key in LIGHT_SPECTRUM:
             if LIGHT_SPECTRUM[spectrum_key].visible:
                 spectrum_colors[spectrum_key] = LIGHT_SPECTRUM[spectrum_key].color
@@ -239,6 +238,7 @@ func _create_temperature_gradient():
     
     # Register with color system
     if color_system and color_system.has_method("create_gradient"):
+	}
         var from_color = temperature_gradient[0].color
         var to_color = temperature_gradient[temperature_gradient.size() - 1].color
         color_system.create_gradient("temperature", from_color, to_color, temperature_gradient.size())
@@ -246,6 +246,7 @@ func _create_temperature_gradient():
 func _record_initial_numbers():
     # Record initial numbers in akashic system
     if akashic_system and akashic_system.has_method("register_number"):
+	}
         # Record temperature numbers
         for temp_key in COLOR_TEMPERATURES:
             temperature_numbers.append(COLOR_TEMPERATURES[temp_key].temperature)
@@ -454,12 +455,13 @@ func get_projection_state():
         "color_state": current_color_state,
         "light_spectrum": current_light_spectrum,
         "energy_level": current_energy_level
-    }
+		}
 
 # ----- AKASHIC NUMBER MANIPULATION -----
 func record_color_pattern(color_names):
     # Record color pattern in akashic system
     if akashic_system and akashic_system.has_method("register_number"):
+	}
         var color_values = []
         
         for color_name in color_names:
@@ -490,7 +492,7 @@ func record_color_pattern(color_names):
             "pattern_hash": pattern_hash,
             "lucky_number": lucky_number,
             "color_values": color_values
-        }
+			}
     
     return null
 
@@ -539,7 +541,7 @@ func integrate_with_migration_system():
             "error": "Migration components not available",
             "migration_system": migration_system != null,
             "ethereal_bridge": ethereal_bridge != null
-        }
+			}
     
     # Create color temperature reference in migration system
     var temperature_data = {
@@ -551,8 +553,7 @@ func integrate_with_migration_system():
             "color_state": current_color_state,
             "light_spectrum": current_light_spectrum,
             "energy_level": current_energy_level
-        }
-    }
+			}
     
     # Add temperature data
     for temp_key in COLOR_TEMPERATURES:
@@ -560,7 +561,7 @@ func integrate_with_migration_system():
             "temperature": COLOR_TEMPERATURES[temp_key].temperature,
             "frequency": COLOR_TEMPERATURES[temp_key].frequency,
             "energy_state": COLOR_TEMPERATURES[temp_key].energy_state
-        }
+			}
     
     # Add light spectrum data
     for spectrum_key in LIGHT_SPECTRUM:
@@ -569,7 +570,7 @@ func integrate_with_migration_system():
                 "wavelength_min": LIGHT_SPECTRUM[spectrum_key].wavelength[0],
                 "wavelength_max": LIGHT_SPECTRUM[spectrum_key].wavelength[1],
                 "energy": LIGHT_SPECTRUM[spectrum_key].energy
-            }
+				}
     
     # Record with ethereal bridge
     if ethereal_bridge.has_method("_record_node_migration"):
@@ -592,6 +593,7 @@ func integrate_with_migration_system():
                 333: universe_name = "ethereal_engine"
                 555: universe_name = "akashic_records"
                 777, 999: universe_name = "dimensional_colors"
+				}
             
             if universe_name != "":
                 terminal_bridge.connect_to_universe(universe_name)
@@ -602,7 +604,7 @@ func integrate_with_migration_system():
         "lucky_numbers": LUCKY_NUMBERS.size(),
         "spectrum_colors": LIGHT_SPECTRUM.size(),
         "current_temperature": current_temperature
-    }
+		}
 
 # ----- EVENT HANDLERS -----
 func _on_terminal_temperature_changed(old_temp, new_temp, color):
@@ -636,6 +638,7 @@ func _on_terminal_projection_changed(type, intensity):
 func create_color_temperature_bridge():
     # Setup integration with terminal and migration components
     if terminal_bridge and terminal_bridge.has_method("create_terminal_bridge_with_ethereal"):
+	
         var bridge_result = terminal_bridge.create_terminal_bridge_with_ethereal()
         
         # Generate a lucky number
@@ -656,12 +659,12 @@ func create_color_temperature_bridge():
             "color_pattern": color_pattern.pattern_hash if color_pattern else 0,
             "temperature": current_temperature,
             "bridge_timestamp": bridge_result.bridge_timestamp if bridge_result.has("bridge_timestamp") else 0
-        }
+			}
     
     return {
         "success": false,
         "error": "Terminal bridge not available"
-    }
+		}
 
 func get_temperature_states():
     return COLOR_TEMPERATURES
@@ -681,7 +684,7 @@ func get_current_state():
         "projection_mode": projection_mode,
         "projection_intensity": projection_intensity,
         "projection_visible": projection_visible
-    }
+		}
 
 func cycle_temperature_up():
     # Find next temperature in gradient
@@ -736,4 +739,3 @@ func set_temperature_by_lucky_number(lucky_number):
         "lucky_number": closest_lucky,
         "color_state": closest_key,
         "temperature": current_temperature
-    }

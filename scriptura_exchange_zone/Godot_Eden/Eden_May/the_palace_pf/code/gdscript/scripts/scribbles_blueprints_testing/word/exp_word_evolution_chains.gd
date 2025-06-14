@@ -17,7 +17,7 @@ extends Node
 #   - Evaluate performance impact of chain calculation
 # -----------------------------------------------
 
-class_name ExpWordEvolutionChains
+class_name ExpWordEvolutionChains_expwordevolutionchains_expworde
 
 # System references
 var word_manifestor = JSHWordManifestor.get_instance()

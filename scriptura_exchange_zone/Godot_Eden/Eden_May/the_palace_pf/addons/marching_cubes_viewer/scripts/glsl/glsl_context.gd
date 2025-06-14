@@ -30,8 +30,8 @@
 # transform any of the 256 possibilites into one of the root forms.
 
 @tool
-extends RefCounted
-class_name GLSLContext
+extends \2
+class_name GLSLContext_glslcontext_glslcont
 
 var rd:RenderingDevice
 

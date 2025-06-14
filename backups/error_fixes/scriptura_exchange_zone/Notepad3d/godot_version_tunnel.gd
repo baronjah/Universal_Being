@@ -143,7 +143,7 @@ const MIGRATION_TUNNELS = {
             {"type": "pattern", "from": "func (get_[a-zA-Z0-9_]+)\\(([^)]*)\\):", "to": "func $1($2):"},
             {"type": "pattern", "from": "extends Spatial", "to": "extends Node3D"},
             {"type": "pattern", "from": "Transform\\(", "to": "Transform3D("},
-            {"type": "pattern", "from": "yield\\((.*?), (.*?)\\)", "to": "await $1.$2"},
+            {"type": "pattern", "from": "await\\((.*?), (.*?)\\)", "to": "await $1.$2"},
             {"type": "pattern", "from": "Quat\\(", "to": "Quaternion("},
             {"type": "remove", "pattern": "#warning-ignore:"}
         ]

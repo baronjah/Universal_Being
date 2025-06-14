@@ -144,12 +144,12 @@ func initialize_ui():
 	word_input = LineEdit.new()
 	word_input.placeholder_text = "Enter a word..."
 	word_input.size_flags_horizontal = SIZE_EXPAND_FILL
-	word_input.connect("text_entered", self, "_on_word_submitted")
+	word_input.connect(_on_word_submitted)
 	input_container.add_child(word_input)
 	
 	submit_button = Button.new()
 	submit_button.text = "Submit"
-	submit_button.connect("pressed", self, "_on_submit_pressed")
+	submit_button.connect(_on_submit_pressed)
 	input_container.add_child(submit_button)
 	
 	# Right panel - Challenge and targets
@@ -184,39 +184,39 @@ func initialize_ui():
 	
 	var start_button = Button.new()
 	start_button.text = "Start Game"
-	start_button.connect("pressed", self, "_on_start_button_pressed")
+	start_button.connect(_on_start_button_pressed)
 	game_buttons.add_child(start_button)
 	
 	var pause_button = Button.new()
 	pause_button.text = "Pause"
-	pause_button.connect("pressed", self, "_on_pause_button_pressed")
+	pause_button.connect(_on_pause_button_pressed)
 	game_buttons.add_child(pause_button)
 	
 	var help_button = Button.new()
 	help_button.text = "Help"
-	help_button.connect("pressed", self, "_on_help_button_pressed")
+	help_button.connect(_on_help_button_pressed)
 	game_buttons.add_child(help_button)
 
 func connect_systems():
-	divine_word_game = get_node("/root/DivineWordGame")
-	turn_system = get_node("/root/TurnSystem")
-	divine_word_processor = get_node("/root/DivineWordProcessor")
+	divine_word_game = get_node("\1") as Node
+	turn_system = get_node("\1") as Node
+	divine_word_processor = get_node("\1") as Node
 	
 	if divine_word_game:
-		divine_word_game.connect("game_started", self, "_on_game_started")
-		divine_word_game.connect("game_paused", self, "_on_game_paused")
-		divine_word_game.connect("game_resumed", self, "_on_game_resumed")
-		divine_word_game.connect("game_over", self, "_on_game_over")
-		divine_word_game.connect("level_up", self, "_on_level_up")
-		divine_word_game.connect("dimension_unlocked", self, "_on_dimension_unlocked")
-		divine_word_game.connect("word_target_completed", self, "_on_word_target_completed")
+		divine_word_game.connect(_on_game_started)
+		divine_word_game.connect(_on_game_paused)
+		divine_word_game.connect(_on_game_resumed)
+		divine_word_game.connect(_on_game_over)
+		divine_word_game.connect(_on_level_up)
+		divine_word_game.connect(_on_dimension_unlocked)
+		divine_word_game.connect(_on_word_target_completed)
 	
 	if turn_system:
-		turn_system.connect("turn_completed", self, "_on_turn_completed")
-		turn_system.connect("dimension_changed", self, "_on_dimension_changed")
+		turn_system.connect(_on_turn_completed)
+		turn_system.connect(_on_dimension_changed)
 	
 	if divine_word_processor:
-		divine_word_processor.connect("word_processed", self, "_on_word_processed")
+		divine_word_processor.connect(_on_word_processed)
 
 func _process(delta):
 	if turn_system and turn_system.is_running:
@@ -241,6 +241,7 @@ func _process(delta):
 		var stats = divine_word_game.get_game_stats()
 		score_label.text = "Score: " + str(stats.score)
 		level_label.text = "Level: " + str(stats.level)
+
 		
 		if stats.state == divine_word_game.GameState.PAUSED:
 			timer_bar.modulate = Color(0.5, 0.5, 0.5)  # Gray when paused
@@ -281,7 +282,7 @@ func _on_submit_pressed():
 	submit_word(word_input.text)
 
 func submit_word(text):
-	if text.empty():
+	if text.is_empty():
 		return
 	
 	if divine_word_game:
@@ -300,6 +301,7 @@ func submit_word(text):
 func add_message(text, color=Color(1, 1, 1)):
 	var time_str = OS.get_time()
 	var timestamp = "%02d:%02d:%02d" % [time_str.hour, time_str.minute, time_str.second]
+
 	
 	message_log.bbcode_text += "[color=#888888][" + timestamp + "][/color] "
 	message_log.bbcode_text += "[color=#" + color.to_html(false) + "]" + text + "[/color]\n"
@@ -325,10 +327,13 @@ func update_targets_panel():
 		
 		if targets.size() > 0:
 			targets_panel.bbcode_text = "[b]Current Word Targets:[/b]\n"
+
 			
 			for target in targets:
 				var status = target.completed ? "[color=green]✓[/color]" : "[color=yellow]◯[/color]"
+	
 				var color = target.completed ? "#88FF88" : "#FFFFFF"
+	
 				
 				targets_panel.bbcode_text += status + " [color=" + color + "]" + target.word
 				targets_panel.bbcode_text += " (Min Power: " + str(target.min_power) + ")[/color]\n"
@@ -387,6 +392,7 @@ func _on_game_resumed():
 
 func _on_game_over(final_score):
 	add_message("Game over! Final score: " + str(final_score), Color(1, 0.5, 0))
+
 	
 	# Show game over summary
 	message_log.bbcode_text += "\n[color=#FFAA00][b]GAME OVER SUMMARY[/b][/color]\n"
@@ -396,6 +402,7 @@ func _on_game_over(final_score):
 		message_log.bbcode_text += "Final Level: " + str(stats.level) + "\n"
 		message_log.bbcode_text += "Turns Played: " + str(stats.turn_count) + "\n"
 		message_log.bbcode_text += "Highest Dimension: " + str(stats.dimension_unlocked) + "D\n"
+
 	
 	message_log.bbcode_text += "\nStart a new game to play again.\n"
 
@@ -414,6 +421,7 @@ func _on_word_target_completed(word, power):
 
 func _on_turn_completed(turn_number):
 	turn_label.text = "Turn: " + str(turn_number)
+
 	
 	# Every 12 turns, add a cycle completion message
 	if turn_number % 12 == 0:
@@ -422,6 +430,7 @@ func _on_turn_completed(turn_number):
 
 func _on_dimension_changed(new_dimension, old_dimension):
 	dimension_label.text = "Dimension: " + str(new_dimension) + "D"
+
 	
 	# Update dimension visualization
 	if new_dimension >= 1 and new_dimension <= 12:
@@ -433,6 +442,7 @@ func _on_dimension_changed(new_dimension, old_dimension):
 	
 	# Add dimension change message
 	add_message("Dimension changed: " + str(old_dimension) + "D → " + str(new_dimension) + "D", Color(0.5, 1, 1))
+
 
 func _on_word_processed(word, power, source_player):
 	# Only display messages for significant power levels

@@ -1,5 +1,5 @@
 @icon("thread.png")
-class_name FutureThreadPool
+class_name FutureThreadPool_futureth
 extends Node
 ## A thread pool designed to perform your tasks efficiently with support for Futures.
 
@@ -8,7 +8,7 @@ extends Node
 signal task_completed(task)
 
 ##This property controls whether the thread pool should emit signals.
-@export var use_signals: bool = false
+@@export var use_signals: bool = false
 
 var __tasks: Array = []
 var __started = false

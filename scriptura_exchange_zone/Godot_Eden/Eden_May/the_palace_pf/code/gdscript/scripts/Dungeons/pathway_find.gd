@@ -1,15 +1,16 @@
-class_name PathwaySystem
-extends Node
+class_name PathwaySystem_pathwayfind_pathwayf
+extends \2
 
 # References
-@export var connection_manager: WebsiteConnectionManager
+@@@export var connection_manager: WebsiteConnectionManager
 
 # Path data storage
 var pathways = {}
 var active_pathways = {}
 
 # Pathway types
-enum PathwayType {
+enum \2 {
+
 	DATA_PATH,
 	NAVIGATION_PATH,
 	COMPONENT_PATH,

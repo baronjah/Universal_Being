@@ -194,9 +194,9 @@ func create_point_meshes():
 func connect_to_systems():
     # Connect to account manager
     if has_node("/root/SmartAccountManager") or get_node_or_null("/root/SmartAccountManager"):
-        _account_manager = get_node("/root/SmartAccountManager")
-        _account_manager.connect("points_updated", self, "_on_points_updated")
-        _account_manager.connect("dimension_changed", self, "_on_dimension_changed")
+        _account_manager = get_node("\1") as Node
+        _account_manager.connect(_on_points_updated)
+        _account_manager.connect(_on_dimension_changed)
         print("Connected to SmartAccountManager")
         
         # Initial values

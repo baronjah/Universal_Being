@@ -22,7 +22,7 @@ enum CommandType {
 
 # ===== COMMAND SYSTEM =====
 var command_history: Array[Dictionary] = []
-var logic_connectors: Dictionary = {}  # word -> action mappings
+var logic_connectors: Dictionary = {}}  # word -> action mappings
 var natural_language_patterns: Dictionary = {}
 var active_macros: Dictionary = {}
 var script_cache: Dictionary = {}
@@ -49,6 +49,7 @@ func pentagon_init() -> void:
     _setup_logic_connectors()
     
     print("🌟 UniversalCommandProcessor: Meta-reality system online")
+	
 
 func pentagon_ready() -> void:
     super.pentagon_ready()
@@ -57,6 +58,7 @@ func pentagon_ready() -> void:
     _connect_to_console()
     
     print("🌟 UniversalCommandProcessor: Ready for universe creation")
+	
 
 func pentagon_process(delta: float) -> void:
     super.pentagon_process(delta)
@@ -88,6 +90,7 @@ func pentagon_sewers() -> void:
 func process_universal_command(command: String, source: String = "user") -> Dictionary:
     """Process any command - natural language or structured"""
     print("🌟 Processing command: '%s' from %s" % [command, source])
+	
     
     var result = {
         "success": false,
@@ -95,7 +98,7 @@ func process_universal_command(command: String, source: String = "user") -> Dict
         "actions_performed": [],
         "new_beings_created": [],
         "scripts_modified": []
-    }
+		}
     
     # Record command in history
     var command_entry = {
@@ -103,8 +106,8 @@ func process_universal_command(command: String, source: String = "user") -> Dict
         "source": source,
         "timestamp": Time.get_unix_time_from_system(),
         "consciousness_context": consciousness_level
-    }
     command_history.append(command_entry)
+}
     
     # Determine command type and process
     var cmd_type = _classify_command(command)
@@ -132,10 +135,12 @@ func process_universal_command(command: String, source: String = "user") -> Dict
 
 func _process_natural_language(command: String) -> Dictionary:
     """Process natural language commands like 'say potato to open doors'"""
-    var result = {"success": false, "message": "", "actions_performed": []}
+    var result = {"success": false, "message": "", "actions_performed": []
+	}
     
     # Parse natural language patterns
     if command.contains("say") and command.contains("to"):
+	
         var parts = command.split(" to ")
         if parts.size() >= 2:
             var trigger_phrase = parts[0].replace("say ", "").strip_edges()
@@ -149,21 +154,24 @@ func _process_natural_language(command: String) -> Dictionary:
                 "type": "proximity_trigger",
                 "created_by": command,
                 "consciousness_level": consciousness_level
-            }
+				}
             
             result.success = true
             result.message = "Created logic connector: '%s' -> '%s'" % [trigger_phrase, action_description]
             result.actions_performed.append("logic_connector_created")
             
             print("🌟 Logic connector created: %s" % trigger_phrase)
+			
     
     return result
 
 func _process_script_command(command: String) -> Dictionary:
     """Process script-related commands"""
-    var result = {"success": false, "message": "", "actions_performed": []}
+    var result = {"success": false, "message": "", "actions_performed": []
+	}
     
     if command.begins_with("/load script "):
+	
         var script_path = command.replace("/load script ", "").strip_edges()
         var loaded_script = _load_and_cache_script(script_path)
         
@@ -173,8 +181,10 @@ func _process_script_command(command: String) -> Dictionary:
             result.actions_performed.append("script_loaded")
         else:
             result.message = "Failed to load script: %s" % script_path
+			
     
     elif command.begins_with("/reload "):
+	
         var target = command.replace("/reload ", "").strip_edges()
         if target == "all scripts":
             _reload_all_scripts()
@@ -186,9 +196,11 @@ func _process_script_command(command: String) -> Dictionary:
 
 func _process_data_inspection(command: String) -> Dictionary:
     """Process data inspection commands"""
-    var result = {"success": false, "message": "", "actions_performed": []}
+    var result = {"success": false, "message": "", "actions_performed": []
+	}
     
     if command.contains("count lines in"):
+	
         var file_path = command.split("count lines in ")[1].strip_edges()
         var line_count = _count_lines_in_file(file_path)
         
@@ -198,6 +210,7 @@ func _process_data_inspection(command: String) -> Dictionary:
             result.actions_performed.append("line_count_performed")
     
     elif command.contains("show functions in"):
+	
         var file_path = command.split("show functions in ")[1].strip_edges()
         var functions = _extract_functions_from_file(file_path)
         
@@ -209,9 +222,11 @@ func _process_data_inspection(command: String) -> Dictionary:
 
 func _process_logic_connector(command: String) -> Dictionary:
     """Process logic connector commands"""
-    var result = {"success": false, "message": "", "actions_performed": []}
+    var result = {"success": false, "message": "", "actions_performed": []
+	}
     
     if command.begins_with("/when "):
+	
         var parts = command.replace("/when ", "").split(" then ")
         if parts.size() >= 2:
             var trigger = parts[0].strip_edges()
@@ -224,7 +239,7 @@ func _process_logic_connector(command: String) -> Dictionary:
                 "action": action,
                 "type": "logic_connector",
                 "created_by": command
-            }
+				}
             
             result.success = true
             result.message = "Created logic connector: '%s' -> '%s'" % [trigger, action]
@@ -234,9 +249,11 @@ func _process_logic_connector(command: String) -> Dictionary:
 
 func _process_reality_modifier(command: String) -> Dictionary:
     """Process reality modification commands"""
-    var result = {"success": false, "message": "", "actions_performed": []}
+    var result = {"success": false, "message": "", "actions_performed": []
+	}
     
     if command.begins_with("/create being "):
+	
         var description = command.replace("/create being ", "").strip_edges()
         var being = _create_being_from_description({"name": description, "type": "generic"})
         if being:
@@ -245,6 +262,7 @@ func _process_reality_modifier(command: String) -> Dictionary:
             result.actions_performed.append("being_created")
             result.new_beings_created.append(being)
     elif command.begins_with("/modify "):
+	
         var modification = command.replace("/modify ", "").strip_edges()
         if _apply_reality_modification({"type": "custom", "value": modification}):
             result.success = true
@@ -252,6 +270,7 @@ func _process_reality_modifier(command: String) -> Dictionary:
             result.actions_performed.append("reality_modified")
         else:
             result.message = "Failed to apply modification: %s" % modification
+			
     
     return result
 
@@ -270,18 +289,21 @@ func toggle_ai_channel() -> void:
 func process_ai_command(command: String, ai_source: String = "gemma") -> Dictionary:
     """Process commands from AI systems"""
     print("🤖 AI Command from %s: %s" % [ai_source, command])
+	
     
     # Add AI context to command processing
     var result = process_universal_command(command, ai_source)
     
     # Log AI collaboration
     ai_collaboration_log.append("%s: %s" % [ai_source, command])
+	
     
     return result
 
 func create_anything_with_ai(description: String) -> Dictionary:
     """Collaborative creation with AI"""
     print("✨ Creating with AI: %s" % description)
+	
     
     var creation_plan = _generate_creation_plan(description)
     var result = _execute_creation_plan(creation_plan)
@@ -294,25 +316,26 @@ func _check_proximity_triggers() -> void:
     """Check for proximity-based logic triggers"""
     for being in get_tree().get_nodes_in_group("universal_beings"):
         if being.has_method("check_proximity_triggers"):
+		
             # Create a single action parameter for proximity check
             var action_data = {
                 "type": "proximity_check",
                 "source": being,
-                "metadata": {}
-            }
+                "metadata": {
             being.check_proximity_triggers(action_data)
+}
 
 func _execute_proximity_action(action: Dictionary) -> void:
     """Execute a proximity-based action"""
     var source = action.get("source")
     var target = action.get("target")
     if source and target and source.has_method("on_proximity_action"):
+	}
         # Create a single action parameter containing all necessary data
         var action_data = {
             "target": target,
             "action_type": action.get("type", "proximity"),
             "metadata": action.get("metadata", {})
-        }
         source.on_proximity_action(action_data)
 
 # ===== UTILITY FUNCTIONS =====
@@ -336,6 +359,7 @@ func _extract_functions_from_file(file_path: String) -> Array:
         while not file.eof_reached():
             var line = file.get_line()
             if line.contains("func "):
+			}
                 var func_name = line.split("func ")[1].split("(")[0].strip_edges()
                 functions.append(func_name)
     return functions
@@ -374,25 +398,29 @@ func ai_invoke_method(method_name: String, args: Array = []) -> Variant:
         "process_command":
             if args.size() > 0:
                 return process_universal_command(args[0], "ai")
-            return {"success": false, "message": "No command provided"}
+            return {"success": false, "message": "No command provided"
+			}
         
         "create_anything":
             if args.size() > 0:
                 return create_anything_with_ai(args[0])
-            return {"success": false, "message": "No description provided"}
+            return {"success": false, "message": "No description provided"
+			}
         
         "setup_logic_connector":
             if args.size() >= 2:
                 var trigger = args[0]
                 var action = args[1]
-                logic_connectors[trigger] = {"action": action, "type": "ai_created"}
+                logic_connectors[trigger] = {"action": action, "type": "ai_created"
                 return "Logic connector created: %s -> %s" % [trigger, action]
-            return {"success": false, "message": "Missing trigger or action"}
+            return {"success": false, "message": "Missing trigger or action"
+			}
         
         "inspect_data":
             if args.size() > 0:
                 return _process_data_inspection("show functions in " + args[0])
-            return {"success": false, "message": "No target specified"}
+            return {"success": false, "message": "No target specified"
+			}
         
         "reload_reality":
             _reload_all_scripts()
@@ -401,12 +429,14 @@ func ai_invoke_method(method_name: String, args: Array = []) -> Variant:
         "collaborate_with_user":
             toggle_ai_channel()
             return "AI collaboration channel: %s" % ("active" if ai_channel_active else "inactive")
+			}
         
         _:
             return await super.ai_invoke_method(method_name, args)
 
 func _to_string() -> String:
     return "UniversalCommandProcessor<Commands:%d, Connectors:%d>" % [command_history.size(), logic_connectors.size()]
+	
 
 # ===== INITIALIZATION FUNCTIONS =====
 
@@ -424,14 +454,14 @@ func _initialize_command_patterns() -> void:
         "connect_logic": {
             "pattern": "connect {source} to {target}",
             "example": "connect door_sensor door_actuator"
-        }
-    }
+			}
 
 func _setup_logic_connectors() -> void:
     """Setup initial logic connector system"""
-    logic_connectors = {}
+    logic_connectors = {
     # Load any saved connectors from Akashic Records (using correct autoload name)
     if has_node("/root/CosmicRecords"):
+	}
         var records = get_node("/root/CosmicRecords")
         var saved_connectors = records.load_record("logic_connectors", "system")
         if saved_connectors:
@@ -440,6 +470,7 @@ func _setup_logic_connectors() -> void:
 func _connect_to_console() -> void:
     """Connect to UniversalConsole for command processing"""
     if has_node("/root/UniversalConsole"):
+	}
         var console = get_node("/root/UniversalConsole")
         console.command_entered.connect(_on_console_command)
         console.ai_channel_toggled.connect(_on_ai_channel_toggle)
@@ -452,12 +483,14 @@ func _process_command_queue(delta: float) -> void:
 func _save_command_history() -> void:
     """Save command history to Akashic Records"""
     if has_node("/root/CosmicRecords"):
+	
         var records = get_node("/root/CosmicRecords")
         records.save_record("command_history", "system", command_history)
 
 func _save_logic_connectors() -> void:
     """Save logic connectors to Akashic Records"""
     if has_node("/root/CosmicRecords"):
+	
         var records = get_node("/root/CosmicRecords")
         records.save_record("logic_connectors", "system", logic_connectors)
 
@@ -484,7 +517,8 @@ func _classify_command(command: String) -> CommandType:
 
 func _process_system_debug(command: String) -> Dictionary:
     """Process system debug commands"""
-    var result = {"success": false, "message": "", "actions_performed": []}
+    var result = {"success": false, "message": "", "actions_performed": []
+	}
     
     if command == "/reload all scripts":
         _reload_all_scripts()
@@ -496,9 +530,11 @@ func _process_system_debug(command: String) -> Dictionary:
 
 func _process_ai_collaboration(command: String) -> Dictionary:
     """Process AI collaboration commands"""
-    var result = {"success": false, "message": "", "actions_performed": []}
+    var result = {"success": false, "message": "", "actions_performed": []
+	}
     
     if command.begins_with("/gemma"):
+	
         var ai_command = command.replace("/gemma ", "")
         gemma_commands.append(ai_command)
         result.success = true
@@ -535,9 +571,11 @@ func _apply_reality_modification(modification: Dictionary) -> bool:
             Engine.time_scale = modification.value
             success = true
         "consciousness":
+		
             # Modify global consciousness rules
             success = true
         "custom":
+		
             # Handle custom modifications
             success = true
     
@@ -546,6 +584,7 @@ func _apply_reality_modification(modification: Dictionary) -> bool:
 func _notify_gemma_channel_open() -> void:
     """Notify when AI channel is opened"""
     if has_node("/root/UniversalConsole"):
+	
         var console = get_node("/root/UniversalConsole")
         console.ai_print("Gemma channel active - Ready for collaboration")
 
@@ -573,6 +612,7 @@ func start_macro_recording() -> void:
 func replay_last_macro() -> void:
     """Replay the last recorded macro"""
     if active_macros.has("last_macro"):
+	
         var macro = active_macros["last_macro"]
         for command in macro:
             process_universal_command(command, "macro")

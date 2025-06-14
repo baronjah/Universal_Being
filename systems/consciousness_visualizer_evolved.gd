@@ -14,7 +14,7 @@ signal consciousness_pulse_visualized(being: UniversalBeing, pulse_data: Diction
 @export var color_transition_speed: float = 1.5
 
 # Color palettes from archaeological findings
-enum ColorPalette {
+enum ConsciousnessPalette {
 	DEFAULT,
 	ETHEREAL,
 	AKASHIC,
@@ -22,7 +22,7 @@ enum ColorPalette {
 	TRANSCENDENT
 }
 
-@export var active_palette: ColorPalette = ColorPalette.TRANSCENDENT
+@export var active_palette: ConsciousnessPalette = ConsciousnessPalette.TRANSCENDENT
 
 # Archaeological consciousness level mapping
 var consciousness_level_frequencies = {
@@ -32,7 +32,6 @@ var consciousness_level_frequencies = {
 	3: 333.0,   # Connected - Triple unity
 	4: 555.0,   # Enlightened - Golden ratio derivative
 	5: 888.0    # Transcendent - Infinite consciousness
-}
 
 # Color caches for performance
 var consciousness_color_cache: Dictionary = {}
@@ -46,6 +45,7 @@ func _ready() -> void:
 	precompute_consciousness_colors()
 	
 	print("🌈 Evolved Consciousness Visualizer: Archaeological wisdom activated!")
+}
 
 func initialize_frequency_mappings() -> void:
 	"""Initialize consciousness frequency mappings with archaeological wisdom"""
@@ -63,17 +63,18 @@ func precompute_consciousness_colors() -> void:
 		consciousness_color_cache[level] = color
 		
 		print("🎨 Consciousness Level %d: Frequency %.1f = %s" % [level, frequency, color])
+}
 
 func calculate_consciousness_color(level: int, frequency: float) -> Color:
 	"""Archaeological wisdom: Convert consciousness frequency to perfect color"""
 	match active_palette:
-		ColorPalette.TRANSCENDENT:
+		ConsciousnessPalette.TRANSCENDENT:
 			return calculate_transcendent_color(level, frequency)
-		ColorPalette.ETHEREAL:
+		ConsciousnessPalette.ETHEREAL:
 			return calculate_ethereal_color(level, frequency)
-		ColorPalette.AKASHIC:
+		ConsciousnessPalette.AKASHIC:
 			return calculate_akashic_color(level, frequency)
-		ColorPalette.DIMENSIONAL:
+		ConsciousnessPalette.DIMENSIONAL:
 			return calculate_dimensional_color(level, frequency)
 		_:
 			return calculate_default_color(level, frequency)
@@ -186,7 +187,7 @@ func create_consciousness_pulse(being: UniversalBeing, pulse_intensity: float = 
 		"frequency": consciousness_level_frequencies[being.consciousness_level],
 		"color": get_consciousness_color(being.consciousness_level),
 		"timestamp": Time.get_time_string_from_system()
-	}
+}
 	
 	# Create visual pulse effect
 	create_pulse_effect(being, pulse_data)
@@ -229,7 +230,7 @@ func evolve_consciousness_visualization() -> void:
 	# Recalculate frequencies with evolution
 	for level in consciousness_level_frequencies:
 		var current_freq = consciousness_level_frequencies[level]
-		var evolved_freq = current_freq * (1.0 + sin(Time.get_time_from_start()) * 0.1)
+		var evolved_freq = current_freq * (1.0 + sin(Time.get_time_string_from_system().hash()) * 0.1)
 		consciousness_level_frequencies[level] = evolved_freq
 	
 	# Regenerate color cache

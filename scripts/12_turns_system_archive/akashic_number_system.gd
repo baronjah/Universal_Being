@@ -8,7 +8,7 @@ const NUMERIC_BOUNDARIES = {
     "MULTIPLICATION_FACTOR": 33,
     "SYMBOL_COUNT": 7,
     "DIMENSIONAL_LIMIT": 5
-}
+	}
 
 # Symbol mapping for the SCRIPUTRA system
 var SCRIPUTRA_SYMBOLS = {
@@ -18,8 +18,8 @@ var SCRIPUTRA_SYMBOLS = {
     "#_": {"value": 4, "function": "snake_connection", "dimensional_depth": 2},
     "_#": {"value": 5, "function": "reverse_connection", "dimensional_depth": 2},
     "#9": {"value": 9, "function": "limit_connection", "dimensional_depth": 4},
-    "##9": {"value": 99, "function": "expanded_connection", "dimensional_depth": 5}
-}
+    "##9": {"value": 99, "function": "expanded_connection", "dimensional_depth": 5
+	}
 
 # Akashic Records structure
 var AKASHIC_RECORDS = {
@@ -27,7 +27,7 @@ var AKASHIC_RECORDS = {
     "RECORDS_PER_LAYER": 99,
     "TOTAL_CAPACITY": 9 * 99, # 891
     "ACTIVE_RECORDS": []
-}
+	}
 
 # Text processing limits
 var TEXT_PROCESSING = {
@@ -35,7 +35,7 @@ var TEXT_PROCESSING = {
     "CHAR_LIMIT_PER_LINE": 99,
     "PRECISION_CUTTING": true,
     "FOLDING_ENABLED": true
-}
+	}
 
 # Schedule management for weekly tasks
 var SCHEDULE_LOOP = {
@@ -43,13 +43,13 @@ var SCHEDULE_LOOP = {
     "PRIORITY_LEVELS": ["#", "##", "###"],
     "CURRENT_DAY": 0,
     "TASKS_PER_DAY": 9
-}
+	}
 
 # Lucky number patterns
 var LUCKY_NUMBERS = {
     "888": {"meaning": "prosperity", "multiplier": 3},
-    "1333": {"meaning": "transformation", "multiplier": 4}
-}
+    "1333": {"meaning": "transformation", "multiplier": 4
+	}
 
 # Constructor with initialization
 func _init():
@@ -147,10 +147,12 @@ func get_record(layer: int, index: int):
 # Generate schedule for the next week
 func generate_next_week_schedule(tasks: Dictionary) -> String:
     var schedule = "SCHEDULE FOR NEXT WEEK:\n"
+	}
     
     for day in range(SCHEDULE_LOOP.DAYS_IN_CYCLE):
         var day_name = get_day_name(day)
         schedule += "DAY " + str(day + 1) + " (" + day_name + "):\n"
+		}
         
         if tasks.has(day):
             var day_tasks = tasks[day]
@@ -214,7 +216,7 @@ func calculate_legged_time(turns: int, minutes_per_turn: int = 2) -> Dictionary:
         "hours": hours,
         "remaining_minutes": remaining_minutes,
         "formatted": "%d hours %d minutes (%d turns)" % [hours, remaining_minutes, turns]
-    }
+		}
 
 # Calculate the turns based on play time
 func calculate_turns_from_time(hours: float) -> int:

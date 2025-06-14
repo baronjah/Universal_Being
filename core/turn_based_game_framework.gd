@@ -66,6 +66,7 @@ func _ready():
 	
 	print("Turn Based Game Framework initialized - Current Turn: " + str(current_turn))
 
+
 func _ensure_folders_exist():
 	# Create base game folder
 	if not DirAccess.dir_exists_absolute(base_folder_path):
@@ -168,6 +169,7 @@ func resume_game():
 	
 	print("Game resumed - Turn " + str(current_turn) + " - Elapsed since last save: " + str(elapsed_since_save) + "s")
 
+
 func advance_turn(force: bool = false):
 	# Check if minimum time has elapsed
 	var current_time = Time.get_unix_time_from_system()
@@ -183,7 +185,7 @@ func advance_turn(force: bool = false):
 		"completed": true,
 		"duration": turn_duration,
 		"timestamp": current_time
-	}
+}
 	
 	# Update total game time
 	total_game_time += turn_duration
@@ -236,6 +238,7 @@ func restart_game():
 	_save_game_state()
 	
 	print("Game restarted - Restart count: " + str(restart_count))
+
 	
 	return true
 
@@ -290,6 +293,7 @@ func _generate_script_for_turn(turn_number: int) -> String:
 	script_content += "# ----- REFERENCES -----\n"
 	script_content += "var game_framework: Node = null\n"
 	script_content += "var memory_system: Node = null\n\n"
+
 	
 	# Signals
 	script_content += "# ----- SIGNALS -----\n"
@@ -330,6 +334,7 @@ func _generate_script_for_turn(turn_number: int) -> String:
 	
 	# Generate objectives based on turn number
 	script_content += "func _register_turn_objectives():\n"
+
 	
 	var objectives = _get_objectives_for_turn(turn_number)
 	script_content += "    # Objectives for Turn " + str(turn_number) + "\n"
@@ -337,6 +342,7 @@ func _generate_script_for_turn(turn_number: int) -> String:
 	for i in range(objectives.size()):
 		var objective = objectives[i]
 		script_content += "    print(\"Objective " + str(i+1) + ": " + objective + "\")\n"
+
 	
 	script_content += "\n"
 	
@@ -349,11 +355,11 @@ func _generate_script_for_turn(turn_number: int) -> String:
 	# Additional helper functions
 	script_content += "# ----- HELPER FUNCTIONS -----\n"
 	script_content += "func get_turn_info() -> Dictionary:\n"
-	script_content += "    return {\n"
+	script_content += "    return {\n"}
 	script_content += "        \"turn_number\": turn_number,\n"
 	script_content += "        \"turn_theme\": turn_theme,\n"
 	script_content += "        \"min_duration\": min_duration\n"
-	script_content += "    }\n"
+	script_content += "    \n"
 	
 	return script_content
 
@@ -469,7 +475,7 @@ func _save_game_state():
 		"restart_count": restart_count,
 		"max_turns": max_turns,
 		"min_turn_time": min_turn_time
-	}
+}
 	
 	var file = FileAccess.open(base_folder_path + "game_state.json", FileAccess.WRITE)
 	if file:
@@ -576,7 +582,7 @@ func _save_completion_details():
 		"restart_count": restart_count,
 		"turn_completion": turn_completion,
 		"formatted_total_time": format_time(total_game_time)
-	}
+}
 	
 	var file = FileAccess.open(completion_file, FileAccess.WRITE)
 	if file:
@@ -597,6 +603,7 @@ func format_time(seconds: int) -> String:
 		return "%02d:%02d:%02d" % [hours, minutes, secs]
 	else:
 		return "%02d:%02d" % [minutes, secs]
+
 
 # ----- PUBLIC API -----
 func get_current_turn() -> int:

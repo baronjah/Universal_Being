@@ -55,7 +55,7 @@ func start_rpg_session(book_name: String = "book_one") -> void:
 
 func _build_scene_context() -> Dictionary:
 	"""Build context dictionary for current scene"""
-	var context = {}
+	var context = {
 	
 	# Find player
 	var players = get_tree().get_nodes_in_group("player")
@@ -87,6 +87,7 @@ func _build_scene_context() -> Dictionary:
 func _send_prompt_to_gemma(prompt: String) -> void:
 	"""Send RPG prompt to Gemma AI"""
 	if gemma_ai and gemma_ai.has_method("process_user_input"):
+}
 		# Prepend RPG instruction
 		var full_prompt = "[RPG_MODE] " + prompt
 		gemma_ai.process_user_input(full_prompt)
@@ -98,6 +99,7 @@ func _send_prompt_to_gemma(prompt: String) -> void:
 func _on_gemma_response(response: String) -> void:
 	"""Handle Gemma's response and execute actions"""
 	print("🤖 Gemma responded: " + response)
+
 	
 	# Parse response into actions
 	var actions = action_book.parse_gemma_response(response)
@@ -108,7 +110,7 @@ func _on_gemma_response(response: String) -> void:
 
 func _execute_action(action_type: String, params) -> void:
 	"""Execute specific action based on type"""
-	var result = {}
+	var result = {
 	
 	match action_type:
 		"move":
@@ -123,8 +125,10 @@ func _execute_action(action_type: String, params) -> void:
 			result = _execute_create(params)
 		"intent":
 			result = _execute_natural_intent(params)
+}
 		_:
-			result = {"success": false, "error": "Unknown action: " + action_type}
+			result = {"success": false, "error": "Unknown action: " + action_type
+}
 	
 	gemma_action_performed.emit(action_type, result)
 
@@ -137,16 +141,19 @@ func _execute_move(target_pos: Vector3) -> Dictionary:
 	
 	if gemma_manifestation and gemma_ai.has_method("move_manifestation"):
 		gemma_ai.move_manifestation(target_pos, 2.0)
-		return {"success": true, "new_position": target_pos}
+		return {"success": true, "new_position": target_pos
+}
 	
-	return {"success": false, "error": "Could not move - manifestation failed"}
+	return {"success": false, "error": "Could not move - manifestation failed"
+}
 
 func _execute_rotate(angles: Vector3) -> Dictionary:
 	"""Execute rotation command"""
 	if gemma_manifestation:
 		gemma_manifestation.rotation_degrees = angles
 		return {"success": true, "new_rotation": angles}
-	return {"success": false, "error": "No manifestation to rotate"}
+	return {"success": false, "error": "No manifestation to rotate"
+}
 
 func _execute_inspect(target: String) -> Dictionary:
 	"""Execute inspection command"""
@@ -154,10 +161,13 @@ func _execute_inspect(target: String) -> Dictionary:
 	if found_object:
 		# Use Gemma's spatial awareness
 		if gemma_ai.has_method("analyze_spatial_object"):
+
 			var analysis = gemma_ai.analyze_spatial_object(found_object, found_object.global_position, {})
-			return {"success": true, "analysis": analysis, "target": target}
+			return {"success": true, "analysis": analysis, "target": target
+}
 	
-	return {"success": false, "error": "Could not find target: " + target}
+	return {"success": false, "error": "Could not find target: " + target
+}
 
 func _execute_interact(target: String) -> Dictionary:
 	"""Execute interaction command"""
@@ -165,28 +175,35 @@ func _execute_interact(target: String) -> Dictionary:
 	if found_object and found_object.has_method("interact"):
 		found_object.interact()
 		interaction_created.emit([gemma_manifestation, found_object])
-		return {"success": true, "target": target}
+		return {"success": true, "target": target
+}
 	
-	return {"success": false, "error": "Could not interact with: " + target}
+	return {"success": false, "error": "Could not interact with: " + target
+}
 
 func _execute_create(params: Dictionary) -> Dictionary:
 	"""Execute creation command"""
 	if gemma_ai.has_method("create_universal_being"):
+
 		var new_being = gemma_ai.create_universal_being(params.type, params.description)
 		if new_being:
-			return {"success": true, "created": params.type}
+			return {"success": true, "created": params.type
+}
 	
-	return {"success": false, "error": "Could not create: " + str(params)}
+	return {"success": false, "error": "Could not create: " + str(params)
+}
 
 func _execute_natural_intent(intent: String) -> Dictionary:
 	"""Execute natural language intent"""
 	# This handles "I wanna move to..." type expressions
 	if "move" in intent:
+
 		var coords = action_book._extract_coordinates(intent)
 		if coords.size() >= 3:
 			return _execute_move(Vector3(coords[0], coords[1], coords[2]))
 	
-	return {"success": false, "error": "Could not parse intent: " + intent}
+	return {"success": false, "error": "Could not parse intent: " + intent
+}
 
 # ===== HELPER FUNCTIONS =====
 
@@ -274,4 +291,3 @@ func get_gemma_status() -> Dictionary:
 		"position": _get_gemma_position(),
 		"last_prompt": last_prompt,
 		"push_enabled": push_interactions_enabled
-	}

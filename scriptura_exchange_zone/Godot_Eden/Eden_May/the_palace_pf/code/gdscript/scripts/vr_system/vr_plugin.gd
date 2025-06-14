@@ -1,13 +1,13 @@
 @tool
-extends EditorPlugin
+extends \2
 
 func _enter_tree():
 	# Register VR autoload singleton
-	add_autoload_singleton("VRManager", "res://code/gdscript/scripts/vr_system/vr_manager.gd")
+	add_autoload_singleton("VRManager", "res://scripts/gdscript/scripts/vr_system/vr_manager.gd")
 	
 	# Add custom types for integration
-	add_custom_type("VRSceneSetup", "Node", preload("res://code/gdscript/scripts/vr_system/vr_scene_setup.gd"), preload("res://icon.png"))
-	add_custom_type("VRAkashicInterface", "Node", preload("res://code/gdscript/scripts/vr_system/vr_akashic_interface.gd"), preload("res://icon.png"))
+	add_custom_type("VRSceneSetup", "Node", preload("res://scripts/gdscript/scripts/vr_system/vr_scene_setup.gd"), preload("res://icon.png"))
+	add_custom_type("VRAkashicInterface", "Node", preload("res://scripts/gdscript/scripts/vr_system/vr_akashic_interface.gd"), preload("res://icon.png"))
 	
 	print("VR Plugin initialized")
 

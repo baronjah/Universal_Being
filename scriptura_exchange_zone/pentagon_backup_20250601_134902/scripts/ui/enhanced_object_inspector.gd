@@ -10,7 +10,6 @@
 # PURPOSE: Click any object to inspect and edit ALL properties
 # CREATED: 2025-05-27
 # ==================================================
-
 extends UniversalBeingBase
 signal object_selected(object: Node)
 signal property_changed(object: Node, property: String, value: Variant)
@@ -391,7 +390,7 @@ func _on_property_changed(property: String, value: Variant) -> void:
 	current_object.set(property, value)
 	
 	# If using UniversalObjectManager, notify it
-	var uom = get_node_or_null("/root/UniversalObjectManager")
+	var uom = get_node_or_null("root/UniversalObjectManager")
 	if uom and current_uuid:
 		uom.modify_object(current_uuid, {property: value})
 	

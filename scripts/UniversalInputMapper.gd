@@ -27,10 +27,10 @@ var default_mappings = {
 }
 
 # Current active mappings (loaded from user settings or defaults)
-var current_mappings = {}
+var current_mappings = {
 
 # Combo support - for multi-key combinations
-var combo_mappings = {}
+var combo_mappings = {
 
 # Settings file path
 const SETTINGS_FILE = "user://input_settings.json"
@@ -77,6 +77,7 @@ func load_user_settings():
 			if result == OK and json.data is Dictionary:
 				combo_mappings = json.data
 				print("🎯 Loaded combo mappings: %d combinations" % combo_mappings.size())
+	}
 	
 	settings_loaded.emit()
 	print("✅ Input Mapper ready - %d actions mapped" % current_mappings.size())
@@ -90,6 +91,7 @@ func save_user_settings():
 		file.store_string(json.stringify(current_mappings))
 		file.close()
 		print("💾 Saved input settings to user://")
+}
 	
 	# Save combo mappings
 	var combo_file = FileAccess.open(COMBO_SETTINGS_FILE, FileAccess.WRITE)
@@ -98,6 +100,7 @@ func save_user_settings():
 		combo_file.store_string(json.stringify(combo_mappings))
 		combo_file.close()
 		print("💾 Saved combo settings to user://")
+
 
 func remap_action(action_name: String, new_key: int):
 	"""Change the key mapping for an action"""
@@ -116,12 +119,14 @@ func add_combo_mapping(combo_name: String, key_sequence: Array):
 	save_user_settings()
 	print("🎯 Added combo '%s': %s" % [combo_name, _format_key_sequence(key_sequence)])
 
+
 func remove_combo_mapping(combo_name: String):
 	"""Remove a combo mapping"""
 	if combo_name in combo_mappings:
 		combo_mappings.erase(combo_name)
 		save_user_settings()
 		print("🗑️ Removed combo: %s" % combo_name)
+
 
 func get_key_for_action(action_name: String) -> int:
 	"""Get the current key mapped to an action"""
@@ -175,7 +180,7 @@ func export_settings() -> String:
 		"single_keys": current_mappings,
 		"combos": combo_mappings,
 		"exported_at": Time.get_datetime_string_from_system()
-	}
+}
 	var json = JSON.new()
 	return json.stringify(export_data)
 
@@ -188,6 +193,7 @@ func import_settings(json_string: String) -> bool:
 		var import_data = json.data
 		
 		if "single_keys" in import_data:
+
 			# Validate imported keys
 			for action in import_data.single_keys:
 				if action in default_mappings:

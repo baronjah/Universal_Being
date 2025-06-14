@@ -4,7 +4,6 @@
 # Created: May 31st, 2025 | Perfect Pentagon Architecture
 # Location: scripts/autoload/sewers_monitor.gd
 ################################################################
-
 extends UniversalBeingBase
 ################################################################
 # CORE VARIABLES - Flow Monitoring
@@ -420,8 +419,8 @@ func auto_adjust_systems():
 
 func _adjust_input_throttling(enabled: bool):
 	"""Adjust input throttling in Perfect Input system"""
-	if has_node("/root/PerfectInput"):
-		var perfect_input = get_node("/root/PerfectInput")
+	if has_node("root/PerfectInput"):
+		var perfect_input = get_node("root/PerfectInput")
 		if perfect_input.has_method("enable_throttling"):
 			perfect_input.enable_throttling(enabled, max_input_rate * 0.8)
 			print("🌊 SEWERS AUTO-ADJUST: Input throttling %s" % ("ENABLED" if enabled else "DISABLED"))
@@ -429,8 +428,8 @@ func _adjust_input_throttling(enabled: bool):
 
 func _adjust_frame_distribution():
 	"""Adjust frame distribution in Perfect Delta system"""
-	if has_node("/root/PerfectDelta"):
-		var perfect_delta = get_node("/root/PerfectDelta")  
+	if has_node("root/PerfectDelta"):
+		var perfect_delta = get_node("root/PerfectDelta")  
 		if perfect_delta.has_method("adjust_frame_pattern"):
 			perfect_delta.adjust_frame_pattern()
 			print("🌊 SEWERS AUTO-ADJUST: Frame distribution adjusted")
@@ -543,8 +542,8 @@ func _update_individual_health_metrics():
 
 func _setup_ai_monitoring():
 	"""Set up monitoring for AI entities"""
-	if has_node("/root/PerfectReady"):
-		var perfect_ready = get_node("/root/PerfectReady")
+	if has_node("root/PerfectReady"):
+		var perfect_ready = get_node("root/PerfectReady")
 		if perfect_ready.has_signal("ai_entity_ready"):
 			perfect_ready.ai_entity_ready.connect(_on_ai_entity_ready)
 
@@ -578,7 +577,7 @@ func _connect_to_pentagon_systems():
 	var systems_to_monitor = ["PerfectInit", "PerfectReady", "PerfectInput", "LogicConnector"]
 	
 	for system_name in systems_to_monitor:
-		if has_node("/root/" + system_name):
+		if has_node("root/" + system_name):
 			print("🔗 SEWERS MONITOR: Connected to " + system_name)
 
 ################################################################

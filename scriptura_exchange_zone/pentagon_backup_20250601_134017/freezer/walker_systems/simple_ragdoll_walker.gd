@@ -4,10 +4,10 @@
 # PURPOSE: Make ragdoll walk upright using coordinated forces
 # CREATED: 2025-05-25 - Walking ragdoll implementation
 # ==================================================
-
-extends UniversalBeingBase
+extends \2
 # Movement states
-enum WalkState {
+enum \2 {
+
 	IDLE,
 	STANDING_UP,
 	BALANCING,

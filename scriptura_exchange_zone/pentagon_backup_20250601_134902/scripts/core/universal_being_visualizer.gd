@@ -4,9 +4,8 @@
 # PURPOSE: The Universal Being that can become anything - now with perfect visualization!
 # CREATED: 2025-05-28 - Your dream visualization realized
 # ==================================================
-
 extends UniversalBeingBase
-class_name UniversalBeingVisualizer
+# DISABLED DUPLICATE: class_name UniversalBeingVisualizer_universa
 
 # Visual Universal Being with star sprite and clickable area
 signal clicked()
@@ -156,19 +155,19 @@ func _setup_transformation_system() -> void:
 func _register_with_systems() -> void:
 	"""Register with all game systems"""
 	# Register with Universal Object Manager
-	var uom = get_node_or_null("/root/UniversalObjectManager")
+	var uom = get_node_or_null("root/UniversalObjectManager")
 	if uom:
 		set_meta("uuid", uuid)
 		set_meta("is_universal_being", true)
 		set_meta("object_type", "universal_being")
 	
 	# Register with Floodgate
-	var floodgate = get_node_or_null("/root/FloodgateController")
+	var floodgate = get_node_or_null("root/FloodgateController")
 	if floodgate:
 		floodgate.second_dimensional_magic(0, name, self)
 	
 	# Register with Inspection Bridge
-	var bridge = get_node_or_null("/root/UniversalInspectionBridge")
+	var bridge = get_node_or_null("root/UniversalInspectionBridge")
 	if not bridge:
 		bridge = get_tree().get_first_node_in_group("inspection_bridge")
 	if bridge and bridge.has_method("make_object_inspectable"):
@@ -193,7 +192,7 @@ func _on_clicked() -> void:
 	_print("⭐ I have been clicked! I can transform into anything!")
 	
 	# Send click feedback to console
-	var console = get_node_or_null("/root/ConsoleManager")
+	var console = get_node_or_null("root/ConsoleManager")
 	if console and console.has_method("_print_to_console"):
 		console._print_to_console("⭐ CLICKED: Universal Being (" + form + ")")
 		console._print_to_console("  Position: " + str(position))
@@ -375,7 +374,7 @@ func _print(message: String) -> void:
 
 func register_console_commands() -> void:
 	"""Register commands for interacting with this being"""
-	var console = get_node_or_null("/root/ConsoleManager")
+	var console = get_node_or_null("root/ConsoleManager")
 	if console and console.has_method("add_command"):
 		console.add_command("being_transform", _cmd_transform, "Transform Universal Being into [form]")
 		console.add_command("being_status", _cmd_status, "Show Universal Being status")

@@ -56,6 +56,7 @@ func _ready() -> void:
 	setup_input_handlers()
 	connect_to_akashic_records()
 	print("🎮 Game State Socket System: Active")
+}
 
 func setup_state_sockets() -> void:
 	"""Initialize game-level sockets like Universal Being sockets"""
@@ -66,7 +67,7 @@ func setup_state_sockets() -> void:
 		"current": InputState.NORMAL,
 		"handlers": [],
 		"locked": false
-	}
+}
 	
 	# Console State Socket
 	state_sockets["console_state"] = {
@@ -74,15 +75,15 @@ func setup_state_sockets() -> void:
 		"active": false,
 		"input_buffer": "",
 		"focus_locked": false
-	}
+}
 	
 	# AI Communication Socket
 	state_sockets["ai_comm"] = {
 		"type": "ai_communication",
 		"gemma_active": false,
 		"chat_mode": false,
-		"shared_context": {}
-	}
+		"shared_context": {
+}
 	
 	# Cursor Control Socket
 	state_sockets["cursor_control"] = {
@@ -90,7 +91,7 @@ func setup_state_sockets() -> void:
 		"state": CursorState.FREE,
 		"position": Vector2.ZERO,
 		"target": null
-	}
+}
 	
 	# Shared Data Socket (AI + Human access)
 	state_sockets["shared_data"] = {
@@ -98,9 +99,10 @@ func setup_state_sockets() -> void:
 		"human_view": {},
 		"ai_view": {},
 		"sync_active": true
-	}
+}
 	
 	print("🔌 Game State Sockets: 5 sockets initialized")
+}
 
 func setup_input_handlers() -> void:
 	"""Setup input handlers for different states"""
@@ -244,6 +246,7 @@ func change_state(new_state: InputState) -> void:
 	state_changed.emit(old_state, new_state)
 	
 	print("🎮 State: %s → %s" % [InputState.keys()[old_state], InputState.keys()[new_state]])
+}
 
 func activate_console() -> void:
 	"""Activate console and lock other inputs"""
@@ -354,6 +357,7 @@ func perform_interaction_at_cursor() -> void:
 			clicked_object.on_interact()
 			print("🎯 Interacted with: %s" % clicked_object.name)
 
+
 func update_inspection_target() -> void:
 	"""Update what we're inspecting in inspect mode"""
 	# Similar to interaction but for inspection
@@ -386,14 +390,15 @@ func send_message_to_gemma(message: String) -> void:
 		gemma_reference.receive_player_message(message)
 		print("📨 Sent to Gemma: %s" % message)
 
+
 func get_shared_akashic_data() -> Dictionary:
 	"""Get Akashic Records data that both AI and human can access"""
 	if shared_akashic_access:
-		return shared_akashic_access.get_all_data() if shared_akashic_access.has_method("get_all_data") else {}
-	return {}
+		return shared_akashic_access.get_all_data() if shared_akashic_access.has_method("get_all_data") else {
+	return {
 
 func update_shared_visual_data(key: String, value: Variant) -> void:
-	"""Update shared visual data for AI-Human cooperation"""
+	"""Update shared visual data for AI-Human cooperation"""}
 	shared_visual_data[key] = value
 	state_sockets["shared_data"]["human_view"][key] = value
 	state_sockets["shared_data"]["ai_view"][key] = value
@@ -413,7 +418,7 @@ func ai_get_game_state() -> Dictionary:
 		"ai_chat_active": ai_chat_active,
 		"state_sockets": state_sockets,
 		"shared_data": shared_visual_data
-	}
+}
 
 func ai_can_access_akashic() -> bool:
 	"""Check if AI can access Akashic Records"""

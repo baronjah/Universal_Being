@@ -129,20 +129,20 @@ func connect_to_systems():
 	word_dream_storage = get_node_or_null("/root/WordDreamStorage")
 	
 	if divine_word_processor:
-		divine_word_processor.connect("word_processed", self, "_on_word_processed")
+		divine_word_processor.connect(_on_word_processed)
 	
 	if turn_system:
-		turn_system.connect("turn_completed", self, "_on_turn_completed")
-		turn_system.connect("dimension_changed", self, "_on_dimension_changed")
+		turn_system.connect(_on_turn_completed)
+		turn_system.connect(_on_dimension_changed)
 	
 	if word_crimes_analysis:
-		word_crimes_analysis.connect("word_crime_detected", self, "_on_crime_detected")
-		word_crimes_analysis.connect("dangerous_pattern_detected", self, "_on_pattern_detected")
-		word_crimes_analysis.connect("judgment_issued", self, "_on_judgment_issued_external")
+		word_crimes_analysis.connect(_on_crime_detected)
+		word_crimes_analysis.connect(_on_pattern_detected)
+		word_crimes_analysis.connect(_on_judgment_issued_external)
 	
 	if word_comment_system:
-		word_comment_system.connect("comment_added", self, "_on_comment_added")
-		word_comment_system.connect("defense_registered", self, "_on_defense_registered")
+		word_comment_system.connect(_on_comment_added)
+		word_comment_system.connect(_on_defense_registered)
 
 func start_game(player_names):
 	if player_names.size() < min_players or player_names.size() > max_players:

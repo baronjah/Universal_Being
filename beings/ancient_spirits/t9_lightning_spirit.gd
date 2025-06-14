@@ -213,6 +213,7 @@ func _on_lightning_pulse():
 	var tween = create_tween()
 	tween.tween_property(message_display, "modulate:a", 1.5, 0.1)
 	tween.tween_property(message_display, "modulate:a", 0.9, 0.3)
+
 	
 	# Random spiritual utterance
 	if randf() < 0.3:  # 30% chance

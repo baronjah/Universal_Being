@@ -90,7 +90,7 @@ func _init():
 
 func _ready():
     # Connect to other systems
-    yield(get_tree(), "idle_frame")
+    await(get_tree(), "idle_frame")
     _connect_to_dependencies()
     
     # Set initial component statuses
@@ -104,22 +104,22 @@ func _ready():
 func _connect_to_dependencies():
     # Find and connect to NetworkValidation
     if get_node_or_null("/root/NetworkValidation") != null:
-        network_validation = get_node("/root/NetworkValidation")
+        network_validation = get_node("\1") as Node
         print("[SelfCheckUpgrade] Connected to Network Validation")
     
     # Find and connect to MouseAutomation
     if get_node_or_null("/root/MouseAutomation") != null:
-        mouse_automation = get_node("/root/MouseAutomation")
+        mouse_automation = get_node("\1") as Node
         print("[SelfCheckUpgrade] Connected to Mouse Automation")
     
     # Find and connect to TerminalGodotBridge
     if get_node_or_null("/root/TerminalGodotBridge") != null:
-        terminal_bridge = get_node("/root/TerminalGodotBridge")
+        terminal_bridge = get_node("\1") as Node
         print("[SelfCheckUpgrade] Connected to Terminal Bridge")
     
     # Find and connect to SegmentProcessor
     if get_node_or_null("/root/SegmentProcessor") != null:
-        segment_processor = get_node("/root/SegmentProcessor")
+        segment_processor = get_node("\1") as Node
         print("[SelfCheckUpgrade] Connected to Segment Processor")
 
 # =====================
@@ -238,7 +238,7 @@ func _check_all_components():
 
 func _schedule_self_check():
     # Schedule next self-check
-    yield(get_tree().create_timer(check_interval), "timeout")
+    await(get_tree().create_timer(check_interval), "timeout")
     
     # Perform the self-check
     var check_result = perform_self_check()

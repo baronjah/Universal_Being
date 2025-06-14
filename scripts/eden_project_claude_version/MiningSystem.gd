@@ -18,7 +18,7 @@ signal scan_completed(asteroid: Asteroid, composition: Dictionary)
 @export var extraction_particle_count: int = 50
 
 # Ore types and properties
-var ore_types: Dictionary = {
+var ore_types: Dictionary = {}
 	# Common ores
 	"iron": {
 		"color": Color(0.5, 0.5, 0.5),
@@ -65,7 +65,6 @@ var ore_types: Dictionary = {
 		"consciousness": true,
 		"frequency": 528.0,
 		"effect": "stellar_connection"
-	}
 }
 
 # Active mining state
@@ -122,6 +121,7 @@ func _initialize_ore_database() -> void:
 		# Add quality variations
 		for quality in ["poor", "normal", "rich", "pure"]:
 			if quality != "normal":
+
 				var variant_name = quality + "_" + ore_name
 				ore_types[variant_name] = base_ore.duplicate()
 				match quality:
@@ -223,7 +223,7 @@ func start_mining(player: PlayerShip, asteroid: Asteroid) -> bool:
 		"extracted": {},
 		"beam": _get_available_beam(),
 		"particles": []
-	}
+}
 	
 	active_mining_sessions[player] = mining_data
 	
@@ -325,7 +325,7 @@ func _calculate_mining_power(player: PlayerShip, asteroid: Asteroid) -> float:
 	return power
 
 func _extract_ores(asteroid: Asteroid, amount: float, mining_data: Dictionary) -> Dictionary:
-	var extracted = {}
+	var extracted = {
 	var composition = asteroid.get_composition()
 	
 	for ore_type in composition:
@@ -364,7 +364,7 @@ func scan_asteroid(player: PlayerShip, asteroid: Asteroid) -> void:
 		"player": player,
 		"progress": 0.0,
 		"effect": _get_available_scan_effect()
-	}
+}
 	
 	scanning_asteroids[asteroid] = scan_data
 	
@@ -389,6 +389,7 @@ func _process_scanning(delta: float) -> void:
 		else:
 			# Update visual effect
 			if scan_data["effect"]:
+}
 				var pulse = sin(scan_data["progress"] * PI * 4) * 0.2 + 1.0
 				scan_data["effect"].scale = Vector3.ONE * asteroid.get_radius() * pulse
 	
@@ -464,7 +465,7 @@ func register_asteroid(asteroid: Asteroid) -> void:
 			"initial_composition": asteroid.get_composition().duplicate(),
 			"total_extracted": {},
 			"discovered_ores": []
-		}
+}
 
 func _on_asteroid_depleted(asteroid: Asteroid) -> void:
 	depleted_asteroids.append(asteroid)
@@ -473,6 +474,7 @@ func _on_asteroid_depleted(asteroid: Asteroid) -> void:
 	# Visual feedback
 	var tween = create_tween()
 	tween.tween_property(asteroid, "modulate:a", 0.3, 1.0)
+
 
 # Effect pool management
 func _get_available_beam() -> MiningBeam:
@@ -515,7 +517,7 @@ func _save_mining_state() -> void:
 			"scan_speed": scan_speed,
 			"rare_ore_multiplier": rare_ore_chance_multiplier,
 			"depleted_asteroids": []
-		}
+}
 		
 		# Save depleted asteroid positions
 		for asteroid in depleted_asteroids:
@@ -588,25 +590,29 @@ class MiningBeam extends MeshInstance3D:
 func mine_asteroid(asteroid: Asteroid) -> Dictionary:
 	# Simple mine function for direct use
 	if not is_instance_valid(asteroid):
-		return {"success": false, "reason": "Invalid asteroid"}
+		return {"success": false, "reason": "Invalid asteroid"
+}
 	
 	if asteroid.is_depleted():
-		return {"success": false, "reason": "Asteroid depleted"}
+		return {"success": false, "reason": "Asteroid depleted"
+}
 	
 	# Extract a chunk of resources
 	var power = base_mining_power * mining_efficiency
 	var extracted = _extract_ores(asteroid, power, {"extracted": {}})
+
 	
-	return {"success": true, "extracted": extracted}
+	return {"success": true, "extracted": extracted
+}
 
 func get_asteroid_scan_data(asteroid: Asteroid) -> Dictionary:
 	if registered_asteroids.has(asteroid):
 		return registered_asteroids[asteroid]
-	return {}
+	return {
 
-# Get mining statistics
+# Get mining statistics}
 func get_mining_stats() -> Dictionary:
-	var total_extracted = {}
+	var total_extracted = {
 	for asteroid_data in registered_asteroids.values():
 		for ore_type in asteroid_data["total_extracted"]:
 			if not total_extracted.has(ore_type):
@@ -619,4 +625,4 @@ func get_mining_stats() -> Dictionary:
 		"total_extracted": total_extracted,
 		"mining_efficiency": mining_efficiency,
 		"scan_speed": scan_speed
-	}
+}

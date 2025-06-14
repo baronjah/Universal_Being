@@ -45,7 +45,7 @@ func _ready():
     auto_save_timer = Timer.new()
     auto_save_timer.wait_time = auto_save_interval
     auto_save_timer.one_shot = false
-    auto_save_timer.connect("timeout", self, "_on_auto_save_timer_timeout")
+    auto_save_timer.connect(_on_auto_save_timer_timeout)
     add_child(auto_save_timer)
     
     # Initialize core systems
@@ -89,7 +89,7 @@ func initialize_nvidia_ai():
         return
     
     # Connect signals
-    nvidia_bridge.connect("ai_process_complete", self, "_on_ai_process_complete")
+    nvidia_bridge.connect(_on_ai_process_complete)
     
     # Initialize
     var success = nvidia_bridge.initialize_local_models("res://ai_models/")
@@ -109,7 +109,7 @@ func initialize_ocr_system():
         return
     
     # Connect signals
-    ocr_processor.connect("text_recognized", self, "_on_text_recognized")
+    ocr_processor.connect(_on_text_recognized)
     
     # Set AI bridge connection
     if nvidia_bridge != null:
@@ -130,8 +130,8 @@ func initialize_neural_network():
         return
     
     # Connect signals
-    neural_evolution.connect("evolution_step", self, "_on_network_evolved")
-    neural_evolution.connect("pattern_detected", self, "_on_pattern_detected")
+    neural_evolution.connect(_on_network_evolved)
+    neural_evolution.connect(_on_pattern_detected)
     
     # Try to load previous network state
     var loaded = neural_evolution.load_network_state("user://network_state.nn")
@@ -153,8 +153,8 @@ func initialize_api_connections():
         return
     
     # Connect signals
-    api_orchestrator.connect("api_response", self, "_on_api_response")
-    api_orchestrator.connect("api_error", self, "_on_api_error")
+    api_orchestrator.connect(_on_api_response)
+    api_orchestrator.connect(_on_api_error)
     
     # Initialize API connections
     var apis = [
@@ -180,10 +180,10 @@ func initialize_turn_system():
         return
     
     # Connect signals
-    turn_system.connect("turn_started", self, "_on_turn_started")
-    turn_system.connect("turn_completed", self, "_on_turn_completed")
-    turn_system.connect("cycle_completed", self, "_on_cycle_completed")
-    turn_system.connect("break_time_started", self, "_on_break_time_started")
+    turn_system.connect(_on_turn_started)
+    turn_system.connect(_on_turn_completed)
+    turn_system.connect(_on_cycle_completed)
+    turn_system.connect(_on_break_time_started)
     
     # Configure turn system
     turn_system.set_max_turns(turns_per_cycle)
@@ -247,7 +247,7 @@ func start_day_challenge():
 
 func set_daily_goal():
     # Generate a daily goal or load existing one
-    if daily_goal.empty():
+    if daily_goal.is_empty():
         if offline_mode:
             # Generate locally
             var goals = [

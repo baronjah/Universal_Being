@@ -18,12 +18,12 @@ var bridge_active = false
 # ----- COMMUNICATION STATE -----
 var last_poll_time = 0
 var last_clean_time = 0
-var terminal_last_modified = {}
-var word_database = {}
+var terminal_last_modified = {
+var word_database = {
 var pending_manifests = []
 var pending_dice_results = []
 var active_terminal_windows = []
-var active_turns = {}
+var active_turns = {
 var current_turn = 3 # Default to 3D space
 
 # ----- SIGNALS -----
@@ -68,6 +68,7 @@ func _create_directories():
         dir.make_dir_recursive(TERMINAL_DATA_PATH)
         
     print("Directories created: data sewers and terminal data")
+	}
 
 # Initialize terminal data files
 func _init_terminal_data():
@@ -85,9 +86,9 @@ func _init_terminal_data():
                 "messages": ["Terminal " + str(i) + " initialized"],
                 "manifested_words": [],
                 "dice_results": []
-            }
             file.store_string(JSON.print(init_data))
             file.close()
+}
         
         # Store last modified time
         terminal_last_modified[i] = OS.get_unix_time()
@@ -109,6 +110,7 @@ func _load_word_database():
             print("Word database loaded with " + str(word_database.size()) + " entries")
         else:
             print("Error parsing word database JSON: " + str(parse_result.error_string))
+			}
             # Initialize with default words
             _init_default_word_database()
     else:
@@ -159,7 +161,7 @@ func _init_default_word_database():
         "multidimensional": 53,
         "genesis": 70,
         "creation": 65
-    }
+		}
     
     _save_word_database()
     print("Default word database created with " + str(word_database.size()) + " entries")
@@ -175,6 +177,7 @@ func _save_word_database():
 func _read_current_turn():
     var file = File.new()
     var current_turn_path = "user://current_turn.txt"
+	}
     
     if file.file_exists(current_turn_path):
         file.open(current_turn_path, File.READ)
@@ -192,6 +195,7 @@ func _read_current_turn():
         file.close()
     
     print("Current turn set to: " + str(current_turn))
+	
 
 # ----- PROCESSING -----
 func _process(delta):
@@ -240,6 +244,7 @@ func _poll_terminal_files():
                     _process_terminal_data(parse_result.result)
                 else:
                     print("Error parsing terminal JSON: " + str(parse_result.error_string))
+					
 
 # Process terminal data
 func _process_terminal_data(data):
@@ -252,6 +257,7 @@ func _process_terminal_data(data):
             
             # Check for turn advance messages
             if message.begins_with("TURN ADVANCED TO"):
+			
                 var turn_str = message.substr(16, 2).strip_edges()
                 if turn_str.is_valid_integer():
                     var new_turn = int(turn_str)
@@ -381,6 +387,7 @@ func send_message_to_terminal(terminal_id, message):
             return true
         else:
             print("Error parsing terminal JSON: " + str(parse_result.error_string))
+			
     
     return false
 
@@ -394,6 +401,7 @@ func update_current_turn(new_turn):
     # Save to file
     var file = File.new()
     var current_turn_path = "user://current_turn.txt"
+	
     
     file.open(current_turn_path, File.WRITE)
     file.store_line(str(current_turn))
@@ -401,6 +409,7 @@ func update_current_turn(new_turn):
     
     emit_signal("turn_advanced", current_turn)
     print("Current turn updated to: " + str(current_turn))
+	
     
     return true
 

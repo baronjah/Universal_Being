@@ -2,7 +2,7 @@
 # From text, all forms emerge - 2D visualizations, 3D manifestations
 # Perfect LOD: Show only what needs to be seen
 extends UniversalBeingBase
-class_name AkashicRecordsDatabase
+class_name AkashicRecordsDatabase_akashicr
 
 # The eternal records - pure text data
 var records: Dictionary = {

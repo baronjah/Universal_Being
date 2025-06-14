@@ -1,6 +1,6 @@
 extends Node
 # Using a different class name to avoid conflicts
-class_name CoreEntityManager
+class_name CoreEntityManager_entitymanager_entityma
 
 # Singleton instance
 static var _instance = null
@@ -50,7 +50,7 @@ func initialize() -> void:
 # Find references to required systems
 func _find_system_references() -> void:
 	# Load UniversalEntity class if needed
-	var UniversalEntityClass = load("res://code/gdscript/scripts/akashic_records/universal_entity.gd")
+	var UniversalEntityClass = load("res://scripts/gdscript/scripts/akashic_records/universal_entity.gd")
 	if not UniversalEntityClass:
 		push_error("Failed to load UniversalEntity class")
 
@@ -75,7 +75,7 @@ func _connect_signals() -> void:
 func _initialize_entity_system() -> void:
 	# Create some basic entities for testing
 	if debug_mode:
-		var UniversalEntityClass = load("res://code/gdscript/scripts/akashic_records/universal_entity.gd")
+		var UniversalEntityClass = load("res://scripts/gdscript/scripts/akashic_records/universal_entity.gd")
 		if not UniversalEntityClass:
 			push_error("Failed to load UniversalEntity class in _initialize_entity_system")
 
@@ -137,7 +137,7 @@ func create_entity(entity_type: String = "primordial", position: Vector3 = Vecto
 	var entity_id = _generate_entity_id(entity_type)
 
 	# Load UniversalEntity class if needed
-	var UniversalEntityClass = load("res://code/gdscript/scripts/akashic_records/universal_entity.gd")
+	var UniversalEntityClass = load("res://scripts/gdscript/scripts/akashic_records/universal_entity.gd")
 	if not UniversalEntityClass:
 		push_error("Failed to load UniversalEntity class in create_entity")
 

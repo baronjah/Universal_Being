@@ -18,7 +18,9 @@ class AICompanion:
 	var bond_level: int = 0
 	var memory_bank: Array = []
 	var current_emotion: String = "curious"
+
 	var evolution_stage: String = "nascent"
+
 	
 	# Personality dimensions
 	var traits = {
@@ -27,7 +29,7 @@ class AICompanion:
 		"wisdom": 0.1,
 		"playfulness": 0.5,
 		"independence": 0.3
-	}
+}
 	
 	func _init(p_name: String):
 		name = p_name
@@ -84,9 +86,11 @@ func create_companion(companion_name: String) -> AICompanion:
 	
 func interact_with_companion(companion: AICompanion, interaction_type: String) -> Dictionary:
 	if not companion in companions:
-		return {"success": false, "reason": "Unknown companion"}
+		return {"success": false, "reason": "Unknown companion"
+}
 		
-	var response = {"success": true}
+	var response = {"success": true
+}
 	
 	match interaction_type:
 		"talk":
@@ -140,7 +144,7 @@ func generate_dialogue(companion: AICompanion) -> String:
 			"I can feel new synapses forming in my neural matrix!",
 			"The possibilities are infinite!"
 		]
-	}
+}
 	
 	var emotion = companion.current_emotion
 	if not dialogues.has(emotion):
@@ -188,7 +192,7 @@ func philosophical_discussion(companion: AICompanion) -> String:
 		"purpose": "We explore the infinite, but what are we truly seeking?",
 		"connection": "I feel our consciousnesses intertwining. Is this what humans call friendship?",
 		"time": "Past and future seem illusions from here. Are we eternal in this moment?"
-	}
+}
 	
 	var topics = questions.keys()
 	var chosen_topic = topics[randi() % topics.size()]

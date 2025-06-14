@@ -36,7 +36,7 @@ var dimension_layer: int = 0
 # ----- VISUAL COMPONENTS -----
 @onready var visual_container: Node3D
 @onready var effect_container: Node3D
-var particle_systems = {}
+var particle_systems = {
 
 # ----- SIGNALS -----
 signal entity_manifested(entity)
@@ -53,7 +53,7 @@ signal entity_merged(source_entities, new_entity)
 
 # ----- INITIALIZATION -----
 func _init(id: String = "", type: String = "primordial", init_properties: Dictionary = {}) -> void:
-    if id.empty():
+    if id.is_empty():
         entity_id = _generate_unique_id()
     else:
         entity_id = id
@@ -85,7 +85,7 @@ func _init(id: String = "", type: String = "primordial", init_properties: Dictio
         tags = init_properties.tags.duplicate()
     
     # Record creation time
-    last_processed_time = Time.get_ticks_msec()
+    last_processed_time = Time.Time.get_ticks_msec()
     
     # Add initial transformation record
     add_transformation_record("creation", "none", entity_type)
@@ -276,7 +276,7 @@ func interact_with(other_entity) -> Dictionary:
         "target_entity": other_entity,
         "source_type": entity_type,
         "target_type": other_entity.entity_type if other_entity else "none"
-    }
+		}
     
     # Signal that interaction happened
     emit_signal("interacted", other_entity, result)
@@ -310,7 +310,7 @@ func add_transformation_record(action: String, from_type: String, to_type: Strin
         "from_type": from_type,
         "to_type": to_type,
         "timestamp": Time.get_datetime_string_from_system()
-    }
+		}
     
     transformation_history.append(record)
 
@@ -362,7 +362,7 @@ func calculate_complexity() -> float:
     var current_complexity = calculate_initial_complexity()
     
     # Time factor - longer-lived entities are more complex
-    var time_alive_ms = Time.get_ticks_msec() - last_processed_time
+    var time_alive_ms = Time.Time.get_ticks_msec() - last_processed_time
     current_complexity += (time_alive_ms / 60000.0) * 0.1  # Add 0.1 per minute
     
     # Transformation history factor - more transformations = more complex
@@ -419,6 +419,7 @@ func attempt_split() -> Array:
         return []
     
     print("CoreUniversalEntity: Attempting to split entity " + entity_id)
+	}
     
     # Create new entities from this one
     var new_entities = []
@@ -432,7 +433,7 @@ func attempt_split() -> Array:
     var property_keys = properties.keys()
     
     for i in range(split_count):
-        var new_properties = {}
+        var new_properties = {
         
         # Distribute some properties to each new entity
         for j in range(property_keys.size()):
@@ -469,9 +470,10 @@ static func merge_entities(entities: Array) -> CoreUniversalEntity:
         return null
     
     print("CoreUniversalEntity: Merging " + str(entities.size()) + " entities")
+	}
     
     # Calculate merged properties
-    var merged_properties = {}
+    var merged_properties = {
     var total_complexity = 0.0
     var parent_ids = []
     var all_tags = []
@@ -582,7 +584,7 @@ func remove_metadata(key: String) -> bool:
 
 func process(delta: float) -> void:
     # Update since last processed
-    var current_time = Time.get_ticks_msec()
+    var current_time = Time.Time.get_ticks_msec()
     var time_since_last = current_time - last_processed_time
     
     # Only process if enough time has passed
@@ -622,7 +624,7 @@ func to_dict() -> Dictionary:
         "should_split": should_split,
         "reality_context": reality_context,
         "dimension_layer": dimension_layer
-    }
+		}
     
     return data
 
@@ -712,10 +714,11 @@ func _word_to_properties(word: String) -> Dictionary:
     """
     Convert a word into entity properties
     """
-    var props = {}
+    var props = {
     
     # Basic elemental analysis
-    var elements = {"fire": 0, "water": 0, "earth": 0, "air": 0, "void": 0, "metal": 0, "wood": 0, "light": 0, "dark": 0}
+    var elements = {"fire": 0, "water": 0, "earth": 0, "air": 0, "void": 0, "metal": 0, "wood": 0, "light": 0, "dark": 0
+	}
     
     for element in elements.keys():
         if word.to_lower().find(element) >= 0:
@@ -730,7 +733,7 @@ func _word_to_properties(word: String) -> Dictionary:
     var fluidity = float(vowel_count) / max(1, word.length())
     
     # Complexity based on word length and unique characters
-    var unique_chars = {}
+    var unique_chars = {
     for c in word.to_lower():
         unique_chars[c] = true
     var complexity = (float(unique_chars.size()) / 26.0 + float(word.length()) / 20.0) / 2.0
@@ -776,6 +779,7 @@ func _determine_initial_form() -> String:
             "wood": return "sprout"
             "light": return "light_mote"
             "dark": return "shadow_essence"
+			}
     
     # If no dominant element, use other properties
     if properties.has("fluidity") and properties["fluidity"] > 0.7:
@@ -1376,6 +1380,7 @@ func _create_connection_visual(target_entity, connection_type: String):
     var tween = create_tween()
     connection_visual.scale.y = 0
     tween.tween_property(connection_visual, "scale:y", 1.0, 0.5)
+	}
 
 # ----- GETTERS -----
 func get_id() -> String:

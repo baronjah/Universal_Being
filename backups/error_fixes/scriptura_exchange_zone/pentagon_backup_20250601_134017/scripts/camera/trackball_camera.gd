@@ -440,7 +440,7 @@ func apply_soft_pitch_constraint(on_transform: Transform3D) -> Transform3D:
 
 		add_inertia((
 			limit_will * Vector2.UP  # direction
-			* PITCH_SOFT_LIMIT_NORMALIZATION  # role: yield sane defaults
+			* PITCH_SOFT_LIMIT_NORMALIZATION  # role: await sane defaults
 			* resistance_strength  # grows as the trespassing intensifies
 			* self.pitch_soft_limit_strength  # user-defined (exported) coeff
 		))

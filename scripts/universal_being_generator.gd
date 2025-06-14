@@ -34,7 +34,6 @@ const COMMANDS = {
 		"description": "Test a Universal Being",
 		"usage": "test <name>",
 		"example": "test Player"
-	}
 }
 
 # ===== INITIALIZATION =====
@@ -86,6 +85,7 @@ func print_help() -> void:
 		print("\n  %s - %s" % [cmd, info.description])
 		print("  Usage: %s" % info.usage)
 		print("  Example: %s" % info.example)
+}
 
 func print_usage(command: String) -> void:
 	if COMMANDS.has(command):
@@ -95,6 +95,7 @@ func print_usage(command: String) -> void:
 	else:
 		print("Unknown command: %s" % command)
 
+
 # ===== BEING GENERATION =====
 
 func create_new_being(args: Array) -> void:
@@ -102,16 +103,23 @@ func create_new_being(args: Array) -> void:
 	var being_name: String = args[0]
 	var being_type: String = args[1]
 	var purpose: String = args[2] if args.size() > 2 else ""
+
 	var components: String = args[3] if args.size() > 3 else ""
+
 	var scenes: String = args[4] if args.size() > 4 else ""
+
 	
 	# Generate class name and file name
 	var class_name_str: String = being_name.capitalize() + "UniversalBeing"
+
 	var file_name_str: String = being_name.to_snake_case() + "_universal_being.gd"
+
 	var file_path_str: String = "beings/" + file_name_str
+
 	
 	# Load template
 	var template_path = "res://cli/templates/universal_being_template.gd"
+
 	var template_file = FileAccess.open(template_path, FileAccess.READ)
 	if not template_file:
 		push_error("Failed to load template file: " + template_path)
@@ -136,7 +144,7 @@ func create_new_being(args: Array) -> void:
 		"# __CLEANUP_LOGIC__": "# Add cleanup logic here",
 		"# __METHODS__": "# Add your methods here",
 		"# __AI_METHODS__": "# Add AI methods here"
-	}
+}
 	
 	# Handle capabilities based on components
 	var capabilities = "\"basic_being\""
@@ -167,14 +175,17 @@ func create_new_being(args: Array) -> void:
 	if not scenes.is_empty():
 		print("Scenes: " + scenes)
 
+
 # ===== COMPONENT GENERATION =====
 
 func create_new_component(args: Array) -> void:
 	pass
 	var component_name: String = args[0]
 	var description: String = args[1] if args.size() > 1 else ""
+
 	
 	ComponentTemplateCreator.create_component_template("res://components/" + component_name + ".ub.zip", component_name)
+
 
 # ===== LISTING =====
 
@@ -191,6 +202,7 @@ func list_items(args: Array) -> void:
 			print("Unknown list type: %s" % type)
 			print("Available types: beings, components")
 
+
 func list_beings() -> void:
 	pass
 	var dir = DirAccess.open("res://beings")
@@ -204,6 +216,7 @@ func list_beings() -> void:
 	print("\nAvailable Universal Beings:")
 	while file_name != "":
 		if file_name.ends_with("_universal_being.gd"):
+
 			var being_name = file_name.replace("_universal_being.gd", "").replace("_", " ").capitalize()
 			print("  - %s" % being_name)
 		file_name = dir.get_next()
@@ -221,6 +234,7 @@ func list_components() -> void:
 	print("\nAvailable Components:")
 	while file_name != "":
 		if file_name.ends_with(".ub.zip"):
+
 			var component_name = file_name.replace(".ub.zip", "").replace("_", " ").capitalize()
 			print("  - %s" % component_name)
 		file_name = dir.get_next()
@@ -231,12 +245,14 @@ func test_being(being_name: String) -> void:
 	pass
 	var file_name = being_name.to_snake_case() + "_universal_being.gd"
 	var file_path = "res://beings/" + file_name
+
 	
 	if not FileAccess.file_exists(file_path):
 		push_error("Being not found: %s" % being_name)
 		return
 	
 	print("Testing being: %s" % being_name)
+
 	
 	# Load and instantiate being
 	var script = load(file_path)
@@ -267,6 +283,7 @@ func test_being(being_name: String) -> void:
 	print("    Name: %s" % ai_interface.get("being_info", {}).get("name", "unknown"))
 	print("    Consciousness: %d" % ai_interface.get("being_info", {}).get("consciousness", 0))
 	print("    Capabilities: %s" % str(ai_interface.get("capabilities", [])))
+
 	
 	print("\nTests completed!")
 
@@ -282,7 +299,7 @@ class ComponentTemplateCreator:
 			"author": "Universal Being Generator",
 			"created_at": Time.get_unix_time_from_system(),
 			"files": []
-		}
+}
 		
 		# Save manifest
 		var json = JSON.stringify(manifest, "  ")

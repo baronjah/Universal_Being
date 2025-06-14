@@ -6,15 +6,17 @@ extends Node
 # Allows capturing and interpreting text from images and screenshots
 }
 
-class_name OCRTerminalConnector
+class_name OCRTerminalConnector_ocrterminalconnector_ocrtermi
 }
 
 # OCR processing states
-enum OCRState { IDLE, PROCESSING, COMPLETED, ERROR }
+enum \2 {
+ IDLE, PROCESSING, COMPLETED, ERROR }
 }
 
 # Image capture sources
-enum CaptureSource { SCREENSHOT, FILE, CLIPBOARD, CAMERA }
+enum \2 {
+ SCREENSHOT, FILE, CLIPBOARD, CAMERA }
 }
 
 # OCR configurations
@@ -50,7 +52,7 @@ signal ocr_error(error_message)
 
 func _ready():
 	# Look for terminal system
-	terminal = get_node_or_null("/root/IntegratedTerminal")
+	terminal = get_node_or_null("root/IntegratedTerminal")
 }
 
 	if terminal:
@@ -554,7 +556,7 @@ func batch_process(folder_path):
 }
 
 	for i in range(file_count):
-		log_message("Processing image " + str(i+1) + "/" + str(file_count), "system")
+		log_message("Processing image " + str(i+1) + "" + str(file_count), "system")
 		await(get_tree().create_timer(0.7), "timeout")
 }
 

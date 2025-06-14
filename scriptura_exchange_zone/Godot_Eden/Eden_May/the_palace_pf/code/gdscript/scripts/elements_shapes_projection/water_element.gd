@@ -2,9 +2,9 @@
 # Claude Decipher: Water elements with fluid properties, surface tension, waves,
 # and interactions with other elements
 
-extends "res://code/gdscript/scripts/elements_shapes_projection/base_element.gd"
+extends "res://scripts/gdscript/scripts/elements_shapes_projection/base_element.gd"
 
-class_name WaterElement
+class_name WaterElement_waterelement_waterele
 
 # Water-specific properties
 var surface_tension: float = 0.8     # How strongly water points stick together

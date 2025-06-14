@@ -1,5 +1,5 @@
 extends Control
-class_name JSHEntityVisualizer
+class_name JSHEntityVisualizer_JSHEntityVisualizer_JSHEntit
 
 # System references
 var entity_manager: JSHEntityManager = null

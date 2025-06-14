@@ -4,9 +4,8 @@
 # PURPOSE: Monitor all scripts, detect issues, automatically fix problems
 # CREATED: 2025-05-28 - The dream of self-healing code
 # ==================================================
-
 extends UniversalBeingBase
-class_name SelfRepairSystem
+class_name SelfRepairSystem_selfrepa
 
 # Self-repair consciousness
 signal system_issue_detected(script_path: String, issue: String)
@@ -89,7 +88,7 @@ func _scan_directory(path: String, scripts: Array) -> void:
 	var file_name = dir.get_next()
 	
 	while file_name != "":
-		var full_path = path + "/" + file_name
+		var full_path = path + "" + file_name
 		
 		if dir.current_is_dir() and not file_name.begins_with("."):
 			_scan_directory(full_path, scripts)
@@ -146,7 +145,7 @@ func _analyze_script_content(script_path: String) -> void:
 		"functions": content.count("func "),
 		"variables": content.count("var "),
 		"signals": content.count("signal "),
-		"exports": content.count("@export"),
+		"exports": content.count("@@@export"),
 		"todos": content.count("TODO"),
 		"fixmes": content.count("FIXME"),
 		"warnings": _detect_potential_issues(content)
@@ -486,7 +485,7 @@ func get_script_variables(script_path: String) -> Dictionary:
 
 func register_console_commands() -> void:
 	"""Register repair system commands"""
-	var console = get_node_or_null("/root/ConsoleManager")
+	var console = get_node_or_null("root/ConsoleManager")
 	if console and console.has_method("add_command"):
 		console.add_command("repair_scan", _cmd_scan, "Scan all scripts for issues")
 		console.add_command("repair_status", _cmd_status, "Show repair system status")
@@ -525,7 +524,7 @@ func request_scene_closure() -> void:
 	_update_csv_data()
 	
 	# Signal all systems to prepare for shutdown
-	var console = get_node_or_null("/root/ConsoleManager")
+	var console = get_node_or_null("root/ConsoleManager")
 	if console and console.has_method("_print_to_console"):
 		console._print_to_console("🛑 Scene closing in 3 seconds...")
 		console._print_to_console("📊 Final system state saved")

@@ -75,7 +75,7 @@ func _ready():
     # Setup shift timer
     shift_timer = Timer.new()
     shift_timer.wait_time = memory_shift_frequency
-    shift_timer.connect("timeout", self, "_on_shift_timer")
+    shift_timer.connect(_on_shift_timer)
     add_child(shift_timer)
     
     # Start the shift process if auto-shift is enabled

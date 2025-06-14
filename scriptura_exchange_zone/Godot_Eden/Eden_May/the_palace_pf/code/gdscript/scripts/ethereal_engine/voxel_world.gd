@@ -1,5 +1,5 @@
 # voxel_world.gd
-extends Spatial
+extends \2
 
 const CHUNK_SIZE = 16
 const BLOCK_SIZE = 1.0

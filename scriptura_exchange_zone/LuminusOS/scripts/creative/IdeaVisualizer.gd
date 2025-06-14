@@ -1,5 +1,5 @@
 extends Node3D
-class_name IdeaVisualizer
+class_name IdeaVisualizer_IdeaVisualizer_IdeaVisu
 
 # References to important nodes
 var idea_container: Node3D
@@ -39,13 +39,13 @@ func _ready():
 	_setup_scene()
 	
 	# Look for OpenAI Gateway and connect to it if possible
-	var openai_gateway = get_node_or_null("/root/OpenAIGateway")
+	var openai_gateway = get_node_or_null("root/OpenAIGateway")
 	if openai_gateway:
 		openai_gateway.word_transformed.connect(_on_word_transformed)
 		openai_gateway.world_description_created.connect(_on_world_description_created)
 	
 	# Connect to memory system if available
-	var memory_manager = get_node_or_null("/root/MemoryEvolutionManager")
+	var memory_manager = get_node_or_null("root/MemoryEvolutionManager")
 	if memory_manager:
 		memory_manager.word_caught.connect(_on_word_caught)
 

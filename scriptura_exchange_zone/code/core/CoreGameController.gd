@@ -1,5 +1,5 @@
-class_name CoreGameController
-extends Node
+class_name CoreGameController_CoreGameController_CoreGame
+extends \2
 
 # Component references
 var word_manifestor = null
@@ -111,7 +111,7 @@ func _initialize_map_system() -> bool:
     # Add minimal required methods
     map_system.set_script(GDScript.new())
     map_system.get_script().source_code = """
-    extends Node
+extends \2
     
     func add_entity_to_world(entity, position = Vector3.ZERO):
         add_child(entity)

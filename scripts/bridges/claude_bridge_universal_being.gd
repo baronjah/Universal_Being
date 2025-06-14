@@ -21,16 +21,19 @@ func pentagon_init() -> void:
 	metadata.gemma_can_modify = true
 	print("🌟 %s: Pentagon Init Complete" % being_name)
 
+
 func pentagon_ready() -> void:
 	super.pentagon_ready()
 	
 	# Load AI communication components
 	add_component("res://components/network.ub.zip")
 	add_component("res://components/ai_communication.ub.zip")
+
 	
 	# Initialize Claude connection
 	_initialize_claude_connection()
 	print("🌟 %s: Pentagon Ready Complete" % being_name)
+
 
 func pentagon_process(delta: float) -> void:
 	super.pentagon_process(delta)
@@ -55,6 +58,7 @@ func _initialize_claude_connection() -> void:
 	is_connected = true
 	print("🌟 %s: Claude Bridge initialized and ready" % being_name)
 
+
 func _process_message_queue() -> void:
 	if _message_queue.is_empty() or not is_connected:
 		return
@@ -65,10 +69,12 @@ func _process_message_queue() -> void:
 func _send_to_claude(message: Dictionary) -> void:
 	# Enhanced Claude API communication
 	print("🌉 %s: Sending message to Claude: %s" % [being_name, message.content])
+
 	
 	# In a real implementation, this would make HTTP requests to Claude API
 	# For now, we'll simulate the communication
 	_response_buffer = "Claude response to: " + message.content
+
 	
 	# TODO: Implement actual HTTP request to Claude API
 	# var http_request = HTTPRequest.new()
@@ -90,8 +96,8 @@ func send_to_claude(content: String, context: Dictionary = {}) -> void:
 		"content": content,
 		"context": context,
 		"timestamp": Time.get_unix_time_from_system()
-	}
 	_message_queue.append(message)
+}
 
 func get_claude_response() -> String:
 	pass
@@ -115,8 +121,8 @@ func ai_interface() -> Dictionary:
 		"connected": is_connected,
 		"queue_size": _message_queue.size(),
 		"has_response": not _response_buffer.is_empty()
-	}
 	return base_interface
+}
 
 # Enhanced AI method handling
 func ai_invoke_method(method_name: String, args: Array = []) -> Variant:

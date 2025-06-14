@@ -18,6 +18,7 @@ var current_recording_name: String = ""
 # ===== MACRO DATA STRUCTURE =====
 # macro_data = {
 #   "name": "door_opening_sequence",
+}
 #   "description": "Opens doors with potato command",
 #   "commands": [
 #     {"command": "say potato", "timestamp": 0.0, "context": {}},
@@ -26,7 +27,7 @@ var current_recording_name: String = ""
 #   "created_by": "user|ai|collaborative",
 #   "consciousness_context": 3,
 #   "success_rate": 0.95
-# }
+# 
 
 # ===== RECORDING STATE =====
 var recording_start_time: float = 0.0
@@ -44,6 +45,7 @@ func pentagon_init() -> void:
     _load_saved_macros()
     
     print("📹 MacroSystem: Command recording system ready")
+	
 
 func pentagon_ready() -> void:
     super.pentagon_ready()
@@ -52,6 +54,7 @@ func pentagon_ready() -> void:
     _connect_to_command_system()
     
     print("📹 MacroSystem: Connected to command pipeline")
+	
 
 func pentagon_process(delta: float) -> void:
     super.pentagon_process(delta)
@@ -97,7 +100,7 @@ func start_recording(macro_name: String = "") -> bool:
         "created_by": "user",
         "consciousness_context": consciousness_level,
         "creation_time": Time.get_unix_time_from_system()
-    }
+		}
     
     is_recording = true
     recording_start_time = Time.get_time_dict_from_system().msec / 1000.0
@@ -110,9 +113,9 @@ func stop_recording() -> Dictionary:
     """Stop recording and save the macro"""
     if not is_recording:
         print("📹 No recording in progress")
-        return {}
+        return {
     
-    is_recording = false
+    is_recording = false}
     
     # Finalize macro
     recording_macro["duration"] = last_command_time
@@ -143,10 +146,11 @@ func record_command(command: String, context: Dictionary = {}) -> void:
         "timestamp": last_command_time,
         "context": context.duplicate(),
         "consciousness_level": consciousness_level
-    }
+		}
     
     recording_macro.commands.append(command_entry)
     print("📹 Recorded: %s (t=%.1fs)" % [command, last_command_time])
+	
 
 # ===== PLAYBACK SYSTEM =====
 
@@ -158,6 +162,7 @@ func replay_macro(macro_name: String, speed_multiplier: float = 1.0) -> bool:
     
     var macro = active_macros[macro_name]
     print("📹 Replaying macro: %s" % macro_name)
+	
     
     _execute_macro_sequence(macro, speed_multiplier)
     return true
@@ -182,6 +187,7 @@ func _execute_macro_sequence(macro: Dictionary, speed_multiplier: float) -> void
         
         # Execute command
         print("📹 Executing: %s" % cmd.command)
+		
         var result = command_processor.process_universal_command(cmd.command, "macro")
         
         # Check if command succeeded
@@ -212,9 +218,9 @@ func replay_last_macro() -> bool:
 func edit_macro(macro_name: String) -> Dictionary:
     """Get macro for editing"""
     if not active_macros.has(macro_name):
-        return {}
+        return {
     
-    return active_macros[macro_name].duplicate()
+    return active_macros[macro_name].duplicate()}
 
 func update_macro(macro_name: String, edited_macro: Dictionary) -> bool:
     """Update a macro with edited version"""
@@ -236,7 +242,7 @@ func add_command_to_macro(macro_name: String, command: String, position: int = -
         "timestamp": 0.0,
         "context": {},
         "consciousness_level": consciousness_level
-    }
+		}
     
     if position < 0 or position >= macro.commands.size():
         macro.commands.append(new_command)
@@ -261,6 +267,7 @@ func _recalculate_macro_timing(macro: Dictionary) -> void:
 func generate_ai_macro(description: String, ai_source: String = "gemma") -> Dictionary:
     """Generate macro using AI"""
     print("🤖 Generating AI macro: %s" % description)
+	
     
     var ai_macro = {
         "name": "ai_" + description.replace(" ", "_").to_lower(),
@@ -269,7 +276,7 @@ func generate_ai_macro(description: String, ai_source: String = "gemma") -> Dict
         "created_by": ai_source,
         "consciousness_context": consciousness_level,
         "creation_time": Time.get_unix_time_from_system()
-    }
+		}
     
     # Add to active macros
     active_macros[ai_macro.name] = ai_macro
@@ -285,14 +292,17 @@ func _generate_commands_for_description(description: String) -> Array:
     if description.contains("door"):
         commands.append({"command": "say potato", "timestamp": 0.0, "context": {}})
         commands.append({"command": "/scene load door.tscn", "timestamp": 1.0, "context": {}})
+		
     
     elif description.contains("create") and description.contains("being"):
         commands.append({"command": "/create being " + description, "timestamp": 0.0, "context": {}})
         commands.append({"command": "/scene list", "timestamp": 1.0, "context": {}})
+		
     
     else:
         # Generic command generation
         commands.append({"command": description, "timestamp": 0.0, "context": {}})
+		
     
     return commands
 
@@ -304,7 +314,7 @@ func _save_macro_library() -> void:
         "macros": active_macros,
         "version": "1.0",
         "save_time": Time.get_unix_time_from_system()
-    }
+		}
     
     var file = FileAccess.open("user://macro_library.json", FileAccess.WRITE)
     if file:
@@ -345,6 +355,7 @@ func _show_macro_menu() -> void:
     for macro_name in active_macros:
         var macro = active_macros[macro_name]
         print("  %s: %s (%d commands)" % [macro_name, macro.description, macro.commands.size()])
+		
 
 func _get_command_processor() -> Node:
     """Get the universal command processor"""
@@ -382,6 +393,7 @@ func ai_invoke_method(method_name: String, args: Array = []) -> Variant:
     """AI method invocation for macro control"""
     match method_name:
         "start_recording":
+		
             var name = args[0] if args.size() > 0 else ""
             return start_recording(name)
         
@@ -398,6 +410,7 @@ func ai_invoke_method(method_name: String, args: Array = []) -> Variant:
                 return generate_ai_macro(args[0], "ai")
         
         "list_macros":
+		
             var macro_list = []
             for macro_name in active_macros:
                 macro_list.append({

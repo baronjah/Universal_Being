@@ -113,7 +113,7 @@ func _ready():
     var timer = Timer.new()
     timer.wait_time = analysis_frequency
     timer.autostart = true
-    timer.connect("timeout", self, "_on_analysis_timer")
+    timer.connect(_on_analysis_timer)
     add_child(timer)
     
     print("Word Direction Tracker initialized")
@@ -131,13 +131,13 @@ func _process(delta):
 func connect_to_memory_system():
     # Connect to ProjectMemorySystem if available
     if has_node("/root/ProjectMemorySystem") or get_node_or_null("/root/ProjectMemorySystem"):
-        memory_system = get_node("/root/ProjectMemorySystem")
+        memory_system = get_node("\1") as Node
         print("Connected to ProjectMemorySystem")
         return true
     
     # Try SmartAccountSystem path
     if has_node("/root/SmartAccountSystem/ProjectMemorySystem") or get_node_or_null("/root/SmartAccountSystem/ProjectMemorySystem"):
-        memory_system = get_node("/root/SmartAccountSystem/ProjectMemorySystem")
+        memory_system = get_node("\1") as Node
         print("Connected to ProjectMemorySystem under SmartAccountSystem")
         return true
     
@@ -146,13 +146,13 @@ func connect_to_memory_system():
 func connect_to_investment_system():
     # Connect to MemoryInvestmentSystem if available
     if has_node("/root/MemoryInvestmentSystem") or get_node_or_null("/root/MemoryInvestmentSystem"):
-        investment_system = get_node("/root/MemoryInvestmentSystem")
+        investment_system = get_node("\1") as Node
         print("Connected to MemoryInvestmentSystem")
         return true
     
     # Try SmartAccountSystem path
     if has_node("/root/SmartAccountSystem/MemoryInvestmentSystem") or get_node_or_null("/root/SmartAccountSystem/MemoryInvestmentSystem"):
-        investment_system = get_node("/root/SmartAccountSystem/MemoryInvestmentSystem")
+        investment_system = get_node("\1") as Node
         print("Connected to MemoryInvestmentSystem under SmartAccountSystem")
         return true
     
@@ -170,7 +170,7 @@ func _initialize_activation_levels():
 
 func analyze_word(word, category = "noun"):
     # Skip empty words
-    if word.empty():
+    if word.is_empty():
         return null
     
     # Validate category
@@ -442,7 +442,7 @@ func analyze_sentence(sentence):
     for word in words:
         # Clean word
         word = word.strip_edges().to_lower()
-        if word.empty():
+        if word.is_empty():
             continue
         
         # Guess word category
@@ -489,7 +489,7 @@ func get_recommended_direction():
             })
     
     # Sort by value
-    directions.sort_custom(self, "_sort_by_direction_value")
+    directions.sort_custom(self."_sort_by_direction_value")
     
     if directions.size() > 0:
         return directions[0]["direction"]
@@ -510,7 +510,7 @@ func get_word_cloud(max_words = 20):
         })
     
     # Sort by count
-    words.sort_custom(self, "_sort_by_word_count")
+    words.sort_custom(self."_sort_by_word_count")
     
     # Return top words
     return words.slice(0, min(max_words - 1, words.size() - 1))

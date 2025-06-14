@@ -87,17 +87,17 @@ func _ready():
 func _connect_to_systems():
     # Connect to MultiAccountManager
     if has_node("/root/MultiAccountManager") or get_node_or_null("/root/MultiAccountManager"):
-        account_manager = get_node("/root/MultiAccountManager")
+        account_manager = get_node("\1") as Node
         print("Connected to MultiAccountManager")
     
     # Connect to MultiThreadedProcessor
     if has_node("/root/MultiThreadedProcessor") or get_node_or_null("/root/MultiThreadedProcessor"):
-        thread_processor = get_node("/root/MultiThreadedProcessor")
+        thread_processor = get_node("\1") as Node
         print("Connected to MultiThreadedProcessor")
     
     # Connect to MultiAccount3DVisualizer
     if has_node("/root/MultiAccount3DVisualizer") or get_node_or_null("/root/MultiAccount3DVisualizer"):
-        visualizer = get_node("/root/MultiAccount3DVisualizer")
+        visualizer = get_node("\1") as Node
         print("Connected to MultiAccount3DVisualizer")
         
         # Connect visualization signals
@@ -159,7 +159,7 @@ func send_api_request(from_account, to_account, api_type, request_data):
     """
     # Find the connection
     var connection_id = _find_api_connection(from_account, to_account, api_type)
-    if connection_id.empty():
+    if connection_id.is_empty():
         print("No API connection found between accounts")
         return null
     
@@ -397,7 +397,7 @@ func _find_api_window(account_id):
 
 func _on_visualizer_api_connected(from_account, to_account, connection_type):
     # Create actual API connection in the controller
-    if not _find_api_connection(from_account, to_account, APIType.CLAUDE).empty():
+    if not _find_api_connection(from_account, to_account, APIType.CLAUDE).is_empty():
         return
     
     create_api_connection(from_account, to_account, APIType.CLAUDE)

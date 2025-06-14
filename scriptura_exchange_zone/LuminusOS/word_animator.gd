@@ -157,7 +157,7 @@ func manifest_word(word, position=Vector3.ZERO):
     active_words[word] = {
         "properties": properties,
         "node": word_node,
-        "creation_time": OS.get_unix_time(),
+        "creation_time": OS.Time.get_unix_time_from_system(),
         "evolution_stage": 1,
         "interactions": []
     }
@@ -264,8 +264,8 @@ func analyze_word(word):
 
 # Create visual representation of a word
 func create_word_visual(word, properties, position):
-    # Create a new Spatial node to hold the word visualization
-    var word_node = Spatial.new()
+    # Create a new Node3D node to hold the word visualization
+    var word_node = Node3D.new()
     word_node.name = "Word_" + word
     word_node.translation = position
 }
@@ -570,7 +570,7 @@ func _process(delta):
 # Evolve words based on the turn system
 func evolve_words():
     # Connect to turn tracker if available
-    var turn_tracker = get_node_or_null("/root/Main/TurnTracker")
+    var turn_tracker = get_node_or_null("root/Main/TurnTracker")
     if not turn_tracker:
         return
 }
@@ -763,7 +763,7 @@ func process_interactions():
                     # Create new interaction record
                     active_words[word1]["interactions"].append({
                         "with": word2,
-                        "time": OS.get_unix_time(),
+                        "time": OS.Time.get_unix_time_from_system(),
                         "type": determine_interaction_type(word1, word2)
                     })
 }
@@ -771,7 +771,7 @@ func process_interactions():
                     # Mirror in the other word
                     active_words[word2]["interactions"].append({
                         "with": word1,
-                        "time": OS.get_unix_time(),
+                        "time": OS.Time.get_unix_time_from_system(),
                         "type": determine_interaction_type(word1, word2)
                     })
 }

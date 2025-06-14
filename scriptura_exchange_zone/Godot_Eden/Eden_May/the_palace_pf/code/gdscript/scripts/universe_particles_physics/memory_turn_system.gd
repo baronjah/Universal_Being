@@ -1,5 +1,5 @@
 extends Node
-class_name MemoryTurnSystem
+class_name MemoryTurnSystem_memoryturnsystem_memorytu
 
 # Memory Turn System
 # Manages memory across 12 turns in a cyclic pattern
@@ -7,7 +7,8 @@ class_name MemoryTurnSystem
 # Implements the spatial-temporal dot frequency model
 
 # Memory types and their weights
-enum MemoryType {
+enum \2 {
+
 	SPATIAL,       # Space-related memories
 	TEMPORAL,      # Time-related memories
 	CONNECTION,    # Connection between entities
@@ -525,15 +526,15 @@ func generate_memory_report() -> String:
 	var stats = calculate_memory_stats()
 	var report = "=== Memory Turn System Report ===\n"
 	
-	report += "Turn: " + str(current_turn) + " / " + str(TURN_COUNT) + "\n"
-	report += "Memory usage: " + str(stats.total_memories) + " / " + str(MAX_MEMORY_SLOTS) + " slots (" + str(stats.usage_percent) + "%)\n"
+	report += "Turn: " + str(current_turn) + "  " + str(TURN_COUNT) + "\n"
+	report += "Memory usage: " + str(stats.total_memories) + "  " + str(MAX_MEMORY_SLOTS) + " slots (" + str(stats.usage_percent) + "%)\n"
 	report += "Dot frequency: " + str(DOT_FREQUENCY_BASE) + "% (" + str(stats.active_dots) + " active dots)\n"
 	report += "Screen mode: " + screen_mode + "\n\n"
 	
 	report += "Memory allocation by type:\n"
 	for type in MemoryType.keys():
 		var type_enum = MemoryType[type]
-		report += "- " + type + ": " + str(stats[type_enum]) + " / " + str(int(MAX_MEMORY_SLOTS * memory_allocations[type_enum])) + " allocated\n"
+		report += "- " + type + ": " + str(stats[type_enum]) + "  " + str(int(MAX_MEMORY_SLOTS * memory_allocations[type_enum])) + " allocated\n"
 	
 	return report
 

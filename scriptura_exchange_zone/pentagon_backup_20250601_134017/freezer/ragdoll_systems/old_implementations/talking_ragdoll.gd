@@ -3,8 +3,7 @@
 # DESCRIPTION: A ragdoll character that talks constantly while being dragged
 # CREATED: 2025-05-23 - The talking, draggable character
 # ==================================================
-
-extends RigidBody3D
+extends \2
 
 # Dialogue lines for different situations
 const IDLE_DIALOGUE = [

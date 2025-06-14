@@ -1,12 +1,12 @@
 extends Resource
-class_name StarSystemGenerator
+class_name StarSystemGenerator_starsystemgenerator_starsyst
 
 # Calculate orbital distances based on modified Titus-Bode law
 const TITUS_BODE_BASE = 0.4
 const TITUS_BODE_MULTIPLIER = 0.3
 
 # Reference to StarSystem for accessing types
-var StarSystem = load("res://code/gdscript/scripts/Galaxy_Star_Planet/star_system.gd")
+var StarSystem = load("res://scripts/gdscript/scripts/Galaxy_Star_Planet/star_system.gd")
 
 # Generate a complete star system
 func generate_star_system(seed_value: int, galaxy_position: Vector3, distance_from_center: float) -> StarSystem:
@@ -145,7 +145,8 @@ func determine_planet_type(seed_value: int, distance_from_star: float, star_type
 	var temp_factor = star_temp / (distance_from_star * distance_from_star) * scale_factor
 	
 	# Planet type enum equivalent to documentation
-	enum PlanetType {
+enum \2 {
+
 		ROCKY,
 		GAS_GIANT,
 		ICE_GIANT,

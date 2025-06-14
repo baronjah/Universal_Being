@@ -1,7 +1,7 @@
 # world_grid.gd
-extends Node2D
+extends \2
 
-class_name WorldGrid
+class_name WorldGrid_worldgrid_worldgri
 
 # Grid dimensions
 var width: int = 100

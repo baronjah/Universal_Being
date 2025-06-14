@@ -1,5 +1,5 @@
 # pi_number_creator.gd
-extends Node
+extends \2
 
 # Path to the pi_digits.txt file
 var pi_file_path = "res://pi_digits.txt"
@@ -56,10 +56,10 @@ func save_pi_dictionary():
 
 # Function to create and save the file
 func file_creation(file_content, path_for_file, name_for_file):
-	var file = FileAccess.open(path_for_file + "/" + name_for_file + ".txt", FileAccess.WRITE)
+	var file = FileAccess.open(path_for_file + "" + name_for_file + ".txt", FileAccess.WRITE)
 	if file:
 		for line in file_content:
 			file.store_line(line)  # Store each line in the file
-		print("File saved successfully at: ", path_for_file + "/" + name_for_file + ".txt")
+		print("File saved successfully at: ", path_for_file + "" + name_for_file + ".txt")
 	else:
 		print("Failed to create or write to the file!")

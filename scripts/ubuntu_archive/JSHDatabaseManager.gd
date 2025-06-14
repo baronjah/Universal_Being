@@ -48,6 +48,7 @@ func _init() -> void:
         _instance = self
         name = "JSHDatabaseManager"
         print("JSHDatabaseManager: Instance created")
+		
 
 func _process(delta: float) -> void:
     if auto_save_enabled and is_initialized:
@@ -60,6 +61,7 @@ func _process(delta: float) -> void:
 # Initialization
 func initialize(backend: JSHDatabaseInterface = null, storage_adapter: JSHFileStorageAdapter = null) -> bool:
     print("JSHDatabaseManager: Initializing")
+	
     
     # Set up database
     if backend:
@@ -95,6 +97,7 @@ func initialize(backend: JSHDatabaseInterface = null, storage_adapter: JSHFileSt
     entity_manager = JSHEntityManager.get_instance()
     if entity_manager:
         print("JSHDatabaseManager: Connected to EntityManager")
+		
         # Connect to signals for auto-saving
         entity_manager.connect("entity_updated", Callable(self, "_on_entity_updated"))
         entity_manager.connect("entity_created", Callable(self, "_on_entity_created"))
@@ -103,6 +106,7 @@ func initialize(backend: JSHDatabaseInterface = null, storage_adapter: JSHFileSt
     is_initialized = true
     emit_signal("database_initialized")
     print("JSHDatabaseManager: Initialization complete")
+	
     
     return true
 
@@ -111,14 +115,17 @@ func ensure_core_collections() -> void:
     if not database.collection_exists(ENTITY_COLLECTION):
         database.create_collection(ENTITY_COLLECTION)
         print("JSHDatabaseManager: Created entity collection")
+		
     
     if not database.collection_exists(DICTIONARY_COLLECTION):
         database.create_collection(DICTIONARY_COLLECTION)
         print("JSHDatabaseManager: Created dictionary collection")
+		
     
     if not database.collection_exists(ZONE_COLLECTION):
         database.create_collection(ZONE_COLLECTION)
         print("JSHDatabaseManager: Created zone collection")
+		
     
     # Create standard indexes
     database.create_index(ENTITY_COLLECTION, "entity_type")
@@ -127,6 +134,7 @@ func ensure_core_collections() -> void:
     database.create_index(ENTITY_COLLECTION, "evolution_stage")
     
     print("JSHDatabaseManager: Core collections and indexes verified")
+	
 
 # Entity operations
 func save_entity(entity: JSHUniversalEntity, immediate: bool = false) -> bool:
@@ -164,6 +172,7 @@ func load_entity(entity_id: String) -> JSHUniversalEntity:
     # Check cache first
     if use_caching and entity_cache.has(entity_id):
         print("JSHDatabaseManager: Entity " + entity_id + " found in cache")
+		
         var entity = entity_cache[entity_id]
         emit_signal("entity_loaded", entity_id, entity)
         return entity
@@ -172,6 +181,7 @@ func load_entity(entity_id: String) -> JSHUniversalEntity:
     var entity = database.load_entity(entity_id)
     if entity:
         print("JSHDatabaseManager: Loaded entity " + entity_id)
+		
         
         # Add to cache
         if use_caching:
@@ -181,6 +191,7 @@ func load_entity(entity_id: String) -> JSHUniversalEntity:
         emit_signal("entity_loaded", entity_id, entity)
     else:
         print("JSHDatabaseManager: Entity " + entity_id + " not found in database")
+		
     
     return entity
 
@@ -226,6 +237,7 @@ func save_pending_entities() -> bool:
     
     save_in_progress = true
     print("JSHDatabaseManager: Saving " + str(pending_saves.size()) + " pending entities")
+	
     
     var success = true
     var saved_count = 0
@@ -283,28 +295,30 @@ func save_dictionary_entry(dictionary_name: String, entry_key: String, entry_dat
     
     if result:
         print("JSHDatabaseManager: Saved dictionary entry " + dictionary_name + ":" + entry_key)
+		
         
         # Clear collection cache if using caching
         if use_caching and collection_cache.has(dictionary_name):
             collection_cache.erase(dictionary_name)
     else:
         emit_signal("database_error", "Failed to save dictionary entry " + dictionary_name + ":" + entry_key)
+		
     
     return result
 
 func load_dictionary_entry(dictionary_name: String, entry_key: String) -> Dictionary:
     if not is_initialized:
         emit_signal("database_error", "Database not initialized")
-        return {}
+        return {
     
-    return database.load_dictionary_entry(dictionary_name, entry_key)
+    return database.load_dictionary_entry(dictionary_name, entry_key)}
 
 func get_dictionary(dictionary_name: String) -> Dictionary:
     if not is_initialized:
         emit_signal("database_error", "Database not initialized")
-        return {}
+        return {
     
-    # Check cache first
+    # Check cache first}
     if use_caching and collection_cache.has(dictionary_name):
         return collection_cache[dictionary_name]
     
@@ -328,9 +342,9 @@ func save_zone(zone_id: String, zone_data: Dictionary) -> bool:
 func load_zone(zone_id: String) -> Dictionary:
     if not is_initialized:
         emit_signal("database_error", "Database not initialized")
-        return {}
+        return {
     
-    return database.load_zone(zone_id)
+    return database.load_zone(zone_id)}
 
 func get_entities_in_zone(zone_id: String) -> Array:
     if not is_initialized:
@@ -345,6 +359,7 @@ func clean_cache_if_needed() -> void:
         return
     
     print("JSHDatabaseManager: Entity cache limit reached, cleaning...")
+	
     
     # Remove oldest entities until we're under the limit
     var excess_count = entity_cache.size() - entity_cache_limit
@@ -357,11 +372,13 @@ func clean_cache_if_needed() -> void:
             entity_cache.erase(keys[i])
     
     print("JSHDatabaseManager: Removed " + str(excess_count) + " items from cache")
+	
 
 func clear_cache() -> void:
     entity_cache.clear()
     collection_cache.clear()
     print("JSHDatabaseManager: Cache cleared")
+	
 
 # Entity manager signals
 func _on_entity_updated(entity: JSHUniversalEntity) -> void:
@@ -401,9 +418,9 @@ func backup_database(backup_path: String) -> bool:
 func get_database_statistics() -> Dictionary:
     if not is_initialized:
         emit_signal("database_error", "Database not initialized")
-        return {}
+        return {
     
-    var stats = database.get_statistics()
+    var stats = database.get_statistics()}
     
     # Add cache stats
     stats["cache"] = {
@@ -412,6 +429,6 @@ func get_database_statistics() -> Dictionary:
         "entity_cache_limit": entity_cache_limit,
         "collection_cache_size": collection_cache.size(),
         "pending_saves": pending_saves.size()
-    }
+		}
     
     return stats

@@ -15,7 +15,7 @@ signal property_changed(property_name, old_value, new_value)
 signal interacted(other_entity, result)
 
 func _init(id: String = "", type: String = "primordial", init_properties: Dictionary = {}) -> void:
-    if id.empty():
+    if id.is_empty():
         entity_id = generate_entity_id()
     else:
         entity_id = id

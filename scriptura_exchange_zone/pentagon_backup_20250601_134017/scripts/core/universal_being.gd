@@ -9,9 +9,8 @@
 # DESCRIPTION: Minimal working version of Universal Being
 # PURPOSE: Test the core concept before full implementation
 # ==================================================
-
-extends UniversalBeingBase
-class_name UniversalBeing
+extends \2
+# DISABLED DUPLICATE: class_name UniversalBeing_universalbeing_universa
 
 # Core properties
 var uuid: String = ""
@@ -89,7 +88,7 @@ func manifest(form_type: String) -> void:
 		manifestation = null
 	
 	# Try to use StandardizedObjects for known asset types
-	var std_objects = get_node_or_null("/root/StandardizedObjects")
+	var std_objects = get_node_or_null("root/StandardizedObjects")
 	print("[DEBUG] StandardizedObjects found: ", std_objects != null)
 	
 	if std_objects and std_objects.has_method("create_object"):
@@ -291,7 +290,7 @@ func _initialize_advanced_consciousness() -> void:
 	_initialize_basic_consciousness()
 	
 	# Try to connect to JSH Task Manager
-	var jsh_manager = get_node_or_null("/root/JSHTaskManager")
+	var jsh_manager = get_node_or_null("root/JSHTaskManager")
 	if jsh_manager:
 		task_manager = jsh_manager
 		print("🎯 [", name, "] Connected to JSH Task Manager for advanced planning")
@@ -1065,7 +1064,7 @@ func _on_interface_value_changed(element_id: String, new_value: Variant) -> void
 
 func _handle_console_command(command: String) -> void:
 	"""Handle console commands from interface"""
-	var console_manager = get_node_or_null("/root/ConsoleManager")
+	var console_manager = get_node_or_null("root/ConsoleManager")
 	if console_manager and console_manager.has_method("execute_command"):
 		console_manager.execute_command(command)
 		print("💻 [", name, "] Executed console command: ", command)
@@ -1128,7 +1127,7 @@ func _create_neural_status_interface() -> void:
 
 func _run_consciousness_test() -> void:
 	"""Run the consciousness ecosystem test"""
-	var console_manager = get_node_or_null("/root/ConsoleManager")
+	var console_manager = get_node_or_null("root/ConsoleManager")
 	if console_manager and console_manager.has_method("execute_command"):
 		console_manager.execute_command("test_consciousness")
 	print("🧪 [", name, "] Running consciousness test")
@@ -1179,7 +1178,7 @@ func _connect_interface_to_systems(interface: EnhancedInterfaceSystem, system_na
 	"""Connect interface to relevant game systems"""
 	match system_name:
 		"console":
-			var console_manager = get_node_or_null("/root/ConsoleManager")
+			var console_manager = get_node_or_null("root/ConsoleManager")
 			if console_manager:
 				interface.connect_to_system("console", console_manager)
 		
@@ -1191,12 +1190,12 @@ func _connect_interface_to_systems(interface: EnhancedInterfaceSystem, system_na
 				interface.connect_to_system("being_" + being.name, being)
 		
 		"asset_creator":
-			var world_builder = get_node_or_null("/root/WorldBuilder")
+			var world_builder = get_node_or_null("root/WorldBuilder")
 			if world_builder:
 				interface.connect_to_system("world_builder", world_builder)
 		
 		"inspector":
-			var object_manager = get_node_or_null("/root/UniversalObjectManager")
+			var object_manager = get_node_or_null("root/UniversalObjectManager")
 			if object_manager:
 				interface.connect_to_system("object_manager", object_manager)
 

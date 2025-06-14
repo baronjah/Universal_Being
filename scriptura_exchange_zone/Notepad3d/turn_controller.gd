@@ -1,6 +1,6 @@
 extends Node
 
-class_name TurnController
+class_name TurnController_turncontroller_turncont
 
 # ----- TURN CONTROLLER -----
 # Manages the 12-turn cycle for the Akashic Notepad3D game

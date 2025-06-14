@@ -1,6 +1,6 @@
 extends Node
 
-class_name ModulesBank
+class_name ModulesBank_modulesbank_modulesb
 
 
 static var multi_threading: bool

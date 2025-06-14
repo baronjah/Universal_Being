@@ -6,10 +6,12 @@ extends Node
 class_name ConcurrentProcessor
 
 # Task priority levels
-enum Priority { LOW, MEDIUM, HIGH, CRITICAL }
+enum Priority { LOW, MEDIUM, HIGH, CRITICAL
+}
 
 # Task status tracking
-enum TaskStatus { PENDING, RUNNING, COMPLETED, FAILED, CANCELED }
+enum TaskStatus { PENDING, RUNNING, COMPLETED, FAILED, CANCELED
+}
 
 # Task structure for function processing
 class Task:
@@ -21,6 +23,7 @@ class Task:
 	var status: int
 	var result = null
 	var error_message: String = ""
+}
 	var start_time: int = 0
 	var end_time: int = 0
 	
@@ -48,7 +51,7 @@ class Task:
 	
 	func execute() -> void:
 		status = TaskStatus.RUNNING
-		start_time = OS.get_ticks_msec()
+		start_time = OS.Time.get_ticks_msec()
 		
 		if function_ref.is_valid():
 			# Execute with variable number of arguments
@@ -67,7 +70,7 @@ class Task:
 			error_message = "Invalid function reference"
 			status = TaskStatus.FAILED
 			
-		end_time = OS.get_ticks_msec()
+		end_time = OS.Time.get_ticks_msec()
 
 # Main processor properties
 var max_concurrent_tasks: int = 3
@@ -88,7 +91,7 @@ func _ready() -> void:
 	var process_timer = Timer.new()
 	process_timer.wait_time = 0.05  # 50ms intervals for processing
 	process_timer.autostart = true
-	process_timer.connect("timeout", self, "_process_tasks")
+	process_timer.connect(_process_tasks)
 	add_child(process_timer)
 
 # Create a new task and add it to the queue
@@ -99,7 +102,7 @@ func schedule_task(id: String, function_object: Object, function_name: String,
 	
 	task_queue.append(task)
 	# Sort by priority (higher priority first)
-	task_queue.sort_custom(self, "_compare_task_priority")
+	task_queue.sort_custom(self."_compare_task_priority")
 	
 	return task
 
@@ -124,7 +127,7 @@ func _process_tasks() -> void:
 		i -= 1
 	
 	# Start new tasks if we have capacity
-	while running_tasks.size() < max_concurrent_tasks and not task_queue.empty():
+	while running_tasks.size() < max_concurrent_tasks and not task_queue.is_empty():
 		var next_task_index = _find_next_executable_task()
 		
 		if next_task_index >= 0:
@@ -140,7 +143,7 @@ func _process_tasks() -> void:
 			break
 	
 	# Check if all tasks are complete
-	if task_queue.empty() and running_tasks.empty():
+	if task_queue.is_empty() and running_tasks.is_empty():
 		emit_signal("all_tasks_completed")
 
 # Find index of next task that can be executed based on dependencies

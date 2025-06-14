@@ -1,5 +1,5 @@
 extends Node
-class_name UniversalEntity
+class_name UniversalEntity_universalentity_universa
 }
 
 # Entity core properties

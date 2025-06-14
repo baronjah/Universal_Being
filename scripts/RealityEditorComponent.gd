@@ -443,6 +443,7 @@ func _add_vector3_editor(parent: Control, label: String, prop_name: String) -> v
 	container.add_child(label_node)
 	
 	for axis in ["x", "y", "z"]:
+}
 		var axis_label = Label.new()
 		axis_label.text = axis.to_upper() + ":"
 		container.add_child(axis_label)
@@ -615,6 +616,7 @@ func _log_genesis(message: String) -> void:
 		akashic_logger.log_genesis_event("Reality Editor", message)
 	print("📜 Genesis: " + message)
 
+
 func _auto_save_changes() -> void:
 	if reality_changes.is_empty():
 		return
@@ -666,6 +668,7 @@ func _on_universe_deleted(universe_name: String) -> void:
 func _get_component_template() -> String:
 	return """extends "res://core/Component.gd"
 
+
 # ==================================================
 # UNIVERSAL BEING COMPONENT: [Your Component Name]
 # TYPE: Component
@@ -693,7 +696,7 @@ func component_exit() -> void:
 
 func _gather_component_metadata() -> Dictionary:
 	pass
-	var metadata = {}
+	var metadata = {
 	for child in component_creator.get_children():
 		if child.has_meta("field_name"):
 			metadata[child.get_meta("field_name")] = child.text
@@ -726,7 +729,7 @@ func _create_new_component(metadata: Dictionary, code: String, sockets: Array[St
 		"description": metadata.get("component_description", ""),
 		"main_script": metadata.component_name.to_pascal_case() + "Component.gd",
 		"compatible_sockets": sockets
-	}
+}
 	
 	var manifest_file = FileAccess.open(component_dir + "manifest.json", FileAccess.WRITE)
 	if manifest_file:
@@ -862,7 +865,7 @@ func _save_logic_network() -> void:
 	var network_data = {
 		"nodes": [],
 		"connections": []
-	}
+}
 	
 	# Save nodes
 	for child in logic_canvas.get_children():
@@ -886,7 +889,7 @@ func _save_logic_network() -> void:
 
 func _extract_node_data(node: GraphNode) -> Dictionary:
 	pass
-	var data = {}
+	var data = {
 	for child in node.get_children():
 		if child is LineEdit:
 			data["text_input"] = child.text
@@ -948,8 +951,7 @@ func ai_interface() -> Dictionary:
 			"current_universe": current_universe.name if current_universe else "none",
 			"selected_being": selected_being.being_name if selected_being else "none",
 			"pending_changes": reality_changes.size()
-		}
-	}
+}
 
 func ai_invoke_method(method_name: String, args: Array = []) -> Variant:
 	match method_name:
@@ -971,6 +973,7 @@ func ai_invoke_method(method_name: String, args: Array = []) -> Variant:
 			return "Changes saved to Akashic Records"
 		_:
 			return "Unknown method: " + method_name
+}
 
 # ===== SIGNALS =====
 

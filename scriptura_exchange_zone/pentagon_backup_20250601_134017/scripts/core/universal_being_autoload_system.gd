@@ -5,9 +5,8 @@
 # CREATED: 2025-06-01 - Universal Being Autoload Revolution
 # AUTHOR: JSH + Claude Code
 # ==================================================
-
-extends UniversalBeingBase
-class_name UniversalBeingAutoloadSystem
+extends \2
+# DISABLED DUPLICATE: class_name UniversalBeingAutoloadSystem_universalbeingautoloadsystem_universa
 
 # Universal Being Autoload Registry
 var registered_autoloads: Dictionary = {}
@@ -120,7 +119,7 @@ func _setup_spatial_autoload(autoload_name: String, instance: Node) -> void:
 			"connections": [],
 			"awareness_radius": 50.0
 		}
-		print("🌍 [Pathway] Spatial autoload registered: ", autoload_name)
+		print("🌍 [Pathway] Node3D autoload registered: ", autoload_name)
 	
 func establish_pathway(from_autoload: String, to_autoload: String, pathway_type: String = "communication") -> void:
 	"""Establish communication pathway between autoloads"""
@@ -197,7 +196,7 @@ func _update_scene_tree_position(autoload_name: String, node: Node) -> void:
 		"node_path": node.get_path(),
 		"parent": node.get_parent().name if node.get_parent() else "ROOT",
 		"children_count": node.get_child_count(),
-		"scene_depth": str(node.get_path()).count("/"),
+		"scene_depth": str(node.get_path()).count(""),
 		"global_position": node.global_position if node is Node3D else Vector3.ZERO
 	}
 
@@ -243,7 +242,7 @@ func _discover_existing_autoloads() -> void:
 
 func _integrate_existing_autoload(autoload_name: String) -> void:
 	"""Integrate existing autoload into Universal Being system"""
-	var autoload_node = get_node("/root/" + autoload_name)
+	var autoload_node = get_node("root/" + autoload_name)
 	if autoload_node:
 		var capabilities = _detect_autoload_capabilities(autoload_node)
 		
@@ -295,7 +294,7 @@ func _setup_pathway_network() -> void:
 
 func _initialize_spatial_tracking() -> void:
 	"""Initialize spatial tracking for 3D autoloads"""
-	print("📍 [Spatial] Initializing spatial autoload tracking...")
+	print("📍 [Node3D] Initializing spatial autoload tracking...")
 	
 	for autoload_name in registered_autoloads:
 		var autoload_data = registered_autoloads[autoload_name]
@@ -341,7 +340,7 @@ func show_pathway_network() -> void:
 
 func show_spatial_autoloads() -> void:
 	"""Show spatial autoload positions"""
-	print("📍 [Spatial] Spatial Autoloads:")
+	print("📍 [Node3D] Node3D Autoloads:")
 	for autoload_name in spatial_autoloads:
 		var spatial = spatial_autoloads[autoload_name]
 		var pos = spatial["last_position"]

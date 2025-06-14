@@ -46,6 +46,7 @@ signal input_routed(context: InputContext, event: InputEvent)
 
 func _ready() -> void:
 	print("🎮 InputStateManager: Surgical implantation successful")
+}
 	
 	# Set input processing priority
 	process_mode = Node.PROCESS_MODE_ALWAYS
@@ -219,6 +220,7 @@ func _handle_mecha_input(event: InputEvent) -> void:
 	
 	# Route to mecha controller (when implemented)
 	print("🤖 Mecha input: %s" % event)
+}
 
 func _handle_star_navigation_input(event: InputEvent) -> void:
 	"""Handle input during star navigation"""
@@ -261,6 +263,7 @@ func _set_context(new_context: InputContext) -> void:
 	context_changed.emit(old_context, new_context)
 	print("🎮 Context changed: %s → %s" % [_context_to_string(old_context), _context_to_string(new_context)])
 
+
 func _set_mouse_mode(new_mode: MouseMode) -> void:
 	"""Change mouse mode with proper cursor management"""
 	var old_mode = current_mouse_mode
@@ -274,6 +277,7 @@ func _set_mouse_mode(new_mode: MouseMode) -> void:
 	
 	mouse_mode_changed.emit(old_mode, new_mode)
 	print("🖱️ Mouse mode: %s → %s" % [_mouse_mode_to_string(old_mode), _mouse_mode_to_string(new_mode)])
+
 
 # ===== UTILITY FUNCTIONS =====
 
@@ -293,11 +297,13 @@ func _context_to_string(context: InputContext) -> String:
 		InputContext.CINEMATIC_CUTSCENE: return "CINEMATIC"
 		_: return "UNKNOWN"
 
+
 func _mouse_mode_to_string(mode: MouseMode) -> String:
 	match mode:
 		MouseMode.FREE_CURSOR: return "FREE"
 		MouseMode.CAMERA_CAPTURED: return "CAPTURED"
 		_: return "UNKNOWN"
+
 
 # ===== GAME SYSTEM INTEGRATIONS =====
 

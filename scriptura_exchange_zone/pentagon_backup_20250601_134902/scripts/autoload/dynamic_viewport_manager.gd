@@ -4,7 +4,6 @@
 # PURPOSE: Adaptive window sizing for different displays
 # CREATED: 2025-05-28 - Smart viewport management
 # ==================================================
-
 extends UniversalBeingBase
 signal viewport_changed(new_size: Vector2i)
 signal fullscreen_toggled(is_fullscreen: bool)
@@ -44,7 +43,7 @@ func _detect_and_apply_optimal_settings() -> void:
 	# Users can use console commands to adjust
 
 func _register_commands() -> void:
-	var console = get_node_or_null("/root/ConsoleManager")
+	var console = get_node_or_null("root/ConsoleManager")
 	if console:
 		console.register_command("viewport", _cmd_viewport_info, "Show viewport and screen information")
 		console.register_command("window_size", _cmd_set_window_size, "Set window size (width height)")
@@ -88,7 +87,7 @@ func _set_fullscreen(enabled: bool) -> void:
 # ================================
 
 func _cmd_viewport_info(_args: Array) -> void:
-	var console = get_node("/root/ConsoleManager")
+	var console = get_node("root/ConsoleManager")
 	
 	console._print_to_console("[color=cyan]=== Viewport Information ===[/color]")
 	
@@ -120,7 +119,7 @@ func _cmd_viewport_info(_args: Array) -> void:
 	console._print_to_console("\n[color=yellow]Aspect Ratio:[/color] %.2f:1 (%s)" % [aspect_ratio, _get_aspect_ratio_name(aspect_ratio)])
 
 func _cmd_set_window_size(args: Array) -> void:
-	var console = get_node("/root/ConsoleManager")
+	var console = get_node("root/ConsoleManager")
 	
 	if args.size() < 2:
 		console._print_to_console("Usage: window_size <width> <height>")
@@ -143,7 +142,7 @@ func _cmd_set_window_size(args: Array) -> void:
 	_center_window()
 
 func _cmd_toggle_fullscreen(args: Array) -> void:
-	var console = get_node("/root/ConsoleManager")
+	var console = get_node("root/ConsoleManager")
 	
 	if args.size() > 0:
 		var mode = args[0].to_lower()
@@ -154,7 +153,7 @@ func _cmd_toggle_fullscreen(args: Array) -> void:
 	console._print_to_console("Fullscreen: " + ("ON" if is_fullscreen else "OFF"))
 
 func _cmd_set_window_mode(args: Array) -> void:
-	var console = get_node("/root/ConsoleManager")
+	var console = get_node("root/ConsoleManager")
 	
 	if args.size() == 0:
 		console._print_to_console("Usage: window_mode <mode>")
@@ -177,12 +176,12 @@ func _cmd_set_window_mode(args: Array) -> void:
 	console._print_to_console("Window mode changed to: " + args[0])
 
 func _cmd_center_window(_args: Array) -> void:
-	var console = get_node("/root/ConsoleManager")
+	var console = get_node("root/ConsoleManager")
 	_center_window()
 	console._print_to_console("Window centered on current screen")
 
 func _cmd_list_screens(_args: Array) -> void:
-	var console = get_node("/root/ConsoleManager")
+	var console = get_node("root/ConsoleManager")
 	var screen_count = DisplayServer.get_screen_count()
 	
 	console._print_to_console("[color=cyan]=== Available Screens ===[/color]")
@@ -199,7 +198,7 @@ func _cmd_list_screens(_args: Array) -> void:
 		console._print_to_console("  DPI: %d, Scale: %.2f" % [dpi, scale])
 
 func _cmd_move_to_screen(args: Array) -> void:
-	var console = get_node("/root/ConsoleManager")
+	var console = get_node("root/ConsoleManager")
 	
 	if args.size() == 0:
 		console._print_to_console("Usage: move_to_screen <screen_number>")

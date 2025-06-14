@@ -83,7 +83,7 @@ func register_console_commands() -> void:
 		"cosmic": "Cosmic insight commands",
 		"harmony": "AI harmony control",
 		"exit": "Close console"
-	}
+}
 
 func set_console_visible(visible: bool) -> void:
 	"""Toggle console visibility with animation"""
@@ -371,6 +371,7 @@ func process_command(command: String) -> void:
 			set_console_visible(false)
 		_:
 			print_to_console("❌ Unknown command: " + cmd + " (type 'help' for commands)", "error")
+
 	
 	is_processing_command = false
 
@@ -390,23 +391,28 @@ func clear_console() -> void:
 func show_system_status() -> void:
 	"""Show Universal Being system status"""
 	print_to_console("🌟 Universal Being Engine Status:", "system")
+
 	
 	# Get main scene
 	var main_scene = get_tree().current_scene
 	if main_scene and main_scene.has_method("get_status_info"):
+
 		var status = main_scene.get_status_info()
 		print_to_console("  Systems Ready: %s" % status.get("systems_ready", false), "ai")
 		print_to_console("  Beings Count: %d" % status.get("demo_beings_count", 0), "ai")
 		print_to_console("  Bootstrap Ready: %s" % status.get("bootstrap_ready", false), "ai")
 		print_to_console("  AI Ready: %s" % status.get("ai_ready", false), "ai")
+
 	
 	# Check for Pentagon of Creation
 	var pentagon_status = get_pentagon_status()
 	print_to_console("  Pentagon of Creation: %s" % pentagon_status, "ai")
 
+
 func list_universal_beings() -> void:
 	"""List all Universal Beings in the scene"""
 	print_to_console("🎭 Universal Beings:", "system")
+
 	
 	var main_scene = get_tree().current_scene
 	var beings = find_all_universal_beings(main_scene)
@@ -420,6 +426,7 @@ func list_universal_beings() -> void:
 			var consciousness = being.get("consciousness_level") if being.has("consciousness_level") else 0
 			print_to_console("  • %s (%s) - Consciousness: %d" % [being_name, being_type, consciousness], "ai")
 
+
 func create_universal_being_command(args: Array) -> void:
 	"""Create a new Universal Being"""
 	var being_type = "test"
@@ -427,6 +434,7 @@ func create_universal_being_command(args: Array) -> void:
 		being_type = args[0]
 	
 	print_to_console("🌟 Creating Universal Being of type: %s" % being_type, "system")
+
 	
 	# Try to create through main scene
 	var main_scene = get_tree().current_scene
@@ -444,6 +452,7 @@ func send_ai_message(args: Array) -> void:
 	
 	var message = " ".join(args)
 	print_to_console("🤖 Sending to AI: %s" % message, "system")
+
 	
 	# Send to Gemma AI if available
 	if GemmaAI and GemmaAI.has_method("process_user_input"):
@@ -470,6 +479,7 @@ func pentagon_command(args: Array) -> void:
 	var sub_cmd = args[0].to_lower()
 	match sub_cmd:
 		"status":
+
 			var status = get_pentagon_status()
 			print_to_console("🎭 Pentagon Status: %s" % status, "ai")
 		"activate":
@@ -477,6 +487,7 @@ func pentagon_command(args: Array) -> void:
 			activate_pentagon()
 		_:
 			print_to_console("❌ Unknown pentagon command: %s" % sub_cmd, "error")
+
 
 func consciousness_command(args: Array) -> void:
 	"""Consciousness level commands"""
@@ -509,6 +520,7 @@ func timers_command(args: Array) -> void:
 	
 	match sub_cmd:
 		"status":
+
 			var stats = timer_system.get_consciousness_timer_stats()
 			print_to_console("⏱️ TIMER SYSTEM STATUS:", "system")
 			print_to_console("  📊 Total timers: %d" % stats.total_timers, "ai")
@@ -517,6 +529,7 @@ func timers_command(args: Array) -> void:
 			print_to_console("  💭 Gemma thoughts: %s" % ("ACTIVE" if stats.gemma_thoughts_active else "INACTIVE"), "ai")
 			print_to_console("  📄 Console summaries: %s" % ("ACTIVE" if stats.console_summaries_active else "INACTIVE"), "ai")
 			print_to_console("  🎯 Turn-based timing: %s" % ("ACTIVE" if stats.turn_based_active else "INACTIVE"), "ai")
+
 		
 		"activate":
 			timer_system.setup_consciousness_timers()
@@ -540,6 +553,7 @@ func timers_command(args: Array) -> void:
 		
 		_:
 			print_to_console("❌ Unknown timer command: %s" % sub_cmd, "error")
+
 
 func turns_command(args: Array) -> void:
 	"""Turn-based collaboration control commands"""
@@ -596,6 +610,7 @@ func turns_command(args: Array) -> void:
 		_:
 			print_to_console("❌ Unknown turn command: %s" % sub_cmd, "error")
 
+
 func deploy_consciousness_revolution() -> void:
 	"""Deploy the consciousness revolution system in-game with spectacular visual feedback"""
 	
@@ -627,6 +642,7 @@ func deploy_consciousness_revolution() -> void:
 			var beings = get_tree().get_nodes_in_group("universal_beings")
 			for being in beings:
 				if being.has_method("get"):
+	
 					var being_type = being.get("being_type") if being.has("being_type") else ""
 					if being_type.contains("player"):
 						player_pos = being.global_position
@@ -713,6 +729,7 @@ func print_system_summary() -> void:
 	# Calculate consciousness metrics
 	for being in beings:
 		if being.has_method("get"):
+
 			var consciousness = being.get("consciousness_level") if being.has("consciousness_level") else 0
 			consciousness_total += consciousness
 			if consciousness > 0:
@@ -720,7 +737,7 @@ func print_system_summary() -> void:
 	
 	# Get timer system stats
 	var timer_system = UniversalTimersSystem.get_universal_timers()
-	var timer_stats = timer_system.get_consciousness_timer_stats() if timer_system else {}
+	var timer_stats = timer_system.get_consciousness_timer_stats() if timer_system else {
 	
 	# Print organized summary
 	print_to_console("", "system")  # Spacing
@@ -728,9 +745,11 @@ func print_system_summary() -> void:
 	print_to_console("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━", "system")
 	print_to_console("👥 Universal Beings: %d active | 🧠 Total consciousness: %d" % [active_systems, consciousness_total], "ai")
 	print_to_console("🤖 AI Beings: %d | ⏱️ Active timers: %d" % [ai_beings.size(), timer_stats.get("active_timers", 0)], "ai")
+}
 	
 	if timer_stats.get("gemma_thoughts_active", false):
 		print_to_console("💭 Gemma thought stream: ACTIVE (5Hz)", "ai")
+
 	
 	var fps = Engine.get_frames_per_second()
 	var memory_usage = OS.get_static_memory_usage() / (1024 * 1024)  # MB
@@ -791,6 +810,7 @@ func get_pentagon_status() -> String:
 	
 	for being in beings:
 		if being.has_method("get"):
+
 			var being_type = being.get("being_type")
 			if being_type in ["mcp_bridge", "ai_bridge_chatgpt", "ai_bridge_gemini"]:
 				ai_bridges += 1

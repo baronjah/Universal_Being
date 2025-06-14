@@ -211,12 +211,13 @@ func save_chunk_as_zip(coord: Vector3i) -> bool:
 		"chunk_type": get_chunk_type(coord),
 		"consciousness_level": get_chunk_consciousness_level(coord),
 		"material_data": extract_material_data(chunk_mesh)
-	}
+}
 	
 	# Use SystemBootstrap to access AkashicRecordsSystemSystem
 	if SystemBootstrap and SystemBootstrap.is_system_ready():
 		var akashic = SystemBootstrap.get_akashic_records()
 		if akashic and akashic.has_method("save_universal_being_data"):
+
 			var chunk_id = "chunk_%d_%d_%d" % [coord.x, coord.y, coord.z]
 			var success = akashic.save_universal_being_data(chunk_id, chunk_data)
 			if success:
@@ -251,9 +252,8 @@ func extract_material_data(mesh_instance: MeshInstance3D) -> Dictionary:
 		return {
 			"albedo_color": [material.albedo_color.r, material.albedo_color.g, material.albedo_color.b, material.albedo_color.a],
 			"emission_color": [material.emission.r, material.emission.g, material.emission.b, material.emission.a],
-			"emission_energy": material.emission_energy
-		}
-	return {}
+			"emission_energy": material.emission_energy}
+	return {
 
 func get_debug_info() -> Dictionary:
 	"""Get debug information"""
@@ -262,4 +262,4 @@ func get_debug_info() -> Dictionary:
 		"camera_position": camera.global_position if camera else Vector3.ZERO,
 		"player_chunk": world_to_chunk_coord(player.global_position) if player else Vector3i.ZERO,
 		"chunk_coordinates": visible_chunks.keys()
-	}
+}

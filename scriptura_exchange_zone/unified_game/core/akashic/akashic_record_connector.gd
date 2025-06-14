@@ -1,6 +1,6 @@
 extends Node
 
-class_name AkashicRecordConnector
+class_name AkashicRecordConnector_akashicr
 
 signal record_saved(record_id, record_type)
 signal record_retrieved(record_id, data)
@@ -551,7 +551,7 @@ func _query_by_id(record_type, record_id):
     var collection = RECORD_COLLECTIONS[record_type]
     
     // Check memory cache first
-    var cache_key = collection + "/" + record_id
+    var cache_key = collection + "" + record_id
     if memory_cache.has(cache_key):
         return memory_cache[cache_key]
     }
@@ -808,7 +808,7 @@ func save_record(record_type, content, metadata = {}):
     }
     
     // Update memory cache
-    var cache_key = collection + "/" + record_id
+    var cache_key = collection + "" + record_id
     memory_cache[cache_key] = record
     
     // Create memory imprint

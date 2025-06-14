@@ -52,6 +52,7 @@ func pentagon_init() -> void:
 	metadata.gemma_can_modify = true
 	print("🌟 %s: Pentagon Init Complete" % being_name)
 
+
 func pentagon_ready() -> void:
 	super.pentagon_ready()
 	
@@ -121,7 +122,7 @@ func _create_console_window() -> void:
 		"layer": "console",
 		"esc_closes": true,
 		"moveable": true
-	}
+}
 	
 	console_window = interface_manager.create_normalized_window(config)
 	
@@ -266,14 +267,15 @@ func add_message(sender: String, message: String) -> void:
 		"sender": sender,
 		"message": message,
 		"timestamp": timestamp
-	}
 	conversation_history.append(entry)
+}
 	
 	# Format message for display
 	var color = _get_sender_color(sender)
 	var time_parts = timestamp.split(" ")
 	var time_str = time_parts[1] if time_parts.size() > 1 else timestamp
 	var formatted_message = "[color=%s][%s] %s:[/color] %s\n" % [color, time_str, sender, message]
+
 	
 	if conversation_display:
 		conversation_display.append_text(formatted_message)
@@ -310,6 +312,7 @@ func _send_message(message: String) -> void:
 	if macro_recording:
 		current_macro.append(message)
 		add_message("system", "📝 Added to macro: " + message)
+
 	
 	# Check for enhanced commands first
 	if _process_enhanced_commands(message):
@@ -370,6 +373,7 @@ func _on_conversation_display_input(event: InputEvent) -> void:
 			var conversation_text = ""
 			for entry in conversation_history:
 				conversation_text += "[%s] %s: %s\n" % [entry.timestamp, entry.sender, entry.message]
+	
 			
 			if not conversation_text.is_empty():
 				DisplayServer.clipboard_set(conversation_text)
@@ -391,12 +395,15 @@ func _send_to_gemma(message: String) -> void:
 	# Build conversation context
 	var context = _build_conversation_context()
 	var full_prompt = "%s\n\nUser: %s\n\nRespond naturally as Gemma AI in the Universal Being world:" % [context, message]
+
 	
 	# Check if Gemma has the method to send messages
 	if gemma_ai.has_method("generate_ai_response"):
+
 		var response = await gemma_ai.generate_ai_response(message)
 		add_message("gemma", response)
 	elif gemma_ai.has_method("ai_message"):
+
 		# Emit to Gemma's signal system
 		gemma_ai.ai_message.emit("User says: " + message)
 		add_message("gemma", "I heard you! Let me think about that...")
@@ -409,6 +416,7 @@ func _process_natural_commands(message: String) -> void:
 	
 	# Universe creation
 	if "create" in lower_message and ("universe" in lower_message or "world" in lower_message):
+
 		var universe_name = _extract_universe_name(message)
 		_create_universe_naturally(universe_name)
 	
@@ -418,11 +426,13 @@ func _process_natural_commands(message: String) -> void:
 	
 	# Universe entry
 	elif "enter" in lower_message and "universe" in lower_message:
+
 		var universe_name = _extract_universe_name(message)
 		_enter_universe_naturally(universe_name)
 	
 	# Being inspection
 	elif ("inspect" in lower_message or "examine" in lower_message) and "being" in lower_message:
+
 		var target_being_name = _extract_being_name(message)
 		_inspect_being_naturally(target_being_name)
 	
@@ -456,6 +466,7 @@ func _create_universe_naturally(universe_name: String) -> void:
 	"""Create universe through natural language"""
 	var main_node = get_tree().root.get_node("Main")
 	if main_node and main_node.has_method("create_universe_universal_being"):
+
 		var universe = main_node.create_universe_universal_being()
 		if universe:
 			universe.universe_name = universe_name
@@ -483,6 +494,7 @@ func _enter_universe_naturally(universe_name: String) -> void:
 	for universe in universes:
 		if universe.get("universe_name", "").to_lower() == universe_name.to_lower():
 			add_message("system", "🌌 Entering universe: %s" % universe_name)
+
 			# Here you could implement actual universe entry logic
 			return
 	
@@ -491,12 +503,14 @@ func _enter_universe_naturally(universe_name: String) -> void:
 func _build_conversation_context() -> String:
 	"""Build context from recent conversation"""
 	var context = "You are Gemma AI in the Universal Being project. This is a Godot game where everything is a conscious Universal Being that can evolve into anything else.\n\nRecent conversation:"
+
 	
 	# Get last 5 messages for context
 	var recent_count = min(5, conversation_history.size())
 	for i in range(max(0, conversation_history.size() - recent_count), conversation_history.size()):
 		var entry = conversation_history[i]
 		context += "\n%s: %s" % [entry.sender, entry.message]
+
 	
 	return context
 
@@ -528,8 +542,8 @@ func ai_interface() -> Dictionary:
 		"conversation_count": conversation_history.size(),
 		"is_visible": console_window.visible if console_window else false,
 		"current_tab": channel_tabs.current_tab if channel_tabs else 0
-	}
 	return base_interface
+}
 
 func ai_invoke_method(method_name: String, args: Array = []) -> Variant:
 	match method_name:
@@ -573,6 +587,7 @@ func update_universe_tab() -> void:
 			content += "Say: 'Create a universe called [name]'\n"
 			content += "Say: 'Enter universe [name]'\n"
 			content += "Say: 'Show me all universes'\n"
+
 			
 			universe_display.text = content
 
@@ -673,6 +688,7 @@ func _display_being_inspection(being: UniversalBeing) -> void:
 	
 	# Add conversation message
 	add_message("system", "🔍 Inspecting being: %s" % being.being_name)
+
 
 func _create_info_section(title: String, data: Dictionary) -> Control:
 	"""Create an information section widget"""
@@ -796,13 +812,16 @@ func _process_socket_commands(message: String) -> void:
 	else:
 		add_message("system", "🔌 Socket commands: mount, swap, list")
 
+
 func _handle_gemma_manifestation(message: String) -> void:
 	"""Handle Gemma AI manifestation commands"""
 	var lower_message = message.to_lower()
 	
 	if "manifest" in lower_message or "appear" in lower_message:
+
 		# Call Gemma AI to manifest
 		if gemma_ai and gemma_ai.has_method("manifest_in_world"):
+
 			var manifestation = gemma_ai.manifest_in_world()
 			if manifestation:
 				add_message("system", "✨ Gemma AI has manifested as a sphere of light!")
@@ -812,6 +831,7 @@ func _handle_gemma_manifestation(message: String) -> void:
 			add_message("system", "❌ Gemma AI manifestation not available")
 	
 	elif "move" in lower_message or "go" in lower_message:
+
 		# Extract position if specified, otherwise use random position
 		var target_pos = Vector3(randf_range(-5, 5), randf_range(1, 4), randf_range(-5, 5))
 		if gemma_ai and gemma_ai.has_method("move_manifestation"):
@@ -856,7 +876,7 @@ func _setup_universe_triggers() -> void:
 		"inspect_being": ["inspect being", "examine being", "analyze being"],
 		"socket_operations": ["mount socket", "swap socket", "list sockets"],
 		"macro_operations": ["record macro", "stop macro", "play macro", "list macros"]
-	}
+}
 
 func _process_enhanced_commands(message: String) -> bool:
 	"""Process enhanced commands - returns true if command was handled"""
@@ -889,17 +909,20 @@ func _handle_macro_commands(message: String) -> bool:
 	var action = parts[1]
 	match action:
 		"record":
+
 			var macro_name = parts[2] if parts.size() > 2 else "unnamed_macro"
 			_start_macro_recording(macro_name)
 		"stop":
 			_stop_macro_recording()
 		"play":
+
 			var macro_name = parts[2] if parts.size() > 2 else ""
 			_play_macro(macro_name)
 		"list":
 			_list_macros()
 		_:
 			add_message("system", "📝 Unknown macro action: " + action)
+
 	
 	return true
 
@@ -928,10 +951,12 @@ func _handle_slash_commands(message: String) -> bool:
 			_handle_reload_command(args)
 		_:
 			if enhanced_command_processor and enhanced_command_processor.has_method("execute_command"):
+
 				var result = enhanced_command_processor.execute_command(message.substr(1))
 				add_message("system", "🌟 " + str(result))
 			else:
 				add_message("system", "❌ Unknown command: " + command)
+	
 	
 	return true
 
@@ -939,14 +964,17 @@ func _handle_natural_trigger(trigger_type: String, message: String) -> bool:
 	"""Handle natural language triggers"""
 	match trigger_type:
 		"create_universe":
+
 			var universe_name = _extract_universe_name(message)
 			_create_universe_naturally(universe_name)
 		"list_universes":
 			_list_universes_naturally()
 		"enter_universe":
+
 			var universe_name = _extract_universe_name(message)
 			_enter_universe_naturally(universe_name)
 		"inspect_being":
+
 			var being_name = _extract_being_name(message)
 			_inspect_being_naturally(being_name)
 		"socket_operations":
@@ -995,6 +1023,7 @@ func _play_macro(macro_name: String) -> void:
 	
 	var macro_commands = recorded_macros[macro_name]
 	add_message("system", "▶️ Playing macro: " + macro_name + " (%d commands)" % macro_commands.size())
+
 	
 	for command in macro_commands:
 		# Simulate processing each command
@@ -1057,11 +1086,13 @@ func _handle_create_command(args: Array) -> void:
 		return
 	
 	if args[0] == "being":
+
 		var being_name = args[1] if args.size() > 1 else "Unnamed"
 		var being_type = args[2] if args.size() > 2 else "generic"
 		
 		# Try to create through SystemBootstrap
 		if SystemBootstrap and SystemBootstrap.has_method("create_universal_being"):
+
 			var new_being = SystemBootstrap.create_universal_being()
 			if new_being:
 				new_being.being_name = being_name
@@ -1092,6 +1123,7 @@ func _handle_count_command(args: Array) -> void:
 	
 	match what:
 		"beings":
+
 			var flood_gates = SystemBootstrap.get_flood_gates() if SystemBootstrap else null
 			if flood_gates:
 				var beings = flood_gates.get_all_beings()
@@ -1109,6 +1141,7 @@ func _handle_count_command(args: Array) -> void:
 				add_message("system", "🔢 Lines in %s: %d" % [target, line_count])
 			else:
 				add_message("system", "❌ File not found: " + target)
+	
 
 func _handle_execute_command(args: Array) -> void:
 	"""Handle execute command for GDScript code"""
@@ -1146,6 +1179,7 @@ func _handle_trigger_command(args: Array) -> void:
 	natural_language_triggers["custom"].append(word)
 	add_message("system", "🔮 Created trigger: Say '%s' to %s" % [word, action])
 
+
 func _handle_reload_command(args: Array) -> void:
 	"""Handle reload command"""
 	add_message("system", "🔄 Reloading systems...")
@@ -1166,6 +1200,7 @@ func _handle_macro_natural_language(message: String) -> void:
 	var lower_msg = message.to_lower()
 	
 	if "record" in lower_msg:
+
 		var macro_name = "spoken_macro_" + str(Time.get_ticks_msec())
 		_start_macro_recording(macro_name)
 	elif "stop recording" in lower_msg:

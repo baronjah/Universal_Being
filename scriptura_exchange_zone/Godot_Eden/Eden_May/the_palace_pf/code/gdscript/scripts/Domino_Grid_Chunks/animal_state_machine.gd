@@ -1,7 +1,7 @@
 # AnimalStateMachine.gd
-extends StateMachine
+extends \2
 
-class_name AnimalStateMachine
+class_name AnimalStateMachine_animalstatemachine_animalst
 
 # was _init, but its godot function
 func initialize(parent_entity):
@@ -36,7 +36,8 @@ class BaseState:
 		pass
 
 # Idle State
-class IdleState extends BaseState:
+class IdleState
+extends \2:
 	var idle_timer = 0.0
 	var idle_duration = 0.0
 	
@@ -72,7 +73,8 @@ class IdleState extends BaseState:
 			state_machine.change_state("wander")
 
 # Wander State
-class WanderState extends BaseState:
+class WanderState
+extends \2:
 	var move_timer = 0.0
 	var move_interval = 0.5
 	var wander_duration = 0.0
@@ -114,7 +116,7 @@ class WanderState extends BaseState:
 			var dir = directions[randi() % directions.size()]
 			var new_pos = Vector2i(animal.position.x + dir.x, animal.position.y + dir.y)
 			
-			var world = animal.get_node("/root/World")
+			var world = animal.get_node("root/World")
 			if world.is_valid_move(animal, new_pos.x, new_pos.y):
 				animal.move_to(new_pos)
 		
@@ -124,7 +126,8 @@ class WanderState extends BaseState:
 			state_machine.change_state("idle")
 
 # Seek Food State
-class SeekFoodState extends BaseState:
+class SeekFoodState
+extends \2:
 	var target_food = null
 	var path_refresh_timer = 0.0
 	var path_refresh_interval = 1.0

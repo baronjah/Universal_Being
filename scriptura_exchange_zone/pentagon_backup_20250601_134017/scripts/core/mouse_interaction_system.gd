@@ -4,8 +4,7 @@
 # PURPOSE: Allow clicking any object in the scene to inspect it
 # CREATED: 2025-05-24 - Interactive object inspection
 # ==================================================
-
-extends UniversalBeingBase
+extends \2
 # UI Elements
 var debug_panel: PanelContainer = null
 var debug_label: RichTextLabel = null
@@ -195,7 +194,7 @@ func _handle_mouse_click(mouse_pos: Vector2) -> void:
 	var to = from + camera.project_ray_normal(mouse_pos) * raycast_length
 	
 	# Perform raycast
-	var space_state = camera.get_world_3d().direct_space_state
+	var space_state = camera.get_viewport().get_world_3d().direct_space_state
 	var query = PhysicsRayQueryParameters3D.create(from, to)
 	query.collision_mask = 0xFFFFFFFF  # Check all layers
 	query.collide_with_areas = true
@@ -253,7 +252,7 @@ func _select_object(obj: Node) -> void:
 		print("[MouseInteraction] Selected: " + selected_object.name)
 		
 		# Show click feedback in console immediately
-		var console = get_node_or_null("/root/ConsoleManager")
+		var console = get_node_or_null("root/ConsoleManager")
 		if console and console.has_method("_print_to_console"):
 			console._print_to_console("🔍 CLICKED: " + selected_object.name + " (" + selected_object.get_class() + ")")
 			console._print_to_console("  Position: " + str(selected_object.position))
@@ -261,7 +260,7 @@ func _select_object(obj: Node) -> void:
 			console._print_to_console("  Use 'inspect_by_name " + selected_object.name + "' for details")
 		
 		# Try to use Enhanced Object Inspector
-		var inspector = get_node_or_null("/root/EnhancedObjectInspector")
+		var inspector = get_node_or_null("root/EnhancedObjectInspector")
 		if not inspector:
 			inspector = get_tree().get_first_node_in_group("object_inspector")
 		
@@ -278,7 +277,7 @@ func _clear_selection() -> void:
 	debug_panel.visible = false
 	
 	# Also close enhanced inspector
-	var inspector = get_node_or_null("/root/EnhancedObjectInspector")
+	var inspector = get_node_or_null("root/EnhancedObjectInspector")
 	if inspector and inspector.has_method("_on_close_pressed"):
 		inspector._on_close_pressed()
 	
@@ -329,7 +328,7 @@ func _update_debug_panel() -> void:
 	# Groups
 	var groups = selected_object.get_groups()
 	if groups.size() > 0:
-		info += "\n[b]Groups:[/b] " + ", ".join(groups) + "\n"
+		info += "\n[b]Groups:[/b] " + ", "." ".join(groups) + "\n"
 	
 	# Child count
 	var child_count = selected_object.get_child_count()
@@ -442,7 +441,7 @@ func _get_object_at_position(mouse_pos: Vector2) -> Dictionary:
 	var from = camera.project_ray_origin(mouse_pos)
 	var to = from + camera.project_ray_normal(mouse_pos) * raycast_length
 	
-	var space_state = camera.get_world_3d().direct_space_state
+	var space_state = camera.get_viewport().get_world_3d().direct_space_state
 	var query = PhysicsRayQueryParameters3D.create(from, to)
 	query.collision_mask = 0xFFFFFFFF
 	query.collide_with_areas = true
@@ -674,8 +673,8 @@ func _create_spell_effect(spell: String) -> void:
 func _find_dimensional_ragdoll() -> Node:
 	# Search for dimensional ragdoll system
 	var paths = [
-		"/root/MainGame/DimensionalRagdollSystem",
-		"/root/Main/DimensionalRagdollSystem",
+		"root/MainGame/DimensionalRagdollSystem",
+		"root/Main/DimensionalRagdollSystem",
 		"//DimensionalRagdollSystem"
 	]
 	

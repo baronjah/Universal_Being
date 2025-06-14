@@ -1,5 +1,5 @@
 # CelestialBodyCloseUp.gd in CelestialBodyCloseUp.tscn
-extends Node3D
+extends \2
 var planet_sprite: Sprite3D
 
 # Called when the node enters the scene tree for the first time.

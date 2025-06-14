@@ -1,4 +1,4 @@
-extends Spatial
+extends Node3D
 
 class_name Notepad3DVisualizer
 
@@ -30,25 +30,25 @@ export var dimension_colors = {
     "10D": Color(0.5, 0.5, 0.5), # Gray
     "11D": Color(0.9, 0.9, 0.9), # White
     "12D": Color(0.9, 0.9, 1.0)  # Light Blue
-}
+	}
 
 # ----- COMPONENT REFERENCES -----
 var main_camera: Camera
 var environment: Environment
 var world_environment: WorldEnvironment
 var light: DirectionalLight
-var word_parent: Spatial
-var connection_parent: Spatial
+var word_parent: Node3D
+var connection_parent: Node3D
 var ui_parent: Control
-var transition_effects: Spatial
+var transition_effects: Node3D
 var background: MeshInstance
 
 # ----- SYSTEM STATE -----
 var current_turn = 3
 var current_dimension = "3D"
 var current_symbol = "γ"
-var word_nodes = {}
-var connection_nodes = {}
+var word_nodes = {
+var connection_nodes = {
 var is_transitioning = false
 var transition_progress = 0.0
 var camera_target_position = Vector3(0, 5, 10)
@@ -126,11 +126,11 @@ func _input(event):
 # ----- SETUP FUNCTIONS -----
 func setup_scene():
     # Create node structure
-    word_parent = Spatial.new()
+    word_parent = Node3D.new()
     word_parent.name = "Words"
     add_child(word_parent)
     
-    connection_parent = Spatial.new()
+    connection_parent = Node3D.new()
     connection_parent.name = "Connections"
     add_child(connection_parent)
     
@@ -140,7 +140,7 @@ func setup_scene():
     ui_parent.anchor_bottom = 1.0
     add_child(ui_parent)
     
-    transition_effects = Spatial.new()
+    transition_effects = Node3D.new()
     transition_effects.name = "TransitionEffects"
     add_child(transition_effects)
     
@@ -241,7 +241,7 @@ func create_word_visualization(word_data):
         return word_nodes[word_data.id]
     
     # Create parent for this word
-    var word_node = Spatial.new()
+    var word_node = Node3D.new()
     word_node.name = "Word_" + word_data.id
     word_node.translation = word_data.position
     word_node.rotation = word_data.rotation
@@ -328,7 +328,7 @@ func create_word_visualization(word_data):
     shape.extents = Vector3(1, 1, 1) * word_data.size.length()
     collision.shape = shape
     
-    var area = Area.new()
+    var area = Area3D.new()
     area.add_child(collision)
     area.connect("input_event", self, "_on_word_input_event", [word_data.id])
     word_node.add_child(area)
@@ -416,7 +416,7 @@ func create_connection_visualization(connection_data):
         return null
     
     # Create connection visual
-    var connection_node = Spatial.new()
+    var connection_node = Node3D.new()
     connection_node.name = "Connection_" + connection_data.id
     connection_parent.add_child(connection_node)
     
@@ -515,6 +515,7 @@ func transition_to_dimension(dimension, symbol, turn):
         return false
     
     print("Transitioning to dimension: %s (Turn %d: %s)" % [dimension, turn, symbol])
+	}
     
     is_transitioning = true
     transition_progress = 0.0
@@ -576,65 +577,77 @@ func set_dimension_appearance(dimension):
     # Special dimension-specific settings
     match dimension:
         "1D":
+		}
             # Simple line world
             environment.fog_depth_begin = 10
             environment.fog_depth_end = 30
             light.light_energy = 0.5
         "2D":
+		
             # Flat world
             environment.fog_depth_begin = 15
             environment.fog_depth_end = 40
             light.light_energy = 0.7
         "3D":
+		
             # Standard 3D space
             environment.fog_depth_begin = 20
             environment.fog_depth_end = 60
             light.light_energy = 1.0
         "4D":
+		
             # Time dimension - more dynamic
             environment.fog_depth_begin = 25
             environment.fog_depth_end = 70
             light.light_energy = 1.2
             # Add time dilation effect
         "5D":
+		
             # Consciousness - mental space
             environment.fog_depth_begin = 30
             environment.fog_depth_end = 80
             light.light_energy = 1.3
             environment.dof_blur_far_amount = 0.2
         "6D":
+		
             # Connection dimension
             environment.fog_depth_begin = 30
             environment.fog_depth_end = 100
             light.light_energy = 1.0
         "7D":
+		
             # Creation dimension
             environment.fog_depth_begin = 40
             environment.fog_depth_end = 120
             light.light_energy = 1.5
         "8D":
+		
             # Network dimension
             environment.fog_depth_begin = 50
             environment.fog_depth_end = 150
             light.light_energy = 1.2
         "9D":
+		
             # Harmony dimension
             environment.fog_depth_begin = 70
             environment.fog_depth_end = 200
             light.light_energy = 1.0
         "10D":
+		
             # Unity dimension
             environment.fog_depth_begin = 100
             environment.fog_depth_end = 300
             light.light_energy = 1.8
             environment.dof_blur_far_amount = 0.05
         "11D":
+		
             # Transcendence dimension
             environment.fog_depth_begin = 200
             environment.fog_depth_end = 500
             light.light_energy = 2.0
             environment.dof_blur_far_amount = 0.0
         "12D":
+		
             # Beyond dimension
             environment.fog_depth_begin = 500
             environment.fog_depth_end = 1000
@@ -839,4 +852,3 @@ func get_current_dimension():
         "dimension": current_dimension,
         "symbol": current_symbol,
         "turn": current_turn
-    }

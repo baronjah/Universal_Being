@@ -29,7 +29,6 @@ const COLOR_HARMONICS = {
 	"TERITARY": {
 		"frequencies": [33, 66, 166, 233, 266, 299, 399, 466, 499, 533, 599, 633, 666, 699, 833, 866, 899, 933, 966],
 		"colors": []  # Generated in _ready()
-	}
 }
 
 # ----- MESH CONSTANTS -----
@@ -47,10 +46,10 @@ const DEFAULT_PULSE_FREQUENCY = 4.0 # Hz
 const DEFAULT_AMPLITUDE = 0.2
 
 # ----- FREQUENCY MAPPINGS -----
-var frequency_color_map = {}
-var mesh_point_map = {}
-var animation_timers = {}
-var active_animations = {}
+var frequency_color_map = {
+var mesh_point_map = {
+var animation_timers = {
+var active_animations = {
 
 # ----- COLOR PALETTES -----
 var color_palettes = {
@@ -492,7 +491,7 @@ func start_pulse_animation(frequency: int, duration: float = DEFAULT_ANIMATION_D
 		"target_color": target_color,
 		"current_color": base_color,
 		"elapsed_time": 0.0
-	}
+}
 	
 	emit_signal("animation_started", animation_id, frequency)
 	
@@ -514,7 +513,7 @@ func start_fade_animation(frequency: int, target_color: Color, duration: float =
 		"end_color": target_color,
 		"current_color": start_color,
 		"elapsed_time": 0.0
-	}
+}
 	
 	emit_signal("animation_started", animation_id, frequency)
 	
@@ -537,7 +536,7 @@ func start_cycle_animation(frequency: int, palette_name: String = "default", dur
 		"cycle_speed": cycle_speed,
 		"current_color": start_color,
 		"elapsed_time": 0.0
-	}
+}
 	
 	emit_signal("animation_started", animation_id, frequency)
 	
@@ -560,7 +559,7 @@ func start_rainbow_animation(frequency: int, duration: float = DEFAULT_ANIMATION
 		"brightness": brightness,
 		"current_color": start_color,
 		"elapsed_time": 0.0
-	}
+}
 	
 	emit_signal("animation_started", animation_id, frequency)
 	
@@ -600,7 +599,7 @@ func start_mesh_point_animation(frequency: int, duration: float = DEFAULT_ANIMAT
 		"highlight_color": highlight_color,
 		"current_color": base_color,
 		"elapsed_time": 0.0
-	}
+}
 	
 	emit_signal("animation_started", animation_id, frequency)
 	emit_signal("mesh_point_activated", point_type, frequency)
@@ -747,7 +746,7 @@ func animate_text_typing(text: String, base_freq: int = 120, duration: float = 2
 		"delay_per_char": delay_per_char,
 		"current_char": 0,
 		"elapsed_time": 0.0
-	}
+}
 	
 	emit_signal("animation_started", animation_id, base_freq)
 
@@ -770,7 +769,7 @@ func highlight_mesh_corners(duration: float = 5.0) -> void:
 func get_mesh_visualization_colors() -> Dictionary:
 	# Return colors for mesh visualization
 	return {
-		"centers": [
+		"centers": [}
 			get_color_for_frequency(MESH_HARMONIC_POINTS.CENTERS[0]),
 			get_color_for_frequency(MESH_HARMONIC_POINTS.CENTERS[1]),
 			get_color_for_frequency(MESH_HARMONIC_POINTS.CENTERS[2])
@@ -787,7 +786,6 @@ func get_mesh_visualization_colors() -> Dictionary:
 			get_color_for_frequency(MESH_HARMONIC_POINTS.CORNERS[1]),
 			get_color_for_frequency(MESH_HARMONIC_POINTS.CORNERS[2])
 		]
-	}
 
 # ----- ETHEREAL INTEGRATION -----
 func sync_with_ethereal_bridge() -> bool:
@@ -796,10 +794,12 @@ func sync_with_ethereal_bridge() -> bool:
 	
 	# Get dimensional data from ethereal bridge
 	if ethereal_bridge.has_method("get_active_dimensions"):
+}
 		var active_dimensions = ethereal_bridge.get_active_dimensions()
 		
 		for dim_data in active_dimensions:
 			if dim_data.has("frequency"):
+}
 				var freq = int(dim_data.frequency * 1000) # Convert 0-1 to 0-1000
 				freq = clamp(freq, MIN_FREQUENCY, MAX_FREQUENCY)
 				
@@ -837,7 +837,7 @@ func get_frequency_info(frequency: int) -> Dictionary:
 		"is_harmonic": is_harmonic,
 		"harmonic_type": harmonic_type,
 		"has_active_animation": _frequency_has_animation(frequency)
-	}
+}
 
 func _frequency_has_animation(frequency: int) -> bool:
 	for animation_id in active_animations:

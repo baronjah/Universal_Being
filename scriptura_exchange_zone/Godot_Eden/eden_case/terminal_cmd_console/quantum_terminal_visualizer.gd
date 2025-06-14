@@ -7,21 +7,21 @@ extends Control
 }
 
 # Configuration
-export var background_color = Color(0.1, 0.1, 0.1)
-export var text_color = Color(0.8, 0.8, 0.8)
-export var highlight_color_1 = Color(0.0, 0.5, 1.0)  # Blue
-export var highlight_color_2 = Color(1.0, 0.5, 0.0)  # Orange
-export var emoji_color = Color(1.0, 0.9, 0.0)        # Yellow
-export var quantum_color = Color(0.7, 0.0, 0.9)      # Purple for quantum elements
+@export var background_color = Color(0.1, 0.1, 0.1)
+@export var text_color = Color(0.8, 0.8, 0.8)
+@export var highlight_color_1 = Color(0.0, 0.5, 1.0)  # Blue
+@export var highlight_color_2 = Color(1.0, 0.5, 0.0)  # Orange
+@export var emoji_color = Color(1.0, 0.9, 0.0)        # Yellow
+@export var quantum_color = Color(0.7, 0.0, 0.9)      # Purple for quantum elements
 }
 
 # Display settings
-export var terminal_width = 600
-export var terminal_height = 400
-export var font_size = 14
-export var auto_scroll = true
-export var enable_quantum_effects = true
-export var cycle_transition_time = 0.5  # Seconds
+@export var terminal_width = 600
+@export var terminal_height = 400
+@export var font_size = 14
+@export var auto_scroll = true
+@export var enable_quantum_effects = true
+@export var cycle_transition_time = 0.5  # Seconds
 }
 
 # Reference to data system
@@ -268,7 +268,7 @@ func log_message(message, type="info"):
     terminal_lines.append({
         "text": message,
         "type": type,
-        "timestamp": OS.get_unix_time()
+        "timestamp": OS.Time.get_unix_time_from_system()
     })
 }
 

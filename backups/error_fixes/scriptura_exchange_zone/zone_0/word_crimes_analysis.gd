@@ -101,18 +101,18 @@ func initialize_connections():
 	word_dream_storage = get_node_or_null("/root/WordDreamStorage")
 	
 	if divine_word_processor:
-		divine_word_processor.connect("word_processed", self, "_on_word_processed")
+		divine_word_processor.connect(_on_word_processed)
 	
 	if turn_system:
-		turn_system.connect("turn_completed", self, "_on_turn_completed")
-		turn_system.connect("dimension_changed", self, "_on_dimension_changed")
+		turn_system.connect(_on_turn_completed)
+		turn_system.connect(_on_dimension_changed)
 	
 	if word_salem_controller:
-		word_salem_controller.connect("word_crime_detected", self, "_on_salem_crime_detected")
+		word_salem_controller.connect(_on_salem_crime_detected)
 	
 	if word_comment_system:
-		word_comment_system.connect("comment_added", self, "_on_comment_added")
-		word_comment_system.connect("defense_registered", self, "_on_defense_registered")
+		word_comment_system.connect(_on_comment_added)
+		word_comment_system.connect(_on_defense_registered)
 
 func initialize_dimension_tracking():
 	# Reset dimension influence tracking
@@ -630,7 +630,7 @@ func analyze_dangerous_combinations():
 			})
 	
 	# Sort by average power, descending
-	dangerous_combinations.sort_custom(self, "sort_by_power_descending")
+	dangerous_combinations.sort_custom(self."sort_by_power_descending")
 	
 	# Log the top dangerous combinations
 	for i in range(min(5, dangerous_combinations.size())):
@@ -686,7 +686,7 @@ func load_crime_ledger():
 	
 	while not file.eof_reached():
 		var line = file.get_line()
-		if line.strip_edges().empty():
+		if line.strip_edges().is_empty():
 			continue
 		
 		var json_result = JSON.parse(line)
@@ -736,7 +736,7 @@ func save_to_crime_ledger(crime, update=false):
 		
 		while not file.eof_reached():
 			var line = file.get_line()
-			if line.strip_edges().empty():
+			if line.strip_edges().is_empty():
 				temp_file.store_line("")
 				continue
 			

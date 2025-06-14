@@ -93,7 +93,7 @@ var config = {
 
 func _ready():
     # Generate unique system ID if not already set
-    if system_id.empty():
+    if system_id.is_empty():
         system_id = _generate_system_id()
     
     # Load configuration
@@ -431,7 +431,7 @@ func transfer_through_cross_device_tunnel(tunnel_id, content, source_device_id =
         return false
     
     // Validate source device if specified
-    if not source_device_id.empty():
+    if not source_device_id.is_empty():
         if not connected_devices.has(source_device_id):
             emit_signal("cross_sync_status", "error", "Source device not connected: " + source_device_id)
             return false
@@ -458,7 +458,7 @@ func transfer_through_cross_device_tunnel(tunnel_id, content, source_device_id =
         elif device_anchors[device_id] == target_anchor:
             target_device = device_id
     
-    if source_device.empty() or target_device.empty():
+    if source_device.is_empty() or target_device.is_empty():
         emit_signal("cross_sync_status", "error", "Could not identify devices for tunnel: " + tunnel_id)
         return false
     
@@ -495,10 +495,10 @@ func _initialize_websocket():
     websocket_server.ssl_certificate = null // Set actual cert path if needed
     
     // Connect signals
-    websocket_server.connect("client_connected", self, "_on_client_connected")
-    websocket_server.connect("client_disconnected", self, "_on_client_disconnected")
-    websocket_server.connect("client_close_request", self, "_on_client_close_request")
-    websocket_server.connect("data_received", self, "_on_data_received")
+    websocket_server.connect(_on_client_connected)
+    websocket_server.connect(_on_client_disconnected)
+    websocket_server.connect(_on_client_close_request)
+    websocket_server.connect(_on_data_received)
     
     // Start server
     var err = websocket_server.listen(config.websocket_port)
@@ -669,8 +669,8 @@ func _initialize_claude_bridge():
         add_child(claude_bridge)
         
         // Connect signals
-        claude_bridge.connect("api_connected", self, "_on_claude_api_connected")
-        claude_bridge.connect("api_error", self, "_on_claude_api_error")
+        claude_bridge.connect(_on_claude_api_connected)
+        claude_bridge.connect(_on_claude_api_error)
         
         // Initialize connection
         claude_bridge.initialize()
@@ -841,7 +841,7 @@ func _handle_tunnel_request(client_id, message):
             device_id = id
             break
     
-    if device_id.empty():
+    if device_id.is_empty():
         print("Tunnel request from unidentified client: ", client_id)
         return
     
@@ -871,7 +871,7 @@ func _handle_sync_request(client_id, message):
             device_id = id
             break
     
-    if device_id.empty():
+    if device_id.is_empty():
         print("Sync request from unidentified client: ", client_id)
         return
     

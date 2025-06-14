@@ -1,5 +1,5 @@
 extends Node
-class_name VRSceneSetup
+class_name VRSceneSetup_vrscenesetup_vrscenes
 
 # References to managers
 var vr_manager = null
@@ -65,7 +65,7 @@ func _setup_universe_controller():
 	
 	if not universe_controller:
 		# Create a new one
-		var UniverseControllerScript = load("res://code/gdscript/scripts/universe_particles_physics/universe_controller.gd")
+		var UniverseControllerScript = load("res://scripts/gdscript/scripts/universe_particles_physics/universe_controller.gd")
 		universe_controller = UniverseControllerScript.new()
 		universe_controller.name = "UniverseController"
 		add_child(universe_controller)
@@ -91,7 +91,7 @@ func _setup_vr_akashic_interface():
 
 # Setup the connection between Universe and Dictionary
 func _setup_universe_dictionary_bridge():
-	var BridgeScript = load("res://code/gdscript/scripts/universe_particles_physics/universe_dictionary_bridge.gd")
+	var BridgeScript = load("res://scripts/gdscript/scripts/universe_particles_physics/universe_dictionary_bridge.gd")
 	var bridge = BridgeScript.new()
 	bridge.name = "UniverseDictionaryBridge"
 	

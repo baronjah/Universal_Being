@@ -63,20 +63,20 @@ var metrics = {
 	"total_words_processed": 0,
 	"power_by_dimension": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
 	"crime_frequency": {},
-	"player_power_levels": {}
+	"player_power_levels": {
 }
 
 # Statistical tracking
 var word_history = []
 var crime_history = []
-var word_combinations = {}
+var word_combinations = {
 var dimension_influence = []
 
 # ----- CRIME RECORDS -----
 var crime_ledger = []
-var criminal_records = {}
-var pattern_violations = {}
-var active_judgments = {}
+var criminal_records = {
+var pattern_violations = {
+var active_judgments = {
 
 # ----- SIGNALS -----
 signal word_crime_detected(criminal, crime_type, word_power)
@@ -101,18 +101,18 @@ func initialize_connections():
 	word_dream_storage = get_node_or_null("/root/WordDreamStorage")
 	
 	if divine_word_processor:
-		divine_word_processor.connect("word_processed", self, "_on_word_processed")
+		divine_word_processor.connect(_on_word_processed)
 	
 	if turn_system:
-		turn_system.connect("turn_completed", self, "_on_turn_completed")
-		turn_system.connect("dimension_changed", self, "_on_dimension_changed")
+		turn_system.connect(_on_turn_completed)
+		turn_system.connect(_on_dimension_changed)
 	
 	if word_salem_controller:
-		word_salem_controller.connect("word_crime_detected", self, "_on_salem_crime_detected")
+		word_salem_controller.connect(_on_salem_crime_detected)
 	
 	if word_comment_system:
-		word_comment_system.connect("comment_added", self, "_on_comment_added")
-		word_comment_system.connect("defense_registered", self, "_on_defense_registered")
+		word_comment_system.connect(_on_comment_added)
+		word_comment_system.connect(_on_defense_registered)
 
 func initialize_dimension_tracking():
 	# Reset dimension influence tracking
@@ -125,7 +125,7 @@ func initialize_dimension_tracking():
 			"avg_power": 0,
 			"max_power": 0,
 			"crime_count": 0,
-			"transitions": {}
+			"transitions": {
 		})
 
 # ----- CRIME DETECTION -----
@@ -223,7 +223,7 @@ func record_crime(word, crime_type, power, criminal):
 		"judged": false,
 		"verdict": null,
 		"punishment": null
-	}
+}
 	
 	# Add to crime ledger
 	crime_ledger.append(crime)
@@ -273,7 +273,7 @@ func issue_judgment(crime_id, verdict, punishment, judge="System"):
 		"timestamp": OS.get_unix_time(),
 		"executed": false,
 		"active": true
-	}
+}
 	
 	active_judgments[crime_id] = judgment
 	
@@ -341,7 +341,7 @@ func _on_word_processed(word, power, source_player):
 			"word_count": 0,
 			"avg_power": 0,
 			"max_power": 0
-		}
+}
 	
 	var player_stats = metrics.player_power_levels[source_player]
 	player_stats.total_power += power
@@ -396,7 +396,7 @@ func check_word_combinations(new_word, new_power, source_player):
 					"count": 0,
 					"total_power": 0,
 					"avg_power": 0
-				}
+	}
 			
 			word_combinations[combination].count += 1
 			word_combinations[combination].total_power += new_power
@@ -457,7 +457,7 @@ func detect_sequence_patterns(words):
 	var patterns = []
 	
 	# Check for repeating words
-	var word_counts = {}
+	var word_counts = {
 	for word in words:
 		if not word_counts.has(word):
 			word_counts[word] = 0
@@ -522,6 +522,7 @@ func _on_dimension_changed(new_dimension, old_dimension):
 		for crime in recent_crimes:
 			if not crime.has("judged") or not crime.judged:
 				if not crime.has("pardoned") or not crime.pardoned:
+	}
 					# In dimension 9, auto-judges minor crimes only
 					if crime.type == CrimeType.MINOR:
 						issue_judgment(crime.id, "Guilty", "Linguistic Correction Required", "Dimension 9 Arbiter")
@@ -533,6 +534,7 @@ func _on_comment_added(word, comment_text, type):
 		var criminal = "Unknown"
 		
 		if comment_text.to_lower().find("by ") >= 0:
+}
 			var parts = comment_text.split("by ", true, 1)
 			if parts.size() > 1:
 				criminal = parts[1].strip_edges()
@@ -552,6 +554,7 @@ func _on_defense_registered(word, defense_text):
 	
 	for crime in crime_ledger:
 		if crime.word == word and not (crime.has("pardoned") and crime.pardoned):
+}
 			# If a defense is registered and we're in dimension 9, consider pardon
 			if turn_system and turn_system.current_dimension == 9:
 				# 50% chance of pardon for minor crimes with defense
@@ -579,6 +582,7 @@ func _on_salem_crime_detected(criminal, crime_type, word_power):
 		"moderate": crime_enum = CrimeType.MODERATE
 		"major": crime_enum = CrimeType.MAJOR
 		"cosmic": crime_enum = CrimeType.COSMIC
+}
 	
 	# Create a corresponding crime in our system
 	record_crime("salem_crime_" + str(OS.get_unix_time()), crime_enum, word_power, criminal)
@@ -630,7 +634,7 @@ func analyze_dangerous_combinations():
 			})
 	
 	# Sort by average power, descending
-	dangerous_combinations.sort_custom(self, "sort_by_power_descending")
+	dangerous_combinations.sort_custom(self."sort_by_power_descending")
 	
 	# Log the top dangerous combinations
 	for i in range(min(5, dangerous_combinations.size())):
@@ -643,6 +647,7 @@ func log_potential_abuse(player_name, player_avg, global_avg):
 	print("WARNING: Potential power abuse by player " + player_name + 
 		". Average word power: " + str(player_avg) + 
 		" (Global average: " + str(global_avg) + ")")
+}
 	
 	# Add to crime history
 	crime_history.append({
@@ -677,6 +682,7 @@ func log_dangerous_combination(combination_data):
 func load_crime_ledger():
 	var file = File.new()
 	var ledger_path = "user://word_crimes_ledger.txt"
+}
 	
 	if not file.file_exists(ledger_path):
 		print("Crime ledger not found. Starting with empty ledger.")
@@ -686,7 +692,7 @@ func load_crime_ledger():
 	
 	while not file.eof_reached():
 		var line = file.get_line()
-		if line.strip_edges().empty():
+		if line.strip_edges().is_empty():
 			continue
 		
 		var json_result = JSON.parse(line)
@@ -715,9 +721,10 @@ func load_crime_ledger():
 						"timestamp": crime.judgment_timestamp if crime.has("judgment_timestamp") else crime.timestamp,
 						"executed": false,
 						"active": true
-					}
+}
 		else:
 			print("Error parsing crime record: " + json_result.error_string)
+}
 	
 	file.close()
 	print("Loaded " + str(crime_ledger.size()) + " crimes from ledger")
@@ -725,18 +732,20 @@ func load_crime_ledger():
 func save_to_crime_ledger(crime, update=false):
 	var file = File.new()
 	var ledger_path = "user://word_crimes_ledger.txt"
+}
 	
 	if update:
 		# For updates, we need to update the specific line
 		var temp_file = File.new()
 		var temp_path = "user://word_crimes_ledger_temp.txt"
+
 		
 		file.open(ledger_path, File.READ)
 		temp_file.open(temp_path, File.WRITE)
 		
 		while not file.eof_reached():
 			var line = file.get_line()
-			if line.strip_edges().empty():
+			if line.strip_edges().is_empty():
 				temp_file.store_line("")
 				continue
 			
@@ -843,6 +852,7 @@ func get_crime_risk_level(word, power):
 func export_crime_ledger():
 	var report = "# WORD CRIMES LEDGER\n"
 	report += "Generated: " + str(OS.get_datetime()) + "\n\n"
+
 	
 	report += "## CRIME STATISTICS\n"
 	report += "- Total Crimes: " + str(crime_ledger.size()) + "\n"
@@ -850,12 +860,14 @@ func export_crime_ledger():
 	report += "- Moderate Crimes: " + str(get_crimes_by_type(CrimeType.MODERATE).size()) + "\n"
 	report += "- Major Offenses: " + str(get_crimes_by_type(CrimeType.MAJOR).size()) + "\n"
 	report += "- Cosmic Crimes: " + str(get_crimes_by_type(CrimeType.COSMIC).size()) + "\n\n"
+
 	
 	# Known criminals
 	report += "## KNOWN OFFENDERS\n"
 	for criminal in criminal_records:
 		report += "### " + criminal + "\n"
 		report += "- Total Offenses: " + str(criminal_records[criminal].size()) + "\n"
+
 		
 		var minor = 0
 		var moderate = 0
@@ -873,6 +885,7 @@ func export_crime_ledger():
 		report += "- Moderate: " + str(moderate) + "\n"
 		report += "- Major: " + str(major) + "\n"
 		report += "- Cosmic: " + str(cosmic) + "\n\n"
+
 	
 	# Recent judgments
 	report += "## RECENT JUDGMENTS\n"
@@ -880,8 +893,10 @@ func export_crime_ledger():
 	
 	for crime in crime_ledger:
 		if crime.has("judged") and crime.judged and crime.has("verdict"):
+
 			var date = OS.get_datetime_from_unix_time(crime.judgment_timestamp if crime.has("judgment_timestamp") else crime.timestamp)
 			var date_str = "%04d-%02d-%02d %02d:%02d:%02d" % [date.year, date.month, date.day, date.hour, date.minute, date.second]
+
 			
 			report += "### Crime: " + crime.id + "\n"
 			report += "- Word: " + crime.word + "\n"
@@ -890,6 +905,7 @@ func export_crime_ledger():
 			report += "- Verdict: " + crime.verdict + "\n"
 			report += "- Punishment: " + crime.punishment + "\n"
 			report += "- Date: " + date_str + "\n\n"
+
 			
 			judgments_listed += 1
 			if judgments_listed >= 10:  # List at most 10 recent judgments
@@ -908,7 +924,7 @@ func get_player_crime_summary(player_name):
 	
 	# Calculate summary statistics
 	var total_crimes = crimes.size()
-	var crime_types = {}
+	var crime_types = {
 	var most_recent = null
 	var highest_power = 0
 	var highest_power_crime = null
@@ -938,7 +954,7 @@ func get_player_crime_summary(player_name):
 		"most_recent": most_recent,
 		"highest_power_crime": highest_power_crime,
 		"highest_power": highest_power
-	}
+}
 
 func get_dimension_crime_report():
 	var report = []
@@ -960,7 +976,7 @@ func get_evidence_for_trial(accused_player):
 		"word_history": [],
 		"dangerous_patterns": [],
 		"dimension_influence": []
-	}
+}
 	
 	# Get the player's word history
 	for entry in word_history:
@@ -1059,4 +1075,3 @@ func detect_divine_word_pattern(words):
 		"ascending_dimension": ascending_dimension,
 		"nine_pattern": nine_pattern,
 		"has_cosmic": has_cosmic
-	}

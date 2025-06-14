@@ -363,7 +363,7 @@ class NamingConverter:
                     else:
                         current_part += c
                 
-                if not current_part.empty():
+                if not current_part.is_empty():
                     parts.append(current_part)
                 
                 return parts
@@ -381,7 +381,7 @@ class NamingConverter:
                     else:
                         current_part += c
                 
-                if not current_part.empty():
+                if not current_part.is_empty():
                     parts.append(current_part)
                 
                 return parts
@@ -698,16 +698,16 @@ func create_core_integrations():
             ethereal_id = comp_id
     
     # Create integrations between components
-    if not memory_id.empty() and not yoyo_id.empty():
+    if not memory_id.is_empty() and not yoyo_id.is_empty():
         create_integration(memory_id, yoyo_id)
     
-    if not memory_id.empty() and not animation_id.empty():
+    if not memory_id.is_empty() and not animation_id.is_empty():
         create_integration(memory_id, animation_id)
     
-    if not small_big_id.empty() and not naming_id.empty():
+    if not small_big_id.is_empty() and not naming_id.is_empty():
         create_integration(small_big_id, naming_id)
     
-    if not ethereal_id.empty() and not integration_id.empty():
+    if not ethereal_id.is_empty() and not integration_id.is_empty():
         create_integration(ethereal_id, integration_id)
 
 # Animation Management

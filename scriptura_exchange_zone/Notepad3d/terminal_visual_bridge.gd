@@ -1,6 +1,6 @@
 extends Node
 
-class_name TerminalVisualBridge
+class_name TerminalVisualBridge_terminalvisualbridge_terminal
 
 # Constants for universe identification and connection
 const UNIVERSE_389 = "UNIVERSE_389"

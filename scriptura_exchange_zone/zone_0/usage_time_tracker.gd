@@ -1,15 +1,15 @@
 extends Node
 
-class_name UsageTimeTracker
+class_name UsageTimeTracker_usagetimetracker_usagetim
 
 # ----- TIME TRACKING SETTINGS -----
 @export_category("Usage Time Settings")
-@export var tracking_enabled: bool = true
-@export var hourly_limit: float = 1.0  # Limit in hours
-@export var show_notifications: bool = true
-@export var auto_save_interval: float = 60.0  # Save every minute
-@export var max_log_lines: int = 888  # Maximum log lines for lucky purposes
-@export var lucky_number: int = 1333  # Lucky number for special features
+@@export var tracking_enabled: bool = true
+@@export var hourly_limit: float = 1.0  # Limit in hours
+@@export var show_notifications: bool = true
+@@export var auto_save_interval: float = 60.0  # Save every minute
+@@export var max_log_lines: int = 888  # Maximum log lines for lucky purposes
+@@export var lucky_number: int = 1333  # Lucky number for special features
 
 # ----- TIME TRACKING VARIABLES -----
 var current_session_time: float = 0.0

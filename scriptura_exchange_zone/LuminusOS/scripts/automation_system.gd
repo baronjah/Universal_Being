@@ -1,6 +1,6 @@
 extends Node
 
-class_name AutomationSystem
+class_name AutomationSystem_automationsystem_automati
 
 # Central automation system for LuminusOS
 # Coordinates ticking between all subsystems

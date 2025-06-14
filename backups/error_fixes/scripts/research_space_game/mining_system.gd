@@ -11,7 +11,7 @@ signal mining_tool_upgraded(tool_type: String, level: int)
 var mining_tools: Dictionary = {
 	"basic_laser": {"power": 1.0, "efficiency": 0.5, "range": 50.0},
 	"advanced_laser": {"power": 2.5, "efficiency": 0.7, "range": 75.0},
-	"quantum_drill": {"power": 5.0, "efficiency": 0.9, "range": 100.0}
+	"quantum_drill": {"power": 5.0, "efficiency": 0.9, "range": 100.0
 }
 
 var current_tool: String = "basic_laser"
@@ -23,7 +23,7 @@ var consciousness_ores: Dictionary = {
 	"Resonite": {"frequency": 432.0, "consciousness_boost": 0.1},
 	"Voidstone": {"frequency": 0.0, "consciousness_boost": -0.05},
 	"Stellarium": {"frequency": 528.0, "consciousness_boost": 0.2},
-	"Akashite": {"frequency": 963.0, "consciousness_boost": 0.3}
+	"Akashite": {"frequency": 963.0, "consciousness_boost": 0.3
 }
 
 class Asteroid:
@@ -54,11 +54,12 @@ func initialize_mining_system():
 		"Iron": 0.0,
 		"Nickel": 0.0,
 		"Platinum": 0.0
-	}
+}
 	
 func start_mining(asteroid: Asteroid) -> Dictionary:
 	if not asteroid:
-		return {"success": false, "reason": "No target"}
+		return {"success": false, "reason": "No target"
+}
 		
 	mining_started.emit(asteroid)
 	
@@ -67,7 +68,7 @@ func start_mining(asteroid: Asteroid) -> Dictionary:
 	var extraction_rate = tool_stats["efficiency"]
 	
 	# Calculate ore extraction
-	var extracted_ores = {}
+	var extracted_ores = {
 	for ore_type in asteroid.ore_composition:
 		var available = asteroid.ore_composition[ore_type]
 		var extracted = min(available, mining_power * extraction_rate)
@@ -88,15 +89,16 @@ func start_mining(asteroid: Asteroid) -> Dictionary:
 			
 	asteroid.total_ore -= extracted_ores.values().reduce(func(a, b): return a + b, 0.0)
 	
-	return {"success": true, "extracted": extracted_ores}
+	return {"success": true, "extracted": extracted_ores
+}
 	
 func scan_asteroid(asteroid: Asteroid) -> Dictionary:
-	# Scanning reveals composition and increases yield
+	# Scanning reveals composition and increases await
 	var scan_results = {
 		"composition": asteroid.ore_composition.duplicate(),
 		"total_ore": asteroid.total_ore,
 		"consciousness_signature": false
-	}
+}
 	
 	# Check for consciousness ores
 	for ore_type in asteroid.ore_composition:
@@ -109,24 +111,25 @@ func scan_asteroid(asteroid: Asteroid) -> Dictionary:
 	
 func refine_ore(ore_type: String, amount: float) -> Dictionary:
 	if not ore_inventory.has(ore_type) or ore_inventory[ore_type] < amount:
-		return {"success": false, "reason": "Insufficient ore"}
+		return {"success": false, "reason": "Insufficient ore"
+}
 		
 	ore_inventory[ore_type] -= amount
 	
 	# Refining process
 	var refined_output = amount * 0.8  # 80% efficiency
-	var byproducts = {}
+	var byproducts = {
 	
 	# Special refining for consciousness ores
 	if ore_type in consciousness_ores:
-		refined_output *= 0.5  # Lower yield but special properties
+		refined_output *= 0.5  # Lower await but special properties
 		byproducts["Consciousness Essence"] = amount * 0.1
 		
 	return {
 		"success": true,
 		"refined": refined_output,
 		"byproducts": byproducts
-	}
+}
 	
 func upgrade_mining_tool(tool_type: String):
 	if mining_tools.has(tool_type):
@@ -261,9 +264,9 @@ func _setup_collision():
 
 func mine(mining_power: float) -> Dictionary:
 	if is_depleted:
-		return {}
+		return {
 	
-	# Calculate mined amount
+	# Calculate mined amount}
 	var efficiency = mining_power / mining_difficulty
 	var mined = min(resource_amount, 10.0 * efficiency)
 	resource_amount -= mined
@@ -282,7 +285,7 @@ func mine(mining_power: float) -> Dictionary:
 		_start_respawn_timer()
 	
 	# Return mined resources
-	var result = {}
+	var result = {
 	result[resource_type] = mined
 	resource_mined.emit(mined, resource_type)
 	

@@ -7,11 +7,12 @@ extends Node
 # Supports local, project, Claude, and Google Drive storage modes
 }
 
-class_name SecondaryStorageSystem
+class_name SecondaryStorageSystem_secondarystoragesystem_secondar
 }
 
 # Storage types
-enum StorageType {
+enum \2 {
+
 	LOCAL,
 	PROJECT,
 	CLAUDE,
@@ -21,7 +22,8 @@ enum StorageType {
 }
 
 # Data persistence levels
-enum PersistenceLevel {
+enum \2 {
+
 	TEMPORARY,    # Session only
 	STANDARD,     # Normal persistence
 	RESILIENT,    # Enhanced persistence with redundancy
@@ -30,7 +32,8 @@ enum PersistenceLevel {
 }
 
 # Data change states
-enum ChangeState {
+enum \2 {
+
 	UNCHANGED,
 	MODIFIED,
 	CONFLICTED,
@@ -114,12 +117,12 @@ class ChangeTracker:
 
 	func _init(p_path: String):
 		file_path = p_path
-		last_modified = OS.get_unix_time()
+		last_modified = OS.Time.get_unix_time_from_system()
 }
 
 	func mark_modified():
 		change_state = ChangeState.MODIFIED
-		last_modified = OS.get_unix_time()
+		last_modified = OS.Time.get_unix_time_from_system()
 		version += 1
 }
 
@@ -177,7 +180,7 @@ signal fluctuation_detected(file_paths)
 
 func _ready():
 	# Look for terminal and drive connector
-	terminal = get_node_or_null("/root/IntegratedTerminal")
+	terminal = get_node_or_null("root/IntegratedTerminal")
 }
 
 	if terminal:
@@ -360,7 +363,7 @@ func process_system_storage_command(args):
 			reset_storage_system()
 		"purge":
 			purge_storage(subargs)
-		"export":
+		"@@@export":
 			export_storage_config(subargs)
 		"import":
 			import_storage_config(subargs)
@@ -497,13 +500,13 @@ func backup_data(target=""):
 				backup_count += 1
 }
 
-		last_backup_time = OS.get_unix_time()
+		last_backup_time = OS.Time.get_unix_time_from_system()
 		log_message("Backup completed to " + str(backup_count) + " storage locations.", "storage")
 		emit_signal("backup_completed", backup_count)
 	elif storage_locations.has(target):
 		# Back up to specific storage
 		_backup_to_storage(target)
-		last_backup_time = OS.get_unix_time()
+		last_backup_time = OS.Time.get_unix_time_from_system()
 		log_message("Backup completed to " + target + ".", "storage")
 		emit_signal("backup_completed", 1)
 	else:
@@ -929,7 +932,7 @@ func _sync_single_storage(name: String):
 	# For this mock-up, we'll simulate it
 }
 
-	storage.last_sync = OS.get_unix_time()
+	storage.last_sync = OS.Time.get_unix_time_from_system()
 }
 
 	# Update stats
@@ -1056,7 +1059,7 @@ func _format_timestamp(timestamp: int) -> String:
 		return "Never"
 }
 
-	var delta = OS.get_unix_time() - timestamp
+	var delta = OS.Time.get_unix_time_from_system() - timestamp
 }
 
 	if delta < 60:
@@ -1095,7 +1098,7 @@ func _check_backup_timer():
 		return
 }
 
-	var current_time = OS.get_unix_time()
+	var current_time = OS.Time.get_unix_time_from_system()
 }
 
 	if current_time - last_backup_time >= backup_interval:
@@ -1221,7 +1224,7 @@ func display_system_storage_help():
 	log_message("System Storage Commands:", "system")
 	log_message("  ###storage reset - Reset storage system", "system")
 	log_message("  ###storage purge <name> - Purge storage location", "system")
-	log_message("  ###storage export [path] - Export storage configuration", "system")
+	log_message("  ###storage @@@export [path] - Export storage configuration", "system")
 	log_message("  ###storage import [path] - Import storage configuration", "system")
 	log_message("  ###storage upgrade - Upgrade storage system", "system")
 	log_message("  ###storage help - Display this help", "system")

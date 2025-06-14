@@ -1,5 +1,5 @@
 extends Node
-class_name ThingCreatorA
+class_name ThingCreatorA_thingcreator_thingcre
 
 # Singleton pattern
 static var _instance: ThingCreatorA = null

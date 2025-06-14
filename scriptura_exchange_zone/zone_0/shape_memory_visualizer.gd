@@ -1,28 +1,28 @@
 extends Node2D
 
-class_name ShapeMemoryVisualizer
+class_name ShapeMemoryVisualizer_shapememoryvisualizer_shapemem
 
 # ----- NEURAL VISUALIZATION SETTINGS -----
 @export_category("Neural Shape Settings")
-@export var enabled: bool = true
-@export var max_nodes: int = 88
-@export var min_nodes: int = 8
-@export var connection_threshold: float = 0.4
-@export var memory_density: float = 1.0
-@export var update_frequency: float = 0.5
-@export var neural_size_multiplier: float = 1.0
-@export var lucky_pulse_rate: float = 2.0  # Pulse rate for lucky numbers
-@export var number_influence: float = 0.75  # How much numbers influence shape
+@@@export var enabled: bool = true
+@@@export var max_nodes: int = 88
+@@@export var min_nodes: int = 8
+@@@export var connection_threshold: float = 0.4
+@@@export var memory_density: float = 1.0
+@@@export var update_frequency: float = 0.5
+@@@export var neural_size_multiplier: float = 1.0
+@@@export var lucky_pulse_rate: float = 2.0  # Pulse rate for lucky numbers
+@@@export var number_influence: float = 0.75  # How much numbers influence shape
 
 # ----- SHAPE APPEARANCE -----
 @export_category("Shape Appearance")
-@export var node_min_size: float = 3.0
-@export var node_max_size: float = 12.0
-@export var connection_width: float = 1.5
-@export var main_color: Color = Color(0.3, 0.7, 0.9, 0.8)
-@export var secondary_color: Color = Color(0.9, 0.4, 0.7, 0.6)
-@export var lucky_color: Color = Color(1.0, 0.8, 0.2, 0.9)
-@export var background_fade: float = 0.2
+@@@export var node_min_size: float = 3.0
+@@@export var node_max_size: float = 12.0
+@@@export var connection_width: float = 1.5
+@@@export var main_color: Color = Color(0.3, 0.7, 0.9, 0.8)
+@@@export var secondary_color: Color = Color(0.9, 0.4, 0.7, 0.6)
+@@@export var lucky_color: Color = Color(1.0, 0.8, 0.2, 0.9)
+@@@export var background_fade: float = 0.2
 
 # ----- INTEGRATION -----
 var time_tracker: Node = null
@@ -177,8 +177,8 @@ func _update_animation(delta):
     animation_time += delta
     
     # Update pulse
-    pulse_timer += delta * (lucky_active ? lucky_pulse_rate : 1.0)
-    current_pulse += delta * pulse_dir * (lucky_active ? lucky_pulse_rate : 1.0)
+    pulse_timer += delta * (lucky_pulse_rate if lucky_active else 1.0)
+    current_pulse += delta * pulse_dir * (lucky_pulse_rate if lucky_active else 1.0)
     if current_pulse > 1.0:
         current_pulse = 1.0
         pulse_dir = -1
@@ -231,7 +231,7 @@ func _draw():
             # Determine connection color
             var color
             if from_node.type == 2 or to_node.type == 2:  # Number node
-                color = lucky_active ? lucky_color : secondary_color
+                color = lucky_color if lucky_active else secondary_color
                 color.a = 0.3 + 0.7 * current_pulse
             else:
                 color = main_color
@@ -265,7 +265,7 @@ func _draw():
                 color = secondary_color
                 color.a = 0.3 + node.activity * 0.7
             2:  # Number node
-                color = lucky_active ? lucky_color : secondary_color
+                color = lucky_color if lucky_active else secondary_color
                 color.a = 0.5 + current_pulse * 0.5
         
         draw_circle(node.position, size, color)

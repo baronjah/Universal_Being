@@ -29,11 +29,11 @@ func _ready():
     capture_timer = Timer.new()
     capture_timer.wait_time = capture_interval
     capture_timer.one_shot = false
-    capture_timer.connect("timeout", self, "_on_capture_timer_timeout")
+    capture_timer.connect(_on_capture_timer_timeout)
     add_child(capture_timer)
     
     # Define default screen regions if none specified
-    if screen_regions.empty():
+    if screen_regions.is_empty():
         # Default to full screen
         screen_regions.append({
             "name": "full_screen",
@@ -154,7 +154,7 @@ func _process_next_in_queue():
     # Process with AI bridge if available
     if ai_bridge != null:
         var task_id = ai_bridge.process_image(item.image, "ocr")
-        yield(ai_bridge, "ai_process_complete")
+        await(ai_bridge, "ai_process_complete")
         _handle_ocr_result(task_id, item)
     else:
         # Fallback to simple processing
@@ -251,7 +251,7 @@ func get_text_database_stats():
     
     # Find most frequent words
     var words = recognized_text_db.keys()
-    words.sort_custom(self, "_sort_by_frequency")
+    words.sort_custom(self."_sort_by_frequency")
     
     # Take top 20 words
     var top_count = min(20, words.size())

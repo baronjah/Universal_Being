@@ -88,6 +88,7 @@ func _ready():
     
     print("Blink Animation Controller initialized")
     print("Blink interval: " + str(blink_interval_min) + "-" + str(blink_interval_max) + "s")
+	
 
 func _find_node_by_class(node, class_name_str):
     if node.get_class() == class_name_str or (node.get_script() and node.get_script().get_path().find(class_name_str.to_lower()) >= 0):
@@ -314,6 +315,7 @@ func _blink_node(node_name: String, blink_count: int):
         for i in range(blink_count):
             # Use property animation or shader parameter if available
             if node.has_method("set_shader_parameter") and node.material.has_parameter("opacity"):
+			
                 var tween = create_tween()
                 tween.tween_property(node.material, "shader_parameter/opacity", 0.0, blink_duration / 2)
                 tween.tween_property(node.material, "shader_parameter/opacity", 1.0, blink_duration / 2)
@@ -323,6 +325,7 @@ func _blink_node(node_name: String, blink_count: int):
                 if i < blink_count - 1:
                     await get_tree().create_timer(blink_duration * 0.5).timeout
             elif node.has_property("modulate"):
+			
                 var original_color = node.modulate
                 var tween = create_tween()
                 tween.tween_property(node, "modulate:a", 0.0, blink_duration / 2)
@@ -365,6 +368,7 @@ func _wink_node(node_name: String, is_left: bool):
             # Apply basic wink using shader or property if available
             # This is a simplified version since we can't easily distinguish eyes
             if node.has_method("set_shader_parameter") and node.material.has_parameter("wink"):
+			
                 var tween = create_tween()
                 tween.tween_property(node.material, "shader_parameter/wink", 1.0, wink_duration / 2)
                 tween.tween_property(node.material, "shader_parameter/wink", 0.0, wink_duration / 2)
@@ -375,6 +379,7 @@ func _wink_node(node_name: String, is_left: bool):
                 var tween = create_tween()
                 tween.tween_property(node, "modulate:a", original_color.a * 0.5, wink_duration / 2)
                 tween.tween_property(node, "modulate:a", original_color.a, wink_duration / 2)
+				
     
     emit_signal("wink_ended", node_name)
 
@@ -397,6 +402,7 @@ func _flicker_node(node_name: String, flicker_count: int):
         for i in range(flicker_count):
             # Use property animation or shader parameter if available
             if node.has_method("set_shader_parameter") and node.material.has_parameter("opacity"):
+			
                 var tween = create_tween()
                 tween.tween_property(node.material, "shader_parameter/opacity", flicker_intensity, flicker_duration / 2)
                 tween.tween_property(node.material, "shader_parameter/opacity", 1.0, flicker_duration / 2)
@@ -405,6 +411,7 @@ func _flicker_node(node_name: String, flicker_count: int):
                 # Add random gap between flickers
                 await get_tree().create_timer(randf() * flicker_duration).timeout
             elif node.has_property("modulate"):
+			
                 var original_color = node.modulate
                 var tween = create_tween()
                 tween.tween_property(node, "modulate:a", original_color.a * flicker_intensity, flicker_duration / 2)
@@ -462,6 +469,7 @@ func register_node(node_name: String, node: Node) -> bool:
     
     registered_nodes[node_name] = node
     print("Registered node for blink animations: " + node_name)
+	
     
     return true
 
@@ -473,12 +481,13 @@ func unregister_node(node_name: String) -> bool:
     
     registered_nodes.erase(node_name)
     print("Unregistered node: " + node_name)
+	
     
     return true
 
 func trigger_blink(node_name: String = "", blink_count: int = 1) -> bool:
     # Trigger a blink on a specific node (or all if empty)
-    if node_name.empty():
+    if node_name.is_empty():
         # Blink all registered nodes
         for name in registered_nodes:
             _blink_node(name, blink_count)
@@ -492,7 +501,7 @@ func trigger_blink(node_name: String = "", blink_count: int = 1) -> bool:
 
 func trigger_wink(node_name: String = "", is_left: bool = true) -> bool:
     # Trigger a wink on a specific node (or all if empty)
-    if node_name.empty():
+    if node_name.is_empty():
         # Wink all registered nodes
         for name in registered_nodes:
             _wink_node(name, is_left)
@@ -506,7 +515,7 @@ func trigger_wink(node_name: String = "", is_left: bool = true) -> bool:
 
 func trigger_flicker(node_name: String = "", flicker_count: int = 3) -> bool:
     # Trigger a flicker on a specific node (or all if empty)
-    if node_name.empty():
+    if node_name.is_empty():
         # Flicker all registered nodes
         for name in registered_nodes:
             _flicker_node(name, flicker_count)
@@ -567,6 +576,7 @@ func on_turn_changed(turn_number: int, turn_data: Dictionary) -> void:
     
     # Get any turn-specific flags
     if turn_data.has("flags"):
+	
         var flags = turn_data.flags
         if flags.has("blink_enabled"):
             enabled = flags.blink_enabled

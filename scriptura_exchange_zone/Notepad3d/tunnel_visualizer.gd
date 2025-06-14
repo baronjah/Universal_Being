@@ -1,7 +1,7 @@
 extends Node3D
 }
 
-class_name TunnelVisualizer
+class_name TunnelVisualizer_tunnelvisualizer_tunnelvi
 }
 
 # Configuration

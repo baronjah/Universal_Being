@@ -80,7 +80,7 @@ func _initialize_data_segments():
 			"type": "text",
 			"timestamp": Time.get_unix_time_from_system(),
 			"folded": false
-		}
+}
 
 # Process input events
 func _input(event):
@@ -193,7 +193,8 @@ func process_command(command_text: String) -> Dictionary:
 	# Split command into parts
 	var parts = command_text.strip_edges().split(" ", false)
 	if parts.size() == 0:
-		return {"type": "error", "output": "Empty command"}
+		return {"type": "error", "output": "Empty command"
+}
 	
 	var command = parts[0].to_lower()
 	var args = parts.slice(1)
@@ -232,11 +233,14 @@ func process_command(command_text: String) -> Dictionary:
 			# Command not found - try to find closest match
 			var suggestions = get_command_suggestions(command)
 			var output = "Unknown command: " + command
+
 			
 			if suggestions.size() > 0:
 				output += "\nDid you mean: " + ", ".join(suggestions) + "?"
+	
 				
-			return {"type": "error", "output": output}
+			return {"type": "error", "output": output
+}
 
 # Register terminal commands for autocompletion
 func register_terminal_commands():
@@ -284,6 +288,7 @@ func _on_command_executed(command: String, result: Dictionary):
 # Self-recovery system
 func _attempt_recovery(command: String, error_result: Dictionary):
 	print("Attempting recovery for command: " + command)
+
 	
 	# Analyze the error and attempt recovery
 	var recovery_successful = false
@@ -295,6 +300,7 @@ func _attempt_recovery(command: String, error_result: Dictionary):
 		_add_terminal_output("system", "Recovery successful for command: " + command)
 	else:
 		_add_terminal_output("system", "Recovery failed for command: " + command)
+
 
 # OCR calibration system
 func calibrate_ocr():
@@ -332,7 +338,7 @@ func segment_data(data: String, segment_id: int = -1) -> Dictionary:
 		"type": "text",
 		"timestamp": Time.get_unix_time_from_system(),
 		"folded": false
-	}
+}
 	
 	emit_signal("data_segmented", segment_id, data_segments[segment_id])
 	return data_segments[segment_id]
@@ -340,15 +346,18 @@ func segment_data(data: String, segment_id: int = -1) -> Dictionary:
 # Data folding functions
 func fold_data(segment_id: int, bracket_type: String = "{}") -> Dictionary:
 	if not data_segments.has(segment_id):
-		return {"error": "Invalid segment ID"}
+		return {"error": "Invalid segment ID"
+}
 	
 	if data_segments[segment_id].folded:
-		return {"error": "Segment already folded"}
+		return {"error": "Segment already folded"
+}
 	
 	# Check bracket limit
 	if bracket_stack.size() >= BRACKET_LIMIT:
 		emit_signal("bracket_limit_reached", segment_id)
-		return {"error": "Bracket limit reached", "limit": BRACKET_LIMIT}
+		return {"error": "Bracket limit reached", "limit": BRACKET_LIMIT
+}
 	
 	# Fold the data
 	data_segments[segment_id].folded = true
@@ -362,10 +371,12 @@ func fold_data(segment_id: int, bracket_type: String = "{}") -> Dictionary:
 # Data unfolding
 func unfold_data(segment_id: int) -> Dictionary:
 	if not data_segments.has(segment_id):
-		return {"error": "Invalid segment ID"}
+		return {"error": "Invalid segment ID"
+}
 	
 	if not data_segments[segment_id].folded:
-		return {"error": "Segment not folded"}
+		return {"error": "Segment not folded"
+}
 	
 	# Unfold the data
 	data_segments[segment_id].folded = false
@@ -381,7 +392,8 @@ func unfold_data(segment_id: int) -> Dictionary:
 # Automation system
 func start_automation(sequence_name: String, commands: Array) -> Dictionary:
 	if automation_active:
-		return {"error": "Automation already active"}
+		return {"error": "Automation already active"
+}
 	
 	automation_active = true
 	automation_sequence = commands
@@ -394,7 +406,7 @@ func start_automation(sequence_name: String, commands: Array) -> Dictionary:
 		"status": "Automation started",
 		"sequence": sequence_name,
 		"commands": commands.size()
-	}
+}
 
 # Run automation coroutine
 func _run_automation():
@@ -467,14 +479,17 @@ status       - Show system status
 restore      - Self-restore system
 wish [text]  - Process a wish"""
 
-	return {"type": "system", "output": output}
+	return {"type": "system", "output": output
+}
 
 func _cmd_echo(args: Array) -> Dictionary:
-	return {"output": " ".join(args)}
+	return {"output": " ".join(args)
+}
 
 func _cmd_clear(args: Array) -> Dictionary:
 	terminal_output.clear()
-	return {"type": "system", "output": "Terminal cleared"}
+	return {"type": "system", "output": "Terminal cleared"
+}
 
 func _cmd_segment(args: Array) -> Dictionary:
 	var segment_id = -1
@@ -489,17 +504,21 @@ func _cmd_segment(args: Array) -> Dictionary:
 			data = " ".join(args)
 	
 	if data == "":
-		return {"type": "error", "output": "No data to segment"}
+		return {"type": "error", "output": "No data to segment"
+}
 	
 	var result = segment_data(data, segment_id)
-	return {"type": "system", "output": "Data segmented (ID: %d, Segments: %d)" % [segment_id, result.segments.size()]}
+	return {"type": "system", "output": "Data segmented (ID: %d, Segments: %d)" % [segment_id, result.segments.size()]
+}
 
 func _cmd_fold(args: Array) -> Dictionary:
 	if args.size() == 0:
-		return {"type": "error", "output": "No segment ID specified"}
+		return {"type": "error", "output": "No segment ID specified"
+}
 	
 	if not args[0].is_valid_int():
-		return {"type": "error", "output": "Invalid segment ID"}
+		return {"type": "error", "output": "Invalid segment ID"
+}
 	
 	var segment_id = args[0].to_int()
 	var bracket_type = "{}"
@@ -510,34 +529,43 @@ func _cmd_fold(args: Array) -> Dictionary:
 	var result = fold_data(segment_id, bracket_type)
 	
 	if result.has("error"):
-		return {"type": "error", "output": result.error}
+		return {"type": "error", "output": result.error
+}
 	
-	return {"type": "system", "output": "Data folded (ID: %d)" % segment_id}
+	return {"type": "system", "output": "Data folded (ID: %d)" % segment_id
+}
 
 func _cmd_unfold(args: Array) -> Dictionary:
 	if args.size() == 0:
-		return {"type": "error", "output": "No segment ID specified"}
+		return {"type": "error", "output": "No segment ID specified"
+}
 	
 	if not args[0].is_valid_int():
-		return {"type": "error", "output": "Invalid segment ID"}
+		return {"type": "error", "output": "Invalid segment ID"
+}
 	
 	var segment_id = args[0].to_int()
 	var result = unfold_data(segment_id)
 	
 	if result.has("error"):
-		return {"type": "error", "output": result.error}
+		return {"type": "error", "output": result.error
+}
 	
-	return {"type": "system", "output": "Data unfolded (ID: %d)" % segment_id}
+	return {"type": "system", "output": "Data unfolded (ID: %d)" % segment_id
+}
 
 func _cmd_ocr(args: Array) -> Dictionary:
 	var text = " ".join(args)
 	
 	if text == "calibrate":
+
 		var accuracy = calibrate_ocr()
-		return {"type": "system", "output": "OCR calibrated (Accuracy: %.2f%%)" % (accuracy * 100)}
+		return {"type": "system", "output": "OCR calibrated (Accuracy: %.2f%%)" % (accuracy * 100)
+}
 	
 	if text == "":
-		return {"type": "error", "output": "No text for OCR processing"}
+		return {"type": "error", "output": "No text for OCR processing"
+}
 	
 	# Simulate OCR processing - in reality, this would call an OCR API
 	var processed_text = text
@@ -560,25 +588,29 @@ func _cmd_ocr(args: Array) -> Dictionary:
 		
 		processed_text = chars.get_string_from_utf8()
 	
-	return {"output": "OCR result: " + processed_text}
+	return {"output": "OCR result: " + processed_text
+}
 
 func _cmd_automate(args: Array) -> Dictionary:
 	if args.size() == 0:
 		if automation_active:
 			return {"type": "system", "output": "Automation active (%d/%d commands)" % [automation_index, automation_sequence.size()]}
 		else:
-			return {"type": "error", "output": "No automation sequence specified"}
+			return {"type": "error", "output": "No automation sequence specified"
+}
 	
 	if args[0] == "stop":
 		automation_active = false
-		return {"type": "system", "output": "Automation stopped"}
+		return {"type": "system", "output": "Automation stopped"
+}
 	
 	if args[0] == "delay" and args.size() > 1:
 		if args[1].is_valid_float():
 			automation_delay = float(args[1])
 			return {"type": "system", "output": "Automation delay set to %.2f seconds" % automation_delay}
 		else:
-			return {"type": "error", "output": "Invalid delay value"}
+			return {"type": "error", "output": "Invalid delay value"
+}
 	
 	# Define sequences
 	var sequences = {
@@ -599,24 +631,27 @@ func _cmd_automate(args: Array) -> Dictionary:
 			"godot script TestNode",
 			"echo Godot sequence complete"
 		]
-	}
+}
 	
 	if sequences.has(args[0]):
 		var result = start_automation(args[0], sequences[args[0]])
 		return {"type": "system", "output": "Started automation sequence: " + args[0]}
 	else:
-		return {"type": "error", "output": "Unknown automation sequence: " + args[0]}
+		return {"type": "error", "output": "Unknown automation sequence: " + args[0]
+}
 
 func _cmd_godot(args: Array) -> Dictionary:
 	if args.size() == 0:
-		return {"type": "error", "output": "No Godot command specified"}
+		return {"type": "error", "output": "No Godot command specified"
+}
 	
 	var subcommand = args[0]
 	
 	match subcommand:
 		"script":
 			if args.size() < 2:
-				return {"type": "error", "output": "No script name specified"}
+				return {"type": "error", "output": "No script name specified"
+	}
 			
 			var script_name = args[1]
 			var script_type = "Node"
@@ -625,37 +660,47 @@ func _cmd_godot(args: Array) -> Dictionary:
 				script_type = args[2]
 			
 			var script_content = generate_godot_script(script_name, script_type)
-			return {"output": "Generated Godot script:\n\n" + script_content}
+			return {"output": "Generated Godot script:\n\n" + script_content
+}
 		
 		"run":
-			return {"type": "system", "output": "Simulating Godot project run..."}
+			return {"type": "system", "output": "Simulating Godot project run..."
+}
 		
 		"build":
-			return {"type": "system", "output": "Simulating Godot project build..."}
+			return {"type": "system", "output": "Simulating Godot project build..."
+}
 		
 		"scene":
 			if args.size() < 2:
-				return {"type": "error", "output": "No scene name specified"}
+				return {"type": "error", "output": "No scene name specified"
+	}
 			
-			return {"type": "system", "output": "Creating Godot scene: " + args[1]}
+			return {"type": "system", "output": "Creating Godot scene: " + args[1]
+}
 		
 		"export":
-			return {"type": "system", "output": "Simulating Godot project export..."}
+			return {"type": "system", "output": "Simulating Godot project export..."
+}
 		
 		_:
-			return {"type": "error", "output": "Unknown Godot command: " + subcommand}
+			return {"type": "error", "output": "Unknown Godot command: " + subcommand
+}
 
 func _cmd_turn(args: Array) -> Dictionary:
 	if args.size() == 0:
-		return {"type": "system", "output": "Current turn: %d (%s)" % [current_dimension, dimension_name]}
+		return {"type": "system", "output": "Current turn: %d (%s)" % [current_dimension, dimension_name]
+}
 	
 	if not args[0].is_valid_int():
-		return {"type": "error", "output": "Invalid turn number"}
+		return {"type": "error", "output": "Invalid turn number"
+}
 	
 	var turn = args[0].to_int()
 	
 	if turn < 1 or turn > 12:
-		return {"type": "error", "output": "Turn number must be between 1 and 12"}
+		return {"type": "error", "output": "Turn number must be between 1 and 12"
+}
 	
 	current_dimension = turn
 	
@@ -686,11 +731,13 @@ func _cmd_turn(args: Array) -> Dictionary:
 	
 	dimension_color = dimension_colors[current_dimension - 1]
 	
-	return {"type": "system", "output": "Turn changed to %d (%s)" % [current_dimension, dimension_name]}
+	return {"type": "system", "output": "Turn changed to %d (%s)" % [current_dimension, dimension_name]
+}
 
 func _cmd_bracket(args: Array) -> Dictionary:
 	if args.size() == 0:
 		var output = "Current bracket stack (%d/%d):" % [bracket_stack.size(), BRACKET_LIMIT]
+
 		
 		if bracket_stack.size() == 0:
 			output += "\n  (empty)"
@@ -699,7 +746,8 @@ func _cmd_bracket(args: Array) -> Dictionary:
 				var bracket = bracket_stack[i]
 				output += "\n  %d. Segment %d (%s)" % [i, bracket.segment_id, bracket.bracket_type]
 		
-		return {"type": "system", "output": output}
+		return {"type": "system", "output": output
+}
 	
 	var subcommand = args[0]
 	
@@ -709,7 +757,8 @@ func _cmd_bracket(args: Array) -> Dictionary:
 				BRACKET_LIMIT = args[1].to_int()
 				return {"type": "system", "output": "Bracket limit set to " + args[1]}
 			else:
-				return {"type": "system", "output": "Current bracket limit: " + str(BRACKET_LIMIT)}
+				return {"type": "system", "output": "Current bracket limit: " + str(BRACKET_LIMIT)
+	}
 		
 		"clear":
 			bracket_stack.clear()
@@ -719,10 +768,12 @@ func _cmd_bracket(args: Array) -> Dictionary:
 				if data_segments[id].folded:
 					data_segments[id].folded = false
 			
-			return {"type": "system", "output": "Bracket stack cleared"}
+			return {"type": "system", "output": "Bracket stack cleared"
+}
 		
 		_:
-			return {"type": "error", "output": "Unknown bracket command: " + subcommand}
+			return {"type": "error", "output": "Unknown bracket command: " + subcommand
+}
 
 func _cmd_status(args: Array) -> Dictionary:
 	var output = "System Status (Turn %d: %s)\n" % [current_dimension, dimension_name]
@@ -733,21 +784,26 @@ func _cmd_status(args: Array) -> Dictionary:
 	output += "Bracket Stack: %d/%d\n" % [bracket_stack.size(), BRACKET_LIMIT]
 	output += "OCR Calibration: %.2f%% (Last: %d)\n" % [ocr_accuracy * 100, last_ocr_calibration_time]
 	output += "Automation: %s\n" % ["Active" if automation_active else "Inactive"]
+
 	
 	if automation_active:
 		output += "  Progress: %d/%d commands\n" % [automation_index, automation_sequence.size()]
 		output += "  Delay: %.2f seconds\n" % automation_delay
+
 	
-	return {"type": "system", "output": output}
+	return {"type": "system", "output": output
+}
 
 func _cmd_restore(args: Array) -> Dictionary:
 	if args.size() > 0 and args[0] == "disable":
 		AUTO_RECOVERY_ENABLED = false
-		return {"type": "system", "output": "Auto-recovery disabled"}
+		return {"type": "system", "output": "Auto-recovery disabled"
+}
 	
 	if args.size() > 0 and args[0] == "enable":
 		AUTO_RECOVERY_ENABLED = true
-		return {"type": "system", "output": "Auto-recovery enabled"}
+		return {"type": "system", "output": "Auto-recovery enabled"
+}
 	
 	# Simulate system self-check and restoration
 	var output = "System self-check and restoration\n"
@@ -760,17 +816,21 @@ func _cmd_restore(args: Array) -> Dictionary:
 	output += "Automation system: OK\n"
 	output += "Godot integration: OK\n"
 	output += "\nSystem integrity: 100%\n"
+
 	
-	return {"type": "system", "output": output}
+	return {"type": "system", "output": output
+}
 
 func _cmd_wish(args: Array) -> Dictionary:
 	if args.size() == 0:
-		return {"type": "error", "output": "No wish specified"}
+		return {"type": "error", "output": "No wish specified"
+}
 	
 	var wish = " ".join(args)
 	
 	# Process the wish
 	var output = "Processing wish: " + wish + "\n\n"
+
 	
 	var wish_lower = wish.to_lower()
 	
@@ -792,7 +852,8 @@ func _cmd_wish(args: Array) -> Dictionary:
 	else:
 		output += "Wish acknowledged. Processing in dimensional matrix..."
 	
-	return {"type": "wish", "output": output}
+	return {"type": "wish", "output": output
+}
 
 # Draw the terminal (for custom GUI implementation)
 func _draw_terminal(rect: Rect2):

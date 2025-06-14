@@ -1,6 +1,6 @@
 extends Node
 
-class_name ArchiveManager
+class_name ArchiveManager_archivemanager_archivem
 
 # Archive Manager for LuminusOS
 # Handles hourly data archiving and project change tracking
@@ -460,10 +460,10 @@ func get_archive_stats():
     
     # Archive counts
     result += "Archive Counts:\n"
-    result += "- Tick Archives: " + str(archives.tick.size()) + "/" + str(archive_config.max_archive_count.tick) + "\n"
-    result += "- Hourly Archives: " + str(archives.hour.size()) + "/" + str(archive_config.max_archive_count.hour) + "\n"
-    result += "- Daily Archives: " + str(archives.day.size()) + "/" + str(archive_config.max_archive_count.day) + "\n"
-    result += "- Weekly Archives: " + str(archives.week.size()) + "/" + str(archive_config.max_archive_count.week) + "\n\n"
+    result += "- Tick Archives: " + str(archives.tick.size()) + "" + str(archive_config.max_archive_count.tick) + "\n"
+    result += "- Hourly Archives: " + str(archives.hour.size()) + "" + str(archive_config.max_archive_count.hour) + "\n"
+    result += "- Daily Archives: " + str(archives.day.size()) + "" + str(archive_config.max_archive_count.day) + "\n"
+    result += "- Weekly Archives: " + str(archives.week.size()) + "" + str(archive_config.max_archive_count.week) + "\n\n"
     
     # Storage usage
     result += "Storage Usage: " + _format_size(total_archive_size_mb * 1024) + "\n"
@@ -579,9 +579,9 @@ func cmd_archive(args):
 
 func _connect_to_systems():
     # Try to get references to required systems
-    game_creator = get_node_or_null("/root/GameCreator")
-    data_evolution_system = get_node_or_null("/root/DataEvolutionSystem")
-    storage_manager = get_node_or_null("/root/StorageManager")
+    game_creator = get_node_or_null("root/GameCreator")
+    data_evolution_system = get_node_or_null("root/DataEvolutionSystem")
+    storage_manager = get_node_or_null("root/StorageManager")
     
     # Output connection status
     if game_creator != null:

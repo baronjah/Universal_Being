@@ -1,5 +1,5 @@
 extends Control
-class_name JSHConsoleUI
+class_name JSHConsoleUI_JSHConsoleUI_JSHConso
 
 # UI references
 @onready var output_text: RichTextLabel = $VBoxContainer/OutputPanel/ScrollContainer/RichTextLabel

@@ -1,5 +1,5 @@
 # thingy.gd
-extends MultiMeshInstance3D
+extends \2
 
 #extends Node3D
 

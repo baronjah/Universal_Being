@@ -1,7 +1,7 @@
 extends Node
 }
 
-class_name TextSummarizationSystem
+class_name TextSummarizationSystem_textsummarizationsystem_textsumm
 }
 
 # ----- CONSTANTS -----
@@ -168,7 +168,7 @@ func generate_summary(text, max_tokens = MAX_TOKEN_COUNT, algorithm = "hybrid"):
 }
 
 	# Start timer
-	processing_start_time = OS.get_unix_time()
+	processing_start_time = OS.Time.get_unix_time_from_system()
 }
 
 	# Pre-process text
@@ -205,7 +205,7 @@ func generate_summary(text, max_tokens = MAX_TOKEN_COUNT, algorithm = "hybrid"):
 }
 
 	# End timer
-	processing_end_time = OS.get_unix_time()
+	processing_end_time = OS.Time.get_unix_time_from_system()
 	var processing_time = processing_end_time - processing_start_time
 }
 
@@ -544,7 +544,7 @@ func connect_to_divine_word_processor():
 }
 
 	# Try to find existing instance
-	if has_node("/root/DivineWordProcessor") or get_node_or_null("/root/DivineWordProcessor"):
+	if has_node("root/DivineWordProcessor") or get_node_or_null("root/DivineWordProcessor"):
 		divine_word_processor = get_node("\1") as Node
 		print("Connected to existing DivineWordProcessor")
 		return true
@@ -562,7 +562,7 @@ func connect_to_reality_data_processor():
 }
 
 	# Try to find existing instance
-	if has_node("/root/RealityDataProcessor") or get_node_or_null("/root/RealityDataProcessor"):
+	if has_node("root/RealityDataProcessor") or get_node_or_null("root/RealityDataProcessor"):
 		reality_data_processor = get_node("\1") as Node
 		print("Connected to existing RealityDataProcessor")
 		return true
@@ -580,7 +580,7 @@ func connect_to_memory_investment_system():
 }
 
 	# Try to find existing instance
-	if has_node("/root/MemoryInvestmentSystem") or get_node_or_null("/root/MemoryInvestmentSystem"):
+	if has_node("root/MemoryInvestmentSystem") or get_node_or_null("root/MemoryInvestmentSystem"):
 		memory_investment_system = get_node("\1") as Node
 		print("Connected to existing MemoryInvestmentSystem")
 		return true
@@ -880,11 +880,11 @@ func _generate_dimensional_summary():
 			# For physical (most detailed), use primarily extractive
 			summary = _join_sentences(dimension_sentences)
 		else:
-			// Blend previous summary with new extracted content
+# // Blend previous summary with new extracted content
 			var dimension_summary = _join_sentences(dimension_sentences)
 }
 
-			// Apply dimension-specific connectors
+# // Apply dimension-specific connectors
 			if dimension == "conceptual":
 				summary = prev_summary + "\n\nFurther exploration reveals:\n" + dimension_summary
 			elif dimension == "temporal":
@@ -894,20 +894,20 @@ func _generate_dimensional_summary():
 		}
 }
 
-		// Store the dimension summary
+# // Store the dimension summary
 		summary_by_dimension[dimension] = summary
 }
 
-		// Emit signal
+# // Emit signal
 		emit_signal("dimension_summary_completed", dimension, summary.length(), estimate_token_count(summary))
 	}
 }
 
-	// Create integrated dimensional summary
+# // Create integrated dimensional summary
 	summary_by_dimension["integrated"] = _create_integrated_dimensional_summary()
 }
 
-	// Also generate a combined summary that fits in max tokens
+# // Also generate a combined summary that fits in max tokens
 	summary_by_dimension["combined"] = get_flexible_summary(current_max_tokens)
 }
 

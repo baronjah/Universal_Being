@@ -6,7 +6,7 @@
 
 # interactions_bank.gd
 extends UniversalBeingBase
-class_name InteractionsBank
+class_name InteractionsBank_interact
 
 var interaction_add_number  : String = "interaction_"
 var list_add_number : String = "list_"

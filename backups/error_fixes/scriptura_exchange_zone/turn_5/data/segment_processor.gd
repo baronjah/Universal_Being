@@ -46,7 +46,7 @@ func _ready():
 	last_calibration_time = Time.get_unix_time_from_system()
 	
 	# Connect to signals as needed
-	# self.connect("segment_created", self, "_on_segment_created")
+	# self.connect(_on_segment_created)
 
 # Process function - check for calibration needs
 func _process(delta):

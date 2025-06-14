@@ -28,8 +28,8 @@ func initialize(merger, noise_gen, tunnel_mgr = null):
     ethereal_tunnel_manager = tunnel_mgr
     
     # Connect signals
-    project_merger.connect("scan_completed", self, "_on_scan_completed")
-    project_merger.connect("merge_completed", self, "_on_merge_completed")
+    project_merger.connect(_on_scan_completed)
+    project_merger.connect(_on_merge_completed)
     
     project_merger.cloud_noise_generator = cloud_noise_generator
     

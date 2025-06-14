@@ -131,6 +131,7 @@ func _try_interact() -> void:
 			while current:
 				if current is UniversalBeing:
 					print("🎯 Player interacting with: ", current.being_name)
+	
 					# Trigger click if it's a button
 					if current.has_method("_on_button_clicked"):
 						current._on_button_clicked()
@@ -145,5 +146,5 @@ func ai_interface() -> Dictionary:
 	base.player_state = {
 		"position": global_position,
 		"looking_at": interaction_ray.get_collision_point() if interaction_ray and interaction_ray.is_colliding() else null
-	}
 	return base
+}

@@ -3,42 +3,41 @@
 # Created: May 31, 2025, 23:28 CEST
 # Purpose: System controller for Pentagon architecture
 # Connection: Part of Pentagon Architecture migration
-
-extends UniversalBeingBase
-class_name BlinkAnimationController
+extends \2
+class_name BlinkAnimationController_blinkanimationcontroller_blinkani
 
 # ----- ANIMATION SETTINGS -----
 @export_category("Blink Settings")
-@export var enabled: bool = true
-@export var blink_interval_min: float = 0.5  # Minimum time between blinks in seconds
-@export var blink_interval_max: float = 3.0  # Maximum time between blinks in seconds
-@export var blink_duration: float = 0.15     # Duration of a single blink in seconds
-@export var double_blink_chance: float = 0.3 # Chance of a double blink (0-1)
-@export var triple_blink_chance: float = 0.1 # Chance of a triple blink (0-1)
+@@@@export var enabled: bool = true
+@@@@export var blink_interval_min: float = 0.5  # Minimum time between blinks in seconds
+@@@@export var blink_interval_max: float = 3.0  # Maximum time between blinks in seconds
+@@@@export var blink_duration: float = 0.15     # Duration of a single blink in seconds
+@@@@export var double_blink_chance: float = 0.3 # Chance of a double blink (0-1)
+@@@@export var triple_blink_chance: float = 0.1 # Chance of a triple blink (0-1)
 
 # ----- WINK SETTINGS -----
 @export_category("Wink Settings")
-@export var wink_enabled: bool = true
-@export var wink_interval_min: float = 5.0   # Minimum time between winks
-@export var wink_interval_max: float = 15.0  # Maximum time between winks
-@export var wink_duration: float = 0.3       # Duration of a wink
-@export var left_wink_chance: float = 0.5    # Chance of winking with left eye (vs right)
+@@@@export var wink_enabled: bool = true
+@@@@export var wink_interval_min: float = 5.0   # Minimum time between winks
+@@@@export var wink_interval_max: float = 15.0  # Maximum time between winks
+@@@@export var wink_duration: float = 0.3       # Duration of a wink
+@@@@export var left_wink_chance: float = 0.5    # Chance of winking with left eye (vs right)
 
 # ----- FLICKER SETTINGS -----
 @export_category("Flicker Settings")
-@export var flicker_enabled: bool = true
-@export var flicker_interval_min: float = 10.0  # Minimum time between flickers
-@export var flicker_interval_max: float = 30.0  # Maximum time between flickers
-@export var flicker_duration: float = 0.05      # Duration of a single flicker
-@export var flicker_count_min: int = 2          # Minimum flickers in sequence
-@export var flicker_count_max: int = 6          # Maximum flickers in sequence
-@export var flicker_intensity: float = 0.7      # Intensity of the flicker (0-1)
+@@@@export var flicker_enabled: bool = true
+@@@@export var flicker_interval_min: float = 10.0  # Minimum time between flickers
+@@@@export var flicker_interval_max: float = 30.0  # Maximum time between flickers
+@@@@export var flicker_duration: float = 0.05      # Duration of a single flicker
+@@@@export var flicker_count_min: int = 2          # Minimum flickers in sequence
+@@@@export var flicker_count_max: int = 6          # Maximum flickers in sequence
+@@@@export var flicker_intensity: float = 0.7      # Intensity of the flicker (0-1)
 
 # ----- TURN INTEGRATION -----
 @export_category("Turn Integration")
-@export var increase_frequency_per_turn: bool = true
-@export var turn_frequency_multiplier: float = 0.9  # Reduces intervals by 10% per turn
-@export var max_frequency_multiplier: float = 0.3   # Max reduction is 70% of original
+@@@@export var increase_frequency_per_turn: bool = true
+@@@@export var turn_frequency_multiplier: float = 0.9  # Reduces intervals by 10% per turn
+@@@@export var max_frequency_multiplier: float = 0.3   # Max reduction is 70% of original
 
 # ----- STATE VARIABLES -----
 var blink_timer: Timer
@@ -66,7 +65,7 @@ func _ready():
     _initialize_timers()
     
     # Find turn controller
-    turn_controller = get_node_or_null("/root/TurnController")
+    turn_controller = get_node_or_null("root/TurnController")
     if not turn_controller:
         turn_controller = _find_node_by_class(get_tree().root, "TurnController")
     

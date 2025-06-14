@@ -1,6 +1,6 @@
 extends Node
 
-class_name IntegratedGameSystem
+class_name IntegratedGameSystem_integratedgamesystem_integrat
 
 # ----- INTEGRATED GAME SYSTEM -----
 # Main controller for the Akashic Notepad3D game
@@ -56,26 +56,26 @@ func _discover_components():
     # Find Eden Pitopia Integration
     if has_node("../EdenPitopiaIntegration"):
         eden_pitopia_integration = get_node("../EdenPitopiaIntegration")
-    elif has_node("/root/EdenPitopiaIntegration"):
-        eden_pitopia_integration = get_node("/root/EdenPitopiaIntegration")
+    elif has_node("root/EdenPitopiaIntegration"):
+        eden_pitopia_integration = get_node("root/EdenPitopiaIntegration")
     
     # Find Word Manifestation System
     if has_node("../WordManifestationSystem"):
         word_manifestation_system = get_node("../WordManifestationSystem")
-    elif has_node("/root/WordManifestationSystem"):
-        word_manifestation_system = get_node("/root/WordManifestationSystem")
+    elif has_node("root/WordManifestationSystem"):
+        word_manifestation_system = get_node("root/WordManifestationSystem")
     
     # Find Turn Controller
     if has_node("../TurnController"):
         turn_controller = get_node("../TurnController")
-    elif has_node("/root/TurnController"):
-        turn_controller = get_node("/root/TurnController")
+    elif has_node("root/TurnController"):
+        turn_controller = get_node("root/TurnController")
     
     # Find Notepad3D Visualizer
     if has_node("../Notepad3DVisualizer"):
         notepad3d_visualizer = get_node("../Notepad3DVisualizer")
-    elif has_node("/root/Notepad3DVisualizer"):
-        notepad3d_visualizer = get_node("/root/Notepad3DVisualizer")
+    elif has_node("root/Notepad3DVisualizer"):
+        notepad3d_visualizer = get_node("root/Notepad3DVisualizer")
 
 # ----- UI INITIALIZATION -----
 func _initialize_ui():

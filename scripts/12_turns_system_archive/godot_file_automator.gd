@@ -15,6 +15,7 @@ func _ready():
 	print("Godot File Automator initialized")
 	print("Monitoring source directory: " + WINDOWS_SOURCE_DIR)
 	print("Target Godot directory: " + GODOT_PROJECT_DIR)
+
 	
 	# Ensure the required directories exist
 	_ensure_directories()
@@ -35,6 +36,7 @@ func _ready():
 func _ensure_directories():
 	# Convert Windows path to a path format that DirAccess can use
 	var unix_path = WINDOWS_SOURCE_DIR.replace("C:/", "/mnt/c/").replace("\\", "/")
+
 	
 	# Check if directory exists
 	if not DirAccess.dir_exists_absolute(unix_path):
@@ -46,6 +48,7 @@ func _ensure_directories():
 	if not DirAccess.dir_exists_absolute(godot_data_dir):
 		DirAccess.make_dir_recursive_absolute(godot_data_dir)
 		print("Created directory: " + godot_data_dir)
+
 
 # Timer callback to check for file changes
 func _on_timer_timeout():
@@ -72,6 +75,7 @@ func scan_source_directory():
 	
 	# Convert Windows path to a path format that DirAccess can use
 	var unix_path = WINDOWS_SOURCE_DIR.replace("C:/", "/mnt/c/").replace("\\", "/")
+
 	
 	# Process all files in the directory recursively
 	_scan_directory_recursive(unix_path, files)
@@ -87,8 +91,10 @@ func _scan_directory_recursive(path, files):
 		var file_name = dir.get_next()
 		
 		while file_name != "":
+
 			# Skip . and .. directories
 			if file_name != "." and file_name != "..":
+
 				var full_path = path.path_join(file_name)
 				
 				if dir.current_is_dir():
@@ -107,9 +113,11 @@ func _scan_directory_recursive(path, files):
 	else:
 		print("Failed to open directory: " + path)
 
+
 # Process a file based on its type
 func process_file(file_path):
 	print("Processing file: " + file_path)
+
 	
 	# Determine file type based on extension
 	var extension = file_path.get_extension().to_lower()
@@ -125,6 +133,7 @@ func process_file(file_path):
 			_process_scene_file(file_path)
 		_:
 			print("Unsupported file type: " + extension)
+
 
 # Process text files (txt, md)
 func _process_text_file(file_path):
@@ -143,6 +152,7 @@ func _process_text_file(file_path):
 			print("File imported to Godot: " + godot_path)
 		else:
 			print("Failed to write to Godot file: " + godot_path)
+
 
 # Process Godot script files (gd)
 func _process_godot_script(file_path):
@@ -166,6 +176,7 @@ func _process_godot_script(file_path):
 		else:
 			print("Failed to write to Godot script: " + godot_path)
 
+
 # Process data files (json, csv)
 func _process_data_file(file_path):
 	var file = FileAccess.open(file_path, FileAccess.READ)
@@ -187,6 +198,7 @@ func _process_data_file(file_path):
 			print("Data file imported to Godot: " + godot_path)
 		else:
 			print("Failed to write to Godot data file: " + godot_path)
+
 		
 		# If it's a JSON file, try to parse it
 		if file_path.ends_with(".json"):
@@ -214,6 +226,7 @@ func _process_scene_file(file_path):
 		else:
 			print("Failed to write to Godot scene: " + godot_path)
 
+
 # Parse a JSON file and create a Resource
 func _parse_json_file(file_path):
 	var file = FileAccess.open(file_path, FileAccess.READ)
@@ -225,6 +238,7 @@ func _parse_json_file(file_path):
 		if error == OK:
 			var data = json.data
 			print("JSON parsed successfully: " + str(data))
+
 			
 			# Create a resource from the JSON data
 			var resource = _create_resource_from_json(data, file_path.get_file().get_basename())
@@ -244,6 +258,7 @@ func _parse_json_file(file_path):
 					print("Failed to save resource: " + str(error))
 		else:
 			print("JSON parse error: " + str(error) + " at line " + str(json.get_error_line()))
+
 
 # Create a Resource from JSON data
 func _create_resource_from_json(json_data, resource_name):
@@ -265,7 +280,7 @@ func _create_resource_from_json(json_data, resource_name):
 # Helper function to get file metadata
 func _get_file_metadata(file_path, key, default_value):
 	var metadata_path = GODOT_PROJECT_DIR + "imported_metadata.json"
-	var metadata = {}
+	var metadata = {
 	
 	# Load existing metadata if it exists
 	if FileAccess.file_exists(metadata_path):
@@ -280,7 +295,7 @@ func _get_file_metadata(file_path, key, default_value):
 	
 	# Create an entry for this file if it doesn't exist
 	if not metadata.has(file_path):
-		metadata[file_path] = {}
+		metadata[file_path] = {
 	
 	# Return the requested value or the default if not found
 	if metadata[file_path].has(key):
@@ -291,7 +306,7 @@ func _get_file_metadata(file_path, key, default_value):
 # Helper function to set file metadata
 func _set_file_metadata(file_path, key, value):
 	var metadata_path = GODOT_PROJECT_DIR + "imported_metadata.json"
-	var metadata = {}
+	var metadata = {
 	
 	# Load existing metadata if it exists
 	if FileAccess.file_exists(metadata_path):
@@ -306,7 +321,7 @@ func _set_file_metadata(file_path, key, value):
 	
 	# Create an entry for this file if it doesn't exist
 	if not metadata.has(file_path):
-		metadata[file_path] = {}
+		metadata[file_path] = {
 	
 	# Set the value
 	metadata[file_path][key] = value

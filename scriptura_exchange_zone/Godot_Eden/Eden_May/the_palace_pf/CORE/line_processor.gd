@@ -3,7 +3,7 @@ extends Node
 # Line Processor for Eden_May Game
 # Processes text input line by line based on Turn 8 patterns
 
-class_name LineProcessor
+class_name LineProcessor_lineprocessor_lineproc
 
 # Line patterns (from Turn 8)
 var patterns = {
@@ -95,7 +95,7 @@ func process_line(text, detect_pattern=true):
 		"pattern": used_pattern,
 		"words": [],
 		"turn": active_turn,
-		"timestamp": OS.get_unix_time()
+		"timestamp": OS.Time.get_unix_time_from_system()
 	}
 	
 	# Apply the pattern processing

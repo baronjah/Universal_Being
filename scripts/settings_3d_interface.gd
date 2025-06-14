@@ -19,6 +19,7 @@ var instruction_label: Label3D = null
 
 func _ready():
 	print("⚙️ 3D Settings Interface: Creating spatial controls...")
+
 	
 	# Get input mapper
 	input_mapper = UniversalInputMapper.new()
@@ -194,7 +195,7 @@ func create_control_buttons():
 	var button_data = [
 		{"name": "SAVE", "pos": Vector3(-3, -6, 0.2), "color": Color.GREEN},
 		{"name": "RESET", "pos": Vector3(0, -6, 0.2), "color": Color.ORANGE},
-		{"name": "CLOSE", "pos": Vector3(3, -6, 0.2), "color": Color.RED}
+		{"name": "CLOSE", "pos": Vector3(3, -6, 0.2), "color": Color.RED
 	]
 	
 	for data in button_data:
@@ -277,6 +278,7 @@ func start_key_remapping(action_name: String):
 		material.emission_energy = 1.0
 	
 	print("🔄 Waiting for key input to remap: %s" % action_name)
+}
 
 func _input(event: InputEvent):
 	"""Handle input for key remapping"""

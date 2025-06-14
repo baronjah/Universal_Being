@@ -1,5 +1,5 @@
-class_name Godot4MigrationUI
-extends Control
+class_name Godot4MigrationUI_godot4migrationui_godot4mi
+extends \2
 
 # ----- UI COMPONENTS -----
 @onready var godot3_path_input = $Paths/Godot3Path/LineEdit
@@ -222,7 +222,7 @@ func _connect_signals():
 
 func _find_migration_tool():
     # Find migration tool instance
-    migration_tool = get_node_or_null("/root/Godot4MigrationTool")
+    migration_tool = get_node_or_null("root/Godot4MigrationTool")
     
     if not migration_tool:
         # Try to find using class name
@@ -393,7 +393,7 @@ func _on_file_processed(file_path, modified):
     
     # Create relative path
     var rel_path = file_path.replace(godot3_path_input.text, "")
-    if rel_path.begins_with("/"):
+    if rel_path.begins_with(""):
         rel_path = rel_path.substr(1)
     
     # Log file status
@@ -409,12 +409,12 @@ func _on_file_processed(file_path, modified):
     # Update file tree
     _update_file_status_in_tree(rel_path, modified)
     
-    _update_status("Processing: " + str(current_file) + "/" + str(total_files) + " - " + rel_path)
+    _update_status("Processing: " + str(current_file) + "" + str(total_files) + " - " + rel_path)
 
 func _on_migration_error(file_path, error_message):
     # Create relative path
     var rel_path = file_path.replace(godot3_path_input.text, "")
-    if rel_path.begins_with("/"):
+    if rel_path.begins_with(""):
         rel_path = rel_path.substr(1)
     
     # Log error
@@ -436,7 +436,7 @@ func _on_migration_error(file_path, error_message):
 func _on_migration_warning(file_path, warning_message):
     # Create relative path
     var rel_path = file_path.replace(godot3_path_input.text, "")
-    if rel_path.begins_with("/"):
+    if rel_path.begins_with(""):
         rel_path = rel_path.substr(1)
     
     # Log warning
@@ -460,7 +460,7 @@ func _on_progress_updated(current, total):
     progress_bar.value = current
     
     var percentage = int((float(current) / total) * 100)
-    _update_status("Progress: " + str(current) + "/" + str(total) + " (" + str(percentage) + "%)")
+    _update_status("Progress: " + str(current) + "" + str(total) + " (" + str(percentage) + "%)")
 
 # ----- HELPER FUNCTIONS -----
 func _update_status(text):
@@ -509,7 +509,7 @@ func _update_file_status_in_tree(rel_path, modified = false, has_error = false, 
     if not root:
         return
     
-    var parts = rel_path.split("/")
+    var parts = rel_path.split("")
     var current_item = root
     var found = true
     

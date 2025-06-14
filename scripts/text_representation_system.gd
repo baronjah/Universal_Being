@@ -22,6 +22,7 @@ static func generate_text_for_being(being: UniversalBeing) -> String:
 	text += "[%s:%s]" % [being.being_type.to_upper(), being.being_name]
 	text += " POS:(%.1f,%.1f,%.1f)" % [being.global_position.x, being.global_position.y, being.global_position.z]
 	text += " CONSCIOUSNESS:%d" % being.consciousness_level
+
 	
 	# Add being-specific info
 	if being.has_method("get_text_details"):
@@ -54,6 +55,7 @@ static func _recursive_node_text(node: Node, depth: int) -> String:
 	# Universal Being info
 	if node is UniversalBeing:
 		text += " {UB: %s, CL:%d}" % [node.being_type, node.consciousness_level]
+
 	
 	text += "\n"
 	
@@ -69,10 +71,12 @@ static func generate_connection_text(beings: Array[UniversalBeing]) -> String:
 	
 	for being in beings:
 		if being.has_method("get_socket_info"):
+
 			var info = being.get_socket_info()
 			text += "%s:\n" % being.being_name
 			text += "  IN: %d connections\n" % info.get("input_connections", 0)
 			text += "  OUT: %d connections\n" % info.get("output_connections", 0)
+
 	
 	text += "==================\n"
 	return text
@@ -146,9 +150,12 @@ static func generate_cli_representation(being: UniversalBeing) -> String:
 	cli += "UUID: %s\n" % being.get_instance_id()
 	cli += "Consciousness: %d/5\n" % being.consciousness_level
 	cli += "Position: %.2f, %.2f, %.2f\n" % [being.global_position.x, being.global_position.y, being.global_position.z]
+
 	
 	if being.has_method("get_socket_info"):
+
 		var info = being.get_socket_info()
 		cli += "Sockets: %d IN, %d OUT\n" % [info.get("input_connections", 0), info.get("output_connections", 0)]
+
 	
 	return cli

@@ -3,9 +3,8 @@
 # Created: May 31, 2025, 23:28 CEST
 # Purpose: Ragdoll physics and behavior system
 # Connection: Part of Pentagon Architecture migration
-
 extends UniversalBeingBase
-class_name BiomechanicalWalker
+class_name BiomechanicalWalker_biomecha
 # Advanced bipedal walker with anatomically correct feet and gait cycle
 
 signal step_completed(foot: String)
@@ -46,11 +45,11 @@ class Leg:
 	var side: String = "left"  # or "right"
 
 # Walker components
-@export var walk_speed: float = 2.0
-@export var step_length: float = 0.6
-@export var step_height: float = 0.15
-@export var stance_duration: float = 0.6  # 60% of cycle
-@export var swing_duration: float = 0.4   # 40% of cycle
+@@export var walk_speed: float = 2.0
+@@export var step_length: float = 0.6
+@@export var step_height: float = 0.15
+@@export var stance_duration: float = 0.6  # 60% of cycle
+@@export var swing_duration: float = 0.4   # 40% of cycle
 
 var pelvis: RigidBody3D
 var spine: RigidBody3D
@@ -374,8 +373,8 @@ func _apply_midstance_forces(leg: Leg) -> void:
 	var ankle_torque = Vector3(-0.1, 0, 0)
 	leg.heel.apply_torque(ankle_torque)
 	
-	# Knee extends
-	var knee_torque = Vector3(-0.2, 0, 0)
+	# Knee
+extends var knee_torque = Vector3(-0.2, 0, 0)
 	leg.shin.apply_torque(knee_torque)
 
 func _apply_heel_off_forces(leg: Leg) -> void:
@@ -435,7 +434,8 @@ func _apply_mid_swing_forces(leg: Leg) -> void:
 
 func _apply_terminal_swing_forces(leg: Leg) -> void:
 	# Prepare for heel strike
-	# Knee extends nearly straight
+	# Knee
+extends nearly straight
 	var knee_torque = Vector3(-0.4, 0, 0)
 	leg.shin.apply_torque(knee_torque)
 	

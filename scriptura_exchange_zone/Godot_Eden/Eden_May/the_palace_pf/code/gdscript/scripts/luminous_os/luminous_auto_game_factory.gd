@@ -1,5 +1,5 @@
 extends Node
-class_name LuminousAutoGameFactory
+class_name LuminousAutoGameFactory_luminousautogamefactory_luminous
 
 # Signals
 signal project_creation_started(project_id, project_name)
@@ -472,7 +472,7 @@ func _analyze_data(analysis_id: String) -> void:
         
         # Update progress
         var progress = 0.1 + (0.8 * float(i + 1) / source_count)
-        _update_analysis_progress(analysis_id, progress, "Analyzed source " + str(i + 1) + "/" + str(source_count))
+        _update_analysis_progress(analysis_id, progress, "Analyzed source " + str(i + 1) + "" + str(source_count))
     
     # Finalize analysis
     thread_mutex.lock()
@@ -575,7 +575,7 @@ func _generate_base_scripts(project_id: String, project_path: String) -> void:
         # Update progress
         index += 1
         var progress = 0.15 + (0.2 * float(index) / script_count)
-        _update_project_progress(project_id, progress, "Generated base script " + str(index) + "/" + str(script_count))
+        _update_project_progress(project_id, progress, "Generated base script " + str(index) + "" + str(script_count))
 
 func _generate_scenes(project_id: String, project_path: String) -> void:
     # Access project settings
@@ -619,7 +619,7 @@ func _generate_scenes(project_id: String, project_path: String) -> void:
         # Update progress
         index += 1
         var progress = 0.35 + (0.2 * float(index) / scene_count)
-        _update_project_progress(project_id, progress, "Generated scene " + str(index) + "/" + str(scene_count))
+        _update_project_progress(project_id, progress, "Generated scene " + str(index) + "" + str(scene_count))
 
 func _generate_resources(project_id: String, project_path: String) -> void:
     # Generate theme
@@ -848,8 +848,8 @@ signal game_state_changed(new_state)
 signal score_changed(new_score)
 signal level_started(level_number)
 signal level_completed(level_number)
-
-enum GameState {MAIN_MENU, PLAYING, PAUSED, GAME_OVER, VICTORY}
+enum \2 {
+MAIN_MENU, PLAYING, PAUSED, GAME_OVER, VICTORY}
 
 var current_state: GameState = GameState.MAIN_MENU
 var current_level: int = 1
@@ -1033,9 +1033,9 @@ func _generate_player_script(project) -> String:
 signal health_changed(new_health)
 signal player_died
 
-@export var speed = 300.0
-@export var jump_velocity = -400.0
-@export var max_health = 100.0
+@@@@export var speed = 300.0
+@@@@export var jump_velocity = -400.0
+@@@@export var max_health = 100.0
 
 var current_health = max_health
 var is_jumping = false
@@ -1115,10 +1115,10 @@ func _on_animation_finished(anim_name):
 signal health_changed(new_health)
 signal player_died
 
-@export var speed = 5.0
-@export var jump_velocity = 4.5
-@export var mouse_sensitivity = 0.002
-@export var max_health = 100.0
+@@@@export var speed = 5.0
+@@@@export var jump_velocity = 4.5
+@@@@export var mouse_sensitivity = 0.002
+@@@@export var max_health = 100.0
 
 var current_health = max_health
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
@@ -1855,7 +1855,7 @@ func _scan_project_structure(project_path: String, template: Dictionary) -> void
                 if file_name.ends_with(".gd") or file_name.ends_with(".tscn") or file_name == "project.godot":
                     var file = FileAccess.open(full_path, FileAccess.READ)
                     if file:
-                        template.files[full_path.replace(project_path + "/", "")] = file.get_as_text()
+                        template.files[full_path.replace(project_path + "", "")] = file.get_as_text()
         
         file_name = dir.get_next()
     

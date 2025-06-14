@@ -48,9 +48,9 @@ var logo_colors = [
 
 func _ready():
     # Get references to other systems
-    word_animator = get_node_or_null("/root/Main/WordAnimator")
-    word_translator = get_node_or_null("/root/Main/WordTranslator")
-    turn_tracker = get_node_or_null("/root/Main/TurnTracker")
+    word_animator = get_node_or_null("root/Main/WordAnimator")
+    word_translator = get_node_or_null("root/Main/WordTranslator")
+    turn_tracker = get_node_or_null("root/Main/TurnTracker")
 }
 
     # Connect input field signals
@@ -73,7 +73,7 @@ func _process(delta):
 
     # Update turn information if available
     if turn_tracker:
-        var status_text = "Turn: " + str(turn_tracker.current_turn) + "/" + str(turn_tracker.max_turns_per_phase)
+        var status_text = "Turn: " + str(turn_tracker.current_turn) + "" + str(turn_tracker.max_turns_per_phase)
         status_text += " | Phase: " + turn_tracker.get_current_phase_name()
         $VBoxContainer/StatusBar/TurnLabel.text = status_text
 }
@@ -241,7 +241,7 @@ func _process_command(text):
                     turn_tracker.advance_turn()
                     _print_output("Advanced to turn " + str(turn_tracker.current_turn) + " of phase " + turn_tracker.get_current_phase_name(), terminal_colors["system"])
                 else:
-                    _print_output("Current turn: " + str(turn_tracker.current_turn) + "/" + str(turn_tracker.max_turns_per_phase), terminal_colors["system"])
+                    _print_output("Current turn: " + str(turn_tracker.current_turn) + "" + str(turn_tracker.max_turns_per_phase), terminal_colors["system"])
                     _print_output("Current phase: " + turn_tracker.get_current_phase_name(), terminal_colors["system"])
             else:
                 _print_output("Turn system not available", terminal_colors["error"])

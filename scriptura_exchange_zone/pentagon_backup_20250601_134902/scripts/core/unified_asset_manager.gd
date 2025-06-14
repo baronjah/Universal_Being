@@ -4,9 +4,8 @@
 # PURPOSE: Consolidate Asset Catalog + Assets Library + Standardized Objects into ONE system
 # CREATED: 2025-05-31 - Asset unification for Akashic Records
 # ==================================================
-
 extends UniversalBeingBase
-class_name UnifiedAssetManager
+class_name UnifiedAssetManager_unifieda
 
 # THE ONE TRUE ASSET REGISTRY
 var unified_assets: Dictionary = {}
@@ -45,9 +44,9 @@ func pentagon_ready() -> void:
 
 func _connect_to_legacy_systems() -> void:
 	# Get references to all existing asset systems
-	asset_library = get_node_or_null("/root/AssetLibrary")
+	asset_library = get_node_or_null("root/AssetLibrary")
 	standardized_objects = StandardizedObjects if StandardizedObjects else null
-	console_manager = get_node_or_null("/root/ConsoleManager")
+	console_manager = get_node_or_null("root/ConsoleManager")
 
 func _unify_all_assets() -> void:
 	print("🔄 [UnifiedAssets] Consolidating all asset sources...")
@@ -121,7 +120,7 @@ func _import_asset_library() -> void:
 
 func _import_misc_assets() -> void:
 	# Import any other assets from TXT database, etc.
-	var txt_db = get_node_or_null("/root/TxtUniversalDatabase")
+	var txt_db = get_node_or_null("root/TxtUniversalDatabase")
 	if txt_db and txt_db.has_method("get_all_entries"):
 		var txt_assets = txt_db.get_all_entries()
 		for asset_name in txt_assets:

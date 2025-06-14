@@ -40,13 +40,13 @@ func connect_components(world_storage, notepad_visualizer):
     
     if storage and visualizer:
         # Connect signals from storage
-        storage.connect("notebook_updated", self, "_on_notebook_updated")
-        storage.connect("entry_added", self, "_on_entry_added")
+        storage.connect(_on_notebook_updated)
+        storage.connect(_on_entry_added)
         
         # Connect signals from visualizer
-        visualizer.connect("visualization_ready", self, "_on_visualization_ready")
-        visualizer.connect("word_selected", self, "_on_word_selected")
-        visualizer.connect("dimension_transition_complete", self, "_on_dimension_changed")
+        visualizer.connect(_on_visualization_ready)
+        visualizer.connect(_on_word_selected)
+        visualizer.connect(_on_dimension_changed)
         
         print("Connected SpatialWorldStorage to Notepad3DVisualizer")
         return true
@@ -357,7 +357,7 @@ func create_entry_connections(entry_ids):
 # ----- UTILITY FUNCTIONS -----
 func get_color_for_tags(tags):
     # Generate a color based on tags
-    if tags.empty():
+    if tags.is_empty():
         return Color(1, 1, 1)
     
     # Use first tag to determine hue

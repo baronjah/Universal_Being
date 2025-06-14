@@ -53,7 +53,6 @@ var integration_status = {
 	"game": {
 		"snake": false,
 		"marching": false
-	}
 }
 
 func _ready():
@@ -88,6 +87,7 @@ func _setup_jsh_console():
 	integration_status.console.jsh_ready = console_manager != null and console_ui != null
 	
 	print("JSH Console System: " + ("Ready" if integration_status.console.jsh_ready else "Not Ready"))
+}
 
 func _load_legacy_components():
 	# Find JSH_console.gd
@@ -132,6 +132,7 @@ func _load_legacy_components():
 	
 	print("Legacy Components: " + ("Found" if integration_status.console.legacy_ready else "Not Found"))
 
+
 func _create_adapter():
 	# Create adapter if legacy console exists
 	if integration_status.console.legacy_ready and integration_status.console.jsh_ready:
@@ -142,6 +143,7 @@ func _create_adapter():
 		print("Legacy Console Adapter: Created")
 	else:
 		print("Legacy Console Adapter: Not Created (missing components)")
+
 
 func _register_integration_commands():
 	# Register specialized integration commands
@@ -206,6 +208,7 @@ func _register_integration_commands():
 	
 	print("Integration Commands: Registered")
 
+
 func _print_integration_status():
 	console_manager.print_line("JSH Console Integration Demo", Color(0.2, 0.7, 1.0))
 	console_manager.print_line("=========================", Color(0.2, 0.7, 1.0))
@@ -214,6 +217,7 @@ func _print_integration_status():
 	console_manager.print_line("  JSH Console: " + _status_text(integration_status.console.jsh_ready))
 	console_manager.print_line("  Legacy Console: " + _status_text(integration_status.console.legacy_ready))
 	console_manager.print_line("  Adapter: " + _status_text(integration_status.console.adapter_ready))
+
 	
 	console_manager.print_line("\nBank Systems:")
 	console_manager.print_line("  Records Bank: " + _status_text(integration_status.banks.records))
@@ -221,6 +225,7 @@ func _print_integration_status():
 	console_manager.print_line("  Scenes Bank: " + _status_text(integration_status.banks.scenes))
 	console_manager.print_line("  Instructions Bank: " + _status_text(integration_status.banks.instructions))
 	console_manager.print_line("  Banks Combiner: " + _status_text(integration_status.banks.combiner))
+
 	
 	console_manager.print_line("\nOther Systems:")
 	console_manager.print_line("  Entity System: " + _status_text(integration_status.systems.entity))
@@ -228,6 +233,7 @@ func _print_integration_status():
 	console_manager.print_line("  Task Manager: " + _status_text(integration_status.systems.task))
 	console_manager.print_line("  Snake Game: " + _status_text(integration_status.game.snake))
 	console_manager.print_line("  Marching Shapes: " + _status_text(integration_status.game.marching))
+
 	
 	console_manager.print_line("\nType 'status' for more detailed information")
 	console_manager.print_line("Type 'visualize' to see system connections")
@@ -251,29 +257,36 @@ func _cmd_status(args : Array) -> Dictionary:
 	if detail_level >= 2:
 		# Show component details
 		console_manager.print_line("\nComponent Details:", Color(1, 0.9, 0.2))
+
 		
 		if legacy_console:
 			console_manager.print_line("  Legacy Console:")
 			console_manager.print_line("    Commands: " + str(legacy_adapter.get_legacy_commands().size() if legacy_adapter else "Unknown"))
 			console_manager.print_line("    Type: " + str(legacy_console.get_class()))
+
 		
 		if records_bank:
 			console_manager.print_line("  Records Bank:")
+
 			var record_count = "Unknown"
 			if records_bank.has_method("get_record_count"):
 				record_count = str(records_bank.get_record_count())
 			console_manager.print_line("    Records: " + record_count)
+
 		
 		if actions_bank:
 			console_manager.print_line("  Actions Bank:")
+
 			var action_count = "Unknown"
 			if actions_bank.has_method("get_action_count"):
 				action_count = str(actions_bank.get_action_count())
 			console_manager.print_line("    Actions: " + action_count)
+
 	
 	if detail_level >= 3:
 		# Show integration metrics
 		console_manager.print_line("\nIntegration Metrics:", Color(1, 0.9, 0.2))
+
 		
 		var metrics = {
 			"commands_registered": console_manager.commands.size(),
@@ -282,7 +295,7 @@ func _cmd_status(args : Array) -> Dictionary:
 			"integration_commands": 5,
 			"entities_synced": 0,
 			"records_synced": 0
-		}
+}
 		
 		console_manager.print_line("  Commands: " + str(metrics.commands_registered) + " total")
 		console_manager.print_line("    Legacy Commands: " + str(metrics.legacy_commands))
@@ -290,17 +303,19 @@ func _cmd_status(args : Array) -> Dictionary:
 		console_manager.print_line("    Integration Commands: " + str(metrics.integration_commands))
 		console_manager.print_line("  Entities Synced: " + str(metrics.entities_synced))
 		console_manager.print_line("  Records Synced: " + str(metrics.records_synced))
+
 	
 	return {
 		"success": true,
 		"message": "Status displayed",
 		"detail_level": detail_level
-	}
+}
 
 func _cmd_snake(args : Array) -> Dictionary:
 	if not integration_status.game.snake:
 		console_manager.print_error("Snake game not available")
-		return {"success": false, "message": "Snake game not available"}
+		return {"success": false, "message": "Snake game not available"
+}
 	
 	var operation = "start"
 	if args.size() > 0:
@@ -322,25 +337,29 @@ func _cmd_snake(args : Array) -> Dictionary:
 				console_manager.print_error("Unable to stop snake game")
 		
 		"score":
+
 			var score = "Unknown"
 			if snake_game.has_method("get_score"):
 				score = str(snake_game.get_score())
 			console_manager.print_line("Snake game score: " + score)
+
 		
 		_:
 			console_manager.print_error("Unknown snake operation: " + operation)
-			return {"success": false, "message": "Unknown operation"}
+			return {"success": false, "message": "Unknown operation"
+}
 	
 	return {
 		"success": true,
 		"message": "Snake game operation: " + operation,
 		"operation": operation
-	}
+}
 
 func _cmd_shapes(args : Array) -> Dictionary:
 	if not integration_status.game.marching:
 		console_manager.print_error("Marching shapes system not available")
-		return {"success": false, "message": "Marching shapes not available"}
+		return {"success": false, "message": "Marching shapes not available"
+}
 	
 	var shape_type = args[0].to_lower()
 	var size = 10
@@ -349,6 +368,7 @@ func _cmd_shapes(args : Array) -> Dictionary:
 		size = args[1]
 	
 	if marching_shapes.has_method("generate_shape"):
+
 		var shape = marching_shapes.generate_shape(shape_type, size)
 		
 		if shape:
@@ -357,25 +377,27 @@ func _cmd_shapes(args : Array) -> Dictionary:
 				"success": true,
 				"message": "Shape generated",
 				"shape_type": shape_type,
-				"size": size
-			}
+				"size": size}
 		else:
 			console_manager.print_error("Failed to generate shape")
 			return {"success": false, "message": "Generation failed"}
 	else:
 		console_manager.print_error("Shape generation method not found")
-		return {"success": false, "message": "Method not found"}
+		return {"success": false, "message": "Method not found"
+}
 
 func _cmd_task(args : Array) -> Dictionary:
 	if not integration_status.systems.task:
 		console_manager.print_error("Task manager not available")
-		return {"success": false, "message": "Task manager not available"}
+		return {"success": false, "message": "Task manager not available"
+}
 	
 	var operation = args[0].to_lower()
 	var task_args = args.slice(1)
 	
 	match operation:
 		"list":
+
 			var tasks = []
 			if task_manager.has_method("get_tasks"):
 				tasks = task_manager.get_tasks()
@@ -385,22 +407,25 @@ func _cmd_task(args : Array) -> Dictionary:
 				var task_id = task.get("id", "unknown")
 				var task_status = task.get("status", "unknown")
 				console_manager.print_line("  " + task_id + ": " + task_status)
+	
 			
 			return {
 				"success": true,
 				"message": str(tasks.size()) + " tasks found",
 				"tasks": tasks
-			}
+	}
 		
 		"add":
 			if task_args.size() < 1:
 				console_manager.print_error("Task name required")
-				return {"success": false, "message": "Task name required"}
+				return {"success": false, "message": "Task name required"
+	}
 			
 			var task_name = task_args[0]
-			var task_params = {}
+			var task_params = {
 			
 			if task_manager.has_method("add_task"):
+}
 				var task = task_manager.add_task(task_name, task_params)
 				
 				if task:
@@ -409,18 +434,19 @@ func _cmd_task(args : Array) -> Dictionary:
 						"success": true,
 						"message": "Task added",
 						"task_name": task_name,
-						"task": task
-					}
+						"task": task}
 				else:
 					console_manager.print_error("Failed to add task")
 					return {"success": false, "message": "Failed to add task"}
 			else:
 				console_manager.print_error("Add task method not found")
-				return {"success": false, "message": "Method not found"}
+				return {"success": false, "message": "Method not found"
+	}
 		
 		_:
 			console_manager.print_error("Unknown task operation: " + operation)
-			return {"success": false, "message": "Unknown operation"}
+			return {"success": false, "message": "Unknown operation"
+}
 
 func _cmd_visualize(args = []) -> Dictionary:
 	var system = "all"
@@ -432,6 +458,7 @@ func _cmd_visualize(args = []) -> Dictionary:
 	
 	match system:
 		"console", "all":
+
 			# Console systems visualization
 			console_manager.print_line("\nConsole Systems:", Color(1, 0.9, 0.2))
 			console_manager.print_line("┌─────────────────┐      ┌─────────────────┐")
@@ -461,6 +488,7 @@ func _cmd_visualize(args = []) -> Dictionary:
 			console_manager.print_line("         └─────────────────┘")
 		
 		"banks", "all":
+
 			# Bank systems visualization
 			console_manager.print_line("\nBank Systems:", Color(1, 0.9, 0.2))
 			console_manager.print_line("┌─────────────────┐  ┌─────────────────┐  ┌─────────────────┐")
@@ -486,6 +514,7 @@ func _cmd_visualize(args = []) -> Dictionary:
 			console_manager.print_line("└─────────────────┘  └─────────────────┘  └─────────────────┘")
 		
 		"entity", "all":
+
 			# Entity system visualization
 			console_manager.print_line("\nEntity Systems:", Color(1, 0.9, 0.2))
 			console_manager.print_line("┌─────────────────┐      ┌─────────────────┐")
@@ -513,15 +542,17 @@ func _cmd_visualize(args = []) -> Dictionary:
 		
 		_:
 			console_manager.print_error("Unknown system to visualize: " + system)
-			return {"success": false, "message": "Unknown system"}
+			return {"success": false, "message": "Unknown system"
+}
 	
 	return {
 		"success": true,
 		"message": "Visualization displayed",
 		"system": system
-	}
+}
 
 # Utility function
 func _get_time_string() -> String:
 	var datetime = Time.get_datetime_dict_from_system()
 	return "%02d:%02d:%02d" % [datetime.hour, datetime.minute, datetime.second]
+

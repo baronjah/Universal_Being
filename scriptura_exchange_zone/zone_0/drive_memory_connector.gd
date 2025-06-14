@@ -9,7 +9,8 @@ signal memory_fragment_found(fragment_data)
 signal sync_complete(stats)
 
 # Drive connection types
-enum DriveType {
+enum \2 {
+
     LOCAL,
     NETWORK,
     CLOUD,
@@ -27,11 +28,11 @@ var sync_in_progress = false
 const FRAGMENT_EXTENSION = ".mem.json"
 const DRIVE_CONFIG_PATH = "res://12_turns_system/drive_config.json"
 const DEFAULT_PATHS = [
-    "/mnt/c/Users/Percision 15/12_turns_system/",
-    "/mnt/c/Users/Percision 15/world_of_words/",
-    "/mnt/c/Users/Percision 15/notepad3d/",
-    "/mnt/c/Users/Percision 15/Eden_OS/",
-    "/mnt/c/Users/Percision 15/LuminusOS/"
+    "mnt/c/Users/Percision 15/12_turns_system/",
+    "mnt/c/Users/Percision 15/world_of_words/",
+    "mnt/c/Users/Percision 15/notepad3d/",
+    "mnt/c/Users/Percision 15/Eden_OS/",
+    "mnt/c/Users/Percision 15/LuminusOS/"
 ]
 
 # File system access
@@ -192,7 +193,7 @@ func _generate_ethereal_fragment(source):
     # Modify with ethereal properties
     ethereal.is_ethereal = true
     ethereal.origin_path = source.path
-    ethereal.path = "ethereal://" + str(randi() % 1000000) + "/" + source.name
+    ethereal.path = "ethereal://" + str(randi() % 1000000) + "" + source.name
     
     # Add dimensional shift
     if ethereal.has("dimensions"):
@@ -235,8 +236,8 @@ func save_memory_fragment(fragment_data, target_path = ""):
             return false
     
     # Ensure path ends with separator
-    if not target_path.ends_with("/"):
-        target_path += "/"
+    if not target_path.ends_with(""):
+        target_path += ""
     
     # Generate a name if none provided
     if not fragment_data.has("name") or fragment_data.name.is_empty():

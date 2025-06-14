@@ -1,7 +1,7 @@
 extends Node
 }
 
-class_name AkashicRecordsGameConnector
+class_name AkashicRecordsGameConnector_akashicrecordsgameconnector_akashicr
 }
 
 # Akashic Records Game Connector
@@ -19,7 +19,8 @@ signal memory_synchronized(source_drive, target_drive, records_count)
 }
 
 # Record types specific to games
-enum GameRecordType {
+enum \2 {
+
 	SAVE_STATE,    # Complete game save state
 	GAME_OBJECT,   # Individual game object
 	PLAYER_STATS,  # Player statistics
@@ -34,7 +35,8 @@ enum GameRecordType {
 }
 
 # Drive types for cross-drive functionality
-enum DriveType {
+enum \2 {
+
 	LOCAL,
 	NETWORK,
 	CLOUD,
@@ -113,7 +115,7 @@ func _ready():
 
 func _find_akashic_components():
 	# Find Akashic Records
-	if has_node("/root/AkashicRecords") or get_node_or_null("/root/AkashicRecords"):
+	if has_node("root/AkashicRecords") or get_node_or_null("root/AkashicRecords"):
 		akashic_records = get_node("\1") as Node
 		print("Connected to AkashicRecords")
 	else:
@@ -124,7 +126,7 @@ func _find_akashic_components():
 }
 
 	# Find Dimension Controller
-	if has_node("/root/ShapeDimensionController") or get_node_or_null("/root/ShapeDimensionController"):
+	if has_node("root/ShapeDimensionController") or get_node_or_null("root/ShapeDimensionController"):
 		dimension_controller = get_node("\1") as Node
 		print("Connected to ShapeDimensionController")
 	else:
@@ -135,7 +137,7 @@ func _find_akashic_components():
 }
 
 	# Find Turn Cycle Manager
-	if has_node("/root/TurnCycleManager") or get_node_or_null("/root/TurnCycleManager"):
+	if has_node("root/TurnCycleManager") or get_node_or_null("root/TurnCycleManager"):
 		turn_cycle_manager = get_node("\1") as Node
 		print("Connected to TurnCycleManager")
 	else:
@@ -200,8 +202,8 @@ func initialize_game(game_id_str, name, version="1.0.0"):
 }
 
 	# Create game-specific directories
-	var game_dir = akashic_path + games_path + game_id + "/"
-	var game_saves_dir = akashic_path + saves_path + game_id + "/"
+	var game_dir = akashic_path + games_path + game_id + ""
+	var game_saves_dir = akashic_path + saves_path + game_id + ""
 }
 
 	var dir = DirAccess.open(base_path)
@@ -282,8 +284,8 @@ func _initialize_drives():
 
 func _detect_additional_drives():
 	# Try to detect Eden_OS and LuminusOS drives
-	var eden_path = "/mnt/c/Users/Percision 15/Eden_OS/"
-	var luminus_path = "/mnt/c/Users/Percision 15/LuminusOS/"
+	var eden_path = "mnt/c/Users/Percision 15/Eden_OS/"
+	var luminus_path = "mnt/c/Users/Percision 15/LuminusOS/"
 }
 
 	if DirAccess.dir_exists_absolute(eden_path):
@@ -577,12 +579,12 @@ func _get_save_path(filename):
 	# Determine the save path based on default drive type
 	match default_save_drive:
 		DriveType.LOCAL:
-			return base_path + akashic_path + saves_path + game_id + "/" + filename
+			return base_path + akashic_path + saves_path + game_id + "" + filename
 		DriveType.CLOUD:
-			return "user://cloud_storage/saves/" + game_id + "/" + filename
+			return "user://cloud_storage/saves/" + game_id + "" + filename
 		_:
 			# Default to local if drive type not handled
-			return base_path + akashic_path + saves_path + game_id + "/" + filename
+			return base_path + akashic_path + saves_path + game_id + "" + filename
 }
 
 func _generate_save_id():
@@ -595,7 +597,7 @@ func _generate_save_id():
 }
 
 func _find_newest_save():
-	var saves_dir = base_path + akashic_path + saves_path + game_id + "/"
+	var saves_dir = base_path + akashic_path + saves_path + game_id + ""
 	var dir = DirAccess.open(saves_dir)
 }
 
@@ -650,12 +652,12 @@ func _sync_save_to_drives(save_path, save_id):
 
 		match drive_type:
 			DriveType.CLOUD:
-				target_path = "user://cloud_storage/saves/" + game_id + "/"
+				target_path = "user://cloud_storage/saves/" + game_id + ""
 			DriveType.VIRTUAL, DriveType.NETWORK:
-				target_path = drive.path + "games/" + game_id + "/saves/"
+				target_path = drive.path + "games/" + game_id + "saves/"
 			DriveType.ETHEREAL:
 				# For ethereal drives, dimension > 6 only
-				target_path = "user://ethereal_storage/dimension_" + str(current_dimension) + "/"
+				target_path = "user://ethereal_storage/dimension_" + str(current_dimension) + ""
 }
 
 		# Ensure target directory exists
@@ -940,9 +942,9 @@ func connect_drive(drive_path, drive_type=DriveType.NETWORK, drive_name=""):
 }
 
 	# Create necessary directories
-	var games_dir = drive_path + "/games/"
-	var game_dir = games_dir + game_id + "/"
-	var saves_dir = game_dir + "/saves/"
+	var games_dir = drive_path + "games/"
+	var game_dir = games_dir + game_id + ""
+	var saves_dir = game_dir + "saves/"
 }
 
 	var dir = DirAccess.open(drive_path)
@@ -1043,24 +1045,24 @@ func _sync_drives(source_type, target_type):
 
 	match source_type:
 		DriveType.LOCAL:
-			source_path = base_path + akashic_path + saves_path + game_id + "/"
+			source_path = base_path + akashic_path + saves_path + game_id + ""
 		DriveType.CLOUD:
-			source_path = "user://cloud_storage/saves/" + game_id + "/"
+			source_path = "user://cloud_storage/saves/" + game_id + ""
 		DriveType.VIRTUAL, DriveType.NETWORK:
-			source_path = source.path + "games/" + game_id + "/saves/"
+			source_path = source.path + "games/" + game_id + "saves/"
 		DriveType.ETHEREAL:
-			source_path = "user://ethereal_storage/dimension_" + str(current_dimension) + "/"
+			source_path = "user://ethereal_storage/dimension_" + str(current_dimension) + ""
 }
 
 	match target_type:
 		DriveType.LOCAL:
-			target_path = base_path + akashic_path + saves_path + game_id + "/"
+			target_path = base_path + akashic_path + saves_path + game_id + ""
 		DriveType.CLOUD:
-			target_path = "user://cloud_storage/saves/" + game_id + "/"
+			target_path = "user://cloud_storage/saves/" + game_id + ""
 		DriveType.VIRTUAL, DriveType.NETWORK:
-			target_path = target.path + "games/" + game_id + "/saves/"
+			target_path = target.path + "games/" + game_id + "saves/"
 		DriveType.ETHEREAL:
-			target_path = "user://ethereal_storage/dimension_" + str(current_dimension) + "/"
+			target_path = "user://ethereal_storage/dimension_" + str(current_dimension) + ""
 }
 
 	# Ensure target directory exists
@@ -1218,7 +1220,7 @@ func _on_auto_save_timeout():
 }
 
 func _rotate_auto_saves():
-	var saves_dir = base_path + akashic_path + saves_path + game_id + "/"
+	var saves_dir = base_path + akashic_path + saves_path + game_id + ""
 	var dir = DirAccess.open(saves_dir)
 }
 

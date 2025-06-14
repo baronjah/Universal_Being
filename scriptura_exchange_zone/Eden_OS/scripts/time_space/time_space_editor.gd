@@ -1,6 +1,6 @@
 extends Node
 
-class_name TimeSpaceEditor
+class_name TimeSpaceEditor_timespaceeditor_timespac
 
 # Time Space Editor for Eden_OS
 # Allows manipulation of data across timelines and dimensions
@@ -65,17 +65,17 @@ func _process(delta):
 
 func initialize_time_space_editor():
 	# Connect to dependent systems
-	if get_node_or_null("/root/DataZoneManager"):
-		data_zone_manager = get_node("/root/DataZoneManager")
+	if get_node_or_null("root/DataZoneManager"):
+		data_zone_manager = get_node("root/DataZoneManager")
 	
-	if get_node_or_null("/root/AkashicRecords"):
-		akashic_records = get_node("/root/AkashicRecords")
+	if get_node_or_null("root/AkashicRecords"):
+		akashic_records = get_node("root/AkashicRecords")
 	
-	if get_node_or_null("/root/TurnSystem"):
-		turn_system = get_node("/root/TurnSystem")
+	if get_node_or_null("root/TurnSystem"):
+		turn_system = get_node("root/TurnSystem")
 	
-	if get_node_or_null("/root/DimensionEngine"):
-		dimension_engine = get_node("/root/DimensionEngine")
+	if get_node_or_null("root/DimensionEngine"):
+		dimension_engine = get_node("root/DimensionEngine")
 	
 	# Initialize main timeline
 	time_pointer = Time.get_unix_time_from_system()

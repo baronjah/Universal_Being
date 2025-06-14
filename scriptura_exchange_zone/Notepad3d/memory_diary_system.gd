@@ -1,7 +1,7 @@
 extends Node
 }
 
-class_name MemoryDiarySystem
+class_name MemoryDiarySystem_memorydiarysystem_memorydi
 }
 
 # Memory Diary System
@@ -10,21 +10,21 @@ class_name MemoryDiarySystem
 
 # Configuration
 var config = {
-    "diary_root": "/mnt/c/Users/Percision 15/memory/diary",
+    "diary_root": "mnt/c/Users/Percision 15/memory/diary",
     "claude_accounts": {
         "normal": {
-            "path": "/mnt/c/Users/Percision 15/memory/claude/normal",
+            "path": "mnt/c/Users/Percision 15/memory/claude/normal",
             "active": true
         },
         "max": {
-            "path": "/mnt/c/Users/Percision 15/memory/claude/max",
+            "path": "mnt/c/Users/Percision 15/memory/claude/max",
             "active": true
         }
     },
     "memory_paths": {
-        "primary": "/mnt/c/Users/Percision 15/memory",
-        "secondary": "/mnt/c/Users/Percision 15/OneDrive/memory",
-        "tertiary": "/mnt/d/memory_backup"
+        "primary": "mnt/c/Users/Percision 15/memory",
+        "secondary": "mnt/c/Users/Percision 15/OneDrive/memory",
+        "tertiary": "mnt/d/memory_backup"
     },
     "diary_format": {
         "date_format": "%Y-%m-%d",
@@ -73,7 +73,7 @@ func _ready():
 }
 
     # Set last sync time
-    last_sync_time = OS.get_unix_time()
+    last_sync_time = OS.Time.get_unix_time_from_system()
 }
 
 # Connect to terminal
@@ -82,10 +82,10 @@ func connect_terminal(term):
 }
 
     # Register commands
-    terminal.register_command("diary", "Manage memory diary", funcref(self, "_cmd_diary"), 1, "diary <subcommand> [args]")
-    terminal.register_command("account", "Manage Claude accounts", funcref(self, "_cmd_account"), 1, "account <subcommand> [args]")
-    terminal.register_command("entry", "Add or view memory entries", funcref(self, "_cmd_entry"), 1, "entry <subcommand> [args]")
-    terminal.register_command("merge", "Merge entries from multiple accounts", funcref(self, "_cmd_merge"), 0, "merge [account1] [account2]")
+    terminal.register_command("diary", "Manage memory diary", Callable(self, "_cmd_diary"), 1, "diary <subcommand> [args]")
+    terminal.register_command("account", "Manage Claude accounts", Callable(self, "_cmd_account"), 1, "account <subcommand> [args]")
+    terminal.register_command("entry", "Add or view memory entries", Callable(self, "_cmd_entry"), 1, "entry <subcommand> [args]")
+    terminal.register_command("merge", "Merge entries from multiple accounts", Callable(self, "_cmd_merge"), 0, "merge [account1] [account2]")
 }
 
     return true
@@ -97,7 +97,7 @@ func connect_visualizer(vis):
 }
 
     # Register data source
-    visualizer.register_data_source("diary", "Memory Diary", funcref(self, "_get_diary_data"))
+    visualizer.register_data_source("diary", "Memory Diary", Callable(self, "_get_diary_data"))
 }
 
     return true
@@ -162,7 +162,7 @@ func load_all_entries():
 
 # Add a new memory entry
 func add_memory_entry(content, account = "normal", tags = []):
-    var timestamp = OS.get_unix_time()
+    var timestamp = OS.Time.get_unix_time_from_system()
     var date_str = Time.get_datetime_string_from_unix_time(timestamp, config.diary_format.date_format)
     var time_str = Time.get_datetime_string_from_unix_time(timestamp, config.diary_format.time_format)
 }
@@ -271,7 +271,7 @@ func _save_account_entry(entry):
 
 # Save entry to diary file
 func _save_diary_entry(formatted_entry):
-    var date = Time.get_date_dict_from_unix_time(OS.get_unix_time())
+    var date = Time.get_date_dict_from_unix_time(OS.Time.get_unix_time_from_system())
     var diary_file = config.diary_root.plus_file(str(date.year) + "-" + str(date.month) + ".log")
     var file = File.new()
 }
@@ -982,7 +982,7 @@ func _cmd_account(args):
 }
 
             # Make path absolute if not already
-            if not path.begins_with("/"):
+            if not path.begins_with(""):
                 path = OS.get_executable_path().get_base_dir().plus_file(path)
 }
 

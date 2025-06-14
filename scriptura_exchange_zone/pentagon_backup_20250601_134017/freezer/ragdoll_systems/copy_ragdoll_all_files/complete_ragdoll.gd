@@ -6,7 +6,8 @@
 # ==================================================
 
 # DISABLED: This implementation has been replaced by unified_biomechanical_walker.gd
-# extends Node3D
+#
+extends \2
 
 # ENTIRE FILE DISABLED - All content commented out
 """

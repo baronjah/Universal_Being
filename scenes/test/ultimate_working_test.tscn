@@ -1,0 +1,30 @@
+[gd_scene load_steps=3 format=3 uid="uid://working_test_ultimate"]
+
+[ext_resource type="Script" path="res://scenes/test/ultimate_working_test.gd" id="1_working_test"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_1"]
+size = Vector3(1, 1, 1)
+
+[node name="UltimateWorkingTest" type="Node3D"]
+script = ExtResource("1_working_test")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.866025, 0.5, 0, -0.5, 0.866025, 0, 3, 5)
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.707107, -0.5, 0.5, 0, 0.707107, 0.707107, -0.707107, -0.5, 0.5, 0, 0, 0)
+
+[node name="TestCube" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_1")
+
+[node name="UI" type="CanvasLayer" parent="."]
+
+[node name="StatusLabel" type="Label" parent="UI"]
+offset_left = 10.0
+offset_top = 10.0
+offset_right = 400.0
+offset_bottom = 200.0
+text = "🌟 ULTIMATE WORKING TEST
+✅ Core systems active
+⚡ No scriptura_exchange_zone dependencies
+🎮 Ready for plasmoid testing"

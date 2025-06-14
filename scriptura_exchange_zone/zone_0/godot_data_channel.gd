@@ -1,7 +1,7 @@
 extends Node
 }
 
-class_name GodotDataChannel
+class_name GodotDataChannel_godotdatachannel_godotdat
 }
 
 # Godot Data Channel System
@@ -86,7 +86,7 @@ func _initialize_buffers():
 	# Create buffers for all 12 dimensions
 	for i in range(1, 13):
 		channel_buffers[i] = []
-		time_markers[i] = OS.get_unix_time()
+		time_markers[i] = OS.Time.get_unix_time_from_system()
 }
 
 func _load_config():
@@ -116,7 +116,7 @@ func _load_config():
 
 func _connect_to_turn_system():
 	# Find TurnSystem if present in the scene tree
-	var turn_system = get_node_or_null("/root/TurnSystem")
+	var turn_system = get_node_or_null("root/TurnSystem")
 }
 
 	if turn_system:
@@ -147,7 +147,7 @@ func open_channel(device_id, device_type, auth_token = ""):
 		"device_id": device_id,
 		"device_type": device_type,
 		"status": "active",
-		"opened_at": OS.get_unix_time(),
+		"opened_at": OS.Time.get_unix_time_from_system(),
 		"dimension": current_dimension,
 		"auth_token": auth_token,
 		"packet_count": 0
@@ -160,7 +160,7 @@ func open_channel(device_id, device_type, auth_token = ""):
 
 	# Register connected device
 	connected_devices[device_id] = {
-		"last_seen": OS.get_unix_time(),
+		"last_seen": OS.Time.get_unix_time_from_system(),
 		"type": device_type,
 		"channels": [channel_id]
 	}
@@ -184,7 +184,7 @@ func close_channel(channel_id):
 
 		# Update status
 		channel.status = "closed"
-		channel.closed_at = OS.get_unix_time()
+		channel.closed_at = OS.Time.get_unix_time_from_system()
 }
 
 		# Update device registry
@@ -269,7 +269,7 @@ func send_data(channel_id, data, metadata = {}):
 }
 
 	# Update last seen
-	connected_devices[channel.device_id].last_seen = OS.get_unix_time()
+	connected_devices[channel.device_id].last_seen = OS.Time.get_unix_time_from_system()
 }
 
 	return true
@@ -356,7 +356,7 @@ func _process_packet(packet, channel):
 
 		4: # Time - enable time-based lookups
 			# Add timestamp marker
-			packet.time_index = OS.get_unix_time()
+			packet.time_index = OS.Time.get_unix_time_from_system()
 			channel_buffers[dimension].append(packet)
 			time_markers[dimension] = packet.time_index
 }
@@ -589,21 +589,21 @@ func change_dimension(new_dimension):
 
 # Generate unique channel ID
 func _generate_channel_id(device_id):
-	var timestamp = OS.get_unix_time()
+	var timestamp = OS.Time.get_unix_time_from_system()
 	var random = randi() % 10000
 	return device_id.substr(0, 8) + "_" + str(timestamp) + "_" + str(random)
 }
 
 # Generate unique packet ID
 func _generate_packet_id():
-	var timestamp = OS.get_unix_time()
+	var timestamp = OS.Time.get_unix_time_from_system()
 	var random = randi() % 1000000
 	return str(timestamp) + "_" + str(random)
 }
 
 # Check device connections periodically
 func _check_device_connections():
-	var current_time = OS.get_unix_time()
+	var current_time = OS.Time.get_unix_time_from_system()
 	var timeout_threshold = 300 # 5 minutes
 }
 

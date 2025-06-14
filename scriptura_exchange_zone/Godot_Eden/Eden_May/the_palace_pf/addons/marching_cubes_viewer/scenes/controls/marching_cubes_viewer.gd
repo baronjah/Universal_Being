@@ -22,10 +22,10 @@
 # SOFTWARE.
 
 @tool
-extends Node3D
-class_name MarchingCubesViewer
+extends \2
+class_name MarchingCubesViewer_marchingcubesviewer_marching
 
-@export var material:Material:
+@@@export var material:Material:
 	get:
 		return material
 	set(value):
@@ -34,7 +34,7 @@ class_name MarchingCubesViewer
 		material = value
 		update_material()
 
-@export var material_points:Material:
+@@@export var material_points:Material:
 	get:
 		return material_points
 	set(value):
@@ -43,7 +43,7 @@ class_name MarchingCubesViewer
 		material_points = value
 		update_material_points()
 
-@export var image_data:ZippedImageStack:
+@@@export var image_data:ZippedImageStack:
 	get:
 		return image_data
 	set(value):
@@ -61,7 +61,7 @@ class_name MarchingCubesViewer
 		threshold = value
 		dirty = true
 
-@export var step_size:Vector3 = Vector3(8, 8, 8):
+@@@export var step_size:Vector3 = Vector3(8, 8, 8):
 	get:
 		return step_size
 	set(value):
@@ -70,7 +70,7 @@ class_name MarchingCubesViewer
 		step_size = value
 		dirty = true
 
-@export var cell_min:Vector3i = Vector3i(0, 0, 0):
+@@@export var cell_min:Vector3i = Vector3i(0, 0, 0):
 	get:
 		return cell_min
 	set(value):
@@ -80,7 +80,7 @@ class_name MarchingCubesViewer
 		dirty = true
 
 
-@export var cell_max:Vector3 = Vector3i(10, 10, 10):
+@@@export var cell_max:Vector3 = Vector3i(10, 10, 10):
 	get:
 		return cell_max
 	set(value):

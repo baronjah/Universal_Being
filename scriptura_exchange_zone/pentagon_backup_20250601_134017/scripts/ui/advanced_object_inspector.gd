@@ -4,7 +4,6 @@
 # PURPOSE: Edit any property, save/load scenes, integrate with Floodgate
 # CREATED: 2025-05-28 - Enhanced scene editing system
 # ==================================================
-
 extends UniversalBeingBase
 signal property_changed(object: Node, property: String, new_value: Variant)
 signal scene_save_requested(scene_data: Dictionary)
@@ -806,7 +805,7 @@ func _load_scene_from_file(path: String) -> void:
 
 func request_floodgate_operation(operation: Dictionary) -> void:
 	# Send operation through Floodgate system
-	var floodgate = get_node_or_null("/root/FloodgateController")
+	var floodgate = get_node_or_null("root/FloodgateController")
 	if floodgate and floodgate.has_method("queue_operation"):
 		floodgate.queue_operation(operation)
 

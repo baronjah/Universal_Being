@@ -2,8 +2,8 @@
 # Add this code to your existing main.gd file
 
 # Add these imports at the top of your file
-const ThingCreatorIntegration = preload("res://code/gdscript/scripts/Menu_Keyboard_Console/thing_creator_integration.gd")
-const ThingCreatorCommands = preload("res://code/gdscript/scripts/Menu_Keyboard_Console/thing_creator_commands.gd")
+const ThingCreatorIntegration = preload("res://scripts/gdscript/scripts/Menu_Keyboard_Console/thing_creator_integration.gd")
+const ThingCreatorCommands = preload("res://scripts/gdscript/scripts/Menu_Keyboard_Console/thing_creator_commands.gd")
 
 # Add these class variables to your main.gd class
 var thing_creator_integration = null
@@ -14,8 +14,8 @@ func _initialize_thing_creator():
     print("Initializing Thing Creator System...")
     
     # Create ThingCreator instance if not already existing
-    if not has_node("/root/ThingCreator"):
-        var ThingCreatorClass = load("res://code/gdscript/scripts/akashic_records/thing_creator.gd")
+    if not has_node("root/ThingCreator"):
+        var ThingCreatorClass = load("res://scripts/gdscript/scripts/akashic_records/thing_creator.gd")
         if ThingCreatorClass:
             var thing_creator = ThingCreatorClass.new()
             thing_creator.name = "ThingCreator"

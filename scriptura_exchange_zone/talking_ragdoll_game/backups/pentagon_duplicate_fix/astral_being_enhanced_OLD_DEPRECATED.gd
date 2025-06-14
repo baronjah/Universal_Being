@@ -3,7 +3,6 @@
 # DESCRIPTION: Star-like beings that orbit and understand connections
 # CREATED: 2025-05-23 - Points of light with awareness
 # ==================================================
-
 extends UniversalBeingBase
 # Core properties
 var light_point: OmniLight3D
@@ -56,7 +55,7 @@ func pentagon_ready() -> void:
 	set_physics_process(true)
 	
 	# Get physics state manager
-	physics_state_manager = get_node_or_null("/root/PhysicsStateManager")
+	physics_state_manager = get_node_or_null("root/PhysicsStateManager")
 	if not physics_state_manager:
 		print("Warning: PhysicsStateManager not found")
 

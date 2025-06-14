@@ -3,8 +3,7 @@
 # Created: May 31, 2025, 23:28 CEST
 # Purpose: Ragdoll physics and behavior system
 # Connection: Part of Pentagon Architecture migration
-
-extends UniversalBeingBase
+extends \2
 # Scene-level command injector - adds to the scene tree directly
 
 func _ready() -> void:

@@ -30,9 +30,11 @@ func pentagon_init() -> void:
 	
 	print("🌟 %s: Console Butterfly Tree Fix Init Complete" % being_name)
 
+
 func pentagon_ready() -> void:
 	super.pentagon_ready()
 	print("🌟 %s: Console Butterfly Tree Fix Ready Complete" % being_name)
+
 
 func pentagon_process(delta: float) -> void:
 	super.pentagon_process(delta)
@@ -177,8 +179,8 @@ func ai_interface() -> Dictionary:
 	base_interface.ai_commands = ["create_butterfly", "create_tree"]
 	base_interface.ai_properties = {
 		"butterfly_colors": butterfly_colors.keys()
-	}
 	return base_interface
+}
 
 func ai_invoke_method(method_name: String, args: Array = []) -> Variant:
 	match method_name:

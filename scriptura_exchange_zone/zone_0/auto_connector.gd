@@ -1,32 +1,32 @@
 extends Node
 
-class_name AutoConnector
+class_name AutoConnector_autoconnector_autoconn
 
 # ----- CONFIGURATION -----
 @export_category("Connection Settings")
-@export var auto_connect_on_startup: bool = true
-@export var auto_reconnect: bool = true
-@export var connection_types: Array[String] = ["api", "drive", "ocr", "network"]
-@export var check_interval: float = 30.0  # seconds
-@export var retry_interval: float = 10.0  # seconds
-@export var max_retry_count: int = 5
-@export var timeout: float = 15.0  # seconds
+@@@export var auto_connect_on_startup: bool = true
+@@@export var auto_reconnect: bool = true
+@@@export var connection_types: Array[String] = ["api", "drive", "ocr", "network"]
+@@@export var check_interval: float = 30.0  # seconds
+@@@export var retry_interval: float = 10.0  # seconds
+@@@export var max_retry_count: int = 5
+@@@export var timeout: float = 15.0  # seconds
 
 # ----- API CONFIGURATION -----
 @export_category("API Settings")
-@export var api_url: String = "https://api.example.com"
-@export var api_version: String = "v1"
-@export var api_key: String = ""
-@export var use_api_encryption: bool = true
-@export var verify_ssl: bool = true
+@@@export var api_url: String = "https://api.example.com"
+@@@export var api_version: String = "v1"
+@@@export var api_key: String = ""
+@@@export var use_api_encryption: bool = true
+@@@export var verify_ssl: bool = true
 
 # ----- INTEGRATION CONFIGURATION -----
 @export_category("Integration Settings")
-@export var enable_drive_integration: bool = true
-@export var enable_ocr_integration: bool = true
-@export var enable_network_discovery: bool = true
-@export var ocr_service_url: String = "https://ocr.example.com"
-@export var drive_service_url: String = "https://drive.example.com"
+@@@export var enable_drive_integration: bool = true
+@@@export var enable_ocr_integration: bool = true
+@@@export var enable_network_discovery: bool = true
+@@@export var ocr_service_url: String = "https://ocr.example.com"
+@@@export var drive_service_url: String = "https://drive.example.com"
 
 # ----- CONNECTION STATE -----
 var connections = {
@@ -119,22 +119,22 @@ func _initialize_timers():
 
 func _find_system_references():
     # Find OCR processor
-    ocr_processor = get_node_or_null("/root/OCRProcessor")
+    ocr_processor = get_node_or_null("root/OCRProcessor")
     if not ocr_processor:
         ocr_processor = _find_node_by_class(get_tree().root, "OCRProcessor")
     
     # Find screen capturer
-    screen_capturer = get_node_or_null("/root/ScreenCaptureUtility")
+    screen_capturer = get_node_or_null("root/ScreenCaptureUtility")
     if not screen_capturer:
         screen_capturer = _find_node_by_class(get_tree().root, "ScreenCaptureUtility")
     
     # Find color system
-    color_system = get_node_or_null("/root/DimensionalColorSystem")
+    color_system = get_node_or_null("root/DimensionalColorSystem")
     if not color_system:
         color_system = _find_node_by_class(get_tree().root, "DimensionalColorSystem")
     
     # Find updater
-    updater = get_node_or_null("/root/AutoUpdater")
+    updater = get_node_or_null("root/AutoUpdater")
     if not updater:
         updater = _find_node_by_class(get_tree().root, "AutoUpdater")
     
@@ -209,7 +209,7 @@ func connect_all() -> void:
     is_connecting = false
     
     print("Connection sequence #" + str(sequence_id) + " completed with " + 
-          str(successful_connections) + "/" + str(connection_types.size()) + " successful connections")
+          str(successful_connections) + "" + str(connection_types.size()) + " successful connections")
     
     emit_signal("connection_sequence_complete", successful_connections, connection_types.size())
     
@@ -299,7 +299,7 @@ func disconnect_all() -> void:
 func _connect_to_api():
     # Connect to API service
     
-    print("Establishing API connection to: " + api_url + "/" + api_version)
+    print("Establishing API connection to: " + api_url + "" + api_version)
     
     # In a real implementation, would make an authentication request
     # For this mock-up, we'll simulate the connection
@@ -311,7 +311,7 @@ func _connect_to_api():
     
     if success:
         connections.api.status = "connected"
-        connections.api.last_connected = OS.get_unix_time()
+        connections.api.last_connected = OS.Time.get_unix_time_from_system()
         connections.api.retry_count = 0
         
         auth_token = _generate_token(32)
@@ -359,7 +359,7 @@ func _connect_to_drive():
     
     if success:
         connections.drive.status = "connected"
-        connections.drive.last_connected = OS.get_unix_time()
+        connections.drive.last_connected = OS.Time.get_unix_time_from_system()
         connections.drive.retry_count = 0
         
         _update_connection_status("drive", "connected")
@@ -405,7 +405,7 @@ func _connect_to_ocr():
     
     if success:
         connections.ocr.status = "connected"
-        connections.ocr.last_connected = OS.get_unix_time()
+        connections.ocr.last_connected = OS.Time.get_unix_time_from_system()
         connections.ocr.retry_count = 0
         
         _update_connection_status("ocr", "connected")
@@ -451,7 +451,7 @@ func _connect_to_network():
     
     if success:
         connections.network.status = "connected"
-        connections.network.last_connected = OS.get_unix_time()
+        connections.network.last_connected = OS.Time.get_unix_time_from_system()
         connections.network.retry_count = 0
         
         _update_connection_status("network", "connected")
@@ -530,7 +530,7 @@ func _schedule_retry(connection_type: String):
     var wait_time = retry_interval * pow(1.5, retry_count - 1)  # Exponential backoff
     
     print("Scheduling " + connection_type + " connection retry " + 
-          str(retry_count) + "/" + str(max_retry_count) + 
+          str(retry_count) + "" + str(max_retry_count) + 
           " in " + str(wait_time) + " seconds")
     
     connection_timers[connection_type].wait_time = wait_time

@@ -9,7 +9,6 @@ const CONSCIOUSNESS_COLORS = {
 	3: Color(0.2, 1.0, 0.2),      # Green - Connected
 	4: Color(1.0, 0.84, 0.0),     # Gold - Enlightened
 	5: Color(1.0, 1.0, 1.0)       # Glowing White - Transcendent
-}
 
 const CONSCIOUSNESS_NAMES = {
 	0: "Dormant",
@@ -63,7 +62,6 @@ const VISUAL_EFFECTS = {
 		"emission_radius": 60.0,
 		"glow_strength": 1.0,
 		"pulse_speed": 3.0
-	}
 }
 
 # Apply consciousness visual to a being's scene
@@ -171,7 +169,6 @@ void fragment() {
     float pulse = sin(TIME * time_scale) * 0.5 + 0.5;
     vec4 glow = glow_color * pulse * glow_power;
     COLOR = tex + glow * tex.a;
-}
 """
 	
 	var material = ShaderMaterial.new()

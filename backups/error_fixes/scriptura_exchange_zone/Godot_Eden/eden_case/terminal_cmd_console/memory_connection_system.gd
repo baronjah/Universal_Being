@@ -328,7 +328,7 @@ func find_chain(start_id: String, graph: Dictionary, min_length: int, chain = nu
     if visited == null:
         visited = {start_id: true}
     
-    if not graph.has(start_id) or graph[start_id].empty():
+    if not graph.has(start_id) or graph[start_id].is_empty():
         return chain if chain.size() >= min_length else []
     
     var longest_chain = chain.duplicate()
@@ -807,7 +807,7 @@ func generate_connection_stats() -> Dictionary:
         })
     
     # Sort by connection count, descending
-    sorted_memories.sort_custom(self, "_sort_by_connection_count")
+    sorted_memories.sort_custom(self."_sort_by_connection_count")
     
     # Take top 5
     for i in range(min(5, sorted_memories.size())):

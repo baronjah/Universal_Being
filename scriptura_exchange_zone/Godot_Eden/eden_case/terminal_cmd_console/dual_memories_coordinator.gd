@@ -1,5 +1,5 @@
 extends Node
-class_name DualMemoriesCoordinator
+class_name DualMemoriesCoordinator_dualmemoriescoordinator_dualmemo
 }
 
 """
@@ -118,7 +118,7 @@ func process_text(text: String, source: String = "user") -> Dictionary:
                 "text": text,
                 "source": source
             },
-            "timestamp": OS.get_unix_time()
+            "timestamp": OS.Time.get_unix_time_from_system()
         }
         word_memory_system.record_word_message(message)
 }
@@ -446,7 +446,7 @@ func add_catchphrase_pattern(text: String, type: String = "exact", effect: Dicti
         "text": text,
         "type": type,
         "effect": effect,
-        "created_at": OS.get_unix_time()
+        "created_at": OS.Time.get_unix_time_from_system()
     }
 }
 
@@ -596,7 +596,7 @@ func hatch_data(text: String, force_mode: String = "") -> Dictionary:
 
     # Store crossover point for future reference
     if crossover_data:
-        memory_crossover_points[OS.get_unix_time()] = crossover_data
+        memory_crossover_points[OS.Time.get_unix_time_from_system()] = crossover_data
 }
 
     # Restore original mode
@@ -884,7 +884,7 @@ func _add_random_transformation(text: String, intensity: float) -> String:
 }
 
     # Random suffix
-    var suffixes = [" (echoing)", " [shifting]", " {resonating}", " <transforming>", " /oscillating/"]
+    var suffixes = [" (echoing)", " [shifting]", " {resonating}", " <transforming>", " oscillating/"]
     if randf() < intensity * 0.5:
         transformed = transformed + suffixes[randi() % suffixes.size()]
 }
@@ -914,7 +914,7 @@ func _create_memory_crossover(word_memory, wish_element) -> Dictionary:
 }
 
     # Generate a unique crossover ID
-    var crossover_id = "crossover_" + str(OS.get_unix_time()) + "_" + str(randi() % 1000)
+    var crossover_id = "crossover_" + str(OS.Time.get_unix_time_from_system()) + "_" + str(randi() % 1000)
 }
 
     # Create the crossover data structure
@@ -922,7 +922,7 @@ func _create_memory_crossover(word_memory, wish_element) -> Dictionary:
         "id": crossover_id,
         "word_memory_id": word_memory.id,
         "wish_element_id": wish_element.id,
-        "creation_time": OS.get_unix_time(),
+        "creation_time": OS.Time.get_unix_time_from_system(),
         "dimensional_plane": wish_element.dimensional_plane,
         "word_dimension": word_memory.dimension_history[word_memory.dimension_history.size() - 1].dimension if word_memory.dimension_history.size() > 0 else "3D",
         "properties": {}

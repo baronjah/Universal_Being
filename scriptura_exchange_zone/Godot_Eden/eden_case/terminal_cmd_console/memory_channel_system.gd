@@ -1,5 +1,5 @@
 extends Node
-class_name MemoryChannelSystem
+class_name MemoryChannelSystem_memorychannelsystem_memorych
 }
 
 """
@@ -33,7 +33,8 @@ Features:
 }
 
 # Channel definitions
-enum ChannelType {
+enum \2 {
+
     PRIMARY,
     SECONDARY,
     TERTIARY,
@@ -42,7 +43,8 @@ enum ChannelType {
 }
 
 # Storage types
-enum StorageType {
+enum \2 {
+
     RAM,
     LOCAL,
     CLOUD,
@@ -51,7 +53,8 @@ enum StorageType {
 }
 
 # Processing priorities
-enum Priority {
+enum \2 {
+
     CRITICAL,
     HIGH,
     MEDIUM,
@@ -61,7 +64,8 @@ enum Priority {
 }
 
 # Task status
-enum TaskStatus {
+enum \2 {
+
     PENDING,
     IN_PROGRESS,
     COMPLETED,
@@ -71,7 +75,8 @@ enum TaskStatus {
 }
 
 # Device types
-enum DeviceType {
+enum \2 {
+
     DESKTOP,
     MOBILE,
     WEB,
@@ -101,7 +106,7 @@ class MemoryChannel:
         storage_type = p_storage_type
         capacity = p_capacity
         description = p_description
-        created_at = OS.get_unix_time()
+        created_at = OS.Time.get_unix_time_from_system()
 }
 
     func can_accept_task(task_size: float) -> bool:
@@ -166,31 +171,31 @@ class Task:
         priority = p_priority
         size = p_size
         payload = p_payload
-        created_at = OS.get_unix_time()
+        created_at = OS.Time.get_unix_time_from_system()
         status = TaskStatus.PENDING
 }
 
     func start():
         if status == TaskStatus.PENDING:
             status = TaskStatus.IN_PROGRESS
-            started_at = OS.get_unix_time()
+            started_at = OS.Time.get_unix_time_from_system()
 }
 
     func complete(p_result = null):
         status = TaskStatus.COMPLETED
         result = p_result
-        completed_at = OS.get_unix_time()
+        completed_at = OS.Time.get_unix_time_from_system()
 }
 
     func fail(error_message: String):
         status = TaskStatus.FAILED
         error = error_message
-        completed_at = OS.get_unix_time()
+        completed_at = OS.Time.get_unix_time_from_system()
 }
 
     func cancel():
         status = TaskStatus.CANCELED
-        completed_at = OS.get_unix_time()
+        completed_at = OS.Time.get_unix_time_from_system()
 }
 
     func is_ready() -> bool:
@@ -221,12 +226,12 @@ class Device:
         name = p_name
         type = p_type
         max_capacity = p_max_capacity
-        last_seen = OS.get_unix_time()
+        last_seen = OS.Time.get_unix_time_from_system()
 }
 
     func update_status(online: bool):
         is_online = online
-        last_seen = OS.get_unix_time()
+        last_seen = OS.Time.get_unix_time_from_system()
 }
 
     func can_accept_task(task_size: float) -> bool:
@@ -404,7 +409,7 @@ func create_channel(id: String, type: int, storage_type: int, capacity: int = 10
         "tasks_failed": 0,
         "avg_processing_time": 0.0,
         "peak_load": 0.0,
-        "created_at": OS.get_unix_time()
+        "created_at": OS.Time.get_unix_time_from_system()
     }
 }
 
@@ -837,7 +842,7 @@ func get_system_stats() -> Dictionary:
         "active_channels": active_channels,
         "total_devices": total_devices,
         "online_devices": online_devices,
-        "system_uptime": OS.get_unix_time() - _channels["primary_ram"].created_at if _channels.has("primary_ram") else 0
+        "system_uptime": OS.Time.get_unix_time_from_system() - _channels["primary_ram"].created_at if _channels.has("primary_ram") else 0
     }
 }
 
@@ -854,7 +859,7 @@ func synchronize():
 }
 
     # Check for timed-out tasks
-    var current_time = OS.get_unix_time()
+    var current_time = OS.Time.get_unix_time_from_system()
     var timeout_threshold = _config.timeout_threshold
 }
 
@@ -903,7 +908,7 @@ func cleanup_old_tasks():
 }
 
 func generate_unique_id() -> String:
-    var id = str(OS.get_unix_time()) + "-" + str(randi() % 1000000).pad_zeros(6)
+    var id = str(OS.Time.get_unix_time_from_system()) + "-" + str(randi() % 1000000).pad_zeros(6)
     return id
 }
 
@@ -953,7 +958,7 @@ func create_function_task(name: String, func_ref: FuncRef, priority: int, size: 
 # add_child(memory_system)
 # memory_system.initialize()
 # 
-# var funcref = funcref(self, "my_function")
+# var funcref = Callable(self, "my_function")
 # var task_id = memory_system.create_function_task("My Task", funcref, MemoryChannelSystem.Priority.HIGH)
 # 
 # # Later check the result:

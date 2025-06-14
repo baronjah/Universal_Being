@@ -120,7 +120,7 @@ func _write_to_chronicle(verse: String, event_type: String, metadata: Dictionary
 		"verse": verse,
 		"type": event_type,
 		"metadata": metadata
-	}
+}
 	
 	chronicle_entries.append(entry)
 	verse_written.emit(verse, entry)
@@ -192,6 +192,7 @@ func _generate_epic_name() -> String:
 func describe_being_poetic(being: Node) -> String:
 	"""Generate poetic description of a being"""
 	if being.has_method("get_being_type"):
+
 		var being_type = being.get_being_type()
 		var name = being.name if being.name != "" else _generate_epic_name()
 		

@@ -3,7 +3,6 @@
 # Created: May 31, 2025, 23:28 CEST
 # Purpose: Ragdoll physics and behavior system
 # Connection: Part of Pentagon Architecture migration
-
 extends UniversalBeingBase
 # Console commands for biomechanical walker testing
 
@@ -19,7 +18,7 @@ func pentagon_ready() -> void:
 	# Wait for autoloads
 	await get_tree().process_frame
 	
-	console_manager = get_node_or_null("/root/ConsoleManager")
+	console_manager = get_node_or_null("root/ConsoleManager")
 	
 	if console_manager:
 		_register_walker_commands()

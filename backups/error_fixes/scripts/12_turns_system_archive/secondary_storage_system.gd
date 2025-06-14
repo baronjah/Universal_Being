@@ -61,6 +61,7 @@ class StorageConfig:
 			StorageType.GOOGLE_DRIVE: return "Google Drive"
 			StorageType.CUSTOM: return "Custom"
 			_: return "Unknown"
+}
 			
 	func get_persistence_string() -> String:
 		match persistence_level:
@@ -69,6 +70,7 @@ class StorageConfig:
 			PersistenceLevel.RESILIENT: return "Resilient"
 			PersistenceLevel.PERMANENT: return "Permanent"
 			_: return "Unknown"
+}
 		
 	func get_summary() -> String:
 		return "%s (%s) - %s persistence, %d files (%s)" % [
@@ -96,6 +98,7 @@ class ChangeTracker:
 	var last_modified: int = 0
 	var version: int = 1
 	var hash_value: String = ""
+}
 	var sync_status = {}  # Storage name -> sync status
 	
 	func _init(p_path: String):
@@ -124,11 +127,12 @@ class ChangeTracker:
 			ChangeState.SYNCHRONIZED: return "Synchronized"
 			_: return "Unknown"
 
+
 # Storage locations and configurations
-var storage_locations = {}
+var storage_locations = {
 var active_storage = "local"
-var change_trackers = {}
-var file_locks = {}
+var change_trackers = {
+var file_locks = {
 
 # References to other systems
 var terminal = null
@@ -157,10 +161,10 @@ func _ready():
 	
 	if terminal:
 		if terminal.has_node("drive_connector"):
-			drive_connector = terminal.get_node("drive_connector")
+			drive_connector = terminal.get_node("\1") as Node
 		
 		if terminal.has_node("concurrent_processor"):
-			concurrent_processor = terminal.get_node("concurrent_processor")
+			concurrent_processor = terminal.get_node("\1") as Node
 		
 		log_message("Secondary Storage System initialized.", "system")
 	
@@ -171,7 +175,7 @@ func _ready():
 	var backup_timer = Timer.new()
 	backup_timer.wait_time = 60  # Check every minute
 	backup_timer.autostart = true
-	backup_timer.connect("timeout", self, "_check_backup_timer")
+	backup_timer.connect(_check_backup_timer)
 	add_child(backup_timer)
 	
 	# Set up timer for fluctuation detection
@@ -179,25 +183,30 @@ func _ready():
 		var fluctuation_timer = Timer.new()
 		fluctuation_timer.wait_time = 300  # Check every 5 minutes
 		fluctuation_timer.autostart = true
-		fluctuation_timer.connect("timeout", self, "_check_for_fluctuations")
+		fluctuation_timer.connect(_check_for_fluctuations)
 		add_child(fluctuation_timer)
 
 # Initialize default storage locations
 func initialize_default_storage():
 	# Local storage
 	add_storage("local", StorageType.LOCAL, "user://local_storage/")
+}
 	
 	# Project storage
 	add_storage("project", StorageType.PROJECT, "res://project_storage/")
+}
 	
 	# Claude storage
 	add_storage("claude", StorageType.CLAUDE, "user://claude_storage/")
+}
 	
 	# Google Drive storage
 	if drive_connector and drive_connector.has_method("get_drives"):
+
 		var drives = drive_connector.get_drives()
 		for drive_name in drives:
 			if drive_name.to_lower() == "gdrive":
+
 				var drive = drives[drive_name]
 				add_storage("google_drive", StorageType.GOOGLE_DRIVE, drive.path)
 				break
@@ -261,6 +270,7 @@ func process_storage_command(args):
 		_:
 			log_message("Unknown storage command: " + subcmd, "error")
 
+
 # Process advanced storage commands
 func process_advanced_storage_command(args):
 	var parts = args.split(" ", true, 1)
@@ -294,6 +304,7 @@ func process_advanced_storage_command(args):
 		_:
 			log_message("Unknown advanced storage command: " + subcmd, "error")
 
+
 # Process system storage commands
 func process_system_storage_command(args):
 	var parts = args.split(" ", true, 1)
@@ -321,9 +332,11 @@ func process_system_storage_command(args):
 		_:
 			log_message("Unknown system storage command: " + subcmd, "error")
 
+
 # List all storage locations
 func list_storage_locations():
 	log_message("Available Storage Locations:", "storage")
+
 	
 	for name in storage_locations:
 		var storage = storage_locations[name]
@@ -339,7 +352,7 @@ func show_active_storage():
 
 # Set active storage
 func set_active_storage(name):
-	if name.empty():
+	if name.is_empty():
 		log_message("Please specify a storage name.", "error")
 		return
 		
@@ -352,7 +365,7 @@ func set_active_storage(name):
 
 # Show information about a storage location
 func show_storage_info(name):
-	if name.empty():
+	if name.is_empty():
 		log_message("Please specify a storage name.", "error")
 		return
 		
@@ -372,7 +385,7 @@ func show_storage_info(name):
 
 # Sync a storage location
 func sync_storage(name):
-	if name.empty() or name == "all":
+	if name.is_empty() or name == "all":
 		log_message("Syncing all storage locations...", "storage")
 		
 		for storage_name in storage_locations:
@@ -397,6 +410,7 @@ func show_storage_status():
 	log_message("- Fluctuation Detection: " + ("Enabled" if fluctuation_detection else "Disabled"), "storage")
 	log_message("- Clean Data Mode: " + ("Enabled" if clean_data_mode else "Disabled"), "storage")
 	log_message("- Human Resonance Correction: " + ("Enabled" if human_resonance_correction else "Disabled"), "storage")
+
 	
 	var total_files = 0
 	var total_changes = 0
@@ -412,14 +426,16 @@ func show_storage_status():
 	log_message("- Changed Files: " + str(total_changes), "storage")
 	log_message("- Total Size: " + _format_size(total_size), "storage")
 
+
 # Backup data
 func backup_data(target=""):
-	if target.empty():
+	if target.is_empty():
 		target = "all"
 		
 	log_message("Backing up data to " + target + "...", "storage")
 	
 	if target == "all":
+
 		# Back up to all available storage locations
 		var backup_count = 0
 		
@@ -443,7 +459,7 @@ func backup_data(target=""):
 
 # Restore from backup
 func restore_from_backup(source=""):
-	if source.empty():
+	if source.is_empty():
 		log_message("Please specify a source storage for restoration.", "error")
 		return
 		
@@ -456,12 +472,13 @@ func restore_from_backup(source=""):
 	# In a real implementation, this would restore files from the backup
 	# For this mock-up, we'll simulate it
 	
-	yield(get_tree().create_timer(1.5), "timeout")
+	await(get_tree().create_timer(1.5), "timeout")
 	log_message("Data restored from " + source + ".", "storage")
 
 # Show file changes
 func show_changes():
 	log_message("Changed Files:", "storage")
+
 	
 	var found_changes = false
 	
@@ -473,6 +490,7 @@ func show_changes():
 			log_message("- " + path + " (" + tracker.get_state_string() + ", v" + 
 						str(tracker.version) + ", " + _format_timestamp(tracker.last_modified) + ")", 
 						tracker.change_state == ChangeState.CONFLICTED ? "error" : "storage")
+	
 	
 	if !found_changes:
 		log_message("No changed files found.", "storage")
@@ -504,7 +522,7 @@ func add_custom_storage(args):
 
 # Remove a storage location
 func remove_storage(name):
-	if name.empty():
+	if name.is_empty():
 		log_message("Please specify a storage name to remove.", "error")
 		return
 		
@@ -546,6 +564,7 @@ func configure_storage(args):
 			storage.auto_sync = (value.to_lower() == "true" or value.to_lower() == "yes" or value == "1")
 			log_message("Auto-sync for " + name + " " + ("enabled" if storage.auto_sync else "disabled"), "storage")
 		"sync_interval":
+
 			var interval = int(value)
 			if interval > 0:
 				storage.sync_interval = interval
@@ -553,6 +572,7 @@ func configure_storage(args):
 			else:
 				log_message("Invalid sync interval. Must be positive.", "error")
 		"persistence":
+
 			var level = PersistenceLevel.STANDARD
 			match value.to_lower():
 				"temporary": level = PersistenceLevel.TEMPORARY
@@ -572,9 +592,10 @@ func configure_storage(args):
 			log_message("Unknown property: " + property, "error")
 			log_message("Valid properties: enabled, auto_sync, sync_interval, persistence, path", "system")
 
+
 # Toggle fluctuation detection
 func toggle_fluctuation_detection(enabled=""):
-	if enabled.empty():
+	if enabled.is_empty():
 		fluctuation_detection = !fluctuation_detection
 	else:
 		fluctuation_detection = (enabled.to_lower() == "true" or enabled.to_lower() == "on" or enabled == "1")
@@ -587,7 +608,7 @@ func toggle_fluctuation_detection(enabled=""):
 
 # Toggle clean data mode
 func toggle_clean_data_mode(enabled=""):
-	if enabled.empty():
+	if enabled.is_empty():
 		clean_data_mode = !clean_data_mode
 	else:
 		clean_data_mode = (enabled.to_lower() == "true" or enabled.to_lower() == "on" or enabled == "1")
@@ -600,7 +621,7 @@ func toggle_clean_data_mode(enabled=""):
 
 # Toggle human resonance correction
 func toggle_human_resonance_correction(enabled=""):
-	if enabled.empty():
+	if enabled.is_empty():
 		human_resonance_correction = !human_resonance_correction
 	else:
 		human_resonance_correction = (enabled.to_lower() == "true" or enabled.to_lower() == "on" or enabled == "1")
@@ -613,7 +634,7 @@ func toggle_human_resonance_correction(enabled=""):
 
 # Verify data integrity
 func verify_data_integrity(storage_name=""):
-	if storage_name.empty() or storage_name == "all":
+	if storage_name.is_empty() or storage_name == "all":
 		log_message("Verifying data integrity across all storage locations...", "storage")
 		
 		for name in storage_locations:
@@ -627,6 +648,7 @@ func verify_data_integrity(storage_name=""):
 	else:
 		log_message("Storage location not found: " + storage_name, "error")
 
+
 # Resolve conflicts
 func resolve_conflicts(mode=""):
 	log_message("Searching for conflicts...", "storage")
@@ -639,6 +661,7 @@ func resolve_conflicts(mode=""):
 		if tracker.change_state == ChangeState.CONFLICTED:
 			conflict_count += 1
 			log_message("Found conflict: " + path, "storage")
+
 			
 			# Apply resolution based on mode
 			match mode.to_lower():
@@ -689,7 +712,7 @@ func reset_storage_system():
 
 # Purge a storage location
 func purge_storage(name):
-	if name.empty():
+	if name.is_empty():
 		log_message("Please specify a storage name to purge.", "error")
 		return
 		
@@ -698,6 +721,7 @@ func purge_storage(name):
 		return
 		
 	log_message("Purging storage location: " + name, "storage")
+
 	
 	# In a real implementation, this would delete all files
 	# For this mock-up, we'll simulate it
@@ -709,30 +733,35 @@ func purge_storage(name):
 	
 	log_message("Storage location purged: " + name, "storage")
 
+
 # Export storage configuration
 func export_storage_config(path):
-	if path.empty():
+	if path.is_empty():
 		path = "user://storage_config.dat"
+
 		
 	log_message("Exporting storage configuration to: " + path, "storage")
+
 	
 	# In a real implementation, this would save to a file
 	# For this mock-up, we'll simulate it
 	
-	yield(get_tree().create_timer(0.8), "timeout")
+	await(get_tree().create_timer(0.8), "timeout")
 	log_message("Storage configuration exported successfully.", "storage")
 
 # Import storage configuration
 func import_storage_config(path):
-	if path.empty():
+	if path.is_empty():
 		path = "user://storage_config.dat"
+
 		
 	log_message("Importing storage configuration from: " + path, "storage")
+
 	
 	# In a real implementation, this would load from a file
 	# For this mock-up, we'll simulate it
 	
-	yield(get_tree().create_timer(0.8), "timeout")
+	await(get_tree().create_timer(0.8), "timeout")
 	log_message("Storage configuration imported successfully.", "storage")
 
 # Upgrade storage system
@@ -740,13 +769,13 @@ func upgrade_storage_system():
 	log_message("Upgrading storage system...", "system")
 	
 	log_message("Checking for available upgrades...", "storage")
-	yield(get_tree().create_timer(1.0), "timeout")
+	await(get_tree().create_timer(1.0), "timeout")
 	
 	log_message("Installing upgraded components...", "storage")
-	yield(get_tree().create_timer(1.5), "timeout")
+	await(get_tree().create_timer(1.5), "timeout")
 	
 	log_message("Applying new configuration...", "storage")
-	yield(get_tree().create_timer(0.8), "timeout")
+	await(get_tree().create_timer(0.8), "timeout")
 	
 	log_message("Storage system upgrade complete!", "system")
 	log_message("New features available:", "system")
@@ -817,7 +846,7 @@ func _backup_to_storage(name: String):
 	# In a real implementation, this would copy files to the backup location
 	# For this mock-up, we'll simulate it
 	
-	yield(get_tree().create_timer(0.5), "timeout")
+	await(get_tree().create_timer(0.5), "timeout")
 	log_message("Backed up data to " + name + ".", "storage")
 
 # Verify storage integrity
@@ -833,7 +862,7 @@ func _verify_storage_integrity(name: String):
 	# In a real implementation, this would check file integrity
 	# For this mock-up, we'll simulate it
 	
-	yield(get_tree().create_timer(0.8), "timeout")
+	await(get_tree().create_timer(0.8), "timeout")
 	
 	var simulated_issues = randi() % 3  # 0, 1, or 2 random issues
 	
@@ -842,7 +871,7 @@ func _verify_storage_integrity(name: String):
 	else:
 		log_message("Found " + str(simulated_issues) + " integrity issues in " + name + ".", "error")
 		log_message("Running automatic repairs...", "storage")
-		yield(get_tree().create_timer(0.5), "timeout")
+		await(get_tree().create_timer(0.5), "timeout")
 		log_message("Repairs completed.", "storage")
 
 # Get directory stats
@@ -851,7 +880,7 @@ func _get_directory_stats(path: String) -> Dictionary:
 		"size": 0,
 		"files": 0,
 		"dirs": 0
-	}
+}
 	
 	var dir = Directory.new()
 	if dir.open(path) != OK:
@@ -968,7 +997,7 @@ func _apply_resonance_correction():
 	# In a real implementation, this would apply actual corrections
 	# For this mock-up, we'll simulate it
 	
-	yield(get_tree().create_timer(1.0), "timeout")
+	await(get_tree().create_timer(1.0), "timeout")
 	log_message("Schumann resonance corrections applied. Data stability improved.", "storage")
 
 # Clean all data
@@ -978,7 +1007,7 @@ func _clean_all_data():
 	# In a real implementation, this would clean actual data
 	# For this mock-up, we'll simulate it
 	
-	yield(get_tree().create_timer(1.5), "timeout")
+	await(get_tree().create_timer(1.5), "timeout")
 	log_message("All data cleaned and validated.", "storage")
 
 # Clean affected data
@@ -988,7 +1017,7 @@ func _clean_affected_data(file_paths):
 	# In a real implementation, this would clean actual data
 	# For this mock-up, we'll simulate it
 	
-	yield(get_tree().create_timer(1.0), "timeout")
+	await(get_tree().create_timer(1.0), "timeout")
 	log_message("Affected data cleaned and validated.", "storage")
 
 # Display storage help

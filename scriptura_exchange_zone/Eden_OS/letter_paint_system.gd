@@ -1,6 +1,6 @@
 extends Node
 
-class_name LetterPaintSystem
+class_name LetterPaintSystem_letterpaintsystem_letterpa
 
 signal letter_painted(letter, dimension, power)
 signal glyph_recognized(glyph_data)
@@ -101,7 +101,8 @@ var letter_dimension_properties = {
 }
 
 # Mind update types
-enum MindUpdateType {
+enum \2 {
+
 	INSIGHT,         # New understanding
 	REALIZATION,     # Sudden awareness
 	INTEGRATION,     # Combining concepts
@@ -241,15 +242,15 @@ class MindUpdate:
 
 func _ready():
 	# Get references to other systems
-	paint_system = get_node_or_null("/root/PaintSystem")
+	paint_system = get_node_or_null("root/PaintSystem")
 	if not paint_system:
 		paint_system = PaintSystem.new()
 		add_child(paint_system)
 	
-	shape_system = get_node_or_null("/root/ShapeSystem")
-	dimensional_color_system = get_node_or_null("/root/DimensionalColorSystem")
-	turn_cycle_manager = get_node_or_null("/root/TurnCycleManager")
-	astral_entity_system = get_node_or_null("/root/AstralEntitySystem")
+	shape_system = get_node_or_null("root/ShapeSystem")
+	dimensional_color_system = get_node_or_null("root/DimensionalColorSystem")
+	turn_cycle_manager = get_node_or_null("root/TurnCycleManager")
+	astral_entity_system = get_node_or_null("root/AstralEntitySystem")
 	
 	# Connect signals
 	paint_system.stroke_created.connect(_on_stroke_created)
@@ -618,7 +619,7 @@ func _generate_insight(update_type: int, source_letters: Array, dimension: int) 
 	if source_letters.size() == 1:
 		source_text = "letter " + source_letters[0]
 	else:
-		source_text = "word '" + "".join(source_letters) + "'"
+		source_text = "word '" + ""." ".join(source_letters) + "'"
 	
 	# Choose a random insight template
 	var templates = insights.get(update_type, ["New understanding emerges"])

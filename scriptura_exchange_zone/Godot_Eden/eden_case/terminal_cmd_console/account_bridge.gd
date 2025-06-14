@@ -1,6 +1,6 @@
 extends Node
 
-class_name AccountBridge
+class_name AccountBridge_accountbridge_accountb
 
 # AccountBridge - Connects multiple accounts (Google, AI services) with LUMINUS CORE
 # Manages authentication, data synchronization, and service integration

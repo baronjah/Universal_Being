@@ -52,13 +52,13 @@ func initialize_ui():
 	color_indicator.color = Color(1.0, 0.9, 0.5)  # Turn 8 color
 	
 	# Connect buttons
-	$ControlPanel/ConnectButton.connect("pressed", self, "_on_connect_button_pressed")
-	$ControlPanel/OCRButton.connect("pressed", self, "_on_ocr_button_pressed")
-	$GamePanel/CreateGameButton.connect("pressed", self, "_on_create_game_pressed")
-	$TurnHistoryPanel/ViewArchiveButton.connect("pressed", self, "_on_view_archive_pressed")
-	$ControlPanel/NextTurnButton.connect("pressed", self, "_on_next_turn_pressed")
+	$ControlPanel/ConnectButton.connect(_on_connect_button_pressed)
+	$ControlPanel/OCRButton.connect(_on_ocr_button_pressed)
+	$GamePanel/CreateGameButton.connect(_on_create_game_pressed)
+	$TurnHistoryPanel/ViewArchiveButton.connect(_on_view_archive_pressed)
+	$ControlPanel/NextTurnButton.connect(_on_next_turn_pressed)
 	
-	file_dialog.connect("file_selected", self, "_on_file_selected")
+	file_dialog.connect(_on_file_selected)
 	
 	# Initial output text
 	output_text.bbcode_text = "[b]Scriptura Turn System[/b]\n"
@@ -91,11 +91,11 @@ func setup_connections():
 		return
 	
 	# Connect signals
-	turn_system.connect("turn_advanced", self, "_on_turn_advanced")
-	turn_system.connect("turn_progress_updated", self, "_on_turn_progress_updated")
-	turn_system.connect("ocr_result_ready", self, "_on_ocr_result_ready")
-	turn_system.connect("game_created", self, "_on_game_created")
-	turn_system.connect("api_connection_changed", self, "_on_api_connection_changed")
+	turn_system.connect(_on_turn_advanced)
+	turn_system.connect(_on_turn_progress_updated)
+	turn_system.connect(_on_ocr_result_ready)
+	turn_system.connect(_on_game_created)
+	turn_system.connect(_on_api_connection_changed)
 
 func update_turn_display():
 	if not turn_system:
@@ -285,5 +285,5 @@ func add_output_text(text):
 	output_text.bbcode_text += "\n" + text
 	
 	# Auto-scroll to bottom
-	yield(get_tree(), "idle_frame")
+	await(get_tree(), "idle_frame")
 	output_text.scroll_vertical = output_text.get_content_height()

@@ -1,5 +1,5 @@
 extends Node3D
-class_name LuminousOSController
+class_name LuminousOSController_luminousoscontroller_luminous
 
 # Signals
 signal command_executed(command, result)
@@ -13,11 +13,12 @@ var ui_controller: Control
 var command_processor: Node
 
 # Reality states (inspired by TempleOS's divine inspiration concept)
-enum Reality {PHYSICAL, DIGITAL, DIVINE}
+enum \2 {
+PHYSICAL, DIGITAL, DIVINE}
 var current_reality: Reality = Reality.PHYSICAL
 
 # Navigation and state
-var current_path: String = "/"
+var current_path: String = ""
 var command_history: Array = []
 var clipboard: Dictionary = {}
 
@@ -104,7 +105,7 @@ func navigate_to_directory(path: String):
 	if path == "..":
 		filesystem.navigate_back()
 	else:
-		var full_path = current_path.path_join(path) if not path.begins_with("/") else path
+		var full_path = current_path.path_join(path) if not path.begins_with("") else path
 		filesystem.navigate_to(full_path)
 
 func toggle_divine_reality():

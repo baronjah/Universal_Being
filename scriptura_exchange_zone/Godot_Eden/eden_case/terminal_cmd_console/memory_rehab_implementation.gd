@@ -1,5 +1,5 @@
 extends Node
-class_name MemoryRehabImplementation
+class_name MemoryRehabImplementation_memoryrehabimplementation_memoryre
 
 # Memory Rehabilitation Implementation Demo
 # Shows how the # comment style and new memory organization works

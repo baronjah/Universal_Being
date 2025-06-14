@@ -75,6 +75,7 @@ class EvolutionMetrics:
 			   "- Novelty: %.2f\n" % novelty + \
 			   "- Stability: %.2f\n" % stability + \
 			   "- Evolution Potential: %.2f" % calculate_evolution_potential()
+	}
 
 # Data entity that can evolve
 class DataEntity:
@@ -87,6 +88,7 @@ class DataEntity:
 	var evolution_stage: int = EvolutionStage.SEED
 	var evolution_pattern: int = EvolutionPattern.LINEAR
 	var parent_id: String = ""
+}
 	var children_ids: Array = []
 	var metrics: EvolutionMetrics
 	var fold_state: int = 0  # 0 = unfolded, 1+ = fold level
@@ -141,7 +143,7 @@ signal entity_unfolded(entity_id, fold_level)
 signal evolution_cycle_completed(cycle_number)
 
 # Engine state
-var entities = {}
+var entities = {
 var current_evolution_cycle = 0
 var total_evolution_cycles = 0
 var evolution_rate = 1.0  # Base rate multiplier
@@ -159,8 +161,8 @@ var fluctuation_monitor = null
 # Internal state
 var _evolution_queue = []
 var _ready_for_evolution = []
-var _scheduled_folds = {}
-var _entity_relationships = {}
+var _scheduled_folds = {
+var _entity_relationships = {
 var _current_storage_mode = StorageType.MEMORY
 
 func _ready():
@@ -168,7 +170,7 @@ func _ready():
 	evolution_timer = Timer.new()
 	evolution_timer.wait_time = 5.0  # 5 seconds between evolution cycles
 	evolution_timer.autostart = false
-	evolution_timer.connect("timeout", self, "_process_evolution_cycle")
+	evolution_timer.connect(_process_evolution_cycle)
 	add_child(evolution_timer)
 	
 	# Find terminal and other systems
@@ -253,6 +255,7 @@ func process_evolution_command(args):
 			display_evolution_help()
 		_:
 			log_message("Unknown evolution command: " + subcmd, "error")
+}
 
 # Process advanced evolution commands
 func process_advanced_evolution_command(args):
@@ -288,6 +291,7 @@ func process_advanced_evolution_command(args):
 			display_advanced_evolution_help()
 		_:
 			log_message("Unknown advanced evolution command: " + subcmd, "error")
+}
 
 # Process system evolution commands
 func process_system_evolution_command(args):
@@ -319,10 +323,11 @@ func process_system_evolution_command(args):
 			display_system_evolution_help()
 		_:
 			log_message("Unknown system evolution command: " + subcmd, "error")
+}
 
 # Create a new entity
 func create_entity(content, type="text"):
-	if content.empty():
+	if content.is_empty():
 		log_message("Entity content cannot be empty.", "error")
 		return null
 		
@@ -341,12 +346,13 @@ func create_entity(content, type="text"):
 	_evolution_queue.append(id)
 	
 	log_message("Created new entity: " + entity.to_string())
+}
 	
 	return id
 
 # Evolve a specific entity
 func evolve_entity(entity_id):
-	if entity_id.empty():
+	if entity_id.is_empty():
 		log_message("Please specify an entity ID to evolve.", "error")
 		return false
 		
@@ -428,6 +434,7 @@ func fold_entity(args):
 		"semantic", "s": fold_mode = FoldingMode.SEMANTIC
 		"quantum", "q": fold_mode = FoldingMode.QUANTUM
 		"recursive", "r": fold_mode = FoldingMode.RECURSIVE
+}
 	
 	# Apply the fold
 	var folded_content = entity.fold(fold_mode)
@@ -441,7 +448,7 @@ func fold_entity(args):
 
 # Unfold an entity
 func unfold_entity(entity_id):
-	if entity_id.empty():
+	if entity_id.is_empty():
 		log_message("Please specify an entity ID to unfold.", "error")
 		return false
 		
@@ -466,7 +473,7 @@ func unfold_entity(entity_id):
 
 # Toggle auto-evolution
 func toggle_auto_evolution(enabled_str=""):
-	if enabled_str.empty():
+	if enabled_str.is_empty():
 		auto_evolution = !auto_evolution
 	else:
 		auto_evolution = (enabled_str.to_lower() == "on" or enabled_str.to_lower() == "true" or enabled_str == "1")
@@ -496,6 +503,7 @@ func set_evolution_rate(rate_str):
 		
 	evolution_rate = rate
 	log_message("Evolution rate set to: " + str(evolution_rate))
+
 
 # Set the evolution pattern for an entity
 func set_evolution_pattern(args):
@@ -606,7 +614,7 @@ func split_entity(args):
 		var end = min(content.length(), (i + 1) * split_size)
 		var part_content = content.substr(start, end - start)
 		
-		if part_content.strip_edges().empty():
+		if part_content.strip_edges().is_empty():
 			continue
 			
 		var new_id = create_entity(part_content, entity.type)
@@ -636,6 +644,7 @@ func merge_entities(args):
 			combined_content += entities[id].content + "\n"
 		else:
 			log_message("Entity not found: " + id, "warning")
+
 	
 	if valid_entities.size() < 2:
 		log_message("Need at least 2 valid entities to merge.", "error")
@@ -656,12 +665,13 @@ func merge_entities(args):
 	entities[merged_id].evolution_pattern = EvolutionPattern.FUSION
 	
 	log_message("Created merged entity: " + merged_id)
+
 	
 	return true
 
 # Show metrics for an entity
 func show_entity_metrics(entity_id):
-	if entity_id.empty():
+	if entity_id.is_empty():
 		log_message("Please specify an entity ID to show metrics for.", "error")
 		return false
 		
@@ -685,6 +695,7 @@ func set_batch_size(size_str):
 		
 	evolution_batch_size = size
 	log_message("Evolution batch size set to: " + str(evolution_batch_size))
+
 
 # Set folding thresholds
 func set_folding_thresholds(args):
@@ -710,6 +721,7 @@ func set_folding_thresholds(args):
 	
 	log_message("Folding threshold set to: " + str(folding_threshold))
 	log_message("Unfolding threshold set to: " + str(unfolding_threshold))
+
 	
 	return true
 
@@ -717,9 +729,10 @@ func set_folding_thresholds(args):
 func analyze_evolution_patterns():
 	log_message("Analyzing evolution patterns...")
 	
-	var patterns = {}
-	var stage_counts = {}
-	var fold_counts = {"folded": 0, "unfolded": 0}
+	var patterns = {
+	var stage_counts = {
+	var fold_counts = {"folded": 0, "unfolded": 0
+}
 	var total_entities = entities.size()
 	
 	for id in entities:
@@ -763,10 +776,12 @@ func analyze_evolution_patterns():
 	
 	# Report folding status
 	log_message("Folding Status:")
+}
 	var folded_percent = (float(fold_counts.folded) / total_entities) * 100
 	var unfolded_percent = (float(fold_counts.unfolded) / total_entities) * 100
 	log_message("- Folded: " + str(fold_counts.folded) + " (" + str(int(folded_percent)) + "%)")
 	log_message("- Unfolded: " + str(fold_counts.unfolded) + " (" + str(int(unfolded_percent)) + "%)")
+}
 	
 	return true
 
@@ -823,42 +838,47 @@ func set_storage_mode(mode_str):
 	
 	_current_storage_mode = mode
 	log_message("Storage mode set to: " + mode_str)
+
 	
 	return true
 
 # Save evolution state
 func save_evolution_state(path=""):
-	if path.empty():
+	if path.is_empty():
 		path = "user://evolution_state.dat"
+
 		
 	log_message("Saving evolution state to: " + path, "system")
+
 	
 	# In a real implementation, this would save to a file
 	# For this mock-up, we'll simulate it
 	
-	yield(get_tree().create_timer(0.8), "timeout")
+	await(get_tree().create_timer(0.8), "timeout")
 	log_message("Evolution state saved successfully.")
 	
 	return true
 
 # Load evolution state
 func load_evolution_state(path=""):
-	if path.empty():
+	if path.is_empty():
 		path = "user://evolution_state.dat"
+
 		
 	log_message("Loading evolution state from: " + path, "system")
+
 	
 	# In a real implementation, this would load from a file
 	# For this mock-up, we'll simulate it
 	
-	yield(get_tree().create_timer(0.8), "timeout")
+	await(get_tree().create_timer(0.8), "timeout")
 	log_message("Evolution state loaded successfully.")
 	
 	return true
 
 # Purge entities
 func purge_entities(criteria=""):
-	if criteria.empty():
+	if criteria.is_empty():
 		log_message("Please specify purge criteria (all, folded, stage:<num>).", "error")
 		return false
 	
@@ -874,6 +894,7 @@ func purge_entities(criteria=""):
 			_scheduled_folds.clear()
 			_entity_relationships.clear()
 		"folded":
+
 			var to_remove = []
 			for id in entities:
 				if entities[id].fold_state > 0:
@@ -894,6 +915,7 @@ func purge_entities(criteria=""):
 						_entity_relationships[parent_id].erase(id)
 		_:
 			if criteria.begins_with("stage:"):
+
 				var stage_str = criteria.substr(6)
 				var stage = int(stage_str)
 				
@@ -930,49 +952,53 @@ func export_evolution_data(format="json"):
 	# In a real implementation, this would export actual data
 	# For this mock-up, we'll simulate it
 	
-	yield(get_tree().create_timer(0.8), "timeout")
+	await(get_tree().create_timer(0.8), "timeout")
 	log_message("Evolution data exported successfully as " + format)
 	
 	return true
 
 # Import evolution data
 func import_evolution_data(path=""):
-	if path.empty():
+	if path.is_empty():
 		log_message("Please specify a path to import from.", "error")
 		return false
 		
 	log_message("Importing evolution data from: " + path)
+
 	
 	# In a real implementation, this would import actual data
 	# For this mock-up, we'll simulate it
 	
-	yield(get_tree().create_timer(0.8), "timeout")
+	await(get_tree().create_timer(0.8), "timeout")
 	log_message("Evolution data imported successfully.")
 	
 	return true
 
 # List all entities
 func list_entities():
-	if entities.empty():
+	if entities.is_empty():
 		log_message("No entities exist.", "system")
 		return
 		
 	log_message("Entity List (" + str(entities.size()) + " total):")
+
 	
 	var sorted_keys = entities.keys()
-	sorted_keys.sort_custom(self, "_sort_by_evolution_stage")
+	sorted_keys.sort_custom(self."_sort_by_evolution_stage")
 	
 	for id in sorted_keys:
 		var entity = entities[id]
 		log_message("- " + id + ": " + entity.to_string())
 
+
 # Search for entities matching criteria
 func search_entities(criteria):
-	if criteria.empty():
+	if criteria.is_empty():
 		log_message("Please specify search criteria.", "error")
 		return
 		
 	log_message("Searching entities with criteria: " + criteria)
+
 	
 	var matches = []
 	
@@ -986,6 +1012,7 @@ func search_entities(criteria):
 			
 		# Tag search
 		if criteria.begins_with("tag:"):
+
 			var tag = criteria.substr(4)
 			if entity.tags.has(tag):
 				matches.append(id)
@@ -993,6 +1020,7 @@ func search_entities(criteria):
 		
 		# Stage search
 		if criteria.begins_with("stage:"):
+
 			var stage_str = criteria.substr(6)
 			var stage = int(stage_str)
 			if entity.evolution_stage == stage:
@@ -1001,6 +1029,7 @@ func search_entities(criteria):
 		
 		# Pattern search
 		if criteria.begins_with("pattern:"):
+
 			var pattern_str = criteria.substr(8)
 			var pattern = _pattern_from_string(pattern_str)
 			if pattern >= 0 and entity.evolution_pattern == pattern:
@@ -1017,15 +1046,17 @@ func search_entities(criteria):
 			continue
 	
 	log_message("Found " + str(matches.size()) + " matching entities:")
+
 	
 	for id in matches:
 		log_message("- " + id + ": " + entities[id].to_string())
+
 	
 	return matches
 
 # Show a specific entity's details
 func show_entity(entity_id):
-	if entity_id.empty():
+	if entity_id.is_empty():
 		log_message("Please specify an entity ID to show.", "error")
 		return false
 		
@@ -1042,15 +1073,19 @@ func show_entity(entity_id):
 	log_message("- Evolution Stage: " + str(entity.evolution_stage) + " (" + _get_stage_name(entity.evolution_stage) + ")")
 	log_message("- Evolution Pattern: " + _get_pattern_name(entity.evolution_pattern))
 	log_message("- Fold State: " + str(entity.fold_state))
+
 	
-	if not entity.tags.empty():
+	if not entity.tags.is_empty():
 		log_message("- Tags: " + str(entity.tags))
+
 	
 	if entity.parent_id:
 		log_message("- Parent: " + entity.parent_id)
+
 	
-	if not entity.children_ids.empty():
+	if not entity.children_ids.is_empty():
 		log_message("- Children: " + str(entity.children_ids))
+
 	
 	log_message("- Content:")
 	log_message(entity.content)
@@ -1079,7 +1114,7 @@ func _process_evolution_cycle():
 	log_message("Evolved " + str(evolved_count) + " entities in this cycle.")
 	
 	# Process scheduled folds
-	if not _scheduled_folds.empty():
+	if not _scheduled_folds.is_empty():
 		var fold_count = 0
 		var scheduled_ids = _scheduled_folds.keys()
 		
@@ -1124,7 +1159,7 @@ func _prepare_evolution_candidates():
 	_evolution_queue.clear()
 	
 	# Sort by evolution stage (prioritize lower stages)
-	_ready_for_evolution.sort_custom(self, "_sort_by_evolution_stage_ascending")
+	_ready_for_evolution.sort_custom(self."_sort_by_evolution_stage_ascending")
 	
 	# Apply randomness based on evolution rate
 	if evolution_rate != 1.0:
@@ -1172,6 +1207,7 @@ func _get_pattern_name(pattern):
 		EvolutionPattern.FUSION: return "Fusion"
 		_: return "Unknown"
 
+
 # Get pattern enum from string
 func _pattern_from_string(pattern_str):
 	match pattern_str.to_lower():
@@ -1200,6 +1236,7 @@ func _get_stage_name(stage):
 		EvolutionStage.COMPLETION: return "Completion ★"  # 9
 		_: return "Unknown"
 
+
 # Get fold mode name
 func _get_fold_mode_name(mode):
 	match mode:
@@ -1211,6 +1248,7 @@ func _get_fold_mode_name(mode):
 		FoldingMode.QUANTUM: return "quantum"
 		FoldingMode.RECURSIVE: return "recursive"
 		_: return "horizontal"
+
 
 # Format timestamp
 func _format_timestamp(timestamp):
@@ -1279,9 +1317,10 @@ func display_evolution_status():
 	log_message("- Folding Threshold: " + str(folding_threshold), "evolution")
 	log_message("- Unfolding Threshold: " + str(unfolding_threshold), "evolution")
 	log_message("- Storage Mode: " + _get_storage_mode_name(_current_storage_mode), "evolution")
+
 	
 	# Distribution of evolution stages
-	var stage_counts = {}
+	var stage_counts = {
 	for id in entities:
 		var stage = entities[id].evolution_stage
 		if not stage_counts.has(stage):
@@ -1295,6 +1334,7 @@ func display_evolution_status():
 			special_marker = " ★"
 		var count = stage_counts[i] if stage_counts.has(i) else 0
 		log_message("  - Stage " + str(i) + special_marker + ": " + str(count), "evolution")
+}
 
 # Get storage mode name
 func _get_storage_mode_name(mode):
@@ -1307,6 +1347,7 @@ func _get_storage_mode_name(mode):
 		StorageType.DIMENSIONAL: return "Dimensional"
 		StorageType.QUANTUM: return "Quantum"
 		_: return "Unknown"
+
 
 # Log a message
 func log_message(message, category="evolution"):

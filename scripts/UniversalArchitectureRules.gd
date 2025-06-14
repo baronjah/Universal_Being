@@ -77,7 +77,6 @@ var scriptura_rules = {
 		"isolation_required": true,
 		"namespace_protection": true,
 		"version_compatibility": true
-	}
 }
 
 # Scene Rules Database
@@ -99,11 +98,11 @@ var scene_rules = {
 		"cursor_distance_controlled": true,
 		"floating_interfaces": true,
 		"billboard_text_allowed": true
-	}
 }
 
 func _ready():
 	print("📐 Universal Architecture Rules: Cosmic organization system ready!")
+}
 
 func validate_scriptura(script_path: String) -> Dictionary:
 	"""Validate a scriptura against architecture rules"""
@@ -113,7 +112,7 @@ func validate_scriptura(script_path: String) -> Dictionary:
 		"violations": [],
 		"recommendations": [],
 		"pentagon_compliance": false
-	}
+}
 	
 	# Determine scriptura type
 	var scriptura_type = determine_scriptura_type(script_path)
@@ -141,7 +140,7 @@ func validate_scene(scene_path: String) -> Dictionary:
 		"violations": [],
 		"recommendations": [],
 		"socket_compliance": false
-	}
+}
 	
 	# Determine scene type
 	var scene_type = determine_scene_type(scene_path)
@@ -216,6 +215,7 @@ func validate_pentagon_compliance(content: String, scriptura_type: ScripturaType
 		result.recommendations.append("✅ Full Pentagon compliance detected")
 	else:
 		result.violations.append("Missing Pentagon methods: " + str(pentagon_mandatory_methods.filter(func(m): return not m in pentagon_methods_found)))
+}
 	
 	# Check for super calls
 	if rules.get("super_calls_mandatory", false):
@@ -270,6 +270,7 @@ func validate_naming_conventions(script_path: String, content: String, result: D
 	# Check file naming convention (snake_case)
 	if not file_name.to_lower() == file_name or " " in file_name:
 		result.recommendations.append("Consider using snake_case for file naming: " + file_name)
+}
 	
 	# Check class_name matches file structure
 	var class_name_regex = RegEx.new()
@@ -288,6 +289,7 @@ func validate_scene_sockets(scene_path: String, scene_type: SceneType, result: D
 	
 	if required_sockets.size() > 0:
 		result.recommendations.append("Scene should include sockets: " + str(required_sockets))
+}
 		# Note: Actual scene parsing would require more complex logic
 
 func validate_3d_compliance(scene_path: String, scene_type: SceneType, result: Dictionary):
@@ -375,7 +377,7 @@ func organize_scriptura_stash(stash_directory: String) -> Dictionary:
 		"systems": [],
 		"utilities": [],
 		"unknown": []
-	}
+}
 	
 	var dir = DirAccess.open(stash_directory)
 	if dir:
@@ -383,6 +385,7 @@ func organize_scriptura_stash(stash_directory: String) -> Dictionary:
 		var file_name = dir.get_next()
 		while file_name != "":
 			if file_name.ends_with(".gd"):
+
 				var full_path = stash_directory + "/" + file_name
 				var category = categorize_scriptura_by_name(file_name)
 				organization[category].append(full_path)
@@ -416,7 +419,7 @@ func organize_entire_cosmos():
 		"pentagon_compliant": 0,
 		"violations_found": 0,
 		"fantastic_scripturas": []
-	}
+}
 	
 	# Scan all scripturas
 	var all_scripts = find_all_scripturas("res://")
@@ -437,6 +440,7 @@ func organize_entire_cosmos():
 	print("🔯 Pentagon Compliant: %d" % cosmic_report.pentagon_compliant)
 	print("⚠️ Violations Found: %d" % cosmic_report.violations_found)
 	print("✨ Fantastic Scripturas: %d" % cosmic_report.fantastic_scripturas.size())
+
 	
 	return cosmic_report
 
@@ -448,6 +452,7 @@ func find_all_scripturas(path: String) -> Array:
 		dir.list_dir_begin()
 		var file_name = dir.get_next()
 		while file_name != "":
+
 			var full_path = path + "/" + file_name
 			if dir.current_is_dir() and not file_name.begins_with("."):
 				scripts.append_array(find_all_scripturas(full_path))

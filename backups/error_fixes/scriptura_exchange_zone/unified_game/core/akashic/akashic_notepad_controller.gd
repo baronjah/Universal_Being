@@ -46,8 +46,8 @@ func _ready():
     _initialize_default_notebook()
     
     # Connect to signals from storage
-    spatial_storage.connect("entry_added", self, "_on_entry_added")
-    spatial_storage.connect("notebook_updated", self, "_on_notebook_updated")
+    spatial_storage.connect(_on_entry_added)
+    spatial_storage.connect(_on_notebook_updated)
     
     # Note: The visualizer will be connected when set_visualizer is called
     
@@ -78,9 +78,9 @@ func set_main_controller(controller):
     
     if controller:
         # Connect to main controller signals
-        controller.connect("note_created", self, "_on_note_created")
-        controller.connect("turn_advanced", self, "_on_turn_advanced")
-        controller.connect("word_manifested", self, "_on_word_manifested")
+        controller.connect(_on_note_created)
+        controller.connect(_on_turn_advanced)
+        controller.connect(_on_word_manifested)
         
         print("Connected to main controller")
         return true
@@ -98,8 +98,8 @@ func set_visualizer(visualizer):
         integration.connect_components(spatial_storage, visualizer)
         
         # Connect to integration signals
-        integration.connect("cell_created", self, "_on_cell_created")
-        integration.connect("entry_visualized", self, "_on_entry_visualized")
+        integration.connect(_on_cell_created)
+        integration.connect(_on_entry_visualized)
         
         print("Connected to visualizer via integration system")
         return true
@@ -147,7 +147,7 @@ func create_akashic_entry(content, position, dimension = 0, tags = []):
     emit_signal("record_created", entry_id)
     
     # Automatically visualize if entries are being displayed
-    if not current_visualized_entries.empty() and integration:
+    if not current_visualized_entries.is_empty() and integration:
         visualize_akashic_record()
     
     return entry_id
@@ -190,7 +190,7 @@ func visualize_akashic_record(dimension = 0, limit = MAX_VISUALIZED_ENTRIES):
     var entries = spatial_storage.find_entries_by_dimension(dimension)
     
     # Sort by power (highest first)
-    entries.sort_custom(self, "_sort_entries_by_power")
+    entries.sort_custom(self."_sort_entries_by_power")
     
     # Limit number of entries
     if entries.size() > limit:
@@ -217,7 +217,7 @@ func create_notebook_from_akashic(dimension, notebook_name = ""):
         return false
     
     # Generate name if not provided
-    if notebook_name.empty():
+    if notebook_name.is_empty():
         notebook_name = "dimension_%d_notebook" % dimension
     
     # Find entries for this dimension
@@ -388,7 +388,7 @@ func _extract_tags_from_text(text):
             tags.append(tag)
     
     // If no tags found, add some based on content
-    if tags.empty():
+    if tags.is_empty():
         // Add dimension tag
         if main_controller:
             tags.append("dim" + str(main_controller.current_turn))
@@ -430,7 +430,7 @@ func _on_turn_advanced(turn_number, symbol, dimension):
     active_dimension = turn_number
     
     // Visualize akashic records for new dimension
-    if not current_visualized_entries.empty():
+    if not current_visualized_entries.is_empty():
         visualize_akashic_record(turn_number)
 
 func _on_word_manifested(word, position, power):
@@ -478,7 +478,7 @@ func process_command(command, args):
             return "Unknown command: " + command
 
 func _process_akashic_command(args):
-    if args.empty():
+    if args.is_empty():
         return "Usage: akashic [create|list|find|connect|synergy]"
     
     match args[0]:
@@ -544,7 +544,7 @@ func _process_akashic_command(args):
             return "Unknown akashic subcommand: " + args[0]
 
 func _process_notepad_command(args):
-    if args.empty():
+    if args.is_empty():
         return "Usage: notepad [create|add|visualize|list]"
     
     match args[0]:
@@ -606,7 +606,7 @@ func _process_notepad_command(args):
             
             var notebooks = spatial_storage.notepad_notebooks
             
-            if notebooks.empty():
+            if notebooks.is_empty():
                 return "No notebooks found"
             
             var result = "Notebooks:\n"
@@ -632,7 +632,7 @@ func _process_notepad_command(args):
             return "Unknown notepad subcommand: " + args[0]
 
 func _process_visualize_command(args):
-    if args.empty():
+    if args.is_empty():
         return "Usage: visualize [akashic|notepad|clear]"
     
     match args[0]:
@@ -670,7 +670,7 @@ func _process_visualize_command(args):
             return "Unknown visualize subcommand: " + args[0]
 
 func _process_3d_command(args):
-    if args.empty():
+    if args.is_empty():
         return "Usage: 3d [save|load|auto]"
     
     match args[0]:

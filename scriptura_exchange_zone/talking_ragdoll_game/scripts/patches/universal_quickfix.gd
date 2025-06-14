@@ -3,7 +3,6 @@
 # Created: May 31, 2025, 23:28 CEST
 # Purpose: Ragdoll physics and behavior system
 # Connection: Part of Pentagon Architecture migration
-
 extends UniversalBeingBase
 # Quick fix to manually register Universal Entity commands
 # Add this to autoload temporarily if commands aren't working
@@ -16,8 +15,8 @@ func pentagon_ready() -> void:
 	# Wait for everything to load
 	await get_tree().create_timer(1.0).timeout
 	
-	var console = get_node_or_null("/root/ConsoleManager")
-	var universal = get_node_or_null("/root/UniversalEntity")
+	var console = get_node_or_null("root/ConsoleManager")
+	var universal = get_node_or_null("root/UniversalEntity")
 	
 	if console and universal and "commands" in console:
 		print("[QuickFix] Manually registering Universal Entity commands...")

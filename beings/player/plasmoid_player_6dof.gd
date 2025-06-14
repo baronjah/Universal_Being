@@ -277,6 +277,7 @@ func attempt_socket_connection(socket: Node3D) -> void:
 	else:
 		print("⚠️ Socket too far: %.1fm (max: %.1fm)" % [distance, interaction_range])
 
+
 func connect_to_nearest_socket() -> void:
 	"""Connect to nearest compatible socket"""
 	var nearest_socket: Node3D = null
@@ -354,6 +355,7 @@ func enter_text_editing_mode() -> void:
 		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 		text_editing_mode_changed.emit(true)
 		show_ub_visual("Editing text: " + current_target.name)
+
 
 func exit_text_editing_mode() -> void:
 	"""Exit text editing mode without saving"""
@@ -451,6 +453,7 @@ func enter_grab_mode() -> void:
 	if current_target:
 		interface_activated.emit("grab")
 		show_ub_visual("Grabbed: " + current_target.name)
+
 
 func pentagon_sewers() -> void:
 	# Clean up UI

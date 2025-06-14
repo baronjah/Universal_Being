@@ -178,10 +178,12 @@ func _update_display():
         var value_text = "%.2f" % investment.current_value
         var roi_text = "%.1f%%" % ((investment.current_value / investment.initial_value - 1.0) * 100.0)
         word_list.add_item("%s (%s): %s (%s)" % [investment.word, investment.category, value_text, roi_text])
+		
     
     # Update total value
     var total_value = investment_system.get_total_value()
     value_display.text = "Total Value: %.2f" % total_value
+	
     
     # Activate color cycling
     _update_colors()
@@ -193,6 +195,7 @@ func _update_direction_display(word = ""):
         
         direction_display.clear()
         direction_display.append_text("[b]Overall Direction Analysis:[/b]\n\n")
+		
         
         for direction in trends:
             var strength = trends[direction]
@@ -207,6 +210,7 @@ func _update_direction_display(word = ""):
         
         direction_display.clear()
         direction_display.append_text("[b]Direction Analysis for '%s':[/b]\n\n" % word)
+		
         
         for direction in word_direction:
             var strength = word_direction[direction]
@@ -216,6 +220,7 @@ func _update_direction_display(word = ""):
                 
                 var color_code = _get_direction_color(direction)
                 direction_display.append_text("%s: [color=%s]%s[/color] %.2f\n" % [direction, color_code, bar, strength])
+				
         
         # Show related words
         var related = direction_tracker.get_related_words(word)
@@ -235,6 +240,7 @@ func _get_direction_color(direction):
         "inward": return "#4ae2e2"
         "outward": return "#e24ae2"
         _: return "#aaaaaa"
+		
 
 func _update_colors():
     # Cycle the color gradient for UI elements

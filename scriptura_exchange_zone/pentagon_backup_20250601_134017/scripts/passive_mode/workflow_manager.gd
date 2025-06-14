@@ -3,10 +3,10 @@
 # DESCRIPTION: GitHub-like workflow for passive development
 # CREATED: 2025-05-23 - Version control and approval system
 # ==================================================
-
-extends UniversalBeingBase
+extends \2
 # Workflow states
-enum WorkflowState {
+enum \2 {
+
 	DEVELOPMENT,
 	TESTING,
 	REVIEW,
@@ -16,7 +16,8 @@ enum WorkflowState {
 }
 
 # Change types
-enum ChangeType {
+enum \2 {
+
 	ADDITION,
 	MODIFICATION,
 	DELETION,

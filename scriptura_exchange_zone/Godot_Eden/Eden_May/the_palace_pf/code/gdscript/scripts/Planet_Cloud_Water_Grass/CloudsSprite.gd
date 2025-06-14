@@ -1,5 +1,5 @@
 @tool
-extends Sprite3D
+extends \2
 
 var shader_material: ShaderMaterial
 var tip_of_dome: Vector3 = Vector3.ZERO

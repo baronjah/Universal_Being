@@ -335,7 +335,7 @@ func _process_system_symbol_command(args: String) -> void:
 
 # List symbols
 func _list_symbols(category: String) -> void:
-	if category.empty():
+	if category.is_empty():
 		_log("Available symbol categories:")
 		for cat in symbols:
 			_log("- " + cat + " (" + str(symbols[cat].size()) + " symbols)")
@@ -472,7 +472,7 @@ func _export_symbols(path: String) -> void:
 
 # Reset symbols
 func _reset_symbols(category: String) -> void:
-	if category.empty() or category == "all":
+	if category.is_empty() or category == "all":
 		_log("Resetting all custom symbols")
 		symbols["custom"] = {}
 	elif category == "custom" and symbols.has("custom"):

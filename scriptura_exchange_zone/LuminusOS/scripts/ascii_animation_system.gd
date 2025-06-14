@@ -1,6 +1,6 @@
 extends Node
 
-class_name AsciiAnimationSystem
+class_name AsciiAnimationSystem_asciianimationsystem_asciiani
 
 # ASCII Animation System for LuminusOS
 # Creates animated ASCII art for terminal visualizations
@@ -89,10 +89,10 @@ var animations = {
         # Frame 1 - Still tree
         [
             "    ^    ",
-            "   / \\   ",
-            "  /   \\  ",
-            " /     \\ ",
-            "/       \\",
+            "    \\   ",
+            "     \\  ",
+            "      \\ ",
+            "       \\",
             "    |    ",
             "    |    ",
             "    |    ",
@@ -101,10 +101,10 @@ var animations = {
         # Frame 2 - Tree swaying slightly right
         [
             "     ^   ",
-            "    / \\  ",
-            "   /   \\ ",
-            "  /     \\",
-            " /       ",
+            "     \\  ",
+            "      \\ ",
+            "       \\",
+            "        ",
             "    |    ",
             "    |    ",
             "    |    ",
@@ -113,10 +113,10 @@ var animations = {
         # Frame 3 - Tree swaying more right
         [
             "      ^  ",
-            "     / \\ ",
-            "    /   \\",
-            "   /     ",
-            "  /      ",
+            "      \\ ",
+            "       \\",
+            "        ",
+            "        ",
             "    |    ",
             "    |    ",
             "    |    ",
@@ -125,10 +125,10 @@ var animations = {
         # Frame 4 - Tree swaying back to center
         [
             "     ^   ",
-            "    / \\  ",
-            "   /   \\ ",
-            "  /     \\",
-            " /       ",
+            "     \\  ",
+            "      \\ ",
+            "       \\",
+            "        ",
             "    |    ",
             "    |    ",
             "    |    ",
@@ -137,10 +137,10 @@ var animations = {
         # Frame 5 - Back to still tree
         [
             "    ^    ",
-            "   / \\   ",
-            "  /   \\  ",
-            " /     \\ ",
-            "/       \\",
+            "    \\   ",
+            "     \\  ",
+            "      \\ ",
+            "       \\",
             "    |    ",
             "    |    ",
             "    |    ",
@@ -149,9 +149,9 @@ var animations = {
         # Frame 6 - Tree swaying slightly left
         [
             "   ^     ",
-            "  / \\    ",
-            " /   \\   ",
-            "/     \\  ",
+            "   \\    ",
+            "    \\   ",
+            "     \\  ",
             "       \\ ",
             "    |    ",
             "    |    ",
@@ -161,8 +161,8 @@ var animations = {
         # Frame 7 - Tree swaying more left
         [
             "  ^      ",
-            " / \\     ",
-            "/   \\    ",
+            "  \\     ",
+            "   \\    ",
             "     \\   ",
             "      \\  ",
             "    |    ",
@@ -173,9 +173,9 @@ var animations = {
         # Frame 8 - Tree swaying back to center
         [
             "   ^     ",
-            "  / \\    ",
-            " /   \\   ",
-            "/     \\  ",
+            "   \\    ",
+            "    \\   ",
+            "     \\  ",
             "       \\ ",
             "    |    ",
             "    |    ",
@@ -346,8 +346,8 @@ var animations = {
         # Frame 2
         [
             "   ┌─┐   ",
-            "  /│ │\\  ",
-            " / │ │ \\ ",
+            "  │ │\\  ",
+            "  │ │ \\ ",
             "┌─┘ └─┐  ",
             "│     │  ",
             "└─────┘  "
@@ -355,8 +355,8 @@ var animations = {
         # Frame 3
         [
             "   ┌───┐ ",
-            "  /│   │ ",
-            " / │   │ ",
+            "  │   │ ",
+            "  │   │ ",
             "┌──┘   │ ",
             "│      │ ",
             "│      │ ",
@@ -378,7 +378,7 @@ var animations = {
             "  │     │",
             "  │     │",
             "  └─┐ ┌─┘",
-            " / │ │ \\ ",
+            "  │ │ \\ ",
             "//  │ │  \\",
             "    └─┘   "
         ],
@@ -402,7 +402,7 @@ var color_schemes = {
         "0": Color.WHITE,
         "1": Color.LIGHT_BLUE,
         "*": Color.GREEN,
-        "/": Color.GREEN,
+        "": Color.GREEN,
         "\\": Color.GREEN,
         "^": Color.GREEN,
         "|": Color.BROWN,
@@ -412,7 +412,7 @@ var color_schemes = {
         "0": Color("009900"),
         "1": Color("00FF00"),
         "*": Color("00FF00"),
-        "/": Color("00DD00"),
+        "": Color("00DD00"),
         "\\": Color("00DD00"),
         "^": Color("00FF00"),
         "|": Color("00CC00"),
@@ -422,7 +422,7 @@ var color_schemes = {
         "0": Color("444444"),
         "1": Color("AAAAFF"),
         "*": Color("FFAA77"),
-        "/": Color("77AAFF"),
+        "": Color("77AAFF"),
         "\\": Color("77AAFF"),
         "^": Color("FFAA77"),
         "|": Color("AA88CC"),
@@ -543,7 +543,7 @@ func list_animations():
         
         if active_animations.has(name):
             var anim = active_animations[name]
-            status = "Active (Frame " + str(anim.current_frame + 1) + "/" + str(anim.total_frames) + \
+            status = "Active (Frame " + str(anim.current_frame + 1) + "" + str(anim.total_frames) + \
                      ", " + str(anim.fps) + " FPS, " + ("Looping" if anim.loop else "Once") + ")"
         
         result.append({

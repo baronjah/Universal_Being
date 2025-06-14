@@ -74,7 +74,7 @@ func _ready():
     var timer = Timer.new()
     timer.wait_time = 30.0  # Default 30 seconds per cycle
     timer.autostart = true
-    timer.connect("timeout", self, "_advance_cycle")
+    timer.connect(_advance_cycle)
     add_child(timer)
 
 func _initialize_data_structures():
@@ -342,7 +342,7 @@ func _format_data_for_display(data):
 
 # API key integration with secure handling
 func set_api_key(key):
-    if key.empty():
+    if key.is_empty():
         return false
     
     # Store only a hash, not the actual key

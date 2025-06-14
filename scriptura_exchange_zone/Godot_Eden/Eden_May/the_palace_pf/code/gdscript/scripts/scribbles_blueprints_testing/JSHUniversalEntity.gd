@@ -1,5 +1,5 @@
 extends UniversalEntity
-class_name JSHUniversalEntity
+class_name JSHUniversalEntity_JSHUniversalEntity_JSHUnive
 
 # Constants for entity complexity thresholds
 const COMPLEXITY_THRESHOLD_LOW = 10

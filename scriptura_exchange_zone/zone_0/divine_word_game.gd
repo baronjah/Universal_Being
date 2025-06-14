@@ -6,11 +6,12 @@ extends Node
 # Terminal 1: Divine Word Genesis
 }
 
-class_name DivineWordGame
+class_name DivineWordGame_divinewordgame_divinewo
 }
 
 # Game state
-enum GameState {
+enum \2 {
+
 	MENU,
 	PLAYING,
 	PAUSED,
@@ -67,12 +68,12 @@ func _ready():
 
 func initialize_game():
 	# Get references to all required systems
-	turn_system = get_node_or_null("/root/TurnSystem")
-	divine_word_processor = get_node_or_null("/root/DivineWordProcessor")
-	word_salem_controller = get_node_or_null("/root/WordSalemGameController")
-	word_crimes_analysis = get_node_or_null("/root/WordCrimesAnalysis")
-	word_comment_system = get_node_or_null("/root/WordCommentSystem")
-	word_dream_storage = get_node_or_null("/root/WordDreamStorage")
+	turn_system = get_node_or_null("root/TurnSystem")
+	divine_word_processor = get_node_or_null("root/DivineWordProcessor")
+	word_salem_controller = get_node_or_null("root/WordSalemGameController")
+	word_crimes_analysis = get_node_or_null("root/WordCrimesAnalysis")
+	word_comment_system = get_node_or_null("root/WordCommentSystem")
+	word_dream_storage = get_node_or_null("root/WordDreamStorage")
 }
 
 	# Create any missing systems
@@ -171,7 +172,7 @@ func setup_config():
 			"reward": 200
 		},
 		3: {
-			"name": "Spatial Construction",
+			"name": "Node3D Construction",
 			"description": "Create words related to 3D space",
 			"target_words": ["cube", "volume", "sphere", "depth", "breadth"],
 			"min_power": 25,

@@ -20,13 +20,13 @@ func _connect_to_existing_systems():
 	# Wait a frame to ensure all other autoloads are ready
 	await get_tree().process_frame
 	
-	var openai_gateway = get_node_or_null("/root/OpenAIGateway")
+	var openai_gateway = get_node_or_null("root/OpenAIGateway")
 	if not openai_gateway:
 		print("ERROR: Failed to find OpenAIGateway singleton")
 		return
 	
 	# Connect to MemoryEvolutionManager if it exists
-	var memory_manager = get_node_or_null("/root/MemoryEvolutionManager")
+	var memory_manager = get_node_or_null("root/MemoryEvolutionManager")
 	if memory_manager:
 		# Connect signals as needed
 		if not openai_gateway.word_transformed.is_connected(memory_manager.catch_word):
@@ -35,7 +35,7 @@ func _connect_to_existing_systems():
 		print("Connected OpenAIGateway to MemoryEvolutionManager")
 	
 	# Connect to WordTranslator if it exists
-	var word_translator = get_node_or_null("/root/WordTranslator")
+	var word_translator = get_node_or_null("root/WordTranslator")
 	if word_translator:
 		# Assign reference
 		openai_gateway.word_processor = word_translator

@@ -1,7 +1,7 @@
 extends Node
 # global_resources_loader
 # code
-# res://code/gdscript/scripts/Space_Place_Point/global_resources_loader.gd
+# res://scripts/gdscript/scripts/Space_Place_Point/global_resources_loader.gd
 
 # This singleton class will manage global resources and model access
 # Add to your Autoload in Project Settings with name "Globals"

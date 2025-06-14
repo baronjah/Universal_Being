@@ -1,6 +1,6 @@
 extends Node
 
-class_name StorageIntegrationSystem
+class_name StorageIntegrationSystem_storageintegrationsystem_storagei
 
 # Storage limits in bytes
 const STORAGE_LIMITS = {
@@ -17,10 +17,10 @@ const WISH_TOKEN_COST = 10 # Default token cost per wish
 
 # Storage paths
 var storage_paths = {
-	"icloud": "/mnt/c/Users/Percision 15/icloud_sync",
-	"google": "/mnt/c/Users/Percision 15/google_drive",
-	"local": "/mnt/c/Users/Percision 15",
-	"wishes": "/mnt/c/Users/Percision 15/12_turns_system/wishes"
+	"icloud": "mnt/c/Users/Percision 15/icloud_sync",
+	"google": "mnt/c/Users/Percision 15/google_drive",
+	"local": "mnt/c/Users/Percision 15",
+	"wishes": "mnt/c/Users/Percision 15/12_turns_system/wishes"
 }
 
 # Storage status tracking
@@ -99,8 +99,8 @@ func _ensure_directories_exist():
 # Connection management
 func _connect_to_akashic_bridge():
 	# Try to find the Akashic Bridge
-	if has_node("/root/ClaudeAkashicBridge") or get_node_or_null("/root/ClaudeAkashicBridge"):
-		_akashic_bridge = get_node("/root/ClaudeAkashicBridge")
+	if has_node("root/ClaudeAkashicBridge") or get_node_or_null("root/ClaudeAkashicBridge"):
+		_akashic_bridge = get_node("root/ClaudeAkashicBridge")
 		print("Connected to existing Claude Akashic Bridge")
 	else:
 		# Check if the class exists
@@ -221,7 +221,7 @@ func create_wish(wish_text, priority = "normal", metadata = {}):
 		return null
 	
 	# Create wish ID
-	var wish_id = "wish_" + str(OS.get_unix_time()) + "_" + str(randi() % 10000)
+	var wish_id = "wish_" + str(OS.Time.get_unix_time_from_system()) + "_" + str(randi() % 10000)
 	
 	# Get current date
 	var date = OS.get_date()
@@ -238,7 +238,7 @@ func create_wish(wish_text, priority = "normal", metadata = {}):
 		"text": wish_text,
 		"priority": priority,
 		"date": date_str,
-		"timestamp": OS.get_unix_time(),
+		"timestamp": OS.Time.get_unix_time_from_system(),
 		"status": "pending",
 		"token_cost": token_cost,
 		"metadata": metadata
@@ -335,7 +335,7 @@ func complete_wish(wish_id, result = "completed", output = ""):
 	
 	# Update wish status
 	wish_system.active_wishes[wish_index].status = result
-	wish_system.active_wishes[wish_index].completion_time = OS.get_unix_time()
+	wish_system.active_wishes[wish_index].completion_time = OS.Time.get_unix_time_from_system()
 	wish_system.active_wishes[wish_index].output = output
 	
 	# Move from active to history

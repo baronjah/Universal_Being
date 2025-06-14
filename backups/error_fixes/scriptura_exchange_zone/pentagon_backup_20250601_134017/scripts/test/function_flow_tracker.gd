@@ -32,7 +32,7 @@ var known_error_patterns = {
 	"empty_to_is_empty": {
 		"pattern": "Cannot find member \"empty\" in base \"String\"",
 		"fix": "Change empty() to is_empty() for Godot 4",
-		"example": "if string.empty(): → if string.is_empty():"
+		"example": "if string.is_empty(): → if string.is_empty():"
 	},
 	"autoload_naming": {
 		"pattern": "Class .* hides an autoload singleton",
@@ -82,7 +82,7 @@ func trace_function_call(script_name: String, function_name: String, params: Arr
 		"script": script_name,
 		"function": function_name,
 		"params": params,
-		"timestamp": Time.get_ticks_msec(),
+		"timestamp": Time.Time.get_ticks_msec(),
 		"stack_depth": function_call_stack.size()
 	}
 	
@@ -102,7 +102,7 @@ func trace_function_return(script_name: String, function_name: String, return_va
 		
 		# Record the complete execution
 		last_call["return_value"] = return_value
-		last_call["duration"] = Time.get_ticks_msec() - last_call.timestamp
+		last_call["duration"] = Time.Time.get_ticks_msec() - last_call.timestamp
 
 # Document floodgate triggers
 func _check_floodgate_trigger(script_name: String, function_name: String) -> void:
@@ -128,7 +128,7 @@ func _check_floodgate_trigger(script_name: String, function_name: String) -> voi
 			"script": script_name,
 			"function": function_name,
 			"description": triggers[script_name][function_name],
-			"timestamp": Time.get_ticks_msec()
+			"timestamp": Time.Time.get_ticks_msec()
 		}
 		
 		if not floodgate_triggers.has(script_name):
@@ -149,7 +149,7 @@ func generate_flow_report() -> String:
 	var sorted_calls = []
 	for key in call_counts:
 		sorted_calls.append([key, call_counts[key]])
-	sorted_calls.sort_custom(func(a, b): return a[1] > b[1])
+	sorted_calls.sort_custom(func(a.b): return a[1] > b[1])
 	
 	for i in min(10, sorted_calls.size()):
 		report += "  %s - %d calls\n" % [sorted_calls[i][0], sorted_calls[i][1]]
@@ -225,7 +225,7 @@ func record_fix_applied(error_type: String, file_path: String, fix_description: 
 	error_fixes_applied[error_type].append({
 		"file": file_path,
 		"fix": fix_description,
-		"timestamp": Time.get_ticks_msec()
+		"timestamp": Time.Time.get_ticks_msec()
 	})
 
 # Simulate complete program flow

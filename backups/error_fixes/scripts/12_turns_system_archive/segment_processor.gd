@@ -9,7 +9,7 @@ const MAX_BRACKET_DEPTH = 3
 const AUTO_CALIBRATION_INTERVAL = 60  # seconds
 
 # Segment storage
-var segments = {}
+var segments = {
 var segment_order = []
 var current_segment_id = 0
 
@@ -24,8 +24,8 @@ var bracket_pairs = {
 }
 
 # Folding state
-var folded_segments = {}
-var fold_visibility = {}
+var folded_segments = {
+var fold_visibility = {
 
 # OCR calibration
 var ocr_calibration_level = 0.95  # 95% accuracy
@@ -46,7 +46,7 @@ func _ready():
 	last_calibration_time = Time.get_unix_time_from_system()
 	
 	# Connect to signals as needed
-	# self.connect("segment_created", self, "_on_segment_created")
+	# self.connect(_on_segment_created)
 
 # Process function - check for calibration needs
 func _process(delta):
@@ -80,7 +80,7 @@ func create_segment(data, segment_id = -1):
 		"modified": Time.get_unix_time_from_system(),
 		"folded": false,
 		"brackets": []
-	}
+}
 	
 	# Update segment order if needed
 	if not segment_id in segment_order:
@@ -235,6 +235,7 @@ func toggle_fold_visibility(segment_id):
 func process_user_input(input_text):
 	# Check if input matches a bracket pattern for folding/unfolding
 	if input_text.strip_edges() == "}" or input_text.strip_edges() == "]" or input_text.strip_edges() == ")":
+}
 		# Try to unfold the last segment in bracket stack
 		if bracket_stack.size() > 0:
 			var last_bracket = bracket_stack.back()
@@ -242,10 +243,11 @@ func process_user_input(input_text):
 			return {
 				"action": "unfold",
 				"segment_id": last_bracket.segment_id
-			}
+	}
 	
 	# Check if input starts with a bracket for folding
 	if input_text.strip_edges().begins_with("{") or input_text.strip_edges().begins_with("[") or input_text.strip_edges().begins_with("("):
+}
 		# Create a new segment and fold it
 		var bracket_type = input_text.strip_edges()[0] + bracket_pairs[input_text.strip_edges()[0]]
 		var content = input_text.strip_edges().substr(1)
@@ -257,7 +259,7 @@ func process_user_input(input_text):
 			"action": "fold",
 			"segment_id": segment_id,
 			"bracket_type": bracket_type
-		}
+}
 	
 	# Default to creating a new segment
 	var segment_id = create_segment(input_text)
@@ -265,7 +267,7 @@ func process_user_input(input_text):
 	return {
 		"action": "create",
 		"segment_id": segment_id
-	}
+}
 
 # Split a line into multiple segments (segmenting)
 func segment_line(line, segment_size = DEFAULT_SEGMENT_SIZE):
@@ -339,7 +341,7 @@ func correct_ocr_errors(text):
 		"nemib": "remember",
 		"accress": "access",
 		"unlockabe": "unlockable"
-	}
+}
 	
 	# Replace common OCR errors
 	for error in corrections:
@@ -384,7 +386,7 @@ func self_check_and_restore():
 		issues_fixed += 1
 	
 	# Check fold visibility consistency
-	var valid_fold_visibility = {}
+	var valid_fold_visibility = {
 	for segment_id in fold_visibility:
 		if segments.has(segment_id) and segments[segment_id].folded:
 			valid_fold_visibility[segment_id] = fold_visibility[segment_id]
@@ -417,7 +419,7 @@ func self_check_and_restore():
 		"issues_found": issues_found,
 		"issues_fixed": issues_fixed,
 		"status": "OK" if issues_fixed == issues_found else "WARNING"
-	}
+}
 
 # Export all segments as a single text
 func export_all_segments():
@@ -473,6 +475,7 @@ func generate_report():
 	report += "OCR Calibration: %.2f%%\n" % [ocr_calibration_level * 100]
 	report += "OCR Calibrations: %d\n" % [calibration_count]
 	report += "Last Calibration: %s\n\n" % [Time.get_datetime_string_from_unix_time(last_calibration_time)]
+}
 	
 	report += "Segments:\n"
 	for segment_id in segment_order:

@@ -86,11 +86,11 @@ func _ready():
     
     # Connect signals
     if temperature_system:
-        temperature_system.connect("temperature_changed", self, "_on_temperature_changed")
-        temperature_system.connect("temperature_state_changed", self, "_on_temperature_state_changed")
+        temperature_system.connect(_on_temperature_changed)
+        temperature_system.connect(_on_temperature_state_changed)
     
     if temperature_word_effects:
-        temperature_word_effects.connect("word_transformed", self, "_on_word_transformed")
+        temperature_word_effects.connect(_on_word_transformed)
     
     # Start ambient sound for current temperature
     if temperature_system:
@@ -126,7 +126,7 @@ func play_ambient_sound(state_name):
         tween.start()
         
         # Wait for fade out then change sound
-        yield(tween, "tween_completed")
+        await(tween, "tween_completed")
         ambient_player.stop()
         tween.queue_free()
     
@@ -144,7 +144,7 @@ func play_ambient_sound(state_name):
     tween.start()
     
     # Clean up tween when done
-    yield(tween, "tween_completed")
+    await(tween, "tween_completed")
     tween.queue_free()
 
 # Play temperature transition sound

@@ -6,10 +6,10 @@ extends Node
 }
 
 # Configuration
-export var story_complexity: int = 3  # 1-5, affects story depth and branching
-export var story_persistence: bool = true  # Stories persist across sessions
-export var player_influence_weight: float = 0.7  # How much player actions affect stories
-export var universe_influence_weight: float = 0.5  # How much universe properties affect stories
+@export var story_complexity: int = 3  # 1-5, affects story depth and branching
+@export var story_persistence: bool = true  # Stories persist across sessions
+@export var player_influence_weight: float = 0.7  # How much player actions affect stories
+@export var universe_influence_weight: float = 0.5  # How much universe properties affect stories
 }
 
 # Story structure
@@ -85,17 +85,17 @@ func _ready():
 
 func initialize_system():
 	# Connect to required systems
-	multiverse_system = get_node_or_null("/root/MultiverseSystemIntegration")
+	multiverse_system = get_node_or_null("root/MultiverseSystemIntegration")
 	if not multiverse_system:
 		multiverse_system = get_node_or_null("../MultiverseSystemIntegration")
 }
 
-	dream_processor = get_node_or_null("/root/DreamStateProcessor")
+	dream_processor = get_node_or_null("root/DreamStateProcessor")
 	if not dream_processor:
 		dream_processor = get_node_or_null("../DreamStateProcessor")
 }
 
-	player_controller = get_node_or_null("/root/PlayerController")
+	player_controller = get_node_or_null("root/PlayerController")
 	if not player_controller:
 		player_controller = get_node_or_null("../PlayerController")
 }
@@ -161,8 +161,8 @@ func create_origin_story():
 		"branches": [],
 		"status": "active",
 		"player_influenced": false,
-		"created_time": OS.get_unix_time(),
-		"last_updated": OS.get_unix_time(),
+		"created_time": OS.Time.get_unix_time_from_system(),
+		"last_updated": OS.Time.get_unix_time_from_system(),
 		"completion": 0.0
 	}
 }
@@ -216,7 +216,7 @@ func create_random_story():
 
 func create_story(theme: String, archetype: String, location: String, universe_id: String, story_seed: String) -> String:
 	# Create a unique ID for the story
-	var story_id = "story_" + str(OS.get_unix_time()) + "_" + str(randi() % 1000)
+	var story_id = "story_" + str(OS.Time.get_unix_time_from_system()) + "_" + str(randi() % 1000)
 }
 
 	var story_data = {
@@ -229,8 +229,8 @@ func create_story(theme: String, archetype: String, location: String, universe_i
 		"branches": [],
 		"status": "active",
 		"player_influenced": false,
-		"created_time": OS.get_unix_time(),
-		"last_updated": OS.get_unix_time(),
+		"created_time": OS.Time.get_unix_time_from_system(),
+		"last_updated": OS.Time.get_unix_time_from_system(),
 		"completion": 0.0
 	}
 }
@@ -405,7 +405,7 @@ func advance_story(story_id: String):
 
 	# Add to story fragments
 	story_data.fragments.append(next_fragment)
-	story_data.last_updated = OS.get_unix_time()
+	story_data.last_updated = OS.Time.get_unix_time_from_system()
 }
 
 	# Update completion progress
@@ -830,7 +830,7 @@ func should_branch_story(story_data: Dictionary) -> bool:
 		return false
 }
 
-	// Chance increases with complexity
+# // Chance increases with complexity
 	var branch_chance = 0.1 * (story_complexity - 2)
 }
 
@@ -845,16 +845,16 @@ func branch_story(story_id: String):
 	var parent_story = active_stories[story_id]
 }
 
-	// Create a story branch
+# // Create a story branch
 	var last_fragment = parent_story.fragments[parent_story.fragments.size() - 1]
 	var transition = transition_phrases[randi() % transition_phrases.size()]
 }
 
-	// Generate branch seed
+# // Generate branch seed
 	var branch_seed = transition + " " + generate_branch_seed(parent_story)
 }
 
-	// Create the branch
+# // Create the branch
 	var branch_id = create_story(
 		parent_story.theme, 
 		story_archetypes[randi() % story_archetypes.size()], 
@@ -864,11 +864,11 @@ func branch_story(story_id: String):
 	)
 }
 
-	// Register the branch
+# // Register the branch
 	parent_story.branches.append(branch_id)
 }
 
-	// Create a connection between the stories
+# // Create a connection between the stories
 	connect_stories(story_id, branch_id, "branch")
 }
 
@@ -879,7 +879,7 @@ func branch_story(story_id: String):
 }
 
 func generate_branch_seed(parent_story: Dictionary) -> String:
-	// Create a seed for a branching story
+# // Create a seed for a branching story
 }
 
 	var seed_templates = [
@@ -902,22 +902,22 @@ func complete_story(story_id: String):
 	var story_data = active_stories[story_id]
 }
 
-	// Mark as complete
+# // Mark as complete
 	story_data.status = "completed"
 	story_data.completion = 1.0
 }
 
-	// Add conclusion if needed
+# // Add conclusion if needed
 	if not is_conclusion(story_data.fragments[story_data.fragments.size() - 1]):
 		var conclusion = generate_conclusion(story_data)
 		story_data.fragments.append(conclusion)
 }
 
-	// Emit signal
+# // Emit signal
 	emit_signal("story_completed", story_id)
 }
 
-	// If story persistence is enabled, save stories
+# // If story persistence is enabled, save stories
 	if story_persistence:
 		save_stories()
 }
@@ -929,7 +929,7 @@ func complete_story(story_id: String):
 }
 
 func is_conclusion(fragment: String) -> bool:
-	// Check if a fragment seems like a conclusion
+# // Check if a fragment seems like a conclusion
 	var conclusion_indicators = [
 		"finally", "ultimately", "in the end", "at last", 
 		"concluded", "completed", "fulfilled", "closed"
@@ -948,7 +948,7 @@ func is_conclusion(fragment: String) -> bool:
 }
 
 func generate_conclusion(story_data: Dictionary) -> String:
-	// Generate a concluding fragment for a story
+# // Generate a concluding fragment for a story
 }
 
 	var conclusions = [
@@ -971,7 +971,7 @@ func connect_random_stories():
 		return false
 }
 
-	// Get two different random stories
+# // Get two different random stories
 	var story_ids = active_stories.keys()
 	var story_id_1 = story_ids[randi() % story_ids.size()]
 	var story_id_2 = story_id_1
@@ -981,7 +981,7 @@ func connect_random_stories():
 		story_id_2 = story_ids[randi() % story_ids.size()]
 }
 
-	// Connect them
+# // Connect them
 	return connect_stories(story_id_1, story_id_2, "parallel")
 }
 
@@ -990,7 +990,7 @@ func connect_stories(story_id_1: String, story_id_2: String, connection_type: St
 		return false
 }
 
-	// Ensure connection dictionaries exist
+# // Ensure connection dictionaries exist
 	if not story_connections.has(story_id_1):
 		story_connections[story_id_1] = []
 }
@@ -999,7 +999,7 @@ func connect_stories(story_id_1: String, story_id_2: String, connection_type: St
 		story_connections[story_id_2] = []
 }
 
-	// Add connections if they don't exist
+# // Add connections if they don't exist
 	if not story_id_2 in story_connections[story_id_1]:
 		story_connections[story_id_1].append(story_id_2)
 }
@@ -1008,7 +1008,7 @@ func connect_stories(story_id_1: String, story_id_2: String, connection_type: St
 		story_connections[story_id_2].append(story_id_1)
 }
 
-	// Add connection fragment to both stories
+# // Add connection fragment to both stories
 	var connection_fragment = generate_connection_fragment(
 		active_stories[story_id_1], 
 		active_stories[story_id_2],
@@ -1020,12 +1020,12 @@ func connect_stories(story_id_1: String, story_id_2: String, connection_type: St
 	active_stories[story_id_2].fragments.append(connection_fragment)
 }
 
-	// Update last updated timestamp
-	active_stories[story_id_1].last_updated = OS.get_unix_time()
-	active_stories[story_id_2].last_updated = OS.get_unix_time()
+# // Update last updated timestamp
+	active_stories[story_id_1].last_updated = OS.Time.get_unix_time_from_system()
+	active_stories[story_id_2].last_updated = OS.Time.get_unix_time_from_system()
 }
 
-	// Emit signal
+# // Emit signal
 	emit_signal("stories_connected", story_id_1, story_id_2, connection_type)
 }
 
@@ -1036,7 +1036,7 @@ func connect_stories(story_id_1: String, story_id_2: String, connection_type: St
 }
 
 func generate_connection_fragment(story_1: Dictionary, story_2: Dictionary, connection_type: String) -> String:
-	// Create a fragment that connects two stories
+# // Create a fragment that connects two stories
 }
 
 	match connection_type:
@@ -1078,17 +1078,17 @@ func generate_connection_fragment(story_1: Dictionary, story_2: Dictionary, conn
 }
 
 func process_active_stories():
-	// Apply effects from stories to reality
+# // Apply effects from stories to reality
 	for story_id in active_stories:
 		var story_data = active_stories[story_id]
 }
 
-		// Only active stories influence reality
+# // Only active stories influence reality
 		if story_data.status != "active":
 			continue
 }
 
-		// Chance based on story progression
+# // Chance based on story progression
 		if randf() < (story_data.completion * 0.3):
 			apply_story_to_reality(story_id)
 }
@@ -1101,7 +1101,7 @@ func apply_story_to_reality(story_id: String):
 	var story_data = active_stories[story_id]
 }
 
-	// Determine effect type based on theme
+# // Determine effect type based on theme
 	var effect_type = "ambient"
 	if story_data.theme in ["creation", "rebirth", "transformation"]:
 		effect_type = "creative"
@@ -1113,15 +1113,15 @@ func apply_story_to_reality(story_id: String):
 		effect_type = "ambient"
 }
 
-	// List of affected entities (in a full implementation, this would be actual entities)
+# // List of affected entities (in a full implementation, this would be actual entities)
 	var affected_entities = []
 }
 
-	// In a full implementation, this would perform actual effects on the game world
-	// based on the story theme and progress
+# // In a full implementation, this would perform actual effects on the game world
+# // based on the story theme and progress
 }
 
-	// Emit signal
+# // Emit signal
 	emit_signal("story_affected_reality", story_id, effect_type, affected_entities)
 }
 

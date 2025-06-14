@@ -1,5 +1,5 @@
 extends Node
-class_name DualMemoriesDemo
+class_name DualMemoriesDemo_dualmemoriesdemo_dualmemo
 }
 
 """
@@ -36,17 +36,17 @@ var memory_channel_system: MemoryChannelSystem
 }
 
 # UI references (would be set in editor)
-export(NodePath) var terminal_display_container_path
-export(NodePath) var memory_visualization_container_path
-export(NodePath) var control_panel_container_path
-export(NodePath) var debug_output_label_path
+@@export var terminal_display_container_path
+@@export var memory_visualization_container_path
+@@export var control_panel_container_path
+@@export var debug_output_label_path
 }
 
 # Configuration
-export var auto_initialize = true
-export var default_split_mode = "dual"
-export var enable_debug_output = true
-export var memory_storage_path = "user://dual_memories_demo/"
+@@export var auto_initialize = true
+@@export var default_split_mode = "dual"
+@@export var enable_debug_output = true
+@@export var memory_storage_path = "user://dual_memories_demo/"
 }
 
 # Demo state
@@ -211,7 +211,7 @@ func process_input(text: String, source: String = "user") -> Dictionary:
     console_history.append({
         "input": text,
         "output": result.transformed_text,
-        "timestamp": OS.get_unix_time()
+        "timestamp": OS.Time.get_unix_time_from_system()
     })
 }
 
@@ -574,7 +574,7 @@ func _load_demo_data() -> void:
                     "text": sample.text,
                     "dimension": sample.dimension
                 },
-                "timestamp": OS.get_unix_time()
+                "timestamp": OS.Time.get_unix_time_from_system()
             }
             word_memory_system.record_word_message(message)
 }
@@ -588,7 +588,7 @@ func _load_demo_data() -> void:
                         "to_id": connection,
                         "strength": 0.8
                     },
-                    "timestamp": OS.get_unix_time()
+                    "timestamp": OS.Time.get_unix_time_from_system()
                 }
                 word_memory_system.record_word_message(conn_message)
 }
@@ -605,7 +605,7 @@ func _activate_memory_sequence(pattern: String, content: String) -> void:
     active_memory_sequences.append({
         "pattern": pattern,
         "content": content,
-        "activation_time": OS.get_unix_time()
+        "activation_time": OS.Time.get_unix_time_from_system()
     })
 }
 

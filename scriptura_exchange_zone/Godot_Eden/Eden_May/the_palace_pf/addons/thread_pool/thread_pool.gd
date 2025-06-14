@@ -46,8 +46,8 @@
 
 
 @icon("thread.png")
-class_name ThreadPool
-extends Node
+class_name ThreadPool_threadpool_threadpo
+extends \2
 ## A thread pool designed to perform your tasks efficiently.
 ##
 ## A GDScript Thread Pool suited for use with signaling and processing performed by Godot nodes.
@@ -63,7 +63,7 @@ signal task_discarded(task)
 signal task_started(task)
 
 ## This property controls whether the thread pool should discard or store the results of finished tasks.
-@export var discard_finished_tasks: bool = true
+@@@export var discard_finished_tasks: bool = true
 
 var __tasks: Array = []
 var __started = false

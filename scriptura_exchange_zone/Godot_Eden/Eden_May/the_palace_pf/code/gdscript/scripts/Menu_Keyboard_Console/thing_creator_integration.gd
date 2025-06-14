@@ -1,5 +1,5 @@
 extends Node
-class_name ThingCreatorIntegration
+class_name ThingCreatorIntegration_thingcreatorintegration_thingcre
 
 # References
 var main_console = null
@@ -13,17 +13,17 @@ func initialize(p_main_console) -> void:
 	main_console = p_main_console
 	
 	# Find AkashicRecordsManager
-	if has_node("/root/AkashicRecordsManager"):
-		akashic_records_manager = get_node("/root/AkashicRecordsManager")
+	if has_node("root/AkashicRecordsManager"):
+		akashic_records_manager = get_node("root/AkashicRecordsManager")
 	else:
 		push_error("AkashicRecordsManager not found! Make sure it's initialized.")
 		return
 	
 	# Initialize Thing Creator if not already created
-	if has_node("/root/ThingCreator"):
-		thing_creator = get_node("/root/ThingCreator")
+	if has_node("root/ThingCreator"):
+		thing_creator = get_node("root/ThingCreator")
 	else:
-		var ThingCreatorClass = load("res://code/gdscript/scripts/akashic_records/thing_creator.gd")
+		var ThingCreatorClass = load("res://scripts/gdscript/scripts/akashic_records/thing_creator.gd")
 		if ThingCreatorClass:
 			thing_creator = ThingCreatorClass.new()
 			thing_creator.name = "ThingCreator"
@@ -33,7 +33,7 @@ func initialize(p_main_console) -> void:
 			return
 	
 	# Load the Thing Creator UI scene
-	thing_creator_ui_scene = load("res://code/gdscript/scenes/thing_creator_ui.tscn")
+	thing_creator_ui_scene = load("res://scripts/gdscript/scenes/thing_creator_ui.tscn")
 	
 	# Register with main console
 	_register_with_console()

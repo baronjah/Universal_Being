@@ -38,7 +38,7 @@ func _initialize_systems():
     
     # Create the Eden Garden System (or get reference to existing one)
     # For this example, we assume it's already created elsewhere
-    eden_garden_system = get_node("/root/EdenGardenSystem")
+    eden_garden_system = get_node("\1") as Node
     if not eden_garden_system:
         # Create a minimal version for the example
         eden_garden_system = Node.new()
@@ -174,18 +174,18 @@ func _populate_endpoint_selector():
 
 func _connect_signals():
     # Connect UI signals
-    endpoint_selector.connect("item_selected", self, "_on_endpoint_selected")
-    offline_toggle.connect("toggled", self, "_on_offline_toggled")
-    add_endpoint_button.connect("pressed", self, "_on_add_endpoint_pressed")
-    restart_button.connect("pressed", self, "_on_restart_pressed")
+    endpoint_selector.connect(_on_endpoint_selected)
+    offline_toggle.connect(_on_offline_toggled)
+    add_endpoint_button.connect(_on_add_endpoint_pressed)
+    restart_button.connect(_on_restart_pressed)
     
     # Connect API Integration signals
-    eden_api_integration.connect("api_status_changed", self, "_on_api_status_changed")
-    eden_api_integration.connect("api_sync_completed", self, "_on_api_sync_completed")
+    eden_api_integration.connect(_on_api_status_changed)
+    eden_api_integration.connect(_on_api_sync_completed)
     
     # Connect API Switch Manager signals
-    api_switch_manager.connect("api_switched", self, "_on_api_switched")
-    api_switch_manager.connect("connection_state_changed", self, "_on_connection_state_changed")
+    api_switch_manager.connect(_on_api_switched)
+    api_switch_manager.connect(_on_connection_state_changed)
 
 # Core API Switching Functionality
 
@@ -251,7 +251,7 @@ func simulate_restart():
 
 func _log_action(message):
     print(message)
-    var log_box = get_node("ApiSwitchUI/LogBox")
+    var log_box = get_node("\1") as Node
     if log_box:
         log_box.text += message + "\n"
 
@@ -265,14 +265,14 @@ func _on_offline_toggled(toggled):
     toggle_offline_mode(toggled)
 
 func _on_add_endpoint_pressed():
-    var name_field = get_node("ApiSwitchUI/EndpointName")
-    var url_field = get_node("ApiSwitchUI/EndpointURL")
+    var name_field = get_node("\1") as Node
+    var url_field = get_node("\1") as Node
     
     if name_field and url_field:
         var name = name_field.text.strip_edges()
         var url = url_field.text.strip_edges()
         
-        if name.empty() or url.empty():
+        if name.is_empty() or url.is_empty():
             _log_action("Error: Name and URL are required")
             return
         

@@ -1,9 +1,8 @@
 # Akashic Records Debug Helper
 # This script provides logging and debugging tools for the Akashic Records system integration
+extends \2
+enum \2 {
 
-extends Node
-
-enum LogLevel {
     ERROR = 0,    # Only errors 
     WARNING = 1,  # Errors and warnings
     INFO = 2,     # Errors, warnings, and general info

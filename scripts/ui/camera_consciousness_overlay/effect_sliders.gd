@@ -47,8 +47,8 @@ func initialize_values():
 		"distortion": 0.0,
 		"quantum": 0.0,
 		"master": 1.0
-	}
 	update_sliders_from_values()
+}
 
 func update_sliders_from_values():
 	vignette_slider.value = effect_values.vignette
@@ -106,6 +106,7 @@ func emit_all_effects():
 func _on_save_preset():
 	# Save current settings as preset
 	print("Saving effect preset: ", effect_values)
+
 
 func _on_load_preset():
 	# Load saved preset

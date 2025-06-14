@@ -113,7 +113,7 @@ class Wish:
         text = p_text
         dimension = p_dimension
         difficulty = p_difficulty
-        creation_time = OS.get_ticks_msec() / 1000.0
+        creation_time = OS.Time.get_ticks_msec() / 1000.0
         score_value = 10 * difficulty * dimension
         
         # Extract required words
@@ -161,7 +161,7 @@ class Memory:
         id = p_id
         text = p_text
         dimension = p_dimension
-        creation_time = OS.get_ticks_msec() / 1000.0
+        creation_time = OS.Time.get_ticks_msec() / 1000.0
         expiration_time = creation_time + MEMORY_LIFESPAN
         
         # Random position within view
@@ -657,7 +657,7 @@ func check_wish_fulfillment(memory):
 func fulfill_wish(wish, memories_used):
     # Mark wish as fulfilled
     wish.fulfilled = true
-    wish.fulfillment_time = OS.get_ticks_msec() / 1000.0
+    wish.fulfillment_time = OS.Time.get_ticks_msec() / 1000.0
     
     # Add to fulfilled wishes
     fulfilled_wishes.append(wish)
@@ -820,7 +820,7 @@ func clear_memories():
 
 # Memory Expiration
 func check_memory_expiration():
-    var current_time = OS.get_ticks_msec() / 1000.0
+    var current_time = OS.Time.get_ticks_msec() / 1000.0
     var expired_memories = []
     
     for memory in active_memories:
@@ -834,7 +834,7 @@ func check_memory_expiration():
 # UI Updates
 func update_wish_display():
     # Get wish container
-    var container = wish_list_panel.get_node("WishScroll/WishContainer")
+    var container = wish_list_panel.get_node("\1") as Node
     
     # Clear existing wishes
     for child in container.get_children():
@@ -928,7 +928,7 @@ func add_fulfilled_wish_item(container, wish):
 
 func update_memory_display():
     # Get memory container
-    var container = memory_panel.get_node("MemoryScroll/MemoryContainer")
+    var container = memory_panel.get_node("\1") as Node
     
     # Clear existing memories
     for child in container.get_children():
@@ -998,7 +998,7 @@ func add_memory_item(container, memory):
     item.add_stylebox_override("normal", style)
     
     # Add timer indicator
-    var current_time = OS.get_ticks_msec() / 1000.0
+    var current_time = OS.Time.get_ticks_msec() / 1000.0
     var remaining = memory.expiration_time - current_time
     var progress = remaining / MEMORY_LIFESPAN
     
@@ -1048,7 +1048,7 @@ func play_sound(sound_name):
 func process_command(command):
     # Skip empty commands
     command = command.strip_edges()
-    if command.empty():
+    if command.is_empty():
         return null
     
     print("# Processing command: " + command + " #")

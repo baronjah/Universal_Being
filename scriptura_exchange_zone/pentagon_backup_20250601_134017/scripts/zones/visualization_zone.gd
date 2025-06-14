@@ -1,6 +1,6 @@
 @tool
 extends Zone
-class_name VisualizationZone
+class_name VisualizationZone_visualiz
 ## Visualization Zone - Universal Being that interprets and displays data
 ## Decides HOW to visualize based on consciousness and reasoning
 
@@ -8,9 +8,9 @@ signal interpretation_changed(new_mode: String, reasoning: String)
 
 @export_group("Visualization Modes")
 @export_enum("Points", "Marching Cubes", "SDF Mesh", "Voxels", "Conscious Choice") var viz_mode: int = 4
-@export var iso_surface_value: float = 0.0
-@export var mesh_resolution: int = 20
-@export var interpretation_intelligence: float = 1.0
+@@export var iso_surface_value: float = 0.0
+@@export var mesh_resolution: int = 20
+@@export var interpretation_intelligence: float = 1.0
 
 # Universal Being consciousness
 # Note: consciousness_level inherited from Zone base class

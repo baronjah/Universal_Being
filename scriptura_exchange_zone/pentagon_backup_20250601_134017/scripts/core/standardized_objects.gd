@@ -3,8 +3,7 @@
 # DESCRIPTION: Standardized object definitions and behaviors
 # CREATED: 2025-05-23 - Unified object system
 # ==================================================
-
-extends UniversalBeingBase
+extends \2
 # Object type definitions with properties and default behaviors
 var object_definitions = {
 	"tree": {
@@ -323,7 +322,7 @@ func create_object(object_type: String, position: Vector3, properties: Dictionar
 	if def.get("type") == "rigid" and obj is RigidBody3D:
 		# Place rigid bodies slightly above ground to prevent falling through
 		obj.position.y = max(obj.position.y, 1.0)
-		print("🔧 [StandardizedObjects] Fixed RigidBody position for: " + obj.name)
+		print("🔧 [StandardizedObjects] Fixed RigidBody3D position for: " + obj.name)
 	
 	return obj
 

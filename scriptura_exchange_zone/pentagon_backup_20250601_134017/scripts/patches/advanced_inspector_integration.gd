@@ -4,8 +4,7 @@
 # PURPOSE: Add advanced editing commands to console
 # CREATED: 2025-05-28 - Console integration patch
 # ==================================================
-
-extends UniversalBeingBase
+extends \2
 var console_manager: Node
 var advanced_inspector: Control
 var scene_editor: Node
@@ -17,7 +16,7 @@ func _setup_integration() -> void:
 	# Wait for console manager
 	await get_tree().process_frame
 	
-	console_manager = get_node_or_null("/root/ConsoleManager")
+	console_manager = get_node_or_null("root/ConsoleManager")
 	if not console_manager:
 		print("[AdvancedInspectorIntegration] Console manager not found")
 		return
@@ -342,7 +341,7 @@ func _get_object_under_mouse() -> Node:
 	var from = camera.project_ray_origin(mouse_pos)
 	var to = from + camera.project_ray_normal(mouse_pos) * 1000
 	
-	var space_state = camera.get_world_3d().direct_space_state
+	var space_state = camera.get_viewport().get_world_3d().direct_space_state
 	var query = PhysicsRayQueryParameters3D.create(from, to)
 	var result = space_state.intersect_ray(query)
 	

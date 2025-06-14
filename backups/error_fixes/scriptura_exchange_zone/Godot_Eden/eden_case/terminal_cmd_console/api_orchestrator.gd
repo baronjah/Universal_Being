@@ -61,7 +61,7 @@ func add_api_connection(api_name, config_file=""):
         return false
     
     # Determine config file path if not provided
-    if config_file.empty():
+    if config_file.is_empty():
         config_file = config_path.plus_file(api_name + "_config.json")
     
     # Load API configuration
@@ -235,7 +235,7 @@ func send_request(api_name, endpoint, method="GET", data=null, params={}):
                 print("Using cached response for: ", api_name, "/", endpoint)
                 
                 # Simulate delay for realism
-                yield(get_tree().create_timer(0.1), "timeout")
+                await(get_tree().create_timer(0.1), "timeout")
                 
                 emit_signal("api_response", api_name, cached.response, request_id)
                 return request_id
@@ -329,7 +329,7 @@ func _execute_request(request):
     
     # Simulate network delay (0.5 to 2.0 seconds)
     var delay = 0.5 + randf() * 1.5
-    yield(get_tree().create_timer(delay), "timeout")
+    await(get_tree().create_timer(delay), "timeout")
     
     # Simulate response
     var success = randf() > 0.1  # 90% success rate
@@ -365,7 +365,7 @@ func _execute_request(request):
             api_usage[api_name].retry_count += 1
             
             # Add back to queue after delay
-            yield(get_tree().create_timer(retry_delay), "timeout")
+            await(get_tree().create_timer(retry_delay), "timeout")
             request_queue.append(request)
             _process_request_queue()
         else:
@@ -434,7 +434,7 @@ func _generate_simulated_error(api_name):
 func _simulate_claude_response(endpoint, data):
     if endpoint == "messages":
         var prompt = data.get("prompt", "")
-        if prompt.empty() and data.has("messages"):
+        if prompt.is_empty() and data.has("messages"):
             # Extract last message content for simulation
             var messages = data.get("messages", [])
             if messages.size() > 0:

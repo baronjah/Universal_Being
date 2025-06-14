@@ -36,11 +36,13 @@ func pentagon_init() -> void:
 	
 	print("💻 %s: Pentagon Init Complete" % being_name)
 
+
 func pentagon_ready() -> void:
 	super.pentagon_ready()
 	
 	# Load console scene
 	load_scene("res://beings/console_text_layer.tscn")
+
 	
 	# Get console nodes
 	_console_node = get_scene_node("ConsoleOutput")
@@ -52,6 +54,7 @@ func pentagon_ready() -> void:
 		push_error("Console nodes not found in scene")
 	
 	print("💻 %s: Pentagon Ready Complete" % being_name)
+
 
 func pentagon_process(delta: float) -> void:
 	super.pentagon_process(delta)
@@ -89,6 +92,7 @@ func pentagon_sewers() -> void:
 	
 	super.pentagon_sewers()
 	print("💻 %s: Pentagon Sewers Complete" % being_name)
+
 
 # ===== CONSOLE SETUP =====
 
@@ -189,6 +193,7 @@ func _cmd_package(args: Array) -> void:
 		_:
 			print_console("Unknown package command: %s" % subcmd)
 
+
 func _cmd_package_list(args: Array) -> void:
 	"""List available packages"""
 	var zip_manager = SystemBootstrap.get_zip_manager() if SystemBootstrap else null
@@ -209,6 +214,7 @@ func _cmd_package_list(args: Array) -> void:
 		print_console("    Memory: %.1f MB" % (package.memory_usage / (1024.0 * 1024.0)))
 		print_console("    Last access: %s" % Time.get_datetime_string_from_unix_time(package.last_access))
 
+
 func _cmd_package_load(args: Array) -> void:
 	"""Load a package"""
 	if args.is_empty():
@@ -222,12 +228,14 @@ func _cmd_package_load(args: Array) -> void:
 		return
 	
 	print_console("Loading package: %s" % package_path)
+
 	var success = await zip_manager.load_full_package(package_path)
 	
 	if success:
 		print_console("Package loaded successfully")
 	else:
 		print_console("Error: Failed to load package")
+
 
 func _cmd_package_unload(args: Array) -> void:
 	"""Unload a package"""
@@ -242,12 +250,14 @@ func _cmd_package_unload(args: Array) -> void:
 		return
 	
 	print_console("Unloading package: %s" % package_id)
+
 	var success = zip_manager.unload_package(package_id)
 	
 	if success:
 		print_console("Package unloaded successfully")
 	else:
 		print_console("Error: Failed to unload package")
+
 
 func _cmd_package_info(args: Array) -> void:
 	"""Show package information"""
@@ -273,6 +283,7 @@ func _cmd_package_info(args: Array) -> void:
 	print_console("  Files: %d" % package.files.size())
 	print_console("  Cache items: %d" % package.cache_items.size())
 
+
 func _cmd_validate(args: Array) -> void:
 	"""Validate a package"""
 	if args.is_empty():
@@ -286,14 +297,16 @@ func _cmd_validate(args: Array) -> void:
 		return
 	
 	print_console("Validating package: %s" % package_path)
+
 	
 	# Connect to validation signals
 	var validation_complete = false
-	var validation_results = {}
+	var validation_results = {
 	
 	var progress_handler = func(pkg_id: String, stage: String, progress: float) -> void:
 		if pkg_id == package_path:
 			print_console("  %s: %.0f%%" % [stage, progress * 100])
+}
 	
 	var result_handler = func(pkg_id: String, results: Dictionary) -> void:
 		if pkg_id == package_path:
@@ -323,18 +336,22 @@ func _cmd_validate(args: Array) -> void:
 	# Print results
 	print_console("\nValidation results:")
 	print_console("  Valid: %s" % ("Yes" if validation_results.get("valid", false) else "No"))
+
 	
 	if not validation_results.get("valid", false):
 		print_console("\nErrors:")
 		for stage in ["manifest", "compatibility", "performance", "memory"]:
+
 			var stage_results = validation_results.get(stage, {})
 			if not stage_results.get("valid", true):
 				for error in stage_results.get("errors", []):
 					print_console("  %s: %s" % [stage, error])
 	
+	
 	# Print metrics
-	var metrics = {}
+	var metrics = {
 	for stage in ["manifest", "compatibility", "performance", "memory"]:
+}
 		var stage_results = validation_results.get(stage, {})
 		if stage_results.has("metrics"):
 			metrics[stage] = stage_results.metrics
@@ -345,6 +362,7 @@ func _cmd_validate(args: Array) -> void:
 			print_console("  %s:" % stage)
 			for key in metrics[stage]:
 				print_console("    %s: %s" % [key, metrics[stage][key]])
+	
 
 func _cmd_memory(args: Array) -> void:
 	"""Show memory usage"""
@@ -362,6 +380,7 @@ func _cmd_memory(args: Array) -> void:
 	print_console("  Active packages: %d" % metrics.active_packages)
 	print_console("  Cached assets: %d" % metrics.cached_assets)
 
+
 func _cmd_test(args: Array) -> void:
 	"""Run package tests"""
 	if args.is_empty():
@@ -376,7 +395,7 @@ func _cmd_test(args: Array) -> void:
 	
 	# Connect to test signals
 	var test_complete = false
-	var test_results = {}
+	var test_results = {
 	
 	var test_handler = func(test_name: String, passed: bool, details: Dictionary) -> void:
 		print_console("\nTest: %s" % test_name)
@@ -385,12 +404,14 @@ func _cmd_test(args: Array) -> void:
 		if not passed:
 			print_console("  Error: %s" % details.error)
 		print_console("  Metrics: %s" % details.metrics)
+}
 	
 	var complete_handler = func(results: Dictionary) -> void:
 		test_complete = true
 		test_results = results
 		
 		print_console("\nTest summary:")
+
 		var total = results.size()
 		var passed = 0
 		var total_duration = 0.0
@@ -404,6 +425,7 @@ func _cmd_test(args: Array) -> void:
 		print_console("  Passed: %d" % passed)
 		print_console("  Failed: %d" % (total - passed))
 		print_console("  Total duration: %.1f ms" % total_duration)
+
 	
 	test_being.test_completed.connect(test_handler)
 	test_being.all_tests_completed.connect(complete_handler)
@@ -445,6 +467,7 @@ func _cmd_scene(args: Array) -> void:
 		_:
 			print_console("Unknown scene command: %s" % subcmd)
 
+
 func _cmd_scene_load(args: Array) -> void:
 	"""Load a scene with optional consciousness level"""
 	if args.is_empty():
@@ -461,6 +484,7 @@ func _cmd_scene_load(args: Array) -> void:
 			return
 	
 	print_console("Loading scene: %s (consciousness level %d)" % [scene_path, consciousness_level])
+
 	
 	# Try to load the scene
 	var scene_resource = load(scene_path)
@@ -480,6 +504,7 @@ func _cmd_scene_load(args: Array) -> void:
 	# Add to scene tree through FloodGates if available
 	var bootstrap = SystemBootstrap if SystemBootstrap else null
 	if bootstrap and bootstrap.has_method("add_being_to_scene"):
+
 		var parent = get_tree().current_scene
 		if bootstrap.add_being_to_scene(scene_instance, parent):
 			print_console("✓ Scene loaded successfully via FloodGates")
@@ -497,9 +522,10 @@ func _cmd_scene_load(args: Array) -> void:
 		"path": scene_path,
 		"consciousness_level": consciousness_level,
 		"loaded_at": Time.get_unix_time_from_system()
-	}
+}
 	
 	print_console("Scene ID: %s" % scene_id)
+
 
 func _cmd_scene_unload(args: Array) -> void:
 	"""Unload a scene by ID"""
@@ -541,6 +567,7 @@ func _cmd_scene_list(args: Array) -> void:
 		print_console("    Status: %s" % status)
 		print_console("    Loaded: %s ago" % _format_time_ago(scene_data.loaded_at))
 
+
 func _cmd_scene_info(args: Array) -> void:
 	"""Show detailed info about a scene"""
 	if args.is_empty():
@@ -560,15 +587,18 @@ func _cmd_scene_info(args: Array) -> void:
 	print_console("  Path: %s" % scene_data.path)
 	print_console("  Consciousness Level: %d" % scene_data.consciousness_level)
 	print_console("  Loaded At: %s" % Time.get_datetime_string_from_unix_time(scene_data.loaded_at))
+
 	
 	if is_instance_valid(scene_instance):
 		print_console("  Status: Active")
 		print_console("  Node Name: %s" % scene_instance.name)
 		print_console("  Children: %d" % scene_instance.get_child_count())
+
 		
 		# Check if it's a Universal Being
 		if scene_instance.has_method("ai_interface"):
 			print_console("  Type: Universal Being")
+
 			var interface = scene_instance.ai_interface()
 			if interface.has("consciousness_level"):
 				print_console("  Current Consciousness: %d" % interface.consciousness_level)
@@ -576,6 +606,7 @@ func _cmd_scene_info(args: Array) -> void:
 			print_console("  Type: Standard Node")
 	else:
 		print_console("  Status: Invalid/Removed")
+
 
 func _format_time_ago(unix_time: float) -> String:
 	"""Format time difference as human readable string"""
@@ -640,8 +671,8 @@ func ai_interface() -> Dictionary:
 	base_interface.custom_properties = {
 		"max_lines": max_lines,
 		"command_history": _command_history
-	}
 	return base_interface
+}
 
 func ai_invoke_method(method_name: String, args: Array = []) -> Variant:
 	"""Handle AI method calls"""

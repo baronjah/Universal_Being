@@ -1,6 +1,6 @@
 #the cube of truth
 @tool
-extends MeshInstance3D
+extends \2
 
 var position_basis: Basis
 var camera: Camera3D

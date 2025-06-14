@@ -1,5 +1,6 @@
 @tool
-class_name VisualShaderNodeAdjustmentSaturation extends VisualShaderNodeCustom
+class_name VisualShaderNodeAdjustmentSaturation_Saturation_Saturati
+extends \2
 
 
 func _get_name() -> String:

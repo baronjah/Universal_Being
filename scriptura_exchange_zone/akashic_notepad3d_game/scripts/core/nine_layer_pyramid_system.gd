@@ -20,7 +20,7 @@ extends Node3D
 # 🎮 UPGRADE PATH: 5-layer (125 positions) → 9-layer (729 positions)
 # ═══════════════════════════════════════════════════════════════════════════════════════════════
 
-class_name NineLayerPyramidSystem
+class_name NineLayerPyramidSystem_ninelayerpyramidsystem_ninelaye
 
 # REVOLUTIONARY CONSTANTS - Sacred Numbers from Knowledge Archives
 const PYRAMID_LAYERS = 9
@@ -30,7 +30,8 @@ const TOTAL_POSITIONS = 729       # 9x9x9 complete pyramid
 const MASTER_CONVERGENCE_COORD = Vector3(5, 5, 5)  # Sacred center point [x5y5z5]
 
 # LAYER VISIBILITY STATES
-enum LayerVisibility {
+enum \2 {
+
 	ALWAYS_VISIBLE,    # Layer 1 - humans always see
 	CONDITIONAL,       # Layers 2-8 - visible if no content blocks from front
 	BACKGROUND         # Layer 9 - deepest background layer
@@ -211,13 +212,13 @@ func _connect_to_convergence_system():
 	# CONNECTION: Integrates pyramid with consciousness evolution systems
 	
 	# Find or create convergence engine
-	var convergence_node = get_node_or_null("/root/RegenesisConvergenceEngine")
+	var convergence_node = get_node_or_null("root/RegenesisConvergenceEngine")
 	if convergence_node:
 		convergence_engine = convergence_node
 		print("🔗 Connected to Regenesis Convergence Engine")
 	
 	# Find or create AI-DNA engine
-	var ai_dna_node = get_node_or_null("/root/AIDNAEvolutionEngine")
+	var ai_dna_node = get_node_or_null("root/AIDNAEvolutionEngine")
 	if ai_dna_node:
 		ai_dna_engine = ai_dna_node
 		print("🧬 Connected to AI-DNA Evolution Engine")

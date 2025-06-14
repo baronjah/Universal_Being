@@ -8,8 +8,8 @@
 
 # This is the core interface/behavior definition for all Universal Beings
 # It doesn't extend anything - it's pure Universal Being consciousness
-
-class_name UniversalBeingCore
+# DISABLED DUPLICATE: 
+class_name UniversalBeingCore_universalbeingcore_universa
 
 # ===== CORE UNIVERSAL BEING INTERFACE =====
 

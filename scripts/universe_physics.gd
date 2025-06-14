@@ -99,4 +99,3 @@ func get_physics_state() -> Dictionary:
         "quantum_fluctuation": quantum_fluctuation,
         "physics_enabled": physics_enabled,
         "active_forces": active_forces.size()
-    } 

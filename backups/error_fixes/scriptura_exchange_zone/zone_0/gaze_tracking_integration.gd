@@ -50,7 +50,7 @@ func _ready():
     var timer = Timer.new()
     timer.wait_time = UPDATE_FREQUENCY
     timer.autostart = true
-    timer.connect("timeout", self, "_on_tracking_update")
+    timer.connect(_on_tracking_update)
     add_child(timer)
     
     # Initialize calibration points
@@ -125,13 +125,13 @@ func detect_device_capabilities():
 func connect_to_keyboard_manager():
     # Find keyboard manager node
     if has_node("/root/KeyboardShapeManager") or get_node_or_null("/root/KeyboardShapeManager"):
-        keyboard_manager = get_node("/root/KeyboardShapeManager")
+        keyboard_manager = get_node("\1") as Node
         print("Connected to keyboard shape manager")
         return true
     
     # Try to find shape manager
     if has_node("/root/SmartAccountSystem/KeyboardShapeManager") or get_node_or_null("/root/SmartAccountSystem/KeyboardShapeManager"):
-        keyboard_manager = get_node("/root/SmartAccountSystem/KeyboardShapeManager")
+        keyboard_manager = get_node("\1") as Node
         print("Connected to keyboard shape manager")
         return true
     
@@ -143,7 +143,7 @@ func start_tracking():
         return false
     
     is_tracking_active = true
-    last_update_time = OS.get_ticks_msec()
+    last_update_time = OS.Time.get_ticks_msec()
     print("Eye tracking started")
     return true
 
@@ -163,7 +163,7 @@ func calibrate():
     
     # In a real implementation, would guide user through calibration process
     # For this demo, simulate successful calibration
-    yield(get_tree().create_timer(2.0), "timeout")
+    await(get_tree().create_timer(2.0), "timeout")
     
     # Simulate calibration result
     var success = true
@@ -210,7 +210,7 @@ func _update_gaze_point():
     # In a real implementation, would get data from eye tracking hardware
     # For this demo, simulate eye movement
     
-    var now = OS.get_ticks_msec()
+    var now = OS.Time.get_ticks_msec()
     var time_delta = (now - last_update_time) / 1000.0
     last_update_time = now
     

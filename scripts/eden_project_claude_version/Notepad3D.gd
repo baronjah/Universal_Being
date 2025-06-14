@@ -43,7 +43,9 @@ var unsaved_changes: bool = false
 class Note3D extends Node3D:
 	var id: String
 	var title: String = "Untitled"
+
 	var content: String = ""
+
 	var color: Color = Color.WHITE
 	var size: Vector2 = Vector2(400, 300)
 	var folded: bool = false
@@ -128,7 +130,7 @@ func _initialize_tools() -> void:
 		"connect": preload("res://cursors/connect.png"),
 		"delete": preload("res://cursors/delete.png"),
 		"fold": preload("res://cursors/fold.png")
-	}
+}
 
 # Note creation and management
 func create_note(title: String, content: String, position: Vector3, color: Color = Color.WHITE) -> Note3D:
@@ -275,7 +277,7 @@ func create_connection(from_note: Note3D, to_note: Note3D, color: Color = Color.
 		"to": to_note.id,
 		"color": color,
 		"line": null
-	}
+}
 	
 	# Create 3D line
 	var line = MeshInstance3D.new()
@@ -444,6 +446,7 @@ func _on_left_click(event: InputEventMouseButton) -> void:
 	else:
 		# Click on empty space
 		if current_tool == "create":
+
 			var world_pos = _get_world_position_from_mouse(mouse_pos)
 			create_note("New Note", "Click to edit", world_pos)
 		elif current_tool == "select" and not event.shift_pressed:
@@ -537,7 +540,7 @@ func save_all_notes() -> void:
 		"connections": [],
 		"folders": folders,
 		"timestamp": Time.get_unix_time_from_system()
-	}
+}
 	
 	# Save notes
 	for id in notes:
@@ -553,7 +556,7 @@ func save_all_notes() -> void:
 			"tags": note.tags,
 			"locked": note.locked,
 			"opacity": note.opacity
-		}
+}
 	
 	# Save connections
 	for connection in connections:
@@ -570,6 +573,7 @@ func save_all_notes() -> void:
 	unsaved_changes = false
 	print("Notepad3D saved: %d notes, %d connections" % [notes.size(), connections.size()])
 
+
 func load_notes(save_data: Dictionary) -> void:
 	# Clear existing
 	_clear_all_notes()
@@ -577,6 +581,7 @@ func load_notes(save_data: Dictionary) -> void:
 	# Load notes
 	if save_data.has("notes"):
 		for id in save_data["notes"]:
+
 			var note_data = save_data["notes"][id]
 			var note = create_note(
 				note_data["title"],
@@ -600,6 +605,7 @@ func load_notes(save_data: Dictionary) -> void:
 	# Load connections
 	if save_data.has("connections"):
 		for conn_data in save_data["connections"]:
+
 			var from_note = notes.get(conn_data["from"])
 			var to_note = notes.get(conn_data["to"])
 			if from_note and to_note:
@@ -623,7 +629,7 @@ func _clear_all_notes() -> void:
 
 # Export for game saving
 func export_notes() -> Dictionary:
-	var export_data = {}
+	var export_data = {
 	save_all_notes() # Ensure latest data
 	
 	if AkashicRecordsSystem:

@@ -68,7 +68,7 @@ func _init_tokenizer():
 	}
 
 func _tokenize_content(content):
-	if content == null or content.empty():
+	if content == null or content.is_empty():
 		return []
 	
 	var tokens = []
@@ -79,7 +79,7 @@ func _tokenize_content(content):
 	
 	for word in words:
 		word = word.strip_edges().to_lower()
-		if not word.empty() and not word in tokenizer.ignored_words:
+		if not word.is_empty() and not word in tokenizer.ignored_words:
 			tokens.append(word)
 	
 	return tokens

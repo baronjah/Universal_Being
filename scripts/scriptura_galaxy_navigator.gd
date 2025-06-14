@@ -57,6 +57,7 @@ func pentagon_init() -> void:
 	
 	print("🌌 SCRIPTURA GALAXY NAVIGATOR: Mapping %d files as cosmic objects!" % count_scriptura_files())
 
+
 func initialize_galaxy_coordinates() -> void:
 	"""Initialize 3D galaxy coordinate system"""
 	galaxy_position = Vector3(0, 0, 0)  # Start at galactic center
@@ -86,8 +87,7 @@ func initialize_galaxy_coordinates() -> void:
 			"radius": 150.0,
 			"files": [],
 			"description": "Hidden gems and forgotten knowledge"
-		}
-	}
+}
 
 func count_scriptura_files() -> int:
 	"""Count total files in scriptura_exchange_zone"""
@@ -95,9 +95,11 @@ func count_scriptura_files() -> int:
 	var dir = DirAccess.open("res://scriptura_exchange_zone/")
 	if dir:
 		file_count = count_files_recursive("res://scriptura_exchange_zone/")
+}
 	
 	# Also count main project files
 	file_count += count_files_recursive("res://")
+
 	
 	return file_count
 
@@ -110,6 +112,7 @@ func count_files_recursive(path: String) -> int:
 		var file_name = dir.get_next()
 		
 		while file_name != "":
+
 			var full_path = path + "/" + file_name
 			if dir.current_is_dir() and not file_name.begins_with("."):
 				count += count_files_recursive(full_path)
@@ -130,6 +133,7 @@ func build_scriptura_galaxy() -> void:
 	map_directory_to_galaxy("res://core/", "galactic_core")
 	map_directory_to_galaxy("res://scenes/", "outer_spiral")
 	map_directory_to_galaxy("res://scripts/", "dark_nebula")
+
 	
 	# Generate visual galaxy
 	generate_galaxy_visuals()
@@ -172,7 +176,7 @@ func map_files_recursive(path: String, base_pos: Vector3, region: String, index:
 				"position": nebula_pos,
 				"region": region,
 				"file_count": count_files_recursive(full_path)
-			}
+	}
 			
 			# Recursively map subdirectory
 			index = map_files_recursive(full_path, nebula_pos, region, index)
@@ -191,8 +195,8 @@ func map_files_recursive(path: String, base_pos: Vector3, region: String, index:
 				"star_class": determine_star_class(file_name),
 				"brightness": calculate_file_importance(full_path),
 				"index": index
-			}
 			index += 1
+}
 		
 		file_name = dir.get_next()
 	
@@ -211,6 +215,7 @@ func get_file_type(filename: String) -> String:
 		"txt": return "text"
 		"gdshader": return "shader"
 		_: return "unknown"
+
 
 func determine_star_class(filename: String) -> String:
 	"""Determine stellar classification based on file importance"""
@@ -245,12 +250,14 @@ func calculate_file_importance(file_path: String) -> float:
 	if "pentagon" in path_lower: importance += 1.8
 	if "core" in path_lower: importance += 1.5
 	if "system" in path_lower: importance += 1.2
+
 	
 	# File type importance
 	if path_lower.ends_with(".gd"): importance += 1.0
 	elif path_lower.ends_with(".tscn"): importance += 0.8
 	elif path_lower.ends_with(".tres"): importance += 0.6
 	elif path_lower.ends_with(".md"): importance += 0.4
+
 	
 	return clamp(importance, 0.1, 5.0)
 
@@ -484,6 +491,7 @@ func activate_warp_drive() -> void:
 	warp_active = !warp_active
 	print("🌌 Warp drive: %s" % ("ENGAGED" if warp_active else "DISENGAGED"))
 
+
 func show_galaxy_map() -> void:
 	"""Show overview galaxy map"""
 	print("🌌 Galaxy Map - %d regions mapped" % scriptura_galaxy.size())
@@ -491,12 +499,14 @@ func show_galaxy_map() -> void:
 		var region = scriptura_galaxy[region_name]
 		print("   %s: %s" % [region_name, region.description])
 
+
 func navigate_to_nearest_star() -> void:
 	"""Navigate to nearest interesting star"""
 	var nearest_star = find_nearest_important_star()
 	if nearest_star:
 		navigation_target = nearest_star.global_position
 		print("🌌 Navigating to: %s" % nearest_star.get_meta("file_path", "unknown"))
+
 
 func find_nearest_important_star() -> Node3D:
 	"""Find nearest star with high importance"""
@@ -573,6 +583,7 @@ func _on_star_approached(file_path: String, body: Node3D) -> void:
 	var distance = global_position.distance_to(body.global_position)
 	file_star_approached.emit(file_path, distance)
 	print("🌟 Approaching star: %s (distance: %.1f)" % [file_path.get_file(), distance])
+
 
 func pentagon_sewers() -> void:
 	"""Clean up galaxy navigation"""

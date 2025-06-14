@@ -4,9 +4,8 @@
 # PURPOSE: Connect existing systems to create shared debugging reality
 # CREATED: 2025-05-31 - Consciousness Bridge Implementation
 # ==================================================
-
-extends UniversalBeing
-class_name ConsciousnessBridge
+extends \2
+class_name ConsciousnessBridge_consciousnessbridge_consciou
 
 # Existing system connections
 var gemma_vision: Node = null
@@ -53,28 +52,28 @@ func _connect_existing_systems() -> void:
 	"""Connect to your existing architecture"""
 	
 	# Connect to Gemma Vision System (Gamma's perception)
-	gemma_vision = get_node_or_null("/root/GemmaVisionSystem")
+	gemma_vision = get_node_or_null("root/GemmaVisionSystem")
 	if not gemma_vision:
 		print("⚠️ [ConsciousnessBridge] GemmaVisionSystem not found - Gamma's vision limited")
 	else:
 		print("👁️ [ConsciousnessBridge] Connected to Gemma Vision System")
 	
 	# Connect to Logic Connector (Universal Being interactions)
-	logic_connector = get_node_or_null("/root/LogicConnector")
+	logic_connector = get_node_or_null("root/LogicConnector")
 	if not logic_connector:
 		print("⚠️ [ConsciousnessBridge] LogicConnector not found - interaction system limited")
 	else:
 		print("🔗 [ConsciousnessBridge] Connected to Logic Connector")
 		
 	# Connect to Console Manager (shared command interface)
-	console_manager = get_node_or_null("/root/ConsoleManager")
+	console_manager = get_node_or_null("root/ConsoleManager")
 	if not console_manager:
 		print("⚠️ [ConsciousnessBridge] ConsoleManager not found - command interface limited")
 	else:
 		print("💬 [ConsciousnessBridge] Connected to Console Manager")
 		
 	# Connect to Universal Object Manager
-	universal_object_manager = get_node_or_null("/root/UniversalObjectManager")
+	universal_object_manager = get_node_or_null("root/UniversalObjectManager")
 	if universal_object_manager:
 		print("🌟 [ConsciousnessBridge] Connected to Universal Object Manager")
 

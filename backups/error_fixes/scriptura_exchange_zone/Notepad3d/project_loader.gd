@@ -58,8 +58,8 @@ func initialize():
 	visualizer.connect_to_connector(connector)
 	
 	# Connect signals
-	connector.connect("component_registered", self, "_on_component_registered")
-	connector.connect("connection_established", self, "_on_connection_established")
+	connector.connect(_on_component_registered)
+	connector.connect(_on_connection_established)
 	
 	is_initialized = true
 	emit_signal("initialization_complete")

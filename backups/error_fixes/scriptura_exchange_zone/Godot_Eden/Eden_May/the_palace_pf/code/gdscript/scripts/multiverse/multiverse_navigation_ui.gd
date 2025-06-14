@@ -53,7 +53,7 @@ func _ready():
 func initialize_dependencies():
     # Try to find Akashic Records Manager
     if has_node("/root/AkashicRecordsManager"):
-        akashic_records_manager = get_node("/root/AkashicRecordsManager")
+        akashic_records_manager = get_node("\1") as Node
     else:
         var akashic_records_script = load("res://code/gdscript/scripts/akashic/akashic_records_manager.gd")
         if akashic_records_script:
@@ -66,7 +66,7 @@ func initialize_dependencies():
     
     # Try to find Database System
     if has_node("/root/DatabaseSystem"):
-        database_system = get_node("/root/DatabaseSystem")
+        database_system = get_node("\1") as Node
     else:
         var database_script = load("res://code/gdscript/scripts/database/JSHDatabaseManager.gd")
         if database_script:
@@ -79,7 +79,7 @@ func initialize_dependencies():
     
     # Try to find Entity Evolution
     if has_node("/root/EntityEvolution"):
-        entity_evolution = get_node("/root/EntityEvolution")
+        entity_evolution = get_node("\1") as Node
     else:
         var evolution_script = load("res://code/gdscript/scripts/entity/JSHEntityEvolution.gd")
         if evolution_script:
@@ -92,7 +92,7 @@ func initialize_dependencies():
     
     # Try to find Universal Bridge
     if has_node("/root/UniversalBridge"):
-        universal_bridge = get_node("/root/UniversalBridge")
+        universal_bridge = get_node("\1") as Node
     else:
         var bridge_script = load("res://code/gdscript/scripts/core/universal_bridge.gd")
         if bridge_script:
@@ -790,26 +790,26 @@ func load_universe_data():
 
 func update_current_universe_ui():
     # Update current universe panel with data
-    var id_value = current_universe_panel.get_node("UniverseIDValue")
+    var id_value = current_universe_panel.get_node("\1") as Node
     id_value.text = current_universe_id
     
-    var type_value = current_universe_panel.get_node("UniverseTypeValue")
+    var type_value = current_universe_panel.get_node("\1") as Node
     type_value.text = UNIVERSE_TYPES[randi() % UNIVERSE_TYPES.size()]
     
-    var stability_progress = current_universe_panel.get_node("StabilityProgress")
+    var stability_progress = current_universe_panel.get_node("\1") as Node
     stability_progress.value = randf_range(0, 100)
     
-    var energy_progress = current_universe_panel.get_node("EnergyProgress")
+    var energy_progress = current_universe_panel.get_node("\1") as Node
     energy_progress.value = randf_range(0, 100)
     
-    var entities_value = current_universe_panel.get_node("EntitiesValue")
+    var entities_value = current_universe_panel.get_node("\1") as Node
     entities_value.text = str(randi() % 10000)
     
-    var element_value = current_universe_panel.get_node("ElementValue")
+    var element_value = current_universe_panel.get_node("\1") as Node
     var elements = ["Aether", "Chronos", "Void", "Light", "Shadow", "Nexus", "Quantum"]
     element_value.text = elements[randi() % elements.size()]
     
-    var desc_text = current_universe_panel.get_node("DescriptionText")
+    var desc_text = current_universe_panel.get_node("\1") as Node
     desc_text.text = "This universe exists within the JSH Ethereal Engine multiverse cluster. "
     desc_text.text += "It demonstrates " + str(randi() % 80 + 20) + "% stability with a core " 
     desc_text.text += "resonance pattern of " + str(randf_range(1.0, 10.0)) + ". "
@@ -817,34 +817,34 @@ func update_current_universe_ui():
 
 func update_cosmic_data_ui():
     # Update cosmic data panel
-    var turn_value = cosmic_data_panel.get_node("TurnValue") 
+    var turn_value = cosmic_data_panel.get_node("\1") as Node 
     turn_value.text = str(current_cosmic_turn)
     
-    var age_value = cosmic_data_panel.get_node("AgeValue")
+    var age_value = cosmic_data_panel.get_node("\1") as Node
     age_value.text = COSMIC_AGES[current_cosmic_age]
     
-    var observable_value = cosmic_data_panel.get_node("ObservableValue")
+    var observable_value = cosmic_data_panel.get_node("\1") as Node
     observable_value.text = str(randi() % 50 + 10)
     
-    var convergence_value = cosmic_data_panel.get_node("ConvergenceValue")
+    var convergence_value = cosmic_data_panel.get_node("\1") as Node
     convergence_value.text = str(randi() % 10)
 
 func update_metanarrative_ui():
     # Update metanarrative panel
-    var progress_bar = metanarrative_panel.get_node("MetanarrativeProgress")
+    var progress_bar = metanarrative_panel.get_node("\1") as Node
     progress_bar.value = metanarrative_progress
     
-    var progress_label = metanarrative_panel.get_node("ProgressLabel")
+    var progress_label = metanarrative_panel.get_node("\1") as Node
     progress_label.text = str(int(metanarrative_progress)) + "%"
     
-    var phase_value = metanarrative_panel.get_node("PhaseValue")
+    var phase_value = metanarrative_panel.get_node("\1") as Node
     var phases = ["Introduction", "Expansion", "Conflict", "Climax", "Resolution", "Epilogue"]
     phase_value.text = phases[int(metanarrative_progress / 20) if metanarrative_progress < 100 else 5]
     
-    var threads_value = metanarrative_panel.get_node("ThreadsValue")
+    var threads_value = metanarrative_panel.get_node("\1") as Node
     threads_value.text = str(randi() % 7 + 1)
     
-    var objective_text = metanarrative_panel.get_node("ObjectiveText")
+    var objective_text = metanarrative_panel.get_node("\1") as Node
     var objectives = [
         "Stabilize the primary narrative convergence point",
         "Resolve timeline inconsistencies in sector 7",
@@ -856,13 +856,13 @@ func update_metanarrative_ui():
 
 func update_alignment_ui():
     # Update alignment panel
-    var align_bar = alignment_panel.get_node("AlignmentBar")
+    var align_bar = alignment_panel.get_node("\1") as Node
     align_bar.value = universe_alignment
     
-    var sync_bar = alignment_panel.get_node("SynchronizationBar")
+    var sync_bar = alignment_panel.get_node("\1") as Node
     sync_bar.value = universe_synchronization
     
-    var sync_text = alignment_panel.get_node("SyncText")
+    var sync_text = alignment_panel.get_node("\1") as Node
     var sync_level = ""
     if universe_synchronization < 33:
         sync_level = "Asynchronous"
@@ -873,7 +873,7 @@ func update_alignment_ui():
     sync_text.text = sync_level + " (" + str(int(universe_synchronization)) + "%)"
     
     # Update visualization (placeholder)
-    var vis_rect = alignment_panel.get_node("VisualizationRect")
+    var vis_rect = alignment_panel.get_node("\1") as Node
     var base_color = Color(0.2, 0.2, 0.3)
     if universe_alignment < -33:
         # More chaotic
@@ -906,31 +906,31 @@ func generate_access_points():
         access_points.append(ap)
 
 func update_access_points_ui():
-    var access_list = access_points_panel.get_node("AccessPointsList")
+    var access_list = access_points_panel.get_node("\1") as Node
     access_list.clear()
     
     # Get the current filter
-    var filter_dropdown = access_points_panel.get_node("TypeFilter")
+    var filter_dropdown = access_points_panel.get_node("\1") as Node
     var filter_index = filter_dropdown.selected
     var filter_type = ""
     if filter_index > 0:
         filter_type = UNIVERSE_TYPES[filter_index - 1]
     
     # Get the current sort option
-    var sort_dropdown = access_points_panel.get_node("SortOption")
+    var sort_dropdown = access_points_panel.get_node("\1") as Node
     var sort_index = sort_dropdown.selected
     
     # Sort the access points
     var sorted_points = access_points.duplicate()
     match sort_index:
         0: # Proximity
-            sorted_points.sort_custom(func(a, b): return a.proximity > b.proximity)
+            sorted_points.sort_custom(func(a.b): return a.proximity > b.proximity)
         1: # Stability
-            sorted_points.sort_custom(func(a, b): return a.stability > b.stability)
+            sorted_points.sort_custom(func(a.b): return a.stability > b.stability)
         2: # Energy
-            sorted_points.sort_custom(func(a, b): return a.energy > b.energy)
+            sorted_points.sort_custom(func(a.b): return a.energy > b.energy)
         3: # Alignment
-            sorted_points.sort_custom(func(a, b): return abs(a.alignment) < abs(b.alignment))
+            sorted_points.sort_custom(func(a.b): return abs(a.alignment) < abs(b.alignment))
     
     # Populate the list with filtered and sorted access points
     for ap in sorted_points:
@@ -990,7 +990,7 @@ func _on_refresh_button_pressed():
     load_universe_data()
 
 func _on_travel_button_pressed():
-    var access_list = access_points_panel.get_node("AccessPointsList")
+    var access_list = access_points_panel.get_node("\1") as Node
     var selected_items = access_list.get_selected_items()
     
     if selected_items.size() > 0:
@@ -1031,8 +1031,8 @@ func _on_sort_option_selected(index):
     update_access_points_ui()
 
 func _on_access_point_selected(index):
-    var ap = access_points_panel.get_node("AccessPointsList").get_item_metadata(index)
-    var details_text = access_points_panel.get_node("DetailsText")
+    var ap = access_points_panel.get_node("\1") as Node.get_item_metadata(index)
+    var details_text = access_points_panel.get_node("\1") as Node
     
     # Format the details text
     var alignment_text = ""

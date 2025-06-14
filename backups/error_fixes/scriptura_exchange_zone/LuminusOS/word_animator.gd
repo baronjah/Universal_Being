@@ -134,7 +134,7 @@ func manifest_word(word, position=Vector3.ZERO):
     # Clean up the word
     word = word.strip_edges().to_lower()
     
-    if word.empty():
+    if word.is_empty():
         return null
         
     # Calculate word properties
@@ -246,7 +246,7 @@ func create_word_visual(word, properties, position):
     var shape_scene = shape_templates[shape_type]
     
     # Instance the shape
-    var shape_instance = shape_scene.instance()
+    var shape_instance = shape_scene.instantiate()
     word_node.add_child(shape_instance)
     
     # Apply scale based on word length
@@ -469,14 +469,14 @@ func _on_bounce_timer(word_node, pattern):
     tween.interpolate_property(word_node, "translation", start_pos, peak, 0.5, Tween.TRANS_SINE, Tween.EASE_OUT)
     tween.start()
     
-    yield(tween, "tween_completed")
+    await(tween, "tween_completed")
     
     # Down movement with bounce
     var down_pos = Vector3(start_pos.x, original_y, start_pos.z)
     tween.interpolate_property(word_node, "translation", peak, down_pos, 0.5, Tween.TRANS_BOUNCE, Tween.EASE_IN)
     tween.start()
     
-    yield(tween, "tween_completed")
+    await(tween, "tween_completed")
     tween.queue_free()
 
 # Process word evolution over time
@@ -571,14 +571,14 @@ func update_word_visual(word):
         child.queue_free()
     
     # Wait one frame for removal to complete
-    yield(get_tree(), "idle_frame")
+    await(get_tree(), "idle_frame")
     
     # Create new shape
     var shape_type = property_mappings["consonant_pattern"]["patterns"][properties["consonant_pattern"]]
     var shape_scene = shape_templates[shape_type]
     
     # Instance the shape
-    var shape_instance = shape_scene.instance()
+    var shape_instance = shape_scene.instantiate()
     word_node.add_child(shape_instance)
     
     # Apply scale
@@ -606,7 +606,7 @@ func update_word_visual(word):
             child.queue_free()
     
     # Wait one frame
-    yield(get_tree(), "idle_frame")
+    await(get_tree(), "idle_frame")
     
     # Apply new animation
     var first_letter = properties["first_letter"]

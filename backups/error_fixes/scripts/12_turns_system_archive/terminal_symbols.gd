@@ -136,17 +136,18 @@ func get_symbol(name: String, category: String = "general") -> String:
 func get_category_symbols(category: String) -> Dictionary:
 	if symbols.has(category):
 		return symbols[category]
-	return {}
+	return {
 
-# Add a custom symbol
+# Add a custom symbol}
 func add_custom_symbol(name: String, symbol: String) -> bool:
 	if not symbols.has("custom"):
-		symbols["custom"] = {}
+		symbols["custom"] = {
 		
 	symbols["custom"][name] = symbol
 	
 	if terminal_memory and terminal_memory.has_method("add_memory_text"):
 		terminal_memory.add_memory_text("Added custom symbol: " + name + " " + symbol, "system")
+}
 		
 	return true
 
@@ -157,6 +158,7 @@ func remove_custom_symbol(name: String) -> bool:
 		
 		if terminal_memory and terminal_memory.has_method("add_memory_text"):
 			terminal_memory.add_memory_text("Removed custom symbol: " + name, "system")
+}
 			
 		return true
 		
@@ -179,6 +181,7 @@ func format_message(message: String) -> String:
 	# Replace :symbol_name: with the actual symbol
 	var regex = RegEx.new()
 	regex.compile(":(\\w+):")
+
 	
 	var matches = regex.search_all(message)
 	for match_result in matches:
@@ -187,6 +190,7 @@ func format_message(message: String) -> String:
 		
 		if symbol != "":
 			formatted = formatted.replace(":" + symbol_name + ":", symbol)
+
 			
 	return formatted
 
@@ -281,6 +285,7 @@ func _process_symbol_command(args: String) -> void:
 		_:
 			_log("Unknown symbol command: " + subcmd)
 
+
 # Process advanced symbol commands
 func _process_advanced_symbol_command(args: String) -> void:
 	var parts = args.split(" ", true, 1)
@@ -308,6 +313,7 @@ func _process_advanced_symbol_command(args: String) -> void:
 		_:
 			_log("Unknown advanced symbol command: " + subcmd)
 
+
 # Process system symbol commands
 func _process_system_symbol_command(args: String) -> void:
 	var parts = args.split(" ", true, 1)
@@ -333,9 +339,10 @@ func _process_system_symbol_command(args: String) -> void:
 		_:
 			_log("Unknown system symbol command: " + subcmd)
 
+
 # List symbols
 func _list_symbols(category: String) -> void:
-	if category.empty():
+	if category.is_empty():
 		_log("Available symbol categories:")
 		for cat in symbols:
 			_log("- " + cat + " (" + str(symbols[cat].size()) + " symbols)")
@@ -345,6 +352,7 @@ func _list_symbols(category: String) -> void:
 			_log("- " + name + ": " + symbols[category][name])
 	else:
 		_log("Unknown category: " + category)
+
 
 # Get a specific symbol
 func _get_symbol(args: String) -> void:
@@ -361,6 +369,7 @@ func _get_symbol(args: String) -> void:
 		_log("Symbol " + name + " in category " + category + ": " + symbols[category][name])
 	else:
 		_log("Symbol not found: " + category + "/" + name)
+
 
 # Add a custom symbol
 func _add_symbol(args: String) -> void:
@@ -384,6 +393,7 @@ func _remove_symbol(name: String) -> void:
 		_log("Removed symbol: " + name)
 	else:
 		_log("Symbol not found: " + name)
+
 
 # Display symbol help
 func _display_symbol_help() -> void:
@@ -463,23 +473,26 @@ func _pokemon_theme(text: String) -> void:
 # Import symbols from file
 func _import_symbols(path: String) -> void:
 	_log("Importing symbols from: " + path)
+
 	# In a real implementation, this would load from a file
 
 # Export symbols to file
 func _export_symbols(path: String) -> void:
 	_log("Exporting symbols to: " + path)
+
 	# In a real implementation, this would save to a file
 
 # Reset symbols
 func _reset_symbols(category: String) -> void:
-	if category.empty() or category == "all":
+	if category.is_empty() or category == "all":
 		_log("Resetting all custom symbols")
-		symbols["custom"] = {}
+		symbols["custom"] = {
 	elif category == "custom" and symbols.has("custom"):
 		_log("Resetting custom symbols")
-		symbols["custom"] = {}
+		symbols["custom"] = {
 	else:
 		_log("Cannot reset built-in symbol category: " + category)
+}
 
 # Show emoji support info
 func _show_emoji_support() -> void:

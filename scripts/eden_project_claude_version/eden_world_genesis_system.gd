@@ -207,6 +207,7 @@ func _process_primordial_ground(delta: float) -> void:
 		environment.background_mode = Environment.BG_SKY
 		environment.sky = Sky.new()
 		environment.sky.sky_material = preload("res://shaders/eden_sky.gdshader")
+}
 	
 	# Transition when ground is formed
 	if phase_progress > 10.0:
@@ -354,6 +355,7 @@ func _transition_to_phase(new_phase: GenesisPhase) -> void:
 	})
 	
 	print("Genesis Phase: ", new_phase)
+
 	
 	# Emit signal for other systems
 	get_tree().call_group("genesis_listeners", "on_genesis_phase_changed", new_phase)
@@ -417,7 +419,7 @@ func get_world_state() -> Dictionary:
 		"life_points": life_spawners.size(),
 		"consciousness_active": consciousness_network != null,
 		"seed": genesis_seed
-	}
+}
 
 # Notes:
 # - World literally grows from the chosen menu crystal

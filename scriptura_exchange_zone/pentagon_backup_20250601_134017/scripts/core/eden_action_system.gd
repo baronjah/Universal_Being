@@ -3,9 +3,8 @@
 # Created: May 31, 2025, 23:28 CEST
 # Purpose: Ragdoll physics and behavior system
 # Connection: Part of Pentagon Architecture migration
-
-extends UniversalBeingBase
-class_name EdenActionSystem
+extends \2
+class_name EdenActionSystem_edenactionsystem_edenacti
 ## Eden-style Action System for complex multi-step interactions
 ## Based on the Eden project's interaction array patterns
 
@@ -73,7 +72,8 @@ var selected_targets: Array[Node] = []
 var selection_mode: String = ""
 
 ## Action state machine
-enum ActionState {
+enum \2 {
+
 	IDLE,
 	PREPARING,
 	EXECUTING,

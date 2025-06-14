@@ -1,5 +1,5 @@
 # Plant.gd
-extends Entity
+extends \2
 
 var growth_stage: int = 0
 var max_growth_stage: int = 3
@@ -45,7 +45,7 @@ func _process(delta):
 	super._process(delta)
 	
 	# Plant-specific processes
-	var world = get_node("/root/World")
+	var world = get_node("root/World")
 	var cell_moisture = world.moisture_layer[position.x][position.y]
 	var cell_sunlight = world.sunlight_layer[position.x][position.y]
 	
@@ -70,7 +70,7 @@ func grow(amount: float):
 			disperse_seeds()
 
 func disperse_seeds():
-	var world = get_node("/root/World")
+	var world = get_node("root/World")
 	
 	# Try to spawn 1-3 seeds
 	var seed_count = 1 + randi() % 3

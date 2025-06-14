@@ -1,6 +1,6 @@
 extends Node
 
-class_name ShapeDimensionController
+class_name ShapeDimensionController_shapedimensioncontroller_shapedim
 
 signal shape_transcended(shape_id, from_dimension, to_dimension)
 signal shape_attuned(shape_id, color_enum)
@@ -38,18 +38,18 @@ const EVOLUTION_THRESHOLD = 5.0  # Accumulated energy needed for evolution
 
 func _ready():
 	# Initialize systems
-	shape_system = get_node_or_null("/root/ShapeSystem")
+	shape_system = get_node_or_null("root/ShapeSystem")
 	if not shape_system:
 		shape_system = ShapeSystem.new()
 		add_child(shape_system)
 	
-	dimensional_color_system = get_node_or_null("/root/DimensionalColorSystem")
+	dimensional_color_system = get_node_or_null("root/DimensionalColorSystem")
 	if not dimensional_color_system:
 		dimensional_color_system = DimensionalColorSystem.new()
 		add_child(dimensional_color_system)
 	
-	turn_cycle_manager = get_node_or_null("/root/TurnCycleManager")
-	astral_entity_system = get_node_or_null("/root/AstralEntitySystem")
+	turn_cycle_manager = get_node_or_null("root/TurnCycleManager")
+	astral_entity_system = get_node_or_null("root/AstralEntitySystem")
 	
 	# Connect signals
 	if turn_cycle_manager:
@@ -473,7 +473,7 @@ func generate_shape_report(shape_id: String) -> String:
 	report += "Creation Time: " + Time.get_datetime_string_from_unix_time(shape.creation_time) + "\n"
 	
 	# Evolution info
-	report += "Evolution Energy: " + str(shape_evolution_stages.get(shape_id, 0.0)) + " / " + str(EVOLUTION_THRESHOLD) + "\n"
+	report += "Evolution Energy: " + str(shape_evolution_stages.get(shape_id, 0.0)) + "  " + str(EVOLUTION_THRESHOLD) + "\n"
 	
 	# Color attunements
 	if shape.properties.has("color_attunements"):

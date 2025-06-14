@@ -1,5 +1,5 @@
 # line.gd
-extends MeshInstance3D
+extends \2
 
 
 func _ready():

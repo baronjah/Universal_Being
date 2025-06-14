@@ -75,11 +75,11 @@ func update_help_information():
 	# Add wish maker information to help
 	var current_text = help_text.bbcode_text
 	var wish_maker_help = "\n\n[b]Wish Maker Commands:[/b]\n" +
-		"/wish - Open Wish Maker interface\n" +
-		"/tokens - Show current token balance\n" +
-		"/wish_make <text> - Make a wish directly\n" +
-		"/wish_gemini <text> - Force Gemini API for wish\n" +
-		"/wish_claude <text> - Force Claude for wish\n"
+		"wish - Open Wish Maker interface\n" +
+		"tokens - Show current token balance\n" +
+		"wish_make <text> - Make a wish directly\n" +
+		"wish_gemini <text> - Force Gemini API for wish\n" +
+		"wish_claude <text> - Force Claude for wish\n"
 }
 
 	help_text.bbcode_text = current_text + wish_maker_help

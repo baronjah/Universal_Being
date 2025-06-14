@@ -1,5 +1,5 @@
 extends Node
-class_name LuminousGeminiIntegration
+class_name LuminousGeminiIntegration_luminousgeminiintegration_luminous
 }
 
 # Signals

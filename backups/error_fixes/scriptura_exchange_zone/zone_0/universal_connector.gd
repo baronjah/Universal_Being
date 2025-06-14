@@ -215,7 +215,7 @@ func connect_drives(source_drive, target_drive):
 	var source_path = DRIVE_PATHS.get(source_drive, "")
 	var target_path = DRIVE_PATHS.get(target_drive, "")
 	
-	if source_path.empty() or target_path.empty():
+	if source_path.is_empty() or target_path.is_empty():
 		push_error("Invalid drive paths")
 		return false
 	
@@ -430,7 +430,7 @@ func _trigger_shortcut(shortcut_name):
 	return false
 
 func _parse_shortcut(shortcut_str):
-	if shortcut_str.empty():
+	if shortcut_str.is_empty():
 		return null
 	
 	var parts = shortcut_str.to_lower().split("+")
@@ -501,14 +501,14 @@ func connect_app_from_shortcut(app_name = ""):
 	# This function is called by registered shortcuts
 	
 	# Find which app corresponds to the triggered shortcut
-	if app_name.empty():
+	if app_name.is_empty():
 		for name in APP_CONNECTIONS:
 			var shortcut_name = name + "_connector"
 			if global_shortcuts.has(shortcut_name) and global_shortcuts[shortcut_name].object == self:
 				app_name = name
 				break
 	
-	if app_name.empty():
+	if app_name.is_empty():
 		push_error("Could not determine app name from shortcut")
 		return false
 	

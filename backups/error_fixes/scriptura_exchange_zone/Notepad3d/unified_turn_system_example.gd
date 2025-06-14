@@ -23,9 +23,9 @@ func _ready():
 	add_child(turn_connector)
 	
 	# Connect to signals
-	turn_connector.connect("system_initialized", self, "_on_system_initialized")
-	turn_connector.connect("turn_components_connected", self, "_on_components_connected")
-	turn_connector.connect("snake_case_applied", self, "_on_snake_case_applied")
+	turn_connector.connect(_on_system_initialized)
+	turn_connector.connect(_on_components_connected)
+	turn_connector.connect(_on_snake_case_applied)
 	
 	# Find UI elements if they exist
 	turn_label = get_node_or_null("TurnLabel")
@@ -67,7 +67,7 @@ func start_turn_cycle():
 	var timer = Timer.new()
 	timer.wait_time = 1.0  # Update once per second
 	timer.one_shot = false
-	timer.connect("timeout", self, "update_ui")
+	timer.connect(update_ui)
 	add_child(timer)
 	timer.start()
 

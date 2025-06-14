@@ -6,7 +6,7 @@
 #
 # GlobalState
 #
-# res://code/gdscript/scripts/Galaxy_Star_Planet/GlobalState.gd
+# res://scripts/gdscript/scripts/Galaxy_Star_Planet/GlobalState.gd
 #
 # uid://dxkmdghkhlyf3
 #
@@ -30,8 +30,7 @@
 #
 
 # a scripts that runs underneath and keeps data, needs some help in seeing
-
-extends Node
+extends \2
 
 var current_galaxy_data = null
 var visible_galaxies = []

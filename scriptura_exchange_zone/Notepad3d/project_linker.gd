@@ -1,6 +1,6 @@
 extends Node
 
-class_name ProjectLinker
+class_name ProjectLinker_projectlinker_projectl
 
 # Project Linker
 # Creates connections between similar components across different projects
@@ -203,7 +203,7 @@ func _find_content_based_candidates(components):
 func _extract_component_functions(component_id):
 	var component_path = component_id.split("::")[1]
 	var project_name = component_id.split("::")[0]
-	var full_path = connector.PROJECT_PATHS[project_name] + "/" + component_path
+	var full_path = connector.PROJECT_PATHS[project_name] + "" + component_path
 	
 	return token_analyzer.tokenize_file(full_path, TokenAnalyzer.TokenStrategy.FUNCTION_NAMES)
 
@@ -211,7 +211,7 @@ func _extract_component_functions(component_id):
 func _extract_component_tokens(component_id):
 	var component_path = component_id.split("::")[1]
 	var project_name = component_id.split("::")[0]
-	var full_path = connector.PROJECT_PATHS[project_name] + "/" + component_path
+	var full_path = connector.PROJECT_PATHS[project_name] + "" + component_path
 	
 	return token_analyzer.tokenize_file(full_path, TokenAnalyzer.TokenStrategy.CODE_TOKENS)
 

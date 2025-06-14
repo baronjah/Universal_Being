@@ -6,11 +6,12 @@ extends Node
 # Handles folding, unfolding, and continuous evolution of narrative structures
 }
 
-class_name DataEvolutionEngine
+class_name DataEvolutionEngine_dataevolutionengine_dataevol
 }
 
-# Evolution patterns 
-enum EvolutionPattern {
+# Evolution patterns
+enum \2 {
+
 	LINEAR,       # Simple progression
 	BRANCHING,    # Tree-like evolution with multiple paths
 	CYCLIC,       # Repeating patterns with variations
@@ -23,7 +24,8 @@ enum EvolutionPattern {
 }
 
 # Evolution stages (rule of 3-6-9)
-enum EvolutionStage {
+enum \2 {
+
 	SEED = 0,     # Initial concept
 	GROWTH = 1,   # Early development
 	FORM = 2,     # Basic structure
@@ -38,7 +40,8 @@ enum EvolutionStage {
 }
 
 # Data folding modes
-enum FoldingMode {
+enum \2 {
+
 	HORIZONTAL,   # Fold along horizontal axis
 	VERTICAL,     # Fold along vertical axis
 	DIAGONAL,     # Fold along diagonal
@@ -50,7 +53,8 @@ enum FoldingMode {
 }
 
 # Data storage type
-enum StorageType {
+enum \2 {
+
 	TERMINAL,     # Terminal buffer storage
 	FILE,         # File-based storage
 	MEMORY,       # In-memory storage 
@@ -107,7 +111,7 @@ class DataEntity:
 		id = p_id
 		content = p_content
 		type = p_type
-		created_at = OS.get_unix_time()
+		created_at = OS.Time.get_unix_time_from_system()
 		modified_at = created_at
 		metrics = EvolutionMetrics.new()
 }
@@ -115,18 +119,18 @@ class DataEntity:
 	func evolve():
 		if evolution_stage < EvolutionStage.COMPLETION:
 			evolution_stage += 1
-		modified_at = OS.get_unix_time()
+		modified_at = OS.Time.get_unix_time_from_system()
 }
 
 	func add_child(child_id: String):
 		if not children_ids.has(child_id):
 			children_ids.append(child_id)
-			modified_at = OS.get_unix_time()
+			modified_at = OS.Time.get_unix_time_from_system()
 }
 
 	func fold(mode: int = FoldingMode.HORIZONTAL):
 		fold_state += 1
-		modified_at = OS.get_unix_time()
+		modified_at = OS.Time.get_unix_time_from_system()
 		# In a real implementation, this would compress/transform the content
 		return "Folded content (level %d)" % fold_state
 }
@@ -134,7 +138,7 @@ class DataEntity:
 	func unfold():
 		if fold_state > 0:
 			fold_state -= 1
-		modified_at = OS.get_unix_time()
+		modified_at = OS.Time.get_unix_time_from_system()
 		# In a real implementation, this would decompress/transform the content
 		return content
 }
@@ -142,7 +146,7 @@ class DataEntity:
 	func add_tag(tag: String):
 		if not tags.has(tag):
 			tags.append(tag)
-			modified_at = OS.get_unix_time()
+			modified_at = OS.Time.get_unix_time_from_system()
 }
 
 	func to_string() -> String:
@@ -195,9 +199,9 @@ func _ready():
 }
 
 	# Find terminal and other systems
-	terminal = get_node_or_null("/root/IntegratedTerminal")
-	storage_system = get_node_or_null("/root/SecondaryStorageSystem")
-	fluctuation_monitor = get_node_or_null("/root/DataFluctuationMonitor")
+	terminal = get_node_or_null("root/IntegratedTerminal")
+	storage_system = get_node_or_null("root/SecondaryStorageSystem")
+	fluctuation_monitor = get_node_or_null("root/DataFluctuationMonitor")
 }
 
 	# Log initialization
@@ -353,7 +357,7 @@ func process_system_evolution_command(args):
 			load_evolution_state(subargs)
 		"purge":
 			purge_entities(subargs)
-		"export":
+		"@@@export":
 			export_evolution_data(subargs)
 		"import":
 			import_evolution_data(subargs)
@@ -370,7 +374,7 @@ func create_entity(content, type="text"):
 		return null
 }
 
-	var id = "entity_" + str(OS.get_unix_time()) + "_" + str(randi() % 1000)
+	var id = "entity_" + str(OS.Time.get_unix_time_from_system()) + "_" + str(randi() % 1000)
 	var entity = DataEntity.new(id, content, type)
 }
 
@@ -1109,7 +1113,7 @@ func export_evolution_data(format="json"):
 	log_message("Exporting evolution data in " + format + " format...")
 }
 
-	# In a real implementation, this would export actual data
+	# In a real implementation, this would @@@export actual data
 	# For this mock-up, we'll simulate it
 }
 
@@ -1511,7 +1515,7 @@ func display_system_evolution_help():
 	log_message("  ###evolution save [path] - Save evolution state", "system")
 	log_message("  ###evolution load [path] - Load evolution state", "system")
 	log_message("  ###evolution purge <criteria> - Purge entities", "system")
-	log_message("  ###evolution export [format] - Export evolution data", "system")
+	log_message("  ###evolution @@@export [format] - Export evolution data", "system")
 	log_message("  ###evolution import <path> - Import evolution data", "system")
 	log_message("  ###evolution help - Display this help", "system")
 }

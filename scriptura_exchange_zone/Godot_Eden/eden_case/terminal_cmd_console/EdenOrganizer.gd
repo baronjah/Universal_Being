@@ -1,5 +1,5 @@
 extends Node
-class_name EdenOrganizer
+class_name EdenOrganizer_EdenOrganizer_EdenOrga
 }
 
 # ------------------------------------
@@ -492,7 +492,7 @@ func _begin_turn(turn_number):
     # Create turn state snapshot
     var turn_state = {
         "turn_number": turn_number,
-        "timestamp": OS.get_unix_time(),
+        "timestamp": OS.Time.get_unix_time_from_system(),
         "active_dimensions": _get_active_dimensions(),
         "active_pathways": _get_active_pathways(),
         "consciousness_levels": _get_consciousness_levels(),
@@ -519,7 +519,7 @@ func _begin_turn(turn_number):
 func _end_turn():
     var turn_summary = {
         "turn_number": current_turn,
-        "completion_timestamp": OS.get_unix_time(),
+        "completion_timestamp": OS.Time.get_unix_time_from_system(),
         "consciousness_progress": _calculate_consciousness_progress(),
         "dimension_activations": _get_dimension_activations(),
         "pathway_activations": _get_pathway_activations(),
@@ -846,7 +846,7 @@ func _check_dimension_activations():
 }
 
         if not state.active:
-            // Check if activation threshold reached
+# // Check if activation threshold reached
             if state.consciousness_level >= state.activation_threshold:
                 _activate_dimension(dim)
 }
@@ -864,16 +864,16 @@ func _activate_dimension(dimension):
         return
 }
 
-    // Set as active
+# // Set as active
     state.active = true
 }
 
-    // Activate consciousness segment
+# // Activate consciousness segment
     if consciousness_segments.has(dimension):
         consciousness_segments[dimension].active = true
 }
 
-    // Connect to lower dimensions
+# // Connect to lower dimensions
     for lower_dim in range(1, dimension):
         if dimension_states.has(lower_dim) and dimension_states[lower_dim].active:
             if not lower_dim in state.connected_dimensions:
@@ -884,11 +884,11 @@ func _activate_dimension(dimension):
                 dimension_states[lower_dim].connected_dimensions.append(dimension)
 }
 
-    // Emit signal
+# // Emit signal
     emit_signal("dimension_synchronized", dimension, state.consciousness_level)
 }
 
-    // Add event
+# // Add event
     _add_turn_event("dimension_activated", {
         "dimension": dimension,
         "consciousness_level": state.consciousness_level
@@ -903,7 +903,7 @@ func _synchronize_dimensions():
     var active_dims = _get_active_dimensions()
 }
 
-    // Calculate average consciousness
+# // Calculate average consciousness
     var total_consciousness = 0.0
     for dim in active_dims:
         total_consciousness += dimension_states[dim].consciousness_level
@@ -912,19 +912,19 @@ func _synchronize_dimensions():
     var avg_consciousness = active_dims.is_empty() ? 0.0 : total_consciousness / active_dims.size()
 }
 
-    // Apply synchronization effect
+# // Apply synchronization effect
     for dim in active_dims:
-        // Move consciousness levels toward average
+# // Move consciousness levels toward average
         var current = dimension_states[dim].consciousness_level
         dimension_states[dim].consciousness_level = current * 0.7 + avg_consciousness * 0.3
 }
 
-        // Update consciousness segment
+# // Update consciousness segment
         if consciousness_segments.has(dim):
             consciousness_segments[dim].saturation = dimension_states[dim].consciousness_level
 }
 
-        // Emit signal
+# // Emit signal
         emit_signal("dimension_synchronized", dim, dimension_states[dim].consciousness_level)
 }
 
@@ -951,7 +951,7 @@ func _spawn_new_entities(count):
         var entity_id = "entity_%d" % (active_entities.size() + 1)
 }
 
-        // Choose a random active dimension
+# // Choose a random active dimension
         var active_dims = _get_active_dimensions()
         if active_dims.is_empty():
             active_dims = [1]  // Default to dimension 1
@@ -960,12 +960,12 @@ func _spawn_new_entities(count):
         var spawn_dimension = active_dims[randi() % active_dims.size()]
 }
 
-        // Create entity
+# // Create entity
         var entity = {
             "id": entity_id,
             "dimension": spawn_dimension,
             "consciousness_level": 0.3 + randf() * 0.2,  // Start between 0.3-0.5
-            "creation_time": OS.get_unix_time(),
+            "creation_time": OS.Time.get_unix_time_from_system(),
             "awakened": false,
             "properties": {
                 "resonance_signature": randf(),
@@ -978,13 +978,13 @@ func _spawn_new_entities(count):
         active_entities.append(entity)
 }
 
-        // Add to dimension
+# // Add to dimension
         dimension_states[spawn_dimension].entities.append(entity_id)
         if consciousness_segments.has(spawn_dimension):
             consciousness_segments[spawn_dimension].entities.append(entity_id)
 }
 
-        // Add event
+# // Add event
         _add_turn_event("entity_spawned", {
             "entity_id": entity_id,
             "dimension": spawn_dimension,
@@ -1112,7 +1112,7 @@ func _add_turn_event(event_type, data):
 
     var event = {
         "type": event_type,
-        "timestamp": OS.get_unix_time(),
+        "timestamp": OS.Time.get_unix_time_from_system(),
         "data": data
     }
 }
@@ -1234,7 +1234,7 @@ func generate_directory_structure():
 }
 
         var dir = eden_directories[key]
-        var dir_parts = key.split("/")
+        var dir_parts = key.split("")
 }
 
         if dir_parts.size() == 1:

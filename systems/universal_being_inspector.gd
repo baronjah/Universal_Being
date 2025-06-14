@@ -26,6 +26,7 @@ func _ready() -> void:
 	setup_inspector_ui()
 	print("🔍 Universal Being Inspector: Ready to debug and modify everything!")
 
+
 func setup_inspector_ui() -> void:
 	"""Create the inspector interface"""
 	# Main inspector panel
@@ -105,6 +106,7 @@ func toggle() -> void:
 	inspection_mode_changed.emit(inspector_visible)
 	print("🔍 Inspector visibility: %s" % ("ON" if inspector_visible else "OFF"))
 
+
 func inspect_being(being: UniversalBeing) -> void:
 	"""Inspect a specific Universal Being"""
 	if not being:
@@ -120,6 +122,7 @@ func inspect_being(being: UniversalBeing) -> void:
 	being_inspected.emit(being)
 	print("🔍 Inspecting Universal Being: %s" % being.being_name)
 
+
 func display_being_info() -> void:
 	"""Display comprehensive being information"""
 	if not current_being:
@@ -131,6 +134,7 @@ func display_being_info() -> void:
 	info_text += "[color=cyan]Name:[/color] %s\n" % current_being.being_name
 	info_text += "[color=cyan]Type:[/color] %s\n" % current_being.get_script().get_global_name()
 	info_text += "[color=cyan]Consciousness Level:[/color] %d\n" % current_being.consciousness_level
+
 	
 	# Pentagon Architecture Status
 	info_text += "\n[color=yellow]📐 PENTAGON ARCHITECTURE:[/color]\n"
@@ -139,6 +143,7 @@ func display_being_info() -> void:
 	info_text += "• pentagon_process(): %s\n" % ("✅" if current_being.has_method("pentagon_process") else "❌")
 	info_text += "• pentagon_input(): %s\n" % ("✅" if current_being.has_method("pentagon_input") else "❌")
 	info_text += "• pentagon_sewers(): %s\n" % ("✅" if current_being.has_method("pentagon_sewers") else "❌")
+
 	
 	# Position and Transform
 	info_text += "\n[color=green]📍 TRANSFORM DATA:[/color]\n"
@@ -157,6 +162,7 @@ func display_being_info() -> void:
 	info_text += "\n[color=magenta]🔗 CONNECTIONS:[/color]\n"
 	info_text += "• Children: %d\n" % current_being.get_child_count()
 	info_text += "• Groups: %s\n" % str(current_being.get_groups())
+
 	
 	# Metadata
 	var meta_list = current_being.get_meta_list()
@@ -164,6 +170,7 @@ func display_being_info() -> void:
 		info_text += "\n[color=orange]📋 METADATA:[/color]\n"
 		for meta_key in meta_list:
 			info_text += "• %s: %s\n" % [meta_key, str(current_being.get_meta(meta_key))]
+
 	
 	being_info_display.text = info_text
 
@@ -333,12 +340,14 @@ func _on_consciousness_changed(new_value: float) -> void:
 		property_changed.emit(current_being, "consciousness_level", old_value, new_value)
 		print("🔍 Consciousness level changed: %d → %d" % [old_value, new_value])
 
+
 func _on_name_changed(new_name: String) -> void:
 	if current_being:
 		var old_name = current_being.being_name
 		current_being.being_name = new_name
 		property_changed.emit(current_being, "being_name", old_name, new_name)
 		print("🔍 Being name changed: %s → %s" % [old_name, new_name])
+
 
 func _on_position_changed(_value: float) -> void:
 	if current_being:
@@ -369,6 +378,7 @@ func _on_metadata_changed(meta_key: String, new_value: String) -> void:
 		property_changed.emit(current_being, "meta_" + meta_key, old_value, new_value)
 		print("🔍 Metadata changed: %s = %s" % [meta_key, new_value])
 
+
 # Control functions
 func _refresh_inspector() -> void:
 	"""Refresh the inspector display"""
@@ -384,6 +394,7 @@ func _debug_being() -> void:
 		print("🔍 Node path: %s" % current_being.get_path())
 		print("🔍 Global position: %s" % current_being.global_position)
 		print("🔍 Groups: %s" % current_being.get_groups())
+
 		
 		# Call debug method if available
 		if current_being.has_method("debug_info"):
@@ -393,6 +404,7 @@ func _save_modifications() -> void:
 	"""Save all modifications made in the inspector"""
 	if current_being:
 		print("🔍 Saving modifications to: %s" % current_being.being_name)
+
 		
 		# Trigger any update methods
 		if current_being.has_method("on_inspector_update"):

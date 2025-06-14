@@ -1,29 +1,29 @@
 extends Node
 
-class_name WordSeedEvolution
+class_name WordSeedEvolution_wordseedevolution_wordseed
 
 # ----- EVOLUTION SETTINGS -----
 @export_category("Evolution Settings")
-@export var evolution_enabled: bool = true
-@export var evolution_speed: float = 1.0  # Multiplier for evolution rate
-@export var random_mutation_chance: float = 0.05  # 5% chance of random mutations
-@export var environmental_influence: float = 0.3  # How much environment affects evolution
-@export var connection_influence: float = 0.4  # How much connections affect evolution
-@export var max_evolution_stages: int = 7  # Maximum evolution stages
+@@export var evolution_enabled: bool = true
+@@export var evolution_speed: float = 1.0  # Multiplier for evolution rate
+@@export var random_mutation_chance: float = 0.05  # 5% chance of random mutations
+@@export var environmental_influence: float = 0.3  # How much environment affects evolution
+@@export var connection_influence: float = 0.4  # How much connections affect evolution
+@@export var max_evolution_stages: int = 7  # Maximum evolution stages
 
 # ----- STORY SETTINGS -----
 @export_category("Story Settings")
-@export var story_generation_enabled: bool = true
-@export var story_update_interval: float = 60.0  # Seconds between story updates
-@export var story_complexity: float = 0.5  # How complex generated stories should be
-@export var story_memory_size: int = 10  # How many story events to remember
+@@export var story_generation_enabled: bool = true
+@@export var story_update_interval: float = 60.0  # Seconds between story updates
+@@export var story_complexity: float = 0.5  # How complex generated stories should be
+@@export var story_memory_size: int = 10  # How many story events to remember
 
 # ----- SEED SETTINGS -----
 @export_category("Seed Settings")
-@export var initial_seed_words: Array = ["creation", "void", "light", "darkness", "potential"]
-@export var seed_growth_rate: float = 1.0  # Base rate for seed growth
-@export var seed_energy_requirement: float = 10.0  # Energy needed for seeds to grow
-@export var seed_minimum_connections: int = 1  # Connections needed to evolve
+@@export var initial_seed_words: Array = ["creation", "void", "light", "darkness", "potential"]
+@@export var seed_growth_rate: float = 1.0  # Base rate for seed growth
+@@export var seed_energy_requirement: float = 10.0  # Energy needed for seeds to grow
+@@export var seed_minimum_connections: int = 1  # Connections needed to evolve
 
 # ----- COMPONENT REFERENCES -----
 var words_in_space: Node  # Reference to word visualization system
@@ -514,8 +514,8 @@ func _calculate_energy_factor(word_id: String) -> float:
     if not active_seeds.has(word_id) or not player_controller:
         return 1.0
     
-    // In a real implementation, this would use the player's energy
-    // For now, return 1.0 (no energy limitation)
+# // In a real implementation, this would use the player's energy
+# // For now, return 1.0 (no energy limitation)
     return 1.0
 
 func _calculate_connection_influence(word_id: String) -> float:
@@ -528,14 +528,14 @@ func _calculate_connection_influence(word_id: String) -> float:
     if connected_count == 0:
         return 0.0
     
-    // Calculate influence based on connection types
+# // Calculate influence based on connection types
     var influence = 0.0
     for connected_id in seed_data.connected_words:
         if active_seeds.has(connected_id):
             var connected_type = _determine_word_type(active_seeds[connected_id].text)
             var self_type = _determine_word_type(seed_data.text)
             
-            // Opposite types have more influence
+# // Opposite types have more influence
             if (self_type == "creation" and connected_type == "destruction") or \
                (self_type == "destruction" and connected_type == "creation"):
                 influence += 0.5
@@ -580,7 +580,7 @@ func generate_story() -> String:
     if settings.size() == 0:
         settings.append("the realm of words")
     
-    // Craft the beginning
+# // Craft the beginning
     story += "In " + settings[0] + ", "
     
     if protagonists.size() > 0:
@@ -588,7 +588,7 @@ func generate_story() -> String:
     else:
         story += "an unnamed entity "
     
-    // Add journey context
+# // Add journey context
     story += "journeyed through the fabric of creation"
     
     if antagonists.size() > 0:
@@ -596,15 +596,15 @@ func generate_story() -> String:
     
     story += ".\n\n"
     
-    // Process story events
+# // Process story events
     if story_events.size() > 0:
-        // Sort events by time
+# // Sort events by time
         story_events.sort_custom(func(a, b): return a.time < b.time)
         
-        // Take most recent events up to story_memory_size
+# // Take most recent events up to story_memory_size
         var recent_events = story_events.slice(max(0, story_events.size() - story_memory_size))
         
-        // Generate narrative from events
+# // Generate narrative from events
         for event in recent_events:
             match event.type:
                 "evolution":
@@ -614,14 +614,14 @@ func generate_story() -> String:
                 "completion":
                     story += _narrative_for_completion(event) + "\n"
     
-    // Add story ending or continuation hook
+# // Add story ending or continuation hook
     story += "\nThe story continues to unfold as words manifest new realities..."
     
-    // Log to console
+# // Log to console
     if console and console.has_method("log"):
         console.log("Story updated", Color(0.7, 0.7, 1.0))
     
-    // Emit signal
+# // Emit signal
     emit_signal("story_updated", story)
     
     return story
@@ -665,11 +665,11 @@ func _narrative_for_completion(event: Dictionary) -> String:
 func _add_story_event(event: Dictionary):
     story_events.append(event)
     
-    // Trim story events if needed
+# // Trim story events if needed
     while story_events.size() > story_memory_size * 3:  // Keep 3x memory size for history
         story_events.pop_front()
     
-    // If many events have occurred since last story update, generate new story
+# // If many events have occurred since last story update, generate new story
     if story_events.size() % 5 == 0:
         generate_story()
 
@@ -678,18 +678,18 @@ func connect_words(word_id1: String, word_id2: String) -> bool:
     if not active_seeds.has(word_id1) or not active_seeds.has(word_id2):
         return false
     
-    // Add connection to tracking
+# // Add connection to tracking
     if not word_id2 in active_seeds[word_id1].connected_words:
         active_seeds[word_id1].connected_words.append(word_id2)
     
     if not word_id1 in active_seeds[word_id2].connected_words:
         active_seeds[word_id2].connected_words.append(word_id1)
     
-    // Make visual connection if possible
+# // Make visual connection if possible
     if words_in_space and words_in_space.has_method("connect_words"):
         words_in_space.connect_words(word_id1, word_id2)
     
-    // Add story event
+# // Add story event
     _add_story_event({
         "type": "connection",
         "word1": active_seeds[word_id1].text,
@@ -699,7 +699,7 @@ func connect_words(word_id1: String, word_id2: String) -> bool:
         "time": current_time
     })
     
-    // Log to console
+# // Log to console
     if console and console.has_method("log"):
         console.log("Connected " + active_seeds[word_id1].text + " to " + active_seeds[word_id2].text, Color(0.3, 0.7, 0.9))
     

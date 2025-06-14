@@ -67,12 +67,12 @@ func initialize(memories_coordinator: DualMemoriesCoordinator = null,
     
     # Connect signals if available
     if dual_memories_coordinator:
-        dual_memories_coordinator.connect("meaning_transformed", self, "_on_meaning_transformed")
-        dual_memories_coordinator.connect("terminal_split_changed", self, "_on_terminal_split_changed")
+        dual_memories_coordinator.connect(_on_meaning_transformed)
+        dual_memories_coordinator.connect(_on_terminal_split_changed)
     
     if terminal_split_controller:
-        terminal_split_controller.connect("terminal_data_updated", self, "_on_terminal_data_updated")
-        terminal_split_controller.connect("split_mode_changed", self, "_on_split_mode_changed")
+        terminal_split_controller.connect(_on_terminal_data_updated)
+        terminal_split_controller.connect(_on_split_mode_changed)
     
     print("Animation System initialized")
 

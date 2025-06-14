@@ -85,7 +85,6 @@ var divine_word_registry = {
 		"command_access": ["redeem", "sacrifice", "humble"],
 		"dimension_access": [6, 9, 12],
 		"description": "Divine sacrifice and redemption"
-	}
 }
 
 # Terminal command structure
@@ -119,7 +118,6 @@ var command_templates = {
 		"example": "sanctify terminal for divine_work by anointing",
 		"description": "Sets apart objects for divine purpose",
 		"parameters": ["object", "purpose", "method"]
-	}
 }
 
 # AI terminal connection settings
@@ -180,7 +178,7 @@ func _setup_revelation_timer():
 	var timer = Timer.new()
 	timer.wait_time = 33.3 # A sacred timing
 	timer.autostart = true
-	timer.connect("timeout", self, "_on_revelation_timer")
+	timer.connect(_on_revelation_timer)
 	add_child(timer)
 
 func _connect_to_data_channel():
@@ -189,8 +187,8 @@ func _connect_to_data_channel():
 	
 	if data_channel:
 		# Connect to the data channel signals
-		data_channel.connect("data_received", self, "_on_data_received")
-		data_channel.connect("dimension_changed", self, "_on_dimension_changed")
+		data_channel.connect(_on_data_received)
+		data_channel.connect(_on_dimension_changed)
 		
 		# Sync current dimension
 		current_dimension = data_channel.current_dimension
@@ -268,6 +266,7 @@ func _apply_word_effects(word, word_data):
 		# Try to shift to a compatible dimension
 		var target_dimension = word_data.dimension_access[0]
 		print("Word '" + word + "' seeking compatible dimension: " + str(target_dimension))
+}
 		
 		# Attempt dimension shift
 		_attempt_dimension_shift(target_dimension)
@@ -284,7 +283,7 @@ func _generate_revelation(word, power_level):
 		"dimension": current_dimension,
 		"message": _generate_divine_message(word),
 		"symbolic_form": _generate_symbolic_form(word)
-	}
+}
 	
 	# Emit the revelation
 	emit_signal("revelation_manifested", word, revelation)
@@ -299,11 +298,13 @@ func _generate_revelation(word, power_level):
 func process_command(command_text):
 	if not connection_active:
 		print("Cannot process command - temple connection not active")
-		return {"error": "No active temple connection"}
+		return {"error": "No active temple connection"
+}
 	
 	if active_command_channel == null:
 		print("Cannot process command - no active command channel")
-		return {"error": "No active command channel - speak a divine word first"}
+		return {"error": "No active command channel - speak a divine word first"
+}
 	
 	# Calculate token cost
 	var token_cost = _calculate_token_cost(command_text)
@@ -311,12 +312,14 @@ func process_command(command_text):
 	# Check if we have enough tokens
 	if ai_settings.tokens_available < token_cost:
 		print("Cannot process command - insufficient divine tokens")
-		return {"error": "Insufficient divine tokens: " + str(ai_settings.tokens_available) + " < " + str(token_cost)}
+		return {"error": "Insufficient divine tokens: " + str(ai_settings.tokens_available) + " < " + str(token_cost)
+}
 	
 	# Parse the command
 	var command_parts = command_text.split(" ")
 	if command_parts.size() == 0:
-		return {"error": "Empty command"}
+		return {"error": "Empty command"
+}
 	
 	var command_type = command_parts[0].to_lower()
 	var word_data = divine_word_registry[active_command_channel]
@@ -324,7 +327,8 @@ func process_command(command_text):
 	# Check if this command type is allowed by the active divine word
 	if not word_data.command_access.has(command_type):
 		print("Command '" + command_type + "' not authorized by divine word '" + active_command_channel + "'")
-		return {"error": "Command not authorized by active divine word", "suggested_words": _suggest_words_for_command(command_type)}
+		return {"error": "Command not authorized by active divine word", "suggested_words": _suggest_words_for_command(command_type)
+}
 	
 	# Process the specific command type
 	var result = _process_specific_command(command_type, command_parts, word_data)
@@ -341,6 +345,7 @@ func process_command(command_text):
 	
 	print("Processed divine command: " + command_text)
 	print("Tokens used: " + str(token_cost) + ", remaining: " + str(ai_settings.tokens_available))
+}
 	
 	return result
 
@@ -367,11 +372,12 @@ func _calculate_token_cost(command_text):
 # Process a specific type of command
 func _process_specific_command(command_type, command_parts, word_data):
 	# Extract parameters
-	var parameters = {}
+	var parameters = {
 	var template = command_templates.get(command_type, null)
 	
 	if template == null:
-		return {"error": "Unknown command type: " + command_type}
+		return {"error": "Unknown command type: " + command_type
+}
 	
 	# Try to parse parameters based on template
 	for i in range(1, command_parts.size()):
@@ -387,7 +393,7 @@ func _process_specific_command(command_type, command_parts, word_data):
 		"dimension": current_dimension,
 		"parameters": parameters,
 		"commandment_number": commandment_counter + 1
-	}
+}
 	
 	# Apply specific command logic
 	match command_type:
@@ -396,14 +402,14 @@ func _process_specific_command(command_type, command_parts, word_data):
 				"target": parameters.get("target", "scene"),
 				"intensity": int(parameters.get("intensity", "5")),
 				"color": parameters.get("color", "white")
-			}
+	}
 		
 		"create":
 			result.creation = {
 				"object": parameters.get("object", "symbol"),
 				"location": parameters.get("location", "center"),
 				"attributes": parameters.get("attributes", "default")
-			}
+	}
 			# Apply special LOGOS effect
 			if active_command_channel == "LOGOS":
 				result.creation.logos_empowered = true
@@ -414,21 +420,21 @@ func _process_specific_command(command_type, command_parts, word_data):
 				"truth": parameters.get("truth", "hidden"),
 				"subject": parameters.get("subject", "creation"),
 				"dimension": int(parameters.get("dimension", str(current_dimension)))
-			}
+	}
 		
 		"speak":
 			result.message = {
 				"content": parameters.get("message", "truth"),
 				"audience": parameters.get("audience", "all"),
 				"tone": parameters.get("tone", "gentle")
-			}
+	}
 		
 		"sanctify":
 			result.sanctification = {
 				"object": parameters.get("object", "space"),
 				"purpose": parameters.get("purpose", "divine_work"),
 				"method": parameters.get("method", "word")
-			}
+	}
 	
 	return result
 
@@ -477,6 +483,7 @@ func _attempt_dimension_shift(target_dimension):
 		current_dimension = target_dimension
 		
 		print("Dimension shift successful: " + str(old_dimension) + " → " + str(target_dimension))
+}
 		
 		# Emit dimension changed event to any listeners
 		emit_signal("dimension_changed", old_dimension, target_dimension)
@@ -511,7 +518,7 @@ func _generate_divine_message(word):
 		"KING": "The kingdom comes when the King is recognized and honored.",
 		"SPIRIT": "The Spirit moves where it wills, bringing life and transformation.",
 		"LAMB": "The Lamb who was slain is worthy of all honor and praise."
-	}
+}
 	
 	if messages.has(word):
 		return messages[word]
@@ -532,17 +539,18 @@ func _generate_symbolic_form(word):
 		"WORD": {"type": "open_book", "color": "parchment", "glowing_text": true},
 		"KING": {"type": "throne", "color": "purple", "elevated": true},
 		"SPIRIT": {"type": "wind", "color": "translucent", "moving": true},
-		"LAMB": {"type": "lamb", "color": "white", "peaceful": true}
-	}
+		"LAMB": {"type": "lamb", "color": "white", "peaceful": true
+}
 	
 	if symbols.has(word):
 		return symbols[word]
 	else:
-		return {"type": "abstract_form", "color": "multicolored", "shifting": true}
+		return {"type": "abstract_form", "color": "multicolored", "shifting": true
+}
 
 # Handle timer-based revelations
 func _on_revelation_timer():
-	if not connection_active or last_divine_word.empty():
+	if not connection_active or last_divine_word.is_empty():
 		return
 	
 	# Only trigger revelations sometimes
@@ -554,6 +562,7 @@ func _on_revelation_timer():
 func _on_data_received(source, data_packet, timestamp):
 	# Check if this is a divine command packet
 	if data_packet.has("divine_command"):
+}
 		# Process the command
 		process_command(data_packet.divine_command)
 
@@ -561,6 +570,7 @@ func _on_data_received(source, data_packet, timestamp):
 func _on_dimension_changed(old_dimension, new_dimension):
 	current_dimension = new_dimension
 	print("Temple connector dimension updated: " + str(old_dimension) + " → " + str(new_dimension))
+
 
 # ===== PUBLIC API =====
 
@@ -582,7 +592,7 @@ func get_ai_terminal_status():
 		"current_dimension": current_dimension,
 		"commandments_issued": commandment_counter,
 		"divine_random_seed": divine_random_seed
-	}
+}
 
 # Check the price of AI in divine tokens
 func get_ai_price_in_divine_time():
@@ -603,4 +613,3 @@ func get_ai_price_in_divine_time():
 		"dimension_factor": dimension_factor,
 		"price_per_command": ai_settings.token_cost_per_command,
 		"divine_explanation": "The price of AI in divine time is measured in tokens of understanding."
-	}

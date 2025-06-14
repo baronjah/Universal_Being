@@ -90,25 +90,25 @@ func _ready():
     var storage_timer = Timer.new()
     storage_timer.wait_time = 300 # 5 minutes
     storage_timer.autostart = true
-    storage_timer.connect("timeout", self, "_on_storage_monitor")
+    storage_timer.connect(_on_storage_monitor)
     add_child(storage_timer)
     
     # Initialize API usage monitor
     var api_timer = Timer.new()
     api_timer.wait_time = 60 # 1 minute
     api_timer.autostart = true
-    api_timer.connect("timeout", self, "_on_api_usage_reset")
+    api_timer.connect(_on_api_usage_reset)
     add_child(api_timer)
 
 func connect_to_systems():
     # Connect to SmartAccountManager
     if has_node("/root/SmartAccountManager") or get_node_or_null("/root/SmartAccountManager"):
-        _smart_account_manager = get_node("/root/SmartAccountManager")
+        _smart_account_manager = get_node("\1") as Node
         print("Connected to SmartAccountManager")
     
     # Connect to SharedAccountConnector
     if has_node("/root/SharedAccountConnector") or get_node_or_null("/root/SharedAccountConnector"):
-        _account_connector = get_node("/root/SharedAccountConnector")
+        _account_connector = get_node("\1") as Node
         print("Connected to SharedAccountConnector")
 
 func create_account(display_name, tier = AccountTier.FREE, api_key = ""):
@@ -146,7 +146,7 @@ func create_account(display_name, tier = AccountTier.FREE, api_key = ""):
     api_usage_time[account_id] = OS.get_unix_time()
     
     # Store API key if provided
-    if not api_key.empty():
+    if not api_key.is_empty():
         api_keys[api_key] = account_id
     
     # Initialize thread pool for this account
@@ -405,7 +405,7 @@ func link_luno_storage(account_id, storage_size_gb = 2000):
 
 func get_account_data(account_id = ""):
     # Use active account if none specified
-    if account_id.empty():
+    if account_id.is_empty():
         account_id = active_account_id
     
     if not account_id in accounts:
@@ -427,7 +427,7 @@ func get_thread_status(account_id, thread_id):
 
 func get_account_colors(account_id = ""):
     # Use active account if none specified
-    if account_id.empty():
+    if account_id.is_empty():
         account_id = active_account_id
     
     if not account_id in accounts:

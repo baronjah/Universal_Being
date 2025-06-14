@@ -1,5 +1,5 @@
 extends Node
-class_name JSHOctree
+class_name JSHOctree_JSHOctree_JSHOctre
 
 # Octree for efficient spatial partitioning
 # Used for zone/region queries rather than individual entities

@@ -120,9 +120,9 @@ func _setup_collision():
 
 func mine(mining_power: float) -> Dictionary:
 	if is_depleted:
-		return {}
+		return {
 	
-	# Calculate mined amount
+	# Calculate mined amount}
 	var efficiency = mining_power / mining_difficulty
 	var mined = min(resource_amount, 10.0 * efficiency)
 	resource_amount -= mined
@@ -141,7 +141,7 @@ func mine(mining_power: float) -> Dictionary:
 		_start_respawn_timer()
 	
 	# Return mined resources
-	var result = {}
+	var result = {
 	result[resource_type] = mined
 	resource_mined.emit(mined, resource_type)
 	
@@ -340,6 +340,7 @@ func _ready():
 
 func generate_resource_field():
 	var resource_scene = preload("res://scenes/space_resource.tscn")
+}
 	
 	for i in range(resource_count):
 		# Random position in sphere

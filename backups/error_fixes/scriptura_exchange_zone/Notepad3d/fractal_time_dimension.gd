@@ -196,7 +196,7 @@ func _create_time_anchors():
     
     # Create tunnels between adjacent scales
     var scale_ids = FRACTAL_DIMENSIONS.keys()
-    scale_ids.sort_custom(Callable(self, "_sort_by_scale"))
+    scale_ids.sort_custom(Callable(self."_sort_by_scale"))
     
     for i in range(scale_ids.size() - 1):
         var source_scale = scale_ids[i]
@@ -321,12 +321,12 @@ func _smooth_step(t):
     return t * t * (3.0 - 2.0 * t)
 
 func create_timeline_branch(branch_id = "", parent_id = ""):
-    if branch_id.empty():
+    if branch_id.is_empty():
         // Generate unique branch ID
         branch_id = "branch_" + str(randi() % 10000) + "_" + str(current_time)
     }
     
-    if parent_id.empty():
+    if parent_id.is_empty():
         parent_id = current_branch_id
     }
     
@@ -460,7 +460,7 @@ func merge_timeline_branches(source_branch_id, target_branch_id = ""):
         return false
     }
     
-    if target_branch_id.empty():
+    if target_branch_id.is_empty():
         target_branch_id = current_branch_id
     } else if not active_branches.has(target_branch_id):
         print("Target branch not found: " + target_branch_id)
@@ -496,7 +496,7 @@ func merge_timeline_branches(source_branch_id, target_branch_id = ""):
     }
     
     // Sort events by timestamp
-    target_branch.events.sort_custom(Callable(self, "_sort_events_by_time"))
+    target_branch.events.sort_custom(Callable(self."_sort_events_by_time"))
     
     // Add merge record
     var merge_data = {
@@ -545,7 +545,7 @@ func merge_timeline_branches(source_branch_id, target_branch_id = ""):
     return true
 
 func record_timeline_event(event_data, branch_id = ""):
-    if branch_id.empty():
+    if branch_id.is_empty():
         branch_id = current_branch_id
     }
     
@@ -567,7 +567,7 @@ func record_timeline_event(event_data, branch_id = ""):
     branch.events.push_back(event)
     
     // Sort events
-    branch.events.sort_custom(Callable(self, "_sort_events_by_time"))
+    branch.events.sort_custom(Callable(self."_sort_events_by_time"))
     
     // Create memory imprint
     create_temporal_imprint(event.id, event_data)
@@ -578,7 +578,7 @@ func _sort_events_by_time(a, b):
     return a.timestamp < b.timestamp
 
 func get_timeline_events(branch_id = "", start_time = 0, end_time = 0):
-    if branch_id.empty():
+    if branch_id.is_empty():
         branch_id = current_branch_id
     }
     
@@ -612,7 +612,7 @@ func get_timeline_events(branch_id = "", start_time = 0, end_time = 0):
     return events
 
 func get_branch_info(branch_id = ""):
-    if branch_id.empty():
+    if branch_id.is_empty():
         branch_id = current_branch_id
     }
     
@@ -898,7 +898,7 @@ func _update_visualization(delta):
         return
     
     // Update current time marker
-    var current_marker = visualization_node.get_node("CurrentTimeMarker")
+    var current_marker = visualization_node.get_node("\1") as Node
     if current_marker:
         var branch = active_branches[current_branch_id]
         var branch_path = visualization_node.get_node("Branch_" + current_branch_id)

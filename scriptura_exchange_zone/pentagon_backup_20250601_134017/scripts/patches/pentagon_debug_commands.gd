@@ -10,15 +10,14 @@
 # PURPOSE: Provide the exact commands needed for strategic testing
 # CREATED: 2025-05-31
 # ==================================================
-
-extends UniversalBeingBase
+extends \2
 func _ready() -> void:
 	# Wait longer for console manager to fully initialize
 	await get_tree().create_timer(1.0).timeout
 	_register_commands()
 
 func _register_commands() -> void:
-	var console = get_node_or_null("/root/ConsoleManager")
+	var console = get_node_or_null("root/ConsoleManager")
 	
 	if console and console.has_method("register_command"):
 		console.register_command("pentagon_status", _cmd_pentagon_status, "Show Perfect Pentagon system status")
@@ -60,11 +59,11 @@ func _cmd_pentagon_status(_args: Array) -> String:
 	
 	# Check each Pentagon system
 	var systems = {
-		"PerfectInit": "/root/PerfectInit",
-		"PerfectReady": "/root/PerfectReady", 
-		"PerfectInput": "/root/PerfectInput",
-		"LogicConnector": "/root/LogicConnector",
-		"SewersMonitor": "/root/SewersMonitor"
+		"PerfectInit": "root/PerfectInit",
+		"PerfectReady": "root/PerfectReady", 
+		"PerfectInput": "root/PerfectInput",
+		"LogicConnector": "root/LogicConnector",
+		"SewersMonitor": "root/SewersMonitor"
 	}
 	
 	for system_name in systems:
@@ -78,7 +77,7 @@ func _cmd_pentagon_status(_args: Array) -> String:
 	
 	# Check system readiness
 	result += "\n🔗 SYSTEM INTEGRATION:\n"
-	var perfect_ready = get_node_or_null("/root/PerfectReady")
+	var perfect_ready = get_node_or_null("root/PerfectReady")
 	if perfect_ready and perfect_ready.has_method("get_readiness_status"):
 		result += str(perfect_ready.get_readiness_status()) + "\n"
 	
@@ -108,7 +107,7 @@ func _cmd_system_health(_args: Array) -> String:
 	
 	# Threading health
 	result += "\n🧵 THREADING:\n"
-	var thread_pool = get_node_or_null("/root/JSH_Threads/thread_pool")
+	var thread_pool = get_node_or_null("root/JSH_Threads/thread_pool")
 	if thread_pool and thread_pool.has_method("get_thread_stats"):
 		var stats = thread_pool.get_thread_stats()
 		result += "   Active Threads: " + str(stats.size()) + "\n"
@@ -133,13 +132,13 @@ func _cmd_flow_trace(_args: Array) -> String:
 	
 	# Check current flow state
 	result += "\n🔄 CURRENT FLOW STATE:\n"
-	var sewers = get_node_or_null("/root/SewersMonitor")
+	var sewers = get_node_or_null("root/SewersMonitor")
 	if sewers and sewers.has_method("get_flow_status"):
 		result += str(sewers.get_flow_status()) + "\n"
 	
 	# Universal Being flow
 	result += "\n🌟 UNIVERSAL BEING FLOW:\n"
-	var uom = get_node_or_null("/root/UniversalObjectManager")
+	var uom = get_node_or_null("root/UniversalObjectManager")
 	if uom:
 		result += "   Object Manager: ACTIVE\n"
 		if uom.has_method("get_object_count"):
@@ -153,7 +152,7 @@ func _cmd_gamma_status(_args: Array) -> String:
 	result += "══════════════════════\n"
 	
 	# Check Gamma controller
-	var gamma_scene = get_node_or_null("/root/GammaAI") 
+	var gamma_scene = get_node_or_null("root/GammaAI") 
 	if gamma_scene:
 		result += "✅ Gamma Scene: LOADED\n"
 		

@@ -1,6 +1,6 @@
 @tool
 extends UniversalBeingBase
-class_name ZoneSystem
+class_name ZoneSystem_zonesyst
 ## 3D Block Coding Zone System - Creation and Visualization Zones
 ## One zone creates data (points, shapes, noise), another visualizes it
 ## Universal Beings decide HOW to interpret and display the data

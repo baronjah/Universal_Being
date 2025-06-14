@@ -48,6 +48,7 @@ func _ready() -> void:
 	name = "PentagonValidator"
 	print("🔺 Pentagon Validator: Sacred geometry compliance system ready")
 
+
 # ===============================================
 # VALIDATION METHODS
 # ===============================================
@@ -76,6 +77,7 @@ func validate_all_beings() -> Dictionary:
 func validate_single_being(script_path: String) -> Dictionary:
 	"""Validate Pentagon compliance for a single Universal Being"""
 	print("🔺 Validating Pentagon compliance: %s" % script_path)
+
 	
 	return _validate_being_script(script_path)
 
@@ -112,12 +114,15 @@ func _scan_directory_for_beings(directory_path: String, beings_list: Array[Strin
 	var file_name = dir.get_next()
 	
 	while file_name != "":
+
 		var file_path = directory_path + "/" + file_name
 		
 		if dir.current_is_dir() and not file_name.begins_with("."):
+
 			# Recursively scan subdirectories
 			_scan_directory_for_beings(file_path, beings_list)
 		elif file_name.ends_with(".gd"):
+
 			# Check if this script extends Universal Being
 			if _script_extends_universal_being(file_path):
 				beings_list.append(file_path)
@@ -165,7 +170,7 @@ func _validate_being_script(script_path: String) -> Dictionary:
 		"compliance_score": 0.0,
 		"issues": [],
 		"recommendations": []
-	}
+}
 	
 	if not FileAccess.file_exists(script_path):
 		validation_result.issues.append("Script file not found")
@@ -203,6 +208,7 @@ func _validate_pentagon_methods(content: String, result: Dictionary) -> void:
 			result.methods_missing.append(method)
 			result.issues.append("Missing Pentagon method: %s()" % method)
 
+
 func _validate_super_calls(content: String, result: Dictionary) -> void:
 	"""Check if proper super() calls are made in Pentagon methods"""
 	for method in result.methods_found:
@@ -217,6 +223,7 @@ func _validate_super_calls(content: String, result: Dictionary) -> void:
 		else:
 			result.super_calls_missing.append(method)
 			result.issues.append("Missing super() call in %s(): Expected '%s'" % [method, super_pattern])
+
 
 func _extract_method_body(content: String, method_name: String) -> String:
 	"""Extract the body of a specific method"""
@@ -247,9 +254,11 @@ func _generate_recommendations(result: Dictionary) -> void:
 	"""Generate actionable recommendations for compliance"""
 	if result.methods_missing.size() > 0:
 		result.recommendations.append("Implement missing Pentagon methods: %s" % ", ".join(result.methods_missing))
+
 	
 	if result.super_calls_missing.size() > 0:
 		result.recommendations.append("Add required super() calls in: %s" % ", ".join(result.super_calls_missing))
+
 	
 	if result.pentagon_compliant:
 		result.recommendations.append("✅ Perfect Pentagon compliance achieved!")
@@ -301,7 +310,7 @@ func _generate_validation_report() -> Dictionary:
 		"non_compliant_details": non_compliant_beings,
 		"status": _get_compliance_status(compliance_percentage),
 		"summary": _generate_summary_text(compliance_percentage)
-	}
+}
 	
 	print("\n🔺 === PENTAGON VALIDATION REPORT ===")
 	print("🔺 Beings Scanned: %d" % total_beings_scanned)
@@ -354,14 +363,13 @@ func _generate_being_fix(being_result: Dictionary) -> Dictionary:
 	"""Generate fix for a specific non-compliant being"""
 	if being_result.pentagon_compliant:
 		return {}
-	
 	var fix = {
 		"script_path": being_result.script_path,
 		"fix_type": "pentagon_compliance",
 		"missing_methods": being_result.methods_missing,
 		"missing_super_calls": being_result.super_calls_missing,
 		"fix_code": _generate_fix_code(being_result)
-	}
+}
 	
 	return fix
 
@@ -380,6 +388,7 @@ func _generate_method_template(method_name: String) -> String:
 	var templates = {
 		"pentagon_init": """func pentagon_init() -> void:
 	super.pentagon_init()  # ALWAYS call super first
+}
 	# Initialize being-specific properties here""",
 		
 		"pentagon_ready": """func pentagon_ready() -> void:
@@ -395,9 +404,9 @@ func _generate_method_template(method_name: String) -> String:
 	# Handle being-specific input here""",
 		
 		"pentagon_sewers": """func pentagon_sewers() -> void:
+
 	# Being-specific cleanup here
 	super.pentagon_sewers()  # ALWAYS call super last"""
-	}
 	
 	return templates.get(method_name, "# Method template not found")
 
@@ -412,7 +421,7 @@ func get_compliance_summary() -> Dictionary:
 		"compliant_beings": compliant_beings,
 		"compliance_percentage": (float(compliant_beings) / total_beings_scanned) * 100.0 if total_beings_scanned > 0 else 0.0,
 		"non_compliant_count": non_compliant_beings.size()
-	}
+}
 
 func export_validation_report(file_path: String) -> bool:
 	"""Export validation report to file"""

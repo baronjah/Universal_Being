@@ -4,8 +4,7 @@
 # PURPOSE: Control the ragdoll to walk around, pick up objects, and manipulate the scene
 # CREATED: 2025-05-24 - Enhanced for Garden of Eden creation
 # ==================================================
-
-extends Node3D
+extends \2
 
 # Core Components
 @onready var ragdoll_body: Node3D = null
@@ -28,8 +27,8 @@ var rotation_speed: float = 2.0
 var behavior_state: BehaviorState = BehaviorState.IDLE
 var patrol_points: Array[Vector3] = []
 var current_patrol_index: int = 0
+enum \2 {
 
-enum BehaviorState {
 	IDLE,
 	WALKING,
 	INVESTIGATING,
@@ -49,8 +48,8 @@ func _ready() -> void:
 	print("[RagdollController] Initializing ragdoll controller...")
 	
 	# Get references
-	floodgate = get_node("/root/FloodgateController") if has_node("/root/FloodgateController") else null
-	world_builder = get_node("/root/WorldBuilder") if has_node("/root/WorldBuilder") else null
+	floodgate = get_node("root/FloodgateController") if has_node("root/FloodgateController") else null
+	world_builder = get_node("root/WorldBuilder") if has_node("root/WorldBuilder") else null
 	
 	# Find ragdoll in scene
 	_find_ragdoll_body()

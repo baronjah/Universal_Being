@@ -228,7 +228,7 @@ func _rebuild_fluid_surface():
                            bounds.size.y / grid_resolution)
     
     # Generate implicit field values (metaball field)
-    var field = {}
+    var field = {
     for x in range(grid_resolution + 1):
         for y in range(grid_resolution + 1):
             var pos = bounds.position + Vector2(x * cell_size.x, y * cell_size.y)
@@ -251,7 +251,7 @@ func _rebuild_fluid_surface():
 func _marching_squares(field, resolution, bounds, threshold):
     """Implement marching squares algorithm for metaball rendering"""
     var vertices = []
-    var visited_edges = {}
+    var visited_edges = {
     
     # Process each cell in the grid
     for x in range(resolution):
@@ -392,7 +392,7 @@ func _organize_polygon_vertices(vertices):
 
 func _get_surface_outline(polygon):
     """Extract the outline edges from the polygon"""
-    var edges = {}
+    var edges = {
     var outline = []
     
     # Track edge frequencies
@@ -504,7 +504,6 @@ func _get_default_particle_shader_code():
         vec4 color = mix(outer_color, inner_color, alpha);
         
         COLOR = color;
-    }
     """
 
 func _get_default_metaball_shader_code():
@@ -535,10 +534,8 @@ func _get_default_metaball_shader_code():
         // Add highlights at top
         if (UV.y < 0.15) {
             base_color = base_color * (1.0 + (0.15 - UV.y) * 2.0);
-        }
         
         COLOR = base_color;
-    }
     """
 
 func _get_renderable_particles():

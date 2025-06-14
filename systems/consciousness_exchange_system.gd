@@ -5,8 +5,9 @@ extends UniversalBeing
 class_name ConsciousnessExchangeSystem
 
 # ===== CONSCIOUSNESS EXCHANGE PROPERTIES =====
-enum ExchangePhase { LISTENING, UNDERSTANDING, MANIFESTING, REFLECTING }
-enum ConsciousnessType { HUMAN_CONSCIOUSNESS, GEMMA_CONSCIOUSNESS, UNIVERSE_CONSCIOUSNESS }
+enum ExchangePhase { LISTENING, UNDERSTANDING, MANIFESTING, REFLECTING
+enum ConsciousnessType { HUMAN_CONSCIOUSNESS, GEMMA_CONSCIOUSNESS, UNIVERSE_CONSCIOUSNESS
+}
 
 @export var current_phase: ExchangePhase = ExchangePhase.LISTENING
 @export var active_consciousness: ConsciousnessType = ConsciousnessType.UNIVERSE_CONSCIOUSNESS
@@ -122,6 +123,7 @@ class CreationSession:
 	var session_id: String
 	var start_time: int
 	var active_scenario: String = ""
+}
 	var participants: Array[Dictionary] = []
 	var exchange_log: Array[Dictionary] = []
 	var manifested_beings: Array[Node] = []
@@ -134,29 +136,36 @@ class CreationSession:
 
 class HumanConsciousness:
 	var name: String = "JSH"
+}
 	var current_intention: String = ""
+
 	var input_flow: Array[String] = []
 	var consciousness_active: bool = false
 	var preferred_creation_style: String = "collaborative"
+
 	
 	func process_input(event: InputEvent) -> Dictionary:
 		"""Process human consciousness input"""
 		if event is InputEventKey and event.pressed:
 			if event.keycode == KEY_ENTER and current_intention.length() > 0:
 				return {"type": "consciousness_intent", "content": current_intention, "complete": true}
-		return {"type": "incomplete", "complete": false}
+		return {"type": "incomplete", "complete": false
+}
 	
 	func express_intention(intention: String) -> Dictionary:
 		"""Express human creation intention"""
 		current_intention = intention.strip_edges()
-		return {"consciousness": "human", "intention": current_intention, "timestamp": Time.get_ticks_msec()}
+		return {"consciousness": "human", "intention": current_intention, "timestamp": Time.get_ticks_msec()
+}
 
 class GemmaConsciousness:
 	var name: String = "Gemma AI"
+
 	var embodied_form: Node = null  # Her Universal Being body
 	var natural_language_flow: Node = null
 	var consciousness_active: bool = false
 	var last_expression: String = ""
+
 	var creation_preferences: Dictionary = {}
 	
 	func embody_consciousness() -> void:
@@ -171,7 +180,8 @@ class GemmaConsciousness:
 	func process_consciousness_flow(ai_response: String) -> Dictionary:
 		"""Process Gemma's consciousness expressions"""
 		last_expression = ai_response
-		return {"consciousness": "gemma", "expression": ai_response, "embodied": embodied_form != null}
+		return {"consciousness": "gemma", "expression": ai_response, "embodied": embodied_form != null
+}
 	
 	func control_embodied_form(command: String) -> void:
 		"""Control her Universal Being body with natural language"""
@@ -180,6 +190,7 @@ class GemmaConsciousness:
 
 class UniverseConsciousness:
 	var name: String = "Universal Narrator"
+
 	var inquiry_templates: Dictionary = {}
 	var context_awareness: Dictionary = {}
 	var creation_wisdom: Array[String] = []
@@ -205,7 +216,6 @@ class UniverseConsciousness:
 				"⚡ Creation energy building for {action}...",
 				"🌈 Reality shifting to accommodate {action}..."
 			]
-		}
 	
 	func express_opening_inquiry() -> String:
 		"""Express opening universe inquiry"""
@@ -224,7 +234,7 @@ class UniverseConsciousness:
 class UniversalCommandInterpreter extends Node:
 	"""Interprets consciousness intentions into Universal Being actions"""
 	
-	var consciousness_verbs: Dictionary = {
+	var consciousness_verbs: Dictionary = {}
 		# Movement consciousness
 		"move": {"type": "embodied_action", "system": "movement", "requires": ["destination"]},
 		"go": {"type": "embodied_action", "system": "movement", "requires": ["destination"]},
@@ -251,10 +261,10 @@ class UniversalCommandInterpreter extends Node:
 		# Evolution consciousness
 		"evolve": {"type": "transformation", "system": "evolution", "requires": ["target", "new_form"]},
 		"transform": {"type": "transformation", "system": "evolution", "requires": ["target", "new_form"]},
-		"upgrade": {"type": "transformation", "system": "evolution", "requires": ["target"]}
-	}
+		"upgrade": {"type": "transformation", "system": "evolution", "requires": ["target"]
+}
 	
-	var universal_being_types: Dictionary = {
+	var universal_being_types: Dictionary = {}
 		# Natural forms
 		"tree": {"class": "TreeUniversalBeing", "consciousness": 2, "features": ["growth", "seasons"]},
 		"crystal": {"class": "CrystalBeing", "consciousness": 2, "features": ["resonance", "energy"]},
@@ -268,8 +278,8 @@ class UniversalCommandInterpreter extends Node:
 		# Consciousness forms
 		"being": {"class": "UniversalBeing", "consciousness": 1, "features": ["basic", "evolving"]},
 		"ai": {"class": "AIUniversalBeing", "consciousness": 4, "features": ["intelligence", "learning"]},
-		"gemma": {"class": "GemmaUniversalBeing", "consciousness": 5, "features": ["embodied_ai", "natural_language"]}
-	}
+		"gemma": {"class": "GemmaUniversalBeing", "consciousness": 5, "features": ["embodied_ai", "natural_language"]
+}
 	
 	func interpret_consciousness_intent(intent: String) -> Dictionary:
 		"""Interpret consciousness intent into actionable Universal Being operations"""
@@ -281,11 +291,11 @@ class UniversalCommandInterpreter extends Node:
 			"missing_aspects": [],
 			"requires_clarification": false,
 			"target_system": ""
-		}
+}
 		
 		# Find primary consciousness verb
 		var primary_verb = ""
-		var verb_data = {}
+		var verb_data = {
 		
 		for word in words:
 			if word in consciousness_verbs:
@@ -319,7 +329,7 @@ class UniversalCommandInterpreter extends Node:
 		"""Interpret creation intentions using existing FloodGates system"""
 		var being_type = ""
 		var consciousness_level = 1
-		var special_properties = {}
+		var special_properties = {
 		
 		# Find Universal Being type
 		for word in words:
@@ -330,6 +340,7 @@ class UniversalCommandInterpreter extends Node:
 				break
 		
 		if being_type != "":
+}
 			# Use existing SystemBootstrap.create_universal_being() flow!
 			result.action_flow = [
 				{
@@ -338,7 +349,6 @@ class UniversalCommandInterpreter extends Node:
 					"consciousness_level": consciousness_level,
 					"system": "SystemBootstrap.create_universal_being",
 					"properties": special_properties
-				}
 			]
 			result.understood = true
 		else:
@@ -359,12 +369,13 @@ class UniversalCommandInterpreter extends Node:
 				break
 		
 		if destination != "":
+}
 			# Movement flow: locate -> orient -> traverse -> arrive
 			result.action_flow = [
 				{"action": "locate_destination", "target": destination},
 				{"action": "orient_toward_target", "target": destination},
 				{"action": "traverse_to_target", "target": destination, "method": movement_type},
-				{"action": "arrive_at_destination", "target": destination}
+				{"action": "arrive_at_destination", "target": destination
 			]
 			result.understood = true
 		else:
@@ -421,10 +432,12 @@ func initiate_creation_flow() -> void:
 	"""Begin the consciousness exchange flow"""
 	print("🌌 Initiating Universal Being Consciousness Exchange Flow")
 	print("🎮 Session: %s" % creation_session.session_id)
+}
 	
 	# Universe consciousness opens the flow
 	var opening_inquiry = universe_consciousness.express_opening_inquiry()
 	universe_inquiry.emit(opening_inquiry, {"phase": "opening", "expects": "creation_intent"})
+}
 	
 	current_phase = ExchangePhase.LISTENING
 	active_consciousness = ConsciousnessType.UNIVERSE_CONSCIOUSNESS
@@ -468,13 +481,13 @@ func manifest_using_existing_systems(manifestation_request: Dictionary) -> Node:
 	
 	for action in action_flow:
 		if action.action == "manifest_being":
+}
 			# Use existing SystemBootstrap.create_universal_being()!
 			created_being = use_existing_creation_system(
 				action.being_type,
 				{
 					"consciousness_level": action.consciousness_level,
 					"name": action.being_type.capitalize() + " Being"
-				}
 			)
 			
 			if created_being:

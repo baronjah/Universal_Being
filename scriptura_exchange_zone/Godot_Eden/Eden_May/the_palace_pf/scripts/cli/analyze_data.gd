@@ -1,8 +1,8 @@
 @tool
-extends SceneTree
+extends \2
 
 # CLI script for analyzing data from the command line
-# Usage: godot --path "/project/path" --headless --script "scripts/cli/analyze_data.gd" --data-path "/path/to/data" --output-file "/path/to/output.json"
+# Usage: godot --path "project/path" --headless --script "scripts/cli/analyze_data.gd" --data-path "path/to/data" --output-file "path/to/output.json"
 
 const DATA_CACHE_DIR = "res://data_cache/"
 const DEFAULT_OUTPUT_DIR = "res://analysis_results/"
@@ -197,7 +197,7 @@ func find_files_to_analyze():
 			return []
 		
 		# Convert to absolute path if it's relative
-		if not root_dir.begins_with("/"):
+		if not root_dir.begins_with(""):
 			root_dir = OS.get_user_data_dir().path_join(root_dir)
 		
 		var os_dir = DirAccess.open(root_dir)
@@ -457,7 +457,7 @@ func analyze_code_file(content, extension):
 			function_pattern = "\\b(public|private|protected|internal|static)?(\\s+virtual|\\s+override)?\\s+\\w+\\s+\\w+\\s*\\("
 			class_pattern = "\\b(public|private|protected|internal|static)?\\s+class\\s+"
 			single_comment = "//"
-			multi_comment_start = "/*"
+			multi_comment_start = "*"
 			multi_comment_end = "*/"
 		"py":
 			function_pattern = "^\\s*def\\s+"
@@ -469,14 +469,14 @@ func analyze_code_file(content, extension):
 			function_pattern = "\\bfunction\\s+\\w+\\s*\\(|\\b\\w+\\s*=\\s*function\\s*\\(|\\b\\w+\\s*\\(.*\\)\\s*=>"
 			class_pattern = "\\bclass\\s+"
 			single_comment = "//"
-			multi_comment_start = "/*"
+			multi_comment_start = "*"
 			multi_comment_end = "*/"
 		_:
 			# Default patterns
 			function_pattern = "\\bfunction\\s+|\\bdef\\s+|\\bfunc\\s+"
 			class_pattern = "\\bclass\\s+"
 			single_comment = "#|//"
-			multi_comment_start = "/\\*|'''"
+			multi_comment_start = "\\*|'''"
 			multi_comment_end = "\\*/|'''"
 	
 	# Simple code analysis
@@ -813,7 +813,7 @@ func export_results(results):
 	
 	# Create output file
 	var file
-	if output_path.begins_with("/"):
+	if output_path.begins_with(""):
 		# This is an absolute path in the file system
 		file = FileAccess.open(output_path, FileAccess.WRITE)
 	else:
@@ -835,7 +835,7 @@ func export_results(results):
 		"bytes_processed": stats.bytes_processed
 	}
 	
-	# Determine export format from file extension
+	# Determine @@export format from file extension
 	var export_format = output_path.get_extension().to_lower()
 	if export_format not in ["json", "csv", "txt", "text"]:
 		export_format = config.export_format  # Use the one from config
@@ -844,7 +844,7 @@ func export_results(results):
 		"json":
 			file.store_string(JSON.stringify(results, "  "))
 		"csv":
-			# This is a simplified CSV export - would need to be expanded
+			# This is a simplified CSV @@export - would need to be expanded
 			# based on the specific analysis type
 			file.store_line("key,value")
 			
@@ -1030,10 +1030,10 @@ func generate_visualization(results, data_path):
     </div>
     
     <script>
-        // Data from analysis
+# // Data from analysis
         const analysisData = %s;
         
-        // Display metadata
+# // Display metadata
         const metadataElement = document.getElementById('metadata');
         const metadata = analysisData.metadata;
         if (metadata) {
@@ -1045,7 +1045,7 @@ func generate_visualization(results, data_path):
             metadataElement.innerHTML += metadataHtml;
         }
         
-        // Create visualizations based on analysis type
+# // Create visualizations based on analysis type
         const analysisType = metadata ? metadata.analysis_type : 'unknown';
         
         function createCharts() {
@@ -1068,7 +1068,7 @@ func generate_visualization(results, data_path):
         }
         
         function createTextAnalysisCharts() {
-            // Word count chart
+# // Word count chart
             if (analysisData.common_words) {
                 const labels = Object.keys(analysisData.common_words).slice(0, 10);
                 const data = labels.map(word => analysisData.common_words[word]);
@@ -1101,7 +1101,7 @@ func generate_visualization(results, data_path):
                 });
             }
             
-            // Text metrics chart
+# // Text metrics chart
             new Chart(document.getElementById('secondaryChart'), {
                 type: 'pie',
                 data: {
@@ -1126,7 +1126,7 @@ func generate_visualization(results, data_path):
         }
         
         function createCodeAnalysisCharts() {
-            // Code composition chart
+# // Code composition chart
             const totalLines = analysisData.code_lines + analysisData.comment_lines + analysisData.blank_lines;
             
             new Chart(document.getElementById('mainChart'), {
@@ -1156,7 +1156,7 @@ func generate_visualization(results, data_path):
                 }
             });
             
-            // File extensions chart
+# // File extensions chart
             if (analysisData.file_extensions) {
                 const labels = Object.keys(analysisData.file_extensions);
                 const data = labels.map(ext => analysisData.file_extensions[ext]);
@@ -1191,7 +1191,7 @@ func generate_visualization(results, data_path):
         }
         
         function createPatternAnalysisCharts() {
-            // Pattern frequency chart
+# // Pattern frequency chart
             if (analysisData.frequency) {
                 const labels = Object.keys(analysisData.frequency);
                 const data = labels.map(pattern => analysisData.frequency[pattern]);
@@ -1224,7 +1224,7 @@ func generate_visualization(results, data_path):
                 });
             }
             
-            // Co-occurrences chart
+# // Co-occurrences chart
             if (analysisData.co_occurrences) {
                 const labels = Object.keys(analysisData.co_occurrences).slice(0, 10);
                 const data = labels.map(pattern => analysisData.co_occurrences[pattern]);
@@ -1259,7 +1259,7 @@ func generate_visualization(results, data_path):
         }
         
         function createSemanticAnalysisCharts() {
-            // Topics chart
+# // Topics chart
             if (analysisData.topics) {
                 const labels = Object.keys(analysisData.topics);
                 const data = labels.map(topic => analysisData.topics[topic]);
@@ -1292,7 +1292,7 @@ func generate_visualization(results, data_path):
                 });
             }
             
-            // Sentiment by topic chart
+# // Sentiment by topic chart
             if (analysisData.sentiment_by_topic) {
                 const labels = Object.keys(analysisData.sentiment_by_topic);
                 const data = labels.map(topic => analysisData.sentiment_by_topic[topic]);
@@ -1336,7 +1336,7 @@ func generate_visualization(results, data_path):
             }
         }
         
-        // Initialize charts
+# // Initialize charts
         createCharts();
     </script>
 </body>

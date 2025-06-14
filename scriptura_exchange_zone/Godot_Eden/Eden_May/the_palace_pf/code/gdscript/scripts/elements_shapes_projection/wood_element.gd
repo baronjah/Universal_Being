@@ -5,9 +5,9 @@
 
 # i think i named it elements.gd
 
-extends "res://code/gdscript/scripts/elements_shapes_projection/base_element.gd"
+extends "res://scripts/gdscript/scripts/elements_shapes_projection/base_element.gd"
 
-class_name WoodElement
+class_name WoodElement_woodelement_woodelem
 
 # Wood-specific properties
 var moisture_content: float = 0.4    # 0-1 value, affects burning speed (0=dry, 1=soaked)
@@ -95,7 +95,7 @@ func ignite():
 
 func create_fire_on_surface():
 	# Create a fire element on this wood
-	var fire_element = load("res://code/gdscript/scripts/elements_shapes_projection/fire_element.gd").new()
+	var fire_element = load("res://scripts/gdscript/scripts/elements_shapes_projection/fire_element.gd").new()
 	fire_element.global_position = global_position + Vector3(0, 0.5, 0)
 	fire_element.heat_intensity = 1.0
 	get_parent().add_child(fire_element)
@@ -204,7 +204,7 @@ func break_apart():
 func convert_to_ash():
 	# Wood fully burned, convert to ash
 	# Always create ash from script since we're not using scenes
-	var ash = load("res://code/gdscript/scripts/elements_shapes_projection/ash_element.gd").new()
+	var ash = load("res://scripts/gdscript/scripts/elements_shapes_projection/ash_element.gd").new()
 	if ash:
 		ash.global_position = global_position
 		ash.scale = Vector3(1, 0.2, 1) * scale.x  # Ash is flatter

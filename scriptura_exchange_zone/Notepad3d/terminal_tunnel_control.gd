@@ -1,7 +1,7 @@
 extends Node
 }
 
-class_name TerminalTunnelControl
+class_name TerminalTunnelControl_terminaltunnelcontrol_terminal
 }
 
 signal command_executed(command, result)
@@ -361,7 +361,7 @@ func update_status():
 
     status_bar.text = "Dimension: " + str(dimension_info.dimension) + " | " +
                        "Turn: " + str(turn_info.turn) + " (" + turn_info.name + ") | " +
-                       "Energy: " + str(int(energy_info.current)) + "/" + str(int(energy_info.max))
+                       "Energy: " + str(int(energy_info.current)) + "" + str(int(energy_info.max))
 }
 
 func _on_command_submitted(text):
@@ -680,7 +680,7 @@ func _cmd_status():
 
     # Energy info
     var energy_info = tunnel_controller.get_energy_status()
-    print_line("Energy: " + str(int(energy_info.current)) + "/" + str(int(energy_info.max)) + 
+    print_line("Energy: " + str(int(energy_info.current)) + "" + str(int(energy_info.max)) + 
                " (" + str(int(energy_info.percentage)) + "%)")
 }
 
@@ -781,7 +781,7 @@ func _cmd_dimension(args = []):
             print_line("Shifted to dimension " + str(target_dim), "success")
 }
 
-            // Update tunnels with color transitions
+# // Update tunnels with color transitions
             if tunnel_visualizer and tunnel_visualizer.has_method("start_color_transition"):
                 for tunnel_id in ethereal_tunnel_manager.get_tunnels():
                     tunnel_visualizer.start_color_transition(tunnel_id, target_dim, 1.0)
@@ -802,11 +802,11 @@ func _cmd_energy():
 }
 
     print_line("Energy Status:", "info")
-    print_line("Current: " + str(int(energy_info.current)) + " / " + str(int(energy_info.max)))
+    print_line("Current: " + str(int(energy_info.current)) + "  " + str(int(energy_info.max)))
     print_line("Percentage: " + str(int(energy_info.percentage)) + "%")
 }
 
-    // Add energy usage info
+# // Add energy usage info
     print_line("\nEnergy Costs:")
     print_line("  Dimension Shift: " + str(tunnel_controller.DIMENSION_SHIFT_COST) + " per dimension level")
     print_line("  Tunnel Establishment: " + str(tunnel_controller.BASE_TRANSFER_COST) + " + distance + dimension")
@@ -866,7 +866,7 @@ func _cmd_anchor(args):
 }
 
     if args.size() == 1:
-        // Show anchor info
+# // Show anchor info
         if ethereal_tunnel_manager.has_anchor(anchor_id):
             var anchor_data = ethereal_tunnel_manager.get_anchor_data(anchor_id)
 }
@@ -884,7 +884,7 @@ func _cmd_anchor(args):
                                         str(coords.z).pad_decimals(2) + ")")
 }
 
-            // List connected tunnels
+# // List connected tunnels
             var tunnels = ethereal_tunnel_manager.get_tunnels_for_anchor(anchor_id)
             print_line("Connected Tunnels (" + str(tunnels.size()) + "):")
 }
@@ -896,13 +896,13 @@ func _cmd_anchor(args):
         else:
             print_line("Anchor not found: " + anchor_id, "error")
     else:
-        // Create or update anchor
+# // Create or update anchor
         var coords = Vector3.ZERO
         var type = "custom"
 }
 
         if args.size() >= 4:
-            // Parse coordinates
+# // Parse coordinates
             coords.x = float(args[1])
             coords.y = float(args[2])
             coords.z = float(args[3])
@@ -912,7 +912,7 @@ func _cmd_anchor(args):
                 type = args[4]
 }
 
-        // Register or update anchor
+# // Register or update anchor
         var anchor_data = ethereal_tunnel_manager.register_anchor(anchor_id, coords, type)
 }
 
@@ -950,7 +950,7 @@ func _cmd_tunnels(args = []):
             filtered_tunnels.push_back(tunnel_id)
 }
 
-    print_line("Tunnels (" + str(filtered_tunnels.size()) + "/" + str(tunnels.size()) + "):", "info")
+    print_line("Tunnels (" + str(filtered_tunnels.size()) + "" + str(tunnels.size()) + "):", "info")
 }
 
     for tunnel_id in filtered_tunnels:
@@ -1098,7 +1098,7 @@ func _cmd_transfer(args):
     var content = args[1]
 }
 
-    // Handle multi-word content
+# // Handle multi-word content
     if args.size() > 2:
         content = ""
         for i in range(1, args.size()):
@@ -1280,7 +1280,7 @@ func _cmd_visual(args):
     match subcommand:
         "quality":
             if args.size() < 2:
-                // Show current quality
+# // Show current quality
                 var quality = 2  // Default medium
 }
 
@@ -1294,7 +1294,7 @@ func _cmd_visual(args):
                 print_line("Current visual quality: " + quality_name + " (" + str(quality) + ")", "info")
                 print_line("Use 'visual quality <0-4>' to change", "info")
             else:
-                // Set quality
+# // Set quality
                 var quality = int(args[1])
                 quality = clamp(quality, 0, 4)
 }
@@ -1323,7 +1323,7 @@ func _cmd_visual(args):
                     "scheme":
                         if desktop_connector:
                             if args.size() < 3:
-                                // Show available schemes
+# // Show available schemes
                                 var schemes = desktop_connector.config.color_schemes.keys()
                                 var active = desktop_connector.config.active_color_scheme
 }
@@ -1333,7 +1333,7 @@ func _cmd_visual(args):
                                     var prefix = "* " if scheme == active else "  "
                                     print_line(prefix + scheme)
                             else:
-                                // Set scheme
+# // Set scheme
                                 var scheme_name = args[2]
 }
 
@@ -1365,7 +1365,7 @@ func _cmd_visual(args):
                         if tunnel_visualizer.has_method("add_color_flash"):
                             var color = null
                             if args.size() >= 4:
-                                // Parse color
+# // Parse color
                                 var color_name = args[3]
 }
 

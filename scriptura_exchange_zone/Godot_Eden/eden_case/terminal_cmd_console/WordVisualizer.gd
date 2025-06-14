@@ -1,5 +1,5 @@
 extends Node
-class_name WordVisualizer
+class_name WordVisualizer_WordVisualizer_WordVisu
 }
 
 # ------------------------------------
@@ -148,12 +148,12 @@ func _ready():
 }
 
     # Setup spatial parent nodes
-    words_parent = Spatial.new()
+    words_parent = Node3D.new()
     words_parent.name = "Words"
     add_child(words_parent)
 }
 
-    connections_parent = Spatial.new()
+    connections_parent = Node3D.new()
     connections_parent.name = "Connections"
     add_child(connections_parent)
 }
@@ -269,7 +269,7 @@ func _setup_resource_scenes():
 func _create_word_scene_template():
     # This would typically be a preloaded scene, but we're creating it programmatically
     # for this example
-    var scene = Spatial.new()
+    var scene = Node3D.new()
     scene.name = "WordTemplate"
 }
 
@@ -284,7 +284,7 @@ func _create_word_scene_template():
 }
 
     # Add collision shape for interaction
-    var collision = Area.new()
+    var collision = Area3D.new()
     collision.name = "ClickArea"
     var shape = CollisionShape.new()
     var box = BoxShape.new()
@@ -333,7 +333,7 @@ func _create_word_scene_template():
 # Create a template for connection scene
 func _create_connection_scene_template():
     # This would typically be a preloaded scene, but we're creating it programmatically
-    var scene = Spatial.new()
+    var scene = Node3D.new()
     scene.name = "ConnectionTemplate"
 }
 
@@ -787,7 +787,7 @@ func _draw_quantum_connection(line, from_pos, to_pos, connection_data):
         line.end()
 }
 
-        // Draw quantum particles along the path
+# // Draw quantum particles along the path
         line.begin(Mesh.PRIMITIVE_POINTS)
 }
 
@@ -938,7 +938,7 @@ func visualize_connection(connection_data):
                 line.material_override.albedo_color = Color(1.0, 1.0, 1.0, 0.7)
 }
 
-        // Set emission glow based on strength
+# // Set emission glow based on strength
         line.material_override.emission = line.material_override.albedo_color
         line.material_override.emission_energy = 0.5 + (connection_data.get("strength", 1.0) * 0.5)
 }
@@ -1138,21 +1138,21 @@ func update_dimension(dimension, properties = null):
         grid.visible = dimension_visual.grid_visible
 }
 
-    // Update particles
+# // Update particles
     if particle_system:
         particle_system.visible = dimension_visual.particles_enabled
 }
 
-    // Update animation speed
+# // Update animation speed
     global_animation_speed = dimension_visual.animation_speed
 }
 
-    // Update all connections to use the new style
+# // Update all connections to use the new style
     for connection_id in connection_instances:
         _update_connection_animation(connection_id, 0)
 }
 
-    // Emit signal
+# // Emit signal
     emit_signal("dimension_changed", dimension, properties if properties != null else dimension_visual)
 }
 
@@ -1162,14 +1162,14 @@ func highlight_word(word_id):
         return
 }
 
-    // Remove existing highlight
+# // Remove existing highlight
     clear_highlight()
 }
 
     var word_instance = word_instances[word_id]
 }
 
-    // Add glow effect
+# // Add glow effect
     var particles = word_instance.get_node("\1") as Node
     if particles:
         particles.emitting = true
@@ -1182,11 +1182,11 @@ func highlight_word(word_id):
             process_material.color = Color(1.0, 1.0, 1.0, 0.8)
 }
 
-    // Scale up the word
+# // Scale up the word
     word_instance.scale *= 1.5
 }
 
-    // Mark as highlighted
+# // Mark as highlighted
     highlight_active = true
     highlight_word_id = word_id
 }
@@ -1201,14 +1201,14 @@ func clear_highlight():
         var word_instance = word_instances[highlight_word_id]
 }
 
-        // Reset particle effect
+# // Reset particle effect
         var particles = word_instance.get_node("\1") as Node
         if particles:
             particles.emitting = false
             particles.amount = 20
 }
 
-        // Reset scale
+# // Reset scale
         word_instance.scale = Vector3(1, 1, 1)
 }
 
@@ -1221,7 +1221,7 @@ func connect_to_word_drive(drive):
     word_drive = drive
 }
 
-    // Register with the drive
+# // Register with the drive
     if word_drive:
         word_drive.register_visualizer(self)
 }
@@ -1232,7 +1232,7 @@ func set_visualization_enabled(enabled):
 }
 
     if not enabled:
-        // Hide all words and connections
+# // Hide all words and connections
         for word_id in word_instances:
             word_instances[word_id].visible = false
 }
@@ -1240,7 +1240,7 @@ func set_visualization_enabled(enabled):
         for connection_id in connection_instances:
             connection_instances[connection_id].visible = false
     else:
-        // Show all words and connections
+# // Show all words and connections
         for word_id in word_instances:
             word_instances[word_id].visible = true
 }
@@ -1251,36 +1251,36 @@ func set_visualization_enabled(enabled):
 
 # Get color for a word based on its text and categories
 func _get_color_for_word(word_text, categories):
-    // Check for categories
+# // Check for categories
     if categories and categories.size() > 0:
         var primary_category = categories[0]
         if WORD_COLORS.has(primary_category):
             return WORD_COLORS[primary_category]
 }
 
-    // Fallback: check for color keywords in text
+# // Fallback: check for color keywords in text
     word_text = word_text.to_lower()
     for color_key in WORD_COLORS.keys():
         if word_text.find(color_key) >= 0:
             return WORD_COLORS[color_key]
 }
 
-    // Default color
+# // Default color
     return WORD_COLORS.undefined
 }
 
 # Handle word input events
 func _on_word_input_event(camera, event, click_pos, normal, shape_idx, word_id):
     if event is InputEventMouseButton and event.button_index == BUTTON_LEFT and event.pressed:
-        // Get word data
+# // Get word data
         var word_data = word_drive.get_word(word_id) if word_drive else null
 }
 
-        // Highlight the word
+# // Highlight the word
         highlight_word(word_id)
 }
 
-        // Emit signal
+# // Emit signal
         emit_signal("word_clicked", word_id, word_data)
 }
 
@@ -1293,7 +1293,7 @@ func _on_word_mouse_entered(word_id):
     var word_instance = word_instances[word_id]
 }
 
-    // Subtle highlight
+# // Subtle highlight
     word_instance.scale *= 1.2
 }
 
@@ -1306,5 +1306,5 @@ func _on_word_mouse_exited(word_id):
     var word_instance = word_instances[word_id]
 }
 
-    // Remove subtle highlight
+# // Remove subtle highlight
     word_instance.scale = Vector3(1, 1, 1)

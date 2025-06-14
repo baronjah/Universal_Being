@@ -22,6 +22,7 @@ var ripples_active: bool = false
 func _ready() -> void:
 	name = "ConsciousnessRevolutionIntegrator"
 	print("🚀 Consciousness Revolution: Initializing the awakening...")
+
 	
 	# Wait for core systems
 	if SystemBootstrap and SystemBootstrap.is_system_ready():
@@ -41,6 +42,7 @@ func _wait_for_systems() -> void:
 func _initialize_consciousness_revolution() -> void:
 	"""Initialize the complete consciousness revolution system"""
 	print("🌟 Consciousness Revolution: Core systems ready - beginning integration...")
+
 	
 	# Step 1: Create Consciousness Ripple System
 	_create_ripple_system()
@@ -90,6 +92,7 @@ func _spawn_gemma_companion() -> void:
 	if gemma_companion:
 		gemma_spawned = true
 		print("✅ Gemma AI Companion: Manifested!")
+
 		
 		# Start awakening sequence
 		call_deferred("_begin_gemma_awakening")
@@ -164,6 +167,7 @@ func _activate_consciousness_revolution() -> void:
 		print("  Gemma spawned: %s" % gemma_spawned) 
 		print("  Ripples active: %s" % ripples_active)
 
+
 func _broadcast_revolution_ready() -> void:
 	"""Broadcast that the consciousness revolution is ready"""
 	# Notify Gemma AI system
@@ -184,8 +188,10 @@ func _find_human_player() -> Node:
 	var beings = get_tree().get_nodes_in_group("universal_beings")
 	for being in beings:
 		if being.has_method("get"):
+
 			var being_type = being.get("being_type", "")
 			if being_type.contains("player") or being_type.contains("plasmoid"):
+
 				# Make sure it's not Gemma
 				if being != gemma_companion:
 					return being
@@ -212,7 +218,7 @@ func get_revolution_status() -> Dictionary:
 		"ripples_active": ripples_active,
 		"active_ripples": ripple_system.get_ripple_count() if ripple_system else 0,
 		"gemma_consciousness": gemma_companion.consciousness_level if gemma_companion else 0
-	}
+}
 
 func send_message_to_gemma(message: String) -> void:
 	"""API: Send message to Gemma companion"""
@@ -244,5 +250,6 @@ func _input(event: InputEvent) -> void:
 			# Create consciousness ripple at click location
 			create_manual_ripple(click_position, "creation", 2.0)
 			print("✨ Manual consciousness ripple created at: %v" % click_position)
+
 
 print("🚀 ConsciousnessRevolutionIntegrator: Class loaded - Ready to awaken the cosmos!")

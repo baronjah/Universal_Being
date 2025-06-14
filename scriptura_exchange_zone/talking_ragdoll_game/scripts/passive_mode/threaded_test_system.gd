@@ -3,7 +3,6 @@
 # DESCRIPTION: Multi-threaded testing like Eden datapoint system
 # CREATED: 2025-05-23 - No await, proper threading
 # ==================================================
-
 extends UniversalBeingBase
 # Test containers (like Eden's datapoint containers)
 var test_containers: Dictionary = {}
@@ -178,19 +177,19 @@ func _run_feature_test(feature: String) -> Dictionary:
 			return {"working": false, "error": "Unknown test"}
 
 func _test_console_system() -> Dictionary:
-	var console = get_node_or_null("/root/ConsoleManager")
+	var console = get_node_or_null("root/ConsoleManager")
 	if console and console.has_method("toggle_console"):
 		return {"working": true, "details": "Console system operational"}
 	return {"working": false, "error": "Console not found"}
 
 func _test_physics_system() -> Dictionary:
-	var physics_mgr = get_node_or_null("/root/PhysicsStateManager")
+	var physics_mgr = get_node_or_null("root/PhysicsStateManager")
 	if physics_mgr and physics_mgr.has_method("set_object_state"):
 		return {"working": true, "details": "Physics state system operational"}
 	return {"working": false, "error": "Physics manager not found"}
 
 func _test_object_spawning() -> Dictionary:
-	var world_builder = get_node_or_null("/root/WorldBuilder")
+	var world_builder = get_node_or_null("root/WorldBuilder")
 	if world_builder and world_builder.has_method("create_tree"):
 		return {"working": true, "details": "Object spawning system operational"}
 	return {"working": false, "error": "WorldBuilder not found"}
@@ -203,7 +202,7 @@ func _test_ragdoll_physics() -> Dictionary:
 			return {"working": true, "details": "Ragdoll physics available"}
 	
 	# Check if spawner exists
-	var world_builder = get_node_or_null("/root/WorldBuilder")
+	var world_builder = get_node_or_null("root/WorldBuilder")
 	if world_builder and world_builder.has_method("create_ragdoll"):
 		return {"working": true, "details": "Ragdoll spawner available"}
 	
@@ -218,32 +217,32 @@ func _test_ragdoll_walking() -> Dictionary:
 	return {"working": false, "error": "No walking capability"}
 
 func _test_scene_loading() -> Dictionary:
-	var scene_loader = get_node_or_null("/root/SceneLoader")
+	var scene_loader = get_node_or_null("root/SceneLoader")
 	if scene_loader and scene_loader.has_method("list_available_scenes"):
 		var scenes = scene_loader.list_available_scenes()
 		return {"working": true, "details": str(scenes.size()) + " scenes available"}
 	return {"working": false, "error": "Scene loader not found"}
 
 func _test_dialogue_system() -> Dictionary:
-	var dialogue_system = get_node_or_null("/root/DialogueSystem")
+	var dialogue_system = get_node_or_null("root/DialogueSystem")
 	if dialogue_system and dialogue_system.has_method("show_dialogue"):
 		return {"working": true, "details": "Dialogue system operational"}
 	return {"working": false, "error": "Dialogue system not found"}
 
 func _test_astral_beings() -> Dictionary:
-	var world_builder = get_node_or_null("/root/WorldBuilder")
+	var world_builder = get_node_or_null("root/WorldBuilder")
 	if world_builder and world_builder.has_method("create_astral_being"):
 		return {"working": true, "details": "Astral being system available"}
 	return {"working": false, "error": "Astral being system not found"}
 
 func _test_passive_mode() -> Dictionary:
-	var console = get_node_or_null("/root/ConsoleManager")
+	var console = get_node_or_null("root/ConsoleManager")
 	if console and console.has_node("passive_controller"):
 		return {"working": true, "details": "Passive mode integrated"}
 	return {"working": false, "error": "Passive mode not found"}
 
 func _test_workflow_system() -> Dictionary:
-	var console = get_node_or_null("/root/ConsoleManager")
+	var console = get_node_or_null("root/ConsoleManager")
 	if console and console.has_node("multi_project_manager"):
 		return {"working": true, "details": "Workflow system integrated"}
 	return {"working": false, "error": "Workflow system not found"}

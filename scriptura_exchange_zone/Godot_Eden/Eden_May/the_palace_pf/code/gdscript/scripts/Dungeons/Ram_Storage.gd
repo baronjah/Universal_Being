@@ -1,5 +1,5 @@
-class_name RAMStorage
-extends RefCounted
+class_name RAMStorage_RamStorage_RamStora
+extends \2
 
 var data = {}
 

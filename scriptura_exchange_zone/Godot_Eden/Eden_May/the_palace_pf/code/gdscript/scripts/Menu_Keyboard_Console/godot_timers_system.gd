@@ -1,7 +1,7 @@
 # godot_timers_system.gd
 # root/godot_timers_system
 #
-# res://code/gdscript/scripts/Menu_Keyboard_Console/godot_timers_system.gd
+# res://scripts/gdscript/scripts/Menu_Keyboard_Console/godot_timers_system.gd
 # JSH_Patch/Godot_connections/godot_tree_system
 #
 # Example usage:
@@ -21,9 +21,9 @@
 #timer_system.start_timer("data_timer")
 
 #
-extends Node
+extends \2
 #
-class_name GodotTimersSystem
+class_name GodotTimersSystem_godottimerssystem_godottim
 #
 #
 # Storage for all timers

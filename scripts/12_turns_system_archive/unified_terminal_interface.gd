@@ -199,7 +199,6 @@ func create_interface_windows():
 			"lines": [],
 			"scroll_position": 0,
 			"active": false
-		}
 	]
 	
 	# Add headers to each window
@@ -215,6 +214,7 @@ func show_welcome_message():
 	add_line("")
 	
 	add_colored_line("Terminal Status:", config.theme.highlight_color)
+}
 	
 	# Add storage system status
 	if storage_system:
@@ -228,6 +228,7 @@ func show_welcome_message():
 			str(100 - storage_status.wishes.today) + " remaining", config.theme.wish_color)
 	else:
 		add_colored_line("  Storage: Not Connected", config.theme.error_color)
+
 	
 	# Add akashic status
 	if akashic_bridge:
@@ -237,6 +238,7 @@ func show_welcome_message():
 		add_colored_line("  Dimensional Gates: " + str(status.gates), config.theme.text_color)
 	else:
 		add_colored_line("  Akashic Bridge: Not Connected", config.theme.error_color)
+
 	
 	add_line("")
 	add_colored_line("Type 'help' for available commands", config.theme.prompt_color)
@@ -259,6 +261,7 @@ func add_colored_line(text, color):
 	# In actual implementation, this would apply color to the text
 	# For this script, we'll just add a tag
 	add_line("<color:" + color.to_html() + ">" + text + "</color>")
+
 
 func add_multiline_text(text):
 	var lines = text.split("\n")
@@ -367,12 +370,14 @@ func execute_command(command):
 	
 	return "Command not recognized: " + cmd
 
+
 func run_external_command(command):
 	# Simulate running an external command
 	
 	# Check for bash commands
 	if command.begins_with("bash ") or command.begins_with("sh ") or 
 	   command.begins_with("./") or command.begins_with("/"):
+	
 		# Simulate bash execution
 		add_colored_line("Executing external command: " + command, config.theme.dim_color)
 		add_colored_line("Command output would appear here in actual implementation", config.theme.dim_color)
@@ -389,6 +394,7 @@ func run_external_command(command):
 	
 	return "Unknown command: " + command
 
+
 # Command implementations
 func show_help(args = []):
 	var help_text = []
@@ -402,6 +408,7 @@ func show_help(args = []):
 		help_text.append("Help topics matching '" + filter + "':")
 	else:
 		help_text.append("Available commands:")
+
 	
 	help_text.append("")
 	
@@ -501,6 +508,7 @@ func clear_terminal():
 func change_theme(args):
 	if args.size() == 0:
 		return "Usage: theme [list|set|color]"
+
 	
 	var subcommand = args[0].to_lower()
 	
@@ -514,6 +522,7 @@ func change_theme(args):
 		"set":
 			if args.size() < 2:
 				return "Usage: theme set [theme_name]"
+	
 			
 			var theme_name = args[1].to_lower()
 			# In actual implementation, this would load the theme
@@ -521,6 +530,7 @@ func change_theme(args):
 		"color":
 			if args.size() < 3:
 				return "Usage: theme color [color_name] [hex_color]"
+	
 			
 			var color_name = args[1].to_lower()
 			var hex_color = args[2]
@@ -529,6 +539,7 @@ func change_theme(args):
 			return "Color '" + color_name + "' set to '" + hex_color + "'"
 		_:
 			return "Unknown theme subcommand: " + subcommand
+
 
 func handle_exit():
 	if config.multiple_interfaces and active_window_index > 0:
@@ -546,6 +557,7 @@ func handle_exit():
 func process_wish(args):
 	if args.size() == 0:
 		return "Usage: wish [text] or wish [list|status|complete]"
+
 	
 	var subcommand = args[0].to_lower()
 	
@@ -601,6 +613,7 @@ func wish_status(wish_id):
 				result.append("Created: " + wish.date)
 				result.append("Timestamp: " + str(wish.timestamp))
 				result.append("Token Cost: " + str(wish.token_cost))
+	
 				
 				if wish.has("output"):
 					result.append("\nOutput:")
@@ -705,6 +718,7 @@ func generate_wish_response(wish):
 func storage_command(args):
 	if args.size() == 0:
 		return "Usage: storage [status|connect|list|sync]"
+
 	
 	var subcommand = args[0].to_lower()
 	
@@ -721,6 +735,7 @@ func storage_command(args):
 			return sync_storage()
 		_:
 			return "Unknown storage subcommand: " + subcommand
+
 
 func storage_status():
 	if storage_system:
@@ -756,6 +771,7 @@ func storage_status():
 			result.append("  Used: " + str(int(status.google.used_gb)) + " GB")
 			result.append("  Free: " + str(int(status.google.total_gb - status.google.used_gb)) + " GB")
 			result.append("  Usage: " + str(int(status.google.percentage)) + "%")
+
 		
 		return result
 	else:
@@ -764,6 +780,7 @@ func storage_status():
 func connect_storage(service):
 	if storage_system:
 		if service.to_lower() == "icloud" or service.to_lower() == "google":
+
 			var result = storage_system.connect_cloud_storage(service.to_lower())
 			
 			if result:
@@ -778,6 +795,7 @@ func connect_storage(service):
 func list_storage_files(args):
 	# In actual implementation, this would list files from the storage
 	var path = args.size() > 0 ? args[0] : ""
+
 	var result = ["=== FILES ==="]
 	
 	# Simulate listing files
@@ -796,6 +814,7 @@ func list_storage_files(args):
 		result.append("  unified_terminal_interface.gd")
 	else:
 		result.append("No files found at path: " + path)
+
 	
 	return result
 
@@ -813,6 +832,7 @@ func file_list_command(args):
 func akashic_command(args):
 	if args.size() == 0:
 		return "Usage: akashic [status|search|store]"
+
 	
 	var subcommand = args[0].to_lower()
 	
@@ -826,6 +846,7 @@ func akashic_command(args):
 		"store":
 			if args.size() < 2:
 				return "Usage: akashic store [word] [power]"
+	
 			
 			var word = args[1]
 			var power = args.size() > 2 ? int(args[2]) : 50
@@ -833,6 +854,7 @@ func akashic_command(args):
 			return akashic_store(word, power)
 		_:
 			return "Unknown akashic subcommand: " + subcommand
+
 
 func akashic_status():
 	if akashic_bridge:
@@ -843,14 +865,17 @@ func akashic_status():
 		result.append("Claude Connected: " + str(status.claude_connected))
 		result.append("Firewall Status: " + (str(status.firewall_active) + " (Level: " + status.firewall_level + ")"))
 		result.append("Dimension Access Level: " + str(status.dimension_access))
+
 		
 		result.append("\nDimensional Gates:")
 		for gate in status.gates:
 			result.append("  " + gate + ": " + ("OPEN" if status.gates[gate] else "CLOSED"))
+
 		
 		result.append("\nSystem Metrics:")
 		result.append("  Error Count: " + str(status.errors))
 		result.append("  Recovery Points: " + str(status.recovery_points))
+
 		
 		return result
 	else:
@@ -861,6 +886,7 @@ func akashic_search(term):
 		# In actual implementation, this would search the Akashic Records
 		var result = ["=== AKASHIC SEARCH RESULTS ===", 
 				"Search term: " + term, ""]
+	
 		
 		# Simulate search results
 		if term.to_lower() == "consciousness" or term.to_lower() == "mind":
@@ -879,6 +905,7 @@ func akashic_search(term):
 		else:
 			result.append("No direct matches found.")
 			result.append("Similar terms: reality, consciousness, creation")
+
 		
 		return result
 	else:
@@ -902,6 +929,7 @@ func akashic_store(word, power):
 func gate_command(args):
 	if args.size() == 0:
 		return "Usage: gate [status|open|close]"
+
 	
 	var subcommand = args[0].to_lower()
 	
@@ -918,6 +946,7 @@ func gate_command(args):
 			return close_gate(args[1])
 		_:
 			return "Unknown gate subcommand: " + subcommand
+
 
 func gate_status():
 	if akashic_bridge:
@@ -978,6 +1007,7 @@ func close_gate(gate_num):
 func firewall_command(args):
 	if args.size() == 0:
 		return "Usage: firewall [status|set|log]"
+
 	
 	var subcommand = args[0].to_lower()
 	
@@ -993,6 +1023,7 @@ func firewall_command(args):
 		_:
 			return "Unknown firewall subcommand: " + subcommand
 
+
 func firewall_status():
 	if akashic_bridge:
 		var status = akashic_bridge.get_status()
@@ -1000,6 +1031,7 @@ func firewall_status():
 		
 		result.append("Status: " + ("ACTIVE" if status.firewall_active else "INACTIVE"))
 		result.append("Current Level: " + status.firewall_level.to_upper())
+
 		
 		# Add level descriptions
 		result.append("")
@@ -1011,6 +1043,7 @@ func firewall_status():
 		result.append("")
 		result.append("Error Count: " + str(status.errors))
 		result.append("Recovery Points: " + str(status.recovery_points))
+
 		
 		return result
 	else:
@@ -1023,24 +1056,23 @@ func set_firewall(level):
 		if level != "standard" and level != "enhanced" and level != "divine":
 			return "Invalid firewall level. Must be standard, enhanced, or divine."
 		
-		var settings = {}
+		var settings = {
 		
 		# Adjust settings based on level
 		if level == "divine":
 			settings = {
 				"dimension_access": min(current_turn + 2, 12),
-				"gates": {"gate_0": true, "gate_1": true, "gate_2": true}
-			}
+				"gates": {"gate_0": true, "gate_1": true, "gate_2": true
 		elif level == "enhanced":
 			settings = {
 				"dimension_access": min(current_turn, 7),
-				"gates": {"gate_0": true, "gate_1": true, "gate_2": false}
-			}
+				"gates": {"gate_0": true, "gate_1": true, "gate_2": false
+}
 		else: # standard
 			settings = {
 				"dimension_access": min(current_turn, 3),
-				"gates": {"gate_0": true, "gate_1": false, "gate_2": false}
-			}
+				"gates": {"gate_0": true, "gate_1": false, "gate_2": false
+	}
 		
 		var result = akashic_bridge.update_firewall(level, settings)
 		
@@ -1060,12 +1092,14 @@ func firewall_log():
 	result.append("2025-05-13 14:30:15 - ACCESS_DENIED - Word rejected by firewall: exec rm -rf")
 	result.append("2025-05-13 14:28:07 - CLAUDE_ERROR - Token limit exceeded")
 	result.append("2025-05-13 14:25:59 - ACCESS_DENIED - Query rejected by firewall: sudo /*")
+}
 	
 	return result
 
 func multi_window_command(args):
 	if args.size() == 0:
 		return "Usage: multi [on|off|status]"
+}
 	
 	var subcommand = args[0].to_lower()
 	
@@ -1078,7 +1112,9 @@ func multi_window_command(args):
 			config.multiple_interfaces = false
 			return "Multiple interfaces disabled"
 		"status":
+}
 			var result = ["Multiple interfaces: " + ("ENABLED" if config.multiple_interfaces else "DISABLED")]
+}
 			
 			if config.multiple_interfaces:
 				result.append("\nAvailable windows:")
@@ -1089,6 +1125,7 @@ func multi_window_command(args):
 			return result
 		_:
 			return "Unknown multi subcommand: " + subcommand
+}
 
 func switch_window(args):
 	if not config.multiple_interfaces:
@@ -1096,8 +1133,10 @@ func switch_window(args):
 	
 	if args.size() == 0:
 		return "Usage: window [number] or window list"
+
 	
 	if args[0].to_lower() == "list":
+
 		var result = ["=== TERMINAL WINDOWS ==="]
 		
 		for i in range(interface_windows.size()):
@@ -1121,6 +1160,7 @@ func switch_window(args):
 func turn_command(args):
 	if args.size() == 0:
 		return "Usage: turn [status|advance|set]"
+
 	
 	var subcommand = args[0].to_lower()
 	
@@ -1136,18 +1176,22 @@ func turn_command(args):
 		_:
 			return "Unknown turn subcommand: " + subcommand
 
+
 func turn_status():
 	var result = ["=== TURN STATUS ==="]
 	
 	result.append("Current Turn: " + str(current_turn))
+
 	
 	# Get dimension name
 	var dimension_name = get_dimension_name(current_turn)
 	result.append("Dimension: " + dimension_name)
+
 	
 	# Create turn progression visualization
 	result.append("")
 	result.append("Turn Progression:")
+
 	
 	var progress = ""
 	for i in range(1, 13):
@@ -1189,6 +1233,7 @@ func set_turn(turn_num):
 	return ["Turn set to " + str(current_turn),
 			"Dimension: " + dimension_name]
 
+
 func save_current_turn():
 	# In actual implementation, this would save the current turn
 	var file = File.new()
@@ -1226,6 +1271,7 @@ func get_dimension_name(turn):
 func change_interface(args):
 	if args.size() == 0:
 		return "Usage: interface [list|name]"
+
 	
 	if args[0].to_lower() == "list":
 		return ["Available interfaces:",
@@ -1259,9 +1305,11 @@ func change_interface(args):
 		_:
 			return "Unknown interface: " + interface_name
 
+
 func notepad3d_command(args):
 	if args.size() == 0:
 		return "Usage: notepad3d [launch|open|save|close]"
+
 	
 	var subcommand = args[0].to_lower()
 	
@@ -1284,6 +1332,7 @@ func notepad3d_command(args):
 		_:
 			return "Unknown notepad3d subcommand: " + subcommand
 
+
 func show_status():
 	var result = ["=== SYSTEM STATUS ==="]
 	
@@ -1302,9 +1351,11 @@ func show_status():
 	# Add multi-window status
 	result.append("INTERFACES:")
 	result.append("  Multiple Interfaces: " + str(config.multiple_interfaces))
+
 	
 	if config.multiple_interfaces:
 		result.append("  Active Interface: " + interface_windows[active_window_index].title)
+
 	
 	result.append("")
 	
@@ -1315,6 +1366,7 @@ func show_status():
 		result.append("  Today's Wishes: " + str(status.wishes.today) + " / 100")
 		result.append("  Remaining: " + str(status.wishes.remaining))
 		result.append("  Active Wishes: " + str(status.wishes.active))
+
 	
 	return result
 

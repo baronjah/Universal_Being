@@ -38,18 +38,18 @@ var current_reality: String = "Physical"
 var current_moon_phase: int = 0
 
 var data_streams = []
-var data_chunks = {}
-var data_splits = {}
-var active_connections = {}
-var active_visualizers = {}
+var data_chunks = {
+var data_splits = {
+var active_connections = {
+var active_visualizers = {
 var data_flow_history = []
 var merge_operations = []
 
 # Dictionary of node references for visual elements
-var stream_nodes = {}
-var chunk_nodes = {}
-var connection_nodes = {}
-var split_nodes = {}
+var stream_nodes = {
+var chunk_nodes = {
+var connection_nodes = {
+var split_nodes = {
 
 # ----- SIGNALS -----
 signal initialization_completed
@@ -69,6 +69,7 @@ func _ready():
 
 func initialize():
 	print("DataSplitterController: Initializing...")
+}
 	
 	# Resolve node paths
 	_resolve_node_paths()
@@ -119,6 +120,7 @@ func _resolve_node_paths():
 		print("- Pitopia Main: ", "Found" if pitopia_main else "Not found")
 		print("- Console: ", "Found" if console else "Not found")
 		print("- Data Container: ", "Found" if data_container else "Not found")
+}
 
 func _create_container_nodes():
 	# Create data container if missing
@@ -130,6 +132,7 @@ func _create_container_nodes():
 			data_container.name = "DataSplitterContainer"
 			add_child(data_container)
 			print("DataSplitterController: Created missing DataSplitterContainer")
+}
 	
 	# Ensure all required child nodes exist
 	var streams_node = data_container.get_node_or_null("DataStreams")
@@ -217,7 +220,8 @@ func create_data_stream(stream_id: String, data_type: String = "binary", size: i
 	if data_streams.size() >= max_data_streams:
 		if enable_debug_logs:
 			print("DataSplitterController: Cannot create stream, maximum reached")
-		return {"success": false, "message": "Maximum streams reached"}
+		return {"success": false, "message": "Maximum streams reached"
+}
 	
 	# Create stream data
 	var stream_data = {
@@ -234,8 +238,7 @@ func create_data_stream(stream_id: String, data_type: String = "binary", size: i
 			"compression_ratio": 0.8,
 			"stability": 0.9,
 			"entropy": 0.2
-		}
-	}
+}
 	
 	# Add to streams
 	data_streams.append(stream_data)
@@ -252,8 +255,10 @@ func create_data_stream(stream_id: String, data_type: String = "binary", size: i
 	
 	if enable_debug_logs:
 		print("DataSplitterController: Created stream '" + stream_id + "' with initial chunk")
+}
 	
-	return {"success": true, "message": "Stream created", "stream_data": stream_data}
+	return {"success": true, "message": "Stream created", "stream_data": stream_data
+}
 
 func create_data_chunk(chunk_id: String, content: String, parent_stream_id: String) -> Dictionary:
 	# Validate parent stream
@@ -264,7 +269,8 @@ func create_data_chunk(chunk_id: String, content: String, parent_stream_id: Stri
 			break
 	
 	if not parent_stream:
-		return {"success": false, "message": "Parent stream not found"}
+		return {"success": false, "message": "Parent stream not found"
+}
 	
 	# Create chunk data
 	var chunk_data = {
@@ -280,8 +286,7 @@ func create_data_chunk(chunk_id: String, content: String, parent_stream_id: Stri
 			"complexity": randf_range(0.2, 0.8),
 			"coherence": randf_range(0.4, 0.9),
 			"stability": randf_range(0.5, 1.0)
-		}
-	}
+}
 	
 	# Add to chunks dictionary
 	data_chunks[chunk_id] = chunk_data
@@ -298,13 +303,16 @@ func create_data_chunk(chunk_id: String, content: String, parent_stream_id: Stri
 	
 	if enable_debug_logs:
 		print("DataSplitterController: Created chunk '" + chunk_id + "' in stream '" + parent_stream_id + "'")
+}
 	
-	return {"success": true, "message": "Data chunk created", "chunk_data": chunk_data}
+	return {"success": true, "message": "Data chunk created", "chunk_data": chunk_data
+}
 
 func split_data_chunk(chunk_id: String, split_factor: int = -1) -> Dictionary:
 	# Validate chunk
 	if not data_chunks.has(chunk_id):
-		return {"success": false, "message": "Chunk not found"}
+		return {"success": false, "message": "Chunk not found"
+}
 	
 	# Get chunk data
 	var chunk_data = data_chunks[chunk_id]
@@ -322,6 +330,7 @@ func split_data_chunk(chunk_id: String, split_factor: int = -1) -> Dictionary:
 	
 	# Try to split content intelligently
 	if content.find(" ") >= 0:
+}
 		# Split by words
 		var words = content.split(" ", false)
 		
@@ -371,7 +380,7 @@ func split_data_chunk(chunk_id: String, split_factor: int = -1) -> Dictionary:
 		"created_at": Time.get_unix_time_from_system(),
 		"dimension": current_dimension,
 		"reality": current_reality
-	}
+}
 	
 	# Add to splits
 	data_splits[split_id] = split_data
@@ -389,17 +398,21 @@ func split_data_chunk(chunk_id: String, split_factor: int = -1) -> Dictionary:
 	
 	if enable_debug_logs:
 		print("DataSplitterController: Split chunk '" + chunk_id + "' into " + str(resulting_chunks.size()) + " parts")
+}
 	
-	return {"success": true, "message": "Data chunk split", "split_data": split_data, "resulting_chunks": resulting_chunks}
+	return {"success": true, "message": "Data chunk split", "split_data": split_data, "resulting_chunks": resulting_chunks
+}
 
 func merge_data_chunks(chunk_ids: Array, merge_type: String = "concatenate") -> Dictionary:
 	# Validate chunks
 	for chunk_id in chunk_ids:
 		if not data_chunks.has(chunk_id):
-			return {"success": false, "message": "Chunk '" + chunk_id + "' not found"}
+			return {"success": false, "message": "Chunk '" + chunk_id + "' not found"
+}
 	
 	if chunk_ids.size() < 2:
-		return {"success": false, "message": "Need at least 2 chunks to merge"}
+		return {"success": false, "message": "Need at least 2 chunks to merge"
+}
 	
 	# Get first chunk to determine parent stream
 	var first_chunk = data_chunks[chunk_ids[0]]
@@ -408,7 +421,8 @@ func merge_data_chunks(chunk_ids: Array, merge_type: String = "concatenate") -> 
 	# Check if all chunks belong to the same parent stream
 	for chunk_id in chunk_ids:
 		if data_chunks[chunk_id].parent_stream != parent_stream_id:
-			return {"success": false, "message": "All chunks must belong to the same stream"}
+			return {"success": false, "message": "All chunks must belong to the same stream"
+}
 	
 	# Create merge id
 	var merge_id = "merge_" + str(Time.get_unix_time_from_system())
@@ -417,12 +431,14 @@ func merge_data_chunks(chunk_ids: Array, merge_type: String = "concatenate") -> 
 	var merged_content = ""
 	
 	if merge_type == "concatenate":
+}
 		# Simple concatenation with spaces
 		for chunk_id in chunk_ids:
 			if merged_content.length() > 0:
 				merged_content += " "
 			merged_content += data_chunks[chunk_id].content
 	elif merge_type == "interleave":
+}
 		# Interleave words from each chunk
 		var all_words = []
 		for chunk_id in chunk_ids:
@@ -440,7 +456,8 @@ func merge_data_chunks(chunk_ids: Array, merge_type: String = "concatenate") -> 
 	var result = create_data_chunk(result_chunk_id, merged_content, parent_stream_id)
 	
 	if not result.success:
-		return {"success": false, "message": "Failed to create merged chunk"}
+		return {"success": false, "message": "Failed to create merged chunk"
+}
 	
 	# Record merge operation
 	var merge_data = {
@@ -451,7 +468,7 @@ func merge_data_chunks(chunk_ids: Array, merge_type: String = "concatenate") -> 
 		"created_at": Time.get_unix_time_from_system(),
 		"dimension": current_dimension,
 		"reality": current_reality
-	}
+}
 	
 	merge_operations.append(merge_data)
 	
@@ -468,8 +485,10 @@ func merge_data_chunks(chunk_ids: Array, merge_type: String = "concatenate") -> 
 	
 	if enable_debug_logs:
 		print("DataSplitterController: Merged " + str(chunk_ids.size()) + " chunks into '" + result_chunk_id + "'")
+}
 	
-	return {"success": true, "message": "Chunks merged", "merge_data": merge_data, "result_chunk": result_chunk_id}
+	return {"success": true, "message": "Chunks merged", "merge_data": merge_data, "result_chunk": result_chunk_id
+}
 
 # ----- VISUALIZATION FUNCTIONS -----
 func _create_stream_visualization(stream_data):
@@ -686,7 +705,7 @@ func _create_connection(source_id: String, target_id: String, connection_type: S
 		"target": target_id,
 		"type": connection_type,
 		"created_at": Time.get_unix_time_from_system()
-	}
+}
 	
 	# Store in active connections
 	active_connections[connection_id] = connection_data
@@ -752,7 +771,8 @@ func process_command(command: String) -> Dictionary:
 	
 	# Skip empty commands
 	if command.strip_edges().is_empty():
-		return {"success": false, "message": "Empty command"}
+		return {"success": false, "message": "Empty command"
+}
 	
 	# Split into command and parameters
 	var parts = command.split(" ", false, 1)
@@ -763,10 +783,12 @@ func process_command(command: String) -> Dictionary:
 	
 	match cmd:
 		"/split":
+
 			# Split data command
 			if params.is_empty():
 				_log_message("Usage: /split [text to split]")
-				return {"success": false, "message": "Missing text to split"}
+				return {"success": false, "message": "Missing text to split"
+	}
 			
 			# Create a stream if needed
 			var stream_id = "text_stream_" + str(data_streams.size())
@@ -794,15 +816,18 @@ func process_command(command: String) -> Dictionary:
 				return split_result
 		
 		"/merge":
+
 			# Merge data command
 			if params.is_empty():
 				_log_message("Usage: /merge [chunk_id_1] [chunk_id_2] ...")
-				return {"success": false, "message": "Missing chunks to merge"}
+				return {"success": false, "message": "Missing chunks to merge"
+	}
 			
 			var chunk_ids = params.split(" ", false)
 			if chunk_ids.size() < 2:
 				_log_message("Need at least 2 chunks to merge")
-				return {"success": false, "message": "Need at least 2 chunks to merge"}
+				return {"success": false, "message": "Need at least 2 chunks to merge"
+	}
 			
 			var merge_result = merge_data_chunks(chunk_ids)
 			
@@ -814,6 +839,7 @@ func process_command(command: String) -> Dictionary:
 				return merge_result
 		
 		"/stream":
+
 			# Create new data stream
 			var stream_id = "stream_" + str(data_streams.size())
 			var stream_type = "binary"
@@ -838,14 +864,17 @@ func process_command(command: String) -> Dictionary:
 				return stream_result
 		
 		"/list":
+
 			# List existing data elements
 			var listing = "[color=#88ff99]Data Splitter Elements:[/color]\n"
+
 			
 			listing += "\n[color=#aaaaff]Streams (" + str(data_streams.size()) + "):[/color]\n"
 			for stream in data_streams:
 				listing += "- " + stream.id + " (" + stream.type + ", " + str(stream.size) + " bytes, " + str(stream.chunks.size()) + " chunks)\n"
 			
 			listing += "\n[color=#ffaaaa]Chunks (" + str(data_chunks.size()) + "):[/color]\n"
+
 			var chunk_count = 0
 			for chunk_id in data_chunks:
 				listing += "- " + chunk_id + " (size: " + str(data_chunks[chunk_id].size) + ")\n"
@@ -855,6 +884,7 @@ func process_command(command: String) -> Dictionary:
 					break
 			
 			listing += "\n[color=#aaffaa]Splits (" + str(data_splits.size()) + "):[/color]\n"
+
 			var split_count = 0
 			for split_id in data_splits:
 				listing += "- " + split_id + " (factor: " + str(data_splits[split_id].factor) + ")\n"
@@ -864,9 +894,11 @@ func process_command(command: String) -> Dictionary:
 					break
 			
 			_log_message(listing)
-			return {"success": true, "message": listing}
+			return {"success": true, "message": listing
+}
 		
 		"/help":
+
 			# Display data splitter commands
 			var help_text = "[color=#88ff99]Data Splitter Commands:[/color]\n"
 			help_text += "/split [text] - Split text into data chunks\n"
@@ -876,7 +908,8 @@ func process_command(command: String) -> Dictionary:
 			help_text += "/help - Display this help\n"
 			
 			_log_message(help_text)
-			return {"success": true, "message": help_text}
+			return {"success": true, "message": help_text
+}
 		
 		_:
 			# Pass to notepad3d if available
@@ -885,7 +918,8 @@ func process_command(command: String) -> Dictionary:
 			elif pitopia_main and pitopia_main.has_method("process_command"):
 				return pitopia_main.process_command(command)
 			else:
-				return {"success": false, "message": "Unknown command. Try /help for available commands."}
+				return {"success": false, "message": "Unknown command. Try /help for available commands."
+	}
 
 # ----- SIGNAL HANDLERS -----
 func _on_dimension_changed(new_dimension, old_dimension = 0):
@@ -893,6 +927,7 @@ func _on_dimension_changed(new_dimension, old_dimension = 0):
 	
 	if enable_debug_logs:
 		print("DataSplitterController: Dimension changed to " + str(new_dimension) + "D")
+
 	
 	# Apply dimension effects to data elements
 	_apply_dimension_effects(new_dimension)
@@ -905,6 +940,7 @@ func _on_turn_advanced(turn_number):
 	
 	if enable_debug_logs:
 		print("DataSplitterController: Advanced to turn " + str(turn_number))
+
 	
 	# Process automatic data flows
 	_process_data_flows()
@@ -917,6 +953,7 @@ func _on_reality_changed(new_reality, old_reality):
 	
 	if enable_debug_logs:
 		print("DataSplitterController: Reality changed to " + new_reality)
+
 	
 	# Apply reality effects to data elements
 	_apply_reality_effects(new_reality)
@@ -929,6 +966,7 @@ func _on_moon_phase_changed(new_phase, old_phase, stability):
 	
 	if enable_debug_logs:
 		print("DataSplitterController: Moon phase changed to " + str(new_phase) + " (stability: " + str(stability) + ")")
+
 	
 	# Adjust data flow and split stability based on moon phase
 	_adjust_stability_by_moon_phase(new_phase, stability)
@@ -936,6 +974,7 @@ func _on_moon_phase_changed(new_phase, old_phase, stability):
 func _on_word_manifested(word, entity, reality_type = "", dimension = 0):
 	if enable_debug_logs:
 		print("DataSplitterController: Word '" + word + "' manifested")
+
 	
 	# Check for data splitter related words to trigger effects
 	var data_related_words = ["data", "split", "stream", "flow", "chunk", "merge", "process"]
@@ -1117,17 +1156,20 @@ func _process_word_data_effects(word: String, entity):
 	var word_lower = word.to_lower()
 	
 	if word_lower == "data" or word_lower == "stream":
+
 		# Create a new data stream
 		var stream_id = "word_stream_" + str(Time.get_unix_time_from_system())
 		create_data_stream(stream_id, "text", 16 + word.length())
 	
 	elif word_lower == "split":
+
 		# Split a random chunk if available
 		if data_chunks.size() > 0:
 			var chunk_id = data_chunks.keys()[randi() % data_chunks.size()]
 			split_data_chunk(chunk_id)
 	
 	elif word_lower == "merge":
+
 		# Merge random chunks if enough are available
 		if data_chunks.size() >= 2:
 			var all_chunks = data_chunks.keys()
@@ -1142,6 +1184,7 @@ func _process_word_data_effects(word: String, entity):
 			merge_data_chunks(to_merge)
 	
 	elif word_lower.find("flow") >= 0 or word_lower.find("process") >= 0:
+
 		# Trigger data flows
 		_process_data_flows()
 
@@ -1185,7 +1228,7 @@ func _process_data_flows():
 				"timestamp": Time.get_unix_time_from_system(),
 				"dimension": current_dimension,
 				"reality": current_reality
-			}
+	}
 			
 			data_flow_history.append(flow_data)
 			emit_signal("data_flow_processed", flow_id, source_chunk, dest_chunk, flow_amount)
@@ -1197,6 +1240,7 @@ func _process_data_flows():
 	
 	if enable_debug_logs and flow_count > 0:
 		print("DataSplitterController: Processed " + str(flow_count) + " data flows")
+
 	
 	# Update UI
 	_update_ui_display()
@@ -1261,16 +1305,19 @@ func _update_ui_display():
 	var streams_label = data_panel.get_node_or_null("StreamsLabel")
 	if streams_label:
 		streams_label.text = "Active Streams: " + str(data_streams.size()) + "/" + str(max_data_streams)
+
 	
 	# Update chunk count
 	var chunks_label = data_panel.get_node_or_null("ChunksLabel")
 	if chunks_label:
 		chunks_label.text = "Data Chunks: " + str(data_chunks.size())
+
 	
 	# Update splits count
 	var splits_label = data_panel.get_node_or_null("SplitsLabel")
 	if splits_label:
 		splits_label.text = "Active Splits: " + str(data_splits.size())
+
 
 func _log_message(message: String):
 	# Log message to console output if available
@@ -1284,6 +1331,7 @@ func _log_message(message: String):
 	
 	if enable_debug_logs:
 		print("DataSplitterController: " + message)
+
 
 # ----- PHYSICS PROCESS -----
 func _physics_process(delta):

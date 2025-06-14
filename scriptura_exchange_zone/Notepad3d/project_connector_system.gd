@@ -1,6 +1,6 @@
 extends Node
 
-class_name ProjectConnectorSystem
+class_name ProjectConnectorSystem_projectconnectorsystem_projectc
 
 # Project Connector System
 # Manages project merging, file synchronization, and cross-application integration
@@ -50,8 +50,8 @@ func _ready():
 func _initialize_default_mappings():
 	# Set up basic drive mappings
 	drive_mappings = {
-		"c": "/mnt/c",
-		"d": "/mnt/d",
+		"c": "mnt/c",
+		"d": "mnt/d",
 		"u": "user://",
 		"r": "res://"
 	}
@@ -347,7 +347,7 @@ func get_file_modifications():
 
 # Resolve path with drive mapping
 func resolve_path(path):
-	if path.begins_with("/"):
+	if path.begins_with(""):
 		# Absolute path, use as is
 		return path
 	

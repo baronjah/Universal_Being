@@ -1,6 +1,6 @@
 # UJAH_Texts.gd
 #extends Node
-class_name UJAH
+class_name UJAH_UJAHTexts_UJAHText
 
 # the text about how great UJAH is
 const menace = {

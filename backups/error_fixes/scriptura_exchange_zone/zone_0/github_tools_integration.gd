@@ -117,7 +117,7 @@ func authenticate(token, username = ""):
         
         emit_signal("rate_limit_changed", api_calls_remaining, api_reset_time)
         
-        print("Authenticated with GitHub as: " + (github_username if !github_username.empty() else "Anonymous"))
+        print("Authenticated with GitHub as: " + (github_username if !github_username.is_empty() else "Anonymous"))
         return true
     else:
         connection_state = "error"
@@ -217,7 +217,7 @@ func search_repositories(query, category = -1, sort_by = "stars", count = 10):
                 tool_name,
                 category_name
             ],
-            "category": category_name if !category_name.empty() else "misc",
+            "category": category_name if !category_name.is_empty() else "misc",
             "version": "v" + str(int(rand_range(0, 3))) + "." + str(int(rand_range(0, 10))) + "." + str(int(rand_range(0, 10))),
             "has_downloads": true,
             "default_branch": "main"
@@ -225,11 +225,11 @@ func search_repositories(query, category = -1, sort_by = "stars", count = 10):
     
     # Sort repositories
     if sort_by == "stars":
-        repositories.sort_custom(self, "_sort_by_stars")
+        repositories.sort_custom(self."_sort_by_stars")
     elif sort_by == "updated":
-        repositories.sort_custom(self, "_sort_by_update")
+        repositories.sort_custom(self."_sort_by_update")
     elif sort_by == "name":
-        repositories.sort_custom(self, "_sort_by_name")
+        repositories.sort_custom(self."_sort_by_name")
     
     # Cache results
     if use_cache:
@@ -293,7 +293,7 @@ func get_repository_details(repo_full_name):
             category_name = cat.to_lower()
             break
     
-    if category_name.empty():
+    if category_name.is_empty():
         category_name = "utility" # Default category
     
     # Generate repository details
@@ -455,7 +455,7 @@ func install_tool(tool_name):
     # For this demo, simulate installation
     
     # Simulate installation delay
-    yield(get_tree().create_timer(1.0), "timeout")
+    await(get_tree().create_timer(1.0), "timeout")
     
     # Add to imported tools
     var imported_tool = {

@@ -1,5 +1,5 @@
 # init_functions.gd
-extends Node
+extends \2
 
 var core_states
 var initialization_states

@@ -142,8 +142,7 @@ const KEY_COMMAND_PATTERNS = {
         "dimensional_depth": 2,
         "function": "reverse_connection",
         "description": "Creates reverse dimensional connection"
-    }
-}
+		}
 
 # ----- AUTO-CORRECTION DICTIONARY -----
 const AUTO_CORRECTIONS = {
@@ -203,7 +202,7 @@ const AUTO_CORRECTIONS = {
     "automate": "automate",
     "automatino": "automation",
     "engnie": "engine"
-}
+	}
 
 # ----- SYSTEM STATE -----
 var command_history = []
@@ -244,6 +243,7 @@ func _ready():
     _initialize_input_handling()
     
     print("Keyboard Command System initialized with dimensional depth: " + str(active_dimensional_depth))
+	}
 
 func _find_systems():
     # Find Auto-Correction System
@@ -371,7 +371,7 @@ func _check_for_key_patterns():
         "CTRL+SCTRL+HCTRL+I": "dimensional_shift_initiation",
         "ALT+CALT+OALT+N": "connection_verification",
         "SHIFT+#CTRL+#ALT+#": "multi_dimensional_traversal"
-    }
+		}
     
     if sequences.has(sequence):
         emit_signal("key_sequence_recognized", sequences[sequence])
@@ -388,6 +388,7 @@ func _check_for_key_patterns():
                 _verify_all_connections()
             "multi_dimensional_traversal":
                 if ethereal_bridge and ethereal_bridge.has_method("change_dimension"):
+				
                     var connected_dimensions = ethereal_bridge.get_connected_dimensions()
                     if connected_dimensions.size() > 0:
                         ethereal_bridge.change_dimension(connected_dimensions[0])
@@ -424,6 +425,7 @@ func _check_for_auto_correction():
             emit_signal("auto_correction_applied", last_word, corrected)
             
             print("Auto-corrected: " + last_word + " → " + corrected)
+			
 
 func _record_correction(original: String, corrected: String):
     correction_history.append({
@@ -525,6 +527,7 @@ func _separate_words() -> bool:
 
 func _start_new_turn() -> bool:
     if turn_system and turn_system.has_method("advance_turn"):
+	
         var current_turn = 1
         if turn_system.has_method("get_current_turn"):
             current_turn = turn_system.get_current_turn()
@@ -612,6 +615,7 @@ func _insert_special_symbol() -> bool:
 
 func _create_bridge_connection() -> bool:
     if ethereal_bridge and ethereal_bridge.has_method("record_memory"):
+	
         var content = "Bridge connection at depth " + str(active_dimensional_depth)
         if input_buffer.length() > 0:
             content = input_buffer
@@ -638,19 +642,23 @@ func _save_current_state() -> bool:
     var saved = false
     
     if akashic_system and akashic_system.has_method("store_record"):
+	
         var data = {
             "input_buffer": input_buffer,
             "dimensional_depth": active_dimensional_depth,
             "corrections": auto_corrections_applied,
             "commands": command_history.size(),
             "timestamp": Time.get_unix_time_from_system()
-        }
+			}
         
         saved = akashic_system.store_record(0, 0, data)
     
     if not saved and ethereal_bridge and ethereal_bridge.has_method("record_memory"):
+	
         var content = "Saved state: Depth=" + str(active_dimensional_depth) + ", Buffer=" + input_buffer
+		
         var tags = ["saved_state", "depth:" + str(active_dimensional_depth)]
+		
         
         saved = ethereal_bridge.record_memory(content, tags)
     
@@ -737,30 +745,35 @@ func _verify_all_connections() -> bool:
     var all_connected = true
     
     print("Checking system connections:")
+	
     
     if not auto_correction_system:
         print("- Auto-Correction System: DISCONNECTED")
         all_connected = false
     else:
         print("- Auto-Correction System: CONNECTED")
+		
     
     if not ethereal_bridge:
         print("- Ethereal Bridge: DISCONNECTED")
         all_connected = false
     else:
         print("- Ethereal Bridge: CONNECTED")
+		
     
     if not akashic_system:
         print("- Akashic System: DISCONNECTED")
         all_connected = false
     else:
         print("- Akashic System: CONNECTED")
+		
     
     if not turn_system:
         print("- Turn System: DISCONNECTED")
         all_connected = false
     else:
         print("- Turn System: CONNECTED")
+		
     
     return all_connected
 
@@ -793,15 +806,18 @@ func _create_connection(connection_type: String, depth: int) -> bool:
         "dimension": dimension_key,
         "symbol": _get_symbol_for_connection(connection_type),
         "timestamp": Time.get_unix_time_from_system()
-    }
+		}
     
     # Create memory record
     if ethereal_bridge.has_method("record_memory"):
+	
         var content = "Created " + connection_type + " connection at depth " + str(depth)
         var tags = ["connection", connection_type, "depth:" + str(depth)]
+		
         
         ethereal_bridge.record_memory(content, tags)
         print("Connection created: " + content)
+		
         
         return true
     
@@ -843,7 +859,7 @@ func get_correction_stats() -> Dictionary:
         "last_correction_time": last_correction_time,
         "history_size": correction_history.size(),
         "current_dimensional_depth": active_dimensional_depth
-    }
+		}
 
 func set_auto_correction(enabled: bool) -> void:
     auto_correction_enabled = enabled
@@ -862,6 +878,7 @@ func add_custom_correction(original: String, corrected: String) -> bool:
     
     AUTO_CORRECTIONS[original.to_lower()] = corrected
     print("Added custom correction: " + original + " → " + corrected)
+	
     
     return true
 

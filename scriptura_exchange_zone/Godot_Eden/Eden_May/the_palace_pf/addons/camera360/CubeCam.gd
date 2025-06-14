@@ -1,10 +1,10 @@
 #CubeCam.gd, it is attached to Cubecam in main scene, also the same file as in addons
-extends Node3D
+extends \2
 
-@export var cube_size:float = 512: get = get_cube_size, set = set_cube_size
-@export var shadow_atlast_size:float = 1024: get = get_shadow_atlas_size, set = set_shadow_atlas_size
-@export var near:float = 0.1: get = get_near, set = set_near
-@export var far:float = 300.0: get = get_far, set = set_far
+@@export var cube_size:float = 512: get = get_cube_size, set = set_cube_size
+@@export var shadow_atlast_size:float = 1024: get = get_shadow_atlas_size, set = set_shadow_atlas_size
+@@export var near:float = 0.1: get = get_near, set = set_near
+@@export var far:float = 300.0: get = get_far, set = set_far
 
 var is_ready = false
 

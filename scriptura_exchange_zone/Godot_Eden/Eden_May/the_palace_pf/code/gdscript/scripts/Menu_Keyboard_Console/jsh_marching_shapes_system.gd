@@ -1,6 +1,6 @@
 extends Node
-class_name JSHDataGrid
-# res://code/gdscript/scripts/Menu_Keyboard_Console/jsh_marching_shapes_system.gd
+class_name JSHDataGrid_jshmarchingshapessystem_jshmarch
+# res://scripts/gdscript/scripts/Menu_Keyboard_Console/jsh_marching_shapes_system.gd
 # JSH_World/JSH_Marching_Shapes_System
 
 #      oooo  .oooooo..o ooooo   ooooo 
@@ -27,7 +27,8 @@ var task_manager = null
 var data_grid = null
 
 # Test patterns
-enum DataPattern {
+enum \2 {
+
 	WAVE,
 	RIPPLE,
 	RANDOM,
@@ -93,7 +94,7 @@ var main_scene_reference = null
 
 
 #extends Node3D
-#class_name JSHMarchingShapes
+#class_name JSHMarchingShapes_jshmarchingshapessystem_jshmarch
 
 # Signals
 signal mesh_generated
@@ -151,7 +152,7 @@ func _ready_add():
 	generate_mesh()
 	
 	# Connect to task manager if available
-	task_manager = get_node_or_null("/root/JSHTaskManager")
+	task_manager = get_node_or_null("root/JSHTaskManager")
 	if task_manager:
 		print("Marching shapes connected to task manager")
 
@@ -204,7 +205,7 @@ func _ready_old_0():
 	initialize_grid()
 	
 	# Connect to task manager if available
-	task_manager = get_node_or_null("/root/JSHTaskManager")
+	task_manager = get_node_or_null("root/JSHTaskManager")
 	if task_manager:
 		print("Data grid connected to task manager")
 
@@ -682,7 +683,7 @@ func generate_random_pattern(data):
 
 func setup_task_manager():
 	# Check if task manager exists
-	task_manager = get_node_or_null("/root/JSHTaskManager")
+	task_manager = get_node_or_null("root/JSHTaskManager")
 	
 	if not task_manager:
 		# Create and add task manager

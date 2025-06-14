@@ -103,7 +103,7 @@ func _ready():
     _feedback_timer = Timer.new()
     _feedback_timer.one_shot = true
     _feedback_timer.wait_time = _feedback_duration
-    _feedback_timer.connect("timeout", self, "_hide_feedback")
+    _feedback_timer.connect(_hide_feedback)
     add_child(_feedback_timer)
 
 func initialize(memory_system = null, connection_system = null, updater_system = null, wish_system = null):
@@ -150,7 +150,7 @@ func _input(event):
         # Handle key combinations
         elif event.pressed:
             # Check for double press
-            var current_time = OS.get_ticks_msec()
+            var current_time = OS.Time.get_ticks_msec()
             var is_double_press = _last_key_pressed == event.scancode and (current_time - _last_key_press_time) < _double_press_threshold
             
             _last_key_press_time = current_time
@@ -410,7 +410,7 @@ func cmd_split_memory(params):
     elif params.has("memory_id"):
         memory_to_split = params.memory_id
     
-    if memory_to_split.empty():
+    if memory_to_split.is_empty():
         return {"error": "No memory selected for splitting"}
     
     # Get number of fragments
@@ -521,7 +521,7 @@ func cmd_evolve_memory(params):
     elif params.has("memory_id"):
         memory_to_evolve = params.memory_id
     
-    if memory_to_evolve.empty():
+    if memory_to_evolve.is_empty():
         return {"error": "No memory selected for evolution"}
     
     # Use updater if available
@@ -619,7 +619,7 @@ func cmd_change_dimension(params):
     elif params.has("memory_id"):
         memory_to_change = params.memory_id
     
-    if memory_to_change.empty():
+    if memory_to_change.is_empty():
         return {"error": "No memory selected for dimension change"}
     
     # Get target dimension
@@ -706,5 +706,5 @@ func get_last_command_result():
 # kb_controller.set_feedback_label(feedback)
 # 
 # # Connect to signals
-# kb_controller.connect("keyboard_command_executed", self, "_on_command_executed")
-# kb_controller.connect("memory_selection_changed", self, "_on_selection_changed")
+# kb_controller.connect(_on_command_executed)
+# kb_controller.connect(_on_selection_changed)

@@ -4,9 +4,8 @@
 # PURPOSE: Detect ground height, slopes, edges, and safe foot placements
 # CREATED: 2025-05-26 - Complete ragdoll system overhaul
 # ==================================================
-
 extends UniversalBeingBase
-class_name GroundDetectionSystem
+class_name GroundDetectionSystem_groundde
 
 # Ground info structure
 class GroundInfo:

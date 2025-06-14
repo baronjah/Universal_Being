@@ -1,6 +1,6 @@
 extends Control
 
-class_name PaintCanvas
+class_name PaintCanvas_paintcanvas_paintcan
 
 # Signals
 signal stroke_completed(stroke_id)
@@ -38,13 +38,13 @@ var texture: ImageTexture
 
 func _ready():
 	# Get references to systems
-	paint_system = get_node_or_null("/root/PaintSystem")
+	paint_system = get_node_or_null("root/PaintSystem")
 	if not paint_system:
 		paint_system = PaintSystem.new()
 		add_child(paint_system)
 	
-	dimensional_color_system = get_node_or_null("/root/DimensionalColorSystem")
-	turn_cycle_manager = get_node_or_null("/root/TurnCycleManager")
+	dimensional_color_system = get_node_or_null("root/DimensionalColorSystem")
+	turn_cycle_manager = get_node_or_null("root/TurnCycleManager")
 	
 	# Connect signals
 	paint_system.texture_created.connect(_on_texture_created)
@@ -300,7 +300,7 @@ func set_shape_overlay(shape_id: String):
 	if not is_node_ready():
 		await ready
 	
-	var shape_system = get_node_or_null("/root/ShapeSystem")
+	var shape_system = get_node_or_null("root/ShapeSystem")
 	if not shape_system or not shape_system.shapes.has(shape_id):
 		shape_overlay.visible = false
 		return

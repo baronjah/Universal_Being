@@ -1,6 +1,6 @@
 extends Node
 
-class_name TokenSystem
+class_name TokenSystem_tokensystem_tokensys
 
 # Token Economy System for Eden_OS
 # Manages value exchange, creation tokens, and cryptocurrency integration
@@ -292,7 +292,7 @@ func get_token_info(token_type):
         return "Invalid token type: " + token_type
     
     var info = "Token: " + token_type + " (" + TOKEN_TYPES[token_type]["symbol"] + ")\n"
-    info += "Supply: " + str(token_supply[token_type]) + " / " + str(TOKEN_TYPES[token_type]["max_supply"]) + "\n"
+    info += "Supply: " + str(token_supply[token_type]) + "  " + str(TOKEN_TYPES[token_type]["max_supply"]) + "\n"
     info += "Value: $" + str(snappedf(token_value[token_type], 0.01)) + "\n"
     
     info += "Exchange Rates:\n"

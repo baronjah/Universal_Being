@@ -10,7 +10,7 @@
 # `Y888P                            
 #
 # data bus so pathways for informations flow
-extends Node
+extends \2
 
 var connections = {}  # Stores which nodes are connected to which
 

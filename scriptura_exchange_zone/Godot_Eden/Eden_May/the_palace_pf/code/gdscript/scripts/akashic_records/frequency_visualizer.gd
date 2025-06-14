@@ -1,5 +1,5 @@
 extends Node3D
-class_name FrequencyVisualizer
+class_name FrequencyVisualizer_frequencyvisualizer_frequenc
 
 # Signal when a word is selected
 signal word_selected(word)
@@ -9,12 +9,12 @@ var akashic_records = null
 var evolution_manager = null
 
 # Visualization settings
-@export var auto_update: bool = true
-@export var update_interval: float = 2.0
-@export var max_words: int = 100
-@export var layout_type: String = "radial"  # radial, spiral, cluster
-@export var show_connections: bool = true
-@export var connection_threshold: float = 0.7  # Similarity threshold for connections
+@@@export var auto_update: bool = true
+@@@export var update_interval: float = 2.0
+@@@export var max_words: int = 100
+@@@export var layout_type: String = "radial"  # radial, spiral, cluster
+@@@export var show_connections: bool = true
+@@@export var connection_threshold: float = 0.7  # Similarity threshold for connections
 
 # Node for organizing word visualizations
 var words_container: Node3D
@@ -29,7 +29,8 @@ var spiral_rotation: float = 0.5
 var cluster_separation: float = 6.0
 
 # Visualization node class
-class VisualizationNode extends Node3D:
+class VisualizationNode
+extends \2:
 	# Signal when this node is selected/clicked
 	signal clicked(node)
 

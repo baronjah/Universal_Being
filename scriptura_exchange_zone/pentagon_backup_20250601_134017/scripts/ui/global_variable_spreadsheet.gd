@@ -10,7 +10,6 @@
 # PURPOSE: Complete visibility into the game's soul
 # CREATED: 2025-05-27
 # ==================================================
-
 extends UniversalBeingBase
 signal variable_changed(script_path: String, var_name: String, new_value: Variant)
 
@@ -173,7 +172,7 @@ func _scan_autoloads() -> void:
 	]
 	
 	for autoload_name in autoloads:
-		var node = get_node_or_null("/root/" + autoload_name)
+		var node = get_node_or_null("root/" + autoload_name)
 		if node:
 			all_singletons[autoload_name] = {
 				"node": node,
@@ -190,7 +189,7 @@ func _scan_scene_tree() -> void:
 
 func _scan_node_recursive(node: Node, path: String = "") -> void:
 	"""Recursively scan nodes"""
-	var node_path = (path + "/" + node.name) if not path.is_empty() else node.name
+	var node_path = (path + "" + node.name) if not path.is_empty() else node.name
 	
 	all_nodes[node_path] = {
 		"node": node,
@@ -201,7 +200,7 @@ func _scan_node_recursive(node: Node, path: String = "") -> void:
 	}
 	
 	# Limit recursion depth for performance
-	if path.count("/") < 5:
+	if path.count("") < 5:
 		for child in node.get_children():
 			_scan_node_recursive(child, node_path)
 

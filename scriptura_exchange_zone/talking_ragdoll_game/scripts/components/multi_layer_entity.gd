@@ -1,13 +1,13 @@
 extends UniversalBeingBase
-class_name MultiLayerEntity
+class_name MultiLayerEntity_multilay
 # Multi-Layer Entity - Exists across multiple reality layers
 # Manages different representations of the same entity
 
 signal layer_representation_changed(layer: int)  # Emitted when layer representation updates
 
 # Entity data
-@export var entity_id: String = ""
-@export var entity_type: String = "generic"
+@@@export var entity_id: String = ""
+@@@export var entity_type: String = "generic"
 
 # Layer representations
 var text_representation: Dictionary = {}
@@ -32,8 +32,8 @@ func pentagon_ready() -> void:
 		entity_id = "entity_" + str(get_instance_id())
 	
 	# Get system references
-	layer_system = get_node_or_null("/root/LayerRealitySystem")
-	console_manager = get_node_or_null("/root/ConsoleManager")
+	layer_system = get_node_or_null("root/LayerRealitySystem")
+	console_manager = get_node_or_null("root/ConsoleManager")
 	
 	# Initialize representations
 	_create_layer_representations()

@@ -19,7 +19,7 @@ var is_processing_queue := false
 
 func _ready():
     # Connect to required nodes
-    yield(get_tree(), "idle_frame")
+    await(get_tree(), "idle_frame")
     _connect_to_dependencies()
     
     print("[MouseAutomationIntegration] Initialized for Turn 5: Awakening")
@@ -27,7 +27,7 @@ func _ready():
 func _connect_to_dependencies():
     # Find and connect to TerminalGodotBridge
     if get_node_or_null("/root/TerminalGodotBridge") != null:
-        terminal_bridge = get_node("/root/TerminalGodotBridge")
+        terminal_bridge = get_node("\1") as Node
         print("[MouseAutomationIntegration] Connected to Terminal Bridge")
         
         # Register ourselves with the bridge
@@ -36,7 +36,7 @@ func _connect_to_dependencies():
     
     # Find and connect to MouseAutomation
     if get_node_or_null("/root/MouseAutomation") != null:
-        mouse_automation = get_node("/root/MouseAutomation")
+        mouse_automation = get_node("\1") as Node
         print("[MouseAutomationIntegration] Connected to Mouse Automation")
     else:
         # Create MouseAutomation if it doesn't exist
@@ -47,7 +47,7 @@ func _connect_to_dependencies():
     
     # Find and connect to SegmentProcessor
     if get_node_or_null("/root/SegmentProcessor") != null:
-        segment_processor = get_node("/root/SegmentProcessor")
+        segment_processor = get_node("\1") as Node
         print("[MouseAutomationIntegration] Connected to Segment Processor")
         
         # Connect mouse automation to segment processor
@@ -100,7 +100,7 @@ func _process_automation_queue():
           ("Success" if result.success else "Failed"))
     
     # Process next command after a short delay
-    yield(get_tree().create_timer(0.5), "timeout")
+    await(get_tree().create_timer(0.5), "timeout")
     _process_automation_queue()
 
 # ==================

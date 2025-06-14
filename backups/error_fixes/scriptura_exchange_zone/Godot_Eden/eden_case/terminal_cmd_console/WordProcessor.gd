@@ -58,7 +58,7 @@ func _load_word_database() -> void:
     if file.open("/mnt/c/Users/Percision 15/12_turns_system/word_database.txt", File.READ) == OK:
         while not file.eof_reached():
             var line = file.get_line().strip_edges()
-            if line.empty():
+            if line.is_empty():
                 continue
                 
             var parts = line.split(" ", false, 1)
@@ -85,7 +85,7 @@ func process_word(word_text: String, context: Dictionary = {}) -> Dictionary:
     var normalized_text = word_text.strip_edges().to_lower()
     
     # If empty, return default
-    if normalized_text.empty():
+    if normalized_text.is_empty():
         return {"text": word_text, "power": MIN_POWER}
     
     # Calculate base power
@@ -295,7 +295,7 @@ func _categorize_word(word_text: String) -> Array:
                 break
     
     # If no categories found, add "undefined"
-    if categories.empty():
+    if categories.is_empty():
         categories.append("undefined")
     
     return categories

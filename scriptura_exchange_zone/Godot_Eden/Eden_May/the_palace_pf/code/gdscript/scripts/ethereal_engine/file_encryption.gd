@@ -1,5 +1,5 @@
 # file_encryption.gd
-extends Node
+extends \2
 
 const EncryptionEngine = preload("res://scripts/encryption_engine.gd")
 

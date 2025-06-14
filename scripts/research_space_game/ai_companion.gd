@@ -30,7 +30,7 @@ func _ready():
 		"curiosity": randf(),
 		"loyalty": 0.8 + randf() * 0.2,  # Always loyal
 		"efficiency": randf()
-	}
+}
 	
 	# Set up visuals
 	_setup_appearance()
@@ -71,6 +71,7 @@ func ai_think(delta: float):
 	
 	# Use your Gemma integration
 	if ai_brain.has_method("get_companion_action"):
+
 		var action = ai_brain.get_companion_action({
 			"position": position,
 			"health": health,
@@ -128,6 +129,7 @@ func _mining_behavior(delta: float):
 	var min_distance = INF
 	
 	for resource in nearby["resources"]:
+
 		var dist = position.distance_to(resource.position)
 		if dist < min_distance:
 			min_distance = dist
@@ -192,7 +194,7 @@ func _scan_area() -> Dictionary:
 		"resources": [],
 		"threats": [],
 		"allies": []
-	}
+}
 	
 	# Get all nodes in detection range
 	var space_state = get_world_3d().direct_space_state
@@ -309,4 +311,4 @@ func get_status() -> Dictionary:
 		"behavior": behavior_state,
 		"position": position,
 		"personality": personality_traits
-	}
+}

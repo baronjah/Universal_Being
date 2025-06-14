@@ -48,7 +48,7 @@ func _ready():
 func _connect_systems():
 	# Find memory transfer system
 	if has_node("/root/MemoryTransferSystem") or get_node_or_null("/root/MemoryTransferSystem"):
-		memory_transfer_system = get_node("/root/MemoryTransferSystem")
+		memory_transfer_system = get_node("\1") as Node
 	else:
 		# Create if it doesn't exist
 		memory_transfer_system = load("res://memory_transfer_system.gd").new()
@@ -280,7 +280,7 @@ func _on_turn_changed(previous_turn_id, new_turn_id):
 	print("Turn changed: " + previous_turn_id + " -> " + new_turn_id)
 	
 	# Save memory for the previous turn
-	if not previous_turn_id.empty():
+	if not previous_turn_id.is_empty():
 		save_turn_memory(previous_turn_id)
 	
 	# Update current turn
@@ -300,7 +300,7 @@ func _on_investment_created(investment_data):
 	print("New investment created: " + investment_data.word)
 	
 	# If configured to transfer after investment and we have a current turn
-	if config.transfer_after_investment and not current_turn_id.empty():
+	if config.transfer_after_investment and not current_turn_id.is_empty():
 		# Get connected devices
 		var connected_devices = []
 		if memory_transfer_system and memory_transfer_system.cross_device_connector:
@@ -360,7 +360,7 @@ func _on_transfer_completed(transfer_id, success, stats):
 
 func _on_device_memory_updated(device_id, stats):
 	# Memory stats were updated, check if we need to save the current turn
-	if not current_turn_id.empty() and config.save_turn_memories:
+	if not current_turn_id.is_empty() and config.save_turn_memories:
 		# Just update without saving to file to avoid excessive writes
 		turn_memories[current_turn_id] = _gather_turn_memory_data(current_turn_id)
 		emit_signal("memory_synced", current_turn_id, stats)

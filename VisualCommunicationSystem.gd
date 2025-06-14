@@ -14,8 +14,8 @@ const STELLAR_COLORS = {
     "physics_interaction": Color(1.0, 0.2, 0.2),  # Physics Events
     "debugging": Color(0.4, 0.2, 0.1),  # Debug Messages
     "general": Color(0.2, 0.4, 1.0),  # General Messages
+	}
 
-}
 
 # Main visual communication function
 func visual_message(message: String, category: String = "general", duration: float = 3.0) -> void:
@@ -44,6 +44,7 @@ func visual_message(message: String, category: String = "general", duration: flo
 # Specific functions for each category
 func gemma_message(text: String) -> void:
     visual_message("🤖 Gemma: " + text, "gemma_ai")
+	
 
 func consciousness_message(text: String) -> void:
     visual_message("🧠 " + text, "consciousness")

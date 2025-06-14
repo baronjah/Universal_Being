@@ -34,7 +34,7 @@
 
 
 @icon("thread.png")
-class_name ThreadPool
+class_name ThreadPool_threadpo
 extends Node
 ## A thread pool designed to perform your tasks efficiently.
 ##
@@ -51,7 +51,7 @@ signal task_discarded(task)
 signal task_started(task)
 
 ## This property controls whether the thread pool should discard or store the results of finished tasks.
-@export var discard_finished_tasks: bool = true
+@@export var discard_finished_tasks: bool = true
 
 var __tasks: Array = []
 var __started = false

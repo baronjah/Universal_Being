@@ -14,7 +14,7 @@ func _ready():
 	phase_timer = Timer.new()
 	phase_timer.one_shot = true
 	add_child(phase_timer)
-	phase_timer.connect("timeout", self, "_on_phase_timeout")
+	phase_timer.connect(_on_phase_timeout)
 
 # DAY PHASE FUNCTIONS
 func start_day():
@@ -92,6 +92,7 @@ func apply_night_effects():
 		
 		# Process investigation results
 		if player.has("pending_investigation") and player.pending_investigation:
+
 			var result = player.pending_investigation
 			player.investigation_results.append(result)
 			player.pending_investigation = null
@@ -105,7 +106,7 @@ func apply_night_effects():
 # VOTING PHASE FUNCTIONS
 func start_voting():
 	controller.current_state = controller.GameState.VOTING
-	controller.votes = {}
+	controller.votes = {
 	
 	# Initialize votes
 	for player in controller.living_players:
@@ -131,7 +132,7 @@ func start_voting():
 
 func process_votes():
 	# Count votes
-	var vote_count = {}
+	var vote_count = {
 	var max_votes = 0
 	var players_with_max_votes = []
 	
@@ -219,11 +220,12 @@ func start_defense(player_name):
 
 func start_judgment(player_name):
 	controller.current_state = controller.GameState.JUDGMENT
-	controller.votes = {}
+	controller.votes = {
 	
 	# Reset votes
 	for player in controller.living_players:
 		if player != player_name:  # Accused can't vote
+}
 			# Check if player is blackmailed
 			if not controller.players[player].has("blackmailed") or not controller.players[player].blackmailed:
 				controller.votes[player] = false  # Default innocent
@@ -310,11 +312,12 @@ func select_random_haunt_target(jester_name):
 	else:
 		# If somehow no one voted guilty, don't haunt anyone
 		print("JESTER HAUNT: No guilty voters found for " + jester_name)
+}
 
 # NIGHT PHASE FUNCTIONS
 func start_night():
 	controller.current_state = controller.GameState.NIGHT
-	controller.night_actions = {}
+	controller.night_actions = {
 	controller.protected_players = []
 	
 	# Announce night phase
@@ -375,6 +378,7 @@ func process_jester_haunt():
 		for player_name in controller.players:
 			if not controller.players[player_name].alive and controller.players[player_name].role == "Jester" and controller.players[player_name].lynched:
 				if controller.players[player_name].has("haunt_target"):
+	}
 					var target = controller.players[player_name].haunt_target
 					
 					# Kill the target unless protected
@@ -460,7 +464,7 @@ func process_night_actions():
 	process_special_actions()
 	
 	# Reset night actions
-	controller.night_actions = {}
+	controller.night_actions = {
 
 func process_role_blocks():
 	var blocked_players = []
@@ -520,6 +524,7 @@ func process_investigation_actions():
 			
 		# Sheriff investigations
 		if action and action.type == "investigate" and controller.players[player].role == "Word Sheriff":
+}
 			var target = action.target
 			var result = ""
 			
@@ -538,7 +543,7 @@ func process_investigation_actions():
 				"result": result,
 				"day": controller.current_day,
 				"exact": false
-			}
+	}
 			
 			if controller.word_comment_system:
 				controller.word_comment_system.add_comment("private_" + player, 
@@ -547,6 +552,7 @@ func process_investigation_actions():
 		
 		# Consigliere exact role investigations
 		elif action and action.type == "investigate_exact" and controller.players[player].role == "Mafia Consigliere":
+}
 			var target = action.target
 			var result = controller.players[target].role
 			
@@ -557,7 +563,7 @@ func process_investigation_actions():
 				"result": "Exact role: " + result,
 				"day": controller.current_day,
 				"exact": true
-			}
+	}
 			
 			if controller.word_comment_system:
 				controller.word_comment_system.add_comment("private_" + player, 
@@ -566,6 +572,7 @@ func process_investigation_actions():
 		
 		# Lookout watching
 		elif action and action.type == "watch" and controller.players[player].role == "Word Lookout":
+
 			var target = action.target
 			var visitors = []
 			
@@ -581,7 +588,7 @@ func process_investigation_actions():
 				"result": visitors.size() > 0 ? target + " was visited by: " + PoolStringArray(visitors).join(", ") : "No one visited " + target + " last night.",
 				"day": controller.current_day,
 				"exact": false
-			}
+	}
 			
 			if controller.word_comment_system:
 				controller.word_comment_system.add_comment("private_" + player, 
@@ -590,6 +597,7 @@ func process_investigation_actions():
 		
 		# Etymologist exact role reveal
 		elif action and action.type == "reveal_role" and controller.players[player].role == "Etymologist":
+
 			var target = action.target
 			
 			# Reveal the role to everyone
@@ -616,12 +624,13 @@ func process_investigation_actions():
 			controller.players[player].abilities["reveal_role"].uses = 0
 
 func process_control_actions():
-	var controlled_players = {}
+	var controlled_players = {
 	
 	# Identify all control actions
 	for player in controller.night_actions.keys():
 		var action = controller.night_actions[player]
 		if action and action.type == "control" and controller.can_perform_action(player):
+}
 			# Store the redirection
 			controlled_players[action.target] = action.redirect_target
 			
@@ -670,6 +679,7 @@ func process_killing_actions():
 		if not mafia_kill_target in controller.protected_players:
 			# Check if target is on alert
 			if controller.players[mafia_kill_target].has("on_alert") and controller.players[mafia_kill_target].on_alert:
+
 				# Find a random mafia member to kill
 				var mafia_members = []
 				for p in controller.living_players:
@@ -690,6 +700,7 @@ func process_killing_actions():
 			continue
 			
 		if action and (action.type == "kill" or action.type == "stab"):
+
 			var target = action.target
 			
 			# Skip already killed players
@@ -835,6 +846,7 @@ func check_win_conditions():
 			announce_winner("Jester (" + player.name + ")")
 			return true
 		elif player.role == "Word Survivor" and player.name in controller.living_players:
+
 			var all_killers_dead = true
 			
 			# Check if all killing roles are gone
@@ -867,6 +879,7 @@ func announce_winner(faction):
 	var role_reveal = "PLAYER ROLES:\n"
 	for player_name in controller.players:
 		role_reveal += player_name + ": " + controller.players[player_name].role + " (" + ("ALIVE" if player_name in controller.living_players else "DEAD") + ")\n"
+
 	
 	if controller.word_comment_system:
 		controller.word_comment_system.add_comment("town_meeting", role_reveal, controller.word_comment_system.CommentType.INFORMATION)

@@ -1,5 +1,5 @@
 extends Node
-class_name JSHDatabaseManager
+class_name JSHDatabaseManager_JSHDatabaseManager_JSHDatab
 
 # Singleton pattern
 static var _instance: JSHDatabaseManager = null

@@ -1,14 +1,15 @@
 extends Node
 }
 
-class_name GitHubToolsIntegration
+class_name GitHubToolsIntegration_githubtoolsintegration_githubto
 }
 
 # Tool integration system for Github repositories
 }
 
 # Default tool categories
-enum ToolCategory {
+enum \2 {
+
     INPUT,
     GRAPHICS,
     AUDIO,
@@ -135,7 +136,7 @@ func authenticate(token, username = ""):
         # Update rate limit
         api_rate_limit = 5000 # Authenticated users get 5000 requests per hour
         api_calls_remaining = api_rate_limit
-        api_reset_time = OS.get_unix_time() + 3600
+        api_reset_time = OS.Time.get_unix_time_from_system() + 3600
 }
 
         emit_signal("rate_limit_changed", api_calls_remaining, api_reset_time)
@@ -177,7 +178,7 @@ func search_repositories(query, category = -1, sort_by = "stars", count = 10):
 }
 
         # Check if cache is still valid
-        if OS.get_unix_time() - cache_entry["timestamp"] < cache_lifetime:
+        if OS.Time.get_unix_time_from_system() - cache_entry["timestamp"] < cache_lifetime:
             print("Using cached results for: " + query)
             return cache_entry["data"]
 }
@@ -234,7 +235,7 @@ func search_repositories(query, category = -1, sort_by = "stars", count = 10):
 
         var stars = int(rand_range(5, 500))
         var forks = int(stars * rand_range(0.1, 0.5))
-        var last_update = OS.get_unix_time() - int(rand_range(86400, 7776000)) # 1 day to 90 days ago
+        var last_update = OS.Time.get_unix_time_from_system() - int(rand_range(86400, 7776000)) # 1 day to 90 days ago
 }
 
         repositories.append({
@@ -242,8 +243,8 @@ func search_repositories(query, category = -1, sort_by = "stars", count = 10):
             "owner": {
                 "login": "github-user-" + str(i)
             },
-            "full_name": "github-user-" + str(i) + "/" + repo_name,
-            "html_url": "https://github.com/github-user-" + str(i) + "/" + repo_name,
+            "full_name": "github-user-" + str(i) + "" + repo_name,
+            "html_url": "https://github.com/github-user-" + str(i) + "" + repo_name,
             "description": "A " + tool_name.replace("-", " ") + " tool for Godot Engine",
             "stargazers_count": stars,
             "forks_count": forks,
@@ -275,7 +276,7 @@ func search_repositories(query, category = -1, sort_by = "stars", count = 10):
     # Cache results
     if use_cache:
         cached_repositories[cache_key] = {
-            "timestamp": OS.get_unix_time(),
+            "timestamp": OS.Time.get_unix_time_from_system(),
             "data": repositories
         }
 }
@@ -317,7 +318,7 @@ func get_repository_details(repo_full_name):
 }
 
         # Check if cache is still valid
-        if OS.get_unix_time() - cache_entry["timestamp"] < cache_lifetime:
+        if OS.Time.get_unix_time_from_system() - cache_entry["timestamp"] < cache_lifetime:
             print("Using cached details for: " + repo_full_name)
             return cache_entry["data"]
 }
@@ -326,7 +327,7 @@ func get_repository_details(repo_full_name):
     # For this demo, generate dummy details
 }
 
-    var parts = repo_full_name.split("/")
+    var parts = repo_full_name.split("")
     if parts.size() != 2:
         print("Invalid repository name format")
         return null
@@ -355,7 +356,7 @@ func get_repository_details(repo_full_name):
     # Generate repository details
     var stars = int(rand_range(5, 500))
     var forks = int(stars * rand_range(0.1, 0.5))
-    var last_update = OS.get_unix_time() - int(rand_range(86400, 7776000)) # 1 day to 90 days ago
+    var last_update = OS.Time.get_unix_time_from_system() - int(rand_range(86400, 7776000)) # 1 day to 90 days ago
 }
 
     var repo_details = {
@@ -398,7 +399,7 @@ func get_repository_details(repo_full_name):
                     {
                         "name": repo_name + "-v1.0.0.zip",
                         "download_count": int(rand_range(100, 1000)),
-                        "browser_download_url": "https://github.com/" + repo_full_name + "/releases/download/v1.0.0/" + repo_name + "-v1.0.0.zip"
+                        "browser_download_url": "https://github.com/" + repo_full_name + "releases/download/v1.0.0/" + repo_name + "-v1.0.0.zip"
                     }
                 ]
             }
@@ -411,7 +412,7 @@ func get_repository_details(repo_full_name):
     # Cache results
     if use_cache:
         cached_repositories[cache_key] = {
-            "timestamp": OS.get_unix_time(),
+            "timestamp": OS.Time.get_unix_time_from_system(),
             "data": repo_details
         }
 }

@@ -180,10 +180,10 @@ func _connect_to_systems():
         
         # Connect signals
         if ethereal_engine.has_signal("shape_created"):
-            ethereal_engine.connect("shape_created", self, "_on_shape_created")
+            ethereal_engine.connect(_on_shape_created)
         
         if ethereal_engine.has_signal("color_palette_changed"):
-            ethereal_engine.connect("color_palette_changed", self, "_on_color_palette_changed")
+            ethereal_engine.connect(_on_color_palette_changed)
     
     # Try to find a Turn System
     turn_system = get_node_or_null("/root/TurnIntegrator")
@@ -195,9 +195,9 @@ func _connect_to_systems():
         
         # Connect appropriate signals
         if turn_system is TurnIntegrator and turn_system.has_signal("turn_integrated"):
-            turn_system.connect("turn_integrated", self, "_on_turn_integrated")
+            turn_system.connect(_on_turn_integrated)
         elif turn_system is TurnPrioritySystem and turn_system.has_signal("turn_advanced"):
-            turn_system.connect("turn_advanced", self, "_on_turn_advanced")
+            turn_system.connect(_on_turn_advanced)
     
     # Try to find API Orchestrator
     api_orchestrator = get_node_or_null("/root/APIOrchestrator")
@@ -206,7 +206,7 @@ func _connect_to_systems():
         
         # Connect signals
         if api_orchestrator.has_signal("emotion_detected"):
-            api_orchestrator.connect("emotion_detected", self, "_on_emotion_detected")
+            api_orchestrator.connect(_on_emotion_detected)
 
 func create_log_entry(entry_type, content, metadata = {}):
     var timestamp = OS.get_datetime()
@@ -276,7 +276,7 @@ func create_log_entry(entry_type, content, metadata = {}):
 
 func update_current_story(log_entry):
     # If no current story, create one
-    if current_story_id.empty() or _should_create_new_story():
+    if current_story_id.is_empty() or _should_create_new_story():
         current_story_id = _create_new_story()
     
     # Load current story
@@ -420,7 +420,7 @@ func _should_create_new_story():
     # 1. The day has changed
     # 2. The current story has too many entries
     
-    if current_story_id.empty():
+    if current_story_id.is_empty():
         return true
     
     var story = _load_story(current_story_id)

@@ -1,7 +1,7 @@
 extends Node
 }
 
-class_name GodotResearchSystem
+class_name GodotResearchSystem_godotresearchsystem_godotres
 }
 
 # Godot Source Code Research and Analysis System
@@ -16,9 +16,9 @@ signal visualization_generated(visualization_type, data)
 }
 
 # Configuration
-const GODOT_SOURCE_CACHE = "/mnt/c/Users/Percision 15/LuminusOS/code_cache/godot_source/"
-const INDEX_PATH = "/mnt/c/Users/Percision 15/LuminusOS/code_cache/godot_index.json"
-const RESEARCH_DB_PATH = "/mnt/c/Users/Percision 15/LuminusOS/code_cache/godot_research.db"
+const GODOT_SOURCE_CACHE = "mnt/c/Users/Percision 15/LuminusOS/code_cache/godot_source/"
+const INDEX_PATH = "mnt/c/Users/Percision 15/LuminusOS/code_cache/godot_index.json"
+const RESEARCH_DB_PATH = "mnt/c/Users/Percision 15/LuminusOS/code_cache/godot_research.db"
 }
 
 # Index of all Godot source files and classes
@@ -122,7 +122,7 @@ func search_code(search_term, filters = {}):
             })
 }
 
-        for class_name in keyword_matches.classes:
+        for class_name in_godotresearchsystem_godotres keyword_matches.classes:
             results.classes.append({
                 "name": class_name,
                 "file": class_index[class_name].file,
@@ -423,7 +423,7 @@ func analyze_file(file_path):
 }
 
         # Handle multiline comments
-        if line.find("/*") >= 0 and line.find("*/") < 0:
+        if line.find("*") >= 0 and line.find("*/") < 0:
             in_multiline_comment = true
             metrics.comment_lines += 1
             continue
@@ -476,7 +476,7 @@ func build_class_hierarchy():
 }
 
     # First pass: identify base classes (those that don't inherit from anything or inherit from Object)
-    for class_name in class_index:
+    for class_name in_godotresearchsystem_godotres class_index:
         var inherits = class_index[class_name].inherits
         if inherits.is_empty() or inherits == "Object" or inherits == "Reference":
             hierarchy[class_name] = {
@@ -486,7 +486,7 @@ func build_class_hierarchy():
 }
 
     # Second pass: add all remaining classes to the hierarchy
-    for class_name in class_index:
+    for class_name in_godotresearchsystem_godotres class_index:
         if hierarchy.has(class_name):
             continue  # Already added as a base class
 }
@@ -561,10 +561,10 @@ func index_godot_source(source_path = ""):
     if source_path.is_empty():
         # Try to use default locations
         var potential_paths = [
-            "/mnt/c/Users/Percision 15/Desktop/JustStuff/godot 4.2.2 sourcecode/godot-4.2/",
-            "/mnt/c/Users/Percision 15/godot-4.2/",
-            "/mnt/c/godot-4.2/",
-            "/usr/local/src/godot/"
+            "mnt/c/Users/Percision 15/Desktop/JustStuff/godot 4.2.2 sourcecode/godot-4.2/",
+            "mnt/c/Users/Percision 15/godot-4.2/",
+            "mnt/c/godot-4.2/",
+            "usr/local/src/godot/"
         ]
 }
 
@@ -803,7 +803,7 @@ func _index_source_thread(source_path):
         files_processed += 1
         if files_processed % 100 == 0:
             var progress = float(files_processed) / file_count
-            call_deferred("emit_signal", "code_indexed", {"status": "Indexing files: " + str(files_processed) + "/" + str(file_count), "progress": progress}, files_processed)
+            call_deferred("emit_signal", "code_indexed", {"status": "Indexing files: " + str(files_processed) + "" + str(file_count), "progress": progress}, files_processed)
 }
 
     # Save the index
@@ -907,7 +907,7 @@ func _parse_file_content(file_path, lines):
 }
 
         # Handle multiline comments
-        if trimmed.find("/*") >= 0 and trimmed.find("*/") < 0:
+        if trimmed.find("*") >= 0 and trimmed.find("*/") < 0:
             in_multiline_comment = true
             pending_doc_comment.append(trimmed)
             continue
@@ -928,8 +928,7 @@ func _parse_file_content(file_path, lines):
         if (trimmed.begins_with("class ") or trimmed.find(" class ") > 0) and (trimmed.find("{") > 0 or trimmed.ends_with(":")):
             var class_name = _extract_class_name(trimmed)
             if not class_name.is_empty():
-                current_class = class_name
-                in_class = true
+                current_class = class_name in_class_godotresearchsystem_godotres = true
                 class_match = true
 }
 
@@ -974,7 +973,7 @@ func _parse_file_content(file_path, lines):
                 pending_doc_comment = []
 }
 
-        # GDScript class definition: class_name ClassName
+        # GDScript class definition: class_name ClassName_godotresearchsystem_godotres
         elif trimmed.begins_with("class_name "):
             var parts = trimmed.split(" ", false, 1)
             if parts.size() > 1:
@@ -1165,7 +1164,7 @@ func _extract_class_name(line):
                 return class_name
 }
 
-    # GDScript style: class_name ClassName
+    # GDScript style: class_name ClassName_godotresearchsystem_godotres
     if line.begins_with("class_name "):
         var parts = line.split(" ", false, 1)
         if parts.size() > 1:
@@ -1294,8 +1293,8 @@ func _format_doc_comment(comments):
     for line in comments:
         # Remove comment markers
         var text = line
-        text = text.replace("/**", "").replace("*/", "")
-        text = text.replace("/*", "").replace("*/", "")
+        text = text.replace("**", "").replace("*/", "")
+        text = text.replace("*", "").replace("*/", "")
         text = text.replace("#", "").replace("//", "")
         text = text.strip_edges()
 }
@@ -1427,8 +1426,8 @@ func _find_class_usage_examples(class_name):
             var line = lines[i].strip_edges()
 }
 
-            # Look for class instantiation or extends
-            if (line.find("var") >= 0 and line.find(class_name) >= 0 and line.find("=") >= 0 or
+            # Look for class instantiation or
+extends \2 (line.find("var") >= 0 and line.find(class_name) >= 0 and line.find("=") >= 0 or
                 line.find("extends " + class_name) >= 0 or
                 line.find(class_name + ".new(") >= 0):
 }
@@ -1592,7 +1591,7 @@ func _extract_class_documentation(file_path, line_number):
         var line = lines[i].strip_edges()
 }
 
-        if line.begins_with("/**") or line.begins_with("/*"):
+        if line.begins_with("**") or line.begins_with("*"):
             in_doc_comment = true
             docs.append(line)
         elif in_doc_comment:
@@ -1634,7 +1633,7 @@ func _generate_overall_structure():
     var modules = {}
 }
 
-    for class_name in class_index:
+    for class_name in_godotresearchsystem_godotres class_index:
         var file_path = class_index[class_name].file
 }
 
@@ -1642,18 +1641,18 @@ func _generate_overall_structure():
         var module = "core"
 }
 
-        if file_path.find("/scene/") >= 0:
+        if file_path.find("scene/") >= 0:
             module = "scene"
-        elif file_path.find("/servers/") >= 0:
+        elif file_path.find("servers/") >= 0:
             module = "servers"
-        elif file_path.find("/editor/") >= 0:
+        elif file_path.find("editor/") >= 0:
             module = "editor"
-        elif file_path.find("/platform/") >= 0:
+        elif file_path.find("platform/") >= 0:
             module = "platform"
-        elif file_path.find("/drivers/") >= 0:
+        elif file_path.find("drivers/") >= 0:
             module = "drivers"
-        elif file_path.find("/modules/") >= 0:
-            module = "modules/" + file_path.split("/modules/")[1].split("/")[0]
+        elif file_path.find("modules/") >= 0:
+            module = "modules/" + file_path.split("modules/")[1].split("")[0]
 }
 
         if not modules.has(module):
@@ -1671,7 +1670,7 @@ func _generate_overall_structure():
         }
 }
 
-        for class_name in modules[module]:
+        for class_name in_godotresearchsystem_godotres modules[module]:
             module_node.children.append({
                 "name": class_name,
                 "type": "class"
@@ -1798,7 +1797,7 @@ func _format_hierarchy_for_visualization(hierarchy):
 }
 
     # Start with base classes (those that don't inherit or inherit from Object)
-    for class_name in hierarchy:
+    for class_name in_godotresearchsystem_godotres hierarchy:
         var class_data = hierarchy[class_name]
 }
 
@@ -1840,7 +1839,7 @@ func _cmd_search(args):
         return "Usage: code godot search <search_term>"
 }
 
-    var search_term = args.join(" ")
+    var search_term = args." ".join(" ")
     var results = search_code(search_term)
 }
 
@@ -1904,7 +1903,7 @@ func _cmd_analyze(args):
     var file_path = args[0]
 }
 
-    if not file_path.begins_with("/"):
+    if not file_path.begins_with(""):
         # Try to find the file in the index
         var found = false
 }

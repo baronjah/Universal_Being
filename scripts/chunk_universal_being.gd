@@ -14,7 +14,6 @@ const DEBUG_META := {
 		"Save to Akashic": "save_chunk_to_akashic",
 		"Test LOD": "test_lod_cycle",
 		"Inspect": "inspect_chunk"
-	}
 }
 
 # ===== CHUNK PROPERTIES =====
@@ -35,7 +34,8 @@ var debug_label: Label3D = null
 var chunk_boundary: Node3D = null
 
 # LOD System
-enum LODLevel { HIDDEN, MINIMAL, BASIC, DETAILED, FULL_DETAIL }
+enum LODLevel { HIDDEN, MINIMAL, BASIC, DETAILED, FULL_DETAIL
+}
 var current_lod: LODLevel = LODLevel.HIDDEN
 var render_distance: float = 50.0
 var detail_distance: float = 20.0
@@ -154,7 +154,7 @@ func initialize_chunk_systems() -> void:
 		"content_manifest": {},
 		"visitor_log": [],
 		"evolution_history": []
-	}
+}
 
 func setup_generators_by_y_level() -> void:
 	"""Setup different generators based on Y coordinate"""
@@ -185,7 +185,7 @@ func setup_generation_rules() -> void:
 		"cosmic_density": 0.2,
 		"evolution_rate": 1.0,
 		"consciousness_attraction": 1.0
-	}
+}
 
 # ===== WORLD POSITIONING =====
 
@@ -271,6 +271,7 @@ func update_debug_labels() -> void:
 					child.modulate = get_consciousness_color()
 				elif child.text.begins_with("Gen:"):
 					child.text = "Gen:%d LOD:%s" % [generation_level, LODLevel.keys()[current_lod]]
+	}
 
 # ===== LOD SYSTEM =====
 
@@ -341,6 +342,7 @@ func set_lod_level(new_lod: LODLevel) -> void:
 	
 	update_debug_labels()
 	print("🧊 Chunk %s: LOD %s -> %s (dist: %.1f)" % [being_name, LODLevel.keys()[old_lod], LODLevel.keys()[current_lod], get_distance_to_closest_observer()])
+}
 
 # ===== LOD ACTIVATION LEVELS =====
 
@@ -456,6 +458,7 @@ func inspect_chunk() -> void:
 	print("  Stored Beings: %d" % stored_beings.size())
 	print("  Stored Data Keys: %s" % stored_data.keys())
 
+
 func show_chunk_context_menu() -> void:
 	"""Show context menu for chunk operations"""
 	print("📋 Chunk Context Menu:")
@@ -490,7 +493,7 @@ func save_chunk_to_akashic() -> void:
 		"stored_data": stored_data,
 		"generation_rules": generation_rules,
 		"being_manifest": []
-	}
+}
 	
 	# Add stored beings info
 	for being in stored_beings:
@@ -582,7 +585,7 @@ func get_consciousness_color() -> Color:
 
 func get_debug_payload() -> Dictionary:
 	"""Return debug payload using DEBUG_META configuration"""
-	var out := {}
+	var out := {
 	for key in DEBUG_META.get("show_vars", []):
 		if has_method("get") and get(key) != null:
 			out[key] = get(key)
@@ -620,10 +623,11 @@ func set_debug_field(key: String, value) -> void:
 		"detail_distance":
 			detail_distance = maxf(value, 1.0)
 			print("🔍 Detail distance: %.1f" % detail_distance)
+}
 
 func get_debug_actions() -> Dictionary:
 	"""Return callable debug actions from DEBUG_META"""
-	var out := {}
+	var out := {
 	var actions = DEBUG_META.get("actions", {})
 	for label in actions.keys():
 		var method_name = actions[label]
@@ -646,6 +650,7 @@ func test_lod_cycle() -> void:
 	var next_lod = (current_lod + 1) % LODLevel.size()
 	set_lod_level(next_lod)
 	print("🔄 LOD cycled to: %s" % LODLevel.keys()[next_lod])
+}
 
 # ===== GENERATOR CLASSES (Stubs for now) =====
 

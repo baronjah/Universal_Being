@@ -163,7 +163,7 @@ func capture_image(source):
 			capture_from_camera()
 		_:
 			# Assume it's a file path
-			if source.empty():
+			if source.is_empty():
 				log_message("Please specify a source: screenshot, clipboard, camera, or a file path", "error")
 			else:
 				log_message("Capturing from file: " + source, "system")
@@ -179,7 +179,7 @@ func recognize_text(mode="auto"):
 	current_state = OCRState.PROCESSING
 	
 	# Start timing
-	var start_time = OS.get_ticks_msec()
+	var start_time = OS.Time.get_ticks_msec()
 	
 	# In a real implementation, this would call the actual OCR engine
 	# For this mock-up, we'll simulate OCR processing
@@ -200,7 +200,7 @@ func recognize_text(mode="auto"):
 # Simulate OCR processing (would be replaced by actual OCR in real implementation)
 func _simulate_ocr_processing(mode):
 	# Simulate processing time
-	yield(get_tree().create_timer(1.5), "timeout")
+	await(get_tree().create_timer(1.5), "timeout")
 	
 	# Generate sample text based on the current capture source
 	var recognized_text = ""
@@ -221,7 +221,7 @@ func _simulate_ocr_processing(mode):
 			confidence = 0.69
 	
 	# Calculate process time
-	var end_time = OS.get_ticks_msec()
+	var end_time = OS.Time.get_ticks_msec()
 	last_process_time = end_time - start_time
 	
 	# Save the result
@@ -276,11 +276,11 @@ func capture_from_camera():
 	# For this mock-up, we'll simulate it
 	
 	# Simulate camera access
-	yield(get_tree().create_timer(0.5), "timeout")
+	await(get_tree().create_timer(0.5), "timeout")
 	log_message("Camera activated. Position text in view...", "system")
 	
 	# Simulate capture delay
-	yield(get_tree().create_timer(1.0), "timeout")
+	await(get_tree().create_timer(1.0), "timeout")
 	
 	current_capture_source = CaptureSource.CAMERA
 	last_captured_image = "camera.png"  # Simulated image reference
@@ -336,7 +336,7 @@ func display_ocr_status():
 
 # Display last OCR result
 func display_last_result():
-	if last_recognized_text.empty():
+	if last_recognized_text.is_empty():
 		log_message("No OCR results available. Use '#ocr capture' then '#ocr scan'.", "system")
 		return
 		
@@ -389,7 +389,7 @@ func configure_ocr(config_string):
 
 # Analyze recognized text
 func analyze_text(analysis_type="general"):
-	if last_recognized_text.empty():
+	if last_recognized_text.is_empty():
 		log_message("No text to analyze. Perform OCR recognition first.", "error")
 		return
 	
@@ -411,7 +411,7 @@ func analyze_text(analysis_type="general"):
 
 # Extract structured data from recognized text
 func extract_structured_data(data_type="auto"):
-	if last_recognized_text.empty():
+	if last_recognized_text.is_empty():
 		log_message("No text to extract data from. Perform OCR recognition first.", "error")
 		return
 	
@@ -433,7 +433,7 @@ func extract_structured_data(data_type="auto"):
 
 # Translate recognized text
 func translate_text(target_language="en"):
-	if last_recognized_text.empty():
+	if last_recognized_text.is_empty():
 		log_message("No text to translate. Perform OCR recognition first.", "error")
 		return
 	
@@ -442,7 +442,7 @@ func translate_text(target_language="en"):
 	# In a real implementation, this would use a translation API
 	# For this mock-up, we'll simulate it
 	
-	yield(get_tree().create_timer(0.8), "timeout")
+	await(get_tree().create_timer(0.8), "timeout")
 	
 	var translated_text = "This is simulated translated text.\nThe original language was detected as " + ocr_config.language + ".\nTranslated to " + target_language + "."
 	
@@ -460,14 +460,14 @@ func batch_process(folder_path):
 	log_message("Searching for images...", "system")
 	
 	# Simulate finding images
-	yield(get_tree().create_timer(0.5), "timeout")
+	await(get_tree().create_timer(0.5), "timeout")
 	
 	var file_count = 5  # Simulated file count
 	log_message("Found " + str(file_count) + " images to process", "system")
 	
 	for i in range(file_count):
 		log_message("Processing image " + str(i+1) + "/" + str(file_count), "system")
-		yield(get_tree().create_timer(0.7), "timeout")
+		await(get_tree().create_timer(0.7), "timeout")
 	
 	log_message("Batch processing complete. " + str(file_count) + " images processed.", "system")
 
@@ -481,26 +481,26 @@ func install_ocr_components(component="all"):
 	match component:
 		"all":
 			log_message("Installing all OCR components...", "system")
-			yield(get_tree().create_timer(2.0), "timeout")
+			await(get_tree().create_timer(2.0), "timeout")
 			log_message("All OCR components installed successfully!", "system")
 		"core":
 			log_message("Installing OCR core components...", "system")
-			yield(get_tree().create_timer(1.0), "timeout")
+			await(get_tree().create_timer(1.0), "timeout")
 			log_message("OCR core components installed successfully!", "system")
 		"languages":
 			log_message("Installing OCR language packs...", "system")
-			yield(get_tree().create_timer(1.5), "timeout")
+			await(get_tree().create_timer(1.5), "timeout")
 			log_message("OCR language packs installed successfully!", "system")
 		"advanced":
 			log_message("Installing advanced OCR components...", "system")
-			yield(get_tree().create_timer(1.8), "timeout")
+			await(get_tree().create_timer(1.8), "timeout")
 			log_message("Advanced OCR components installed successfully!", "system")
 		_:
 			log_message("Unknown component: " + component, "error")
 
 # Uninstall OCR components
 func uninstall_ocr_components(component="none"):
-	if component == "none" or component.empty():
+	if component == "none" or component.is_empty():
 		log_message("Please specify a component to uninstall", "error")
 		return
 	
@@ -509,7 +509,7 @@ func uninstall_ocr_components(component="none"):
 	# In a real implementation, this would uninstall actual components
 	# For this mock-up, we'll simulate it
 	
-	yield(get_tree().create_timer(1.0), "timeout")
+	await(get_tree().create_timer(1.0), "timeout")
 	log_message("OCR components uninstalled: " + component, "system")
 
 # Reset OCR system
@@ -536,7 +536,7 @@ func reset_ocr_system():
 
 # Backup OCR data
 func backup_ocr_data(path):
-	if path.empty():
+	if path.is_empty():
 		path = "user://ocr_backup.dat"
 	
 	log_message("Backing up OCR data to: " + path, "system")
@@ -544,12 +544,12 @@ func backup_ocr_data(path):
 	# In a real implementation, this would save data to a file
 	# For this mock-up, we'll simulate it
 	
-	yield(get_tree().create_timer(0.8), "timeout")
+	await(get_tree().create_timer(0.8), "timeout")
 	log_message("OCR data backup complete.", "system")
 
 # Restore OCR data
 func restore_ocr_data(path):
-	if path.empty():
+	if path.is_empty():
 		path = "user://ocr_backup.dat"
 	
 	log_message("Restoring OCR data from: " + path, "system")
@@ -557,7 +557,7 @@ func restore_ocr_data(path):
 	# In a real implementation, this would load data from a file
 	# For this mock-up, we'll simulate it
 	
-	yield(get_tree().create_timer(0.8), "timeout")
+	await(get_tree().create_timer(0.8), "timeout")
 	log_message("OCR data restored successfully.", "system")
 
 # Display OCR help

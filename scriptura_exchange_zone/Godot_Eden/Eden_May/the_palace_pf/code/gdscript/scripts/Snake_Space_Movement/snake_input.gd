@@ -1,8 +1,8 @@
 extends Node
 # jsh_snake_game.gd
 #extends Node3D
-class_name JSHSnakeGameInput
-# res://code/gdscript/scripts/Snake_Space_Movement/snake_input.gd
+class_name JSHSnakeGameInput_snakeinput_snakeinp
+# res://scripts/gdscript/scripts/Snake_Space_Movement/snake_input.gd
 # JSH_World/grid_map
 
 var snake_integration
@@ -71,12 +71,12 @@ var JSH3DTerminal
 
 func _ready_new_v1():
 	# Get references to your systems
-	thread_pool = get_node("/root/thread_pool_autoload")
+	thread_pool = get_node("root/thread_pool_autoload")
 	
 	# Find the snake integration node
 	snake_integration = get_node_or_null("../JSHSpaceSnakeIntegration")
 	if not snake_integration:
-		snake_integration = get_node_or_null("/root/main/JSHSpaceSnakeIntegration")
+		snake_integration = get_node_or_null("root/main/JSHSpaceSnakeIntegration")
 	
 	# Set up connection to active datapoint
 	connect_to_datapoint()
@@ -425,7 +425,7 @@ func handle_input_new(direction):
 func connect_to_datapoint():
 	# Find the active container and datapoint in your JSH system
 	var container_name = BanksCombiner.set_containers_names["singular_lines"]
-	var current_container = get_node_or_null("/root/main/" + container_name)
+	var current_container = get_node_or_null("root/main/" + container_name)
 	
 	if current_container:
 		# Find the datapoint within this container
@@ -555,7 +555,7 @@ func process_grid_interaction(interaction_data):
 
 # jsh_snake_game.gd
 #extends Node3D
-#class_name JSHSnakeGame
+#class_name JSHSnakeGame_snakeinput_snakeinp
 
 # Game configuration
 # Input mapping

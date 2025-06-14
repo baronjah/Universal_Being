@@ -12,6 +12,7 @@ func inspect_object(object: Node) -> void:
 		return
 	
 	print("🔍 Inspecting: %s" % object.name)
+
 	
 	inspected_object = object
 	update_header_info()
@@ -344,6 +345,7 @@ func _on_debuggable_field_changed(field_name: String, new_value) -> void:
 		return
 	
 	print("🔧 Debuggable field changed: %s.%s = %s" % [inspected_object.name, field_name, new_value])
+
 	
 	# Call set_debug_field on the object
 	inspected_object.set_debug_field(field_name, new_value)
@@ -357,6 +359,7 @@ func execute_debuggable_action(action_name: String, action_callable: Callable) -
 		return
 	
 	print("⚡ Executing Debuggable action: %s on %s" % [action_name, inspected_object.name])
+
 	
 	try:
 		action_callable.call()
@@ -369,6 +372,7 @@ func show_debuggable_change_feedback(field_name: String, new_value) -> void:
 	"""Show visual feedback for Debuggable field change"""
 	if inspected_object and inspected_object is Node3D:
 		create_floating_change_text(inspected_object, "Debuggable: %s = %s" % [field_name, str(new_value)])
+
 
 func show_debuggable_action_feedback(action_name: String, success: bool) -> void:
 	"""Show visual feedback for Debuggable action"""
@@ -407,6 +411,7 @@ func get_value_type_name(value) -> String:
 		TYPE_ARRAY: return "Array"
 		TYPE_DICTIONARY: return "Dictionary"
 		_: return "unknown"
+
 
 func update_header_info() -> void:
 	"""Enhanced header that shows debug interface type"""

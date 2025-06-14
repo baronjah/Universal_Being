@@ -1,6 +1,6 @@
 # element_factory.gd
-class_name ElementFactory
-extends Node
+class_name ElementFactory_elementfactory_elementf
+extends \2
 }
 
 # Registry of all possible elements that can be created

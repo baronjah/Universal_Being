@@ -1,6 +1,6 @@
 # project_architecture.gd
 # JSH Ethereal Engine Architecture
-extends Node
+extends \2
 
 # Core Systems Structure
 const CORE_SYSTEMS = {

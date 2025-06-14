@@ -25,6 +25,7 @@ func pentagon_init() -> void:
     metadata.gemma_can_modify = true
     status_message = "Initializing Terminal..."
     print("🌟 %s: Pentagon Init Complete" % being_name)
+	
 
 func pentagon_ready() -> void:
     super.pentagon_ready()  # 🔄 ALWAYS CALL SUPER FIRST
@@ -32,13 +33,16 @@ func pentagon_ready() -> void:
     add_component("res://components/terminal_ui.ub.zip")
     add_component("res://components/ai_integration.ub.zip")
     add_component("res://components/socket_grid.ub.zip")
+	
     # Load and control the terminal scene
     load_scene("res://scenes/terminal_scene.tscn")
+	
     # Set up socket grid and AI status
     set_scene_property("TerminalUI/StatusLabel", "text", status_message)
     set_scene_property("TerminalUI/SocketGrid", "size", socket_grid_size)
     ai_connected = true  # Simulate AI connection for now
     print("🌟 %s: Pentagon Ready Complete" % being_name)
+	
 
 func pentagon_process(delta: float) -> void:
     super.pentagon_process(delta)  # ⚡ ALWAYS CALL SUPER FIRST
@@ -56,6 +60,7 @@ func pentagon_input(event: InputEvent) -> void:
 func pentagon_sewers() -> void:
     # Being-specific cleanup FIRST
     print("🌟 %s: Pentagon Sewers Starting" % being_name)
+	
     # Cleanup logic here (e.g., disconnect AI, clear UI)
     super.pentagon_sewers()  # 💀 ALWAYS CALL SUPER LAST
 
@@ -65,6 +70,7 @@ func process_command(command: String) -> void:
     """Process a command entered in the terminal UI."""
     # Placeholder for command parsing and execution
     print("[Terminal] Command received: %s" % command)
+	
 
 # ===== AI INTEGRATION =====
 
@@ -76,8 +82,8 @@ func ai_interface() -> Dictionary:
         "socket_grid_size": socket_grid_size,
         "ai_connected": ai_connected,
         "status_message": status_message
-    }
     return base_interface
+}
 
 func ai_invoke_method(method_name: String, args: Array = []) -> Variant:
     match method_name:

@@ -1,14 +1,14 @@
 extends Node
 
-class_name TurnBasedGameFramework
+class_name TurnBasedGameFramework_turnbasedgameframework_turnbase
 
 # ----- GAME STRUCTURE SETTINGS -----
 @export_category("Game Structure")
-@export var min_turn_time: int = 120  # 2 minutes per turn minimum
-@export var max_turns: int = 12
-@export var auto_advance_turns: bool = true
-@export var create_turn_folders: bool = true
-@export var save_turn_state: bool = true
+@@@export var min_turn_time: int = 120  # 2 minutes per turn minimum
+@@@export var max_turns: int = 12
+@@@export var auto_advance_turns: bool = true
+@@@export var create_turn_folders: bool = true
+@@@export var save_turn_state: bool = true
 
 # ----- GAME COMPONENTS -----
 var turn_system: Node = null
@@ -78,7 +78,7 @@ func _ensure_folders_exist():
     # Create turn folders
     if create_turn_folders:
         for i in range(1, max_turns + 1):
-            var turn_folder = base_folder_path + "turn_" + str(i) + "/"
+            var turn_folder = base_folder_path + "turn_" + str(i) + ""
             
             if not DirAccess.dir_exists_absolute(turn_folder):
                 DirAccess.make_dir_recursive_absolute(turn_folder)
@@ -278,7 +278,7 @@ func _generate_script_for_turn(turn_number: int) -> String:
     script_content += "# Part of the 12 Turns Game Framework\n\n"
     
     # Class declaration
-    script_content += "class_name Turn" + str(turn_number) + "Script\n\n"
+    script_content += "class_name Turn_turnbasedgameframework_turnbase" + str(turn_number) + "Script\n\n"
     
     # Variables
     script_content += "# ----- TURN SETTINGS -----\n"

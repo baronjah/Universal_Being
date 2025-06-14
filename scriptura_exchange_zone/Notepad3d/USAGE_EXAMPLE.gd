@@ -140,7 +140,7 @@ func advanced_example():
 	visualizer.connect_to_connector(connector)
 	
 	# Export visualizations
-	visualizer.export_html_visualization("/mnt/c/Users/Percision 15/advanced_connections.html")
+	visualizer.export_html_visualization("mnt/c/Users/Percision 15/advanced_connections.html")
 	
 	print("\nAdvanced example complete\n")
 
@@ -203,7 +203,7 @@ func tokenize_example():
 		analyzer = TokenAnalyzer.new()
 	
 	# Tokenize a file with different strategies
-	var file_path = "/mnt/c/Users/Percision 15/12_turns_system/dimensional_color_system.gd"
+	var file_path = "mnt/c/Users/Percision 15/12_turns_system/dimensional_color_system.gd"
 	
 	# Code tokens
 	var code_tokens = analyzer.tokenize_file(file_path, analyzer.TokenStrategy.CODE_TOKENS)

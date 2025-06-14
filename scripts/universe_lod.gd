@@ -62,8 +62,7 @@ const LOD_PRESETS = {
         "render_distance": 3200.0,
         "texture_quality": 2.0,
         "simulation_rate": 2.0
-    }
-}
+		}
 
 func _init() -> void:
     component_name = "universe_lod"
@@ -87,7 +86,7 @@ func start_lod_transition(target_lod: int) -> void:
         "target_lod": target_lod,
         "progress": 0.0,
         "active": true
-    }
+		}
     
     active_lod_effects.append(transition)
     current_lod = target_lod
@@ -185,4 +184,3 @@ func get_lod_state() -> Dictionary:
         "is_observed": is_observed,
         "active_transitions": active_lod_effects.size(),
         "observer_distance": observer_position.length() if is_observed else -1.0
-    } 

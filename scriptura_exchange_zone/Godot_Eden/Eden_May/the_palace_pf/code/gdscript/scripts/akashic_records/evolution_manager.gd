@@ -1,15 +1,15 @@
 extends Node
-class_name EvolutionManager
+class_name EvolutionManager_evolutionmanager_evolutio
 
 # References
 var akashic_records = null
 
 # Evolution parameters
-@export var evolution_interval: float = 60.0  # seconds between evolution cycles
-@export var evolution_rate: float = 0.05      # base rate of property drift
-@export var variant_threshold: int = 10       # usage count needed to generate variants
-@export var variant_probability: float = 0.3  # probability of generating a variant
-@export var auto_evolution: bool = true       # whether to automatically evolve
+@@export var evolution_interval: float = 60.0  # seconds between evolution cycles
+@@export var evolution_rate: float = 0.05      # base rate of property drift
+@@export var variant_threshold: int = 10       # usage count needed to generate variants
+@@export var variant_probability: float = 0.3  # probability of generating a variant
+@@export var auto_evolution: bool = true       # whether to automatically evolve
 
 # Evolution statistics
 var evolution_cycles: int = 0

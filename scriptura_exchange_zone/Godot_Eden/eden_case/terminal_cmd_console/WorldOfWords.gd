@@ -1,5 +1,5 @@
 extends Node
-class_name WorldOfWords
+class_name WorldOfWords_WorldOfWords_WorldOfW
 }
 
 # ------------------------------------
@@ -235,7 +235,7 @@ func create_word(text, properties = {}):
 }
 
     # Record last activity time
-    last_activity_time = OS.get_unix_time()
+    last_activity_time = OS.Time.get_unix_time_from_system()
 }
 
     # Process through the word processor
@@ -274,7 +274,7 @@ func delete_word(word_id):
 }
 
     # Record last activity time
-    last_activity_time = OS.get_unix_time()
+    last_activity_time = OS.Time.get_unix_time_from_system()
 }
 
     var word_data = word_drive.get_word(word_id)
@@ -296,7 +296,7 @@ func connect_words(from_id, to_id, properties = {}):
 }
 
     # Record last activity time
-    last_activity_time = OS.get_unix_time()
+    last_activity_time = OS.Time.get_unix_time_from_system()
 }
 
     # Get word data
@@ -331,7 +331,7 @@ func change_dimension(dimension):
 }
 
     # Record last activity time
-    last_activity_time = OS.get_unix_time()
+    last_activity_time = OS.Time.get_unix_time_from_system()
 }
 
     # Set current dimension
@@ -365,22 +365,22 @@ func advance_turn():
 }
 
     # Record last activity time
-    last_activity_time = OS.get_unix_time()
+    last_activity_time = OS.Time.get_unix_time_from_system()
 }
 
-    // Save current state
+# // Save current state
     save_system_state()
 }
 
-    // Increment turn
+# // Increment turn
     current_turn += 1
 }
 
-    // Update processor
+# // Update processor
     word_processor.set_turn(current_turn)
 }
 
-    // Update through WordDrive
+# // Update through WordDrive
     word_drive.send_message("system_command", {
         "command": "change_turn",
         "turn": current_turn
@@ -426,12 +426,12 @@ func load_system_state():
         current_dimension = memory_system.get_current_dimension()
 }
 
-        // Update processor
+# // Update processor
         word_processor.set_turn(current_turn)
         word_processor.set_dimension(current_dimension)
 }
 
-        // Update dimension
+# // Update dimension
         change_dimension(current_dimension)
 }
 
@@ -486,20 +486,20 @@ func update_config(new_config):
         return false
 }
 
-    // Apply changes
+# // Apply changes
     for key in new_config:
         if config.has(key):
             config[key] = new_config[key]
 }
 
-    // Apply configuration changes to components
+# // Apply configuration changes to components
     word_visualizer.set_visualization_enabled(config.visualization_enabled)
     physics_engine.set_physics_enabled(config.physics_enabled)
     memory_system.set_memory_enabled(config.memory_enabled)
     connection_manager.set_auto_discovery(config.connection_auto_discovery)
 }
 
-    // Update auto-save
+# // Update auto-save
     if config.auto_save_enabled:
         auto_save_timer.start()
     else:
@@ -534,7 +534,7 @@ func get_system_status():
         "connection_count": word_drive.get_all_connections().size(),
         "memory_allocated": word_drive_status.memory_allocated,
         "last_activity_time": last_activity_time,
-        "uptime": OS.get_unix_time() - word_drive_status.last_activity_timestamp,
+        "uptime": OS.Time.get_unix_time_from_system() - word_drive_status.last_activity_timestamp,
         "config": config
     }
 }
@@ -547,8 +547,8 @@ func get_system_status():
 
 # Signal handlers
 func _on_word_message_sent(msg_type, payload, source):
-    // Update last activity time
-    last_activity_time = OS.get_unix_time()
+# // Update last activity time
+    last_activity_time = OS.Time.get_unix_time_from_system()
 }
 
 func _on_dimension_changed(dimension, properties):
@@ -571,14 +571,14 @@ func _on_word_clicked(word_id, word_data):
 }
 
 func _on_visualizer_dimension_changed(dimension, properties):
-    // This is for when the visualizer triggers a dimension change
+# // This is for when the visualizer triggers a dimension change
     if dimension != current_dimension:
         change_dimension(dimension)
 }
 
 func _on_auto_save_timer_timeout():
     if config.auto_save_enabled:
-        // Check if there was activity since last save
+# // Check if there was activity since last save
         if last_activity_time > memory_system.get_last_save_time():
             save_system_state()
 }
@@ -587,7 +587,8 @@ func _on_auto_save_timer_timeout():
 }
 
 # Word Physics Engine
-class WordPhysics extends Node:
+class WordPhysics
+extends \2:
     var word_drive = null
     var physics_enabled = true
 }
@@ -702,7 +703,8 @@ class WordPhysics extends Node:
 }
 
 # Word Connection Manager
-class WordConnectionManager extends Node:
+class WordConnectionManager
+extends \2:
     var word_drive = null
     var auto_discovery_enabled = true
 }
@@ -812,7 +814,8 @@ class WordConnectionManager extends Node:
 }
 
 # Word Memory System
-class WordMemorySystem extends Node:
+class WordMemorySystem
+extends \2:
     var word_drive = null
     var memory_enabled = true
     var message_history = []
@@ -853,7 +856,7 @@ class WordMemorySystem extends Node:
 
         var save_data = {
             "version": "1.0.0",
-            "timestamp": OS.get_unix_time(),
+            "timestamp": OS.Time.get_unix_time_from_system(),
             "turn": turn,
             "dimension": dimension,
             "words": words,
@@ -868,7 +871,7 @@ class WordMemorySystem extends Node:
         if file.open(save_path, File.WRITE) == OK:
             file.store_string(JSON.print(save_data, "  "))
             file.close()
-            last_save_time = OS.get_unix_time()
+            last_save_time = OS.Time.get_unix_time_from_system()
             return true
 }
 

@@ -1,5 +1,5 @@
 extends Node
-class_name UniverseDictionaryBridge
+class_name UniverseDictionaryBridge_universedictionarybridge_universe
 
 # References to managers
 var universe_controller = null
@@ -231,8 +231,8 @@ func update_cosmic_data(cosmic_id: String, data: Dictionary) -> bool:
 		if typeof(data[key]) != TYPE_OBJECT and typeof(data[key]) != TYPE_ARRAY:
 			entity.properties[key] = data[key]
 	
-	// TODO: Need a method to update entity properties without changing position
-	// For now, we'll just update position with same value
+# // TODO: Need a method to update entity properties without changing position
+# // For now, we'll just update position with same value
 	
 	var position = Vector3(
 		entity.position.x,
@@ -254,14 +254,14 @@ func unregister_cosmic_object(cosmic_id: String) -> bool:
 	
 	var entity_id = cosmic_to_entity[cosmic_id]
 	
-	// Emit signal before removal
+# // Emit signal before removal
 	emit_signal("entity_removed", entity_id, cosmic_id)
 	
-	// Remove mappings
+# // Remove mappings
 	entity_to_cosmic.erase(entity_id)
 	cosmic_to_entity.erase(cosmic_id)
 	
-	// Remove from Akashic Records
+# // Remove from Akashic Records
 	return akashic_records.remove_entity(entity_id)
 
 # Process an interaction between two cosmic objects

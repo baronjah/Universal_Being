@@ -28,6 +28,7 @@ func pentagon_init() -> void:
     
     # Being-specific initialization
     print("🌟 %s: Pentagon Init Complete" % being_name)
+	
 
 func pentagon_ready() -> void:
     super.pentagon_ready()  # 🔄 ALWAYS CALL SUPER FIRST
@@ -40,6 +41,7 @@ func pentagon_ready() -> void:
     
     # Being-specific ready logic
     print("🌟 %s: Pentagon Ready Complete" % being_name)
+	
 
 func pentagon_process(delta: float) -> void:
     super.pentagon_process(delta)  # ⚡ ALWAYS CALL SUPER FIRST
@@ -59,6 +61,7 @@ func pentagon_input(event: InputEvent) -> void:
 func pentagon_sewers() -> void:
     # Being-specific cleanup FIRST
     print("🌟 %s: Pentagon Sewers Starting" % being_name)
+	
     
     # Cleanup visualization
     cleanup_tree_visualization()
@@ -94,5 +97,4 @@ func ai_interface() -> Dictionary:
         "growth_speed": growth_speed,
         "leaf_color": leaf_color,
         "trunk_color": trunk_color
-    }
     return base_interface 

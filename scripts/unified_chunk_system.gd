@@ -87,8 +87,7 @@ func initialize_unified_system() -> void:
 			"performance": 0.0,
 			"memory_usage": 0.0,
 			"adaptability": 10.0
-		}
-	}
+}
 
 func setup_hybrid_system() -> void:
 	"""Setup the hybrid system that uses both approaches intelligently"""
@@ -175,7 +174,7 @@ func monitor_performance() -> void:
 		"frame_times": [],
 		"memory_samples": [],
 		"chunk_operations": 0
-	}
+}
 
 func update_performance_metrics(delta: float) -> void:
 	"""Update performance metrics for optimization"""
@@ -235,7 +234,7 @@ func analyze_current_context() -> Dictionary:
 		"memory_pressure": get_memory_pressure(),
 		"cpu_load": calculate_average_frame_time(),
 		"generation_demand": get_generation_demand()
-	}
+}
 	
 	return context
 
@@ -245,7 +244,7 @@ func determine_optimal_approach(context: Dictionary) -> String:
 		"luminus": 0.0,
 		"detailed": 0.0,
 		"hybrid": 0.0
-	}
+}
 	
 	# Score based on context factors
 	
@@ -320,7 +319,7 @@ func get_system_status() -> Dictionary:
 		"performance": system_performance,
 		"luminus_active": luminus_manager != null and luminus_manager.get_process_mode() != Node.PROCESS_MODE_DISABLED,
 		"detailed_active": detailed_manager != null and detailed_manager.get_process_mode() != Node.PROCESS_MODE_DISABLED
-	}
+}
 
 func print_system_status() -> void:
 	"""Print current system status for debugging"""
@@ -331,6 +330,7 @@ func print_system_status() -> void:
 	print("  Luminus Active: %s" % status.luminus_active)
 	print("  Detailed Active: %s" % status.detailed_active)
 	print("  Avg Frame Time: %.3f ms" % (calculate_average_frame_time() * 1000))
+}
 
 # ===== INTEGRATION HELPERS =====
 
@@ -348,6 +348,7 @@ func create_chunk_at_position(world_pos: Vector3, approach: String = "") -> Node
 				var coords = detailed_manager.world_pos_to_chunk_coord(world_pos)
 				return detailed_manager.create_chunk_at_coordinate(coords)
 		"hybrid":
+
 			# Use context to decide which system to use for this chunk
 			var context = analyze_current_context()
 			if context.memory_pressure < 0.5:

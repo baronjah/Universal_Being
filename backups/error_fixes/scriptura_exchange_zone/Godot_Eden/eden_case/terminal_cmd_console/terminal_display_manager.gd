@@ -343,4 +343,4 @@ func get_terminal_settings() -> Dictionary:
 # var display_manager = TerminalDisplayManager.new()
 # add_child(display_manager)
 # display_manager.toggle_night_mode(true)
-# display_manager.connect("mode_changed", self, "_on_display_mode_changed")
+# display_manager.connect(_on_display_mode_changed)

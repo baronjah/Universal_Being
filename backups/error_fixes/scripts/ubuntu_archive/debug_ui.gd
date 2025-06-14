@@ -38,6 +38,7 @@ func initialize(akashic_records_system: Node, bridge: Node, manager: Node, db_in
     refresh_ui()
     
     print("DebugUI: Initialized with system references")
+	
 
 func _setup_ui() -> void:
     # Main container
@@ -152,13 +153,14 @@ func _setup_ui() -> void:
     control_panel.add_child(clear_log_button)
     
     print("DebugUI: UI setup complete")
+	
 
 func refresh_ui() -> void:
     # Refresh entity list
     _refresh_entity_list()
     
     # Refresh entity info if an entity is selected
-    if !selected_entity_id.empty():
+    if !selected_entity_id.is_empty():
         _display_entity_info(selected_entity_id)
     else:
         _clear_info_panel()
@@ -335,6 +337,7 @@ func _on_test_interaction_pressed() -> void:
     
     if result.has("success") and result["success"]:
         log_message("Interaction between " + entity1.get_type() + " and " + entity2.get_type() + " resulted in effect: " + result["effect"], "interaction")
+		
         
         # Log transformations
         if result.has("transformations") and result["transformations"].size() > 0:
@@ -351,7 +354,7 @@ func _on_test_interaction_pressed() -> void:
     refresh_ui()
 
 func _on_transform_entity_pressed() -> void:
-    if universal_bridge == null or selected_entity_id.empty():
+    if universal_bridge == null or selected_entity_id.is_empty():
         log_message("Cannot transform: No entity selected or bridge unavailable", "warning")
         return
     
@@ -394,6 +397,7 @@ func _on_check_database_pressed() -> void:
     # Get information about current files
     var files = database_integrator.get_database_files()
     log_message("Current database files: " + str(files.size()), "database")
+	
     
     refresh_ui()
 

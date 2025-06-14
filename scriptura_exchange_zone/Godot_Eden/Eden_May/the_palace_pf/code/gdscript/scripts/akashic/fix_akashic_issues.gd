@@ -1,5 +1,5 @@
 extends Node
-class_name AkashicFixer
+class_name AkashicFixer_fixakashicissues_fixakash
 
 # This is a utility script to fix common issues in the Akashic Records system
 
@@ -45,9 +45,9 @@ func fix_get_tree_issues() -> void:
                 file.close()
                 print("Fixed get_tree() issues in " + file_path)
 
-# Issue 2: class_name parameter conflicts
+# Issue 2: class_name parameter_fixakashicissues_fixakash conflicts
 func fix_class_name_issues() -> void:
-    print("Fixing class_name parameter issues...")
+    print("Fixing class_name parameter_fixakashicissues_fixakash issues...")
     var files = find_files_with_pattern("class_name")
     
     for file_path in files:
@@ -63,7 +63,7 @@ func fix_class_name_issues() -> void:
             var result = regex.search(content)
             
             if result:
-                # Replace class_name parameter with class_name_param
+                # Replace class_name parameter_fixakashicissues_fixakash with class_name_param
                 var line = result.get_string()
                 var fixed_line = line.replace("class_name", "class_name_param")
                 content = content.replace(line, fixed_line)
@@ -78,7 +78,7 @@ func fix_class_name_issues() -> void:
                 if file:
                     file.store_string(content)
                     file.close()
-                    print("Fixed class_name parameter issues in " + file_path)
+                    print("Fixed class_name parameter_fixakashicissues_fixakash issues in " + file_path)
 
 # Issue 3: visible property access
 func fix_visible_property_issues() -> void:

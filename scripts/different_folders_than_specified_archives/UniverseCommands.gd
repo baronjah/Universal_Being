@@ -49,7 +49,7 @@ func _cmd_universe(args: Array) -> Dictionary:
 		return {
 			"success": false,
 			"message": "Usage: universe <create|enter|exit|info|list>"
-		}
+}
 	
 	var subcommand = args[0]
 	var subargs = args.slice(1)
@@ -69,14 +69,14 @@ func _cmd_universe(args: Array) -> Dictionary:
 			return {
 				"success": false,
 				"message": "Unknown subcommand: " + subcommand
-			}
+	}
 func _cmd_create_universe(args: Array) -> Dictionary:
 	"""Create a new universe"""
 	if args.is_empty():
 		return {
 			"success": false,
 			"message": "Usage: create_universe <name> [parent_name]"
-		}
+}
 	
 	var universe_name = args[0]
 	var parent_universe = null
@@ -88,7 +88,7 @@ func _cmd_create_universe(args: Array) -> Dictionary:
 			return {
 				"success": false,
 				"message": "Parent universe '%s' not found" % args[1]
-			}
+	}
 	
 	# Create the universe
 	var new_universe = universe_manager.create_universe(universe_name, parent_universe, {
@@ -102,8 +102,7 @@ func _cmd_create_universe(args: Array) -> Dictionary:
 		"data": {
 			"uuid": new_universe.uuid,
 			"parent": new_universe.parent_universe.name if new_universe.parent_universe else "None"
-		}
-	}
+}
 
 func _cmd_enter_universe(args: Array) -> Dictionary:
 	"""Enter a universe"""
@@ -111,22 +110,22 @@ func _cmd_enter_universe(args: Array) -> Dictionary:
 		return {
 			"success": false,
 			"message": "Usage: enter <universe_name>"
-		}
+}
 	
 	var universe = universe_manager.find_universe_by_name(args[0])
 	if not universe:
 		return {
 			"success": false,
 			"message": "Universe '%s' not found" % args[0]
-		}
+}
 	
 	universe_manager.enter_universe(universe)
 	
 	return {
 		"success": true,
 		"message": "Consciousness descended into Universe '%s'" % universe.name,
-		"data": {"universe": universe.name}
-	}
+		"data": {"universe": universe.name
+}
 
 func _cmd_exit_universe(args: Array) -> Dictionary:
 	"""Exit current universe"""
@@ -151,12 +150,13 @@ func _cmd_exit_universe(args: Array) -> Dictionary:
 				message = "Transcended to Universe '%s'" % universe.name
 			else:
 				message = "Unknown universe: " + exit_to
+	}
 	
 	return {
 		"success": success,
 		"message": message,
-		"data": {"current_universe": universe_manager.active_universe.name}
-	}
+		"data": {"current_universe": universe_manager.active_universe.name
+}
 ## REALITY MANIPULATION COMMANDS ==================================================
 
 func _cmd_set_physics(args: Array) -> Dictionary:
@@ -165,7 +165,7 @@ func _cmd_set_physics(args: Array) -> Dictionary:
 		return {
 			"success": false,
 			"message": "Usage: set_physics <property> <value>"
-		}
+}
 	
 	var property = args[0]
 	var value = str_to_var(args[1])
@@ -179,13 +179,12 @@ func _cmd_set_physics(args: Array) -> Dictionary:
 			)
 			return {
 				"success": true,
-				"message": "Gravity redefined to %s" % value
-			}
+				"message": "Gravity redefined to %s" % value}
 		_:
 			return {
 				"success": false,
 				"message": "Unknown physics property: " + property
-			}
+	}
 
 func _cmd_set_time(args: Array) -> Dictionary:
 	"""Modify time flow in current universe"""
@@ -193,7 +192,7 @@ func _cmd_set_time(args: Array) -> Dictionary:
 		return {
 			"success": false,
 			"message": "Usage: set_time <scale>"
-		}
+}
 	
 	var time_scale = str_to_var(args[0])
 	universe_manager.set_universe_rule(
@@ -205,7 +204,7 @@ func _cmd_set_time(args: Array) -> Dictionary:
 	return {
 		"success": true,
 		"message": "Time now flows at %sx speed" % time_scale
-	}
+}
 
 func _cmd_set_consciousness(args: Array) -> Dictionary:
 	"""Toggle consciousness in current universe"""
@@ -222,7 +221,7 @@ func _cmd_set_consciousness(args: Array) -> Dictionary:
 	return {
 		"success": true,
 		"message": "Consciousness %s in this universe" % ["awakened" if enabled else "dormant"]
-	}
+}
 
 ## UNIVERSE INSPECTION COMMANDS ==================================================
 
@@ -236,7 +235,7 @@ func _cmd_universe_info(args: Array) -> Dictionary:
 			return {
 				"success": false,
 				"message": "Universe '%s' not found" % args[0]
-			}
+	}
 	
 	var info = universe_manager.get_universe_info(universe)
 	
@@ -269,7 +268,7 @@ Rules:
 		"success": true,
 		"message": message.strip_edges(),
 		"data": info
-	}
+}
 
 func _cmd_list_universes(args: Array) -> Dictionary:
 	"""List all universes"""
@@ -290,8 +289,8 @@ func _cmd_list_universes(args: Array) -> Dictionary:
 	return {
 		"success": true,
 		"message": message.strip_edges(),
-		"data": {"universe_count": universes.size()}
-	}
+		"data": {"universe_count": universes.size()
+}
 
 func _cmd_universe_beings(args: Array) -> Dictionary:
 	"""List beings in current or specified universe"""
@@ -303,9 +302,10 @@ func _cmd_universe_beings(args: Array) -> Dictionary:
 			return {
 				"success": false,
 				"message": "Universe '%s' not found" % args[0]
-			}
+	}
 	
 	var message = "Beings in Universe '%s':\n" % universe.name
+}
 	
 	if universe.beings.is_empty():
 		message += "  (void - no beings exist yet)"
@@ -319,8 +319,8 @@ func _cmd_universe_beings(args: Array) -> Dictionary:
 	return {
 		"success": true,
 		"message": message.strip_edges(),
-		"data": {"being_count": universe.beings.size()}
-	}
+		"data": {"being_count": universe.beings.size()
+}
 
 func _cmd_multiverse(args: Array) -> Dictionary:
 	"""Show the multiverse tree structure"""
@@ -333,7 +333,7 @@ func _cmd_multiverse(args: Array) -> Dictionary:
 		"success": true,
 		"message": message.strip_edges(),
 		"data": tree
-	}
+}
 
 ## HELPER FUNCTIONS ==================================================
 

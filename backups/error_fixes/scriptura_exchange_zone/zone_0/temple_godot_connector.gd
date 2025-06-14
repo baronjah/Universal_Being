@@ -180,7 +180,7 @@ func _setup_revelation_timer():
 	var timer = Timer.new()
 	timer.wait_time = 33.3 # A sacred timing
 	timer.autostart = true
-	timer.connect("timeout", self, "_on_revelation_timer")
+	timer.connect(_on_revelation_timer)
 	add_child(timer)
 
 func _connect_to_data_channel():
@@ -189,8 +189,8 @@ func _connect_to_data_channel():
 	
 	if data_channel:
 		# Connect to the data channel signals
-		data_channel.connect("data_received", self, "_on_data_received")
-		data_channel.connect("dimension_changed", self, "_on_dimension_changed")
+		data_channel.connect(_on_data_received)
+		data_channel.connect(_on_dimension_changed)
 		
 		# Sync current dimension
 		current_dimension = data_channel.current_dimension
@@ -542,7 +542,7 @@ func _generate_symbolic_form(word):
 
 # Handle timer-based revelations
 func _on_revelation_timer():
-	if not connection_active or last_divine_word.empty():
+	if not connection_active or last_divine_word.is_empty():
 		return
 	
 	# Only trigger revelations sometimes

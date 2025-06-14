@@ -1,7 +1,7 @@
 #Star.gd in Star scene, here we are generating a sprite for stars in GalaxyCloseUp scene, they apeear where just white dots were on a single sprite with some help of compute shader
 
 @tool
-extends Sprite3D
+extends \2
 
 var shader_material: ShaderMaterial
 var pending_parameters: Dictionary = {}

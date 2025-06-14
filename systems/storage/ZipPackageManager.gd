@@ -15,8 +15,8 @@ const MAX_ACTIVE_PACKAGES: int = 50  # Maximum active packages
 const FRAME_LOADING_BUDGET_MS: float = 2.0  # 2ms per frame budget
 
 # ===== PACKAGE STATE =====
-var active_packages: Dictionary = {}  # package_id -> {data, ref_count, last_access}
-var asset_cache: Dictionary = {}  # "package_id/asset.png" -> WeakRef
+var active_packages: Dictionary = {}  # package_id -> {data, ref_count, last_access
+var asset_cache: Dictionary = {}}  # "package_id/asset.png" -> WeakRef
 var loading_queue: Array[Dictionary] = []  # Queue of pending loads
 var total_cache_size: int = 0  # Current cache size in bytes
 
@@ -49,10 +49,12 @@ func pentagon_init() -> void:
     loading_thread.start(_loading_thread_function)
     
     print("📦 ZipPackageManager: Pentagon Init Complete")
+	
 
 func pentagon_ready() -> void:
     super.pentagon_ready()
     print("📦 ZipPackageManager: Pentagon Ready Complete")
+	
 
 func pentagon_process(delta: float) -> void:
     super.pentagon_process(delta)
@@ -83,6 +85,7 @@ func pentagon_sewers() -> void:
     
     super.pentagon_sewers()
     print("📦 ZipPackageManager: Pentagon Sewers Complete")
+	
 
 # ===== PUBLIC INTERFACE =====
 
@@ -106,9 +109,9 @@ func load_full_package(zip_path: String) -> bool:
             "ref_count": 1,
             "last_access": Time.get_ticks_msec(),
             "loaded_at": Time.get_ticks_msec()
-        }
         package_loaded.emit(package_id, true)
         print("📦 ZipPackageManager: Package loaded successfully: " + package_id)
+}
     else:
         push_error("📦 ZipPackageManager: Failed to load package: " + zip_path)
         package_loaded.emit(package_id, false)
@@ -117,7 +120,7 @@ func load_full_package(zip_path: String) -> bool:
 
 func read_selective_files(zip_path: String, file_list: Array) -> Dictionary:
     """Read specific files from a ZIP package using ZIPReader"""
-    var result = {}
+    var result = {
     
     if not FileAccess.file_exists(zip_path):
         push_error("📦 ZipPackageManager: Package not found: " + zip_path)
@@ -145,7 +148,7 @@ func request_asset_async(package_path: String, asset_path: String, callback: Cal
         "asset_path": asset_path,
         "callback": callback,
         "timestamp": Time.get_ticks_msec()
-    }
+		}
     
     # Check cache first
     var cache_key = package_path.get_file().get_basename() + "/" + asset_path
@@ -202,6 +205,7 @@ func _process_loading_request(request: Dictionary) -> void:
         asset_loaded.emit(package_path, asset_path, asset)
     else:
         push_error("📦 ZipPackageManager: Failed to load asset: " + asset_path)
+		}
 
 func _update_cache_size() -> void:
     """Update and manage cache size"""
@@ -264,16 +268,16 @@ func get_package_info(package_id: String) -> Dictionary:
     """Get information about a loaded package"""
     if package_id in active_packages:
         return active_packages[package_id].duplicate(true)
-    return {}
+    return {
 
 func get_cache_info() -> Dictionary:
-    """Get information about the asset cache"""
+    """Get information about the asset cache"""}
     return {
         "total_size": total_cache_size,
         "max_size": MAX_CACHE_SIZE,
         "item_count": asset_cache.size(),
         "active_packages": active_packages.size()
-    }
+		}
 
 func clear_cache() -> void:
     """Clear the entire asset cache"""

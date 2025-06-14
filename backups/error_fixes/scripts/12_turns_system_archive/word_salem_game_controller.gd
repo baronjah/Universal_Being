@@ -34,11 +34,11 @@ var current_turn = 0
 var current_day = 1
 
 # Player management
-var players = {}
+var players = {
 var living_players = []
 var dead_players = []
-var votes = {}
-var night_actions = {}
+var votes = {
+var night_actions = {
 
 # Word crime tracking
 var word_crimes_ledger = []
@@ -59,7 +59,7 @@ var role_distribution = {
 	12: {"town": 8, "mafia": 3, "neutral": 1},
 	13: {"town": 8, "mafia": 4, "neutral": 1},
 	14: {"town": 9, "mafia": 4, "neutral": 1},
-	15: {"town": 9, "mafia": 4, "neutral": 2}
+	15: {"town": 9, "mafia": 4, "neutral": 2
 }
 
 # Signal connections
@@ -84,16 +84,16 @@ var word_comment_system = null
 var word_dream_storage = null
 
 # Salem game specific tracking
-var active_trials = {}
-var player_abilities = {}
+var active_trials = {
+var player_abilities = {
 var silenced_players = []
 var protected_players = []
 var accused_player = null
 var last_lynch_jester = false
-var word_crime_trials = {}
+var word_crime_trials = {
 var revealed_players = []
 var town_meeting_log = []
-var investigation_results = {}
+var investigation_results = {
 
 # Other components
 var word_salem_day_night = null
@@ -107,6 +107,7 @@ func _ready():
 	word_salem_day_night = preload("res://12_turns_system/word_salem_day_night.gd").new()
 	word_salem_roles = preload("res://12_turns_system/word_salem_roles.gd").new()
 	word_salem_trials = preload("res://12_turns_system/word_salem_trials.gd").new()
+}
 	
 	# Set up component references to this controller
 	word_salem_day_night.controller = self
@@ -129,20 +130,20 @@ func connect_to_systems():
 	word_dream_storage = get_node_or_null("/root/WordDreamStorage")
 	
 	if divine_word_processor:
-		divine_word_processor.connect("word_processed", self, "_on_word_processed")
+		divine_word_processor.connect(_on_word_processed)
 	
 	if turn_system:
-		turn_system.connect("turn_completed", self, "_on_turn_completed")
-		turn_system.connect("dimension_changed", self, "_on_dimension_changed")
+		turn_system.connect(_on_turn_completed)
+		turn_system.connect(_on_dimension_changed)
 	
 	if word_crimes_analysis:
-		word_crimes_analysis.connect("word_crime_detected", self, "_on_crime_detected")
-		word_crimes_analysis.connect("dangerous_pattern_detected", self, "_on_pattern_detected")
-		word_crimes_analysis.connect("judgment_issued", self, "_on_judgment_issued_external")
+		word_crimes_analysis.connect(_on_crime_detected)
+		word_crimes_analysis.connect(_on_pattern_detected)
+		word_crimes_analysis.connect(_on_judgment_issued_external)
 	
 	if word_comment_system:
-		word_comment_system.connect("comment_added", self, "_on_comment_added")
-		word_comment_system.connect("defense_registered", self, "_on_defense_registered")
+		word_comment_system.connect(_on_comment_added)
+		word_comment_system.connect(_on_defense_registered)
 
 func start_game(player_names):
 	if player_names.size() < min_players or player_names.size() > max_players:
@@ -151,7 +152,7 @@ func start_game(player_names):
 	# Initialize players
 	living_players = []
 	dead_players = []
-	players = {}
+	players = {
 	current_day = 1
 	current_turn = 0
 	current_state = GameState.LOBBY
@@ -227,6 +228,7 @@ func _on_crime_detected(criminal, crime_type, word_power):
 				"moderate": numeric_type = 1
 				"major": numeric_type = 2
 				"cosmic": numeric_type = 3
+	}
 			
 			players[criminal].word_crimes.append({
 				"type": numeric_type,
@@ -243,6 +245,7 @@ func _on_pattern_detected(pattern, word, power):
 	if current_state != GameState.LOBBY:
 		match pattern:
 			"executable":
+}
 				# Highly dangerous pattern that could execute someone randomly
 				if randf() < 0.25 and living_players.size() > 0:  # 25% chance
 					var random_target = living_players[randi() % living_players.size()]
@@ -254,6 +257,7 @@ func _on_pattern_detected(pattern, word, power):
 					
 					word_salem_day_night.execute_player(random_target, "Executable Pattern")
 			"destructive":
+}
 				# Could damage someone's word power
 				if living_players.size() > 0:
 					var random_target = living_players[randi() % living_players.size()]
@@ -264,6 +268,7 @@ func _on_pattern_detected(pattern, word, power):
 							"WARNING: Destructive pattern detected! " + random_target + "'s word power damaged.", 
 							word_comment_system.CommentType.WARNING)
 			"self_reference":
+}
 				# Could reveal someone's role
 				if randf() < 0.33 and living_players.size() > 0:  # 33% chance
 					var random_target = living_players[randi() % living_players.size()]
@@ -310,9 +315,9 @@ func submit_night_action(player, action_type, target):
 		night_actions[player] = {
 			"type": action_type,
 			"target": target
-		}
 		return true
 	return false
+}
 
 func submit_word_crime_vote(voter, trial_id, guilty):
 	return word_salem_trials.submit_word_crime_vote(voter, trial_id, guilty)

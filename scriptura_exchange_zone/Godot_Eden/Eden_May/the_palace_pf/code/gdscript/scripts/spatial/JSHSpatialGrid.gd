@@ -1,7 +1,7 @@
 extends Node
-class_name JSHSpatialGrid
+class_name JSHSpatialGrid_JSHSpatialGrid_JSHSpati
 
-# Spatial grid for efficient spatial queries
+# Node3D grid for efficient spatial queries
 # Based on a uniform grid for fast entity position lookup
 
 # Grid parameters
@@ -155,7 +155,7 @@ func remove_entity(entity_id: String, zone_id: String = "") -> void:
         entity_cells.erase(entity_id)
         stats.total_entities -= 1
 
-# Spatial queries
+# Node3D queries
 func query_point(position: Vector3, zone_id: String = "") -> Array:
     var cell_coords = get_cell_coords(position)
     var cell_key = str(cell_coords.x) + "," + str(cell_coords.y) + "," + str(cell_coords.z)

@@ -1,5 +1,5 @@
 extends Node
-class_name MemoryUltraAdvanced
+class_name MemoryUltraAdvanced_memoryultraadvanced_memoryul
 
 # Ultra Advanced Memory System - Turn 3 Implementation
 # Integrates device numbers 0-3 with word memories across 12 dimensions
@@ -15,7 +15,7 @@ const MAX_WISHES = 9
 const DEVICE_DIMENSIONS = {
     0: [1, 5, 9],    # Reality, Conscious, Harmony
     1: [2, 6, 10],   # Linear, Connection, Unity
-    2: [3, 7, 11],   # Spatial, Creation, Transcendent
+    2: [3, 7, 11],   # Node3D, Creation, Transcendent
     3: [4, 8, 12]    # Temporal, Network, Meta
 }
 
@@ -48,7 +48,7 @@ class MemoryWord:
         device_number = p_device
         dimension = p_dimension
         power_level = 1.0
-        timestamp = OS.get_unix_time()
+        timestamp = OS.Time.get_unix_time_from_system()
         is_active = true
     
     func add_connection(target_word: String):
@@ -80,7 +80,7 @@ class Wish:
         target_device = p_device
         target_dimension = p_dimension
         is_fulfilled = false
-        timestamp = OS.get_unix_time()
+        timestamp = OS.Time.get_unix_time_from_system()
     
     func fulfill(words):
         fulfillment_words = words
@@ -256,7 +256,7 @@ func process_all_wishes():
     while process_next_wish():
         pass
     
-    print("# All wishes processed (" + str(active_wish_index) + "/" + str(wishes.size()) + ") #")
+    print("# All wishes processed (" + str(active_wish_index) + "" + str(wishes.size()) + ") #")
 
 # Helper Functions
 func extract_wish_words(wish_content: String) -> Array:

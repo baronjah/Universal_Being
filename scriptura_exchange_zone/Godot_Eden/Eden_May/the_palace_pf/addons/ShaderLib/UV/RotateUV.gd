@@ -1,5 +1,6 @@
 @tool
-class_name VisualShaderNodeUVRotate extends VisualShaderNodeCustom
+class_name VisualShaderNodeUVRotate_RotateUV_RotateUV
+extends \2
 
 func _init() -> void:
 	set_output_port_for_preview(0)

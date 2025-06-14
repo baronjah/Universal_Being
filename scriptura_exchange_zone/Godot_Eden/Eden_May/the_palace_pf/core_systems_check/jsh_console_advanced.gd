@@ -1,36 +1,36 @@
 extends Control
 
-class_name JSHConsoleAdvanced
+class_name JSHConsoleAdvanced_jshconsoleadvanced_jshconso
 
 # ----- CONSOLE SETTINGS -----
 @export_category("Console Settings")
-@export var console_font: Font
-@export var console_font_size: int = 14
-@export var console_max_lines: int = 100
-@export var console_padding: Vector2 = Vector2(10, 10)
-@export var auto_complete_enabled: bool = true
-@export var save_command_history: bool = true
-@export var command_history_size: int = 50
+@@@export var console_font: Font
+@@@export var console_font_size: int = 14
+@@@export var console_max_lines: int = 100
+@@@export var console_padding: Vector2 = Vector2(10, 10)
+@@@export var auto_complete_enabled: bool = true
+@@@export var save_command_history: bool = true
+@@@export var command_history_size: int = 50
 
 # ----- VISUAL SETTINGS -----
 @export_category("Visual Settings")
-@export var console_background_color: Color = Color(0.0, 0.0, 0.0, 0.8)
-@export var console_text_color: Color = Color(0.8, 0.8, 0.8, 1.0)
-@export var console_input_color: Color = Color(1.0, 1.0, 1.0, 1.0)
-@export var console_error_color: Color = Color(1.0, 0.3, 0.3, 1.0)
-@export var console_warning_color: Color = Color(1.0, 0.8, 0.0, 1.0)
-@export var console_success_color: Color = Color(0.3, 1.0, 0.3, 1.0)
-@export var console_border_color: Color = Color(0.5, 0.5, 0.5, 0.5)
-@export var console_border_width: int = 1
+@@@export var console_background_color: Color = Color(0.0, 0.0, 0.0, 0.8)
+@@@export var console_text_color: Color = Color(0.8, 0.8, 0.8, 1.0)
+@@@export var console_input_color: Color = Color(1.0, 1.0, 1.0, 1.0)
+@@@export var console_error_color: Color = Color(1.0, 0.3, 0.3, 1.0)
+@@@export var console_warning_color: Color = Color(1.0, 0.8, 0.0, 1.0)
+@@@export var console_success_color: Color = Color(0.3, 1.0, 0.3, 1.0)
+@@@export var console_border_color: Color = Color(0.5, 0.5, 0.5, 0.5)
+@@@export var console_border_width: int = 1
 
 # ----- GAME INTEGRATION SETTINGS -----
 @export_category("Game Integration Settings")
-@export var overlay_mode_enabled: bool = false
-@export var game_overlay_path: NodePath
-@export var word_manifestor_path: NodePath
-@export var word_dna_system_path: NodePath
-@export var player_controller_path: NodePath
-@export var cheat_codes_enabled: bool = true
+@@@export var overlay_mode_enabled: bool = false
+@@@export var game_overlay_path: NodePath
+@@@export var word_manifestor_path: NodePath
+@@@export var word_dna_system_path: NodePath
+@@@export var player_controller_path: NodePath
+@@@export var cheat_codes_enabled: bool = true
 
 # ----- COMPONENT REFERENCES -----
 @onready var console_input: LineEdit = $ConsoleInput
@@ -213,7 +213,7 @@ func _on_console_input_submitted(text: String):
 
 func process_console_input(text: String):
     # Check if it's a command (starts with /)
-    if text.begins_with("/"):
+    if text.begins_with(""):
         execute_command(text.substr(1))
     # Check if it's a cheat code
     elif cheat_codes_enabled and cheat_codes.has(text.to_lower()):
@@ -357,13 +357,13 @@ func show_auto_complete():
     var suggestions = []
     
     # If input starts with /, show command suggestions
-    if input_text.begins_with("/"):
+    if input_text.begins_with(""):
         var command_prefix = input_text.substr(1).to_lower()
         
         # Find matching commands
         for command in registered_commands.keys():
             if command.begins_with(command_prefix):
-                suggestions.append("/" + command)
+                suggestions.append("" + command)
     else:
         # Check for cheat codes
         for code in cheat_codes.keys():
@@ -421,7 +421,7 @@ func _cmd_help(args: Array) -> Dictionary:
         var help_text = "Available commands:\n"
         
         for command in registered_commands.keys():
-            help_text += "  /" + command + " - " + registered_commands[command].description + "\n"
+            help_text += "  " + command + " - " + registered_commands[command].description + "\n"
         
         if cheat_codes_enabled:
             help_text += "\nCheat codes are also available. Try some classic FPS cheats!"

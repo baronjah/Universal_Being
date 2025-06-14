@@ -43,6 +43,7 @@ func _ready() -> void:
 	_compile_path_patterns()
 	print("🔍 Path Audit System: Ready to analyze Universal Being database connections")
 
+
 func _compile_path_patterns() -> void:
 	"""Compile regex patterns for different path types"""
 	path_patterns.core.compile("res://core/.*\\.gd")
@@ -52,6 +53,7 @@ func _compile_path_patterns() -> void:
 	path_patterns.assets.compile("res://assets/.*")
 	path_patterns.scenes.compile("res://scenes/.*\\.tscn")
 	path_patterns.ui.compile("res://ui/.*\\.gd")
+
 
 # ===== MAIN AUDIT FUNCTIONS =====
 
@@ -95,6 +97,7 @@ func _scan_project_structure() -> void:
 	print("🔍 Scanning project structure...")
 	folder_structure = _scan_directory("res://")
 
+
 func _scan_directory(path: String) -> Dictionary:
 	"""Recursively scan directory structure"""
 	var result = {
@@ -103,7 +106,7 @@ func _scan_directory(path: String) -> Dictionary:
 		"folders": {},
 		"file_count": 0,
 		"folder_count": 0
-	}
+}
 	
 	var dir = DirAccess.open(path)
 	if not dir:
@@ -113,7 +116,9 @@ func _scan_directory(path: String) -> Dictionary:
 	var file_name = dir.get_next()
 	
 	while file_name != "":
+
 		var full_path = path + "/" + file_name if path != "res://" else "res://" + file_name
+
 		
 		if dir.current_is_dir():
 			result.folders[file_name] = _scan_directory(full_path)
@@ -158,6 +163,7 @@ func _extract_paths_from_project_file() -> void:
 	if paths.size() > 0:
 		found_paths["res://project.godot"] = paths
 
+
 func _find_all_files_with_extension(extension: String) -> Array[String]:
 	"""Find all files with specific extension"""
 	var files: Array[String] = []
@@ -174,7 +180,9 @@ func _find_files_recursive(path: String, extension: String, files: Array[String]
 	var file_name = dir.get_next()
 	
 	while file_name != "":
+
 		var full_path = path + "/" + file_name if path != "res://" else "res://" + file_name
+
 		
 		if dir.current_is_dir() and not file_name.begins_with("."):
 			_find_files_recursive(full_path, extension, files)
@@ -187,6 +195,7 @@ func _find_files_recursive(path: String, extension: String, files: Array[String]
 
 func _extract_paths_from_file(file_path: String) -> Array[String]:
 	"""Extract all res:// paths from a file"""
+
 	var paths: Array[String] = []
 	
 	var file = FileAccess.open(file_path, FileAccess.READ)
@@ -199,6 +208,7 @@ func _extract_paths_from_file(file_path: String) -> Array[String]:
 	# Find all res:// paths
 	var regex = RegEx.new()
 	regex.compile("\"res://[^\"]*\"")
+
 	
 	var results = regex.search_all(content)
 	for result in results:
@@ -256,6 +266,7 @@ func _analyze_folder_structure() -> void:
 	for folder in expected_folders:
 		if not DirAccess.dir_exists_absolute("res://" + folder):
 			missing_files.append("Missing folder: " + folder)
+
 
 func _identify_path_mismatches() -> void:
 	"""Identify potential path mismatches and naming inconsistencies"""
@@ -323,7 +334,7 @@ func _generate_audit_report() -> Dictionary:
 		"path_mismatches": path_mismatches,
 		"folder_structure": folder_structure,
 		"recommendations": _generate_recommendations()
-	}
+}
 	
 	return report
 
@@ -362,6 +373,7 @@ func _generate_recommendations() -> Array[String]:
 func audit_specific_folder(folder_path: String) -> Dictionary:
 	"""Audit a specific folder"""
 	print("🔍 Auditing folder: %s" % folder_path)
+
 	
 	var folder_paths: Dictionary = {}
 	var folder_files = _find_all_files_with_extension(".gd")
@@ -406,18 +418,21 @@ func print_audit_summary() -> void:
 	print("  Broken paths: %d" % broken_paths.size())
 	print("  Missing files: %d" % missing_files.size())
 	print("  Path mismatches: %d" % path_mismatches.size())
+
 	
 	if broken_paths.size() > 0:
 		print("📋 BROKEN PATHS:")
 		for i in range(min(5, broken_paths.size())):
 			var broken = broken_paths[i]
 			print("  - %s references missing: %s" % [broken.source_file, broken.broken_path])
+
 	
 	if path_mismatches.size() > 0:
 		print("📋 PATH MISMATCHES:")
 		for i in range(min(5, path_mismatches.size())):
 			var mismatch = path_mismatches[i]
 			print("  - %s: %s" % [mismatch.issue, mismatch.path])
+
 
 # ===== AUTOMATED FIXES =====
 

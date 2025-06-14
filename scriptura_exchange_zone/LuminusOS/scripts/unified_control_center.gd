@@ -1,6 +1,6 @@
 extends Node
 
-class_name UnifiedControlCenter
+class_name UnifiedControlCenter_unifiedcontrolcenter_unifiedc
 
 # Unified Control Center for LuminusOS - Integrates multi-API, file management, picture viewing, and ASCII-based UI
 # This serves as the central command point for your entire ecosystem
@@ -18,7 +18,7 @@ var automation_system = null
 var data_evolution_system = null
 
 # File management
-var current_directory = "/"
+var current_directory = ""
 var selected_files = []
 var file_clipboard = []
 var clipboard_operation = "" # "copy" or "cut"
@@ -114,7 +114,7 @@ func list_files(dir_path=null):
                 # Get file info
                 var file_stat = FileAccess.get_modified_time(file_data.path)
                 file_data["modified"] = file_stat
-                file_data["size"] = FileAccess.get_file_size(file_data.path)
+                file_data["size"] = FileAccess.FileAccess.get_file_as_bytes(file_data.path)
                 file_data["extension"] = file_name.get_extension().to_lower()
                 
                 # Determine file type
@@ -660,19 +660,19 @@ func _update_picture_list():
 
 func _connect_to_systems():
     # Try to get references to required systems
-    api_controller = get_node_or_null("/root/ApiController")
+    api_controller = get_node_or_null("root/ApiController")
     if api_controller:
         print("Connected to API Controller")
     
-    archive_manager = get_node_or_null("/root/ArchiveManager")
+    archive_manager = get_node_or_null("root/ArchiveManager")
     if archive_manager:
         print("Connected to Archive Manager")
     
-    automation_system = get_node_or_null("/root/AutomationSystem")
+    automation_system = get_node_or_null("root/AutomationSystem")
     if automation_system:
         print("Connected to Automation System")
     
-    data_evolution_system = get_node_or_null("/root/DataEvolutionSystem")
+    data_evolution_system = get_node_or_null("root/DataEvolutionSystem")
     if data_evolution_system:
         print("Connected to Data Evolution System")
 
@@ -747,7 +747,7 @@ func _cmd_list_files(args):
     var path = current_directory
     if args.size() > 0:
         path = args[0]
-        if not path.begins_with("/"):
+        if not path.begins_with(""):
             path = current_directory.path_join(path)
     
     var files = list_files(path)
@@ -756,7 +756,7 @@ func _cmd_list_files(args):
     for file in files:
         var name = file.name
         if file.is_directory:
-            name += "/"
+            name += ""
             result += "[DIR] " + name + "\n"
         else:
             var size_text = ""
@@ -774,8 +774,8 @@ func _cmd_change_directory(args):
     if path == "..":
         path = current_directory.get_base_dir()
     elif path == "~":
-        path = "/mnt/c/Users/Percision 15"
-    elif not path.begins_with("/"):
+        path = "mnt/c/Users/Percision 15"
+    elif not path.begins_with(""):
         path = current_directory.path_join(path)
     
     if DirAccess.dir_exists_absolute(path):
@@ -797,10 +797,10 @@ func _cmd_copy(args):
     var source = args[0]
     var destination = args[1]
     
-    if not source.begins_with("/"):
+    if not source.begins_with(""):
         source = current_directory.path_join(source)
     
-    if not destination.begins_with("/"):
+    if not destination.begins_with(""):
         destination = current_directory.path_join(destination)
     
     # Check if this is a single file or directory
@@ -816,10 +816,10 @@ func _cmd_move(args):
     var source = args[0]
     var destination = args[1]
     
-    if not source.begins_with("/"):
+    if not source.begins_with(""):
         source = current_directory.path_join(source)
     
-    if not destination.begins_with("/"):
+    if not destination.begins_with(""):
         destination = current_directory.path_join(destination)
     
     # Check if this is a single file or directory
@@ -833,7 +833,7 @@ func _cmd_delete(args):
         return "Usage: rm <file_or_directory>"
     
     var path = args[0]
-    if not path.begins_with("/"):
+    if not path.begins_with(""):
         path = current_directory.path_join(path)
     
     if FileAccess.file_exists(path) or DirAccess.dir_exists_absolute(path):
@@ -848,7 +848,7 @@ func _cmd_rename(args):
     var old_name = args[0]
     var new_name = args[1]
     
-    if not old_name.begins_with("/"):
+    if not old_name.begins_with(""):
         old_name = current_directory.path_join(old_name)
     
     if FileAccess.file_exists(old_name) or DirAccess.dir_exists_absolute(old_name):
@@ -912,7 +912,7 @@ func _cmd_favorites(args):
                 return add_to_favorites(current_directory)
             
             var path = args[1]
-            if not path.begins_with("/"):
+            if not path.begins_with(""):
                 path = current_directory.path_join(path)
             
             return add_to_favorites(path)
@@ -931,7 +931,7 @@ func _cmd_favorites(args):
                     return "Invalid favorite index"
             else:
                 var path = arg
-                if not path.begins_with("/"):
+                if not path.begins_with(""):
                     path = current_directory.path_join(path)
                 
                 return remove_from_favorites(path)
@@ -960,7 +960,7 @@ func _cmd_view(args):
         return "Usage: view <file_path>"
     
     var path = args[0]
-    if not path.begins_with("/"):
+    if not path.begins_with(""):
         path = current_directory.path_join(path)
     
     if FileAccess.file_exists(path):

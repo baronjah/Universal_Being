@@ -23,7 +23,7 @@
 
 # settings_bank.gd
 extends UniversalBeingBase
-class_name SettingsBank
+class_name SettingsBank_settings
 
 # Static variables to store settings
 static var page: String = "settings"

@@ -1,13 +1,13 @@
 extends Node
-# res://code/gdscript/scripts/Snake_Space_Movement/snake_animation.gd
+# res://scripts/gdscript/scripts/Snake_Space_Movement/snake_animation.gd
 # JSH_World/object
 # Animation system for the space snake game
 
 
-class_name SnakeAnimator
+class_name SnakeAnimator_snakeanimation_snakeani
 
 
-#class_name JSHAnimationController
+#class_name JSHAnimationController_snakeanimation_snakeani
 
 var animation_queue = []
 var active_animations = {}

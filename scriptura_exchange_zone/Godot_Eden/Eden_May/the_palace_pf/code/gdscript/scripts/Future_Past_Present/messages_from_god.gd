@@ -1,6 +1,6 @@
 # message_from_god.gd
-extends Node
-class_name MessagesSystem
+extends \2
+class_name MessagesSystem_messagesfromgod_messages
 ## consts of some random words and lines of text
 
 const first_message = {
@@ -296,8 +296,7 @@ const first_message = {
 		## camera and its nodes, have some more
 		# additionally camera addon file
 		camera_move, camera_mover
-		# for node i dunno, sphere so maybe planet generator too?
-		Node: sphere, cameramove, TrackballCamera
+		# for node i dunno, sphere so maybe planet generator Node if too else sphere, cameramove, TrackballCamera
 		## code segments for that from main
 
 		## code segments of scripts
@@ -562,7 +561,7 @@ const first_message = {
 	"message_12":
 		"
 		metadata
-		extends Node3D
+extends \2
 		all variants
 		var first_start_check : String = pending
 		var int_of_stuff_started : int = 0
@@ -647,7 +646,8 @@ const first_message = {
 		var fsc_status = null
 		var fdc_status = null
 		var ftc_status = null
-		enum SystemState {UNKNOWN = -1,INACTIVE = 0,ACTIVE = 1,BUSY = 2,ERROR = 3}
+enum \2 {
+UNKNOWN = -1,INACTIVE = 0,ACTIVE = 1,BUSY = 2,ERROR = 3}
 		var message_of_delta_start
 		var array_of_startup_check : Array = []
 		signal main_node_signal(place)

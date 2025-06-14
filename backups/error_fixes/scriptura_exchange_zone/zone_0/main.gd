@@ -50,9 +50,9 @@ func _ready():
     add_child(word_processor)
     
     # Connect signals
-    word_processor.connect("word_processed", self, "_on_word_processed")
-    word_processor.connect("reality_created", self, "_on_reality_created")
-    word_processor.connect("memory_stored", self, "_on_memory_stored")
+    word_processor.connect(_on_word_processed)
+    word_processor.connect(_on_reality_created)
+    word_processor.connect(_on_memory_stored)
     
     # Record big bang timestamp
     big_bang_timestamp = OS.get_unix_time()
@@ -350,13 +350,13 @@ func execute_command(command_text):
                 return start_quantum_loop()
         
         "/note":
-            if args.strip_edges().empty():
+            if args.strip_edges().is_empty():
                 return "Error: Note text required"
             return create_note(args)
         
         "/save":
             var name = args.strip_edges()
-            if name.empty():
+            if name.is_empty():
                 name = "manual_save_" + str(OS.get_unix_time())
             return save_reality(name)
         
@@ -364,7 +364,7 @@ func execute_command(command_text):
             return show_status()
         
         "/word-power":
-            if args.strip_edges().empty():
+            if args.strip_edges().is_empty():
                 return "Error: Word required"
             var word = args.strip_edges()
             var power = word_processor.check_word_power(word)
@@ -372,7 +372,7 @@ func execute_command(command_text):
             return power
         
         "/memory":
-            if args.strip_edges().empty():
+            if args.strip_edges().is_empty():
                 return "Error: Memory text required"
             var tier = 1
             if args.ends_with(" 2"):

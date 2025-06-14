@@ -25,10 +25,12 @@ func pentagon_init():
 	consciousness_level = 5
 	print("👁️ Data Inspector: Awakening the spirit whisper of data...")
 
+
 func pentagon_ready():
 	super.pentagon_ready()
 	create_inspection_interface()
 	print("✨ Data Inspector: Ready to whisper the secrets of data!")
+
 
 func pentagon_process(delta: float):
 	super.pentagon_process(delta)
@@ -76,7 +78,7 @@ func create_inspection_interface():
 
 func inspect_data(data: Variant) -> Dictionary:
 	"""The main inspection function - examines any data and whispers its secrets"""
-	var inspection = {}
+	var inspection = {
 	
 	# Basic type information using Godot's typeof()
 	var type_id = typeof(data)
@@ -231,6 +233,7 @@ func _get_type_name(type_id: int) -> String:
 		TYPE_PACKED_VECTOR3_ARRAY: return "PackedVector3Array"
 		TYPE_PACKED_COLOR_ARRAY: return "PackedColorArray"
 		_: return "Unknown"
+}
 
 # Specialized inspection functions for each type
 func _inspect_nil(data) -> Dictionary:
@@ -238,7 +241,7 @@ func _inspect_nil(data) -> Dictionary:
 		"spirit_message": "The void whispers... nothingness incarnate",
 		"is_empty": true,
 		"philosophical_note": "Existence undefined, potential infinite"
-	}
+}
 
 func _inspect_bool(data: bool) -> Dictionary:
 	return {
@@ -246,7 +249,7 @@ func _inspect_bool(data: bool) -> Dictionary:
 		"spirit_message": "Truth speaks: " + ("YES" if data else "NO"),
 		"binary_representation": "1" if data else "0",
 		"philosophical_note": "Duality embodied in singular choice"
-	}
+}
 
 func _inspect_int(data: int) -> Dictionary:
 	return {
@@ -259,7 +262,7 @@ func _inspect_int(data: int) -> Dictionary:
 		"hex": "0x" + ("%X" % data),
 		"absolute_value": abs(data),
 		"mathematical_properties": _analyze_number_properties(data)
-	}
+}
 
 func _inspect_float(data: float) -> Dictionary:
 	return {
@@ -271,7 +274,7 @@ func _inspect_float(data: float) -> Dictionary:
 		"integer_part": int(data),
 		"fractional_part": data - int(data),
 		"scientific_notation": "%.2e" % data
-	}
+}
 
 func _inspect_string(data: String) -> Dictionary:
 	return {
@@ -285,7 +288,7 @@ func _inspect_string(data: String) -> Dictionary:
 		"contains_numbers": data.is_valid_int() or data.is_valid_float(),
 		"is_valid_filename": data.is_valid_filename(),
 		"character_analysis": _analyze_string_characters(data)
-	}
+}
 
 func _inspect_vector3(data: Vector3) -> Dictionary:
 	return {
@@ -301,7 +304,7 @@ func _inspect_vector3(data: Vector3) -> Dictionary:
 		"distance_from_origin": data.distance_to(Vector3.ZERO),
 		"angle_with_up": data.angle_to(Vector3.UP),
 		"dimensional_dominance": _get_dominant_axis(data)
-	}
+}
 
 func _inspect_color(data: Color) -> Dictionary:
 	return {
@@ -317,7 +320,7 @@ func _inspect_color(data: Color) -> Dictionary:
 		"brightness": (data.r + data.g + data.b) / 3.0,
 		"is_transparent": data.a < 1.0,
 		"is_grayscale": abs(data.r - data.g) < 0.01 and abs(data.g - data.b) < 0.01
-	}
+}
 
 func _inspect_object(data: Object) -> Dictionary:
 	var obj_info = {
@@ -326,7 +329,7 @@ func _inspect_object(data: Object) -> Dictionary:
 		"instance_id": data.get_instance_id(),
 		"is_valid": is_instance_valid(data),
 		"script_attached": data.get_script() != null
-	}
+}
 	
 	# If it's a Node, get additional info
 	if data is Node:
@@ -354,7 +357,7 @@ func _inspect_array(data: Array) -> Dictionary:
 		"element_types": _analyze_array_types(data),
 		"has_duplicates": _has_duplicates(data),
 		"is_sorted": _is_array_sorted(data)
-	}
+}
 
 func _inspect_dictionary(data: Dictionary) -> Dictionary:
 	return {
@@ -366,7 +369,7 @@ func _inspect_dictionary(data: Dictionary) -> Dictionary:
 		"values": data.values(),
 		"key_types": _analyze_array_types(data.keys()),
 		"value_types": _analyze_array_types(data.values())
-	}
+}
 
 # Helper analysis functions
 func _analyze_number_properties(num: int) -> Dictionary:
@@ -375,7 +378,7 @@ func _analyze_number_properties(num: int) -> Dictionary:
 		"is_even": num % 2 == 0,
 		"is_perfect_square": sqrt(num) == int(sqrt(num)),
 		"digit_count": str(abs(num)).length()
-	}
+}
 
 func _analyze_string_characters(text: String) -> Dictionary:
 	var alpha_count = 0
@@ -399,7 +402,7 @@ func _analyze_string_characters(text: String) -> Dictionary:
 		"digits": digit_count,
 		"spaces": space_count,
 		"special": special_count
-	}
+}
 
 func _get_dominant_axis(vec: Vector3) -> String:
 	var abs_x = abs(vec.x)
@@ -433,17 +436,18 @@ func _color_to_hsv(color: Color) -> Dictionary:
 		if h < 0:
 			h += 360
 	
-	return {"hue": h, "saturation": s, "value": v}
+	return {"hue": h, "saturation": s, "value": v
+}
 
 func _analyze_array_types(arr: Array) -> Dictionary:
-	var type_counts = {}
+	var type_counts = {
 	for item in arr:
 		var type_name = _get_type_name(typeof(item))
 		type_counts[type_name] = type_counts.get(type_name, 0) + 1
 	return type_counts
 
 func _has_duplicates(arr: Array) -> bool:
-	var seen = {}
+	var seen = {
 	for item in arr:
 		var key = var_to_str(item)
 		if seen.has(key):
@@ -525,6 +529,7 @@ func speak_whisper(whisper: String):
 	
 	whisper_spoken.emit(whisper)
 	print("👁️ SPIRIT WHISPER: " + whisper)
+}
 
 func create_whisper_bubble(message: String) -> Node3D:
 	"""Create floating whisper bubble"""
@@ -575,6 +580,7 @@ func inspect_nearby_data():
 	inspect_data(Color.CYAN)
 	inspect_data([1, "two", Vector3.UP])
 	inspect_data({"meaning": 42, "color": Color.MAGENTA})
+}
 
 func update_inspection_display(delta: float):
 	"""Update visual inspection effects"""
@@ -613,7 +619,7 @@ func _inspect_vector2(data: Vector2) -> Dictionary:
 		"length": data.length(),
 		"angle": data.angle(),
 		"normalized": data.normalized()
-	}
+}
 
 func _inspect_callable(data: Callable) -> Dictionary:
 	return {
@@ -621,7 +627,7 @@ func _inspect_callable(data: Callable) -> Dictionary:
 		"is_valid": data.is_valid(),
 		"object": data.get_object(),
 		"method": data.get_method()
-	}
+}
 
 func _inspect_node_path(data: NodePath) -> Dictionary:
 	return {
@@ -630,7 +636,7 @@ func _inspect_node_path(data: NodePath) -> Dictionary:
 		"is_absolute": data.is_absolute(),
 		"is_empty": data.is_empty(),
 		"name_count": data.get_name_count()
-	}
+}
 
 # Stub implementations for other types
 func _inspect_vector2i(data): return {"spirit_message": "2D integer coordinates"}
@@ -658,4 +664,4 @@ func _inspect_packed_string_array(data): return {"spirit_message": "String array
 func _inspect_packed_vector2_array(data): return {"spirit_message": "Vector2 array"}
 func _inspect_packed_vector3_array(data): return {"spirit_message": "Vector3 array"}
 func _inspect_packed_color_array(data): return {"spirit_message": "Color array"}
-func _inspect_unknown(data): return {"spirit_message": "Unknown data type detected"}
+func _inspect_unknown(data): return {"spirit_message": "Unknown data type detected"

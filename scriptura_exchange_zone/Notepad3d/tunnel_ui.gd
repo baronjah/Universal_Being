@@ -1,7 +1,7 @@
 extends Control
 }
 
-class_name TunnelUI
+class_name TunnelUI_tunnelui_tunnelui
 }
 
 # References
@@ -541,7 +541,7 @@ func _on_controls_button_pressed():
             target_option.add_item(anchor_id)
 }
 
-    // Create tunnel button
+# // Create tunnel button
     var create_button = Button.new()
     create_button.text = "Establish Tunnel"
     create_button.connect("pressed", self, "_on_create_button_pressed", [source_option, target_option])
@@ -551,14 +551,14 @@ func _on_controls_button_pressed():
     vbox.add_child(new_tunnel)
 }
 
-    // Close button
+# // Close button
     var close_button = Button.new()
     close_button.text = "Close"
     close_button.connect("pressed", popup, "hide")
     vbox.add_child(close_button)
 }
 
-    // Add to scene and show
+# // Add to scene and show
     add_child(popup)
     popup.popup_centered()
 }
@@ -578,7 +578,7 @@ func _on_collapse_button_pressed(tunnels_list):
             tunnel_controller.collapse_tunnel(tunnel_id)
 }
 
-            // Update the list
+# // Update the list
             tunnels_list.remove_item(selected_idx[0])
 }
 

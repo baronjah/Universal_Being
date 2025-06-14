@@ -136,7 +136,7 @@ class DirectiveScanReport:
 			"GDSCRIPT_DIRECTIVE": 0,
 			"BUILTIN_TYPE_FUNCTION": 0, 
 			"BUILTIN_FUNCTION": 0
-		}
+}
 	
 	func add_conflict(conflict: DirectiveConflict) -> void:
 		conflicts.append(conflict)
@@ -176,6 +176,7 @@ static func scan_project_for_directive_conflicts(base_path: String = "res://") -
 	"""Scan entire project for GDScript directive conflicts"""
 	print("🚫 Scanning for GDScript directive conflicts...")
 	print("Looking for: var class_name, var type, etc.")
+
 	
 	var report = DirectiveScanReport.new()
 	var all_files = _get_all_gd_files(base_path)
@@ -231,6 +232,7 @@ static func _check_line_for_conflicts(line: String, line_number: int, file_path:
 		var conflict_type = _get_conflict_type(var_name)
 		
 		if conflict_type != "":
+
 			var conflict = DirectiveConflict.new(
 				file_path, line_number, match.get_start(), var_name, conflict_type
 			)
@@ -246,6 +248,7 @@ static func _check_line_for_conflicts(line: String, line_number: int, file_path:
 		var conflict_type = _get_conflict_type(var_name)
 		
 		if conflict_type != "":
+
 			var conflict = DirectiveConflict.new(
 				file_path, line_number, match.get_start(), var_name, conflict_type
 			)
@@ -276,7 +279,7 @@ static func generate_fix_script(conflicts: Array[DirectiveConflict]) -> String:
 	script_lines.append("")
 	
 	# Group conflicts by file
-	var files_to_fix = {}
+	var files_to_fix = {
 	for conflict in conflicts:
 		if not files_to_fix.has(conflict.file_path):
 			files_to_fix[conflict.file_path] = []
@@ -313,7 +316,7 @@ static func check_specific_variable(var_name: String) -> Dictionary:
 		"conflict_type": "",
 		"issue": "",
 		"suggestion": ""
-	}
+}
 	
 	var conflict_type = _get_conflict_type(var_name)
 	if conflict_type != "":
@@ -352,6 +355,7 @@ static func _scan_directory_for_gd_files(path: String, files: Array[String]) -> 
 	var file_name = dir.get_next()
 	
 	while file_name != "":
+}
 		var full_path = path.path_join(file_name)
 		
 		if dir.current_is_dir() and not file_name.begins_with("."):
@@ -370,6 +374,7 @@ static func main():
 	var args = OS.get_cmdline_args()
 	
 	if "--scan-directives" in args:
+
 		var report = scan_project_for_directive_conflicts()
 		print(report.get_summary())
 		
@@ -379,9 +384,11 @@ static func main():
 			report_file.store_string(report.get_summary())
 			report_file.close()
 			print("\n📄 Report saved to: gdscript_directive_conflicts.txt")
+
 	
 	elif "--check-var" in args:
 		if args.size() > args.find("--check-var") + 1:
+
 			var var_name = args[args.find("--check-var") + 1]
 			var result = check_specific_variable(var_name)
 			
@@ -393,6 +400,7 @@ static func main():
 				print("✅ No conflicts found")
 	
 	elif "--generate-fixes" in args:
+
 		var report = scan_project_for_directive_conflicts()
 		var fix_script = generate_fix_script(report.conflicts)
 		
@@ -402,6 +410,7 @@ static func main():
 			script_file.close()
 			print("🔧 Fix script generated: fix_directive_conflicts.sh")
 			print("Run: chmod +x fix_directive_conflicts.sh && ./fix_directive_conflicts.sh")
+
 	
 	else:
 		print("🚫 GDScript Directive Conflict Scanner")

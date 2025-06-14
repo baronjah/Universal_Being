@@ -27,6 +27,7 @@ func _ready():
         call_deferred("optimize_game_performance")
     
     print("⚡ Performance Optimizer Active - Target: %d FPS" % target_fps)
+	
 
 func optimize_game_performance():
     """Apply immediate performance optimizations"""
@@ -164,4 +165,3 @@ func get_performance_report() -> Dictionary:
         "total_errors_suppressed": error_counts.values().reduce(func(a, b): return a + b, 0),
         "active_chunks": get_tree().get_nodes_in_group("chunk").size(),
         "active_beings": get_tree().get_nodes_in_group("universal_beings").size()
-    }

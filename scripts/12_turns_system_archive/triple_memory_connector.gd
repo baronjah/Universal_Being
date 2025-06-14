@@ -49,7 +49,7 @@ var sync_stats: Dictionary = {
     "transferred_entries": 0,
     "conflicts_resolved": 0,
     "compression_savings": 0.0
-}
+	}
 
 # ----- WISH CONNECTIONS -----
 var connected_wishes: Dictionary = {}
@@ -145,6 +145,7 @@ func _load_all_memories():
     print("Loaded memories - Local: " + str(local_memories.size()) + 
           ", Ethereal: " + str(ethereal_memories.size()) + 
           ", Akashic: " + str(akashic_memories.size()))
+		}
 
 func _load_local_memories():
     local_memories.clear()
@@ -172,6 +173,7 @@ func _load_memories_from_directory(directory_path, memory_container):
         
         while file_name != "":
             if not dir.current_is_dir() and file_name.ends_with(".json"):
+			
                 var memory_path = directory_path + file_name
                 _load_memory_file(memory_path, memory_container)
             
@@ -187,6 +189,7 @@ func _load_memory_file(file_path, memory_container):
         # Decompress if it starts with the compression marker
         if content.begins_with("COMPRESSED:"):
             content = _decompress_memory_data(content.substr(11))  # Remove "COMPRESSED:" prefix
+			
         
         var json = JSON.new()
         var error = json.parse(content)
@@ -235,6 +238,7 @@ func connect_memory_systems():
     
     # Optimize performance if available
     if performance_optimizer and performance_optimizer.has_method("allocate_thread"):
+	
         # Allocate thread for memory operations
         performance_optimizer.allocate_thread("memory_connector", 7)
     
@@ -396,6 +400,7 @@ func _save_memory_to_file(memory, file_path):
         if json_string.length() > 1024 and memory_compression_level > 0:
             var compressed = _compress_memory_data(json_string)
             file.store_string("COMPRESSED:" + compressed)
+			
             
             # Track compression savings
             var savings = 1.0 - (float(compressed.length()) / float(json_string.length()))
@@ -455,6 +460,7 @@ func _has_content_conflict(memory1, memory2):
         return true
     
     if memory1.has("tags") and memory2.has("tags") and memory1.tags != memory2.tags:
+	
         # Different tags
         return true
     
@@ -493,7 +499,7 @@ func connect_wish_to_memories(wish_id, memory_ids):
         "connected_at": Time.get_unix_time_from_system(),
         "fulfilled": false,
         "fulfilled_by": ""
-    }
+		}
     
     # Add connections to memories
     for memory_id in memory_ids:
@@ -546,10 +552,11 @@ func fulfill_wish_with_memory(wish_id, memory_id):
     wish_completions[wish_id] = {
         "memory_id": memory_id,
         "fulfilled_at": Time.get_unix_time_from_system()
-    }
+		}
     
     # Update Memory System if available
     if memory_system and memory_system.has_method("fulfill_wish"):
+	
         var memory = _get_memory_by_id(memory_id)
         if memory:
             memory_system.fulfill_wish(wish_id, memory.content)
@@ -593,6 +600,7 @@ func _compress_memory_data(data):
     # return data.compress(memory_compression_level)
     
     return "COMPRESSED_DATA:" + str(data.length()) + ":" + data.substr(0, 100) + "..."
+	
 
 func _decompress_memory_data(compressed_data):
     # Since our compression is just a mock, this is also a mock decompression
@@ -600,6 +608,7 @@ func _decompress_memory_data(compressed_data):
     
     var parts = compressed_data.split(":", true, 2)
     if parts.size() >= 3 and parts[0] == "COMPRESSED_DATA":
+	
         var original_length = int(parts[1])
         
         # In a real implementation, you would decompress the data
@@ -643,6 +652,7 @@ func _on_cleanup_timer_timeout():
 func _on_memory_stored(memory_id, content):
     # Memory was stored in the Memory System
     if not local_memories.has(memory_id) and memory_system and memory_system.has_method("retrieve_memory"):
+	
         var memory = memory_system.retrieve_memory(memory_id)
         if memory:
             local_memories[memory_id] = memory
@@ -664,28 +674,33 @@ func _on_wish_fulfilled(wish_id, content):
     
     # Create a new memory for this fulfillment
     if memory_system and memory_system.has_method("store_memory"):
+	
         var tags = ["wish_fulfillment", "wish:" + wish_id]
+		
         var memory_id = memory_system.store_memory("Wish fulfilled: " + content, tags, "fulfillment")
+		
         
         wish_completions[wish_id] = {
             "memory_id": memory_id,
             "fulfilled_at": Time.get_unix_time_from_system()
-        }
+			}
 
 func _on_ethereal_memory_recorded(content, dimension):
     # Memory was recorded in Ethereal Bridge
     if ethereal_bridge and ethereal_bridge.has_method("search_akashic_records"):
+	
         var results = ethereal_bridge.search_akashic_records(content, dimension)
         
         for result in results:
             if result.has("memory_id") and not ethereal_memories.has(result.memory_id):
+			
                 var memory = {
                     "id": result.memory_id,
                     "content": result.content,
                     "tags": result.has("tags") ? result.tags : [],
                     "dimension": result.has("dimension") ? result.dimension : "",
                     "timestamp": result.has("timestamp") ? result.timestamp : Time.get_unix_time_from_system()
-                }
+					}
                 
                 ethereal_memories[result.memory_id] = memory
                 _sync_memory_to_system(memory, MemorySystem.ETHEREAL)
@@ -703,6 +718,7 @@ func _check_wish_fulfillment_by_content(content):
             var memory_id = ""
             
             if memory_system and memory_system.has_method("store_memory"):
+			
                 var tags = ["potential_fulfillment", "wish:" + wish_id]
                 memory_id = memory_system.store_memory(content, tags, "fulfillment_check")
             
@@ -758,10 +774,10 @@ func get_memory_counts():
         "ethereal": ethereal_memories.size(),
         "akashic": akashic_memories.size(),
         "total_unique": _count_unique_memories()
-    }
+		}
 
 func _count_unique_memories():
-    var unique_ids = {}
+    var unique_ids = {
     
     for memory_id in local_memories:
         unique_ids[memory_id] = true

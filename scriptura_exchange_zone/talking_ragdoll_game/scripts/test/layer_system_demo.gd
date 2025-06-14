@@ -3,11 +3,10 @@
 # Created: May 31, 2025, 23:28 CEST
 # Purpose: Ragdoll physics and behavior system
 # Connection: Part of Pentagon Architecture migration
-
 extends UniversalBeingBase
 # Layer System Demo - Shows how entities exist across multiple reality layers
 
-@onready var layer_system = get_node("/root/LayerRealitySystem")
+@onready var layer_system = get_node("root/LayerRealitySystem")
 
 # Demo entities
 var demo_ragdoll: Node3D
@@ -116,8 +115,8 @@ func _print_instructions() -> void:
   - All entities exist in multiple layers
 """
 	
-	if has_node("/root/ConsoleManager"):
-		var console = get_node("/root/ConsoleManager")
+	if has_node("root/ConsoleManager"):
+		var console = get_node("root/ConsoleManager")
 		console._print_to_console(instructions)
 	else:
 		print(instructions)

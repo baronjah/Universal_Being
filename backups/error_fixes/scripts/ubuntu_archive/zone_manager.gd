@@ -44,7 +44,7 @@ func create_zone(zone_id: String, zone_name: String, boundaries: Dictionary, pro
         "entities": [],
         "boundaries": boundaries,
         "properties": properties
-    }
+		}
     
     emit_signal("zone_created", zone_id)
     print("ZoneManager: Created zone: ", zone_id)
@@ -56,7 +56,7 @@ func update_zone(zone_id: String, zone_name: String = "", boundaries: Dictionary
         print("ZoneManager: Cannot update non-existent zone: ", zone_id)
         return false
     
-    if not zone_name.empty():
+    if not zone_name.is_empty():
         zones[zone_id]["name"] = zone_name
     
     if not boundaries.is_empty():
@@ -143,8 +143,8 @@ func get_entities_in_zone(zone_id: String) -> Array:
 # Gets a zone by ID
 func get_zone(zone_id: String) -> Dictionary:
     if not zones.has(zone_id):
-        return {}
-    return zones[zone_id].duplicate()
+        return {
+    return zones[zone_id].duplicate()}
 
 # Gets all zones
 func get_all_zones() -> Array:

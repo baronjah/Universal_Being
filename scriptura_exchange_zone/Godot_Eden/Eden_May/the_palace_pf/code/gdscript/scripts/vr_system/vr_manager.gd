@@ -1,5 +1,5 @@
 extends Node
-class_name VRManager
+class_name VRManager_vrmanager_vrmanage
 
 # Singleton instance
 static var _instance = null

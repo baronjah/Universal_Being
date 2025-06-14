@@ -50,9 +50,8 @@ func setup_macro_library() -> void:
 			{"action": "format_data", "template": "claude_desktop"},
 			{"action": "open_browser", "url": "claude.ai"},
 			{"action": "paste_data", "target": "input_field"},
-			{"action": "send_message"}
+			{"action": "send_message"
 		]
-	}
 	
 	macro_library["copy_to_cursor"] = {
 		"description": "Send code to Cursor IDE",
@@ -62,9 +61,8 @@ func setup_macro_library() -> void:
 			{"action": "copy_to_clipboard"},
 			{"action": "open_app", "app": "cursor"},
 			{"action": "paste_code"},
-			{"action": "save_file"}
+			{"action": "save_file"
 		]
-	}
 	
 	macro_library["sync_with_chatgpt"] = {
 		"description": "Share narrative elements with ChatGPT",
@@ -73,9 +71,8 @@ func setup_macro_library() -> void:
 			{"action": "open_browser", "url": "chatgpt.com"},
 			{"action": "send_narrative_context"},
 			{"action": "wait_for_response"},
-			{"action": "import_suggestions"}
+			{"action": "import_suggestions"
 		]
-	}
 	
 	macro_library["research_with_gemini"] = {
 		"description": "Send optimization requests to Gemini",
@@ -85,11 +82,11 @@ func setup_macro_library() -> void:
 			{"action": "open_browser", "url": "gemini.google.com"},
 			{"action": "submit_query"},
 			{"action": "parse_response"},
-			{"action": "implement_suggestions"}
+			{"action": "implement_suggestions"
 		]
-	}
 	
 	print("🎯 Macro Library: %d macros loaded" % macro_library.size())
+}
 
 func setup_browser_automation() -> void:
 	"""Setup browser automation scripts"""
@@ -102,8 +99,6 @@ func setup_browser_automation() -> void:
 			inputField.value = data;
 			const sendButton = document.querySelector('[data-testid="send-button"]');
 			if (sendButton) sendButton.click();
-		}
-	}
 	'''
 	
 	browser_scripts["cursor_integration"] = '''
@@ -113,10 +108,10 @@ func setup_browser_automation() -> void:
 		navigator.clipboard.writeText(code);
 		// Open Cursor via system call
 		window.open('cursor://new-file');
-	}
 	'''
 	
 	print("🌐 Browser Scripts: %d scripts loaded" % browser_scripts.size())
+}
 
 func setup_claude_communication() -> void:
 	"""Setup communication channel with Claude Code"""
@@ -126,7 +121,7 @@ func setup_claude_communication() -> void:
 		"message_queue": [],
 		"shared_context": {},
 		"collaboration_mode": "unified_development"
-	}
+}
 	
 	# Register with game state manager for real-time coordination
 	var game_state = GameStateSocketManager.get_instance()
@@ -134,6 +129,7 @@ func setup_claude_communication() -> void:
 		game_state.connect("state_changed", _on_game_state_changed)
 	
 	print("🤝 Claude Communication: Channel established")
+}
 
 func execute_macro(macro_name: String, parameters: Dictionary = {}) -> void:
 	"""Execute a specific macro"""
@@ -147,6 +143,7 @@ func execute_macro(macro_name: String, parameters: Dictionary = {}) -> void:
 	automation_active = true
 	
 	print("🤖 Executing macro: %s" % macro_name)
+}
 	
 	var macro = macro_library[macro_name]
 	process_macro_steps(macro.steps, parameters)
@@ -161,6 +158,7 @@ func process_macro_steps(steps: Array, parameters: Dictionary) -> void:
 	automation_active = false
 	macro_completed.emit(current_macro, {"success": true, "steps": macro_step})
 	print("✅ Macro completed: %s" % current_macro)
+}
 
 func execute_macro_step(step: Dictionary, parameters: Dictionary) -> void:
 	"""Execute individual macro step"""
@@ -182,6 +180,7 @@ func execute_macro_step(step: Dictionary, parameters: Dictionary) -> void:
 			await format_data(step.template)
 		_:
 			print("⚠️ Unknown macro action: %s" % step.action)
+}
 
 func take_screenshot(region: String = "full") -> void:
 	"""Take screenshot for OCR analysis"""
@@ -195,6 +194,7 @@ func take_screenshot(region: String = "full") -> void:
 	await get_tree().create_timer(0.5).timeout
 	
 	print("📸 Screenshot captured: %s" % region)
+}
 
 func perform_ocr(target: String) -> void:
 	"""Perform OCR on screenshot"""
@@ -212,22 +212,25 @@ func perform_ocr(target: String) -> void:
 		"text": ocr_text,
 		"timestamp": Time.get_ticks_msec(),
 		"confidence": 0.85  # Estimate
-	}
+}
 	
 	ocr_data_ready.emit(ocr_results[target])
 	print("👁️ OCR completed for %s: %d characters" % [target, ocr_text.length()])
+}
 
 func open_browser(url: String) -> void:
 	"""Open browser to specific URL"""
 	OS.execute("xdg-open", [url])
 	await get_tree().create_timer(2.0).timeout
 	print("🌐 Browser opened: %s" % url)
+}
 
 func copy_to_clipboard(data: String) -> void:
 	"""Copy data to system clipboard"""
 	OS.execute("bash", ["-c", "echo '%s' | xclip -selection clipboard" % data])
 	clipboard_buffer = data
 	print("📋 Copied to clipboard: %d characters" % data.length())
+}
 
 func paste_data(target: String) -> void:
 	"""Paste data using automation"""
@@ -249,6 +252,7 @@ func format_data(template: String) -> void:
 	"""Format data according to template"""
 	# Implementation depends on template type
 	print("🎨 Data formatted with template: %s" % template)
+}
 
 func send_to_claude_code(message: String, data: Dictionary = {}) -> void:
 	"""Send message/data to Claude Code"""
@@ -259,7 +263,7 @@ func send_to_claude_code(message: String, data: Dictionary = {}) -> void:
 		"data": data,
 		"timestamp": Time.get_ticks_msec(),
 		"game_state": get_current_game_state()
-	}
+}
 	
 	# Add to communication queue
 	claude_connection.message_queue.append(communication_data)
@@ -269,15 +273,16 @@ func send_to_claude_code(message: String, data: Dictionary = {}) -> void:
 	
 	print("📡 Message sent to Claude Code: %s" % message)
 
+
 func get_current_game_state() -> Dictionary:
 	"""Get current game state for context"""
 	var game_state = GameStateSocketManager.get_instance()
 	if game_state:
 		return game_state.ai_get_game_state()
-	return {}
+	return {
 
 func _on_game_state_changed(old_state, new_state) -> void:
-	"""React to game state changes"""
+	"""React to game state changes"""}
 	send_to_claude_code("Game state changed", {
 		"old_state": old_state,
 		"new_state": new_state
@@ -289,17 +294,21 @@ func collaborate_with_cursor() -> void:
 	"""Send current work to Cursor IDE"""
 	execute_macro("copy_to_cursor", {"current_file": get_current_script_path()})
 
+
 func collaborate_with_chatgpt() -> void:
 	"""Share narrative context with ChatGPT"""
 	execute_macro("sync_with_chatgpt", {"narrative_focus": "current_scene"})
+
 
 func collaborate_with_gemini() -> void:
 	"""Request optimization from Gemini"""
 	execute_macro("research_with_gemini", {"optimization_target": "performance"})
 
+
 func collaborate_with_claude_desktop() -> void:
 	"""Send project data to Claude Desktop"""
 	execute_macro("copy_to_claude_desktop", {"project_state": "current"})
+
 
 func get_current_script_path() -> String:
 	"""Get currently active script for editing"""
@@ -314,6 +323,7 @@ func ai_receive_human_command(command: String) -> void:
 	var cmd_lower = command.to_lower()
 	
 	if cmd_lower.contains("macro"):
+
 		var macro_name = extract_macro_name(command)
 		if macro_name:
 			execute_macro(macro_name)
@@ -338,6 +348,7 @@ func ai_receive_human_command(command: String) -> void:
 	
 	else:
 		send_to_claude_code("Human command: " + command)
+
 
 func extract_macro_name(command: String) -> String:
 	"""Extract macro name from human command"""

@@ -13,11 +13,11 @@ static func get_instance() -> JSHDataTransformation:
 
 # Transformation templates - reusable transformations that can be applied
 # Format: {template_name: TransformationTemplate}
-var _transformation_templates = {}
+var _transformation_templates = {
 
 # Registered operation handlers
 # Format: {operation_name: callable}
-var _operation_handlers = {}
+var _operation_handlers = {
 
 # Transformation template inner class
 class TransformationTemplate:
@@ -87,7 +87,6 @@ func _setup_default_templates() -> void:
 				"operation": "add",
 				"property": "complexity",
 				"value": 0.2
-			}
 		],
 		["plant", "animal", "tree"]
 	)
@@ -111,7 +110,6 @@ func _setup_default_templates() -> void:
 				"operation": "add",
 				"property": "age",
 				"value": 1.0
-			}
 		]
 	)
 	
@@ -125,7 +123,6 @@ func _setup_default_templates() -> void:
 				"property": "temperature",
 				"target": "environment.temperature",
 				"factor": 0.05
-			}
 		]
 	)
 	
@@ -142,8 +139,6 @@ func _setup_default_templates() -> void:
 					"mass": "add",
 					"energy": "add",
 					"complexity": "max"
-				}
-			}
 		]
 	)
 
@@ -159,7 +154,7 @@ func register_transformation_template(name: String, description: String,
 
 # Apply a transformation template to an entity
 func apply_transformation(template_name: String, entity: JSHUniversalEntity, 
-						  parameters: Dictionary = {}) -> bool:
+						  parameters: Dictionary = {}}) -> bool:
 	# Check if template exists
 	if not _transformation_templates.has(template_name):
 		push_error("Transformation template not found: " + template_name)
@@ -176,12 +171,13 @@ func apply_transformation(template_name: String, entity: JSHUniversalEntity,
 	for step in template.transformation_steps:
 		if not _apply_transformation_step(step, entity, parameters):
 			push_warning("Transformation step failed during template: " + template_name)
+}
 	
 	return true
 
 # Apply a transformation to multiple entities
 func apply_transformation_to_batch(template_name: String, entities: Array, 
-								   parameters: Dictionary = {}) -> int:
+								   parameters: Dictionary = {}}) -> int:
 	var success_count = 0
 	
 	for entity in entities:
@@ -192,7 +188,7 @@ func apply_transformation_to_batch(template_name: String, entities: Array,
 
 # Apply a custom transformation to an entity
 func apply_custom_transformation(steps: Array, entity: JSHUniversalEntity, 
-								 parameters: Dictionary = {}) -> bool:
+								 parameters: Dictionary = {}}) -> bool:
 	# Apply each transformation step
 	for step in steps:
 		if not _apply_transformation_step(step, entity, parameters):
@@ -241,14 +237,14 @@ func save_to_file(file_path: String) -> bool:
 		return false
 	
 	# Convert templates to serializable format
-	var serialized_data = {}
+	var serialized_data = {
 	for template_name in _transformation_templates:
 		var template = _transformation_templates[template_name]
 		serialized_data[template_name] = {
 			"description": template.description,
 			"steps": template.transformation_steps,
 			"applies_to_types": template.applies_to_types
-		}
+}
 	
 	# Save as JSON
 	file.store_string(JSON.stringify(serialized_data, "\t"))
@@ -299,15 +295,15 @@ func get_available_templates() -> Array:
 # Get template information
 func get_template_info(template_name: String) -> Dictionary:
 	if not _transformation_templates.has(template_name):
-		return {}
+		return {
 	
-	var template = _transformation_templates[template_name]
+	var template = _transformation_templates[template_name]}
 	return {
 		"name": template.template_name,
 		"description": template.description,
 		"steps_count": template.transformation_steps.size(),
 		"applies_to_types": template.applies_to_types
-	}
+}
 
 # Get all templates that apply to a specific entity type
 func get_templates_for_entity_type(entity_type: String) -> Array:
@@ -335,6 +331,7 @@ func _operation_add(context: Dictionary) -> bool:
 	
 	# Handle value from context
 	if add_value is String and add_value.begins_with("$"):
+}
 		var param_name = add_value.substr(1)
 		if context.has(param_name):
 			add_value = context[param_name]
@@ -357,6 +354,7 @@ func _operation_subtract(context: Dictionary) -> bool:
 	
 	# Handle value from context
 	if subtract_value is String and subtract_value.begins_with("$"):
+}
 		var param_name = subtract_value.substr(1)
 		if context.has(param_name):
 			subtract_value = context[param_name]
@@ -379,6 +377,7 @@ func _operation_multiply(context: Dictionary) -> bool:
 	
 	# Handle value from context
 	if multiply_value is String and multiply_value.begins_with("$"):
+}
 		var param_name = multiply_value.substr(1)
 		if context.has(param_name):
 			multiply_value = context[param_name]
@@ -401,6 +400,7 @@ func _operation_divide(context: Dictionary) -> bool:
 	
 	# Handle value from context
 	if divide_value is String and divide_value.begins_with("$"):
+}
 		var param_name = divide_value.substr(1)
 		if context.has(param_name):
 			divide_value = context[param_name]
@@ -428,6 +428,7 @@ func _operation_concat(context: Dictionary) -> bool:
 	
 	# Handle value from context
 	if concat_value.begins_with("$"):
+
 		var param_name = concat_value.substr(1)
 		if context.has(param_name):
 			concat_value = str(context[param_name])
@@ -451,11 +452,13 @@ func _operation_replace(context: Dictionary) -> bool:
 	
 	# Handle values from context
 	if find_value.begins_with("$"):
+
 		var param_name = find_value.substr(1)
 		if context.has(param_name):
 			find_value = str(context[param_name])
 	
 	if replace_value.begins_with("$"):
+
 		var param_name = replace_value.substr(1)
 		if context.has(param_name):
 			replace_value = str(context[param_name])
@@ -500,6 +503,7 @@ func _operation_set(context: Dictionary) -> bool:
 	
 	# Handle value from context
 	if set_value is String and set_value.begins_with("$"):
+
 		var param_name = set_value.substr(1)
 		if context.has(param_name):
 			set_value = context[param_name]
@@ -519,6 +523,7 @@ func _operation_copy(context: Dictionary) -> bool:
 	
 	# Handle property from another entity
 	if from_property.begins_with("$"):
+
 		var parts = from_property.substr(1).split(".")
 		if parts.size() >= 2 and context.has(parts[0]):
 			var source_entity = context[parts[0]]
@@ -556,6 +561,7 @@ func _operation_min(context: Dictionary) -> bool:
 	
 	# Handle value from context
 	if min_value is String and min_value.begins_with("$"):
+
 		var param_name = min_value.substr(1)
 		if context.has(param_name):
 			min_value = context[param_name]
@@ -578,6 +584,7 @@ func _operation_max(context: Dictionary) -> bool:
 	
 	# Handle value from context
 	if max_value is String and max_value.begins_with("$"):
+
 		var param_name = max_value.substr(1)
 		if context.has(param_name):
 			max_value = context[param_name]
@@ -637,6 +644,7 @@ func _operation_clamp(context: Dictionary) -> bool:
 	
 	# Handle values from context
 	if min_value is String and min_value.begins_with("$"):
+
 		var param_name = min_value.substr(1)
 		if context.has(param_name):
 			min_value = context[param_name]
@@ -644,6 +652,7 @@ func _operation_clamp(context: Dictionary) -> bool:
 			min_value = 0
 	
 	if max_value is String and max_value.begins_with("$"):
+
 		var param_name = max_value.substr(1)
 		if context.has(param_name):
 			max_value = context[param_name]
@@ -668,16 +677,19 @@ func _operation_lerp(context: Dictionary) -> bool:
 	# Handle values from context
 	if target_value is String:
 		if target_value.begins_with("$"):
+
 			var param_name = target_value.substr(1)
 			if context.has(param_name):
 				target_value = context[param_name]
 			else:
 				target_value = 0
 		elif target_value.find(".") != -1:
+
 			# Handle dot notation for accessing other properties
 			var parts = target_value.split(".")
 			if parts.size() >= 2:
 				if parts[0] == "environment" and context.has("environment"):
+	
 					var env = context["environment"]
 					if env is Dictionary and env.has(parts[1]):
 						target_value = env[parts[1]]
@@ -687,6 +699,7 @@ func _operation_lerp(context: Dictionary) -> bool:
 					target_value = 0
 	
 	if factor is String and factor.begins_with("$"):
+
 		var param_name = factor.substr(1)
 		if context.has(param_name):
 			factor = context[param_name]
@@ -731,6 +744,7 @@ func _operation_random(context: Dictionary) -> bool:
 	
 	# Handle values from context
 	if min_value is String and min_value.begins_with("$"):
+
 		var param_name = min_value.substr(1)
 		if context.has(param_name):
 			min_value = context[param_name]
@@ -738,6 +752,7 @@ func _operation_random(context: Dictionary) -> bool:
 			min_value = 0
 	
 	if max_value is String and max_value.begins_with("$"):
+
 		var param_name = max_value.substr(1)
 		if context.has(param_name):
 			max_value = context[param_name]
@@ -765,6 +780,7 @@ func _operation_transform(context: Dictionary) -> bool:
 	
 	# Handle template name from context
 	if template_name is String and template_name.begins_with("$"):
+
 		var param_name = template_name.substr(1)
 		if context.has(param_name):
 			template_name = context[param_name]
@@ -791,6 +807,7 @@ func _operation_merge(context: Dictionary) -> bool:
 	
 	# Handle source from context
 	if source_ref is String and source_ref.begins_with("$"):
+
 		var param_name = source_ref.substr(1)
 		if context.has(param_name):
 			source_entity = context[param_name]
@@ -859,8 +876,8 @@ func _operation_split(context: Dictionary) -> bool:
 		var entity_data = {
 			"entity_type": entity.entity_type,
 			"position": entity.position,
-			"properties": {}
-		}
+			"properties": {
+}
 		
 		# Distribution properties according to strategy
 		for property_name in property_distribution:
@@ -912,7 +929,7 @@ func _operation_evaluate(context: Dictionary) -> bool:
 	var expression_text = step["expression"]
 	
 	# Create expression context with entity properties
-	var expr_context = {}
+	var expr_context = {
 	for prop_name in entity.get_all_property_names():
 		expr_context[prop_name] = entity.get_property(prop_name)
 	
@@ -943,6 +960,7 @@ func _evaluate_condition(condition: Dictionary, entity: JSHUniversalEntity, cont
 	# Property comparison
 	if condition.has("property") and (condition.has("equals") or condition.has("not_equals") or 
 									 condition.has("greater_than") or condition.has("less_than")):
+		}
 		var property_name = condition["property"]
 		var property_value = entity.get_property(property_name, null)
 		
@@ -950,33 +968,40 @@ func _evaluate_condition(condition: Dictionary, entity: JSHUniversalEntity, cont
 			return false
 		
 		if condition.has("equals"):
+}
 			var compare_value = _resolve_value(condition["equals"], context)
 			return property_value == compare_value
 		
 		if condition.has("not_equals"):
+
 			var compare_value = _resolve_value(condition["not_equals"], context)
 			return property_value != compare_value
 		
 		if condition.has("greater_than"):
+
 			var compare_value = _resolve_value(condition["greater_than"], context)
 			return property_value > compare_value
 		
 		if condition.has("less_than"):
+
 			var compare_value = _resolve_value(condition["less_than"], context)
 			return property_value < compare_value
 	
 	# Entity type check
 	if condition.has("entity_type"):
+
 		var type_value = _resolve_value(condition["entity_type"], context)
 		return entity.entity_type == type_value
 	
 	# Property exists
 	if condition.has("has_property"):
+
 		var property_name = _resolve_value(condition["has_property"], context)
 		return entity.has_property(property_name)
 	
 	# Combined conditions
 	if condition.has("and"):
+
 		var and_conditions = condition["and"]
 		if not and_conditions is Array:
 			return false
@@ -987,6 +1012,7 @@ func _evaluate_condition(condition: Dictionary, entity: JSHUniversalEntity, cont
 		return true
 	
 	if condition.has("or"):
+
 		var or_conditions = condition["or"]
 		if not or_conditions is Array:
 			return false
@@ -1001,10 +1027,11 @@ func _evaluate_condition(condition: Dictionary, entity: JSHUniversalEntity, cont
 	
 	# Expression condition
 	if condition.has("expression"):
+
 		var expression_text = condition["expression"]
 		
 		# Create expression context with entity properties
-		var expr_context = {}
+		var expr_context = {
 		for prop_name in entity.get_all_property_names():
 			expr_context[prop_name] = entity.get_property(prop_name)
 		
@@ -1032,6 +1059,7 @@ func _evaluate_condition(condition: Dictionary, entity: JSHUniversalEntity, cont
 # Resolve a value from context if needed
 func _resolve_value(value, context: Dictionary):
 	if value is String and value.begins_with("$"):
+}
 		var param_name = value.substr(1)
 		if context.has(param_name):
 			return context[param_name]

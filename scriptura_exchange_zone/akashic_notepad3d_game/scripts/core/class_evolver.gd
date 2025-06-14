@@ -21,7 +21,7 @@ extends Node
 # ═══════════════════════════════════════════════════════════════════════════════════════════════
 
 ## Class Evolver for dynamic class updates and evolution
-class_name ClassEvolver
+class_name ClassEvolver_classevolver_classevo
 
 # ─────────────────────────────────────────────────────────────────────────────────
 # 🧬 EVOLUTION STATE MANAGEMENT
@@ -33,7 +33,8 @@ static var function_fallbacks: Dictionary = {}
 static var ai_generations: Dictionary = {}
 
 # Evolution categories for tracking development patterns
-enum EvolutionType {
+enum \2 {
+
 	ENHANCEMENT,     # Improving existing functionality
 	ADAPTATION,      # Adapting to new requirements
 	OPTIMIZATION,    # Performance improvements

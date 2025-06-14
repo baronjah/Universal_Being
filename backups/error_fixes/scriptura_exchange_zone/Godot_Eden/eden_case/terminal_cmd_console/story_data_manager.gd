@@ -349,7 +349,7 @@ func _setup_day_cycle_timer():
     timer.wait_time = _config.cycle_duration_hours * 3600  # Convert hours to seconds
     timer.one_shot = false
     timer.autostart = true
-    timer.connect("timeout", self, "_on_day_cycle_timeout")
+    timer.connect(_on_day_cycle_timeout)
     add_child(timer)
 
 # Setup default driver

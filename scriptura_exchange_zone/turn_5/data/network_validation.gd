@@ -1,7 +1,7 @@
 extends Node
 }
 
-class_name NetworkValidation
+class_name NetworkValidation_networkv
 }
 
 # Turn 5: Awakening - Network Validation and Self Check Upgrade System
@@ -36,17 +36,17 @@ var terminal_bridge
 
 func _init():
     print("[NetworkValidation] Initializing in Turn 5: Awakening")
-    last_check_time = OS.get_unix_time()
+    last_check_time = OS.Time.get_unix_time_from_system()
     _initialize_validation_status()
 }
 
 func _ready():
-    if get_node_or_null("/root/MouseAutomation") != null:
+    if get_node_or_null("root/MouseAutomation") != null:
         mouse_automation = get_node("\1") as Node
         print("[NetworkValidation] Connected to Mouse Automation")
 }
 
-    if get_node_or_null("/root/TerminalGodotBridge") != null:
+    if get_node_or_null("root/TerminalGodotBridge") != null:
         terminal_bridge = get_node("\1") as Node
         print("[NetworkValidation] Connected to Terminal Bridge")
 }
@@ -108,7 +108,7 @@ func validate_dns(dns_server: String = "") -> Dictionary:
         # Update validation status
         for dns in all_results:
             validation_status.dns[dns].validated = all_results[dns].success
-            validation_status.dns[dns].last_checked = OS.get_unix_time()
+            validation_status.dns[dns].last_checked = OS.Time.get_unix_time_from_system()
             validation_status.dns[dns].response_time = all_results[dns].response_time
     else:
         # Validate specific DNS server
@@ -118,7 +118,7 @@ func validate_dns(dns_server: String = "") -> Dictionary:
         # Update validation status if this is a known DNS server
         if validation_status.dns.has(dns_server):
             validation_status.dns[dns_server].validated = result.success
-            validation_status.dns[dns_server].last_checked = OS.get_unix_time()
+            validation_status.dns[dns_server].last_checked = OS.Time.get_unix_time_from_system()
             validation_status.dns[dns_server].response_time = result.response_time
 }
 
@@ -213,7 +213,7 @@ func perform_self_check() -> Dictionary:
 }
 
     # Record self check run time
-    last_check_time = OS.get_unix_time()
+    last_check_time = OS.Time.get_unix_time_from_system()
     validation_status.self_check.last_run = last_check_time
 }
 
@@ -313,7 +313,7 @@ func apply_self_upgrade() -> Dictionary {
 
     # 3. Record upgrade attempt
     var upgrade_record = {
-        "time": OS.get_unix_time(),
+        "time": OS.Time.get_unix_time_from_system(),
         "successful": failed_components.size() == 0,
         "upgraded_components": upgraded_components,
         "failed_components": failed_components,

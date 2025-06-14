@@ -6,15 +6,17 @@ extends Node
 # Integrates with Terminal Memory System and Concurrent Processor
 }
 
-class_name DriveConnector
+class_name DriveConnector_driveconnector_drivecon
 }
 
 # Drive types
-enum DriveType { LOCAL, ICLOUD, GOOGLE_DRIVE, REMOTE }
+enum \2 {
+ LOCAL, ICLOUD, GOOGLE_DRIVE, REMOTE }
 }
 
 # Connection status
-enum ConnectionStatus { DISCONNECTED, CONNECTING, CONNECTED, ERROR }
+enum \2 {
+ DISCONNECTED, CONNECTING, CONNECTED, ERROR }
 }
 
 # Drive Configuration
@@ -60,7 +62,7 @@ class DriveConfig:
 			emoji,
 			name,
 			get_type_string(),
-			_format_size(quota_used) + "/" + _format_size(quota_total) if quota_total > 0 else "Unlimited"
+			_format_size(quota_used) + "" + _format_size(quota_total) if quota_total > 0 else "Unlimited"
 		]
 }
 
@@ -95,7 +97,7 @@ func _ready():
 }
 
 	# Look for terminal memory system
-	terminal_memory = get_node_or_null("/root/TerminalMemorySystem")
+	terminal_memory = get_node_or_null("root/TerminalMemorySystem")
 }
 
 	if terminal_memory and terminal_memory.has_method("add_memory_text"):
@@ -484,7 +486,7 @@ func _process_add_command(args: String) -> void:
 
 	var drive_type_str = parts[0].to_lower()
 	var name = parts[1]
-	var path = parts[2] if parts.size() > 2 else "user://" + name + "/"
+	var path = parts[2] if parts.size() > 2 else "user://" + name + ""
 }
 
 	var drive_type = DriveType.LOCAL
@@ -789,7 +791,7 @@ func _connect_local_drive(drive: DriveConfig) -> bool:
 }
 
 	drive.connection_status = ConnectionStatus.CONNECTED
-	drive.last_sync = OS.get_unix_time()
+	drive.last_sync = OS.Time.get_unix_time_from_system()
 }
 
 	emit_signal("drive_connected", drive.name)
@@ -815,7 +817,7 @@ func _connect_icloud_drive(drive: DriveConfig) -> bool:
 
 	# In a real implementation, this would connect to the iCloud API
 	drive.connection_status = ConnectionStatus.CONNECTED
-	drive.last_sync = OS.get_unix_time()
+	drive.last_sync = OS.Time.get_unix_time_from_system()
 	drive.quota_used = int(drive.quota_total * 0.3) # Simulate 30% used
 }
 
@@ -842,7 +844,7 @@ func _connect_google_drive(drive: DriveConfig) -> bool:
 
 	# In a real implementation, this would connect to the Google Drive API
 	drive.connection_status = ConnectionStatus.CONNECTED
-	drive.last_sync = OS.get_unix_time()
+	drive.last_sync = OS.Time.get_unix_time_from_system()
 	drive.quota_used = int(drive.quota_total * 0.25) # Simulate 25% used
 }
 
@@ -866,7 +868,7 @@ func _connect_remote_drive(drive: DriveConfig) -> bool:
 
 	# In a real implementation, this would connect to a remote API
 	drive.connection_status = ConnectionStatus.CONNECTED
-	drive.last_sync = OS.get_unix_time()
+	drive.last_sync = OS.Time.get_unix_time_from_system()
 	drive.quota_used = int(drive.quota_total * 0.5) # Simulate 50% used
 }
 
@@ -883,7 +885,7 @@ func _sync_local_drive(drive: DriveConfig) -> bool:
 	# Update stats
 	var stats = _get_directory_stats(drive.path)
 	drive.quota_used = stats.size
-	drive.last_sync = OS.get_unix_time()
+	drive.last_sync = OS.Time.get_unix_time_from_system()
 }
 
 	emit_signal("sync_completed", drive.name)
@@ -897,7 +899,7 @@ func _sync_icloud_drive(drive: DriveConfig) -> bool:
 }
 
 	# In a real implementation, this would sync with the iCloud API
-	drive.last_sync = OS.get_unix_time()
+	drive.last_sync = OS.Time.get_unix_time_from_system()
 }
 
 	emit_signal("sync_completed", drive.name)
@@ -911,7 +913,7 @@ func _sync_google_drive(drive: DriveConfig) -> bool:
 }
 
 	# In a real implementation, this would sync with the Google Drive API
-	drive.last_sync = OS.get_unix_time()
+	drive.last_sync = OS.Time.get_unix_time_from_system()
 }
 
 	emit_signal("sync_completed", drive.name)
@@ -932,7 +934,7 @@ func _sync_remote_drive(drive: DriveConfig) -> bool:
 }
 
 	# In a real implementation, this would sync with a remote API
-	drive.last_sync = OS.get_unix_time()
+	drive.last_sync = OS.Time.get_unix_time_from_system()
 }
 
 	emit_signal("sync_completed", drive.name)

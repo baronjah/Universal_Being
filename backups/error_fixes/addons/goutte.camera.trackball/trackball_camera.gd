@@ -192,6 +192,7 @@ extends Camera3D
 @export var pitch_soft_limit_strength := 1.0
 
 #enum PitchLimitMode {
+}
 #	SOFT,
 #	HARD,
 #	BOTH,
@@ -252,6 +253,7 @@ func ready():
 		position = Vector3(0, 5, 10)
 	
 	print("🎥 TrackballCamera ready! Distance to target: %.2f" % get_distance_to_target())
+
 
 
 func input(event: InputEvent):
@@ -469,7 +471,7 @@ func apply_soft_pitch_constraint(on_transform: Transform3D) -> Transform3D:
 
 		add_inertia((
 			limit_will * Vector2.UP  # direction
-			* PITCH_SOFT_LIMIT_NORMALIZATION  # role: yield sane defaults
+			* PITCH_SOFT_LIMIT_NORMALIZATION  # role: await sane defaults
 			* resistance_strength  # grows as the trespassing intensifies
 			* self.pitch_soft_limit_strength  # user-defined (exported) coeff
 		))

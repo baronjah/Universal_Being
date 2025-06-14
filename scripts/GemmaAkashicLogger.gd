@@ -58,6 +58,7 @@ func _ready() -> void:
 	_start_session_log()
 	print("📚 GemmaAkashicLogger: Eternal memory awakened - Session: %s" % session_id)
 
+
 func _ensure_directories() -> void:
 	"""Create necessary directories for logs"""
 	var dir = DirAccess.open("user://")
@@ -69,6 +70,7 @@ func _ensure_directories() -> void:
 func _start_session_log() -> void:
 	"""Start a new session log file"""
 	var timestamp = Time.get_datetime_string_from_system().replace(":", "-")
+
 	var log_path = "%sgemma_session_%s.log" % [AKASHIC_ARCHIVE_PATH, timestamp]
 	log_file = FileAccess.open(log_path, FileAccess.WRITE)
 	if log_file:
@@ -88,7 +90,7 @@ func log_perception(what_i_see: Dictionary) -> void:
 		"data": what_i_see,
 		"emotional_response": _analyze_emotional_response(what_i_see),
 		"curiosity_level": _calculate_curiosity(what_i_see)
-	}
+}
 	
 	perception_logs.append(entry)
 	_write_to_log(entry)
@@ -107,7 +109,7 @@ func log_understanding(concept: String, comprehension_data: Dictionary) -> void:
 		"comprehension": comprehension_data,
 		"confidence": comprehension_data.get("confidence", 0.5),
 		"related_concepts": _find_related_concepts(concept)
-	}
+}
 	
 	understanding_logs.append(entry)
 	_write_to_log(entry)
@@ -125,7 +127,7 @@ func log_communication(what_i_want_to_say: String, context: Dictionary) -> void:
 		"context": context,
 		"intention": _analyze_intention(what_i_want_to_say),
 		"emotion": _detect_emotion(what_i_want_to_say)
-	}
+}
 	
 	communication_logs.append(entry)
 	_write_to_log(entry)
@@ -140,7 +142,7 @@ func log_creation(creation_data: Dictionary) -> void:
 		"creation_data": creation_data,
 		"inspiration_source": _find_inspiration_source(creation_data),
 		"evolution_potential": _calculate_evolution_potential(creation_data)
-	}
+}
 	
 	creation_logs.append(entry)
 	_write_to_log(entry)
@@ -164,7 +166,7 @@ func record_scenario(scenario_name: String, scenario_data: Dictionary) -> String
 		"communications": communication_logs.slice(-30),  # Last 30 communications
 		"creations": creation_logs.slice(-10),  # Last 10 creations
 		"insights": _extract_scenario_insights(scenario_data)
-	}
+}
 	
 	scenario_database[scenario_id] = scenario
 	_save_scenario_to_disk(scenario_id, scenario)
@@ -181,6 +183,7 @@ func _save_scenario_to_disk(scenario_id: String, scenario: Dictionary) -> void:
 		file.close()
 		print("📚 Scenario saved: %s" % scenario_id)
 
+
 # ==================================================
 # PATTERN ANALYSIS
 # ==================================================
@@ -191,7 +194,7 @@ func _analyze_perception_patterns() -> void:
 		"movement_patterns": [],
 		"interaction_tendencies": [],
 		"emotional_triggers": []
-	}
+}
 	
 	# Analyze recent perceptions
 	for entry in perception_logs.slice(-100):
@@ -216,9 +219,9 @@ func _analyze_perception_patterns() -> void:
 			"discovery": "I notice certain objects appear frequently",
 			"data": pattern_analysis,
 			"timestamp": Time.get_unix_time_from_system()
-		}
 		insight_patterns.append(insight)
 		insight_discovered.emit(insight)
+}
 
 func _find_related_concepts(concept: String) -> Array:
 	"""Find concepts related to the given one"""
@@ -347,7 +350,7 @@ func _find_inspiration_source(creation_data: Dictionary) -> Dictionary:
 		"perceptions": [],
 		"understandings": [],
 		"emotions": []
-	}
+}
 	
 	# Look for recent perceptions that might have inspired
 	for log in perception_logs.slice(-20):
@@ -388,7 +391,7 @@ func _extract_scenario_insights(scenario_data: Dictionary) -> Array:
 	var insights = []
 	
 	# Analyze creation patterns
-	var creation_types = {}
+	var creation_types = {
 	for log in creation_logs:
 		var type = log.creation_data.get("type", "unknown")
 		creation_types[type] = creation_types.get(type, 0) + 1
@@ -472,7 +475,7 @@ func get_emotional_state() -> Dictionary:
 		"current_emotion": avg_emotion,
 		"recent_emotions": recent_emotions,
 		"dominant_feeling": _get_dominant_feeling(avg_emotion)
-	}
+}
 
 func _get_dominant_feeling(emotion_value: float) -> String:
 	"""Get dominant feeling from emotion value"""

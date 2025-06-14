@@ -1,11 +1,12 @@
 extends CharacterBody3D
-class_name JSHPlayerController
+class_name JSHPlayerController_jshplayercontroller_jshplaye
 
 # Player Movement + Flight System for JSH Ethereal Engine
 # Allows navigation through the word and shape space with multiple movement modes
 
 # Movement modes
-enum MovementMode {
+enum \2 {
+
     WALKING,    # Standard walking on surfaces
     FLYING,     # Free flight in any direction
     SPECTATOR,  # No collision ghost mode
@@ -19,40 +20,40 @@ signal word_interaction(word_id, interaction_type)
 
 # Movement parameters
 @export_group("Movement Settings")
-@export var walk_speed: float = 5.0
-@export var run_speed: float = 10.0
-@export var flight_speed: float = 15.0
-@export var spectator_speed: float = 20.0
-@export var word_surf_speed: float = 25.0
-@export var acceleration: float = 8.0
-@export var deceleration: float = 10.0
-@export var jump_strength: float = 5.0
-@export var gravity_force: float = 9.8
+@@@@export var walk_speed: float = 5.0
+@@@@export var run_speed: float = 10.0
+@@@@export var flight_speed: float = 15.0
+@@@@export var spectator_speed: float = 20.0
+@@@@export var word_surf_speed: float = 25.0
+@@@@export var acceleration: float = 8.0
+@@@@export var deceleration: float = 10.0
+@@@@export var jump_strength: float = 5.0
+@@@@export var gravity_force: float = 9.8
 
 # Flight parameters
 @export_group("Flight Settings")
-@export var flight_acceleration: float = 4.0
-@export var flight_deceleration: float = 6.0
-@export var flight_rotation_speed: float = 2.0
-@export var boost_multiplier: float = 2.0
-@export var hover_stabilization: float = 0.5
-@export var energy_consumption_rate: float = 0.1
+@@@@export var flight_acceleration: float = 4.0
+@@@@export var flight_deceleration: float = 6.0
+@@@@export var flight_rotation_speed: float = 2.0
+@@@@export var boost_multiplier: float = 2.0
+@@@@export var hover_stabilization: float = 0.5
+@@@@export var energy_consumption_rate: float = 0.1
 
 # Camera parameters
 @export_group("Camera Settings")
-@export var mouse_sensitivity: float = 0.2
-@export var controller_sensitivity: float = 2.0
-@export var camera_smoothing: float = 0.2
-@export var camera_tilt_limit: float = 89.0
-@export var enable_head_bob: bool = true
-@export var head_bob_amount: float = 0.1
-@export var head_bob_speed: float = 10.0
+@@@@export var mouse_sensitivity: float = 0.2
+@@@@export var controller_sensitivity: float = 2.0
+@@@@export var camera_smoothing: float = 0.2
+@@@@export var camera_tilt_limit: float = 89.0
+@@@@export var enable_head_bob: bool = true
+@@@@export var head_bob_amount: float = 0.1
+@@@@export var head_bob_speed: float = 10.0
 
 # Reality shift parameters
 @export_group("Reality Shift Settings")
-@export var shift_transition_time: float = 1.0
-@export var shift_energy_cost: float = 20.0
-@export var reality_shader_transition: bool = true
+@@@@export var shift_transition_time: float = 1.0
+@@@@export var shift_energy_cost: float = 20.0
+@@@@export var reality_shader_transition: bool = true
 
 # Node references
 @onready var head = $Head
@@ -148,8 +149,8 @@ func _find_systems():
         words_in_space = words_nodes[0]
     
     # Try to find reality system
-    if has_node("/root/main"):
-        var main = get_node("/root/main")
+    if has_node("root/main"):
+        var main = get_node("root/main")
         
         if main.has_method("get_reality_system"):
             reality_system = main.get_reality_system()

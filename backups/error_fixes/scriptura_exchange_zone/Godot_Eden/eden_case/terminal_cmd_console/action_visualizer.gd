@@ -80,7 +80,7 @@ func _process(delta):
     
     # Update action timers if waiting for input
     if waiting_for_input:
-        var elapsed = OS.get_ticks_msec() - input_start_time
+        var elapsed = OS.Time.get_ticks_msec() - input_start_time
         var remaining = input_success_window * 1000 - elapsed
         
         if remaining <= 0:
@@ -97,7 +97,7 @@ func _input(event):
        (event is InputEventMouseButton and event.button_index == BUTTON_LEFT and event.pressed):
         
         # Calculate success based on timing
-        var elapsed = OS.get_ticks_msec() - input_start_time
+        var elapsed = OS.Time.get_ticks_msec() - input_start_time
         var remaining = input_success_window * 1000 - elapsed
         
         # Success is more likely if action is performed in the middle of the window
@@ -190,13 +190,13 @@ func display_visual_event(event_type, visual_data):
         _play_sound(visual_data.sound)
     
     # Store event
-    active_events[event_type + str(OS.get_ticks_msec())] = {
+    active_events[event_type + str(OS.Time.get_ticks_msec())] = {
         "container": container,
         "particles": particles,
         "label": label,
         "glow": glow,
         "duration": visual_data.duration,
-        "start_time": OS.get_ticks_msec()
+        "start_time": OS.Time.get_ticks_msec()
     }
     
     # Set up timer to clean up
@@ -258,14 +258,14 @@ func display_action_opportunity(action_type, time_window, prompt_text):
         "progress": progress,
         "hint": hint,
         "time_window": time_window,
-        "start_time": OS.get_ticks_msec()
+        "start_time": OS.Time.get_ticks_msec()
     }
     
     # Set input variables
     waiting_for_input = true
     current_action_type = action_type
     input_success_window = time_window
-    input_start_time = OS.get_ticks_msec()
+    input_start_time = OS.Time.get_ticks_msec()
     
     # Animate timer countdown
     tween.interpolate_property(progress, "value", 
@@ -324,7 +324,7 @@ func display_ai_guidance(guidance_text, importance):
     var timer = Timer.new()
     timer.wait_time = 10.0 + importance * 10  # 10-20 seconds based on importance
     timer.one_shot = true
-    timer.connect("timeout", self, "_fade_out_guidance")
+    timer.connect(_fade_out_guidance)
     add_child(timer)
     timer.start()
 
@@ -339,7 +339,7 @@ func _fade_out_guidance():
     tween.start()
     
     # Schedule removal
-    yield(tween, "tween_completed")
+    await(tween, "tween_completed")
     if current_guidance_label != null:
         current_guidance_label.queue_free()
         current_guidance_label = null
@@ -408,7 +408,7 @@ func _cleanup_visual_event(event_type, container):
     tween.start()
     
     # Schedule removal
-    yield(tween, "tween_completed")
+    await(tween, "tween_completed")
     if is_instance_valid(container) and container.get_parent() == self:
         container.queue_free()
     

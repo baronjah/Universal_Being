@@ -4,8 +4,7 @@
 # Created: May 31st, 2025 | Perfect Pentagon Architecture  
 # Location: scripts/autoload/perfect_input.gd
 ################################################################
-
-extends UniversalBeingBase
+extends \2
 ################################################################
 # CORE VARIABLES
 ################################################################
@@ -107,12 +106,12 @@ func create_divine_cursor():
 	print("🖱️ CREATING DIVINE CURSOR: Mouse becoming Universal Being...")
 	
 	# Check if Universal Object Manager exists
-	if not has_node("/root/UniversalObjectManager"):
+	if not has_node("root/UniversalObjectManager"):
 		print("⚠️ DIVINE CURSOR: UniversalObjectManager not found, creating basic cursor")
 		_create_basic_divine_cursor()
 		return
 	
-	var uom = get_node("/root/UniversalObjectManager")
+	var uom = get_node("root/UniversalObjectManager")
 	
 	# Create mouse as Universal Being using correct method name
 	mouse_being = uom.create_object("magical_orb", Vector3(0, 2, 0), {
@@ -189,10 +188,10 @@ func create_keyboard_being():
 	"""
 	Create keyboard as Universal Being for AI text input
 	"""
-	if not has_node("/root/UniversalObjectManager"):
+	if not has_node("root/UniversalObjectManager"):
 		return
 	
-	var uom = get_node("/root/UniversalObjectManager")
+	var uom = get_node("root/UniversalObjectManager")
 	keyboard_being = uom.create_object("input_interface", Vector3(0, 1, 0), {
 		"name": "divine_keyboard",
 		"consciousness_level": 3,
@@ -297,7 +296,7 @@ func _screen_to_world_position(screen_pos: Vector2) -> Vector3:
 	var from = camera.project_ray_origin(screen_pos)
 	var to = from + camera.project_ray_normal(screen_pos) * 1000.0
 	
-	var space_state = get_viewport().get_world_3d().direct_space_state
+	var space_state = get_viewport().get_viewport().get_world_3d().direct_space_state
 	var query = PhysicsRayQueryParameters3D.create(from, to)
 	var result = space_state.intersect_ray(query)
 	
@@ -350,8 +349,8 @@ func _handle_mouse_being_interaction(target_being: Node, event: InputEvent):
 			interaction_type = "double_click"
 		
 		# Trigger Logic Connector action if available
-		if has_node("/root/LogicConnector"):
-			var logic_connector = get_node("/root/LogicConnector")
+		if has_node("root/LogicConnector"):
+			var logic_connector = get_node("root/LogicConnector")
 			if logic_connector.has_method("trigger_action"):
 				logic_connector.trigger_action(target_being, "on_user_" + interaction_type)
 		
@@ -368,8 +367,8 @@ func setup_ai_input_monitoring():
 	"""
 	Set up monitoring for AI entity input
 	"""
-	if has_node("/root/PerfectReady"):
-		var perfect_ready = get_node("/root/PerfectReady")
+	if has_node("root/PerfectReady"):
+		var perfect_ready = get_node("root/PerfectReady")
 		if perfect_ready.has_signal("ai_entity_ready"):
 			perfect_ready.ai_entity_ready.connect(_on_ai_entity_ready)
 
@@ -518,7 +517,7 @@ func _connect_to_pentagon_systems():
 	Connect to other Perfect Pentagon systems
 	"""
 	# Connect to SewersMonitor when available
-	if has_node("/root/SewersMonitor"):
+	if has_node("root/SewersMonitor"):
 		print("🔗 PERFECT INPUT: Connected to SewersMonitor")
 
 ################################################################

@@ -1,6 +1,6 @@
 extends Node
 
-class_name TurnCycleManager
+class_name TurnCycleManager_turncyclemanager_turncycl
 
 signal turn_completed(turn_number)
 signal cycle_completed
@@ -17,7 +17,8 @@ var rest_period_duration: int = REST_PERIOD_DEFAULT
 var rest_timer: Timer
 
 # Color system - 9 base colors + 3 extension colors
-enum ColorSystem {
+enum \2 {
+
 	AZURE,     # Dimension 1 - Foundation
 	EMERALD,   # Dimension 2 - Growth
 	AMBER,     # Dimension 3 - Energy

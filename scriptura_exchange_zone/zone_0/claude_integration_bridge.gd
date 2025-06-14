@@ -1,18 +1,18 @@
 extends Node
 
-class_name ClaudeIntegrationBridge
+class_name ClaudeIntegrationBridge_claudeintegrationbridge_claudein
 
 # ----- CLAUDE INTEGRATION SETTINGS -----
 @export_category("Claude Integration")
-@export var enabled: bool = true
-@export var auto_connect: bool = true
-@export var use_memory_system: bool = true
-@export var use_ethereal_bridge: bool = true
-@export var use_akashic_records: bool = true
-@export var default_model: String = "claude-3-7-sonnet"
-@export var cache_responses: bool = true
-@export var max_tokens_per_minute: int = 8000
-@export var freemium_mode: bool = true
+@@export var enabled: bool = true
+@@export var auto_connect: bool = true
+@@export var use_memory_system: bool = true
+@@export var use_ethereal_bridge: bool = true
+@@export var use_akashic_records: bool = true
+@@export var default_model: String = "claude-3-7-sonnet"
+@@export var cache_responses: bool = true
+@@export var max_tokens_per_minute: int = 8000
+@@export var freemium_mode: bool = true
 
 # ----- API SETTINGS -----
 var api_key: String = ""
@@ -140,7 +140,7 @@ func _find_system_references():
     performance_optimizer = _find_node_by_class(get_tree().root, "PerformanceOptimizer")
 
 func _find_node_by_class(node, class_name):
-    if node.get_class() == class_name or (node.get_script() and node.get_script().get_path().find(class_name.to_lower()) >= 0):
+    if node.get_class() == class_name or_claudeintegrationbridge_claudein (node.get_script() and node.get_script().get_path().find(class_name.to_lower()) >= 0):
         return node
     
     for child in node.get_children():
@@ -419,7 +419,7 @@ func send_message(content, system_prompt = "", model = ""):
 func _prepare_messages_for_api():
     var api_messages = []
     
-    // Take the last few messages to stay within context limits
+# // Take the last few messages to stay within context limits
     var recent_messages = current_conversation_messages.slice(
         max(0, current_conversation_messages.size() - max_conversation_history),
         current_conversation_messages.size()
@@ -439,62 +439,62 @@ func _process_queue():
     
     is_processing_queue = true
     
-    // Check for cooldown period
+# // Check for cooldown period
     var current_time = Time.get_unix_time_from_system()
     if current_time - last_request_time < request_cooldown:
-        // Wait for cooldown
+# // Wait for cooldown
         return
     
-    // Get next request
+# // Get next request
     var request = request_queue[0]
     
-    // Allocate performance thread if available
+# // Allocate performance thread if available
     var thread_id = -1
     if performance_optimizer and performance_optimizer.has_method("allocate_thread"):
         thread_id = performance_optimizer.allocate_thread("claude_api_request", 8)
     
-    // Process request
+# // Process request
     _process_single_request(request)
     
-    // Update last request time
+# // Update last request time
     last_request_time = Time.get_unix_time_from_system()
     
-    // Remove from queue
+# // Remove from queue
     request_queue.remove_at(0)
     
-    // Release thread if allocated
+# // Release thread if allocated
     if thread_id >= 0 and performance_optimizer and performance_optimizer.has_method("release_thread"):
         performance_optimizer.release_thread(thread_id)
     
     is_processing_queue = false
     
-    // Continue processing queue if more items
+# // Continue processing queue if more items
     if not request_queue.is_empty():
         queue_process_timer.start(request_cooldown)  // Schedule next process after cooldown
 
 func _process_single_request(request):
-    // In a real implementation, this would make an actual API call
-    // For this demo, we'll simulate a response
+# // In a real implementation, this would make an actual API call
+# // For this demo, we'll simulate a response
     
-    // Simulate API call
+# // Simulate API call
     print("Processing API request for message: " + request.message_id)
     
-    // Simulate token counting
+# // Simulate token counting
     var input_tokens = len(request.content.split(" "))
     var output_tokens = input_tokens * 2  // Simulate Claude's verbosity
     
-    // Update token usage
+# // Update token usage
     token_usage.input_tokens += input_tokens
     token_usage.output_tokens += output_tokens
     token_usage.total_tokens += input_tokens + output_tokens
     
     emit_signal("token_usage_updated", token_usage)
     
-    // Generate simulated response
+# // Generate simulated response
     var response_content = _generate_simulated_response(request.content)
     var response_id = _generate_id()
     
-    // Add to conversation
+# // Add to conversation
     current_conversation_messages.append({
         "id": response_id,
         "role": "assistant",
@@ -502,7 +502,7 @@ func _process_single_request(request):
         "timestamp": Time.get_unix_time_from_system()
     })
     
-    // Cache response if enabled
+# // Cache response if enabled
     if cache_responses:
         var cache_key = request.content.strip_edges().md5_text()
         cached_responses[cache_key] = {
@@ -511,7 +511,7 @@ func _process_single_request(request):
             "timestamp": Time.get_unix_time_from_system()
         }
         
-        // Trim cache if needed
+# // Trim cache if needed
         if cached_responses.size() > max_cache_items:
             var oldest_key = null
             var oldest_time = Time.get_unix_time_from_system()
@@ -524,16 +524,16 @@ func _process_single_request(request):
             if oldest_key:
                 cached_responses.erase(oldest_key)
     
-    // Save conversation
+# // Save conversation
     _save_conversation(current_conversation_id, current_conversation_messages)
     
     emit_signal("response_received", response_id, response_content)
 
 func _generate_simulated_response(user_message):
-    // This is a placeholder for a real Claude API call
-    // In a real implementation, this would send the request to Claude's API
+# // This is a placeholder for a real Claude API call
+# // In a real implementation, this would send the request to Claude's API
     
-    // Simple "echo" to simulate a response
+# // Simple "echo" to simulate a response
     return "I understand you're asking about: " + user_message + "\n\nIn a real implementation, this would be Claude's actual response."
 
 # ----- MEMORY INTEGRATION -----
@@ -548,7 +548,7 @@ func store_message_as_memory(message_id, tags = []):
     
     var memory_id = null
     
-    // Store in Memory System if available
+# // Store in Memory System if available
     if use_memory_system and memory_system and memory_system.has_method("store_memory"):
         memory_id = memory_system.store_memory(
             message.content,
@@ -556,7 +556,7 @@ func store_message_as_memory(message_id, tags = []):
             "claude_message_" + message.role
         )
     
-    // Also connect to Ethereal Bridge if available
+# // Also connect to Ethereal Bridge if available
     if use_ethereal_bridge and ethereal_bridge and ethereal_bridge.has_method("record_memory"):
         ethereal_bridge.record_memory(
             message.content,
@@ -580,7 +580,7 @@ func _find_message_by_id(message_id):
 func _check_token_reset():
     var current_time = Time.get_unix_time_from_system()
     
-    // Check if a new day has started since last reset
+# // Check if a new day has started since last reset
     if token_usage.last_reset == 0 or _is_new_day(token_usage.last_reset, current_time):
         token_usage.input_tokens = 0
         token_usage.output_tokens = 0
@@ -670,7 +670,7 @@ func get_conversation_list():
             if not dir.current_is_dir() and file_name.ends_with(".json"):
                 var conv_id = file_name.split(".")[0]
                 
-                // Load basic metadata
+# // Load basic metadata
                 var file = FileAccess.open(conversation_path + file_name, FileAccess.READ)
                 if file:
                     var json = JSON.new()
@@ -691,7 +691,7 @@ func get_conversation_list():
         dir.list_dir_end()
     }
     
-    // Sort by timestamp (most recent first)
+# // Sort by timestamp (most recent first)
     conversations.sort_custom(func(a, b): return a.timestamp > b.timestamp)
     
     return conversations

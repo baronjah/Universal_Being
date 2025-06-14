@@ -40,7 +40,7 @@ func adjust_for_new_version(version):
 	
 	# This would include API changes, deprecation fixes, etc.
 	# For demo purposes, we'll just update the welcome message
-	var terminal = get_node_or_null("/root/LuminusOS/Terminal")
+	var terminal = get_node_or_null("root/LuminusOS/Terminal")
 	if terminal:
 		terminal.show_welcome_message()
 	

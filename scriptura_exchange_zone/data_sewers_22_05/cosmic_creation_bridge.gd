@@ -1,5 +1,5 @@
 extends Node
-class_name CosmicCreationBridge
+class_name CosmicCreationBridge_cosmiccreationbridge_cosmiccr
 
 # Cosmic Creation Bridge System
 # ============================
@@ -11,8 +11,8 @@ signal cosmic_story_created(story_data: Dictionary)
 signal reality_layer_connected(layer_from: String, layer_to: String)
 signal akashic_record_updated(record_id: String, content: Dictionary)
 signal universal_cycle_completed(cycle_data: Dictionary)
+enum \2 {
 
-enum CosmicLayer {
 	MULTIVERSE,    # Highest level - contains all possible realities
 	UNIVERSE,      # Single universe within multiverse
 	GALAXY,        # Galaxy within universe
@@ -22,8 +22,8 @@ enum CosmicLayer {
 	STORY,         # Individual stories/entities
 	PARTICLE       # Quantum level - smallest units
 }
+enum \2 {
 
-enum TemporalFlow {
 	YESTERDAYS,    # Desktop conversations and past artifacts
 	TODAYS,        # Current implementation and active development
 	TOMORROWS,     # Future vision and evolution potential
@@ -146,7 +146,7 @@ func initialize_cosmic_hierarchy():
 func load_desktop_artifacts():
 	"""Load and integrate desktop conversation artifacts (Yesterdays)"""
 	
-	var desktop_path = "/mnt/c/Users/Percision 15/Desktop/claude_desktop/"
+	var desktop_path = "mnt/c/Users/Percision 15/Desktop/claude_desktop/"
 	var artifacts = {
 		"evolution_plan_from_desktop": {
 			"temporal_flow": TemporalFlow.YESTERDAYS,

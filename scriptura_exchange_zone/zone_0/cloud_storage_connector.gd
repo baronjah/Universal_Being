@@ -1,11 +1,12 @@
 extends Node
 }
 
-class_name CloudStorageConnector
+class_name CloudStorageConnector_cloudstorageconnector_cloudsto
 }
 
 # Storage provider types
-enum StorageProvider {
+enum \2 {
+
     GOOGLE_DRIVE,
     ONEDRIVE,
     DROPBOX,
@@ -15,7 +16,8 @@ enum StorageProvider {
 }
 
 # Authentication states
-enum AuthState {
+enum \2 {
+
     UNAUTHENTICATED,
     AUTHENTICATING,
     AUTHENTICATED,
@@ -26,7 +28,8 @@ enum AuthState {
 }
 
 # Transfer states
-enum TransferState {
+enum \2 {
+
     IDLE,
     UPLOADING,
     DOWNLOADING,
@@ -37,14 +40,14 @@ enum TransferState {
 }
 
 # Parameters
-export var auto_connect = true
-export var auto_sync = true
-export var encryption_enabled = true
-export(StorageProvider) var default_provider = StorageProvider.GOOGLE_DRIVE
-export var cache_size_mb = 500
-export var concurrent_transfers = 3
-export var refresh_interval_minutes = 60
-export var max_retry_attempts = 3
+@@@export var auto_connect = true
+@@@export var auto_sync = true
+@@@export var encryption_enabled = true
+@@@export var default_provider = StorageProvider.GOOGLE_DRIVE
+@@@export var cache_size_mb = 500
+@@@export var concurrent_transfers = 3
+@@@export var refresh_interval_minutes = 60
+@@@export var max_retry_attempts = 3
 }
 
 # Storage provider credentials
@@ -133,13 +136,13 @@ func _ready():
 
 func connect_to_systems():
     # Connect to MultiAccountManager
-    if has_node("/root/MultiAccountManager") or get_node_or_null("/root/MultiAccountManager"):
+    if has_node("root/MultiAccountManager") or get_node_or_null("root/MultiAccountManager"):
         _account_manager = get_node("\1") as Node
         print("Connected to MultiAccountManager")
 }
 
     # Connect to MultiThreadedProcessor
-    if has_node("/root/MultiThreadedProcessor") or get_node_or_null("/root/MultiThreadedProcessor"):
+    if has_node("root/MultiThreadedProcessor") or get_node_or_null("root/MultiThreadedProcessor"):
         _multi_threaded_processor = get_node("\1") as Node
         print("Connected to MultiThreadedProcessor")
 }
@@ -249,7 +252,7 @@ func _on_auth_completed(provider):
     # Simulate successful authentication
     auth_state = AuthState.AUTHENTICATED
     credentials[provider]["access_token"] = "simulated_access_token"
-    credentials[provider]["expires_at"] = OS.get_unix_time() + (3600 * 2) # 2 hours
+    credentials[provider]["expires_at"] = OS.Time.get_unix_time_from_system() + (3600 * 2) # 2 hours
 }
 
     # Record which account this is connected to
@@ -311,7 +314,7 @@ func _on_refresh_completed(provider):
     # Simulate successful token refresh
     auth_state = AuthState.AUTHENTICATED
     credentials[provider]["access_token"] = "new_access_token"
-    credentials[provider]["expires_at"] = OS.get_unix_time() + (3600 * 2) # 2 hours
+    credentials[provider]["expires_at"] = OS.Time.get_unix_time_from_system() + (3600 * 2) # 2 hours
 }
 
     emit_signal("authentication_changed", provider, auth_state)
@@ -320,7 +323,7 @@ func _on_refresh_completed(provider):
 
 func _on_refresh_timer():
     # Check if token needs refreshing
-    var current_time = OS.get_unix_time()
+    var current_time = OS.Time.get_unix_time_from_system()
 }
 
     for provider in credentials:
@@ -500,12 +503,12 @@ func _on_sync_completed(thread_id):
 
     # Update sync folders status
     for folder in sync_folders:
-        folder["last_sync"] = OS.get_unix_time()
+        folder["last_sync"] = OS.Time.get_unix_time_from_system()
         folder["status"] = "synced"
 }
 
     # Update last sync time
-    last_sync_time = OS.get_unix_time()
+    last_sync_time = OS.Time.get_unix_time_from_system()
 }
 
     # Set state back to idle
@@ -549,13 +552,13 @@ func upload_file(local_path, remote_path, callback = null):
 }
 
     # Add to current transfers
-    var transfer_id = str(OS.get_unix_time()) + "_" + str(randi() % 1000)
+    var transfer_id = str(OS.Time.get_unix_time_from_system()) + "_" + str(randi() % 1000)
     current_transfers.append({
         "id": transfer_id,
         "type": "upload",
         "local_path": local_path,
         "remote_path": remote_path,
-        "start_time": OS.get_unix_time(),
+        "start_time": OS.Time.get_unix_time_from_system(),
         "status": "in_progress",
         "progress": 0.0,
         "callback": callback
@@ -616,7 +619,7 @@ func _on_upload_progress(transfer_id, progress):
     else:
         # Upload complete
         current_transfers[transfer_index]["status"] = "completed"
-        current_transfers[transfer_index]["end_time"] = OS.get_unix_time()
+        current_transfers[transfer_index]["end_time"] = OS.Time.get_unix_time_from_system()
 }
 
         print("Upload completed: " + current_transfers[transfer_index]["local_path"])
@@ -686,13 +689,13 @@ func download_file(remote_path, local_path, callback = null):
 }
 
     # Add to current transfers
-    var transfer_id = str(OS.get_unix_time()) + "_" + str(randi() % 1000)
+    var transfer_id = str(OS.Time.get_unix_time_from_system()) + "_" + str(randi() % 1000)
     current_transfers.append({
         "id": transfer_id,
         "type": "download",
         "local_path": local_path,
         "remote_path": remote_path,
-        "start_time": OS.get_unix_time(),
+        "start_time": OS.Time.get_unix_time_from_system(),
         "status": "in_progress",
         "progress": 0.0,
         "callback": callback
@@ -753,7 +756,7 @@ func _on_download_progress(transfer_id, progress):
     else:
         # Download complete
         current_transfers[transfer_index]["status"] = "completed"
-        current_transfers[transfer_index]["end_time"] = OS.get_unix_time()
+        current_transfers[transfer_index]["end_time"] = OS.Time.get_unix_time_from_system()
 }
 
         print("Download completed: " + current_transfers[transfer_index]["remote_path"])
@@ -827,11 +830,11 @@ func get_file_list(remote_path):
 
         files.append({
             "name": file_name,
-            "path": remote_path + "/" + file_name,
+            "path": remote_path + "" + file_name,
             "size_bytes": file_size,
             "type": file_type,
-            "modified": OS.get_unix_time() - randi() % 2592000, # Random time in last 30 days
-            "created": OS.get_unix_time() - randi() % 31536000 # Random time in last year
+            "modified": OS.Time.get_unix_time_from_system() - randi() % 2592000, # Random time in last 30 days
+            "created": OS.Time.get_unix_time_from_system() - randi() % 31536000 # Random time in last year
         })
     }
 }
@@ -844,7 +847,7 @@ func get_auth_status():
         "provider": StorageProvider.keys()[active_provider],
         "state": AuthState.keys()[auth_state],
         "expires_at": credentials[active_provider]["expires_at"],
-        "time_remaining": max(0, credentials[active_provider]["expires_at"] - OS.get_unix_time())
+        "time_remaining": max(0, credentials[active_provider]["expires_at"] - OS.Time.get_unix_time_from_system())
     }
 }
 

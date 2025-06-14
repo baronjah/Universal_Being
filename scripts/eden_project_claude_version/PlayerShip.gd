@@ -500,8 +500,8 @@ func _save_ship_state() -> void:
 			"energy": energy,
 			"shields": shields,
 			"consciousness_frequency": consciousness_frequency
-		}
 		AkashicRecordsSystem.save_player_ship_data(ship_data)
+}
 
 func load_ship_state(data: Dictionary) -> void:
 	global_position = data.get("position", Vector3.ZERO)
@@ -568,4 +568,4 @@ func get_ship_status() -> Dictionary:
 		"consciousness_level": consciousness_level,
 		"consciousness_frequency": consciousness_frequency,
 		"position": global_position
-	}
+}

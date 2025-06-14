@@ -5,7 +5,7 @@ extends Control
 
 # Memory storage systems
 var memory_buffer = []
-var offline_data = {}
+var offline_data = {
 var tdic_entries = {
 	"past": [],
 	"present": [],
@@ -33,8 +33,8 @@ func _ready():
 	# Initialize the concurrent processor
 	processor = ConcurrentProcessor.new()
 	add_child(processor)
-	processor.connect("task_completed", self, "_on_task_completed")
-	processor.connect("all_tasks_completed", self, "_on_all_tasks_completed")
+	processor.connect(_on_task_completed)
+	processor.connect(_on_all_tasks_completed)
 	
 	# Load saved memories
 	processor.schedule_task("load_data", self, "load_offline_memories")
@@ -58,7 +58,7 @@ func setup_terminal_display():
 	
 	input_field = LineEdit.new()
 	input_field.rect_min_size = Vector2(600, 30)
-	input_field.connect("text_entered", self, "_on_text_entered")
+	input_field.connect(_on_text_entered)
 	add_child(input_field)
 	
 	# Set layout (would be replaced by proper UI in real implementation)
@@ -69,7 +69,7 @@ func setup_terminal_display():
 func _on_text_entered(text):
 	input_field.text = ""
 	
-	if text.empty():
+	if text.is_empty():
 		return
 		
 	# Process commands
@@ -99,6 +99,7 @@ func process_command(command):
 		"#clear":
 			processor.schedule_task("clear_display", self, "clear_terminal")
 		"#show":
+}
 			var timeframe = args if args in ["past", "present", "future", "all"] else "all"
 			processor.schedule_task("display_memories", self, "display_memories", [timeframe])
 		"#run":
@@ -106,13 +107,16 @@ func process_command(command):
 		"#chain":
 			run_chained_functions(args)
 		"##":
+
 			# Double hash commands for more advanced operations
 			process_advanced_command(args)
 		"###":
+
 			# Triple hash commands for system-level operations
 			process_system_command(args)
 		_:
 			add_memory_text("Unknown command: " + cmd, "error")
+
 
 # Auto Text Wrap for Terminal Output
 func add_memory_text(text, category="general"):
@@ -170,6 +174,7 @@ func load_offline_memories():
 	var file = File.new()
 	if file.file_exists("user://offline_memories.dat"):
 		file.open("user://offline_memories.dat", File.READ)
+
 		var data = file.get_var()
 		memory_buffer = data.memory_buffer
 		tdic_entries = data.tdic_entries
@@ -190,6 +195,7 @@ func display_memories(timeframe="all"):
 	for memory in memory_buffer:
 		var memory_timeframe = get_memory_timeframe(memory)
 		if timeframe == "all" or memory_timeframe == timeframe:
+
 			var color = terminal_colors.default
 			
 			if memory_timeframe in terminal_colors:
@@ -230,7 +236,7 @@ func auto_wrap_text(text, width):
 	
 	for word in words:
 		if line.length() + word.length() + 1 <= width:
-			if line.empty():
+			if line.is_empty():
 				line = word
 			else:
 				line += " " + word
@@ -238,7 +244,7 @@ func auto_wrap_text(text, width):
 			wrapped += line + "\n"
 			line = word
 	
-	if not line.empty():
+	if not line.is_empty():
 		wrapped += line
 		
 	return wrapped
@@ -296,6 +302,7 @@ func process_advanced_command(args):
 		_:
 			add_memory_text("Unknown advanced command: " + subcmd, "error")
 
+
 # Process system commands (###)
 func process_system_command(args):
 	var parts = args.split(" ", true, 1)
@@ -312,6 +319,7 @@ func process_system_command(args):
 		_:
 			add_memory_text("Unknown system command: " + subcmd, "error")
 
+
 # Set color theme
 func set_color_theme(theme):
 	match theme:
@@ -321,6 +329,7 @@ func set_color_theme(theme):
 			terminal_colors.present = Color(0.9, 0.9, 0.9)
 			terminal_colors.future = Color(0.9, 0.6, 0.6)
 		"sad":
+
 			# Sad colors palette
 			terminal_colors.default = Color(0.5, 0.5, 0.7)
 			terminal_colors.past = Color(0.4, 0.4, 0.6)
@@ -341,6 +350,7 @@ func export_memories(format):
 # Search through memories
 func search_memories(query):
 	add_memory_text("Searching for: " + query, "system")
+
 	var results = []
 	
 	for memory in memory_buffer:
@@ -360,9 +370,9 @@ func reset_system():
 		"past": [],
 		"present": [],
 		"future": []
-	}
 	save_offline_memories()
 	add_memory_text("Memory system reset complete.", "system")
+}
 
 # Optimize memory storage
 func optimize_memory():
@@ -391,7 +401,7 @@ func run_parallel_functions(function_list):
 			"display": "display_memories",
 			"search": "search_memories",
 			"optimize": "optimize_memory"
-		}
+}
 		
 		var valid_functions = []
 		var args_list = []
@@ -403,6 +413,7 @@ func run_parallel_functions(function_list):
 				args_list.append([])
 			else:
 				add_memory_text("Unknown function: " + func_name, "error")
+	
 		
 		if valid_functions.size() > 0:
 			processor.create_parallel_tasks("parallel_run", self, valid_functions, args_list)
@@ -422,7 +433,7 @@ func run_chained_functions(function_list):
 			"display": "display_memories",
 			"search": "search_memories",
 			"optimize": "optimize_memory"
-		}
+}
 		
 		var valid_functions = []
 		var args_list = []
@@ -434,6 +445,7 @@ func run_chained_functions(function_list):
 				args_list.append([])
 			else:
 				add_memory_text("Unknown function: " + func_name, "error")
+	
 		
 		if valid_functions.size() > 0:
 			processor.create_task_chain("chain_run", self, valid_functions, args_list)
@@ -443,6 +455,7 @@ func run_chained_functions(function_list):
 # Signal handlers
 func _on_task_completed(task_id, result):
 	add_memory_text("Task completed: " + task_id, "system")
+
 
 func _on_all_tasks_completed():
 	add_memory_text("All scheduled tasks completed.", "system")

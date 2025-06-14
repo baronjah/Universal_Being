@@ -1,12 +1,12 @@
 # res://scripts/godot_ai_bridge.gd
-extends Node
-class_name GodotAIBridge
+extends \2
+class_name GodotAIBridge_godotaibridge_godotaib
 
 # Configuration
-@export var port: int = 8888
-@export var api_key_file: String = "user://api_key.txt"
-@export var default_model: String = "gpt-4"
-@export var debug_mode: bool = true
+@@@export var port: int = 8888
+@@@export var api_key_file: String = "user://api_key.txt"
+@@@export var default_model: String = "gpt-4"
+@@@export var debug_mode: bool = true
 
 # WebSocket server
 var ws_server: WebSocketServer

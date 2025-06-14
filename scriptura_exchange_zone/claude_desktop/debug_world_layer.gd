@@ -1,7 +1,7 @@
 # Debug World Layer - Divine Vision System
 # JSH #memories
-extends Node3D
-class_name DebugWorldLayer
+extends \2
+class_name DebugWorldLayer_debugworldlayer_debugwor
 
 signal shape_recognized(entity_data: Dictionary)
 signal debug_mode_changed(enabled: bool)

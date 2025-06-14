@@ -1,5 +1,5 @@
 extends Node
-class_name MultiDeviceController
+class_name MultiDeviceController_multidevicecontroller_multidev
 
 # Singleton instance
 static var _instance = null
@@ -86,7 +86,7 @@ func initialize():
     print("MultiDeviceController: Initializing...")
     
     if not thread_pool:
-        thread_pool = get_node("/root/thread_pool_autoload")
+        thread_pool = get_node("root/thread_pool_autoload")
     
     if not thread_pool:
         push_error("ThreadPool not found - MultiDeviceController requires ThreadPool")
@@ -163,15 +163,15 @@ func _detect_capabilities():
 # Find required components
 func _find_components():
     # Look for thread pool
-    if has_node("/root/thread_pool_autoload"):
-        thread_pool = get_node("/root/thread_pool_autoload")
+    if has_node("root/thread_pool_autoload"):
+        thread_pool = get_node("root/thread_pool_autoload")
     
     # Look for VR manager
     vr_manager = VRManager.get_instance() if ClassDB.class_exists("VRManager") else null
     
     # Look for entity manager, word manifestor, etc
-    if has_node("/root/main"):
-        var main = get_node("/root/main")
+    if has_node("root/main"):
+        var main = get_node("root/main")
         if main.has_method("get_entity_manager"):
             entity_manager = main.get_entity_manager()
         if main.has_method("get_word_manifestor"):

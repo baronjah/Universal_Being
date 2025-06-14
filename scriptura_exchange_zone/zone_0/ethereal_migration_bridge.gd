@@ -1,12 +1,12 @@
-class_name EtherealMigrationBridge
-extends Node
+class_name EtherealMigrationBridge_etherealmigrationbridge_ethereal
+extends \2
 
 # ----- INTEGRATION WITH JSH ETHEREAL ENGINE -----
 @export_category("Ethereal Engine Integration")
-@export var use_akashic_records: bool = true
-@export var track_reality_changes: bool = true
-@export var enable_word_manifestation: bool = true
-@export var dimensional_records_path: String = "res://akashic_records/migration"
+@@@@export var use_akashic_records: bool = true
+@@@@export var track_reality_changes: bool = true
+@@@@export var enable_word_manifestation: bool = true
+@@@@export var dimensional_records_path: String = "res://akashic_records/migration"
 
 # ----- MIGRATION TOOL REFERENCE -----
 var migration_tool = null
@@ -46,7 +46,7 @@ func _ready():
 
 func _find_components():
     # Find Migration Tool
-    migration_tool = get_node_or_null("/root/Godot4MigrationTool")
+    migration_tool = get_node_or_null("root/Godot4MigrationTool")
     if not migration_tool:
         migration_tool = _find_node_by_class(get_tree().root, "Godot4MigrationTool")
     
@@ -55,26 +55,26 @@ func _find_components():
         add_child(migration_tool)
     
     # Find other systems by checking for JSH systems
-    akashic_system = get_node_or_null("/root/AkashicNumberSystem")
+    akashic_system = get_node_or_null("root/AkashicNumberSystem")
     if not akashic_system:
         akashic_system = _find_node_by_class(get_tree().root, "AkashicNumberSystem")
     
-    color_system = get_node_or_null("/root/DimensionalColorSystem")
+    color_system = get_node_or_null("root/DimensionalColorSystem")
     if not color_system:
         color_system = _find_node_by_class(get_tree().root, "DimensionalColorSystem")
     
     # Look for JSH Records System
-    records_system = get_node_or_null("/root/JSH_records_system")
+    records_system = get_node_or_null("root/JSH_records_system")
     if not records_system:
         records_system = _find_node_by_class(get_tree().root, "JSH_records_system")
     
     # Look for BanksCombiner
-    banks_combiner = get_node_or_null("/root/BanksCombiner")
+    banks_combiner = get_node_or_null("root/BanksCombiner")
     if not banks_combiner:
         banks_combiner = _find_node_by_class(get_tree().root, "BanksCombiner")
     
     # Look for WordManager
-    word_manager = get_node_or_null("/root/WordManager")
+    word_manager = get_node_or_null("root/WordManager")
     if not word_manager:
         word_manager = _find_node_by_class(get_tree().root, "WordManager")
     
@@ -873,13 +873,13 @@ func _enhance_akashic_integration(project_path: String) -> Dictionary:
         # Create integration file
         var integration_file = project_path.path_join("ethereal_akashic_bridge.gd")
         
-        var content = """class_name EtherealAkashicBridge
-extends Node
+        var content = """class_name EtherealAkashicBridge_etherealmigrationbridge_ethereal
+extends \2
 
 # Integration between JSH Ethereal Engine and AkashicNumberSystem
 
-@export var enable_akashic_integration: bool = true
-@export var record_migration_numbers: bool = true
+@@@@export var enable_akashic_integration: bool = true
+@@@@export var record_migration_numbers: bool = true
 
 var akashic_system = null
 var records_system = null
@@ -890,12 +890,12 @@ func _ready():
 
 func _find_systems():
     # Find AkashicNumberSystem
-    akashic_system = get_node_or_null("/root/AkashicNumberSystem")
+    akashic_system = get_node_or_null("root/AkashicNumberSystem")
     if not akashic_system:
         push_warning("AkashicNumberSystem not found")
     
     # Find JSH_records_system
-    records_system = get_node_or_null("/root/JSH_records_system")
+    records_system = get_node_or_null("root/JSH_records_system")
     if not records_system:
         push_warning("JSH_records_system not found")
 
@@ -949,17 +949,17 @@ func _enhance_reality_transitions(project_path: String) -> Dictionary:
     # Create enhanced reality transition system
     var reality_file = project_path.path_join("enhanced_reality_system.gd")
     
-    var content = """class_name EnhancedRealitySystem
-extends Node
+    var content = """class_name EnhancedRealitySystem_etherealmigrationbridge_ethereal
+extends \2
 
 signal reality_changed(old_reality, new_reality)
 signal reality_transition_started(from_reality, to_reality)
 signal reality_transition_completed(new_reality)
 
-@export var default_reality: String = "digital_reality"
-@export var transition_duration: float = 1.0
-@export var enable_visual_effects: bool = true
-@export var enable_akashic_recording: bool = true
+@@@@export var default_reality: String = "digital_reality"
+@@@@export var transition_duration: float = 1.0
+@@@@export var enable_visual_effects: bool = true
+@@@@export var enable_akashic_recording: bool = true
 
 var current_reality: String = ""
 var transitioning: bool = false
@@ -980,10 +980,10 @@ func _ready():
 
 func _find_systems():
     # Find AkashicNumberSystem
-    akashic_system = get_node_or_null("/root/AkashicNumberSystem")
+    akashic_system = get_node_or_null("root/AkashicNumberSystem")
     
     # Find JSH_records_system
-    records_system = get_node_or_null("/root/JSH_records_system")
+    records_system = get_node_or_null("root/JSH_records_system")
 
 func _setup_transition_effects():
     if not enable_visual_effects:
@@ -1099,31 +1099,31 @@ uniform vec4 to_reality : source_color = vec4(0.1, 0.8, 0.3, 1.0);
 uniform float progress : hint_range(0.0, 1.0) = 0.0;
 
 void fragment() {
-    // Complex transition effect based on UV coordinates
+# // Complex transition effect based on UV coordinates
     vec2 uv = UV;
     float distortion = sin(UV.x * 10.0 + TIME) * 0.02 * (1.0 - progress);
     uv.y += distortion;
     
-    // Radial transition pattern
+# // Radial transition pattern
     float dist = distance(uv, vec2(0.5, 0.5));
     float circle_progress = smoothstep(0.0, 0.8, progress);
     float mask = smoothstep(circle_progress, circle_progress + 0.1, dist);
     
-    // Edge glow
+# // Edge glow
     float edge = smoothstep(circle_progress - 0.05, circle_progress, dist) - 
                 smoothstep(circle_progress, circle_progress + 0.05, dist);
     vec4 edge_color = mix(from_reality, to_reality, progress);
     edge_color.a = edge * 2.0;
     
-    // Final color
+# // Final color
     vec4 base_color = mix(from_reality, to_reality, 1.0 - mask);
     base_color.a = smoothstep(1.0, 0.0, mask) * 0.7;
     
-    // Add some subtle noise
+# // Add some subtle noise
     float noise = fract(sin(dot(uv, vec2(12.9898, 78.233))) * 43758.5453);
     base_color.rgb += noise * 0.05 * (1.0 - progress);
     
-    // Combine with edge glow
+# // Combine with edge glow
     vec4 final_color = mix(base_color, edge_color, edge);
     final_color.a = max(base_color.a, edge_color.a);
     
@@ -1152,17 +1152,17 @@ func _enhance_word_manifestations(project_path: String) -> Dictionary:
     # Create enhanced word manifestation system
     var word_file = project_path.path_join("enhanced_word_manifestation.gd")
     
-    var content = """class_name EnhancedWordManifestation
-extends Node
+    var content = """class_name EnhancedWordManifestation_etherealmigrationbridge_ethereal
+extends \2
 
 signal word_manifested(word, position, entity)
 signal word_transformed(word, new_form)
 signal word_dematerialized(word, position)
 
-@export var enable_visual_effects: bool = true
-@export var enable_akashic_recording: bool = true
-@export var enable_physics_interaction: bool = true
-@export var manifestation_cooldown: float = 0.5
+@@@@export var enable_visual_effects: bool = true
+@@@@export var enable_akashic_recording: bool = true
+@@@@export var enable_physics_interaction: bool = true
+@@@@export var manifestation_cooldown: float = 0.5
 
 var akashic_system = null
 var records_system = null
@@ -1180,13 +1180,13 @@ func _process(delta):
 
 func _find_systems():
     # Find AkashicNumberSystem
-    akashic_system = get_node_or_null("/root/AkashicNumberSystem")
+    akashic_system = get_node_or_null("root/AkashicNumberSystem")
     
     # Find JSH_records_system
-    records_system = get_node_or_null("/root/JSH_records_system")
+    records_system = get_node_or_null("root/JSH_records_system")
     
     # Find EnhancedRealitySystem
-    reality_system = get_node_or_null("/root/EnhancedRealitySystem")
+    reality_system = get_node_or_null("root/EnhancedRealitySystem")
 
 func manifest_word(word: String, position: Vector3) -> Node3D:
     if manifestation_timer > 0:
@@ -1341,14 +1341,14 @@ func get_manifested_entities() -> Array[Node3D]:
             # Create word manifestation template script
             var template_file = template_dir.path_join("word_manifestation.gd")
             
-            var template_content = """class_name WordManifestation
-extends Node3D
+            var template_content = """class_name WordManifestation_etherealmigrationbridge_ethereal
+extends \2
 
-@export var word: String = ""
-@export var font_size: float = 1.0
-@export var material: Material = null
-@export var enable_physics: bool = true
-@export var enable_glow: bool = true
+@@@@export var word: String = ""
+@@@@export var font_size: float = 1.0
+@@@@export var material: Material = null
+@@@@export var enable_physics: bool = true
+@@@@export var enable_glow: bool = true
 
 var label_3d: Label3D = null
 var collision_shape: CollisionShape3D = null

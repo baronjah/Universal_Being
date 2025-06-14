@@ -1,10 +1,10 @@
 # JSH_Akashic_Records.gd
-# res://code/gdscript/scripts/akashic_records/JSH_Akashic_Records.gd
-extends Node
-class_name JSH_AkashicRecordsSystem
+# res://scripts/gdscript/scripts/akashic_records/JSH_Akashic_Records.gd
+extends \2
+class_name JSH_AkashicRecordsSystem_JSHAkashicRecords_JSHAkash
 
 # Import the helper class
-const ConsoleIntegrationHelper = preload("res://code/gdscript/scripts/akashic_records/console_integration_helper.gd")
+const ConsoleIntegrationHelper = preload("res://scripts/gdscript/scripts/akashic_records/console_integration_helper.gd")
 
 # Main connector for the Akashic Records system
 # This script integrates with existing JSH systems while providing new functionality
@@ -98,31 +98,31 @@ func _find_existing_systems() -> void:
 	print("JSH_AkashicRecords: Finding existing systems...")
 	
 	# Find records system
-	if has_node("/root/main/JSH_records_system"):
-		jsh_records_system = get_node("/root/main/JSH_records_system")
+	if has_node("root/main/JSH_records_system"):
+		jsh_records_system = get_node("root/main/JSH_records_system")
 		print("Found JSH_records_system")
 	
 	# Find data splitter
-	if has_node("/root/main/JSH_data_splitter"):
-		jsh_data_splitter = get_node("/root/main/JSH_data_splitter") 
+	if has_node("root/main/JSH_data_splitter"):
+		jsh_data_splitter = get_node("root/main/JSH_data_splitter") 
 		print("Found JSH_data_splitter")
 	
 	# Find database system
-	if has_node("/root/main/JSH_database_system"):
-		jsh_database_system = get_node("/root/main/JSH_database_system")
+	if has_node("root/main/JSH_database_system"):
+		jsh_database_system = get_node("root/main/JSH_database_system")
 		print("Found JSH_database_system")
-	elif has_node("/root/main/JSH_Core/JSH_database_system"):
-		jsh_database_system = get_node("/root/main/JSH_Core/JSH_database_system")
+	elif has_node("root/main/JSH_Core/JSH_database_system"):
+		jsh_database_system = get_node("root/main/JSH_Core/JSH_database_system")
 		print("Found JSH_database_system in JSH_Core")
 	
 	# Find console
-	if has_node("/root/main/JSH_console"):
-		jsh_console = get_node("/root/main/JSH_console")
+	if has_node("root/main/JSH_console"):
+		jsh_console = get_node("root/main/JSH_console")
 		print("Found JSH_console")
 	
 	# Find task manager
-	if has_node("/root/main/JSH_task_manager"):
-		jsh_task_manager = get_node("/root/main/JSH_task_manager")
+	if has_node("root/main/JSH_task_manager"):
+		jsh_task_manager = get_node("root/main/JSH_task_manager")
 		print("Found JSH_task_manager")
 
 # Step 2: Initialize new systems
@@ -311,12 +311,12 @@ func _create_debug_ui() -> void:
 	print("JSH_AkashicRecords: Creating debug UI...")
 
 	# Create the debug UI
-	var DebugUIScene = load("res://code/gdscript/scripts/akashic_records/debug_ui.tscn")
+	var DebugUIScene = load("res://scripts/gdscript/scripts/akashic_records/debug_ui.tscn")
 	if DebugUIScene:
 		debug_ui = DebugUIScene.instantiate()
 	else:
 		# Try to load the debug UI script
-		var DebugUIScript = load("res://code/gdscript/scripts/akashic_records/debug_ui.gd")
+		var DebugUIScript = load("res://scripts/gdscript/scripts/akashic_records/debug_ui.gd")
 		if DebugUIScript:
 			debug_ui = DebugUIScript.new()
 		else:
@@ -327,7 +327,7 @@ func _create_debug_ui() -> void:
 			# Add a dummy initialize method
 			debug_ui.set_script(GDScript.new())
 			debug_ui.get_script().source_code = """
-extends Control
+extends \2
 
 func initialize(records_manager, creator, bridge):
 	print("Minimal Debug UI initialized")
@@ -420,7 +420,7 @@ func _cmd_akashic_list(args) -> String:
 	if words.size() == 0:
 		return "No words found" + ("" if category.is_empty() else " in category: " + category)
 	
-	return "Words in dictionary:\n" + "\n".join(words)
+	return "Words in dictionary:\n" + "\n"." ".join(words)
 
 func _cmd_akashic_info(args) -> String:
 	if args.size() < 1:
@@ -476,8 +476,8 @@ func _on_jsh_parsing_completed(stats: Dictionary) -> void:
 
 # Find a node by name in the scene tree
 func find_node_by_name(name: String) -> Node:
-	if has_node("/root/" + name):
-		return get_node("/root/" + name)
+	if has_node("root/" + name):
+		return get_node("root/" + name)
 		
 	var root = get_tree().root
 	return _find_node_recursive(root, name)

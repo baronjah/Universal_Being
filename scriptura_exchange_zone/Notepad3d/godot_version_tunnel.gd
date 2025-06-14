@@ -1,7 +1,7 @@
 extends Node
 }
 
-class_name GodotVersionTunnel
+class_name GodotVersionTunnel_godotversiontunnel_godotver
 }
 
 signal migration_started(source_version, target_version, files)
@@ -21,7 +21,7 @@ const VERSION_DEFINITIONS = {
         "feature_identifiers": {
             "signals": "signal ",
             "onready": "onready var",
-            "exports": "export",
+            "exports": "@export",
             "enums": "enum"
         }
     },
@@ -34,7 +34,7 @@ const VERSION_DEFINITIONS = {
         "feature_identifiers": {
             "signals": "signal",
             "annotations": "@onready",
-            "exports": "export",
+            "exports": "@export",
             "enums": "enum"
         }
     },
@@ -47,7 +47,7 @@ const VERSION_DEFINITIONS = {
         "feature_identifiers": {
             "signals": "signal",
             "annotations": "@onready",
-            "exports": "export",
+            "exports": "@export",
             "enums": "enum"
         }
     },
@@ -60,7 +60,7 @@ const VERSION_DEFINITIONS = {
         "feature_identifiers": {
             "signals": "signal",
             "annotations": "@onready",
-            "exports": "export",
+            "exports": "@export",
             "enums": "enum"
         }
     },
@@ -73,7 +73,7 @@ const VERSION_DEFINITIONS = {
         "feature_identifiers": {
             "signals": "signal",
             "annotations": "@onready",
-            "exports": "export",
+            "exports": "@export",
             "enums": "enum"
         }
     },
@@ -86,7 +86,7 @@ const VERSION_DEFINITIONS = {
         "feature_identifiers": {
             "signals": "signal",
             "annotations": "@onready",
-            "exports": "export",
+            "exports": "@export",
             "enums": "enum",
             "typed_arrays": "Array[",
             "explicit_constructors": "Vector"
@@ -101,7 +101,7 @@ const VERSION_DEFINITIONS = {
         "feature_identifiers": {
             "signals": "signal",
             "annotations": "@onready",
-            "exports": "export",
+            "exports": "@export",
             "enums": "enum",
             "typed_arrays": "Array[",
             "explicit_constructors": "Vector"
@@ -116,7 +116,7 @@ const VERSION_DEFINITIONS = {
         "feature_identifiers": {
             "signals": "signal",
             "annotations": "@",
-            "exports": "export",
+            "exports": "@export",
             "enums": "enum",
             "typed_arrays": "Array[",
             "explicit_constructors": "Vector"
@@ -133,7 +133,7 @@ const MIGRATION_TUNNELS = {
         "stability": 0.8,
         "energy_cost": 25.0,
         "transforms": [
-            {"type": "rename", "from": "Spatial", "to": "Node3D"},
+            {"type": "rename", "from": "Node3D", "to": "Node3D"},
             {"type": "rename", "from": "GLES3", "to": "GL_COMPATIBILITY"},
             {"type": "rename", "from": "GLES2", "to": "GLES3"},
             {"type": "rename", "from": "get_node_or_null", "to": "get_node_or_null"},
@@ -145,7 +145,7 @@ const MIGRATION_TUNNELS = {
             {"type": "pattern", "from": "Vector3\\( *(.*?), *(.*?), *(.*?) *\\)", "to": "Vector3($1, $2, $3)"},
             {"type": "pattern", "from": "func (_[a-zA-Z0-9_]+)\\(([^)]*)\\):", "to": "func $1($2) -> void:"},
             {"type": "pattern", "from": "func (get_[a-zA-Z0-9_]+)\\(([^)]*)\\):", "to": "func $1($2):"},
-            {"type": "pattern", "from": "extends Spatial", "to": "extends Node3D"},
+            {"type": "pattern", "from": "extends Node3D", "to": "extends Node3D"},
             {"type": "pattern", "from": "Transform\\(", "to": "Transform3D("},
             {"type": "pattern", "from": "await\\((.*?), (.*?)\\)", "to": "await $1.$2"},
             {"type": "pattern", "from": "Quat\\(", "to": "Quaternion("},
@@ -497,14 +497,14 @@ func create_migration_tunnel(source_project_path, target_project_path, target_ve
         }
 }
 
-        // Check if tunnel already exists
+# // Check if tunnel already exists
         var existing_tunnel_id = source_anchor_id + "_to_" + target_anchor_id
 }
 
         if ethereal_tunnel_manager.has_tunnel(existing_tunnel_id):
             ethereal_tunnel = ethereal_tunnel_manager.get_tunnel_data(existing_tunnel_id)
         } else {
-            // Create tunnel with the appropriate dimension
+# // Create tunnel with the appropriate dimension
             var dimension = max(
                 VERSION_DEFINITIONS[source_version].dimension,
                 VERSION_DEFINITIONS[target_version].dimension
@@ -518,7 +518,7 @@ func create_migration_tunnel(source_project_path, target_project_path, target_ve
             )
 }
 
-            // Set stability based on migration difficulty
+# // Set stability based on migration difficulty
             if ethereal_tunnel:
                 ethereal_tunnel_manager.set_tunnel_stability(
                     ethereal_tunnel.id, 
@@ -529,7 +529,7 @@ func create_migration_tunnel(source_project_path, target_project_path, target_ve
     }
 }
 
-    // Connect to word pattern system to create patterns related to migration
+# // Connect to word pattern system to create patterns related to migration
     if word_pattern_visualizer:
         var pattern_text = "godot_migration_" + source_version + "_to_" + target_version
         var energy = 20.0
@@ -543,7 +543,7 @@ func create_migration_tunnel(source_project_path, target_project_path, target_ve
     }
 }
 
-    // Create numeric token for version numbers
+# // Create numeric token for version numbers
     if numeric_token_system:
         var source_num = float(source_version.replace("x", "0")) * 100
         var target_num = float(target_version.replace("x", "0")) * 100
@@ -554,7 +554,7 @@ func create_migration_tunnel(source_project_path, target_project_path, target_ve
     }
 }
 
-    // Create migration config with all necessary information
+# // Create migration config with all necessary information
     var migration_config = {
         "id": tunnel_id,
         "source_version": source_version,
@@ -570,37 +570,37 @@ func create_migration_tunnel(source_project_path, target_project_path, target_ve
 }
 
 func start_migration(migration_config):
-    // Check if already migrating
+# // Check if already migrating
     if current_migration != null:
-        // Add to queue
+# // Add to queue
         migration_queue.push_back(migration_config)
         return false
     }
 }
 
-    // Set as current migration
+# // Set as current migration
     current_migration = migration_config
 }
 
-    // Collect files to migrate
+# // Collect files to migrate
     file_queue = _collect_migration_files(
         migration_config.source_path,
         VERSION_DEFINITIONS[migration_config.source_version].file_extensions
     )
 }
 
-    // Update stats
+# // Update stats
     migration_stats.total_migrations += 1
 }
 
-    // Ensure target directory exists
+# // Ensure target directory exists
     var dir = DirAccess.open("res://")
     if not DirAccess.dir_exists_absolute(migration_config.target_path):
         dir.make_dir_recursive(migration_config.target_path)
     }
 }
 
-    // Copy project.godot file and update version
+# // Copy project.godot file and update version
     _migrate_project_file(
         migration_config.source_path.path_join("project.godot"),
         migration_config.target_path.path_join("project.godot"),
@@ -609,7 +609,7 @@ func start_migration(migration_config):
     )
 }
 
-    // Emit signal
+# // Emit signal
     emit_signal("migration_started", 
         migration_config.source_version, 
         migration_config.target_version,
@@ -621,7 +621,7 @@ func start_migration(migration_config):
 }
 
 func _process_migration():
-    // Process a batch of files
+# // Process a batch of files
     var batch_size = 5
     var processed = 0
 }
@@ -633,7 +633,7 @@ func _process_migration():
         migration_stats.files_processed += 1
 }
 
-        // Emit progress signal
+# // Emit progress signal
         var progress = 1.0 - (float(file_queue.size()) / 
                            (migration_stats.files_processed + file_queue.size()))
 }
@@ -646,11 +646,11 @@ func _process_migration():
     }
 }
 
-    // Check if migration is complete
+# // Check if migration is complete
     if file_queue.size() == 0:
-        // Finish migration
+# // Finish migration
         if current_migration.ethereal_tunnel and tunnel_controller:
-            // Transfer migration completion data through tunnel
+# // Transfer migration completion data through tunnel
             var content = {
                 "type": "migration_complete",
                 "source_version": current_migration.source_version,
@@ -668,7 +668,7 @@ func _process_migration():
         }
 }
 
-        // Emit completion signal
+# // Emit completion signal
         var success = migration_stats.conversion_errors == 0
         if success:
             migration_stats.successful_migrations += 1
@@ -680,12 +680,12 @@ func _process_migration():
         emit_signal("migration_completed", success, migration_stats)
 }
 
-        // Clear current migration
+# // Clear current migration
         var completed_migration = current_migration
         current_migration = null
 }
 
-        // Process next in queue
+# // Process next in queue
         if migration_queue.size() > 0:
             var next_migration = migration_queue.pop_front()
             start_migration(next_migration)
@@ -711,13 +711,13 @@ func _collect_migration_files(dir_path, extensions):
 }
 
         if dir.current_is_dir():
-            // Skip .git, .import, and similar directories
+# // Skip .git, .import, and similar directories
             if not file_name.begins_with(".") and file_name != "addons":
                 var sub_files = _collect_migration_files(full_path, extensions)
                 files.append_array(sub_files)
             }
         } else {
-            // Check file extension
+# // Check file extension
             var has_valid_ext = false
             for ext in extensions:
                 if file_name.ends_with(ext):
@@ -742,12 +742,12 @@ func _collect_migration_files(dir_path, extensions):
 }
 
 func _migrate_file(source_file_path):
-    // Create target file path
+# // Create target file path
     var rel_path = source_file_path.trim_prefix(current_migration.source_path)
     var target_file_path = current_migration.target_path.path_join(rel_path)
 }
 
-    // Handle shader extension rename if needed
+# // Handle shader extension rename if needed
     if current_migration.source_version == "3.x" and current_migration.target_version.begins_with("4"):
         if source_file_path.ends_with(".shader"):
             target_file_path = target_file_path.trim_suffix(".shader") + ".gdshader"
@@ -755,7 +755,7 @@ func _migrate_file(source_file_path):
     }
 }
 
-    // Ensure target directory exists
+# // Ensure target directory exists
     var target_dir = target_file_path.get_base_dir()
     var dir = DirAccess.open("res://")
 }
@@ -765,7 +765,7 @@ func _migrate_file(source_file_path):
     }
 }
 
-    // Read source file
+# // Read source file
     var file = FileAccess.open(source_file_path, FileAccess.READ)
     if not file:
         emit_signal("conversion_error", source_file_path, "Cannot open source file")
@@ -778,11 +778,11 @@ func _migrate_file(source_file_path):
     file.close()
 }
 
-    // Apply transforms
+# // Apply transforms
     var transformed_content = _apply_transforms(content, source_file_path)
 }
 
-    // Write to target file
+# // Write to target file
     file = FileAccess.open(target_file_path, FileAccess.WRITE)
     if not file:
         emit_signal("conversion_error", target_file_path, "Cannot write to target file")
@@ -795,7 +795,7 @@ func _migrate_file(source_file_path):
     file.close()
 }
 
-    // Record in Akashic records if available
+# // Record in Akashic records if available
     if akashic_record_connector:
         akashic_record_connector.record_file_migration(
             source_file_path,
@@ -807,7 +807,7 @@ func _migrate_file(source_file_path):
 }
 
 func _migrate_project_file(source_file_path, target_file_path, source_version, target_version):
-    // Read source project file
+# // Read source project file
     var file = FileAccess.open(source_file_path, FileAccess.READ)
     if not file:
         emit_signal("conversion_error", source_file_path, "Cannot open source project file")
@@ -820,7 +820,7 @@ func _migrate_project_file(source_file_path, target_file_path, source_version, t
     file.close()
 }
 
-    // Update config_version
+# // Update config_version
     var source_config = VERSION_DEFINITIONS[source_version].project_identifier
     var target_config = VERSION_DEFINITIONS[target_version].project_identifier
 }
@@ -828,20 +828,20 @@ func _migrate_project_file(source_file_path, target_file_path, source_version, t
     content = content.replace(source_config, target_config)
 }
 
-    // Godot 3.x to 4.x specific changes
+# // Godot 3.x to 4.x specific changes
     if source_version == "3.x" and target_version.begins_with("4"):
-        // Update renderer
+# // Update renderer
         content = content.replace("GLES2", "GLES3")
         content = content.replace("GLES3", "GL_COMPATIBILITY")
 }
 
-        // Update global script classes format
+# // Update global script classes format
         content = content.replace("_global_script_classes=[  ]", "_global_script_classes={}")
         content = content.replace("_global_script_class_icons={", "_global_script_class_icons={")
     }
 }
 
-    // Write to target file
+# // Write to target file
     file = FileAccess.open(target_file_path, FileAccess.WRITE)
     if not file:
         emit_signal("conversion_error", target_file_path, "Cannot write to target project file")
@@ -859,13 +859,13 @@ func _apply_transforms(content, file_path):
     var transforms_applied = 0
 }
 
-    // Skip binary files
+# // Skip binary files
     if _is_binary(result):
         return result
     }
 }
 
-    // For multi-hop tunnels, apply transforms from each tunnel in the chain
+# // For multi-hop tunnels, apply transforms from each tunnel in the chain
     if current_migration.tunnel_config.has("chain"):
         for tunnel in current_migration.tunnel_config.chain:
             for transform in tunnel.transforms:
@@ -879,7 +879,7 @@ func _apply_transforms(content, file_path):
             }
         }
     } else {
-        // Direct tunnel
+# // Direct tunnel
         for transform in current_migration.tunnel_config.transforms:
             var old_result = result
             result = _apply_transform(result, transform, file_path)
@@ -899,9 +899,9 @@ func _apply_transforms(content, file_path):
 func _apply_transform(content, transform, file_path):
     match transform.type:
         "rename":
-            // Simple text replacement
+# // Simple text replacement
             if transform.has("file_extension") and transform.file_extension:
-                // Only for relevant files
+# // Only for relevant files
                 if file_path.ends_with(transform.from):
                     return content.replace(transform.from, transform.to)
                 } else {
@@ -913,7 +913,7 @@ func _apply_transform(content, transform, file_path):
 }
 
         "pattern":
-            // RegEx pattern replacement
+# // RegEx pattern replacement
             var regex = RegEx.new()
             regex.compile(transform.from)
 }
@@ -926,7 +926,7 @@ func _apply_transform(content, transform, file_path):
                     var to_text = regex.sub(from_text, transform.to)
 }
 
-                    // Replace at specific position
+# // Replace at specific position
                     var start = match_obj.get_start()
                     var end = match_obj.get_end()
                     content = content.substr(0, start) + to_text + content.substr(end)
@@ -938,7 +938,7 @@ func _apply_transform(content, transform, file_path):
 }
 
         "remove":
-            // Remove matching patterns
+# // Remove matching patterns
             var regex = RegEx.new()
             regex.compile(transform.pattern)
 }
@@ -958,13 +958,13 @@ func _apply_transform(content, transform, file_path):
 }
 
         _:
-            // Unknown transform type
+# // Unknown transform type
             return content
 }
 
 func _is_binary(content):
-    // Check if file appears to be binary
-    // Look for null bytes or other binary indicators
+# // Check if file appears to be binary
+# // Look for null bytes or other binary indicators
     return content.find("\0") >= 0
 }
 
@@ -1006,7 +1006,7 @@ func check_next_version_path(project_path):
         return null
 }
 
-    // Get ordered list of versions
+# // Get ordered list of versions
     var versions = VERSION_DEFINITIONS.keys()
     versions.sort()
 }
@@ -1016,5 +1016,5 @@ func check_next_version_path(project_path):
         return null
 }
 
-    // Return next version
+# // Return next version
     return versions[current_index + 1]

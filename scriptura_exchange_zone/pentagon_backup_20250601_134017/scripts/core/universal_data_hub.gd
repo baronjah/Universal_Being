@@ -4,8 +4,7 @@
 # PURPOSE: Every script asks this hub for data instead of searching
 # CREATED: 2025-05-27
 # ==================================================
-
-extends UniversalBeingBase
+extends \2
 signal system_registered(name: String, system: Node)
 signal object_registered(uuid: String, object: Node)
 signal data_requested(requester: String, data_type: String)

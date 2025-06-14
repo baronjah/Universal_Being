@@ -1,5 +1,5 @@
 extends Node
-class_name ThingCreatorAutoSetup
+class_name ThingCreatorAutoSetup_thingcreatorautosetup_thingcre
 
 # This script automatically sets up the Thing Creator system
 # It attempts to find the correct paths and fix common issues
@@ -41,8 +41,8 @@ func _ready():
 func find_akashic_records():
     log.append("Searching for AkashicRecordsManager...")
     
-    if has_node("/root/AkashicRecordsManager"):
-        akashic_records_manager = get_node("/root/AkashicRecordsManager")
+    if has_node("root/AkashicRecordsManager"):
+        akashic_records_manager = get_node("root/AkashicRecordsManager")
         log.append("✓ Found AkashicRecordsManager at: /root/AkashicRecordsManager")
         return
     
@@ -60,12 +60,12 @@ func find_jsh_console():
     
     # Common paths to try
     var possible_paths = [
-        "/root/Main/JSH_console",
-        "/root/Main/CanvasLayer/JSH_console",
-        "/root/Main/UI/JSH_console",
-        "/root/layer_0/JSH_console",
-        "/root/layer_0/CanvasLayer/JSH_console",
-        "/root/layer_0/UI/JSH_console"
+        "root/Main/JSH_console",
+        "root/Main/CanvasLayer/JSH_console",
+        "root/Main/UI/JSH_console",
+        "root/layer_0/JSH_console",
+        "root/layer_0/CanvasLayer/JSH_console",
+        "root/layer_0/UI/JSH_console"
     ]
     
     # Try each path
@@ -114,11 +114,11 @@ func check_required_files():
     log.append("Checking required Thing Creator files...")
     
     var required_files = [
-        "res://code/gdscript/scripts/akashic_records/thing_creator.gd",
-        "res://code/gdscript/scripts/akashic_records/thing_creator_ui.gd",
-        "res://code/gdscript/scenes/thing_creator_ui.tscn",
-        "res://code/gdscript/scripts/Menu_Keyboard_Console/thing_creator_integration.gd",
-        "res://code/gdscript/scripts/Menu_Keyboard_Console/thing_creator_commands.gd"
+        "res://scripts/gdscript/scripts/akashic_records/thing_creator.gd",
+        "res://scripts/gdscript/scripts/akashic_records/thing_creator_ui.gd",
+        "res://scripts/gdscript/scenes/thing_creator_ui.tscn",
+        "res://scripts/gdscript/scripts/Menu_Keyboard_Console/thing_creator_integration.gd",
+        "res://scripts/gdscript/scripts/Menu_Keyboard_Console/thing_creator_commands.gd"
     ]
     
     var all_files_exist = true
@@ -137,13 +137,13 @@ func setup_thing_creator():
     log.append("Setting up Thing Creator...")
     
     # Check if already exists
-    if has_node("/root/ThingCreator"):
-        thing_creator = get_node("/root/ThingCreator")
+    if has_node("root/ThingCreator"):
+        thing_creator = get_node("root/ThingCreator")
         log.append("✓ ThingCreator already exists at /root/ThingCreator")
         return
     
     # Create new instance
-    var ThingCreatorClass = load("res://code/gdscript/scripts/akashic_records/thing_creator.gd")
+    var ThingCreatorClass = load("res://scripts/gdscript/scripts/akashic_records/thing_creator.gd")
     if ThingCreatorClass:
         thing_creator = ThingCreatorClass.new()
         thing_creator.name = "ThingCreator"
@@ -156,7 +156,7 @@ func setup_integration():
     log.append("Setting up integration...")
     
     # Set up integration with menu
-    var IntegrationClass = load("res://code/gdscript/scripts/Menu_Keyboard_Console/thing_creator_integration.gd")
+    var IntegrationClass = load("res://scripts/gdscript/scripts/Menu_Keyboard_Console/thing_creator_integration.gd")
     if IntegrationClass:
         thing_creator_integration = IntegrationClass.new()
         thing_creator_integration.name = "ThingCreatorIntegration"
@@ -173,7 +173,7 @@ func setup_integration():
         log.append("✗ Failed to load ThingCreatorIntegration class")
     
     # Set up JSH console commands
-    var CommandsClass = load("res://code/gdscript/scripts/Menu_Keyboard_Console/thing_creator_commands.gd")
+    var CommandsClass = load("res://scripts/gdscript/scripts/Menu_Keyboard_Console/thing_creator_commands.gd")
     if CommandsClass and jsh_console:
         thing_creator_commands = CommandsClass.new()
         thing_creator_commands.name = "ThingCreatorCommands"

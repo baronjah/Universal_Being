@@ -19,7 +19,7 @@ extends Node
 # 🎮 USER EXPERIENCE: Cleaner, more manageable system architecture
 # ═══════════════════════════════════════════════════════════════════════════════════════════════
 
-class_name WordComponents
+class_name WordComponents_wordcomponents_wordcomp
 
 # ─────────────────────────────────────────────────────────────────────────────────
 # 🎯 WORD COMPONENT DEFINITIONS
@@ -29,7 +29,8 @@ class_name WordComponents
 var word_components: Dictionary = {}
 
 # Component types
-enum ComponentType {
+enum \2 {
+
 	CONTROLLER,  # Input handling and coordination
 	INPUT,       # Keyboard, mouse, and interaction processing
 	VISION,      # Camera positioning and movement

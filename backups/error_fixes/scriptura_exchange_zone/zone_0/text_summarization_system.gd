@@ -328,7 +328,7 @@ func split_into_sentences(text):
 
 # Validate if text is a proper sentence
 func is_valid_sentence(text):
-	if text.empty():
+	if text.is_empty():
 		return false
 	
 	# Count words (rough estimate)
@@ -344,7 +344,7 @@ func is_valid_sentence(text):
 
 # Estimate token count from text
 func estimate_token_count(text):
-	if text.empty():
+	if text.is_empty():
 		return 0
 	
 	# Approximate token count based on character count
@@ -467,7 +467,7 @@ func connect_to_divine_word_processor():
 	
 	# Try to find existing instance
 	if has_node("/root/DivineWordProcessor") or get_node_or_null("/root/DivineWordProcessor"):
-		divine_word_processor = get_node("/root/DivineWordProcessor")
+		divine_word_processor = get_node("\1") as Node
 		print("Connected to existing DivineWordProcessor")
 		return true
 	
@@ -482,7 +482,7 @@ func connect_to_reality_data_processor():
 	
 	# Try to find existing instance
 	if has_node("/root/RealityDataProcessor") or get_node_or_null("/root/RealityDataProcessor"):
-		reality_data_processor = get_node("/root/RealityDataProcessor")
+		reality_data_processor = get_node("\1") as Node
 		print("Connected to existing RealityDataProcessor")
 		return true
 	
@@ -497,7 +497,7 @@ func connect_to_memory_investment_system():
 	
 	# Try to find existing instance
 	if has_node("/root/MemoryInvestmentSystem") or get_node_or_null("/root/MemoryInvestmentSystem"):
-		memory_investment_system = get_node("/root/MemoryInvestmentSystem")
+		memory_investment_system = get_node("\1") as Node
 		print("Connected to existing MemoryInvestmentSystem")
 		return true
 	
@@ -523,7 +523,7 @@ func _generate_extractive_summary():
 		
 		# If we have too many sentences, sort by importance and take top ones
 		if current_tokens > tokens_target:
-			selected_sentences.sort_custom(self, "_sort_by_importance")
+			selected_sentences.sort_custom(self."_sort_by_importance")
 			
 			var pruned_sentences = []
 			current_tokens = 0
@@ -539,7 +539,7 @@ func _generate_extractive_summary():
 			selected_sentences = pruned_sentences
 		
 		# Reorder sentences to maintain original sequence
-		selected_sentences.sort_custom(self, "_sort_by_original_order")
+		selected_sentences.sort_custom(self."_sort_by_original_order")
 		
 		# Join sentences and store the summary
 		summary_by_dimension[dimension] = _join_sentences(selected_sentences)
@@ -568,7 +568,7 @@ func _generate_abstractive_summary():
 				key_sentences.append(sentence)
 		
 		# Sort by importance
-		key_sentences.sort_custom(self, "_sort_by_importance")
+		key_sentences.sort_custom(self."_sort_by_importance")
 		
 		# Keep only top percentage based on detail level
 		var keep_count = int(key_sentences.size() * detail_level)
@@ -605,7 +605,7 @@ func _generate_hybrid_summary():
 				key_sentences.append(sentence)
 		
 		# Sort by importance
-		key_sentences.sort_custom(self, "_sort_by_importance")
+		key_sentences.sort_custom(self."_sort_by_importance")
 		
 		# For more abstract dimensions (conceptual, quantum), use more abstractive approach
 		var abstractive_ratio = 0.0
@@ -680,7 +680,7 @@ func _generate_dimensional_summary():
 		if sentence_importance[sentence] >= quantum_threshold:
 			quantum_sentences.append(sentence)
 	
-	quantum_sentences.sort_custom(self, "_sort_by_importance")
+	quantum_sentences.sort_custom(self."_sort_by_importance")
 	
 	# Take only top 3-5 sentences for quantum level
 	var quantum_count = min(5, quantum_sentences.size())
@@ -713,7 +713,7 @@ func _generate_dimensional_summary():
 				selected_sentences.append(sentence)
 		
 		# Sort by importance
-		selected_sentences.sort_custom(self, "_sort_by_importance")
+		selected_sentences.sort_custom(self."_sort_by_importance")
 		
 		# Calculate remaining token budget after accounting for previous summary
 		var prev_tokens = estimate_token_count(prev_summary)
@@ -732,7 +732,7 @@ func _generate_dimensional_summary():
 				break
 		
 		# Sort sentences by original order
-		dimension_sentences.sort_custom(self, "_sort_by_original_order")
+		dimension_sentences.sort_custom(self."_sort_by_original_order")
 		
 		# Build summary by expanding on previous dimension
 		var summary = ""
@@ -843,7 +843,7 @@ func _extract_key_concepts(sentences):
 			concepts[i].importance += 0.2
 	
 	# Sort by importance
-	concepts.sort_custom(self, "_sort_concepts_by_importance")
+	concepts.sort_custom(self."_sort_concepts_by_importance")
 	
 	return concepts
 
@@ -953,7 +953,7 @@ func _build_abstractive_summary(concepts, dimension, token_budget):
 
 # Join sentences into paragraphs
 func _join_sentences(sentence_list):
-	if sentence_list.empty():
+	if sentence_list.is_empty():
 		return ""
 	
 	var result = ""
@@ -971,7 +971,7 @@ func _join_sentences(sentence_list):
 			sentence_count = 0
 	
 	# Add any remaining sentences
-	if not paragraph_sentences.empty():
+	if not paragraph_sentences.is_empty():
 		result += _join_paragraph(paragraph_sentences)
 	
 	return result.strip_edges()

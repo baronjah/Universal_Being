@@ -1,6 +1,6 @@
 extends Node
 
-class_name InfiniteEyeConnector
+class_name InfiniteEyeConnector_infiniteeyeconnector_infinite
 
 # Infinite Eye Connector - Deep database visualization system
 # Creates holographic visualization of all connected account data with infinite depth

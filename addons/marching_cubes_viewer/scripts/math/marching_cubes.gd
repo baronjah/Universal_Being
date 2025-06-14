@@ -202,7 +202,7 @@ static func build_mesh(image_data:ZippedImageStack, threshold:float, step_size:V
 	return {
 		"points": mesh_tri_verts,
 		"normals": mesh_tri_norms
-	}
+}
 
 static func build_mesh_points(image_data:ZippedImageStack, threshold:float, step_size:Vector3):
 	
@@ -237,4 +237,4 @@ static func build_mesh_points(image_data:ZippedImageStack, threshold:float, step
 	return {
 		"points": mesh_verts,
 		"colors": mesh_cols
-	}
+}

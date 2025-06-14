@@ -27,14 +27,14 @@ enum APIState {
 # ----- TERMINAL REFERENCES -----
 var dual_core_terminal = null
 var connected_cores = []
-var terminal_monitors = {}
+var terminal_monitors = {
 
 # ----- API CONNECTIONS -----
-var active_connections = {}
+var active_connections = {
 var connection_history = []
-var auth_tokens = {}
-var connection_timeouts = {}
-var retry_counts = {}
+var auth_tokens = {
+var connection_timeouts = {
+var retry_counts = {
 
 # ----- INTEGRATION WITH GAME SYSTEMS -----
 var divine_word_game = null
@@ -44,8 +44,8 @@ var word_comment_system = null
 
 # ----- DATA TRANSFER -----
 var transfer_queue = []
-var processed_data = {}
-var pending_responses = {}
+var processed_data = {
+var pending_responses = {
 var last_sync_time = 0
 
 # ----- SIGNALS -----
@@ -76,17 +76,17 @@ func _ready():
     sync_timer.wait_time = 5.0 # Sync every 5 seconds
     sync_timer.one_shot = false
     sync_timer.autostart = true
-    sync_timer.connect("timeout", self, "_on_sync_timer_timeout")
+    sync_timer.connect(_on_sync_timer_timeout)
     add_child(sync_timer)
     
     print("Terminal API Bridge initialized")
 
 func _connect_terminal_signals():
     if dual_core_terminal:
-        dual_core_terminal.connect("core_switched", self, "_on_core_switched")
-        dual_core_terminal.connect("input_processed", self, "_on_terminal_input_processed")
-        dual_core_terminal.connect("special_pattern_detected", self, "_on_special_pattern_detected")
-        dual_core_terminal.connect("miracle_triggered", self, "_on_miracle_triggered")
+        dual_core_terminal.connect(_on_core_switched)
+        dual_core_terminal.connect(_on_terminal_input_processed)
+        dual_core_terminal.connect(_on_special_pattern_detected)
+        dual_core_terminal.connect(_on_miracle_triggered)
         
         # Initialize monitors for existing cores
         var cores = dual_core_terminal.get_all_cores()
@@ -103,7 +103,7 @@ func _connect_game_systems():
     # Connect to turn system
     turn_system = get_node_or_null("/root/TurnSystem")
     if turn_system:
-        turn_system.connect("turn_advanced", self, "_on_turn_advanced")
+        turn_system.connect(_on_turn_advanced)
     
     # Connect to word comment system
     word_comment_system = get_node_or_null("/root/WordCommentSystem")
@@ -119,8 +119,7 @@ func _initialize_core_monitor(core_id):
             "sent_bytes": 0,
             "received_bytes": 0,
             "last_transfer": 0
-        }
-    }
+			}
 
 # ----- PROCESSING -----
 func _process(delta):
@@ -295,7 +294,7 @@ func _connect_to_api(api_name, host, port, core_id):
         "port": port,
         "state": APIState.CONNECTING,
         "core_id": core_id
-    }
+		}
     
     # Set timeout
     connection_timeouts[api_name] = OS.get_unix_time() + API_TIMEOUT
@@ -328,6 +327,7 @@ func _authenticate(api_name):
     ]
     
     var data = JSON.print({"authenticate": true})
+	}
     
     # Send auth request
     var err = connection.connection.request("POST", "/auth", headers, data)
@@ -370,6 +370,7 @@ func _process_api_response(api_name, headers, body):
         
         # Check response type
         if response_data.has("authenticated") and response_data.authenticated:
+		}
             # Authentication successful
             connection.state = APIState.AUTHENTICATED
             emit_signal("auth_succeeded", api_name)
@@ -386,6 +387,7 @@ func _process_api_response(api_name, headers, body):
             
             # Update core monitor stats if we have a core ID
             if connection.has("core_id") and terminal_monitors.has(connection.core_id):
+			}
                 var data_size = body.size()
                 terminal_monitors[connection.core_id].data_stats.received_bytes += data_size
                 terminal_monitors[connection.core_id].data_stats.last_transfer = OS.get_unix_time()
@@ -431,6 +433,7 @@ func _on_rate_limit_reset(api_name):
     if active_connections.has(api_name) and active_connections[api_name].state == APIState.RATE_LIMITED:
         active_connections[api_name].state = APIState.AUTHENTICATED
         print("Rate limit reset for API: " + api_name)
+		}
 
 # ----- DATA TRANSFER -----
 func send_data(api_name, endpoint, data, method="POST", core_id=null):
@@ -461,14 +464,14 @@ func register_response_handler(api_name, target, method):
         "target": target,
         "method": method,
         "timestamp": OS.get_unix_time()
-    }
+		}
 
 func synchronize_cores(core_ids=null):
     // If no core IDs specified, sync all connected cores
     if core_ids == null:
         core_ids = connected_cores
     
-    var sync_data = {}
+    var sync_data = {
     
     // Gather data from each core
     for core_id in core_ids:
@@ -484,7 +487,7 @@ func synchronize_cores(core_ids=null):
                 "miracle_count": core_info.miracle_count,
                 "last_input": core_info.last_input,
                 "time_state": dual_core_terminal.get_time_state()
-            }
+				}
     
     // Record sync time
     last_sync_time = OS.get_unix_time()
@@ -589,6 +592,7 @@ func _process_api_command(core_id, input_text):
                         terminal_monitors[core_id].connection_status.erase(api_name)
                     
                     print("Disconnected from API: " + api_name)
+					}
 
 func _on_special_pattern_detected(pattern, effect):
     // Special handling for API patterns
@@ -605,7 +609,7 @@ func _on_special_pattern_detected(pattern, effect):
                     "effect": effect,
                     "dimension": turn_system.current_dimension if turn_system else 0,
                     "timestamp": OS.get_unix_time()
-                }
+					}
                 
                 send_data(api_name, "/pattern", data, "POST", connection.core_id)
 
@@ -621,7 +625,7 @@ func _on_miracle_triggered(core_id):
                 "core_id": core_id,
                 "dimension": turn_system.current_dimension if turn_system else 0,
                 "timestamp": OS.get_unix_time()
-            }
+				}
             
             send_data(api_name, "/event", data, "POST", connection.core_id)
 
@@ -637,7 +641,7 @@ func _on_turn_advanced(old_turn, new_turn):
                 "old_turn": old_turn,
                 "new_turn": new_turn,
                 "timestamp": OS.get_unix_time()
-            }
+				}
             
             send_data(api_name, "/event", data, "POST", connection.core_id)
 

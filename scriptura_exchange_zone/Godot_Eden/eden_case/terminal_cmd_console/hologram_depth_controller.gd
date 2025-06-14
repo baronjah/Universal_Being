@@ -1,6 +1,6 @@
 extends Node
 
-class_name HologramDepthController
+class_name HologramDepthController_hologramdepthcontroller_hologram
 
 # Hologram Depth Controller - Creates psychological horror elements through terminal
 # Interfaces with screen devices and manipulates perception through holographic depth
@@ -556,10 +556,10 @@ func _create_horror_forest():
 	# Create trees
 	for i in range(10):
 		var tree = """
-     /\\
-    /  \\
-   /    \\
-  /______\\
+     \\
+# /  \\
+# /    \\
+# /______\\
      ||
 """
 		var scale = 0.3 + randf() * 0.5
@@ -581,8 +581,8 @@ func _create_horror_forest():
 	# Create distant figure
 	var figure = """
      o
-    /|\\
-    / \\
+# /|\\
+# / \\
 """
 		var model_index = terminal_visualizer.create_ascii_model(figure, 0.3, Color(0.1, 0.1, 0.1))
 		terminal_visualizer.translate_model(model_index, Vector3(0, 0, -25))

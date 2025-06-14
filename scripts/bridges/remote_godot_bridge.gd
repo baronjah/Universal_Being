@@ -38,6 +38,7 @@ class RemoteConnection:
 	
 	func connect_to_godot(ip: String = "127.0.0.1") -> bool:
 		print("🔗 Attempting to connect to %s at %s:%d" % [service_name, ip, port])
+
 		
 		client = StreamPeerTCP.new()
 		var result = client.connect_to_host(ip, port)
@@ -97,7 +98,7 @@ static func setup_remote_connections() -> Dictionary:
 	"""Setup connections to all Godot development ports"""
 	print("🌐 Setting up remote connections to Windows Godot Engine...")
 	
-	var connections = {}
+	var connections = {
 	
 	# Language Server Connection (GDScript completion, hover, etc.)
 	var language_server = RemoteConnection.new("GDScript Language Server", GODOT_LANGUAGE_SERVER_PORT)
@@ -122,14 +123,14 @@ static func test_all_connections(windows_ip: String = "127.0.0.1") -> Dictionary
 		"timestamp": Time.get_datetime_string_from_system(),
 		"target_ip": windows_ip,
 		"connections": {},
-		"summary": {}
-	}
+		"summary": {
+}
 	
 	var ports_to_test = {
 		"language_server": GODOT_LANGUAGE_SERVER_PORT,
 		"debug_adapter": GODOT_DEBUG_ADAPTER_PORT,
 		"cursor_remote": CURSOR_REMOTE_PORT
-	}
+}
 	
 	var successful_connections = 0
 	
@@ -145,13 +146,14 @@ static func test_all_connections(windows_ip: String = "127.0.0.1") -> Dictionary
 		"total_services": ports_to_test.size(),
 		"successful_connections": successful_connections,
 		"connection_rate": (successful_connections / float(ports_to_test.size())) * 100.0
-	}
+}
 	
 	return results
 
 static func _test_single_connection(ip: String, port: int, service: String) -> Dictionary:
 	"""Test connection to a single port"""
 	print("🔗 Testing %s at %s:%d..." % [service, ip, port])
+}
 	
 	var tcp = StreamPeerTCP.new()
 	var start_time = Time.get_time_dict_from_system().get("unix", 0.0)
@@ -164,7 +166,7 @@ static func _test_single_connection(ip: String, port: int, service: String) -> D
 			"connected": false,
 			"error": "Connection failed immediately",
 			"response_time": 0.0
-		}
+}
 	
 	# Wait for connection or timeout
 	var timeout = 3.0
@@ -182,12 +184,13 @@ static func _test_single_connection(ip: String, port: int, service: String) -> D
 		"connected": tcp.get_status() == StreamPeerTCP.STATUS_CONNECTED,
 		"status": _get_status_string(tcp.get_status()),
 		"response_time": response_time
-	}
+}
 	
 	if connection_data.connected:
 		print("✅ %s: Connected in %.2fs" % [service, response_time])
 	else:
 		print("❌ %s: Failed (%s)" % [service, connection_data.status])
+}
 	
 	tcp.disconnect_from_host()
 	return connection_data
@@ -217,7 +220,7 @@ static func setup_multi_ai_bridge() -> Dictionary:
 		"ai_systems": {},
 		"communication_channels": {},
 		"coordination_hub": null
-	}
+}
 	
 	# Claude Code (Linux) - Current instance
 	ai_bridge.ai_systems["claude_code"] = {
@@ -226,7 +229,7 @@ static func setup_multi_ai_bridge() -> Dictionary:
 		"role": "System Architecture & Code Generation",
 		"capabilities": ["file_operations", "code_analysis", "system_design"],
 		"status": "active"
-	}
+}
 	
 	# Claude Desktop MCP (Windows)
 	ai_bridge.ai_systems["claude_desktop"] = {
@@ -235,7 +238,7 @@ static func setup_multi_ai_bridge() -> Dictionary:
 		"role": "Project Orchestration & UI Integration",
 		"capabilities": ["godot_integration", "visual_debugging", "project_management"],
 		"status": "available"
-	}
+}
 	
 	# Cursor AI (Windows)
 	ai_bridge.ai_systems["cursor"] = {
@@ -244,7 +247,7 @@ static func setup_multi_ai_bridge() -> Dictionary:
 		"role": "Visual Development & Code Completion",
 		"capabilities": ["code_completion", "visual_editing", "real_time_collaboration"],
 		"status": "connected_via_6008"
-	}
+}
 	
 	# Communication channels
 	ai_bridge.communication_channels = {
@@ -262,8 +265,7 @@ static func setup_multi_ai_bridge() -> Dictionary:
 			"port": CURSOR_REMOTE_PORT,
 			"purpose": "Remote development coordination",
 			"ai_users": ["claude_code", "cursor"]
-		}
-	}
+}
 	
 	print("🤖 Multi-AI bridge configuration complete!")
 	return ai_bridge
@@ -273,6 +275,7 @@ static func setup_multi_ai_bridge() -> Dictionary:
 static func send_gdscript_command(command: String, windows_ip: String = "127.0.0.1") -> Dictionary:
 	"""Send GDScript command to remote Godot instance"""
 	print("📡 Sending GDScript command to Godot: %s" % command)
+}
 	
 	var connection = RemoteConnection.new("Command Sender", GODOT_LANGUAGE_SERVER_PORT)
 	var result = {
@@ -280,7 +283,7 @@ static func send_gdscript_command(command: String, windows_ip: String = "127.0.0
 		"success": false,
 		"response": "",
 		"timestamp": Time.get_datetime_string_from_system()
-	}
+}
 	
 	if await connection.connect_to_godot(windows_ip):
 		var message_sent = connection.send_message(command)
@@ -319,7 +322,7 @@ static func discover_windows_godot() -> Dictionary:
 		"timestamp": Time.get_datetime_string_from_system(),
 		"candidates": [],
 		"recommended_ip": WINDOWS_IP
-	}
+}
 	
 	# For WSL, Windows host is typically accessible via these methods:
 	var ip_candidates = [
@@ -331,6 +334,7 @@ static func discover_windows_godot() -> Dictionary:
 	
 	for ip in ip_candidates:
 		if ip and ip != "":
+
 			var test_result = await test_all_connections(ip)
 			if test_result.summary.successful_connections > 0:
 				discovery_result.candidates.append({
@@ -364,6 +368,7 @@ static func _get_windows_host_ip() -> String:
 		var lines = content.split("\n")
 		for line in lines:
 			if line.begins_with("nameserver"):
+
 				var parts = line.split(" ")
 				if parts.size() > 1:
 					return parts[1].strip_edges()
@@ -385,6 +390,7 @@ static func main():
 	var args = OS.get_cmdline_args()
 	
 	if "--test-connections" in args:
+
 		var ip = "127.0.0.1"
 		var ip_index = args.find("--test-connections")
 		if ip_index + 1 < args.size():
@@ -400,23 +406,29 @@ static func main():
 		])
 	
 	elif "--discover" in args:
+
 		var discovery = await discover_windows_godot()
 		print("\n🌐 Discovery Results:")
 		print("Found %d candidate IPs" % discovery.candidates.size())
 		print("Recommended IP: %s" % discovery.recommended_ip)
+
 	
 	elif "--setup-multi-ai" in args:
+
 		var bridge = setup_multi_ai_bridge()
 		print("\n🤖 Multi-AI Bridge Setup Complete:")
 		print("AI Systems: %d" % bridge.ai_systems.size())
 		print("Channels: %d" % bridge.communication_channels.size())
+
 	
 	elif "--send-command" in args:
+
 		var cmd_index = args.find("--send-command")
 		if cmd_index + 1 < args.size():
 			var command = args[cmd_index + 1]
 			var result = await send_gdscript_command(command)
 			print("Command Result: %s" % ("Success" if result.success else "Failed"))
+
 	
 	else:
 		print("🌐 Remote Godot Bridge - Multi-AI Development")

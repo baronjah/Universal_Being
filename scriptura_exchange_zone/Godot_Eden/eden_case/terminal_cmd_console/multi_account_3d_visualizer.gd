@@ -1,6 +1,6 @@
 extends Node3D
 
-class_name MultiAccount3DVisualizer
+class_name MultiAccount3DVisualizer_multiaccount3dvisualizer_multiacc
 
 """
 Multi-Account 3D Visualizer
@@ -17,7 +17,8 @@ const ACCOUNT_COLORS = {
 }
 
 # Window types and visual properties
-enum WindowType {
+enum \2 {
+
     TERMINAL,
     API,
     DATABASE,
@@ -67,13 +68,13 @@ func _ready():
 
 func _connect_to_systems():
     # Connect to MultiAccountManager
-    if has_node("/root/MultiAccountManager") or get_node_or_null("/root/MultiAccountManager"):
-        account_manager = get_node("/root/MultiAccountManager")
+    if has_node("root/MultiAccountManager") or get_node_or_null("root/MultiAccountManager"):
+        account_manager = get_node("root/MultiAccountManager")
         print("Connected to MultiAccountManager")
     
     # Connect to MultiThreadedProcessor
-    if has_node("/root/MultiThreadedProcessor") or get_node_or_null("/root/MultiThreadedProcessor"):
-        thread_processor = get_node("/root/MultiThreadedProcessor")
+    if has_node("root/MultiThreadedProcessor") or get_node_or_null("root/MultiThreadedProcessor"):
+        thread_processor = get_node("root/MultiThreadedProcessor")
         print("Connected to MultiThreadedProcessor")
 
 func _create_materials():

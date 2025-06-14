@@ -4,7 +4,8 @@
 extends UniversalBeing
 #class_name UniversalBeingAssetChecker # Commented to avoid duplicate
 
-enum ValidationResult { VALID, WARNING, ERROR, CRITICAL }
+enum ValidationResult { VALID, WARNING, ERROR, CRITICAL
+}
 
 class ValidationReport:
 	var asset_path: String
@@ -30,6 +31,7 @@ static func validate_asset(asset_path: String) -> ValidationReport:
 	report.asset_path = asset_path
 	
 	print("🔍 Validating asset: %s" % asset_path)
+}
 	
 	# Check if file exists and is ZIP
 	if not FileAccess.file_exists(asset_path):
@@ -69,6 +71,7 @@ static func validate_asset(asset_path: String) -> ValidationReport:
 		print("✅ Asset validation PASSED: %s" % asset_path)
 	else:
 		print("❌ Asset validation FAILED: %s (%s)" % [asset_path, _result_to_string(report.result)])
+
 	
 	return report
 
@@ -98,9 +101,11 @@ static func _validate_manifest(zip_reader: ZIPReader, files: PackedStringArray, 
 	for field in required_fields:
 		if not field in manifest:
 			report.add_issue(ValidationResult.ERROR, "Missing required manifest field: " + field, "manifest.json")
+
 	
 	# Validate consciousness level
 	if "consciousness_level" in manifest:
+
 		var level = manifest.consciousness_level
 		if typeof(level) != TYPE_INT or level < 0 or level > 5:
 			report.add_issue(ValidationResult.ERROR, "Invalid consciousness_level: must be 0-5", "manifest.json")
@@ -109,9 +114,11 @@ static func _validate_manifest(zip_reader: ZIPReader, files: PackedStringArray, 
 	
 	# Validate asset type
 	if "type" in manifest:
+
 		var valid_types = ["being", "component", "scene", "material", "sound", "texture"]
 		if not manifest.type in valid_types:
 			report.add_issue(ValidationResult.WARNING, "Unknown asset type: " + str(manifest.type), "manifest.json")
+
 	
 	return true
 
@@ -171,6 +178,7 @@ static func _validate_consciousness_system(report: ValidationReport) -> void:
 	for trait_name in traits:
 		if not trait_name in valid_trait_names:
 			report.add_issue(ValidationResult.WARNING, "Unknown consciousness trait: " + trait_name, "manifest.json")
+
 		
 		var value = traits[trait_name]
 		if typeof(value) != TYPE_FLOAT or value < 0.0 or value > 1.0:
@@ -209,6 +217,7 @@ static func _result_to_string(result: ValidationResult) -> String:
 		ValidationResult.CRITICAL: return "CRITICAL"
 		_: return "UNKNOWN"
 
+
 static func validate_all_assets_in_directory(directory_path: String) -> Array[ValidationReport]:
 	"""Validate all .ub.zip assets in a directory"""
 	var reports: Array[ValidationReport] = []
@@ -223,6 +232,7 @@ static func validate_all_assets_in_directory(directory_path: String) -> Array[Va
 	
 	while file_name != "":
 		if file_name.ends_with(".ub.zip"):
+
 			var full_path = directory_path + "/" + file_name
 			var report = validate_asset(full_path)
 			reports.append(report)

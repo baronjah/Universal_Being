@@ -1,13 +1,13 @@
 # Dynamic LOD System with Time-Based Transitions
 # JSH #memories
-extends Node3D
-class_name DynamicLODSystem
+extends \2
+class_name DynamicLODSystem_dynamiclodsystem_dynamicl
 
 signal lod_changed(entity: Node3D, new_lod: LODLevel)
 signal entity_frozen(entity: Node3D)
 signal entity_disappeared(entity: Node3D)
+enum \2 {
 
-enum LODLevel {
 	FULL_3D,      # Close - full detail
 	SIMPLE_3D,    # Medium - cube/sphere
 	BILLBOARD_2D, # Far - 2D sprite + label

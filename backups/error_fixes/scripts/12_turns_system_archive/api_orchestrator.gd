@@ -14,7 +14,7 @@ var api_keys = {
     "apple_vision": "",
     "emotion_api": "",
     "ocr_service": ""
-}
+	}
 
 # Integration states
 var integration_states = {
@@ -22,7 +22,7 @@ var integration_states = {
     "apple_vision": false, 
     "emotion_api": false,
     "ocr_service": false
-}
+	}
 
 # Data collection
 var collected_data = {
@@ -31,7 +31,7 @@ var collected_data = {
     "emotion_records": [],
     "api_interactions": [],
     "human_interactions": []
-}
+	}
 
 # Queue for API requests
 var request_queue = []
@@ -71,6 +71,7 @@ func _ready():
           ", Apple Vision: " + str(integration_states["apple_vision"]) + 
           ", Emotion API: " + str(integration_states["emotion_api"]) + 
           ", OCR Service: " + str(integration_states["ocr_service"]))
+		
 
 func load_api_config():
     var file = File.new()
@@ -88,7 +89,7 @@ func load_api_config():
                 for key in config.api_keys:
                     if api_keys.has(key):
                         api_keys[key] = config.api_keys[key]
-                        integration_states[key] = !config.api_keys[key].empty()
+                        integration_states[key] = !config.api_keys[key].is_empty()
             
             print("API configuration loaded from: " + API_CONFIG_PATH)
         else:
@@ -118,8 +119,7 @@ func create_default_api_config():
             "collect_emotion_data": true,
             "emotion_sampling_rate": 10,
             "ocr_cache_days": 7
-        }
-    }
+			}
     
     var file = File.new()
     file.open(API_CONFIG_PATH, File.WRITE)
@@ -127,6 +127,7 @@ func create_default_api_config():
     file.close()
     
     print("Default API configuration created at: " + API_CONFIG_PATH)
+	}
 
 func connect_to_systems():
     # Try to find existing TurnPrioritySystem or TurnIntegrator
@@ -137,21 +138,22 @@ func connect_to_systems():
     if turn_system:
         # Connect turn signals appropriately
         if turn_system is TurnPrioritySystem:
-            turn_system.connect("turn_advanced", self, "_on_turn_advanced")
+            turn_system.connect(_on_turn_advanced)
         elif turn_system is TurnIntegrator:
-            turn_system.connect("turn_integrated", self, "_on_turn_integrated")
+            turn_system.connect(_on_turn_integrated)
         print("Connected to Turn System: " + turn_system.get_class())
+		
     
     # Try to find existing OCRProcessor
     ocr_processor = get_node_or_null("/root/OCRProcessor")
     if ocr_processor:
-        ocr_processor.connect("processing_completed", self, "_on_ocr_processing_completed")
+        ocr_processor.connect(_on_ocr_processing_completed)
         print("Connected to OCR Processor")
 
 func set_api_key(service, key):
     if api_keys.has(service):
         api_keys[service] = key
-        integration_states[service] = !key.empty()
+        integration_states[service] = !key.is_empty()
         
         # Update config file
         save_api_config()
@@ -163,7 +165,7 @@ func set_api_key(service, key):
 
 func save_api_config():
     # Load existing config first
-    var config = {}
+    var config = {
     var file = File.new()
     if file.file_exists(API_CONFIG_PATH):
         file.open(API_CONFIG_PATH, File.READ)
@@ -176,7 +178,7 @@ func save_api_config():
     
     # Update API keys
     if not config.has("api_keys"):
-        config["api_keys"] = {}
+        config["api_keys"] = {
     
     for key in api_keys:
         config["api_keys"][key] = api_keys[key]
@@ -187,6 +189,7 @@ func save_api_config():
     file.close()
     
     print("Saved API configuration to: " + API_CONFIG_PATH)
+	}
 
 func process_image_with_ocr(image_path, options = {}):
     if not integration_states["ocr_service"] and not integration_states["apple_vision"]:
@@ -208,10 +211,11 @@ func process_image_with_ocr(image_path, options = {}):
         "service": integration_states["apple_vision"] ? "apple_vision" : "ocr_service",
         "path": image_path,
         "options": options
-    }
+		}
     
     _queue_api_request(request_data)
     print("Queued OCR request for: " + image_path)
+	}
     
     return image_id
 
@@ -229,10 +233,11 @@ func analyze_emotion(text_content, source="api"):
         "service": integration_states["emotion_api"] ? "emotion_api" : "openai",
         "content": text_content,
         "source": source
-    }
+		}
     
     _queue_api_request(request_data)
     print("Queued emotion analysis for text from source: " + source)
+	
     
     return emotion_id
 
@@ -251,7 +256,7 @@ func continue_with_ai(context, prompt, options = {}):
         "context": context,
         "prompt": prompt,
         "options": options
-    }
+		}
     
     _queue_api_request(request_data)
     print("Queued AI continuation request")
@@ -268,7 +273,7 @@ func record_human_interaction(interaction_type, content, metadata = {}):
         "content": content,
         "timestamp": timestamp,
         "metadata": metadata
-    }
+		}
     
     # Add to collected data
     collected_data.human_interactions.append(interaction_data)
@@ -292,7 +297,7 @@ func gather_turn_data(turn_data):
         "timestamp": timestamp,
         "active_category": turn_data.active_category if turn_data.has("active_category") else "",
         "turn_lines": turn_data.turn_lines if turn_data.has("turn_lines") else []
-    }
+		}
     
     # Add to collected data
     collected_data.turns.append(turn_record)
@@ -344,13 +349,14 @@ func _process_next_request():
     timer.start()
     
     print("Processing API request: " + request.type + " using " + request.service)
+	
 
 func _on_mock_api_response(request):
     # Remove from queue
     request_queue.remove(0)
     
     # Generate mock response based on request type
-    var response = {}
+    var response = {
     var success = true
     
     match request.type:
@@ -362,7 +368,8 @@ func _on_mock_api_response(request):
             response = _generate_mock_continuation_response(request)
         _:
             success = false
-            response = {"error": "Unknown request type"}
+            response = {"error": "Unknown request type"
+			}
     
     # Record API interaction
     var api_interaction = {
@@ -371,8 +378,8 @@ func _on_mock_api_response(request):
         "service": request.service,
         "timestamp": OS.get_datetime(),
         "success": success
-    }
     collected_data.api_interactions.append(api_interaction)
+}
     
     # Emit appropriate signals
     emit_signal("api_request_completed", request.id, response, success)
@@ -428,7 +435,7 @@ func _generate_mock_ocr_response(request):
         "surprise": rand_range(0.0, 0.8),
         "disgust": rand_range(0.0, 0.2),
         "neutral": rand_range(0.0, 0.9)
-    }
+		}
     
     # Find primary emotion
     var primary_emotion = "neutral"
@@ -448,8 +455,7 @@ func _generate_mock_ocr_response(request):
             "word_count": text.split(" ").size(),
             "processing_time_ms": randi() % 1000 + 500,
             "language": "en"
-        }
-    }
+			}
 
 func _generate_mock_emotion_response(request):
     # Analysis of emotional content
@@ -461,7 +467,7 @@ func _generate_mock_emotion_response(request):
         "surprise": rand_range(0.0, 0.8),
         "disgust": rand_range(0.0, 0.2),
         "neutral": rand_range(0.0, 0.9)
-    }
+		}
     
     # Find primary emotion
     var primary_emotion = "neutral"
@@ -478,8 +484,7 @@ func _generate_mock_emotion_response(request):
         "metadata": {
             "character_count": request.content.length(),
             "processing_time_ms": randi() % 300 + 100
-        }
-    }
+			}
 
 func _generate_mock_continuation_response(request):
     # Sample continuations based on prompts
@@ -498,7 +503,7 @@ func _generate_mock_continuation_response(request):
         "tokens_generated": continuation.split(" ").size(),
         "processing_time_ms": randi() % 1500 + 500,
         "model": "mock-gpt-4"
-    }
+		}
 
 # ----- EVENT HANDLERS -----
 

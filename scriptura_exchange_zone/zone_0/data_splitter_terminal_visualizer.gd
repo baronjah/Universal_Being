@@ -1,13 +1,13 @@
 extends Node
 
-class_name DataSplitterTerminalVisualizer
+class_name DataSplitterTerminalVisualizer_datasplitterterminalvisualizer_dataspli
 
 # ----- CONFIGURATION -----
-@export var max_terminal_width: int = 80
-@export var enable_colors: bool = true
-@export var enable_ascii_art: bool = true
-@export var enable_animations: bool = false
-@export var detail_level: int = 2  # 1 = basic, 2 = normal, 3 = detailed
+@@@export var max_terminal_width: int = 80
+@@@export var enable_colors: bool = true
+@@@export var enable_ascii_art: bool = true
+@@@export var enable_animations: bool = false
+@@@export var detail_level: int = 2  # 1 = basic, 2 = normal, 3 = detailed
 
 # ----- COLOR DEFINITIONS -----
 const COLOR_RESET = "[/color]"
@@ -24,9 +24,9 @@ const COLOR_DIMENSION = "[color=#88ffff]" # Cyan
 # 3D Box template for stream/chunk visualization
 const BOX_TEMPLATE_3D = [
     "    {top_line}",
-    "   /|{top_content}|",
-    "  / |{title_line}|",
-    " /__|{mid_line}|",
+    "   |{top_content}|",
+    "   |{title_line}|",
+    " __|{mid_line}|",
     "|   |{content1}|",
     "|   |{content2}|",
     "|   |{content3}|",
@@ -179,14 +179,14 @@ func visualize_text_analysis(text: String) -> String:
 # Generate help text visualization
 func visualize_help() -> String:
     var help_text = COLOR_SUCCESS + "Data Splitter Terminal Bridge Commands:" + COLOR_RESET + "\n"
-    help_text += "/split [chunk_id] [split_factor] - Split a data chunk\n"
-    help_text += "/stream [stream_id] [data_type] [size] - Create a new data stream\n"
-    help_text += "/chunk [chunk_id] [parent_stream] [content] - Create a new data chunk\n"
-    help_text += "/merge [chunk_id1,chunk_id2,...] [merge_type] - Merge multiple chunks\n"
-    help_text += "/list [streams|chunks|splits|all] - List data elements\n"
-    help_text += "/analyze [text] - Analyze text for data splitting\n"
-    help_text += "/visualize [chunk_id|stream_id] [dimension] - Visualize data in terminal\n"
-    help_text += "/help - Display this help\n"
+    help_text += "split [chunk_id] [split_factor] - Split a data chunk\n"
+    help_text += "stream [stream_id] [data_type] [size] - Create a new data stream\n"
+    help_text += "chunk [chunk_id] [parent_stream] [content] - Create a new data chunk\n"
+    help_text += "merge [chunk_id1,chunk_id2,...] [merge_type] - Merge multiple chunks\n"
+    help_text += "list [streams|chunks|splits|all] - List data elements\n"
+    help_text += "analyze [text] - Analyze text for data splitting\n"
+    help_text += "visualize [chunk_id|stream_id] [dimension] - Visualize data in terminal\n"
+    help_text += "help - Display this help\n"
     
     return help_text
 
@@ -504,7 +504,7 @@ func _generate_merge_visualization(merge_data: Dictionary) -> String:
         visualization += spaces + COLOR_CHUNK + source_chunks[i] + COLOR_RESET + "\n"
         visualization += spaces + "↓\n"
     
-    // Add converging arrows
+# // Add converging arrows
     var arrow_width = 4 + ((source_chunks.size() - 1) * 4)
     var arrows = ""
     for i in range(arrow_width):
@@ -514,7 +514,7 @@ func _generate_merge_visualization(merge_data: Dictionary) -> String:
             arrows += " "
     visualization += arrows + "\n"
     
-    // Center result chunk
+# // Center result chunk
     var center_space = " " * (arrow_width / 2)
     visualization += center_space + COLOR_CHUNK + result_chunk + COLOR_RESET + "\n"
     

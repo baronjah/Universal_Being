@@ -91,9 +91,9 @@ func get_help_text():
 LuminusOS Script (.ls) Help:
 
 Basic Syntax:
-  // Comment
+# // Comment
   func main() {
-    // Code goes here
+# // Code goes here
   }
 
 Built-in Functions:

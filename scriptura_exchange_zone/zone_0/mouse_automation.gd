@@ -1,7 +1,7 @@
 extends Node
 }
 
-class_name MouseAutomation
+class_name MouseAutomation_mouseautomation_mouseaut
 }
 
 # -----------------------------------------------------------------------------
@@ -113,7 +113,7 @@ func _ready():
 }
 
 	# Connect to terminal bridge when available
-	if get_node_or_null("/root/TerminalToGodotBridge") != null:
+	if get_node_or_null("root/TerminalToGodotBridge") != null:
 		connect_to_bridge(get_node("\1") as Node)
 }
 

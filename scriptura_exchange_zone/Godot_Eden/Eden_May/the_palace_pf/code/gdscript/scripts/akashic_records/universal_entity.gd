@@ -1,5 +1,5 @@
 extends Node
-class_name UniversalEntity
+class_name UniversalEntity_universalentity_universa
 
 # Core identity properties
 var entity_id: String = ""
@@ -31,7 +31,7 @@ var state: Dictionary = {
 # Interaction rules
 var interaction_rules: Dictionary = {}
 
-# Spatial properties
+# Node3D properties
 var position: Vector3 = Vector3.ZERO
 var scale: Vector3 = Vector3.ONE
 
@@ -77,7 +77,7 @@ func transform(new_type: String, transformation_properties: Dictionary = {}) -> 
 		return false
 	
 	if transformation_energy < transformation_threshold:
-		print("Entity lacks transformation energy: " + str(transformation_energy) + "/" + str(transformation_threshold))
+		print("Entity lacks transformation energy: " + str(transformation_energy) + "" + str(transformation_threshold))
 		return false
 	
 	# Store previous type

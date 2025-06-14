@@ -66,6 +66,7 @@ func _ready() -> void:
     else:
         entity_manager = ThingCreatorA.get_instance()
         print("CoreWordManifestor: Using ThingCreatorA as entity manager")
+		
     
     # Try to get dictionary manager
     if ClassDB.class_exists("JSHDictionaryManager"):
@@ -76,6 +77,7 @@ func _ready() -> void:
         print("CoreWordManifestor: Connected to CoreDictionaryManager")
     else:
         print("CoreWordManifestor: Dictionary manager not found, dictionary features limited")
+		
 
 func initialize(p_map_system, p_player = null) -> void:
     map_system = p_map_system
@@ -144,10 +146,12 @@ func manifest_word(word: String, position = null, extra_properties: Dictionary =
     # Try to create entity using entity manager
     if entity_manager:
         if entity_manager.has_method("create_entity"):
+		
             # Determine entity type based on word analysis
             var entity_type = _determine_entity_type(properties)
             entity = entity_manager.create_entity(entity_type, properties)
         elif entity_manager.has_method("manifest_from_word"):
+		
             # Direct word manifestation
             entity = entity_manager.manifest_from_word(word)
     
@@ -243,7 +247,7 @@ func combine_words(words: Array, position = null) -> Object:
         return null
     
     # Combine the properties of all words
-    var combined_properties = {}
+    var combined_properties = {
     var combined_word = ""
     
     for word in words:
@@ -301,11 +305,14 @@ func analyze_word(word: String) -> Dictionary:
     
     # Use existing dictionary definition if available
     if dictionary_manager and dictionary_manager.has_method("get_word_definition"):
+	}
         var definition = dictionary_manager.get_word_definition(word)
         if definition != "No definition available.":
+		
             # Extract properties from definition
-            var dict_props = {}
+            var dict_props = {
             if dictionary_manager.has_method("get_element_properties"):
+			}
                 var element_props = dictionary_manager.get_element_properties(word)
                 if not element_props.is_empty():
                     dict_props = element_props
@@ -328,7 +335,7 @@ func analyze_word(word: String) -> Dictionary:
         "power_level": _calculate_power_level(word, phonetic_result, semantic_result, pattern_result),
         "concept_triggers": _extract_concept_triggers(word, semantic_result),
         "timestamp": Time.get_datetime_string_from_system()
-    }
+		}
     
     # Emit signal with the analysis results
     emit_signal("word_analyzed", word, analysis)
@@ -351,7 +358,7 @@ func _calculate_power_level(word: String, phonetic_result: Dictionary, semantic_
     var base_power = phonetic_power + semantic_power + pattern_power
     
     # Adjust based on unique characters ratio
-    var unique_chars = {}
+    var unique_chars = {
     for c in word:
         unique_chars[c] = true
     var uniqueness_ratio = float(unique_chars.size()) / max(1, word.length())
@@ -363,6 +370,7 @@ func _determine_element_affinity(word: String, phonetic_result: Dictionary) -> S
     if dictionary_manager:
         # Check if this word is in the "element" category
         if dictionary_manager.has_method("get_word_categories"):
+		}
             var categories = dictionary_manager.get_word_categories(word)
             if "element" in categories:
                 return word  # The word itself is an element
@@ -380,7 +388,7 @@ func _determine_element_affinity(word: String, phonetic_result: Dictionary) -> S
     
     # Simple mapping based on dominant vowels
     if vowels.size() > 0:
-        var vowel_counts = {}
+        var vowel_counts = {
         for v in vowels:
             if not vowel_counts.has(v):
                 vowel_counts[v] = 0
@@ -402,6 +410,7 @@ func _determine_element_affinity(word: String, phonetic_result: Dictionary) -> S
             "o": element = "earth"
             "u": element = "water"
             _: element = "neutral"
+			}
     
     # Adjust based on consonant patterns
     var consonants = phonetic_result.get("consonants", [])
@@ -451,7 +460,7 @@ func _extract_concept_triggers(word: String, semantic_result: Dictionary) -> Arr
         "stillness": ["still", "quiet", "calm", "peace"],
         "knowledge": ["know", "learn", "wise", "mind"],
         "mystery": ["mystery", "secret", "hidden", "obscure"]
-    }
+		}
     
     # Check for matches
     for concept in common_triggers:
@@ -472,7 +481,7 @@ func _determine_entity_type(properties: Dictionary) -> String:
     return "primordial"
 
 func _generate_entity_properties(analysis: Dictionary) -> Dictionary:
-    var properties = {}
+    var properties = {
     
     # Base properties
     properties["energy"] = analysis.get("power_level", 0.5) * 100
@@ -565,7 +574,7 @@ func get_recent_manifestations(count: int = 10) -> Array:
 func _create_word_relationship(word1: String, word2: String, relationship_type: String) -> void:
     # Initialize if needed
     if not word_relationships.has(word1):
-        word_relationships[word1] = {}
+        word_relationships[word1] = {
     
     # Create relationship
     word_relationships[word1][word2] = relationship_type
@@ -575,14 +584,14 @@ func _create_word_relationship(word1: String, word2: String, relationship_type: 
 func get_related_words(word: String) -> Dictionary:
     if word_relationships.has(word):
         return word_relationships[word].duplicate()
-    return {}
+    return {
 
 func _add_word_combination(words: Array, result: String) -> void:
-    """
+    """}
     Record a successful word combination
     """
     if not concept_relationships.has("combinations"):
-        concept_relationships["combinations"] = {}
+        concept_relationships["combinations"] = {
     
     var combo_key = " + ".join(words)
     concept_relationships["combinations"][combo_key] = result
@@ -607,6 +616,7 @@ func save_word_database() -> void:
         file.store_string(JSON.stringify(word_properties))
     else:
         print("Error saving word database: ", FileAccess.get_open_error())
+		}
 
 func load_word_database() -> void:
     """
@@ -638,6 +648,7 @@ func save_concept_map() -> void:
         file.store_string(JSON.stringify(concept_relationships))
     else:
         print("Error saving concept map: ", FileAccess.get_open_error())
+		}
 
 func load_concept_map() -> void:
     """
@@ -666,8 +677,8 @@ func load_concept_map() -> void:
                 "creation": "destruction",
                 "movement": "stillness"
             },
-            "combinations": {}
-        }
+            "combinations": {
+			}
 
 func _initialize_starter_words() -> void:
     """
@@ -688,12 +699,12 @@ func _initialize_starter_words() -> void:
         "air+water": "mist",
         "light+water": "rainbow",
         "fire+air": "smoke"
-    }
+		}
     
     for combo in combinations:
         var result = combinations[combo]
         var words = combo.split("+")
-        var props = {}
+        var props = {
         
         for word in words:
             var word_props = analyze_word(word)
@@ -735,10 +746,11 @@ func process_command(command: String) -> Dictionary:
         "success": false,
         "message": "",
         "entity": null
-    }
+		}
     
     match action:
         "create", "manifest":
+		}
             var entity = manifest_word(params)
             if entity:
                 result.success = true
@@ -746,8 +758,10 @@ func process_command(command: String) -> Dictionary:
                 result.entity = entity
             else:
                 result.message = "Failed to create entity from: " + params
+				}
         
         "combine":
+		}
             var words = params.split(" ", false)
             if words.size() >= 2:
                 var entity = combine_words(words)
@@ -761,6 +775,7 @@ func process_command(command: String) -> Dictionary:
                 result.message = "Need at least 2 words to combine"
         
         "evolve":
+		
             # Find entities by word
             var entity = _find_entity_by_word(params)
             if entity:
@@ -773,8 +788,10 @@ func process_command(command: String) -> Dictionary:
                     result.message = "Entity cannot be evolved: " + params
             else:
                 result.message = "No entity found with word: " + params
+				
         
         "transform":
+		
             var word_parts = params.split(" to ", false)
             if word_parts.size() == 2:
                 var source_word = word_parts[0].strip_edges()
@@ -795,6 +812,7 @@ func process_command(command: String) -> Dictionary:
                 result.message = "Invalid transform command. Use 'transform X to Y'"
         
         "connect":
+		
             var word_parts = params.split(" to ", false)
             if word_parts.size() == 2:
                 var source_word = word_parts[0].strip_edges()
@@ -843,6 +861,7 @@ func _find_entity_by_word(word: String) -> Object:
     """
     # Check if map system is available
     if map_system and map_system.has_method("get_entities"):
+	
         var all_entities = map_system.get_entities()
         for entity in all_entities:
             if entity.source_word == word:
@@ -874,7 +893,7 @@ class PhoneticAnalyzer:
             "pattern": "",
             "power": 0.5,
             "resonance": 0.5
-        }
+			}
         
         # Extract vowels and consonants
         var vowels = "aeiou"
@@ -927,7 +946,7 @@ class SemanticAnalyzer:
         "destruction": ["destroy", "break", "ruin", "smash", "wreck"],
         "protection": ["protect", "shield", "guard", "defend", "ward"],
         "transformation": ["transform", "change", "shift", "morph"]
-    }
+		}
     
     func analyze(word: String) -> Dictionary:
         var result = {
@@ -935,7 +954,7 @@ class SemanticAnalyzer:
             "power": 0.5,
             "positivity": 0.5,
             "complexity": 0.5
-        }
+			}
         
         # Check for concept roots
         for concept in concept_roots:
@@ -978,10 +997,10 @@ class PatternAnalyzer:
             "repetitions": 0,
             "symmetry": 0.0,
             "power": 0.5
-        }
+			}
         
         # Check for repetitions
-        var char_counts = {}
+        var char_counts = {
         for c in word:
             if not char_counts.has(c):
                 char_counts[c] = 0

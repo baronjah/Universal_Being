@@ -4,9 +4,8 @@
 # PURPOSE: Show how to use Pentagon Initialization Queue properly
 # CREATED: 2025-06-01 - Pentagon dependency patterns guide
 # ==================================================
-
 extends UniversalBeingBaseEnhanced
-class_name PentagonDependencyExamples
+class_name PentagonDependencyExamples_pentagon
 
 # ===== EXAMPLE 1: SIMPLE AUTOLOAD DEPENDENCY =====
 
@@ -47,7 +46,7 @@ func pentagon_sewers() -> void:
 	# Pentagon cleanup/output - override in child classes
 	pass
 func get_pentagon_dependencies() -> Array[String]:
-	return ["/root/ConsoleManager"]
+	return ["root/ConsoleManager"]
 
 func pentagon_ready() -> void:
 	# This will only run AFTER ConsoleManager exists
@@ -62,12 +61,13 @@ func _example_command(_args: Array) -> String:
 # ===== EXAMPLE 2: MULTIPLE DEPENDENCIES =====
 
 # Example that needs multiple systems
-class MultipleDependencyExample extends UniversalBeingBaseEnhanced:
+class MultipleDependencyExample
+extends UniversalBeingBaseEnhanced:
 	func get_pentagon_dependencies() -> Array[String]:
 		return [
-			"/root/ConsoleManager",
-			"/root/FloodgateController",
-			"/root/UniversalObjectManager"
+			"root/ConsoleManager",
+			"root/FloodgateController",
+			"root/UniversalObjectManager"
 		]
 	
 	func pentagon_ready() -> void:
@@ -82,7 +82,8 @@ class MultipleDependencyExample extends UniversalBeingBaseEnhanced:
 # ===== EXAMPLE 3: CHILD NODE DEPENDENCY =====
 
 # Example that needs a specific child node
-class ChildNodeExample extends UniversalBeingBaseEnhanced:
+class ChildNodeExample
+extends UniversalBeingBaseEnhanced:
 	func get_pentagon_dependencies() -> Array[String]:
 		return ["SpecificChildNode"]  # Relative path
 	
@@ -95,15 +96,16 @@ class ChildNodeExample extends UniversalBeingBaseEnhanced:
 # ===== EXAMPLE 4: CONDITIONAL DEPENDENCIES =====
 
 # Example with conditional dependency checking
-class ConditionalExample extends UniversalBeingBaseEnhanced:
+class ConditionalExample
+extends UniversalBeingBaseEnhanced:
 	var cursor_mode: bool = true
 	
 	func get_pentagon_dependencies() -> Array[String]:
-		var deps = ["/root/FloodgateController"]
+		var deps = ["root/FloodgateController"]
 		
 		# Add cursor dependency only if in cursor mode
 		if cursor_mode:
-			deps.append("/root/UniversalCursor")
+			deps.append("root/UniversalCursor")
 		
 		return deps
 	
@@ -119,14 +121,15 @@ class ConditionalExample extends UniversalBeingBaseEnhanced:
 # ===== EXAMPLE 5: FALLBACK MECHANISM =====
 
 # Example with graceful fallback when dependencies fail
-class FallbackExample extends UniversalBeingBaseEnhanced:
+class FallbackExample
+extends UniversalBeingBaseEnhanced:
 	var fallback_mode: bool = false
 	
 	func get_pentagon_dependencies() -> Array[String]:
 		if fallback_mode:
 			return []  # No dependencies in fallback mode
 		else:
-			return ["/root/AdvancedSystem"]
+			return ["root/AdvancedSystem"]
 	
 	func pentagon_ready() -> void:
 		if fallback_mode:
@@ -149,9 +152,10 @@ class FallbackExample extends UniversalBeingBaseEnhanced:
 # ===== EXAMPLE 6: DYNAMIC DEPENDENCY REGISTRATION =====
 
 # Example that registers additional dependencies at runtime
-class DynamicExample extends UniversalBeingBaseEnhanced:
+class DynamicExample
+extends UniversalBeingBaseEnhanced:
 	func get_pentagon_dependencies() -> Array[String]:
-		return ["/root/FloodgateController"]
+		return ["root/FloodgateController"]
 	
 	func pentagon_ready() -> void:
 		# Initial setup
@@ -159,7 +163,7 @@ class DynamicExample extends UniversalBeingBaseEnhanced:
 		
 		# Register additional dependency for later feature
 		if pentagon_queue:
-			wait_for_node("/root/AdvancedFeature", _setup_advanced_feature)
+			wait_for_node("root/AdvancedFeature", _setup_advanced_feature)
 	
 	func _setup_advanced_feature() -> void:
 		var advanced = require_autoload("AdvancedFeature")
@@ -169,11 +173,12 @@ class DynamicExample extends UniversalBeingBaseEnhanced:
 # ===== EXAMPLE 7: CURSOR SYSTEM DEPENDENCY =====
 
 # Example cursor that needs interface system
-class CursorExample extends UniversalBeingBaseEnhanced:
+class CursorExample
+extends UniversalBeingBaseEnhanced:
 	func get_pentagon_dependencies() -> Array[String]:
 		return [
-			"/root/FloodgateController",
-			"/root/UniversalObjectManager",
+			"root/FloodgateController",
+			"root/UniversalObjectManager",
 			"EnhancedInterfaceSystem"  # Scene node
 		]
 	
@@ -198,11 +203,12 @@ class CursorExample extends UniversalBeingBaseEnhanced:
 # ===== EXAMPLE 8: INTERFACE SYSTEM DEPENDENCY =====
 
 # Example interface that needs cursor
-class InterfaceExample extends UniversalBeingBaseEnhanced:
+class InterfaceExample
+extends UniversalBeingBaseEnhanced:
 	func get_pentagon_dependencies() -> Array[String]:
 		return [
-			"/root/FloodgateController",
-			"/root/UniversalCursor"  # Needs cursor to be interactive
+			"root/FloodgateController",
+			"root/UniversalCursor"  # Needs cursor to be interactive
 		]
 	
 	func pentagon_ready() -> void:

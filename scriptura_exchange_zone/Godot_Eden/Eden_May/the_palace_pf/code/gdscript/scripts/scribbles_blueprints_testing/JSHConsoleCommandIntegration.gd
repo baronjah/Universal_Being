@@ -1,5 +1,5 @@
 extends Node
-class_name JSHConsoleCommandIntegration
+class_name JSHConsoleCommandIntegration_JSHConsoleCommandIntegration_JSHConso
 
 # References to systems
 var console_manager: JSHConsoleManager = null
@@ -80,7 +80,7 @@ func cmd_jsh(self, args: Array = []) -> Dictionary:
         console_manager.print_line("\nCore Systems:")
         console_manager.print_line("  Entity System: " + ("Active" if entity_manager != null else "Inactive"))
         console_manager.print_line("  Database System: " + ("Active" if database_manager != null else "Inactive"))
-        console_manager.print_line("  Spatial System: " + ("Active" if spatial_manager != null else "Inactive"))
+        console_manager.print_line("  Node3D System: " + ("Active" if spatial_manager != null else "Inactive"))
         
         console_manager.print_line("\nAvailable Commands:")
         console_manager.print_line("  jsh info - Display system information")
@@ -120,7 +120,7 @@ func cmd_jsh_info(self, args: Array) -> Dictionary:
     console_manager.print_line("\nSystem Overview:")
     console_manager.print_line("  Entity System: Universal entity framework with self-evolving capabilities")
     console_manager.print_line("  Database System: Persistent storage with automatic entity splitting")
-    console_manager.print_line("  Spatial System: Zone-based world management with spatial partitioning")
+    console_manager.print_line("  Node3D System: Zone-based world management with spatial partitioning")
     console_manager.print_line("  Console System: Command interface for system interaction and control")
     
     console_manager.print_line("\nSystem Architecture:")
@@ -128,7 +128,7 @@ func cmd_jsh_info(self, args: Array) -> Dictionary:
     console_manager.print_line("  - Self-Evolving Database")
     console_manager.print_line("  - Hierarchical Zone Organization")
     console_manager.print_line("  - Dynamic Loading/Unloading")
-    console_manager.print_line("  - Spatial Query Optimization")
+    console_manager.print_line("  - Node3D Query Optimization")
     
     return {
         "success": true,
@@ -165,7 +165,7 @@ func cmd_jsh_status(self, args: Array) -> Dictionary:
     else:
         console_manager.print_line("  Status: Inactive")
     
-    # Spatial system status
+    # Node3D system status
     console_manager.print_line("\nSpatial System:")
     if spatial_manager:
         var stats = spatial_manager.get_zone_statistics()
@@ -294,7 +294,7 @@ func cmd_jsh_test(self, args: Array) -> Dictionary:
             
             console_manager.print_line("  Found " + str(nearby_entities.size()) + " entities within " + str(radius) + " units of center")
             
-            console_manager.print_success("Spatial tests completed")
+            console_manager.print_success("Node3D tests completed")
         
         "all":
             console_manager.print_line("Running all system tests...")

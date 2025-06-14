@@ -1,5 +1,5 @@
 extends Node
-class_name EtherealSystemInitializer
+class_name EtherealSystemInitializer_etherealsysteminit_ethereal
 
 """
 EtherealSystemInitializer: Main initialization script for the LuminusOS Ethereal Engine

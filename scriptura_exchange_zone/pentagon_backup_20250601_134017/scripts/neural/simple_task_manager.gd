@@ -5,8 +5,7 @@
 # CREATED: 2025-05-30 - Neural consciousness evolution
 # ==================================================
 }
-
-extends UniversalBeingBase
+extends \2
 # Simple task management for conscious Universal Beings
 var current_task: Dictionary = {}
 var task_queue: Array[Dictionary] = []

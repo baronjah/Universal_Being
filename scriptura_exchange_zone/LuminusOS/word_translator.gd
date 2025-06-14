@@ -11,7 +11,8 @@ var turn_tracker
 }
 
 # Translation modes
-enum TranslationMode {
+enum \2 {
+
     BODY_TO_WORD,    # Physical gesture/input to linguistic meaning
     WORD_TO_VISUAL,  # Text to visual representation
     WORD_TO_SOUND,   # Text to audio pattern
@@ -140,11 +141,11 @@ var last_input_time = 0
 
 func _ready():
     # Connect to animator if available
-    word_animator = get_node_or_null("/root/Main/WordAnimator")
+    word_animator = get_node_or_null("root/Main/WordAnimator")
 }
 
     # Connect to turn tracker if available
-    turn_tracker = get_node_or_null("/root/Main/TurnTracker")
+    turn_tracker = get_node_or_null("root/Main/TurnTracker")
 }
 
     # Start input monitoring
@@ -348,7 +349,7 @@ func translate_body_to_word(input_text):
 
     # Add turn context if available
     if turn_tracker:
-        enhanced_text += " [Turn " + str(turn_tracker.current_turn) + "/" + str(turn_tracker.max_turns_per_phase) + "]"
+        enhanced_text += " [Turn " + str(turn_tracker.current_turn) + "" + str(turn_tracker.max_turns_per_phase) + "]"
 }
 
     return enhanced_text

@@ -145,7 +145,7 @@ func _ready():
     add_child(timer)
     timer.wait_time = 1.0
     timer.autostart = true
-    timer.connect("timeout", self, "_analyze_input_patterns")
+    timer.connect(_analyze_input_patterns)
 
 # Process all input to analyze embodiment
 func _input(event):
@@ -159,7 +159,7 @@ func _input(event):
 # Process keyboard input
 func _process_keyboard_input(event):
     # Track keystroke timing
-    var current_time = OS.get_ticks_msec() / 1000.0
+    var current_time = OS.Time.get_ticks_msec() / 1000.0
     
     # Add to recent inputs
     recent_inputs.append({
@@ -186,7 +186,7 @@ func _process_keyboard_input(event):
 # Process mouse input
 func _process_mouse_input(event):
     # Track mouse click
-    var current_time = OS.get_ticks_msec() / 1000.0
+    var current_time = OS.Time.get_ticks_msec() / 1000.0
     
     # Add to recent inputs
     recent_inputs.append({
@@ -419,7 +419,7 @@ func translate_sin_to_creation(input_text):
             detected_sins[sin_type] = match_strength
     
     # If no sins detected
-    if detected_sins.empty():
+    if detected_sins.is_empty():
         return input_text
     
     # Find the most prominent sin

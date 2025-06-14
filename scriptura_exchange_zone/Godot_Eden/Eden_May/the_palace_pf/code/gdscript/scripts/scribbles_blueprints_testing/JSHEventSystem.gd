@@ -1,5 +1,5 @@
 extends Node
-class_name JSHEventSystem
+class_name JSHEventSystem_JSHEventSystem_JSHEvent
 
 # The JSHEventSystem handles communication between different components of the system
 # It provides a central event bus for publishing and subscribing to events

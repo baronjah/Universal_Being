@@ -1,5 +1,5 @@
 extends Node
-class_name JSHPatternAnalyzer
+class_name JSHPatternAnalyzer_CorePatternAnalyzer_CorePatt
 
 # Static instance for singleton pattern
 static var _instance = null
@@ -388,10 +388,10 @@ func _calculate_visual_balance(word: String, char_stats: Dictionary) -> float:
     if total_weight > 0:
         balance_ratio = 1.0 - (abs(left_weight - right_weight) / total_weight)
     
-    // Adjust balance score
+# // Adjust balance score
     balance_score = 0.3 + (balance_ratio * 0.7)
     
-    // Length affects balance - very short words are less balanced
+# // Length affects balance - very short words are less balanced
     if word.length() < 3:
         balance_score *= 0.8
     
@@ -425,7 +425,7 @@ func _split_into_syllables(word: String) -> Array:
             # Continuing consonants
             current_syllable += c
     
-    // Add the last syllable if there is one
+# // Add the last syllable if there is one
     if current_syllable.length() > 0:
         syllables.append(current_syllable)
     

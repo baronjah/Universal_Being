@@ -1,6 +1,6 @@
 extends Node3D
 
-class_name DataSplitterController
+class_name DataSplitterController_datasplittercontroller_dataspli
 
 # ----- NODE PATHS -----
 @export_node_path var notepad3d_integration_path: NodePath
@@ -15,20 +15,20 @@ var console = null
 var data_container = null
 
 # ----- CONFIGURATION -----
-@export var auto_initialize: bool = true
-@export var enable_debug_logs: bool = true
-@export var max_data_streams: int = 9
-@export var default_data_chunk_size: int = 16
-@export var default_split_factor: int = 3
-@export var data_visualization_enabled: bool = true
+@@@export var auto_initialize: bool = true
+@@@export var enable_debug_logs: bool = true
+@@@export var max_data_streams: int = 9
+@@@export var default_data_chunk_size: int = 16
+@@@export var default_split_factor: int = 3
+@@@export var data_visualization_enabled: bool = true
 
 # ----- VISUAL SETTINGS -----
 @export_group("Visual Settings")
-@export var stream_material: StandardMaterial3D
-@export var chunk_material: StandardMaterial3D
-@export var connection_material: StandardMaterial3D
-@export var split_effect: PackedScene
-@export var merge_effect: PackedScene
+@@@export var stream_material: StandardMaterial3D
+@@@export var chunk_material: StandardMaterial3D
+@@@export var connection_material: StandardMaterial3D
+@@@export var split_effect: PackedScene
+@@@export var merge_effect: PackedScene
 
 # ----- STATE VARIABLES -----
 var initialized: bool = false
@@ -762,7 +762,7 @@ func process_command(command: String) -> Dictionary:
 		params = parts[1]
 	
 	match cmd:
-		"/split":
+		"split":
 			# Split data command
 			if params.is_empty():
 				_log_message("Usage: /split [text to split]")
@@ -793,7 +793,7 @@ func process_command(command: String) -> Dictionary:
 				_log_message("Failed to split: " + split_result.message)
 				return split_result
 		
-		"/merge":
+		"merge":
 			# Merge data command
 			if params.is_empty():
 				_log_message("Usage: /merge [chunk_id_1] [chunk_id_2] ...")
@@ -813,7 +813,7 @@ func process_command(command: String) -> Dictionary:
 				_log_message("Failed to merge: " + merge_result.message)
 				return merge_result
 		
-		"/stream":
+		"stream":
 			# Create new data stream
 			var stream_id = "stream_" + str(data_streams.size())
 			var stream_type = "binary"
@@ -837,7 +837,7 @@ func process_command(command: String) -> Dictionary:
 				_log_message("Failed to create stream: " + stream_result.message)
 				return stream_result
 		
-		"/list":
+		"list":
 			# List existing data elements
 			var listing = "[color=#88ff99]Data Splitter Elements:[/color]\n"
 			
@@ -866,14 +866,14 @@ func process_command(command: String) -> Dictionary:
 			_log_message(listing)
 			return {"success": true, "message": listing}
 		
-		"/help":
+		"help":
 			# Display data splitter commands
 			var help_text = "[color=#88ff99]Data Splitter Commands:[/color]\n"
-			help_text += "/split [text] - Split text into data chunks\n"
-			help_text += "/merge [chunk_id1] [chunk_id2] ... - Merge chunks\n"
-			help_text += "/stream [id] [type] [size] - Create a new data stream\n"
-			help_text += "/list - List all data elements\n"
-			help_text += "/help - Display this help\n"
+			help_text += "split [text] - Split text into data chunks\n"
+			help_text += "merge [chunk_id1] [chunk_id2] ... - Merge chunks\n"
+			help_text += "stream [id] [type] [size] - Create a new data stream\n"
+			help_text += "list - List all data elements\n"
+			help_text += "help - Display this help\n"
 			
 			_log_message(help_text)
 			return {"success": true, "message": help_text}
@@ -1260,7 +1260,7 @@ func _update_ui_display():
 	# Update stream count
 	var streams_label = data_panel.get_node_or_null("StreamsLabel")
 	if streams_label:
-		streams_label.text = "Active Streams: " + str(data_streams.size()) + "/" + str(max_data_streams)
+		streams_label.text = "Active Streams: " + str(data_streams.size()) + "" + str(max_data_streams)
 	
 	# Update chunk count
 	var chunks_label = data_panel.get_node_or_null("ChunksLabel")

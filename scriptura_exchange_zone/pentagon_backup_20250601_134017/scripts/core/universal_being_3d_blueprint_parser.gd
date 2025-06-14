@@ -9,9 +9,8 @@
 # DESCRIPTION: Parse TXT blueprints for 3D Universal Being interfaces
 # PURPOSE: Convert human-readable blueprints into 3D interface elements
 # ==================================================
-
-extends UniversalBeingBase
-class_name UniversalBeing3DBlueprintParser
+extends \2
+# DISABLED DUPLICATE: class_name UniversalBeing3DBlueprintParser_universalbeing3dblueprintparser_universa
 
 # Blueprint data structure
 var parsed_blueprint: Dictionary = {}

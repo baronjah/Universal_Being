@@ -120,15 +120,15 @@ func initialize(terminal: DualCoreTerminal,
     
     # Connect signals
     if dual_core_terminal:
-        dual_core_terminal.connect("core_switched", self, "_on_core_switched")
-        dual_core_terminal.connect("input_processed", self, "_on_terminal_input_processed")
+        dual_core_terminal.connect(_on_core_switched)
+        dual_core_terminal.connect(_on_terminal_input_processed)
     
     if dual_memories_coordinator:
-        dual_memories_coordinator.connect("meaning_transformed", self, "_on_meaning_transformed")
-        dual_memories_coordinator.connect("terminal_split_changed", self, "_on_terminal_split_changed")
+        dual_memories_coordinator.connect(_on_meaning_transformed)
+        dual_memories_coordinator.connect(_on_terminal_split_changed)
     
     if meaning_transformation_pipeline:
-        meaning_transformation_pipeline.connect("pipeline_completed", self, "_on_pipeline_completed")
+        meaning_transformation_pipeline.connect(_on_pipeline_completed)
     
     # Initialize with single mode
     _initialize_single_mode()
@@ -383,7 +383,7 @@ func create_assigned_terminal(assignment, core_id: int = -1) -> int:
         elif typeof(assignment) == TYPE_STRING:
             name = assignment
         
-        if name.empty():
+        if name.is_empty():
             name = "Core " + str(core_id)
         
         # Create the core
@@ -560,7 +560,7 @@ func _configure_cascade_mode() -> void:
 
 func _configure_custom_mode() -> void:
     # Apply custom layout if available
-    if custom_layout_data.empty():
+    if custom_layout_data.is_empty():
         # Fallback to dual mode
         _configure_dual_mode()
         return

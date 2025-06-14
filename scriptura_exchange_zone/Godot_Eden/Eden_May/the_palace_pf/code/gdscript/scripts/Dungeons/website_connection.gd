@@ -1,8 +1,9 @@
-class_name WebsiteConnectionManager
-extends Node
+class_name WebsiteConnectionManager_websiteconnection_websitec
+extends \2
 
 # Core components of the system
-enum ComponentType {
+enum \2 {
+
 	JSH_ETHEREAL_ENGINE,
 	KIT_ANALYZER,
 	NETSUITE_CONSOLE,
@@ -11,7 +12,8 @@ enum ComponentType {
 }
 
 # Connection types between components
-enum ConnectionType {
+enum \2 {
+
 	DATA_FLOW,
 	NAVIGATION,
 	DEPENDENCY,

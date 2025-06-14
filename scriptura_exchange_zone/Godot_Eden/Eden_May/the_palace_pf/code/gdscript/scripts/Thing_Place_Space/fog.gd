@@ -1,10 +1,10 @@
 extends Node
-class_name JSHFogSystem
+class_name JSHFogSystem_fog_fog
 # fog.gd
 # res://scenes/fog.gd
 # JSH_World/fog
 # res://scenes/fog.gd
-# res://code/gdscript/scripts/Thing_Place_Space/fog.gd
+# res://scripts/gdscript/scripts/Thing_Place_Space/fog.gd
 ####################
 #
 # JSH Fog System
@@ -26,7 +26,8 @@ signal fog_changed(fog_params)
 signal volumetric_fog_updated(voxel_data)
 
 # Fog types
-enum FogType {
+enum \2 {
+
 	UNIFORM,           # Uniform fog throughout the scene
 	LAYERED,           # Layered fog with height gradients
 	VOLUMETRIC,        # Full volumetric fog with 3D textures

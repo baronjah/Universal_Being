@@ -1,5 +1,5 @@
-#Orbit.gd in Orbit.tscn, #res://Scenes/Orbit.tscn
-extends Node3D
+#Orbit.gd in Orbit.tscn, #res://scenes/Orbit.tscn
+extends \2
 
 var orbit_speed #float = 1.0
 var orbit_radius #float = 10.0

@@ -124,6 +124,7 @@ func _update_systems(delta: float) -> void:
 	if interactions_processed > 0 or evolutions_processed > 0:
 		print("Updated systems - Interactions: " + str(interactions_processed) + ", Evolutions: " + str(evolutions_processed))
 
+
 # Register event handlers
 func _register_event_handlers() -> void:
 	# Entity events
@@ -153,19 +154,19 @@ func _register_console_commands() -> void:
 	console_manager.register_command("interaction.trigger", _cmd_trigger_interaction, 
 		"Triggers an interaction between two entities", [
 			{"name": "source_id", "type": "string", "description": "Source entity ID"},
-			{"name": "target_id", "type": "string", "description": "Target entity ID"}
+			{"name": "target_id", "type": "string", "description": "Target entity ID"
 		])
 	
 	# Evolution commands
 	console_manager.register_command("evolution.stages", _cmd_list_evolution_stages, 
 		"Lists all evolution stages for an entity type", [
-			{"name": "entity_type", "type": "string", "description": "Entity type to check"}
+			{"name": "entity_type", "type": "string", "description": "Entity type to check"
 		])
 	
 	console_manager.register_command("evolution.evolve", _cmd_evolve_entity, 
 		"Evolves an entity to a specific stage", [
 			{"name": "entity_id", "type": "string", "description": "Entity ID to evolve"},
-			{"name": "target_stage", "type": "string", "description": "Target evolution stage"}
+			{"name": "target_stage", "type": "string", "description": "Target evolution stage"
 		])
 	
 	# Transformation commands
@@ -175,13 +176,13 @@ func _register_console_commands() -> void:
 	console_manager.register_command("transform.apply", _cmd_apply_transformation, 
 		"Applies a transformation to an entity", [
 			{"name": "entity_id", "type": "string", "description": "Entity ID to transform"},
-			{"name": "template", "type": "string", "description": "Transformation template name"}
+			{"name": "template", "type": "string", "description": "Transformation template name"
 		])
 	
 	# Query commands
 	console_manager.register_command("query.run", _cmd_run_query, 
 		"Runs a query using query language", [
-			{"name": "query_string", "type": "string", "description": "Query string to execute"}
+			{"name": "query_string", "type": "string", "description": "Query string to execute"
 		])
 
 # Unregister console commands
@@ -247,6 +248,7 @@ func _on_system_initialized(event_name: String, event_data: Dictionary) -> void:
 	
 	var system_name = event_data["system_name"]
 	print("System initialized: " + system_name)
+}
 
 func _on_system_shutdown(event_name: String, event_data: Dictionary) -> void:
 	if not event_data.has("system_name"):
@@ -254,10 +256,12 @@ func _on_system_shutdown(event_name: String, event_data: Dictionary) -> void:
 	
 	var system_name = event_data["system_name"]
 	print("System shut down: " + system_name)
+}
 
 # Console command handlers
 func _cmd_list_interactions(args: Array) -> String:
 	var response = "Interaction rules:\n"
+}
 	
 	var entity_types = []
 	var all_entities = entity_manager.get_all_entities()
@@ -271,6 +275,7 @@ func _cmd_list_interactions(args: Array) -> String:
 		
 		if not target_types.is_empty():
 			response += "\n" + source_type + " interacts with:\n"
+}
 			
 			for target_type in target_types:
 				var rules = interaction_matrix.get_interaction_rules(source_type, target_type)
@@ -281,6 +286,7 @@ func _cmd_list_interactions(args: Array) -> String:
 func _cmd_trigger_interaction(args: Array) -> String:
 	if args.size() < 2:
 		return "Error: Missing entity IDs"
+}
 	
 	var source_id = args[0]
 	var target_id = args[1]
@@ -290,9 +296,11 @@ func _cmd_trigger_interaction(args: Array) -> String:
 	
 	if not source_entity:
 		return "Error: Source entity not found: " + source_id
+
 	
 	if not target_entity:
 		return "Error: Target entity not found: " + target_id
+
 	
 	var interaction_happened = interaction_matrix.process_interaction(source_entity, target_entity)
 	
@@ -304,20 +312,24 @@ func _cmd_trigger_interaction(args: Array) -> String:
 func _cmd_list_evolution_stages(args: Array) -> String:
 	if args.is_empty():
 		var response = "Evolution stages for all entity types:\n"
+
 		var evolvable_types = entity_evolution.get_evolvable_entity_types()
 		
 		for entity_type in evolvable_types:
 			response += "\n" + entity_type + " stages:\n"
+
 			var stages = entity_evolution.get_stages_for_entity_type(entity_type)
 			
 			for stage_name in stages:
 				var stage_info = entity_evolution.get_stage_info(entity_type, stage_name)
 				response += "  - " + stage_name + " (index: " + str(stage_info["stage_index"]) + ")\n"
+	
 		
 		return response
 	else:
 		var entity_type = args[0]
 		var response = "Evolution stages for " + entity_type + ":\n"
+
 		var stages = entity_evolution.get_stages_for_entity_type(entity_type)
 		
 		if stages.is_empty():
@@ -326,25 +338,31 @@ func _cmd_list_evolution_stages(args: Array) -> String:
 		for stage_name in stages:
 			var stage_info = entity_evolution.get_stage_info(entity_type, stage_name)
 			response += "  - " + stage_name + " (index: " + str(stage_info["stage_index"]) + ")\n"
+
 			
 			if not stage_info["transforms_to"].is_empty():
 				response += "    Transforms to: " + stage_info["transforms_to"] + "\n"
+	
 			
 			response += "    Required complexity: " + str(stage_info["required_complexity"]) + "\n"
+
 			
 			if not stage_info["requirements"].is_empty():
 				response += "    Requirements:\n"
 				for req_name in stage_info["requirements"]:
 					response += "      - " + req_name + ": " + str(stage_info["requirements"][req_name]) + "\n"
+	
 			
 			if not stage_info["next_stages"].is_empty():
 				response += "    Next stages: " + ", ".join(stage_info["next_stages"]) + "\n"
+	
 		
 		return response
 
 func _cmd_evolve_entity(args: Array) -> String:
 	if args.size() < 2:
 		return "Error: Missing entity ID or target stage"
+
 	
 	var entity_id = args[0]
 	var target_stage = args[1]
@@ -353,11 +371,13 @@ func _cmd_evolve_entity(args: Array) -> String:
 	
 	if not entity:
 		return "Error: Entity not found: " + entity_id
+
 	
 	var can_evolve = entity_evolution.can_evolve_to_stage(entity, target_stage)
 	
 	if not can_evolve:
 		return "Error: Entity cannot evolve to stage " + target_stage + " (requirements not met)"
+
 	
 	var evolution_successful = entity_evolution.evolve_entity_to_stage(entity, target_stage)
 	
@@ -368,6 +388,7 @@ func _cmd_evolve_entity(args: Array) -> String:
 
 func _cmd_list_transformations(args: Array) -> String:
 	var response = "Transformation templates:\n"
+
 	var templates = data_transformation.get_available_templates()
 	
 	for template_name in templates:
@@ -375,15 +396,18 @@ func _cmd_list_transformations(args: Array) -> String:
 		response += "\n" + template_name + ":\n"
 		response += "  Description: " + template_info["description"] + "\n"
 		response += "  Steps: " + str(template_info["steps_count"]) + "\n"
+
 		
 		if not template_info["applies_to_types"].is_empty():
 			response += "  Applies to: " + ", ".join(template_info["applies_to_types"]) + "\n"
+
 	
 	return response
 
 func _cmd_apply_transformation(args: Array) -> String:
 	if args.size() < 2:
 		return "Error: Missing entity ID or template name"
+
 	
 	var entity_id = args[0]
 	var template_name = args[1]
@@ -392,13 +416,15 @@ func _cmd_apply_transformation(args: Array) -> String:
 	
 	if not entity:
 		return "Error: Entity not found: " + entity_id
+
 	
 	var templates = data_transformation.get_available_templates()
 	
 	if not template_name in templates:
 		return "Error: Template not found: " + template_name
+
 	
-	var parameters = {}
+	var parameters = {
 	
 	if args.size() > 2:
 		# Parse additional parameters
@@ -416,6 +442,7 @@ func _cmd_apply_transformation(args: Array) -> String:
 func _cmd_run_query(args: Array) -> String:
 	if args.is_empty():
 		return "Error: Missing query string"
+}
 	
 	var query_string = " ".join(args)
 	var query = query_language.parse_query_string(query_string)
@@ -423,6 +450,7 @@ func _cmd_run_query(args: Array) -> String:
 	
 	var response = "Query executed: " + query_string + "\n"
 	response += "Results: " + str(results.size()) + "\n\n"
+
 	
 	if results.is_empty():
 		response += "No results found."
@@ -440,6 +468,7 @@ func _cmd_run_query(args: Array) -> String:
 		for i in range(min(results.size(), 10)):
 			var entity = results[i]
 			response += "Result " + str(i + 1) + ": " + entity.entity_type + " (ID: " + entity.entity_id + ")\n"
+
 	
 	if results.size() > 10:
 		response += "\n(Showing 10 of " + str(results.size()) + " results)"

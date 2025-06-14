@@ -20,8 +20,8 @@ var thread_mutex = Mutex.new()
 
 # Task management
 var task_queue = []
-var task_results = {}
-var task_groups = {}
+var task_results = {
+var task_groups = {
 var queue_mutex = Mutex.new()
 var task_semaphore = Semaphore.new()
 
@@ -56,7 +56,7 @@ func _init(thread_count_override = -1):
 			"current_task": null,
 			"tasks_processed": 0,
 			"processing_time": 0.0
-		}
+}
 	
 	print("Thread manager initialized with %d worker threads" % thread_count)
 
@@ -150,6 +150,7 @@ func _thread_function(thread_id):
 		catch(e):
 			error = e
 			print("Error in thread %d processing task %s: %s" % [thread_id, task.id, e])
+}
 		
 		thread_mutex.lock()
 		available_thread_count += 1
@@ -179,7 +180,7 @@ func _thread_function(thread_id):
 				"status": "failed",
 				"error": error,
 				"processing_time": processing_time
-			}
+	}
 			
 			# Schedule signal emission on main thread
 			call_deferred("_emit_task_failed", task.id, error)
@@ -188,7 +189,7 @@ func _thread_function(thread_id):
 				"status": "completed",
 				"result": result,
 				"processing_time": processing_time
-			}
+	}
 			
 			# Schedule signal emission on main thread
 			call_deferred("_emit_task_completed", task.id, result)
@@ -200,7 +201,7 @@ func _thread_function(thread_id):
 					"total": 0,
 					"completed": 0,
 					"failed": 0
-				}
+	}
 			
 			task_groups[task.group_id].completed += 1
 			
@@ -238,8 +239,8 @@ func add_task(callable, params = null, group_id = null) -> String:
 				"total": 0,
 				"completed": 0,
 				"failed": 0
-			}
 		task_groups[group_id].total += 1
+}
 	
 	queue_mutex.unlock()
 	
@@ -269,7 +270,7 @@ func add_batch_tasks(callable, param_array, group_id = null) -> Array:
 			"total": 0,
 			"completed": 0,
 			"failed": 0
-		}
+}
 	
 	# Add all tasks to queue
 	for params in param_array:
@@ -325,7 +326,8 @@ func get_task_result(task_id):
 		if task_results[task_id].status == "completed":
 			result = task_results[task_id].result
 		else:
-			result = {"error": task_results[task_id].error}
+			result = {"error": task_results[task_id].error
+}
 	
 	queue_mutex.unlock()
 	
@@ -340,7 +342,8 @@ func try_get_task_result(task_id):
 		if task_results[task_id].status == "completed":
 			result = task_results[task_id].result
 		else:
-			result = {"error": task_results[task_id].error}
+			result = {"error": task_results[task_id].error
+}
 	
 	queue_mutex.unlock()
 	
@@ -444,10 +447,12 @@ func calculate_primes(n):
 # Helper function to print task results
 func debug_task_result(task_id, result):
 	print("Task %s completed with result: %s" % [task_id, result])
+}
 
 # Helper function to print task errors
 func debug_task_error(task_id, error):
 	print("Task %s failed with error: %s" % [task_id, error])
+
 
 # Usage example in _ready():
 # var task_id = add_task(Callable(self, "calculate_primes").bind(10000))

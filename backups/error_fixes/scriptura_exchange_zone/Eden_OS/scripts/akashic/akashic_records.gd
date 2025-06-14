@@ -591,13 +591,13 @@ func search_records(query, options={}):
     # Sort results
     match options.sort_by:
         "relevance":
-            results.sort_custom(func(a, b): return a.relevance > b.relevance)
+            results.sort_custom(func(a.b): return a.relevance > b.relevance)
         "created":
-            results.sort_custom(func(a, b): return a.record.created > b.record.created)
+            results.sort_custom(func(a.b): return a.record.created > b.record.created)
         "accessed":
-            results.sort_custom(func(a, b): return a.record.last_accessed > b.record.last_accessed)
+            results.sort_custom(func(a.b): return a.record.last_accessed > b.record.last_accessed)
         "modified":
-            results.sort_custom(func(a, b): return a.record.last_modified > b.record.last_modified)
+            results.sort_custom(func(a.b): return a.record.last_modified > b.record.last_modified)
     
     # Limit results
     if results.size() > options.limit:
@@ -941,7 +941,7 @@ func get_stats():
     for record_type in access_stats["reads_by_type"]:
         sorted_types.append({"type": record_type, "count": access_stats["reads_by_type"][record_type]})
     
-    sorted_types.sort_custom(func(a, b): return a.count > b.count)
+    sorted_types.sort_custom(func(a.b): return a.count > b.count)
     
     for i in range(min(3, sorted_types.size())):
         stats += "- " + sorted_types[i].type + ": " + str(sorted_types[i].count) + " reads\n"

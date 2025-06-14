@@ -1,5 +1,5 @@
 extends Node
-class_name SceneDiagnostics
+class_name SceneDiagnostics_scenediagnostics_scenedia
 
 # This script helps diagnose your scene structure to find key nodes
 # It can be temporarily added to your scene for debugging
@@ -28,12 +28,12 @@ func find_jsh_console():
     
     # Common paths to try
     var possible_paths = [
-        "/root/Main/JSH_console",
-        "/root/Main/CanvasLayer/JSH_console",
-        "/root/Main/UI/JSH_console",
-        "/root/layer_0/JSH_console",
-        "/root/layer_0/CanvasLayer/JSH_console",
-        "/root/layer_0/UI/JSH_console"
+        "root/Main/JSH_console",
+        "root/Main/CanvasLayer/JSH_console",
+        "root/Main/UI/JSH_console",
+        "root/layer_0/JSH_console",
+        "root/layer_0/CanvasLayer/JSH_console",
+        "root/layer_0/UI/JSH_console"
     ]
     
     # Try each path
@@ -54,7 +54,7 @@ func find_jsh_console():
 func find_akashic_records():
     log.append("Searching for AkashicRecordsManager...")
     
-    if has_node("/root/AkashicRecordsManager"):
+    if has_node("root/AkashicRecordsManager"):
         log.append("✓ Found AkashicRecordsManager at: /root/AkashicRecordsManager")
         return
     

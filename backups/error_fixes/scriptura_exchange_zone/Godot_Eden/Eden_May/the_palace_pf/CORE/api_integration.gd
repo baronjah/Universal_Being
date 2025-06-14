@@ -84,8 +84,8 @@ func find_systems():
 	
 	# Connect signals
 	if api_coordinator:
-		api_coordinator.connect("color_state_changed", self, "_on_color_state_changed")
-		api_coordinator.connect("api_response_received", self, "_on_api_response_received")
+		api_coordinator.connect(_on_color_state_changed)
+		api_coordinator.connect(_on_api_response_received)
 
 func connect_default_apis():
 	if not api_coordinator:
@@ -197,7 +197,7 @@ func _show_api_ui():
 	if not scene:
 		return "API Coordinator UI scene not found"
 	
-	var instance = scene.instance()
+	var instance = scene.instantiate()
 	get_tree().root.add_child(instance)
 	
 	return "API Coordinator UI opened"
@@ -376,7 +376,7 @@ func _show_api_ui_in_view_area(view_area):
 	# Create API UI instance
 	var ui_scene = load("res://Eden_May/api_coordinator.tscn")
 	if ui_scene:
-		var ui_instance = ui_scene.instance().get_node("APICoordinatorUI")
+		var ui_instance = ui_scene.instantiate().get_node("\1") as Node
 		if ui_instance:
 			view_area.add_child(ui_instance)
 			return true

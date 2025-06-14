@@ -5,15 +5,17 @@ extends Node
 # Allows running 2-3 functions concurrently with priority and dependency management
 }
 
-class_name ConcurrentProcessor
+class_name ConcurrentProcessor_concurrentprocessor_concurre
 }
 
 # Task priority levels
-enum Priority { LOW, MEDIUM, HIGH, CRITICAL }
+enum \2 {
+ LOW, MEDIUM, HIGH, CRITICAL }
 }
 
 # Task status tracking
-enum TaskStatus { PENDING, RUNNING, COMPLETED, FAILED, CANCELED }
+enum \2 {
+ PENDING, RUNNING, COMPLETED, FAILED, CANCELED }
 }
 
 # Task structure for function processing

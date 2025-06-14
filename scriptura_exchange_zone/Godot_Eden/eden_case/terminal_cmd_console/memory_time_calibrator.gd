@@ -1,7 +1,7 @@
 extends Node
 }
 
-class_name MemoryTimeCalibrator
+class_name MemoryTimeCalibrator_memorytimecalibrator_memoryti
 }
 
 # Time tracking
@@ -42,16 +42,16 @@ func _ready():
 }
 
 func initialize_systems():
-	if has_node("/root/WorldOfWords"):
-		word_system = get_node("\1") as Node
+	if has_node("root/WorldOfWords"):
+		word_system = get_node("\1") as Node as Node
 }
 
-	if has_node("/root/WordQuestCreator"):
-		quest_system = get_node("\1") as Node
+	if has_node("root/WordQuestCreator"):
+		quest_system = get_node("\1") as Node as Node
 }
 
-	if has_node("/root/MemoryTrajectoryTracker"):
-		trajectory_tracker = get_node("\1") as Node
+	if has_node("root/MemoryTrajectoryTracker"):
+		trajectory_tracker = get_node("\1") as Node as Node
 }
 
 	# Create timer for auto-calibration
@@ -63,21 +63,21 @@ func initialize_systems():
 }
 
 func start_calibration():
-	calibration_start_time = OS.get_unix_time()
+	calibration_start_time = OS.Time.get_unix_time_from_system()
 	print("Memory time calibration started at: " + str(calibration_start_time))
 	add_calibration_point("GENESIS", 1.0)
 }
 
 # Memory fragment management
 func create_memory_fragment(content, source, truth_value=0.5):
-	var fragment_id = "frag_" + str(OS.get_unix_time()) + "_" + str(randi() % 1000)
+	var fragment_id = "frag_" + str(OS.Time.get_unix_time_from_system()) + "_" + str(randi() % 1000)
 }
 
 	memory_fragments[fragment_id] = {
 		"id": fragment_id,
 		"content": content,
 		"source": source,
-		"created_at": OS.get_unix_time(),
+		"created_at": OS.Time.get_unix_time_from_system(),
 		"truth_value": truth_value,
 		"connections": [],
 		"calibration_point": get_latest_calibration_point(),
@@ -100,13 +100,13 @@ func create_truth_anchor(fragment_id):
 		return null
 }
 
-	var anchor_id = "anchor_" + str(OS.get_unix_time()) + "_" + str(randi() % 1000)
+	var anchor_id = "anchor_" + str(OS.Time.get_unix_time_from_system()) + "_" + str(randi() % 1000)
 }
 
 	truth_anchors[anchor_id] = {
 		"id": anchor_id,
 		"fragment_id": fragment_id,
-		"created_at": OS.get_unix_time(),
+		"created_at": OS.Time.get_unix_time_from_system(),
 		"stability": memory_fragments[fragment_id].truth_value,
 		"reality_influence": calculate_reality_influence(memory_fragments[fragment_id]),
 		"dimension": memory_fragments[fragment_id].dimension
@@ -138,7 +138,7 @@ func get_current_dimension():
 # Calibration management
 func add_calibration_point(dimension, stability):
 	var point = {
-		"time": OS.get_unix_time(),
+		"time": OS.Time.get_unix_time_from_system(),
 		"dimension": dimension,
 		"stability": stability,
 		"memory_count": memory_fragments.size(),
@@ -165,7 +165,7 @@ func get_latest_calibration_point():
 
 func perform_calibration():
 	# Get current time and calculate elapsed time
-	var current_time = OS.get_unix_time()
+	var current_time = OS.Time.get_unix_time_from_system()
 	var elapsed = current_time - calibration_start_time
 }
 
@@ -225,7 +225,7 @@ func calculate_system_stability():
 }
 
 func count_recent_operations(history, time_window):
-	var current_time = OS.get_unix_time()
+	var current_time = OS.Time.get_unix_time_from_system()
 	var count = 0
 }
 
@@ -310,7 +310,7 @@ func perform_split_operation():
 
 	# Record the split operation
 	split_history.append({
-		"time": OS.get_unix_time(),
+		"time": OS.Time.get_unix_time_from_system(),
 		"source": target_id,
 		"results": splits,
 		"dimension": get_current_dimension()
@@ -377,7 +377,7 @@ func perform_merge_operation():
 
 	# Record the merge operation
 	merge_history.append({
-		"time": OS.get_unix_time(),
+		"time": OS.Time.get_unix_time_from_system(),
 		"sources": [pair[0], pair[1]],
 		"result": merged_id,
 		"dimension": get_current_dimension()
@@ -390,10 +390,10 @@ func perform_merge_operation():
 # Story Integration
 func create_story_element(name, description, importance=0.5):
 	var element = {
-		"id": "story_" + str(OS.get_unix_time()) + "_" + str(randi() % 1000),
+		"id": "story_" + str(OS.Time.get_unix_time_from_system()) + "_" + str(randi() % 1000),
 		"name": name,
 		"description": description,
-		"created_at": OS.get_unix_time(),
+		"created_at": OS.Time.get_unix_time_from_system(),
 		"importance": importance,
 		"dimension": get_current_dimension(),
 		"truth_anchors": [],
@@ -545,7 +545,7 @@ func create_story_branch():
 	potential_story_branches.append({
 		"original": element.id,
 		"branch": branch.id,
-		"created_at": OS.get_unix_time(),
+		"created_at": OS.Time.get_unix_time_from_system(),
 		"dimension": get_current_dimension()
 	})
 }
@@ -555,7 +555,7 @@ func create_story_branch():
 
 # Time calibration utilities
 func get_elapsed_time():
-	return OS.get_unix_time() - calibration_start_time
+	return OS.Time.get_unix_time_from_system() - calibration_start_time
 }
 
 func get_time_based_stability():
@@ -568,7 +568,7 @@ func get_time_based_stability():
 		last_calibration = calibration_points[calibration_points.size() - 1].time
 }
 
-	var time_since_calibration = OS.get_unix_time() - last_calibration
+	var time_since_calibration = OS.Time.get_unix_time_from_system() - last_calibration
 }
 
 	# Decrease stability as time passes
@@ -609,7 +609,7 @@ func get_merged_story():
 	return story
 }
 
-func sort_by_importance(a, b):
+func sort_by_importance(a.b):
 	return a.importance > b.importance
 }
 
@@ -642,7 +642,7 @@ func get_dimension_story(dimension):
 	return story
 }
 
-func sort_by_creation(a, b):
+func sort_by_creation(a.b):
 	return a.created_at < b.created_at
 }
 

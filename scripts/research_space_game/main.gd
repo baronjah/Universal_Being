@@ -26,12 +26,13 @@ extends Node
 	## The Six Pillars of Reality activate:
 	#var systems = {
 		#"consciousness": game_systems.get_node("ConsciousnessSystem"),  # Your awareness
+}
 		#"akashic": game_systems.get_node("AkashicRecordsSystem"),      # Universal memory
 		#"stellar": game_systems.get_node("StellarProgressionSystem"),   # The stars await
 		#"mining": game_systems.get_node("MiningSystem"),                # Extract reality
 		#"companion": game_systems.get_node("AICompanionSystem"),        # Your AI friends
 		#"pentagon": game_systems.get_node("PentagonArchitecture")       # Cosmic balance
-	#}
+	#
 	#
 	## The Integration Hub becomes the universe's consciousness
 	#integration_hub.game_systems = systems
@@ -148,6 +149,7 @@ func enter_akashic_meditation():
 	var tween = create_tween()
 	tween.tween_property(player_ship, "modulate:a", 0.0, 2.0)
 	tween.parallel().tween_property(world_environment, "environment:glow_intensity", 5.0, 2.0)
+
 	
 	# Load Akashic dimension
 	tween.tween_callback(func():

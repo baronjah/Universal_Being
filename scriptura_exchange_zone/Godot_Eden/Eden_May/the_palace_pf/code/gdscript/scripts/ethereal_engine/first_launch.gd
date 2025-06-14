@@ -1,5 +1,5 @@
 # first_launch.gd
-extends Control
+extends \2
 
 @onready var name_input = $CenterContainer/PanelContainer/VBoxContainer/NameInput
 @onready var save_button = $CenterContainer/PanelContainer/VBoxContainer/SaveButton

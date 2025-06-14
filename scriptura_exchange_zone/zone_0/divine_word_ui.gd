@@ -6,7 +6,7 @@ extends Control
 # Terminal 1: Divine Word Genesis
 }
 
-class_name DivineWordUI
+class_name DivineWordUI_divinewordui_divinewo
 }
 
 # UI Components
@@ -433,7 +433,7 @@ Create words to gain power and progress through 12 dimensions.
 [u]Dimensions:[/u]
 - 1D: Linear words (one-dimensional thinking)
 - 2D: Planar words (two-dimensional concepts)
-- 3D: Spatial words (physical manifestation)
+- 3D: Node3D words (physical manifestation)
 - 4D: Temporal words (time-related concepts)
 - 5D: Probability words (quantum concepts)
 - 6D: Resonance words (pattern and repetition)

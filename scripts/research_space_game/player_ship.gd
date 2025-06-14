@@ -608,14 +608,14 @@ class_name PlayerShip
 ## Save/Load support
 #func get_save_data() -> Dictionary:
 	#return {
-		#"position": global_position,
+		#"position": global_position,}
 		#"rotation": rotation,
 		#"velocity": velocity,
 		#"energy": energy_level,
 		#"shields": shields,
 		#"frequency": consciousness_frequency,
 		#"perception_radius": current_perception_radius
-	#}
+	#
 #
 #func load_save_data(data: Dictionary):
 	#global_position = data.get("position", Vector3.ZERO)
@@ -722,6 +722,7 @@ func regenerate_energy(delta):
 func _on_perception_area_entered(area: Area3D):
 	# Handle consciousness perception events
 	if area.has_method("get_consciousness_signature"):
+
 		var signature = area.get_consciousness_signature()
 		# Process consciousness interaction
 		

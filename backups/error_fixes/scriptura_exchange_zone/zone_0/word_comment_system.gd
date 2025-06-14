@@ -58,11 +58,11 @@ func connect_systems():
 	word_dream_storage = get_node_or_null("/root/WordDreamStorage")
 	
 	if divine_word_processor:
-		divine_word_processor.connect("word_processed", self, "_on_word_processed")
+		divine_word_processor.connect(_on_word_processed)
 	
 	if turn_system:
-		turn_system.connect("turn_completed", self, "_on_turn_completed")
-		turn_system.connect("dimension_changed", self, "_on_dimension_changed")
+		turn_system.connect(_on_turn_completed)
+		turn_system.connect(_on_dimension_changed)
 
 # Initialize with some starting comments
 func initialize_default_comments():
@@ -222,7 +222,7 @@ func consolidate_dreams():
 		return
 	
 	# Sort by power, descending
-	recent_dreams.sort_custom(self, "sort_by_power_descending")
+	recent_dreams.sort_custom(self."sort_by_power_descending")
 	
 	# Take the three most powerful dreams
 	var top_dreams = []

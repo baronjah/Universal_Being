@@ -1,7 +1,7 @@
 # camera_move.gd
 # root/main/sphere/cameramove
 #Where Camera is? so kinda most important Node? kinda what we will call our first space with memory in scene?
-extends Node3D
+extends \2
 
 # Rotation memory? vec3?
 var direction #xyz so Vector3 of three rotation degrees?

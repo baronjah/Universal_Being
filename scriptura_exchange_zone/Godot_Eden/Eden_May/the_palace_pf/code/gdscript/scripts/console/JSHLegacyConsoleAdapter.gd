@@ -1,5 +1,5 @@
 extends Node
-class_name JSHLegacyConsoleAdapter
+class_name JSHLegacyConsoleAdapter_JSHLegacyConsoleAdapter_JSHLegac
 
 # This adapter connects our Phase 4 JSHConsoleManager with the existing JSH_console.gd implementation
 # It enables bidirectional command execution and output synchronization
@@ -36,17 +36,17 @@ func _init(console_manager = null, legacy_instance = null):
 func _ready():
     # Find legacy console if not provided in init
     if not legacy_console:
-        legacy_console = get_node_or_null("/root/JSH_console")
+        legacy_console = get_node_or_null("root/JSH_console")
     
     # Find bank systems
-    records_bank = get_node_or_null("/root/records_bank")
-    actions_bank = get_node_or_null("/root/actions_bank")
-    scenes_bank = get_node_or_null("/root/scenes_bank") 
-    instructions_bank = get_node_or_null("/root/instructions_bank")
-    banks_combiner = get_node_or_null("/root/banks_combiner")
+    records_bank = get_node_or_null("root/records_bank")
+    actions_bank = get_node_or_null("root/actions_bank")
+    scenes_bank = get_node_or_null("root/scenes_bank") 
+    instructions_bank = get_node_or_null("root/instructions_bank")
+    banks_combiner = get_node_or_null("root/banks_combiner")
     
     # Find text screen
-    text_screen = get_node_or_null("/root/text_screen")
+    text_screen = get_node_or_null("root/text_screen")
     
     # Set up signal connections
     _connect_signals()
@@ -371,7 +371,7 @@ static func register_integration_commands(console_manager: JSHConsoleManager) ->
 
 # Static command handlers
 static func _cmd_legacy(self, args: Array) -> Dictionary:
-    var adapter = self.get_node_or_null("/root/JSHLegacyConsoleAdapter")
+    var adapter = self.get_node_or_null("root/JSHLegacyConsoleAdapter")
     
     if not adapter:
         self.print_error("Legacy console adapter not found")
@@ -394,7 +394,7 @@ static func _cmd_legacy(self, args: Array) -> Dictionary:
     return result
 
 static func _cmd_bank(self, args: Array) -> Dictionary:
-    var adapter = self.get_node_or_null("/root/JSHLegacyConsoleAdapter")
+    var adapter = self.get_node_or_null("root/JSHLegacyConsoleAdapter")
     
     if not adapter:
         self.print_error("Legacy console adapter not found")
@@ -413,7 +413,7 @@ static func _cmd_bank(self, args: Array) -> Dictionary:
     return result
 
 static func _cmd_sync(self, args: Array) -> Dictionary:
-    var adapter = self.get_node_or_null("/root/JSHLegacyConsoleAdapter")
+    var adapter = self.get_node_or_null("root/JSHLegacyConsoleAdapter")
     
     if not adapter:
         self.print_error("Legacy console adapter not found")

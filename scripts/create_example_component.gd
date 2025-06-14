@@ -8,6 +8,7 @@ func _init():
 	
 	# Create the component
 	ComponentLoader.create_component_template("res://components/ui_behavior.ub.zip", "UI Behavior")
+
 	
 	print("✅ Example component created!")
 	quit()

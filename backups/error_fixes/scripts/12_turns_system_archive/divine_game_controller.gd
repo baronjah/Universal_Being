@@ -24,26 +24,31 @@ func _ready():
 func initialize_systems():
 	# Check if the new systems already exist
 	if get_node_or_null("/root/DivineWordGame") == null:
+
 		var word_game = DivineWordGame.new()
 		word_game.name = "DivineWordGame"
 		get_tree().root.add_child(word_game)
 	
 	if get_node_or_null("/root/WordCommentSystem") == null:
+
 		var comment_system = WordCommentSystem.new()
 		comment_system.name = "WordCommentSystem"
 		get_tree().root.add_child(comment_system)
 	
 	if get_node_or_null("/root/WordDreamStorage") == null:
+
 		var dream_storage = WordDreamStorage.new()
 		dream_storage.name = "WordDreamStorage"
 		get_tree().root.add_child(dream_storage)
 	
 	if get_node_or_null("/root/WordSalemGameController") == null:
+
 		var salem_controller = WordSalemGameController.new()
 		salem_controller.name = "WordSalemGameController"
 		get_tree().root.add_child(salem_controller)
 	
 	if get_node_or_null("/root/WordCrimesAnalysis") == null:
+
 		var crimes_analysis = WordCrimesAnalysis.new()
 		crimes_analysis.name = "WordCrimesAnalysis" 
 		get_tree().root.add_child(crimes_analysis)
@@ -78,9 +83,9 @@ func initialize_ui():
 func connect_to_main_controller():
 	if main_controller:
 		# Connect signals from main controller to our systems
-		main_controller.connect("turn_advanced", self, "_on_main_turn_advanced")
-		main_controller.connect("note_created", self, "_on_main_note_created")
-		main_controller.connect("word_manifested", self, "_on_main_word_manifested")
+		main_controller.connect(_on_main_turn_advanced)
+		main_controller.connect(_on_main_note_created)
+		main_controller.connect(_on_main_word_manifested)
 		
 		# Connect our divine word processor to the existing one
 		var divine_word_processor = get_node_or_null("/root/DivineWordProcessor")
@@ -106,10 +111,10 @@ func _input(event):
 
 func toggle_ui():
 	# Toggle between different UI screens
-	var ui_container = get_node("UIContainer")
-	var main_ui = ui_container.get_node("DivineWordUI")
-	var comment_ui = ui_container.get_node("WordCommentUI")
-	var salem_ui = ui_container.get_node("WordSalemUI")
+	var ui_container = get_node("\1") as Node
+	var main_ui = ui_container.get_node("\1") as Node
+	var comment_ui = ui_container.get_node("\1") as Node
+	var salem_ui = ui_container.get_node("\1") as Node
 	
 	if main_ui.visible:
 		main_ui.visible = false
@@ -126,13 +131,13 @@ func toggle_ui():
 
 func toggle_comment_mode():
 	# Toggle dream mode in the comment UI
-	var ui_container = get_node("UIContainer")
-	var comment_ui = ui_container.get_node("WordCommentUI")
+	var ui_container = get_node("\1") as Node
+	var comment_ui = ui_container.get_node("\1") as Node
 	
 	# Make sure Comment UI is visible
 	if !comment_ui.visible:
-		ui_container.get_node("DivineWordUI").visible = false
-		ui_container.get_node("WordSalemUI").visible = false
+		ui_container.get_node("\1") as Node.visible = false
+		ui_container.get_node("\1") as Node.visible = false
 		comment_ui.visible = true
 	
 	# Toggle dream mode
@@ -146,6 +151,7 @@ func _on_main_turn_advanced(turn_number, symbol, dimension):
 	if turn_system:
 		turn_system.set_dimension(turn_number)
 		print("Synchronized with main controller: Turn " + str(turn_number) + " - Dimension " + dimension)
+
 		
 		# Add comment about dimension change
 		var word_comment_system = get_node_or_null("/root/WordCommentSystem")
@@ -168,6 +174,7 @@ func _on_main_note_created(note_data):
 			word_comment_system.CommentType.OBSERVATION)
 		
 		print("Processed note from main controller: " + note_data.text)
+
 
 func _on_main_word_manifested(word, position, power):
 	# Process the manifested word in our systems

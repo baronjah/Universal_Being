@@ -22,8 +22,8 @@
 # SOFTWARE.
 
 @tool
-extends GLSLShaderTool
-class_name SobelGradientGenerator
+extends \2
+class_name SobelGradientGenerator_sobelgradientgenerator_sobelgra
 
 #var rd:RenderingDevice
 var shader:RID

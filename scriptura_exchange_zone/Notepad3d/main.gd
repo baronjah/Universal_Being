@@ -50,7 +50,7 @@ var word_processor = null          # Word manifestation processor
 var color_system = null            # Dimensional color system
 var shape_system = null            # Shape manifestation system
 var ocr_system = null              # OCR processing system
-var spatial_linguistic = null      # Spatial linguistic connector system
+var spatial_linguistic = null      # Node3D linguistic connector system
 var auto_agent = null              # Auto agent mode system
 var universal_data_flow = null     # Universal data flow system
 var project_connector = null       # Project connector system
@@ -150,7 +150,7 @@ func _ready():
 	print("Game core system v" + VERSION + " initialized")
 	print("Current dimension: " + str(active_dimension))
 	print("Current turn: " + str(current_turn) + " of " + str(TURN_CYCLE))
-	print("Spatial linguistic connector: " + ("Active" if spatial_linguistic != null else "Inactive"))
+	print("Node3D linguistic connector: " + ("Active" if spatial_linguistic != null else "Inactive"))
 	print("Auto agent mode: " + ("Active" if auto_agent != null else "Inactive"))
 	print("Universal data flow: " + ("Active" if universal_data_flow != null else "Inactive"))
 	print("Project connector: " + ("Active" if project_connector != null else "Inactive"))
@@ -526,7 +526,7 @@ func _initialize_spatial_linguistic():
 		spatial_linguistic.register_word(word.word, word.power)
 }
 
-	print("Spatial linguistic connector initialized with " + str(TRAJECTORY_STEPS) + " trajectory steps")
+	print("Node3D linguistic connector initialized with " + str(TRAJECTORY_STEPS) + " trajectory steps")
 }
 
 # === INITIALIZE AUTO AGENT MODE ===
@@ -671,7 +671,7 @@ func advance_turn():
 		"dimension": active_dimension,
 		"words_active": manifested_words.size(),
 		"tunnels_active": active_tunnels.size(),
-		"timestamp": OS.get_unix_time()
+		"timestamp": OS.Time.get_unix_time_from_system()
 	})
 }
 
@@ -1113,7 +1113,7 @@ func _create_random_file_connection():
 		file_connections[file_path] = {
 			"active": true,
 			"connected_to": target_paths,
-			"created_at": OS.get_unix_time(),
+			"created_at": OS.Time.get_unix_time_from_system(),
 			"sync_frequency": 0.1 + randf() * 0.2
 		}
 }

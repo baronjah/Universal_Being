@@ -1,7 +1,7 @@
 # state_machine.gd
-extends Node
+extends \2
 
-class_name StateMachine
+class_name StateMachine_statemachine_statemac
 
 var parent
 var current_state = null

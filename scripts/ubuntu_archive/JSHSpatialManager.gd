@@ -21,9 +21,9 @@ var zone_transitions: Dictionary = {}
 
 # Entity position tracking
 var entity_positions: Dictionary = {}
-var entities_by_position: Dictionary = {}  # Spatial hash grid for quick lookups
+var entities_by_position: Dictionary = {}  # Node3D hash grid for quick lookups
 
-# Spatial partitioning
+# Node3D partitioning
 var spatial_grid: JSHSpatialGrid = null
 var spatial_tree: JSHOctree = null
 
@@ -47,7 +47,7 @@ var stats: Dictionary = {
     "entity_positions": 0,
     "spatial_queries": 0,
     "zone_transitions": 0
-}
+	}
 
 # Signals
 signal zone_created(zone_id, zone_data)
@@ -66,6 +66,7 @@ func _init() -> void:
         _instance = self
         name = "JSHSpatialManager"
         print("JSHSpatialManager: Instance created")
+		
 
 func _ready() -> void:
     # Initialize spatial partitioning
@@ -86,6 +87,7 @@ func _ready() -> void:
     database_manager = JSHDatabaseManager.get_instance()
     if database_manager:
         print("JSHSpatialManager: Connected to DatabaseManager")
+		
     
     # Create default zone if it doesn't exist
     if not zone_exists("default"):
@@ -114,6 +116,7 @@ func _process(delta: float) -> void:
 # Zone operations
 func create_zone(zone_id: String, zone_data: Dictionary) -> bool:
     print("JSHSpatialManager: Creating zone " + zone_id)
+	
     
     # Ensure required fields
     if not zone_data.has("bounds"):
@@ -121,7 +124,7 @@ func create_zone(zone_id: String, zone_data: Dictionary) -> bool:
             "min_x": -100, "max_x": 100,
             "min_y": -100, "max_y": 100,
             "min_z": -100, "max_z": 100
-        }
+			}
     
     if not zone_data.has("name"):
         zone_data.name = zone_id
@@ -139,7 +142,7 @@ func create_zone(zone_id: String, zone_data: Dictionary) -> bool:
         zone_data.autoload = false
     
     if not zone_data.has("properties"):
-        zone_data.properties = {}
+        zone_data.properties = {
     
     # Add to zones dictionary
     zones[zone_id] = zone_data
@@ -149,7 +152,7 @@ func create_zone(zone_id: String, zone_data: Dictionary) -> bool:
         zone_hierarchy[zone_id] = {
             "parent": "",
             "children": []
-        }
+}
     else:
         var parent_zone = zone_data.parent_zone
         
@@ -158,7 +161,7 @@ func create_zone(zone_id: String, zone_data: Dictionary) -> bool:
             zone_hierarchy[parent_zone] = {
                 "parent": "",
                 "children": []
-            }
+				}
         
         zone_hierarchy[parent_zone].children.append(zone_id)
         
@@ -166,7 +169,7 @@ func create_zone(zone_id: String, zone_data: Dictionary) -> bool:
         zone_hierarchy[zone_id] = {
             "parent": parent_zone,
             "children": []
-        }
+			}
     
     # Initialize entity tracking for this zone
     zone_entities[zone_id] = []
@@ -192,6 +195,7 @@ func delete_zone(zone_id: String) -> bool:
         return false
     
     print("JSHSpatialManager: Deleting zone " + zone_id)
+	}
     
     # Handle any entities in this zone
     if zone_entities.has(zone_id):
@@ -221,7 +225,6 @@ func delete_zone(zone_id: String) -> bool:
         
         # Remove from hierarchy
         zone_hierarchy.erase(zone_id)
-    }
     
     # Remove from spatial partitioning
     spatial_tree.remove_zone(zone_id)
@@ -264,6 +267,7 @@ func update_zone(zone_id: String, zone_data: Dictionary) -> bool:
         return false
     
     print("JSHSpatialManager: Updating zone " + zone_id)
+	
     
     # Update zone data
     var original_data = zones[zone_id]
@@ -272,11 +276,13 @@ func update_zone(zone_id: String, zone_data: Dictionary) -> bool:
     
     # Check if bounds changed, if so update spatial partitioning
     if zone_data.has("bounds"):
+	
         var bounds = _get_zone_bounds(zone_data.bounds)
         spatial_tree.update_zone(zone_id, bounds)
     
     # Check for parent zone changes
     if zone_data.has("parent_zone") and zone_hierarchy.has(zone_id):
+	
         var old_parent = zone_hierarchy[zone_id].parent
         var new_parent = zone_data.parent_zone
         
@@ -294,14 +300,12 @@ func update_zone(zone_id: String, zone_data: Dictionary) -> bool:
                     zone_hierarchy[new_parent] = {
                         "parent": "",
                         "children": []
-                    }
+						}
                 
                 zone_hierarchy[new_parent].children.append(zone_id)
             
             # Update zone's parent
             zone_hierarchy[zone_id].parent = new_parent
-        }
-    }
     
     # Save to database if available
     if database_manager:
@@ -318,9 +322,9 @@ func zone_exists(zone_id: String) -> bool:
 func get_zone(zone_id: String) -> Dictionary:
     if zones.has(zone_id):
         return zones[zone_id].duplicate()
-    return {}
+    return {
 
-func get_all_zones() -> Array:
+func get_all_zones() -> Array:}
     return zones.keys()
 
 func get_zones_in_radius(position: Vector3, radius: float) -> Array:
@@ -363,6 +367,7 @@ func add_entity_to_zone(entity_id: String, zone_id: String) -> bool:
         return false
     
     print("JSHSpatialManager: Adding entity " + entity_id + " to zone " + zone_id)
+	
     
     # Check if already in this zone
     if zone_entities.has(zone_id) and entity_id in zone_entities[zone_id]:
@@ -394,6 +399,7 @@ func remove_entity_from_zone(entity_id: String, zone_id: String) -> bool:
         return false
     
     print("JSHSpatialManager: Removing entity " + entity_id + " from zone " + zone_id)
+	
     
     # Remove from zone entities
     var index = zone_entities[zone_id].find(entity_id)
@@ -446,6 +452,7 @@ func get_entities_in_zone(zone_id: String) -> Array:
 # Entity position management
 func set_entity_position(entity_id: String, position: Vector3) -> bool:
     print("JSHSpatialManager: Setting entity " + entity_id + " position to " + str(position))
+	
     
     var old_position = Vector3.ZERO
     if entity_positions.has(entity_id):
@@ -486,6 +493,7 @@ func get_entity_position(entity_id: String) -> Vector3:
     if entity:
         var pos_data = entity.get_metadata("position")
         if pos_data and pos_data.has("x") and pos_data.has("y") and pos_data.has("z"):
+		
             var position = Vector3(pos_data.x, pos_data.y, pos_data.z)
             
             # Update our cache
@@ -530,7 +538,7 @@ func get_zones_containing_point(position: Vector3) -> Array:
     
     return result
 
-# Spatial queries
+# Node3D queries
 func get_entities_in_radius(position: Vector3, radius: float, filter: Dictionary = {}) -> Array:
     stats.spatial_queries += 1
     
@@ -557,6 +565,7 @@ func get_entities_in_radius(position: Vector3, radius: float, filter: Dictionary
         
         # Filter by zone
         if filter.has("zone"):
+		
             var entity_zones = entity.get_zones()
             if not filter.zone in entity_zones:
                 matches = false
@@ -597,6 +606,7 @@ func get_entities_in_box(min_bounds: Vector3, max_bounds: Vector3, filter: Dicti
         
         # Filter by zone
         if filter.has("zone"):
+		
             var entity_zones = entity.get_zones()
             if not filter.zone in entity_zones:
                 matches = false
@@ -647,7 +657,7 @@ func cast_ray(start: Vector3, end: Vector3, filter: Dictionary = {}) -> Dictiona
         "position": Vector3.ZERO,
         "normal": Vector3.ZERO,
         "distance": 0.0
-    }
+		}
     
     # Calculate ray direction and length
     var direction = end - start
@@ -743,6 +753,7 @@ func set_active_zone(zone_id: String) -> bool:
     active_zone = zone_id
     
     print("JSHSpatialManager: Active zone set to " + zone_id)
+	
     
     # Update visible zones
     _update_visible_zones()
@@ -808,6 +819,7 @@ func _update_visible_zones() -> void:
     _update_entity_visibility()
     
     print("JSHSpatialManager: Updated visible zones: " + str(visible_zones))
+	
 
 func _add_child_zones_recursive(zone_id: String) -> void:
     if not zone_hierarchy.has(zone_id):
@@ -884,6 +896,7 @@ func _load_zone(zone_id: String) -> void:
         return
     
     print("JSHSpatialManager: Loading zone " + zone_id)
+	
     
     # Add to visible zones if not already there
     if not zone_id in visible_zones:
@@ -913,6 +926,7 @@ func _load_zone(zone_id: String) -> void:
                     # Set position if available
                     var pos_data = entity_data.get_metadata("position")
                     if pos_data and pos_data.has("x") and pos_data.has("y") and pos_data.has("z"):
+					
                         var position = Vector3(pos_data.x, pos_data.y, pos_data.z)
                         set_entity_position(entity_id, position)
             
@@ -930,6 +944,7 @@ func _unload_zone(zone_id: String) -> void:
         return
     
     print("JSHSpatialManager: Unloading zone " + zone_id)
+	
     
     # Remove from visible zones
     var index = visible_zones.find(zone_id)
@@ -956,6 +971,7 @@ func subdivide_zone(zone_id: String, divisions: Vector3i) -> Array:
         return []
     
     print("JSHSpatialManager: Subdividing zone " + zone_id)
+	
     
     var zone_data = zones[zone_id]
     var bounds = zone_data.bounds
@@ -1005,7 +1021,7 @@ func subdivide_zone(zone_id: String, divisions: Vector3i) -> Array:
                     "is_root": false,
                     "autoload": zone_data.autoload,
                     "properties": zone_data.properties.duplicate()
-                }
+					}
                 
                 create_zone(child_id, child_data)
                 child_zones.append(child_id)
@@ -1025,6 +1041,7 @@ func subdivide_zone(zone_id: String, divisions: Vector3i) -> Array:
     # Update parent zone
     zone_data.is_subdivided = true
     update_zone(zone_id, { "is_subdivided": true })
+	
     
     return child_zones
 
@@ -1033,6 +1050,7 @@ func merge_zones(zone_ids: Array) -> String:
         return ""
     
     print("JSHSpatialManager: Merging zones: " + str(zone_ids))
+	
     
     # Check if all zones exist
     for zone_id in zone_ids:
@@ -1079,7 +1097,7 @@ func merge_zones(zone_ids: Array) -> String:
         "autoload": false,
         "properties": {},
         "merged_from": zone_ids.duplicate()
-    }
+		}
     
     create_zone(merged_zone_id, merged_data)
     
@@ -1111,6 +1129,7 @@ func register_zone_transition(source_zone: String, target_zone: String, transiti
         return false
     
     print("JSHSpatialManager: Registering transition from " + source_zone + " to " + target_zone)
+	
     
     # Initialize if needed
     if not zone_transitions.has(source_zone):
@@ -1147,7 +1166,6 @@ func register_zone_transition(source_zone: String, target_zone: String, transiti
             "type": transition_data.type,
             "data": transition_data
         })
-    }
     
     # Update statistics
     stats.zone_transitions += 1
@@ -1168,6 +1186,7 @@ func transition_entity(entity_id: String, target_zone: String) -> bool:
         return false
     
     print("JSHSpatialManager: Transitioning entity " + entity_id + " to zone " + target_zone)
+	
     
     var current_zones = get_entity_zones(entity_id)
     var source_zone = ""
@@ -1255,7 +1274,7 @@ func _get_nearest_point_between_zones(zone1: String, zone2: String) -> Vector3:
 
 # Statistics and optimization
 func get_zone_statistics(zone_id: String = "") -> Dictionary:
-    var result = {}
+    var result = {
     
     if zone_id.is_empty():
         # Global statistics
@@ -1268,7 +1287,7 @@ func get_zone_statistics(zone_id: String = "") -> Dictionary:
             "entity_positions": stats.entity_positions,
             "spatial_queries": stats.spatial_queries,
             "zone_transitions": stats.zone_transitions
-        }
+}
     else:
         # Zone-specific statistics
         if zones.has(zone_id):
@@ -1305,13 +1324,13 @@ func get_zone_statistics(zone_id: String = "") -> Dictionary:
                 "transition_count": transition_count,
                 "child_count": child_count,
                 "parent_zone": get_parent_zone(zone_id)
-            }
-        }
+				}
     
     return result
 
 func optimize_zone_partitioning() -> bool:
     print("JSHSpatialManager: Optimizing zone partitioning")
+	}
     
     # Find zones with too many entities
     var zones_to_subdivide = []
@@ -1356,12 +1375,11 @@ func _get_zone_bounds(bounds_dict: Dictionary) -> Dictionary:
             (bounds_dict.min_y + bounds_dict.max_y) / 2,
             (bounds_dict.min_z + bounds_dict.max_z) / 2
         ),
-        "size": Vector3(
+        "size": Vector3(}
             bounds_dict.max_x - bounds_dict.min_x,
             bounds_dict.max_y - bounds_dict.min_y,
             bounds_dict.max_z - bounds_dict.min_z
         )
-    }
 
 func _get_zone_center(bounds_dict: Dictionary) -> Vector3:
     return Vector3(
@@ -1395,6 +1413,7 @@ func _on_entity_updated(entity: JSHUniversalEntity) -> void:
     # Update position if metadata changed
     var pos_data = entity.get_metadata("position")
     if pos_data and pos_data.has("x") and pos_data.has("y") and pos_data.has("z"):
+	
         var position = Vector3(pos_data.x, pos_data.y, pos_data.z)
         
         # Only update if position changed

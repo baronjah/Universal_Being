@@ -1,6 +1,6 @@
 extends Node
 
-class_name WishEngine
+class_name WishEngine_wishengine_wishengi
 
 signal wish_created(wish_id, wish_type, strength)
 signal wish_fulfilled(wish_id, result_type, output)
@@ -16,7 +16,8 @@ var shape_system: ShapeSystem
 var paint_system: PaintSystem
 
 # Wish Types
-enum WishType {
+enum \2 {
+
 	CREATION,      # Creating something new
 	TRANSFORMATION, # Changing something existing
 	EVOLUTION,     # Growing/advancing something
@@ -29,7 +30,8 @@ enum WishType {
 }
 
 # Game Genres
-enum GameGenre {
+enum \2 {
+
 	ACTION,
 	ADVENTURE,
 	RPG,
@@ -48,7 +50,8 @@ enum GameGenre {
 }
 
 # Result Types
-enum ResultType {
+enum \2 {
+
 	SUCCESS,       # Wish fulfilled successfully
 	PARTIAL,       # Partial fulfillment
 	TRANSFORMED,   # Wish transformed into something else
@@ -59,7 +62,8 @@ enum ResultType {
 }
 
 # Account Types for merging
-enum AccountType {
+enum \2 {
+
 	PERSONAL,      # Individual user account
 	PROJECT,       # Project-specific account
 	SYSTEM,        # System-level account
@@ -383,12 +387,12 @@ var wish_templates = []       # Array of template strings
 
 func _ready():
 	# Get references to other systems
-	turn_cycle_manager = get_node_or_null("/root/TurnCycleManager")
-	dimensional_color_system = get_node_or_null("/root/DimensionalColorSystem")
-	astral_entity_system = get_node_or_null("/root/AstralEntitySystem")
-	letter_paint_system = get_node_or_null("/root/LetterPaintSystem")
-	shape_system = get_node_or_null("/root/ShapeSystem")
-	paint_system = get_node_or_null("/root/PaintSystem")
+	turn_cycle_manager = get_node_or_null("root/TurnCycleManager")
+	dimensional_color_system = get_node_or_null("root/DimensionalColorSystem")
+	astral_entity_system = get_node_or_null("root/AstralEntitySystem")
+	letter_paint_system = get_node_or_null("root/LetterPaintSystem")
+	shape_system = get_node_or_null("root/ShapeSystem")
+	paint_system = get_node_or_null("root/PaintSystem")
 	
 	# Connect signals
 	if turn_cycle_manager:
@@ -882,7 +886,7 @@ func add_terminal_output_for_account(account_id: String, text: String):
 	add_terminal_output("[" + account_name + "] " + text)
 
 func get_terminal_output() -> String:
-	return "\n".join(terminal_output)
+	return "\n"." ".join(terminal_output)
 
 func clear_terminal():
 	terminal_output.clear()
@@ -908,17 +912,17 @@ func execute_command(command: String) -> String:
 				_cmd_list("all")
 		"create":
 			if args.size() >= 2:
-				_cmd_create(args[0], args.slice(1).join(" "))
+				_cmd_create(args[0], args.slice(1)." ".join(" "))
 			else:
 				add_terminal_output("Usage: create <type> <details>")
 		"merge":
 			if args.size() >= 3:
-				_cmd_merge(args[0], args[1].split(","), args.slice(2).join(" "))
+				_cmd_merge(args[0], args[1].split(","), args.slice(2)." ".join(" "))
 			else:
 				add_terminal_output("Usage: merge <type> <id1,id2,...> <name>")
 		"wish":
 			if args.size() >= 1:
-				_cmd_wish(args.join(" "))
+				_cmd_wish(args." ".join(" "))
 			else:
 				add_terminal_output("Usage: wish <your wish text>")
 		"use":
@@ -1112,7 +1116,7 @@ func _cmd_game(action: String, args: Array):
 				return
 			
 			var title = args[0]
-			var description = args.slice(1).join(" ")
+			var description = args.slice(1)." ".join(" ")
 			
 			# Determine genre from description
 			var genre = _determine_genre_from_text(description)
@@ -1354,7 +1358,7 @@ func _extract_game_details_from_wish(wish_text: String) -> Dictionary:
 				for i in range(words.size()):
 					if words[i].length() > 0:
 						words[i] = words[i][0].to_upper() + words[i].substr(1)
-				title = " ".join(words)
+				title = " "." ".join(words)
 				break
 	
 	# Determine genre
@@ -1453,9 +1457,9 @@ func _generate_game_code_snippets(game: Game):
 	
 	# Game controller
 	code_snippets["GameController"] = """
-extends Node
+extends \2
 
-class_name GameController
+class_name GameController_wishengine_wishengi
 
 # Core game systems
 var game_state = GameState.new()
@@ -1487,10 +1491,10 @@ func _process(delta):
 
 	# Main feature
 	var feature = game.features[0] if game.features.size() > 0 else "Feature System"
-	var feature_name = feature.split(" ").join("")
+	var feature_name = feature.split(" ")." ".join("")
 	
 	code_snippets[feature_name] = """
-extends Node
+extends \2
 
 class_name """ + feature_name + """
 
@@ -1528,14 +1532,14 @@ func update(delta):
 
 	# Game state
 	code_snippets["GameState"] = """
-extends Resource
+extends \2
 
-class_name GameState
+class_name GameState_wishengine_wishengi
 
 signal state_changed(new_state, old_state)
 signal dimension_shifted(new_dimension, old_dimension)
+enum \2 {
 
-enum GamePhase {
 	MENU,
 	PLAYING,
 	PAUSED,

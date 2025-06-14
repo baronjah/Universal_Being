@@ -5,7 +5,6 @@
 # CREATED: 2025-05-25 - Building fix memory
 # ==================================================
 }
-
 extends RefCounted
 }
 
@@ -13,8 +12,8 @@ extends RefCounted
 static var PATH_FIXES = {
 	"JSH_FRAMEWORK_PATHS": {
 		"problem": "JSH framework expects D: drive paths",
-		"symptoms": ["Preload file does not exist", "res://code/gdscript/scripts/"],
-		"fix_pattern": "res://code/gdscript/scripts/ → res://scripts/jsh_framework/",
+		"symptoms": ["Preload file does not exist", "res://scripts/gdscript/scripts/"],
+		"fix_pattern": "res://scripts/gdscript/scripts/ → res://scripts/jsh_framework/",
 		"files_affected": [
 			"jsh_scene_tree_system.gd",
 			"main.gd",

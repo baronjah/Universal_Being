@@ -3,9 +3,8 @@
 # Created: May 31, 2025, 23:28 CEST
 # Purpose: Ragdoll physics and behavior system
 # Connection: Part of Pentagon Architecture migration
-
 extends UniversalBeingBase
-# res://code/gdscript/scripts/Menu_Keyboard_Console/jsh_world.gd
+# res://scripts/gdscript/scripts/Menu_Keyboard_Console/jsh_world.gd
 
 #    oooo  .oooooo..o ooooo   ooooo 
 #    `888 d8P'    `Y8 `888'   `888' 

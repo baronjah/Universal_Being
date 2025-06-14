@@ -1,5 +1,5 @@
 extends Node
-class_name InteractionEngine
+class_name InteractionEngine_interactionengine_interact
 
 # References
 var dictionary = null

@@ -8,6 +8,7 @@ func _ready():
 	# Register multiple Player implementations
 	UniversalFallbackSystem.register_class_implementation("Player", "res://examples/BasePlayer.gd", 100)
 	UniversalFallbackSystem.register_class_implementation("Player", "res://examples/AdvancedPlayer.gd", 200)
+
 	
 	# Create player with fallback capabilities
 	var player = UniversalFallbackSystem.create_fallback_instance("Player")
@@ -26,9 +27,11 @@ func _ready():
 	
 	# BasePlayer has this method (fallback)
 	print("Health: " + str(player.get_health()))
+
 	
 	# AdvancedPlayer has this method
 	print("Mana: " + str(player.get_mana()))
+
 	
 	# BasePlayer has this method (fallback)
 	player.attack()

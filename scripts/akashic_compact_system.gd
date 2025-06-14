@@ -22,6 +22,7 @@ enum CompactType {
 ## Compact Record
 class Compact:
     var id: String = ""
+	}
     var type: CompactType = CompactType.MEMORY
     var timestamp: float = 0.0
     var content: Dictionary = {}
@@ -30,6 +31,7 @@ class Compact:
     var compression_ratio: float = 1.0
     var tokens_saved: int = 0
     var being_id: String = ""  # Owner
+	
     var consciousness_level: int = 0
     var metadata: Dictionary = {}
     
@@ -73,6 +75,7 @@ func load_consciousness_icons() -> void:
         if ResourceLoader.exists(icon_path):
             consciousness_icons[i] = icon_path
             print("🎨 Loaded consciousness icon: Level %d" % i)
+			
 
 # ===== COMPACT CREATION =====
 
@@ -121,7 +124,7 @@ func create_scenario_compact(scenario_text: String, title: String = "Untitled") 
         "locations": extract_locations(scenario_text),
         "decisions": extract_decisions(scenario_text),
         "ai_instructions": extract_ai_instructions(scenario_text)
-    }
+		}
     
     compact.compression_ratio = float(scenario_text.length()) / var_to_str(compact.content).length()
     compact.tokens_saved = estimate_tokens_saved(scenario_text, compact.content)
@@ -148,7 +151,7 @@ func create_evolution_compact(being: Node, from_form: String, to_form: String) -
         "properties_changed": {},
         "components_added": [],
         "components_removed": []
-    }
+		}
     
     store_compact(compact)
     compact_created.emit(compact)
@@ -163,10 +166,10 @@ func compress_memories(memories: Array) -> Dictionary:
         "data": {},
         "ratio": 1.0,
         "tokens_saved": 0
-    }
+		}
     
     # Group similar memories
-    var grouped = {}
+    var grouped = {
     for memory in memories:
         var category = categorize_memory(memory)
         if not category in grouped:
@@ -182,7 +185,7 @@ func compress_memories(memories: Array) -> Dictionary:
                 "count": group.size(),
                 "summary": summarize_memory_group(group),
                 "highlights": extract_highlights(group)
-            }
+}
         else:
             # Keep small groups intact
             result["data"][category] = group
@@ -276,8 +279,8 @@ func merge_compacts(compact_ids: Array[String]) -> Compact:
 
 func merge_memory_content(sources: Array) -> Dictionary:
     """Merge memory compacts intelligently"""
-    var merged_content = {}
-    var all_categories = {}
+    var merged_content = {
+    var all_categories = {
     
     # Collect all categories
     for source in sources:
@@ -296,7 +299,7 @@ func merge_memory_content(sources: Array) -> Dictionary:
             merged_content[category] = {
                 "merged_from": items.size(),
                 "combined_data": merge_similar_data(items)
-            }
+				}
     
     return merged_content
 
@@ -313,8 +316,7 @@ func merge_scenario_content(sources: Array) -> Dictionary:
             "tone": "adaptive",
             "style": "narrative",
             "constraints": []
-        }
-    }
+			}
     
     # Collect all content
     for source in sources:
@@ -334,18 +336,20 @@ func merge_scenario_content(sources: Array) -> Dictionary:
     merged_content["characters"] = merged_content["characters"].filter(func(x): return x != "")
     merged_content["locations"] = merged_content["locations"].filter(func(x): return x != "")
     merged_content["decisions"] = merged_content["decisions"].filter(func(x): return x != "")
+	}
     
     # Deduplicate arrays
     merged_content["key_points"] = Array(merged_content["key_points"]).filter(func(x, i, arr): return arr.find(x) == i)
     merged_content["characters"] = Array(merged_content["characters"]).filter(func(x, i, arr): return arr.find(x) == i)
     merged_content["locations"] = Array(merged_content["locations"]).filter(func(x, i, arr): return arr.find(x) == i)
     merged_content["decisions"] = Array(merged_content["decisions"]).filter(func(x, i, arr): return arr.find(x) == i)
+	}
     
     return merged_content
 
 func merge_generic_content(sources: Array) -> Dictionary:
     """Merge generic compacts"""
-    var merged = {}
+    var merged = {
     for source in sources:
         for key in source.content:
             if not key in merged:
@@ -516,7 +520,7 @@ func extract_ai_instructions(text: String) -> Dictionary:
         "tone": "adaptive",
         "style": "narrative",
         "constraints": []
-    }
+		}
 
 func estimate_tokens_saved(original, compressed) -> int:
     """Estimate tokens saved by compression"""
@@ -535,7 +539,7 @@ func merge_similar_data(items: Array) -> Dictionary:
         "count": items.size(),
         "first": items[0] if items.size() > 0 else null,
         "last": items[-1] if items.size() > 0 else null
-    }
+		}
 
 # ===== AI INTEGRATION =====
 
@@ -549,7 +553,7 @@ func get_ai_context(being_id: String) -> Dictionary:
         "total_compacts": compact_chains[being_id].size() if being_id in compact_chains else 0,
         "recent_memories": [],
         "consciousness_progression": []
-    }
+		}
     
     for memory in memories:
         context["recent_memories"].append({
@@ -571,7 +575,7 @@ func export_being_compacts(being_id: String) -> Dictionary:
         "being_id": being_id,
         "export_date": Time.get_datetime_string_from_system(),
         "compacts": []
-    }
+		}
     
     if being_id in compact_chains:
         for compact_id in compact_chains[being_id]:
@@ -589,6 +593,7 @@ func import_being_compacts(data: Dictionary) -> bool:
     var imported = 0
     
     for compact_data in data["compacts"]:
+	}
         var compact = Compact.new()
         # Restore compact properties
         for key in compact_data:

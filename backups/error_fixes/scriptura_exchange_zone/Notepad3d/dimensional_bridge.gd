@@ -706,7 +706,7 @@ func track_object(object, object_id=""):
 		return null
 	
 	# Generate object ID if not provided
-	if object_id.empty():
+	if object_id.is_empty():
 		object_id = "obj_" + str(Time.get_unix_time_from_system()) + "_" + str(tracked_objects.size())
 	
 	# Store object reference and data

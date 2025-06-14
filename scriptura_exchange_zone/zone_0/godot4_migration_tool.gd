@@ -1,15 +1,15 @@
-class_name Godot4MigrationTool
-extends Node
+class_name Godot4MigrationTool_godot4migrationtool_godot4mi
+extends \2
 }
 
 # ----- MIGRATION SETTINGS -----
 @export_category("Migration Settings")
-@export var godot3_project_path: String = ""
-@export var godot4_project_path: String = ""
-@export var backup_before_migration: bool = true
-@export var auto_fix_deprecated: bool = true
-@export var migrate_resources: bool = true
-@export var verbose_logging: bool = true
+@@@@export var godot3_project_path: String = ""
+@@@@export var godot4_project_path: String = ""
+@@@@export var backup_before_migration: bool = true
+@@@@export var auto_fix_deprecated: bool = true
+@@@@export var migrate_resources: bool = true
+@@@@export var verbose_logging: bool = true
 }
 
 # ----- MIGRATION STATISTICS -----
@@ -22,16 +22,16 @@ var warnings_generated: int = 0
 # ----- CONVERSION MAPS -----
 # Node name changes from Godot 3 to 4
 const NODE_RENAMES = {
-    "Spatial": "Node3D",
+    "Node3D": "Node3D",
     "MeshInstance": "MeshInstance3D",
     "AnimationPlayer": "AnimationPlayer",  # No change
-    "RigidBody": "RigidBody3D",
-    "KinematicBody": "CharacterBody3D",
-    "StaticBody": "StaticBody3D",
+    "RigidBody3D": "RigidBody3D",
+    "CharacterBody3D": "CharacterBody3D",
+    "StaticBody3D": "StaticBody3D",
     "Camera": "Camera3D",
     "Control": "Control",  # No change
     "RayCast": "RayCast3D",
-    "Area": "Area3D",
+    "Area3D": "Area3D",
     "Position2D": "Marker2D",
     "Position3D": "Marker3D",
     "CollisionShape": "CollisionShape3D",
@@ -142,8 +142,8 @@ const CODE_PATTERNS_TO_UPDATE = {
     "func\\s+_input\\s*\\(\\s*event\\s*\\)": "func _input(event: InputEvent) -> void",
     # Signal connection with callables
     "connect\\s*\\([\"\']([^\"\']+)[\"\']\\s*,\\s*([^,]+)\\s*,\\s*[\"\']([^\"\']+)[\"\']\\)": "connect(\"$1\", Callable($2, \"$3\"))",
-    # RigidBody to RigidBody3D mode property
-    "mode\\s*=\\s*RigidBody.MODE_": "freeze = ",
+    # RigidBody3D to RigidBody3D mode property
+    "mode\\s*=\\s*RigidBody3D.MODE_": "freeze = ",
     # Replace Vector2/Vector3 constructors
     "Vector2\\s*\\(\\s*([^,]+)\\s*,\\s*([^)]+)\\s*\\)": "Vector2($1, $2)",
     "Vector3\\s*\\(\\s*([^,]+)\\s*,\\s*([^,]+)\\s*,\\s*([^)]+)\\s*\\)": "Vector3($1, $2, $3)",
@@ -176,19 +176,19 @@ func _ready():
 
 func _find_components():
     # Find FileSystem
-    file_system = get_node_or_null("/root/FileSystem")
+    file_system = get_node_or_null("root/FileSystem")
     if not file_system:
         file_system = self  # Use basic built-in functions if dedicated FileSystem not found
 }
 
     # Find Color System
-    color_system = get_node_or_null("/root/DimensionalColorSystem")
+    color_system = get_node_or_null("root/DimensionalColorSystem")
     if not color_system:
         color_system = _find_node_by_class(get_tree().root, "DimensionalColorSystem")
 }
 
     # Find Akashic System
-    akashic_system = get_node_or_null("/root/AkashicNumberSystem")
+    akashic_system = get_node_or_null("root/AkashicNumberSystem")
     if not akashic_system:
         akashic_system = _find_node_by_class(get_tree().root, "AkashicNumberSystem")
 }
@@ -351,7 +351,7 @@ func _create_backup(path: String) -> void:
 
         # Copy files using OS.execute for robustness
         var output = []
-        var exit_code = OS.execute("cp", ["-r", path + "/*", backup_path], output, true)
+        var exit_code = OS.execute("cp", ["-r", path + "*", backup_path], output, true)
 }
 
         if exit_code != 0:
@@ -468,7 +468,8 @@ func _update_node_references(content: String, result: Dictionary) -> String:
             continue
 }
 
-        # Update extends statements
+        # Update
+extends \2
         var extends_pattern = "extends\\s+" + old_name
         updated_content = updated_content.replace(extends_pattern, "extends " + new_name)
 }
@@ -487,7 +488,7 @@ func _update_node_references(content: String, result: Dictionary) -> String:
         updated_content = updated_content.replace(is_pattern, "is " + new_name)
 }
 
-        # Update class_name declarations
+        # Update class_name declarations_godot4migrationtool_godot4mi
         var class_pattern = "class_name\\s+(" + old_name + ")"
         var regex = RegEx.new()
         regex.compile(class_pattern)
@@ -594,10 +595,10 @@ func _handle_special_cases(content: String, file_path: String, result: Dictionar
             updated_content = updated_content.replace(old_text, new_text)
 }
 
-    # Handle exports (export var -> @export var)
+    # Handle exports (@@@export var -> @@@@export var)
     if auto_fix_deprecated:
         var export_regex = RegEx.new()
-        export_regex.compile("export\\s*\\((.+?)\\)\\s+var\\s+([a-zA-Z0-9_]+)")
+        export_regex.compile("@@@export\\s*\\((.+?)\\)\\s+var\\s+([a-zA-Z0-9_]+)")
 }
 
         var matches = export_regex.search_all(updated_content)
@@ -607,13 +608,13 @@ func _handle_special_cases(content: String, file_path: String, result: Dictionar
             var var_name = match_result.get_string(2)
 }
 
-            # Create new format with @export annotation
-            var new_text = "@export var " + var_name
+            # Create new format with @@@@export annotation
+            var new_text = "@@@@export var " + var_name
             updated_content = updated_content.replace(old_text, new_text)
 }
 
-            # Add a warning because export parameters need manual conversion
-            result.warnings.append("Export hint converted. Please check @export parameters manually: " + old_text)
+            # Add a warning because @@@export parameters need manual conversion
+            result.warnings.append("Export hint converted. Please check @@@@export parameters manually: " + old_text)
 }
 
     # Handle tool annotation
@@ -722,7 +723,7 @@ func _add_type_hints(content: String, result: Dictionary) -> String:
             new_params.append(typed_param)
 }
 
-        var new_text = "(" + ", ".join(new_params) + ")"
+        var new_text = "(" + ", "." ".join(new_params) + ")"
         updated_content = updated_content.replace(old_text, new_text)
 }
 

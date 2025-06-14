@@ -73,7 +73,7 @@ func _process(delta):
 
 # Execute a command string
 func execute_command(command_str):
-	if command_str.empty():
+	if command_str.is_empty():
 		output(PROMPT)
 		return
 	
@@ -474,7 +474,7 @@ func _cmd_script(args):
 		line = line.strip_edges()
 		
 		# Skip empty lines and comments
-		if line.empty() or line.begins_with("#"):
+		if line.is_empty() or line.begins_with("#"):
 			continue
 		
 		command_queue.append(line)

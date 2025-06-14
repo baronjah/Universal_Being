@@ -37,9 +37,11 @@ func setup_example_data():
 # Demonstrate the concurrent execution of functions
 func demonstrate_concurrent_execution():
 	terminal_memory.add_memory_text("DEMONSTRATION: Running multiple functions concurrently", "system")
+
 	
 	# Example 1: Run 3 functions in parallel
 	terminal_memory.add_memory_text("Example 1: Running 3 functions in parallel", "system")
+
 	
 	var functions = ["display_time", "count_entries", "check_system_status"]
 	var args_list = [[], [], []]
@@ -52,8 +54,9 @@ func demonstrate_concurrent_execution():
 	)
 	
 	# Example 2: Run functions in a chain (one after another)
-	yield(get_tree().create_timer(2.0), "timeout")
+	await(get_tree().create_timer(2.0), "timeout")
 	terminal_memory.add_memory_text("Example 2: Running functions in sequence", "system")
+
 	
 	var chain_functions = ["prepare_data", "process_data", "finalize_data"]
 	var chain_args = [[], [], []]
@@ -66,8 +69,9 @@ func demonstrate_concurrent_execution():
 	)
 	
 	# Example 3: Mixed priority tasks
-	yield(get_tree().create_timer(4.0), "timeout")
+	await(get_tree().create_timer(4.0), "timeout")
 	terminal_memory.add_memory_text("Example 3: Tasks with different priorities", "system")
+
 	
 	concurrent_processor.schedule_task(
 		"low_priority", 
@@ -121,40 +125,43 @@ func check_system_status():
 # Chain example: Step 1 - Prepare data
 func prepare_data():
 	terminal_memory.add_memory_text("Step 1: Preparing data...", "system")
-	yield(get_tree().create_timer(0.5), "timeout")
-	return {"status": "prepared", "timestamp": OS.get_unix_time()}
+	await(get_tree().create_timer(0.5), "timeout")
+	return {"status": "prepared", "timestamp": OS.get_unix_time()
+}
 
 # Chain example: Step 2 - Process data
 func process_data():
 	terminal_memory.add_memory_text("Step 2: Processing data...", "system")
-	yield(get_tree().create_timer(0.5), "timeout")
-	return {"status": "processed", "operations": 5}
+	await(get_tree().create_timer(0.5), "timeout")
+	return {"status": "processed", "operations": 5
+}
 
 # Chain example: Step 3 - Finalize data
 func finalize_data():
 	terminal_memory.add_memory_text("Step 3: Finalizing data...", "system")
-	yield(get_tree().create_timer(0.5), "timeout")
+	await(get_tree().create_timer(0.5), "timeout")
 	terminal_memory.add_memory_text("Data processing complete!", "system")
-	return {"status": "completed", "success": true}
+	return {"status": "completed", "success": true
+}
 
 # Priority example: Low priority, long-running task
 func long_running_task(message):
 	terminal_memory.add_memory_text("Starting: " + message, "system")
-	yield(get_tree().create_timer(1.5), "timeout")
+	await(get_tree().create_timer(1.5), "timeout")
 	terminal_memory.add_memory_text("Completed: " + message, "system")
 	return "Long task completed"
 
 # Priority example: Medium priority task
 func medium_task(message):
 	terminal_memory.add_memory_text("Starting: " + message, "system")
-	yield(get_tree().create_timer(1.0), "timeout")
+	await(get_tree().create_timer(1.0), "timeout")
 	terminal_memory.add_memory_text("Completed: " + message, "system")
 	return "Medium task completed"
 
 # Priority example: High priority, quick task
 func quick_task(message):
 	terminal_memory.add_memory_text("Starting: " + message, "system")
-	yield(get_tree().create_timer(0.5), "timeout")
+	await(get_tree().create_timer(0.5), "timeout")
 	terminal_memory.add_memory_text("Completed: " + message, "system")
 	return "Quick task completed"
 

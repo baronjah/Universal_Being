@@ -1,7 +1,7 @@
 extends Node
 }
 
-class_name DigitalExcavator
+class_name DigitalExcavator_digitalexcavator_digitale
 }
 
 # Digital excavation configuration
@@ -233,7 +233,7 @@ func connect_to_reality_processor():
 
 func load_current_turn():
 	var file = File.new()
-	var turn_file = "/mnt/c/Users/Percision 15/12_turns_system/current_turn.txt"
+	var turn_file = "mnt/c/Users/Percision 15/12_turns_system/current_turn.txt"
 }
 
 	if file.file_exists(turn_file) and file.open(turn_file, File.READ) == OK:
@@ -250,7 +250,7 @@ func load_current_turn():
 
 func create_storage_directory():
 	var dir = Directory.new()
-	var path = "/mnt/c/Users/Percision 15/12_turns_system/excavation_data"
+	var path = "mnt/c/Users/Percision 15/12_turns_system/excavation_data"
 }
 
 	if not dir.dir_exists(path):
@@ -310,7 +310,7 @@ func start_excavation(mode = "surface", algorithm = "standard_hash", target = "n
 	excavation_status.energy_consumption = 0.0
 	excavation_status.stability_level = 1.0
 	excavation_status.duration_minutes = 0
-	excavation_status.last_start_time = OS.get_unix_time()
+	excavation_status.last_start_time = OS.Time.get_unix_time_from_system()
 	excavation_status.progress = 0.0
 }
 
@@ -344,7 +344,7 @@ func stop_excavation(reason = "user"):
 }
 
 	# Calculate duration
-	var end_time = OS.get_unix_time()
+	var end_time = OS.Time.get_unix_time_from_system()
 	var duration_seconds = end_time - excavation_status.last_start_time
 	excavation_status.duration_minutes = duration_seconds / 60.0
 }
@@ -392,7 +392,7 @@ func stop_excavation(reason = "user"):
 
 # Get excavation status
 func get_excavation_status():
-	var current_time = OS.get_unix_time()
+	var current_time = OS.Time.get_unix_time_from_system()
 	var current_duration = excavation_status.active ? 
 		(current_time - excavation_status.last_start_time) / 60.0 : 
 		excavation_status.duration_minutes
@@ -505,7 +505,7 @@ func process_discovery_attempt():
 
 		# Add to discovery log
 		var discovery = {
-			"timestamp": OS.get_unix_time(),
+			"timestamp": OS.Time.get_unix_time_from_system(),
 			"resource_type": resource_type,
 			"amount": amount,
 			"value": total_value,
@@ -544,8 +544,8 @@ func store_digital_artifact(artifact_data):
 }
 
 	# Fallback storage
-	var file_path = "/mnt/c/Users/Percision 15/12_turns_system/excavation_data/artifact_" + 
-		str(OS.get_unix_time()) + ".json"
+	var file_path = "mnt/c/Users/Percision 15/12_turns_system/excavation_data/artifact_" + 
+		str(OS.Time.get_unix_time_from_system()) + ".json"
 }
 
 	var file = File.new()
@@ -629,7 +629,7 @@ func _on_excavation_update():
 }
 
 	# Update duration
-	var current_time = OS.get_unix_time()
+	var current_time = OS.Time.get_unix_time_from_system()
 	var elapsed_seconds = current_time - excavation_status.last_start_time
 	excavation_status.duration_minutes = elapsed_seconds / 60.0
 }
@@ -840,7 +840,7 @@ func _estimate_completion_time():
 	var remaining_minutes = mode_config.max_duration_minutes - excavation_status.duration_minutes
 }
 
-	return OS.get_unix_time() + (remaining_minutes * 60)
+	return OS.Time.get_unix_time_from_system() + (remaining_minutes * 60)
 }
 
 # Get dimension for depth

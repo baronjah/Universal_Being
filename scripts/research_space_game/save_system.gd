@@ -21,13 +21,14 @@ class_name SaveSystem
 #gdscriptfunc save_game(game_data: Dictionary) -> bool:
 	#var save_dict = {
 		#"version": SAVE_VERSION,
+}
 		#"timestamp": Time.get_unix_time_from_system(),
 		#"player_data": extract_player_data(game_data["player"]),
 		#"consciousness_data": extract_consciousness_data(game_data["consciousness"]),
 		#"companion_data": extract_companion_data(game_data["companions"]),
 		#"stellar_data": extract_stellar_data(game_data["stellar"]),
 		#"akashic_data": extract_akashic_data(game_data["akashic"])
-	#}
+	#
 #The save process:
 #
 #Receives a dictionary containing references to all game systems
@@ -39,22 +40,22 @@ class_name SaveSystem
 #1. Player Data
 #gdscriptfunc extract_player_data(player: Node) -> Dictionary:
 	#return {
-		#"position": player.global_position,
+		#"position": player.global_position,}
 		#"rotation": player.rotation,
 		#"velocity": player.velocity,
 		#"energy": player.energy_level,
 		#"shields": player.shields
-	#}
+	#
 #Saves the physical state of your ship - where you are, which direction you're facing, your momentum, and ship status.
 #2. Consciousness Data
 #gdscriptfunc extract_consciousness_data(consciousness_system: ConsciousnessSystem) -> Dictionary:
 	#return {
-		#"awareness_level": consciousness_system.awareness_level,
+		#"awareness_level": consciousness_system.awareness_level,}
 		#"current_frequency": consciousness_system.current_frequency,
 		#"consciousness_energy": consciousness_system.consciousness_energy,
 		#"unlocked_perceptions": consciousness_system.unlocked_perceptions,
 		#"current_state": consciousness_system.current_state
-	#}
+	#
 #This is your spiritual progress:
 #
 #How expanded your awareness is
@@ -89,11 +90,11 @@ class_name SaveSystem
 #4. Stellar Data
 #gdscriptfunc extract_stellar_data(stellar_system: StellarProgressionSystem) -> Dictionary:
 	#return {
-		#"current_system": stellar_system.current_system,
+		#"current_system": stellar_system.current_system,}
 		#"visited_systems": stellar_system.visited_systems,
 		#"warp_drive_level": stellar_system.warp_drive_level,
 		#"stellar_knowledge": stellar_system.stellar_knowledge
-	#}
+	#
 #Your exploration progress:
 #
 #Which star system you're currently in
@@ -104,10 +105,10 @@ class_name SaveSystem
 #5. Akashic Data
 #gdscriptfunc extract_akashic_data(akashic_system: AkashicRecordsSystem) -> Dictionary:
 	#return {
-		#"accessed_records": akashic_system.accessed_records,
+		#"accessed_records": akashic_system.accessed_records,}
 		#"integrated_knowledge": akashic_system.integrated_knowledge,
 		#"discovered_patterns": akashic_system.discovered_patterns
-	#}
+	#
 #Your universal wisdom:
 #
 #Which cosmic records you've accessed
@@ -179,11 +180,12 @@ class_name SaveSystem
 	## Add metadata
 	#save_dict["save_metadata"] = {
 		#"slot_name": slot_name,
+}
 		#"play_time": get_total_play_time(),
 		#"real_time": Time.get_datetime_string_from_system(),
 		#"consciousness_level": game_data["consciousness"].awareness_level,
 		#"location": game_data["stellar"].current_system
-	#}
+	#
 	#
 	## Compress save data
 	#var compressed = compress_save_data(save_dict)
@@ -203,6 +205,7 @@ class_name SaveSystem
 #func compile_save_data(game_data: Dictionary) -> Dictionary:
 	#var save_dict = {
 		#"version": SAVE_VERSION,
+}
 		#"timestamp": Time.get_unix_time_from_system(),
 		#"checksum": "",  # Will be calculated after compilation
 		#
@@ -219,7 +222,7 @@ class_name SaveSystem
 		#
 		## Game statistics
 		#"statistics": extract_game_statistics(game_data)
-	#}
+	#
 	#
 	## Calculate checksum for save integrity
 	#save_dict["checksum"] = calculate_checksum(save_dict)
@@ -231,28 +234,28 @@ class_name SaveSystem
 		#return {}
 		#
 	#return {
-		#"current_tool": mining_system.current_tool,
+		#"current_tool": mining_system.current_tool,}
 		#"mining_skill": mining_system.mining_skill,
 		#"ore_inventory": mining_system.ore_inventory.duplicate()
-	#}
+	#
 #
 #func extract_pentagon_data(pentagon_system) -> Dictionary:
 	#if not pentagon_system:
 		#return {}
 		#
 	#return {
-		#"pillar_states": pentagon_system.pillar_states.duplicate(),
+		#"pillar_states": pentagon_system.pillar_states.duplicate(),}
 		#"harmony_threshold": pentagon_system.harmony_threshold
-	#}
+	#
 #
 #func extract_game_statistics(game_data: Dictionary) -> Dictionary:
 	#return {
-		#"total_consciousness_gained": calculate_total_consciousness(game_data),
+		#"total_consciousness_gained": calculate_total_consciousness(game_data),}
 		#"systems_discovered": game_data["stellar"].discovered_systems.size(),
 		#"companions_befriended": game_data["companions"].companions.size(),
 		#"akashic_records_accessed": game_data["akashic"].accessed_records.size(),
 		#"rare_ores_found": count_rare_ores(game_data.get("mining"))
-	#}
+	#
 #
 ## Enhanced companion data extraction with memories
 #func extract_companion_data(companion_system: AICompanionSystem) -> Array:
@@ -261,6 +264,7 @@ class_name SaveSystem
 	#for companion in companion_system.companions:
 		#var data = {
 			#"name": companion.name,
+}
 			#"traits": companion.traits,
 			#"consciousness_level": companion.consciousness_level,
 			#"bond_level": companion.bond_level,
@@ -269,7 +273,7 @@ class_name SaveSystem
 			#
 			## Save important memories
 			#"key_memories": extract_key_memories(companion.memory_bank)
-		#}
+		#
 		#companion_data.append(data)
 		#
 	#return companion_data
@@ -417,7 +421,7 @@ func save_game(game_data: Dictionary) -> bool:
 		"companion_data": extract_companion_data(game_data["companions"]),
 		"stellar_data": extract_stellar_data(game_data["stellar"]),
 		"akashic_data": extract_akashic_data(game_data["akashic"])
-	}
+}
 	
 	var file = FileAccess.open(SAVE_PATH, FileAccess.WRITE)
 	if file:
@@ -429,13 +433,13 @@ func save_game(game_data: Dictionary) -> bool:
 	
 func load_game() -> Dictionary:
 	if not FileAccess.file_exists(SAVE_PATH):
-		return {}
+		return {
 		
-	var file = FileAccess.open(SAVE_PATH, FileAccess.READ)
+	var file = FileAccess.open(SAVE_PATH, FileAccess.READ)}
 	if not file:
-		return {}
+		return {
 		
-	var save_dict = file.get_var()
+	var save_dict = file.get_var()}
 	file.close()
 	
 	# Version check
@@ -452,7 +456,7 @@ func extract_player_data(player: Node) -> Dictionary:
 		"velocity": player.velocity,
 		"energy": player.energy_level,
 		"shields": player.shields
-	}
+}
 	
 func extract_consciousness_data(consciousness_system: ConsciousnessSystem) -> Dictionary:
 	return {
@@ -461,7 +465,7 @@ func extract_consciousness_data(consciousness_system: ConsciousnessSystem) -> Di
 		"consciousness_energy": consciousness_system.consciousness_energy,
 		"unlocked_perceptions": consciousness_system.unlocked_perceptions,
 		"current_state": consciousness_system.current_state
-	}
+}
 	
 func extract_companion_data(companion_system: AICompanionSystem) -> Array:
 	var companion_data = []
@@ -484,11 +488,11 @@ func extract_stellar_data(stellar_system: StellarProgressionSystem) -> Dictionar
 		"visited_systems": stellar_system.visited_systems,
 		"warp_drive_level": stellar_system.warp_drive_level,
 		"stellar_knowledge": stellar_system.stellar_knowledge
-	}
+}
 	
 func extract_akashic_data(akashic_system: AkashicRecordsSystem) -> Dictionary:
 	return {
 		"accessed_records": akashic_system.accessed_records,
 		"integrated_knowledge": akashic_system.integrated_knowledge,
 		"discovered_patterns": akashic_system.discovered_patterns
-	}
+}

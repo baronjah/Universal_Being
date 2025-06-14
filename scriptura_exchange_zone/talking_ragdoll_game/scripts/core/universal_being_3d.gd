@@ -3,9 +3,8 @@
 # Created: May 31, 2025, 23:35 CEST
 # Purpose: Universal Being specialized for 3D spatial objects
 # Connection: Pentagon Architecture - 3D spatial manifestation
-
 extends UniversalBeingBase
-class_name UniversalBeing3D
+# DISABLED DUPLICATE: class_name UniversalBeing3D_universa
 
 ## Universal Being specialized for 3D objects
 ## Inherits all Pentagon functionality plus 3D-specific features

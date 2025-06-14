@@ -1,7 +1,7 @@
 # jsh_thread_pool_manager.gd
 # root/JSH_ThreadPool_Manager
 
-# res://code/gdscript/scripts/Menu_Keyboard_Console/jsh_thread_pool_manager.gd
+# res://scripts/gdscript/scripts/Menu_Keyboard_Console/jsh_thread_pool_manager.gd
 #
 
 #    oooo  .oooooo..o ooooo   ooooo 
@@ -13,10 +13,9 @@
 # .o. 88P 8""88888P'  o888o   o888o 
 # `Y888P                            
 #
+extends \2
 
-extends Node
-
-@onready var thread_pool = get_node("/root/thread_pool_autoload")
+@onready var thread_pool = get_node("root/thread_pool_autoload")
 
 var thread_stats = {
 	"total_threads": 0,

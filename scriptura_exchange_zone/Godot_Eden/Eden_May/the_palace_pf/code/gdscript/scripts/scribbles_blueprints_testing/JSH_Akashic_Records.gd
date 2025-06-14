@@ -1,5 +1,5 @@
 extends Node
-class_name JSH_AkashicRecords
+class_name JSH_AkashicRecords_JSHAkashicRecords_JSHAkash
 
 # System references
 var jsh_records_system: Node = null

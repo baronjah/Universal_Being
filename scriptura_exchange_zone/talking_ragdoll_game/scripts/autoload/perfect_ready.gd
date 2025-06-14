@@ -4,7 +4,6 @@
 # Created: May 31st, 2025 | Perfect Pentagon Architecture
 # Location: scripts/autoload/perfect_ready.gd
 ################################################################
-
 extends UniversalBeingBase
 ################################################################
 # CORE VARIABLES
@@ -55,8 +54,8 @@ func pentagon_ready() -> void:
 	ready_status["ai_entities_loaded"] = 0
 	
 	# Connect to Perfect Init completion
-	if has_node("/root/PerfectInit"):
-		var perfect_init = get_node("/root/PerfectInit")
+	if has_node("root/PerfectInit"):
+		var perfect_init = get_node("root/PerfectInit")
 		if not perfect_init.all_init_complete.is_connected(_on_perfect_init_complete):
 			perfect_init.all_init_complete.connect(_on_perfect_init_complete)
 	
@@ -147,8 +146,8 @@ func load_ai_configuration(file_path: String) -> void:
 					"universal_being": null,
 					"txt_input_path": "ai_communication/input/" + ai_name + ".txt",
 					"txt_output_path": "ai_communication/output/" + ai_name + ".txt",
-					"model_path": "ai_models/" + ai_name.to_lower() + "/model.gguf",
-					"model_config": "ai_models/" + ai_name.to_lower() + "/config.json"
+					"model_path": "ai_models/" + ai_name.to_lower() + "model.gguf",
+					"model_config": "ai_models/" + ai_name.to_lower() + "config.json"
 				})
 		file.close()
 		
@@ -273,8 +272,8 @@ func _initialize_single_ai_entity(ai_entity: Dictionary) -> void:
 	var ai_name = ai_entity.name
 	
 	# Create Universal Being for the AI
-	if has_node("/root/UniversalObjectManager"):
-		var uom = get_node("/root/UniversalObjectManager")
+	if has_node("root/UniversalObjectManager"):
+		var uom = get_node("root/UniversalObjectManager")
 		
 		# Create AI being with special properties using correct method name
 		var ai_being = uom.create_object("ai_companion", Vector3(0, 1, 0), {
@@ -521,8 +520,8 @@ func _auto_detect_ai_models():
 		
 		while folder_name != "":
 			if dir.current_is_dir() and folder_name != "." and folder_name != "..":
-				var model_path = ai_models_dir + folder_name + "/model.gguf"
-				var config_path = ai_models_dir + folder_name + "/config.json"
+				var model_path = ai_models_dir + folder_name + "model.gguf"
+				var config_path = ai_models_dir + folder_name + "config.json"
 				
 				if FileAccess.file_exists(model_path):
 					print("🎉 AI MODEL FOUND: %s at %s" % [folder_name.capitalize(), model_path])

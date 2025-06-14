@@ -4,7 +4,6 @@
 # PURPOSE: Guide users through ragdoll controls with scene transitions
 # CREATED: 2025-05-26 - Tutorial system implementation
 # ==================================================
-
 extends UniversalBeingBase
 # Tutorial phases
 enum TutorialPhase {
@@ -68,7 +67,7 @@ func pentagon_ready() -> void:
 	_create_tutorial_ui()
 	
 	# Connect to console for command logging
-	var console = get_node_or_null("/root/ConsoleManager")
+	var console = get_node_or_null("root/ConsoleManager")
 	if console:
 		console.command_executed.connect(_on_command_executed)
 	

@@ -29,8 +29,8 @@ var is_migrating = false
 var current_file = 0
 var total_files = 0
 var selected_dir = ""
-var migration_stats = {}
-var file_status = {}
+var migration_stats = {
+var file_status = {
 
 # ----- SIGNALS -----
 signal migration_complete()
@@ -336,10 +336,12 @@ func _on_report_pressed():
     _log_message("Compatible files: " + str(report.compatible_files))
     _log_message("Incompatible files: " + str(report.incompatible_files))
     _log_message("\nFile details:")
+	}
     
     for file_info in report.file_details:
         var status = "✓ Compatible" if file_info.compatible else "✗ Incompatible"
         _log_message("\n" + file_info.path + ": " + status)
+		}
         
         if not file_info.compatible:
             _log_message("Issues:")
@@ -368,6 +370,7 @@ func _on_migration_started(total):
     _update_status("Migration started. Total files: " + str(total))
     _log_message("\n----- MIGRATION STARTED -----")
     _log_message("Total files to process: " + str(total))
+	
 
 func _on_migration_completed(stats):
     migration_stats = stats
@@ -381,6 +384,7 @@ func _on_migration_completed(stats):
     _log_message("Files modified: " + str(stats.files_modified))
     _log_message("Errors encountered: " + str(stats.errors_encountered))
     _log_message("Warnings generated: " + str(stats.warnings_generated))
+	
     
     # Update progress to 100%
     progress_bar.value = progress_bar.max_value
@@ -399,17 +403,19 @@ func _on_file_processed(file_path, modified):
     # Log file status
     var status = "Modified" if modified else "No changes needed"
     _log_message(rel_path + ": " + status)
+	
     
     # Update file status dictionary
     file_status[rel_path] = {
         "status": status,
         "modified": modified
-    }
+		}
     
     # Update file tree
     _update_file_status_in_tree(rel_path, modified)
     
     _update_status("Processing: " + str(current_file) + "/" + str(total_files) + " - " + rel_path)
+	
 
 func _on_migration_error(file_path, error_message):
     # Create relative path
@@ -419,6 +425,7 @@ func _on_migration_error(file_path, error_message):
     
     # Log error
     _log_message("ERROR in " + rel_path + ": " + error_message)
+	
     
     # Update file status
     if file_status.has(rel_path):
@@ -428,7 +435,7 @@ func _on_migration_error(file_path, error_message):
         file_status[rel_path] = {
             "status": "Error",
             "errors": [error_message]
-        }
+			}
     
     # Update file tree
     _update_file_status_in_tree(rel_path, false, true)
@@ -441,6 +448,7 @@ func _on_migration_warning(file_path, warning_message):
     
     # Log warning
     _log_message("WARNING in " + rel_path + ": " + warning_message)
+	
     
     # Update file status
     if file_status.has(rel_path):
@@ -450,7 +458,7 @@ func _on_migration_warning(file_path, warning_message):
         file_status[rel_path] = {
             "status": "Warning",
             "warnings": [warning_message]
-        }
+			}
     
     # Update file tree
     _update_file_status_in_tree(rel_path, false, false, true)
@@ -461,6 +469,7 @@ func _on_progress_updated(current, total):
     
     var percentage = int((float(current) / total) * 100)
     _update_status("Progress: " + str(current) + "/" + str(total) + " (" + str(percentage) + "%)")
+	
 
 # ----- HELPER FUNCTIONS -----
 func _update_status(text):
@@ -487,6 +496,7 @@ func _populate_file_tree(parent_item, dir_path):
         
         while file_name != "":
             if file_name != "." and file_name != "..":
+			
                 var full_path = dir_path.path_join(file_name)
                 
                 if dir.current_is_dir():
@@ -495,6 +505,7 @@ func _populate_file_tree(parent_item, dir_path):
                     item.set_icon(0, _get_folder_icon())
                     _populate_file_tree(item, full_path)
                 elif file_name.ends_with(".gd") or file_name.ends_with(".tscn") or file_name.ends_with(".tres"):
+				
                     var item = file_tree.create_item(parent_item)
                     item.set_text(0, file_name)
                     item.set_icon(0, _get_file_icon(file_name))
@@ -502,6 +513,7 @@ func _populate_file_tree(parent_item, dir_path):
             file_name = dir.get_next()
     else:
         _log_message("Could not open directory: " + dir_path)
+		
 
 func _update_file_status_in_tree(rel_path, modified = false, has_error = false, has_warning = false):
     # Find and update file in tree

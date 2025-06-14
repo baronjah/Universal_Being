@@ -1,7 +1,6 @@
 # Create required directories for the Akashic Records system
 # This script can be run from the Godot editor to create the necessary directories
-
-extends Node
+extends \2
 
 func _ready():
     # Define the base directory path - adjust this to match your project path

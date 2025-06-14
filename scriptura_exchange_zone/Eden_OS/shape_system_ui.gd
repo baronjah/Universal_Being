@@ -1,6 +1,6 @@
 extends Control
 
-class_name ShapeSystemUI
+class_name ShapeSystemUI_shapesystemui_shapesys
 
 # References to systems
 var shape_system: ShapeSystem
@@ -51,7 +51,7 @@ func _ready():
 
 func _initialize_systems():
 	# Get or create shape system
-	shape_system = get_node_or_null("/root/ShapeSystem")
+	shape_system = get_node_or_null("root/ShapeSystem")
 	if not shape_system:
 		shape_system = ShapeSystem.new()
 		add_child(shape_system)
@@ -61,12 +61,12 @@ func _initialize_systems():
 	canvas_container.add_child(shape_visualizer)
 	
 	# Get or create other systems
-	dimensional_color_system = get_node_or_null("/root/DimensionalColorSystem")
+	dimensional_color_system = get_node_or_null("root/DimensionalColorSystem")
 	if not dimensional_color_system:
 		dimensional_color_system = DimensionalColorSystem.new()
 		add_child(dimensional_color_system)
 	
-	turn_cycle_manager = get_node_or_null("/root/TurnCycleManager")
+	turn_cycle_manager = get_node_or_null("root/TurnCycleManager")
 	
 	# Create shape dimension controller
 	shape_dimension_controller = ShapeDimensionController.new()
@@ -106,7 +106,7 @@ func _update_ui():
 		if current_turn > 0:
 			current_color = turn_cycle_manager.get_current_color_name()
 		
-		current_turn_label.text = "Turn: " + str(current_turn) + " / 12"
+		current_turn_label.text = "Turn: " + str(current_turn) + "  12"
 		current_dimension_label.text = "Color: " + current_color
 	
 	# Update shape info if a shape is selected
@@ -135,7 +135,7 @@ func _update_shape_info(shape_id: String):
 	# Evolution info
 	var evolution = shape_dimension_controller.shape_evolution_stages.get(shape_id, 0.0)
 	var threshold = shape_dimension_controller.EVOLUTION_THRESHOLD
-	info_text += "Evolution: " + str(evolution) + " / " + str(threshold) + "\n"
+	info_text += "Evolution: " + str(evolution) + "  " + str(threshold) + "\n"
 	
 	# Color attunements
 	if shape.properties.has("color_attunements"):
@@ -170,7 +170,7 @@ func _update_zone_info(zone_id: String):
 	# Evolution info
 	var evolution = shape_dimension_controller.zone_evolution_stages.get(zone_id, 0.0)
 	var threshold = shape_dimension_controller.EVOLUTION_THRESHOLD
-	info_text += "Evolution: " + str(evolution) + " / " + str(threshold) + "\n"
+	info_text += "Evolution: " + str(evolution) + "  " + str(threshold) + "\n"
 	
 	# Evolution level
 	if zone.properties.has("evolution_level"):

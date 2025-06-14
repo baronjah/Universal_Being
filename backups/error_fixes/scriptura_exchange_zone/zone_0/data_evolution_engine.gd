@@ -168,7 +168,7 @@ func _ready():
 	evolution_timer = Timer.new()
 	evolution_timer.wait_time = 5.0  # 5 seconds between evolution cycles
 	evolution_timer.autostart = false
-	evolution_timer.connect("timeout", self, "_process_evolution_cycle")
+	evolution_timer.connect(_process_evolution_cycle)
 	add_child(evolution_timer)
 	
 	# Find terminal and other systems
@@ -322,7 +322,7 @@ func process_system_evolution_command(args):
 
 # Create a new entity
 func create_entity(content, type="text"):
-	if content.empty():
+	if content.is_empty():
 		log_message("Entity content cannot be empty.", "error")
 		return null
 		
@@ -346,7 +346,7 @@ func create_entity(content, type="text"):
 
 # Evolve a specific entity
 func evolve_entity(entity_id):
-	if entity_id.empty():
+	if entity_id.is_empty():
 		log_message("Please specify an entity ID to evolve.", "error")
 		return false
 		
@@ -441,7 +441,7 @@ func fold_entity(args):
 
 # Unfold an entity
 func unfold_entity(entity_id):
-	if entity_id.empty():
+	if entity_id.is_empty():
 		log_message("Please specify an entity ID to unfold.", "error")
 		return false
 		
@@ -466,7 +466,7 @@ func unfold_entity(entity_id):
 
 # Toggle auto-evolution
 func toggle_auto_evolution(enabled_str=""):
-	if enabled_str.empty():
+	if enabled_str.is_empty():
 		auto_evolution = !auto_evolution
 	else:
 		auto_evolution = (enabled_str.to_lower() == "on" or enabled_str.to_lower() == "true" or enabled_str == "1")
@@ -606,7 +606,7 @@ func split_entity(args):
 		var end = min(content.length(), (i + 1) * split_size)
 		var part_content = content.substr(start, end - start)
 		
-		if part_content.strip_edges().empty():
+		if part_content.strip_edges().is_empty():
 			continue
 			
 		var new_id = create_entity(part_content, entity.type)
@@ -661,7 +661,7 @@ func merge_entities(args):
 
 # Show metrics for an entity
 func show_entity_metrics(entity_id):
-	if entity_id.empty():
+	if entity_id.is_empty():
 		log_message("Please specify an entity ID to show metrics for.", "error")
 		return false
 		
@@ -828,7 +828,7 @@ func set_storage_mode(mode_str):
 
 # Save evolution state
 func save_evolution_state(path=""):
-	if path.empty():
+	if path.is_empty():
 		path = "user://evolution_state.dat"
 		
 	log_message("Saving evolution state to: " + path, "system")
@@ -836,14 +836,14 @@ func save_evolution_state(path=""):
 	# In a real implementation, this would save to a file
 	# For this mock-up, we'll simulate it
 	
-	yield(get_tree().create_timer(0.8), "timeout")
+	await(get_tree().create_timer(0.8), "timeout")
 	log_message("Evolution state saved successfully.")
 	
 	return true
 
 # Load evolution state
 func load_evolution_state(path=""):
-	if path.empty():
+	if path.is_empty():
 		path = "user://evolution_state.dat"
 		
 	log_message("Loading evolution state from: " + path, "system")
@@ -851,14 +851,14 @@ func load_evolution_state(path=""):
 	# In a real implementation, this would load from a file
 	# For this mock-up, we'll simulate it
 	
-	yield(get_tree().create_timer(0.8), "timeout")
+	await(get_tree().create_timer(0.8), "timeout")
 	log_message("Evolution state loaded successfully.")
 	
 	return true
 
 # Purge entities
 func purge_entities(criteria=""):
-	if criteria.empty():
+	if criteria.is_empty():
 		log_message("Please specify purge criteria (all, folded, stage:<num>).", "error")
 		return false
 	
@@ -930,14 +930,14 @@ func export_evolution_data(format="json"):
 	# In a real implementation, this would export actual data
 	# For this mock-up, we'll simulate it
 	
-	yield(get_tree().create_timer(0.8), "timeout")
+	await(get_tree().create_timer(0.8), "timeout")
 	log_message("Evolution data exported successfully as " + format)
 	
 	return true
 
 # Import evolution data
 func import_evolution_data(path=""):
-	if path.empty():
+	if path.is_empty():
 		log_message("Please specify a path to import from.", "error")
 		return false
 		
@@ -946,21 +946,21 @@ func import_evolution_data(path=""):
 	# In a real implementation, this would import actual data
 	# For this mock-up, we'll simulate it
 	
-	yield(get_tree().create_timer(0.8), "timeout")
+	await(get_tree().create_timer(0.8), "timeout")
 	log_message("Evolution data imported successfully.")
 	
 	return true
 
 # List all entities
 func list_entities():
-	if entities.empty():
+	if entities.is_empty():
 		log_message("No entities exist.", "system")
 		return
 		
 	log_message("Entity List (" + str(entities.size()) + " total):")
 	
 	var sorted_keys = entities.keys()
-	sorted_keys.sort_custom(self, "_sort_by_evolution_stage")
+	sorted_keys.sort_custom(self."_sort_by_evolution_stage")
 	
 	for id in sorted_keys:
 		var entity = entities[id]
@@ -968,7 +968,7 @@ func list_entities():
 
 # Search for entities matching criteria
 func search_entities(criteria):
-	if criteria.empty():
+	if criteria.is_empty():
 		log_message("Please specify search criteria.", "error")
 		return
 		
@@ -1025,7 +1025,7 @@ func search_entities(criteria):
 
 # Show a specific entity's details
 func show_entity(entity_id):
-	if entity_id.empty():
+	if entity_id.is_empty():
 		log_message("Please specify an entity ID to show.", "error")
 		return false
 		
@@ -1043,13 +1043,13 @@ func show_entity(entity_id):
 	log_message("- Evolution Pattern: " + _get_pattern_name(entity.evolution_pattern))
 	log_message("- Fold State: " + str(entity.fold_state))
 	
-	if not entity.tags.empty():
+	if not entity.tags.is_empty():
 		log_message("- Tags: " + str(entity.tags))
 	
 	if entity.parent_id:
 		log_message("- Parent: " + entity.parent_id)
 	
-	if not entity.children_ids.empty():
+	if not entity.children_ids.is_empty():
 		log_message("- Children: " + str(entity.children_ids))
 	
 	log_message("- Content:")
@@ -1079,7 +1079,7 @@ func _process_evolution_cycle():
 	log_message("Evolved " + str(evolved_count) + " entities in this cycle.")
 	
 	# Process scheduled folds
-	if not _scheduled_folds.empty():
+	if not _scheduled_folds.is_empty():
 		var fold_count = 0
 		var scheduled_ids = _scheduled_folds.keys()
 		
@@ -1124,7 +1124,7 @@ func _prepare_evolution_candidates():
 	_evolution_queue.clear()
 	
 	# Sort by evolution stage (prioritize lower stages)
-	_ready_for_evolution.sort_custom(self, "_sort_by_evolution_stage_ascending")
+	_ready_for_evolution.sort_custom(self."_sort_by_evolution_stage_ascending")
 	
 	# Apply randomness based on evolution rate
 	if evolution_rate != 1.0:

@@ -1,6 +1,6 @@
 extends Node
 
-class_name UnifiedProjectMerger
+class_name UnifiedProjectMerger_unifiedprojectmerger_unifiedp
 
 # Constants for drive types
 const DRIVE_TYPE_LOCAL = "local"
@@ -39,7 +39,7 @@ func _init():
 func register_drive(drive_path, drive_type = DRIVE_TYPE_LOCAL, drive_name = ""):
     """Register a drive for scanning and merging"""
     if drive_name == "":
-        drive_name = drive_path.split("/")[-1]
+        drive_name = drive_path.split("")[-1]
     
     drives[drive_name] = {
         "path": drive_path,

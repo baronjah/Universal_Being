@@ -22,7 +22,7 @@ static func initialize_vr():
 	
 	# If not found, try to load and create
 	if not vr_manager:
-		var vr_manager_script = load("res://code/gdscript/scripts/vr_system/vr_manager.gd")
+		var vr_manager_script = load("res://scripts/gdscript/scripts/vr_system/vr_manager.gd")
 		if vr_manager_script:
 			vr_manager = vr_manager_script.new()
 			vr_manager.name = "VRManager"
@@ -53,7 +53,7 @@ static func create_vr_scene_setup():
 			break
 	
 	if not vr_scene_setup:
-		var vr_scene_setup_script = load("res://code/gdscript/scripts/vr_system/vr_scene_setup.gd")
+		var vr_scene_setup_script = load("res://scripts/gdscript/scripts/vr_system/vr_scene_setup.gd")
 		if vr_scene_setup_script:
 			vr_scene_setup = vr_scene_setup_script.new()
 			vr_scene_setup.name = "VRSceneSetup"
@@ -76,7 +76,7 @@ static func add_vr_integration_to(node):
 			return child
 	
 	# Load and add VR integration
-	var vr_integration_script = load("res://code/gdscript/scripts/Menu_Keyboard_Console/vr_integration.gd")
+	var vr_integration_script = load("res://scripts/gdscript/scripts/Menu_Keyboard_Console/vr_integration.gd")
 	if vr_integration_script:
 		var vr_integration = vr_integration_script.new()
 		vr_integration.name = "VRIntegration"

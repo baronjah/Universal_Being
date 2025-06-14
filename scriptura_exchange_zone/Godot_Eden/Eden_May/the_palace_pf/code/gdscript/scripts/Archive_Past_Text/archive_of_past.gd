@@ -1,5 +1,5 @@
 # archive_of_past.gd
-extends Node
+extends \2
 # main.gd
 # JSH Ethereal Engine tests
 ####################
@@ -280,7 +280,7 @@ extends Node
 	#@onready var JSH_Threads = get_node("JSH_ThreadPool_Manager")
 	#
 	## autoload ones
-	#@onready var thread_pool = get_node("/root/thread_pool_autoload")
+	#@onready var thread_pool = get_node("root/thread_pool_autoload")
 	
 	#JSH_records_system
 	#task_manager
@@ -330,7 +330,7 @@ extends Node
 ####################
 # JSH Ethereal Engine Repair
 	
-		#class_name BanksCombiner #BanksCombiner.combination_0
+		#class_name BanksCombiner_archiveofpast_archiveo #BanksCombiner.combination_0
 		#const data_sets_names = [
 			#"base_", "menu_", "settings_", "keyboard_", "keyboard_left_", "keyboard_right_", "things_creation_", "singular_lines_"
 		#]
@@ -1140,7 +1140,7 @@ func another_data_chunk():
 	#for child in children_to_process:
 		#print_tree_structure(child, indent + 1)
 #func jsh_scene_tree_get_children(node_path_get_childs: String) -> Array:
-	#var path_parts = node_path_get_childs.split("/")
+	#var path_parts = node_path_get_childs.split("")
 	##tree_mutex.lock()
 	#var current_branch = scene_tree_jsh["main_root"]["branches"]
 	##tree_mutex.unlock()
@@ -1361,8 +1361,8 @@ func etheric_download_system_information_data():
 			#var temp_reality = alternate_realities[randi() % alternate_realities.size()]
 			#
 			## Brief reality flash
-			#var old_container = get_node_or_null("/root/main/" + current + "_reality_container")
-			#var new_container = get_node_or_null("/root/main/" + temp_reality + "_reality_container")
+			#var old_container = get_node_or_null("root/main/" + current + "_reality_container")
+			#var new_container = get_node_or_null("root/main/" + temp_reality + "_reality_container")
 			#
 			#if old_container and new_container:
 				#old_container.visible = false
@@ -1466,12 +1466,12 @@ func etheric_download_system_information_data():
 	#print("🔄 Shifting reality from " + old_reality + " to " + new_reality)
 	#
 	## Update reality text
-	#var reality_text_node = get_node_or_null("/root/main/digital_earthlings_container/thing_6")
+	#var reality_text_node = get_node_or_null("root/main/digital_earthlings_container/thing_6")
 	#if reality_text_node and reality_text_node is Label3D:
 		#reality_text_node.text = new_reality.to_upper()
 	#
 	## Update reality indicator color
-	#var reality_indicator = get_node_or_null("/root/main/digital_earthlings_container/thing_5")
+	#var reality_indicator = get_node_or_null("root/main/digital_earthlings_container/thing_5")
 	#if reality_indicator and reality_indicator is MeshInstance3D:
 		#var material = reality_indicator.get_surface_material(0)
 		#if material:
@@ -1485,7 +1485,7 @@ func etheric_download_system_information_data():
 	#if main_node and main_node.has_method("sixth_dimensional_magic"):
 		#main_node.sixth_dimensional_magic(
 			#"call_function_single_get_node",
-			#"/root/main",
+			#"root/main",
 			#"create_glitch_effect",
 			#["visuals", 50, "2s"]
 		#)
@@ -1551,7 +1551,7 @@ func etheric_download_system_information_data():
 	#
 	## Transform entity in current reality
 	#var container_path = current_reality + "_reality_container"
-	#var entity_path = container_path + "/" + entity_name
+	#var entity_path = container_path + "" + entity_name
 	#
 	## Use JSH's transformation system
 	#if main_node and main_node.has_method("the_fourth_dimensional_magic"):
@@ -1580,7 +1580,7 @@ func etheric_download_system_information_data():
 		#return {"success": false, "message": "Usage: remember [concept] [details...]"}
 	#
 	#var concept = args[0]
-	#var details = " ".join(args.slice(1, args.size() - 1))
+	#var details = " "." ".join(args.slice(1, args.size() - 1))
 	#
 	## Store in memory
 	#remember(concept, details)
@@ -1616,7 +1616,7 @@ func etheric_download_system_information_data():
 		#return {"success": false, "message": "Usage: speak [entity_name] [message]"}
 	#
 	#var entity_name = args[0]
-	#var message = " ".join(args.slice(1, args.size() - 1))
+	#var message = " "." ".join(args.slice(1, args.size() - 1))
 	#
 	## Use JSH's messaging system
 	#if main_node and main_node.has_method("eight_dimensional_magic"):
@@ -1734,7 +1734,7 @@ func etheric_download_system_information_data():
 		#Engine.time_scale = 0.8
 		#
 		## Set geometric shader with bold colors
-		#var world_env = get_node_or_null("/root/World/WorldEnvironment")
+		#var world_env = get_node_or_null("root/World/WorldEnvironment")
 		#if world_env and "environment" in world_env:
 			## Apply geometric shader
 			#pass
@@ -1764,7 +1764,7 @@ func etheric_download_system_information_data():
 		#Engine.time_scale = 1.0
 		#
 		## Set normal shader
-		#var world_env = get_node_or_null("/root/World/WorldEnvironment")
+		#var world_env = get_node_or_null("root/World/WorldEnvironment")
 		#if world_env and "environment" in world_env:
 			## Load normal shader
 			#pass
@@ -1790,7 +1790,7 @@ func etheric_download_system_information_data():
 		#Engine.time_scale = 1.2
 		#
 		## Set PS2-era shader effects
-		#var world_env = get_node_or_null("/root/World/WorldEnvironment")
+		#var world_env = get_node_or_null("root/World/WorldEnvironment")
 		#if world_env and "environment" in world_env:
 			## Apply low-poly shader
 			#pass
@@ -2003,7 +2003,7 @@ func etheric_download_system_information_data():
 		#Engine.time_scale = 1.0
 		#
 		## Set normal shader
-		#var world_env = get_node_or_null("/root/World/WorldEnvironment")
+		#var world_env = get_node_or_null("root/World/WorldEnvironment")
 		#if world_env and "environment" in world_env:
 			## Load normal shader
 			#pass
@@ -2030,7 +2030,7 @@ func etheric_download_system_information_data():
 		#Engine.time_scale = 1.2
 		#
 		## Set PS2-era shader effects
-		#var world_env = get_node_or_null("/root/World/WorldEnvironment")
+		#var world_env = get_node_or_null("root/World/WorldEnvironment")
 		#if world_env and "environment" in world_env:
 			## Apply low-poly shader
 			#pass
@@ -2057,7 +2057,7 @@ func etheric_download_system_information_data():
 		#Engine.time_scale = 0.8
 		#
 		## Set geometric shader with bold colors
-		#var world_env = get_node_or_null("/root/World/WorldEnvironment")
+		#var world_env = get_node_or_null("root/World/WorldEnvironment")
 		#if world_env and "environment" in world_env:
 			## Apply geometric shader
 			#pass
@@ -2647,7 +2647,7 @@ func etheric_download_system_information_data():
 ## JSH Digital Earthlings Integration
 #func trigger_transition_effect(from_reality, to_reality):
 	## Using Ethereal Engine's shader system
-	#sixth_dimensional_magic("call_function_single_get_node", "/root/JSH_reality_shaders", "trigger_transition_effect", [from_reality, to_reality])
+	#sixth_dimensional_magic("call_function_single_get_node", "root/JSH_reality_shaders", "trigger_transition_effect", [from_reality, to_reality])
 #####################
 
 
@@ -3812,7 +3812,7 @@ func etheric_download_system_information_data():
 							#var parent_path = data_to_process[1]
 							#var node_name = data_to_process[2]
 							#var main_node_to_add = data_to_process[3]
-							#var combined_path = parent_path + "/" + node_name
+							#var combined_path = parent_path + "" + node_name
 							#var container = get_node(parent_path)
 							#if container:
 								#container.add_child(main_node_to_add)
@@ -3833,7 +3833,7 @@ func etheric_download_system_information_data():
 							#var node_name = data_to_process[2]
 							#var main_node_to_add = data_to_process[3]
 							#var container_name = data_to_process[4]
-							#var combined_path = parent_path + "/" + node_name
+							#var combined_path = parent_path + "" + node_name
 							#var container = get_node(parent_path)
 							#if container:
 								#container.add_child(main_node_to_add)
@@ -4296,7 +4296,7 @@ func etheric_download_system_information_data():
 	#
 	## Use fourth_dimensional_magic to transform the entity
 	#var container_path = current_reality + "_reality_container"
-	#var entity_path = container_path + "/" + entity_name
+	#var entity_path = container_path + "" + entity_name
 	#the_fourth_dimensional_magic("transform", entity_path, {
 		#"form": new_form,
 		#"attributes": attributes
@@ -4319,7 +4319,7 @@ func etheric_download_system_information_data():
 		#return {"success": false, "message": "Usage: remember [concept] [details...]"}
 	#
 	#var concept = args[0]
-	#var details = " ".join(args.slice(1, args.size() - 1))
+	#var details = " "." ".join(args.slice(1, args.size() - 1))
 	#
 	## Store in memory
 	#var result = remember(concept, details)
@@ -4366,7 +4366,7 @@ func etheric_download_system_information_data():
 		#return {"success": false, "message": "Usage: speak [entity_name] [message]"}
 	#
 	#var entity_name = args[0]
-	#var message = " ".join(args.slice(1, args.size() - 1))
+	#var message = " "." ".join(args.slice(1, args.size() - 1))
 	#
 	## Send message to entity
 	#print("💬 Speaking to entity: " + entity_name + " with message: " + message)
@@ -4461,7 +4461,7 @@ func etheric_download_system_information_data():
 				#active_count += 1
 		#
 		#var usage_percent = int((float(active_count) / total_count) * 100) if total_count > 0 else 0
-		#var message = "Thread usage: " + str(active_count) + "/" + str(total_count) + " (" + str(usage_percent) + "%)"
+		#var message = "Thread usage: " + str(active_count) + "" + str(total_count) + " (" + str(usage_percent) + "%)"
 		#
 		#return {
 			#"success": true,

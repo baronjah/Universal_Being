@@ -1,5 +1,5 @@
 # scripts/thing.gd
-extends Node
+extends \2
 
 # Data for current visible position, orientation, direction, center of mass, so where it is, where it is going, and it will be needed for physics stuff, like every node? so maybe lets make one script for just thing appearing?
 var current_position : Array = []

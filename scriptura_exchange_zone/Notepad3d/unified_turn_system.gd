@@ -1,6 +1,6 @@
 extends Node
 
-class_name UnifiedTurnSystem
+class_name UnifiedTurnSystem_unifiedturnsystem_unifiedt
 
 # ----- SYSTEM CONSTANTS -----
 const VERSION = "1.0.0"
@@ -13,7 +13,7 @@ const DEFAULT_TURN_DURATION = 9.0  # The sacred 9-second interval
 const TURN_SYMBOLS = [
 	"△", # Triangle - Genesis - 1D - Linear Expression
 	"○", # Circle - Formation - 2D - Planar Reflection
-	"□", # Square - Complexity - 3D - Spatial Manifestation
+	"□", # Square - Complexity - 3D - Node3D Manifestation
 	"◇", # Diamond - Awareness - 4D - Temporal Flow
 	"×", # Cross - Connection - 5D - Probability Waves
 	"⊕", # Circled Plus - Expansion - 6D - Phase Resonance
@@ -28,7 +28,7 @@ const TURN_SYMBOLS = [
 const DIMENSION_NAMES = [
 	"Linear Expression",      # 1D
 	"Planar Reflection",      # 2D
-	"Spatial Manifestation",  # 3D
+	"Node3D Manifestation",  # 3D
 	"Temporal Flow",          # 4D
 	"Probability Waves",      # 5D
 	"Phase Resonance",        # 6D
@@ -41,7 +41,8 @@ const DIMENSION_NAMES = [
 ]
 
 # ----- COLOR SYSTEM -----
-enum ColorSystem {
+enum \2 {
+
 	AZURE,     # Dimension 1 - Foundation
 	EMERALD,   # Dimension 2 - Growth
 	AMBER,     # Dimension 3 - Energy
@@ -478,7 +479,7 @@ func get_time_remaining():
 	return max(0, turn_duration - elapsed_time)
 
 func get_turn_cycle():
-	return total_cycles_completed + (current_turn == MAX_TURNS_PER_CYCLE ? 1 : 0)
+	return total_cycles_completed + (current_turn == 1 if MAX_TURNS_PER_CYCLE else 0)
 
 func get_cycle_turn():
 	return current_turn
@@ -571,9 +572,9 @@ func _update_turn_files():
 	
 	# Try to save to system directory for other systems
 	var system_paths = [
-		"/mnt/c/Users/Percision 15/12_turns_system/current_turn.txt",
-		"/mnt/c/Users/Percision 15/12_turns_system/display1_turn.txt",
-		"/mnt/c/Users/Percision 15/12_turns_system/display2_turn.txt"
+		"mnt/c/Users/Percision 15/12_turns_system/current_turn.txt",
+		"mnt/c/Users/Percision 15/12_turns_system/display1_turn.txt",
+		"mnt/c/Users/Percision 15/12_turns_system/display2_turn.txt"
 	]
 	
 	for path in system_paths:
@@ -598,32 +599,32 @@ func _update_turn_files():
 # ----- CONNECTED SYSTEMS -----
 func _find_connected_systems():
 	# Find ethereal bridge
-	ethereal_bridge = get_node_or_null("/root/EtherealAkashicBridge")
+	ethereal_bridge = get_node_or_null("root/EtherealAkashicBridge")
 	if ethereal_bridge == null:
 		ethereal_bridge = _find_node_by_class(get_tree().root, "EtherealAkashicBridge")
 		
 	# Find akashic system
-	akashic_system = get_node_or_null("/root/AkashicNumberSystem")
+	akashic_system = get_node_or_null("root/AkashicNumberSystem")
 	if akashic_system == null:
 		akashic_system = _find_node_by_class(get_tree().root, "AkashicNumberSystem")
 	
 	# Find word processor
-	word_processor = get_node_or_null("/root/DivineWordProcessor")
+	word_processor = get_node_or_null("root/DivineWordProcessor")
 	if word_processor == null:
 		word_processor = _find_node_by_class(get_tree().root, "DivineWordProcessor")
 	
 	# Find color system
-	color_system = get_node_or_null("/root/DimensionalColorSystem")
+	color_system = get_node_or_null("root/DimensionalColorSystem")
 	if color_system == null:
 		color_system = _find_node_by_class(get_tree().root, "DimensionalColorSystem")
 	
 	# Find dimensional system
-	dimensional_system = get_node_or_null("/root/EtherealEngine")
+	dimensional_system = get_node_or_null("root/EtherealEngine")
 	if dimensional_system == null:
 		dimensional_system = _find_node_by_class(get_tree().root, "EtherealEngine")
 	
 	# Find file connector
-	file_connector = get_node_or_null("/root/FileConnectionSystem")
+	file_connector = get_node_or_null("root/FileConnectionSystem")
 	if file_connector == null:
 		file_connector = _find_node_by_class(get_tree().root, "FileConnectionSystem")
 	

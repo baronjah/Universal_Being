@@ -1,5 +1,5 @@
 extends Node
-class_name LuminousNeuralProcessor
+class_name LuminousNeuralProcessor_luminousneuralprocessor_luminous
 
 # Signals
 signal model_loaded(model_name)

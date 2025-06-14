@@ -30,6 +30,7 @@ func pentagon_init() -> void:
     consciousness_level = 2  # Medium consciousness for console management
     
     print("🌟 %s: Console Base Init Complete" % being_name)
+	
 
 func pentagon_ready() -> void:
     super.pentagon_ready()
@@ -38,6 +39,7 @@ func pentagon_ready() -> void:
     setup_console_ui()
     
     print("🌟 %s: Console Base Ready Complete" % being_name)
+	
 
 func pentagon_process(delta: float) -> void:
     super.pentagon_process(delta)
@@ -101,6 +103,7 @@ func execute_command(command: String) -> String:
     """Execute a console command and return result"""
     # Base implementation - override in subclasses
     return "Command not implemented: " + command
+	
 
 func submit_current_command() -> void:
     """Submit the current command for processing"""
@@ -175,8 +178,8 @@ func ai_interface() -> Dictionary:
         "name": console_name,
         "history_size": command_history.size(),
         "output_size": output_buffer.size()
-    }
     return base_interface
+}
 
 func ai_invoke_method(method_name: String, args: Array = []) -> Variant:
     match method_name:

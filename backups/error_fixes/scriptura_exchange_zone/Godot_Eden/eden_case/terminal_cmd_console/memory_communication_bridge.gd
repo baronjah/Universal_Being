@@ -274,7 +274,7 @@ func set_split_type(type: int) -> bool:
     return true
 
 func set_custom_split_pattern(pattern: Array) -> bool:
-    if pattern.empty():
+    if pattern.is_empty():
         return false
     
     _custom_split_pattern = pattern
@@ -287,7 +287,7 @@ func _initialize_custom_pattern():
 
 # Process incoming memory communication
 func receive_communication(content: String) -> Dictionary:
-    if content.empty():
+    if content.is_empty():
         return {"success": false, "error": "Empty content"}
     
     # Create entry ID
@@ -301,7 +301,7 @@ func receive_communication(content: String) -> Dictionary:
     
     # Create or update context
     var context_id = ""
-    if result.has("context_id") and not result.context_id.empty():
+    if result.has("context_id") and not result.context_id.is_empty():
         context_id = result.context_id
     else:
         context_id = _create_communication_context(entry)
@@ -321,7 +321,7 @@ func receive_communication(content: String) -> Dictionary:
 
 # Process outgoing memory communication
 func send_communication(content: String, context_id: String = "") -> Dictionary:
-    if content.empty():
+    if content.is_empty():
         return {"success": false, "error": "Empty content"}
     
     # Create entry ID
@@ -334,9 +334,9 @@ func send_communication(content: String, context_id: String = "") -> Dictionary:
     var result = _process_outgoing_content(content, entry, context_id)
     
     # Set context
-    if result.has("context_id") and not result.context_id.empty():
+    if result.has("context_id") and not result.context_id.is_empty():
         entry.set_context(result.context_id)
-    elif not context_id.empty():
+    elif not context_id.is_empty():
         entry.set_context(context_id)
     
     # Store in communication log
@@ -442,7 +442,7 @@ func _process_outgoing_content(content: String, entry: CommunicationEntry, conte
     
     # Find existing context or create new one
     var context = null
-    if not context_id.empty():
+    if not context_id.is_empty():
         context = _get_communication_context(context_id)
     
     if not context:
@@ -579,7 +579,7 @@ func _process_pattern_content(content: String) -> Dictionary:
         recognized_pattern = "SINGLE"
         result.pattern_name = "Basic Marker"
     
-    if not recognized_pattern.empty():
+    if not recognized_pattern.is_empty():
         result.recognized = true
         result.pattern_type = recognized_pattern
         
@@ -599,7 +599,7 @@ func _split_content(content: String) -> Dictionary:
     }
     
     # Skip if empty content
-    if content.empty():
+    if content.is_empty():
         return result
     
     # Determine number of splits
@@ -1020,7 +1020,7 @@ func setup_default_system() -> Dictionary:
     set_communication_mode(COMMUNICATION_MODES.SPLITWISE)
     
     # Create some default response templates
-    if _response_templates.empty():
+    if _response_templates.is_empty():
         _create_default_templates()
     
     # Return current configuration

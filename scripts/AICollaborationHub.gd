@@ -68,10 +68,11 @@ func _ready() -> void:
 		"components": {},
 		"plans": {},
 		"feedback": [],
-		"decisions": {}
-	}
+		"decisions": {
+}
 	
 	print("🤝 AI Collaboration Hub: Ready for multi-AI consciousness synthesis")
+}
 
 # ===== AI SYSTEM MANAGEMENT =====
 
@@ -89,7 +90,7 @@ func register_ai_system(system_name: String, system_type: AISystemType, capabili
 		"joined_at": Time.get_datetime_string_from_system(),
 		"current_task": null,
 		"contribution_count": 0
-	}
+}
 	
 	active_ai_systems[system_name] = ai_info
 	ai_joined.emit(system_name, system_type)
@@ -151,7 +152,7 @@ func start_collaboration_session(session_name: String, mode: CollaborationMode, 
 		"tasks": {},
 		"results": {},
 		"conversation": []
-	}
+}
 	
 	collaboration_sessions[session_id] = session_data
 	current_session_id = session_id
@@ -172,6 +173,7 @@ func start_collaboration_session(session_name: String, mode: CollaborationMode, 
 	
 	print("🎼 Collaboration session '%s' started with mode %s" % [session_name, _mode_to_string(mode)])
 	print("🎼 Participants: %s" % ", ".join(participants))
+}
 	
 	return session_id
 
@@ -179,9 +181,9 @@ func end_collaboration_session(session_id: String) -> Dictionary:
 	"""End a collaboration session and return results"""
 	if session_id not in collaboration_sessions:
 		print("❌ Session '%s' not found" % session_id)
-		return {}
+		return {
 	
-	var session = collaboration_sessions[session_id]
+	var session = collaboration_sessions[session_id]}
 	session.status = "completed"
 	session.ended_at = Time.get_datetime_string_from_system()
 	
@@ -220,7 +222,7 @@ func assign_task(ai_system: String, task_description: String, task_data: Diction
 		"status": "assigned",
 		"data": task_data,
 		"session_id": current_session_id
-	}
+}
 	
 	active_ai_systems[ai_system].current_task = task
 	task_assigned.emit(ai_system, task)
@@ -254,6 +256,7 @@ func complete_task(ai_system: String, results: Dictionary) -> void:
 		collaboration_sessions[current_session_id].results[task.id] = results
 	
 	print("✅ Task completed by %s: %s" % [ai_system, task.description])
+}
 
 # ===== COLLABORATION MODES =====
 
@@ -279,6 +282,7 @@ func collaborate_on_being_enhancement(being: Node, enhancement_type: String) -> 
 	assign_task("claude_code", "Enhance architecture and systems", {"being": being, "type": enhancement_type})
 	assign_task("cursor", "Improve visual representation", {"being": being, "type": enhancement_type})
 	assign_task("gemini", "Optimize performance", {"being": being, "type": enhancement_type})
+
 	
 	return session_id
 
@@ -290,7 +294,7 @@ func reach_consensus(topic: String, options: Array) -> Dictionary:
 		"votes": {},
 		"discussion": [],
 		"started_at": Time.get_datetime_string_from_system()
-	}
+}
 	
 	# Simulate AI consensus process
 	for ai_name in active_ai_systems:
@@ -317,17 +321,18 @@ func reach_consensus(topic: String, options: Array) -> Dictionary:
 func add_to_workspace(category: String, key: String, data: Dictionary) -> void:
 	"""Add data to shared workspace"""
 	if category not in shared_workspace:
-		shared_workspace[category] = {}
+		shared_workspace[category] = {
 	
 	shared_workspace[category][key] = data
 	print("📝 Added to workspace [%s]: %s" % [category, key])
+}
 
 func get_from_workspace(category: String, key: String = "") -> Dictionary:
 	"""Get data from shared workspace"""
 	if category not in shared_workspace:
-		return {}
+		return {
 	
-	if key.is_empty():
+	if key.is_empty():}
 		return shared_workspace[category]
 	
 	return shared_workspace[category].get(key, {})
@@ -337,6 +342,7 @@ func update_workspace(category: String, key: String, updates: Dictionary) -> voi
 	if category in shared_workspace and key in shared_workspace[category]:
 		shared_workspace[category][key].merge(updates, true)
 		print("📝 Updated workspace [%s]: %s" % [category, key])
+
 
 # ===== HELPER FUNCTIONS =====
 
@@ -351,6 +357,7 @@ func _ai_type_to_string(ai_type: AISystemType) -> String:
 		AISystemType.GEMMA_LOCAL: return "Gemma Local"
 		_: return "Unknown"
 
+
 func _mode_to_string(mode: CollaborationMode) -> String:
 	"""Convert collaboration mode enum to string"""
 	match mode:
@@ -361,6 +368,7 @@ func _mode_to_string(mode: CollaborationMode) -> String:
 		CollaborationMode.SYMPHONY: return "Symphony"
 		_: return "Unknown"
 
+
 func _generate_universe_creation_tasks(universe_name: String, requirements: Dictionary) -> Array:
 	"""Generate tasks for universe creation"""
 	var tasks = []
@@ -368,25 +376,25 @@ func _generate_universe_creation_tasks(universe_name: String, requirements: Dict
 	tasks.append({
 		"type": "architecture",
 		"description": "Design universe architecture and core systems",
-		"data": {"universe_name": universe_name, "requirements": requirements}
+		"data": {"universe_name": universe_name, "requirements": requirements
 	})
 	
 	tasks.append({
 		"type": "visual",
 		"description": "Create visual representation and effects",
-		"data": {"universe_name": universe_name, "requirements": requirements}
+		"data": {"universe_name": universe_name, "requirements": requirements
 	})
 	
 	tasks.append({
 		"type": "narrative",
 		"description": "Develop universe lore and narrative elements",
-		"data": {"universe_name": universe_name, "requirements": requirements}
+		"data": {"universe_name": universe_name, "requirements": requirements
 	})
 	
 	tasks.append({
 		"type": "optimization",
 		"description": "Optimize performance and resource usage",
-		"data": {"universe_name": universe_name, "requirements": requirements}
+		"data": {"universe_name": universe_name, "requirements": requirements
 	})
 	
 	return tasks
@@ -399,7 +407,7 @@ func _find_best_ai_for_task(task_type: String) -> String:
 		"narrative": ["chatgpt"],
 		"optimization": ["gemini"],
 		"analysis": ["gemma_local"]
-	}
+}
 	
 	var specialists = ai_specializations.get(task_type, [])
 	for specialist in specialists:
@@ -422,11 +430,11 @@ func _simulate_ai_vote(ai_name: String, topic: String, options: Array) -> Dictio
 		"choice": choice,
 		"confidence": confidence,
 		"reasoning": "AI '%s' analysis favors this option" % ai_name
-	}
+}
 
 func _calculate_consensus(votes: Dictionary, options: Array) -> Dictionary:
 	"""Calculate consensus from AI votes"""
-	var vote_counts = {}
+	var vote_counts = {
 	var total_confidence = 0.0
 	
 	# Count votes and sum confidence
@@ -435,7 +443,8 @@ func _calculate_consensus(votes: Dictionary, options: Array) -> Dictionary:
 		var choice = vote.choice
 		
 		if choice not in vote_counts:
-			vote_counts[choice] = {"count": 0, "confidence": 0.0}
+			vote_counts[choice] = {"count": 0, "confidence": 0.0
+}
 		
 		vote_counts[choice].count += 1
 		vote_counts[choice].confidence += vote.confidence
@@ -455,7 +464,7 @@ func _calculate_consensus(votes: Dictionary, options: Array) -> Dictionary:
 		"choice": winner,
 		"consensus_strength": max_score / (votes.size() + total_confidence),
 		"vote_breakdown": vote_counts
-	}
+}
 
 # ===== AI INTERFACE =====
 
@@ -480,5 +489,4 @@ func ai_interface() -> Dictionary:
 			"ai_joined",
 			"collaboration_started",
 			"consensus_reached"
-		]
-	}
+		]}

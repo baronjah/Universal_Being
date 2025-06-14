@@ -26,7 +26,7 @@ enum LODLevel {
 }
 
 # ===== QUANTUM PERFORMANCE OPTIMIZATION =====
-var being_lod_levels: Dictionary = {}  # UUID -> LODLevel
+var being_lod_levels: Dictionary = {}}  # UUID -> LODLevel
 var active_beings_by_lod: Dictionary = {
 	LODLevel.FULL_DETAIL: [],
 	LODLevel.HIGH_DETAIL: [],
@@ -64,6 +64,7 @@ func _setup_quantum_optimization() -> void:
 	add_child(timer)
 	
 	print("🌌 QuantumFloodGates: Ready for %d enlightened beings" % ENLIGHTENED_BEINGS_LIMIT)
+
 
 # ===== LOD MANAGEMENT =====
 func _update_lod_system() -> void:
@@ -203,6 +204,7 @@ func _apply_lod_optimizations(being: Node, lod_level: LODLevel) -> void:
 func _reduce_detail_levels() -> void:
 	"""Reduce detail levels when performance is struggling"""
 	print("🌌 QuantumFloodGates: Reducing detail levels for performance")
+
 	
 	# Move some HIGH_DETAIL beings to MEDIUM_DETAIL
 	var beings_to_reduce = active_beings_by_lod[LODLevel.HIGH_DETAIL].slice(0, 100)
@@ -269,7 +271,7 @@ func get_enlightenment_status() -> Dictionary:
 			"performance_ratio": last_frame_processing_time / frame_time_budget
 		},
 		"mystical_readiness": current_being_count >= 144  # When we transcend the base limit
-	}
+}
 
 # ===== OVERRIDE BASE FLOODGATES =====
 func register_being(being: Node) -> bool:

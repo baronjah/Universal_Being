@@ -1,6 +1,6 @@
 extends Node
 
-class_name ScaleConsoleCommands
+class_name ScaleConsoleCommands_scaleconsolecommands_scalecon
 
 # ----- CONSOLE REFERENCE -----
 var console: Node  # JSHConsoleAdvanced reference
@@ -334,7 +334,7 @@ func _cmd_whimsy(args: Array) -> Dictionary:
         size = float(args[1])
         size = max(5.0, min(size, 50.0))  # Limit between 5-50
     
-    // Determine zone properties based on whimsy type
+# // Determine zone properties based on whimsy type
     var scale_level = "human"  // Default
     var zone_type = zone_scale_system.ZoneType.STABLE
     var position = Vector3.ZERO
@@ -342,9 +342,9 @@ func _cmd_whimsy(args: Array) -> Dictionary:
     if player_controller:
         position = player_controller.global_position + player_controller.camera_mount.global_transform.basis.z * -size
     
-    // Map whimsy to zone properties
+# // Map whimsy to zone properties
     match whimsy_type:
-        // Emotional whimsies
+# // Emotional whimsies
         "joy", "happy", "excitement":
             scale_level = "human"
             zone_type = zone_scale_system.ZoneType.CREATIVE
@@ -361,7 +361,7 @@ func _cmd_whimsy(args: Array) -> Dictionary:
             scale_level = "planetary"
             zone_type = zone_scale_system.ZoneType.STABLE
         
-        // Conceptual whimsies
+# // Conceptual whimsies
         "infinity", "endless", "eternal":
             scale_level = "cosmic"
             zone_type = zone_scale_system.ZoneType.ACCELERATED
@@ -378,7 +378,7 @@ func _cmd_whimsy(args: Array) -> Dictionary:
             scale_level = rand_array(zone_scale_system.scale_levels)
             zone_type = zone_scale_system.ZoneType.DESTRUCTIVE
         
-        // Intensity whimsies
+# // Intensity whimsies
         "intense", "powerful", "strong":
             scale_level = rand_array(zone_scale_system.scale_levels)
             zone_type = zone_scale_system.ZoneType.ACCELERATED
@@ -390,11 +390,11 @@ func _cmd_whimsy(args: Array) -> Dictionary:
             zone_type = randi() % zone_scale_system.ZoneType.size()
         
         _:
-            // For unknown whimsies, use a shifting zone with random scale
+# // For unknown whimsies, use a shifting zone with random scale
             scale_level = rand_array(zone_scale_system.scale_levels)
             zone_type = zone_scale_system.ZoneType.SHIFTING
     
-    // Create the zone based on whimsy
+# // Create the zone based on whimsy
     var zone_id = zone_scale_system.create_custom_zone(position, size, scale_level, zone_scale_system.ZoneType.keys()[zone_type])
     
     if zone_id != "":
@@ -425,7 +425,7 @@ func _cmd_matter(args: Array) -> Dictionary:
     
     match matter_aspect:
         "balance":
-            // Set creation and destruction to the same value
+# // Set creation and destruction to the same value
             zone_data.manifestation_factor = value
             zone_data.destruction_factor = value
             return {
@@ -434,7 +434,7 @@ func _cmd_matter(args: Array) -> Dictionary:
             }
         
         "creation":
-            // Set creation/manifestation rate
+# // Set creation/manifestation rate
             zone_data.manifestation_factor = value
             return {
                 "message": "Matter creation rate in current zone set to " + str(value) + "x", 
@@ -442,7 +442,7 @@ func _cmd_matter(args: Array) -> Dictionary:
             }
         
         "destruction":
-            // Set destruction rate
+# // Set destruction rate
             zone_data.destruction_factor = value
             return {
                 "message": "Matter destruction rate in current zone set to " + str(value) + "x", 
@@ -561,7 +561,7 @@ func _cmd_chunk_create(args: Array) -> Dictionary:
     if args.size() >= 2:
         scale_level = args[1].to_lower()
         
-        // Check scale level validity
+# // Check scale level validity
         if not scale_level in zone_scale_system.scale_levels:
             var valid_scales = ", ".join(zone_scale_system.scale_levels)
             return {"message": "Invalid scale level. Valid options: " + valid_scales, "color": output_color_error}
@@ -569,17 +569,17 @@ func _cmd_chunk_create(args: Array) -> Dictionary:
     if args.size() >= 5:
         position = Vector3(float(args[2]), float(args[3]), float(args[4]))
     elif player_controller:
-        // Use position in front of player
+# // Use position in front of player
         position = player_controller.global_position + player_controller.camera_mount.global_transform.basis.z * -10.0
     
-    // Create a custom chunk with properties based on name
+# // Create a custom chunk with properties based on name
     var properties = {
         "name": chunk_name,
         "custom_chunk": true,
         "creation_time": Time.get_ticks_msec() / 1000.0
     }
     
-    // Random zone type based on chunk name hash
+# // Random zone type based on chunk name hash
     var hash_value = 0
     for i in range(chunk_name.length()):
         hash_value += chunk_name.unicode_at(i)
@@ -587,7 +587,7 @@ func _cmd_chunk_create(args: Array) -> Dictionary:
     var zone_type_index = hash_value % zone_scale_system.ZoneType.size()
     var zone_type = zone_scale_system.ZoneType.keys()[zone_type_index]
     
-    // Create the zone representing this chunk
+# // Create the zone representing this chunk
     var zone_id = zone_scale_system.create_custom_zone(position, 8.0, scale_level, zone_type, properties)
     
     if zone_id != "":
@@ -605,11 +605,11 @@ func _cmd_chunk_destroy(args: Array) -> Dictionary:
     var chunk_identifier = args[0]
     var found_zone_id = ""
     
-    // Check if it's a direct zone ID
+# // Check if it's a direct zone ID
     if zone_scale_system.active_zones.has(chunk_identifier):
         found_zone_id = chunk_identifier
     else:
-        // Search for chunk by name
+# // Search for chunk by name
         for zone_id in zone_scale_system.active_zones:
             var zone_data = zone_scale_system.active_zones[zone_id]
             
@@ -620,7 +620,7 @@ func _cmd_chunk_destroy(args: Array) -> Dictionary:
     if found_zone_id == "":
         return {"message": "Chunk not found: " + chunk_identifier, "color": output_color_error}
     
-    // Delete the zone
+# // Delete the zone
     if zone_scale_system.delete_zone(found_zone_id):
         return {"message": "Destroyed chunk: " + chunk_identifier, "color": output_color_zone}
     else:
@@ -636,11 +636,11 @@ func _cmd_chunk_modify(args: Array) -> Dictionary:
     
     var found_zone_id = ""
     
-    // Check if it's a direct zone ID
+# // Check if it's a direct zone ID
     if zone_scale_system.active_zones.has(chunk_identifier):
         found_zone_id = chunk_identifier
     else:
-        // Search for chunk by name
+# // Search for chunk by name
         for zone_id in zone_scale_system.active_zones:
             var zone_data = zone_scale_system.active_zones[zone_id]
             
@@ -653,12 +653,12 @@ func _cmd_chunk_modify(args: Array) -> Dictionary:
     
     var zone_data = zone_scale_system.active_zones[found_zone_id]
     
-    // Modify the specified property
+# // Modify the specified property
     match property:
         "size", "radius":
             zone_data.radius = float(value)
             
-            // Update visualization if available
+# // Update visualization if available
             if zone_scale_system.visualization_enabled and zone_scale_system.zone_visualization_nodes.has(found_zone_id):
                 var mesh = zone_scale_system.zone_visualization_nodes[found_zone_id].get_node("BoundaryMesh")
                 if mesh and mesh.mesh:
@@ -681,7 +681,7 @@ func _cmd_chunk_modify(args: Array) -> Dictionary:
             if zone_type_index >= 0:
                 zone_data.zone_type = zone_type_index
                 
-                // Update visualization if available
+# // Update visualization if available
                 if zone_scale_system.visualization_enabled and zone_scale_system.zone_visualization_nodes.has(found_zone_id):
                     var mesh = zone_scale_system.zone_visualization_nodes[found_zone_id].get_node("BoundaryMesh")
                     if mesh and mesh.material_override:
@@ -705,7 +705,7 @@ func _cmd_chunk_modify(args: Array) -> Dictionary:
         _:
             return {"message": "Unknown property: " + property, "color": output_color_error}
     
-    // Update the zone label
+# // Update the zone label
     if zone_scale_system.visualization_enabled and zone_scale_system.zone_visualization_nodes.has(found_zone_id):
         var label = zone_scale_system.zone_visualization_nodes[found_zone_id].get_node("ZoneLabel")
         if label:
@@ -729,5 +729,5 @@ func set_references(console_ref, zone_scale_ref, word_seed_ref, player_ref):
     word_seed_evolution = word_seed_ref
     player_controller = player_ref
     
-    // Register commands
+# // Register commands
     register_commands()

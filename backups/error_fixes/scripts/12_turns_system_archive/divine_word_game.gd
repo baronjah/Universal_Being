@@ -38,7 +38,7 @@ var config = {
 	"word_targets": {},
 	"banned_words": [],
 	"sacred_words": [],
-	"dimension_challenges": {}
+	"dimension_challenges": {
 }
 
 # Signals
@@ -98,22 +98,22 @@ func initialize_game():
 
 func connect_signals():
 	if turn_system:
-		turn_system.connect("turn_completed", self, "_on_turn_completed")
-		turn_system.connect("dimension_changed", self, "_on_dimension_changed")
+		turn_system.connect(_on_turn_completed)
+		turn_system.connect(_on_dimension_changed)
 	
 	if divine_word_processor:
-		divine_word_processor.connect("word_processed", self, "_on_word_processed")
+		divine_word_processor.connect(_on_word_processed)
 	
 	if word_salem_controller:
-		word_salem_controller.connect("game_over", self, "_on_salem_game_over")
-		word_salem_controller.connect("word_crime_detected", self, "_on_word_crime_detected")
+		word_salem_controller.connect(_on_salem_game_over)
+		word_salem_controller.connect(_on_word_crime_detected)
 	
 	if word_crimes_analysis:
-		word_crimes_analysis.connect("dangerous_pattern_detected", self, "_on_dangerous_pattern_detected")
-		word_crimes_analysis.connect("cosmic_power_threshold_reached", self, "_on_cosmic_power_threshold_reached")
+		word_crimes_analysis.connect(_on_dangerous_pattern_detected)
+		word_crimes_analysis.connect(_on_cosmic_power_threshold_reached)
 	
 	if word_comment_system:
-		word_comment_system.connect("dream_recorded", self, "_on_dream_recorded")
+		word_comment_system.connect(_on_dream_recorded)
 
 func setup_config():
 	# Set up initial game configuration
@@ -216,8 +216,7 @@ func setup_config():
 			"target_words": ["divine", "sacred", "eternal", "transcend"],
 			"min_power": 70,
 			"reward": 1200
-		}
-	}
+}
 	
 	# Set up banned words
 	config.banned_words = [
@@ -245,7 +244,7 @@ func setup_config():
 	update_word_targets()
 
 func update_word_targets():
-	config.word_targets = {}
+	config.word_targets = {
 	
 	# Add dimension-specific targets based on current dimension
 	var dimension = turn_system.current_dimension if turn_system else 1
@@ -257,7 +256,7 @@ func update_word_targets():
 				"completed": false,
 				"min_power": challenge.min_power,
 				"reward": challenge.reward / challenge.target_words.size()
-			}
+	}
 	
 	# Add level-specific targets
 	var level_words = []
@@ -267,13 +266,14 @@ func update_word_targets():
 		3: level_words = ["transform", "evolve", "change"]
 		4: level_words = ["master", "perfect", "complete"]
 		5: level_words = ["transcend", "ascend", "divine"]
+}
 	
 	for word in level_words:
 		config.word_targets[word] = {
 			"completed": false,
 			"min_power": 20 * current_level,
 			"reward": 50 * current_level
-		}
+}
 
 func start_game():
 	if current_state != GameState.MENU:
@@ -524,6 +524,7 @@ func _on_word_crime_detected(criminal, crime_type, word_power):
 			"moderate": penalty = 25
 			"major": penalty = 50
 			"cosmic": penalty = 100
+}
 		
 		score -= penalty
 		
@@ -610,7 +611,7 @@ func get_game_stats():
 		"dimension": turn_system.current_dimension if turn_system else 1,
 		"dimension_unlocked": dimension_unlocked,
 		"state": current_state
-	}
+}
 
 func restart_game():
 	end_game()

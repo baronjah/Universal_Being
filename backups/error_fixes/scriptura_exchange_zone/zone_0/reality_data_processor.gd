@@ -271,7 +271,7 @@ func setup_timer():
 	processing_timer = Timer.new()
 	add_child(processing_timer)
 	processing_timer.wait_time = 1.0
-	processing_timer.connect("timeout", self, "_on_processing_timer")
+	processing_timer.connect(_on_processing_timer)
 	processing_timer.set_paused(true)
 
 # Public API
@@ -355,7 +355,7 @@ func start_mining(mode = "standard", algorithm = "pattern_recognition", targets 
 	mining_status.digital_artifacts = 0
 	
 	# Set targets (or use default if empty)
-	if targets.empty():
+	if targets.is_empty():
 		mining_status.current_targets = ["automatic"]
 	else:
 		mining_status.current_targets = targets
@@ -999,7 +999,7 @@ func _select_dimension_for_pattern(algorithm):
 		if reality_status[dim].active:
 			valid_dimensions.append(dim)
 	
-	if valid_dimensions.empty():
+	if valid_dimensions.is_empty():
 		return "digital" # Default fallback
 	
 	return valid_dimensions[randi() % valid_dimensions.size()]
@@ -1012,11 +1012,11 @@ func _select_dimension_for_artifact(algorithm):
 		if reality_status[dim].active:
 			valid_dimensions.append(dim)
 	
-	if valid_dimensions.empty():
+	if valid_dimensions.is_empty():
 		return "digital" # Default fallback
 	
 	# Sort by access level (higher dimensions preferred for artifacts)
-	valid_dimensions.sort_custom(self, "_sort_dimensions_by_access_level")
+	valid_dimensions.sort_custom(self."_sort_dimensions_by_access_level")
 	
 	return valid_dimensions[0] # Return highest available dimension
 

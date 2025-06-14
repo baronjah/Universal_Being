@@ -58,6 +58,7 @@ func gather_cullable_objects():
 	
 	print("🕊️ OcclusionCulling: Found ", cullable_objects.size(), " objects to manage")
 
+
 func gather_objects_recursive(node: Node):
 	"""Recursively gather all cullable objects"""
 	if node is MeshInstance3D or node is Label3D or node is GPUParticles3D:
@@ -191,7 +192,7 @@ func get_peace_report() -> Dictionary:
 		"peace_level": akashic_peace_level,
 		"culling_active": culling_active,
 		"camera_position": camera.global_position if camera else Vector3.ZERO
-	}
+}
 
 func set_culling_active(active: bool):
 	"""Enable/disable occlusion culling"""

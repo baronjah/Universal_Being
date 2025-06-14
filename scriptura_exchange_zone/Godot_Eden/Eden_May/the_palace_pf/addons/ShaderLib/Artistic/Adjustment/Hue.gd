@@ -1,5 +1,6 @@
 @tool
-class_name VisualShaderNodeAdjustmentHue extends VisualShaderNodeCustom
+class_name VisualShaderNodeAdjustmentHue_Hue_Hue
+extends \2
 
 func _get_name() -> String:
 	return "Hue"

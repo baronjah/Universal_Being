@@ -33,7 +33,9 @@ func check_claude_updates():
 func update_claude_display(data):
 	# Show Claude's current thoughts in 3D
 	var status_text = "CLAUDE: " + data.get("claude_status", "Working...")
+
 	var task_text = "TASK: " + data.get("current_task", "Unknown")
+
 	
 	# Create floating status display
 	create_floating_message(status_text, Vector3(0, 10, 0), Color.CYAN)
@@ -203,8 +205,8 @@ func claude_update_status(status: String):
 		"claude_status": status,
 		"timestamp": Time.get_ticks_msec(),
 		"current_task": "VR IDE Development"
-	}
 	write_bridge_data(data)
+}
 
 func write_bridge_data(data: Dictionary):
 	var file = FileAccess.open(claude_bridge_file, FileAccess.WRITE)

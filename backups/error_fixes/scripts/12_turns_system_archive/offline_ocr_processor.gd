@@ -35,11 +35,11 @@ var installed_languages = {
     "chi_sim": false, # Simplified Chinese
     "chi_tra": false, # Traditional Chinese
     "kor": false  # Korean
-}
+	}
 
 # ----- OCR STATE -----
 var processing_queue = []
-var active_tasks = {}
+var active_tasks = {
 var mutex = Mutex.new()
 var thread_pool = []
 var is_busy = false
@@ -54,7 +54,7 @@ var stats = {
     "cache_hits": 0,
     "cache_misses": 0,
     "errors": 0
-}
+	}
 
 # ----- SIGNALS -----
 signal processing_started(image_id, language)
@@ -78,6 +78,7 @@ func _ready():
     print("Offline OCR Processor initialized")
     print("Cache directory: " + cache_directory)
     print("Tessdata path: " + tessdata_path)
+	}
 
 func _ensure_directories():
     var dir = Directory.new()
@@ -128,6 +129,7 @@ func _detect_installed_languages():
             available_langs.append(lang)
     
     print("Available OCR languages: " + str(available_langs))
+	
 
 # ----- PUBLIC API -----
 func process_image(image_path: String, options: Dictionary = {}) -> String:
@@ -180,7 +182,7 @@ func process_image(image_path: String, options: Dictionary = {}) -> String:
         "options": task_options,
         "cache_key": cache_key,
         "timestamp": OS.get_unix_time()
-    }
+		}
     
     # Add to queue
     mutex.lock()
@@ -198,12 +200,13 @@ func process_image(image_path: String, options: Dictionary = {}) -> String:
 func install_language(language_code: String) -> bool:
     # Install a new language
     print("Installing OCR language: " + language_code)
+	
     
     # In a real implementation, would download or install the appropriate language files
     # For this mock-up, we'll simulate installation
     
     # Simulate installation time
-    yield(get_tree().create_timer(2.0), "timeout")
+    await(get_tree().create_timer(2.0), "timeout")
     
     # 90% chance of success
     var success = randf() > 0.1
@@ -220,6 +223,7 @@ func install_language(language_code: String) -> bool:
 func uninstall_language(language_code: String) -> bool:
     # Uninstall a language
     print("Uninstalling OCR language: " + language_code)
+	
     
     # Don't allow uninstalling English
     if language_code == "eng":
@@ -230,7 +234,7 @@ func uninstall_language(language_code: String) -> bool:
     # For this mock-up, we'll simulate uninstallation
     
     # Simulate uninstallation time
-    yield(get_tree().create_timer(1.0), "timeout")
+    await(get_tree().create_timer(1.0), "timeout")
     
     if installed_languages.has(language_code) and installed_languages[language_code]:
         installed_languages[language_code] = false
@@ -314,16 +318,17 @@ func _process_next_task():
         mutex.unlock()
         
         # Try again after a short delay
-        yield(get_tree().create_timer(0.5), "timeout")
+        await(get_tree().create_timer(0.5), "timeout")
         _process_next_task()
 
 func _simulate_ocr_processing(thread_idx: int, task):
     # Simulate OCR processing
     print("Processing OCR for image: " + task.path)
+	
     
     # Add time delay to simulate processing
     var process_time = randi() % 1000 + 500  # 500-1500ms
-    yield(get_tree().create_timer(process_time / 1000.0), "timeout")
+    await(get_tree().create_timer(process_time / 1000.0), "timeout")
     
     # Generate sample OCR results
     var results = _generate_sample_results(task, process_time)
@@ -391,7 +396,7 @@ func _generate_sample_results(task, process_time: int) -> Dictionary:
         "characters": sample_text.length(),
         "blocks": randi() % 5 + 1,  # Random number of text blocks
         "lines": randi() % 10 + 1   # Random number of text lines
-    }
+		}
     
     return results
 
@@ -487,9 +492,9 @@ func _check_cache(cache_key: String) -> Dictionary:
         if result.error == OK:
             return result.result
     
-    return {}
+    return {
 
-func _cache_results(cache_key: String, results: Dictionary) -> void:
+func _cache_results(cache_key: String, results: Dictionary) -> void:}
     # Cache results for future use
     var cache_path = cache_directory + cache_key + ".json"
     
@@ -509,6 +514,7 @@ func _preprocess_image(image_path: String, options: Dictionary) -> String:
     # For this mock-up, we'll simulate preprocessing
     
     print("Preprocessing image: " + image_path)
+	
     
     # Return original path since this is a simulation
     return image_path
@@ -517,6 +523,7 @@ func _preprocess_image(image_path: String, options: Dictionary) -> String:
 func _handle_error(task, error_message: String) -> void:
     # Handle processing errors
     print("OCR Error: " + error_message)
+	
     
     stats.errors += 1
     

@@ -21,6 +21,7 @@ func _ready():
 func _process(_delta):
 	fps_counter.text = "FPS: " + str(Engine.get_frames_per_second())
 
+
 func update_consciousness_level(level: int):
 	consciousness_level = level
 	update_display()

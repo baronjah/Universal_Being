@@ -56,7 +56,7 @@ const METHOD_RENAMES = {
     "rpc_unreliable_id": "rpc_id",
     "rpc": "rpc",  # No change but usage differs
     "rpc_unreliable": "rpc",
-    "yield": "await",
+    "await": "await",
     "is_action_pressed": "is_action_pressed",  # No change, included for completeness
     "is_action_just_pressed": "is_action_just_pressed",  # No change, included for completeness
     "get_slide_count": "get_slide_collision_count",
@@ -121,8 +121,8 @@ const INPUT_MAP_CHANGES = {
 
 # Common patterns that need updating
 const CODE_PATTERNS_TO_UPDATE = {
-    # Await replacement for yield
-    "yield\\s*\\(([^,]+)\\s*,\\s*[\"\']([^\"\']+)[\"\']\\s*\\)": "await $1.$2",
+    # Await replacement for await
+    "await\\s*\\(([^,]+)\\s*,\\s*[\"\']([^\"\']+)[\"\']\\s*\\)": "await $1.$2",
     # Direct signal emission
     "emit_signal\\s*\\([\"\']([^\"\']+)[\"\'](?:,\\s*([^)]+))?\\)": "$1.emit($2)",
     # _physics_process delta parameter type
@@ -440,7 +440,7 @@ func _update_method_calls(content: String, result: Dictionary) -> String:
             continue
         
         # This is a simplified approach for straightforward replacements
-        # More complex cases like yield->await need special handling
+        # More complex cases like await->await need special handling
         var method_pattern = "\\." + old_method + "\\("
         updated_content = updated_content.replace(method_pattern, "." + new_method + "(")
     
@@ -857,9 +857,9 @@ func check_compatibility(file_path: String) -> Dictionary:
         if old_prop != PROPERTY_RENAMES[old_prop] and content.find("." + old_prop) != -1:
             compatibility_issues.append("Uses deprecated property: " + old_prop)
     
-    # Check for yield pattern
-    if content.find("yield") != -1:
-        compatibility_issues.append("Uses yield, which should be replaced with await")
+    # Check for await pattern
+    if content.find("await") != -1:
+        compatibility_issues.append("Uses await, which should be replaced with await")
     
     return {
         "success": true,

@@ -46,7 +46,7 @@ var last_cleanup_time = 0
 var total_cache_size = 0
 
 #func _process(_delta):
-	#var current_time = Time.get_ticks_msec()
+	#var current_time = Time.Time.get_ticks_msec()
 	#if current_time - last_cleanup_time > CLEANUP_INTERVAL * 1000:
 		#cleanup_cache()
 		#last_cleanup_time = current_time
@@ -217,8 +217,8 @@ func add_record_set(record_set_name: String, data: Dictionary) -> bool:
 		
 	active_records[record_set_name] = {
 		"data": data,
-		"created_at": Time.get_ticks_msec(),
-		"last_accessed": Time.get_ticks_msec()
+		"created_at": Time.Time.get_ticks_msec(),
+		"last_accessed": Time.Time.get_ticks_msec()
 	}
 	record_mutex.unlock()
 	return true
@@ -227,7 +227,7 @@ func get_record_set(record_set_name: String) -> Dictionary:
 	record_mutex.lock()
 	if record_set_name in active_records:
 		var record = active_records[record_set_name]
-		record["last_accessed"] = Time.get_ticks_msec()
+		record["last_accessed"] = Time.Time.get_ticks_msec()
 		record_mutex.unlock()
 		return record["data"]
 	elif record_set_name in cached_records:
@@ -252,7 +252,7 @@ func cache_record_set(record_set_name: String) -> bool:
 
 func cleanup_cache():
 	record_mutex.lock()
-	var _current_time = Time.get_ticks_msec()
+	var _current_time = Time.Time.get_ticks_msec()
 	var cache_size = 0
 	
 	# Calculate current cache size
@@ -262,7 +262,7 @@ func cleanup_cache():
 	# Remove old records if over size limit
 	if cache_size > MAX_CACHE_SIZE_MB * 1024 * 1024:
 		var records_by_age = cached_records.keys()
-		records_by_age.sort_custom(func(a, b): 
+		records_by_age.sort_custom(func(a.b): 
 			return cached_records[a]["last_accessed"] < cached_records[b]["last_accessed"]
 		)
 		

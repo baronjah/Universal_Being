@@ -1,5 +1,5 @@
 @tool
-extends EditorPlugin
+extends \2
 
 
 func _enter_tree():

@@ -3,9 +3,8 @@
 # Created: May 31, 2025 - Pentagon Architecture Fix
 # Purpose: Base class for autoload scripts following Pentagon Architecture
 # Connection: Node-based foundation for autoloads and management systems
-
 extends UniversalBeingBase
-class_name UniversalBeingNodeBase
+# DISABLED DUPLICATE: class_name UniversalBeingNodeBase_universa
 
 ## The foundation class for AUTOLOAD scripts in the project
 ## Enforces Pentagon Pattern with 5 sacred functions
@@ -63,13 +62,13 @@ func pentagon_log(message: String) -> void:
 
 ## Access to other Pentagon systems
 func get_floodgate() -> Node:
-	return get_node_or_null("/root/FloodgateController")
+	return get_node_or_null("root/FloodgateController")
 
 func get_console() -> Node:
-	return get_node_or_null("/root/ConsoleManager")
+	return get_node_or_null("root/ConsoleManager")
 
 func get_akashic() -> Node:
-	return get_node_or_null("/root/AkashicRecords")
+	return get_node_or_null("root/AkashicRecords")
 
 ## Pentagon-compliant object creation
 func pentagon_create_child(child: Node, parent: Node = null) -> void:
@@ -82,7 +81,7 @@ func pentagon_create_child(child: Node, parent: Node = null) -> void:
 
 ## Pentagon-compliant timer access
 func pentagon_get_timer() -> Timer:
-	var timer_manager = get_node_or_null("/root/TimerManager")
+	var timer_manager = get_node_or_null("root/TimerManager")
 	if timer_manager and timer_manager.has_method("get_timer"):
 		return timer_manager.get_timer()
 	else:
@@ -92,7 +91,7 @@ func pentagon_get_timer() -> Timer:
 
 ## Pentagon-compliant material access
 func pentagon_get_material(material_type: String = "default") -> Material:
-	var material_library = get_node_or_null("/root/MaterialLibrary")
+	var material_library = get_node_or_null("root/MaterialLibrary")
 	if material_library and material_library.has_method("get_material"):
 		return material_library.get_material(material_type)
 	else:
@@ -124,7 +123,7 @@ func become(evolution_type: String) -> bool:
 
 ## Register with Pentagon monitoring
 func register_with_pentagon() -> void:
-	var monitor = get_node_or_null("/root/PentagonActivityMonitor")
+	var monitor = get_node_or_null("root/PentagonActivityMonitor")
 	if monitor and monitor.has_method("register_being"):
 		monitor.register_being(self)
 

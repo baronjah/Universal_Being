@@ -111,7 +111,7 @@ func _run_from_command_line():
     print("Total size: " + project_merger.get_total_size_formatted())
     
     # Clean up and quit
-    yield(get_tree().create_timer(1.0), "timeout")
+    await(get_tree().create_timer(1.0), "timeout")
     get_tree().quit()
 
 # Command-line execution check

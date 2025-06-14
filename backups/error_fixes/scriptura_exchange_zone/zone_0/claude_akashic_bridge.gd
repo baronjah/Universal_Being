@@ -61,7 +61,7 @@ func _ready():
 	_initialize_bridge()
 	
 	# Register callback for gate status changes
-	self.connect("gate_status_changed", self, "_on_gate_status_changed")
+	self.connect(_on_gate_status_changed)
 
 func _initialize_bridge():
 	# Connect to Akashic database
@@ -82,7 +82,7 @@ func _initialize_bridge():
 func _connect_to_akashic():
 	# Try to find the Akashic connector
 	if has_node("/root/AkashicDatabaseConnector") or get_node_or_null("/root/AkashicDatabaseConnector"):
-		_akashic_connector = get_node("/root/AkashicDatabaseConnector")
+		_akashic_connector = get_node("\1") as Node
 		connection_status.akashic_connected = true
 		print("Connected to Akashic Database Connector")
 	else:
@@ -493,7 +493,7 @@ func handle_claude_error(error_message, metadata = {}):
 # Validate a word
 func _validate_word(word, power, metadata):
 	# Basic validation
-	if typeof(word) != TYPE_STRING or word.empty():
+	if typeof(word) != TYPE_STRING or word.is_empty():
 		_log_error(ERROR_TYPES.validation, "Invalid word: Empty or wrong type")
 		return false
 	
@@ -512,11 +512,11 @@ func _validate_word(word, power, metadata):
 # Validate a wish
 func _validate_wish(wish_id, status, metadata):
 	# Basic validation
-	if typeof(wish_id) != TYPE_STRING or wish_id.empty():
+	if typeof(wish_id) != TYPE_STRING or wish_id.is_empty():
 		_log_error(ERROR_TYPES.validation, "Invalid wish ID: Empty or wrong type")
 		return false
 	
-	if typeof(status) != TYPE_STRING or status.empty():
+	if typeof(status) != TYPE_STRING or status.is_empty():
 		_log_error(ERROR_TYPES.validation, "Invalid wish status: Empty or wrong type")
 		return false
 	
@@ -536,7 +536,7 @@ func _validate_record(record_type, content, metadata):
 		return false
 	
 	# Validate content
-	if typeof(content) != TYPE_STRING or content.empty():
+	if typeof(content) != TYPE_STRING or content.is_empty():
 		_log_error(ERROR_TYPES.validation, "Invalid content: Empty or wrong type")
 		return false
 	

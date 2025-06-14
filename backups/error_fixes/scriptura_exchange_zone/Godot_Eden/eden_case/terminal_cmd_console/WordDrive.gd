@@ -91,7 +91,7 @@ func send_message(msg_type: String, payload: Variant, source: String = "system")
 # Process a new word creation
 func _process_word_creation(payload: Dictionary, source: String) -> void:
     # Generate word ID if not provided
-    if not payload.has("id") or payload.id.empty():
+    if not payload.has("id") or payload.id.is_empty():
         payload.id = _generate_word_id(payload.text)
     
     # Process the word if we have a processor
@@ -193,7 +193,7 @@ func _process_dimension_change(payload: Dictionary, source: String) -> void:
 # Process connection creation
 func _process_connection_creation(payload: Dictionary, source: String) -> void:
     # Generate connection ID if not provided
-    if not payload.has("id") or payload.id.empty():
+    if not payload.has("id") or payload.id.is_empty():
         payload.id = _generate_connection_id(payload.from_id, payload.to_id)
     
     # Ensure both words exist

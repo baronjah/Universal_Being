@@ -21,16 +21,14 @@ var dreams = {
 	1: [], # Tier 1 dreams
 	2: [], # Tier 2 dreams
 	3: []  # Tier 3 dreams (eternal)
-}
 
 var comments = {
 	1: [], # Tier 1 comments
 	2: [], # Tier 2 comments
 	3: []  # Tier 3 comments (eternal)
-}
 
-var dimension_records = {}
-var defense_records = {}
+var dimension_records = {
+var defense_records = {
 
 # Auto-save timer
 var auto_save_timer = null
@@ -68,6 +66,7 @@ var memory_stats = {
 func _ready():
 	print("Word Dream Storage initialized")
 	print("Memory Tiers: RAM (1), C: Drive (2), D: Drive (3)")
+}
 	
 	initialize_storage()
 	connect_systems()
@@ -97,19 +96,19 @@ func connect_systems():
 	turn_system = get_node_or_null("/root/TurnSystem")
 	
 	if word_comment_system:
-		word_comment_system.connect("dream_recorded", self, "_on_dream_recorded")
-		word_comment_system.connect("comment_added", self, "_on_comment_added")
-		word_comment_system.connect("defense_registered", self, "_on_defense_registered")
+		word_comment_system.connect(_on_dream_recorded)
+		word_comment_system.connect(_on_comment_added)
+		word_comment_system.connect(_on_defense_registered)
 	
 	if turn_system:
-		turn_system.connect("dimension_changed", self, "_on_dimension_changed")
-		turn_system.connect("turn_completed", self, "_on_turn_completed")
+		turn_system.connect(_on_dimension_changed)
+		turn_system.connect(_on_turn_completed)
 
 func start_auto_save():
 	auto_save_timer = Timer.new()
 	auto_save_timer.wait_time = auto_save_interval
 	auto_save_timer.one_shot = false
-	auto_save_timer.connect("timeout", self, "_on_auto_save_timeout")
+	auto_save_timer.connect(_on_auto_save_timeout)
 	add_child(auto_save_timer)
 	auto_save_timer.start()
 
@@ -431,6 +430,7 @@ func load_persistent_memories():
 		
 		while file_name != "":
 			if file_name.ends_with(".json"):
+}
 				var file_path = tier2_path + file_name
 				var data = load_from_disk(file_path)
 				
@@ -442,6 +442,7 @@ func load_persistent_memories():
 					elif file_name.begins_with("defense_"):
 						defense_records[data.id] = data
 					elif file_name.begins_with("dimension_"):
+	}
 						var dimension = int(file_name.split("_")[1])
 						if dimension_records.has(dimension):
 							dimension_records[dimension].append(data)
@@ -455,6 +456,7 @@ func load_persistent_memories():
 		
 		while file_name != "":
 			if file_name.ends_with(".json"):
+}
 				var file_path = tier3_path + file_name
 				var data = load_from_disk(file_path)
 				
@@ -466,6 +468,7 @@ func load_persistent_memories():
 					elif file_name.begins_with("defense_"):
 						defense_records[data.id] = data
 					elif file_name.begins_with("dimension_"):
+	
 						var dimension = int(file_name.split("_")[1])
 						if dimension_records.has(dimension):
 							dimension_records[dimension].append(data)
@@ -507,6 +510,7 @@ func archive_accepted_defenses():
 func backup_memories():
 	var timestamp = OS.get_unix_time()
 	var backup_dir = "user://word_dreams/backups/" + str(timestamp) + "/"
+
 	
 	var dir = Directory.new()
 	if not dir.dir_exists(backup_dir):
@@ -567,8 +571,8 @@ func save_all_data():
 				"timestamp": entry.comment.timestamp,
 				"turn": entry.comment.turn,
 				"dimension": entry.comment.dimension
-			}
 			save_comment(comment_data)
+}
 	
 	# Process defense statements
 	if word_comment_system:
@@ -586,7 +590,7 @@ func save_all_data():
 			"dimension": current_dimension,
 			"turn": turn_system.current_turn,
 			"timestamp": OS.get_unix_time()
-		}
+}
 		
 		# Add memory stats for this dimension
 		if word_comment_system:
@@ -636,7 +640,7 @@ func clear_tier_1_memory():
 		dimension_records[dimension] = kept_records
 	
 	# Keep only tier 2 and 3 defense records
-	var kept_defenses = {}
+	var kept_defenses = {
 	for defense_id in defense_records:
 		if defense_records[defense_id].tier >= 2:
 			kept_defenses[defense_id] = defense_records[defense_id]
@@ -649,6 +653,7 @@ func clear_tier_1_memory():
 func generate_dream_report():
 	var report = "# DIVINE WORD DREAM SYSTEM REPORT\n"
 	report += "Generated: " + str(OS.get_datetime()) + "\n\n"
+}
 	
 	report += "## MEMORY STATISTICS\n"
 	report += "- Dreams saved: " + str(memory_stats.dreams_saved) + "\n"
@@ -656,15 +661,18 @@ func generate_dream_report():
 	report += "- Tier 2 memory size: " + str(memory_stats.tier_2_size) + " items\n"
 	report += "- Tier 3 memory size: " + str(memory_stats.tier_3_size) + " items\n"
 	report += "- Backups created: " + str(memory_stats.backup_count) + "\n\n"
+
 	
 	report += "## TIER 3 DREAMS (ETERNAL)\n"
 	for dream in dreams[3]:
 		var date = OS.get_datetime_from_unix_time(dream.timestamp)
 		var date_str = "%04d-%02d-%02d %02d:%02d:%02d" % [date.year, date.month, date.day, date.hour, date.minute, date.second]
+
 		
 		report += "### Dream: " + dream.id + "\n"
 		report += "- Date: " + date_str + "\n"
 		report += "- Power: " + str(dream.power if dream.has("power") else "Unknown") + "\n"
+
 		
 		if dream.has("dream_text"):
 			report += dream.dream_text + "\n\n"
@@ -708,7 +716,7 @@ func _on_dimension_changed(new_dimension, old_dimension):
 			"dimension": old_dimension,
 			"exited_at_turn": turn_system.current_turn if turn_system else 0,
 			"timestamp": OS.get_unix_time()
-		}
+}
 		
 		save_dimension_record(old_dimension, dimension_data)
 	

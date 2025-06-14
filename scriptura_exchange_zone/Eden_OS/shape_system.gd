@@ -1,6 +1,6 @@
 extends Node
 
-class_name ShapeSystem
+class_name ShapeSystem_shapesystem_shapesys
 
 signal shape_created(shape_id, shape_type)
 signal shape_transformed(shape_id, transformation_type)
@@ -9,7 +9,8 @@ signal zone_created(zone_id, zone_properties)
 signal point_created(point_id, coordinates)
 
 # Basic shape types
-enum ShapeType {
+enum \2 {
+
 	POINT,      # Single point in space
 	LINE,       # Line between two points
 	TRIANGLE,   # Three points forming a triangle
@@ -24,7 +25,8 @@ enum ShapeType {
 }
 
 # 2D transformation types
-enum TransformationType {
+enum \2 {
+
 	TRANSLATE,  # Move shape
 	ROTATE,     # Rotate shape
 	SCALE,      # Scale shape
@@ -330,12 +332,12 @@ var turn_cycle_manager: TurnCycleManager
 
 func _ready():
 	# Try to get references to other systems
-	dimensional_color_system = get_node_or_null("/root/DimensionalColorSystem")
+	dimensional_color_system = get_node_or_null("root/DimensionalColorSystem")
 	if not dimensional_color_system:
 		dimensional_color_system = DimensionalColorSystem.new()
 		add_child(dimensional_color_system)
 	
-	turn_cycle_manager = get_node_or_null("/root/TurnCycleManager")
+	turn_cycle_manager = get_node_or_null("root/TurnCycleManager")
 	
 	# Load saved data
 	_load_data()

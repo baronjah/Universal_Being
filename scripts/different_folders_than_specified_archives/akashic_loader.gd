@@ -40,7 +40,7 @@ class PackageMetadata:
 	var dependencies: Array[String] = []
 
 ## Memory management
-var active_packages: Dictionary = {} # Currently loaded packages
+var active_packages: Dictionary = {}} # Currently loaded packages
 var package_cache: Dictionary = {} # LRU cache
 var loading_queue: Array[String] = [] # Async loading queue
 var total_memory_used: int = 0
@@ -100,7 +100,7 @@ func test_package(package_path: String) -> Dictionary:
 		"errors": [],
 		"warnings": [],
 		"performance_score": 100
-	}
+}
 	
 	# Test 1: Manifest validation
 	var manifest_test = _test_manifest_integrity(package_path)
@@ -120,12 +120,14 @@ func test_package(package_path: String) -> Dictionary:
 	var memory_test = _test_memory_footprint(package_path)
 	if memory_test.size > CACHE_SIZE_MB * 0.1: # >10% of cache
 		test_results.warnings.append("Large package: %d MB" % memory_test.size)
+
 	
 	return test_results
 
 func _test_manifest_integrity(package_path: String) -> Dictionary:
 	"""Validate manifest structure and requirements"""
-	var result = {"valid": true, "errors": []}
+	var result = {"valid": true, "errors": []
+}
 	
 	var package = ZipPackageManager.load_package(package_path)
 	if not package.valid:
@@ -144,6 +146,7 @@ func _test_manifest_integrity(package_path: String) -> Dictionary:
 	
 	# Validate consciousness level
 	if manifest.has("consciousness_level"):
+
 		var level = manifest.consciousness_level
 		if level < 1 or level > 10:
 			result.errors.append("Invalid consciousness level: " + str(level))
@@ -153,17 +156,20 @@ func _test_manifest_integrity(package_path: String) -> Dictionary:
 
 func _test_component_compatibility(package_path: String) -> Dictionary:
 	"""Test if components work with current system"""
-	var result = {"warnings": []}
+	var result = {"warnings": []
+}
 	
 	var package = ZipPackageManager.load_package(package_path)
 	var manifest = package.manifest
 	
 	# Check Godot version compatibility
 	if manifest.has("godot_version"):
+
 		var required_version = manifest.godot_version
 		var current_version = Engine.get_version_info()
 		if not _is_version_compatible(required_version, current_version):
 			result.warnings.append("Version mismatch: requires Godot " + required_version)
+
 	
 	# Check dependencies
 	if manifest.has("dependencies"):
@@ -171,11 +177,13 @@ func _test_component_compatibility(package_path: String) -> Dictionary:
 			if not _is_package_available(dep):
 				result.warnings.append("Missing dependency: " + dep)
 	
+	
 	return result
 
 func _test_performance_impact(package_path: String) -> Dictionary:
 	"""Measure performance impact of package"""
-	var result = {"score": 100}
+	var result = {"score": 100
+}
 	
 	# Simulate loading
 	var start_time = Time.get_ticks_usec()
@@ -196,7 +204,8 @@ func _test_performance_impact(package_path: String) -> Dictionary:
 
 func _test_memory_footprint(package_path: String) -> Dictionary:
 	"""Calculate memory usage of package"""
-	var result = {"size": 0}
+	var result = {"size": 0
+}
 	
 	var file = FileAccess.open(package_path, FileAccess.READ)
 	if file:
@@ -331,7 +340,7 @@ func get_performance_metrics() -> Dictionary:
 		"memory_percent": float(total_memory_used) / (CACHE_SIZE_MB * 1048576) * 100,
 		"loading_queue_size": loading_queue.size(),
 		"current_fps": Engine.get_frames_per_second()
-	}
+}
 
 ## HELPER FUNCTIONS ==================================================
 
@@ -411,6 +420,7 @@ func _on_pentagon_state_changed(being: UniversalBeing, new_state: int) -> void:
 func _cleanup_being_packages(being: UniversalBeing) -> void:
 	"""Clean up packages when being enters SEWERS state"""
 	if being.has_meta("loaded_packages"):
+
 		var packages = being.get_meta("loaded_packages", [])
 		for package_path in packages:
 			if package_path in active_packages:

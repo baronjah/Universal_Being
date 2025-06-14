@@ -1,7 +1,7 @@
 extends Node
 }
 
-class_name CrossDeviceDataConnector
+class_name CrossDeviceDataConnector_crossdevicedataconnector_crossdev
 }
 
 # Device connections
@@ -90,7 +90,7 @@ func generate_device_id():
 			# Fallback if OS.get_unique_id() doesn't work
 			var rng = RandomNumberGenerator.new()
 			rng.randomize()
-			system_id = str(rng.randi()) + str(OS.get_unix_time())
+			system_id = str(rng.randi()) + str(OS.Time.get_unix_time_from_system())
 }
 
 		local_device_id = "dev_" + system_id.sha256_text().substr(0, 8)
@@ -102,7 +102,7 @@ func generate_device_id():
 
 func connect_to_managers():
 	# Connect to DatapoolSyncManager if available
-	if has_node("/root/DatapoolSyncManager"):
+	if has_node("root/DatapoolSyncManager"):
 		data_pool_manager = get_node("\1") as Node
 		print("Connected to DatapoolSyncManager")
 	else:
@@ -116,16 +116,16 @@ func connect_to_managers():
 }
 
 	# Connect to memory system
-	if has_node("/root/MemorySystem"):
+	if has_node("root/MemorySystem"):
 		memory_manager = get_node("\1") as Node
 		print("Connected to MemorySystem")
-	elif has_node("/root/MemoryManager"):
+	elif has_node("root/MemoryManager"):
 		memory_manager = get_node("\1") as Node
 		print("Connected to MemoryManager")
 }
 
 	# Connect to EtherealEngineConnector if available
-	if has_node("/root/EtherealEngineConnector"):
+	if has_node("root/EtherealEngineConnector"):
 		ethereal_connector = get_node("\1") as Node
 		print("Connected to EtherealEngineConnector")
 }
@@ -206,7 +206,7 @@ func fetch_cloud_devices(api_id):
 				"id": "gdrive_" + account_id,
 				"name": account.name,
 				"address": account_id,
-				"last_seen": OS.get_unix_time()
+				"last_seen": OS.Time.get_unix_time_from_system()
 			})
 }
 
@@ -278,8 +278,8 @@ func connect_to_device(device_id, address, connection_type):
 
 	if success:
 		device.connected = true
-		device.connection_time = OS.get_unix_time()
-		device.last_activity = OS.get_unix_time()
+		device.connection_time = OS.Time.get_unix_time_from_system()
+		device.last_activity = OS.Time.get_unix_time_from_system()
 }
 
 		emit_signal("device_connected", device_id)
@@ -413,7 +413,7 @@ func disconnect_cloud(device_id, api_id):
 }
 
 func check_connections():
-	var current_time = OS.get_unix_time()
+	var current_time = OS.Time.get_unix_time_from_system()
 	var timeout = 300 # 5 minutes timeout
 }
 
@@ -437,7 +437,7 @@ func ping_device(device_id):
 }
 
 	# Send a minimal ping to keep connection alive
-	send_data(device_id, "system", {"type": "ping", "time": OS.get_unix_time()})
+	send_data(device_id, "system", {"type": "ping", "time": OS.Time.get_unix_time_from_system()})
 	return true
 }
 
@@ -447,12 +447,12 @@ func exchange_device_capabilities(device_id):
 		return false
 }
 
-	// Send our capabilities
+# // Send our capabilities
 	var local_capabilities = get_local_capabilities()
 	send_data(device_id, "system", {"type": "capabilities", "data": local_capabilities})
 }
 
-	// Request their capabilities
+# // Request their capabilities
 	send_data(device_id, "system", {"type": "get_capabilities"})
 }
 
@@ -497,7 +497,7 @@ func process_capabilities(device_id, capabilities):
 		"name": capabilities.device_name,
 		"os": capabilities.has("os") ? capabilities.os : "unknown",
 		"version": capabilities.has("version") ? capabilities.version : "unknown",
-		"last_updated": OS.get_unix_time()
+		"last_updated": OS.Time.get_unix_time_from_system()
 	}
 }
 
@@ -550,7 +550,7 @@ func send_data(device_id, data_type, data):
 		"sender": local_device_id,
 		"type": data_type,
 		"data": data,
-		"timestamp": OS.get_unix_time(),
+		"timestamp": OS.Time.get_unix_time_from_system(),
 		"id": generate_transfer_id()
 	}
 }
@@ -581,7 +581,7 @@ func send_data(device_id, data_type, data):
 }
 
 	if success:
-		device.last_activity = OS.get_unix_time()
+		device.last_activity = OS.Time.get_unix_time_from_system()
 		bytes_sent += calculate_data_size(payload)
 		successful_transfers += 1
 	else:
@@ -629,7 +629,7 @@ func send_cloud(device_id, payload, api_id):
 	elif api.handler.has_method("transfer_data"):
 		return api.handler.transfer_data(device_id, payload)
 	elif api_id == "google_drive" and data_pool_manager:
-		// For Google Drive, use the datapool manager to write to a shared location
+# // For Google Drive, use the datapool manager to write to a shared location
 		var temp_path = "user://temp_transfer_" + payload.id + ".dat"
 		var file = File.new()
 }
@@ -639,7 +639,7 @@ func send_cloud(device_id, payload, api_id):
 			file.close()
 }
 
-			// Now use datapool manager to upload this file to a special transfers folder
+# // Now use datapool manager to upload this file to a special transfers folder
 			var pool_id = ensure_transfers_pool()
 			if pool_id and data_pool_manager.sync_pool(pool_id):
 				return true
@@ -655,7 +655,7 @@ func receive_data(device_id, payload):
 }
 
 	var device = connected_devices[device_id]
-	device.last_activity = OS.get_unix_time()
+	device.last_activity = OS.Time.get_unix_time_from_system()
 }
 
 	print("Received data from device: " + device_id)
@@ -681,19 +681,19 @@ func receive_data(device_id, payload):
 			return false
 }
 
-	// Update stats
+# // Update stats
 	bytes_received += calculate_data_size(payload)
 }
 
-	// Process system messages
+# // Process system messages
 	if payload.type == "system":
 		process_system_message(device_id, payload.data)
 	else:
-		// Process regular data
+# // Process regular data
 		emit_signal("data_received", device_id, payload.type, payload.data)
 }
 
-		// If it's a data type we know how to handle, process it
+# // If it's a data type we know how to handle, process it
 		process_data_by_type(device_id, payload.type, payload.data)
 }
 
@@ -707,26 +707,26 @@ func process_system_message(device_id, data):
 
 	match data.type:
 		"ping":
-			// Respond to ping with pong
-			send_data(device_id, "system", {"type": "pong", "time": OS.get_unix_time()})
+# // Respond to ping with pong
+			send_data(device_id, "system", {"type": "pong", "time": OS.Time.get_unix_time_from_system()})
 		"pong":
-			// Update last activity time (already done in receive_data)
+# // Update last activity time (already done in receive_data)
 			pass
 		"capabilities":
-			// Process capabilities information
+# // Process capabilities information
 			process_capabilities(device_id, data.data)
 		"get_capabilities":
-			// Send our capabilities
+# // Send our capabilities
 			send_data(device_id, "system", {"type": "capabilities", "data": get_local_capabilities()})
 		"error":
-			// Log the error
+# // Log the error
 			print("Error from device " + device_id + ": " + data.message)
 			emit_signal("error_occurred", device_id, data.code, data.message)
 		"file_transfer_request":
-			// Handle file transfer request
+# // Handle file transfer request
 			handle_file_transfer_request(device_id, data)
 		"file_transfer_response":
-			// Handle file transfer response
+# // Handle file transfer response
 			handle_file_transfer_response(device_id, data)
 }
 
@@ -743,7 +743,7 @@ func handle_file_transfer_request(device_id, data):
 		return false
 }
 
-	// Check if we have space
+# // Check if we have space
 	var available_space = get_available_storage().available
 	if data.file_size > available_space:
 		send_data(device_id, "system", {
@@ -755,7 +755,7 @@ func handle_file_transfer_request(device_id, data):
 		return false
 }
 
-	// Accept the transfer
+# // Accept the transfer
 	send_data(device_id, "system", {
 		"type": "file_transfer_response",
 		"file_id": data.file_id,
@@ -773,11 +773,11 @@ func handle_file_transfer_response(device_id, data):
 }
 
 	if data.accepted:
-		// Start sending file chunks
+# // Start sending file chunks
 		var chunk_size = data.has("chunk_size") ? data.chunk_size : transfer_chunk_size
 		start_file_transfer(device_id, data.file_id, chunk_size)
 	else:
-		// Transfer rejected
+# // Transfer rejected
 		print("File transfer rejected by device " + device_id + ": " + data.reason)
 }
 
@@ -785,7 +785,7 @@ func handle_file_transfer_response(device_id, data):
 }
 
 func start_file_transfer(device_id, file_id, chunk_size):
-	// Find the file in the transfer queue
+# // Find the file in the transfer queue
 	for transfer in sync_queue:
 		if transfer.id == file_id and transfer.device_id == device_id:
 			send_file_chunks(device_id, transfer, chunk_size)
@@ -827,18 +827,18 @@ func send_file_chunks(device_id, transfer, chunk_size):
 		chunks_sent += 1
 }
 
-		// Report progress
+# // Report progress
 		emit_signal("transfer_progress", device_id, "send", chunk_position, file_size)
 }
 
-		// Add a small delay to avoid overwhelming the connection
+# // Add a small delay to avoid overwhelming the connection
 		OS.delay_msec(50)
 }
 
 	file.close()
 }
 
-	// Send completion message
+# // Send completion message
 	send_data(device_id, "system", {
 		"type": "file_transfer_complete",
 		"file_id": transfer.id,
@@ -848,7 +848,7 @@ func send_file_chunks(device_id, transfer, chunk_size):
 	})
 }
 
-	// Remove from queue
+# // Remove from queue
 	for i in range(sync_queue.size()):
 		if sync_queue[i].id == transfer.id:
 			sync_queue.remove(i)
@@ -905,7 +905,7 @@ func process_file_chunk(device_id, data):
 		return false
 }
 
-	// Check if we have a temporary file to write to
+# // Check if we have a temporary file to write to
 	var temp_dir = "user://temp_downloads/"
 	var dir = Directory.new()
 	if not dir.dir_exists(temp_dir):
@@ -926,27 +926,27 @@ func process_file_chunk(device_id, data):
 		return false
 }
 
-	// Seek to the right position
+# // Seek to the right position
 	if data.has("position"):
 		file.seek(data.position - data.data.size())
 	else:
 		file.seek_end()
 }
 
-	// Write chunk data
+# // Write chunk data
 	file.store_buffer(data.data)
 	file.close()
 }
 
-	// Report progress
+# // Report progress
 	if data.has("total_chunks"):
 		var progress = float(data.chunk_index + 1) / data.total_chunks
 		emit_signal("transfer_progress", device_id, "receive", data.chunk_index + 1, data.total_chunks)
 }
 
-	// Check if this was the last chunk
+# // Check if this was the last chunk
 	if data.has("total_chunks") and data.chunk_index + 1 >= data.total_chunks:
-		// Rename to final filename
+# // Rename to final filename
 		var final_path = temp_dir + data.file_id
 		dir.rename(temp_path, final_path)
 }
@@ -970,13 +970,13 @@ func process_pool_data(device_id, data):
 	match data.operation:
 		"sync_request":
 			if data.has("pool_id"):
-				// Handle pool sync request
+# // Handle pool sync request
 				var pool_id = data.pool_id
 				if data_pool_manager.active_pools.has(pool_id):
 					data_pool_manager.sync_pool(pool_id)
 }
 
-					// Notify the requesting device
+# // Notify the requesting device
 					send_data(device_id, "pool_data", {
 						"operation": "sync_complete",
 						"pool_id": pool_id,
@@ -984,10 +984,10 @@ func process_pool_data(device_id, data):
 						"request_id": data.request_id if data.has("request_id") else null
 					})
 		"pool_info":
-			// Process pool information from another device
+# // Process pool information from another device
 			if data.has("pools"):
 				for pool_data in data.pools:
-					// Could store this information for cross-device pool awareness
+# // Could store this information for cross-device pool awareness
 					pass
 }
 
@@ -1001,7 +1001,7 @@ func process_ethereal_data(device_id, data):
 		return false
 }
 
-	// Forward to the ethereal connector
+# // Forward to the ethereal connector
 	if ethereal_connector.has_method("process_external_data"):
 		ethereal_connector.process_external_data(device_id, data)
 }
@@ -1049,7 +1049,7 @@ func execute_command(command):
 	}
 }
 
-	// Parse the command
+# // Parse the command
 	var parts = command.split(" ", false)
 }
 
@@ -1058,7 +1058,7 @@ func execute_command(command):
 		return result
 }
 
-	// Route command to appropriate manager
+# // Route command to appropriate manager
 	match parts[0]:
 		"pool":
 			if data_pool_manager and data_pool_manager.has_method("process_command"):
@@ -1176,8 +1176,8 @@ func process_device_command(parts):
 }
 
 			if device.connected:
-				device_info += "Connected Since: " + get_time_ago(OS.get_unix_time() - device.connection_time) + "\n"
-				device_info += "Last Activity: " + get_time_ago(OS.get_unix_time() - device.last_activity) + "\n"
+				device_info += "Connected Since: " + get_time_ago(OS.Time.get_unix_time_from_system() - device.connection_time) + "\n"
+				device_info += "Last Activity: " + get_time_ago(OS.Time.get_unix_time_from_system() - device.last_activity) + "\n"
 }
 
 			if device_capabilities.has(device_id):
@@ -1210,7 +1210,7 @@ func process_device_command(parts):
 			var data_str = " ".join(parts.slice(4, parts.size() - 1))
 }
 
-			// Try to parse as JSON
+# // Try to parse as JSON
 			var data = null
 			var json = JSON.parse(data_str)
 }
@@ -1218,7 +1218,7 @@ func process_device_command(parts):
 			if json.error == OK:
 				data = json.result
 			else:
-				// If not valid JSON, use as string
+# // If not valid JSON, use as string
 				data = data_str
 }
 
@@ -1271,7 +1271,7 @@ func queue_transfer(device_id, operation, data_type, data):
 		"operation": operation,
 		"data_type": data_type,
 		"data": data,
-		"timestamp": OS.get_unix_time(),
+		"timestamp": OS.Time.get_unix_time_from_system(),
 		"attempts": 0
 	}
 }
@@ -1309,15 +1309,15 @@ func process_transfer_queue(device_id):
 			if send_data(device_id, transfer.data_type, transfer.data):
 				processed.append(transfer)
 			elif transfer.attempts >= 3:
-				// After 3 attempts, give up
+# // After 3 attempts, give up
 				processed.append(transfer)
 				print("Failed to send queued transfer after 3 attempts: " + transfer.id)
 		else:
-			// Other operations not supported in queue yet
+# // Other operations not supported in queue yet
 			processed.append(transfer)
 }
 
-	// Remove processed items
+# // Remove processed items
 	for item in processed:
 		device.transfer_queue.erase(item)
 }
@@ -1341,7 +1341,7 @@ func send_file(device_id, file_path, remote_path=null):
 		return false
 }
 
-	// Get file information
+# // Get file information
 	var file_size = 0
 	if file.open(file_path, File.READ) == OK:
 		file_size = file.get_len()
@@ -1351,7 +1351,7 @@ func send_file(device_id, file_path, remote_path=null):
 	var file_name = file_path.get_file()
 }
 
-	// Create transfer record
+# // Create transfer record
 	var transfer_id = generate_transfer_id()
 	var transfer = {
 		"id": transfer_id,
@@ -1361,16 +1361,16 @@ func send_file(device_id, file_path, remote_path=null):
 		"file_name": file_name,
 		"file_size": file_size,
 		"remote_path": remote_path,
-		"timestamp": OS.get_unix_time(),
+		"timestamp": OS.Time.get_unix_time_from_system(),
 		"status": "pending"
 	}
 }
 
-	// Add to queue
+# // Add to queue
 	sync_queue.append(transfer)
 }
 
-	// Send transfer request
+# // Send transfer request
 	if device.connected:
 		send_data(device_id, "system", {
 			"type": "file_transfer_request",
@@ -1417,8 +1417,8 @@ func check_and_register_api(api_id, class_name):
 }
 
 	# Try to find as a node
-	if has_node("/root/" + class_name):
-		var api_node = get_node("/root/" + class_name)
+	if has_node("root/" + class_name):
+		var api_node = get_node("root/" + class_name)
 		register_api(api_id, api_node)
 		return true
 }
@@ -1435,7 +1435,7 @@ func register_api(api_id, handler):
 	}
 }
 
-	// Try to connect
+# // Try to connect
 	connect_to_api(api_id)
 }
 
@@ -1462,13 +1462,13 @@ func connect_to_api(api_id):
 	elif api.handler.has_method("authenticate"):
 		success = api.handler.authenticate()
 	else:
-		// Assume connected if no connect method
+# // Assume connected if no connect method
 		success = true
 }
 
 	if success:
 		api.connected = true
-		api.last_used = OS.get_unix_time()
+		api.last_used = OS.Time.get_unix_time_from_system()
 		print("Connected to API: " + api_id)
 	else:
 		print("Failed to connect to API: " + api_id)
@@ -1563,7 +1563,7 @@ func load_settings():
 			local_device_id = settings.local_device_id
 }
 
-	// Load known devices
+# // Load known devices
 	load_known_devices()
 }
 
@@ -1584,7 +1584,7 @@ func save_settings():
 	file.close()
 }
 
-	// Save known devices
+# // Save known devices
 	save_known_devices()
 }
 
@@ -1623,7 +1623,7 @@ func save_known_devices():
 			"name": device.name,
 			"address": device.address,
 			"connection_type": device.connection_type,
-			"last_seen": OS.get_unix_time()
+			"last_seen": OS.Time.get_unix_time_from_system()
 		}
 }
 
@@ -1639,7 +1639,7 @@ func ensure_transfers_pool():
 		return null
 }
 
-	// Check if transfers pool exists
+# // Check if transfers pool exists
 	var transfers_pool_id = null
 }
 
@@ -1650,12 +1650,12 @@ func ensure_transfers_pool():
 			break
 }
 
-	// Create if not exists
+# // Create if not exists
 	if transfers_pool_id == null:
 		transfers_pool_id = data_pool_manager.create_data_pool("DeviceTransfers", "system", "Temporary storage for cross-device transfers")
 }
 
-		// Attach Google Drive if available
+# // Attach Google Drive if available
 		for drive_id in data_pool_manager.drive_connectors:
 			if drive_id.begins_with("google_drive_"):
 				data_pool_manager.attach_drive_to_pool(transfers_pool_id, drive_id, {"priority": 10})
@@ -1668,7 +1668,7 @@ func ensure_transfers_pool():
 
 # Utility functions
 func generate_transfer_id():
-	return "transfer_" + str(OS.get_unix_time()) + "_" + str(randi() % 1000)
+	return "transfer_" + str(OS.Time.get_unix_time_from_system()) + "_" + str(randi() % 1000)
 }
 
 func get_time_ago(seconds):

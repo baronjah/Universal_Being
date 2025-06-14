@@ -66,7 +66,7 @@ func _create_akashic_adapter():
 
 # Ethereal Engine integration
 func _create_ethereal_adapter():
-	# Create adapter class to bridge between JSH Spatial system and Ethereal Engine
+	# Create adapter class to bridge between JSH Node3D system and Ethereal Engine
 	var adapter = EtherealEngineAdapter.new()
 	adapter.zone_manager = zone_manager
 	adapter.spatial_manager = spatial_manager
@@ -151,7 +151,8 @@ func _cmd_akashic(args: Array) -> Dictionary:
 		_:
 			console_manager.print_error("Unknown akashic subcommand: " + subcommand)
 			console_manager.print_line("Available subcommands: info, status, create, find, query")
-			return {"success": false, "message": "Unknown subcommand: " + subcommand}
+			return {"success": false, "message": "Unknown subcommand: " + subcommand
+}
 
 func _cmd_akashic_info(args: Array) -> Dictionary:
 	console_manager.print_line("Akashic Records System", Color(0.2, 0.7, 1.0))
@@ -160,13 +161,16 @@ func _cmd_akashic_info(args: Array) -> Dictionary:
 	if akashic_records_manager:
 		console_manager.print_line("\nSystem Information:")
 		console_manager.print_line("  Status: Active")
+
 		
 		# Pull information from the actual system if methods exist
 		if akashic_records_manager.has_method("get_entity_count"):
 			console_manager.print_line("  Entity Count: " + str(akashic_records_manager.get_entity_count()))
+
 		
 		if akashic_records_manager.has_method("get_dictionary_count"):
 			console_manager.print_line("  Dictionary Count: " + str(akashic_records_manager.get_dictionary_count()))
+
 		
 		console_manager.print_line("\nIntegration Status:")
 		console_manager.print_line("  Adapter: " + ("Active" if akashic_adapter else "Inactive"))
@@ -177,22 +181,24 @@ func _cmd_akashic_info(args: Array) -> Dictionary:
 	return {
 		"success": true,
 		"message": "Akashic Records information displayed"
-	}
+}
 
 func _cmd_akashic_status(args: Array) -> Dictionary:
 	# Similar to info but with more operational details
-	return {"success": true, "message": "Status command not fully implemented yet"}
+	return {"success": true, "message": "Status command not fully implemented yet"
+}
 
 func _cmd_akashic_create(args: Array) -> Dictionary:
 	if args.size() < 2:
 		console_manager.print_error("Usage: akashic create <type> <name> [properties...]")
-		return {"success": false, "message": "Invalid arguments"}
+		return {"success": false, "message": "Invalid arguments"
+}
 	
 	var entity_type = args[0]
 	var entity_name = args[1]
 	
 	# Parse properties
-	var properties = {}
+	var properties = {
 	for i in range(2, args.size()):
 		var prop = args[i].split("=")
 		if prop.size() == 2:
@@ -213,25 +219,30 @@ func _cmd_akashic_create(args: Array) -> Dictionary:
 	
 	# Use adapter to create entity in Akashic Records
 	if akashic_adapter and akashic_adapter.has_method("create_entity"):
+}
 		var result = akashic_adapter.create_entity(entity_type, entity_name, properties)
 		
 		if result.success:
 			console_manager.print_success("Entity created in Akashic Records: " + result.entity_id)
 		else:
 			console_manager.print_error("Failed to create entity: " + result.message)
+
 		
 		return result
 	else:
 		console_manager.print_error("Akashic Records adapter not available")
-		return {"success": false, "message": "Adapter not available"}
+		return {"success": false, "message": "Adapter not available"
+}
 
 func _cmd_akashic_find(args: Array) -> Dictionary:
 	# Implementation of entity search in Akashic Records
-	return {"success": true, "message": "Find command not fully implemented yet"}
+	return {"success": true, "message": "Find command not fully implemented yet"
+}
 
 func _cmd_akashic_query(args: Array) -> Dictionary:
 	# Implementation of complex queries in Akashic Records
-	return {"success": true, "message": "Query command not fully implemented yet"}
+	return {"success": true, "message": "Query command not fully implemented yet"
+}
 
 func _cmd_ethereal(args: Array) -> Dictionary:
 	var subcommand = args[0].to_lower()
@@ -251,7 +262,8 @@ func _cmd_ethereal(args: Array) -> Dictionary:
 		_:
 			console_manager.print_error("Unknown ethereal subcommand: " + subcommand)
 			console_manager.print_line("Available subcommands: info, status, zone, element, voxel")
-			return {"success": false, "message": "Unknown subcommand: " + subcommand}
+			return {"success": false, "message": "Unknown subcommand: " + subcommand
+}
 
 func _cmd_ethereal_info(args: Array) -> Dictionary:
 	console_manager.print_line("Ethereal Engine System", Color(0.2, 0.7, 1.0))
@@ -260,6 +272,7 @@ func _cmd_ethereal_info(args: Array) -> Dictionary:
 	if zone_manager:
 		console_manager.print_line("\nZone Manager Information:")
 		console_manager.print_line("  Status: Active")
+
 		
 		# Pull information from the actual system if methods exist
 		if zone_manager.has_method("get_zone_count"):
@@ -270,52 +283,63 @@ func _cmd_ethereal_info(args: Array) -> Dictionary:
 	console_manager.print_line("\nIntegration Status:")
 	console_manager.print_line("  Adapter: " + ("Active" if ethereal_adapter else "Inactive"))
 	console_manager.print_line("  Zone Sync: " + ("Enabled" if ethereal_adapter and ethereal_adapter.sync_enabled else "Disabled"))
+
 	
 	return {
 		"success": true,
 		"message": "Ethereal Engine information displayed"
-	}
+}
 
 func _cmd_ethereal_status(args: Array) -> Dictionary:
 	# Similar to info but with more operational details
-	return {"success": true, "message": "Status command not fully implemented yet"}
+	return {"success": true, "message": "Status command not fully implemented yet"
+}
 
 func _cmd_ethereal_zone(args: Array) -> Dictionary:
 	if args.size() < 1:
 		console_manager.print_error("Usage: ethereal zone <operation> [arguments]")
 		console_manager.print_line("Operations: create, load, unload, list, find")
-		return {"success": false, "message": "Invalid arguments"}
+		return {"success": false, "message": "Invalid arguments"
+}
 	
 	var operation = args[0].to_lower()
 	var op_args = args.slice(1)
 	
 	match operation:
 		"create":
+
 			# Implementation of zone creation
-			return {"success": true, "message": "Zone creation not fully implemented yet"}
+			return {"success": true, "message": "Zone creation not fully implemented yet"
 		"load":
+}
 			# Implementation of zone loading
-			return {"success": true, "message": "Zone loading not fully implemented yet"}
+			return {"success": true, "message": "Zone loading not fully implemented yet"
 		"unload":
+}
 			# Implementation of zone unloading
-			return {"success": true, "message": "Zone unloading not fully implemented yet"}
+			return {"success": true, "message": "Zone unloading not fully implemented yet"
 		"list":
+}
 			# Implementation of zone listing
-			return {"success": true, "message": "Zone listing not fully implemented yet"}
+			return {"success": true, "message": "Zone listing not fully implemented yet"
 		"find":
+}
 			# Implementation of zone finding
 			return {"success": true, "message": "Zone finding not fully implemented yet"}
 		_:
 			console_manager.print_error("Unknown zone operation: " + operation)
-			return {"success": false, "message": "Unknown operation"}
+			return {"success": false, "message": "Unknown operation"
+}
 
 func _cmd_ethereal_element(args: Array) -> Dictionary:
 	# Implementation of element commands
-	return {"success": true, "message": "Element command not fully implemented yet"}
+	return {"success": true, "message": "Element command not fully implemented yet"
+}
 
 func _cmd_ethereal_voxel(args: Array) -> Dictionary:
 	# Implementation of voxel commands
-	return {"success": true, "message": "Voxel command not fully implemented yet"}
+	return {"success": true, "message": "Voxel command not fully implemented yet"
+}
 
 func _cmd_integrate(args: Array) -> Dictionary:
 	var subcommand = args[0].to_lower()
@@ -331,7 +355,8 @@ func _cmd_integrate(args: Array) -> Dictionary:
 		_:
 			console_manager.print_error("Unknown integrate subcommand: " + subcommand)
 			console_manager.print_line("Available subcommands: status, sync, convert")
-			return {"success": false, "message": "Unknown subcommand: " + subcommand}
+			return {"success": false, "message": "Unknown subcommand: " + subcommand
+}
 
 func _cmd_integrate_status(args: Array) -> Dictionary:
 	console_manager.print_line("Integration Status", Color(0.2, 0.7, 1.0))
@@ -342,28 +367,32 @@ func _cmd_integrate_status(args: Array) -> Dictionary:
 	console_manager.print_line("  Universal Bridge: " + ("Available" if universal_bridge else "Not Available"))
 	console_manager.print_line("  Zone Manager: " + ("Available" if zone_manager else "Not Available"))
 	console_manager.print_line("  Thing Creator: " + ("Available" if thing_creator else "Not Available"))
+
 	
 	console_manager.print_line("\nJSH Systems:")
 	console_manager.print_line("  Entity Manager: " + ("Active" if entity_manager else "Inactive"))
 	console_manager.print_line("  Database Manager: " + ("Active" if database_manager else "Inactive"))
-	console_manager.print_line("  Spatial Manager: " + ("Active" if spatial_manager else "Inactive"))
+	console_manager.print_line("  Node3D Manager: " + ("Active" if spatial_manager else "Inactive"))
 	console_manager.print_line("  Console Manager: " + ("Active" if console_manager else "Inactive"))
+
 	
 	console_manager.print_line("\nAdapters:")
 	console_manager.print_line("  Akashic Adapter: " + ("Active" if akashic_adapter else "Inactive"))
 	console_manager.print_line("  Ethereal Adapter: " + ("Active" if ethereal_adapter else "Inactive"))
 	console_manager.print_line("  UI Adapter: " + ("Active" if ui_adapter else "Inactive"))
+
 	
 	return {
 		"success": true,
 		"message": "Integration status displayed"
-	}
+}
 
 func _cmd_integrate_sync(args: Array) -> Dictionary:
 	if args.size() < 2:
 		console_manager.print_error("Usage: integrate sync <system> <enable|disable>")
 		console_manager.print_line("Systems: akashic, ethereal, all")
-		return {"success": false, "message": "Invalid arguments"}
+		return {"success": false, "message": "Invalid arguments"
+}
 	
 	var system = args[0].to_lower()
 	var enable = args[1].to_lower() == "enable" or args[1].to_lower() == "true" or args[1].to_lower() == "on"
@@ -394,31 +423,34 @@ func _cmd_integrate_sync(args: Array) -> Dictionary:
 		
 		_:
 			console_manager.print_error("Unknown system: " + system)
-			return {"success": false, "message": "Unknown system"}
+			return {"success": false, "message": "Unknown system"
+}
 	
 	return {
 		"success": true,
 		"message": "Sync " + ("enabled" if enable else "disabled") + " for " + system
-	}
+}
 
 func _cmd_integrate_convert(args: Array) -> Dictionary:
 	if args.size() < 2:
 		console_manager.print_error("Usage: integrate convert <source> <target> [id]")
 		console_manager.print_line("Sources/Targets: akashic, jsh, ethereal")
-		return {"success": false, "message": "Invalid arguments"}
+		return {"success": false, "message": "Invalid arguments"
+}
 	
 	var source = args[0].to_lower()
 	var target = args[1].to_lower()
 	var id = args[2] if args.size() > 2 else ""
 	
 	console_manager.print_line("Converting from " + source + " to " + target + (": " + id if not id.is_empty() else ""))
+
 	
 	# Implementation would depend on the specific conversion logic
 	
 	return {
 		"success": true,
 		"message": "Convert command not fully implemented yet"
-	}
+}
 
 # Adapter classes
 class AkashicRecordsAdapter:
@@ -429,7 +461,8 @@ class AkashicRecordsAdapter:
 	
 	func create_entity(entity_type: String, entity_name: String, properties: Dictionary = {}):
 		if not akashic_records_manager:
-			return {"success": false, "message": "Akashic Records Manager not available"}
+			return {"success": false, "message": "Akashic Records Manager not available"
+}
 		
 		# Call appropriate method on Akashic Records Manager
 		var entity = null
@@ -444,10 +477,10 @@ class AkashicRecordsAdapter:
 				"success": true,
 				"message": "Entity created successfully",
 				"entity_id": entity.id if entity.has("id") else "",
-				"entity": entity
-			}
+				"entity": entity}
 		else:
-			return {"success": false, "message": "Failed to create entity"}
+			return {"success": false, "message": "Failed to create entity"
+}
 	
 	func _on_akashic_entity_created(entity):
 		if not sync_enabled:
@@ -456,7 +489,7 @@ class AkashicRecordsAdapter:
 		# Create corresponding JSH entity
 		var jsh_entity = entity_manager.create_entity(
 			entity.type if entity.has("type") else "unknown",
-			entity.properties if entity.has("properties") else {}
+			entity.properties if entity.has("properties") else {
 		)
 		
 		# Store reference to Akashic ID
@@ -469,6 +502,7 @@ class AkashicRecordsAdapter:
 		
 		# Create corresponding Akashic entity
 		if akashic_records_manager and akashic_records_manager.has_method("create_entity"):
+}
 			var properties = entity.get_all_properties()
 			var akashic_entity = akashic_records_manager.create_entity(entity.get_type(), properties)
 			

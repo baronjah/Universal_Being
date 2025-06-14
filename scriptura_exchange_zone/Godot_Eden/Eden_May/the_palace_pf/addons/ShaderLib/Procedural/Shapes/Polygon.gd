@@ -1,5 +1,6 @@
 @tool
-class_name VisualShaderNodeProceduralPolygon extends VisualShaderNodeCustom
+class_name VisualShaderNodeProceduralPolygon_Polygon_Polygon
+extends \2
 
 func _init() -> void:
 	output_port_for_preview = 0

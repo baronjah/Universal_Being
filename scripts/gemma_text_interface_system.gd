@@ -34,6 +34,7 @@ func pentagon_init() -> void:
 	
 	print("👁️ %s: Pentagon Init - Text vision awakening" % being_name)
 
+
 func pentagon_ready() -> void:
 	super.pentagon_ready()
 	
@@ -44,6 +45,7 @@ func pentagon_ready() -> void:
 	_start_interface_scanning()
 	
 	print("👁️ %s: Pentagon Ready - Scanning reality for interfaces" % being_name)
+
 
 func pentagon_process(delta: float) -> void:
 	super.pentagon_process(delta)
@@ -157,11 +159,14 @@ func _generate_interface_description(interface: Node) -> void:
 		description += "Universal Being Interface: %s (Type: %s)\n" % [interface_name, interface.get("being_type")]
 	else:
 		description += "Interface: %s (%s)\n" % [interface_name, interface.get_class()]
+
 	
 	# Position information
 	if include_position_data and interface.has_method("get_global_position"):
+
 		var pos = interface.global_position
 		description += "  Position: %.1f, %.1f, %.1f\n" % [pos.x, pos.y, pos.z]
+
 	
 	# Interface-specific descriptions
 	if interface is UniversalInterfaceBeing:
@@ -182,14 +187,17 @@ func _describe_universal_interface(interface: UniversalInterfaceBeing) -> String
 	desc += "  Size: %.0fx%.0f\n" % [interface.interface_size.x, interface.interface_size.y]
 	desc += "  Moveable: %s\n" % ("Yes" if interface.is_moveable else "No")
 	desc += "  Resizable: %s\n" % ("Yes" if interface.is_resizable else "No")
+
 	
 	# Content description
 	if interface.loaded_interface:
 		desc += "  Content: %s interface loaded\n" % interface.interface_type
+
 	
 	# Interaction hints
 	if include_interaction_hints:
 		desc += "  Interactions: "
+
 		var interactions = []
 		if interface.is_moveable:
 			interactions.append("grab to move")
@@ -207,11 +215,13 @@ func _describe_control_interface(control: Control) -> String:
 	desc += "  Type: %s\n" % control.get_class()
 	desc += "  Size: %.0fx%.0f\n" % [control.size.x, control.size.y]
 	desc += "  Visible: %s\n" % ("Yes" if control.visible else "No")
+
 	
 	# Describe interactive elements
 	var buttons = _find_children_of_type(control, Button)
 	if buttons.size() > 0:
 		desc += "  Buttons: "
+
 		var button_names = []
 		for button in buttons:
 			button_names.append("'%s'" % button.text)
@@ -220,10 +230,12 @@ func _describe_control_interface(control: Control) -> String:
 	var inputs = _find_children_of_type(control, LineEdit)
 	if inputs.size() > 0:
 		desc += "  Text Inputs: %d fields\n" % inputs.size()
+
 	
 	var labels = _find_children_of_type(control, Label)
 	if labels.size() > 0 and labels.size() <= 5:  # Don't overwhelm with too many labels
 		desc += "  Labels: "
+
 		var label_texts = []
 		for label in labels:
 			if label.text.length() < 50:  # Keep text short
@@ -237,16 +249,20 @@ func _describe_console_interface(console: Node) -> String:
 	var desc = ""
 	desc += "  Console Type: Perfect Universal Console\n"
 	desc += "  Features: Commands, Natural Language, AI Chat\n"
+
 	
 	# Check for loaded interfaces in tabs
 	if console.has_method("get_loaded_interfaces"):
+
 		var loaded = console.get_loaded_interfaces()
 		if loaded.size() > 0:
 			desc += "  Loaded Interfaces: %d tabs active\n" % loaded.size()
+
 	
 	if include_interaction_hints:
 		desc += "  Usage: Type commands or speak naturally\n"
 		desc += "  Commands: /help, /load, /create, /inspect\n"
+
 	
 	return desc
 
@@ -266,6 +282,7 @@ func _compile_scene_description() -> void:
 	current_scene_description = "=== GEMMA'S INTERFACE VISION ===\n"
 	current_scene_description += "Timestamp: %s\n" % Time.get_datetime_string_from_system()
 	current_scene_description += "Active Interfaces: %d\n\n" % observed_interfaces.size()
+
 	
 	# Add all interface descriptions
 	for description in interface_inventory:
@@ -317,11 +334,13 @@ func on_interface_created(interface: Node) -> void:
 	add_observed_interface(interface)
 	print("👁️ New interface detected: %s" % interface.name)
 
+
 func on_interface_destroyed(interface: Node) -> void:
 	"""Called when an interface is destroyed"""
 	observed_interfaces.erase(interface)
 	interface_descriptions.erase(interface)
 	print("👁️ Interface removed: %s" % interface.name)
+
 
 func on_interface_changed(interface: Node) -> void:
 	"""Called when an interface changes"""

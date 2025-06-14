@@ -1,0 +1,5 @@
+# Temporary exclusion of scriptura_exchange_zone to prevent scanning errors
+scriptura_exchange_zone/Godot_Eden/
+scriptura_exchange_zone/talking_ragdoll_game/
+scriptura_exchange_zone/pentagon_backup_*/
+scriptura_exchange_zone/*/addons/

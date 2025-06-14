@@ -111,7 +111,7 @@ func create_multiverse_ui():
 	var ui_scene = load("res://multiverse_navigation_ui.tscn")
 	
 	if ui_scene:
-		multiverse_ui = ui_scene.instance()
+		multiverse_ui = ui_scene.instantiate()
 	else:
 		# Create UI programmatically
 		multiverse_ui = load("res://multiverse_navigation_ui.gd").new()
@@ -256,13 +256,13 @@ func connect_signals():
 	set_process_input(true)
 	
 	# Connect to system integration signals
-	system_integration.connect("universe_changed", self, "_on_universe_changed")
-	system_integration.connect("access_point_discovered", self, "_on_access_point_discovered")
-	system_integration.connect("cosmic_turn_advanced", self, "_on_cosmic_turn_advanced")
+	system_integration.connect(_on_universe_changed)
+	system_integration.connect(_on_access_point_discovered)
+	system_integration.connect(_on_cosmic_turn_advanced)
 	
 	# Connect to player controller signals if available
 	if player_controller:
-		player_controller.connect("movement_mode_changed", self, "_on_movement_mode_changed")
+		player_controller.connect(_on_movement_mode_changed)
 	
 	print("JSH Multiverse Initializer: Signals connected")
 

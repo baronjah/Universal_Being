@@ -1,7 +1,7 @@
 extends Node
 }
 
-class_name AkashicRecords
+class_name AkashicRecords_akashicrecords_akashicr
 }
 
 # Akashic Records System for Eden_OS

@@ -62,9 +62,11 @@ static func print_usage():
 	print("  godot --script gdscript_validator_bridge.gd -- --validate-file main.gd")
 	print("  godot --script gdscript_validator_bridge.gd -- --validate-content 'func test(): pass'")
 
+
 static func validate_file(file_path: String) -> Dictionary:
 	"""Validate a GDScript file using Godot's built-in parser"""
 	print("🔍 Validating file: %s" % file_path)
+
 	
 	var result = {
 		"file_path": file_path,
@@ -72,7 +74,7 @@ static func validate_file(file_path: String) -> Dictionary:
 		"errors": [],
 		"warnings": [],
 		"timestamp": Time.get_datetime_string_from_system()
-	}
+}
 	
 	# Check if file exists
 	if not FileAccess.file_exists(file_path):
@@ -114,7 +116,7 @@ static func validate_content(content: String, source_path: String = "temp.gd") -
 		"warnings": [],
 		"syntax_tree": null,
 		"timestamp": Time.get_datetime_string_from_system()
-	}
+}
 	
 	# Try to parse the GDScript content
 	var parser = GDScript.new()
@@ -136,7 +138,7 @@ static func validate_content(content: String, source_path: String = "temp.gd") -
 			{"pattern": "Expected", "severity": "error"},
 			{"pattern": "Identifier.*not declared", "severity": "error"},
 			{"pattern": "Function.*not found", "severity": "error"},
-			{"pattern": "Invalid syntax", "severity": "error"}
+			{"pattern": "Invalid syntax", "severity": "error"
 		]
 		
 		result.errors.append({
@@ -167,6 +169,7 @@ static func analyze_gdscript_semantics(content: String, result: Dictionary) -> D
 		
 		# Check for common issues
 		if line.strip_edges().begins_with("var "):
+}
 			# Check for variable naming issues
 			var regex = RegEx.new()
 			regex.compile(r"var\s+(\w+)")
@@ -183,6 +186,7 @@ static func analyze_gdscript_semantics(content: String, result: Dictionary) -> D
 		
 		# Check for function definitions
 		if line.strip_edges().begins_with("func "):
+
 			# Check for Pentagon method overrides without super calls
 			var pentagon_methods = ["pentagon_init", "pentagon_ready", "pentagon_process", "pentagon_input", "pentagon_sewers"]
 			for method in pentagon_methods:
@@ -200,6 +204,7 @@ static func analyze_gdscript_semantics(content: String, result: Dictionary) -> D
 static func check_syntax(file_path: String) -> Dictionary:
 	"""Quick syntax check only"""
 	print("🔍 Quick syntax check: %s" % file_path)
+
 	
 	var result = await validate_file(file_path)
 	
@@ -209,7 +214,7 @@ static func check_syntax(file_path: String) -> Dictionary:
 		"has_syntax_errors": result.errors.size() > 0,
 		"syntax_errors": result.errors,
 		"timestamp": result.timestamp
-	}
+}
 	
 	if syntax_result.has_syntax_errors:
 		print("❌ Syntax errors found in: %s" % file_path)
@@ -217,6 +222,7 @@ static func check_syntax(file_path: String) -> Dictionary:
 			print("   Line %d: %s" % [error.line, error.message])
 	else:
 		print("✅ Syntax OK: %s" % file_path)
+
 	
 	return syntax_result
 
@@ -264,7 +270,7 @@ static func handle_validation_request(request: Dictionary) -> Dictionary:
 		"request_id": request.get("id", "unknown"),
 		"timestamp": Time.get_datetime_string_from_system(),
 		"results": []
-	}
+}
 	
 	if request.has("files"):
 		for file_data in request.files:
@@ -273,6 +279,7 @@ static func handle_validation_request(request: Dictionary) -> Dictionary:
 			response.results.append(result)
 	
 	if request.has("content"):
+
 		var content = request.content.get("code", "")
 		var source = request.content.get("source", "temp.gd")
 		var result = await validate_content(content, source)
@@ -285,10 +292,11 @@ static func handle_validation_request(request: Dictionary) -> Dictionary:
 static func watch_for_changes(directory: String) -> void:
 	"""Watch directory for file changes and auto-validate"""
 	print("👁️ Watching directory for changes: %s" % directory)
+
 	
 	# This would require a more complex implementation
 	# For now, we'll use polling
-	var file_times = {}
+	var file_times = {
 	
 	while true:
 		var dir = DirAccess.open(directory)
@@ -298,6 +306,7 @@ static func watch_for_changes(directory: String) -> void:
 			
 			while file_name != "":
 				if file_name.ends_with(".gd"):
+	}
 					var full_path = directory + "/" + file_name
 					var current_time = FileAccess.get_modified_time(full_path)
 					

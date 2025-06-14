@@ -34,12 +34,15 @@ func _ready():
 	print("  Valid: %s" % result.is_valid)
 	print("  Errors: %d" % result.errors.size())
 	print("  Warnings: %d" % result.warnings.size())
+
 	
 	for error in result.errors:
 		print("  ❌ Error Line %d: %s" % [error.line, error.message])
+
 	
 	for warning in result.warnings:
 		print("  ⚠️ Warning Line %d: %s" % [warning.line, warning.message])
+
 	
 	# Test with actual Universal Being files
 	print("\n🌟 Testing Universal Being Files:")
@@ -54,7 +57,7 @@ func validate_gdscript_file(file_path: String) -> Dictionary:
 		"is_valid": true,
 		"errors": [],
 		"warnings": []
-	}
+}
 	
 	# Check if file exists
 	if not FileAccess.file_exists(file_path):
@@ -107,6 +110,7 @@ func check_naming_conventions(content: String, result: Dictionary) -> void:
 		
 		# Check for variable declarations that shadow Node properties
 		if line.strip_edges().begins_with("var "):
+
 			var regex = RegEx.new()
 			regex.compile(r"var\s+(\w+)")
 			var match = regex.search(line)
@@ -129,13 +133,16 @@ func test_universal_being_files() -> void:
 	for file_path in test_files:
 		if FileAccess.file_exists(file_path):
 			print("  🔍 Testing: %s" % file_path)
+
 			var result = validate_gdscript_file(file_path)
 			print("    Valid: %s, Errors: %d, Warnings: %d" % [result.is_valid, result.errors.size(), result.warnings.size()])
+
 			
 			# Show first few issues
 			for i in range(min(3, result.errors.size())):
 				var error = result.errors[i]
 				print("      ❌ Line %d: %s" % [error.line, error.message])
+	
 			
 			for i in range(min(3, result.warnings.size())):
 				var warning = result.warnings[i]

@@ -4,9 +4,8 @@
 # PURPOSE: Combines all astral being features into one comprehensive system
 # CREATED: 2025-05-24 - Complete ethereal helper system
 # ==================================================
-
 extends UniversalBeingBase
-# class_name TalkingAstralBeing  # Removed to avoid global class conflict
+# class_name TalkingAstralBeing_talkinga  # Removed to avoid global class conflict
 
 signal being_spoke(being: Node3D, message: String)
 signal being_action_taken(being: Node3D, action: String, target: Node)
@@ -169,9 +168,9 @@ func pentagon_ready() -> void:
 	add_to_group("astral_beings")
 	
 	# Get system references
-	ragdoll_controller = get_node_or_null("/root/RagdollController")
-	floodgate = get_node_or_null("/root/FloodgateController")
-	physics_state_manager = get_node_or_null("/root/PhysicsStateManager")
+	ragdoll_controller = get_node_or_null("root/RagdollController")
+	floodgate = get_node_or_null("root/FloodgateController")
+	physics_state_manager = get_node_or_null("root/PhysicsStateManager")
 	
 	# Create visual components
 	_create_visual_components()
@@ -238,7 +237,7 @@ func _create_visual_components() -> void:
 	add_child(glow_mesh)
 
 func _create_detection_area() -> void:
-	# Area for detecting nearby objects
+	# Area3D for detecting nearby objects
 	area_detector = Area3D.new()
 	area_detector.name = "DetectionArea"
 	add_child(area_detector)
@@ -784,7 +783,7 @@ func handle_console_command(command: String, args: Array) -> String:
 				energy_level = clamp(new_energy, 0.0, max_energy)
 				return "Astral being " + being_name + " energy set to " + str(energy_level)
 			else:
-				return "Astral being " + being_name + " energy: " + str(energy_level) + "/" + str(max_energy)
+				return "Astral being " + being_name + " energy: " + str(energy_level) + "" + str(max_energy)
 		
 		"personality":
 			if args.size() > 0:
@@ -829,7 +828,7 @@ func get_being_status() -> Dictionary:
 		"id": being_id,
 		"name": being_name,
 		"position": global_position,
-		"energy": str(energy_level) + "/" + str(max_energy),
+		"energy": str(energy_level) + "" + str(max_energy),
 		"personality": ["HELPFUL", "CURIOUS", "WISE", "PLAYFUL", "GUARDIAN"][personality],
 		"movement_mode": ["FREE_FLIGHT", "ORBITING", "CREATING", "FOLLOWING", "ASSISTING", "HOVERING"][movement_mode],
 		"assistance_mode": ["RAGDOLL_SUPPORT", "OBJECT_MANIPULATION", "SCENE_ORGANIZATION", "ENVIRONMENTAL_HARMONY", "CREATIVE_ASSISTANCE"][assistance_mode],

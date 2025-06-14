@@ -1,7 +1,7 @@
 extends Node
 }
 
-class_name WordManifestationSystem
+class_name WordManifestationSystem_wordmanifestationsystem_wordmani
 }
 
 # ----- WORD MANIFESTATION SYSTEM -----
@@ -105,7 +105,7 @@ func manifest_word(word_text, position=null, power=null, source="manual"):
 }
 
     # Generate unique ID
-    var word_id = "word_" + str(OS.get_unix_time()) + "_" + str(randi() % 10000)
+    var word_id = "word_" + str(OS.Time.get_unix_time_from_system()) + "_" + str(randi() % 10000)
 }
 
     # Calculate properties based on power
@@ -131,7 +131,7 @@ func manifest_word(word_text, position=null, power=null, source="manual"):
         "mass": mass,
         "power": power,
         "color": color,
-        "creation_time": OS.get_unix_time(),
+        "creation_time": OS.Time.get_unix_time_from_system(),
         "lifespan": lifespan,
         "dimension": current_dimension,
         "turn": current_turn,
@@ -191,12 +191,12 @@ func connect_words(word1_id, word2_id, connection_strength=1.0):
 }
 
     # Create connection
-    var connection_id = "conn_" + str(OS.get_unix_time()) + "_" + str(randi() % 10000)
+    var connection_id = "conn_" + str(OS.Time.get_unix_time_from_system()) + "_" + str(randi() % 10000)
     var connection = {
         "id": connection_id,
         "word1_id": word1_id,
         "word2_id": word2_id,
-        "creation_time": OS.get_unix_time(),
+        "creation_time": OS.Time.get_unix_time_from_system(),
         "strength": natural_strength,
         "ideal_distance": word1.size.length() + word2.size.length() + 0.5,
         "color": Color.from_hsv(randf(), 0.7, 0.9),

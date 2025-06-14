@@ -33,7 +33,7 @@ func _ready():
     setup_ui()
     
     # Create the universe controller
-    universe_controller = preload("res://code/gdscript/scripts/universe_particles_physics/universe_controller.gd").new()
+    universe_controller = preload("res://scripts/gdscript/scripts/universe_particles_physics/universe_controller.gd").new()
     universe_controller.name = "UniverseController"
     add_child(universe_controller)
     

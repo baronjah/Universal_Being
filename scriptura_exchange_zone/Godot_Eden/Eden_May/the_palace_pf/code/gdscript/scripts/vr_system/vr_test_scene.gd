@@ -20,10 +20,10 @@ var status_label = null
 var fps_label = null
 
 # Test settings
-@export var spawn_test_elements: bool = true
-@export var create_test_dictionary: bool = true
-@export var show_debug_ui: bool = true
-@export var auto_initialize_vr: bool = true
+@@@export var spawn_test_elements: bool = true
+@@@export var create_test_dictionary: bool = true
+@@@export var show_debug_ui: bool = true
+@@@export var auto_initialize_vr: bool = true
 
 # Called when the node enters the scene tree
 func _ready():
@@ -118,7 +118,7 @@ func _setup_environment():
 	add_child(floor_instance)
 	
 	# Add a reference grid
-	var grid_mesh = GridMesh.new()
+	var grid_mesh = PlaneMesh.new()
 	grid_mesh.size = Vector2(20, 20)
 	grid_mesh.sections = Vector2(20, 20)
 	
@@ -148,7 +148,7 @@ func _initialize_vr():
 	print("Initializing VR system...")
 	
 	# Try to load VR Manager
-	var vr_manager_script = load("res://code/gdscript/scripts/vr_system/vr_manager.gd")
+	var vr_manager_script = load("res://scripts/gdscript/scripts/vr_system/vr_manager.gd")
 	if vr_manager_script:
 		# Try to get singleton instance first
 		vr_manager = VRManager.get_instance() if "VRManager" in get_tree().root.get_children() else null
@@ -170,7 +170,7 @@ func _initialize_vr():
 
 # Create VR scene setup
 func _create_vr_scene_setup():
-	var vr_scene_setup_script = load("res://code/gdscript/scripts/vr_system/vr_scene_setup.gd")
+	var vr_scene_setup_script = load("res://scripts/gdscript/scripts/vr_system/vr_scene_setup.gd")
 	if vr_scene_setup_script:
 		var vr_scene_setup = vr_scene_setup_script.new()
 		vr_scene_setup.name = "VRSceneSetup"
@@ -237,10 +237,10 @@ func _initialize_akashic_records():
 	print("Initializing Akashic Records...")
 	
 	# Try to get singleton instance first
-	akashic_records = get_node_or_null("/root/AkashicRecordsManager")
+	akashic_records = get_node_or_null("root/AkashicRecordsManager")
 	
 	if not akashic_records:
-		var akashic_script = load("res://code/gdscript/scripts/akashic_records/akashic_records_manager.gd")
+		var akashic_script = load("res://scripts/gdscript/scripts/akashic_records/akashic_records_manager.gd")
 		if akashic_script:
 			akashic_records = akashic_script.new()
 			akashic_records.name = "AkashicRecordsManager"

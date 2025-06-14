@@ -106,7 +106,7 @@ func _process_text_data(data, dataset_id):
     # Process each line
     for line in lines:
         # Skip empty lines
-        if line.strip_edges().empty():
+        if line.strip_edges().is_empty():
             continue
         
         # Check if we're at the item limit
@@ -227,7 +227,7 @@ func _process_csv_data(data, dataset_id):
     # Process each line
     for line in lines:
         # Skip empty lines
-        if line.strip_edges().empty():
+        if line.strip_edges().is_empty():
             continue
         
         # Check if we're at the item limit
@@ -372,7 +372,7 @@ func _cleanse_item(item):
     var cleansed_item = item.duplicate(true)
     
     # Skip if no errors and already valid
-    if item["errors"].empty() and not item["metadata"]["has_errors"]:
+    if item["errors"].is_empty() and not item["metadata"]["has_errors"]:
         # Still mark as cleansed
         cleansed_item["metadata"]["cleansed"] = true
         return cleansed_item
@@ -602,7 +602,7 @@ func _segment_by_content(dataset_id, items):
     for item in items:
         var content = str(item["content"])
         
-        if content.empty():
+        if content.is_empty():
             continue
         
         var first_char = content[0].to_lower()
@@ -727,7 +727,7 @@ func _segment_auto(dataset_id, items):
                 length_variation += content.length()
                 
                 # Track first character variation
-                if not content.empty():
+                if not content.is_empty():
                     var first_char = content[0].to_lower()
                     if not first_char_variation.has(first_char):
                         first_char_variation[first_char] = 0
@@ -1207,7 +1207,7 @@ func save_data_to_file(dataset_id, stage="cleansed", format="json", file_path=""
         return false
     
     # Generate file path if not provided
-    if file_path.empty():
+    if file_path.is_empty():
         var timestamp = OS.get_unix_time()
         file_path = "user://data_bank_" + dataset_id + "_" + stage + "_" + str(timestamp) + "." + format
     
@@ -1470,4 +1470,5 @@ func get_dataset_info(dataset_id, stage="raw"):
     if not data_bank[stage].has(dataset_id):
         return null
     
-    return data_bank[stage][dataset_id]["metadata"]
+    return data_bank[stage][dataset_id]["metadata"]}
+}

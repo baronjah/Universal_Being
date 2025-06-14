@@ -22,10 +22,10 @@
 # SOFTWARE.
 
 @tool
-extends Control
-class_name ImageStackViewer
+extends \2
+class_name ImageStackViewer_imagestackviewer_imagesta
 
-@export var image_list:Array[Image]:
+@@@export var image_list:Array[Image]:
 	get:
 		return image_list
 	set(value):

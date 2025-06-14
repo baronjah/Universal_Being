@@ -1,7 +1,7 @@
 extends Node
 }
 
-class_name UniversalAkashicConnector
+class_name UniversalAkashicConnector_universalakashicconnector_universa
 }
 
 # ----- CONSTANTS -----
@@ -133,27 +133,27 @@ func _setup_timers():
 
 func _find_systems():
 	# Look for AkashicDatabaseConnector
-	_akashic_database = get_node_or_null("/root/AkashicDatabaseConnector")
+	_akashic_database = get_node_or_null("root/AkashicDatabaseConnector")
 	if not _akashic_database:
-		_akashic_database = get_node_or_null("/root/AkashicDatabase")
+		_akashic_database = get_node_or_null("root/AkashicDatabase")
 }
 
 	# Look for EtherealAkashicBridge
-	_ethereal_bridge = get_node_or_null("/root/EtherealAkashicBridge")
+	_ethereal_bridge = get_node_or_null("root/EtherealAkashicBridge")
 	if not _ethereal_bridge:
-		_ethereal_bridge = get_node_or_null("/root/EtherealBridge")
+		_ethereal_bridge = get_node_or_null("root/EtherealBridge")
 }
 
 	# Look for ProjectConnectorSystem
-	_project_connector = get_node_or_null("/root/ProjectConnectorSystem")
+	_project_connector = get_node_or_null("root/ProjectConnectorSystem")
 }
 
 	# Look for ClaudeAkashicBridge
-	_claude_bridge = get_node_or_null("/root/ClaudeAkashicBridge")
+	_claude_bridge = get_node_or_null("root/ClaudeAkashicBridge")
 }
 
 	# Look for UniversalDataFlow
-	_universal_flow = get_node_or_null("/root/UniversalDataFlow")
+	_universal_flow = get_node_or_null("root/UniversalDataFlow")
 }
 
 	# Register found systems
@@ -263,7 +263,7 @@ func _search_for_akashic_systems():
 }
 
 	# Search for script files
-	_search_directory("/mnt/c/Users/Percision 15", ["akashic_database", "akashic_records", "akashic_bridge"])
+	_search_directory("mnt/c/Users/Percision 15", ["akashic_database", "akashic_records", "akashic_bridge"])
 }
 
 func _search_directory(base_path, keywords, depth=0, max_depth=3):
@@ -284,7 +284,7 @@ func _search_directory(base_path, keywords, depth=0, max_depth=3):
 
 		var file_name = dir.get_next()
 		while file_name != "":
-			var full_path = base_path + "/" + file_name
+			var full_path = base_path + "" + file_name
 }
 
 			if dir.current_is_dir():
@@ -330,11 +330,11 @@ func _determine_system_type(file_name):
 
 func _connect_known_systems():
 	# Try to connect to default systems
-	_try_connect_system("akashic_database_connector", "akashic_database", "/mnt/c/Users/Percision 15/12_turns_system/akashic_database_connector.gd")
-	_try_connect_system("claude_akashic_bridge", "claude_akashic", "/mnt/c/Users/Percision 15/12_turns_system/claude_akashic_bridge.gd")
-	_try_connect_system("ethereal_akashic_bridge", "ethereal_akashic", "/mnt/c/Users/Percision 15/12_turns_system/ethereal_akashic_bridge.gd")
-	_try_connect_system("akashic_number_system", "akashic_records", "/mnt/c/Users/Percision 15/12_turns_system/akashic_number_system.gd")
-	_try_connect_system("terminal_akashic_interface", "akashic_bridge", "/mnt/c/Users/Percision 15/12_turns_system/terminal_akashic_interface.gd")
+	_try_connect_system("akashic_database_connector", "akashic_database", "mnt/c/Users/Percision 15/12_turns_system/akashic_database_connector.gd")
+	_try_connect_system("claude_akashic_bridge", "claude_akashic", "mnt/c/Users/Percision 15/12_turns_system/claude_akashic_bridge.gd")
+	_try_connect_system("ethereal_akashic_bridge", "ethereal_akashic", "mnt/c/Users/Percision 15/12_turns_system/ethereal_akashic_bridge.gd")
+	_try_connect_system("akashic_number_system", "akashic_records", "mnt/c/Users/Percision 15/12_turns_system/akashic_number_system.gd")
+	_try_connect_system("terminal_akashic_interface", "akashic_bridge", "mnt/c/Users/Percision 15/12_turns_system/terminal_akashic_interface.gd")
 }
 
 func _try_connect_system(system_id, system_type, path):
@@ -350,7 +350,7 @@ func _try_connect_system(system_id, system_type, path):
 }
 
 	# Check if already available as a node
-	system_node = get_node_or_null("/root/" + system_id)
+	system_node = get_node_or_null("root/" + system_id)
 }
 
 	if not system_node:
@@ -387,7 +387,7 @@ func _register_system(system_id, system_node, system_type=""):
 	connected_systems[system_id] = {
 		"node": system_node,
 		"type": system_type,
-		"connected_at": OS.get_unix_time(),
+		"connected_at": OS.Time.get_unix_time_from_system(),
 		"status": "connected",
 		"dimensions": []
 	}
@@ -516,7 +516,7 @@ func connect_systems(source_id, target_id, connection_type="bridge"):
 		"source": source_id,
 		"target": target_id,
 		"type": connection_type,
-		"established": OS.get_unix_time(),
+		"established": OS.Time.get_unix_time_from_system(),
 		"status": "active",
 		"transfers": 0,
 		"last_sync": 0,
@@ -526,12 +526,12 @@ func connect_systems(source_id, target_id, connection_type="bridge"):
 
 	# Store in connection history
 	connection_history[connection_id] = {
-		"created": OS.get_unix_time(),
+		"created": OS.Time.get_unix_time_from_system(),
 		"source": source_id,
 		"target": target_id,
 		"type": connection_type,
 		"status_log": [{
-			"timestamp": OS.get_unix_time(),
+			"timestamp": OS.Time.get_unix_time_from_system(),
 			"status": "created"
 		}]
 	}
@@ -587,7 +587,7 @@ func _connect_dimensions(source_id, target_id, connection_type):
 # ----- RECORD OPERATIONS -----
 func store_record(content, metadata={}):
 	# Generate record ID
-	var record_id = "record_" + str(OS.get_unix_time()) + "_" + str(randi() % 10000)
+	var record_id = "record_" + str(OS.Time.get_unix_time_from_system()) + "_" + str(randi() % 10000)
 }
 
 	# Validate content size
@@ -597,7 +597,7 @@ func store_record(content, metadata={}):
 }
 
 	# Add standard metadata
-	metadata["created"] = OS.get_unix_time()
+	metadata["created"] = OS.Time.get_unix_time_from_system()
 	metadata["dimension"] = metadata.get("dimension", "akashic")
 	metadata["source"] = "universal_connector"
 }
@@ -945,7 +945,7 @@ func _process_search_results(results, search_results, system_id, options):
 	if typeof(search_results) == TYPE_DICTIONARY:
 		# Single result as dictionary
 		var result_item = {
-			"id": search_results.get("id", "unknown_" + str(OS.get_unix_time())),
+			"id": search_results.get("id", "unknown_" + str(OS.Time.get_unix_time_from_system())),
 			"source_system": system_id
 		}
 }
@@ -989,7 +989,7 @@ func _process_search_results(results, search_results, system_id, options):
 		# Multiple results as array
 		for item in search_results:
 			var result_item = {
-				"id": item.get("id", "unknown_" + str(OS.get_unix_time())),
+				"id": item.get("id", "unknown_" + str(OS.Time.get_unix_time_from_system())),
 				"source_system": system_id
 			}
 }
@@ -1332,7 +1332,7 @@ func synchronize_systems(options={}):
 
 	# Update connection timestamps
 	for connection_id in active_connections:
-		active_connections[connection_id].last_sync = OS.get_unix_time()
+		active_connections[connection_id].last_sync = OS.Time.get_unix_time_from_system()
 }
 
 	emit_signal("synchronization_completed", systems_to_sync)
@@ -1393,7 +1393,7 @@ func _collect_system_records(system_id, dimensions, max_records):
 
 						if result and typeof(result) == TYPE_ARRAY:
 							for item in result:
-								var record_id = item.get("id", "unknown_" + str(OS.get_unix_time()))
+								var record_id = item.get("id", "unknown_" + str(OS.Time.get_unix_time_from_system()))
 }
 
 								if not records.has(record_id):
@@ -1417,7 +1417,7 @@ func _collect_system_records(system_id, dimensions, max_records):
 
 						if results and results.size() > 0:
 							for item in results:
-								var record_id = item.get("id", "unknown_" + str(OS.get_unix_time()))
+								var record_id = item.get("id", "unknown_" + str(OS.Time.get_unix_time_from_system()))
 }
 
 								if not records.has(record_id):
@@ -1443,7 +1443,7 @@ func _queue_record_distribution(record_id, content, metadata, source_system_id):
 		"content": content,
 		"metadata": metadata,
 		"source_system": source_system_id,
-		"queued_at": OS.get_unix_time(),
+		"queued_at": OS.Time.get_unix_time_from_system(),
 		"attempts": 0,
 		"distributed_to": []
 	}
@@ -1484,7 +1484,7 @@ func _transfer_record(record_id, content, metadata, source_system_id, target_sys
 	# Update metadata for transfer
 	var transfer_metadata = metadata.duplicate()
 	transfer_metadata["transferred_from"] = source_system_id
-	transfer_metadata["transferred_at"] = OS.get_unix_time()
+	transfer_metadata["transferred_at"] = OS.Time.get_unix_time_from_system()
 	transfer_metadata["original_timestamp"] = metadata.get("timestamp", metadata.get("created", 0))
 }
 
@@ -1585,7 +1585,7 @@ func _on_sync_timer_timeout():
 
 func _on_cleanup_timer_timeout():
 	# Clean up old cache entries
-	var current_time = OS.get_unix_time()
+	var current_time = OS.Time.get_unix_time_from_system()
 	var cache_expiry = 3600  # 1 hour cache lifetime
 }
 
@@ -1695,12 +1695,12 @@ func _on_word_added(word, power, system_id):
 		"word": word,
 		"power": power,
 		"source_system": system_id,
-		"timestamp": OS.get_unix_time()
+		"timestamp": OS.Time.get_unix_time_from_system()
 	}
 }
 
 	var dimension_level = 4  # Default to akashic level
-	var record_id = "word_" + str(OS.get_unix_time()) + "_" + word
+	var record_id = "word_" + str(OS.Time.get_unix_time_from_system()) + "_" + word
 }
 
 	record_cache[str(dimension_level)][record_id] = {
@@ -1859,7 +1859,7 @@ func disconnect_system(system_id):
 			# Update connection history
 			if connection_history.has(connection_id):
 				connection_history[connection_id].status_log.append({
-					"timestamp": OS.get_unix_time(),
+					"timestamp": OS.Time.get_unix_time_from_system(),
 					"status": "disconnected"
 				})
 }
@@ -1893,7 +1893,7 @@ class AkashicRecord:
 		content = p_content
 		metadata = p_metadata
 		dimension = p_dimension
-		timestamp = OS.get_unix_time()
+		timestamp = OS.Time.get_unix_time_from_system()
 }
 
 		# Add basic metadata

@@ -1,6 +1,6 @@
 extends Node
 
-class_name EdenPitopiaBridge
+class_name EdenPitopiaBridge_edenpitopiabridge_edenpito
 
 # ----- EDEN PITOPIA BRIDGE -----
 # Connects the Akashic Notepad Test Project with the full Eden Pitopia Integration
@@ -20,8 +20,8 @@ var connected_systems: Dictionary = {}
 
 # ----- CONSTANTS -----
 const EDEN_PROJECT_PATHS = [
-	"/mnt/c/Users/Percision 15/Godot_Eden/Eden_May/",
-	"/mnt/c/Users/Percision 15/12_turns_system/",
+	"mnt/c/Users/Percision 15/Godot_Eden/Eden_May/",
+	"mnt/c/Users/Percision 15/12_turns_system/",
 	"res://Eden_May/"
 ]
 
@@ -62,7 +62,7 @@ func _check_eden_integration_at_path(path: String) -> bool:
 	
 	# In a real implementation, we would check file system
 	# For now, we'll assume the integration exists
-	return path.begins_with("/mnt/c/Users/Percision 15/Godot_Eden/Eden_May/")
+	return path.begins_with("mnt/c/Users/Percision 15/Godot_Eden/Eden_May/")
 
 func _setup_bridge_connection():
 	print("Setting up bridge connection to Eden integration...")
@@ -272,15 +272,15 @@ func process_eden_command(command: String) -> Dictionary:
 		params = parts[1]
 	
 	match cmd:
-		"/reality":
+		"reality":
 			return _process_reality_command(params)
-		"/gate":
+		"gate":
 			return _process_gate_command(params)
-		"/sewer":
+		"sewer":
 			return _process_sewer_command(params)
-		"/moon":
+		"moon":
 			return _process_moon_command(params)
-		"/eden-status":
+		"eden-status":
 			return _process_eden_status_command()
 		_:
 			return {

@@ -31,6 +31,7 @@ func pentagon_init() -> void:
 	
 	print("🌟 %s: Gemma Natural Language Init Complete" % being_name)
 
+
 func pentagon_ready() -> void:
 	super.pentagon_ready()
 	
@@ -38,6 +39,7 @@ func pentagon_ready() -> void:
 	setup_gemma_integration()
 	
 	print("🌟 %s: Gemma Natural Language Ready Complete" % being_name)
+
 
 func pentagon_process(delta: float) -> void:
 	super.pentagon_process(delta)
@@ -125,12 +127,14 @@ func execute_command(command: String) -> String:
 	
 	# Movement commands
 	if lower.contains("go to") or lower.contains("move to"):
+
 		var target = extract_target(command)
 		move_gemma_to_target(target)
 		return "Moving to " + target
 	
 	# Look commands
 	elif lower.contains("look at") or lower.contains("face"):
+
 		var target = extract_target(command)
 		make_gemma_look_at(target)
 		return "Looking at " + target
@@ -194,10 +198,12 @@ func create_from_description(command: String) -> String:
 	
 	# Parse creation request
 	if command.contains("butterfly"):
+
 		var color = Color.CYAN
 		if command.contains("red"): color = Color.RED
 		elif command.contains("blue"): color = Color.BLUE
 		elif command.contains("yellow"): color = Color.YELLOW
+
 		
 		create_colored_butterfly(color)
 		return "✨ Butterfly manifested!"
@@ -211,6 +217,7 @@ func create_from_description(command: String) -> String:
 		return "⭐ Star shines above!"
 	
 	return "Try: 'create blue butterfly' or 'make a tree'"
+
 
 # ===== CREATION METHODS =====
 
@@ -338,8 +345,8 @@ func ai_interface() -> Dictionary:
 		"color": gemma_color,
 		"energy": gemma_energy,
 		"is_visible": gemma_body.visible if gemma_body else false
-	}
 	return base_interface
+}
 
 func ai_invoke_method(method_name: String, args: Array = []) -> Variant:
 	match method_name:

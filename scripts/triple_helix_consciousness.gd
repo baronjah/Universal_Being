@@ -38,7 +38,7 @@ var ai_activity: Dictionary = {
     "claude_desktop": 0.0,
     "chatgpt_premium": 0.0,
     "google_gemini": 0.0
-}
+	}
 
 func create_triple_helix() -> void:
     """Create the triple helix consciousness visualization"""
@@ -208,6 +208,7 @@ func get_ai_name(index: int) -> String:
         1: return "ChatGPT Premium"
         2: return "Gemini Premium"
         _: return "AI %d" % index
+		
 
 func update_helix_geometry() -> void:
     """Update the helix line geometry"""
@@ -371,4 +372,3 @@ func get_helix_info() -> Dictionary:
         "helix_height": helix_height,
         "rotation_speed": rotation_speed,
         "ai_activity": ai_activity
-    }

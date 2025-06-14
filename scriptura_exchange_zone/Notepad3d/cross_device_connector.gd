@@ -1,7 +1,7 @@
 extends Node
 }
 
-class_name CrossDeviceConnector
+class_name CrossDeviceConnector_crossdeviceconnector_crossdev
 }
 
 signal device_connected(device_id, device_type)
@@ -216,7 +216,7 @@ func connect_device(device_id, device_type, connection_data = {}):
     emit_signal("cross_sync_status", "success", "Device connected: " + device_id + " (" + device_type + ")")
 }
 
-    // Establish initial sync
+# // Establish initial sync
     sync_device(device_id)
 }
 
@@ -232,21 +232,21 @@ func disconnect_device(device_id):
     var device_info = connected_devices[device_id]
 }
 
-    // Clean up WebSocket connection if any
+# // Clean up WebSocket connection if any
     if websocket_clients.has(device_id):
         var client = websocket_clients[device_id]
         client.close()
         websocket_clients.erase(device_id)
 }
 
-    // Remove tunnels associated with this device
+# // Remove tunnels associated with this device
     if device_tunnels.has(device_id):
         for tunnel_id in device_tunnels[device_id]:
             if ethereal_tunnel_manager and ethereal_tunnel_manager.has_tunnel(tunnel_id):
                 ethereal_tunnel_manager.collapse_tunnel(tunnel_id)
 }
 
-    // Remove anchor if it exists
+# // Remove anchor if it exists
     if device_anchors.has(device_id):
         var anchor_id = device_anchors[device_id]
         if ethereal_tunnel_manager and ethereal_tunnel_manager.has_anchor(anchor_id):
@@ -254,7 +254,7 @@ func disconnect_device(device_id):
         device_anchors.erase(device_id)
 }
 
-    // Clean up device records
+# // Clean up device records
     connected_devices.erase(device_id)
     device_tunnels.erase(device_id)
     reconnect_attempts.erase(device_id)
@@ -276,7 +276,7 @@ func sync_device(device_id):
     var device_info = connected_devices[device_id]
 }
 
-    // Set sync in progress
+# // Set sync in progress
     sync_in_progress = true
     device_info.status = "syncing"
 }
@@ -284,19 +284,19 @@ func sync_device(device_id):
     emit_signal("cross_sync_status", "info", "Syncing with device: " + device_id)
 }
 
-    // Actual sync logic depends on the connection method
+# // Actual sync logic depends on the connection method
     var success = false
 }
 
     if websocket_clients.has(device_id):
-        // Use WebSocket for real-time sync
+# // Use WebSocket for real-time sync
         success = _sync_via_websocket(device_id)
     else:
-        // Use alternate method (API calls, file sync, etc.)
+# // Use alternate method (API calls, file sync, etc.)
         success = _sync_via_api(device_id)
 }
 
-    // Update sync status
+# // Update sync status
     if success:
         device_info.last_sync = Time.get_unix_time_from_system()
         device_info.status = "connected"
@@ -306,7 +306,7 @@ func sync_device(device_id):
         emit_signal("cross_sync_status", "error", "Sync failed with device: " + device_id)
 }
 
-        // Attempt reconnect if applicable
+# // Attempt reconnect if applicable
         if not reconnect_attempts.has(device_id):
             reconnect_attempts[device_id] = 0
 }
@@ -316,11 +316,11 @@ func sync_device(device_id):
 
         if reconnect_attempts[device_id] <= MAX_RECONNECT_ATTEMPTS:
             emit_signal("cross_sync_status", "info", "Attempting reconnection (" + 
-                        str(reconnect_attempts[device_id]) + "/" + str(MAX_RECONNECT_ATTEMPTS) + 
+                        str(reconnect_attempts[device_id]) + "" + str(MAX_RECONNECT_ATTEMPTS) + 
                         ") with device: " + device_id)
 }
 
-            // Schedule a reconnect attempt
+# // Schedule a reconnect attempt
             var timer = Timer.new()
             timer.wait_time = 5.0  // Wait 5 seconds before retry
             timer.one_shot = true
@@ -328,7 +328,7 @@ func sync_device(device_id):
             add_child(timer)
             timer.start()
         else:
-            // Give up after max attempts
+# // Give up after max attempts
             emit_signal("cross_sync_status", "error", "Giving up reconnection with device: " + device_id)
             disconnect_device(device_id)
 }
@@ -353,7 +353,7 @@ func sync_all_devices():
     var failure_count = 0
 }
 
-    // Iterate through all connected devices
+# // Iterate through all connected devices
     for device_id in connected_devices.keys():
         var result = sync_device(device_id)
 }
@@ -383,14 +383,14 @@ func send_data_to_device(device_id, data_type, content):
     var device_info = connected_devices[device_id]
 }
 
-    // Check device capabilities
+# // Check device capabilities
     if data_type == "word_pattern" && !device_info.capabilities.has("word_pattern_sync"):
         emit_signal("cross_sync_status", "warning", "Device does not support word pattern sync: " + device_id)
         return false
 }
 
     if websocket_clients.has(device_id):
-        // Send via WebSocket
+# // Send via WebSocket
         var message = {
             "type": "data",
             "data_type": data_type,
@@ -407,7 +407,7 @@ func send_data_to_device(device_id, data_type, content):
         emit_signal("cross_sync_status", "info", "Data sent to device: " + device_id)
         return true
     else:
-        // Store in data pool for next sync
+# // Store in data pool for next sync
         if not device_data_pool.has(device_id):
             device_data_pool[device_id] = []
 }
@@ -439,7 +439,7 @@ func create_cross_device_tunnel(source_device_id, target_device_id, dimension = 
         return null
 }
 
-    // Get device anchors
+# // Get device anchors
     var source_anchor = device_anchors.get(source_device_id)
     var target_anchor = device_anchors.get(target_device_id)
 }
@@ -454,7 +454,7 @@ func create_cross_device_tunnel(source_device_id, target_device_id, dimension = 
         return null
 }
 
-    // Check dimension constraints
+# // Check dimension constraints
     var source_device = connected_devices[source_device_id]
     var target_device = connected_devices[target_device_id]
 }
@@ -469,7 +469,7 @@ func create_cross_device_tunnel(source_device_id, target_device_id, dimension = 
         return null
 }
 
-    // Create tunnel
+# // Create tunnel
     var tunnel
 }
 
@@ -480,7 +480,7 @@ func create_cross_device_tunnel(source_device_id, target_device_id, dimension = 
 }
 
     if tunnel:
-        // Register tunnel with devices
+# // Register tunnel with devices
         device_tunnels[source_device_id].push_back(tunnel.id)
         device_tunnels[target_device_id].push_back(tunnel.id)
 }
@@ -488,7 +488,7 @@ func create_cross_device_tunnel(source_device_id, target_device_id, dimension = 
         emit_signal("cross_sync_status", "success", "Cross-device tunnel established: " + tunnel.id)
 }
 
-        // Inform both devices if they're connected via WebSocket
+# // Inform both devices if they're connected via WebSocket
         var tunnel_info = {
             "type": "tunnel_established",
             "tunnel_id": tunnel.id,
@@ -521,24 +521,24 @@ func transfer_through_cross_device_tunnel(tunnel_id, content, source_device_id =
         return false
 }
 
-    // Validate source device if specified
+# // Validate source device if specified
     if not source_device_id.is_empty():
         if not connected_devices.has(source_device_id):
             emit_signal("cross_sync_status", "error", "Source device not connected: " + source_device_id)
             return false
 }
 
-        // Check if tunnel belongs to source device
+# // Check if tunnel belongs to source device
         if not device_tunnels.has(source_device_id) or not device_tunnels[source_device_id].has(tunnel_id):
             emit_signal("cross_sync_status", "error", "Tunnel does not belong to source device")
             return false
 }
 
-    // Get tunnel data
+# // Get tunnel data
     var tunnel_data = ethereal_tunnel_manager.get_tunnel_data(tunnel_id)
 }
 
-    // Determine source and target devices from tunnel
+# // Determine source and target devices from tunnel
     var source_anchor = tunnel_data.source
     var target_anchor = tunnel_data.target
 }
@@ -547,7 +547,7 @@ func transfer_through_cross_device_tunnel(tunnel_id, content, source_device_id =
     var target_device = ""
 }
 
-    // Find devices associated with anchors
+# // Find devices associated with anchors
     for device_id in device_anchors:
         if device_anchors[device_id] == source_anchor:
             source_device = device_id
@@ -560,24 +560,24 @@ func transfer_through_cross_device_tunnel(tunnel_id, content, source_device_id =
         return false
 }
 
-    // Scale content based on numeric token system if enabled
+# // Scale content based on numeric token system if enabled
     var scaled_content = content
     if config.enable_numeric_scaling:
         scaled_content = _apply_numeric_scaling(content, source_device, target_device)
 }
 
-    // Transfer through tunnel
+# // Transfer through tunnel
     var result = false
 }
 
     if tunnel_controller:
         result = tunnel_controller.transfer_through_tunnel(tunnel_id, scaled_content)
     else:
-        // Manually notify about transfer
+# // Manually notify about transfer
         emit_signal("cross_sync_status", "info", "Transferring data through tunnel: " + tunnel_id)
 }
 
-        // Send to target device
+# // Send to target device
         result = send_data_to_device(target_device, "tunnel_transfer", {
             "tunnel_id": tunnel_id,
             "content": scaled_content,
@@ -590,23 +590,23 @@ func transfer_through_cross_device_tunnel(tunnel_id, content, source_device_id =
 }
 
 func _initialize_websocket():
-    // Create WebSocket server
+# // Create WebSocket server
     websocket_server = WebSocketServer.new()
 }
 
-    // Set WebSocket options
+# // Set WebSocket options
     websocket_server.private_key = null // Set actual key path if needed
     websocket_server.ssl_certificate = null // Set actual cert path if needed
 }
 
-    // Connect signals
+# // Connect signals
     websocket_server.connect(_on_client_connected)
     websocket_server.connect(_on_client_disconnected)
     websocket_server.connect(_on_client_close_request)
     websocket_server.connect(_on_data_received)
 }
 
-    // Start server
+# // Start server
     var err = websocket_server.listen(config.websocket_port)
     if err != OK:
         print("Failed to start WebSocket server on port: ", config.websocket_port)
@@ -621,7 +621,7 @@ func _on_client_connected(id, protocol):
     print("Client connected with ID: ", id)
 }
 
-    // New clients start in a pending state until they identify
+# // New clients start in a pending state until they identify
     websocket_clients[str(id)] = {
         "id": id,
         "status": "pending",
@@ -634,7 +634,7 @@ func _on_client_disconnected(id, was_clean_close):
     print("Client disconnected with ID: ", id)
 }
 
-    // Find device ID associated with this client
+# // Find device ID associated with this client
     var device_id_to_remove = null
 }
 
@@ -648,12 +648,12 @@ func _on_client_disconnected(id, was_clean_close):
         websocket_clients.erase(device_id_to_remove)
 }
 
-        // Don't disconnect the device immediately, it might reconnect
+# // Don't disconnect the device immediately, it might reconnect
         if connected_devices.has(device_id_to_remove):
             connected_devices[device_id_to_remove].status = "connection_lost"
 }
 
-            // Schedule a check
+# // Schedule a check
             var timer = Timer.new()
             timer.wait_time = CONNECTION_TIMEOUT
             timer.one_shot = true
@@ -671,7 +671,7 @@ func _on_data_received(id):
     var data_string = packet.get_string_from_utf8()
 }
 
-    // Parse JSON data
+# // Parse JSON data
     var json_result = JSON.parse_string(data_string)
 }
 
@@ -683,7 +683,7 @@ func _on_data_received(id):
     var message = json_result
 }
 
-    // Handle based on message type
+# // Handle based on message type
     match message.type:
         "identify":
             _handle_identify_message(id, message)
@@ -710,13 +710,13 @@ func _on_data_received(id):
 }
 
 func _handle_identify_message(client_id, message):
-    // Extract device info
+# // Extract device info
     var device_id = message.device_id
     var device_type = message.device_type
     var device_token = message.token
 }
 
-    // Validate token if token exchange is enabled
+# // Validate token if token exchange is enabled
     if config.token_exchange_enabled:
         if not _validate_device_token(device_id, device_token):
             print("Invalid device token from: ", device_id)
@@ -724,7 +724,7 @@ func _handle_identify_message(client_id, message):
             return
 }
 
-    // Connect the device
+# // Connect the device
     var result = connect_device(device_id, device_type, {
         "ip_address": websocket_server.get_peer(client_id).get_connected_host(),
         "app_version": message.get("app_version", "unknown")
@@ -732,11 +732,11 @@ func _handle_identify_message(client_id, message):
 }
 
     if result:
-        // Associate websocket client with device
+# // Associate websocket client with device
         websocket_clients[device_id] = websocket_server.get_peer(client_id)
 }
 
-        // Send acknowledgement
+# // Send acknowledgement
         var response = {
             "type": "identify_ack",
             "status": "success",
@@ -747,7 +747,7 @@ func _handle_identify_message(client_id, message):
 
         websocket_server.get_peer(client_id).send_text(JSON.stringify(response))
     else:
-        // Send failure
+# // Send failure
         var response = {
             "type": "identify_ack",
             "status": "failure",
@@ -760,7 +760,7 @@ func _handle_identify_message(client_id, message):
 }
 
 func _handle_data_message(client_id, message):
-    // Find device ID associated with this client
+# // Find device ID associated with this client
     var sender_device_id = null
 }
 
@@ -775,16 +775,16 @@ func _handle_data_message(client_id, message):
         return
 }
 
-    // Process the data
+# // Process the data
     var data_type = message.data_type
     var content = message.content
 }
 
-    // Emit signal for this data
+# // Emit signal for this data
     emit_signal("data_received", sender_device_id, data_type, content)
 }
 
-    // Handle based on data type
+# // Handle based on data type
     match data_type:
         "word_pattern":
             _handle_word_pattern_data(sender_device_id, content)
@@ -807,18 +807,18 @@ func _handle_data_message(client_id, message):
 }
 
 func _initialize_claude_bridge():
-    // Check if Claude bridge functionality is available
+# // Check if Claude bridge functionality is available
     if OS.has_feature("claude_api"):
         claude_bridge = preload("res://claude_api_bridge.gd").new()
         add_child(claude_bridge)
 }
 
-        // Connect signals
+# // Connect signals
         claude_bridge.connect(_on_claude_api_connected)
         claude_bridge.connect(_on_claude_api_error)
 }
 
-        // Initialize connection
+# // Initialize connection
         claude_bridge.initialize()
 }
 
@@ -832,7 +832,7 @@ func _on_claude_api_connected():
     print("Claude API connected")
 }
 
-    // Register Claude as a connected device
+# // Register Claude as a connected device
     var claude_id = "claude_api_" + str(randi() % 1000)
 }
 
@@ -846,12 +846,12 @@ func _on_claude_api_error(error_code, message):
     print("Claude API error: ", error_code, " - ", message)
 }
 
-    // Handle reconnection or report to user
+# // Handle reconnection or report to user
     emit_signal("cross_sync_status", "error", "Claude API error: " + message)
 }
 
 func _generate_system_id():
-    // Create a unique system ID based on hardware and time
+# // Create a unique system ID based on hardware and time
     var os_name = OS.get_name()
     var time_stamp = Time.get_unix_time_from_system()
     var random_salt = randi() % 100000
@@ -860,19 +860,19 @@ func _generate_system_id():
     var raw_id = os_name + "_" + str(time_stamp) + "_" + str(random_salt)
 }
 
-    // Use a hash function to create a consistent ID
+# // Use a hash function to create a consistent ID
     return str(hash(raw_id)).md5_text().substr(0, 16)
 }
 
 func _generate_device_coordinates(device_type, device_id):
-    // Generate 3D coordinates based on device type and ID
-    // This determines where in the ethereal space the device appears
+# // Generate 3D coordinates based on device type and ID
+# // This determines where in the ethereal space the device appears
 }
 
     var coordinates = Vector3.ZERO
 }
 
-    // Base position on device type
+# // Base position on device type
     match device_type:
         "desktop":
             coordinates = Vector3(5, 0, 0)
@@ -886,7 +886,7 @@ func _generate_device_coordinates(device_type, device_id):
             coordinates = Vector3(0, 0, 0)
 }
 
-    // Add variation based on device ID
+# // Add variation based on device ID
     var id_hash = device_id.hash()
 }
 
@@ -903,7 +903,7 @@ func _sync_via_websocket(device_id):
         return false
 }
 
-    // Send sync request
+# // Send sync request
     var sync_message = {
         "type": "sync",
         "timestamp": Time.get_unix_time_from_system(),
@@ -911,7 +911,7 @@ func _sync_via_websocket(device_id):
     }
 }
 
-    // Add anchor data if available
+# // Add anchor data if available
     if device_anchors.has(device_id):
         var anchor_id = device_anchors[device_id]
         if ethereal_tunnel_manager.has_anchor(anchor_id):
@@ -919,7 +919,7 @@ func _sync_via_websocket(device_id):
             sync_message["anchor_data"] = anchor_data
 }
 
-    // Add tunnel data if available
+# // Add tunnel data if available
     if device_tunnels.has(device_id):
         var tunnels_data = []
 }
@@ -933,35 +933,35 @@ func _sync_via_websocket(device_id):
         sync_message["tunnels_data"] = tunnels_data
 }
 
-    // Add any pending data from the pool
+# // Add any pending data from the pool
     if device_data_pool.has(device_id) and device_data_pool[device_id].size() > 0:
         sync_message["pending_data"] = device_data_pool[device_id]
         device_data_pool[device_id].clear()
 }
 
-    // Send the message
+# // Send the message
     websocket_clients[device_id].send_text(JSON.stringify(sync_message))
 }
 
-    // For WebSocket we consider this successful as long as we could send
+# // For WebSocket we consider this successful as long as we could send
     return true
 }
 
 func _sync_via_api(device_id):
-    // Implementation of sync via API calls
-    // This is a placeholder and would need to be implemented based on your specific API
+# // Implementation of sync via API calls
+# // This is a placeholder and would need to be implemented based on your specific API
 }
 
     emit_signal("cross_sync_status", "warning", "API sync not fully implemented for device: " + device_id)
 }
 
-    // This would involve making HTTP requests or using a different protocol
-    // For now we'll simulate success
+# // This would involve making HTTP requests or using a different protocol
+# // For now we'll simulate success
     return true
 }
 
 func _reconnect_device(device_id, timer):
-    // Cleanup timer
+# // Cleanup timer
     timer.queue_free()
 }
 
@@ -969,12 +969,12 @@ func _reconnect_device(device_id, timer):
         return
 }
 
-    // Attempt to sync again
+# // Attempt to sync again
     sync_device(device_id)
 }
 
 func _check_device_reconnection(device_id, timer):
-    // Cleanup timer
+# // Cleanup timer
     timer.queue_free()
 }
 
@@ -982,19 +982,19 @@ func _check_device_reconnection(device_id, timer):
         return
 }
 
-    // Check if the device has reconnected
+# // Check if the device has reconnected
     if connected_devices[device_id].status == "connection_lost":
-        // Device didn't reconnect within timeout
+# // Device didn't reconnect within timeout
         disconnect_device(device_id)
 }
 
 func _send_heartbeats():
-    // Only send heartbeats on a fixed interval
+# // Only send heartbeats on a fixed interval
     if Engine.get_idle_frames() % (HEARTBEAT_INTERVAL * Engine.get_frames_per_second()) != 0:
         return
 }
 
-    // Send heartbeat to all connected WebSocket clients
+# // Send heartbeat to all connected WebSocket clients
     var heartbeat_message = {
         "type": "heartbeat",
         "timestamp": Time.get_unix_time_from_system(),
@@ -1011,7 +1011,7 @@ func _send_heartbeats():
 }
 
 func _handle_heartbeat_message(client_id, message):
-    // Update last activity timestamp for the device
+# // Update last activity timestamp for the device
     var device_id = message.get("device_id", "")
 }
 
@@ -1023,7 +1023,7 @@ func _handle_tunnel_request(client_id, message):
     var device_id = ""
 }
 
-    // Find device ID associated with this client
+# // Find device ID associated with this client
     for id in websocket_clients:
         if str(websocket_clients[id].id) == str(client_id):
             device_id = id
@@ -1035,16 +1035,16 @@ func _handle_tunnel_request(client_id, message):
         return
 }
 
-    // Extract request data
+# // Extract request data
     var target_device = message.target_device
     var dimension = message.get("dimension", 3)
 }
 
-    // Create the tunnel
+# // Create the tunnel
     var tunnel = create_cross_device_tunnel(device_id, target_device, dimension)
 }
 
-    // Send response
+# // Send response
     var response = {
         "type": "tunnel_response",
         "status": tunnel ? "success" : "failure",
@@ -1060,7 +1060,7 @@ func _handle_sync_request(client_id, message):
     var device_id = ""
 }
 
-    // Find device ID associated with this client
+# // Find device ID associated with this client
     for id in websocket_clients:
         if str(websocket_clients[id].id) == str(client_id):
             device_id = id
@@ -1072,7 +1072,7 @@ func _handle_sync_request(client_id, message):
         return
 }
 
-    // Process sync
+# // Process sync
     sync_device(device_id)
 }
 
@@ -1081,11 +1081,11 @@ func _handle_word_pattern_data(device_id, content):
         return
 }
 
-    // Process word pattern data
-    // This would be implemented based on your specific word pattern system
+# // Process word pattern data
+# // This would be implemented based on your specific word pattern system
 }
 
-    // Example: pass to tunnel visualizer for visualization
+# // Example: pass to tunnel visualizer for visualization
     if tunnel_visualizer and tunnel_visualizer.has_method("visualize_word_pattern"):
         tunnel_visualizer.visualize_word_pattern(content.pattern, content.energy)
 }
@@ -1095,17 +1095,17 @@ func _handle_energy_transfer(device_id, content):
         return
 }
 
-    // Apply energy transfer
+# // Apply energy transfer
     var amount = content.amount
     var source = content.source
 }
 
-    // Scale based on device capabilities
+# // Scale based on device capabilities
     var device_info = connected_devices[device_id]
     amount *= device_info.capabilities.energy_modifier
 }
 
-    // Apply to tunnel controller
+# // Apply to tunnel controller
     var current = tunnel_controller.available_energy
     var max_energy = tunnel_controller.max_energy
 }
@@ -1118,11 +1118,11 @@ func _handle_dimension_shift(device_id, content):
         return
 }
 
-    // Process dimension shift request
+# // Process dimension shift request
     var target_dimension = content.dimension
 }
 
-    // Check device capabilities
+# // Check device capabilities
     var device_info = connected_devices[device_id]
 }
 
@@ -1131,7 +1131,7 @@ func _handle_dimension_shift(device_id, content):
         return
 }
 
-    // Attempt shift
+# // Attempt shift
     tunnel_controller.shift_dimension(target_dimension)
 }
 
@@ -1140,12 +1140,12 @@ func _handle_anchor_data(device_id, content):
         return
 }
 
-    // Update anchor data
+# // Update anchor data
     if device_anchors.has(device_id):
         var anchor_id = device_anchors[device_id]
 }
 
-        // Update coordinates if needed
+# // Update coordinates if needed
         if content.has("coordinates"):
             var coords = Vector3(
                 content.coordinates.x,
@@ -1157,7 +1157,7 @@ func _handle_anchor_data(device_id, content):
             ethereal_tunnel_manager.update_anchor_coordinates(anchor_id, coords)
 }
 
-        // Update other properties if needed
+# // Update other properties if needed
         if content.has("properties"):
             ethereal_tunnel_manager.update_anchor_properties(anchor_id, content.properties)
 }
@@ -1167,7 +1167,7 @@ func _handle_token_data(device_id, content):
         return
 }
 
-    // Store token data for numeric scaling
+# // Store token data for numeric scaling
     if not connected_devices.has(device_id):
         return
 }
@@ -1176,11 +1176,11 @@ func _handle_token_data(device_id, content):
 }
 
 func _apply_numeric_scaling(content, source_device, target_device):
-    // Apply numeric token system for energy scaling
-    // This scales content based on various numeric patterns
+# // Apply numeric token system for energy scaling
+# // This scales content based on various numeric patterns
 }
 
-    // Simple implementation: count numbers in content and use as scaling factors
+# // Simple implementation: count numbers in content and use as scaling factors
     var number_pattern = RegEx.new()
     number_pattern.compile("\\d+")
 }
@@ -1193,12 +1193,12 @@ func _apply_numeric_scaling(content, source_device, target_device):
     var target_cap = connected_devices[target_device].capabilities
 }
 
-    // Extract multiplier based on number patterns
+# // Extract multiplier based on number patterns
     var multiplier = 1.0
 }
 
     if number_count > 0:
-        // Use numbers as energy anchors
+# // Use numbers as energy anchors
         var total = 0
         var count = 0
 }
@@ -1214,23 +1214,23 @@ func _apply_numeric_scaling(content, source_device, target_device):
             var avg = float(total) / count
 }
 
-            // Scale multiplier based on average value
-            // Higher average numbers provide more energy
+# // Scale multiplier based on average value
+# // Higher average numbers provide more energy
             multiplier = 1.0 + (avg / 100.0)
 }
 
-        // Apply device-specific scaling
+# // Apply device-specific scaling
         multiplier *= source_cap.energy_modifier
         multiplier /= target_cap.energy_modifier
     }
 }
 
-    // Apply multiplier to content if it's relevant
-    // In this case we're not actually changing the content, just using
-    // the numeric patterns to influence tunnel energy/stability
+# // Apply multiplier to content if it's relevant
+# // In this case we're not actually changing the content, just using
+# // the numeric patterns to influence tunnel energy/stability
 }
 
-    // Store multiplier for later use
+# // Store multiplier for later use
     if tunnel_controller:
         tunnel_controller.set_transfer_multiplier(multiplier)
 }
@@ -1239,16 +1239,16 @@ func _apply_numeric_scaling(content, source_device, target_device):
 }
 
 func _validate_device_token(device_id, token):
-    // Simple token validation
-    // In a real implementation, this would use proper cryptographic methods
+# // Simple token validation
+# // In a real implementation, this would use proper cryptographic methods
 }
 
-    // For now, accept any token
+# // For now, accept any token
     return true
 }
 
 func _load_config():
-    // Load configuration from file
+# // Load configuration from file
     if not FileAccess.file_exists("user://cross_device_config.json"):
         return
 }
@@ -1264,14 +1264,14 @@ func _load_config():
 
     var parse_result = JSON.parse_string(json)
     if parse_result:
-        // Update config with loaded values
+# // Update config with loaded values
         for key in parse_result:
             if config.has(key):
                 config[key] = parse_result[key]
 }
 
 func save_config():
-    // Save configuration to file
+# // Save configuration to file
     var file = FileAccess.open("user://cross_device_config.json", FileAccess.WRITE)
     if not file:
         return false

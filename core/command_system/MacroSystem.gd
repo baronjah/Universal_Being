@@ -20,6 +20,7 @@ class Macro:
 	var name: String
 	var commands: Array[MacroCommand] = []
 	var description: String = ""
+
 	var tags: Array[String] = []
 	var consciousness_requirement: int = 0
 	
@@ -37,7 +38,7 @@ class Macro:
 			"description": description,
 			"tags": tags,
 			"consciousness_requirement": consciousness_requirement
-		}
+}
 	
 	static func from_dict(data: Dictionary) -> Macro:
 		var macro = Macro.new()
@@ -47,6 +48,7 @@ class Macro:
 		macro.consciousness_requirement = data.get("consciousness_requirement", 0)
 		
 		for cmd_data in data.get("commands", []):
+
 			var cmd = MacroCommand.from_dict(cmd_data)
 			macro.commands.append(cmd)
 		
@@ -66,7 +68,7 @@ class MacroCommand:
 		return {
 			"command": command,
 			"delay_ms": delay_ms
-		}
+}
 	
 	static func from_dict(data: Dictionary) -> MacroCommand:
 		return MacroCommand.new(
@@ -93,6 +95,7 @@ func start_recording(macro_name: String) -> void:
 	macro_started.emit(macro_name)
 	print("🔴 Recording macro: %s" % macro_name)
 
+
 func stop_recording() -> bool:
 	"""Stop recording and save macro"""
 	if not recording or not current_macro:
@@ -105,6 +108,7 @@ func stop_recording() -> bool:
 	var cmd_count = current_macro.commands.size()
 	macro_completed.emit(current_macro.name, cmd_count)
 	print("⏹️ Macro saved: %s (%d commands)" % [current_macro.name, cmd_count])
+
 	
 	current_macro = null
 	return true
@@ -173,9 +177,9 @@ func list_macros(filter_tags: Array[String] = []) -> Array[String]:
 func get_macro_info(macro_name: String) -> Dictionary:
 	"""Get detailed information about a macro"""
 	if not macro_name in stored_macros:
-		return {}
+		return {
 	
-	var macro = stored_macros[macro_name]
+	var macro = stored_macros[macro_name]}
 	return {
 		"name": macro.name,
 		"description": macro.description,
@@ -183,7 +187,7 @@ func get_macro_info(macro_name: String) -> Dictionary:
 		"tags": macro.tags,
 		"consciousness_requirement": macro.consciousness_requirement,
 		"commands": macro.commands.map(func(cmd): return cmd.command)
-	}
+}
 
 func create_combo_macro(name: String, macro_names: Array[String]) -> bool:
 	"""Combine multiple macros into one"""
@@ -214,8 +218,9 @@ func create_combo_macro(name: String, macro_names: Array[String]) -> bool:
 func save_macros() -> void:
 	"""Save all macros to Akashic Records"""
 	if has_node("/root/AkashicRecordsSystemSystem"):
+
 		var akashic = get_node("/root/AkashicRecordsSystemSystem")
-		var data = {}
+		var data = {
 		for name in stored_macros:
 			data[name] = stored_macros[name].to_dict()
 		akashic.save_record("macros", "system", data)
@@ -223,6 +228,7 @@ func save_macros() -> void:
 func load_macros() -> void:
 	"""Load macros from Akashic Records"""
 	if has_node("/root/AkashicRecordsSystemSystem"):
+}
 		var akashic = get_node("/root/AkashicRecordsSystemSystem")
 		var data = akashic.load_record("macros", "system")
 		if data and data is Dictionary:

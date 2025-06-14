@@ -1,8 +1,8 @@
 # banks_combiner.gd
 
-# res://code/gdscript/scripts/Menu_Keyboard_Console/banks_combiner.gd
+# res://scripts/gdscript/scripts/Menu_Keyboard_Console/banks_combiner.gd
 
-# class_name BanksCombiner
+# class_name BanksCombiner_bankscombiner_bankscom
 #
 
 # combine record, scene, action, instruction into one data_pack with data_point container
@@ -51,12 +51,11 @@
 # patches like bugs and words
 
 # we just add paths and lines to stitch the first net
-
-extends Node3D
+extends \2
 
 #
 
-class_name BanksCombiner #BanksCombiner.combination_0 
+class_name BanksCombiner_bankscombiner_bankscom #BanksCombiner.combination_0 
 
 #BanksCombiner.set_containers_names
 
@@ -109,7 +108,7 @@ const data_names_3 = [
 	"records", "scenes", "interactions"
 ]
 
-#class_name BanksCombiner #BanksCombiner.combination_0
+#class_name BanksCombiner_bankscombiner_bankscom #BanksCombiner.combination_0
 const data_sets_names = [
 	"base_", "menu_", "settings_", "keyboard_", "keyboard_left_", "keyboard_right_", "things_creation_", "singular_lines_", "snake_"
 ]
@@ -196,7 +195,7 @@ const turn_system_0 = [
 	"base", "menu", "settings", "keyboard", "left", "right", "things_creation"
 ]
 const symbols_net_0 = [
-	"|", "/", ":", "ø", "()", "[]", "{}", "#", "_"
+	"|", "", ":", "ø", "()", "[]", "{}", "#", "_"
 ]
 const functions_net_0 = [
 	"var", "func", "return", "break", "pass", "continue", "#", "enums", "const", "=", "@", "!", "$", "%", "|", "*", "&", "^", "0010110", "type"

@@ -189,13 +189,13 @@ func _setup_ui():
     var controls_button = Button.new()
     controls_button.text = "Controls"
     controls_button.size_flags_vertical = SIZE_SHRINK_CENTER
-    controls_button.connect("pressed", self, "_on_controls_button_pressed")
+    controls_button.connect(_on_controls_button_pressed)
     hbox.add_child(controls_button)
 
 func _connect_signals():
     if tunnel_controller:
-        tunnel_controller.connect("connection_status_changed", self, "_on_connection_status_changed")
-        tunnel_controller.connect("tunnel_transfer_completed", self, "_on_tunnel_transfer_completed")
+        tunnel_controller.connect(_on_connection_status_changed)
+        tunnel_controller.connect(_on_tunnel_transfer_completed)
 
 func set_controller(controller):
     tunnel_controller = controller
@@ -357,7 +357,7 @@ func _on_controls_button_pressed():
     
     var advance_turn_button = Button.new()
     advance_turn_button.text = "Advance Turn"
-    advance_turn_button.connect("pressed", self, "advance_turn")
+    advance_turn_button.connect(advance_turn)
     advance_turn_button.size_flags_horizontal = SIZE_EXPAND_FILL
     turn_controls.add_child(advance_turn_button)
     

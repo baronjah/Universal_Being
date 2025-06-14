@@ -3,7 +3,6 @@
 # Created: May 31, 2025, 23:28 CEST
 # Purpose: Ragdoll physics and behavior system
 # Connection: Part of Pentagon Architecture migration
-
 extends UniversalBeingBase
 ## Startup Diagnostic Tool
 ## Run this to check for common issues
@@ -36,7 +35,7 @@ func _check_autoloads() -> void:
 	]
 	
 	for autoload in autoloads:
-		var node = get_node_or_null("/root/" + autoload)
+		var node = get_node_or_null("root/" + autoload)
 		if node:
 			print("  ✅ %s loaded" % autoload)
 		else:
@@ -81,7 +80,7 @@ func _check_common_issues() -> void:
 	print("\n🔍 Checking Common Issues...")
 	
 	# Check if console is being blocked
-	var console = get_node_or_null("/root/ConsoleManager")
+	var console = get_node_or_null("root/ConsoleManager")
 	if console:
 		if console.has_method("is_console_visible"):
 			print("  ✅ Console has visibility method")

@@ -1,5 +1,5 @@
 extends Node
-class_name ThingCreatorSetup
+class_name ThingCreatorSetup_thingcreatorsetup_thingcre
 
 # This script handles the initialization of the Thing Creator system
 # Add this to your main scene to set up the system
@@ -12,17 +12,17 @@ func initialize_thing_creator():
 	print("Initializing Thing Creator System...")
 	
 	# First check if AkashicRecordsManager exists
-	if not has_node("/root/AkashicRecordsManager"):
+	if not has_node("root/AkashicRecordsManager"):
 		push_error("AkashicRecordsManager not found! Make sure it's initialized before Thing Creator.")
 		return false
 	
 	# Then check if ThingCreator already exists to avoid duplication
-	if has_node("/root/ThingCreator"):
+	if has_node("root/ThingCreator"):
 		print("ThingCreator already initialized.")
 		return true
 	
 	# Create ThingCreator
-	var ThingCreatorClass = load("res://code/gdscript/scripts/akashic_records/thing_creator.gd")
+	var ThingCreatorClass = load("res://scripts/gdscript/scripts/akashic_records/thing_creator.gd")
 	if not ThingCreatorClass:
 		push_error("Failed to load ThingCreator class.")
 		return false
@@ -45,17 +45,17 @@ func initialize_jsh_commands():
 	var jsh_console = null
 	
 	# Find JSH console
-	if has_node("/root/JSH_console"):
-		jsh_console = get_node("/root/JSH_console")
-	elif has_node("/root/Main/JSH_console"):
-		jsh_console = get_node("/root/Main/JSH_console")
+	if has_node("root/JSH_console"):
+		jsh_console = get_node("root/JSH_console")
+	elif has_node("root/Main/JSH_console"):
+		jsh_console = get_node("root/Main/JSH_console")
 	
 	if not jsh_console:
 		print("JSH console not found, skipping command initialization.")
 		return false
 	
 	# Create command handler
-	var CommandsClass = load("res://code/gdscript/scripts/Menu_Keyboard_Console/thing_creator_commands.gd")
+	var CommandsClass = load("res://scripts/gdscript/scripts/Menu_Keyboard_Console/thing_creator_commands.gd")
 	if not CommandsClass:
 		push_error("Failed to load ThingCreatorCommands class.")
 		return false
@@ -72,8 +72,8 @@ func initialize_menu_integration():
 	var main_console = null
 	
 	# Find main console (typically in Main node)
-	if has_node("/root/Main"):
-		var main = get_node("/root/Main")
+	if has_node("root/Main"):
+		var main = get_node("root/Main")
 		
 		# Check if main has a add_menu_entry method (assuming this is the console)
 		if main.has_method("add_menu_entry"):
@@ -84,7 +84,7 @@ func initialize_menu_integration():
 		return false
 	
 	# Create integration
-	var IntegrationClass = load("res://code/gdscript/scripts/Menu_Keyboard_Console/thing_creator_integration.gd")
+	var IntegrationClass = load("res://scripts/gdscript/scripts/Menu_Keyboard_Console/thing_creator_integration.gd")
 	if not IntegrationClass:
 		push_error("Failed to load ThingCreatorIntegration class.")
 		return false

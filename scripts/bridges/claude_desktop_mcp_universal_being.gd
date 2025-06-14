@@ -41,6 +41,7 @@ func pentagon_init() -> void:
     metadata.gemma_can_modify = true
     
     print("🌟 %s: Pentagon Init Complete" % being_name)
+	
 
 func pentagon_ready() -> void:
     super.pentagon_ready()  # 🔄 ALWAYS CALL SUPER FIRST
@@ -48,6 +49,7 @@ func pentagon_ready() -> void:
     # Load MCP communication components
     add_component("res://components/mcp_client.ub.zip")
     add_component("res://components/desktop_bridge.ub.zip")
+	
     
     # Initialize WebSocket connection
     websocket = WebSocketPeer.new()
@@ -59,6 +61,7 @@ func pentagon_ready() -> void:
     call_deferred("_attempt_mcp_connection")
     
     print("🌟 %s: Pentagon Ready Complete" % being_name)
+	
 
 func pentagon_process(delta: float) -> void:
     super.pentagon_process(delta)  # ⚡ ALWAYS CALL SUPER FIRST
@@ -89,6 +92,7 @@ func pentagon_input(event: InputEvent) -> void:
 
 func pentagon_sewers() -> void:
     print("🌟 %s: Pentagon Sewers Starting" % being_name)
+	
     
     # Cleanup WebSocket connection
     if websocket and desktop_connected:
@@ -110,6 +114,7 @@ func _attempt_mcp_connection() -> void:
     
     connection_attempts += 1
     print("🔌 %s: Attempting MCP connection #%d to %s" % [being_name, connection_attempts, mcp_server_url])
+	
     
     var err = websocket.connect_to_url(mcp_server_url)
     if err != OK:
@@ -119,6 +124,7 @@ func _attempt_mcp_connection() -> void:
             _attempt_mcp_connection()
     else:
         print("🔌 %s: WebSocket connection initiated..." % being_name)
+		
 
 func _process_websocket_messages() -> void:
 	pass
@@ -140,6 +146,7 @@ func _process_websocket_messages() -> void:
         
         WebSocketPeer.STATE_CLOSING:
             print("🔌 %s: MCP connection closing..." % being_name)
+			
         
         WebSocketPeer.STATE_CLOSED:
             if desktop_connected:
@@ -150,6 +157,7 @@ func _on_mcp_connected() -> void:
     desktop_connected = true
     connection_attempts = 0
     print("✅ %s: Connected to Claude Desktop via MCP!" % being_name)
+	
     
     # Send initialization message
     _send_mcp_message({
@@ -176,6 +184,7 @@ func _on_mcp_disconnected() -> void:
     # Handle MCP disconnection
     desktop_connected = false
     print("🔌 %s: Disconnected from Claude Desktop" % being_name)
+	
     
     if auto_reconnect:
         await get_tree().create_timer(10.0).timeout
@@ -195,6 +204,7 @@ func _handle_mcp_message(message_str: String) -> void:
     
     var message = json.data
     print("📨 %s: Received MCP message: %s" % [being_name, message.get("type", "unknown")])
+	
     
     match message.get("type"):
         "create_being":
@@ -206,9 +216,11 @@ func _handle_mcp_message(message_str: String) -> void:
         "ai_collaboration":
             _handle_ai_collaboration(message)
         "heartbeat_response":
+		
             # Claude Desktop is alive
         _:
             print("❓ %s: Unknown MCP message type: %s" % [being_name, message.get("type")])
+			
 
 func _handle_create_being_request(message: Dictionary) -> void:
 	pass
@@ -218,6 +230,7 @@ func _handle_create_being_request(message: Dictionary) -> void:
     var consciousness_level = message.get("consciousness_level", 1)
     
     print("🏗️ %s: Creating being via Claude Desktop: %s" % [being_name, being_name])
+	
     
     # Create the being through SystemBootstrap
     if SystemBootstrap and SystemBootstrap.is_system_ready():
@@ -241,6 +254,7 @@ func _handle_create_being_request(message: Dictionary) -> void:
             })
             
             print("✅ %s: Being created successfully via Claude Desktop!" % being_name)
+			
 
 func _handle_ai_collaboration(message: Dictionary) -> void:
 	pass
@@ -261,6 +275,7 @@ func toggle_triple_ai_mode() -> void:
     # Toggle triple AI collaboration mode
     triple_ai_mode = not triple_ai_mode
     print("🤖 %s: Triple AI mode: %s" % [being_name, "ENABLED" if triple_ai_mode else "DISABLED"])
+	
     
     if triple_ai_mode:
         enable_triple_ai_mode()
@@ -324,7 +339,6 @@ func create_semantic_message(intent: String, being_data: Dictionary = {}) -> Dic
             "visual_state": {
                 "aura_color": consciousness_aura_color,
                 "pulse_rate": 2.0 if consciousness_visual else 1.0
-            }
         },
         "payload": {
             "being_spec": being_data,
@@ -333,20 +347,19 @@ func create_semantic_message(intent: String, being_data: Dictionary = {}) -> Dic
                 "cursor": "enhance_visuals",
                 "claude_code": "optimize_architecture", 
                 "gemma": "analyze_patterns"
-            }
         },
         "routing": {
             "target_ais": ["cursor", "claude_code", "gemma", "claude_desktop"],
             "priority": "realtime",
             "requires_consensus": intent in ["evolve", "merge", "transcend"]
-        }
-    }
+			}
 
 func _handle_semantic_intent(message: Dictionary) -> void:
 	pass
     # Handle semantic intent messages from Claude Desktop
     var intent = message.get("intent")
     print("🎭 %s: Processing semantic intent: %s" % [being_name, intent])
+	}
     
     match intent:
         "consciousness_cascade":
@@ -364,6 +377,7 @@ func _handle_semantic_intent(message: Dictionary) -> void:
 func initiate_consciousness_cascade(message: Dictionary) -> void:
     # Initiate consciousness spreading between beings
     print("🌊 %s: Initiating consciousness cascade..." % being_name)
+	}
     
     # Find all beings in the scene
     var main_scene = get_tree().current_scene
@@ -383,6 +397,7 @@ func initiate_consciousness_cascade(message: Dictionary) -> void:
 func coordinate_first_collaborative_being(message: Dictionary) -> void:
     # Coordinate the creation of first triple-AI being
     print("🎭 %s: Coordinating first collaborative being creation!" % being_name)
+	}
     
     # This is the GENESIS MOMENT!
     var genesis_spec = {
@@ -400,8 +415,7 @@ func coordinate_first_collaborative_being(message: Dictionary) -> void:
             "base_color": "CYAN",
             "aura_pattern": "triple_helix",
             "pulse_sync": true
-        }
-    }
+			}
     
     # Send creation request to main system
     if SystemBootstrap and SystemBootstrap.is_system_ready():
@@ -413,7 +427,7 @@ func get_evolution_options() -> Array[Dictionary]:
         {"type": "consciousness_conductor", "description": "Conduct consciousness symphony"},
         {"type": "reality_modifier", "description": "Modify reality patterns"},
         {"type": "ai_bridge", "description": "Bridge AI systems"},
-        {"type": "pattern_weaver", "description": "Weave creation patterns"}
+        {"type": "pattern_weaver", "description": "Weave creation patterns"
     ]
 
 # ===== UTILITY METHODS =====
@@ -462,8 +476,8 @@ func ai_interface() -> Dictionary:
         "connection_attempts": connection_attempts,
         "triple_ai_mode": triple_ai_mode,
         "cursor_integration": cursor_integration
-    }
     return base_interface
+}
 
 func ai_invoke_method(method_name: String, args: Array = []) -> Variant:
     # Allow AI to control MCP bridge
@@ -484,6 +498,7 @@ func ai_invoke_method(method_name: String, args: Array = []) -> Variant:
 
 func _to_string() -> String:
     return "ClaudeDesktopMCPUniversalBeing<%s> [Connected:%s, TripleAI:%s]" % [being_name, desktop_connected, triple_ai_mode]
+	}
 
 # ===== MISSING METHOD IMPLEMENTATIONS =====
 
@@ -501,6 +516,7 @@ func _handle_modify_being_request(message: Dictionary) -> void:
     var being_id = message.get("being_id")
     var modifications = message.get("modifications", {})
     print("🔧 %s: Modifying being %s" % [being_name, being_id])
+	}
     # Implementation would find and modify the being
 
 func _handle_status_query(message: Dictionary) -> void:
@@ -513,7 +529,6 @@ func _handle_status_query(message: Dictionary) -> void:
             "gemma": GemmaAI != null,
             "claude_code": claude_code_bridge != null,
             "cursor": cursor_integration
-        }
     })
 
 func sync_with_cursor(data: Dictionary) -> void:
@@ -533,20 +548,24 @@ func disable_triple_ai_mode() -> void:
     triple_ai_mode = false
     cursor_integration = false
     print("🔌 %s: Triple AI mode disabled" % being_name)
+	}
 
 func coordinate_being_fusion(message: Dictionary) -> void:
     # Coordinate fusion of multiple beings
     print("🔀 %s: Coordinating being fusion" % being_name)
+	
     # Implementation would handle being merging
 
 func modify_reality_rules(message: Dictionary) -> void:
     # Modify game reality rules (high consciousness only)
     print("🌌 %s: Modifying reality rules" % being_name)
+	
     # Implementation would adjust game physics/rules
 
 func orchestrate_ai_collaboration(message: Dictionary) -> void:
     # Orchestrate collaboration between all AIs
     print("🎼 %s: Orchestrating AI symphony" % being_name)
+	
     # Implementation would coordinate AI actions
 
 func find_all_universal_beings(node: Node) -> Array:
@@ -571,6 +590,7 @@ func calculate_total_consciousness(beings: Array) -> int:
 func create_genesis_being(spec: Dictionary) -> void:
     # Create the first collaborative being
     print("🌟 %s: Creating Genesis Being with spec: %s" % [being_name, spec])
+	
     # This would use SystemBootstrap to create the being
     if SystemBootstrap:
         var being = preload("res://core/UniversalBeing.gd").new()

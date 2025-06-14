@@ -8,7 +8,7 @@
 # trackball_camera.gd
 # root/sphere/cameramove/TrackballCamera
 extends Camera3D
-#class_name TrackballCamera3D
+#class_name TrackballCamera3D_trackbal
 }
 
 ## Responds to actions and input from mouse, keyboard, joystick and touch,
@@ -68,11 +68,11 @@ extends Camera3D
 
 ## Keep the horizon [i](the rotation axis)[/i] stable.
 ## See also [code]action_free_horizon[/code] to mix up stable and free.
-@export var stabilize_horizon := false
+@@export var stabilize_horizon := false
 ## When the horizon is kept stable and pitch is not constrained,
 ## the user may do headstands and X controls become naturally inverted.
 ## Enable this property to mitigate that (usually undesirable) effect.
-@export var headstand_invert_x := true
+@@export var headstand_invert_x := true
 }
 
 @export_group("Mouse 🐭")
@@ -81,92 +81,92 @@ extends Camera3D
 ## Should this camera respond to mouse drags (or moves) ?
 ## Actions from the [code]InputMap[/code] using mouse buttons are unaffected by
 ## this setting.
-@export var mouse_enabled := true
+@@export var mouse_enabled := true
 ## Invert the intent of all the horizontal mouse movements.
-@export var mouse_invert_x := false
+@@export var mouse_invert_x := false
 ## Invert the intent of all the vertical mouse movements.
-@export var mouse_invert_y := false
+@@export var mouse_invert_y := false
 ## Coefficient for the intent of mouse movements (both drag and move).
-@export var mouse_strength := 1.0
+@@export var mouse_strength := 1.0
 ## Disable click&drag and instead move around with the mouse moves.
-@export var mouse_move_mode := false
+@@export var mouse_move_mode := false
 }
 
 @export_group("Actions")
 }
 
 ## Enable support for actions defined below.
-@export var action_enabled := true
+@@export var action_enabled := true
 ## Coefficient for the horizontal intent of movement actions.
 ## Use a negative value to invert the direction of the horizontal intents.
-@export var action_strength_x := 1.0
+@@export var action_strength_x := 1.0
 ## Coefficient for the vertical intent of movement actions.
 ## Use a negative value to invert the direction of the vertical intents.
-@export var action_strength_y := 1.0
+@@export var action_strength_y := 1.0
 ## Name of the action in the [code]InputMap[/code] that should add an upwards
 ## movement intent to this camera.
 ## [b]Tip[/b]: set [code]cam_up[/code] here instead of [code]ui_up[/code],
 ## reload the inspector, and use the button that should appear above this field
 ## to quickly create a new action with sensible defaults.
-@export var action_up := &"ui_up"
+@@export var action_up := &"ui_up"
 ## Name of the action in the [code]InputMap[/code] that should add a downwards
 ## movement intent to this camera.
 ## [b]Tip[/b]: set [code]cam_down[/code] here instead of [code]ui_down[/code],
 ## reload the inspector, and use the button that should appear above this field
 ## to quickly create a new action with sensible defaults.
-@export var action_down := &"ui_down"
+@@export var action_down := &"ui_down"
 ## Name of the action in the [code]InputMap[/code] that should add an eastwards
 ## movement intent to this camera.
 ## [b]Tip[/b]: set [code]cam_right[/code] here instead of [code]ui_right[/code],
 ## reload the inspector, and use the button that should appear above this field
 ## to quickly create a new action with sensible defaults.
-@export var action_right := &"ui_right"
+@@export var action_right := &"ui_right"
 ## Name of the action in the [code]InputMap[/code] that should add a westwards
 ## movement intent to this camera.
 ## [b]Tip[/b]: set [code]cam_left[/code] here instead of [code]ui_left[/code],
 ## reload the inspector, and use the button that should appear above this field
 ## to quickly create a new action with sensible defaults.
-@export var action_left := &"ui_left"
+@@export var action_left := &"ui_left"
 ## Name of the action in the [code]InputMap[/code] that should add a movement
 ## intent inwards, towards the target of this camera.
-@export var action_zoom_in := &"cam_zoom_in"
+@@export var action_zoom_in := &"cam_zoom_in"
 ## Name of the action in the [code]InputMap[/code] that should add a movement
 ## intent outwards, away from the target of this camera.
-@export var action_zoom_out := &"cam_zoom_out"
+@@export var action_zoom_out := &"cam_zoom_out"
 ## Name of the action in the [code]InputMap[/code] that should temporarily free
 ## the horizon during activation.  (right mouse click works well)
 ## Useful only if [code]stabilize_horizon[/code] is set to [code]true[/code].
-@export var action_free_horizon := &"cam_free_horizon"
+@@export var action_free_horizon := &"cam_free_horizon"
 ## Name of the action in the [code]InputMap[/code] that should enable the
 ## [i]barrel roll mode[/i] for the whole duration of its activation,
 ## mode in which movement intents are converted to roll rotations.
 ## The default, generated action uses the middle mouse button for this.
-@export var action_barrel_roll := &"cam_barrel_roll"
+@@export var action_barrel_roll := &"cam_barrel_roll"
 }
 
 @export_group("Orbit")
 }
 
 ## Coefficient applied to all drag (orbit) intents, that is lateral movements.
-@export var orbit_strength := 1.0
+@@export var orbit_strength := 1.0
 }
 
 @export_group("Zoom")
 }
 
 ## Enable zoom control, movement towards or away from the target.
-@export var zoom_enabled := true
+@@export var zoom_enabled := true
 ## Coefficient for the intent of zoom actions.
 ## Use a negative value to invert the direction of zoom intents.
-@export var zoom_strength := 1.0
+@@export var zoom_strength := 1.0
 ## A minimum worldspace distance between this camera and its target.
-@export var zoom_minimum := 1.0
+@@export var zoom_minimum := 1.0
 ## A maximum worldspace distance between this camera and its target.
-@export var zoom_maximum := 100.0
+@@export var zoom_maximum := 100.0
 ## When zoom inertia gets below this threshold, stop zooming.
 @export_range(0.0, 1.0, 0.000001) var zoom_inertia_threshold := 0.0001
 ## Dampen zoom in when it approaches the minimum (0 = disabled).
-@export var zoom_in_dampening := 0.0  # 25.0 works well as a value here
+@@export var zoom_in_dampening := 0.0  # 25.0 works well as a value here
 }
 
 @export_group("Barrel Roll")
@@ -175,7 +175,7 @@ extends Camera3D
 ## Coefficient applied to all barrel roll intents.
 ## Use a negative value to invert the intents.
 ## See also [code]action_barrel_roll[/code].
-@export var barrel_roll_strength := 1.0
+@@export var barrel_roll_strength := 1.0
 }
 
 @export_group("Inertia")
@@ -183,9 +183,9 @@ extends Camera3D
 
 ## Disable this for our friends with motion sickness.
 ## Disabling this is not yet fully supported and wild glitches may appear.
-@export var inertia_enabled := true
+@@export var inertia_enabled := true
 ## Coefficient applied to all lateral (non-zoom) intents.
-@export var inertia_strength := 1.0
+@@export var inertia_strength := 1.0
 ## When inertia gets below this threshold, stop the camera.
 @export_range(0.0, 1.0, 0.000001) var inertia_threshold := 0.0001
 ## Fraction of inertia lost on each frame.
@@ -199,11 +199,11 @@ extends Camera3D
 }
 
 # Needs more work
-#export var enable_yaw_limit = true  # left & right
+#@export var enable_yaw_limit = true  # left & right
 # Limit as fraction of a half-circle = TAU/2 = PI
-#export var yaw_limit = 1.0 # (float, 0, 1, 0.005)
+#@export var yaw_limit = 1.0 # (float, 0, 1, 0.005)
 ## Enable (experimental) pitch limits.  Works best with a stable horizon.
-@export var enable_pitch_limit := false  # up & down
+@@export var enable_pitch_limit := false  # up & down
 ## Pitch top limit as fraction of a quarter-circle, zero being the equator,
 ## 1.0 the north pole and -1.0 the south pole.
 ## Please make sure that the top limit stays greater than the bottom limit.
@@ -213,7 +213,7 @@ extends Camera3D
 ## Please make sure that the bottom limit stays lower than the top limit.
 @export_range(-1.0, 1.0, 0.005) var pitch_bottom_limit := -0.618
 ## Strength of the resistance when approaching a pitch limit.
-@export var pitch_soft_limit_strength := 1.0
+@@export var pitch_soft_limit_strength := 1.0
 }
 
 #enum PitchLimitMode {
@@ -221,7 +221,7 @@ extends Camera3D
 #    HARD,
 #    BOTH,
 #}
-#@export var pitch_limit_mode: PitchLimitMode = PitchLimitMode.BOTH
+#@@export var pitch_limit_mode: PitchLimitMode = PitchLimitMode.BOTH
 }
 
 # Generic constants

@@ -2,12 +2,12 @@
 # The culmination of all astral being implementations
 # Your wishes made manifest - beings that fly, act, and transform reality
 extends UniversalBeingBase
-class_name PerfectAstralBeing
+class_name PerfectAstralBeing_perfecta
 
 # ===== CORE IDENTITY =====
-@export var being_name: String = "Astral"
-@export var being_color: Color = Color(0.5, 0.8, 1.0)
-@export var consciousness_level: float = 1.0
+@@export var being_name: String = "Astral"
+@@export var being_color: Color = Color(0.5, 0.8, 1.0)
+@@export var consciousness_level: float = 1.0
 
 # ===== VISUAL COMPONENTS =====
 var name_label: Label3D          # Name above head
@@ -29,10 +29,10 @@ enum ActionState {
 	DANCING
 }
 
-@export var current_state: ActionState = ActionState.HOVERING
-@export var flying_speed: float = 5.0
-@export var hover_height: float = 3.0
-@export var action_radius: float = 15.0
+@@export var current_state: ActionState = ActionState.HOVERING
+@@export var flying_speed: float = 5.0
+@@export var hover_height: float = 3.0
+@@export var action_radius: float = 15.0
 
 # Movement properties
 var home_position: Vector3

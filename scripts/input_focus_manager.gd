@@ -39,6 +39,7 @@ func pentagon_init() -> void:
     consciousness_level = 3
     
     print("⌨️ InputFocusManager: Focus control initialized")
+	}
 
 func pentagon_ready() -> void:
     super.pentagon_ready()
@@ -50,6 +51,7 @@ func pentagon_ready() -> void:
     get_tree().set_input_as_handled()
     
     print("⌨️ InputFocusManager: Ready for input management")
+	
 
 func pentagon_process(delta: float) -> void:
     super.pentagon_process(delta)
@@ -115,14 +117,17 @@ func _toggle_console_focus() -> void:
         FocusState.GAME_FOCUSED:
             _set_focus(FocusState.CONSOLE_FOCUSED)
             print("⌨️ Focus: CONSOLE (~ to return to game)")
+			
         
         FocusState.CONSOLE_FOCUSED:
             _set_focus(FocusState.GAME_FOCUSED)
             print("⌨️ Focus: GAME (~ to open console)")
+			
         
         _:  # From other modes, return to game
             _set_focus(FocusState.GAME_FOCUSED)
             print("⌨️ Focus: GAME")
+			
 
 func _toggle_ai_channel() -> void:
     # Toggle AI collaboration channel
@@ -132,12 +137,14 @@ func _toggle_ai_channel() -> void:
     else:
         _set_focus(FocusState.AI_CHANNEL)
         print("🤖 AI Channel: OPEN - Gemma collaboration active!")
+		
 
 func _handle_escape_key() -> void:
     # ESC key always returns to game focus
     if current_focus != FocusState.GAME_FOCUSED:
         _set_focus(FocusState.GAME_FOCUSED)
         print("⌨️ Focus: GAME (ESC pressed)")
+		
 
 func _set_focus(new_focus: FocusState) -> void:
 	pass
@@ -225,8 +232,10 @@ func _set_cursor_style(style: String) -> void:
     # Could change cursor, add overlay, etc.
     match style:
         "console":
+		
             # Make cursor more prominent for console mode
         "ai":
+		
             # Special AI collaboration cursor
             pass
 
@@ -317,6 +326,7 @@ func ai_invoke_method(method_name: String, args: Array = []) -> Variant:
                         _set_focus(i)
                         return "Focus set to: %s" % focus_name
                 return "Invalid focus state: %s" % focus_name
+				
         
         "toggle_console":
             _toggle_console_focus()
@@ -339,3 +349,4 @@ func ai_invoke_method(method_name: String, args: Array = []) -> Variant:
 
 func _to_string() -> String:
     return "InputFocusManager<Focus:%s>" % FocusState.keys()[current_focus]
+	

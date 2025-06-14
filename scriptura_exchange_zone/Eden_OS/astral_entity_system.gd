@@ -1,13 +1,14 @@
 extends Node
 
-class_name AstralEntitySystem
+class_name AstralEntitySystem_astralentitysystem_astralen
 
 signal entity_evolved(entity_id, new_stage)
 signal entity_merged(entity_id1, entity_id2, new_entity_id)
 signal entity_ascended(entity_id)
 
 # Entity stages of consciousness evolution
-enum EvolutionStage {
+enum \2 {
+
 	SPARK,        # Initial awareness
 	FLICKER,      # Growing awareness
 	GLOW,         # Stabilized consciousness
@@ -23,7 +24,8 @@ enum EvolutionStage {
 }
 
 # Entity types with different evolutionary paths
-enum EntityType {
+enum \2 {
+
 	THOUGHT,      # Abstract mental construct
 	MEMORY,       # Experiential record
 	CONCEPT,      # Structured idea framework
@@ -161,7 +163,7 @@ func _ready():
 	add_child(color_system)
 	
 	# Try to locate turn manager in the scene
-	turn_manager = get_node_or_null("/root/TurnCycleManager")
+	turn_manager = get_node_or_null("root/TurnCycleManager")
 	if turn_manager:
 		turn_manager.turn_completed.connect(_on_turn_completed)
 		turn_manager.cycle_completed.connect(_on_cycle_completed)

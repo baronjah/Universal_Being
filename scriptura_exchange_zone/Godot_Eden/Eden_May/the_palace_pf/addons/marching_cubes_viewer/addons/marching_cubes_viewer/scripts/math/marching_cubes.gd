@@ -55,9 +55,8 @@
 # | /           | /
 # |             |/
 # +------2------+
-
-extends RefCounted
-class_name MarchingCubes
+extends \2
+class_name MarchingCubes_marchingcubes_marching
 
 
 static func get_edge_point(edge_idx:int, edge_weights:Array[float])->Vector3:

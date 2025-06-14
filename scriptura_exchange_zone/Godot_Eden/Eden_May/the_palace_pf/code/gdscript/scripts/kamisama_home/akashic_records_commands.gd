@@ -1,7 +1,6 @@
 # Akashic Records Console Commands
 # This script adds Akashic Records related commands to the JSH console
-
-extends Node
+extends \2
 
 # Reference to the JSH console
 var jsh_console = null

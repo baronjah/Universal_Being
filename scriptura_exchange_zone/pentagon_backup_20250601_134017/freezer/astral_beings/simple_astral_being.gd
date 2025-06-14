@@ -1,12 +1,12 @@
 # Simple Astral Being - Flying entities with names that do things
 # Your wishes made manifest - beings that act on whims
-extends UniversalBeingBase
-class_name SimpleAstralBeing
+extends \2
+class_name SimpleAstralBeing_simpleastralbeing_simpleas
 
 # Core properties - just what we need NOW
-@export var being_name: String = "Astral"
-@export var flying_speed: float = 3.0
-@export var action_radius: float = 10.0
+@@@@export var being_name: String = "Astral"
+@@@@export var flying_speed: float = 3.0
+@@@@export var action_radius: float = 10.0
 
 # Visual elements
 var name_label: Label3D
@@ -189,7 +189,7 @@ func _find_random_target() -> Node3D:
 	return objects[randi() % objects.size()]
 
 func _find_named_target(target_name: String) -> Node3D:
-	var node = get_node_or_null("/root/" + target_name)
+	var node = get_node_or_null("root/" + target_name)
 	if not node:
 		node = get_tree().get_first_node_in_group(target_name)
 	return node

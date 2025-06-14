@@ -1,24 +1,24 @@
 extends Node
 
-class_name PreciseTimingSystem
+class_name PreciseTimingSystem_precisetimingsystem_preciset
 
 # ----- PRECISION SETTINGS -----
 @export_category("Precision Settings")
-@export var enabled: bool = true
-@export var use_precise_timing: bool = true
-@export var timing_resolution: float = 0.001  # 1ms precision
-@export var synchronize_with_system_clock: bool = true
-@export var max_timing_drift: float = 0.01  # Maximum allowed drift before correction
+@@@export var enabled: bool = true
+@@@export var use_precise_timing: bool = true
+@@@export var timing_resolution: float = 0.001  # 1ms precision
+@@@export var synchronize_with_system_clock: bool = true
+@@@export var max_timing_drift: float = 0.01  # Maximum allowed drift before correction
 
 # ----- TIME MARKERS -----
 @export_category("Time Markers")
-@export var hour_markers: Array[int] = [0, 3, 6, 9, 12, 15, 18, 21]  # Key hours
-@export var minute_markers: Array[int] = [0, 15, 30, 45]  # Key minutes
-@export var second_markers: Array[int] = [0, 15, 30, 45]  # Key seconds
+@@@export var hour_markers: Array[int] = [0, 3, 6, 9, 12, 15, 18, 21]  # Key hours
+@@@export var minute_markers: Array[int] = [0, 15, 30, 45]  # Key minutes
+@@@export var second_markers: Array[int] = [0, 15, 30, 45]  # Key seconds
 
 # ----- TURN INTEGRATION -----
 @export_category("Turn Integration")
-@export var turn_time_mapping: Dictionary = {
+@@@export var turn_time_mapping: Dictionary = {
     "1": {"hour": 0, "minute": 0},
     "2": {"hour": 2, "minute": 0},
     "3": {"hour": 4, "minute": 0},
@@ -56,12 +56,12 @@ func _ready():
     _initialize_timer()
     
     # Find turn controller
-    turn_controller = get_node_or_null("/root/TurnController")
+    turn_controller = get_node_or_null("root/TurnController")
     if not turn_controller:
         turn_controller = _find_node_by_class(get_tree().root, "TurnController")
     
     # Find blink controller
-    blink_controller = get_node_or_null("/root/BlinkAnimationController")
+    blink_controller = get_node_or_null("root/BlinkAnimationController")
     if not blink_controller:
         blink_controller = _find_node_by_class(get_tree().root, "BlinkAnimationController")
     

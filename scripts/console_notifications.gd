@@ -87,6 +87,7 @@ func _send_notification(message: String) -> void:
 		return
 	
 	var full_message = "%s %s: %s" % [notification_prefix, being_reference.name, message]
+
 	
 	# Send to console if available
 	if console_reference and console_reference.has_method("add_message"):
@@ -139,8 +140,7 @@ func get_component_info() -> Dictionary:
 			"log_consciousness": log_consciousness,
 			"log_components": log_components,
 			"prefix": notification_prefix
-		}
-	}
+}
 
 func remove_from_being() -> void:
 	"""Clean up when component is removed"""
@@ -166,7 +166,7 @@ func ai_get_state() -> Dictionary:
 			"log_components": log_components
 		},
 		"notifications_sent": get_signal_connection_list("notification_sent").size()
-	}
+}
 
 func ai_invoke_method(method_name: String, args: Array = []) -> Variant:
 	"""Allow AI to invoke component methods"""
@@ -187,3 +187,4 @@ func ai_invoke_method(method_name: String, args: Array = []) -> Variant:
 				return "Prefix updated"
 	
 	return "Unknown method: " + method_name
+}

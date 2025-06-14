@@ -121,6 +121,7 @@ class Query:
 	var distinct: bool = false
 	var group_by: Array = []
 	var zone: String = ""
+}
 	var types: Array = []
 	var tags: Array = []
 	
@@ -166,6 +167,7 @@ class Query:
 	# Helper function to convert condition to string
 	func _condition_to_string(condition: Dictionary) -> String:
 		if condition.has("operator"):
+}
 			var op = condition["operator"]
 			
 			# Logical operators (AND, OR, NOT)
@@ -286,7 +288,7 @@ func execute_query(query: Query) -> Array:
 	if not query.select.is_empty():
 		var result = []
 		for entity in entities:
-			var item = {}
+			var item = {
 			for prop in query.select:
 				if prop == "entity_id":
 					item[prop] = entity.entity_id
@@ -296,6 +298,7 @@ func execute_query(query: Query) -> Array:
 					item[prop] = entity.position
 				elif prop == "complexity":
 					item[prop] = entity.complexity
+}
 				else:
 					item[prop] = entity.get_property(prop)
 			result.append(item)
@@ -304,7 +307,7 @@ func execute_query(query: Query) -> Array:
 	# Apply distinct if specified
 	if query.distinct:
 		var distinct_entities = []
-		var seen_ids = {}
+		var seen_ids = {
 		
 		for entity in entities:
 			if not seen_ids.has(entity.entity_id):
@@ -315,7 +318,7 @@ func execute_query(query: Query) -> Array:
 	
 	# Apply group by if specified - note: this changes the return format
 	if not query.group_by.is_empty():
-		var groups = {}
+		var groups = {
 		
 		for entity in entities:
 			var group_key = ""
@@ -421,7 +424,6 @@ func parse_query_string(query_string: String) -> Query:
 							i += 1
 						else:
 							break
-				}
 			
 			"LIMIT":
 				i += 1
@@ -476,7 +478,7 @@ func add_where_condition(query: Query, property: String, operator, value) -> Que
 		"property": property,
 		"operator": _normalize_operator(operator),
 		"value": value
-	}
+}
 	
 	if query.where.is_empty():
 		query.where = condition
@@ -484,7 +486,7 @@ func add_where_condition(query: Query, property: String, operator, value) -> Que
 		query.where = {
 			"operator": Operator.AND,
 			"conditions": [query.where, condition]
-		}
+}
 	
 	return query
 
@@ -498,12 +500,13 @@ func add_or_condition(query: Query, property: String, operator, value) -> Query:
 		"property": property,
 		"operator": _normalize_operator(operator),
 		"value": value
-	}
+}
 	
 	if query.where.is_empty():
 		query.where = condition
 	else:
 		if query.where.has("operator") and query.where["operator"] == Operator.OR:
+}
 			# If the top level is already an OR, just add to it
 			query.where["conditions"].append(condition)
 		else:
@@ -511,7 +514,7 @@ func add_or_condition(query: Query, property: String, operator, value) -> Query:
 			query.where = {
 				"operator": Operator.OR,
 				"conditions": [query.where, condition]
-			}
+	}
 	
 	return query
 
@@ -521,12 +524,12 @@ func add_not_condition(query: Query, property: String, operator, value) -> Query
 		"property": property,
 		"operator": _normalize_operator(operator),
 		"value": value
-	}
+}
 	
 	var not_condition = {
 		"operator": Operator.NOT,
 		"condition": condition
-	}
+}
 	
 	if query.where.is_empty():
 		query.where = not_condition
@@ -534,7 +537,7 @@ func add_not_condition(query: Query, property: String, operator, value) -> Query
 		query.where = {
 			"operator": Operator.AND,
 			"conditions": [query.where, not_condition]
-		}
+}
 	
 	return query
 
@@ -603,6 +606,7 @@ func set_zone(query: Query, zone: String) -> Query:
 func _evaluate_condition(condition: Dictionary, entity: JSHUniversalEntity) -> bool:
 	# Handle logical operators first
 	if condition.has("operator"):
+}
 		var op = condition["operator"]
 		
 		if op == Operator.AND:
@@ -775,9 +779,9 @@ func _tokenize_query_string(query_string: String) -> Array:
 # Parse condition tokens into a condition structure
 func _parse_condition_tokens(tokens: Array) -> Dictionary:
 	if tokens.is_empty():
-		return {}
+		return {
 	
-	# Handle parenthesized expressions
+	# Handle parenthesized expressions}
 	if tokens[0] == "(" and tokens[-1] == ")":
 		return _parse_condition_tokens(tokens.slice(1, -1))
 	
@@ -808,7 +812,7 @@ func _parse_condition_tokens(tokens: Array) -> Dictionary:
 		return {
 			"operator": Operator.AND,
 			"conditions": conditions
-		}
+}
 	
 	# Check for OR conditions
 	var or_indices = []
@@ -837,14 +841,14 @@ func _parse_condition_tokens(tokens: Array) -> Dictionary:
 		return {
 			"operator": Operator.OR,
 			"conditions": conditions
-		}
+}
 	
 	# Check for NOT conditions
 	if tokens[0].to_upper() == "NOT" or tokens[0] == "!":
 		return {
 			"operator": Operator.NOT,
 			"condition": _parse_condition_tokens(tokens.slice(1))
-		}
+}
 	
 	# Parse property conditions
 	if tokens.size() >= 3:
@@ -859,13 +863,14 @@ func _parse_condition_tokens(tokens: Array) -> Dictionary:
 				return {
 					"property": property_name,
 					"operator": operator
-				}
+	}
 			
 			# Parse value
 			var value = null
 			
 			if tokens.size() > 2:
 				if tokens[2] == "[" and tokens[-1] == "]":
+	
 					# Parse array value
 					var array_values = []
 					var i = 3
@@ -884,14 +889,13 @@ func _parse_condition_tokens(tokens: Array) -> Dictionary:
 				"property": property_name,
 				"operator": operator,
 				"value": value
-			}
 	}
 	
 	# Couldn't parse the condition
 	push_error("Invalid condition syntax: " + " ".join(tokens))
-	return {}
+	return {
 
-# Parse a value token
+# Parse a value token}
 func _parse_value(token: String):
 	# Try to parse as number
 	if token.is_valid_int():

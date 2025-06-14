@@ -22,11 +22,11 @@
 # SOFTWARE.
 
 @tool
-extends Control
+extends \2
 
 signal updated
 
-@export var mesh:ArrayMesh:
+@@export var mesh:ArrayMesh:
 	get:
 		return mesh
 	set(value):
@@ -57,5 +57,5 @@ func export_gltf():
 	var state:GLTFState = GLTFState.new()
 
 	doc.append_from_scene($SubViewportContainer/SubViewport/Node3D, state)
-	doc.write_to_filesystem(state, "../export/mesh.glb")
+	doc.write_to_filesystem(state, "../@export/mesh.glb")
 	

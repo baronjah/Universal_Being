@@ -17,6 +17,7 @@ func _ready():
 
 func generate_resource_field():
 	var resource_scene = preload("res://scenes/space_resource.tscn")
+
 	
 	for i in range(resource_count):
 		# Random position in sphere

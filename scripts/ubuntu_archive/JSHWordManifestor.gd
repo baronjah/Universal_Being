@@ -76,6 +76,7 @@ func _ready() -> void:
         print("JSHWordManifestor: Connected to JSHDictionaryManager")
     else:
         print("JSHWordManifestor: JSHDictionaryManager not found, dictionary features unavailable")
+		
 
 # Core manifestation function
 func manifest_word(word: String, options: Dictionary = {}) -> Dictionary:
@@ -108,6 +109,7 @@ func manifest_word(word: String, options: Dictionary = {}) -> Dictionary:
             entity = entity_manager.create_entity(entity_type, entity_properties)
     else:
         print("JSHWordManifestor: No entity manager available, cannot create entity")
+		
     
     # Process relationships with recent words
     if entity:
@@ -121,7 +123,7 @@ func manifest_word(word: String, options: Dictionary = {}) -> Dictionary:
         "analysis": analysis,
         "properties": entity_properties,
         "type": entity_type
-    }
+		}
 
 # Analyze a word and return its characteristics
 func analyze_word(word: String) -> Dictionary:
@@ -143,7 +145,7 @@ func analyze_word(word: String) -> Dictionary:
         "element_affinity": _determine_element_affinity(normalized_word, phonetic_result),
         "concept_triggers": _extract_concept_triggers(normalized_word, semantic_result),
         "timestamp": Time.get_datetime_string_from_system()
-    }
+		}
     
     emit_signal("word_analyzed", word, combined_analysis)
     return combined_analysis
@@ -188,7 +190,7 @@ func get_recent_manifestations(count: int = 10) -> Array:
 func _create_word_relationship(word1: String, word2: String, relationship_type: String) -> void:
     # Initialize if needed
     if not word_relationships.has(word1):
-        word_relationships[word1] = {}
+        word_relationships[word1] = {
     
     # Create relationship
     word_relationships[word1][word2] = relationship_type
@@ -198,9 +200,9 @@ func _create_word_relationship(word1: String, word2: String, relationship_type: 
 func get_related_words(word: String) -> Dictionary:
     if word_relationships.has(word):
         return word_relationships[word].duplicate()
-    return {}
+    return {
 
-# Entity relationship management
+# Entity relationship management}
 func _create_entity_relationship(entity1, entity2, relationship_type: String) -> void:
     if entity1 and entity2:
         # Add reference in both directions
@@ -222,7 +224,7 @@ func _calculate_power_level(word: String, phonetic_result: Dictionary, semantic_
     var base_power = phonetic_power + semantic_power + pattern_power
     
     # Adjust based on unique characters ratio
-    var unique_chars = {}
+    var unique_chars = {
     for c in word:
         unique_chars[c] = true
     var uniqueness_ratio = float(unique_chars.size()) / max(1, word.length())
@@ -250,7 +252,7 @@ func _determine_element_affinity(word: String, phonetic_result: Dictionary) -> S
 
     # Simple mapping based on dominant vowels
     if vowels.size() > 0:
-        var vowel_counts = {}
+        var vowel_counts = {
         for v in vowels:
             if not vowel_counts.has(v):
                 vowel_counts[v] = 0
@@ -272,6 +274,7 @@ func _determine_element_affinity(word: String, phonetic_result: Dictionary) -> S
             "o": element = "earth"
             "u": element = "water"
             _: element = "neutral"
+			}
 
     # Adjust based on consonant patterns
     var consonants = phonetic_result.get("consonants", [])
@@ -321,7 +324,7 @@ func _extract_concept_triggers(word: String, semantic_result: Dictionary) -> Arr
         "stillness": ["still", "quiet", "calm", "peace"],
         "knowledge": ["know", "learn", "wise", "mind"],
         "mystery": ["mystery", "secret", "hidden", "obscure"]
-    }
+		}
     
     # Check for matches
     for concept in common_triggers:
@@ -350,7 +353,7 @@ func _determine_entity_type(analysis: Dictionary) -> String:
     return entity_type
 
 func _generate_entity_properties(analysis: Dictionary) -> Dictionary:
-    var properties = {}
+    var properties = {
     
     # Base properties
     properties["energy"] = analysis.get("power_level", 0.5) * 100
@@ -423,18 +426,21 @@ func _apply_context_modifiers(analysis: Dictionary, options: Dictionary) -> void
     var reality_context = options.get("reality_context", "physical")
     match reality_context:
         "digital":
+		}
             # Digital reality boosts abstract and lightning elements
             if analysis["element_affinity"] == "lightning":
                 analysis["power_level"] *= 1.3
             elif analysis["element_affinity"] == "abstract":
                 analysis["power_level"] *= 1.2
         "astral":
+		}
             # Astral reality boosts abstract and primal elements
             if analysis.get("concept_triggers", []).size() >= 2:
                 analysis["power_level"] *= 1.25
             if analysis["element_affinity"] == "abstract":
                 analysis["power_level"] *= 1.4
         "ethereal":
+		}
             # Ethereal reality boosts all elements but especially abstract
             analysis["power_level"] *= 1.1
             if analysis["element_affinity"] == "abstract":
@@ -444,13 +450,16 @@ func _apply_context_modifiers(analysis: Dictionary, options: Dictionary) -> void
     var source = options.get("source", "spoken")
     match source:
         "written":
+		
             # Written words have more stability
             analysis["stability_factor"] = options.get("stability_factor", 1.0) * 1.3
         "thought":
+		
             # Thought words have less stability but more flexibility
             analysis["stability_factor"] = options.get("stability_factor", 1.0) * 0.7
             analysis["flexibility_factor"] = options.get("flexibility_factor", 1.0) * 1.4
         "encoded":
+		
             # Encoded words (like in a database) are more stable but less powerful
             analysis["stability_factor"] = options.get("stability_factor", 1.0) * 1.5
             analysis["power_level"] *= 0.8
@@ -532,7 +541,7 @@ class PhoneticAnalyzer:
             "pattern": "",
             "power": 0.5,
             "resonance": 0.5
-        }
+			}
         
         # Extract vowels and consonants
         var vowels = "aeiou"
@@ -584,7 +593,7 @@ class SemanticAnalyzer:
         "destruction": ["destroy", "break", "ruin", "smash", "wreck"],
         "protection": ["protect", "shield", "guard", "defend", "ward"],
         "transformation": ["transform", "change", "shift", "morph"]
-    }
+		}
     
     func analyze(word: String) -> Dictionary:
         var result = {
@@ -592,7 +601,7 @@ class SemanticAnalyzer:
             "power": 0.5,
             "positivity": 0.5,
             "complexity": 0.5
-        }
+			}
         
         # Check for concept roots
         for concept in concept_roots:
@@ -634,10 +643,10 @@ class PatternAnalyzer:
             "repetitions": 0,
             "symmetry": 0.0,
             "power": 0.5
-        }
+			}
         
         # Check for repetitions
-        var char_counts = {}
+        var char_counts = {
         for c in word:
             if not char_counts.has(c):
                 char_counts[c] = 0

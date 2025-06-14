@@ -5,7 +5,6 @@
 # CREATED: 2025-05-25 - Learning from our fixes
 # ==================================================
 }
-
 extends UniversalBeingBase
 # Track all function calls
 var function_call_stack: Array = []
@@ -19,10 +18,10 @@ var known_error_patterns = {
 	"preload_path_error": {
 		"pattern": "Preload file .* does not exist",
 		"fix": "Update path from D: drive structure to local project structure",
-		"example": "res://code/gdscript/ → res://scripts/jsh_framework/"
+		"example": "res://scripts/gdscript/ → res://scripts/jsh_framework/"
 	},
 	"node_path_error": {
-		"pattern": "Node not found: \"/root/main\"",
+		"pattern": "Node not found: \"root/main\"",
 		"fix": "Use get_tree().current_scene instead of hardcoded /root/main",
 		"example": "get_node('/root/main') → get_tree().current_scene"
 	},
@@ -39,7 +38,7 @@ var known_error_patterns = {
 	"autoload_naming": {
 		"pattern": "Class .* hides an autoload singleton",
 		"fix": "Rename class to avoid conflict with autoload name",
-		"example": "class_name JSHConsole → class_name JSHConsoleSystem"
+		"example": "class_name JSHConsole_function → class_name JSHConsoleSystem_function"
 	}
 }
 }

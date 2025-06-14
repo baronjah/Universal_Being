@@ -1,5 +1,5 @@
 extends Node
-class_name MemoryUpdater
+class_name MemoryUpdater_memoryupdater_memoryup
 }
 
 # Memory Updater System
@@ -48,7 +48,7 @@ class UpdateTask:
     func _init(p_id: String, p_type: String):
         id = p_id
         type = p_type
-        created_at = OS.get_unix_time()
+        created_at = OS.Time.get_unix_time_from_system()
         scheduled_time = created_at
 }
 
@@ -62,18 +62,18 @@ class UpdateTask:
 }
 
     func is_due() -> bool:
-        return OS.get_unix_time() >= scheduled_time
+        return OS.Time.get_unix_time_from_system() >= scheduled_time
 }
 
     func complete(p_result = null):
         status = "completed"
-        completed_time = OS.get_unix_time()
+        completed_time = OS.Time.get_unix_time_from_system()
         result = p_result
 }
 
     func fail(error_message: String):
         status = "failed"
-        completed_time = OS.get_unix_time()
+        completed_time = OS.Time.get_unix_time_from_system()
         result = {"error": error_message}
 }
 
@@ -120,7 +120,7 @@ class UpdateCycle:
         id = p_id
         name = p_name
         cycle_time = p_cycle_time
-        created_at = OS.get_unix_time()
+        created_at = OS.Time.get_unix_time_from_system()
 }
 
     func add_task(task_id: String):
@@ -131,7 +131,7 @@ class UpdateCycle:
     func activate():
         is_active = true
         if last_run < 0:
-            last_run = OS.get_unix_time()
+            last_run = OS.Time.get_unix_time_from_system()
         next_run = last_run + cycle_time
 }
 
@@ -141,11 +141,11 @@ class UpdateCycle:
 }
 
     func is_due() -> bool:
-        return is_active and next_run > 0 and OS.get_unix_time() >= next_run
+        return is_active and next_run > 0 and OS.Time.get_unix_time_from_system() >= next_run
 }
 
     func mark_completed():
-        last_run = OS.get_unix_time()
+        last_run = OS.Time.get_unix_time_from_system()
         next_run = last_run + cycle_time
         iterations_completed += 1
 }
@@ -230,7 +230,7 @@ func create_task(type: String, scheduled_time: int = -1) -> String:
         return ""
 }
 
-    var task_id = "task_" + str(OS.get_unix_time()) + "_" + str(randi() % 1000).pad_zeros(3)
+    var task_id = "task_" + str(OS.Time.get_unix_time_from_system()) + "_" + str(randi() % 1000).pad_zeros(3)
     var task = UpdateTask.new(task_id, type)
 }
 
@@ -283,7 +283,7 @@ func get_task(task_id: String) -> UpdateTask:
 
 # Cycle Management
 func create_cycle(name: String, cycle_time: int = UPDATE_CYCLES.STANDARD) -> String:
-    var cycle_id = "cycle_" + str(OS.get_unix_time()) + "_" + str(randi() % 1000).pad_zeros(3)
+    var cycle_id = "cycle_" + str(OS.Time.get_unix_time_from_system()) + "_" + str(randi() % 1000).pad_zeros(3)
     var cycle = UpdateCycle.new(cycle_id, name, cycle_time)
 }
 
@@ -526,7 +526,7 @@ func _create_memory_snapshot(task: UpdateTask):
     # Take a snapshot of the current memory state
     # This is a simplified implementation
     var snapshot = {
-        "timestamp": OS.get_unix_time(),
+        "timestamp": OS.Time.get_unix_time_from_system(),
         "memory_count": 0,
         "memories": []
     }
@@ -556,7 +556,7 @@ func _create_memory_snapshot(task: UpdateTask):
 }
 
         var file = File.new()
-        var snapshot_path = snapshot_dir.plus_file("snapshot_" + str(OS.get_unix_time()) + ".json")
+        var snapshot_path = snapshot_dir.plus_file("snapshot_" + str(OS.Time.get_unix_time_from_system()) + ".json")
         file.open(snapshot_path, File.WRITE)
         file.store_string(JSON.print(snapshot, "  "))
         file.close()
@@ -797,7 +797,7 @@ func _debug_memory_system(task: UpdateTask):
 }
 
             var file = File.new()
-            var report_path = report_dir.plus_file("debug_report_" + str(OS.get_unix_time()) + ".txt")
+            var report_path = report_dir.plus_file("debug_report_" + str(OS.Time.get_unix_time_from_system()) + ".txt")
             file.open(report_path, File.WRITE)
             file.store_string(debug_report)
             file.close()
@@ -832,7 +832,7 @@ func _test_memory_system(task: UpdateTask):
     }
 }
 
-    var memory_id = _memory_system.create_memory("Test memory created at " + str(OS.get_unix_time()))
+    var memory_id = _memory_system.create_memory("Test memory created at " + str(OS.Time.get_unix_time_from_system()))
     var memory = _memory_system.get_memory(memory_id)
 }
 
@@ -855,7 +855,7 @@ func _test_memory_system(task: UpdateTask):
 }
 
     if memory:
-        var update_success = _memory_system.update_memory(memory_id, "Updated test memory at " + str(OS.get_unix_time()))
+        var update_success = _memory_system.update_memory(memory_id, "Updated test memory at " + str(OS.Time.get_unix_time_from_system()))
         if update_success:
             test2.passed = true
             result.tests_passed += 1
@@ -878,11 +878,11 @@ func _test_memory_system(task: UpdateTask):
         }
 }
 
-        // Create a second memory for connection testing
+# // Create a second memory for connection testing
         var second_memory_id = _memory_system.create_memory("Second test memory for connection")
 }
 
-        // Try to connect the memories
+# // Try to connect the memories
         var connection_id = _connection_system.connect_memories(
             memory_id,
             second_memory_id,
@@ -926,7 +926,7 @@ func _clean_memories(task: UpdateTask):
 }
 
     if task.target_memory_ids.size() > 0:
-        // Clean specific memories
+# // Clean specific memories
         for memory_id in task.target_memory_ids:
             var memory = _memory_system.get_memory(memory_id)
             if memory:
@@ -934,17 +934,17 @@ func _clean_memories(task: UpdateTask):
             else:
                 result.errors.append("Memory not found: " + memory_id)
     else:
-        // If no targets specified, clean all memories
+# // If no targets specified, clean all memories
         memories_to_clean = _memory_system._memories.values()
 }
 
-    // Simulated cleaning process - just updating memory contents
+# // Simulated cleaning process - just updating memory contents
     for memory in memories_to_clean:
-        // Remove duplicate whitespace, trim, etc.
+# // Remove duplicate whitespace, trim, etc.
         var cleaned_content = memory.content.strip_edges()
 }
 
-        // If content changed, update the memory
+# // If content changed, update the memory
         if cleaned_content != memory.content:
             var success = _memory_system.update_memory(memory.id, cleaned_content)
             if success:
@@ -969,14 +969,14 @@ func _archive_memories(task: UpdateTask):
 }
 
     if task.target_memory_ids.size() > 0:
-        // Archive specific memories
+# // Archive specific memories
         for memory_id in task.target_memory_ids:
             var memory = _memory_system.get_memory(memory_id)
             if memory:
                 memories_to_archive.append(memory)
     else:
-        // If no targets specified, archive based on criteria (e.g., age)
-        var current_time = OS.get_unix_time()
+# // If no targets specified, archive based on criteria (e.g., age)
+        var current_time = OS.Time.get_unix_time_from_system()
         var age_threshold = task.parameters.has("age_threshold") ? task.parameters.age_threshold : 30 * 24 * 60 * 60  // Default 30 days
 }
 
@@ -985,9 +985,9 @@ func _archive_memories(task: UpdateTask):
                 memories_to_archive.append(memory)
 }
 
-    // Process each memory for archiving
+# // Process each memory for archiving
     for memory in memories_to_archive:
-        // Save memory to archive file
+# // Save memory to archive file
         var dir = Directory.new()
         var archive_dir = "user://memory_archive"
 }
@@ -1025,15 +1025,15 @@ func _compact_memory_storage(task: UpdateTask):
     }
 }
 
-    // Simulate storage size before compaction
+# // Simulate storage size before compaction
     result.before_size = _memory_system._memories.size() * 1024  // Just a dummy calculation
 }
 
-    // Perform compaction operations
-    // This is just a placeholder - real implementation would depend on memory system
+# // Perform compaction operations
+# // This is just a placeholder - real implementation would depend on memory system
 }
 
-    // Simulate storage size after compaction
+# // Simulate storage size after compaction
     result.after_size = result.before_size * 0.8  // Assume 20% reduction
     result.reduction_percentage = 20
 }
@@ -1056,32 +1056,32 @@ func _repair_memories(task: UpdateTask):
 }
 
     if task.target_memory_ids.size() > 0:
-        // Repair specific memories
+# // Repair specific memories
         for memory_id in task.target_memory_ids:
             var memory = _memory_system.get_memory(memory_id)
             if memory:
                 memories_to_repair.append(memory)
     else:
-        // If no targets specified, check for potentially corrupted memories
-        // This is just a placeholder - real implementation would have actual corruption detection
+# // If no targets specified, check for potentially corrupted memories
+# // This is just a placeholder - real implementation would have actual corruption detection
         for memory in _memory_system._memories.values():
-            // Simple check for empty content or missing tags
+# // Simple check for empty content or missing tags
             if memory.content.is_empty() or memory.tags.is_empty():
                 memories_to_repair.append(memory)
 }
 
-    // Process each memory for repair
+# // Process each memory for repair
     for memory in memories_to_repair:
         var was_repaired = false
 }
 
-        // Check for empty content
+# // Check for empty content
         if memory.content.is_empty():
-            memory.content = "Repaired content at " + str(OS.get_unix_time())
+            memory.content = "Repaired content at " + str(OS.Time.get_unix_time_from_system())
             was_repaired = true
 }
 
-        // Check for missing tags
+# // Check for missing tags
         if memory.tags.is_empty():
             _memory_system.add_tag_to_memory(memory.id, _memory_system.MEMORY_TAGS.CORE)
             was_repaired = true
@@ -1355,7 +1355,7 @@ func get_status_report() -> Dictionary:
                     "cycle_id": cycle.id,
                     "name": cycle.name,
                     "next_run": cycle.next_run,
-                    "seconds_remaining": max(0, cycle.next_run - OS.get_unix_time())
+                    "seconds_remaining": max(0, cycle.next_run - OS.Time.get_unix_time_from_system())
                 })
 }
 

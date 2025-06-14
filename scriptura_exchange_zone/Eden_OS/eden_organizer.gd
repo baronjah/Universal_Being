@@ -1,6 +1,6 @@
 extends Node
 
-class_name EdenOrganizer
+class_name EdenOrganizer_edenorganizer_edenorga
 
 signal directory_cleaned(path, files_processed)
 signal file_categorized(file_path, category)
@@ -69,8 +69,8 @@ func _ready():
 	add_child(dimensional_color_system)
 	
 	# Try to locate other systems in the scene
-	astral_entity_system = get_node_or_null("/root/AstralEntitySystem")
-	turn_cycle_manager = get_node_or_null("/root/TurnCycleManager")
+	astral_entity_system = get_node_or_null("root/AstralEntitySystem")
+	turn_cycle_manager = get_node_or_null("root/TurnCycleManager")
 	
 	# Create directory structure if it doesn't exist
 	_ensure_directory_structure()
@@ -92,7 +92,7 @@ func _create_directories(base_path: String, structure: Dictionary):
 		return
 	
 	for dir_name in structure.keys():
-		var path = base_path + "/" + dir_name
+		var path = base_path + "" + dir_name
 		if not dir.dir_exists(dir_name):
 			print("Creating directory: " + path)
 			dir.make_dir(dir_name)
@@ -115,7 +115,7 @@ func clean_directory(path: String = EDEN_ROOT_PATH) -> int:
 	
 	while file_name != "":
 		if file_name != "." and file_name != "..":
-			var full_path = path + "/" + file_name
+			var full_path = path + "" + file_name
 			
 			if dir.current_is_dir():
 				# Recursively clean subdirectories
@@ -149,7 +149,7 @@ func _process_file(file_path: String) -> bool:
 	var dir = DirAccess.open("res://")
 	if dir.file_exists(file_path):
 		var file_name = file_path.get_file()
-		var result = dir.copy(file_path, destination + "/" + file_name)
+		var result = dir.copy(file_path, destination + "" + file_name)
 		
 		if result == OK:
 			# If copy succeeded, remove the original
@@ -209,12 +209,12 @@ func _analyze_file_content(file_path: String) -> String:
 func _get_destination_for_category(category: String, file_path: String) -> String:
 	# Map categories to destination directories
 	var category_destinations = {
-		"word": EDEN_ROOT_PATH + "/Entities/Words",
-		"concept": EDEN_ROOT_PATH + "/Entities/Concepts",
-		"memory": EDEN_ROOT_PATH + "/Entities/Memories",
-		"essence": EDEN_ROOT_PATH + "/Entities/Essences",
-		"creation": EDEN_ROOT_PATH + "/Entities/Creations",
-		"system": EDEN_ROOT_PATH + "/System"
+		"word": EDEN_ROOT_PATH + "Entities/Words",
+		"concept": EDEN_ROOT_PATH + "Entities/Concepts",
+		"memory": EDEN_ROOT_PATH + "Entities/Memories",
+		"essence": EDEN_ROOT_PATH + "Entities/Essences",
+		"creation": EDEN_ROOT_PATH + "Entities/Creations",
+		"system": EDEN_ROOT_PATH + "System"
 	}
 	
 	# Check if we have a mapping for this category
@@ -226,9 +226,9 @@ func _get_destination_for_category(category: String, file_path: String) -> Strin
 	
 	# Newer files go to Current cycle, older to Archives
 	if Time.get_unix_time_from_system() - file_stat < 604800:  # 7 days
-		return EDEN_ROOT_PATH + "/Cycles/Current"
+		return EDEN_ROOT_PATH + "Cycles/Current"
 	else:
-		return EDEN_ROOT_PATH + "/Cycles/Archives"
+		return EDEN_ROOT_PATH + "Cycles/Archives"
 
 func assign_file_to_dimension(file_path: String, dimension: int) -> bool:
 	if not FileAccess.file_exists(file_path):
@@ -239,7 +239,7 @@ func assign_file_to_dimension(file_path: String, dimension: int) -> bool:
 		return false
 	
 	# Get the destination directory for this dimension
-	var dimension_dir = EDEN_ROOT_PATH + "/Dimensions/D" + str(dimension) + "_"
+	var dimension_dir = EDEN_ROOT_PATH + "Dimensions/D" + str(dimension) + "_"
 	
 	# Map dimension number to name
 	var dimension_names = {
@@ -260,7 +260,7 @@ func assign_file_to_dimension(file_path: String, dimension: int) -> bool:
 	var dir = DirAccess.open("res://")
 	if dir.file_exists(file_path):
 		var file_name = file_path.get_file()
-		var result = dir.copy(file_path, dimension_dir + "/" + file_name)
+		var result = dir.copy(file_path, dimension_dir + "" + file_name)
 		
 		if result == OK:
 			# If copy succeeded, remove the original
@@ -297,7 +297,7 @@ func color_file_by_dimension(file_path: String, dimension: int) -> bool:
 
 func scan_dimension(dimension: int, deep: bool = false) -> Dictionary:
 	# Scan files in a specific dimension
-	var dimension_dir = EDEN_ROOT_PATH + "/Dimensions/D" + str(dimension) + "_"
+	var dimension_dir = EDEN_ROOT_PATH + "Dimensions/D" + str(dimension) + "_"
 	
 	# Map dimension number to name
 	var dimension_names = {
@@ -332,7 +332,7 @@ func scan_dimension(dimension: int, deep: bool = false) -> Dictionary:
 	
 	while file_name != "":
 		if file_name != "." and file_name != ".." and not dir.current_is_dir():
-			var full_path = dimension_dir + "/" + file_name
+			var full_path = dimension_dir + "" + file_name
 			
 			# Ignore color metadata files
 			if not file_name.ends_with(".color"):
@@ -409,7 +409,7 @@ func create_turn_specific_file(content: String, file_name: String) -> String:
 	var current_color = turn_cycle_manager.turn_color_mapping[current_turn - 1]
 	var dimension = dimensional_color_system.color_properties[current_color].dimensional_depth
 	
-	var dimension_dir = EDEN_ROOT_PATH + "/Dimensions/D" + str(dimension) + "_"
+	var dimension_dir = EDEN_ROOT_PATH + "Dimensions/D" + str(dimension) + "_"
 	
 	# Map dimension number to name
 	var dimension_names = {
@@ -427,7 +427,7 @@ func create_turn_specific_file(content: String, file_name: String) -> String:
 	dimension_dir += dimension_names[dimension]
 	
 	# Create the file
-	var file_path = dimension_dir + "/" + full_file_name
+	var file_path = dimension_dir + "" + full_file_name
 	var file = FileAccess.open(file_path, FileAccess.WRITE)
 	
 	if file:
@@ -443,7 +443,7 @@ func create_turn_specific_file(content: String, file_name: String) -> String:
 
 func create_dimensional_backup() -> bool:
 	# Create a backup of the entire dimensional structure
-	var backup_dir = EDEN_ROOT_PATH + "/System/Backup/Dimensions_" + str(Time.get_unix_time_from_system())
+	var backup_dir = EDEN_ROOT_PATH + "System/Backup/Dimensions_" + str(Time.get_unix_time_from_system())
 	
 	# Create the backup directory
 	var dir = DirAccess.open("res://")
@@ -452,7 +452,7 @@ func create_dimensional_backup() -> bool:
 	
 	# Copy all dimension directories
 	for dimension in range(1, 10):
-		var dimension_dir = EDEN_ROOT_PATH + "/Dimensions/D" + str(dimension) + "_"
+		var dimension_dir = EDEN_ROOT_PATH + "Dimensions/D" + str(dimension) + "_"
 		
 		# Map dimension number to name
 		var dimension_names = {
@@ -469,7 +469,7 @@ func create_dimensional_backup() -> bool:
 		
 		dimension_dir += dimension_names[dimension]
 		
-		var target_dir = backup_dir + "/D" + str(dimension) + "_" + dimension_names[dimension]
+		var target_dir = backup_dir + "D" + str(dimension) + "_" + dimension_names[dimension]
 		
 		# Copy all files from the dimension
 		_copy_directory_contents(dimension_dir, target_dir)
@@ -491,8 +491,8 @@ func _copy_directory_contents(source_dir: String, target_dir: String) -> bool:
 	
 	while file_name != "":
 		if file_name != "." and file_name != "..":
-			var source_path = source_dir + "/" + file_name
-			var target_path = target_dir + "/" + file_name
+			var source_path = source_dir + "" + file_name
+			var target_path = target_dir + "" + file_name
 			
 			if src_dir.current_is_dir():
 				# Recursively copy subdirectories

@@ -1,5 +1,5 @@
 extends Node
-class_name MemoryPoolEvolution
+class_name MemoryPoolEvolution_memorypoolevolution_memorypo
 
 """
 Memory Pool Evolution System
@@ -134,11 +134,11 @@ class Memory:
         id = p_id
         content = p_content
         source_type = p_source_type
-        creation_time = OS.get_unix_time()
+        creation_time = OS.Time.get_unix_time_from_system()
         last_access_time = creation_time
     
     func access() -> void:
-        last_access_time = OS.get_unix_time()
+        last_access_time = OS.Time.get_unix_time_from_system()
         access_count += 1
     
     func add_connection(memory_id: String) -> void:
@@ -182,7 +182,7 @@ class StoryZone:
         id = p_id
         name = p_name
         type = p_type
-        creation_time = OS.get_unix_time()
+        creation_time = OS.Time.get_unix_time_from_system()
     
     func add_memory(memory_id: String) -> void:
         if not memories.has(memory_id):
@@ -225,11 +225,11 @@ class NPCBehavior:
         npc_id = p_npc_id
         behavior_type = p_behavior_type
         description = p_description
-        first_observed = OS.get_unix_time()
+        first_observed = OS.Time.get_unix_time_from_system()
         last_observed = first_observed
     
     func observe() -> void:
-        last_observed = OS.get_unix_time()
+        last_observed = OS.Time.get_unix_time_from_system()
         observation_count += 1
         
         # Increase stability with more observations
@@ -278,12 +278,12 @@ class EvolutionTrack:
         id = p_id
         source_memories = p_sources
         evolution_stage = p_stage
-        creation_time = OS.get_unix_time()
+        creation_time = OS.Time.get_unix_time_from_system()
     
     func complete_evolution(result_id: String, strength: float) -> void:
         result_memory = result_id
         evolution_strength = strength
-        completion_time = OS.get_unix_time()
+        completion_time = OS.Time.get_unix_time_from_system()
         complete = true
     
     func to_dict() -> Dictionary:
@@ -312,7 +312,7 @@ class UnifiedEntrance:
     
     func activate() -> bool:
         active = true
-        access_timestamp = OS.get_unix_time()
+        access_timestamp = OS.Time.get_unix_time_from_system()
         return true
     
     func deactivate() -> void:
@@ -336,7 +336,7 @@ func _ready():
     _setup_default_zones()
     _initialize_temporal_states()
     
-    _last_sync_time = OS.get_unix_time()
+    _last_sync_time = OS.Time.get_unix_time_from_system()
     
     # Create unified entrance
     _unified_entrance_active = false
@@ -609,7 +609,7 @@ func get_npc_behaviors(npc_id: String) -> Array:
 
 # Synchronize memory pools
 func synchronize_memory_pools() -> Dictionary:
-    var start_time = OS.get_unix_time()
+    var start_time = OS.Time.get_unix_time_from_system()
     
     var pools_synced = []
     var memories_transferred = 0
@@ -648,7 +648,7 @@ func synchronize_memory_pools() -> Dictionary:
                         # For now, just increment our transfer counter
                         memories_transferred += 1
     
-    _last_sync_time = OS.get_unix_time()
+    _last_sync_time = OS.Time.get_unix_time_from_system()
     
     emit_signal("memory_pool_synchronized", pools_synced, true)
     
@@ -932,7 +932,7 @@ func _calculate_evolution_strength(memory_ids: Array) -> float:
         total_weight += memory.weight
     
     # Calculate average age
-    var now = OS.get_unix_time()
+    var now = OS.Time.get_unix_time_from_system()
     for memory in memories:
         average_age += (now - memory.creation_time)
     average_age /= memories.size()
@@ -1014,7 +1014,7 @@ func _calculate_zone_connection_strength(zone_ids: Array) -> float:
 
 # Check if it's time for auto-synchronization
 func _check_for_auto_sync() -> void:
-    var current_time = OS.get_unix_time()
+    var current_time = OS.Time.get_unix_time_from_system()
     var elapsed_time = current_time - _last_sync_time
     
     if elapsed_time > 300:  # 5 minutes
@@ -1093,7 +1093,7 @@ func _analyze_access_pattern() -> void:
         _current_access_pattern = []
         
         # Trigger evolution if the connection is strong
-        emit_signal("unified_entrance_accessed", OS.get_unix_time(), [pattern_description])
+        emit_signal("unified_entrance_accessed", OS.Time.get_unix_time_from_system(), [pattern_description])
 
 # Process memory evolution based on time
 func _process_memory_evolution(delta: float) -> void:

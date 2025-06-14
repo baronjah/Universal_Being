@@ -80,7 +80,7 @@ func setup_terminal_ui():
 	input_field = LineEdit.new()
 	input_field.rect_min_size = Vector2(800, 30)
 	input_field.rect_position = Vector2(0, 470)
-	input_field.connect("text_entered", self, "_on_text_entered")
+	input_field.connect(_on_text_entered)
 	terminal_container.add_child(input_field)
 	
 	# Set focus to input field
@@ -116,14 +116,14 @@ func connect_signals():
 	# Connect to memory system signals if needed
 	
 	# Connect to drive connector signals
-	drive_connector.connect("drive_connected", self, "_on_drive_connected")
-	drive_connector.connect("drive_disconnected", self, "_on_drive_disconnected")
-	drive_connector.connect("sync_completed", self, "_on_sync_completed")
-	drive_connector.connect("sync_failed", self, "_on_sync_failed")
+	drive_connector.connect(_on_drive_connected)
+	drive_connector.connect(_on_drive_disconnected)
+	drive_connector.connect(_on_sync_completed)
+	drive_connector.connect(_on_sync_failed)
 
 # Process text input
 func _on_text_entered(text):
-	if text.empty():
+	if text.is_empty():
 		show_prompt()
 		return
 	
@@ -177,7 +177,7 @@ func auto_wrap_text(text, width):
 	
 	for word in words:
 		if line.length() + word.length() + 1 <= width:
-			if line.empty():
+			if line.is_empty():
 				line = word
 			else:
 				line += " " + word
@@ -185,7 +185,7 @@ func auto_wrap_text(text, width):
 			wrapped += line + "\n"
 			line = word
 	
-	if not line.empty():
+	if not line.is_empty():
 		wrapped += line
 		
 	return wrapped
@@ -193,7 +193,7 @@ func auto_wrap_text(text, width):
 # Process a command
 func process_command(command):
 	# Check for empty command
-	if command.empty():
+	if command.is_empty():
 		return
 	
 	# Normalize command text
@@ -411,7 +411,7 @@ func advance_turn():
 
 # Toggle auto turn advancement
 func toggle_auto_advance(enabled=""):
-	if enabled.empty():
+	if enabled.is_empty():
 		turn_auto_advance = !turn_auto_advance
 	else:
 		turn_auto_advance = (enabled.to_lower() == "on" or enabled.to_lower() == "true")
@@ -478,7 +478,7 @@ func set_auto_interval(interval):
 
 # Save turn state
 func save_turn_state(name):
-	if name.empty():
+	if name.is_empty():
 		name = "turn_" + str(current_turn)
 	
 	add_text("Saving turn state: " + name, "system")
@@ -527,9 +527,9 @@ func import_turn_data(path):
 func check_turn_advancement():
 	if turn_auto_advance and current_turn < max_turns:
 		# In a real implementation, this would use a timer
-		# For now, we'll just simulate it with a yield
+		# For now, we'll just simulate it with a await
 		add_text("Auto-advancing to next turn in 3 seconds...", "system")
-		yield(get_tree().create_timer(3.0), "timeout")
+		await(get_tree().create_timer(3.0), "timeout")
 		advance_turn()
 
 # Color commands
@@ -620,7 +620,7 @@ func evolve_terminal(evolution_type):
 	
 	# Show fancy progress animation
 	for i in range(5):
-		yield(get_tree().create_timer(0.3), "timeout")
+		await(get_tree().create_timer(0.3), "timeout")
 		add_text(symbol_system.generate_symbol_pattern("▪ ", 20), "system")
 	
 	match evolution_type:

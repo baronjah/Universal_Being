@@ -1,5 +1,5 @@
-class_name KeyboardCommandSystem
-extends Node
+class_name KeyboardCommandSystem_keyboardcommandsystem_keyboard
+extends \2
 
 # ----- KEY COMMAND CONFIGURATION -----
 const KEY_COMMAND_PATTERNS = {
@@ -247,22 +247,22 @@ func _ready():
 
 func _find_systems():
     # Find Auto-Correction System
-    auto_correction_system = get_node_or_null("/root/AutoCorrectionSystem")
+    auto_correction_system = get_node_or_null("root/AutoCorrectionSystem")
     if not auto_correction_system:
         auto_correction_system = _find_node_by_class(get_tree().root, "AutoCorrectionSystem")
     
     # Find Ethereal Bridge
-    ethereal_bridge = get_node_or_null("/root/EtherealAkashicBridge")
+    ethereal_bridge = get_node_or_null("root/EtherealAkashicBridge")
     if not ethereal_bridge:
         ethereal_bridge = _find_node_by_class(get_tree().root, "EtherealAkashicBridge")
     
     # Find Akashic System
-    akashic_system = get_node_or_null("/root/AkashicNumberSystem")
+    akashic_system = get_node_or_null("root/AkashicNumberSystem")
     if not akashic_system:
         akashic_system = _find_node_by_class(get_tree().root, "AkashicNumberSystem")
     
     # Find Turn System
-    turn_system = get_node_or_null("/root/TurnSystem") 
+    turn_system = get_node_or_null("root/TurnSystem") 
     if not turn_system:
         turn_system = _find_node_by_class(get_tree().root, "TurnCycleController")
     
@@ -415,7 +415,7 @@ func _check_for_auto_correction():
             
             # Replace word in buffer
             words[words.size() - 1] = corrected
-            input_buffer = " ".join(words)
+            input_buffer = " "." ".join(words)
             
             # Record correction
             _record_correction(last_word, corrected)
@@ -558,7 +558,7 @@ func _convert_to_snake_case() -> bool:
             input_buffer = ""
         else:
             words.remove_at(words.size() - 1)
-            input_buffer = " ".join(words)
+            input_buffer = " "." ".join(words)
             if input_buffer != "":
                 input_buffer += " "
         
@@ -667,7 +667,7 @@ func _undo_last_change() -> bool:
     
     if words.size() > 0:
         words.remove_at(words.size() - 1)
-        input_buffer = " ".join(words)
+        input_buffer = " "." ".join(words)
         
         if correction_history.size() > 0:
             correction_history.pop_back()

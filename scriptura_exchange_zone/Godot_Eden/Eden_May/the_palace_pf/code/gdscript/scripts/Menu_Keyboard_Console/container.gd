@@ -1,5 +1,5 @@
 # containter.gd
-extends Node
+extends \2
 
 var container_number : int = -1
 var containter_datapoint = null

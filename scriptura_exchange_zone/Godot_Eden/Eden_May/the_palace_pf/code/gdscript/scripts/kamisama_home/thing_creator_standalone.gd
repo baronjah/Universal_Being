@@ -1,5 +1,5 @@
 extends Node
-class_name ThingCreatorStandaloneUI
+class_name ThingCreatorStandaloneUI_thingcreatorstandalone_thingcre
 
 # This script creates a standalone menu for the Thing Creator
 # Use this if your scene doesn't have a suitable menu system
@@ -40,8 +40,8 @@ func _input(event):
 func find_akashic_records():
 	print("Searching for AkashicRecordsManager...")
 	
-	if has_node("/root/AkashicRecordsManager"):
-		akashic_records_manager = get_node("/root/AkashicRecordsManager")
+	if has_node("root/AkashicRecordsManager"):
+		akashic_records_manager = get_node("root/AkashicRecordsManager")
 		print("Found AkashicRecordsManager")
 		return
 	
@@ -58,13 +58,13 @@ func setup_thing_creator():
 	print("Setting up Thing Creator...")
 	
 	# Check if already exists
-	if has_node("/root/ThingCreator"):
-		thing_creator = get_node("/root/ThingCreator")
+	if has_node("root/ThingCreator"):
+		thing_creator = get_node("root/ThingCreator")
 		print("ThingCreator already exists")
 		return
 	
 	# Create new instance
-	var ThingCreatorClass = load("res://code/gdscript/scripts/akashic_records/thing_creator.gd")
+	var ThingCreatorClass = load("res://scripts/gdscript/scripts/akashic_records/thing_creator.gd")
 	if ThingCreatorClass:
 		thing_creator = ThingCreatorClass.new()
 		thing_creator.name = "ThingCreator"
@@ -187,7 +187,7 @@ func open_thing_creator_ui():
 	_close_current_ui()
 	
 	# Load the Thing Creator UI scene
-	var thing_creator_ui_scene = load("res://code/gdscript/scenes/thing_creator_ui.tscn")
+	var thing_creator_ui_scene = load("res://scripts/gdscript/scenes/thing_creator_ui.tscn")
 	if not thing_creator_ui_scene:
 		print("Error: Thing Creator UI scene not found")
 		return
@@ -256,7 +256,7 @@ func _on_dictionary_button_pressed():
 	_close_current_ui()
 	
 	# Try to load the Akashic Records UI
-	var akashic_records_ui_scene = load("res://code/gdscript/scenes/akashic_records_ui.tscn")
+	var akashic_records_ui_scene = load("res://scripts/gdscript/scenes/akashic_records_ui.tscn")
 	if akashic_records_ui_scene:
 		current_ui_instance = akashic_records_ui_scene.instantiate()
 		view_area.add_child(current_ui_instance)
@@ -289,11 +289,11 @@ func _on_spawn_snake_button_pressed():
 	spawn_button.pressed.connect(func():
 		# Try to find or load snake spawner
 		var snake_spawner = null
-		if has_node("/root/SnakeSpawner"):
-			snake_spawner = get_node("/root/SnakeSpawner")
+		if has_node("root/SnakeSpawner"):
+			snake_spawner = get_node("root/SnakeSpawner")
 		else:
 			# Try to create a new spawner
-			var spawner_script = load("res://code/gdscript/scripts/Snake_Space_Movement/snake_spawner.gd")
+			var spawner_script = load("res://scripts/gdscript/scripts/Snake_Space_Movement/snake_spawner.gd")
 			if spawner_script:
 				snake_spawner = spawner_script.new()
 				snake_spawner.name = "SnakeSpawner"

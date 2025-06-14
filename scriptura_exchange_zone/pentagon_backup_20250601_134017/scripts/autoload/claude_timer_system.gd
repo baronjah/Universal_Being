@@ -3,8 +3,7 @@
 # DESCRIPTION: Multi-project timer with user wait-time tracking
 # CREATED: 2025-05-23 - Autonomous work during user delays
 # ==================================================
-
-extends UniversalBeingBase
+extends \2
 # Project tracking
 var active_projects: Dictionary = {
 	"talking_ragdoll": {"name": "Talking Ragdoll Game", "time": 0.0, "status": "active"},

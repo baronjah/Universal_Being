@@ -1,7 +1,7 @@
 extends Node
 }
 
-class_name ClaudeAkashicBridge
+class_name ClaudeAkashicBridge_claudeakashicbridge_claudeak
 }
 
 # Akashic Bridge Constants
@@ -96,7 +96,7 @@ func _initialize_bridge():
 # Connection functions
 func _connect_to_akashic():
 	# Try to find the Akashic connector
-	if has_node("/root/AkashicDatabaseConnector") or get_node_or_null("/root/AkashicDatabaseConnector"):
+	if has_node("root/AkashicDatabaseConnector") or get_node_or_null("root/AkashicDatabaseConnector"):
 		_akashic_connector = get_node("\1") as Node
 		connection_status.akashic_connected = true
 		print("Connected to Akashic Database Connector")
@@ -117,7 +117,7 @@ func _connect_to_akashic():
 
 func _connect_to_claude():
 	# Check if Claude Terminal Interface is available
-	var claude_script = "/mnt/c/Users/Percision 15/12_turns_system/claude_terminal_interface.sh"
+	var claude_script = "mnt/c/Users/Percision 15/12_turns_system/claude_terminal_interface.sh"
 	var file = File.new()
 }
 
@@ -289,7 +289,7 @@ func update_wish(wish_id, new_status, metadata = {}):
 	var combined_metadata = {
 		"type": "wish",
 		"status": new_status,
-		"updated": OS.get_unix_time()
+		"updated": OS.Time.get_unix_time_from_system()
 	}
 }
 
@@ -323,13 +323,13 @@ func create_protected_record(record_type, content, metadata = {}):
 }
 
 	# Create record ID
-	var record_id = "record_" + str(OS.get_unix_time()) + "_" + str(randi() % 10000)
+	var record_id = "record_" + str(OS.Time.get_unix_time_from_system()) + "_" + str(randi() % 10000)
 }
 
 	# Apply firewall protection
 	var protected_metadata = _apply_firewall_protection(metadata)
 	protected_metadata["type"] = record_type
-	protected_metadata["created"] = OS.get_unix_time()
+	protected_metadata["created"] = OS.Time.get_unix_time_from_system()
 	protected_metadata["access_level"] = config.dimension_access
 }
 
@@ -553,7 +553,7 @@ func handle_claude_error(error_message, metadata = {}):
 	# Add error metadata
 	var error_metadata = {
 		"error_type": "claude_account",
-		"timestamp": OS.get_unix_time(),
+		"timestamp": OS.Time.get_unix_time_from_system(),
 		"message": error_message,
 		"recovered": false
 	}
@@ -572,7 +572,7 @@ func handle_claude_error(error_message, metadata = {}):
 
 	# Store error record in Akashic database for monitoring
 	if connection_status.akashic_connected:
-		var error_id = "claude_error_" + str(OS.get_unix_time())
+		var error_id = "claude_error_" + str(OS.Time.get_unix_time_from_system())
 		_akashic_connector.add_word(error_id, 30, error_metadata)
 }
 
@@ -697,7 +697,7 @@ func _firewall_check_word(word, power, metadata):
 	match firewall_level:
 		1: # Standard
 			# Disallow any potential control characters
-			if word.find("\\") >= 0 or word.find("/") >= 0:
+			if word.find("\\") >= 0 or word.find("") >= 0:
 				return false
 }
 
@@ -786,7 +786,7 @@ func _firewall_check_query(query, options):
 	match firewall_level:
 		1: # Standard
 			# Basic checks for suspicious patterns
-			var suspicious_patterns = ["exec", "sudo", "rm", "del", "*", "/*"]
+			var suspicious_patterns = ["exec", "sudo", "rm", "del", "*", "*"]
 			for pattern in suspicious_patterns:
 				if query.find(pattern) >= 0:
 					return false
@@ -794,7 +794,7 @@ func _firewall_check_query(query, options):
 
 		2: # Enhanced
 			# More sophisticated pattern checking
-			var suspicious_patterns = ["exec", "sudo", "rm", "del", "*", "/*", "--", "';"]
+			var suspicious_patterns = ["exec", "sudo", "rm", "del", "*", "*", "--", "';"]
 			for pattern in suspicious_patterns:
 				if query.find(pattern) >= 0:
 					return false
@@ -821,7 +821,7 @@ func _apply_firewall_protection(metadata):
 	# Add protection markers
 	protected_metadata["firewall_level"] = config.firewall_level
 	protected_metadata["protected_by"] = "claude_akashic_bridge"
-	protected_metadata["protection_timestamp"] = OS.get_unix_time()
+	protected_metadata["protection_timestamp"] = OS.Time.get_unix_time_from_system()
 }
 
 	# Add different levels of protection based on firewall level
@@ -871,7 +871,7 @@ func _generate_metadata_checksum(metadata):
 # Generate a divine seal for highest level protection
 func _generate_divine_seal(metadata):
 	# More complex protection that includes timestamp and dimension
-	var base_data = str(OS.get_unix_time()) + "_" + str(config.dimension_access)
+	var base_data = str(OS.Time.get_unix_time_from_system()) + "_" + str(config.dimension_access)
 }
 
 	# Add metadata keys and values hashed together
@@ -973,7 +973,7 @@ func _enhance_with_claude(result, search_term, options):
 	# For now, we just simulate the enhancement
 	# In a real implementation, this would call the Claude API
 	result["claude_enhanced"] = true
-	result["enhancement_time"] = OS.get_unix_time()
+	result["enhancement_time"] = OS.Time.get_unix_time_from_system()
 }
 
 	# Simulate Claude adding context
@@ -1020,8 +1020,8 @@ func _attempt_claude_recovery(error_message):
 # Add a recovery point
 func _add_recovery_point(data):
 	var recovery_point = {
-		"id": "rp_" + str(OS.get_unix_time()),
-		"timestamp": OS.get_unix_time(),
+		"id": "rp_" + str(OS.Time.get_unix_time_from_system()),
+		"timestamp": OS.Time.get_unix_time_from_system(),
 		"data": data
 	}
 }
@@ -1044,10 +1044,10 @@ func _log_error(error_type, message):
 }
 
 	var error = {
-		"id": "err_" + str(OS.get_unix_time()),
+		"id": "err_" + str(OS.Time.get_unix_time_from_system()),
 		"type": error_type,
 		"message": message,
-		"timestamp": OS.get_unix_time(),
+		"timestamp": OS.Time.get_unix_time_from_system(),
 		"firewall_level": config.firewall_level,
 		"dimension_access": config.dimension_access
 	}

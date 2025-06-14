@@ -19,14 +19,14 @@ var smoothed_gaze_point = Vector2(0.5, 0.5)
 var gaze_history = []
 var calibration_points = []
 var calibration_matrices = []
-var device_capabilities = {}
+var device_capabilities = {
 var screen_dimensions = Vector2(1920, 1080)
 var last_update_time = 0
 var fixation_threshold = 0.05
 var fixation_time_threshold = 0.3
 var current_fixation_point = Vector2(0, 0)
 var current_fixation_duration = 0
-var heatmap_data = {}
+var heatmap_data = {
 var tracking_quality = "unknown"
 var device_with_lidar = false
 
@@ -50,7 +50,7 @@ func _ready():
     var timer = Timer.new()
     timer.wait_time = UPDATE_FREQUENCY
     timer.autostart = true
-    timer.connect("timeout", self, "_on_tracking_update")
+    timer.connect(_on_tracking_update)
     add_child(timer)
     
     # Initialize calibration points
@@ -90,7 +90,7 @@ func detect_device_capabilities():
         "front_camera": false,
         "lidar_sensor": false,
         "processing_cores": OS.get_processor_count()
-    }
+		}
     
     # Simulate detection of camera and LiDAR based on platform/model
     if device_info["platform"] == "iOS" or device_info["platform"] == "Android":
@@ -119,19 +119,20 @@ func detect_device_capabilities():
     
     print("Detected device: " + device_info["platform"] + " " + device_info["model"])
     print("Eye tracking quality: " + tracking_quality)
+	}
     
     return device_capabilities
 
 func connect_to_keyboard_manager():
     # Find keyboard manager node
     if has_node("/root/KeyboardShapeManager") or get_node_or_null("/root/KeyboardShapeManager"):
-        keyboard_manager = get_node("/root/KeyboardShapeManager")
+        keyboard_manager = get_node("\1") as Node
         print("Connected to keyboard shape manager")
         return true
     
     # Try to find shape manager
     if has_node("/root/SmartAccountSystem/KeyboardShapeManager") or get_node_or_null("/root/SmartAccountSystem/KeyboardShapeManager"):
-        keyboard_manager = get_node("/root/SmartAccountSystem/KeyboardShapeManager")
+        keyboard_manager = get_node("\1") as Node
         print("Connected to keyboard shape manager")
         return true
     
@@ -143,7 +144,7 @@ func start_tracking():
         return false
     
     is_tracking_active = true
-    last_update_time = OS.get_ticks_msec()
+    last_update_time = OS.Time.get_ticks_msec()
     print("Eye tracking started")
     return true
 
@@ -163,7 +164,7 @@ func calibrate():
     
     # In a real implementation, would guide user through calibration process
     # For this demo, simulate successful calibration
-    yield(get_tree().create_timer(2.0), "timeout")
+    await(get_tree().create_timer(2.0), "timeout")
     
     # Simulate calibration result
     var success = true
@@ -210,7 +211,7 @@ func _update_gaze_point():
     # In a real implementation, would get data from eye tracking hardware
     # For this demo, simulate eye movement
     
-    var now = OS.get_ticks_msec()
+    var now = OS.Time.get_ticks_msec()
     var time_delta = (now - last_update_time) / 1000.0
     last_update_time = now
     
@@ -269,7 +270,7 @@ func _update_heatmap(position, duration):
             "duration": 0,
             "visits": 0,
             "position": Vector2(grid_x / float(grid_size), grid_y / float(grid_size))
-        }
+			}
     
     heatmap_data[grid_key]["duration"] += duration
     heatmap_data[grid_key]["visits"] += 1
@@ -291,7 +292,7 @@ func get_device_info():
         "is_calibrated": is_calibrated,
         "tracking_confidence": tracking_confidence,
         "has_lidar": device_with_lidar
-    }
+		}
 
 func get_screen_to_world_point(screen_position):
     # Convert screen position to world coordinates (normalized 0-1)

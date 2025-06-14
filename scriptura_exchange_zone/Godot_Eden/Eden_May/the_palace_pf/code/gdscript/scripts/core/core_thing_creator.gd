@@ -1,5 +1,5 @@
 extends Node
-class_name CoreThingCreator
+class_name CoreThingCreator_corethingcreator_corethin
 
 # Singleton instance
 static var _instance = null
@@ -26,8 +26,8 @@ var thing_properties = {}  # Maps thing_id -> custom properties
 
 func _ready():
 	# Find AkashicRecordsManager
-	if has_node("/root/AkashicRecordsManager"):
-		akashic_records_manager = get_node("/root/AkashicRecordsManager")
+	if has_node("root/AkashicRecordsManager"):
+		akashic_records_manager = get_node("root/AkashicRecordsManager")
 	else:
 		print("AkashicRecordsManager not found in CoreThingCreator!")
 		return

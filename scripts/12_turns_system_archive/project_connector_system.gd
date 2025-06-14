@@ -23,12 +23,12 @@ var spatial_connector = null
 var universal_flow = null
 
 # ----- PROJECT DATA -----
-var registered_projects = {}
-var project_connections = {}
-var active_merges = {}
-var version_history = {}
-var sound_registry = {}
-var drive_mappings = {}
+var registered_projects = {
+var project_connections = {
+var active_merges = {
+var version_history = {
+var sound_registry = {
+var drive_mappings = {
 
 # ----- CONNECTION MANAGERS -----
 var file_synchronizer = null
@@ -76,7 +76,7 @@ func _connect_systems():
     # Connect to Auto Agent
     auto_agent = get_node_or_null("/root/AutoAgentMode")
     
-    # Connect to Spatial Connector
+    # Connect to Node3D Connector
     spatial_connector = get_node_or_null("/root/SpatialLinguisticConnector")
     
     # Connect to Universal Flow
@@ -131,6 +131,7 @@ func _map_drives():
     # Virtual drives for akashic and ethereal systems
     _register_virtual_drive("akashic", "akashic://records")
     _register_virtual_drive("ethereal", "ethereal://dimension")
+	}
     
     print("Mapped " + str(drive_mappings.size()) + " drives")
 
@@ -156,6 +157,7 @@ func _scan_directory(base_path, indicator_files, project_type):
         
         var file_name = dir.get_next()
         while file_name != "":
+		}
             var full_path = base_path + "/" + file_name
             
             if dir.current_is_dir():
@@ -198,7 +200,7 @@ func _register_project(name, path, type):
         "versions": [],
         "sounds": [],
         "dimensions": []
-    }
+		}
     
     # Scan for sound files
     _scan_for_sounds(path, project_id)
@@ -209,6 +211,7 @@ func _register_project(name, path, type):
     
     # Register with ethereal bridge if available
     if ethereal_bridge and ethereal_bridge.has_method("register_dimension"):
+	}
         var dimension_id = ethereal_bridge.register_dimension(project_id, name)
         registered_projects[project_id].dimensions.append(dimension_id)
     
@@ -235,7 +238,7 @@ func _register_drive(drive_name, path):
         "connected": true,
         "projects": [],
         "last_scan": OS.get_unix_time()
-    }
+		}
     
     # Scan for projects on this drive
     for project_id in registered_projects:
@@ -255,7 +258,7 @@ func _register_virtual_drive(drive_name, url):
         "connected": true,
         "projects": [],
         "last_scan": OS.get_unix_time()
-    }
+		}
     
     emit_signal("drive_connected", drive_name, url)
     
@@ -272,6 +275,7 @@ func _scan_for_sounds(path, project_id):
         
         var file_name = dir.get_next()
         while file_name != "":
+		}
             var full_path = path + "/" + file_name
             
             if dir.current_is_dir():
@@ -301,7 +305,7 @@ func _register_sound(name, path, format, project_id):
         "registered": OS.get_unix_time(),
         "duration": _get_sound_duration(path, format),
         "processed": false
-    }
+		}
     
     # Add to project
     registered_projects[project_id].sounds.append(sound_id)
@@ -347,7 +351,7 @@ func _create_version(project_id, label):
         "files": _snapshot_files(project.path),
         "connections": project.connections.duplicate(),
         "sounds": project.sounds.duplicate()
-    }
+		}
     
     # Store version
     version_history[version_id] = version_data
@@ -374,6 +378,7 @@ func _snapshot_files(path):
         
         var file_name = dir.get_next()
         while file_name != "":
+		}
             var full_path = path + "/" + file_name
             
             if dir.current_is_dir():
@@ -437,7 +442,7 @@ func connect_projects(source_id, target_id, connection_type="direct"):
         "data_flows": [],
         "shared_files": [],
         "shared_sounds": []
-    }
+		}
     
     # Update projects
     registered_projects[source_id].connections.append(connection_id)
@@ -445,6 +450,7 @@ func connect_projects(source_id, target_id, connection_type="direct"):
     
     # Connect through ethereal bridge if available
     if ethereal_bridge and ethereal_bridge.has_method("connect_dimensions"):
+	}
         var source_dim = registered_projects[source_id].dimensions[0] if registered_projects[source_id].dimensions.size() > 0 else null
         var target_dim = registered_projects[target_id].dimensions[0] if registered_projects[target_id].dimensions.size() > 0 else null
         
@@ -513,7 +519,7 @@ func merge_projects(projects, strategy="combine", label="merged"):
         "start_time": OS.get_unix_time(),
         "status": "in_progress",
         "result_id": null
-    }
+		}
     
     emit_signal("merge_started", merge_id, projects)
     
@@ -738,7 +744,7 @@ func _create_unified_project_files(target_path, projects):
         "merged_projects": [],
         "merged_time": OS.get_unix_time(),
         "project_count": projects.size()
-    }
+		}
     
     for project_id in projects:
         var project = registered_projects[project_id]
@@ -850,8 +856,6 @@ func _create_js_project_file(target_path):
   "main": "index.js",
   "scripts": {
     "start": "node index.js"
-  }
-}
     """)
     file.close()
     
@@ -928,6 +932,7 @@ func load_connections():
     var file = File.new()
     if file.file_exists("res://dimension_connections.json"):
         file.open("res://dimension_connections.json", File.READ)
+		}
         var data = JSON.parse(file.get_as_text()).result
         file.close()
         return data.connections
@@ -935,6 +940,7 @@ func load_connections():
 
 func connect_dimensions(source, target, type):
     print("Connecting dimensions: " + source + " to " + target + " via " + type)
+	}
     # Implementation would depend on the specific dimensional system
     """)
     file.close()
@@ -954,6 +960,7 @@ func _copy_directory(from_dir, to_dir, overwrite=false):
         
         var file_name = dir.get_next()
         while file_name != "":
+		
             var from_path = from_dir + "/" + file_name
             var to_path = to_dir + "/" + file_name
             
@@ -983,6 +990,7 @@ func _copy_files_by_extension(from_dir, to_dir, extensions):
         
         var file_name = dir.get_next()
         while file_name != "":
+		
             var from_path = from_dir + "/" + file_name
             
             if dir.current_is_dir():
@@ -1004,6 +1012,7 @@ class FileSynchronizer:
     signal file_synced(source_path, target_path)
     
     func synchronize_files(source_path, target_path, match_pattern="*"):
+	
         # Implement file synchronization logic
         var dir = Directory.new()
         
@@ -1022,14 +1031,14 @@ class FileSynchronizer:
             "only_in_dir1": [],
             "only_in_dir2": [],
             "different": []
-        }
+			}
         
         # TODO: Implement directory comparison
         
         return differences
 
 class VersionControl:
-    var versions = {}
+    var versions = {
     
     signal version_registered(version_id, project_id)
     
@@ -1038,7 +1047,7 @@ class VersionControl:
             "project_id": project_id,
             "timestamp": OS.get_unix_time(),
             "data": version_data
-        }
+			}
         
         emit_signal("version_registered", version_id, project_id)
         
@@ -1053,14 +1062,14 @@ class VersionControl:
             "added_files": [],
             "removed_files": [],
             "modified_files": []
-        }
+			}
         
         # TODO: Implement version comparison
         
         return differences
 
 class SoundProcessor:
-    var registered_sounds = {}
+    var registered_sounds = {
     
     signal sound_registered(sound_id, path)
     signal sound_processed(sound_id)
@@ -1070,7 +1079,7 @@ class SoundProcessor:
             "path": path,
             "format": format,
             "processed": false
-        }
+			}
         
         emit_signal("sound_registered", sound_id, path)
         
@@ -1103,7 +1112,7 @@ class SoundProcessor:
         return null
 
 class DriveConnector:
-    var connected_drives = {}
+    var connected_drives = {
     
     signal drive_connected(drive_id, path)
     signal drive_disconnected(drive_id)
@@ -1114,7 +1123,7 @@ class DriveConnector:
             "type": type,
             "connected": true,
             "last_connected": OS.get_unix_time()
-        }
+			}
         
         emit_signal("drive_connected", drive_id, path)
         
@@ -1310,8 +1319,8 @@ func get_project_stats():
         "total_drives": drive_mappings.size(),
         "total_merges": active_merges.size(),
         "project_by_type": {},
-        "sound_by_format": {}
-    }
+        "sound_by_format": {
+		}
     
     # Count projects by type
     for project_id in registered_projects:

@@ -44,7 +44,7 @@ func test_methods():
     if is_network_master():
         rpc_id(1, "update")
         rpc_unreliable("update_pos")
-    var result = yield(get_tree(), "idle_frame")
+    var result = await(get_tree(), "idle_frame")
 """,
         "expected": """
 func test_methods() -> void:

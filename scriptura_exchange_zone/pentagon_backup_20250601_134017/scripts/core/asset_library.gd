@@ -164,7 +164,7 @@ func _ready():
 	print("[AssetLibrary] Initializing asset management system...")
 	
 	# Find floodgate controller
-	floodgate = get_node_or_null("/root/FloodgateController")
+	floodgate = get_node_or_null("root/FloodgateController")
 	if not floodgate:
 		push_error("FloodgateController not found! Asset Library requires FloodgateController.")
 		return
@@ -215,7 +215,7 @@ func register_asset(category: String, asset_id: String, asset_info: Dictionary) 
 	asset_catalog[category][asset_id] = asset_info
 	emit_signal("asset_catalog_updated")
 	
-	print("[AssetLibrary] Registered asset: " + category + "/" + asset_id)
+	print("[AssetLibrary] Registered asset: " + category + "" + asset_id)
 	return true
 
 func unregister_asset(category: String, asset_id: String) -> bool:
@@ -297,11 +297,11 @@ func search_assets(search_term: String) -> Array:
 func load_asset(category: String, asset_id: String, auto_approve: bool = false) -> String:
 	var asset_info = get_asset_info(category, asset_id)
 	if asset_info.is_empty():
-		push_error("Asset not found: " + category + "/" + asset_id)
+		push_error("Asset not found: " + category + "" + asset_id)
 		return ""
 	
 	# Check if already loaded
-	var full_id = category + "/" + asset_id
+	var full_id = category + "" + asset_id
 	if loaded_assets.has(full_id):
 		print("[AssetLibrary] Asset already loaded: " + full_id)
 		return loaded_assets[full_id].operation_id
@@ -330,7 +330,7 @@ func load_asset(category: String, asset_id: String, auto_approve: bool = false) 
 	return operation_id
 
 func unload_asset(category: String, asset_id: String) -> bool:
-	var full_id = category + "/" + asset_id
+	var full_id = category + "" + asset_id
 	if not loaded_assets.has(full_id):
 		return false
 	
@@ -369,11 +369,11 @@ func preload_by_tag(tag: String, auto_approve: bool = false):
 func spawn_asset(category: String, asset_id: String, parent: Node, position: Vector3 = Vector3.ZERO) -> String:
 	var asset_info = get_asset_info(category, asset_id)
 	if asset_info.is_empty():
-		push_error("Asset not found for spawning: " + category + "/" + asset_id)
+		push_error("Asset not found for spawning: " + category + "" + asset_id)
 		return ""
 	
 	# Ensure asset is loaded first
-	var full_id = category + "/" + asset_id
+	var full_id = category + "" + asset_id
 	if not loaded_assets.has(full_id):
 		load_asset(category, asset_id, true)
 		# TODO: Wait for load to complete
@@ -463,7 +463,7 @@ func _find_asset_by_path(path: String) -> Dictionary:
 				return {
 					"category": category,
 					"id": asset_id,
-					"full_id": category + "/" + asset_id,
+					"full_id": category + "" + asset_id,
 					"info": asset_catalog[category][asset_id]
 				}
 	return {}
@@ -479,10 +479,10 @@ func get_loaded_assets_list() -> Array:
 	return loaded_assets.keys()
 
 func is_asset_loaded(category: String, asset_id: String) -> bool:
-	return loaded_assets.has(category + "/" + asset_id)
+	return loaded_assets.has(category + "" + asset_id)
 
 func get_asset_load_status(category: String, asset_id: String) -> String:
-	var full_id = category + "/" + asset_id
+	var full_id = category + "" + asset_id
 	if loaded_assets.has(full_id):
 		return loaded_assets[full_id].status
 	return "not_loaded"
@@ -529,8 +529,8 @@ func import_catalog(file_path: String, merge: bool = false) -> bool:
 func load_universal_being(asset_id: String, variant: String = "default"):
 	"""Load a Universal Being from TXT + TSCN definition"""
 	var category = _get_asset_category(asset_id)
-	var txt_path = "res://assets/definitions/" + category + "/" + asset_id + ".txt"
-	var tscn_path = "res://assets/arrangements/" + category + "/" + asset_id + ".tscn"
+	var txt_path = "res://assets/definitions/" + category + "" + asset_id + ".txt"
+	var tscn_path = "res://assets/arrangements/" + category + "" + asset_id + ".tscn"
 	
 	# Load variant if specified
 	if variant != "default":

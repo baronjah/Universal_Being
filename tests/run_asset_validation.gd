@@ -20,6 +20,7 @@ static func _run_validation():
 	
 	for directory in asset_directories:
 		print("\n📁 Checking directory: %s" % directory)
+
 		var reports = UniversalBeingAssetChecker.validate_all_assets_in_directory(directory)
 		all_reports.append_array(reports)
 		
@@ -49,11 +50,13 @@ static func _print_directory_summary(directory: String, reports: Array[Universal
 	
 	print("  📊 Assets: %d total, %d valid, %d with issues" % [reports.size(), valid, issues])
 
+
 static func _generate_detailed_report(reports: Array[UniversalBeingAssetChecker.ValidationReport]) -> void:
 	"""Generate detailed report file for assets with issues"""
 	var has_issues = false
 	var report_content = "# Universal Being Asset Validation Report\n"
 	report_content += "Generated: %s\n\n" % Time.get_datetime_string_from_system()
+
 	
 	for report in reports:
 		if report.result != UniversalBeingAssetChecker.ValidationResult.VALID:
@@ -62,6 +65,7 @@ static func _generate_detailed_report(reports: Array[UniversalBeingAssetChecker.
 			report_content += "Status: %s\n" % _result_to_string(report.result)
 			report_content += "Pentagon Compliance: %s\n" % ("✅" if report.pentagon_compliance else "❌")
 			report_content += "Consciousness Valid: %s\n\n" % ("✅" if report.consciousness_valid else "❌")
+
 			
 			if report.issues.size() > 0:
 				report_content += "### Issues:\n"
@@ -80,6 +84,7 @@ static func _generate_detailed_report(reports: Array[UniversalBeingAssetChecker.
 			file.close()
 			print("📝 Detailed report saved to: res://assets/validation/last_validation_report.md")
 
+
 static func _result_to_string(result: UniversalBeingAssetChecker.ValidationResult) -> String:
 	match result:
 		UniversalBeingAssetChecker.ValidationResult.VALID: return "VALID"
@@ -88,6 +93,7 @@ static func _result_to_string(result: UniversalBeingAssetChecker.ValidationResul
 		UniversalBeingAssetChecker.ValidationResult.CRITICAL: return "CRITICAL"
 		_: return "UNKNOWN"
 
+
 static func _get_level_icon(level: UniversalBeingAssetChecker.ValidationResult) -> String:
 	match level:
 		UniversalBeingAssetChecker.ValidationResult.VALID: return "✅"
@@ -95,6 +101,7 @@ static func _get_level_icon(level: UniversalBeingAssetChecker.ValidationResult) 
 		UniversalBeingAssetChecker.ValidationResult.ERROR: return "❌"
 		UniversalBeingAssetChecker.ValidationResult.CRITICAL: return "🚨"
 		_: return "❓"
+
 
 # Auto-run when script is executed
 static func _init():

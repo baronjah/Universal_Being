@@ -1,5 +1,5 @@
-class_name UniversalAPIConnector
-extends Node
+class_name UniversalAPIConnector_UniversalAPIConnector_Universa
+extends \2
 
 # ================ API CONNECTION SYSTEM ================
 # Universal connector that bridges to any API service
@@ -21,9 +21,9 @@ const KNOWN_SERVICES = {
         "base_url": "https://api.openai.com/v1",
         "required_auth": ["api_key"],
         "endpoints": {
-            "chat": "/chat/completions",
-            "embeddings": "/embeddings",
-            "images": "/images/generations"
+            "chat": "chat/completions",
+            "embeddings": "embeddings",
+            "images": "images/generations"
         },
         "default_model": "gpt-4o",
         "response_format": "json"
@@ -32,8 +32,8 @@ const KNOWN_SERVICES = {
         "base_url": "https://api.anthropic.com/v1",
         "required_auth": ["api_key"],
         "endpoints": {
-            "chat": "/messages",
-            "complete": "/complete"
+            "chat": "messages",
+            "complete": "complete"
         },
         "default_model": "claude-3-opus-20240229",
         "response_format": "json"
@@ -42,7 +42,7 @@ const KNOWN_SERVICES = {
         "base_url": "https://generativelanguage.googleapis.com/v1beta",
         "required_auth": ["api_key"],
         "endpoints": {
-            "generate": "/models/gemini-1.5-pro:generateContent"
+            "generate": "models/gemini-1.5-pro:generateContent"
         },
         "default_model": "gemini-1.5-pro",
         "response_format": "json"
@@ -51,7 +51,7 @@ const KNOWN_SERVICES = {
         "base_url": "https://api.stability.ai/v1",
         "required_auth": ["api_key"],
         "endpoints": {
-            "text-to-image": "/generation/text-to-image"
+            "text-to-image": "generation/text-to-image"
         },
         "default_model": "stable-diffusion-xl-1024-v1-0",
         "response_format": "json"
@@ -60,7 +60,7 @@ const KNOWN_SERVICES = {
         "base_url": "https://api.elevenlabs.io/v1",
         "required_auth": ["api_key"],
         "endpoints": {
-            "text-to-speech": "/text-to-speech"
+            "text-to-speech": "text-to-speech"
         },
         "default_model": "eleven_monolingual_v1",
         "response_format": "audio"
@@ -101,7 +101,7 @@ func _ready():
 
 # Create secure storage for API keys
 class SecureStorage:
-    extends Node
+extends \2
     
     var encrypted_data = {}
     var encryption_key = "luminusos_api_secure"

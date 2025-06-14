@@ -1,5 +1,5 @@
 extends Node
-class_name Ethereal_Engine_Connector
+class_name Ethereal_Engine_Connector_etherealengineconnector_ethereal
 }
 
 """
@@ -230,14 +230,14 @@ class AnimationController:
 }
 
     func create_animation(element_id: String, properties: Dictionary) -> String:
-        var animation_id = "anim_" + str(OS.get_unix_time()) + "_" + str(randi() % 1000).pad_zeros(3)
+        var animation_id = "anim_" + str(OS.Time.get_unix_time_from_system()) + "_" + str(randi() % 1000).pad_zeros(3)
 }
 
         var animation_data = properties.duplicate()
         animation_data["element_id"] = element_id
         animation_data["style"] = current_style
         animation_data["speed"] = animation_speed
-        animation_data["created_at"] = OS.get_unix_time()
+        animation_data["created_at"] = OS.Time.get_unix_time_from_system()
         animation_data["is_active"] = true
 }
 
@@ -666,7 +666,7 @@ func register_component(name: String, type: String, naming_convention: int = -1)
         naming_convention = _current_naming_convention
 }
 
-    var component_id = "comp_" + str(OS.get_unix_time()) + "_" + str(randi() % 1000).pad_zeros(3)
+    var component_id = "comp_" + str(OS.Time.get_unix_time_from_system()) + "_" + str(randi() % 1000).pad_zeros(3)
 }
 
     var component = EngineComponent.new(component_id, name, type)
@@ -737,7 +737,7 @@ func create_integration(source_component_id: String, target_component_id: String
         return ""
 }
 
-    var integration_id = "integ_" + str(OS.get_unix_time()) + "_" + str(randi() % 1000).pad_zeros(3)
+    var integration_id = "integ_" + str(OS.Time.get_unix_time_from_system()) + "_" + str(randi() % 1000).pad_zeros(3)
 }
 
     var integration = EngineIntegration.new(
@@ -1133,7 +1133,7 @@ func generate_engine_report() -> String:
     report += "Mode: " + get_engine_mode_name() + "\n"
     report += "Naming Convention: " + get_naming_convention_name() + "\n"
     report += "Animation Style: " + get_animation_style_name() + "\n"
-    report += "Integration Level: " + str(_integration_level) + "/10\n\n"
+    report += "Integration Level: " + str(_integration_level) + "10\n\n"
 }
 
     # Components
@@ -1174,7 +1174,7 @@ func generate_engine_report() -> String:
 }
 
         report += "- " + source_name + " " + bidirectional + " " + target_name + "\n"
-        report += "  Level: " + str(integration.integration_level) + "/10\n"
+        report += "  Level: " + str(integration.integration_level) + "10\n"
 }
 
         if integration.naming_map.size() > 0:

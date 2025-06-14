@@ -1,6 +1,6 @@
 # CelestialBody.gd res://Scripts/CelestialBody.gd
 @tool
-extends Sprite3D
+extends \2
 
 var shader_material: ShaderMaterial
 var star_id: int

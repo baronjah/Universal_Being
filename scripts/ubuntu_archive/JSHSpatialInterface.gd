@@ -1,7 +1,7 @@
 extends RefCounted
 class_name JSHSpatialInterface
 
-# Spatial interface defines standard methods that all spatial management systems should implement
+# Node3D interface defines standard methods that all spatial management systems should implement
 
 # Zone operations
 func create_zone(zone_id: String, zone_data: Dictionary) -> bool:
@@ -22,9 +22,9 @@ func zone_exists(zone_id: String) -> bool:
 
 func get_zone(zone_id: String) -> Dictionary:
     push_error("JSHSpatialInterface: get_zone() method must be implemented by subclass")
-    return {}
+    return {
 
-func get_all_zones() -> Array:
+func get_all_zones() -> Array:}
     push_error("JSHSpatialInterface: get_all_zones() method must be implemented by subclass")
     return []
 
@@ -66,7 +66,7 @@ func move_entity(entity_id: String, new_position: Vector3) -> bool:
     push_error("JSHSpatialInterface: move_entity() method must be implemented by subclass")
     return false
 
-# Spatial queries
+# Node3D queries
 func get_entities_in_radius(position: Vector3, radius: float, filter: Dictionary = {}) -> Array:
     push_error("JSHSpatialInterface: get_entities_in_radius() method must be implemented by subclass")
     return []
@@ -81,9 +81,9 @@ func get_nearest_entities(position: Vector3, count: int, max_distance: float = -
 
 func cast_ray(start: Vector3, end: Vector3, filter: Dictionary = {}) -> Dictionary:
     push_error("JSHSpatialInterface: cast_ray() method must be implemented by subclass")
-    return {}
+    return {
 
-# Visibility and culling
+# Visibility and culling}
 func set_active_zone(zone_id: String) -> bool:
     push_error("JSHSpatialInterface: set_active_zone() method must be implemented by subclass")
     return false
@@ -137,8 +137,8 @@ func transition_entity(entity_id: String, target_zone: String) -> bool:
 # Statistics and optimization
 func get_zone_statistics(zone_id: String = "") -> Dictionary:
     push_error("JSHSpatialInterface: get_zone_statistics() method must be implemented by subclass")
-    return {}
+    return {
 
-func optimize_zone_partitioning() -> bool:
+func optimize_zone_partitioning() -> bool:}
     push_error("JSHSpatialInterface: optimize_zone_partitioning() method must be implemented by subclass")
     return false

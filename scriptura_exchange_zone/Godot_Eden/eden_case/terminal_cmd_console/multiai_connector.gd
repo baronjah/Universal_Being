@@ -1,6 +1,6 @@
 extends Node
 
-class_name MultiAIConnector
+class_name MultiAIConnector_multiaiconnector_multiaic
 
 # MultiAIConnector - Connects to multiple AI systems simultaneously
 # Allows parallel queries, AI switching, and result comparison
@@ -588,7 +588,7 @@ func create_game_session(prompt):
 		dir.make_dir("user://game_sessions/" + session_id)
 	
 	# Store session info
-	var file = FileAccess.open("user://game_sessions/" + session_id + "/info.json", FileAccess.WRITE)
+	var file = FileAccess.open("user://game_sessions/" + session_id + "info.json", FileAccess.WRITE)
 	if file:
 		var data = {
 			"session_id": session_id,
@@ -617,7 +617,7 @@ Format your response as a structured game design document.
 	var request_id = send_broadcast_request(game_prompt)
 	
 	# Store request info
-	file = FileAccess.open("user://game_sessions/" + session_id + "/requests.json", FileAccess.WRITE)
+	file = FileAccess.open("user://game_sessions/" + session_id + "requests.json", FileAccess.WRITE)
 	if file:
 		var data = {
 			"initial_request": request_id,
@@ -631,7 +631,7 @@ Format your response as a structured game design document.
 
 # Process game design from all AIs
 func process_game_designs(session_id):
-	var file_path = "user://game_sessions/" + session_id + "/requests.json"
+	var file_path = "user://game_sessions/" + session_id + "requests.json"
 	
 	if not FileAccess.file_exists(file_path):
 		return false
@@ -659,7 +659,7 @@ func process_game_designs(session_id):
 	var merged_design = _merge_game_designs(responses, session_id)
 	
 	# Store merged design
-	file = FileAccess.open("user://game_sessions/" + session_id + "/merged_design.json", FileAccess.WRITE)
+	file = FileAccess.open("user://game_sessions/" + session_id + "merged_design.json", FileAccess.WRITE)
 	if file:
 		file.store_string(JSON.stringify(merged_design, "  "))
 	
@@ -736,7 +736,7 @@ func _merge_game_designs(responses, session_id):
 
 # Update game session status
 func _update_session_status(session_id, status):
-	var file_path = "user://game_sessions/" + session_id + "/info.json"
+	var file_path = "user://game_sessions/" + session_id + "info.json"
 	
 	if not FileAccess.file_exists(file_path):
 		return false

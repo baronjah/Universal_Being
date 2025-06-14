@@ -3,7 +3,6 @@
 # Created: May 31, 2025, 23:28 CEST
 # Purpose: Ragdoll physics and behavior system
 # Connection: Part of Pentagon Architecture migration
-
 extends UniversalBeingBase
 # Delayed command injection - waits for console to be fully ready
 
@@ -17,7 +16,7 @@ func pentagon_ready() -> void:
 	
 	print("\n🔧 [DelayedInjector] Attempting to inject commands...")
 	
-	var console = get_node_or_null("/root/ConsoleManager")
+	var console = get_node_or_null("root/ConsoleManager")
 	if not console:
 		push_error("[DelayedInjector] Console not found!")
 		return
@@ -73,7 +72,7 @@ func pentagon_ready() -> void:
 	
 	commands_dict["test_layers"] = func(_args):
 		console._print_to_console("[color=#00ffff]=== Layer System Test ===[/color]")
-		var layer_sys = get_node_or_null("/root/LayerRealitySystem")
+		var layer_sys = get_node_or_null("root/LayerRealitySystem")
 		if layer_sys:
 			console._print_to_console("[color=#00ff00]✅ Layer system found![/color]")
 			console._print_to_console("Press F1-F4 to toggle layers")
@@ -86,7 +85,7 @@ func pentagon_ready() -> void:
 			console._print_to_console("Usage: layer [show|hide|toggle] [text|map|debug|full]")
 			return
 		
-		var layer_sys = get_node_or_null("/root/LayerRealitySystem")
+		var layer_sys = get_node_or_null("root/LayerRealitySystem")
 		if not layer_sys:
 			console._print_to_console("[color=#ff0000]Layer system not available[/color]")
 			return

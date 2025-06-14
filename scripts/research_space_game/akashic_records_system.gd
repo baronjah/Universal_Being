@@ -33,8 +33,9 @@ class AkashicRecord:
 		id = p_id
 		type = p_type
 		timestamp = Time.get_unix_time_from_system()
-		content = {}
-		access_requirements = {"consciousness_level": 1}
+		content = {
+		access_requirements = {"consciousness_level": 1
+}
 
 func _ready():
 	initialize_core_records()
@@ -60,13 +61,15 @@ func create_record(id: String, type: RecordType, content: Dictionary):
 	
 func access_record(record_id: String, consciousness_level: int) -> Dictionary:
 	if not records.has(record_id):
-		return {"success": false, "reason": "Record not found"}
+		return {"success": false, "reason": "Record not found"
+}
 		
 	var record = records[record_id]
 	
 	# Check access requirements
 	if consciousness_level < record.access_requirements.get("consciousness_level", 1):
-		return {"success": false, "reason": "Insufficient consciousness level"}
+		return {"success": false, "reason": "Insufficient consciousness level"
+}
 		
 	# Access granted
 	if record_id not in accessed_records:
@@ -81,7 +84,8 @@ func access_record(record_id: String, consciousness_level: int) -> Dictionary:
 	if record.content.has("pattern"):
 		discover_pattern(record.content["pattern"])
 		
-	return {"success": true, "content": record.content}
+	return {"success": true, "content": record.content
+}
 	
 func integrate_knowledge(knowledge_type: String):
 	if not integrated_knowledge.has(knowledge_type):
@@ -137,22 +141,27 @@ func speak_word_of_power(word: AkashicWord, target: Node3D):
 	# Words literally reshape reality
 	match word.word:
 		"FORM":
+}
 			# Transforms asteroid into structured matter
 			if target.is_in_group("asteroids"):
+}
 				var structure = create_space_structure(target.position)
 				target.queue_free()
 				
 		"FLOW":
+
 			# Redirects energy streams
 			create_energy_current(player_position, target.position)
 			
 		"UNITE":
+
 			# Merges consciousness with target
 			if target is AICompanion:
 				target.consciousness_level = consciousness_level
 				create_telepathic_bond(target)
 				
 		"REVEAL":
+
 			# Shows hidden dimensions
 			reveal_quantum_layer(target.position)
 
@@ -192,8 +201,9 @@ class AkashicRecord:
 		id = p_id
 		type = p_type
 		timestamp = Time.get_unix_time_from_system()
-		content = {}
-		access_requirements = {"consciousness_level": 1}
+		content = {
+		access_requirements = {"consciousness_level": 1
+}
 
 func _ready():
 	initialize_core_records()
@@ -219,13 +229,15 @@ func create_record(id: String, type: RecordType, content: Dictionary):
 	
 func access_record(record_id: String, consciousness_level: int) -> Dictionary:
 	if not records.has(record_id):
-		return {"success": false, "reason": "Record not found"}
+		return {"success": false, "reason": "Record not found"
+}
 		
 	var record = records[record_id]
 	
 	# Check access requirements
 	if consciousness_level < record.access_requirements.get("consciousness_level", 1):
-		return {"success": false, "reason": "Insufficient consciousness level"}
+		return {"success": false, "reason": "Insufficient consciousness level"
+}
 		
 	# Access granted
 	if record_id not in accessed_records:
@@ -240,7 +252,8 @@ func access_record(record_id: String, consciousness_level: int) -> Dictionary:
 	if record.content.has("pattern"):
 		discover_pattern(record.content["pattern"])
 		
-	return {"success": true, "content": record.content}
+	return {"success": true, "content": record.content
+}
 	
 func integrate_knowledge(knowledge_type: String):
 	if not integrated_knowledge.has(knowledge_type):

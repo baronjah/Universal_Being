@@ -111,7 +111,7 @@ func _create_particle_burst() -> void:
 	add_child(ripple_particles)
 
 func _create_distortion_field() -> void:
-	# Area that affects nearby objects
+	# Area3D that affects nearby objects
 	distortion_field = Area3D.new()
 	var collision = CollisionShape3D.new()
 	var sphere_shape = SphereShape3D.new()
@@ -241,7 +241,7 @@ func _distort_reality(radius: float, strength: float) -> void:
 		"radius": radius,
 		"strength": strength,
 		"time": ripple_time
-	}
+}
 	
 	# The world generator or environment would listen for this
 	get_tree().call_group("reality_listeners", "on_consciousness_distortion", distortion_data)
@@ -271,7 +271,7 @@ func get_ripple_state() -> Dictionary:
 		"time": ripple_time,
 		"radius": ripple_time * ripple_speed,
 		"strength": ripple_strength * (1.0 - ripple_time / ripple_lifetime)
-	}
+}
 
 # Notes:
 # - Ripple expands at consciousness speed, not physical speed

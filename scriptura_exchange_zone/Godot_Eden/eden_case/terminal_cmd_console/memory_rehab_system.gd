@@ -1,5 +1,5 @@
 extends Node
-class_name MemoryRehabSystem
+class_name MemoryRehabSystem_memoryrehabsystem_memoryre
 
 # Memory Rehabilitation System
 # Enhances memory organization using # instead of / or // 
@@ -29,7 +29,7 @@ const MEMORY_TAGS = {
     "EVOLUTION": "#^",    # Memory evolutionary progress
     "INSIGHT": "#*",      # Special insight or realization
     "TIME": "#t",         # Temporal memory marker
-    "SPACE": "#s",        # Spatial memory marker
+    "SPACE": "#s",        # Node3D memory marker
     "EMOTION": "#e",      # Emotional memory component
     "QUESTION": "#?",     # Memory question or uncertainty
     "ANSWER": "#!",       # Memory answer or resolution
@@ -38,7 +38,7 @@ const MEMORY_TAGS = {
 }
 
 # File System Integration
-const MEMORY_DIR = "/mnt/c/Users/Percision 15/MemoryRehab"
+const MEMORY_DIR = "mnt/c/Users/Percision 15/MemoryRehab"
 const MEMORY_EXTENSION = ".mem"
 
 # Memory Structure
@@ -55,7 +55,7 @@ class MemoryNode:
         id = p_id
         content = p_content
         dimension = p_dimension
-        timestamp = OS.get_unix_time()
+        timestamp = OS.Time.get_unix_time_from_system()
     
     func add_tag(tag: String):
         if not tags.has(tag):
@@ -179,7 +179,7 @@ func create_memory(content: String, dimension: int = 1, tags = []) -> String:
     if not _initialized:
         initialize()
     
-    var memory_id = "mem_" + str(OS.get_unix_time()) + "_" + str(randi() % 1000).pad_zeros(3)
+    var memory_id = "mem_" + str(OS.Time.get_unix_time_from_system()) + "_" + str(randi() % 1000).pad_zeros(3)
     var memory = MemoryNode.new(memory_id, content, dimension)
     
     # Add tags
@@ -481,7 +481,7 @@ func export_memory_system() -> Dictionary:
         "system_info": {
             "version": "1.0",
             "memory_count": _memories.size(),
-            "exported_at": OS.get_unix_time(),
+            "exported_at": OS.Time.get_unix_time_from_system(),
             "dimensions": MEMORY_DIMENSIONS
         }
     }

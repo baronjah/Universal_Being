@@ -1,5 +1,5 @@
 extends Node3D
-class_name WordLimbEvolution
+class_name WordLimbEvolution_WordLimbEvolution_WordLimb
 
 # Constants for evolution stages
 const NUMERIC_STAGES = 10  # 0-9 progression system
@@ -69,7 +69,7 @@ func get_stage_words(stage):
         0: words = ["var", "if", "for", "func", "print"]
         1: words = ["class", "extends", "return", "while", "break"]
         2: words = ["signal", "connect", "emit", "array", "dictionary"]
-        3: words = ["export", "preload", "instance", "queue_free", "get_node"]
+        3: words = ["@@export", "preload", "instance", "queue_free", "get_node"]
         4: words = ["shader", "material", "texture", "mesh", "light"]
         5: words = ["physics", "collision", "rigidbody", "raycast", "area"]
         6: words = ["animation", "tween", "particle", "skeleton", "blend"]
@@ -510,10 +510,10 @@ func create_firewall_protection():
     
     # Define paths to protect
     var protected_paths = [
-        "/mnt/d/",
-        "/user/data/",
-        "/system/core/",
-        "/memory/primary/"
+        "mnt/d/",
+        "user/data/",
+        "system/core/",
+        "memory/primary/"
     ]
     
     print("Firewall initialized with strength " + str(firewall_strength))

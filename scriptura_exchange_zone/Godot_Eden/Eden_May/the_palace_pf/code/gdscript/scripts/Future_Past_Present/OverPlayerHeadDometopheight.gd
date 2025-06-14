@@ -1,5 +1,5 @@
 @tool
-extends MeshInstance3D
+extends \2
 
 signal over_head_position(origin_position)
 

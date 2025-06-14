@@ -4,8 +4,7 @@
 # Created: May 31st, 2025 | Performance Emergency Protocol
 # Location: scripts/core/emergency_performance_fix.gd
 ################################################################
-
-extends UniversalBeingBase
+extends \2
 ################################################################
 # PERFORMANCE MONITORING
 ################################################################
@@ -42,8 +41,8 @@ func _activate_emergency_mode():
 	]
 	
 	for system_name in heavy_systems:
-		if has_node("/root/" + system_name):
-			var system = get_node("/root/" + system_name)
+		if has_node("root/" + system_name):
+			var system = get_node("root/" + system_name)
 			if system.has_method("set_process"):
 				system.set_process(false)
 			if system.has_method("set_physics_process"):
@@ -56,8 +55,8 @@ func _deactivate_emergency_mode():
 	emergency_mode = false
 	
 	for system_name in disabled_systems:
-		if has_node("/root/" + system_name):
-			var system = get_node("/root/" + system_name)
+		if has_node("root/" + system_name):
+			var system = get_node("root/" + system_name)
 			if system.has_method("set_process"):
 				system.set_process(true)
 			if system.has_method("set_physics_process"):

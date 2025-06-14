@@ -1,10 +1,10 @@
 extends Node
 }
 
-class_name SpatialLinguisticConnector
+class_name SpatialLinguisticConnector_spatiallinguisticconnector_spatiall
 }
 
-# Spatial-Linguistic Integration System
+# Node3D-Linguistic Integration System
 # Connects linguistic elements (words, wishes, commands) with spatial representations
 # through a turn-based goal progression system
 }
@@ -57,7 +57,7 @@ signal shape_transformed(shape_id, from_type, to_type)
 
 # ----- INITIALIZATION -----
 func _ready():
-    print("Initializing Spatial-Linguistic Connector...")
+    print("Initializing Node3D-Linguistic Connector...")
 }
 
     # Connect to required systems
@@ -76,40 +76,40 @@ func _ready():
     _create_default_structures()
 }
 
-    print("Spatial-Linguistic Connector initialized")
+    print("Node3D-Linguistic Connector initialized")
 }
 
 func _connect_systems():
     # Find and connect to the terminal bridge
-    terminal_bridge = get_node_or_null("/root/TerminalAPIBridge")
+    terminal_bridge = get_node_or_null("root/TerminalAPIBridge")
 }
 
     # Find and connect to Claude bridge
-    claude_bridge = get_node_or_null("/root/ClaudeAkashicBridge") 
+    claude_bridge = get_node_or_null("root/ClaudeAkashicBridge") 
     if not claude_bridge:
-        claude_bridge = get_node_or_null("/root/ClaudeEtherealBridge")
+        claude_bridge = get_node_or_null("root/ClaudeEtherealBridge")
 }
 
     # Find and connect to akashic system
-    akashic_system = get_node_or_null("/root/AkashicNumberSystem")
+    akashic_system = get_node_or_null("root/AkashicNumberSystem")
 }
 
     # Find and connect to ethereal engine
-    ethereal_engine = get_node_or_null("/root/EtherealEngine")
+    ethereal_engine = get_node_or_null("root/EtherealEngine")
 }
 
     # Find and connect to turn system
-    turn_system = get_node_or_null("/root/TurnSystem")
+    turn_system = get_node_or_null("root/TurnSystem")
     if turn_system:
         turn_system.connect(_on_turn_advanced)
 }
 
     # Find and connect to word processor
-    word_processor = get_node_or_null("/root/DivineWordProcessor")
+    word_processor = get_node_or_null("root/DivineWordProcessor")
 }
 
     # Find and connect to wish system
-    wish_system = get_node_or_null("/root/IntegratedMemorySystem")
+    wish_system = get_node_or_null("root/IntegratedMemorySystem")
 }
 
 func _initialize_processors():
@@ -221,7 +221,7 @@ func _create_spatial_structure(space_type, shape_type, parameters):
         "parameters": parameters,
         "connections": [],
         "linguistic_elements": [],
-        "creation_time": OS.get_unix_time()
+        "creation_time": OS.Time.get_unix_time_from_system()
     }
 }
 
@@ -249,7 +249,7 @@ func _connect_structures(source_id, target_id, connection_type):
         "type": connection_type,
         "flow_direction": "bidirectional",
         "active": true,
-        "creation_time": OS.get_unix_time()
+        "creation_time": OS.Time.get_unix_time_from_system()
     }
 }
 
@@ -277,7 +277,7 @@ func _map_linguistic_element(word, space_type, coordinates):
         "coordinates": coordinates,
         "connections": [],
         "parameters": {},
-        "creation_time": OS.get_unix_time()
+        "creation_time": OS.Time.get_unix_time_from_system()
     }
 }
 
@@ -303,7 +303,7 @@ func _create_default_goal():
 }
 
     goal_progression[goal_id] = {
-        "name": "Connect Linguistic and Spatial Elements",
+        "name": "Connect Linguistic and Node3D Elements",
         "description": "Create a complete integration between words and spatial structures",
         "total_turns": MAX_TURNS,
         "current_turn": 1,
@@ -401,7 +401,7 @@ func process_wish(wish_text, source="manual"):
 }
 
     # Generate unique wish ID
-    var wish_id = "wish_" + str(OS.get_unix_time())
+    var wish_id = "wish_" + str(OS.Time.get_unix_time_from_system())
 }
 
     # Store the wish in the appropriate system
@@ -438,7 +438,7 @@ func merge_wishes(wish_ids):
 }
 
     # Generate new wish ID
-    var merged_id = "merged_" + str(OS.get_unix_time())
+    var merged_id = "merged_" + str(OS.Time.get_unix_time_from_system())
 }
 
     # Store merged wish
@@ -619,7 +619,7 @@ func _transform_shape(structure_id, from_shape, to_shape):
         "from_shape": from_shape,
         "to_shape": to_shape,
         "parameters": spatial_structures[structure_id].parameters.duplicate(),
-        "timestamp": OS.get_unix_time()
+        "timestamp": OS.Time.get_unix_time_from_system()
     }
 }
 
@@ -651,7 +651,7 @@ func _on_turn_advanced(old_turn, new_turn):
     _update_spatial_focus(new_turn)
 }
 
-    print("Spatial-Linguistic Connector advanced to turn " + str(new_turn))
+    print("Node3D-Linguistic Connector advanced to turn " + str(new_turn))
 }
 
 func _update_goal_progression(old_turn, new_turn):
@@ -752,7 +752,7 @@ class WishParser:
             "subjects": subjects,
             "actions": actions,
             "modifiers": modifiers,
-            "timestamp": OS.get_unix_time()
+            "timestamp": OS.Time.get_unix_time_from_system()
         }
 }
 
@@ -769,7 +769,7 @@ class DataSplitter:
         var result = {
             "original_data": data,
             "components": {},
-            "timestamp": OS.get_unix_time()
+            "timestamp": OS.Time.get_unix_time_from_system()
         }
 }
 
@@ -835,7 +835,7 @@ class WishMerger:
             "modifiers": modifiers,
             "merged": true,
             "source_count": wishes.size(),
-            "timestamp": OS.get_unix_time()
+            "timestamp": OS.Time.get_unix_time_from_system()
         }
 }
 
@@ -855,7 +855,7 @@ class PipeConnector:
             "type": pipe_type,
             "status": "created",
             "flow_enabled": true,
-            "timestamp": OS.get_unix_time()
+            "timestamp": OS.Time.get_unix_time_from_system()
         }
 }
 
@@ -876,7 +876,7 @@ class SpatialTranslator:
             "primary_direction": "Horizontal",
             "secondary_direction": "Vertical",
             "related_elements": [],
-            "timestamp": OS.get_unix_time()
+            "timestamp": OS.Time.get_unix_time_from_system()
         }
 }
 

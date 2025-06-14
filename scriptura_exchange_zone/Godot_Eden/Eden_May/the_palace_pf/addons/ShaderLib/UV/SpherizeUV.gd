@@ -1,5 +1,6 @@
 @tool
-class_name VisualShaderNodeUVSpherize extends VisualShaderNodeCustom
+class_name VisualShaderNodeUVSpherize_SpherizeUV_Spherize
+extends \2
 
 func _init() -> void:
 	set_output_port_for_preview(0)

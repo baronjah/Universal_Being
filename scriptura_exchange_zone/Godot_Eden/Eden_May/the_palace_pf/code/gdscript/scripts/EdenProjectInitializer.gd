@@ -1,5 +1,5 @@
 extends Node
-class_name EdenProjectInitializer
+class_name EdenProjectInitializer_EdenProjectInitializer_EdenProj
 
 # References to key systems
 var universal_bridge = null
@@ -100,11 +100,11 @@ func initialize_console_system():
 		print("Initializing Console System...")
 	
 	# Try to find existing console system
-	console_system = get_node_or_null("/root/JSH_Console_System")
+	console_system = get_node_or_null("root/JSH_Console_System")
 	
 	if not console_system:
 		# Create a new console if needed
-		var console_script = load("res://code/gdscript/scripts/Menu_Keyboard_Console/JSH_console.gd")
+		var console_script = load("res://scripts/gdscript/scripts/Menu_Keyboard_Console/JSH_console.gd")
 		if console_script:
 			console_system = console_script.new()
 			console_system.name = "JSH_Console_System"
@@ -136,7 +136,7 @@ func initialize_element_system():
 	
 	if not element_manager:
 		# Create new element manager
-		var element_manager_script = load("res://code/gdscript/scripts/elements_shapes_projection/element_manager.gd")
+		var element_manager_script = load("res://scripts/gdscript/scripts/elements_shapes_projection/element_manager.gd")
 		if element_manager_script:
 			element_manager = element_manager_script.new()
 			element_manager.name = "ElementManager"

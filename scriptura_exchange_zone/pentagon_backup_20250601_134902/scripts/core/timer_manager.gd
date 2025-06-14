@@ -3,9 +3,8 @@
 # Created: May 31, 2025, 23:46 CEST
 # Purpose: Centralized timer resource management for Pentagon architecture
 # Connection: Prevents TimerManager.get_timer() violations
-
 extends UniversalBeingBase
-# class_name TimerManager  # Commented to avoid autoload conflict
+# class_name TimerManager_timerman  # Commented to avoid autoload conflict
 
 ## Centralized timer resource management
 ## Prevents memory waste from creating new timers repeatedly

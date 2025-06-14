@@ -12,7 +12,7 @@ extends Node
 # For the bottom terminal evolution with enhanced command support
 }
 
-class_name IntegratedTerminal
+class_name IntegratedTerminal_integratedterminal_integrat
 }
 
 # Terminal UI elements
@@ -72,7 +72,7 @@ func _ready():
 	# Welcome message
 	add_text("Integrated Terminal System v1.0", "system")
 	add_text("Type #help for available commands", "system")
-	add_text("Current turn: " + str(current_turn) + "/" + str(max_turns), "system")
+	add_text("Current turn: " + str(current_turn) + "" + str(max_turns), "system")
 }
 
 	# Show command prompt
@@ -178,7 +178,7 @@ func _on_text_entered(text):
 # Show command prompt
 func show_prompt():
 	# You could customize this with current turn, etc.
-	input_field.placeholder_text = "[" + str(current_turn) + "/" + str(max_turns) + "] > "
+	input_field.placeholder_text = "[" + str(current_turn) + "" + str(max_turns) + "] > "
 	input_field.grab_focus()
 }
 
@@ -354,7 +354,7 @@ func process_system_command(command):
 			reset_terminal()
 		"concurrent":
 			set_concurrent_tasks(args)
-		"export":
+		"@@export":
 			export_terminal_state(args)
 		"import":
 			import_terminal_state(args)
@@ -385,7 +385,7 @@ func process_turn_command(args):
 }
 
 	if parts.size() < 1:
-		add_text("Current turn: " + str(current_turn) + "/" + str(max_turns), "system")
+		add_text("Current turn: " + str(current_turn) + "" + str(max_turns), "system")
 		return
 }
 
@@ -416,7 +416,7 @@ func process_advanced_turn_command(args):
 }
 
 	if parts.size() < 1:
-		add_text("Current turn: " + str(current_turn) + "/" + str(max_turns), "system")
+		add_text("Current turn: " + str(current_turn) + "" + str(max_turns), "system")
 		return
 }
 
@@ -443,7 +443,7 @@ func process_system_turn_command(args):
 }
 
 	if parts.size() < 1:
-		add_text("Current turn: " + str(current_turn) + "/" + str(max_turns), "system")
+		add_text("Current turn: " + str(current_turn) + "" + str(max_turns), "system")
 		return
 }
 
@@ -454,7 +454,7 @@ func process_system_turn_command(args):
 	match subcmd:
 		"cycle":
 			restart_turn_cycle()
-		"export":
+		"@@export":
 			export_turn_data(subargs)
 		"import":
 			import_turn_data(subargs)
@@ -466,7 +466,7 @@ func process_system_turn_command(args):
 func advance_turn():
 	if current_turn < max_turns:
 		current_turn += 1
-		add_text("Advanced to turn " + str(current_turn) + "/" + str(max_turns), "system")
+		add_text("Advanced to turn " + str(current_turn) + "" + str(max_turns), "system")
 		emit_signal("turn_changed", current_turn)
 }
 
@@ -495,7 +495,7 @@ func set_turn(turn_number):
 
 	if new_turn >= 1 and new_turn <= max_turns:
 		current_turn = new_turn
-		add_text("Set current turn to: " + str(current_turn) + "/" + str(max_turns), "system")
+		add_text("Set current turn to: " + str(current_turn) + "" + str(max_turns), "system")
 		emit_signal("turn_changed", current_turn)
 	else:
 		add_text("Invalid turn number. Must be between 1 and " + str(max_turns) + ".", "error")
@@ -523,7 +523,7 @@ func reset_turns():
 # Display turn status
 func display_turn_status():
 	add_text("Turn Status:", "system")
-	add_text("- Current turn: " + str(current_turn) + "/" + str(max_turns), "system")
+	add_text("- Current turn: " + str(current_turn) + "" + str(max_turns), "system")
 	add_text("- Auto advance: " + ("ON" if turn_auto_advance else "OFF"), "system")
 }
 
@@ -543,7 +543,7 @@ func skip_turns(count):
 }
 
 		current_turn = target_turn
-		add_text("Skipped " + str(turns_skipped) + " turns. Now at turn " + str(current_turn) + "/" + str(max_turns), "system")
+		add_text("Skipped " + str(turns_skipped) + " turns. Now at turn " + str(current_turn) + "" + str(max_turns), "system")
 		emit_signal("turn_changed", current_turn)
 }
 
@@ -603,7 +603,7 @@ func export_turn_data(path):
 	add_text("Exporting turn data to: " + path, "system")
 }
 
-	# In a real implementation, this would export data to a file
+	# In a real implementation, this would @@export data to a file
 	# For now, we'll just simulate it
 	add_text("Turn data exported successfully.", "system")
 }
@@ -703,7 +703,7 @@ func export_terminal_state(path):
 	add_text("Exporting terminal state to: " + path, "system")
 }
 
-	# In a real implementation, this would export data to a file
+	# In a real implementation, this would @@export data to a file
 	# For now, we'll just simulate it
 	add_text("Terminal state exported successfully.", "system")
 }
@@ -815,13 +815,13 @@ func display_system_help():
 	add_text(symbol_system.format_header("System Commands", 60), "system")
 	add_text("System Commands (###):", "system")
 	add_text("  ###help - Display this help", "system")
-	add_text("  ###turn [cycle|export|import] - System turn management", "system")
+	add_text("  ###turn [cycle|@@export|import] - System turn management", "system")
 	add_text("  ###memory/###mem [command] - System memory commands", "system")
 	add_text("  ###drive/###drives [command] - System drive commands", "system")
 	add_text("  ###symbol/###symbols [command] - System symbol commands", "system")
 	add_text("  ###reset - Reset the terminal", "system")
 	add_text("  ###concurrent [count] - Set concurrent task count (1-5)", "system")
-	add_text("  ###export [path] - Export terminal state", "system")
+	add_text("  ###@@export [path] - Export terminal state", "system")
 	add_text("  ###import [path] - Import terminal state", "system")
 	add_text("  ###evolution [type] - Evolve the terminal", "system")
 }

@@ -294,10 +294,12 @@ func _refresh_universe_info() -> void:
 	info_text += "Children: %d\n" % info.children
 	info_text += "Beings: %d\n" % info.beings
 	info_text += "Age: %.1f seconds\n\n" % info.age
+
 	
 	info_text += "[b]Reality Rules:[/b]\n"
 	for rule in info.rules:
 		info_text += "• %s: %s\n" % [rule.capitalize(), info.rules[rule]]
+
 	
 	universe_info_label.text = info_text
 	
@@ -361,7 +363,7 @@ func _on_create_pressed() -> void:
 		parent_universe = parent_selector.get_item_metadata(selected_idx)
 	
 	# Gather reality rules
-	var custom_rules = {}
+	var custom_rules = {
 	for rule_key in reality_sliders:
 		custom_rules[rule_key] = reality_sliders[rule_key].value
 	

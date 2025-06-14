@@ -3,7 +3,6 @@
 # Created: May 31, 2025, 23:28 CEST
 # Purpose: Ragdoll physics and behavior system
 # Connection: Part of Pentagon Architecture migration
-
 extends UniversalBeingBase
 # Quick test to verify Universal Entity is working
 # Add this script to any node in your scene to test
@@ -15,7 +14,7 @@ func _ready():
 	print("\n=== UNIVERSAL ENTITY STATUS CHECK ===")
 	
 	# Check if UniversalEntity loaded
-	var universal = get_node_or_null("/root/UniversalEntity")
+	var universal = get_node_or_null("root/UniversalEntity")
 	if universal:
 		print("✅ UniversalEntity is loaded!")
 		
@@ -30,7 +29,7 @@ func _ready():
 			print("✅ Health Monitor ready")
 			
 		# Check console commands
-		var console = get_node_or_null("/root/ConsoleManager")
+		var console = get_node_or_null("root/ConsoleManager")
 		if console and "commands" in console:
 			if "universal" in console.commands:
 				print("✅ Commands registered successfully!")

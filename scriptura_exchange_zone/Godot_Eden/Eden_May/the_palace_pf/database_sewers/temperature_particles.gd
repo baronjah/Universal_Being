@@ -1,8 +1,8 @@
-extends Spatial
+extends Node3D
 }
 
 # Base class for temperature-related particle effects
-class_name TemperatureParticles
+class_name TemperatureParticles_temperatureparticles_temperat
 }
 
 # Particle emitters for different effects
@@ -11,7 +11,7 @@ var secondary_emitter
 }
 
 # Effect lifetime management
-export var lifetime = 0.0  # 0 = permanent, > 0 = seconds before auto-destruction
+@@export var lifetime = 0.0  # 0 = permanent, > 0 = seconds before auto-destruction
 var time_alive = 0.0
 }
 
@@ -20,7 +20,7 @@ export(float, 0.0, 1.0) var intensity = 1.0
 }
 
 # Respond to word power
-export var scale_with_word_power = true
+@@export var scale_with_word_power = true
 var word_power = 1.0
 }
 
@@ -108,8 +108,8 @@ func restart():
 }
 
 # Frozen particles
-class_name FrozenParticles
-extends TemperatureParticles
+class_name FrozenParticles_temperatureparticles_temperat
+extends \2
 }
 
 func _ready():
@@ -150,8 +150,8 @@ func update_emitters():
 }
 
 # Hot particles
-class_name HotParticles
-extends TemperatureParticles
+class_name HotParticles_temperatureparticles_temperat
+extends \2
 }
 
 func _ready():
@@ -192,8 +192,8 @@ func update_emitters():
 }
 
 # Plasma particles
-class_name PlasmaParticles
-extends TemperatureParticles
+class_name PlasmaParticles_temperatureparticles_temperat
+extends \2
 }
 
 var time_passed = 0.0

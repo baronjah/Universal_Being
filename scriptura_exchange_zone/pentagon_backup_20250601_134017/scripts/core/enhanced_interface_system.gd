@@ -4,9 +4,8 @@
 # PURPOSE: Create truly functional, clickable, scrollable 3D interfaces
 # CREATED: 2025-05-30 - Interface evolution
 # ==================================================
-
-extends UniversalBeingBase
-class_name EnhancedInterfaceSystem
+extends \2
+class_name EnhancedInterfaceSystem_enhancedinterfacesystem_enhanced
 
 signal interface_button_clicked(button_id: String, data: Dictionary)
 signal interface_value_changed(element_id: String, new_value: Variant)
@@ -512,7 +511,7 @@ func _on_console_command_executed(input_field: LineEdit) -> void:
 	print("💻 [Console] Executing: ", command)
 	
 	# Send command to console manager
-	var console_manager = get_node_or_null("/root/ConsoleManager")
+	var console_manager = get_node_or_null("root/ConsoleManager")
 	if console_manager and console_manager.has_method("execute_command"):
 		console_manager.execute_command(command)
 	
@@ -529,7 +528,7 @@ func _on_quick_action(action: String) -> void:
 	"""Handle quick action buttons"""
 	print("⚡ [QuickAction] ", action)
 	
-	var console_manager = get_node_or_null("/root/ConsoleManager")
+	var console_manager = get_node_or_null("root/ConsoleManager")
 	if console_manager and console_manager.has_method("execute_command"):
 		console_manager.execute_command(action)
 	
@@ -549,7 +548,7 @@ func _on_create_asset_clicked() -> void:
 	var new_being = UniversalBeing.new()
 	new_being.global_position = global_position + Vector3(0, 0, 3)
 	new_being.become("custom_asset")
-	get_node("/root/FloodgateController").universal_add_child(new_being, get_tree().current_scene)
+	get_node("root/FloodgateController").universal_add_child(new_being, get_tree().current_scene)
 	
 	interface_button_clicked.emit("create_asset", asset_data)
 

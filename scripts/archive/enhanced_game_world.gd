@@ -74,6 +74,7 @@ func _process(_delta):
 	if memory_monitor and MemoryOptimizer.instance:
 		var stats = MemoryOptimizer.instance.get_stats()
 		memory_monitor.text = "Memory: %.1f MB" % stats.current_usage_mb
+
 	
 	if being_counter:
 		var bootstrap = get_node_or_null("/root/SystemBootstrap")
@@ -81,6 +82,7 @@ func _process(_delta):
 			var flood_gates = bootstrap.get_flood_gates()
 			if flood_gates:
 				being_counter.text = "Beings: %d / %d" % [flood_gates.get_being_count(), max_beings]
+	
 
 func _spawn_random_being():
 	pass
@@ -115,12 +117,14 @@ func _spawn_random_being():
 
 func _on_memory_warning(usage_mb: float):
 	print("⚠️ Memory warning: ", usage_mb, " MB")
+
 	# Reduce spawn rate
 	if spawn_timer:
 		spawn_timer.wait_time = 5.0
 
 func _on_memory_critical(usage_mb: float):
 	print("🚨 Memory critical: ", usage_mb, " MB")
+
 	# Stop spawning
 	if spawn_timer:
 		spawn_timer.stop()

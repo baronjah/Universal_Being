@@ -1,6 +1,6 @@
 extends Node
 
-class_name PlatformIntegration
+class_name PlatformIntegration_platformintegration_platform
 
 # Platform Integration System for LuminusOS
 # Enables cross-platform gameplay, synchronization, and VR/Desktop compatibility
@@ -266,7 +266,7 @@ func get_compatibility_report(game_id):
     result += "\nCompatibility Scores:\n"
     for platform in SUPPORTED_PLATFORMS:
         var score = _calculate_compatibility_score(game_id, platform)
-        result += "- " + platform + ": " + str(score) + "/10\n"
+        result += "- " + platform + ": " + str(score) + "10\n"
     
     return result
 
@@ -464,9 +464,9 @@ func _create_vr_adapter():
 
 func _connect_to_external_systems():
     # Try to get references to required systems
-    game_creator = get_node_or_null("/root/GameCreator")
-    data_evolution_system = get_node_or_null("/root/DataEvolutionSystem")
-    storage_manager = get_node_or_null("/root/StorageManager")
+    game_creator = get_node_or_null("root/GameCreator")
+    data_evolution_system = get_node_or_null("root/DataEvolutionSystem")
+    storage_manager = get_node_or_null("root/StorageManager")
     
     # Output connection status
     if game_creator != null:

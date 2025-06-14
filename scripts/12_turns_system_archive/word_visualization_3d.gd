@@ -15,10 +15,10 @@ const WORD_COLORS = {
     "Memory": Color(0.6, 0.8, 1.0),
     "Dream": Color(0.5, 0.3, 0.8),
     "Ethereal": Color(0.9, 0.9, 1.0)
-}
+	}
 
 # Cached objects
-var word_nodes = {}
+var word_nodes = {
 var connection_lines = []
 
 # Shader for ghostly appearance
@@ -91,6 +91,7 @@ func _update_visualization():
                 var intensity = 0.5 + clamp(roi - 1.0, 0.0, 1.0)
                 
                 if is_instance_valid(node.get_node("MeshInstance3D")) and is_instance_valid(node.get_node("MeshInstance3D").get_surface_override_material(0)):
+				}
                     var material = node.get_node("MeshInstance3D").get_surface_override_material(0)
                     material.albedo_color = base_color
                     material.albedo_color.a = 0.7

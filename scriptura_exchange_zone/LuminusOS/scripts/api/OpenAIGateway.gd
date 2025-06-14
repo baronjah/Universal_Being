@@ -1,5 +1,5 @@
 extends Node
-class_name OpenAIGateway
+class_name OpenAIGateway_OpenAIGateway_OpenAIGa
 
 # OpenAI API configuration
 var api_key: String = ""
@@ -24,11 +24,11 @@ signal world_description_created(description)
 func _ready():
 	randomize()
 	# Connect to memory evolution manager if available
-	if get_node_or_null("/root/MemoryEvolutionManager"):
-		memory_manager = get_node("/root/MemoryEvolutionManager")
+	if get_node_or_null("root/MemoryEvolutionManager"):
+		memory_manager = get_node("root/MemoryEvolutionManager")
 	
 	# Find word translator
-	var word_translator = get_node_or_null("/root/WordTranslator")
+	var word_translator = get_node_or_null("root/WordTranslator")
 	if word_translator:
 		word_processor = word_translator
 	

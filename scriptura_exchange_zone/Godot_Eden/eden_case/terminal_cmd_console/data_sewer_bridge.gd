@@ -1,5 +1,5 @@
 extends Node
-class_name DataSewerBridge
+class_name DataSewerBridge_datasewerbridge_datasewe
 }
 
 """
@@ -117,7 +117,7 @@ class Pipeline:
         type = p_type
         source = p_source
         destination = p_destination
-        creation_time = OS.get_unix_time()
+        creation_time = OS.Time.get_unix_time_from_system()
         last_flow_time = creation_time
 }
 
@@ -188,7 +188,7 @@ class DataUnit:
         content_type = p_content_type
         source = p_source
         destination = p_destination
-        timestamp = OS.get_unix_time()
+        timestamp = OS.Time.get_unix_time_from_system()
 }
 
     func to_dict() -> Dictionary:
@@ -278,7 +278,7 @@ class BrowserInterface:
 
     func _init(p_enabled: bool = true):
         enabled = p_enabled
-        last_refresh_time = OS.get_unix_time()
+        last_refresh_time = OS.Time.get_unix_time_from_system()
 }
 
     func trigger_refresh() -> bool:
@@ -290,7 +290,7 @@ class BrowserInterface:
             refresh_callback.call_func()
 }
 
-        last_refresh_time = OS.get_unix_time()
+        last_refresh_time = OS.Time.get_unix_time_from_system()
         return true
 }
 
@@ -360,13 +360,13 @@ func _initialize_browser_interface():
 }
 
     # Set up the refresh callback - in Godot, we use the funcref system
-    _browser_interface.refresh_callback = funcref(self, "_refresh_browser_content")
+    _browser_interface.refresh_callback = Callable(self, "_refresh_browser_content")
 }
 
 # Process function for time-dependent functionality
 func _process(delta):
     if _config.auto_refresh and _browser_interface and _browser_interface.auto_refresh:
-        var current_time = OS.get_unix_time()
+        var current_time = OS.Time.get_unix_time_from_system()
         if current_time - _last_refresh_time >= _browser_interface.refresh_interval:
             _trigger_auto_refresh()
             _last_refresh_time = current_time
@@ -402,7 +402,7 @@ func start_data_flow(pipeline_id: String, data = null) -> bool:
 
     var pipeline = _active_pipelines[pipeline_id]
     pipeline.active = true
-    pipeline.last_flow_time = OS.get_unix_time()
+    pipeline.last_flow_time = OS.Time.get_unix_time_from_system()
 }
 
     # Process the data flow
@@ -634,7 +634,7 @@ func reset() -> void:
     _combo_reason_counter = 0
     _combo_states.clear()
     _pipeline_counter = 0
-    _last_refresh_time = OS.get_unix_time()
+    _last_refresh_time = OS.Time.get_unix_time_from_system()
 }
 
     # Reinitialize components
@@ -656,7 +656,7 @@ func _process_data_flow(pipeline: Pipeline, data) -> bool:
 }
 
     # Create a data unit
-    var data_unit_id = "data_" + str(OS.get_unix_time()) + "_" + str(randi() % 1000)
+    var data_unit_id = "data_" + str(OS.Time.get_unix_time_from_system()) + "_" + str(randi() % 1000)
     var content_type = typeof(data)
 }
 
@@ -709,7 +709,7 @@ func _handle_browser_pipeline(pipeline: Pipeline, data_unit: DataUnit) -> bool:
     # Process browser-specific data
     data_unit.metadata["browser"] = {
         "url": _browser_interface.page_url,
-        "timestamp": OS.get_unix_time()
+        "timestamp": OS.Time.get_unix_time_from_system()
     }
 }
 
@@ -909,7 +909,7 @@ func _trigger_auto_refresh() -> void:
 
             # Pulse effect for shapes
             if shape.type != SHAPE_TYPES.GRID:
-                var pulse_opacity = 0.7 + 0.3 * sin(OS.get_unix_time() * 2.0)
+                var pulse_opacity = 0.7 + 0.3 * sin(OS.Time.get_unix_time_from_system() * 2.0)
 }
 
                 update_shape(shape_id, {

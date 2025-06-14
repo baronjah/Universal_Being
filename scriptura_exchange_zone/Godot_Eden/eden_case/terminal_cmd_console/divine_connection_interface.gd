@@ -1,6 +1,6 @@
 extends Node3D
 
-class_name DivineConnectionInterface
+class_name DivineConnectionInterface_divineconnectioninterface_divineco
 
 """
 Divine Connection Interface
@@ -9,7 +9,8 @@ Transforms emotional energies into computational power
 """
 
 # Spirit entity types
-enum SpiritType {
+enum \2 {
+
     VAMPIRE,
     DEMON,
     ETHEREAL,
@@ -20,7 +21,8 @@ enum SpiritType {
 }
 
 # Connection states
-enum ConnectionState {
+enum \2 {
+
     DORMANT,
     AWAKENING,
     MANIFESTED,

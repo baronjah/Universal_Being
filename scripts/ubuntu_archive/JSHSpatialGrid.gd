@@ -1,7 +1,7 @@
 extends Node
 class_name JSHSpatialGrid
 
-# Spatial grid for efficient spatial queries
+# Node3D grid for efficient spatial queries
 # Based on a uniform grid for fast entity position lookup
 
 # Grid parameters
@@ -20,11 +20,12 @@ var stats: Dictionary = {
     "total_entities": 0,
     "max_entities_per_cell": 0,
     "num_zones": 0
-}
+	}
 
 func _init(cell_size_param: Vector3 = Vector3(10, 10, 10)) -> void:
     cell_size = cell_size_param
     print("JSHSpatialGrid: Initialized with cell size " + str(cell_size))
+	
 
 # Grid operations
 func insert_entity(entity_id: String, position: Vector3, zone_id: String = "") -> void:
@@ -34,7 +35,7 @@ func insert_entity(entity_id: String, position: Vector3, zone_id: String = "") -
     # Handle zone-specific grid
     if not zone_id.is_empty():
         if not zone_grids.has(zone_id):
-            zone_grids[zone_id] = {}
+            zone_grids[zone_id] = {
             stats.num_zones += 1
         
         var zone_grid = zone_grids[zone_id]
@@ -50,7 +51,7 @@ func insert_entity(entity_id: String, position: Vector3, zone_id: String = "") -
         
         # Track which cells this entity is in
         if not entity_cells.has(entity_id):
-            entity_cells[entity_id] = {}
+            entity_cells[entity_id] = {
         
         if not entity_cells[entity_id].has(zone_id):
             entity_cells[entity_id][zone_id] = []
@@ -73,7 +74,7 @@ func insert_entity(entity_id: String, position: Vector3, zone_id: String = "") -
     
     # Track entity in global cells
     if not entity_cells.has(entity_id):
-        entity_cells[entity_id] = {}
+        entity_cells[entity_id] = {
         stats.total_entities += 1
     
     if not entity_cells[entity_id].has("global"):
@@ -129,10 +130,10 @@ func remove_entity(entity_id: String, zone_id: String = "") -> void:
         if empty:
             zone_grids.erase(zone_id)
             stats.num_zones -= 1
-    }
     
     # Also remove from global grid
     if entity_cells[entity_id].has("global"):
+	}
         var cell_keys = entity_cells[entity_id]["global"]
         
         for cell_key in cell_keys:
@@ -148,14 +149,13 @@ func remove_entity(entity_id: String, zone_id: String = "") -> void:
         
         # Clear entity's global cell tracking
         entity_cells[entity_id].erase("global")
-    }
     
     # If entity has no more cells, remove it entirely
     if entity_cells[entity_id].is_empty():
         entity_cells.erase(entity_id)
         stats.total_entities -= 1
 
-# Spatial queries
+# Node3D queries
 func query_point(position: Vector3, zone_id: String = "") -> Array:
     var cell_coords = get_cell_coords(position)
     var cell_key = str(cell_coords.x) + "," + str(cell_coords.y) + "," + str(cell_coords.z)
@@ -194,7 +194,6 @@ func query_box(min_pos: Vector3, max_pos: Vector3, zone_id: String = "") -> Arra
                         for entity_id in zone_grids[zone_id][cell_key]:
                             if not entity_id in result:
                                 result.append(entity_id)
-                }
     
     return result
 
@@ -216,6 +215,7 @@ func query_sphere(center: Vector3, radius: float, zone_id: String = "") -> Array
                 # Check global cells
                 if entity_cells[entity_id].has("global"):
                     for cell_key in entity_cells[entity_id]["global"]:
+					}
                         var cell_parts = cell_key.split(",")
                         var cell_x = int(cell_parts[0])
                         var cell_y = int(cell_parts[1])
@@ -254,11 +254,9 @@ func query_sphere(center: Vector3, radius: float, zone_id: String = "") -> Array
                         if dist <= radius + cell_radius:
                             within_radius = true
                             break
-            }
             
             if within_radius:
                 result.append(entity_id)
-        }
     
     return result
 
@@ -283,9 +281,10 @@ func clear() -> void:
         "total_entities": 0,
         "max_entities_per_cell": 0,
         "num_zones": 0
-    }
+		}
     
     print("JSHSpatialGrid: Cleared all data")
+	}
 
 func get_statistics() -> Dictionary:
     return {
@@ -296,4 +295,3 @@ func get_statistics() -> Dictionary:
         "min_bounds": min_bounds,
         "max_bounds": max_bounds,
         "cell_size": cell_size
-    }

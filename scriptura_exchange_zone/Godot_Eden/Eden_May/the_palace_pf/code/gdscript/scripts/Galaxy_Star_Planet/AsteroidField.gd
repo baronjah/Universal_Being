@@ -1,13 +1,13 @@
 # AsteroidField.gd in AsteroidField scene
 @tool
-extends Node3D
+extends \2
 
 var asteroid_density: float = 0.01
 var asteroid_radius: float = 0.5
 var asteroid_size: float = 512.0
 
-var asteroid_2d_scene = preload("res://Scenes/celestialflatsteroid.tscn")
-var asteroid_3d_scene = preload("res://Scenes/CelestialAsteroid.tscn")
+var asteroid_2d_scene = preload("res://scenes/celestialflatsteroid.tscn")
+var asteroid_3d_scene = preload("res://scenes/CelestialAsteroid.tscn")
 var rd: RenderingDevice
 var shader: RID
 var pipeline: RID
@@ -21,7 +21,7 @@ var transition_distance: float = 36.9
 var asteroids: Array = []
 
 class AsteroidData:
-	extends Node
+extends \2
 	var position: Vector3
 	var scale: Vector3
 	var seed_asteroid: int

@@ -1,32 +1,32 @@
 extends Node3D
 
-class_name JSHGameController
+class_name JSHGameController_jshgamecontroller_jshgamec
 
 # ----- GAME SETTINGS -----
 @export_category("Game Settings")
-@export var game_enabled: bool = true
-@export var initial_reality: String = "physical"  # physical, digital, astral
-@export var auto_scene_generation: bool = true
-@export var scene_update_interval: float = 60.0  # Seconds between scene updates
-@export var anime_style_visualization: bool = true
-@export var holographic_mode: bool = true
+@@export var game_enabled: bool = true
+@@export var initial_reality: String = "physical"  # physical, digital, astral
+@@export var auto_scene_generation: bool = true
+@@export var scene_update_interval: float = 60.0  # Seconds between scene updates
+@@export var anime_style_visualization: bool = true
+@@export var holographic_mode: bool = true
 
 # ----- VISUAL SETTINGS -----
 @export_category("Visual Settings")
-@export var time_zone_visualization: bool = true
-@export var zone_glow_intensity: float = 0.7
-@export var word_animation_enabled: bool = true
-@export var anime_outline_width: float = 2.0
-@export var anime_outline_color: Color = Color(0.0, 0.0, 0.0, 1.0)
-@export var anime_cel_shading_levels: int = 3
-@export var anime_2d_billboard_mode: bool = true
+@@export var time_zone_visualization: bool = true
+@@export var zone_glow_intensity: float = 0.7
+@@export var word_animation_enabled: bool = true
+@@export var anime_outline_width: float = 2.0
+@@export var anime_outline_color: Color = Color(0.0, 0.0, 0.0, 1.0)
+@@export var anime_cel_shading_levels: int = 3
+@@export var anime_2d_billboard_mode: bool = true
 
 # ----- COMPONENT REFERENCES -----
-@export var words_in_space_path: NodePath
-@export var word_seed_evolution_path: NodePath
-@export var zone_scale_system_path: NodePath
-@export var player_controller_path: NodePath
-@export var console_path: NodePath
+@@export var words_in_space_path: NodePath
+@@export var word_seed_evolution_path: NodePath
+@@export var zone_scale_system_path: NodePath
+@@export var player_controller_path: NodePath
+@@export var console_path: NodePath
 
 # ----- COMPONENT REFERENCES -----
 var words_in_space: Node

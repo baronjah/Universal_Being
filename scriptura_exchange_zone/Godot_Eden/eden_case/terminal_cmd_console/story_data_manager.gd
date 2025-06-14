@@ -1,5 +1,5 @@
 extends Node
-class_name StoryDataManager
+class_name StoryDataManager_storydatamanager_storydat
 }
 
 """
@@ -120,7 +120,7 @@ class HistoryEntry:
         id = p_id
         category = p_category
         content = p_content
-        timestamp = OS.get_unix_time()
+        timestamp = OS.Time.get_unix_time_from_system()
 }
 
     func add_tag(tag: String) -> void:
@@ -167,19 +167,19 @@ class Story:
         title = p_title
         type = p_type
         content = p_content
-        created_at = OS.get_unix_time()
+        created_at = OS.Time.get_unix_time_from_system()
         updated_at = created_at
 }
 
     func add_history_entry(entry_id: String) -> void:
         if not history_entries.has(entry_id):
             history_entries.append(entry_id)
-            updated_at = OS.get_unix_time()
+            updated_at = OS.Time.get_unix_time_from_system()
 }
 
     func update_content(new_content: String) -> void:
         content = new_content
-        updated_at = OS.get_unix_time()
+        updated_at = OS.Time.get_unix_time_from_system()
         version += 1
 }
 
@@ -229,22 +229,22 @@ class Task:
         description = p_description
         token_allocation = p_token_allocation
         cycle_phase = p_cycle_phase
-        created_at = OS.get_unix_time()
+        created_at = OS.Time.get_unix_time_from_system()
 }
 
     func start_task() -> void:
         status = "in_progress"
-        started_at = OS.get_unix_time()
+        started_at = OS.Time.get_unix_time_from_system()
 }
 
     func complete_task() -> void:
         status = "completed"
-        completed_at = OS.get_unix_time()
+        completed_at = OS.Time.get_unix_time_from_system()
 }
 
     func cancel_task() -> void:
         status = "cancelled"
-        completed_at = OS.get_unix_time()
+        completed_at = OS.Time.get_unix_time_from_system()
 }
 
     func add_token_usage(amount: int) -> void:
@@ -326,7 +326,7 @@ class Driver:
 }
 
                 status = "connected"
-                last_connected = OS.get_unix_time()
+                last_connected = OS.Time.get_unix_time_from_system()
                 return true
 }
 
@@ -340,13 +340,13 @@ class Driver:
                 # In a real implementation, this would attempt a connection
                 # For now, we'll simulate a successful connection
                 status = "connected"
-                last_connected = OS.get_unix_time()
+                last_connected = OS.Time.get_unix_time_from_system()
                 return true
 }
 
             DRIVER_TYPES.MEMORY:
                 status = "connected"
-                last_connected = OS.get_unix_time()
+                last_connected = OS.Time.get_unix_time_from_system()
                 return true
 }
 
@@ -377,7 +377,7 @@ class Driver:
 
 # Initialization
 func _ready():
-    _cycle_start_time = OS.get_unix_time()
+    _cycle_start_time = OS.Time.get_unix_time_from_system()
     _setup_default_driver()
 }
 
@@ -721,7 +721,7 @@ func get_current_day_cycle() -> Dictionary:
         "cycle": _current_day_cycle,
         "name": _get_cycle_name(_current_day_cycle),
         "start_time": _cycle_start_time,
-        "elapsed_time": OS.get_unix_time() - _cycle_start_time
+        "elapsed_time": OS.Time.get_unix_time_from_system() - _cycle_start_time
     }
 }
 
@@ -934,7 +934,7 @@ func _calculate_complexity(text: String) -> float:
 
 # Check and potentially update the day cycle
 func _check_day_cycle():
-    var current_time = OS.get_unix_time()
+    var current_time = OS.Time.get_unix_time_from_system()
     var elapsed_hours = (current_time - _cycle_start_time) / 3600.0
 }
 
@@ -946,7 +946,7 @@ func _check_day_cycle():
 func _advance_day_cycle():
     var old_cycle = _current_day_cycle
     _current_day_cycle = (_current_day_cycle + 1) % DAY_CYCLE_PHASES.size()
-    _cycle_start_time = OS.get_unix_time()
+    _cycle_start_time = OS.Time.get_unix_time_from_system()
 }
 
     # Reset current cycle token usage
@@ -1024,7 +1024,7 @@ func _save_to_filesystem(base_path: String) -> bool:
 }
 
     var history_file = File.new()
-    var history_path = base_path + "/history.json"
+    var history_path = base_path + "history.json"
     var history_error = history_file.open(history_path, File.WRITE)
 }
 
@@ -1044,7 +1044,7 @@ func _save_to_filesystem(base_path: String) -> bool:
 }
 
     var stories_file = File.new()
-    var stories_path = base_path + "/stories.json"
+    var stories_path = base_path + "stories.json"
     var stories_error = stories_file.open(stories_path, File.WRITE)
 }
 
@@ -1064,7 +1064,7 @@ func _save_to_filesystem(base_path: String) -> bool:
 }
 
     var tasks_file = File.new()
-    var tasks_path = base_path + "/tasks.json"
+    var tasks_path = base_path + "tasks.json"
     var tasks_error = tasks_file.open(tasks_path, File.WRITE)
 }
 
@@ -1079,7 +1079,7 @@ func _save_to_filesystem(base_path: String) -> bool:
 
     # Save token usage
     var token_file = File.new()
-    var token_path = base_path + "/token_usage.json"
+    var token_path = base_path + "token_usage.json"
     var token_error = token_file.open(token_path, File.WRITE)
 }
 
@@ -1144,7 +1144,7 @@ func _load_from_filesystem(base_path: String) -> bool:
 
     # Load history entries
     var history_file = File.new()
-    var history_path = base_path + "/history.json"
+    var history_path = base_path + "history.json"
 }
 
     if history_file.file_exists(history_path):
@@ -1192,7 +1192,7 @@ func _load_from_filesystem(base_path: String) -> bool:
 
     # Load stories
     var stories_file = File.new()
-    var stories_path = base_path + "/stories.json"
+    var stories_path = base_path + "stories.json"
 }
 
     if stories_file.file_exists(stories_path):
@@ -1242,7 +1242,7 @@ func _load_from_filesystem(base_path: String) -> bool:
 
     # Load tasks
     var tasks_file = File.new()
-    var tasks_path = base_path + "/tasks.json"
+    var tasks_path = base_path + "tasks.json"
 }
 
     if tasks_file.file_exists(tasks_path):
@@ -1300,7 +1300,7 @@ func _load_from_filesystem(base_path: String) -> bool:
 
     # Load token usage
     var token_file = File.new()
-    var token_path = base_path + "/token_usage.json"
+    var token_path = base_path + "token_usage.json"
 }
 
     if token_file.file_exists(token_path):

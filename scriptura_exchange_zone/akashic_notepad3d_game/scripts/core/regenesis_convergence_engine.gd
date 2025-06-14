@@ -10,7 +10,7 @@ extends Node
 # CHANGES: Transforms static archives into breathing, growing data entities
 # CONNECTION: Central hub connecting 12 turns history, current implementation, future evolution
 
-class_name RegenesisConvergenceEngine
+class_name RegenesisConvergenceEngine_regenesisconvergenceengine_regenesi
 
 # SACRED COORDINATES - The Universal Reference Point
 const MASTER_CONVERGENCE_COORDINATE = Vector3(5, 5, 5)

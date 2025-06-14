@@ -4,8 +4,7 @@
 # Created: May 31st, 2025 | Perfect Pentagon Architecture
 # Location: scripts/core/ai_sandbox_system.gd
 ################################################################
-
-extends UniversalBeingBase
+extends \2
 ################################################################
 # CORE VARIABLES
 ################################################################
@@ -129,7 +128,7 @@ func create_ai_sandbox(ai_name: String, sandbox_config: Dictionary = {}) -> Dict
 	CONNECTION: Links to Universal Being system and file persistence
 	"""
 	
-	var sandbox_path = sandbox_base_path + ai_name.to_lower() + "/"
+	var sandbox_path = sandbox_base_path + ai_name.to_lower() + ""
 	
 	# Check if sandbox already exists
 	if ai_name in active_sandboxes:
@@ -542,7 +541,7 @@ func _load_existing_sandboxes():
 
 func _load_sandbox_from_folder(folder_name: String):
 	"""Load sandbox data from folder"""
-	var sandbox_path = sandbox_base_path + folder_name + "/"
+	var sandbox_path = sandbox_base_path + folder_name + ""
 	var data_file_path = sandbox_path + "sandbox_data.json"
 	
 	if FileAccess.file_exists(data_file_path):
@@ -572,8 +571,8 @@ func _ensure_sandbox_infrastructure():
 
 func _connect_to_pentagon_systems():
 	"""Connect to Perfect Pentagon systems"""
-	if has_node("/root/PerfectReady"):
-		var perfect_ready = get_node("/root/PerfectReady")
+	if has_node("root/PerfectReady"):
+		var perfect_ready = get_node("root/PerfectReady")
 		if perfect_ready.has_signal("ai_entity_ready"):
 			perfect_ready.ai_entity_ready.connect(_on_ai_entity_ready)
 

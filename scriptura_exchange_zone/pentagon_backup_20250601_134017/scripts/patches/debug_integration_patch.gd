@@ -3,8 +3,7 @@
 # Created: May 31, 2025, 23:28 CEST
 # Purpose: Ragdoll physics and behavior system
 # Connection: Part of Pentagon Architecture migration
-
-extends UniversalBeingBase
+extends \2
 # Debug Integration Patch
 # Integrates DebugManager with all print statements
 
@@ -15,7 +14,7 @@ func _ready():
 	# Wait for DebugManager to be available
 	await get_tree().process_frame
 	
-	debug_manager = get_node_or_null("/root/DebugManager")
+	debug_manager = get_node_or_null("root/DebugManager")
 	if not debug_manager:
 		push_error("DebugManager not found!")
 		return
@@ -23,7 +22,7 @@ func _ready():
 	print("[DebugIntegration] Patching print statements to use DebugManager")
 	
 	# Hook into console manager
-	var console_manager = get_node_or_null("/root/ConsoleManager")
+	var console_manager = get_node_or_null("root/ConsoleManager")
 	if console_manager:
 		patch_console_manager(console_manager)
 	
@@ -56,12 +55,12 @@ func pentagon_sewers() -> void:
 	pass
 func patch_console_manager(_console: Node):
 	# Hook into console output instead of trying to override methods
-	# Since we can't assign callables to non-@export properties
+	# Since we can't assign callables to non-@@@export properties
 	pass
 
 func patch_jsh_systems():
 	# Patch JSH Scene Tree System
-	var jsh_tree = get_node_or_null("/root/JSHSceneTree")
+	var jsh_tree = get_node_or_null("root/JSHSceneTree")
 	if jsh_tree:
 		# Set debug_verbose to false to reduce spam
 		if "debug_verbose" in jsh_tree:
@@ -69,13 +68,13 @@ func patch_jsh_systems():
 			print("[DebugIntegration] Disabled JSH tree verbose mode")
 	
 	# Patch Performance Guardian
-	var perf_guardian = get_node_or_null("/root/PerformanceGuardian")
+	var perf_guardian = get_node_or_null("root/PerformanceGuardian")
 	if perf_guardian and perf_guardian.has_method("set_verbose"):
 		perf_guardian.set_verbose(false)
 		print("[DebugIntegration] Disabled Performance Guardian verbose mode")
 
 func add_debug_commands():
-	var console_manager = get_node_or_null("/root/ConsoleManager")
+	var console_manager = get_node_or_null("root/ConsoleManager")
 	if not console_manager:
 		return
 	

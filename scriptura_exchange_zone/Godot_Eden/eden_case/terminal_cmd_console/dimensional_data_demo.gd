@@ -157,7 +157,7 @@ func _on_save_pressed():
 
     var selected_dimension = dimension_option.get_selected_id()
     var success = dimension_bridge.save_dimensional_data(
-        {"text": text_input, "timestamp": OS.get_unix_time()},
+        {"text": text_input, "timestamp": OS.Time.get_unix_time_from_system()},
         SAVE_PATH,
         selected_dimension
     )

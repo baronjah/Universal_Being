@@ -48,7 +48,7 @@ func _initialize_group_cache(group_name: String) -> void:
 	"""Initialize cache for a specific group"""
 	group_cache[group_name] = []
 	group_cache_dirty[group_name] = true
-	group_spatial_index[group_name] = {}
+	group_spatial_index[group_name] = {
 
 # ===== OPTIMIZED GROUP OPERATIONS =====
 func get_beings_in_group_optimized(group_name: String) -> Array[Node]:
@@ -227,7 +227,7 @@ func get_enlightenment_statistics() -> Dictionary:
 		"total_cached_beings": 0,
 		"cache_efficiency": {},
 		"memory_usage_estimate": 0
-	}
+}
 	
 	for group_name in group_cache.keys():
 		var cached_count = group_cache[group_name].size()
@@ -238,7 +238,7 @@ func get_enlightenment_statistics() -> Dictionary:
 			"cached": cached_count,
 			"actual": actual_count,
 			"accuracy": float(cached_count) / max(actual_count, 1) * 100.0
-		}
+}
 		
 		# Estimate memory usage (rough calculation)
 		stats.memory_usage_estimate += cached_count * 16  # ~16 bytes per WeakRef
@@ -255,11 +255,12 @@ func force_refresh_all_caches() -> void:
 
 func get_group_distribution_by_consciousness() -> Dictionary:
 	"""Get distribution of universal_beings by consciousness level"""
-	var distribution = {}
+	var distribution = {
 	var beings = get_beings_in_group_optimized("universal_beings")
 	
 	for being in beings:
 		if being.has_method("get"):
+}
 			var consciousness = being.get("consciousness_level")
 			if consciousness in distribution:
 				distribution[consciousness] += 1

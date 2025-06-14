@@ -1,0 +1,159 @@
+# ==================================================
+# UNIVERSAL BEING: ClassNameFixer
+# TYPE: Migration Tool
+# PURPOSE: Fix class name conflicts during Godot 4 migration
+# ==================================================
+
+extends Node
+class_name ClassNameFixer
+
+# ===== BEING-SPECIFIC PROPERTIES =====
+@export var backup_before_fix: bool = true
+@export var fix_script_paths: Array[String] = [
+    "res://addons/",
+    "res://backups/error_fixes/",
+    "res://scripts/"
+]
+
+# ===== PENTAGON ARCHITECTURE IMPLEMENTATION =====
+
+func pentagon_init() -> void:
+    super.pentagon_init()
+    being_type = "migration_tool"
+    being_name = "ClassNameFixer"
+    consciousness_level = 2  # AI-accessible for analysis
+
+func pentagon_ready() -> void:
+    super.pentagon_ready()
+    print("🌟 ClassNameFixer: Starting class name conflict resolution...")
+    fix_class_name_conflicts()
+
+func pentagon_process(_delta: float) -> void:
+    super.pentagon_process(_delta)
+    # No continuous processing needed
+
+func pentagon_input(_event: InputEvent) -> void:
+    super.pentagon_input(_event)
+    # No input handling needed
+
+func pentagon_sewers() -> void:
+    print("🌟 ClassNameFixer: Cleanup complete")
+    super.pentagon_sewers()
+
+# ===== BEING-SPECIFIC METHODS =====
+
+func fix_class_name_conflicts() -> void:
+    var class_registry = {}  # Maps class names to their implementations
+    
+    # First pass: collect all class_name declarations
+    for script_path in fix_script_paths:
+        var dir = DirAccess.open(script_path)
+        if dir:
+            dir.list_dir_begin()
+            var file_name = dir.get_next()
+            while file_name != "":
+                if file_name.ends_with(".gd"):
+                    var full_path = script_path.path_join(file_name)
+                    var class_name = extract_class_name(full_path)
+                    if class_name:
+                        if not class_registry.has(class_name):
+                            class_registry[class_name] = []
+                        class_registry[class_name].append({
+                            "path": full_path,
+                            "priority": get_priority_from_path(full_path)
+                        })
+                file_name = dir.get_next()
+    
+    # Second pass: fix conflicts
+    for class_name in class_registry:
+        var implementations = class_registry[class_name]
+        if implementations.size() > 1:
+            print("🔧 Found multiple implementations of class: " + class_name)
+            
+            # Sort by priority
+            implementations.sort_custom(func(a, b): return a.priority > b.priority)
+            
+            # Register with UniversalFallbackSystem
+            for impl in implementations:
+                UniversalFallbackSystem.register_class_implementation(
+                    class_name,
+                    impl.path,
+                    impl.priority
+                )
+            
+            # Comment out class_name in lower priority implementations
+            for i in range(1, implementations.size()):
+                var impl = implementations[i]
+                comment_out_class_name(impl.path)
+                
+            print("✅ Registered " + str(implementations.size()) + " implementations of " + class_name)
+
+func extract_class_name(file_path: String) -> String:
+    var file = FileAccess.open(file_path, FileAccess.READ)
+    if not file:
+        return ""
+    
+    var content = file.get_as_text()
+    file.close()
+    
+    var regex = RegEx.new()
+    regex.compile("class_name\\s+([A-Za-z_][A-Za-z0-9_]*)")
+    var result = regex.search(content)
+    
+    return result.get_string(1) if result else ""
+
+func get_priority_from_path(file_path: String) -> int:
+    var path = file_path.to_lower()
+    
+    # Priority order:
+    # 1. Core systems (highest)
+    # 2. Active scripts
+    # 3. Addons
+    # 4. Backups (lowest)
+    
+    if "core/" in path:
+        return 300
+    elif "scripts/" in path and not "backup" in path:
+        return 200
+    elif "addons/" in path:
+        return 150
+    elif "backup" in path:
+        return 50
+    else:
+        return 100
+
+func comment_out_class_name(file_path: String) -> void:
+    if backup_before_fix:
+        var backup_path = file_path + ".bak"
+        var dir = DirAccess.open(file_path.get_base_dir())
+        if dir:
+            dir.copy(file_path, backup_path)
+    
+    var file = FileAccess.open(file_path, FileAccess.READ)
+    if not file:
+        return
+    
+    var content = file.get_as_text()
+    file.close()
+    
+    # Comment out class_name declaration
+    var regex = RegEx.new()
+    regex.compile("^(\\s*)class_name\\s+([A-Za-z_][A-Za-z0-9_]*)")
+    content = regex.sub(content, "$1#class_name $2", true)
+    
+    # Write back modified content
+    file = FileAccess.open(file_path, FileAccess.WRITE)
+    if file:
+        file.store_string(content)
+        file.close()
+        print("📝 Commented out class_name in: " + file_path)
+
+# ===== AI INTEGRATION =====
+
+func ai_interface() -> Dictionary:
+    var base_interface = super.ai_interface()
+    base_interface.custom_commands = ["fix_conflicts", "analyze_conflicts"]
+    base_interface.custom_properties = {
+        "backup_before_fix": backup_before_fix,
+        "fix_script_paths": fix_script_paths
+    return base_interface 

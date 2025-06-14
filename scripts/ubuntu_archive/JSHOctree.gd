@@ -129,7 +129,7 @@ class OctreeNode:
             "id": zone_id,
             "center": zone_bounds.position, 
             "size": zone_bounds.size
-        }
+			}
         
         # If this is a leaf node or at max depth, add zone to this node
         if is_leaf:
@@ -138,7 +138,7 @@ class OctreeNode:
             # Check if we need to subdivide
             if depth < max_depth and zones.size() > min_zones_per_node:
                 subdivide()
-        } else {
+         else {
             # Try to insert into a child
             var inserted = false
             
@@ -151,7 +151,6 @@ class OctreeNode:
             # If doesn't fit in any child, add to this node
             if not inserted:
                 zones.append(zone_data)
-        }
     
     func remove_zone(zone_id: String) -> bool:
         # Remove from this node
@@ -327,7 +326,7 @@ var stats: Dictionary = {
     "total_nodes": 0,
     "max_depth": 0,
     "zone_operations": 0
-}
+	}
 
 func _init(p_world_size: Vector3 = Vector3(2000, 2000, 2000), p_world_center: Vector3 = Vector3.ZERO) -> void:
     world_size = p_world_size
@@ -336,6 +335,7 @@ func _init(p_world_size: Vector3 = Vector3(2000, 2000, 2000), p_world_center: Ve
     # Create root node
     root = OctreeNode.new(world_center, world_size, 0, max_depth, min_zones_per_node)
     print("JSHOctree: Initialized with world size " + str(world_size))
+	}
 
 # Zone operations
 func insert_zone(zone_id: String, zone_bounds: Dictionary) -> void:
@@ -398,9 +398,10 @@ func clear() -> void:
         "total_nodes": 0,
         "max_depth": 0,
         "zone_operations": 0
-    }
+		}
     
     print("JSHOctree: Cleared all data")
+	
 
 func rebuild() -> void:
     # TODO: Implement octree rebuilding for better balance

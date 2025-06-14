@@ -1,5 +1,5 @@
 # function_metadata.gd
-extends Node
+extends \2
 
 const MAIN_FUNCTIONS = {
 	"_init": {

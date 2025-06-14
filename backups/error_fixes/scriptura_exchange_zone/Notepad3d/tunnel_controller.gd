@@ -63,17 +63,17 @@ func _ready():
 func _connect_signals():
     if ethereal_tunnel_manager:
         if not ethereal_tunnel_manager.is_connected("tunnel_established", self, "_on_tunnel_established"):
-            ethereal_tunnel_manager.connect("tunnel_established", self, "_on_tunnel_established")
+            ethereal_tunnel_manager.connect(_on_tunnel_established)
         
         if not ethereal_tunnel_manager.is_connected("tunnel_collapsed", self, "_on_tunnel_collapsed"):
-            ethereal_tunnel_manager.connect("tunnel_collapsed", self, "_on_tunnel_collapsed")
+            ethereal_tunnel_manager.connect(_on_tunnel_collapsed)
     
     if tunnel_visualizer:
         if not tunnel_visualizer.is_connected("tunnel_selected", self, "_on_tunnel_selected"):
-            tunnel_visualizer.connect("tunnel_selected", self, "_on_tunnel_selected")
+            tunnel_visualizer.connect(_on_tunnel_selected)
         
         if not tunnel_visualizer.is_connected("anchor_selected", self, "_on_anchor_selected"):
-            tunnel_visualizer.connect("anchor_selected", self, "_on_anchor_selected")
+            tunnel_visualizer.connect(_on_anchor_selected)
 
 func _process(delta):
     # Handle energy recovery

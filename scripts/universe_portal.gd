@@ -45,11 +45,13 @@ func pentagon_init() -> void:
 	
 	print("🌟 %s: Portal Init Complete" % being_name)
 
+
 func pentagon_ready() -> void:
 	super.pentagon_ready()
 	
 	# Load the portal scene
 	load_scene("res://components/universe_creation.ub.zip/universe_portal.tscn")
+
 	
 	# Get references to portal nodes
 	portal_particles = get_scene_node("PortalVisuals/Particles")
@@ -66,6 +68,7 @@ func pentagon_ready() -> void:
 			flood_gates.register_portal(self)
 	
 	print("🌟 %s: Portal Ready Complete" % being_name)
+
 
 func pentagon_process(delta: float) -> void:
 	super.pentagon_process(delta)
@@ -206,8 +209,8 @@ func ai_interface() -> Dictionary:
 		"energy": portal_energy,
 		"travelers": current_travelers,
 		"target": target_universe
-	}
 	return base_interface
+}
 
 func ai_invoke_method(method_name: String, args: Array = []) -> Variant:
 	match method_name:

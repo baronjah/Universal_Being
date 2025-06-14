@@ -141,7 +141,7 @@ func add_memory_text(text, category="general"):
 	# Add to memory buffer
 	memory_buffer.append({
 		"text": wrapped_text,
-		"timestamp": OS.get_unix_time(),
+		"timestamp": OS.Time.get_unix_time_from_system(),
 		"category": category,
 		"offline": true
 	})
@@ -171,7 +171,7 @@ func process_tdic_entry(text):
 	# Store in temporal dictionary
 	tdic_entries[timeframe].append({
 		"content": text,
-		"timestamp": OS.get_unix_time()
+		"timestamp": OS.Time.get_unix_time_from_system()
 	})
 }
 
@@ -342,7 +342,7 @@ func process_advanced_command(args):
 	match subcmd:
 		"color":
 			set_color_theme(subargs)
-		"export":
+		"@export":
 			export_memories(subargs)
 		"search":
 			search_memories(subargs)

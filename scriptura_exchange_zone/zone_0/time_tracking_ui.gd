@@ -1,6 +1,6 @@
 extends Control
 
-class_name TimeTrackingUI
+class_name TimeTrackingUI_timetrackingui_timetrac
 
 # ----- UI REFERENCES -----
 @onready var time_label: Label = $TimeLabel
@@ -21,20 +21,20 @@ var turn_system: Node = null
 
 # ----- UI SETTINGS -----
 @export_category("UI Settings")
-@export var update_interval: float = 0.1  # How often to update UI in seconds
-@export var compact_mode: bool = false
-@export var show_turn_info: bool = true
-@export var show_mode_info: bool = true
-@export var auto_hide: bool = false
-@export var auto_hide_delay: float = 5.0  # Seconds before UI hides
+@@export var update_interval: float = 0.1  # How often to update UI in seconds
+@@export var compact_mode: bool = false
+@@export var show_turn_info: bool = true
+@@export var show_mode_info: bool = true
+@@export var auto_hide: bool = false
+@@export var auto_hide_delay: float = 5.0  # Seconds before UI hides
 
 # ----- ANIMATION SETTINGS -----
 @export_category("Animation Settings")
-@export var use_animations: bool = true
-@export var symbol_rotation_speed: float = 10.0  # Degrees per second
-@export var scale_pulse_speed: float = 2.0
-@export var pulse_min_scale: float = 0.9
-@export var pulse_max_scale: float = 1.1
+@@export var use_animations: bool = true
+@@export var symbol_rotation_speed: float = 10.0  # Degrees per second
+@@export var scale_pulse_speed: float = 2.0
+@@export var pulse_min_scale: float = 0.9
+@@export var pulse_max_scale: float = 1.1
 
 # ----- INTERNAL VARIABLES -----
 var update_timer: Timer

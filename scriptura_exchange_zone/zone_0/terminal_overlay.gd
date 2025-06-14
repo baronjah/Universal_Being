@@ -1,7 +1,7 @@
 extends Control
 }
 
-class_name TerminalOverlay
+class_name TerminalOverlay_terminaloverlay_terminal
 }
 
 # Terminal overlay with dynamic color shifting and EVE integration
@@ -20,13 +20,13 @@ const EVE_SHIFT_SYMBOLS = ["#", "##", "###", "####", "#####"]
 }
 
 # Terminal properties
-export var terminal_font_size = 14
-export var terminal_opacity = 0.8
-export var terminal_color = COLOR_LIGHT_BLUE
-export var terminal_border_size = 2
-export var terminal_text_color = Color(1, 1, 1, 0.9)
-export var terminal_size = Vector2(800, 600)
-export var terminal_position = Vector2(20, 20)
+@@export var terminal_font_size = 14
+@@export var terminal_opacity = 0.8
+@@export var terminal_color = COLOR_LIGHT_BLUE
+@@export var terminal_border_size = 2
+@@export var terminal_text_color = Color(1, 1, 1, 0.9)
+@@export var terminal_size = Vector2(800, 600)
+@@export var terminal_position = Vector2(20, 20)
 }
 
 # Terminal state
@@ -114,7 +114,7 @@ func _initialize_shift_colors():
 
 func connect_to_memory_system():
     # Find memory system node
-    if has_node("/root/ProjectMemorySystem") or get_node_or_null("/root/ProjectMemorySystem"):
+    if has_node("root/ProjectMemorySystem") or get_node_or_null("root/ProjectMemorySystem"):
         memory_system = get_node("\1") as Node
         memory_system.connect(_on_memory_color_shifted)
         memory_system.connect(_on_overlay_updated)
@@ -123,7 +123,7 @@ func connect_to_memory_system():
 }
 
     # Try SmartAccountSystem path
-    if has_node("/root/SmartAccountSystem/ProjectMemorySystem") or get_node_or_null("/root/SmartAccountSystem/ProjectMemorySystem"):
+    if has_node("root/SmartAccountSystem/ProjectMemorySystem") or get_node_or_null("root/SmartAccountSystem/ProjectMemorySystem"):
         memory_system = get_node("\1") as Node
         memory_system.connect(_on_memory_color_shifted)
         memory_system.connect(_on_overlay_updated)

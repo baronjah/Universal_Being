@@ -366,7 +366,7 @@ func _setup_word_manifestation_layer() -> void:
 				"word": words[i],
 				"dimension": current_dimension,
 				"cosmic_age": current_turn
-			}
+	}
 			
 			# Calculate word properties
 			var result = word_processor.calculate_word_power(params)
@@ -637,6 +637,7 @@ func focus_on_layer(layer_index: int) -> void:
 	emit_signal("layer_focus_changed", layer_index)
 	print("📸 Focused on layer %d: %s" % [layer_index, LAYER_NAMES[layer_index]])
 
+
 ## Toggle layer visibility
 # INPUT: None
 # PROCESS: Shows/hides entire environment
@@ -698,7 +699,7 @@ func get_state() -> Dictionary:
 		"current_dimension": current_dimension,
 		"current_focus_layer": current_focus_layer,
 		"viewer_position": viewer_position
-	}
+}
 
 ## Restore from saved state
 # INPUT: State dictionary

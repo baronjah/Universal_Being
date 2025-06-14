@@ -3,9 +3,8 @@
 # Created: May 31, 2025, 23:36 CEST
 # Purpose: Universal Being specialized for UI elements
 # Connection: Pentagon Architecture - Interface manifestation
-
-extends UniversalBeingBase
-class_name UniversalBeingUI
+extends \2
+# DISABLED DUPLICATE: class_name UniversalBeingUI_universalbeingui_universa
 
 ## Universal Being specialized for UI elements
 ## Every button, panel, window is a conscious Universal Being
@@ -88,7 +87,7 @@ func on_clicked() -> void:
 	if "on_clicked" in evolution_state.abilities:
 		store_memory("last_click", Time.get_ticks_msec())
 		# Notify Logic Connector of interaction
-		var logic_connector = get_node_or_null("/root/LogicConnector")
+		var logic_connector = get_node_or_null("root/LogicConnector")
 		if logic_connector and logic_connector.has_method("on_ui_interaction"):
 			logic_connector.on_ui_interaction(self, "clicked")
 

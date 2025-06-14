@@ -3,7 +3,6 @@
 # Created: May 31, 2025, 23:28 CEST
 # Purpose: Ragdoll physics and behavior system
 # Connection: Part of Pentagon Architecture migration
-
 extends UniversalBeingBase
 # Universal Entity Console Integration Helper
 # This ensures commands are properly registered
@@ -21,8 +20,8 @@ func pentagon_ready() -> void:
 	_ensure_universal_commands()
 
 func _ensure_universal_commands():
-	var console = get_node_or_null("/root/ConsoleManager")
-	var universal = get_node_or_null("/root/UniversalEntity")
+	var console = get_node_or_null("root/ConsoleManager")
+	var universal = get_node_or_null("root/UniversalEntity")
 	
 	if not console:
 		print("[UniversalConsoleHelper] ConsoleManager not found")

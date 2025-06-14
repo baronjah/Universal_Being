@@ -27,12 +27,12 @@ enum Status {
 
 # Thread pools
 var thread_pool = []
-var thread_data = {}
+var thread_data = {
 var mutex = Mutex.new()
 var semaphore = Semaphore.new()
 
 # Account-based thread allocation
-var account_thread_allocation = {}
+var account_thread_allocation = {
 var global_thread_count = 0
 
 # Processing metrics
@@ -51,7 +51,6 @@ var thread_colors = {
     Priority.NORMAL: Color(0.3, 0.9, 0.3), # Green
     Priority.HIGH: Color(0.9, 0.6, 0.3), # Orange
     Priority.CRITICAL: Color(0.9, 0.3, 0.3) # Red
-}
 
 # References to other systems
 var _account_manager = null
@@ -75,18 +74,18 @@ func _ready():
     var timer = Timer.new()
     timer.wait_time = 1.0 # 1 second intervals
     timer.autostart = true
-    timer.connect("timeout", self, "_on_monitor_threads")
+    timer.connect(_on_monitor_threads)
     add_child(timer)
 
 func connect_to_systems():
     # Connect to MultiAccountManager
     if has_node("/root/MultiAccountManager") or get_node_or_null("/root/MultiAccountManager"):
-        _account_manager = get_node("/root/MultiAccountManager")
+        _account_manager = get_node("\1") as Node
         print("Connected to MultiAccountManager")
     
     # Connect to SmartAccountManager
     if has_node("/root/SmartAccountManager") or get_node_or_null("/root/SmartAccountManager"):
-        _smart_account_manager = get_node("/root/SmartAccountManager")
+        _smart_account_manager = get_node("\1") as Node
         print("Connected to SmartAccountManager")
 
 func _initialize_thread_pool():
@@ -105,7 +104,7 @@ func _initialize_thread_pool():
             "result": null,
             "error": "",
             "color": thread_colors[Priority.NORMAL]
-        }
+			}
     
     global_thread_count = MAX_GLOBAL_THREADS
     print("Initialized thread pool with " + str(global_thread_count) + " threads")
@@ -123,7 +122,7 @@ func allocate_thread(account_id, task_function, task_parameters, priority = Prio
             "allocated": 0,
             "limit": 1, # Default limit
             "threads": []
-        }
+			}
         
         # If connected to account manager, get actual limit
         if _account_manager:
@@ -239,7 +238,7 @@ func _thread_function(data):
     _release_thread(thread_id, account_id)
     
     # Emit signal
-    if error.empty():
+    if error.is_empty():
         emit_signal("thread_completed", thread_id, execution_time)
     
     # Signal semaphore to wake up main thread
@@ -310,6 +309,7 @@ func _on_monitor_threads():
         
         # Remove completed threads from pool
         if thread_data[thread_id]["status"] == Status.COMPLETED or thread_data[thread_id]["status"] == Status.ERROR or thread_data[thread_id]["status"] == Status.TIMEOUT:
+		}
             # Wait for thread to finish
             thread_info["thread"].wait_to_finish()
             
@@ -364,7 +364,7 @@ func _auto_scale_threads():
             "result": null,
             "error": "",
             "color": thread_colors[Priority.NORMAL]
-        }
+			}
         
         global_thread_count += 1
     
@@ -405,7 +405,7 @@ func get_utilization_stats():
         "total_threads": global_thread_count,
         "operations_count": operation_count,
         "avg_execution_time": get_average_execution_time()
-    }
+		}
 
 func get_active_thread_count():
     var count = 0

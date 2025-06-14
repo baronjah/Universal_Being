@@ -66,7 +66,7 @@ func initialize(evolution_system = null, records_manager = null, player = null, 
 
 # Create a default universe if none exists
 func create_default_universe():
-	if universes.empty():
+	if universes.is_empty():
 		var default_universe = {
 			"id": "root_universe",
 			"name": "Origin Point Alpha",
@@ -164,7 +164,7 @@ func create_sample_universe_data():
 		key_universes.append(universe)
 	
 	# Set current universe
-	if not current_universe_id and not universes.empty():
+	if not current_universe_id and not universes.is_empty():
 		current_universe_id = universes.keys()[0]
 	
 	# Set up cosmic state
@@ -243,7 +243,7 @@ func get_current_universe():
 func get_available_access_points():
 	# Regenerate access points if the source universe changed
 	var current_source = ""
-	if not access_points.empty():
+	if not access_points.is_empty():
 		current_source = access_points[0].source_universe.id
 	
 	if current_source != current_universe_id:
@@ -397,7 +397,7 @@ func discover_new_universe():
 		if not universe_id in discovered_universes:
 			undiscovered.append(universe_id)
 	
-	if undiscovered.empty():
+	if undiscovered.is_empty():
 		return false
 	
 	# Select random undiscovered universe

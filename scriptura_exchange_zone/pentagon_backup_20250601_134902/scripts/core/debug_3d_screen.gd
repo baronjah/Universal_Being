@@ -3,7 +3,6 @@
 # DESCRIPTION: 3D screen for debugging like notepad3d project
 # CREATED: 2025-05-23 - Visual debug interface
 # ==================================================
-
 extends UniversalBeingBase
 # Screen properties
 var screen_mesh: MeshInstance3D
@@ -170,7 +169,7 @@ func _collect_scene_debug_info() -> void:
 		return
 	
 	# Get spawned objects safely
-	var world_builder = get_node_or_null("/root/WorldBuilder")
+	var world_builder = get_node_or_null("root/WorldBuilder")
 	if world_builder and world_builder.has_method("get_spawned_objects"):
 		var spawned = world_builder.get_spawned_objects()
 		all_objects.append_array(spawned)

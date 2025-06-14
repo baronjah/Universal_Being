@@ -272,7 +272,7 @@ func _connect_to_center_projection():
     if not center_projection_system:
         # Check parent
         if get_parent() and get_parent().has_node("CenterProjectionSystem"):
-            center_projection_system = get_parent().get_node("CenterProjectionSystem")
+            center_projection_system = get_parent().get_node("\1") as Node
     
     # If still not found, try global search
     if not center_projection_system:
@@ -379,7 +379,7 @@ func _animate_zone_transition(zone_index, highlight):
     tween_manager.start()
     
     # Set up completion callback
-    yield(tween_manager, "tween_completed")
+    await(tween_manager, "tween_completed")
     is_transition_active = false
 
 # ===== PATTERN RECOGNITION =====
@@ -392,7 +392,7 @@ var pattern_timer = 0.0
 func _record_interaction(position):
     interaction_history.append({
         "position": position,
-        "time": OS.get_ticks_msec() / 1000.0
+        "time": OS.Time.get_ticks_msec() / 1000.0
     })
     
     # Reset timer
@@ -403,7 +403,7 @@ func _record_interaction(position):
 
 # Clean up old interaction history
 func _clean_interaction_history():
-    var current_time = OS.get_ticks_msec() / 1000.0
+    var current_time = OS.Time.get_ticks_msec() / 1000.0
     
     var i = 0
     while i < interaction_history.size():

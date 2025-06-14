@@ -1,21 +1,21 @@
 extends Resource
-class_name WordEntry
+class_name WordEntry_wordentry_wordentr
 
 # Basic identification
-@export var id: String = ""
-@export var category: String = ""
-@export var parent_id: String = ""
-@export var children: Array[String] = []
-@export var usage_count: int = 0
-@export var last_used: int = 0  # Unix timestamp
+@@export var id: String = ""
+@@export var category: String = ""
+@@export var parent_id: String = ""
+@@export var children: Array[String] = []
+@@export var usage_count: int = 0
+@@export var last_used: int = 0  # Unix timestamp
 
 # Content
-@export var properties: Dictionary = {}
-@export var states: Dictionary = {}
-@export var current_state: String = ""
-@export var interactions: Dictionary = {}
-@export var file_reference: String = ""
-@export var variants: Array[Resource] = []  # Array of WordEntry variants
+@@export var properties: Dictionary = {}
+@@export var states: Dictionary = {}
+@@export var current_state: String = ""
+@@export var interactions: Dictionary = {}
+@@export var file_reference: String = ""
+@@export var variants: Array[Resource] = []  # Array of WordEntry variants
 
 # Initialization
 func _init(p_id: String = "", p_category: String = ""):

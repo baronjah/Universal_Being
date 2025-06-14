@@ -4,7 +4,6 @@
 # PURPOSE: Quickly fix the 160+ warnings
 # CREATED: 2025-05-25 - Batch processing
 # ==================================================
-
 extends RefCounted
 
 # Common patterns that are safe to auto-fix
@@ -216,7 +215,7 @@ static func _scan_for_files(path: String, files: Array) -> void:
 	var file_name = dir.get_next()
 	
 	while file_name != "":
-		var full_path = path + "/" + file_name
+		var full_path = path + "" + file_name
 		
 		if dir.current_is_dir() and not file_name.begins_with("."):
 			_scan_for_files(full_path, files)

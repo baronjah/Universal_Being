@@ -36,19 +36,21 @@ func _ready():
 func _initialize_interface_systems():
 	"""Initialize Gemma's interface reading capabilities"""
 	print("🖥️ GemmaInterfaceReader: Initializing interface comprehension...")
+
 	
 	interface_memory = {
 		"active_interfaces": {},
 		"text_content": {},
 		"button_elements": {},
 		"input_fields": {},
-		"interaction_points": {}
-	}
+		"interaction_points": {
+}
 	
-	ui_element_cache = {}
+	ui_element_cache = {
 	interaction_patterns = []
 	
 	print("🖥️ GemmaInterfaceReader: Interface reading systems ready")
+}
 
 func _start_interface_monitoring():
 	"""Start continuous interface monitoring"""
@@ -74,7 +76,7 @@ func _capture_interface_snapshot() -> Dictionary:
 		"readable_content": readable_content,
 		"interaction_points": _identify_interaction_points(interfaces),
 		"interface_hierarchy": _build_interface_hierarchy(interfaces)
-	}
+}
 
 func _find_all_interfaces() -> Array[Dictionary]:
 	"""Find all active Universal Being interfaces"""
@@ -116,7 +118,7 @@ func _analyze_interface_element(node: Node) -> Dictionary:
 		"text_content": _extract_text_from_element(node),
 		"children_count": node.get_child_count(),
 		"signals": _get_element_signals(node)
-	}
+}
 	
 	return interface_data
 
@@ -186,7 +188,7 @@ func _extract_readable_content(interfaces: Array) -> Dictionary:
 		"button_labels": [],
 		"input_placeholders": [],
 		"rich_content": []
-	}
+}
 	
 	for interface in interfaces:
 		var text = interface.text_content
@@ -196,7 +198,7 @@ func _extract_readable_content(interfaces: Array) -> Dictionary:
 				"type": interface.type,
 				"content": text,
 				"position": interface.position
-			}
+	}
 			
 			match interface.type:
 				"button":
@@ -223,8 +225,8 @@ func _identify_interaction_points(interfaces: Array) -> Array[Dictionary]:
 				"size": interface.size,
 				"signals": interface.signals,
 				"accessibility": _assess_accessibility(interface)
-			}
 			interaction_points.append(interaction)
+}
 	
 	return interaction_points
 
@@ -257,7 +259,7 @@ func _build_interface_hierarchy(interfaces: Array) -> Dictionary:
 		"root_interfaces": [],
 		"parent_child_relationships": [],
 		"interaction_chains": []
-	}
+}
 	
 	# Analyze interface relationships
 	for interface in interfaces:
@@ -287,7 +289,7 @@ func _process_interface_data(interface_data: Dictionary):
 
 func _update_interface_memory(interface_data: Dictionary):
 	"""Update interface memory with new data"""
-	interface_memory.active_interfaces = {}
+	interface_memory.active_interfaces = {
 	
 	for interface in interface_data.active_interfaces:
 		interface_memory.active_interfaces[interface.id] = interface
@@ -305,7 +307,7 @@ func _analyze_text_content(readable_content: Dictionary):
 			"text_fields": readable_content.text_elements.size(),
 			"rich_content": readable_content.rich_content.size(),
 			"content_summary": _summarize_text_content(readable_content)
-		}
+}
 		
 		text_content_found.emit(text_data)
 
@@ -337,7 +339,7 @@ func _detect_interaction_opportunities(interaction_points: Array):
 			"count": accessible_interactions.size(),
 			"types": _get_interaction_types(accessible_interactions),
 			"recommended_action": _recommend_interaction(accessible_interactions)
-		}
+}
 		
 		interaction_opportunity_detected.emit(opportunity)
 
@@ -357,6 +359,7 @@ func _recommend_interaction(interactions: Array) -> String:
 			return "Connect to Universal Being interface"
 		elif interaction.interaction_type == "click":
 			return "Click button: %s" % interaction.interface_id
+}
 	
 	return "Explore available interactions"
 
@@ -368,7 +371,7 @@ func _learn_interface_patterns(interface_data: Dictionary):
 		"interaction_count": interface_data.interaction_points.size(),
 		"content_types": _get_content_types(interface_data.readable_content),
 		"complexity_level": _assess_interface_complexity(interface_data)
-	}
+}
 	
 	interaction_patterns.append(pattern)
 	
@@ -413,7 +416,7 @@ func get_interface_summary() -> Dictionary:
 		"text_analysis": analyze_text,
 		"interaction_tracking": track_interactions,
 		"last_scan": Time.get_datetime_string_from_system()
-	}
+}
 
 func read_specific_interface(interface_id: String) -> Dictionary:
 	"""Read specific interface in detail"""

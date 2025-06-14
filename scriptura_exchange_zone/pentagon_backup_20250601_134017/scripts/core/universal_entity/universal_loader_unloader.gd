@@ -4,9 +4,8 @@
 # PURPOSE: Keep the game stable by managing memory and performance
 # CREATED: 2025-05-27 - The Universal Entity Core
 # ==================================================
-
 extends UniversalBeingBase
-class_name UniversalLoaderUnloader
+class_name UniversalLoaderUnloader_universa
 
 signal node_loaded(node: Node, load_time: float)
 signal node_unloaded(path: String, freed_memory: int)
@@ -48,8 +47,8 @@ func _ready() -> void:
 	name = "UniversalLoaderUnloader"
 	
 	# Get references
-	floodgate = get_node_or_null("/root/FloodgateController")
-	console = get_node_or_null("/root/ConsoleManager")
+	floodgate = get_node_or_null("root/FloodgateController")
+	console = get_node_or_null("root/ConsoleManager")
 	
 	# Start monitoring
 	set_process(true)

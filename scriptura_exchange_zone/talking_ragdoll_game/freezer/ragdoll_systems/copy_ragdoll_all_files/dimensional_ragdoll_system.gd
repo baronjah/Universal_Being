@@ -4,9 +4,8 @@
 # PURPOSE: Implement Eden's 5D positioning and evolution mechanics
 # BASED ON: Eden project's dimensional magic system
 # ==================================================
-
 extends Node
-class_name DimensionalRagdollSystem
+class_name DimensionalRagdollSystem_dimensio
 
 signal dimension_changed(from: int, to: int)
 signal consciousness_evolved(level: String, value: float)

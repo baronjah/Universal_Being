@@ -507,7 +507,7 @@ class TextProcessor:
                 for word in word_counts:
                     keywords.append({"word": word, "count": word_counts[word]})
                 
-                keywords.sort_custom(self, "_sort_by_count")
+                keywords.sort_custom(self."_sort_by_count")
                 
                 # Limit to top N keywords
                 var limit = params.get("limit", 10)
@@ -1038,7 +1038,7 @@ class DataProcessingQueue:
         _queue.append(operation)
         
         # Sort by priority
-        _queue.sort_custom(self, "_sort_by_priority")
+        _queue.sort_custom(self."_sort_by_priority")
         
         return true
     
@@ -2538,7 +2538,7 @@ func _ready():
     _timer = Timer.new()
     _timer.wait_time = _config.processing_interval
     _timer.one_shot = false
-    _timer.connect("timeout", self, "_on_timer_timeout")
+    _timer.connect(_on_timer_timeout)
     add_child(_timer)
 
     # Check connectivity initially

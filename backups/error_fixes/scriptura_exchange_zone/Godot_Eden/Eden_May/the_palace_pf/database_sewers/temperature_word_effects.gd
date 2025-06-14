@@ -34,14 +34,14 @@ signal word_transformed(word_id, word_text, transformation_type, new_form)
 
 func _ready():
     # Get references to required systems
-    temperature_system = get_node("/root/TemperatureSystem")
-    word_manifestation_system = get_node("/root/WordManifestationSystem")
-    divine_word_processor = get_node("/root/DivineWordProcessor")
+    temperature_system = get_node("\1") as Node
+    word_manifestation_system = get_node("\1") as Node
+    divine_word_processor = get_node("\1") as Node
     
     # Connect to system signals
-    temperature_system.connect("temperature_changed", self, "_on_temperature_changed")
-    word_manifestation_system.connect("word_created", self, "_on_word_created")
-    word_manifestation_system.connect("word_removed", self, "_on_word_removed")
+    temperature_system.connect(_on_temperature_changed)
+    word_manifestation_system.connect(_on_word_created)
+    word_manifestation_system.connect(_on_word_removed)
     
     # Process initial words with current temperature
     process_existing_words()

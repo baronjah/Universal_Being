@@ -32,7 +32,6 @@ static var generation_rules = {
 		"cave_chance": 0.4,
 		"mineral_chance": 0.6,
 		"underground_being_chance": 0.1
-	}
 }
 
 # ===== PUBLIC API =====
@@ -43,6 +42,7 @@ static func populate(chunk: ChunkUniversalBeing) -> void:
 	var layer_type = get_layer_type(y_layer)
 	
 	print("🎨 Populating chunk %s (Y:%d, Type:%s)" % [chunk.name, y_layer, layer_type])
+}
 	
 	match layer_type:
 		"underground":
@@ -197,8 +197,8 @@ static func _create_cave_system(chunk: ChunkUniversalBeing) -> void:
 		"type": "natural_cave",
 		"depth": randf_range(5.0, 20.0),
 		"connections": randi_range(1, 4)
-	}
 	print("🕳️ Generated cave system in %s" % chunk.name)
+}
 
 static func _create_mineral_deposits(chunk: ChunkUniversalBeing) -> void:
 	"""Create mineral deposits"""
@@ -310,7 +310,7 @@ static func get_layer_info(y_coord: int) -> Dictionary:
 		"layer_type": get_layer_type(y_coord),
 		"y_coordinate": y_coord,
 		"features": get_layer_features(get_layer_type(y_coord))
-	}
+}
 
 static func get_layer_features(layer_type: String) -> Array:
 	"""Get possible features for a layer type"""

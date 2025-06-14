@@ -87,8 +87,8 @@ func initialize_connections():
 	
 	# Connect signals
 	for connection in [gemini_connection, gemini_advanced_connection, claude_connection, claude_luna_connection, openai_connection]:
-		connection.connect("response_received", self, "_on_api_response_received")
-		connection.connect("connection_status_changed", self, "_on_connection_status_changed")
+		connection.connect(_on_api_response_received)
+		connection.connect(_on_connection_status_changed)
 
 func set_api_key(api_name, key):
 	if api_keys.has(api_name):
@@ -493,4 +493,4 @@ class ClaudeLunaConnection extends APIConnection:
 
 class OpenAIConnection extends APIConnection:
 	func _init():
-		name = "openai"
+		name = "openai"}

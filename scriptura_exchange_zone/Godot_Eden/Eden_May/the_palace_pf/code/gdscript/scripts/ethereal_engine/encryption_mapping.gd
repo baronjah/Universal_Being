@@ -1,5 +1,5 @@
 # encryption_mapping.gd
-extends Node
+extends \2
 
 # The 25 special characters used in the game data
 const SPECIAL_CHARS = [

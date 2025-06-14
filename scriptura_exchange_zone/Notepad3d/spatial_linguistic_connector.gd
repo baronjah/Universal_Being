@@ -1,8 +1,8 @@
 extends Node
 
-class_name SpatialLinguisticConnector
+class_name SpatialLinguisticConnector_spatiallinguisticconnector_spatiall
 
-# Spatial Linguistic Connector
+# Node3D Linguistic Connector
 # Connects linguistic elements with spatial representations
 # Creates trajectories for words through dimensional space
 # Maps words to shapes and coordinates
@@ -39,7 +39,7 @@ func _ready():
 	# Initialize default mappings
 	_initialize_default_mappings()
 	
-	print("Spatial Linguistic Connector initialized")
+	print("Node3D Linguistic Connector initialized")
 
 # Initialize default word-shape mappings
 func _initialize_default_mappings():
@@ -265,7 +265,7 @@ func advance_word_goal(word, value = 1):
 		# Emit signal
 		emit_signal("goal_advanced", word, goal.type, goal.progress)
 		
-		print("Advanced goal for word '" + word + "': " + str(goal.current) + "/" + str(goal.target))
+		print("Advanced goal for word '" + word + "': " + str(goal.current) + "" + str(goal.target))
 		
 		# Check if goal is completed
 		if goal.progress >= 1.0:

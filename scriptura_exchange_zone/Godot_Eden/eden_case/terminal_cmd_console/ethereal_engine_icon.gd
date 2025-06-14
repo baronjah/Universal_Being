@@ -1,5 +1,5 @@
 extends Node2D
-class_name EtherealEngineIcon
+class_name EtherealEngineIcon_etherealengineicon_ethereal
 
 """
 EtherealEngineIcon: Visual representation of the Ethereal Engine

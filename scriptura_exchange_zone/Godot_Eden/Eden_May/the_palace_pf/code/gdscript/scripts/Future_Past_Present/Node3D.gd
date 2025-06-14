@@ -1,5 +1,5 @@
 #@tool
-extends Node3D
+extends \2
 
 var galaxy_seed
 var galaxy_rng

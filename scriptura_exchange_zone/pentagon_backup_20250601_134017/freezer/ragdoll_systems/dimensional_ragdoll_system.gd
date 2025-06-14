@@ -10,9 +10,8 @@
 # PURPOSE: Implement Eden's 5D positioning and evolution mechanics
 # BASED ON: Eden project's dimensional magic system
 # ==================================================
-
-extends UniversalBeingBase
-# Note: Removed class_name to avoid global conflict
+extends \2
+# Note: Removed class_name to_dimensionalragdollsystem_dimensio avoid global conflict
 
 signal dimension_changed(from: int, to: int)
 signal consciousness_evolved(level: String, value: float)
@@ -38,7 +37,8 @@ class Vector5:
 var position_5d: Vector5 = Vector5.new(0, 0, 0, 0, 0.1)  # x,y,z,emotion,consciousness
 
 ## Dimensional States
-enum Dimension {
+enum \2 {
+
 	PHYSICAL = 0,    # Normal warehouse reality
 	DREAM = 1,       # Floaty, surreal dimension
 	MEMORY = 2,      # Past echoes, time loops

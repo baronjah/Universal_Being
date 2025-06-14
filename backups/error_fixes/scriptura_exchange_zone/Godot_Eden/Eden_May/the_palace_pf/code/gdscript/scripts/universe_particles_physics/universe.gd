@@ -44,7 +44,7 @@ func _init_systems():
 	add_child(user_interface)
 	
 	# Connect signals
-	user_interface.connect("big_bang_triggered", self, "_on_big_bang_triggered")
+	user_interface.connect(_on_big_bang_triggered)
 
 func _on_big_bang_triggered():
 	# Clear existing particles

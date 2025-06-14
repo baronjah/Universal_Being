@@ -46,6 +46,7 @@ class AICompanion extends UniversalBeing:
 	# Consciousness state
 	var consciousness_level: int = 3
 	var evolution_stage: String = "awakening"
+
 	var awareness_radius: float = 100.0
 	
 	# Relationship
@@ -61,7 +62,9 @@ class AICompanion extends UniversalBeing:
 	
 	# Current state
 	var current_emotion: String = "curious"
+
 	var current_thought: String = ""
+
 	var attention_target: Node3D = null
 	var is_speaking: bool = false
 	
@@ -73,6 +76,7 @@ class AICompanion extends UniversalBeing:
 	
 	# Behavior
 	var behavior_state: String = "following"
+
 	var exploration_interest: float = 0.7
 	var conversation_desire: float = 0.5
 	
@@ -85,7 +89,7 @@ class AICompanion extends UniversalBeing:
 			"caution": 0.4,
 			"creativity": 0.5,
 			"loyalty": 0.6
-		}
+}
 		
 		func randomize_personality(variance: float) -> void:
 			for traity in traits:
@@ -278,7 +282,7 @@ class AICompanion extends UniversalBeing:
 			conversation_desire = 0.8
 	
 	func _scan_environment() -> Dictionary:
-		var found = {}
+		var found = {
 		
 		# Scan for objects in awareness radius
 		var space_state = get_world_3d().direct_space_state
@@ -295,6 +299,7 @@ class AICompanion extends UniversalBeing:
 			if collider.is_in_group("asteroids"):
 				found["asteroid"] = collider
 			elif collider.has_method("get_ore_type"):
+}
 				var ore_type = collider.get_ore_type()
 				if ore_type in ["resonite", "stellarium", "voidstone"]:
 					found["consciousness_ore"] = collider
@@ -309,7 +314,7 @@ class AICompanion extends UniversalBeing:
 			"emotion": current_emotion,
 			"location": global_position,
 			"importance": importance
-		}
+}
 		
 		# Add to short term
 		short_term_memory.append(memory)
@@ -334,9 +339,9 @@ class AICompanion extends UniversalBeing:
 			if context in str(memory["event"]):
 				return memory
 		
-		return {}
+		return {
 	
-	# Evolution system
+	# Evolution system}
 	func evolve() -> void:
 		match evolution_stage:
 			"awakening":
@@ -430,8 +435,8 @@ class AICompanion extends UniversalBeing:
 				"trust_score": trust_score,
 				"long_term_memory": long_term_memory,
 				"emotional_memory": emotional_memory
-			}
 			AkashicRecordsSystem.save_companion_data(companion_name, save_data)
+}
 
 # Pentagon implementation for system
 func pentagon_init() -> void:
@@ -501,7 +506,8 @@ func create_companion(companion_name: String) -> AICompanion:
 
 # Interaction system
 func interact_with_companion(companion: AICompanion, interaction_type: String) -> Dictionary:
-	var response = {"success": true}
+	var response = {"success": true
+}
 	
 	match interaction_type:
 		"talk":
@@ -542,7 +548,7 @@ func _generate_dialogue(companion: AICompanion) -> String:
 			"personality": companion.personality_core.traits,
 			"current_emotion": companion.current_emotion,
 			"recent_memory": companion.short_term_memory
-		}
+}
 		var ai_response = gemma_ai.generate_companion_dialogue(context)
 		if ai_response:
 			companion.speak(ai_response, companion.current_emotion)
@@ -602,7 +608,7 @@ func _get_contextual_dialogues(companion: AICompanion) -> Array:
 
 func _explore_together(companion: AICompanion) -> Dictionary:
 	# Companion suggests exploration target
-	var suggestion = {}
+	var suggestion = {
 	
 	# Look for interesting nearby objects
 	var nearby = companion._scan_environment()

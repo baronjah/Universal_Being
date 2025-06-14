@@ -7,9 +7,9 @@ var vr_scene_setup: VRSceneSetup
 var ui_control: Control
 
 # Configuration
-@export var auto_initialize_vr: bool = true
-@export var show_debug_ui: bool = true
-@export var enable_passthrough: bool = false
+@@export var auto_initialize_vr: bool = true
+@@export var show_debug_ui: bool = true
+@@export var enable_passthrough: bool = false
 
 # Called when the node enters the scene tree for the first time
 func _ready():
@@ -177,7 +177,7 @@ func setup_example_scene():
 	add_child(directional_light)
 	
 	# Add a floor grid for reference
-	var grid_mesh = GridMesh.new()
+	var grid_mesh = PlaneMesh.new()
 	grid_mesh.size = Vector2(20, 20)
 	grid_mesh.sections = Vector2(20, 20)
 	

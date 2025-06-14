@@ -1,6 +1,6 @@
 extends Node
 
-class_name GameCreator
+class_name GameCreator_gamecreator_gamecrea
 
 # Game creation system for LuminusOS
 # Allows creating simple games through the terminal
@@ -49,9 +49,9 @@ var script_templates = {
 
 # Player character controller
 
-@export var speed = 300.0
-@export var jump_strength = 600.0
-@export var gravity = 980.0
+@@export var speed = 300.0
+@@export var jump_strength = 600.0
+@@export var gravity = 980.0
 
 var is_jumping = false
 
@@ -374,9 +374,9 @@ func cmd_game(args):
 				
 			return run_game(args[1])
 			
-		"export":
+		"@export":
 			if args.size() < 2:
-				return "Usage: game export <game_name> [platform]"
+				return "Usage: game @export <game_name> [platform]"
 				
 			var platform = "Windows"
 			if args.size() >= 3:
@@ -398,4 +398,4 @@ func cmd_game(args):
 			return get_templates()
 			
 		_:
-			return "Unknown game command. Try 'create', 'list', 'details', 'run', 'export', 'script', or 'templates'"
+			return "Unknown game command. Try 'create', 'list', 'details', 'run', '@export', 'script', or 'templates'"

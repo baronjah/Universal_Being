@@ -36,6 +36,7 @@ func _process(delta):
 	if camera:
 		# Activate the 16-ray spatial awareness!
 		if gemma_ai.has_method("update_spatial_awareness"):
+
 			var cam_forward = -camera.transform.basis.z
 			gemma_ai.update_spatial_awareness(camera.global_position, cam_forward)
 		else:

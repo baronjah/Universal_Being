@@ -1,7 +1,7 @@
 extends Node3D
 ## Interactive 3D UI System
 ## Based on Luminus research: Flat 2D shapes in 3D space with hover/click interactions
-class_name Interactive3DUISystem
+class_name Interactive3DUISystem_interactive3duisystem_interact
 
 # UI Configuration
 const UI_LAYER_DISTANCE = 2.0

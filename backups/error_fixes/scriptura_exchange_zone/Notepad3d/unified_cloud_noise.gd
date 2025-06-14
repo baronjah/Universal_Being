@@ -738,7 +738,7 @@ func _add_cylinder_to_surface_tool(st, start, end, radius, segments, noise, comp
 
 func _apply_noise_to_vertex(vertex, noise, complexity):
     var noise_scale = 0.1 + complexity * 0.9  # 0.1 to 1.0
-    var time_offset = OS.get_ticks_msec() / 10000.0  # Slowly changing time
+    var time_offset = OS.Time.get_ticks_msec() / 10000.0  # Slowly changing time
     
     var noise_value = noise.get_noise_3d(
         vertex.x * 5.0, 
@@ -893,7 +893,7 @@ func apply_projection_to_clouds(projection_id, cloud_ids = []):
     var transform = projection_transforms[projection_id]
     
     # If no specific clouds provided, apply to all clouds
-    if cloud_ids.empty():
+    if cloud_ids.is_empty():
         cloud_ids = active_clouds.keys()
     
     # Apply projection to each cloud
@@ -1237,7 +1237,7 @@ func shift_perspective(perspective_id, shift_amount = 0.1):
     return true
 
 func generate_shape_from_numbers(sequence_indices = [], shape_type = "cube"):
-    if sequence_indices.empty() or sequence_indices.size() < 3:
+    if sequence_indices.is_empty() or sequence_indices.size() < 3:
         # Use first few numbers from sequence
         sequence_indices = [0, 1, 2, 3, 4, 5, 6, 7]
     

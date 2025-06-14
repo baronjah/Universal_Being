@@ -1,5 +1,5 @@
 # animal.gd
-extends Entity
+extends \2
 
 # Animal-specific properties
 var species: String
@@ -46,7 +46,7 @@ func get_base_energy_consumption() -> float:
 
 func perceive_environment():
 	# Scan surroundings within perception range
-	var world = get_node("/root/World")
+	var world = get_node("root/World")
 	var perceived_entities = []
 	
 	for dx in range(-perception_range, perception_range + 1):
@@ -99,7 +99,7 @@ func is_entity_edible(entity) -> bool:
 	return false
 
 func move_toward(target_pos: Vector2i):
-	var world = get_node("/root/World")
+	var world = get_node("root/World")
 	
 	# Simple A* pathfinding to target
 	var path = world.find_path(position, target_pos)
@@ -136,7 +136,7 @@ func reproduce():
 	if energy < reproduction_energy_threshold:
 		return false
 	
-	var world = get_node("/root/World")
+	var world = get_node("root/World")
 	
 	# Find open adjacent cell
 	var adjacent_cells = []

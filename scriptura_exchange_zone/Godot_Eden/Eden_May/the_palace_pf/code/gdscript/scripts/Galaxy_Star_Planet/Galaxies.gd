@@ -10,23 +10,25 @@
 # .o. 88P 8""88888P'  o888o   o888o 
 # `Y888P                            
 #
-extends Node3D
+extends \2
 
-@export var galaxy_count = 100
-@export var field_size = Vector3(1000, 1000, 1000)
-@export var base_resolution = 512  # Base resolution for scaling
-@export var main_seed = 12345  # Add this line
+@@export var galaxy_count = 100
+@@export var field_size = Vector3(1000, 1000, 1000)
+@@export var base_resolution = 512  # Base resolution for scaling
+@@export var main_seed = 12345  # Add this line
 
-@export var visible_galaxy_distance: float = 369.0
+@@export var visible_galaxy_distance: float = 369.0
 
-var galaxy_scene = preload("res://Scenes/GalaxySprite.tscn")
-var galaxy_core_scene = preload("res://Scenes/GalaxyCore.tscn")
+var galaxy_scene = preload("res://scenes/GalaxySprite.tscn")
+var galaxy_core_scene = preload("res://scenes/GalaxyCore.tscn")
 var rng = RandomNumberGenerator.new()
 
 var debug_rect: TextureRect
 
 # Galaxy Types
-enum GalaxyType {
+enum \2 {
+
+
 	SPIRAL,
 	ELLIPTICAL,
 	IRREGULAR,
@@ -408,7 +410,7 @@ func transition_to_galaxy(target_galaxy):
 	# generating skybox function
 	generate_and_store_skybox(target_galaxy)
 	# because of await stuff, i had to move it to where we play around with cubecam
-	#get_tree().change_scene_to_file("res://Scenes/GalaxyCloseUp.tscn")
+	#get_tree().change_scene_to_file("res://scenes/GalaxyCloseUp.tscn")
 
 func setup_debug_display():
 	debug_rect = TextureRect.new()
@@ -646,7 +648,7 @@ func generate_and_store_offset_skybox(target_galaxy_first_position):
 	print("Skybox texture stored successfully")
 	
 	offset_galaxies_last_supper(target_galaxy_first_position)
-	#get_tree().change_scene_to_file("res://Scenes/GalaxyCloseUp.tscn")
+	#get_tree().change_scene_to_file("res://scenes/GalaxyCloseUp.tscn")
 	
 	
 #GlobalState.store_celestialbody_skybox_texture(skybox_texture)
@@ -676,4 +678,4 @@ func generate_and_store_celestialbody_skybox(target_galaxy_first_position):
 	GlobalState.store_celestialbody_skybox_texture(skybox_texture)
 	print("Skybox texture stored successfully")
 	GlobalState.update_elapsed_time()
-	get_tree().change_scene_to_file("res://Scenes/GalaxyCloseUp.tscn")
+	get_tree().change_scene_to_file("res://scenes/GalaxyCloseUp.tscn")

@@ -13,4 +13,4 @@ extends Node
 
 # turns, queue, loops, returns, repeat, cycle
 # JSH_Core/JSH_queue_system
-# res://code/gdscript/scripts/jsh_queue_system.gd
+# res://scripts/gdscript/scripts/jsh_queue_system.gd

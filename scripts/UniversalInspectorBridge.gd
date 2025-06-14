@@ -118,6 +118,7 @@ func find_cursor_being() -> Node:
 func setup_cursor_integration() -> void:
 	# Override cursor click behavior when in inspect mode
 	if cursor_being and cursor_being.has_method("get_cursor_info"):
+
 		var cursor_info = cursor_being.get_cursor_info()
 		if cursor_info.get("mode") == "INSPECT":
 			print("🔗 Cursor is in INSPECT mode - ready for Universal Being inspection")
@@ -146,7 +147,7 @@ func inspect_being(being: UniversalBeing) -> void:
 		"components": get_being_components(being),
 		"editable_properties": get_editable_properties(being),
 		"available_actions": get_available_actions(being)
-	}
+}
 	
 	# Log to history
 	inspection_history.append(inspection_data)
@@ -158,6 +159,7 @@ func inspect_being(being: UniversalBeing) -> void:
 	
 	# Send to console
 	if console_being and console_being.has_method("add_message"):
+
 		var console_msg = "🔍 INSPECTING: %s\n" % being.being_name
 		console_msg += "📊 Type: %s | Consciousness: %d | Layer: %d\n" % [
 			being.being_type,
@@ -172,6 +174,7 @@ func inspect_being(being: UniversalBeing) -> void:
 	
 	# Notify Gemma AI
 	if gemma_ai and gemma_ai.has_method("ai_message"):
+
 		var ai_msg = "🔍 Universal Being Inspection:\n"
 		ai_msg += "Being: %s (%s)\n" % [being.being_name, being.being_type]
 		ai_msg += "Consciousness Level: %d\n" % being.consciousness_level
@@ -202,57 +205,55 @@ func get_being_components(being: UniversalBeing) -> Array:
 func get_editable_properties(being: UniversalBeing) -> Dictionary:
 	pass
 	# Properties that can be edited in the inspector
-	var editable = {}
+	var editable = {
 	
 	# Core Universal Being properties
 	editable["being_name"] = {
 		"type": "String",
 		"value": being.being_name,
 		"category": "Core"
-	}
 	editable["consciousness_level"] = {
 		"type": "int",
 		"value": being.consciousness_level,
 		"min": 0,
 		"max": 10,
 		"category": "Core"
-	}
 	editable["visual_layer"] = {
 		"type": "int",
 		"value": being.visual_layer,
 		"min": -100,
 		"max": 1000,
 		"category": "Visual"
-	}
+}
 	
 	# Transform properties
 	editable["position"] = {
 		"type": "Vector3",
 		"value": being.position,
 		"category": "Transform"
-	}
 	editable["rotation"] = {
 		"type": "Vector3",
 		"value": being.rotation,
 		"category": "Transform"
-	}
 	editable["scale"] = {
 		"type": "Vector3",
 		"value": being.scale,
 		"category": "Transform"
-	}
+}
 	
 	# Add custom properties from metadata
 	if being.has_method("get") and being.get("metadata"):
+}
 		var metadata = being.get("metadata")
 		for key in metadata:
 			if key.begins_with("editable_"):
+}
 				var prop_name = key.trim_prefix("editable_")
 				editable[prop_name] = {
 					"type": "Variant",
 					"value": metadata[key],
 					"category": "Custom"
-				}
+	}
 	
 	return editable
 
@@ -285,6 +286,7 @@ func get_available_actions(being: UniversalBeing) -> Array:
 	
 	# Check for custom actions in metadata
 	if being.has_method("get_available_actions"):
+}
 		var custom_actions = being.get_available_actions()
 		actions.append_array(custom_actions)
 	
@@ -305,6 +307,7 @@ func modify_property(being: UniversalBeing, property_name: String, new_value: Va
 	
 	# Log to console
 	if console_being and console_being.has_method("add_message"):
+}
 		var msg = "✏️ Modified %s.%s: %s → %s" % [
 			being.being_name,
 			property_name,
@@ -348,6 +351,7 @@ func execute_action(being: UniversalBeing, action_name: String) -> void:
 	# Log action
 	if console_being:
 		console_being.add_message("system", "🎬 Executed: %s on %s" % [action_name, being.being_name])
+}
 
 func duplicate_being(being: UniversalBeing) -> UniversalBeing:
 	if SystemBootstrap and SystemBootstrap.is_system_ready():
@@ -368,12 +372,14 @@ func duplicate_being(being: UniversalBeing) -> UniversalBeing:
 
 func save_being_to_akashic(being: UniversalBeing) -> void:
 	if akashic_records and akashic_records.has_method("save_being"):
+
 		var save_path = "res://akashic_library/beings/%s_%s.ub.zip" % [
 			being.being_type,
 			being.being_uuid
 		]
 		akashic_records.save_being(being, save_path)
 		print("💾 Saved being to Akashic Records: %s" % save_path)
+
 
 func export_being_dna(being: UniversalBeing) -> void:
 	pass
@@ -385,7 +391,7 @@ func export_being_dna(being: UniversalBeing) -> void:
 		"metadata": being.metadata if being.has_method("get") else {},
 		"components": get_being_components(being),
 		"visual_layer": being.visual_layer
-	}
+}
 	
 	# Save DNA to file
 	var file = FileAccess.open("user://being_dna_%s.json" % being.being_uuid, FileAccess.WRITE)
@@ -393,6 +399,7 @@ func export_being_dna(being: UniversalBeing) -> void:
 		file.store_string(JSON.stringify(dna, "\t"))
 		file.close()
 		print("🧬 Exported being DNA: being_dna_%s.json" % being.being_uuid)
+
 
 func enable_editing_mode() -> void:
 	is_editing_mode = true

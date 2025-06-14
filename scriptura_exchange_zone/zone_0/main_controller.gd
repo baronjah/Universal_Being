@@ -1,7 +1,7 @@
 extends Node3D
 ## Main Controller for 12 Turns System
 ## Integrates all subsystems with 5-layer visualization
-class_name MainController
+class_name MainController_maincontroller_maincont
 
 # ==================================================
 # SCRIPT NAME: main_controller.gd
@@ -31,14 +31,14 @@ var current_focus_layer: int = 0
 var fps_timer: float = 0.0
 
 # ----- CONFIGURATION -----
-@export var auto_initialize: bool = true
-@export var debug_mode: bool = false
-@export var default_theme: String = "default"
-@export var enable_animations: bool = true
-@export var enable_auto_updates: bool = true
-@export var enable_auto_connection: bool = true
-@export var capture_hotkey: String = "Ctrl+Shift+P"
-@export var ocr_hotkey: String = "Ctrl+Shift+O"
+@@@export var auto_initialize: bool = true
+@@@export var debug_mode: bool = false
+@@@export var default_theme: String = "default"
+@@@export var enable_animations: bool = true
+@@@export var enable_auto_updates: bool = true
+@@@export var enable_auto_connection: bool = true
+@@@export var capture_hotkey: String = "Ctrl+Shift+P"
+@@@export var ocr_hotkey: String = "Ctrl+Shift+O"
 
 # ----- SIGNALS -----
 signal initialization_completed()
@@ -89,43 +89,43 @@ func initialize_all() -> void:
 
 func _find_existing_systems():
 	# Find existing screen capture system
-	screen_capture = get_node_or_null("/root/ScreenCaptureUtility")
+	screen_capture = get_node_or_null("root/ScreenCaptureUtility")
 	if not screen_capture:
 		screen_capture = _find_node_by_class(get_tree().root, "ScreenCaptureUtility")
 	
 	# Find existing OCR processor
-	ocr_processor = get_node_or_null("/root/OCRProcessor")
+	ocr_processor = get_node_or_null("root/OCRProcessor")
 	if not ocr_processor:
 		ocr_processor = _find_node_by_class(get_tree().root, "OCRProcessor")
 	
 	# Find existing offline OCR processor
-	offline_ocr = get_node_or_null("/root/OfflineOCRProcessor")
+	offline_ocr = get_node_or_null("root/OfflineOCRProcessor")
 	if not offline_ocr:
 		offline_ocr = _find_node_by_class(get_tree().root, "OfflineOCRProcessor")
 	
 	# Find existing auto updater
-	auto_updater = get_node_or_null("/root/AutoUpdater")
+	auto_updater = get_node_or_null("root/AutoUpdater")
 	if not auto_updater:
 		auto_updater = _find_node_by_class(get_tree().root, "AutoUpdater")
 	
 	# Find existing auto connector
-	auto_connector = get_node_or_null("/root/AutoConnector")
+	auto_connector = get_node_or_null("root/AutoConnector")
 	if not auto_connector:
 		auto_connector = _find_node_by_class(get_tree().root, "AutoConnector")
 	
 	# Find existing color theme system
-	color_theme_system = get_node_or_null("/root/ExtendedColorThemeSystem")
+	color_theme_system = get_node_or_null("root/ExtendedColorThemeSystem")
 	if not color_theme_system:
 		color_theme_system = _find_node_by_class(get_tree().root, "ExtendedColorThemeSystem")
 	
 	# If not found, try other color systems
 	if not color_theme_system:
-		color_theme_system = get_node_or_null("/root/DimensionalColorSystem")
+		color_theme_system = get_node_or_null("root/DimensionalColorSystem")
 		if not color_theme_system:
 			color_theme_system = _find_node_by_class(get_tree().root, "DimensionalColorSystem")
 	
 	# Find existing task animator
-	task_animator = get_node_or_null("/root/TaskTransitionAnimator")
+	task_animator = get_node_or_null("root/TaskTransitionAnimator")
 	if not task_animator:
 		task_animator = _find_node_by_class(get_tree().root, "TaskTransitionAnimator")
 
@@ -513,7 +513,7 @@ func _update_debug_info() -> void:
 		debug_label.text = "FPS: %d\nThreads: %s\nWords: %d" % [fps, thread_info, word_count]
 
 func _get_thread_info() -> String:
-	var thread_manager = get_node_or_null("/root/ThreadManager")
+	var thread_manager = get_node_or_null("root/ThreadManager")
 	if thread_manager:
 		var stats = thread_manager.get_statistics()
 		return "%d/%d" % [stats.available_threads, stats.thread_count]

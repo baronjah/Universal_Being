@@ -1,7 +1,7 @@
 # system_check.gd
 #
 #
-## res://code/gdscript/scripts/Menu_Keyboard_Console/system_check.gd
+## res://scripts/gdscript/scripts/Menu_Keyboard_Console/system_check.gd
 #
 # JSH_Patch/Godot_connections/system_check
 #
@@ -79,8 +79,7 @@
 ## we will track times
 ## for key presses xD
 ###
-
-extends Node
+extends \2
 
 
 
@@ -474,7 +473,7 @@ func _create_zip_file(zip_path: String, source_path: String):
 		var dir = DirAccess.open(source_path)
 		if dir:
 			for file in dir.get_files():
-				var file_path = source_path + "/" + file
+				var file_path = source_path + "" + file
 				var content = FileAccess.get_file_as_bytes(file_path)
 				if content:
 					# Map file to word
@@ -504,7 +503,7 @@ func extract_zip_archive(zip_path: String, extract_path: String) -> bool:
 		while !zip_file.eof_reached():
 			var file_data = zip_file.get_var()
 			if file_data:
-				var extract_file_path = extract_path + "/" + file_data["name"]
+				var extract_file_path = extract_path + "" + file_data["name"]
 				var output_file = FileAccess.open(extract_file_path, FileAccess.WRITE)
 				if output_file:
 					output_file.store_buffer(file_data["data"])

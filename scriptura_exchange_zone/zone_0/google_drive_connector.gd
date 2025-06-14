@@ -1,7 +1,7 @@
 extends "cloud_storage_connector.gd"
 }
 
-class_name GoogleDriveConnector
+class_name GoogleDriveConnector_googledriveconnector_googledr
 }
 
 # Google Drive specific constants
@@ -82,7 +82,7 @@ func authenticate_with_token(access_token, refresh_token, expires_in):
 
     credentials[provider]["access_token"] = access_token
     credentials[provider]["refresh_token"] = refresh_token
-    credentials[provider]["expires_at"] = OS.get_unix_time() + expires_in
+    credentials[provider]["expires_at"] = OS.Time.get_unix_time_from_system() + expires_in
 }
 
     auth_state = AuthState.AUTHENTICATED
@@ -138,10 +138,10 @@ func search_files(query, max_results = 100):
 }
 
         results.append({
-            "id": "file_" + str(OS.get_unix_time()) + "_" + str(i),
+            "id": "file_" + str(OS.Time.get_unix_time_from_system()) + "_" + str(i),
             "name": name,
             "mimeType": mime_type,
-            "modifiedTime": OS.get_datetime_from_unix_time(OS.get_unix_time() - randi() % 10000000),
+            "modifiedTime": OS.get_datetime_from_unix_time(OS.Time.get_unix_time_from_system() - randi() % 10000000),
             "size": str(randi() % 10000000),
             "parents": ["folder_" + str(randi() % 10)],
             "thumbnailLink": "",
@@ -168,7 +168,7 @@ func create_folder(folder_name, parent_id = "root"):
 
     # In real implementation, would make API call
     # For demo, generate folder ID
-    var folder_id = "folder_" + str(OS.get_unix_time())
+    var folder_id = "folder_" + str(OS.Time.get_unix_time_from_system())
 }
 
     # Add to folder cache
@@ -338,8 +338,8 @@ func get_file_metadata(file_id):
         "id": file_id,
         "name": "File " + file_id.substr(0, 8),
         "mimeType": mime_type,
-        "modifiedTime": OS.get_datetime_from_unix_time(OS.get_unix_time() - randi() % 10000000),
-        "createdTime": OS.get_datetime_from_unix_time(OS.get_unix_time() - randi() % 20000000),
+        "modifiedTime": OS.get_datetime_from_unix_time(OS.Time.get_unix_time_from_system() - randi() % 10000000),
+        "createdTime": OS.get_datetime_from_unix_time(OS.Time.get_unix_time_from_system() - randi() % 20000000),
         "size": str(file_size),
         "parents": ["folder_" + str(randi() % 10)],
         "owners": [
@@ -359,7 +359,7 @@ func get_file_metadata(file_id):
             "canDownload": true
         },
         "viewedByMe": randi() % 2 == 0,
-        "viewedByMeTime": OS.get_datetime_from_unix_time(OS.get_unix_time() - randi() % 5000000),
+        "viewedByMeTime": OS.get_datetime_from_unix_time(OS.Time.get_unix_time_from_system() - randi() % 5000000),
         "shared": randi() % 2 == 0,
         "thumbnailLink": "",
         "webViewLink": "https://drive.google.com/file/d/" + file_id,
@@ -400,7 +400,7 @@ func list_folders(parent_id = "root"):
             "name": folder_name,
             "mimeType": "application/vnd.google-apps.folder",
             "parents": [parent_id],
-            "modifiedTime": OS.get_datetime_from_unix_time(OS.get_unix_time() - randi() % 10000000),
+            "modifiedTime": OS.get_datetime_from_unix_time(OS.Time.get_unix_time_from_system() - randi() % 10000000),
             "capabilities": {
                 "canEdit": randi() % 2 == 0,
                 "canComment": true,

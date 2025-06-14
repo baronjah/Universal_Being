@@ -1,19 +1,20 @@
 extends Node
 
-class_name UsageTimeTrackerWithExtensions
+class_name UsageTimeTrackerWithExtensions_usagetimetrackerwithextensions_usagetim
 
-# This class extends the base UsageTimeTracker to add support for extensions:
+# This class
+extends \2 base UsageTimeTracker to add support for extensions:
 # 1. Neural net shape visualization
 # 2. Auto-updating capabilities
 # 3. Lucky number integration
 
 # ----- TIME TRACKING SETTINGS -----
 @export_category("Extended Time Tracking")
-@export var use_neural_visualization: bool = true
-@export var auto_update_enabled: bool = true
-@export var lucky_numbers_enabled: bool = true
-@export var line_limit: int = 888
-@export var lucky_sequence: Array = [8, 88, 888, 1333]
+@@@export var use_neural_visualization: bool = true
+@@@export var auto_update_enabled: bool = true
+@@@export var lucky_numbers_enabled: bool = true
+@@@export var line_limit: int = 888
+@@@export var lucky_sequence: Array = [8, 88, 888, 1333]
 
 # ----- COMPONENT REFERENCES -----
 var base_tracker: Node = null

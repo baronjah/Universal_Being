@@ -3,7 +3,6 @@
 # Created: May 31, 2025, 23:28 CEST
 # Purpose: Ragdoll physics and behavior system
 # Connection: Part of Pentagon Architecture migration
-
 extends UniversalBeingBase
 # Final verification script for Universal Entity
 # Run this to ensure everything is perfect!
@@ -18,7 +17,7 @@ func pentagon_ready() -> void:
 	await get_tree().create_timer(1.5).timeout
 	
 	# 1. Check if it exists
-	var ue = get_node_or_null("/root/UniversalEntity")
+	var ue = get_node_or_null("root/UniversalEntity")
 	if not ue:
 		print("❌ UniversalEntity NOT FOUND in autoloads!")
 		print("   Add it in Project Settings > Autoload")
@@ -41,7 +40,7 @@ func pentagon_ready() -> void:
 			print("❌ Missing: " + components[node_name])
 	
 	# 3. Test a command
-	var console = get_node_or_null("/root/ConsoleManager")
+	var console = get_node_or_null("root/ConsoleManager")
 	if console and "commands" in console and "universal" in console.commands:
 		print("\n✅ Commands are registered!")
 		print("\n🎉 UNIVERSAL ENTITY IS PERFECT! 🎉")

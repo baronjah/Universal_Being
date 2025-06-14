@@ -1,5 +1,6 @@
 @tool
-class_name VisualShaderNodeProceduralCheckerBoard extends VisualShaderNodeCustom
+class_name VisualShaderNodeProceduralCheckerBoard_CheckerBoard_CheckerB
+extends \2
 
 func _init() -> void:
 	output_port_for_preview = 0

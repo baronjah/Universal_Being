@@ -1,11 +1,12 @@
 extends Node
 }
 
-class_name MultiAccountManager
+class_name MultiAccountManager_multiaccountmanager_multiacc
 }
 
 # Account tier constants
-enum AccountTier {
+enum \2 {
+
     FREE,
     PLUS,
     MAX,
@@ -14,7 +15,8 @@ enum AccountTier {
 }
 
 # Thread priority levels
-enum ThreadPriority {
+enum \2 {
+
     LOW,
     MEDIUM,
     HIGH,
@@ -116,13 +118,13 @@ func _ready():
 
 func connect_to_systems():
     # Connect to SmartAccountManager
-    if has_node("/root/SmartAccountManager") or get_node_or_null("/root/SmartAccountManager"):
+    if has_node("root/SmartAccountManager") or get_node_or_null("root/SmartAccountManager"):
         _smart_account_manager = get_node("\1") as Node
         print("Connected to SmartAccountManager")
 }
 
     # Connect to SharedAccountConnector
-    if has_node("/root/SharedAccountConnector") or get_node_or_null("/root/SharedAccountConnector"):
+    if has_node("root/SharedAccountConnector") or get_node_or_null("root/SharedAccountConnector"):
         _account_connector = get_node("\1") as Node
         print("Connected to SharedAccountConnector")
 }
@@ -162,7 +164,7 @@ func create_account(display_name, tier = AccountTier.FREE, api_key = ""):
     # Initialize usage counters
     storage_usage[account_id] = 0
     api_usage_counter[account_id] = 0
-    api_usage_time[account_id] = OS.get_unix_time()
+    api_usage_time[account_id] = OS.Time.get_unix_time_from_system()
 }
 
     # Store API key if provided
@@ -242,7 +244,7 @@ func allocate_thread(account_id, task_description, priority = ThreadPriority.MED
     for thread in thread_pools[account_id]:
         if not thread["active"]:
             thread["active"] = true
-            thread["start_time"] = OS.get_unix_time()
+            thread["start_time"] = OS.Time.get_unix_time_from_system()
             thread["priority"] = priority
             thread["task"] = task_description
             thread_id = thread["id"]
@@ -255,7 +257,7 @@ func allocate_thread(account_id, task_description, priority = ThreadPriority.MED
         account["threads_allocated"] += 1
         account["active_threads"].append({
             "id": thread_id,
-            "start_time": OS.get_unix_time(),
+            "start_time": OS.Time.get_unix_time_from_system(),
             "priority": priority,
             "task": task_description
         })
@@ -268,7 +270,7 @@ func allocate_thread(account_id, task_description, priority = ThreadPriority.MED
 
         thread_usage[account_id].append({
             "thread_id": thread_id,
-            "start_time": OS.get_unix_time(),
+            "start_time": OS.Time.get_unix_time_from_system(),
             "priority": priority
         })
 }
@@ -323,8 +325,8 @@ func release_thread(account_id, thread_id):
             account["thread_history"].append({
                 "id": thread_id,
                 "start_time": account["active_threads"][index_to_remove]["start_time"],
-                "end_time": OS.get_unix_time(),
-                "duration": OS.get_unix_time() - account["active_threads"][index_to_remove]["start_time"],
+                "end_time": OS.Time.get_unix_time_from_system(),
+                "duration": OS.Time.get_unix_time_from_system() - account["active_threads"][index_to_remove]["start_time"],
                 "priority": account["active_threads"][index_to_remove]["priority"],
                 "task": account["active_threads"][index_to_remove]["task"]
             })
@@ -337,8 +339,8 @@ func release_thread(account_id, thread_id):
         # Update thread usage tracking
         for i in range(thread_usage[account_id].size()):
             if thread_usage[account_id][i]["thread_id"] == thread_id:
-                thread_usage[account_id][i]["end_time"] = OS.get_unix_time()
-                thread_usage[account_id][i]["duration"] = OS.get_unix_time() - thread_usage[account_id][i]["start_time"]
+                thread_usage[account_id][i]["end_time"] = OS.Time.get_unix_time_from_system()
+                thread_usage[account_id][i]["duration"] = OS.Time.get_unix_time_from_system() - thread_usage[account_id][i]["start_time"]
                 break
 }
 
@@ -537,11 +539,11 @@ func _on_api_usage_reset():
     # Reset API usage counters for all accounts
     for account_id in api_usage_counter:
         api_usage_counter[account_id] = 0
-        api_usage_time[account_id] = OS.get_unix_time()
+        api_usage_time[account_id] = OS.Time.get_unix_time_from_system()
 }
 
 func _generate_unique_id():
-    return str(OS.get_unix_time()) + "_" + str(randi() % 10000)
+    return str(OS.Time.get_unix_time_from_system()) + "_" + str(randi() % 10000)
 }
 
 func _generate_tier_colors(tier):

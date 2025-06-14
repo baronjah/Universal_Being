@@ -22,7 +22,7 @@ extends RigidBody3D
 # ═══════════════════════════════════════════════════════════════════════════════════════════════
 
 ## Word Entity class for individual 3D word objects
-class_name WordEntity
+class_name WordEntity_wordentity_wordenti
 
 # ─────────────────────────────────────────────────────────────────────────────────
 # 🎯 CORE WORD PROPERTIES

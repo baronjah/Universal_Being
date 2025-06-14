@@ -742,7 +742,7 @@ func get_info_dict() -> Dictionary:
 		"age": time_alive,
 		"num_collisions": 0,  # Track this if needed
 		"parent": parent_body.name if parent_body else "None"
-	}
+}
 
 func _get_type_name() -> String:
 	match body_type:
@@ -755,6 +755,7 @@ func _get_type_name() -> String:
 		6: return "Comet"
 		7: return "Galaxy Core"
 		_: return "Unknown"
+
 
 func set_temperature(kelvin: float):
 	# NOTE: Update temperature and visual appearance

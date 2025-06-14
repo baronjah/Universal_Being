@@ -25,12 +25,12 @@ var word_processor = null
 var wish_system = null
 
 # ----- DATA STRUCTURES -----
-var linguistic_maps = {}
-var spatial_structures = {}
-var connection_pipes = {}
-var shape_transformations = {}
-var goal_progression = {}
-var turn_states = {}
+var linguistic_maps = {
+var spatial_structures = {
+var connection_pipes = {
+var shape_transformations = {
+var goal_progression = {
+var turn_states = {
 
 # ----- PROCESSORS -----
 var wish_parser = null
@@ -83,7 +83,7 @@ func _connect_systems():
     # Find and connect to turn system
     turn_system = get_node_or_null("/root/TurnSystem")
     if turn_system:
-        turn_system.connect("turn_advanced", self, "_on_turn_advanced")
+        turn_system.connect(_on_turn_advanced)
     
     # Find and connect to word processor
     word_processor = get_node_or_null("/root/DivineWordProcessor")
@@ -95,27 +95,27 @@ func _initialize_processors():
     # Create wish parser instance
     wish_parser = WishParser.new()
     add_child(wish_parser)
-    wish_parser.connect("wish_parsed", self, "_on_wish_parsed")
+    wish_parser.connect(_on_wish_parsed)
     
     # Create data splitter instance
     data_splitter = DataSplitter.new()
     add_child(data_splitter)
-    data_splitter.connect("data_split", self, "_on_data_split")
+    data_splitter.connect(_on_data_split)
     
     # Create merger instance
     merger = WishMerger.new()
     add_child(merger)
-    merger.connect("wishes_merged", self, "_on_wishes_merged")
+    merger.connect(_on_wishes_merged)
     
     # Create connector instance
     connector = PipeConnector.new()
     add_child(connector)
-    connector.connect("pipe_connected", self, "_on_pipe_connected")
+    connector.connect(_on_pipe_connected)
     
     # Create translator instance
     translator = SpatialTranslator.new()
     add_child(translator)
-    translator.connect("translation_completed", self, "_on_translation_completed")
+    translator.connect(_on_translation_completed)
 
 func _initialize_turn_state():
     # Get current turn from turn system if available
@@ -134,10 +134,10 @@ func _initialize_turn_state():
         "outer_boundary": "Outside",
         "primary_direction": "Horizontal",
         "secondary_direction": "Vertical"
-    }
+		}
     
     # Create initial goal if none exists
-    if goal_progression.empty():
+    if goal_progression.is_empty():
         _create_default_goal()
 
 func _create_default_structures():
@@ -187,7 +187,7 @@ func _create_spatial_structure(space_type, shape_type, parameters):
         "connections": [],
         "linguistic_elements": [],
         "creation_time": OS.get_unix_time()
-    }
+		}
     
     # Emit signal about new structure
     emit_signal("spatial_structured", structure_id, shape_type, parameters)
@@ -210,7 +210,7 @@ func _connect_structures(source_id, target_id, connection_type):
         "flow_direction": "bidirectional",
         "active": true,
         "creation_time": OS.get_unix_time()
-    }
+		}
     
     # Add connection to structures
     spatial_structures[source_id].connections.append(pipe_id)
@@ -233,7 +233,7 @@ func _map_linguistic_element(word, space_type, coordinates):
         "connections": [],
         "parameters": {},
         "creation_time": OS.get_unix_time()
-    }
+		}
     
     # Find appropriate spatial structure and add reference
     for structure_id in spatial_structures:
@@ -318,9 +318,7 @@ func _create_default_goal():
                 "turn": 12,
                 "name": "Achieve Full Automation",
                 "completed": false
-            }
         ]
-    }
     
     # Add active goal to current turn state
     var current_turn = 1
@@ -349,6 +347,7 @@ func process_wish(wish_text, source="manual"):
     # Store the wish in the appropriate system
     if wish_system:
         wish_system.add_wish(wish_text, 5, ["spatial_linguistic", "source:" + source])
+		}
     
     # Map the wish spatially
     _map_wish_spatially(wish_id, spatial_wish)
@@ -449,7 +448,7 @@ func translate_command(command_text):
         "shapes": shape_keywords,
         "action": command_parts[0] if command_parts.size() > 0 else "",
         "translations": []
-    }
+		}
     
     # Perform translations for each identified element
     for space in spatial_keywords:
@@ -472,10 +471,10 @@ func _translate_space_command(space_type, translation):
         "space_type": space_type,
         "matching_structures": matching_structures,
         "command_shapes": []
-    }
+		}
     
     # Apply shape transformations if specified
-    if not translation.shapes.empty():
+    if not translation.shapes.is_empty():
         var target_shape = translation.shapes[0]
         
         for structure_id in matching_structures:
@@ -490,7 +489,7 @@ func _translate_space_command(space_type, translation):
             })
     
     # Apply directional transformations if specified
-    if not translation.directions.empty():
+    if not translation.directions.is_empty():
         var primary_direction = translation.directions[0]
         var secondary_direction = translation.directions[1] if translation.directions.size() > 1 else "None"
         
@@ -500,7 +499,7 @@ func _translate_space_command(space_type, translation):
                 spatial_structures[structure_id].parameters.secondary_direction = secondary_direction
     
     # Apply positional transformations if specified
-    if not translation.positions.empty():
+    if not translation.positions.is_empty():
         var target_position = translation.positions[0]
         
         # Here we would implement position-specific logic
@@ -523,7 +522,7 @@ func _transform_shape(structure_id, from_shape, to_shape):
         "to_shape": to_shape,
         "parameters": spatial_structures[structure_id].parameters.duplicate(),
         "timestamp": OS.get_unix_time()
-    }
+		}
     
     # Update structure shape
     spatial_structures[structure_id].shape_type = to_shape
@@ -633,7 +632,7 @@ class WishParser:
             "actions": actions,
             "modifiers": modifiers,
             "timestamp": OS.get_unix_time()
-        }
+			}
         
         emit_signal("wish_parsed", wish_data)
         return wish_data
@@ -647,7 +646,7 @@ class DataSplitter:
             "original_data": data,
             "components": {},
             "timestamp": OS.get_unix_time()
-        }
+			}
         
         # Process different data types differently
         match typeof(data):
@@ -681,7 +680,7 @@ class WishMerger:
             if typeof(wish) == TYPE_DICTIONARY:
                 # Extract components to merge
                 if wish.has("original_text"):
-                    if merged_text.empty():
+                    if merged_text.is_empty():
                         merged_text = wish.original_text
                     else:
                         merged_text += " and " + wish.original_text
@@ -704,7 +703,7 @@ class WishMerger:
             "merged": true,
             "source_count": wishes.size(),
             "timestamp": OS.get_unix_time()
-        }
+			}
         
         emit_signal("wishes_merged", merged_wish)
         return merged_wish
@@ -713,6 +712,7 @@ class PipeConnector:
     signal pipe_connected(pipe_data)
     
     func connect_pipe(source, target, pipe_type="default"):
+	}
         # Create a pipe connection between source and target
         var pipe_data = {
             "source": source,
@@ -721,7 +721,7 @@ class PipeConnector:
             "status": "created",
             "flow_enabled": true,
             "timestamp": OS.get_unix_time()
-        }
+			}
         
         emit_signal("pipe_connected", pipe_data)
         return pipe_data
@@ -739,10 +739,11 @@ class SpatialTranslator:
             "secondary_direction": "Vertical",
             "related_elements": [],
             "timestamp": OS.get_unix_time()
-        }
+			}
         
         # Extract components for translation
         if typeof(data) == TYPE_DICTIONARY and data.has("components"):
+		}
             var components = data.components
             
             # Look for shape indicators
@@ -762,6 +763,7 @@ class SpatialTranslator:
                 # Check for position words
                 if typeof(value) == TYPE_STRING:
                     if value.to_lower() in ["top", "bottom", "left", "right", "center"]:
+					}
                         # Use position to influence the spatial position
                         match value.to_lower():
                             "top":
@@ -847,7 +849,7 @@ func reset_turn_state(turn):
             "outer_boundary": "Outside",
             "primary_direction": "Horizontal",
             "secondary_direction": "Vertical"
-        }
+			}
         
         return true
     
@@ -882,7 +884,7 @@ func auto_agent_mode(enable=true, agent_parameters={}):
         timer.wait_time = 5.0 # Process every 5 seconds
         timer.one_shot = false
         timer.autostart = true
-        timer.connect("timeout", self, "_on_auto_agent_tick")
+        timer.connect(_on_auto_agent_tick)
         add_child(timer)
         
         print("Auto Agent Mode enabled with parameters:", parameters)

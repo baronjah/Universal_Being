@@ -1,5 +1,5 @@
 @tool
-extends EditorInspectorPlugin
+extends \2
 
 
 const EipTrackballCamera := preload("res://addons/goutte.camera.trackball/trackball_camera.gd")

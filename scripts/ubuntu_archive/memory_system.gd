@@ -23,7 +23,6 @@ var memories = {
 	1: [],  # Tier 1: RAM - temporary/recent memories (98% retention)
 	2: [],  # Tier 2: C: Drive - important memories (85% retention)
 	3: []   # Tier 3: D: Drive - eternal/archived memories (100% retention)
-}
 
 # ----- SEWER SYSTEM -----
 # Data sewers store overflow from memory tiers
@@ -69,6 +68,7 @@ func _process(delta):
 # ----- MEMORY FUNCTIONS -----
 func create_memory(text: String, tier: int = 1, power: float = 1.0, 
 				   tags: Array = [], reality_type: String = "") -> Dictionary:
+	}
 	# Validate tier
 	tier = clamp(tier, 1, 3)
 	
@@ -89,7 +89,7 @@ func create_memory(text: String, tier: int = 1, power: float = 1.0,
 		"last_accessed": Time.get_unix_time_from_system(),
 		"access_count": 0,
 		"size_bytes": text.length() * 2  # Approximate size estimation
-	}
+}
 	
 	# Add to appropriate tier
 	memories[tier].append(memory)
@@ -128,9 +128,9 @@ func get_memory(memory_id: String) -> Dictionary:
 	
 	# Not found
 	print("Memory not found: %s" % memory_id)
-	return {}
+	return {
 
-func promote_memory(memory_id: String, target_tier: int) -> bool:
+func promote_memory(memory_id: String, target_tier: int) -> bool:}
 	# Validate tier
 	if target_tier < 1 or target_tier > 3:
 		push_error("Invalid target tier: %d" % target_tier)
@@ -200,6 +200,7 @@ func archive_memory(memory_id: String) -> bool:
 				emit_signal("memory_archived", memory_id)
 				
 				print("Memory archived: '%s'" % memory.text.substr(0, min(30, memory.text.length())) + (memory.text.length() > 30 ? "..." : ""))
+	
 				
 				return true
 	
@@ -286,7 +287,7 @@ func check_and_clean_sewers() -> Dictionary:
 		"bytes_freed": 0,
 		"compressed": 0,
 		"archived": 0
-	}
+}
 	
 	# Check each reality sewer
 	for reality in data_sewers:
@@ -345,7 +346,6 @@ func check_and_clean_sewers() -> Dictionary:
 					# Stop cleaning if we've freed enough space
 					if cleanup_stats.bytes_freed > SEWER_CLEANUP_THRESHOLD_MB * 1024 * 1024 * 0.6:
 						break
-			}
 			
 			print("Sewer cleanup complete: %d files moved, %.2f MB freed" % [
 				cleanup_stats.files_moved,
@@ -354,7 +354,6 @@ func check_and_clean_sewers() -> Dictionary:
 			
 			# Signal cleanup
 			emit_signal("sewer_cleaned", cleanup_stats.files_moved, cleanup_stats.bytes_freed)
-		}
 	
 	return cleanup_stats
 
@@ -388,7 +387,6 @@ func _check_tier_capacity(tier: int):
 				memories[tier].remove_at(0)
 		
 		print("Tier %d overflow managed - reduced to %d memories" % [tier, memories[tier].size()])
-	}
 
 func _ensure_directories_exist():
 	var dir = DirAccess.open("user://")
@@ -423,7 +421,7 @@ func _save_state():
 		"total_bytes_stored": total_bytes_stored,
 		"total_bytes_archived": total_bytes_archived,
 		"timestamp": Time.get_unix_time_from_system()
-	}
+}
 	
 	var dir = DirAccess.open("user://")
 	if not dir:
@@ -464,6 +462,7 @@ func _load_state():
 	else:
 		push_error("JSON Parse Error: " + json.get_error_message())
 
+
 # ----- PUBLIC API -----
 func get_total_memory_count() -> int:
 	var count = 0
@@ -482,7 +481,7 @@ func get_memory_stats() -> Dictionary:
 		"archive_size": archives.size(),
 		"bytes_stored": total_bytes_stored,
 		"bytes_archived": total_bytes_archived
-	}
+}
 
 func get_sewer_size() -> int:
 	var total = 0

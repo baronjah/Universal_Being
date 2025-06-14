@@ -1,5 +1,5 @@
 extends Node
-class_name WishingGame
+class_name WishingGame_wishinggame_wishingg
 }
 
 # Wishing Game - Memory-based Wishing System
@@ -20,7 +20,7 @@ const MEMORY_LIFESPAN = 30.0 # seconds
 const DIMENSION_NAMES = {
     1: "Reality",
     2: "Linear",
-    3: "Spatial", 
+    3: "Node3D", 
     4: "Temporal",
     5: "Consciousness",
     6: "Connection",
@@ -66,7 +66,7 @@ var game_active = false
 var dimension_unlocked = {
     1: true,   # Reality starts unlocked
     2: false,  # Linear
-    3: false,  # Spatial
+    3: false,  # Node3D
     4: false,  # Temporal
     5: false,  # Consciousness
     6: false,  # Connection
@@ -499,7 +499,7 @@ func create_random_wish():
 }
 
     # Generate wish ID
-    var wish_id = "wish_" + str(wishes.size()) + "_" + str(OS.get_unix_time())
+    var wish_id = "wish_" + str(wishes.size()) + "_" + str(OS.Time.get_unix_time_from_system())
 }
 
     # Determine difficulty (higher dimensions = higher difficulty)
@@ -548,7 +548,7 @@ func generate_wish_text(dimension):
             "Create a timeline linking # to #",
             "Establish a path from # to #"
         ],
-        3: [  # Spatial
+        3: [  # Node3D
             "Build a # structure with # dimensions",
             "Form a # in the shape of a #",
             "Construct a # with # spatial attributes"
@@ -611,7 +611,7 @@ func generate_wish_text(dimension):
             "path", "journey", "story", "sequence", "progression", "evolution", "cycle",
             "chain", "line", "history", "future", "development", "growth", "timeline"
         ],
-        3: [  # Spatial - dimensional concepts
+        3: [  # Node3D - dimensional concepts
             "cube", "sphere", "pyramid", "labyrinth", "maze", "vortex", "spiral",
             "dimension", "void", "space", "realm", "territory", "domain", "plane"
         ],
@@ -879,7 +879,7 @@ func create_memory(text, tags = []):
 }
 
     # Generate memory ID
-    var memory_id = "memory_" + str(active_memories.size()) + "_" + str(OS.get_unix_time())
+    var memory_id = "memory_" + str(active_memories.size()) + "_" + str(OS.Time.get_unix_time_from_system())
 }
 
     # Create memory
@@ -1254,26 +1254,26 @@ func process_command(command):
 }
 
     match cmd:
-        "start", "/start":
+        "start", "start":
             result = start_game()
-        "end", "/end":
+        "end", "end":
             result = end_game()
-        "wish", "/wish":
+        "wish", "wish":
             if args.size() > 0:
                 result = create_random_wish()
-        "memory", "/memory":
+        "memory", "memory":
             if args.size() > 0:
                 var memory_text = PoolStringArray(args).join(" ")
                 result = create_memory(memory_text)
-        "dimension", "/dimension":
+        "dimension", "dimension":
             if args.size() > 0 and args[0].is_valid_integer():
                 var dim = int(args[0])
                 result = change_dimension(dim)
-        "score", "/score":
+        "score", "score":
             result = {"score": total_score, "level": current_level}
-        "clear", "/clear":
+        "clear", "clear":
             result = clear_memories()
-        "help", "/help":
+        "help", "help":
             result = {
                 "commands": [
                     "start - Start the game",

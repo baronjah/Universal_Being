@@ -34,7 +34,7 @@ var type_colors = {
     "transformed": Color(0.8, 0.4, 0.8),
     "fused": Color(0.8, 0.6, 0.2),
     "consumed": Color(0.3, 0.3, 0.3)
-}
+	}
 
 # Signals
 signal entity_selected(entity_id)
@@ -95,7 +95,7 @@ func _create_entity_node(entity_id: String) -> void:
             "zones": entity.get_zones(),
             "selected": false,
             "hovered": false
-        }
+			}
         
         entity_nodes[entity_id] = node_data
 
@@ -178,8 +178,8 @@ func _layout_graph() -> void:
     var damping = 0.9
     
     # Initialize forces and velocities
-    var forces = {}
-    var velocities = {}
+    var forces = {
+    var velocities = {
     
     for id in entity_nodes:
         forces[id] = Vector2.ZERO
@@ -253,7 +253,7 @@ func _layout_spatial() -> void:
 
 func _layout_hierarchy() -> void:
     # Layout entities in a hierarchical tree
-    var levels = {}
+    var levels = {
     var max_level = 0
     
     # Group entities by evolution stage
@@ -402,6 +402,7 @@ func _draw() -> void:
             var property_text = ""
             for key in node.properties:
                 property_text += key + ": " + str(node.properties[key]) + "\n"
+				}
             
             var prop_pos = pos + Vector2(0, radius + 30)
             draw_string(ThemeDB.fallback_font, prop_pos, property_text, HORIZONTAL_ALIGNMENT_LEFT, -1, 12)

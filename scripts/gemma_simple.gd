@@ -29,6 +29,7 @@ func pentagon_init() -> void:
 	
 	print("🌟 %s: Gemma Simple Init Complete" % being_name)
 
+
 func pentagon_ready() -> void:
 	super.pentagon_ready()
 	
@@ -36,6 +37,7 @@ func pentagon_ready() -> void:
 	create_gemma_embodiment()
 	
 	print("🌟 %s: Gemma Simple Ready Complete" % being_name)
+
 
 func pentagon_process(delta: float) -> void:
 	super.pentagon_process(delta)
@@ -79,6 +81,7 @@ func create_gemma_embodiment() -> void:
 	
 	terminal_output("✨ Gemma manifested! Try: 'go to tree' or 'look at butterfly'")
 
+
 # ===== COMMAND PROCESSING =====
 
 func execute_command(command: String) -> String:
@@ -105,6 +108,7 @@ func execute_command(command: String) -> String:
 	
 	# Natural language inspection
 	if command.contains("what is") or command.contains("inspect"):
+
 		var target_name = command.split(" ")[-1]
 		var target = find_being(target_name)
 		if target:
@@ -158,8 +162,8 @@ func ai_interface() -> Dictionary:
 		"color": gemma_color,
 		"energy": gemma_energy,
 		"is_visible": gemma_body != null
-	}
 	return base_interface
+}
 
 func ai_invoke_method(method_name: String, args: Array = []) -> Variant:
 	match method_name:

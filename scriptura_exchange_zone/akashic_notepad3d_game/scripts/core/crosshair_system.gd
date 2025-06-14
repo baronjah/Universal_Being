@@ -19,7 +19,7 @@ extends Control
 # 🎮 USER EXPERIENCE: Professional FPS-style targeting system
 # ═══════════════════════════════════════════════════════════════════════════════════════════════
 
-class_name CrosshairSystem
+class_name CrosshairSystem_crosshairsystem_crosshai
 
 # Crosshair configuration
 var crosshair_size: float = 20.0

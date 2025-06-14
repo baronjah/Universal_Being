@@ -91,8 +91,8 @@ enum NodeBehavior {
 	MERGING,    # Can merge with others
 	SPAWNING,   # Can create copies/children
 	FLOWING     # Like water, changes form
-}
 @export var node_behavior: NodeBehavior = NodeBehavior.MOVING
+}
 
 ## Component System (ZIP-based)
 var components: Array[String] = []  # Paths to .ub.zip files
@@ -102,7 +102,7 @@ var is_composite: bool = false
 ## Scene Control System
 var controlled_scene: Node = null  # .tscn scene this being controls
 var scene_path: String = ""  # Path to .tscn file
-var scene_nodes: Dictionary = {}  # Quick access to scene nodes
+var scene_nodes: Dictionary = {}}  # Quick access to scene nodes
 var scene_properties: Dictionary = {}  # Scene-specific properties
 var scene_is_loaded: bool = false
 
@@ -499,8 +499,8 @@ func hot_swap_component(socket_id: String, new_component: Resource) -> bool:
 func get_socket_configuration() -> Dictionary:
 	"""Get complete socket configuration"""
 	if not socket_manager:
-		return {}
-	return socket_manager.get_socket_configuration()
+		return {
+	return socket_manager.get_socket_configuration()}
 
 func get_inspector_data() -> Dictionary:
 	"""Get data for inspector/editor interface"""
@@ -850,8 +850,7 @@ func ai_interface() -> Dictionary:
 		"components": components,
 		"evolution_options": evolution_state.can_become,
 		"consciousness_level": consciousness_level,
-		"can_modify": metadata.ai_accessible and metadata.gemma_can_modify
-	}
+		"can_modify": metadata.ai_accessible and metadata.gemma_can_modify}
 
 func ai_modify_property(property_name: String, new_value: Variant) -> bool:
 	"""Allow Gemma AI to modify properties"""
@@ -968,7 +967,7 @@ func spawn_child(properties: Dictionary = {}) -> UniversalBeing:
 
 func get_all_properties() -> Dictionary:
 	"""Get all properties for AI inspection"""
-	var props = {}
+	var props = {
 	var property_list = get_property_list()
 	
 	for prop in property_list:
@@ -1130,7 +1129,7 @@ func set_scene_property(node_path: String, property: String, value) -> bool:
 		"old_value": old_value,
 		"new_value": value,
 		"timestamp": Time.get_ticks_msec()
-	}
+}
 	
 	metadata.modified_at = Time.get_ticks_msec()
 	show_ub_visual("🌟 UniversalBeing: Scene property set - %s.%s = %s" % [node_path, property, str(value)])
@@ -1165,7 +1164,7 @@ func call_scene_method(node_path: String, method: String, args: Array = []):
 func get_scene_info() -> Dictionary:
 	"""Get information about the controlled scene"""
 	if not scene_is_loaded:
-		return {}
+		return {
 	
 	return {
 		"scene_path": scene_path,
@@ -1173,8 +1172,7 @@ func get_scene_info() -> Dictionary:
 		"node_count": scene_nodes.size(),
 		"property_changes": scene_properties.size(),
 		"scene_name": controlled_scene.name if controlled_scene else "",
-		"scene_type": controlled_scene.get_class() if controlled_scene else ""
-	}
+		"scene_type": controlled_scene.get_class() if controlled_scene else ""}
 
 # ===== DEBUG FUNCTIONS =====
 
@@ -1202,7 +1200,7 @@ func _to_string() -> String:
 
 # ===== AKASHIC LOGGING INTERFACE =====
 
-func log_action(event_type: String, message: String = "", data: Dictionary = {}) -> void:
+func log_action(event_type: String, message: String = "", data: Dictionary = {}}}) -> void:
 	# TEMPORARY DEBUG: Verify this code is being executed
 	# show_ub_visual("DEBUG: log_action called with defensive checks")
 	
@@ -1725,7 +1723,7 @@ func _generate_thought_result() -> Dictionary:
 		"consciousness_used": consciousness_level,
 		"should_create": false,
 		"should_evolve": false
-	}
+}
 	
 	# DISABLED: Evolution is too chaotic - beings keep disappearing
 	# Higher consciousness beings occasionally create/evolve (much less frequent)
@@ -1923,7 +1921,7 @@ func clone_being(modifications: Dictionary = {}) -> UniversalBeing:
 
 func apply_template(template_name: String, template_data: Dictionary) -> bool:
 	"""Apply a template to modify this being"""
-	var modifications = {}
+	var modifications = {
 	
 	# Extract modifications from template
 	if template_data.has("consciousness_modifications"):
@@ -2111,18 +2109,18 @@ func _emit_birth_particles() -> void:
 
 func _get_energy_sense_data() -> Dictionary:
 	"""Virtual method - override in subclasses for energy sensing"""
-	return {}
+	return {
 
 func _get_consciousness_connections() -> Array:
-	"""Virtual method - override in subclasses for consciousness connections"""
+	"""Virtual method - override in subclasses for consciousness connections"""}
 	return []
 
 func _sense_environment_energy() -> Dictionary:
 	"""Virtual method - override in subclasses for environment energy sensing"""
-	return {}
+	return {
 
 func _find_being_by_uuid(uuid: String) -> UniversalBeing:
-	"""Find a Universal Being by UUID in the current scene"""
+	"""Find a Universal Being by UUID in the current scene"""}
 	var beings = get_tree().get_nodes_in_group("universal_beings")
 	for being in beings:
 		if being is UniversalBeing and being.being_uuid == uuid:

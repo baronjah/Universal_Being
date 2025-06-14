@@ -248,7 +248,7 @@ func merge_energies_with(other: PlasmoidUniversalBeing, duration: float = 2.0) -
 		"being": other,
 		"strength": connection_strength,
 		"timer": duration
-	}
+}
 	
 	# Share consciousness insights
 	if connection_strength > 0.7:
@@ -284,6 +284,7 @@ func _animate_birth() -> void:
 	# Animate shader transparency instead of modulate
 	if plasma_shader:
 		tween.tween_method(func(alpha): plasma_shader.set_shader_parameter("alpha", alpha), 0.0, 1.0, 0.5)
+
 	
 	# Birth particles
 	_emit_birth_particles()
@@ -320,8 +321,7 @@ func get_sensory_data() -> Dictionary:
 			"consciousness_level": consciousness_level,
 			"core_intensity": core_intensity,
 			"energy_connections": energy_connections.size()
-		}
-	}
+}
 
 func _get_vision_data() -> Dictionary:
 	"""What the plasmoid 'sees' - 360 degree energy vision"""
@@ -351,7 +351,7 @@ func _get_vision_data() -> Dictionary:
 		"visible_beings": visible_beings,
 		"energy_signatures": energy_signatures,
 		"environment_energy": _sense_environment_energy()
-	}
+}
 
 func process_ai_decision(decision: Dictionary) -> void:
 	"""Process AI companion decisions - equal to human input"""
@@ -359,6 +359,7 @@ func process_ai_decision(decision: Dictionary) -> void:
 		"move":
 			flow_to(decision.get("target", Vector3.ZERO))
 		"interact":
+}
 			var target_uuid = decision.get("target_uuid", "")
 			var target = _find_being_by_uuid(target_uuid)
 			if target:
@@ -366,6 +367,7 @@ func process_ai_decision(decision: Dictionary) -> void:
 		"energy_burst":
 			_start_energy_burst(decision.get("position", global_position + Vector3.FORWARD * 3))
 		"merge":
+
 			var target_uuid = decision.get("target_uuid", "")
 			var target = _find_being_by_uuid(target_uuid)
 			if target and target is PlasmoidUniversalBeing:

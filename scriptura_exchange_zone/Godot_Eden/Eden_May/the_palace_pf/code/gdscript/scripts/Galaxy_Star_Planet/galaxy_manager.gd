@@ -1,5 +1,5 @@
 extends "../universe_particles_physics/scale_manager.gd"
-class_name GalaxyManager
+class_name GalaxyManager_galaxymanager_galaxyma
 
 # Galaxy specific properties
 var galaxy_data = null
@@ -16,9 +16,9 @@ var camera_position = Vector3.ZERO
 var view_frustum = []
 
 # Scenes and resources
-@export var star_scene: PackedScene
-@export var nebula_scene: PackedScene
-@export var dust_scene: PackedScene
+@@export var star_scene: PackedScene
+@@export var nebula_scene: PackedScene
+@@export var dust_scene: PackedScene
 
 # Visual components
 var galaxy_center: Node3D

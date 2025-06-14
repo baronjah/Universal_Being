@@ -4,9 +4,8 @@
 # PURPOSE: Keep the miracle running smooth, fade distant scribbles
 # CREATED: 2025-05-28 - Making space for new miracles
 # ==================================================
-
-extends UniversalBeingBase
-class_name MiracleDeclutterer
+extends \2
+class_name MiracleDeclutterer_miracledeclutterer_miracled
 
 signal object_faded(node: Node3D, reason: String)
 signal object_restored(node: Node3D)
@@ -53,8 +52,8 @@ func _ready() -> void:
 	declutter_timer.start()
 	
 	# Connect to frame guardian if available
-	if has_node("/root/FrameGuardian"):
-		var guardian = get_node("/root/FrameGuardian")
+	if has_node("root/FrameGuardian"):
+		var guardian = get_node("root/FrameGuardian")
 		# We'll work together!
 	
 	print("🌟 [MiracleDeclutterer] Making space for miracles...")
@@ -303,7 +302,7 @@ func force_declutter_all() -> void:
 
 # Console commands
 func register_console_commands() -> void:
-	var console = get_node_or_null("/root/ConsoleManager")
+	var console = get_node_or_null("root/ConsoleManager")
 	if console:
 		console.register_command("declutter_status", _cmd_declutter_status,
 			"Show declutter zone statistics")
@@ -313,7 +312,7 @@ func register_console_commands() -> void:
 			"Show distance zone settings")
 
 func _cmd_declutter_status(_args: Array) -> void:
-	var console = get_node("/root/ConsoleManager")
+	var console = get_node("root/ConsoleManager")
 	var report = get_zone_report()
 	
 	console._print_to_console("[color=cyan]🌟 Miracle Declutterer Status[/color]")
@@ -325,7 +324,7 @@ func _cmd_declutter_status(_args: Array) -> void:
 	console._print_to_console("Total tracked: %d" % report.total)
 
 func _cmd_toggle_declutter(args: Array) -> void:
-	var console = get_node("/root/ConsoleManager")
+	var console = get_node("root/ConsoleManager")
 	
 	if args.size() > 0:
 		enabled = args[0].to_lower() == "on"
@@ -341,7 +340,7 @@ func _cmd_toggle_declutter(args: Array) -> void:
 			_apply_zone_state(state)
 
 func _cmd_show_zones(_args: Array) -> void:
-	var console = get_node("/root/ConsoleManager")
+	var console = get_node("root/ConsoleManager")
 	
 	console._print_to_console("[color=yellow]🎯 Declutter Zones:[/color]")
 	console._print_to_console("Perfect: 0 - %.0fm (everything works)" % ZONE_PERFECT)

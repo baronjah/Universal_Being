@@ -1,5 +1,5 @@
 # game_initializer.gd
-extends Node
+extends \2
 
 # Path for the player data file
 const PLAYER_DATA_PATH = "user://player_data.json"

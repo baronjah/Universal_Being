@@ -249,6 +249,7 @@ func check_hover() -> void:
 			print("🎯 Found Universal Being: %s" % new_hover.being_name)
 		else:
 			print("🎯 No Universal Being found in: %s" % (collider.name if collider else "null"))
+
 	
 	if new_hover != hovered_object:
 		if hovered_object:
@@ -296,6 +297,7 @@ func update_hover_visual() -> void:
 
 func handle_click() -> void:
 	print("🖱️ CURSOR CLICK! Hovered object: %s" % (hovered_object.name if hovered_object else "NONE"))
+
 	
 	if not hovered_object:
 		print("❌ No object to click on!")
@@ -314,8 +316,10 @@ func handle_click() -> void:
 	else:
 		print("⚠️ Not in inspect mode (mode: %d)" % current_mode)
 
+
 func inspect_being(being: UniversalBeing) -> void:
 	print("🔍 Inspecting: %s" % being.being_name)
+
 	
 	# Try bridge first
 	var bridge = get_tree().get_nodes_in_group("inspector_bridge").front()
@@ -364,6 +368,7 @@ func toggle_mode() -> void:
 	
 	print("🎯 Cursor mode: %s" % ("INSPECT" if current_mode == 1 else "INTERACT"))
 
+
 # ===== API =====
 
 func get_cursor_info() -> Dictionary:
@@ -371,7 +376,7 @@ func get_cursor_info() -> Dictionary:
 		"mode": "INSPECT" if current_mode == 1 else "INTERACT",
 		"is_hovering": hovered_object != null,
 		"hovered_object": hovered_object.name if hovered_object else "none"
-	}
+}
 
 func get_cursor_tip_world_position() -> Vector3:
 	if ray_cast:
@@ -409,3 +414,4 @@ func _on_cursor_inspected(being: UniversalBeing) -> void:
 	var console = get_tree().get_nodes_in_group("console").front()
 	if console and console.has_method("add_message"):
 		console.add_message("system", "Inspecting: %s (%s)" % [being.being_name, being.being_type])
+

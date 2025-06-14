@@ -169,7 +169,7 @@ func _apply_center_splitting():
             "data": center_segment,
             "cycle": current_cycle,
             "synergy": _calculate_synergy(center_segment),
-            "timestamp": OS.get_unix_time()
+            "timestamp": OS.Time.get_unix_time_from_system()
         })
 }
 
@@ -267,7 +267,7 @@ func _prepare_for_reset():
     # Archive current data
     if data_packs.size() > 0 or quantum_registry.size() > 0:
         var archive = {
-            "timestamp": OS.get_unix_time(),
+            "timestamp": OS.Time.get_unix_time_from_system(),
             "cycle": current_cycle,
             "data_count": data_packs.size(),
             "quantum_count": quantum_registry.size(),
@@ -278,7 +278,7 @@ func _prepare_for_reset():
 
         # Optional: Save to disk
         # var file = File.new()
-        # file.open("user://data_archive_%d.json" % OS.get_unix_time(), File.WRITE)
+        # file.open("user://data_archive_%d.json" % OS.Time.get_unix_time_from_system(), File.WRITE)
         # file.store_string(JSON.print(archive))
         # file.close()
 }
@@ -426,7 +426,7 @@ func debug_generate_test_data(count=20):
         var test_data = {
             "id": i,
             "message": "Test data pack #%d" % i,
-            "timestamp": OS.get_unix_time(),
+            "timestamp": OS.Time.get_unix_time_from_system(),
             "value": randf()
         }
         add_data_pack(test_data, {"segment_id": i % 5})

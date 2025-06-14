@@ -1,5 +1,5 @@
 extends Node3D
-class_name ModelLoader
+class_name ModelLoader_modelloadel_modelloa
 
 # This class will handle the dynamic creation of models that are missing in the project
 # It will serve as a replacement for the preloaded models

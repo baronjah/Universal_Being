@@ -1,5 +1,5 @@
 extends Node
-class_name UniversalBridge
+class_name UniversalBridge_universalbridge_universa
 
 # This class serves as the central connection point between all major systems:
 # - Element System
@@ -72,14 +72,14 @@ func initialize() -> bool:
 # Find references to all required systems
 func _find_system_references() -> void:
 	# Find Akashic Records Manager
-	if has_node("/root/AkashicRecordsManager"):
-		akashic_records_manager = get_node("/root/AkashicRecordsManager")
+	if has_node("root/AkashicRecordsManager"):
+		akashic_records_manager = get_node("root/AkashicRecordsManager")
 	else:
 		akashic_records_manager = AkashicRecordsManagerA.get_instance()
 	
 	# Find Element Manager
-	if has_node("/root/ElementManager"):
-		element_manager = get_node("/root/ElementManager")
+	if has_node("root/ElementManager"):
+		element_manager = get_node("root/ElementManager")
 	else:
 		# Safely check if tree is available
 		if is_inside_tree():
@@ -93,15 +93,15 @@ func _find_system_references() -> void:
 			call_deferred("_find_element_manager")
 	
 	# Find Thing Creator
-	if has_node("/root/ThingCreator"):
-		thing_creator = get_node("/root/ThingCreator")
+	if has_node("root/ThingCreator"):
+		thing_creator = get_node("root/ThingCreator")
 	else:
 		thing_creator = ThingCreatorA.get_instance()
 	
 	# Find Menu System
-	if has_node("/root/main"):
+	if has_node("root/main"):
 		# This will need to be adjusted based on your actual menu system path
-		menu_system = get_node("/root/main")
+		menu_system = get_node("root/main")
 		
 		# Try to find console system
 		if menu_system.has_node("JSH_console"):

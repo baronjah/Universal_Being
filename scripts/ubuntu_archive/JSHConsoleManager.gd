@@ -69,8 +69,7 @@ var default_commands: Dictionary = {
         "arg_types": [TYPE_STRING],
         "arg_descriptions": ["Optional subsystem to show info for"],
         "system": true
-    }
-}
+		}
 
 # Command execution
 var command_history: Array = []
@@ -95,6 +94,7 @@ func _init() -> void:
         _instance = self
         name = "JSHConsoleManager"
         print("JSHConsoleManager: Instance created")
+		}
         
         # Register default commands
         for cmd_name in default_commands:
@@ -106,7 +106,7 @@ func _ready() -> void:
         "system": "JSH Eden Console",
         "version": "1.0.0",
         "start_time": Time.get_datetime_string_from_system()
-    }
+		}
 
 # Command registration
 func register_command(command_name: String, command_data: Dictionary) -> bool:
@@ -155,7 +155,8 @@ func unregister_command(command_name: String) -> bool:
 
 func execute_command(command_text: String) -> Dictionary:
     if command_text.strip_edges().is_empty():
-        return { "success": false, "message": "Empty command" }
+        return { "success": false, "message": "Empty command"
+		}
     
     # Add command to history
     if command_history.size() >= command_history_limit:
@@ -174,9 +175,9 @@ func execute_command(command_text: String) -> Dictionary:
             "success": false,
             "message": "Unknown command: " + command_name,
             "command": command_name
-        }
         emit_signal("command_executed", command_text, result)
         return result
+}
     
     var command = commands[command_name]
     
@@ -186,18 +187,18 @@ func execute_command(command_text: String) -> Dictionary:
             "success": false,
             "message": "Not enough arguments. Usage: " + command.usage,
             "command": command_name
-        }
         emit_signal("command_executed", command_text, result)
         return result
+}
     
     if command.max_args >= 0 and args.size() > command.max_args:
         var result = {
             "success": false,
             "message": "Too many arguments. Usage: " + command.usage,
             "command": command_name
-        }
         emit_signal("command_executed", command_text, result)
         return result
+}
     
     # Type conversion and validation
     var converted_args = args
@@ -215,9 +216,9 @@ func execute_command(command_text: String) -> Dictionary:
                             "success": false,
                             "message": "Argument " + str(i+1) + " must be an integer",
                             "command": command_name
-                        }
                         emit_signal("command_executed", command_text, result)
                         return result
+}
                 
                 TYPE_FLOAT:
                     if args[i].is_valid_float():
@@ -227,9 +228,9 @@ func execute_command(command_text: String) -> Dictionary:
                             "success": false,
                             "message": "Argument " + str(i+1) + " must be a number",
                             "command": command_name
-                        }
                         emit_signal("command_executed", command_text, result)
                         return result
+}
                 
                 TYPE_BOOL:
                     var lower_arg = args[i].to_lower()
@@ -242,9 +243,9 @@ func execute_command(command_text: String) -> Dictionary:
                             "success": false,
                             "message": "Argument " + str(i+1) + " must be a boolean value",
                             "command": command_name
-                        }
                         emit_signal("command_executed", command_text, result)
                         return result
+}
                 
                 _:  # String or other types
                     converted_args.append(args[i])
@@ -268,13 +269,12 @@ func execute_command(command_text: String) -> Dictionary:
             "success": true,
             "message": "Command executed",
             "command": command_name
-        }
     elif typeof(result) != TYPE_DICTIONARY:
         result = {
             "success": true,
             "message": str(result),
             "command": command_name
-        }
+			}
     
     # Add command info
     if not result.has("command"):
@@ -290,13 +290,16 @@ func get_command_list() -> Array:
 func get_command_help(command_name: String) -> String:
     if not commands.has(command_name):
         return "Unknown command: " + command_name
+		}
     
     var command = commands[command_name]
     var help_text = command_name + ": " + command.description + "\n"
     help_text += "Usage: " + command.usage + "\n"
+	
     
     if command.has("arg_descriptions") and command.arg_descriptions.size() > 0:
         help_text += "Arguments:\n"
+		
         
         for i in range(command.arg_descriptions.size()):
             var type_str = "any"
@@ -306,6 +309,7 @@ func get_command_help(command_name: String) -> String:
                     TYPE_FLOAT: type_str = "number"
                     TYPE_BOOL: type_str = "boolean"
                     TYPE_STRING: type_str = "string"
+					
             
             help_text += "  - " + command.arg_descriptions[i] + " (" + type_str + ")\n"
     
@@ -318,12 +322,15 @@ func print_line(text: String, color: Color = Color.WHITE) -> void:
 
 func print_error(text: String) -> void:
     print_line("ERROR: " + text, Color(1, 0.3, 0.3))
+	
 
 func print_warning(text: String) -> void:
     print_line("WARNING: " + text, Color(1, 0.9, 0.2))
+	
 
 func print_success(text: String) -> void:
     print_line("SUCCESS: " + text, Color(0.3, 1, 0.3))
+	
 
 func clear() -> void:
     output_buffer.clear()
@@ -373,6 +380,7 @@ func get_autocomplete_suggestions(partial_command: String) -> Array:
             var command = commands[cmd_name]
             
             if command.has("arg_autocomplete"):
+			
                 var arg_index = parts.size() - 2  # -2 because parts[0] is command, and we want index of current arg
                 if arg_index < command.arg_autocomplete.size():
                     var autocomplete_func = command.arg_autocomplete[arg_index]
@@ -429,30 +437,33 @@ func _cmd_help(self, args = []) -> Dictionary:
     if args.size() == 0:
         # General help
         print_line("Available commands:")
+		
         var sorted_commands = commands.keys()
         sorted_commands.sort()
         
         for cmd in sorted_commands:
             print_line("  " + cmd + ": " + commands[cmd].description)
+			
         
         print_line("\nType 'help <command>' for detailed help on a specific command.")
-        return { "success": true, "message": "Help displayed" }
+        return { "success": true, "message": "Help displayed"}
     else:
         # Specific command help
         var command_name = args[0]
         
         if commands.has(command_name):
             print_line(get_command_help(command_name))
-            return { "success": true, "message": "Help for " + command_name + " displayed" }
+            return { "success": true, "message": "Help for " + command_name + " displayed"}
         else:
             print_error("Unknown command: " + command_name)
             print_line("Type 'list' to see all available commands.")
-            return { "success": false, "message": "Unknown command: " + command_name }
-    }
+            return { "success": false, "message": "Unknown command: " + command_name
+			}
 
 func _cmd_clear(self) -> Dictionary:
     clear()
-    return { "success": true, "message": "Console cleared" }
+    return { "success": true, "message": "Console cleared"
+	}
 
 func _cmd_list(self, args = []) -> Dictionary:
     var filter = ""
@@ -470,22 +481,25 @@ func _cmd_list(self, args = []) -> Dictionary:
                 filtered_commands.append(cmd)
     
     print_line("Commands" + (" matching '" + filter + "'" if not filter.is_empty() else "") + ":")
+	
     
     for cmd in filtered_commands:
         var system_tag = "[system] " if commands[cmd].get("system", false) else ""
         print_line("  " + cmd + ": " + system_tag + commands[cmd].description)
+		
     
     return {
         "success": true,
         "message": str(filtered_commands.size()) + " commands listed",
         "commands": filtered_commands
-    }
+		}
 
 func _cmd_history(self, args = []) -> Dictionary:
     if args.size() > 0 and args[0].to_lower() == "clear":
         clear_command_history()
         print_line("Command history cleared")
-        return { "success": true, "message": "Command history cleared" }
+        return { "success": true, "message": "Command history cleared"
+		}
     
     if command_history.size() == 0:
         print_line("Command history is empty")
@@ -493,17 +507,19 @@ func _cmd_history(self, args = []) -> Dictionary:
         print_line("Command history:")
         for i in range(command_history.size()):
             print_line(str(i+1) + ": " + command_history[i])
+			
     
     return {
         "success": true,
         "message": str(command_history.size()) + " commands in history",
         "history": command_history
-    }
+		}
 
 func _cmd_echo(self, args: Array) -> Dictionary:
     var message = " ".join(args)
     print_line(message)
-    return { "success": true, "message": message }
+    return { "success": true, "message": message
+	}
 
 func _cmd_info(self, args = []) -> Dictionary:
     var subsystem = ""
@@ -519,18 +535,22 @@ func _cmd_info(self, args = []) -> Dictionary:
         print_line("Commands: " + str(commands.size()))
         print_line("History: " + str(command_history.size()))
         print_line("Variables: " + str(variables.size()))
+		
         
         # System details
         var system_info = Engine.get_engine_info()
         print_line("\nEngine:")
         print_line("  Version: " + system_info.version)
         print_line("  Platform: " + OS.get_name())
+		
         
         var datetime = Time.get_datetime_dict_from_system()
         print_line("Time: " + "%02d:%02d:%02d" % [datetime.hour, datetime.minute, datetime.second])
         print_line("Date: " + "%04d-%02d-%02d" % [datetime.year, datetime.month, datetime.day])
+		
     
     if subsystem == "entity" or subsystem == "entities":
+	
         var entity_manager = get_node_or_null("/root/JSHEntityManager") or JSHEntityManager.get_instance()
         
         if entity_manager:
@@ -540,10 +560,12 @@ func _cmd_info(self, args = []) -> Dictionary:
             print_line("Total Entities: " + str(stats.total_entities))
             print_line("Process Queue: " + str(stats.process_queue_size))
             print_line("Average Complexity: " + str(snappedf(stats.average_complexity, 0.01)))
+			
             
             print_line("\nEntities by Type:")
             for type in stats.by_type:
                 print_line("  " + type + ": " + str(stats.by_type[type]))
+				
             
             print_line("\nEntities by Evolution Stage:")
             for stage in stats.by_evolution_stage:
@@ -552,6 +574,7 @@ func _cmd_info(self, args = []) -> Dictionary:
             print_error("Entity Manager not found")
     
     if subsystem == "db" or subsystem == "database":
+	
         var db_manager = get_node_or_null("/root/JSHDatabaseManager") or JSHDatabaseManager.get_instance()
         
         if db_manager:
@@ -561,6 +584,7 @@ func _cmd_info(self, args = []) -> Dictionary:
             print_line("Entity Count: " + str(stats.entity_count if stats.has("entity_count") else "Unknown"))
             print_line("Dictionary Count: " + str(stats.dictionary_count if stats.has("dictionary_count") else "Unknown"))
             print_line("Zone Count: " + str(stats.zone_count if stats.has("zone_count") else "Unknown"))
+			
             
             if stats.has("cache"):
                 print_line("\nCache:")
@@ -571,6 +595,7 @@ func _cmd_info(self, args = []) -> Dictionary:
             print_error("Database Manager not found")
     
     if subsystem == "spatial" or subsystem == "space":
+	
         var spatial_manager = get_node_or_null("/root/JSHSpatialManager") or JSHSpatialManager.get_instance()
         
         if spatial_manager:
@@ -581,8 +606,10 @@ func _cmd_info(self, args = []) -> Dictionary:
             print_line("Loaded Zones: " + str(stats.loaded_zones))
             print_line("Visible Entities: " + str(stats.visible_entities))
             print_line("Active Zone: " + str(stats.active_zone))
+			
             
             print_line("\nActive Zone Details:")
+			
             var active_zone = spatial_manager.get_active_zone()
             if not active_zone.is_empty():
                 var zone_stats = spatial_manager.get_zone_statistics(active_zone)
@@ -594,6 +621,6 @@ func _cmd_info(self, args = []) -> Dictionary:
                 print_line("  Transition Count: " + str(zone_stats.transition_count))
                 print_line("  Child Zones: " + str(zone_stats.child_count))
         else:
-            print_error("Spatial Manager not found")
+            print_error("Node3D Manager not found")
     
-    return { "success": true, "message": "System information displayed" }
+    return { "success": true, "message": "System information displayed"

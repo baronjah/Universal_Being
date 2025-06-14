@@ -1,8 +1,9 @@
 extends Resource
-class_name StarSystem
+class_name StarSystem_starsystem_starsyst
 
 # Star Types
-enum StarType {
+enum \2 {
+
 	O_TYPE,    # Blue, extremely hot and bright
 	B_TYPE,    # Blue-white, very hot
 	A_TYPE,    # White, hot

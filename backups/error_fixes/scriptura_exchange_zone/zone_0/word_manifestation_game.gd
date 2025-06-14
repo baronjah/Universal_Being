@@ -78,9 +78,9 @@ func initialize_word_processor():
     add_child(word_processor)
     
     # Connect signals
-    word_processor.connect("word_processed", self, "_on_word_processed")
-    word_processor.connect("reality_created", self, "_on_reality_created")
-    word_processor.connect("divine_level_changed", self, "_on_divine_level_changed")
+    word_processor.connect(_on_word_processed)
+    word_processor.connect(_on_reality_created)
+    word_processor.connect(_on_divine_level_changed)
     
     print("Word processor initialized with %d divine words" % word_processor.word_power_dictionary.size())
 
@@ -727,8 +727,8 @@ func set_visualizer(vis_node):
     
     if visualizer:
         # Connect signals
-        visualizer.connect("visualization_ready", self, "_on_visualization_ready")
-        visualizer.connect("word_selected", self, "_on_visualizer_word_selected")
+        visualizer.connect(_on_visualization_ready)
+        visualizer.connect(_on_visualizer_word_selected)
         
         print("Connected to 3D visualizer")
     }

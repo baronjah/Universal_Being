@@ -88,7 +88,7 @@ func _connect_systems():
     # Connect to Turn System
     turn_system = get_node_or_null("/root/TurnSystem")
     if turn_system:
-        turn_system.connect("turn_advanced", self, "_on_turn_advanced")
+        turn_system.connect(_on_turn_advanced)
         active_turn = turn_system.get_current_turn()
     
     # Connect to Divine Word Processor
@@ -103,7 +103,7 @@ func _setup_processing_timer():
     timer.one_shot = false
     timer.autostart = false
     timer.name = "AutoProcessingTimer"
-    timer.connect("timeout", self, "_on_processing_timer")
+    timer.connect(_on_processing_timer)
     add_child(timer)
 
 func _initialize_word_powers():
@@ -281,7 +281,7 @@ func _process_command(command, core_id):
         if word in CORE_WORDS:
             core_words_found.append(word)
     
-    if core_words_found.empty():
+    if core_words_found.is_empty():
         return
     
     print("Auto Agent processing command with core words: " + str(core_words_found))

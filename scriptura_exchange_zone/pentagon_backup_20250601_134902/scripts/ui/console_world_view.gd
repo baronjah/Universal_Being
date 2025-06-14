@@ -1,5 +1,5 @@
 extends UniversalBeingBase
-class_name ConsoleWorldView
+class_name ConsoleWorldView_consolew
 # Console World View - Text-based representation of the 3D world
 # Shows entities, their states, and relationships in ASCII
 
@@ -58,7 +58,7 @@ func pentagon_ready() -> void:
 	_initialize_world_grid()
 	
 	# Connect to layer system
-	var layer_system = get_node_or_null("/root/LayerRealitySystem")
+	var layer_system = get_node_or_null("root/LayerRealitySystem")
 	if layer_system:
 		layer_system.layer_visibility_changed.connect(_on_layer_visibility_changed)
 	

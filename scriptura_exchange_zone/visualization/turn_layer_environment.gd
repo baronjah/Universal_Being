@@ -2,7 +2,7 @@ extends Node3D
 ## Turn Layer Environment Controller
 ## Implements 5-layer architecture from Akashic 3D for turn visualization
 ## Each layer represents different aspects of the 12-turn cycle
-class_name TurnLayerEnvironment
+class_name TurnLayerEnvironment_turnlayerenvironment_turnlaye
 
 # ==================================================
 # SCRIPT NAME: turn_layer_environment.gd
@@ -87,13 +87,13 @@ func _ready() -> void:
 # CONNECTION: Links to core systems
 func _get_autoload_references() -> void:
 	# Get thread manager if it exists
-	if has_node("/root/ThreadManager"):
-		thread_manager = get_node("/root/ThreadManager")
+	if has_node("root/ThreadManager"):
+		thread_manager = get_node("root/ThreadManager")
 		print("✅ Thread Manager connected")
 	
 	# Get word processor if it exists
-	if has_node("/root/WordProcessorTasks"):
-		word_processor = get_node("/root/WordProcessorTasks")
+	if has_node("root/WordProcessorTasks"):
+		word_processor = get_node("root/WordProcessorTasks")
 		print("✅ Word Processor connected")
 
 ## Initialize with camera and controller

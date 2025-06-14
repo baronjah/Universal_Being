@@ -1,6 +1,6 @@
 extends Node
 
-class_name DimensionEngine
+class_name DimensionEngine_dimensionengine_dimensio
 
 # Dimension Engine for Eden_OS
 # Manages the multi-dimensional aspects of the World of Words game

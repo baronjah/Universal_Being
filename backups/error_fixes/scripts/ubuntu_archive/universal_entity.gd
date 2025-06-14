@@ -15,7 +15,7 @@ signal property_changed(property_name, old_value, new_value)
 signal interacted(other_entity, result)
 
 func _init(id: String = "", type: String = "primordial", init_properties: Dictionary = {}) -> void:
-    if id.empty():
+    if id.is_empty():
         entity_id = generate_entity_id()
     else:
         entity_id = id
@@ -73,7 +73,7 @@ func add_transformation_record(action: String, from_type: String, to_type: Strin
         "from_type": from_type,
         "to_type": to_type,
         "timestamp": Time.get_datetime_string_from_system()
-    }
+		}
     
     transformation_history.append(record)
 
@@ -100,7 +100,7 @@ func interact_with(other_entity: UniversalEntity) -> Dictionary:
         "target_entity": other_entity,
         "source_type": entity_type,
         "target_type": other_entity.entity_type if other_entity else "none"
-    }
+		}
     
     # Signal that interaction happened
     emit_signal("interacted", other_entity, result)
@@ -135,7 +135,7 @@ func to_dict() -> Dictionary:
         "creation_timestamp": creation_timestamp,
         "transformation_history": transformation_history,
         "references": references
-    }
+		}
 
 func from_dict(data: Dictionary) -> bool:
     if not data.has("entity_id") or not data.has("entity_type"):

@@ -1,5 +1,5 @@
 extends Control
-class_name AkashicRecordsUI
+class_name AkashicRecordsUI_akashicrecordsui_akashicr
 
 # References
 var akashic_records_manager = null
@@ -18,8 +18,8 @@ var current_selected_word: String = ""
 
 func _ready():
 	# Find AkashicRecordsManager
-	if has_node("/root/AkashicRecordsManager"):
-		akashic_records_manager = get_node("/root/AkashicRecordsManager")
+	if has_node("root/AkashicRecordsManager"):
+		akashic_records_manager = get_node("root/AkashicRecordsManager")
 	else:
 		print("AkashicRecordsManager not found!")
 		status_label.text = "Error: AkashicRecordsManager not found!"
@@ -59,7 +59,7 @@ func _connect_signals():
 
 func _initialize_visualizer():
 	# Load the FrequencyVisualizer script and create an instance
-	var visualizer_script = load("res://code/gdscript/scripts/akashic_records/frequency_visualizer.gd")
+	var visualizer_script = load("res://scripts/gdscript/scripts/akashic_records/frequency_visualizer.gd")
 	if visualizer_script:
 		frequency_visualizer = visualizer_script.new()
 		frequency_visualizer.akashic_records = akashic_records_manager
@@ -100,7 +100,7 @@ func _populate_word_list():
 			"concept":
 				word_list.set_item_icon(word_list.get_item_count() - 1, get_icon("Control"))
 			"entity":
-				word_list.set_item_icon(word_list.get_item_count() - 1, get_icon("Spatial"))
+				word_list.set_item_icon(word_list.get_item_count() - 1, get_icon("Node3D"))
 	
 	status_label.text = "Found " + str(words.size()) + " words"
 

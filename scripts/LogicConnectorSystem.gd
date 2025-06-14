@@ -26,6 +26,7 @@ func _ready() -> void:
 	name = "LogicConnectorSystem"
 	add_to_group("logic_connector_system")
 	print("🔌 LogicConnectorSystem: Universal Being logic connection management ready")
+
 	
 	# Auto-discover and register Universal Beings
 	if auto_register_enabled:
@@ -41,6 +42,7 @@ func _auto_discover_universal_beings() -> void:
 	_scan_node_for_universal_beings(get_tree().root)
 	
 	print("🔌 Auto-discovery complete: %d Universal Beings registered" % LogicConnector.get_debuggable_count())
+
 
 func _scan_node_for_universal_beings(node: Node) -> void:
 	"""Recursively scan node tree for Universal Beings"""
@@ -80,6 +82,7 @@ func register_universal_being(being: Node) -> bool:
 	
 	# Ensure it has the required debug interface
 	if not being.has_method("get_debug_payload"):
+
 		# Create minimal debug interface if missing
 		_create_minimal_debug_interface(being)
 	
@@ -123,7 +126,7 @@ func create_logic_connection(from: Node, to: Node, connection_type: String = "de
 		"type": connection_type,
 		"created": Time.get_ticks_msec(),
 		"active": true
-	}
+}
 	
 	# Add to LogicConnector tracking
 	if not LogicConnector.socket_connections.has(from):
@@ -136,6 +139,7 @@ func create_logic_connection(from: Node, to: Node, connection_type: String = "de
 	
 	logic_connection_established.emit(from, to, connection_type)
 	print("🔌 Logic connection created: %s → %s (%s)" % [from.name, to.name, connection_type])
+
 	
 	return connection
 
@@ -209,7 +213,7 @@ func execute_action_on_being(being: Node, action_name: String, parameters: Dicti
 		"success": false,
 		"message": "",
 		"result": null
-	}
+}
 	
 	# Use LogicConnector to execute the action
 	if being.has_method(action_name):
@@ -232,7 +236,7 @@ func get_system_status() -> Dictionary:
 		"visualization_count": connection_visualizations.size(),
 		"auto_register_enabled": auto_register_enabled,
 		"debuggable_types": LogicConnector.get_debuggable_types()
-	}
+}
 
 func _count_active_connections() -> int:
 	"""Count total active logic connections"""

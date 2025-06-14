@@ -1,7 +1,7 @@
 extends Node
 }
 
-class_name MemoryInvestmentSystem
+class_name MemoryInvestmentSystem_memoryinvestmentsystem_memoryin
 }
 
 # Memory Investment System - Tracks value and growth of invested words and concepts
@@ -61,7 +61,7 @@ class Investment:
 		category = cat
 		initial_value = val
 		current_value = val
-		investment_date = OS.get_unix_time()
+		investment_date = OS.Time.get_unix_time_from_system()
 		last_updated = investment_date
 		growth_rate = INVESTMENT_RETURN_RATES[cat] if cat in INVESTMENT_RETURN_RATES else 0.03
 		maturity_cycle = randi() % INVESTMENT_CYCLES + 1
@@ -104,7 +104,7 @@ class Investment:
 
 	func pause_investment(duration):
 		is_paused = true
-		pause_until = OS.get_unix_time() + duration
+		pause_until = OS.Time.get_unix_time_from_system() + duration
 		return pause_until
 }
 
@@ -138,7 +138,7 @@ signal turn_advanced(turn_number)
 
 func _ready():
 	# Initialize the system
-	cycle_start_time = OS.get_unix_time()
+	cycle_start_time = OS.Time.get_unix_time_from_system()
 }
 
 	# Set up timers
@@ -164,7 +164,7 @@ func _ready():
 }
 
 	print("Memory Investment System initialized")
-	print("Current cycle: " + str(current_cycle) + "/" + str(INVESTMENT_CYCLES))
+	print("Current cycle: " + str(current_cycle) + "" + str(INVESTMENT_CYCLES))
 }
 
 func _process(delta):
@@ -183,14 +183,14 @@ func _process(delta):
 
 func connect_to_memory_system():
 	# Connect to ProjectMemorySystem if available
-	if has_node("/root/ProjectMemorySystem") or get_node_or_null("/root/ProjectMemorySystem"):
+	if has_node("root/ProjectMemorySystem") or get_node_or_null("root/ProjectMemorySystem"):
 		memory_system = get_node("\1") as Node
 		print("Connected to ProjectMemorySystem")
 		return true
 }
 
 	# Try SmartAccountSystem path
-	if has_node("/root/SmartAccountSystem/ProjectMemorySystem") or get_node_or_null("/root/SmartAccountSystem/ProjectMemorySystem"):
+	if has_node("root/SmartAccountSystem/ProjectMemorySystem") or get_node_or_null("root/SmartAccountSystem/ProjectMemorySystem"):
 		memory_system = get_node("\1") as Node
 		print("Connected to ProjectMemorySystem under SmartAccountSystem")
 		return true
@@ -202,10 +202,10 @@ func connect_to_memory_system():
 func connect_to_turn_system():
 	# Look for turn system in different paths
 	var potential_paths = [
-		"/root/TurnSystem",
-		"/root/SmartAccountSystem/TurnSystem",
-		"/root/12_turns_system",
-		"/root/turn_manager"
+		"root/TurnSystem",
+		"root/SmartAccountSystem/TurnSystem",
+		"root/12_turns_system",
+		"root/turn_manager"
 	]
 }
 
@@ -288,7 +288,7 @@ func update_investment(investment_id):
 }
 
 	var investment = active_investments[investment_id]
-	var current_time = OS.get_unix_time()
+	var current_time = OS.Time.get_unix_time_from_system()
 }
 
 	# Update investment value
@@ -309,7 +309,7 @@ func update_investment(investment_id):
 }
 
 func update_all_investments():
-	var current_time = OS.get_unix_time()
+	var current_time = OS.Time.get_unix_time_from_system()
 	var total_old_value = total_portfolio_value
 	total_portfolio_value = 0
 }
@@ -372,10 +372,10 @@ func mature_investment(investment_id):
 
 func start_cycle(cycle_number):
 	current_cycle = cycle_number
-	cycle_start_time = OS.get_unix_time()
+	cycle_start_time = OS.Time.get_unix_time_from_system()
 }
 
-	print("Starting investment cycle " + str(current_cycle) + "/" + str(INVESTMENT_CYCLES))
+	print("Starting investment cycle " + str(current_cycle) + "" + str(INVESTMENT_CYCLES))
 }
 
 	# Set up auto-next turn if enabled
@@ -429,7 +429,7 @@ func pause_system(duration = DEFAULT_PAUSE_DURATION):
 
 	# Pause the system
 	is_system_paused = true
-	pause_end_time = OS.get_unix_time() + duration
+	pause_end_time = OS.Time.get_unix_time_from_system() + duration
 }
 
 	# Pause all active investments
@@ -467,7 +467,7 @@ func resume_system():
 
 	# Resume next turn timer if auto-next turn is enabled
 	if auto_next_turn:
-		var remaining_time = pause_end_time - OS.get_unix_time()
+		var remaining_time = pause_end_time - OS.Time.get_unix_time_from_system()
 		if remaining_time <= 0:
 			# Start a new turn timer with default duration
 			var turn_duration = _calculate_turn_duration()
@@ -676,7 +676,7 @@ func _calculate_turn_duration():
 
 func _generate_investment_id(word):
 	# Generate unique ID for investment
-	return "inv_" + word.replace(" ", "_") + "_" + str(OS.get_unix_time())
+	return "inv_" + word.replace(" ", "_") + "_" + str(OS.Time.get_unix_time_from_system())
 }
 
 func _sort_by_value(a, b):

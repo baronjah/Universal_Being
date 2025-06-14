@@ -4,7 +4,6 @@
 # PURPOSE: Connect proper walking ragdoll to JSH framework and floodgate system
 # CREATED: 2025-05-25 - Ragdoll domino effect fix
 # ==================================================
-
 extends UniversalBeingBase
 # 7-Part Ragdoll Components (based on ProceduralWalk structure)
 var spine_bones = []
@@ -342,7 +341,7 @@ func _create_ankle_joint(parts: Dictionary, parent_name: String, child_name: Str
 
 func _connect_to_jsh_framework() -> void:
 	# Connect to main game controller's JSH system
-	var main_controller = get_node_or_null("/root/main") 
+	var main_controller = get_node_or_null("root/main") 
 	if not main_controller:
 		main_controller = get_tree().current_scene
 	
@@ -362,7 +361,7 @@ func _connect_to_jsh_framework() -> void:
 
 func _connect_to_floodgate() -> void:
 	# Connect to FloodgateController
-	var floodgate = get_node_or_null("/root/FloodgateController")
+	var floodgate = get_node_or_null("root/FloodgateController")
 	if floodgate:
 		print("🌊 [SevenPartRagdoll] Connected to Floodgate system")
 		
@@ -648,12 +647,12 @@ func stop_patrol() -> void:
 
 # Floodgate Integration Signal Handlers
 func _on_ragdoll_state_changed(new_state: String) -> void:
-	var floodgate = get_node_or_null("/root/FloodgateController")
+	var floodgate = get_node_or_null("root/FloodgateController")
 	if floodgate:
 		floodgate.queue_ragdoll_position_update(ragdoll_id, global_position, new_state)
 
 func _on_ragdoll_position_updated(pos: Vector3) -> void:
-	var floodgate = get_node_or_null("/root/FloodgateController")
+	var floodgate = get_node_or_null("root/FloodgateController")
 	if floodgate:
 		var current_state = "idle"
 		if is_walking:
@@ -729,7 +728,7 @@ func say(text: String) -> void:
 	
 	# Get dialogue system if available
 	if not dialogue_system:
-		dialogue_system = get_node_or_null("/root/DialogueSystem")
+		dialogue_system = get_node_or_null("root/DialogueSystem")
 	
 	if dialogue_system and dialogue_system.has_method("show_ragdoll_dialogue"):
 		dialogue_system.show_ragdoll_dialogue(text)

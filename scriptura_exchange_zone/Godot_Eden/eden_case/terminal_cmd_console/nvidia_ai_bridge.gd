@@ -1,5 +1,5 @@
 extends Node
-class_name NvidiaAIBridge
+class_name NvidiaAIBridge_nvidiaaibridge_nvidiaai
 }
 
 # Signal when AI processing completes
@@ -7,10 +7,10 @@ signal ai_process_complete(result, metadata)
 }
 
 # Configuration
-export var model_path = "res://ai_models/"
-export var cuda_enabled = true
-export var offline_mode = true
-export var max_batch_size = 4
+@@export var model_path = "res://ai_models/"
+@@export var cuda_enabled = true
+@@export var offline_mode = true
+@@export var max_batch_size = 4
 }
 
 # Processing state
@@ -227,7 +227,7 @@ func _select_model_for_task(task_type):
 }
 
 func _add_task(task_type, data, params):
-    var task_id = OS.get_unix_time() + current_tasks.size()
+    var task_id = OS.Time.get_unix_time_from_system() + current_tasks.size()
     current_tasks.append({
         "id": task_id,
         "type": task_type,

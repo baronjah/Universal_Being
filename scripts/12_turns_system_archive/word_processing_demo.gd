@@ -55,6 +55,7 @@ func _ready():
 # Process text input into words
 func process_text(input_text: String) -> void:
 	print("Processing text: %s" % input_text)
+
 	
 	# Reset any previous results
 	if output_rich_text:
@@ -69,7 +70,7 @@ func process_text(input_text: String) -> void:
 	var process_params = {
 		"text": input_text,
 		"dimension": current_dimension
-	}
+}
 	
 	var task_id = thread_manager.add_task(
 		Callable(word_processor, "process_text_input"),
@@ -77,34 +78,42 @@ func process_text(input_text: String) -> void:
 	)
 	
 	print("Text processing task started with ID: %s" % task_id)
+
 	
 	# We'll handle the rest in the task completion callback
 
 # Handle task completion
 func _on_task_completed(task_id: String, result):
 	print("Task completed: %s" % task_id)
+
 	
 	# Check what kind of result we got
 	if result is Dictionary:
 		if result.has("words") and result.has("word_count"):
+
 			# This is the result from process_text_input
 			_handle_text_processing_result(result)
 		elif result.has("word") and result.has("power"):
+
 			# This is the result from calculate_word_power
 			_handle_word_power_result(result)
 		elif result.has("word") and result.has("connections"):
+
 			# This is the result from calculate_word_connections
 			_handle_word_connections_result(result)
 		elif result.has("word") and result.has("physics"):
+
 			# This is the result from calculate_word_physics
 			_handle_word_physics_result(result)
 		elif result.has("word") and result.has("evolution_stage"):
+
 			# This is the result from calculate_word_evolution
 			_handle_word_evolution_result(result)
 
 # Handle text processing result
 func _handle_text_processing_result(result: Dictionary) -> void:
 	print("Text processed: %d words found" % result.word_count)
+
 	
 	if output_rich_text:
 		output_rich_text.clear()
@@ -120,7 +129,7 @@ func _handle_text_processing_result(result: Dictionary) -> void:
 			"word": word,
 			"dimension": current_dimension,
 			"cosmic_age": cosmic_age
-		}
+}
 		
 		# Process word power
 		thread_manager.add_task(
@@ -136,6 +145,7 @@ func _handle_word_power_result(result: Dictionary) -> void:
 	var color = result.color
 	
 	print("Word power calculated: %s = %.2f (%s)" % [word, power, tier])
+
 	
 	# For this demo, we'll just create a formatted output
 	if output_rich_text:
@@ -152,7 +162,7 @@ func _handle_word_power_result(result: Dictionary) -> void:
 	var physics_params = {
 		"word_data": result,
 		"dimension": current_dimension
-	}
+}
 	
 	thread_manager.add_task(
 		Callable(word_processor, "calculate_word_physics"),
@@ -165,7 +175,7 @@ func _handle_word_power_result(result: Dictionary) -> void:
 		"current_stage": 0,
 		"dimension": current_dimension,
 		"cosmic_age": cosmic_age
-	}
+}
 	
 	thread_manager.add_task(
 		Callable(word_processor, "calculate_word_evolution"),
@@ -180,6 +190,7 @@ func _handle_word_physics_result(result: Dictionary) -> void:
 	print("Physics calculated for word: %s" % word)
 	print("- Position: %s" % physics.position)
 	print("- Mass: %.2f" % physics.mass)
+
 	
 	# In a real app, we would use this to position the word in 3D space
 
@@ -203,6 +214,7 @@ func _handle_word_evolution_result(result: Dictionary) -> void:
 	print("Evolution calculated for word: %s" % word)
 	print("- Stage: %s (level %d)" % [stage_name, stage])
 	print("- New power: %.2f" % power)
+
 	
 	# In a real app, we would use this to show the evolution animation
 
@@ -210,13 +222,16 @@ func _handle_word_evolution_result(result: Dictionary) -> void:
 func _on_task_failed(task_id: String, error):
 	print("Task failed: %s" % task_id)
 	print("Error: %s" % error)
+
 	
 	# Update UI to show the error
 	output_rich_text.append_text("[color=red]Error processing text: %s[/color]\n" % error)
 
+
 # Handle task group completion
 func _on_task_group_completed(group_id: String):
 	print("Task group completed: %s" % group_id)
+
 	
 	# Update UI to show completion
 	if output_rich_text:
@@ -244,6 +259,7 @@ func change_dimension(new_dimension: int) -> void:
 	if dimension_label:
 		dimension_label.text = "Dimension: %d" % (current_dimension + 1)
 
+
 # Change the cosmic age
 func change_cosmic_age(new_age: int) -> void:
 	cosmic_age = new_age
@@ -251,6 +267,7 @@ func change_cosmic_age(new_age: int) -> void:
 	
 	if cosmic_age_label:
 		cosmic_age_label.text = "Cosmic Age: %d" % cosmic_age
+
 
 # Demo function to run a batch of word power calculations
 func run_word_power_batch() -> void:
@@ -285,6 +302,7 @@ func get_thread_stats() -> String:
 	stats_text += "- Avg Processing Time: %.2f ms\n" % stats.avg_processing_time
 	stats_text += "- Max Processing Time: %.2f ms\n" % stats.max_processing_time
 	stats_text += "- Current Queue Size: %d\n" % stats.current_queue_size
+
 	
 	return stats_text
 

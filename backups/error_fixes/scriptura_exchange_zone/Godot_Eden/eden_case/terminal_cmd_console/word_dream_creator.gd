@@ -235,7 +235,7 @@ func create_word_from_dream(dream_info: Dictionary = {}) -> Dictionary:
     # Generate a new word from dream symbols
     var new_word = _generate_dream_word(dream_info)
     
-    if new_word.empty():
+    if new_word.is_empty():
         print("⚠️ Failed to generate word from dream")
         return {
             "success": false,
@@ -258,7 +258,7 @@ func create_word_from_dream(dream_info: Dictionary = {}) -> Dictionary:
     if dream_info.has("symbols") and dream_info.symbols.size() > 0:
         for symbol in dream_info.symbols:
             var association = _symbol_to_association(symbol)
-            if not association.empty() and not word_data.associations.has(association):
+            if not association.is_empty() and not word_data.associations.has(association):
                 word_data.associations.append(association)
     
     # Add to database

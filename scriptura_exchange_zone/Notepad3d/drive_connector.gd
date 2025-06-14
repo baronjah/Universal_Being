@@ -1,6 +1,6 @@
 extends Node
 
-class_name DriveConnector
+class_name DriveConnector_driveconnector_drivecon
 
 # Drive types
 const DRIVE_TYPES = {
@@ -111,7 +111,7 @@ func _connect_systems():
         print("Connected to TerminalVisualBridge")
     else:
         print("TerminalVisualBridge not available, trying to load directly")
-        var script = load("/mnt/c/Users/Percision 15/terminal_visual_bridge.gd")
+        var script = load("mnt/c/Users/Percision 15/terminal_visual_bridge.gd")
         if script:
             terminal_bridge = script.new()
             print("Loaded TerminalVisualBridge directly")
@@ -126,7 +126,7 @@ func _connect_systems():
         print("Connected to DockerAnthropicConnector")
     else:
         print("DockerAnthropicConnector not available, trying to load directly")
-        var script = load("/mnt/c/Users/Percision 15/docker_anthropic_connector.gd")
+        var script = load("mnt/c/Users/Percision 15/docker_anthropic_connector.gd")
         if script:
             docker_connector = script.new()
             print("Loaded DockerAnthropicConnector directly")
@@ -146,7 +146,7 @@ func _connect_systems():
 
 func _initialize_default_drives():
     # Add local drive
-    connect_drive("local_c", "C Drive", "LOCAL", "/mnt/c")
+    connect_drive("local_c", "C Drive", "LOCAL", "mnt/c")
     
     # Add any available removable drives
     var drives = _detect_drives()
@@ -159,7 +159,7 @@ func _detect_drives():
     
     # Try to detect Windows drives through WSL
     var output = []
-    var exit_code = OS.execute("ls", ["/mnt"], output, true)
+    var exit_code = OS.execute("ls", ["mnt"], output, true)
     
     if exit_code == 0 and output.size() > 0:
         var drives = output[0].split("\n")
@@ -180,7 +180,7 @@ func _detect_drives():
                     "id": "local_" + drive_letter,
                     "name": drive_letter.to_upper() + " Drive",
                     "type": drive_type,
-                    "path": "/mnt/" + drive_letter
+                    "path": "mnt/" + drive_letter
                 })
     }
     
@@ -399,7 +399,7 @@ func connect_drive(drive_id, drive_name, drive_type, drive_path):
         "type": drive_type,
         "path": drive_path,
         "state": "READY",
-        "connection_time": OS.get_unix_time(),
+        "connection_time": OS.Time.get_unix_time_from_system(),
         "data_count": 0
     }
     
@@ -409,7 +409,7 @@ func connect_drive(drive_id, drive_name, drive_type, drive_path):
         "data_out": 0,
         "syncs_in": 0,
         "syncs_out": 0,
-        "last_access": OS.get_unix_time()
+        "last_access": OS.Time.get_unix_time_from_system()
     }
     
     # Initialize datapoints storage
@@ -475,13 +475,13 @@ func store_data(drive_id, data_id, data_content):
     datapoints[drive_id][data_id] = {
         "id": data_id,
         "content": data_content,
-        "timestamp": OS.get_unix_time(),
+        "timestamp": OS.Time.get_unix_time_from_system(),
         "size": data_content.length()
     }
     
     # Update drive stats
     drive_stats[drive_id].data_in += 1
-    drive_stats[drive_id].last_access = OS.get_unix_time()
+    drive_stats[drive_id].last_access = OS.Time.get_unix_time_from_system()
     
     # Update drive data count
     drive.data_count = datapoints[drive_id].size()
@@ -517,7 +517,7 @@ func get_data(drive_id, data_id):
     
     # Update drive stats
     drive_stats[drive_id].data_out += 1
-    drive_stats[drive_id].last_access = OS.get_unix_time()
+    drive_stats[drive_id].last_access = OS.Time.get_unix_time_from_system()
     
     # Emit signal
     emit_signal("data_retrieved", drive_id, data_id)
@@ -543,12 +543,12 @@ func update_data(drive_id, data_id, data_content):
     
     # Update data
     datapoints[drive_id][data_id].content = data_content
-    datapoints[drive_id][data_id].timestamp = OS.get_unix_time()
+    datapoints[drive_id][data_id].timestamp = OS.Time.get_unix_time_from_system()
     datapoints[drive_id][data_id].size = data_content.length()
     
     # Update drive stats
     drive_stats[drive_id].data_in += 1
-    drive_stats[drive_id].last_access = OS.get_unix_time()
+    drive_stats[drive_id].last_access = OS.Time.get_unix_time_from_system()
     
     # Emit signal
     emit_signal("data_updated", drive_id, data_id)
@@ -602,7 +602,7 @@ func list_data(drive_id):
         return []
     
     # Update drive stats
-    drive_stats[drive_id].last_access = OS.get_unix_time()
+    drive_stats[drive_id].last_access = OS.Time.get_unix_time_from_system()
     
     return datapoints[drive_id].keys()
 
@@ -632,13 +632,13 @@ func sync_drives(source_drive, target_drive, filter_prefix = ""):
     target.state = "SYNCING"
     
     # Create sync operation
-    var sync_id = "sync_" + str(OS.get_unix_time()) + "_" + source_drive + "_" + target_drive
+    var sync_id = "sync_" + str(OS.Time.get_unix_time_from_system()) + "_" + source_drive + "_" + target_drive
     
     var sync_op = {
         "id": sync_id,
         "source_drive": source_drive,
         "target_drive": target_drive,
-        "start_time": OS.get_unix_time(),
+        "start_time": OS.Time.get_unix_time_from_system(),
         "progress": 0.0,
         "speed": 0.1 + randf() * 0.2,  # Random speed between 0.1 and 0.3
         "filter_prefix": filter_prefix

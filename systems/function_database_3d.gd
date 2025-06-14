@@ -33,6 +33,7 @@ func _ready():
 	create_visual_function_spheres()
 	print("✨ Function Database: Ready for exploration!")
 
+
 func scan_all_functions():
 	"""Scan entire codebase for functions"""
 	print("🔍 Scanning codebase for all functions...")
@@ -67,6 +68,7 @@ func _scan_directory_recursive(path: String, files: Array):
 	var file_name = dir.get_next()
 	
 	while file_name != "":
+
 		var full_path = path + "/" + file_name
 		
 		if dir.current_is_dir() and not file_name.begins_with("."):
@@ -91,6 +93,7 @@ func _extract_all_functions_from_file(file_path: String) -> Array:
 	for i in range(lines.size()):
 		var line = lines[i].strip_edges()
 		if line.begins_with("func ") and ":" in line:
+
 			var function_info = _parse_function_signature(line, i + 1, file_path)
 			if function_info:
 				functions.append(function_info)
@@ -105,11 +108,13 @@ func _parse_function_signature(line: String, line_number: int, file_path: String
 	var return_type = "void"
 	
 	if "(" in func_match and ")" in func_match:
+
 		var full_sig = func_match.split("(")[1].split(")")[0]
 		params_part = full_sig
 	
 	if "->" in line:
 		return_type = line.split("->")[1].split(":")[0].strip_edges()
+
 	
 	# Determine function category
 	var category = _categorize_function(name_part, file_path)
@@ -124,7 +129,7 @@ func _parse_function_signature(line: String, line_number: int, file_path: String
 		"visibility": "public" if not name_part.begins_with("_") else "private",
 		"full_signature": line,
 		"file_name": file_path.get_file()
-	}
+}
 
 func _categorize_function(function_name: String, file_path: String) -> String:
 	"""Categorize function based on name and location"""
@@ -182,6 +187,7 @@ func organize_functions_by_category():
 	for category in function_categories.keys():
 		var count = function_categories[category].size()
 		print("  • %s: %d functions" % [category, count])
+
 
 func create_database_interface():
 	"""Create 3D interface for browsing functions"""
@@ -466,6 +472,7 @@ func show_function_details(function_info: Dictionary):
 	details_text += "Parameters: " + function_info.parameters + "\n"
 	details_text += "Returns: " + function_info.return_type + "\n\n"
 	details_text += "Signature:\n" + function_info.full_signature
+
 	
 	var details_label = Label3D.new()
 	details_label.text = details_text
@@ -574,4 +581,3 @@ func get_database_stats() -> Dictionary:
 		"total_files": all_functions.size(),
 		"categories": function_categories.size(),
 		"search_results": search_results.size()
-	}

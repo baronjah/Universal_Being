@@ -4,9 +4,8 @@
 # PURPOSE: Complete control over game state for the universal entity
 # CREATED: 2025-05-27 - The Universal Entity Core
 # ==================================================
-
 extends UniversalBeingBase
-class_name GlobalVariableInspector
+class_name GlobalVariableInspector_globalva
 
 signal variable_changed(path: String, old_value, new_value)
 signal variable_tracked(path: String, value)  # Emitted when starting to track a variable
@@ -34,7 +33,7 @@ func _ready() -> void:
 func pentagon_ready() -> void:
 	super.pentagon_ready()
 	name = "GlobalVariableInspector"
-	console = get_node_or_null("/root/ConsoleManager")
+	console = get_node_or_null("root/ConsoleManager")
 	
 	# Initial scan
 	scan_all_variables()
@@ -87,7 +86,7 @@ func _scan_autoloads() -> void:
 	for property in ProjectSettings.get_property_list():
 		if property.name.begins_with("autoload/"):
 			var autoload_name = property.name.trim_prefix("autoload/")
-			var node = get_node_or_null("/root/" + autoload_name)
+			var node = get_node_or_null("root/" + autoload_name)
 			if node:
 				autoloads[autoload_name] = _scan_node_properties(node)
 	
@@ -166,7 +165,7 @@ func _scan_node_recursive(node: Node, max_depth: int = 3, current_depth: int = 0
 
 func get_variable(path: String):
 	"""Get a variable by path (e.g., 'autoloads/ConsoleManager/is_visible')"""
-	var parts = path.split("/")
+	var parts = path.split("")
 	var current = variable_categories
 	
 	for part in parts:
@@ -181,7 +180,7 @@ func get_variable(path: String):
 
 func set_variable(path: String, value) -> bool:
 	"""Set a variable by path"""
-	var parts = path.split("/")
+	var parts = path.split("")
 	var category = parts[0]
 	
 	match category:
@@ -200,13 +199,13 @@ func _set_autoload_variable(parts: Array, value) -> bool:
 		return false
 	
 	var autoload_name = parts[1]
-	var property_path = "/".join(parts.slice(2))
+	var property_path = "".join(parts.slice(2))
 	
-	var node = get_node_or_null("/root/" + autoload_name)
+	var node = get_node_or_null("root/" + autoload_name)
 	if node:
 		var old_value = node.get(property_path)
 		node.set(property_path, value)
-		variable_changed.emit("/".join(parts), old_value, value)
+		variable_changed.emit("".join(parts), old_value, value)
 		return true
 	
 	return false
@@ -216,10 +215,10 @@ func _set_project_setting(parts: Array, value) -> bool:
 	if parts.size() < 2:
 		return false
 	
-	var setting_name = "/".join(parts.slice(1))
+	var setting_name = "".join(parts.slice(1))
 	var old_value = ProjectSettings.get_setting(setting_name)
 	ProjectSettings.set_setting(setting_name, value)
-	variable_changed.emit("/".join(parts), old_value, value)
+	variable_changed.emit("".join(parts), old_value, value)
 	return true
 
 func _set_engine_setting(parts: Array, value) -> bool:
@@ -246,7 +245,7 @@ func _set_engine_setting(parts: Array, value) -> bool:
 		_:
 			return false
 	
-	variable_changed.emit("/".join(parts), old_value, value)
+	variable_changed.emit("".join(parts), old_value, value)
 	return true
 
 # ========== WATCHING ==========
@@ -315,7 +314,7 @@ func search_variables(search_term: String) -> Array:
 func _search_recursive(data: Dictionary, path: String, search: String, results: Array) -> void:
 	"""Recursive search helper"""
 	for key in data:
-		var current_path = path + "/" + key if path else key
+		var current_path = path + "" + key if path else key
 		
 		if key.to_lower().contains(search):
 			results.append({

@@ -7,11 +7,10 @@
 #       888 oo     .d8P  888     888               ┛                ┛      
 #   .o. 88P 8""88888P'  o888o   o888o 
 #   `Y888P
+extends \2
+class_name JSHConsoleUI_consolewindowui_consolew
 
-extends Control
-class_name JSHConsoleUI
-
-# res://code/gdscript/scripts/Text_Console_Window/console_window_ui.gd
+# res://scripts/gdscript/scripts/Text_Console_Window/console_window_ui.gd
 
 ####################
 #
@@ -185,7 +184,7 @@ var sdf_primitives := {
 # This would be a new script file that handles terminal functionality
 #
 #extends Node3D
-#class_name TerminalManager
+#class_name TerminalManager_consolewindowui_consolew
 
 # References to important nodes
 var terminal_container : Node3D
@@ -245,7 +244,7 @@ var available_commands = {
 # Create a new script file with this code
 
 #extends Node3D
-#class_name TerminalManager
+#class_name TerminalManager_consolewindowui_consolew
 
 # References to important nodes
 var terminal_containerr : Node3D
@@ -523,7 +522,7 @@ func _input(event):
 func _ready_new():
 	setup_terminal_container()
 	setup_delimiter_mesh()
-	thread_pool = get_node_or_null("/root/thread_pool_autoload")
+	thread_pool = get_node_or_null("root/thread_pool_autoload")
 	camera = get_viewport().get_camera_3d()
 	add_test_text()
 
@@ -558,7 +557,7 @@ func _init_old():
 func _ready_old():
 	setup_containers()
 	setup_material_cache()
-	thread_pool = get_node_or_null("/root/thread_pool_autoload")
+	thread_pool = get_node_or_null("root/thread_pool_autoload")
 	camera = get_viewport().get_camera_3d()
 	
 	# Setup combo rules
@@ -1646,13 +1645,13 @@ func process_terminal_command(args):
 			if parts.size() > 1:
 				match parts[1]:
 					"words":
-						response = "Active|words:|" + "|".join(active_words)
+						response = "Active|words:|" + "|"." ".join(active_words)
 					"combos":
-						response = "Active|combos:|" + "|".join(combo_active)
+						response = "Active|combos:|" + "|"." ".join(combo_active)
 					"shapes":
-						response = "Available|shapes:|" + "|".join(shape_transforms)
+						response = "Available|shapes:|" + "|"." ".join(shape_transforms)
 					"primitives":
-						response = "Available|primitives:|" + "|".join(sdf_primitives.keys())
+						response = "Available|primitives:|" + "|"." ".join(sdf_primitives.keys())
 					_:
 						response = "Unknown|list|type.|Try:|words|combos|shapes|primitives"
 
@@ -1756,7 +1755,7 @@ func clear_terminall():
 	terminal_text.clear()
 
 func launch_snake_game():
-	var main_node = get_node_or_null("/root/main")
+	var main_node = get_node_or_null("root/main")
 	if main_node and main_node.has_method("show_snake_game"):
 		main_node.show_snake_game()
 
@@ -2257,7 +2256,7 @@ func clear_terminal_new():
 	terminal_text.clear()
 
 func launch_snake_game_new():
-	var main_node = get_node_or_null("/root/main")
+	var main_node = get_node_or_null("root/main")
 	if main_node and main_node.has_method("show_snake_game"):
 		main_node.show_snake_game()
 

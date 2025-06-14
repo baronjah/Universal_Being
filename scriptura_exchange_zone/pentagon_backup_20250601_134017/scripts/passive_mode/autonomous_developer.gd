@@ -3,10 +3,10 @@
 # DESCRIPTION: Passive mode development system that works autonomously
 # CREATED: 2025-05-23 - Self-managing development assistant
 # ==================================================
-
-extends UniversalBeingBase
+extends \2
 # Development states
-enum DevelopmentState {
+enum \2 {
+
 	IDLE,
 	PLANNING,
 	CODING,
@@ -18,7 +18,8 @@ enum DevelopmentState {
 }
 
 # Task priorities
-enum Priority {
+enum \2 {
+
 	CRITICAL = 0,
 	HIGH = 1,
 	MEDIUM = 2,
@@ -405,7 +406,7 @@ func _generate_daily_report() -> String:
 	
 	report += "Date: " + Time.get_datetime_string_from_system() + "\n"
 	report += "Hours worked: " + str(hours_worked_today) + "\n"
-	report += "Tokens used: " + str(tokens_used_today) + " / " + str(daily_token_budget) + "\n"
+	report += "Tokens used: " + str(tokens_used_today) + "  " + str(daily_token_budget) + "\n"
 	report += "Tasks completed: " + str(completed_tasks.size()) + "\n\n"
 	
 	report += "Completed Tasks:\n"

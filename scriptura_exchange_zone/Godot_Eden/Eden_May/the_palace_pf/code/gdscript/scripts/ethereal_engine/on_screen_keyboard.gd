@@ -1,5 +1,5 @@
 # on_screen_keyboard.gd
-extends Control
+extends \2
 
 signal character_pressed(character)
 signal backspace_pressed

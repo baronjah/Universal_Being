@@ -53,11 +53,11 @@ func transition_element(element, new_state):
 	return false
 	
 func play_visual_effect(effect_name, position):
-	var effect = load("res://effects/visual/" + effect_name + ".tscn").instance()
+	var effect = load("res://effects/visual/" + effect_name + ".tscn").instantiate()
 	effect.global_position = position
 	get_tree().get_root().add_child(effect)
 	
 func play_sound_effect(effect_name, position):
-	var effect = load("res://effects/sound/" + effect_name + ".tscn").instance()
+	var effect = load("res://effects/sound/" + effect_name + ".tscn").instantiate()
 	effect.global_position = position
 	get_tree().get_root().add_child(effect)

@@ -1,5 +1,5 @@
 extends Node
-class_name AkashicRecordsManagerA
+class_name AkashicRecordsManagerA_akashicrecordsmanager_akashicr
 
 # Public property for initialization status
 var is_initialized: bool = false
@@ -179,7 +179,7 @@ func _add_interactions() -> void:
 
 func _initialize_evolution_system() -> void:
 	# Try to load the evolution manager script
-	var script = load("res://code/gdscript/scripts/akashic_records/evolution_manager.gd")
+	var script = load("res://scripts/gdscript/scripts/akashic_records/evolution_manager.gd")
 	if script:
 		evolution_manager = script.new()
 		evolution_manager.name = "EvolutionManager"

@@ -10,12 +10,11 @@
 # PURPOSE: Quick performance fixes for testing
 # CREATED: 2025-05-31
 # ==================================================
-
-extends UniversalBeingBase
+extends \2
 func _ready() -> void:
 	# Wait for console manager
 	await get_tree().process_frame
-	var console = get_node_or_null("/root/ConsoleManager")
+	var console = get_node_or_null("root/ConsoleManager")
 	
 	if console and console.has_method("register_command"):
 		console.register_command("emergency_performance", _cmd_emergency_performance, "Emergency performance optimization")
@@ -32,21 +31,21 @@ func _cmd_emergency_performance(_args: Array) -> String:
 	var optimizations = 0
 	
 	# Disable architecture harmony if running
-	var arch_harmony = get_node_or_null("/root/ArchitectureHarmony")
+	var arch_harmony = get_node_or_null("root/ArchitectureHarmony")
 	if arch_harmony:
 		arch_harmony.set_process(false)
 		result += "🛑 Disabled ArchitectureHarmony\n"
 		optimizations += 1
 	
 	# Reduce Universal Entity processing
-	var universal_entity = get_node_or_null("/root/UniversalEntity")
+	var universal_entity = get_node_or_null("root/UniversalEntity")
 	if universal_entity:
 		universal_entity.set_process(false)
 		result += "🛑 Reduced UniversalEntity processing\n"
 		optimizations += 1
 	
 	# Pause inspection bridge
-	var inspection_bridge = get_node_or_null("/root/UniversalInspectionBridge")
+	var inspection_bridge = get_node_or_null("root/UniversalInspectionBridge")
 	if inspection_bridge:
 		inspection_bridge.set_process(false)
 		result += "🛑 Paused InspectionBridge\n"
@@ -71,10 +70,10 @@ func _cmd_disable_heavy_systems(_args: Array) -> String:
 	
 	# List of heavy systems to disable
 	var heavy_systems = [
-		"/root/ArchitectureHarmony",
-		"/root/UniversalInspectionBridge", 
-		"/root/BackgroundProcessManager",
-		"/root/PerformanceGuardian"
+		"root/ArchitectureHarmony",
+		"root/UniversalInspectionBridge", 
+		"root/BackgroundProcessManager",
+		"root/PerformanceGuardian"
 	]
 	
 	for system_path in heavy_systems:
@@ -142,7 +141,7 @@ func _cmd_fix_fps(_args: Array) -> String:
 	Engine.max_fps = 60
 	
 	# Disable debug overlays
-	var debug_overlay = get_node_or_null("/root/ConsoleDebugOverlay")
+	var debug_overlay = get_node_or_null("root/ConsoleDebugOverlay")
 	if debug_overlay:
 		debug_overlay.queue_free()
 		result += "🛑 Removed debug overlay\n"
@@ -206,7 +205,7 @@ func _get_active_systems() -> Array:
 	]
 	
 	for autoload in autoloads:
-		var system = get_node_or_null("/root/" + autoload)
+		var system = get_node_or_null("root/" + autoload)
 		if system:
 			systems.append(autoload)
 	

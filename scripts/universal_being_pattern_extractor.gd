@@ -55,7 +55,6 @@ static var CORE_ARCHITECTURE_PATTERNS = {
 		"patterns": ["consciousness_", "awareness_", "evolution_", "being_"],
 		"naming_style": "snake_case",
 		"examples": ["consciousness_level", "awareness_state", "being_name", "being_type"]
-	}
 }
 
 # ===== EXTRACTED UNIVERSAL BEING VOCABULARY =====
@@ -75,6 +74,7 @@ class UniversalBeingVocabulary:
 			# FloodGates System
 			"flow_management": ["flood", "gate", "flow", "passage", "threshold", "barrier"],
 			"registration": ["registry", "register", "catalog", "manifest", "entry"],
+}
 			
 			# Pentagon Architecture  
 			"lifecycle": ["pentagon", "init", "ready", "process", "input", "sewers"],
@@ -95,7 +95,7 @@ class UniversalBeingVocabulary:
 			# Universal Being Core
 			"being_identity": ["being", "universal", "entity", "existence", "presence"],
 			"dimensional": ["dimensional", "spatial", "coordinates", "location", "placement"]
-		}
+}
 		
 		# Naming patterns extracted from existing code
 		naming_patterns = {
@@ -110,7 +110,7 @@ class UniversalBeingVocabulary:
 			"prefixed_patterns": [
 				"pentagon_", "akashic_", "socket_", "being_", "consciousness_", "universal_"
 			]
-		}
+}
 
 static func extract_existing_patterns_from_codebase(base_path: String = "res://") -> UniversalBeingVocabulary:
 	"""Extract actual Universal Being patterns from the existing codebase"""
@@ -132,7 +132,7 @@ static func extract_existing_patterns_from_codebase(base_path: String = "res://"
 
 static func _scan_for_ub_terms(files: Array[String]) -> Dictionary:
 	"""Scan files for Universal Being specific terminology"""
-	var terms = {}
+	var terms = {
 	var ub_keywords = [
 		"universal", "being", "pentagon", "akashic", "flood", "gate", "socket", 
 		"consciousness", "evolution", "transformation", "cosmic", "dimensional",
@@ -171,7 +171,7 @@ static func _analyze_naming_cases(files: Array[String]) -> Dictionary:
 		"camelCase": [],
 		"PascalCase": [],
 		"mixed_patterns": []
-	}
+}
 	
 	for file_path in files:
 		var file = FileAccess.open(file_path, FileAccess.READ)
@@ -206,7 +206,7 @@ static func _find_connection_patterns(files: Array[String]) -> Dictionary:
 		"architectural_bridges": [],
 		"system_connectors": [],
 		"naming_bridges": []
-	}
+}
 	
 	# Look for files that bridge different Universal Being systems
 	for file_path in files:
@@ -379,10 +379,11 @@ static func analyze_existing_naming_conflicts() -> Dictionary:
 		"generic_vs_architectural": [],
 		"case_inconsistencies": [],
 		"missing_connections": []
-	}
+}
 	
 	var vocabulary = extract_existing_patterns_from_codebase()
 	var all_files = _get_all_gd_files("res://")
+}
 	
 	for file_path in all_files:
 		var file_conflicts = _analyze_file_naming(file_path, vocabulary)
@@ -401,7 +402,7 @@ static func _analyze_file_naming(file_path: String, vocabulary: UniversalBeingVo
 		"generic": [],
 		"case_issues": [],
 		"missing": []
-	}
+}
 	
 	var file = FileAccess.open(file_path, FileAccess.READ)
 	if not file:
@@ -446,7 +447,7 @@ static func generate_migration_plan() -> Dictionary:
 		"phases": {},
 		"total_files_affected": 0,
 		"priority_fixes": []
-	}
+}
 	
 	# Phase 1: Core Architecture Alignment
 	plan.phases["phase_1_core_architecture"] = {
@@ -458,7 +459,7 @@ static func generate_migration_plan() -> Dictionary:
 			"Convert 'manager' to 'flow_controller' or 'gate_keeper'",
 			"Update socket references to use 'mounting_point' terminology"
 		]
-	}
+}
 	
 	# Phase 2: Connect Unused Signals (Archaeological Priority)
 	plan.phases["phase_2_signal_connections"] = {
@@ -470,7 +471,7 @@ static func generate_migration_plan() -> Dictionary:
 			"Link thinking_started to consciousness visualizers",
 			"Establish socket_configuration_changed handlers"
 		]
-	}
+}
 	
 	# Phase 3: Complete Incomplete Implementations  
 	plan.phases["phase_3_complete_designs"] = {
@@ -482,7 +483,7 @@ static func generate_migration_plan() -> Dictionary:
 			"Complete console command argument parsing",
 			"Finish component hot-swap functionality"
 		]
-	}
+}
 	
 	return plan
 
@@ -504,6 +505,7 @@ static func _scan_directory_for_gd_files(path: String, files: Array[String]) -> 
 	var file_name = dir.get_next()
 	
 	while file_name != "":
+
 		var full_path = path.path_join(file_name)
 		
 		if dir.current_is_dir() and not file_name.begins_with("."):
@@ -534,6 +536,7 @@ static func main():
 		guide_file.store_string(style_guide)
 		guide_file.close()
 		print("📚 Native style guide generated: UNIVERSAL_BEING_NATIVE_STYLE_GUIDE.md")
+
 	
 	# Analyze conflicts
 	var conflicts = analyze_existing_naming_conflicts()
@@ -541,6 +544,7 @@ static func main():
 	print("  - Shadowing Universal terms: %d" % conflicts.shadowing_universal_terms.size())
 	print("  - Generic vs Architectural: %d" % conflicts.generic_vs_architectural.size()) 
 	print("  - Case inconsistencies: %d" % conflicts.case_inconsistencies.size())
+
 	
 	# Generate migration plan
 	var migration = generate_migration_plan()

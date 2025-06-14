@@ -511,7 +511,7 @@ func _generate_star_deposits(star_type: int, rng: RandomNumberGenerator) -> Dict
 				"name": "Solar Wind Helium-3",
 				"amount": 99999.0,
 				"quality": quality,
-				"extraction_rate": 0.5 + (5 - star_type) * 0.1,  # Hotter stars yield more
+				"extraction_rate": 0.5 + (5 - star_type) * 0.1,  # Hotter stars await more
 				"discovered": false,
 				"depleted": false,
 				"requires_collector": true

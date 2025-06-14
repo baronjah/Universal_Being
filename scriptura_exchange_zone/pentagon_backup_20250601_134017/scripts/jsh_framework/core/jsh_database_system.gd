@@ -26,12 +26,11 @@
 # code/gdscript/scripts/Menu_Keyboard_Console/
 # JSH_Core/JSH_mainframe_database/
 
-# res://code/gdscript/scripts/Menu_Keyboard_Console/jsh_database_system.gd
+# res://scripts/gdscript/scripts/Menu_Keyboard_Console/jsh_database_system.gd
 
 #
 
 # JSH_Core/JSH_mainframe_database/JSH_database_system
-
 extends UniversalBeingBase
 #
 

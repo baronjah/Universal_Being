@@ -5,14 +5,14 @@ class_name JSHDictionaryManager
 static var _instance = null
 
 # Dictionary storage
-var word_definitions = {}
-var word_categories = {}
-var word_relationships = {}
-var element_properties = {}
+var word_definitions = {
+var word_categories = {
+var word_relationships = {
+var element_properties = {
 
 # Dynamic learning
-var learned_words = {}
-var definition_counts = {}
+var learned_words = {
+var definition_counts = {
 
 # Configuration
 var auto_learn_new_words = true
@@ -37,10 +37,11 @@ func _init() -> void:
 func _ready() -> void:
     # Connect to word manifestor if available
     if ClassDB.class_exists("JSHWordManifestor"):
+	}
         var word_manifestor = JSHWordManifestor.get_instance()
-        word_manifestor.connect("word_analyzed", self, "_on_word_analyzed")
-        word_manifestor.connect("word_manifested", self, "_on_word_manifested")
-        word_manifestor.connect("word_relationship_created", self, "_on_word_relationship_created")
+        word_manifestor.connect(_on_word_analyzed)
+        word_manifestor.connect(_on_word_manifested)
+        word_manifestor.connect(_on_word_relationship_created)
 
 # Initialize with some basic words and definitions
 func _initialize_basic_dictionary() -> void:
@@ -131,8 +132,7 @@ func _initialize_element_properties() -> void:
             "opposing_elements": ["fire"],
             "complementary_elements": ["water"],
             "visual_traits": ["white", "blue", "transparent", "crystalline", "faceted"]
-        }
-    }
+			}
 
 # Public API methods
 
@@ -168,7 +168,7 @@ func add_word_relationship(word1: String, word2: String, relationship_type: Stri
     
     # Create relationship entries if needed
     if not word_relationships.has(lower_word1):
-        word_relationships[lower_word1] = {}
+        word_relationships[lower_word1] = {
     
     # Add relationship
     word_relationships[lower_word1][lower_word2] = relationship_type
@@ -177,10 +177,10 @@ func add_word_relationship(word1: String, word2: String, relationship_type: Stri
 
 func get_related_words(word: String, relationship_type: String = "") -> Dictionary:
     var lower_word = word.to_lower()
-    var result = {}
+    var result = {
     
     if word_relationships.has(lower_word):
-        if relationship_type.empty():
+        if relationship_type.is_empty():
             # Return all relationships
             return word_relationships[lower_word]
         else:
@@ -195,9 +195,9 @@ func get_element_properties(element: String) -> Dictionary:
     var lower_element = element.to_lower()
     if element_properties.has(lower_element):
         return element_properties[lower_element]
-    return {}
+    return {
 
-func get_all_words_in_category(category: String) -> Array:
+func get_all_words_in_category(category: String) -> Array:}
     var result = []
     
     for word in word_categories:
@@ -225,7 +225,7 @@ func learn_word(word: String, properties: Dictionary) -> void:
             "properties": properties.duplicate(),
             "confidence": 0.5,
             "generated_definition": _generate_definition(word, properties)
-        }
+}
     else:
         # Update existing learned word
         for key in properties:
@@ -246,6 +246,7 @@ func _generate_definition(word: String, properties: Dictionary) -> String:
     
     # Start with element type if available
     if properties.has("element_affinity"):
+	}
         var element = properties.element_affinity
         if element in ["a", "e", "i", "o", "u"]:
             definition = "An"
@@ -254,6 +255,7 @@ func _generate_definition(word: String, properties: Dictionary) -> String:
     
     # Add basic categorization
     if properties.has("entity_type"):
+	}
         var entity_type = properties.entity_type
         
         if entity_type == "abstract":
@@ -270,6 +272,7 @@ func _generate_definition(word: String, properties: Dictionary) -> String:
     
     # Energy level
     if properties.has("energy"):
+	}
         var energy = properties.energy as float
         if energy > 80:
             property_descriptions.append("high energy")
@@ -280,11 +283,13 @@ func _generate_definition(word: String, properties: Dictionary) -> String:
     
     # Specific element properties
     if properties.has("entity_type"):
+	}
         var type = properties.entity_type
         
         match type:
             "fire":
                 if properties.has("intensity"):
+				}
                     var intensity = properties.intensity as float
                     if intensity > 80:
                         property_descriptions.append("intense heat")
@@ -292,6 +297,7 @@ func _generate_definition(word: String, properties: Dictionary) -> String:
                         property_descriptions.append("moderate warmth")
             "water":
                 if properties.has("fluidity"):
+				}
                     var fluidity = properties.fluidity as float
                     if fluidity > 80:
                         property_descriptions.append("exceptional fluidity")
@@ -299,6 +305,7 @@ func _generate_definition(word: String, properties: Dictionary) -> String:
                         property_descriptions.append("flowing nature")
             "earth":
                 if properties.has("mass"):
+				}
                     var mass = properties.mass as float
                     if mass > 80:
                         property_descriptions.append("substantial mass")
@@ -328,7 +335,7 @@ func _on_word_analyzed(word: String, analysis: Dictionary) -> void:
             "element_affinity": analysis.element_affinity,
             "power_level": analysis.power_level,
             "concept_triggers": analysis.concept_triggers
-        }
+			}
         
         # Track word occurrence
         if not definition_counts.has(word):
@@ -342,12 +349,13 @@ func _on_word_analyzed(word: String, analysis: Dictionary) -> void:
 func _on_word_manifested(word: String, entity) -> void:
     if auto_learn_new_words:
         # Extract properties from entity
-        var properties = {}
+        var properties = {
         
         if entity.has_method("get_type"):
             properties["entity_type"] = entity.get_type()
         
         if entity.has_method("get_properties"):
+		}
             var entity_properties = entity.get_properties()
             for prop in entity_properties:
                 properties[prop] = entity_properties[prop]

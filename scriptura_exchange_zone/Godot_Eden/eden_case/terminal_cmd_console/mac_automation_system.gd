@@ -1,5 +1,5 @@
 extends Node
-class_name MacAutomationSystem
+class_name MacAutomationSystem_macautomationsystem_macautom
 
 signal automation_status_changed(status: Dictionary)
 signal schedule_updated(schedule: Dictionary)
@@ -92,7 +92,7 @@ func _ready():
 
 func _connect_to_systems():
     # Connect to LUNO cycle system if available
-    luno_manager = get_node_or_null("/root/LunoCycleManager")
+    luno_manager = get_node_or_null("root/LunoCycleManager")
     if luno_manager:
         print("✓ Connected to LUNO Cycle Manager")
         luno_manager.register_participant("MacAutomation", Callable(self, "_on_luno_tick"))
@@ -100,7 +100,7 @@ func _connect_to_systems():
         print("⚠️ LUNO Cycle Manager not found, operating independently")
     
     # Connect to Sleep system if available
-    sleep_system = get_node_or_null("/root/LunoSleepSystem")
+    sleep_system = get_node_or_null("root/LunoSleepSystem")
     if sleep_system:
         print("✓ Connected to LUNO Sleep System")
     else:
@@ -128,7 +128,7 @@ func _initialize_schedule():
         day_sessions.append(session)
         schedule.sessions.append(day_sessions)
     
-    schedule.last_update = OS.get_unix_time()
+    schedule.last_update = OS.Time.get_unix_time_from_system()
     schedule.daily_goal = automation_config.hours_per_day
     
     print("📅 Schedule initialized with %d hours per day" % automation_config.hours_per_day)
@@ -172,7 +172,7 @@ func start_automation() -> bool:
         return false
     
     automation_config.active = true
-    automation_config.last_active = OS.get_unix_time()
+    automation_config.last_active = OS.Time.get_unix_time_from_system()
     
     # Reset current session
     automation_config.current_session = 0
@@ -192,7 +192,7 @@ func start_automation() -> bool:
     if schedule.current_day < schedule.sessions.size():
         var day_sessions = schedule.sessions[schedule.current_day]
         if day_sessions.size() > 0:
-            day_sessions[0].start_time = OS.get_unix_time()
+            day_sessions[0].start_time = OS.Time.get_unix_time_from_system()
     
     # Emit signal
     emit_signal("automation_status_changed", automation_config)
@@ -207,7 +207,7 @@ func stop_automation() -> bool:
         return false
     
     # Calculate how long the automation was active
-    var session_duration = OS.get_unix_time() - automation_config.last_active
+    var session_duration = OS.Time.get_unix_time_from_system() - automation_config.last_active
     var hours_active = session_duration / 3600.0
     
     # Update schedule
@@ -216,7 +216,7 @@ func stop_automation() -> bool:
         if day_sessions.size() > 0:
             day_sessions[0].completed = true
             day_sessions[0].actual_hours = hours_active
-            day_sessions[0].end_time = OS.get_unix_time()
+            day_sessions[0].end_time = OS.Time.get_unix_time_from_system()
     
     # Update overall stats
     schedule.total_hours += hours_active
@@ -227,7 +227,7 @@ func stop_automation() -> bool:
         "duration": session_duration,
         "hours": hours_active,
         "start_time": automation_config.last_active,
-        "end_time": OS.get_unix_time(),
+        "end_time": OS.Time.get_unix_time_from_system(),
         "resources": {
             "avg_cpu": resource_usage.cpu,
             "avg_memory": resource_usage.memory,
@@ -412,7 +412,7 @@ func add_automation_task(task_name: String, estimated_time: float) -> Dictionary
     var task = {
         "name": task_name,
         "estimated_time": estimated_time,  # In hours
-        "start_time": OS.get_unix_time(),
+        "start_time": OS.Time.get_unix_time_from_system(),
         "end_time": 0,
         "completed": false,
         "progress": 0.0
@@ -445,7 +445,7 @@ func complete_automation_task(task_name: String) -> bool:
             for i in range(tasks.size()):
                 if tasks[i].name == task_name and not tasks[i].completed:
                     tasks[i].completed = true
-                    tasks[i].end_time = OS.get_unix_time()
+                    tasks[i].end_time = OS.Time.get_unix_time_from_system()
                     tasks[i].progress = 1.0
                     
                     # Calculate actual time spent

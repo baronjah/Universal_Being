@@ -4,8 +4,7 @@
 # PURPOSE: Central control for astral beings
 # CREATED: 2025-05-28 - Astral being management
 # ==================================================
-
-extends UniversalBeingBase
+extends \2
 signal being_spawned(being: Node3D)
 signal task_completed(being_name: String, task: String)
 
@@ -34,7 +33,7 @@ func _ready() -> void:
 	print("[AstralBeingManager] Astral dimension connected")
 
 func _register_commands() -> void:
-	var console = get_node_or_null("/root/ConsoleManager")
+	var console = get_node_or_null("root/ConsoleManager")
 	if console:
 		# Being management
 		console.register_command("astral_spawn", _cmd_spawn_being, "Spawn a magical astral being")
@@ -284,7 +283,7 @@ func spawn_astral_being(being_name: String = "", position: Vector3 = Vector3.ZER
 	being.position = position
 	
 	# Queue creation through Floodgate so it can be inspected
-	var floodgate = get_node_or_null("/root/FloodgateController")
+	var floodgate = get_node_or_null("root/FloodgateController")
 	if floodgate:
 		# Create through Floodgate
 		var params = {
@@ -371,7 +370,7 @@ func _find_being(identifier: String) -> Node3D:
 	return null
 
 func _print(text: String) -> void:
-	var console = get_node_or_null("/root/ConsoleManager")
+	var console = get_node_or_null("root/ConsoleManager")
 	if console:
 		console._print_to_console(text)
 	else:

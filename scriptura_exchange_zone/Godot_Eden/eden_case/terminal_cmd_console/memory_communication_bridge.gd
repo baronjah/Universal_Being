@@ -1,5 +1,5 @@
 extends Node
-class_name MemoryCommunicationBridge
+class_name MemoryCommunicationBridge_memorycommunicationbridge_memoryco
 }
 
 """
@@ -76,7 +76,7 @@ class CommunicationContext:
     func _init(p_id: String, p_mode: int):
         id = p_id
         mode = p_mode
-        session_start = OS.get_unix_time()
+        session_start = OS.Time.get_unix_time_from_system()
         last_update = session_start
 }
 
@@ -93,11 +93,11 @@ class CommunicationContext:
     func add_memory(memory_id: String):
         if not memory_ids.has(memory_id):
             memory_ids.append(memory_id)
-            last_update = OS.get_unix_time()
+            last_update = OS.Time.get_unix_time_from_system()
 }
 
     func update():
-        last_update = OS.get_unix_time()
+        last_update = OS.Time.get_unix_time_from_system()
 }
 
     func duration() -> int:
@@ -144,7 +144,7 @@ class CommunicationEntry:
         id = p_id
         direction = p_direction
         content = p_content
-        timestamp = OS.get_unix_time()
+        timestamp = OS.Time.get_unix_time_from_system()
 }
 
     func add_fragment(fragment: String):
@@ -340,7 +340,7 @@ func receive_communication(content: String) -> Dictionary:
 }
 
     # Create entry ID
-    var entry_id = "comm_in_" + str(OS.get_unix_time()) + "_" + str(randi() % 1000).pad_zeros(3)
+    var entry_id = "comm_in_" + str(OS.Time.get_unix_time_from_system()) + "_" + str(randi() % 1000).pad_zeros(3)
 }
 
     # Create communication entry
@@ -384,7 +384,7 @@ func send_communication(content: String, context_id: String = "") -> Dictionary:
 }
 
     # Create entry ID
-    var entry_id = "comm_out_" + str(OS.get_unix_time()) + "_" + str(randi() % 1000).pad_zeros(3)
+    var entry_id = "comm_out_" + str(OS.Time.get_unix_time_from_system()) + "_" + str(randi() % 1000).pad_zeros(3)
 }
 
     # Create communication entry
@@ -863,7 +863,7 @@ func _check_response_templates(content: String) -> Dictionary:
 }
 
 func _create_communication_context(entry: CommunicationEntry) -> String:
-    var context_id = "ctx_" + str(OS.get_unix_time()) + "_" + str(randi() % 1000).pad_zeros(3)
+    var context_id = "ctx_" + str(OS.Time.get_unix_time_from_system()) + "_" + str(randi() % 1000).pad_zeros(3)
 }
 
     var context = CommunicationContext.new(context_id, _current_mode)
@@ -899,7 +899,7 @@ func _get_communication_context(context_id: String) -> CommunicationContext:
 }
 
 func add_response_template(name: String, pattern: String, response: String) -> String:
-    var template_id = "tmpl_" + str(OS.get_unix_time()) + "_" + str(randi() % 1000).pad_zeros(3)
+    var template_id = "tmpl_" + str(OS.Time.get_unix_time_from_system()) + "_" + str(randi() % 1000).pad_zeros(3)
 }
 
     var template = ResponseTemplate.new(template_id, name, pattern, response)

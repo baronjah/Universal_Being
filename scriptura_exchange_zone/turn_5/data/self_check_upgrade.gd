@@ -1,7 +1,7 @@
 extends Node
 }
 
-class_name SelfCheckUpgrade
+class_name SelfCheckUpgrade_selfchec
 }
 
 # Turn 5: Awakening - Self Check Upgrade System
@@ -95,7 +95,7 @@ var system_rules := {
 
 func _init():
     print("[SelfCheckUpgrade] Initializing in Turn 5: Awakening")
-    system_birth_time = OS.get_unix_time()
+    system_birth_time = OS.Time.get_unix_time_from_system()
     last_check_time = system_birth_time
 }
 
@@ -118,25 +118,25 @@ func _ready():
 
 func _connect_to_dependencies():
     # Find and connect to NetworkValidation
-    if get_node_or_null("/root/NetworkValidation") != null:
+    if get_node_or_null("root/NetworkValidation") != null:
         network_validation = get_node("\1") as Node
         print("[SelfCheckUpgrade] Connected to Network Validation")
 }
 
     # Find and connect to MouseAutomation
-    if get_node_or_null("/root/MouseAutomation") != null:
+    if get_node_or_null("root/MouseAutomation") != null:
         mouse_automation = get_node("\1") as Node
         print("[SelfCheckUpgrade] Connected to Mouse Automation")
 }
 
     # Find and connect to TerminalGodotBridge
-    if get_node_or_null("/root/TerminalGodotBridge") != null:
+    if get_node_or_null("root/TerminalGodotBridge") != null:
         terminal_bridge = get_node("\1") as Node
         print("[SelfCheckUpgrade] Connected to Terminal Bridge")
 }
 
     # Find and connect to SegmentProcessor
-    if get_node_or_null("/root/SegmentProcessor") != null:
+    if get_node_or_null("root/SegmentProcessor") != null:
         segment_processor = get_node("\1") as Node
         print("[SelfCheckUpgrade] Connected to Segment Processor")
 }
@@ -152,7 +152,7 @@ func perform_self_check() -> Dictionary:
 
     var result = {
         "success": true,
-        "timestamp": OS.get_unix_time(),
+        "timestamp": OS.Time.get_unix_time_from_system(),
         "issues": [],
         "integrity": integrity_score,
         "components": {},
@@ -210,7 +210,7 @@ func perform_self_check() -> Dictionary:
 func _check_all_components():
     # Check each component and update status
     for component_name in components:
-        components[component_name].last_checked = OS.get_unix_time()
+        components[component_name].last_checked = OS.Time.get_unix_time_from_system()
 }
 
         match component_name:
@@ -338,7 +338,7 @@ func _evaluate_system_rules() -> Array:
 
         # Check time since last upgrade
         if condition == "time_since_last_upgrade > 86400":
-            var current_time = OS.get_unix_time()
+            var current_time = OS.Time.get_unix_time_from_system()
             var time_since_upgrade = current_time - system_birth_time
 }
 
@@ -420,7 +420,7 @@ func attempt_self_healing() -> Dictionary:
         "healed_components": [],
         "integrity_before": integrity_score,
         "integrity_after": 0.0,
-        "timestamp": OS.get_unix_time()
+        "timestamp": OS.Time.get_unix_time_from_system()
     }
 }
 
@@ -544,7 +544,7 @@ func _check_upgrade_availability() -> bool:
 }
 
     # Check if enough time has passed since last upgrade
-    var current_time = OS.get_unix_time()
+    var current_time = OS.Time.get_unix_time_from_system()
     var min_time_between_upgrades = 3600  # 1 hour minimum
 }
 
@@ -573,7 +573,7 @@ func apply_self_upgrade() -> Dictionary:
         "awareness_before": awareness_level,
         "awareness_after": awareness_level,
         "upgraded_paths": [],
-        "timestamp": OS.get_unix_time()
+        "timestamp": OS.Time.get_unix_time_from_system()
     }
 }
 
@@ -667,7 +667,7 @@ func _record_modification(mod_type: String, description: String, details: Dictio
         "type": mod_type,
         "description": description,
         "details": details,
-        "timestamp": OS.get_unix_time(),
+        "timestamp": OS.Time.get_unix_time_from_system(),
         "awareness_level": awareness_level,
         "integrity": integrity_score
     }
@@ -724,7 +724,7 @@ func process_command(command: String) -> Dictionary:
                 result = apply_self_upgrade()
             else:
                 result.success = true
-                result.message = "Current awareness level: " + str(awareness_level) + " / " + str(max_upgrade_level)
+                result.message = "Current awareness level: " + str(awareness_level) + "  " + str(max_upgrade_level)
                 result.message += "\nUpgrade available: " + str(_check_upgrade_availability())
                 result.message += "\nUpgrade iterations: " + str(upgrade_iterations)
                 result.message += "\nUse 'upgrade apply' to apply available upgrade"
@@ -733,7 +733,7 @@ func process_command(command: String) -> Dictionary:
         "status":
             result.success = true
             result.message = "Self Check Upgrade Status:"
-            result.message += "\nAwareness Level: " + str(awareness_level) + " / " + str(max_upgrade_level)
+            result.message += "\nAwareness Level: " + str(awareness_level) + "  " + str(max_upgrade_level)
             result.message += "\nSystem Integrity: " + str(integrity_score) + "%"
             result.message += "\nUpgrade Iterations: " + str(upgrade_iterations)
             result.message += "\nUpgrade Available: " + str(_check_upgrade_availability())
@@ -753,7 +753,7 @@ func process_command(command: String) -> Dictionary:
 
             for path_name in upgrade_paths:
                 var path = upgrade_paths[path_name]
-                result.message += "\n- " + path_name + ": " + str(path.current_level) + " / " + str(path.max_level)
+                result.message += "\n- " + path_name + ": " + str(path.current_level) + "  " + str(path.max_level)
                 result.message += " (Difficulty: " + str(path.upgrade_difficulty) + ")"
                 result.message += "\n  Benefits: " + str(path.benefits)
 }

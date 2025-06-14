@@ -1,5 +1,6 @@
 @tool
-class_name VisualShaderNodeAdjustmentReplaceColor extends VisualShaderNodeCustom
+class_name VisualShaderNodeAdjustmentReplaceColor_ReplaceColor_ReplaceC
+extends \2
 
 func _get_name() -> String:
 	return "ReplaceColor"

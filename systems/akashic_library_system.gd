@@ -37,8 +37,7 @@ var record_types: Dictionary = {
     "gemma": {
         "required_fields": ["action", "input"],
         "optional_fields": ["being_name", "result", "consciousness"]
-    }
-}
+		}
 
 # Signals
 signal record_created(record: Dictionary)
@@ -66,22 +65,22 @@ func create_record(type: String, data: Dictionary) -> Dictionary:
     # Validate record type
     if not record_types.has(type):
         push_error("Invalid record type: " + type)
-        return {}
+        return {
     
-    # Add required fields
+    # Add required fields}
     var record = {
         "type": type,
         "timestamp": Time.get_datetime_string_from_system(),
         "uuid": _generate_uuid()
-    }
+		}
     
     # Validate required fields
     var required = record_types[type].required_fields
     for field in required:
         if not data.has(field):
             push_error("Missing required field for " + type + ": " + field)
-            return {}
-        record[field] = data[field]
+            return {
+        record[field] = data[field]}
     
     # Add optional fields
     var optional = record_types[type].optional_fields
@@ -104,9 +103,9 @@ func modify_record(uuid: String, data: Dictionary) -> Dictionary:
     var index = records.find(func(r): return r.get("uuid") == uuid)
     if index == -1:
         push_error("Record not found: " + uuid)
-        return {}
+        return {
     
-    # Update record
+    # Update record}
     var record = records[index]
     for key in data:
         record[key] = data[key]
@@ -122,14 +121,16 @@ func modify_record(uuid: String, data: Dictionary) -> Dictionary:
 func get_record(uuid: String) -> Dictionary:
     var record = records.filter(func(r): return r.get("uuid") == uuid)
     if record.is_empty():
-        return {}
-    return record[0]
+        return {
+    return record[0]}
 
 func get_records_by_type(type: String) -> Array[Dictionary]:
     return records.filter(func(r): return r.get("type") == type)
+	}
 
 func get_records_by_being(being_name: String) -> Array[Dictionary]:
     return records.filter(func(r): return r.get("being_name") == being_name)
+	
 
 func get_records_by_time_range(start_time: String, end_time: String) -> Array[Dictionary]:
     return records.filter(func(r):
@@ -166,7 +167,7 @@ func _save_records() -> void:
         "timestamp": Time.get_datetime_string_from_system(),
         "record_count": records.size(),
         "records": records
-    }
+		}
     
     var file = FileAccess.open(save_file_path, FileAccess.WRITE)
     if file:
@@ -175,6 +176,7 @@ func _save_records() -> void:
         emit_signal("library_saved", save_file_path)
     else:
         push_error("Failed to save Akashic records: " + str(FileAccess.get_open_error()))
+		
     
     is_saving = false
 
@@ -196,6 +198,7 @@ func _load_records() -> void:
         file.close()
     else:
         push_error("Failed to load Akashic records: " + str(FileAccess.get_open_error()))
+		
 
 func _create_backup() -> void:
     var backup_path = save_file_path + ".backup"
@@ -221,13 +224,14 @@ func _create_backup() -> void:
             "timestamp": Time.get_datetime_string_from_system(),
             "record_count": records.size(),
             "records": records
-        }
         file.store_string(JSON.stringify(save_data))
         file.close()
         last_backup_time = Time.get_datetime_string_from_system()
         emit_signal("backup_created", backup_path + str(backup_index))
+}
     else:
         push_error("Failed to create Akashic backup: " + str(FileAccess.get_open_error()))
+		
 
 func _generate_uuid() -> String:
     var uuid = ""
@@ -245,8 +249,8 @@ func get_statistics() -> Dictionary:
         "oldest_record": "",
         "newest_record": "",
         "most_active_being": "",
-        "being_activity": {}
-    }
+        "being_activity": {
+		}
     
     # Count records by type
     for record in records:
@@ -279,6 +283,7 @@ func export_records(format: String = "json") -> String:
         "json":
             return JSON.stringify(records)
         "csv":
+		}
             var csv = "timestamp,type,being_name,message\n"
             for record in records:
                 csv += "%s,%s,%s,%s\n" % [
@@ -289,6 +294,7 @@ func export_records(format: String = "json") -> String:
                 ]
             return csv
         "text":
+		
             var text = "Akashic Records Export\n"
             text += "=====================\n\n"
             for record in records:

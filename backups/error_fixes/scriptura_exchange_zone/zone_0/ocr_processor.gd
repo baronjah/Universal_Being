@@ -79,7 +79,7 @@ func save_emotion_words():
     print("Saved emotion words dictionary to: " + EMOTION_WORDS_PATH)
 
 func process_image(image_path, image_id = "", options = {}):
-    if image_id.empty():
+    if image_id.is_empty():
         image_id = str(OS.get_unix_time()) + "_" + str(randi() % 1000)
     
     # Check if image exists

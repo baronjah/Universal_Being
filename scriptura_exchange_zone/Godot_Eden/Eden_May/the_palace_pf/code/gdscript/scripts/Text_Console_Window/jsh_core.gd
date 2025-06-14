@@ -1,5 +1,5 @@
 extends Node
-# res://code/gdscript/scripts/Text_Console_Window/jsh_core.gd
+# res://scripts/gdscript/scripts/Text_Console_Window/jsh_core.gd
 
 #    oooo  .oooooo..o ooooo   ooooo 
 #    `888 d8P'    `Y8 `888'   `888' 

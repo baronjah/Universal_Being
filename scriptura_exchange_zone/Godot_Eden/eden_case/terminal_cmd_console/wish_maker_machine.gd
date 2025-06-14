@@ -1,5 +1,5 @@
 extends Node
-class_name WishMakerMachine
+class_name WishMakerMachine_wishmakermachine_wishmake
 
 signal wish_processed(wish_data: Dictionary)
 signal connection_status_changed(status: Dictionary)
@@ -71,13 +71,13 @@ func _ready():
 
 func _connect_to_systems():
     # Connect to LUNO cycle system
-    luno_manager = get_node_or_null("/root/LunoCycleManager")
+    luno_manager = get_node_or_null("root/LunoCycleManager")
     if luno_manager:
         print("✓ Connected to LUNO Cycle Manager")
         luno_manager.register_participant("WishMaker", Callable(self, "_on_luno_tick"))
     
     # Connect to Terminal Display Manager
-    display_manager = get_node_or_null("/root/TerminalDisplayManager")
+    display_manager = get_node_or_null("root/TerminalDisplayManager")
     if display_manager:
         print("✓ Connected to Terminal Display Manager")
     
@@ -116,7 +116,7 @@ func _center_trajectory():
         center_date.is_active = false
 
 func _check_date_reset():
-    var current_time = OS.get_unix_time()
+    var current_time = OS.Time.get_unix_time_from_system()
     var current_date = Time.get_date_dict_from_system()
     
     # Get the timestamp from the beginning of the current day
@@ -137,14 +137,14 @@ func _check_date_reset():
 
 func make_wish(wish_text: String, parameters: Dictionary = {}) -> Dictionary:
     # Create wish data structure
-    var wish_id = "WISH_" + str(OS.get_unix_time()) + "_" + str(randi() % 1000)
+    var wish_id = "WISH_" + str(OS.Time.get_unix_time_from_system()) + "_" + str(randi() % 1000)
     var current_date = Time.get_date_dict_from_system()
     
     var wish_data = {
         "id": wish_id,
         "text": wish_text,
         "parameters": parameters,
-        "timestamp": OS.get_unix_time(),
+        "timestamp": OS.Time.get_unix_time_from_system(),
         "date": current_date,
         "status": "pending",
         "auto_processed": false,

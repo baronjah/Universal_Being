@@ -1,8 +1,8 @@
 @tool
-extends SceneTree
+extends \2
 
 # CLI script for generating games from the command line
-# Usage: godot --path "/project/path" --headless --script "scripts/cli/generate_game.gd" --config-file "/path/to/config.json"
+# Usage: godot --path "project/path" --headless --script "scripts/cli/generate_game.gd" --config-file "path/to/config.json"
 
 const DEFAULT_TEMPLATE = "2d_platformer"
 const TEMPLATES_PATH = "res://templates/games/"

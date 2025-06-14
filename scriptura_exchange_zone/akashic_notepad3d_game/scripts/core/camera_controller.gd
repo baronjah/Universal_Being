@@ -1,6 +1,6 @@
 extends Node
 ## Camera Controller class for smooth 3D movement
-class_name CameraController
+class_name CameraController_cameracontroller_cameraco
 
 var camera: Camera3D
 var rotation_speed: float = 2.0

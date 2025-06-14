@@ -1,50 +1,50 @@
 extends Node
 
-class_name CodeValidator
+class_name CodeValidator_codevalidator_codevali
 
 # ----- CONFIGURATION -----
-@export var auto_initialize: bool = true
-@export var enable_gdscript_validation: bool = true
-@export var enable_python_validation: bool = true
-@export var enable_javascript_validation: bool = true
-@export var validation_timeout: float = 10.0  # seconds
-@export var max_file_size_kb: int = 1024  # 1MB
+@@@export var auto_initialize: bool = true
+@@@export var enable_gdscript_validation: bool = true
+@@@export var enable_python_validation: bool = true
+@@@export var enable_javascript_validation: bool = true
+@@@export var validation_timeout: float = 10.0  # seconds
+@@@export var max_file_size_kb: int = 1024  # 1MB
 
 # ----- VALIDATION RULES -----
 @export_group("GDScript Rules")
-@export var gdscript_check_syntax: bool = true
-@export var gdscript_check_naming: bool = true
-@export var gdscript_check_structure: bool = true
-@export var gdscript_max_line_length: int = 100
-@export var gdscript_max_function_lines: int = 50
-@export var gdscript_required_sections: Array[String] = [
+@@@export var gdscript_check_syntax: bool = true
+@@@export var gdscript_check_naming: bool = true
+@@@export var gdscript_check_structure: bool = true
+@@@export var gdscript_max_line_length: int = 100
+@@@export var gdscript_max_function_lines: int = 50
+@@@export var gdscript_required_sections: Array[String] = [
     "# ----- VARIABLES -----",
     "# ----- INITIALIZATION -----",
     "func _ready"
 ]
 
 @export_group("Python Rules")
-@export var python_check_syntax: bool = true
-@export var python_check_pep8: bool = true
-@export var python_check_imports: bool = true
-@export var python_max_line_length: int = 79
-@export var python_max_function_lines: int = 50
-@export var python_style_guide: String = "PEP 8"
+@@@export var python_check_syntax: bool = true
+@@@export var python_check_pep8: bool = true
+@@@export var python_check_imports: bool = true
+@@@export var python_max_line_length: int = 79
+@@@export var python_max_function_lines: int = 50
+@@@export var python_style_guide: String = "PEP 8"
 
 @export_group("JavaScript Rules")
-@export var js_check_syntax: bool = true
-@export var js_check_standards: bool = true
-@export var js_check_es_version: bool = true
-@export var js_max_line_length: int = 80
-@export var js_max_function_lines: int = 40
-@export var js_style_guide: String = "Standard"
+@@@export var js_check_syntax: bool = true
+@@@export var js_check_standards: bool = true
+@@@export var js_check_es_version: bool = true
+@@@export var js_max_line_length: int = 80
+@@@export var js_max_function_lines: int = 40
+@@@export var js_style_guide: String = "Standard"
 
 # ----- EXTERNAL TOOLS -----
 @export_group("External Tools")
-@export var gdscript_parser_path: String = "res://addons/gdscript_parser.gd"
-@export var python_executable: String = "python3"
-@export var eslint_executable: String = "npx eslint"
-@export var use_external_tools: bool = true
+@@@export var gdscript_parser_path: String = "res://addons/gdscript_parser.gd"
+@@@export var python_executable: String = "python3"
+@@@export var eslint_executable: String = "npx eslint"
+@@@export var use_external_tools: bool = true
 
 # ----- COMPONENT CONNECTIONS -----
 @export_node_path var file_tracker_path: NodePath
@@ -65,7 +65,7 @@ var validation_history = []
 var gdscript_patterns = {
     "class_definition": "^class_name\\s+([A-Za-z0-9_]+)\\s*(?:extends\\s+([A-Za-z0-9_]+))?",
     "function_definition": "^func\\s+([A-Za-z0-9_]+)\\s*\\(",
-    "variable_definition": "^(?:var|const|export|onready var)\\s+([A-Za-z0-9_]+)\\s*(?::\\s*([A-Za-z0-9_]+))?\\s*=",
+    "variable_definition": "^(?:var|const|@@export|onready var)\\s+([A-Za-z0-9_]+)\\s*(?::\\s*([A-Za-z0-9_]+))?\\s*=",
     "signal_definition": "^signal\\s+([A-Za-z0-9_]+)",
     "enum_definition": "^enum\\s+([A-Za-z0-9_]+)",
     "extends_statement": "^extends\\s+([A-Za-z0-9_]+)"
@@ -86,7 +86,7 @@ var js_patterns = {
     "arrow_function": "(?:const|let|var)\\s+([A-Za-z0-9_$]+)\\s*=\\s*\\([^)]*\\)\\s*=>",
     "class_definition": "class\\s+([A-Za-z0-9_$]+)",
     "import_statement": "import\\s+(?:{[^}]*}|[A-Za-z0-9_$]+)\\s+from",
-    "export_statement": "export\\s+(?:default\\s+)?(?:const|let|var|function|class)",
+    "export_statement": "@@export\\s+(?:default\\s+)?(?:const|let|var|function|class)",
     "variable_declaration": "(?:const|let|var)\\s+([A-Za-z0-9_$]+)"
 }
 
@@ -124,7 +124,7 @@ func _connect_systems():
     
     if not file_tracker:
         # Try to find by class name or in specific paths
-        file_tracker = get_node_or_null("/root/UnifiedFileTracker")
+        file_tracker = get_node_or_null("root/UnifiedFileTracker")
         if not file_tracker:
             var potential_nodes = get_tree().get_nodes_in_group("file_tracker")
             if potential_nodes.size() > 0:
@@ -136,7 +136,7 @@ func _connect_systems():
     
     if not terminal_system:
         # Try to find by class name or in specific paths
-        terminal_system = get_node_or_null("/root/TerminalSystem")
+        terminal_system = get_node_or_null("root/TerminalSystem")
         if not terminal_system:
             var potential_nodes = get_tree().get_nodes_in_group("terminal_system")
             if potential_nodes.size() > 0:
@@ -466,7 +466,7 @@ func _check_gdscript_structure(content, result):
         result.warnings.append({
             "line": 1,
             "column": 1,
-            "message": "Consider adding a class_name for reusability",
+            "message": "Consider adding a class_name for_codevalidator_codevali reusability",
             "type": "structure"
         })
     
@@ -776,7 +776,7 @@ func _check_python_pep8(content, result):
             stripped_line.find("+=") >= 0 or
             stripped_line.find("-=") >= 0 or
             stripped_line.find("*=") >= 0 or
-            stripped_line.find("/=") >= 0
+            stripped_line.find("=") >= 0
         ):
             result.warnings.append({
                 "line": line_num + 1,
@@ -946,7 +946,7 @@ func _check_javascript_syntax(content, result):
         var stripped_line = line.strip_edges()
         
         # Skip comments
-        if stripped_line.begins_with("//") or stripped_line.begins_with("/*"):
+        if stripped_line.begins_with("//") or stripped_line.begins_with("*"):
             continue
         
         # Check for mismatched braces, parentheses, and brackets

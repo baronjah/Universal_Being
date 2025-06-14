@@ -1,7 +1,7 @@
 extends Node2D
 }
 
-class_name ProjectConnectionVisualizer
+class_name ProjectConnectionVisualizer_projectconnectionvisualizer_projectc
 }
 
 # Project Connection Visualizer
@@ -375,7 +375,7 @@ func export_visualization(file_path):
 	if img.save_png(file_path) == OK:
 		print("Visualization exported to: " + file_path)
 	else:
-		push_error("Failed to export visualization")
+		push_error("Failed to @export visualization")
 }
 
 	# Clean up
@@ -535,7 +535,7 @@ func export_html_visualization(file_path):
 }
 
     <script>
-        // Project data
+# // Project data
         const projectData = {
             projects: {},
             components: [],
@@ -543,9 +543,9 @@ func export_html_visualization(file_path):
         };
 }
 
-        // Initialize with data
+# // Initialize with data
         function initializeVisualization() {
-            // Set projects data
+# // Set projects data
             """
 }
 
@@ -567,7 +567,7 @@ func export_html_visualization(file_path):
 }
 
         function renderVisualization() {
-            // Render projects and components
+# // Render projects and components
             const projectsContainer = document.getElementById('projects');
             projectsContainer.innerHTML = '';
 }
@@ -580,7 +580,7 @@ func export_html_visualization(file_path):
             };
 }
 
-            // Group components by project
+# // Group components by project
             const componentsByProject = {};
             projectData.components.forEach(component => {
                 if (!componentsByProject[component.project]) {
@@ -590,14 +590,14 @@ func export_html_visualization(file_path):
             });
 }
 
-            // Render each project
+# // Render each project
             Object.keys(projectData.projects).forEach(projectName => {
                 const projectComponents = componentsByProject[projectName] || [];
                 const projectDiv = document.createElement('div');
                 projectDiv.className = 'project';
 }
 
-                // Project header
+# // Project header
                 const projectTitle = document.createElement('div');
                 projectTitle.className = 'project-title';
                 projectTitle.style.color = projectColors[projectName] || '#ffffff';
@@ -605,7 +605,7 @@ func export_html_visualization(file_path):
                 projectDiv.appendChild(projectTitle);
 }
 
-                // Components
+# // Components
                 projectComponents.forEach(component => {
                     const componentEl = document.createElement('div');
                     componentEl.className = 'component';
@@ -614,7 +614,7 @@ func export_html_visualization(file_path):
                     componentEl.dataset.id = component.id;
 }
 
-                    // Show details on click
+# // Show details on click
                     componentEl.addEventListener('click', () => showComponentDetails(component));
 }
 
@@ -626,11 +626,11 @@ func export_html_visualization(file_path):
             });
 }
 
-            // Render connections
+# // Render connections
             renderConnections();
 }
 
-            // Render stats
+# // Render stats
             renderStats();
         }
 }
@@ -658,14 +658,14 @@ func export_html_visualization(file_path):
             };
 }
 
-            // Get component map for lookup
+# // Get component map for lookup
             const componentMap = {};
             projectData.components.forEach(component => {
                 componentMap[component.id] = component;
             });
 }
 
-            // Sort connections by type
+# // Sort connections by type
             const sortedConnections = [...projectData.connections].sort((a, b) => a.type - b.type);
 }
 
@@ -700,21 +700,21 @@ func export_html_visualization(file_path):
             const statsContainer = document.getElementById('stats-content');
 }
 
-            // Count components per project
+# // Count components per project
             const projectCounts = {};
             projectData.components.forEach(component => {
                 projectCounts[component.project] = (projectCounts[component.project] || 0) + 1;
             });
 }
 
-            // Count connection types
+# // Count connection types
             const connectionTypeCounts = {};
             projectData.connections.forEach(connection => {
                 connectionTypeCounts[connection.type] = (connectionTypeCounts[connection.type] || 0) + 1;
             });
 }
 
-            // Count cross-project connections
+# // Count cross-project connections
             let crossProjectConnections = 0;
             projectData.connections.forEach(connection => {
                 const sourceComponent = projectData.components.find(c => c.id === connection.source);
@@ -768,13 +768,13 @@ func export_html_visualization(file_path):
             const detailContent = document.getElementById('detail-content');
 }
 
-            // Find connections for this component
+# // Find connections for this component
             const relatedConnections = projectData.connections.filter(
                 conn => conn.source === component.id || conn.target === component.id
             );
 }
 
-            // Show component details
+# // Show component details
             detailTitle.textContent = component.name;
 }
 
@@ -796,7 +796,7 @@ func export_html_visualization(file_path):
             };
 }
 
-            // Get component map for lookup
+# // Get component map for lookup
             const componentMap = {};
             projectData.components.forEach(c => {
                 componentMap[c.id] = c;
@@ -828,13 +828,13 @@ func export_html_visualization(file_path):
 }
 
         function highlightComponent(componentId) {
-            // Find the component
+# // Find the component
             const component = projectData.components.find(c => c.id === componentId);
             if (component) {
                 showComponentDetails(component);
 }
 
-                // Scroll to the component's project
+# // Scroll to the component's project
                 const projectSections = document.querySelectorAll('.project');
                 for (const section of projectSections) {
                     if (section.querySelector('.project-title').textContent.includes(component.project)) {
@@ -844,7 +844,7 @@ func export_html_visualization(file_path):
                 }
 }
 
-                // Highlight the component
+# // Highlight the component
                 const componentEl = document.querySelector(`.component[data-id="${componentId}"]`);
                 if (componentEl) {
                     componentEl.style.boxShadow = '0 0 0 3px #fff';
@@ -856,7 +856,7 @@ func export_html_visualization(file_path):
         }
 }
 
-        // Close details panel when clicking elsewhere
+# // Close details panel when clicking elsewhere
         document.addEventListener('click', function(event) {
             const detailsPanel = document.getElementById('details');
             if (!event.target.closest('#details') && 
@@ -867,7 +867,7 @@ func export_html_visualization(file_path):
         });
 }
 
-        // Initialize on load
+# // Initialize on load
         window.addEventListener('load', initializeVisualization);
     </script>
 </body>
@@ -883,5 +883,5 @@ func export_html_visualization(file_path):
 		print("HTML visualization exported to: " + file_path)
 		return true
 	else:
-		push_error("Failed to export HTML visualization")
+		push_error("Failed to @export HTML visualization")
 		return false

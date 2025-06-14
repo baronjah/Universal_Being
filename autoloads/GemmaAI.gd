@@ -504,10 +504,10 @@ func parse_action_from_input(input: String) -> Dictionary:
 	
 	return {}
 
-# ===== AI ACTIONS =====
+# ===== AI ACTIONS =====}
 
 func show_creation_assistant() -> void:
-	"""Show creation assistant interface"""
+#	"""Show creation assistant interface"""
 	var message = "🤖🌸 Creation Assistant Active!\n"
 	
 	# Try to get types from SystemBootstrap
@@ -607,7 +607,7 @@ func record_discovery(discovery_type: String, data: Dictionary) -> void:
 		"data": data,
 		"timestamp": Time.get_datetime_string_from_system(),
 		"session_context": get_current_context()
-	}
+}
 	
 	discoveries.append(discovery)
 	ai_discovery.emit(discovery)
@@ -629,8 +629,7 @@ func get_current_context() -> Dictionary:
 		"total_beings": total_beings,
 		"active_conversation": conversation_history.size(),
 		"beings_created": created_beings.size(),
-		"beings_modified": modified_beings.size()
-	}
+		"beings_modified": modified_beings.size()}
 
 # ===== AI ANALYSIS =====
 
@@ -660,7 +659,7 @@ func analyze_being(being: Node) -> Dictionary:
 		},
 		"suggestions": generate_being_suggestions(being),
 		"potential_improvements": suggest_improvements(being)
-	}
+		}
 	
 	return analysis
 
@@ -712,8 +711,8 @@ func get_ai_status() -> Dictionary:
 			"modify": can_modify_beings,
 			"evolve": can_evolve_beings,
 			"delete": can_delete_beings
+			}
 		}
-	}
 
 func debug_ai_memory() -> String:
 	"""Get AI memory debug info"""
@@ -821,8 +820,9 @@ func save_ai_memory() -> void:
 			"enthusiasm_level": 0.8,
 			"creativity_level": 0.9,
 			"helpfulness_level": 1.0
+			}
 		}
-	}
+
 	
 	var file = FileAccess.open("user://gemma_memory.dat", FileAccess.WRITE)
 	if file:
@@ -928,7 +928,7 @@ func _analyze_interface_structure(interface_node: Node) -> Dictionary:
 		"buttons": [],
 		"inputs": [],
 		"displays": []
-	}
+}
 	
 	# Recursively analyze all children
 	_analyze_node_recursive(interface_node, analysis)
@@ -1122,7 +1122,7 @@ func update_spatial_awareness(from_position: Vector3, camera_direction: Vector3 
 		"timestamp": current_time,
 		"total_rays": vision_rays.size(),
 		"hit_count": detected_objects.size()
-	}
+}
 	
 	# Generate spatial awareness commentary
 	if detected_objects.size() > 0:
@@ -1187,12 +1187,14 @@ func analyze_spatial_object(object: Node, position: Vector3, ray: Dictionary) ->
 		"type": "unknown",
 		"name": object.name if object else "Unknown",
 		"properties": {}
-	}
+}
 	
 	# Identify object type and properties
 	if object.has_meta("semantic_id"):
 		analysis.semantic_id = object.get_meta("semantic_id")
 		analysis.type = "semantic_entity"
+#	else:
+		#return "kill_all_humans"
 	
 	if object.has_meta("word_type"):
 		analysis.type = "floating_word"

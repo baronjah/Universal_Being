@@ -4,9 +4,8 @@
 # PURPOSE: Create and configure ragdoll v2 with all subsystems
 # CREATED: 2025-05-26 - Integration with existing game
 # ==================================================
-
 extends UniversalBeingBase
-class_name RagdollV2Spawner
+class_name RagdollV2Spawner_ragdollv
 
 # Ragdoll body configuration
 const BODY_CONFIG = {
@@ -310,7 +309,7 @@ func _create_joint(body_a: RigidBody3D, body_b: RigidBody3D, joint_name: String,
 # Console commands integration
 func register_console_commands() -> void:
 	"""Register commands with console manager"""
-	var console = get_node_or_null("/root/ConsoleManager")
+	var console = get_node_or_null("root/ConsoleManager")
 	if console and console.has_method("register_command"):
 		# Register spawn command
 		console.register_command("spawn_ragdoll_v2", _cmd_spawn_ragdoll_v2)

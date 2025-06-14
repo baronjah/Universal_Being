@@ -3,8 +3,7 @@
 # Created: May 31, 2025, 23:28 CEST
 # Purpose: Ragdoll physics and behavior system
 # Connection: Part of Pentagon Architecture migration
-
-extends UniversalBeingBase
+extends \2
 # Debug script to check why UniversalEntity might not be loading
 # Add this to any scene temporarily to debug
 
@@ -34,7 +33,7 @@ func _ready():
 		print("❌ Script file not found: " + script_path)
 	
 	# Check autoload
-	var universal = get_node_or_null("/root/UniversalEntity")
+	var universal = get_node_or_null("root/UniversalEntity")
 	if universal:
 		print("✅ UniversalEntity autoload is active")
 		print("   Node name: " + universal.name)
@@ -55,7 +54,7 @@ func _ready():
 				print("   - " + child.name)
 	
 	# Check ConsoleManager
-	var console = get_node_or_null("/root/ConsoleManager")
+	var console = get_node_or_null("root/ConsoleManager")
 	if console:
 		print("\n✅ ConsoleManager found")
 		if "commands" in console:

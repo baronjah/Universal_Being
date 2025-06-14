@@ -74,6 +74,7 @@ func _on_consciousness_changed(old_level: int, new_level: int) -> void:
 	"""React to consciousness level changes"""
 	current_consciousness_level = new_level
 	print("📸 Camera effects: Consciousness %d -> %d" % [old_level, new_level])
+
 	
 	if effects_enabled:
 		transition_effects(old_level, new_level)
@@ -132,16 +133,19 @@ func get_effect_name_for_level(level: int) -> String:
 		7: return "consciousness_pulse"
 		_: return ""
 
+
 # ===== INDIVIDUAL EFFECTS =====
 
 func add_vignette_effect() -> void:
 	"""Level 1: Subtle screen edge darkening"""
+
 	var rect = create_shader_rect("vignette", 1)
 	if rect:
 		print("🌑 Added vignette effect")
 
 func add_depth_of_field_effect() -> void:
 	"""Level 2: Focus blur on distant objects"""
+
 	var rect = create_shader_rect("depth_of_field", 2)
 	if rect:
 		# Set initial parameters
@@ -152,30 +156,35 @@ func add_depth_of_field_effect() -> void:
 
 func add_bloom_effect() -> void:
 	"""Level 3: Consciousness glow on beings"""
+
 	var rect = create_shader_rect("bloom", 3)
 	if rect:
 		print("✨ Added bloom effect")
 
 func add_chromatic_aberration_effect() -> void:
 	"""Level 4: RGB channel separation"""
+
 	var rect = create_shader_rect("chromatic_aberration", 4)
 	if rect:
 		print("🌈 Added chromatic aberration effect")
 
 func add_reality_distortion_effect() -> void:
 	"""Level 5: Space-time warping"""
+
 	var rect = create_shader_rect("reality_distortion", 5)
 	if rect:
 		print("🌀 Added reality distortion effect")
 
 func add_quantum_vision_effect() -> void:
 	"""Level 6: Multiple reality perception"""
+
 	var rect = create_shader_rect("quantum_vision", 6)
 	if rect:
 		print("👁️ Added quantum vision effect")
 
 func add_consciousness_pulse_effect() -> void:
 	"""Level 7: All effects + breathing reality"""
+
 	var rect = create_shader_rect("consciousness_pulse", 7)
 	if rect:
 		# This shader combines all previous effects
@@ -197,6 +206,7 @@ func create_shader_rect(effect_name: String, level: int) -> ColorRect:
 	# Try to load material preset first
 	var preset_path = MATERIAL_PRESETS.get(level, "")
 	if preset_path != "" and ResourceLoader.exists(preset_path):
+
 		var preset_material = load(preset_path)
 		rect.material = preset_material
 		print("✅ Loaded material preset for level %d" % level)
@@ -204,6 +214,7 @@ func create_shader_rect(effect_name: String, level: int) -> ColorRect:
 		# Fallback: Create material from shader
 		var shader_path = LEVEL_SHADERS.get(level, "")
 		if shader_path != "" and ResourceLoader.exists(shader_path):
+
 			var shader = load(shader_path)
 			var material = ShaderMaterial.new()
 			material.shader = shader
@@ -260,6 +271,7 @@ func update_shader_consciousness(material: ShaderMaterial) -> void:
 		material.set_shader_parameter("consciousness_level", float(current_consciousness_level))
 	
 	if material.shader and material.shader.has_uniform("effect_intensity"):
+
 		var intensity = current_consciousness_level / 7.0
 		material.set_shader_parameter("effect_intensity", intensity)
 
@@ -311,8 +323,7 @@ func ai_interface() -> Dictionary:
 			"set_effects_enabled [true/false]",
 			"force_level [0-7]",
 			"cleanup_effects"
-		]
-	}
+		]}
 
 func ai_invoke_method(method_name: String, args: Array = []) -> Variant:
 	"""AI method invocation"""
@@ -332,3 +343,4 @@ func ai_invoke_method(method_name: String, args: Array = []) -> Variant:
 			return "All effects cleaned up"
 		_:
 			return "Unknown command: %s" % method_name
+

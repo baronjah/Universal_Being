@@ -12,7 +12,7 @@ const ENJOYMENT_INDICATORS = {
     "completion_rate": 0.2,
     "revisit_frequency": 0.2,
     "exploration_breadth": 0.2
-}
+	}
 
 # Preference categories and tracking
 var preference_categories = {
@@ -23,7 +23,6 @@ var preference_categories = {
             "difficulty_selected": [],
             "retry_attempts": [],
             "time_spent_on_challenges": []
-        }
     },
     "creation": {
         "current_value": 0.5,
@@ -32,7 +31,6 @@ var preference_categories = {
             "items_created": [],
             "creation_time_spent": [],
             "customization_depth": []
-        }
     },
     "exploration": {
         "current_value": 0.5, 
@@ -41,7 +39,6 @@ var preference_categories = {
             "areas_visited": [],
             "discovery_rate": [],
             "path_diversity": []
-        }
     },
     "social": {
         "current_value": 0.5,
@@ -50,7 +47,6 @@ var preference_categories = {
             "interaction_frequency": [],
             "dialogue_choices": [],
             "relationship_building": []
-        }
     },
     "achievement": {
         "current_value": 0.5,
@@ -59,9 +55,7 @@ var preference_categories = {
             "goals_completed": [],
             "progress_tracking": [],
             "perfectionism": []
-        }
-    }
-}
+			}
 
 # Player state tracking
 var activity_log = []
@@ -71,7 +65,7 @@ var enjoyment_metrics = {
     "completion_rate": [],
     "revisit_frequency": [],
     "exploration_breadth": []
-}
+	}
 
 # Analytics
 var enjoyment_factor = 1.0
@@ -91,12 +85,12 @@ func _ready():
     var timer = Timer.new()
     timer.wait_time = ANALYSIS_INTERVAL
     timer.autostart = true
-    timer.connect("timeout", self, "_on_analysis_interval")
+    timer.connect(_on_analysis_interval)
     add_child(timer)
     
     # Find account manager if available
     if has_node("/root/SmartAccountManager") or get_node_or_null("/root/SmartAccountManager"):
-        _account_manager = get_node("/root/SmartAccountManager")
+        _account_manager = get_node("\1") as Node
         print("Connected to SmartAccountManager")
 
 func _on_analysis_interval():
@@ -122,6 +116,7 @@ func log_activity(activity_data):
 
 func log_preference_indicator(category, indicator, value):
     if category in preference_categories and indicator in preference_categories[category]["indicators"]:
+	}
         # Add data point to indicator
         preference_categories[category]["indicators"][indicator].append({
             "value": value,
@@ -212,7 +207,7 @@ func analyze_player_preferences():
     if _account_manager:
         _account_manager.enjoyment_factor = enjoyment_factor
         
-        var preferences = {}
+        var preferences = {
         for category in preference_categories:
             var key = "prefers_" + category
             preferences[key] = preference_categories[category]["current_value"]
@@ -220,7 +215,7 @@ func analyze_player_preferences():
         _account_manager.player_preferences = preferences
     
     # Emit updated preferences
-    var current_preferences = {}
+    var current_preferences = {
     for category in preference_categories:
         current_preferences[category] = preference_categories[category]["current_value"]
     
@@ -229,6 +224,7 @@ func analyze_player_preferences():
     emit_signal("confidence_level_changed", confidence_level)
     
     print("Analyzed player preferences - Enjoyment factor: " + str(enjoyment_factor))
+	}
 
 func calculate_enjoyment_factor():
     var factor_sum = 0.0
@@ -288,6 +284,7 @@ func calculate_confidence_level():
     confidence_level = (data_coverage * 0.7 + history_factor * 0.3)
     
     print("Preference analysis confidence: " + str(confidence_level * 100.0) + "%")
+	}
 
 # Artificial intelligence enhancement functions for auto-correction
 
@@ -316,7 +313,7 @@ func get_auto_correction_suggestion():
         "amount": highest_value * 50, # Scale based on preference strength
         "confidence": confidence_level,
         "reason": "Player shows strong preference for " + highest_preference
-    }
+		}
     
     return suggestion
 

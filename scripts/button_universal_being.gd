@@ -37,12 +37,14 @@ func pentagon_init() -> void:
     ]
     
     print("🌟 %s: Pentagon Init Complete" % being_name)
+	
 
 func pentagon_ready() -> void:
     super.pentagon_ready()  # 🔄 ALWAYS CALL SUPER FIRST
     
     # Load the button scene
     load_scene("res://scenes/ui/button_template.tscn")
+	
     
     # Find the button node
     button_node = get_scene_node("Button") as Button
@@ -55,8 +57,10 @@ func pentagon_ready() -> void:
     
     # Add UI behavior component
     add_component("res://components/ui_behavior.ub.zip")
+	
     
     print("🌟 %s: Pentagon Ready Complete" % being_name)
+	
 
 func pentagon_process(delta: float) -> void:
     super.pentagon_process(delta)  # ⚡ ALWAYS CALL SUPER FIRST
@@ -69,6 +73,7 @@ func pentagon_process(delta: float) -> void:
     # Update button text with consciousness
     if button_node:
         button_node.text = "%s [Clicks: %d]" % [button_text, click_count]
+		
 
 func pentagon_input(event: InputEvent) -> void:
     super.pentagon_input(event)  # 👂 ALWAYS CALL SUPER FIRST
@@ -80,6 +85,7 @@ func pentagon_input(event: InputEvent) -> void:
 
 func pentagon_sewers() -> void:
     print("🌟 %s: Pentagon Sewers - Total clicks: %d" % [being_name, click_count])
+	
     
     # Clean up button connections
     if button_node:
@@ -98,6 +104,7 @@ func _on_button_pressed() -> void:
     update_consciousness_visual()
     
     print("🔘 %s clicked! Count: %d, Consciousness: %d" % [being_name, click_count, consciousness_level])
+	
     
     # Emit consciousness awakening at milestones
     if click_count in [10, 25, 50, 100]:
@@ -106,6 +113,7 @@ func _on_button_pressed() -> void:
     # Evolution trigger
     if click_count >= 42 and can_evolve_to("consciousness_portal.ub.zip"):
         print("🌟 %s: Ready to evolve into Consciousness Portal!" % being_name)
+		
 
 func _on_mouse_entered() -> void:
     is_hovered = true
@@ -141,8 +149,8 @@ func ai_interface() -> Dictionary:
         "clicks": click_count,
         "text": button_text,
         "hovered": is_hovered
-    }
     return base
+}
 
 func ai_invoke_method(method_name: String, args: Array = []) -> Variant:
     match method_name:
@@ -150,6 +158,7 @@ func ai_invoke_method(method_name: String, args: Array = []) -> Variant:
             click_count = 0
             return "Button clicks reset to 0"
         "magic_press":
+		
             var times = args[0] if args.size() > 0 else 42
             for i in times:
                 _on_button_pressed()

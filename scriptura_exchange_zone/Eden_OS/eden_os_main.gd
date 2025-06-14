@@ -86,7 +86,7 @@ func initialize_system():
 	var init_content = "Eden OS Initialization\n"
 	init_content += "=====================\n"
 	init_content += "Time: " + Time.get_datetime_string_from_system() + "\n"
-	init_content += "Turn Cycle: " + str(turn_cycle_manager.current_turn) + "/12\n"
+	init_content += "Turn Cycle: " + str(turn_cycle_manager.current_turn) + "12\n"
 	init_content += "Completed Cycles: " + str(turn_cycle_manager.total_cycles_completed) + "\n"
 	
 	# Create system log file
@@ -331,7 +331,7 @@ func _on_shape_painted(shape_id, texture_id):
 		}
 		
 		file_path += dimension_names[shape.dimension]
-		file_path += "/painted_shape_" + shape_id.split("_")[1] + ".png"
+		file_path += "painted_shape_" + shape_id.split("_")[1] + ".png"
 		
 		# Save the image
 		var error = image.save_png(file_path)
@@ -412,7 +412,7 @@ func generate_system_report() -> String:
 	var report = "Eden OS System Report\n"
 	report += "===================\n"
 	report += "Time: " + Time.get_datetime_string_from_system() + "\n"
-	report += "Turn: " + str(turn_cycle_manager.current_turn) + "/12\n"
+	report += "Turn: " + str(turn_cycle_manager.current_turn) + "12\n"
 	report += "Current Color: " + turn_cycle_manager.get_current_color_name() + "\n"
 	report += "Completed Cycles: " + str(turn_cycle_manager.total_cycles_completed) + "\n"
 	report += "System Running: " + str(running) + "\n"

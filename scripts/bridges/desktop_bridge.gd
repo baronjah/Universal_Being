@@ -26,4 +26,3 @@ func get_component_info() -> Dictionary:
 		"name": "Desktop Bridge",
 		"status": bridge_status,
 		"ready": bridge_ready
-	}

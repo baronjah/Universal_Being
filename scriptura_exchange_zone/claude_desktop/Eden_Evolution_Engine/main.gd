@@ -82,7 +82,7 @@ func _ready():
 # ========== AKASHIC RECORDS FUNCTIONS ==========
 func _initialize_akashic_records():
 	akashic_records = {
-		"genesis_moment": OS.get_unix_time(),
+		"genesis_moment": OS.Time.get_unix_time_from_system(),
 		"evolution_chains": [],
 		"memory_pools": {},
 		"consciousness_map": {},
@@ -100,7 +100,7 @@ func store_memory(memory_data, pool_id = 0):
 		pool_id = pool_id % MEMORY_POOLS
 	
 	var memory_fragment = {
-		"timestamp": OS.get_unix_time(),
+		"timestamp": OS.Time.get_unix_time_from_system(),
 		"data": memory_data,
 		"evolution_state": evolution_state,
 		"dimension": current_dimension
@@ -230,11 +230,11 @@ func add_falling_text(text, color_index = 0):
 # ========== JSH CONSOLE ==========
 func _connect_jsh_console():
 	jsh_console.commands = {
-		"evolve": funcref(self, "cmd_evolve"),
-		"create": funcref(self, "cmd_create"),
-		"memory": funcref(self, "cmd_memory"),
-		"turn": funcref(self, "cmd_turn"),
-		"universe": funcref(self, "cmd_universe")
+		"evolve": Callable(self, "cmd_evolve"),
+		"create": Callable(self, "cmd_create"),
+		"memory": Callable(self, "cmd_memory"),
+		"turn": Callable(self, "cmd_turn"),
+		"universe": Callable(self, "cmd_universe")
 	}
 
 func execute_jsh_command(command_string):

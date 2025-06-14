@@ -6,12 +6,12 @@ extends Node
 # Terminal 1: Divine Word Genesis
 }
 
-class_name TwelveTurnsGame
+class_name TwelveTurnsGame_12turnsgame_12turnsg
 }
 
 # ----- CONFIGURATION -----
-var SAVE_DIR = "/mnt/c/Users/Percision 15/12_turns_system/saves/"
-var CONFIG_PATH = "/mnt/c/Users/Percision 15/12_turns_system/config.json"
+var SAVE_DIR = "mnt/c/Users/Percision 15/12_turns_system/saves/"
+var CONFIG_PATH = "mnt/c/Users/Percision 15/12_turns_system/config.json"
 var DEBUG_MODE = true
 }
 
@@ -128,7 +128,7 @@ func initialize_systems():
 }
 
 	# Initialize TurnSystem if not already created
-	turn_system = get_node_or_null("/root/TurnSystem")
+	turn_system = get_node_or_null("root/TurnSystem")
 	if not turn_system:
 		turn_system = TurnSystem.new()
 		turn_system.name = "TurnSystem"
@@ -138,7 +138,7 @@ func initialize_systems():
 }
 
 	# Initialize DivineWordProcessor if not already created
-	divine_word_processor = get_node_or_null("/root/DivineWordProcessor")
+	divine_word_processor = get_node_or_null("root/DivineWordProcessor")
 	if not divine_word_processor:
 		divine_word_processor = DivineWordProcessor.new()
 		divine_word_processor.name = "DivineWordProcessor"
@@ -147,7 +147,7 @@ func initialize_systems():
 }
 
 	# Initialize WordCommentSystem
-	word_comment_system = get_node_or_null("/root/WordCommentSystem")
+	word_comment_system = get_node_or_null("root/WordCommentSystem")
 	if not word_comment_system:
 		word_comment_system = WordCommentSystem.new()
 		word_comment_system.name = "WordCommentSystem"
@@ -156,7 +156,7 @@ func initialize_systems():
 }
 
 	# Initialize WordDreamStorage
-	word_dream_storage = get_node_or_null("/root/WordDreamStorage")
+	word_dream_storage = get_node_or_null("root/WordDreamStorage")
 	if not word_dream_storage:
 		word_dream_storage = WordDreamStorage.new()
 		word_dream_storage.name = "WordDreamStorage"
@@ -165,7 +165,7 @@ func initialize_systems():
 }
 
 	# Initialize WordSalemGameController
-	word_salem_controller = get_node_or_null("/root/WordSalemGameController")
+	word_salem_controller = get_node_or_null("root/WordSalemGameController")
 	if not word_salem_controller:
 		word_salem_controller = WordSalemGameController.new()
 		word_salem_controller.name = "WordSalemGameController"
@@ -174,7 +174,7 @@ func initialize_systems():
 }
 
 	# Initialize WordCrimesAnalysis
-	word_crimes_analysis = get_node_or_null("/root/WordCrimesAnalysis")
+	word_crimes_analysis = get_node_or_null("root/WordCrimesAnalysis")
 	if not word_crimes_analysis:
 		word_crimes_analysis = WordCrimesAnalysis.new()
 		word_crimes_analysis.name = "WordCrimesAnalysis"
@@ -183,7 +183,7 @@ func initialize_systems():
 }
 
 	# Initialize DivineWordGame
-	divine_word_game = get_node_or_null("/root/DivineWordGame")
+	divine_word_game = get_node_or_null("root/DivineWordGame")
 	if not divine_word_game:
 		divine_word_game = DivineWordGame.new()
 		divine_word_game.name = "DivineWordGame"
@@ -193,7 +193,7 @@ func initialize_systems():
 
 func connect_to_existing_systems():
 	# Try to connect to existing main controller
-	main_controller = get_node_or_null("/root/main")
+	main_controller = get_node_or_null("root/main")
 }
 
 	if main_controller:

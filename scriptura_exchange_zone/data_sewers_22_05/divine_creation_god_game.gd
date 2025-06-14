@@ -59,7 +59,7 @@ var universe_parameters = {
 
 # ----- CREATION CANVAS -----
 var creation_space_size = Vector3(100, 100, 100)
-var creation_chunks = {}  # Spatial chunks for efficient processing
+var creation_chunks = {}  # Node3D chunks for efficient processing
 var active_creations = []
 var creation_history = []
 }

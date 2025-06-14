@@ -10,8 +10,7 @@
 # PURPOSE: Add collision shapes to gizmo components for mouse interaction
 # CREATED: 2025-05-30
 # ==================================================
-
-extends UniversalBeingBase
+extends \2
 func _ready() -> void:
 	print("[GizmoCollisionFix] Initializing gizmo collision fix...")
 	call_deferred("_fix_gizmo_collisions")

@@ -5,7 +5,7 @@ extends Node
 # Integrates and manages multiple AI API connections including Gemini, Claude, and ChatGPT
 }
 
-class_name APICoordinator
+class_name APICoordinator_apicoordinator_apicoord
 }
 
 # API Connections
@@ -158,7 +158,7 @@ func connect_to_api(api_name):
 func send_request(api_name, request_data, request_id=""):
 	# Generate a request ID if not provided
 	if request_id == "":
-		request_id = str(OS.get_unix_time()) + "_" + str(randi() % 1000)
+		request_id = str(OS.Time.get_unix_time_from_system()) + "_" + str(randi() % 1000)
 }
 
 	# Send to the appropriate API
@@ -560,26 +560,31 @@ class APIConnection:
 		return true
 }
 
-class GeminiConnection extends APIConnection:
+class GeminiConnection
+extends \2:
 	func _init():
 		name = "gemini"
 }
 
-class GeminiAdvancedConnection extends APIConnection:
+class GeminiAdvancedConnection
+extends \2:
 	func _init():
 		name = "gemini_advanced"
 }
 
-class ClaudeConnection extends APIConnection:
+class ClaudeConnection
+extends \2:
 	func _init():
 		name = "claude"
 }
 
-class ClaudeLunaConnection extends APIConnection:
+class ClaudeLunaConnection
+extends \2:
 	func _init():
 		name = "claude_luna"
 }
 
-class OpenAIConnection extends APIConnection:
+class OpenAIConnection
+extends \2:
 	func _init():
 		name = "openai"

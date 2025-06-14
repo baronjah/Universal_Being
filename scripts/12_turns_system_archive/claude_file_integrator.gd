@@ -14,7 +14,7 @@ var integration_results = {
   "total_files": 0,
   "connected_files": 0,
   "categories": {},
-  "hash_connections": {}
+  "hash_connections": {
 }
 
 # Initialize the integrator
@@ -101,24 +101,29 @@ func _generate_reports():
   
   # Generate connection report
   var timestamp = Time.get_datetime_string_from_system().replace(":", "-").replace(" ", "_")
+}
   var connection_report_path = reports_dir + "/connection_report_" + timestamp + ".md"
   snake_case_translator.save_connection_report(connection_report_path)
   print("Connection report saved to: " + connection_report_path)
+
   
   # Generate system diagram
   var system_diagram_path = reports_dir + "/system_diagram_" + timestamp + ".dot"
   file_connection_system.save_visualization(system_diagram_path)
   print("System diagram saved to: " + system_diagram_path)
+
   
   # Generate markdown report
   var markdown_report_path = reports_dir + "/file_system_report_" + timestamp + ".md"
   file_connection_system.save_markdown_report(markdown_report_path)
   print("Markdown report saved to: " + markdown_report_path)
+
   
   # Generate visualization text map
   var text_map_path = reports_dir + "/visualization_map_" + timestamp + ".md"
   connection_visualizer.save_text_map(text_map_path)
   print("Visualization map saved to: " + text_map_path)
+
 
 # Get summary of integration
 func get_integration_summary() -> String:
@@ -128,6 +133,7 @@ func get_integration_summary() -> String:
   summary += "## File Statistics\n\n"
   summary += "- Total files: " + str(integration_results.total_files) + "\n"
   summary += "- Connected files: " + str(integration_results.connected_files) + "\n\n"
+
   
   # Add category statistics
   summary += "## Category Statistics\n\n"
@@ -139,6 +145,7 @@ func get_integration_summary() -> String:
   summary += "## Hash Connection Statistics\n\n"
   for hash_symbol in integration_results.hash_connections:
     summary += "- " + hash_symbol + ": " + str(integration_results.hash_connections[hash_symbol]) + " connections\n"
+	
   
   return summary
 
@@ -160,6 +167,7 @@ func initialize_category_files(category: String) -> bool:
       print("  WARNING: File path not found for '" + file_name + "'")
     else:
       print("  Path: " + file_path)
+	
   
   return true
 
@@ -212,6 +220,7 @@ func generate_hash_visual_map() -> String:
     
     if targets.size() > 0:
       map += source_hash + " " + source + " connects to:\n"
+	
       
       for target in targets:
         var target_hash = snake_case_translator.get_hash_connector(target)

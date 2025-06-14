@@ -47,8 +47,8 @@ func _ready() -> void:
 
 func _initialize_navigation_system() -> void:
 	# Set up file system paths
-	akashic_records_path = "/mnt/c/Users/Percision 15/Desktop/claude_desktop/kamisama_tests/Eden/AkashicRecord/AkashicRecords"
-	desktop_claude_path = "/mnt/c/Users/Percision 15/Desktop/claude_desktop"
+	akashic_records_path = "mnt/c/Users/Percision 15/Desktop/claude_desktop/kamisama_tests/Eden/AkashicRecord/AkashicRecords"
+	desktop_claude_path = "mnt/c/Users/Percision 15/Desktop/claude_desktop"
 	
 	# Initialize lateral position tracking
 	for level in NAVIGATION_HIERARCHY:
@@ -59,7 +59,7 @@ func _initialize_navigation_system() -> void:
 
 func _load_navigation_hierarchy_data() -> void:
 	# Load master navigation index
-	var master_index_path = akashic_records_path + "/MASTER_NAVIGATION_INDEX.md"
+	var master_index_path = akashic_records_path + "MASTER_NAVIGATION_INDEX.md"
 	if FileAccess.file_exists(master_index_path):
 		var file = FileAccess.open(master_index_path, FileAccess.READ)
 		if file:
@@ -149,14 +149,14 @@ func can_navigate_lateral(direction: int) -> bool:
 	return new_position >= 0 and new_position <= max_pos
 
 func _cache_level_data(level_name: String) -> void:
-	var level_path = akashic_records_path + "/" + level_name
+	var level_path = akashic_records_path + "" + level_name
 	
 	if not DirAccess.dir_exists_absolute(level_path):
 		print("Level directory does not exist: ", level_path)
 		return
 	
 	# Cache navigation stitch file
-	var stitch_path = level_path + "/NAVIGATION_STITCH.md"
+	var stitch_path = level_path + "NAVIGATION_STITCH.md"
 	if FileAccess.file_exists(stitch_path):
 		var file = FileAccess.open(stitch_path, FileAccess.READ)
 		if file:
@@ -165,7 +165,7 @@ func _cache_level_data(level_name: String) -> void:
 	
 	# Cache point files (0-9)
 	for i in range(10):
-		var point_path = level_path + "/point_" + str(i) + ".txt"
+		var point_path = level_path + "point_" + str(i) + ".txt"
 		if FileAccess.file_exists(point_path):
 			var file = FileAccess.open(point_path, FileAccess.READ)
 			if file:
@@ -174,7 +174,7 @@ func _cache_level_data(level_name: String) -> void:
 	
 	# Cache wall files (0-9)
 	for i in range(10):
-		var wall_path = level_path + "/wall_" + str(i) + ".txt"
+		var wall_path = level_path + "wall_" + str(i) + ".txt"
 		if FileAccess.file_exists(wall_path):
 			var file = FileAccess.open(wall_path, FileAccess.READ)
 			if file:

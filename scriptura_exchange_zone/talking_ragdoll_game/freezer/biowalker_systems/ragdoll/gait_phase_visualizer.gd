@@ -3,16 +3,15 @@
 # Created: May 31, 2025, 23:28 CEST
 # Purpose: Ragdoll physics and behavior system
 # Connection: Part of Pentagon Architecture migration
-
 extends UniversalBeingBase
-class_name GaitPhaseVisualizer
+class_name GaitPhaseVisualizer_gaitphas
 # Visualizes gait phases and foot contacts in the debug layer
 
-@export var walker: BiomechanicalWalker
-@export var show_phase_labels: bool = true
-@export var show_contact_points: bool = true
-@export var show_force_vectors: bool = true
-@export var show_gait_timeline: bool = true
+@@@export var walker: BiomechanicalWalker
+@@@export var show_phase_labels: bool = true
+@@@export var show_contact_points: bool = true
+@@@export var show_force_vectors: bool = true
+@@@export var show_gait_timeline: bool = true
 
 var layer_system: Node
 var debug_labels: Dictionary = {}
@@ -40,7 +39,7 @@ func _ready() -> void:
 
 func pentagon_ready() -> void:
 	super.pentagon_ready()
-	layer_system = get_node_or_null("/root/LayerRealitySystem")
+	layer_system = get_node_or_null("root/LayerRealitySystem")
 	
 	if walker:
 		walker.phase_changed.connect(_on_phase_changed)
@@ -246,8 +245,8 @@ func _on_step_completed(foot: String) -> void:
 	print("Step completed: %s foot" % foot)
 	
 	# Could trigger footstep sounds here
-	if has_node("/root/AudioManager"):
-		get_node("/root/AudioManager").play_footstep(foot)
+	if has_node("root/AudioManager"):
+		get_node("root/AudioManager").play_footstep(foot)
 
 # Console integration
 

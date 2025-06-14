@@ -4,9 +4,8 @@
 # PURPOSE: Prevent duplicate implementations and manage script connections
 # CREATED: 2025-05-28 - Bringing harmony to the chaos
 # ==================================================
-
 extends UniversalBeingBase
-class_name ArchitectureHarmonySystem
+class_name ArchitectureHarmonySystem_architec
 
 signal harmony_achieved()
 signal conflict_detected(type: String, scripts: Array)
@@ -88,7 +87,7 @@ func _scan_directory(dir: DirAccess, path: String) -> void:
 	var file_name = dir.get_next()
 	
 	while file_name != "":
-		var full_path = path + "/" + file_name
+		var full_path = path + "" + file_name
 		
 		if dir.current_is_dir() and not file_name.begins_with("."):
 			var subdir = DirAccess.open(full_path)
@@ -252,7 +251,7 @@ func _guess_purpose(script_path: String) -> String:
 
 func _register_harmony_commands() -> void:
 	"""Register console commands for architecture harmony"""
-	var console = get_node_or_null("/root/ConsoleManager")
+	var console = get_node_or_null("root/ConsoleManager")
 	if console:
 		console.register_command("arch_status", _cmd_architecture_status, 
 			"Show architecture harmony status")
@@ -264,7 +263,7 @@ func _register_harmony_commands() -> void:
 			"Find architecture conflicts")
 
 func _cmd_architecture_status(_args: Array) -> void:
-	var console = get_node("/root/ConsoleManager")
+	var console = get_node("root/ConsoleManager")
 	console._print_to_console("[color=cyan]🎭 Architecture Harmony Status[/color]")
 	console._print_to_console("Scripts tracked: %d" % script_registry.size())
 	console._print_to_console("Process users: %d" % process_users.size())
@@ -272,7 +271,7 @@ func _cmd_architecture_status(_args: Array) -> void:
 	console._print_to_console("Best ragdoll: %s" % get_best_ragdoll())
 
 func _cmd_ragdoll_status(_args: Array) -> void:
-	var console = get_node("/root/ConsoleManager")
+	var console = get_node("root/ConsoleManager")
 	console._print_to_console("[color=yellow]🤖 Ragdoll Implementations:[/color]")
 	
 	for item_name in ragdoll_implementations:
@@ -283,7 +282,7 @@ func _cmd_ragdoll_status(_args: Array) -> void:
 		console._print_to_console("  Features: %s" % ", ".join(impl.features))
 
 func _cmd_process_users(_args: Array) -> void:
-	var console = get_node("/root/ConsoleManager")
+	var console = get_node("root/ConsoleManager")
 	console._print_to_console("[color=orange]⚡ Process Function Users:[/color]")
 	
 	console._print_to_console("_process users (%d):" % process_users.size())
@@ -295,7 +294,7 @@ func _cmd_process_users(_args: Array) -> void:
 		console._print_to_console("  • %s" % script.get_file())
 
 func _cmd_show_conflicts(_args: Array) -> void:
-	var console = get_node("/root/ConsoleManager")
+	var console = get_node("root/ConsoleManager")
 	var conflicts = find_conflicts()
 	
 	if conflicts.is_empty():

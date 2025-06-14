@@ -227,7 +227,7 @@ func evolve_random_words():
     var words_to_evolve = min(all_words.size(), 3)
     
     for i in range(words_to_evolve):
-        if all_words.empty():
+        if all_words.is_empty():
             break
             
         var random_index = randi() % all_words.size()
@@ -247,7 +247,7 @@ func evolve_random_words():
         var evolution_stage = randi() % 5 + 1
         for stage in range(1, evolution_stage):
             word_animator.evolve_word(word, stage + 1)
-            yield(get_tree(), "idle_frame")  # Wait a frame between evolutions
+            await(get_tree(), "idle_frame")  # Wait a frame between evolutions
 
 # Create the yoyo visual
 func _create_yoyo_visual():
@@ -309,7 +309,7 @@ func launch_yoyo_catcher():
     # Get all active words from the animator
     var active_words = word_animator.active_words
     
-    if active_words.empty():
+    if active_words.is_empty():
         return
     
     # Choose a random word to target
@@ -343,7 +343,7 @@ func launch_yoyo_catcher():
     tween.start()
     
     # Wait for the extension to complete, then check for catch
-    yield(tween, "tween_completed")
+    await(tween, "tween_completed")
     
     # Check if we caught the word
     var distance = yoyo["visual_node"].translation.distance_to(target_node.translation)
@@ -366,7 +366,7 @@ func launch_yoyo_catcher():
     tween.start()
     
     # Wait for retraction to complete
-    yield(tween, "tween_completed")
+    await(tween, "tween_completed")
     
     # Clean up
     yoyo["active"] = false
@@ -377,7 +377,7 @@ func launch_yoyo_catcher():
 # Update the yoyo string
 func _update_yoyo(delta):
     # Draw the string from origin to yoyo
-    var string = yoyo["visual_node"].get_node("YoyoString")
+    var string = yoyo["visual_node"].get_node("\1") as Node
     
     string.clear()
     string.begin(Mesh.PRIMITIVE_LINE_STRIP)
@@ -427,7 +427,7 @@ func _catch_word(word):
             material.emission_energy = 3.0
         
         # Return to original after a delay
-        yield(get_tree().create_timer(0.5), "timeout")
+        await(get_tree().create_timer(0.5), "timeout")
         
         if is_instance_valid(material) and material is SpatialMaterial:
             material.emission_energy = original_energy

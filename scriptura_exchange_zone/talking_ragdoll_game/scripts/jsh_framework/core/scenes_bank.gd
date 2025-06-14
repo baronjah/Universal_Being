@@ -42,12 +42,10 @@
 # keyboard will appear, in ram and rom we have physical memory too in ram and rom, grids, icons, shapes, i can see with label
 # text mesh, font, sprite, 2d, 3d, mesh, direction distance, duration, flat or not, rotation position time, distance, direction
 # split and amounts and limits
-
-
 extends UniversalBeingBase
 # node 3d class with a name
 # scenes_bank
-class_name ScenesBank 
+class_name ScenesBank_scenesba 
 
 # amount of var and const
 # lenght in 2d
@@ -78,7 +76,7 @@ const scene_name_1 = [
 ]
 
 const main_scene_nodes_0 = [
-	"/", "root", "/", "main"
+	"", "root", "", "main"
 ]
 
 const nodes_names_batch_0 = [
@@ -137,7 +135,7 @@ const functions_words_0 = [
 #
 
 const singular_function_symbol_0 = [
-	"|", "#", "@",  "/", "'", ",", ":",  "*", "+", "-", "_", "=", "?", "†", ",", ".",
+	"|", "#", "@",  "", "'", ",", ":",  "*", "+", "-", "_", "=", "?", "†", ",", ".",
 	"(" , ")", "[", "]", "{", "}", "!", "%", "^", "$", "&", ";",
 	">", "<","·", "¤", "ø", "┃", "»", "、", "¨", "¯", 
 	"●", "○", "×", "△", "▲",
@@ -145,7 +143,7 @@ const singular_function_symbol_0 = [
 ]
 
 const function_godot_1 = [
-	"@", "#", "/", "'", ",", ":", "|", "*", "+", "-", "_", 
+	"@", "#", "", "'", ",", ":", "|", "*", "+", "-", "_", 
 	"\n", "//", 
 	 "extends", "signal", "onready", "const", "enum", "class", "var", 
 	"func", "return", "break", "pass", "print", 
@@ -181,7 +179,7 @@ const symbols_duality_0 = [
 ]
 
 const single_symbol_splitter = [
-	"|", "," , ".", "#", "/", "func", "var"
+	"|", "," , ".", "#", "", "func", "var"
 ]
 
 const word_catcher_0 = [
@@ -1283,7 +1281,7 @@ const scenes_frames_terminal__ = {
 #extends Node3D#
 # node 3d class with a name
 # scenes_bank
-#class_name ScenesBank #
+#class_name ScenesBank_scenesba #
 
 # scenes_bank, ScenesBank
 # words changes places too

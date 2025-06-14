@@ -1,5 +1,5 @@
 extends Node
-class_name ApiSwitchExample
+class_name ApiSwitchExample_apiswitchexample_apiswitc
 }
 
 # ApiSwitchExample

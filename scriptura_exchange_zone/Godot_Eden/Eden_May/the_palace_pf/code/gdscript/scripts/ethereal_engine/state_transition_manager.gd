@@ -1,5 +1,5 @@
 # state_transition_manager.gd
-extends Node
+extends \2
 }
 
 # State transition rules

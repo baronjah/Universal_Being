@@ -62,6 +62,7 @@ func pentagon_ready() -> void:
 	
 	# Store initial size
 	if corners["left_top"] and corners["right_bottom"]:
+
 		var width = abs(corners["right_bottom"].position.x - corners["left_top"].position.x)
 		var height = abs(corners["left_top"].position.y - corners["right_bottom"].position.y)
 		initial_size = Vector2(width, height)
@@ -147,6 +148,7 @@ func _setup_interactions() -> void:
 func _on_close_clicked(camera: Node, event: InputEvent, position: Vector3, normal: Vector3, shape_idx: int) -> void:
 	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
 		print("🗙 Closing window: ", being_name)
+
 		# Animate close
 		var tween = get_tree().create_tween()
 		tween.tween_property(self, "scale", Vector3.ZERO, 0.3)
@@ -312,9 +314,9 @@ func ai_interface() -> Dictionary:
 		"position": global_position,
 		"size": initial_size,
 		"sockets_enabled": enable_sockets
-	}
 	base.text_representation = get_text_representation()
 	return base
+}
 
 # ===== 1D TEXT REPRESENTATION =====
 
@@ -325,6 +327,7 @@ func get_text_representation() -> String:
 	text += "Position: %.2f, %.2f, %.2f\n" % [global_position.x, global_position.y, global_position.z]
 	text += "Size: %.2f x %.2f\n" % [initial_size.x, initial_size.y]
 	text += "State: %s\n" % ("DRAGGING" if is_dragging else "RESIZING" if is_resizing else "IDLE")
+
 	
 	# Socket information
 	if enable_sockets:
@@ -335,6 +338,7 @@ func get_text_representation() -> String:
 		text += "  Outputs: %d\n" % output_sockets.size()
 		for i in range(output_sockets.size()):
 			text += "    - out_%d: %s\n" % [i, "connected" if _is_socket_connected(output_sockets[i]) else "open"]
+
 	
 	text += "Consciousness: Level %d\n" % consciousness_level
 	text += "========================\n"

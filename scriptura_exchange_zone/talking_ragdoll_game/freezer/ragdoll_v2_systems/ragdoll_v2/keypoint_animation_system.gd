@@ -4,9 +4,8 @@
 # PURPOSE: Define movement goals for each limb with animation cycles
 # CREATED: 2025-05-26 - Complete ragdoll system overhaul
 # ==================================================
-
 extends UniversalBeingBase
-class_name KeypointAnimationSystem
+class_name KeypointAnimationSystem_keypoint
 
 # Keypoint for tracking limb goals
 class LimbKeypoint:

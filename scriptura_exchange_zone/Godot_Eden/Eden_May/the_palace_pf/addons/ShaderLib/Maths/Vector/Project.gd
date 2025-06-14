@@ -1,5 +1,6 @@
 @tool
-class_name VisualShaderNodeVectorProject extends VisualShaderNodeCustom
+class_name VisualShaderNodeVectorProject_Project_Project
+extends \2
 
 func _get_name() -> String:
 	return "Project"

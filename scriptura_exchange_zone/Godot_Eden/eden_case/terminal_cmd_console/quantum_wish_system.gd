@@ -1,5 +1,5 @@
 extends Node
-class_name QuantumWishSystem
+class_name QuantumWishSystem_quantumwishsystem_quantumw
 
 """
 Quantum Wish System
@@ -141,7 +141,7 @@ class Wish:
         id = p_id
         description = p_description
         pricing_tier = p_pricing_tier
-        creation_time = OS.get_unix_time()
+        creation_time = OS.Time.get_unix_time_from_system()
     
     func set_cost(p_cost: float) -> void:
         cost = p_cost
@@ -149,7 +149,7 @@ class Wish:
     func manifest(p_level: int, p_stability: float) -> void:
         manifestation_level = p_level
         stability = p_stability
-        manifestation_time = OS.get_unix_time()
+        manifestation_time = OS.Time.get_unix_time_from_system()
         manifested = true
     
     func add_tag(tag: String) -> void:
@@ -196,7 +196,7 @@ class ProbabilityField:
         id = p_id
         size = p_size
         resolution = p_resolution
-        creation_time = OS.get_unix_time()
+        creation_time = OS.Time.get_unix_time_from_system()
         last_update_time = creation_time
         
         # Initialize field data
@@ -223,7 +223,7 @@ class ProbabilityField:
                     var factor = strength * exp(-(distance * distance) / (2 * radius * radius))
                     field_data[x][y] = clamp(field_data[x][y] + factor, 0.0, 1.0)
         
-        last_update_time = OS.get_unix_time()
+        last_update_time = OS.Time.get_unix_time_from_system()
     
     func calculate_stability() -> float:
         var total_value = 0.0
@@ -303,14 +303,14 @@ class ManifestationCycle:
     func _init(p_id: String, p_phase: int = CYCLE_PHASES.CONCEPTION):
         id = p_id
         current_phase = p_phase
-        start_time = OS.get_unix_time()
+        start_time = OS.Time.get_unix_time_from_system()
     
     func advance_phase() -> int:
         current_phase = (current_phase + 1) % CYCLE_PHASES.size()
         return current_phase
     
     func complete_cycle(p_efficiency: float, p_success_rate: float) -> void:
-        end_time = OS.get_unix_time()
+        end_time = OS.Time.get_unix_time_from_system()
         efficiency_rating = p_efficiency
         success_rate = p_success_rate
         complete = true
@@ -343,7 +343,7 @@ func _ready():
     _initialize_resources()
     _setup_current_cycle()
     
-    _last_resource_update_time = OS.get_unix_time()
+    _last_resource_update_time = OS.Time.get_unix_time_from_system()
     
     # Debug message
     if _config.debug_logging:
@@ -809,7 +809,7 @@ func _determine_manifestation_level(wish: Wish, resources: Dictionary) -> int:
 
 # Update resources over time
 func _update_resources(delta: float) -> void:
-    var current_time = OS.get_unix_time()
+    var current_time = OS.Time.get_unix_time_from_system()
     var hours_elapsed = (current_time - _last_resource_update_time) / 3600.0
     
     if hours_elapsed > 0:

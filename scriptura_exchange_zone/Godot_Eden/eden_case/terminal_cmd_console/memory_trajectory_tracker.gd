@@ -1,5 +1,5 @@
 extends Node
-class_name MemoryTrajectoryTracker
+class_name MemoryTrajectoryTracker_memorytrajectorytracker_memorytr
 }
 
 """
@@ -48,7 +48,7 @@ class TrajectoryPoint:
         type = p_type
         memory_id = p_memory_id
         content = p_content
-        timestamp = OS.get_unix_time()
+        timestamp = OS.Time.get_unix_time_from_system()
 }
 
     func set_dimension(dim: int):
@@ -94,7 +94,7 @@ class DailyTrajectory:
     func _init(p_id: String, p_date: String):
         id = p_id
         date = p_date
-        created_at = OS.get_unix_time()
+        created_at = OS.Time.get_unix_time_from_system()
         updated_at = created_at
 }
 
@@ -104,7 +104,7 @@ class DailyTrajectory:
 }
 
         points[point.type] = point
-        updated_at = OS.get_unix_time()
+        updated_at = OS.Time.get_unix_time_from_system()
         return true
 }
 
@@ -115,8 +115,8 @@ class DailyTrajectory:
 
         points[type].memory_id = memory_id
         points[type].content = content
-        points[type].timestamp = OS.get_unix_time()
-        updated_at = OS.get_unix_time()
+        points[type].timestamp = OS.Time.get_unix_time_from_system()
+        updated_at = OS.Time.get_unix_time_from_system()
         return true
 }
 
@@ -126,13 +126,13 @@ class DailyTrajectory:
 
     func mark_completed():
         completed = true
-        updated_at = OS.get_unix_time()
+        updated_at = OS.Time.get_unix_time_from_system()
 }
 
     func add_connected_memory(memory_id: String):
         if not connected_memories.has(memory_id):
             connected_memories.append(memory_id)
-            updated_at = OS.get_unix_time()
+            updated_at = OS.Time.get_unix_time_from_system()
 }
 
     func to_dict() -> Dictionary:
@@ -417,7 +417,7 @@ func add_trajectory_note(note: String, date: String = "") -> bool:
         trajectory.notes += "\n" + note
 }
 
-    trajectory.updated_at = OS.get_unix_time()
+    trajectory.updated_at = OS.Time.get_unix_time_from_system()
 }
 
     # Save updated trajectory

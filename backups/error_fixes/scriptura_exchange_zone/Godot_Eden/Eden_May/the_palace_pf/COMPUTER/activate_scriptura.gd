@@ -86,7 +86,7 @@ func open_scriptura_ui():
 		print("Failed to load scriptura_turn_system.tscn")
 		return false
 	
-	var instance = scene.instance()
+	var instance = scene.instantiate()
 	get_tree().root.add_child(instance)
 	
 	return true

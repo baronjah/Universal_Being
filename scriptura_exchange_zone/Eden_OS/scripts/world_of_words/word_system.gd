@@ -1,6 +1,6 @@
 extends Node
 
-class_name WordSystem
+class_name WordSystem_wordsystem_wordsyst
 
 # Word System for Eden_OS
 # Manages the World of Words game with 5D chess concepts

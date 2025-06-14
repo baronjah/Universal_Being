@@ -25,7 +25,7 @@ var concept_roots = {
     "spirit": ["spirit", "soul", "essence", "ethereal", "ghost", "wraith", "phantom", "spectre", "apparition"],
     "element": ["element", "fundamental", "basic", "essential", "primal", "core", "primary", "quintessential", "elemental"],
     "emotion": ["emotion", "feel", "heart", "passion", "sense", "perceive", "sentiment", "affect", "mood"]
-}
+	}
 
 # Antonym pairs (concepts with opposite meanings)
 var antonym_pairs = [
@@ -49,7 +49,7 @@ var emotional_valence = {
 var intensity_modifiers = {
     "amplifiers": ["very", "extremely", "incredibly", "immensely", "utterly", "absolutely", "completely", "totally"],
     "diminishers": ["slightly", "somewhat", "rather", "fairly", "a bit", "a little", "hardly", "barely"]
-}
+	}
 
 # Static accessor for singleton
 static func get_instance():
@@ -72,7 +72,7 @@ func analyze(word: String) -> Dictionary:
         "primary_concept": "",    # Most strongly matched concept
         "intensity": 0.5,         # Intensity of meaning (0.0-1.0)
         "abstraction": 0.5        # Level of abstractness (0.0-1.0)
-    }
+		}
     
     # Find matching concepts
     var concept_matches = _find_concept_matches(text)
@@ -105,8 +105,8 @@ func analyze(word: String) -> Dictionary:
 # Function to find concepts that match the word
 func _find_concept_matches(word: String) -> Dictionary:
     var matches = []
-    var match_strengths = {}
-    var substring_matches = {}
+    var match_strengths = {
+    var substring_matches = {
     
     # Check for exact matches in concept roots
     for concept in concept_roots:
@@ -152,7 +152,7 @@ func _find_concept_matches(word: String) -> Dictionary:
         "concepts": result_concepts,
         "strengths": match_strengths,
         "substring_matches": substring_matches
-    }
+		}
 
 # Function to find concepts that oppose the identified concepts
 func _find_opposing_concepts(concepts: Array) -> Array:

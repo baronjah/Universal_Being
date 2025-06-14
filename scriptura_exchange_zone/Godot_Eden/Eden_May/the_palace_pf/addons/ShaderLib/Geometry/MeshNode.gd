@@ -1,5 +1,6 @@
 @tool
-class_name VisualShaderNodeGeometryMeshNode extends VisualShaderNodeCustom
+class_name VisualShaderNodeGeometryMeshNode_MeshNode_MeshNode
+extends \2
 
 func _get_name() -> String:
 	return "MeshNode"

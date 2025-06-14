@@ -1,5 +1,6 @@
 @tool
-class_name VisualShaderNodeVectorTransform extends VisualShaderNodeCustom
+class_name VisualShaderNodeVectorTransform_VectorTransform_VectorTr
+extends \2
 
 func _get_name() -> String:
 	return "VectorTransform"

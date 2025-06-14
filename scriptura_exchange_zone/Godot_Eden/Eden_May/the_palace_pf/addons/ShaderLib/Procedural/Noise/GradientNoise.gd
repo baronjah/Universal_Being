@@ -1,5 +1,6 @@
 @tool
-class_name VisualShaderNodeProceduralGradientNoise extends VisualShaderNodeCustom
+class_name VisualShaderNodeProceduralGradientNoise_GradientNoise_Gradient
+extends \2
 
 func _init() -> void:
 	output_port_for_preview = 0

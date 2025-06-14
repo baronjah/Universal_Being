@@ -14,7 +14,7 @@ func _ready():
 	phase_timer = Timer.new()
 	phase_timer.one_shot = true
 	add_child(phase_timer)
-	phase_timer.connect("timeout", self, "_on_phase_timeout")
+	phase_timer.connect(_on_phase_timeout)
 
 # DAY PHASE FUNCTIONS
 func start_day():

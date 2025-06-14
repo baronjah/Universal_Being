@@ -4,8 +4,7 @@
 # PURPOSE: Keep object count under control (max 20 objects)
 # CREATED: 2025-05-28 10:00 AM - Fixing spawn spam
 # ==================================================
-
-extends UniversalBeingBase
+extends \2
 # Spawn tracking
 var spawn_counts: Dictionary = {
 	"box": 0,

@@ -191,7 +191,7 @@ func batch_generate(prompts: Array, parameters: Dictionary = {}) -> String:
 # Game Generation Helpers
 func generate_game_script(script_type: String, parameters: Dictionary) -> String:
     var template = _get_game_template("script", script_type)
-    if template.empty():
+    if template.is_empty():
         return ""
     
     var prompt = template.format(parameters)
@@ -199,7 +199,7 @@ func generate_game_script(script_type: String, parameters: Dictionary) -> String
 
 func generate_game_scene(scene_type: String, parameters: Dictionary) -> String:
     var template = _get_game_template("scene", scene_type)
-    if template.empty():
+    if template.is_empty():
         return ""
     
     var prompt = template.format(parameters)
@@ -207,7 +207,7 @@ func generate_game_scene(scene_type: String, parameters: Dictionary) -> String:
 
 func generate_game_system(system_type: String, parameters: Dictionary) -> String:
     var template = _get_game_template("system", system_type)
-    if template.empty():
+    if template.is_empty():
         return ""
     
     var prompt = template.format(parameters)
@@ -215,7 +215,7 @@ func generate_game_system(system_type: String, parameters: Dictionary) -> String
 
 func generate_project_structure(game_type: String, project_name: String) -> String:
     var template = _get_game_template("project", game_type)
-    if template.empty():
+    if template.is_empty():
         return ""
     
     var parameters = {

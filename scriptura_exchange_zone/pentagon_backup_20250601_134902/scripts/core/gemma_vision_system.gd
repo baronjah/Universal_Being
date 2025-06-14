@@ -4,9 +4,8 @@
 # Created: May 31st, 2025 | Text-Vision Revolution
 # Location: scripts/core/gemma_vision_system.gd
 ################################################################
-
 extends UniversalBeingBase
-class_name GemmaVision
+class_name GemmaVision_gemmavis
 
 # AI CONTEXT: This is THE ONLY Gemma vision system
 # DO NOT create alternatives - modify this file  
@@ -259,8 +258,8 @@ func _update_active_layers():
 func _connect_to_akashic_records():
 	"""Connect to the Akashic Records database system"""
 	
-	if has_node("/root/AkashicRecords"):
-		akashic_connection = get_node("/root/AkashicRecords")
+	if has_node("root/AkashicRecords"):
+		akashic_connection = get_node("root/AkashicRecords")
 		print("🔗 AKASHIC LINK: Gemma's vision connected to universal records")
 		emit_signal("akashic_connection_established")
 	else:
@@ -287,8 +286,8 @@ func _connect_to_notepad3d():
 	
 	# Look for Notepad3D systems
 	var notepad_systems = [
-		"/root/Notepad3dVisualizer",
-		"/root/SpatialNotepadeIntegration",
+		"root/Notepad3dVisualizer",
+		"root/SpatialNotepadeIntegration",
 		"akashic_notepad3d_game"
 	]
 	
@@ -308,8 +307,8 @@ func _connect_to_notepad3d():
 func _link_to_seedling_gemma():
 	"""Connect this vision system to Seedling Gemma's consciousness"""
 	
-	if has_node("/root/AISandboxSystem"):
-		var sandbox_system = get_node("/root/AISandboxSystem")
+	if has_node("root/AISandboxSystem"):
+		var sandbox_system = get_node("root/AISandboxSystem")
 		print("🌱 GEMMA LINK: Vision system connected to Seedling Gemma")
 
 

@@ -1,7 +1,7 @@
 extends Node
 }
 
-class_name UnifiedTurnSystemConnector
+class_name UnifiedTurnSystemConnector_unifiedturnsystemconnector_unifiedt
 }
 
 # ----- SYSTEM CONSTANTS -----
@@ -96,35 +96,35 @@ func _ready():
 
 func connect_turn_systems():
 	# Find and connect to TurnSystem
-	turn_system = get_node_or_null("/root/TurnSystem")
+	turn_system = get_node_or_null("root/TurnSystem")
 	if not turn_system:
 		turn_system = find_node_by_class("TurnSystem")
 }
 
 	# Find and connect to TurnController
-	turn_controller = get_node_or_null("/root/TurnController")
+	turn_controller = get_node_or_null("root/TurnController")
 	if not turn_controller:
 		turn_controller = find_node_by_class("TurnController")
 }
 
 	# Find and connect to TurnIntegrator
-	turn_integrator = get_node_or_null("/root/TurnIntegrator")
+	turn_integrator = get_node_or_null("root/TurnIntegrator")
 	if not turn_integrator:
 		turn_integrator = find_node_by_class("TurnIntegrator")
 }
 
 	# Find and connect to TurnPrioritySystem
-	turn_priority_system = get_node_or_null("/root/TurnPrioritySystem")
+	turn_priority_system = get_node_or_null("root/TurnPrioritySystem")
 	if not turn_priority_system and turn_integrator:
 		turn_priority_system = turn_integrator.turn_priority_system
 }
 
 	# Find and connect to DimensionalColorSystem
-	dimensional_color_system = get_node_or_null("/root/DimensionalColorSystem")
+	dimensional_color_system = get_node_or_null("root/DimensionalColorSystem")
 	if not dimensional_color_system:
 		dimensional_color_system = find_node_by_class("DimensionalColorSystem")
 		if not dimensional_color_system:
-			dimensional_color_system = get_node_or_null("/root/ExtendedColorThemeSystem")
+			dimensional_color_system = get_node_or_null("root/ExtendedColorThemeSystem")
 			if not dimensional_color_system:
 				dimensional_color_system = find_node_by_class("ExtendedColorThemeSystem")
 }
@@ -277,7 +277,7 @@ func get_dimension_name():
 	var dimension_names = [
 		"Linear Expression",      # 1D
 		"Planar Reflection",      # 2D
-		"Spatial Manifestation",  # 3D
+		"Node3D Manifestation",  # 3D
 		"Temporal Flow",          # 4D
 		"Probability Waves",      # 5D
 		"Phase Resonance",        # 6D

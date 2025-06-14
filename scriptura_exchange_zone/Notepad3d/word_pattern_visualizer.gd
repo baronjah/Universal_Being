@@ -1,6 +1,6 @@
 extends Node3D
 
-class_name WordPatternVisualizer
+class_name WordPatternVisualizer_wordpatternvisualizer_wordpatt
 
 signal pattern_energy_changed(pattern, energy)
 signal pattern_resonance_detected(pattern1, pattern2, resonance_value)
@@ -387,15 +387,15 @@ func _update_pattern_positions(delta):
         if pos.z < -bound: pos.z = -bound; vel.z *= -0.5
         if pos.z > bound: pos.z = bound; vel.z *= -0.5
         
-        // Apply attraction to dimension center
+# // Apply attraction to dimension center
         var dimension = pattern_dimensions[pattern]
         var dim_center = _get_dimension_center(dimension)
         var dir_to_center = (dim_center - pos).normalized()
         
-        // Attraction force based on dimension affinity
+# // Attraction force based on dimension affinity
         vel += dir_to_center * delta * 0.2
         
-        // Apply some random motion
+# // Apply some random motion
         var random_force = Vector3(
             (randf() * 2.0 - 1.0),
             (randf() * 2.0 - 1.0),
@@ -404,7 +404,7 @@ func _update_pattern_positions(delta):
         
         vel += random_force
         
-        // Apply clustering with related patterns
+# // Apply clustering with related patterns
         for other_pattern in active_patterns.keys():
             if pattern == other_pattern:
                 continue
@@ -417,20 +417,20 @@ func _update_pattern_positions(delta):
                 var dir = (other_pos - pos).normalized()
                 var dist = pos.distance_to(other_pos)
                 
-                // Only attract if not too close
+# // Only attract if not too close
                 if dist > 1.0:
                     var resonance = pattern_resonances.get(cluster_key, pattern_resonances.get(reverse_key, 0.0))
                     vel += dir * delta * resonance * 0.5
             }
         
-        // Apply velocity damping
+# // Apply velocity damping
         vel *= (1.0 - delta * 0.1)
         
-        // Update position and velocity
+# // Update position and velocity
         pattern_position[pattern] = pos
         pattern_velocity[pattern] = vel
         
-        // Update visual position
+# // Update visual position
         if pattern_particle_nodes.has(pattern):
             pattern_particle_nodes[pattern].position = pos
         
@@ -438,21 +438,21 @@ func _update_pattern_positions(delta):
             pattern_labels[pattern].position = pos + Vector3(0, 0.2, 0)
 
 func _update_pattern_energies(delta):
-    // Spontaneous energy changes
+# // Spontaneous energy changes
     for pattern in active_patterns.keys():
         if not pattern_energy.has(pattern):
             continue
         
         var energy = pattern_energy[pattern]
         
-        // Energy decay over time
+# // Energy decay over time
         energy *= (1.0 - delta * 0.05)
         
-        // Energy gain based on dimension and current system turn
+# // Energy gain based on dimension and current system turn
         if tunnel_controller:
             var turn_info = tunnel_controller.get_current_turn_info()
             
-            // Different turns affect different dimension patterns
+# // Different turns affect different dimension patterns
             var dimension = pattern_dimensions[pattern]
             var energy_boost = 0.0
             
@@ -475,23 +475,23 @@ func _update_pattern_energies(delta):
             energy += energy_boost * delta
         }
         
-        // Min energy floor
+# // Min energy floor
         if energy < 0.1:
             energy = 0.0
         
-        // Update energy
+# // Update energy
         pattern_energy[pattern] = energy
         
-        // Remove patterns with no energy
+# // Remove patterns with no energy
         if energy <= 0.0:
             remove_word_pattern(pattern)
             continue
         
-        // Update visual appearance based on new energy
+# // Update visual appearance based on new energy
         _update_pattern_appearance(pattern)
 
 func _detect_pattern_resonances():
-    // Check for resonances between patterns
+# // Check for resonances between patterns
     var new_resonances = {}
     
     for pattern1 in active_patterns.keys():
@@ -499,48 +499,48 @@ func _detect_pattern_resonances():
             if pattern1 == pattern2:
                 continue
             
-            // Create a consistent key for this pair
+# // Create a consistent key for this pair
             var resonance_key = pattern1 + "_to_" + pattern2
             
-            // Skip if we've already calculated this pair
+# // Skip if we've already calculated this pair
             if pattern_resonances.has(resonance_key):
                 new_resonances[resonance_key] = pattern_resonances[resonance_key]
                 continue
             
-            // Calculate resonance value
+# // Calculate resonance value
             var resonance = _calculate_pattern_resonance(pattern1, pattern2)
             
-            // Store if significant
+# // Store if significant
             if resonance > 0.2:
                 new_resonances[resonance_key] = resonance
                 
-                // Emit signal for new significant resonances
+# // Emit signal for new significant resonances
                 if resonance > 0.5:
                     emit_signal("pattern_resonance_detected", pattern1, pattern2, resonance)
                 
-                // Create visual effect for strong resonances
+# // Create visual effect for strong resonances
                 if resonance > 0.7:
                     _create_resonance_effect(pattern1, pattern2, resonance)
             }
         }
     }
     
-    // Update resonances
+# // Update resonances
     pattern_resonances = new_resonances
 
 func _check_manifestation_conditions():
     var patterns_to_manifest = []
     
-    // Check each pattern for manifestation conditions
+# // Check each pattern for manifestation conditions
     for pattern in active_patterns.keys():
         var energy = pattern_energy[pattern]
         
-        // Basic energy threshold
+# // Basic energy threshold
         if energy >= ENERGY_THRESHOLD_MANIFESTATION:
             patterns_to_manifest.push_back(pattern)
             continue
         
-        // Check for resonance-based manifestation
+# // Check for resonance-based manifestation
         var max_resonance = 0.0
         var resonant_energy = 0.0
         
@@ -552,7 +552,7 @@ func _check_manifestation_conditions():
                 if resonance > max_resonance:
                     max_resonance = resonance
                 
-                // The other pattern in the resonance
+# // The other pattern in the resonance
                 var other_pattern = parts[0] if parts[1] == pattern else parts[1]
                 
                 if pattern_energy.has(other_pattern):
@@ -560,13 +560,13 @@ func _check_manifestation_conditions():
             }
         }
         
-        // Combined energy manifestation check
+# // Combined energy manifestation check
         if energy + resonant_energy >= ENERGY_THRESHOLD_MANIFESTATION:
             patterns_to_manifest.push_back(pattern)
         }
     }
     
-    // Process manifestations
+# // Process manifestations
     for pattern in patterns_to_manifest:
         _manifest_word_pattern(pattern)
 
@@ -577,20 +577,20 @@ func _manifest_word_pattern(pattern):
     var dimension = pattern_dimensions[pattern]
     var energy = pattern_energy[pattern]
     
-    // Perform manifestation
+# // Perform manifestation
     print("Manifesting word pattern: " + pattern + " (Dimension: " + str(dimension) + 
           ", Energy: " + str(energy) + ")")
     
-    // Create manifestation effect
+# // Create manifestation effect
     _create_manifestation_effect(pattern, dimension, energy)
     
-    // Emit signal
+# // Emit signal
     emit_signal("word_manifestation", pattern, dimension, energy)
     
-    // Remove the manifested pattern
+# // Remove the manifested pattern
     remove_word_pattern(pattern)
     
-    // Affect nearby patterns
+# // Affect nearby patterns
     var manifestation_pos = pattern_position[pattern]
     var effect_radius = 2.0 + (energy / 20.0)
     
@@ -602,32 +602,32 @@ func _manifest_word_pattern(pattern):
         var dist = manifestation_pos.distance_to(other_pos)
         
         if dist <= effect_radius:
-            // Energy boost to nearby patterns
+# // Energy boost to nearby patterns
             var boost = energy * 0.2 * (1.0 - dist / effect_radius)
             pattern_energy[other_pattern] += boost
             
-            // Update visuals
+# // Update visuals
             _update_pattern_appearance(other_pattern)
         }
     }
     
-    // Affect tunnels if connected to tunnel system
+# // Affect tunnels if connected to tunnel system
     if tunnel_controller and tunnel_visualizer:
-        // Find tunnels in the same dimension
+# // Find tunnels in the same dimension
         var tunnels = ethereal_tunnel_manager.get_tunnels()
         
         for tunnel_id in tunnels:
             var tunnel_data = ethereal_tunnel_manager.get_tunnel_data(tunnel_id)
             
-            // Match dimension
+# // Match dimension
             if tunnel_data.dimension == dimension:
-                // Energy boost to tunnel
+# // Energy boost to tunnel
                 var stability_boost = (energy / 100.0) * 0.1
                 var new_stability = min(1.0, tunnel_data.stability + stability_boost)
                 
                 ethereal_tunnel_manager.set_tunnel_stability(tunnel_id, new_stability)
                 
-                // Visual effect
+# // Visual effect
                 if tunnel_visualizer.has_method("add_color_flash"):
                     var flash_color = DIMENSION_COLORS.get(dimension, Color(1, 1, 1))
                     tunnel_visualizer.add_color_flash(tunnel_id, flash_color)
@@ -636,15 +636,15 @@ func _manifest_word_pattern(pattern):
     }
 
 func _create_manifestation_effect(pattern, dimension, energy):
-    // Create a visual effect for word manifestation
+# // Create a visual effect for word manifestation
     var effect_node = Node3D.new()
     effect_node.name = "Manifestation_" + pattern
     
-    // Position at pattern location
+# // Position at pattern location
     var pos = pattern_position[pattern]
     effect_node.position = pos
     
-    // Create word text
+# // Create word text
     var word_text = Label3D.new()
     word_text.text = pattern
     word_text.font = word_font
@@ -653,14 +653,14 @@ func _create_manifestation_effect(pattern, dimension, energy):
     word_text.modulate = DIMENSION_COLORS.get(dimension, Color(1, 1, 1))
     effect_node.add_child(word_text)
     
-    // Create particle effect
+# // Create particle effect
     var particles = GPUParticles3D.new()
     particles.amount = 100 + energy
     particles.lifetime = 3.0
     particles.explosiveness = 0.8
     particles.one_shot = true
     
-    // Configure particle material
+# // Configure particle material
     var mat = manifestation_material.duplicate()
     mat.albedo_color = DIMENSION_COLORS.get(dimension, Color(1, 1, 1))
     mat.emission = mat.albedo_color
@@ -670,65 +670,65 @@ func _create_manifestation_effect(pattern, dimension, energy):
     
     effect_node.add_child(particles)
     
-    // Create expanding sphere
+# // Create expanding sphere
     var sphere = CSGSphere3D.new()
     sphere.radius = 0.1
     sphere.material = mat.duplicate()
     effect_node.add_child(sphere)
     
-    // Add light
+# // Add light
     var light = OmniLight3D.new()
     light.light_color = DIMENSION_COLORS.get(dimension, Color(1, 1, 1))
     light.light_energy = 2.0 + (energy / 50.0)
     effect_node.add_child(light)
     
-    // Add to scene
+# // Add to scene
     word_manifestation_container.add_child(effect_node)
     
-    // Create animation for the effect
+# // Create animation for the effect
     var tween = create_tween()
     tween.set_parallel(true)
     
-    // Expand sphere
+# // Expand sphere
     tween.tween_property(sphere, "radius", 3.0 + (energy / 20.0), 2.0)
     tween.tween_property(sphere.material, "albedo_color:a", 0.0, 2.0)
     
-    // Fade out light
+# // Fade out light
     tween.tween_property(light, "light_energy", 0.0, 3.0)
     
-    // Float word upward
+# // Float word upward
     tween.tween_property(word_text, "position:y", 3.0, 3.0)
     
-    // Remove after animation completes
+# // Remove after animation completes
     await tween.finished
     effect_node.queue_free()
     
-    // Play audio
+# // Play audio
     if audio_player:
-        // Would load an actual sound in a real implementation
-        // audio_player.stream = manifestation_sound
+# // Would load an actual sound in a real implementation
+# // audio_player.stream = manifestation_sound
         audio_player.position = pos
         audio_player.play()
 
 func _create_energy_transfer_effect(source_pattern, target_pattern, amount):
-    // Create a visual energy transfer effect between patterns
+# // Create a visual energy transfer effect between patterns
     var source_pos = pattern_position[source_pattern]
     var target_pos = pattern_position[target_pattern]
     
-    // Create a line between the patterns
+# // Create a line between the patterns
     var energy_beam = CSGCylinder3D.new()
     energy_beam.radius = 0.03 + (amount / 100.0)
     
-    // Calculate position and height
+# // Calculate position and height
     var mid_point = (source_pos + target_pos) / 2.0
     var distance = source_pos.distance_to(target_pos)
     energy_beam.height = distance
     
-    // Orient the cylinder
+# // Orient the cylinder
     energy_beam.look_at_from_position(mid_point, target_pos, Vector3.UP)
     energy_beam.rotate_x(PI/2)  // Adjust orientation
     
-    // Set material
+# // Set material
     var source_dim = pattern_dimensions[source_pattern]
     var target_dim = pattern_dimensions[target_pattern]
     
@@ -739,17 +739,17 @@ func _create_energy_transfer_effect(source_pattern, target_pattern, amount):
     mat.flags_transparent = true
     mat.emission_enabled = true
     
-    // Gradient between source and target colors
+# // Gradient between source and target colors
     mat.albedo_color = source_color.lerp(target_color, 0.5)
     mat.emission = mat.albedo_color
     mat.emission_energy = 1.0 + (amount / 50.0)
     
     energy_beam.material = mat
     
-    // Add to scene
+# // Add to scene
     pattern_container.add_child(energy_beam)
     
-    // Animate and remove
+# // Animate and remove
     var tween = create_tween()
     tween.set_parallel(true)
     tween.tween_property(mat, "albedo_color:a", 0.0, 0.5)
@@ -762,20 +762,20 @@ func _create_resonance_effect(pattern1, pattern2, resonance):
     var pos1 = pattern_position[pattern1]
     var pos2 = pattern_position[pattern2]
     
-    // Create resonance line
+# // Create resonance line
     var resonance_line = CSGCylinder3D.new()
     resonance_line.radius = 0.02 * resonance
     
-    // Calculate position and height
+# // Calculate position and height
     var mid_point = (pos1 + pos2) / 2.0
     var distance = pos1.distance_to(pos2)
     resonance_line.height = distance
     
-    // Orient the cylinder
+# // Orient the cylinder
     resonance_line.look_at_from_position(mid_point, pos2, Vector3.UP)
     resonance_line.rotate_x(PI/2)  // Adjust orientation
     
-    // Set material
+# // Set material
     var dim1 = pattern_dimensions[pattern1]
     var dim2 = pattern_dimensions[pattern2]
     
@@ -786,7 +786,7 @@ func _create_resonance_effect(pattern1, pattern2, resonance):
     mat.flags_transparent = true
     mat.emission_enabled = true
     
-    // Gradient between colors
+# // Gradient between colors
     mat.albedo_color = color1.lerp(color2, 0.5)
     mat.albedo_color.a = resonance * 0.5
     mat.emission = mat.albedo_color
@@ -794,10 +794,10 @@ func _create_resonance_effect(pattern1, pattern2, resonance):
     
     resonance_line.material = mat
     
-    // Add to scene
+# // Add to scene
     pattern_container.add_child(resonance_line)
     
-    // Pulsate effect
+# // Pulsate effect
     var tween = create_tween()
     tween.set_loops(3)
     tween.set_parallel(true)
@@ -814,27 +814,27 @@ func _create_resonance_effect(pattern1, pattern2, resonance):
 func _cleanup_old_patterns():
     var patterns_to_remove = []
     
-    // Find old patterns with low energy
+# // Find old patterns with low energy
     for pattern in active_patterns.keys():
         var time_since_update = energy_flow_time - pattern_last_update[pattern]
         var energy = pattern_energy[pattern]
         
-        // Patterns that haven't been updated in a while and have low energy
+# // Patterns that haven't been updated in a while and have low energy
         if time_since_update > 10.0 and energy < 5.0:
             patterns_to_remove.push_back(pattern)
         }
     }
     
-    // Remove old patterns
+# // Remove old patterns
     for pattern in patterns_to_remove:
         remove_word_pattern(pattern)
 
 func _analyze_pattern_dimension(pattern):
-    // Determine which dimension this pattern belongs to based on semantics
+# // Determine which dimension this pattern belongs to based on semantics
     var best_dimension = 3  // Default to space dimension
     var best_score = 0
     
-    // Simple keyword matching
+# // Simple keyword matching
     for dimension in DIMENSION_WORD_AFFINITIES:
         var affinity_words = DIMENSION_WORD_AFFINITIES[dimension]
         var score = 0
@@ -843,7 +843,7 @@ func _analyze_pattern_dimension(pattern):
             if pattern.find(word) >= 0:
                 score += 2
             
-            // Partial matches
+# // Partial matches
             for segment in pattern.split(" "):
                 if segment.length() >= 3 and word.find(segment) >= 0:
                     score += 1
@@ -856,12 +856,12 @@ func _analyze_pattern_dimension(pattern):
         }
     }
     
-    // If no clear match, use character analysis as fallback
+# // If no clear match, use character analysis as fallback
     if best_score == 0:
-        // Use character frequencies to guess dimension
+# // Use character frequencies to guess dimension
         var chars = _analyze_pattern_characters(pattern)
         
-        // Rough heuristics based on character composition
+# // Rough heuristics based on character composition
         var numbers = chars.get("numbers", 0)
         var spaces = chars.get("spaces", 0)
         var symbols = chars.get("symbols", 0)
@@ -913,16 +913,16 @@ func _analyze_pattern_characters(pattern):
     return chars
 
 func _calculate_pattern_resonance(pattern1, pattern2):
-    // Calculate how strongly two patterns resonate with each other
+# // Calculate how strongly two patterns resonate with each other
     
-    // Check dimensions first
+# // Check dimensions first
     var dim1 = pattern_dimensions[pattern1]
     var dim2 = pattern_dimensions[pattern2]
     
-    // Dimensional resonance factor - closer dimensions resonate more
+# // Dimensional resonance factor - closer dimensions resonate more
     var dim_factor = 1.0 - (abs(dim1 - dim2) / 9.0)
     
-    // Character comparison
+# // Character comparison
     var chars1 = pattern_characters[pattern1]
     var chars2 = pattern_characters[pattern2]
     
@@ -943,7 +943,7 @@ func _calculate_pattern_resonance(pattern1, pattern2):
         char_similarity /= total_chars
     }
     
-    // Word overlap
+# // Word overlap
     var words1 = pattern1.split(" ")
     var words2 = pattern2.split(" ")
     
@@ -960,10 +960,10 @@ func _calculate_pattern_resonance(pattern1, pattern2):
         word_factor = float(word_overlap) / min(words1.size(), words2.size())
     }
     
-    // Length similarity
+# // Length similarity
     var length_ratio = min(pattern1.length(), pattern2.length()) / max(pattern1.length(), pattern2.length())
     
-    // Combined resonance value
+# // Combined resonance value
     var resonance = (
         dim_factor * 0.4 +
         char_similarity * 0.3 +
@@ -974,10 +974,10 @@ func _calculate_pattern_resonance(pattern1, pattern2):
     return resonance
 
 func _generate_pattern_position(pattern, dimension):
-    // Generate a position for a new pattern based on its dimension
+# // Generate a position for a new pattern based on its dimension
     var base_pos = _get_dimension_center(dimension)
     
-    // Add some random offset
+# // Add some random offset
     var offset = Vector3(
         randf_range(-3.0, 3.0),
         randf_range(-3.0, 3.0),
@@ -987,7 +987,7 @@ func _generate_pattern_position(pattern, dimension):
     return base_pos + offset
 
 func _get_dimension_center(dimension):
-    // Return the center position for a given dimension
+# // Return the center position for a given dimension
     var angle = (dimension - 1) * (2 * PI / 9)
     var radius = 5.0
     
@@ -997,7 +997,7 @@ func _get_dimension_center(dimension):
     return Vector3(x, 0, z)
 
 func _generate_pattern_velocity(pattern):
-    // Generate initial velocity for a pattern
+# // Generate initial velocity for a pattern
     return Vector3(
         randf_range(-0.5, 0.5),
         randf_range(-0.3, 0.3),
@@ -1005,7 +1005,7 @@ func _generate_pattern_velocity(pattern):
     )
 
 func _assign_pattern_to_cluster(pattern):
-    // Find the best cluster for this pattern based on resonance
+# // Find the best cluster for this pattern based on resonance
     var best_resonance = 0.0
     var best_pattern = ""
     
@@ -1021,18 +1021,18 @@ func _assign_pattern_to_cluster(pattern):
         }
     }
     
-    // If good resonance found, store it
+# // If good resonance found, store it
     if best_resonance > 0.5 and best_pattern != "":
         var resonance_key = pattern + "_to_" + best_pattern
         pattern_resonances[resonance_key] = best_resonance
         
-        // Attract the patterns together
+# // Attract the patterns together
         var dir = (pattern_position[best_pattern] - pattern_position[pattern]).normalized()
         pattern_velocity[pattern] += dir * 0.5
     }
 
 func _extract_numeric_values(pattern):
-    // Extract numbers from the pattern for the numeric token system
+# // Extract numbers from the pattern for the numeric token system
     var number_pattern = RegEx.new()
     number_pattern.compile("\\d+")
     
@@ -1044,14 +1044,14 @@ func _extract_numeric_values(pattern):
         numeric_pattern_count += 1
     }
     
-    // Update resonance factor based on numeric patterns
+# // Update resonance factor based on numeric patterns
     if numeric_pattern_count > 0:
         numeric_resonance_factor = 1.0 + (numeric_value_total / (numeric_pattern_count * 100.0))
         numeric_resonance_factor = clamp(numeric_resonance_factor, 1.0, 3.0)
     }
 
 func _initialize_seed_patterns():
-    // Add some initial patterns to get started
+# // Add some initial patterns to get started
     add_word_pattern("space", 15.0, 3)
     add_word_pattern("time", 15.0, 2)
     add_word_pattern("energy", 15.0, 4)
@@ -1090,12 +1090,12 @@ func clear_all_patterns():
     for pattern in patterns_to_remove:
         remove_word_pattern(pattern)
     
-    // Reset numeric values
+# // Reset numeric values
     numeric_value_total = 0
     numeric_pattern_count = 0
     numeric_resonance_factor = 1.0
     
-    // Reset timers
+# // Reset timers
     energy_flow_time = 0.0
     last_resonance_check = 0.0
     last_pattern_cleanup = 0.0

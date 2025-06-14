@@ -79,7 +79,7 @@ func _on_create_universe():
 		"beings": [],
 		"entropy": 0.0,
 		"age": 0.0
-	}
+}
 	
 	universes[universe_name] = universe_data
 	update_universe_tree()
@@ -110,6 +110,7 @@ func display_universe_info(universe_name: String):
 	info_text += "[b]Physics Scale:[/b] %.1f\n" % data.physics_scale
 	info_text += "[b]Time Scale:[/b] %.1f\n" % data.time_scale
 	info_text += "[b]LOD Level:[/b] %d\n" % data.lod_level
+
 	
 	universe_info.text = info_text
 

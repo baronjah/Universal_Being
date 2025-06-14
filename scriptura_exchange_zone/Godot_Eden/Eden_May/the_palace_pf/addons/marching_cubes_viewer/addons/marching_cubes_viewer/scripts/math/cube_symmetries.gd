@@ -28,9 +28,8 @@
 # finding which colorings are related via a set of these simple operations.  This script
 # calculates the minimal set of root colorings needed, as well as the transforms needed to
 # transform any of the 256 possibilites into one of the root forms.
-
-extends RefCounted
-class_name CubeSymmetries
+extends \2
+class_name CubeSymmetries_cubesymmetries_cubesymm
 
 
 # Cube corner indexing
@@ -69,7 +68,8 @@ class_name CubeSymmetries
 # +------2------+
 
 #Operations we can apply to the cube to change it's vertex coloring
-enum Operations { ROT_X_90, ROT_Y_90, ROT_Z_90, MIRROR_X, MIRROR_Y, MIRROR_Z }
+enum \2 {
+ ROT_X_90, ROT_Y_90, ROT_Z_90, MIRROR_X, MIRROR_Y, MIRROR_Z }
 
 #enum CubeEdge { A, B, C, D, E, F, G, H, I, J, K, L }
 
@@ -207,10 +207,12 @@ static var root_mesh_edges:Dictionary = {
 	],
 }
 
-class ColorGroup extends RefCounted:
+class ColorGroup
+extends \2:
 	var tessellation:PackedVector3Array
 
-class PeerColoring extends RefCounted:
+class PeerColoring
+extends \2:
 	var coloring:int
 	var operations:PackedInt32Array
 	var prev:PeerColoring

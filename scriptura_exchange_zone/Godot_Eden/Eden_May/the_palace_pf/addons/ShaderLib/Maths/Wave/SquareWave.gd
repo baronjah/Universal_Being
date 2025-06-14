@@ -1,5 +1,6 @@
 @tool
-class_name VisualShaderNodeMathsSquareWave extends VisualShaderNodeCustom
+class_name VisualShaderNodeMathsSquareWave_SquareWave_SquareWa
+extends \2
 
 
 func _get_name() -> String:

@@ -1,18 +1,18 @@
 extends Node
 
-class_name IntegratedMemorySystem
+class_name IntegratedMemorySystem_integratedmemorysystem_integrat
 
 # ----- MEMORY SYSTEM SETTINGS -----
 @export_category("Memory System Settings")
-@export var enabled: bool = true
-@export var local_storage_enabled: bool = true
-@export var online_storage_enabled: bool = false
-@export var multi_device_sync: bool = false
-@export var auto_backup: bool = true
-@export var backup_interval: int = 300  # seconds
-@export var memory_compression: bool = true
-@export var memories_per_turn: int = 8
-@export var max_stored_wishes: int = 88
+@@@export var enabled: bool = true
+@@@export var local_storage_enabled: bool = true
+@@@export var online_storage_enabled: bool = false
+@@@export var multi_device_sync: bool = false
+@@@export var auto_backup: bool = true
+@@@export var backup_interval: int = 300  # seconds
+@@@export var memory_compression: bool = true
+@@@export var memories_per_turn: int = 8
+@@@export var max_stored_wishes: int = 88
 
 # ----- STORAGE PATHS -----
 var local_memory_path: String = "user://memory_system/"
@@ -678,7 +678,7 @@ func _backup_memories():
     
     # Create timestamp for backup
     var timestamp = Time.get_datetime_string_from_system().replace(":", "-").replace(" ", "_")
-    var backup_folder = local_backup_path + "backup_" + timestamp + "/"
+    var backup_folder = local_backup_path + "backup_" + timestamp + ""
     
     # Create backup directory
     if not DirAccess.dir_exists_absolute(backup_folder):
@@ -775,7 +775,7 @@ func _remove_directory_recursive(path: String):
         
         while file_name != "":
             if dir.current_is_dir() and file_name != "." and file_name != "..":
-                _remove_directory_recursive(path + "/" + file_name)
+                _remove_directory_recursive(path + "" + file_name)
             elif not dir.current_is_dir():
                 dir.remove(file_name)
             
@@ -993,7 +993,7 @@ func export_memories(target_path: String, format: String = "json") -> bool:
                 }
             }
             
-            var file_path = target_path + "/memories_export_" + Time.get_datetime_string_from_system().replace(":", "-").replace(" ", "_") + ".json"
+            var file_path = target_path + "memories_export_" + Time.get_datetime_string_from_system().replace(":", "-").replace(" ", "_") + ".json"
             var file = FileAccess.open(file_path, FileAccess.WRITE)
             
             if file:
@@ -1026,7 +1026,7 @@ func import_memories(source_path: String) -> Dictionary:
     
     # Validate import data
     if not data.has("memories") or not data.has("wishes") or not data.has("connections"):
-        return {"success": false, "error": "Invalid memory export format"}
+        return {"success": false, "error": "Invalid memory @@export format"}
     
     # Import memories
     var imported_count = 0

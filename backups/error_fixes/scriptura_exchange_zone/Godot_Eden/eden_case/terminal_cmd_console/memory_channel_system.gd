@@ -268,13 +268,13 @@ func _init_timers():
     _sync_timer = Timer.new()
     _sync_timer.wait_time = _config.sync_interval
     _sync_timer.one_shot = false
-    _sync_timer.connect("timeout", self, "_on_sync_timer_timeout")
+    _sync_timer.connect(_on_sync_timer_timeout)
     add_child(_sync_timer)
     
     _cleanup_timer = Timer.new()
     _cleanup_timer.wait_time = 300  # 5 minutes
     _cleanup_timer.one_shot = false
-    _cleanup_timer.connect("timeout", self, "_on_cleanup_timer_timeout")
+    _cleanup_timer.connect(_on_cleanup_timer_timeout)
     add_child(_cleanup_timer)
 
 func auto_init() -> bool:
@@ -486,7 +486,7 @@ func process_pending_tasks():
                 processable_tasks.append(task)
         
         # Sort by priority (higher priorities first)
-        processable_tasks.sort_custom(self, "_sort_tasks_by_priority")
+        processable_tasks.sort_custom(self."_sort_tasks_by_priority")
         
         # Process tasks
         for task in processable_tasks:

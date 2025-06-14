@@ -148,6 +148,7 @@ func inspect_object(object: Node) -> void:
 		return
 	
 	print("🔍 Inspecting: %s (%s)" % [object.name, object.get_script().get_path() if object.get_script() else "No script"])
+
 	
 	inspected_object = object
 	update_header_info()
@@ -489,6 +490,7 @@ func create_generic_editor(value, prop_name: String) -> LineEdit:
 func get_property_value(object: Node, prop_name: String, prop: Dictionary):
 	"""Get current value of a property"""
 	if prop.get("custom", false):
+
 		# Handle custom Universal Being properties
 		match prop_name:
 			"being_type":
@@ -517,6 +519,7 @@ func _on_variable_changed(prop_name: String, new_value) -> void:
 	set_property_value(inspected_object, prop_name, new_value)
 	
 	print("🔧 Changed %s.%s: %s → %s" % [inspected_object.name, prop_name, old_value, new_value])
+
 	
 	variable_changed.emit(inspected_object, prop_name, old_value, new_value)
 
@@ -547,6 +550,7 @@ func get_type_name(type: int) -> String:
 		TYPE_ARRAY: return "Array"
 		TYPE_DICTIONARY: return "Dictionary"
 		_: return "unknown"
+
 
 func update_header_info() -> void:
 	"""Update header with object information"""

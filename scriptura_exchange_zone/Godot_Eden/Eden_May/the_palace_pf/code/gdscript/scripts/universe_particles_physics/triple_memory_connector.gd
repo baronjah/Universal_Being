@@ -1,5 +1,5 @@
 extends Node
-class_name TripleMemoryConnector
+class_name TripleMemoryConnector_triplememoryconnector_tripleme
 
 # Triple Memory Connector
 # Specializes in connecting 3-way memory patterns with special focus on "333" repeating patterns
@@ -7,7 +7,8 @@ class_name TripleMemoryConnector
 # Supports PS5 controller input for intuitive memory sorting
 
 # Triple connection modes
-enum TripleMode {
+enum \2 {
+
 	LINEAR,     # A → B → C
 	TRIANGULAR, # A ↔ B ↔ C ↔ A
 	RADIAL,     # A,B,C → center
@@ -83,7 +84,7 @@ func find_memory_turn_system():
 		parent = parent.get_parent()
 	
 	# Try to find it in the scene
-	return get_node_or_null("/root/MemoryTurnSystem")
+	return get_node_or_null("root/MemoryTurnSystem")
 
 func find_editor_interface():
 	# For in-editor usage, attempt to get editor interface

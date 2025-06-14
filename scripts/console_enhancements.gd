@@ -28,10 +28,12 @@ func pentagon_init() -> void:
 	
 	print("🌟 %s: Console Enhancements Init Complete" % being_name)
 
+
 func pentagon_ready() -> void:
 	super.pentagon_ready()
 	connect_to_akashic_records()
 	print("🌟 %s: Console Enhancements Ready Complete" % being_name)
+
 
 func pentagon_process(delta: float) -> void:
 	super.pentagon_process(delta)
@@ -126,7 +128,6 @@ func create_butterfly_being() -> String:
 			"properties": {
 				"color": "blue",
 				"can_fly": butterfly_properties.can_fly
-			}
 		})
 	
 	# Notify GemmaAI
@@ -142,6 +143,7 @@ func handle_create_command(type: String) -> String:
 			return create_butterfly_being()
 		_:
 			return "🖥️ Can create: butterfly"
+}
 
 func handle_akashic_command(parts: Array) -> String:
 	"""Handle Akashic Records commands"""
@@ -161,6 +163,7 @@ func handle_akashic_command(parts: Array) -> String:
 		"status":
 			response = "🔮 Akashic Records Status:\n"
 			if akashic.has_method("get_status"):
+
 				var status = akashic.get_status()
 				response += "  Beings tracked: %d\n" % status.get("being_count", 0)
 				response += "  Events logged: %d" % status.get("event_count", 0)
@@ -169,6 +172,7 @@ func handle_akashic_command(parts: Array) -> String:
 		
 		"list":
 			response = "🔮 Registered Beings:\n"
+
 			var beings = get_tree().get_nodes_in_group("universal_beings")
 			for being in beings:
 				var b_name = being.get("being_name") if being.has_method("get") else being.name
@@ -179,6 +183,7 @@ func handle_akashic_command(parts: Array) -> String:
 		"history":
 			response = "🔮 Recent Akashic Events:\n"
 			if akashic.has_method("get_recent_events"):
+
 				var events = akashic.get_recent_events(5)
 				for event in events:
 					response += "  • %s\n" % event.get("description", "Unknown event")
@@ -195,6 +200,7 @@ func connect_to_akashic_records() -> void:
 		print("✅ Connected to Akashic Records!")
 		# Load any saved console configuration
 		if akashic.has_method("load_console_config"):
+
 			var config = akashic.load_console_config()
 			if config:
 				apply_console_config(config)
@@ -214,8 +220,8 @@ func ai_interface() -> Dictionary:
 	base_interface.ai_commands = ["create_butterfly", "akashic_status", "akashic_list"]
 	base_interface.ai_properties = {
 		"butterfly_properties": butterfly_properties
-	}
 	return base_interface
+}
 
 func ai_invoke_method(method_name: String, args: Array = []) -> Variant:
 	match method_name:

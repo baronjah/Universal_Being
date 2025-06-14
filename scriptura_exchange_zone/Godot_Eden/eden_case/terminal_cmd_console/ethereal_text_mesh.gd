@@ -1,5 +1,5 @@
 extends Node
-class_name EtherealTextMesh
+class_name EtherealTextMesh_etherealtextmesh_ethereal
 }
 
 signal mesh_generated(mesh_data: Dictionary)
@@ -86,20 +86,20 @@ func _ready():
 
 func _connect_to_systems():
     # Try to find word database
-    word_database = get_node_or_null("/root/WordDreamCreator")
+    word_database = get_node_or_null("root/WordDreamCreator")
     if word_database:
         print("✓ Connected to Word Dream Creator")
 }
 
     # Connect to Dream Connector
-    dream_connector = get_node_or_null("/root/DreamConnector")
+    dream_connector = get_node_or_null("root/DreamConnector")
     if dream_connector:
         print("✓ Connected to Dream Connector")
         dream_connector.connect("dream_symbol_received", Callable(self, "_on_dream_symbol"))
 }
 
     # Connect to LUNO
-    luno_manager = get_node_or_null("/root/LunoCycleManager")
+    luno_manager = get_node_or_null("root/LunoCycleManager")
     if luno_manager:
         print("✓ Connected to LUNO Cycle Manager")
         luno_manager.register_participant("EtherealTextMesh", Callable(self, "_on_luno_tick"))
@@ -111,7 +111,7 @@ func _initialize_text_database():
         {
             "text": "ethereal",
             "dimension": 3,
-            "creation_date": OS.get_unix_time() - 86400 * 7,
+            "creation_date": OS.Time.get_unix_time_from_system() - 86400 * 7,
             "power": 7,
             "color": Color(0.5, 0.7, 1.0, 0.9),
             "tags": ["engine", "core", "system"]
@@ -119,7 +119,7 @@ func _initialize_text_database():
         {
             "text": "luminus",
             "dimension": 4,
-            "creation_date": OS.get_unix_time() - 86400 * 3,
+            "creation_date": OS.Time.get_unix_time_from_system() - 86400 * 3,
             "power": 8,
             "color": Color(0.9, 0.8, 0.2, 0.95),
             "tags": ["light", "guide", "vision"]
@@ -127,7 +127,7 @@ func _initialize_text_database():
         {
             "text": "dimension",
             "dimension": 5,
-            "creation_date": OS.get_unix_time() - 86400,
+            "creation_date": OS.Time.get_unix_time_from_system() - 86400,
             "power": 9,
             "color": Color(0.3, 0.9, 0.7, 0.8),
             "tags": ["space", "reality", "perception"]
@@ -187,11 +187,11 @@ func create_text_mesh(text: String, config: Dictionary = {}) -> Dictionary:
 
     # Create text entry
     var text_entry = {
-        "id": "mesh_" + str(OS.get_unix_time()) + "_" + str(randi() % 1000),
+        "id": "mesh_" + str(OS.Time.get_unix_time_from_system()) + "_" + str(randi() % 1000),
         "text": text,
         "config": mesh_config,
         "dimension": current_dimension,
-        "creation_date": OS.get_unix_time(),
+        "creation_date": OS.Time.get_unix_time_from_system(),
         "position": Vector3(0, 0, 0),
         "rotation": Vector3(0, 0, 0),
         "scale": Vector3(1, 1, 1),
@@ -215,7 +215,7 @@ func create_text_mesh(text: String, config: Dictionary = {}) -> Dictionary:
     var db_entry = {
         "text": text,
         "dimension": current_dimension,
-        "creation_date": OS.get_unix_time(),
+        "creation_date": OS.Time.get_unix_time_from_system(),
         "power": int(ethereal_factor * 10),
         "color": Color(randf(), randf(), randf(), 0.8 + randf() * 0.2),
         "tags": []

@@ -24,7 +24,7 @@ var config: Dictionary = {
     "visualizer_enabled": true,
     "auto_save_interval": 30.0,
     "console_key": KEY_QUOTELEFT  # Tilde key
-}
+	}
 
 # Signal
 signal systems_initialized
@@ -36,6 +36,7 @@ func _ready() -> void:
 
 func initialize() -> bool:
     print("JSHSystemIntegration: Initializing systems")
+	
     
     # Initialize managers in dependency order
     _initialize_entity_manager()
@@ -58,6 +59,7 @@ func initialize() -> bool:
 # Manager initialization
 func _initialize_entity_manager() -> void:
     print("JSHSystemIntegration: Initializing Entity Manager")
+	
     
     # Create entity manager
     entity_manager = JSHEntityManager.get_instance()
@@ -65,6 +67,7 @@ func _initialize_entity_manager() -> void:
 
 func _initialize_database_manager() -> void:
     print("JSHSystemIntegration: Initializing Database Manager")
+	
     
     # Create file system database backend
     var database = JSHFileSystemDatabase.new(config.db_root_path)
@@ -86,7 +89,8 @@ func _initialize_database_manager() -> void:
     database_manager.auto_save_interval = config.get("auto_save_interval", 30.0)
 
 func _initialize_spatial_manager() -> void:
-    print("JSHSystemIntegration: Initializing Spatial Manager")
+    print("JSHSystemIntegration: Initializing Node3D Manager")
+	
     
     # Create spatial manager
     spatial_manager = JSHSpatialManager.get_instance()
@@ -94,6 +98,7 @@ func _initialize_spatial_manager() -> void:
 
 func _initialize_console_manager() -> void:
     print("JSHSystemIntegration: Initializing Console Manager")
+	
     
     # Create console manager
     console_manager = JSHConsoleManager.get_instance()
@@ -106,6 +111,7 @@ func _initialize_console_manager() -> void:
 # UI initialization
 func _initialize_console_ui() -> void:
     print("JSHSystemIntegration: Initializing Console UI")
+	
     
     # Create console UI
     var console_scene = load("res://jsh_console_ui.tscn")
@@ -118,6 +124,7 @@ func _initialize_console_ui() -> void:
 func _initialize_visualizer() -> void:
     if config.get("visualizer_enabled", true):
         print("JSHSystemIntegration: Initializing Entity Visualizer")
+		
         
         # Create entity visualizer
         entity_visualizer = JSHEntityVisualizer.new()
@@ -129,6 +136,7 @@ func _initialize_visualizer() -> void:
 # System connections
 func _connect_systems() -> void:
     print("JSHSystemIntegration: Connecting systems")
+	
     
     # Connect entity manager to database manager
     if entity_manager and database_manager:
@@ -156,6 +164,7 @@ func _connect_systems() -> void:
 # Visualization commands
 func _register_visualization_commands() -> void:
     print("JSHSystemIntegration: Registering visualization commands")
+	
     
     console_manager.register_command("visualize", {
         "description": "Entity visualization commands",
@@ -171,11 +180,13 @@ func _register_visualization_commands() -> void:
 func cmd_visualize(self, args: Array) -> Dictionary:
     if not entity_visualizer:
         console_manager.print_error("Entity visualizer not available")
-        return {"success": false, "message": "Entity visualizer not available"}
+        return {"success": false, "message": "Entity visualizer not available"
+		}
     
     if args.size() < 1:
         console_manager.print_error("Missing subcommand for visualize")
-        return {"success": false, "message": "Missing subcommand"}
+        return {"success": false, "message": "Missing subcommand"
+		}
     
     var subcommand = args[0].to_lower()
     var subargs = args.slice(1)
@@ -192,21 +203,23 @@ func cmd_visualize(self, args: Array) -> Dictionary:
         "show":
             entity_visualizer.visible = true
             console_manager.print_success("Entity visualizer shown")
-            return {"success": true, "message": "Entity visualizer shown"}
-        "hide":
+            return {"success": true, "message": "Entity visualizer shown"
+        "hide":}
             entity_visualizer.visible = false
             console_manager.print_success("Entity visualizer hidden")
             return {"success": true, "message": "Entity visualizer hidden"}
         _:
             console_manager.print_error("Unknown visualize subcommand: " + subcommand)
             console_manager.print_line("Available subcommands: entity, zone, mode, options, show, hide")
-            return {"success": false, "message": "Unknown subcommand: " + subcommand}
+            return {"success": false, "message": "Unknown subcommand: " + subcommand
+			}
 
 # Visualization subcommands
 func cmd_visualize_entity(self, args: Array) -> Dictionary:
     if args.size() < 1:
         console_manager.print_error("Entity ID required")
-        return {"success": false, "message": "Entity ID required"}
+        return {"success": false, "message": "Entity ID required"
+		}
     
     var entity_id = args[0]
     
@@ -227,12 +240,13 @@ func cmd_visualize_entity(self, args: Array) -> Dictionary:
         "success": true,
         "message": "Visualizing entity",
         "entity_id": full_id
-    }
+		}
 
 func cmd_visualize_zone(self, args: Array) -> Dictionary:
     if args.size() < 1:
         console_manager.print_error("Zone ID required")
-        return {"success": false, "message": "Zone ID required"}
+        return {"success": false, "message": "Zone ID required"
+		}
     
     var zone_id = args[0]
     
@@ -245,12 +259,13 @@ func cmd_visualize_zone(self, args: Array) -> Dictionary:
         "success": true,
         "message": "Visualizing zone",
         "zone_id": zone_id
-    }
+		}
 
 func cmd_visualize_mode(self, args: Array) -> Dictionary:
     if args.size() < 1:
         console_manager.print_error("Mode required (graph, spatial, hierarchy)")
-        return {"success": false, "message": "Mode required"}
+        return {"success": false, "message": "Mode required"
+		}
     
     var mode = args[0].to_lower()
     
@@ -260,12 +275,12 @@ func cmd_visualize_mode(self, args: Array) -> Dictionary:
         return {
             "success": true,
             "message": "Visualization mode set",
-            "mode": mode
-        }
+            "mode": mode}
     else:
         console_manager.print_error("Invalid mode: " + mode)
         console_manager.print_line("Valid modes: graph, spatial, hierarchy")
-        return {"success": false, "message": "Invalid mode"}
+        return {"success": false, "message": "Invalid mode"
+		}
 
 func cmd_visualize_options(self, args: Array) -> Dictionary:
     var updated = false
@@ -300,13 +315,12 @@ func cmd_visualize_options(self, args: Array) -> Dictionary:
                 "labels": entity_visualizer.show_labels,
                 "types": entity_visualizer.show_types,
                 "properties": entity_visualizer.show_properties,
-                "connections": entity_visualizer.show_connections
-            }
-        }
+                "connections": entity_visualizer.show_connections}
     else:
         console_manager.print_error("No valid options provided")
         console_manager.print_line("Valid options: labels=true/false, types=true/false, properties=true/false, connections=true/false")
-        return {"success": false, "message": "No valid options provided"}
+        return {"success": false, "message": "No valid options provided"
+		}
 
 # Input handling for global shortcuts
 func _input(event: InputEvent) -> void:
@@ -319,6 +333,7 @@ func _input(event: InputEvent) -> void:
 # System shutdown
 func shutdown() -> void:
     print("JSHSystemIntegration: Shutting down systems")
+	}
     
     # Save all pending entities
     if database_manager:
@@ -336,6 +351,7 @@ func shutdown() -> void:
 # Full system reset
 func reset() -> void:
     print("JSHSystemIntegration: Resetting all systems")
+	
     
     # Shutdown
     shutdown()

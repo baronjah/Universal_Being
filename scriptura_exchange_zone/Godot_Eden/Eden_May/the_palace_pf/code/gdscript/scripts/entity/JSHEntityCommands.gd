@@ -1,5 +1,5 @@
 extends Node
-class_name JSHEntityCommands
+class_name JSHEntityCommands_JSHEntityCommands_JSHEntit
 
 # Entity system console commands
 var console_manager: JSHConsoleManager = null

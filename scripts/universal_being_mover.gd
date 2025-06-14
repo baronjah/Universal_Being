@@ -20,7 +20,6 @@ const DEBUG_META := {
 		"Generate Path": "generate_ground_path",
 		"Switch Mode": "cycle_movement_mode",
 		"Inspect": "inspect_mover_state"
-	}
 }
 
 # ===== MOVEMENT PROPERTIES =====
@@ -94,6 +93,7 @@ func pentagon_init() -> void:
 	connect_to_chunk_system()
 	
 	print("🚀 Universal Being Mover: Locomotion system initialized")
+}
 
 func pentagon_ready() -> void:
 	super.pentagon_ready()
@@ -108,6 +108,7 @@ func pentagon_ready() -> void:
 	detect_environment_and_set_mode()
 	
 	print("🚀 Universal Being Mover: Ready for human player control")
+}
 
 func pentagon_process(delta: float) -> void:
 	super.pentagon_process(delta)
@@ -186,6 +187,7 @@ func create_player_sockets() -> void:
 	
 	print("🔌 Player sockets created: Camera, Body, Pointer, Tool")
 
+
 func attach_to_socket(socket_name: String, being: UniversalBeing) -> bool:
 	"""Attach a Universal Being to a specific socket"""
 	var socket = get_player_socket(socket_name)
@@ -259,6 +261,7 @@ func attach_being(being: UniversalBeing, offset: Vector3 = Vector3.ZERO) -> bool
 	
 	being_attached.emit(being)
 	print("🔗 Attached being: %s" % being.being_name)
+
 	
 	return true
 
@@ -286,11 +289,13 @@ func detach_being() -> UniversalBeing:
 	
 	being_detached.emit(being)
 	print("🔗 Detached being: %s" % being.being_name)
+
 	
 	return being
 
 func attach_random_being() -> void:
 	"""Debug action: Attach a random nearby being"""
+
 	var nearby_beings = find_nearby_beings(5.0)
 	if nearby_beings.size() > 0:
 		var random_being = nearby_beings[randi() % nearby_beings.size()]
@@ -306,6 +311,7 @@ func find_nearby_beings(radius: float) -> Array[UniversalBeing]:
 		
 		for being in all_beings:
 			if being != self and being.has_method("get_global_position"):
+
 				var distance = global_position.distance_to(being.global_position)
 				if distance <= radius:
 					nearby.append(being)
@@ -401,6 +407,7 @@ func update_chunk_generation() -> void:
 		
 		print("🌌 Entered chunk: %s" % current_chunk_coords)
 
+
 func world_position_to_chunk_coordinates(world_pos: Vector3) -> Vector3i:
 	"""Convert world position to chunk coordinates"""
 	return Vector3i(
@@ -441,6 +448,7 @@ func detect_ground_surfaces() -> void:
 		if ground_node:
 			ground_surfaces.append(ground_node)
 			print("🛤️ Ground surface detected: %s" % ground_node.name)
+
 
 func create_path3d_on_ground() -> void:
 	"""Create Path3D on the detected ground"""
@@ -512,6 +520,7 @@ func set_movement_mode(new_mode: MovementMode) -> void:
 	
 	movement_mode_changed.emit(current_mode)
 	print("🚀 Movement mode: %s → %s" % [MovementMode.keys()[old_mode], MovementMode.keys()[current_mode]])
+
 
 func cycle_movement_mode() -> void:
 	"""Cycle through movement modes"""
@@ -610,6 +619,7 @@ func move_to_position(target: Vector3) -> void:
 	mover_target = target
 	movement_started.emit(target)
 	print("🚀 Moving to: %s" % target)
+
 
 func look_at_direction(direction: Vector3) -> void:
 	"""Look in specific direction"""

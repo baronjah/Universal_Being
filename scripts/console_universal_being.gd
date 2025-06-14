@@ -24,15 +24,18 @@ func pentagon_init() -> void:
     metadata.gemma_can_modify = true
     output_text = "Console initialized."
     print("🌟 %s: Pentagon Init Complete" % being_name)
+	
 
 func pentagon_ready() -> void:
     super.pentagon_ready()  # 🔄 ALWAYS CALL SUPER FIRST
     # Load required components
     add_component("res://components/console_core.ub.zip")
+	
     # Load and control the console scene
     load_scene("res://scenes/console_scene.tscn")
     set_scene_property("ConsoleUI/OutputLabel", "text", output_text)
     print("🌟 %s: Pentagon Ready Complete" % being_name)
+	
 
 func pentagon_process(delta: float) -> void:
     super.pentagon_process(delta)  # ⚡ ALWAYS CALL SUPER FIRST
@@ -47,6 +50,7 @@ func pentagon_input(event: InputEvent) -> void:
 func pentagon_sewers() -> void:
     # Being-specific cleanup FIRST
     print("🌟 %s: Pentagon Sewers Starting" % being_name)
+	
     # Cleanup logic here
     super.pentagon_sewers()  # 💀 ALWAYS CALL SUPER LAST
 
@@ -72,8 +76,8 @@ func ai_interface() -> Dictionary:
     base_interface.custom_properties = {
         "command_history": command_history,
         "output_text": output_text
-    }
     return base_interface
+}
 
 func ai_invoke_method(method_name: String, args: Array = []) -> Variant:
     match method_name:

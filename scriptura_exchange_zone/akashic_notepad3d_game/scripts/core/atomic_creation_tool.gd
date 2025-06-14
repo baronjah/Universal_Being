@@ -23,7 +23,7 @@ extends Node3D
 #    - create cylinder height 8 → Perfect cylinder from circles
 # ═══════════════════════════════════════════════════════════════════════════════════════════════
 
-class_name AtomicCreationTool
+class_name AtomicCreationTool_atomiccreationtool_atomiccr
 
 # ATOMIC CREATION CONSTANTS
 const CREATION_SPACE_SIZE = 9
@@ -31,7 +31,8 @@ const TOTAL_CREATION_POSITIONS = 729  # 9x9x9
 const ATOMIC_SCALE = 0.1  # Scale factor for atomic visualization
 
 # MATTER STATES - From Knowledge Archives
-enum MatterState {
+enum \2 {
+
 	SOLID,      # [ooo] - atoms tightly packed
 	LIQUID,     # [ococo] - atoms with connectors  
 	GAS,        # [occocco] - atoms with more space

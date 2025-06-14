@@ -32,9 +32,7 @@ const COLOR_PALETTES = {
             "neutral": 0,
             "warm": 37,
             "hot": 100
-        }
-    }
-}
+			}
 
 const ENERGY_SHAPES = {
     "TRANSPORT_VECTORS": [
@@ -59,8 +57,7 @@ const ENERGY_SHAPES = {
         "low": [20, 250],
         "mid": [250, 4000],
         "high": [4000, 20000]
-    }
-}
+		}
 
 const STAR_SYSTEM_389 = {
     "total_stars": 389,
@@ -68,7 +65,7 @@ const STAR_SYSTEM_389 = {
     "boundary_stars": 300,
     "galaxy_type": "claude",
     "center_color": "orange"
-}
+	}
 
 # ----- INTEGRATION POINTS -----
 var akashic_system = null
@@ -79,7 +76,7 @@ var records_system = null
 var migration_system = null
 
 # ----- CONNECTION STATE -----
-var active_connections = {}
+var active_connections = {
 var temperature_state = 0
 var color_gradient_index = 0
 var projection_active = false
@@ -159,7 +156,7 @@ func _initialize_terminal_connection():
         "temperature": COLOR_PALETTES.NEGATIVE_SPACE.TEMPERATURE_SCALE.neutral,
         "energy_shape": ENERGY_SHAPES.PROJECTION_TYPES[6],  # terminal
         "timestamp": Time.get_unix_time_from_system()
-    }
+		}
     
     # Register in akashic system
     if akashic_system and akashic_system.has_method("register_number"):
@@ -246,7 +243,7 @@ func connect_to_user_actions(user_id = "terminal_user"):
         "color_mode": _get_current_color_mode(),
         "temperature": temperature_state,
         "connected_universes": connected_universes
-    }
+		}
     
     # Record the connection
     if records_system and records_system.has_method("create_memory_record"):
@@ -279,7 +276,7 @@ func detect_user_action(action_type, action_data):
             return {
                 "success": false,
                 "error": "Unknown action type: " + action_type
-            }
+				}
 
 func _process_color_change(data):
     var from_color = _get_current_color()
@@ -298,7 +295,7 @@ func _process_color_change(data):
         return {
             "success": false,
             "error": "Invalid color specification"
-        }
+			}
     
     # Register color change
     if color_system and color_system.has_method("shift_color"):
@@ -321,7 +318,7 @@ func _process_color_change(data):
         "from_color": from_color.to_html(),
         "to_color": to_color.to_html(),
         "temperature": temperature_state
-    }
+		}
 
 func _process_temperature_adjustment(data):
     var old_temp = temperature_state
@@ -348,7 +345,7 @@ func _process_temperature_adjustment(data):
         "success": true,
         "old_temperature": old_temp,
         "new_temperature": temperature_state
-    }
+		}
 
 func _process_projection_toggle(data):
     projection_active = data.active if data.has("active") else !projection_active
@@ -372,7 +369,7 @@ func _process_projection_toggle(data):
         "projection_active": projection_active,
         "projection_type": projection_type,
         "intensity": intensity
-    }
+		}
 
 func _process_universe_connection(data):
     var universe_name = data.universe if data.has("universe") else "luminous_os"
@@ -391,6 +388,7 @@ func _process_universe_connection(data):
     
     # Register in akashic system
     if akashic_system and akashic_system.has_method("register_number"):
+	}
         var star_count = _get_universe_star_count(universe_name)
         akashic_system.register_number(star_count, universe_name + "_stars")
     
@@ -413,7 +411,7 @@ func _process_universe_connection(data):
         "universe": universe_name,
         "connected": connect_state,
         "cosmic_address": cosmic_address
-    }
+		}
 
 func _process_energy_transport(data):
     var shape_type = data.shape if data.has("shape") else "terminal"
@@ -442,7 +440,7 @@ func _process_energy_transport(data):
         "from_point": from_point,
         "to_point": to_point,
         "flow_direction": energy_flow_direction
-    }
+		}
 
 func _process_audio_input(data):
     audio_input_active = data.active if data.has("active") else true
@@ -476,7 +474,7 @@ func _process_audio_input(data):
         "frequency_range": frequency_range,
         "frequency_values": freq_values,
         "intensity": intensity
-    }
+		}
 
 func _process_akashic_sync(data):
     var record_type = data.type if data.has("type") else "terminal"
@@ -510,7 +508,7 @@ func _process_akashic_sync(data):
         "record_type": record_type,
         "cosmic_address": cosmic_address,
         "sync_all": sync_all
-    }
+		}
 
 # ----- AKASHIC RECORD INTEGRATION -----
 func link_akashic_records_to_ethereal():
@@ -521,7 +519,7 @@ func link_akashic_records_to_ethereal():
             "error": "Required systems unavailable",
             "akashic_available": akashic_system != null,
             "ethereal_available": ethereal_bridge != null
-        }
+			}
     
     # Create bridge records
     var bridge_records = []
@@ -533,8 +531,8 @@ func link_akashic_records_to_ethereal():
             "palettes": COLOR_PALETTES.keys(),
             "gradients": 3,  # Number of gradients created
             "timestamp": Time.get_unix_time_from_system()
-        }
         bridge_records.append(color_record)
+}
         
         # Register key colors in akashic system
         akashic_system.register_number(COLOR_PALETTES.UNIVERSE_389.CENTER_ORANGE.to_rgba32(), "center_orange_rgba")
@@ -546,8 +544,8 @@ func link_akashic_records_to_ethereal():
         "projection_types": ENERGY_SHAPES.PROJECTION_TYPES,
         "frequency_ranges": ENERGY_SHAPES.MICROPHONE_FREQUENCIES.keys(),
         "timestamp": Time.get_unix_time_from_system()
-    }
     bridge_records.append(energy_record)
+}
     
     # 3. Link universe connections
     var universe_record = {
@@ -555,8 +553,8 @@ func link_akashic_records_to_ethereal():
         "connected_universes": connected_universes,
         "total_stars": STAR_SYSTEM_389.total_stars,
         "timestamp": Time.get_unix_time_from_system()
-    }
     bridge_records.append(universe_record)
+}
     
     # 4. Create the core bridge record
     var core_bridge = {
@@ -566,7 +564,7 @@ func link_akashic_records_to_ethereal():
         "projection_active": projection_active,
         "color_gradient": _get_current_color_mode(),
         "timestamp": Time.get_unix_time_from_system()
-    }
+		}
     
     # Record in ethereal bridge
     if ethereal_bridge.has_method("_record_record_set_migration"):
@@ -592,7 +590,7 @@ func link_akashic_records_to_ethereal():
         "bridge_records": bridge_records.size(),
         "cosmic_address": cosmic_address,
         "bridge_timestamp": core_bridge.timestamp
-    }
+		}
 
 func sync_terminal_view_with_akashic():
     # Get current timestamp
@@ -609,7 +607,7 @@ func sync_terminal_view_with_akashic():
         "energy_flow": energy_flow_direction,
         "audio_input_active": audio_input_active,
         "timestamp": sync_timestamp
-    }
+		}
     
     # Record in records system
     if records_system and records_system.has_method("create_memory_record"):
@@ -631,7 +629,7 @@ func sync_terminal_view_with_akashic():
         "view_mode": user_view_mode,
         "color_mode": _get_current_color_mode(),
         "connected_universes": connected_universes.size()
-    }
+		}
 
 # ----- HELPER FUNCTIONS -----
 func _generate_cosmic_address(base_name):
@@ -645,6 +643,7 @@ func _generate_cosmic_address(base_name):
     ]
     
     return address_components.join(":")
+	}
 
 func _get_universe_star_count(universe_name):
     match universe_name:
@@ -685,16 +684,19 @@ func _get_current_color():
     # Get color based on current mode and gradient index
     match _get_current_color_mode():
         "orange_to_black":
+		}
             var gradient_pos = float(color_gradient_index) / 6.0
             return COLOR_PALETTES.UNIVERSE_389.CENTER_ORANGE.lerp(
                 COLOR_PALETTES.UNIVERSE_389.BLACK, 
                 gradient_pos)
         "grey_scale":
+		}
             var gradient_pos = float(color_gradient_index) / 8.0
             return COLOR_PALETTES.UNIVERSE_389.BLACK.lerp(
                 COLOR_PALETTES.UNIVERSE_389.WHITE, 
                 gradient_pos)
         "luminous_shine":
+		
             var idx = mini(color_gradient_index, COLOR_PALETTES.LUMINOUS_OS.DARK_GRADIENT.size() - 1)
             return COLOR_PALETTES.LUMINOUS_OS.DARK_GRADIENT[idx]
         _:
@@ -725,15 +727,19 @@ func connect_terminal_to_user():
 
 func process_user_color_change(color_name):
     return detect_user_action("color_change", {"color_name": color_name})
+	
 
 func adjust_temperature(delta):
     return detect_user_action("temperature_adjust", {"delta": delta})
+	
 
 func toggle_projection(active = true, type = "terminal"):
     return detect_user_action("projection_toggle", {"active": active, "type": type})
+	
 
 func connect_to_universe(universe_name, connect = true):
     return detect_user_action("universe_connect", {"universe": universe_name, "connect": connect})
+	
 
 func transport_energy_shape(shape_type, from_point, to_point):
     return detect_user_action("energy_transport", {
@@ -771,7 +777,7 @@ func get_current_projection_state():
         "active": projection_active,
         "user_view_mode": user_view_mode,
         "energy_flow": energy_flow_direction
-    }
+		}
 
 func get_terminal_connection_stats():
     return {
@@ -781,7 +787,7 @@ func get_terminal_connection_stats():
         "projection_active": projection_active,
         "audio_active": audio_input_active,
         "total_stars": STAR_SYSTEM_389.total_stars
-    }
+		}
 
 func create_terminal_bridge_with_ethereal():
     var result = link_akashic_records_to_ethereal()

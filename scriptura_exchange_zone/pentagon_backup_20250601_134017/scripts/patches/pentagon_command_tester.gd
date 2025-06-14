@@ -10,15 +10,14 @@
 # PURPOSE: Validate that strategic testing commands are available
 # CREATED: 2025-05-31
 # ==================================================
-
-extends UniversalBeingBase
+extends \2
 func _ready() -> void:
 	# Register test command
 	await get_tree().create_timer(2.0).timeout
 	_register_test_command()
 
 func _register_test_command() -> void:
-	var console = get_node_or_null("/root/ConsoleManager")
+	var console = get_node_or_null("root/ConsoleManager")
 	if console and console.has_method("register_command"):
 		console.register_command("test_pentagon", _cmd_test_pentagon, "Test Pentagon debug commands availability")
 		print("🧪 [PentagonTester] Test command registered - use 'test_pentagon'")
@@ -27,7 +26,7 @@ func _cmd_test_pentagon(_args: Array) -> String:
 	var result = "🧪 PENTAGON COMMAND TEST\n"
 	result += "═══════════════════════════\n"
 	
-	var console = get_node_or_null("/root/ConsoleManager")
+	var console = get_node_or_null("root/ConsoleManager")
 	if not console:
 		return result + "❌ ConsoleManager not found!"
 	
@@ -52,7 +51,7 @@ func _cmd_test_pentagon(_args: Array) -> String:
 		else:
 			result += "❌ " + cmd_name + ": MISSING\n"
 	
-	result += "\n📈 SUMMARY: " + str(found_count) + "/" + str(pentagon_commands.size()) + " commands found\n"
+	result += "\n📈 SUMMARY: " + str(found_count) + "" + str(pentagon_commands.size()) + " commands found\n"
 	
 	# Test executing pentagon_status if available
 	if "pentagon_status" in console.commands:
@@ -66,14 +65,14 @@ func _cmd_test_pentagon(_args: Array) -> String:
 	
 	# Check for PentagonDebugCommands node
 	result += "\n🔍 NODE EXISTENCE CHECK:\n"
-	var pentagon_node = get_node_or_null("/root/MainGame/PentagonDebugCommands")
+	var pentagon_node = get_node_or_null("root/MainGame/PentagonDebugCommands")
 	if pentagon_node:
 		result += "✅ PentagonDebugCommands node found\n"
 	else:
 		result += "❌ PentagonDebugCommands node missing\n"
 		
 	# Check enhanced registrar
-	var registrar = get_node_or_null("/root/MainGame/EnhancedCommandRegistrar")
+	var registrar = get_node_or_null("root/MainGame/EnhancedCommandRegistrar")
 	if registrar:
 		result += "✅ EnhancedCommandRegistrar node found\n"
 	else:

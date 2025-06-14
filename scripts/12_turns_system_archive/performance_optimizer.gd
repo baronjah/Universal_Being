@@ -20,7 +20,7 @@ var resource_allocation: Dictionary = {
     "gpu": 0.0,         # 0.0-1.0 scale
     "storage": 0.0,     # 0.0-1.0 scale
     "network": 0.0      # 0.0-1.0 scale
-}
+	}
 
 var resource_limits: Dictionary = {
     "cpu": 0.8,         # Max CPU usage (0.0-1.0)
@@ -28,7 +28,7 @@ var resource_limits: Dictionary = {
     "gpu": 0.6,         # Max GPU usage (0.0-1.0)
     "storage": 0.9,     # Max Storage usage (0.0-1.0)
     "network": 0.5      # Max Network usage (0.0-1.0)
-}
+	}
 
 var freemium_day_usage: Dictionary = {
     "cpu_minutes": 0.0,
@@ -36,7 +36,7 @@ var freemium_day_usage: Dictionary = {
     "memory_mb_minutes": 0.0,
     "data_transfers_mb": 0.0,
     "resource_score": 0.0
-}
+	}
 
 # ----- SYSTEM REFERENCES -----
 var ethereal_bridge: Node = null
@@ -90,6 +90,7 @@ func _ready():
     _initialize_magic_cycle()
     
     print("Performance Optimizer initialized - Magic cycle duration: " + str(turn_duration_minutes * 12) + " minutes")
+	
 
 func _setup_timers():
     # Resource monitor timer - check resource usage every 5 seconds
@@ -277,7 +278,7 @@ func _calculate_current_resource_usage():
 
 func _get_resources_for_cycle(cycle_number):
     # Define resource distribution for each of the 12 magical cycles
-    var cycle_resources = {}
+    var cycle_resources = {
     
     match cycle_number:
         0:  # Genesis - Initialization phase
@@ -287,7 +288,7 @@ func _get_resources_for_cycle(cycle_number):
                 "gpu": 0.1,
                 "storage": 0.3,
                 "network": 0.1
-            }
+}
         1:  # Formation - Structure creation
             cycle_resources = {
                 "cpu": 0.4,
@@ -295,7 +296,7 @@ func _get_resources_for_cycle(cycle_number):
                 "gpu": 0.2,
                 "storage": 0.4,
                 "network": 0.1
-            }
+}
         2:  # Complexity - Systems interact
             cycle_resources = {
                 "cpu": 0.5,
@@ -303,7 +304,7 @@ func _get_resources_for_cycle(cycle_number):
                 "gpu": 0.2,
                 "storage": 0.3,
                 "network": 0.2
-            }
+}
         3:  # Consciousness - Awareness develops
             cycle_resources = {
                 "cpu": 0.6,
@@ -311,7 +312,7 @@ func _get_resources_for_cycle(cycle_number):
                 "gpu": 0.3,
                 "storage": 0.2,
                 "network": 0.3
-            }
+}
         4:  # Awakening - Full activation
             cycle_resources = {
                 "cpu": 0.7,
@@ -319,7 +320,7 @@ func _get_resources_for_cycle(cycle_number):
                 "gpu": 0.4,
                 "storage": 0.2,
                 "network": 0.4
-            }
+}
         5:  # Enlightenment - Knowledge processing
             cycle_resources = {
                 "cpu": 0.8,
@@ -327,7 +328,7 @@ func _get_resources_for_cycle(cycle_number):
                 "gpu": 0.3,
                 "storage": 0.4,
                 "network": 0.5
-            }
+}
         6:  # Manifestation - Creation peak
             cycle_resources = {
                 "cpu": 0.9,
@@ -335,7 +336,7 @@ func _get_resources_for_cycle(cycle_number):
                 "gpu": 0.7,
                 "storage": 0.5,
                 "network": 0.4
-            }
+}
         7:  # Connection - Network focus
             cycle_resources = {
                 "cpu": 0.7,
@@ -343,7 +344,7 @@ func _get_resources_for_cycle(cycle_number):
                 "gpu": 0.5,
                 "storage": 0.6,
                 "network": 0.8
-            }
+}
         8:  # Harmony - Balanced resources
             cycle_resources = {
                 "cpu": 0.6,
@@ -351,7 +352,7 @@ func _get_resources_for_cycle(cycle_number):
                 "gpu": 0.6,
                 "storage": 0.6,
                 "network": 0.6
-            }
+}
         9:  # Transcendence - All systems peak
             cycle_resources = {
                 "cpu": 0.9,
@@ -359,7 +360,7 @@ func _get_resources_for_cycle(cycle_number):
                 "gpu": 0.8,
                 "storage": 0.7,
                 "network": 0.7
-            }
+}
         10: # Unity - Full integration
             cycle_resources = {
                 "cpu": 0.8,
@@ -367,7 +368,7 @@ func _get_resources_for_cycle(cycle_number):
                 "gpu": 0.7,
                 "storage": 0.8,
                 "network": 0.6
-            }
+}
         11: # Beyond - Cycle completion
             cycle_resources = {
                 "cpu": 0.5,
@@ -375,7 +376,7 @@ func _get_resources_for_cycle(cycle_number):
                 "gpu": 0.4,
                 "storage": 0.9,
                 "network": 0.3
-            }
+				}
     
     # Apply freemium limits if enabled
     if freemium_optimization:
@@ -390,6 +391,7 @@ func _optimize_resource_usage(resource_type):
     
     match resource_type:
         "cpu":
+		}
             # Reduce active threads
             var high_priority_count = 0
             for thread in thread_pool:
@@ -406,23 +408,31 @@ func _optimize_resource_usage(resource_type):
                         break
         
         "memory":
+		
             # Simulate memory cleanup
             resource_allocation.memory *= 0.6
             print("Optimizing Memory: Forced garbage collection")
+			
         
         "gpu":
+		
             # Reduce GPU usage
             resource_allocation.gpu *= 0.7
             print("Optimizing GPU: Reduced rendering quality")
+			
         
         "storage":
+		
             # Clean up temporary files
             print("Optimizing Storage: Cleaned temporary files")
+			
         
         "network":
+		
             # Throttle network operations
             resource_allocation.network *= 0.5
             print("Optimizing Network: Throttled data transfers")
+			
 
 func _apply_magic_cycle_resources():
     if not hourly_magic_cycles:
@@ -584,7 +594,7 @@ func _run_performance_optimization():
             "time": Time.get_datetime_string_from_system(),
             "improvement": end_performance - start_performance,
             "level": current_performance_level
-        }
+			}
         
         # Store performance for current magic cycle
         magic_cycle_performance[current_magic_cycle] = end_performance
@@ -676,6 +686,7 @@ func _update_magic_cycle():
     
     # Check if turn system is available and synchronized
     if turn_system and turn_system.has_method("get_current_turn"):
+	
         var system_turn = (turn_system.get_current_turn() - 1) % 12
         
         # If system turn is different, use it
@@ -691,6 +702,7 @@ func _update_magic_cycle():
 
 func _on_magic_cycle_changed():
     print("Magic cycle changed to: " + str(current_magic_cycle + 1))
+	
     
     # Apply resources for new cycle
     _apply_magic_cycle_resources()
@@ -808,7 +820,7 @@ func get_current_performance():
         "resource_usage": resource_allocation.duplicate(),
         "thread_usage": _count_active_threads() / float(max_threads),
         "freemium_usage": freemium_day_usage.duplicate()
-    }
+		}
 
 func get_magic_cycle_info():
     # Calculate time remaining in current cycle
@@ -823,7 +835,7 @@ func get_magic_cycle_info():
         "total_duration": turn_duration_minutes * 60,
         "resources": magic_cycle_resources[current_magic_cycle].duplicate(),
         "performance": magic_cycle_performance[current_magic_cycle]
-    }
+		}
 
 func allocate_ethereal_thread(task_name):
     # Special allocation for Ethereal Engine with high priority

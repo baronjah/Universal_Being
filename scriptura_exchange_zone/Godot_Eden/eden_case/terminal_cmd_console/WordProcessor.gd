@@ -1,5 +1,5 @@
 extends Node
-class_name WordProcessor
+class_name WordProcessor_WordProcessor_WordProc
 }
 
 # ------------------------------------
@@ -64,7 +64,7 @@ func _ready():
 # Load the word database
 func _load_word_database() -> void:
     var file = File.new()
-    if file.open("/mnt/c/Users/Percision 15/12_turns_system/word_database.txt", File.READ) == OK:
+    if file.open("mnt/c/Users/Percision 15/12_turns_system/word_database.txt", File.READ) == OK:
         while not file.eof_reached():
             var line = file.get_line().strip_edges()
             if line.is_empty():
@@ -136,7 +136,7 @@ func process_word(word_text: String, context: Dictionary = {}) -> Dictionary:
         "attributes": attributes,
         "categories": _categorize_word(normalized_text),
         "processed_by": "WordProcessor v1.0",
-        "timestamp": OS.get_unix_time()
+        "timestamp": OS.Time.get_unix_time_from_system()
     }
 }
 
@@ -544,7 +544,7 @@ func add_custom_rule(condition: Dictionary, effect: Dictionary) -> void:
     custom_rules.append({
         "condition": condition,
         "effect": effect,
-        "id": "rule_" + str(OS.get_unix_time()) + "_" + str(randi() % 1000)
+        "id": "rule_" + str(OS.Time.get_unix_time_from_system()) + "_" + str(randi() % 1000)
     })
 }
 

@@ -5,7 +5,7 @@ class_name KeyboardShapeManager
 # Keyboard tracking and shape generation system with eyeball tracking integration
 
 # Keyboard state tracking
-var key_states = {}
+var key_states = {
 var active_keys = []
 var key_press_history = []
 var key_combinations = []
@@ -59,7 +59,7 @@ var shape_patterns = {
     "JKLI": "star",
     "YGHJ": "octahedron",
     "BNM": "icosahedron"
-}
+	}
 
 # Special key combinations for effects
 var effect_combos = {
@@ -68,7 +68,7 @@ var effect_combos = {
     "CTRL+ALT+C": "cycle_color",
     "CTRL+SHIFT+E": "toggle_eye_tracking",
     "ALT+SHIFT+R": "randomize_properties"
-}
+	}
 
 # External tool connections
 var github_connected = false
@@ -122,7 +122,7 @@ func _initialize_key_states():
             "press_count": 0,
             "hold_duration": 0,
             "combined_with": []
-        }
+			}
 
 func _input(event):
     # Track keyboard input
@@ -148,9 +148,9 @@ func _on_key_pressed(key_name):
             "press_count": 0,
             "hold_duration": 0,
             "combined_with": []
-        }
+			}
     
-    var now = OS.get_ticks_msec()
+    var now = OS.Time.get_ticks_msec()
     var key_state = key_states[key_name]
     
     # Update key state
@@ -216,7 +216,7 @@ func _on_key_released(key_name):
     if not key_name in key_states:
         return
     
-    var now = OS.get_ticks_msec()
+    var now = OS.Time.get_ticks_msec()
     var key_state = key_states[key_name]
     
     # Update key state
@@ -283,7 +283,7 @@ func create_shape(shape_name):
         "typing_speed": typing_speed,
         "typing_pattern": typing_pattern,
         "created_at": OS.get_unix_time()
-    }
+		}
     
     # Adjust properties based on typing rhythm
     if typing_rhythm.size() > 0:
@@ -366,7 +366,7 @@ func load_shape(shape_name = ""):
     
     while file_name != "":
         if not dir.current_is_dir() and file_name.ends_with(".json"):
-            if shape_name.empty() or file_name.begins_with(shape_name):
+            if shape_name.is_empty() or file_name.begins_with(shape_name):
                 shape_files.append(file_name)
         file_name = dir.get_next()
     
@@ -435,6 +435,7 @@ func cycle_color_palette():
     
     # If shape exists, update its color
     if current_shape != "none":
+	}
         var properties = create_shape(current_shape)
         emit_signal("shape_changed", current_shape, properties)
     
@@ -453,6 +454,7 @@ func update_eye_position(position):
     
     # If shape exists, update its position
     if current_shape != "none" and eye_tracking_active:
+	
         var properties = create_shape(current_shape)
         emit_signal("shape_changed", current_shape, properties)
     
@@ -460,6 +462,7 @@ func update_eye_position(position):
 
 func randomize_shape_properties():
     if current_shape == "none":
+	
         # Create a random shape if none exists
         var shapes = shape_patterns.values()
         current_shape = shapes[randi() % shapes.size()]
@@ -517,7 +520,6 @@ func connect_to_github():
             "stars": 263,
             "forks": 87,
             "description": "Eye tracking integration for Godot"
-        }
     ]
     
     emit_signal("tool_connected", "GitHub", github_connected)
@@ -554,7 +556,6 @@ func load_external_tools():
             "repo": "godot-keyboard-tools",
             "version": "1.0.5",
             "functions": ["map_keyboard", "create_custom_mapping", "export_layout"]
-        }
     ]
     
     # For each tool, emit connected signal
@@ -578,18 +579,18 @@ func get_keyboard_stats():
         "current_shape": current_shape,
         "current_color": current_color,
         "eye_tracking": eye_tracking_active
-    }
+		}
     
     # Calculate most pressed keys
     var most_pressed = []
-    var key_press_counts = {}
+    var key_press_counts = {
     
     for key in key_states:
         key_press_counts[key] = key_states[key]["press_count"]
     
     # Sort keys by press count
     var sorted_keys = key_press_counts.keys()
-    sorted_keys.sort_custom(self, "_sort_by_press_count")
+    sorted_keys.sort_custom(self."_sort_by_press_count")
     
     # Get top 5 most pressed keys
     for i in range(min(5, sorted_keys.size())):

@@ -86,6 +86,7 @@ static var NAMING_REPLACEMENTS = {
 	"rotation": "angular_orientation",
 	"scale": "scaling_factor",
 	"modulate": "color_modulation",
+}
 	
 	# Socket System
 	"socket_name": "socket_designation",
@@ -115,7 +116,6 @@ static var CONTEXT_WHITELIST = {
 	ValidationContext.SIGNAL_NAME: [
 		"name_changed", "position_updated", "type_evolved"
 	]
-}
 
 # ===== LEGACY CODE EXCEPTIONS =====
 static var LEGACY_WHITELIST = [
@@ -133,7 +133,6 @@ static var LEGACY_WHITELIST = [
 		"pattern": "var type = VISUAL",
 		"reason": "Socket type enum - needs socket_classification refactor",
 		"deadline": "2025-01-15"
-	}
 ]
 
 # ===== VALIDATION RESULT CLASSES =====
@@ -209,14 +208,17 @@ class Violation:
 				base_msg = "💡 LOW: '%s' doesn't follow Universal Being conventions" % problematic_name
 			_:
 				base_msg = "ℹ️ INFO: Consider renaming '%s'" % problematic_name
+	}
 		
 		return "%s in %s:%d" % [base_msg, file_path.get_file(), line_number]
+}
 	
 	func _generate_suggestion() -> String:
 		if NamingValidator.NAMING_REPLACEMENTS.has(problematic_name):
 			return "Replace with: %s" % NamingValidator.NAMING_REPLACEMENTS[problematic_name]
 		else:
 			return "Consider: %s" % NamingValidator.suggest_alternative(problematic_name)
+}
 
 class FileValidationReport:
 	var file_path: String
@@ -243,6 +245,7 @@ class FileValidationReport:
 			var low = violations.filter(func(v): return v.severity == ViolationSeverity.LOW).size()
 			
 			return "❌ %s: %dC %dH %dM %dL" % [file_path.get_file(), critical, high, medium, low]
+
 
 # ===== MAIN VALIDATION METHODS =====
 
@@ -307,8 +310,8 @@ static func scan_project_for_violations(base_path: String = "res://") -> Diction
 		"files_scanned": 0,
 		"total_violations": 0,
 		"file_reports": {},
-		"summary": {}
-	}
+		"summary": {
+}
 	
 	var file_paths = _get_all_gdscript_files(base_path)
 	
@@ -364,10 +367,10 @@ static func generate_refactoring_plan(violations: Array[Violation]) -> Dictionar
 		"refactoring_actions": [],
 		"estimated_files_affected": 0,
 		"priority_order": []
-	}
+}
 	
 	# Group violations by file and severity
-	var files_affected = {}
+	var files_affected = {
 	var critical_violations = []
 	var high_violations = []
 	
@@ -393,7 +396,7 @@ static func generate_refactoring_plan(violations: Array[Violation]) -> Dictionar
 			"violations": file_violations.size(),
 			"replacements": {},
 			"manual_review_needed": false
-		}
+}
 		
 		for violation in file_violations:
 			if NAMING_REPLACEMENTS.has(violation.problematic_name):
@@ -457,7 +460,7 @@ static func _scan_line_for_violations(line: String, line_number: int, file_path:
 		"function_param": r"func\s+\w+\([^)]*(\w+):\s*\w+",
 		"class_declaration": r"class_name\s+(\w+)",
 		"signal_declaration": r"signal\s+(\w+)"
-	}
+}
 	
 	for pattern_type in patterns:
 		var regex = RegEx.new()
@@ -504,6 +507,7 @@ static func _scan_directory_recursive(path: String, files: Array[String]) -> voi
 	var file_name = dir.get_next()
 	
 	while file_name != "":
+}
 		var full_path = path + "/" + file_name
 		
 		if dir.current_is_dir() and not file_name.begins_with("."):
@@ -525,10 +529,10 @@ static func _generate_project_summary(project_report: Dictionary) -> Dictionary:
 		"cleanest_files": [],
 		"most_violations": [],
 		"compliance_percentage": 0.0
-	}
+}
 	
 	var clean_files = 0
-	var violation_counts = {}
+	var violation_counts = {
 	
 	for file_path in project_report.file_reports:
 		var report = project_report.file_reports[file_path]
@@ -586,7 +590,9 @@ static func run_validation_cli(args: Array[String]) -> void:
 					print("    → %s" % violation.suggested_fix)
 		
 		"--scan-project":
+}
 			var base_path = args[1] if args.size() > 1 else "res://"
+}
 			var project_report = scan_project_for_violations(base_path)
 			print("🔍 Universal Being Project Scan Results")
 			print("Files scanned: %d" % project_report.files_scanned)
@@ -597,11 +603,13 @@ static func run_validation_cli(args: Array[String]) -> void:
 			print("  High: %d" % project_report.summary.total_high)
 			print("  Medium: %d" % project_report.summary.total_medium)
 			print("  Low: %d" % project_report.summary.total_low)
+
 		
 		"--suggest":
 			if args.size() > 1:
 				var suggestion = suggest_alternative(args[1])
 				print("Suggestion for '%s': %s" % [args[1], suggestion])
+	
 		
 		"--check":
 			if args.size() > 1:

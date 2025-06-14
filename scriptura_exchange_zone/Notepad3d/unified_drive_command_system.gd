@@ -1,18 +1,18 @@
 extends Node
 
-class_name UnifiedDriveCommandSystem
+class_name UnifiedDriveCommandSystem_unifieddrivecommandsystem_unifiedd
 
 # Constants for drive connection
 const DRIVE_MAPPINGS = {
     "C_DRIVE": {
-        "path": "/mnt/c",
+        "path": "mnt/c",
         "color": Color(0.2, 0.7, 0.3, 1.0),  # Green
         "frequency": 333,
         "symbol": "©",
         "type": "LOCAL"
     },
     "D_DRIVE": {
-        "path": "/mnt/d",
+        "path": "mnt/d",
         "color": Color(0.3, 0.5, 0.9, 1.0),  # Blue
         "frequency": 555,
         "symbol": "Đ",
@@ -116,7 +116,7 @@ func _connect_systems():
         print("Connected to DriveConnector")
     else:
         print("DriveConnector not available, trying to load directly")
-        var script = load("/mnt/c/Users/Percision 15/drive_connector.gd")
+        var script = load("mnt/c/Users/Percision 15/drive_connector.gd")
         if script:
             drive_connector = script.new()
             print("Loaded DriveConnector directly")
@@ -131,7 +131,7 @@ func _connect_systems():
         print("Connected to TerminalVisualBridge")
     else:
         print("TerminalVisualBridge not available, trying to load directly")
-        var script = load("/mnt/c/Users/Percision 15/terminal_visual_bridge.gd")
+        var script = load("mnt/c/Users/Percision 15/terminal_visual_bridge.gd")
         if script:
             terminal_bridge = script.new()
             print("Loaded TerminalVisualBridge directly")
@@ -146,7 +146,7 @@ func _connect_systems():
         print("Connected to MessageTimelineConnector")
     else:
         print("MessageTimelineConnector not available, trying to load directly")
-        var script = load("/mnt/c/Users/Percision 15/message_timeline_connector.gd")
+        var script = load("mnt/c/Users/Percision 15/message_timeline_connector.gd")
         if script:
             message_timeline = script.new()
             print("Loaded MessageTimelineConnector directly")
@@ -177,7 +177,7 @@ func _initialize_drives():
                 active_drives[drive_id] = {
                     "id": drive_id,
                     "status": "ONLINE",
-                    "connection_time": OS.get_unix_time(),
+                    "connection_time": OS.Time.get_unix_time_from_system(),
                     "commands": [],
                     "words": []
                 }
@@ -188,7 +188,7 @@ func _initialize_drives():
     
     if active_drives.size() > 0:
         online_status = true
-        print("Drives connected: " + str(active_drives.size()) + " / " + str(DRIVE_MAPPINGS.size()))
+        print("Drives connected: " + str(active_drives.size()) + "  " + str(DRIVE_MAPPINGS.size()))
     }
 
 func _update_solar_cycle():
@@ -273,7 +273,7 @@ func _initialize_vertical_shapes():
 
 func _process(delta):
     # Update solar cycle periodically
-    if OS.get_unix_time() % 300 == 0:  # Every 5 minutes
+    if OS.Time.get_unix_time_from_system() % 300 == 0:  # Every 5 minutes
         _update_solar_cycle()
     
     # Update vertical shapes
@@ -337,7 +337,7 @@ func process_command(command_text):
     # Add to history
     command_history.append({
         "command": command_text,
-        "timestamp": OS.get_unix_time(),
+        "timestamp": OS.Time.get_unix_time_from_system(),
         "cycle": current_solar_cycle
     })
     
@@ -615,7 +615,7 @@ func _process_link_command(command):
     return {"link_attempted": true, "status": "unknown"}
 
 func _process_shape_command(command):
-    // Shape commands for manipulating vertical shapes
+# // Shape commands for manipulating vertical shapes
     var parts = command.split(" ", false)
     if parts.size() == 0:
         return {"shapes": vertical_shapes}
@@ -678,7 +678,7 @@ func _process_shape_command(command):
             return {"error": "Unknown shape command: " + cmd}
 
 func _process_word_command(command):
-    // Word commands for manipulating connected words
+# // Word commands for manipulating connected words
     var parts = command.split(" ", false)
     if parts.size() == 0:
         return {"words": connected_words}
@@ -730,24 +730,24 @@ func _process_word_command(command):
             return {"error": "Unknown word command: " + cmd}
 
 func _process_chaos_command(command):
-    // Chaos commands introduce randomness and unpredictability
+# // Chaos commands introduce randomness and unpredictability
     var chaos_level = randf()
     var chaos_result = {"chaos_level": chaos_level}
     
-    // Random effects based on chaos level
+# // Random effects based on chaos level
     if chaos_level < 0.3:
-        // Low chaos - minor effects
+# // Low chaos - minor effects
         var random_shape = vertical_shapes[randi() % vertical_shapes.size()]
         random_shape.color = Color(randf(), randf(), randf())
         chaos_result["effect"] = "color_shift"
     elif chaos_level < 0.7:
-        // Medium chaos - command substitution
+# // Medium chaos - command substitution
         var cycle_commands = SOLAR_CYCLES[current_solar_cycle].commands
         var random_command = cycle_commands[randi() % cycle_commands.size()]
         process_command(random_command)
         chaos_result["effect"] = "command_substitution"
     else:
-        // High chaos - system change
+# // High chaos - system change
         var cycles = SOLAR_CYCLES.keys()
         var random_cycle = cycles[randi() % cycles.size()]
         force_solar_cycle(random_cycle)
@@ -779,7 +779,7 @@ func connect_drive(drive_id):
             active_drives[drive_id] = {
                 "id": drive_id,
                 "status": "ONLINE",
-                "connection_time": OS.get_unix_time(),
+                "connection_time": OS.Time.get_unix_time_from_system(),
                 "commands": [],
                 "words": []
             }
@@ -838,7 +838,7 @@ func sync_all_drives():
     return results
 
 func process_data(data_id):
-    // Find data in any connected drive
+# // Find data in any connected drive
     var drive_with_data = null
     var data_content = null
     
@@ -858,15 +858,15 @@ func process_data(data_id):
         return {"error": "Data not found: " + data_id}
     }
     
-    // Process the data (in this case, we'll just analyze it)
+# // Process the data (in this case, we'll just analyze it)
     var processing_result = {
         "data_id": data_id,
         "source_drive": drive_with_data,
         "size": data_content.length(),
-        "timestamp": OS.get_unix_time()
+        "timestamp": OS.Time.get_unix_time_from_system()
     }
     
-    // Send to terminal for visualization
+# // Send to terminal for visualization
     if terminal_bridge and terminal_bridge.has_method("process_terminal_command"):
         terminal_bridge.process_terminal_command("energy", ["2", "active"])
     }
@@ -880,7 +880,7 @@ func transport_data(source_drive, target_drive, data_id):
     if not target_drive in active_drives:
         return {"error": "Target drive not connected: " + target_drive}
     
-    // Get data from source drive
+# // Get data from source drive
     var data_content = null
     
     if drive_connector and drive_connector.has_method("get_data"):
@@ -891,7 +891,7 @@ func transport_data(source_drive, target_drive, data_id):
         return {"error": "Data not found on source drive: " + data_id}
     }
     
-    // Store data to target drive
+# // Store data to target drive
     if drive_connector and drive_connector.has_method("store_data"):
         var result = drive_connector.store_data(target_drive, data_id, data_content)
         
@@ -908,18 +908,18 @@ func transport_data(source_drive, target_drive, data_id):
     return {"error": "Failed to transport data"}
 
 func initialize_system():
-    // Reset and reinitialize all system components
+# // Reset and reinitialize all system components
     
-    // Reconnect drives
+# // Reconnect drives
     _initialize_drives()
     
-    // Reset vertical shapes
+# // Reset vertical shapes
     _initialize_vertical_shapes()
     
-    // Update solar cycle
+# // Update solar cycle
     _update_solar_cycle()
     
-    // Clear command history
+# // Clear command history
     command_history.clear()
     
     return {
@@ -985,18 +985,18 @@ func analyze_data(drive_id, data_id):
         return {"error": "Data not found: " + data_id}
     }
     
-    // Analyze the data
+# // Analyze the data
     var analysis = {
         "data_id": data_id,
         "drive": drive_id,
         "size": data_content.length(),
-        "timestamp": OS.get_unix_time(),
+        "timestamp": OS.Time.get_unix_time_from_system(),
         "contains_numbers": data_content.is_valid_float() or data_content.is_valid_integer(),
         "contains_words": data_content.split(" ").size() > 1,
         "lucky_numbers": []
     }
     
-    // Check for lucky numbers
+# // Check for lucky numbers
     for lucky_number in LUCKY_NUMBERS:
         if data_content.find(str(lucky_number)) >= 0:
             analysis.lucky_numbers.append(lucky_number)
@@ -1006,7 +1006,7 @@ func analyze_data(drive_id, data_id):
     return analysis
 
 func transform_data(data_id, transformation_type):
-    // Find data in any connected drive
+# // Find data in any connected drive
     var drive_with_data = null
     var data_content = null
     
@@ -1026,7 +1026,7 @@ func transform_data(data_id, transformation_type):
         return {"error": "Data not found: " + data_id}
     }
     
-    // Transform the data based on type
+# // Transform the data based on type
     var transformed_data = data_content
     
     match transformation_type:
@@ -1040,7 +1040,7 @@ func transform_data(data_id, transformation_type):
             transformed_data = data_content.to_lower()
         
         "rotate":
-            // Rotate characters
+# // Rotate characters
             var chars = []
             for i in range(data_content.length()):
                 chars.append(data_content[data_content.length() - 1 - i])
@@ -1048,7 +1048,7 @@ func transform_data(data_id, transformation_type):
             transformed_data = "".join(chars)
         
         "evolve":
-            // Add some random variations
+# // Add some random variations
             var words = data_content.split(" ")
             var evolved_words = []
             
@@ -1072,7 +1072,7 @@ func transform_data(data_id, transformation_type):
         _:
             return {"error": "Unknown transformation type: " + transformation_type}
     
-    // Store transformed data
+# // Store transformed data
     if drive_connector and drive_connector.has_method("update_data"):
         var result = drive_connector.update_data(drive_with_data, data_id, transformed_data)
         
@@ -1089,9 +1089,9 @@ func transform_data(data_id, transformation_type):
     return {"error": "Failed to transform data"}
 
 func accelerate_process(process_id):
-    // Acceleration depends on the type of process
+# // Acceleration depends on the type of process
     if process_id.begins_with("sync_"):
-        // Accelerate sync operation
+# // Accelerate sync operation
         if drive_connector and drive_connector.has_method("active_sync_operations"):
             var sync_ops = drive_connector.active_sync_operations
             
@@ -1105,7 +1105,7 @@ func accelerate_process(process_id):
             }
         }
     } else if process_id.begins_with("msg_"):
-        // Accelerate message timeline hatching
+# // Accelerate message timeline hatching
         if message_timeline and message_timeline.has_method("accelerate_hatching"):
             var result = message_timeline.accelerate_hatching(process_id, 2.0)
             
@@ -1124,7 +1124,7 @@ func accelerate_process(process_id):
 func accelerate_all_processes():
     var results = {}
     
-    // Accelerate all sync operations
+# // Accelerate all sync operations
     if drive_connector and drive_connector.has_method("active_sync_operations"):
         var sync_ops = drive_connector.active_sync_operations
         
@@ -1143,12 +1143,12 @@ func illuminate_drive(drive_id):
     if not drive_id in active_drives:
         return {"error": "Drive not connected: " + drive_id}
     
-    // Change visual representation of drive
+# // Change visual representation of drive
     if drive_id in DRIVE_MAPPINGS:
         var drive_data = DRIVE_MAPPINGS[drive_id]
         var drive_color = drive_data.color
         
-        // Send to terminal for visualization
+# // Send to terminal for visualization
         if terminal_bridge and terminal_bridge.has_method("process_terminal_command"):
             var color_name = _get_color_name(drive_color)
             terminal_bridge.process_terminal_command("colors", [color_name])
@@ -1173,7 +1173,7 @@ func illuminate_all_drives():
     return results
 
 func _get_color_name(color):
-    // Convert color to closest named color
+# // Convert color to closest named color
     if color.r > 0.7 and color.g < 0.3 and color.b < 0.3:
         return "RED"
     elif color.r > 0.7 and color.g > 0.7 and color.b < 0.3:
@@ -1192,18 +1192,18 @@ func _get_color_name(color):
         return "NEUTRAL"
 
 func wake_system():
-    // Set all components to active state
+# // Set all components to active state
     online_status = true
     
-    // Activate all shapes
+# // Activate all shapes
     for shape in vertical_shapes:
         shape.active = true
     }
     
-    // Connect all drives
+# // Connect all drives
     connect_all_drives()
     
-    // Set solar cycle to DAWN
+# // Set solar cycle to DAWN
     force_solar_cycle("DAWN")
     
     return {
@@ -1213,8 +1213,8 @@ func wake_system():
     }
 
 func dream_data(data_id):
-    // Dream process creates variations of existing data
-    // Find data in any connected drive
+# // Dream process creates variations of existing data
+# // Find data in any connected drive
     var drive_with_data = null
     var data_content = null
     
@@ -1234,7 +1234,7 @@ func dream_data(data_id):
         return {"error": "Data not found: " + data_id}
     }
     
-    // Create a dream variation
+# // Create a dream variation
     var dream_id = "dream_" + data_id
     var words = data_content.split(" ")
     var dream_words = []
@@ -1243,7 +1243,7 @@ func dream_data(data_id):
         if randf() < 0.7:  // 70% chance to keep original word
             dream_words.append(word)
         } else {
-            // Replace with a connected word if possible
+# // Replace with a connected word if possible
             var found_replacement = false
             
             for connected_word in connected_words.keys():
@@ -1262,7 +1262,7 @@ func dream_data(data_id):
     
     var dream_content = " ".join(dream_words)
     
-    // Store dream data
+# // Store dream data
     if drive_connector and drive_connector.has_method("store_data"):
         var result = drive_connector.store_data(drive_with_data, dream_id, dream_content)
         
@@ -1279,12 +1279,12 @@ func dream_data(data_id):
     return {"error": "Failed to create dream data"}
 
 func dream_random():
-    // Create a completely new dream from connected words
+# // Create a completely new dream from connected words
     if connected_words.size() == 0:
         return {"error": "No connected words to dream with"}
     }
     
-    var dream_id = "dream_" + str(OS.get_unix_time())
+    var dream_id = "dream_" + str(OS.Time.get_unix_time_from_system())
     var dream_words = []
     var word_count = 5 + randi() % 10  // 5-15 words
     
@@ -1297,7 +1297,7 @@ func dream_random():
     
     var dream_content = " ".join(dream_words)
     
-    // Store in a random drive
+# // Store in a random drive
     var drive_ids = active_drives.keys()
     if drive_ids.size() > 0:
         var random_drive = drive_ids[randi() % drive_ids.size()]
@@ -1319,8 +1319,8 @@ func dream_random():
     return {"error": "Failed to create random dream"}
 
 func reflect_on_data(data_id):
-    // Reflection creates metadata about existing data
-    // Find data in any connected drive
+# // Reflection creates metadata about existing data
+# // Find data in any connected drive
     var drive_with_data = null
     var data_content = null
     
@@ -1340,7 +1340,7 @@ func reflect_on_data(data_id):
         return {"error": "Data not found: " + data_id}
     }
     
-    // Create a reflection
+# // Create a reflection
     var reflection_id = "reflection_" + data_id
     var words = data_content.split(" ")
     
@@ -1349,19 +1349,19 @@ func reflect_on_data(data_id):
         "word_count": words.size(),
         "character_count": data_content.length(),
         "drive": drive_with_data,
-        "timestamp": OS.get_unix_time(),
+        "timestamp": OS.Time.get_unix_time_from_system(),
         "solar_cycle": current_solar_cycle,
         "connected_words": []
     }
     
-    // Find connected words in the data
+# // Find connected words in the data
     for word in words:
         if word in connected_words:
             reflection.connected_words.append(word)
         }
     }
     
-    // Store reflection as JSON
+# // Store reflection as JSON
     var reflection_content = JSON.stringify(reflection)
     
     if drive_connector and drive_connector.has_method("store_data"):
@@ -1380,9 +1380,9 @@ func reflect_on_data(data_id):
     return {"error": "Failed to create reflection"}
 
 func reflect_on_system():
-    // Create a system-wide reflection
+# // Create a system-wide reflection
     var reflection = {
-        "timestamp": OS.get_unix_time(),
+        "timestamp": OS.Time.get_unix_time_from_system(),
         "solar_cycle": current_solar_cycle,
         "drives": active_drives.size(),
         "commands": command_history.size(),
@@ -1391,10 +1391,10 @@ func reflect_on_system():
         "online": online_status
     }
     
-    var reflection_id = "system_reflection_" + str(OS.get_unix_time())
+    var reflection_id = "system_reflection_" + str(OS.Time.get_unix_time_from_system())
     var reflection_content = JSON.stringify(reflection)
     
-    // Store in all connected drives
+# // Store in all connected drives
     var results = {}
     
     for drive_id in active_drives.keys():
@@ -1411,8 +1411,8 @@ func reflect_on_system():
     }
 
 func integrate_data(source_id, target_id):
-    // Integration combines two pieces of data
-    // Find source data
+# // Integration combines two pieces of data
+# // Find source data
     var source_drive = null
     var source_content = null
     
@@ -1432,7 +1432,7 @@ func integrate_data(source_id, target_id):
         return {"error": "Source data not found: " + source_id}
     }
     
-    // Find target data
+# // Find target data
     var target_drive = null
     var target_content = null
     
@@ -1452,11 +1452,11 @@ func integrate_data(source_id, target_id):
         return {"error": "Target data not found: " + target_id}
     }
     
-    // Integrate the data
+# // Integrate the data
     var integrated_id = "integrated_" + source_id + "_" + target_id
     var integrated_content = source_content + " " + target_content
     
-    // Store in both drives
+# // Store in both drives
     var results = {}
     
     if drive_connector and drive_connector.has_method("store_data"):
@@ -1473,49 +1473,49 @@ func integrate_data(source_id, target_id):
     }
 
 func adapt_to_condition(condition):
-    // Adaptation changes system behavior based on conditions
+# // Adaptation changes system behavior based on conditions
     match condition:
         "low_energy":
-            // Reduce activity
+# // Reduce activity
             for shape in vertical_shapes:
                 shape.frequency *= 0.5
             }
             return {"adapted": true, "condition": "low_energy"}
         
         "high_traffic":
-            // Prioritize certain operations
+# // Prioritize certain operations
             return {"adapted": true, "condition": "high_traffic"}
         
         "offline":
-            // Prepare for offline operation
+# // Prepare for offline operation
             online_status = false
             return {"adapted": true, "condition": "offline"}
         
         "secure":
-            // Increase security measures
+# // Increase security measures
             return {"adapted": true, "condition": "secure"}
         
         _:
             return {"error": "Unknown condition: " + condition}
 
 func adapt_to_current_conditions():
-    // Automatically detect and adapt to current conditions
+# // Automatically detect and adapt to current conditions
     var conditions = []
     
-    // Check drive status
+# // Check drive status
     if active_drives.size() < DRIVE_MAPPINGS.size():
         conditions.append("limited_drives")
     }
     
-    // Check time of day (solar cycle)
+# // Check time of day (solar cycle)
     if current_solar_cycle == "NIGHT":
         conditions.append("night_mode")
     }
     
-    // Check command frequency
+# // Check command frequency
     if command_history.size() > 0:
         var last_command_time = command_history[command_history.size() - 1].timestamp
-        var time_since_last = OS.get_unix_time() - last_command_time
+        var time_since_last = OS.Time.get_unix_time_from_system() - last_command_time
         
         if time_since_last > 3600:  // More than an hour
             conditions.append("low_activity")
@@ -1524,7 +1524,7 @@ func adapt_to_current_conditions():
         }
     }
     
-    // Adapt to all detected conditions
+# // Adapt to all detected conditions
     var results = {}
     
     for condition in conditions:
@@ -1538,10 +1538,10 @@ func adapt_to_current_conditions():
     }
 
 func evolve_component(component):
-    // Evolution improves or changes components over time
+# // Evolution improves or changes components over time
     match component:
         "shapes":
-            // Add a new shape based on existing ones
+# // Add a new shape based on existing ones
             var new_shape_id = "evolved_shape_" + str(vertical_shapes.size())
             var base_shape = vertical_shapes[randi() % vertical_shapes.size()]
             
@@ -1564,7 +1564,7 @@ func evolve_component(component):
             }
         
         "words":
-            // Evolve word connections
+# // Evolve word connections
             if connected_words.size() == 0:
                 return {"error": "No connected words to evolve"}
             }
@@ -1581,7 +1581,7 @@ func evolve_component(component):
                 }
             }
             
-            // Connect each pair
+# // Connect each pair
             var results = {}
             
             for pair in word_pairs:
@@ -1601,7 +1601,7 @@ func evolve_component(component):
             }
         
         "drives":
-            // Evolve drive capabilities
+# // Evolve drive capabilities
             return {
                 "evolved": true,
                 "component": "drives"
@@ -1611,14 +1611,14 @@ func evolve_component(component):
             return {"error": "Unknown component: " + component}
 
 func evolve_system():
-    // Evolve the entire system
+# // Evolve the entire system
     var results = {}
     
     results.shapes = evolve_component("shapes")
     results.words = evolve_component("words")
     results.drives = evolve_component("drives")
     
-    // Also evolve the solar cycle
+# // Also evolve the solar cycle
     var cycles = SOLAR_CYCLES.keys()
     var current_index = cycles.find(current_solar_cycle)
     var next_index = (current_index + 1) % cycles.size()
@@ -1632,10 +1632,10 @@ func evolve_system():
     }
 
 func maximize_component(component):
-    // Maximize a component's capabilities
+# // Maximize a component's capabilities
     match component:
         "shapes":
-            // Make all shapes active and larger
+# // Make all shapes active and larger
             for shape in vertical_shapes:
                 shape.active = true
                 shape.height *= 1.5
@@ -1649,7 +1649,7 @@ func maximize_component(component):
             }
         
         "drives":
-            // Connect all drives and sync them
+# // Connect all drives and sync them
             connect_all_drives()
             sync_all_drives()
             
@@ -1660,7 +1660,7 @@ func maximize_component(component):
             }
         
         "words":
-            // Make all words connect to all drives
+# // Make all words connect to all drives
             var results = {}
             
             for word in connected_words.keys():
@@ -1678,17 +1678,17 @@ func maximize_component(component):
             return {"error": "Unknown component: " + component}
 
 func maximize_system():
-    // Maximize the entire system
+# // Maximize the entire system
     var results = {}
     
     results.shapes = maximize_component("shapes")
     results.words = maximize_component("words")
     results.drives = maximize_component("drives")
     
-    // Set to NOON cycle (maximum energy)
+# // Set to NOON cycle (maximum energy)
     results.cycle = force_solar_cycle("NOON")
     
-    // Maximize terminal as well
+# // Maximize terminal as well
     if terminal_bridge and terminal_bridge.has_method("process_terminal_command"):
         terminal_bridge.process_terminal_command("temp", ["HOT"])
         terminal_bridge.process_terminal_command("energy", ["1", "2", "3", "4"])
@@ -1700,8 +1700,8 @@ func maximize_system():
     }
 
 func merge_data(source_id, target_id):
-    // Similar to integrate but overwrites the target
-    // Find source data
+# // Similar to integrate but overwrites the target
+# // Find source data
     var source_drive = null
     var source_content = null
     
@@ -1721,7 +1721,7 @@ func merge_data(source_id, target_id):
         return {"error": "Source data not found: " + source_id}
     }
     
-    // Find target data
+# // Find target data
     var target_drive = null
     var target_content = null
     
@@ -1741,10 +1741,10 @@ func merge_data(source_id, target_id):
         return {"error": "Target data not found: " + target_id}
     }
     
-    // Merge the data (source takes precedence)
+# // Merge the data (source takes precedence)
     var merged_content = source_content
     
-    // Update target with merged content
+# // Update target with merged content
     if drive_connector and drive_connector.has_method("update_data"):
         var result = drive_connector.update_data(target_drive, target_id, merged_content)
         
@@ -1761,7 +1761,7 @@ func merge_data(source_id, target_id):
     return {"error": "Failed to merge data"}
 
 func transition_to_state(state):
-    // Transition the system to a new state
+# // Transition the system to a new state
     match state:
         "online":
             online_status = true
@@ -1772,10 +1772,10 @@ func transition_to_state(state):
             return {"transitioned": true, "state": "offline"}
         
         "ready":
-            // Set system to ready state
+# // Set system to ready state
             online_status = true
             
-            // Activate all components
+# // Activate all components
             for shape in vertical_shapes:
                 shape.active = true
             }
@@ -1783,7 +1783,7 @@ func transition_to_state(state):
             return {"transitioned": true, "state": "ready"}
         
         "standby":
-            // Set system to standby state
+# // Set system to standby state
             for shape in vertical_shapes:
                 shape.active = false
             }
@@ -1801,17 +1801,17 @@ func get_system_status():
         "shapes": vertical_shapes.size(),
         "commands": command_history.size(),
         "solar_cycle": current_solar_cycle,
-        "timestamp": OS.get_unix_time()
+        "timestamp": OS.Time.get_unix_time_from_system()
     }
 
 func reset_system():
-    // Reset all system components
+# // Reset all system components
     active_drives.clear()
     command_history.clear()
     connected_words.clear()
     current_command_chain.clear()
     
-    // Reinitialize
+# // Reinitialize
     _initialize_drives()
     _initialize_vertical_shapes()
     _update_solar_cycle()
@@ -1832,7 +1832,7 @@ func force_solar_cycle(cycle):
     current_solar_cycle = cycle
     emit_signal("solar_cycle_changed", current_solar_cycle)
     
-    // Update terminal colors based on solar cycle
+# // Update terminal colors based on solar cycle
     if terminal_bridge and terminal_bridge.has_method("set_temperature"):
         var cycle_data = SOLAR_CYCLES[current_solar_cycle]
         terminal_bridge.set_temperature(_get_temperature_for_cycle(current_solar_cycle))
@@ -1847,11 +1847,11 @@ func get_command_history():
     return command_history
 
 func connect_word(word, drives):
-    // Connect a word to one or more drives
+# // Connect a word to one or more drives
     if not word in connected_words:
         connected_words[word] = {
             "word": word,
-            "connection_time": OS.get_unix_time(),
+            "connection_time": OS.Time.get_unix_time_from_system(),
             "drives": [],
             "connections": []
         }
@@ -1860,7 +1860,7 @@ func connect_word(word, drives):
     var word_entry = connected_words[word]
     var connected_drive_ids = []
     
-    // Handle drives as string or array
+# // Handle drives as string or array
     var drive_ids = []
     if drives is String:
         drive_ids = [drives]
@@ -1868,13 +1868,13 @@ func connect_word(word, drives):
         drive_ids = drives
     }
     
-    // Connect to each drive
+# // Connect to each drive
     for drive_id in drive_ids:
         if drive_id in active_drives and not drive_id in word_entry.drives:
             word_entry.drives.append(drive_id)
             connected_drive_ids.append(drive_id)
             
-            // Add word to drive's word list
+# // Add word to drive's word list
             active_drives[drive_id].words.append(word)
         }
     }
@@ -1895,7 +1895,7 @@ func disconnect_word(word):
     var word_entry = connected_words[word]
     var drive_ids = word_entry.drives.duplicate()
     
-    // Remove word from drives
+# // Remove word from drives
     for drive_id in drive_ids:
         if drive_id in active_drives:
             word_entry.drives.erase(drive_id)
@@ -1903,7 +1903,7 @@ func disconnect_word(word):
         }
     }
     
-    // Remove word if no more drive connections
+# // Remove word if no more drive connections
     if word_entry.drives.size() == 0 and word_entry.connections.size() == 0:
         connected_words.erase(word)
     }
@@ -1935,7 +1935,7 @@ func process_word(word):
     
     var word_entry = connected_words[word]
     
-    // Process the word (in this case, find connections)
+# // Process the word (in this case, find connections)
     var connected_drive_data = []
     
     for drive_id in word_entry.drives:
@@ -1947,12 +1947,12 @@ func process_word(word):
         }
     }
     
-    // Find similar words
+# // Find similar words
     var similar_words = []
     
     for other_word in connected_words.keys():
         if word != other_word:
-            // Check for partial match
+# // Check for partial match
             if word.length() >= 3 and other_word.length() >= 3:
                 if word.find(other_word.substr(0, 3)) >= 0 or other_word.find(word.substr(0, 3)) >= 0:
                     similar_words.append(other_word)
@@ -1974,17 +1974,17 @@ func reverse_word(word):
         return {"error": "Word not connected: " + word}
     }
     
-    // Create reversed version of the word
+# // Create reversed version of the word
     var reversed_word = ""
     for i in range(word.length() - 1, -1, -1):
         reversed_word += word[i]
     }
     
-    // Connect the reversed word to the same drives
+# // Connect the reversed word to the same drives
     var word_entry = connected_words[word]
     var result = connect_word(reversed_word, word_entry.drives)
     
-    // Connect the words to each other
+# // Connect the words to each other
     if not reversed_word in word_entry.connections:
         word_entry.connections.append(reversed_word)
     }
@@ -2001,7 +2001,7 @@ func reverse_word(word):
     }
 
 func create_shape(shape_id, shape_type):
-    // Create a new vertical shape
+# // Create a new vertical shape
     var shape = {
         "id": shape_id,
         "height": 5,
@@ -2013,7 +2013,7 @@ func create_shape(shape_id, shape_type):
         "type": shape_type
     }
     
-    // Adjust properties based on type
+# // Adjust properties based on type
     match shape_type:
         "pyramid":
             shape.height = 7
@@ -2048,7 +2048,7 @@ func create_shape(shape_id, shape_type):
     }
 
 func modify_shape(shape_id, property, value):
-    // Find the shape
+# // Find the shape
     var target_shape = null
     var shape_index = -1
     
@@ -2064,7 +2064,7 @@ func modify_shape(shape_id, property, value):
         return {"error": "Shape not found: " + shape_id}
     }
     
-    // Convert value to appropriate type
+# // Convert value to appropriate type
     var converted_value = value
     
     if property in ["height", "width", "rotation", "frequency"]:
@@ -2072,7 +2072,7 @@ func modify_shape(shape_id, property, value):
     } elif property == "active":
         converted_value = value.to_lower() == "true"
     } elif property == "color":
-        // Handle color names
+# // Handle color names
         match value.to_upper():
             "RED":
                 converted_value = Color(1.0, 0.0, 0.0)
@@ -2095,7 +2095,7 @@ func modify_shape(shape_id, property, value):
             "PURPLE":
                 converted_value = Color(0.5, 0.0, 0.5)
             _:
-                // Try to parse as RGB
+# // Try to parse as RGB
                 var rgb = value.split(",")
                 if rgb.size() >= 3:
                     converted_value = Color(float(rgb[0]), float(rgb[1]), float(rgb[2]))
@@ -2103,7 +2103,7 @@ func modify_shape(shape_id, property, value):
         }
     }
     
-    // Modify the property
+# // Modify the property
     target_shape[property] = converted_value
     
     emit_signal("shape_changed", shape_id, target_shape)
@@ -2132,7 +2132,7 @@ func color_shape(shape_id, color_name):
 # Run a command or command chain
 func run_command(command_text):
     if ";" in command_text:
-        // Split into chain
+# // Split into chain
         var commands = command_text.split(";")
         
         for cmd in commands:
@@ -2151,19 +2151,19 @@ func listen_for_word(word):
     if word in connected_words:
         var word_entry = connected_words[word]
         
-        // Check drives for word activation
+# // Check drives for word activation
         for drive_id in word_entry.drives:
             if drive_id in active_drives:
                 active_drives[drive_id].status = "ACTIVE"
             }
         }
         
-        // Check word connections
+# // Check word connections
         var connections = []
         
         for connected_word in word_entry.connections:
             connections.append(connected_word)
-            // Also activate the connected words
+# // Also activate the connected words
             if connected_word in connected_words:
                 for drive_id in connected_words[connected_word].drives:
                     if drive_id in active_drives:
@@ -2185,12 +2185,12 @@ func listen_for_word(word):
 
 # Process terminal input
 func process_terminal_input(input_text):
-    // Process as command if it starts with a recognized prefix
+# // Process as command if it starts with a recognized prefix
     for prefix in COMMAND_PREFIXES.values():
         if input_text.begins_with(prefix):
             return run_command(input_text)
         }
     }
     
-    // Otherwise, treat as word activation
+# // Otherwise, treat as word activation
     return listen_for_word(input_text)

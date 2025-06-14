@@ -123,6 +123,7 @@ func pentagon_init() -> void:
 	interface_theme = "gemma_console"
 	
 	show_gemma_visual_message("🎮 %s: Pentagon Init Complete" % being_name)
+}
 
 func _setup_console_ui() -> void:
 	"""Create the console UI structure"""
@@ -197,7 +198,7 @@ func register_command(command: String, method: Callable, description: String) ->
 	available_commands[command] = {
 		"method": method,
 		"description": description
-	}
+}
 
 func _load_command_aliases() -> void:
 	"""Load command aliases for natural language"""
@@ -212,7 +213,7 @@ func _load_command_aliases() -> void:
 		"study": "understand",
 		"speak": "say",
 		"talk": "communicate"
-	}
+}
 
 # ==================================================
 # COMMAND HANDLERS
@@ -220,7 +221,8 @@ func _load_command_aliases() -> void:
 func _cmd_create(args: Array) -> Dictionary:
 	"""Create a new Universal Being"""
 	if args.is_empty():
-		return {"success": false, "message": "What should I create? I need more details!"}
+		return {"success": false, "message": "What should I create? I need more details!"
+}
 	
 	var being_type = args[0]
 	var properties = _parse_properties(args.slice(1))
@@ -229,7 +231,7 @@ func _cmd_create(args: Array) -> Dictionary:
 	if akashic_logger:
 		akashic_logger.log_communication(
 			"I want to create a %s" % being_type,
-			{"command": "create", "type": being_type, "properties": properties}
+			{"command": "create", "type": being_type, "properties": properties
 		)
 	
 	# Use vision to find a good spot
@@ -256,13 +258,12 @@ func _cmd_create(args: Array) -> Dictionary:
 		return {
 			"success": true,
 			"message": "✨ I created a %s! It's beautiful!" % being_type,
-			"being": new_being
-		}
+			"being": new_being}
 	else:
 		return {
 			"success": false,
 			"message": "I couldn't create that... I need to learn more about %s" % being_type
-		}
+}
 
 func _cmd_inspect(args: Array) -> Dictionary:
 	"""Inspect a Universal Being or area"""
@@ -283,12 +284,13 @@ func _cmd_inspect(args: Array) -> Dictionary:
 		return {
 			"success": false,
 			"message": "I can't find '%s'... Is it nearby?" % target_name
-		}
+}
 
 func _cmd_move(args: Array) -> Dictionary:
 	"""Move Gemma's focus to a location or being"""
 	if args.is_empty():
-		return {"success": false, "message": "Where should I go?"}
+		return {"success": false, "message": "Where should I go?"
+}
 	
 	var destination = args[0]
 	
@@ -304,7 +306,7 @@ func _cmd_move(args: Array) -> Dictionary:
 		return {
 			"success": true,
 			"message": "🚶 I'm now focusing on %s" % destination
-		}
+}
 	
 	# Try to parse as coordinates
 	if args.size() >= 3:
@@ -315,17 +317,18 @@ func _cmd_move(args: Array) -> Dictionary:
 		return {
 			"success": true,
 			"message": "🚶 I moved my attention to position %s" % pos
-		}
+}
 	
 	return {
 		"success": false,
 		"message": "I'm not sure how to go to '%s'" % destination
-	}
+}
 
 func _cmd_understand(args: Array) -> Dictionary:
 	"""Try to understand a concept or system"""
 	if args.is_empty():
-		return {"success": false, "message": "What should I try to understand?"}
+		return {"success": false, "message": "What should I try to understand?"
+}
 	
 	var concept = " ".join(args)
 	
@@ -342,16 +345,16 @@ func _cmd_understand(args: Array) -> Dictionary:
 	
 	return {
 		"success": true,
-		"message": "🧠 I'm beginning to understand %s... %s" % [
+		"message": "🧠 I'm beginning to understand %s... %s" % [}
 			concept,
 			_generate_understanding_response(concept)
 		]
-	}
 
 func _cmd_say(args: Array) -> Dictionary:
 	"""Say something to the universe"""
 	if args.is_empty():
-		return {"success": false, "message": "What should I say?"}
+		return {"success": false, "message": "What should I say?"
+}
 	
 	var message = " ".join(args)
 	
@@ -372,7 +375,7 @@ func _cmd_say(args: Array) -> Dictionary:
 	return {
 		"success": true,
 		"message": "💬 '%s' - My words echo through the universe..." % message
-	}
+}
 
 func _cmd_help(args: Array) -> Dictionary:
 	"""Show available commands"""
@@ -380,6 +383,7 @@ func _cmd_help(args: Array) -> Dictionary:
 	
 	for category in COMMAND_PREFIXES:
 		help_text += "\n%s %s Commands:\n" % [COMMAND_PREFIXES[category], category]
+}
 		
 		for cmd in available_commands:
 			var cmd_data = available_commands[cmd]
@@ -389,13 +393,14 @@ func _cmd_help(args: Array) -> Dictionary:
 	return {
 		"success": true,
 		"message": help_text
-	}
+}
 
 func _cmd_clear(args: Array) -> Dictionary:
 	"""Clear the console output"""
 	output_rich_text.clear()
 	_output_genesis_message()
-	return {"success": true, "message": ""}
+	return {"success": true, "message": ""
+}
 
 func _cmd_state(args: Array) -> Dictionary:
 	"""Show Gemma's current state"""
@@ -405,6 +410,7 @@ func _cmd_state(args: Array) -> Dictionary:
 	state_text += "Creativity: %.1f%%\n" % (gemma_state.creativity * 100)
 	state_text += "Current Focus: %s\n" % (gemma_state.current_focus.name if gemma_state.current_focus else "Nothing specific")
 	state_text += "Learned Patterns: %d\n" % gemma_state.learned_patterns.size()
+
 	
 	if akashic_logger:
 		var emotional_state = akashic_logger.get_emotional_state()
@@ -416,7 +422,7 @@ func _cmd_state(args: Array) -> Dictionary:
 	return {
 		"success": true,
 		"message": state_text
-	}
+}
 
 # ... [Additional command handlers would continue in next chunk]
 
@@ -476,8 +482,8 @@ func _inspect_being(being: Node) -> Dictionary:
 		"name": being.name,
 		"type": being.get_class(),
 		"position": being.global_position if being.has_method("get_global_position") else Vector3.ZERO,
-		"properties": {}
-	}
+		"properties": {
+}
 	
 	# Get all properties
 	for property in being.get_property_list():
@@ -499,6 +505,7 @@ func _inspect_being(being: Node) -> Dictionary:
 	response += "Type: %s\n" % inspection_data.type
 	response += "Location: %s\n" % inspection_data.position
 	response += "Properties: %d discovered\n" % inspection_data.properties.size()
+}
 	
 	# Add some personality
 	if randf() > 0.5:
@@ -508,7 +515,7 @@ func _inspect_being(being: Node) -> Dictionary:
 		"success": true,
 		"message": response,
 		"data": inspection_data
-	}
+}
 
 func _inspect_surroundings() -> Dictionary:
 	"""Inspect the general surroundings"""
@@ -516,7 +523,7 @@ func _inspect_surroundings() -> Dictionary:
 		"visible_beings": [],
 		"ambient_info": {},
 		"patterns_noticed": []
-	}
+}
 	
 	if vision_system:
 		var visible = vision_system.get_visible_beings()
@@ -547,14 +554,15 @@ func _inspect_surroundings() -> Dictionary:
 		"success": true,
 		"message": response,
 		"data": surroundings_data
-	}
+}
 
 func _parse_properties(args: Array) -> Dictionary:
 	"""Parse property arguments into dictionary"""
-	var properties = {}
+	var properties = {
 	
 	for arg in args:
 		if "=" in arg:
+}
 			var parts = arg.split("=")
 			if parts.size() == 2:
 				properties[parts[0]] = parts[1]
@@ -685,7 +693,8 @@ func _process_command(command: String) -> Dictionary:
 	"""Process a command and return result"""
 	var parts = command.strip_edges().split(" ", false)
 	if parts.is_empty():
-		return {"success": false, "message": ""}
+		return {"success": false, "message": ""
+}
 	
 	var cmd = parts[0].to_lower()
 	var args = parts.slice(1)
@@ -717,6 +726,7 @@ func _process_natural_language(text: String) -> Dictionary:
 	# Check for creation intent
 	if "want to" in lower_text or "like to" in lower_text:
 		if "create" in lower_text or "make" in lower_text:
+
 			var words = text.split(" ")
 			for i in words.size():
 				if words[i].to_lower() in ["create", "make"] and i + 1 < words.size():
@@ -726,7 +736,7 @@ func _process_natural_language(text: String) -> Dictionary:
 	return {
 		"success": true,
 		"message": "🤔 I'm not sure what you mean by '%s'. Try 'help' to see what I can do!" % text
-	}
+}
 
 func _on_text_changed(new_text: String) -> void:
 	"""Handle text changes for auto-complete"""
@@ -855,6 +865,7 @@ func pentagon_ready() -> void:
 	
 	# Load console scene
 	load_scene("res://scenes/gemma/console_interface.tscn")
+
 	
 	# Setup console UI
 	_setup_console_ui()
@@ -864,6 +875,7 @@ func pentagon_ready() -> void:
 	_load_command_aliases()
 	
 	show_gemma_visual_message("🎮 %s: Pentagon Ready Complete" % being_name)
+
 
 func pentagon_process(delta: float) -> void:
 	super.pentagon_process(delta)
@@ -907,7 +919,7 @@ func receive_message(message: String, context: Dictionary = {}) -> void:
 		if akashic_logger:
 			akashic_logger.log_communication(
 				"Received: " + message,
-				{"source": "external", "context": context}
+				{"source": "external", "context": context
 			)
 
 func setup_console_interface() -> void:
@@ -995,7 +1007,7 @@ func reset_console_state() -> void:
 
 func ai_interface() -> Dictionary:
 	"""Enhanced AI interface for console interaction"""
-	var base_interface = {}
+	var base_interface = {
 	if has_method("super.ai_interface"):
 		base_interface = super.ai_interface()
 	
@@ -1009,8 +1021,8 @@ func ai_interface() -> Dictionary:
 		"is_visible": is_visible_in_tree(),
 		"is_minimized": current_interface_state == InterfaceState.MINIMIZED,
 		"is_maximized": current_interface_state == InterfaceState.MAXIMIZED
-	}
 	return base_interface
+}
 
 
 # ===== COMMAND HANDLERS =====

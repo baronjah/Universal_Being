@@ -1,5 +1,6 @@
 @tool
-class_name VisualShaderNodeProceduralEllipse extends VisualShaderNodeCustom
+class_name VisualShaderNodeProceduralEllipse_Ellipse_Ellipse
+extends \2
 
 func _init() -> void:
 	output_port_for_preview = 0

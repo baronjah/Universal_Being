@@ -42,6 +42,7 @@ func _init() -> void:
         _instance = self
         name = "JSHEntityManager"
         print("JSHEntityManager: Initialized")
+		
 
 func _process(delta: float) -> void:
     if auto_process:
@@ -225,6 +226,7 @@ func handle_entity_split(entity: JSHUniversalEntity) -> void:
     
     if new_entities.size() > 0:
         print("JSHEntityManager: Entity " + entity.get_id() + " split into " + str(new_entities.size()) + " new entities")
+		
         
         # Register new entities
         for new_entity in new_entities:
@@ -262,6 +264,7 @@ func merge_entities(entity_ids: Array) -> JSHUniversalEntity:
         emit_signal("entity_merged", entities_to_merge, merged_entity)
         
         print("JSHEntityManager: Merged " + str(entities_to_merge.size()) + " entities into " + merged_entity.get_id())
+		
     
     return merged_entity
 
@@ -502,7 +505,7 @@ func get_statistics() -> Dictionary:
         "process_queue_size": process_queue.size(),
         "highest_complexity": 0.0,
         "average_complexity": 0.0
-    }
+		}
     
     # Count by type
     for type in entities_by_type:

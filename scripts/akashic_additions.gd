@@ -11,20 +11,20 @@ func log_interaction(data: Dictionary) -> void:
 		"participants": data.get("participants", []),
 		"emotion": infer_emotion(data),
 		"location": data.get("location", Vector3.ZERO)
-	}
 	session_interactions.append(entry)
 	emit_signal("akashic_memory_updated", "interaction", entry)
+}
 
 func infer_emotion(data: Dictionary) -> String:
 	pass
 	var emotions = {
 		"attack": "hostile", "help": "friendly",
 		"trade": "neutral", "gift": "generous"
-	}
 	for key in emotions:
 		if data.get("type", "").contains(key):
 			return emotions[key]
 	return "neutral"
+}
 
 # 2. Query System
 func query_interactions(filters: Dictionary) -> Array:
@@ -46,7 +46,7 @@ func get_status() -> Dictionary:
 		"being_count": session_beings.size(),
 		"event_count": session_interactions.size(),
 		"loaded": true
-	}
+}
 
 # 4. Event helpers
 func log_creation(data: Dictionary) -> void:

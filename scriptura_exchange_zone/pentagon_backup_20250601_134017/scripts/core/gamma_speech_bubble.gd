@@ -4,9 +4,8 @@
 # Created: May 31st, 2025 | Speech Bubble Revolution
 # Location: scripts/core/gamma_speech_bubble.gd
 ################################################################
-
-extends UniversalBeingBase
-class_name GammaSpeechBubble
+extends \2
+class_name GammaSpeechBubble_gammaspeechbubble_gammaspe
 
 ################################################################
 # SPEECH BUBBLE COMPONENTS

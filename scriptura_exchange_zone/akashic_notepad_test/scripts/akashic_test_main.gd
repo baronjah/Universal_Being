@@ -488,7 +488,7 @@ func show_eden_status():
 }
 
 	if eden_bridge and eden_bridge.has_method("process_eden_command"):
-		var result = eden_bridge.process_eden_command("/eden-status")
+		var result = eden_bridge.process_eden_command("eden-status")
 		if result.success:
 			print(result.message)
 		else:

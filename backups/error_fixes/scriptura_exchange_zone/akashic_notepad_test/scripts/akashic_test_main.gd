@@ -34,10 +34,10 @@ func _ready():
 	ui_elements.help_text = $UI/HelpText
 	
 	# Connect UI signals
-	ui_elements.test_button.connect("pressed", self, "_on_test_button_pressed")
+	ui_elements.test_button.connect(_on_test_button_pressed)
 	
 	# Wait a frame then initialize components
-	yield(get_tree(), "idle_frame")
+	await(get_tree(), "idle_frame")
 	initialize_components()
 
 func initialize_components():
@@ -167,7 +167,7 @@ func test_create_akashic_entries():
 	print("Test Step 1 complete: %s" % ("SUCCESS" if success else "FAILED"))
 	
 	# Continue to next step after a brief delay
-	yield(get_tree().create_timer(1.0), "timeout")
+	await(get_tree().create_timer(1.0), "timeout")
 	run_next_test_step()
 
 func test_create_notepad():
@@ -210,7 +210,7 @@ func test_create_notepad():
 	
 	print("Test Step 2 complete: %s" % ("SUCCESS" if success else "FAILED"))
 	
-	yield(get_tree().create_timer(1.0), "timeout")
+	await(get_tree().create_timer(1.0), "timeout")
 	run_next_test_step()
 
 func test_visualize_akashic_records():
@@ -234,7 +234,7 @@ func test_visualize_akashic_records():
 	
 	print("Test Step 3 complete: %s" % ("SUCCESS" if success else "FAILED"))
 	
-	yield(get_tree().create_timer(2.0), "timeout")  # Give more time for visualization
+	await(get_tree().create_timer(2.0), "timeout")  # Give more time for visualization
 	run_next_test_step()
 
 func test_create_connections():
@@ -265,7 +265,7 @@ func test_create_connections():
 	
 	print("Test Step 4 complete: %s" % ("SUCCESS" if success else "FAILED"))
 	
-	yield(get_tree().create_timer(1.0), "timeout")
+	await(get_tree().create_timer(1.0), "timeout")
 	run_next_test_step()
 
 func test_notepad_integration():
@@ -289,7 +289,7 @@ func test_notepad_integration():
 	
 	print("Test Step 5 complete: %s" % ("SUCCESS" if success else "FAILED"))
 	
-	yield(get_tree().create_timer(2.0), "timeout")
+	await(get_tree().create_timer(2.0), "timeout")
 	run_next_test_step()
 
 func complete_tests():

@@ -1,6 +1,6 @@
 extends Node3D
 ## Word Interaction System for handling 3D word entities
-class_name WordInteractionSystem
+class_name WordInteractionSystem_wordinteractionsystem_wordinte
 
 var word_entities: Dictionary = {}
 var main_controller: Node3D

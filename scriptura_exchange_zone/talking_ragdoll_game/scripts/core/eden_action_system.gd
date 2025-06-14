@@ -3,9 +3,8 @@
 # Created: May 31, 2025, 23:28 CEST
 # Purpose: Ragdoll physics and behavior system
 # Connection: Part of Pentagon Architecture migration
-
 extends UniversalBeingBase
-class_name EdenActionSystem
+class_name EdenActionSystem_edenacti
 ## Eden-style Action System for complex multi-step interactions
 ## Based on the Eden project's interaction array patterns
 

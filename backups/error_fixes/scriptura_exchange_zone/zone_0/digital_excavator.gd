@@ -201,7 +201,7 @@ func setup_timer():
 	excavation_timer = Timer.new()
 	add_child(excavation_timer)
 	excavation_timer.wait_time = update_interval_seconds
-	excavation_timer.connect("timeout", self, "_on_excavation_update")
+	excavation_timer.connect(_on_excavation_update)
 	excavation_timer.set_paused(true)
 
 func connect_to_reality_processor():

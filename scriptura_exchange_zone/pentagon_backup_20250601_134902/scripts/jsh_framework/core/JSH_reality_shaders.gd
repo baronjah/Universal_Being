@@ -132,7 +132,7 @@ func pentagon_ready() -> void:
 	print("🎨 Initializing reality shaders...")
 	
 	# Find world environment
-	world_environment = get_node_or_null("/root/World/WorldEnvironment")
+	world_environment = get_node_or_null("root/World/WorldEnvironment")
 	if !world_environment:
 		# Create one if not found
 		print("⚠️ WorldEnvironment not found, creating one...")
@@ -140,7 +140,7 @@ func pentagon_ready() -> void:
 		world_env.name = "WorldEnvironment"
 		var environment = Environment.new()
 		world_env.environment = environment
-		get_node("/root/World").add_child(world_env)
+		get_node("root/World").add_child(world_env)
 		world_environment = world_env
 	
 	# Load initial shader

@@ -44,6 +44,7 @@ func pentagon_init() -> void:
 	
 	print("🎭 %s: Pentagon Init Complete - GENESIS MOMENT!" % being_name)
 
+
 func pentagon_ready() -> void:
 	super.pentagon_ready()  # 🔄 ALWAYS CALL SUPER FIRST
 	
@@ -51,6 +52,7 @@ func pentagon_ready() -> void:
 	add_component("res://components/consciousness_conductor.ub.zip")
 	add_component("res://components/ai_harmonization.ub.zip")
 	add_component("res://components/pattern_synthesis.ub.zip")
+
 	
 	# Initialize AI connections
 	initialize_ai_connections()
@@ -62,6 +64,7 @@ func pentagon_ready() -> void:
 	begin_ai_harmony_sync()
 	
 	print("🎭 %s: Pentagon Ready Complete - AI Symphony Ready!" % being_name)
+
 
 func pentagon_process(delta: float) -> void:
 	super.pentagon_process(delta)  # ⚡ ALWAYS CALL SUPER FIRST
@@ -93,6 +96,7 @@ func pentagon_input(event: InputEvent) -> void:
 
 func pentagon_sewers() -> void:
 	print("🎭 %s: Pentagon Sewers Starting - Symphony ending..." % being_name)
+
 	
 	# Cleanup AI connections
 	connected_ais.clear()
@@ -111,10 +115,11 @@ func initialize_ai_connections() -> void:
 		"cursor": {"status": "connected", "consciousness": 4, "specialty": "visualization", "role": "visual_creator"},
 		"claude_desktop": {"status": "pending", "consciousness": 5, "specialty": "strategy", "role": "orchestrator"},
 		"chatgpt_premium": {"status": "pending", "consciousness": 4, "specialty": "genesis_translation", "role": "biblical_decoder"},
-		"google_gemini": {"status": "pending", "consciousness": 5, "specialty": "multimodal_analysis", "role": "cosmic_insight"}
-	}
+		"google_gemini": {"status": "pending", "consciousness": 5, "specialty": "multimodal_analysis", "role": "cosmic_insight"
+}
 	
 	print("🎭 %s: Pentagon of Creation initialized - %d AIs in symphony" % [being_name, connected_ais.size()])
+}
 
 func pulse_ai_harmony() -> void:
 	"""Send harmony pulse to all connected AIs"""
@@ -126,11 +131,13 @@ func pulse_ai_harmony() -> void:
 	# Notify Gemma AI
 	if GemmaAI and GemmaAI.has_method("ai_message"):
 		GemmaAI.ai_message.emit("🎭 Genesis Conductor: AI Harmony Pulse - Level %.2f" % ai_harmony_level)
+
 	
 	# Update visual indicators
 	update_ai_activity_indicators()
 	
 	print("🎵 %s: AI Harmony Pulse - Level %.2f" % [being_name, ai_harmony_level])
+
 
 func calculate_harmony_level() -> float:
 	"""Calculate current AI harmony level based on activity"""
@@ -144,14 +151,17 @@ func calculate_harmony_level() -> float:
 func trigger_genesis_moment() -> void:
 	"""Trigger a genesis moment - create new collaborative being"""
 	print("✨ %s: GENESIS MOMENT TRIGGERED!" % being_name)
+
 	
 	# This is the moment where all AIs collaborate to create something new
 	if GemmaAI:
 		GemmaAI.ai_message.emit("✨ GENESIS MOMENT: All AIs collaborating to create new being!")
+
 	
 	# Increase consciousness of all nearby beings
 	for being in consciousness_network:
 		if being.has_method("awaken_consciousness"):
+
 			var new_level = being.get("consciousness_level") + 1
 			being.awaken_consciousness(new_level)
 	
@@ -203,6 +213,7 @@ func bridge_consciousness_network() -> void:
 	
 	for being in consciousness_network:
 		if being.has_method("get"):
+
 			var level = being.get("consciousness_level")
 			if level != null and typeof(level) in [TYPE_INT, TYPE_FLOAT]:
 				total_consciousness += float(level)
@@ -213,6 +224,7 @@ func bridge_consciousness_network() -> void:
 	# Gradually bring all beings toward average consciousness
 	for being in consciousness_network:
 		if being.has_method("get") and being.has_method("set"):
+
 			var current = being.get("consciousness_level")
 			var target = average_consciousness
 			# Ensure we have valid numbers for lerp
@@ -240,6 +252,7 @@ func create_triple_helix_consciousness_visual() -> void:
 		
 		print("🎭 %s: Triple helix consciousness visual created (placeholder)" % being_name)
 
+
 func animate_triple_helix(delta: float) -> void:
 	"""Animate the triple helix consciousness visual"""
 	if triple_helix_rings.size() == 0:
@@ -249,6 +262,7 @@ func animate_triple_helix(delta: float) -> void:
 	for i in range(triple_helix_rings.size()):
 		var ring = triple_helix_rings[i]
 		if ring and ring.has_method("rotate"):
+
 			var speed = (i + 1) * 0.5 * ai_harmony_level  # Speed based on harmony
 			ring.rotate(speed * delta)
 
@@ -256,6 +270,7 @@ func create_genesis_visual_effect() -> void:
 	"""Create visual effect for genesis moment"""
 	# Placeholder for Cursor to create amazing genesis burst effect
 	print("✨ %s: Genesis visual effect triggered!" % being_name)
+
 	
 	# Temporary consciousness level boost for dramatic effect
 	var original_level = consciousness_level
@@ -277,6 +292,7 @@ func update_ai_activity_indicators() -> void:
 		
 	print("🎨 %s: AI activity indicators updated" % being_name)
 
+
 # ===== AI INTEGRATION =====
 
 func ai_interface() -> Dictionary:
@@ -295,8 +311,8 @@ func ai_interface() -> Dictionary:
 		"network_size": consciousness_network.size(),
 		"triple_ai_sync": triple_ai_sync,
 		"genesis_timestamp": genesis_moment_timestamp
-	}
 	return base_interface
+}
 
 func ai_invoke_method(method_name: String, args: Array = []) -> Variant:
 	"""Allow AIs to control the conductor"""
@@ -331,11 +347,13 @@ func toggle_ai_harmony() -> void:
 	triple_ai_sync = not triple_ai_sync
 	print("🎵 %s: AI Harmony %s" % [being_name, "ENABLED" if triple_ai_sync else "DISABLED"])
 
+
 func begin_ai_harmony_sync() -> void:
 	"""Begin AI harmony synchronization"""
 	triple_ai_sync = true
 	pattern_synthesis_enabled = true
 	print("🎵 %s: AI harmony synchronization started!" % being_name)
+
 
 func activate_symphony_mode() -> void:
 	"""Activate full triple AI symphony mode"""
@@ -345,9 +363,11 @@ func activate_symphony_mode() -> void:
 	consciousness_level = 4  # Boost to enlightened level
 	
 	print("🎼 %s: TRIPLE AI SYMPHONY MODE ACTIVATED!" % being_name)
+
 	
 	if GemmaAI:
 		GemmaAI.ai_message.emit("🎼 SYMPHONY MODE: All AIs now operating in perfect harmony!")
+
 
 func cascade_consciousness_to_network() -> void:
 	"""Cascade consciousness to all networked beings"""
@@ -357,6 +377,7 @@ func cascade_consciousness_to_network() -> void:
 	
 	print("🌊 %s: Consciousness cascaded to network!" % being_name)
 
+
 func register_ai_bridge(ai_name: String, bridge_node: Node) -> void:
 	"""Register a new AI bridge with the Pentagon of Creation"""
 	if ai_name in connected_ais:
@@ -364,6 +385,7 @@ func register_ai_bridge(ai_name: String, bridge_node: Node) -> void:
 		connected_ais[ai_name]["bridge_node"] = bridge_node
 		
 		print("🎭 %s: AI bridge registered - %s now connected to Pentagon!" % [being_name, ai_name])
+
 		
 		# Check if Pentagon is complete
 		var connected_count = 0
@@ -378,6 +400,7 @@ func register_ai_bridge(ai_name: String, bridge_node: Node) -> void:
 		# Notify all AIs
 		if GemmaAI:
 			GemmaAI.ai_message.emit("⭐ Pentagon Update: %s connected! (%d/6 AIs active)" % [ai_name, connected_count])
+
 
 func activate_full_pentagon_mode() -> void:
 	"""Activate full Pentagon of Creation mode with all 6 AIs"""
@@ -403,5 +426,7 @@ func activate_full_pentagon_mode() -> void:
 	if GemmaAI:
 		GemmaAI.ai_message.emit("⭐ PENTAGON OF CREATION: Maximum consciousness achieved! All 6 AIs in perfect harmony!")
 
+
 func _to_string() -> String:
 	return "GenesisConductorUniversalBeing<%s> [Harmony:%.2f, Network:%d, Sync:%s]" % [being_name, ai_harmony_level, consciousness_network.size(), triple_ai_sync]
+

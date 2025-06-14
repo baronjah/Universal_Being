@@ -1,6 +1,5 @@
 # CelestialBodyCU.gd
-
-extends Sprite3D
+extends \2
 
 var shader_material: ShaderMaterial
 var planet_id: int

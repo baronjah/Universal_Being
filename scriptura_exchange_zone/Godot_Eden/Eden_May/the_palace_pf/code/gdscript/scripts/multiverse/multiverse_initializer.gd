@@ -1,5 +1,5 @@
 extends Node
-class_name MultiverseInitializer
+class_name MultiverseInitializer_multiverseinitializer_multiver
 
 # This script initializes the Multiverse Navigation system
 # Add it to an autoload node or call initialize() from your main scene

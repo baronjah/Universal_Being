@@ -4,9 +4,8 @@
 # PURPOSE: Track scene hierarchy like JSH system
 # CREATED: 2025-05-24 - Scene persistence system
 # ==================================================
-
 extends UniversalBeingBase
-class_name SceneTreeTracker
+class_name SceneTreeTracker_scenetre
 
 # Scene tree structure similar to JSH
 var scene_tree_jsh: Dictionary = {}
@@ -105,7 +104,7 @@ func track_node(node: Node, category: String = "") -> void:
 	tree_mutex.lock()
 	
 	var node_path = str(node.get_path())
-	var path_parts = node_path.split("/")
+	var path_parts = node_path.split("")
 	
 	# Remove empty parts
 	var filtered_parts = []
@@ -119,7 +118,7 @@ func track_node(node: Node, category: String = "") -> void:
 	
 	for i in range(path_parts.size()):
 		var part = path_parts[i]
-		current_full_path = current_full_path + "/" + part if current_full_path else part
+		current_full_path = current_full_path + "" + part if current_full_path else part
 		
 		if not current_branch.has(part):
 			var new_branch = BRANCH_BLUEPRINT.duplicate(true)
@@ -158,7 +157,7 @@ func untrack_node(node: Node) -> void:
 
 ## Get node by JSH path
 func jsh_tree_get_node(node_path_get: String) -> Node:
-	var path_parts = node_path_get.split("/")
+	var path_parts = node_path_get.split("")
 	tree_mutex.lock()
 	
 	var current = scene_tree_jsh["main_root"]["branches"]
@@ -241,7 +240,7 @@ func _collect_nodes_by_type(branches: Dictionary, jsh_type: String, nodes: Array
 
 ## Internal helper to remove branch
 func _remove_branch_by_path(path: String) -> void:
-	var path_parts = path.split("/")
+	var path_parts = path.split("")
 	var filtered_parts = []
 	for part in path_parts:
 		if part != "":
@@ -310,7 +309,7 @@ func _collect_stats(branches: Dictionary, stats: Dictionary) -> void:
 # Ragdoll tracking functionality
 func has_branch(path: String) -> bool:
 	tree_mutex.lock()
-	var parts = path.split("/")
+	var parts = path.split("")
 	var current = scene_tree_jsh
 	
 	for part in parts:
@@ -326,7 +325,7 @@ func has_branch(path: String) -> bool:
 
 func get_branch(path: String) -> Dictionary:
 	tree_mutex.lock()
-	var parts = path.split("/")
+	var parts = path.split("")
 	var current = scene_tree_jsh
 	
 	for part in parts:
@@ -342,7 +341,7 @@ func get_branch(path: String) -> Dictionary:
 
 func _set_branch_unsafe(path: String, _data: Dictionary) -> void:
 	# Assumes mutex is already locked
-	var parts = path.split("/")
+	var parts = path.split("")
 	var current = scene_tree_jsh
 	
 	# Navigate to parent

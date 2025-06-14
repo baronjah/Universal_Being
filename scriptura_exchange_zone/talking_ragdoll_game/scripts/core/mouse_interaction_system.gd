@@ -4,7 +4,6 @@
 # PURPOSE: Allow clicking any object in the scene to inspect it
 # CREATED: 2025-05-24 - Interactive object inspection
 # ==================================================
-
 extends UniversalBeingBase
 # UI Elements
 var debug_panel: PanelContainer = null
@@ -263,7 +262,7 @@ func _select_object(obj: Node) -> void:
 		print("[MouseInteraction] Selected: " + selected_object.name)
 		
 		# Show click feedback in console immediately
-		var console = get_node_or_null("/root/ConsoleManager")
+		var console = get_node_or_null("root/ConsoleManager")
 		if console and console.has_method("_print_to_console"):
 			console._print_to_console("🔍 CLICKED: " + selected_object.name + " (" + selected_object.get_class() + ")")
 			console._print_to_console("  Position: " + str(selected_object.position))
@@ -271,7 +270,7 @@ func _select_object(obj: Node) -> void:
 			console._print_to_console("  Use 'inspect_by_name " + selected_object.name + "' for details")
 		
 		# Try to use Enhanced Object Inspector
-		var inspector = get_node_or_null("/root/EnhancedObjectInspector")
+		var inspector = get_node_or_null("root/EnhancedObjectInspector")
 		if not inspector:
 			inspector = get_tree().get_first_node_in_group("object_inspector")
 		
@@ -288,7 +287,7 @@ func _clear_selection() -> void:
 	debug_panel.visible = false
 	
 	# Also close enhanced inspector
-	var inspector = get_node_or_null("/root/EnhancedObjectInspector")
+	var inspector = get_node_or_null("root/EnhancedObjectInspector")
 	if inspector and inspector.has_method("_on_close_pressed"):
 		inspector._on_close_pressed()
 	
@@ -681,8 +680,8 @@ func _create_spell_effect(spell: String) -> void:
 func _find_dimensional_ragdoll() -> Node:
 	# Search for dimensional ragdoll system
 	var paths = [
-		"/root/MainGame/DimensionalRagdollSystem",
-		"/root/Main/DimensionalRagdollSystem",
+		"root/MainGame/DimensionalRagdollSystem",
+		"root/Main/DimensionalRagdollSystem",
 		"//DimensionalRagdollSystem"
 	]
 	

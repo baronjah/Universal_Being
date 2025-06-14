@@ -3,8 +3,7 @@
 # DESCRIPTION: Stable ragdoll character with realistic physics
 # CREATED: 2025-05-23 - Stable physics implementation
 # ==================================================
-
-extends Node3D
+extends \2
 
 # Core components
 var body: RigidBody3D

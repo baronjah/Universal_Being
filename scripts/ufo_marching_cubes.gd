@@ -123,6 +123,7 @@ func _calculate_sdf_normal(pos: Vector3, mesh_size: Vector3) -> Vector3:
 
 func ufo_sdf(pos: Vector3, mesh_size: Vector3) -> float:
     """Custom SDF for UFO: dome + body = union of two SDFs"""
+	
     var dome = sphere_sdf(pos - Vector3(0, 0.15 * mesh_size.y, 0), mesh_size.x * 0.45)
     var body = ellipsoid_sdf(pos, mesh_size * Vector3(1, 0.4, 1))
     return min(dome, body)  # Union operation

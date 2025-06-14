@@ -1,5 +1,5 @@
-class_name TerminalAkashicInterface
-extends Node
+class_name TerminalAkashicInterface_terminalakashicinterface_terminal
+extends \2
 
 # ----- TERMINAL INTERFACE CONSTANTS -----
 const TERMINAL_COLORS = {
@@ -118,7 +118,7 @@ var command_history = []
 var history_index = -1
 var command_buffer = ""
 var connected_components = {}
-var current_directory = "/"
+var current_directory = ""
 var logged_in = false
 var username = ""
 var last_result = null
@@ -146,26 +146,26 @@ func _ready():
 
 func _find_components():
     # Find TerminalBridgeConnector
-    terminal_bridge = get_node_or_null("/root/TerminalBridgeConnector")
+    terminal_bridge = get_node_or_null("root/TerminalBridgeConnector")
     if not terminal_bridge:
         terminal_bridge = _find_node_by_class(get_tree().root, "TerminalBridgeConnector")
     
     # Find ColorTemperatureProjection
-    color_temperature = get_node_or_null("/root/ColorTemperatureProjection")
+    color_temperature = get_node_or_null("root/ColorTemperatureProjection")
     if not color_temperature:
         color_temperature = _find_node_by_class(get_tree().root, "ColorTemperatureProjection")
     
     # Find AkashicNumberSystem
-    akashic_system = get_node_or_null("/root/AkashicNumberSystem")
+    akashic_system = get_node_or_null("root/AkashicNumberSystem")
     if not akashic_system:
         akashic_system = _find_node_by_class(get_tree().root, "AkashicNumberSystem")
     
     # Find migration components
-    migration_system = get_node_or_null("/root/UnifiedMigrationSystem")
+    migration_system = get_node_or_null("root/UnifiedMigrationSystem")
     if not migration_system:
         migration_system = _find_node_by_class(get_tree().root, "UnifiedMigrationSystem")
     
-    ethereal_bridge = get_node_or_null("/root/EtherealMigrationBridge")
+    ethereal_bridge = get_node_or_null("root/EtherealMigrationBridge")
     if not ethereal_bridge:
         ethereal_bridge = _find_node_by_class(get_tree().root, "EtherealMigrationBridge")
     
@@ -567,7 +567,7 @@ func _cmd_connect(args):
     # Try to connect
     match component:
         "terminal":
-            terminal_bridge = get_node_or_null("/root/TerminalBridgeConnector")
+            terminal_bridge = get_node_or_null("root/TerminalBridgeConnector")
             if not terminal_bridge:
                 terminal_bridge = _find_node_by_class(get_tree().root, "TerminalBridgeConnector")
             
@@ -589,7 +589,7 @@ func _cmd_connect(args):
             }
         
         "color":
-            color_temperature = get_node_or_null("/root/ColorTemperatureProjection")
+            color_temperature = get_node_or_null("root/ColorTemperatureProjection")
             if not color_temperature:
                 color_temperature = _find_node_by_class(get_tree().root, "ColorTemperatureProjection")
             
@@ -609,7 +609,7 @@ func _cmd_connect(args):
             }
         
         "akashic":
-            akashic_system = get_node_or_null("/root/AkashicNumberSystem")
+            akashic_system = get_node_or_null("root/AkashicNumberSystem")
             if not akashic_system:
                 akashic_system = _find_node_by_class(get_tree().root, "AkashicNumberSystem")
             
@@ -629,7 +629,7 @@ func _cmd_connect(args):
             }
         
         "migration":
-            migration_system = get_node_or_null("/root/UnifiedMigrationSystem")
+            migration_system = get_node_or_null("root/UnifiedMigrationSystem")
             if not migration_system:
                 migration_system = _find_node_by_class(get_tree().root, "UnifiedMigrationSystem")
             
@@ -649,7 +649,7 @@ func _cmd_connect(args):
             }
         
         "ethereal":
-            ethereal_bridge = get_node_or_null("/root/EtherealMigrationBridge")
+            ethereal_bridge = get_node_or_null("root/EtherealMigrationBridge")
             if not ethereal_bridge:
                 ethereal_bridge = _find_node_by_class(get_tree().root, "EtherealMigrationBridge")
             
@@ -682,13 +682,13 @@ func _cmd_connect(args):
                 return {
                     "success": true,
                     "color": TERMINAL_COLORS.SUCCESS,
-                    "message": "Successfully connected to all systems:\n" + "\n".join(results)
+                    "message": "Successfully connected to all systems:\n" + "\n"." ".join(results)
                 }
             else:
                 return {
                     "success": false,
                     "color": TERMINAL_COLORS.WARNING,
-                    "message": "Some systems could not be connected:\n" + "\n".join(results)
+                    "message": "Some systems could not be connected:\n" + "\n"." ".join(results)
                 }
         
         _:
@@ -738,7 +738,7 @@ func _cmd_sync(args):
             return {
                 "success": success,
                 "color": TERMINAL_COLORS.SUCCESS if success else TERMINAL_COLORS.WARNING,
-                "message": "Synchronization " + ("completed" if success else "partially completed") + ":\n" + "\n".join(messages)
+                "message": "Synchronization " + ("completed" if success else "partially completed") + ":\n" + "\n"." ".join(messages)
             }
         
         "color":
@@ -1291,7 +1291,7 @@ func _cmd_universe(args):
             return {
                 "success": true,
                 "color": TERMINAL_COLORS.INFO,
-                "message": "Connected universes:\n\n" + "\n".join(universes)
+                "message": "Connected universes:\n\n" + "\n"." ".join(universes)
             }
         else:
             return {
@@ -1338,7 +1338,7 @@ func _cmd_record(args):
         }
     
     var record_type = args[0]
-    var record_data = " ".join(args.slice(1))
+    var record_data = " "." ".join(args.slice(1))
     
     # Create record
     if terminal_bridge and terminal_bridge.has_method("sync_akashic_record"):

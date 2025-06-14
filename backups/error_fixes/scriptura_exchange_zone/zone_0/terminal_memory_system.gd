@@ -33,8 +33,8 @@ func _ready():
 	# Initialize the concurrent processor
 	processor = ConcurrentProcessor.new()
 	add_child(processor)
-	processor.connect("task_completed", self, "_on_task_completed")
-	processor.connect("all_tasks_completed", self, "_on_all_tasks_completed")
+	processor.connect(_on_task_completed)
+	processor.connect(_on_all_tasks_completed)
 	
 	# Load saved memories
 	processor.schedule_task("load_data", self, "load_offline_memories")
@@ -58,7 +58,7 @@ func setup_terminal_display():
 	
 	input_field = LineEdit.new()
 	input_field.rect_min_size = Vector2(600, 30)
-	input_field.connect("text_entered", self, "_on_text_entered")
+	input_field.connect(_on_text_entered)
 	add_child(input_field)
 	
 	# Set layout (would be replaced by proper UI in real implementation)
@@ -69,7 +69,7 @@ func setup_terminal_display():
 func _on_text_entered(text):
 	input_field.text = ""
 	
-	if text.empty():
+	if text.is_empty():
 		return
 		
 	# Process commands
@@ -230,7 +230,7 @@ func auto_wrap_text(text, width):
 	
 	for word in words:
 		if line.length() + word.length() + 1 <= width:
-			if line.empty():
+			if line.is_empty():
 				line = word
 			else:
 				line += " " + word
@@ -238,7 +238,7 @@ func auto_wrap_text(text, width):
 			wrapped += line + "\n"
 			line = word
 	
-	if not line.empty():
+	if not line.is_empty():
 		wrapped += line
 		
 	return wrapped

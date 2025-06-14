@@ -1,7 +1,7 @@
 # Systematic Test Tutorial - Click Through Every Function
 # Tests each feature one by one, reports results back to you
 extends UniversalBeingBase
-class_name SystematicTestTutorial
+class_name SystematicTestTutorial_systemat
 
 # UI Elements
 var main_panel: Panel
@@ -239,7 +239,7 @@ func _run_current_test():
 	result_display.text = "[color=yellow]⏳ Testing: " + test.command + "[/color]"
 	
 	# Get console manager
-	var console = get_node_or_null("/root/ConsoleManager")
+	var console = get_node_or_null("root/ConsoleManager")
 	if not console:
 		_record_test_result(test.name, "❌ Console Manager not found", false)
 		return

@@ -1,5 +1,5 @@
 extends Node2D
-class_name DimensionalBridgeVisualizer
+class_name DimensionalBridgeVisualizer_dimensionalbridgevisualizer_dimensio
 
 # Visualization system for the Claude-Ethereal Bridge
 # Creates visual representations of dimensional connections, memory flows,
@@ -65,15 +65,15 @@ func _ready():
 
 func _connect_to_systems():
 	# Find Claude Ethereal Bridge
-	if has_node("/root/ClaudeEtherealBridge"):
-		claude_ethereal_bridge = get_node("/root/ClaudeEtherealBridge")
+	if has_node("root/ClaudeEtherealBridge"):
+		claude_ethereal_bridge = get_node("root/ClaudeEtherealBridge")
 		print("✓ Connected to Claude Ethereal Bridge")
 	else:
 		print("⚠ Claude Ethereal Bridge not found")
 	
 	# Find Ethereal Engine Integration
-	if has_node("/root/EtherealEngineIntegration"):
-		ethereal_engine_integration = get_node("/root/EtherealEngineIntegration")
+	if has_node("root/EtherealEngineIntegration"):
+		ethereal_engine_integration = get_node("root/EtherealEngineIntegration")
 		print("✓ Connected to Ethereal Engine Integration")
 	else:
 		print("⚠ Ethereal Engine Integration not found")

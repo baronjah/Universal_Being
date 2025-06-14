@@ -5,8 +5,9 @@ extends UniversalBeing
 class_name TurnBasedCreationSystem
 
 # ===== TURN SYSTEM PROPERTIES =====
-enum TurnState { WAITING, QUESTIONING, PROCESSING, EXECUTING, REFLECTING }
-enum ParticipantType { HUMAN, GEMMA_AI, UNIVERSE_NARRATOR }
+enum TurnState { WAITING, QUESTIONING, PROCESSING, EXECUTING, REFLECTING
+enum ParticipantType { HUMAN, GEMMA_AI, UNIVERSE_NARRATOR
+}
 
 @export var current_turn_state: TurnState = TurnState.WAITING
 @export var active_participant: ParticipantType = ParticipantType.UNIVERSE_NARRATOR
@@ -87,6 +88,7 @@ class CreationSession:
 	var session_id: String
 	var start_time: int
 	var current_scenario: String = ""
+}
 	var participants: Array[Dictionary] = []
 	var turn_history: Array[Dictionary] = []
 	var created_objects: Array[Node] = []
@@ -119,6 +121,7 @@ func initialize_creation_components() -> void:
 func start_creation_session() -> void:
 	"""Begin a new collaborative creation session"""
 	print("🌟 Starting Universal Being Creation Session: %s" % creation_session.session_id)
+}
 	
 	# Universe narrator introduces the session
 	universe_narrator.ask_opening_question()
@@ -129,7 +132,9 @@ func start_creation_session() -> void:
 
 class HumanParticipant:
 	var name: String = "JSH"
+
 	var current_input: String = ""
+
 	var input_buffer: Array[String] = []
 	var is_typing: bool = false
 	var turn_active: bool = false
@@ -139,19 +144,23 @@ class HumanParticipant:
 		current_input = input.strip_edges()
 		if current_input.length() > 0:
 			return {"type": "text_command", "content": current_input, "complete": true}
-		return {"type": "empty", "complete": false}
+		return {"type": "empty", "complete": false
+}
 
 class GemmaParticipant:
 	var name: String = "Gemma AI"
+
 	var embodied_being: GemmaUniversalBeing = null
 	var natural_language_processor: Node = null
 	var turn_active: bool = false
 	var last_response: String = ""
+
 	
 	func process_ai_response(response: String) -> Dictionary:
 		"""Process Gemma's natural language response"""
 		last_response = response
-		return {"type": "ai_command", "content": response, "complete": true}
+		return {"type": "ai_command", "content": response, "complete": true
+}
 	
 	func embody_in_universe(universe: Node) -> void:
 		"""Give Gemma a physical form she can control"""
@@ -210,8 +219,8 @@ class UniversalCommandParser extends Node:
 		"talk": {"type": "communication", "requires": ["target"]},
 		"say": {"type": "communication", "requires": ["message"]},
 		"evolve": {"type": "evolution", "requires": ["target", "evolution_type"]},
-		"transform": {"type": "evolution", "requires": ["target", "new_form"]}
-	}
+		"transform": {"type": "evolution", "requires": ["target", "new_form"]
+}
 	
 	var known_objects: Dictionary = {
 		"tree": {"type": "natural", "properties": ["position", "size", "species"]},
@@ -219,8 +228,8 @@ class UniversalCommandParser extends Node:
 		"crystal": {"type": "magical", "properties": ["position", "color", "resonance"]},
 		"house": {"type": "structure", "properties": ["position", "style", "size"]},
 		"portal": {"type": "magical", "properties": ["source", "destination", "stability"]},
-		"being": {"type": "consciousness", "properties": ["consciousness_level", "type", "name"]}
-	}
+		"being": {"type": "consciousness", "properties": ["consciousness_level", "type", "name"]
+}
 	
 	func parse_command(input: String) -> Dictionary:
 		"""Parse natural language command into actionable steps"""
@@ -231,14 +240,14 @@ class UniversalCommandParser extends Node:
 			"action_sequence": [],
 			"missing_info": [],
 			"clarification_needed": false
-		}
+}
 		
 		if words.is_empty():
 			return result
 		
 		# Find main verb
 		var main_verb = ""
-		var verb_info = {}
+		var verb_info = {
 		
 		for word in words:
 			if word in known_verbs:
@@ -285,18 +294,20 @@ class UniversalCommandParser extends Node:
 				break
 		
 		if target_object != "":
+}
 			# Movement to object requires: find, face, move, stop
 			result.action_sequence = [
 				{"action": "find_object", "target": target_object},
 				{"action": "face_target", "target": target_object},
 				{"action": "move_to_target", "target": target_object},
-				{"action": "stop_at_target", "target": target_object}
+				{"action": "stop_at_target", "target": target_object
 			]
 			result.understood = true
 		elif direction != "":
+}
 			# Simple directional movement
 			result.action_sequence = [
-				{"action": "move_direction", "direction": direction}
+				{"action": "move_direction", "direction": direction
 			]
 			result.understood = true
 		else:
@@ -308,7 +319,7 @@ class UniversalCommandParser extends Node:
 	func parse_creation_command(words: PackedStringArray, result: Dictionary) -> Dictionary:
 		"""Parse creation commands like 'create crystal being'"""
 		var object_type = ""
-		var object_properties = {}
+		var object_properties = {
 		
 		# Find object type
 		for word in words:
@@ -318,7 +329,7 @@ class UniversalCommandParser extends Node:
 		
 		if object_type != "":
 			result.action_sequence = [
-				{"action": "create_object", "type": object_type, "properties": object_properties}
+				{"action": "create_object", "type": object_type, "properties": object_properties
 			]
 			result.understood = true
 		else:
@@ -338,13 +349,13 @@ class UniversalCommandParser extends Node:
 		
 		if target != "":
 			result.action_sequence = [
-				{"action": "observe_object", "target": target}
+				{"action": "observe_object", "target": target
 			]
 			result.understood = true
 		else:
 			# Look around generally
 			result.action_sequence = [
-				{"action": "observe_surroundings"}
+				{"action": "observe_surroundings"
 			]
 			result.understood = true
 		
@@ -376,12 +387,12 @@ class UniverseNarrator extends Node:
 			"Creation energy sensed! What shall we manifest?",
 			"I'm ready to create! What form should it take?"
 		]
-	}
 	
 	func ask_opening_question() -> void:
 		"""Ask the initial creation question"""
 		var question = question_templates.opening[randi() % question_templates.opening.size()]
 		emit_universe_question(question, {"type": "opening", "expects": "creation_intent"})
+}
 	
 	func ask_clarification_question(parsed_command: Dictionary) -> void:
 		"""Ask for clarification based on missing information"""
@@ -404,6 +415,7 @@ class UniverseNarrator extends Node:
 	func emit_universe_question(question: String, context: Dictionary) -> void:
 		"""Emit a question for both human and AI to see"""
 		print("🌌 Universe: %s" % question)
+}
 		# This should connect to both console and Gemma AI
 		get_parent().universe_question_asked.emit(question, context)
 
@@ -420,6 +432,7 @@ func process_participant_command(participant: ParticipantType, command: String) 
 	current_turn_state = TurnState.PROCESSING
 	
 	print("🎯 Processing command from %s: %s" % [_participant_name(participant), command])
+}
 	
 	# Parse the command
 	var parsed = command_parser.parse_command(command)
@@ -457,6 +470,7 @@ func execute_single_action(participant: ParticipantType, action: Dictionary) -> 
 			observe_object_in_universe(action.target)
 		_:
 			print("⚠️ Unknown action: %s" % action.action)
+}
 
 func _participant_name(participant: ParticipantType) -> String:
 	match participant:
@@ -464,6 +478,7 @@ func _participant_name(participant: ParticipantType) -> String:
 		ParticipantType.GEMMA_AI: return "Gemma AI"
 		ParticipantType.UNIVERSE_NARRATOR: return "Universe"
 		_: return "Unknown"
+}
 
 # ===== ACTION IMPLEMENTATIONS =====
 
@@ -539,6 +554,7 @@ func switch_active_participant() -> void:
 	
 	turn_started.emit(active_participant)
 	print("🔄 Turn switched to: %s" % _participant_name(active_participant))
+}
 
 # ===== TIMER INTEGRATION =====
 

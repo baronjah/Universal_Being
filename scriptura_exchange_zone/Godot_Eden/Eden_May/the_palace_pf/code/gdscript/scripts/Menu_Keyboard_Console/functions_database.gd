@@ -1,7 +1,7 @@
 # functions_database.gd
-extends Node
+extends \2
 
-class_name FunctionChainManager
+class_name FunctionChainManager_functionsdatabase_function
 
 var registered_commands = {}
 var command_chains = {}

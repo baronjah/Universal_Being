@@ -16,7 +16,7 @@ extends Node
 # -----------------------------------------------
 
 # Change the class name based on your experiment
-class_name ExperimentTemplate
+class_name ExperimentTemplate_templateexperiment_template
 
 # Add any required references to other systems
 # var entity_manager = JSHEntityManager.get_instance()

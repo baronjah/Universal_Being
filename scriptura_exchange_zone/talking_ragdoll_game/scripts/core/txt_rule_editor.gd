@@ -9,9 +9,8 @@
 # DESCRIPTION: In-game editor for TXT rule files
 # PURPOSE: Edit game rules live through UI
 # ==================================================
-
 extends UniversalBeingBase
-class_name TxtRuleEditor
+class_name TxtRuleEditor_txtrulee
 
 # UI elements
 var file_list: ItemList
@@ -124,7 +123,7 @@ func _scan_directory(path: String, category: String) -> void:
 	
 	while file_name != "":
 		if file_name.ends_with(".txt"):
-			var display_name = category + "/" + file_name
+			var display_name = category + "" + file_name
 			file_list.add_item(display_name)
 			loaded_files[display_name] = path + file_name
 		file_name = dir.get_next()
@@ -174,15 +173,15 @@ func _save_current_file() -> void:
 func _notify_rule_change(file_path: String) -> void:
 	"""Notify game systems that rules have changed"""
 	# If it's a game rule file
-	if file_path.contains("/lists/"):
-		var lists_viewer = get_node_or_null("/root/ListsViewerSystem")
+	if file_path.contains("lists/"):
+		var lists_viewer = get_node_or_null("root/ListsViewerSystem")
 		if lists_viewer and lists_viewer.has_method("reload_file"):
 			var file_name = file_path.get_file()
 			lists_viewer.reload_file(file_name)
 	
 	# If it's an asset definition
-	elif file_path.contains("/definitions/"):
-		var asset_library = get_node_or_null("/root/AssetLibrary")
+	elif file_path.contains("definitions/"):
+		var asset_library = get_node_or_null("root/AssetLibrary")
 		if asset_library and asset_library.has_method("reload_definitions"):
 			asset_library.reload_definitions()
 

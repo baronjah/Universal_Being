@@ -1,6 +1,6 @@
 # voxel_chunk.gd
-class_name VoxelChunk
-extends Spatial
+class_name VoxelChunk_voxelchunk_voxelchu
+extends \2
 
 var chunk_position: Vector3
 var chunk_size: int

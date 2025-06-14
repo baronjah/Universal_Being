@@ -1,28 +1,28 @@
 extends Node
 
-class_name MultiverseEvolutionSystem
+class_name MultiverseEvolutionSystem_multiverseevolutionsystem_multiver
 
 # ----- MULTIVERSE SETTINGS -----
 @export_category("Multiverse Settings")
-@export var multiverse_enabled: bool = true
-@export var universe_count: int = 7  # Number of parallel universes
-@export var evolution_turn_duration: float = 300.0  # Seconds per turn
-@export var universe_divergence_factor: float = 0.3  # How different universes become
-@export var story_synchronization: float = 0.5  # How synchronized stories are across universes
+@@export var multiverse_enabled: bool = true
+@@export var universe_count: int = 7  # Number of parallel universes
+@@export var evolution_turn_duration: float = 300.0  # Seconds per turn
+@@export var universe_divergence_factor: float = 0.3  # How different universes become
+@@export var story_synchronization: float = 0.5  # How synchronized stories are across universes
 
 # ----- TURN SETTINGS -----
 @export_category("Turn Settings")
-@export var auto_advance_turns: bool = true
-@export var turns_per_age: int = 7  # Number of turns in one cosmic age
-@export var cosmic_ages: Array = ["Genesis", "Formation", "Complexity", "Consciousness", "Transcendence", "Unity", "Beyond"]
-@export var turn_transition_duration: float = 5.0  # Seconds to transition between turns
+@@export var auto_advance_turns: bool = true
+@@export var turns_per_age: int = 7  # Number of turns in one cosmic age
+@@export var cosmic_ages: Array = ["Genesis", "Formation", "Complexity", "Consciousness", "Transcendence", "Unity", "Beyond"]
+@@export var turn_transition_duration: float = 5.0  # Seconds to transition between turns
 
 # ----- STORY INTEGRATION -----
 @export_category("Story Integration")
-@export var story_per_universe: bool = true  # Each universe has its own story
-@export var metanarrative_enabled: bool = true  # Overall story connecting all universes
-@export var crossover_probability: float = 0.2  # Chance of story elements crossing universes
-@export var player_story_influence: float = 0.7  # How much player actions affect stories
+@@export var story_per_universe: bool = true  # Each universe has its own story
+@@export var metanarrative_enabled: bool = true  # Overall story connecting all universes
+@@export var crossover_probability: float = 0.2  # Chance of story elements crossing universes
+@@export var player_story_influence: float = 0.7  # How much player actions affect stories
 
 # ----- COMPONENT REFERENCES -----
 var game_controller: Node
@@ -601,7 +601,7 @@ func travel_between_universes(access_id: String):
     if !access_point.active:
         return false
     
-    // Check if player has enough energy
+# // Check if player has enough energy
     if player_controller and player_controller.energy < access_point.energy_cost:
         if game_controller and game_controller.has_method("show_notification"):
             game_controller.show_notification(
@@ -610,18 +610,18 @@ func travel_between_universes(access_id: String):
             )
         return false
     
-    // Consume energy
+# // Consume energy
     if player_controller:
         player_controller.set_energy_level(player_controller.energy - access_point.energy_cost)
     
-    // Set new active universe
+# // Set new active universe
     set_active_universe(access_point.to_universe)
     
-    // Teleport player to access point exit
+# // Teleport player to access point exit
     if player_controller:
         player_controller.teleport_to(access_point.position)
     
-    // Record crossover event
+# // Record crossover event
     record_crossover_event(access_point.from_universe, access_point.to_universe, ["player_travel"])
     
     return true
@@ -634,33 +634,33 @@ func advance_universe_story(universe_id: int):
     var story = universe_stories[universe_id]
     var progress_factor = 0.0
     
-    // Calculate story progress based on turn
+# // Calculate story progress based on turn
     if story.climax_turn > story.resolution_turn:
-        // Handle invalid turn configuration
+# // Handle invalid turn configuration
         story.resolution_turn = story.climax_turn + 2
     
     if current_turn < story.climax_turn:
-        // Before climax - rising action
+# // Before climax - rising action
         progress_factor = float(current_turn - story.current_segment) / float(story.climax_turn - 1)
         story.current_stage = "rising_action"
     elif current_turn == story.climax_turn:
-        // At climax
+# // At climax
         progress_factor = 1.0
         story.current_stage = "climax"
     elif current_turn < story.resolution_turn:
-        // After climax, before resolution - falling action
+# // After climax, before resolution - falling action
         progress_factor = 1.0 - float(current_turn - story.climax_turn) / float(story.resolution_turn - story.climax_turn)
         story.current_stage = "falling_action"
     else:
-        // At or after resolution
+# // At or after resolution
         progress_factor = 0.0
         story.current_stage = "resolution"
     
-    // Determine story segment based on progress
+# // Determine story segment based on progress
     var old_segment = story.current_segment
     var segments = ["awakening", "exploration", "connection", "transformation", "conflict", "resolution", "transcendence", "rebirth"]
     
-    // Calculate segment index (0-7)
+# // Calculate segment index (0-7)
     var segment_index = 0
     
     if story.current_stage == "rising_action":
@@ -675,11 +675,11 @@ func advance_universe_story(universe_id: int):
     segment_index = clamp(segment_index, 0, segments.size() - 1)
     story.current_segment = segments[segment_index]
     
-    // If segment changed, record it and emit signal
+# // If segment changed, record it and emit signal
     if old_segment != story.current_segment:
         story.segments_completed.append(old_segment)
         
-        // Create a story event
+# // Create a story event
         var event = {
             "type": "segment_change",
             "from": old_segment,
@@ -689,46 +689,46 @@ func advance_universe_story(universe_id: int):
         }
         story.events.append(event)
         
-        // Emit signal
+# // Emit signal
         emit_signal("story_evolved", universe_id, old_segment, story.current_segment)
         
-        // Apply story segment effects if we're in this universe
+# // Apply story segment effects if we're in this universe
         if universe_id == current_universe_id:
             apply_story_segment_effects(story.current_segment)
 
 func apply_story_segment_effects(segment: String):
-    // Apply effects based on story segment
+# // Apply effects based on story segment
     match segment:
         "awakening":
-            // Create initial core words
+# // Create initial core words
             manifest_core_concepts(["existence", "creation"], 3)
         
         "exploration":
-            // Create exploration-themed words
+# // Create exploration-themed words
             manifest_themed_words("exploration", 5)
             
         "connection":
-            // Increase connection visibility and create connections
+# // Increase connection visibility and create connections
             connect_existing_words(10)
             
         "transformation":
-            // Evolve existing words
+# // Evolve existing words
             trigger_word_evolutions(7)
             
         "conflict":
-            // Create opposing forces
+# // Create opposing forces
             create_opposing_forces()
             
         "resolution":
-            // Harmonize opposing forces
+# // Harmonize opposing forces
             connect_opposing_words()
             
         "transcendence":
-            // Create transcendence-themed words
+# // Create transcendence-themed words
             manifest_themed_words("transcendence", 5)
             
         "rebirth":
-            // Reset some aspects and prepare for next cycle
+# // Reset some aspects and prepare for next cycle
             prepare_for_rebirth()
 
 func manifest_core_concepts(concept_names: Array, count: int):
@@ -737,41 +737,41 @@ func manifest_core_concepts(concept_names: Array, count: int):
     
     var manifested_count = 0
     
-    // First manifest specific named concepts
+# // First manifest specific named concepts
     for concept_name in concept_names:
         var concept_id = "constant_" + concept_name
         
         if core_concepts.has(concept_id):
             var concept = core_concepts[concept_id]
             
-            // Check if already manifested in this universe
+# // Check if already manifested in this universe
             if concept.universe_manifestations.has(current_universe_id) and concept.universe_manifestations[current_universe_id].word_id != "":
                 continue
             
-            // Manifest the concept
+# // Manifest the concept
             var position = Vector3(randf_range(-5, 5), randf_range(-1, 3), randf_range(-5, 5))
             var word_id = word_seed_evolution.plant_seed(concept_name, position, "concept")
             
-            // Record manifestation
+# // Record manifestation
             if word_id != "":
                 concept.universe_manifestations[current_universe_id].word_id = word_id
                 manifested_count += 1
                 
-                // Add visual effects
+# // Add visual effects
                 if game_controller and game_controller.has_method("create_word_hologram"):
                     game_controller.create_word_hologram(word_id)
     
-    // Then manifest additional random core concepts up to count
+# // Then manifest additional random core concepts up to count
     while manifested_count < count:
-        // Choose a concept category
+# // Choose a concept category
         var categories = ["energy", "matter", "consciousness", "time", "space", "force", "form"]
         var category = categories[randi() % categories.size()]
         
-        // Get first evolution stage for this category
+# // Get first evolution stage for this category
         if evolution_matrices.has(current_universe_id) and evolution_matrices[current_universe_id].has(category):
             var first_stage = evolution_matrices[current_universe_id][category][0]
             
-            // Manifest this concept
+# // Manifest this concept
             var position = Vector3(randf_range(-10, 10), randf_range(-1, 3), randf_range(-10, 10))
             word_seed_evolution.plant_seed(first_stage.name, position, "concept")
             manifested_count += 1
@@ -793,7 +793,7 @@ func manifest_themed_words(theme: String, count: int):
     var words = theme_words[theme]
     words.shuffle()
     
-    // Manifest words in a pattern
+# // Manifest words in a pattern
     for i in range(min(count, words.size())):
         var angle = (2 * PI / count) * i
         var radius = 10.0
@@ -808,7 +808,7 @@ func connect_existing_words(connection_count: int):
     var connections_made = 0
     var existing_words = []
     
-    // Get all existing words
+# // Get all existing words
     if word_seed_evolution.has_method("get_all_words"):
         existing_words = word_seed_evolution.get_all_words()
     elif word_seed_evolution.active_seeds:
@@ -817,10 +817,10 @@ func connect_existing_words(connection_count: int):
     if existing_words.size() < 2:
         return
     
-    // Shuffle words for random connections
+# // Shuffle words for random connections
     existing_words.shuffle()
     
-    // Connect words
+# // Connect words
     for i in range(min(connection_count, existing_words.size() - 1)):
         var word1 = existing_words[i]
         var word2 = existing_words[(i + 1) % existing_words.size()]
@@ -837,10 +837,10 @@ func trigger_word_evolutions(count: int):
     if seeds.size() == 0:
         return
     
-    // Shuffle seeds for random selection
+# // Shuffle seeds for random selection
     seeds.shuffle()
     
-    // Evolve words
+# // Evolve words
     for i in range(min(count, seeds.size())):
         word_seed_evolution._evolve_seed(seeds[i])
 
@@ -848,7 +848,7 @@ func create_opposing_forces():
     if !zone_scale_system:
         return
     
-    // Create two opposing zones
+# // Create two opposing zones
     var order_zone_id = zone_scale_system.create_custom_zone(
         Vector3(15, 0, 0),
         5.0,
@@ -865,17 +865,17 @@ func create_opposing_forces():
         {"force": "chaos", "polarity": -1}
     )
     
-    // Create words in each zone
+# // Create words in each zone
     if word_seed_evolution:
         var order_words = ["order", "structure", "system", "pattern", "discipline"]
         var chaos_words = ["chaos", "entropy", "freedom", "chance", "spontaneity"]
         
-        // Manifest order words
+# // Manifest order words
         for word in order_words:
             var pos = zone_scale_system.active_zones[order_zone_id].position + Vector3(randf_range(-3, 3), randf_range(0, 3), randf_range(-3, 3))
             word_seed_evolution.plant_seed(word, pos, "concept")
         
-        // Manifest chaos words
+# // Manifest chaos words
         for word in chaos_words:
             var pos = zone_scale_system.active_zones[chaos_zone_id].position + Vector3(randf_range(-3, 3), randf_range(0, 3), randf_range(-3, 3))
             word_seed_evolution.plant_seed(word, pos, "concept")
@@ -887,7 +887,7 @@ func connect_opposing_words():
     var order_words = []
     var chaos_words = []
     
-    // Find opposing concept words
+# // Find opposing concept words
     for word_id in word_seed_evolution.active_seeds:
         var word_text = word_seed_evolution.active_seeds[word_id].text.to_lower()
         
@@ -897,36 +897,36 @@ func connect_opposing_words():
         if word_text in ["chaos", "entropy", "freedom", "chance", "spontaneity"]:
             chaos_words.append(word_id)
     
-    // Connect opposing concepts
+# // Connect opposing concepts
     for order_id in order_words:
         for chaos_id in chaos_words:
             if word_seed_evolution.has_method("connect_words"):
                 word_seed_evolution.connect_words(order_id, chaos_id)
 
 func prepare_for_rebirth():
-    // Reset some aspects while maintaining core structures
+# // Reset some aspects while maintaining core structures
     
-    // Clear temporary zones but keep core zones
+# // Clear temporary zones but keep core zones
     if zone_scale_system:
         var zones_to_remove = []
         
         for zone_id in zone_scale_system.active_zones:
             var zone = zone_scale_system.active_zones[zone_id]
             
-            // Keep core zones (usually those without custom properties)
+# // Keep core zones (usually those without custom properties)
             if !zone.has("properties") or !zone.properties.has("force"):
                 continue
             
             zones_to_remove.append(zone_id)
         
-        // Remove temporary zones
+# // Remove temporary zones
         for zone_id in zones_to_remove:
             zone_scale_system.delete_zone(zone_id)
     
-    // Manifest new seed words for next cycle
+# // Manifest new seed words for next cycle
     manifest_themed_words("unity", 3)
     
-    // Create a special rebirth zone
+# // Create a special rebirth zone
     if zone_scale_system:
         zone_scale_system.create_custom_zone(
             Vector3(0, 5, 0),
@@ -940,28 +940,28 @@ func advance_metanarrative():
     if !metanarrative_enabled:
         return
     
-    // Update player influence on metanarrative
+# // Update player influence on metanarrative
     update_player_influence()
     
-    // Check current act completion
+# // Check current act completion
     var current_act_index = metanarrative.current_act
     if current_act_index >= metanarrative.acts.size():
         return
     
     var current_act = metanarrative.acts[current_act_index]
     
-    // Check if act has been active for enough turns
+# // Check if act has been active for enough turns
     if !current_act.has("active_turns"):
         current_act.active_turns = 1
     else:
         current_act.active_turns += 1
     
-    // Check completion conditions
+# // Check completion conditions
     if current_act.active_turns >= current_act.required_turns and check_act_completion(current_act):
-        // Mark act as completed
+# // Mark act as completed
         current_act.completed = true
         
-        // Add event
+# // Add event
         var event = {
             "type": "act_completion",
             "act": current_act.name,
@@ -970,17 +970,17 @@ func advance_metanarrative():
         }
         metanarrative.events.append(event)
         
-        // Move to next act
+# // Move to next act
         metanarrative.current_act += 1
         
-        // Show notification
+# // Show notification
         if game_controller and game_controller.has_method("show_notification"):
             game_controller.show_notification(
                 "Metanarrative Act Complete: " + current_act.name,
                 5.0
             )
         
-        // Apply act completion effects
+# // Apply act completion effects
         apply_act_completion_effects(current_act)
 
 func check_act_completion(act) -> bool:
@@ -1023,44 +1023,44 @@ func check_act_completion(act) -> bool:
     return false
 
 func apply_act_completion_effects(act):
-    // Apply effects based on completed act
+# // Apply effects based on completed act
     match act.name:
         "The Divergence":
-            // Create more access points between universes
+# // Create more access points between universes
             create_additional_access_points(3)
         
         "The Patterns Emerge":
-            // Strengthen core concepts
+# // Strengthen core concepts
             strengthen_core_concepts()
         
         "The Great Crossroads":
-            // Increase crossover chance
+# // Increase crossover chance
             crossover_probability *= 1.5
         
         "The Cosmic Alignment":
-            // Align universe properties
+# // Align universe properties
             align_universe_properties()
         
         "The Great Convergence":
-            // Begin merging some universes
+# // Begin merging some universes
             begin_universe_convergence()
         
         "The Ultimate Reality":
-            // Reveal the ultimate reality
+# // Reveal the ultimate reality
             reveal_ultimate_reality()
         
         "Beyond Understanding":
-            // Complete the metanarrative cycle
+# // Complete the metanarrative cycle
             complete_metanarrative_cycle()
 
 func update_player_influence():
-    // Calculate how much the player has influenced the metanarrative
+# // Calculate how much the player has influenced the metanarrative
     var base_influence = 0.0
     
-    // Influence based on universes visited
+# // Influence based on universes visited
     base_influence += min(1.0, player_universe_history.size() / float(universe_count)) * 0.3
     
-    // Influence based on crossovers participated in
+# // Influence based on crossovers participated in
     var player_crossover_count = 0
     for event in crossover_events:
         if event.elements.has("player_travel"):
@@ -1068,24 +1068,24 @@ func update_player_influence():
     
     base_influence += min(1.0, player_crossover_count / 5.0) * 0.3
     
-    // Influence based on words manifested
+# // Influence based on words manifested
     if word_seed_evolution and word_seed_evolution.active_seeds:
         var word_count = word_seed_evolution.active_seeds.size()
         base_influence += min(1.0, word_count / 20.0) * 0.2
     
-    // Influence based on turn progression
+# // Influence based on turn progression
     base_influence += min(1.0, current_turn / 10.0) * 0.2
     
-    // Update metanarrative player influence
+# // Update metanarrative player influence
     metanarrative.player_influence = base_influence * player_story_influence
 
 # ----- CROSSOVER EVENTS -----
 func generate_crossover_events():
-    // Chance to generate crossover events between universes
+# // Chance to generate crossover events between universes
     if randf() >= crossover_probability:
         return
     
-    // Choose two random universes
+# // Choose two random universes
     var universe_ids = active_universes.keys()
     if universe_ids.size() < 2:
         return
@@ -1094,26 +1094,26 @@ func generate_crossover_events():
     var universe1 = universe_ids[0]
     var universe2 = universe_ids[1]
     
-    // Determine what elements cross over
+# // Determine what elements cross over
     var crossover_elements = []
     
     var possible_elements = ["word", "story_element", "zone_property", "concept", "reality"]
     possible_elements.shuffle()
     
-    // Choose 1-3 elements to cross over
+# // Choose 1-3 elements to cross over
     var element_count = 1 + randi() % 3
     for i in range(element_count):
         if i < possible_elements.size():
             crossover_elements.append(possible_elements[i])
     
-    // Create the crossover
+# // Create the crossover
     create_crossover(universe1, universe2, crossover_elements)
 
 func create_crossover(from_universe: int, to_universe: int, elements: Array):
     if !active_universes.has(from_universe) or !active_universes.has(to_universe):
         return
     
-    // Process each crossover element
+# // Process each crossover element
     for element_type in elements:
         match element_type:
             "word":
@@ -1127,10 +1127,10 @@ func create_crossover(from_universe: int, to_universe: int, elements: Array):
             "reality":
                 crossover_reality(from_universe, to_universe)
     
-    // Record the crossover event
+# // Record the crossover event
     record_crossover_event(from_universe, to_universe, elements)
     
-    // Notify if we're in one of these universes
+# // Notify if we're in one of these universes
     if current_universe_id == from_universe or current_universe_id == to_universe:
         if game_controller and game_controller.has_method("show_notification"):
             game_controller.show_notification(
@@ -1139,11 +1139,11 @@ func create_crossover(from_universe: int, to_universe: int, elements: Array):
             )
 
 func crossover_word(from_universe: int, to_universe: int):
-    // Copy a word from one universe to another
+# // Copy a word from one universe to another
     if current_universe_id != from_universe or !word_seed_evolution or !word_seed_evolution.active_seeds:
         return
     
-    // Choose a random word
+# // Choose a random word
     var words = word_seed_evolution.active_seeds.keys()
     if words.size() == 0:
         return
@@ -1151,7 +1151,7 @@ func crossover_word(from_universe: int, to_universe: int):
     var word_id = words[randi() % words.size()]
     var word_data = word_seed_evolution.active_seeds[word_id]
     
-    // Store this word in the target universe's data
+# // Store this word in the target universe's data
     active_universes[to_universe].words[word_id] = {
         "text": word_data.text,
         "position": word_data.position,
@@ -1159,12 +1159,12 @@ func crossover_word(from_universe: int, to_universe: int):
         "origin_universe": from_universe
     }
     
-    // If we're in the target universe, manifest the word
+# // If we're in the target universe, manifest the word
     if current_universe_id == to_universe and word_seed_evolution.has_method("plant_seed"):
         var position = word_data.position + Vector3(randf_range(-5, 5), randf_range(0, 3), randf_range(-5, 5))
         var crossover_word_id = word_seed_evolution.plant_seed(word_data.text, position, word_data.category)
         
-        // Apply special crossover effects
+# // Apply special crossover effects
         if crossover_word_id != "" and game_controller and game_controller.has_method("create_word_hologram"):
             game_controller.create_word_hologram(crossover_word_id)
 
@@ -1175,7 +1175,7 @@ func crossover_story_element(from_universe: int, to_universe: int):
     var from_story = universe_stories[from_universe]
     var to_story = universe_stories[to_universe]
     
-    // Choose an element to cross over
+# // Choose an element to cross over
     var element_type = randi() % 3
     
     match element_type:
@@ -1203,26 +1203,26 @@ func crossover_zone_property(from_universe: int, to_universe: int):
     var from_props = active_universes[from_universe].properties
     var to_props = active_universes[to_universe].properties
     
-    // Choose a property to cross over
+# // Choose a property to cross over
     var properties = ["time_flow_rate", "reality_stability", "evolution_speed", "manifestation_rate", "connection_strength"]
     var property = properties[randi() % properties.size()]
     
-    // Transfer the property
+# // Transfer the property
     to_props[property] = from_props[property]
     
-    // Apply if we're in the target universe
+# // Apply if we're in the target universe
     if current_universe_id == to_universe:
         apply_universe_settings(to_universe)
 
 func crossover_concept(from_universe: int, to_universe: int):
-    // Find a concept that exists in the source universe and transfer it
+# // Find a concept that exists in the source universe and transfer it
     for concept_id in core_concepts:
         var concept = core_concepts[concept_id]
         
         if concept.universe_manifestations.has(from_universe) and concept.universe_manifestations[from_universe].word_id != "":
-            // This concept exists in the source universe
+# // This concept exists in the source universe
             
-            // Make it available in the target universe
+# // Make it available in the target universe
             if !concept.universe_manifestations.has(to_universe):
                 concept.universe_manifestations[to_universe] = {
                     "word_id": "",
@@ -1230,7 +1230,7 @@ func crossover_concept(from_universe: int, to_universe: int):
                     "influence": 0.6
                 }
             
-            // If we're in the target universe, manifest it
+# // If we're in the target universe, manifest it
             if current_universe_id == to_universe and word_seed_evolution and word_seed_evolution.has_method("plant_seed"):
                 var position = Vector3(randf_range(-10, 10), randf_range(0, 5), randf_range(-10, 10))
                 var word_id = word_seed_evolution.plant_seed(concept.name, position, "concept")
@@ -1238,22 +1238,22 @@ func crossover_concept(from_universe: int, to_universe: int):
                 if word_id != "":
                     concept.universe_manifestations[to_universe].word_id = word_id
                     
-                    // Add visual effects
+# // Add visual effects
                     if game_controller and game_controller.has_method("create_word_hologram"):
                         game_controller.create_word_hologram(word_id)
             
-            // Only do one concept per crossover
+# // Only do one concept per crossover
             break
 
 func crossover_reality(from_universe: int, to_universe: int):
     if !active_universes.has(from_universe) or !active_universes.has(to_universe):
         return
     
-    // Transfer dominant reality
+# // Transfer dominant reality
     var from_reality = active_universes[from_universe].dominant_reality
     active_universes[to_universe].dominant_reality = from_reality
     
-    // Apply if we're in the target universe
+# // Apply if we're in the target universe
     if current_universe_id == to_universe:
         if game_controller and game_controller.has_method("set_reality"):
             game_controller.set_reality(from_reality)
@@ -1268,44 +1268,44 @@ func record_crossover_event(from_universe: int, to_universe: int, elements: Arra
         "time": Time.get_ticks_msec() / 1000.0
     }
     
-    // Add to crossover events
+# // Add to crossover events
     crossover_events.append(event)
     
-    // Emit signal
+# // Emit signal
     emit_signal("crossover_occurred", from_universe, to_universe, elements)
 
 # ----- UNIVERSE EVOLUTION -----
 func evolve_universes():
-    // Make incremental changes to universes each turn
+# // Make incremental changes to universes each turn
     for universe_id in active_universes:
         var universe = active_universes[universe_id]
         
-        // Small random variations in properties
+# // Small random variations in properties
         for prop in universe.properties:
             var variation = randf_range(-0.05, 0.05)
             universe.properties[prop] = clamp(universe.properties[prop] + variation, 0.1, 2.0)
         
-        // Chance to change dominant reality
+# // Chance to change dominant reality
         if randf() < 0.1:
             var realities = ["physical", "digital", "astral"]
             var current_index = realities.find(universe.dominant_reality)
             var new_index = (current_index + 1 + randi() % 2) % realities.size()
             universe.dominant_reality = realities[new_index]
     
-    // Chance to create a new universe
+# // Chance to create a new universe
     if universe_count < 9 and randf() < 0.15:
         var new_universe_id = universe_count
         create_universe(new_universe_id)
         universe_count += 1
         
-        // Create access points to the new universe
+# // Create access points to the new universe
         create_access_points_for_universe(new_universe_id)
 
 func create_access_points_for_universe(universe_id: int):
     if !active_universes.has(universe_id):
         return
     
-    // Create 1-3 access points to existing universes
+# // Create 1-3 access points to existing universes
     var access_count = 1 + randi() % 3
     var existing_universes = active_universes.keys()
     existing_universes.erase(universe_id)
@@ -1313,10 +1313,10 @@ func create_access_points_for_universe(universe_id: int):
     for i in range(min(access_count, existing_universes.size())):
         var target_id = existing_universes[i]
         
-        // Generate a unique ID for this access point
+# // Generate a unique ID for this access point
         var access_id = "access_" + str(universe_id) + "_to_" + str(target_id)
         
-        // Create access point data
+# // Create access point data
         universe_access_points[access_id] = {
             "id": access_id,
             "from_universe": universe_id,
@@ -1327,7 +1327,7 @@ func create_access_points_for_universe(universe_id: int):
             "active": true
         }
         
-        // Create reverse access point
+# // Create reverse access point
         var reverse_id = "access_" + str(target_id) + "_to_" + str(universe_id)
         universe_access_points[reverse_id] = {
             "id": reverse_id,
@@ -1345,15 +1345,15 @@ func create_additional_access_points(count: int):
         return
     
     for i in range(count):
-        // Choose two random universes
+# // Choose two random universes
         universe_ids.shuffle()
         var universe1 = universe_ids[0]
         var universe2 = universe_ids[1]
         
-        // Generate a unique ID for this access point
+# // Generate a unique ID for this access point
         var access_id = "access_" + str(universe1) + "_to_" + str(universe2) + "_" + str(i)
         
-        // Create access point data
+# // Create access point data
         universe_access_points[access_id] = {
             "id": access_id,
             "from_universe": universe1,
@@ -1365,26 +1365,26 @@ func create_additional_access_points(count: int):
         }
 
 func evolve_core_concepts():
-    // Evolve concepts across universes
+# // Evolve concepts across universes
     for concept_id in core_concepts:
         var concept = core_concepts[concept_id]
         
         for universe_id in concept.universe_manifestations:
             var manifestation = concept.universe_manifestations[universe_id]
             
-            // Skip if not manifested yet
+# // Skip if not manifested yet
             if manifestation.word_id == "":
                 continue
             
-            // Chance to increase influence
+# // Chance to increase influence
             if randf() < 0.2:
                 manifestation.influence = min(1.0, manifestation.influence + 0.1)
             
-            // Apply influence to universe properties
+# // Apply influence to universe properties
             if active_universes.has(universe_id):
                 var universe = active_universes[universe_id]
                 
-                // Core concepts stabilize reality
+# // Core concepts stabilize reality
                 universe.properties.reality_stability = lerp(
                     universe.properties.reality_stability,
                     1.0,
@@ -1392,78 +1392,78 @@ func evolve_core_concepts():
                 )
 
 func update_universe_properties():
-    // Apply turn-based changes to universe properties
+# // Apply turn-based changes to universe properties
     for universe_id in active_universes:
         var universe = active_universes[universe_id]
         
-        // Adjust properties based on age progression
+# // Adjust properties based on age progression
         var age_factor = float(current_age) / max(1, cosmic_ages.size() - 1)
         
-        // As ages progress:
-        // - Time flow becomes more unified
-        // - Reality stability increases
-        // - Evolution becomes more directed
+# // As ages progress:
+# // - Time flow becomes more unified
+# // - Reality stability increases
+# // - Evolution becomes more directed
         universe.properties.time_flow_rate = lerp(universe.properties.time_flow_rate, 1.0, age_factor * 0.1)
         universe.properties.reality_stability = lerp(universe.properties.reality_stability, 1.0, age_factor * 0.1)
         
-        // Apply story influence
+# // Apply story influence
         if universe_stories.has(universe_id):
             var story = universe_stories[universe_id]
             
-            // Story stage affects properties
+# // Story stage affects properties
             match story.current_stage:
                 "rising_action":
-                    // Increasing evolution and manifestation
+# // Increasing evolution and manifestation
                     universe.properties.evolution_speed *= 1.01
                     universe.properties.manifestation_rate *= 1.01
                 
                 "climax":
-                    // Peak activity
+# // Peak activity
                     universe.properties.evolution_speed = max(universe.properties.evolution_speed, 1.2)
                     universe.properties.manifestation_rate = max(universe.properties.manifestation_rate, 1.2)
                 
                 "falling_action":
-                    // Decreasing activity
+# // Decreasing activity
                     universe.properties.evolution_speed *= 0.99
                     universe.properties.manifestation_rate *= 0.99
                 
                 "resolution":
-                    // Stabilizing
+# // Stabilizing
                     universe.properties.reality_stability = max(universe.properties.reality_stability, 0.9)
         
-        // Apply to current universe if needed
+# // Apply to current universe if needed
         if universe_id == current_universe_id:
             apply_universe_settings(universe_id)
 
 # ----- METANARRATIVE EFFECTS -----
 func strengthen_core_concepts():
-    // Strengthen the manifestation of core concepts
+# // Strengthen the manifestation of core concepts
     for concept_id in core_concepts:
         var concept = core_concepts[concept_id]
         
         for universe_id in concept.universe_manifestations:
             var manifestation = concept.universe_manifestations[universe_id]
             
-            // Increase stability and influence
+# // Increase stability and influence
             manifestation.stability = min(1.0, manifestation.stability + 0.2)
             manifestation.influence = min(1.0, manifestation.influence + 0.2)
             
-            // If we're in this universe and the concept is manifested
+# // If we're in this universe and the concept is manifested
             if universe_id == current_universe_id and manifestation.word_id != "" and word_seed_evolution:
-                // Strengthen the word
+# // Strengthen the word
                 if word_seed_evolution.has_method("_evolve_seed"):
                     word_seed_evolution._evolve_seed(manifestation.word_id)
                 
-                // Add visual effects
+# // Add visual effects
                 if game_controller and game_controller.has_method("create_word_hologram"):
                     game_controller.create_word_hologram(manifestation.word_id)
 
 func align_universe_properties():
-    // Align certain properties across universes
+# // Align certain properties across universes
     var avg_time_flow = 0.0
     var avg_evolution_speed = 0.0
     
-    // Calculate averages
+# // Calculate averages
     for universe_id in active_universes:
         var universe = active_universes[universe_id]
         avg_time_flow += universe.properties.time_flow_rate
@@ -1472,31 +1472,31 @@ func align_universe_properties():
     avg_time_flow /= active_universes.size()
     avg_evolution_speed /= active_universes.size()
     
-    // Move properties toward average
+# // Move properties toward average
     for universe_id in active_universes:
         var universe = active_universes[universe_id]
         universe.properties.time_flow_rate = lerp(universe.properties.time_flow_rate, avg_time_flow, 0.3)
         universe.properties.evolution_speed = lerp(universe.properties.evolution_speed, avg_evolution_speed, 0.3)
     
-    // Apply to current universe
+# // Apply to current universe
     apply_universe_settings(current_universe_id)
 
 func begin_universe_convergence():
-    // Start process of universe convergence
-    // Increase connection strength between universes
+# // Start process of universe convergence
+# // Increase connection strength between universes
     for access_id in universe_access_points:
         var access_point = universe_access_points[access_id]
         
-        // Reduce energy cost
+# // Reduce energy cost
         access_point.energy_cost *= 0.7
         
-        // Increase stability
+# // Increase stability
         access_point.stability = min(1.0, access_point.stability + 0.2)
     
-    // Increase story synchronization
+# // Increase story synchronization
     story_synchronization *= 1.5
     
-    // Manifest convergence-themed words
+# // Manifest convergence-themed words
     if current_universe_id >= 0 and word_seed_evolution:
         var convergence_words = ["convergence", "unification", "merge", "synthesis", "reunion"]
         
@@ -1505,7 +1505,7 @@ func begin_universe_convergence():
             word_seed_evolution.plant_seed(word, pos, "concept")
 
 func reveal_ultimate_reality():
-    // Create a special zone representing the ultimate reality
+# // Create a special zone representing the ultimate reality
     if zone_scale_system:
         var ultimate_zone_id = zone_scale_system.create_custom_zone(
             Vector3(0, 20, 0),
@@ -1520,7 +1520,7 @@ func reveal_ultimate_reality():
             }
         )
         
-        // Manifest the ultimate concepts
+# // Manifest the ultimate concepts
         if word_seed_evolution:
             var ultimate_concepts = ["absolute", "eternal", "infinite", "one", "all", "ultimate", "perfect"]
             
@@ -1532,20 +1532,20 @@ func reveal_ultimate_reality():
                     game_controller.create_word_hologram(word_id)
 
 func complete_metanarrative_cycle():
-    // Reset some aspects while preserving progress
+# // Reset some aspects while preserving progress
     current_turn = 1
     
-    // Start a new age if not at max
+# // Start a new age if not at max
     if current_age < cosmic_ages.size() - 1:
         current_age += 1
     
-    // Reset turn timer
+# // Reset turn timer
     turn_time_remaining = evolution_turn_duration
     
-    // Create a new metanarrative cycle
+# // Create a new metanarrative cycle
     initialize_metanarrative()
     
-    // Show epic notification
+# // Show epic notification
     if game_controller and game_controller.has_method("show_notification"):
         game_controller.show_notification(
             "The Cosmic Cycle Begins Anew - Age of " + cosmic_ages[current_age],
@@ -1554,14 +1554,14 @@ func complete_metanarrative_cycle():
 
 # ----- HELPER FUNCTIONS -----
 func calculate_universe_alignment() -> float:
-    // Calculate how aligned universes are in terms of properties
+# // Calculate how aligned universes are in terms of properties
     if active_universes.size() < 2:
         return 1.0
     
     var total_deviation = 0.0
     var prop_count = 0
     
-    // For each property, calculate average deviation
+# // For each property, calculate average deviation
     var properties = ["time_flow_rate", "reality_stability", "evolution_speed", "manifestation_rate", "connection_strength"]
     
     for prop in properties:
@@ -1572,40 +1572,40 @@ func calculate_universe_alignment() -> float:
                 values.append(active_universes[universe_id].properties[prop])
         
         if values.size() > 1:
-            // Calculate average
+# // Calculate average
             var avg = 0.0
             for val in values:
                 avg += val
             avg /= values.size()
             
-            // Calculate average deviation
+# // Calculate average deviation
             var deviation = 0.0
             for val in values:
                 deviation += abs(val - avg)
             deviation /= values.size()
             
-            // Add to total
+# // Add to total
             total_deviation += deviation
             prop_count += 1
     
     if prop_count == 0:
         return 1.0
     
-    // Calculate average deviation across all properties
+# // Calculate average deviation across all properties
     var avg_deviation = total_deviation / prop_count
     
-    // Convert to alignment (0-1, where 1 is perfect alignment)
+# // Convert to alignment (0-1, where 1 is perfect alignment)
     return max(0.0, 1.0 - avg_deviation)
 
 func calculate_story_synchronization() -> float:
-    // Calculate how synchronized stories are across universes
+# // Calculate how synchronized stories are across universes
     if universe_stories.size() < 2:
         return 1.0
     
     var same_segment_count = 0
     var total_comparisons = 0
     
-    // Compare segments across universes
+# // Compare segments across universes
     var universe_ids = universe_stories.keys()
     
     for i in range(universe_ids.size()):
@@ -1626,10 +1626,10 @@ func calculate_story_synchronization() -> float:
 func count_evolved_core_concepts() -> int:
     var evolved_count = 0
     
-    // Count evolved core concepts
+# // Count evolved core concepts
     for concept_id in core_concepts:
         if core_concepts[concept_id].is_constant:
-            // Check if evolved in multiple universes
+# // Check if evolved in multiple universes
             var universe_count = 0
             
             for universe_id in core_concepts[concept_id].universe_manifestations:
@@ -1643,43 +1643,43 @@ func count_evolved_core_concepts() -> int:
 
 # ----- EVENT HANDLERS -----
 func _on_player_moved(distance, velocity):
-    // Update multiverse state based on player movement
+# // Update multiverse state based on player movement
     
-    // Movement can trigger crossover events
+# // Movement can trigger crossover events
     if distance > 2.0 and randf() < 0.01 * distance:
-        // Chance for random crossover based on movement
+# // Chance for random crossover based on movement
         var universe_ids = active_universes.keys()
         if universe_ids.size() >= 2:
             universe_ids.erase(current_universe_id)
             var target_universe = universe_ids[randi() % universe_ids.size()]
             create_crossover(current_universe_id, target_universe, ["word"])
     
-    // Movement in high-velocity can cause reality shifts
+# // Movement in high-velocity can cause reality shifts
     if velocity.length() > 15.0 and randf() < 0.05:
-        // Chance to trigger reality shift near universe boundaries
+# // Chance to trigger reality shift near universe boundaries
         check_for_reality_boundary()
 
 func check_for_reality_boundary():
-    // Check if player is near a universe boundary
+# // Check if player is near a universe boundary
     for access_id in universe_access_points:
         var access_point = universe_access_points[access_id]
         
-        // Only check access points from current universe
+# // Only check access points from current universe
         if access_point.from_universe != current_universe_id:
             continue
         
         var distance = player_controller.global_position.distance_to(access_point.position)
         
-        // If near access point, chance of reality distortion
+# // If near access point, chance of reality distortion
         if distance < 5.0 and randf() < access_point.stability:
-            // Trigger reality effect
+# // Trigger reality effect
             if game_controller and game_controller.has_method("show_notification"):
                 game_controller.show_notification(
                     "Reality boundary detected - " + active_universes[access_point.to_universe].name + " Universe",
                     2.0
                 )
             
-            // Create visual distortion
+# // Create visual distortion
             if game_controller and game_controller.has_method("create_reality_distortion"):
                 game_controller.create_reality_distortion(access_point.position, access_point.to_universe)
 

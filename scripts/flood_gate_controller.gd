@@ -8,9 +8,11 @@ func register_being(being: UniversalBeing) -> void:
 		beings.append(being)
 		print("🌊 FloodGate registered: %s (%s)" % [being.being_name, being.being_uuid])
 
+
 func deregister_being(being: UniversalBeing) -> void:
 	beings.erase(being)
 	print("🌊 FloodGate deregistered: %s" % being.being_name)
+
 
 func get_all_beings() -> Array[UniversalBeing]:
 	return beings

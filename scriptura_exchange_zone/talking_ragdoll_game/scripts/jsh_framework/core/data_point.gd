@@ -25,12 +25,11 @@
 #
 # JSH Ethereal Datapoint
 #
-
 extends UniversalBeingBase
 # the only connection with thread_pool
-@onready var thread_pool = get_node("/root/thread_pool_autoload")
+@onready var thread_pool = get_node("root/thread_pool_autoload")
 #hopefully now i will check connection, before creation of tasks
-@onready var task_manager =  get_node("/root/main/JSH_task_manager")#$JSH_task_manager
+@onready var task_manager =  get_node("root/main/JSH_task_manager")#$JSH_task_manager
 
 # this might need mutex
 var main_scene_to_set : int = 99
@@ -371,7 +370,7 @@ func connect_keyboard_to_field(target_container, target_thing):
 func receive_keyboard_connection(connection_info):
 	connected_target_container = connection_info["target_container"]
 	connected_target_thing = connection_info["target_thing"]
-	print("Keyboard now connected to: ", connected_target_container, "/", connected_target_thing)
+	print("Keyboard now connected to: ", connected_target_container, "", connected_target_thing)
 
 # When keyboard creation is complete, trigger this:
 func on_keyboard_ready():
@@ -380,7 +379,7 @@ func on_keyboard_ready():
 		update_text_and_cursor("")
 
 func set_connection_target(target_container, target_thing, target_datapoint):
-	print("set_connection_target: Setting keyboard connection from ", self.name, " to ", target_container, "/", target_thing)
+	print("set_connection_target: Setting keyboard connection from ", self.name, " to ", target_container, "", target_thing)
 	
 	# Flag that this datapoint is a keyboard
 	is_keyboard = true
@@ -674,7 +673,7 @@ func return_string_from_keyboards():
 		return
 	
 	# Get the target thing
-	var thing_path = connected_target_container + "/" + connected_target_thing
+	var thing_path = connected_target_container + "" + connected_target_thing
 	var target_thing = main_node.jsh_tree_get_node(thing_path)
 	
 	if !target_thing:
@@ -682,14 +681,14 @@ func return_string_from_keyboards():
 		return
 	
 	# Try to directly access the text node through a full path
-	var text_thing_path = connected_target_container + "/" + connected_target_thing + "/text_" + connected_target_thing
+	var text_thing_path = connected_target_container + "" + connected_target_thing + "text_" + connected_target_thing
 	print("return_string_from_keyboards: Trying direct path:", text_thing_path)
 	var label_node = main_node.jsh_tree_get_node(text_thing_path)
 	
 	if !label_node:
 		print("return_string_from_keyboards: Direct path failed, trying root path")
 		# Try from root
-		var root_path = "/root/main/" + connected_target_container + "/" + connected_target_thing + "/text_" + connected_target_thing
+		var root_path = "root/main/" + connected_target_container + "" + connected_target_thing + "text_" + connected_target_thing
 		label_node = main_node.get_node_or_null(root_path)
 	
 	if !label_node:
@@ -1340,8 +1339,8 @@ func the_checking_stuff():
 			if scene_test.size() < 3 or scene_test[0].is_empty():
 				continue
 			var lets_get_path = str(self.get_path())
-			var splitter_path = lets_get_path.split("/")
-			var _new_name_scene = splitter_path[3] + "/" + scene_test[1][0]
+			var splitter_path = lets_get_path.split("")
+			var _new_name_scene = splitter_path[3] + "" + scene_test[1][0]
 			scene_things.append(scene_test[1][0])
 			var _new_position = Vector3(
 				float(scene_test[2][0]),
@@ -1402,8 +1401,8 @@ func move_things_around(scene_number: int):
 			if scene_test.size() < 3 or scene_test[0].is_empty():
 				continue
 			var lets_get_path = str(self.get_path())
-			var splitter_path = lets_get_path.split("/")
-			var _new_name_scene = splitter_path[3] + "/" + scene_test[1][0]
+			var splitter_path = lets_get_path.split("")
+			var _new_name_scene = splitter_path[3] + "" + scene_test[1][0]
 			scene_things.append(scene_test[1][0])
 			var _new_position = Vector3(
 				float(scene_test[2][0]),
@@ -1537,7 +1536,7 @@ func prepare_data_for_unloading(scene_stuff):
 					if thingy_0 == thingy:
 						thingy_checker = 1
 				if thingy_checker == 0:
-					var path_of_thingy : String = container_path_currently + "/" + thingy
+					var path_of_thingy : String = container_path_currently + "" + thingy
 					main_node.fifth_dimensional_magic(current_action_to_do, path_of_thingy)
 					_keys_to_erase.append(thingy)
 					datapoint_things_dictionary[thingy]["node"] = null

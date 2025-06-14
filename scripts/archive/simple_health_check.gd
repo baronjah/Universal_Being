@@ -29,6 +29,7 @@ func _init():
 	var health_percentage = (working_paths / float(critical_paths.size())) * 100
 	print("🏥 ================================")
 	print("🏥 Critical Path Health: %.1f%% (%d/%d)" % [health_percentage, working_paths, critical_paths.size()])
+
 	
 	# Test new systems instantiation
 	print("🏥 Testing new systems...")

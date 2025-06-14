@@ -3,8 +3,7 @@
 # DESCRIPTION: Complete ragdoll with proper legs and talking ability - FIXED
 # CREATED: 2025-05-26 - Fixed all GDScript errors
 # ==================================================
-
-extends Node3D
+extends \2
 
 # Body parts - properly declared
 var body_parts: Dictionary = {}

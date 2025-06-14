@@ -1,17 +1,17 @@
 extends Node3D
 
-class_name ZoneScaleSystem
+class_name ZoneScaleSystem_zonescalesystem_zonescal
 
 # ----- SCALE ZONE SETTINGS -----
 @export_category("Scale Zone Settings")
-@export var zones_enabled: bool = true
-@export var visualization_enabled: bool = true
-@export var transition_smoothing: float = 0.8
-@export var update_frequency: float = 0.5  # Seconds between zone updates
+@@@export var zones_enabled: bool = true
+@@@export var visualization_enabled: bool = true
+@@@export var transition_smoothing: float = 0.8
+@@@export var update_frequency: float = 0.5  # Seconds between zone updates
 
 # ----- SCALE DEFINITIONS -----
 @export_category("Scale Definitions")
-@export var scale_levels: Array[String] = [
+@@@export var scale_levels: Array[String] = [
     "quantum",     # Subatomic scale
     "micro",       # Microscopic
     "object",      # Human-scale objects
@@ -24,7 +24,8 @@ class_name ZoneScaleSystem
 ]
 
 # ----- ZONE TYPES -----
-enum ZoneType {
+enum \2 {
+
     STABLE,        # Slow evolution, high stability
     CHAOTIC,       # Fast evolution, high instability
     CREATIVE,      # High manifestation rate, medium stability

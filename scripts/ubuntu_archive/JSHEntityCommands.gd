@@ -32,8 +32,7 @@ func register_commands() -> void:
             "max_args": 2,
             "arg_types": [TYPE_STRING, TYPE_STRING],
             "arg_descriptions": ["Filter type (type/tag)", "Filter value"]
-        }
-    }
+			}
     
     # Register with console manager
     for cmd_name in commands:
@@ -43,7 +42,8 @@ func register_commands() -> void:
 func cmd_entity(self, args: Array) -> Dictionary:
     if args.size() < 1:
         console_manager.print_error("Missing subcommand for entity")
-        return {"success": false, "message": "Missing subcommand"}
+        return {"success": false, "message": "Missing subcommand"
+		}
     
     var subcommand = args[0].to_lower()
     var subargs = args.slice(1)
@@ -66,7 +66,8 @@ func cmd_entity(self, args: Array) -> Dictionary:
         _:
             console_manager.print_error("Unknown entity subcommand: " + subcommand)
             console_manager.print_line("Available subcommands: list, create, delete, info, find, tag, stats")
-            return {"success": false, "message": "Unknown subcommand: " + subcommand}
+            return {"success": false, "message": "Unknown subcommand: " + subcommand
+			}
 
 # Entity subcommands
 func cmd_entity_list(self, args: Array) -> Dictionary:
@@ -91,6 +92,7 @@ func cmd_entity_list(self, args: Array) -> Dictionary:
             entities.append(entity_manager.entities[id])
     
     console_manager.print_line("Entities" + (": " + str(entities.size()) if entities.size() > 0 else " (none)"))
+	}
     
     for entity in entities:
         var tags = ""
@@ -98,21 +100,23 @@ func cmd_entity_list(self, args: Array) -> Dictionary:
             tags = " [" + ", ".join(entity.get_tags()) + "]"
         
         console_manager.print_line("  " + entity.get_id().substr(0, 8) + ": " + entity.get_type() + tags)
+		
     
     return {
         "success": true,
         "message": str(entities.size()) + " entities found",
         "count": entities.size(),
         "entities": entities
-    }
+		}
 
 func cmd_entity_create(self, args: Array) -> Dictionary:
     if args.size() < 1:
         console_manager.print_error("Entity type required")
-        return {"success": false, "message": "Entity type required"}
+        return {"success": false, "message": "Entity type required"
+		}
     
     var entity_type = args[0]
-    var properties = {}
+    var properties = {
     
     # Parse properties
     for i in range(1, args.size()):
@@ -136,21 +140,23 @@ func cmd_entity_create(self, args: Array) -> Dictionary:
         console_manager.print_success("Created entity: " + entity.get_id())
         console_manager.print_line("Type: " + entity.get_type())
         console_manager.print_line("Properties: " + str(properties))
+		}
         
         return {
             "success": true,
             "message": "Entity created",
             "entity_id": entity.get_id(),
-            "entity": entity
-        }
+            "entity": entity}
     else:
         console_manager.print_error("Failed to create entity")
-        return {"success": false, "message": "Failed to create entity"}
+        return {"success": false, "message": "Failed to create entity"
+		}
 
 func cmd_entity_delete(self, args: Array) -> Dictionary:
     if args.size() < 1:
         console_manager.print_error("Entity ID required")
-        return {"success": false, "message": "Entity ID required"}
+        return {"success": false, "message": "Entity ID required"
+		}
     
     var entity_id = args[0]
     
@@ -168,12 +174,14 @@ func cmd_entity_delete(self, args: Array) -> Dictionary:
         return {"success": true, "message": "Entity deleted", "entity_id": full_id}
     else:
         console_manager.print_error("Entity not found: " + entity_id)
-        return {"success": false, "message": "Entity not found"}
+        return {"success": false, "message": "Entity not found"
+		}
 
 func cmd_entity_info(self, args: Array) -> Dictionary:
     if args.size() < 1:
         console_manager.print_error("Entity ID required")
-        return {"success": false, "message": "Entity ID required"}
+        return {"success": false, "message": "Entity ID required"
+		}
     
     var entity_id = args[0]
     
@@ -194,12 +202,14 @@ func cmd_entity_info(self, args: Array) -> Dictionary:
         console_manager.print_line("Creation Time: " + entity.get_creation_timestamp())
         console_manager.print_line("Complexity: " + str(entity.complexity))
         console_manager.print_line("Evolution Stage: " + str(entity.evolution_stage))
+		
         
         # Properties
         var properties = entity.get_properties()
         console_manager.print_line("\nProperties:")
         for key in properties:
             console_manager.print_line("  " + key + ": " + str(properties[key]))
+			
         
         # Tags
         var tags = entity.get_tags()
@@ -231,16 +241,17 @@ func cmd_entity_info(self, args: Array) -> Dictionary:
         return {
             "success": true,
             "message": "Entity info displayed",
-            "entity": entity
-        }
+            "entity": entity}
     else:
         console_manager.print_error("Entity not found: " + entity_id)
-        return {"success": false, "message": "Entity not found"}
+        return {"success": false, "message": "Entity not found"
+		}
 
 func cmd_entity_find(self, args: Array) -> Dictionary:
     if args.size() < 2:
         console_manager.print_error("Search criteria required (type/property/tag/zone value)")
-        return {"success": false, "message": "Search criteria required"}
+        return {"success": false, "message": "Search criteria required"
+		}
     
     var search_type = args[0].to_lower()
     var search_value = args[1]
@@ -255,7 +266,8 @@ func cmd_entity_find(self, args: Array) -> Dictionary:
         "property":
             if args.size() < 3:
                 console_manager.print_error("Property value required")
-                return {"success": false, "message": "Property value required"}
+                return {"success": false, "message": "Property value required"
+				}
             
             var property_name = search_value
             var property_value = args[2]
@@ -274,24 +286,27 @@ func cmd_entity_find(self, args: Array) -> Dictionary:
         _:
             console_manager.print_error("Unknown search type: " + search_type)
             console_manager.print_line("Valid search types: type, tag, property")
-            return {"success": false, "message": "Unknown search type"}
+            return {"success": false, "message": "Unknown search type"
+			}
     
     console_manager.print_line("Found " + str(entities.size()) + " entities matching " + search_type + "=" + search_value)
     
     for entity in entities:
         console_manager.print_line("  " + entity.get_id().substr(0, 8) + ": " + entity.get_type())
+		
     
     return {
         "success": true,
         "message": str(entities.size()) + " entities found",
         "count": entities.size(),
         "entities": entities
-    }
+		}
 
 func cmd_entity_tag(self, args: Array) -> Dictionary:
     if args.size() < 3:
         console_manager.print_error("Usage: entity tag add/remove <entity_id> <tag>")
-        return {"success": false, "message": "Invalid arguments"}
+        return {"success": false, "message": "Invalid arguments"
+		}
     
     var action = args[0].to_lower()
     var entity_id = args[1]
@@ -310,7 +325,8 @@ func cmd_entity_tag(self, args: Array) -> Dictionary:
     
     if not entity:
         console_manager.print_error("Entity not found: " + entity_id)
-        return {"success": false, "message": "Entity not found"}
+        return {"success": false, "message": "Entity not found"
+		}
     
     match action:
         "add":
@@ -320,8 +336,7 @@ func cmd_entity_tag(self, args: Array) -> Dictionary:
                     "success": true,
                     "message": "Tag added",
                     "entity": entity,
-                    "tag": tag
-                }
+                    "tag": tag}
             else:
                 console_manager.print_warning("Entity already has tag '" + tag + "'")
                 return {
@@ -329,7 +344,7 @@ func cmd_entity_tag(self, args: Array) -> Dictionary:
                     "message": "Tag already exists",
                     "entity": entity,
                     "tag": tag
-                }
+					}
         
         "remove":
             if entity.remove_tag(tag):
@@ -338,8 +353,7 @@ func cmd_entity_tag(self, args: Array) -> Dictionary:
                     "success": true,
                     "message": "Tag removed",
                     "entity": entity,
-                    "tag": tag
-                }
+                    "tag": tag}
             else:
                 console_manager.print_warning("Entity does not have tag '" + tag + "'")
                 return {
@@ -347,12 +361,13 @@ func cmd_entity_tag(self, args: Array) -> Dictionary:
                     "message": "Tag does not exist",
                     "entity": entity,
                     "tag": tag
-                }
+					}
         
         _:
             console_manager.print_error("Unknown tag action: " + action)
             console_manager.print_line("Valid actions: add, remove")
-            return {"success": false, "message": "Unknown tag action"}
+            return {"success": false, "message": "Unknown tag action"
+			}
 
 func cmd_entity_stats(self, args: Array) -> Dictionary:
     var stats = entity_manager.get_statistics()
@@ -361,20 +376,23 @@ func cmd_entity_stats(self, args: Array) -> Dictionary:
     console_manager.print_line("  Total Entities: " + str(stats.total_entities))
     console_manager.print_line("  Process Queue: " + str(stats.process_queue_size))
     console_manager.print_line("  Average Complexity: " + str(snappedf(stats.average_complexity, 0.01)))
+	
     
     console_manager.print_line("\nEntities by Type:")
     for type in stats.by_type:
         console_manager.print_line("  " + type + ": " + str(stats.by_type[type]))
+		
     
     console_manager.print_line("\nEntities by Evolution Stage:")
     for stage in stats.by_evolution_stage:
         console_manager.print_line("  Stage " + stage + ": " + str(stats.by_evolution_stage[stage]))
+		
     
     return {
         "success": true,
         "message": "Entity statistics displayed",
         "stats": stats
-    }
+		}
 
 # Entities command handler
 func cmd_entities(self, args: Array) -> Dictionary:

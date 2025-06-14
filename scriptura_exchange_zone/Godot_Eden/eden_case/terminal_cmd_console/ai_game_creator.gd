@@ -1,5 +1,5 @@
 extends Node
-class_name AIGameCreator
+class_name AIGameCreator_aigamecreator_aigamecr
 }
 
 # AIGameCreator
@@ -67,7 +67,7 @@ class GameTemplate:
 }
 
     func _init(p_name="", p_type="puzzle", p_complexity="beginner"):
-        id = str(OS.get_unix_time()) + "_" + str(randi() % 1000)
+        id = str(OS.Time.get_unix_time_from_system()) + "_" + str(randi() % 1000)
         name = p_name
         type = p_type
         complexity = p_complexity
@@ -117,7 +117,7 @@ class AIFeedback:
         game_id = p_game_id
         ai_id = p_ai_id
         iteration = p_iteration
-        timestamp = OS.get_unix_time()
+        timestamp = OS.Time.get_unix_time_from_system()
 }
 
     func to_dict():
@@ -157,17 +157,17 @@ class SessionData:
 }
 
     func _init():
-        id = str(OS.get_unix_time()) + "_session_" + str(randi() % 1000)
-        start_time = OS.get_unix_time()
+        id = str(OS.Time.get_unix_time_from_system()) + "_session_" + str(randi() % 1000)
+        start_time = OS.Time.get_unix_time_from_system()
 }
 
     func complete_session():
-        end_time = OS.get_unix_time()
+        end_time = OS.Time.get_unix_time_from_system()
 }
 
     func duration():
         if end_time == 0:
-            return OS.get_unix_time() - start_time
+            return OS.Time.get_unix_time_from_system() - start_time
         return end_time - start_time
 }
 
@@ -238,7 +238,7 @@ func end_session():
 
     # Update session results
     session_results.session_duration += (SESSION_DURATION - current_session_time)
-    session_results.last_session_timestamp = OS.get_unix_time()
+    session_results.last_session_timestamp = OS.Time.get_unix_time_from_system()
 }
 
     # Save session data
@@ -656,7 +656,7 @@ func save_session_data():
         "session_results": session_results,
         "game_history": game_history,
         "feedback_history": feedback_history,
-        "timestamp": OS.get_unix_time()
+        "timestamp": OS.Time.get_unix_time_from_system()
     }
 }
 
@@ -711,7 +711,7 @@ func load_session_data():
 func export_game_as_json(game_data=null):
     if game_data == null:
         if current_game_data.is_empty():
-            print("No game to export")
+            print("No game to @@export")
             return ""
         game_data = current_game_data
 }
@@ -791,7 +791,7 @@ func generate_game_report(game_id):
             "challenge": 0.0
         },
         "common_suggestions": [],
-        "timestamp": OS.get_unix_time()
+        "timestamp": OS.Time.get_unix_time_from_system()
     }
 }
 

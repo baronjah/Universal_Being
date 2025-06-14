@@ -10,9 +10,8 @@
 # PURPOSE: Detect mouse-drawn shapes for spell casting
 # BASED ON: Eden's shape detection algorithms
 # ==================================================
-
-extends UniversalBeingBase
-class_name ShapeGestureSystem
+extends \2
+class_name ShapeGestureSystem_shapegesturesystem_shapeges
 
 signal shape_detected(shape: String, confidence: float)
 signal gesture_completed(gesture: String, points: Array)

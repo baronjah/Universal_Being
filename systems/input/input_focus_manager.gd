@@ -26,6 +26,7 @@ func pentagon_init() -> void:
 	
 	print("🎯 Input Focus Manager: Pentagon Init Complete")
 
+
 func pentagon_ready() -> void:
 	super.pentagon_ready()
 	
@@ -36,6 +37,7 @@ func pentagon_ready() -> void:
 			flood_gates.register_system_being(self)
 	
 	print("🎯 Input Focus Manager: Pentagon Ready Complete")
+
 
 func pentagon_process(delta: float) -> void:
 	super.pentagon_process(delta)
@@ -135,7 +137,7 @@ func ai_interface() -> Dictionary:
 		"focused_being": focused_being.name if focused_being else "none",
 		"focus_stack_size": focus_stack.size(),
 		"focus_locked": focus_locked
-	}
+}
 	
 	base_interface["capabilities"] = [
 		"focus_management",

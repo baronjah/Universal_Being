@@ -1,5 +1,5 @@
 extends Node
-class_name ThermalCalibrationSystem
+class_name ThermalCalibrationSystem_thermalcalibrationsystem_thermalc
 
 # Thermal Calibration System
 # Manages temperature fluctuations across the memory system
@@ -16,7 +16,8 @@ const MAX_RESTARTS_PER_DAY = 9
 const DAY_CYCLE_HOURS = 25.0  # Special 25-hour cycle
 
 # Temperature patterns (yoyo oscillators)
-enum YoyoPattern {
+enum \2 {
+
 	LINEAR,      # Smooth up-down
 	SINE_WAVE,   # Sinusoidal
 	STEP,        # Discrete steps
@@ -28,7 +29,7 @@ enum YoyoPattern {
 # Terminal command prefixes
 const MEMORY_COMMAND_PREFIX = "#memories"
 const TERMINAL_COMMAND_PREFIX = "#"
-const EDITOR_COMMAND_PREFIX = "/"
+const EDITOR_COMMAND_PREFIX = ""
 
 # System state
 var current_temperature = BASE_TEMPERATURE
@@ -87,10 +88,10 @@ func _ready():
 			memory_system.connect("turn_completed", Callable(self, "_on_turn_completed"))
 
 func _find_memory_system():
-	return get_node_or_null("/root/MemoryTurnSystem") or get_node_or_null("../MemoryTurnSystem")
+	return get_node_or_null("root/MemoryTurnSystem") or get_node_or_null("../MemoryTurnSystem")
 
 func _find_triple_connector():
-	return get_node_or_null("/root/TripleMemoryConnector") or get_node_or_null("../TripleMemoryConnector")
+	return get_node_or_null("root/TripleMemoryConnector") or get_node_or_null("../TripleMemoryConnector")
 
 func _initialize_oscillators():
 	# Create all yoyo oscillator patterns
@@ -266,7 +267,7 @@ func _cycle_active_patterns():
 
 func _prepare_system_restart():
 	restart_count += 1
-	print("Preparing system restart " + str(restart_count) + "/" + str(MAX_RESTARTS_PER_DAY))
+	print("Preparing system restart " + str(restart_count) + "" + str(MAX_RESTARTS_PER_DAY))
 	
 	# Execute restart command
 	execute_terminal_command("#memories prepare_restart")
@@ -379,7 +380,7 @@ func _process_terminal_command(command: String) -> String:
 		"cycle":
 			result = "Cycle position: " + str(current_cycle_position * 100.0) + "%"
 		"restart":
-			result = "Restart count: " + str(restart_count) + "/" + str(MAX_RESTARTS_PER_DAY)
+			result = "Restart count: " + str(restart_count) + "" + str(MAX_RESTARTS_PER_DAY)
 		"patterns":
 			result = "Active patterns: " + str(active_patterns)
 		"day":
@@ -435,10 +436,10 @@ func _get_memory_status() -> String:
 	var status = "MEMORY SYSTEM STATUS:\n"
 	
 	if memory_system:
-		status += "Turn: " + str(memory_system.current_turn) + "/" + str(memory_system.TURN_COUNT) + "\n"
+		status += "Turn: " + str(memory_system.current_turn) + "" + str(memory_system.TURN_COUNT) + "\n"
 		status += "Dot frequency: " + str(memory_system.DOT_FREQUENCY_BASE) + "%\n"
 		status += "Screen mode: " + memory_system.screen_mode + "\n"
-		status += "Memory slots: " + str(memory_system.count_active_memories()) + "/" + str(memory_system.MAX_MEMORY_SLOTS) + "\n"
+		status += "Memory slots: " + str(memory_system.count_active_memories()) + "" + str(memory_system.MAX_MEMORY_SLOTS) + "\n"
 	else:
 		status += "Memory system not connected\n"
 	
@@ -468,7 +469,7 @@ func _activate_claude_plus() -> void:
 		"#memories status",
 		"#temp",
 		"#cycle",
-		"/custom terminal_sync"
+		"custom terminal_sync"
 	]
 	
 	# Execute them sequentially

@@ -1,5 +1,5 @@
 extends Node
-class_name UniversalBridge
+class_name UniversalBridge_universalbridge_universa
 
 # System references
 var akashic_records_manager: Node = null

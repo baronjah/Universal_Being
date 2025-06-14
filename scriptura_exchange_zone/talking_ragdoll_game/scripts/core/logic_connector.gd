@@ -4,7 +4,6 @@
 # Created: May 31st, 2025 | Perfect Pentagon Architecture
 # Location: scripts/core/logic_connector.gd
 ################################################################
-
 extends UniversalBeingBase
 ################################################################
 # CORE VARIABLES
@@ -427,8 +426,8 @@ func _execute_movement(being: Node, direction: Vector3) -> String:
 
 func _execute_sound(being: Node, sound_name: String) -> String:
 	"""Execute sound action"""
-	if has_node("/root/AudioManager"):
-		var audio_manager = get_node("/root/AudioManager")
+	if has_node("root/AudioManager"):
+		var audio_manager = get_node("root/AudioManager")
 		if audio_manager.has_method("play_sound"):
 			audio_manager.play_sound(sound_name)
 			return "success"
@@ -466,8 +465,8 @@ func _execute_debug_print(being: Node) -> String:
 
 func _execute_visual_effect(being: Node, effect: String) -> String:
 	"""Execute visual effect action"""
-	if has_node("/root/UniversalShaderEffects"):
-		var shader_effects = get_node("/root/UniversalShaderEffects")
+	if has_node("root/UniversalShaderEffects"):
+		var shader_effects = get_node("root/UniversalShaderEffects")
 		if shader_effects.has_method("apply_shader_to_being"):
 			shader_effects.apply_shader_to_being(being, effect)
 			return "success"
@@ -483,8 +482,8 @@ func _setup_ai_integration():
 	"""
 	Set up AI entity integration for collaborative scripting
 	"""
-	if has_node("/root/PerfectReady"):
-		var perfect_ready = get_node("/root/PerfectReady")
+	if has_node("root/PerfectReady"):
+		var perfect_ready = get_node("root/PerfectReady")
 		if perfect_ready.has_signal("ai_entity_ready"):
 			perfect_ready.ai_entity_ready.connect(_on_ai_entity_ready)
 

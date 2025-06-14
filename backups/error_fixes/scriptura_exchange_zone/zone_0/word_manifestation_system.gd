@@ -428,7 +428,7 @@ func calculate_word_affinity(word1, word2):
 
 func evolve_random_word():
 	# Randomly evolve a word if possible
-	if manifested_words.empty():
+	if manifested_words.is_empty():
 		return
 	
 	# Get random word
@@ -473,7 +473,7 @@ func cull_oldest_words(dimension):
 			dimension_words.append(manifested_words[word_id])
 	
 	# Sort by creation time (oldest first)
-	dimension_words.sort_custom(self, "_sort_words_by_age")
+	dimension_words.sort_custom(self."_sort_words_by_age")
 	
 	# Delete oldest words until under limit
 	var to_delete = dimension_words.size() - MAX_WORDS_PER_DIMENSION

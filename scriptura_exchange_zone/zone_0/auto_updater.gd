@@ -1,24 +1,24 @@
 extends Node
 
-class_name AutoUpdater
+class_name AutoUpdater_autoupdater_autoupda
 
 # ----- CONFIGURATION -----
 @export_category("Update Settings")
-@export var check_on_startup: bool = true
-@export var update_server_url: String = "https://api.example.com/updates"
-@export var auto_download_updates: bool = false
-@export var update_channel: String = "stable"  # stable, beta, dev
-@export var max_download_retries: int = 3
-@export var download_timeout: int = 60  # seconds
-@export var temp_directory: String = "user://temp/"
+@@@export var check_on_startup: bool = true
+@@@export var update_server_url: String = "https://api.example.com/updates"
+@@@export var auto_download_updates: bool = false
+@@@export var update_channel: String = "stable"  # stable, beta, dev
+@@@export var max_download_retries: int = 3
+@@@export var download_timeout: int = 60  # seconds
+@@@export var temp_directory: String = "user://temp/"
 
 # ----- CONNECTION SETTINGS -----
 @export_category("Connection Settings")
-@export var auto_reconnect: bool = true
-@export var reconnect_interval: int = 10  # seconds
-@export var max_reconnect_attempts: int = 5
-@export var connection_timeout: int = 30  # seconds
-@export var api_endpoints: Dictionary = {
+@@@export var auto_reconnect: bool = true
+@@@export var reconnect_interval: int = 10  # seconds
+@@@export var max_reconnect_attempts: int = 5
+@@@export var connection_timeout: int = 30  # seconds
+@@@export var api_endpoints: Dictionary = {
     "auth": "https://api.example.com/auth",
     "status": "https://api.example.com/status",
     "config": "https://api.example.com/config"
@@ -145,7 +145,7 @@ func _simulate_update_check():
         
         # Update state
         is_update_available = true
-        update_check_time = OS.get_unix_time()
+        update_check_time = OS.Time.get_unix_time_from_system()
         
         # Emit signal
         emit_signal("update_available", latest_version, release_notes)
@@ -156,7 +156,7 @@ func _simulate_update_check():
         # No update available
         latest_version = current_version
         is_update_available = false
-        update_check_time = OS.get_unix_time()
+        update_check_time = OS.Time.get_unix_time_from_system()
         
         emit_signal("update_not_available")
         
@@ -397,7 +397,7 @@ func _finalize_connection():
     if all_connected:
         is_connected = true
         connection_status = "connected"
-        last_connection_time = OS.get_unix_time()
+        last_connection_time = OS.Time.get_unix_time_from_system()
         
         emit_signal("connection_status_changed", connection_status)
         
@@ -442,7 +442,7 @@ func _schedule_reconnect():
     
     connection_attempt += 1
     
-    print("Scheduling reconnect attempt " + str(connection_attempt) + "/" + str(max_reconnect_attempts))
+    print("Scheduling reconnect attempt " + str(connection_attempt) + "" + str(max_reconnect_attempts))
     
     # Exponential backoff
     var wait_time = reconnect_interval * pow(1.5, connection_attempt - 1)

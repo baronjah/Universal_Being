@@ -1,5 +1,5 @@
-class_name EnhancedMigrationLauncher
-extends Node
+class_name EnhancedMigrationLauncher_enhancedmigrationlauncher_enhanced
+extends \2
 
 # ----- COMPONENT REFERENCES -----
 var migration_tool = null
@@ -11,11 +11,11 @@ var akashic_system = null
 
 # ----- CONFIGURATION -----
 @export_category("Migration Settings")
-@export var auto_start_ui: bool = true
-@export var default_godot3_path: String = ""
-@export var default_godot4_path: String = ""
-@export var enable_color_integration: bool = true
-@export var enable_test_runner: bool = true
+@@@@export var auto_start_ui: bool = true
+@@@@export var default_godot3_path: String = ""
+@@@@export var default_godot4_path: String = ""
+@@@@export var enable_color_integration: bool = true
+@@@@export var enable_test_runner: bool = true
 
 # ----- SCENES -----
 const MIGRATION_UI_SCENE = "res://12_turns_system/godot4_migration_ui.tscn"
@@ -53,7 +53,7 @@ func _ready():
 
 func _find_or_create_components():
     # Find or create the migration tool
-    migration_tool = get_node_or_null("/root/Godot4MigrationTool")
+    migration_tool = get_node_or_null("root/Godot4MigrationTool")
     if not migration_tool:
         migration_tool = _find_node_by_class(get_tree().root, "Godot4MigrationTool")
     
@@ -62,7 +62,7 @@ func _find_or_create_components():
         add_child(migration_tool)
     
     # Find or create the migration tester
-    migration_tester = get_node_or_null("/root/Godot4MigrationTester")
+    migration_tester = get_node_or_null("root/Godot4MigrationTester")
     if not migration_tester:
         migration_tester = _find_node_by_class(get_tree().root, "Godot4MigrationTester")
     
@@ -71,12 +71,12 @@ func _find_or_create_components():
         add_child(migration_tester)
     
     # Find color system
-    color_system = get_node_or_null("/root/DimensionalColorSystem")
+    color_system = get_node_or_null("root/DimensionalColorSystem")
     if not color_system:
         color_system = _find_node_by_class(get_tree().root, "DimensionalColorSystem")
     
     # Find akashic system
-    akashic_system = get_node_or_null("/root/AkashicNumberSystem")
+    akashic_system = get_node_or_null("root/AkashicNumberSystem")
     if not akashic_system:
         akashic_system = _find_node_by_class(get_tree().root, "AkashicNumberSystem")
     

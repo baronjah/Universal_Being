@@ -1,5 +1,5 @@
 extends Node
-class_name JSHConsoleIntegrationDemo
+class_name JSHConsoleIntegrationDemo_consoleintegrationdemo_consolei
 
 # This script demonstrates how to integrate the Phase 4 Console System
 # with the existing Menu_Keyboard_Console components
@@ -91,43 +91,43 @@ func _setup_jsh_console():
 
 func _load_legacy_components():
     # Find JSH_console.gd
-    legacy_console = get_node_or_null("/root/JSH_console")
+    legacy_console = get_node_or_null("root/JSH_console")
     integration_status.console.legacy_ready = legacy_console != null
     
     # Find text_screen.gd
-    text_screen = get_node_or_null("/root/text_screen")
+    text_screen = get_node_or_null("root/text_screen")
     
     # Find bank systems
-    records_bank = get_node_or_null("/root/records_bank")
+    records_bank = get_node_or_null("root/records_bank")
     integration_status.banks.records = records_bank != null
     
-    actions_bank = get_node_or_null("/root/actions_bank")
+    actions_bank = get_node_or_null("root/actions_bank")
     integration_status.banks.actions = actions_bank != null
     
-    scenes_bank = get_node_or_null("/root/scenes_bank")
+    scenes_bank = get_node_or_null("root/scenes_bank")
     integration_status.banks.scenes = scenes_bank != null
     
-    instructions_bank = get_node_or_null("/root/instructions_bank")
+    instructions_bank = get_node_or_null("root/instructions_bank")
     integration_status.banks.instructions = instructions_bank != null
     
-    banks_combiner = get_node_or_null("/root/banks_combiner")
+    banks_combiner = get_node_or_null("root/banks_combiner")
     integration_status.banks.combiner = banks_combiner != null
     
     # Find other systems
-    digital_earthlings = get_node_or_null("/root/jsh_digital_earthlings")
+    digital_earthlings = get_node_or_null("root/jsh_digital_earthlings")
     integration_status.systems.entity = digital_earthlings != null
     
-    mainframe_database = get_node_or_null("/root/JSH_mainframe_database")
-    database_system = get_node_or_null("/root/jsh_database_system")
+    mainframe_database = get_node_or_null("root/JSH_mainframe_database")
+    database_system = get_node_or_null("root/jsh_database_system")
     integration_status.systems.database = mainframe_database != null or database_system != null
     
-    marching_shapes = get_node_or_null("/root/jsh_marching_shapes_system")
+    marching_shapes = get_node_or_null("root/jsh_marching_shapes_system")
     integration_status.game.marching = marching_shapes != null
     
-    snake_game = get_node_or_null("/root/jsh_snake_game")
+    snake_game = get_node_or_null("root/jsh_snake_game")
     integration_status.game.snake = snake_game != null
     
-    task_manager = get_node_or_null("/root/jsh_task_manager")
+    task_manager = get_node_or_null("root/jsh_task_manager")
     integration_status.systems.task = task_manager != null
     
     print("Legacy Components: " + ("Found" if integration_status.console.legacy_ready else "Not Found"))

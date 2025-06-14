@@ -99,7 +99,7 @@ func _ready():
 func _find_akashic_components():
 	# Find Akashic Records
 	if has_node("/root/AkashicRecords") or get_node_or_null("/root/AkashicRecords"):
-		akashic_records = get_node("/root/AkashicRecords")
+		akashic_records = get_node("\1") as Node
 		print("Connected to AkashicRecords")
 	else:
 		var potential_records = get_tree().get_nodes_in_group("akashic_records")
@@ -109,7 +109,7 @@ func _find_akashic_components():
 	
 	# Find Dimension Controller
 	if has_node("/root/ShapeDimensionController") or get_node_or_null("/root/ShapeDimensionController"):
-		dimension_controller = get_node("/root/ShapeDimensionController")
+		dimension_controller = get_node("\1") as Node
 		print("Connected to ShapeDimensionController")
 	else:
 		var potential_controllers = get_tree().get_nodes_in_group("dimension_controllers")
@@ -119,7 +119,7 @@ func _find_akashic_components():
 	
 	# Find Turn Cycle Manager
 	if has_node("/root/TurnCycleManager") or get_node_or_null("/root/TurnCycleManager"):
-		turn_cycle_manager = get_node("/root/TurnCycleManager")
+		turn_cycle_manager = get_node("\1") as Node
 		print("Connected to TurnCycleManager")
 	else:
 		var potential_managers = get_tree().get_nodes_in_group("turn_managers")
@@ -306,7 +306,7 @@ func save_game_state(state_data, save_id="", slot=-1):
 		return null
 	
 	# Generate save ID if not provided
-	if save_id.empty():
+	if save_id.is_empty():
 		save_id = _generate_save_id()
 	
 	current_save_id = save_id
@@ -401,12 +401,12 @@ func load_game_state(save_id="", slot=-1):
 	var filename
 	if slot >= 0 and slot < config.max_save_slots:
 		filename = "slot_" + str(slot) + ".save"
-	elif not save_id.empty():
+	elif not save_id.is_empty():
 		filename = save_id + ".save"
 	else:
 		# Try to load the most recent save
 		var newest_save = _find_newest_save()
-		if newest_save.empty():
+		if newest_save.is_empty():
 			print("ERROR: No saves found and no save_id or slot specified.")
 			return null
 		
@@ -623,7 +623,7 @@ func create_game_object_record(object_data, object_type, object_id=""):
 		return null
 	
 	# Generate object ID if not provided
-	if object_id.empty():
+	if object_id.is_empty():
 		object_id = _generate_object_id(object_type)
 	
 	# Prepare record data
@@ -770,7 +770,7 @@ func _generate_object_id(object_type):
 # Drive Management and Synchronization
 
 func connect_drive(drive_path, drive_type=DriveType.NETWORK, drive_name=""):
-	if drive_name.empty():
+	if drive_name.is_empty():
 		drive_name = "Drive_" + str(connected_drives.size() + 1)
 	
 	# Check if drive exists
@@ -1037,7 +1037,7 @@ func _rotate_auto_saves():
 	# If we have more than the maximum allowed auto-saves, delete the oldest ones
 	if auto_saves.size() > config.max_auto_saves:
 		# Sort by time (oldest first)
-		auto_saves.sort_custom(func(a, b): return a.time < b.time)
+		auto_saves.sort_custom(func(a.b): return a.time < b.time)
 		
 		# Delete oldest auto-saves
 		var to_delete = auto_saves.size() - config.max_auto_saves
@@ -1062,7 +1062,7 @@ func save_configuration():
 # Game Templates and Helpers
 
 func create_game_template(template_path=""):
-	if template_path.empty():
+	if template_path.is_empty():
 		template_path = base_path + akashic_path + games_path + "template/"
 	
 	print("Creating game template at: " + template_path)

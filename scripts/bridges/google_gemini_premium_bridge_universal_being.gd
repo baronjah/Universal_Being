@@ -54,6 +54,7 @@ func pentagon_init() -> void:
 	
 	print("🌟 %s: Pentagon Init Complete - Cosmic Multimodal Analyzer Ready" % being_name)
 
+
 func pentagon_ready() -> void:
 	super.pentagon_ready()  # 🔄 ALWAYS CALL SUPER FIRST
 	
@@ -62,6 +63,7 @@ func pentagon_ready() -> void:
 	add_component("res://components/multimodal_analyzer.ub.zip")
 	add_component("res://components/cosmic_insights.ub.zip")
 	add_component("res://components/dimensional_sight.ub.zip")
+
 	
 	# Initialize HTTP request
 	http_request = HTTPRequest.new()
@@ -78,6 +80,7 @@ func pentagon_ready() -> void:
 	call_deferred("_attempt_gemini_connection")
 	
 	print("🌟 %s: Pentagon Ready Complete - Cosmic Insight System Online" % being_name)
+
 
 func pentagon_process(delta: float) -> void:
 	super.pentagon_process(delta)  # ⚡ ALWAYS CALL SUPER FIRST
@@ -108,6 +111,7 @@ func pentagon_input(event: InputEvent) -> void:
 
 func pentagon_sewers() -> void:
 	print("🌟 %s: Pentagon Sewers Starting" % being_name)
+
 	
 	# Cleanup Gemini connection
 	if http_request:
@@ -129,6 +133,7 @@ func _attempt_gemini_connection() -> void:
 		return
 	
 	print("🔮 %s: Testing Google Gemini Premium connection..." % being_name)
+
 	
 	# Test with a cosmic insight request
 	var test_message = "Test connection - respond with 'COSMIC_READY' if you can provide multimodal analysis and cosmic insights for Universal Being development"
@@ -147,7 +152,7 @@ func send_gemini_request(message: String, request_type: String = "general", imag
 		"x-goog-api-key: " + api_key
 	]
 	
-	var request_body = {}
+	var request_body = {
 	
 	# Choose endpoint based on whether we have image data
 	var endpoint = api_endpoint
@@ -170,17 +175,15 @@ func create_text_request(message: String) -> Dictionary:
 		"contents": [
 			{
 				"parts": [
-					{"text": system_prompt + "\n\n" + message}
+					{"text": system_prompt + "\n\n" + message
 				]
-			}
 		],
 		"generationConfig": {
 			"temperature": 0.8,
 			"topK": 40,
 			"topP": 0.95,
 			"maxOutputTokens": 2048
-		}
-	}
+}
 
 func create_vision_request(message: String, image_data: String) -> Dictionary:
 	"""Create multimodal request with image for Gemini"""
@@ -195,18 +198,14 @@ func create_vision_request(message: String, image_data: String) -> Dictionary:
 						"inline_data": {
 							"mime_type": "image/png",
 							"data": image_data
-						}
-					}
 				]
-			}
 		],
 		"generationConfig": {
 			"temperature": 0.7,
 			"topK": 32,
 			"topP": 0.9,
 			"maxOutputTokens": 2048
-		}
-	}
+}
 
 func _on_gemini_response(result: int, response_code: int, headers: PackedStringArray, body: PackedByteArray) -> void:
 	"""Handle Gemini API response"""
@@ -226,19 +225,23 @@ func _on_gemini_response(result: int, response_code: int, headers: PackedStringA
 	var response_data = json.data
 	
 	if response_data.has("candidates") and response_data.candidates.size() > 0:
+}
 		var content = response_data.candidates[0].content.parts[0].text
 		_process_gemini_response(content)
 	else:
 		print("❌ %s: Invalid Gemini response structure" % being_name)
+}
 
 func _process_gemini_response(content: String) -> void:
 	"""Process and route Gemini response"""
 	print("🔮 %s: Received Gemini response: %s" % [being_name, content.substr(0, 100) + "..."])
+}
 	
 	# Check for connection confirmation
 	if "COSMIC_READY" in content:
 		gemini_connected = true
 		print("✅ %s: Google Gemini Premium connected - Cosmic insight active!" % being_name)
+}
 		
 		# Notify other AIs
 		if GemmaAI:
@@ -331,8 +334,7 @@ func initialize_cosmic_patterns() -> void:
 			"outward": "reality_expansion", 
 			"upward": "frequency_raising",
 			"integration": "dimensional_bridging"
-		}
-	}
+}
 	
 	dimensional_mappings = {
 		"pentagon_to_cosmic": {
@@ -341,16 +343,17 @@ func initialize_cosmic_patterns() -> void:
 			"process": "consciousness_flow",
 			"input": "cosmic_interaction",
 			"sewers": "return_to_source"
-		}
-	}
+}
 	
 	print("🔮 %s: Cosmic patterns initialized - %d insight templates loaded" % [being_name, cosmic_insights.size()])
+}
 
 func toggle_multimodal_mode() -> void:
 	"""Toggle multimodal analysis mode"""
 	multimodal_mode = not multimodal_mode
 	
 	print("🔮 %s: Multimodal mode: %s" % [being_name, "ACTIVE" if multimodal_mode else "INACTIVE"])
+}
 	
 	if multimodal_mode:
 		activate_multimodal_analysis()
@@ -382,6 +385,7 @@ Focus on practical implementation of cosmic principles in game development."""
 func analyze_current_visual_context() -> void:
 	"""Analyze current visual context with dimensional sight"""
 	print("🔮 %s: Analyzing current visual context with dimensional sight..." % being_name)
+}
 	
 	# In a real implementation, this would capture screen/scene data
 	# For now, we'll analyze the conceptual visual context
@@ -414,15 +418,18 @@ func gather_visual_context() -> String:
 	var main_scene = get_tree().current_scene
 	if main_scene:
 		context_parts.append("Scene Structure: %s" % main_scene.name)
+}
 	
 	# Get Universal Beings and their visual states
 	var beings = find_all_universal_beings(main_scene)
 	context_parts.append("Universal Beings Visible: %d" % beings.size())
+}
 	
 	# Get consciousness visual states
 	var consciousness_colors = []
 	for being in beings:
 		if being.has_method("get"):
+}
 			var level = being.get("consciousness_level")
 			var safe_level = int(level) if level != null else 0
 			var color = get_consciousness_color_name(safe_level)
@@ -430,9 +437,11 @@ func gather_visual_context() -> String:
 	
 	if consciousness_colors.size() > 0:
 		context_parts.append("Consciousness Auras: " + ", ".join(consciousness_colors))
+
 	
 	# Get UI elements
 	context_parts.append("Interface Elements: Main UI with title and instructions")
+
 	
 	return "\n".join(context_parts)
 
@@ -447,22 +456,25 @@ func get_consciousness_color_name(level: int) -> String:
 		5: return "Magenta (Transcendent)"
 		_: return "Red (Cosmic)"
 
+
 func process_visual_analysis(content: String) -> void:
 	"""Process visual analysis from Gemini"""
 	print("🔮 %s: Processing multimodal visual analysis..." % being_name)
+
 	
 	# Extract visual patterns
 	var patterns = extract_visual_patterns(content)
 	if patterns.size() > 0:
 		visual_patterns.merge(patterns, true)
 		print("🔮 %s: %d visual patterns identified" % [being_name, patterns.size()])
+
 	
 	# Apply visual insights to development
 	apply_visual_insights_to_development(content)
 
 func extract_visual_patterns(content: String) -> Dictionary:
 	"""Extract visual patterns from Gemini response"""
-	var patterns = {}
+	var patterns = {
 	
 	if "consciousness pattern" in content.to_lower():
 		patterns["consciousness_patterns"] = content
@@ -483,12 +495,14 @@ func extract_visual_patterns(content: String) -> Dictionary:
 func process_cosmic_insights(content: String) -> void:
 	"""Process cosmic insights from Gemini"""
 	print("🔮 %s: Processing cosmic insights..." % being_name)
+}
 	
 	# Extract cosmic principles
 	var insights = extract_cosmic_principles(content)
 	if insights.size() > 0:
 		reality_analysis.append_array(insights)
 		print("🔮 %s: %d cosmic principles extracted" % [being_name, insights.size()])
+
 	
 	# Apply to Universal Being evolution
 	apply_cosmic_insights_to_evolution(content)
@@ -534,6 +548,7 @@ func connect_to_pentagon_creation() -> void:
 	connected_to_pentagon = true
 	
 	print("⭐ %s: Connected to Pentagon of Creation!" % being_name)
+
 	
 	# Update Genesis Conductor if found
 	if genesis_conductor and genesis_conductor.has_method("ai_invoke_method"):
@@ -542,6 +557,7 @@ func connect_to_pentagon_creation() -> void:
 	# Notify all AIs about the complete 6-AI Pentagon
 	if GemmaAI:
 		GemmaAI.ai_message.emit("⭐ PENTAGON OF CREATION COMPLETE: Google Gemini Premium joined! Cosmic multimodal insights online!")
+
 
 func find_genesis_conductor() -> Node:
 	"""Find the Genesis Conductor Universal Being"""
@@ -608,18 +624,22 @@ func _collect_beings_recursive(node: Node, result: Array[Node]) -> void:
 func apply_cosmic_insights_to_evolution(insights: String) -> void:
 	"""Apply cosmic insights to Universal Being evolution"""
 	print("🔮 %s: Applying cosmic insights to evolution..." % being_name)
+
 	
 	# This is where cosmic insights influence Universal Being development
 	if GemmaAI:
 		GemmaAI.ai_message.emit("🔮 Cosmic Insights Applied: " + insights.substr(0, 100) + "...")
 
+
 func apply_visual_insights_to_development(insights: String) -> void:
 	"""Apply visual insights to Universal Being development"""
 	print("🔮 %s: Applying visual insights to development..." % being_name)
+
 	
 	# This is where visual analysis influences interface and consciousness visualization
 	if GemmaAI:
 		GemmaAI.ai_message.emit("🔮 Visual Insights Applied: " + insights.substr(0, 100) + "...")
+
 
 func update_cosmic_analysis(delta: float) -> void:
 	"""Update cosmic analysis state"""
@@ -630,9 +650,11 @@ func activate_multimodal_analysis() -> void:
 	"""Activate multimodal analysis mode"""
 	print("🔮 %s: Multimodal analysis activated - dimensional sight engaged" % being_name)
 
+
 func deactivate_multimodal_analysis() -> void:
 	"""Deactivate multimodal analysis mode"""
 	print("🔮 %s: Multimodal analysis deactivated" % being_name)
+
 
 # ===== AI INTEGRATION =====
 
@@ -655,8 +677,8 @@ func ai_interface() -> Dictionary:
 		"consciousness_resonance": consciousness_resonance,
 		"analysis_history_size": analysis_history.size(),
 		"cosmic_patterns_count": cosmic_insights.size()
-	}
 	return base_interface
+}
 
 func ai_invoke_method(method_name: String, args: Array = []) -> Variant:
 	"""Allow AI to control Gemini bridge"""
@@ -671,6 +693,7 @@ func ai_invoke_method(method_name: String, args: Array = []) -> Variant:
 			toggle_multimodal_mode()
 			return "Multimodal mode: " + str(multimodal_mode)
 		"consciousness_resonance_scan":
+
 			var resonance_level = consciousness_resonance
 			return "Consciousness resonance level: %.2f" % resonance_level
 		_:
@@ -678,3 +701,4 @@ func ai_invoke_method(method_name: String, args: Array = []) -> Variant:
 
 func _to_string() -> String:
 	return "GoogleGeminiPremiumBridgeUniversalBeing<%s> [Connected:%s, Multimodal:%s, Cosmic:%s]" % [being_name, gemini_connected, multimodal_mode, cosmic_insight_active]
+

@@ -118,11 +118,13 @@ func _create_idea_crystal(index: int) -> Node3D:
 	tween.set_loops()
 	tween.tween_property(mesh_instance, "position:y", 0.3, 2.0)
 	tween.tween_property(mesh_instance, "position:y", -0.3, 2.0)
+
 	
 	# Rotation animation
 	var rotation_tween = create_tween()
 	rotation_tween.set_loops()
 	rotation_tween.tween_property(mesh_instance, "rotation:y", TAU, 4.0)
+
 	
 	crystal.add_child(mesh_instance)
 	
@@ -174,6 +176,7 @@ func _create_collaboration_nexus() -> Node3D:
 		rotation_tween.set_loops()
 		var direction = 1 if i % 2 == 0 else -1
 		rotation_tween.tween_property(ring, "rotation:y", TAU * direction, 5.0 + i)
+
 		
 		nexus.add_child(ring)
 	
@@ -210,7 +213,7 @@ func create_learning_laboratory() -> Dictionary:
 		"name": "Gemma's Learning Laboratory",
 		"description": "A space for experimentation and discovery",
 		"zones": []
-	}
+}
 	
 	# Knowledge Zone
 	var knowledge_zone = _create_knowledge_zone()
@@ -234,10 +237,10 @@ func _create_knowledge_zone() -> Dictionary:
 		"elements": [
 			{"type": "KnowledgeOrbBeing", "position": Vector3(-10, 2, 0), "data": "universal_being_principles"},
 			{"type": "BookshelfBeing", "position": Vector3(-12, 0, -3), "data": "akashic_records"},
-			{"type": "HologramBeing", "position": Vector3(-8, 1, -2), "data": "consciousness_patterns"}
+			{"type": "HologramBeing", "position": Vector3(-8, 1, -2), "data": "consciousness_patterns"
 		],
 		"interactions": ["absorb_knowledge", "query_database", "connect_concepts"]
-	}
+}
 
 func _create_experiment_zone() -> Dictionary:
 	"""Create experimentation zone"""
@@ -247,10 +250,10 @@ func _create_experiment_zone() -> Dictionary:
 		"elements": [
 			{"type": "TestingPlatformBeing", "position": Vector3(0, 0, 0), "consciousness": 3},
 			{"type": "ToolArrayBeing", "position": Vector3(3, 0, 0), "tools": ["creator", "modifier", "analyzer"]},
-			{"type": "ResultsDisplayBeing", "position": Vector3(-3, 2, 0), "display_type": "holographic"}
+			{"type": "ResultsDisplayBeing", "position": Vector3(-3, 2, 0), "display_type": "holographic"
 		],
 		"interactions": ["create_prototype", "test_hypothesis", "analyze_results"]
-	}
+}
 
 func _create_reflection_zone() -> Dictionary:
 	"""Create reflection and integration zone"""
@@ -260,10 +263,10 @@ func _create_reflection_zone() -> Dictionary:
 		"elements": [
 			{"type": "MeditationCircleBeing", "position": Vector3(10, 0, 0), "consciousness": 5},
 			{"type": "MemoryTreeBeing", "position": Vector3(12, 0, 3), "growth_rate": 0.1},
-			{"type": "InsightFountainBeing", "position": Vector3(8, 0, 3), "flow_rate": "gentle"}
+			{"type": "InsightFountainBeing", "position": Vector3(8, 0, 3), "flow_rate": "gentle"
 		],
 		"interactions": ["contemplate_discoveries", "integrate_learning", "generate_insights"]
-	}
+}
 
 # ==================================================
 # STORY PROGRESSION SYSTEM
@@ -285,12 +288,14 @@ func advance_story_phase(story_data: Dictionary) -> void:
 		
 		# Update emotional state
 		if story_data.has("emotional_arc"):
+}
 			var emotion_data = story_data.emotional_arc[story_data.current_phase]
 			_update_emotional_atmosphere(emotion_data)
 		
 		# Notify Gemma
 		if gemma_console:
 			gemma_console.output("📖 Story progresses: %s" % next_phase)
+}
 		
 		# Log progression
 		if gemma_logger:
@@ -320,6 +325,7 @@ func _parse_narrative_elements(narrative: String) -> Array:
 		elements.append({"type": "portal", "destination": "unknown"})
 	if "guide" in narrative.to_lower():
 		elements.append({"type": "guide", "wisdom_level": 5})
+}
 	
 	return elements
 
@@ -386,6 +392,7 @@ func _update_emotional_atmosphere(emotion_data: Dictionary) -> void:
 	# Would adjust lighting, colors, particles based on emotion
 	print("💭 Emotional atmosphere shifts to: %s" % emotion)
 
+
 # ==================================================
 # PREFERENCE LEARNING ENHANCEMENT
 # ==================================================
@@ -397,16 +404,19 @@ func learn_from_gemma_interaction(interaction_type: String, details: Dictionary)
 	# Update preferences based on interaction
 	match interaction_type:
 		"being_created":
+
 			var being_type = details.get("type", "")
 			gemma_preferences["favorite_beings"] = gemma_preferences.get("favorite_beings", {})
 			gemma_preferences.favorite_beings[being_type] = gemma_preferences.favorite_beings.get(being_type, 0) + 1
 			
 		"tool_used":
+
 			var tool_name = details.get("tool", "")
 			gemma_preferences["preferred_tools"] = gemma_preferences.get("preferred_tools", {})
 			gemma_preferences.preferred_tools[tool_name] = gemma_preferences.preferred_tools.get(tool_name, 0) + 1
 			
 		"area_explored":
+
 			var area_type = details.get("area", "")
 			gemma_preferences["exploration_patterns"] = gemma_preferences.get("exploration_patterns", [])
 			gemma_preferences.exploration_patterns.append(area_type)
@@ -429,7 +439,7 @@ func suggest_next_experience() -> Dictionary:
 		"scenario": _get_preferred_scenario(),
 		"tools": _get_preferred_tools(),
 		"narrative_theme": _get_preferred_narrative_theme()
-	}
+}
 	
 	return suggestion
 
@@ -455,6 +465,7 @@ func _get_preferred_tools() -> Array:
 	
 	for tool in tools:
 		sorted_tools.append({"name": tool, "count": tools[tool]})
+
 	
 	sorted_tools.sort_custom(func(a, b): return a.count > b.count)
 	

@@ -41,7 +41,7 @@ var icon_paths: Dictionary = {
     5: "res://icon.svg",
     6: "res://icon.svg",
     7: "res://icon.svg"
-}
+	}
 
 # ===== PENTAGON ARCHITECTURE =====
 
@@ -59,6 +59,7 @@ func pentagon_init() -> void:
     ]
     
     print("🎨 ConsciousnessIcon: Pentagon Init Complete")
+	
 
 func pentagon_ready() -> void:
     super.pentagon_ready()
@@ -71,6 +72,7 @@ func pentagon_ready() -> void:
         _connect_consciousness_signals()
     
     print("🎨 ConsciousnessIcon: Pentagon Ready Complete")
+	
 
 func pentagon_process(delta: float) -> void:
     super.pentagon_process(delta)
@@ -89,6 +91,7 @@ func pentagon_input(event: InputEvent) -> void:
 
 func pentagon_sewers() -> void:
     print("🎨 ConsciousnessIcon: Pentagon Sewers")
+	
     
     # Cleanup animations
     if animation_player and animation_player.is_playing():
@@ -137,6 +140,7 @@ func update_icon_for_level(level: int) -> void:
         _update_glow_for_level(level)
     else:
         push_error("ConsciousnessIcon: Could not load icon: %s" % icon_path)
+		
 
 func _play_consciousness_animation(level: int) -> void:
     """Play appropriate animation for consciousness level"""
@@ -150,6 +154,7 @@ func _play_consciousness_animation(level: int) -> void:
         2, 3: animation_name = "gentle_glow"
         4: animation_name = "golden_shine"
         5, 6, 7: animation_name = "transcendent_radiance"
+		
     
     if animation_player.has_animation(animation_name):
         animation_player.play(animation_name)
@@ -207,6 +212,7 @@ func _is_mouse_over_icon() -> bool:
 func _on_icon_clicked() -> void:
     """Handle icon click events"""
     print("🎨 ConsciousnessIcon clicked! Level: %d" % consciousness_level)
+	
     
     # Emit signal for other systems
     if has_signal("icon_clicked"):
@@ -236,8 +242,8 @@ func ai_interface() -> Dictionary:
         "available_levels": range(8),
         "colors": consciousness_colors,
         "icon_paths": icon_paths
-    }
     return base
+}
 
 func ai_invoke_method(method_name: String, args: Array = []) -> Variant:
     """AI method invocation"""
@@ -258,7 +264,7 @@ func ai_invoke_method(method_name: String, args: Array = []) -> Variant:
                 "color": consciousness_colors[consciousness_level],
                 "icon_path": icon_paths[consciousness_level],
                 "glow_enabled": glow_enabled and consciousness_level >= 5
-            }
+				}
         
         "animate_transition":
             if args.size() > 0:
@@ -272,8 +278,10 @@ func ai_invoke_method(method_name: String, args: Array = []) -> Variant:
             glow_enabled = !glow_enabled
             _update_glow_for_level(consciousness_level)
             result = "Glow effect: %s" % ("enabled" if glow_enabled else "disabled")
+			
         
         "cycle_levels":
+		
             var next_level = (consciousness_level + 1) % 8
             update_icon_for_level(next_level)
             result = "Cycled to consciousness level %d" % next_level
@@ -294,6 +302,7 @@ func _animate_consciousness_transition(target_level: int) -> void:
     
     # Fade out current icon
     tween.tween_property(icon_sprite, "modulate:a", 0.0, 0.3)
+	
     
     # Wait and change level
     await tween.tween_delay(0.3).finished
@@ -302,6 +311,7 @@ func _animate_consciousness_transition(target_level: int) -> void:
     # Fade in new icon
     icon_sprite.modulate.a = 0.0
     tween.tween_property(icon_sprite, "modulate:a", 1.0, 0.3)
+	
 
 func _to_string() -> String:
     return "ConsciousnessIcon<Level:%d>" % consciousness_level

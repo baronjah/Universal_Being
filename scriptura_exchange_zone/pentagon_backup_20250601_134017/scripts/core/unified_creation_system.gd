@@ -4,9 +4,8 @@
 # PURPOSE: Everything creates through here - console, UI, code
 # CREATED: 2025-05-28 - The Great Unification
 # ==================================================
-
-extends UniversalBeingBase
-class_name UnifiedCreationSystem
+extends \2
+class_name UnifiedCreationSystem_unifiedcreationsystem_unifiedc
 
 # The single source of truth for all object creation
 signal object_created(object: Node3D, type: String)
@@ -14,7 +13,8 @@ signal object_destroyed(object: Node3D)
 signal creation_failed(reason: String)
 
 # Creation sources tracking
-enum CreationSource {
+enum \2 {
+
 	CONSOLE,        # Console commands
 	GAME_RULES,     # Automatic spawning from rules
 	UI_INTERFACE,   # Grid/inspector creation
@@ -41,9 +41,9 @@ func _ready() -> void:
 	name = "UnifiedCreationSystem"
 	
 	# Get system references
-	floodgate = get_node("/root/FloodgateController")
-	asset_library = get_node("/root/AssetLibrary")
-	universal_object_manager = get_node("/root/UniversalObjectManager")
+	floodgate = get_node("root/FloodgateController")
+	asset_library = get_node("root/AssetLibrary")
+	universal_object_manager = get_node("root/UniversalObjectManager")
 	
 	print("🌟 [UnifiedCreation] System initialized - ONE creation system to rule them all")
 

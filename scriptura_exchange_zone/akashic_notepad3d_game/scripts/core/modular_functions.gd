@@ -19,7 +19,7 @@ extends Node
 # 🎮 USER EXPERIENCE: Accelerated development through code reuse
 # ═══════════════════════════════════════════════════════════════════════════════════════════════
 
-class_name ModularFunctions
+class_name ModularFunctions_modularfunctions_modularf
 
 # ─────────────────────────────────────────────────────────────────────────────────
 # 🔧 STRING-BASED DATA PROCESSORS - UNIVERSAL PATTERNS

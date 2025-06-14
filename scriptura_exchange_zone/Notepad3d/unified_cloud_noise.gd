@@ -1,7 +1,7 @@
 extends Node
 }
 
-class_name UnifiedCloudNoise
+class_name UnifiedCloudNoise_unifiedcloudnoise_unifiedc
 }
 
 signal shape_generated(shape_id, dimension, complexity)

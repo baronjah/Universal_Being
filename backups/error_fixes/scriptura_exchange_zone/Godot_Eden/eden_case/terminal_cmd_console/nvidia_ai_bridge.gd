@@ -114,7 +114,7 @@ func _load_model(model_name):
     print("Loading model: ", model_name)
     
     # Simulate load time
-    yield(get_tree().create_timer(0.5), "timeout")
+    await(get_tree().create_timer(0.5), "timeout")
     
     local_models[model_name].loaded = true
     return true
@@ -131,10 +131,10 @@ func process_image(image, task_type="classification", params={}):
     
     # Ensure model is loaded
     if !local_models[model_name].loaded:
-        yield(_load_model(model_name), "completed")
+        await(_load_model(model_name), "completed")
     
     # Process the image
-    yield(_process_with_model(model_name, image, params), "completed")
+    await(_process_with_model(model_name, image, params), "completed")
     
     return task_id
 
@@ -150,10 +150,10 @@ func process_text(text, task_type="completion", params={}):
     
     # Ensure model is loaded
     if !local_models[model_name].loaded:
-        yield(_load_model(model_name), "completed")
+        await(_load_model(model_name), "completed")
     
     # Process the text
-    yield(_process_with_model(model_name, text, params), "completed")
+    await(_process_with_model(model_name, text, params), "completed")
     
     return task_id
 
@@ -192,7 +192,7 @@ func _add_task(task_type, data, params):
         "type": task_type,
         "data": data,
         "params": params,
-        "start_time": OS.get_ticks_msec()
+        "start_time": OS.Time.get_ticks_msec()
     })
     return task_id
 
@@ -230,7 +230,7 @@ func _process_with_model(model_name, data, params):
     if cuda_enabled:
         processing_time *= 0.3  # 70% faster with CUDA
     
-    yield(get_tree().create_timer(processing_time), "timeout")
+    await(get_tree().create_timer(processing_time), "timeout")
     
     # Generate result based on task type
     var result = null
@@ -247,7 +247,7 @@ func _process_with_model(model_name, data, params):
             result = _simulate_image_generation(params)
     
     # Calculate performance metrics
-    var end_time = OS.get_ticks_msec()
+    var end_time = OS.Time.get_ticks_msec()
     var elapsed = end_time - current_tasks[task_index].start_time
     
     inference_times.append(elapsed)

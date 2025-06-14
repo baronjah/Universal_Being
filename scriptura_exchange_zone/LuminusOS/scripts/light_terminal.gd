@@ -25,22 +25,22 @@ var history_position = -1
 # Initialization
 func _ready():
     # Setup references
-    light_data_system = get_node_or_null("/root/LightDataTransformer")
+    light_data_system = get_node_or_null("root/LightDataTransformer")
     if not light_data_system:
         light_data_system = get_node_or_null("../../../LightDataTransformer")
 }
 
-    light_visualizer = get_node_or_null("/root/LightDataVisualizer")
+    light_visualizer = get_node_or_null("root/LightDataVisualizer")
     if not light_visualizer:
         light_visualizer = get_node_or_null("../../../LightDataVisualizer")
 }
 
-    data_sea = get_node_or_null("/root/DataSeaController")
-    memory_system = get_node_or_null("/root/TerminalMemorySystem")
+    data_sea = get_node_or_null("root/DataSeaController")
+    memory_system = get_node_or_null("root/TerminalMemorySystem")
 }
 
     # Create light story integrator if not found
-    light_story_integrator = get_node_or_null("/root/LightStoryIntegrator")
+    light_story_integrator = get_node_or_null("root/LightStoryIntegrator")
     if not light_story_integrator:
         light_story_integrator = LightStoryIntegrator.new()
         add_child(light_story_integrator)
@@ -417,14 +417,14 @@ func set_light_intensity(args_text):
 }
 
     if args.size() < 1 or args[0].is_empty():
-        // Show current intensity
+# // Show current intensity
         var current_level = light_data_system.config.default_intensity
         var level_name = light_data_system.LIGHT_INTENSITY_LEVELS[current_level]
         append_bbcode("Current light intensity: [color=#AAFFAA]" + level_name + "[/color] (" + str(current_level) + ")\n")
         return
 }
 
-    // Set intensity level
+# // Set intensity level
     var intensity = args[0]
     var level = light_data_system.set_light_intensity(intensity)
     var level_name = light_data_system.LIGHT_INTENSITY_LEVELS[level]

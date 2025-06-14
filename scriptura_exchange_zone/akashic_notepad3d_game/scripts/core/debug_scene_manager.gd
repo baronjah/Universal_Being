@@ -22,7 +22,7 @@ extends Control
 # 🎮 USER EXPERIENCE: Developer-friendly real-time debugging and modification
 # ═══════════════════════════════════════════════════════════════════════════════════════════════
 
-class_name DebugSceneManager
+class_name DebugSceneManager_debugscenemanager_debugsce
 
 # ─────────────────────────────────────────────────────────────────────────────────
 # 🎯 CORE DEBUG MANAGER PROPERTIES

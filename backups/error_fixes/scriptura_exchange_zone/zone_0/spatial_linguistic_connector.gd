@@ -83,7 +83,7 @@ func _connect_systems():
     # Find and connect to turn system
     turn_system = get_node_or_null("/root/TurnSystem")
     if turn_system:
-        turn_system.connect("turn_advanced", self, "_on_turn_advanced")
+        turn_system.connect(_on_turn_advanced)
     
     # Find and connect to word processor
     word_processor = get_node_or_null("/root/DivineWordProcessor")
@@ -95,27 +95,27 @@ func _initialize_processors():
     # Create wish parser instance
     wish_parser = WishParser.new()
     add_child(wish_parser)
-    wish_parser.connect("wish_parsed", self, "_on_wish_parsed")
+    wish_parser.connect(_on_wish_parsed)
     
     # Create data splitter instance
     data_splitter = DataSplitter.new()
     add_child(data_splitter)
-    data_splitter.connect("data_split", self, "_on_data_split")
+    data_splitter.connect(_on_data_split)
     
     # Create merger instance
     merger = WishMerger.new()
     add_child(merger)
-    merger.connect("wishes_merged", self, "_on_wishes_merged")
+    merger.connect(_on_wishes_merged)
     
     # Create connector instance
     connector = PipeConnector.new()
     add_child(connector)
-    connector.connect("pipe_connected", self, "_on_pipe_connected")
+    connector.connect(_on_pipe_connected)
     
     # Create translator instance
     translator = SpatialTranslator.new()
     add_child(translator)
-    translator.connect("translation_completed", self, "_on_translation_completed")
+    translator.connect(_on_translation_completed)
 
 func _initialize_turn_state():
     # Get current turn from turn system if available
@@ -137,7 +137,7 @@ func _initialize_turn_state():
     }
     
     # Create initial goal if none exists
-    if goal_progression.empty():
+    if goal_progression.is_empty():
         _create_default_goal()
 
 func _create_default_structures():
@@ -475,7 +475,7 @@ func _translate_space_command(space_type, translation):
     }
     
     # Apply shape transformations if specified
-    if not translation.shapes.empty():
+    if not translation.shapes.is_empty():
         var target_shape = translation.shapes[0]
         
         for structure_id in matching_structures:
@@ -490,7 +490,7 @@ func _translate_space_command(space_type, translation):
             })
     
     # Apply directional transformations if specified
-    if not translation.directions.empty():
+    if not translation.directions.is_empty():
         var primary_direction = translation.directions[0]
         var secondary_direction = translation.directions[1] if translation.directions.size() > 1 else "None"
         
@@ -500,7 +500,7 @@ func _translate_space_command(space_type, translation):
                 spatial_structures[structure_id].parameters.secondary_direction = secondary_direction
     
     # Apply positional transformations if specified
-    if not translation.positions.empty():
+    if not translation.positions.is_empty():
         var target_position = translation.positions[0]
         
         # Here we would implement position-specific logic
@@ -681,7 +681,7 @@ class WishMerger:
             if typeof(wish) == TYPE_DICTIONARY:
                 # Extract components to merge
                 if wish.has("original_text"):
-                    if merged_text.empty():
+                    if merged_text.is_empty():
                         merged_text = wish.original_text
                     else:
                         merged_text += " and " + wish.original_text
@@ -882,7 +882,7 @@ func auto_agent_mode(enable=true, agent_parameters={}):
         timer.wait_time = 5.0 # Process every 5 seconds
         timer.one_shot = false
         timer.autostart = true
-        timer.connect("timeout", self, "_on_auto_agent_tick")
+        timer.connect(_on_auto_agent_tick)
         add_child(timer)
         
         print("Auto Agent Mode enabled with parameters:", parameters)

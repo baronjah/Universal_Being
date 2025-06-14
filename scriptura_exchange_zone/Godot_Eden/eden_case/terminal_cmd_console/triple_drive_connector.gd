@@ -1,5 +1,5 @@
 extends Node
-class_name TripleDriveConnector
+class_name TripleDriveConnector_tripledriveconnector_tripledr
 
 """
 TripleDriveConnector: System for connecting and organizing data across
@@ -9,9 +9,9 @@ data management for the Ethereal Engine.
 
 # Drive location constants
 const DRIVE_LOCATIONS = {
-	"C": "/mnt/c/Users/Percision 15/",
-	"D": "/mnt/d/GodotEden/",
-	"E": "/mnt/e/LuminusOS/"
+	"C": "mnt/c/Users/Percision 15/",
+	"D": "mnt/d/GodotEden/",
+	"E": "mnt/e/LuminusOS/"
 }
 
 # Signal declarations

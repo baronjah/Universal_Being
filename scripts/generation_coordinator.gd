@@ -20,7 +20,8 @@ var lightweight_chunks: LightweightChunkSystem = null
 var player: Node3D = null
 
 # Current active system
-enum GenerationMode { NONE, LIGHTWEIGHT, MATRIX, COSMIC }
+enum GenerationMode { NONE, LIGHTWEIGHT, MATRIX, COSMIC
+}
 var current_mode: GenerationMode = GenerationMode.NONE
 var last_mode_check: float = 0.0
 
@@ -211,7 +212,7 @@ func get_performance_stats() -> Dictionary:
 		"emergency_active": emergency_active,
 		"current_mode": GenerationMode.keys()[current_mode],
 		"total_chunks": get_total_chunk_count()
-	}
+}
 
 func get_total_chunk_count() -> int:
 	"""Get total number of active chunks across all systems"""

@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://bj6d7ojhggoim"]
+
+[ext_resource type="Script" path="res://scripts/migration_check.gd" id="1_2u4vx"]
+
+[node name="MigrationCheck" type="Node"]
+script = ExtResource("1_2u4vx") 

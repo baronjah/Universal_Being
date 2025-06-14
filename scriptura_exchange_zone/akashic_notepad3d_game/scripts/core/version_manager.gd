@@ -21,7 +21,7 @@ extends Node
 # ═══════════════════════════════════════════════════════════════════════════════════════════════
 
 ## Version Manager class for local Git-like version control
-class_name VersionManager
+class_name VersionManager_versionmanager_versionm
 
 # ─────────────────────────────────────────────────────────────────────────────────
 # 🗃️ VERSION CONTROL STATE
@@ -34,7 +34,8 @@ static var branches: Dictionary = {"main": {"created": Time.get_datetime_string_
 static var search_log: Array = []
 
 # Change categories for organized development
-enum ChangeCategory {
+enum \2 {
+
 	FEATURE,        # New functionality added
 	BUGFIX,         # Problem resolution
 	REFACTOR,       # Code structure improvement

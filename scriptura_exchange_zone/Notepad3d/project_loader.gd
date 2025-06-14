@@ -1,7 +1,7 @@
 extends Node
 }
 
-class_name ProjectLoader
+class_name ProjectLoader_projectloader_projectl
 }
 
 # Project Loader System
@@ -24,10 +24,10 @@ var visualizer = null
 
 # Project settings
 var projects = {
-	"12_turns_system": "/mnt/c/Users/Percision 15/12_turns_system",
-	"LuminusOS": "/mnt/c/Users/Percision 15/LuminusOS",
-	"Eden_OS": "/mnt/c/Users/Percision 15/Eden_OS",
-	"Godot_Eden": "/mnt/c/Users/Percision 15/Godot_Eden"
+	"12_turns_system": "mnt/c/Users/Percision 15/12_turns_system",
+	"LuminusOS": "mnt/c/Users/Percision 15/LuminusOS",
+	"Eden_OS": "mnt/c/Users/Percision 15/Eden_OS",
+	"Godot_Eden": "mnt/c/Users/Percision 15/Godot_Eden"
 }
 }
 
@@ -177,7 +177,7 @@ func get_connection_summary():
 }
 
 # Export visualization to HTML
-func export_visualization(output_path = "/mnt/c/Users/Percision 15/project_connections.html"):
+func export_visualization(output_path = "mnt/c/Users/Percision 15/project_connections.html"):
 	if not is_initialized:
 		push_error("System not initialized")
 		return null
@@ -210,7 +210,7 @@ func transfer_data(source_id, target_id, data, channel = "default"):
 }
 
 func load_script(script_name):
-	var script_path = OS.get_executable_path().get_base_dir() + "/" + script_name
+	var script_path = OS.get_executable_path().get_base_dir() + "" + script_name
 }
 
 	if not File.new().file_exists(script_path):

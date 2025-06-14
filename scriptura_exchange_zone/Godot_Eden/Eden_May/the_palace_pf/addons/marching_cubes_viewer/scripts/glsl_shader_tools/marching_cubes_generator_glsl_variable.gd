@@ -22,8 +22,8 @@
 # SOFTWARE.
 
 @tool
-extends GLSLShaderTool
-class_name MarchingCubesGeneratorGLSLVariable
+extends \2
+class_name MarchingCubesGeneratorGLSLVariable_marchingcubesgeneratorglslvariable_marching
 
 #var shader_mipmap_rid:RID;
 var mipmap_gen_rf_3d:MipmapGenerator_rf_3d

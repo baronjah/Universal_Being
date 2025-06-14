@@ -46,6 +46,7 @@ func _make_ai_decision() -> void:
 	
 	# Use Gemma for complex decisions
 	if gemma_connection and gemma_connection.has_method("process_companion_decision"):
+
 		var decision = gemma_connection.process_companion_decision(context)
 		process_ai_decision(decision)
 	else:
@@ -61,7 +62,7 @@ func _build_decision_context(sensory_data: Dictionary) -> Dictionary:
 		"sensory_data": sensory_data,
 		"memory_recent": memory_buffer.slice(-5), # Last 5 memories
 		"following": following_target != null
-	}
+}
 
 func _autonomous_behavior(sensory_data: Dictionary) -> void:
 	"""Basic autonomous behavior when Gemma isn't available"""
@@ -70,6 +71,7 @@ func _autonomous_behavior(sensory_data: Dictionary) -> void:
 	
 	# Curious personality - investigate new beings
 	if "curious" in personality_traits and visible_beings.size() > 0:
+
 		var closest = visible_beings[0]
 		for being in visible_beings:
 			if being.distance < closest.distance:
@@ -79,6 +81,7 @@ func _autonomous_behavior(sensory_data: Dictionary) -> void:
 		if closest.distance > preferred_distance:
 			var target_pos = closest.position
 			process_ai_decision({"action": "move", "target": target_pos})
+
 	
 	# Empathetic - help low consciousness beings
 	if "empathetic" in personality_traits:
@@ -134,11 +137,13 @@ func experience_environment() -> void:
 	var beauty_score = _sense_environmental_beauty()
 	experience_quality += beauty_score
 	experience_factors.append("beauty: %f" % beauty_score)
+
 	
 	# Check for interesting interactions
 	var interaction_score = float(energy_connections.size()) / 5.0
 	experience_quality += interaction_score
 	experience_factors.append("connections: %d" % energy_connections.size())
+
 	
 	# Check for growth opportunities
 	var growth_possible = consciousness_level < 7
@@ -151,6 +156,7 @@ func experience_environment() -> void:
 	experience_quality -= threat_level
 	if threat_level > 0:
 		experience_factors.append("threats: %f" % threat_level)
+
 	
 	# Update emotional state based on experience
 	if experience_quality > 0.7:
@@ -159,6 +165,7 @@ func experience_environment() -> void:
 	elif experience_quality < -0.3:
 		emotional_state = "distressed"
 		log_action("negative_experience", "%s experiences distress: %s" % [companion_name, experience_factors])
+
 		# AI can choose to leave hostile environments
 		_seek_better_environment()
 	else:

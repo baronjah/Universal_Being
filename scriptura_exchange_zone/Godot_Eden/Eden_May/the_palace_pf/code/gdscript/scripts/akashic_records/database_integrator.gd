@@ -1,5 +1,5 @@
 extends Node
-class_name AkashicDatabaseIntegrator
+class_name AkashicDatabaseIntegrator_databaseintegrator_database
 
 # This class integrates the Akashic Records with JSH databases
 # It handles automatic splitting and organization of data
@@ -116,7 +116,7 @@ func _scan_directory(path: String, category: String) -> void:
 		while file_name != "":
 			if not dir.current_is_dir() and file_name.ends_with(".json"):
 				# Add to registry
-				var file_path = path + "/" + file_name
+				var file_path = path + "" + file_name
 				var file_info = {
 					"path": file_path,
 					"size": _get_file_size(file_path),
@@ -486,7 +486,7 @@ func process_external_split(data: Dictionary, options: Dictionary = {}) -> Dicti
 		if split_result.has("success") and split_result.success:
 			# Process the split result
 			var category = options.get("category", "words")
-			var base_path = "user://akashic_records/data/" + category + "/"
+			var base_path = "user://akashic_records/data/" + category + ""
 			var base_name = options.get("base_name", "data_" + str(Time.get_ticks_msec()))
 			
 			# Save splits to files

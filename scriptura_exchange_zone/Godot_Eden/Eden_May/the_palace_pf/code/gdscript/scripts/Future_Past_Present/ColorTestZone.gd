@@ -1,5 +1,5 @@
 
-extends Node3D
+extends \2
 
 # The reference to the Sprite3D node
 @onready var sprite3d = $Sprite3D

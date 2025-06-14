@@ -9,8 +9,8 @@
 # root/JSH_records_system
 extends UniversalBeingBase
 #
-# res://code/gdscript/scripts/Menu_Keyboard_Console/record_set_manager.gd
-# res://code/gdscript/scripts/Archive_Past_Text/ARF_global_load.gd
+# res://scripts/gdscript/scripts/Menu_Keyboard_Console/record_set_manager.gd
+# res://scripts/gdscript/scripts/Archive_Past_Text/ARF_global_load.gd
 # JSH_Core/JSH_mainframe_database/JSH_records_system
 #
 # Record set storage

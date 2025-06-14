@@ -13,7 +13,7 @@ static func get_instance() -> JSHEntityEvolution:
 
 # Evolution stages define how entities progress
 # Format: {entity_type: {stage_name: EvolutionStage}}
-var _evolution_stages = {}
+var _evolution_stages = {
 
 # Evolution stage inner class
 class EvolutionStage:
@@ -51,27 +51,27 @@ func _setup_default_stages():
 	
 	define_evolution_stage("seedling", "plant", 1, 1.0, {
 		"water_level": {"min": 2.0},
-		"sunlight": {"min": 1.0}
+		"sunlight": {"min": 1.0
 	}, "plant_seedling")
 	
 	define_evolution_stage("young", "plant", 2, 2.0, {
 		"water_level": {"min": 5.0},
 		"sunlight": {"min": 3.0},
-		"soil_quality": {"min": 2.0}
+		"soil_quality": {"min": 2.0
 	}, "plant_young")
 	
 	define_evolution_stage("mature", "plant", 3, 4.0, {
 		"water_level": {"min": 8.0},
 		"sunlight": {"min": 5.0},
 		"soil_quality": {"min": 4.0},
-		"age": {"min": 10.0}
+		"age": {"min": 10.0
 	}, "plant_mature")
 	
 	define_evolution_stage("flowering", "plant", 4, 6.0, {
 		"water_level": {"min": 10.0},
 		"sunlight": {"min": 8.0},
 		"soil_quality": {"min": 6.0},
-		"age": {"min": 20.0}
+		"age": {"min": 20.0
 	}, "plant_flowering")
 	
 	define_evolution_stage("fruit_bearing", "plant", 5, 8.0, {
@@ -79,7 +79,7 @@ func _setup_default_stages():
 		"sunlight": {"min": 10.0},
 		"soil_quality": {"min": 8.0},
 		"age": {"min": 30.0},
-		"pollinated": {"equals": true}
+		"pollinated": {"equals": true
 	}, "plant_fruit")
 	
 	# Set up stage connections
@@ -93,6 +93,7 @@ func _setup_default_stages():
 func define_evolution_stage(stage_name: String, entity_type: String, stage_index: int,
 							required_complexity: float, requirements: Dictionary,
 							transforms_to: String = "", effect_script: String = "") -> void:
+	}
 	# Create the stage object
 	var stage = EvolutionStage.new(
 		stage_name, entity_type, stage_index, required_complexity, 
@@ -101,7 +102,7 @@ func define_evolution_stage(stage_name: String, entity_type: String, stage_index
 	
 	# Initialize the entity type dictionary if it doesn't exist
 	if not _evolution_stages.has(entity_type):
-		_evolution_stages[entity_type] = {}
+		_evolution_stages[entity_type] = {
 	
 	# Add the stage to the entity type
 	_evolution_stages[entity_type][stage_name] = stage
@@ -277,6 +278,7 @@ func process_batch_evolution(entities: Array, delta: float) -> int:
 	for entity in entities:
 		# Skip entities without evolution data
 		if not entity.has_property("evolution_time_accumulator"):
+}
 			# Initialize evolution timer
 			entity.set_property("evolution_time_accumulator", 0.0)
 			continue
@@ -316,9 +318,9 @@ func save_to_file(file_path: String) -> bool:
 		return false
 	
 	# Convert evolution stages to serializable format
-	var serialized_data = {}
+	var serialized_data = {
 	for entity_type in _evolution_stages:
-		serialized_data[entity_type] = {}
+		serialized_data[entity_type] = {
 		for stage_name in _evolution_stages[entity_type]:
 			var stage = _evolution_stages[entity_type][stage_name]
 			serialized_data[entity_type][stage_name] = {
@@ -328,7 +330,7 @@ func save_to_file(file_path: String) -> bool:
 				"transforms_to": stage.transforms_to,
 				"effect_script": stage.effect_script,
 				"next_stages": stage.next_stages
-			}
+	}
 	
 	# Save as JSON
 	file.store_string(JSON.stringify(serialized_data, "\t"))
@@ -417,9 +419,9 @@ func get_initial_stage(entity_type: String) -> String:
 # Get the stage information
 func get_stage_info(entity_type: String, stage_name: String) -> Dictionary:
 	if not _evolution_stages.has(entity_type) or not _evolution_stages[entity_type].has(stage_name):
-		return {}
+		return {
 	
-	var stage = _evolution_stages[entity_type][stage_name]
+	var stage = _evolution_stages[entity_type][stage_name]}
 	return {
 		"stage_name": stage.stage_name,
 		"entity_type": stage.entity_type,
@@ -428,7 +430,7 @@ func get_stage_info(entity_type: String, stage_name: String) -> Dictionary:
 		"requirements": stage.requirements,
 		"transforms_to": stage.transforms_to,
 		"next_stages": stage.next_stages
-	}
+}
 
 # Set up an entity with initial evolution data
 func initialize_entity_evolution(entity: JSHUniversalEntity) -> void:

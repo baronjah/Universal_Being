@@ -1,5 +1,5 @@
 extends Node
-class_name WishKnowledgeSystem
+class_name WishKnowledgeSystem_wishknowledgesystem_wishknow
 
 """
 Wish Knowledge System
@@ -23,7 +23,8 @@ Features:
 """
 
 # Element types
-enum ElementType {
+enum \2 {
+
     CHARACTER,
     LOCATION,
     ITEM,
@@ -39,7 +40,8 @@ enum ElementType {
 }
 
 # Wish complexity
-enum WishComplexity {
+enum \2 {
+
     SIMPLE,
     MODERATE,
     COMPLEX,
@@ -48,7 +50,8 @@ enum WishComplexity {
 }
 
 # Knowledge domains
-enum KnowledgeDomain {
+enum \2 {
+
     GAMEPLAY,
     NARRATIVE,
     VISUAL,
@@ -64,7 +67,8 @@ enum KnowledgeDomain {
 }
 
 # Dimensional mapping (aligns with 12-turn system)
-enum DimensionalPlane {
+enum \2 {
+
     REALITY,      # 1D: Point - Concrete implementation
     LINEAR,       # 2D: Line - Sequential flow
     SPATIAL,      # 3D: Space - Environment and layout
@@ -80,7 +84,8 @@ enum DimensionalPlane {
 }
 
 # Implementation difficulty
-enum ImplementationDifficulty {
+enum \2 {
+
     TRIVIAL,
     EASY,
     MODERATE,
@@ -107,7 +112,7 @@ class WishIntent:
     func _init(p_id: String, p_raw_text: String):
         id = p_id
         raw_text = p_raw_text
-        creation_timestamp = OS.get_unix_time()
+        creation_timestamp = OS.Time.get_unix_time_from_system()
     
     func to_dict() -> Dictionary:
         return {
@@ -142,7 +147,7 @@ class KnowledgeNode:
         id = p_id
         name = p_name
         type = p_type
-        last_updated = OS.get_unix_time()
+        last_updated = OS.Time.get_unix_time_from_system()
         version = 1
     
     func add_connection(node_id: String):
@@ -186,7 +191,7 @@ class GameElement:
         name = p_name
         type = p_type
         status = "concept"
-        created_at = OS.get_unix_time()
+        created_at = OS.Time.get_unix_time_from_system()
         updated_at = created_at
     
     func add_integration_point(element_id: String):
@@ -229,7 +234,7 @@ class ImplementationPlan:
         element_id = p_element_id
         title = p_title
         implementation_phase = "planning"
-        created_at = OS.get_unix_time()
+        created_at = OS.Time.get_unix_time_from_system()
         updated_at = created_at
     
     func add_step(step_description: String, estimated_hours: float):
@@ -700,11 +705,11 @@ class ElementGenerator:
         if text_lower.find("interact") >= 0 or text_lower.find("interface") >= 0:
             return ElementType.INTERACTION
         
-        // Default: infer from core intents
+# // Default: infer from core intents
         for intent_obj in intent.core_intents:
             var content = intent_obj.content.to_lower()
             
-            // Simple pattern matching
+# // Simple pattern matching
             if content.find("character") >= 0 or content.find("npc") >= 0:
                 return ElementType.CHARACTER
                 
@@ -714,7 +719,7 @@ class ElementGenerator:
             if content.find("item") >= 0 or content.find("tool") >= 0:
                 return ElementType.ITEM
         
-        // If no obvious type, use the dimensional plane to guide the decision
+# // If no obvious type, use the dimensional plane to guide the decision
         match intent.dimensional_alignment:
             DimensionalPlane.REALITY:
                 return ElementType.ITEM
@@ -1135,7 +1140,7 @@ class IntegrationManager:
         plan.implementation_phase = "completed"
         
         # Update element timestamp
-        element.updated_at = OS.get_unix_time()
+        element.updated_at = OS.Time.get_unix_time_from_system()
         
         return true
     
@@ -1357,7 +1362,7 @@ func get_elements_by_dimension(dimension: int) -> Array:
 func set_dimension(dimension: int):
     # If we have a dimensional system, this will be handled by that system
     # Otherwise, we'll update the current dimension in our intent processor
-    _intent_processor = IntentProcessor.new(_dimensional_system if _dimensional_system else {"get_current_dimension": funcref(self, "_get_dimension_fallback")})
+    _intent_processor = IntentProcessor.new(_dimensional_system if _dimensional_system else {"get_current_dimension": Callable(self, "_get_dimension_fallback")})
 
 func _get_dimension_fallback() -> int:
     # Fallback function for when there's no dimensional system
@@ -1416,7 +1421,7 @@ func _seed_initial_knowledge():
     _knowledge_graph.connect_nodes("knowledge_mechanics", "knowledge_visual")
 
 static func generate_unique_id() -> String:
-    var id = str(OS.get_unix_time()) + "-" + str(randi() % 1000000).pad_zeros(6)
+    var id = str(OS.Time.get_unix_time_from_system()) + "-" + str(randi() % 1000000).pad_zeros(6)
     return id
 
 # Example usage:

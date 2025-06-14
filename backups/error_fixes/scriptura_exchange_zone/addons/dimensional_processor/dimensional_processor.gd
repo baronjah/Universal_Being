@@ -57,8 +57,8 @@ func initialize() -> bool:
             data_bridge.activate_dimension(dim)
     
     # Connect bridge signals
-    data_bridge.connect("dimension_changed", self, "_on_dimension_changed")
-    data_bridge.connect("transformation_completed", self, "_on_transformation_completed")
+    data_bridge.connect(_on_dimension_changed)
+    data_bridge.connect(_on_transformation_completed)
     
     # Log initialization
     if config.enable_logging:

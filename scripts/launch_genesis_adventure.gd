@@ -183,8 +183,8 @@ func _connect_gemma_ai_system(ai_companion: Node) -> void:
 			"creativity_level": 0.8,
 			"collaboration_style": "supportive",
 			"suggestion_frequency": "moderate"
-		}
 		ai_companion.set("ai_personality", ai_personality)
+}
 		
 		print("🔗 AI companion connected to Gemma AI system")
 	else:
@@ -297,4 +297,3 @@ func get_collaboration_status() -> Dictionary:
 		"genesis_scenario_loaded": genesis_scenario != null,
 		"collaboration_areas": 4,  # North, East, West, Central
 		"total_garden_beings": genesis_scenario.garden_beings.size() if genesis_scenario else 0
-	}

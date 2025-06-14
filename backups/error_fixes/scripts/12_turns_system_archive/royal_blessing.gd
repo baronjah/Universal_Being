@@ -51,15 +51,14 @@ var blessing_properties = {
 		"dimension_bonus": 12.0,
 		"duration_turns": 3,
 		"favor_cost": 120
-	}
 }
 
 # ----- STATE VARIABLES -----
-var active_blessings = {}
-var royal_favor = {}
-var blessed_words = {}
+var active_blessings = {
+var royal_favor = {
+var blessed_words = {
 var royal_decrees = []
-var royal_titles = {}
+var royal_titles = {
 
 # ----- SYSTEM REFERENCES -----
 var turn_system = null
@@ -82,13 +81,13 @@ func connect_systems():
 	# Connect to the turn system
 	turn_system = get_node_or_null("/root/TurnSystem")
 	if turn_system:
-		turn_system.connect("turn_completed", self, "_on_turn_completed")
-		turn_system.connect("dimension_changed", self, "_on_dimension_changed")
+		turn_system.connect(_on_turn_completed)
+		turn_system.connect(_on_dimension_changed)
 	
 	# Connect to the divine word processor
 	divine_word_processor = get_node_or_null("/root/DivineWordProcessor")
 	if divine_word_processor:
-		divine_word_processor.connect("word_processed", self, "_on_word_processed")
+		divine_word_processor.connect(_on_word_processed)
 	
 	# Connect to the comment system
 	word_comment_system = get_node_or_null("/root/WordCommentSystem")
@@ -140,8 +139,7 @@ func initialize_royal_titles():
 			"favor_required": 2000,
 			"dimension_required": 12,
 			"powers": ["All lesser title powers", "Reality creation"]
-		}
-	}
+}
 	
 	# Store the data
 	royal_titles = royal_title_data
@@ -158,7 +156,7 @@ func grant_blessing(player_name, word, blessing_type, requester="system"):
 		return {
 			"success": false,
 			"message": "Insufficient royal favor. Required: " + str(favor_cost) + ", Available: " + str(royal_favor[player_name])
-		}
+}
 	
 	# Reduce royal favor
 	var old_favor = royal_favor[player_name]
@@ -180,7 +178,7 @@ func grant_blessing(player_name, word, blessing_type, requester="system"):
 		"expires_turn": (turn_system.current_turn if turn_system else 0) + duration,
 		"requester": requester,
 		"timestamp": OS.get_unix_time()
-	}
+}
 	
 	# Add to active blessings
 	active_blessings[blessing_id] = blessing_data
@@ -217,7 +215,7 @@ func grant_blessing(player_name, word, blessing_type, requester="system"):
 		"message": decree_text,
 		"blessing_id": blessing_id,
 		"duration": duration
-	}
+}
 
 func record_royal_decree(decree_text, blessing_type, player_name, word):
 	var decree = {
@@ -228,7 +226,7 @@ func record_royal_decree(decree_text, blessing_type, player_name, word):
 		"timestamp": OS.get_unix_time(),
 		"turn": turn_system.current_turn if turn_system else 0,
 		"dimension": turn_system.current_dimension if turn_system else 1
-	}
+}
 	
 	royal_decrees.append(decree)
 	emit_signal("royal_decree_issued", decree_text, blessing_type)
@@ -354,7 +352,7 @@ func grant_royal_title(player_name, title):
 		return {
 			"success": false,
 			"message": "Invalid royal title: " + title
-		}
+}
 	
 	var title_data = royal_titles[title]
 	
@@ -374,7 +372,7 @@ func grant_royal_title(player_name, title):
 		"message": decree_text,
 		"title": title,
 		"powers": title_data.powers
-	}
+}
 
 func apply_title_benefits(player_name, title):
 	if not royal_titles.has(title):
@@ -476,7 +474,6 @@ func parse_royal_decree(text, source_player):
 		if blessing_type >= 0:
 			// Check if player has sufficient favor
 			return grant_blessing(source_player, word, blessing_type, source_player)
-	}
 	
 	return null
 

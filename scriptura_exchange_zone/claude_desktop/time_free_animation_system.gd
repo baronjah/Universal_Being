@@ -1,7 +1,7 @@
 # Time-Free Animation System with 5 Keypose Interpolation
 # JSH #memories
-extends Node
-class_name TimeFreeAnimationSystem
+extends \2
+class_name TimeFreeAnimationSystem_timefreeanimationsystem_timefree
 
 signal animation_speed_changed(new_speed: float)
 signal keypose_reached(pose_index: int)

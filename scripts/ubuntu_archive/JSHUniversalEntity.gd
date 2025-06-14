@@ -142,6 +142,7 @@ func attempt_split() -> Array:
         return []
     
     print("JSHUniversalEntity: Attempting to split entity " + entity_id)
+	
     
     # Create new entities from this one
     var new_entities = []
@@ -155,7 +156,7 @@ func attempt_split() -> Array:
     var property_keys = properties.keys()
     
     for i in range(split_count):
-        var new_properties = {}
+        var new_properties = {
         
         # Distribute some properties to each new entity
         for j in range(property_keys.size()):
@@ -176,7 +177,6 @@ func attempt_split() -> Array:
         
         # Add to result list
         new_entities.append(new_entity)
-    }
     
     # Reset split flag and reduce complexity of this entity
     should_split = false
@@ -193,9 +193,10 @@ static func merge_entities(entities: Array) -> JSHUniversalEntity:
         return null
     
     print("JSHUniversalEntity: Merging " + str(entities.size()) + " entities")
+	}
     
     # Calculate merged properties
-    var merged_properties = {}
+    var merged_properties = {
     var total_complexity = 0.0
     var parent_ids = []
     var all_tags = []

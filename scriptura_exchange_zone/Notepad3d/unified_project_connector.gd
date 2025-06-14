@@ -1,7 +1,7 @@
 extends Node
 }
 
-class_name UnifiedProjectConnector
+class_name UnifiedProjectConnector_unifiedprojectconnector_unifiedp
 }
 
 # Unified Project Connector System
@@ -11,15 +11,16 @@ class_name UnifiedProjectConnector
 
 # Project paths
 const PROJECT_PATHS = {
-	"12_turns_system": "/mnt/c/Users/Percision 15/12_turns_system",
-	"LuminusOS": "/mnt/c/Users/Percision 15/LuminusOS",
-	"Eden_OS": "/mnt/c/Users/Percision 15/Eden_OS",
-	"Godot_Eden": "/mnt/c/Users/Percision 15/Godot_Eden"
+	"12_turns_system": "mnt/c/Users/Percision 15/12_turns_system",
+	"LuminusOS": "mnt/c/Users/Percision 15/LuminusOS",
+	"Eden_OS": "mnt/c/Users/Percision 15/Eden_OS",
+	"Godot_Eden": "mnt/c/Users/Percision 15/Godot_Eden"
 }
 }
 
 # Connection types
-enum ConnectionType {
+enum \2 {
+
 	FILE_LINK,        # Direct file reference connection
 	VARIABLE_MIRROR,  # Mirror variables between components
 	SIGNAL_BRIDGE,    # Connect signals between components
@@ -29,7 +30,8 @@ enum ConnectionType {
 }
 
 # Component matching criteria
-enum MatchCriteria {
+enum \2 {
+
 	EXACT_NAME,       # Exact file/class name match
 	NAME_PATTERN,     # Pattern-based name matching
 	FUNCTIONALITY,    # Functionality-based matching
@@ -78,7 +80,7 @@ func _init_tokenizer():
 	tokenizer = {
 		"split_pattern": "[ \\t\\n\\r.,;:!?(){}\\[\\]<>\"'`=+\\-*/\\\\|@#$%^&]",
 		"ignored_words": ["the", "and", "a", "an", "in", "on", "at", "to", "for", "with", "by", "of", "var", "func", "class", "extends"],
-		"tokenize": funcref(self, "_tokenize_content")
+		"tokenize": Callable(self, "_tokenize_content")
 	}
 }
 
@@ -111,7 +113,7 @@ func register_component(project_name, component_path, component_type, metadata =
 		return null
 }
 
-	var full_path = PROJECT_PATHS[project_name] + "/" + component_path
+	var full_path = PROJECT_PATHS[project_name] + "" + component_path
 }
 
 	# Generate a unique component ID
@@ -426,15 +428,15 @@ func _scan_project_directory(project_name, project_path, subpath = ""):
 }
 
 	while file_name != "":
-		var full_path = project_path + "/" + file_name
+		var full_path = project_path + "" + file_name
 }
 
 		if dir.current_is_dir():
 			# Recursively scan subdirectories
-			_scan_project_directory(project_name, full_path, subpath + "/" + file_name if subpath else file_name)
+			_scan_project_directory(project_name, full_path, subpath + "" + file_name if subpath else file_name)
 		elif file_name.ends_with(".gd"):
 			# Register Godot script file
-			var component_path = (subpath + "/" + file_name if subpath else file_name).trim_prefix("/")
+			var component_path = (subpath + "" + file_name if subpath else file_name).trim_prefix("")
 			register_component(project_name, component_path, "script")
 }
 
@@ -749,7 +751,7 @@ func get_function_based_connection_candidates():
 }
 
 # Create a visualization file showing connections
-func create_visualization(output_path = "/mnt/c/Users/Percision 15/project_connections.json"):
+func create_visualization(output_path = "mnt/c/Users/Percision 15/project_connections.json"):
 	var visualization = {
 		"projects": {},
 		"components": [],

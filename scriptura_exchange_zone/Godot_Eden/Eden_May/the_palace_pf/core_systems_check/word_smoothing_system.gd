@@ -1,28 +1,28 @@
 extends Node
 
-class_name WordSmoothingSystem
+class_name WordSmoothingSystem_wordsmoothingsystem_wordsmoo
 
 # ----- SMOOTHING SETTINGS -----
 @export_category("Smoothing Settings")
-@export var smoothing_enabled: bool = true
-@export var path_smoothing_strength: float = 0.5
-@export var position_smoothing_weight: float = 0.2
-@export var rotation_smoothing_weight: float = 0.1
-@export var scale_smoothing_weight: float = 0.3
-@export var use_bezier_curves: bool = true
+@@export var smoothing_enabled: bool = true
+@@export var path_smoothing_strength: float = 0.5
+@@export var position_smoothing_weight: float = 0.2
+@@export var rotation_smoothing_weight: float = 0.1
+@@export var scale_smoothing_weight: float = 0.3
+@@export var use_bezier_curves: bool = true
 
 # ----- VISUAL SETTINGS -----
 @export_category("Visual Settings")
-@export var draw_debug_paths: bool = false
-@export var debug_path_segments: int = 20
-@export var debug_path_width: float = 2.0
-@export var debug_path_color: Color = Color(1.0, 0.5, 0.0, 0.5)
+@@export var draw_debug_paths: bool = false
+@@export var debug_path_segments: int = 20
+@@export var debug_path_width: float = 2.0
+@@export var debug_path_color: Color = Color(1.0, 0.5, 0.0, 0.5)
 
 # ----- INTEGRATION SETTINGS -----
 @export_category("Integration Settings")
-@export var auto_update_on_physics: bool = true
-@export var update_frequency: float = 60.0  # Updates per second when not using physics
-@export var max_words_per_update: int = 10  # To avoid performance issues
+@@export var auto_update_on_physics: bool = true
+@@export var update_frequency: float = 60.0  # Updates per second when not using physics
+@@export var max_words_per_update: int = 10  # To avoid performance issues
 
 # ----- STATE TRACKING -----
 var word_entities: Dictionary = {}  # word_id -> {node, target, data}
@@ -288,7 +288,7 @@ func evaluate_bezier_at(points: Array, t: float) -> Vector3:
     if i >= point_count - 1:
         return points[point_count - 1]
     
-    // Interpolate between sample points
+# // Interpolate between sample points
     var fraction = segment - i
     return points[i].lerp(points[i + 1], fraction)
 

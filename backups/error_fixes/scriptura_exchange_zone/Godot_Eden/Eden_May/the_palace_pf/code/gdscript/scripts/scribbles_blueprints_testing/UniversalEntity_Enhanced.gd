@@ -53,7 +53,7 @@ signal entity_merged(source_entities, new_entity)
 
 # ----- INITIALIZATION -----
 func _init(id: String = "", type: String = "primordial", init_properties: Dictionary = {}) -> void:
-    if id.empty():
+    if id.is_empty():
         entity_id = _generate_unique_id()
     else:
         entity_id = id
@@ -85,7 +85,7 @@ func _init(id: String = "", type: String = "primordial", init_properties: Dictio
         tags = init_properties.tags.duplicate()
     
     # Record creation time
-    last_processed_time = Time.get_ticks_msec()
+    last_processed_time = Time.Time.get_ticks_msec()
     
     # Add initial transformation record
     add_transformation_record("creation", "none", entity_type)
@@ -362,7 +362,7 @@ func calculate_complexity() -> float:
     var current_complexity = calculate_initial_complexity()
     
     # Time factor - longer-lived entities are more complex
-    var time_alive_ms = Time.get_ticks_msec() - last_processed_time
+    var time_alive_ms = Time.Time.get_ticks_msec() - last_processed_time
     current_complexity += (time_alive_ms / 60000.0) * 0.1  # Add 0.1 per minute
     
     # Transformation history factor - more transformations = more complex
@@ -582,7 +582,7 @@ func remove_metadata(key: String) -> bool:
 
 func process(delta: float) -> void:
     # Update since last processed
-    var current_time = Time.get_ticks_msec()
+    var current_time = Time.Time.get_ticks_msec()
     var time_since_last = current_time - last_processed_time
     
     # Only process if enough time has passed

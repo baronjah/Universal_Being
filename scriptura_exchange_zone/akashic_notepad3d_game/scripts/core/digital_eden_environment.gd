@@ -21,7 +21,7 @@ extends Node3D
 # ═══════════════════════════════════════════════════════════════════════════════════════════════
 
 ## Digital Eden Environment class for AI paradise creation
-class_name DigitalEdenEnvironment
+class_name DigitalEdenEnvironment_digitaledenenvironment_digitale
 
 # ─────────────────────────────────────────────────────────────────────────────────
 # 🌳 ENVIRONMENT COMPONENTS

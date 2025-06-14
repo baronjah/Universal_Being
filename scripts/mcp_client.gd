@@ -26,4 +26,3 @@ func get_component_info() -> Dictionary:
 		"name": "MCP Client",
 		"status": connection_status,
 		"ready": client_ready
-	}

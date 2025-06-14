@@ -1,5 +1,5 @@
 extends Node
-class_name PS5ControllerInterface
+class_name PS5ControllerInterface_ps5controllerinterface_ps5contr
 
 # PS5 Controller Interface for Space Game
 # Provides specialized handling for PS5/DualSense controllers
@@ -122,7 +122,7 @@ func _check_for_controllers():
 
 func _find_memory_systems():
 	# Find the memory turn system
-	memory_system = get_node_or_null("/root/MemoryTurnSystem")
+	memory_system = get_node_or_null("root/MemoryTurnSystem")
 	if !memory_system:
 		var parent = get_parent()
 		while parent and !memory_system:
@@ -130,7 +130,7 @@ func _find_memory_systems():
 			parent = parent.get_parent()
 	
 	# Find the triple memory connector
-	triple_connector = get_node_or_null("/root/TripleMemoryConnector")
+	triple_connector = get_node_or_null("root/TripleMemoryConnector")
 	if !triple_connector:
 		var parent = get_parent()
 		while parent and !triple_connector:

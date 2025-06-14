@@ -1,9 +1,10 @@
 extends Resource
 
-class_name AccountTierColors
+class_name AccountTierColors_accounttiercolors_accountt
 
 # Account tiers
-enum AccountTier {
+enum \2 {
+
     FREE,
     PLUS,
     MAX,

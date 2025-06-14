@@ -1,5 +1,5 @@
 extends Node
-class_name WordDreamCreator
+class_name WordDreamCreator_worddreamcreator_worddrea
 }
 
 signal word_created(word_data: Dictionary)
@@ -77,7 +77,7 @@ func _ready():
 
 func _connect_to_systems():
     # Connect to Dream Connector
-    dream_connector = get_node_or_null("/root/DreamConnector")
+    dream_connector = get_node_or_null("root/DreamConnector")
     if dream_connector:
         print("✓ Connected to Dream Connector")
         dream_connector.connect("dream_symbol_received", Callable(self, "_on_dream_symbol"))
@@ -92,13 +92,13 @@ func _connect_to_systems():
 }
 
     # Connect to Wish Maker
-    wish_maker = get_node_or_null("/root/WishMakerMachine")
+    wish_maker = get_node_or_null("root/WishMakerMachine")
     if wish_maker:
         print("✓ Connected to Wish Maker Machine")
 }
 
     # Connect to LUNO
-    luno_manager = get_node_or_null("/root/LunoCycleManager")
+    luno_manager = get_node_or_null("root/LunoCycleManager")
     if luno_manager:
         print("✓ Connected to LUNO Cycle Manager")
         luno_manager.register_participant("WordDreamCreator", Callable(self, "_on_luno_tick"))
@@ -116,7 +116,7 @@ func _initialize_word_database():
     word_database.append({
         "word": "luminus",
         "origin": "dream",
-        "creation_date": OS.get_unix_time() - 86400 * 7,
+        "creation_date": OS.Time.get_unix_time_from_system() - 86400 * 7,
         "dream_depth": 4,
         "associations": ["light", "knowledge", "interface"],
         "power_level": 8
@@ -126,7 +126,7 @@ func _initialize_word_database():
     word_database.append({
         "word": "ethereal",
         "origin": "dream",
-        "creation_date": OS.get_unix_time() - 86400 * 3,
+        "creation_date": OS.Time.get_unix_time_from_system() - 86400 * 3,
         "dream_depth": 3,
         "associations": ["spirit", "engine", "flow"],
         "power_level": 7
@@ -138,7 +138,7 @@ func _initialize_word_database():
 
 func _update_device_connections():
     # Update current device info
-    connected_devices.current.last_login = OS.get_unix_time()
+    connected_devices.current.last_login = OS.Time.get_unix_time_from_system()
 }
 
     # This would check for other connected devices
@@ -151,7 +151,7 @@ func _update_device_connections():
             "name": "ipad-m2",
             "type": "tablet",
             "status": "connected", 
-            "last_login": OS.get_unix_time() - 3600
+            "last_login": OS.Time.get_unix_time_from_system() - 3600
         })
 }
 
@@ -159,14 +159,14 @@ func _update_device_connections():
             "name": "macbook-pro",
             "type": "laptop",
             "status": "inactive",
-            "last_login": OS.get_unix_time() - 86400
+            "last_login": OS.Time.get_unix_time_from_system() - 86400
         })
 }
 
     # Cloud connection status
     connected_devices.cloud = {
         "status": "connected",
-        "synced_at": OS.get_unix_time(),
+        "synced_at": OS.Time.get_unix_time_from_system(),
         "storage_used": 128.5,  # MB
         "storage_total": 1024   # MB
     }
@@ -180,7 +180,7 @@ func _update_device_connections():
 }
 
 func _check_date_reset():
-    var current_time = OS.get_unix_time()
+    var current_time = OS.Time.get_unix_time_from_system()
     var current_date = Time.get_date_dict_from_system()
 }
 
@@ -226,14 +226,14 @@ func _check_subscription():
 }
 
     # Log subscription status
-    var days_remaining = (subscription_status.renewal_date - OS.get_unix_time()) / 86400
+    var days_remaining = (subscription_status.renewal_date - OS.Time.get_unix_time_from_system()) / 86400
     print("💰 Subscription active: %d days remaining" % days_remaining)
 }
 
     # Record a payment if none exists
     if payment_records.size() == 0:
         payment_records.append({
-            "date": OS.get_unix_time() - 86400 * 5,  # 5 days ago
+            "date": OS.Time.get_unix_time_from_system() - 86400 * 5,  # 5 days ago
             "amount": subscription_status.monthly_cost,
             "status": "completed",
             "method": "credit_card"
@@ -289,7 +289,7 @@ func create_word_from_dream(dream_info: Dictionary = {}) -> Dictionary:
     var word_data = {
         "word": new_word,
         "origin": "dream",
-        "creation_date": OS.get_unix_time(),
+        "creation_date": OS.Time.get_unix_time_from_system(),
         "dream_depth": dream_info.get("depth", 1),
         "associations": [],
         "power_level": dream_info.get("depth", 1) * 2
@@ -424,8 +424,8 @@ func start_dream_sequence():
 
     # Initialize dream sequence
     active_sequence = {
-        "id": "seq_" + str(OS.get_unix_time()),
-        "start_time": OS.get_unix_time(),
+        "id": "seq_" + str(OS.Time.get_unix_time_from_system()),
+        "start_time": OS.Time.get_unix_time_from_system(),
         "end_time": 0,
         "symbols_collected": [],
         "words_created": [],
@@ -455,7 +455,7 @@ func end_dream_sequence() -> Dictionary:
 }
 
     # Complete the sequence
-    active_sequence.end_time = OS.get_unix_time()
+    active_sequence.end_time = OS.Time.get_unix_time_from_system()
     active_sequence.completed = true
 }
 
@@ -504,7 +504,7 @@ func connect_device(device_info: Dictionary) -> bool:
         if device.name == device_info.name:
             # Update existing device
             device.status = "connected"
-            device.last_login = OS.get_unix_time()
+            device.last_login = OS.Time.get_unix_time_from_system()
 }
 
             print("🔄 Reconnected existing device: %s" % device.name)
@@ -517,7 +517,7 @@ func connect_device(device_info: Dictionary) -> bool:
         "name": device_info.name,
         "type": device_info.get("type", "unknown"),
         "status": "connected",
-        "last_login": OS.get_unix_time()
+        "last_login": OS.Time.get_unix_time_from_system()
     }
 }
 
@@ -536,7 +536,7 @@ func record_payment(amount: float, method: String = "credit_card") -> Dictionary
 }
 
     var payment = {
-        "date": OS.get_unix_time(),
+        "date": OS.Time.get_unix_time_from_system(),
         "amount": amount,
         "status": "completed",
         "method": method

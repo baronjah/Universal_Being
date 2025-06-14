@@ -1,7 +1,7 @@
 # Master Evolution System - Claude's Self-Improving Framework
 # JSH #memories
-extends Node
-class_name MasterEvolutionSystem
+extends \2
+class_name MasterEvolutionSystem_masterevolutionsystem_masterev
 
 signal evolution_milestone(description: String)
 signal pathway_discovered(from: String, to: String)
@@ -53,12 +53,12 @@ func initialize_knowledge_base():
 	
 	# Categories to scan
 	var scan_paths = [
-		"/mnt/c/Users/Percision 15/",
-		"/mnt/c/Users/Percision 15/Desktop/",
-		"/mnt/c/Users/Percision 15/Desktop/claude_desktop/",
-		"/mnt/c/claude/",
-		"/mnt/c/eden/",
-		"/mnt/c/kamisama/"
+		"mnt/c/Users/Percision 15/",
+		"mnt/c/Users/Percision 15/Desktop/",
+		"mnt/c/Users/Percision 15/Desktop/claude_desktop/",
+		"mnt/c/claude/",
+		"mnt/c/eden/",
+		"mnt/c/kamisama/"
 	]
 	
 	for path in scan_paths:
@@ -74,7 +74,7 @@ func scan_directory_recursive(path: String):
 	var file_name = dir.get_next()
 	
 	while file_name != "":
-		var full_path = path + "/" + file_name
+		var full_path = path + "" + file_name
 		
 		if dir.current_is_dir() and not file_name.begins_with("."):
 			# Check if it's a relevant directory
@@ -260,14 +260,14 @@ func get_instructions_summary() -> String:
 	instructions.append("4. Create debug/tutorial ground for testing")
 	instructions.append("5. Implement time-free animation system")
 	# ... more instructions
-	return "\n".join(instructions)
+	return "\n"." ".join(instructions)
 
 func get_recent_actions() -> String:
 	"""Get recent evolution actions"""
 	var actions = []
 	for i in range(min(100, evolution_history.size())):
 		actions.append(evolution_history[-(i+1)])
-	return "\n".join(actions)
+	return "\n"." ".join(actions)
 
 func track_usage_patterns():
 	"""Track which functions are actually used"""

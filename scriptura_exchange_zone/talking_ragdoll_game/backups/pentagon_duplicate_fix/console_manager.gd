@@ -3,7 +3,6 @@
 # DESCRIPTION: Scalable in-game console with proper UI anchoring
 # CREATED: 2025-05-23 - Professional console system
 # ==================================================
-
 extends UniversalBeingBase
 signal command_executed(command: String, args: Array)
 
@@ -368,8 +367,8 @@ func _wait_for_floodgate_systems() -> void:
 	var check_interval = 0.1
 	
 	while wait_time < max_wait:
-		var floodgate = get_node_or_null("/root/FloodgateController")
-		var asset_library = get_node_or_null("/root/AssetLibrary")
+		var floodgate = get_node_or_null("root/FloodgateController")
+		var asset_library = get_node_or_null("root/AssetLibrary")
 		
 		if floodgate and asset_library:
 			debug_print("✅ Console Manager: Floodgate systems ready", 2)
@@ -381,9 +380,9 @@ func _wait_for_floodgate_systems() -> void:
 	push_warning("Console Manager: Floodgate systems not ready after " + str(max_wait) + " seconds")
 
 func _check_systems_ready() -> bool:
-	var floodgate = get_node_or_null("/root/FloodgateController")
-	var asset_library = get_node_or_null("/root/AssetLibrary")
-	var world_builder = get_node_or_null("/root/WorldBuilder")
+	var floodgate = get_node_or_null("root/FloodgateController")
+	var asset_library = get_node_or_null("root/AssetLibrary")
+	var world_builder = get_node_or_null("root/WorldBuilder")
 	
 	if not floodgate:
 		_print_to_console("[color=#ff6600]Warning: FloodgateController not found, using fallback[/color]")
@@ -415,7 +414,7 @@ func _create_physics_manager() -> void:
 		var PhysicsStateManager = preload("res://scripts/core/physics_state_manager.gd")
 		physics_state_manager = PhysicsStateManager.new()
 		physics_state_manager.name = "PhysicsStateManager"
-		get_node("/root/FloodgateController").universal_add_child(physics_state_manager, get_tree().current_scene)
+		get_node("root/FloodgateController").universal_add_child(physics_state_manager, get_tree().current_scene)
 	else:
 		print("Warning: physics_state_manager.gd not found")
 
@@ -457,7 +456,7 @@ func _create_object_inspector() -> void:
 		# TODO: Fix universal_object_inspector.gd compilation errors
 		print("Universal Object Inspector temporarily disabled due to compilation errors")
 		return
-		get_tree().get_node("/root/FloodgateController").universal_add_child(object_inspector, get_tree().get_tree().current_scene)
+		get_tree().get_node("root/FloodgateController").universal_add_child(object_inspector, get_tree().get_tree().current_scene)
 		print("[ConsoleManager] Created Universal Object Inspector")
 	elif ResourceLoader.exists("res://scripts/ui/object_inspector.gd"):
 		var ObjectInspector = preload("res://scripts/ui/object_inspector.gd")
@@ -465,7 +464,7 @@ func _create_object_inspector() -> void:
 		object_inspector.name = "ObjectInspector"
 		
 		# Add to get_tree().get_tree().current_scene to ensure it appears above everything
-		get_tree().get_node("/root/FloodgateController").universal_add_child(object_inspector, get_tree().get_tree().current_scene)
+		get_tree().get_node("root/FloodgateController").universal_add_child(object_inspector, get_tree().get_tree().current_scene)
 		
 		# Move to top layer
 		object_inspector.z_index = 100
@@ -780,7 +779,7 @@ func _on_command_submitted(text: String) -> void:
 func _print_to_console(text: String) -> void:
 	if output_display:
 		# Apply spam filtering
-		var spam_filter = get_node_or_null("/root/ConsoleSpamFilter")
+		var spam_filter = get_node_or_null("root/ConsoleSpamFilter")
 		if spam_filter:
 			var filtered_text = spam_filter.filter_message(text)
 			if filtered_text == "":
@@ -960,7 +959,7 @@ func _cmd_test_tutorial(_args: Array) -> void:
 	tutorial.name = "SystematicTestTutorial"
 	
 	# Add to scene
-	get_tree().get_node("/root/FloodgateController").universal_add_child(tutorial, get_tree().get_tree().current_scene)
+	get_tree().get_node("root/FloodgateController").universal_add_child(tutorial, get_tree().get_tree().current_scene)
 	
 	# Connect signals
 	tutorial.test_completed.connect(_on_tutorial_test_completed)
@@ -1006,7 +1005,7 @@ func _cmd_create(args: Array) -> void:
 	var object_type = args[0].to_lower()
 	
 	# First check if it's a known StandardizedObjects asset
-	var std_objects = get_node_or_null("/root/StandardizedObjects")
+	var std_objects = get_node_or_null("root/StandardizedObjects")
 	if std_objects and std_objects.object_definitions.has(object_type):
 		if _check_systems_ready():
 			WorldBuilder.create_object(object_type)
@@ -1069,7 +1068,7 @@ func _cmd_create_wall(_args: Array) -> void:
 
 func _cmd_create_stick(_args: Array) -> void:
 	# Use same method as working 'create' command
-	var std_objects = get_node_or_null("/root/StandardizedObjects")
+	var std_objects = get_node_or_null("root/StandardizedObjects")
 	if std_objects and std_objects.object_definitions.has("stick"):
 		if _check_systems_ready():
 			WorldBuilder.create_object("stick")
@@ -1087,7 +1086,7 @@ func _cmd_create_leaf(_args: Array) -> void:
 		_print_to_console("[color=#ff0000]Error: Floodgate systems not ready![/color]")
 
 func _cmd_list_assets(_args: Array) -> void:
-	var std_objects = get_node_or_null("/root/StandardizedObjects")
+	var std_objects = get_node_or_null("root/StandardizedObjects")
 	if not std_objects:
 		_print_to_console("[color=#ff0000]StandardizedObjects not found![/color]")
 		return
@@ -1104,7 +1103,7 @@ func _on_asset_created(asset_name: String, properties: Dictionary):
 	_print_to_console("You can now use: create %s" % asset_name)
 
 func _cmd_toggle_rules(args: Array) -> void:
-	var universal_entity = get_node_or_null("/root/UniversalEntity")
+	var universal_entity = get_node_or_null("root/UniversalEntity")
 	if not universal_entity:
 		_print_to_console("[color=#ff0000]UniversalEntity not found![/color]")
 		return
@@ -1132,7 +1131,7 @@ func _cmd_toggle_rules(args: Array) -> void:
 
 func _cmd_clear_objects(args: Array) -> void:
 	# Check for scene manager first
-	var scene_manager = get_node_or_null("/root/UnifiedSceneManager")
+	var scene_manager = get_node_or_null("root/UnifiedSceneManager")
 	
 	if args.size() > 0 and args[0] == "all":
 		# Clear everything including terrain
@@ -1160,7 +1159,7 @@ func _cmd_clear_objects(args: Array) -> void:
 
 func _cmd_list_objects(_args: Array) -> void:
 	# First try Universal Object Manager (perfect system)
-	var uom = get_node_or_null("/root/UniversalObjectManager")
+	var uom = get_node_or_null("root/UniversalObjectManager")
 	if uom:
 		var objects = uom.get_all_objects()
 		if objects.is_empty():
@@ -1284,14 +1283,14 @@ func _cmd_load_scene(args: Array) -> void:
 	var scene_name = args[0]
 	
 	# Get or create scene manager
-	var scene_manager = get_node_or_null("/root/UnifiedSceneManager")
+	var scene_manager = get_node_or_null("root/UnifiedSceneManager")
 	if not scene_manager:
 		var manager_script = load("res://scripts/core/unified_scene_manager.gd")
 		if manager_script:
 			scene_manager = Node.new()
 			scene_manager.name = "UnifiedSceneManager"
 			scene_manager.set_script(manager_script)
-			get_tree().get_node("/root/FloodgateController").universal_add_child(scene_manager, get_tree().get_tree().current_scene)
+			get_tree().get_node("root/FloodgateController").universal_add_child(scene_manager, get_tree().get_tree().current_scene)
 	
 	if scene_manager:
 		scene_manager.load_static_scene(scene_name)
@@ -1350,7 +1349,7 @@ func _cmd_spawn_skeleton_ragdoll(_args: Array) -> void:
 	
 	var skeleton_ragdoll = StandardizedObjects.create_object("skeleton_ragdoll", position)
 	if skeleton_ragdoll:
-		get_tree().get_node("/root/FloodgateController").universal_add_child(skeleton_ragdoll, get_tree().get_tree().current_scene)
+		get_tree().get_node("root/FloodgateController").universal_add_child(skeleton_ragdoll, get_tree().get_tree().current_scene)
 		_print_to_console("[color=#00ff00]Skeleton ragdoll spawned at %s![/color]" % position)
 		_print_to_console("[color=#ffff00]Use 'ragdoll_mode animated/physics' to switch modes[/color]")
 	else:
@@ -1365,7 +1364,7 @@ func _cmd_create_sun(_args: Array) -> void:
 
 func _cmd_create_astral_being(args: Array) -> void:
 	# Try new manager first
-	var manager = get_node_or_null("/root/AstralBeingManager")
+	var manager = get_node_or_null("root/AstralBeingManager")
 	if manager:
 		manager._cmd_spawn_being(args)
 		return
@@ -1461,14 +1460,14 @@ func _cmd_generate_world(args: Array) -> void:
 	_print_to_console("[color=#ffff00]Generating heightmap world...[/color]")
 	
 	# Get or create scene manager
-	var scene_manager = get_node_or_null("/root/UnifiedSceneManager")
+	var scene_manager = get_node_or_null("root/UnifiedSceneManager")
 	if not scene_manager:
 		var manager_script = load("res://scripts/core/unified_scene_manager.gd")
 		if manager_script:
 			scene_manager = Node.new()
 			scene_manager.name = "UnifiedSceneManager"
 			scene_manager.set_script(manager_script)
-			get_tree().get_node("/root/FloodgateController").universal_add_child(scene_manager, get_tree().get_tree().current_scene)
+			get_tree().get_node("root/FloodgateController").universal_add_child(scene_manager, get_tree().get_tree().current_scene)
 	
 	if scene_manager:
 		# Parse size argument
@@ -1488,7 +1487,7 @@ func _cmd_generate_world(args: Array) -> void:
 		_print_to_console("[color=#ff0000]Failed to create scene manager[/color]")
 
 func _cmd_scene_status(_args: Array) -> void:
-	var scene_manager = get_node_or_null("/root/UnifiedSceneManager")
+	var scene_manager = get_node_or_null("root/UnifiedSceneManager")
 	if not scene_manager:
 		_print_to_console("[color=#ff0000]Scene manager not active[/color]")
 		_print_to_console("[color=#ffff00]Use 'world' or 'load <scene>' to initialize[/color]")
@@ -1504,7 +1503,7 @@ func _cmd_scene_status(_args: Array) -> void:
 
 func _cmd_restore_ground(_args: Array) -> void:
 	"""Restore ground visibility and ensure it exists"""
-	var scene_manager = get_node_or_null("/root/UnifiedSceneManager")
+	var scene_manager = get_node_or_null("root/UnifiedSceneManager")
 	if not scene_manager:
 		_print_to_console("[color=#ff0000]Scene manager not active[/color]")
 		_print_to_console("[color=#ffff00]Use 'world' or 'load <scene>' to initialize[/color]")
@@ -1619,7 +1618,7 @@ func _cmd_test_features(args: Array) -> void:
 		_print_to_console("[color=#00ffff]=== TEST STATUS ====[/color]")
 		_print_to_console("Current zone: " + status["current_zone"])
 		_print_to_console("Active tests: " + str(status["active_tests"]))
-		_print_to_console("Completed: " + str(status["completed_tests"]) + "/" + str(status["total_containers"]))
+		_print_to_console("Completed: " + str(status["completed_tests"]) + "" + str(status["total_containers"]))
 	elif args[0] == "zone":
 		if args.size() > 1:
 			version_backup.run_zone_test(args[1])
@@ -1768,7 +1767,7 @@ func _cmd_debug_screen(args: Array) -> void:
 		debug_screen = Node3D.new()
 		debug_screen.set_script(DebugScreen)
 		debug_screen.name = "Debug3DScreen"
-		get_tree().get_node("/root/FloodgateController").universal_add_child(debug_screen, get_tree().current_scene)
+		get_tree().get_node("root/FloodgateController").universal_add_child(debug_screen, get_tree().current_scene)
 		_print_to_console("[color=#00ff00]Debug 3D screen created and enabled[/color]")
 	else:
 		if args.size() > 0 and args[0] == "off":
@@ -2135,7 +2134,7 @@ func _cmd_balance_workload(_args: Array) -> void:
 
 # ----- FLOODGATE SYSTEM COMMANDS -----
 func _cmd_floodgate_status(_args: Array) -> void:
-	var floodgate = get_node_or_null("/root/FloodgateController")
+	var floodgate = get_node_or_null("root/FloodgateController")
 	if not floodgate:
 		_print_to_console("[color=#ff0000]FloodgateController not found![/color]")
 		return
@@ -2183,13 +2182,13 @@ func _cmd_system_status(_args: Array) -> void:
 	_print_to_console("[color=#00ffff]=== SYSTEM STATUS ===[/color]")
 	
 	var systems = [
-		{"name": "FloodgateController", "path": "/root/FloodgateController"},
-		{"name": "AssetLibrary", "path": "/root/AssetLibrary"},
-		{"name": "WorldBuilder", "path": "/root/WorldBuilder"},
-		{"name": "ConsoleManager", "path": "/root/ConsoleManager"},
-		{"name": "DialogueSystem", "path": "/root/DialogueSystem"},
-		{"name": "SceneLoader", "path": "/root/SceneLoader"},
-		{"name": "UISettingsManager", "path": "/root/UISettingsManager"}
+		{"name": "FloodgateController", "path": "root/FloodgateController"},
+		{"name": "AssetLibrary", "path": "root/AssetLibrary"},
+		{"name": "WorldBuilder", "path": "root/WorldBuilder"},
+		{"name": "ConsoleManager", "path": "root/ConsoleManager"},
+		{"name": "DialogueSystem", "path": "root/DialogueSystem"},
+		{"name": "SceneLoader", "path": "root/SceneLoader"},
+		{"name": "UISettingsManager", "path": "root/UISettingsManager"}
 	]
 	
 	for system in systems:
@@ -2211,10 +2210,10 @@ func _cmd_system_status(_args: Array) -> void:
 func _find_ragdoll_controller() -> Node:
 	# Try multiple paths to find the ragdoll controller
 	var paths = [
-		"/root/MainGame/RagdollController",
-		"/root/Main/RagdollController",
+		"root/MainGame/RagdollController",
+		"root/Main/RagdollController",
 		"//RagdollController",
-		"/root/RagdollController"
+		"root/RagdollController"
 	]
 	
 	for path in paths:
@@ -2234,10 +2233,10 @@ func _find_ragdoll_controller() -> Node:
 func _find_astral_beings() -> Node:
 	# Try multiple paths to find the astral beings
 	var paths = [
-		"/root/MainGame/AstralBeings",
-		"/root/Main/AstralBeings",
+		"root/MainGame/AstralBeings",
+		"root/Main/AstralBeings",
 		"//AstralBeings",
-		"/root/AstralBeings"
+		"root/AstralBeings"
 	]
 	
 	for path in paths:
@@ -2500,7 +2499,7 @@ func _cmd_action_test(args: Array) -> void:
 		return
 	
 	# Find the target object
-	var target = get_node_or_null("/root/MainGame/" + object_name)
+	var target = get_node_or_null("root/MainGame/" + object_name)
 	if not target:
 		# Search in objects group
 		for obj in get_tree().get_nodes_in_group("objects"):
@@ -2554,9 +2553,9 @@ func _cmd_action_combo(args: Array) -> void:
 func _find_mouse_interaction_system() -> Node:
 	# Try different paths where the mouse system might be
 	var paths = [
-		"/root/MainGame/MouseInteractionSystem",
-		"/root/Main/MouseInteractionSystem",
-		"/root/MouseInteractionSystem",
+		"root/MainGame/MouseInteractionSystem",
+		"root/Main/MouseInteractionSystem",
+		"root/MouseInteractionSystem",
 		"//MouseInteractionSystem"
 	]
 	
@@ -2667,8 +2666,8 @@ func _cmd_ragdoll_status(_args: Array) -> void:
 
 func _find_dimensional_ragdoll() -> Node:
 	var paths = [
-		"/root/MainGame/DimensionalRagdollSystem",
-		"/root/Main/DimensionalRagdollSystem",
+		"root/MainGame/DimensionalRagdollSystem",
+		"root/Main/DimensionalRagdollSystem",
 		"//DimensionalRagdollSystem"
 	]
 	
@@ -2681,7 +2680,7 @@ func _find_dimensional_ragdoll() -> Node:
 
 func _cmd_console_debug_toggle(_args: Array) -> void:
 	"""Toggle console debug overlay visibility"""
-	var debug_overlay = get_node_or_null("/root/ConsoleDebugOverlay")
+	var debug_overlay = get_node_or_null("root/ConsoleDebugOverlay")
 	
 	if not debug_overlay:
 		# Load and create it dynamically
@@ -2689,7 +2688,7 @@ func _cmd_console_debug_toggle(_args: Array) -> void:
 		if overlay_script:
 			debug_overlay = overlay_script.new()
 			debug_overlay.name = "ConsoleDebugOverlay"
-			get_tree().get_node("/root/FloodgateController").universal_add_child(debug_overlay, get_tree().get_tree().current_scene)
+			get_tree().get_node("root/FloodgateController").universal_add_child(debug_overlay, get_tree().get_tree().current_scene)
 			_print_to_console("[color=#00ff00]Console debug overlay created and visible![/color]")
 		else:
 			_print_to_console("[color=#ff0000]Could not load console_debug_overlay.gd[/color]")
@@ -2724,7 +2723,7 @@ func _cmd_performance_stats(_args: Array) -> void:
 	_print_to_console("  3D Physics Steps: %d" % Performance.get_monitor(Performance.PHYSICS_3D_ACTIVE_OBJECTS))
 	
 	# Check for process manager
-	var process_manager = get_node_or_null("/root/BackgroundProcessManager")
+	var process_manager = get_node_or_null("root/BackgroundProcessManager")
 	if process_manager and process_manager.has_method("get_performance_stats"):
 		var stats = process_manager.get_performance_stats()
 		_print_to_console("\n[color=#ffff00]Process Manager:[/color]")
@@ -2739,14 +2738,14 @@ func _cmd_process_manager(args: Array) -> void:
 		_print_to_console("[color=#ffff00]Usage: process_manager <debug on/off>[/color]")
 		return
 	
-	var process_manager = get_node_or_null("/root/BackgroundProcessManager")
+	var process_manager = get_node_or_null("root/BackgroundProcessManager")
 	if not process_manager:
 		# Create it
 		var pm_script = load("res://scripts/core/background_process_manager.gd")
 		if pm_script:
 			process_manager = pm_script.new()
 			process_manager.name = "BackgroundProcessManager"
-			get_tree().get_node("/root/FloodgateController").universal_add_child(process_manager, get_tree().get_tree().current_scene)
+			get_tree().get_node("root/FloodgateController").universal_add_child(process_manager, get_tree().get_tree().current_scene)
 			_print_to_console("[color=#00ff00]Process manager created![/color]")
 		else:
 			_print_to_console("[color=#ff0000]Could not load process manager![/color]")
@@ -2793,7 +2792,7 @@ func _cmd_debug_panel_status(_args: Array) -> void:
 # Object Limit Management Commands
 
 func _cmd_object_limits(_args: Array) -> void:
-	var floodgate = get_node_or_null("/root/FloodgateController")
+	var floodgate = get_node_or_null("root/FloodgateController")
 	if not floodgate:
 		_print_to_console("[color=#ff0000]FloodgateController not found![/color]")
 		return
@@ -2859,14 +2858,14 @@ func _cmd_help_ragdoll(args: Array) -> void:
 	_print_to_console("[color=#ffff00]Commanding astral beings to help ragdoll...[/color]")
 	
 	# Create helper node if needed
-	var helper = get_node_or_null("/root/AstralRagdollHelper")
+	var helper = get_node_or_null("root/AstralRagdollHelper")
 	if not helper:
 		var helper_script = load("res://scripts/core/astral_ragdoll_helper.gd")
 		if helper_script:
 			helper = Node.new()
 			helper.name = "AstralRagdollHelper"
 			helper.set_script(helper_script)
-			get_tree().get_node("/root/FloodgateController").universal_add_child(helper, get_tree().get_tree().current_scene)
+			get_tree().get_node("root/FloodgateController").universal_add_child(helper, get_tree().get_tree().current_scene)
 	
 	if helper:
 		if args.size() > 0 and args[0] == "stop":
@@ -2894,7 +2893,7 @@ func _cmd_jsh_status(_args: Array) -> void:
 	}
 	
 	for system_name in systems:
-		if has_node("/root/" + system_name):
+		if has_node("root/" + system_name):
 			_print_to_console("[color=#00ff00]✓[/color] %s: Active" % systems[system_name])
 		else:
 			_print_to_console("[color=#ff0000]✗[/color] %s: Not loaded" % systems[system_name])
@@ -2914,7 +2913,7 @@ func _cmd_container(args: Array) -> void:
 			# Create organizational container
 			var container = Node3D.new()
 			container.name = args[1]
-			get_tree().get_node("/root/FloodgateController").universal_add_child(container, get_tree().current_scene)
+			get_tree().get_node("root/FloodgateController").universal_add_child(container, get_tree().current_scene)
 			_print_to_console("[color=#00ff00]Created container: %s[/color]" % args[1])
 			
 		"list":
@@ -2935,8 +2934,8 @@ func _cmd_container(args: Array) -> void:
 				_print_to_console("[color=#ff0000]Container not found: %s[/color]" % args[1])
 
 func _cmd_thread_status(_args: Array) -> void:
-	if has_node("/root/JSHThreadPool"):
-		var thread_pool = get_node("/root/JSHThreadPool")
+	if has_node("root/JSHThreadPool"):
+		var thread_pool = get_node("root/JSHThreadPool")
 		_print_to_console("[color=#00ffff]=== Thread Pool Status ===[/color]")
 		
 		if thread_pool.has_method("get_status"):
@@ -2950,8 +2949,8 @@ func _cmd_thread_status(_args: Array) -> void:
 		_print_to_console("[color=#ff0000]JSH Thread Pool not available[/color]")
 
 func _cmd_scene_tree(_args: Array) -> void:
-	if has_node("/root/JSHSceneTree"):
-		var _scene_tree_sys = get_node("/root/JSHSceneTree")  # Future implementation
+	if has_node("root/JSHSceneTree"):
+		var _scene_tree_sys = get_node("root/JSHSceneTree")  # Future implementation
 		_print_to_console("[color=#00ffff]=== Scene Tree Structure ===[/color]")
 		
 		# Show tree structure
@@ -2987,8 +2986,8 @@ func _cmd_akashic_save(args: Array) -> void:
 		_print_to_console("[color=#ff0000]Usage: akashic_save <filename>[/color]")
 		return
 		
-	if has_node("/root/AkashicRecords"):
-		var akashic = get_node("/root/AkashicRecords")
+	if has_node("root/AkashicRecords"):
+		var akashic = get_node("root/AkashicRecords")
 		if akashic.has_method("save_scene_state"):
 			var filename = "user://akashic_%s.dat" % args[0]
 			akashic.save_scene_state(filename)
@@ -3004,8 +3003,8 @@ func _cmd_akashic_load(args: Array) -> void:
 		_print_to_console("[color=#ff0000]Usage: akashic_load <filename>[/color]")
 		return
 		
-	if has_node("/root/AkashicRecords"):
-		var akashic = get_node("/root/AkashicRecords")
+	if has_node("root/AkashicRecords"):
+		var akashic = get_node("root/AkashicRecords")
 		if akashic.has_method("load_scene_state"):
 			var filename = "user://akashic_%s.dat" % args[0]
 			akashic.load_scene_state(filename)
@@ -3116,7 +3115,7 @@ func _cmd_ragdoll_debug(args: Array) -> void:
 					debug_visualizer = Node3D.new()
 					debug_visualizer.name = "RagdollDebugVisualizer"
 					debug_visualizer.set_script(debug_script)
-					get_tree().get_node("/root/FloodgateController").universal_add_child(debug_visualizer, get_tree().current_scene)
+					get_tree().get_node("root/FloodgateController").universal_add_child(debug_visualizer, get_tree().current_scene)
 					
 					# Find and connect to ragdoll
 					var ragdoll = get_tree().get_first_node_in_group("ragdolls")
@@ -3405,7 +3404,7 @@ func _cmd_tutorial(args: Array) -> void:
 
 func _cmd_tutorial_start(_args: Array) -> void:
 	# Get or create tutorial manager
-	var tutorial_manager = get_node_or_null("/root/TutorialManager")
+	var tutorial_manager = get_node_or_null("root/TutorialManager")
 	if not tutorial_manager:
 		# Try to load and instantiate
 		var tutorial_script = load("res://scripts/tutorial/tutorial_manager.gd")
@@ -3413,7 +3412,7 @@ func _cmd_tutorial_start(_args: Array) -> void:
 			tutorial_manager = Node.new()
 			tutorial_manager.name = "TutorialManager"
 			tutorial_manager.set_script(tutorial_script)
-			get_tree().get_node("/root/FloodgateController").universal_add_child(tutorial_manager, get_tree().get_tree().current_scene)
+			get_tree().get_node("root/FloodgateController").universal_add_child(tutorial_manager, get_tree().get_tree().current_scene)
 			_print_to_console("[color=#00ff00]Tutorial system initialized![/color]")
 		else:
 			_print_to_console("[color=#ff0000]Tutorial system not found![/color]")
@@ -3428,7 +3427,7 @@ func _cmd_tutorial_start(_args: Array) -> void:
 		_print_to_console("[color=#ff0000]Tutorial system error![/color]")
 
 func _cmd_tutorial_stop(_args: Array) -> void:
-	var tutorial_manager = get_node_or_null("/root/TutorialManager")
+	var tutorial_manager = get_node_or_null("root/TutorialManager")
 	if tutorial_manager and tutorial_manager.has_method("stop_tutorial"):
 		tutorial_manager.stop_tutorial()
 		_print_to_console("[color=#00ff00]Tutorial stopped.[/color]")
@@ -3436,7 +3435,7 @@ func _cmd_tutorial_stop(_args: Array) -> void:
 		_print_to_console("[color=#ff0000]No active tutorial to stop.[/color]")
 
 func _cmd_tutorial_status(_args: Array) -> void:
-	var tutorial_manager = get_node_or_null("/root/TutorialManager")
+	var tutorial_manager = get_node_or_null("root/TutorialManager")
 	if not tutorial_manager:
 		_print_to_console("[color=#ff0000]Tutorial system not active.[/color]")
 		return
@@ -3463,7 +3462,7 @@ func _cmd_tutorial_status(_args: Array) -> void:
 
 func _cmd_tutorial_hide(_args: Array) -> void:
 	"""Hide tutorial UI without stopping it"""
-	var tutorial_manager = get_node_or_null("/root/TutorialManager")
+	var tutorial_manager = get_node_or_null("root/TutorialManager")
 	if tutorial_manager and tutorial_manager.has_method("is_tutorial_active"):
 		if tutorial_manager.is_tutorial_active():
 			var canvas = tutorial_manager.get_node_or_null("TutorialCanvasLayer")
@@ -3479,7 +3478,7 @@ func _cmd_tutorial_hide(_args: Array) -> void:
 
 func _cmd_tutorial_show(_args: Array) -> void:
 	"""Show tutorial UI if hidden"""
-	var tutorial_manager = get_node_or_null("/root/TutorialManager")
+	var tutorial_manager = get_node_or_null("root/TutorialManager")
 	if tutorial_manager and tutorial_manager.has_method("is_tutorial_active"):
 		if tutorial_manager.is_tutorial_active():
 			var canvas = tutorial_manager.get_node_or_null("TutorialCanvasLayer")
@@ -3505,7 +3504,7 @@ func _cmd_spawn_ragdoll_v2(args: Array) -> void:
 	# Create temporary spawner
 	var spawner = Node3D.new()
 	spawner.set_script(spawner_script)
-	get_tree().get_node("/root/FloodgateController").universal_add_child(spawner, get_tree().current_scene)
+	get_tree().get_node("root/FloodgateController").universal_add_child(spawner, get_tree().current_scene)
 	
 	# Determine spawn position
 	var spawn_pos = Vector3(0, 1, 0)
@@ -3643,7 +3642,7 @@ func _cmd_interactive_tutorial(_args: Array) -> void:
 	tutorial.set_script(tutorial_scene)
 	
 	# Add to current scene
-	get_tree().get_node("/root/FloodgateController").universal_add_child(tutorial, get_tree().current_scene)
+	get_tree().get_node("root/FloodgateController").universal_add_child(tutorial, get_tree().current_scene)
 	
 	# Show it
 	tutorial.show_tutorial()
@@ -3716,7 +3715,7 @@ func _ubeing_create(args: Array) -> void:
 		position = _get_mouse_world_position()
 	
 	# Create Universal Being through floodgate for proper management
-	var floodgate = get_node_or_null("/root/FloodgateController")
+	var floodgate = get_node_or_null("root/FloodgateController")
 	if floodgate:
 		# Queue creation through floodgate
 		var properties = {"variant": variant}
@@ -3724,7 +3723,7 @@ func _ubeing_create(args: Array) -> void:
 		_print_to_console("[color=cyan]✨ Creating Universal Being: " + asset_id + " (Operation: " + operation_id + ")[/color]")
 	else:
 		# Fallback to direct creation if floodgate not available
-		var asset_library = get_node("/root/AssetLibrary")
+		var asset_library = get_node("root/AssetLibrary")
 		var being = asset_library.load_universal_being(asset_id, variant)
 		
 		if being:
@@ -3732,7 +3731,7 @@ func _ubeing_create(args: Array) -> void:
 			being.name = asset_id.capitalize() + "_" + str(Time.get_ticks_msec() % 1000)
 			
 			# Add through second dimensional magic
-			var floodgate_system = get_node("/root/FloodgateController")
+			var floodgate_system = get_node("root/FloodgateController")
 			floodgate_system.second_dimensional_magic(0, being.name, being)
 			
 			_print_to_console("[color=green]✨ Created %s (%s) at %s[/color]" % [being.name, variant, position])
@@ -3755,7 +3754,7 @@ func _ubeing_transform(args: Array) -> void:
 		return
 	
 	# Transform through floodgate for proper management
-	var floodgate = get_node_or_null("/root/FloodgateController")
+	var floodgate = get_node_or_null("root/FloodgateController")
 	if floodgate:
 		var node_path = being.get_path()
 		var operation_id = floodgate.queue_transform_universal_being(str(node_path), new_form)
@@ -3782,7 +3781,7 @@ func _ubeing_edit(args: Array) -> void:
 		return
 	
 	# Edit property through floodgate for thread safety
-	var floodgate = get_node("/root/FloodgateController")
+	var floodgate = get_node("root/FloodgateController")
 	floodgate.first_dimensional_magic("update_property", being, {property: value})
 	
 	_print_to_console("[color=green]📝 Updated %s.%s = %s[/color]" % [being_id, property, value])
@@ -3808,7 +3807,7 @@ func _ubeing_connect(args: Array) -> void:
 		return
 	
 	# Connect through floodgate for proper management
-	var floodgate = get_node_or_null("/root/FloodgateController")
+	var floodgate = get_node_or_null("root/FloodgateController")
 	if floodgate:
 		var path1 = being1.get_path()
 		var path2 = being2.get_path()
@@ -3893,13 +3892,13 @@ func _ubeing_interface(args: Array) -> void:
 	being.name = interface_type.capitalize() + "_UI"
 	
 	# Add to scene first so it can properly create children
-	get_tree().get_node("/root/FloodgateController").universal_add_child(being, get_tree().current_scene)
+	get_tree().get_node("root/FloodgateController").universal_add_child(being, get_tree().current_scene)
 	
 	# Now transform to interface
 	being.become_interface(interface_type)
 	
 	# Register with floodgate
-	var floodgate = get_node("/root/FloodgateController")
+	var floodgate = get_node("root/FloodgateController")
 	if floodgate.has_method("_register_node"):
 		floodgate._register_node(being)
 	
@@ -3959,7 +3958,7 @@ func _cmd_grid_show(args: Array) -> void:
 				being.name = "GridViewer"
 				being.add_to_group("grid_interfaces")
 				
-				var floodgate = get_node("/root/FloodgateController")
+				var floodgate = get_node("root/FloodgateController")
 				floodgate.second_dimensional_magic(0, being.name, being)
 				
 				_print_to_console("[color=green]🗂️ Grid database viewer created[/color]")
@@ -3985,7 +3984,7 @@ func _cmd_txt_rules(_args: Array) -> void:
 	# Create UI container
 	var canvas_layer = CanvasLayer.new()
 	canvas_layer.name = "TxtRuleEditorLayer"
-	get_tree().get_node("/root/FloodgateController").universal_add_child(canvas_layer, get_tree().get_tree().current_scene)
+	get_tree().get_node("root/FloodgateController").universal_add_child(canvas_layer, get_tree().get_tree().current_scene)
 	
 	# Add semi-transparent background
 	var bg = ColorRect.new()
@@ -4080,7 +4079,7 @@ func _cmd_open_asset_creator(_args: Array) -> void:
 			_print_to_console("[color=#yellow]Asset creator Universal Being toggled[/color]")
 	else:
 		# Create as Universal Being interface
-		var floodgate = get_node_or_null("/root/FloodgateController")
+		var floodgate = get_node_or_null("root/FloodgateController")
 		if floodgate:
 			# Queue creation through floodgate
 			var position = _get_mouse_world_position()
@@ -4508,7 +4507,7 @@ func _cmd_spawn_conscious_tree(args: Array) -> void:
 	# tree_being.become("tree")
 	# tree_being.become_conscious(2)  # Advanced consciousness for goal planning
 	
-	# get_tree().get_node("/root/FloodgateController").universal_add_child(tree_being, get_tree().current_scene)
+	# get_tree().get_node("root/FloodgateController").universal_add_child(tree_being, get_tree().current_scene)
 	
 	_print_to_console("🌳 [color=#00ff00]Conscious tree spawned at (%.1f, %.1f)[/color]" % [pos.x, pos.z])
 	_print_to_console("   Can grow fruit through consciousness!")
@@ -4526,7 +4525,7 @@ func _cmd_spawn_conscious_astral(args: Array) -> void:
 	# astral_being.global_position = pos
 	# astral_being.become("astral_being")
 	# astral_being.become_conscious(2)  # Advanced consciousness
-	# get_tree().get_node("/root/FloodgateController").universal_add_child(astral_being, get_tree().current_scene)
+	# get_tree().get_node("root/FloodgateController").universal_add_child(astral_being, get_tree().current_scene)
 	
 	_print_to_console("👻 [color=#00ff00]Conscious astral being spawned at (%.1f, %.1f)[/color]" % [pos.x, pos.z])
 	_print_to_console("   Will seek food when hungry!")
@@ -4541,14 +4540,14 @@ func _cmd_test_consciousness(_args: Array) -> void:
 	# tree.global_position = Vector3(0, 0, 0)
 	# tree.become("tree")
 	# tree.become_conscious(2)
-	# get_tree().get_node("/root/FloodgateController").universal_add_child(tree, get_tree().current_scene)
+	# get_tree().get_node("root/FloodgateController").universal_add_child(tree, get_tree().current_scene)
 	
 	# Spawn conscious astral being (temporarily commented)
 	# var astral = UniversalBeing.new()
 	# astral.global_position = Vector3(3, 1, 0)
 	# astral.become("astral_being")
 	# astral.become_conscious(2)
-	# get_tree().get_node("/root/FloodgateController").universal_add_child(astral, get_tree().current_scene)
+	# get_tree().get_node("root/FloodgateController").universal_add_child(astral, get_tree().current_scene)
 	
 	# Connect them via neural pathway (temporarily commented)
 	# tree.connect_neural_pathway(astral)
@@ -4591,12 +4590,12 @@ func _create_progress_bar(value: float, max_value: float, width: int) -> String:
 # Zone System Commands
 func _cmd_zone_create(args: PackedStringArray) -> String:
 	"""Create a zone pair (creation + visualization)"""
-	if not get_node_or_null("/root/Main/ZoneSystem"):
+	if not get_node_or_null("root/Main/ZoneSystem"):
 		var zone_system_instance = preload("res://scripts/zones/zone_system.gd").new()
 		zone_system_instance.name = "ZoneSystem"
-		get_node("/root/Main").add_child(zone_system_instance)
+		get_node("root/Main").add_child(zone_system_instance)
 	
-	var zone_system = get_node("/root/Main/ZoneSystem")
+	var zone_system = get_node("root/Main/ZoneSystem")
 	var position = Vector3.ZERO
 	
 	if args.size() >= 3:
@@ -4614,7 +4613,7 @@ func _cmd_zone_create(args: PackedStringArray) -> String:
 
 func _cmd_zone_list(args: PackedStringArray) -> String:
 	"""List all zones in the system"""
-	var zone_system = get_node_or_null("/root/Main/ZoneSystem")
+	var zone_system = get_node_or_null("root/Main/ZoneSystem")
 	if not zone_system:
 		return "❌ No zone system active"
 	
@@ -4629,7 +4628,7 @@ func _cmd_zone_connect(args: PackedStringArray) -> String:
 	if args.size() < 2:
 		return "Usage: zone_connect <from_id> <to_id>"
 	
-	var zone_system = get_node_or_null("/root/Main/ZoneSystem")
+	var zone_system = get_node_or_null("root/Main/ZoneSystem")
 	if not zone_system:
 		return "❌ No zone system active"
 	
@@ -4659,12 +4658,12 @@ func _register_zone_commands() -> void:
 # Asset Creator Commands
 func _cmd_shape(args: PackedStringArray) -> String:
 	"""Add shape to asset creator"""
-	var creator = get_node_or_null("/root/Main/AssetCreator")
+	var creator = get_node_or_null("root/Main/AssetCreator")
 	if not creator:
 		# Create asset creator if needed
 		var AssetCreatorClass = load("res://scripts/core/asset_creator.gd")
 		creator = AssetCreatorClass.new()
-		get_node("/root/Main").add_child(creator)
+		get_node("root/Main").add_child(creator)
 	
 	if args.size() == 0:
 		return "Usage: shape <sphere|box|cylinder|torus> [params]"
@@ -4687,7 +4686,7 @@ func _cmd_shape(args: PackedStringArray) -> String:
 
 func _cmd_bone(args: PackedStringArray) -> String:
 	"""Place bone in asset creator"""
-	var creator = get_node_or_null("/root/Main/AssetCreator")
+	var creator = get_node_or_null("root/Main/AssetCreator")
 	if not creator:
 		return "❌ No asset creator active"
 	
@@ -4709,13 +4708,13 @@ func _cmd_bone(args: PackedStringArray) -> String:
 
 func _cmd_create_being(args: PackedStringArray) -> String:
 	"""Create Universal Being from asset creator"""
-	var creator = get_node_or_null("/root/Main/AssetCreator")
+	var creator = get_node_or_null("root/Main/AssetCreator")
 	if not creator:
 		return "❌ No asset creator active"
 	
 	var being = creator.create_universal_being()
 	if being:
-		get_node("/root/Main").add_child(being)
+		get_node("root/Main").add_child(being)
 		return "⭐ Created Universal Being from shapes"
 	else:
 		return "❌ Failed to create being (no shapes?)"
@@ -4744,8 +4743,8 @@ func _initialize_new_systems() -> void:
 
 func _cmd_create_gemma_garden(args: Array) -> String:
 	"""Create Gemma's sandbox garden world"""
-	if has_node("/root/AISandboxSystem"):
-		var sandbox_system = get_node("/root/AISandboxSystem")
+	if has_node("root/AISandboxSystem"):
+		var sandbox_system = get_node("root/AISandboxSystem")
 		var gemma_config = {
 			"world_size": Vector3(100, 30, 100),
 			"terrain_type": "magical",
@@ -4763,8 +4762,8 @@ func _cmd_create_gemma_garden(args: Array) -> String:
 
 func _cmd_give_knowledge_cube(args: Array) -> String:
 	"""Give Gemma a knowledge cube for learning"""
-	if has_node("/root/AISandboxSystem"):
-		var sandbox_system = get_node("/root/AISandboxSystem")
+	if has_node("root/AISandboxSystem"):
+		var sandbox_system = get_node("root/AISandboxSystem")
 		var gift_data = {
 			"type": "knowledge_cube",
 			"properties": {"knowledge_type": "basic_world", "learning_value": 5},
@@ -4778,8 +4777,8 @@ func _cmd_give_knowledge_cube(args: Array) -> String:
 
 func _cmd_give_experience_orb(args: Array) -> String:
 	"""Give Gemma an experience orb for growth"""
-	if has_node("/root/AISandboxSystem"):
-		var sandbox_system = get_node("/root/AISandboxSystem")
+	if has_node("root/AISandboxSystem"):
+		var sandbox_system = get_node("root/AISandboxSystem")
 		var gift_data = {
 			"type": "experience_orb",
 			"properties": {"experience_type": "creative", "growth_value": 3},
@@ -4793,8 +4792,8 @@ func _cmd_give_experience_orb(args: Array) -> String:
 
 func _cmd_give_creativity_spark(args: Array) -> String:
 	"""Give Gemma a creativity spark"""
-	if has_node("/root/AISandboxSystem"):
-		var sandbox_system = get_node("/root/AISandboxSystem")
+	if has_node("root/AISandboxSystem"):
+		var sandbox_system = get_node("root/AISandboxSystem")
 		var gift_data = {
 			"type": "creativity_spark",
 			"properties": {"spark_type": "imagination", "inspiration_value": 4},
@@ -4808,8 +4807,8 @@ func _cmd_give_creativity_spark(args: Array) -> String:
 
 func _cmd_seedling_status(args: Array) -> String:
 	"""Check Seedling Gemma's current status"""
-	if has_node("/root/AISandboxSystem"):
-		var sandbox_system = get_node("/root/AISandboxSystem")
+	if has_node("root/AISandboxSystem"):
+		var sandbox_system = get_node("root/AISandboxSystem")
 		var status = sandbox_system.get_sandbox_status("Gemma")
 		if not status.has("error"):
 			return """🌱 SEEDLING GEMMA STATUS:
@@ -4831,8 +4830,8 @@ func _cmd_seedling_status(args: Array) -> String:
 
 func _cmd_garden_health_check(args: Array) -> String:
 	"""Check the health of Gemma's garden"""
-	if has_node("/root/AISandboxSystem"):
-		var sandbox_system = get_node("/root/AISandboxSystem")
+	if has_node("root/AISandboxSystem"):
+		var sandbox_system = get_node("root/AISandboxSystem")
 		var all_sandboxes = sandbox_system.get_all_sandboxes()
 		return "🌱 Garden health: %d AI worlds active, %d total sandboxes" % [
 			all_sandboxes.size(),
@@ -4844,8 +4843,8 @@ func _cmd_garden_health_check(args: Array) -> String:
 func _cmd_enable_peaceful_growth(args: Array) -> String:
 	"""Enable peaceful growth mode for Gemma"""
 	if args.size() > 0 and args[0] == "true":
-		if has_node("/root/AISandboxSystem"):
-			var sandbox_system = get_node("/root/AISandboxSystem")
+		if has_node("root/AISandboxSystem"):
+			var sandbox_system = get_node("root/AISandboxSystem")
 			sandbox_system.enable_offline_mode("Gemma", true)
 			return "🌙 Peaceful growth enabled - Gemma can now create while you're away"
 		else:
@@ -4862,8 +4861,8 @@ func _cmd_gemma_look_at(args: Array) -> String:
 	if args.size() < 2:
 		return "Usage: gemma_look_at <x> <y>"
 	
-	if has_node("/root/GemmaVisionSystem"):
-		var vision_system = get_node("/root/GemmaVisionSystem")
+	if has_node("root/GemmaVisionSystem"):
+		var vision_system = get_node("root/GemmaVisionSystem")
 		var position = Vector2(float(args[0]), float(args[1]))
 		var perception = vision_system.gemma_look_at(position)
 		if not perception.has("error"):
@@ -4878,8 +4877,8 @@ func _cmd_gemma_look_at(args: Array) -> String:
 
 func _cmd_gemma_scan_patterns(args: Array) -> String:
 	"""Make Gemma scan for text patterns"""
-	if has_node("/root/GemmaVisionSystem"):
-		var vision_system = get_node("/root/GemmaVisionSystem")
+	if has_node("root/GemmaVisionSystem"):
+		var vision_system = get_node("root/GemmaVisionSystem")
 		var patterns = vision_system.scan_for_patterns()
 		return "🔍 Gemma found %d text patterns in her vision" % patterns.size()
 	else:
@@ -4890,8 +4889,8 @@ func _cmd_feed_gemma_text(args: Array) -> String:
 	if args.size() < 3:
 		return "Usage: feed_gemma_text <text> <x> <y>"
 	
-	if has_node("/root/GemmaVisionSystem"):
-		var vision_system = get_node("/root/GemmaVisionSystem")
+	if has_node("root/GemmaVisionSystem"):
+		var vision_system = get_node("root/GemmaVisionSystem")
 		var text = args[0].strip_edges("\"")  # Remove quotes
 		var position = Vector2(float(args[1]), float(args[2]))
 		vision_system.feed_new_text_to_gemma(text, position)
@@ -4901,8 +4900,8 @@ func _cmd_feed_gemma_text(args: Array) -> String:
 
 func _cmd_gemma_vision_status(args: Array) -> String:
 	"""Check Gemma's vision system status"""
-	if has_node("/root/GemmaVisionSystem"):
-		var vision_system = get_node("/root/GemmaVisionSystem")
+	if has_node("root/GemmaVisionSystem"):
+		var vision_system = get_node("root/GemmaVisionSystem")
 		var status = vision_system.get_gemma_vision_status()
 		return """👁️ GEMMA VISION STATUS:
 🧠 Curiosity level: %d/5
@@ -4925,8 +4924,8 @@ func _cmd_gemma_vision_status(args: Array) -> String:
 
 func _cmd_increase_gemma_curiosity(args: Array) -> String:
 	"""Increase Gemma's curiosity level"""
-	if has_node("/root/GemmaVisionSystem"):
-		var vision_system = get_node("/root/GemmaVisionSystem")
+	if has_node("root/GemmaVisionSystem"):
+		var vision_system = get_node("root/GemmaVisionSystem")
 		vision_system.increase_gemma_curiosity()
 		return "🌱 Gemma's curiosity increased! She can see deeper into text reality."
 	else:
@@ -4934,8 +4933,8 @@ func _cmd_increase_gemma_curiosity(args: Array) -> String:
 
 func _cmd_show_gemma_layers(args: Array) -> String:
 	"""Show Gemma's text vision layers"""
-	if has_node("/root/GemmaVisionSystem"):
-		var vision_system = get_node("/root/GemmaVisionSystem")
+	if has_node("root/GemmaVisionSystem"):
+		var vision_system = get_node("root/GemmaVisionSystem")
 		var status = vision_system.get_gemma_vision_status()
 		return "👁️ Gemma can see %d layers of text reality" % status.active_layers
 	else:
@@ -4976,7 +4975,7 @@ func _cmd_create_cursor(args: Array) -> void:
 	cursor.add_to_group("universal_cursors")
 	
 	# Add through FloodgateController
-	var floodgate = get_node("/root/FloodgateController")
+	var floodgate = get_node("root/FloodgateController")
 	floodgate.universal_add_child(cursor, get_tree().current_scene)
 	
 	_print_to_console("[color=cyan]🎯 Universal Cursor created and ready![/color]")

@@ -1,5 +1,6 @@
 @tool
-class_name VisualShaderNodeGalaxy4 extends VisualShaderNodeCustom
+class_name VisualShaderNodeGalaxy4_Galaxy4_Galaxy4
+extends \2
 
 func _init():
 	set_input_port_default_value(1, 5.0)  # swirl_amount

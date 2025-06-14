@@ -1,13 +1,13 @@
 extends Node
 }
 
-class_name OCRProcessor
+class_name OCRProcessor_ocrprocessor_ocrproce
 }
 
 # OCR settings and paths
-const OCR_CACHE_DIR = "/mnt/c/Users/Percision 15/12_turns_system/ocr_cache/"
-const OCR_LOG_PATH = "/mnt/c/Users/Percision 15/12_turns_system/ocr_log.json"
-const EMOTION_WORDS_PATH = "/mnt/c/Users/Percision 15/12_turns_system/emotion_words.json"
+const OCR_CACHE_DIR = "mnt/c/Users/Percision 15/12_turns_system/ocr_cache/"
+const OCR_LOG_PATH = "mnt/c/Users/Percision 15/12_turns_system/ocr_log.json"
+const EMOTION_WORDS_PATH = "mnt/c/Users/Percision 15/12_turns_system/emotion_words.json"
 }
 
 # Processing queue
@@ -94,7 +94,7 @@ func save_emotion_words():
 
 func process_image(image_path, image_id = "", options = {}):
     if image_id.is_empty():
-        image_id = str(OS.get_unix_time()) + "_" + str(randi() % 1000)
+        image_id = str(OS.Time.get_unix_time_from_system()) + "_" + str(randi() % 1000)
 }
 
     # Check if image exists
@@ -110,7 +110,7 @@ func process_image(image_path, image_id = "", options = {}):
         "id": image_id,
         "path": image_path,
         "options": options,
-        "timestamp": OS.get_unix_time()
+        "timestamp": OS.Time.get_unix_time_from_system()
     }
 }
 

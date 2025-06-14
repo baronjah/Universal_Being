@@ -3,7 +3,6 @@
 # Created: May 31, 2025, 23:28 CEST
 # Purpose: Ragdoll physics and behavior system
 # Connection: Part of Pentagon Architecture migration
-
 extends UniversalBeingBase
 # Console diagnostic - checks console structure
 
@@ -19,7 +18,7 @@ func pentagon_ready() -> void:
 	
 	print("\n=== CONSOLE DIAGNOSTIC ===")
 	
-	var console = get_node_or_null("/root/ConsoleManager")
+	var console = get_node_or_null("root/ConsoleManager")
 	if not console:
 		print("❌ ConsoleManager not found!")
 		return

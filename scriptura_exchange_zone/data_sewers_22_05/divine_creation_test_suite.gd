@@ -880,7 +880,7 @@ func _generate_test_report():
 	
 	# Record final test report to vault
 	_record_message_to_vault(
-		"Test suite completed: " + str(passed_tests) + "/" + str(total_tests) + " tests passed",
+		"Test suite completed: " + str(passed_tests) + "" + str(total_tests) + " tests passed",
 		"system",
 		{
 			"total_tests": total_tests,

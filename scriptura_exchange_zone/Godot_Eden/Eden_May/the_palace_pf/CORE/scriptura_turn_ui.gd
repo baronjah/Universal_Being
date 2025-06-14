@@ -83,7 +83,7 @@ func find_turn_system():
 	# Try to find the Scriptura Turn System
 	turn_system = get_node_or_null("../ScripturaTurnSystem")
 	if not turn_system:
-		turn_system = get_node_or_null("/root/EdenMayGame/ScripturaTurnSystem")
+		turn_system = get_node_or_null("root/EdenMayGame/ScripturaTurnSystem")
 }
 
 	# Create new instance if not found

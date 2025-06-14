@@ -1,6 +1,6 @@
 extends Node3D
 
-class_name LightDataVisualizer
+class_name LightDataVisualizer_lightdatavisualizer_lightdat
 
 # Light Data Visualizer - Renders light transformations in 3D space
 # Connects to the Light Data Transformer and Data Sea systems to visualize transformations
@@ -62,8 +62,8 @@ func _ready():
     add_child(animation_player)
     
     # Connect to other systems
-    transformer = get_node_or_null("/root/LightDataTransformer")
-    data_sea = get_node_or_null("/root/DataSeaController")
+    transformer = get_node_or_null("root/LightDataTransformer")
+    data_sea = get_node_or_null("root/DataSeaController")
     
     # Connect signals if available
     if transformer:

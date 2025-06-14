@@ -10,7 +10,6 @@
 # PURPOSE: Help debug console visibility issues
 # CREATED: 2025-05-26
 # ==================================================
-
 extends CanvasLayer
 
 var debug_label: Label
@@ -36,7 +35,7 @@ func pentagon_ready() -> void:
 	
 	# Wait for console manager
 	await get_tree().process_frame
-	console_manager = get_node_or_null("/root/ConsoleManager")
+	console_manager = get_node_or_null("root/ConsoleManager")
 	
 	if console_manager:
 		debug_label.text = "Console Manager: Found ✅"

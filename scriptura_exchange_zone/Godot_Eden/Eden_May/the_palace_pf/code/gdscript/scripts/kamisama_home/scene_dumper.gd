@@ -1,5 +1,5 @@
 extends Node
-class_name SceneDumper
+class_name SceneDumper_scenedumper_scenedum
 
 # This script dumps the entire scene hierarchy to help
 # understand the structure of complex scenes

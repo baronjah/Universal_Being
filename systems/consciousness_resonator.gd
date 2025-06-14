@@ -118,6 +118,7 @@ func sync_with_universe_dna() -> void:
 	consciousness_sync.emit(target_being, current_universe)
 	print("🧬 Resonator synced with universe DNA - strength: %.2f" % resonance_strength)
 
+
 func _adjust_visual_for_trait(trait_name: String, trait_value: float) -> void:
 	"""Adjust visual effects based on DNA trait"""
 	if not particles:
@@ -127,17 +128,21 @@ func _adjust_visual_for_trait(trait_name: String, trait_value: float) -> void:
 	
 	match trait_name:
 		"awareness_coefficient":
+
 			# Higher awareness = more particles
 			particles.amount = int(50 * trait_value)
 		"creativity_factor":
+
 			# Higher creativity = more colorful
 			var hue = trait_value * 0.8  # 0 to 0.8 (red to magenta)
 			material.color = Color.from_hsv(hue, 0.8, 1.0, 0.6)
 		"harmony_resonance":
+
 			# Higher harmony = smoother movement
 			material.orbit_velocity_min = 0.1 * (1.0 - trait_value)
 			material.orbit_velocity_max = 0.3 * (1.0 - trait_value)
 		"evolution_rate":
+
 			# Higher evolution = faster particles
 			particles.speed_scale = 0.5 + trait_value * 1.5
 
@@ -158,6 +163,7 @@ func set_resonance_strength(strength: float) -> void:
 	resonance_strength = clamp(strength, 0.1, 3.0)
 	print("🎮 Resonance strength set to: %.2f" % resonance_strength)
 
+
 func remove_from_being() -> void:
 	"""Clean up when component is removed"""
 	if visual_node:
@@ -175,7 +181,7 @@ func ai_get_info() -> Dictionary:
 		"dna_sensitivity": dna_sensitivity,
 		"current_universe": current_universe.name if current_universe else "none",
 		"monitored_traits": monitored_traits
-	}
+}
 
 func ai_invoke_method(method_name: String, args: Array) -> Variant:
 	"""AI method invocation"""

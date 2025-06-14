@@ -55,6 +55,7 @@ func pentagon_init() -> void:
 	
 	print("🖥️ %s: Pentagon Init - Interface consciousness awakens" % being_name)
 
+
 func pentagon_ready() -> void:
 	super.pentagon_ready()
 	
@@ -68,6 +69,7 @@ func pentagon_ready() -> void:
 	_connect_to_cursor()
 	
 	print("🖥️ %s: Pentagon Ready - Interface ready for interaction" % being_name)
+
 
 func pentagon_process(delta: float) -> void:
 	super.pentagon_process(delta)
@@ -252,6 +254,7 @@ func _start_grab(grab_position: Vector3) -> void:
 	
 	print("🖥️ Grabbed interface: %s" % interface_title)
 
+
 func _stop_grab() -> void:
 	"""Stop grabbing the interface"""
 	is_grabbed = false
@@ -261,6 +264,7 @@ func _stop_grab() -> void:
 		background_mesh.material_override.albedo_color = Color(0.1, 0.1, 0.15, 0.9)
 	
 	print("🖥️ Released interface: %s" % interface_title)
+
 
 # ===== INTERFACE MANIPULATION =====
 
@@ -276,6 +280,7 @@ func _update_grab_movement() -> void:
 	"""Update position while being grabbed"""
 	var cursor = get_tree().get_first_node_in_group("cursor")
 	if cursor and cursor.has_method("get_world_position_3d"):
+
 		var cursor_pos = cursor.get_world_position_3d()
 		global_position = cursor_pos + grab_offset
 
@@ -314,6 +319,7 @@ func resize_interface(new_size: Vector2) -> void:
 		close_button.position = Vector2(new_size.x - 30, 2.5)
 	
 	print("🖥️ Resized interface to: %s" % new_size)
+
 
 # ===== INTERFACE CONTENT =====
 
@@ -359,6 +365,7 @@ func _connect_to_gemma_vision() -> void:
 func _on_close_pressed() -> void:
 	"""Handle close button press"""
 	print("🖥️ Closing interface: %s" % interface_title)
+
 	
 	# Emit signal for observers
 	if has_signal("interface_closed"):
@@ -421,6 +428,7 @@ func mount_to_socket(socket_being: UniversalBeing, socket_name: String) -> bool:
 func on_interaction(interactor: UniversalBeing) -> void:
 	"""When someone interacts with the interface"""
 	print("🖥️ %s: Interface activated by %s" % [interface_title, interactor.being_name])
+
 	
 	# Bring to front (increase layer)
 	visual_layer += 1

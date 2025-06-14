@@ -4,8 +4,7 @@
 # PURPOSE: Ensure pigeon controls work without project settings
 # CREATED: 2025-05-24 - Input mapping for pigeon
 # ==================================================
-
-extends UniversalBeingBase
+extends \2
 func _ready() -> void:
 	_setup_input_actions()
 

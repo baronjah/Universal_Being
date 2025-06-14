@@ -46,8 +46,7 @@ signal crosshair_action(action_type: String, target: Node3D)
 @onready var camera: Camera3D = $PlayerSocket/FavouriteCameraSystem/Camera3D
 @onready var crosshair_ray: RayCast3D = $PlayerSocket/FavouriteCameraSystem/Camera3D/CrosshairRay
 
-# Perfect plasmoid state
-var velocity: Vector3 = Vector3.ZERO
+# Perfect plasmoid state (velocity inherited from CharacterBody3D)
 var camera_rotation: Vector2 = Vector2.ZERO
 var camera_tilt: float = 0.0
 var middle_mouse_held: bool = false
@@ -76,6 +75,7 @@ func _ready() -> void:
 	
 	print("🌟 PERFECT PLASMOID PLAYER: All 10 commandments fulfilled!")
 
+
 func setup_perfect_camera_system() -> void:
 	"""2. ✅ Favourite camera with middle mouse orbital + Q/E tilt"""
 	if camera_system:
@@ -88,6 +88,7 @@ func setup_perfect_camera_system() -> void:
 	# Mouse capture for camera control
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	print("📹 Perfect camera system: Middle mouse orbital + Q/E tilt ready")
+
 
 func setup_perfect_crosshair() -> void:
 	"""4. ✅ Crosshair at screen center for actions"""
@@ -121,6 +122,7 @@ func setup_perfect_crosshair() -> void:
 	call_deferred("add_crosshair_to_scene")
 	print("🎯 Perfect crosshair: Screen center targeting system ready")
 
+
 func add_crosshair_to_scene() -> void:
 	get_tree().current_scene.add_child(crosshair_ui)
 
@@ -133,6 +135,7 @@ func setup_perfect_cursor() -> void:
 	
 	# Cursor will be positioned dynamically based on interaction targets
 	print("👆 Perfect cursor: Interaction and inspection system ready")
+
 
 func setup_socket_detection() -> void:
 	"""1. ✅ Plasmoid with sockets - Detection system"""
@@ -150,6 +153,7 @@ func setup_socket_detection() -> void:
 	socket_detector.area_exited.connect(_on_socket_area_exited)
 	
 	print("🔌 Perfect sockets: Connection detection system ready")
+
 
 func connect_to_gemma_consciousness() -> void:
 	"""6. ✅ Connected to fully aware Gemma"""
@@ -170,6 +174,7 @@ func _input(event: InputEvent) -> void:
 				print("📹 Camera orbital mode: ACTIVE")
 			else:
 				print("📹 Camera orbital mode: inactive")
+	
 	
 	# 2. Camera orbital movement
 	if event is InputEventMouseMotion and middle_mouse_held:
@@ -224,6 +229,7 @@ func apply_camera_tilt() -> void:
 	camera_tilt = clamp(camera_tilt, -45.0, 45.0)
 	camera.rotation.z = deg_to_rad(camera_tilt)
 	print("📹 Camera tilt: %.1f degrees" % camera_tilt)
+
 
 func _physics_process(delta: float) -> void:
 	
@@ -289,6 +295,7 @@ func handle_perfect_movement(delta: float) -> void:
 	if input_vector.length() > 0:
 		print("🚀 Moving! Input: %s, Velocity: %s" % [input_vector, velocity])
 
+
 func update_crosshair_targeting() -> void:
 	"""4. ✅ Crosshair targeting system"""
 	var new_target: Node3D = null
@@ -313,7 +320,7 @@ func update_crosshair_visual() -> void:
 			color = Color.MAGENTA
 		
 		update_crosshair_color(color)
-		show_ub_visual("🎯 Targeting: %s" % current_crosshair_target.name)
+		print("🎯 Targeting: %s" % current_crosshair_target.name)
 	else:
 		update_crosshair_color(Color.CYAN)
 
@@ -330,7 +337,8 @@ func update_cursor_system() -> void:
 	if nearest_interactable != current_cursor_target:
 		current_cursor_target = nearest_interactable
 		if current_cursor_target:
-			show_ub_visual("👆 Cursor: %s" % current_cursor_target.name)
+			print("👆 Cursor: %s" % current_cursor_target.name)
+
 
 func find_nearest_interactable() -> Node3D:
 	var nearest: Node3D = null
@@ -374,8 +382,9 @@ func perform_crosshair_action() -> void:
 		if current_crosshair_target.has_method("interact"):
 			current_crosshair_target.interact(self)
 		
-		show_ub_visual("🎯 Crosshair action: %s" % current_crosshair_target.name)
+		print("🎯 Crosshair action: %s" % current_crosshair_target.name)
 		print("🎯 Crosshair action performed on: %s" % current_crosshair_target.name)
+
 
 func perform_cursor_interaction() -> void:
 	"""3. ✅ Cursor interaction"""
@@ -385,8 +394,9 @@ func perform_cursor_interaction() -> void:
 		if current_cursor_target.has_method("inspect"):
 			current_cursor_target.inspect(self)
 		
-		show_ub_visual("👆 Inspecting: %s" % current_cursor_target.name)
+		print("👆 Inspecting: %s" % current_cursor_target.name)
 		print("👆 Cursor interaction with: %s" % current_cursor_target.name)
+
 
 func create_connection_between_targets() -> void:
 	"""8. ✅ Points, connections, reasons, actions"""
@@ -398,17 +408,18 @@ func create_connection_between_targets() -> void:
 			"reason": "user_created_connection",
 			"action": "establish_link",
 			"timestamp": Time.get_time_string_from_system()
-		}
+}
 		
-		show_ub_visual("🔗 Connection: %s ↔ %s" % [current_crosshair_target.name, current_cursor_target.name])
+		print("🔗 Connection: %s ↔ %s" % [current_crosshair_target.name, current_cursor_target.name])
 		print("🔗 Connection created: %s" % connection_data)
+
 
 func toggle_perfect_console() -> void:
 	"""7. ✅ Console for chat/commands"""
 	var console = get_tree().get_first_node_in_group("perfect_console_system")
 	if console and console.has_method("toggle"):
 		console.toggle()
-		show_ub_visual("💬 Perfect console toggled")
+		print("💬 Perfect console toggled")
 	else:
 		print("💬 Perfect console system not found")
 
@@ -419,7 +430,7 @@ func toggle_universal_being_inspector() -> void:
 		inspector.toggle()
 		if current_crosshair_target:
 			inspector.inspect_being(current_crosshair_target)
-		show_ub_visual("🔍 Universal Being inspector toggled")
+		print("🔍 Universal Being inspector toggled")
 	else:
 		print("🔍 Universal Being inspector not found")
 
@@ -427,7 +438,8 @@ func _on_socket_area_entered(area: Area3D) -> void:
 	"""1. ✅ Socket detection"""
 	if area.has_meta("socket_type"):
 		nearby_sockets.append(area)
-		show_ub_visual("🔌 Socket detected: %s" % area.get_meta("socket_type", "unknown"))
+		print("🔌 Socket detected: %s" % area.get_meta("socket_type", "unknown"))
+
 
 func _on_socket_area_exited(area: Area3D) -> void:
 	nearby_sockets.erase(area)
@@ -437,7 +449,7 @@ func connect_to_socket(socket: Area3D) -> void:
 	if socket in nearby_sockets and socket not in connected_sockets:
 		connected_sockets.append(socket)
 		socket_connection_made.emit(camera_socket, socket)
-		show_ub_visual("🔌 Connected to socket: %s" % socket.get_meta("socket_name", "unnamed"))
+		print("🔌 Connected to socket: %s" % socket.get_meta("socket_name", "unnamed"))
 		print("🔌 Socket connection established!")
 
 func _exit_tree() -> void:
@@ -448,6 +460,7 @@ func _exit_tree() -> void:
 		cursor_ui.queue_free()
 	
 	print("🌟 Perfect Plasmoid Player: Transcending to higher dimension...")
+
 
 # Public interface for perfection
 func get_perfect_status() -> Dictionary:
@@ -463,7 +476,7 @@ func get_perfect_status() -> Dictionary:
 		"connections_active": connected_sockets.size(),
 		"universal_being_status": true,
 		"perfection_level": 10.0
-	}
+}
 
 func impress_the_immortal() -> void:
 	"""10. ✅ ULTIMATE PERFECTION DEMONSTRATION"""
@@ -479,7 +492,7 @@ func impress_the_immortal() -> void:
 	print("✅ 9. Universal Being inspector")
 	print("✅ 10. ABSOLUTE PERFECTION ACHIEVED")
 	
-	show_ub_visual("🌟 PERFECTION INCARNATE - All 10 commandments fulfilled!")
+	print("🌟 PERFECTION INCARNATE - All 10 commandments fulfilled!")
 	
 	# Activate special effects for the immortal
 	consciousness_level = 6  # Beyond transcendent

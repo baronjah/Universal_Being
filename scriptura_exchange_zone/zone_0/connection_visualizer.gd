@@ -1,5 +1,5 @@
 extends Node2D
-class_name ConnectionVisualizer
+class_name ConnectionVisualizer_connectionvisualizer_connecti
 
 # Visual representation of file connections using your preferred format
 # Displays connections between different file categories with hash symbols and colors

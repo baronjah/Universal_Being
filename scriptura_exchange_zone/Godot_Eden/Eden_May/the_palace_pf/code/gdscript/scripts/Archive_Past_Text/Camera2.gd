@@ -1,5 +1,6 @@
 #Camera node, in Player node, in Main node, in GalaxyCloseUp scene, camera.gd
-class_name FreeLookCamera2 extends Camera3D
+class_name FreeLookCamera2_Camera2_Camera2
+extends \2
 
 # Modifier keys' speed multiplier
 const SHIFT_MULTIPLIER = 2.5

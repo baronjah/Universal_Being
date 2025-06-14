@@ -4,7 +4,6 @@
 # PURPOSE: Coordinate astral beings to support ragdoll movement
 # CREATED: 2025-05-24 - Astral assistance system
 # ==================================================
-
 extends Node
 
 # ================================
@@ -135,7 +134,7 @@ func _find_ragdoll() -> Node3D:
 	# Try multiple methods to find ragdoll
 	
 	# Method 1: Look for RagdollController
-	var controller = get_node_or_null("/root/RagdollController")
+	var controller = get_node_or_null("root/RagdollController")
 	if controller:
 		return controller
 		

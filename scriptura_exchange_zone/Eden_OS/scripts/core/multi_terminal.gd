@@ -1,6 +1,6 @@
 extends Node
 
-class_name MultiTerminal
+class_name MultiTerminal_multiterminal_multiter
 
 # Multi-Terminal System for Eden_OS
 # Manages multiple terminal windows for parallel operations
@@ -145,8 +145,8 @@ func process_command(command, terminal_id=null):
     
     # Process the command through EdenCore
     var result = ""
-    if has_node("/root/EdenCore"):
-        result = get_node("/root/EdenCore").process_command(command, terminal_id)
+    if has_node("root/EdenCore"):
+        result = get_node("root/EdenCore").process_command(command, terminal_id)
     else:
         result = "EdenCore not found - command not processed"
     
@@ -212,7 +212,7 @@ func process_terminal_command(args, terminal_id):
             return "Unknown terminal command: " + args[0]
 
 func list_terminals():
-    var result = "Active Terminals (" + str(active_terminals.size()) + "/" + str(MAX_TERMINALS) + "):\n"
+    var result = "Active Terminals (" + str(active_terminals.size()) + "" + str(MAX_TERMINALS) + "):\n"
     
     for id in active_terminals:
         var status = " "

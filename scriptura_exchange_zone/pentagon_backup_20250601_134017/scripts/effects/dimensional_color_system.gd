@@ -4,8 +4,8 @@
 # Purpose: Ragdoll physics and behavior system
 # Connection: Part of Pentagon Architecture migration
 
-class_name DimensionalColorSystemEffect
-extends UniversalBeingBase
+class_name DimensionalColorSystemEffect_dimensionalcolorsystem_dimensio
+extends \2
 # ----- COLOR FREQUENCY CONSTANTS -----
 const COLOR_HARMONICS = {
 	"PRIMARY": {
@@ -277,12 +277,12 @@ func _generate_color_palettes():
 
 func _find_systems():
 	# Find Ethereal Bridge
-	ethereal_bridge = get_node_or_null("/root/EtherealAkashicBridge")
+	ethereal_bridge = get_node_or_null("root/EtherealAkashicBridge")
 	if not ethereal_bridge:
 		ethereal_bridge = _find_node_by_class(get_tree().root, "EtherealAkashicBridge")
 	
 	# Find Akashic System
-	akashic_system = get_node_or_null("/root/AkashicNumberSystem")
+	akashic_system = get_node_or_null("root/AkashicNumberSystem")
 	if not akashic_system:
 		akashic_system = _find_node_by_class(get_tree().root, "AkashicNumberSystem")
 	

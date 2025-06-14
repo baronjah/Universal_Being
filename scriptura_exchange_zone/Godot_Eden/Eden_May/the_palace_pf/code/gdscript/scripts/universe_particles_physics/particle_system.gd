@@ -1,5 +1,5 @@
 # particle_system.gd - Manages particles
-extends Node3D
+extends \2
 
 var config
 var particles = []
@@ -104,7 +104,7 @@ func update_particles(delta):
 
 
 # Manages particles in the universe simulation
-extends Node3D
+extends \2
 
 var config: Dictionary
 var particles: Array[Node3D] = []

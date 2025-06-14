@@ -6,7 +6,7 @@ extends Control
 # Terminal 1: Divine Word Genesis
 }
 
-class_name WordSalemUI
+class_name WordSalemUI_wordsalemui_wordsale
 }
 
 # UI Components

@@ -21,7 +21,7 @@ var record_colors: Dictionary = {
     "system": Color(0.8, 0.2, 0.2),  # Red
     "gemma": Color(0.2, 0.8, 0.8),  # Cyan
     "default": Color(0.8, 0.8, 0.8)  # White
-}
+	}
 
 # Signals
 signal record_added(record: Dictionary)
@@ -55,6 +55,7 @@ func _on_parent_ready() -> void:
     # Initialize display with parent's consciousness
     var parent = get_parent()
     if parent and parent.has_method("get_consciousness_level"):
+	
         var consciousness = parent.get_consciousness_level()
         if consciousness >= 3:
             max_visible_records = 200
@@ -125,6 +126,7 @@ func _format_record(record: Dictionary, is_highlighted: bool) -> String:
     var being = record.get("being_name", "")
     if not being.is_empty():
         text += "%s: " % being
+		
     
     # Add message
     var message = record.get("message", "")

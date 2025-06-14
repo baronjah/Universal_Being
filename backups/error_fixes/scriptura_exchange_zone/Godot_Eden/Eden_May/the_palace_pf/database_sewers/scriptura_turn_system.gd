@@ -89,12 +89,12 @@ func initialize_components():
 	# Initialize OCR processor
 	ocr_processor = OCRProcessor.new()
 	add_child(ocr_processor)
-	ocr_processor.connect("ocr_completed", self, "_on_ocr_completed")
+	ocr_processor.connect(_on_ocr_completed)
 	
 	# Initialize game creator
 	game_creator = GameCreator.new()
 	add_child(game_creator)
-	game_creator.connect("game_created", self, "_on_game_created")
+	game_creator.connect(_on_game_created)
 	
 	# Find or create API coordinator
 	api_coordinator = get_node_or_null("/root/EdenMayGame/APICoordinator")
@@ -108,8 +108,8 @@ func initialize_components():
 		add_child(api_coordinator)
 	
 	if api_coordinator:
-		api_coordinator.connect("api_response_received", self, "_on_api_response_received")
-		api_coordinator.connect("connection_status_changed", self, "_on_api_connection_changed")
+		api_coordinator.connect(_on_api_response_received)
+		api_coordinator.connect(_on_api_connection_changed)
 	
 	# Find existing systems
 	word_manager = get_node_or_null("/root/EdenMayGame/WordManager")
@@ -561,7 +561,7 @@ class OCRProcessor extends Node:
 		# For now, we'll simulate OCR processing
 		
 		# Short delay to simulate processing
-		yield(get_tree().create_timer(1.0), "timeout")
+		await(get_tree().create_timer(1.0), "timeout")
 		
 		# Generate sample text based on the image name
 		var image_name = image_path.get_file().get_basename()
@@ -621,7 +621,7 @@ class GameCreator extends Node:
 		print("Template selected: " + template.name)
 		
 		# Advance to next phase
-		yield(get_tree().create_timer(1.0), "timeout")
+		await(get_tree().create_timer(1.0), "timeout")
 		advance_creation_phase()
 	
 	func generate_core_mechanics():
@@ -632,7 +632,7 @@ class GameCreator extends Node:
 		# In a real implementation, you would send this to the API
 		
 		# Advance to next phase
-		yield(get_tree().create_timer(1.0), "timeout")
+		await(get_tree().create_timer(1.0), "timeout")
 		advance_creation_phase()
 	
 	func create_game_assets():
@@ -643,7 +643,7 @@ class GameCreator extends Node:
 		# In a real implementation, you would generate actual assets
 		
 		# Advance to next phase
-		yield(get_tree().create_timer(1.0), "timeout")
+		await(get_tree().create_timer(1.0), "timeout")
 		advance_creation_phase()
 	
 	func finalize_game():

@@ -87,7 +87,7 @@ class MagicItem:
         # Add random energy types
         var num_additional = 1 + randi() % 3  # 1-3 additional energy types
         for i in range(num_additional):
-            if types.empty():
+            if types.is_empty():
                 break
                 
             var type_index = randi() % types.size()
@@ -220,7 +220,7 @@ class Spell:
             var remaining_cost = total_cost - energy_cost[primary_type]
             var num_additional = 1 + randi() % 2
             for i in range(num_additional):
-                if types.empty() or remaining_cost <= 0:
+                if types.is_empty() or remaining_cost <= 0:
                     break
                     
                 var type_index = randi() % types.size()
@@ -242,7 +242,7 @@ class Spell:
             var remaining_cost = total_cost
             
             for i in range(num_types):
-                if types.empty() or remaining_cost <= 0:
+                if types.is_empty() or remaining_cost <= 0:
                     break
                     
                 var type_index = randi() % types.size()
@@ -388,7 +388,7 @@ func _ready():
     energy_cycle_timer = Timer.new()
     energy_cycle_timer.one_shot = false
     energy_cycle_timer.wait_time = ENERGY_CYCLE_INTERVAL
-    energy_cycle_timer.connect("timeout", self, "_on_energy_cycle_timeout")
+    energy_cycle_timer.connect(_on_energy_cycle_timeout)
     add_child(energy_cycle_timer)
     
     # Initialize energy pool with zero values for all types
@@ -399,11 +399,11 @@ func _ready():
     load_system_state()
     
     # Generate initial shop inventory
-    if shop_inventory.empty():
+    if shop_inventory.is_empty():
         generate_shop_inventory(5)
     
     # Set up initial available tools
-    if available_tools.empty():
+    if available_tools.is_empty():
         generate_available_tools()
     
     print("Magic Item System initialized with stability: %.1f%%" % current_stability)
@@ -709,7 +709,7 @@ func generate_available_tools():
     # Add a few advanced tools
     var advanced_categories = TOOL_CATEGORIES.duplicate()
     for i in range(3):
-        if advanced_categories.empty():
+        if advanced_categories.is_empty():
             break
             
         var idx = randi() % advanced_categories.size()
@@ -772,7 +772,7 @@ func create_spell(name, primary_energy_type="", difficulty=1, creator="system"):
     var num_compatible = 1 + randi() % 3  # 1-3 compatible tools
     var available_categories = TOOL_CATEGORIES.duplicate()
     for i in range(num_compatible):
-        if available_categories.empty():
+        if available_categories.is_empty():
             break
             
         var idx = randi() % available_categories.size()
@@ -907,7 +907,7 @@ func process_turn(turn_number):
     return true
 
 func process_craft_queue():
-    if craft_queue.empty():
+    if craft_queue.is_empty():
         return false
     
     var items_to_remove = []

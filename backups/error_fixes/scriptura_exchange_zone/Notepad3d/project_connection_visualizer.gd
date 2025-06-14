@@ -300,8 +300,8 @@ func export_visualization(file_path):
 	viewport.add_child(vis_copy)
 	
 	# Wait a frame for rendering
-	yield(get_tree(), "idle_frame")
-	yield(get_tree(), "idle_frame")
+	await(get_tree(), "idle_frame")
+	await(get_tree(), "idle_frame")
 	
 	# Get the image
 	var img = viewport.get_texture().get_data()

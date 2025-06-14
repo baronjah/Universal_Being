@@ -38,7 +38,7 @@ const CMD_DATA_HELP = "/help"
 
 # ----- COMMUNICATION STATE -----
 var last_poll_time = 0
-var terminal_last_modified = {}
+var terminal_last_modified = {
 var command_history = []
 var last_command_index = -1
 var active_terminal_windows = []
@@ -63,6 +63,7 @@ func _ready():
 
 func initialize():
 	print("DataSplitterTerminalBridge: Initializing...")
+}
 	
 	# Find components
 	_resolve_component_paths()
@@ -119,6 +120,7 @@ func _resolve_component_paths():
 		print("- Terminal Bridge Connector: ", "Found" if terminal_bridge_connector else "Not found")
 		print("- Console: ", "Found" if console else "Not found")
 
+
 func _create_directories():
 	# Create data sewer directory
 	var dir = DirAccess.open("user://")
@@ -135,6 +137,7 @@ func _create_directories():
 	else:
 		print("DataSplitterTerminalBridge: Error accessing user directory")
 
+
 func _init_terminal_data():
 	# Create terminal data files for multiple terminals
 	for i in range(6):  # Support 6 terminal windows
@@ -149,11 +152,12 @@ func _init_terminal_data():
 					"messages": ["Terminal " + str(i) + " initialized for data splitting"],
 					"data_operations": [],
 					"data_results": []
-				}
 				file.store_string(JSON.stringify(init_data))
+}
 				
 				if enable_debug_logs:
 					print("DataSplitterTerminalBridge: Created terminal file for Terminal " + str(i))
+	
 		
 		# Store last modified time
 		terminal_last_modified[i] = Time.get_unix_time_from_system()
@@ -233,12 +237,14 @@ func _poll_terminal_files():
 						_process_terminal_data(json)
 					else:
 						print("DataSplitterTerminalBridge: Error parsing terminal JSON for Terminal " + str(terminal_id))
+	
 
 func _process_terminal_data(data):
 	var terminal_id = data.terminal_id
 	
 	# Process messages
 	if data.has("messages") and data.messages.size() > 0:
+
 		var last_message = data.messages[data.messages.size() - 1]
 		emit_signal("terminal_message_received", terminal_id, last_message)
 		
@@ -274,7 +280,7 @@ func _process_command(command: String, terminal_id: int):
 	if parts.size() > 1:
 		params = parts[1]
 	
-	var result = {}
+	var result = {
 	
 	match cmd:
 		CMD_DATA_SPLIT:
@@ -296,6 +302,7 @@ func _process_command(command: String, terminal_id: int):
 		_:
 			# Check if command might be for data splitter
 			if command.begins_with("/data-"):
+}
 				var custom_cmd = command.substr(6)
 				result = _handle_custom_command(custom_cmd)
 			else:
@@ -345,7 +352,7 @@ func _handle_split_command(params: String) -> Dictionary:
 		return {
 			"success": false,
 			"message": "Usage: " + CMD_DATA_SPLIT + " [chunk_id] [split_factor]"
-		}
+}
 	
 	var parts = params.split(" ", false)
 	var chunk_id = parts[0]
@@ -369,13 +376,12 @@ func _handle_split_command(params: String) -> Dictionary:
 			"message": "Splitting chunk '" + chunk_id + "' with factor " + str(split_factor) + "...",
 			"operation": "split",
 			"chunk_id": chunk_id,
-			"split_factor": split_factor
-		}
+			"split_factor": split_factor}
 	else:
 		return {
 			"success": false,
 			"message": "Data Splitter Controller not available"
-		}
+}
 
 func _handle_stream_command(params: String) -> Dictionary:
 	# Stream command: /stream [stream_id] [data_type] [size]
@@ -383,7 +389,7 @@ func _handle_stream_command(params: String) -> Dictionary:
 		return {
 			"success": false,
 			"message": "Usage: " + CMD_DATA_STREAM + " [stream_id] [data_type] [size]"
-		}
+}
 	
 	var parts = params.split(" ", false)
 	var stream_id = parts[0]
@@ -413,13 +419,12 @@ func _handle_stream_command(params: String) -> Dictionary:
 			"operation": "create_stream",
 			"stream_id": stream_id,
 			"data_type": data_type,
-			"size": size
-		}
+			"size": size}
 	else:
 		return {
 			"success": false,
 			"message": "Data Splitter Controller not available"
-		}
+}
 
 func _handle_chunk_command(params: String) -> Dictionary:
 	# Chunk command: /chunk [chunk_id] [parent_stream] [content]
@@ -427,7 +432,7 @@ func _handle_chunk_command(params: String) -> Dictionary:
 		return {
 			"success": false,
 			"message": "Usage: " + CMD_DATA_CHUNK + " [chunk_id] [parent_stream] [content]"
-		}
+}
 	
 	var parts = params.split(" ", false, 2)
 	
@@ -435,7 +440,7 @@ func _handle_chunk_command(params: String) -> Dictionary:
 		return {
 			"success": false,
 			"message": "Usage: " + CMD_DATA_CHUNK + " [chunk_id] [parent_stream] [content]"
-		}
+}
 	
 	var chunk_id = parts[0]
 	var parent_stream = parts[1]
@@ -458,13 +463,12 @@ func _handle_chunk_command(params: String) -> Dictionary:
 			"operation": "create_chunk",
 			"chunk_id": chunk_id,
 			"parent_stream": parent_stream,
-			"content_length": content.length()
-		}
+			"content_length": content.length()}
 	else:
 		return {
 			"success": false,
 			"message": "Data Splitter Controller not available"
-		}
+}
 
 func _handle_merge_command(params: String) -> Dictionary:
 	# Merge command: /merge [chunk_id1,chunk_id2,...] [merge_type]
@@ -472,7 +476,7 @@ func _handle_merge_command(params: String) -> Dictionary:
 		return {
 			"success": false,
 			"message": "Usage: " + CMD_DATA_MERGE + " [chunk_id1,chunk_id2,...] [merge_type]"
-		}
+}
 	
 	var parts = params.split(" ", false)
 	
@@ -480,7 +484,7 @@ func _handle_merge_command(params: String) -> Dictionary:
 		return {
 			"success": false,
 			"message": "Usage: " + CMD_DATA_MERGE + " [chunk_id1,chunk_id2,...] [merge_type]"
-		}
+}
 	
 	var chunk_ids_str = parts[0]
 	var chunk_ids = chunk_ids_str.split(",", false)
@@ -489,7 +493,7 @@ func _handle_merge_command(params: String) -> Dictionary:
 		return {
 			"success": false,
 			"message": "Need at least 2 chunks to merge. Usage: " + CMD_DATA_MERGE + " [chunk_id1,chunk_id2,...] [merge_type]"
-		}
+}
 	
 	var merge_type = "concatenate"  # Default merge type
 	
@@ -511,13 +515,12 @@ func _handle_merge_command(params: String) -> Dictionary:
 			"message": "Merging " + str(chunk_ids.size()) + " chunks with merge type '" + merge_type + "'...",
 			"operation": "merge",
 			"chunk_ids": chunk_ids,
-			"merge_type": merge_type
-		}
+			"merge_type": merge_type}
 	else:
 		return {
 			"success": false,
 			"message": "Data Splitter Controller not available"
-		}
+}
 
 func _handle_list_command(params: String) -> Dictionary:
 	# List command: /list [streams|chunks|splits|all]
@@ -528,9 +531,10 @@ func _handle_list_command(params: String) -> Dictionary:
 	
 	if data_splitter_controller:
 		var streams = []
-		var chunks = {}
-		var splits = {}
+		var chunks = {
+		var splits = {
 		var listing = "[color=#88ff99]Data Splitter Elements:[/color]\n"
+}
 		
 		# Get data from controller
 		if list_type == "all" or list_type == "streams":
@@ -559,6 +563,7 @@ func _handle_list_command(params: String) -> Dictionary:
 		
 		if list_type == "all" or list_type == "chunks":
 			listing += "\n[color=#ffaaaa]Chunks (" + str(chunks.size()) + "):[/color]\n"
+}
 			var chunk_count = 0
 			for chunk_id in chunks:
 				listing += "- " + chunk_id + " (size: " + str(chunks[chunk_id].size) + ")\n"
@@ -569,6 +574,7 @@ func _handle_list_command(params: String) -> Dictionary:
 		
 		if list_type == "all" or list_type == "splits":
 			listing += "\n[color=#aaffaa]Splits (" + str(splits.size()) + "):[/color]\n"
+
 			var split_count = 0
 			for split_id in splits:
 				listing += "- " + split_id + " (factor: " + str(splits[split_id].factor) + ")\n"
@@ -584,13 +590,12 @@ func _handle_list_command(params: String) -> Dictionary:
 			"message": listing,
 			"streams_count": streams.size(),
 			"chunks_count": chunks.size(),
-			"splits_count": splits.size()
-		}
+			"splits_count": splits.size()}
 	else:
 		return {
 			"success": false,
 			"message": "Data Splitter Controller not available"
-		}
+}
 
 func _handle_analyze_command(params: String) -> Dictionary:
 	# Analyze command: /analyze [text_to_analyze]
@@ -598,15 +603,15 @@ func _handle_analyze_command(params: String) -> Dictionary:
 		return {
 			"success": false,
 			"message": "Usage: " + CMD_DATA_ANALYZE + " [text_to_analyze]"
-		}
+}
 	
 	# Perform basic analysis
 	var analysis = {
 		"total_chars": params.length(),
 		"word_count": params.split(" ", false).size(),
 		"line_count": params.split("\n", false).size(),
-		"special_chars": {}
-	}
+		"special_chars": {
+}
 	
 	var special_chars = ["[", "]", "=", "|", "#", "@", "$", "%", "^", "&", "*"]
 	
@@ -636,11 +641,13 @@ func _handle_analyze_command(params: String) -> Dictionary:
 	message += "Characters: " + str(analysis.total_chars) + "\n"
 	message += "Words: " + str(analysis.word_count) + "\n"
 	message += "Lines: " + str(analysis.line_count) + "\n"
+}
 	
 	if analysis.special_chars.size() > 0:
 		message += "\n[color=#aaaaff]Special Characters:[/color]\n"
 		for char in analysis.special_chars:
 			message += "- '" + char + "': " + str(analysis.special_chars[char]) + "\n"
+
 	
 	if natural_splits.size() > 0:
 		message += "\n[color=#aaffaa]Suggested Split Methods:[/color]\n"
@@ -653,7 +660,7 @@ func _handle_analyze_command(params: String) -> Dictionary:
 		"success": true,
 		"message": message,
 		"analysis": analysis
-	}
+}
 
 func _handle_visualize_command(params: String) -> Dictionary:
 	# Visualize command: /visualize [chunk_id|stream_id] [dimension]
@@ -661,7 +668,7 @@ func _handle_visualize_command(params: String) -> Dictionary:
 		return {
 			"success": false,
 			"message": "Usage: " + CMD_DATA_VISUALIZE + " [chunk_id|stream_id] [dimension]"
-		}
+}
 	
 	var parts = params.split(" ", false)
 	var entity_id = parts[0]
@@ -676,6 +683,7 @@ func _handle_visualize_command(params: String) -> Dictionary:
 		var found = false
 		
 		if data_splitter_controller.has_method("get_data_streams"):
+
 			var streams = data_splitter_controller.get_data_streams()
 			for stream in streams:
 				if stream.id == entity_id:
@@ -690,6 +698,7 @@ func _handle_visualize_command(params: String) -> Dictionary:
 					break
 		
 		if not found and data_splitter_controller.has_method("get_data_chunks"):
+
 			var chunks = data_splitter_controller.get_data_chunks()
 			if chunks.has(entity_id):
 				entity_type = "chunk"
@@ -701,6 +710,7 @@ func _handle_visualize_command(params: String) -> Dictionary:
 		
 		if found:
 			var visualization_text = "[color=#88ff99]Visualizing " + entity_type + " '" + entity_id + "' in " + str(dimension) + "D:[/color]\n\n"
+
 			
 			if entity_type == "stream":
 				visualization_text += _generate_stream_visualization(entity_id, dimension)
@@ -714,18 +724,16 @@ func _handle_visualize_command(params: String) -> Dictionary:
 				"message": visualization_text,
 				"entity_type": entity_type,
 				"entity_id": entity_id,
-				"dimension": dimension
-			}
+				"dimension": dimension}
 		else:
 			return {
 				"success": false,
-				"message": "Entity '" + entity_id + "' not found"
-			}
+				"message": "Entity '" + entity_id + "' not found"}
 	else:
 		return {
 			"success": false,
 			"message": "Data Splitter Controller not available"
-		}
+}
 
 func _handle_help_command(params: String) -> Dictionary:
 	# Help command: /help
@@ -744,22 +752,24 @@ func _handle_help_command(params: String) -> Dictionary:
 	return {
 		"success": true,
 		"message": help_text
-	}
+}
 
 func _handle_custom_command(command: String) -> Dictionary:
 	# Handle custom commands passed to data splitter
 	if data_splitter_controller and data_splitter_controller.has_method("process_command"):
+
 		var result = data_splitter_controller.process_command(command)
 		
 		if not result.success:
 			_log_message("Error: " + result.message)
+
 		
 		return result
 	else:
 		return {
 			"success": false,
 			"message": "Data Splitter Controller not available or does not support custom commands"
-		}
+}
 
 # ----- HELPER FUNCTIONS -----
 func _add_to_command_history(command: String):
@@ -794,6 +804,7 @@ func _send_operation_result_to_terminal(terminal_id: int, result: Dictionary):
 			message += result.message
 	else:
 		message = "[color=#ff7777]Operation failed: " + result.message + "[/color]"
+
 	
 	_send_message_to_terminal(terminal_id, message)
 	
@@ -855,6 +866,7 @@ func _send_message_to_terminal(terminal_id: int, message: String):
 	else:
 		print("DataSplitterTerminalBridge: Terminal file not found for Terminal " + str(terminal_id))
 
+
 func _log_message(message: String):
 	# Log to console if available
 	if console:
@@ -869,12 +881,14 @@ func _log_message(message: String):
 	if enable_debug_logs:
 		print("DataSplitterTerminalBridge: " + message.replace("[color=#88ff99]", "").replace("[/color]", "").replace("[color=#aaaaff]", "").replace("[color=#ffaaaa]", "").replace("[color=#aaffaa]", "").replace("[color=#ff7777]", ""))
 
+
 func _generate_stream_visualization(stream_id: String, dimension: int) -> String:
 	var visualization = ""
 	var stream_data = null
 	
 	# Get stream data
 	if data_splitter_controller.has_method("get_data_streams"):
+
 		var streams = data_splitter_controller.get_data_streams()
 		for stream in streams:
 			if stream.id == stream_id:
@@ -898,6 +912,7 @@ func _generate_stream_visualization(stream_id: String, dimension: int) -> String
 			if stream_data.has("chunks") and stream_data.chunks.size() > 0:
 				visualization += "-" * 40 + "\n"
 				visualization += "Chunks: "
+	
 				
 				for i in range(stream_data.chunks.size()):
 					if i > 0:
@@ -973,8 +988,11 @@ func _generate_stream_visualization(stream_id: String, dimension: int) -> String
 			
 			// Stream properties
 			var type_text = "Type: " + stream_data.type
+
 			var size_text = "Size: " + str(stream_data.size)
+
 			var chunk_text = "Chunks: " + str(stream_data.chunks.size())
+
 			
 			visualization += " /__|" + "_" * (width - 8) + "|\n"
 			visualization += "|   |" + " " * (width - 8) + "|\n"
@@ -990,6 +1008,7 @@ func _generate_stream_visualization(stream_id: String, dimension: int) -> String
 				
 				for d in range(4, dimension + 1):
 					visualization += "  Dimension " + str(d) + ": " + _get_dimension_property(d) + "\n"
+	
 			
 			// If chunks exist, list them with ASCII connection
 			if stream_data.has("chunks") and stream_data.chunks.size() > 0:
@@ -1009,6 +1028,7 @@ func _generate_chunk_visualization(chunk_id: String, dimension: int) -> String:
 	
 	// Get chunk data
 	if data_splitter_controller.has_method("get_data_chunks"):
+
 		var chunks = data_splitter_controller.get_data_chunks()
 		if chunks.has(chunk_id):
 			chunk_data = chunks[chunk_id]
@@ -1024,12 +1044,15 @@ func _generate_chunk_visualization(chunk_id: String, dimension: int) -> String:
 		1:
 			// 1D visualization - simple representation
 			visualization += "[color=#ffaaaa][" + chunk_id + ":" + str(chunk_data.size) + "][/color]\n"
+
 			
 			if chunk_data.has("content") and chunk_data.content.length() > 0:
+
 				var content = chunk_data.content
 				if content.length() > 40:
 					content = content.substr(0, 37) + "..."
 				visualization += "Content: " + content
+	
 		
 		2:
 			// 2D visualization - box
@@ -1069,6 +1092,7 @@ func _generate_chunk_visualization(chunk_id: String, dimension: int) -> String:
 			// Show content
 			if chunk_data.has("content") and chunk_data.content.length() > 0:
 				visualization += "\nContent:\n"
+	
 				var content = chunk_data.content
 				if content.length() > 100:
 					content = content.substr(0, 97) + "..."
@@ -1094,8 +1118,11 @@ func _generate_chunk_visualization(chunk_id: String, dimension: int) -> String:
 			
 			// Chunk properties
 			var stream_text = "Stream: " + chunk_data.parent_stream
+
 			var size_text = "Size: " + str(chunk_data.size)
+
 			var created_text = "Created: " + _format_timestamp(chunk_data.created_at)
+
 			
 			visualization += " /__|" + "_" * (width - 8) + "|\n"
 			visualization += "|   |" + " " * (width - 8) + "|\n"
@@ -1105,6 +1132,7 @@ func _generate_chunk_visualization(chunk_id: String, dimension: int) -> String:
 			
 			// Content preview
 			if chunk_data.has("content") and chunk_data.content.length() > 0:
+
 				var content = chunk_data.content
 				if content.length() > width - 15:
 					content = content.substr(0, width - 18) + "..."
@@ -1121,12 +1149,14 @@ func _generate_chunk_visualization(chunk_id: String, dimension: int) -> String:
 				
 				for d in range(4, dimension + 1):
 					visualization += "  Dimension " + str(d) + ": " + _get_dimension_property(d) + "\n"
+	
 			
 			// Display properties
 			if chunk_data.has("properties"):
 				visualization += "\n[color=#aaffaa]Properties:[/color]\n"
 				for prop in chunk_data.properties:
 					visualization += "  " + prop + ": " + str(chunk_data.properties[prop]) + "\n"
+	
 	
 	return visualization
 
@@ -1168,6 +1198,7 @@ func _format_timestamp(timestamp) -> String:
 func _on_data_splitter_initialized():
 	if enable_debug_logs:
 		print("DataSplitterTerminalBridge: Data Splitter Controller initialized")
+
 	
 	if data_splitter_controller:
 		current_dimension = data_splitter_controller.current_dimension
@@ -1179,13 +1210,16 @@ func _on_data_splitter_initialized():
 func _on_data_stream_created(stream_id, data_type, size):
 	if enable_debug_logs:
 		print("DataSplitterTerminalBridge: Stream created - " + stream_id)
+
 	
 	_send_message_to_all_terminals("[color=#aaaaff]New data stream created: " + stream_id + 
 		" (Type: " + data_type + ", Size: " + str(size) + ")[/color]")
 
+
 func _on_data_chunk_created(chunk_id, content, parent_stream):
 	if enable_debug_logs:
 		print("DataSplitterTerminalBridge: Chunk created - " + chunk_id)
+
 	
 	_send_message_to_all_terminals("[color=#ffaaaa]New data chunk created: " + chunk_id + 
 		" in stream " + parent_stream + "[/color]")
@@ -1193,6 +1227,7 @@ func _on_data_chunk_created(chunk_id, content, parent_stream):
 func _on_data_split_created(split_id, original_chunk, resulting_chunks):
 	if enable_debug_logs:
 		print("DataSplitterTerminalBridge: Split created - " + split_id)
+
 	
 	_send_message_to_all_terminals("[color=#aaffaa]Data split performed: " + original_chunk + 
 		" split into " + str(resulting_chunks.size()) + " chunks[/color]")
@@ -1200,6 +1235,7 @@ func _on_data_split_created(split_id, original_chunk, resulting_chunks):
 func _on_data_merged(merge_id, source_chunks, result_chunk):
 	if enable_debug_logs:
 		print("DataSplitterTerminalBridge: Merge performed - " + merge_id)
+
 	
 	_send_message_to_all_terminals("[color=#ffaaff]Data merge performed: " + 
 		str(source_chunks.size()) + " chunks merged into " + result_chunk + "[/color]")
@@ -1209,6 +1245,7 @@ func _on_dimension_changed(new_dimension, old_dimension = 0):
 	
 	if enable_debug_logs:
 		print("DataSplitterTerminalBridge: Dimension changed to " + str(new_dimension) + "D")
+
 	
 	_send_message_to_all_terminals("[color=#88ffff]Dimension changed to " + str(new_dimension) + "D[/color]")
 	
@@ -1219,6 +1256,7 @@ func _on_reality_changed(new_reality, old_reality):
 	
 	if enable_debug_logs:
 		print("DataSplitterTerminalBridge: Reality changed to " + new_reality)
+
 	
 	_send_message_to_all_terminals("[color=#ffff88]Reality changed to " + new_reality + "[/color]")
 	
@@ -1227,12 +1265,14 @@ func _on_reality_changed(new_reality, old_reality):
 func _on_terminal_connected(details):
 	if enable_debug_logs:
 		print("DataSplitterTerminalBridge: Terminal connected")
+
 	
 	_send_message_to_all_terminals("[color=#88ff99]Terminal connected to Data Splitter[/color]")
 
 func _on_color_shift_detected(from_color, to_color, temperature):
 	if enable_debug_logs:
 		print("DataSplitterTerminalBridge: Color shift detected")
+
 	
 	_send_message_to_all_terminals("[color=#" + to_color.to_html() + "]Color shift detected - Temperature: " + 
 		str(temperature) + "[/color]")
@@ -1257,14 +1297,14 @@ func process_direct_command(command: String) -> Dictionary:
 		return {
 			"success": false,
 			"message": "Not a valid command. Commands should start with /"
-		}
+}
 
 func create_data_stream(stream_id: String, data_type: String = "binary", size: int = 16) -> Dictionary:
 	if not data_splitter_controller:
 		return {
 			"success": false,
 			"message": "Data Splitter Controller not available"
-		}
+}
 	
 	var result = data_splitter_controller.create_data_stream(stream_id, data_type, size)
 	return result
@@ -1274,7 +1314,7 @@ func split_data_chunk(chunk_id: String, split_factor: int = 3) -> Dictionary:
 		return {
 			"success": false,
 			"message": "Data Splitter Controller not available"
-		}
+}
 	
 	var result = data_splitter_controller.split_data_chunk(chunk_id, split_factor)
 	return result
@@ -1284,7 +1324,7 @@ func merge_data_chunks(chunk_ids: Array, merge_type: String = "concatenate") -> 
 		return {
 			"success": false,
 			"message": "Data Splitter Controller not available"
-		}
+}
 	
 	var result = data_splitter_controller.merge_data_chunks(chunk_ids, merge_type)
 	return result
@@ -1307,6 +1347,7 @@ func is_terminal_bridge_active() -> bool:
 func start_bridge():
 	bridge_active = true
 	print("DataSplitterTerminalBridge: Bridge started")
+
 
 func stop_bridge():
 	bridge_active = false

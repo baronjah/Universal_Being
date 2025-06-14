@@ -69,7 +69,7 @@ func assign_roles(player_names):
 			"abilities": initialize_abilities(role["name"]),
 			"investigation_results": [],
 			"votes_against": 0
-		}
+}
 		
 		controller.living_players.append(player_name)
 	
@@ -113,6 +113,7 @@ func notify_role_assignment(player_name, role, role_type):
 	
 	# Log the role assignment to the terminal
 	print("ROLE ASSIGNMENT: " + player_name + " is now " + role + " (" + alignment + ")")
+
 
 # ROLE DEFINITIONS
 func get_town_role(index):
@@ -193,47 +194,48 @@ func get_role_description(role):
 
 # ABILITY MANAGEMENT
 func initialize_abilities(role_name):
-	var abilities = {}
+	var abilities = {
 	
 	match role_name:
 		"Wordsmith":
-			abilities["craft_defensive_word"] = {"uses": -1, "description": "Create a defensive word with enhanced power"}
+			abilities["craft_defensive_word"] = {"uses": -1, "description": "Create a defensive word with enhanced power"
 		"Word Sheriff":
-			abilities["investigate"] = {"uses": -1, "description": "Investigate a player to determine their alignment"}
+			abilities["investigate"] = {"uses": -1, "description": "Investigate a player to determine their alignment"
 		"Etymologist":
-			abilities["reveal_role"] = {"uses": 1, "description": "Reveal a player's exact role"}
+			abilities["reveal_role"] = {"uses": 1, "description": "Reveal a player's exact role"
 		"Word Doctor":
-			abilities["protect"] = {"uses": -1, "description": "Protect a player from night attacks"}
+			abilities["protect"] = {"uses": -1, "description": "Protect a player from night attacks"
 		"Vigilante":
-			abilities["kill"] = {"uses": 3, "description": "Attack a suspect player at night"}
+			abilities["kill"] = {"uses": 3, "description": "Attack a suspect player at night"
 		"Word Mayor":
-			abilities["reveal"] = {"uses": 1, "description": "Reveal yourself as Mayor, tripling your vote power"}
+			abilities["reveal"] = {"uses": 1, "description": "Reveal yourself as Mayor, tripling your vote power"
 		"Veteran":
-			abilities["alert"] = {"uses": 3, "description": "Go on alert, killing anyone who targets you"}
+			abilities["alert"] = {"uses": 3, "description": "Go on alert, killing anyone who targets you"
 		"Word Escort":
-			abilities["block"] = {"uses": -1, "description": "Block a player's night actions"}
+			abilities["block"] = {"uses": -1, "description": "Block a player's night actions"
 		"Word Lookout":
-			abilities["watch"] = {"uses": -1, "description": "See who visits a player at night"}
+			abilities["watch"] = {"uses": -1, "description": "See who visits a player at night"
 		"Mafia Godfather":
-			abilities["order_kill"] = {"uses": -1, "description": "Order a Mafia kill"}
+			abilities["order_kill"] = {"uses": -1, "description": "Order a Mafia kill"
 		"Mafia Silencer":
-			abilities["silence"] = {"uses": -1, "description": "Prevent a player from speaking during the day"}
+			abilities["silence"] = {"uses": -1, "description": "Prevent a player from speaking during the day"
 		"Mafia Consigliere":
-			abilities["investigate_exact"] = {"uses": -1, "description": "Learn a player's exact role"}
+			abilities["investigate_exact"] = {"uses": -1, "description": "Learn a player's exact role"
 		"Mafia Blackmailer":
-			abilities["blackmail"] = {"uses": -1, "description": "Prevent a player from voting"}
+			abilities["blackmail"] = {"uses": -1, "description": "Prevent a player from voting"
 		"Jester":
-			abilities["confuse"] = {"uses": -1, "description": "Act suspicious to get lynched"}
+			abilities["confuse"] = {"uses": -1, "description": "Act suspicious to get lynched"
 		"Serial Killer":
-			abilities["stab"] = {"uses": -1, "description": "Kill a player each night"}
+			abilities["stab"] = {"uses": -1, "description": "Kill a player each night"
 		"Word Witch":
-			abilities["control"] = {"uses": -1, "description": "Control another player's actions"}
+			abilities["control"] = {"uses": -1, "description": "Control another player's actions"
 		"Amnesiac":
-			abilities["remember"] = {"uses": 1, "description": "Remember and become a dead player's role"}
+			abilities["remember"] = {"uses": 1, "description": "Remember and become a dead player's role"
 		"Word Survivor":
-			abilities["vest"] = {"uses": 4, "description": "Put on a bulletproof vest for the night"}
+			abilities["vest"] = {"uses": 4, "description": "Put on a bulletproof vest for the night"
 		"Divine Judge":
-			abilities["divine_judgment"] = {"uses": 1, "description": "Pass instant judgment on a cosmic word crime"}
+			abilities["divine_judgment"] = {"uses": 1, "description": "Pass instant judgment on a cosmic word crime"
+}
 	
 	return abilities
 
@@ -257,6 +259,7 @@ func process_word_powers():
 		# Apply role-specific effects based on word power
 		match player.role:
 			"Wordsmith":
+}
 				# Wordsmith gains protection with high word power
 				if recent_word_power >= controller.power_thresholds.major:
 					apply_protection(player_name, 1)  # Protect for 1 night
@@ -266,6 +269,7 @@ func process_word_powers():
 							"Your words have granted you protection for the next night!", 
 							controller.word_comment_system.CommentType.INFORMATION)
 			"Mafia Silencer":
+}
 				# Silencer can block more players with higher word power
 				if recent_word_power >= controller.power_thresholds.moderate:
 					player.silence_power = recent_word_power / controller.power_thresholds.moderate
@@ -275,6 +279,7 @@ func process_word_powers():
 							"Your silencing power has increased to " + str(player.silence_power) + "!", 
 							controller.word_comment_system.CommentType.INFORMATION)
 			"Divine Judge":
+}
 				# Divine Judge can instant-kill with cosmic word power
 				if recent_word_power >= controller.power_thresholds.cosmic:
 					player.divine_judgment = true

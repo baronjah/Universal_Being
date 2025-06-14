@@ -1,8 +1,8 @@
 # encryption_engine.gd
-extends Node
+extends \2
 
-const EncryptionMapping = preload("res://code/scripts/ethereal_engine/encryption_mapping.gd")
-const KeyGenerator = preload("res://code/scripts/ethereal_engine/encryption_key_generator.gd")
+const EncryptionMapping = preload("res://scripts/scripts/ethereal_engine/encryption_mapping.gd")
+const KeyGenerator = preload("res://scripts/scripts/ethereal_engine/encryption_key_generator.gd")
 
 # Encrypt a string using the player name and world name as key components
 func encrypt_string(input_string, player_name, world_name):
@@ -103,7 +103,7 @@ func reverse_transform_romanji(transformed, key_byte):
 ## version 2.0
 
 # encryption_engine.gd
-extends RefCounted
+extends \2
 
 # Mapping dictionary from characters to Romanji/Hiragana representation
 var char_to_romanji = {
@@ -114,7 +114,7 @@ var char_to_romanji = {
 	"u": "ha", "v": "hi", "w": "fu", "x": "he", "y": "ho",
 	"z": "ma", "0": "mi", "1": "mu", "2": "me", "3": "mo",
 	"4": "ya", "5": "yu", "6": "yo", "7": "ra", "8": "ri",
-	"9": "ru", "+": "re", "-": "ro", "*": "wa", "/": "wo",
+	"9": "ru", "+": "re", "-": "ro", "*": "wa", "": "wo",
 	"=": "n", ".": "ga", ",": "gi", ";": "gu", ":": "ge",
 	"_": "go", "(": "za", ")": "ji", "{": "zu", "}": "ze",
 	"[": "zo", "]": "da", "!": "di", "@": "du", "#": "de",

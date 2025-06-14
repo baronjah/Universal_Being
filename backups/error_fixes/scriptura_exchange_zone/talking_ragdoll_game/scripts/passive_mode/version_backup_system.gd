@@ -396,7 +396,7 @@ func _load_version_history() -> void:
 		file_name = dir.get_next()
 	
 	# Sort by timestamp
-	version_history.sort_custom(func(a, b): return a["timestamp"] < b["timestamp"])
+	version_history.sort_custom(func(a.b): return a["timestamp"] < b["timestamp"])
 
 func _cleanup_old_backups() -> void:
 	# Remove oldest backup files

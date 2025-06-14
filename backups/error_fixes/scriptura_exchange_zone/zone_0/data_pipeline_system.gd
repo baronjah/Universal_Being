@@ -411,7 +411,7 @@ func store_turn_data(turn_number, turn_data, metadata = {}):
 # Trigger system backup
 func trigger_backup(include_content_types = []):
 	# Default to all content types if none specified
-	if include_content_types.empty():
+	if include_content_types.is_empty():
 		include_content_types = CONTENT_TYPES.keys()
 	
 	# Create backup object
@@ -615,7 +615,7 @@ func process_pipeline_steps(pipeline, data):
 				pass
 	
 	# Emit signal for successful storage
-	if not stored_cores.empty():
+	if not stored_cores.is_empty():
 		emit_signal("data_stored", content_type, data.id, stored_cores)
 	
 	return true

@@ -77,20 +77,20 @@ func get_current_phase_name():
 func update_display():
     # Implementation depends on UI structure
     if has_node("../TurnDisplay"):
-        var display = get_node("../TurnDisplay")
-        display.get_node("TurnLabel").text = "Turn: " + str(current_turn) + "/12"
-        display.get_node("PhaseLabel").text = "Phase: " + get_current_phase_name()
+        var display = get_node("\1") as Node
+        display.get_node("\1") as Node.text = "Turn: " + str(current_turn) + "/12"
+        display.get_node("\1") as Node.text = "Phase: " + get_current_phase_name()
         
         # Update progress bar
-        display.get_node("TurnProgress").value = (current_turn / float(max_turns_per_phase)) * 100
+        display.get_node("\1") as Node.value = (current_turn / float(max_turns_per_phase)) * 100
         
         # Update API call counter
-        display.get_node("APIUsageLabel").text = "Claude: " + str(api_calls["claude"]) + " | Gemini: " + str(api_calls["gemini"])
+        display.get_node("\1") as Node.text = "Claude: " + str(api_calls["claude"]) + " | Gemini: " + str(api_calls["gemini"])
         
         # Update cost estimate
         var claude_cost = (api_calls["claude"] * avg_tokens_per_call / 1000.0) * cost_per_1k_tokens["claude"]
         var gemini_cost = (api_calls["gemini"] * avg_tokens_per_call / 1000.0) * cost_per_1k_tokens["gemini"]
-        display.get_node("CostLabel").text = "Est. Cost: $" + str(stepify(claude_cost + gemini_cost, 0.01))
+        display.get_node("\1") as Node.text = "Est. Cost: $" + str(stepify(claude_cost + gemini_cost, 0.01))
 
 # Track an API call
 func track_api_call(api_name):
@@ -105,10 +105,10 @@ func track_api_call(api_name):
 func suggest_break():
     # Show break suggestion notification
     if has_node("../BreakNotification"):
-        var notification = get_node("../BreakNotification")
+        var notification = get_node("\1") as Node
         notification.visible = true
-        notification.get_node("Label").text = "Turn cycle complete. Consider taking a break."
+        notification.get_node("\1") as Node.text = "Turn cycle complete. Consider taking a break."
         
         # Auto-hide after 10 seconds
-        yield(get_tree().create_timer(10.0), "timeout")
+        await(get_tree().create_timer(10.0), "timeout")
         notification.visible = false

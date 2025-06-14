@@ -1,6 +1,6 @@
 extends Node3D
 
-class_name PitopiaMain
+class_name PitopiaMain_pitopiamain_pitopiam
 
 # ----- NODE PATHS -----
 # These paths help with easily connecting nodes in the editor
@@ -22,19 +22,19 @@ var player_camera = null
 var entity_container = null
 
 # ----- CONFIGURATION -----
-@export var auto_initialize: bool = true
-@export var auto_connect_signals: bool = true
-@export var default_dimension: int = 3
-@export var default_turn_duration: float = 9.0
-@export var enable_creation_on_words: bool = true
-@export var enable_automatic_dimension_effects: bool = true
-@export var enable_debug_messages: bool = true
+@@@@export var auto_initialize: bool = true
+@@@@export var auto_connect_signals: bool = true
+@@@@export var default_dimension: int = 3
+@@@@export var default_turn_duration: float = 9.0
+@@@@export var enable_creation_on_words: bool = true
+@@@@export var enable_automatic_dimension_effects: bool = true
+@@@@export var enable_debug_messages: bool = true
 
 # ----- PRELOAD RESOURCES -----
-@export var default_entity_scene: PackedScene
-@export var word_display_effect_scene: PackedScene
-@export var dimension_particle_effect_scene: PackedScene
-@export var pitopia_environment: Environment
+@@@@export var default_entity_scene: PackedScene
+@@@@export var word_display_effect_scene: PackedScene
+@@@@export var dimension_particle_effect_scene: PackedScene
+@@@@export var pitopia_environment: Environment
 
 # ----- STATE VARIABLES -----
 var initialized: bool = false
@@ -188,7 +188,7 @@ func _create_missing_components():
 func _initialize_turn_system():
 	if not turn_system:
 		# Try to find turn system in the scene
-		turn_system = get_node_or_null("/root/TurnSystem")
+		turn_system = get_node_or_null("root/TurnSystem")
 		
 		if not turn_system and ClassDB.class_exists("TurnSystem"):
 			# Create a new turn system
@@ -221,7 +221,7 @@ func _initialize_turn_system():
 func _initialize_color_system():
 	if not color_system:
 		# Try to find color system in the scene
-		color_system = get_node_or_null("/root/DimensionalColorSystem")
+		color_system = get_node_or_null("root/DimensionalColorSystem")
 		
 		if not color_system and ClassDB.class_exists("DimensionalColorSystem"):
 			# Create a new color system
@@ -257,7 +257,7 @@ func _initialize_word_system():
 func _initialize_ethereal_system():
 	if not ethereal_engine:
 		# Try to find ethereal engine in the scene
-		ethereal_engine = get_node_or_null("/root/JshEtherealIntegration")
+		ethereal_engine = get_node_or_null("root/JshEtherealIntegration")
 		
 		if not ethereal_engine and ClassDB.class_exists("JshEtherealIntegration"):
 			# Create a new ethereal engine
@@ -373,7 +373,7 @@ func get_dimension_name(dimension: int = -1) -> String:
 	var dimension_names = [
 		"Linear Expression",      # 1D
 		"Planar Reflection",      # 2D
-		"Spatial Manifestation",  # 3D
+		"Node3D Manifestation",  # 3D
 		"Temporal Flow",          # 4D
 		"Probability Waves",      # 5D
 		"Phase Resonance",        # 6D
@@ -432,7 +432,7 @@ func combine_words(words: Array) -> Object:
 		if entity.has_property("source_word"):
 			combined_word = entity.source_word
 		else:
-			combined_word = "_".join(words)
+			combined_word = "_"." ".join(words)
 		
 		# Add to tracking
 		manifested_words.append(combined_word)
@@ -719,10 +719,10 @@ func _create_entity_connection(entity1, entity2, connection_type):
 	# Make it update continuously
 	var script = GDScript.new()
 	script.source_code = """
-	extends Line2D
+extends \2
 	
-	@export var entity1_path: NodePath
-	@export var entity2_path: NodePath
+	@@@@export var entity1_path: NodePath
+	@@@@export var entity2_path: NodePath
 	
 	func _process(delta):
 		var entity1 = get_node_or_null(entity1_path)

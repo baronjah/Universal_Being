@@ -73,8 +73,7 @@ var credentials = {
         "secret_key": "",
         "access_token": "",
         "expires_at": 0
-    }
-}
+		}
 
 # Current state
 var active_provider = StorageProvider.GOOGLE_DRIVE
@@ -82,8 +81,8 @@ var auth_state = AuthState.UNAUTHENTICATED
 var transfer_state = TransferState.IDLE
 var current_transfers = []
 var connected_accounts = []
-var device_info = {}
-var storage_usage = {}
+var device_info = {
+var storage_usage = {
 var sync_folders = []
 var last_sync_time = 0
 var error_log = []
@@ -110,7 +109,7 @@ func _ready():
     var refresh_timer = Timer.new()
     refresh_timer.wait_time = refresh_interval_minutes * 60
     refresh_timer.autostart = true
-    refresh_timer.connect("timeout", self, "_on_refresh_timer")
+    refresh_timer.connect(_on_refresh_timer)
     add_child(refresh_timer)
     
     # Initialize with default provider
@@ -120,12 +119,12 @@ func _ready():
 func connect_to_systems():
     # Connect to MultiAccountManager
     if has_node("/root/MultiAccountManager") or get_node_or_null("/root/MultiAccountManager"):
-        _account_manager = get_node("/root/MultiAccountManager")
+        _account_manager = get_node("\1") as Node
         print("Connected to MultiAccountManager")
     
     # Connect to MultiThreadedProcessor
     if has_node("/root/MultiThreadedProcessor") or get_node_or_null("/root/MultiThreadedProcessor"):
-        _multi_threaded_processor = get_node("/root/MultiThreadedProcessor")
+        _multi_threaded_processor = get_node("\1") as Node
         print("Connected to MultiThreadedProcessor")
 
 func _detect_device_info():
@@ -140,7 +139,7 @@ func _detect_device_info():
         "has_camera": false, # Will be detected later
         "has_lidar": false,  # Not available on most devices
         "memory_mb": OS.get_static_memory_usage() / (1024 * 1024)
-    }
+		}
     
     # Try to detect camera
     # In a real implementation, would use platform-specific methods
@@ -150,6 +149,7 @@ func _detect_device_info():
         
         # More detailed device model detection for mobile
         if device_info["platform"] == "iOS" and device_info["device_name"].find("iPhone") >= 0:
+		}
             var iphone_model = device_info["device_name"]
             
             # Check for LIDAR-capable models (iPhone 12 Pro and newer)
@@ -162,6 +162,7 @@ func _detect_device_info():
         print("Camera detected: Yes (LIDAR: " + str(device_info["has_lidar"]) + ")")
     else:
         print("Camera detected: No")
+		}
 
 func set_api_key(provider, api_key, client_id = "", client_secret = ""):
     if not provider in StorageProvider.values():
@@ -170,10 +171,10 @@ func set_api_key(provider, api_key, client_id = "", client_secret = ""):
     
     credentials[provider]["api_key"] = api_key
     
-    if not client_id.empty():
+    if not client_id.is_empty():
         credentials[provider]["client_id"] = client_id
     
-    if not client_secret.empty():
+    if not client_secret.is_empty():
         credentials[provider]["client_secret"] = client_secret
     
     print("Set API key for provider: " + StorageProvider.keys()[provider])
@@ -184,7 +185,7 @@ func connect_provider(provider):
         print("Invalid storage provider")
         return false
     
-    if credentials[provider]["api_key"].empty():
+    if credentials[provider]["api_key"].is_empty():
         print("API key not set for provider: " + StorageProvider.keys()[provider])
         return false
     
@@ -194,6 +195,7 @@ func connect_provider(provider):
     emit_signal("authentication_changed", provider, auth_state)
     
     print("Connecting to provider: " + StorageProvider.keys()[provider])
+	}
     
     # Start authentication process
     # For Google Drive, would use OAuth2 flow
@@ -241,7 +243,7 @@ func refresh_token(provider):
         print("Invalid storage provider")
         return false
     
-    if credentials[provider]["refresh_token"].empty():
+    if credentials[provider]["refresh_token"].is_empty():
         print("No refresh token available for provider: " + StorageProvider.keys()[provider])
         return false
     
@@ -250,6 +252,7 @@ func refresh_token(provider):
     emit_signal("authentication_changed", provider, auth_state)
     
     print("Refreshing token for provider: " + StorageProvider.keys()[provider])
+	}
     
     # In a real implementation, would use refresh token to get new access token
     # For this demo, simulate refreshing
@@ -277,6 +280,7 @@ func _on_refresh_timer():
     
     for provider in credentials:
         if credentials[provider]["expires_at"] > 0 and credentials[provider]["expires_at"] - current_time < 300:
+		}
             # Token will expire in less than 5 minutes, refresh it
             refresh_token(provider)
 
@@ -302,8 +306,6 @@ func get_storage_usage():
                 "videos": 275.4,
                 "audio": 15.2,
                 "other": 9.35
-            }
-        }
     elif active_provider == StorageProvider.LUNO:
         storage_usage = {
             "total_gb": 2048, # 2TB
@@ -317,8 +319,7 @@ func get_storage_usage():
                 "videos": 128.9,
                 "audio": 8.75,
                 "other": 4.6
-            }
-        }
+}
     else:
         storage_usage = {
             "total_gb": 15, # Basic storage
@@ -332,15 +333,14 @@ func get_storage_usage():
                 "videos": 1.9,
                 "audio": 0.4,
                 "other": 0.2
-            }
-        }
+				}
     
     emit_signal("storage_usage_updated", storage_usage)
     return storage_usage
 
 func add_sync_folder(local_path, remote_path, sync_direction = "both"):
     # Validate inputs
-    if local_path.empty() or remote_path.empty():
+    if local_path.is_empty() or remote_path.is_empty():
         print("Local and remote paths must be specified")
         return false
     
@@ -390,6 +390,7 @@ func synchronize_folders():
     # Set state to synchronizing
     transfer_state = TransferState.SYNCHRONIZING
     emit_signal("transfer_state_changed", transfer_state, {"folders": sync_folders.size()})
+	}
     
     print("Starting synchronization of " + str(sync_folders.size()) + " folders")
     
@@ -458,7 +459,7 @@ func upload_file(local_path, remote_path, callback = null):
         return false
     
     # Validate inputs
-    if local_path.empty() or remote_path.empty():
+    if local_path.is_empty() or remote_path.is_empty():
         print("Local and remote paths must be specified")
         return false
     
@@ -485,8 +486,10 @@ func upload_file(local_path, remote_path, callback = null):
     })
     
     emit_signal("transfer_state_changed", transfer_state, {"transfers": current_transfers.size()})
+	}
     
     print("Starting upload: " + local_path + " -> " + remote_path)
+	}
     
     # In a real implementation, would perform actual upload
     # For this demo, simulate upload with a timer
@@ -533,9 +536,11 @@ func _on_upload_progress(transfer_id, progress):
         current_transfers[transfer_index]["end_time"] = OS.get_unix_time()
         
         print("Upload completed: " + current_transfers[transfer_index]["local_path"])
+		}
         
         # Check if callback is provided
         if current_transfers[transfer_index]["callback"]:
+		}
             var callback = current_transfers[transfer_index]["callback"]
             callback.call_func(transfer_id, true)
         
@@ -557,6 +562,7 @@ func _on_upload_progress(transfer_id, progress):
         if all_completed and current_transfers.size() > 0:
             transfer_state = TransferState.COMPLETED
             emit_signal("transfer_state_changed", transfer_state, {"all_completed": true})
+			
 
 func _remove_transfer(transfer_id):
     # Find transfer in current transfers
@@ -580,7 +586,7 @@ func download_file(remote_path, local_path, callback = null):
         return false
     
     # Validate inputs
-    if local_path.empty() or remote_path.empty():
+    if local_path.is_empty() or remote_path.is_empty():
         print("Local and remote paths must be specified")
         return false
     
@@ -601,8 +607,10 @@ func download_file(remote_path, local_path, callback = null):
     })
     
     emit_signal("transfer_state_changed", transfer_state, {"transfers": current_transfers.size()})
+	
     
     print("Starting download: " + remote_path + " -> " + local_path)
+	
     
     # In a real implementation, would perform actual download
     # For this demo, simulate download with a timer
@@ -649,9 +657,11 @@ func _on_download_progress(transfer_id, progress):
         current_transfers[transfer_index]["end_time"] = OS.get_unix_time()
         
         print("Download completed: " + current_transfers[transfer_index]["remote_path"])
+		
         
         # Check if callback is provided
         if current_transfers[transfer_index]["callback"]:
+		
             var callback = current_transfers[transfer_index]["callback"]
             callback.call_func(transfer_id, true)
         
@@ -673,6 +683,7 @@ func _on_download_progress(transfer_id, progress):
         if all_completed and current_transfers.size() > 0:
             transfer_state = TransferState.COMPLETED
             emit_signal("transfer_state_changed", transfer_state, {"all_completed": true})
+			
 
 func get_file_list(remote_path):
     if auth_state != AuthState.AUTHENTICATED:
@@ -714,7 +725,6 @@ func get_file_list(remote_path):
             "modified": OS.get_unix_time() - randi() % 2592000, # Random time in last 30 days
             "created": OS.get_unix_time() - randi() % 31536000 # Random time in last year
         })
-    }
     
     return files
 
@@ -724,14 +734,14 @@ func get_auth_status():
         "state": AuthState.keys()[auth_state],
         "expires_at": credentials[active_provider]["expires_at"],
         "time_remaining": max(0, credentials[active_provider]["expires_at"] - OS.get_unix_time())
-    }
+		}
 
 func get_transfer_status():
     return {
         "state": TransferState.keys()[transfer_state],
         "current_transfers": current_transfers.size(),
         "active_transfers": _count_active_transfers()
-    }
+		}
 
 func _count_active_transfers():
     var count = 0

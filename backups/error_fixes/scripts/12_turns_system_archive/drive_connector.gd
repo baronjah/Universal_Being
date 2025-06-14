@@ -7,10 +7,12 @@ extends Node
 class_name DriveConnector
 
 # Drive types
-enum DriveType { LOCAL, ICLOUD, GOOGLE_DRIVE, REMOTE }
+enum DriveType { LOCAL, ICLOUD, GOOGLE_DRIVE, REMOTE
+}
 
 # Connection status
-enum ConnectionStatus { DISCONNECTED, CONNECTING, CONNECTED, ERROR }
+enum ConnectionStatus { DISCONNECTED, CONNECTING, CONNECTED, ERROR
+}
 
 # Drive Configuration
 class DriveConfig:
@@ -23,6 +25,7 @@ class DriveConfig:
 	var quota_used: int = 0
 	var sync_enabled: bool = true
 	var emoji: String = "💾"
+}
 	
 	func _init(p_name: String, p_type: int, p_path: String, p_emoji: String = "💾"):
 		name = p_name
@@ -36,6 +39,7 @@ class DriveConfig:
 			ConnectionStatus.CONNECTING: return "🟡"
 			ConnectionStatus.ERROR: return "🔴"
 			_: return "⚪"
+}
 			
 	func get_type_string():
 		match type:
@@ -44,6 +48,7 @@ class DriveConfig:
 			DriveType.GOOGLE_DRIVE: return "Google Drive"
 			DriveType.REMOTE: return "Remote"
 			_: return "Unknown"
+
 			
 	func get_summary():
 		return "%s %s %s - %s (%s)" % [
@@ -65,7 +70,7 @@ class DriveConfig:
 			return str(bytes / (1024 * 1024 * 1024)) + " GB"
 
 # Drive storage
-var drives = {}
+var drives = {
 var active_drive: String = "local"
 var terminal_memory = null
 var processor = null
@@ -79,6 +84,7 @@ signal sync_failed(drive_name, error)
 func _ready():
 	# Configure default local drive
 	add_drive("local", DriveType.LOCAL, "user://", "💻")
+}
 	
 	# Look for terminal memory system
 	terminal_memory = get_node_or_null("/root/TerminalMemorySystem")
@@ -86,7 +92,7 @@ func _ready():
 	if terminal_memory and terminal_memory.has_method("add_memory_text"):
 		terminal_memory.add_memory_text("Drive Connector initialized with local drive.", "system")
 		if terminal_memory.has_node("processor"):
-			processor = terminal_memory.get_node("processor")
+			processor = terminal_memory.get_node("\1") as Node
 
 # Add a new drive to the system
 func add_drive(name: String, type: int, path: String, emoji: String = "💾") -> bool:
@@ -106,6 +112,7 @@ func connect_drive(name: String) -> bool:
 		
 	var drive = drives[name]
 	_log("Connecting to drive: %s" % drive.get_summary())
+
 	
 	drive.connection_status = ConnectionStatus.CONNECTING
 	
@@ -152,6 +159,7 @@ func disconnect_drive(name: String) -> bool:
 		
 	var drive = drives[name]
 	_log("Disconnecting from drive: %s" % drive.name)
+
 	
 	# Save any pending data before disconnecting
 	if drive.connection_status == ConnectionStatus.CONNECTED:
@@ -192,6 +200,7 @@ func sync_drive(name: String) -> bool:
 		return false
 		
 	_log("Synchronizing drive: %s" % drive.name)
+
 	
 	match drive.type:
 		DriveType.LOCAL:
@@ -239,6 +248,7 @@ func get_drive_summary(name: String) -> String:
 # Get all drives summary
 func get_all_drives_summary() -> String:
 	var summary = "Connected Drives Summary:\n"
+
 	
 	for name in drives.keys():
 		summary += "- " + drives[name].get_summary() + "\n"
@@ -259,6 +269,7 @@ func save_memory_to_drive(memory_data, drive_name: String = "") -> bool:
 		return false
 		
 	_log("Saving memory data to drive: %s" % drive.name)
+
 	
 	match drive.type:
 		DriveType.LOCAL:
@@ -279,14 +290,14 @@ func load_memory_from_drive(drive_name: String = "") -> Dictionary:
 	
 	if not drives.has(target_drive_name):
 		_log("Drive '%s' does not exist." % target_drive_name)
-		return {}
+		return {
 		
-	var drive = drives[target_drive_name]
+	var drive = drives[target_drive_name]}
 	if drive.connection_status != ConnectionStatus.CONNECTED:
 		_log("Drive '%s' is not connected." % target_drive_name)
 		return {}
-		
 	_log("Loading memory data from drive: %s" % drive.name)
+
 	
 	match drive.type:
 		DriveType.LOCAL:
@@ -299,9 +310,9 @@ func load_memory_from_drive(drive_name: String = "") -> Dictionary:
 			return _load_from_remote_drive(drive)
 		_:
 			_log("Unknown drive type: %d" % drive.type)
-			return {}
+			return {
 
-# Process command with the connector
+# Process command with the connector}
 func process_command(command: String) -> void:
 	var parts = command.split(" ", true, 2)
 	var cmd = parts[0].to_lower()
@@ -309,22 +320,22 @@ func process_command(command: String) -> void:
 	
 	match cmd:
 		"#connect":
-			if args.empty():
+			if args.is_empty():
 				connect_all_drives()
 			else:
 				connect_drive(args)
 		"#disconnect":
-			if args.empty():
+			if args.is_empty():
 				_log("Please specify a drive to disconnect.")
 			else:
 				disconnect_drive(args)
 		"#sync":
-			if args.empty():
+			if args.is_empty():
 				sync_all_drives()
 			else:
 				sync_drive(args)
 		"#active":
-			if args.empty():
+			if args.is_empty():
 				_log("Current active drive: %s" % get_drive_summary(active_drive))
 			else:
 				set_active_drive(args)
@@ -339,10 +350,12 @@ func process_command(command: String) -> void:
 		_:
 			_log("Unknown drive command: %s" % cmd)
 
+
 # Configure iCloud drive
 func configure_icloud(size_gb: int = 5) -> bool:
 	var name = "icloud"
 	var path = "user://icloud/"
+
 	var emoji = "☁️"
 	
 	if add_drive(name, DriveType.ICLOUD, path, emoji):
@@ -357,6 +370,7 @@ func configure_icloud(size_gb: int = 5) -> bool:
 func configure_google_drive(size_gb: int = 15) -> bool:
 	var name = "gdrive" 
 	var path = "user://gdrive/"
+
 	var emoji = "📝"
 	
 	if add_drive(name, DriveType.GOOGLE_DRIVE, path, emoji):
@@ -379,6 +393,7 @@ func create_drive_directories(drive_name: String) -> bool:
 		return false
 		
 	_log("Creating directory structure for drive: %s" % drive.name)
+
 	
 	var dir = Directory.new()
 	var base_path = drive.path
@@ -411,6 +426,7 @@ func _process_add_command(args: String) -> void:
 	var drive_type_str = parts[0].to_lower()
 	var name = parts[1]
 	var path = parts[2] if parts.size() > 2 else "user://" + name + "/"
+
 	
 	var drive_type = DriveType.LOCAL
 	var emoji = "💾"
@@ -462,6 +478,7 @@ func _process_advanced_drive_command(args: String) -> void:
 		_:
 			_log("Unknown advanced drive command: %s" % subcmd)
 
+
 # Process system drive commands
 func _process_system_drive_command(args: String) -> void:
 	var parts = args.split(" ", true, 2)
@@ -487,9 +504,10 @@ func _process_system_drive_command(args: String) -> void:
 		_:
 			_log("Unknown system drive command: %s" % subcmd)
 
+
 # Reset a drive or all drives
 func _reset_drive(drive_name: String) -> void:
-	if drive_name.empty() or drive_name == "all":
+	if drive_name.is_empty() or drive_name == "all":
 		_log("Resetting all drives...")
 		drives.clear()
 		add_drive("local", DriveType.LOCAL, "user://", "💻")
@@ -507,6 +525,7 @@ func _configure_all_drives() -> void:
 	# Make sure local drive exists
 	if not drives.has("local"):
 		add_drive("local", DriveType.LOCAL, "user://", "💻")
+
 		
 	# Configure iCloud (5GB free tier)
 	configure_icloud(5)
@@ -516,6 +535,7 @@ func _configure_all_drives() -> void:
 	
 	# Add a remote drive as example
 	add_drive("remote", DriveType.REMOTE, "http://example.com/api/storage", "🌐")
+
 	
 	_log("All standard drives configured.")
 
@@ -645,6 +665,7 @@ func _show_emoji_map() -> void:
 	_log("- System: ⚙️")
 	_log("- External Drive: 📀")
 
+
 # Connect implementations
 func _connect_local_drive(drive: DriveConfig) -> bool:
 	# For local drives, just check if the directory exists or try to create it
@@ -671,7 +692,7 @@ func _connect_local_drive(drive: DriveConfig) -> bool:
 func _connect_icloud_drive(drive: DriveConfig) -> bool:
 	# Simulate connection to iCloud
 	_log("Connecting to iCloud Drive: %s" % drive.name)
-	yield(get_tree().create_timer(0.5), "timeout")
+	await(get_tree().create_timer(0.5), "timeout")
 	
 	# Create the directory for our simulated iCloud
 	var dir = Directory.new()
@@ -694,7 +715,7 @@ func _connect_icloud_drive(drive: DriveConfig) -> bool:
 func _connect_google_drive(drive: DriveConfig) -> bool:
 	# Simulate connection to Google Drive
 	_log("Connecting to Google Drive: %s" % drive.name)
-	yield(get_tree().create_timer(0.7), "timeout")
+	await(get_tree().create_timer(0.7), "timeout")
 	
 	# Create the directory for our simulated Google Drive
 	var dir = Directory.new()
@@ -717,7 +738,7 @@ func _connect_google_drive(drive: DriveConfig) -> bool:
 func _connect_remote_drive(drive: DriveConfig) -> bool:
 	# Simulate connection to a remote drive
 	_log("Connecting to Remote Drive: %s" % drive.name)
-	yield(get_tree().create_timer(1.0), "timeout")
+	await(get_tree().create_timer(1.0), "timeout")
 	
 	# Simulate random connection failure (20% chance)
 	if randf() < 0.2:
@@ -737,6 +758,7 @@ func _connect_remote_drive(drive: DriveConfig) -> bool:
 # Sync implementations
 func _sync_local_drive(drive: DriveConfig) -> bool:
 	_log("Synchronizing local drive: %s" % drive.name)
+
 	
 	# Update stats
 	var stats = _get_directory_stats(drive.path)
@@ -749,7 +771,7 @@ func _sync_local_drive(drive: DriveConfig) -> bool:
 
 func _sync_icloud_drive(drive: DriveConfig) -> bool:
 	_log("Synchronizing iCloud Drive: %s" % drive.name)
-	yield(get_tree().create_timer(0.5), "timeout")
+	await(get_tree().create_timer(0.5), "timeout")
 	
 	# In a real implementation, this would sync with the iCloud API
 	drive.last_sync = OS.get_unix_time()
@@ -760,7 +782,7 @@ func _sync_icloud_drive(drive: DriveConfig) -> bool:
 
 func _sync_google_drive(drive: DriveConfig) -> bool:
 	_log("Synchronizing Google Drive: %s" % drive.name)
-	yield(get_tree().create_timer(0.7), "timeout")
+	await(get_tree().create_timer(0.7), "timeout")
 	
 	# In a real implementation, this would sync with the Google Drive API
 	drive.last_sync = OS.get_unix_time()
@@ -771,7 +793,7 @@ func _sync_google_drive(drive: DriveConfig) -> bool:
 
 func _sync_remote_drive(drive: DriveConfig) -> bool:
 	_log("Synchronizing Remote Drive: %s" % drive.name)
-	yield(get_tree().create_timer(1.0), "timeout")
+	await(get_tree().create_timer(1.0), "timeout")
 	
 	# Simulate random sync failure (10% chance)
 	if randf() < 0.1:
@@ -789,6 +811,7 @@ func _sync_remote_drive(drive: DriveConfig) -> bool:
 # Save implementations
 func _save_to_local_drive(data, drive: DriveConfig) -> bool:
 	_log("Saving data to local drive: %s" % drive.name)
+
 	
 	var file = File.new()
 	var file_path = drive.path + "memories/memory_data.dat"
@@ -815,9 +838,10 @@ func _save_to_local_drive(data, drive: DriveConfig) -> bool:
 
 func _save_to_icloud_drive(data, drive: DriveConfig) -> bool:
 	_log("Saving data to iCloud Drive: %s" % drive.name)
+
 	
 	# Simulate iCloud save
-	yield(get_tree().create_timer(0.5), "timeout")
+	await(get_tree().create_timer(0.5), "timeout")
 	
 	# Actually save to our simulated iCloud directory
 	var file = File.new()
@@ -844,9 +868,10 @@ func _save_to_icloud_drive(data, drive: DriveConfig) -> bool:
 
 func _save_to_google_drive(data, drive: DriveConfig) -> bool:
 	_log("Saving data to Google Drive: %s" % drive.name)
+
 	
 	# Simulate Google Drive save
-	yield(get_tree().create_timer(0.7), "timeout")
+	await(get_tree().create_timer(0.7), "timeout")
 	
 	# Actually save to our simulated Google Drive directory
 	var file = File.new()
@@ -873,9 +898,10 @@ func _save_to_google_drive(data, drive: DriveConfig) -> bool:
 
 func _save_to_remote_drive(data, drive: DriveConfig) -> bool:
 	_log("Saving data to Remote Drive: %s" % drive.name)
+
 	
 	# Simulate remote save
-	yield(get_tree().create_timer(1.0), "timeout")
+	await(get_tree().create_timer(1.0), "timeout")
 	
 	# Simulate random save failure (15% chance)
 	if randf() < 0.15:
@@ -908,30 +934,32 @@ func _save_to_remote_drive(data, drive: DriveConfig) -> bool:
 # Load implementations
 func _load_from_local_drive(drive: DriveConfig) -> Dictionary:
 	_log("Loading data from local drive: %s" % drive.name)
+
 	
 	var file = File.new()
 	var file_path = drive.path + "memories/memory_data.dat"
 	
 	if not file.file_exists(file_path):
 		_log("File does not exist: %s" % file_path)
-		return {}
+		return {
 	
-	var err = file.open(file_path, File.READ)
+	var err = file.open(file_path, File.READ)}
 	if err != OK:
 		_log("Failed to open file for reading: %s (Error: %d)" % [file_path, err])
-		return {}
+		return {
 	
-	var data = file.get_var()
+	var data = file.get_var()}
 	file.close()
 	
 	_log("Data loaded from local drive: %s" % drive.name)
-	return data if data is Dictionary else {}
+	return data if data is Dictionary else {
 
 func _load_from_icloud_drive(drive: DriveConfig) -> Dictionary:
 	_log("Loading data from iCloud Drive: %s" % drive.name)
+}
 	
 	# Simulate iCloud load
-	yield(get_tree().create_timer(0.5), "timeout")
+	await(get_tree().create_timer(0.5), "timeout")
 	
 	# Actually load from our simulated iCloud directory
 	var file = File.new()
@@ -939,24 +967,25 @@ func _load_from_icloud_drive(drive: DriveConfig) -> Dictionary:
 	
 	if not file.file_exists(file_path):
 		_log("File does not exist: %s" % file_path)
-		return {}
+		return {
 	
-	var err = file.open(file_path, File.READ)
+	var err = file.open(file_path, File.READ)}
 	if err != OK:
 		_log("Failed to open file for reading: %s (Error: %d)" % [file_path, err])
-		return {}
+		return {
 	
-	var data = file.get_var()
+	var data = file.get_var()}
 	file.close()
 	
 	_log("Data loaded from iCloud Drive: %s" % drive.name)
-	return data if data is Dictionary else {}
+	return data if data is Dictionary else {
 
 func _load_from_google_drive(drive: DriveConfig) -> Dictionary:
 	_log("Loading data from Google Drive: %s" % drive.name)
+}
 	
 	# Simulate Google Drive load
-	yield(get_tree().create_timer(0.7), "timeout")
+	await(get_tree().create_timer(0.7), "timeout")
 	
 	# Actually load from our simulated Google Drive directory
 	var file = File.new()
@@ -964,48 +993,49 @@ func _load_from_google_drive(drive: DriveConfig) -> Dictionary:
 	
 	if not file.file_exists(file_path):
 		_log("File does not exist: %s" % file_path)
-		return {}
+		return {
 	
-	var err = file.open(file_path, File.READ)
+	var err = file.open(file_path, File.READ)}
 	if err != OK:
 		_log("Failed to open file for reading: %s (Error: %d)" % [file_path, err])
-		return {}
+		return {
 	
-	var data = file.get_var()
+	var data = file.get_var()}
 	file.close()
 	
 	_log("Data loaded from Google Drive: %s" % drive.name)
-	return data if data is Dictionary else {}
+	return data if data is Dictionary else {
 
 func _load_from_remote_drive(drive: DriveConfig) -> Dictionary:
 	_log("Loading data from Remote Drive: %s" % drive.name)
+}
 	
 	# Simulate remote load
-	yield(get_tree().create_timer(1.0), "timeout")
+	await(get_tree().create_timer(1.0), "timeout")
 	
 	# Simulate random load failure (15% chance)
 	if randf() < 0.15:
 		_log("Failed to load data from Remote Drive: %s" % drive.name)
-		return {}
+		return {
 	
-	# Actually load from our simulated remote directory
+	# Actually load from our simulated remote directory}
 	var file = File.new()
 	var file_path = drive.path + "memories/memory_data.dat"
 	
 	if not file.file_exists(file_path):
 		_log("File does not exist: %s" % file_path)
-		return {}
+		return {
 	
-	var err = file.open(file_path, File.READ)
+	var err = file.open(file_path, File.READ)}
 	if err != OK:
 		_log("Failed to open file for reading: %s (Error: %d)" % [file_path, err])
-		return {}
+		return {
 	
-	var data = file.get_var()
+	var data = file.get_var()}
 	file.close()
 	
 	_log("Data loaded from Remote Drive: %s" % drive.name)
-	return data if data is Dictionary else {}
+	return data if data is Dictionary else {
 
 # Helper: Get directory stats
 func _get_directory_stats(path: String) -> Dictionary:
@@ -1013,7 +1043,7 @@ func _get_directory_stats(path: String) -> Dictionary:
 		"size": 0,
 		"files": 0,
 		"dirs": 0
-	}
+}
 	
 	var dir = Directory.new()
 	if dir.open(path) != OK:

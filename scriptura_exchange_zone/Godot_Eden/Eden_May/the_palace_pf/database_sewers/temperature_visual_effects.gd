@@ -150,7 +150,7 @@ func remove_temperature_particles(word_id):
 
 # Apply temperature effects to the global environment
 func apply_global_temperature_effects(temp_state):
-    var world_environment = get_node_or_null("/root/Main/WorldEnvironment")
+    var world_environment = get_node_or_null("root/Main/WorldEnvironment")
     if not world_environment:
         return
 }

@@ -1,7 +1,7 @@
 extends Node
 }
 
-class_name MemoryTransferSystem
+class_name MemoryTransferSystem_memorytransfersystem_memorytr
 }
 
 # Signals
@@ -13,7 +13,8 @@ signal error_occurred(error_code, message)
 }
 
 # Device memory state
-enum MemoryState {
+enum \2 {
+
 	IDLE,
 	SCANNING,
 	TRANSFERRING,
@@ -24,7 +25,8 @@ enum MemoryState {
 }
 
 # Transfer types
-enum TransferType {
+enum \2 {
+
 	FULL_SYNC,     # Complete synchronization of all memory fragments
 	DIFFERENTIAL,  # Only transfer changes since last sync
 	SNAPSHOT,      # Transfer current state without history
@@ -34,7 +36,8 @@ enum TransferType {
 }
 
 # Memory fragment source types
-enum SourceType {
+enum \2 {
+
 	LOCAL_FILE,    # From filesystem
 	CLOUD_STORAGE, # From cloud provider
 	DEVICE_MEMORY, # From connected device's internal memory
@@ -44,7 +47,8 @@ enum SourceType {
 }
 
 # Priority levels for transfers
-enum Priority {
+enum \2 {
+
 	LOW,
 	NORMAL,
 	HIGH,
@@ -104,7 +108,7 @@ func _ready():
 
 func _connect_components():
 	# Find DriveMemoryConnector
-	if has_node("/root/DriveMemoryConnector") or get_node_or_null("/root/DriveMemoryConnector"):
+	if has_node("root/DriveMemoryConnector") or get_node_or_null("root/DriveMemoryConnector"):
 		drive_memory_connector = get_node("\1") as Node
 		print("Connected to DriveMemoryConnector")
 	else:
@@ -118,7 +122,7 @@ func _connect_components():
 }
 
 	# Find CrossDeviceConnector
-	if has_node("/root/CrossDeviceConnector") or get_node_or_null("/root/CrossDeviceConnector"):
+	if has_node("root/CrossDeviceConnector") or get_node_or_null("root/CrossDeviceConnector"):
 		cross_device_connector = get_node("\1") as Node
 		print("Connected to CrossDeviceConnector")
 	elif has_node("../CrossDeviceConnector") or get_node_or_null("../CrossDeviceConnector"):
@@ -127,13 +131,13 @@ func _connect_components():
 }
 
 	# Find CloudStorageConnector
-	if has_node("/root/CloudStorageConnector") or get_node_or_null("/root/CloudStorageConnector"):
+	if has_node("root/CloudStorageConnector") or get_node_or_null("root/CloudStorageConnector"):
 		cloud_storage_connector = get_node("\1") as Node
 		print("Connected to CloudStorageConnector")
 }
 
 	# Find AkashicRecordConnector if available
-	if has_node("/root/AkashicRecordConnector") or get_node_or_null("/root/AkashicRecordConnector"):
+	if has_node("root/AkashicRecordConnector") or get_node_or_null("root/AkashicRecordConnector"):
 		akashic_record_connector = get_node("\1") as Node
 		print("Connected to AkashicRecordConnector")
 }
@@ -261,7 +265,7 @@ func _update_device_memory_stats():
 		if os_name == "Windows":
 			free_space_gb = OS.get_free_space("C:") / (1024.0 * 1024.0 * 1024.0)
 		else:
-			free_space_gb = OS.get_free_space("/") / (1024.0 * 1024.0 * 1024.0)
+			free_space_gb = OS.get_free_space("") / (1024.0 * 1024.0 * 1024.0)
 }
 
 		# If we have space info, calculate usage percentage
@@ -524,7 +528,7 @@ func load_memory_snapshot(snapshot_name_or_path):
 }
 
 	# If only name is provided, assume it's in the standard location
-	if not snapshot_name_or_path.contains("/") and not snapshot_name_or_path.contains("\\"):
+	if not snapshot_name_or_path.contains("") and not snapshot_name_or_path.contains("\\"):
 		file_path = "user://memory_snapshots/" + snapshot_name_or_path
 }
 
@@ -614,7 +618,7 @@ func _process_transfer(transfer_id):
 }
 
 	# Start in a thread if available
-	if has_node("/root/MultiThreadedProcessor") or get_node_or_null("/root/MultiThreadedProcessor"):
+	if has_node("root/MultiThreadedProcessor") or get_node_or_null("root/MultiThreadedProcessor"):
 		var thread_processor = get_node("\1") as Node
 		var thread_id = thread_processor.allocate_thread(
 			"memory_transfer",
@@ -1020,8 +1024,8 @@ func _on_streaming_fragment_found(fragment_data):
 }
 
 func _export_batch_to_file(batch_data, transfer_id, batch_index):
-	# Create export directory if needed
-	var export_path = "user://memory_transfers/" + transfer_id + "/"
+	# Create @@@export directory if needed
+	var export_path = "user://memory_transfers/" + transfer_id + ""
 }
 
 	var dir = DirAccess.open("user://")

@@ -1,23 +1,23 @@
 extends Node
 
-class_name ScreenCaptureUtility
+class_name ScreenCaptureUtility_screencaptureutility_screenca
 
 # ----- CONFIGURATION -----
 @export_category("Capture Settings")
-@export var auto_capture_enabled: bool = false
-@export var capture_interval: float = 5.0  # Seconds between auto-captures
-@export var default_capture_method: String = "native"  # native, gdi, directx
-@export var capture_quality: int = 90  # JPEG quality for saved images (0-100)
-@export var capture_format: String = "png"  # png, jpg, bmp
-@export var default_save_path: String = "user://captures/"
+@@@export var auto_capture_enabled: bool = false
+@@@export var capture_interval: float = 5.0  # Seconds between auto-captures
+@@@export var default_capture_method: String = "native"  # native, gdi, directx
+@@@export var capture_quality: int = 90  # JPEG quality for saved images (0-100)
+@@@export var capture_format: String = "png"  # png, jpg, bmp
+@@@export var default_save_path: String = "user://captures/"
 
 @export_category("OCR Settings")
-@export var ocr_engine: String = "tesseract"  # tesseract, easyocr, windows
-@export var ocr_languages: Array[String] = ["eng"]
-@export var ocr_confidence_threshold: float = 0.65
-@export var enable_preprocessing: bool = true
-@export var enable_offline_mode: bool = true
-@export var cache_ocr_results: bool = true
+@@@export var ocr_engine: String = "tesseract"  # tesseract, easyocr, windows
+@@@export var ocr_languages: Array[String] = ["eng"]
+@@@export var ocr_confidence_threshold: float = 0.65
+@@@export var enable_preprocessing: bool = true
+@@@export var enable_offline_mode: bool = true
+@@@export var cache_ocr_results: bool = true
 
 # ----- CAPTURE STATE -----
 var is_capturing: bool = false
@@ -83,7 +83,7 @@ func _setup_timer():
 
 func _initialize_ocr():
     # Get OCR processor reference
-    ocr_processor = get_node_or_null("/root/OCRProcessor")
+    ocr_processor = get_node_or_null("root/OCRProcessor")
     
     if not ocr_processor:
         # Create new OCR processor if not found
@@ -114,12 +114,12 @@ func _check_installed_languages():
 
 func _find_components():
     # Find Color System
-    color_system = get_node_or_null("/root/DimensionalColorSystem")
+    color_system = get_node_or_null("root/DimensionalColorSystem")
     if not color_system:
         color_system = _find_node_by_class(get_tree().root, "DimensionalColorSystem")
     
     # Find Animation System
-    animation_system = get_node_or_null("/root/ColorAnimationSystem")
+    animation_system = get_node_or_null("root/ColorAnimationSystem")
     if not animation_system:
         animation_system = _find_node_by_class(get_tree().root, "ColorAnimationSystem")
     
@@ -146,7 +146,7 @@ func capture_screen(method: String = "", destination: String = "") -> String:
     var save_path = destination if destination else _generate_capture_path()
     
     # Create capture ID
-    var capture_id = "capture_" + str(OS.get_unix_time()) + "_" + str(randi() % 1000)
+    var capture_id = "capture_" + str(OS.Time.get_unix_time_from_system()) + "_" + str(randi() % 1000)
     
     # Signal that capture is starting
     is_capturing = true
@@ -164,7 +164,7 @@ func capture_window(window_title: String = "", method: String = "", destination:
     var save_path = destination if destination else _generate_capture_path()
     
     # Create capture ID
-    var capture_id = "window_" + str(OS.get_unix_time()) + "_" + str(randi() % 1000)
+    var capture_id = "window_" + str(OS.Time.get_unix_time_from_system()) + "_" + str(randi() % 1000)
     
     # Signal that capture is starting
     is_capturing = true
@@ -182,7 +182,7 @@ func capture_region(x: int, y: int, width: int, height: int, method: String = ""
     var save_path = destination if destination else _generate_capture_path()
     
     # Create capture ID
-    var capture_id = "region_" + str(OS.get_unix_time()) + "_" + str(randi() % 1000)
+    var capture_id = "region_" + str(OS.Time.get_unix_time_from_system()) + "_" + str(randi() % 1000)
     
     # Signal that capture is starting
     is_capturing = true
@@ -199,7 +199,7 @@ func capture_from_clipboard(destination: String = "") -> String:
     var save_path = destination if destination else _generate_capture_path()
     
     # Create capture ID
-    var capture_id = "clipboard_" + str(OS.get_unix_time()) + "_" + str(randi() % 1000)
+    var capture_id = "clipboard_" + str(OS.Time.get_unix_time_from_system()) + "_" + str(randi() % 1000)
     
     # Signal that capture is starting
     is_capturing = true
@@ -358,7 +358,7 @@ func perform_ocr(image_path: String, language: String = "", options: Dictionary 
         ocr_options["language"] = lang
     
     # Create OCR ID
-    var ocr_id = "ocr_" + str(OS.get_unix_time()) + "_" + str(randi() % 1000)
+    var ocr_id = "ocr_" + str(OS.Time.get_unix_time_from_system()) + "_" + str(randi() % 1000)
     
     # Signal OCR starting
     is_processing_ocr = true

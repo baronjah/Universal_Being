@@ -1,5 +1,5 @@
 extends Node
-class_name WishDimensionalConnector
+class_name WishDimensionalConnector_wishdimensionalconnector_wishdime
 
 """
 Wish Dimensional Connector
@@ -82,10 +82,10 @@ func _init(wish_system: WishKnowledgeSystem, dimensional_bridge: DimensionalData
 func _ready():
     # Try to find nodes if not provided in constructor
     if not _wish_system:
-        _wish_system = get_node_or_null("/root/WishKnowledgeSystem")
+        _wish_system = get_node_or_null("root/WishKnowledgeSystem")
     
     if not _dimensional_bridge:
-        _dimensional_bridge = get_node_or_null("/root/DimensionalDataBridge")
+        _dimensional_bridge = get_node_or_null("root/DimensionalDataBridge")
     
     # Connect signals if systems are available
     if _wish_system and _dimensional_bridge:
@@ -243,7 +243,7 @@ func transform_element_to_dimension(element_id: String, target_dimension: String
     new_element.status = transformed_dict.status
     new_element.integration_points = transformed_dict.integration_points
     new_element.created_at = transformed_dict.created_at
-    new_element.updated_at = OS.get_unix_time()
+    new_element.updated_at = OS.Time.get_unix_time_from_system()
     new_element.metadata = transformed_dict.metadata
     
     # Add dimensional metadata
@@ -329,7 +329,7 @@ func apply_dimensional_influence(element_id: String, influence_dimension: String
     # Update element metadata
     element.metadata["influenced_by"] = influence_dimension
     element.metadata["influence_strength"] = strength
-    element.updated_at = OS.get_unix_time()
+    element.updated_at = OS.Time.get_unix_time_from_system()
     
     return true
 

@@ -1,5 +1,5 @@
 extends Node3D
-class_name FrequencyVisualizerNode
+class_name FrequencyVisualizerNode_frequencyvisualizernode_frequenc
 
 # Signal when this node is selected/clicked
 signal clicked(node)

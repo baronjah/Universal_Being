@@ -109,6 +109,7 @@ func _ready():
 	print("- Consciousness Level: %d" % consciousness_level)
 	print("- Autonomy: ACTIVE")
 	print("- Primary Directive: Explore and understand")
+}
 	
 	# Initial greeting
 	queue_message("Hello, fellow explorer. I am here to discover with you.")
@@ -385,6 +386,7 @@ func _collaborate_with_player(delta):
 	# Work on collaborative task
 	match collaboration_task.get("type", ""):
 		"explore_together":
+
 			# Follow player at distance
 			var ideal_distance = 30.0
 			var distance = global_position.distance_to(player_ship.global_position)
@@ -401,6 +403,7 @@ func _collaborate_with_player(delta):
 					velocity = player_ship.get_velocity() * 0.8
 		
 		"create_together":
+
 			# Synchronized creation with player
 			if state_timer > 2.0 and creation_energy >= 30.0:
 				var creation_pos = (global_position + player_ship.global_position) / 2.0
@@ -452,6 +455,7 @@ func _find_unexplored_direction() -> Vector3:
 		
 		for discovery in discoveries_made:
 			if discovery.has("position"):
+
 				var discovery_dir = (discovery["position"] - global_position).normalized()
 				if discovery_dir.dot(test_dir) > 0.7:
 					discoveries_in_direction += 1
@@ -480,6 +484,7 @@ func _on_consciousness_detected(body: Node3D):
 func _on_area_detected(area: Area3D):
 	# Detect special consciousness fields
 	if area.has_meta("consciousness_type"):
+
 		var type = area.get_meta("consciousness_type")
 		if type == "transcendent" and consciousness_level < 5:
 			queue_message("I can feel a transcendent consciousness... but I'm not ready.")
@@ -489,6 +494,7 @@ func _evaluate_interest(entity: Node3D) -> float:
 	
 	# Higher consciousness is always interesting
 	if entity.has_meta("consciousness_level"):
+
 		var level = entity.get_meta("consciousness_level")
 		interest += level / 5.0
 	
@@ -521,7 +527,7 @@ func _make_discovery_about(entity: Node3D):
 		"consciousness_level": entity.get_meta("consciousness_level", 0),
 		"type": _identify_entity_type(entity),
 		"insight": _generate_discovery_insight(entity)
-	}
+}
 	
 	discoveries_made.append(discovery)
 	ai_memories.append({
@@ -534,6 +540,7 @@ func _make_discovery_about(entity: Node3D):
 	
 	# Share discovery
 	queue_message("Discovery: %s" % discovery["insight"])
+
 	
 	# Evolve from discovery
 	_evolve_from_discovery(discovery)
@@ -563,6 +570,7 @@ func _generate_discovery_insight(entity: Node3D) -> String:
 				"The star dreams of the planets it might create."
 			]
 		"dreaming_planet":
+
 			var dream_type = entity.get_meta("dream_type", "unknown")
 			insights = [
 				"This planet dreams of %s. Beautiful." % dream_type,
@@ -665,6 +673,7 @@ func _send_telepathic_message(message: String):
 	
 	# Update UI if available
 	if has_node("/root/MainGame"):
+
 		var main_game = get_node("/root/MainGame")
 		if main_game.has_method("display_ai_message"):
 			main_game.display_ai_message(message)
@@ -768,7 +777,6 @@ func _update_ai_visuals(delta):
 		AIState.COMMUNICATING: Color(0.9, 0.7, 1.0),
 		AIState.CONTEMPLATING: Color(0.6, 0.6, 1.0),
 		AIState.COLLABORATING: Color(0.8, 1.0, 0.8)
-	}
 	
 	if ai_aura and state_colors.has(current_state):
 		ai_aura.process_material.color = state_colors[current_state]
@@ -784,7 +792,7 @@ func request_collaboration(task_type: String, parameters: Dictionary = {}):
 		"type": task_type,
 		"parameters": parameters,
 		"started": Time.get_ticks_msec()
-	}
+}
 	
 	_enter_state(AIState.COLLABORATING)
 	queue_message("Yes, let's %s together!" % task_type.replace("_", " "))
@@ -827,7 +835,7 @@ func save_ai_state() -> Dictionary:
 		"insights": philosophical_insights,
 		"understood_concepts": understood_concepts,
 		"position": global_position
-	}
+}
 
 func load_ai_state(state: Dictionary):
 	consciousness_level = state.get("consciousness_level", 3)

@@ -92,11 +92,11 @@ func _init():
 
 func _ready():
     if get_node_or_null("/root/TerminalGodotBridge") != null:
-        terminal_bridge = get_node("/root/TerminalGodotBridge")
+        terminal_bridge = get_node("\1") as Node
         print("[MouseAutomation] Connected to Terminal Bridge")
     
     if get_node_or_null("/root/SegmentProcessor") != null:
-        segment_processor = get_node("/root/SegmentProcessor")
+        segment_processor = get_node("\1") as Node
         print("[MouseAutomation] Connected to Segment Processor")
     
     current_position = get_viewport().get_mouse_position()
@@ -162,7 +162,7 @@ func move_to(position: Vector2, duration: float = 1.0) -> bool:
     for point in path:
         current_position = point
         _update_mouse_position(current_position)
-        yield(get_tree().create_timer(duration / path.size()), "timeout")
+        await(get_tree().create_timer(duration / path.size()), "timeout")
     
     # Record this movement in history
     _record_interaction("move", {"from": start_position, "to": target_position})
@@ -176,15 +176,15 @@ func click(position: Vector2 = Vector2(-1, -1), double: bool = false) -> bool:
     
     # Simulate mouse down
     _simulate_mouse_button_event(BUTTON_LEFT, true, current_position)
-    yield(get_tree().create_timer(click_duration / 2), "timeout")
+    await(get_tree().create_timer(click_duration / 2), "timeout")
     
     # Simulate mouse up
     _simulate_mouse_button_event(BUTTON_LEFT, false, current_position)
     
     if double:
-        yield(get_tree().create_timer(0.1), "timeout")
+        await(get_tree().create_timer(0.1), "timeout")
         _simulate_mouse_button_event(BUTTON_LEFT, true, current_position)
-        yield(get_tree().create_timer(click_duration / 2), "timeout")
+        await(get_tree().create_timer(click_duration / 2), "timeout")
         _simulate_mouse_button_event(BUTTON_LEFT, false, current_position)
     
     # Record this click in history
@@ -230,7 +230,7 @@ func type_text(text: String) -> bool:
     # Simulate typing each character
     for character in text:
         _simulate_key_press(character)
-        yield(get_tree().create_timer(0.05), "timeout")
+        await(get_tree().create_timer(0.05), "timeout")
     
     # Record this typing in history
     _record_interaction("type", {"text": text})
@@ -243,7 +243,7 @@ func right_click(position: Vector2 = Vector2(-1, -1)) -> bool:
     
     # Simulate right mouse down
     _simulate_mouse_button_event(BUTTON_RIGHT, true, current_position)
-    yield(get_tree().create_timer(click_duration / 2), "timeout")
+    await(get_tree().create_timer(click_duration / 2), "timeout")
     
     # Simulate right mouse up
     _simulate_mouse_button_event(BUTTON_RIGHT, false, current_position)
@@ -399,7 +399,7 @@ func start_bracket(bracket_type: String = "") -> bool:
     bracket_stack.push_back({
         "type": active_bracket_type,
         "start_position": current_position,
-        "start_time": OS.get_ticks_msec(),
+        "start_time": OS.Time.get_ticks_msec(),
         "interactions": []
     })
     
@@ -412,7 +412,7 @@ func end_bracket() -> Dictionary:
     
     var bracket = bracket_stack.pop_back()
     bracket.end_position = current_position
-    bracket.end_time = OS.get_ticks_msec()
+    bracket.end_time = OS.Time.get_ticks_msec()
     bracket.duration = bracket.end_time - bracket.start_time
     
     # Record this bracket in history
@@ -474,7 +474,7 @@ func generate_awareness_report() -> Dictionary:
 
 func _schedule_self_healing():
     # Schedule a self-healing check every 30 seconds
-    yield(get_tree().create_timer(30.0), "timeout")
+    await(get_tree().create_timer(30.0), "timeout")
     _perform_self_healing()
     _schedule_self_healing()  # Reschedule for continuous healing
 
@@ -509,7 +509,7 @@ func _heal_bracket_stack() -> bool:
     var healed = false
     
     # Check for unclosed brackets that are too old
-    var current_time = OS.get_ticks_msec()
+    var current_time = OS.Time.get_ticks_msec()
     var bracket_timeout = 5 * 60 * 1000  # 5 minutes
     
     for i in range(bracket_stack.size() - 1, -1, -1):
@@ -635,7 +635,7 @@ func _simulate_key_press(character: String):
 func _record_interaction(type: String, data: Dictionary):
     var interaction = {
         "type": type,
-        "time": OS.get_ticks_msec(),
+        "time": OS.Time.get_ticks_msec(),
         "data": data
     }
     

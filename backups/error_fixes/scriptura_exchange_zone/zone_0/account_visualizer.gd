@@ -195,9 +195,9 @@ func setup_visualization_area():
 func connect_to_systems():
     # Connect to account manager
     if has_node("/root/SmartAccountManager") or get_node_or_null("/root/SmartAccountManager"):
-        _account_manager = get_node("/root/SmartAccountManager")
-        _account_manager.connect("points_updated", self, "_on_points_updated")
-        _account_manager.connect("dimension_changed", self, "_on_dimension_changed")
+        _account_manager = get_node("\1") as Node
+        _account_manager.connect(_on_points_updated)
+        _account_manager.connect(_on_dimension_changed)
         print("Connected to SmartAccountManager")
         
         # Initial data
@@ -208,15 +208,15 @@ func connect_to_systems():
     
     # Connect to preference analyzer
     if has_node("/root/PlayerPreferenceAnalyzer") or get_node_or_null("/root/PlayerPreferenceAnalyzer"):
-        _preference_analyzer = get_node("/root/PlayerPreferenceAnalyzer")
-        _preference_analyzer.connect("preferences_updated", self, "_on_preferences_updated")
+        _preference_analyzer = get_node("\1") as Node
+        _preference_analyzer.connect(_on_preferences_updated)
         print("Connected to PlayerPreferenceAnalyzer")
     
     # Connect to auto-correction system
     if has_node("/root/AutoCorrectionSystem") or get_node_or_null("/root/AutoCorrectionSystem"):
-        _auto_correction = get_node("/root/AutoCorrectionSystem")
-        _auto_correction.connect("playstyle_detected", self, "_on_playstyle_detected")
-        _auto_correction.connect("correction_applied", self, "_on_correction_applied")
+        _auto_correction = get_node("\1") as Node
+        _auto_correction.connect(_on_playstyle_detected)
+        _auto_correction.connect(_on_correction_applied)
         print("Connected to AutoCorrectionSystem")
         
         # Initial playstyle

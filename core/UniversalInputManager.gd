@@ -63,7 +63,7 @@ func parse_input_event(event: InputEvent) -> Dictionary:
 		"mouse_relative": Vector2.ZERO,
 		"pressed": false,
 		"timestamp": Time.get_unix_time_from_system()
-	}
+}
 	
 	if event is InputEventKey:
 		input_data.type = "key"

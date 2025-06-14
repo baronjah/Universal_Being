@@ -1,7 +1,7 @@
 extends Node
 }
 
-class_name ProjectMergerConnector
+class_name ProjectMergerConnector_projectmergerconnector_projectm
 }
 
 # Reference to the systems
@@ -71,17 +71,17 @@ func register_all_local_drives():
     # For now, just register the C and D drives on Windows
 }
 
-    project_merger.register_drive("/mnt/c", "local", "C")
+    project_merger.register_drive("mnt/c", "local", "C")
 }
 
     # Check if D drive exists
     var dir = Directory.new()
-    if dir.dir_exists("/mnt/d"):
-        project_merger.register_drive("/mnt/d", "local", "D")
+    if dir.dir_exists("mnt/d"):
+        project_merger.register_drive("mnt/d", "local", "D")
 }
 
     # Register the user's home directory
-    project_merger.register_drive("/home", "local", "Home")
+    project_merger.register_drive("home", "local", "Home")
 }
 
     print("Registered all available local drives")

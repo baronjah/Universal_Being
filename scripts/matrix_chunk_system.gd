@@ -65,7 +65,7 @@ class MatrixGenerator:
 			"color": color,
 			"height_noise": height_noise,
 			"coord": coord
-		}
+}
 
 func _ready():
 	# Initialize Matrix
@@ -240,6 +240,7 @@ func cleanup_distant_chunks(player_chunk: Vector3i, render_radius: int):
 		if removed_count == 1:
 			print("🔴 MATRIX UNLOAD: Removing %d distant chunks..." % chunks_to_remove.size())
 
+
 func world_to_chunk_coord(world_pos: Vector3) -> Vector3i:
 	"""Convert world position to Matrix chunk coordinate"""
 	return Vector3i(
@@ -268,12 +269,13 @@ func save_matrix_chunk(coord: Vector3i) -> bool:
 		"coordinates": coord,
 		"generation_seed": generation_seed,
 		"timestamp": Time.get_ticks_msec()
-	}
+}
 	
 	# Save to Akashic Records
 	if SystemBootstrap and SystemBootstrap.is_system_ready():
 		var akashic = SystemBootstrap.get_akashic_records()
 		if akashic and akashic.has_method("save_universal_being_data"):
+
 			var chunk_id = "matrix_%d_%d_%d" % [coord.x, coord.y, coord.z]
 			return akashic.save_universal_being_data(chunk_id, matrix_data)
 	
@@ -286,4 +288,4 @@ func get_matrix_stats() -> Dictionary:
 		"player_chunk": world_to_chunk_coord(player.global_position) if player else Vector3i.ZERO,
 		"render_distance": render_distance,
 		"generation_seed": generation_seed
-	}
+}

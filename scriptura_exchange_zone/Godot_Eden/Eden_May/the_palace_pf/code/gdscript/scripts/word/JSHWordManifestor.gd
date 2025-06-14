@@ -1,5 +1,5 @@
 extends Node
-class_name JSHWordManifestor
+class_name JSHWordManifestor_JSHWordManifestor_JSHWordM
 
 # Singleton pattern
 static var _instance: JSHWordManifestor = null

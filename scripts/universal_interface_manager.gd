@@ -37,7 +37,6 @@ const INTERFACE_THEMES = {
 		"border_color": Color(0.4, 0.3, 0.3),
 		"text_color": Color(0.9, 0.9, 0.9),
 		"accent_color": Color(1.0, 0.6, 0.2)
-	}
 }
 
 # ===== INTERFACE REGISTRY =====
@@ -161,6 +160,7 @@ func find_topmost_escapable_window() -> Window:
 	
 	for window in registered_windows.values():
 		if window.visible and window.get_meta("esc_closes", false):
+}
 			var priority = window.get_meta("layer_priority", 0)
 			if priority > highest_priority:
 				highest_priority = priority
@@ -221,6 +221,7 @@ func close_window(window: Window) -> void:
 			active_window = null
 		print("🎯 Window closed: %s" % window.title)
 
+
 func _on_window_close_requested(window: Window) -> void:
 	"""Handle window close button"""
 	close_window(window)
@@ -239,9 +240,10 @@ func register_existing_window(window: Window, window_id: String, config: Diction
 	
 	print("🎯 Registered existing window: %s" % window.title)
 
+
 func get_interface_status() -> Dictionary:
 	"""Get status of all registered interfaces"""
-	var status = {}
+	var status = {
 	for id in registered_windows:
 		var window = registered_windows[id]
 		status[id] = {
@@ -250,8 +252,8 @@ func get_interface_status() -> Dictionary:
 			"layer": window.get_meta("layer_name", "unknown"),
 			"position": window.position,
 			"size": window.size
-		}
 	return status
+}
 
 # ===== STATIC ACCESS =====
 static func get_instance() -> UniversalInterfaceManager:

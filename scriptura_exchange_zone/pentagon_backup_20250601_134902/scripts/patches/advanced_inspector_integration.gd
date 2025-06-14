@@ -4,7 +4,6 @@
 # PURPOSE: Add advanced editing commands to console
 # CREATED: 2025-05-28 - Console integration patch
 # ==================================================
-
 extends UniversalBeingBase
 var console_manager: Node
 var advanced_inspector: Control
@@ -21,7 +20,7 @@ func _setup_integration() -> void:
 	# Wait for console manager
 	await get_tree().process_frame
 	
-	console_manager = get_node_or_null("/root/ConsoleManager")
+	console_manager = get_node_or_null("root/ConsoleManager")
 	if not console_manager:
 		print("[AdvancedInspectorIntegration] Console manager not found")
 		return

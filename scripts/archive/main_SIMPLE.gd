@@ -18,6 +18,7 @@ func _ready() -> void:
 func create_player() -> void:
 	pass
 	var player_script = load("res://beings/player_universal_being.gd")
+
 	var player = player_script.new()
 	player.name = "Player"
 	add_child(player)
@@ -25,6 +26,7 @@ func create_player() -> void:
 func create_cursor() -> void:
 	pass
 	var cursor_script = load("res://beings/cursor/CursorUniversalBeing.gd")
+
 	var cursor = cursor_script.new()
 	cursor.name = "Cursor"
 	add_child(cursor)
@@ -32,6 +34,7 @@ func create_cursor() -> void:
 func create_console() -> void:
 	pass
 	var console_script = load("res://beings/perfect_universal_console.gd")
+
 	var console = console_script.new()
 	console.name = "Console"
 	add_child(console)

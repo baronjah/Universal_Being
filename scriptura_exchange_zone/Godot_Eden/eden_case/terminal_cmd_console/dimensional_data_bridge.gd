@@ -1,5 +1,5 @@
 extends Node
-class_name DimensionalDataBridge
+class_name DimensionalDataBridge_dimensionaldatabridge_dimensio
 
 """
 DimensionalDataBridge
@@ -391,7 +391,7 @@ func get_dimension_stats() -> Dictionary:
 # 
 # # Save dimensionally-processed data
 # dimension_bridge.save_dimensional_data(
-#     {"message": original_text, "timestamp": OS.get_unix_time()},
+#     {"message": original_text, "timestamp": OS.Time.get_unix_time_from_system()},
 #     "user://dimensional_data.json", 
 #     OfflineDataProcessor.DimensionalPlane.TRANSCENDENCE
 # )

@@ -74,6 +74,7 @@ func _find_turn_system():
             
         if turn_system:
             print("Found turn system by class: " + turn_system.name)
+			
             
             # Add to turn systems group for easy finding
             turn_system.add_to_group("turn_systems")
@@ -104,9 +105,9 @@ func set_hourly_limit(hours: float) -> bool:
 func get_usage_summary() -> Dictionary:
     if usage_time_tracker:
         return usage_time_tracker.get_usage_summary()
-    return {}
+    return {
 
-func toggle_tracking() -> bool:
+func toggle_tracking() -> bool:}
     if usage_time_tracker:
         return usage_time_tracker.toggle_tracking()
     return false

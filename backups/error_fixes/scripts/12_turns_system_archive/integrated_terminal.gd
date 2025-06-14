@@ -61,6 +61,7 @@ func _ready():
 	add_text("Integrated Terminal System v1.0", "system")
 	add_text("Type #help for available commands", "system")
 	add_text("Current turn: " + str(current_turn) + "/" + str(max_turns), "system")
+
 	
 	# Show command prompt
 	show_prompt()
@@ -80,7 +81,7 @@ func setup_terminal_ui():
 	input_field = LineEdit.new()
 	input_field.rect_min_size = Vector2(800, 30)
 	input_field.rect_position = Vector2(0, 470)
-	input_field.connect("text_entered", self, "_on_text_entered")
+	input_field.connect(_on_text_entered)
 	terminal_container.add_child(input_field)
 	
 	# Set focus to input field
@@ -116,14 +117,14 @@ func connect_signals():
 	# Connect to memory system signals if needed
 	
 	# Connect to drive connector signals
-	drive_connector.connect("drive_connected", self, "_on_drive_connected")
-	drive_connector.connect("drive_disconnected", self, "_on_drive_disconnected")
-	drive_connector.connect("sync_completed", self, "_on_sync_completed")
-	drive_connector.connect("sync_failed", self, "_on_sync_failed")
+	drive_connector.connect(_on_drive_connected)
+	drive_connector.connect(_on_drive_disconnected)
+	drive_connector.connect(_on_sync_completed)
+	drive_connector.connect(_on_sync_failed)
 
 # Process text input
 func _on_text_entered(text):
-	if text.empty():
+	if text.is_empty():
 		show_prompt()
 		return
 	
@@ -177,7 +178,7 @@ func auto_wrap_text(text, width):
 	
 	for word in words:
 		if line.length() + word.length() + 1 <= width:
-			if line.empty():
+			if line.is_empty():
 				line = word
 			else:
 				line += " " + word
@@ -185,7 +186,7 @@ func auto_wrap_text(text, width):
 			wrapped += line + "\n"
 			line = word
 	
-	if not line.empty():
+	if not line.is_empty():
 		wrapped += line
 		
 	return wrapped
@@ -193,7 +194,7 @@ func auto_wrap_text(text, width):
 # Process a command
 func process_command(command):
 	# Check for empty command
-	if command.empty():
+	if command.is_empty():
 		return
 	
 	# Normalize command text
@@ -201,6 +202,7 @@ func process_command(command):
 	
 	# Check for special command prefixes
 	if command.begins_with("#"):
+
 		# Check for system level commands
 		if command.begins_with("###"):
 			process_system_command(command.substr(3).strip_edges())
@@ -250,6 +252,7 @@ func process_basic_command(command):
 				pass
 			else:
 				add_text("Unknown command: " + cmd, "error")
+	
 
 # Process advanced ## commands
 func process_advanced_command(command):
@@ -280,6 +283,7 @@ func process_advanced_command(command):
 				pass
 			else:
 				add_text("Unknown advanced command: " + cmd, "error")
+	
 
 # Process system ### commands
 func process_system_command(command):
@@ -316,6 +320,7 @@ func process_system_command(command):
 				pass
 			else:
 				add_text("Unknown system command: " + cmd, "error")
+	
 
 # Process regular text input
 func process_text_input(text):
@@ -352,6 +357,7 @@ func process_turn_command(args):
 		_:
 			add_text("Unknown turn command: " + subcmd, "error")
 
+
 # Advanced turn commands
 func process_advanced_turn_command(args):
 	var parts = args.split(" ", true, 1)
@@ -375,6 +381,7 @@ func process_advanced_turn_command(args):
 		_:
 			add_text("Unknown advanced turn command: " + subcmd, "error")
 
+
 # System turn commands
 func process_system_turn_command(args):
 	var parts = args.split(" ", true, 1)
@@ -396,6 +403,7 @@ func process_system_turn_command(args):
 		_:
 			add_text("Unknown system turn command: " + subcmd, "error")
 
+
 # Advance to next turn
 func advance_turn():
 	if current_turn < max_turns:
@@ -411,12 +419,13 @@ func advance_turn():
 
 # Toggle auto turn advancement
 func toggle_auto_advance(enabled=""):
-	if enabled.empty():
+	if enabled.is_empty():
 		turn_auto_advance = !turn_auto_advance
 	else:
 		turn_auto_advance = (enabled.to_lower() == "on" or enabled.to_lower() == "true")
 	
 	add_text("Auto turn advancement: " + ("ON" if turn_auto_advance else "OFF"), "system")
+
 
 # Set current turn
 func set_turn(turn_number):
@@ -450,10 +459,12 @@ func display_turn_status():
 	add_text("Turn Status:", "system")
 	add_text("- Current turn: " + str(current_turn) + "/" + str(max_turns), "system")
 	add_text("- Auto advance: " + ("ON" if turn_auto_advance else "OFF"), "system")
+
 	
 	var progress = float(current_turn) / float(max_turns)
 	var progress_bar = symbol_system.format_progress_bar(progress, 20)
 	add_text("- Progress: " + progress_bar, "system")
+
 
 # Skip multiple turns
 func skip_turns(count):
@@ -478,10 +489,11 @@ func set_auto_interval(interval):
 
 # Save turn state
 func save_turn_state(name):
-	if name.empty():
+	if name.is_empty():
 		name = "turn_" + str(current_turn)
 	
 	add_text("Saving turn state: " + name, "system")
+
 	
 	# In a real implementation, this would save the current state to a file
 	# For now, we'll just simulate it by adding it to memory
@@ -490,6 +502,7 @@ func save_turn_state(name):
 # Load turn state
 func load_turn_state(name):
 	add_text("Loading turn state: " + name, "system")
+
 	
 	# In a real implementation, this would load state from a file
 	# For now, we'll just simulate it
@@ -510,6 +523,7 @@ func restart_turn_cycle():
 # Export turn data
 func export_turn_data(path):
 	add_text("Exporting turn data to: " + path, "system")
+
 	
 	# In a real implementation, this would export data to a file
 	# For now, we'll just simulate it
@@ -518,6 +532,7 @@ func export_turn_data(path):
 # Import turn data
 func import_turn_data(path):
 	add_text("Importing turn data from: " + path, "system")
+
 	
 	# In a real implementation, this would import data from a file
 	# For now, we'll just simulate it
@@ -527,9 +542,9 @@ func import_turn_data(path):
 func check_turn_advancement():
 	if turn_auto_advance and current_turn < max_turns:
 		# In a real implementation, this would use a timer
-		# For now, we'll just simulate it with a yield
+		# For now, we'll just simulate it with a await
 		add_text("Auto-advancing to next turn in 3 seconds...", "system")
-		yield(get_tree().create_timer(3.0), "timeout")
+		await(get_tree().create_timer(3.0), "timeout")
 		advance_turn()
 
 # Color commands
@@ -544,6 +559,7 @@ func set_terminal_colors(theme):
 			terminal_colors.error = Color(1.0, 0.5, 0.5)
 			terminal_colors.command = Color(0.9, 0.9, 0.6)
 		"sad":
+
 			# Sad colors palette
 			terminal_colors.default = Color(0.5, 0.5, 0.7)
 			terminal_colors.past = Color(0.4, 0.4, 0.6)
@@ -553,6 +569,7 @@ func set_terminal_colors(theme):
 			terminal_colors.error = Color(0.7, 0.4, 0.4)
 			terminal_colors.command = Color(0.6, 0.6, 0.5)
 		"dark":
+
 			# Dark theme
 			terminal_colors.default = Color(0.7, 0.7, 0.7)
 			terminal_colors.past = Color(0.4, 0.4, 0.7)
@@ -562,6 +579,7 @@ func set_terminal_colors(theme):
 			terminal_colors.error = Color(0.9, 0.3, 0.3)
 			terminal_colors.command = Color(0.7, 0.7, 0.4)
 		"bright":
+
 			# Bright theme
 			terminal_colors.default = Color(1.0, 1.0, 1.0)
 			terminal_colors.past = Color(0.7, 0.7, 1.0)
@@ -575,6 +593,7 @@ func set_terminal_colors(theme):
 			return
 	
 	add_text("Terminal color theme changed to: " + theme, "system")
+
 
 # Clear the terminal
 func clear_terminal():
@@ -600,6 +619,7 @@ func set_concurrent_tasks(count):
 # Export terminal state
 func export_terminal_state(path):
 	add_text("Exporting terminal state to: " + path, "system")
+
 	
 	# In a real implementation, this would export data to a file
 	# For now, we'll just simulate it
@@ -608,6 +628,7 @@ func export_terminal_state(path):
 # Import terminal state
 func import_terminal_state(path):
 	add_text("Importing terminal state from: " + path, "system")
+
 	
 	# In a real implementation, this would import data from a file
 	# For now, we'll just simulate it
@@ -620,7 +641,7 @@ func evolve_terminal(evolution_type):
 	
 	# Show fancy progress animation
 	for i in range(5):
-		yield(get_tree().create_timer(0.3), "timeout")
+		await(get_tree().create_timer(0.3), "timeout")
 		add_text(symbol_system.generate_symbol_pattern("▪ ", 20), "system")
 	
 	match evolution_type:
@@ -651,7 +672,7 @@ func display_dimensions():
 		{"name": "Digital", "symbol": symbol_system.get_symbol("digital", "dimensions"), "desc": "The realm of data and information"},
 		{"name": "Temporal", "symbol": symbol_system.get_symbol("temporal", "dimensions"), "desc": "The flow of time and memory"},
 		{"name": "Conceptual", "symbol": symbol_system.get_symbol("conceptual", "dimensions"), "desc": "The space of ideas and abstractions"},
-		{"name": "Quantum", "symbol": symbol_system.get_symbol("quantum", "dimensions"), "desc": "The underlying fabric of possibilities"}
+		{"name": "Quantum", "symbol": symbol_system.get_symbol("quantum", "dimensions"), "desc": "The underlying fabric of possibilities"
 	]
 	
 	add_text(symbol_system.format_header("Dimensional Analysis", 60), "system")
@@ -722,15 +743,19 @@ func _on_turns_completed():
 
 func _on_drive_connected(drive_name):
 	add_text("Drive connected: " + drive_name, "system")
+}
 
 func _on_drive_disconnected(drive_name):
 	add_text("Drive disconnected: " + drive_name, "system")
 
+
 func _on_sync_completed(drive_name):
 	add_text("Drive sync completed: " + drive_name, "system")
 
+
 func _on_sync_failed(drive_name, error):
 	add_text("Drive sync failed: " + drive_name + " (" + error + ")", "error")
+
 
 # Input handling for command history
 func _input(event):

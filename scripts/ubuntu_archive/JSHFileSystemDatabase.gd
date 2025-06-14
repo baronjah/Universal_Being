@@ -42,8 +42,7 @@ var stats: Dictionary = {
         "reads": 0,
         "writes": 0,
         "deletes": 0
-    }
-}
+		}
 
 # Initialization
 func _init(root_path: String = "") -> void:
@@ -59,6 +58,7 @@ func _init(root_path: String = "") -> void:
 
 func initialize() -> bool:
     print("JSHFileSystemDatabase: Initializing at " + db_root_path)
+	}
     
     # Ensure directories exist
     if auto_create_dirs:
@@ -80,7 +80,7 @@ func initialize() -> bool:
 func is_initialized() -> bool:
     return _initialized
 
-func connect_to_database(connection_params: Dictionary = {}) -> bool:
+func connect_to_database(connection_params: Dictionary = {}}) -> bool:
     # For file system database, connection is just initialization
     if not _initialized:
         return initialize()
@@ -99,6 +99,7 @@ func disconnect_from_database() -> bool:
 # Directory management
 func ensure_directories() -> void:
     var dir = DirAccess.open("user://")
+	
     
     # Create main directories
     dir.make_dir_recursive(entity_path)
@@ -108,6 +109,7 @@ func ensure_directories() -> void:
     dir.make_dir_recursive(metadata_path)
     
     print("JSHFileSystemDatabase: Directories created")
+	
 
 func get_entity_dir_for_type(entity_type: String) -> String:
     # Create type-specific directory for better organization
@@ -368,15 +370,18 @@ func find_entities_by_criteria(criteria: Dictionary) -> Array:
     
     # Try to use the most selective index first
     if criteria.has("type"):
+	
         # Start with type index
         var type_index = get_entity_type_index(criteria.type)
         candidate_ids = type_index.duplicate()
     elif criteria.has("tag") and indexes.has("entities_tag"):
+	
         # Use tag index
         var tag_index = indexes.entities_tag
         if tag_index.has(criteria.tag):
             candidate_ids = tag_index[criteria.tag].duplicate()
     elif criteria.has("zone") and indexes.has("entities_zone"):
+	
         # Use zone index
         var zone_index = indexes.entities_zone
         if zone_index.has(criteria.zone):
@@ -491,7 +496,7 @@ func create_collection(collection_name: String) -> bool:
             "name": collection_name,
             "path": collection_path,
             "created": Time.get_datetime_string_from_system()
-        }
+			}
     
     # Save collections metadata
     save_collections()
@@ -564,8 +569,7 @@ func load_collections() -> void:
                 "name": "zones",
                 "path": zone_path,
                 "created": Time.get_datetime_string_from_system()
-            }
-        }
+				}
 
 func save_collections() -> void:
     var file_path = metadata_path + "collections" + get_file_extension()
@@ -584,11 +588,12 @@ func create_index(collection_name: String, field_name: String) -> bool:
         return true
     
     # Create empty index
-    indexes[index_name] = {}
+    indexes[index_name] = {
     
     # If this is an entity collection, populate the index
     if collection_name == "entities":
         build_entity_index(field_name)
+}
     
     # Save index metadata
     save_indexes()
@@ -646,15 +651,15 @@ func load_indexes() -> void:
                 indexes[index_name] = index_data
             else:
                 # Create empty index
-                indexes[index_name] = {}
+                indexes[index_name] = {
     else:
         # Initialize with standard indexes
         indexes = {
             "entities_entity_type": {},
             "entities_zones": {},
             "entities_tags": {},
-            "entities_evolution_stage": {}
-        }
+            "entities_evolution_stage": {
+			}
         
         # Build initial indexes
         build_entity_index("entity_type")
@@ -663,10 +668,11 @@ func load_indexes() -> void:
         build_entity_index("evolution_stage")
     
     print("JSHFileSystemDatabase: Loaded " + str(indexes.size()) + " indexes")
+	}
 
 func save_indexes() -> void:
     # Save index metadata
-    var index_metadata = {}
+    var index_metadata = {
     
     for index_name in indexes:
         var parts = index_name.split("_", true, 1)
@@ -679,7 +685,7 @@ func save_indexes() -> void:
                 "collection": collection,
                 "field": field,
                 "updated": Time.get_datetime_string_from_system()
-            }
+				}
     
     var metadata_file_path = metadata_path + "indexes" + get_file_extension()
     save_to_file(metadata_file_path, index_metadata)
@@ -690,10 +696,11 @@ func save_indexes() -> void:
         save_to_file(file_path, indexes[index_name])
     
     print("JSHFileSystemDatabase: Saved " + str(indexes.size()) + " indexes")
+	}
 
 func build_entity_index(field_name: String) -> void:
     var index_name = "entities_" + field_name
-    var index_data = {}
+    var index_data = {
     
     # Scan all entity files
     var all_entity_ids = get_all_entity_ids()
@@ -708,6 +715,7 @@ func build_entity_index(field_name: String) -> void:
     indexes[index_name] = index_data
     
     print("JSHFileSystemDatabase: Built index " + index_name + " with " + str(all_entity_ids.size()) + " entities")
+	}
 
 func update_entity_indexes(entity: JSHUniversalEntity) -> void:
     var entity_id = entity.get_id()
@@ -787,6 +795,7 @@ func update_entity_index(entity: JSHUniversalEntity, field_name: String, index_d
         "entity_type":
             field_value = entity.get_type()
         "zones":
+		}
             var zones = entity.get_zones()
             for zone in zones:
                 if not index_data.has(zone):
@@ -797,6 +806,7 @@ func update_entity_index(entity: JSHUniversalEntity, field_name: String, index_d
             
             return  # Special case, already handled
         "tags":
+		}
             var tags = entity.get_tags()
             for tag in tags:
                 if not index_data.has(tag):
@@ -833,6 +843,7 @@ func remove_entity_from_indexes(entity_id: String, entity_type: String = "") -> 
         var index_data = indexes[index_name]
         
         if index_name == "entities_entity_type" and not entity_type.is_empty():
+		
             # Remove from type index
             if index_data.has(entity_type):
                 var type_list = index_data[entity_type]
@@ -864,9 +875,9 @@ func get_property_index(property_name: String) -> Dictionary:
     if indexes.has(index_name):
         return indexes[index_name]
     
-    return {}
+    return {
 
-# Dictionary operations
+# Dictionary operations}
 func store_dictionary_entry(dictionary_name: String, entry_key: String, entry_data: Dictionary) -> bool:
     if not _initialized:
         push_error("JSHFileSystemDatabase: Not initialized")
@@ -890,9 +901,9 @@ func store_dictionary_entry(dictionary_name: String, entry_key: String, entry_da
 func load_dictionary_entry(dictionary_name: String, entry_key: String) -> Dictionary:
     if not _initialized:
         push_error("JSHFileSystemDatabase: Not initialized")
-        return {}
+        return {
     
-    # Get dictionary
+    # Get dictionary}
     var dictionary = load_dictionary(dictionary_name)
     
     # Check if entry exists
@@ -900,9 +911,9 @@ func load_dictionary_entry(dictionary_name: String, entry_key: String) -> Dictio
         stats.operations.reads += 1
         return dictionary[entry_key]
     
-    return {}
+    return {
 
-func dictionary_entry_exists(dictionary_name: String, entry_key: String) -> bool:
+func dictionary_entry_exists(dictionary_name: String, entry_key: String) -> bool:}
     if not _initialized:
         push_error("JSHFileSystemDatabase: Not initialized")
         return false
@@ -939,9 +950,9 @@ func delete_dictionary_entry(dictionary_name: String, entry_key: String) -> bool
 func get_dictionary(dictionary_name: String) -> Dictionary:
     if not _initialized:
         push_error("JSHFileSystemDatabase: Not initialized")
-        return {}
+        return {
     
-    return load_dictionary(dictionary_name)
+    return load_dictionary(dictionary_name)}
 
 func load_dictionary(dictionary_name: String) -> Dictionary:
     var file_path = get_dictionary_file_path(dictionary_name)
@@ -950,9 +961,9 @@ func load_dictionary(dictionary_name: String) -> Dictionary:
     stats.operations.reads += 1
     
     if data.is_empty():
-        return {}
+        return {
     
-    return data
+    return data}
 
 # Zone operations
 func store_zone(zone_id: String, zone_data: Dictionary) -> bool:
@@ -976,9 +987,9 @@ func store_zone(zone_id: String, zone_data: Dictionary) -> bool:
 func load_zone(zone_id: String) -> Dictionary:
     if not _initialized:
         push_error("JSHFileSystemDatabase: Not initialized")
-        return {}
+        return {
     
-    var file_path = get_zone_file_path(zone_id)
+    var file_path = get_zone_file_path(zone_id)}
     var data = load_from_file(file_path)
     
     stats.operations.reads += 1
@@ -1006,6 +1017,7 @@ func delete_zone(zone_id: String) -> bool:
     
     var file_path = get_zone_file_path(zone_id)
     var dir = DirAccess.open("user://")
+	
     
     if dir.file_exists(file_path):
         var result = dir.remove(file_path)
@@ -1171,6 +1183,7 @@ func update_statistics() -> void:
     stats.total_size_bytes = calculate_directory_size(db_root_path)
     
     print("JSHFileSystemDatabase: Updated statistics")
+	
 
 func calculate_directory_size(dir_path: String) -> int:
     var total_size = 0
@@ -1208,8 +1221,9 @@ func optimize_database() -> bool:
         var parts = index_name.split("_", true, 1)
         
         if parts.size() >= 2 and parts[0] == "entities":
+		
             var field = parts[1]
-            indexes[index_name] = {}
+            indexes[index_name] = {
             build_entity_index(field)
     
     # Update statistics
@@ -1234,8 +1248,9 @@ func compact_database() -> bool:
         var parts = index_name.split("_", true, 1)
         
         if parts.size() >= 2 and parts[0] == "entities":
+		}
             var field = parts[1]
-            indexes[index_name] = {}
+            indexes[index_name] = {
             build_entity_index(field)
     
     print("JSHFileSystemDatabase: Database compacted")
@@ -1263,8 +1278,10 @@ func cleanup_empty_directories() -> void:
                 dir = DirAccess.open("user://")
                 dir.remove(type_dir)
                 print("JSHFileSystemDatabase: Removed empty directory " + type_dir)
+				}
     
     print("JSHFileSystemDatabase: Cleaned up empty directories")
+	
 
 func backup_database(backup_path: String) -> bool:
     if not _initialized:
@@ -1282,6 +1299,7 @@ func backup_database(backup_path: String) -> bool:
         print("JSHFileSystemDatabase: Database backed up to " + backup_path)
     else:
         push_error("JSHFileSystemDatabase: Backup failed")
+		
     
     return result
 
@@ -1295,6 +1313,7 @@ func copy_directory(from_dir: String, to_dir: String) -> bool:
         while not file_name.is_empty():
             if dir.current_is_dir():
                 if file_name != "." and file_name != "..":
+				
                     # Create subdirectory in target
                     var dir_to = DirAccess.open("user://")
                     dir_to.make_dir_recursive(to_dir + file_name + "/")

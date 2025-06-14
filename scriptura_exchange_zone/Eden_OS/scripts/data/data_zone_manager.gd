@@ -1,6 +1,6 @@
 extends Node
 
-class_name DataZoneManager
+class_name DataZoneManager_datazonemanager_datazone
 
 # Data Zone Management System for Eden_OS
 # Handles data zone creation, cleaning, organization, and optimization
@@ -86,11 +86,11 @@ func initialize_data_zones():
     auto_clean_timer = auto_clean_interval
     
     # Connect to other systems
-    if get_node_or_null("/root/AkashicRecords"):
-        akashic_records = get_node("/root/AkashicRecords")
+    if get_node_or_null("root/AkashicRecords"):
+        akashic_records = get_node("root/AkashicRecords")
     
-    if get_node_or_null("/root/MassCodeProcessor"):
-        mass_code_processor = get_node("/root/MassCodeProcessor")
+    if get_node_or_null("root/MassCodeProcessor"):
+        mass_code_processor = get_node("root/MassCodeProcessor")
 
 func create_zone(zone_name, zone_type="storage"):
     # Create a new data zone

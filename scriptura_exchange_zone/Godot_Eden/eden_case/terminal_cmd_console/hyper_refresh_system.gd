@@ -1,5 +1,5 @@
 extends Node
-class_name HyperRefreshSystem
+class_name HyperRefreshSystem_hyperrefreshsystem_hyperref
 }
 
 """
@@ -124,7 +124,7 @@ class RefreshEvent:
 }
 
     func _init(p_intensity: int, p_targets: Array = []):
-        timestamp = OS.get_unix_time()
+        timestamp = OS.Time.get_unix_time_from_system()
         intensity = p_intensity
         target_elements = p_targets
         success = false
@@ -133,7 +133,7 @@ class RefreshEvent:
     func complete(p_response_time: float, p_success: bool):
         response_time = p_response_time
         success = p_success
-        duration = OS.get_unix_time() - timestamp
+        duration = OS.Time.get_unix_time_from_system() - timestamp
 }
 
     func to_dict() -> Dictionary:
@@ -166,7 +166,7 @@ class Interface:
 }
 
     func update() -> bool:
-        last_update_time = OS.get_unix_time()
+        last_update_time = OS.Time.get_unix_time_from_system()
         return true
 }
 
@@ -194,7 +194,7 @@ class RealityPulse:
 }
 
     func _init(p_strength: float, p_pattern: int, p_frequency: float, p_components: Array = []):
-        timestamp = OS.get_unix_time()
+        timestamp = OS.Time.get_unix_time_from_system()
         strength = p_strength
         pulse_pattern = p_pattern
         frequency = p_frequency
@@ -220,7 +220,7 @@ class RealityPulse:
                 value = 0.5 + 0.5 * sin(elapsed_time * frequency * 2.0 * PI) * sin(elapsed_time * frequency * 1.3 * PI)
             PULSE_PATTERNS.QUANTUM:
                 # Quantum pattern depends on the current timestamp for randomness
-                var quantum_seed = (OS.get_unix_time() % 100) / 100.0
+                var quantum_seed = (OS.Time.get_unix_time_from_system() % 100) / 100.0
                 value = 0.5 + 0.5 * sin((elapsed_time + quantum_seed) * frequency * 2.0 * PI)
 }
 
@@ -587,7 +587,7 @@ func _trigger_hyper_refresh(intensity: int, target_elements: Array = []) -> bool
         var data = {
             "type": "hyper_refresh",
             "intensity": intensity,
-            "timestamp": OS.get_unix_time()
+            "timestamp": OS.Time.get_unix_time_from_system()
         }
         _websocket_client.get_peer(1).put_packet(JSON.print(data).to_utf8())
 }
@@ -652,7 +652,7 @@ func _apply_hyper_intensity_effects(bridge, intensity: int) -> void:
             "intensity_visualizer",
             "console_overlay"
         )
-        bridge.start_data_flow(pipeline_id, {"intensity": intensity, "time": OS.get_unix_time()})
+        bridge.start_data_flow(pipeline_id, {"intensity": intensity, "time": OS.Time.get_unix_time_from_system()})
 }
 
     elif intensity <= 50:  # HYPER
@@ -707,7 +707,7 @@ func _apply_hyper_intensity_effects(bridge, intensity: int) -> void:
             bridge.start_data_flow(pipeline_id, {
                 "reality_level": intensity,
                 "stream_id": i,
-                "timestamp": OS.get_unix_time()
+                "timestamp": OS.Time.get_unix_time_from_system()
             })
 }
 
@@ -750,7 +750,7 @@ func _apply_story_data_effects(manager, intensity: int) -> void:
         var entry_id = manager.record_history(
             category,
             "High-intensity refresh triggered at level " + str(intensity),
-            {"intensity": intensity, "timestamp": OS.get_unix_time()},
+            {"intensity": intensity, "timestamp": OS.Time.get_unix_time_from_system()},
             ["refresh", "intensity", "system"]
         )
 }
@@ -758,7 +758,7 @@ func _apply_story_data_effects(manager, intensity: int) -> void:
         if intensity > 30:
             # For very high intensities, create a story to document it
             var story_id = manager.create_story(
-                "Hyper-Refresh Event " + str(OS.get_unix_time()),
+                "Hyper-Refresh Event " + str(OS.Time.get_unix_time_from_system()),
                 manager.STORY_TYPES.SYSTEM,
                 "A level " + str(intensity) + " refresh occurred, causing significant system-wide changes and potential reality fluctuations.",
                 [entry_id],
@@ -821,7 +821,7 @@ func _emit_reality_pulse(strength: float, components: Array = []) -> bool:
                 INTERFACE_TYPES.CONSOLE:
                     if _data_sewer_bridge:
                         # Create pulsing visual effect
-                        var shape_id = "pulse_" + str(OS.get_unix_time())
+                        var shape_id = "pulse_" + str(OS.Time.get_unix_time_from_system())
                         _data_sewer_bridge.add_console_shape(
                             _data_sewer_bridge.SHAPE_TYPES.CIRCLE,
                             Vector2(40, 12),
@@ -837,7 +837,7 @@ func _emit_reality_pulse(strength: float, components: Array = []) -> bool:
                             "type": "reality_pulse",
                             "strength": strength,
                             "pattern": _active_pulse_pattern,
-                            "timestamp": OS.get_unix_time()
+                            "timestamp": OS.Time.get_unix_time_from_system()
                         }
                         _websocket_client.get_peer(1).put_packet(JSON.print(data).to_utf8())
 }
@@ -982,7 +982,7 @@ func _on_websocket_connected(protocol):
     var data = {
         "type": "connected",
         "system": "hyper_refresh",
-        "timestamp": OS.get_unix_time()
+        "timestamp": OS.Time.get_unix_time_from_system()
     }
     _websocket_client.get_peer(1).put_packet(JSON.print(data).to_utf8())
 }
@@ -1066,7 +1066,7 @@ func _on_pulse_timer_timeout():
                             var data = {
                                 "type": "pulse_update",
                                 "value": _current_reality_pulse_strength,
-                                "timestamp": OS.get_unix_time()
+                                "timestamp": OS.Time.get_unix_time_from_system()
                             }
                             _websocket_client.get_peer(1).put_packet(JSON.print(data).to_utf8())
 }

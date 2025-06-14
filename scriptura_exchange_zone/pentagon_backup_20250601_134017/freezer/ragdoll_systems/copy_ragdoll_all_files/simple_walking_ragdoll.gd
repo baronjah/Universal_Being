@@ -3,8 +3,7 @@
 # DESCRIPTION: Simple ragdoll with legs that can walk
 # CREATED: 2025-05-23 - Simplified stable version
 # ==================================================
-
-extends Node3D
+extends \2
 
 # Body parts
 var body: RigidBody3D

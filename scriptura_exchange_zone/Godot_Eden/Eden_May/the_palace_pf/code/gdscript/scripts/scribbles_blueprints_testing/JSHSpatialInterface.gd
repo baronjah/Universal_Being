@@ -1,7 +1,7 @@
 extends RefCounted
-class_name JSHSpatialInterface
+class_name JSHSpatialInterface_JSHSpatialInterface_JSHSpati
 
-# Spatial interface defines standard methods that all spatial management systems should implement
+# Node3D interface defines standard methods that all spatial management systems should implement
 
 # Zone operations
 func create_zone(zone_id: String, zone_data: Dictionary) -> bool:
@@ -66,7 +66,7 @@ func move_entity(entity_id: String, new_position: Vector3) -> bool:
     push_error("JSHSpatialInterface: move_entity() method must be implemented by subclass")
     return false
 
-# Spatial queries
+# Node3D queries
 func get_entities_in_radius(position: Vector3, radius: float, filter: Dictionary = {}) -> Array:
     push_error("JSHSpatialInterface: get_entities_in_radius() method must be implemented by subclass")
     return []

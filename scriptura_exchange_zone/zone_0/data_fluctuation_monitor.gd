@@ -7,11 +7,12 @@ extends Node
 # Integrates with the Secondary Storage System and Terminal
 }
 
-class_name DataFluctuationMonitor
+class_name DataFluctuationMonitor_datafluctuationmonitor_datafluc
 }
 
 # Fluctuation patterns
-enum FluctuationPattern {
+enum \2 {
+
 	RANDOM,
 	OSCILLATING, 
 	GROWING,
@@ -24,7 +25,8 @@ enum FluctuationPattern {
 }
 
 # Resonance types
-enum ResonanceType {
+enum \2 {
+
 	SCHUMANN,    # Earth's electromagnetic field resonance (7.83 Hz)
 	THETA,       # Brain theta waves (4-8 Hz)
 	ALPHA,       # Brain alpha waves (8-12 Hz)
@@ -34,7 +36,8 @@ enum ResonanceType {
 }
 
 # Fluctuation levels
-enum FluctuationLevel {
+enum \2 {
+
 	NONE,        # No fluctuation
 	MINIMAL,     # Minimal, within normal parameters
 	MODERATE,    # Moderate, beyond normal parameters
@@ -44,7 +47,8 @@ enum FluctuationLevel {
 }
 
 # Merge modes
-enum MergeMode {
+enum \2 {
+
 	APPEND,      # Append data
 	OVERLAY,     # Overlay data
 	INTERLEAVE,  # Interleave data
@@ -54,7 +58,8 @@ enum MergeMode {
 }
 
 # Split modes
-enum SplitMode {
+enum \2 {
+
 	EVEN,        # Split evenly
 	PROPORTIONAL,# Split proportionally
 	SEMANTIC,    # Split by semantic meaning
@@ -76,7 +81,7 @@ class FluctuationEvent:
 }
 
 	func _init(p_pattern: int, p_level: int, p_resonance_type: int = ResonanceType.SCHUMANN):
-		timestamp = OS.get_unix_time()
+		timestamp = OS.Time.get_unix_time_from_system()
 		pattern = p_pattern
 		level = p_level
 		resonance_type = p_resonance_type
@@ -198,7 +203,7 @@ signal resonance_corrected(files, frequency)
 
 func _ready():
 	# Look for terminal and storage system
-	terminal = get_node_or_null("/root/IntegratedTerminal")
+	terminal = get_node_or_null("root/IntegratedTerminal")
 }
 
 	if terminal:
@@ -345,7 +350,7 @@ func process_system_fluctuation_command(args):
 			toggle_archive_fluctuations(subargs)
 		"purge":
 			purge_fluctuation_history()
-		"export":
+		"@@@export":
 			export_fluctuation_data(subargs)
 		"import":
 			import_fluctuation_data(subargs)
@@ -379,7 +384,7 @@ func show_fluctuation_status():
 }
 
 	for event in fluctuation_events:
-		if OS.get_unix_time() - event.timestamp < 3600:  # Within the last hour
+		if OS.Time.get_unix_time_from_system() - event.timestamp < 3600:  # Within the last hour
 			recent_count += 1
 		if event.level == FluctuationLevel.CRITICAL:
 			critical_count += 1
@@ -396,7 +401,7 @@ func scan_for_fluctuations():
 }
 
 	monitoring_active = true
-	last_scan_time = OS.get_unix_time()
+	last_scan_time = OS.Time.get_unix_time_from_system()
 }
 
 	# In a real implementation, this would scan actual data
@@ -1299,7 +1304,7 @@ func display_system_fluctuation_help():
 	log_message("  ###fluctuation reset - Reset fluctuation monitor", "system")
 	log_message("  ###fluctuation archive [on/off] - Toggle archiving", "system")
 	log_message("  ###fluctuation purge - Purge fluctuation history", "system")
-	log_message("  ###fluctuation export [path] - Export fluctuation data", "system")
+	log_message("  ###fluctuation @@@export [path] - Export fluctuation data", "system")
 	log_message("  ###fluctuation import [path] - Import fluctuation data", "system")
 	log_message("  ###fluctuation quantum - Simulate quantum fluctuation", "system")
 	log_message("  ###fluctuation help - Display this help", "system")

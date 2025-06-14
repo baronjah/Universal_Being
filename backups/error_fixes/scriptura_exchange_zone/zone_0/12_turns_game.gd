@@ -166,9 +166,9 @@ func connect_to_existing_systems():
 	
 	if main_controller:
 		# Connect signals from main controller to our systems
-		main_controller.connect("turn_advanced", self, "_on_main_turn_advanced")
-		main_controller.connect("note_created", self, "_on_main_note_created")
-		main_controller.connect("word_manifested", self, "_on_main_word_manifested")
+		main_controller.connect(_on_main_turn_advanced)
+		main_controller.connect(_on_main_note_created)
+		main_controller.connect(_on_main_word_manifested)
 		
 		if divine_word_processor and main_controller.word_processor:
 			main_controller.word_processor.connect("word_processed", divine_word_processor, "_on_word_processed_external")
@@ -212,7 +212,7 @@ func initialize_ui():
 func start_game_systems():
 	# Start the turn system
 	if turn_system:
-		turn_system.connect("dimension_changed", self, "_on_dimension_changed")
+		turn_system.connect(_on_dimension_changed)
 		turn_system.start_turns()
 	
 	# Start the Salem game if available
@@ -238,10 +238,10 @@ func _input(event):
 
 func toggle_ui():
 	# Toggle between different UI screens
-	var ui_container = get_node("UIContainer")
-	var main_ui = ui_container.get_node("DivineWordUI")
-	var comment_ui = ui_container.get_node("WordCommentUI")
-	var salem_ui = ui_container.get_node("WordSalemUI")
+	var ui_container = get_node("\1") as Node
+	var main_ui = ui_container.get_node("\1") as Node
+	var comment_ui = ui_container.get_node("\1") as Node
+	var salem_ui = ui_container.get_node("\1") as Node
 	
 	if main_ui.visible:
 		main_ui.visible = false
@@ -261,13 +261,13 @@ func toggle_ui():
 
 func toggle_comment_mode():
 	# Toggle dream mode in the comment UI
-	var ui_container = get_node("UIContainer")
-	var comment_ui = ui_container.get_node("WordCommentUI")
+	var ui_container = get_node("\1") as Node
+	var comment_ui = ui_container.get_node("\1") as Node
 	
 	# Make sure Comment UI is visible
 	if !comment_ui.visible:
-		ui_container.get_node("DivineWordUI").visible = false
-		ui_container.get_node("WordSalemUI").visible = false
+		ui_container.get_node("\1") as Node.visible = false
+		ui_container.get_node("\1") as Node.visible = false
 		comment_ui.visible = true
 	
 	# Toggle dream mode
@@ -284,7 +284,7 @@ func _on_dimension_changed(new_dimension, old_dimension):
 		7:  # Dream dimension
 			# Make dream storage more active
 			if word_dream_storage:
-				word_dream_storage.connect("dream_saved", self, "_on_dream_saved")
+				word_dream_storage.connect(_on_dream_saved)
 				print("Dream dimension activated - Dream storage enhanced")
 				
 				# Add comment about dimension

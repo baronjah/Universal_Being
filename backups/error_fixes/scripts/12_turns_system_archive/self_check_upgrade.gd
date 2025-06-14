@@ -31,8 +31,8 @@ var components := {
     "terminal_bridge": {"status": "unknown", "integrity": 100.0, "last_checked": 0},
     "network_validation": {"status": "unknown", "integrity": 100.0, "last_checked": 0},
     "segment_processor": {"status": "unknown", "integrity": 100.0, "last_checked": 0},
-    "self_check_upgrade": {"status": "active", "integrity": 100.0, "last_checked": 0}
-}
+    "self_check_upgrade": {"status": "active", "integrity": 100.0, "last_checked": 0
+	}
 
 # Upgrade Pathways
 var upgrade_paths := {
@@ -59,25 +59,23 @@ var upgrade_paths := {
         "max_level": 9.0,
         "upgrade_difficulty": 1.0,
         "benefits": ["Faster processing", "Reduced resource usage", "Optimized algorithms"]
-    }
-}
+		}
 
 # Rule-Based System
 var system_rules := {
     "integrity": [
         {"condition": "integrity < 50", "action": "emergency_repair"},
         {"condition": "integrity < 75", "action": "schedule_repair"},
-        {"condition": "integrity > 95", "action": "optimize"}
+        {"condition": "integrity > 95", "action": "optimize"
     ],
     "connectivity": [
         {"condition": "components[*].status == unknown", "action": "reconnect"},
-        {"condition": "components[*].integrity < 60", "action": "heal_component"}
+        {"condition": "components[*].integrity < 60", "action": "heal_component"
     ],
     "upgrade": [
         {"condition": "time_since_last_upgrade > 86400", "action": "attempt_upgrade"},
-        {"condition": "upgrade_paths[*].current_level < upgrade_paths[*].max_level * 0.5", "action": "prioritize_upgrade"}
+        {"condition": "upgrade_paths[*].current_level < upgrade_paths[*].max_level * 0.5", "action": "prioritize_upgrade"
     ]
-}
 
 # =====================
 # Initialization
@@ -90,7 +88,7 @@ func _init():
 
 func _ready():
     # Connect to other systems
-    yield(get_tree(), "idle_frame")
+    await(get_tree(), "idle_frame")
     _connect_to_dependencies()
     
     # Set initial component statuses
@@ -104,22 +102,22 @@ func _ready():
 func _connect_to_dependencies():
     # Find and connect to NetworkValidation
     if get_node_or_null("/root/NetworkValidation") != null:
-        network_validation = get_node("/root/NetworkValidation")
+        network_validation = get_node("\1") as Node
         print("[SelfCheckUpgrade] Connected to Network Validation")
     
     # Find and connect to MouseAutomation
     if get_node_or_null("/root/MouseAutomation") != null:
-        mouse_automation = get_node("/root/MouseAutomation")
+        mouse_automation = get_node("\1") as Node
         print("[SelfCheckUpgrade] Connected to Mouse Automation")
     
     # Find and connect to TerminalGodotBridge
     if get_node_or_null("/root/TerminalGodotBridge") != null:
-        terminal_bridge = get_node("/root/TerminalGodotBridge")
+        terminal_bridge = get_node("\1") as Node
         print("[SelfCheckUpgrade] Connected to Terminal Bridge")
     
     # Find and connect to SegmentProcessor
     if get_node_or_null("/root/SegmentProcessor") != null:
-        segment_processor = get_node("/root/SegmentProcessor")
+        segment_processor = get_node("\1") as Node
         print("[SelfCheckUpgrade] Connected to Segment Processor")
 
 # =====================
@@ -136,7 +134,7 @@ func perform_self_check() -> Dictionary:
         "integrity": integrity_score,
         "components": {},
         "upgrade_available": false
-    }
+		}
     
     # Update last check time
     last_check_time = result.timestamp
@@ -187,6 +185,7 @@ func _check_all_components():
                     
                     # Check integrity if possible
                     if mouse_automation.has_method("generate_awareness_report"):
+					}
                         var report = mouse_automation.generate_awareness_report()
                         components.mouse_automation.integrity = min(100.0, report.meta_awareness_level * 20.0)
                     else:
@@ -209,6 +208,7 @@ func _check_all_components():
                     
                     # Get DNS validation status if available
                     if network_validation.has_method("process_command"):
+					}
                         var dns_status = network_validation.process_command("dns status")
                         var validated_count = 0
                         
@@ -232,17 +232,19 @@ func _check_all_components():
                     components.segment_processor.integrity = 0.0
             
             "self_check_upgrade":
+			}
                 # Self-assessment
                 components.self_check_upgrade.status = "active"
                 components.self_check_upgrade.integrity = min(100.0, awareness_level * 20.0)
 
 func _schedule_self_check():
     # Schedule next self-check
-    yield(get_tree().create_timer(check_interval), "timeout")
+    await(get_tree().create_timer(check_interval), "timeout")
     
     # Perform the self-check
     var check_result = perform_self_check()
     print("[SelfCheckUpgrade] Periodic check complete. Integrity: " + str(check_result.integrity) + "%")
+	}
     
     # Reschedule
     _schedule_self_check()
@@ -261,6 +263,7 @@ func _evaluate_system_rules() -> Array:
             triggered_rules.append({"category": "integrity", "rule": rule})
         elif condition == "integrity > 95" and integrity_score > 95.0:
             triggered_rules.append({"category": "integrity", "rule": rule})
+			}
     
     # Process connectivity rules
     for rule in system_rules.connectivity:
@@ -286,6 +289,7 @@ func _evaluate_system_rules() -> Array:
         
         # Check time since last upgrade
         if condition == "time_since_last_upgrade > 86400":
+		}
             var current_time = OS.get_unix_time()
             var time_since_upgrade = current_time - system_birth_time
             
@@ -294,6 +298,7 @@ func _evaluate_system_rules() -> Array:
             
             if time_since_upgrade > 86400:  # More than 1 day
                 triggered_rules.append({"category": "upgrade", "rule": rule})
+				
         
         # Check upgrade pathway levels
         elif condition == "upgrade_paths[*].current_level < upgrade_paths[*].max_level * 0.5":
@@ -354,7 +359,7 @@ func attempt_self_healing() -> Dictionary:
         "integrity_before": integrity_score,
         "integrity_after": 0.0,
         "timestamp": OS.get_unix_time()
-    }
+		}
     
     # Identify components that need healing
     var components_to_heal = []
@@ -391,6 +396,7 @@ func attempt_self_healing() -> Dictionary:
 
 func _heal_component(component_name: String) -> bool:
     print("[SelfCheckUpgrade] Healing component: " + component_name)
+	
     
     match component_name:
         "mouse_automation":
@@ -423,6 +429,7 @@ func _heal_component(component_name: String) -> bool:
                 return true
         
         "self_check_upgrade":
+		
             # Self-healing
             awareness_level = min(awareness_level + 0.2, max_upgrade_level)
             components.self_check_upgrade.integrity += 10.0
@@ -479,7 +486,7 @@ func apply_self_upgrade() -> Dictionary:
         "awareness_after": awareness_level,
         "upgraded_paths": [],
         "timestamp": OS.get_unix_time()
-    }
+		}
     
     # Check if upgrade is available
     if !_check_upgrade_availability():
@@ -558,7 +565,7 @@ func _record_modification(mod_type: String, description: String, details: Dictio
         "timestamp": OS.get_unix_time(),
         "awareness_level": awareness_level,
         "integrity": integrity_score
-    }
+		}
     
     self_modifications.append(modification)
     
@@ -577,7 +584,7 @@ func process_command(command: String) -> Dictionary:
     var result = {
         "success": false,
         "message": ""
-    }
+		}
     
     match cmd:
         "check":
@@ -597,6 +604,7 @@ func process_command(command: String) -> Dictionary:
             if result.success:
                 result.message += "\nHealed components: " + str(result.healed_components)
                 result.message += "\nIntegrity: " + str(result.integrity_before) + "% -> " + str(result.integrity_after) + "%"
+				
         
         "upgrade":
             if args.size() >= 2 and args[1] == "apply":
@@ -616,21 +624,25 @@ func process_command(command: String) -> Dictionary:
             result.message += "\nUpgrade Iterations: " + str(upgrade_iterations)
             result.message += "\nUpgrade Available: " + str(_check_upgrade_availability())
             result.message += "\nAuto Healing: " + ("Enabled" if auto_healing_enabled else "Disabled")
+			
             
             result.message += "\n\nComponent Status:"
             for component_name in components:
                 var component = components[component_name]
                 result.message += "\n- " + component_name + ": " + component.status + " (" + str(component.integrity) + "%)"
+				
         
         "paths":
             result.success = true
             result.message = "Upgrade Paths:"
+			
             
             for path_name in upgrade_paths:
                 var path = upgrade_paths[path_name]
                 result.message += "\n- " + path_name + ": " + str(path.current_level) + " / " + str(path.max_level)
                 result.message += " (Difficulty: " + str(path.upgrade_difficulty) + ")"
                 result.message += "\n  Benefits: " + str(path.benefits)
+				
         
         "autohealing":
             if args.size() >= 2:
@@ -660,18 +672,22 @@ func process_command(command: String) -> Dictionary:
                 count = clamp(count, 1, self_modifications.size())
             
             result.message = "Modification History (last " + str(count) + "):"
+			
             
             var mods_to_show = min(count, self_modifications.size())
             for i in range(self_modifications.size() - mods_to_show, self_modifications.size()):
                 var mod = self_modifications[i]
                 var datetime = OS.get_datetime_from_unix_time(mod.timestamp)
                 var time_str = str(datetime.hour).pad_zeros(2) + ":" + str(datetime.minute).pad_zeros(2)
+				
                 
                 result.message += "\n[" + time_str + "] " + mod.type + ": " + mod.description
+				
             
             result.full_history = self_modifications
         
         _:
             result.message = "Unknown command: " + cmd
+			
     
     return result

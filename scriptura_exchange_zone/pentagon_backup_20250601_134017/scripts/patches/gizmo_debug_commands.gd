@@ -10,15 +10,14 @@
 # PURPOSE: Help diagnose and fix gizmo clicking issues
 # CREATED: 2025-05-30
 # ==================================================
-
-extends UniversalBeingBase
+extends \2
 func _ready() -> void:
 	print("[GizmoDebug] Adding gizmo debug commands...")
 	_register_debug_commands()
 
 func _register_debug_commands() -> void:
 	"""Register debug commands with console"""
-	var console = get_node_or_null("/root/ConsoleManager")
+	var console = get_node_or_null("root/ConsoleManager")
 	if not console:
 		print("[GizmoDebug] Console not found!")
 		return
@@ -139,7 +138,7 @@ func cmd_show_gizmo_layers(_args: Array) -> String:
 	output += "\n"
 	
 	# Check mouse interaction system
-	var mouse_system = get_node_or_null("/root/MainGame/MouseInteractionSystem")
+	var mouse_system = get_node_or_null("root/MainGame/MouseInteractionSystem")
 	if mouse_system:
 		output += "✅ MouseInteractionSystem found\n"
 		# Check what layers it's detecting
@@ -168,7 +167,7 @@ func cmd_test_gizmo_click(_args: Array) -> String:
 	var from = camera.project_ray_origin(center)
 	var to = from + camera.project_ray_normal(center) * 100.0
 	
-	var space_state = camera.get_world_3d().direct_space_state
+	var space_state = camera.get_viewport().get_world_3d().direct_space_state
 	
 	# Test layer 2 (gizmo layer)
 	var query = PhysicsRayQueryParameters3D.create(from, to)

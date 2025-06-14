@@ -184,7 +184,7 @@ func _ready():
     _auto_update_timer.autostart = false
     _auto_update_timer.one_shot = false
     _auto_update_timer.wait_time = 1.0  # Check every second
-    _auto_update_timer.connect("timeout", self, "_process_updates")
+    _auto_update_timer.connect(_process_updates)
     add_child(_auto_update_timer)
     
     load_data()
@@ -879,7 +879,7 @@ func _repair_memories(task: UpdateTask):
         // This is just a placeholder - real implementation would have actual corruption detection
         for memory in _memory_system._memories.values():
             // Simple check for empty content or missing tags
-            if memory.content.empty() or memory.tags.empty():
+            if memory.content.is_empty() or memory.tags.is_empty():
                 memories_to_repair.append(memory)
     
     // Process each memory for repair
@@ -887,12 +887,12 @@ func _repair_memories(task: UpdateTask):
         var was_repaired = false
         
         // Check for empty content
-        if memory.content.empty():
+        if memory.content.is_empty():
             memory.content = "Repaired content at " + str(OS.get_unix_time())
             was_repaired = true
         
         // Check for missing tags
-        if memory.tags.empty():
+        if memory.tags.is_empty():
             _memory_system.add_tag_to_memory(memory.id, _memory_system.MEMORY_TAGS.CORE)
             was_repaired = true
         
@@ -1115,7 +1115,7 @@ func get_status_report() -> Dictionary:
     
     # Sort next updates by time
     if report.next_updates.size() > 1:
-        report.next_updates.sort_custom(self, "_sort_by_next_run")
+        report.next_updates.sort_custom(self."_sort_by_next_run")
     
     return report
 

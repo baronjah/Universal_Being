@@ -1,5 +1,5 @@
-class_name FileSystemStorage
-extends RefCounted
+class_name FileSystemStorage_Filesystemstorage_Filesyst
+extends \2
 
 var base_path = "user://"
 

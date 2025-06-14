@@ -229,7 +229,7 @@ func _setup_pulse_timer():
     _pulse_timer.wait_time = 1.0 / _config.pulse_frequency
     _pulse_timer.one_shot = false
     _pulse_timer.autostart = true
-    _pulse_timer.connect("timeout", self, "_on_pulse_timer_timeout")
+    _pulse_timer.connect(_on_pulse_timer_timeout)
     add_child(_pulse_timer)
 
 # Initialize default interfaces
@@ -248,10 +248,10 @@ func _initialize_interfaces():
 func _initialize_websocket():
     if _connected_interfaces.has("interface_" + str(INTERFACE_TYPES.BROWSER)):
         _websocket_client = WebSocketClient.new()
-        _websocket_client.connect("connection_established", self, "_on_websocket_connected")
-        _websocket_client.connect("connection_error", self, "_on_websocket_error")
-        _websocket_client.connect("connection_closed", self, "_on_websocket_closed")
-        _websocket_client.connect("data_received", self, "_on_websocket_data_received")
+        _websocket_client.connect(_on_websocket_connected)
+        _websocket_client.connect(_on_websocket_error)
+        _websocket_client.connect(_on_websocket_closed)
+        _websocket_client.connect(_on_websocket_data_received)
         
         var err = _websocket_client.connect_to_url(_config.browser_websocket_url)
         if err != OK:
@@ -272,11 +272,11 @@ func _process(delta):
     
     # Calculate current reality pulse value
     if _config.enable_reality_pulses:
-        var elapsed_time = OS.get_ticks_msec() / 1000.0
+        var elapsed_time = OS.Time.get_ticks_msec() / 1000.0
         _current_reality_pulse_strength = _calculate_reality_pulse_value(elapsed_time)
     
     # Apply automatic refresh if enabled and due
-    if _config.auto_intensity_scaling and OS.get_ticks_msec() - _last_refresh_time > (1000.0 / _config.max_refresh_rate):
+    if _config.auto_intensity_scaling and OS.Time.get_ticks_msec() - _last_refresh_time > (1000.0 / _config.max_refresh_rate):
         _apply_auto_refresh()
 
 # Public API Methods
@@ -461,13 +461,13 @@ func _trigger_hyper_refresh(intensity: int, target_elements: Array = []) -> bool
         return false
     
     var refresh_event = RefreshEvent.new(intensity, target_elements)
-    var start_time = OS.get_ticks_msec()
+    var start_time = OS.Time.get_ticks_msec()
     
     # Prepare affected components
     var affected_components = []
     
     # Add default components if not specified
-    if target_elements.empty():
+    if target_elements.is_empty():
         for interface_id in _connected_interfaces:
             var interface = _connected_interfaces[interface_id]
             if interface.status == "connected" or interface.status == "active":
@@ -507,7 +507,7 @@ func _trigger_hyper_refresh(intensity: int, target_elements: Array = []) -> bool
         _websocket_client.get_peer(1).put_packet(JSON.print(data).to_utf8())
     
     # Complete the event
-    var response_time = (OS.get_ticks_msec() - start_time) / 1000.0
+    var response_time = (OS.Time.get_ticks_msec() - start_time) / 1000.0
     refresh_event.complete(response_time, true)
     
     # Track history
@@ -516,7 +516,7 @@ func _trigger_hyper_refresh(intensity: int, target_elements: Array = []) -> bool
         _refresh_history.pop_front()
     
     # Update last refresh time
-    _last_refresh_time = OS.get_ticks_msec()
+    _last_refresh_time = OS.Time.get_ticks_msec()
     
     # Emit signal
     emit_signal("hyper_refresh_triggered", intensity, affected_components)
@@ -589,9 +589,9 @@ func _apply_hyper_intensity_effects(bridge, intensity: int) -> void:
                 Vector2(i * 20, i * 5),
                 Vector2(200 - i * 20, 50 - i * 5),
                 Color(
-                    sin(i * 0.1 + OS.get_ticks_msec() * 0.001) * 0.5 + 0.5,
-                    cos(i * 0.1 + OS.get_ticks_msec() * 0.001) * 0.5 + 0.5,
-                    sin(i * 0.2 + OS.get_ticks_msec() * 0.002) * 0.5 + 0.5,
+                    sin(i * 0.1 + OS.Time.get_ticks_msec() * 0.001) * 0.5 + 0.5,
+                    cos(i * 0.1 + OS.Time.get_ticks_msec() * 0.001) * 0.5 + 0.5,
+                    sin(i * 0.2 + OS.Time.get_ticks_msec() * 0.002) * 0.5 + 0.5,
                     0.7
                 )
             )
@@ -683,7 +683,7 @@ func _emit_reality_pulse(strength: float, components: Array = []) -> bool:
         return false
     
     var affected_components = components
-    if affected_components.empty():
+    if affected_components.is_empty():
         # If no components specified, affect all interfaces
         for interface_id in _connected_interfaces:
             affected_components.append(interface_id)
@@ -882,7 +882,7 @@ func _on_websocket_data_received():
 func _on_pulse_timer_timeout():
     if _config.enable_reality_pulses:
         # Calculate current pulse value
-        var elapsed_time = OS.get_ticks_msec() / 1000.0
+        var elapsed_time = OS.Time.get_ticks_msec() / 1000.0
         _current_reality_pulse_strength = _calculate_reality_pulse_value(elapsed_time)
         
         # Apply pulse to connected interfaces

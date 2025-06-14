@@ -1,7 +1,7 @@
 # world_database.gd
-extends Node
+extends \2
 
-class_name WorldDatabase
+class_name WorldDatabase_worlddatabase_worlddat
 
 # File path for saving the world
 const SAVE_FILE_PATH = "user://luminus_world.json"

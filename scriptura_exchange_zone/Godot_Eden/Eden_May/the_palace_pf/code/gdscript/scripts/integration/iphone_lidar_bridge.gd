@@ -1,5 +1,5 @@
 extends Node
-class_name iPhoneLiDARBridge
+class_name iPhoneLiDARBridge_iphonelidarbridge_iphoneli
 
 # Singleton instance
 static var _instance = null
@@ -38,7 +38,8 @@ var use_compression: bool = true
 var scan_timeout: float = 30.0  # Seconds
 
 # Scan types
-enum ScanType {
+enum \2 {
+
     ROOM_SCAN,      # Full room scan
     OBJECT_SCAN,    # Single object detailed scan
     QUICK_SCAN,     # Fast low-resolution scan
@@ -221,7 +222,7 @@ func _handle_scan_data(client: StreamPeerTCP, message: Dictionary):
             
             # Calculate percentage and print progress
             var percentage = (float(pending_scans[scan_id].chunks.size()) / total_chunks) * 100
-            print("Scan ", scan_id, " progress: ", percentage, "% (", pending_scans[scan_id].chunks.size(), "/", total_chunks, " chunks)")
+            print("Scan ", scan_id, " progress: ", percentage, "% (", pending_scans[scan_id].chunks.size(), "", total_chunks, " chunks)")
             
             # Check if scan is complete
             if pending_scans[scan_id].chunks.size() == total_chunks:

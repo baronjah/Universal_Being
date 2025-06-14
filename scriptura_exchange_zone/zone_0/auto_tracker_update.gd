@@ -1,13 +1,13 @@
 extends Node
 
-class_name AutoTrackerUpdate
+class_name AutoTrackerUpdate_autotrackerupdate_autotrac
 
 # ----- AUTO UPDATE SETTINGS -----
 @export_category("Auto Update Settings")
-@export var update_interval: float = 5.0  # Check for updates every 5 seconds
-@export var auto_create_missing: bool = true
-@export var auto_restart_on_error: bool = true
-@export var log_activity: bool = true
+@@export var update_interval: float = 5.0  # Check for updates every 5 seconds
+@@export var auto_create_missing: bool = true
+@@export var auto_restart_on_error: bool = true
+@@export var log_activity: bool = true
 
 # ----- COMPONENT REFERENCES -----
 var time_tracker: Node = null

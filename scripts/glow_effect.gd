@@ -151,8 +151,7 @@ func get_component_info() -> Dictionary:
 			"intensity": glow_intensity,
 			"pulse_speed": pulse_speed,
 			"pulse_enabled": pulse_enabled
-		}
-	}
+}
 
 func remove_from_being() -> void:
 	"""Clean up when component is removed"""
@@ -179,7 +178,7 @@ func ai_get_state() -> Dictionary:
 		"pulse_speed": pulse_speed,
 		"pulse_enabled": pulse_enabled,
 		"time_active": time_passed
-	}
+}
 
 func ai_invoke_method(method_name: String, args: Array = []) -> Variant:
 	"""Allow AI to invoke component methods"""
@@ -203,3 +202,4 @@ func ai_invoke_method(method_name: String, args: Array = []) -> Variant:
 			return "Pulse " + ("enabled" if pulse_enabled else "disabled")
 	
 	return "Unknown method: " + method_name
+}

@@ -1,5 +1,6 @@
 @tool
-class_name VisualShaderNodeScalarSmoothMin extends VisualShaderNodeCustom
+class_name VisualShaderNodeScalarSmoothMin_SmoothMin_SmoothMi
+extends \2
 
 func _get_name() -> String:
 	return "SmoothMin"

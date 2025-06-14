@@ -168,7 +168,7 @@ func _ready():
     session_timer = Timer.new()
     session_timer.one_shot = false
     session_timer.wait_time = 1.0  # 1 second interval for updates
-    session_timer.connect("timeout", self, "_on_session_timer_timeout")
+    session_timer.connect(_on_session_timer_timeout)
     add_child(session_timer)
     
     # Load previous sessions data
@@ -308,7 +308,7 @@ func iterate_game(suggestions=[]):
         print("Cannot iterate game: No active session")
         return false
     
-    if current_game_data.empty():
+    if current_game_data.is_empty():
         print("No current game to iterate on")
         return false
     
@@ -361,7 +361,7 @@ func iterate_game(suggestions=[]):
     return true
 
 func test_game_with_ai(ai_id="testing_ai", parameters={}):
-    if current_game_data.empty():
+    if current_game_data.is_empty():
         print("No current game to test")
         return null
     
@@ -598,7 +598,7 @@ func load_session_data():
 
 func export_game_as_json(game_data=null):
     if game_data == null:
-        if current_game_data.empty():
+        if current_game_data.is_empty():
             print("No game to export")
             return ""
         game_data = current_game_data

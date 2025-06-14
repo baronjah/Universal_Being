@@ -6,18 +6,19 @@
 extends RefCounted
 class_name UniversalFallbackSystem
 
-static var class_registry = {}
+static var class_registry = {
 
 # Register multiple implementations of the same class name
 static func register_class_implementation(class_name: String, script_path: String, priority: int = 0):
 	if not class_registry.has(class_name):
 		class_registry[class_name] = []
+}
 	
 	var implementation = {
 		"script_path": script_path,
 		"script": load(script_path),
 		"priority": priority
-	}
+}
 	
 	class_registry[class_name].append(implementation)
 	# Sort by priority (higher priority first)
@@ -48,7 +49,7 @@ class FallbackProxy:
 	
 	var primary_instance
 	var implementations: Array
-	var method_cache = {}
+	var method_cache = {
 	
 	func _init(primary: Object, impls: Array):
 		primary_instance = primary

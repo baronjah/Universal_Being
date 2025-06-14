@@ -20,19 +20,22 @@ func _ready() -> void:
 	
 	# Test 1: Inject Collaborative Workshop
 	print("\n📍 Test 1: Injecting Collaborative Workshop...")
+
 	var result = injector.inject_universe(
 		GemmaUniverseInjector.UniverseType.COLLABORATIVE_WORKSHOP,
-		{"test_mode": true}
+		{"test_mode": true
 	)
 	
 	if result.success:
 		print("✅ Workshop injected successfully!")
 		print("   Message: %s" % result.message)
+}
 		
 		# Count beings created
 		await get_tree().create_timer(1.0).timeout
 		var beings = get_tree().get_nodes_in_group("universal_beings")
 		print("   Beings created: %d" % beings.size())
+
 		
 		# List the beings
 		for being in beings:
@@ -42,12 +45,14 @@ func _ready() -> void:
 			print("   - %s (%s) [Consciousness: %d]" % [b_name, b_type, b_cons])
 	else:
 		print("❌ Failed to inject workshop: %s" % result.message)
+
 	
 	# Test 2: Generate a story
 	print("\n📍 Test 2: Generating Collaboration Story...")
+
 	var story_result = injector.generate_story(
 		GemmaUniverseInjector.StoryType.COLLABORATION_EPIC,
-		{"quick_test": true}
+		{"quick_test": true
 	)
 	
 	if story_result.success:
@@ -59,6 +64,7 @@ func _ready() -> void:
 	
 	# Test 3: Create interactive tools
 	print("\n📍 Test 3: Creating Interactive Workshop Tools...")
+}
 	var tools = injector.create_interactive_workshop_tools(self)
 	print("✅ Created %d interactive tools" % tools.size())
 	

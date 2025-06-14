@@ -1,5 +1,5 @@
 extends Node
-class_name TerminalSplitController
+class_name TerminalSplitController_terminalsplitcontroller_terminal
 }
 
 """
@@ -31,7 +31,8 @@ var wish_knowledge_system: WishKnowledgeSystem
 }
 
 # Split configurations
-enum SplitMode {
+enum \2 {
+
     SINGLE,    # Only one terminal visible
     DUAL,      # Two terminals side by side
     QUAD,      # Four terminals in grid layout
@@ -43,7 +44,8 @@ enum SplitMode {
 }
 
 # Core assignment types
-enum CoreAssignment {
+enum \2 {
+
     WORD_MEMORY,
     WISH_KNOWLEDGE,
     DUAL_MEMORY,
@@ -347,7 +349,7 @@ func update_terminal_displays(result: Dictionary) -> void:
         # Store in data bindings
         core_data_bindings[core_id] = {
             "text": display_text,
-            "timestamp": OS.get_unix_time(),
+            "timestamp": OS.Time.get_unix_time_from_system(),
             "raw_data": result
         }
 }
@@ -359,7 +361,7 @@ func update_terminal_displays(result: Dictionary) -> void:
             dual_core_terminal.cores[core_id].history.append({
                 "type": "system",
                 "text": display_text,
-                "timestamp": OS.get_unix_time()
+                "timestamp": OS.Time.get_unix_time_from_system()
             })
 }
 
@@ -472,7 +474,7 @@ func synchronize_terminals() -> void:
 
     # Create sync data
     var sync_data = {
-        "sync_time": OS.get_unix_time(),
+        "sync_time": OS.Time.get_unix_time_from_system(),
         "original_text": last_input_text,
         "transformed_text": last_transformation_result.transformed_text if last_transformation_result else last_input_text,
         "cores_synced": active_terminal_cores
@@ -485,7 +487,7 @@ func synchronize_terminals() -> void:
             dual_core_terminal.cores[core_id].history.append({
                 "type": "sync",
                 "text": "SYNC: All terminals synchronized at " + str(OS.get_datetime()),
-                "timestamp": OS.get_unix_time()
+                "timestamp": OS.Time.get_unix_time_from_system()
             })
 }
 

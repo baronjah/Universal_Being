@@ -4,8 +4,7 @@
 # PURPOSE: Ensure advanced editing features are available
 # CREATED: 2025-05-28 - Advanced inspector loader
 # ==================================================
-
-extends UniversalBeingBase
+extends \2
 var integration_patch: Node
 
 func _ready() -> void:

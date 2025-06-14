@@ -4,9 +4,8 @@
 # PURPOSE: Handle Pentagon scripts that need other nodes to exist first
 # CREATED: 2025-06-01 - Solving Pentagon initialization dependencies
 # ==================================================
-
-extends UniversalBeingBase
-class_name PentagonInitializationQueue
+extends \2
+class_name PentagonInitializationQueue_pentagoninitializationqueue_pentagon
 
 signal all_systems_green()
 signal system_initialization_complete(system_name: String)
@@ -313,7 +312,7 @@ func get_failed_systems() -> Array[Dictionary]:
 
 func register_console_commands() -> void:
 	"""Register console commands for debugging"""
-	var console = get_node_or_null("/root/ConsoleManager")
+	var console = get_node_or_null("root/ConsoleManager")
 	if console and "commands" in console:
 		console.commands["pentagon_queue_status"] = _cmd_queue_status
 		console.commands["pentagon_retry_failed"] = _cmd_retry_failed

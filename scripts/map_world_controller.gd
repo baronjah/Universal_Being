@@ -104,6 +104,7 @@ func update_all_ui_labels() -> void:
 	if player_pos_label and player:
 		var pos = player.global_position
 		player_pos_label.text = "Player: (%.1f, %.1f, %.1f)" % [pos.x, pos.y, pos.z]
+
 	
 	# Current chunk info
 	if chunk_info_label and player and chunk_grid_manager:
@@ -185,6 +186,7 @@ func _input(event: InputEvent) -> void:
 				if debug_ui:
 					debug_ui.visible = !debug_ui.visible
 					print("🎛️ Debug UI: %s" % ("ON" if debug_ui.visible else "OFF"))
+	
 			
 			KEY_F2:
 				# Print grid status to console
@@ -197,6 +199,7 @@ func _input(event: InputEvent) -> void:
 					var player_chunk_coord = chunk_grid_manager.world_pos_to_chunk_coord(player.global_position)
 					var new_chunk = chunk_grid_manager.force_generate_chunk(player_chunk_coord)
 					print("⚡ Force generated chunk: %s" % new_chunk.being_name)
+	
 			
 			KEY_F4:
 				# Clear all chunks (reset)

@@ -22,8 +22,8 @@
 # SOFTWARE.
 
 @tool
-extends Resource
-class_name ZippedImageStack
+extends \2
+class_name ZippedImageStack_zippedimagestack_zippedim
 
 @export_file("*.zip") var zip_file:String:
 	get:

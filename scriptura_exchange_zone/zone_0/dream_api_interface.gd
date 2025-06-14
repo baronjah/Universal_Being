@@ -6,7 +6,7 @@ extends Node
 # Reads and parses main game data, dreams, and memory structures
 }
 
-class_name DreamAPIInterface
+class_name DreamAPIInterface_dreamapiinterface_dreamapi
 }
 
 # ----- API CONFIGURATION -----
@@ -40,7 +40,8 @@ var turn_system = null
 }
 
 # ----- DREAM STATE -----
-enum DreamState {
+enum \2 {
+
     DORMANT,
     ACTIVE,
     LUCID,
@@ -93,7 +94,7 @@ func _ready():
 
 func _connect_to_systems():
     # Connect to dual core terminal
-    dual_core_terminal = get_node_or_null("/root/DualCoreTerminal")
+    dual_core_terminal = get_node_or_null("root/DualCoreTerminal")
     if dual_core_terminal:
         dual_core_terminal.connect(_on_miracle_triggered)
         dual_core_terminal.connect(_on_time_state_changed)
@@ -101,7 +102,7 @@ func _connect_to_systems():
 }
 
     # Connect to divine word game
-    divine_word_game = get_node_or_null("/root/DivineWordGame")
+    divine_word_game = get_node_or_null("root/DivineWordGame")
     if divine_word_game:
         # Check if this is a connection to the actual game
         if divine_word_game.has_method("get_game_stats"):
@@ -110,17 +111,17 @@ func _connect_to_systems():
 }
 
     # Connect to word comment system
-    word_comment_system = get_node_or_null("/root/WordCommentSystem")
+    word_comment_system = get_node_or_null("root/WordCommentSystem")
     if word_comment_system:
         word_comment_system.connect(_on_dream_recorded)
 }
 
     # Connect to word dream storage
-    word_dream_storage = get_node_or_null("/root/WordDreamStorage")
+    word_dream_storage = get_node_or_null("root/WordDreamStorage")
 }
 
     # Connect to turn system
-    turn_system = get_node_or_null("/root/TurnSystem")
+    turn_system = get_node_or_null("root/TurnSystem")
     if turn_system:
         turn_system.connect(_on_dimension_changed)
 }
@@ -232,7 +233,7 @@ func authenticate_api(api_name):
 }
 
     # Send request
-    var err = connection.client.request("POST", "/auth", headers, json_data)
+    var err = connection.client.request("POST", "auth", headers, json_data)
 }
 
     if err != OK:
@@ -240,13 +241,13 @@ func authenticate_api(api_name):
         return false
 }
 
-    connection.last_request = OS.get_unix_time()
+    connection.last_request = OS.Time.get_unix_time_from_system()
 }
 
     # Add callback for response
     response_callbacks[api_name] = {
         "type": "auth",
-        "timestamp": OS.get_unix_time()
+        "timestamp": OS.Time.get_unix_time_from_system()
     }
 }
 
@@ -277,7 +278,7 @@ func send_dream(dream_data, api_name):
 }
 
     # Send request
-    var err = connection.client.request("POST", "/dreams", headers, json_data)
+    var err = connection.client.request("POST", "dreams", headers, json_data)
 }
 
     if err != OK:
@@ -285,22 +286,22 @@ func send_dream(dream_data, api_name):
         return false
 }
 
-    connection.last_request = OS.get_unix_time()
+    connection.last_request = OS.Time.get_unix_time_from_system()
 }
 
     # Add to request queue
     request_queue.append({
         "api_name": api_name,
-        "endpoint": "/dreams",
+        "endpoint": "dreams",
         "method": "POST",
         "data": dream_data,
-        "timestamp": OS.get_unix_time(),
+        "timestamp": OS.Time.get_unix_time_from_system(),
         "retry_count": 0
     })
 }
 
     # Generate dream ID
-    var dream_id = "dream_" + str(OS.get_unix_time()) + "_" + str(randi() % 10000)
+    var dream_id = "dream_" + str(OS.Time.get_unix_time_from_system()) + "_" + str(randi() % 10000)
 }
 
     emit_signal("dream_sent", dream_id)
@@ -327,7 +328,7 @@ func fetch_dreams(api_name, count=10):
 }
 
     # Send request
-    var err = connection.client.request("GET", "/dreams?count=" + str(count), headers, "")
+    var err = connection.client.request("GET", "dreams?count=" + str(count), headers, "")
 }
 
     if err != OK:
@@ -335,13 +336,13 @@ func fetch_dreams(api_name, count=10):
         return false
 }
 
-    connection.last_request = OS.get_unix_time()
+    connection.last_request = OS.Time.get_unix_time_from_system()
 }
 
     # Add callback for response
     response_callbacks[api_name] = {
         "type": "fetch_dreams",
-        "timestamp": OS.get_unix_time()
+        "timestamp": OS.Time.get_unix_time_from_system()
     }
 }
 
@@ -350,7 +351,7 @@ func fetch_dreams(api_name, count=10):
 
 func process_dream(dream_text, source="api", state=DreamState.ACTIVE):
     # Process a dream text and add it to storage
-    var dream_id = "dream_" + str(OS.get_unix_time()) + "_" + str(randi() % 10000)
+    var dream_id = "dream_" + str(OS.Time.get_unix_time_from_system()) + "_" + str(randi() % 10000)
 }
 
     var dream_data = {
@@ -358,7 +359,7 @@ func process_dream(dream_text, source="api", state=DreamState.ACTIVE):
         "text": dream_text,
         "source": source,
         "state": state,
-        "timestamp": OS.get_unix_time(),
+        "timestamp": OS.Time.get_unix_time_from_system(),
         "processed": false
     }
 }
@@ -690,7 +691,7 @@ func _on_dream_sync_timer():
         var connection = active_connections[api_name]
 }
 
-        if OS.get_unix_time() - connection.last_request > 60:
+        if OS.Time.get_unix_time_from_system() - connection.last_request > 60:
             # Refresh connection by fetching dreams
             fetch_dreams(api_name, 1)
 }
@@ -965,11 +966,11 @@ func process_chat_response(response_text):
             var data = {
                 "text": memory_text,
                 "source": "chat_api",
-                "timestamp": OS.get_unix_time()
+                "timestamp": OS.Time.get_unix_time_from_system()
             }
 }
 
-            // Determine which tier to store in
+# // Determine which tier to store in
             var tier = 1
             if memory_text.to_lower().find("important") >= 0 or memory_text.to_lower().find("crucial") >= 0:
                 tier = 2
@@ -978,7 +979,7 @@ func process_chat_response(response_text):
 }
 
             store_in_memory_tier(data, tier)
-            return "memory_" + str(OS.get_unix_time())
+            return "memory_" + str(OS.Time.get_unix_time_from_system())
 }
 
     return null

@@ -54,8 +54,7 @@ const TIER_COLORS = {
         "glow": 1.0,                                # Glow intensity
         "symbols": "####",                          # Dimension symbol
         "threads": 32                               # Thread count
-    }
-}
+		}
 
 # Thread colors - used for thread visualization in each tier
 const THREAD_COLORS = {
@@ -87,7 +86,6 @@ const THREAD_COLORS = {
         Color(0.7, 0.6, 0.2, 0.7),                 # Yellow thread
         Color(0.9, 0.7, 0.1, 0.7)                  # Orange thread
     ]
-}
 
 # Special effect parameters for each tier
 const TIER_EFFECTS = {
@@ -122,8 +120,7 @@ const TIER_EFFECTS = {
         "dimension_access": 12,                    # Full dimension access
         "ghostly_transparency": 0.95,              # Most visible
         "custom_effects": true                     # Enable custom effects
-    }
-}
+		}
 
 # Function to get all colors for a tier
 static func get_tier_colors(tier):
@@ -153,7 +150,7 @@ static func get_primary_color_with_glow(tier):
         "color": colors["primary"],
         "glow_intensity": colors["glow"],
         "pulse_speed": effects["pulse_speed"]
-    }
+		}
     
     return color_with_glow
 

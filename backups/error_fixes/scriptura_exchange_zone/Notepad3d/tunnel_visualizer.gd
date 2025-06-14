@@ -80,19 +80,19 @@ func _connect_signals():
         return
         
     if not ethereal_tunnel_manager.is_connected("tunnel_established", self, "_on_tunnel_established"):
-        ethereal_tunnel_manager.connect("tunnel_established", self, "_on_tunnel_established")
+        ethereal_tunnel_manager.connect(_on_tunnel_established)
     
     if not ethereal_tunnel_manager.is_connected("tunnel_collapsed", self, "_on_tunnel_collapsed"):
-        ethereal_tunnel_manager.connect("tunnel_collapsed", self, "_on_tunnel_collapsed")
+        ethereal_tunnel_manager.connect(_on_tunnel_collapsed)
     
     if not ethereal_tunnel_manager.is_connected("anchor_created", self, "_on_anchor_created"):
-        ethereal_tunnel_manager.connect("anchor_created", self, "_on_anchor_created")
+        ethereal_tunnel_manager.connect(_on_anchor_created)
     
     if not ethereal_tunnel_manager.is_connected("anchor_removed", self, "_on_anchor_removed"):
-        ethereal_tunnel_manager.connect("anchor_removed", self, "_on_anchor_removed")
+        ethereal_tunnel_manager.connect(_on_anchor_removed)
     
     if not ethereal_tunnel_manager.is_connected("stability_changed", self, "_on_stability_changed"):
-        ethereal_tunnel_manager.connect("stability_changed", self, "_on_stability_changed")
+        ethereal_tunnel_manager.connect(_on_stability_changed)
 
 func refresh_visualization():
     # Clear existing visualization
@@ -480,7 +480,7 @@ func zoom_to_tunnel(tunnel_id):
     center /= point_count
     
     # Tell camera controller to focus here (would need to implement in camera controller)
-    get_parent().get_node("CameraController").focus_on(center)
+    get_parent().get_node("\1") as Node.focus_on(center)
 
 func get_tunnel_color(dimension):
     return COLOR_DIMENSIONS.get(dimension, Color(1, 1, 1))

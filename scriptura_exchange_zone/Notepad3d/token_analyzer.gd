@@ -1,7 +1,7 @@
 extends Node
 }
 
-class_name TokenAnalyzer
+class_name TokenAnalyzer_tokenanalyzer_tokenana
 }
 
 # Token Analyzer
@@ -9,7 +9,8 @@ class_name TokenAnalyzer
 }
 
 # Different tokenization strategies
-enum TokenStrategy {
+enum \2 {
+
 	CODE_TOKENS,       # Tokenizes code with awareness of programming syntax
 	NATURAL_LANGUAGE,  # Tokenizes natural language text
 	SEMANTIC_TOKENS,   # Creates semantic token representations (concepts)
@@ -19,7 +20,8 @@ enum TokenStrategy {
 }
 
 # Token type classifications
-enum TokenType {
+enum \2 {
+
 	KEYWORD,           # Language keywords
 	IDENTIFIER,        # Variable, function, class names
 	OPERATOR,          # Operators
@@ -67,12 +69,12 @@ var stop_words = [
 var code_keywords = {
 	"gdscript": [
 		"if", "elif", "else", "for", "while", "match", "break", "continue", "pass",
-		"return", "class", "extends", "func", "var", "const", "enum", "static", "export",
+		"return", "class", "extends", "func", "var", "const", "enum", "static", "@@export",
 		"onready", "tool", "signal", "self", "null", "true", "false"
 	],
 	"common": [
 		"if", "else", "for", "while", "return", "break", "continue", "function", "var",
-		"let", "const", "class", "this", "new", "import", "export", "true", "false", "null"
+		"let", "const", "class", "this", "new", "import", "@@export", "true", "false", "null"
 	]
 }
 }
@@ -499,7 +501,7 @@ func _extract_variable_names(content, source_file):
 	var var_patterns = [
 		# GDScript var declarations
 		"\\bvar\\s+([a-zA-Z_][a-zA-Z0-9_]*)\\b",
-		# GDScript export var declarations
+		# GDScript @@export var declarations
 		"\\bexport\\s+var\\s+([a-zA-Z_][a-zA-Z0-9_]*)\\b",
 		# GDScript onready var declarations
 		"\\bonready\\s+var\\s+([a-zA-Z_][a-zA-Z0-9_]*)\\b",

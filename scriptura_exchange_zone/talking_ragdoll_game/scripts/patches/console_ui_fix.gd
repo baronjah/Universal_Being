@@ -4,7 +4,6 @@
 # PURPOSE: Ensure console scales properly with viewport
 # CREATED: 2025-05-28 - Console UI scaling fix
 # ==================================================
-
 extends UniversalBeingBase
 var console_manager: Node
 var console_container: Control
@@ -19,7 +18,7 @@ func pentagon_ready() -> void:
 	_apply_console_fixes()
 
 func _apply_console_fixes() -> void:
-	console_manager = get_node_or_null("/root/ConsoleManager")
+	console_manager = get_node_or_null("root/ConsoleManager")
 	if not console_manager:
 		print("[ConsoleUIFix] Console manager not found")
 		return
@@ -37,7 +36,7 @@ func _apply_console_fixes() -> void:
 	_fix_console_sizing()
 	
 	# Connect to viewport changes
-	var viewport_manager = get_node_or_null("/root/DynamicViewportManager")
+	var viewport_manager = get_node_or_null("root/DynamicViewportManager")
 	if viewport_manager:
 		viewport_manager.viewport_changed.connect(_on_viewport_changed)
 	

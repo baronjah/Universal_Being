@@ -22,8 +22,8 @@
 # SOFTWARE.
 
 @tool
-extends RefCounted
-class_name GLSLShaderTool
+extends \2
+class_name GLSLShaderTool_glslshadertool_glslshad
 
 var rd:RenderingDevice
 

@@ -37,11 +37,13 @@ signal zone_updated(zone_id)
 func _ready() -> void:
 	print("AkashicRecordsManager: Ready")
 
+
 func initialize(records_system: Node = null, database_system: Node = null) -> void:
 	jsh_records_system = records_system
 	jsh_database_system = database_system
 
 	print("AkashicRecordsManagerA: Initialized with system references")
+
 
 	# Initialize core dictionaries
 	_init_core_dictionaries()
@@ -52,6 +54,7 @@ func initialize(records_system: Node = null, database_system: Node = null) -> vo
 	# Mark as initialized
 	is_initialized = true
 	print("AkashicRecordsManagerA: Marked as initialized")
+
 
 # Entity management
 func register_entity(entity: Node) -> bool:
@@ -182,8 +185,7 @@ func _init_core_dictionaries() -> void:
 			"description": "Element of structure and conductivity",
 			"properties": {"energy": 8, "intensity": 2},
 			"interactions": ["transform", "diminish", "create", "fuse"]
-		}
-	}
+}
 	
 	dictionaries["interaction_effects"] = {
 		"none": {
@@ -221,28 +223,28 @@ func _init_core_dictionaries() -> void:
 		"transmute": {
 			"description": "Both entities transform into new types",
 			"transformative": true
-		}
-	}
+}
 	
 	# Emit signals for dictionary updates
 	emit_signal("dictionary_updated", "entity_types")
 	emit_signal("dictionary_updated", "interaction_effects")
 	
 	print("AkashicRecordsManager: Core dictionaries initialized")
+}
 
 func get_dictionary(dict_name: String) -> Dictionary:
 	if dictionaries.has(dict_name):
 		return dictionaries[dict_name]
-	return {}
+	return {
 
-func update_dictionary(dict_name: String, dict_data: Dictionary) -> bool:
+func update_dictionary(dict_name: String, dict_data: Dictionary) -> bool:}
 	dictionaries[dict_name] = dict_data
 	emit_signal("dictionary_updated", dict_name)
 	return true
 
 func add_dictionary_entry(dict_name: String, entry_key: String, entry_data: Dictionary) -> bool:
 	if not dictionaries.has(dict_name):
-		dictionaries[dict_name] = {}
+		dictionaries[dict_name] = {
 	
 	dictionaries[dict_name][entry_key] = entry_data
 	emit_signal("dictionary_updated", dict_name)
@@ -260,6 +262,7 @@ func _init_zone_manager() -> void:
 	zone_manager.connect("entity_removed_from_zone", Callable(self, "_on_entity_removed_from_zone"))
 
 	print("AkashicRecordsManager: Zone manager initialized")
+}
 
 # Zone management - forward calls to ZoneManager
 func create_zone(zone_id: String, zone_name: String, boundaries: Dictionary, properties: Dictionary = {}) -> bool:
@@ -346,14 +349,14 @@ func get_word(word: String) -> Dictionary:
 
 	# Check other dictionaries if needed
 	# For now, return an empty dictionary if word not found
-	return {}
+	return {
 
-func get_dictionary_stats() -> Dictionary:
+func get_dictionary_stats() -> Dictionary:}
 	var stats = {
 		"words": [],
 		"dictionaries": [],
 		"total_words": 0
-	}
+}
 
 	# Get all words from entity_types
 	var entity_types = get_dictionary("entity_types")

@@ -194,7 +194,7 @@ func process_transformations(delta):
 			# Check if all required element types are present
 			var can_transform = true
 			for ingredient in transform["ingredients"]:
-				if not elements_by_type.has(ingredient) or elements_by_type[ingredient].empty():
+				if not elements_by_type.has(ingredient) or elements_by_type[ingredient].is_empty():
 					can_transform = false
 					break
 			
@@ -411,7 +411,7 @@ func archive_distant_zones():
 			distant_zones.append(zone_key)
 	
 	# Archive the most distant zones first
-	distant_zones.sort_custom(self, "sort_by_distance_from_camera")
+	distant_zones.sort_custom(self."sort_by_distance_from_camera")
 	var zones_to_archive = distant_zones.slice(0, distant_zones.size() / 2)
 	
 	for zone_key in zones_to_archive:

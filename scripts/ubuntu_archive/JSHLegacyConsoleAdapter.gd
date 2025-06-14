@@ -19,7 +19,7 @@ var banks_combiner = null
 var text_screen = null
 
 # Command and output mapping
-var command_mapping = {}
+var command_mapping = {
 var legacy_commands = []
 var output_buffer = []
 
@@ -60,6 +60,7 @@ func _ready():
         _import_bank_actions()
     
     print("JSHLegacyConsoleAdapter: Initialized")
+	}
 
 # Signal connections
 func _connect_signals():
@@ -94,7 +95,7 @@ func _import_legacy_commands():
     for cmd_name in commands:
         legacy_commands.append(cmd_name)
         
-        var cmd_data = {}
+        var cmd_data = {
         if legacy_console.has_method("get_command_data"):
             cmd_data = legacy_console.get_command_data(cmd_name)
         
@@ -113,6 +114,7 @@ func _import_legacy_commands():
         command_mapping[cmd_name] = cmd_name
     
     print("JSHLegacyConsoleAdapter: Imported " + str(legacy_commands.size()) + " legacy commands")
+	}
 
 # Bank action import
 func _import_bank_actions():
@@ -127,7 +129,7 @@ func _import_bank_actions():
     
     # Register each action as a command
     for action_name in actions:
-        var action_data = {}
+        var action_data = {
         if actions_bank.has_method("get_action_data"):
             action_data = actions_bank.get_action_data(action_name)
         
@@ -149,6 +151,7 @@ func _import_bank_actions():
         command_mapping[cmd_name] = action_name
     
     print("JSHLegacyConsoleAdapter: Imported bank actions as commands")
+	}
 
 # Execute legacy command
 func _execute_legacy_command(self, args = []) -> Dictionary:
@@ -156,7 +159,7 @@ func _execute_legacy_command(self, args = []) -> Dictionary:
         return {
             "success": false,
             "message": "Legacy console not available"
-        }
+			}
     
     # Get command info from args
     var cmd_data = jsh_console_manager.commands[jsh_console_manager.get_command_list()[0]]
@@ -176,14 +179,14 @@ func _execute_legacy_command(self, args = []) -> Dictionary:
             result = legacy_console.call(cmd_name, cmd_args)
     
     # Format result as dictionary
-    var result_dict = {}
+    var result_dict = {
     if result is Dictionary:
         result_dict = result
     else:
         result_dict = {
             "success": true,
             "message": str(result) if result != null else "Command executed"
-        }
+			}
     
     # Add legacy marker
     result_dict["legacy"] = true
@@ -197,7 +200,7 @@ func _execute_bank_action(self, args = []) -> Dictionary:
         return {
             "success": false,
             "message": "Actions bank not available"
-        }
+			}
     
     # Get action info from args
     var cmd_data = jsh_console_manager.commands[jsh_console_manager.get_command_list()[0]]
@@ -217,14 +220,14 @@ func _execute_bank_action(self, args = []) -> Dictionary:
             result = actions_bank.call(action_name, action_args)
     
     # Format result as dictionary
-    var result_dict = {}
+    var result_dict = {
     if result is Dictionary:
         result_dict = result
     else:
         result_dict = {
             "success": true,
             "message": str(result) if result != null else "Action executed"
-        }
+			}
     
     # Add bank marker
     result_dict["bank"] = true
@@ -273,7 +276,7 @@ func execute_in_legacy_console(command_text: String) -> Dictionary:
         return {
             "success": false,
             "message": "Legacy console not available"
-        }
+			}
     
     # Parse command
     var parts = command_text.split(" ")
@@ -288,7 +291,7 @@ func execute_bank_action(action_name: String, args: Array = []) -> Dictionary:
         return {
             "success": false,
             "message": "Actions bank not available"
-        }
+			}
     
     # Execute bank action
     return _execute_bank_action(self, [action_name] + args)
@@ -375,7 +378,8 @@ static func _cmd_legacy(self, args: Array) -> Dictionary:
     
     if not adapter:
         self.print_error("Legacy console adapter not found")
-        return {"success": false, "message": "Adapter not found"}
+        return {"success": false, "message": "Adapter not found"
+		}
     
     var command = args[0]
     var command_args = args.slice(1)
@@ -390,6 +394,7 @@ static func _cmd_legacy(self, args: Array) -> Dictionary:
         self.print_success("Command executed in legacy console: " + command)
     else:
         self.print_error("Failed to execute in legacy console: " + result.get("message", "Unknown error"))
+		}
     
     return result
 
@@ -398,7 +403,8 @@ static func _cmd_bank(self, args: Array) -> Dictionary:
     
     if not adapter:
         self.print_error("Legacy console adapter not found")
-        return {"success": false, "message": "Adapter not found"}
+        return {"success": false, "message": "Adapter not found"
+		}
     
     var action = args[0]
     var action_args = args.slice(1)
@@ -409,6 +415,7 @@ static func _cmd_bank(self, args: Array) -> Dictionary:
         self.print_success("Action executed in bank: " + action)
     else:
         self.print_error("Failed to execute bank action: " + result.get("message", "Unknown error"))
+		}
     
     return result
 
@@ -417,7 +424,8 @@ static func _cmd_sync(self, args: Array) -> Dictionary:
     
     if not adapter:
         self.print_error("Legacy console adapter not found")
-        return {"success": false, "message": "Adapter not found"}
+        return {"success": false, "message": "Adapter not found"
+		}
     
     var system = args[0].to_lower()
     var direction = "both"
@@ -430,16 +438,18 @@ static func _cmd_sync(self, args: Array) -> Dictionary:
         "message": "Sync completed",
         "systems": {},
         "count": 0
-    }
+		}
     
     match system:
         "entities", "records":
+		
             var count = adapter.sync_entities_with_records_bank()
             result.systems["entities"] = count
             result.count += count
             self.print_line("Synced " + str(count) + " entities with records bank")
         
         "all":
+		
             var entities_count = adapter.sync_entities_with_records_bank()
             result.systems["entities"] = entities_count
             result.count += entities_count
@@ -447,7 +457,8 @@ static func _cmd_sync(self, args: Array) -> Dictionary:
         
         _:
             self.print_error("Unknown system to sync: " + system)
-            return {"success": false, "message": "Unknown system: " + system}
+            return {"success": false, "message": "Unknown system: " + system
+			}
     
     self.print_success("Sync completed: " + str(result.count) + " items synchronized")
     return result

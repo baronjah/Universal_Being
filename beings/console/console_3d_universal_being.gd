@@ -35,11 +35,13 @@ func pentagon_init():
 	consciousness_level = 3
 	print("🖥️ 3D Console: Initializing spatial console interface...")
 
+
 func pentagon_ready():
 	super.pentagon_ready()
 	create_3d_console_interface()
 	register_console_commands()
 	print("✨ 3D Console: Ready for spatial command interaction!")
+
 
 func pentagon_process(delta: float):
 	super.pentagon_process(delta)
@@ -211,9 +213,11 @@ func process_command(command: String) -> String:
 		_:
 			return "Unknown command: " + cmd + " (type 'help' for commands)"
 
+
 func get_help_text() -> String:
 	"""Return help text for available commands"""
 	return """🖥️ 3D CONSOLE COMMANDS:
+
 
 SYSTEM:
   help        - Show this help
@@ -249,6 +253,7 @@ func get_system_status() -> String:
 	status += "Console State: " + console_state + "\n"
 	status += "Consciousness Level: " + str(consciousness_level) + "\n"
 	status += "Command History: " + str(command_history.size()) + " commands\n"
+
 	
 	# Check SystemBootstrap
 	if SystemBootstrap:
@@ -259,29 +264,34 @@ func get_system_status() -> String:
 			status += "Core Systems: ⚠️ Loading\n"
 	else:
 		status += "SystemBootstrap: ❌ Missing\n"
+
 	
 	return status
 
 func get_system_states() -> String:
 	"""Get current interface and input states"""
 	var states = "🔄 SYSTEM STATES:\n\n"
+
 	
 	# Console states
 	states += "CONSOLE:\n"
 	states += "  State: " + console_state + "\n"
 	states += "  Input Mode: " + ("Active" if console_state != "minimized" else "Inactive") + "\n"
 	states += "  History Lines: " + str(command_history.size()) + "\n\n"
+
 	
 	# Input states
 	states += "INPUT:\n"
 	states += "  Mouse Mode: " + str(Input.mouse_mode) + "\n"
 	states += "  Current Actions: " + str(_get_active_actions()) + "\n\n"
+
 	
 	# Interface states
 	states += "INTERFACES:\n"
 	states += "  Active Consoles: 1\n"
 	states += "  Debug Chamber: " + ("Active" if _is_debug_chamber_active() else "Inactive") + "\n"
 	states += "  Text Editors: 0\n"  # Will be updated when text editor is created
+
 	
 	return states
 
@@ -289,6 +299,7 @@ func execute_gemma_command(args: Array) -> String:
 	"""Execute Gemma AI related commands"""
 	if args.is_empty():
 		return "Usage: gemma <message|vision|action>"
+
 	
 	var subcommand = args[0].to_lower()
 	match subcommand:
@@ -306,20 +317,24 @@ func activate_gemma_vision() -> String:
 	gemma_command_issued.emit("activate_vision", {"fibonacci": true, "spatial": true})
 	return "👁️ Gemma Vision: Activated fibonacci spatial sensing"
 
+
 func show_gemma_action_books() -> String:
 	"""Show Gemma's action books interface"""
 	gemma_command_issued.emit("show_action_books", {})
 	return "📚 Gemma Action Books: Interface activated - check 3D space"
+
 
 func send_message_to_gemma(message: String) -> String:
 	"""Send message to Gemma AI"""
 	gemma_command_issued.emit("chat", {"message": message})
 	return "🤖 Message sent to Gemma: \"" + message + "\""
 
+
 func execute_debug_command(args: Array) -> String:
 	"""Execute debug chamber commands"""
 	if args.is_empty():
 		return "Usage: debug <stars|cinema|confess>"
+
 	
 	var subcommand = args[0].to_lower()
 	match subcommand:
@@ -332,10 +347,12 @@ func execute_debug_command(args: Array) -> String:
 		_:
 			return "Unknown debug command: " + subcommand
 
+
 func execute_spawn_command(args: Array) -> String:
 	"""Spawn Universal Beings"""
 	if args.is_empty():
 		return "Usage: spawn <being_type>"
+
 	
 	var being_type = args[0].to_lower()
 	# This would integrate with the spawn system
@@ -345,6 +362,7 @@ func execute_goto_command(args: Array) -> String:
 	"""Navigate to specific locations"""
 	if args.is_empty():
 		return "Usage: goto <location>"
+
 	
 	var location = args[0].to_lower()
 	match location:
@@ -357,10 +375,12 @@ func execute_goto_command(args: Array) -> String:
 		_:
 			return "Unknown location: " + location
 
+
 func execute_list_command(args: Array) -> String:
 	"""List various system components"""
 	if args.is_empty():
 		return "Usage: list <beings|scripts|interfaces>"
+
 	
 	var list_type = args[0].to_lower()
 	match list_type:
@@ -373,10 +393,12 @@ func execute_list_command(args: Array) -> String:
 		_:
 			return "Unknown list type: " + list_type
 
+
 func configure_cursor(args: Array) -> String:
 	"""Configure 3D cursor settings"""
 	if args.is_empty():
 		return "Usage: cursor <show|hide|plasmoid>"
+
 	
 	var action = args[0].to_lower()
 	match action:
@@ -388,6 +410,7 @@ func configure_cursor(args: Array) -> String:
 			return "✨ Plasmoid Cursor: Energy mode activated"
 		_:
 			return "Unknown cursor action: " + action
+
 
 func list_universal_beings() -> String:
 	"""List all Universal Beings in the scene"""
@@ -406,6 +429,7 @@ func list_universal_beings() -> String:
 func list_active_interfaces() -> String:
 	"""List currently active 3D interfaces"""
 	return """🖥️ ACTIVE INTERFACES:
+
 
 3D Console: ✅ Active (you're using it)
 Debug Chamber: Press SHIFT+TAB to access

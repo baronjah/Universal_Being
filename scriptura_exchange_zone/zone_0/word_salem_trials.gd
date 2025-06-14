@@ -22,7 +22,7 @@ func record_word_crime(player, word, power, crime_type):
 		"type": crime_type,
 		"day": controller.current_day,
 		"turn": controller.current_turn,
-		"timestamp": OS.get_unix_time()
+		"timestamp": OS.Time.get_unix_time_from_system()
 	})
 	
 	# If a divine judge exists and the crime is cosmic, notify them
@@ -42,7 +42,7 @@ func create_word_crime_trial(criminal, word, power, crime_type):
 	if !controller:
 		return ""
 		
-	var trial_id = "trial_" + str(OS.get_unix_time()) + "_" + str(randi() % 10000)
+	var trial_id = "trial_" + str(OS.Time.get_unix_time_from_system()) + "_" + str(randi() % 10000)
 	
 	controller.word_crime_trials[trial_id] = {
 		"id": trial_id,
@@ -52,7 +52,7 @@ func create_word_crime_trial(criminal, word, power, crime_type):
 		"type": crime_type,
 		"day": controller.current_day,
 		"turn": controller.current_turn,
-		"timestamp": OS.get_unix_time(),
+		"timestamp": OS.Time.get_unix_time_from_system(),
 		"votes": {},
 		"status": "pending",
 		"verdict": null
@@ -64,7 +64,7 @@ func create_word_crime_trial(criminal, word, power, crime_type):
 		"text": "WORD CRIME TRIAL: " + criminal + " is accused of a " + crime_type + " linguistic crime!",
 		"day": controller.current_day,
 		"phase": "word_trial",
-		"timestamp": OS.get_unix_time()
+		"timestamp": OS.Time.get_unix_time_from_system()
 	})
 	
 	if controller.word_comment_system:
@@ -134,7 +134,7 @@ func judge_word_crime(trial_id, verdict, punishment):
 		"verdict": verdict,
 		"punishment": punishment,
 		"day": controller.current_day,
-		"timestamp": OS.get_unix_time()
+		"timestamp": OS.Time.get_unix_time_from_system()
 	})
 	
 	if controller.word_comment_system:
@@ -193,7 +193,7 @@ func apply_punishment(player_name, punishment):
 					"text": player_name + " has been banished from this dimension!",
 					"day": controller.current_day,
 					"phase": "banishment",
-					"timestamp": OS.get_unix_time()
+					"timestamp": OS.Time.get_unix_time_from_system()
 				})
 				
 				if controller.word_comment_system:
@@ -247,7 +247,7 @@ func process_accusation_comment(word, comment_text):
 					"text": player_name + " has been put on trial due to multiple accusations!",
 					"day": controller.current_day,
 					"phase": "auto_trial",
-					"timestamp": OS.get_unix_time()
+					"timestamp": OS.Time.get_unix_time_from_system()
 				})
 				
 				if controller.word_comment_system:
@@ -280,7 +280,7 @@ func process_defense_statement(word, defense_text):
 		"text": defense_text,
 		"day": controller.current_day,
 		"phase": "defense",
-		"timestamp": OS.get_unix_time()
+		"timestamp": OS.Time.get_unix_time_from_system()
 	})
 	
 	# Add defense chance bonus
@@ -314,7 +314,7 @@ func pardon_word_crime(crime_id, reason, pardoner="System"):
 	crime.pardoned = true
 	crime.pardon_reason = reason
 	crime.pardoner = pardoner
-	crime.pardon_timestamp = OS.get_unix_time()
+	crime.pardon_timestamp = OS.Time.get_unix_time_from_system()
 	
 	# Announce pardon
 	controller.town_meeting_log.append({
@@ -322,7 +322,7 @@ func pardon_word_crime(crime_id, reason, pardoner="System"):
 		"text": crime.player + " has been pardoned for their word crime: " + reason,
 		"day": controller.current_day,
 		"phase": "pardon",
-		"timestamp": OS.get_unix_time()
+		"timestamp": OS.Time.get_unix_time_from_system()
 	})
 	
 	if controller.word_comment_system:
@@ -368,7 +368,7 @@ func divine_judgment(judge_name, criminal_name, verdict, punishment):
 		"text": "DIVINE JUDGMENT: " + judge_name + " has passed judgment on " + criminal_name + ": " + verdict + " - " + punishment,
 		"day": controller.current_day,
 		"phase": "divine_judgment",
-		"timestamp": OS.get_unix_time()
+		"timestamp": OS.Time.get_unix_time_from_system()
 	})
 	
 	if controller.word_comment_system:

@@ -3,15 +3,9 @@
 # Created: May 31, 2025, 23:28 CEST
 # Purpose: Ragdoll physics and behavior system
 # Connection: Part of Pentagon Architecture migration
-
-
-
-
-
-
 extends UniversalBeingBase
 # JSH_mainframe_database.gd
-# res://code/gdscript/scripts/Menu_Keyboard_Console/JSH_mainframe_database.gd
+# res://scripts/gdscript/scripts/Menu_Keyboard_Console/JSH_mainframe_database.gd
 
 
 # #
@@ -216,22 +210,22 @@ var corner_markers_new = {
 # Node path management
 var node_paths = {
 	"main": {
-		"path": "/root/main",
+		"path": "root/main",
 		"active": true,
 		"children": ["datapoint", "container", "controller"]
 	},
 	"datapoint": {
-		"path": "/root/main/datapoint",
+		"path": "root/main/datapoint",
 		"active": true,
 		"children": ["memory", "processor"]
 	},
 	"container": {
-		"path": "/root/main/container",
+		"path": "root/main/container",
 		"active": true,
 		"children": ["keyboard", "settings", "menu"]
 	},
 	"keyboard": {
-		"path": "/root/main/container/keyboard",
+		"path": "root/main/container/keyboard",
 		"active": false,
 		"children": ["left_panel", "right_panel"]
 	}
@@ -269,22 +263,22 @@ var corner_markers = {
 
 var node_paths_new = {
   "main": {
-	"path": "/root/main",
+	"path": "root/main",
 	"active": true,
 	"children": ["datapoint", "container", "controller"]
   },
   "datapoint": {
-	"path": "/root/main/datapoint",
+	"path": "root/main/datapoint",
 	"active": true,
 	"children": ["memory", "processor"]
   },
   "container": {
-	"path": "/root/main/container",
+	"path": "root/main/container",
 	"active": true,
 	"children": ["keyboard", "settings", "menu"]
   },
   "keyboard": {
-	"path": "/root/main/container/keyboard",
+	"path": "root/main/container/keyboard",
 	"active": false,
 	"children": ["left_panel", "right_panel"]
   }

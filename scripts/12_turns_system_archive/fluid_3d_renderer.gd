@@ -229,6 +229,7 @@ func _update_particle_instances():
         
         # Apply velocity-based stretching for fast particles
         if p.has("velocity"):
+		
             var speed = p.velocity.length()
             if speed > 1.0:
                 var stretch_dir = p.velocity.normalized()
@@ -375,7 +376,7 @@ func _create_mesh_surface(particles, bounds):
     )
     
     # Generate scalar field
-    var field = {}
+    var field = {
     for x in range(x_res + 1):
         for y in range(y_res + 1):
             for z in range(z_res + 1):
@@ -503,7 +504,7 @@ func _marching_cubes(field, x_res, y_res, z_res, bounds, cell_size,
                     continue
                 
                 # Calculate intersection vertices
-                var edge_vertices = {}
+                var edge_vertices = {
                 
                 if edge_flags & 1:    # Edge 0
                     edge_vertices[0] = _interpolate_vertex(positions[0], positions[1], 
@@ -677,7 +678,6 @@ uniform float metallic : hint_range(0.0, 1.0) = 0.1;
 void vertex() {
     // Add slight wobble to particles
     VERTEX.y += sin(VERTEX.x * 4.0 + time * 2.0) * 0.01;
-}
 
 void fragment() {
     ALBEDO = base_color.rgb;
@@ -692,7 +692,6 @@ void fragment() {
     // Fresnel effect for edge highlights
     float fresnel = pow(1.0 - dot(NORMAL, VIEW), 5.0);
     EMISSION = base_color.rgb * fresnel * 0.2;
-}
 """
 
 func _get_metaball_shader_code():
@@ -724,10 +723,8 @@ float sample_volume(vec3 pos) {
     // Check if outside bounds
     if (any(lessThan(norm_pos, vec3(0.0))) || any(greaterThan(norm_pos, vec3(1.0)))) {
         return 0.0;
-    }
     
     return texture(volume_texture, norm_pos).r;
-}
 
 vec3 estimate_normal(vec3 pos) {
     vec2 e = vec2(EPSILON, 0.0);
@@ -736,7 +733,6 @@ vec3 estimate_normal(vec3 pos) {
         sample_volume(pos + e.yxy) - sample_volume(pos - e.yxy),
         sample_volume(pos + e.yyx) - sample_volume(pos - e.yyx)
     ));
-}
 
 void fragment() {
     // Ray marching setup
@@ -756,7 +752,6 @@ void fragment() {
     // Skip if ray doesn't intersect box
     if (t_near > t_far || t_far < 0.0) {
         discard;
-    }
     
     // Clamp to near plane
     t_near = max(t_near, 0.0);
@@ -776,14 +771,11 @@ void fragment() {
             hit = true;
             hit_pos = pos;
             break;
-        }
         
         t += STEP_SIZE;
-    }
     
     if (!hit) {
         discard;
-    }
     
     // Calculate surface properties
     vec3 normal = estimate_normal(hit_pos);
@@ -824,7 +816,6 @@ void fragment() {
     
     // Set correct depth
     DEPTH = length(hit_pos - CAMERA_POSITION);
-}
 """
 
 func _get_surface_shader_code():
@@ -863,7 +854,6 @@ void vertex() {
     // Adjust normal for waves
     NORMAL.y += wave * 5.0;
     NORMAL = normalize(NORMAL);
-}
 
 void fragment() {
     // Basic color
@@ -877,7 +867,6 @@ void fragment() {
     if (COLOR.a > 0.0) {
         ALBEDO = COLOR.rgb;
         ALPHA = COLOR.a;
-    }
     
     // Normal mapping for ripples
     vec3 normal_map = texture(surface_normal_map, UV * 3.0 + vec2(time * 0.05, time * 0.03)).rgb * 2.0 - 1.0;
@@ -912,8 +901,6 @@ void fragment() {
             ALBEDO = mix(ALBEDO, foam_color.rgb, foam_mask);
             ROUGHNESS = mix(ROUGHNESS, 0.7, foam_mask);
             SPECULAR = mix(SPECULAR, 0.1, foam_mask);
-        }
-    }
     
     // Add caustics
     if (enable_caustics && depth_fade < 0.5) {
@@ -922,8 +909,6 @@ void fragment() {
         float caustic = pow(caustic1 * caustic2, 2.0) * (1.0 - depth_fade);
         
         EMISSION += vec3(0.2, 0.4, 0.8) * caustic * 0.5;
-    }
-}
 """
 
 func _get_foam_shader_code():
@@ -939,7 +924,6 @@ uniform sampler2D foam_texture : hint_default_white;
 void vertex() {
     // Push foam slightly above surface
     VERTEX.y += 0.005;
-}
 
 void fragment() {
     float foam_noise = texture(foam_texture, UV * 5.0 + vec2(time * 0.1, 0.0)).r;
@@ -949,7 +933,6 @@ void fragment() {
     ALBEDO = foam_color.rgb;
     ALPHA = foam * foam_color.a;
     EMISSION = foam_color.rgb * 0.5;
-}
 """
 
 func _get_impostor_shader_code():
@@ -980,7 +963,6 @@ void vertex() {
     
     // Add subtle animation
     VERTEX.y += sin(time * 2.0 + pos.x + pos.z) * 0.01;
-}
 
 void fragment() {
     // Calculate distance from fragment to center of quad
@@ -1004,7 +986,6 @@ void fragment() {
     
     // Add subtle emission for highlighting
     EMISSION = particle_color.rgb * highlight * 0.2;
-}
 """
 
 func _get_marching_cubes_edge_table():

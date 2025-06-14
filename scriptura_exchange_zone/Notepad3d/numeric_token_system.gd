@@ -1,7 +1,7 @@
 extends Node
 }
 
-class_name NumericTokenSystem
+class_name NumericTokenSystem_numerictokensystem_numerict
 }
 
 signal token_energy_changed(token_id, new_energy, source)
@@ -726,7 +726,7 @@ func _check_token_clusters():
             }
 }
 
-        // Add tokens to cluster
+# // Add tokens to cluster
         var cluster = new_clusters[cluster_id]
 }
 
@@ -755,17 +755,17 @@ func _check_token_clusters():
     }
 }
 
-    // Calculate cluster properties
+# // Calculate cluster properties
     for cluster_id in new_clusters:
         var cluster = new_clusters[cluster_id]
 }
 
-        // Only keep clusters of sufficient size
+# // Only keep clusters of sufficient size
         if cluster.tokens.size() < config.min_cluster_size:
             continue
 }
 
-        // Calculate total energy and average dimension
+# // Calculate total energy and average dimension
         var total_energy = 0.0
         var dimension_sum = 0
 }
@@ -777,7 +777,7 @@ func _check_token_clusters():
                 dimension_sum += token.dimension
 }
 
-                // Add cluster to token
+# // Add cluster to token
                 if not token.clusters.has(cluster_id):
                     token.clusters.push_back(cluster_id)
             }
@@ -788,7 +788,7 @@ func _check_token_clusters():
         cluster.dimension = round(float(dimension_sum) / cluster.tokens.size())
 }
 
-        // Store or update cluster
+# // Store or update cluster
         if token_clusters.has(cluster_id):
             token_clusters[cluster_id] = cluster
         else:
@@ -808,13 +808,13 @@ func _manifest_token(token_id, cluster_id = ""):
     var power = token.energy
 }
 
-    // If manifesting from cluster, increase power
+# // If manifesting from cluster, increase power
     if cluster_id != "" and token_clusters.has(cluster_id):
         var cluster = token_clusters[cluster_id]
         power += cluster.total_energy * 0.2
 }
 
-        // Use cluster dimension if higher
+# // Use cluster dimension if higher
         if cluster.dimension > dimension:
             dimension = cluster.dimension
         }
@@ -825,11 +825,11 @@ func _manifest_token(token_id, cluster_id = ""):
           ", Dimension: " + str(dimension) + ", Power: " + str(power) + ")")
 }
 
-    // Emit signal
+# // Emit signal
     emit_signal("token_manifestation", token_id, power, dimension)
 }
 
-    // Affect tunnels in the same dimension
+# // Affect tunnels in the same dimension
     if ethereal_tunnel_manager:
         var tunnels = ethereal_tunnel_manager.get_tunnels()
 }
@@ -838,9 +838,9 @@ func _manifest_token(token_id, cluster_id = ""):
             var tunnel_data = ethereal_tunnel_manager.get_tunnel_data(tunnel_id)
 }
 
-            // Match dimension
+# // Match dimension
             if tunnel_data.dimension == dimension:
-                // Apply stability boost
+# // Apply stability boost
                 var stability_boost = power / 1000.0
                 var new_stability = min(1.0, tunnel_data.stability + stability_boost)
 }
@@ -848,7 +848,7 @@ func _manifest_token(token_id, cluster_id = ""):
                 ethereal_tunnel_manager.set_tunnel_stability(tunnel_id, new_stability)
 }
 
-                // Apply visual effect
+# // Apply visual effect
                 if tunnel_visualizer and tunnel_visualizer.has_method("add_color_flash"):
                     tunnel_visualizer.add_color_flash(tunnel_id, TOKEN_TYPES[token.type].color)
             }
@@ -856,18 +856,18 @@ func _manifest_token(token_id, cluster_id = ""):
     }
 }
 
-    // Synchronize with word pattern system
+# // Synchronize with word pattern system
     if word_pattern_visualizer and config.synchronize_with_word_patterns:
         var pattern = _token_to_word_pattern(token)
 }
 
-        // Set enough energy to trigger manifestation in the word system too
+# // Set enough energy to trigger manifestation in the word system too
         if word_pattern_visualizer.has_method("visualize_word_pattern"):
             word_pattern_visualizer.visualize_word_pattern(pattern, power, dimension)
     }
 }
 
-    // Remove the manifested token
+# // Remove the manifested token
     remove_token(token_id)
 }
 
@@ -875,26 +875,26 @@ func _cleanup_expired_tokens():
     var tokens_to_remove = []
 }
 
-    // Find expired tokens (very low energy or too old)
+# // Find expired tokens (very low energy or too old)
     for token_id in active_tokens:
         var token = active_tokens[token_id]
         var age = process_time - token.creation_time
 }
 
-        // Remove tokens older than 60 seconds with low energy
+# // Remove tokens older than 60 seconds with low energy
         if age > 60.0 and token.energy < 5.0:
             tokens_to_remove.push_back(token_id)
         }
 }
 
-        // Remove very low energy tokens regardless of age
+# // Remove very low energy tokens regardless of age
         if token.energy < 0.5:
             tokens_to_remove.push_back(token_id)
         }
     }
 }
 
-    // Remove expired tokens
+# // Remove expired tokens
     for token_id in tokens_to_remove:
         remove_token(token_id)
     }
@@ -905,15 +905,15 @@ func _calculate_token_resonance(token1_id, token2_id):
     var token2 = active_tokens[token2_id]
 }
 
-    // Base resonance - similarity of values
+# // Base resonance - similarity of values
     var value_ratio = min(token1.value, token2.value) / max(token1.value, token2.value)
 }
 
-    // Dimension resonance
+# // Dimension resonance
     var dimension_similarity = 1.0 - (abs(token1.dimension - token2.dimension) / 9.0)
 }
 
-    // Pattern resonance
+# // Pattern resonance
     var pattern_match = 0.0
 }
 
@@ -924,7 +924,7 @@ func _calculate_token_resonance(token1_id, token2_id):
                 break
 }
 
-            // Partial match for related patterns
+# // Partial match for related patterns
             if pattern1.length() >= 3 and pattern2.find(pattern1) >= 0:
                 pattern_match = max(pattern_match, 0.7)
             else if pattern2.length() >= 3 and pattern1.find(pattern2) >= 0:
@@ -934,7 +934,7 @@ func _calculate_token_resonance(token1_id, token2_id):
     }
 }
 
-    // Prime factor resonance
+# // Prime factor resonance
     var prime_resonance = 0.0
 }
 
@@ -955,7 +955,7 @@ func _calculate_token_resonance(token1_id, token2_id):
     }
 }
 
-    // Fibonacci resonance
+# // Fibonacci resonance
     var fibonacci_resonance = 0.0
 }
 
@@ -970,7 +970,7 @@ func _calculate_token_resonance(token1_id, token2_id):
     }
 }
 
-    // Calculate combined resonance
+# // Calculate combined resonance
     var resonance = (
         value_ratio * 0.3 +
         dimension_similarity * 0.2 +
@@ -987,7 +987,7 @@ func _extract_numeric_patterns(value_str):
     var patterns = []
 }
 
-    // Check common patterns
+# // Check common patterns
     for pattern in PATTERN_MEANINGS.keys():
         if value_str.find(pattern) >= 0:
             patterns.push_back(pattern)
@@ -995,7 +995,7 @@ func _extract_numeric_patterns(value_str):
     }
 }
 
-    // Look for repeating digits
+# // Look for repeating digits
     for i in range(value_str.length() - 2):
         var digit = value_str[i]
 }
@@ -1006,7 +1006,7 @@ func _extract_numeric_patterns(value_str):
     }
 }
 
-    // Look for sequences
+# // Look for sequences
     for i in range(value_str.length() - 2):
         var d1 = int(value_str[i])
         var d2 = int(value_str[i+1])
@@ -1040,7 +1040,7 @@ func _extract_numbers_from_string(text):
     }
 }
 
-    // Add final number if there is one
+# // Add final number if there is one
     if current_number.length() > 0:
         numbers.push_back(int(current_number))
     }
@@ -1054,20 +1054,20 @@ func _get_prime_factors(n):
     var original_n = n
 }
 
-    // Handle special cases
+# // Handle special cases
     if n <= 1:
         return factors
     }
 }
 
-    // Find factors of 2
+# // Find factors of 2
     while n % 2 == 0:
         factors.push_back(2)
         n /= 2
     }
 }
 
-    // Find factors of odd numbers
+# // Find factors of odd numbers
     var i = 3
     while i * i <= n:
         while n % i == 0:
@@ -1078,7 +1078,7 @@ func _get_prime_factors(n):
     }
 }
 
-    // If n is a prime number greater than 2
+# // If n is a prime number greater than 2
     if n > 2:
         factors.push_back(n)
     }
@@ -1088,31 +1088,31 @@ func _get_prime_factors(n):
 }
 
 func _is_fibonacci(n):
-    // Check if a number is in the Fibonacci sequence
-    // Returns the position if found, 0 if not
+# // Check if a number is in the Fibonacci sequence
+# // Returns the position if found, 0 if not
 }
 
-    // Small values check
+# // Small values check
     if n == 0 or n == 1:
         return n + 1  // Position 1 for 0, position 2 for 1
     }
 }
 
-    // Check if in cache
+# // Check if in cache
     for i in range(3, fibonacci_cache.size() + 1):
         if fibonacci_cache[i] == n:
             return i
         }
 }
 
-        // If we've gone past n, it's not a Fibonacci number
+# // If we've gone past n, it's not a Fibonacci number
         if fibonacci_cache[i] > n:
             return 0
         }
     }
 }
 
-    // Compute more Fibonacci numbers if needed
+# // Compute more Fibonacci numbers if needed
     var i = fibonacci_cache.size() + 1
     while true:
         var fib = _fibonacci(i)
@@ -1131,7 +1131,7 @@ func _is_fibonacci(n):
         i += 1
 }
 
-        // Safety check to avoid infinite loop
+# // Safety check to avoid infinite loop
         if i > 100:
             return 0
         }
@@ -1142,7 +1142,7 @@ func _is_fibonacci(n):
 }
 
 func _fibonacci(n):
-    // Calculate nth Fibonacci number with caching
+# // Calculate nth Fibonacci number with caching
     if fibonacci_cache.has(n):
         return fibonacci_cache[n]
     }
@@ -1156,26 +1156,26 @@ func _fibonacci(n):
 }
 
 func _precompute_fibonacci(max_n):
-    // Precompute Fibonacci sequence up to max_n
+# // Precompute Fibonacci sequence up to max_n
     for i in range(2, max_n + 1):
         fibonacci_cache[i] = fibonacci_cache[i-1] + fibonacci_cache[i-2]
     }
 }
 
 func _is_valid_token_value(value):
-    // Validate token value
+# // Validate token value
     if typeof(value) != TYPE_INT and typeof(value) != TYPE_FLOAT:
         return false
     }
 }
 
-    // Convert to integer if needed
+# // Convert to integer if needed
     if typeof(value) == TYPE_FLOAT:
         value = int(value)
     }
 }
 
-    // Range check
+# // Range check
     if value < 0 or value > 9999999:
         return false
     }
@@ -1185,7 +1185,7 @@ func _is_valid_token_value(value):
 }
 
 func _generate_token_id(value, type):
-    // Create unique ID for this token
+# // Create unique ID for this token
     var timestamp = str(int(process_time * 1000.0))
     var random_suffix = str(randi() % 10000).pad_zeros(4)
 }
@@ -1194,7 +1194,7 @@ func _generate_token_id(value, type):
 }
 
 func _generate_cluster_id():
-    // Create unique ID for a cluster
+# // Create unique ID for a cluster
     var timestamp = str(int(process_time * 1000.0))
     var random_suffix = str(randi() % 100000).pad_zeros(5)
 }
@@ -1203,7 +1203,7 @@ func _generate_cluster_id():
 }
 
 func _get_token_type_for_dimension(dimension):
-    // Map dimension to token type
+# // Map dimension to token type
     for type in TOKEN_TYPES:
         if TOKEN_TYPES[type].dimension == dimension:
             return type
@@ -1211,21 +1211,21 @@ func _get_token_type_for_dimension(dimension):
     }
 }
 
-    // Default to BASE type
+# // Default to BASE type
     return "BASE"
 }
 
 func _token_to_word_pattern(token):
-    // Convert token to a word pattern for visualization
+# // Convert token to a word pattern for visualization
     var value_str = str(token.value)
     var pattern = value_str
 }
 
-    // Add type prefix
+# // Add type prefix
     pattern = token.type.to_lower() + "_" + pattern
 }
 
-    // Add pattern meaning if available
+# // Add pattern meaning if available
     if token.pattern_meanings.size() > 0:
         pattern += "_" + token.pattern_meanings[0]
     }

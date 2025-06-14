@@ -1,6 +1,5 @@
-# Planet Scene, Planet.gd with a shader, "res://Scenes/Planet.tscn", "res://Shaders/Planet.gdshader"
-
-extends Sprite3D
+# Planet Scene, Planet.gd with a shader, "res://scenes/Planet.tscn", "res://Shaders/Planet.gdshader"
+extends \2
 
 var shader_material: ShaderMaterial
 var pending_parameters: Dictionary = {}

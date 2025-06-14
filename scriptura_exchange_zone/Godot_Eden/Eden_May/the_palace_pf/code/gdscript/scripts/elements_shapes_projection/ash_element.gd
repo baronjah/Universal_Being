@@ -5,9 +5,9 @@
 
 # elements.gd?
 
-extends "res://code/gdscript/scripts/elements_shapes_projection/base_element.gd"
+extends "res://scripts/gdscript/scripts/elements_shapes_projection/base_element.gd"
 
-class_name AshElement
+class_name AshElement_ashelement_asheleme
 
 # Ash-specific properties
 var amount: float = 1.0              # How much ash is present

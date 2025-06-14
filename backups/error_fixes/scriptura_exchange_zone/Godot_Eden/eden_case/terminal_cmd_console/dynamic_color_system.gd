@@ -497,7 +497,7 @@ func process_multi_colored_text(text: String) -> String:
             continue
             
         var section_text = sections[i]
-        if section_text.empty():
+        if section_text.is_empty():
             continue
             
         var color = generate_color_from_text(section_text)
@@ -794,7 +794,7 @@ func _update_animated_colors(delta):
     if terminal_split_controller == null:
         return
         
-    var pulse = (sin(OS.get_ticks_msec() * 0.001) + 1.0) * 0.5
+    var pulse = (sin(OS.Time.get_ticks_msec() * 0.001) + 1.0) * 0.5
     var terminals = terminal_split_controller.active_terminal_cores
     
     for i in range(terminals.size()):

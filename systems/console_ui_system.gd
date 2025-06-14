@@ -21,7 +21,7 @@ var commands: Dictionary = {
     "evolve": "Evolve a being to a new form",
     "clear": "Clear the console",
     "exit": "Close the console"
-}
+	}
 
 # Signals
 signal output_received(text: String)
@@ -54,6 +54,7 @@ func _on_parent_ready() -> void:
     # Initialize console with parent's consciousness
     var parent = get_parent()
     if parent and parent.has_method("get_consciousness_level"):
+	
         var consciousness = parent.get_consciousness_level()
         if consciousness >= 3:
             auto_complete_enabled = true
@@ -118,6 +119,7 @@ func _show_help() -> String:
 func _handle_create(args: Array) -> String:
     if args.is_empty():
         return "Usage: create [type] [name]"
+		
     
     var type = args[0]
     var name = args[1] if args.size() > 1 else "New Being"
@@ -125,6 +127,7 @@ func _handle_create(args: Array) -> String:
     # Create being through wand system
     var wand = get_node_or_null("/root/UniversalBeing/CreationWand")
     if wand and wand.has_method("_create_universal_being"):
+	
         var being = wand._create_universal_being()
         being.being_type = type
         being.being_name = name
@@ -134,6 +137,7 @@ func _handle_create(args: Array) -> String:
 func _handle_modify(args: Array) -> String:
     if args.is_empty():
         return "Usage: modify [property] [value]"
+		
     
     var wand = get_node_or_null("/root/UniversalBeing/CreationWand")
     if wand and wand.has_method("_modify_current_being"):
@@ -152,6 +156,7 @@ func _handle_list() -> String:
 func _handle_inspect(args: Array) -> String:
     if args.is_empty():
         return "Usage: inspect [name]"
+		
     
     var name = args[0]
     var beings = get_tree().get_nodes_in_group("universal_beings")
@@ -163,6 +168,7 @@ func _handle_inspect(args: Array) -> String:
 func _handle_evolve(args: Array) -> String:
     if args.is_empty():
         return "Usage: evolve [name] [target_type]"
+		
     
     var name = args[0]
     var target_type = args[1] if args.size() > 1 else "evolved"

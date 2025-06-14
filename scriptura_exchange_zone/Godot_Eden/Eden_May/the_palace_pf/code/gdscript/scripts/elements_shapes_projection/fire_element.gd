@@ -2,9 +2,9 @@
 # Claude Decipher: Fire elements like stars that have size, create light, change outer shape
 # and interact with other elements like wood, consuming it and changing its properties
 
-extends "res://code/gdscript/scripts/elements_shapes_projection/base_element.gd"
+extends "res://scripts/gdscript/scripts/elements_shapes_projection/base_element.gd"
 
-class_name FireElement
+class_name FireElement_fireelement_fireelem
 
 # Fire-specific constants
 const FLICKER_SPEED = 10.0

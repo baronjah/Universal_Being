@@ -1,6 +1,6 @@
 extends Node
 
-class_name MessageTimelineConnector
+class_name MessageTimelineConnector_messagetimelineconnector_messaget
 
 # Constants for message lifecycle
 const LIFECYCLE_STAGES = {
@@ -136,7 +136,7 @@ func _init():
 
 func _initialize_timeline():
     # Set timeline start time to now
-    timeline_start_time = OS.get_unix_time()
+    timeline_start_time = OS.Time.get_unix_time_from_system()
     timeline_current_time = timeline_start_time
     
     # Create initial timeline grid
@@ -149,7 +149,7 @@ func _connect_systems():
         print("Connected to TerminalVisualBridge")
     else:
         print("TerminalVisualBridge not available, trying to load directly")
-        var script = load("/mnt/c/Users/Percision 15/terminal_visual_bridge.gd")
+        var script = load("mnt/c/Users/Percision 15/terminal_visual_bridge.gd")
         if script:
             terminal_bridge = script.new()
             print("Loaded TerminalVisualBridge directly")
@@ -164,7 +164,7 @@ func _connect_systems():
         print("Connected to DockerAnthropicConnector")
     else:
         print("DockerAnthropicConnector not available, trying to load directly")
-        var script = load("/mnt/c/Users/Percision 15/docker_anthropic_connector.gd")
+        var script = load("mnt/c/Users/Percision 15/docker_anthropic_connector.gd")
         if script:
             docker_connector = script.new()
             print("Loaded DockerAnthropicConnector directly")
@@ -248,7 +248,7 @@ func _create_timeline_grid():
 
 func _process(delta):
     # Update timeline current time
-    timeline_current_time = OS.get_unix_time()
+    timeline_current_time = OS.Time.get_unix_time_from_system()
     
     # Check for message hatching events
     _check_message_hatching()

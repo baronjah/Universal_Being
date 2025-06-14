@@ -1,6 +1,6 @@
 @tool
 #Dome.gd it is a Node named Dome, we shall create a shader for i!
-extends MeshInstance3D
+extends \2
 
 
 var tip_of_dome: Vector3 = Vector3.ZERO  # Initializes to (0, 0, 0)

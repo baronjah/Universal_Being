@@ -39,7 +39,7 @@
 # main.gd
 
 # scripts/main.gd
-# res://code/gdscript/scripts/Menu_Keyboard_Console/main.gd
+# res://scripts/gdscript/scripts/Menu_Keyboard_Console/main.gd
 
 # we need node from list
 # we need records from lists
@@ -72,10 +72,7 @@
 #       888      `"Y88b  888     888     ┗┛┗┛┗┗ ┛ ┗ ┗┻┗  ┗┛┛┗┗┫┗┛┗┗   ┗┛┗┫┛┗┗ ┛┗┗
 #       888 oo     .d8P  888     888                          ┛          ┛      
 #   .o. 88P 8""88888P'  o888o   o888o 
-#   `Y888P                            
-
-
-
+#   `Y888P
 extends UniversalBeingBase
 var jsh_console
 var cmd_terminal
@@ -264,19 +261,19 @@ var timer_system: GodotTimersSystem
 @onready var gemma_ai = get_node("JSH_gemma_integration")
 
 
-@onready var main_node = get_node("/root/main")
-@onready var records_system = get_node_or_null("/root/main/JSH_records_system")
+@onready var main_node = get_node("root/main")
+@onready var records_system = get_node_or_null("root/main/JSH_records_system")
 var JSH_records_system = records_system
 
-@onready var data_splitter = get_node("/root/main/JSH_data_splitter")
-@onready var task_manager = get_node("/root/main/JSH_task_manager")
+@onready var data_splitter = get_node("root/main/JSH_data_splitter")
+@onready var task_manager = get_node("root/main/JSH_task_manager")
 #@onready var JSH_records_system = get_node("JSH_records_system")
-@onready var JSH_Threads = get_node("/root/main/JSH_ThreadPool_Manager")
-@onready var JSH_system_check = get_node("/root/main/system_check")
+@onready var JSH_Threads = get_node("root/main/JSH_ThreadPool_Manager")
+@onready var JSH_system_check = get_node("root/main/system_check")
 
 
 
-@onready var thread_pool = get_node("/root/thread_pool_autoload")
+@onready var thread_pool = get_node("root/thread_pool_autoload")
 
 
 
@@ -1424,7 +1421,7 @@ func interactions_upload_to_datapoint(header_line, information_lines, datapoint)
 	datapoint.upload_interactions(header_line, information_lines)
 
 func scene_frames_upload_to_datapoint(header_line, information_lines, datapointi, containeri):
-	var datapoint_path = header_line[1][0] + "/" + header_line[2][0]
+	var datapoint_path = header_line[1][0] + "" + header_line[2][0]
 	var datapoint_selector = datapointi
 	var new_way1 = header_line
 	var new_way2 = information_lines
@@ -1483,7 +1480,7 @@ func load_cached_data_second_impact(data_set: String):
 					print("newly_made_dictio here we act re se ")
 				1:
 					var thingies_to_make_path = lines_parsed[0]
-					var datapoint_path_l_c_d_s_i =  thingies_to_make_path[0][0] + "/" + thingies_to_make_path[1][0]
+					var datapoint_path_l_c_d_s_i =  thingies_to_make_path[0][0] + "" + thingies_to_make_path[1][0]
 					var data_type_s_i : String = "instructions_analiser"
 					print(" we have an issue, probably  1")
 					data_to_be_send_processing(thingies_to_make_path[0][0], first_line[0][0], datapoint_path_l_c_d_s_i, data_type_s_i, first_line.duplicate(true), lines_parsed.duplicate(true), data_set)
@@ -1492,7 +1489,7 @@ func load_cached_data_second_impact(data_set: String):
 					mutex_data_to_send.unlock()
 				2: 
 					var thingies_to_make_path = lines_parsed[0]
-					var datapoint_path_l_c_d_s_i0 =  first_line[1][0] + "/" + first_line[2][0]
+					var datapoint_path_l_c_d_s_i0 =  first_line[1][0] + "" + first_line[2][0]
 					var data_type_s_i0 : String = "scene_frame_upload"
 					print(" we have an issue, probably  2")
 					data_to_be_send_processing(first_line[1][0], first_line[0][0], datapoint_path_l_c_d_s_i0, data_type_s_i0, first_line.duplicate(true), lines_parsed.duplicate(true), data_set)
@@ -1501,7 +1498,7 @@ func load_cached_data_second_impact(data_set: String):
 					data_to_be_send.append([data_type_s_i0, datapoint_path_l_c_d_s_i0, first_line[1][0], first_line.duplicate(true), lines_parsed.duplicate(true)])
 					mutex_data_to_send.unlock()
 				3:
-					var datapoint_path_l_c_d_s_i1 =  first_line[1][0] + "/" + first_line[2][0]
+					var datapoint_path_l_c_d_s_i1 =  first_line[1][0] + "" + first_line[2][0]
 					var data_type_s_i1 : String = "interactions_upload"
 					print(" we have an issue, probably  3")
 					data_to_be_send_processing(first_line[1][0], first_line[0][0], datapoint_path_l_c_d_s_i1, data_type_s_i1, first_line.duplicate(true), lines_parsed.duplicate(true), data_set)
@@ -1545,7 +1542,7 @@ func load_cached_data_second_impact_old(data_set: String):
 					print("newly_made_dictio here we act re se ")
 				1:
 					var thingies_to_make_path = lines_parsed[0]
-					var datapoint_path_l_c_d_s_i =  thingies_to_make_path[0][0] + "/" + thingies_to_make_path[1][0]
+					var datapoint_path_l_c_d_s_i =  thingies_to_make_path[0][0] + "" + thingies_to_make_path[1][0]
 					var data_type_s_i : String = "instructions_analiser"
 					data_to_be_send_processing(thingies_to_make_path[0][0], first_line[0][0], datapoint_path_l_c_d_s_i, data_type_s_i, first_line.duplicate(true), lines_parsed.duplicate(true), data_set)
 					mutex_data_to_send.lock()
@@ -1553,14 +1550,14 @@ func load_cached_data_second_impact_old(data_set: String):
 					mutex_data_to_send.unlock()
 				2: 
 					var thingies_to_make_path = lines_parsed[0]
-					var datapoint_path_l_c_d_s_i0 =  first_line[1][0] + "/" + first_line[2][0]
+					var datapoint_path_l_c_d_s_i0 =  first_line[1][0] + "" + first_line[2][0]
 					var data_type_s_i0 : String = "scene_frame_upload"
 					data_to_be_send_processing(first_line[1][0], first_line[0][0], datapoint_path_l_c_d_s_i0, data_type_s_i0, first_line.duplicate(true), lines_parsed.duplicate(true), data_set)
 					mutex_data_to_send.lock()
 					data_to_be_send.append([data_type_s_i0, datapoint_path_l_c_d_s_i0, first_line[1][0], first_line.duplicate(true), lines_parsed.duplicate(true)])
 					mutex_data_to_send.unlock()
 				3: 
-					var datapoint_path_l_c_d_s_i1 =  first_line[1][0] + "/" + first_line[2][0]
+					var datapoint_path_l_c_d_s_i1 =  first_line[1][0] + "" + first_line[2][0]
 					var data_type_s_i1 : String = "interactions_upload"
 					data_to_be_send_processing(first_line[1][0], first_line[0][0], datapoint_path_l_c_d_s_i1, data_type_s_i1, first_line.duplicate(true), lines_parsed.duplicate(true), data_set)
 					mutex_data_to_send.lock()
@@ -2277,17 +2274,17 @@ func sixth_impact_right_now(data_set_name_here):
 # Create Files
 
 func file_creation(file_content,  path_for_file, name_for_file):
-	var file = FileAccess.open( path_for_file + "/" + name_for_file + ".txt", FileAccess.WRITE)
+	var file = FileAccess.open( path_for_file + "" + name_for_file + ".txt", FileAccess.WRITE)
 	if file:
 		for line in file_content:
 			file.store_line(line) 
 
 func create_file(array_with_data: Array, lines_amount: int, name_for_file: String):
-	var file = FileAccess.open(path + "/" + name_for_file + ".txt", FileAccess.WRITE)
+	var file = FileAccess.open(path + "" + name_for_file + ".txt", FileAccess.WRITE)
 	if file:
 		for line in range(lines_amount):
 			file.store_line(array_with_data[line][0]) 
-		file_path = path + "/" + name_for_file + ".txt"
+		file_path = path + "" + name_for_file + ".txt"
 
 func save_file_list_text(scan_results: Dictionary, output_file: String, target_directory: String):
 	var file = FileAccess.open(output_file, FileAccess.WRITE)
@@ -2334,9 +2331,9 @@ func save_file_list_json(scan_results: Dictionary, output_file: String = "user:/
 func find_or_create_eden_directory():
 	var available_dirs = scan_available_storage()
 	for dir in available_dirs:
-		if DirAccess.dir_exists_absolute(dir + "/Eden"):
-			return dir + "/Eden"
-	var target_dir = available_dirs[0] + "/Eden"
+		if DirAccess.dir_exists_absolute(dir + "Eden"):
+			return dir + "Eden"
+	var target_dir = available_dirs[0] + "Eden"
 	DirAccess.make_dir_recursive_absolute(target_dir)
 	return target_dir
 ####################
@@ -2346,7 +2343,7 @@ func file_finder(file_name, path_to_file, list_of_files, type_of_data):
 	var counter_times : int = 0
 	for file in list_of_files:
 		if file == file_name:
-			file_path = path_to_file + "/" + file
+			file_path = path_to_file + "" + file
 ####################
 
 func check_folder(folder_path):
@@ -2549,14 +2546,14 @@ func scan_available_storage():
 				available_directiories.append(drive)
 	elif OS.get_name() == "Android":
 		var common_paths = [
-			"/storage/emulated/0/", 
-			"/sdcard/",              
-			"/storage/"              
+			"storage/emulated/0/", 
+			"sdcard/",              
+			"storage/"              
 		]
 		for path_s_a_s in common_paths:
 			var dir = DirAccess.open(path)
 			if dir != null:
-				if path_s_a_s == "/storage/":
+				if path_s_a_s == "storage/":
 					var contents = dir.get_directories()
 					for storage in contents:
 						print("Storage device found: /storage/" + storage)
@@ -2687,10 +2684,10 @@ func check_memory_state():
 
 func setup_settings():
 	var eden_path = find_or_create_eden_directory()
-	var akashic_path = eden_path + "/akashic_records"
+	var akashic_path = eden_path + "akashic_records"
 	if !DirAccess.dir_exists_absolute(akashic_path):
 		DirAccess.make_dir_recursive_absolute(akashic_path)
-	var settings_file_path = akashic_path + "/settings.txt"
+	var settings_file_path = akashic_path + "settings.txt"
 	if !FileAccess.file_exists(settings_file_path):
 		create_default_settings(settings_file_path)
 	SettingsBank.load_settings_file(settings_file_path)
@@ -3051,7 +3048,7 @@ func container_finder(set_name):
 			active_record_sets[set_name][wordly_word]
 			container_name_now = active_record_sets[set_name][wordly_word]["content"][0][0][6][0]
 	active_r_s_mut.unlock()
-	var container_splitter = container_name_now.split("/")
+	var container_splitter = container_name_now.split("")
 	if container_splitter.size() > 1:
 		container_name_now = container_splitter[0]
 	return container_name_now
@@ -3316,7 +3313,7 @@ func create_additional_record_set(record_type, current_container_count_check):
 func continue_recreation(data_to_work_on_additional_set, datapoint_name_thing, container_name_thing, set_name_to_work_on, current_container_count_check, record_type, amount_of_things, container_name):
 	var just_thing : String = "thing_"
 	var just_interaction : String = "interaction_"
-	var just_path_now : String = container_name + "/" + just_thing
+	var just_path_now : String = container_name + "" + just_thing
 	var parts_to_change = BanksCombiner.data_names_3
 	for part_now in parts_to_change:
 		var part_name = set_name_to_work_on + part_now
@@ -3371,9 +3368,9 @@ func continue_recreation(data_to_work_on_additional_set, datapoint_name_thing, c
 														var new_stuff_to_find_1 = interaction_name_split + "_" + str(number_of_that_interaction)
 														data_to_work_on_additional_set[part_name][stuff][counting_int_0][counting_int_1][counting_int_2][counting_int_3] = new_stuff_to_find_1
 													elif stuff_to_find_1.begins_with(just_path_now):
-														var first_path_split = stuff_to_find_1.split("/")
+														var first_path_split = stuff_to_find_1.split("")
 														var second_split_of_thing = first_path_split[1].split("_")
-														var first_merge = first_path_split[0] + "/" + second_split_of_thing[0] + "_"
+														var first_merge = first_path_split[0] + "" + second_split_of_thing[0] + "_"
 														var number_of_that_thing : int = int(second_split_of_thing[1]) + amount_of_things
 														var new_path_now = first_merge + str(number_of_that_thing)
 														data_to_work_on_additional_set[part_name][stuff][counting_int_0][counting_int_1][counting_int_2][counting_int_3] = new_path_now
@@ -3936,7 +3933,7 @@ func build_pretty_print(node: Node, prefix: String = "", is_last: bool = true) -
 	return output
 
 func find_branch_to_unload(thing_path):
-	var new_path_splitter = str(thing_path).split("/")
+	var new_path_splitter = str(thing_path).split("")
 	tree_mutex.lock()
 	if scene_tree_jsh["main_root"]["branches"][new_path_splitter[0]]["children"].has(new_path_splitter[1]):
 		var branch_part_to_cache = scene_tree_jsh["main_root"]["branches"][new_path_splitter[0]]["children"][new_path_splitter[1]].duplicate(true)
@@ -3989,7 +3986,7 @@ func print_tree_structure(branch: Dictionary, indent: int = 0):
 		if metadata.get("has_collision", false):
 			print("%s  └─ Has Collision" % indent_str)
 		if metadata.get("has_area", false):
-			print("%s  └─ Has Area" % indent_str)
+			print("%s  └─ Has Area3D" % indent_str)
 	if branch.has("branches"):
 		for child in branch["branches"].values():
 			tree_mutex.unlock()
@@ -4001,7 +3998,7 @@ func print_tree_structure(branch: Dictionary, indent: int = 0):
 	tree_mutex.unlock()
 
 func jsh_tree_get_node(node_path_get_node: String) -> Node:
-	var path_parts = node_path_get_node.split("/")
+	var path_parts = node_path_get_node.split("")
 	tree_mutex.lock()
 	var current = scene_tree_jsh["main_root"]["branches"]
 	for part in path_parts:
@@ -4255,7 +4252,7 @@ func recreator_of_singular_thing(data_set):
 func recreate_missing_nodes(array_of_recreation):
 	var container_name = array_of_recreation[0]
 	var path_of_missing_node = array_of_recreation[1]
-	var splitted_path_for_main_thingy = path_of_missing_node.split("/")
+	var splitted_path_for_main_thingy = path_of_missing_node.split("")
 	var node_we_look_for_now : String
 	var set_name_we_look_for : String
 	if splitted_path_for_main_thingy.size() > 1:
@@ -4274,7 +4271,7 @@ func recreate_missing_nodes(array_of_recreation):
 						print_tree_structure(scene_tree_jsh["main_root"]["branches"][container_name]["children"][node_we_look_for_now], 0)
 						disable_all_branches_reset_counters(scene_tree_jsh["main_root"]["branches"][container_name]["children"][node_we_look_for_now], container_name)
 						print_tree_structure(scene_tree_jsh["main_root"]["branches"][container_name]["children"][node_we_look_for_now], 0)
-						var path_for_node_to_unload = container_name + "/" + node_we_look_for_now
+						var path_for_node_to_unload = container_name + "" + node_we_look_for_now
 						array_counting_mutex.lock()
 						if array_for_counting_finish[container_name].has(node_we_look_for_now):
 							array_for_counting_finish[container_name][node_we_look_for_now]["node"] = []
@@ -4360,10 +4357,10 @@ func recreate_node_from_records(container_name: String, node_type: String, recor
 		})
 
 func tasked_children(node_to_be_added, node_to_be_added_path):
-	var splitted_path = node_to_be_added_path.split("/")
+	var splitted_path = node_to_be_added_path.split("")
 	var container_name = splitted_path[0]
 	var node_to_be_added_name = splitted_path[-1]
-	var parent_path = "/".join(splitted_path.slice(0, -1)) 
+	var parent_path = "".join(splitted_path.slice(0, -1)) 
 	if splitted_path.size() == 1:
 		var node_type : int = 0
 		mutex_nodes_to_be_added.lock()
@@ -4441,38 +4438,38 @@ func process_active_records_for_tree(active_records: Dictionary, set_name_to_pro
 			array_for_counting_finish[container_name_here]["metadata"]["counter_before"] +=4
 			array_counting_mutex.unlock()
 			var static_body_name = "collision_" + node_name
-			var static_body_path = node_path_p_a_r_f_t + "/" + static_body_name
+			var static_body_path = node_path_p_a_r_f_t + "" + static_body_name
 			the_pretender_printer(static_body_name, static_body_path, "StaticBody3D", "collision")
 			var shape_name = "shape_" + node_name
-			var shape_path = static_body_path + "/" + shape_name
+			var shape_path = static_body_path + "" + shape_name
 			the_pretender_printer(shape_name, shape_path, "CollisionShape3D", "collision")
 			var area_name = "aura_" + node_name
-			var area_path = node_path_p_a_r_f_t + "/" + area_name
+			var area_path = node_path_p_a_r_f_t + "" + area_name
 			the_pretender_printer(area_name, area_path, "Area3D", "area")
 			var area_shape_name = "collision_aura_" + node_name
-			var area_shape_path = area_path + "/" + area_shape_name
+			var area_shape_path = area_path + "" + area_shape_name
 			the_pretender_printer(area_shape_name, area_shape_path, "CollisionShape3D", "collision")
 		elif node_type == "button":
 			array_counting_mutex.lock()
 			array_for_counting_finish[container_name_here]["metadata"]["counter_before"] +=6
 			array_counting_mutex.unlock()
 			var text_name = "text_" + node_name
-			var text_path = node_path_p_a_r_f_t + "/" + text_name
+			var text_path = node_path_p_a_r_f_t + "" + text_name
 			the_pretender_printer(text_name, text_path, "Label3D", "text")
 			var shape_name = "shape_" + node_name
-			var shape_path = node_path_p_a_r_f_t + "/" + shape_name
+			var shape_path = node_path_p_a_r_f_t + "" + shape_name
 			the_pretender_printer(shape_name, shape_path, "MeshInstance3D", "button")
 			var collision_shape_name = "collision_" + shape_name
-			var collision_shape_path = shape_path + "/" + collision_shape_name
+			var collision_shape_path = shape_path + "" + collision_shape_name
 			the_pretender_printer(collision_shape_name, collision_shape_path, "StaticBody3D", "collision")
 			var shape_collision_name = "shape_" + shape_name
-			var shape_collision_path = collision_shape_path + "/" + shape_collision_name
+			var shape_collision_path = collision_shape_path + "" + shape_collision_name
 			the_pretender_printer(shape_collision_name, shape_collision_path, "CollisionShape3D", "collision")
 			var area_name = "aura_" + shape_name
-			var area_path = shape_path + "/" + area_name
+			var area_path = shape_path + "" + area_name
 			the_pretender_printer(area_name, area_path, "Area3D", "area")
 			var area_collision_name = "collision_aura_" + shape_name
-			var area_collision_path = area_path + "/" + area_collision_name
+			var area_collision_path = area_path + "" + area_collision_name
 			the_pretender_printer(area_collision_name, area_collision_path, "CollisionShape3D", "collision")
 	active_r_s_mut.unlock()
 
@@ -4503,7 +4500,7 @@ func the_pretender_printer(node_name: String, node_path_jsh_tree: String, godot_
 		scene_tree_jsh["main_root"]["type"] = "Node3D"
 		scene_tree_jsh["main_root"]["status"] = "active"
 		scene_tree_jsh["main_root"]["node"] = self
-	var path_parts = node_path_jsh_tree.split("/")
+	var path_parts = node_path_jsh_tree.split("")
 	var current_branch = scene_tree_jsh["main_root"]["branches"]
 	cached_tree_mutex.lock()
 	var cached_current_branch = cached_jsh_tree_branches
@@ -4511,7 +4508,7 @@ func the_pretender_printer(node_name: String, node_path_jsh_tree: String, godot_
 	var current_full_path = ""
 	for i in range(path_parts.size()):
 		var part = path_parts[i]
-		current_full_path = current_full_path + "/" + part if current_full_path else part
+		current_full_path = current_full_path + "" + part if current_full_path else part
 		if !current_branch.has(part):
 			if cached_current_branch.has(part):
 				print(" the cached branch has that one ")
@@ -4734,7 +4731,7 @@ func disable_all_branches_reset_counters(branch_to_disable, container_name_for_a
 		branches_to_process.remove_at(0)
 
 func jsh_tree_get_node_status_changer(node_path_jsh_tree_status: String, node_name: String, node_to_check: Node):
-	var path_parts_jsh_status_node = node_path_jsh_tree_status.split("/")
+	var path_parts_jsh_status_node = node_path_jsh_tree_status.split("")
 	tree_mutex.lock()
 	var current = scene_tree_jsh["main_root"]["branches"]
 	tree_mutex.unlock()
@@ -4993,7 +4990,7 @@ func process_system_1():
 					var parent_path = data_to_process[1]
 					var node_name = data_to_process[2]
 					var main_node_to_add = data_to_process[3]
-					var combined_path = parent_path + "/" + node_name
+					var combined_path = parent_path + "" + node_name
 					var container = get_node_or_null(parent_path)
 					if container:
 						FloodgateController.universal_add_child(main_node_to_add, container)
@@ -5019,7 +5016,7 @@ func process_system_1():
 					var node_name = data_to_process[2]
 					var main_node_to_add = data_to_process[3]
 					var container_name = data_to_process[4]
-					var combined_path = parent_path + "/" + node_name
+					var combined_path = parent_path + "" + node_name
 					var container = get_node_or_null(parent_path)
 					if container:
 						FloodgateController.universal_add_child(main_node_to_add, container)
@@ -5615,7 +5612,7 @@ func multi_threaded_ray_cast(result, to, from):
 		to = result.position
 		var collider = result.collider
 		var container_path = result.collider.get_path()
-		var container_name_split = str(container_path).split("/")
+		var container_name_split = str(container_path).split("")
 		var container_name = container_name_split[3]
 		var thing_name = container_name_split[4]
 		print(" ray_cast_stufff container_name : " , container_name, " andu za thingu : " , thing_name)
@@ -6135,8 +6132,8 @@ func create_button_with_rounded_corners(node_name: String, first_line: Array, da
 	text_label.modulate = Color(1, 1, 1) 
 	text_label.position.z += 0.01 
 	
-	var mesh_path = node_path_c_b + "/" + mesh_name
-	var label_path = node_path_c_b + "/" + text_label_name
+	var mesh_path = node_path_c_b + "" + mesh_name
+	var label_path = node_path_c_b + "" + text_label_name
 	tasked_children(text_label, label_path)
 	
 	var node_type = "button"
@@ -6198,8 +6195,8 @@ func create_button(node_name: String, first_line : Array, data_to_write : Array,
 	text_label.no_depth_test = true
 	text_label.modulate = Color(1, 1, 1) 
 	text_label.position.z += 0.01 
-	var mesh_path = node_path_c_b + "/" + mesh_name
-	var label_path = node_path_c_b + "/" + text_label_name
+	var mesh_path = node_path_c_b + "" + mesh_name
+	var label_path = node_path_c_b + "" + text_label_name
 	tasked_children(text_label, label_path)
 	var node_type = "button"
 	node_creation(mesh_name, mesh_instance, coords, to_rotate, group_name, node_type, mesh_path)
@@ -7224,19 +7221,19 @@ func generate_uvs_for_mesh(mesh_instance):
 
 func add_collision_to_thing(thing_node, node_type, path_of_thingy, name_of_thingy):
 	var static_body_name = "collision_" + name_of_thingy 
-	var static_body_path = path_of_thingy + "/" + static_body_name
+	var static_body_path = path_of_thingy + "" + static_body_name
 	var static_body = StaticBody3D.new()
 	static_body.name = static_body_name
 	var shape_name = "shape_" + name_of_thingy 
-	var collision_shape_path = static_body_path + "/"  + shape_name
+	var collision_shape_path = static_body_path + ""  + shape_name
 	var collision_shape = CollisionShape3D.new()
 	collision_shape.name = shape_name
 	var area_name = "aura_" + name_of_thingy 
-	var area_node_path = path_of_thingy + "/" + area_name
+	var area_node_path = path_of_thingy + "" + area_name
 	var area = Area3D.new()
 	area.name = area_name
 	var collision_area = "collision_aura_" + name_of_thingy
-	var collision_area_path = area_node_path + "/" + collision_area
+	var collision_area_path = area_node_path + "" + collision_area
 	var area_collision_shape = CollisionShape3D.new()
 	area_collision_shape.name = collision_area
 	var mesh_instance = thing_node as MeshInstance3D
@@ -7930,7 +7927,7 @@ func initialize_physical_reality(settings):
 	var world = get_tree().get_root()
 	if world:
 		Engine.time_scale = 1.0
-		var world_env = get_node_or_null("/root/World/WorldEnvironment")
+		var world_env = get_node_or_null("root/World/WorldEnvironment")
 		if world_env and "environment" in world_env:
 			pass
 	return {"status": "success", "reality": "physical"}
@@ -7940,7 +7937,7 @@ func initialize_digital_reality(settings):
 	var world = get_tree().get_root()
 	if world:
 		Engine.time_scale = 1.2
-		var world_env = get_node_or_null("/root/World/WorldEnvironment")
+		var world_env = get_node_or_null("root/World/WorldEnvironment")
 		if world_env and "environment" in world_env:
 			pass
 	return {"status": "success", "reality": "digital"}
@@ -7950,7 +7947,7 @@ func initialize_astral_reality(settings):
 	var world = get_tree().get_root()
 	if world:
 		Engine.time_scale = 0.8
-		var world_env = get_node_or_null("/root/World/WorldEnvironment")
+		var world_env = get_node_or_null("root/World/WorldEnvironment")
 		if world_env and "environment" in world_env:
 			pass
 	return {"status": "success", "reality": "astral"}
@@ -8291,7 +8288,7 @@ func generate_icosphere_old(lod: int, time: float) -> ArrayMesh:
 	return
 	
 class ChunkData:
-	extends RefCounted
+extends RefCounted
 	var position: Vector3
 	var last_accessed: float
 	var time_created: float
@@ -8497,7 +8494,7 @@ func apply_reality_rules(reality_type):
 			apply_color_palette("geometric")
 
 func apply_color_palette(palette_name):
-	var world_env = get_node_or_null("/root/World/WorldEnvironment")
+	var world_env = get_node_or_null("root/World/WorldEnvironment")
 	if world_env and "environment" in world_env:
 		print("🎨 Applied color palette: " + palette_name)
 
@@ -8715,7 +8712,7 @@ func parse_command(input_text):
 		return {"success": false, "message": "Command parser not initialized"}
 
 func find_interface_text_node():
-	var container = get_node_or_null("/root/main/digital_earthlings_container")
+	var container = get_node_or_null("root/main/digital_earthlings_container")
 	if container:
 		return container.get_node_or_null("thing_3")
 	return null
@@ -8828,10 +8825,10 @@ func create_anomaly():
 
 
 func toggle_reality_containers(old_reality, new_reality):
-	var old_container = get_node_or_null("/root/main/" + old_reality + "_reality_container")
+	var old_container = get_node_or_null("root/main/" + old_reality + "_reality_container")
 	if old_container:
 		old_container.visible = false
-	var new_container = get_node_or_null("/root/main/" + new_reality + "_reality_container")
+	var new_container = get_node_or_null("root/main/" + new_reality + "_reality_container")
 	if new_container:
 		new_container.visible = true
 
@@ -9119,7 +9116,7 @@ func create_glitch_effect(parameter, intensity, duration_str):
 	else:
 		intensity_value = min(int(intensity), 100)
 	print("🔥 Creating " + parameter + " glitch with intensity " + str(intensity_value) + " for " + str(duration) + "s")
-	sixth_dimensional_magic("call_function_single_get_node", "/root/JSH_reality_shaders", "create_glitch_effect", [parameter, intensity_value, duration_str])
+	sixth_dimensional_magic("call_function_single_get_node", "root/JSH_reality_shaders", "create_glitch_effect", [parameter, intensity_value, duration_str])
 	remember("glitch_" + parameter, {"intensity": intensity_value, "duration": duration})
 	return {
 		"status": "success", 
@@ -9226,7 +9223,7 @@ func connect_signals():
 		thread_pool.connect("task_started", _on_task_started)
 
 func apply_reality_shader(reality_type):
-	sixth_dimensional_magic("call_function_single_get_node", "/root/JSH_reality_shaders", "apply_color_palette", reality_type)
+	sixth_dimensional_magic("call_function_single_get_node", "root/JSH_reality_shaders", "apply_color_palette", reality_type)
 
 func register_with_banks_combiner():
 	if !BanksCombiner.data_sets_names_0.has("digital_earthlings"):
@@ -9283,7 +9280,7 @@ func initialize_thread_system():
 	if thread_pool == null:
 		print("⚠️ Thread pool not found. Creating new instance...")
 		# Use JSH thread pool manager instead
-		thread_pool = get_node("/root/JSHThreadPool") if has_node("/root/JSHThreadPool") else Node.new()
+		thread_pool = get_node("root/JSHThreadPool") if has_node("root/JSHThreadPool") else Node.new()
 		add_child(thread_pool)
 	thread_pool.connect("task_discarded", Callable(self, "_on_task_discarded"))
 	thread_pool.connect("task_started", Callable(self, "_on_task_started"))
@@ -9444,7 +9441,7 @@ func create_racing_game_integrator():
 		return
 	
 	# Create the racing game integrator
-	var integrator_script = load("res://code/gdscript/scripts/Menu_Keyboard_Console/racing_menu_integrator.gd")
+	var integrator_script = load("res://scripts/gdscript/scripts/Menu_Keyboard_Console/racing_menu_integrator.gd")
 	if integrator_script:
 		var integrator = Node.new()
 		integrator.name = "RacingGameIntegrator"
@@ -9559,7 +9556,7 @@ func set_up_racing_game(container_name, visibility):
 	# Container exists, set up everything else
 	
 	# Load the racing game script
-	var PalletsRacingGameScript = load("res://code/gdscript/scripts/Menu_Keyboard_Console/pallets_racing_game.gd")
+	var PalletsRacingGameScript = load("res://scripts/gdscript/scripts/Menu_Keyboard_Console/pallets_racing_game.gd")
 	
 	# Create racing game node if it doesn't exist yet
 	var racing_game_node = container_node.get_node_or_null("PalletsRacingGame")

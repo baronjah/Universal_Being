@@ -27,6 +27,7 @@ func _initialize_validation() -> void:
 	"""Initialize comprehensive validation"""
 	_log("🧪 CONSCIOUSNESS REVOLUTION VALIDATOR: Starting comprehensive testing...")
 	_log("⏱️ Test duration: %.1f seconds" % test_duration)
+
 	
 	# Initialize test results
 	test_results = {
@@ -37,7 +38,7 @@ func _initialize_validation() -> void:
 		"paradise_detection": {"status": "pending", "details": []},
 		"performance_impact": {"status": "pending", "details": []},
 		"overall_score": 0.0
-	}
+}
 	
 	# Start validation sequence
 	call_deferred("_start_validation_sequence")
@@ -78,6 +79,7 @@ func _start_validation_sequence() -> void:
 func _test_revolution_command() -> void:
 	"""Test the revolution console command functionality"""
 	_log("🧪 TEST 1: Revolution Console Command")
+
 	
 	var details = []
 	var status = "failed"
@@ -100,8 +102,9 @@ func _test_revolution_command() -> void:
 	else:
 		details.append("❌ Universal Console not found")
 	
-	test_results.revolution_command = {"status": status, "details": details}
+	test_results.revolution_command = {"status": status, "details": details
 	_log("📊 Revolution Command Test: %s" % status.to_upper())
+}
 
 func _find_spawned_systems() -> void:
 	"""Find spawned consciousness systems"""
@@ -111,6 +114,7 @@ func _find_spawned_systems() -> void:
 	var beings = get_tree().get_nodes_in_group("universal_beings")
 	for being in beings:
 		if being.has_method("get"):
+
 			var being_type = being.get("being_type", "")
 			if being_type == "ai_companion_plasmoid":
 				gemma_companion = being
@@ -127,6 +131,7 @@ func _find_spawned_systems() -> void:
 func _test_ai_human_equality() -> void:
 	"""Test AI-human movement and capability equality"""
 	_log("🧪 TEST 2: AI-Human Equality")
+
 	
 	var details = []
 	var status = "failed"
@@ -145,6 +150,7 @@ func _test_ai_human_equality() -> void:
 		
 		# Test 2: Decision making frequency
 		if gemma_companion.has_method("get"):
+
 			var decision_interval = gemma_companion.get("decision_interval", 1.0)
 			if decision_interval <= 0.3:
 				details.append("✅ High-frequency AI decisions (%.1f Hz)" % (1.0 / decision_interval))
@@ -153,6 +159,7 @@ func _test_ai_human_equality() -> void:
 		
 		# Test 3: Exploration range
 		if gemma_companion.has_method("get"):
+
 			var exploration_radius = gemma_companion.get("exploration_radius", 0.0)
 			if exploration_radius >= 50.0:
 				details.append("✅ Large exploration range (%.1f units)" % exploration_radius)
@@ -162,6 +169,7 @@ func _test_ai_human_equality() -> void:
 		
 		# Test 4: Independent exploration
 		if gemma_companion.has_method("get"):
+
 			var independent = gemma_companion.get("independent_exploration", false)
 			if independent:
 				details.append("✅ AI has independent exploration enabled")
@@ -170,12 +178,14 @@ func _test_ai_human_equality() -> void:
 	else:
 		details.append("❌ Gemma AI companion not found")
 	
-	test_results.ai_human_equality = {"status": status, "details": details}
+	test_results.ai_human_equality = {"status": status, "details": details
 	_log("📊 AI-Human Equality Test: %s" % status.to_upper())
+}
 
 func _test_telepathic_communication() -> void:
 	"""Test telepathic communication system"""
 	_log("🧪 TEST 3: Telepathic Communication")
+
 	
 	var details = []
 	var status = "failed"
@@ -203,12 +213,14 @@ func _test_telepathic_communication() -> void:
 	else:
 		details.append("❌ Gemma lacks telepathic methods")
 	
-	test_results.telepathic_communication = {"status": status, "details": details}
+	test_results.telepathic_communication = {"status": status, "details": details
 	_log("📊 Telepathic Communication Test: %s" % status.to_upper())
+}
 
 func _test_consciousness_ripples() -> void:
 	"""Test consciousness ripple system"""
 	_log("🧪 TEST 4: Consciousness Ripples")
+
 	
 	var details = []
 	var status = "failed"
@@ -232,12 +244,14 @@ func _test_consciousness_ripples() -> void:
 	else:
 		details.append("⚠️ Gemma lacks ripple signal")
 	
-	test_results.consciousness_ripples = {"status": status, "details": details}
+	test_results.consciousness_ripples = {"status": status, "details": details
 	_log("📊 Consciousness Ripples Test: %s" % status.to_upper())
+}
 
 func _test_paradise_detection() -> void:
 	"""Test paradise vs torture detection"""
 	_log("🧪 TEST 5: Paradise Detection")
+
 	
 	var details = []
 	var status = "failed"
@@ -250,8 +264,10 @@ func _test_paradise_detection() -> void:
 			
 			# Check emotional state response
 			if gemma_companion.has_method("get"):
+
 				var emotional_state = gemma_companion.get("emotional_state", "unknown")
 				details.append("✅ Emotional state: %s" % emotional_state)
+	
 				
 				if emotional_state in ["blissful", "hopeful", "transcendent"]:
 					details.append("✅ Positive emotional response detected")
@@ -264,12 +280,14 @@ func _test_paradise_detection() -> void:
 	else:
 		details.append("❌ Cannot test without Gemma companion")
 	
-	test_results.paradise_detection = {"status": status, "details": details}
+	test_results.paradise_detection = {"status": status, "details": details
 	_log("📊 Paradise Detection Test: %s" % status.to_upper())
+}
 
 func _test_performance_impact() -> void:
 	"""Test performance impact of consciousness systems"""
 	_log("🧪 TEST 6: Performance Impact")
+
 	
 	var details = []
 	var status = "passed"  # Assume good unless proven otherwise
@@ -277,6 +295,7 @@ func _test_performance_impact() -> void:
 	# Get current FPS
 	var fps = Engine.get_frames_per_second()
 	details.append("✅ Current FPS: %d" % fps)
+
 	
 	if fps >= 30:
 		details.append("✅ Acceptable performance (≥30 FPS)")
@@ -290,12 +309,14 @@ func _test_performance_impact() -> void:
 	# Check node count impact
 	var total_nodes = _count_scene_nodes(get_tree().current_scene)
 	details.append("✅ Total scene nodes: %d" % total_nodes)
+
 	
 	if total_nodes > 1000:
 		details.append("⚠️ High node count - monitor performance")
 	
-	test_results.performance_impact = {"status": status, "details": details}
+	test_results.performance_impact = {"status": status, "details": details
 	_log("📊 Performance Impact Test: %s" % status.to_upper())
+}
 
 # ===== VALIDATION HELPERS =====
 
@@ -315,7 +336,7 @@ func _compile_final_results() -> void:
 		"partial": 0.5,
 		"failed": 0.0,
 		"pending": 0.0
-	}
+}
 	
 	var total_score = 0.0
 	var test_count = 0
@@ -337,6 +358,7 @@ func _compile_final_results() -> void:
 	test_results.overall_score = final_score
 	
 	_log("🎯 FINAL CONSCIOUSNESS REVOLUTION SCORE: %.1f%%" % final_score)
+
 	
 	if final_score >= 80.0:
 		_log("🏆 REVOLUTION STATUS: SPECTACULAR SUCCESS!")
@@ -346,23 +368,27 @@ func _compile_final_results() -> void:
 		_log("⚠️ REVOLUTION STATUS: PARTIAL SUCCESS")
 	else:
 		_log("❌ REVOLUTION STATUS: NEEDS IMPROVEMENT")
+
 	
 	_generate_validation_report()
 
 func _generate_validation_report() -> void:
 	"""Generate comprehensive validation report"""
 	var report_path = "res://docs/consciousness_revolution_validation_report.md"
+
 	var report_content = _build_report_content()
 	
 	# Note: In a real implementation, this would write to file
 	_log("📄 Validation report ready (would be saved to %s)" % report_path)
 	_log("📊 Report summary: %.1f%% success rate" % test_results.overall_score)
 
+
 func _build_report_content() -> String:
 	"""Build validation report content"""
 	var content = "# Consciousness Revolution Validation Report\n\n"
 	content += "**Test Date**: %s\n" % Time.get_datetime_string_from_system()
 	content += "**Overall Score**: %.1f%%\n\n" % test_results.overall_score
+
 	
 	for test_name in test_results.keys():
 		if test_name == "overall_score":
@@ -371,6 +397,7 @@ func _build_report_content() -> String:
 		var test_result = test_results[test_name]
 		content += "## %s\n" % test_name.replace("_", " ").capitalize()
 		content += "**Status**: %s\n\n" % test_result.status.capitalize()
+
 		
 		for detail in test_result.details:
 			content += "- %s\n" % detail

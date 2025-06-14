@@ -1,5 +1,5 @@
 # scene_tree_check.gd
-extends Node
+extends \2
 
 func _ready():
 	# Call print_tree_pretty on the root node to print the whole tree

@@ -85,6 +85,7 @@ func _find_systems():
     time_tracker = _find_node_by_class(get_tree().root, "UsageTimeTracker")
     if time_tracker:
         print("Found time tracker: " + time_tracker.name)
+		
         
         # Update lucky number from tracker if available
         if "lucky_number" in time_tracker:
@@ -102,6 +103,7 @@ func _find_systems():
             
         if turn_system:
             print("Found turn system by class: " + turn_system.name)
+			
             
             # Get current turn
             if "current_turn" in turn_system:
@@ -137,8 +139,8 @@ func _initialize_network():
             "activity": randf(),
             "type": randi() % 3,  # 0: standard, 1: memory, 2: number
             "connections": []
-        }
         nodes.append(node)
+}
     
     # Create connections between nodes
     for i in range(nodes.size()):
@@ -149,10 +151,10 @@ func _initialize_network():
                     "to": j,
                     "weight": randf(),
                     "active": randf() < 0.5
-                }
                 connections.append(connection)
                 nodes[i].connections.append(j)
                 nodes[j].connections.append(i)
+}
     
     # Create special memory points based on the digit 8
     _create_number_shape(8, 100, 150, 0.5)
@@ -316,6 +318,7 @@ func _on_data_timer_timeout():
     if turn_system:
         # Update current turn
         if "current_turn" in turn_system:
+		
             var new_turn = turn_system.current_turn
             if new_turn != current_turn:
                 current_turn = new_turn
@@ -446,9 +449,9 @@ func _create_number_shape(digit: int, center_x: float, center_y: float, scale: f
             "activity": 0.8,
             "type": 2,  # Number type
             "connections": []
-        }
         nodes.append(node)
         number_points.append(nodes.size() - 1)
+}
 
 func _rebuild_connections():
     connections.clear()
@@ -483,10 +486,10 @@ func _rebuild_connections():
                     "to": j,
                     "weight": 1.0 - distance / max_dist,
                     "active": randf() < 0.7
-                }
                 connections.append(connection)
                 node_i.connections.append(j)
                 node_j.connections.append(i)
+}
 
 # ----- PUBLIC API -----
 func set_number_sequence(new_sequence: Array):

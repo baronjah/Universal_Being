@@ -4,7 +4,6 @@
 # PURPOSE: Control the ragdoll to walk around, pick up objects, and manipulate the scene
 # CREATED: 2025-05-24 - Enhanced for Garden of Eden creation
 # ==================================================
-
 extends Node3D
 
 # Core Components
@@ -53,8 +52,8 @@ func pentagon_ready() -> void:
 	print("[RagdollController] Initializing ragdoll controller...")
 	
 	# Get references
-	floodgate = get_node("/root/FloodgateController") if has_node("/root/FloodgateController") else null
-	world_builder = get_node("/root/WorldBuilder") if has_node("/root/WorldBuilder") else null
+	floodgate = get_node("root/FloodgateController") if has_node("root/FloodgateController") else null
+	world_builder = get_node("root/WorldBuilder") if has_node("root/WorldBuilder") else null
 	
 	# Find ragdoll in scene
 	_find_ragdoll_body()

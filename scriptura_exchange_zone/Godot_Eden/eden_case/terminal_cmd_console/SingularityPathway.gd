@@ -1,5 +1,5 @@
-extends Spatial
-class_name SingularityPathway
+extends Node3D
+class_name SingularityPathway_SingularityPathway_Singular
 }
 
 # ------------------------------------
@@ -18,7 +18,8 @@ const RESONANCE_FREQUENCY = 432.0
 }
 
 # Enumerations for pathway types
-enum PathwayType {
+enum \2 {
+
     LINEAR,           # Direct linear connection
     SPIRAL,           # Spiraling connection with harmonic oscillation
     BRANCHING,        # Branching path with multiple possible futures
@@ -215,7 +216,7 @@ func create_pathway(start_dimension, end_dimension, pathway_type = PathwayType.L
         "type": pathway_type,
         "control_points": control_points,
         "properties": properties,
-        "creation_time": OS.get_unix_time(),
+        "creation_time": OS.Time.get_unix_time_from_system(),
         "active": false,
         "completed": false,
         "flow_rate": 0.0,
@@ -453,7 +454,7 @@ func activate_pathway(pathway_id, initial_flow_rate = 0.1):
     # Set as active
     pathway.active = true
     pathway.flow_rate = initial_flow_rate
-    pathway.activation_time = OS.get_unix_time()
+    pathway.activation_time = OS.Time.get_unix_time_from_system()
 }
 
     # Begin data flow
@@ -489,7 +490,7 @@ func complete_pathway(pathway_id, success = true):
     # Mark as completed
     pathway.active = false
     pathway.completed = true
-    pathway.completion_time = OS.get_unix_time()
+    pathway.completion_time = OS.Time.get_unix_time_from_system()
     pathway.success = success
 }
 
@@ -1039,7 +1040,8 @@ func reset_system():
 }
 
 # Pathway visualizer for rendering
-class PathwayVisualizer extends Spatial:
+class PathwayVisualizer
+extends \2:
     func create_pathway_visualization(pathway):
         # This would create visual representation of pathways
         # Implementation would include mesh creation and material setup
@@ -1102,7 +1104,8 @@ class PathwayVisualizer extends Spatial:
 }
 
 # Dimension coordinator for dimensional interactions
-class DimensionCoordinator extends Node:
+class DimensionCoordinator
+extends \2:
     signal dimension_interaction(dim1, dim2, strength)
 }
 
@@ -1112,7 +1115,8 @@ class DimensionCoordinator extends Node:
 }
 
 # Convergence monitor
-class ConvergenceMonitor extends Node:
+class ConvergenceMonitor
+extends \2:
     signal convergence_update(new_convergence, delta)
 }
 
@@ -1122,7 +1126,8 @@ class ConvergenceMonitor extends Node:
 }
 
 # Data flow system
-class DataFlowSystem extends Node:
+class DataFlowSystem
+extends \2:
     signal flow_threshold_reached(pathway_id, threshold_value)
 }
 

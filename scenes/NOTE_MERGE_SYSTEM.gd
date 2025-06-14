@@ -13,6 +13,7 @@ func select_note_at_cursor():
 	
 	for note in floating_notes:
 		if is_instance_valid(note) and note.has_meta("editable"):
+
 			var distance = note.global_position.distance_to(to)
 			if distance < min_distance:
 				min_distance = distance

@@ -1,7 +1,7 @@
 extends Node
 }
 
-class_name TraversalMarker
+class_name TraversalMarker_traversalmarker_traversa
 }
 
 # Traversal Marker System
@@ -23,7 +23,7 @@ Notes: {notes}
 =====================
 """,
     "default_notes": "Explored this area. Potential for resources.",
-    "world_origin": "/mnt/c/Users/Percision 15",
+    "world_origin": "mnt/c/Users/Percision 15",
     "biomes": [
         "Forest", "Desert", "Mountains", "Ocean", "Plains", 
         "Jungle", "Swamp", "Tundra", "Savanna", "Taiga",
@@ -68,7 +68,7 @@ signal territory_mapped(mapped_percentage)
 # Initialize the marker system
 func _ready():
     # Generate world seed based on date
-    var date = Time.get_date_dict_from_unix_time(OS.get_unix_time())
+    var date = Time.get_date_dict_from_unix_time(OS.Time.get_unix_time_from_system())
     world_seed = date.year * 10000 + date.month * 100 + date.day
 }
 
@@ -83,7 +83,7 @@ func _ready():
     # Mark origin as visited
     visited_locations[current_location] = {
         "coords": current_position,
-        "timestamp": OS.get_unix_time(),
+        "timestamp": OS.Time.get_unix_time_from_system(),
         "marker_placed": false
     }
 }
@@ -108,12 +108,12 @@ func connect_terminal(term):
 }
 
     # Register commands
-    terminal.register_command("mark", "Place a marker at current location", funcref(self, "_cmd_mark"), 0, "mark [notes]")
-    terminal.register_command("explore", "Move to and explore a location", funcref(self, "_cmd_explore"), 1, "explore <path>")
-    terminal.register_command("position", "Show current position", funcref(self, "_cmd_position"))
-    terminal.register_command("map", "Show map of explored territories", funcref(self, "_cmd_map"))
-    terminal.register_command("read", "Read marker at location", funcref(self, "_cmd_read"), 1, "read [location]")
-    terminal.register_command("calibrate", "Place OCR calibration markers", funcref(self, "_cmd_calibrate"))
+    terminal.register_command("mark", "Place a marker at current location", Callable(self, "_cmd_mark"), 0, "mark [notes]")
+    terminal.register_command("explore", "Move to and explore a location", Callable(self, "_cmd_explore"), 1, "explore <path>")
+    terminal.register_command("position", "Show current position", Callable(self, "_cmd_position"))
+    terminal.register_command("map", "Show map of explored territories", Callable(self, "_cmd_map"))
+    terminal.register_command("read", "Read marker at location", Callable(self, "_cmd_read"), 1, "read [location]")
+    terminal.register_command("calibrate", "Place OCR calibration markers", Callable(self, "_cmd_calibrate"))
 }
 
     return true
@@ -125,7 +125,7 @@ func connect_visualizer(vis):
 }
 
     # Register data source
-    visualizer.register_data_source("traversal", "World Traversal", funcref(self, "_get_traversal_data"))
+    visualizer.register_data_source("traversal", "World Traversal", Callable(self, "_get_traversal_data"))
 }
 
     return true
@@ -134,7 +134,7 @@ func connect_visualizer(vis):
 # Move to and explore a location
 func explore_location(location):
     # If path is relative, make it absolute
-    if not location.begins_with("/"):
+    if not location.begins_with(""):
         location = current_location.plus_file(location)
 }
 
@@ -171,14 +171,14 @@ func explore_location(location):
         "from": old_location,
         "to": location,
         "distance": distance,
-        "timestamp": OS.get_unix_time()
+        "timestamp": OS.Time.get_unix_time_from_system()
     })
 }
 
     # Mark as visited
     visited_locations[location] = {
         "coords": current_position,
-        "timestamp": OS.get_unix_time(),
+        "timestamp": OS.Time.get_unix_time_from_system(),
         "marker_placed": false
     }
 }
@@ -242,7 +242,7 @@ func place_marker(location, position = null, notes = null):
 }
 
     # Generate marker content
-    var timestamp = Time.get_datetime_string_from_unix_time(OS.get_unix_time())
+    var timestamp = Time.get_datetime_string_from_unix_time(OS.Time.get_unix_time_from_system())
     var biome = _get_biome_for_position(position)
     var distance = position.length()  # Distance from origin
 }
@@ -282,7 +282,7 @@ func place_marker(location, position = null, notes = null):
     placed_markers.append({
         "location": location,
         "position": position,
-        "timestamp": OS.get_unix_time(),
+        "timestamp": OS.Time.get_unix_time_from_system(),
         "notes": notes,
         "biome": biome
     })
@@ -303,7 +303,7 @@ func read_marker(location):
 }
 
     # If path is relative, make it absolute
-    if not location.begins_with("/"):
+    if not location.begins_with(""):
         location = current_location.plus_file(location)
 }
 
@@ -403,12 +403,12 @@ func _path_to_position(path):
         rel_path = path.substr(config.world_origin.length())
 }
 
-    if rel_path.begins_with("/"):
+    if rel_path.begins_with(""):
         rel_path = rel_path.substr(1)
 }
 
     # Split into path components
-    var components = rel_path.split("/")
+    var components = rel_path.split("")
 }
 
     # Start at origin

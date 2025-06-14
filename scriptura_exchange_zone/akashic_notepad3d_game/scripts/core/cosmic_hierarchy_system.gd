@@ -31,7 +31,7 @@ extends Node3D
 # ═══════════════════════════════════════════════════════════════════════════════════════════════
 
 ## Cosmic Hierarchy System - Sun + 8 Planets Architecture
-class_name CosmicHierarchySystem
+class_name CosmicHierarchySystem_cosmichierarchysystem_cosmichi
 
 # Cosmic constants
 const TOTAL_PLANETS = 8
@@ -40,7 +40,8 @@ const SUN_POSITION = Vector3(0, 0, 0)  # Central hub
 const PLANET_ORBIT_RADIUS = 100.0
 
 # Planet data structure
-enum PlanetType {
+enum \2 {
+
 	MERCURY,  # Speed/Communication
 	VENUS,    # Love/Beauty
 	EARTH,    # Life/Balance  

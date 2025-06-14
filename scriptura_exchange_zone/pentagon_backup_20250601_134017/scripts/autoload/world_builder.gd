@@ -3,8 +3,7 @@
 # DESCRIPTION: Spawns objects in the world based on console commands
 # CREATED: 2025-05-23 - Dynamic world creation system
 # ==================================================
-
-extends UniversalBeingBase
+extends \2
 # Object storage
 var spawned_objects: Array[Node3D] = []
 var object_counter: Dictionary = {}
@@ -58,7 +57,7 @@ func debug_print(message: String, level: int = 2) -> void:
 
 func _get_std_objects() -> Node:
 	"""Get StandardizedObjects autoload"""
-	return get_node_or_null("/root/StandardizedObjects")
+	return get_node_or_null("root/StandardizedObjects")
 
 func _ready() -> void:
 	# Initialize counters
@@ -80,8 +79,8 @@ func _ready() -> void:
 	}
 	
 	# Get references to new systems
-	floodgate = get_node("/root/FloodgateController")
-	asset_library = get_node("/root/AssetLibrary")
+	floodgate = get_node("root/FloodgateController")
+	asset_library = get_node("root/AssetLibrary")
 	
 	if floodgate:
 		debug_print("[WorldBuilder] Connected to FloodgateController", 2)
@@ -117,7 +116,7 @@ func get_mouse_spawn_position() -> Vector3:
 	var from = camera.project_ray_origin(mouse_pos)
 	var to = from + camera.project_ray_normal(mouse_pos) * 100
 	
-	var space_state = get_tree().current_scene.get_world_3d().direct_space_state
+	var space_state = get_tree().current_scene.get_viewport().get_world_3d().direct_space_state
 	var ray_query = PhysicsRayQueryParameters3D.new()
 	ray_query.from = from
 	ray_query.to = to
@@ -157,7 +156,7 @@ func _fallback_create_tree() -> void:
 	var obj = std_objects.create_object("tree", get_mouse_spawn_position())
 	if obj:
 		object_counter["tree"] += 1
-		get_tree().get_node("/root/FloodgateController").universal_add_child(obj, get_tree().current_scene)
+		get_tree().get_node("root/FloodgateController").universal_add_child(obj, get_tree().current_scene)
 		spawned_objects.append(obj)
 
 func create_rock() -> void:
@@ -235,7 +234,7 @@ func create_ragdoll() -> void:
 	var obj = StandardizedObjects.create_object("ragdoll", get_mouse_spawn_position())
 	if obj:
 		object_counter["ragdoll"] += 1
-		get_tree().get_node("/root/FloodgateController").universal_add_child(obj, get_tree().current_scene)
+		get_tree().get_node("root/FloodgateController").universal_add_child(obj, get_tree().current_scene)
 		# Don't add to spawned_objects since we only want one ragdoll
 
 func create_sun() -> void:
@@ -244,7 +243,7 @@ func create_sun() -> void:
 	var obj = StandardizedObjects.create_object("sun", spawn_pos)
 	if obj:
 		object_counter["sun"] += 1
-		get_tree().get_node("/root/FloodgateController").universal_add_child(obj, get_tree().current_scene)
+		get_tree().get_node("root/FloodgateController").universal_add_child(obj, get_tree().current_scene)
 		spawned_objects.append(obj)
 		# Ensure sun stays in place (no gravity)
 		if obj.has_method("set_freeze_enabled"):
@@ -276,7 +275,7 @@ func create_astral_being() -> void:
 			spawned_objects.append(astral_being)
 			debug_print("[WorldBuilder] Queued talking astral being creation: " + being_name, 3)
 		else:
-			get_tree().get_node("/root/FloodgateController").universal_add_child(astral_being, get_tree().current_scene)
+			get_tree().get_node("root/FloodgateController").universal_add_child(astral_being, get_tree().current_scene)
 			spawned_objects.append(astral_being)
 			debug_print("[WorldBuilder] Created talking astral being directly", 3)
 	else:
@@ -286,21 +285,21 @@ func create_pathway() -> void:
 	var obj = StandardizedObjects.create_object("pathway", get_mouse_spawn_position())
 	if obj:
 		object_counter["pathway"] += 1
-		get_tree().get_node("/root/FloodgateController").universal_add_child(obj, get_tree().current_scene)
+		get_tree().get_node("root/FloodgateController").universal_add_child(obj, get_tree().current_scene)
 		spawned_objects.append(obj)
 
 func create_bush() -> void:
 	var obj = StandardizedObjects.create_object("bush", get_mouse_spawn_position())
 	if obj:
 		object_counter["bush"] += 1
-		get_tree().get_node("/root/FloodgateController").universal_add_child(obj, get_tree().current_scene)
+		get_tree().get_node("root/FloodgateController").universal_add_child(obj, get_tree().current_scene)
 		spawned_objects.append(obj)
 
 func create_fruit() -> void:
 	var obj = StandardizedObjects.create_object("fruit", get_mouse_spawn_position())
 	if obj:
 		object_counter["fruit"] += 1
-		get_tree().get_node("/root/FloodgateController").universal_add_child(obj, get_tree().current_scene)
+		get_tree().get_node("root/FloodgateController").universal_add_child(obj, get_tree().current_scene)
 		spawned_objects.append(obj)
 
 func create_pigeon() -> void:
@@ -341,7 +340,7 @@ func create_pigeon() -> void:
 			spawned_objects.append(bird)
 			print("[WorldBuilder] Queued triangular bird creation with AI: " + bird.name)
 		else:
-			get_tree().get_node("/root/FloodgateController").universal_add_child(bird, get_tree().current_scene)
+			get_tree().get_node("root/FloodgateController").universal_add_child(bird, get_tree().current_scene)
 			spawned_objects.append(bird)
 			print("[WorldBuilder] Created triangular bird with AI directly")
 	else:
@@ -404,28 +403,28 @@ func _fallback_create_rock() -> void:
 	var obj = StandardizedObjects.create_object("rock", get_mouse_spawn_position())
 	if obj:
 		object_counter["rock"] += 1
-		get_tree().get_node("/root/FloodgateController").universal_add_child(obj, get_tree().current_scene)
+		get_tree().get_node("root/FloodgateController").universal_add_child(obj, get_tree().current_scene)
 		spawned_objects.append(obj)
 
 func _fallback_create_box() -> void:
 	var obj = StandardizedObjects.create_object("box", get_mouse_spawn_position())
 	if obj:
 		object_counter["box"] += 1
-		get_tree().get_node("/root/FloodgateController").universal_add_child(obj, get_tree().current_scene)
+		get_tree().get_node("root/FloodgateController").universal_add_child(obj, get_tree().current_scene)
 		spawned_objects.append(obj)
 
 func _fallback_create_ball() -> void:
 	var obj = StandardizedObjects.create_object("ball", get_mouse_spawn_position())
 	if obj:
 		object_counter["ball"] += 1
-		get_tree().get_node("/root/FloodgateController").universal_add_child(obj, get_tree().current_scene)
+		get_tree().get_node("root/FloodgateController").universal_add_child(obj, get_tree().current_scene)
 		spawned_objects.append(obj)
 
 func _fallback_create_ramp() -> void:
 	var obj = StandardizedObjects.create_object("ramp", get_mouse_spawn_position())
 	if obj:
 		object_counter["ramp"] += 1
-		get_tree().get_node("/root/FloodgateController").universal_add_child(obj, get_tree().current_scene)
+		get_tree().get_node("root/FloodgateController").universal_add_child(obj, get_tree().current_scene)
 		spawned_objects.append(obj)
 
 ## Generic object creation for any type
@@ -436,7 +435,7 @@ func _fallback_create_ramp() -> void:
 # CONNECTION: Used by console commands for new asset types
 func create_object(object_type: String) -> void:
 	# Try to use UniversalObjectManager first (the perfect way)
-	var uom = get_node_or_null("/root/UniversalObjectManager")
+	var uom = get_node_or_null("root/UniversalObjectManager")
 	if uom and uom.has_method("create_object"):
 		var uom_spawn_pos = get_mouse_spawn_position()
 		var uom_obj_node = uom.create_object(object_type, uom_spawn_pos)
@@ -456,7 +455,7 @@ func create_object(object_type: String) -> void:
 	
 	# Use floodgate system to create object
 	var spawn_pos = get_mouse_spawn_position()
-	var std_objects = get_node_or_null("/root/StandardizedObjects")
+	var std_objects = get_node_or_null("root/StandardizedObjects")
 	if not std_objects:
 		_fallback_create_object(object_type)
 		return
@@ -481,7 +480,7 @@ func create_object(object_type: String) -> void:
 		debug_print("[WorldBuilder] Queued %s creation through floodgate: %s" % [object_type, obj_name], 3)
 	
 func _fallback_create_object(object_type: String) -> void:
-	var std_objects = get_node_or_null("/root/StandardizedObjects")
+	var std_objects = get_node_or_null("root/StandardizedObjects")
 	if not std_objects:
 		debug_print("[WorldBuilder] StandardizedObjects autoload not found!", 1)
 		return
@@ -491,5 +490,5 @@ func _fallback_create_object(object_type: String) -> void:
 			object_counter[object_type] += 1
 		else:
 			object_counter[object_type] = 1
-		get_tree().get_node("/root/FloodgateController").universal_add_child(obj, get_tree().current_scene)
+		get_tree().get_node("root/FloodgateController").universal_add_child(obj, get_tree().current_scene)
 		spawned_objects.append(obj)

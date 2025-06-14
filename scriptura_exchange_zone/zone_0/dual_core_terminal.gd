@@ -6,7 +6,7 @@ extends Node
 # Implements hash-based bracket coloring and special pattern detection
 }
 
-class_name DualCoreTerminal
+class_name DualCoreTerminal_dualcoreterminal_dualcore
 }
 
 # ----- CORE CONFIGURATION -----
@@ -17,7 +17,8 @@ const MAX_ACCOUNT_VALUE = 19
 }
 
 # ----- TERMINAL WINDOW STATES -----
-enum WindowState {
+enum \2 {
+
     ACTIVE,
     PROCESSING,
     WAITING,
@@ -43,13 +44,14 @@ const SPECIAL_PATTERNS = {
     "###\n#+#\n###": "enclosed_room",
     "[@]": "player_start",
     "<->": "teleporter",
-    "/*\\": "time_rune",
+    "*\\": "time_rune",
     "|/\\|": "dimension_gate"
 }
 }
 
 # ----- TIME STATES -----
-enum TimeState {
+enum \2 {
+
     PAST,
     PRESENT,
     FUTURE,
@@ -147,7 +149,7 @@ func _ready():
         "account_value": 0,
         "special_patterns": {},
         "last_input": "",
-        "creation_time": OS.get_unix_time(),
+        "creation_time": OS.Time.get_unix_time_from_system(),
         "miracle_count": 0
     }
 }
@@ -167,21 +169,21 @@ func _ready():
 
 func _connect_to_game_systems():
     # Connect to divine word game
-    divine_word_game = get_node_or_null("/root/DivineWordGame")
+    divine_word_game = get_node_or_null("root/DivineWordGame")
 }
 
     # Connect to divine word processor
-    divine_word_processor = get_node_or_null("/root/DivineWordProcessor")
+    divine_word_processor = get_node_or_null("root/DivineWordProcessor")
 }
 
     # Connect to turn system
-    turn_system = get_node_or_null("/root/TurnSystem")
+    turn_system = get_node_or_null("root/TurnSystem")
     if turn_system:
         turn_system.connect(_on_dimension_changed)
 }
 
     # Connect to word comment system
-    word_comment_system = get_node_or_null("/root/WordCommentSystem")
+    word_comment_system = get_node_or_null("root/WordCommentSystem")
 }
 
 func _initialize_dimension_cores():
@@ -208,7 +210,7 @@ func _initialize_dimension_cores():
                 "account_value": 0,
                 "special_patterns": {},
                 "last_input": "",
-                "creation_time": OS.get_unix_time(),
+                "creation_time": OS.Time.get_unix_time_from_system(),
                 "miracle_count": 0
             }
 }
@@ -280,7 +282,7 @@ func create_core(core_id, name=""):
         "account_value": 0,
         "special_patterns": {},
         "last_input": "",
-        "creation_time": OS.get_unix_time(),
+        "creation_time": OS.Time.get_unix_time_from_system(),
         "miracle_count": 0
     }
 }
@@ -318,7 +320,7 @@ func process_input(core_id, input_text):
     cores[core_id].history.append({
         "type": "input",
         "text": input_text,
-        "timestamp": OS.get_unix_time()
+        "timestamp": OS.Time.get_unix_time_from_system()
     })
 }
 
@@ -391,7 +393,7 @@ func process_input(core_id, input_text):
     cores[core_id].history.append({
         "type": "output",
         "text": str(result),
-        "timestamp": OS.get_unix_time()
+        "timestamp": OS.Time.get_unix_time_from_system()
     })
 }
 
@@ -526,7 +528,7 @@ func _trigger_miracle(core_id):
     cores[core_id].history.append({
         "type": "miracle",
         "text": "MIRACLE PATTERN DETECTED: Reality manifests!",
-        "timestamp": OS.get_unix_time()
+        "timestamp": OS.Time.get_unix_time_from_system()
     })
 }
 
@@ -632,7 +634,7 @@ func _handle_i_might_see_secret(core_id):
     cores[core_id].history.append({
         "type": "secret",
         "text": "I_MIGHT_SEE: The hidden truth reveals itself!",
-        "timestamp": OS.get_unix_time()
+        "timestamp": OS.Time.get_unix_time_from_system()
     })
 }
 

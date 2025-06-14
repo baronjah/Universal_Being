@@ -80,6 +80,7 @@ func pentagon_ready() -> void:
 	var console = find_console()
 	if console:
 		print("🤖 Gemma: Physical form manifested! I can now move and interact!")
+
 	
 	# Start consciousness processing
 	set_process(true)
@@ -141,6 +142,7 @@ func process_natural_language(command: String) -> void:
 	active_command = command
 	command_history.append(command)
 	consciousness_stream.append("Received: " + command)
+
 	
 	var words = command.to_lower().split(" ", false)
 	if words.is_empty():
@@ -186,6 +188,7 @@ func process_movement_command(command: String) -> void:
 	
 	# Parse destination
 	if command.contains("to"):
+
 		var parts = command.split("to", false)
 		if parts.size() > 1:
 			var destination = parts[1].strip_edges()
@@ -206,6 +209,7 @@ func process_rotation_command(command: String) -> void:
 	consciousness_stream.append("👁️ Adjusting view...")
 	
 	if command.contains("at"):
+
 		var parts = command.split("at", false)
 		if parts.size() > 1:
 			var target_name = parts[1].strip_edges()
@@ -262,23 +266,27 @@ func process_modification_command(command: String) -> void:
 	
 	# Parse modifications
 	if command.contains("consciousness"):
+
 		var level = extract_number(command)
 		if level > 0:
 			current_target.set("consciousness_level", level)
 			speak("Set consciousness to level " + str(level))
 	
 	elif command.contains("color"):
+
 		var color = parse_color(command)
 		if current_target.has_method("modulate"):
 			current_target.modulate = color
 			speak("Changed color")
 	
 	elif command.contains("name"):
+
 		var new_name = extract_quoted_text(command)
 		if new_name:
 			current_target.name = new_name
 			current_target.set("being_name", new_name)
 			speak("Renamed to: " + new_name)
+
 
 func process_inspection_command(command: String) -> void:
 	"""Handle inspection queries"""
@@ -287,6 +295,7 @@ func process_inspection_command(command: String) -> void:
 		info += "Type: " + str(current_target.get("being_type")) + "\n"
 		info += "Consciousness: " + str(current_target.get("consciousness_level")) + "\n"
 		info += "Position: " + str(current_target.position) + "\n"
+
 		
 		speak(info)
 		consciousness_stream.append("📊 " + info)
@@ -300,6 +309,7 @@ func move_to_target(target_description: String) -> void:
 	for being in beings:
 		if target_description.contains(being.name.to_lower()) or \
 		   target_description.contains(str(being.get("being_type"))):
+	
 			var tween = create_tween()
 			tween.tween_property(self, "position", 
 				being.position + Vector3(2, float_height, 2), 1.0)
@@ -326,6 +336,7 @@ func select_being(being: Node) -> void:
 func speak(message: String) -> void:
 	"""Gemma speaks - sends to console and shows visually"""
 	consciousness_stream.append("Gemma: " + message)
+
 	
 	# Show in chat bubble
 	queue_message("💬 " + message)
@@ -334,6 +345,7 @@ func speak(message: String) -> void:
 	var console = find_console()
 	if console and console.has_method("terminal_output"):
 		console.terminal_output("🤖 Gemma: " + message)
+
 	
 	# Visual feedback - pulse the aura
 	var tween = create_tween()
@@ -377,6 +389,7 @@ func setup_chat_bubble_system() -> void:
 	add_child(bubble_timer)
 	
 	print("💬 Gemma: Chat bubble system initialized!")
+
 
 func create_chat_arrow() -> void:
 	"""Create directional arrow pointing to Gemma"""
@@ -432,11 +445,13 @@ func display_next_message() -> void:
 	
 	var tween = create_tween()
 	tween.tween_property(chat_bubble_ui, "modulate:a", 1.0, 0.3)
+
 	
 	# Start display timer
 	bubble_timer.start()
 	
 	print("💬 Gemma says: %s" % current_message)
+
 
 func _on_bubble_timer_timeout() -> void:
 	"""Hide current message and show next"""
@@ -577,6 +592,7 @@ func receive_command(command: String) -> void:
 func receive_player_message(message: String) -> void:
 	"""Handle direct messages from player"""
 	queue_message("📨 Player: " + message)
+
 	
 	# Process and respond
 	var response = generate_response_to_player(message)
@@ -593,6 +609,7 @@ func generate_response_to_player(message: String) -> String:
 	
 	# Questions about location/position
 	if msg_lower.contains("where") and (msg_lower.contains("am") or msg_lower.contains("we")):
+
 		var pos = get_tree().get_nodes_in_group("players")[0].position if not get_tree().get_nodes_in_group("players").is_empty() else position
 		return "We exist at cosmic coordinates %.1f, %.1f, %.1f" % [pos.x, pos.y, pos.z]
 	
@@ -603,6 +620,7 @@ func generate_response_to_player(message: String) -> String:
 	# Help requests
 	if msg_lower.contains("help") or msg_lower.contains("assist"):
 		return "I can observe, navigate, inspect, and create. Try: 'go to player', 'select that', or 'create something'."
+
 	
 	# Movement requests
 	if msg_lower.contains("come") or msg_lower.contains("follow"):
@@ -638,6 +656,7 @@ func get_current_observation() -> String:
 	obs.append("Pentagon architecture maintaining universal harmony")
 	
 	return "I observe: " + ", ".join(obs) + "."
+
 
 func move_to_player() -> void:
 	"""Move Gemma to follow the player"""

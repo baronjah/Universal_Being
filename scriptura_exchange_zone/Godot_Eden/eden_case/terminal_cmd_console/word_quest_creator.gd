@@ -1,7 +1,7 @@
 extends Node
 }
 
-class_name WordQuestCreator
+class_name WordQuestCreator_wordquestcreator_wordques
 }
 
 # Core components
@@ -56,11 +56,11 @@ func _ready():
 
 func initialize_systems():
 	# Connect to required systems
-	if has_node("/root/MemorySystem"):
+	if has_node("root/MemorySystem"):
 		memory_system = get_node("\1") as Node
 }
 
-	if has_node("/root/WorldOfWords"):
+	if has_node("root/WorldOfWords"):
 		world_of_words_connector = get_node("\1") as Node
 }
 
@@ -114,7 +114,7 @@ func create_quest(quest_name, type, objective, reward):
 		"reward": reward,
 		"progress": 0.0,
 		"completed": false,
-		"created_at": OS.get_unix_time(),
+		"created_at": OS.Time.get_unix_time_from_system(),
 		"dimension": get_current_dimension(),
 		"markers": []
 	}
@@ -129,7 +129,7 @@ func create_quest(quest_name, type, objective, reward):
 }
 
 func generate_quest_id():
-	return "quest_" + str(OS.get_unix_time()) + "_" + str(randi() % 1000)
+	return "quest_" + str(OS.Time.get_unix_time_from_system()) + "_" + str(randi() % 1000)
 }
 
 func get_current_dimension():
@@ -256,13 +256,13 @@ func create_memory_crystal():
 }
 
 func award_wisdom_point():
-	if has_node("/root/PlayerStats"):
+	if has_node("root/PlayerStats"):
 		var stats = get_node("\1") as Node
 		stats.add_wisdom(1)
 }
 
 func grant_creation_energy():
-	if has_node("/root/CreationSystem"):
+	if has_node("root/CreationSystem"):
 		var creation = get_node("\1") as Node
 		creation.add_energy(50)
 }
@@ -350,7 +350,7 @@ func visualize_quest(quest):
 
 # Special Animations
 func create_portal_animation():
-	var portal = Spatial.new()
+	var portal = Node3D.new()
 	portal.name = "DimensionalPortal"
 	add_child(portal)
 }
@@ -414,7 +414,7 @@ func create_portal_animation():
 }
 
 func create_completion_animation(quest):
-	var celebration = Spatial.new()
+	var celebration = Node3D.new()
 	celebration.name = "QuestCompletionEffect"
 	add_child(celebration)
 }
@@ -720,7 +720,7 @@ help - Show this help text
 func save_quests():
 	var save_data = {
 		"active_quests": active_quests,
-		"timestamp": OS.get_unix_time()
+		"timestamp": OS.Time.get_unix_time_from_system()
 	}
 }
 

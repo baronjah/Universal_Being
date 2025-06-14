@@ -1,5 +1,5 @@
 extends Control
-class_name JSHPlayerGUI
+class_name JSHPlayerGUI_jshplayergui_jshplaye
 
 # GUI for the JSH Player Controller
 # Displays current movement mode, reality, energy, and word information

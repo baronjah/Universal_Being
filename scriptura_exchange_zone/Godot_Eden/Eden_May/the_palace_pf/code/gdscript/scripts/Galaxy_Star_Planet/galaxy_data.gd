@@ -1,5 +1,5 @@
 extends Resource
-class_name GalaxyData
+class_name GalaxyData_galaxydata_galaxyda
 
 var id: int
 var seed_value: int

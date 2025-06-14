@@ -1,13 +1,14 @@
 extends Node
 
-class_name PaintSystem
+class_name PaintSystem_paintsystem_paintsys
 
 signal stroke_created(stroke_id, color, dimension)
 signal shape_painted(shape_id, texture_id)
 signal texture_created(texture_id, dimension)
 
 # Stroke types
-enum StrokeType {
+enum \2 {
+
 	BRUSH,          # Regular brush stroke
 	WATER,          # Water/blend effect
 	GLOW,           # Glowing effect
@@ -236,9 +237,9 @@ var turn_cycle_manager: TurnCycleManager
 
 func _ready():
 	# Get references to other systems
-	shape_system = get_node_or_null("/root/ShapeSystem")
-	dimensional_color_system = get_node_or_null("/root/DimensionalColorSystem")
-	turn_cycle_manager = get_node_or_null("/root/TurnCycleManager")
+	shape_system = get_node_or_null("root/ShapeSystem")
+	dimensional_color_system = get_node_or_null("root/DimensionalColorSystem")
+	turn_cycle_manager = get_node_or_null("root/TurnCycleManager")
 	
 	# Set default brush settings based on current dimension
 	if turn_cycle_manager and dimensional_color_system:

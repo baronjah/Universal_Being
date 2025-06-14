@@ -7,15 +7,15 @@ extends UniversalBeingBase
 
 signal layer_visibility_changed(layer_id: int, visible: bool)
 signal reality_mode_changed(mode: String)  # Connected by UI systems for mode switching
+enum \2 {
 
-enum Layer {
 	TEXT = 0,      # Console/text representation
 	MAP_2D = 1,    # 2D height/color map
 	DEBUG_3D = 2,  # Debug shapes and lines
 	FULL_3D = 3    # Full 3D models
 }
+enum \2 {
 
-enum ViewMode {
 	SINGLE,        # Show one layer
 	DUAL,          # Show two layers
 	TRIPLE,        # Show three layers
@@ -309,8 +309,8 @@ func add_text_entity(id: String, text: String, world_pos: Vector3) -> void:
 		"last_update": Time.get_ticks_msec()
 	}
 	# This would connect to console manager for text display
-	if has_node("/root/ConsoleManager"):
-		get_node("/root/ConsoleManager").call("display_world_text", text_data)
+	if has_node("root/ConsoleManager"):
+		get_node("root/ConsoleManager").call("display_world_text", text_data)
 
 # 2D Map Layer Functions (Layer 1)
 func update_height_map(position: Vector2, height: float, color: Color) -> void:
@@ -363,8 +363,8 @@ func get_layer_node(layer: Layer) -> Node3D:
 
 # Console commands integration
 func register_console_commands() -> void:
-	if has_node("/root/ConsoleManager"):
-		var console = get_node("/root/ConsoleManager")
+	if has_node("root/ConsoleManager"):
+		var console = get_node("root/ConsoleManager")
 		if "commands" in console:
 			console.commands["layer"] = _console_layer_command
 			console.commands["reality"] = _console_reality_command

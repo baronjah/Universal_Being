@@ -1,5 +1,5 @@
 extends Node
-class_name StoryGenerationEngine
+class_name StoryGenerationEngine_storygenerationengine_storygen
 
 """
 Story Generation Engine
@@ -18,7 +18,8 @@ Features:
 """
 
 # Story structure elements
-enum StoryStage {
+enum \2 {
+
     SETUP,
     CONFLICT,
     RISING_ACTION,
@@ -26,8 +27,8 @@ enum StoryStage {
     FALLING_ACTION,
     RESOLUTION
 }
+enum \2 {
 
-enum StoryTone {
     HOPEFUL,
     DARK,
     MYSTERIOUS,
@@ -38,8 +39,8 @@ enum StoryTone {
     NEUTRAL,
     PERSONALIZED
 }
+enum \2 {
 
-enum StoryTheme {
     IDENTITY,
     TRANSFORMATION,
     MYSTERY,
@@ -53,8 +54,8 @@ enum StoryTheme {
     BALANCE,
     TRANSCENDENCE
 }
+enum \2 {
 
-enum CharacterRole {
     PROTAGONIST,
     ANTAGONIST,
     MENTOR,
@@ -65,8 +66,8 @@ enum CharacterRole {
     TRICKSTER,
     MESSENGER
 }
+enum \2 {
 
-enum DimensionalInfluence {
     REALITY,      # 1D: Point - Basic factual data
     LINEAR,       # 2D: Line - Direct cause/effect
     SPATIAL,      # 3D: Space - Environmental context
@@ -253,7 +254,7 @@ class Story:
     func _init(p_id: String, p_title: String):
         id = p_id
         title = p_title
-        created_at = OS.get_unix_time()
+        created_at = OS.Time.get_unix_time_from_system()
         last_updated = created_at
     
     func add_arc(arc: StoryArc):
@@ -289,7 +290,7 @@ class Story:
         
         # Update current event
         current_event_id = choice.next_event_id
-        last_updated = OS.get_unix_time()
+        last_updated = OS.Time.get_unix_time_from_system()
         
         return current_event_id
     
@@ -1035,7 +1036,7 @@ func get_dimension_name(dimension: int) -> String:
         DimensionalInfluence.LINEAR:
             return "Linear"
         DimensionalInfluence.SPATIAL:
-            return "Spatial"
+            return "Node3D"
         DimensionalInfluence.TEMPORAL:
             return "Temporal"
         DimensionalInfluence.CONSCIOUS:
@@ -1058,7 +1059,7 @@ func get_dimension_name(dimension: int) -> String:
             return "Unknown"
 
 func generate_unique_id() -> String:
-    var id = str(OS.get_unix_time()) + "-" + str(randi() % 1000000).pad_zeros(6)
+    var id = str(OS.Time.get_unix_time_from_system()) + "-" + str(randi() % 1000000).pad_zeros(6)
     return id
 
 # Example usage:

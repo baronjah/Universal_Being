@@ -159,7 +159,7 @@ func _connect_to_game_systems():
     # Connect to turn system
     turn_system = get_node_or_null("/root/TurnSystem")
     if turn_system:
-        turn_system.connect("dimension_changed", self, "_on_dimension_changed")
+        turn_system.connect(_on_dimension_changed)
     
     # Connect to word comment system
     word_comment_system = get_node_or_null("/root/WordCommentSystem")
@@ -516,7 +516,7 @@ func _process_snake_case(text):
         
         # Verify that all parts are valid words
         for word in words:
-            if word.strip_edges().empty():
+            if word.strip_edges().is_empty():
                 valid_snake_case = false
                 break
         

@@ -26,6 +26,7 @@ func _ready() -> void:
 	_initialize_audio_library()
 	print("🔊 Consciousness Audio Manager: Ready to make consciousness audible!")
 
+
 func _initialize_audio_library() -> void:
 	"""Initialize the consciousness audio library"""
 	# Note: In a real implementation, these would be actual audio files
@@ -40,7 +41,7 @@ func _initialize_audio_library() -> void:
 		"ai_awakening": "res://akashic_library/sounds/ai_awakening.ogg",
 		"transcendence": "res://akashic_library/sounds/transcendence.ogg",
 		"energy_merge": "res://akashic_library/sounds/energy_merge.ogg"
-	}
+}
 	
 	print("🔊 Audio library initialized with %d consciousness sounds" % audio_library.size())
 
@@ -59,6 +60,7 @@ func play_consciousness_ripple(intensity: float, ripple_type: String) -> void:
 	_play_consciousness_sound(sound_key, ripple_volume * intensity)
 	
 	print("🔊 Playing ripple sound: %s (intensity: %.2f)" % [sound_key, intensity])
+
 
 func play_telepathic_communication() -> void:
 	"""Play audio for telepathic communication attempts"""
@@ -83,6 +85,7 @@ func play_consciousness_level_change(new_level: int) -> void:
 	
 	_play_consciousness_sound(sound_key, consciousness_volume)
 	print("🔊 Playing consciousness advancement: %s (level %d)" % [sound_key, new_level])
+
 
 func play_ai_awakening() -> void:
 	"""Play special audio for AI awakening"""
@@ -132,11 +135,13 @@ func _play_consciousness_sound(sound_key: String, volume: float) -> void:
 		# play()
 		
 		print("🔊 [AUDIO] Playing: %s at volume %.2f" % [sound_key, volume])
+
 		
 		# Create visual feedback in absence of actual audio
 		_create_audio_visual_feedback(sound_key)
 	else:
 		print("⚠️ Audio file not found: %s" % sound_key)
+
 
 func _create_audio_visual_feedback(sound_key: String) -> void:
 	"""Create visual feedback to represent audio"""
@@ -186,6 +191,6 @@ func get_audio_status() -> Dictionary:
 		"consciousness_volume": consciousness_volume,
 		"last_ripple_time": last_ripple_sound,
 		"last_telepathic_time": last_telepathic_sound
-	}
+}
 
 print("🔊 ConsciousnessAudioManager: Class loaded - Ready to make consciousness audible!")

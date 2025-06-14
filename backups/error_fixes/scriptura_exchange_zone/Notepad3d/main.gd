@@ -184,7 +184,7 @@ func _process_word_manifestation(delta):
 # === DIMENSIONAL STABILITY PROCESSING ===
 func _process_dimension_stability(delta):
 	# Calculate stability fluctuation
-	var stability_change = sin(OS.get_ticks_msec() / 1000.0) * 0.01
+	var stability_change = sin(OS.Time.get_ticks_msec() / 1000.0) * 0.01
 	
 	# Apply stability change
 	bridge_stability = clamp(bridge_stability + stability_change, 0.5, 1.0)
@@ -518,33 +518,33 @@ func _initialize_negative_dimensions():
 func _connect_signals():
 	# Connect ethereal tunnel signals
 	if ethereal_tunnel != null:
-		ethereal_tunnel.connect("tunnel_established", self, "_on_tunnel_established")
-		ethereal_tunnel.connect("dimension_shifted", self, "_on_dimension_shifted")
-		ethereal_tunnel.connect("word_manifested", self, "_on_word_manifested")
-		ethereal_tunnel.connect("color_spectrum_activated", self, "_on_color_spectrum_activated")
-		ethereal_tunnel.connect("ocr_detected", self, "_on_ocr_detected")
-		ethereal_tunnel.connect("tunnel_collapsed", self, "_on_tunnel_collapsed")
+		ethereal_tunnel.connect(_on_tunnel_established)
+		ethereal_tunnel.connect(_on_dimension_shifted)
+		ethereal_tunnel.connect(_on_word_manifested)
+		ethereal_tunnel.connect(_on_color_spectrum_activated)
+		ethereal_tunnel.connect(_on_ocr_detected)
+		ethereal_tunnel.connect(_on_tunnel_collapsed)
 	
 	# Connect spatial linguistic signals
 	if spatial_linguistic != null:
-		spatial_linguistic.connect("trajectory_created", self, "_on_trajectory_created")
-		spatial_linguistic.connect("word_mapped", self, "_on_word_mapped")
+		spatial_linguistic.connect(_on_trajectory_created)
+		spatial_linguistic.connect(_on_word_mapped)
 	
 	# Connect auto agent signals
 	if auto_agent != null:
-		auto_agent.connect("agent_mode_activated", self, "_on_agent_mode_activated")
-		auto_agent.connect("transform_applied", self, "_on_transform_applied")
+		auto_agent.connect(_on_agent_mode_activated)
+		auto_agent.connect(_on_transform_applied)
 	
 	# Connect universal data flow signals
 	if universal_data_flow != null:
-		universal_data_flow.connect("data_flow_established", self, "_on_data_flow_established")
-		universal_data_flow.connect("negative_generated", self, "_on_negative_generated")
+		universal_data_flow.connect(_on_data_flow_established)
+		universal_data_flow.connect(_on_negative_generated)
 	
 	# Connect project connector signals
 	if project_connector != null:
-		project_connector.connect("project_connected", self, "_on_project_connected")
-		project_connector.connect("file_modified", self, "_on_file_modified")
-		project_connector.connect("sound_activated", self, "_on_sound_activated")
+		project_connector.connect(_on_project_connected)
+		project_connector.connect(_on_file_modified)
+		project_connector.connect(_on_sound_activated)
 	
 	print("All signals connected")
 
@@ -712,7 +712,7 @@ func establish_tunnel(source, target, dimension = active_dimension):
 		"source": source,
 		"target": target,
 		"dimension": dimension,
-		"established": OS.get_ticks_msec(),
+		"established": OS.Time.get_ticks_msec(),
 		"stability": bridge_stability
 	}
 	
@@ -846,7 +846,7 @@ func _create_word_trajectory(word, dimension = active_dimension):
 				"steps": steps,
 				"current_step": 0,
 				"current_position": steps[0],
-				"created_at": OS.get_ticks_msec()
+				"created_at": OS.Time.get_ticks_msec()
 			}
 			
 			word_trajectories.append(trajectory)

@@ -4,7 +4,6 @@
 # PURPOSE: Visual asset browser for quick world building
 # CREATED: 2025-05-24 - Creative mode interface
 # ==================================================
-
 extends UniversalBeingBase
 signal item_selected(item_type: String, item_data: Dictionary)
 
@@ -72,7 +71,7 @@ func _ready() -> void:
 	_create_ui()
 	
 	# Get asset library reference
-	asset_library = get_node_or_null("/root/AssetLibrary")
+	asset_library = get_node_or_null("root/AssetLibrary")
 	if not asset_library:
 		print("[CreativeInventory] AssetLibrary not found!")
 		return
@@ -360,7 +359,7 @@ func _on_item_selected(item_id: String, item_data: Dictionary) -> void:
 	print("[CreativeInventory] Selected: " + item_id)
 	
 	# Execute the corresponding console command
-	var console_manager = get_node_or_null("/root/ConsoleManager")
+	var console_manager = get_node_or_null("root/ConsoleManager")
 	if console_manager and console_manager.has_method("execute_command"):
 		console_manager.execute_command(item_id, [])
 	

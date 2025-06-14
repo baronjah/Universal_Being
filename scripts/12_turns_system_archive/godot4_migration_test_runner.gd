@@ -35,8 +35,8 @@ var migration_tester = null
 var color_system = null
 
 # ----- STATE VARIABLES -----
-var current_test_results = {}
-var test_items = {}
+var current_test_results = {
+var test_items = {
 var selected_test = ""
 var is_testing = false
 
@@ -98,6 +98,7 @@ func _setup_ui():
     passed_tests_label.text = "Passed: 0"
     failed_tests_label.text = "Failed: 0"
     success_rate_label.text = "Success Rate: 0%"
+	}
 
 func _create_ui_components():
     # Create UI components programmatically if not using a scene
@@ -311,6 +312,7 @@ func _on_run_selected_test_pressed():
     is_testing = true
     _clear_result_tabs()
     result_view.text = "Running test: " + selected_test + "..."
+	}
     
     # Run tests in a deferred call to allow UI to update
     call_deferred("_run_selected_test")
@@ -323,9 +325,9 @@ func _run_selected_test():
         "total": 1,
         "passed": 1 if result.passed else 0,
         "failed": 0 if result.passed else 1,
-        "details": {}
-    }
+        "details": {
     current_test_results.details[selected_test] = result
+}
     
     _update_test_result_view(selected_test, result)
     _update_summary(current_test_results)
@@ -344,6 +346,7 @@ func _on_batch_test_pressed():
     is_testing = true
     _clear_result_tabs()
     result_view.text = "Running batch tests on directory: " + batch_path + "..."
+	}
     
     # Run batch test in a deferred call to allow UI to update
     call_deferred("_run_batch_test", batch_path)
@@ -358,18 +361,22 @@ func _run_batch_test(path):
     result_view.append_text("Total Files: " + str(results.total_files) + "\n")
     result_view.append_text("Successful Migrations: " + str(results.successful_migrations) + "\n")
     result_view.append_text("Failed Migrations: " + str(results.failed_migrations) + "\n\n")
+	
     
     if results.total_files > 0:
         var success_rate = float(results.successful_migrations) / results.total_files * 100
         result_view.append_text("Success Rate: " + str(success_rate) + "%\n\n")
+		
     
     result_view.append_text("File Details:\n")
+	
     
     for file_path in results.details.keys():
         var file_result = results.details[file_path]
         var status = "✓ SUCCESS" if file_result.success and file_result.modified else "✗ FAILED"
         
         result_view.append_text("\n" + file_path + ": " + status + "\n")
+		
         
         if file_result.has("warnings") and file_result.warnings.size() > 0:
             result_view.append_text("  Warnings:\n")
@@ -443,6 +450,7 @@ func _on_test_started(total_tests):
 func _on_test_completed(results):
     progress_bar.value = progress_bar.max_value
     status_label.text = "Tests completed: " + str(results.passed) + "/" + str(results.total) + " passed"
+	
     
     _update_summary(results)
     
@@ -453,18 +461,22 @@ func _on_test_completed(results):
     result_view.append_text("Total Tests: " + str(results.total) + "\n")
     result_view.append_text("Passed: " + str(results.passed) + "\n")
     result_view.append_text("Failed: " + str(results.failed) + "\n")
+	
     
     if results.total > 0:
         var success_rate = float(results.passed) / results.total * 100
         result_view.append_text("Success Rate: " + str(success_rate) + "%\n\n")
+		
     
     result_view.append_text("Test Details:\n")
+	
     
     for test_name in results.details.keys():
         var test_result = results.details[test_name]
         var status = "✓ PASSED" if test_result.passed else "✗ FAILED"
         
         result_view.append_text("\n" + test_name + ": " + status + "\n")
+		
         
         if not test_result.passed:
             result_view.append_text("  (Click on the test name to see details)\n")
@@ -476,6 +488,7 @@ func _on_test_completed(results):
 func _on_test_case_started(test_name):
     progress_bar.value += 1
     status_label.text = "Running test: " + test_name + " (" + str(progress_bar.value) + "/" + str(progress_bar.max_value) + ")"
+	
     
     # Highlight current test in list
     if test_items.has(test_name):
@@ -492,6 +505,7 @@ func _on_test_case_completed(test_name, passed, details):
 
 func _update_test_result_view(test_name, details):
     result_title.text = "Test Result: " + test_name
+	
     
     # Clear existing content
     _clear_result_tabs()
@@ -510,6 +524,7 @@ func _update_test_result_view(test_name, details):
     result_view.push_paragraph(HORIZONTAL_ALIGNMENT_LEFT)
     var status = "✓ PASSED" if details.passed else "✗ FAILED"
     result_view.append_text("Test: " + test_name + " - " + status + "\n\n")
+	
     
     if not details.passed:
         result_view.append_text("The migrated code does not match the expected output.\n")
@@ -517,6 +532,7 @@ func _update_test_result_view(test_name, details):
     
     if details.has("migration_error"):
         result_view.append_text("Migration Error: " + details.migration_error + "\n\n")
+		
     
     if details.has("warnings") and details.warnings.size() > 0:
         result_view.append_text("Warnings:\n")
@@ -570,12 +586,14 @@ func _update_summary(results):
     total_tests_label.text = "Total Tests: " + str(results.total)
     passed_tests_label.text = "Passed: " + str(results.passed)
     failed_tests_label.text = "Failed: " + str(results.failed)
+	
     
     if results.total > 0:
         var success_rate = float(results.passed) / results.total * 100
         success_rate_label.text = "Success Rate: " + str(success_rate) + "%"
     else:
         success_rate_label.text = "Success Rate: 0%"
+		
 
 # ----- HELPER FUNCTIONS -----
 func _clear_result_tabs():
@@ -606,6 +624,7 @@ func integrate_with_color_system():
     
     # Example: Update summary panel with color system colors
     if current_test_results.has("total") and current_test_results.total > 0:
+	
         var success_rate = float(current_test_results.passed) / current_test_results.total
         
         # In a real implementation, color_system would provide these colors

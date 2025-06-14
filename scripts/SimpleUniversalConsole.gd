@@ -8,6 +8,7 @@ var is_console_visible: bool = false
 
 func _ready():
 	print("🩺 Simple Console: Surgical implantation successful")
+
 	
 	# Find the console UI elements
 	output_display = get_node("ConsoleVBox/OutputDisplay")
@@ -18,12 +19,14 @@ func _ready():
 		display_message("🩺 Console surgery complete - ready for communication")
 	else:
 		print("❌ Console: Output display not found")
+
 	
 	if input_line:
 		input_line.text_submitted.connect(_on_command_entered)
 		print("✅ Console: Input line connected")
 	else:
 		print("❌ Console: Input line not found")
+
 	
 	# Connect to Gemma AI
 	connect_to_gemma()
@@ -47,8 +50,10 @@ func toggle_console():
 	
 	print("🖥️ Console visibility: %s" % is_console_visible)
 
+
 func display_message(text: String):
 	print("🖥️ Console Message: " + text)
+
 	
 	if output_display:
 		var formatted_text = "[color=white]" + text + "[/color]"
@@ -59,11 +64,13 @@ func display_message(text: String):
 	else:
 		print("❌ Console: Cannot display - output_display is null")
 
+
 func _on_command_entered(command: String):
 	if command.length() == 0:
 		return
 	
 	display_message("🎮 Command: " + command)
+
 	
 	# Process simple commands
 	match command.to_lower().strip_edges():
@@ -83,6 +90,7 @@ func _on_command_entered(command: String):
 		_:
 			display_message("🤖 Unknown command: " + command)
 			display_message("💡 Try: test, clear, gemma, revolution, stars, help")
+
 	
 	# Clear input
 	if input_line:
@@ -135,12 +143,14 @@ func find_node_with_name_containing(node: Node, search_term: String) -> Node:
 func _on_gemma_message(message: String):
 	display_message("🤖 Gemma: " + message)
 
+
 func test_gemma_connection():
 	var gemma_ai = find_gemma_in_scene()
 	if gemma_ai:
 		display_message("🤖 Gemma AI Status: FOUND")
 		display_message("📍 Location: " + str(gemma_ai.global_position))
 		display_message("🧠 Type: " + gemma_ai.get_class())
+
 		
 		# Try to send a test message to Gemma
 		if gemma_ai.has_method("process_user_input"):
@@ -184,6 +194,7 @@ func activate_star_navigation():
 		# Create some basic star visualization
 		display_message("✨ Star navigation placeholder active")
 		display_message("🪣 Bucket constellations: akashic_universe, consciousness_beings, debug_tools...")
+
 
 func show_help():
 	display_message("🌟 UNIVERSAL CONSOLE COMMANDS:")

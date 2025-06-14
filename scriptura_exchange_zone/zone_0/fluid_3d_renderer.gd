@@ -1,50 +1,50 @@
 extends Node3D
 
-class_name Fluid3DRenderer
+class_name Fluid3DRenderer_fluid3drenderer_fluid3dr
 
 # Reference to fluid simulation
 var simulation: FluidSimulationCore = null
 
 # Rendering properties
 @export_category("Rendering Methods")
-@export var render_method: int = 0  # 0=Particles, 1=Metaballs, 2=Mesh Surface
-@export var surface_detail: float = 1.0  # Detail level for mesh surface (0.1-2.0)
-@export var particle_size: float = 0.1
-@export var use_instancing: bool = true
-@export var max_particles_to_render: int = 10000
-@export var use_imposters: bool = false  # Use billboards instead of spheres
+@@export var render_method: int = 0  # 0=Particles, 1=Metaballs, 2=Mesh Surface
+@@export var surface_detail: float = 1.0  # Detail level for mesh surface (0.1-2.0)
+@@export var particle_size: float = 0.1
+@@export var use_instancing: bool = true
+@@export var max_particles_to_render: int = 10000
+@@export var use_imposters: bool = false  # Use billboards instead of spheres
 @export_color var base_color: Color = Color(0.0, 0.5, 1.0, 0.8) 
 
 # Fluid mesh properties
 @export_category("Fluid Surface Properties")
 @export_range(0.1, 2.0) var metaball_threshold: float = 0.5
 @export_range(0.1, 2.0) var surface_smoothing: float = 1.0
-@export var update_interval: float = 0.1  # Surface update frequency in seconds
-@export var use_adaptive_resolution: bool = true  # Adjust resolution based on particle count
+@@export var update_interval: float = 0.1  # Surface update frequency in seconds
+@@export var use_adaptive_resolution: bool = true  # Adjust resolution based on particle count
 
 # Visual effects
 @export_category("Visual Effects")
-@export var enable_refraction: bool = true
-@export var refraction_strength: float = 0.1
-@export var enable_reflection: bool = true
-@export var reflection_strength: float = 0.3
-@export var enable_foam: bool = true
-@export var foam_threshold: float = 0.7
+@@export var enable_refraction: bool = true
+@@export var refraction_strength: float = 0.1
+@@export var enable_reflection: bool = true
+@@export var reflection_strength: float = 0.3
+@@export var enable_foam: bool = true
+@@export var foam_threshold: float = 0.7
 @export_color var foam_color: Color = Color(1.0, 1.0, 1.0, 0.9)
-@export var enable_caustics: bool = true
-@export var enable_depth_fade: bool = true
-@export var depth_fade_distance: float = 2.0
-@export var add_ripples: bool = true
-@export var ripple_speed: float = 1.0
-@export var ripple_height: float = 0.03
+@@export var enable_caustics: bool = true
+@@export var enable_depth_fade: bool = true
+@@export var depth_fade_distance: float = 2.0
+@@export var add_ripples: bool = true
+@@export var ripple_speed: float = 1.0
+@@export var ripple_height: float = 0.03
 
 # Performance options
 @export_category("Performance")
 @export_range(8, 100) var surface_resolution: int = 32  # Grid resolution for marching cubes
-@export var lod_distance: float = 20.0  # Distance for level of detail changes
-@export var occlusion_culling: bool = true  # Cull particles not visible to camera
-@export var use_shader_lod: bool = true  # Use LOD in shaders based on distance
-@export var frustum_culling: bool = true  # Cull particles outside camera frustum
+@@export var lod_distance: float = 20.0  # Distance for level of detail changes
+@@export var occlusion_culling: bool = true  # Cull particles not visible to camera
+@@export var use_shader_lod: bool = true  # Use LOD in shaders based on distance
+@@export var frustum_culling: bool = true  # Cull particles outside camera frustum
 
 # Internal variables
 var _time: float = 0.0
@@ -675,7 +675,7 @@ uniform float roughness : hint_range(0.0, 1.0) = 0.2;
 uniform float metallic : hint_range(0.0, 1.0) = 0.1;
 
 void vertex() {
-    // Add slight wobble to particles
+# // Add slight wobble to particles
     VERTEX.y += sin(VERTEX.x * 4.0 + time * 2.0) * 0.01;
 }
 
@@ -686,10 +686,10 @@ void fragment() {
     ROUGHNESS = roughness;
     SPECULAR = 0.5;
     
-    // Add refraction
+# // Add refraction
     REFRACTION = refraction_strength;
     
-    // Fresnel effect for edge highlights
+# // Fresnel effect for edge highlights
     float fresnel = pow(1.0 - dot(NORMAL, VIEW), 5.0);
     EMISSION = base_color.rgb * fresnel * 0.2;
 }
@@ -712,16 +712,16 @@ uniform float reflection_strength : hint_range(0.0, 1.0) = 0.3;
 uniform float depth_fade_distance = 2.0;
 uniform vec4 wave_params = vec4(1.0, 0.03, 1.0, 1.0); // speed, height, freq mod, scale mod
 
-// Ray marching parameters
+# // Ray marching parameters
 const int MAX_STEPS = 128;
 const float STEP_SIZE = 0.05;
 const float EPSILON = 0.001;
 
 float sample_volume(vec3 pos) {
-    // Convert to normalized coordinates in the volume texture
+# // Convert to normalized coordinates in the volume texture
     vec3 norm_pos = (pos - bounds_min) / bounds_size;
     
-    // Check if outside bounds
+# // Check if outside bounds
     if (any(lessThan(norm_pos, vec3(0.0))) || any(greaterThan(norm_pos, vec3(1.0)))) {
         return 0.0;
     }
@@ -739,11 +739,11 @@ vec3 estimate_normal(vec3 pos) {
 }
 
 void fragment() {
-    // Ray marching setup
+# // Ray marching setup
     vec3 ray_origin = CAMERA_POSITION;
     vec3 ray_dir = normalize(VERTEX - CAMERA_POSITION);
     
-    // Intersect with bounding box
+# // Intersect with bounding box
     vec3 inv_ray_dir = 1.0 / ray_dir;
     vec3 t1 = (bounds_min - ray_origin) * inv_ray_dir;
     vec3 t2 = (bounds_min + bounds_size - ray_origin) * inv_ray_dir;
@@ -753,15 +753,15 @@ void fragment() {
     float t_near = max(max(tmin.x, tmin.y), tmin.z);
     float t_far = min(min(tmax.x, tmax.y), tmax.z);
     
-    // Skip if ray doesn't intersect box
+# // Skip if ray doesn't intersect box
     if (t_near > t_far || t_far < 0.0) {
         discard;
     }
     
-    // Clamp to near plane
+# // Clamp to near plane
     t_near = max(t_near, 0.0);
     
-    // Ray march through volume
+# // Ray march through volume
     float t = t_near;
     bool hit = false;
     vec3 hit_pos = vec3(0.0);
@@ -785,10 +785,10 @@ void fragment() {
         discard;
     }
     
-    // Calculate surface properties
+# // Calculate surface properties
     vec3 normal = estimate_normal(hit_pos);
     
-    // Add wave displacement
+# // Add wave displacement
     float wave_speed = wave_params.x;
     float wave_height = wave_params.y;
     float wave_freq_mod = wave_params.z;
@@ -798,31 +798,31 @@ void fragment() {
                  sin((hit_pos.z - hit_pos.x) * 3.0 * wave_scale_mod + time * wave_speed * 0.7) * 
                  wave_height;
     
-    // Adjust normal for waves
+# // Adjust normal for waves
     normal.y += wave * 5.0;
     normal = normalize(normal);
     
-    // Basic lighting
+# // Basic lighting
     ALBEDO = base_color.rgb;
     ALPHA = base_color.a;
     METALLIC = 0.1;
     ROUGHNESS = 0.2;
     SPECULAR = 0.5;
     
-    // Add fresnel effect for edge highlights
+# // Add fresnel effect for edge highlights
     float fresnel = pow(1.0 - dot(normal, VIEW), 5.0);
     EMISSION = base_color.rgb * fresnel * 0.3;
     
-    // Refraction based on depth
+# // Refraction based on depth
     float depth = length(hit_pos - CAMERA_POSITION);
     float depth_fade = 1.0 - exp(-depth / depth_fade_distance);
     
     REFRACTION = refraction_strength * (1.0 - depth_fade);
     
-    // Adjust alpha based on depth
+# // Adjust alpha based on depth
     ALPHA *= mix(0.7, 1.0, depth_fade);
     
-    // Set correct depth
+# // Set correct depth
     DEPTH = length(hit_pos - CAMERA_POSITION);
 }
 """
@@ -847,7 +847,7 @@ uniform float foam_threshold = 0.7;
 uniform vec4 foam_color : source_color = vec4(1.0, 1.0, 1.0, 0.9);
 
 void vertex() {
-    // Add wave displacement
+# // Add wave displacement
     float wave_speed = wave_params.x;
     float wave_height = wave_params.y;
     float wave_freq_mod = wave_params.z;
@@ -857,39 +857,39 @@ void vertex() {
                  sin((VERTEX.z - VERTEX.x) * 3.0 * wave_scale_mod + time * wave_speed * 0.7) * 
                  wave_height;
     
-    // Apply wave displacement to vertex
+# // Apply wave displacement to vertex
     VERTEX.y += wave;
     
-    // Adjust normal for waves
+# // Adjust normal for waves
     NORMAL.y += wave * 5.0;
     NORMAL = normalize(NORMAL);
 }
 
 void fragment() {
-    // Basic color
+# // Basic color
     ALBEDO = base_color.rgb;
     ALPHA = base_color.a;
     METALLIC = 0.1;
     ROUGHNESS = 0.2;
     SPECULAR = 0.5;
     
-    // Use vertex color if available
+# // Use vertex color if available
     if (COLOR.a > 0.0) {
         ALBEDO = COLOR.rgb;
         ALPHA = COLOR.a;
     }
     
-    // Normal mapping for ripples
+# // Normal mapping for ripples
     vec3 normal_map = texture(surface_normal_map, UV * 3.0 + vec2(time * 0.05, time * 0.03)).rgb * 2.0 - 1.0;
     normal_map = mix(vec3(0.0, 1.0, 0.0), normal_map, 0.3);
     NORMAL_MAP = normal_map;
     NORMAL_MAP_DEPTH = 0.2;
     
-    // Add fresnel effect for edge highlights
+# // Add fresnel effect for edge highlights
     float fresnel = pow(1.0 - dot(NORMAL, VIEW), 5.0);
     EMISSION = base_color.rgb * fresnel * 0.3;
     
-    // Refraction based on depth
+# // Refraction based on depth
     float depth = texture(DEPTH_TEXTURE, SCREEN_UV).r;
     vec4 world_pos = INV_PROJECTION_MATRIX * vec4(SCREEN_UV * 2.0 - 1.0, depth, 1.0);
     world_pos.xyz /= world_pos.w;
@@ -899,13 +899,13 @@ void fragment() {
     
     REFRACTION = refraction_strength * (1.0 - depth_fade);
     
-    // Add foam
+# // Add foam
     if (enable_foam) {
         float foam_noise = texture(foam_texture, UV * 5.0 + vec2(time * 0.1, 0.0)).r;
         float foam_pattern = texture(foam_texture, UV * 3.0 - vec2(time * 0.2, 0.0)).r;
         float foam = foam_noise * foam_pattern;
         
-        // Apply foam at edges and shallow areas
+# // Apply foam at edges and shallow areas
         float foam_mask = fresnel * 0.7 + (1.0 - depth_fade) * 0.5;
         
         if (foam_mask > foam_threshold && foam > 0.4) {
@@ -915,7 +915,7 @@ void fragment() {
         }
     }
     
-    // Add caustics
+# // Add caustics
     if (enable_caustics && depth_fade < 0.5) {
         float caustic1 = texture(foam_texture, UV * 4.0 + vec2(time * 0.05, time * 0.03)).r;
         float caustic2 = texture(foam_texture, UV * 3.0 - vec2(time * 0.07, time * 0.02)).r;
@@ -937,7 +937,7 @@ uniform float time;
 uniform sampler2D foam_texture : hint_default_white;
 
 void vertex() {
-    // Push foam slightly above surface
+# // Push foam slightly above surface
     VERTEX.y += 0.005;
 }
 
@@ -963,7 +963,7 @@ uniform float time;
 uniform vec3 camera_position;
 
 void vertex() {
-    // Billboard the quad to face camera
+# // Billboard the quad to face camera
     vec3 up = vec3(0.0, 1.0, 0.0);
     vec3 forward = normalize(camera_position - VERTEX);
     vec3 right = normalize(cross(up, forward));
@@ -972,28 +972,28 @@ void vertex() {
     vec3 pos = VERTEX;
     vec3 offset = VERTEX - MODEL_MATRIX[3].xyz;
     
-    // Apply billboard transform
+# // Apply billboard transform
     VERTEX = MODEL_MATRIX[3].xyz;
     VERTEX += right * offset.x;
     VERTEX += up * offset.y;
     VERTEX += forward * offset.z * 0.1; // Flatten slightly
     
-    // Add subtle animation
+# // Add subtle animation
     VERTEX.y += sin(time * 2.0 + pos.x + pos.z) * 0.01;
 }
 
 void fragment() {
-    // Calculate distance from fragment to center of quad
+# // Calculate distance from fragment to center of quad
     vec2 center = vec2(0.5, 0.5);
     float dist = distance(UV, center) * 2.0;
     
-    // Create soft circular shape
+# // Create soft circular shape
     float circle = 1.0 - smoothstep(0.8, 1.0, dist);
     
-    // Add internal detail
+# // Add internal detail
     float detail = sin(dist * 3.1415) * 0.5 + 0.5;
     
-    // Apply highlight in center
+# // Apply highlight in center
     float highlight = 1.0 - smoothstep(0.0, 0.3, dist);
     
     ALBEDO = particle_color.rgb;
@@ -1002,7 +1002,7 @@ void fragment() {
     ROUGHNESS = mix(0.2, 0.4, detail);
     SPECULAR = 0.5;
     
-    // Add subtle emission for highlighting
+# // Add subtle emission for highlighting
     EMISSION = particle_color.rgb * highlight * 0.2;
 }
 """

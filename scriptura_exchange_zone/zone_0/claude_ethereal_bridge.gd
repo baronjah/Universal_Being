@@ -1,5 +1,5 @@
 extends Node
-class_name ClaudeEtherealBridge
+class_name ClaudeEtherealBridge_claudeetherealbridge_claudeet
 
 # Bridge between Claude AI and Ethereal Engine Integration
 # Facilitates bidirectional communication, memory sharing, and dimensional resonance
@@ -64,20 +64,20 @@ func _ready():
 
 func _connect_to_systems():
 	# Find Claude integration
-	if has_node("/root/ClaudeIntegration"):
-		claude_integration = get_node("/root/ClaudeIntegration")
+	if has_node("root/ClaudeIntegration"):
+		claude_integration = get_node("root/ClaudeIntegration")
 		print("✓ Connected to Claude Integration")
 	else:
 		print("⚠ Claude Integration not found")
 	
 	# Find Ethereal Engine integration
-	if has_node("/root/EtherealEngineIntegration"):
-		ethereal_engine_integration = get_node("/root/EtherealEngineIntegration")
+	if has_node("root/EtherealEngineIntegration"):
+		ethereal_engine_integration = get_node("root/EtherealEngineIntegration")
 		print("✓ Connected to Ethereal Engine Integration")
 	else:
 		print("⚠ Ethereal Engine Integration not found")
 		# Try to find it at the specific path
-		var potential_path = "/mnt/c/Users/Percision 15/ethereal_engine_integration.gd"
+		var potential_path = "mnt/c/Users/Percision 15/ethereal_engine_integration.gd"
 		if ResourceLoader.exists(potential_path):
 			var script = load(potential_path)
 			if script:
@@ -86,15 +86,15 @@ func _connect_to_systems():
 				print("✓ Loaded Ethereal Engine Integration from path")
 	
 	# Find Triple Memory Connector
-	if has_node("/root/TripleMemoryConnector"):
-		triple_memory_connector = get_node("/root/TripleMemoryConnector")
+	if has_node("root/TripleMemoryConnector"):
+		triple_memory_connector = get_node("root/TripleMemoryConnector")
 		print("✓ Connected to Triple Memory Connector")
 	else:
 		print("⚠ Triple Memory Connector not found")
 	
 	# Find Turn-based Game Framework
-	if has_node("/root/TurnBasedGameFramework"):
-		turn_based_game_framework = get_node("/root/TurnBasedGameFramework")
+	if has_node("root/TurnBasedGameFramework"):
+		turn_based_game_framework = get_node("root/TurnBasedGameFramework")
 		print("✓ Connected to Turn-based Game Framework")
 	else:
 		print("⚠ Turn-based Game Framework not found")
@@ -425,7 +425,7 @@ func _on_dimension_resonance(dimensions: Array, resonance_value: float):
 		# This would influence future communications with Claude
 
 func _on_token_usage_updated(used: int, total: int, percentage: float):
-	print("🔢 Token usage updated: " + str(used) + "/" + str(total) + 
+	print("🔢 Token usage updated: " + str(used) + "" + str(total) + 
 		" (" + str(percentage * 100) + "%)")
 	
 	# Adjust Claude's token allocation based on Ethereal Engine usage

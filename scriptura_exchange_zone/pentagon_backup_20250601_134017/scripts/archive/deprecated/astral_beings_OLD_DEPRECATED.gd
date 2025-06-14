@@ -4,7 +4,6 @@
 # PURPOSE: Invisible helpers that stabilize ragdoll, move objects, and assist creation
 # CREATED: 2025-05-24 - Ethereal assistance for Garden of Eden building
 # ==================================================
-
 extends UniversalBeingBase
 # Astral Being Manager
 var astral_beings: Array[AstralBeing] = []
@@ -44,7 +43,7 @@ func _ready() -> void:
 	
 	# Get references
 	ragdoll_controller = get_node_or_null("../RagdollController")
-	floodgate = get_node("/root/FloodgateController") if has_node("/root/FloodgateController") else null
+	floodgate = get_node("root/FloodgateController") if has_node("root/FloodgateController") else null
 	
 	# Spawn initial astral beings
 	_spawn_initial_beings()

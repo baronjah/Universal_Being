@@ -1,5 +1,5 @@
 extends Node3D
-class_name PlayButton
+class_name PlayButton_playbutton_playbutt
 
 # Signal for when play mode is activated
 signal play_mode_activated(settings)

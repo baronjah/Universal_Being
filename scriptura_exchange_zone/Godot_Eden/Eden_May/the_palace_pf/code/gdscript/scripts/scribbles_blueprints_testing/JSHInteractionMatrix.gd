@@ -1,5 +1,5 @@
 extends Node
-class_name JSHInteractionMatrix
+class_name JSHInteractionMatrix_JSHInteractionMatrix_JSHInter
 
 # The interaction matrix defines how entities interact with each other based on their types
 # It handles entity-to-entity interactions, transformations, and emergent behaviors

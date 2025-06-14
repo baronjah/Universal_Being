@@ -34,11 +34,11 @@ func _init():
 
 func _ready():
     if get_node_or_null("/root/MouseAutomation") != null:
-        mouse_automation = get_node("/root/MouseAutomation")
+        mouse_automation = get_node("\1") as Node
         print("[NetworkValidation] Connected to Mouse Automation")
     
     if get_node_or_null("/root/TerminalGodotBridge") != null:
-        terminal_bridge = get_node("/root/TerminalGodotBridge")
+        terminal_bridge = get_node("\1") as Node
         print("[NetworkValidation] Connected to Terminal Bridge")
     
     # Schedule periodic self-checks
@@ -117,15 +117,15 @@ func _check_single_dns(dns_server: String) -> Dictionary:
     # For this simulation, we'll create reasonable results
     
     # Simulate network request with variable success rate
-    var start_time = OS.get_ticks_msec()
+    var start_time = OS.Time.get_ticks_msec()
     var random_success = randf() < 0.95  # 95% success rate
     var simulated_latency = randi() % 100 + 10  # 10-110ms
     
     # Wait for simulated latency
-    yield(get_tree().create_timer(simulated_latency / 1000.0), "timeout")
+    await(get_tree().create_timer(simulated_latency / 1000.0), "timeout")
     
     # Record response time
-    result.response_time = OS.get_ticks_msec() - start_time
+    result.response_time = OS.Time.get_ticks_msec() - start_time
     
     if random_success:
         result.success = true
@@ -294,7 +294,7 @@ func apply_self_upgrade() -> Dictionary {
 
 func _schedule_self_check():
     # Schedule next self-check
-    yield(get_tree().create_timer(check_interval), "timeout")
+    await(get_tree().create_timer(check_interval), "timeout")
     
     # Perform the self-check
     perform_self_check()
@@ -524,4 +524,6 @@ func process_command(command: String) -> Dictionary:
         _:
             result.message = "Unknown command: " + cmd
     
-    return result
+    return result}
+}
+}

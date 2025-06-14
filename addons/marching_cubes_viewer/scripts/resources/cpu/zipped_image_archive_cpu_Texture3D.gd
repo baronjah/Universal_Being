@@ -89,6 +89,7 @@ func load_image_from_zip(path:String):
 	
 	for filename in reader.get_files():
 		if filename.ends_with(".png"):
+
 			var buf:PackedByteArray = reader.read_file(filename)
 			
 			var image:Image = Image.new()

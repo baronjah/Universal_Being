@@ -64,14 +64,14 @@ func _ready():
 	quick_travel_buttons = $QuickTravelBar
 	
 	# Connect signals
-	travel_button.connect("pressed", self, "_on_travel_button_pressed")
-	search_filter.connect("text_changed", self, "_on_search_filter_changed")
+	travel_button.connect(_on_travel_button_pressed)
+	search_filter.connect(_on_search_filter_changed)
 	
 	# Set up update timer
 	var update_timer = Timer.new()
 	update_timer.wait_time = auto_update_interval
 	update_timer.autostart = true
-	update_timer.connect("timeout", self, "update_display")
+	update_timer.connect(update_display)
 	add_child(update_timer)
 	
 	# Initial setup
@@ -246,7 +246,7 @@ func _on_travel_button_pressed():
 			play_travel_animation()
 			
 			# Update display after travel
-			yield(get_tree().create_timer(animation_speed * 2), "timeout")
+			await(get_tree().create_timer(animation_speed * 2), "timeout")
 			update_display()
 		else:
 			# Show travel error
@@ -258,7 +258,7 @@ func _on_quick_travel_pressed(universe):
 		play_travel_animation()
 		
 		# Update display after travel
-		yield(get_tree().create_timer(animation_speed * 2), "timeout")
+		await(get_tree().create_timer(animation_speed * 2), "timeout")
 		update_display()
 	else:
 		show_travel_error("Quick travel failed. Access point may be unstable.")
@@ -301,7 +301,7 @@ func show_travel_error(message):
 	error_label.visible = true
 	
 	# Hide after delay
-	yield(get_tree().create_timer(2.0), "timeout")
+	await(get_tree().create_timer(2.0), "timeout")
 	error_label.visible = false
 
 # ========== Public API ==========

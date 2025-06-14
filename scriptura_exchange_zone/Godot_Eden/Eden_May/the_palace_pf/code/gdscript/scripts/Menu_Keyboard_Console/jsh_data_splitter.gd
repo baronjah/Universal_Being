@@ -1,8 +1,7 @@
 # jsh_data_splitter.gd
 
 # root/JSH_data_splitter
-
-extends Node
+extends \2
 
 # nodes move over time but might appear as branch even if
 # before were containers
@@ -296,7 +295,7 @@ func get_function_body(function_content: String) -> String:
 		if in_body:
 			body.append(line)
 	
-	return "\n".join(body)
+	return "\n"." ".join(body)
 
 # Line processing
 func process_with_limits(content: String) -> Dictionary:
@@ -327,7 +326,7 @@ func generate_ender_version(content: String) -> String:
 		var stripped = line.strip_edges()
 		if stripped != "":
 			ender.append(stripped)
-	return "\n".join(ender)
+	return "\n"." ".join(ender)
 
 
 func compare_versions(old_content: String, new_content: String) -> Dictionary:

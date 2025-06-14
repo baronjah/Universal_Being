@@ -1,5 +1,5 @@
 extends Node
-class_name JSHSystemIntegration
+class_name JSHSystemIntegration_JSHSystemIntegration_JSHSyste
 
 # This is the main integration node that ties all JSH systems together
 
@@ -86,7 +86,7 @@ func _initialize_database_manager() -> void:
     database_manager.auto_save_interval = config.get("auto_save_interval", 30.0)
 
 func _initialize_spatial_manager() -> void:
-    print("JSHSystemIntegration: Initializing Spatial Manager")
+    print("JSHSystemIntegration: Initializing Node3D Manager")
     
     # Create spatial manager
     spatial_manager = JSHSpatialManager.get_instance()

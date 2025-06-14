@@ -20,7 +20,7 @@ var max_bounds = Vector3(10, 10, 10)
 
 # Particles and forces
 var particles = []
-var grid_cells = {}
+var grid_cells = {
 var cell_size = smooth_radius * 2.0
 
 # Precomputed constants for SPH
@@ -95,7 +95,7 @@ func create_particles(positions, velocities=null, particle_count=100):
             "lifetime": 0.0,
             "temperature": 20.0,  # 20°C
             "mass": particle_mass
-        }
+			}
         
         new_particles.append(particle)
     
@@ -656,7 +656,7 @@ func marching_cubes_surface(grid_resolution=20):
     # This would typically be implemented in a separate mesh generation class
     # Here we'll provide a simplified placeholder
     
-    var implicit_surface = {}
+    var implicit_surface = {
     var grid_size = (max_bounds - min_bounds) / grid_resolution
     
     # Build implicit surface values

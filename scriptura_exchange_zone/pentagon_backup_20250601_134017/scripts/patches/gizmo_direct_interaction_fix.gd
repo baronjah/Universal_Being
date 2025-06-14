@@ -10,8 +10,7 @@
 # PURPOSE: Make gizmo components properly clickable and draggable
 # CREATED: 2025-05-30
 # ==================================================
-
-extends UniversalBeingBase
+extends \2
 var gizmo_system: Node3D = null
 var mouse_held: bool = false
 var dragging_gizmo: bool = false
@@ -107,7 +106,7 @@ func _raycast_for_gizmo(mouse_pos: Vector2) -> Dictionary:
 	var from = camera.project_ray_origin(mouse_pos)
 	var to = from + camera.project_ray_normal(mouse_pos) * 100.0
 	
-	var space_state = camera.get_world_3d().direct_space_state
+	var space_state = camera.get_viewport().get_world_3d().direct_space_state
 	var query = PhysicsRayQueryParameters3D.create(from, to)
 	
 	# Only check layer 2 (gizmo layer)

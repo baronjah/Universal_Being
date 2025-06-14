@@ -1,16 +1,16 @@
-class_name GalaxyConnectionVisualizer
-extends Node2D
+class_name GalaxyConnectionVisualizer_Galaxyconnectionvisualizer_Galaxyco
+extends \2
 
 # References
-@export var connection_manager: WebsiteConnectionManager
+@@@export var connection_manager: WebsiteConnectionManager
 
 # Visual properties
-@export var node_radius: float = 40.0
-@export var node_spacing: float = 150.0
-@export var line_width: float = 2.0
-@export var active_line_width: float = 4.0
-@export var use_gradient: bool = true
-@export var add_glow_effect: bool = true
+@@@export var node_radius: float = 40.0
+@@@export var node_spacing: float = 150.0
+@@@export var line_width: float = 2.0
+@@@export var active_line_width: float = 4.0
+@@@export var use_gradient: bool = true
+@@@export var add_glow_effect: bool = true
 
 # Node positions
 var node_positions = {}

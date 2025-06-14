@@ -1,13 +1,13 @@
 extends Node
 
 # ----- DNA SYSTEM SETTINGS -----
-class_name WordDNASystem
+class_name WordDNASystem_worddnasystem_worddnas
 
 @export_category("DNA System Settings")
-@export var use_dna_colors: bool = true
-@export var use_dna_transformations: bool = true
-@export var use_dna_particles: bool = true
-@export var use_dna_sound: bool = false
+@@export var use_dna_colors: bool = true
+@@export var use_dna_transformations: bool = true
+@@export var use_dna_particles: bool = true
+@@export var use_dna_sound: bool = false
 
 # ----- DNA COMPONENTS -----
 # DNA Structure: A string of characters that defines visual and behavioral aspects

@@ -65,7 +65,6 @@ var terminal_properties = {
 		"sync_priority": 6,
 		"sacred_number": 7, # Mystical revelation
 		"capabilities": ["dream_creation", "dream_interpretation", "subconscious_access"]
-	}
 }
 
 # ----- COMMUNICATION CHANNELS -----
@@ -81,10 +80,10 @@ var channels = {
 }
 
 # ----- STATE VARIABLES -----
-var active_terminals = {}
+var active_terminals = {
 var current_terminal = TerminalType.GENESIS
-var sync_status = {}
-var channel_buffers = {}
+var sync_status = {
+var channel_buffers = {
 var quantum_entanglement_active = false
 var sync_interval = 9.0 # Sacred 9-second interval
 var sync_timer = 0.0
@@ -125,13 +124,13 @@ func connect_systems():
 	# Connect to the turn system
 	turn_system = get_node_or_null("/root/TurnSystem")
 	if turn_system:
-		turn_system.connect("turn_completed", self, "_on_turn_completed")
-		turn_system.connect("dimension_changed", self, "_on_dimension_changed")
+		turn_system.connect(_on_turn_completed)
+		turn_system.connect(_on_dimension_changed)
 	
 	# Connect to the divine word processor
 	divine_word_processor = get_node_or_null("/root/DivineWordProcessor")
 	if divine_word_processor:
-		divine_word_processor.connect("word_processed", self, "_on_word_processed")
+		divine_word_processor.connect(_on_word_processed)
 	
 	# Connect to other systems
 	word_comment_system = get_node_or_null("/root/WordCommentSystem")
@@ -160,7 +159,7 @@ func register_current_terminal(terminal_type):
 		"status": "active",
 		"dimension": turn_system.current_dimension if turn_system else terminal_properties[terminal_type].primary_dimension,
 		"sync_count": 0
-	}
+}
 	
 	# Set as current terminal
 	current_terminal = terminal_type
@@ -170,7 +169,7 @@ func register_current_terminal(terminal_type):
 		"channels_synced": {},
 		"last_successful_sync": OS.get_unix_time(),
 		"sync_errors": 0
-	}
+}
 	
 	for channel in channels.keys():
 		sync_status[terminal_id].channels_synced[channel] = OS.get_unix_time()
@@ -253,6 +252,7 @@ func sync_all_terminals():
 		var terminal_info = active_terminals[terminal_id]
 		
 		if terminal_info.status == "active":
+}
 			# Attempt to sync this terminal
 			if sync_terminal(terminal_id):
 				successful_terminals.append(terminal_id)
@@ -481,7 +481,7 @@ func transmit_message(channel, message_data, target_terminal=null):
 		"timestamp": OS.get_unix_time(),
 		"processed_by": [],
 		"current_dimension": turn_system.current_dimension if turn_system else 1
-	}
+}
 	
 	// Add to channel buffer
 	channel_buffers[channel].append(message)
@@ -636,7 +636,7 @@ func create_dimensional_tunnel(source_dimension, target_dimension, duration=3):
 		"created_by": current_terminal,
 		"messages_sent": 0,
 		"active": true
-	}
+}
 	
 	// Store tunnel data
 	if word_dream_storage:
@@ -710,7 +710,7 @@ func send_through_tunnel(tunnel_id, message_data):
 		"target_dimension": tunnel.target_dimension,
 		"data": message_data,
 		"timestamp": OS.get_unix_time()
-	}
+}
 	
 	// Transmit to target terminal - bypassing the 9-second delay
 	var channel = "words" // Default channel
@@ -768,7 +768,7 @@ func execute_parallel_operations(operations):
 		var results = []
 		
 		// Group operations by terminal
-		var terminal_operations = {}
+		var terminal_operations = {
 		
 		for operation in operations:
 			var terminal = operation.terminal if operation.has("terminal") else current_terminal
@@ -788,9 +788,11 @@ func execute_parallel_operations(operations):
 
 func execute_operation(operation):
 	if not operation.has("type"):
-		return {"success": false, "error": "No operation type specified"}
+		return {"success": false, "error": "No operation type specified"
+}
 	
-	var result = {"success": false}
+	var result = {"success": false
+}
 	
 	match operation.type:
 		"word_relay":
@@ -802,7 +804,7 @@ func execute_operation(operation):
 						operation.player if operation.has("player") else "System",
 						operation.target_terminal
 					)
-				}
+}
 		
 		"memory_operation":
 			if operation.has("operation") and operation.has("content"):
@@ -815,7 +817,7 @@ func execute_operation(operation):
 						operation.type if operation.has("type") else 0,
 						operation.target_terminal if operation.has("target_terminal") else null
 					)
-				}
+}
 		
 		"judgment_action":
 			if operation.has("action"):
@@ -828,7 +830,7 @@ func execute_operation(operation):
 						operation.evidence if operation.has("evidence") else null,
 						operation.target_terminal if operation.has("target_terminal") else null
 					)
-				}
+}
 		
 		"royal_request":
 			if operation.has("action"):
@@ -841,7 +843,7 @@ func execute_operation(operation):
 						operation.player if operation.has("player") else null,
 						operation.target_terminal if operation.has("target_terminal") else null
 					)
-				}
+}
 		
 		"dream_transmission":
 			if operation.has("dream_text"):
@@ -852,7 +854,7 @@ func execute_operation(operation):
 						operation.word if operation.has("word") else null,
 						operation.target_terminal if operation.has("target_terminal") else null
 					)
-				}
+}
 		
 		"scheme_operation":
 			if operation.has("action"):
@@ -865,7 +867,7 @@ func execute_operation(operation):
 						operation.scheme_id if operation.has("scheme_id") else null,
 						operation.target_terminal if operation.has("target_terminal") else null
 					)
-				}
+}
 		
 		"dimensional_tunnel":
 			if operation.has("source_dimension") and operation.has("target_dimension"):
@@ -876,7 +878,7 @@ func execute_operation(operation):
 						operation.target_dimension,
 						operation.duration if operation.has("duration") else 3
 					)
-				}
+}
 		
 		"tunnel_message":
 			if operation.has("tunnel_id") and operation.has("data"):
@@ -886,7 +888,7 @@ func execute_operation(operation):
 						operation.tunnel_id,
 						operation.data
 					)
-				}
+}
 	
 	return result
 
@@ -904,7 +906,7 @@ func parse_terminal_command(text):
 		return {
 			"success": false,
 			"message": "Invalid terminal command. Format: /terminal [command] [args...]"
-		}
+}
 	
 	var command = args[0].to_lower()
 	var result = null
@@ -916,7 +918,7 @@ func parse_terminal_command(text):
 				"success": true,
 				"message": "Terminal synchronization initiated",
 				"synced_terminals": sync_all_terminals()
-			}
+	}
 		
 		"register":
 			// Register a new terminal
@@ -924,7 +926,7 @@ func parse_terminal_command(text):
 				return {
 					"success": false,
 					"message": "Invalid register command. Format: /terminal register [type]"
-				}
+	}
 			
 			var terminal_type = -1
 			
@@ -935,18 +937,19 @@ func parse_terminal_command(text):
 				"judgment": terminal_type = TerminalType.JUDGMENT
 				"royal_court": terminal_type = TerminalType.ROYAL_COURT
 				"dream_weaver": terminal_type = TerminalType.DREAM_WEAVER
+	}
 			
 			if terminal_type >= 0:
 				result = {
 					"success": true,
 					"message": "Terminal registered successfully",
 					"terminal_id": register_current_terminal(terminal_type)
-				}
+}
 			else:
 				result = {
 					"success": false,
 					"message": "Invalid terminal type. Valid types: genesis, observer, archivist, judgment, royal_court, dream_weaver"
-				}
+	}
 		
 		"tunnel":
 			// Create a dimensional tunnel
@@ -954,7 +957,7 @@ func parse_terminal_command(text):
 				return {
 					"success": false,
 					"message": "Invalid tunnel command. Format: /terminal tunnel [source_dimension] [target_dimension] [duration]"
-				}
+	}
 			
 			var source_dimension = int(args[1])
 			var target_dimension = int(args[2])
@@ -968,12 +971,12 @@ func parse_terminal_command(text):
 					"success": true,
 					"message": "Dimensional tunnel created",
 					"tunnel_id": create_dimensional_tunnel(source_dimension, target_dimension, duration)
-				}
+}
 			else:
 				result = {
 					"success": false,
 					"message": "Invalid dimensions. Must be between 1 and 12."
-				}
+	}
 		
 		"entangle":
 			// Toggle quantum entanglement
@@ -982,13 +985,13 @@ func parse_terminal_command(text):
 				result = {
 					"success": true,
 					"message": "Quantum entanglement deactivated"
-				}
+}
 			else:
 				start_sync_timer()
 				result = {
 					"success": true,
 					"message": "Quantum entanglement activated"
-				}
+	}
 		
 		"multicore":
 			// Toggle multi-core processing
@@ -996,25 +999,24 @@ func parse_terminal_command(text):
 				return {
 					"success": false,
 					"message": "Invalid multicore command. Format: /terminal multicore [on/off]"
-				}
+	}
 			
 			if args[1].to_lower() == "on":
 				enable_multi_core()
 				result = {
 					"success": true,
 					"message": "Multi-core processing enabled"
-				}
 			elif args[1].to_lower() == "off":
 				disable_multi_core()
 				result = {
 					"success": true,
 					"message": "Multi-core processing disabled"
-				}
+}
 			else:
 				result = {
 					"success": false,
 					"message": "Invalid argument. Use 'on' or 'off'."
-				}
+	}
 		
 		"list":
 			// List active terminals
@@ -1036,13 +1038,13 @@ func parse_terminal_command(text):
 				"success": true,
 				"message": str(terminals.size()) + " active terminals",
 				"terminals": terminals
-			}
+	}
 		
 		_:
 			result = {
 				"success": false,
 				"message": "Unknown terminal command: " + command
-			}
+	}
 	
 	return result
 
@@ -1146,19 +1148,19 @@ func get_current_terminal():
 		"type": current_terminal,
 		"name": terminal_properties[current_terminal].name,
 		"primary_dimension": terminal_properties[current_terminal].primary_dimension
-	}
+}
 
 func get_sync_status():
 	return sync_status
 
 func get_channel_status():
-	var status = {}
+	var status = {
 	
 	for channel in channels.keys():
 		status[channel] = {
 			"message_count": channel_buffers[channel].size(),
 			"last_message": null
-		}
+}
 		
 		if channel_buffers[channel].size() > 0:
 			status[channel].last_message = channel_buffers[channel].back()

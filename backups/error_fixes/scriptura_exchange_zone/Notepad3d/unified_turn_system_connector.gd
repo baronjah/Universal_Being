@@ -300,7 +300,7 @@ func add_snake_case_mapping(pascal_case_name, snake_case_name = ""):
 	# Add a new mapping to the snake_case dictionary
 	# If snake_case_name is not provided, it will be generated
 	
-	if snake_case_name.empty():
+	if snake_case_name.is_empty():
 		snake_case_name = get_snake_case(pascal_case_name)
 	
 	snake_case_mapping[pascal_case_name] = snake_case_name

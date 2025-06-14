@@ -91,9 +91,11 @@ func _scan_project_structure() -> void:
 	
 	# Find all .gd files
 	_find_all_gdscript_files("res://")
+
 	
 	# Find all .tscn files
 	_find_all_scene_files("res://")
+
 	
 	print("🔍 Found %d total files to analyze" % all_file_paths.size())
 
@@ -107,7 +109,9 @@ func _find_all_gdscript_files(path: String) -> void:
 	var file_name = dir.get_next()
 	
 	while file_name != "":
+
 		var full_path = path + "/" + file_name if path != "res://" else "res://" + file_name
+
 		
 		if dir.current_is_dir() and not file_name.begins_with("."):
 			_find_all_gdscript_files(full_path)
@@ -128,7 +132,9 @@ func _find_all_scene_files(path: String) -> void:
 	var file_name = dir.get_next()
 	
 	while file_name != "":
+
 		var full_path = path + "/" + file_name if path != "res://" else "res://" + file_name
+
 		
 		if dir.current_is_dir() and not file_name.begins_with("."):
 			_find_all_scene_files(full_path)
@@ -154,7 +160,7 @@ func _validate_core_foundation() -> void:
 		"res://autoloads/GemmaAI.gd": "AI companion",
 		"res://main.gd": "Main entry point",
 		"res://project.godot": "Project configuration"
-	}
+}
 	
 	for file_path in core_files:
 		var description = core_files[file_path]
@@ -166,10 +172,10 @@ func _validate_core_foundation() -> void:
 				"file": file_path,
 				"description": description,
 				"severity": "critical"
-			}
 			critical_issues.append(issue)
 			issue_found.emit(issue)
 			print("❌ MISSING: %s (%s)" % [description, file_path])
+}
 	
 	# Check for Pentagon Architecture compliance
 	_check_pentagon_compliance()
@@ -188,6 +194,7 @@ func _check_pentagon_compliance() -> void:
 	
 	# Check core UniversalBeing.gd
 	if ResourceLoader.exists("res://core/UniversalBeing.gd"):
+
 		var file = FileAccess.open("res://core/UniversalBeing.gd", FileAccess.READ)
 		if file:
 			var content = file.get_as_text()
@@ -195,14 +202,15 @@ func _check_pentagon_compliance() -> void:
 			
 			for method in pentagon_methods:
 				if not content.contains("func " + method):
+	
 					var issue = {
 						"type": "missing_pentagon_method",
 						"file": "res://core/UniversalBeing.gd",
 						"method": method,
 						"severity": "high"
-					}
 					critical_issues.append(issue)
 					print("⚠️ Missing Pentagon method: %s" % method)
+	}
 
 func _check_core_duplicates() -> void:
 	"""Check for duplicate core files"""
@@ -227,9 +235,9 @@ func _check_core_duplicates() -> void:
 				"type": "duplicate_files",
 				"files": found_files,
 				"severity": "medium"
-			}
 			critical_issues.append(issue)
 			print("⚠️ Duplicate files found: %s" % str(found_files))
+}
 
 # ===== PATH REFERENCE VALIDATION =====
 
@@ -242,6 +250,7 @@ func _check_all_path_references() -> void:
 	
 	for file_path in all_file_paths:
 		if file_path.ends_with(".gd"):
+
 			var refs = _extract_path_references(file_path)
 			total_refs += refs.size()
 			
@@ -255,6 +264,7 @@ func _check_all_path_references() -> void:
 					})
 	
 	print("🔗 Path references: %d total, %d broken" % [total_refs, broken_refs])
+
 	
 	if broken_refs > 0:
 		var issue = {
@@ -262,11 +272,12 @@ func _check_all_path_references() -> void:
 			"count": broken_refs,
 			"total": total_refs,
 			"severity": "high"
-		}
 		critical_issues.append(issue)
+}
 
 func _extract_path_references(file_path: String) -> Array[String]:
 	"""Extract all res:// path references from a file"""
+
 	var paths: Array[String] = []
 	
 	var file = FileAccess.open(file_path, FileAccess.READ)
@@ -279,6 +290,7 @@ func _extract_path_references(file_path: String) -> Array[String]:
 	# Find all res:// paths
 	var regex = RegEx.new()
 	regex.compile("\"res://[^\"]*\"")
+
 	
 	var results = regex.search_all(content)
 	for result in results:
@@ -313,7 +325,7 @@ func _analyze_duplicate_files() -> void:
 	"""Analyze duplicate and similar files"""
 	print("🔄 Analyzing duplicate files...")
 	
-	var file_groups = {}
+	var file_groups = {
 	
 	# Group files by base name
 	for file_path in all_file_paths:
@@ -338,6 +350,7 @@ func _analyze_duplicate_files() -> void:
 		var files = file_groups[group_name]
 		if files.size() > 1:
 			print("🔄 Multiple versions of '%s': %s" % [group_name, str(files)])
+}
 
 # ===== EVOLUTION STATE EVALUATION =====
 
@@ -361,9 +374,11 @@ func _evaluate_evolution_state() -> void:
 			implemented_count += 1
 		else:
 			print("🌱 Missing expected system: %s" % system)
+
 	
 	var completion_percentage = (implemented_count / float(expected_systems.size())) * 100
 	print("🌱 Evolution completion: %.1f%% (%d/%d systems)" % [completion_percentage, implemented_count, expected_systems.size()])
+
 
 # ===== RECOMMENDATION GENERATION =====
 
@@ -406,12 +421,13 @@ func _calculate_foundation_health() -> float:
 		"path_references_valid": 20.0,
 		"minimal_duplicates": 15.0,
 		"evolution_progress": 10.0
-	}
+}
 	
 	var total_health = 0.0
 	
 	# Core files present
 	var core_files = ["res://core/UniversalBeing.gd", "res://core/FloodGates.gd", "res://systems/storage/AkashicRecordsSystem.gd"]
+
 	var core_present = 0
 	for file in core_files:
 		if ResourceLoader.exists(file):
@@ -460,7 +476,7 @@ func _compile_diagnostic_results() -> Dictionary:
 		"broken_references": broken_references,
 		"evolution_recommendations": evolution_recommendations,
 		"timestamp": Time.get_datetime_string_from_system()
-	}
+}
 
 # ===== AUTOMATED FIXES =====
 
@@ -497,6 +513,7 @@ func save_diagnostic_report() -> void:
 	file.store_string("# Universal Being Evolution Diagnostic Report\n\n")
 	file.store_string("Generated: %s\n\n" % Time.get_datetime_string_from_system())
 	file.store_string("## Foundation Health: %.1f%%\n\n" % foundation_health)
+
 	
 	# Critical Issues
 	if critical_issues.size() > 0:
@@ -522,6 +539,7 @@ func save_diagnostic_report() -> void:
 	file.close()
 	print("📝 Diagnostic report saved: res://EVOLUTION_DIAGNOSTIC_REPORT.md")
 
+
 func print_summary() -> void:
 	"""Print diagnostic summary"""
 	print("")
@@ -542,6 +560,7 @@ func print_summary() -> void:
 		print("⚠️ STATUS: NEEDS WORK - Significant issues found")
 	else:
 		print("🚨 STATUS: CRITICAL - Foundation needs major repairs")
+
 	
 	print("🔬 ================================")
 	

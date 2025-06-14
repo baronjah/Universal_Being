@@ -61,7 +61,7 @@ func register_command(name: String, method: Callable, description: String = "") 
 		"method": method,
 		"description": description,
 		"usage_count": 0
-	}
+}
 
 ## NATURAL LANGUAGE PROCESSING ==================================================
 
@@ -77,6 +77,7 @@ func process_natural_language(text: String, speaker: UniversalBeing = null) -> v
 	
 	# Check if it's a command-like structure
 	if text.begins_with("say ") or text.begins_with("do ") or text.begins_with("make "):
+
 		var command = text.split(" ", 2)[1] if text.split(" ").size() > 1 else ""
 		execute_command(command)
 
@@ -85,9 +86,11 @@ func register_natural_trigger(word: String, logic_connector: Dictionary) -> void
 	natural_triggers[word.to_lower()] = logic_connector
 	print("🔮 Registered trigger: '%s' -> %s" % [word, logic_connector.get("action", "unknown")])
 
+
 func _activate_trigger(word: String, trigger_data: Dictionary, speaker: UniversalBeing) -> void:
 	"""Activate natural language trigger"""
 	print("✨ Trigger activated: '%s'" % word)
+
 	
 	# Find nearby beings
 	if speaker:
@@ -129,9 +132,11 @@ func _cmd_inspect(args: Array) -> String:
 	"""Inspect anything - file, node, being, package"""
 	if args.is_empty():
 		return "Usage: inspect <target>"
+
 	
 	var target = args[0]
 	var result = "🔍 Inspecting: %s\n" % target
+
 	
 	# File inspection
 	if FileAccess.file_exists(target):
@@ -143,29 +148,35 @@ func _cmd_inspect(args: Array) -> String:
 			result += "Type: File\n"
 			result += "Size: %d bytes\n" % content.length()
 			result += "Lines: %d\n" % content.split("\n").size()
+
 			
 			# Check for functions
 			var functions = _extract_functions(content)
 			if not functions.is_empty():
 				result += "Functions: %s\n" % ", ".join(functions)
+	
 			
 			# Check for classes
 			if content.contains("class_name"):
+
 				var class_match = RegEx.new()
 				class_match.compile("class_name\\s+(\\w+)")
 				var match_result = class_match.search(content)
 				if match_result:
 					result += "Class: %s\n" % match_result.get_string(1)
 	
+	
 	# Node inspection
 	elif has_node(target):
 		var node = get_node(target)
 		result += "Type: %s\n" % node.get_class()
 		result += "Children: %d\n" % node.get_child_count()
+
 		
 		if node is UniversalBeing:
 			result += "Being Type: %s\n" % node.being_type
 			result += "Consciousness: %d\n" % node.consciousness_level
+
 	
 	return result
 
@@ -173,6 +184,7 @@ func _cmd_count(args: Array) -> String:
 	"""Count anything - lines, nodes, functions, etc."""
 	if args.is_empty():
 		return "Usage: count <what> <in>"
+
 	
 	var what = args[0]
 	var target = args[1] if args.size() > 1 else ""
@@ -183,9 +195,11 @@ func _cmd_count(args: Array) -> String:
 				var content = FileAccess.open(target, FileAccess.READ).get_as_text()
 				return "Lines: %d" % content.split("\n").size()
 		"nodes":
+
 			var root = get_node(target) if target else get_tree().root
 			return "Nodes: %d" % _count_nodes_recursive(root)
 		"beings":
+
 			var count = 0
 			for node in get_tree().get_nodes_in_group("universal_beings"):
 				count += 1
@@ -193,78 +207,97 @@ func _cmd_count(args: Array) -> String:
 		_:
 			return "Unknown count type: %s" % what
 
+
 func _cmd_create(args: Array) -> String:
 	"""Create anything from description"""
 	if args.is_empty():
 		return "Usage: create <type> <name> [properties]"
+
 	
 	var type = args[0]
 	var name = args[1] if args.size() > 1 else "unnamed"
 	
 	match type:
 		"being":
+
 			var being = UniversalBeing.new()
 			being.being_name = name
 			being.being_type = args[2] if args.size() > 2 else "generic"
 			get_tree().current_scene.add_child(being)
 			return "✨ Created being: %s" % name
+
 		
 		"trigger":
 			if args.size() < 3:
 				return "Usage: create trigger <word> <action>"
+	
 			var word = args[1]
 			var action = args[2]
 			register_natural_trigger(word, {"action": action})
 			return "🔮 Created trigger: say '%s' to %s" % [word, action]
+
 		
 		"connector":
+
 			var connector = {
 				"name": name,
 				"type": "logic_connector",
 				"connections": []
-			}
+	}
 			# Store in akashic records
 			return "🔗 Created connector: %s" % name
+
 		
 		_:
 			return "Unknown type: %s" % type
+
 
 func _cmd_load(args: Array) -> String:
 	"""Load and execute scripts, records, or packages"""
 	if args.is_empty():
 		return "Usage: load <script/record/package> <path>"
+
 	
 	var type = args[0]
 	var path = args[1] if args.size() > 1 else ""
 	
 	match type:
 		"script":
+
 			var script = load(path)
 			if script:
 				var instance = script.new()
 				get_tree().current_scene.add_child(instance)
 				return "📜 Loaded script: %s" % path
+	
 		
 		"record":
+
 			# Load from akashic records
 			if has_node("/root/AkashicRecords"):
+
 				var records = get_node("/root/AkashicRecords")
 				var data = records.load_record(path)
 				return "📚 Loaded record: %s" % path
+	
 		
 		"package":
 			if has_node("/root/akashic_loader"):
+
 				var loader = get_node("/root/akashic_loader")
 				loader.queue_package_load(path, 100) # High priority
 				return "📦 Loading package: %s" % path
+	
 		
 		_:
 			return "Unknown load type: %s" % type
+
 
 func _cmd_execute(args: Array) -> String:
 	"""Execute GDScript code directly"""
 	if args.is_empty():
 		return "Usage: execute <code>"
+
 	
 	var code = " ".join(args)
 	
@@ -283,6 +316,7 @@ func _run():
 		instance.call("_run")
 		instance.queue_free()
 		return "✅ Executed: %s" % code
+
 	
 	return "❌ Failed to execute code"
 
@@ -290,6 +324,7 @@ func _cmd_reality(args: Array) -> String:
 	"""Modify reality rules"""
 	if args.is_empty():
 		return "Usage: reality <rule> <value>"
+
 	
 	var rule = args[0]
 	var value = args[1] if args.size() > 1 else ""
@@ -299,18 +334,22 @@ func _cmd_reality(args: Array) -> String:
 			if value.is_valid_float():
 				ProjectSettings.set_setting("physics/2d/default_gravity", float(value))
 				return "🌍 Gravity set to: %s" % value
+	
 		
 		"time":
 			if value.is_valid_float():
 				Engine.time_scale = float(value)
 				return "⏰ Time scale set to: %s" % value
+	
 		
 		"consciousness":
+
 			# Modify global consciousness rules
 			return "🧠 Consciousness rules updated"
 		
 		_:
 			return "Unknown reality rule: %s" % rule
+
 
 ## HELPER FUNCTIONS ==================================================
 
@@ -321,6 +360,7 @@ func _extract_functions(content: String) -> Array[String]:
 	
 	for line in lines:
 		if line.strip_edges().begins_with("func "):
+
 			var func_match = RegEx.new()
 			func_match.compile("func\\s+(\\w+)")
 			var match = func_match.search(line)
@@ -351,6 +391,7 @@ func _find_nearby_beings(center: UniversalBeing, radius: float) -> Array[Univers
 func _cmd_help(args: Array) -> String:
 	"""Show available commands"""
 	var help_text = "🌟 Universal Commands:\n\n"
+
 	
 	for cmd_name in command_registry:
 		var cmd_data = command_registry[cmd_name]

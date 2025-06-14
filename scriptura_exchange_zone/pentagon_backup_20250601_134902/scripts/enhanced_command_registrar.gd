@@ -10,9 +10,8 @@
 # PURPOSE: Ensures Pentagon debug commands are always accessible with multiple strategies
 # CREATED: 2025-05-31
 # ==================================================
-
 extends UniversalBeingBase
-class_name EnhancedCommandRegistrar
+class_name EnhancedCommandRegistrar_enhanced
 
 # ═══════════════════════════════════════════════════════════════════════════════
 # REGISTRATION STRATEGIES USED:
@@ -68,8 +67,8 @@ func _attempt_immediate_registration() -> void:
 	registration_attempts += 1
 	print("🎯 [EnhancedCommandRegistrar] Attempt #%d - Immediate registration" % registration_attempts)
 	
-	console_manager = get_node_or_null("/root/ConsoleManager")
-	pentagon_commands = get_node_or_null("/root/MainGameController/PentagonDebugCommands")
+	console_manager = get_node_or_null("root/ConsoleManager")
+	pentagon_commands = get_node_or_null("root/MainGameController/PentagonDebugCommands")
 	
 	if console_manager and pentagon_commands:
 		_perform_registration()
@@ -102,8 +101,8 @@ func _attempt_delayed_registration(delay: float) -> void:
 	registration_attempts += 1
 	print("🕐 [EnhancedCommandRegistrar] Attempt #%d - Delayed registration (%.1fs)" % [registration_attempts, delay])
 	
-	console_manager = get_node_or_null("/root/ConsoleManager")
-	pentagon_commands = get_node_or_null("/root/MainGameController/PentagonDebugCommands")
+	console_manager = get_node_or_null("root/ConsoleManager")
+	pentagon_commands = get_node_or_null("root/MainGameController/PentagonDebugCommands")
 	
 	if console_manager and pentagon_commands and not registration_successful:
 		await _perform_registration()
@@ -119,8 +118,8 @@ func _start_persistent_monitoring() -> void:
 		await get_tree().create_timer(1.0).timeout
 		
 		if not registration_successful:
-			console_manager = get_node_or_null("/root/ConsoleManager")
-			pentagon_commands = get_node_or_null("/root/MainGameController/PentagonDebugCommands")
+			console_manager = get_node_or_null("root/ConsoleManager")
+			pentagon_commands = get_node_or_null("root/MainGameController/PentagonDebugCommands")
 			
 			if console_manager and pentagon_commands:
 				registration_attempts += 1

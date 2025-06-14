@@ -1,5 +1,5 @@
 extends Node
-class_name MemoryConnectionSystem
+class_name MemoryConnectionSystem_memoryconnectionsystem_memoryco
 }
 
 # Memory Connection System
@@ -26,7 +26,8 @@ const CONNECTION_TYPES = {
 }
 
 # Connection Strength
-enum ConnectionStrength {
+enum \2 {
+
     WEAK = 1,      # Subtle, tentative connection
     MODERATE = 2,  # Clear but not dominant
     STRONG = 3,    # Prominent relationship
@@ -35,7 +36,8 @@ enum ConnectionStrength {
 }
 
 # Temporal Patterns
-enum TemporalPattern {
+enum \2 {
+
     INSTANT,       # One-time, immediate
     RECURRING,     # Repeating at intervals
     CONTINUOUS,    # Ongoing, persistent
@@ -65,14 +67,14 @@ class MemoryConnection:
         target_id = p_target_id
         type = p_type
         strength = ConnectionStrength.MODERATE
-        created_at = OS.get_unix_time()
+        created_at = OS.Time.get_unix_time_from_system()
         updated_at = created_at
         temporal_pattern = TemporalPattern.INSTANT
 }
 
     func set_reason(p_reason: String):
         reason = p_reason
-        updated_at = OS.get_unix_time()
+        updated_at = OS.Time.get_unix_time_from_system()
 }
 
     func to_dict() -> Dictionary:
@@ -121,14 +123,14 @@ class ConnectionCluster:
     func _init(p_id: String, p_name: String):
         id = p_id
         name = p_name
-        created_at = OS.get_unix_time()
+        created_at = OS.Time.get_unix_time_from_system()
         updated_at = created_at
 }
 
     func add_connection(connection_id: String):
         if not connections.has(connection_id):
             connections.append(connection_id)
-            updated_at = OS.get_unix_time()
+            updated_at = OS.Time.get_unix_time_from_system()
 }
 
     func to_dict() -> Dictionary:
@@ -204,7 +206,7 @@ func connect_memories(source_id: String, target_id: String, type: String, reason
 }
 
     # Generate unique connection ID
-    var connection_id = "conn_" + str(OS.get_unix_time()) + "_" + str(randi() % 1000).pad_zeros(3)
+    var connection_id = "conn_" + str(OS.Time.get_unix_time_from_system()) + "_" + str(randi() % 1000).pad_zeros(3)
     var connection = MemoryConnection.new(connection_id, source_id, target_id, type)
 }
 
@@ -268,7 +270,7 @@ func update_connection_strength(connection_id: String, strength: int) -> bool:
 
     var connection = _connections[connection_id]
     connection.strength = strength
-    connection.updated_at = OS.get_unix_time()
+    connection.updated_at = OS.Time.get_unix_time_from_system()
 }
 
     # Save connection
@@ -294,7 +296,7 @@ func update_connection_temporal_pattern(connection_id: String, pattern: int) -> 
 }
 
     connection.temporal_pattern = pattern
-    connection.updated_at = OS.get_unix_time()
+    connection.updated_at = OS.Time.get_unix_time_from_system()
 }
 
     if not _temporal_indices.has(pattern):
@@ -313,7 +315,7 @@ func update_connection_temporal_pattern(connection_id: String, pattern: int) -> 
 }
 
 func create_cluster(name: String, connection_ids: Array = []) -> String:
-    var cluster_id = "cluster_" + str(OS.get_unix_time()) + "_" + str(randi() % 1000).pad_zeros(3)
+    var cluster_id = "cluster_" + str(OS.Time.get_unix_time_from_system()) + "_" + str(randi() % 1000).pad_zeros(3)
     var cluster = ConnectionCluster.new(cluster_id, name)
 }
 

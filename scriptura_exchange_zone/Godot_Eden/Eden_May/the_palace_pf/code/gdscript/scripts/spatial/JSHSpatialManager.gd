@@ -1,5 +1,5 @@
 extends Node
-class_name JSHSpatialManager
+class_name JSHSpatialManager_JSHSpatialManager_JSHSpati
 
 # Singleton pattern
 static var _instance: JSHSpatialManager = null
@@ -21,9 +21,9 @@ var zone_transitions: Dictionary = {}
 
 # Entity position tracking
 var entity_positions: Dictionary = {}
-var entities_by_position: Dictionary = {}  # Spatial hash grid for quick lookups
+var entities_by_position: Dictionary = {}  # Node3D hash grid for quick lookups
 
-# Spatial partitioning
+# Node3D partitioning
 var spatial_grid: JSHSpatialGrid = null
 var spatial_tree: JSHOctree = null
 
@@ -530,7 +530,7 @@ func get_zones_containing_point(position: Vector3) -> Array:
     
     return result
 
-# Spatial queries
+# Node3D queries
 func get_entities_in_radius(position: Vector3, radius: float, filter: Dictionary = {}) -> Array:
     stats.spatial_queries += 1
     

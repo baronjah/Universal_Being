@@ -1,5 +1,5 @@
 extends Node
-class_name CoreThingCreatorStandalone
+class_name CoreThingCreatorStandalone_thingcreatorstandalone_thingcre
 
 # This script creates a standalone menu for the Thing Creator
 # Use this if your scene doesn't have a suitable menu system
@@ -30,13 +30,13 @@ func _input(event: InputEvent) -> void:
 func find_akashic_records() -> void:
 	print("Searching for AkashicRecordsManager...")
 
-	if has_node("/root/AkashicRecordsManager"):
-		akashic_records_manager = get_node("/root/AkashicRecordsManager")
+	if has_node("root/AkashicRecordsManager"):
+		akashic_records_manager = get_node("root/AkashicRecordsManager")
 		print("Found AkashicRecordsManager")
 		return
 
-	if has_node("/root/CoreAkashicRecordsManager"):
-		akashic_records_manager = get_node("/root/CoreAkashicRecordsManager")
+	if has_node("root/CoreAkashicRecordsManager"):
+		akashic_records_manager = get_node("root/CoreAkashicRecordsManager")
 		print("Found CoreAkashicRecordsManager")
 		return
 
@@ -46,7 +46,7 @@ func find_akashic_records() -> void:
 	else:
 		print("Could not find CoreAkashicRecordsManager node")
 		print("Attempting to create CoreAkashicRecordsManager instance")
-		var AkashicRecordsClass = load("res://code/gdscript/scripts/core/core_akashic_records_manager.gd")
+		var AkashicRecordsClass = load("res://scripts/gdscript/scripts/core/core_akashic_records_manager.gd")
 		if AkashicRecordsClass:
 			akashic_records_manager = AkashicRecordsClass.new()
 			if akashic_records_manager:
@@ -60,13 +60,13 @@ func find_akashic_records() -> void:
 func setup_thing_creator() -> void:
 	print("Setting up Thing Creator...")
 
-	if has_node("/root/ThingCreator"):
-		thing_creator = get_node("/root/ThingCreator")
+	if has_node("root/ThingCreator"):
+		thing_creator = get_node("root/ThingCreator")
 		print("ThingCreator already exists")
 		return
 
-	if has_node("/root/CoreThingCreator"):
-		thing_creator = get_node("/root/CoreThingCreator")
+	if has_node("root/CoreThingCreator"):
+		thing_creator = get_node("root/CoreThingCreator")
 		print("CoreThingCreator already exists")
 		return
 
@@ -76,7 +76,7 @@ func setup_thing_creator() -> void:
 		return
 
 	# Updated to use the new path and class name
-	var ThingCreatorClass = load("res://code/gdscript/scripts/core/core_thing_creator.gd")
+	var ThingCreatorClass = load("res://scripts/gdscript/scripts/core/core_thing_creator.gd")
 	if ThingCreatorClass:
 		thing_creator = ThingCreatorClass.new()
 		thing_creator.name = "CoreThingCreator"
@@ -171,7 +171,7 @@ func _close_current_ui() -> void:
 
 func open_thing_creator_ui() -> void:
 	_close_current_ui()
-	var scene = load("res://code/gdscript/scenes/thing_creator_ui.tscn")
+	var scene = load("res://scripts/gdscript/scenes/thing_creator_ui.tscn")
 	if scene:
 		current_ui_instance = scene.instantiate()
 		view_area.add_child(current_ui_instance)
@@ -229,7 +229,7 @@ func _on_manage_things_button_pressed() -> void:
 func _on_dictionary_button_pressed() -> void:
 	_close_current_ui()
 
-	var scene = load("res://code/gdscript/scenes/akashic_records_ui.tscn")
+	var scene = load("res://scripts/gdscript/scenes/akashic_records_ui.tscn")
 	if scene:
 		current_ui_instance = scene.instantiate()
 		view_area.add_child(current_ui_instance)

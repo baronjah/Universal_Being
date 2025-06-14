@@ -4,9 +4,8 @@
 # Created: May 31st, 2025 | AI Integration Revolution
 # Location: scripts/ai/gamma_controller.gd
 ################################################################
-
 extends UniversalBeingBase
-class_name GammaController
+class_name GammaController_gammacon
 
 ################################################################
 # CORE VARIABLES
@@ -87,18 +86,18 @@ func _connect_to_pentagon_systems():
 	"""Connect to all Perfect Pentagon systems"""
 	
 	# Connect to Logic Connector
-	if has_node("/root/LogicConnector"):
-		logic_connector = get_node("/root/LogicConnector")
+	if has_node("root/LogicConnector"):
+		logic_connector = get_node("root/LogicConnector")
 		print("🔗 GAMMA: Connected to Logic Connector")
 	
 	# Connect to Sewers Monitor
-	if has_node("/root/SewersMonitor"):
-		sewers_monitor = get_node("/root/SewersMonitor")
+	if has_node("root/SewersMonitor"):
+		sewers_monitor = get_node("root/SewersMonitor")
 		print("🌊 GAMMA: Connected to Sewers Monitor")
 	
 	# Connect to Perfect Ready
-	if has_node("/root/PerfectReady"):
-		perfect_ready = get_node("/root/PerfectReady")
+	if has_node("root/PerfectReady"):
+		perfect_ready = get_node("root/PerfectReady")
 		print("🎯 GAMMA: Connected to Perfect Ready")
 
 ################################################################
@@ -139,7 +138,7 @@ func _find_nobody_model() -> Node:
 	var possible_paths = [
 		"../NobodyWhoModel",
 		"../GammaAI/NobodyWhoModel",
-		"/root/GammaModel"
+		"root/GammaModel"
 	]
 	
 	for path in possible_paths:
@@ -529,7 +528,7 @@ func _find_gamma_universal_being() -> Node:
 	var possible_paths = [
 		"../GammaUniversalBeing",
 		"../Gamma_ai_entity",
-		"/root/GammaAI"
+		"root/GammaAI"
 	]
 	
 	for path in possible_paths:

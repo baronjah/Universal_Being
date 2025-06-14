@@ -19,6 +19,7 @@ var initialization_errors: Array = []
 func load_core_classes() -> void:
 	"""Load core class resources with validation"""
 	print("🚀 SystemBootstrap: Loading core classes...")
+
 	
 	# Check and load UniversalBeing
 	var ub_path = "res://core/UniversalBeing.gd"
@@ -30,6 +31,7 @@ func load_core_classes() -> void:
 			print("🚀 SystemBootstrap: ❌ UniversalBeing load failed")
 	else:
 		print("🚀 SystemBootstrap: ❌ UniversalBeing.gd not found at %s" % ub_path)
+
 	
 	# Check and load FloodGates
 	var fg_path = "res://core/FloodGates.gd"
@@ -41,6 +43,7 @@ func load_core_classes() -> void:
 			print("🚀 SystemBootstrap: ❌ FloodGates load failed")
 	else:
 		print("🚀 SystemBootstrap: ❌ FloodGates.gd not found at %s" % fg_path)
+
 	
 	# Check and load AkashicRecordsSystemSystem
 	var ar_path = "res://systems/storage/AkashicRecordsSystem.gd"
@@ -52,6 +55,7 @@ func load_core_classes() -> void:
 			print("🚀 SystemBootstrap: ❌ AkashicRecordsSystemSystem load failed")
 	else:
 		print("🚀 SystemBootstrap: ❌ AkashicRecordsSystemSystem.gd not found at %s" % ar_path)
+
 	
 	# Update core_loaded status
 	core_loaded = UniversalBeingClass != null and FloodGatesClass != null and AkashicRecordsSystemSystemClass != null
@@ -63,3 +67,4 @@ func load_core_classes() -> void:
 		if not UniversalBeingClass: print("   - Missing: UniversalBeing")
 		if not FloodGatesClass: print("   - Missing: FloodGates")
 		if not AkashicRecordsSystemSystemClass: print("   - Missing: AkashicRecordsSystemSystem")
+

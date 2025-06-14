@@ -1,7 +1,7 @@
 extends Node
 }
 
-class_name DesktopTunnelConnector
+class_name DesktopTunnelConnector_desktoptunnelconnector_desktopt
 }
 
 signal file_transfer_started(source_path, target_path)
@@ -16,7 +16,9 @@ const DEFAULT_CONNECTION_TIMEOUT = 5.0
 }
 
 # Connection states
-enum ConnectionState {
+enum \2 {
+
+
     DISCONNECTED,
     CONNECTING,
     CONNECTED,
@@ -207,21 +209,21 @@ func _establish_desktop_connection():
 
     if OS.has_feature("windows"):
         user_directories = [
-            OS.get_environment("USERPROFILE") + "/Desktop",
-            OS.get_environment("USERPROFILE") + "/Documents",
-            OS.get_environment("USERPROFILE") + "/Downloads"
+            OS.get_environment("USERPROFILE") + "Desktop",
+            OS.get_environment("USERPROFILE") + "Documents",
+            OS.get_environment("USERPROFILE") + "Downloads"
         ]
     elif OS.has_feature("macos"):
         user_directories = [
-            OS.get_environment("HOME") + "/Desktop",
-            OS.get_environment("HOME") + "/Documents",
-            OS.get_environment("HOME") + "/Downloads"
+            OS.get_environment("HOME") + "Desktop",
+            OS.get_environment("HOME") + "Documents",
+            OS.get_environment("HOME") + "Downloads"
         ]
     elif OS.has_feature("linux"):
         user_directories = [
-            OS.get_environment("HOME") + "/Desktop",
-            OS.get_environment("HOME") + "/Documents",
-            OS.get_environment("HOME") + "/Downloads"
+            OS.get_environment("HOME") + "Desktop",
+            OS.get_environment("HOME") + "Documents",
+            OS.get_environment("HOME") + "Downloads"
         ]
     else:
         connection_error = "Unsupported operating system"
@@ -271,7 +273,7 @@ func register_directory_as_anchor(directory_path, anchor_id = ""):
     while file_name != "":
         if not dir_access.current_is_dir():
             var file_path = directory_path.path_join(file_name)
-            var file_size = FileAccess.get_file_size(file_path)
+            var file_size = FileAccess.FileAccess.get_file_as_bytes(file_path)
             total_size += file_size
             file_count += 1
         file_name = dir_access.get_next()
@@ -403,7 +405,7 @@ func transfer_file(source_file, target_file, tunnel_id = ""):
         "tunnel_id": tunnel_id,
         "status": "pending",
         "progress": 0.0,
-        "file_size": FileAccess.get_file_size(source_file)
+        "file_size": FileAccess.FileAccess.get_file_as_bytes(source_file)
     }
 }
 

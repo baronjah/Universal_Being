@@ -1,19 +1,19 @@
 @tool
-extends Node3D
+extends \2
 
 const whitegreen : Color = Color(0.9, 0.97, 0.94)
 
 ## Size of the mirror in world units
-@export var size : Vector2 = Vector2(2, 2)
+@@export var size : Vector2 = Vector2(2, 2)
 
 ## Resolution of the rendered viewport is Size*ResolutionPerUnit
-@export var ResolutionPerUnit = 100
+@@export var ResolutionPerUnit = 100
 
 ## The NodePath to the main camera
-@export var MainCamPath: NodePath = ""
+@@export var MainCamPath: NodePath = ""
 
 ## The cull mask array contains the visual layers which are NOT rendered. The render layers numbering is different from their indexing. To avoid rendering layer 1 add a 0 element to the list. To avoid rendering layer 2 add a 1 element to the list and so on.
-@export var cullMask : Array[int] = []
+@@export var cullMask : Array[int] = []
 
 ## Tint color of the mirror surface
 @export_color_no_alpha var MirrorColor : Color = whitegreen
@@ -22,7 +22,7 @@ const whitegreen : Color = Color(0.9, 0.97, 0.94)
 @export_range(0, 30, 0.01) var MirrorDistortion = 0
 
 ## The distortion texture of the mirror
-@export var DistortionTexture: Texture2D
+@@export var DistortionTexture: Texture2D
 
 var MainCam : Camera3D = null
 var cam : Camera3D

@@ -278,7 +278,7 @@ func _load_account_entries(account):
     dir.list_dir_end()
     
     # Sort entries by timestamp
-    entries.sort_custom(self, "_sort_by_timestamp")
+    entries.sort_custom(self."_sort_by_timestamp")
     
     # Add to memory entries
     for entry in entries:
@@ -337,11 +337,11 @@ func _load_entry_file(file_path, account, date_str):
     var entry = parse_result.result
     
     # Ensure account is set
-    if not entry.has("account") or entry.account.empty():
+    if not entry.has("account") or entry.account.is_empty():
         entry.account = account
     
     # Ensure date is set
-    if not entry.has("date") or entry.date.empty():
+    if not entry.has("date") or entry.date.is_empty():
         entry.date = date_str
     
     return entry
@@ -375,7 +375,7 @@ func _load_diary_entries():
     dir.list_dir_end()
     
     # Sort entries by timestamp (if available)
-    entries.sort_custom(self, "_sort_diary_entries")
+    entries.sort_custom(self."_sort_diary_entries")
     
     # Add to diary entries
     diary_entries = entries
@@ -401,7 +401,7 @@ func _load_diary_file(file_path):
         var line = file.get_line()
         line_num += 1
         
-        if not line.empty():
+        if not line.is_empty():
             var entry = {
                 "formatted": line,
                 "timestamp": 0,  # No timestamp for raw diary entries
@@ -421,7 +421,7 @@ func merge_accounts(accounts = []):
     var merged_count = 0
     
     # If no accounts specified, use all accounts
-    if accounts.empty():
+    if accounts.is_empty():
         for account in config.claude_accounts:
             accounts.append(account)
     
@@ -526,12 +526,12 @@ func search_entries(query, account = "", date_from = "", date_to = ""):
     var timestamp_from = 0
     var timestamp_to = 0
     
-    if not date_from.empty():
+    if not date_from.is_empty():
         var date_dict = _parse_date_string(date_from)
         if date_dict != null:
             timestamp_from = Time.get_unix_time_from_datetime_dict(date_dict)
     
-    if not date_to.empty():
+    if not date_to.is_empty():
         var date_dict = _parse_date_string(date_to)
         if date_dict != null:
             # Set to end of day
@@ -542,7 +542,7 @@ func search_entries(query, account = "", date_from = "", date_to = ""):
     
     # Search entries
     for entry in memory_entries:
-        var match_account = account.empty() or entry.account == account
+        var match_account = account.is_empty() or entry.account == account
         var match_date = true
         
         if timestamp_from > 0:
@@ -551,7 +551,7 @@ func search_entries(query, account = "", date_from = "", date_to = ""):
         if timestamp_to > 0:
             match_date = match_date and entry.timestamp <= timestamp_to
         
-        var match_query = query.empty() or entry.content.to_lower().find(query.to_lower()) >= 0
+        var match_query = query.is_empty() or entry.content.to_lower().find(query.to_lower()) >= 0
         
         if match_account and match_date and match_query:
             results.append(entry)
@@ -584,7 +584,7 @@ func _parse_date_string(date_str):
 
 # Get account status information
 func get_account_status(account = ""):
-    if account.empty():
+    if account.is_empty():
         return account_states
     
     if account_states.has(account):
@@ -646,14 +646,14 @@ func _cmd_diary(args):
             var entries = []
             
             for entry in memory_entries:
-                if account.empty() or entry.account == account:
+                if account.is_empty() or entry.account == account:
                     entries.append(entry)
             
             # Show only the most recent entries
             if entries.size() > count:
                 entries = entries.slice(entries.size() - count, entries.size() - 1)
             
-            var output = "Diary entries (" + (account.empty() ? "all accounts" : account) + "):\n"
+            var output = "Diary entries (" + (account.is_empty() ? "all accounts" : account) + "):\n"
             
             for entry in entries:
                 output += "[" + entry.date + " " + entry.time + "] [" + entry.account + "] " + entry.content.substr(0, 50)

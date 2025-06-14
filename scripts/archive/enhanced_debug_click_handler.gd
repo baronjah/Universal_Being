@@ -85,6 +85,7 @@ func find_active_camera() -> void:
 	if camera:
 		print("📷 Enhanced debug click handler connected to camera: %s" % camera.name)
 
+
 # ===== INPUT HANDLING =====
 
 func _input(event: InputEvent) -> void:
@@ -145,6 +146,7 @@ func inspect_debuggable_under_cursor() -> void:
 func inspect_debuggable(debuggable: Debuggable) -> void:
 	"""Inspect a debuggable object"""
 	print("🔍 Inspecting Debuggable: %s" % debuggable.name if debuggable.has_method("get") else "Unknown")
+
 	
 	# Emit signals
 	debuggable_clicked.emit(debuggable)
@@ -159,11 +161,13 @@ func inspect_debuggable(debuggable: Debuggable) -> void:
 		var name = debuggable.name if debuggable.has_method("get") else "Unknown"
 		click_hint_label.text = "🔍 Inspecting Debuggable: %s" % name
 
+
 func show_all_debuggables() -> void:
 	"""Show list of all registered debuggables"""
 	var debuggables = LogicConnector.all()
 	
 	print("🔍 All Registered Debuggables (%d):" % debuggables.size())
+
 	
 	for i in range(debuggables.size()):
 		var debuggable = debuggables[i]
@@ -194,18 +198,22 @@ func _on_variable_changed(object: Node, property: String, old_value, new_value) 
 	"""Handle variable change from inspector"""
 	print("🔧 Debuggable variable changed: %s.%s = %s (was %s)" % [object.name, property, new_value, old_value])
 
+
 func _on_inspection_started(object: Node) -> void:
 	"""Handle inspection start"""
 	var name = object.name if object.has_method("get") else "Unknown"
 	print("🔍 Started inspecting Debuggable: %s" % name)
+
 	
 	if click_hint_label:
 		click_hint_label.text = "🔍 Inspecting: %s (Right-click others to switch)" % name
+
 
 func _on_inspection_ended(object: Node) -> void:
 	"""Handle inspection end"""
 	var name = object.name if object.has_method("get") else "Unknown"
 	print("🔍 Stopped inspecting: %s" % name)
+
 	
 	if click_hint_label:
 		click_hint_label.text = "🖱️ Right-click any Debuggable object to inspect (%d registered)" % LogicConnector.get_debuggable_count()
@@ -239,6 +247,7 @@ func inspect_debuggable_by_name(name: String) -> void:
 	else:
 		print("❌ No debuggable found with name: %s" % name)
 
+
 func get_debug_status() -> Dictionary:
 	"""Get current debug status"""
 	return {
@@ -248,7 +257,7 @@ func get_debug_status() -> Dictionary:
 		"debuggable_types": LogicConnector.get_debuggable_types(),
 		"inspector_active": unified_inspector and unified_inspector.inspector_window and unified_inspector.inspector_window.visible,
 		"camera_connected": camera != null
-	}
+}
 
 func print_debug_status() -> void:
 	"""Print current debug status"""

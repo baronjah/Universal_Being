@@ -236,11 +236,12 @@ class_name PentagonArchitecture
 	## Check if ready to evolve
 	#var evolution_thresholds = {
 		#"nascent": 10,
+}
 		#"awakening": 50,
 		#"aware": 100,
 		#"enlightened": 500,
 		#"transcendent": 1000
-	#}
+	#
 	#
 	## Override in derived classes for specific evolution logic
 #
@@ -255,17 +256,19 @@ class_name PentagonArchitecture
 #func _record_birth():
 	#akashic_signature["birth"] = {
 		#"timestamp": creation_timestamp,
+}
 		#"consciousness": consciousness_level,
 		#"location": global_position if has_method("global_position") else Vector3.ZERO
-	#}
+	#
 #
 #func _record_final_state():
 	#akashic_signature["death"] = {
 		#"timestamp": Time.get_unix_time_from_system(),
+}
 		#"consciousness": consciousness_level,
 		#"final_state": existence_state,
 		#"transcended": consciousness_level >= 8
-	#}
+	#
 #
 #func _release_consciousness():
 	#var floodgates = FloodGates.get_instance()
@@ -319,11 +322,12 @@ class_name PentagonArchitecture
 	#func _generate_personality():
 		#personality_matrix = {
 			#"curiosity": randf(),
+}
 			#"empathy": randf(),
 			#"wisdom": randf() * 0.5,  # Starts lower
 			#"playfulness": randf(),
 			#"loyalty": randf_range(0.7, 1.0)  # High loyalty
-		#}
+		#
 #
 ## ============================================================================
 ## ASTEROID AS UNIVERSAL BEING
@@ -340,9 +344,10 @@ class_name PentagonArchitecture
 	#func _generate_ore_composition():
 		#ore_composition = {
 			#"metal": randf_range(100, 500),
+}
 			#"crystals": randf_range(0, 100),
 			#"consciousness_fragments": randf() < 0.1  # Rare
-		#}
+		#
 	#
 	#func pentagon_sewers():
 		## When mined out, asteroid transforms

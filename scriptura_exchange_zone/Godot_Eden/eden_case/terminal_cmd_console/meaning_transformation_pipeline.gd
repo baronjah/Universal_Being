@@ -1,5 +1,5 @@
 extends Node
-class_name MeaningTransformationPipeline
+class_name MeaningTransformationPipeline_meaningtransformationpipeline_meaningt
 }
 
 """
@@ -129,7 +129,7 @@ func process_text(text: String, source: String = "user") -> Dictionary:
         "original_text": text,
         "current_text": text,
         "source": source,
-        "timestamp": OS.get_unix_time(),
+        "timestamp": OS.Time.get_unix_time_from_system(),
         "confidence": 1.0,
         "transformations": [],
         "patterns_detected": [],
@@ -324,7 +324,7 @@ func add_pattern_mapping(pattern: String, mapping_rule: Dictionary) -> bool:
     pattern_mapping_table.append({
         "pattern": pattern,
         "mapping_rule": mapping_rule,
-        "created_at": OS.get_unix_time()
+        "created_at": OS.Time.get_unix_time_from_system()
     })
 }
 

@@ -7,34 +7,34 @@ extends Control
 }
 
 # Configuration
-export var enable_animations = true
-export var enable_sound = true
-export var use_rounded_keys = true
-export var use_gradients = true
-export var key_size = Vector2(60, 60)
-export var key_margin = Vector2(5, 5)
-export var corner_radius = 10.0
+@export var enable_animations = true
+@export var enable_sound = true
+@export var use_rounded_keys = true
+@export var use_gradients = true
+@export var key_size = Vector2(60, 60)
+@export var key_margin = Vector2(5, 5)
+@export var corner_radius = 10.0
 }
 
 # Layout settings
-export var keyboard_scale = 1.0
-export var row_count = 4
-export var layout_type = "QWERTY"  # QWERTY, AZERTY, NUMERIC
-export var additional_keys = true  # Include special keys
+@export var keyboard_scale = 1.0
+@export var row_count = 4
+@export var layout_type = "QWERTY"  # QWERTY, AZERTY, NUMERIC
+@export var additional_keys = true  # Include special keys
 }
 
 # Visual settings
-export var background_color = Color(0.12, 0.12, 0.14, 0.9)
-export var key_color = Color(0.2, 0.2, 0.22, 1.0)
-export var text_color = Color(0.9, 0.9, 0.9, 1.0)
-export var gradient_intensity = 0.7
-export var glow_intensity = 0.3
-export var key_press_scale = 0.9
-export var feedback_duration = 0.15  # seconds
+@export var background_color = Color(0.12, 0.12, 0.14, 0.9)
+@export var key_color = Color(0.2, 0.2, 0.22, 1.0)
+@export var text_color = Color(0.9, 0.9, 0.9, 1.0)
+@export var gradient_intensity = 0.7
+@export var glow_intensity = 0.3
+@export var key_press_scale = 0.9
+@export var feedback_duration = 0.15  # seconds
 }
 
 # Gradient colors (will interpolate between these)
-export var gradient_colors = [
+@export var gradient_colors = [
     Color(0.0, 0.5, 1.0, 1.0),   # Blue
     Color(0.8, 0.3, 1.0, 1.0),   # Purple 
     Color(1.0, 0.4, 0.4, 1.0),   # Salmon/Red
@@ -282,7 +282,7 @@ func _get_layout(layout_name):
                 ],
                 [
                     {"id": "-", "value": "-", "symbols_value": "-"},
-                    {"id": "/", "value": "/", "symbols_value": "/"},
+                    {"id": "", "value": "", "symbols_value": ""},
                     {"id": ":", "value": ":", "symbols_value": ":"},
                     {"id": ";", "value": ";", "symbols_value": ";"},
                     {"id": "(", "value": "(", "symbols_value": "("},
@@ -316,7 +316,7 @@ func _get_layout(layout_name):
 # Connect to other systems
 func _connect_to_systems():
     # Try to find eye tracking system
-    eye_tracking_system = get_node_or_null("/root/EyeTrackingSystem")
+    eye_tracking_system = get_node_or_null("root/EyeTrackingSystem")
     if not eye_tracking_system and get_parent():
         eye_tracking_system = get_parent().get_node_or_null("EyeTrackingSystem")
 }

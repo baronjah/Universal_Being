@@ -1,5 +1,6 @@
 @tool
-class_name VisualShaderNodeMathsChebyshevDistance extends VisualShaderNodeCustom
+class_name VisualShaderNodeMathsChebyshevDistance_ChebyshevDistance_Chebyshe
+extends \2
 
 func _get_name() -> String:
 	return "ChebyshevDistance"

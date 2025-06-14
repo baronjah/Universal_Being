@@ -4,10 +4,10 @@
 # PURPOSE: Full movement capabilities - walk, run, crouch, strafe, rotate, jump
 # CREATED: 2025-05-26 - Complete movement overhaul
 # ==================================================
-
-extends UniversalBeingBase
+extends \2
 # Movement states with smooth transitions
-enum MovementState {
+enum \2 {
+
 	IDLE,
 	STANDING_UP,
 	WALKING,
@@ -22,7 +22,8 @@ enum MovementState {
 }
 
 # Movement speeds
-enum SpeedMode {
+enum \2 {
+
 	SLOW,
 	NORMAL,
 	FAST
@@ -470,7 +471,7 @@ func _perform_landing() -> void:
 
 func _update_ground_detection() -> void:
 	# Simple ground check from feet
-	var space_state = get_tree().root.get_world_3d().direct_space_state
+	var space_state = get_tree().root.get_viewport().get_world_3d().direct_space_state
 	
 	var left_check = PhysicsRayQueryParameters3D.new()
 	left_check.from = left_foot.global_position

@@ -1,6 +1,6 @@
 extends Node
 
-class_name UnifiedTerminalInterface
+class_name UnifiedTerminalInterface_unifiedterminalinterface_unifiedt
 
 # Terminal configuration
 var config = {
@@ -224,7 +224,7 @@ func show_welcome_message():
 			str(int(storage_status.local.total_gb)) + " GB (" + 
 			str(int(storage_status.local.percentage)) + "% used)", config.theme.text_color)
 		
-		add_colored_line("  Wishes Today: " + str(storage_status.wishes.today) + " / " + 
+		add_colored_line("  Wishes Today: " + str(storage_status.wishes.today) + "  " + 
 			str(100 - storage_status.wishes.today) + " remaining", config.theme.wish_color)
 	else:
 		add_colored_line("  Storage: Not Connected", config.theme.error_color)
@@ -293,7 +293,7 @@ func process_command(command):
 	
 	# Track command execution
 	executing_command = true
-	command_start_time = OS.get_unix_time()
+	command_start_time = OS.Time.get_unix_time_from_system()
 	current_command = command
 	
 	# Execute the command
@@ -372,7 +372,7 @@ func run_external_command(command):
 	
 	# Check for bash commands
 	if command.begins_with("bash ") or command.begins_with("sh ") or 
-	   command.begins_with("./") or command.begins_with("/"):
+	   command.begins_with("./") or command.begins_with(""):
 		# Simulate bash execution
 		add_colored_line("Executing external command: " + command, config.theme.dim_color)
 		add_colored_line("Command output would appear here in actual implementation", config.theme.dim_color)
@@ -383,7 +383,7 @@ func run_external_command(command):
 		return launch_game()
 	
 	# Check if it's a wish
-	if command.length() > 10 and not command.begins_with("sudo") and command.find("/") < 0:
+	if command.length() > 10 and not command.begins_with("sudo") and command.find("") < 0:
 		add_colored_line("Interpreting as wish...", config.theme.wish_color)
 		return process_wish([command])
 	
@@ -569,7 +569,7 @@ func list_wishes():
 	
 	if storage_system:
 		var status = storage_system.get_storage_status()
-		result.append("Today's wishes: " + str(status.wishes.today) + " / 100")
+		result.append("Today's wishes: " + str(status.wishes.today) + "  100")
 		result.append("Remaining wishes: " + str(status.wishes.remaining))
 		result.append("")
 		
@@ -781,7 +781,7 @@ func list_storage_files(args):
 	var result = ["=== FILES ==="]
 	
 	# Simulate listing files
-	if path == "" or path == "/":
+	if path == "" or path == "":
 		result.append("  12_turns_system/")
 		result.append("  Desktop/")
 		result.append("  Documents/")
@@ -889,7 +889,7 @@ func akashic_store(word, power):
 		var result = akashic_bridge.store_word(word, power, {
 			"origin": "terminal_interface",
 			"dimension": current_turn,
-			"timestamp": OS.get_unix_time()
+			"timestamp": OS.Time.get_unix_time_from_system()
 		})
 		
 		if result:
@@ -1192,7 +1192,7 @@ func set_turn(turn_num):
 func save_current_turn():
 	# In actual implementation, this would save the current turn
 	var file = File.new()
-	var turn_file = "/mnt/c/Users/Percision 15/12_turns_system/current_turn.txt"
+	var turn_file = "mnt/c/Users/Percision 15/12_turns_system/current_turn.txt"
 	
 	if file.open(turn_file, File.WRITE) == OK:
 		file.store_string(str(current_turn))
@@ -1202,7 +1202,7 @@ func save_current_turn():
 
 func load_current_turn():
 	var file = File.new()
-	var turn_file = "/mnt/c/Users/Percision 15/12_turns_system/current_turn.txt"
+	var turn_file = "mnt/c/Users/Percision 15/12_turns_system/current_turn.txt"
 	
 	if file.file_exists(turn_file) and file.open(turn_file, File.READ) == OK:
 		var content = file.get_as_text()
@@ -1312,7 +1312,7 @@ func show_status():
 	if storage_system:
 		var status = storage_system.get_storage_status()
 		result.append("WISHES:")
-		result.append("  Today's Wishes: " + str(status.wishes.today) + " / 100")
+		result.append("  Today's Wishes: " + str(status.wishes.today) + "  100")
 		result.append("  Remaining: " + str(status.wishes.remaining))
 		result.append("  Active Wishes: " + str(status.wishes.active))
 	

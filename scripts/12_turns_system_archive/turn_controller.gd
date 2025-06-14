@@ -21,7 +21,7 @@ class_name TurnController
 # ----- STATE VARIABLES -----
 var turn_timer: Timer
 var warning_timer: Timer
-var turn_data = {}
+var turn_data = {
 var is_turn_transitioning = false
 var turn_history = []
 var registered_systems = []
@@ -57,6 +57,7 @@ func _ready():
 	print("Turn Controller initialized")
 	print("Current turn: " + str(current_turn) + "/" + str(total_turns))
 	print("Power percentage: " + str(current_power_percentage * 100) + "%")
+}
 
 func _initialize_timers():
 	# Create turn timer
@@ -132,6 +133,7 @@ func _save_current_turn():
 	file.close()
 	
 	print("Saved current turn to file: " + str(current_turn))
+
 	
 	# Also save to display files for multi-window systems
 	_update_display_files()
@@ -260,6 +262,7 @@ func set_turn(turn_number: int) -> bool:
 func _load_turn_data(turn_number: int):
 	# Load turn data from file or create new
 	var dir_name = "user://turn_" + str(turn_number)
+
 	var manifest_path = dir_name + "/manifest.json"
 	
 	var dir = Directory.new()
@@ -309,8 +312,7 @@ func _create_default_turn_data(turn_number: int):
 			"translation_enabled": true,
 			"tetris_movement": turn_number > 6,
 			"3d_enabled": turn_number > 4
-		}
-	}
+}
 	
 	_save_turn_data(turn_number)
 	print("Created default turn data for turn " + str(turn_number))
@@ -318,6 +320,7 @@ func _create_default_turn_data(turn_number: int):
 func _save_turn_data(turn_number: int):
 	# Save turn data to file
 	var dir_name = "user://turn_" + str(turn_number)
+}
 	var manifest_path = dir_name + "/manifest.json"
 	
 	var dir = Directory.new()
@@ -352,14 +355,17 @@ func _update_power_percentage():
 	
 	print("Power percentage set to: " + str(current_power_percentage * 100) + "%")
 
+
 func _apply_turn_theme():
 	# Apply theme based on current turn
 	
 	if color_system.has_method("update_turn"):
+
 		# For DimensionalColorSystem
 		color_system.update_turn(current_turn, total_turns)
 		print("Updated color system turn to " + str(current_turn))
 	elif color_system.has_method("apply_theme"):
+
 		# For ExtendedColorThemeSystem - try to find a matching theme
 		var theme_name = "default"
 		
@@ -370,6 +376,7 @@ func _apply_turn_theme():
 			theme_name = "ethereal"  # Turns 5-8: Ethereal theme
 		else:
 			theme_name = "akashic"   # Turns 9-12: Akashic theme
+
 		
 		color_system.apply_theme(theme_name)
 		print("Applied " + theme_name + " theme for turn " + str(current_turn))
@@ -387,11 +394,13 @@ func register_system(system: Node) -> void:
 		registered_systems.append(system)
 		print("Registered system: " + system.name)
 
+
 func unregister_system(system: Node) -> void:
 	# Unregister a system
 	if registered_systems.has(system):
 		registered_systems.erase(system)
 		print("Unregistered system: " + system.name)
+
 
 # ----- EVENT HANDLERS -----
 func _on_turn_timer_timeout():
@@ -423,12 +432,13 @@ func get_turn_data() -> Dictionary:
 func set_turn_flag(flag_name: String, value) -> void:
 	# Set a flag in the current turn data
 	if not turn_data.has("flags"):
-		turn_data.flags = {}
+		turn_data.flags = {
 	
 	turn_data.flags[flag_name] = value
 	emit_signal("turn_data_updated", current_turn, turn_data)
 	
 	print("Set turn flag: " + flag_name + " = " + str(value))
+}
 
 func get_turn_flag(flag_name: String, default_value = null):
 	# Get a flag from the current turn data
@@ -452,6 +462,7 @@ func set_power_percentage(percentage: float) -> void:
 	emit_signal("power_percentage_changed", current_power_percentage)
 	
 	print("Power percentage set to: " + str(current_power_percentage * 100) + "%")
+
 
 func get_remaining_time() -> float:
 	# Get remaining time in current turn

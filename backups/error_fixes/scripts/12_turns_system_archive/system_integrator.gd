@@ -40,9 +40,9 @@ func initialize_systems():
     # Setup connections to main controller if available
     if main_controller:
         # Connect controller signals
-        main_controller.connect("turn_advanced", self, "_on_turn_advanced")
-        main_controller.connect("note_created", self, "_on_note_created")
-        main_controller.connect("word_manifested", self, "_on_word_manifested")
+        main_controller.connect(_on_turn_advanced)
+        main_controller.connect(_on_note_created)
+        main_controller.connect(_on_word_manifested)
         
         # Tell akashic controller about main controller
         akashic_controller.set_main_controller(main_controller)
@@ -68,7 +68,7 @@ func initialize_systems():
     var startup_timer = Timer.new()
     startup_timer.wait_time = 1.0
     startup_timer.one_shot = true
-    startup_timer.connect("timeout", self, "complete_startup")
+    startup_timer.connect(complete_startup)
     add_child(startup_timer)
     startup_timer.start()
 
@@ -89,12 +89,13 @@ func connect_components():
     word_manifestation_system = get_node_or_null("/root/WordManifestationSystem")
     
     if not word_manifestation_system and has_node("/root/DivineWordProcessor"):
+	
         # Create word manifestation system if it doesn't exist
         word_manifestation_system = load("res://word_manifestation_system.gd").new()
         add_child(word_manifestation_system)
         
         # Connect to word processor
-        var word_processor = get_node("/root/DivineWordProcessor")
+        var word_processor = get_node("\1") as Node
         if word_processor:
             word_manifestation_system.set_word_processor(word_processor)
     
@@ -105,6 +106,7 @@ func connect_components():
 func setup_visualization():
     # Create visualization scene if not already in tree
     if not has_node("VisualizationContainer"):
+	
         var container = Spatial.new()
         container.name = "VisualizationContainer"
         add_child(container)
@@ -118,16 +120,16 @@ func setup_visualization():
         _setup_visualization_camera(container)
     else:
         # Get existing visualizer
-        spatial_visualizer = get_node("VisualizationContainer/Notepad3DVisualizer")
+        spatial_visualizer = get_node("\1") as Node
     
     # Connect visualizer to akashic controller
     if spatial_visualizer and akashic_controller:
         akashic_controller.set_visualizer(spatial_visualizer)
         
         # Connect additional signals
-        akashic_controller.connect("record_created", self, "_on_record_created")
-        akashic_controller.connect("notebook_created", self, "_on_notebook_created")
-        akashic_controller.connect("akashic_synergy_detected", self, "_on_akashic_synergy_detected")
+        akashic_controller.connect(_on_record_created)
+        akashic_controller.connect(_on_notebook_created)
+        akashic_controller.connect(_on_akashic_synergy_detected)
         
         print("3D visualization system setup complete")
 
@@ -213,11 +215,13 @@ func _on_word_manifested(word, position, power):
 
 func _on_record_created(entry_id):
     print("Akashic record created: %s" % entry_id)
+	
     
     # Additional processing can be done here if needed
 
 func _on_notebook_created(notebook_name):
     print("Notebook created: %s" % notebook_name)
+	
     
     # Additional processing can be done here if needed
 

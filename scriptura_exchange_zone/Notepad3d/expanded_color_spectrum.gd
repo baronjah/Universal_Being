@@ -1,6 +1,6 @@
 extends Node
 
-class_name ExpandedColorSpectrum
+class_name ExpandedColorSpectrum_expandedcolorspectrum_expanded
 
 # Constants for base colors
 const BASE_COLORS = {
@@ -200,7 +200,7 @@ func _generate_material_colors():
         for material_name in MATERIAL_TYPES:
             var material_props = MATERIAL_TYPES[material_name]
             
-            // For simplicity, we're just storing the color and material properties together
+# // For simplicity, we're just storing the color and material properties together
             material_colors[color_name][material_name] = {
                 "color": base_color,
                 "reflectivity": material_props.reflectivity,
@@ -226,7 +226,7 @@ func _connect_to_terminal_bridge():
         print("Connected to TerminalVisualBridge")
     else:
         print("TerminalVisualBridge not available, trying to load directly")
-        var script = load("/mnt/c/Users/Percision 15/terminal_visual_bridge.gd")
+        var script = load("mnt/c/Users/Percision 15/terminal_visual_bridge.gd")
         if script:
             terminal_bridge = script.new()
             print("Loaded TerminalVisualBridge directly")
@@ -282,24 +282,24 @@ func _draw_color_spectrum():
             # Apply material effects to visualization
             var display_color = color
             if material.emission > 0:
-                // Emissive effect - make it glow by lightening
+# // Emissive effect - make it glow by lightening
                 display_color = color.lightened(material.emission * 0.5)
             } elif material.metallic > 0:
-                // Metallic effect - slight color shift based on angle
+# // Metallic effect - slight color shift based on angle
                 var time_offset = sin(animation_time * 2.0 + x * 0.1 + y * 0.2) * 0.1
                 display_color = color.lightened(time_offset * material.metallic)
             } elif material.reflectivity > 0:
-                // Reflective effect - slight brightness variation
+# // Reflective effect - slight brightness variation
                 var reflection = sin(animation_time + x * 0.2 + y * 0.3) * 0.1
                 display_color = color.lightened(reflection * material.reflectivity)
             }
             
-            // Draw main color cell
+# // Draw main color cell
             canvas.draw_rect(cell_rect, display_color)
             
-            // Draw material effects
+# // Draw material effects
             if material.roughness < 0.5:
-                // Glossy highlight for smooth surfaces
+# // Glossy highlight for smooth surfaces
                 var highlight_size = cell_width * (1.0 - material.roughness) * 0.3
                 var highlight_pos = Vector2(
                     cell_rect.position.x + cell_rect.size.x * 0.7,
@@ -323,7 +323,7 @@ func _draw_color_spectrum():
     if current_spectrum in color_gradients:
         var gradient = color_gradients[current_spectrum]
         
-        // Draw gradient bar
+# // Draw gradient bar
         for i in range(int(spectrum_width)):
             var t = float(i) / spectrum_width
             var color = gradient.interpolate(t)
@@ -331,7 +331,7 @@ func _draw_color_spectrum():
             canvas.draw_rect(rect, color)
         }
     } else {
-        // Draw discrete colors
+# // Draw discrete colors
         var segment_width = spectrum_width / spectrum.size()
         
         for i in range(spectrum.size()):
@@ -576,10 +576,10 @@ func create_custom_spectrum(name, color_names):
         }
     }
     
-    // Create spectrum
+# // Create spectrum
     SPECTRUM_CONFIGS[name] = color_names
     
-    // Create gradient
+# // Create gradient
     var gradient = Gradient.new()
     
     for i in range(color_names.size()):

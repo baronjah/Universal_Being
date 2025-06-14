@@ -92,7 +92,7 @@ func _ready():
 func _connect_components():
 	# Find DriveMemoryConnector
 	if has_node("/root/DriveMemoryConnector") or get_node_or_null("/root/DriveMemoryConnector"):
-		drive_memory_connector = get_node("/root/DriveMemoryConnector")
+		drive_memory_connector = get_node("\1") as Node
 		print("Connected to DriveMemoryConnector")
 	else:
 		# Try to find it in 12_turns_system
@@ -105,20 +105,20 @@ func _connect_components():
 	
 	# Find CrossDeviceConnector
 	if has_node("/root/CrossDeviceConnector") or get_node_or_null("/root/CrossDeviceConnector"):
-		cross_device_connector = get_node("/root/CrossDeviceConnector")
+		cross_device_connector = get_node("\1") as Node
 		print("Connected to CrossDeviceConnector")
 	elif has_node("../CrossDeviceConnector") or get_node_or_null("../CrossDeviceConnector"):
-		cross_device_connector = get_node("../CrossDeviceConnector")
+		cross_device_connector = get_node("\1") as Node
 		print("Connected to CrossDeviceConnector (sibling)")
 	
 	# Find CloudStorageConnector
 	if has_node("/root/CloudStorageConnector") or get_node_or_null("/root/CloudStorageConnector"):
-		cloud_storage_connector = get_node("/root/CloudStorageConnector")
+		cloud_storage_connector = get_node("\1") as Node
 		print("Connected to CloudStorageConnector")
 	
 	# Find AkashicRecordConnector if available
 	if has_node("/root/AkashicRecordConnector") or get_node_or_null("/root/AkashicRecordConnector"):
-		akashic_record_connector = get_node("/root/AkashicRecordConnector")
+		akashic_record_connector = get_node("\1") as Node
 		print("Connected to AkashicRecordConnector")
 
 func _initialize_system():
@@ -375,7 +375,7 @@ func create_memory_snapshot(snapshot_name = ""):
 	
 	memory_state = MemoryState.SCANNING
 	
-	if snapshot_name.empty():
+	if snapshot_name.is_empty():
 		var datetime = Time.get_datetime_dict_from_system()
 		snapshot_name = "snapshot_" + str(datetime.year) + "-" + str(datetime.month).pad_zeros(2) + "-" + str(datetime.day).pad_zeros(2) + "_" + str(datetime.hour).pad_zeros(2) + "-" + str(datetime.minute).pad_zeros(2)
 	
@@ -511,7 +511,7 @@ func _process_transfer(transfer_id):
 	
 	# Start in a thread if available
 	if has_node("/root/MultiThreadedProcessor") or get_node_or_null("/root/MultiThreadedProcessor"):
-		var thread_processor = get_node("/root/MultiThreadedProcessor")
+		var thread_processor = get_node("\1") as Node
 		var thread_id = thread_processor.allocate_thread(
 			"memory_transfer",
 			"Memory transfer to " + transfer.target_device_id,

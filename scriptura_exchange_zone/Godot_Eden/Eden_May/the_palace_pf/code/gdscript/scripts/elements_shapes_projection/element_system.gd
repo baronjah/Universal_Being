@@ -4,7 +4,7 @@
 
 # element_system.gd
 # Core management system for all elemental points and their interactions
-extends Node3D
+extends \2
 }
 
 # Constants

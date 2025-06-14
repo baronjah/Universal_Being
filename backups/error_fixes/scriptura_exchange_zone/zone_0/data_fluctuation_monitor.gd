@@ -181,10 +181,10 @@ func _ready():
 	
 	if terminal:
 		if terminal.has_node("storage_system"):
-			storage_system = terminal.get_node("storage_system")
+			storage_system = terminal.get_node("\1") as Node
 		
 		if terminal.has_node("symbol_system"):
-			symbol_system = terminal.get_node("symbol_system")
+			symbol_system = terminal.get_node("\1") as Node
 		
 		log_message("Data Fluctuation Monitor initialized.", "system")
 	
@@ -192,7 +192,7 @@ func _ready():
 	monitor_timer = Timer.new()
 	monitor_timer.wait_time = monitoring_interval
 	monitor_timer.autostart = true
-	monitor_timer.connect("timeout", self, "_scan_for_fluctuations")
+	monitor_timer.connect(_scan_for_fluctuations)
 	add_child(monitor_timer)
 	
 	# Initial baseline generation
@@ -407,7 +407,7 @@ func show_fluctuation_history():
 
 # Show resonance information
 func show_resonance_info(resonance_type=""):
-	if resonance_type.empty() or resonance_type == "current":
+	if resonance_type.is_empty() or resonance_type == "current":
 		log_message("Current Resonance:", "fluctuation")
 		log_message("- Type: " + _get_resonance_string(default_resonance), "fluctuation")
 		log_message("- Frequency: " + str(current_resonance) + " Hz", "fluctuation")
@@ -444,7 +444,7 @@ func show_resonance_info(resonance_type=""):
 
 # Merge data
 func merge_data(mode_str=""):
-	if !mode_str.empty():
+	if !mode_str.is_empty():
 		set_merge_mode(mode_str)
 		
 	log_message("Merging data using " + _get_merge_mode_string(merge_mode) + " mode...", "fluctuation")
@@ -452,7 +452,7 @@ func merge_data(mode_str=""):
 	# In a real implementation, this would merge actual data
 	# For this mock-up, we'll simulate it
 	
-	yield(get_tree().create_timer(1.0), "timeout")
+	await(get_tree().create_timer(1.0), "timeout")
 	
 	var affected_files = []
 	var affected_count = randi() % 5 + 1  # 1 to 5 files
@@ -465,7 +465,7 @@ func merge_data(mode_str=""):
 
 # Split data
 func split_data(mode_str=""):
-	if !mode_str.empty():
+	if !mode_str.is_empty():
 		set_split_mode(mode_str)
 		
 	log_message("Splitting data using " + _get_split_mode_string(split_mode) + " mode...", "fluctuation")
@@ -473,7 +473,7 @@ func split_data(mode_str=""):
 	# In a real implementation, this would split actual data
 	# For this mock-up, we'll simulate it
 	
-	yield(get_tree().create_timer(1.0), "timeout")
+	await(get_tree().create_timer(1.0), "timeout")
 	
 	var affected_files = []
 	var affected_count = randi() % 5 + 1  # 1 to 5 files
@@ -485,14 +485,14 @@ func split_data(mode_str=""):
 	
 	if clean_data_on_split:
 		log_message("Cleaning split data...", "fluctuation")
-		yield(get_tree().create_timer(0.5), "timeout")
+		await(get_tree().create_timer(0.5), "timeout")
 		log_message("Split data cleaned.", "fluctuation")
 	
 	emit_signal("data_split", affected_files, split_mode)
 
 # Toggle monitoring
 func toggle_monitoring(enabled_str=""):
-	if enabled_str.empty():
+	if enabled_str.is_empty():
 		enabled = !enabled
 	else:
 		enabled = (enabled_str.to_lower() == "on" or enabled_str.to_lower() == "true" or enabled_str == "1")
@@ -508,7 +508,7 @@ func toggle_monitoring(enabled_str=""):
 
 # Apply resonance correction
 func apply_resonance_correction(resonance_str=""):
-	if !resonance_str.empty():
+	if !resonance_str.is_empty():
 		set_resonance_type(resonance_str)
 		
 	log_message("Applying " + _get_resonance_string(default_resonance) + " resonance correction...", "fluctuation")
@@ -516,7 +516,7 @@ func apply_resonance_correction(resonance_str=""):
 	# In a real implementation, this would apply actual corrections
 	# For this mock-up, we'll simulate it
 	
-	yield(get_tree().create_timer(1.0), "timeout")
+	await(get_tree().create_timer(1.0), "timeout")
 	
 	var affected_files = []
 	
@@ -544,7 +544,7 @@ func visualize_fluctuation(type_str=""):
 		
 	var pattern = FluctuationPattern.OSCILLATING
 	
-	if !type_str.empty():
+	if !type_str.is_empty():
 		match type_str.to_lower():
 			"random": pattern = FluctuationPattern.RANDOM
 			"oscillating": pattern = FluctuationPattern.OSCILLATING
@@ -579,12 +579,12 @@ func visualize_fluctuation(type_str=""):
 
 # Analyze fluctuation pattern
 func analyze_fluctuation_pattern(file_path=""):
-	log_message("Analyzing fluctuation pattern" + (file_path.empty() ? "" : " in " + file_path) + "...", "fluctuation")
+	log_message("Analyzing fluctuation pattern" + (file_path.is_empty() ? "" : " in " + file_path) + "...", "fluctuation")
 	
 	# In a real implementation, this would analyze actual data
 	# For this mock-up, we'll simulate it
 	
-	yield(get_tree().create_timer(1.0), "timeout")
+	await(get_tree().create_timer(1.0), "timeout")
 	
 	var pattern = _get_random_pattern()
 	var level = _get_random_level()
@@ -640,7 +640,7 @@ func establish_baseline():
 	# In a real implementation, this would create a baseline from actual data
 	# For this mock-up, we'll simulate it
 	
-	yield(get_tree().create_timer(1.5), "timeout")
+	await(get_tree().create_timer(1.5), "timeout")
 	
 	baseline_hash = "bf3a2c7e9d8f1a6b5c4d2e0f"  # Simulated hash
 	
@@ -649,12 +649,12 @@ func establish_baseline():
 
 # Compare to baseline
 func compare_to_baseline(target=""):
-	log_message("Comparing current data to baseline" + (target.empty() ? "" : " for " + target) + "...", "fluctuation")
+	log_message("Comparing current data to baseline" + (target.is_empty() ? "" : " for " + target) + "...", "fluctuation")
 	
 	# In a real implementation, this would compare actual data
 	# For this mock-up, we'll simulate it
 	
-	yield(get_tree().create_timer(1.0), "timeout")
+	await(get_tree().create_timer(1.0), "timeout")
 	
 	var divergence = randf() * 100  # 0% to 100% divergence
 	var changed_files = int(randf() * 10)  # 0 to 9 changed files
@@ -715,7 +715,7 @@ func set_correction_strength(strength_str):
 
 # Toggle clean data
 func toggle_clean_data(enabled_str=""):
-	if enabled_str.empty():
+	if enabled_str.is_empty():
 		clean_data_on_split = !clean_data_on_split
 	else:
 		clean_data_on_split = (enabled_str.to_lower() == "on" or enabled_str.to_lower() == "true" or enabled_str == "1")
@@ -809,7 +809,7 @@ func reset_fluctuation_monitor():
 
 # Toggle archive fluctuations
 func toggle_archive_fluctuations(enabled_str=""):
-	if enabled_str.empty():
+	if enabled_str.is_empty():
 		archive_fluctuations = !archive_fluctuations
 	else:
 		archive_fluctuations = (enabled_str.to_lower() == "on" or enabled_str.to_lower() == "true" or enabled_str == "1")
@@ -827,7 +827,7 @@ func purge_fluctuation_history():
 
 # Export fluctuation data
 func export_fluctuation_data(path):
-	if path.empty():
+	if path.is_empty():
 		path = "user://fluctuation_data.dat"
 		
 	log_message("Exporting fluctuation data to: " + path, "fluctuation")
@@ -835,12 +835,12 @@ func export_fluctuation_data(path):
 	# In a real implementation, this would save to a file
 	# For this mock-up, we'll simulate it
 	
-	yield(get_tree().create_timer(0.8), "timeout")
+	await(get_tree().create_timer(0.8), "timeout")
 	log_message("Fluctuation data exported successfully.", "fluctuation")
 
 # Import fluctuation data
 func import_fluctuation_data(path):
-	if path.empty():
+	if path.is_empty():
 		path = "user://fluctuation_data.dat"
 		
 	log_message("Importing fluctuation data from: " + path, "fluctuation")
@@ -848,7 +848,7 @@ func import_fluctuation_data(path):
 	# In a real implementation, this would load from a file
 	# For this mock-up, we'll simulate it
 	
-	yield(get_tree().create_timer(0.8), "timeout")
+	await(get_tree().create_timer(0.8), "timeout")
 	log_message("Fluctuation data imported successfully.", "fluctuation")
 
 # Simulate quantum fluctuation

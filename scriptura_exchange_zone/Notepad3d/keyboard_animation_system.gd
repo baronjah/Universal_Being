@@ -1,6 +1,6 @@
 extends Node
 
-class_name KeyboardAnimationSystem
+class_name KeyboardAnimationSystem_keyboardanimationsystem_keyboard
 
 # Constants for keyboard properties
 const KEY_STATES = {
@@ -383,7 +383,7 @@ func _connect_systems():
         print("Connected to TerminalVisualBridge")
     else:
         print("TerminalVisualBridge not available, trying to load directly")
-        var script = load("/mnt/c/Users/Percision 15/terminal_visual_bridge.gd")
+        var script = load("mnt/c/Users/Percision 15/terminal_visual_bridge.gd")
         if script:
             terminal_bridge = script.new()
             print("Loaded TerminalVisualBridge directly")
@@ -399,7 +399,7 @@ func _connect_systems():
         print("Connected to ExpandedColorSpectrum")
     else:
         print("ExpandedColorSpectrum not available, trying to load directly")
-        var script = load("/mnt/c/Users/Percision 15/expanded_color_spectrum.gd")
+        var script = load("mnt/c/Users/Percision 15/expanded_color_spectrum.gd")
         if script:
             color_spectrum = script.new()
             print("Loaded ExpandedColorSpectrum directly")
@@ -640,12 +640,12 @@ func _emit_character_particles(position, color):
             velocity.y += 0.05
             color = color.darkened(0.3)
         } elif character_mood > 0.7:
-            // Happy - particles drift upward
+# // Happy - particles drift upward
             velocity.y -= 0.05
             color = color.lightened(0.3)
         }
         
-        // Character energy affects particle size and speed
+# // Character energy affects particle size and speed
         var energy_factor = 0.5 + character_energy
         
         var particle = {
@@ -778,33 +778,33 @@ func _draw_character(size):
     
     match current_character_state:
         "IDLE":
-            // Subtle breathing animation
+# // Subtle breathing animation
             body_scale = 1.0 + 0.03 * sin(animation_time * 1.5)
         "TYPING":
-            // Small rapid movements
+# // Small rapid movements
             character_center.x += sin(animation_time * 15.0) * 3.0
             character_center.y += sin(animation_time * 10.0) * 2.0
         "THINKING":
-            // Slight tilt back and forth
+# // Slight tilt back and forth
             rotation = sin(animation_time * 0.7) * 0.1
         "EXCITED":
-            // Bouncing and scaling
+# // Bouncing and scaling
             character_center.y += sin(animation_time * 8.0) * 10.0
             body_scale = 1.0 + 0.2 * sin(animation_time * 5.0)
         "CONFUSED":
-            // Tilting and slight movement
+# // Tilting and slight movement
             rotation = sin(animation_time * 1.3) * 0.3
             character_center.x += sin(animation_time * 2.0) * 5.0
         "PROCESSING":
-            // Pulsing and slight vibration
+# // Pulsing and slight vibration
             body_scale = 1.0 + 0.15 * sin(animation_time * 6.0)
             character_center.x += sin(animation_time * 20.0) * 2.0
         "ERROR":
-            // Shake and flash red
+# // Shake and flash red
             character_center.x += sin(animation_time * 25.0) * 8.0
             body_color = Color.lerp(body_color, Color(1,0,0), 0.5 + 0.5 * sin(animation_time * 15.0))
         "SUCCESS":
-            // Grow and spin
+# // Grow and spin
             body_scale = 1.0 + 0.3 * sin(animation_time * 3.0)
             rotation = animation_time * 5.0
     
@@ -822,7 +822,7 @@ func _draw_character(size):
         points.append(character_center + point)
     }
     
-    // Draw filled shape
+# // Draw filled shape
     for i in range(1, points.size() - 1):
         canvas.draw_polygon([
             points[0],
@@ -831,13 +831,13 @@ func _draw_character(size):
         ], [body_color])
     }
     
-    // Draw outline
+# // Draw outline
     for i in range(points.size()):
         var next_i = (i + 1) % points.size()
         canvas.draw_line(points[i], points[next_i], body_color.darkened(0.3), 2.0)
     }
     
-    // Draw eyes
+# // Draw eyes
     var eye_offset = character_size * 0.2
     var eye_size = character_size * 0.15
     var left_eye = character_center + transform * Vector2(-eye_offset, -eye_offset * 0.7)
@@ -846,7 +846,7 @@ func _draw_character(size):
     canvas.draw_circle(left_eye, eye_size, Color(1,1,1))
     canvas.draw_circle(right_eye, eye_size, Color(1,1,1))
     
-    // Draw pupils - follow "typing" direction
+# // Draw pupils - follow "typing" direction
     var pupil_direction = Vector2(0, 1)
     if active_keys.size() > 0:
         var last_key = active_keys[active_keys.size() - 1]
@@ -860,7 +860,7 @@ func _draw_character(size):
     canvas.draw_circle(left_eye + pupil_offset, pupil_size, Color(0,0,0))
     canvas.draw_circle(right_eye + pupil_offset, pupil_size, Color(0,0,0))
     
-    // Draw mouth
+# // Draw mouth
     var mouth_width = character_size * 0.3
     var mouth_height = character_size * 0.1 * (0.5 + 0.5 * character_mood)
     var mouth_y_offset = character_size * 0.3
@@ -872,10 +872,10 @@ func _draw_character(size):
         mouth_height
     )
     
-    // Different mouth shapes based on state
+# // Different mouth shapes based on state
     match current_character_state:
         "IDLE", "THINKING":
-            // Simple line
+# // Simple line
             canvas.draw_line(
                 Vector2(mouth_rect.position.x, mouth_rect.position.y + mouth_rect.size.y / 2),
                 Vector2(mouth_rect.position.x + mouth_rect.size.x, mouth_rect.position.y + mouth_rect.size.y / 2),
@@ -883,10 +883,10 @@ func _draw_character(size):
                 2.0
             )
         "TYPING", "PROCESSING":
-            // Small oval
+# // Small oval
             canvas.draw_rect(mouth_rect, Color(0,0,0))
         "EXCITED", "SUCCESS":
-            // Happy curve
+# // Happy curve
             var curve_points = []
             var curve_segments = 10
             
@@ -900,7 +900,7 @@ func _draw_character(size):
             for i in range(curve_segments):
                 canvas.draw_line(curve_points[i], curve_points[i+1], Color(0,0,0), 2.0)
         "CONFUSED", "ERROR":
-            // Zigzag
+# // Zigzag
             var zigzag_points = []
             var zigzag_segments = 6
             
@@ -1027,14 +1027,14 @@ func _draw_key(key_name, key_data, size):
     
     # Draw a symbol representation (since we can't draw text directly)
     if label.length() == 1:
-        // For single character keys, draw a small circle
+# // For single character keys, draw a small circle
         canvas.draw_circle(Vector2(label_x, label_y), label_size, Color(0,0,0,0.7))
     } else if key_name.begins_with("f") and key_name.length() <= 3:
-        // For function keys, draw a small rectangle
+# // For function keys, draw a small rectangle
         var func_rect = Rect2(label_x - label_size, label_y - label_size / 2, label_size * 2, label_size)
         canvas.draw_rect(func_rect, Color(0,0,0,0.7))
     } else {
-        // For other special keys, draw different shapes
+# // For other special keys, draw different shapes
         match key_name:
             "space":
                 var space_rect = Rect2(label_x - label_size * 2, label_y - label_size / 3, label_size * 4, label_size * 2/3)
@@ -1070,17 +1070,17 @@ func _draw_particles(size):
                 particle.position.y * size.y
             )
             
-            // Adjust color based on lifetime
+# // Adjust color based on lifetime
             var color = particle.color
             color.a *= min(1.0, particle.lifetime * 2.0)
             
-            // Draw particle
+# // Draw particle
             match system_name:
                 "key_press":
-                    // Simple circle
+# // Simple circle
                     canvas.draw_circle(position, particle.size, color)
                 "swipe":
-                    // Line with trail
+# // Line with trail
                     var velocity = particle.velocity
                     var trail_length = velocity.length() * 20.0
                     var trail_end = position - velocity.normalized() * trail_length
@@ -1088,7 +1088,7 @@ func _draw_particles(size):
                     canvas.draw_line(position, trail_end, color, particle.size)
                     canvas.draw_circle(position, particle.size * 0.7, color.lightened(0.2))
                 "character":
-                    // Star shape
+# // Star shape
                     var points = []
                     var point_count = 5
                     var inner_radius = particle.size * 0.4
@@ -1100,7 +1100,7 @@ func _draw_particles(size):
                         points.append(position + Vector2(cos(angle), sin(angle)) * radius)
                     }
                     
-                    // Draw filled star
+# // Draw filled star
                     for i in range(1, points.size() - 1):
                         canvas.draw_polygon([
                             points[0],
@@ -1496,7 +1496,7 @@ func _process_character_state_change(old_state, new_state):
     if terminal_bridge and terminal_bridge.has_method("process_terminal_command"):
         var state_data = CHARACTER_STATES[new_state]
         
-        // Temperature based on state
+# // Temperature based on state
         var temp_name = "NEUTRAL"
         
         match new_state:

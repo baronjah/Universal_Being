@@ -238,6 +238,7 @@ func start_dragging(being: UniversalBeing) -> void:
 	drag_start_position = being.global_position
 	print("👆 Started dragging: %s" % being.name)
 
+
 func handle_drag_motion(event: InputEventMouseMotion) -> void:
 	"""Handle dragging motion"""
 	if not dragging_being:
@@ -351,14 +352,16 @@ func show_being_inspection(being: UniversalBeing) -> void:
 		"position": being.global_position,
 		"type": being.get("being_type", "unknown"),
 		"components": being.get_component_count() if being.has_method("get_component_count") else 0
-	}
+}
 	
 	print("🔍 Inspecting %s: %s" % [being.name, info])
+
 	# Would show detailed UI panel
 
 func awaken_consciousness(being: UniversalBeing) -> void:
 	"""Increase being's consciousness level"""
 	if being.has_method("set_consciousness_level"):
+
 		var new_level = being.consciousness_level + 1
 		being.set_consciousness_level(new_level)
 		
@@ -374,6 +377,7 @@ func awaken_consciousness(being: UniversalBeing) -> void:
 func attempt_merge(being_a: UniversalBeing, being_b: UniversalBeing) -> void:
 	"""Attempt to merge two beings"""
 	print("🔀 Attempting merge: %s + %s" % [being_a.name, being_b.name])
+
 	
 	# Check if merge is possible
 	if can_merge_beings(being_a, being_b):
@@ -450,7 +454,7 @@ func record_discovery(type: String, data: Dictionary) -> void:
 		"data": data,
 		"timestamp": Time.get_ticks_msec(),
 		"session_id": Time.get_datetime_string_from_system()
-	}
+}
 	
 	# Add to discovered combinations
 	var key = "%s_%s" % [type, str(data)]
@@ -458,6 +462,7 @@ func record_discovery(type: String, data: Dictionary) -> void:
 		discovered_combinations[key] = discovery
 		discovery_made.emit(type, data)
 		print("📔 New discovery recorded: %s" % type)
+
 
 func _on_being_hover_enter(being: UniversalBeing) -> void:
 	"""Handle mouse entering a being"""
@@ -504,7 +509,6 @@ func get_consciousness_color(level: int) -> Color:
 		5: Color.WHITE,
 		6: Color(1.0, 0.2, 0.2),
 		7: Color(0.8, 0.3, 1.0)
-	}
 	return colors.get(level, Color.WHITE)
 
 func get_consciousness_description(level: int) -> String:
@@ -518,7 +522,6 @@ func get_consciousness_description(level: int) -> String:
 		5: "Transcendent - Beyond material",
 		6: "Beyond - Infinite perspective",
 		7: "Universal - One with all"
-	}
 	return descriptions.get(level, "Unknown state")
 
 func _on_game_state_changed(old_state, new_state) -> void:

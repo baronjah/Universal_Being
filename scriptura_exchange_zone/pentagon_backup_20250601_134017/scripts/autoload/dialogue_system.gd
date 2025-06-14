@@ -3,8 +3,7 @@
 # DESCRIPTION: Manages ragdoll dialogue and speech patterns
 # CREATED: 2025-05-23 - Making the ragdoll talk!
 # ==================================================
-
-extends UniversalBeingBase
+extends \2
 # Custom dialogue that can be added via console
 var custom_dialogue_queue: Array[String] = []
 

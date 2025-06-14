@@ -1,5 +1,5 @@
 extends Node
-class_name ClaudeFileIntegrator
+class_name ClaudeFileIntegrator_claudefileintegrator_claudefi
 
 # Main integration system that combines all components
 # Connects Claude files in snake_case format across different categories
@@ -94,29 +94,29 @@ func integrate_files():
 # Generate all reports and visualizations
 func _generate_reports():
   # Create report directory if needed
-  var reports_dir = "/mnt/c/Users/Percision 15/12_turns_system/reports"
-  var dir = DirAccess.open("/mnt/c/Users/Percision 15/12_turns_system")
+  var reports_dir = "mnt/c/Users/Percision 15/12_turns_system/reports"
+  var dir = DirAccess.open("mnt/c/Users/Percision 15/12_turns_system")
   if not dir.dir_exists("reports"):
     dir.make_dir("reports")
   
   # Generate connection report
   var timestamp = Time.get_datetime_string_from_system().replace(":", "-").replace(" ", "_")
-  var connection_report_path = reports_dir + "/connection_report_" + timestamp + ".md"
+  var connection_report_path = reports_dir + "connection_report_" + timestamp + ".md"
   snake_case_translator.save_connection_report(connection_report_path)
   print("Connection report saved to: " + connection_report_path)
   
   # Generate system diagram
-  var system_diagram_path = reports_dir + "/system_diagram_" + timestamp + ".dot"
+  var system_diagram_path = reports_dir + "system_diagram_" + timestamp + ".dot"
   file_connection_system.save_visualization(system_diagram_path)
   print("System diagram saved to: " + system_diagram_path)
   
   # Generate markdown report
-  var markdown_report_path = reports_dir + "/file_system_report_" + timestamp + ".md"
+  var markdown_report_path = reports_dir + "file_system_report_" + timestamp + ".md"
   file_connection_system.save_markdown_report(markdown_report_path)
   print("Markdown report saved to: " + markdown_report_path)
   
   # Generate visualization text map
-  var text_map_path = reports_dir + "/visualization_map_" + timestamp + ".md"
+  var text_map_path = reports_dir + "visualization_map_" + timestamp + ".md"
   connection_visualizer.save_text_map(text_map_path)
   print("Visualization map saved to: " + text_map_path)
 

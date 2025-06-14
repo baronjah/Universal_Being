@@ -1,6 +1,6 @@
 extends Node
 
-class_name DivineWordProcessor
+class_name DivineWordProcessor_divinewordprocessor_divinewo
 
 # ----- WORD POWER SYSTEM -----
 const POWER_THRESHOLD = 50  # Words with power > 50 create reality impacts
@@ -177,7 +177,7 @@ func check_word_power(word):
 
 # ----- MEMORY FUNCTIONS -----
 func create_memory(text, tier, powerful_words, power):
-    var timestamp = OS.get_unix_time()
+    var timestamp = OS.Time.get_unix_time_from_system()
     
     var memory = {
         "id": "memory_" + str(timestamp) + "_" + str(randi() % 10000),
@@ -225,7 +225,7 @@ func get_all_memories():
 
 # ----- REALITY FUNCTIONS -----
 func create_reality_impact(source_text, powerful_words, total_power):
-    var timestamp = OS.get_unix_time()
+    var timestamp = OS.Time.get_unix_time_from_system()
     var reality_id = "reality_" + str(timestamp) + "_" + str(randi() % 10000)
     
     # Calculate persistence based on power
@@ -262,7 +262,7 @@ func create_reality_impact(source_text, powerful_words, total_power):
 
 # Save the current reality state with a name
 func save_reality_state(name):
-    var timestamp = OS.get_unix_time()
+    var timestamp = OS.Time.get_unix_time_from_system()
     var save_id = "divine_save_" + str(timestamp)
     
     var save_data = {

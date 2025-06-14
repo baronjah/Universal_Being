@@ -20,8 +20,8 @@ signal entry_visualized(entry_id)
 # ----- STATE TRACKING -----
 var active_notebook = ""
 var active_entries = []
-var visualized_cells = {}
-var visualized_connections = {}
+var visualized_cells = {
+var visualized_connections = {
 
 # ----- CONSTANTS -----
 const DEFAULT_CELL_COLOR = Color(1.0, 1.0, 1.0)
@@ -40,13 +40,13 @@ func connect_components(world_storage, notepad_visualizer):
     
     if storage and visualizer:
         # Connect signals from storage
-        storage.connect("notebook_updated", self, "_on_notebook_updated")
-        storage.connect("entry_added", self, "_on_entry_added")
+        storage.connect(_on_notebook_updated)
+        storage.connect(_on_entry_added)
         
         # Connect signals from visualizer
-        visualizer.connect("visualization_ready", self, "_on_visualization_ready")
-        visualizer.connect("word_selected", self, "_on_word_selected")
-        visualizer.connect("dimension_transition_complete", self, "_on_dimension_changed")
+        visualizer.connect(_on_visualization_ready)
+        visualizer.connect(_on_word_selected)
+        visualizer.connect(_on_dimension_changed)
         
         print("Connected SpatialWorldStorage to Notepad3DVisualizer")
         return true
@@ -92,7 +92,7 @@ func create_cell_visualization(notebook_name, cell):
         "color": cell.color,
         "power": DEFAULT_CELL_POWER,
         "evolution_stage": 1
-    }
+		}
     
     # Create word visualization
     var word_node = visualizer.create_word_visualization(word_data)
@@ -101,9 +101,9 @@ func create_cell_visualization(notebook_name, cell):
             "notebook": notebook_name,
             "cell": cell,
             "word_data": word_data
-        }
         emit_signal("cell_created", notebook_name, cell.cell_id)
         return true
+}
     
     return false
 
@@ -161,7 +161,7 @@ func create_cell_connections(notebook_name):
     visualized_connections.clear()
     
     # Create map of cells by position for fast lookup
-    var cells_by_position = {}
+    var cells_by_position = {
     for cell_id in notebook.cells:
         var cell = notebook.cells[cell_id]
         var pos_key = "%d_%d_%d" % [int(cell.position.x), int(cell.position.y), int(cell.position.z)]
@@ -205,7 +205,7 @@ func create_cell_connections(notebook_name):
                             "word2_id": neighbor_cell.cell_id,
                             "color": DEFAULT_CONNECTION_COLOR,
                             "strength": DEFAULT_CONNECTION_STRENGTH
-                        }
+							}
                         
                         connections.append(connection_data)
     
@@ -263,7 +263,7 @@ func create_entry_visualization(entry):
         "color": get_color_for_tags(entry.tags),
         "power": entry.position.power,
         "evolution_stage": entry.position.dimension / 2  # Higher dimensions = higher evolution
-    }
+		}
     
     # Create word visualization
     var word_node = visualizer.create_word_visualization(word_data)
@@ -272,9 +272,9 @@ func create_entry_visualization(entry):
             "notebook": "akashic",
             "cell": entry,
             "word_data": word_data
-        }
         emit_signal("entry_visualized", entry.entry_id)
         return true
+}
     
     return false
 
@@ -314,7 +314,7 @@ func create_entry_connections(entry_ids):
                 "word2_id": connected_entry.entry_id,
                 "color": Color(0.8, 0.6, 0.2),  # Amber for akashic connections
                 "strength": 1.0 + (entry.position.power + connected_entry.position.power) / 200.0
-            }
+				}
             
             var connection_node = visualizer.create_connection_visualization(connection_data)
             if connection_node:
@@ -346,7 +346,7 @@ func create_entry_connections(entry_ids):
             "word2_id": synergy.entry_b,
             "color": color,
             "strength": strength
-        }
+			}
         
         var connection_node = visualizer.create_connection_visualization(connection_data)
         if connection_node:
@@ -357,7 +357,7 @@ func create_entry_connections(entry_ids):
 # ----- UTILITY FUNCTIONS -----
 func get_color_for_tags(tags):
     # Generate a color based on tags
-    if tags.empty():
+    if tags.is_empty():
         return Color(1, 1, 1)
     
     # Use first tag to determine hue
@@ -512,12 +512,14 @@ func _on_word_selected(word_data):
         
         # Show cell details (implement UI for this)
         print("Selected cell: %s" % word_data.text)
+		}
         
         # You could implement custom UI for editing the cell here
 
 func _on_dimension_changed(dimension):
     # Update visualization based on new dimension
     if active_notebook != "":
+	}
         # Redraw connections with potentially new aesthetics
         create_cell_connections(active_notebook)
     elif active_entries.size() > 0:

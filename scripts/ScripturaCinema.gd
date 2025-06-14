@@ -153,7 +153,7 @@ func create_judgment_system():
 		{"text": "EXCELLENT", "color": excellent_color, "pos": Vector3(0, 2, 0)},
 		{"text": "GOOD", "color": good_color, "pos": Vector3(0, 1, 0)},
 		{"text": "NEEDS WORK", "color": needs_work_color, "pos": Vector3(0, 0, 0)},
-		{"text": "CONCERNING", "color": concerning_color, "pos": Vector3(0, -1, 0)}
+		{"text": "CONCERNING", "color": concerning_color, "pos": Vector3(0, -1, 0)
 	]
 	
 	for judgment_data in judgments:
@@ -237,6 +237,7 @@ func create_appreciation_meter():
 func load_scriptura(script_path: String):
 	"""Load a script file for cinema analysis"""
 	print("🎬 Loading scriptura: %s" % script_path.get_file())
+}
 	
 	current_script_path = script_path
 	current_line_index = 0
@@ -259,6 +260,7 @@ func load_scriptura(script_path: String):
 	else:
 		print("❌ Failed to load script: %s" % script_path)
 
+
 func show_current_line():
 	"""Display the current line for judgment"""
 	if current_line_index >= current_lines.size():
@@ -275,6 +277,7 @@ func show_current_line():
 	generate_ai_comment(line_number, current_line)
 	
 	print("📜 Showing line %d: %s" % [line_number, current_line.substr(0, 50) + "..."])
+
 
 func generate_ai_comment(line_number: int, line_content: String):
 	"""Generate AI analysis comment for the current line"""
@@ -312,6 +315,7 @@ func analyze_line_quality(line: String) -> String:
 		return "🤖 AI: Assignment operation - data transformation"
 	else:
 		return "🤖 AI: Execution line - where the magic happens"
+
 
 func show_ai_comment(comment: String):
 	"""Display AI comment in the cinema"""
@@ -457,11 +461,13 @@ func complete_scriptura_analysis():
 	
 	# Show completion display
 	line_display.text = "🎬 SCRIPTURA ANALYSIS COMPLETE!\\n\\n%s\\n\\nTotal Lines: %d\\nAverage Appreciation: %.2f\\n\\nPress R to restart\\nPress S to save report" % [current_script_path.get_file(), total_lines, average_appreciation]
+
 	
 	# Emit completion signal
 	scriptura_completed.emit(current_script_path, average_appreciation)
 	
 	print("🎊 Scriptura analysis complete: %s (Score: %.2f)" % [current_script_path.get_file(), average_appreciation])
+
 
 func save_analysis_report():
 	"""Save the complete analysis report"""
@@ -483,7 +489,7 @@ func save_analysis_report():
 		"line_appreciations": line_appreciations,
 		"ai_comments": ai_comments,
 		"average_appreciation": _calculate_average_appreciation()
-	}
+}
 	
 	var file = FileAccess.open(full_path, FileAccess.WRITE)
 	if file:
@@ -518,4 +524,3 @@ func get_analysis_summary() -> Dictionary:
 		"judgments": line_judgments,
 		"appreciations": line_appreciations,
 		"ai_comments": ai_comments
-	}

@@ -1,5 +1,5 @@
 extends Node
-class_name EtherealEngine
+class_name EtherealEngine_etherealengine_ethereal
 
 """
 EtherealEngine: Core system for symbol processing and dimensional resonance

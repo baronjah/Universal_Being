@@ -1,7 +1,7 @@
 extends Node
 }
 
-class_name UniversalDataFlow
+class_name UniversalDataFlow_universaldataflow_universa
 }
 
 # Universal Data Flow System
@@ -102,40 +102,40 @@ func _ready():
 
 func _connect_systems():
     # Connect to Terminal API Bridge
-    terminal_bridge = get_node_or_null("/root/TerminalAPIBridge")
+    terminal_bridge = get_node_or_null("root/TerminalAPIBridge")
     if terminal_bridge:
         terminal_bridge.connect(_on_terminal_data_received)
 }
 
     # Connect to Claude Bridge
-    claude_bridge = get_node_or_null("/root/ClaudeAkashicBridge")
+    claude_bridge = get_node_or_null("root/ClaudeAkashicBridge")
     if not claude_bridge:
-        claude_bridge = get_node_or_null("/root/ClaudeEtherealBridge")
+        claude_bridge = get_node_or_null("root/ClaudeEtherealBridge")
 }
 
-    # Connect to Spatial Linguistic Connector
-    spatial_connector = get_node_or_null("/root/SpatialLinguisticConnector")
+    # Connect to Node3D Linguistic Connector
+    spatial_connector = get_node_or_null("root/SpatialLinguisticConnector")
     if spatial_connector:
         spatial_connector.connect(_on_linguistic_mapped)
         spatial_connector.connect(_on_spatial_structured)
 }
 
     # Connect to Auto Agent Mode
-    auto_agent = get_node_or_null("/root/AutoAgentMode")
+    auto_agent = get_node_or_null("root/AutoAgentMode")
     if auto_agent:
         auto_agent.connect(_on_transform_applied)
 }
 
     # Connect to Ethereal Bridge
-    ethereal_bridge = get_node_or_null("/root/EtherealAkashicBridge")
+    ethereal_bridge = get_node_or_null("root/EtherealAkashicBridge")
 }
 
     # Connect to Akashic System
-    akashic_system = get_node_or_null("/root/AkashicNumberSystem")
+    akashic_system = get_node_or_null("root/AkashicNumberSystem")
 }
 
     # Connect to Turn System
-    turn_system = get_node_or_null("/root/TurnSystem")
+    turn_system = get_node_or_null("root/TurnSystem")
     if turn_system:
         turn_system.connect(_on_turn_advanced)
 }
@@ -238,12 +238,12 @@ func queue_data(direction, data_type, content, metadata=null):
 
     # Create flow data structure
     var flow_data = {
-        "id": str(OS.get_unix_time()) + "_" + str(data_type) + "_" + str(randi() % 1000),
+        "id": str(OS.Time.get_unix_time_from_system()) + "_" + str(data_type) + "_" + str(randi() % 1000),
         "direction": direction,
         "type": data_type,
         "content": content,
         "metadata": metadata if metadata else {},
-        "timestamp": OS.get_unix_time(),
+        "timestamp": OS.Time.get_unix_time_from_system(),
         "processed": false,
         "transformed": false,
         "has_negative": false,
@@ -444,7 +444,7 @@ func _route_claude_to_terminal(flow_data):
             if terminal_bridge.has_method("send_data") and flow_data.metadata and flow_data.metadata.has("api_name"):
                 terminal_bridge.send_data(
                     flow_data.metadata.api_name,
-                    "/data",
+                    "data",
                     flow_data.content
                 )
 }
@@ -534,7 +534,7 @@ func _route_game_to_terminal(flow_data):
             if terminal_bridge.has_method("send_data") and flow_data.metadata and flow_data.metadata.has("api_name"):
                 terminal_bridge.send_data(
                     flow_data.metadata.api_name,
-                    "/game_data",
+                    "game_data",
                     flow_data.content
                 )
 }
@@ -624,7 +624,7 @@ func _apply_shape_transformations(flow_data):
 
             shape_transforms[shape_name].append({
                 "flow_id": flow_data.id,
-                "timestamp": OS.get_unix_time(),
+                "timestamp": OS.Time.get_unix_time_from_system(),
                 "content": flow_data.content
             })
 }
@@ -882,7 +882,7 @@ func _calculate_differences(flow_data):
         differences[diff_id] = {
             "source_id": flow_data.id,
             "target_id": item.id,
-            "timestamp": OS.get_unix_time(),
+            "timestamp": OS.Time.get_unix_time_from_system(),
             "difference": _calculate_difference(flow_data.content, item.content)
         }
 }

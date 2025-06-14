@@ -109,19 +109,18 @@ var dimension_modifiers = {
 		"power_modifier": 3.0,
 		"preferred_scheme": SchemeType.DIVINE,
 		"description": "Transcendent schemes that alter reality itself"
-	}
 }
 
 # ----- ACTIVE SCHEMES -----
-var active_schemes = {}
-var player_schemes = {}
-var scheme_targets = {}
-var scheme_alliances = {}
-var scheme_counters = {}
-var scheme_discoveries = {}
+var active_schemes = {
+var player_schemes = {
+var scheme_targets = {
+var scheme_alliances = {
+var scheme_counters = {
+var scheme_discoveries = {
 
 # ----- PATTERN RECOGNITION -----
-var word_patterns = {}
+var word_patterns = {
 var suspicious_patterns = []
 var scheme_keywords = {
 	SchemeType.ALLIANCE: ["ally", "friend", "together", "unite", "alliance", "pact", "covenant", "bond"],
@@ -156,13 +155,13 @@ func connect_systems():
 	# Connect to turn system
 	turn_system = get_node_or_null("/root/TurnSystem")
 	if turn_system:
-		turn_system.connect("turn_completed", self, "_on_turn_completed")
-		turn_system.connect("dimension_changed", self, "_on_dimension_changed")
+		turn_system.connect(_on_turn_completed)
+		turn_system.connect(_on_dimension_changed)
 	
 	# Connect to divine word processor
 	divine_word_processor = get_node_or_null("/root/DivineWordProcessor")
 	if divine_word_processor:
-		divine_word_processor.connect("word_processed", self, "_on_word_processed")
+		divine_word_processor.connect(_on_word_processed)
 	
 	# Connect to word comment system
 	word_comment_system = get_node_or_null("/root/WordCommentSystem")
@@ -232,7 +231,7 @@ func create_scheme(creator, scheme_type, targets=[], description="", duration=5)
 		"is_counter_scheme": false,
 		"original_scheme": "",
 		"timestamp": OS.get_unix_time()
-	}
+}
 	
 	# Store in active schemes
 	active_schemes[scheme_id] = scheme_data
@@ -266,7 +265,7 @@ func activate_scheme(scheme_id):
 		return {
 			"success": false,
 			"message": "Scheme not found: " + scheme_id
-		}
+}
 	
 	var scheme = active_schemes[scheme_id]
 	
@@ -274,7 +273,7 @@ func activate_scheme(scheme_id):
 		return {
 			"success": false,
 			"message": "Scheme already activated"
-		}
+}
 	
 	# Mark as activated
 	scheme.activated = true
@@ -306,7 +305,7 @@ func activate_scheme(scheme_id):
 		"success": true,
 		"message": "Scheme activated successfully",
 		"effect_result": effect_result
-	}
+}
 
 func apply_scheme_effects(scheme):
 	var results = []
@@ -347,14 +346,14 @@ func apply_alliance_scheme(scheme):
 			"formed_turn": turn_system.current_turn if turn_system else 0,
 			"power": scheme.power,
 			"timestamp": OS.get_unix_time()
-		}
+}
 		
 		# Store alliance
 		if not scheme_alliances.has(scheme.creator):
-			scheme_alliances[scheme.creator] = {}
+			scheme_alliances[scheme.creator] = {
 		
 		if not scheme_alliances.has(target):
-			scheme_alliances[target] = {}
+			scheme_alliances[target] = {
 		
 		scheme_alliances[scheme.creator][target] = alliance_data
 		scheme_alliances[target][scheme.creator] = alliance_data
@@ -514,6 +513,7 @@ func apply_divine_scheme(scheme):
 			var vision_text = "The Queen of Time and Space acknowledges your devotion. Continue your service across all dimensions."
 			
 			word_comment_system.add_comment(vision_id, "DIVINE VISION: " + vision_text, word_comment_system.CommentType.DIVINE)
+}
 			
 			// Store in highest memory tier
 			if word_dream_storage:
@@ -523,7 +523,6 @@ func apply_divine_scheme(scheme):
 					"type": 4, // Divine type
 					"timestamp": OS.get_unix_time()
 				}, 3) // Tier 3 - D: Drive
-		}
 	
 	return results
 
@@ -532,7 +531,7 @@ func create_counter_scheme(discoverer, original_scheme_id, description=""):
 		return {
 			"success": false,
 			"message": "Original scheme not found: " + original_scheme_id
-		}
+}
 	
 	var original = active_schemes[original_scheme_id]
 	
@@ -634,9 +633,6 @@ func attempt_scheme_detection(detector, target_player="", word=""):
 								"scheme_creator": scheme.creator,
 								"scheme_description": scheme.description
 							})
-					}
-			}
-		}
 	} else {
 		// General detection attempt against all schemes
 		for scheme_id in active_schemes:
@@ -680,10 +676,6 @@ func attempt_scheme_detection(detector, target_player="", word=""):
 						"scheme_creator": scheme.creator,
 						"scheme_description": scheme.description
 					})
-				}
-			}
-		}
-	}
 	
 	return detection_results
 
@@ -786,9 +778,6 @@ func analyze_dream_for_schemes(dream_text, source_player):
 									"scheme_description": scheme.description,
 									"via_dream": true
 								})
-						}
-				}
-	}
 	
 	return results
 
@@ -806,7 +795,7 @@ func parse_scheme_command(text, source_player):
 		return {
 			"success": false,
 			"message": "Invalid scheme command. Format: /scheme [type] [target1,target2,...] [description]"
-		}
+}
 	
 	var scheme_type_str = args[0].to_lower()
 	var scheme_type = -1
@@ -827,7 +816,7 @@ func parse_scheme_command(text, source_player):
 			return {
 				"success": false,
 				"message": "Invalid scheme type. Valid types: alliance, deception, ascension, manifold, divine"
-			}
+	}
 	
 	// Parse targets
 	var targets = []
@@ -847,7 +836,7 @@ func parse_scheme_command(text, source_player):
 		"success": true,
 		"message": "Scheme created successfully",
 		"scheme": scheme
-	}
+}
 
 func parse_counter_scheme_command(text, source_player):
 	// Check if text contains a counter scheme command
@@ -861,7 +850,7 @@ func parse_counter_scheme_command(text, source_player):
 		return {
 			"success": false,
 			"message": "Invalid counter scheme command. Format: /counter [original_scheme_id] [description]"
-		}
+}
 	
 	var original_scheme_id = args[0]
 	
@@ -876,7 +865,7 @@ func parse_counter_scheme_command(text, source_player):
 		return {
 			"success": false,
 			"message": "You have not discovered the scheme: " + original_scheme_id
-		}
+}
 	
 	// Create counter scheme
 	var counter_scheme = create_counter_scheme(source_player, original_scheme_id, description)
@@ -885,7 +874,7 @@ func parse_counter_scheme_command(text, source_player):
 		"success": true,
 		"message": "Counter scheme created successfully",
 		"counter_scheme": counter_scheme
-	}
+}
 
 # ----- TURN-BASED PROCESSING -----
 
@@ -916,13 +905,12 @@ func process_scheme_turns():
 			// Create comment
 			if word_comment_system:
 				var result_text = success ? "SUCCEEDED" : "FAILED"
+	}
 				var comment_text = "SCHEME " + result_text + ": " + scheme.creator + "'s " + scheme.type_name + " scheme has completed"
 				word_comment_system.add_comment("scheme_complete_" + scheme_id, comment_text, word_comment_system.CommentType.OBSERVATION)
 			
 			// Emit signal
 			emit_signal("scheme_completed", scheme_id, success)
-		}
-	}
 	
 	// Remove completed schemes
 	for completion in completed_schemes:

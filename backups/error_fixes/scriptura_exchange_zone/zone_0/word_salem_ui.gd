@@ -136,12 +136,12 @@ func initialize_ui():
 	
 	var whisper_button = Button.new()
 	whisper_button.text = "Whisper"
-	whisper_button.connect("pressed", self, "_on_whisper_button_pressed")
+	whisper_button.connect(_on_whisper_button_pressed)
 	action_container.add_child(whisper_button)
 	
 	var action_button = Button.new()
 	action_button.text = "Action"
-	action_button.connect("pressed", self, "_on_action_button_pressed")
+	action_button.connect(_on_action_button_pressed)
 	action_container.add_child(action_button)
 	
 	# Right panel - Role info and evidence
@@ -182,29 +182,29 @@ func initialize_ui():
 
 func connect_signals():
 	# Connect to game systems
-	word_salem_controller = get_node("/root/WordSalemGameController")
-	word_crimes_analysis = get_node("/root/WordCrimesAnalysis")
-	divine_word_processor = get_node("/root/DivineWordProcessor")
-	turn_system = get_node("/root/TurnSystem")
+	word_salem_controller = get_node("\1") as Node
+	word_crimes_analysis = get_node("\1") as Node
+	divine_word_processor = get_node("\1") as Node
+	turn_system = get_node("\1") as Node
 	
 	if word_salem_controller:
-		word_salem_controller.connect("day_started", self, "_on_day_started")
-		word_salem_controller.connect("night_started", self, "_on_night_started")
-		word_salem_controller.connect("player_died", self, "_on_player_died")
-		word_salem_controller.connect("game_over", self, "_on_game_over")
-		word_salem_controller.connect("word_crime_detected", self, "_on_word_crime_detected")
+		word_salem_controller.connect(_on_day_started)
+		word_salem_controller.connect(_on_night_started)
+		word_salem_controller.connect(_on_player_died)
+		word_salem_controller.connect(_on_game_over)
+		word_salem_controller.connect(_on_word_crime_detected)
 	
 	if turn_system:
-		turn_system.connect("turn_completed", self, "_on_turn_completed")
-		turn_system.connect("dimension_changed", self, "_on_dimension_changed")
+		turn_system.connect(_on_turn_completed)
+		turn_system.connect(_on_dimension_changed)
 	
 	if divine_word_processor:
-		divine_word_processor.connect("word_processed", self, "_on_word_processed")
+		divine_word_processor.connect(_on_word_processed)
 	
 	if word_crimes_analysis:
-		word_crimes_analysis.connect("dangerous_pattern_detected", self, "_on_dangerous_pattern_detected")
-		word_crimes_analysis.connect("cosmic_power_threshold_reached", self, "_on_cosmic_power_threshold_reached")
-		word_crimes_analysis.connect("player_power_anomaly", self, "_on_player_power_anomaly")
+		word_crimes_analysis.connect(_on_dangerous_pattern_detected)
+		word_crimes_analysis.connect(_on_cosmic_power_threshold_reached)
+		word_crimes_analysis.connect(_on_player_power_anomaly)
 
 func _process(delta):
 	# Handle the 9-second timer
@@ -408,7 +408,7 @@ func update_evidence_panel(accused_player=null):
 		evidence_panel.bbcode_text += "\n[u]Recent Words:[/u]\n"
 		
 		# Sort by turn, descending
-		evidence.word_history.sort_custom(self, "sort_by_turn_descending")
+		evidence.word_history.sort_custom(self."sort_by_turn_descending")
 		
 		for i in range(min(3, evidence.word_history.size())):
 			var word_entry = evidence.word_history[i]

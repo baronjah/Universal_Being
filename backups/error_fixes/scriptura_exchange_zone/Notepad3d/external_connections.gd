@@ -109,7 +109,7 @@ func check_all_connections():
 
 # Check Claude API connection
 func check_claude_connection():
-    if config.claude_api_key.empty():
+    if config.claude_api_key.is_empty():
         connection_states.claude = false
         emit_signal("connection_state_changed", "claude", false)
         return false
@@ -191,7 +191,7 @@ func create_memory_directories():
             var parts = path.split("/")
             
             for part in parts:
-                if part.empty():
+                if part.is_empty():
                     current_path = "/"
                     continue
                 
@@ -437,7 +437,7 @@ func get_memory_path_content(path_key = "primary", sub_path = ""):
     var base_path = config.memory_paths[path_key]
     var full_path = base_path
     
-    if not sub_path.empty():
+    if not sub_path.is_empty():
         full_path = base_path.plus_file(sub_path)
     
     var dir = Directory.new()
@@ -498,7 +498,7 @@ func store_in_memory(data, filename, path_key = "primary", sub_path = ""):
     var base_path = config.memory_paths[path_key]
     var dir_path = base_path
     
-    if not sub_path.empty():
+    if not sub_path.is_empty():
         dir_path = base_path.plus_file(sub_path)
     
     var file_path = dir_path.plus_file(filename)
@@ -544,7 +544,7 @@ func retrieve_from_memory(filename, path_key = "primary", sub_path = ""):
     var base_path = config.memory_paths[path_key]
     var dir_path = base_path
     
-    if not sub_path.empty():
+    if not sub_path.is_empty():
         dir_path = base_path.plus_file(sub_path)
     
     var file_path = dir_path.plus_file(filename)

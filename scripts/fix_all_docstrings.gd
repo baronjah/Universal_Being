@@ -13,6 +13,7 @@ static func fix_docstrings_in_project():
 	
 	var fixed_count = 0
 	_process_directory(dir, "res://", fixed_count)
+
 	
 	print("✅ Fixed %d files with docstring issues" % fixed_count)
 
@@ -21,9 +22,11 @@ static func _process_directory(dir: DirAccess, path: String, fixed_count: int):
 	var file_name = dir.get_next()
 	
 	while file_name != "":
+
 		var full_path = path + "/" + file_name
 		
 		if dir.current_is_dir() and not file_name.begins_with("."):
+
 			var subdir = DirAccess.open(full_path)
 			if subdir:
 				_process_directory(subdir, full_path, fixed_count)
@@ -44,6 +47,7 @@ static func _fix_file_docstrings(file_path: String) -> bool:
 	# Pattern to match function with docstring
 	var regex = RegEx.new()
 	regex.compile('(func\\s+\\w+\\s*\\([^)]*\\)[^:]*:\\s*\\n\\s*)"""([^"]+)"""')
+
 	
 	var fixed_content = content
 	var has_changes = false

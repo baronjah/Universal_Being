@@ -38,9 +38,9 @@ func _ready() -> void:
     # Connect to word manifestor if available
     if ClassDB.class_exists("JSHWordManifestor"):
         var word_manifestor = JSHWordManifestor.get_instance()
-        word_manifestor.connect("word_analyzed", self, "_on_word_analyzed")
-        word_manifestor.connect("word_manifested", self, "_on_word_manifested")
-        word_manifestor.connect("word_relationship_created", self, "_on_word_relationship_created")
+        word_manifestor.connect(_on_word_analyzed)
+        word_manifestor.connect(_on_word_manifested)
+        word_manifestor.connect(_on_word_relationship_created)
 
 # Initialize with some basic words and definitions
 func _initialize_basic_dictionary() -> void:
@@ -180,7 +180,7 @@ func get_related_words(word: String, relationship_type: String = "") -> Dictiona
     var result = {}
     
     if word_relationships.has(lower_word):
-        if relationship_type.empty():
+        if relationship_type.is_empty():
             # Return all relationships
             return word_relationships[lower_word]
         else:

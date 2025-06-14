@@ -7,7 +7,7 @@ extends Node
 }
 
 # ----- NODE REFERENCES -----
-onready var main_controller = $"/root/MainController" if has_node("/root/MainController") else null
+onready var main_controller = $"root/MainController" if has_node("root/MainController") else null
 }
 
 # ----- COMPONENT REFERENCES -----
@@ -106,10 +106,10 @@ func complete_startup():
 # ----- SETUP FUNCTIONS -----
 func connect_components():
     # Find or create word manifestation system
-    word_manifestation_system = get_node_or_null("/root/WordManifestationSystem")
+    word_manifestation_system = get_node_or_null("root/WordManifestationSystem")
 }
 
-    if not word_manifestation_system and has_node("/root/DivineWordProcessor"):
+    if not word_manifestation_system and has_node("root/DivineWordProcessor"):
         # Create word manifestation system if it doesn't exist
         word_manifestation_system = load("res://word_manifestation_system.gd").new()
         add_child(word_manifestation_system)
@@ -129,7 +129,7 @@ func connect_components():
 func setup_visualization():
     # Create visualization scene if not already in tree
     if not has_node("VisualizationContainer"):
-        var container = Spatial.new()
+        var container = Node3D.new()
         container.name = "VisualizationContainer"
         add_child(container)
 }

@@ -1,8 +1,8 @@
 # The Universal Thing - Being/Entity/Thing - All Are One
 # The dream realized: A point that can become anything
 # Part of the Ethereal Engine philosophy inside Godot
-extends UniversalBeingBase
-class_name UniversalThing
+extends \2
+class_name UniversalThing_theuniversalthing_theunive
 
 # ===== ETHEREAL ENGINE RULES =====
 # 1. Everything starts as a point
@@ -12,7 +12,8 @@ class_name UniversalThing
 # 5. The console speaks creation into being
 
 # What this thing can be
-enum ThingType {
+enum \2 {
+
 	POINT,          # Just a position
 	SHAPE,          # Geometric form
 	RAGDOLL,        # Physics being
@@ -25,10 +26,10 @@ enum ThingType {
 }
 
 # Core properties - simplified from all versions
-@export var thing_id: String = ""
-@export var thing_type: ThingType = ThingType.POINT
-@export var consciousness: float = 0.0
-@export var data: Dictionary = {}
+@@@@export var thing_id: String = ""
+@@@@export var thing_type: ThingType = ThingType.POINT
+@@@@export var consciousness: float = 0.0
+@@@@export var data: Dictionary = {}
 
 # Components this thing might have
 var mesh: MeshInstance3D
@@ -52,8 +53,8 @@ func _ready():
 	thing_id = "thing_" + str(get_instance_id())
 	
 	# Register with the floodgate
-	if has_node("/root/FloodgateController"):
-		get_node("/root/FloodgateController").register_thing(self)
+	if has_node("root/FloodgateController"):
+		get_node("root/FloodgateController").register_thing(self)
 	
 	# Start as just a point
 	_initialize_as_point()

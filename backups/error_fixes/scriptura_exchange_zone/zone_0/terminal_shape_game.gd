@@ -96,12 +96,12 @@ func _connect_to_systems():
     # Connect to DualCoreTerminal
     dual_core_terminal = get_node_or_null("/root/DualCoreTerminal")
     if dual_core_terminal:
-        dual_core_terminal.connect("input_processed", self, "_on_terminal_input_processed")
-        dual_core_terminal.connect("core_switched", self, "_on_core_switched")
-        dual_core_terminal.connect("special_pattern_detected", self, "_on_special_pattern_detected")
-        dual_core_terminal.connect("miracle_triggered", self, "_on_miracle_triggered")
-        dual_core_terminal.connect("time_state_changed", self, "_on_time_state_changed")
-        dual_core_terminal.connect("snake_case_detected", self, "_on_snake_case_detected")
+        dual_core_terminal.connect(_on_terminal_input_processed)
+        dual_core_terminal.connect(_on_core_switched)
+        dual_core_terminal.connect(_on_special_pattern_detected)
+        dual_core_terminal.connect(_on_miracle_triggered)
+        dual_core_terminal.connect(_on_time_state_changed)
+        dual_core_terminal.connect(_on_snake_case_detected)
     
     # Connect to TerminalAPIBridge
     terminal_api_bridge = get_node_or_null("/root/TerminalAPIBridge")
@@ -109,21 +109,21 @@ func _connect_to_systems():
     # Connect to TerminalGridCreator
     terminal_grid_creator = get_node_or_null("/root/TerminalGridCreator")
     if terminal_grid_creator:
-        terminal_grid_creator.connect("grid_created", self, "_on_grid_created")
-        terminal_grid_creator.connect("grid_element_added", self, "_on_grid_element_added")
-        terminal_grid_creator.connect("special_pattern_detected", self, "_on_special_pattern_detected")
-        terminal_grid_creator.connect("miracle_portal_created", self, "_on_miracle_portal_created")
+        terminal_grid_creator.connect(_on_grid_created)
+        terminal_grid_creator.connect(_on_grid_element_added)
+        terminal_grid_creator.connect(_on_special_pattern_detected)
+        terminal_grid_creator.connect(_on_miracle_portal_created)
     
     # Connect to divine word game
     divine_word_game = get_node_or_null("/root/DivineWordGame")
     if divine_word_game:
-        divine_word_game.connect("word_target_completed", self, "_on_word_target_completed")
+        divine_word_game.connect(_on_word_target_completed)
     
     # Connect to turn system
     turn_system = get_node_or_null("/root/TurnSystem")
     if turn_system:
-        turn_system.connect("turn_advanced", self, "_on_turn_advanced")
-        turn_system.connect("dimension_changed", self, "_on_dimension_changed")
+        turn_system.connect(_on_turn_advanced)
+        turn_system.connect(_on_dimension_changed)
     
     # Connect to word comment system
     word_comment_system = get_node_or_null("/root/WordCommentSystem")
@@ -216,7 +216,7 @@ func save_shape(name=""):
         return false
     
     # Generate a name if none provided
-    if name.empty():
+    if name.is_empty():
         name = "shape_" + str(OS.get_unix_time())
     
     # Get shape from grid creator

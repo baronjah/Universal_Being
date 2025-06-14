@@ -54,15 +54,18 @@ func pentagon_init() -> void:
 	
 	print("🌟 %s: Universe Core Init Complete" % being_name)
 
+
 func pentagon_ready() -> void:
 	super.pentagon_ready()
 	
 	# Load required components
 	add_component("res://components/consciousness.ub.zip")
 	add_component("res://components/evolution.ub.zip")
+
 	
 	# Load universe template scene
 	load_scene("res://components/universe_creation.ub.zip/universe_template.tscn")
+
 	
 	# Initialize physics and LOD systems
 	if universe_rules.physics_enabled:
@@ -80,6 +83,7 @@ func pentagon_ready() -> void:
 			})
 	
 	print("🌟 %s: Universe Core Ready Complete" % being_name)
+
 
 func pentagon_process(delta: float) -> void:
 	super.pentagon_process(delta)
@@ -202,6 +206,7 @@ func toggle_physics() -> void:
 		universe_physics.set_physics_process(universe_rules.physics_enabled)
 	log_universe_change("physics_toggle", {"enabled": universe_rules.physics_enabled})
 
+
 func cycle_lod_level() -> void:
 	"""Cycle through LOD levels"""
 	if universe_lod:
@@ -210,12 +215,14 @@ func cycle_lod_level() -> void:
 		universe_lod.set_lod_level(next_level)
 		log_universe_change("lod_change", {"level": next_level})
 
+
 func toggle_time() -> void:
 	"""Toggle time flow in the universe"""
 	universe_rules.time_scale = 0.0 if universe_rules.time_scale > 0.0 else 1.0
 	if universe_physics:
 		universe_physics.set_physics_property("time_scale", universe_rules.time_scale)
 	log_universe_change("time_toggle", {"time_scale": universe_rules.time_scale})
+
 
 # ===== LOGGING METHODS =====
 
@@ -285,8 +292,8 @@ func ai_interface() -> Dictionary:
 		"universe_rules": universe_rules,
 		"total_beings": universe_beings.size(),
 		"total_portals": universe_portals.size()
-	}
 	return base_interface
+}
 
 func ai_invoke_method(method_name: String, args: Array = []) -> Variant:
 	"""Handle AI method invocations for universe management"""

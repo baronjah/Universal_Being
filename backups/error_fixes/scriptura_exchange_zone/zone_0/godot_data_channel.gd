@@ -63,7 +63,7 @@ func _setup_connection_monitor():
 	var timer = Timer.new()
 	timer.wait_time = 5.0
 	timer.autostart = true
-	timer.connect("timeout", self, "_check_device_connections")
+	timer.connect(_check_device_connections)
 	add_child(timer)
 
 func _initialize_buffers():
@@ -99,8 +99,8 @@ func _connect_to_turn_system():
 	
 	if turn_system:
 		# Connect to the turn system signals
-		turn_system.connect("dimension_changed", self, "_on_dimension_changed")
-		turn_system.connect("token_advanced", self, "_on_token_advanced")
+		turn_system.connect(_on_dimension_changed)
+		turn_system.connect(_on_token_advanced)
 		
 		# Sync current dimension
 		current_dimension = turn_system.current_dimension
@@ -160,7 +160,7 @@ func close_channel(channel_id):
 				device.channels.erase(channel_id)
 			
 			# Remove device if no more channels
-			if device.channels.empty() and not config.persistent_channels:
+			if device.channels.is_empty() and not config.persistent_channels:
 				connected_devices.erase(channel.device_id)
 		
 		# Emit signal
@@ -229,7 +229,7 @@ func receive_data(device_id, data, metadata = {}):
 	
 	if connected_devices.has(device_id):
 		var device = connected_devices[device_id]
-		if not device.channels.empty():
+		if not device.channels.is_empty():
 			channel_id = device.channels[0]
 	
 	# Create channel if needed and allowed
@@ -344,7 +344,7 @@ func _process_packet(packet, channel):
 			# Create links to related packets
 			var link_count = min(3, channel_buffers[dimension].size())
 			for i in range(link_count):
-				if not channel_buffers[dimension].empty():
+				if not channel_buffers[dimension].is_empty():
 					var index = channel_buffers[dimension].size() - 1 - i
 					if index >= 0:
 						var linked_packet = channel_buffers[dimension][index]
@@ -384,7 +384,7 @@ func _process_packet(packet, channel):
 			
 			# Sample from each dimension
 			for d in range(1, 13):
-				if not channel_buffers[d].empty():
+				if not channel_buffers[d].is_empty():
 					# Get most recent packet from this dimension
 					var sample = channel_buffers[d].back()
 					packet.unified_view[str(d)] = {

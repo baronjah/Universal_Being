@@ -3,8 +3,7 @@
 # DESCRIPTION: Windows 11 console emoji/symbol compatibility fix
 # CREATED: 2025-05-23 - ASCII fallbacks for admin terminal issues
 # ==================================================
-
-extends UniversalBeingBase
+extends \2
 # Windows 11 emoji mapping for admin terminal compatibility
 var emoji_to_ascii: Dictionary = {
 	# Status indicators
@@ -76,7 +75,7 @@ func _detect_terminal_capabilities() -> void:
 	if OS.get_name() == "Windows":
 		# Simple heuristic - admin mode often has encoding issues
 		var test_output = []
-		OS.execute("cmd", ["/c", "echo", "🎮"], test_output)
+		OS.execute("cmd", ["c", "echo", "🎮"], test_output)
 		if test_output.size() > 0 and test_output[0].find("?") != -1:
 			is_windows_admin = true
 			supports_unicode = false

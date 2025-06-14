@@ -1,15 +1,14 @@
 # Akashic Records Demo Script
 # This script demonstrates basic usage of the Akashic Records system
-
-extends Node
+extends \2
 
 # Reference to the Akashic Records integration
 var akashic_records = null
 
 func _ready():
     # Get the Akashic Records integration from the main scene
-    # Replace 'get_node("/root/Main")' with the actual path to your main scene
-    var main = get_node("/root/Main")
+    # Replace 'get_node("root/Main")' with the actual path to your main scene
+    var main = get_node("root/Main")
     akashic_records = main.get_akashic_records()
     
     if akashic_records:

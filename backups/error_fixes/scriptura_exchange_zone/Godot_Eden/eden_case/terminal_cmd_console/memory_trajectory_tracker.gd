@@ -168,7 +168,7 @@ func _ready():
     _auto_save_timer.wait_time = 300  # 5 minutes
     _auto_save_timer.autostart = true
     _auto_save_timer.one_shot = false
-    _auto_save_timer.connect("timeout", self, "_on_auto_save_timer_timeout")
+    _auto_save_timer.connect(_on_auto_save_timer_timeout)
     add_child(_auto_save_timer)
     
     # Initialize current date
@@ -203,7 +203,7 @@ func initialize(memory_system = null, connection_system = null, visualizer = nul
 
 # Trajectory Management
 func create_trajectory(date: String = "") -> String:
-    if date.empty():
+    if date.is_empty():
         date = _current_date
     
     # Check if trajectory already exists
@@ -231,7 +231,7 @@ func create_trajectory(date: String = "") -> String:
     return trajectory_id
 
 func get_trajectory(date: String = "") -> DailyTrajectory:
-    if date.empty():
+    if date.is_empty():
         date = _current_date
     
     if _trajectories.has(date):
@@ -248,7 +248,7 @@ func ensure_today_trajectory() -> String:
     return _trajectories[_current_date].id
 
 func set_active_trajectory(date: String = "") -> bool:
-    if date.empty():
+    if date.is_empty():
         date = _current_date
     
     if not _trajectories.has(date):
@@ -266,7 +266,7 @@ func get_active_trajectory() -> DailyTrajectory:
 
 # Point Management
 func set_trajectory_point(point_type: int, memory_id: String, content: String, date: String = "") -> bool:
-    if date.empty():
+    if date.is_empty():
         date = _current_date
     
     if not _trajectories.has(date):
@@ -311,7 +311,7 @@ func set_trajectory_point(point_type: int, memory_id: String, content: String, d
     return true
 
 func get_trajectory_point(point_type: int, date: String = "") -> TrajectoryPoint:
-    if date.empty():
+    if date.is_empty():
         date = _current_date
     
     if not _trajectories.has(date):
@@ -325,7 +325,7 @@ func get_trajectory_point(point_type: int, date: String = "") -> TrajectoryPoint
     return null
 
 func add_trajectory_note(note: String, date: String = "") -> bool:
-    if date.empty():
+    if date.is_empty():
         date = _current_date
     
     if not _trajectories.has(date):
@@ -333,11 +333,11 @@ func add_trajectory_note(note: String, date: String = "") -> bool:
     
     var trajectory = _trajectories[date]
     
-    if note.empty():
+    if note.is_empty():
         return false
     
     # Add note (append)
-    if trajectory.notes.empty():
+    if trajectory.notes.is_empty():
         trajectory.notes = note
     else:
         trajectory.notes += "\n" + note
@@ -352,7 +352,7 @@ func add_trajectory_note(note: String, date: String = "") -> bool:
     return true
 
 func connect_memory_to_trajectory(memory_id: String, date: String = "") -> bool:
-    if date.empty():
+    if date.is_empty():
         date = _current_date
     
     if not _trajectories.has(date):
@@ -462,7 +462,7 @@ func visualize_trajectory(date: String = "") -> bool:
     if not _visualizer:
         return false
     
-    if date.empty():
+    if date.is_empty():
         date = _current_date
     
     if not _trajectories.has(date):
@@ -473,7 +473,7 @@ func visualize_trajectory(date: String = "") -> bool:
     # Create a new layout for the trajectory
     var layout_id = _visualizer.create_layout("Trajectory " + date)
     
-    if layout_id.empty():
+    if layout_id.is_empty():
         return false
     
     # Create root node for trajectory
@@ -493,14 +493,14 @@ func visualize_trajectory(date: String = "") -> bool:
             var point = trajectory.points[point_type]
             var content = point.content
             
-            if content.empty() and point.memory_id:
+            if content.is_empty() and point.memory_id:
                 # Try to get content from memory
                 if _memory_system:
                     var memory = _memory_system.get_memory(point.memory_id)
                     if memory:
                         content = memory.content
             
-            if content.empty():
+            if content.is_empty():
                 content = "Empty " + point_data.name
                 
             # Create node for point
@@ -511,7 +511,7 @@ func visualize_trajectory(date: String = "") -> bool:
                 content
             )
             
-            if not node_id.empty():
+            if not node_id.is_empty():
                 var node = _visualizer.find_node_by_id(layout.root_node, node_id)
                 
                 # Set marker
@@ -543,7 +543,7 @@ func _on_auto_save_timer_timeout():
     save_all_trajectories()
 
 func get_trajectory_summary(date: String = "") -> String:
-    if date.empty():
+    if date.is_empty():
         date = _current_date
     
     if not _trajectories.has(date):
@@ -610,7 +610,7 @@ func get_trajectory_summary(date: String = "") -> String:
         summary += "\n"
     
     # Add notes
-    if not trajectory.notes.empty():
+    if not trajectory.notes.is_empty():
         summary += "## Notes\n"
         summary += trajectory.notes + "\n\n"
     
@@ -620,7 +620,7 @@ func get_trajectory_summary(date: String = "") -> String:
     return summary
 
 func create_trajectory_connection_graph(date: String = "") -> Dictionary:
-    if date.empty():
+    if date.is_empty():
         date = _current_date
     
     if not _trajectories.has(date):
@@ -635,7 +635,7 @@ func create_trajectory_connection_graph(date: String = "") -> Dictionary:
     # Add trajectory points as nodes
     for point_type in trajectory.points:
         var point = trajectory.points[point_type]
-        if point.memory_id.empty() and point.content.empty():
+        if point.memory_id.is_empty() and point.content.is_empty():
             continue
         
         var node_type = "start"
@@ -670,7 +670,7 @@ func create_trajectory_connection_graph(date: String = "") -> Dictionary:
     for point_type in [TRAJECTORY_POINTS.START, TRAJECTORY_POINTS.CENTER, TRAJECTORY_POINTS.END]:
         if trajectory.points.has(point_type):
             var point = trajectory.points[point_type]
-            if not point.memory_id.empty() or not point.content.empty():
+            if not point.memory_id.is_empty() or not point.content.is_empty():
                 point_ids.append(point.id)
     
     # Create sequential links
@@ -684,7 +684,7 @@ func create_trajectory_connection_graph(date: String = "") -> Dictionary:
     # Add links from points to connected memories
     for point_type in trajectory.points:
         var point = trajectory.points[point_type]
-        if point.memory_id.empty():
+        if point.memory_id.is_empty():
             continue
         
         for memory_id in trajectory.connected_memories:
@@ -715,7 +715,7 @@ func create_trajectory_connection_graph(date: String = "") -> Dictionary:
 
 # Main integration for complete trajectory creation
 func create_full_trajectory(start_content: String, center_content: String, end_content: String, date: String = "") -> String:
-    if date.empty():
+    if date.is_empty():
         date = _current_date
     
     # Ensure trajectory exists
@@ -750,7 +750,7 @@ func create_full_trajectory(start_content: String, center_content: String, end_c
             else:
                 content = end_content
                 
-            if not content.empty():
+            if not content.is_empty():
                 memory_ids[point_type] = _memory_system.create_memory(
                     content,
                     dimensions[point_type]
@@ -765,7 +765,7 @@ func create_full_trajectory(start_content: String, center_content: String, end_c
     if _connection_system:
         var point_ids = []
         for point_type in [TRAJECTORY_POINTS.START, TRAJECTORY_POINTS.CENTER, TRAJECTORY_POINTS.END]:
-            if not memory_ids[point_type].empty():
+            if not memory_ids[point_type].is_empty():
                 point_ids.append(memory_ids[point_type])
         
         # Create sequential connections

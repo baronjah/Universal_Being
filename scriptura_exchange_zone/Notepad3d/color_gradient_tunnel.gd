@@ -1,6 +1,6 @@
 extends TunnelVisualizer
 
-class_name ColorGradientTunnelVisualizer
+class_name ColorGradientTunnelVisualizer_colorgradienttunnel_colorgra
 
 # Enhanced visualization with dynamic gradients and color blending
 const GRADIENT_RESOLUTION = 16
@@ -396,7 +396,7 @@ func start_color_transition(tunnel_id, target_dimension, duration = 1.0):
     if not tunnel_data:
         return false
     
-    // Add to transitions
+# // Add to transitions
     color_transitions[tunnel_id] = {
         "source_dim": tunnel_data.dimension,
         "target_dim": target_dimension,
@@ -410,7 +410,7 @@ func add_color_flash(tunnel_id, color = null, duration = 0.5):
     if not active_tunnels.has(tunnel_id):
         return false
     
-    // Use provided color or generate one
+# // Use provided color or generate one
     var flash_color = color
     if not flash_color:
         flash_color = Color(1.0, 1.0, 1.0)
@@ -432,7 +432,7 @@ func set_animation_quality(quality_level):
     quality_level = clamp(quality_level, 0, 4)
     style_config.animation_quality = quality_level
     
-    // Adjust visual parameters based on quality
+# // Adjust visual parameters based on quality
     match quality_level:
         0:  // Lowest quality
             style_config.tunnel_opacity = 0.7
@@ -470,14 +470,14 @@ func set_animation_quality(quality_level):
             style_config.use_bloom_effect = true
             style_config.use_dynamic_lighting = true
     
-    // Apply changes to existing tunnels
+# // Apply changes to existing tunnels
     _apply_quality_settings()
 
 func _apply_quality_settings():
-    // Apply settings to environment
+# // Apply settings to environment
     _setup_environment_effects()
     
-    // Apply to all tunnels
+# // Apply to all tunnels
     for tunnel_id in active_tunnels:
         var tunnel = active_tunnels[tunnel_id]
         
@@ -487,13 +487,13 @@ func _apply_quality_settings():
             material.emission_enabled = true
             material.emission_energy = style_config.tunnel_glow_intensity
             
-            // Adjust based on stability
+# // Adjust based on stability
             var opacity = style_config.tunnel_opacity * (0.4 + tunnel.data.stability * 0.6)
             var current_color = material.albedo_color
             current_color.a = opacity
             material.albedo_color = current_color
         
-        // Adjust particles
+# // Adjust particles
         if tunnel.has("particles") and tunnel.particles:
             var particle_material = tunnel.particles.process_material
             if particle_material:
@@ -501,15 +501,15 @@ func _apply_quality_settings():
                 particle_material.scale_max = style_config.particle_size * 1.2
 
 func _on_stability_changed(tunnel_id, new_stability):
-    // Call parent implementation
+# // Call parent implementation
     super._on_stability_changed(tunnel_id, new_stability)
     
-    // Add visual effect for stability change
+# // Add visual effect for stability change
     if new_stability < 0.5:
-        // Unstable tunnel gets a red flash
+# // Unstable tunnel gets a red flash
         add_color_flash(tunnel_id, Color(1.0, 0.3, 0.3, 0.7))
     elif new_stability > 0.8:
-        // Very stable tunnel gets a green flash
+# // Very stable tunnel gets a green flash
         add_color_flash(tunnel_id, Color(0.3, 1.0, 0.3, 0.7))
 
 func get_gradient_for_dimension(dimension):
@@ -522,7 +522,7 @@ func create_custom_gradient(colors, positions = null):
         for i in range(colors.size()):
             gradient.add_point(positions[i], colors[i])
     else:
-        // Distribute evenly if no positions provided
+# // Distribute evenly if no positions provided
         for i in range(colors.size()):
             var pos = float(i) / (colors.size() - 1) if colors.size() > 1 else 0.0
             gradient.add_point(pos, colors[i])

@@ -1,5 +1,5 @@
 extends Node
-class_name SpaceSelectionSystem
+class_name SpaceSelectionSystem_spaceselectionsystem_spacesel
 
 signal object_selected(object)
 signal object_hovered(object)

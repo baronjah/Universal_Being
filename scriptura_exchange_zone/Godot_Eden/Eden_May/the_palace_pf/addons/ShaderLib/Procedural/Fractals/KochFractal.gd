@@ -1,5 +1,6 @@
 @tool
-class_name VisualShaderNodeProceduralKochFractal extends VisualShaderNodeCustom
+class_name VisualShaderNodeProceduralKochFractal_KochFractal_KochFrac
+extends \2
 
 func _init() -> void:
 	output_port_for_preview = 0

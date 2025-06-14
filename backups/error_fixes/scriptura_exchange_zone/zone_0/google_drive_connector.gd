@@ -166,7 +166,7 @@ func process_document_with_ai(file_id, processing_type = "summarize"):
         print("Not authenticated to Google Drive")
         return false
     
-    if openai_api_key.empty():
+    if openai_api_key.is_empty():
         print("OpenAI API key not set")
         return false
     

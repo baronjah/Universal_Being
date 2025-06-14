@@ -49,7 +49,7 @@ func initialize():
     # Create demo timer
     demo_timer = Timer.new()
     demo_timer.one_shot = true
-    demo_timer.connect("timeout", self, "_on_demo_timer_timeout")
+    demo_timer.connect(_on_demo_timer_timeout)
     add_child(demo_timer)
 
 func start_demo():

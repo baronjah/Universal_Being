@@ -6,11 +6,12 @@ extends Node
 # Terminal 1: Divine Word Genesis
 }
 
-class_name WordSalemGameController
+class_name WordSalemGameController_wordsalemgamecontroller_wordsale
 }
 
 # Game state constants
-enum GameState {
+enum \2 {
+
 	LOBBY,
 	DAY,
 	VOTING,
@@ -22,7 +23,8 @@ enum GameState {
 }
 
 # Role types
-enum RoleType {
+enum \2 {
+
 	TOWN,
 	MAFIA,
 	NEUTRAL,
@@ -140,11 +142,11 @@ func _ready():
 
 func connect_to_systems():
 	# Connect to the divine word processor and turn system
-	divine_word_processor = get_node_or_null("/root/DivineWordProcessor")
-	turn_system = get_node_or_null("/root/TurnSystem")
-	word_crimes_analysis = get_node_or_null("/root/WordCrimesAnalysis")
-	word_comment_system = get_node_or_null("/root/WordCommentSystem")
-	word_dream_storage = get_node_or_null("/root/WordDreamStorage")
+	divine_word_processor = get_node_or_null("root/DivineWordProcessor")
+	turn_system = get_node_or_null("root/TurnSystem")
+	word_crimes_analysis = get_node_or_null("root/WordCrimesAnalysis")
+	word_comment_system = get_node_or_null("root/WordCommentSystem")
+	word_dream_storage = get_node_or_null("root/WordDreamStorage")
 }
 
 	if divine_word_processor:

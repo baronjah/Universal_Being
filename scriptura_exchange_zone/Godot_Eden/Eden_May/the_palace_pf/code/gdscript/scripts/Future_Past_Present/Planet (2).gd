@@ -1,17 +1,17 @@
 @tool
-extends MeshInstance3D
+extends \2
 
 var triangles = []
 var vertices = []
 
-@export var subdivisions: int = 2:
+@@export var subdivisions: int = 2:
 	set = set_subdivisions, get = get_subdivisions
-@export var roughness: float = 1.0:
+@@export var roughness: float = 1.0:
 	set = set_roughness, get = get_roughness
-@export var radius: float = 1.0:
+@@export var radius: float = 1.0:
 	set = set_radius, get = get_radius
-@export var noise: FastNoiseLite = FastNoiseLite.new()
-@export var update_noise_flag: bool = false:
+@@export var noise: FastNoiseLite = FastNoiseLite.new()
+@@export var update_noise_flag: bool = false:
 	set = update_noise, get = get_update_noise
 
 func _ready():

@@ -1,6 +1,6 @@
 extends Node
 
-class_name AutoAgentMode
+class_name AutoAgentMode_autoagentmode_autoagen
 
 # Auto Agent Mode
 # Enables automatic processing of commands, wishes, and trajectories

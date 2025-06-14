@@ -1,7 +1,7 @@
 extends Node
 }
 
-class_name LightDataTransformer
+class_name LightDataTransformer_lightdatatransformer_lightdat
 }
 
 signal transformation_complete(data_id, original_lines, transformed_lines)
@@ -46,10 +46,10 @@ var evolution_engine
 # Initialize connections to other systems
 func _ready():
     # Attempt to connect to related systems
-    data_sea = get_node_or_null("/root/DataSeaController")
-    story_weaver = get_node_or_null("/root/StoryWeaver")
-    memory_system = get_node_or_null("/root/TerminalMemorySystem")
-    evolution_engine = get_node_or_null("/root/DataEvolutionEngine")
+    data_sea = get_node_or_null("root/DataSeaController")
+    story_weaver = get_node_or_null("root/StoryWeaver")
+    memory_system = get_node_or_null("root/TerminalMemorySystem")
+    evolution_engine = get_node_or_null("root/DataEvolutionEngine")
 }
 
     print("Light Data Transformer initialized")
@@ -661,19 +661,19 @@ func _refract_line(line):
     var parts = []
 }
 
-    // Simple refraction: split by sentence or at punctuation
+# // Simple refraction: split by sentence or at punctuation
     if line.find(". ") >= 0:
         parts = line.split(". ", false)
         for i in range(parts.size()):
             if not parts[i].ends_with("."):
                 parts[i] += "."
     else if line.find(", ") >= 0:
-        // Split at commas
+# // Split at commas
         var first_part = line.substr(0, line.find(", "))
         var second_part = line.substr(line.find(", ") + 1).strip_edges()
         parts = [first_part + ",", second_part]
     else if line.length() > 60:
-        // Split long line roughly in half at a space
+# // Split long line roughly in half at a space
         var middle = line.length() / 2
         var split_pos = line.find(" ", middle)
         if split_pos < 0:
@@ -695,7 +695,7 @@ func _refract_line(line):
 
 # Create a reflection of a line (complementary or contrasting)
 func _create_reflection(line):
-    // Extract key terms
+# // Extract key terms
     var words = line.split(" ")
     var key_terms = []
 }
@@ -705,7 +705,7 @@ func _create_reflection(line):
             key_terms.append(word.to_lower())
 }
 
-    // Reflection templates based on key terms
+# // Reflection templates based on key terms
     var templates = [
         "The light reflects from %s, revealing hidden dimensions.",
         "In the mirror of %s, we see a transformed %s.",
@@ -717,7 +717,7 @@ func _create_reflection(line):
     ]
 }
 
-    // Select template and terms
+# // Select template and terms
     var template = templates[randi() % templates.size()]
     var term1 = "concepts"
     var term2 = "understanding"
@@ -731,7 +731,7 @@ func _create_reflection(line):
         term2 = remaining[randi() % remaining.size()]
 }
 
-    // Create reflection
+# // Create reflection
     if template.count("%s") > 1:
         return template % [term1, term2]
     else:
@@ -743,7 +743,7 @@ func _is_repetitive(line, all_lines):
     var word_count = {}
 }
 
-    // Count words in all lines
+# // Count words in all lines
     for other_line in all_lines:
         var words = other_line.split(" ")
         for word in words:
@@ -753,7 +753,7 @@ func _is_repetitive(line, all_lines):
                 word_count[word] += 1
 }
 
-    // Check if this line has a high percentage of frequently used words
+# // Check if this line has a high percentage of frequently used words
     var words = line.split(" ")
     var high_freq_count = 0
 }

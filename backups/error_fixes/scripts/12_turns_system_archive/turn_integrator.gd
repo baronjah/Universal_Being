@@ -20,7 +20,7 @@ func _ready():
 	turn_timer = Timer.new()
 	turn_timer.one_shot = false
 	turn_timer.wait_time = turn_duration
-	turn_timer.connect("timeout", self, "_on_turn_timer_timeout")
+	turn_timer.connect(_on_turn_timer_timeout)
 	add_child(turn_timer)
 	
 	# Connect to existing systems
@@ -38,16 +38,16 @@ func connect_to_systems():
 		print("Created new TurnPrioritySystem")
 	
 	# Connect signals from TurnPrioritySystem
-	turn_priority_system.connect("turn_advanced", self, "_on_turn_advanced")
-	turn_priority_system.connect("priority_shifted", self, "_on_priority_shifted")
-	turn_priority_system.connect("cycle_completed", self, "_on_cycle_completed")
+	turn_priority_system.connect(_on_turn_advanced)
+	turn_priority_system.connect(_on_priority_shifted)
+	turn_priority_system.connect(_on_cycle_completed)
 	
 	# Try to find existing TwelveTurnsGame
 	twelve_turns_game = get_node_or_null("/root/TwelveTurnsGame")
 	if twelve_turns_game:
 		# Connect to TwelveTurnsGame signals
 		if not twelve_turns_game.is_connected("dimension_transition_complete", self, "_on_dimension_transition"):
-			twelve_turns_game.connect("dimension_transition_complete", self, "_on_dimension_transition")
+			twelve_turns_game.connect(_on_dimension_transition)
 		print("Connected to TwelveTurnsGame")
 	
 	emit_signal("integration_completed")
@@ -81,6 +81,7 @@ func sync_turn_state():
 		
 		emit_signal("turn_integrated", turn_priority_system.get_turn_string(), dimension)
 		print("Synchronized turn state: " + turn_priority_system.get_turn_string() + " with dimension " + str(dimension))
+
 
 func advance_turn():
 	if turn_priority_system:
@@ -119,6 +120,7 @@ func set_auto_advance(enabled):
 		turn_timer.stop()
 	print("Auto advance turns set to: " + str(enabled))
 
+
 func get_current_turn_data():
 	if turn_priority_system:
 		return turn_priority_system.get_turn_data()
@@ -137,6 +139,7 @@ func _on_turn_timer_timeout():
 func _on_turn_advanced(turn_number, turn_lines):
 	# This is called when the TurnPrioritySystem advances a turn
 	print("Turn advanced to: " + turn_number)
+
 	
 	# If connected to TwelveTurnsGame, add the event to the comment system
 	if twelve_turns_game and twelve_turns_game.word_comment_system:
@@ -150,6 +153,7 @@ func _on_turn_advanced(turn_number, turn_lines):
 func _on_priority_shifted(old_category, new_category, item):
 	# This is called when a priority shifts from one category to another
 	print("Priority shifted: " + item + " from " + old_category + " to " + new_category)
+
 	
 	# If connected to TwelveTurnsGame, add the event to the comment system
 	if twelve_turns_game and twelve_turns_game.word_comment_system:
@@ -162,6 +166,7 @@ func _on_priority_shifted(old_category, new_category, item):
 func _on_cycle_completed(cycle_number):
 	# This is called when a full cycle of turns completes
 	print("Completed cycle: " + str(cycle_number))
+
 	
 	# If connected to TwelveTurnsGame, record this in the dream storage
 	if twelve_turns_game and twelve_turns_game.word_dream_storage:
@@ -190,3 +195,4 @@ func _on_dimension_transition(from_dim, to_dim):
 		turn_priority_system.save_display_files()
 		
 		print("Updated turn to match dimension: " + turn_priority_system.get_turn_string())
+

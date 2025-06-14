@@ -1,5 +1,6 @@
 @tool
-class_name VisualShaderNodeProceduralGyroidNoise extends VisualShaderNodeCustom
+class_name VisualShaderNodeProceduralGyroidNoise_GyroidNoise_GyroidNo
+extends \2
 
 func _init() -> void:
 	output_port_for_preview = 0

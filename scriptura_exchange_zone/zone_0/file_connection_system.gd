@@ -1,5 +1,5 @@
 extends Node
-class_name FileConnectionSystem
+class_name FileConnectionSystem_fileconnectionsystem_fileconn
 
 # File connection system for Claude integration
 # Connects all claude-related files with snake_case naming
@@ -7,45 +7,45 @@ class_name FileConnectionSystem
 # Main file connections
 var file_connections = {
   # Main system files
-  "main_controller": "/mnt/c/Users/Percision 15/12_turns_system/main.gd",
-  "desktop_main": "/mnt/c/Users/Percision 15/Desktop/main.gd",
+  "main_controller": "mnt/c/Users/Percision 15/12_turns_system/main.gd",
+  "desktop_main": "mnt/c/Users/Percision 15/Desktop/main.gd",
   
   # Claude core files
-  "claude_config": "/mnt/c/Users/Percision 15/CLAUDE.md",
-  "claude_akashic_bridge": "/mnt/c/Users/Percision 15/12_turns_system/claude_akashic_bridge.gd",
-  "claude_akashic_demo": "/mnt/c/Users/Percision 15/12_turns_system/claude_akashic_demo.gd",
-  "claude_terminal_interface": "/mnt/c/Users/Percision 15/12_turns_system/claude_terminal_interface.sh",
-  "claude_ethereal_bridge": "/mnt/c/Users/Percision 15/12_turns_system/claude_ethereal_bridge.gd",
-  "claude_integration_bridge": "/mnt/c/Users/Percision 15/12_turns_system/claude_integration_bridge.gd",
-  "claude_wsl_config": "/mnt/c/Users/Percision 15/Desktop/wsl claude.txt",
+  "claude_config": "mnt/c/Users/Percision 15/CLAUDE.md",
+  "claude_akashic_bridge": "mnt/c/Users/Percision 15/12_turns_system/claude_akashic_bridge.gd",
+  "claude_akashic_demo": "mnt/c/Users/Percision 15/12_turns_system/claude_akashic_demo.gd",
+  "claude_terminal_interface": "mnt/c/Users/Percision 15/12_turns_system/claude_terminal_interface.sh",
+  "claude_ethereal_bridge": "mnt/c/Users/Percision 15/12_turns_system/claude_ethereal_bridge.gd",
+  "claude_integration_bridge": "mnt/c/Users/Percision 15/12_turns_system/claude_integration_bridge.gd",
+  "claude_wsl_config": "mnt/c/Users/Percision 15/Desktop/wsl claude.txt",
   
   # Memory system files
-  "word_memory_system": "/mnt/c/Users/Percision 15/word_memory_system.gd",
-  "divine_memory_system": "/mnt/c/Users/Percision 15/12_turns_system/divine_memory_system.sh",
-  "memory_investment_system": "/mnt/c/Users/Percision 15/12_turns_system/memory_investment_system.gd",
-  "dimensional_memory_integration": "/mnt/c/Users/Percision 15/dimensional_memory_integration.gd",
-  "dimensional_memory_splitter": "/mnt/c/Users/Percision 15/dimensional_memory_splitter.gd",
-  "terminal_memory_system": "/mnt/c/Users/Percision 15/12_turns_system/terminal_memory_system.gd",
-  "project_memory_system": "/mnt/c/Users/Percision 15/12_turns_system/project_memory_system.gd",
-  "memory_manager": "/mnt/c/Users/Percision 15/Desktop/memory_manager.gd",
-  "memory_drive_connector": "/mnt/c/Users/Percision 15/Desktop/memory_drive_connector.gd",
+  "word_memory_system": "mnt/c/Users/Percision 15/word_memory_system.gd",
+  "divine_memory_system": "mnt/c/Users/Percision 15/12_turns_system/divine_memory_system.sh",
+  "memory_investment_system": "mnt/c/Users/Percision 15/12_turns_system/memory_investment_system.gd",
+  "dimensional_memory_integration": "mnt/c/Users/Percision 15/dimensional_memory_integration.gd",
+  "dimensional_memory_splitter": "mnt/c/Users/Percision 15/dimensional_memory_splitter.gd",
+  "terminal_memory_system": "mnt/c/Users/Percision 15/12_turns_system/terminal_memory_system.gd",
+  "project_memory_system": "mnt/c/Users/Percision 15/12_turns_system/project_memory_system.gd",
+  "memory_manager": "mnt/c/Users/Percision 15/Desktop/memory_manager.gd",
+  "memory_drive_connector": "mnt/c/Users/Percision 15/Desktop/memory_drive_connector.gd",
   
   # 3D Notepad files
-  "notepad_3d_html": "/mnt/c/Users/Percision 15/12_turns_system/3d_notepad.html",
-  "notepad_3d_readme": "/mnt/c/Users/Percision 15/12_turns_system/NOTEPAD3D_README.md",
-  "notepad_3d_visualizer": "/mnt/c/Users/Percision 15/12_turns_system/notepad3d_visualizer.gd",
-  "notepad_3d_manifesto": "/mnt/c/Users/Percision 15/12_turns_system/notepad3d_manifesto.md",
+  "notepad_3d_html": "mnt/c/Users/Percision 15/12_turns_system/3d_notepad.html",
+  "notepad_3d_readme": "mnt/c/Users/Percision 15/12_turns_system/NOTEPAD3D_README.md",
+  "notepad_3d_visualizer": "mnt/c/Users/Percision 15/12_turns_system/notepad3d_visualizer.gd",
+  "notepad_3d_manifesto": "mnt/c/Users/Percision 15/12_turns_system/notepad3d_manifesto.md",
   
   # Datapoint files
-  "datapoint_js": "/mnt/c/Users/Percision 15/Downloads/datapoint-js.txt",
-  "terminal_datapoint_handlers": "/mnt/c/Users/Percision 15/Downloads/terminal-datapoint-handlers.txt",
+  "datapoint_js": "mnt/c/Users/Percision 15/Downloads/datapoint-js.txt",
+  "terminal_datapoint_handlers": "mnt/c/Users/Percision 15/Downloads/terminal-datapoint-handlers.txt",
   
   # Container files (custom containers for the system)
-  "data_container_system": "/mnt/c/Users/Percision 15/12_turns_system/data_container_system.gd",
+  "data_container_system": "mnt/c/Users/Percision 15/12_turns_system/data_container_system.gd",
   
   # Archive files
-  "memory_archive_system": "/mnt/c/Users/Percision 15/12_turns_system/memory_archive_system.gd",
-  "past_memory_archive": "/mnt/c/Users/Percision 15/12_turns_system/past_memory_archive.gd"
+  "memory_archive_system": "mnt/c/Users/Percision 15/12_turns_system/memory_archive_system.gd",
+  "past_memory_archive": "mnt/c/Users/Percision 15/12_turns_system/past_memory_archive.gd"
 }
 
 # Logical groupings of files

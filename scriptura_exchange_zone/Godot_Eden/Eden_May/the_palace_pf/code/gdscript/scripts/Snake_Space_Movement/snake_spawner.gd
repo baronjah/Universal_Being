@@ -1,5 +1,5 @@
 extends Node
-class_name SnakeSpawner
+class_name SnakeSpawner_snakespawner_snakespa
 
 # Add this to your main scene tree to enable snake spawning
 # Use the AkashicRecordsManager to register the snake as a special entity
@@ -10,8 +10,8 @@ var is_spawning = false  # Protection flag to prevent infinite recursion
 
 func _ready():
 	# Find references
-	if has_node("/root/AkashicRecordsManager"):
-		akashic_records_manager = get_node("/root/AkashicRecordsManager")
+	if has_node("root/AkashicRecordsManager"):
+		akashic_records_manager = get_node("root/AkashicRecordsManager")
 	else:
 		akashic_records_manager = AkashicRecordsManagerA.get_instance()
 		
@@ -144,8 +144,8 @@ func spawn_snake_at_player():
 
 # Add this to your UI handler to allow snake spawning
 func register_snake_command():
-	if has_node("/root/CommandConsole"):
-		var console = get_node("/root/CommandConsole")
+	if has_node("root/CommandConsole"):
+		var console = get_node("root/CommandConsole")
 		console.register_command("spawn_snake", self, "spawn_snake_at_player", 
 			"Spawns a cosmic space snake at your position")
 	else:

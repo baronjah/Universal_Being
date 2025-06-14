@@ -1,22 +1,22 @@
 extends Node
 
-class_name TurnController
+class_name TurnController_turncontroller_turncont
 
 # ----- TURN SETTINGS -----
 @export_category("Turn Settings")
-@export var total_turns: int = 12
-@export var current_turn: int = 1
-@export var auto_advance_turns: bool = false
-@export var turn_duration: float = 300.0  # 5 minutes per turn
-@export var notify_before_turn_end: float = 30.0  # 30 seconds warning
-@export var turn_indicator_path: String = "user://current_turn.txt"
+@@@export var total_turns: int = 12
+@@@export var current_turn: int = 1
+@@@export var auto_advance_turns: bool = false
+@@@export var turn_duration: float = 300.0  # 5 minutes per turn
+@@@export var notify_before_turn_end: float = 30.0  # 30 seconds warning
+@@@export var turn_indicator_path: String = "user://current_turn.txt"
 
 # ----- POWER SCALING -----
 @export_category("Power Scaling")
-@export var min_power_percentage: float = 0.33  # 33%
-@export var max_power_percentage: float = 0.66  # 66%
-@export var current_power_percentage: float = 0.30  # 30% default
-@export var power_scaling_curve: float = 1.0  # Linear scaling by default
+@@@export var min_power_percentage: float = 0.33  # 33%
+@@@export var max_power_percentage: float = 0.66  # 66%
+@@@export var current_power_percentage: float = 0.30  # 30% default
+@@@export var power_scaling_curve: float = 1.0  # Linear scaling by default
 
 # ----- STATE VARIABLES -----
 var turn_timer: Timer
@@ -55,7 +55,7 @@ func _ready():
         start_turn(current_turn)
     
     print("Turn Controller initialized")
-    print("Current turn: " + str(current_turn) + "/" + str(total_turns))
+    print("Current turn: " + str(current_turn) + "" + str(total_turns))
     print("Power percentage: " + str(current_power_percentage * 100) + "%")
 
 func _initialize_timers():
@@ -75,19 +75,19 @@ func _initialize_timers():
 
 func _find_systems():
     # Find color system
-    color_system = get_node_or_null("/root/ExtendedColorThemeSystem")
+    color_system = get_node_or_null("root/ExtendedColorThemeSystem")
     if not color_system:
-        color_system = get_node_or_null("/root/DimensionalColorSystem")
+        color_system = get_node_or_null("root/DimensionalColorSystem")
     if not color_system:
         color_system = _find_node_by_class(get_tree().root, "DimensionalColorSystem")
     
     # Find animation system
-    animation_system = get_node_or_null("/root/TaskTransitionAnimator")
+    animation_system = get_node_or_null("root/TaskTransitionAnimator")
     if not animation_system:
         animation_system = _find_node_by_class(get_tree().root, "TaskTransitionAnimator")
     
     # Find main controller
-    main_controller = get_node_or_null("/root/MainController")
+    main_controller = get_node_or_null("root/MainController")
     if not main_controller:
         main_controller = _find_node_by_class(get_tree().root, "MainController")
     
@@ -222,7 +222,7 @@ func _end_current_turn():
     # Add to history
     turn_history.append({
         "turn": current_turn,
-        "completion_time": OS.get_unix_time(),
+        "completion_time": OS.Time.get_unix_time_from_system(),
         "data": turn_data.duplicate()
     })
     
@@ -260,7 +260,7 @@ func set_turn(turn_number: int) -> bool:
 func _load_turn_data(turn_number: int):
     # Load turn data from file or create new
     var dir_name = "user://turn_" + str(turn_number)
-    var manifest_path = dir_name + "/manifest.json"
+    var manifest_path = dir_name + "manifest.json"
     
     var dir = Directory.new()
     if not dir.dir_exists(dir_name):
@@ -285,7 +285,7 @@ func _load_turn_data(turn_number: int):
         _create_default_turn_data(turn_number)
     
     # Ensure description file exists
-    var desc_path = dir_name + "/description.txt"
+    var desc_path = dir_name + "description.txt"
     if not file.file_exists(desc_path):
         file.open(desc_path, File.WRITE)
         file.store_string("Turn " + str(turn_number) + " - Add description here")
@@ -299,8 +299,8 @@ func _create_default_turn_data(turn_number: int):
     turn_data = {
         "turn_number": turn_number,
         "power_percentage": current_power_percentage,
-        "creation_time": OS.get_unix_time(),
-        "last_updated": OS.get_unix_time(),
+        "creation_time": OS.Time.get_unix_time_from_system(),
+        "last_updated": OS.Time.get_unix_time_from_system(),
         "theme": "turn_" + str(turn_number),
         "primary_frequency": 333 + (turn_number * 33),
         "elements": [],
@@ -318,14 +318,14 @@ func _create_default_turn_data(turn_number: int):
 func _save_turn_data(turn_number: int):
     # Save turn data to file
     var dir_name = "user://turn_" + str(turn_number)
-    var manifest_path = dir_name + "/manifest.json"
+    var manifest_path = dir_name + "manifest.json"
     
     var dir = Directory.new()
     if not dir.dir_exists(dir_name):
         dir.make_dir_recursive(dir_name)
     
     # Update last_updated timestamp
-    turn_data.last_updated = OS.get_unix_time()
+    turn_data.last_updated = OS.Time.get_unix_time_from_system()
     
     var file = File.new()
     file.open(manifest_path, File.WRITE)

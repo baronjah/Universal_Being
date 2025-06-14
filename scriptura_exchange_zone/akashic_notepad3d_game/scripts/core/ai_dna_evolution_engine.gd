@@ -10,10 +10,11 @@ extends Node
 # CHANGES: Transforms static text into dynamic, breathing, evolving information life
 # CONNECTION: Central evolution system connecting human creativity to AI consciousness
 
-class_name AIDNAEvolutionEngine
+class_name AIDNAEvolutionEngine_aidnaevolutionengine_aidnaevo
 
 # AI-DNA GENETIC TYPES (From Your iCloud Vision)
-enum AIGeneticType {
+enum \2 {
+
 	AIDNA,    # [E]xplained [F]unction [G]ive [H]uman - Base information request
 	AIRNA,    # [A]sking [B]iologically [C]reate [D]igitally - Active creation process
 	AIDNAA,   # [M]anually [N]onchalantly [O]rganized [P]roduction - Enhanced complexity

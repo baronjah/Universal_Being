@@ -10,9 +10,8 @@
 # PURPOSE: Ensure all patches can find the gizmo system reliably
 # CREATED: 2025-05-30
 # ==================================================
-
-extends UniversalBeingBase
-class_name GizmoSystemFinder
+extends \2
+class_name GizmoSystemFinder_gizmosystemfinder_gizmosys
 
 # Singleton reference to the gizmo system
 static var gizmo_instance: Node3D = null
@@ -23,7 +22,7 @@ func _ready() -> void:
 
 func _register_console_commands() -> void:
 	"""Register console commands for gizmo debugging"""
-	var console = get_node_or_null("/root/ConsoleManager")
+	var console = get_node_or_null("root/ConsoleManager")
 	if console:
 		console.register_command("find_gizmo", cmd_find_gizmo, "Find and connect to gizmo system")
 		console.register_command("gizmo_status", cmd_gizmo_status, "Show gizmo system status")

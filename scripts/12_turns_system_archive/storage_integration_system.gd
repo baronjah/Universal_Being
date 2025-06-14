@@ -42,7 +42,6 @@ var storage_status = {
 		"used": 0,
 		"total": STORAGE_LIMITS.local_drive,
 		"type": "local"
-	}
 }
 
 # Wish system tracking
@@ -86,6 +85,7 @@ func _initialize_system():
 	
 	print("Storage Integration System initialized")
 	print("Connected to local storage: " + str(storage_status.local.used / 1024 / 1024 / 1024) + "GB used of " + str(storage_status.local.total / 1024 / 1024 / 1024) + "GB")
+}
 
 # Directory management
 func _ensure_directories_exist():
@@ -95,6 +95,7 @@ func _ensure_directories_exist():
 		if not dir.dir_exists(storage_paths[key]):
 			dir.make_dir_recursive(storage_paths[key])
 			print("Created directory: " + storage_paths[key])
+
 
 # Connection management
 func _connect_to_akashic_bridge():
@@ -175,6 +176,7 @@ func _load_wish_history():
 						wish_system.today_count += 1
 				
 				print("Loaded wish history: " + str(wish_system.total_count) + " total wishes, " + str(wish_system.today_count) + " today")
+	
 
 # Public API methods
 
@@ -242,7 +244,7 @@ func create_wish(wish_text, priority = "normal", metadata = {}):
 		"status": "pending",
 		"token_cost": token_cost,
 		"metadata": metadata
-	}
+}
 	
 	# Store wish
 	_store_wish(wish)
@@ -272,6 +274,7 @@ func create_wish(wish_text, priority = "normal", metadata = {}):
 	
 	emit_signal("wish_created", wish_id, wish_text)
 	print("Created wish: " + wish_id)
+
 	
 	return wish
 
@@ -354,6 +357,7 @@ func complete_wish(wish_id, result = "completed", output = ""):
 	
 	emit_signal("wish_completed", wish_id)
 	print("Completed wish: " + wish_id)
+
 	
 	return true
 
@@ -397,16 +401,19 @@ func get_terminal_output_text(wish_text, line_count = 10):
 		output.append("Gate 0 (Physical): OPEN")
 	else:
 		output.append("Gate 0 (Physical): CONNECTED")
+
 	
 	if randf() > 0.3:
 		output.append("Gate 1 (Experience): OPEN")
 	else:
 		output.append("Gate 1 (Experience): PARTIAL")
+
 	
 	if randf() > 0.7:
 		output.append("Gate 2 (Transcendent): FLUCTUATING")
 	else:
 		output.append("Gate 2 (Transcendent): CLOSED")
+
 	
 	# Add processing steps
 	output.append("Analyzing wish content...")
@@ -426,6 +433,7 @@ func get_terminal_output_text(wish_text, line_count = 10):
 	if remaining < 0:
 		remaining = 0
 	output.append("Remaining wishes today: " + str(remaining))
+
 	
 	# Ensure we have at least the requested number of lines
 	while output.size() < line_count:
@@ -468,8 +476,7 @@ func get_storage_status():
 			"total": wish_system.total_count,
 			"remaining": MAX_WISHES_PER_DAY - wish_system.today_count,
 			"active": wish_system.active_wishes.size()
-		}
-	}
+}
 
 # Private methods
 func _store_wish(wish):
@@ -488,6 +495,7 @@ func _store_wish(wish):
 		file.close()
 	else:
 		push_error("Failed to write wish file: " + wish_file_path)
+}
 
 func _save_wish_history():
 	var wish_history_path = storage_paths.wishes.plus_file("wish_history.json")
@@ -497,7 +505,7 @@ func _save_wish_history():
 		var data = {
 			"total_count": wish_system.total_count,
 			"wish_history": wish_system.wish_history
-		}
+}
 		
 		file.store_string(JSON.print(data, "  "))
 		file.close()
@@ -569,5 +577,6 @@ func _create_complex_command(wish_text):
 	else:
 		# Generic command if no specific target
 		command = "echo 'Processing wish: " + wish_text + "' && bash " + storage_paths.local.plus_file("12_turns_system/turn_manager.sh")
+
 	
 	return command

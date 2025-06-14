@@ -1,6 +1,6 @@
 extends Control
 
-class_name TerminalInterface
+class_name TerminalInterface_terminalinterface_terminal
 
 # Core systems
 var wish_engine: WishEngine
@@ -61,10 +61,10 @@ Type 'help' for available commands
 
 func _initialize_systems():
 	# Get reference to Eden OS main
-	eden_os_main = get_node_or_null("/root/EdenOSMain")
+	eden_os_main = get_node_or_null("root/EdenOSMain")
 	
 	# Initialize wish engine
-	wish_engine = get_node_or_null("/root/WishEngine")
+	wish_engine = get_node_or_null("root/WishEngine")
 	if not wish_engine:
 		wish_engine = WishEngine.new()
 		add_child(wish_engine)
@@ -205,7 +205,7 @@ func _update_status_bar():
 	status_text += "Dimension: " + str(context.dimension)
 	
 	if eden_os_main and eden_os_main.turn_cycle_manager:
-		status_text += " | Turn: " + str(eden_os_main.turn_cycle_manager.current_turn) + "/12"
+		status_text += " | Turn: " + str(eden_os_main.turn_cycle_manager.current_turn) + "12"
 	
 	status_bar.text = status_text
 

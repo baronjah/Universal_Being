@@ -4,9 +4,8 @@
 # PURPOSE: Everything creates through here - console, UI, code
 # CREATED: 2025-05-28 - The Great Unification
 # ==================================================
-
 extends UniversalBeingBase
-class_name UnifiedCreationSystem
+class_name UnifiedCreationSystem_unifiedc
 
 # The single source of truth for all object creation
 signal object_created(object: Node3D, type: String)
@@ -45,9 +44,9 @@ func pentagon_ready() -> void:
 	name = "UnifiedCreationSystem"
 	
 	# Get system references
-	floodgate = get_node("/root/FloodgateController")
-	asset_library = get_node("/root/AssetLibrary")
-	universal_object_manager = get_node("/root/UniversalObjectManager")
+	floodgate = get_node("root/FloodgateController")
+	asset_library = get_node("root/AssetLibrary")
+	universal_object_manager = get_node("root/UniversalObjectManager")
 	
 	print("🌟 [UnifiedCreation] System initialized - ONE creation system to rule them all")
 

@@ -104,10 +104,10 @@ func initialize(coordinator: DualMemoriesCoordinator = null,
     
     # Connect signals
     if dual_memories_coordinator:
-        dual_memories_coordinator.connect("catchphrase_detected", self, "_on_catchphrase_detected_externally")
+        dual_memories_coordinator.connect(_on_catchphrase_detected_externally)
     
     if meaning_transformation_pipeline:
-        meaning_transformation_pipeline.connect("pattern_detected", self, "_on_pattern_detected_externally")
+        meaning_transformation_pipeline.connect(_on_pattern_detected_externally)
     
     print("CatchphraseSystem initialized")
 
@@ -117,7 +117,7 @@ func add_catchphrase(text: String, type: String = "exact", effect: Dictionary = 
     for pattern in catchphrase_patterns:
         if pattern.text == text:
             # Update existing pattern
-            if not effect.empty():
+            if not effect.is_empty():
                 pattern.effect = effect
             pattern.type = type
             emit_signal("pattern_modified", catchphrase_patterns.find(pattern), pattern, pattern)
@@ -137,7 +137,7 @@ func add_catchphrase(text: String, type: String = "exact", effect: Dictionary = 
 # Add a memory sequence pattern
 func add_memory_sequence(sequence: String, memory_content: String, effect: Dictionary = {}) -> CatchphrasePattern:
     # Create base effect if none provided
-    if effect.empty():
+    if effect.is_empty():
         effect = {
             "type": "reveal_memory",
             "memory_content": memory_content,
@@ -268,7 +268,7 @@ func transform_text(text: String, detection_results: Array) -> Dictionary:
     }
     
     # Skip if no results
-    if detection_results.empty():
+    if detection_results.is_empty():
         return result
     
     # Track confidence

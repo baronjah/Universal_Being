@@ -4,15 +4,15 @@
 # PURPOSE: Replace all ragdoll systems with one working implementation
 # CREATED: 2025-05-26 - Project cleanup and consolidation
 # ==================================================
-
-extends UniversalBeingBase
-class_name UnifiedBiomechanicalWalker
+extends \2
+class_name UnifiedBiomechanicalWalker_unifiedbiomechanicalwalker_unifiedb
 
 # signal step_completed(foot: String)  # Currently unused but kept for future expansion
 signal phase_changed(leg: String, phase: String)
 
 # Simplified gait phases
-enum GaitPhase {
+enum \2 {
+
 	STANCE,       # Foot on ground
 	LIFT,         # Foot lifting
 	SWING,        # Foot swinging forward
@@ -44,9 +44,9 @@ class Leg:
 	
 	
 # Walker components
-@export var walk_speed: float = 1.0
-@export var step_length: float = 0.5
-@export var step_height: float = 0.1
+@@@export var walk_speed: float = 1.0
+@@@export var step_length: float = 0.5
+@@@export var step_height: float = 0.1
 
 var pelvis: RigidBody3D
 var spine: RigidBody3D

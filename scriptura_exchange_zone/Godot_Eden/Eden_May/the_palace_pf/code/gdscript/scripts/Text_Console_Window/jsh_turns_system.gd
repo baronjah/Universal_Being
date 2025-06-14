@@ -17,7 +17,7 @@ extends Node
 
 # turns, time, return loop, while cycle
 # JSH_Core/JSH_turns_system
-# res://code/gdscript/scripts/jsh_turns_system.gd
+# res://scripts/gdscript/scripts/jsh_turns_system.gd
 
 # turns?
 # godot connections
@@ -29,7 +29,7 @@ extends Node
 
 
 #JSH_Core/JSH_task_manager/JSH_turns_system
-# res://code/gdscript/scripts/Text_Console_Window/jsh_turns_system.gd
+# res://scripts/gdscript/scripts/Text_Console_Window/jsh_turns_system.gd
 
 
 #    oooo  .oooooo..o ooooo   ooooo 

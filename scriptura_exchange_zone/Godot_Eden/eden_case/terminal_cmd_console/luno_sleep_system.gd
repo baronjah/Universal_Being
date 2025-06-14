@@ -1,5 +1,5 @@
 extends Node
-class_name LunoSleepSystem
+class_name LunoSleepSystem_lunosleepsystem_lunoslee
 
 signal sleep_state_changed(state: Dictionary)
 signal core_allocation_changed(allocation: Dictionary)
@@ -12,7 +12,8 @@ const MAX_SLEEP_DEPTH = 5
 const CALM_WORD_LIBRARY_SIZE = 144
 
 # Sleep cycle phases
-enum SleepPhase {
+enum \2 {
+
     AWAKE,
     LIGHT_SLEEP,
     DEEP_SLEEP,
@@ -21,7 +22,8 @@ enum SleepPhase {
 }
 
 # Core allocation options
-enum CoreAllocation {
+enum \2 {
+
     SINGLE_CORE,
     DUAL_CORE,
     QUAD_CORE,
@@ -29,7 +31,8 @@ enum CoreAllocation {
 }
 
 # Platform support
-enum Platform {
+enum \2 {
+
     WINDOWS,
     APPLE,
     LINUX,
@@ -137,7 +140,7 @@ func _ready():
 
 func _connect_to_systems():
     # Connect to LUNO system if available
-    luno_manager = get_node_or_null("/root/LunoCycleManager")
+    luno_manager = get_node_or_null("root/LunoCycleManager")
     if luno_manager:
         print("✓ Connected to LUNO Cycle Manager")
         luno_manager.register_participant("SleepSystem", Callable(self, "_on_luno_tick"))
@@ -145,7 +148,7 @@ func _connect_to_systems():
         print("⚠️ LUNO Cycle Manager not found, operating independently")
     
     # Connect to Word Dream Creator if available
-    word_dream_creator = get_node_or_null("/root/WordDreamCreator")
+    word_dream_creator = get_node_or_null("root/WordDreamCreator")
     if word_dream_creator:
         print("✓ Connected to Word Dream Creator")
 
@@ -218,7 +221,7 @@ func _initialize_platform_sync():
             "enabled": true,
             "cores": 1,
             "sync_status": "active",
-            "last_sync": OS.get_unix_time()
+            "last_sync": OS.Time.get_unix_time_from_system()
         },
         Platform.APPLE: {
             "name": "Apple",
@@ -264,7 +267,7 @@ func start_sleep_cycle(cycles: int = 5) -> bool:
     sleep_state.depth = 1
     sleep_state.cycle_count = cycles
     sleep_state.current_cycle = 0
-    sleep_state.started_at = OS.get_unix_time()
+    sleep_state.started_at = OS.Time.get_unix_time_from_system()
     sleep_state.calm_level = 0.2
     
     # Apply resource changes for sleep mode
@@ -290,7 +293,7 @@ func stop_sleep_cycle() -> bool:
         return false
     
     var cycles_completed = sleep_state.current_cycle
-    var duration = OS.get_unix_time() - sleep_state.started_at
+    var duration = OS.Time.get_unix_time_from_system() - sleep_state.started_at
     
     sleep_state.active = false
     sleep_state.phase = SleepPhase.AWAKE
@@ -421,7 +424,7 @@ func enable_platform(platform: int, enable: bool) -> bool:
         await get_tree().create_timer(0.5).timeout
         
         platform_info.sync_status = "active"
-        platform_info.last_sync = OS.get_unix_time()
+        platform_info.last_sync = OS.Time.get_unix_time_from_system()
         
         print("✅ Platform enabled: %s" % platform_info.name)
     else:
@@ -506,7 +509,7 @@ func _generate_calm_word() -> String:
             result = base_word
     
     # Update last generated time
-    calm_words.last_generated = OS.get_unix_time()
+    calm_words.last_generated = OS.Time.get_unix_time_from_system()
     calm_words.current_word = result
     
     # Create word data

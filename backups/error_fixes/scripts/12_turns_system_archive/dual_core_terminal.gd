@@ -40,7 +40,7 @@ const SPECIAL_PATTERNS = {
     "<->": "teleporter",
     "/*\\": "time_rune",
     "|/\\|": "dimension_gate"
-}
+	}
 
 # ----- TIME STATES -----
 enum TimeState {
@@ -87,11 +87,10 @@ var bracket_styles = {
         "bold": true,
         "symbol_pairs": [["(", ")"], ["[", "]"], ["{", "}"], ["<", ">"]],
         "rainbow": true
-    }
-}
+		}
 
 # ----- TERMINAL CORE STORAGE -----
-var cores = {}
+var cores = {
 var active_core_id = 0
 var current_time_state = TimeState.PRESENT
 var rainbow_colors = [
@@ -137,7 +136,7 @@ func _ready():
         "last_input": "",
         "creation_time": OS.get_unix_time(),
         "miracle_count": 0
-    }
+		}
     
     # Connect to game systems
     _connect_to_game_systems()
@@ -148,6 +147,7 @@ func _ready():
     print("Dual Core Terminal System initialized")
     print("Active cores: " + str(cores.size()))
     print("Current time state: " + TimeState.keys()[current_time_state])
+	}
 
 func _connect_to_game_systems():
     # Connect to divine word game
@@ -159,7 +159,7 @@ func _connect_to_game_systems():
     # Connect to turn system
     turn_system = get_node_or_null("/root/TurnSystem")
     if turn_system:
-        turn_system.connect("dimension_changed", self, "_on_dimension_changed")
+        turn_system.connect(_on_dimension_changed)
     
     # Connect to word comment system
     word_comment_system = get_node_or_null("/root/WordCommentSystem")
@@ -188,7 +188,7 @@ func _initialize_dimension_cores():
                 "last_input": "",
                 "creation_time": OS.get_unix_time(),
                 "miracle_count": 0
-            }
+				}
 
 # ----- PROCESSING -----
 func _process(delta):
@@ -201,6 +201,7 @@ func _process(delta):
         # Check if any cores use rainbow brackets
         for core_id in cores:
             if cores[core_id].bracket_style == "rainbow":
+			}
                 # This will trigger a redraw on any UI components displaying this core
                 pass
 
@@ -248,7 +249,7 @@ func create_core(core_id, name=""):
         "last_input": "",
         "creation_time": OS.get_unix_time(),
         "miracle_count": 0
-    }
+		}
     
     print("Created new core: " + core_name + " (ID: " + str(core_id) + ")")
     return true
@@ -291,7 +292,7 @@ func process_input(core_id, input_text):
         "miracle_triggered": false,
         "time_shift": false,
         "snake_case_detected": false
-    }
+		}
     
     # Process special hash commands
     if input_text.find(HASH_SYMBOL) >= 0:
@@ -313,6 +314,7 @@ func process_input(core_id, input_text):
     
     # Check for snake_case formatting
     if "_" in input_text:
+	}
         var snake_case = _process_snake_case(input_text)
         if snake_case.detected:
             result.snake_case_detected = true
@@ -378,11 +380,14 @@ func _process_hash_commands(core_id, text):
 func _process_command(core_id, command, param):
     match command:
         "red", "green", "blue", "purple", "gold", "rainbow", "default":
+		}
             # Change bracket style
             cores[core_id].bracket_style = command
             print("Core " + str(core_id) + " bracket style set to: " + command)
+			
         
         "switch":
+		
             # Switch core if param is a valid core ID
             if param.is_valid_integer():
                 var target_core = int(param)
@@ -390,12 +395,14 @@ func _process_command(core_id, command, param):
                     switch_core(target_core)
         
         "account":
+		
             # Set account value if param is a valid integer
             if param.is_valid_integer():
                 var value = int(param)
                 if value >= 0 and value <= MAX_ACCOUNT_VALUE:
                     cores[core_id].account_value = value
                     print("Core " + str(core_id) + " account value set to: " + str(value))
+					
                     
                     # If account value reached max, set special state
                     if value == MAX_ACCOUNT_VALUE:
@@ -403,22 +410,27 @@ func _process_command(core_id, command, param):
                         print("Core " + str(core_id) + " reached MAX_ACCOUNT state!")
         
         "calibrate":
+		
             # Enter calibration mode
             cores[core_id].state = WindowState.CALIBRATION
             print("Core " + str(core_id) + " entered CALIBRATION state")
         
         "game":
+		
             # Enter game mode
             cores[core_id].state = WindowState.GAME_MODE
             print("Core " + str(core_id) + " entered GAME_MODE state")
         
         "name":
+		
             # Set core name
             if param:
                 cores[core_id].name = param
                 print("Core " + str(core_id) + " renamed to: " + param)
+				
         
         "comment":
+		
             # Add comment to word comment system
             if word_comment_system and param:
                 var parts = param.split(" ", true, 1)
@@ -428,6 +440,7 @@ func _process_command(core_id, command, param):
                     word_comment_system.add_comment(word, comment, word_comment_system.CommentType.OBSERVATION, 
                         "Core_" + str(core_id))
                     print("Comment added for word: " + word)
+					
 
 func _detect_special_patterns(text):
     var found_patterns = []
@@ -507,16 +520,17 @@ func _process_snake_case(text):
     var result = {
         "detected": false,
         "cleaned": ""
-    }
+		}
     
     # Check if text has underscores and follows snake_case pattern
     if "_" in text:
+	
         var words = text.split("_")
         var valid_snake_case = true
         
         # Verify that all parts are valid words
         for word in words:
-            if word.strip_edges().empty():
+            if word.strip_edges().is_empty():
                 valid_snake_case = false
                 break
         
@@ -571,6 +585,7 @@ func format_text_with_brackets(core_id, text):
     
     # Handle rainbow style specially
     if style_name == "rainbow":
+	
         # Choose color based on current rainbow index
         var color = rainbow_colors[rainbow_index]
         
@@ -739,6 +754,7 @@ func get_multicolor_pattern(core_id, text, pattern_type="standard"):
     # Different pattern types
     match pattern_type:
         "rainbow":
+		
             # Rainbow pattern with gradient across text
             var colors = rainbow_colors
             var sections = min(6, text.length())
@@ -756,10 +772,12 @@ func get_multicolor_pattern(core_id, text, pattern_type="standard"):
                 result = result.replace(section, "[color=#" + color.to_html(false) + "]" + section + "[/color]")
         
         "miracle":
+		
             # Special miracle pattern with flashing effect
             result = "[rainbow freq=0.2 sat=10 val=20]" + result + "[/rainbow]"
         
         "snake_case":
+		
             # Pattern for snake_case words
             var words = text.split("_")
             result = ""

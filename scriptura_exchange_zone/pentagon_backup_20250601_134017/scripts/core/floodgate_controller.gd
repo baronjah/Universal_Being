@@ -21,7 +21,8 @@ var max_messages_per_cycle: int = 7
 var max_textures_applied_per_turn: int = 369
 
 # Operation types
-enum OperationType {
+enum \2 {
+
 	CREATE_NODE,
 	DELETE_NODE,
 	MOVE_NODE,
@@ -44,7 +45,8 @@ enum OperationType {
 }
 
 # Asset types
-enum AssetType {
+enum \2 {
+
 	SCENE,
 	MESH,
 	TEXTURE,
@@ -375,8 +377,7 @@ func _op_create_node(params: Dictionary) -> bool:
 		return false
 	
 	# Create node instance
-	var node_class = params.class_name
-	var node = ClassDB.instantiate(node_class)
+	var node_class = params.class_name var_floodgatecontroller_floodgat node = ClassDB.instantiate(node_class)
 	if not node:
 		_log("Failed to instantiate class: " + node_class, "ERROR")
 		return false
@@ -1035,7 +1036,7 @@ func process_system_1():
 					var parent_node = get_node_or_null(parent_path)
 					if parent_node:
 						floodgate_add_child(main_node_to_add, parent_node)
-						var combined_path = parent_path + "/" + node_name
+						var combined_path = parent_path + "" + node_name
 						var just_added_node = get_node_or_null(combined_path)
 						if just_added_node:
 							_register_node(just_added_node)
@@ -1512,7 +1513,7 @@ func _track_new_object(node: Node) -> void:
 		}
 		tracked_objects.append(object_data)
 		object_creation_order.append(node)
-		_log("Tracking new object: " + node.name + " (Total: " + str(tracked_objects.size()) + "/144)", "TRACK")
+		_log("Tracking new object: " + node.name + " (Total: " + str(tracked_objects.size()) + "144)", "TRACK")
 
 func _remove_oldest_object() -> void:
 	if tracked_objects.is_empty():
@@ -1659,7 +1660,7 @@ func _op_create_universal_being(params: Dictionary) -> bool:
 		return false
 		
 	# Get asset library
-	var asset_library = get_node_or_null("/root/AssetLibrary")
+	var asset_library = get_node_or_null("root/AssetLibrary")
 	if not asset_library:
 		_log("Create Universal Being failed: AssetLibrary not found", "ERROR")
 		return false

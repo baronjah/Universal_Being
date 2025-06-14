@@ -1,5 +1,5 @@
 extends Node
-class_name VRAkashicInterface
+class_name VRAkashicInterface_vrakashicinterface_vrakashi
 
 # References to managers
 var vr_manager = null

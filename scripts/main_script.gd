@@ -141,6 +141,7 @@ func detect_consciousness_resonance() -> void:
 	
 	for being in nearby_beings:
 		if being != self and being.has_method("get_global_position"):
+
 			var distance = global_position.distance_to(being.global_position)
 			if distance < 10.0: # Resonance range
 				create_resonance_link(being)
@@ -148,6 +149,7 @@ func detect_consciousness_resonance() -> void:
 func create_resonance_link(other_being: Node) -> void:
 	"""Create visual resonance link with another being"""
 	if other_being.has_method("get") and other_being.get("consciousness_level") > 0:
+
 		# Trigger resonance event
 		var frequency = 220.0 + other_being.get("consciousness_level") * 55.0
 		resonance_triggered.emit(frequency)
@@ -184,13 +186,13 @@ func get_evolution_requirements(target_type: String) -> Dictionary:
 	"""Get requirements for evolution"""
 	match target_type:
 		"advanced_crystal_being":
-			return {"consciousness_level": 3, "resonance_events": 10}
-		"quantum_crystal_being":
-			return {"consciousness_level": 4, "quantum_entanglement": true}
+			return {"consciousness_level": 3, "resonance_events": 10
+		"quantum_crystal_being":}
+			return {"consciousness_level": 4, "quantum_entanglement": true
 		_:
-			return {}
+			return {
 
-# ===== AI INTERFACE =====
+# ===== AI INTERFACE =====}
 
 func ai_interface() -> Dictionary:
 	"""Provide AI interface data"""
@@ -200,6 +202,6 @@ func ai_interface() -> Dictionary:
 		"color": resonance_color,
 		"rotation_speed": rotation_speed,
 		"pulse_enabled": pulse_enabled
-	}
 	base.resonance_frequency = 440.0 + consciousness_level * 55.0
 	return base
+}

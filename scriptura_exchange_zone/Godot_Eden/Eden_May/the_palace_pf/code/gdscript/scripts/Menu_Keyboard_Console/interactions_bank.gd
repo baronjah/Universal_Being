@@ -1,6 +1,6 @@
 # interactions_bank.gd
-extends Node3D
-class_name InteractionsBank
+extends \2
+class_name InteractionsBank_interactionsbank_interact
 
 var interaction_add_number  : String = "interaction_"
 var list_add_number : String = "list_"

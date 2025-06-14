@@ -7,21 +7,21 @@ extends Node2D
 }
 
 # Configuration
-export var enable_eye_tracking = true
-export var gaze_smoothing = 0.15  # Lower = smoother
-export var gaze_inertia = 0.8  # Higher = more inertia
-export var attention_threshold = 1.2  # Seconds before considering "focused"
-export var saccade_frequency = 0.8  # How often to make small eye movements
-export var natural_movement = true  # Enable more realistic eye movement patterns
-export var show_debug_cursor = true  # Show visual indicator of gaze position
+@export var enable_eye_tracking = true
+@export var gaze_smoothing = 0.15  # Lower = smoother
+@export var gaze_inertia = 0.8  # Higher = more inertia
+@export var attention_threshold = 1.2  # Seconds before considering "focused"
+@export var saccade_frequency = 0.8  # How often to make small eye movements
+@export var natural_movement = true  # Enable more realistic eye movement patterns
+@export var show_debug_cursor = true  # Show visual indicator of gaze position
 }
 
 # Visual settings
-export var cursor_size = 12.0
-export var cursor_color = Color(1.0, 1.0, 1.0, 0.3)
-export var focus_color = Color(1.0, 0.8, 0.2, 0.5)
-export var attention_radius = 80.0  # Radius of attention visualization
-export var heatmap_enabled = true  # Show gaze heatmap
+@export var cursor_size = 12.0
+@export var cursor_color = Color(1.0, 1.0, 1.0, 0.3)
+@export var focus_color = Color(1.0, 0.8, 0.2, 0.5)
+@export var attention_radius = 80.0  # Radius of attention visualization
+@export var heatmap_enabled = true  # Show gaze heatmap
 }
 
 # Tracking state
@@ -85,13 +85,13 @@ func _ready():
 # Connect to required systems
 func _connect_to_systems():
     # Try to find visual_zone_system
-    visual_zone_system = get_node_or_null("/root/VisualZoneSystem")
+    visual_zone_system = get_node_or_null("root/VisualZoneSystem")
     if not visual_zone_system and get_parent():
         visual_zone_system = get_parent().get_node_or_null("VisualZoneSystem")
 }
 
     # Try to find center_projection_system
-    center_projection_system = get_node_or_null("/root/CenterProjectionSystem")
+    center_projection_system = get_node_or_null("root/CenterProjectionSystem")
     if not center_projection_system and get_parent():
         center_projection_system = get_parent().get_node_or_null("CenterProjectionSystem")
 }

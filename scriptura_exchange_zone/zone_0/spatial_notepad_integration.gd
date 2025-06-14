@@ -1,13 +1,13 @@
 extends Node
 }
 
-# Spatial Notepad Integration
+# Node3D Notepad Integration
 # Connects SpatialWorldStorage with Notepad3DVisualizer
 # Provides bridge between data storage and visual representation
 # Terminal 1: Divine Word Genesis
 }
 
-class_name SpatialNotepadIntegration
+class_name SpatialNotepadIntegration_spatialnotepadintegration_spatialn
 }
 
 # ----- COMPONENT REFERENCES -----
@@ -38,7 +38,7 @@ const DEFAULT_CONNECTION_STRENGTH = 1.0
 
 # ----- INITIALIZATION -----
 func _ready():
-    print("Spatial Notepad Integration initializing...")
+    print("Node3D Notepad Integration initializing...")
 }
 
 # ----- CONNECTION SETUP -----
@@ -499,7 +499,7 @@ func update_cell_content(notebook_name, cell_id, new_content):
 
     # Update content
     cell.content = new_content
-    cell.last_edit = OS.get_unix_time()
+    cell.last_edit = OS.Time.get_unix_time_from_system()
 }
 
     # Save changes
@@ -531,7 +531,7 @@ func update_cell_color(notebook_name, cell_id, new_color):
 
     # Update color
     cell.color = new_color
-    cell.last_edit = OS.get_unix_time()
+    cell.last_edit = OS.Time.get_unix_time_from_system()
 }
 
     # Save changes

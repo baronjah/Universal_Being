@@ -3,9 +3,8 @@
 # Created: May 31, 2025, 23:28 CEST
 # Purpose: Ragdoll physics and behavior system
 # Connection: Part of Pentagon Architecture migration
-
 extends UniversalBeingUI
-class_name AssetCreatorPanel
+class_name AssetCreatorPanel_assetcre
 
 # In-Game Asset Creator Panel
 # Allows creating new asset types dynamically without coding
@@ -400,13 +399,13 @@ func _on_create_pressed():
 	}
 	
 	# Add to StandardizedObjects autoload
-	var std_objects = get_node_or_null("/root/StandardizedObjects")
+	var std_objects = get_node_or_null("root/StandardizedObjects")
 	if std_objects:
 		std_objects.add_custom_asset(asset_name, properties)
 		print("[AssetCreator] Created new asset: %s" % asset_name)
 		
 		# Also add to AssetLibrary if available
-		var asset_lib = get_node_or_null("/root/AssetLibrary")
+		var asset_lib = get_node_or_null("root/AssetLibrary")
 		if asset_lib:
 			asset_lib.asset_catalog["objects"][asset_name] = {
 				"path": "dynamic://" + asset_name,

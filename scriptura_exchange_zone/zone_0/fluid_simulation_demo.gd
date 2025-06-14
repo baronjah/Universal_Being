@@ -1,6 +1,6 @@
 extends Node
 
-class_name FluidSimulationDemo
+class_name FluidSimulationDemo_fluidsimulationdemo_fluidsim
 
 # Reference to the simulation components
 var simulation: FluidSimulationCore
@@ -9,35 +9,35 @@ var renderer3D: Fluid3DRenderer = null
 
 # Demo properties
 @export_category("Demo Setup")
-@export var use_2d_mode: bool = true
-@export var particle_count: int = 1000
-@export var auto_run: bool = true
-@export var simulation_speed: float = 1.0
-@export var demo_type: int = 0  # 0=Water Tank, 1=Wave, 2=Splash, 3=Dam Break, 4=Fountain, 5=Vortex
+@@export var use_2d_mode: bool = true
+@@export var particle_count: int = 1000
+@@export var auto_run: bool = true
+@@export var simulation_speed: float = 1.0
+@@export var demo_type: int = 0  # 0=Water Tank, 1=Wave, 2=Splash, 3=Dam Break, 4=Fountain, 5=Vortex
 
 # Interactive properties
 @export_category("Interaction")
-@export var enable_interaction: bool = true
-@export var interaction_strength: float = 5.0
-@export var click_to_splash: bool = true
-@export var drag_to_move: bool = true
-@export var use_physics_objects: bool = true
+@@export var enable_interaction: bool = true
+@@export var interaction_strength: float = 5.0
+@@export var click_to_splash: bool = true
+@@export var drag_to_move: bool = true
+@@export var use_physics_objects: bool = true
 
 # Demo-specific settings
 @export_category("Demo Settings")
-@export var tank_size: Vector3 = Vector3(10, 5, 5)
-@export var wave_amplitude: float = 0.5
-@export var wave_frequency: float = 1.0
-@export var splash_size: float = 0.5
-@export var fountain_height: float = 5.0
-@export var vortex_strength: float = 3.0
+@@export var tank_size: Vector3 = Vector3(10, 5, 5)
+@@export var wave_amplitude: float = 0.5
+@@export var wave_frequency: float = 1.0
+@@export var splash_size: float = 0.5
+@@export var fountain_height: float = 5.0
+@@export var vortex_strength: float = 3.0
 
 # Debug visualization
 @export_category("Debug")
-@export var show_velocities: bool = false
-@export var show_forces: bool = false
-@export var show_boundaries: bool = true
-@export var show_performance: bool = true
+@@export var show_velocities: bool = false
+@@export var show_forces: bool = false
+@@export var show_boundaries: bool = true
+@@export var show_performance: bool = true
 
 # Internal variables
 var _time: float = 0.0

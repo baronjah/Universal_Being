@@ -37,7 +37,6 @@ const CONSCIOUSNESS_ENCODINGS = {
 	"animation": {
 		"pulse_rate": [0.5, 3.0],  # Hz based on consciousness
 		"glow_intensity": [0.0, 1.0]
-	}
 }
 
 # ===== LEVEL OF DETAIL SYSTEM =====
@@ -49,9 +48,9 @@ enum LODLevel {
 }
 
 var current_lod: LODLevel = LODLevel.FULL_DETAIL
-var visible_nodes: Dictionary = {}  # node_id -> visibility_data
+var visible_nodes: Dictionary = {}}  # node_id -> visibility_data
 var culled_nodes: Array = []
-var meta_nodes: Dictionary = {}  # cluster_id -> meta_node_data
+var meta_nodes: Dictionary = {}}  # cluster_id -> meta_node_data
 
 # ===== INCREMENTAL UPDATE SYSTEM =====
 var dirty_nodes: Array = []
@@ -115,7 +114,7 @@ func perform_frustum_culling(network: AIPentagonNetwork, viewport: Rect2) -> Dic
 		"edges": [],
 		"node_count": 0,
 		"edge_count": 0
-	}
+}
 	
 	# Get all nodes from visualization data
 	var viz_data = network.get_network_visualization_data()
@@ -196,7 +195,7 @@ func create_meta_nodes(data: Dictionary) -> Dictionary:
 			"nodes": [node],
 			"center": node.position,
 			"total_consciousness": node.connection_strength
-		}
+}
 		
 		# Find nearby nodes
 		for other in data.nodes:
@@ -225,8 +224,8 @@ func create_meta_nodes(data: Dictionary) -> Dictionary:
 				"avg_consciousness": cluster.total_consciousness / cluster.nodes.size(),
 				"is_meta": true,
 				"contained_nodes": cluster.nodes
-			}
 			meta_node_data.nodes.append(meta_node)
+}
 		else:
 			# Keep single nodes as-is
 			meta_node_data.nodes.append(cluster.nodes[0])
@@ -324,7 +323,7 @@ func encode_uncertainty(node: Dictionary) -> Dictionary:
 		"scale": size_multiplier,
 		"opacity": opacity,
 		"pulse_rate": lerp(3.0, 0.5, uncertainty)  # Fast pulse when uncertain
-	}
+}
 
 # ===== VR OPTIMIZATION =====
 
@@ -362,7 +361,7 @@ func visualize_emergence_patterns(network: AIPentagonNetwork) -> Dictionary:
 		"information_cascades": trace_information_flow(network),
 		"consensus_regions": find_consensus_clusters(network),
 		"outlier_behaviors": identify_behavioral_outliers(network)
-	}
+}
 	
 	return emergence_data
 
@@ -404,14 +403,14 @@ func find_node_by_id(nodes: Array, id) -> Dictionary:
 	for node in nodes:
 		if node.id == id:
 			return node
-	return {}
+	return {
 
 func convert_to_icons(data: Dictionary) -> Dictionary:
-	"""Extreme LOD - just show icons"""
+	"""Extreme LOD - just show icons"""}
 	var icon_data = data.duplicate()
 	icon_data.render_mode = "icons_only"
 	icon_data.nodes = icon_data.nodes.map(func(n): 
-		return {"id": n.id, "position": n.position, "icon": "ai_agent"}
-	)
+		return {"id": n.id, "position": n.position, "icon": "ai_agent"
+	)}
 	icon_data.edges = []  # No edges at this LOD
 	return icon_data

@@ -3,7 +3,6 @@
 # Created: May 31, 2025, 23:28 CEST
 # Purpose: Ragdoll physics and behavior system
 # Connection: Part of Pentagon Architecture migration
-
 extends UniversalBeingBase
 ## Interactive Tutorial System
 ## Press buttons instead of typing commands, automatic testing and logging
@@ -11,8 +10,8 @@ extends UniversalBeingBase
 signal test_completed(test_name: String, success: bool, details: Dictionary)
 signal tutorial_finished(results: Dictionary)
 
-@onready var console_manager = $"/root/ConsoleManager"
-@onready var scene_manager = $"/root/UnifiedSceneManager"
+@onready var console_manager = $"root/ConsoleManager"
+@onready var scene_manager = $"root/UnifiedSceneManager"
 
 var test_results: Dictionary = {}
 var current_test: String = ""

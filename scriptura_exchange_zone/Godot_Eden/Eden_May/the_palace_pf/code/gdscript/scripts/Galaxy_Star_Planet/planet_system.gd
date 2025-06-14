@@ -1,9 +1,10 @@
 extends Resource
-class_name PlanetSystem
+class_name PlanetSystem_planetsystem_planetsy
 }
 
 # Planet Types
-enum PlanetType {
+enum \2 {
+
 	ROCKY,
 	GAS_GIANT,
 	ICE_GIANT,

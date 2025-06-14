@@ -65,7 +65,7 @@ func setup_ui():
 	word_filter = LineEdit.new()
 	word_filter.placeholder_text = "Enter word to filter"
 	word_filter.size_flags_horizontal = SIZE_EXPAND_FILL
-	word_filter.connect("text_changed", self, "_on_word_filter_changed")
+	word_filter.connect(_on_word_filter_changed)
 	filter_container.add_child(word_filter)
 	
 	var type_filter_label = Label.new()
@@ -80,12 +80,12 @@ func setup_ui():
 	type_filter.add_item("Dreams", 3)
 	type_filter.add_item("Divine", 4)
 	type_filter.add_item("Warnings", 5)
-	type_filter.connect("item_selected", self, "_on_type_filter_selected")
+	type_filter.connect(_on_type_filter_selected)
 	filter_container.add_child(type_filter)
 	
 	var dream_toggle = CheckButton.new()
 	dream_toggle.text = "Dream Mode"
-	dream_toggle.connect("toggled", self, "_on_dream_toggle")
+	dream_toggle.connect(_on_dream_toggle)
 	filter_container.add_child(dream_toggle)
 	
 	# Tabs for different views
@@ -134,7 +134,7 @@ func setup_ui():
 	
 	submit_button = Button.new()
 	submit_button.text = "Submit"
-	submit_button.connect("pressed", self, "_on_submit_pressed")
+	submit_button.connect(_on_submit_pressed)
 	input_container.add_child(submit_button)
 	
 	# Help text
@@ -150,20 +150,20 @@ func setup_ui():
 	main_container.add_child(help_label)
 
 func connect_systems():
-	word_comment_system = get_node("/root/WordCommentSystem")
-	divine_word_processor = get_node("/root/DivineWordProcessor")
-	turn_system = get_node("/root/TurnSystem")
+	word_comment_system = get_node("\1") as Node
+	divine_word_processor = get_node("\1") as Node
+	turn_system = get_node("\1") as Node
 	
 	if word_comment_system:
-		word_comment_system.connect("comment_added", self, "_on_comment_added")
-		word_comment_system.connect("defense_registered", self, "_on_defense_registered")
-		word_comment_system.connect("dream_recorded", self, "_on_dream_recorded")
+		word_comment_system.connect(_on_comment_added)
+		word_comment_system.connect(_on_defense_registered)
+		word_comment_system.connect(_on_dream_recorded)
 	
 	if divine_word_processor:
-		divine_word_processor.connect("word_processed", self, "_on_word_processed")
+		divine_word_processor.connect(_on_word_processed)
 	
 	if turn_system:
-		turn_system.connect("dimension_changed", self, "_on_dimension_changed")
+		turn_system.connect(_on_dimension_changed)
 
 func _on_word_filter_changed(new_text):
 	current_word = new_text
@@ -186,12 +186,12 @@ func _on_dream_toggle(toggled):
 func _on_submit_pressed():
 	var text = input_field.text.strip_edges()
 	
-	if text.empty():
+	if text.is_empty():
 		return
 	
 	if dream_mode:
 		# In dream mode, create a dream entry for the current word
-		if current_word.empty():
+		if current_word.is_empty():
 			# Select a random word from recent words
 			var recent_words = []
 			if divine_word_processor:
@@ -208,7 +208,7 @@ func _on_submit_pressed():
 		var comments_added = word_comment_system.process_text_for_comments(text)
 		
 		# If no # format comments found, treat as comment for current word
-		if comments_added == 0 and !current_word.empty():
+		if comments_added == 0 and !current_word.is_empty():
 			word_comment_system.add_comment(current_word, text)
 	
 	# Clear the input field
@@ -226,12 +226,13 @@ func refresh_comment_list():
 	comment_list.bbcode_text = ""
 	
 	var comments = []
-	if current_word.empty():
+	if current_word.is_empty():
 		comments = word_comment_system.comment_history
 	else:
 		var word_comments = word_comment_system.get_comments_for_word(current_word)
 		for comment in word_comments:
 			comments.append({"word": current_word, "comment": comment})
+
 	
 	# Filter by type if needed
 	if current_filter_type >= 0:
@@ -256,7 +257,7 @@ func add_comment_to_list(word, comment):
 		3: "#8888FF", # Dream - blue
 		4: "#FFFF88", # Divine - yellow
 		5: "#FF88FF"  # Warning - purple
-	}
+}
 	
 	var type_names = {
 		0: "Observation",
@@ -265,7 +266,7 @@ func add_comment_to_list(word, comment):
 		3: "Dream",
 		4: "Divine",
 		5: "Warning"
-	}
+}
 	
 	var color = "#FFFFFF"
 	if type_colors.has(comment.type):
@@ -288,6 +289,7 @@ func add_comment_to_list(word, comment):
 	
 	if comment.has("dimension") and comment.has("turn"):
 		comment_list.bbcode_text += "[color=#888888]   Dimension: " + str(comment.dimension) + "D, Turn: " + str(comment.turn) + "[/color]\n"
+
 	
 	comment_list.bbcode_text += "\n"
 
@@ -301,10 +303,10 @@ func refresh_dream_list():
 		return
 	
 	// Sort dreams by timestamp, newest first
-	dreams.sort_custom(self, "sort_by_timestamp_descending")
+	dreams.sort_custom(self."sort_by_timestamp_descending")
 	
 	// Filter by word if needed
-	if !current_word.empty():
+	if !current_word.is_empty():
 		var filtered_dreams = []
 		for dream in dreams:
 			if dream.word == current_word:
@@ -341,6 +343,7 @@ func add_dream_to_list(dream):
 	
 	if dream.has("dimension"):
 		dream_list.bbcode_text += "[color=#888888]   Dimension: " + str(dream.dimension) + "D[/color]\n"
+
 	
 	dream_list.bbcode_text += "\n"
 
@@ -349,7 +352,7 @@ func refresh_defense_list():
 	
 	var all_defenses = []
 	
-	if current_word.empty():
+	if current_word.is_empty():
 		// Collect all defenses
 		for word in word_comment_system.defense_statements.keys():
 			var defenses = word_comment_system.defense_statements[word]
@@ -360,9 +363,10 @@ func refresh_defense_list():
 		var defenses = word_comment_system.get_defense_for_word(current_word)
 		for defense in defenses:
 			all_defenses.append({"word": current_word, "defense": defense})
+
 	
 	// Sort defenses by timestamp, newest first
-	all_defenses.sort_custom(self, "sort_defense_by_timestamp_descending")
+	all_defenses.sort_custom(self."sort_defense_by_timestamp_descending")
 	
 	// Display defenses
 	if all_defenses.size() == 0:
@@ -379,16 +383,20 @@ func add_defense_to_list(word, defense):
 	]
 	
 	var status_color = defense.accepted ? "#88FF88" : "#FFFF88"
+
 	var status_text = defense.accepted ? "ACCEPTED" : "PENDING"
+
 	
 	defense_list.bbcode_text += "[color=#888888][" + time_str + "][/color] "
 	defense_list.bbcode_text += "[color=#AAAAFF]" + word + ":[/color] "
 	defense_list.bbcode_text += "[color=" + status_color + "][b][" + status_text + "][/b][/color]\n"
 	defense_list.bbcode_text += "[color=#88FF88]" + defense.text + "[/color]\n"
 	defense_list.bbcode_text += "[color=#888888]   Defender: " + defense.defender
+
 	
 	if defense.has("dimension") and defense.has("turn"):
 		defense_list.bbcode_text += " | Dimension: " + str(defense.dimension) + "D, Turn: " + str(defense.turn)
+
 	
 	defense_list.bbcode_text += "[/color]\n\n"
 
@@ -399,10 +407,11 @@ func sort_defense_by_timestamp_descending(a, b):
 	return a.defense.timestamp > b.defense.timestamp
 
 func update_current_word_label():
-	if current_word.empty():
+	if current_word.is_empty():
 		current_word_label.text = "All Words"
 	else:
 		current_word_label.text = "Word: " + current_word
+
 
 func _on_comment_added(word, comment_text, type):
 	refresh_comment_list()
@@ -419,7 +428,7 @@ func _on_dream_recorded(dream_text, power_level):
 
 func _on_word_processed(word, power, source_player):
 	// Update current word if none is selected
-	if current_word.empty():
+	if current_word.is_empty():
 		current_word = word
 		update_current_word_label()
 		refresh_all_lists()

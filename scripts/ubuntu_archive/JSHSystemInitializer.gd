@@ -18,6 +18,7 @@ var debug_mode = true
 
 func _ready() -> void:
     print("JSHSystemInitializer: System initializer starting...")
+	
     
     if auto_initialize:
         initialize()
@@ -58,11 +59,13 @@ func initialize() -> bool:
         print("JSHSystemInitializer: All systems initialized successfully")
     else:
         print("JSHSystemInitializer: System initialization failed")
+		
     
     return success
 
 func _initialize_entity_manager() -> bool:
     print("JSHSystemInitializer: Initializing Entity Manager...")
+	
     
     # Try JSHEntityManager first
     if ClassDB.class_exists("JSHEntityManager"):
@@ -81,6 +84,7 @@ func _initialize_entity_manager() -> bool:
 
 func _initialize_zone_manager() -> bool:
     print("JSHSystemInitializer: Initializing Zone Manager...")
+	
     
     # Not critical for basic functionality
     if ClassDB.class_exists("JSHSpatialManager"):
@@ -98,6 +102,7 @@ func _initialize_zone_manager() -> bool:
 
 func _initialize_interaction_matrix() -> bool:
     print("JSHSystemInitializer: Initializing Interaction Matrix...")
+	
     
     # Not critical for basic functionality
     if ClassDB.class_exists("JSHInteractionMatrix"):
@@ -115,6 +120,7 @@ func _initialize_interaction_matrix() -> bool:
 
 func _initialize_word_manifestor() -> bool:
     print("JSHSystemInitializer: Initializing Word Manifestor...")
+	
     
     if ClassDB.class_exists("JSHWordManifestor"):
         word_manifestor = JSHWordManifestor.get_instance()
@@ -126,6 +132,7 @@ func _initialize_word_manifestor() -> bool:
 
 func _initialize_console_system() -> bool:
     print("JSHSystemInitializer: Initializing Console System...")
+	
     
     var console_initialized = false
     var commands_initialized = false
@@ -135,19 +142,24 @@ func _initialize_console_system() -> bool:
         console_manager = JSHConsoleManager.get_instance()
         console_initialized = true
         print("JSHSystemInitializer: JSHConsoleManager initialized")
+		
     
     # Try to initialize word commands
     if console_initialized and ClassDB.class_exists("JSHWordCommands"):
+	
         var word_commands = JSHWordCommands.new()
         commands_initialized = true
         print("JSHSystemInitializer: JSHWordCommands initialized")
+		
     
     # Not critical for base functionality
     if !console_initialized:
         print("JSHSystemInitializer: Console manager not found, skipping")
+		
     
     if console_initialized and !commands_initialized:
         print("JSHSystemInitializer: Word commands not found, skipping")
+		
     
     return true  # Not critical, so return true anyway
 
@@ -179,4 +191,3 @@ func get_system_status() -> Dictionary:
         "console_manager_available": console_manager != null,
         "interaction_matrix_available": interaction_matrix != null,
         "zone_manager_available": zone_manager != null
-    }

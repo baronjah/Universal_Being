@@ -38,8 +38,7 @@ func _create_book_one() -> Dictionary:
 			"write": "write(content) - Create text/code",
 			"interact": "interact(target) - Engage with being/object",
 			"fly": "fly(direction, speed) - Move through 3D space"
-		}
-	}
+}
 
 func _create_book_two() -> Dictionary:
 	"""Advanced interaction book"""
@@ -55,8 +54,7 @@ func _create_book_two() -> Dictionary:
 			"evolve": "evolve(target, direction) - Transform consciousness",
 			"communicate": "communicate(being, message) - Telepathic contact",
 			"observe": "observe(phenomenon) - Deep perception analysis"
-		}
-	}
+}
 
 func _create_cosmic_book() -> Dictionary:
 	"""Cosmic navigation specific book"""
@@ -72,8 +70,7 @@ func _create_cosmic_book() -> Dictionary:
 			"examine_star": "examine_star(star_id) - Read script details",
 			"create_constellation": "create_constellation(name, stars) - Group scripts",
 			"teleport": "teleport(coordinates) - Instant travel"
-		}
-	}
+}
 
 # ===== PROMPT GENERATION =====
 
@@ -91,6 +88,7 @@ func generate_prompt(location: String, context: Dictionary = {}) -> String:
 	prompt += "Available actions:\n"
 	for action in book.action_patterns:
 		prompt += "• " + action + ": " + book.action_patterns[action] + "\n"
+}
 	
 	prompt += "\nWhat do you wish to do, Gemma?"
 	return prompt
@@ -106,17 +104,19 @@ func _fill_template(template: String, context: Dictionary) -> String:
 
 func parse_gemma_response(response: String) -> Dictionary:
 	"""Parse Gemma's response into actionable commands"""
-	var actions = {}
+	var actions = {
 	var text = response.to_lower()
 	
 	# Parse movement
 	if "move" in text:
+}
 		var coords = _extract_coordinates(text)
 		if coords.size() >= 3:
 			actions.move = Vector3(coords[0], coords[1], coords[2])
 	
 	# Parse rotation
 	if "rotate" in text or "turn" in text:
+}
 		var angles = _extract_numbers(text)
 		if angles.size() >= 2:
 			actions.rotate = Vector3(angles[0], angles[1], angles[2] if angles.size() > 2 else 0)
@@ -177,7 +177,7 @@ func _extract_creation_params(text: String) -> Dictionary:
 	return {
 		"type": _extract_target(text, ["create", "make", "spawn"]),
 		"description": text
-	}
+}
 
 func _extract_intent(text: String) -> String:
 	"""Extract natural language intent"""
@@ -207,12 +207,14 @@ func add_custom_book(name: String, book_data: Dictionary) -> void:
 	"""Add custom action book"""
 	books[name] = book_data
 	print("📚 Added custom book: " + name)
+}
 
 # ===== PUSH SYSTEM (Minecraft-style) =====
 
 func create_push_interaction(pusher: Node3D, target: Node3D, force: float = 5.0) -> void:
 	"""Create push interaction between beings"""
 	if target.has_method("apply_push"):
+
 		var direction = (target.global_position - pusher.global_position).normalized()
 		target.apply_push(direction * force)
 		print("👥 %s pushed %s" % [pusher.name, target.name])

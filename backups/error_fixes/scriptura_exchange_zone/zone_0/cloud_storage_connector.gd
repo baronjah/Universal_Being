@@ -110,7 +110,7 @@ func _ready():
     var refresh_timer = Timer.new()
     refresh_timer.wait_time = refresh_interval_minutes * 60
     refresh_timer.autostart = true
-    refresh_timer.connect("timeout", self, "_on_refresh_timer")
+    refresh_timer.connect(_on_refresh_timer)
     add_child(refresh_timer)
     
     # Initialize with default provider
@@ -120,12 +120,12 @@ func _ready():
 func connect_to_systems():
     # Connect to MultiAccountManager
     if has_node("/root/MultiAccountManager") or get_node_or_null("/root/MultiAccountManager"):
-        _account_manager = get_node("/root/MultiAccountManager")
+        _account_manager = get_node("\1") as Node
         print("Connected to MultiAccountManager")
     
     # Connect to MultiThreadedProcessor
     if has_node("/root/MultiThreadedProcessor") or get_node_or_null("/root/MultiThreadedProcessor"):
-        _multi_threaded_processor = get_node("/root/MultiThreadedProcessor")
+        _multi_threaded_processor = get_node("\1") as Node
         print("Connected to MultiThreadedProcessor")
 
 func _detect_device_info():
@@ -170,10 +170,10 @@ func set_api_key(provider, api_key, client_id = "", client_secret = ""):
     
     credentials[provider]["api_key"] = api_key
     
-    if not client_id.empty():
+    if not client_id.is_empty():
         credentials[provider]["client_id"] = client_id
     
-    if not client_secret.empty():
+    if not client_secret.is_empty():
         credentials[provider]["client_secret"] = client_secret
     
     print("Set API key for provider: " + StorageProvider.keys()[provider])
@@ -184,7 +184,7 @@ func connect_provider(provider):
         print("Invalid storage provider")
         return false
     
-    if credentials[provider]["api_key"].empty():
+    if credentials[provider]["api_key"].is_empty():
         print("API key not set for provider: " + StorageProvider.keys()[provider])
         return false
     
@@ -241,7 +241,7 @@ func refresh_token(provider):
         print("Invalid storage provider")
         return false
     
-    if credentials[provider]["refresh_token"].empty():
+    if credentials[provider]["refresh_token"].is_empty():
         print("No refresh token available for provider: " + StorageProvider.keys()[provider])
         return false
     
@@ -340,7 +340,7 @@ func get_storage_usage():
 
 func add_sync_folder(local_path, remote_path, sync_direction = "both"):
     # Validate inputs
-    if local_path.empty() or remote_path.empty():
+    if local_path.is_empty() or remote_path.is_empty():
         print("Local and remote paths must be specified")
         return false
     
@@ -458,7 +458,7 @@ func upload_file(local_path, remote_path, callback = null):
         return false
     
     # Validate inputs
-    if local_path.empty() or remote_path.empty():
+    if local_path.is_empty() or remote_path.is_empty():
         print("Local and remote paths must be specified")
         return false
     
@@ -580,7 +580,7 @@ func download_file(remote_path, local_path, callback = null):
         return false
     
     # Validate inputs
-    if local_path.empty() or remote_path.empty():
+    if local_path.is_empty() or remote_path.is_empty():
         print("Local and remote paths must be specified")
         return false
     

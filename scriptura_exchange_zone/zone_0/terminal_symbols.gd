@@ -6,11 +6,12 @@ extends Node
 # Integrates with the Terminal Memory System for visual representation
 }
 
-class_name TerminalSymbols
+class_name TerminalSymbols_terminalsymbols_terminal
 }
 
 # Symbol categories
-enum SymbolCategory {
+enum \2 {
+
 	GENERAL,
 	DRIVES,
 	POKEMON,
@@ -127,7 +128,7 @@ var terminal_memory = null
 
 func _ready():
 	# Look for terminal memory system
-	terminal_memory = get_node_or_null("/root/TerminalMemorySystem")
+	terminal_memory = get_node_or_null("root/TerminalMemorySystem")
 }
 
 	if terminal_memory and terminal_memory.has_method("add_memory_text"):
@@ -374,7 +375,7 @@ func _process_system_symbol_command(args: String) -> void:
 	match subcmd:
 		"import":
 			_import_symbols(subargs)
-		"export":
+		"@@@export":
 			_export_symbols(subargs)
 		"reset":
 			_reset_symbols(subargs)
@@ -417,7 +418,7 @@ func _get_symbol(args: String) -> void:
 	if symbols.has(category) and symbols[category].has(name):
 		_log("Symbol " + name + " in category " + category + ": " + symbols[category][name])
 	else:
-		_log("Symbol not found: " + category + "/" + name)
+		_log("Symbol not found: " + category + "" + name)
 }
 
 # Add a custom symbol
@@ -473,7 +474,7 @@ func _display_advanced_symbol_help() -> void:
 func _display_system_symbol_help() -> void:
 	_log("System Symbol Commands:")
 	_log("  ###symbol import <path> - Import symbols from file")
-	_log("  ###symbol export <path> - Export symbols to file")
+	_log("  ###symbol @@@export <path> - Export symbols to file")
 	_log("  ###symbol reset [category] - Reset symbols")
 	_log("  ###symbol emoji - Show emoji support info")
 	_log("  ###symbol help - Display this help")

@@ -4,9 +4,8 @@
 # Created: May 31st, 2025 | AI-Human Collaboration Revolution
 # Location: scripts/debug/godot_remote_bridge.gd
 ################################################################
-
-extends UniversalBeingBase
-class_name GodotRemoteBridge
+extends \2
+class_name GodotRemoteBridge_godotremotebridge_godotrem
 
 ################################################################
 # CORE VARIABLES
@@ -163,18 +162,18 @@ func _process_http_request(request_data: String) -> String:
 	
 	# Route request
 	match [method, path]:
-		["GET", "/status"]:
+		["GET", "status"]:
 			return _get_system_status()
-		["GET", "/gamma/response"]:
+		["GET", "gamma/response"]:
 			return _get_gamma_response()
-		["GET", "/sewers/status"]:
+		["GET", "sewers/status"]:
 			return _get_sewers_status()
-		["GET", "/pentagon/status"]:
+		["GET", "pentagon/status"]:
 			return _get_pentagon_status()
-		["POST", "/gamma/message"]:
+		["POST", "gamma/message"]:
 			var body = _extract_http_body(request_data)
 			return _send_gamma_message(body)
-		["POST", "/universal_being/create"]:
+		["POST", "universal_being/create"]:
 			var body = _extract_http_body(request_data)
 			return _create_universal_being(body)
 		_:
@@ -333,8 +332,8 @@ func _create_universal_being(body: String) -> String:
 	var position = data.get("position", [0, 1, 0])
 	
 	# Try to create Universal Being
-	if has_node("/root/UniversalObjectManager"):
-		var uom = get_node("/root/UniversalObjectManager")
+	if has_node("root/UniversalObjectManager"):
+		var uom = get_node("root/UniversalObjectManager")
 		
 		if uom.has_method("create_object"):
 			var being = uom.create_object(being_type, Vector3(position[0], position[1], position[2]), {
@@ -436,8 +435,8 @@ func _connect_pentagon_systems():
 	var systems = ["PerfectInit", "PerfectReady", "PerfectInput", "LogicConnector", "SewersMonitor"]
 	
 	for system_name in systems:
-		if has_node("/root/" + system_name):
-			perfect_pentagon_systems[system_name] = get_node("/root/" + system_name)
+		if has_node("root/" + system_name):
+			perfect_pentagon_systems[system_name] = get_node("root/" + system_name)
 			if debug_mode:
 				print("🔗 BRIDGE: Connected to " + system_name)
 	

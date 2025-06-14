@@ -24,6 +24,7 @@ func _init():
 	
 	# Run the scan
 	var report = scanner_script.scan_project_for_directive_conflicts("res://")
+
 	
 	# Display results
 	print(report.get_summary())
@@ -50,6 +51,7 @@ func _init():
 			script_file.close()
 			print("✅ Fix script saved to: res://fix_directive_conflicts.sh")
 			print("   Run: chmod +x fix_directive_conflicts.sh && ./fix_directive_conflicts.sh")
+
 		
 		# Save detailed report
 		var report_file = FileAccess.open("res://gdscript_directive_conflicts_report.txt", FileAccess.WRITE)

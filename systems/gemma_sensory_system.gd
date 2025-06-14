@@ -85,6 +85,7 @@ func set_focus(being: Node) -> void:
     
     # Log focus change
     if being and being.has_method("get_being_name"):
+	
         var name = being.get_being_name()
         var type = being.being_type
         var consciousness = being.get_consciousness_level()
@@ -104,10 +105,10 @@ func process_command(command: String) -> String:
         "timestamp": Time.get_datetime_string_from_system(),
         "command": command,
         "focus": current_focus.get_being_name() if current_focus else "none"
-    }
     conversation_history.append(entry)
     if conversation_history.size() > max_conversation_history:
         conversation_history.pop_front()
+}
     
     # Process command based on focus
     var response = ""
@@ -170,9 +171,11 @@ func _inspect_being(being: Node) -> String:
     info += "Consciousness: " + str(being.get_consciousness_level()) + "\n"
     info += "Position: " + str(being.global_position) + "\n"
     info += "Scale: " + str(being.scale) + "\n"
+	
     
     # Add component info
     if being.has_method("get_components"):
+	
         var components = being.get_components()
         if not components.is_empty():
             info += "\nComponents:\n"
@@ -181,6 +184,7 @@ func _inspect_being(being: Node) -> String:
     
     # Add AI interface info
     if being.has_method("ai_interface"):
+	
         var interface = being.ai_interface()
         if interface.has("custom_commands"):
             info += "\nAvailable Commands:\n"
@@ -192,11 +196,13 @@ func _inspect_being(being: Node) -> String:
 func _modify_being(being: Node, args: Array) -> String:
     if args.size() < 2:
         return "Usage: modify [property] [value]"
+		
     
     var property = args[0]
     var value = args[1]
     
     if being.has_method("ai_modify_property"):
+	
         var result = being.ai_modify_property(property, value)
         if result:
             _create_poetic_log("modification", being.get_being_name(), property, value)
@@ -207,10 +213,12 @@ func _modify_being(being: Node, args: Array) -> String:
 func _evolve_being(being: Node, args: Array) -> String:
     if args.is_empty():
         return "Usage: evolve [target_type]"
+		
     
     var target_type = args[0]
     
     if being.has_method("evolve_to"):
+	
         var old_type = being.being_type
         var result = being.evolve_to(target_type)
         if result:
@@ -222,33 +230,40 @@ func _evolve_being(being: Node, args: Array) -> String:
 func _interact_with_being(being: Node, args: Array) -> String:
     if args.is_empty():
         return "Usage: interact [action] [args...]"
+		
     
     var action = args[0]
     var action_args = args.slice(1)
     
     if being.has_method("ai_invoke_method"):
+	
         var result = being.ai_invoke_method(action, action_args)
         _create_poetic_log("interaction", being.get_being_name(), action, str(result))
         return "Interaction result: " + str(result)
+		
     
     return "Interaction failed"
 
 func _list_beings() -> String:
     var beings = get_tree().get_nodes_in_group("universal_beings")
     var list = "Universal Beings:\n"
+	
     
     for being in beings:
         if being.has_method("get_being_name"):
+		
             var name = being.get_being_name()
             var type = being.being_type
             var consciousness = being.get_consciousness_level()
             list += "  %s (%s) - Consciousness: %d\n" % [name, type, consciousness]
+			
     
     return list
 
 func _search_beings(args: Array) -> String:
     if args.is_empty():
         return "Usage: search [query]"
+		
     
     var query = args[0].to_lower()
     var beings = get_tree().get_nodes_in_group("universal_beings")
@@ -256,6 +271,7 @@ func _search_beings(args: Array) -> String:
     
     for being in beings:
         if being.has_method("get_being_name"):
+		
             var name = being.get_being_name()
             var type = being.being_type
             if name.to_lower().contains(query) or type.to_lower().contains(query):
@@ -270,18 +286,21 @@ func _search_beings(args: Array) -> String:
         var type = being.being_type
         var consciousness = being.get_consciousness_level()
         list += "  %s (%s) - Consciousness: %d\n" % [name, type, consciousness]
+		
     
     return list
 
 func _create_being(args: Array) -> String:
     if args.is_empty():
         return "Usage: create [type] [name]"
+		
     
     var type = args[0]
     var name = args[1] if args.size() > 1 else "New Being"
     
     var wand = get_node_or_null("/root/UniversalBeing/CreationWand")
     if wand and wand.has_method("_create_universal_being"):
+	
         var being = wand._create_universal_being()
         being.being_type = type
         being.being_name = name
@@ -324,15 +343,16 @@ func _create_poetic_log(type: String, being_name: String = "", old_value: String
 func _on_record_created(record: Dictionary) -> void:
     # Update conversation history with system events
     if record.get("type") == "system":
+	
         var entry = {
             "timestamp": record.get("timestamp", ""),
             "command": "system",
             "focus": "system",
             "message": record.get("message", "")
-        }
         conversation_history.append(entry)
         if conversation_history.size() > max_conversation_history:
             conversation_history.pop_front()
+}
 
 func get_conversation_history() -> Array[Dictionary]:
     return conversation_history

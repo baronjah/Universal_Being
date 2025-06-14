@@ -10,8 +10,7 @@
 # Created: May 31st, 2025 | Perfect Pentagon Architecture
 # Location: scripts/core/perfect_pentagon_ui_integration.gd
 ################################################################
-
-extends UniversalBeingBase
+extends \2
 ################################################################
 # PERFECT PENTAGON UI COORDINATOR
 ################################################################
@@ -24,8 +23,8 @@ func _ready():
 	print("🎨 PENTAGON UI: Coordinating UI system initialization...")
 	
 	# Wait for Perfect Pentagon to be ready
-	if has_node("/root/PerfectReady"):
-		var perfect_ready = get_node("/root/PerfectReady")
+	if has_node("root/PerfectReady"):
+		var perfect_ready = get_node("root/PerfectReady")
 		if perfect_ready.has_signal("all_ready_complete"):
 			perfect_ready.all_ready_complete.connect(_on_pentagon_ready)
 		
@@ -53,7 +52,7 @@ func _register_ui_systems():
 	
 	# Universal Being Creator Interface
 	ui_systems["UniversalBeingCreator"] = {
-		"autoload_path": "/root/UniversalBeingCreatorUI",
+		"autoload_path": "root/UniversalBeingCreatorUI",
 		"dependencies": ["UniversalObjectManager", "AISandboxSystem"],
 		"initialization_method": "_perfect_pentagon_init",
 		"priority": 1,
@@ -62,7 +61,7 @@ func _register_ui_systems():
 	
 	# Gemma Vision Interface (future)
 	ui_systems["GemmaVisionUI"] = {
-		"autoload_path": "/root/GemmaVisionSystem", 
+		"autoload_path": "root/GemmaVisionSystem", 
 		"dependencies": ["AISandboxSystem", "GemmaVisionSystem"],
 		"initialization_method": "_pentagon_ui_init",
 		"priority": 2,
@@ -71,7 +70,7 @@ func _register_ui_systems():
 	
 	# Console Manager (already exists, integrate better)
 	ui_systems["ConsoleManager"] = {
-		"autoload_path": "/root/ConsoleManager",
+		"autoload_path": "root/ConsoleManager",
 		"dependencies": ["PerfectInit"],
 		"initialization_method": "_pentagon_integration",
 		"priority": 0,
@@ -191,8 +190,8 @@ func _on_pentagon_ready():
 
 func _register_ui_console_commands():
 	"""Register UI management commands with console"""
-	if has_node("/root/ConsoleManager"):
-		var console = get_node("/root/ConsoleManager")
+	if has_node("root/ConsoleManager"):
+		var console = get_node("root/ConsoleManager")
 		if "commands" in console:
 			console.commands["ui_status"] = _console_ui_status
 			console.commands["ui_reload"] = _console_ui_reload

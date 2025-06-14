@@ -1,6 +1,6 @@
 extends Node
 
-class_name JSHTerminalVisualizer
+class_name JSHTerminalVisualizer_jshterminalvisualizer_jshtermi
 
 # JSH Terminal Visualizer - Advanced terminal graphics for LUMINUS CORE
 # Combines 3D visualization with ASCII art in a terminal interface
@@ -867,17 +867,17 @@ func create_wow_interface():
 	# Create character model (simplified)
 	var character_ascii = """
        o
-      /|\\
-      / \\
+# /|\\
+# / \\
     """
 	var character_index = create_ascii_model(character_ascii, 0.5, Color(1, 0.8, 0.2))
 	translate_model(character_index, Vector3(0, 0, 0))
 	
 	# Create world elements
 	var tree_ascii = """
-      /\\
-     //\\\\
-    ///\\\\\\
+      \\
+# //\\\\
+# ///\\\\\\
      ||
     """
 	var tree_index = create_ascii_model(tree_ascii, 0.3, Color(0.2, 0.8, 0.3))
@@ -889,8 +889,8 @@ func create_wow_interface():
 	# Create ground
 	var ground_ascii = """
   _______________________________________
- /                                       \\
-/_________________________________________\\
+# /                                       \\
+# /_________________________________________\\
     """
 	var ground_index = create_ascii_model(ground_ascii, 0.2, Color(0.6, 0.4, 0.2))
 	translate_model(ground_index, Vector3(0, -2, 0))
@@ -1044,8 +1044,8 @@ func create_wildstar_visualization():
 	# Create character display
 	var character = """
        o 
-      /|\\
-      / \\
+# /|\\
+# / \\
     """
 	var char_index = create_ascii_model(character, 0.5, Color(1, 0.5, 0))
 	translate_model(char_index, Vector3(0, 0, 0))
@@ -1064,12 +1064,12 @@ func create_wildstar_visualization():
 	
 	# Create environment
 	var environment = """
-                   /\\
-        /\\        /  \\        /\\
-       /  \\      /    \\      /  \\
-      /    \\    /      \\    /    \\
-     /      \\  /        \\  /      \\
-    /________\\/          \\/________\\
+                   \\
+# /\\        /  \\        /\\
+# /  \\      /    \\      /  \\
+# /    \\    /      \\    /    \\
+# /      \\  /        \\  /      \\
+# /________\\/          \\/________\\
     """
 	var env_index = create_ascii_model(environment, 0.2, Color(0.2, 0.8, 0.3))
 	translate_model(env_index, Vector3(0, -1, 0))

@@ -1,5 +1,5 @@
-class_name DOSTerminal
-extends Control
+class_name DOSTerminal_DOSTerminal_DOSTermi
+extends \2
 
 # ================ TERMINAL PROPERTIES ================
 var prompt = "C:\\>"
@@ -393,7 +393,7 @@ func complete_command():
             if completions.size() == 1:
                 # Apply completion
                 parts[parts.size() - 1] = completions[0]
-                command_input.text = " ".join(parts) + " "
+                command_input.text = " "." ".join(parts) + " "
                 command_input.caret_position = command_input.text.length()
             elif completions.size() > 1:
                 # Show possible completions
@@ -532,12 +532,12 @@ func cmd_dir(args):
     
     # Process arguments
     for arg in args:
-        if arg.begins_with("/"):
+        if arg.begins_with(""):
             # Handle switches
             match arg.to_upper():
-                "/W":
+                "W":
                     wide_format = true
-                "/A":
+                "A":
                     include_system = true
         else:
             # Handle path
@@ -607,7 +607,7 @@ func cmd_cd(args):
             if parts.size() == 1:
                 current_directory = parts[0] + "\\"  # Root directory
             else:
-                current_directory = "\\".join(parts)
+                current_directory = "\\"." ".join(parts)
         else:
             # Already at root
             current_directory = parts[0] + "\\"
@@ -661,7 +661,7 @@ func cmd_echo(args):
         return
     
     # Check for echo on/off
-    var message = " ".join(args)
+    var message = " "." ".join(args)
     if message.to_upper() == "ON":
         echo_mode = true
         print_text("ECHO is on\n", COLORS.white)
@@ -687,7 +687,7 @@ func cmd_help(args):
         var command = args[0].to_upper()
         show_command_help(command)
     else:
-        // Show general help
+# // Show general help
         print_text("DOS-Terminal Help System\n", COLORS.yellow)
         print_text("======================\n", COLORS.yellow)
         print_text("\n")
@@ -719,8 +719,8 @@ func show_command_help(command):
         "DIR":
             print_text("DIR [drive:][path][filename] [/W] [/A]\n", COLORS.yellow)
             print_text("  Displays a list of files and subdirectories in a directory.\n", COLORS.white)
-            print_text("  /W   Uses wide list format.\n", COLORS.white)
-            print_text("  /A   Displays all files.\n", COLORS.white)
+            print_text("  W   Uses wide list format.\n", COLORS.white)
+            print_text("  A   Displays all files.\n", COLORS.white)
         
         "CD":
             print_text("CD [drive:][path]\n", COLORS.yellow)
@@ -1138,7 +1138,7 @@ func cmd_game(args):
             print_text("\n╔════════════════════════════════════════════════════════╗\n", COLORS.yellow)
             print_text("║                   REALITY ENGINE                       ║\n", COLORS.yellow)
             print_text("╟────────────────────────────────────────────────────────╢\n", COLORS.yellow)
-            print_text("║  Location: Starting Area                               ║\n", COLORS.white)
+            print_text("║  Location: Starting Area3D                               ║\n", COLORS.white)
             print_text("║  Objects:  Portal, Cube, Book                          ║\n", COLORS.white)
             print_text("║  Status:   Exploring                                   ║\n", COLORS.white)
             print_text("╟────────────────────────────────────────────────────────╢\n", COLORS.yellow)
@@ -1205,7 +1205,7 @@ func cmd_merge(args):
             8: step_name = "Verifying consistency"
             9: step_name = "Finalizing merge"
         
-        print_text("Step " + str(i+1) + "/" + str(total_steps) + ": " + step_name + "...\n", COLORS.light_cyan)
+        print_text("Step " + str(i+1) + "" + str(total_steps) + ": " + step_name + "...\n", COLORS.light_cyan)
         
         # Progress bar
         print_text("[", COLORS.white)
@@ -1396,7 +1396,7 @@ func cmd_export(args):
     
     print_text("Exporting " + source + " to " + format + " format...\n", COLORS.light_magenta)
     
-    # Simulate export process
+    # Simulate @@@export process
     input_allowed = false
     
     for i in range(5):
@@ -1451,7 +1451,7 @@ func resolve_path(path):
     # Handle absolute paths
     if path.begins_with("C:\\") or path.begins_with("C:/"):
         # Convert forward slashes to backslashes
-        path = path.replace("/", "\\")
+        path = path.replace("", "\\")
         return path
     
     # Handle relative paths
@@ -1463,7 +1463,7 @@ func resolve_path(path):
 
 func get_directory_node(path):
     # Parse path
-    path = path.replace("/", "\\")  # Normalize separators
+    path = path.replace("", "\\")  # Normalize separators
     
     # Handle trailing backslash
     if path.ends_with("\\"):

@@ -14,9 +14,9 @@ const API_VERSION = "v3"
 var drive_id = "" # For shared drives
 var team_drive_support = false
 var use_app_data_folder = false
-var folder_cache = {}
-var file_cache = {}
-var thumbnail_cache = {}
+var folder_cache = {
+var file_cache = {
+var thumbnail_cache = {
 
 # OpenAI API key for processing files
 var openai_api_key = ""
@@ -36,7 +36,7 @@ func _ready():
     self.add_user_signal("drive_changed", [{"name": "drive_id", "type": TYPE_STRING}])
     self.add_user_signal("file_processed", [
         {"name": "file_id", "type": TYPE_STRING},
-        {"name": "metadata", "type": TYPE_DICTIONARY}
+        {"name": "metadata", "type": TYPE_DICTIONARY
     ])
 
 func _setup_google_drive_config():
@@ -47,6 +47,7 @@ func _setup_google_drive_config():
     add_sync_folder("user://google_drive_cache", "appDataFolder", "both")
     add_sync_folder("user://documents", "Documents", "both")
     add_sync_folder("user://images", "Images", "download")
+	}
     
     # Set default cache size for Google Drive
     cache_size_mb = 1000
@@ -103,7 +104,7 @@ func search_files(query, max_results = 100):
         "video/mp4": "MP4 Video",
         "text/plain": "Text File",
         "application/vnd.google-apps.document": "Google Doc"
-    }
+		}
     
     # Generate relevant results based on query
     var result_count = randi() % max_results + 1
@@ -126,7 +127,6 @@ func search_files(query, max_results = 100):
                 "canComment": true,
                 "canShare": true,
                 "canDownload": true
-            }
         })
     
     print("Found " + str(results.size()) + " results for query: " + query)
@@ -154,8 +154,7 @@ func create_folder(folder_name, parent_id = "root"):
             "canComment": true,
             "canShare": true,
             "canDownload": true
-        }
-    }
+			}
     
     print("Created folder: " + folder_name + " (ID: " + folder_id + ")")
     return folder_id
@@ -166,7 +165,7 @@ func process_document_with_ai(file_id, processing_type = "summarize"):
         print("Not authenticated to Google Drive")
         return false
     
-    if openai_api_key.empty():
+    if openai_api_key.is_empty():
         print("OpenAI API key not set")
         return false
     
@@ -177,6 +176,7 @@ func process_document_with_ai(file_id, processing_type = "summarize"):
     if _multi_threaded_processor:
         var account_id = _account_manager.active_account_id if _account_manager else "default"
         var task_description = "Processing document with AI: " + processing_type
+		}
         
         var thread_id = _multi_threaded_processor.allocate_thread(
             account_id,
@@ -186,6 +186,7 @@ func process_document_with_ai(file_id, processing_type = "summarize"):
         
         if thread_id:
             print("Processing document with AI in thread: " + thread_id)
+			}
             # In real implementation, would start thread function
             # For now, simulate processing after a delay
             var process_timer = Timer.new()
@@ -207,7 +208,7 @@ func process_document_with_ai(file_id, processing_type = "summarize"):
 
 func _on_document_processed(file_id, processing_type, thread_id, account_id):
     # Simulate AI processing results
-    var metadata = {}
+    var metadata = {
     
     match processing_type:
         "summarize":
@@ -221,26 +222,24 @@ func _on_document_processed(file_id, processing_type, thread_id, account_id):
                 "sentiment": "positive",
                 "word_count": randi() % 5000 + 500,
                 "processing_time": randi() % 10 + 2
-            }
         "extract":
             metadata = {
                 "entities": [
                     {"name": "Example Corp", "type": "ORGANIZATION"},
                     {"name": "Jane Smith", "type": "PERSON"},
-                    {"name": "New York", "type": "LOCATION"}
+                    {"name": "New York", "type": "LOCATION"
                 ],
                 "dates": [
                     {"text": "January 15, 2025", "iso": "2025-01-15"},
-                    {"text": "next quarter", "iso": "2025-04-01"}
+                    {"text": "next quarter", "iso": "2025-04-01"
                 ],
                 "topics": ["business", "technology", "finance"],
                 "processing_time": randi() % 15 + 3
-            }
         _:
             metadata = {
                 "result": "Generic processing completed for " + processing_type,
                 "processing_time": randi() % 5 + 1
-            }
+				}
     
     # Update file cache with processed metadata
     if file_id in file_cache:
@@ -249,6 +248,7 @@ func _on_document_processed(file_id, processing_type, thread_id, account_id):
     # Emit signal
     emit_signal("file_processed", file_id, metadata)
     print("Processed document: " + file_id + " with " + processing_type)
+	}
     
     # Release thread if allocated
     if thread_id != "none" and _multi_threaded_processor:
@@ -296,7 +296,6 @@ func get_file_metadata(file_id):
             {
                 "displayName": "Owner Name",
                 "emailAddress": "owner@example.com"
-            }
         ],
         "lastModifyingUser": {
             "displayName": "Editor Name",
@@ -316,7 +315,7 @@ func get_file_metadata(file_id):
         "iconLink": "",
         "starred": randi() % 2 == 0,
         "trashed": false
-    }
+		}
     
     # Cache the metadata
     file_cache[file_id] = metadata
@@ -350,12 +349,10 @@ func list_folders(parent_id = "root"):
                 "canComment": true,
                 "canShare": true,
                 "canDownload": true
-            }
         })
         
         # Cache the folder
         folder_cache[folder_id] = folders[i]
-    }
     
     print("Listed " + str(folders.size()) + " folders in parent: " + parent_id)
     return folders

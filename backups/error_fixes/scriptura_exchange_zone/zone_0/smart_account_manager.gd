@@ -62,17 +62,17 @@ signal preferences_updated()
 func _ready():
     # Connect to Akashic Database if available
     if has_node("/root/AkashicDatabase") or get_node_or_null("/root/AkashicDatabase"):
-        _akashic_db = get_node("/root/AkashicDatabase")
+        _akashic_db = get_node("\1") as Node
     
     # Connect to Account Connector if available
     if has_node("/root/SharedAccountConnector") or get_node_or_null("/root/SharedAccountConnector"):
-        _account_connector = get_node("/root/SharedAccountConnector")
+        _account_connector = get_node("\1") as Node
         
     # Set up auto-correction timer
     var timer = Timer.new()
     timer.wait_time = AUTO_CORRECTION_INTERVAL
     timer.autostart = true
-    timer.connect("timeout", self, "_on_auto_correction_timer")
+    timer.connect(_on_auto_correction_timer)
     add_child(timer)
     
     # Load player data
@@ -86,10 +86,10 @@ func load_account_data():
         account_id = _account_connector.get_current_account_id()
     
     # For testing - initialize with random data
-    if player_name.empty():
+    if player_name.is_empty():
         player_name = "Player" + str(randi() % 1000)
     
-    if account_id.empty():
+    if account_id.is_empty():
         account_id = generate_unique_id()
     
     # Load preferences from saved data or initialize defaults

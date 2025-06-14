@@ -686,7 +686,7 @@ func trigger_npc_casting(energy_type=""):
         
         eligible_npcs.append(npc)
     
-    if eligible_npcs.empty():
+    if eligible_npcs.is_empty():
         print("No eligible NPCs available for casting")
         return null
     
@@ -699,7 +699,7 @@ func trigger_npc_casting(energy_type=""):
         if energy_type == "" or spell.energy_type == energy_type:
             eligible_spells.append(spell)
     
-    if eligible_spells.empty():
+    if eligible_spells.is_empty():
         print("No eligible spells for NPC: %s" % npc.name)
         return null
     
@@ -979,7 +979,7 @@ func _check_witch_emergence_progress():
                 if not already_emerging:
                     eligible_npcs.append(npc_data)
         
-        if eligible_npcs.empty():
+        if eligible_npcs.is_empty():
             return false
         
         # Select random NPC
@@ -1041,8 +1041,8 @@ func initialize_with_magic_system(magic_system_node):
     magic_item_system = magic_system_node
     
     # Connect signals
-    magic_item_system.connect("spell_learned", self, "_on_spell_learned")
-    magic_item_system.connect("stability_updated", self, "_on_stability_updated")
+    magic_item_system.connect(_on_spell_learned)
+    magic_item_system.connect(_on_stability_updated)
     
     print("Connected to Magic Item System")
     return true
@@ -1055,7 +1055,7 @@ func _on_spell_learned(spell_data):
         for energy_type in spell_data.energy_cost:
             energy_types.append(energy_type)
         
-        if energy_types.empty():
+        if energy_types.is_empty():
             continue
         
         var primary_energy = energy_types[0]
@@ -1195,7 +1195,7 @@ func load_system_state():
 
 func run_demo_cycle():
     # Create NPCs if none exist
-    if npc_casters.empty():
+    if npc_casters.is_empty():
         create_npc_caster("Apprentice Alden", "apprentice", 1)
         create_npc_caster("Mage Miriam", "mage", 3)
         create_npc_caster("Wizard Winfred", "wizard", 5)

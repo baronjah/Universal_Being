@@ -3,7 +3,7 @@
 # into your main.gd script for the layer_0.tscn scene.
 
 # 1. Add this import at the top of your main.gd file
-const AkashicRecordsIntegration = preload("res://code/gdscript/scripts/Menu_Keyboard_Console/akashic_records_integration.gd")
+const AkashicRecordsIntegration = preload("res://scripts/gdscript/scripts/Menu_Keyboard_Console/akashic_records_integration.gd")
 
 # 2. Add this class variable to your main.gd file
 # Akashic Records integration

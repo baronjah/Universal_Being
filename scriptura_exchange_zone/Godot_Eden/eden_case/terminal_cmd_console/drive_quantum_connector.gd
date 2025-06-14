@@ -1,5 +1,5 @@
 extends Node
-class_name DriveQuantumConnector
+class_name DriveQuantumConnector_drivequantumconnector_drivequa
 
 signal connection_status_changed(status: Dictionary)
 signal transfer_progress_updated(progress: Dictionary)
@@ -135,7 +135,7 @@ func _ready():
 
 func _connect_to_systems():
     # Connect to LUNO cycle system
-    luno_manager = get_node_or_null("/root/LunoCycleManager")
+    luno_manager = get_node_or_null("root/LunoCycleManager")
     if luno_manager:
         print("✓ Connected to LUNO Cycle Manager")
         luno_manager.register_participant("DriveQuantum", Callable(self, "_on_luno_tick"))
@@ -143,14 +143,14 @@ func _connect_to_systems():
         print("⚠️ LUNO Cycle Manager not found, operating independently")
     
     # Connect to Mac Automation system
-    mac_automation = get_node_or_null("/root/MacAutomationSystem")
+    mac_automation = get_node_or_null("root/MacAutomationSystem")
     if mac_automation:
         print("✓ Connected to Mac Automation System")
     else:
         print("⚠️ Mac Automation System not found")
     
     # Connect to Dream Connector
-    dream_connector = get_node_or_null("/root/DreamConnector")
+    dream_connector = get_node_or_null("root/DreamConnector")
     if dream_connector:
         print("✓ Connected to Dream Connector")
         dream_connector.connect("dream_symbol_received", Callable(self, "_on_dream_symbol"))
@@ -277,7 +277,7 @@ func connect_to_drive() -> bool:
     
     # Set connection as active
     drive_config.active = true
-    drive_config.last_sync = OS.get_unix_time()
+    drive_config.last_sync = OS.Time.get_unix_time_from_system()
     
     # Check connection mode
     if drive_config.offline_mode:
@@ -350,7 +350,7 @@ func sync_drive_data() -> Dictionary:
     
     # Prepare transfer info
     var transfer_info = {
-        "start_time": OS.get_unix_time(),
+        "start_time": OS.Time.get_unix_time_from_system(),
         "end_time": 0,
         "upload_size": 0,
         "download_size": 0,
@@ -394,8 +394,8 @@ func sync_drive_data() -> Dictionary:
             _generate_haptic_feedback("progress", 0.1 + (progress * 0.3))
     
     # Complete transfer
-    var elapsed_time = OS.get_unix_time() - transfer_info.start_time
-    transfer_info.end_time = OS.get_unix_time()
+    var elapsed_time = OS.Time.get_unix_time_from_system() - transfer_info.start_time
+    transfer_info.end_time = OS.Time.get_unix_time_from_system()
     transfer_info.upload_size = upload_size
     transfer_info.download_size = download_size
     transfer_info.speed = (upload_size + download_size) / max(1, elapsed_time)
@@ -431,7 +431,7 @@ func sync_drive_data() -> Dictionary:
         _play_completion_sound()
     
     # Update last sync time
-    drive_config.last_sync = OS.get_unix_time()
+    drive_config.last_sync = OS.Time.get_unix_time_from_system()
     
     # Return transfer info
     return transfer_info
@@ -525,7 +525,7 @@ func _initialize_vr_integration():
         device_integration.vr.resolution_per_eye.y
     ])
     print("   Refresh rate: %d Hz" % device_integration.vr.refresh_rate)
-    print("   Spatial tracking: %s" % ("Enabled" if device_integration.vr.spatial_tracking else "Disabled"))
+    print("   Node3D tracking: %s" % ("Enabled" if device_integration.vr.spatial_tracking else "Disabled"))
 
 func _generate_haptic_feedback(event_type: String, intensity: float):
     # Generate haptic feedback for the given event

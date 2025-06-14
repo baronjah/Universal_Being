@@ -1,6 +1,6 @@
 extends Node
 
-class_name AkashicRecordConnector
+class_name AkashicRecordConnector_akashicrecordconnector_akashicr
 
 signal record_saved(record_id, record_type)
 signal record_retrieved(record_id, data)
@@ -9,7 +9,8 @@ signal connection_status_changed(status, message)
 signal records_synchronized(count, source)
 
 # Connection status
-enum ConnectionState {
+enum \2 {
+
     DISCONNECTED,
     CONNECTING,
     CONNECTED,
@@ -17,7 +18,8 @@ enum ConnectionState {
 }
 
 # Record types
-enum RecordType {
+enum \2 {
+
     CODE_FRAGMENT,
     PROJECT_STATE,
     SCRIPT_MAPPING,
@@ -337,7 +339,7 @@ func _connect_claude(connection_data):
         # Check if tunnel already exists
         var tunnel_id = akashic_anchor_id + "_to_" + claude_anchor_id
         if not ethereal_tunnel_manager.has_tunnel(tunnel_id):
-            // Create tunnel in the information dimension (5)
+# // Create tunnel in the information dimension (5)
             ethereal_tunnel_manager.establish_tunnel(akashic_anchor_id, claude_anchor_id, 5)
         }
     }
@@ -393,7 +395,7 @@ func _connect_bridge(connection_data):
         # Check if tunnel already exists
         var tunnel_id = akashic_anchor_id + "_to_" + bridge_anchor_id
         if not ethereal_tunnel_manager.has_tunnel(tunnel_id):
-            // Create tunnel in the connection dimension (7)
+# // Create tunnel in the connection dimension (7)
             ethereal_tunnel_manager.establish_tunnel(akashic_anchor_id, bridge_anchor_id, 7)
         }
     }
@@ -404,15 +406,15 @@ func disconnect_from_akashic_database():
     if connection_state == ConnectionState.DISCONNECTED:
         return true
     
-    // Save any pending records
+# // Save any pending records
     synchronize_records()
     
-    // Close bridge connections
+# // Close bridge connections
     for bridge in bridge_connections:
         if bridge.status == "connected":
             bridge.status = "disconnected"
             
-            // Record disconnection
+# // Record disconnection
             record_bridge_event(bridge.id, "disconnection", {
                 "source": connection_source,
                 "timestamp": Time.get_unix_time_from_system()
@@ -429,12 +431,12 @@ func synchronize_records():
     if connection_state != ConnectionState.CONNECTED:
         return false
     
-    // Save all collection indexes
+# // Save all collection indexes
     for collection in collection_indexes.keys():
         _save_collection_index(collection)
     }
     
-    // Synchronize with bridges
+# // Synchronize with bridges
     var sync_count = 0
     for bridge in bridge_connections:
         if bridge.status == "connected":
@@ -449,19 +451,19 @@ func synchronize_records():
     return true
 
 func _synchronize_with_bridge(bridge):
-    // Implement specific bridge synchronization
+# // Implement specific bridge synchronization
     match bridge.type:
         "claude":
             _synchronize_with_claude(bridge)
         "external_db":
             _synchronize_with_external_db(bridge)
         "generic":
-            // Generic bridge synchronization
+# // Generic bridge synchronization
             pass
 
 func _synchronize_with_claude(bridge):
-    // This would implement actual Claude API communication
-    // For demonstration, we'll record the synchronization event
+# // This would implement actual Claude API communication
+# // For demonstration, we'll record the synchronization event
     
     record_bridge_event(bridge.id, "synchronization", {
         "source": "claude",
@@ -472,8 +474,8 @@ func _synchronize_with_claude(bridge):
     bridge.last_sync = Time.get_unix_time_from_system()
 
 func _synchronize_with_external_db(bridge):
-    // This would implement external database synchronization
-    // For demonstration, we'll record the synchronization event
+# // This would implement external database synchronization
+# // For demonstration, we'll record the synchronization event
     
     record_bridge_event(bridge.id, "synchronization", {
         "source": "external_db",
@@ -486,7 +488,7 @@ func _synchronize_with_external_db(bridge):
 func _process_bridge_connections():
     for bridge in bridge_connections:
         if bridge.status == "connected":
-            // Check for sync timeout
+# // Check for sync timeout
             var current_time = Time.get_unix_time_from_system()
             if current_time - bridge.last_sync >= SYNC_INTERVAL:
                 _synchronize_with_bridge(bridge)
@@ -503,11 +505,11 @@ func _process_queries():
             continue
         }
         
-        // Process query
+# // Process query
         if query.status == "pending":
             query.status = "processing"
             
-            // Execute query
+# // Execute query
             var result = _execute_query(query)
             
             if result:
@@ -523,7 +525,7 @@ func _process_queries():
         }
     }
     
-    // Remove completed queries
+# // Remove completed queries
     for query in completed_queries:
         active_queries.erase(query)
     }
@@ -550,13 +552,13 @@ func _execute_query(query):
 func _query_by_id(record_type, record_id):
     var collection = RECORD_COLLECTIONS[record_type]
     
-    // Check memory cache first
-    var cache_key = collection + "/" + record_id
+# // Check memory cache first
+    var cache_key = collection + "" + record_id
     if memory_cache.has(cache_key):
         return memory_cache[cache_key]
     }
     
-    // Check collection index
+# // Check collection index
     if collection_indexes.has(collection):
         var index = collection_indexes[collection]
         
@@ -570,7 +572,7 @@ func _query_by_id(record_type, record_id):
                 
                 var record = JSON.parse_string(json)
                 if record:
-                    // Cache the record
+# // Cache the record
                     memory_cache[cache_key] = record
                     return record
                 }
@@ -612,17 +614,17 @@ func _query_by_text(record_type, text):
             var record = _query_by_id(record_type, record_id)
             
             if record:
-                // Simple text search implementation
+# // Simple text search implementation
                 var found = false
                 
-                // Search in content
+# // Search in content
                 if record.has("content") and typeof(record.content) == TYPE_STRING:
                     if record.content.find(text) >= 0:
                         found = true
                     }
                 }
                 
-                // Search in metadata description
+# // Search in metadata description
                 if not found and record.has("metadata"):
                     var metadata = record.metadata
                     
@@ -668,10 +670,10 @@ func _query_by_date_range(record_type, start_date, end_date):
     return results
 
 func _query_complex(record_type, criteria):
-    // Complex query with multiple criteria
+# // Complex query with multiple criteria
     var initial_results = null
     
-    // Start with ID if provided
+# // Start with ID if provided
     if criteria.has("id"):
         var record = _query_by_id(record_type, criteria.id)
         if record:
@@ -681,17 +683,17 @@ func _query_complex(record_type, criteria):
         }
     }
     
-    // Start with tag if provided and no ID results
+# // Start with tag if provided and no ID results
     if initial_results == null and criteria.has("tag"):
         initial_results = _query_by_tag(record_type, criteria.tag)
     }
     
-    // Start with text if provided and no previous results
+# // Start with text if provided and no previous results
     if initial_results == null and criteria.has("text"):
         initial_results = _query_by_text(record_type, criteria.text)
     }
     
-    // Start with date range if provided and no previous results
+# // Start with date range if provided and no previous results
     if initial_results == null and criteria.has("start_date") and criteria.has("end_date"):
         initial_results = _query_by_date_range(
             record_type, 
@@ -700,22 +702,22 @@ func _query_complex(record_type, criteria):
         )
     }
     
-    // If no initial results, return empty array
+# // If no initial results, return empty array
     if initial_results == null:
         return []
     }
     
-    // Apply additional filters
+# // Apply additional filters
     var filtered_results = initial_results
     
-    // Filter by tag if not already used
+# // Filter by tag if not already used
     if criteria.has("tag") and initial_results != _query_by_tag(record_type, criteria.tag):
         filtered_results = filtered_results.filter(func(record):
             return record.has("metadata") and record.metadata.has("tags") and record.metadata.tags.has(criteria.tag)
         )
     }
     
-    // Filter by text if not already used
+# // Filter by text if not already used
     if criteria.has("text") and initial_results != _query_by_text(record_type, criteria.text):
         filtered_results = filtered_results.filter(func(record):
             if record.has("content") and typeof(record.content) == TYPE_STRING:
@@ -732,7 +734,7 @@ func _query_complex(record_type, criteria):
         )
     }
     
-    // Filter by date range if not already used
+# // Filter by date range if not already used
     if criteria.has("start_date") and criteria.has("end_date") and 
        initial_results != _query_by_date_range(record_type, criteria.start_date, criteria.end_date):
         filtered_results = filtered_results.filter(func(record):
@@ -752,20 +754,20 @@ func save_record(record_type, content, metadata = {}):
     
     var collection = RECORD_COLLECTIONS[record_type]
     
-    // Generate record ID if not provided
+# // Generate record ID if not provided
     var record_id = metadata.get("id", _generate_record_id(collection))
     
-    // Add timestamp if not provided
+# // Add timestamp if not provided
     if not metadata.has("timestamp"):
         metadata.timestamp = Time.get_unix_time_from_system()
     }
     
-    // Ensure tags is an array
+# // Ensure tags is an array
     if not metadata.has("tags"):
         metadata.tags = []
     }
     
-    // Create full record
+# // Create full record
     var record = {
         "id": record_id,
         "type": record_type,
@@ -773,7 +775,7 @@ func save_record(record_type, content, metadata = {}):
         "metadata": metadata
     }
     
-    // Save to disk
+# // Save to disk
     var record_path = storage_path.path_join(collection).path_join(record_id + ".json")
     var file = FileAccess.open(record_path, FileAccess.WRITE)
     
@@ -786,7 +788,7 @@ func save_record(record_type, content, metadata = {}):
     file.store_string(json)
     file.close()
     
-    // Update index
+# // Update index
     if not collection_indexes.has(collection):
         collection_indexes[collection] = {"records": {}, "last_updated": Time.get_unix_time_from_system()}
     }
@@ -799,7 +801,7 @@ func save_record(record_type, content, metadata = {}):
     
     collection_indexes[collection].last_updated = Time.get_unix_time_from_system()
     
-    // Add to manifest tags
+# // Add to manifest tags
     var manifest = collection_manifests[collection]
     for tag in metadata.tags:
         if not manifest.tags.has(tag):
@@ -807,14 +809,14 @@ func save_record(record_type, content, metadata = {}):
         }
     }
     
-    // Update memory cache
-    var cache_key = collection + "/" + record_id
+# // Update memory cache
+    var cache_key = collection + "" + record_id
     memory_cache[cache_key] = record
     
-    // Create memory imprint
+# // Create memory imprint
     _create_memory_imprint(record_id)
     
-    // Connect to word pattern visualizer if available
+# // Connect to word pattern visualizer if available
     if word_pattern_visualizer and (
         record_type == RecordType.WORD_PATTERN or 
         record_type == RecordType.WORD_MANIFESTATION
@@ -826,9 +828,9 @@ func save_record(record_type, content, metadata = {}):
         word_pattern_visualizer.add_word_pattern(pattern_text, energy, dimension)
     }
     
-    // Create numeric token if available
+# // Create numeric token if available
     if numeric_token_system:
-        // Generate a token based on record timestamp
+# // Generate a token based on record timestamp
         var timestamp = int(metadata.timestamp)
         numeric_token_system.create_token(timestamp % 10000, "INFO", "akashic_record")
     }
@@ -852,7 +854,7 @@ func query_records(record_type, criteria, query_type = "complex"):
     if connection_state != ConnectionState.CONNECTED:
         return null
     
-    // Create query
+# // Create query
     var query_id = "query_" + str(randi() % 100000) + "_" + str(Time.get_unix_time_from_system())
     
     var query = {
@@ -866,10 +868,10 @@ func query_records(record_type, criteria, query_type = "complex"):
     
     active_queries.push_back(query)
     
-    // For synchronous operation, immediately execute
+# // For synchronous operation, immediately execute
     _process_queries()
     
-    // Return query ID to check results later
+# // Return query ID to check results later
     return query_id
 
 func get_query_results(query_id):
@@ -877,7 +879,7 @@ func get_query_results(query_id):
         return query_results[query_id]
     }
     
-    // Check if query is still in progress
+# // Check if query is still in progress
     for query in active_queries:
         if query.id == query_id:
             return {"status": query.status}
@@ -887,7 +889,7 @@ func get_query_results(query_id):
     return null
 
 func record_code_fragment(code, language, source_file, metadata = {}):
-    // Add specific metadata for code fragments
+# // Add specific metadata for code fragments
     metadata.language = language
     metadata.source_file = source_file
     
@@ -911,7 +913,7 @@ func record_project_state(project_path, version, metadata = {}):
     metadata.tags.push_back("project_state")
     metadata.tags.push_back(version)
     
-    // Would implement project scanning here
+# // Would implement project scanning here
     var project_data = {
         "path": project_path,
         "version": version,
@@ -1066,7 +1068,7 @@ func _generate_record_id(collection):
     return collection + "_" + str(timestamp) + "_" + random_suffix
 
 func _create_memory_imprint(record_id):
-    // Create a memory imprint for this record
+# // Create a memory imprint for this record
     var imprint = {
         "id": record_id,
         "timestamp": Time.get_unix_time_from_system(),
@@ -1075,7 +1077,7 @@ func _create_memory_imprint(record_id):
     
     memory_imprints[record_id] = imprint
     
-    // Connect to word pattern visualizer if available
+# // Connect to word pattern visualizer if available
     if word_pattern_visualizer:
         var pattern_text = "memory_imprint_" + record_id
         var energy = 8.0
@@ -1094,7 +1096,7 @@ func _clean_expired_imprints():
         if current_time >= imprint.expiration:
             imprints_to_remove.push_back(record_id)
             
-            // Remove from word pattern visualizer
+# // Remove from word pattern visualizer
             if word_pattern_visualizer:
                 var pattern_text = "memory_imprint_" + record_id
                 if word_pattern_visualizer.has_method("remove_word_pattern"):
@@ -1131,20 +1133,20 @@ func get_connection_status():
     }
 
 func backup_database():
-    // Create backup directory with timestamp
+# // Create backup directory with timestamp
     var timestamp = Time.get_datetime_string_from_system()
     var backup_dir = BACKUP_PATH.path_join("backup_" + timestamp.replace(":", "-"))
     
     var dir = DirAccess.open("res://")
     dir.make_dir_recursive(backup_dir)
     
-    // Copy collection files and indexes
+# // Copy collection files and indexes
     for collection in RECORD_COLLECTIONS.values():
         var collection_path = storage_path.path_join(collection)
         var backup_collection_path = backup_dir.path_join(collection)
         dir.make_dir_recursive(backup_collection_path)
         
-        // Copy index
+# // Copy index
         var index_path = storage_path.path_join(collection + "_index.json")
         if FileAccess.file_exists(index_path):
             var file = FileAccess.open(index_path, FileAccess.READ)
@@ -1156,7 +1158,7 @@ func backup_database():
             file.close()
         }
         
-        // Copy manifest
+# // Copy manifest
         var manifest_path = storage_path.path_join(collection + "_manifest.json")
         if FileAccess.file_exists(manifest_path):
             var file = FileAccess.open(manifest_path, FileAccess.READ)
@@ -1168,7 +1170,7 @@ func backup_database():
             file.close()
         }
         
-        // Copy records
+# // Copy records
         var collection_dir = DirAccess.open(collection_path)
         if collection_dir:
             collection_dir.list_dir_begin()

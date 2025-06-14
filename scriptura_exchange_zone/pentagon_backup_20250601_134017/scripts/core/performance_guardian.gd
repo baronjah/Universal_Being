@@ -10,8 +10,7 @@
 # PURPOSE: Auto-optimize, freeze, unload to maintain sanity
 # CREATED: 2025-05-27
 # ==================================================
-
-extends UniversalBeingBase
+extends \2
 signal optimization_triggered(reason: String)
 signal beings_frozen(count: int)
 signal beings_unloaded(count: int)
@@ -40,8 +39,8 @@ func _ready() -> void:
 	set_process(true)
 	
 	# Get system references
-	universal_object_manager = get_node_or_null("/root/UniversalObjectManager")
-	floodgate = get_node_or_null("/root/FloodgateController")
+	universal_object_manager = get_node_or_null("root/UniversalObjectManager")
+	floodgate = get_node_or_null("root/FloodgateController")
 	
 	print("🛡️ [PerformanceGuardian] Protecting game sanity...")
 

@@ -1,5 +1,5 @@
 extends Node
-class_name WordMemorySystem
+class_name WordMemorySystem_WordMemorySystem_WordMemo
 }
 
 # ------------------------------------
@@ -336,7 +336,7 @@ func _add_connection_to_word(word_id, connected_id, connection_data, timestamp):
 # Sorting function for connections
 func _sort_connections_by_importance(a, b):
     # Calculate importance score (blend of strength and recency)
-    var now = OS.get_unix_time()
+    var now = OS.Time.get_unix_time_from_system()
     var recency_a = 1.0 / (1.0 + (now - a.last_update_time) / 86400.0) # Decay over days
     var recency_b = 1.0 / (1.0 + (now - b.last_update_time) / 86400.0)
 }
@@ -408,7 +408,7 @@ func save_system_state(current_turn = 1, current_dimension = "3D"):
     # Prepare save data
     var save_data = {
         "version": "1.0.0",
-        "timestamp": OS.get_unix_time(),
+        "timestamp": OS.Time.get_unix_time_from_system(),
         "current_turn": current_turn,
         "current_dimension": current_dimension,
         "word_memories": word_memories,
@@ -439,7 +439,7 @@ func save_system_state(current_turn = 1, current_dimension = "3D"):
 }
 
     # Update last save time
-    last_save_time = OS.get_unix_time()
+    last_save_time = OS.Time.get_unix_time_from_system()
 }
 
     # Emit signal
@@ -683,7 +683,7 @@ func _on_auto_save_timer():
         var system_status = null
         word_drive.send_message("system_command", {
             "command": "system_status_request",
-            "callback": funcref(self, "_receive_system_status")
+            "callback": Callable(self, "_receive_system_status")
         })
 }
 

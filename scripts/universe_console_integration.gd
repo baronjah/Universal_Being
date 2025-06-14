@@ -36,6 +36,7 @@ func _integrate_universe_commands() -> void:
 	
 	print("🌌 Universe Console Commands integrated!")
 	print("🌌 Available commands: universe, portal, enter, exit, inspect, list, rules, setrule")
+
 	
 	# Log to Akashic
 	var akashic = get_tree().get_first_node_in_group("akashic_library")

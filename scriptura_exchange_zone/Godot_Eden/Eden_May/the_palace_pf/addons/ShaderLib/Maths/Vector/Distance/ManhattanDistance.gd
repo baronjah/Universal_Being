@@ -1,5 +1,6 @@
 @tool
-class_name VisualShaderNodeMathsManhattanDistance extends VisualShaderNodeCustom
+class_name VisualShaderNodeMathsManhattanDistance_ManhattanDistance_Manhatta
+extends \2
 
 func _get_name() -> String:
 	return "ManhattanDistance"

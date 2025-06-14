@@ -1,5 +1,5 @@
 extends Node
-class_name DreamConnector
+class_name DreamConnector_dreamconnector_dreamcon
 
 signal dream_connected(success: bool)
 signal dream_symbol_received(symbol: String)
@@ -25,7 +25,7 @@ func _ready():
 
 func _connect_to_luno():
     # Find LunoCycleManager in the scene
-    luno_manager = get_node_or_null("/root/LunoCycleManager")
+    luno_manager = get_node_or_null("root/LunoCycleManager")
     
     if luno_manager:
         print("🌙 Dream Connector found LUNO Cycle Manager")

@@ -1,5 +1,5 @@
 extends RefCounted
-class_name JSHFileStorageAdapter
+class_name JSHFileStorageAdapter_JSHFileStorageAdapter_JSHFileS
 
 # Default paths
 const DEFAULT_STORAGE_ROOT = "user://storage/"
@@ -69,9 +69,9 @@ func ensure_directories() -> void:
     print("JSHFileStorageAdapter: Directories created")
 
 func ensure_path_exists(path: String) -> bool:
-    if not path.ends_with("/"):
+    if not path.ends_with(""):
         # Extract directory part
-        var last_slash = path.rfind("/")
+        var last_slash = path.rfind("")
         if last_slash >= 0:
             path = path.substr(0, last_slash + 1)
         else:

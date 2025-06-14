@@ -1,5 +1,5 @@
 extends Node
-class_name NumericStageSystem
+class_name NumericStageSystem_NumericStageSystem_NumericS
 
 # The yoyo effect of creation, from 0 to 9 cycle
 const NUMERIC_STAGES = 10
@@ -58,20 +58,20 @@ func initialize_stage_system():
 
 func connect_to_subsystems():
     # Connect to limb evolution system if available
-    limb_system = get_node_or_null("/root/WordLimbEvolution")
+    limb_system = get_node_or_null("root/WordLimbEvolution")
     if limb_system:
         limb_system.limb_evolved.connect(_on_limb_evolved)
         limb_system.stage_unlocked.connect(_on_limb_stage_unlocked)
         print("Connected to Word Limb Evolution system")
     
     # Connect to memory system if available
-    memory_system = get_node_or_null("/root/MemoryEvolutionManager")
+    memory_system = get_node_or_null("root/MemoryEvolutionManager")
     if memory_system:
         memory_system.word_caught.connect(_on_word_caught)
         print("Connected to Memory Evolution Manager")
     
     # Connect to firewall system if available
-    firewall_system = get_node_or_null("/root/DataPathProtector")
+    firewall_system = get_node_or_null("root/DataPathProtector")
     if firewall_system:
         firewall_system.security_level_changed.connect(_on_security_level_changed)
         print("Connected to Data Path Protector")
@@ -224,7 +224,7 @@ func add_evolution_progress(amount):
     var previous_progress = evolution_progress
     evolution_progress += amount
     
-    print("Evolution progress: " + str(evolution_progress) + " / " + 
+    print("Evolution progress: " + str(evolution_progress) + "  " + 
           str(stage_properties[current_stage].evolution_threshold))
     
     emit_signal("evolution_progressed", current_stage, evolution_progress)
@@ -296,7 +296,7 @@ func is_programming_keyword(word):
     # Check if word is a common programming keyword
     var keywords = [
         "var", "if", "else", "for", "while", "func", "return", "class",
-        "extends", "signal", "emit", "export", "static", "const",
+        "extends", "signal", "emit", "@@export", "static", "const",
         "match", "break", "continue", "pass", "null", "true", "false"
     ]
     

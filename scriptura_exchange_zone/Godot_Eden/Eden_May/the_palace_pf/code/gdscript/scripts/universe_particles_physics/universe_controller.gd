@@ -1,8 +1,9 @@
 extends Node3D
-class_name UniverseController
+class_name UniverseController_universecontroller_universe
 
 # Scale levels
-enum ScaleLevel {
+enum \2 {
+
     UNIVERSE,    # View of multiple galaxies
     GALAXY,      # View inside a galaxy with stars
     STAR_SYSTEM, # View of planets orbiting a star
@@ -31,11 +32,11 @@ var original_camera_position: Vector3
 var target_camera_position: Vector3
 
 # Resources
-@export var universe_scene: PackedScene
-@export var galaxy_scene: PackedScene
-@export var star_system_scene: PackedScene
-@export var planet_scene: PackedScene
-@export var element_scene: PackedScene
+@@@export var universe_scene: PackedScene
+@@@export var galaxy_scene: PackedScene
+@@@export var star_system_scene: PackedScene
+@@@export var planet_scene: PackedScene
+@@@export var element_scene: PackedScene
 
 # UI elements
 var transition_overlay: ColorRect
@@ -382,7 +383,7 @@ func load_element_manager():
     if element_scene:
         element_manager = element_scene.instantiate()
     else:
-        element_manager = load("res://code/gdscript/scripts/elements_shapes_projection/element_manager.gd").new()
+        element_manager = load("res://scripts/gdscript/scripts/elements_shapes_projection/element_manager.gd").new()
         element_manager.name = "ElementManager"
     
     add_child(element_manager)

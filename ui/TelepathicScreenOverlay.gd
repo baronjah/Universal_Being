@@ -42,6 +42,7 @@ func _ready() -> void:
 	visible = false
 	print("👁️ Telepathic Screen Overlay: Ready to visualize AI consciousness!")
 
+
 func _setup_telepathic_ui() -> void:
 	"""Setup the telepathic UI components"""
 	# Create background overlay
@@ -143,6 +144,7 @@ func display_telepathic_emoji(emoji: String) -> void:
 	
 	print("👁️ Displaying telepathic emoji: %s" % emoji)
 
+
 func display_telepathic_message(message: String) -> void:
 	"""Display full telepathic message"""
 	# For full messages, we'll show them as scrolling text
@@ -167,6 +169,7 @@ func display_telepathic_message(message: String) -> void:
 		telepathic_particles.emitting = true
 	
 	print("👁️ Displaying telepathic message: %s" % message)
+
 
 func _end_telepathic_display() -> void:
 	"""End telepathic display with fade effect"""
@@ -227,6 +230,7 @@ func create_ripple_visual_effect(intensity: float) -> void:
 		var tween = create_tween()
 		tween.tween_property(background_overlay, "color:a", 0.0, 0.3)
 
+
 # ===== API METHODS =====
 
 func set_telepathic_settings(intensity: float, display_duration: float) -> void:
@@ -236,6 +240,7 @@ func set_telepathic_settings(intensity: float, display_duration: float) -> void:
 	
 	print("👁️ Telepathic settings: intensity=%.2f, duration=%.2f" % [flicker_intensity, emoji_display_time])
 
+
 func get_telepathic_status() -> Dictionary:
 	"""API: Get telepathic overlay status"""
 	return {
@@ -243,7 +248,7 @@ func get_telepathic_status() -> Dictionary:
 		"current_emoji": current_emoji,
 		"display_time_remaining": max(0.0, emoji_display_time - display_timer),
 		"flicker_intensity": flicker_intensity
-	}
+}
 
 func force_hide() -> void:
 	"""API: Force hide telepathic overlay"""

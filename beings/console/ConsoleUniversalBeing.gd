@@ -51,6 +51,7 @@ func pentagon_init() -> void:
 	
 	print("🖥️ ConsoleUniversalBeing: Pentagon console initialization")
 
+
 func pentagon_ready() -> void:
 	# Call parent ready
 	super()
@@ -104,6 +105,7 @@ func initialize_socket_grid() -> void:
 	
 	print("🖥️ ConsoleUniversalBeing: Socket grid (8x6) initialized")
 
+
 func create_socket(socket_id: String, x: int, y: int, width: int = 1, height: int = 1) -> bool:
 	"""Create a socket in the grid"""
 	if not is_socket_area_free(x, y, width, height):
@@ -120,7 +122,7 @@ func create_socket(socket_id: String, x: int, y: int, width: int = 1, height: in
 	socket_definitions[socket_id] = {
 		"x": x, "y": y, "width": width, "height": height,
 		"socketed_being": null, "accepts": [], "consciousness_required": 1
-	}
+}
 	
 	print("🖥️ Console: Socket created - %s at (%d,%d) size %dx%d" % [socket_id, x, y, width, height])
 	return true
@@ -216,6 +218,7 @@ func is_being_compatible(socket_id: String, being: Node) -> bool:
 func create_console_interface() -> void:
 	"""Create the professional terminal interface"""
 	print("🖥️ Console: Creating professional terminal interface...")
+
 	
 	# Create main console window
 	console_window = Control.new()
@@ -243,6 +246,7 @@ func create_console_interface() -> void:
 	
 	print("🖥️ Console: Professional terminal created (900x700)")
 
+
 func create_default_sockets() -> void:
 	"""Create the default socket layout"""
 	# Command input socket (top row, spans 6 columns)
@@ -262,9 +266,11 @@ func create_default_sockets() -> void:
 	
 	print("🖥️ Console: Default sockets created (3 main sockets)")
 
+
 func create_terminal_structure() -> void:
 	"""Create the complete professional terminal structure"""
 	print("🖥️ Terminal: Building professional structure...")
+
 	
 	# Main background panel
 	var main_panel = Panel.new()
@@ -310,6 +316,7 @@ func create_terminal_structure() -> void:
 	create_input_field(main_vbox)
 	
 	print("🖥️ Terminal: Professional structure complete!")
+
 
 func create_terminal_header(parent: VBoxContainer) -> void:
 	"""Create draggable header with title and close button"""
@@ -532,6 +539,7 @@ func load_console_blueprint() -> void:
 	if SystemBootstrap and SystemBootstrap.is_system_ready():
 		var akashic = SystemBootstrap.get_akashic_records()
 		if akashic and akashic.has_method("load_interface_blueprint"):
+
 			var blueprint = akashic.load_interface_blueprint("console_base.txt")
 			if blueprint:
 				apply_blueprint(blueprint)
@@ -558,9 +566,11 @@ func apply_blueprint(blueprint: Dictionary) -> void:
 func create_default_interface() -> void:
 	"""Create basic console interface without blueprint"""
 	print("🖥️ Console: Creating default interface...")
+
 	# Create basic input/output interface
 	create_basic_input_output()
 	print("🖥️ Console: Default interface created")
+
 
 # ===== AI INTEGRATION =====
 
@@ -574,6 +584,7 @@ func connect_to_gemma_ai() -> void:
 		GemmaAI.ai_message.connect(on_ai_message)
 		ai_connected = true
 		print("🖥️ Console: Connected to Gemma AI")
+
 		
 		# Send greeting to AI (only once)
 		if GemmaAI.has_method("ai_message"):
@@ -582,9 +593,11 @@ func connect_to_gemma_ai() -> void:
 func on_ai_message(message: String) -> void:
 	"""Handle messages from Gemma AI"""
 	display_output("🤖 Gemma: " + message)
+
 	
 	# Check if Gemma is sending a command
 	if message.begins_with("COMMAND:"):
+
 		var command = message.substr(8).strip_edges()
 		display_output("🤖 Gemma executing: " + command)
 		handle_console_command(command)
@@ -599,6 +612,7 @@ func process_ai_integration(delta: float) -> void:
 	if ai_connected and GemmaAI:
 		# Allow AI to inspect and modify console
 		if GemmaAI.has_method("analyze_console"):
+
 			# Periodic analysis (every few seconds)
 			pass
 
@@ -618,6 +632,7 @@ func toggle_console() -> void:
 			print("🖥️ Console: Closed")
 
 
+
 func process_command(command: String) -> void:
 	"""Process a command entered in console"""
 	command_history.append(command)
@@ -625,6 +640,7 @@ func process_command(command: String) -> void:
 	
 	display_output("🖥️ Command: " + command)
 	print("🖥️ Console Command: " + command)
+
 	
 	# Process command locally first
 	handle_console_command(command)
@@ -638,9 +654,11 @@ func handle_console_command(command: String) -> void:
 	var cmd = command.to_lower().strip_edges()
 	
 	if cmd.begins_with("create "):
+
 		var what = cmd.substr(7)  # Remove "create "
 		handle_create_command(what)
 	elif cmd.begins_with("evolve "):
+
 		var what = cmd.substr(7)  # Remove "evolve "
 		handle_evolve_command(what)
 	elif cmd == "show sockets":
@@ -650,6 +668,7 @@ func handle_console_command(command: String) -> void:
 	else:
 		display_output("🖥️ Unknown command: " + command)
 		display_output("🖥️ Try: create button, evolve input, show sockets, help")
+
 
 func handle_create_command(what: String) -> void:
 	"""Handle create commands"""
@@ -664,6 +683,7 @@ func handle_create_command(what: String) -> void:
 			create_tree_being()
 		_:
 			display_output("🖥️ Can create: button, input, output, tree")
+
 
 
 func create_tree_being() -> void:
@@ -699,6 +719,7 @@ func handle_evolve_command(what: String) -> void:
 	display_output("🌟 Evolution system activated for: " + what)
 	display_output("🌟 (TODO: Implement Universal Being evolution)")
 
+
 func show_console_help() -> void:
 	"""Show console help"""
 	display_output("🌟 UNIVERSAL CONSOLE COMMANDS:")
@@ -720,19 +741,21 @@ func get_console_info() -> Dictionary:
 		"socketed_beings": socketed_beings.size(),
 		"command_history": command_history.size(),
 		"consciousness_level": consciousness_level
-	}
+}
 
 func debug_socket_info() -> String:
 	"""Get socket debug information"""
 	var info = []
 	info.append("=== Console Socket Debug ===")
 	info.append("Total Sockets: %d" % socket_definitions.size())
+
 	
 	for socket_id in socket_definitions:
 		var socket_def = socket_definitions[socket_id]
 		var being = socket_def.socketed_being
 		var status = "Empty" if not being else being.name
 		info.append("  %s: %s" % [socket_id, status])
+
 	
 	return "\n".join(info)
 
@@ -755,6 +778,7 @@ func process_console_input(event: InputEvent) -> void:
 					toggle_console()
 			KEY_ENTER:
 				if command_input and command_input.has_method("get_text"):
+	
 					var command = command_input.get_text()
 					if command.length() > 0:
 						process_command(command)
@@ -764,13 +788,14 @@ func save_console_state() -> void:
 	if SystemBootstrap and SystemBootstrap.is_system_ready():
 		var akashic = SystemBootstrap.get_akashic_records()
 		if akashic and akashic.has_method("save_console_state"):
+
 			var state_data = {
 				"socket_definitions": socket_definitions,
 				"socketed_beings": get_socketed_beings_data(),
 				"console_active": console_active
-			}
 			akashic.save_console_state(state_data)
 			print("🖥️ Console: State saved to Akashic Records")
+}
 
 func cleanup_socketed_beings() -> void:
 	"""Cleanup all socketed beings"""
@@ -778,6 +803,7 @@ func cleanup_socketed_beings() -> void:
 		unsocket_being(socket_id)
 	socketed_beings.clear()
 	print("🖥️ Console: All socketed beings cleaned up")
+
 
 func configure_socketed_being(socket_id: String, being: Node) -> void:
 	"""Configure a being after socketing"""
@@ -793,23 +819,28 @@ func configure_socketed_being(socket_id: String, being: Node) -> void:
 	
 	print("🖥️ Console: Being configured for socket %s" % socket_id)
 
+
 func apply_layout_settings(layout: Dictionary) -> void:
 	"""Apply layout settings from blueprint"""
 	if layout.has("window_size"):
+
 		var size = layout.window_size
 		if console_window:
 			console_window.size = Vector2(size.x, size.y)
 	
 	if layout.has("background_color"):
+
 		var color = layout.background_color
 		setup_console_styling_with_color(Color(color.r, color.g, color.b, color.a))
 	
 	print("🖥️ Console: Layout settings applied")
 
+
 func apply_socket_definitions(socket_defs: Array) -> void:
 	"""Apply socket definitions from blueprint"""
 	for socket_data in socket_defs:
 		if socket_data.has("id") and socket_data.has("x") and socket_data.has("y"):
+
 			var socket_id = socket_data.id
 			var x = socket_data.x
 			var y = socket_data.y
@@ -826,6 +857,7 @@ func apply_socket_definitions(socket_defs: Array) -> void:
 	
 	print("🖥️ Console: Blueprint socket definitions applied")
 
+
 func create_basic_input_output() -> void:
 	"""Create basic input/output interface without blueprint"""
 	print("🖥️ Console: create_basic_input_output() called")
@@ -834,6 +866,7 @@ func create_basic_input_output() -> void:
 		return
 	
 	print("🖥️ Console: Console window exists, children: %d" % console_window.get_child_count())
+
 	
 	# Create a simple VBoxContainer layout
 	var vbox = VBoxContainer.new()
@@ -849,6 +882,7 @@ func create_basic_input_output() -> void:
 	var console_panel = console_window.get_child(0) if console_window.get_child_count() > 0 else console_window
 	console_panel.add_child(vbox)
 	print("🖥️ Console: VBox added to console panel")
+
 	
 	# Create title
 	var title_label = Label.new()
@@ -886,6 +920,7 @@ func create_basic_input_output() -> void:
 	
 	print("🖥️ Console: Basic input/output interface created")
 
+
 func setup_console_styling_with_color(bg_color: Color) -> void:
 	"""Setup console styling with custom background color"""
 	var style_box = StyleBoxFlat.new()
@@ -905,14 +940,15 @@ func setup_console_styling_with_color(bg_color: Color) -> void:
 
 func get_socketed_beings_data() -> Dictionary:
 	"""Get data for socketed beings for saving"""
-	var data = {}
+	var data = {
 	for socket_id in socketed_beings:
 		var being = socketed_beings[socket_id]
 		if being and being.has_method("get_save_data"):
 			data[socket_id] = being.get_save_data()
 		else:
-			data[socket_id] = {"name": being.name, "type": "unknown"}
+			data[socket_id] = {"name": being.name, "type": "unknown"
 	return data
+}
 
 func _on_command_submitted(text: String) -> void:
 	"""Handle command submission from input field"""
@@ -926,6 +962,7 @@ func _on_command_submitted(text: String) -> void:
 func display_output(text: String) -> void:
 	"""Display text in rich text output area with channel routing"""
 	print("🖥️ Terminal Output: " + text)
+}
 	
 	# Route message to appropriate channel
 	var channel = determine_message_channel(text)
@@ -933,6 +970,7 @@ func display_output(text: String) -> void:
 	
 	# Also display in current active channel
 	if output_display and output_display.has_method("append_text"):
+
 		var formatted_text = format_terminal_text(text)
 		output_display.append_text(formatted_text + "\n")
 	elif output_display:
@@ -955,6 +993,7 @@ func route_to_channel(text: String, channel: String) -> void:
 	# TODO: Store messages in channel-specific arrays for later display
 	# For now, just tag the message
 	print("📡 Routing to %s: %s" % [channel, text.substr(0, 50) + "..."])
+
 
 func format_terminal_text(text: String) -> String:
 	"""Format text with colors for terminal display"""

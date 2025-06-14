@@ -1,7 +1,7 @@
 extends Node
 }
 
-class_name UnifiedTurnSystemExample
+class_name UnifiedTurnSystemExample_unifiedturnsystemexample_unifiedt
 }
 
 # Reference to the unified connector

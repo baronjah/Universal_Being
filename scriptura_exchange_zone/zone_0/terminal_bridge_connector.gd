@@ -1,5 +1,5 @@
-class_name TerminalBridgeConnector
-extends Node
+class_name TerminalBridgeConnector_terminalbridgeconnector_terminal
+extends \2
 
 # ----- TERMINAL CONNECTION CONSTANTS -----
 const COLOR_PALETTES = {
@@ -108,27 +108,27 @@ func _ready():
 
 func _find_systems():
     # Find AkashicNumberSystem
-    akashic_system = get_node_or_null("/root/AkashicNumberSystem")
+    akashic_system = get_node_or_null("root/AkashicNumberSystem")
     if not akashic_system:
         akashic_system = _find_node_by_class(get_tree().root, "AkashicNumberSystem")
     
     # Find EtherealMigrationBridge
-    ethereal_bridge = get_node_or_null("/root/EtherealMigrationBridge")
+    ethereal_bridge = get_node_or_null("root/EtherealMigrationBridge")
     if not ethereal_bridge:
         ethereal_bridge = _find_node_by_class(get_tree().root, "EtherealMigrationBridge")
     
     # Find DimensionalColorSystem
-    color_system = get_node_or_null("/root/DimensionalColorSystem")
+    color_system = get_node_or_null("root/DimensionalColorSystem")
     if not color_system:
         color_system = _find_node_by_class(get_tree().root, "DimensionalColorSystem")
     
     # Find Records System
-    records_system = get_node_or_null("/root/JSH_records_system")
+    records_system = get_node_or_null("root/JSH_records_system")
     if not records_system:
         records_system = _find_node_by_class(get_tree().root, "JSH_records_system")
     
     # Find Migration System
-    migration_system = get_node_or_null("/root/UnifiedMigrationSystem")
+    migration_system = get_node_or_null("root/UnifiedMigrationSystem")
     if not migration_system:
         migration_system = _find_node_by_class(get_tree().root, "UnifiedMigrationSystem")
     
@@ -644,7 +644,7 @@ func _generate_cosmic_address(base_name):
         str(temperature_state)
     ]
     
-    return address_components.join(":")
+    return address_components." ".join(":")
 
 func _get_universe_star_count(universe_name):
     match universe_name:

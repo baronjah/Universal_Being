@@ -1,5 +1,6 @@
 #Camera node in galaxies scene, mostly movement stuff, but here we check what galaxy is closest 
-class_name FreeLookCamera extends Camera3D
+class_name FreeLookCamera_Camera3D_Camera3D
+extends \2
 
 # Modifier keys' speed multiplier
 const SHIFT_MULTIPLIER = 2.5
@@ -30,7 +31,7 @@ var _alt = false
 
 var closest_galaxy = null
 var closest_distance = INF
-@export var transition_distance = 1
+@@@export var transition_distance = 1
 
 func _input(event):
 	# Receives mouse motion

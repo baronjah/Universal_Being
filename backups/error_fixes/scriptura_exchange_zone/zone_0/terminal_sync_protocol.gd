@@ -125,13 +125,13 @@ func connect_systems():
 	# Connect to the turn system
 	turn_system = get_node_or_null("/root/TurnSystem")
 	if turn_system:
-		turn_system.connect("turn_completed", self, "_on_turn_completed")
-		turn_system.connect("dimension_changed", self, "_on_dimension_changed")
+		turn_system.connect(_on_turn_completed)
+		turn_system.connect(_on_dimension_changed)
 	
 	# Connect to the divine word processor
 	divine_word_processor = get_node_or_null("/root/DivineWordProcessor")
 	if divine_word_processor:
-		divine_word_processor.connect("word_processed", self, "_on_word_processed")
+		divine_word_processor.connect(_on_word_processed)
 	
 	# Connect to other systems
 	word_comment_system = get_node_or_null("/root/WordCommentSystem")

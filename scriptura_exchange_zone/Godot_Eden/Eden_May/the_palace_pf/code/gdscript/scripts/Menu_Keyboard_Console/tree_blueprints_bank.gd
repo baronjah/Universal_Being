@@ -1,5 +1,5 @@
 # tree_blueprints_bank.gd
-class_name TreeBlueprints #TreeBlueprints.SCENE_TREE_BLUEPRINT BRANCH_BLUEPRINT
+class_name TreeBlueprints_treeblueprintsbank_treeblue #TreeBlueprints.SCENE_TREE_BLUEPRINT BRANCH_BLUEPRINT
 
 const SCENE_TREE_BLUEPRINT = {
 	"main_root": {

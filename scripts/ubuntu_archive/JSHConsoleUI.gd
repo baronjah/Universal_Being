@@ -37,8 +37,7 @@ var themes = {
         "input_background": Color(1.0, 1.0, 1.0, 1.0),
         "text": Color(0.1, 0.1, 0.1),
         "prompt": Color(0.0, 0.5, 0.8)
-    }
-}
+		}
 
 func _ready() -> void:
     # Get console manager

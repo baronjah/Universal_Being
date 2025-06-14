@@ -203,7 +203,7 @@ func install_language(language_code: String) -> bool:
     # For this mock-up, we'll simulate installation
     
     # Simulate installation time
-    yield(get_tree().create_timer(2.0), "timeout")
+    await(get_tree().create_timer(2.0), "timeout")
     
     # 90% chance of success
     var success = randf() > 0.1
@@ -230,7 +230,7 @@ func uninstall_language(language_code: String) -> bool:
     # For this mock-up, we'll simulate uninstallation
     
     # Simulate uninstallation time
-    yield(get_tree().create_timer(1.0), "timeout")
+    await(get_tree().create_timer(1.0), "timeout")
     
     if installed_languages.has(language_code) and installed_languages[language_code]:
         installed_languages[language_code] = false
@@ -314,7 +314,7 @@ func _process_next_task():
         mutex.unlock()
         
         # Try again after a short delay
-        yield(get_tree().create_timer(0.5), "timeout")
+        await(get_tree().create_timer(0.5), "timeout")
         _process_next_task()
 
 func _simulate_ocr_processing(thread_idx: int, task):
@@ -323,7 +323,7 @@ func _simulate_ocr_processing(thread_idx: int, task):
     
     # Add time delay to simulate processing
     var process_time = randi() % 1000 + 500  # 500-1500ms
-    yield(get_tree().create_timer(process_time / 1000.0), "timeout")
+    await(get_tree().create_timer(process_time / 1000.0), "timeout")
     
     # Generate sample OCR results
     var results = _generate_sample_results(task, process_time)

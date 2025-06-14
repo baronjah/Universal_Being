@@ -89,13 +89,13 @@ func generate_star_system(position: Vector3, rng: RandomNumberGenerator) -> Star
 			"type": ["Rocky", "Gas Giant", "Ice", "Desert", "Ocean"][rng.randi() % 5],
 			"resources": generate_planet_resources(rng),
 			"consciousness_artifact": rng.randf() < 0.1  # 10% chance
-		}
 		system.planets.append(planet)
+}
 		
 	return system
 	
 func generate_planet_resources(rng: RandomNumberGenerator) -> Dictionary:
-	var resources = {}
+	var resources = {
 	var resource_types = ["Helium-3", "Rare Metals", "Crystals", "Organic Compounds", "Dark Matter"]
 	
 	for resource in resource_types:
@@ -106,7 +106,8 @@ func generate_planet_resources(rng: RandomNumberGenerator) -> Dictionary:
 	
 func travel_to_system(system_name: String) -> Dictionary:
 	if not discovered_systems.has(system_name):
-		return {"success": false, "reason": "System not discovered"}
+		return {"success": false, "reason": "System not discovered"
+}
 		
 	var target_system = discovered_systems[system_name]
 	var current = discovered_systems[current_system]
@@ -115,7 +116,8 @@ func travel_to_system(system_name: String) -> Dictionary:
 	var max_range = warp_drive_level * 50.0
 	
 	if distance > max_range:
-		return {"success": false, "reason": "System out of range"}
+		return {"success": false, "reason": "System out of range"
+}
 		
 	# Travel successful
 	current_system = system_name
@@ -123,8 +125,10 @@ func travel_to_system(system_name: String) -> Dictionary:
 		visited_systems.append(system_name)
 		stellar_knowledge += 10.0
 		system_discovered.emit({"name": system_name, "data": target_system})
+}
 		
-	return {"success": true, "travel_time": distance / (warp_drive_level * 10.0)}
+	return {"success": true, "travel_time": distance / (warp_drive_level * 10.0)
+}
 	
 func scan_nearby_systems(scan_radius: float) -> Array:
 	var current_pos = discovered_systems[current_system].position

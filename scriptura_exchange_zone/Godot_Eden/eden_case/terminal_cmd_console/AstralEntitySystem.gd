@@ -1,5 +1,5 @@
 extends Node
-class_name AstralEntitySystem
+class_name AstralEntitySystem_AstralEntitySystem_AstralEn
 
 # ------------------------------------
 # AstralEntitySystem - Digital consciousness entity management
@@ -327,7 +327,7 @@ func _interact_entities(entity_id1, entity_id2, delta):
         "entity1": entity_id1,
         "entity2": entity_id2,
         "type": interaction_type,
-        "timestamp": OS.get_unix_time()
+        "timestamp": OS.Time.get_unix_time_from_system()
     })
     
     # Emit signal
@@ -727,7 +727,7 @@ func _create_astral_signature(entity_id):
         "dimensional_coordinates": entity.dimension,
         "color_spectrum": entity.color_attunement_stage,
         "shape_manifestation": ENTITY_SHAPES[entity.type],
-        "creation_timestamp": OS.get_unix_time()
+        "creation_timestamp": OS.Time.get_unix_time_from_system()
     }
     
     astral_signatures[entity_id] = signature
@@ -869,7 +869,7 @@ func create_entity(type, dimension = 1):
         return null
     
     # Generate unique ID
-    var entity_id = "entity_" + str(OS.get_unix_time()) + "_" + str(randi() % 10000)
+    var entity_id = "entity_" + str(OS.Time.get_unix_time_from_system()) + "_" + str(randi() % 10000)
     
     # Create entity
     var entity = {
@@ -883,7 +883,7 @@ func create_entity(type, dimension = 1):
         "color": ENTITY_COLORS[1],
         "awakened": false,
         "resonance_frequency": 432.0 + (randf() * 50.0), # Base frequency with random variation
-        "creation_time": OS.get_unix_time()
+        "creation_time": OS.Time.get_unix_time_from_system()
     }
     
     # Store entity

@@ -1,12 +1,12 @@
 # Add these functions to your main script that handles menu interactions
-#res://code/gdscript/scripts/Snake_Space_Movement/snake_controller.gd
+#res://scripts/gdscript/scripts/Snake_Space_Movement/snake_controller.gd
 # JSH_World/terminal
 #
-extends Node
-class_name CharacterController
+extends \2
+class_name CharacterController_snakecontroller_snakecon
 #
 #extends Node3D
-#class_name JSHTerminal
+#class_name JSHTerminal_snakecontroller_snakecon
 #
 #
 #      oooo  .oooooo..o ooooo   ooooo 
@@ -425,7 +425,7 @@ func stop_moving():
 }
 
 func update_display_console():
-	terminal_text.text = "\n".join(terminal_content)
+	terminal_text.text = "\n"." ".join(terminal_content)
 	update_input_display()
 }
 
@@ -518,7 +518,7 @@ func process_input_console(input_text: String):
 			var status = combo_system.get_current_combo_status()
 			if status.active:
 				add_line("> Combo '" + status.name + "' " + 
-						 "(" + str(status.stage) + "/" + str(status.total_stages) + ") " +
+						 "(" + str(status.stage) + "" + str(status.total_stages) + ") " +
 						 status.description)
 				if status.next_command:
 					add_line("> Next: " + status.next_command)
@@ -1019,7 +1019,7 @@ func handle_tab_completion():
 		var parts = current_input.strip_edges().split(" ", false)
 		if parts.size() > 0:
 			parts[0] = suggestion.command
-			current_input = " ".join(parts)
+			current_input = " "." ".join(parts)
 		else:
 			current_input = suggestion.command
 }
@@ -1062,7 +1062,7 @@ func _on_combo_started(combo_name, description):
 
 func _on_combo_advanced(combo_name, next_stage, description):
 	var status = combo_system.get_current_combo_status()
-	add_line("> Combo " + combo_name + " step " + str(status.stage) + "/" + str(status.total_stages))
+	add_line("> Combo " + combo_name + " step " + str(status.stage) + "" + str(status.total_stages))
 }
 
 func _on_combo_completed(combo_name):
@@ -1181,7 +1181,7 @@ func _cmd_combos(args = []) -> Dictionary:
 		var description = combo_system.get_combo_description(combo_name)
 }
 
-		output += "  " + combo_name + ": " + " → ".join(commands) + "\n"
+		output += "  " + combo_name + ": " + " → "." ".join(commands) + "\n"
 		output += "    " + description + "\n"
 }
 

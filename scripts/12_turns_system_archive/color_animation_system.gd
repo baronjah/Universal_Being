@@ -15,13 +15,13 @@ const HARMONIC_FREQUENCIES = {
     "PRIMARY": [99, 333, 555, 777, 999],
     "SECONDARY": [120, 240, 360, 480, 600, 720, 840, 960],
     "SPECIAL": [33, 66, 166, 233, 266, 299, 399, 466, 499, 533, 599, 633, 666, 699, 833, 866, 899, 933, 966]
-}
+	}
 
 const MESH_POINTS = {
     "CENTERS": [333, 666, 999],
     "EDGES": [120, 240, 480, 720, 960],
     "CORNERS": [99, 555, 777]
-}
+	}
 
 const SYMBOL_FREQUENCIES = {
     "#": 33,    // Simple hash
@@ -33,7 +33,7 @@ const SYMBOL_FREQUENCIES = {
     "%": 44,    // Percent
     "&": 88,    // Ampersand
     "*": 22     // Asterisk
-}
+	}
 
 # ----- ANIMATION TYPES -----
 enum AnimationType {
@@ -48,8 +48,8 @@ enum AnimationType {
 }
 
 # ----- STATE VARIABLES -----
-var active_animations = {}
-var color_map = {}
+var active_animations = {
+var color_map = {
 var update_timer: Timer
 var current_turn = 1
 var total_turns = 12
@@ -75,6 +75,7 @@ func _ready():
     _initialize_palettes()
     
     print("Color Animation System initialized with base frequency: " + str(base_frequency))
+	}
 
 func _setup_timer():
     update_timer = Timer.new()
@@ -105,14 +106,17 @@ func _create_color_for_frequency(frequency: int, type: String = "primary") -> Co
     
     match type:
         "primary":
+		}
             # Primary frequencies get pure, vibrant colors
             saturation = 0.9
             value = 1.0
         "secondary":
+		}
             # Secondary frequencies are slightly less saturated
             saturation = 0.8
             value = 0.9
         "special":
+		
             # Special frequencies have unique treatment
             saturation = 0.7
             value = 0.85
@@ -382,12 +386,15 @@ func _update_mesh_point_animation(animation, progress: float):
     var intensity = animation.intensity
     match mesh_type:
         "center":
+		
             # Centers pulse with high intensity
             intensity = sin(progress * TAU * 3.0) * 0.5 + 0.5
         "edge":
+		
             # Edges pulse with medium intensity
             intensity = sin(progress * TAU * 2.0) * 0.4 + 0.4
         "corner":
+		
             # Corners pulse with lower intensity but higher base
             intensity = sin(progress * TAU * 1.5) * 0.3 + 0.6
     
@@ -420,7 +427,7 @@ func start_fade_animation(target_id, start_color: Color, end_color: Color, durat
         "current_color": start_color,
         "duration": duration,
         "elapsed_time": 0.0
-    }
+		}
     
     emit_signal("animation_started", animation_id, AnimationType.FADE)
     
@@ -440,7 +447,7 @@ func start_pulse_animation(target_id, base_color: Color, pulse_color: Color, dur
         "intensity": intensity,
         "duration": duration,
         "elapsed_time": 0.0
-    }
+		}
     
     emit_signal("animation_started", animation_id, AnimationType.PULSE)
     
@@ -459,7 +466,7 @@ func start_rainbow_animation(target_id, duration: float = default_duration, spee
         "current_color": Color.from_hsv(0, saturation, value),
         "duration": duration,
         "elapsed_time": 0.0
-    }
+		}
     
     emit_signal("animation_started", animation_id, AnimationType.RAINBOW)
     
@@ -478,7 +485,7 @@ func start_flash_animation(target_id, base_color: Color, flash_color: Color, dur
         "flash_count": flash_count,
         "duration": duration,
         "elapsed_time": 0.0
-    }
+		}
     
     emit_signal("animation_started", animation_id, AnimationType.FLASH)
     
@@ -503,7 +510,7 @@ func start_gradient_animation(target_id, colors: Array, positions: Array = [], d
         "current_color": colors[0],
         "duration": duration,
         "elapsed_time": 0.0
-    }
+		}
     
     emit_signal("animation_started", animation_id, AnimationType.GRADIENT)
     
@@ -523,7 +530,7 @@ func start_sparkle_animation(target_id, base_color: Color, sparkle_color: Color,
         "intensity": intensity,
         "duration": duration,
         "elapsed_time": 0.0
-    }
+		}
     
     emit_signal("animation_started", animation_id, AnimationType.SPARKLE)
     
@@ -544,7 +551,7 @@ func start_wave_animation(target_id, base_color: Color, wave_color: Color, durat
         "intensity": intensity,
         "duration": duration,
         "elapsed_time": 0.0
-    }
+		}
     
     emit_signal("animation_started", animation_id, AnimationType.WAVE)
     
@@ -589,7 +596,7 @@ func start_mesh_point_animation(target_id, frequency: int, mesh_type: String, du
         "duration": duration,
         "elapsed_time": 0.0,
         "last_activation_time": 0.0
-    }
+		}
     
     emit_signal("animation_started", animation_id, AnimationType.MESH_POINT)
     
@@ -662,11 +669,13 @@ func colorize_symbols(text: String) -> String:
     
     # Handle multi-character symbols first
     if text.find("###") != -1:
+	
         var color = get_symbol_color("###")
         var hex_color = color.to_html(false)
         result = result.replace("###", "[color=#" + hex_color + "]###[/color]")
     
     if text.find("##") != -1:
+	
         var color = get_symbol_color("##")
         var hex_color = color.to_html(false)
         result = result.replace("##", "[color=#" + hex_color + "]##[/color]")
@@ -722,7 +731,7 @@ func create_mesh_point_colors() -> Dictionary:
         "centers": [],
         "edges": [],
         "corners": []
-    }
+		}
     
     for center in MESH_POINTS.CENTERS:
         result.centers.append(get_color_for_frequency(center))
@@ -762,11 +771,13 @@ func _adjust_frequencies_for_turn(turn_number: int):
         
         # Adjust frequency-based animations
         if animation.has("frequency"):
+		
             # Scale frequency based on turn
             animation.frequency = max(animation.frequency, turn_frequency)
         
         # Update colors if needed
         if animation.has("base_color"):
+		
             # Add turn color influence
             var turn_color = get_turn_color(turn_number)
             animation.base_color = animation.base_color.lerp(turn_color, 0.3)
@@ -839,6 +850,6 @@ func get_animation_info(animation_id: int) -> Dictionary:
             "progress": animation.elapsed_time / animation.duration,
             "target_id": animation.get("target_id", ""),
             "current_color": animation.get("current_color", Color.WHITE)
-        }
+			}
     
-    return {}
+    return {

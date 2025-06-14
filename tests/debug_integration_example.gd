@@ -49,6 +49,7 @@ func handle_debug_input(event: InputEvent) -> void:
 func _on_debug_inspection_requested(object: Node) -> void:
 	"""Handle inspection request"""
 	print("🔍 Inspection requested for: %s" % object.name)
+
 	
 	# Get debug interface using LogicConnector
 	var debug_interface = LogicConnector.get_debug_interface(object)
@@ -59,6 +60,7 @@ func _on_debug_inspection_requested(object: Node) -> void:
 func _on_debug_object_clicked(object: Node, click_position: Vector3) -> void:
 	"""Handle object click"""
 	print("🖱️ Clicked on: %s at position %s" % [object.name, click_position])
+
 
 func print_debug_summary(object: Node, debug_interface: Dictionary) -> void:
 	"""Print a debug summary of the object"""
@@ -74,6 +76,7 @@ func print_debug_summary(object: Node, debug_interface: Dictionary) -> void:
 	print("  Class: %s" % obj_info.class)
 	print("  Position: %s" % obj_info.position)
 	print("  Children: %d" % obj_info.children_count)
+
 	
 	# Pentagon status
 	var pentagon = debug_interface.pentagon_status
@@ -82,6 +85,7 @@ func print_debug_summary(object: Node, debug_interface: Dictionary) -> void:
 	print("  Pentagon Active: %s" % pentagon.pentagon_active)
 	print("  Lifecycle Stage: %s" % pentagon.lifecycle_stage)
 	print("  Methods: %s" % pentagon.pentagon_methods)
+
 	
 	# Consciousness data
 	var consciousness = debug_interface.consciousness_data
@@ -89,6 +93,7 @@ func print_debug_summary(object: Node, debug_interface: Dictionary) -> void:
 	print("  Level: %d" % consciousness.level)
 	print("  Color: %s" % consciousness.color)
 	print("  Evolution Paths: %s" % consciousness.evolution_paths)
+
 	
 	# Available actions
 	var actions = debug_interface.available_actions
@@ -114,18 +119,22 @@ func print_debug_summary(object: Node, debug_interface: Dictionary) -> void:
 func add_debug_to_test_being(test_being: Node) -> void:
 	"""Add debug capabilities to a test being"""
 	if test_being and test_being.has_method("pentagon_init"):
+
 		# The being automatically gets LogicConnector capabilities
 		# You can test the debug interface:
 		var debug_interface = LogicConnector.get_debug_interface(test_being)
 		print("🧪 Test being debug interface ready: %d actions available" % debug_interface.available_actions.size())
 
+
 # Add this to your create_chunk_at_coordinate() function in ChunkGridManager:
 func add_debug_to_chunk(chunk: Node) -> void:
 	"""Add debug capabilities to a chunk"""
 	if chunk and chunk.has_method("pentagon_init"):
+
 		# Chunks automatically get full debug interface
 		var debug_interface = LogicConnector.get_debug_interface(chunk)
 		print("🧊 Chunk debug interface ready: %s" % chunk.name)
+
 
 # ===== COMPLETE INTEGRATION EXAMPLE =====
 
@@ -134,6 +143,7 @@ func _ready() -> void:
 	# Your existing initialization code...
 	name = "Main"
 	print("🌟 Universal Being Engine: Starting...")
+
 	
 	# ADD THIS LINE to enable debugging:
 	setup_universal_debugging()
@@ -180,6 +190,7 @@ func debug_all_universal_beings() -> void:
 	var universal_beings = get_tree().get_nodes_in_group("universal_beings")
 	
 	print("🔍 Debugging %d Universal Beings:" % universal_beings.size())
+
 	
 	for being in universal_beings:
 		var debug_interface = LogicConnector.get_debug_interface(being)
@@ -214,5 +225,6 @@ func find_debug_problems() -> Array:
 		var consciousness = debug_interface.consciousness_data
 		if consciousness.level < 0 or consciousness.level > 5:
 			problems.append("Invalid consciousness level in %s: %d" % [being.name, consciousness.level])
+
 	
 	return problems

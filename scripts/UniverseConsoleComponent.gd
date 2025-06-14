@@ -69,13 +69,16 @@ func _cmd_universe(args: Array) -> String:
 	"""Universe command: create, delete, rename"""
 	if args.is_empty():
 		return "Usage: universe <create|delete|rename> [name]"
+
 	
 	var action = args[0]
 	match action:
 		"create":
+
 			var name = args[1] if args.size() > 1 else "Universe_%d" % randi()
 			return _create_universe(name)
 		"delete":
+
 			var name = args[1] if args.size() > 1 else ""
 			return _delete_universe(name)
 		"rename":
@@ -85,11 +88,13 @@ func _cmd_universe(args: Array) -> String:
 		_:
 			return "Unknown universe action: %s" % action
 
+
 func _create_universe(universe_name: String) -> String:
 	"""Create a new universe"""
 	var UniverseClass = load("res://beings/UniverseUniversalBeing.gd")
 	if not UniverseClass:
 		return "ERROR: UniverseUniversalBeing class not found!"
+
 	
 	var new_universe = UniverseClass.new()
 	new_universe.universe_name = universe_name
@@ -142,6 +147,7 @@ func _cmd_portal(args: Array) -> String:
 	"""Portal command: create portals between universes"""
 	if args.size() < 2:
 		return "Usage: portal <target_universe> [bidirectional]"
+
 	
 	var target_name = args[0]
 	var bidirectional = args.size() > 1 and args[1] == "true"
@@ -185,6 +191,7 @@ func _cmd_inspect(args: Array) -> String:
 	output += "  Sub-universes: %d\n" % info.get("sub_universes", 0)
 	output += "  Total Consciousness: %.2f\n" % info.get("consciousness", 0.0)
 	output += "  Entropy Level: %.4f\n" % info.get("entropy", 0.0)
+
 	
 	return output
 
@@ -192,6 +199,7 @@ func _cmd_enter(args: Array) -> String:
 	"""Enter a universe"""
 	if args.is_empty():
 		return "Usage: enter <universe_name>"
+
 	
 	var target_name = args[0]
 	var target_universe = _find_universe_by_name(target_name)
@@ -242,9 +250,11 @@ func _cmd_list(args: Array) -> String:
 		_:
 			return "Usage: list <universes|beings|portals>"
 
+
 func _list_universes() -> String:
 	"""List all accessible universes"""
 	var output = "🌌 Accessible Universes:\n"
+
 	var universes = _find_all_universes()
 	
 	if universes.is_empty():
@@ -270,6 +280,7 @@ func _cmd_rules(args: Array) -> String:
 	var output = "🌌 Universe Rules for '%s':\n" % info.name
 	for rule_name in rules:
 		output += "  %s: %s\n" % [rule_name, str(rules[rule_name])]
+
 	
 	return output
 
@@ -277,6 +288,7 @@ func _cmd_setrule(args: Array) -> String:
 	"""Set a universe rule"""
 	if args.size() < 2:
 		return "Usage: setrule <rule_name> <value>"
+
 	
 	if not current_universe or not current_universe.has_method("set_universe_rule"):
 		return "Not currently in a universe!"
@@ -295,6 +307,7 @@ func _cmd_lod(args: Array) -> String:
 	"""Manage Level of Detail settings"""
 	if args.is_empty():
 		return "Usage: lod <set|get> [level]"
+
 	
 	if not current_universe:
 		return "Not currently in a universe!"
@@ -309,6 +322,7 @@ func _cmd_lod(args: Array) -> String:
 		"set":
 			if args.size() < 2:
 				return "Usage: lod set <0-4>"
+	
 			var level = int(args[1])
 			current_universe.current_lod = clamp(level, 0, 4)
 			current_universe.apply_lod_settings()
@@ -316,9 +330,11 @@ func _cmd_lod(args: Array) -> String:
 		_:
 			return "Unknown lod action: %s" % action
 
+
 func _cmd_tree(args: Array) -> String:
 	"""Display universe hierarchy tree"""
 	var output = "🌌 Universe Tree:\n"
+
 	var root_universes = _find_root_universes()
 	
 	for universe in root_universes:
@@ -330,6 +346,7 @@ func _cmd_save(args: Array) -> String:
 	"""Save universe state"""
 	if args.is_empty():
 		return "Usage: save <filename>"
+
 	
 	# TODO: Implement universe serialization
 	return "Universe save not yet implemented"
@@ -338,6 +355,7 @@ func _cmd_load(args: Array) -> String:
 	"""Load universe state"""
 	if args.is_empty():
 		return "Usage: load <filename>"
+
 	
 	# TODO: Implement universe deserialization
 	return "Universe load not yet implemented"
@@ -346,6 +364,7 @@ func _cmd_merge(args: Array) -> String:
 	"""Merge two universes"""
 	if args.size() < 2:
 		return "Usage: merge <universe1> <universe2>"
+
 	
 	# TODO: Implement universe merging
 	return "Universe merging not yet implemented"
@@ -354,6 +373,7 @@ func _cmd_split(args: Array) -> String:
 	"""Split current universe"""
 	if args.is_empty():
 		return "Usage: split <criteria>"
+
 	
 	# TODO: Implement universe splitting
 	return "Universe splitting not yet implemented"
@@ -406,6 +426,7 @@ func _build_universe_tree(universe: Node, depth: int) -> String:
 	var indent = "  ".repeat(depth)
 	var info = universe.get_universe_info()
 	var output = "%s└─ %s (beings: %d)\n" % [indent, info.name, info.beings]
+
 	
 	# Find sub-universes
 	for being in universe.contained_beings:
@@ -420,6 +441,7 @@ func _list_beings() -> String:
 		return "Not currently in a universe!"
 	
 	var output = "🌟 Beings in '%s':\n" % current_universe.universe_name
+
 	
 	if current_universe.contained_beings.is_empty():
 		return output + "  No beings in this universe."
@@ -428,6 +450,7 @@ func _list_beings() -> String:
 		var type = being.get("being_type") if being.has_method("get") else "unknown"
 		var consciousness = being.get("consciousness_level") if being.has_method("get") else 0
 		output += "  • %s (%s) - Consciousness: %d\n" % [being.name, type, consciousness]
+
 	
 	return output
 
@@ -437,6 +460,7 @@ func _list_portals() -> String:
 		return "Not currently in a universe!"
 	
 	var output = "🌀 Portals in '%s':\n" % current_universe.universe_name
+
 	
 	if current_universe.portal_connections.is_empty():
 		return output + "  No portals in this universe."

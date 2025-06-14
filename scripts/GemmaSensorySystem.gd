@@ -41,6 +41,7 @@ func _ready() -> void:
 	name = "GemmaSensorySystem"
 	add_to_group("gemma_sensory")
 	print("👁️ GemmaSensorySystem: Initializing Gemma AI senses...")
+
 	
 	# Initialize all sensory subsystems
 	_initialize_vision_system()
@@ -71,6 +72,7 @@ func _initialize_vision_system() -> void:
 	
 	print("👁️ Gemma Vision system initialized - FOV: %.1f°, Range: %.1fm" % [vision_system.field_of_view, vision_system.max_range])
 
+
 func _initialize_audio_system() -> void:
 	"""Initialize Gemma's audio perception system"""
 	audio_system = GemmaAudio.new()
@@ -84,6 +86,7 @@ func _initialize_audio_system() -> void:
 	audio_system.sound_source_tracking = true
 	
 	print("👂 Gemma Audio system initialized - Range: %.1fm" % audio_system.hearing_range)
+
 
 func _initialize_spatial_system() -> void:
 	"""Initialize Gemma's spatial perception system"""
@@ -188,6 +191,7 @@ func _perception_cycle() -> void:
 func _deep_analysis_cycle() -> void:
 	"""Run deeper scene analysis"""
 	print("🧠 Gemma: Performing deep scene analysis...")
+
 	
 	# Comprehensive scene analysis
 	var scene_analysis = _analyze_current_scene()
@@ -265,7 +269,7 @@ func _analyze_current_scene() -> Dictionary:
 		"visual_summary": "",
 		"gemma_observations": "",
 		"interaction_opportunities": []
-	}
+}
 	
 	# Analyze each being
 	for being in observed_beings:
@@ -296,7 +300,7 @@ func _analyze_being(being: Node) -> Dictionary:
 		"evolution_state": "unknown",
 		"interactions_available": [],
 		"visual_description": ""
-	}
+}
 	
 	# Get being type
 	if being.has_method("get") and being.has_property("being_type"):
@@ -336,6 +340,7 @@ func _generate_visual_description(being: Node) -> String:
 		description += " positioned at %s" % being.global_position
 	
 	if being.has_method("get") and being.has_property("consciousness_level"):
+
 		var level = being.get("consciousness_level")
 		description += " with consciousness level %d" % level
 		
@@ -347,6 +352,7 @@ func _generate_visual_description(being: Node) -> String:
 			3: description += " (connected, green)"
 			4: description += " (enlightened, gold)"
 			5: description += " (transcendent, white with glow)"
+
 	
 	return description
 
@@ -413,6 +419,7 @@ func _find_interaction_opportunities() -> Array[Dictionary]:
 func _on_new_being_detected(being: Node) -> void:
 	"""Handle detection of a new Universal Being"""
 	print("👁️ Gemma: New being detected - %s" % being.name)
+
 	
 	# Log the detection
 	if akashic_logger:
@@ -452,6 +459,7 @@ func _check_communication_triggers(analysis: Dictionary) -> void:
 func _check_new_being_communication(being_data: Dictionary) -> void:
 	"""Check if Gemma wants to communicate about a new being"""
 	var message = "I've detected a new Universal Being: %s. " % being_data.visual_description
+
 	
 	if being_data.consciousness_level > 0:
 		message += "It appears to be conscious and may benefit from interaction."
@@ -463,6 +471,7 @@ func _check_new_being_communication(being_data: Dictionary) -> void:
 func _on_gemma_command_received(command: String, parameters: Dictionary) -> void:
 	"""Handle commands sent to Gemma"""
 	print("💬 Gemma received command: %s" % command)
+
 	
 	if command_processor:
 		command_processor.process_command(command, parameters, current_scene_analysis)
@@ -472,6 +481,7 @@ func _on_gemma_command_received(command: String, parameters: Dictionary) -> void
 func _on_gemma_response_ready(response: String, context: Dictionary) -> void:
 	"""Handle Gemma's response to commands"""
 	print("💬 Gemma responds: %s" % response)
+
 	
 	# Log the interaction
 	if akashic_logger:
@@ -482,6 +492,7 @@ func _on_gemma_response_ready(response: String, context: Dictionary) -> void:
 func inject_starting_scenario(scenario_name: String, scenario_data: Dictionary) -> void:
 	"""Inject a starting universe/story scenario for Gemma to work with"""
 	print("🌌 Injecting starting scenario for Gemma: %s" % scenario_name)
+
 	
 	# Create scenario context
 	var scenario_context = {
@@ -491,7 +502,7 @@ func inject_starting_scenario(scenario_name: String, scenario_data: Dictionary) 
 		"beings_to_create": scenario_data.get("beings", []),
 		"story_context": scenario_data.get("story", ""),
 		"objectives": scenario_data.get("objectives", [])
-	}
+}
 	
 	# Log scenario injection
 	if akashic_logger:
@@ -511,7 +522,7 @@ func get_gemma_perception_summary() -> Dictionary:
 		"detected_interfaces": detected_interfaces.size(),
 		"interaction_history": interaction_history.size(),
 		"last_communication": perception_memory.get("last_communication", "")
-	}
+}
 
 func send_message_to_gemma(message: String, context: Dictionary = {}) -> void:
 	"""Send a message to Gemma for processing"""

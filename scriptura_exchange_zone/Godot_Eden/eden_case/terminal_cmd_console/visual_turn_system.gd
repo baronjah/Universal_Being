@@ -1,5 +1,5 @@
 extends Node
-class_name VisualTurnSystem
+class_name VisualTurnSystem_visualturnsystem_visualtu
 
 """
 VisualTurnSystem: Cross-platform visualization of the turn-based system

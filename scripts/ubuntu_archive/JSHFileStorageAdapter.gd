@@ -34,7 +34,7 @@ var stats: Dictionary = {
     "deletes": 0,
     "total_bytes_read": 0,
     "total_bytes_written": 0
-}
+	}
 
 func _init(root_path: String = "") -> void:
     if not root_path.is_empty():
@@ -45,6 +45,7 @@ func _init(root_path: String = "") -> void:
 
 func initialize() -> bool:
     print("JSHFileStorageAdapter: Initializing at " + storage_root)
+	
     
     # Ensure directories exist
     if auto_create_dirs:
@@ -60,6 +61,7 @@ func is_initialized() -> bool:
 # Directory management
 func ensure_directories() -> void:
     var dir = DirAccess.open("user://")
+	
     
     # Create main directories
     dir.make_dir_recursive(entity_data_path)
@@ -67,9 +69,11 @@ func ensure_directories() -> void:
     dir.make_dir_recursive(temp_path)
     
     print("JSHFileStorageAdapter: Directories created")
+	
 
 func ensure_path_exists(path: String) -> bool:
     if not path.ends_with("/"):
+	
         # Extract directory part
         var last_slash = path.rfind("/")
         if last_slash >= 0:
@@ -149,6 +153,7 @@ func save_data(file_path: String, data, data_type: String = "json") -> bool:
             "binary":
                 file.store_var(data)
             "compressed":
+			
                 var buffer = data
                 if typeof(data) == TYPE_STRING:
                     buffer = data.to_utf8_buffer()
@@ -157,6 +162,7 @@ func save_data(file_path: String, data, data_type: String = "json") -> bool:
                 
                 file.store_buffer(buffer.compress(FileAccess.COMPRESSION_GZIP))
             "json":
+			
                 var json_string = ""
                 if typeof(data) == TYPE_DICTIONARY or typeof(data) == TYPE_ARRAY:
                     json_string = JSON.stringify(data, "  ")
@@ -191,6 +197,7 @@ func load_data(file_path: String, data_type: String = "json"):
             "binary":
                 data = file.get_var()
             "compressed":
+			
                 var compressed_data = file.get_buffer(file.get_length())
                 var decompressed = compressed_data.decompress_dynamic(-1, FileAccess.COMPRESSION_GZIP)
                 
@@ -204,6 +211,7 @@ func load_data(file_path: String, data_type: String = "json"):
                     # Return raw decompressed data
                     data = decompressed
             "json":
+			
                 var json_string = file.get_as_text()
                 var json_result = JSON.parse_string(json_string)
                 
@@ -235,6 +243,7 @@ func append_data(file_path: String, data, data_type: String = "text") -> bool:
     # For append, we need to handle different data types
     match data_type:
         "binary":
+		
             # For binary, we need to read the file, append, and save
             var existing_data = load_data(file_path, "binary")
             
@@ -249,6 +258,7 @@ func append_data(file_path: String, data, data_type: String = "text") -> bool:
             
             return save_data(file_path, existing_data, "binary")
         "json":
+		
             # For JSON, we need to read the file, append, and save
             var existing_data = load_data(file_path, "json")
             
@@ -263,6 +273,7 @@ func append_data(file_path: String, data, data_type: String = "text") -> bool:
             
             return save_data(file_path, existing_data, "json")
         "text", "csv", _:
+		
             # For text, we can actually append to the file
             var file = FileAccess.open(file_path, FileAccess.READ_WRITE)
             
@@ -290,6 +301,7 @@ func delete_file(file_path: String) -> bool:
         return false
     
     var dir = DirAccess.open("user://")
+	
     
     if dir.file_exists(file_path):
         var result = dir.remove(file_path)
@@ -415,6 +427,7 @@ func unlock_file(file_path: String) -> bool:
     
     var lock_path = file_locks[file_path]
     var dir = DirAccess.open("user://")
+	
     
     if dir.file_exists(lock_path):
         var result = dir.remove(lock_path)
@@ -475,6 +488,7 @@ func save_media_file(media_id: String, media_data, media_type: String = "image")
     
     # For images, handle Image objects
     if media_type == "image" and media_data is Image:
+	
         var image = media_data as Image
         return image.save_png(file_path) == OK
     
@@ -490,6 +504,7 @@ func load_media_file(media_id: String, media_type: String = "image"):
     
     # For images, load as Image object
     if media_type == "image":
+	
         var image = Image.new()
         var err = image.load(file_path)
         if err == OK:
@@ -563,4 +578,3 @@ func reset_statistics() -> void:
         "deletes": 0,
         "total_bytes_read": 0,
         "total_bytes_written": 0
-    }

@@ -1,5 +1,6 @@
 @tool
-class_name VisualShaderNodeRayMarch extends VisualShaderNodeCustom
+class_name VisualShaderNodeRayMarch_RayMarch_RayMarch
+extends \2
 
 func _get_name() -> String:
 	return "RayMarch"

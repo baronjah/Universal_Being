@@ -1,6 +1,6 @@
 extends Node
 
-# Spatial World Storage System
+# Node3D World Storage System
 # Handles storage and management of 3D spaces, maps and akashic record data
 # Terminal 1: Divine Word Genesis
 
@@ -48,7 +48,7 @@ class DimensionalPoint:
 			"dimension": dimension,
 			"power": power,
 			"timestamp": timestamp
-		}
+}
 	
 	static func from_dict(data):
 		var coord = Coordinate.new(data.x, data.y, data.z)
@@ -85,7 +85,7 @@ class AkashicEntry:
 			"tags": tags,
 			"connections": conn_ids,
 			"entry_id": entry_id
-		}
+}
 
 # 3D world map
 class SpatialMap:
@@ -99,8 +99,8 @@ class SpatialMap:
 	func _init(map_name, dim = 1):
 		name = map_name
 		dimension = dim
-		grid = {}
-		entities = {}
+		grid = {
+		entities = {
 		creation_time = OS.get_unix_time()
 		last_update = creation_time
 	
@@ -118,7 +118,7 @@ class SpatialMap:
 		last_update = OS.get_unix_time()
 	
 	func to_dict():
-		var grid_data = {}
+		var grid_data = {
 		for key in grid:
 			grid_data[key] = grid[key].to_dict()
 		
@@ -129,7 +129,7 @@ class SpatialMap:
 			"entities": entities,
 			"creation_time": creation_time,
 			"last_update": last_update
-		}
+}
 
 # Notepad3D Cell
 class Notepad3DCell:
@@ -162,7 +162,7 @@ class Notepad3DCell:
 			},
 			"cell_id": cell_id,
 			"last_edit": last_edit
-		}
+}
 
 # Notepad3D notebook
 class Notepad3D:
@@ -174,7 +174,7 @@ class Notepad3D:
 	
 	func _init(notebook_name, notebook_tags = []):
 		name = notebook_name
-		cells = {}
+		cells = {
 		creation_time = OS.get_unix_time()
 		last_update = creation_time
 		tags = notebook_tags
@@ -196,7 +196,7 @@ class Notepad3D:
 		return null
 	
 	func to_dict():
-		var cells_data = {}
+		var cells_data = {
 		for cell_id in cells:
 			cells_data[cell_id] = cells[cell_id].to_dict()
 		
@@ -206,12 +206,12 @@ class Notepad3D:
 			"creation_time": creation_time,
 			"last_update": last_update,
 			"tags": tags
-		}
+}
 
 # Main storage variables
-var akashic_entries = {}
-var spatial_maps = {}
-var notepad_notebooks = {}
+var akashic_entries = {
+var spatial_maps = {
+var notepad_notebooks = {
 
 # Signal connections
 signal entry_added(entry_id)
@@ -268,7 +268,7 @@ func connect_entries(source_id, target_id):
 
 func save_akashic_records():
 	var file = File.new()
-	var data = {}
+	var data = {
 	
 	for entry_id in akashic_entries:
 		data[entry_id] = akashic_entries[entry_id].to_dict()
@@ -281,6 +281,7 @@ func load_akashic_records():
 	var file = File.new()
 	if file.file_exists("user://akashic_records.json"):
 		file.open("user://akashic_records.json", File.READ)
+}
 		var data_text = file.get_as_text()
 		file.close()
 		
@@ -289,7 +290,7 @@ func load_akashic_records():
 			akashic_entries.clear()
 			
 			# First pass: Create all entries
-			var temp_entries = {}
+			var temp_entries = {
 			for entry_id in data:
 				var entry_data = data[entry_id]
 				var position_data = entry_data.position
@@ -314,7 +315,7 @@ func load_akashic_records():
 			
 			akashic_entries = temp_entries
 
-# Spatial Maps functions
+# Node3D Maps functions
 func create_spatial_map(name, dimension = 1):
 	var map = SpatialMap.new(name, dimension)
 	spatial_maps[name] = map
@@ -343,7 +344,7 @@ func add_entity_to_map(map_name, entity_id, entity_data):
 
 func save_spatial_maps():
 	var file = File.new()
-	var data = {}
+	var data = {
 	
 	for map_name in spatial_maps:
 		data[map_name] = spatial_maps[map_name].to_dict()
@@ -356,6 +357,7 @@ func load_spatial_maps():
 	var file = File.new()
 	if file.file_exists("user://spatial_maps.json"):
 		file.open("user://spatial_maps.json", File.READ)
+}
 		var data_text = file.get_as_text()
 		file.close()
 		
@@ -419,7 +421,7 @@ func get_cell_at_position(notebook_name, position):
 
 func save_notepad_notebooks():
 	var file = File.new()
-	var data = {}
+	var data = {
 	
 	for notebook_name in notepad_notebooks:
 		data[notebook_name] = notepad_notebooks[notebook_name].to_dict()
@@ -432,6 +434,7 @@ func load_notepad_notebooks():
 	var file = File.new()
 	if file.file_exists("user://notepad3d_notebooks.json"):
 		file.open("user://notepad3d_notebooks.json", File.READ)
+}
 		var data_text = file.get_as_text()
 		file.close()
 		
@@ -507,7 +510,6 @@ func create_map_from_akashic(entry_ids, map_name, dimension = 1):
 					"x": entry.position.coordinate.x,
 					"y": entry.position.coordinate.y,
 					"z": entry.position.coordinate.z
-				}
 			})
 			
 			i += 1
@@ -563,7 +565,7 @@ func find_spatial_synergies(threshold = 5.0):
 
 # Find entries in dimensional clusters
 func find_dimensional_clusters(min_cluster_size = 3, max_distance = 10.0):
-	var clusters = {}
+	var clusters = {
 	
 	# Initialize clusters by dimension
 	for i in range(1, MAX_DIMENSION + 1):
@@ -586,7 +588,7 @@ func find_dimensional_clusters(min_cluster_size = 3, max_distance = 10.0):
 			continue
 		
 		var sub_clusters = []
-		var processed = {}
+		var processed = {
 		
 		for entry in entries:
 			if processed.has(entry.entry_id):

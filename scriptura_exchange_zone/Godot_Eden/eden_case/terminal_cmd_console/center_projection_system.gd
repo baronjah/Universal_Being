@@ -5,13 +5,13 @@ extends Node
 # with fractal loading zones and data easing for optimal performance
 
 # Configuration
-export var use_center_projection = true
-export var use_fractal_loading = true
-export var ease_data_checks = true
-export var viewport_scale = 1.0
-export var max_loading_zones = 9
-export var gradient_smoothing = 0.5
-export var ocr_enabled = true
+@export var use_center_projection = true
+@export var use_fractal_loading = true
+@export var ease_data_checks = true
+@export var viewport_scale = 1.0
+@export var max_loading_zones = 9
+@export var gradient_smoothing = 0.5
+@export var ocr_enabled = true
 
 # Constants
 const FRACTAL_DEPTH = 4
@@ -382,7 +382,7 @@ func _update_gradient_footprints():
 # Connect to existing systems
 func _connect_to_systems():
     # Try to find data_pack_system
-    var dps = get_node_or_null("/root/DataPackSystem")
+    var dps = get_node_or_null("root/DataPackSystem")
     if dps:
         data_pack_system = dps
     
@@ -391,7 +391,7 @@ func _connect_to_systems():
         data_pack_system = get_parent().get_node("DataPackSystem")
     
     # Find quantum terminal
-    var qt = get_node_or_null("/root/QuantumTerminal")
+    var qt = get_node_or_null("root/QuantumTerminal")
     if qt:
         quantum_terminal = qt
 
@@ -418,7 +418,7 @@ func add_ocr_text(text, position, confidence=1.0):
         "text": text,
         "position": position,
         "confidence": confidence,
-        "timestamp": OS.get_unix_time()
+        "timestamp": OS.Time.get_unix_time_from_system()
     }
     
     return true

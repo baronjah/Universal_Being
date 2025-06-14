@@ -1,16 +1,16 @@
 extends Node
 
-class_name EtherealAkashicBridge
+class_name EtherealAkashicBridge_etherealakashicbridge_ethereal
 
 # ----- BRIDGE SETTINGS -----
 @export_category("Bridge Configuration")
-@export var enabled: bool = true
-@export var auto_connect: bool = true
-@export var ethereal_engine_path: String = "res://ethereal_engine_integration.gd"
-@export var akashic_bridge_path: String = "res://claude_akashic_bridge.gd"
-@export var connection_frequency: float = 0.5  # How often to synchronize (in seconds)
-@export var dimensional_depth: int = 8
-@export var max_data_transfer: int = 888
+@@export var enabled: bool = true
+@@export var auto_connect: bool = true
+@@export var ethereal_engine_path: String = "res://ethereal_engine_integration.gd"
+@@export var akashic_bridge_path: String = "res://claude_akashic_bridge.gd"
+@@export var connection_frequency: float = 0.5  # How often to synchronize (in seconds)
+@@export var dimensional_depth: int = 8
+@@export var max_data_transfer: int = 888
 
 # ----- CONNECTION VARIABLES -----
 var ethereal_engine: Node = null

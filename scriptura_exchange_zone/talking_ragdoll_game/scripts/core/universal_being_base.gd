@@ -3,9 +3,8 @@
 # Created: May 31, 2025, 23:30 CEST
 # Purpose: Base class for ALL scripts following Pentagon Architecture
 # Connection: Core foundation implementing "All for One, One for All" principle
-
 extends Node3D
-class_name UniversalBeingBase
+# DISABLED DUPLICATE: class_name UniversalBeingBase_universa
 
 ## The foundation class that ALL scripts in the project inherit from
 ## Enforces Pentagon Pattern with 5 sacred functions
@@ -91,7 +90,7 @@ var being_metadata: Dictionary = {
 
 func _register_with_floodgate() -> void:
 	# Register this Universal Being with FloodgateController
-	var floodgate = get_node_or_null("/root/FloodgateController")
+	var floodgate = get_node_or_null("root/FloodgateController")
 	if floodgate and floodgate.has_method("register_universal_being"):
 		universal_uuid = _generate_uuid()
 		being_metadata.created_at = Time.get_ticks_msec()
@@ -111,7 +110,7 @@ func _generate_uuid() -> String:
 ## Universal add_child - ALWAYS use this instead of direct add_child
 func universal_add_child(child: Node, parent: Node = null) -> void:
 	var target_parent = parent if parent else self
-	var floodgate = get_node_or_null("/root/FloodgateController")
+	var floodgate = get_node_or_null("root/FloodgateController")
 	if floodgate and floodgate.has_method("floodgate_add_child"):
 		# Use floodgate_add_child to avoid infinite recursion
 		floodgate.floodgate_add_child(child, target_parent)
@@ -147,7 +146,7 @@ func evolve_into(new_form: String, evolution_data: Dictionary = {}) -> bool:
 		return false
 
 func _notify_evolution(from: String, to: String) -> void:
-	var logic_connector = get_node_or_null("/root/LogicConnector")
+	var logic_connector = get_node_or_null("root/LogicConnector")
 	if logic_connector and logic_connector.has_method("on_being_evolved"):
 		logic_connector.on_being_evolved(self, from, to)
 
@@ -218,7 +217,7 @@ func clear_memory(key: String) -> void:
 
 func _log_pentagon_activity(function_name: String) -> void:
 	# Log Pentagon function call to PentagonActivityMonitor
-	var monitor = get_node_or_null("/root/PentagonActivityMonitor")
+	var monitor = get_node_or_null("root/PentagonActivityMonitor")
 	if monitor and monitor.has_method("log_pentagon_call"):
 		var script_path = get_script().resource_path if get_script() else "unknown"
 		monitor.log_pentagon_call(function_name, script_path)
@@ -352,7 +351,7 @@ func _set_optimization_state(new_state: String) -> void:
 func _notification(what: int) -> void:
 	if what == NOTIFICATION_PREDELETE:
 		# Notify FloodgateController of being destruction
-		var floodgate = get_node_or_null("/root/FloodgateController")
+		var floodgate = get_node_or_null("root/FloodgateController")
 		if floodgate and floodgate.has_method("unregister_universal_being"):
 			floodgate.unregister_universal_being(self)
 		

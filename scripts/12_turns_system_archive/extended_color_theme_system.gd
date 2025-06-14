@@ -27,13 +27,13 @@ class_name ExtendedColorThemeSystem
 @export var background_color: Color = Color(0.05, 0.05, 0.1, 1.0)  # Dark background
 
 # ----- STATE VARIABLES -----
-var themes = {}
-var current_colors = {}
+var themes = {
+var current_colors = {
 var transition_timer: Timer
 var is_transitioning = false
 var transition_progress = 0.0
-var transition_start_colors = {}
-var transition_target_colors = {}
+var transition_start_colors = {
+var transition_target_colors = {
 var color_correction_lut = []
 var color_temperature = 6500  # Kelvin
 var color_brightness = 1.0  # 0-1 scale
@@ -63,6 +63,7 @@ func _ready():
     print("Extended Color Theme System initialized")
     print("Current theme: " + current_theme)
     print("Color depth: " + str(color_depth) + "-bit")
+	}
 
 func _initialize_timers():
     # Create transition timer
@@ -91,7 +92,7 @@ func _initialize_default_themes():
         "text_secondary": Color(0.7, 0.7, 0.75, 1.0),# Light gray
         "border": Color(0.3, 0.3, 0.4, 1.0),         # Medium gray
         "highlight": Color(0.4, 0.6, 1.0, 1.0)       # Highlight blue
-    }
+		}
     
     # Dark theme
     themes["dark"] = {
@@ -108,7 +109,7 @@ func _initialize_default_themes():
         "text_secondary": Color(0.6, 0.6, 0.65, 1.0),# Gray
         "border": Color(0.25, 0.25, 0.3, 1.0),       # Dark gray
         "highlight": Color(0.3, 0.3, 0.5, 1.0)       # Muted highlight
-    }
+		}
     
     # Light theme
     themes["light"] = {
@@ -125,7 +126,7 @@ func _initialize_default_themes():
         "text_secondary": Color(0.4, 0.4, 0.5, 1.0), # Gray
         "border": Color(0.8, 0.8, 0.85, 1.0),        # Light gray
         "highlight": Color(0.7, 0.8, 1.0, 1.0)       # Light highlight
-    }
+		}
     
     # High contrast theme
     themes["high_contrast"] = {
@@ -142,7 +143,7 @@ func _initialize_default_themes():
         "text_secondary": Color(0.9, 0.9, 0.9, 1.0), # Light gray
         "border": Color(1.0, 1.0, 1.0, 1.0),         # White
         "highlight": Color(1.0, 0.8, 0.0, 1.0)       # Yellow
-    }
+		}
     
     # Ethereal theme (blue/cyan)
     themes["ethereal"] = {
@@ -159,7 +160,7 @@ func _initialize_default_themes():
         "text_secondary": Color(0.5, 0.7, 0.9, 1.0), # Medium blue
         "border": Color(0.2, 0.4, 0.6, 1.0),         # Blue-gray
         "highlight": Color(0.1, 0.8, 1.0, 1.0)       # Bright cyan
-    }
+		}
     
     # Akashic theme (purple/gold)
     themes["akashic"] = {
@@ -176,7 +177,7 @@ func _initialize_default_themes():
         "text_secondary": Color(0.7, 0.5, 0.8, 1.0), # Medium purple
         "border": Color(0.4, 0.3, 0.5, 1.0),         # Purple-gray
         "highlight": Color(1.0, 0.8, 0.2, 1.0)       # Bright gold
-    }
+		}
     
     # Current colors start with default theme
     current_colors = themes["default"].duplicate()
@@ -247,6 +248,7 @@ func _on_transition_timer():
         emit_signal("transition_completed", current_theme)
         
         print("Theme transition complete: " + current_theme)
+		}
 
 func _update_time_based_theme():
     # Switch theme based on time of day
@@ -285,6 +287,7 @@ func apply_theme(theme_name: String, with_transition: bool = true) -> bool:
         return true
     
     print("Applying theme: " + theme_name + (", with transition" if with_transition else ", without transition"))
+	}
     
     if with_transition:
         # Start transition to new theme
@@ -333,6 +336,7 @@ func create_theme(theme_name: String, base_color: Color) -> bool:
         return false
     
     print("Creating new theme: " + theme_name)
+	}
     
     # Generate colors based on the base color
     var h = base_color.h
@@ -353,7 +357,7 @@ func create_theme(theme_name: String, base_color: Color) -> bool:
         "text_secondary": Color(0.7, 0.7, 0.75, 1.0),           # Light gray
         "border": Color(0.3, 0.3, 0.4, 1.0),                    # Medium gray
         "highlight": Color.from_hsv(h, 0.7, 1.0)                # Bright variant
-    }
+		}
     
     # Fix text colors for light themes
     if v > 0.7:
@@ -540,6 +544,7 @@ func set_color_depth(bits: int) -> void:
         emit_signal("color_format_changed", color_depth)
     else:
         print("Unsupported color depth: " + str(bits))
+		
 
 func set_color_temperature(temperature: int) -> void:
     # Set the color temperature (in Kelvin)
@@ -604,28 +609,28 @@ func create_color_scheme(base_color: Color, scheme_type: String = "complementary
     var s = base_color.s
     var v = base_color.v
     
-    var colors = {}
+    var colors = {
     
     match scheme_type:
         "complementary":
             colors = {
                 "base": base_color,
                 "complement": Color.from_hsv(fmod(h + 0.5, 1.0), s, v)
-            }
+				}
         
         "analogous":
             colors = {
                 "base": base_color,
                 "analogous1": Color.from_hsv(fmod(h - 0.08, 1.0), s, v),
                 "analogous2": Color.from_hsv(fmod(h + 0.08, 1.0), s, v)
-            }
+				}
         
         "triadic":
             colors = {
                 "base": base_color,
                 "triadic1": Color.from_hsv(fmod(h + 0.33, 1.0), s, v),
                 "triadic2": Color.from_hsv(fmod(h + 0.66, 1.0), s, v)
-            }
+				}
         
         "tetradic":
             colors = {
@@ -633,7 +638,7 @@ func create_color_scheme(base_color: Color, scheme_type: String = "complementary
                 "tetradic1": Color.from_hsv(fmod(h + 0.25, 1.0), s, v),
                 "tetradic2": Color.from_hsv(fmod(h + 0.5, 1.0), s, v),
                 "tetradic3": Color.from_hsv(fmod(h + 0.75, 1.0), s, v)
-            }
+				}
         
         "monochromatic":
             colors = {
@@ -642,11 +647,12 @@ func create_color_scheme(base_color: Color, scheme_type: String = "complementary
                 "lighter2": Color.from_hsv(h, s * 0.5, min(v * 1.6, 1.0)),
                 "darker1": Color.from_hsv(h, min(s * 1.2, 1.0), v * 0.7),
                 "darker2": Color.from_hsv(h, min(s * 1.4, 1.0), v * 0.4)
-            }
+				}
             
         _:
             print("Unknown color scheme type: " + scheme_type)
-            return {"base": base_color}
+            return {"base": base_color
+			}
     
     # Apply bit depth limitation if needed
     if color_depth < 24:
@@ -690,11 +696,10 @@ func export_theme(theme_name: String) -> Dictionary:
     if not themes.has(theme_name):
         print("Theme not found: " + theme_name)
         return {}
-    
     var export_data = {
         "name": theme_name,
-        "colors": {}
-    }
+        "colors": {
+		}
     
     # Convert colors to hex strings for easy serialization
     for key in themes[theme_name]:
@@ -710,7 +715,7 @@ func import_theme(theme_data: Dictionary) -> bool:
         return false
     
     var theme_name = theme_data.name
-    var theme_colors = {}
+    var theme_colors = {
     
     # Convert hex strings back to colors
     for key in theme_data.colors:
@@ -721,5 +726,6 @@ func import_theme(theme_data: Dictionary) -> bool:
     themes[theme_name] = theme_colors
     
     print("Imported theme: " + theme_name)
+	}
     
     return true

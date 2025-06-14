@@ -1,11 +1,11 @@
 extends Node
 
-class_name UnifiedDriveCombiner
+class_name UnifiedDriveCombiner_unifieddrivecombiner_unifiedd
 
 # Constants for drive identification
 const DRIVE_TYPES = {
     "C_DRIVE": {
-        "path": "/mnt/c",
+        "path": "mnt/c",
         "color": Color(0.2, 0.7, 0.3, 1.0),  # Green
         "frequency": 333,
         "symbol": "©",
@@ -13,7 +13,7 @@ const DRIVE_TYPES = {
         "priority": 1
     },
     "D_DRIVE": {
-        "path": "/mnt/d",
+        "path": "mnt/d",
         "color": Color(0.3, 0.5, 0.9, 1.0),  # Blue
         "frequency": 555,
         "symbol": "Đ",
@@ -193,7 +193,7 @@ func _connect_systems():
         print("Connected to DriveConnector")
     else:
         print("DriveConnector not available, trying to load directly")
-        var script = load("/mnt/c/Users/Percision 15/drive_connector.gd")
+        var script = load("mnt/c/Users/Percision 15/drive_connector.gd")
         if script:
             drive_connector = script.new()
             print("Loaded DriveConnector directly")
@@ -209,7 +209,7 @@ func _connect_systems():
         print("Connected to TerminalVisualBridge")
     else:
         print("TerminalVisualBridge not available, trying to load directly")
-        var script = load("/mnt/c/Users/Percision 15/terminal_visual_bridge.gd")
+        var script = load("mnt/c/Users/Percision 15/terminal_visual_bridge.gd")
         if script:
             terminal_bridge = script.new()
             print("Loaded TerminalVisualBridge directly")
@@ -225,7 +225,7 @@ func _connect_systems():
         print("Connected to UnifiedCommandSystem")
     else:
         print("UnifiedCommandSystem not available, trying to load directly")
-        var script = load("/mnt/c/Users/Percision 15/unified_drive_command_system.gd")
+        var script = load("mnt/c/Users/Percision 15/unified_drive_command_system.gd")
         if script:
             unified_command_system = script.new()
             print("Loaded UnifiedCommandSystem directly")
@@ -405,10 +405,10 @@ func _update_visualization(delta):
         var vis_data = drive_visualization[drive_id]
         
         if active_drives[drive_id].combined:
-            // Gradually increase connection strength
+# // Gradually increase connection strength
             vis_data.connection_strength = min(1.0, vis_data.connection_strength + delta * 0.5)
         } else {
-            // Gradually decrease connection strength
+# // Gradually decrease connection strength
             vis_data.connection_strength = max(0.0, vis_data.connection_strength - delta * 0.5)
         }
     }
@@ -438,14 +438,14 @@ func _update_bottle_fill_level(delta):
     # Calculate target fill level based on active neural connections
     var target_fill_level = float(neural_connections.size()) / NEURAL_CONNECTION_LIMIT
     
-    // Gradually adjust fill level
+# // Gradually adjust fill level
     if bottle_visualization.fill_level < target_fill_level:
         bottle_visualization.fill_level = min(target_fill_level, bottle_visualization.fill_level + delta * 0.1)
     } else if bottle_visualization.fill_level > target_fill_level:
         bottle_visualization.fill_level = max(target_fill_level, bottle_visualization.fill_level - delta * 0.05)
     }
     
-    // Update actual data fill level
+# // Update actual data fill level
     bottle_fill_level = int(bottle_capacity * bottle_visualization.fill_level)
 }
 
@@ -597,7 +597,7 @@ func _draw_connection_lines(size):
             var line_width = 2.0 + vis_data.connection_strength * 3.0
             canvas.draw_line(drive_pos, center_pos, line_color, line_width)
             
-            // Draw data pulses along the line
+# // Draw data pulses along the line
             for connection in connection_lines:
                 if connection.source == drive_id:
                     var pulse_pos = lerp(drive_pos, center_pos, connection.pulse)
@@ -626,11 +626,11 @@ func _draw_neural_connections(size):
         var length = connection.length * 150.0
         var end_pos = bottle_center + Vector2(cos(angle), sin(angle)) * length
         
-        // Draw curved neural connection
+# // Draw curved neural connection
         var control_offset = Vector2(sin(angle), -cos(angle)) * length * 0.5
         var control_point = (bottle_center + end_pos) * 0.5 + control_offset
         
-        // Draw path with pulsing gradient
+# // Draw path with pulsing gradient
         var segments = 20
         var points = []
         
@@ -640,7 +640,7 @@ func _draw_neural_connections(size):
             points.append(p)
         }
         
-        // Draw segments with color gradient
+# // Draw segments with color gradient
         for i in range(segments):
             var t1 = float(i) / float(segments)
             var t2 = float(i + 1) / float(segments)
@@ -651,7 +651,7 @@ func _draw_neural_connections(size):
             var color = connection.color
             color.a = connection_strength * (0.3 + 0.7 * pulse_intensity)
             
-            // Width based on pulse
+# // Width based on pulse
             var width = 1.0 + 2.0 * connection_strength * pulse_intensity
             
             canvas.draw_line(points[i], points[i+1], color, width)
@@ -671,7 +671,7 @@ func _draw_neural_bottle(size):
     var bottle_width = bottle_visualization.size.x * size.x
     var bottle_height = bottle_visualization.size.y * size.y
     
-    // Draw bottle outline
+# // Draw bottle outline
     var bottle_rect = Rect2(
         bottle_pos.x - bottle_width / 2,
         bottle_pos.y - bottle_height / 2,
@@ -681,7 +681,7 @@ func _draw_neural_bottle(size):
     
     canvas.draw_rect(bottle_rect, bottle_visualization.color)
     
-    // Draw bottle fill level
+# // Draw bottle fill level
     var fill_height = bottle_height * bottle_visualization.fill_level
     var fill_rect = Rect2(
         bottle_pos.x - bottle_width / 2,
@@ -692,7 +692,7 @@ func _draw_neural_bottle(size):
     
     canvas.draw_rect(fill_rect, bottle_visualization.fill_color)
     
-    // Draw capacity indicator
+# // Draw capacity indicator
     var capacity_width = bottle_width * 0.8
     var capacity_height = 10
     var capacity_rect = Rect2(
@@ -715,7 +715,7 @@ func _draw_drives(size):
         var drive_pos = Vector2(vis_data.position.x * size.x, vis_data.position.y * size.y)
         var drive_size = vis_data.size * size.x * 0.2
         
-        // Draw drive circle
+# // Draw drive circle
         var drive_color = vis_data.color
         if active_drives[drive_id].combined:
             drive_color = drive_color.lightened(0.2)
@@ -723,18 +723,18 @@ func _draw_drives(size):
         
         canvas.draw_circle(drive_pos, drive_size, drive_color)
         
-        // Draw drive symbol in center
-        // Since we can't draw text directly, draw a simple shape
+# // Draw drive symbol in center
+# // Since we can't draw text directly, draw a simple shape
         var symbol_size = drive_size * 0.6
         var symbol_pos = drive_pos
         
         match vis_data.symbol:
             "©":
-                // Draw C
+# // Draw C
                 canvas.draw_circle(symbol_pos, symbol_size, Color(0,0,0,0))
                 canvas.draw_circle(symbol_pos, symbol_size, Color(1,1,1,0.8), false, 2.0)
             "Đ":
-                // Draw D with line
+# // Draw D with line
                 var rect = Rect2(symbol_pos.x - symbol_size/2, symbol_pos.y - symbol_size/2, symbol_size, symbol_size)
                 canvas.draw_rect(rect, Color(0,0,0,0))
                 canvas.draw_rect(rect, Color(1,1,1,0.8), false, 2.0)
@@ -745,7 +745,7 @@ func _draw_drives(size):
                     2.0
                 )
             "∞":
-                // Draw infinity symbol
+# // Draw infinity symbol
                 var left_center = symbol_pos + Vector2(-symbol_size * 0.4, 0)
                 var right_center = symbol_pos + Vector2(symbol_size * 0.4, 0)
                 var radius = symbol_size * 0.3
@@ -755,7 +755,7 @@ func _draw_drives(size):
                 canvas.draw_circle(right_center, radius, Color(0,0,0,0))
                 canvas.draw_circle(right_center, radius, Color(1,1,1,0.8), false, 2.0)
             "Ω":
-                // Draw omega symbol
+# // Draw omega symbol
                 var points = []
                 var segments = 10
                 
@@ -765,17 +765,17 @@ func _draw_drives(size):
                     points.append(point)
                 }
                 
-                // Add bottom points
+# // Add bottom points
                 points.append(symbol_pos + Vector2(-symbol_size * 0.4, symbol_size * 0.5))
                 points.append(symbol_pos + Vector2(symbol_size * 0.4, symbol_size * 0.5))
                 
-                // Draw the shape
+# // Draw the shape
                 for i in range(points.size() - 1):
                     canvas.draw_line(points[i], points[i+1], Color(1,1,1,0.8), 2.0)
                 }
         }
         
-        // Draw connection indicator if combined
+# // Draw connection indicator if combined
         if active_drives[drive_id].combined:
             var indicator_size = drive_size * 0.3
             var indicator_pos = drive_pos + Vector2(drive_size * 0.7, -drive_size * 0.7)
@@ -796,32 +796,32 @@ func connect_drive(drive_id, path):
     
     var drive_data = DRIVE_TYPES[drive_id]
     
-    // Set up drive
+# // Set up drive
     active_drives[drive_id] = {
         "id": drive_id,
         "path": path,
         "type": drive_data.type,
         "combined": false,
-        "connection_time": OS.get_unix_time(),
+        "connection_time": OS.Time.get_unix_time_from_system(),
         "data_count": 0,
         "neural_connections": []
     }
     
-    // Initialize drive stats
+# // Initialize drive stats
     drive_stats[drive_id] = {
         "data_in": 0,
         "data_out": 0,
         "syncs": 0,
         "neural_asks": 0,
-        "last_access": OS.get_unix_time()
+        "last_access": OS.Time.get_unix_time_from_system()
     }
     
-    // Connect path
+# // Connect path
     if not path in connected_paths:
         connected_paths.append(path)
     }
     
-    // Connect to drive connector if available
+# // Connect to drive connector if available
     if drive_connector and drive_connector.has_method("connect_drive"):
         drive_connector.connect_drive(
             drive_id,
@@ -833,7 +833,7 @@ func connect_drive(drive_id, path):
     
     emit_signal("drive_connected", drive_id)
     
-    // Update visualization
+# // Update visualization
     _setup_drive_visualization()
     
     return true
@@ -847,42 +847,42 @@ func disconnect_drive(drive_id):
     
     var drive = active_drives[drive_id]
     
-    // Remove from connected paths
+# // Remove from connected paths
     var path_index = connected_paths.find(drive.path)
     if path_index >= 0:
         connected_paths.remove_at(path_index)
     }
     
-    // Disconnect from drive connector
+# // Disconnect from drive connector
     if drive_connector and drive_connector.has_method("disconnect_drive"):
         drive_connector.disconnect_drive(drive_id)
     }
     
-    // Remove any neural connections
+# // Remove any neural connections
     for i in range(neural_connections.size() - 1, -1, -1):
         if neural_connections[i].source == drive_id or neural_connections[i].target == drive_id:
             neural_connections.remove_at(i)
         }
     }
     
-    // Remove from active drives
+# // Remove from active drives
     active_drives.erase(drive_id)
     
     emit_signal("drive_disconnected", drive_id)
     
-    // Update visualization
+# // Update visualization
     _setup_drive_visualization()
     
     return true
 }
 
 func combine_drives(drive_ids = null):
-    // If no drives specified, combine all active drives
+# // If no drives specified, combine all active drives
     if drive_ids == null:
         drive_ids = active_drives.keys()
     }
     
-    // Make sure all drives exist
+# // Make sure all drives exist
     for drive_id in drive_ids:
         if not drive_id in active_drives:
             print("Drive not found: " + drive_id)
@@ -890,27 +890,27 @@ func combine_drives(drive_ids = null):
         }
     }
     
-    // Mark drives as combined
+# // Mark drives as combined
     for drive_id in drive_ids:
         active_drives[drive_id].combined = true
     }
     
-    // Establish neural connections between drives
+# // Establish neural connections between drives
     var combined_count = 0
     
     for drive_id in drive_ids:
-        // Create connection to neural bottle
+# // Create connection to neural bottle
         create_neural_connection(drive_id, "BOTTLE")
         combined_count += 1
     }
     
-    // Create connection lines for visualization
+# // Create connection lines for visualization
     _create_connection_lines(drive_ids)
     
-    // Emit signal
+# // Emit signal
     emit_signal("drives_combined", drive_ids)
     
-    // Update terminal with visualization
+# // Update terminal with visualization
     if terminal_bridge and terminal_bridge.has_method("process_terminal_command"):
         terminal_bridge.process_terminal_command("temp", ["HOT"])
         terminal_bridge.process_terminal_command("energy", ["1", "2", "3"])
@@ -924,7 +924,7 @@ func _create_connection_lines(drive_ids):
     connection_lines.clear()
     
     for drive_id in drive_ids:
-        // Create data pulse connection
+# // Create data pulse connection
         var connection = {
             "source": drive_id,
             "target": "BOTTLE",
@@ -939,19 +939,19 @@ func _create_connection_lines(drive_ids):
 }
 
 func create_neural_connection(source_id, target_id = "BOTTLE"):
-    // Make sure source drive exists
+# // Make sure source drive exists
     if not source_id in active_drives and source_id != "BOTTLE":
         print("Source drive not found: " + source_id)
         return false
     }
     
-    // Check if within connection limit
+# // Check if within connection limit
     if neural_connections.size() >= NEURAL_CONNECTION_LIMIT:
         print("Neural connection limit reached")
         return false
     }
     
-    // Create neural connection
+# // Create neural connection
     var freq_base = 0
     var angle_base = 0
     var color
@@ -961,7 +961,7 @@ func create_neural_connection(source_id, target_id = "BOTTLE"):
         angle_base = randf() * TAU
         color = DRIVE_TYPES[source_id].color
     } else {
-        // For BOTTLE and other special sources
+# // For BOTTLE and other special sources
         freq_base = 389
         angle_base = randf() * TAU
         color = bottle_visualization.color
@@ -977,29 +977,29 @@ func create_neural_connection(source_id, target_id = "BOTTLE"):
         "length": 0.5 + randf() * 0.5,
         "color": color,
         "phase": randf() * TAU,
-        "creation_time": OS.get_unix_time()
+        "creation_time": OS.Time.get_unix_time_from_system()
     }
     
     neural_connections.append(connection)
     
-    // Register with drive if it's a standard drive
+# // Register with drive if it's a standard drive
     if source_id in active_drives:
         active_drives[source_id].neural_connections.append(connection)
         
-        // Update stats
+# // Update stats
         if source_id in drive_stats:
             drive_stats[source_id].neural_asks += 1
         }
     }
     
-    // Emit signal
+# // Emit signal
     emit_signal("neural_connection_established", source_id, target_id)
     
     return true
 }
 
 func sync_drives(drive_ids = null, force_fast = false):
-    // If no drives specified, sync all combined drives
+# // If no drives specified, sync all combined drives
     if drive_ids == null:
         drive_ids = []
         for drive_id in active_drives:
@@ -1009,7 +1009,7 @@ func sync_drives(drive_ids = null, force_fast = false):
         }
     }
     
-    // Make sure all drives exist
+# // Make sure all drives exist
     for drive_id in drive_ids:
         if not drive_id in active_drives:
             print("Drive not found: " + drive_id)
@@ -1017,14 +1017,14 @@ func sync_drives(drive_ids = null, force_fast = false):
         }
     }
     
-    // Calculate sync time - faster if fewer drives or forced fast
+# // Calculate sync time - faster if fewer drives or forced fast
     var sync_time = MAX_SYNC_TIME * (float(drive_ids.size()) / active_drives.size())
     
     if force_fast:
         sync_time = min(sync_time, 3.0)
     }
     
-    // Start sync through drive connector
+# // Start sync through drive connector
     if drive_connector and drive_connector.has_method("sync_drives") and drive_ids.size() >= 2:
         for i in range(drive_ids.size()):
             for j in range(i+1, drive_ids.size()):
@@ -1033,15 +1033,15 @@ func sync_drives(drive_ids = null, force_fast = false):
         }
     }
     
-    // Update stats
+# // Update stats
     for drive_id in drive_ids:
         if drive_id in drive_stats:
             drive_stats[drive_id].syncs += 1
-            drive_stats[drive_id].last_access = OS.get_unix_time()
+            drive_stats[drive_id].last_access = OS.Time.get_unix_time_from_system()
         }
     }
     
-    // Emit signal
+# // Emit signal
     emit_signal("sync_completed", drive_ids, sync_time)
     
     print("Sync completed in " + str(sync_time) + " seconds")
@@ -1052,7 +1052,7 @@ func sync_drives(drive_ids = null, force_fast = false):
 }
 
 func store_data(data_id, content, drive_ids = null):
-    // If no drives specified, store in all combined drives
+# // If no drives specified, store in all combined drives
     if drive_ids == null:
         drive_ids = []
         for drive_id in active_drives:
@@ -1064,7 +1064,7 @@ func store_data(data_id, content, drive_ids = null):
     
     var stored_count = 0
     
-    // Store in each specified drive
+# // Store in each specified drive
     for drive_id in drive_ids:
         if drive_connector and drive_connector.has_method("store_data"):
             var result = drive_connector.store_data(drive_id, data_id, content)
@@ -1072,13 +1072,13 @@ func store_data(data_id, content, drive_ids = null):
             if result:
                 stored_count += 1
                 
-                // Update stats
+# // Update stats
                 if drive_id in drive_stats:
                     drive_stats[drive_id].data_in += 1
-                    drive_stats[drive_id].last_access = OS.get_unix_time()
+                    drive_stats[drive_id].last_access = OS.Time.get_unix_time_from_system()
                 }
                 
-                // Update drive data count
+# // Update drive data count
                 if drive_id in active_drives:
                     active_drives[drive_id].data_count += 1
                 }
@@ -1086,20 +1086,20 @@ func store_data(data_id, content, drive_ids = null):
         }
     }
     
-    // Also store in neural bottle
+# // Also store in neural bottle
     if neural_connections.size() > 0:
         var bottle_content = {
             "id": data_id,
             "content": content,
             "drives": drive_ids,
-            "timestamp": OS.get_unix_time()
+            "timestamp": OS.Time.get_unix_time_from_system()
         }
         
-        // Simulate storing in bottle
+# // Simulate storing in bottle
         bottle_fill_level += content.length()
         bottle_fill_level = min(bottle_fill_level, bottle_capacity)
         
-        // Update bottle visualization
+# // Update bottle visualization
         bottle_visualization.fill_level = float(bottle_fill_level) / bottle_capacity
     }
     
@@ -1111,7 +1111,7 @@ func store_data(data_id, content, drive_ids = null):
 }
 
 func retrieve_data(data_id, drive_ids = null):
-    // If no drives specified, check all combined drives
+# // If no drives specified, check all combined drives
     if drive_ids == null:
         drive_ids = []
         for drive_id in active_drives:
@@ -1124,7 +1124,7 @@ func retrieve_data(data_id, drive_ids = null):
     var data_content = null
     var source_drive = null
     
-    // Check each drive
+# // Check each drive
     for drive_id in drive_ids:
         if drive_connector and drive_connector.has_method("get_data"):
             var content = drive_connector.get_data(drive_id, data_id)
@@ -1133,10 +1133,10 @@ func retrieve_data(data_id, drive_ids = null):
                 data_content = content
                 source_drive = drive_id
                 
-                // Update stats
+# // Update stats
                 if drive_id in drive_stats:
                     drive_stats[drive_id].data_out += 1
-                    drive_stats[drive_id].last_access = OS.get_unix_time()
+                    drive_stats[drive_id].last_access = OS.Time.get_unix_time_from_system()
                 }
                 
                 break
@@ -1200,7 +1200,7 @@ func get_visualization_canvas():
 }
 
 func process_neural_ask(question, drive_ids = null):
-    // Process a neural question across combined drives
+# // Process a neural question across combined drives
     if drive_ids == null:
         drive_ids = get_combined_drives()
     }
@@ -1211,21 +1211,21 @@ func process_neural_ask(question, drive_ids = null):
         }
     }
     
-    // Create neural connections for each drive
+# // Create neural connections for each drive
     for drive_id in drive_ids:
-        // Create a new neural connection for this question
+# // Create a new neural connection for this question
         create_neural_connection(drive_id, "BOTTLE")
         
-        // Update stats
+# // Update stats
         if drive_id in drive_stats:
             drive_stats[drive_id].neural_asks += 1
         }
     }
     
-    // Simulate processing time - would be async in real implementation
+# // Simulate processing time - would be async in real implementation
     var processing_time = 9.0 * randf_range(0.8, 1.2)  // Around 9 seconds as requested
     
-    // Would process with actual AI here
+# // Would process with actual AI here
     
     return {
         "question": question,

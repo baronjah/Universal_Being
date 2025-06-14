@@ -13,7 +13,7 @@ static func get_instance() -> JSHInteractionMatrix:
 
 # Matrix storage - maps entity type pairs to interaction rules
 # Format: {source_type: {target_type: [InteractionRule]}}
-var _interaction_rules = {}
+var _interaction_rules = {
 
 # Interaction rule inner class
 class InteractionRule:
@@ -22,6 +22,7 @@ class InteractionRule:
 	var probability: float # 0.0 to 1.0
 	var condition_script: String # GDScript snippet for custom condition
 	var effect_type: String # "transform", "spawn", "evolve", "merge", "split", etc.
+}
 	var effect_params: Dictionary # Parameters for the effect
 	var cooldown: float # Cooldown time in seconds
 	var last_triggered: Dictionary = {} # Map of entity IDs to last trigger time
@@ -68,13 +69,14 @@ func _setup_default_rules():
 func add_interaction_rule(source_type: String, target_type: String, probability: float, 
 						  effect_type: String, effect_params: Dictionary, 
 						  cooldown: float = 0.0, condition_script: String = "") -> void:
+		
 	# Create the rule object
 	var rule = InteractionRule.new(source_type, target_type, probability, 
 								   effect_type, effect_params, cooldown, condition_script)
 	
 	# Initialize the source type dictionary if it doesn't exist
 	if not _interaction_rules.has(source_type):
-		_interaction_rules[source_type] = {}
+		_interaction_rules[source_type] = {
 	
 	# Initialize the target type array if it doesn't exist
 	if not _interaction_rules[source_type].has(target_type):
@@ -185,6 +187,7 @@ func _apply_effect(rule: InteractionRule, source_entity: JSHUniversalEntity, tar
 			_apply_split_effect(rule, source_entity, target_entity)
 		_:
 			push_error("Unknown effect type: " + effect_type)
+}
 
 # Apply a transform effect (change entity type)
 func _apply_transform_effect(rule: InteractionRule, source_entity: JSHUniversalEntity, target_entity: JSHUniversalEntity) -> void:
@@ -192,6 +195,7 @@ func _apply_transform_effect(rule: InteractionRule, source_entity: JSHUniversalE
 	
 	# Transform target if specified
 	if params.has("target_becomes"):
+
 		# Save the target's data
 		var target_data = target_entity.get_entity_data()
 		target_data["entity_type"] = params["target_becomes"]
@@ -205,9 +209,11 @@ func _apply_transform_effect(rule: InteractionRule, source_entity: JSHUniversalE
 	
 	# Handle source entity
 	if params.has("source_consumed") and params["source_consumed"]:
+
 		# Mark source for deletion
 		JSHEntityManager.get_instance().mark_entity_for_deletion(source_entity.entity_id)
 	elif params.has("source_becomes"):
+
 		# Transform source
 		var source_data = source_entity.get_entity_data()
 		source_data["entity_type"] = params["source_becomes"]
@@ -229,6 +235,7 @@ func _apply_spawn_effect(rule: InteractionRule, source_entity: JSHUniversalEntit
 	
 	# Adjust position if offset is specified
 	if params.has("offset"):
+
 		var offset = params["offset"]
 		position += Vector3(offset.x, offset.y, offset.z)
 	
@@ -239,7 +246,7 @@ func _apply_spawn_effect(rule: InteractionRule, source_entity: JSHUniversalEntit
 			"entity_type": spawn_type,
 			"position": position,
 			"parent_id": target_entity.entity_id if params.get("set_parent", false) else null
-		}
+}
 		
 		# Add additional data if specified
 		if params.has("additional_data"):
@@ -264,13 +271,16 @@ func _apply_evolve_effect(rule: InteractionRule, source_entity: JSHUniversalEnti
 	
 	# Handle growth stage
 	if params.has("growth_stage"):
+
 		var growth_value = params["growth_stage"]
 		var current_stage = entity_to_evolve.get_property("growth_stage", 0)
 		
 		if growth_value.begins_with("+"):
+
 			# Increment growth stage
 			current_stage += int(growth_value.substr(1))
 		elif growth_value.begins_with("-"):
+
 			# Decrement growth stage
 			current_stage -= int(growth_value.substr(1))
 		else:
@@ -282,11 +292,13 @@ func _apply_evolve_effect(rule: InteractionRule, source_entity: JSHUniversalEnti
 	# Apply property changes
 	if params.has("property_changes"):
 		for property_name in params["property_changes"]:
+
 			var property_value = params["property_changes"][property_name]
 			entity_to_evolve.set_property(property_name, property_value)
 	
 	# Check if we need to transform based on growth stage
 	if params.has("stage_transforms"):
+
 		var stage_transforms = params["stage_transforms"]
 		var current_stage = entity_to_evolve.get_property("growth_stage", 0)
 		
@@ -304,6 +316,7 @@ func _apply_evolve_effect(rule: InteractionRule, source_entity: JSHUniversalEnti
 	
 	# Increment complexity if specified
 	if params.has("complexity_change"):
+
 		var complexity_change = params["complexity_change"]
 		var current_complexity = entity_to_evolve.complexity
 		
@@ -334,7 +347,7 @@ func _apply_merge_effect(rule: InteractionRule, source_entity: JSHUniversalEntit
 	var result_data = {
 		"entity_type": result_type,
 		"position": target_entity.position,
-	}
+}
 	
 	# Combine properties from both entities
 	var source_data = source_entity.get_entity_data()
@@ -343,33 +356,40 @@ func _apply_merge_effect(rule: InteractionRule, source_entity: JSHUniversalEntit
 	# Handle specific property merging logic
 	if params.has("merge_properties"):
 		for property_name in params["merge_properties"]:
+
 			var merge_type = params["merge_properties"][property_name]
 			
 			match merge_type:
 				"add":
+	
 					# Add numeric properties
 					var source_value = source_data.get(property_name, 0)
 					var target_value = target_data.get(property_name, 0)
 					result_data[property_name] = source_value + target_value
 				"max":
+	
 					# Take maximum value
 					var source_value = source_data.get(property_name, 0)
 					var target_value = target_data.get(property_name, 0)
 					result_data[property_name] = max(source_value, target_value)
 				"min":
+	
 					# Take minimum value
 					var source_value = source_data.get(property_name, 0)
 					var target_value = target_data.get(property_name, 0)
 					result_data[property_name] = min(source_value, target_value)
 				"concat":
+	
 					# Concatenate string or array properties
 					var source_value = source_data.get(property_name, "")
 					var target_value = target_data.get(property_name, "")
 					result_data[property_name] = str(source_value) + str(target_value)
 				"source":
+	
 					# Use source entity value
 					result_data[property_name] = source_data.get(property_name)
 				"target":
+	
 					# Use target entity value
 					result_data[property_name] = target_data.get(property_name)
 	
@@ -411,9 +431,9 @@ func save_to_file(file_path: String) -> bool:
 		return false
 	
 	# Convert interaction rules to serializable format
-	var serialized_data = {}
+	var serialized_data = {
 	for source_type in _interaction_rules:
-		serialized_data[source_type] = {}
+		serialized_data[source_type] = {
 		for target_type in _interaction_rules[source_type]:
 			serialized_data[source_type][target_type] = []
 			for rule in _interaction_rules[source_type][target_type]:

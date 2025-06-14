@@ -1,11 +1,11 @@
 extends Node
 
-class_name TurnPrioritySystem
+class_name TurnPrioritySystem_turnprioritysystem_turnprio
 
 # Constants
-const TURNS_FILE_PATH = "/mnt/c/Users/Percision 15/12_turns_system/current_turn.txt"
-const DISPLAY1_PATH = "/mnt/c/Users/Percision 15/12_turns_system/display1_turn.txt"
-const DISPLAY2_PATH = "/mnt/c/Users/Percision 15/12_turns_system/display2_turn.txt"
+const TURNS_FILE_PATH = "mnt/c/Users/Percision 15/12_turns_system/current_turn.txt"
+const DISPLAY1_PATH = "mnt/c/Users/Percision 15/12_turns_system/display1_turn.txt"
+const DISPLAY2_PATH = "mnt/c/Users/Percision 15/12_turns_system/display2_turn.txt"
 
 # Turn tracking
 var current_turn = [1, 1, 1, 1]  # Format: [major, minor, revision, cycle]

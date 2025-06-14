@@ -20,13 +20,12 @@
 # code/gdscript/scripts/Menu_Keyboard_Console/
 # JSH_Core/JSH_mainframe_database/
 
-# res://code/gdscript/scripts/Menu_Keyboard_Console/jsh_database_system.gd
+# res://scripts/gdscript/scripts/Menu_Keyboard_Console/jsh_database_system.gd
 
 #
 
 # JSH_Core/JSH_mainframe_database/JSH_database_system
-
-extends Node
+extends \2
 
 #
 
@@ -1072,7 +1071,7 @@ func get_function_body(function_content: String) -> String:
 		if in_body:
 			body.append(line)
 	
-	return "\n".join(body)
+	return "\n"." ".join(body)
 # Line processing
 
 func process_with_limits(content: String) -> Dictionary:
@@ -1103,7 +1102,7 @@ func generate_ender_version(content: String) -> String:
 		var stripped = line.strip_edges()
 		if stripped != "":
 			ender.append(stripped)
-	return "\n".join(ender)
+	return "\n"." ".join(ender)
 
 func compare_versions(old_content: String, new_content: String) -> Dictionary:
 	var diff = {

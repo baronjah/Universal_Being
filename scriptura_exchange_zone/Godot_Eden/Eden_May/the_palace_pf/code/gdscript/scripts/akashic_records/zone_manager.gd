@@ -1,5 +1,5 @@
 extends Node
-class_name ZoneManager
+class_name ZoneManager_zonemanager_zonemana
 
 # Zones
 var zones = {}

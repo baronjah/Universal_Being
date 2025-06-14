@@ -122,7 +122,7 @@ func _init():
 	
 func _ready():
 	# Get reference to main node
-	main_ref = get_node("/root/main")
+	main_ref = get_node("\1") as Node
 	
 	# Initialize the scene tree
 	start_up_scene_tree()
@@ -151,7 +151,7 @@ func start_up_scene_tree():
 	scene_tree_jsh["main_root"]["name"] = name_to_add
 	scene_tree_jsh["main_root"]["type"] = "Node"
 	scene_tree_jsh["main_root"]["jsh_type"] = "root"
-	scene_tree_jsh["main_root"]["metadata"]["creation_time"] = Time.get_ticks_msec()
+	scene_tree_jsh["main_root"]["metadata"]["creation_time"] = Time.Time.get_ticks_msec()
 	scene_tree_jsh["main_root"]["node"] = main_ref
 	scene_tree_jsh["main_root"]["status"] = "active"
 	tree_mutex.unlock()
@@ -392,7 +392,7 @@ func validate_branch_nodes(branch_path: String) -> Array:
 	var branch = get_branch(branch_path)
 	var missing_nodes = []
 	
-	if branch.empty():
+	if branch.is_empty():
 		return ["branch_not_found"]
 	
 	if !branch.has("node") or !is_instance_valid(branch["node"]):
@@ -681,7 +681,7 @@ func jsh_tree_get_node_status_changer(node_path: String, node_name: String, node
 				#new_branch["status"] = "pending"
 				#new_branch["node"] = null
 				#new_branch["metadata"] = {
-					#"creation_time": Time.get_ticks_msec(),
+					#"creation_time": Time.Time.get_ticks_msec(),
 					#"full_path": current_full_path,
 					#"parent_path": current_full_path.get_base_dir(),
 					#"has_collision": node_type == "collision",

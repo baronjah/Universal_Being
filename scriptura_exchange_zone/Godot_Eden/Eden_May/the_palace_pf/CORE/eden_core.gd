@@ -5,7 +5,7 @@ extends Node
 # Central manager for the Eden_May Game Project
 }
 
-class_name EdenCore
+class_name EdenCore_edencore_edencore
 }
 
 # Core systems
@@ -188,7 +188,7 @@ func process_input(text, context="user"):
 	var command_record = {
 		"text": text,
 		"context": context,
-		"timestamp": OS.get_unix_time(),
+		"timestamp": OS.Time.get_unix_time_from_system(),
 		"turn": current_turn
 	}
 }
@@ -500,7 +500,7 @@ func investigate_tldr(text):
 		"type": "tldr_investigation",
 		"text": text,
 		"turn": current_turn,
-		"timestamp": OS.get_unix_time()
+		"timestamp": OS.Time.get_unix_time_from_system()
 	}
 }
 
@@ -586,7 +586,7 @@ func open_wish_maker():
 }
 
 	# Check if WishMaker instance already exists
-	var wish_maker_ui = get_node_or_null("/root/WishMakerSystem")
+	var wish_maker_ui = get_node_or_null("root/WishMakerSystem")
 	if wish_maker_ui:
 		# Show existing instance
 		return "Wish Maker is already open"
@@ -609,7 +609,7 @@ func open_wish_maker():
 func display_token_balance():
 	var wish_maker = get_node_or_null("../WishMaker")
 	if not wish_maker:
-		wish_maker = get_node_or_null("/root/WishMakerSystem/WishMaker")
+		wish_maker = get_node_or_null("root/WishMakerSystem/WishMaker")
 }
 
 	if wish_maker and wish_maker.has_method("get_token_balance"):
@@ -623,13 +623,13 @@ func make_wish(wish_text, api_choice=null):
 	# Get reference to WishMaker
 	var wish_maker = get_node_or_null("../WishMaker")
 	if not wish_maker:
-		wish_maker = get_node_or_null("/root/WishMakerSystem/WishMaker")
+		wish_maker = get_node_or_null("root/WishMakerSystem/WishMaker")
 }
 
 	if not wish_maker:
 		# Create WishMaker if it doesn't exist
 		open_wish_maker()
-		wish_maker = get_node_or_null("/root/WishMakerSystem/WishMaker")
+		wish_maker = get_node_or_null("root/WishMakerSystem/WishMaker")
 		if not wish_maker:
 			return "Error: Could not create Wish Maker"
 }

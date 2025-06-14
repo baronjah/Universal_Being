@@ -35,7 +35,7 @@ var token_usage: Dictionary = {
     "output_tokens": 0,
     "total_tokens": 0,
     "last_reset": 0
-}
+	}
 var api_calls_remaining: int = 100
 var current_conversation_id: String = ""
 var current_conversation_messages: Array = []
@@ -176,6 +176,7 @@ func _load_credentials():
     
     # For security, don't log the API key
     print("Claude credentials " + (api_key.is_empty() ? "not found" : "loaded successfully"))
+	
 
 func _save_credentials():
     var data = {
@@ -183,7 +184,7 @@ func _save_credentials():
         "organization_id": organization_id,
         "api_base_url": api_base_url,
         "default_model": default_model
-    }
+		}
     
     var file = FileAccess.open(credentials_file, FileAccess.WRITE)
     if file:
@@ -255,6 +256,7 @@ func end_current_conversation():
     current_conversation_messages = []
     
     print("Ended conversation: " + last_conversation_id + " with " + str(message_count) + " messages")
+	
     
     return true
 
@@ -289,7 +291,7 @@ func _save_conversation(conversation_id, messages):
         "conversation_id": conversation_id,
         "timestamp": Time.get_unix_time_from_system(),
         "messages": messages
-    }
+		}
     
     var file = FileAccess.open(file_path, FileAccess.WRITE)
     if file:
@@ -313,11 +315,13 @@ func _generate_memories_from_conversation(conversation_id):
                 var data = json.data
                 
                 if data.has("messages") and data.messages.size() > 0:
+				
                     # Create a summary memory for the whole conversation
                     var messages = data.messages
                     var summary = _generate_conversation_summary(messages)
                     
                     if memory_system and memory_system.has_method("store_memory"):
+					
                         var memory_id = memory_system.store_memory(
                             summary,
                             ["conversation", "claude", "conversation_" + conversation_id],
@@ -341,6 +345,7 @@ func _generate_memories_from_conversation(conversation_id):
 
 func _generate_conversation_summary(messages):
     var summary = "Conversation Summary:\n\n"
+	
     
     if messages.size() <= 3:
         summary += "Brief exchange"
@@ -369,7 +374,7 @@ func send_message(content, system_prompt = "", model = ""):
         "role": "user",
         "content": content,
         "timestamp": Time.get_unix_time_from_system()
-    }
+		}
     
     # Add to conversation
     current_conversation_messages.append(message)
@@ -385,7 +390,7 @@ func send_message(content, system_prompt = "", model = ""):
         "messages": _prepare_messages_for_api(),
         "content": content,
         "timestamp": Time.get_unix_time_from_system()
-    }
+		}
     
     # Check cache first if enabled
     if cache_responses:
@@ -393,6 +398,7 @@ func send_message(content, system_prompt = "", model = ""):
         if cached_responses.has(cache_key):
             var cache_hit = cached_responses[cache_key]
             print("Cache hit for message: " + message_id)
+			
             
             # Add to conversation
             current_conversation_messages.append({
@@ -478,6 +484,7 @@ func _process_single_request(request):
     
     // Simulate API call
     print("Processing API request for message: " + request.message_id)
+	
     
     // Simulate token counting
     var input_tokens = len(request.content.split(" "))
@@ -509,7 +516,7 @@ func _process_single_request(request):
             "id": response_id,
             "content": response_content,
             "timestamp": Time.get_unix_time_from_system()
-        }
+			}
         
         // Trim cache if needed
         if cached_responses.size() > max_cache_items:
@@ -535,6 +542,7 @@ func _generate_simulated_response(user_message):
     
     // Simple "echo" to simulate a response
     return "I understand you're asking about: " + user_message + "\n\nIn a real implementation, this would be Claude's actual response."
+	
 
 # ----- MEMORY INTEGRATION -----
 func store_message_as_memory(message_id, tags = []):
@@ -668,6 +676,7 @@ func get_conversation_list():
         
         while file_name != "":
             if not dir.current_is_dir() and file_name.ends_with(".json"):
+			
                 var conv_id = file_name.split(".")[0]
                 
                 // Load basic metadata
@@ -689,7 +698,6 @@ func get_conversation_list():
             file_name = dir.get_next()
         
         dir.list_dir_end()
-    }
     
     // Sort by timestamp (most recent first)
     conversations.sort_custom(func(a, b): return a.timestamp > b.timestamp)
@@ -703,7 +711,7 @@ func get_current_conversation_state():
         "is_connected": is_connected,
         "token_usage": token_usage,
         "queue_size": request_queue.size()
-    }
+		}
 
 func create_ethereal_connection(content, dimension = ""):
     if not use_ethereal_bridge or not ethereal_bridge:

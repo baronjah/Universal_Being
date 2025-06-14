@@ -4,7 +4,6 @@
 # PURPOSE: Unified interface where visual = textual
 # CREATED: 2025-05-25 - Everything is a command
 # ==================================================
-
 extends UniversalBeingBase
 # Interface registry - maps visual elements to commands
 var interface_registry: Dictionary = {
@@ -162,8 +161,8 @@ func execute_unified_command(command: String, source: String = "console") -> Dic
 			result = _handle_mode_change(args)
 		_:
 			# Forward to game console
-			if has_node("/root/ConsoleManager"):
-				get_node("/root/ConsoleManager").execute_command(command)
+			if has_node("root/ConsoleManager"):
+				get_node("root/ConsoleManager").execute_command(command)
 				result.success = true
 				result.message = "Forwarded to game console"
 	
@@ -324,8 +323,8 @@ func _log_command(command: String, source: String, result: Dictionary) -> void:
 	}
 	
 	# Store in appropriate system
-	if has_node("/root/MultiLayerRecordSystem"):
-		get_node("/root/MultiLayerRecordSystem").store_with_metadata(
+	if has_node("root/MultiLayerRecordSystem"):
+		get_node("root/MultiLayerRecordSystem").store_with_metadata(
 			"cmd_%d" % Time.get_ticks_msec(),
 			history_entry,
 			"active"

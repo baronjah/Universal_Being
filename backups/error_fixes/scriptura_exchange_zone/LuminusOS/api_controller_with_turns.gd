@@ -54,7 +54,7 @@ func call_api(api_name, prompt):
         var response = responses[randi() % responses.size()]
         
         # Add some randomized delay to simulate network latency
-        yield(get_tree().create_timer(rand_range(0.5, 1.5)), "timeout")
+        await(get_tree().create_timer(rand_range(0.5, 1.5)), "timeout")
         
         # Add turn information to response if available
         if turn_tracker:

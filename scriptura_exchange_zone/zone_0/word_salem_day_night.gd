@@ -80,7 +80,7 @@ func announce_day_start():
 		"text": announcement,
 		"day": controller.current_day,
 		"phase": "day_start",
-		"timestamp": OS.get_unix_time()
+		"timestamp": OS.Time.get_unix_time_from_system()
 	})
 }
 
@@ -140,7 +140,7 @@ func start_voting():
 		"text": "VOTING PHASE BEGINS - Vote for suspicious players",
 		"day": controller.current_day,
 		"phase": "voting",
-		"timestamp": OS.get_unix_time()
+		"timestamp": OS.Time.get_unix_time_from_system()
 	})
 }
 
@@ -200,7 +200,7 @@ func process_votes():
 		"text": controller.accused_player + " has been put on trial with " + str(max_votes) + " votes!",
 		"day": controller.current_day,
 		"phase": "trial",
-		"timestamp": OS.get_unix_time()
+		"timestamp": OS.Time.get_unix_time_from_system()
 	})
 }
 
@@ -220,7 +220,7 @@ func announce_no_trial():
 		"text": "Not enough votes to put anyone on trial. The town will sleep for now.",
 		"day": controller.current_day,
 		"phase": "no_trial",
-		"timestamp": OS.get_unix_time()
+		"timestamp": OS.Time.get_unix_time_from_system()
 	})
 }
 
@@ -241,7 +241,7 @@ func start_defense(player_name):
 		"text": player_name + " is now defending against accusations!",
 		"day": controller.current_day,
 		"phase": "defense",
-		"timestamp": OS.get_unix_time()
+		"timestamp": OS.Time.get_unix_time_from_system()
 	})
 }
 
@@ -278,7 +278,7 @@ func start_judgment(player_name):
 		"text": "JUDGMENT PHASE - Vote guilty or innocent for " + player_name,
 		"day": controller.current_day,
 		"phase": "judgment",
-		"timestamp": OS.get_unix_time()
+		"timestamp": OS.Time.get_unix_time_from_system()
 	})
 }
 
@@ -314,16 +314,16 @@ func process_judgment():
 
 	controller.town_meeting_log.append({
 		"type": "announcement",
-		"text": "The town has found " + controller.accused_player + " " + verdict + " (" + str(guilty_votes) + "/" + str(total_votes) + " guilty votes)",
+		"text": "The town has found " + controller.accused_player + " " + verdict + " (" + str(guilty_votes) + "" + str(total_votes) + " guilty votes)",
 		"day": controller.current_day,
 		"phase": "verdict",
-		"timestamp": OS.get_unix_time()
+		"timestamp": OS.Time.get_unix_time_from_system()
 	})
 }
 
 	if controller.word_comment_system:
 		controller.word_comment_system.add_comment("town_meeting", 
-			"The town has found " + controller.accused_player + " " + verdict + " (" + str(guilty_votes) + "/" + str(total_votes) + " guilty votes)", 
+			"The town has found " + controller.accused_player + " " + verdict + " (" + str(guilty_votes) + "" + str(total_votes) + " guilty votes)", 
 			controller.word_comment_system.CommentType.WARNING)
 }
 
@@ -385,7 +385,7 @@ func start_night():
 		"text": "NIGHT " + str(controller.current_day) + " FALLS - The town goes to sleep",
 		"day": controller.current_day,
 		"phase": "night",
-		"timestamp": OS.get_unix_time()
+		"timestamp": OS.Time.get_unix_time_from_system()
 	})
 }
 
@@ -463,7 +463,7 @@ func process_jester_haunt():
 							"text": target + " died last night to a Jester's Haunt!",
 							"day": controller.current_day,
 							"phase": "night_resolution",
-							"timestamp": OS.get_unix_time()
+							"timestamp": OS.Time.get_unix_time_from_system()
 						})
 }
 
@@ -501,7 +501,7 @@ func announce_night_deaths():
 			"text": death_message,
 			"day": controller.current_day,
 			"phase": "night_resolution",
-			"timestamp": OS.get_unix_time()
+			"timestamp": OS.Time.get_unix_time_from_system()
 		})
 }
 
@@ -515,7 +515,7 @@ func announce_night_deaths():
 			"text": "No one died last night.",
 			"day": controller.current_day,
 			"phase": "night_resolution",
-			"timestamp": OS.get_unix_time()
+			"timestamp": OS.Time.get_unix_time_from_system()
 		})
 }
 
@@ -718,7 +718,7 @@ func process_investigation_actions():
 				"text": "The Etymologist has revealed that " + target + " is a " + controller.players[target].role + "!",
 				"day": controller.current_day,
 				"phase": "night_resolution",
-				"timestamp": OS.get_unix_time()
+				"timestamp": OS.Time.get_unix_time_from_system()
 			})
 }
 
@@ -921,7 +921,7 @@ func execute_player(player_name, cause):
 			"text": player_name + " has been executed! They were a " + controller.players[player_name].role + ".",
 			"day": controller.current_day,
 			"phase": "execution",
-			"timestamp": OS.get_unix_time()
+			"timestamp": OS.Time.get_unix_time_from_system()
 		})
 }
 
@@ -1017,7 +1017,7 @@ func announce_winner(faction):
 		"text": "GAME OVER - " + faction + " has won the game!",
 		"day": controller.current_day,
 		"phase": "game_over",
-		"timestamp": OS.get_unix_time()
+		"timestamp": OS.Time.get_unix_time_from_system()
 	})
 }
 

@@ -79,23 +79,23 @@ func initialize_terminal_interface():
 func connect_signals():
 	# Storage System signals
 	if storage_system:
-		storage_system.connect("storage_connected", self, "_on_storage_connected")
-		storage_system.connect("wish_created", self, "_on_wish_created")
-		storage_system.connect("wish_completed", self, "_on_wish_completed")
+		storage_system.connect(_on_storage_connected)
+		storage_system.connect(_on_wish_created)
+		storage_system.connect(_on_wish_completed)
 	
 	# Akashic Bridge signals
 	if akashic_bridge:
-		akashic_bridge.connect("word_stored", self, "_on_word_stored")
-		akashic_bridge.connect("gate_status_changed", self, "_on_gate_status_changed")
-		akashic_bridge.connect("wish_updated", self, "_on_wish_updated")
-		akashic_bridge.connect("firewall_breached", self, "_on_firewall_breached")
+		akashic_bridge.connect(_on_word_stored)
+		akashic_bridge.connect(_on_gate_status_changed)
+		akashic_bridge.connect(_on_wish_updated)
+		akashic_bridge.connect(_on_firewall_breached)
 	
 	# Terminal Interface signals
 	if terminal_interface:
-		terminal_interface.connect("command_executed", self, "_on_command_executed")
-		terminal_interface.connect("wish_processed", self, "_on_wish_processed")
-		terminal_interface.connect("interface_changed", self, "_on_interface_changed")
-		terminal_interface.connect("terminal_ready", self, "_on_terminal_ready")
+		terminal_interface.connect(_on_command_executed)
+		terminal_interface.connect(_on_wish_processed)
+		terminal_interface.connect(_on_interface_changed)
+		terminal_interface.connect(_on_terminal_ready)
 
 # Interface switching
 func set_interface(interface_name):

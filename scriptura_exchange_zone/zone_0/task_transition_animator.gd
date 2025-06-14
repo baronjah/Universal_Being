@@ -1,19 +1,20 @@
 extends Node
 
-class_name TaskTransitionAnimator
+class_name TaskTransitionAnimator_tasktransitionanimator_tasktran
 
 # ----- ANIMATION SETTINGS -----
 @export_category("Animation Settings")
-@export var enabled: bool = true
-@export var default_duration: float = 0.5
-@export var default_easing: int = Tween.EASE_IN_OUT
-@export var default_transition_type: int = Tween.TRANS_SINE
-@export var auto_start_animations: bool = true
-@export var use_color_themes: bool = true
-@export var particle_effects_enabled: bool = true
+@@@@export var enabled: bool = true
+@@@@export var default_duration: float = 0.5
+@@@@export var default_easing: int = Tween.EASE_IN_OUT
+@@@@export var default_transition_type: int = Tween.TRANS_SINE
+@@@@export var auto_start_animations: bool = true
+@@@@export var use_color_themes: bool = true
+@@@@export var particle_effects_enabled: bool = true
 
 # ----- TRANSITION TYPES -----
-enum TransitionType {
+enum \2 {
+
     FADE,          # Simple fade transition
     SLIDE,         # Slide from one side
     ZOOM,          # Zoom in/out
@@ -45,10 +46,10 @@ signal task_blurred(task_id)
 # ----- INITIALIZATION -----
 func _ready():
     # Look for color system
-    color_system = get_node_or_null("/root/ExtendedColorThemeSystem")
+    color_system = get_node_or_null("root/ExtendedColorThemeSystem")
     
     if not color_system:
-        color_system = get_node_or_null("/root/DimensionalColorSystem")
+        color_system = get_node_or_null("root/DimensionalColorSystem")
     
     if not color_system:
         color_system = _find_node_by_class(get_tree().root, "DimensionalColorSystem")

@@ -29,12 +29,11 @@ var memory_mapping = {
 		"Data": "long_term",
 		"Astral": "intuition",
 		"Ethereal": "imagination"
-	}
 }
 
 # Communication channels
 var active_channels = []
-var channel_status = {}
+var channel_status = {
 
 # Signal declarations
 signal claude_message_sent(message, tokens_used)
@@ -137,6 +136,7 @@ func _open_channel(channel_name: String):
 	active_channels.append(channel_name)
 	channel_status[channel_name] = "open"
 	print("📡 Opened channel: " + channel_name)
+}
 	
 	# Connect appropriate signals based on channel
 	if channel_name == "memory_sync" and triple_memory_connector:
@@ -167,6 +167,7 @@ func _close_channel(channel_name: String):
 	
 	channel_status[channel_name] = "closed"
 	print("📡 Closed channel: " + channel_name)
+}
 	
 	# Disconnect signals based on channel
 	if channel_name == "memory_sync" and triple_memory_connector:
@@ -209,10 +210,9 @@ func send_message_to_claude(message: String, system_prompt: String = ""):
 			{
 				"role": "user",
 				"content": message
-			}
 		],
 		"system": full_system_prompt
-	}
+}
 	
 	# Send HTTP request
 	var http_request = HTTPRequest.new()
@@ -247,6 +247,7 @@ func synchronize_memories(source_type: String, target_type: String, max_memories
 	
 	print("🔄 Synchronizing memories from " + source_system + ":" + source_type + 
 		" to " + target_system + ":" + target_type)
+}
 	
 	# Use Triple Memory Connector to sync
 	var sync_result = triple_memory_connector.synchronize(
@@ -270,6 +271,7 @@ func create_dimension_resonance(claude_dimension: String, ethereal_dimension: St
 	
 	print("🌀 Creating dimensional resonance between Claude:" + claude_dimension + 
 		" and Ethereal:" + ethereal_dimension)
+
 	
 	# Map Claude dimension to Ethereal dimension
 	var mapped_claude_dimension = ""
@@ -298,6 +300,7 @@ func route_claude_command(command: String, args: Array = []):
 		return null
 	
 	print("🔄 Routing Claude command: " + command)
+
 	
 	# Route command through Ethereal Engine
 	var result = ethereal_engine_integration.route_command(command, args)
@@ -380,22 +383,27 @@ func _on_memory_synchronized(source_system: String, source_type: String,
 							target_system: String, target_type: String, count: int):
 	print("🧠 Memory synchronized: " + str(count) + " memories from " + 
 		source_system + ":" + source_type + " to " + target_system + ":" + target_type)
+
 	
 	# Create short-lived resonance to mark sync
 	if source_system == "claude" and target_system == "ethereal":
+
 		var ethereal_dimension = memory_mapping.claude[source_type]
 		create_dimension_resonance(source_type, ethereal_dimension, 0.6)
 
 func _on_command_routed(command: String, source: String, destination: String):
 	print("📡 Command routed: " + command + " from " + source + " to " + destination)
+
 	
 	# If command is coming from or going to Claude, log it
 	if source == "Command" or destination == "Command":
+
 		# This would be handled by Claude's systems
 		pass
 
 func _on_pathway_established(from_dimension: String, to_dimension: String, pathway_id: String):
 	print("🌉 Pathway established: " + from_dimension + " → " + to_dimension)
+
 	
 	# Check if this involves Claude dimensions
 	var claude_dimension = null
@@ -406,6 +414,7 @@ func _on_pathway_established(from_dimension: String, to_dimension: String, pathw
 	
 	if claude_dimension:
 		print("🔄 Claude dimension involved: " + claude_dimension)
+
 		# Update Claude's understanding of the dimensional structure
 		# This would be handled when sending messages to Claude
 
@@ -421,6 +430,7 @@ func _on_dimension_resonance(dimensions: Array, resonance_value: float):
 	
 	if claude_dimensions.size() > 0:
 		print("🔄 Claude dimensions involved: " + str(claude_dimensions))
+
 		# Update Claude's sense of dimensional resonance
 		# This would influence future communications with Claude
 
@@ -440,8 +450,10 @@ func _on_token_usage_updated(used: int, total: int, percentage: float):
 	
 	print("🔢 Adjusted Claude max_tokens to: " + str(max_tokens))
 
+
 func _on_luno_cycle_changed(cycle: int, name: String):
 	print("🌙 LUNO cycle changed to: " + str(cycle) + " - " + name)
+
 	
 	# Adjust Claude's system prompt to include new LUNO cycle
 	# This would be applied to future messages sent to Claude

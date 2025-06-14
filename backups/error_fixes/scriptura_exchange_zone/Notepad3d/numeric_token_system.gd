@@ -417,7 +417,7 @@ func apply_token_to_transfer(content, source_dimension = 3):
     # Extract numeric values from content
     var numbers = _extract_numbers_from_string(content)
     
-    if numbers.empty():
+    if numbers.is_empty():
         return content
     
     # Calculate combined numeric value
@@ -477,7 +477,7 @@ func get_active_token_count():
 
 func get_highest_energy_tokens(count = 5):
     var tokens = active_tokens.keys()
-    tokens.sort_custom(Callable(self, "_sort_by_energy"))
+    tokens.sort_custom(Callable(self."_sort_by_energy"))
     
     return tokens.slice(0, min(count, tokens.size()) - 1)
 
@@ -572,7 +572,7 @@ func _check_token_clusters():
             "value": token_resonances[resonance_key]
         })
     
-    sorted_resonances.sort_custom(Callable(self, "_sort_by_resonance_value"))
+    sorted_resonances.sort_custom(Callable(self."_sort_by_resonance_value"))
     
     # Start with highest resonance pairs
     for resonance_data in sorted_resonances:

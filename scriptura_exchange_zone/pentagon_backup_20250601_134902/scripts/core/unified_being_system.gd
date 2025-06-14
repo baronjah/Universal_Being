@@ -45,7 +45,7 @@ func pentagon_ready() -> void:
 	_migrate_existing_beings()
 
 func _register_commands():
-	var console = get_node_or_null("/root/ConsoleManager")
+	var console = get_node_or_null("root/ConsoleManager")
 	if console:
 		# Basic being commands
 		console.register_command("being", _cmd_being, "Create or manage beings")
@@ -146,7 +146,7 @@ func _create_visual_for_type(type: String) -> Node3D:
 	var visual = Node3D.new()
 	
 	# Use StandardizedObjects if available
-	var std_objects = get_node_or_null("/root/StandardizedObjects")
+	var std_objects = get_node_or_null("root/StandardizedObjects")
 	if std_objects and std_objects.has_method("create_object"):
 		match type:
 			"tree":

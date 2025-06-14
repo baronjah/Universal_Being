@@ -98,22 +98,22 @@ func initialize_game():
 
 func connect_signals():
 	if turn_system:
-		turn_system.connect("turn_completed", self, "_on_turn_completed")
-		turn_system.connect("dimension_changed", self, "_on_dimension_changed")
+		turn_system.connect(_on_turn_completed)
+		turn_system.connect(_on_dimension_changed)
 	
 	if divine_word_processor:
-		divine_word_processor.connect("word_processed", self, "_on_word_processed")
+		divine_word_processor.connect(_on_word_processed)
 	
 	if word_salem_controller:
-		word_salem_controller.connect("game_over", self, "_on_salem_game_over")
-		word_salem_controller.connect("word_crime_detected", self, "_on_word_crime_detected")
+		word_salem_controller.connect(_on_salem_game_over)
+		word_salem_controller.connect(_on_word_crime_detected)
 	
 	if word_crimes_analysis:
-		word_crimes_analysis.connect("dangerous_pattern_detected", self, "_on_dangerous_pattern_detected")
-		word_crimes_analysis.connect("cosmic_power_threshold_reached", self, "_on_cosmic_power_threshold_reached")
+		word_crimes_analysis.connect(_on_dangerous_pattern_detected)
+		word_crimes_analysis.connect(_on_cosmic_power_threshold_reached)
 	
 	if word_comment_system:
-		word_comment_system.connect("dream_recorded", self, "_on_dream_recorded")
+		word_comment_system.connect(_on_dream_recorded)
 
 func setup_config():
 	# Set up initial game configuration

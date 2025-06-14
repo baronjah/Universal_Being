@@ -4,9 +4,8 @@
 # PURPOSE: Maintain good FPS by managing who gets process time
 # CREATED: 2025-05-28 - Guardian of the sacred frames
 # ==================================================
-
 extends UniversalBeingBase
-class_name DeltaFrameGuardian
+class_name DeltaFrameGuardian_deltafra
 
 signal performance_warning  # Emitted when performance issues detected(script: String, usage: float)
 signal script_throttled(script: String, reason: String)
@@ -266,7 +265,7 @@ func get_performance_report() -> Dictionary:
 
 func _register_guardian_commands() -> void:
 	"""Register console commands"""
-	var console = get_node_or_null("/root/ConsoleManager")
+	var console = get_node_or_null("root/ConsoleManager")
 	if console:
 		console.register_command("fps_status", _cmd_fps_status,
 			"Show FPS and performance status")
@@ -278,7 +277,7 @@ func _register_guardian_commands() -> void:
 			"Force emergency mode for testing")
 
 func _cmd_fps_status(_args: Array) -> void:
-	var console = get_node("/root/ConsoleManager")
+	var console = get_node("root/ConsoleManager")
 	var report = get_performance_report()
 	
 	console._print_to_console("[color=cyan]🛡️ Delta Frame Guardian Status[/color]")
@@ -290,7 +289,7 @@ func _cmd_fps_status(_args: Array) -> void:
 	console._print_to_console("Throttling: %s" % ("ENABLED" if throttle_enabled else "DISABLED"))
 
 func _cmd_list_scripts(_args: Array) -> void:
-	var console = get_node("/root/ConsoleManager")
+	var console = get_node("root/ConsoleManager")
 	console._print_to_console("[color=yellow]📜 Managed Scripts:[/color]")
 	
 	for info in frame_consumers:
@@ -300,7 +299,7 @@ func _cmd_list_scripts(_args: Array) -> void:
 		])
 
 func _cmd_toggle_throttle(args: Array) -> void:
-	var console = get_node("/root/ConsoleManager")
+	var console = get_node("root/ConsoleManager")
 	
 	if args.size() > 0:
 		throttle_enabled = args[0].to_lower() == "on"
@@ -310,7 +309,7 @@ func _cmd_toggle_throttle(args: Array) -> void:
 	console._print_to_console("Frame throttling: %s" % ("ENABLED" if throttle_enabled else "DISABLED"))
 
 func _cmd_force_emergency(args: Array) -> void:
-	var console = get_node("/root/ConsoleManager")
+	var console = get_node("root/ConsoleManager")
 	
 	if args.size() > 0 and args[0].to_lower() == "off":
 		_exit_emergency_mode()

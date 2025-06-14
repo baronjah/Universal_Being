@@ -17,4 +17,4 @@ func initialize_component() -> void:
 	print("👁️ Multimodal Analyzer initialized")
 
 func get_component_info() -> Dictionary:
-	return {"name": "Multimodal Analyzer", "ready": analyzer_ready}
+	return {"name": "Multimodal Analyzer", "ready": analyzer_ready

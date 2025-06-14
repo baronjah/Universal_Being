@@ -1,5 +1,5 @@
 extends Node
-class_name MemorySplitVisualizer
+class_name MemorySplitVisualizer_memorysplitvisualizer_memorysp
 }
 
 # Memory Split Visualizer
@@ -138,18 +138,18 @@ class SplitLayout:
     func _init(p_id: String, p_name: String):
         id = p_id
         name = p_name
-        created_at = OS.get_unix_time()
+        created_at = OS.Time.get_unix_time_from_system()
         updated_at = created_at
 }
 
     func set_root(node: SplitNode):
         root_node = node
-        updated_at = OS.get_unix_time()
+        updated_at = OS.Time.get_unix_time_from_system()
 }
 
     func update_viewport_size(width: float, height: float):
         viewport_size = Vector2(width, height)
-        updated_at = OS.get_unix_time()
+        updated_at = OS.Time.get_unix_time_from_system()
 }
 
     func to_dict() -> Dictionary:
@@ -240,7 +240,7 @@ func set_target_canvas(canvas):
 
 # Layout Management
 func create_layout(name: String) -> String:
-    var layout_id = "layout_" + str(OS.get_unix_time()) + "_" + str(randi() % 1000).pad_zeros(3)
+    var layout_id = "layout_" + str(OS.Time.get_unix_time_from_system()) + "_" + str(randi() % 1000).pad_zeros(3)
     var layout = SplitLayout.new(layout_id, name)
 }
 
@@ -278,7 +278,7 @@ func create_split_node(layout_id: String, type: int, content: String = "") -> St
         return ""
 }
 
-    var node_id = "node_" + str(OS.get_unix_time()) + "_" + str(randi() % 1000).pad_zeros(3)
+    var node_id = "node_" + str(OS.Time.get_unix_time_from_system()) + "_" + str(randi() % 1000).pad_zeros(3)
     var node = SplitNode.new(node_id, type, content)
 }
 
@@ -313,7 +313,7 @@ func add_child_split(layout_id: String, parent_node_id: String, type: int, conte
         return ""
 }
 
-    var node_id = "node_" + str(OS.get_unix_time()) + "_" + str(randi() % 1000).pad_zeros(3)
+    var node_id = "node_" + str(OS.Time.get_unix_time_from_system()) + "_" + str(randi() % 1000).pad_zeros(3)
     var node = SplitNode.new(node_id, type, content)
 }
 
@@ -1001,11 +1001,11 @@ func create_connected_memories_layout(memory_id: String, connection_type: String
     root_node.metadata["dimension"] = memory.dimension
 }
 
-    // Get connected memories
+# // Get connected memories
     var connected_memories = _connection_system.get_connected_memories(memory_id, connection_type)
 }
 
-    // Create nodes for connected memories
+# // Create nodes for connected memories
     for connected_id in connected_memories:
         var connected_memory = _memory_system.get_memory(connected_id)
         if connected_memory:
@@ -1023,12 +1023,12 @@ func create_connected_memories_layout(memory_id: String, connection_type: String
                 child_node.metadata["dimension"] = connected_memory.dimension
 }
 
-                // Set connection type marker
+# // Set connection type marker
                 var connections = _connection_system.get_connections_for_memory(memory_id)
                 for conn in connections:
                     if (conn.source_id == memory_id and conn.target_id == connected_id) or \
                        (conn.target_id == memory_id and conn.source_id == connected_id):
-                        // Choose marker based on connection type
+# // Choose marker based on connection type
                         if conn.type == _connection_system.CONNECTION_TYPES.SEQUENTIAL:
                             child_node.marker = SPLIT_MARKERS.STREAM
                         elif conn.type == _connection_system.CONNECTION_TYPES.SPLITS:

@@ -60,7 +60,7 @@ func _init():
 	auto_update_timer = Timer.new()
 	auto_update_timer.wait_time = auto_update_interval
 	auto_update_timer.one_shot = false
-	auto_update_timer.connect("timeout", self, "_on_auto_update")
+	auto_update_timer.connect(_on_auto_update)
 	add_child(auto_update_timer)
 	
 	if automation_enabled:
@@ -112,8 +112,8 @@ func initialize_subsystems():
 
 func connect_signals():
 	if line_processor:
-		line_processor.connect("line_processed", self, "_on_line_processed")
-		line_processor.connect("pattern_detected", self, "_on_pattern_detected")
+		line_processor.connect(_on_line_processed)
+		line_processor.connect(_on_pattern_detected)
 	
 	print("Signals connected")
 
@@ -358,7 +358,7 @@ func cast_spell(spell_name):
 			var old_state = automation_enabled
 			set_automation(false)
 			# Schedule re-enabling
-			yield(get_tree().create_timer(spell.power), "timeout")
+			await(get_tree().create_timer(spell.power), "timeout")
 			set_automation(old_state)
 		"fantasy_creation":
 			effect_description = "Created fantasy world with power " + str(spell.power)
@@ -501,7 +501,7 @@ func open_wish_maker():
 		return "Error: Could not load Wish Maker scene"
 
 	# Instance scene
-	var wish_maker_instance = wish_maker_scene.instance()
+	var wish_maker_instance = wish_maker_scene.instantiate()
 	get_tree().root.add_child(wish_maker_instance)
 
 	return "Wish Maker opened in new window"

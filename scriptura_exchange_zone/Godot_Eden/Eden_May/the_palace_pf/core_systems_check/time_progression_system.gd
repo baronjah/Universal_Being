@@ -1,28 +1,28 @@
 extends Node
 
-class_name TimeProgressionSystem
+class_name TimeProgressionSystem_timeprogressionsystem_timeprog
 
 # ----- TIME SETTINGS -----
 @export_category("Time Settings")
-@export var time_enabled: bool = true
-@export var base_time_scale: float = 1.0
-@export var movement_time_acceleration: float = 0.5  # Time acceleration per unit of movement
-@export var max_time_acceleration: float = 5.0
-@export var time_deceleration_rate: float = 0.8  # How quickly time slows when not moving
-@export var dream_time_scale: float = 2.5  # Time flows faster in dreams
+@@export var time_enabled: bool = true
+@@export var base_time_scale: float = 1.0
+@@export var movement_time_acceleration: float = 0.5  # Time acceleration per unit of movement
+@@export var max_time_acceleration: float = 5.0
+@@export var time_deceleration_rate: float = 0.8  # How quickly time slows when not moving
+@@export var dream_time_scale: float = 2.5  # Time flows faster in dreams
 
 # ----- STORY PROGRESSION SETTINGS -----
 @export_category("Story Progression")
-@export var story_evolution_threshold: float = 5.0  # Time units needed for story evolution
-@export var memory_creation_threshold: float = 2.0  # Time units needed for memory creation
-@export var telepathy_connection_chance: float = 0.2  # Chance to create telepathic connections
-@export var dream_connection_strength: float = 2.0  # How strongly dreams connect to memories
+@@export var story_evolution_threshold: float = 5.0  # Time units needed for story evolution
+@@export var memory_creation_threshold: float = 2.0  # Time units needed for memory creation
+@@export var telepathy_connection_chance: float = 0.2  # Chance to create telepathic connections
+@@export var dream_connection_strength: float = 2.0  # How strongly dreams connect to memories
 
 # ----- ANIMATION SETTINGS -----
 @export_category("Animation Settings")
-@export var min_time_for_animation: float = 0.5  # Minimum time passed for animation
-@export var animation_speed_factor: float = 1.2  # How animation speed scales with time
-@export var animation_blend_time: float = 0.3  # Transition time between animations
+@@export var min_time_for_animation: float = 0.5  # Minimum time passed for animation
+@@export var animation_speed_factor: float = 1.2  # How animation speed scales with time
+@@export var animation_blend_time: float = 0.3  # Transition time between animations
 
 # ----- COMPONENT REFERENCES -----
 var game_controller: Node

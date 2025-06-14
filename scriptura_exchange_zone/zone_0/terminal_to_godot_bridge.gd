@@ -1,6 +1,6 @@
 extends Node
 
-class_name TerminalToGodotBridge
+class_name TerminalToGodotBridge_terminaltogodotbridge_terminal
 
 # ----- BRIDGE CONFIGURATION -----
 const TERMINAL_COUNT = 6
@@ -75,13 +75,13 @@ func _init_terminal_data():
     
     # Create terminal data files if they don't exist
     for i in range(TERMINAL_COUNT):
-        var terminal_file = TERMINAL_DATA_PATH + "/terminal_" + str(i) + terminal_file_extension
+        var terminal_file = TERMINAL_DATA_PATH + "terminal_" + str(i) + terminal_file_extension
         
         if not file.file_exists(terminal_file):
             file.open(terminal_file, File.WRITE)
             var init_data = {
                 "terminal_id": i,
-                "last_update": OS.get_unix_time(),
+                "last_update": OS.Time.get_unix_time_from_system(),
                 "messages": ["Terminal " + str(i) + " initialized"],
                 "manifested_words": [],
                 "dice_results": []
@@ -90,7 +90,7 @@ func _init_terminal_data():
             file.close()
         
         # Store last modified time
-        terminal_last_modified[i] = OS.get_unix_time()
+        terminal_last_modified[i] = OS.Time.get_unix_time_from_system()
     
     print("Terminal data files initialized")
 
@@ -221,11 +221,11 @@ func _poll_terminal_files():
     var file = File.new()
     
     for i in range(TERMINAL_COUNT):
-        var terminal_file = TERMINAL_DATA_PATH + "/terminal_" + str(i) + terminal_file_extension
+        var terminal_file = TERMINAL_DATA_PATH + "terminal_" + str(i) + terminal_file_extension
         
         if file.file_exists(terminal_file):
             # Check if file has been modified
-            var modified_time = OS.get_unix_time()
+            var modified_time = OS.Time.get_unix_time_from_system()
             
             if modified_time > terminal_last_modified[i]:
                 terminal_last_modified[i] = modified_time
@@ -319,11 +319,11 @@ func _clean_data_sewers():
         while file_name != "":
             if not dir.current_is_dir():
                 # Get file age in seconds
-                var file_path = DATA_SEWER_PATH + "/" + file_name
-                var modified_time = OS.get_unix_time()
+                var file_path = DATA_SEWER_PATH + "" + file_name
+                var modified_time = OS.Time.get_unix_time_from_system()
                 
                 # Delete files older than 1 hour
-                if modified_time - OS.get_unix_time() > 3600:
+                if modified_time - OS.Time.get_unix_time_from_system() > 3600:
                     dir.remove(file_path)
                     file_count += 1
             
@@ -355,7 +355,7 @@ func send_message_to_terminal(terminal_id, message):
         return false
     
     var file = File.new()
-    var terminal_file = TERMINAL_DATA_PATH + "/terminal_" + str(terminal_id) + terminal_file_extension
+    var terminal_file = TERMINAL_DATA_PATH + "terminal_" + str(terminal_id) + terminal_file_extension
     
     if file.file_exists(terminal_file):
         # Read current data
@@ -419,7 +419,7 @@ func get_word_database():
 
 # Move data to sewers
 func move_to_sewers(data, name=""):
-    var timestamp = OS.get_unix_time()
+    var timestamp = OS.Time.get_unix_time_from_system()
     var file_name = "sewer_" + str(timestamp)
     
     if name:
@@ -428,7 +428,7 @@ func move_to_sewers(data, name=""):
     file_name += ".json"
     
     var file = File.new()
-    file.open(DATA_SEWER_PATH + "/" + file_name, File.WRITE)
+    file.open(DATA_SEWER_PATH + "" + file_name, File.WRITE)
     file.store_string(JSON.print(data))
     file.close()
     

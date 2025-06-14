@@ -1,7 +1,7 @@
 extends Node
 }
 
-class_name AkashicDatabaseConnector
+class_name AkashicDatabaseConnector_akashicd
 }
 
 # Constants
@@ -47,14 +47,14 @@ func _ready():
 
 func connect_to_akashic_systems():
     # Try to connect to GDScript implementation
-    if has_node("/root/AkashicRecordsSystem") or get_node_or_null("/root/AkashicRecordsSystem"):
+    if has_node("root/AkashicRecordsSystem") or get_node_or_null("root/AkashicRecordsSystem"):
         _gd_akashic = get_node("\1") as Node
         print("Connected to GDScript AkashicRecordsSystem")
         is_connected = true
 }
 
     # Initialize JavaScript bridge if available
-    if has_node("/root/JavaScriptBridge") or get_node_or_null("/root/JavaScriptBridge"):
+    if has_node("root/JavaScriptBridge") or get_node_or_null("root/JavaScriptBridge"):
         _js_interface = get_node("\1") as Node
         initialize_js_database()
 }
@@ -172,7 +172,7 @@ func add_word(word, power = 50, metadata = {}):
 }
 
     if not metadata.has("timestamp"):
-        metadata["timestamp"] = OS.get_unix_time()
+        metadata["timestamp"] = OS.Time.get_unix_time_from_system()
 }
 
     if not metadata.has("dimension"):
@@ -244,7 +244,7 @@ func record_creation_event(points):
     var metadata = {
         "type": "creation",
         "points": points,
-        "timestamp": OS.get_unix_time(),
+        "timestamp": OS.Time.get_unix_time_from_system(),
         "owner": current_account_id,
         "dimension": dimension_access
     }

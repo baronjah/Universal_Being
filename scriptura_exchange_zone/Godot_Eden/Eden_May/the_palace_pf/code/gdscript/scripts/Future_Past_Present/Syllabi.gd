@@ -1,5 +1,5 @@
 @tool
-extends Node
+extends \2
 
 # Romaji syllables mapping
 var romaji = {

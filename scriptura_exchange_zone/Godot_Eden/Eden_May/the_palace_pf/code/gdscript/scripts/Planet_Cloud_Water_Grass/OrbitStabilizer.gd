@@ -1,6 +1,6 @@
 #OrbitStabilizer.gd in new test scene
 @tool
-extends Node3D
+extends \2
 
 var star_position_basis: Basis# = Basis.IDENTITY
 

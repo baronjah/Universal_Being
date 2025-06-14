@@ -1,5 +1,6 @@
 @tool
-class_name VisualShaderNodeMathsTriangleWave extends VisualShaderNodeCustom
+class_name VisualShaderNodeMathsTriangleWave_TriangleWave_Triangle
+extends \2
 
 func _get_name() -> String:
 	return "TriangleWave"

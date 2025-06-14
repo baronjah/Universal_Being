@@ -1,5 +1,5 @@
 extends Control
-class_name ThingCreatorUI
+class_name ThingCreatorUI_thingcreatorui_thingcre
 
 # References
 var akashic_records_manager = null
@@ -28,18 +28,18 @@ signal thing_created(thing_id, word_id, position)
 
 func _ready():
 	# Find AkashicRecordsManager
-	if has_node("/root/AkashicRecordsManager"):
-		akashic_records_manager = get_node("/root/AkashicRecordsManager")
+	if has_node("root/AkashicRecordsManager"):
+		akashic_records_manager = get_node("root/AkashicRecordsManager")
 	else:
 		push_error("AkashicRecordsManager not found!")
 		status_label.text = "Error: AkashicRecordsManager not found!"
 		return
 	
 	# Create ThingCreator if not already available
-	if has_node("/root/ThingCreator"):
-		thing_creator = get_node("/root/ThingCreator")
+	if has_node("root/ThingCreator"):
+		thing_creator = get_node("root/ThingCreator")
 	else:
-		var ThingCreatorClass = load("res://code/gdscript/scripts/akashic_records/thing_creator.gd")
+		var ThingCreatorClass = load("res://scripts/gdscript/scripts/akashic_records/thing_creator.gd")
 		if ThingCreatorClass:
 			thing_creator = ThingCreatorClass.new()
 			thing_creator.name = "ThingCreator"

@@ -1,5 +1,5 @@
 extends RefCounted
-class_name JSHConsoleInterface
+class_name JSHConsoleInterface_JSHConsoleInterface_JSHConso
 
 # Console interface defines standard methods that all console systems should implement
 

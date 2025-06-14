@@ -1,5 +1,5 @@
-class_name SiteMapController
-extends Node
+class_name SiteMapController_sitemapcontroller_sitemapc
+extends \2
 
 # References to subsystems
 var connection_manager
@@ -8,9 +8,9 @@ var evolution_system
 var visualizer
 
 # UI references
-@export var info_panel: Control
-@export var status_label: Label
-@export var log_panel: Control
+@@@export var info_panel: Control
+@@@export var status_label: Label
+@@@export var log_panel: Control
 
 # System state
 var initialized = false

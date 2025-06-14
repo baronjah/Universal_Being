@@ -26,9 +26,9 @@ var downloaded_tools = []
 var imported_tools = []
 var available_updates = []
 var installation_queue = []
-var cached_repositories = {}
-var tool_categories = {}
-var tool_counts = {}
+var cached_repositories = {
+var tool_categories = {
+var tool_counts = {
 
 # Tool directory paths
 var tools_root_path = "user://github_tools/"
@@ -88,8 +88,8 @@ func _initialize_tool_categories():
             "name": category_name,
             "tools": [],
             "count": 0
-        }
         tool_counts[category_name] = 0
+}
 
 func authenticate(token, username = ""):
     # Store authentication info
@@ -117,7 +117,7 @@ func authenticate(token, username = ""):
         
         emit_signal("rate_limit_changed", api_calls_remaining, api_reset_time)
         
-        print("Authenticated with GitHub as: " + (github_username if !github_username.empty() else "Anonymous"))
+        print("Authenticated with GitHub as: " + (github_username if !github_username.is_empty() else "Anonymous"))
         return true
     else:
         connection_state = "error"
@@ -170,7 +170,7 @@ func search_repositories(query, category = -1, sort_by = "stars", count = 10):
         "utility": ["debug-tools", "profiler", "file-browser", "resource-optimizer", "build-system"],
         "ai": ["behavior-trees", "pathfinding", "neural-network", "state-machine", "decision-system"],
         "custom": ["game-framework", "dialogue-system", "inventory-system", "quest-manager", "save-system"]
-    }
+		}
     
     # Get tools based on category
     var tool_names = []
@@ -217,7 +217,7 @@ func search_repositories(query, category = -1, sort_by = "stars", count = 10):
                 tool_name,
                 category_name
             ],
-            "category": category_name if !category_name.empty() else "misc",
+            "category": category_name if !category_name.is_empty() else "misc",
             "version": "v" + str(int(rand_range(0, 3))) + "." + str(int(rand_range(0, 10))) + "." + str(int(rand_range(0, 10))),
             "has_downloads": true,
             "default_branch": "main"
@@ -225,18 +225,18 @@ func search_repositories(query, category = -1, sort_by = "stars", count = 10):
     
     # Sort repositories
     if sort_by == "stars":
-        repositories.sort_custom(self, "_sort_by_stars")
+        repositories.sort_custom(self."_sort_by_stars")
     elif sort_by == "updated":
-        repositories.sort_custom(self, "_sort_by_update")
+        repositories.sort_custom(self."_sort_by_update")
     elif sort_by == "name":
-        repositories.sort_custom(self, "_sort_by_name")
+        repositories.sort_custom(self."_sort_by_name")
     
     # Cache results
     if use_cache:
         cached_repositories[cache_key] = {
             "timestamp": OS.get_unix_time(),
             "data": repositories
-        }
+			}
     
     # Emit signal
     for repo in repositories:
@@ -244,6 +244,7 @@ func search_repositories(query, category = -1, sort_by = "stars", count = 10):
     
     emit_signal("tool_list_updated", repositories.size())
     print("Found " + str(repositories.size()) + " repositories matching: " + query)
+	}
     
     return repositories
 
@@ -293,7 +294,7 @@ func get_repository_details(repo_full_name):
             category_name = cat.to_lower()
             break
     
-    if category_name.empty():
+    if category_name.is_empty():
         category_name = "utility" # Default category
     
     # Generate repository details
@@ -342,20 +343,18 @@ func get_repository_details(repo_full_name):
                         "name": repo_name + "-v1.0.0.zip",
                         "download_count": int(rand_range(100, 1000)),
                         "browser_download_url": "https://github.com/" + repo_full_name + "/releases/download/v1.0.0/" + repo_name + "-v1.0.0.zip"
-                    }
                 ]
-            }
         ],
         "dependencies": [],
         "godot_version": "4.0+"
-    }
+		}
     
     # Cache results
     if use_cache:
         cached_repositories[cache_key] = {
             "timestamp": OS.get_unix_time(),
             "data": repo_details
-        }
+			}
     
     print("Retrieved details for: " + repo_full_name)
     return repo_details
@@ -405,6 +404,7 @@ func _on_download_progress(queue_index):
     item["progress"] += rand_range(0.1, 0.3)
     
     if item["progress"] >= 1.0:
+	}
         # Download complete
         item["progress"] = 1.0
         item["status"] = "downloaded"
@@ -422,7 +422,7 @@ func _on_download_progress(queue_index):
             "download_path": tools_root_path + item["repo"]["name"],
             "category": item["repo"]["category"],
             "downloaded_at": OS.get_datetime()
-        }
+			}
         
         downloaded_tools.append(tool_data)
         
@@ -435,6 +435,7 @@ func _on_download_progress(queue_index):
         
         emit_signal("tool_downloaded", tool_data["name"], tool_data["version"])
         print("Downloaded: " + tool_data["name"] + " " + tool_data["version"])
+		}
         
         # Install the tool
         install_tool(tool_data["name"])
@@ -455,7 +456,7 @@ func install_tool(tool_name):
     # For this demo, simulate installation
     
     # Simulate installation delay
-    yield(get_tree().create_timer(1.0), "timeout")
+    await(get_tree().create_timer(1.0), "timeout")
     
     # Add to imported tools
     var imported_tool = {
@@ -466,7 +467,7 @@ func install_tool(tool_name):
         "category": tool_data["category"],
         "imported_at": OS.get_datetime(),
         "enabled": true
-    }
+		}
     
     imported_tools.append(imported_tool)
     
@@ -510,6 +511,7 @@ func check_updates():
         var repo_details = get_repository_details(tool_data["repo"])
         
         if repo_details != null and repo_details["version"] != tool_data["version"]:
+		}
             # Update available
             available_updates.append({
                 "name": tool_data["name"],
@@ -561,12 +563,12 @@ func count_imported_tools():
 func load_cache():
     # In a real implementation, would load cached data from file
     # For this demo, initialize empty cache
-    cached_repositories = {}
+    cached_repositories = {
     print("Cache initialized")
     return true
 
 func clear_cache():
-    cached_repositories = {}
+    cached_repositories = {
     print("Cache cleared")
     return true
 
@@ -597,4 +599,3 @@ func get_connection_status():
         "api_calls_remaining": api_calls_remaining,
         "api_reset_time": api_reset_time,
         "connected_as": github_username
-    }

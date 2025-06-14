@@ -11,6 +11,7 @@ func move_player(delta: float):
 
 func attack():
 	print("BasePlayer: Basic attack")
+
 	
 func get_health() -> int:
 	return 100

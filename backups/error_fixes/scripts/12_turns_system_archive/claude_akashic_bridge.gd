@@ -8,7 +8,6 @@ const FIREWALL_LEVELS = {
 	"standard": 1,
 	"enhanced": 2,
 	"divine": 3
-}
 const ERROR_TYPES = {
 	"validation": "VALIDATION_ERROR",
 	"access": "ACCESS_DENIED",
@@ -30,7 +29,6 @@ var config = {
 		"gate_0": true, # Physical reality (file system)
 		"gate_1": true, # Immediate experience (active session) 
 		"gate_2": false # Transcendent state (higher dimensions)
-	}
 }
 
 # Connection status
@@ -38,7 +36,7 @@ var connection_status = {
 	"akashic_connected": false,
 	"claude_connected": false,
 	"firewall_active": false,
-	"dimensional_gates_status": {}
+	"dimensional_gates_status": {
 }
 
 # Error handling
@@ -61,7 +59,7 @@ func _ready():
 	_initialize_bridge()
 	
 	# Register callback for gate status changes
-	self.connect("gate_status_changed", self, "_on_gate_status_changed")
+	self.connect(_on_gate_status_changed)
 
 func _initialize_bridge():
 	# Connect to Akashic database
@@ -77,12 +75,13 @@ func _initialize_bridge():
 	_setup_firewall()
 	
 	print("Claude Akashic Bridge initialized with firewall level: " + config.firewall_level)
+}
 
 # Connection functions
 func _connect_to_akashic():
 	# Try to find the Akashic connector
 	if has_node("/root/AkashicDatabaseConnector") or get_node_or_null("/root/AkashicDatabaseConnector"):
-		_akashic_connector = get_node("/root/AkashicDatabaseConnector")
+		_akashic_connector = get_node("\1") as Node
 		connection_status.akashic_connected = true
 		print("Connected to Akashic Database Connector")
 	else:
@@ -117,7 +116,7 @@ func _connect_to_claude():
 		"model": "claude-3-5-sonnet", # Default model
 		"max_tokens": 180000, # Default token limit
 		"temperature": 0.7 # Default temperature
-	}
+}
 	
 	# Check for API key
 	if _claude_interface.api_key and _claude_interface.api_key.length() > 0:
@@ -135,6 +134,7 @@ func _initialize_gates():
 		connection_status.dimensional_gates_status[gate_name] = status
 		
 		print("Gate " + gate_name + " initialized with status: " + str(status))
+}
 	
 	# Connect to dimension level in Akashic connector
 	if connection_status.akashic_connected:
@@ -152,6 +152,7 @@ func _setup_firewall():
 	else:
 		push_error("Invalid firewall level: " + config.firewall_level)
 		_log_error(ERROR_TYPES.validation, "Invalid firewall level: " + config.firewall_level)
+}
 
 func _setup_firewall_rules(level):
 	# Set up pattern matching and validation rules based on level
@@ -228,6 +229,7 @@ func store_words_batch(words_array):
 			failure_count += 1
 	
 	print("Word batch processed - Success: " + str(success_count) + ", Failure: " + str(failure_count))
+
 	
 	return failure_count == 0
 
@@ -247,7 +249,7 @@ func update_wish(wish_id, new_status, metadata = {}):
 		"type": "wish",
 		"status": new_status,
 		"updated": OS.get_unix_time()
-	}
+}
 	
 	# Add custom metadata
 	for key in metadata:
@@ -256,6 +258,7 @@ func update_wish(wish_id, new_status, metadata = {}):
 	# Store wish update in Akashic Records
 	if connection_status.akashic_connected:
 		var wish_word = "wish:" + wish_id
+
 		var success = _akashic_connector.add_word(wish_word, 75, combined_metadata)
 		
 		if success:
@@ -290,6 +293,7 @@ func create_protected_record(record_type, content, metadata = {}):
 		if record_type == "text" or record_type == "message":
 			success = _akashic_connector.add_word(record_id, 60, protected_metadata)
 		elif record_type == "document" or record_type == "file":
+
 			# Additional validation for file records
 			if content.length() > config.max_request_size:
 				_log_error(ERROR_TYPES.validation, "File content exceeds maximum size")
@@ -305,7 +309,7 @@ func create_protected_record(record_type, content, metadata = {}):
 				"type": record_type,
 				"timestamp": protected_metadata["created"],
 				"status": "stored"
-			}
+	}
 	
 	_log_error(ERROR_TYPES.connection, "Failed to create protected record")
 	return null
@@ -323,7 +327,7 @@ func query_akashic_records(search_term, options = {}):
 		"include_metadata": true,
 		"dimension": config.dimension_access,
 		"exact_match": false
-	}
+}
 	
 	# Merge with provided options
 	for key in default_options:
@@ -356,7 +360,7 @@ func update_firewall(new_level, settings = {}):
 		"level": config.firewall_level,
 		"gates": config.dimensional_gates.duplicate(),
 		"dimension_access": config.dimension_access
-	}
+}
 	
 	# Add recovery point
 	_add_recovery_point(old_settings)
@@ -457,7 +461,7 @@ func get_status():
 		"gates": connection_status.dimensional_gates_status,
 		"errors": error_log.size(),
 		"recovery_points": recovery_points.size()
-	}
+}
 
 # Handle Claude account error
 func handle_claude_error(error_message, metadata = {}):
@@ -470,7 +474,7 @@ func handle_claude_error(error_message, metadata = {}):
 		"timestamp": OS.get_unix_time(),
 		"message": error_message,
 		"recovered": false
-	}
+}
 	
 	# Add additional metadata
 	for key in metadata:
@@ -493,7 +497,7 @@ func handle_claude_error(error_message, metadata = {}):
 # Validate a word
 func _validate_word(word, power, metadata):
 	# Basic validation
-	if typeof(word) != TYPE_STRING or word.empty():
+	if typeof(word) != TYPE_STRING or word.is_empty():
 		_log_error(ERROR_TYPES.validation, "Invalid word: Empty or wrong type")
 		return false
 	
@@ -512,11 +516,11 @@ func _validate_word(word, power, metadata):
 # Validate a wish
 func _validate_wish(wish_id, status, metadata):
 	# Basic validation
-	if typeof(wish_id) != TYPE_STRING or wish_id.empty():
+	if typeof(wish_id) != TYPE_STRING or wish_id.is_empty():
 		_log_error(ERROR_TYPES.validation, "Invalid wish ID: Empty or wrong type")
 		return false
 	
-	if typeof(status) != TYPE_STRING or status.empty():
+	if typeof(status) != TYPE_STRING or status.is_empty():
 		_log_error(ERROR_TYPES.validation, "Invalid wish status: Empty or wrong type")
 		return false
 	
@@ -536,7 +540,7 @@ func _validate_record(record_type, content, metadata):
 		return false
 	
 	# Validate content
-	if typeof(content) != TYPE_STRING or content.empty():
+	if typeof(content) != TYPE_STRING or content.is_empty():
 		_log_error(ERROR_TYPES.validation, "Invalid content: Empty or wrong type")
 		return false
 	
@@ -558,6 +562,7 @@ func _firewall_check_word(word, power, metadata):
 	
 	# Gate access check
 	if metadata.has("dimension"):
+
 		var dim = metadata["dimension"]
 		if typeof(dim) == TYPE_INT and dim > config.dimension_access:
 			return false
@@ -722,6 +727,7 @@ func _generate_metadata_checksum(metadata):
 	# Calculate checksum from sorted keys and values
 	for key in keys:
 		if key != "checksum" and key != "divine_seal":
+
 			var value = str(metadata[key])
 			for i in range(value.length()):
 				checksum = (checksum + value.ord_at(i)) % 9973 # Use a prime number
@@ -740,6 +746,7 @@ func _generate_divine_seal(metadata):
 	for key in keys:
 		if key != "checksum" and key != "divine_seal":
 			base_data += "_" + key + ":" + str(metadata[key])
+
 	
 	# Create a seal using a one-way function
 	var seal = 0
@@ -819,6 +826,7 @@ func _enhance_with_claude(result, search_term, options):
 	# Simulate Claude adding context
 	if result.has("content"):
 		result["claude_context"] = "Enhanced understanding of: " + search_term
+
 	
 	return result
 
@@ -826,6 +834,7 @@ func _enhance_with_claude(result, search_term, options):
 func _attempt_claude_recovery(error_message):
 	# Simulate recovery attempt
 	print("Attempting to recover from Claude error: " + error_message)
+
 	
 	# Basic recovery strategies
 	var success = false
@@ -837,10 +846,12 @@ func _attempt_claude_recovery(error_message):
 	# 4. Rate limiting recovery
 	
 	if error_message.find("token") >= 0 or error_message.find("limit") >= 0:
+
 		# Token/limit issues - wait and retry
 		OS.delay_msec(1000) # Wait 1 second
 		success = true
 	elif error_message.find("connect") >= 0:
+
 		# Connection issues - check network
 		success = false
 	else:
@@ -856,7 +867,7 @@ func _add_recovery_point(data):
 		"id": "rp_" + str(OS.get_unix_time()),
 		"timestamp": OS.get_unix_time(),
 		"data": data
-	}
+}
 	
 	recovery_points.append(recovery_point)
 	
@@ -878,7 +889,7 @@ func _log_error(error_type, message):
 		"timestamp": OS.get_unix_time(),
 		"firewall_level": config.firewall_level,
 		"dimension_access": config.dimension_access
-	}
+}
 	
 	error_log.append(error)
 	

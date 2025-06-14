@@ -1,5 +1,6 @@
 @tool
-class_name VisualShaderNodeAdjustmentContrast extends VisualShaderNodeCustom
+class_name VisualShaderNodeAdjustmentContrast_Contrast_Contrast
+extends \2
 
 func _get_name() -> String:
 	return "Contrast"

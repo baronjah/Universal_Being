@@ -1,6 +1,6 @@
 extends Node
 
-class_name MultiCoreSystem
+class_name MultiCoreSystem_multicoresystem_multicor
 
 # Multi-core simulation for LuminusOS
 # Simulates parallel processing environments 
@@ -10,7 +10,8 @@ signal core_state_changed(core_id, state)
 signal memory_updated(address, value)
 
 # Core States
-enum CoreState {IDLE, RUNNING, WAITING, ERROR}
+enum \2 {
+IDLE, RUNNING, WAITING, ERROR}
 
 # Available cores
 var cores = []

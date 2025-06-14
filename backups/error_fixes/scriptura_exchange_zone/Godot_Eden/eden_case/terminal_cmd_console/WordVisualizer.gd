@@ -367,7 +367,7 @@ func _update_word_animation(word_id, delta):
     word_node.scale = animation_scale
     
     # Update particles based on power
-    var particles = word_node.get_node("WordParticles")
+    var particles = word_node.get_node("\1") as Node
     if particles:
         particles.emitting = word_data.power > 50 or evolution_stage > 1
         if evolution_stage > 1:
@@ -401,7 +401,7 @@ func _update_connection_animation(connection_id, delta):
     var to_node = word_instances[to_id]
     
     # Update the connection geometry
-    var line = connection_node.get_node("ConnectionLine")
+    var line = connection_node.get_node("\1") as Node
     if not line:
         return
     
@@ -712,7 +712,7 @@ func visualize_word(word_data):
         word_instance.rotation = word_data.rotation
     
     # Set text
-    var text_node = word_instance.get_node("WordText")
+    var text_node = word_instance.get_node("\1") as Node
     if text_node:
         text_node.text = word_data.text
         
@@ -724,7 +724,7 @@ func visualize_word(word_data):
         text_node.modulate = _get_color_for_word(word_data.text, word_data.get("categories", ["undefined"]))
     
     # Setup interaction
-    var area = word_instance.get_node("ClickArea")
+    var area = word_instance.get_node("\1") as Node
     if area:
         # Connect signals
         area.connect("input_event", self, "_on_word_input_event", [word_id])
@@ -736,7 +736,7 @@ func visualize_word(word_data):
     word_instances[word_id] = word_instance
     
     # Setup particles
-    var particles = word_instance.get_node("WordParticles")
+    var particles = word_instance.get_node("\1") as Node
     if particles:
         particles.emitting = word_data.get("power", 0) > 50
         
@@ -769,7 +769,7 @@ func visualize_connection(connection_data):
     connection_instance.name = "Connection_" + connection_id
     
     # Set material color based on connection data
-    var line = connection_instance.get_node("ConnectionLine")
+    var line = connection_instance.get_node("\1") as Node
     if line and line.material_override:
         if connection_data.has("color"):
             line.material_override.albedo_color = connection_data.color
@@ -817,28 +817,28 @@ func update_word_visual(word_id, updated_data):
     
     # Update text if provided
     if updated_data.has("text"):
-        var text_node = word_instance.get_node("WordText")
+        var text_node = word_instance.get_node("\1") as Node
         if text_node:
             text_node.text = updated_data.text
     
     # Update power affects size
     if updated_data.has("power"):
-        var text_node = word_instance.get_node("WordText")
+        var text_node = word_instance.get_node("\1") as Node
         if text_node:
             text_node.font_size = FONT_SIZE_BASE * (0.8 + (updated_data.power / 100.0) * 0.7)
     
     # Update categories affects color
     if updated_data.has("categories"):
-        var text_node = word_instance.get_node("WordText")
+        var text_node = word_instance.get_node("\1") as Node
         if text_node:
             text_node.modulate = _get_color_for_word(
-                updated_data.get("text", word_instance.get_node("WordText").text), 
+                updated_data.get("text", word_instance.get_node("\1") as Node.text), 
                 updated_data.categories
             )
     
     # Update particles
     if updated_data.has("power") or updated_data.has("evolution_stage"):
-        var particles = word_instance.get_node("WordParticles")
+        var particles = word_instance.get_node("\1") as Node
         if particles:
             particles.emitting = updated_data.get("power", 0) > 50 or updated_data.get("evolution_stage", 1) > 1
             
@@ -846,7 +846,7 @@ func update_word_visual(word_id, updated_data):
                 var process_material = particles.process_material
                 if process_material and updated_data.has("categories"):
                     process_material.color = _get_color_for_word(
-                        updated_data.get("text", word_instance.get_node("WordText").text), 
+                        updated_data.get("text", word_instance.get_node("\1") as Node.text), 
                         updated_data.categories
                     )
 
@@ -858,7 +858,7 @@ func update_connection_visual(connection_id, updated_data):
     var connection_instance = connection_instances[connection_id]
     
     # Update material properties
-    var line = connection_instance.get_node("ConnectionLine")
+    var line = connection_instance.get_node("\1") as Node
     if line and line.material_override:
         # Update color if provided
         if updated_data.has("color"):
@@ -899,7 +899,7 @@ func remove_word_visual(word_id):
     tween.start()
     
     # Wait for animation to complete
-    yield(tween, "tween_completed")
+    await(tween, "tween_completed")
     
     # Remove instance
     word_instance.queue_free()
@@ -914,7 +914,7 @@ func remove_connection_visual(connection_id):
     var connection_instance = connection_instances[connection_id]
     
     # Play removal animation
-    var line = connection_instance.get_node("ConnectionLine")
+    var line = connection_instance.get_node("\1") as Node
     if line and line.material_override:
         var tween = Tween.new()
         add_child(tween)
@@ -922,7 +922,7 @@ func remove_connection_visual(connection_id):
         tween.start()
         
         # Wait for animation to complete
-        yield(tween, "tween_completed")
+        await(tween, "tween_completed")
         
         # Remove instance
         connection_instance.queue_free()
@@ -975,7 +975,7 @@ func highlight_word(word_id):
     var word_instance = word_instances[word_id]
     
     // Add glow effect
-    var particles = word_instance.get_node("WordParticles")
+    var particles = word_instance.get_node("\1") as Node
     if particles:
         particles.emitting = true
         particles.amount = 50
@@ -1001,7 +1001,7 @@ func clear_highlight():
         var word_instance = word_instances[highlight_word_id]
         
         // Reset particle effect
-        var particles = word_instance.get_node("WordParticles")
+        var particles = word_instance.get_node("\1") as Node
         if particles:
             particles.emitting = false
             particles.amount = 20

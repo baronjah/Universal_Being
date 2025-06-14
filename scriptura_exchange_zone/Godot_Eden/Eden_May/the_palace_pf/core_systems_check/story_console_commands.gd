@@ -1,6 +1,6 @@
 extends Node
 
-class_name StoryConsoleCommands
+class_name StoryConsoleCommands_storyconsolecommands_storycon
 
 # ----- CONSOLE REFERENCE -----
 var console: Node  # JSHConsoleAdvanced reference
@@ -343,7 +343,7 @@ func _cmd_dna(args: Array) -> Dictionary:
             var new_dna = args[2]
             word_seed_evolution.active_seeds[word_id].dna = new_dna
             
-            // Update appearance if possible
+# // Update appearance if possible
             if word_seed_evolution.words_in_space:
                 var material = word_seed_evolution.word_dna_system.apply_dna_to_material(
                     word_seed_evolution.words_in_space.get_word_material(word_id),
@@ -357,7 +357,7 @@ func _cmd_dna(args: Array) -> Dictionary:
             var dna = word_seed_evolution.active_seeds[word_id].dna
             var word_text = word_seed_evolution.active_seeds[word_id].text
             
-            // Get analysis components
+# // Get analysis components
             var color = word_seed_evolution.word_dna_system.get_primary_color_from_dna(dna)
             var transform = word_seed_evolution.word_dna_system.get_shape_transform_from_dna(dna)
             var behavior = word_seed_evolution.word_dna_system.get_behavior_from_dna(dna)
@@ -384,7 +384,7 @@ func _cmd_wordstatus(args: Array) -> Dictionary:
     var word_id = args[0]
     
     if word_id == "all":
-        // List all words with their status
+# // List all words with their status
         var output = "Active Words:\n"
         var active_seeds = word_seed_evolution.active_seeds
         
@@ -393,18 +393,18 @@ func _cmd_wordstatus(args: Array) -> Dictionary:
         
         for seed_id in active_seeds:
             var seed_data = active_seeds[seed_id]
-            output += seed_id + ": '" + seed_data.text + "' (Stage " + str(seed_data.evolution_stage) + "/"
+            output += seed_id + ": '" + seed_data.text + "' (Stage " + str(seed_data.evolution_stage) + ""
                     + str(word_seed_evolution.max_evolution_stages) + ") - Growth: " 
                     + str(int(seed_data.growth_progress * 100)) + "%\n"
         
         return {"message": output, "color": output_color_system}
     else:
-        // Show detailed status for specific word
+# // Show detailed status for specific word
         if word_seed_evolution.active_seeds.has(word_id):
             var seed_data = word_seed_evolution.active_seeds[word_id]
             
             var output = "Word Status for '" + seed_data.text + "' (" + word_id + "):\n"
-            output += "Evolution Stage: " + str(seed_data.evolution_stage) + "/" + str(word_seed_evolution.max_evolution_stages) + "\n"
+            output += "Evolution Stage: " + str(seed_data.evolution_stage) + "" + str(word_seed_evolution.max_evolution_stages) + "\n"
             output += "Growth Progress: " + str(int(seed_data.growth_progress * 100)) + "%\n"
             output += "Category: " + seed_data.category + "\n"
             output += "Story Role: " + seed_data.story_role + "\n"
@@ -451,7 +451,7 @@ func _cmd_genesis(args: Array) -> Dictionary:
         word_count = int(args[1])
         word_count = clamp(word_count, 2, 10)  // Limit between 2-10 words
     
-    // Word sets based on themes
+# // Word sets based on themes
     var theme_words = {
         "creation": ["genesis", "beginning", "creation", "birth", "origin", "formation", "existence", "emergence", "dawn", "spark"],
         "destruction": ["apocalypse", "ruin", "decay", "collapse", "entropy", "chaos", "void", "end", "dissolution", "death"],
@@ -462,11 +462,11 @@ func _cmd_genesis(args: Array) -> Dictionary:
         "knowledge": ["wisdom", "insight", "learning", "education", "understanding", "comprehension", "discovery", "revelation", "concept", "theory"]
     }
     
-    // Default to creation theme if not found
+# // Default to creation theme if not found
     if not theme_words.has(theme):
         theme = "creation"
     
-    // Select random words from the theme
+# // Select random words from the theme
     var words = []
     var available_words = theme_words[theme].duplicate()
     
@@ -478,7 +478,7 @@ func _cmd_genesis(args: Array) -> Dictionary:
         words.append(available_words[index])
         available_words.remove_at(index)
     
-    // Plant the words in a circular pattern
+# // Plant the words in a circular pattern
     var radius = 5.0
     var center_pos = Vector3.ZERO
     
@@ -492,13 +492,13 @@ func _cmd_genesis(args: Array) -> Dictionary:
         var offset = Vector3(cos(angle) * radius, 0, sin(angle) * radius)
         var position = center_pos + offset
         
-        // Plant the seed
+# // Plant the seed
         var seed_id = word_seed_evolution.plant_seed(words[i], position, "seed")
         
         if seed_id != "":
             planted_words.append(seed_id)
     
-    // Connect the words in a circle
+# // Connect the words in a circle
     for i in range(planted_words.size()):
         var next_i = (i + 1) % planted_words.size()
         word_seed_evolution.connect_words(planted_words[i], planted_words[next_i])
@@ -515,7 +515,7 @@ func set_references(console_ref, word_seed_ref, words_space_ref, player_ref):
     words_in_space = words_space_ref
     player_controller = player_ref
     
-    // Register commands
+# // Register commands
     register_commands()
 
 func get_last_story() -> String:

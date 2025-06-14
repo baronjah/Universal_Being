@@ -1,5 +1,5 @@
 extends Node
-class_name ResourceManager
+class_name ResourceManager_resourcemanager_resource
 }
 
 # Singleton instance

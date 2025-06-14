@@ -22,8 +22,8 @@
 # SOFTWARE.
 
 @tool
-extends ImageTexture3D
-class_name ZippedImageArchiveCpuTexture3D
+extends \2
+class_name ZippedImageArchiveCpuTexture3D_zippedimagearchivecpuTexture3D_zippedim
 
 @export_file("*.zip") var zip_file:String:
 	get:

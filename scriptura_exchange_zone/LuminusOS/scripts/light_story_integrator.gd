@@ -1,6 +1,6 @@
 extends Node
 
-class_name LightStoryIntegrator
+class_name LightStoryIntegrator_lightstoryintegrator_lightsto
 
 # Light Story Integrator - Connects the Light Data Transformer with storytelling systems
 # Creates narrative structures around light transformations
@@ -68,10 +68,10 @@ var active_integrations = {}
 # Initialize connections
 func _ready():
     # Connect to other systems
-    transformer = get_node_or_null("/root/LightDataTransformer")
-    story_weaver = get_node_or_null("/root/StoryWeaver")
-    data_sea = get_node_or_null("/root/DataSeaController")
-    memory_system = get_node_or_null("/root/TerminalMemorySystem")
+    transformer = get_node_or_null("root/LightDataTransformer")
+    story_weaver = get_node_or_null("root/StoryWeaver")
+    data_sea = get_node_or_null("root/DataSeaController")
+    memory_system = get_node_or_null("root/TerminalMemorySystem")
     
     # Connect signals if available
     if transformer:
@@ -477,7 +477,7 @@ func process_command(command):
             for i in range(count):
                 sample.append(LIGHT_WORDS[i])
             
-            return "Light-related words (" + str(count) + "/" + str(LIGHT_WORDS.size()) + "): " + ", ".join(sample)
+            return "Light-related words (" + str(count) + "" + str(LIGHT_WORDS.size()) + "): " + ", ".join(sample)
             
         _:
             return "Unknown command: " + parts[0]

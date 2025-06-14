@@ -1,5 +1,5 @@
-class_name ColorTemperatureProjection
-extends Node
+class_name ColorTemperatureProjection_colortemperatureprojection_colortem
+extends \2
 
 # ----- COLOR CONSTANTS -----
 const COLOR_TEMPERATURES = {
@@ -142,26 +142,26 @@ func _ready():
 
 func _find_components():
     # Find TerminalBridgeConnector
-    terminal_bridge = get_node_or_null("/root/TerminalBridgeConnector")
+    terminal_bridge = get_node_or_null("root/TerminalBridgeConnector")
     if not terminal_bridge:
         terminal_bridge = _find_node_by_class(get_tree().root, "TerminalBridgeConnector")
     
     # Find AkashicNumberSystem
-    akashic_system = get_node_or_null("/root/AkashicNumberSystem")
+    akashic_system = get_node_or_null("root/AkashicNumberSystem")
     if not akashic_system:
         akashic_system = _find_node_by_class(get_tree().root, "AkashicNumberSystem")
     
     # Find DimensionalColorSystem
-    color_system = get_node_or_null("/root/DimensionalColorSystem")
+    color_system = get_node_or_null("root/DimensionalColorSystem")
     if not color_system:
         color_system = _find_node_by_class(get_tree().root, "DimensionalColorSystem")
     
     # Find migration components
-    migration_system = get_node_or_null("/root/UnifiedMigrationSystem")
+    migration_system = get_node_or_null("root/UnifiedMigrationSystem")
     if not migration_system:
         migration_system = _find_node_by_class(get_tree().root, "UnifiedMigrationSystem")
     
-    ethereal_bridge = get_node_or_null("/root/EtherealMigrationBridge")
+    ethereal_bridge = get_node_or_null("root/EtherealMigrationBridge")
     if not ethereal_bridge:
         ethereal_bridge = _find_node_by_class(get_tree().root, "EtherealMigrationBridge")
     

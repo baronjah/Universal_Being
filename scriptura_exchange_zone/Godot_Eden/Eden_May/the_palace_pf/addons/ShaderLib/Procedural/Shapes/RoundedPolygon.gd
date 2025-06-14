@@ -1,5 +1,6 @@
 @tool
-class_name VisualShaderNodeProceduralRoundedPolygon extends VisualShaderNodeCustom
+class_name VisualShaderNodeProceduralRoundedPolygon_RoundedPolygon_RoundedP
+extends \2
 
 func _init() -> void:
 	output_port_for_preview = 0

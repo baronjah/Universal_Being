@@ -15,7 +15,7 @@ const DNS_TIMEOUT = 5.0
 # Self Check Properties
 var last_check_time := 0
 var check_interval := 3600  # Check every hour
-var validation_status := {}
+var validation_status := {
 var self_upgrade_history := []
 var trust_level := 5  # Turn 5 alignment
 
@@ -34,11 +34,11 @@ func _init():
 
 func _ready():
     if get_node_or_null("/root/MouseAutomation") != null:
-        mouse_automation = get_node("/root/MouseAutomation")
+        mouse_automation = get_node("\1") as Node
         print("[NetworkValidation] Connected to Mouse Automation")
     
     if get_node_or_null("/root/TerminalGodotBridge") != null:
-        terminal_bridge = get_node("/root/TerminalGodotBridge")
+        terminal_bridge = get_node("\1") as Node
         print("[NetworkValidation] Connected to Terminal Bridge")
     
     # Schedule periodic self-checks
@@ -47,9 +47,10 @@ func _ready():
 func _initialize_validation_status():
     validation_status = {
         "dns": {
+}
             DNS_GOOGLE: {"validated": false, "last_checked": 0, "response_time": 0},
             DNS_CLOUDFLARE: {"validated": false, "last_checked": 0, "response_time": 0},
-            DNS_QUAD9: {"validated": false, "last_checked": 0, "response_time": 0}
+            DNS_QUAD9: {"validated": false, "last_checked": 0, "response_time": 0
         },
         "self_check": {
             "last_run": 0,
@@ -59,9 +60,8 @@ func _initialize_validation_status():
         "trust_chains": {
             "automation": {"level": trust_level, "verified": false},
             "terminal": {"level": trust_level, "verified": false},
-            "network": {"level": trust_level, "verified": false}
-        }
-    }
+            "network": {"level": trust_level, "verified": false
+			}
 
 # =====================
 # DNS Validation Methods
@@ -72,11 +72,12 @@ func validate_dns(dns_server: String = "") -> Dictionary:
         "success": false,
         "message": "",
         "response_time": 0
-    }
+		}
     
     # If no specific DNS server provided, validate all
     if dns_server == "":
-        var all_results = {}
+	}
+        var all_results = {
         var all_success = true
         
         for dns in [DNS_GOOGLE, DNS_CLOUDFLARE, DNS_QUAD9]:
@@ -111,25 +112,26 @@ func _check_single_dns(dns_server: String) -> Dictionary:
         "message": "",
         "response_time": 0,
         "server": dns_server
-    }
+		}
     
     # In a real implementation, this would actually ping the DNS server
     # For this simulation, we'll create reasonable results
     
     # Simulate network request with variable success rate
-    var start_time = OS.get_ticks_msec()
+    var start_time = OS.Time.get_ticks_msec()
     var random_success = randf() < 0.95  # 95% success rate
     var simulated_latency = randi() % 100 + 10  # 10-110ms
     
     # Wait for simulated latency
-    yield(get_tree().create_timer(simulated_latency / 1000.0), "timeout")
+    await(get_tree().create_timer(simulated_latency / 1000.0), "timeout")
     
     # Record response time
-    result.response_time = OS.get_ticks_msec() - start_time
+    result.response_time = OS.Time.get_ticks_msec() - start_time
     
     if random_success:
         result.success = true
         result.message = "Successfully validated DNS server: " + dns_server
+		}
         
         # If this is 8.8.8.8, apply special 8.8.8.8 rules
         if dns_server == DNS_GOOGLE:
@@ -141,6 +143,7 @@ func _check_single_dns(dns_server: String) -> Dictionary:
     else:
         result.success = false
         result.message = "Failed to validate DNS server: " + dns_server
+		}
     
     return result
 
@@ -153,7 +156,7 @@ func _apply_google_dns_rules() -> Dictionary:
         "edns_enabled": true,
         "dnssec_validation": "permissive",
         "logging": "minimal"
-    }
+		}
 
 func _apply_cloudflare_dns_rules() -> Dictionary:
     # 1.1.1.1 Cloudflare DNS Rules
@@ -164,7 +167,7 @@ func _apply_cloudflare_dns_rules() -> Dictionary:
         "malware_blocking": "optional",
         "dnssec_validation": "strict",
         "query_minimization": true
-    }
+		}
 
 # =====================
 # Self Check and Upgrade Methods
@@ -177,7 +180,7 @@ func perform_self_check() -> Dictionary:
         "issues": [],
         "integrity": 100.0,
         "upgrade_available": false
-    }
+		}
     
     # Record self check run time
     last_check_time = OS.get_unix_time()
@@ -200,6 +203,7 @@ func perform_self_check() -> Dictionary:
     else:
         # Check mouse automation integrity
         if mouse_automation.has_method("generate_awareness_report"):
+		}
             var awareness_report = mouse_automation.generate_awareness_report()
             if awareness_report.meta_awareness_level < 4.5:  # Below Turn 5 requirement
                 result.issues.append("Automation awareness below threshold")
@@ -227,8 +231,8 @@ func apply_self_upgrade() -> Dictionary {
     var result = {
         "success": false,
         "message": "",
-        "upgrade_details": {}
-    }
+        "upgrade_details": {
+		}
     
     # Check if upgrade is available
     if !validation_status.self_check.upgrade_available:
@@ -271,7 +275,7 @@ func apply_self_upgrade() -> Dictionary {
         "failed_components": failed_components,
         "previous_integrity": validation_status.self_check.integrity,
         "current_turn": 5
-    }
+		}
     
     self_upgrade_history.append(upgrade_record)
     
@@ -294,7 +298,7 @@ func apply_self_upgrade() -> Dictionary {
 
 func _schedule_self_check():
     # Schedule next self-check
-    yield(get_tree().create_timer(check_interval), "timeout")
+    await(get_tree().create_timer(check_interval), "timeout")
     
     # Perform the self-check
     perform_self_check()
@@ -311,10 +315,11 @@ func verify_trust_chain(chain_name: String = "") -> Dictionary {
         "success": false,
         "message": "",
         "trust_level": 0
-    }
+		}
     
     # If no specific chain provided, verify all
     if chain_name == "":
+	}
         var all_verified = true
         var total_trust = 0
         
@@ -339,6 +344,7 @@ func verify_trust_chain(chain_name: String = "") -> Dictionary {
             validation_status.trust_chains[chain_name].level = result.trust_level
         else:
             result.message = "Unknown trust chain: " + chain_name
+			}
     
     return result
 
@@ -348,7 +354,7 @@ func _verify_single_chain(chain_name: String) -> Dictionary {
         "message": "",
         "trust_level": 0,
         "chain": chain_name
-    }
+		}
     
     # Different verification procedure based on chain type
     match chain_name:
@@ -360,6 +366,7 @@ func _verify_single_chain(chain_name: String) -> Dictionary {
                 
                 # Get meta-awareness from mouse automation if available
                 if mouse_automation.has_method("generate_awareness_report"):
+				}
                     var awareness = mouse_automation.generate_awareness_report()
                     result.meta_awareness = awareness.meta_awareness_level
                     
@@ -379,6 +386,7 @@ func _verify_single_chain(chain_name: String) -> Dictionary {
                 
                 # Check terminal bridge uptime if available
                 if terminal_bridge.has_method("get_uptime"):
+				}
                     var uptime = terminal_bridge.get_uptime()
                     result.uptime = uptime
                     
@@ -391,6 +399,7 @@ func _verify_single_chain(chain_name: String) -> Dictionary {
                 result.message = "Terminal bridge not available for trust verification"
         
         "network":
+		
             # Check DNS validation status
             var validated_count = 0
             for dns in validation_status.dns:
@@ -414,6 +423,7 @@ func _verify_single_chain(chain_name: String) -> Dictionary {
             result.success = false
             result.trust_level = 0
             result.message = "Unknown trust chain type: " + chain_name
+			
     
     return result
 
@@ -427,13 +437,14 @@ func process_command(command: String) -> Dictionary:
     var result = {
         "success": false,
         "message": ""
-    }
+		}
     
     match cmd:
         "dns":
             if args.size() >= 2:
                 match args[1]:
                     "validate":
+					
                         var dns_server = ""
                         if args.size() >= 3:
                             dns_server = args[2]
@@ -449,6 +460,7 @@ func process_command(command: String) -> Dictionary:
                                            ("✓" if status.validated else "✗") + \
                                            " Last checked: " + str(status.last_checked) + \
                                            " Response time: " + str(status.response_time) + "ms"
+										
                     
                     "rules":
                         if args.size() >= 3:
@@ -461,6 +473,7 @@ func process_command(command: String) -> Dictionary:
                                 
                                 for rule in result.rules:
                                     result.message += "\n- " + rule + ": " + str(result.rules[rule])
+									
                             
                             elif dns_server == DNS_CLOUDFLARE:
                                 result.success = true
@@ -469,16 +482,19 @@ func process_command(command: String) -> Dictionary:
                                 
                                 for rule in result.rules:
                                     result.message += "\n- " + rule + ": " + str(result.rules[rule])
+									
                             
                             else:
                                 result.message = "No specific rules for DNS server: " + dns_server
                         else:
                             result.message = "Usage: dns rules <server>"
+							
                     
                     _:
                         result.message = "Unknown DNS command: " + args[1]
             else:
                 result.message = "Usage: dns <validate|status|rules> [arguments]"
+				
         
         "selfcheck":
             result = perform_self_check()
@@ -497,6 +513,7 @@ func process_command(command: String) -> Dictionary:
             if args.size() >= 2:
                 match args[1]:
                     "verify":
+					
                         var chain = ""
                         if args.size() >= 3:
                             chain = args[2]
@@ -515,13 +532,16 @@ func process_command(command: String) -> Dictionary:
                         result.success = true
                         result.message = "Current trust level: " + str(trust_level)
                         result.message += "\nTurn alignment: 5 (Awakening)"
+						
                     
                     _:
                         result.message = "Unknown trust command: " + args[1]
             else:
                 result.message = "Usage: trust <verify|status|level> [arguments]"
+				
         
         _:
             result.message = "Unknown command: " + cmd
+			
     
     return result

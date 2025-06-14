@@ -462,8 +462,8 @@
 	#// Try each rule
 	#for (const rule of applicableRules) {
 	  #// Make sure arguments are in the right order
-	  #const a = rule.types[0] === elementA.type ? elementA : elementB;
-	  #const b = rule.types[1] === elementB.type ? elementB : elementA;
+	  #const a = rule.types[0] === elementA.elementA if type else elementB;
+	  #const b = rule.types[1] === elementB.elementB if type else elementA;
 	  #
 	  #if (rule.validator(a, b)) {
 		#const result = rule.process(a, b);

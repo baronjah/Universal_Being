@@ -102,6 +102,7 @@ func find_active_camera() -> void:
 	if camera:
 		print("📷 Debug click handler connected to camera: %s" % camera.name)
 
+
 # ===== INPUT HANDLING =====
 
 func _input(event: InputEvent) -> void:
@@ -261,6 +262,7 @@ func hide_inspection_cursor() -> void:
 func inspect_clicked_object(object: Node, click_pos: Vector2) -> void:
 	"""Inspect a clicked object"""
 	print("🔍 Right-clicked on: %s" % object.name)
+
 	
 	# Emit signals
 	var world_pos = Vector3.ZERO
@@ -277,6 +279,7 @@ func inspect_clicked_object(object: Node, click_pos: Vector2) -> void:
 	# Update click hint
 	if click_hint_label:
 		click_hint_label.text = "🔍 Inspecting: %s" % object.name
+
 
 func toggle_debug_mode() -> void:
 	"""Toggle debug mode on/off"""
@@ -299,6 +302,7 @@ func toggle_debug_mode() -> void:
 func _on_variable_changed(object: Node, property: String, old_value, new_value) -> void:
 	"""Handle variable change from inspector"""
 	print("🔧 Variable changed: %s.%s = %s (was %s)" % [object.name, property, new_value, old_value])
+
 	
 	# Add visual feedback for the change
 	show_change_feedback(object, property, new_value)
@@ -306,13 +310,16 @@ func _on_variable_changed(object: Node, property: String, old_value, new_value) 
 func _on_inspection_started(object: Node) -> void:
 	"""Handle inspection start"""
 	print("🔍 Started inspecting: %s" % object.name)
+
 	
 	if click_hint_label:
 		click_hint_label.text = "🔍 Inspecting: %s (Right-click others to switch)" % object.name
 
+
 func _on_inspection_ended(object: Node) -> void:
 	"""Handle inspection end"""
 	print("🔍 Stopped inspecting: %s" % object.name)
+
 	
 	if click_hint_label:
 		click_hint_label.text = "🖱️ Right-click any Universal Being to inspect"

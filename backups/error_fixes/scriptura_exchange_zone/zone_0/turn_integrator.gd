@@ -20,7 +20,7 @@ func _ready():
     turn_timer = Timer.new()
     turn_timer.one_shot = false
     turn_timer.wait_time = turn_duration
-    turn_timer.connect("timeout", self, "_on_turn_timer_timeout")
+    turn_timer.connect(_on_turn_timer_timeout)
     add_child(turn_timer)
     
     # Connect to existing systems
@@ -38,16 +38,16 @@ func connect_to_systems():
         print("Created new TurnPrioritySystem")
     
     # Connect signals from TurnPrioritySystem
-    turn_priority_system.connect("turn_advanced", self, "_on_turn_advanced")
-    turn_priority_system.connect("priority_shifted", self, "_on_priority_shifted")
-    turn_priority_system.connect("cycle_completed", self, "_on_cycle_completed")
+    turn_priority_system.connect(_on_turn_advanced)
+    turn_priority_system.connect(_on_priority_shifted)
+    turn_priority_system.connect(_on_cycle_completed)
     
     # Try to find existing TwelveTurnsGame
     twelve_turns_game = get_node_or_null("/root/TwelveTurnsGame")
     if twelve_turns_game:
         # Connect to TwelveTurnsGame signals
         if not twelve_turns_game.is_connected("dimension_transition_complete", self, "_on_dimension_transition"):
-            twelve_turns_game.connect("dimension_transition_complete", self, "_on_dimension_transition")
+            twelve_turns_game.connect(_on_dimension_transition)
         print("Connected to TwelveTurnsGame")
     
     emit_signal("integration_completed")

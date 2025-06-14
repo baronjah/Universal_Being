@@ -14,8 +14,8 @@ const MAX_GATES_PER_REALITY = 7
 const CYCLE_TIME = 12.0 # Full cycle time in seconds (12 turns)
 
 # ----- GATE STRUCTURE -----
-var active_gates = {}
-var gate_connections = {}
+var active_gates = {
+var gate_connections = {
 var active_reality = "digital" # Default starting reality
 var target_reality = ""
 var reality_transition_progress = 0.0
@@ -25,9 +25,9 @@ var transition_type = "standard"
 var moon_phase = 0 # 0-7, affects gate stability
 
 # ----- DATA MANAGEMENT -----
-var data_sewers = {}
+var data_sewers = {
 var pending_data_packets = []
-var processed_data = {}
+var processed_data = {
 var data_corruption_level = 0.0 # 0.0 to 1.0
 var sewer_cleanup_timer = 0.0
 var cleanup_interval = 60.0 # Clean sewers every minute
@@ -113,7 +113,7 @@ func create_gate(position, gate_type="standard", source_reality=null, target_rea
         "forced": 0.6,
         "bypass": 0.5,
         "hidden": 0.9
-    }
+		}
     
     var stability = base_stability * moon_factor * type_stability[gate_type]
     
@@ -131,14 +131,14 @@ func create_gate(position, gate_type="standard", source_reality=null, target_rea
         "data_throughput": 0,
         "cycle_signature": current_cycle_time,
         "moon_phase": moon_phase
-    }
+		}
     
     # Store gate
     active_gates[gate_id] = gate_data
     
     # Create gate connection record
     if not gate_connections.has(source_reality):
-        gate_connections[source_reality] = {}
+        gate_connections[source_reality] = {
     
     if not gate_connections[source_reality].has(target_reality):
         gate_connections[source_reality][target_reality] = []
@@ -149,6 +149,7 @@ func create_gate(position, gate_type="standard", source_reality=null, target_rea
     emit_signal("gate_created", gate_id, gate_data)
     
     print("Cyber Gate created: %s → %s (Stability: %.2f)" % [source_reality, target_reality, stability])
+	}
     
     return gate_data
 
@@ -181,6 +182,7 @@ func activate_gate(gate_id):
     emit_signal("gate_activated", gate_id)
     
     print("Gate activated: %s → %s" % [gate.source_reality, gate.target_reality])
+	}
     
     return true
 
@@ -203,6 +205,7 @@ func destroy_gate(gate_id):
     emit_signal("gate_destroyed", gate_id)
     
     print("Gate destroyed: %s" % gate_id)
+	}
     
     return true
 
@@ -234,6 +237,7 @@ func begin_reality_transition(to_reality, transition_type="standard"):
     emit_signal("reality_transition_started", active_reality, to_reality)
     
     print("Reality transition started: %s → %s (Type: %s)" % [active_reality, to_reality, transition_type])
+	}
     
     return true
 
@@ -248,7 +252,7 @@ func process_reality_transition(delta):
         "forced": 1.5,
         "bypass": 3.0,
         "hidden": 0.7
-    }
+		}
     
     # Update progress
     reality_transition_progress += delta * speed_modifier[transition_type]
@@ -290,6 +294,7 @@ func complete_reality_transition():
     emit_signal("reality_transition_completed", target_reality)
     
     print("Reality transition completed: %s → %s" % [old_reality, active_reality])
+	}
     
     # Apply reality-specific effects
     apply_reality_effects(active_reality)
@@ -312,6 +317,7 @@ func apply_reality_effects(reality):
                 pass
         
         "digital":
+		
             # Higher data processing in digital reality
             process_pending_data(5)
             
@@ -322,6 +328,7 @@ func apply_reality_effects(reality):
                 pass
         
         "astral":
+		
             # Higher corruption but more creative manifestation
             data_corruption_level = min(1.0, data_corruption_level + 0.1)
             
@@ -332,6 +339,7 @@ func apply_reality_effects(reality):
                 pass
         
         "quantum":
+		
             # Unpredictable effects
             if randf() < 0.5:
                 data_corruption_level = randf()
@@ -343,6 +351,7 @@ func apply_reality_effects(reality):
                 pass
         
         "memory":
+		
             # Process stored data
             process_memory_data()
             
@@ -353,6 +362,7 @@ func apply_reality_effects(reality):
                 pass
         
         "dream":
+		
             # High creativity, high corruption
             data_corruption_level = min(1.0, data_corruption_level + 0.3)
             
@@ -372,7 +382,7 @@ func initialize_sewers():
             "packets": [],
             "last_cleaned": OS.get_unix_time(),
             "corruption_level": 0.0
-        }
+			}
     
     print("Data sewers initialized for %d realities" % REALITIES.size())
 
@@ -395,6 +405,7 @@ func process_data_packet(packet):
     
     match packet.type:
         "word":
+		
             # Manifest word from data
             if word_manifestation != null:
                 var word = extract_word_from_data(packet.data)
@@ -407,12 +418,14 @@ func process_data_packet(packet):
                 result = word_manifestation.manifest_word(word, position)
         
         "command":
+		
             # Execute command from data
             if main_system != null:
                 var command = extract_command_from_data(packet.data)
                 result = main_system.execute_command(command)
         
         "gate":
+		
             # Create gate from data
             var gate_type = extract_gate_type_from_data(packet.data)
             var position = Vector3(
@@ -424,6 +437,7 @@ func process_data_packet(packet):
             result = create_gate(position, gate_type)
         
         "memory":
+		
             # Create memory from data
             if word_processor != null:
                 var memory_text = extract_text_from_data(packet.data)
@@ -436,7 +450,7 @@ func process_data_packet(packet):
         "original": packet,
         "result": result,
         "timestamp": OS.get_unix_time()
-    }
+		}
     
     # Direct to sewer if needed
     if packet.size > 4096:
@@ -491,7 +505,7 @@ func create_data_packet(type, data, size=null):
         "reality": active_reality,
         "moon_phase": moon_phase,
         "cycle_time": current_cycle_time
-    }
+		}
     
     # Add to pending packets
     pending_data_packets.append(packet)
@@ -547,6 +561,7 @@ func clean_sewer(reality):
     emit_signal("sewer_cleaned", reality, bytes_cleaned)
     
     print("Cleaned %s sewer: removed %d packets, freed %d bytes" % [reality, packets_removed, bytes_cleaned])
+	
     
     return bytes_cleaned
 
@@ -557,6 +572,7 @@ func clean_all_sewers():
         total_bytes_cleaned += clean_sewer(reality)
     
     print("Cleaned all sewers: freed %d bytes total" % total_bytes_cleaned)
+	
     
     return total_bytes_cleaned
 
@@ -565,6 +581,7 @@ func initialize_moon_phases():
     # Initialize with random moon phase
     moon_phase = randi() % 8
     print("Moon phase initialized to: %d/7" % moon_phase)
+	
 
 func advance_moon_phase():
     var old_phase = moon_phase
@@ -574,6 +591,7 @@ func advance_moon_phase():
     emit_signal("moon_phase_changed", old_phase, moon_phase)
     
     print("Moon phase changed: %d → %d" % [old_phase, moon_phase])
+	
     
     # Moon phase affects gate stability
     update_gate_stability()
@@ -669,6 +687,7 @@ func generate_game_event():
     
     match event:
         "gate_malfunction":
+		
             # Random gate malfunctions
             if active_gates.size() > 0:
                 var gate_ids = active_gates.keys()
@@ -678,22 +697,27 @@ func generate_game_event():
                 gate.stability *= 0.7
                 
                 print("Gate malfunction event: Gate %s stability reduced to %.2f" % [gate_id, gate.stability])
+				
         
         "data_surge":
+		
             # Create a surge of data
             var data_size = 1024 * (1 + randi() % 16)
             var data = "Data surge event"
             create_data_packet("word", data, data_size)
             
             print("Data surge event: Created %d byte data packet" % data_size)
+			
         
         "reality_echo":
+		
             # Echo between realities
             var source_reality = REALITIES[randi() % REALITIES.size()]
             var target_reality = active_reality
             
             if source_reality != target_reality:
                 print("Reality echo event: Echo from %s to %s" % [source_reality, target_reality])
+				
                 
                 # Transfer data between sewers
                 if data_sewers.has(source_reality) and data_sewers.has(target_reality):
@@ -708,6 +732,7 @@ func generate_game_event():
                         print("Transferred %d byte packet from %s to %s sewer" % [packet.size, source_reality, target_reality])
         
         "moon_anomaly":
+		
             # Moon phase anomaly
             var old_phase = moon_phase
             moon_phase = randi() % 8
@@ -784,7 +809,7 @@ func get_current_moon_phase():
     return moon_phase
 
 func get_sewer_status():
-    var status = {}
+    var status = {
     
     for reality in data_sewers:
         status[reality] = {
@@ -793,7 +818,7 @@ func get_sewer_status():
             "packet_count": data_sewers[reality].packets.size(),
             "corruption": data_sewers[reality].corruption_level,
             "last_cleaned": data_sewers[reality].last_cleaned
-        }
+			}
     
     return status
 

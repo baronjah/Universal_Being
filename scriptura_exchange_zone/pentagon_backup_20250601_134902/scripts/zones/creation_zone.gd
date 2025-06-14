@@ -1,17 +1,17 @@
 @tool
 extends Zone
-class_name CreationZone
+class_name CreationZone_creation
 ## Creation Zone - Where Universal Beings generate data (points, shapes, noise)
 ## Each creation zone has memory, reasoning, and creativity
 
 # signal pattern_evolved(old_pattern: Dictionary, new_pattern: Dictionary)  # Currently unused but kept for future expansion
 
 @export_group("Creation Tools")
-@export var noise_scale: float = 10.0
-@export var noise_octaves: int = 4
-@export var point_density: float = 0.1
-@export var creativity_level: float = 1.0
-@export var auto_evolve: bool = true
+@@export var noise_scale: float = 10.0
+@@export var noise_octaves: int = 4
+@@export var point_density: float = 0.1
+@@export var creativity_level: float = 1.0
+@@export var auto_evolve: bool = true
 
 # Universal Being consciousness
 # Note: consciousness_level inherited from Zone base class

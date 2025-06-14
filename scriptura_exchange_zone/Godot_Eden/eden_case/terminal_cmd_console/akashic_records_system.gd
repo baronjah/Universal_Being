@@ -1,5 +1,5 @@
 extends Node
-class_name AkashicRecordsSystem
+class_name AkashicRecordsSystem_akashicrecordssystem_akashicr
 
 """
 AkashicRecordsSystem: Core data repository and organizational system
@@ -627,7 +627,7 @@ func export_records(records_ids, export_path, format="json"):
 	_mutex.unlock()
 	
 	if export_data.size() == 0:
-		print("No valid records to export")
+		print("No valid records to @export")
 		return false
 	
 	# Export in the specified format

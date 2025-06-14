@@ -49,7 +49,7 @@ func initialize_connections():
 	# Get reference to WishMaker
 	wish_maker = get_node_or_null("../WishMaker")
 	if not wish_maker:
-		wish_maker = get_node_or_null("/root/EdenMayGame/WishMaker")
+		wish_maker = get_node_or_null("root/EdenMayGame/WishMaker")
 }
 
 	# If still not found, create it
@@ -62,7 +62,7 @@ func initialize_connections():
 	# Get reference to EdenCore
 	eden_core = get_node_or_null("../EdenCore")
 	if not eden_core:
-		eden_core = get_node_or_null("/root/EdenMayGame/EdenCore")
+		eden_core = get_node_or_null("root/EdenMayGame/EdenCore")
 }
 
 	print("Wish Maker UI initialized")

@@ -59,7 +59,6 @@ var mode_colors = {
     Modes.STANDARD: [Color(0.2, 0.6, 0.8), Color(0.8, 0.6, 0.2)],
     Modes.DETAILED: [Color(0.9, 0.2, 0.2), Color(0.2, 0.9, 0.2), Color(0.2, 0.2, 0.9)],
     Modes.SYMBOLIC: [Color(0.8, 0.3, 0.9), Color(0.3, 0.8, 0.9), Color(0.9, 0.8, 0.3)]
-}
 
 # ----- TIMERS -----
 var blink_timer: Timer
@@ -83,6 +82,7 @@ func _ready():
     _apply_mode_settings(current_mode)
     
     print("Visual Indicator System initialized - Mode: " + str(current_mode))
+	}
 
 func _setup_timers():
     # Blink timer
@@ -114,6 +114,7 @@ func _find_time_tracker():
     if potential_trackers.size() > 0:
         time_tracker = potential_trackers[0]
         print("Found time tracker: " + time_tracker.name)
+		}
         
         # Connect to time tracker signals if available
         if time_tracker.has_signal("time_updated"):
@@ -128,6 +129,7 @@ func _find_time_tracker():
             
         if time_tracker:
             print("Found time tracker by class: " + time_tracker.name)
+			
             
             # Connect to signals
             if time_tracker.has_signal("time_updated"):
@@ -269,6 +271,7 @@ func get_current_mode_name() -> String:
         Modes.DETAILED: return "Detailed"
         Modes.SYMBOLIC: return "Symbolic"
         _: return "Unknown"
+		
 
 func get_visual_state() -> Dictionary:
     var color
@@ -286,4 +289,3 @@ func get_visual_state() -> Dictionary:
         "current_layer": current_layer,
         "color": color,
         "scale": icon_scale
-    }

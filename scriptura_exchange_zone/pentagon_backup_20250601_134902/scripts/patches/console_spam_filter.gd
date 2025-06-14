@@ -4,7 +4,6 @@
 # PURPOSE: Keep console clean and performant
 # CREATED: 2025-05-28 - Console optimization
 # ==================================================
-
 extends UniversalBeingBase
 # Message tracking
 var message_counts = {}
@@ -47,7 +46,7 @@ func _ready() -> void:
 
 func pentagon_ready() -> void:
 	super.pentagon_ready()
-	console_manager = get_node_or_null("/root/ConsoleManager")
+	console_manager = get_node_or_null("root/ConsoleManager")
 	
 	# Setup cleanup timer
 	cleanup_timer = TimerManager.get_timer()

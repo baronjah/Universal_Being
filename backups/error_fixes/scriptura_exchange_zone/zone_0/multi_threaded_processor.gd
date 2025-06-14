@@ -75,18 +75,18 @@ func _ready():
     var timer = Timer.new()
     timer.wait_time = 1.0 # 1 second intervals
     timer.autostart = true
-    timer.connect("timeout", self, "_on_monitor_threads")
+    timer.connect(_on_monitor_threads)
     add_child(timer)
 
 func connect_to_systems():
     # Connect to MultiAccountManager
     if has_node("/root/MultiAccountManager") or get_node_or_null("/root/MultiAccountManager"):
-        _account_manager = get_node("/root/MultiAccountManager")
+        _account_manager = get_node("\1") as Node
         print("Connected to MultiAccountManager")
     
     # Connect to SmartAccountManager
     if has_node("/root/SmartAccountManager") or get_node_or_null("/root/SmartAccountManager"):
-        _smart_account_manager = get_node("/root/SmartAccountManager")
+        _smart_account_manager = get_node("\1") as Node
         print("Connected to SmartAccountManager")
 
 func _initialize_thread_pool():
@@ -239,7 +239,7 @@ func _thread_function(data):
     _release_thread(thread_id, account_id)
     
     # Emit signal
-    if error.empty():
+    if error.is_empty():
         emit_signal("thread_completed", thread_id, execution_time)
     
     # Signal semaphore to wake up main thread

@@ -1,6 +1,6 @@
 extends Node
 
-class_name TerminalAkashicInterface
+class_name TerminalAkashicInterface_terminalakashicinterface_terminal
 
 # Constants for terminal commands
 const TERMINAL_COMMANDS = {
@@ -153,7 +153,7 @@ func _connect_systems():
     else:
         print("TerminalVisualBridge not available, creating stub")
         # Load file directly if class not registered
-        var script = load("/mnt/c/Users/Percision 15/terminal_visual_bridge.gd")
+        var script = load("mnt/c/Users/Percision 15/terminal_visual_bridge.gd")
         if script:
             visual_bridge = script.new()
             connected_to_godot = true
@@ -173,7 +173,7 @@ func _connect_systems():
     else:
         print("ColorTemperatureVisualization not available, creating stub")
         # Load file directly if class not registered
-        var script = load("/mnt/c/Users/Percision 15/color_temperature_visualization.gd")
+        var script = load("mnt/c/Users/Percision 15/color_temperature_visualization.gd")
         if script:
             temperature_system = script.new()
         else:
@@ -208,7 +208,7 @@ func _connect_systems():
     else:
         print("UnifiedMigrationSystem not available, creating stub")
         # Try to load directly
-        var script = load("/mnt/c/Users/Percision 15/godot4_migration_tool.gd")
+        var script = load("mnt/c/Users/Percision 15/godot4_migration_tool.gd")
         if script:
             migration_system = script.new()
         else:
@@ -840,7 +840,7 @@ func _cmd_turn(args):
     
     if args.size() == 0:
         # Show turn status
-        return "Current turn: " + str(turn_count) + "/" + str(max_turns)
+        return "Current turn: " + str(turn_count) + "" + str(max_turns)
     else:
         var action = args[0].to_lower()
         
@@ -850,13 +850,13 @@ func _cmd_turn(args):
                     var result = visual_bridge.complete_turn()
                     if result:
                         turn_count += 1
-                        return "Turn completed: " + str(turn_count) + "/" + str(max_turns)
+                        return "Turn completed: " + str(turn_count) + "" + str(max_turns)
                     else:
                         return "Failed to complete turn"
                 else:
                     if turn_count < max_turns:
                         turn_count += 1
-                        return "Turn completed: " + str(turn_count) + "/" + str(max_turns) + " (visual bridge not connected)"
+                        return "Turn completed: " + str(turn_count) + "" + str(max_turns) + " (visual bridge not connected)"
                     else:
                         return "Maximum turns reached"
             
@@ -873,7 +873,7 @@ func _cmd_turn(args):
                     return "Turns reset (visual bridge not connected)"
             
             "status":
-                return "Current turn: " + str(turn_count) + "/" + str(max_turns)
+                return "Current turn: " + str(turn_count) + "" + str(max_turns)
             
             _:
                 return "Unknown turn action: " + action

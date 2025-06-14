@@ -1,5 +1,6 @@
 @tool
-class_name VisualShaderNodeUVFlipbook extends VisualShaderNodeCustom
+class_name VisualShaderNodeUVFlipbook_FlipbookUV_Flipbook
+extends \2
 
 func _init() -> void:
 	set_output_port_for_preview(0)

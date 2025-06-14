@@ -1,7 +1,7 @@
 # OLD FILE - Use core_akashic_records_manager.gd instead
-extends Node
+extends \2
 # This class name conflicts with the autoload singleton
-# class_name AkashicRecordsManager
+# class_name AkashicRecordsManager_akashicrecordsmanager_akashicr
 
 # Singleton instance
 static var _instance = null
@@ -46,7 +46,7 @@ func _ready():
 
 # Initialize the dictionary system
 func _initialize_dictionary() -> void:
-	dynamic_dictionary = load("res://code/gdscript/scripts/akashic_records/dynamic_dictionary.gd").new()
+	dynamic_dictionary = load("res://scripts/gdscript/scripts/akashic_records/dynamic_dictionary.gd").new()
 	dynamic_dictionary.name = "DynamicDictionary"
 	add_child(dynamic_dictionary)
 	dynamic_dictionary.initialize(USER_DICTIONARY_PATH)
@@ -56,7 +56,7 @@ func _initialize_dictionary() -> void:
 
 # Initialize the interaction engine
 func _initialize_interaction_engine() -> void:
-	interaction_engine = load("res://code/gdscript/scripts/akashic_records/interaction_engine.gd").new()
+	interaction_engine = load("res://scripts/gdscript/scripts/akashic_records/interaction_engine.gd").new()
 	interaction_engine.name = "InteractionEngine"
 	add_child(interaction_engine)
 	
@@ -65,7 +65,7 @@ func _initialize_interaction_engine() -> void:
 
 # Initialize the zone manager
 func _initialize_zone_manager() -> void:
-	zone_manager = load("res://code/gdscript/scripts/akashic_records/zone_manager.gd").new()
+	zone_manager = load("res://scripts/gdscript/scripts/akashic_records/zone_manager.gd").new()
 	zone_manager.name = "ZoneManager"
 	add_child(zone_manager)
 	zone_manager.initialize(USER_ZONES_PATH)
@@ -157,7 +157,7 @@ func _create_basic_interactions() -> void:
 
 # Initialize the evolution system
 func _initialize_evolution_system() -> void:
-	evolution_manager = load("res://code/gdscript/scripts/akashic_records/evolution_manager.gd").new()
+	evolution_manager = load("res://scripts/gdscript/scripts/akashic_records/evolution_manager.gd").new()
 	evolution_manager.name = "EvolutionManager"
 	add_child(evolution_manager)
 	evolution_manager.initialize(dynamic_dictionary)

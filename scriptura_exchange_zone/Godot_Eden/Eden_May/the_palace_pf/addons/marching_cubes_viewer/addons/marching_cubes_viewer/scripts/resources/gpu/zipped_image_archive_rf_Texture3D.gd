@@ -22,10 +22,10 @@
 # SOFTWARE.
 
 @tool
-extends ImageTexture3D
-class_name ZippedImageArchiveRFTexture3D
+extends \2
+class_name ZippedImageArchiveRFTexture3D_zippedimagearchiverfTexture3D_zippedim
 
-@export var archive:ZippedImageArchive_RF_3D:
+@@@export var archive:ZippedImageArchive_RF_3D:
 	get:
 		return archive
 		

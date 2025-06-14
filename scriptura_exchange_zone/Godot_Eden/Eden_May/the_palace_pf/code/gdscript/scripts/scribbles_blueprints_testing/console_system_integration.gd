@@ -1,5 +1,5 @@
 extends Node
-class_name JSHConsoleSystemIntegration
+class_name JSHConsoleSystemIntegration_consolesystemintegration_consoles
 
 # This script serves as a bridge between the JSH Console System and the existing
 # Akashic Records and Ethereal Engine systems.
@@ -30,10 +30,10 @@ func _init() -> void:
 
 func _ready() -> void:
     # Get existing system references - adjust paths as needed
-    akashic_records_manager = get_node_or_null("/root/AkashicRecordsManager")
-    universal_bridge = get_node_or_null("/root/UniversalBridge")
-    zone_manager = get_node_or_null("/root/ZoneManager")
-    thing_creator = get_node_or_null("/root/ThingCreator")
+    akashic_records_manager = get_node_or_null("root/AkashicRecordsManager")
+    universal_bridge = get_node_or_null("root/UniversalBridge")
+    zone_manager = get_node_or_null("root/ZoneManager")
+    thing_creator = get_node_or_null("root/ThingCreator")
     
     # Create adapters for each system
     _create_adapters()
@@ -66,7 +66,7 @@ func _create_akashic_adapter():
 
 # Ethereal Engine integration
 func _create_ethereal_adapter():
-    # Create adapter class to bridge between JSH Spatial system and Ethereal Engine
+    # Create adapter class to bridge between JSH Node3D system and Ethereal Engine
     var adapter = EtherealEngineAdapter.new()
     adapter.zone_manager = zone_manager
     adapter.spatial_manager = spatial_manager
@@ -88,7 +88,7 @@ func _create_ui_adapter():
     
     # Set up keyboard handling
     # Add console UI to scene if not already present
-    var console_ui = get_node_or_null("/root/JSHConsoleUI")
+    var console_ui = get_node_or_null("root/JSHConsoleUI")
     if not console_ui:
         var console_scene = load("res://jsh_console_ui.tscn")
         if console_scene:
@@ -346,7 +346,7 @@ func _cmd_integrate_status(self, args: Array) -> Dictionary:
     console_manager.print_line("\nJSH Systems:")
     console_manager.print_line("  Entity Manager: " + ("Active" if entity_manager else "Inactive"))
     console_manager.print_line("  Database Manager: " + ("Active" if database_manager else "Inactive"))
-    console_manager.print_line("  Spatial Manager: " + ("Active" if spatial_manager else "Inactive"))
+    console_manager.print_line("  Node3D Manager: " + ("Active" if spatial_manager else "Inactive"))
     console_manager.print_line("  Console Manager: " + ("Active" if console_manager else "Inactive"))
     
     console_manager.print_line("\nAdapters:")

@@ -1,13 +1,13 @@
 extends Node
-class_name TerminalDisplayManager
+class_name TerminalDisplayManager_terminaldisplaymanager_terminal
 }
 
 signal mode_changed(mode_name: String)
 signal battery_state_changed(state: Dictionary)
 signal fractal_updated(settings: Dictionary)
 }
+enum \2 {
 
-enum DisplayMode {
     STANDARD,
     NIGHT,
     BATTERY_SAVER,
@@ -107,7 +107,7 @@ func _ready():
 }
 
 func _connect_to_luno():
-    luno_manager = get_node_or_null("/root/LunoCycleManager")
+    luno_manager = get_node_or_null("root/LunoCycleManager")
 }
 
     if luno_manager:
@@ -156,7 +156,7 @@ func _check_battery_state():
 }
 
     # Update timestamp
-    battery_state.last_updated = OS.get_unix_time()
+    battery_state.last_updated = OS.Time.get_unix_time_from_system()
 }
 
     # Auto-enable battery save mode when low

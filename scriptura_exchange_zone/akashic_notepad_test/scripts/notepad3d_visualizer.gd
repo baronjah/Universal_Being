@@ -1,23 +1,23 @@
-extends Spatial
+extends Node3D
 
-class_name Notepad3DVisualizer
+class_name Notepad3DVisualizer_notepad3dvisualizer_notepad3
 
 # ----- NOTEPAD 3D VISUALIZER -----
 # Handles 3D visualization of words, connections, and dimensional transitions
 # Creates interactive 3D interface for the word manifestation system
 
 # ----- VISUALIZATION SETTINGS -----
-export var word_font: Font
-export var word_material: Material
-export var connection_material: Material
-export var background_mesh: Mesh
-export var default_word_mesh: Mesh
-export var camera_speed: float = 10.0
-export var rotation_speed: float = 1.0
-export var zoom_speed: float = 0.5
-export var transition_duration: float = 1.0
-export var ambient_color: Color = Color(0.01, 0.01, 0.05)
-export var dimension_colors = {
+@export var word_font: Font
+@export var word_material: Material
+@export var connection_material: Material
+@export var background_mesh: Mesh
+@export var default_word_mesh: Mesh
+@export var camera_speed: float = 10.0
+@export var rotation_speed: float = 1.0
+@export var zoom_speed: float = 0.5
+@export var transition_duration: float = 1.0
+@export var ambient_color: Color = Color(0.01, 0.01, 0.05)
+@export var dimension_colors = {
 	"1D": Color(1.0, 0.1, 0.1),  # Red
 	"2D": Color(1.0, 0.5, 0.1),  # Orange
 	"3D": Color(1.0, 1.0, 0.1),  # Yellow
@@ -37,10 +37,10 @@ var main_camera: Camera
 var environment: Environment
 var world_environment: WorldEnvironment
 var light: DirectionalLight
-var word_parent: Spatial
-var connection_parent: Spatial
+var word_parent: Node3D
+var connection_parent: Node3D
 var ui_parent: Control
-var transition_effects: Spatial
+var transition_effects: Node3D
 var background: MeshInstance
 
 # ----- SYSTEM STATE -----
@@ -126,11 +126,11 @@ func _input(event):
 # ----- SETUP FUNCTIONS -----
 func setup_scene():
 	# Create node structure
-	word_parent = Spatial.new()
+	word_parent = Node3D.new()
 	word_parent.name = "Words"
 	add_child(word_parent)
 	
-	connection_parent = Spatial.new()
+	connection_parent = Node3D.new()
 	connection_parent.name = "Connections"
 	add_child(connection_parent)
 	
@@ -140,7 +140,7 @@ func setup_scene():
 	ui_parent.anchor_bottom = 1.0
 	add_child(ui_parent)
 	
-	transition_effects = Spatial.new()
+	transition_effects = Node3D.new()
 	transition_effects.name = "TransitionEffects"
 	add_child(transition_effects)
 	
@@ -241,7 +241,7 @@ func create_word_visualization(word_data):
 		return word_nodes[word_data.id]
 	
 	# Create parent for this word
-	var word_node = Spatial.new()
+	var word_node = Node3D.new()
 	word_node.name = "Word_" + word_data.id
 	word_node.translation = word_data.position
 	word_node.rotation = word_data.rotation
@@ -328,7 +328,7 @@ func create_word_visualization(word_data):
 	shape.extents = Vector3(1, 1, 1) * word_data.size.length()
 	collision.shape = shape
 	
-	var area = Area.new()
+	var area = Area3D.new()
 	area.add_child(collision)
 	area.connect("input_event", self, "_on_word_input_event", [word_data.id])
 	word_node.add_child(area)
@@ -416,7 +416,7 @@ func create_connection_visualization(connection_data):
 		return null
 	
 	# Create connection visual
-	var connection_node = Spatial.new()
+	var connection_node = Node3D.new()
 	connection_node.name = "Connection_" + connection_data.id
 	connection_parent.add_child(connection_node)
 	

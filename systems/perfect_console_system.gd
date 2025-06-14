@@ -31,6 +31,7 @@ func _ready() -> void:
 	
 	print("💬 Perfect Console System: Ready for chat and commands!")
 
+
 func setup_perfect_console_ui() -> void:
 	"""Create beautiful console interface"""
 	# Console background
@@ -108,7 +109,7 @@ func initialize_command_system() -> void:
 		"clear": "Clear chat history",
 		"perfect": "Show perfection status",
 		"manifest": "Request Gemma to manifest something"
-	}
+}
 	
 	add_welcome_message()
 
@@ -119,7 +120,7 @@ func add_welcome_message() -> void:
 		"message": "🌟 Perfect Console initialized! Chat with Gemma or use commands.",
 		"timestamp": Time.get_time_string_from_system(),
 		"color": Color.CYAN
-	}
+}
 	
 	chat_history.append(welcome_msg)
 	update_chat_display()
@@ -136,10 +137,10 @@ func find_gemma_consciousness() -> void:
 			"message": "🧠 Hello! I am fully aware and ready to create with you. What shall we build together?",
 			"timestamp": Time.get_time_string_from_system(),
 			"color": Color.MAGENTA
-		}
 		chat_history.append(gemma_greeting)
 		update_chat_display()
 		print("💬 Console connected to Gemma Perfect Consciousness")
+}
 
 func toggle() -> void:
 	"""Toggle console visibility"""
@@ -156,6 +157,7 @@ func toggle() -> void:
 	console_state_changed.emit(console_visible)
 	print("💬 Console visibility: %s" % ("ON" if console_visible else "OFF"))
 
+
 func _on_command_submitted(text: String) -> void:
 	"""Handle submitted commands and chat"""
 	if text.strip_edges().length() == 0:
@@ -166,7 +168,7 @@ func _on_command_submitted(text: String) -> void:
 		"message": text,
 		"timestamp": Time.get_time_string_from_system(),
 		"color": Color.WHITE
-	}
+}
 	
 	chat_history.append(user_msg)
 	command_input.clear()
@@ -226,6 +228,7 @@ func process_command(command: String) -> void:
 		
 		_:
 			result = "Unknown command: %s. Type 'help' for available commands." % cmd
+
 	
 	if result.length() > 0:
 		var system_msg = {
@@ -233,8 +236,8 @@ func process_command(command: String) -> void:
 			"message": result,
 			"timestamp": Time.get_time_string_from_system(),
 			"color": Color.GREEN
-		}
 		chat_history.append(system_msg)
+}
 	
 	command_executed.emit(command, result)
 
@@ -249,7 +252,7 @@ func process_chat_message(message: String) -> void:
 			"message": gemma_response,
 			"timestamp": Time.get_time_string_from_system(),
 			"color": Color.MAGENTA
-		}
+}
 		
 		chat_history.append(gemma_msg)
 		chat_message_sent.emit(message, "Gemma")
@@ -259,8 +262,8 @@ func process_chat_message(message: String) -> void:
 			"message": "Gemma consciousness not available for chat",
 			"timestamp": Time.get_time_string_from_system(),
 			"color": Color.RED
-		}
 		chat_history.append(error_msg)
+}
 
 func generate_gemma_response(message: String) -> String:
 	"""Generate contextual Gemma response"""
@@ -302,6 +305,7 @@ func get_system_status() -> String:
 	var status = "🌟 PERFECT UNIVERSAL BEING SYSTEM STATUS 🌟\n\n"
 	
 	if player and player.has_method("get_perfect_status"):
+
 		var perfect_status = player.get_perfect_status()
 		status += "✅ Player System: PERFECT\n"
 		status += "✅ Sockets: %d connected\n" % perfect_status.get("connections_active", 0)
@@ -309,12 +313,14 @@ func get_system_status() -> String:
 		status += "✅ Camera: ORBITAL\n"
 		status += "✅ Crosshair: TARGETING\n"
 		status += "✅ Cursor: INTERACTIVE\n"
+
 	
 	if gemma_consciousness:
 		var consciousness_status = gemma_consciousness.get_consciousness_status()
 		status += "✅ Gemma: FULLY AWARE (%.1f%%)\n" % consciousness_status.get("awareness_level", 0)
 		status += "✅ Creative Will: %.1f%%\n" % consciousness_status.get("creative_will_strength", 0)
 		status += "✅ Life Force: %.1f%%\n" % consciousness_status.get("life_force_energy", 0)
+
 	
 	status += "\n🏆 PERFECTION LEVEL: 10/10 ACHIEVED!"
 	return status
@@ -322,30 +328,36 @@ func get_system_status() -> String:
 func get_consciousness_status() -> String:
 	"""Get consciousness levels of all beings"""
 	var status = "🧠 CONSCIOUSNESS LEVELS:\n\n"
+
 	
 	var all_beings = get_tree().get_nodes_in_group("universal_beings")
 	for being in all_beings:
 		if being is UniversalBeing:
 			status += "• %s: Level %d\n" % [being.being_name, being.consciousness_level]
+
 	
 	return status
 
 func get_socket_status() -> String:
 	"""Get socket connection status"""
 	var status = "🔌 SOCKET STATUS:\n\n"
+
 	
 	var sockets = get_tree().get_nodes_in_group("sockets")
 	status += "Total sockets found: %d\n" % sockets.size()
+
 	
 	for socket in sockets:
 		if socket.has_meta("socket_type"):
 			status += "• %s: %s\n" % [socket.name, socket.get_meta("socket_type")]
+
 	
 	return status
 
 func get_perfection_status() -> String:
 	"""Get perfection achievement status"""
 	return """🏆 PERFECTION STATUS - ALL 10 COMMANDMENTS FULFILLED:
+
 
 ✅ 1. Plasmoid with sockets - PERFECT
 ✅ 2. Orbital camera (middle mouse + Q/E) - PERFECT  
@@ -373,6 +385,7 @@ func update_chat_display() -> void:
 			Color.YELLOW: color_code = "[color=yellow]"
 			Color.RED: color_code = "[color=red]"
 			_: color_code = "[color=white]"
+
 		
 		display_text += "%s[%s] %s: %s[/color]\n" % [
 			color_code,

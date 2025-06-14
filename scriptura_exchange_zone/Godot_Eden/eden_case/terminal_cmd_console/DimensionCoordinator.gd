@@ -1,5 +1,5 @@
 extends Node
-class_name DimensionCoordinator
+class_name DimensionCoordinator_DimensionCoordinator_Dimensio
 }
 
 # ------------------------------------
@@ -14,7 +14,7 @@ const MIN_DIMENSION = 3
 const STABILITY_THRESHOLD = 0.3
 const RESONANCE_BASE_FREQUENCY = 432.0
 const DIMENSION_LABELS = {
-    3: "Spatial",
+    3: "Node3D",
     4: "Temporal",
     5: "Probability",
     6: "Information",
@@ -67,7 +67,7 @@ func _ready():
 }
 
     # Create visualization node
-    visualization_node = Spatial.new()
+    visualization_node = Node3D.new()
     visualization_node.name = "DimensionVisualization"
     add_child(visualization_node)
 }
@@ -124,7 +124,7 @@ func _initialize_dimensions():
 # Get dimension-specific properties
 func _get_dimension_properties(dim):
     match dim:
-        3:  # Spatial dimension
+        3:  # Node3D dimension
             return {
                 "axes": 3,
                 "curvature": 0.0,
@@ -810,7 +810,7 @@ func _restore_boundary(dimension, old_permeability):
 func _add_event_log(event_type, data):
     var event = {
         "type": event_type,
-        "timestamp": OS.get_unix_time(),
+        "timestamp": OS.Time.get_unix_time_from_system(),
         "data": data
     }
 }

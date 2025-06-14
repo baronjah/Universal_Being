@@ -4,8 +4,7 @@
 # PURPOSE: Help debug and tune ragdoll walking behavior
 # CREATED: 2025-05-25 - Visual debugging
 # ==================================================
-
-extends Node3D
+extends \2
 
 # Target ragdoll to visualize
 var ragdoll_node: Node3D

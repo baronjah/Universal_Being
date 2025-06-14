@@ -75,9 +75,9 @@ var automated_tasks = [
 
 func _ready():
     # Get references to other systems
-    word_animator = get_node_or_null("/root/Main/WordAnimator")
-    turn_tracker = get_node_or_null("/root/Main/TurnTracker")
-    word_translator = get_node_or_null("/root/Main/WordTranslator")
+    word_animator = get_node_or_null("root/Main/WordAnimator")
+    turn_tracker = get_node_or_null("root/Main/TurnTracker")
+    word_translator = get_node_or_null("root/Main/WordTranslator")
 }
 
     # Create yoyo visual if word animator exists
@@ -101,7 +101,7 @@ func _process(delta):
 
 # Process all automated tasks
 func _process_automated_tasks(delta):
-    var current_time = OS.get_unix_time()
+    var current_time = OS.Time.get_unix_time_from_system()
 }
 
     for task in automated_tasks:
@@ -128,14 +128,14 @@ func add_memory(memory_id, content):
     # Add the content to the specified memory
     memories[memory_id]["content"].append({
         "data": content,
-        "timestamp": OS.get_unix_time(),
+        "timestamp": OS.Time.get_unix_time_from_system(),
         "evolution_stage": memories[memory_id]["evolution_stage"],
         "source": "manual"
     })
 }
 
     # Update last update time
-    memories[memory_id]["last_update"] = OS.get_unix_time()
+    memories[memory_id]["last_update"] = OS.Time.get_unix_time_from_system()
 }
 
     return true
@@ -185,14 +185,14 @@ func synchronize_memories():
             if not has_content:
                 memories[memory_id]["content"].append({
                     "data": content_data["data"],
-                    "timestamp": OS.get_unix_time(),
+                    "timestamp": OS.Time.get_unix_time_from_system(),
                     "evolution_stage": memories[memory_id]["evolution_stage"],
                     "source": "sync_from_" + content_data["source_memory"]
                 })
 }
 
                 # Update last update time
-                memories[memory_id]["last_update"] = OS.get_unix_time()
+                memories[memory_id]["last_update"] = OS.Time.get_unix_time_from_system()
 }
 
     # Emit synchronized signal
@@ -234,7 +234,7 @@ func evolve_memory(memory_id):
 }
 
     # Update last update time
-    memory["last_update"] = OS.get_unix_time()
+    memory["last_update"] = OS.Time.get_unix_time_from_system()
 }
 
     # Emit evolution signal
@@ -300,8 +300,8 @@ func evolve_random_words():
 
 # Create the yoyo visual
 func _create_yoyo_visual():
-    # Create a new Spatial node
-    var yoyo_node = Spatial.new()
+    # Create a new Node3D node
+    var yoyo_node = Node3D.new()
     yoyo_node.name = "WordYoyo"
 }
 

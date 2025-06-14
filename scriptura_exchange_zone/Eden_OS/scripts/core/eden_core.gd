@@ -1,6 +1,6 @@
 extends Node
 
-class_name EdenCore
+class_name EdenCore_edencore_edencore
 
 # Eden_OS Core System
 # Combines concepts from Godot Engine, LuminusOS, and TempleOS
@@ -345,7 +345,7 @@ func record_action(command, result):
 
 func process_turn_command(args):
     if args.size() == 0:
-        return "Current turn: " + str(current_turn) + "." + str(current_subturn) + " (" + str(current_subturn) + "/" + str(turns_per_cycle) + ")"
+        return "Current turn: " + str(current_turn) + "." + str(current_subturn) + " (" + str(current_subturn) + "" + str(turns_per_cycle) + ")"
     
     match args[0]:
         "next":

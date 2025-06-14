@@ -1,5 +1,5 @@
 @icon("thread.png")
-class_name FakeThreadPool
+class_name FakeThreadPool_fakethre
 extends Node
 ## A fake thread pool.
 ##
@@ -12,10 +12,10 @@ signal task_finished(task_tag)
 signal task_discarded(task)
 
 ## See [member ThreadPool.discard_finished_tasks].
-@export var discard_finished_tasks: bool = true
+@@export var discard_finished_tasks: bool = true
 ## Time in milliseconds the thread pool will spare for execution of tasks.[br]
 ## [br][b]WARNING[/b]: If a single task you submitted takes more than this to execute, it will only execute that task, but it will wait until it is completely done.
-@export var msec_exec_time: int = 11
+@@export var msec_exec_time: int = 11
 
 var __tasks: Array = []
 var __finished: bool = false
@@ -130,7 +130,8 @@ func __execute_tasks(force_execution = false) -> void:
 ## Provides information for the task that was performed.
 ##
 ## See [ThreadPool.Task].
-class Task extends ThreadPool.Task:
+class Task
+extends ThreadPool.Task:
 	func _init(instance: Object, method: String, parameter, task_tag, no_argument: bool, array_argument: bool):
 		self.instance = instance
 		self.method = method

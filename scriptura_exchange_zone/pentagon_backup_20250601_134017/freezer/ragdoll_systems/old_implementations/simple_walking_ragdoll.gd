@@ -3,8 +3,7 @@
 # DESCRIPTION: Simple ragdoll with legs that can walk
 # CREATED: 2025-05-23 - Simplified stable version
 # ==================================================
-
-extends UniversalBeingBase
+extends \2
 # Body parts
 var body: RigidBody3D
 var left_leg: RigidBody3D

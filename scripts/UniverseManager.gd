@@ -26,7 +26,7 @@ class Universe:
 		"max_beings": 1000,
 		"consciousness_enabled": true,
 		"evolution_rate": 1.0
-	}
+}
 	var creation_timestamp: float
 	var metadata: Dictionary = {}
 	var scene_root: Node3D
@@ -77,7 +77,7 @@ func create_universe(name: String, parent: Universe = null, metadata: Dictionary
 		get_node("/root/PoeticLogger").log_creation(
 			"Universe '%s'" % name,
 			"the creative will of %s" % [parent.name if parent else "the Void"],
-			{"universe_id": universe.uuid}
+			{"universe_id": universe.uuid
 		)
 	
 	universe_created.emit(universe)
@@ -144,7 +144,7 @@ func set_universe_rule(universe: Universe, rule: String, value: Variant) -> void
 			rule,
 			str(value),
 			"the Universe Architect",
-			{"universe": universe.name, "old_value": old_value}
+			{"universe": universe.name, "old_value": old_value
 		)
 	
 	universe_rule_changed.emit(universe, rule, value)
@@ -160,11 +160,11 @@ func get_universe_info(universe: Universe) -> Dictionary:
 		"rules": universe.reality_rules.duplicate(),
 		"age": Time.get_unix_time_from_system() - universe.creation_timestamp,
 		"metadata": universe.metadata
-	}
+}
 
 func get_universe_tree() -> Dictionary:
 	"""Get the entire multiverse tree structure"""
-	var tree = {}
+	var tree = {
 	
 	# Find root universes (no parent)
 	for uuid in universes:
@@ -237,16 +237,19 @@ func _apply_reality_rule(universe: Universe, rule: String, value: Variant) -> vo
 			if universe == active_universe:
 				Engine.time_scale = value
 		"lod_distance":
+}
 			# Apply to all beings in universe
 			for being in universe.beings:
 				if being.has_method("set_lod_distance"):
 					being.set_lod_distance(value)
 		"consciousness_enabled":
+}
 			# Toggle AI/consciousness for all beings
 			for being in universe.beings:
 				if being.has_method("set_consciousness_active"):
 					being.set_consciousness_active(value)
 		"evolution_rate":
+}
 			# Adjust evolution speed for all beings
 			for being in universe.beings:
 				if being.has_method("set_evolution_rate"):
@@ -258,8 +261,8 @@ func _build_universe_subtree(universe: Universe) -> Dictionary:
 		"uuid": universe.uuid,
 		"beings": universe.beings.size(),
 		"rules": universe.reality_rules.size(),
-		"children": {}
-	}
+		"children": {
+}
 	
 	for child in universe.child_universes:
 		subtree.children[child.name] = _build_universe_subtree(child)

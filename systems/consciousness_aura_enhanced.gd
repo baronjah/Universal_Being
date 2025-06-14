@@ -267,4 +267,3 @@ func get_aura_info() -> Dictionary:
         "particle_count": particles.amount if particles else 0,
         "color": get_consciousness_color(),
         "pulse_timer": pulse_timer
-    }

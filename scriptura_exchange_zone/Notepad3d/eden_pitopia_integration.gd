@@ -1,6 +1,6 @@
 extends Node
 
-class_name EdenPitopiaIntegration
+class_name EdenPitopiaIntegration_edenpitopiaintegration_edenpito
 
 # ----- EDEN PITOPIA INTEGRATION SYSTEM -----
 # This system connects the Eden Harmony system, Pitopia, and Akashic Notepad3D game
@@ -67,8 +67,8 @@ func _discover_and_connect_components():
     print("Discovering system components...")
     
     # Try to find core systems in scene tree
-    if has_node("/root/AkashicNotepad"):
-        akashic_notepad = get_node("/root/AkashicNotepad")
+    if has_node("root/AkashicNotepad"):
+        akashic_notepad = get_node("root/AkashicNotepad")
         connection_status.akashic_notepad = true
     
     # Connect to Eden Harmony
@@ -80,24 +80,24 @@ func _discover_and_connect_components():
         connection_status.pitopia = true
     
     # Find Word Manifestation System
-    if has_node("/root/WordManifestationSystem"):
-        word_manifestation_system = get_node("/root/WordManifestationSystem")
-    elif has_node("/root/Main/WordManifestationSystem"):
-        word_manifestation_system = get_node("/root/Main/WordManifestationSystem")
+    if has_node("root/WordManifestationSystem"):
+        word_manifestation_system = get_node("root/WordManifestationSystem")
+    elif has_node("root/Main/WordManifestationSystem"):
+        word_manifestation_system = get_node("root/Main/WordManifestationSystem")
     
     # Find Turn Manager
-    if has_node("/root/TurnManager"):
-        turn_manager = get_node("/root/TurnManager")
+    if has_node("root/TurnManager"):
+        turn_manager = get_node("root/TurnManager")
         
         # Connect turn signal
         if turn_manager.has_signal("turn_changed"):
             turn_manager.connect("turn_changed", Callable(self, "_on_turn_changed"))
     
     # Find Notepad3D Visualizer
-    if has_node("/root/Notepad3DVisualizer"):
-        notepad3d_visualizer = get_node("/root/Notepad3DVisualizer")
-    elif has_node("/root/Main/Notepad3DVisualizer"):
-        notepad3d_visualizer = get_node("/root/Main/Notepad3DVisualizer")
+    if has_node("root/Notepad3DVisualizer"):
+        notepad3d_visualizer = get_node("root/Notepad3DVisualizer")
+    elif has_node("root/Main/Notepad3DVisualizer"):
+        notepad3d_visualizer = get_node("root/Main/Notepad3DVisualizer")
     
     # Find Akashic Records Manager
     var akashic_manager = AkashicRecordsManagerA.get_instance()
@@ -116,8 +116,8 @@ func _connect_to_eden_harmony():
     print("Connecting to Eden Harmony system...")
     
     # Try to find Eden Harmony system
-    if has_node("/root/EdenHarmony"):
-        eden_harmony = get_node("/root/EdenHarmony")
+    if has_node("root/EdenHarmony"):
+        eden_harmony = get_node("root/EdenHarmony")
         emit_signal("system_connected", "eden_harmony", true)
         return true
     
@@ -139,14 +139,14 @@ func _connect_to_pitopia():
     print("Connecting to Pitopia system...")
     
     # Try to find Pitopia system
-    if has_node("/root/Pitopia"):
-        pitopia = get_node("/root/Pitopia")
+    if has_node("root/Pitopia"):
+        pitopia = get_node("root/Pitopia")
         emit_signal("system_connected", "pitopia", true)
         return true
     
     # Try alternative names
-    if has_node("/root/PitopiaSystem"):
-        pitopia = get_node("/root/PitopiaSystem")
+    if has_node("root/PitopiaSystem"):
+        pitopia = get_node("root/PitopiaSystem")
         emit_signal("system_connected", "pitopia", true)
         return true
     
@@ -404,11 +404,11 @@ func evolve_entity(entity_id, force_stage=null):
         if entity_mapping.has(entity_id) and entity_mapping[entity_id].has("word_manifestation"):
             word_id = entity_mapping[entity_id].word_manifestation
         
-        // If force_stage is provided and word manifestation system supports it
+# // If force_stage is provided and word manifestation system supports it
         if force_stage != null and word_manifestation_system.manifested_words.has(word_id):
             var current_stage = word_manifestation_system.manifested_words[word_id].evolution_stage
             
-            // Evolve multiple times if needed
+# // Evolve multiple times if needed
             while current_stage < force_stage:
                 var success = word_manifestation_system.evolve_word(word_id)
                 if not success:
@@ -417,14 +417,14 @@ func evolve_entity(entity_id, force_stage=null):
                 current_stage += 1
                 evolution_success = true
         else:
-            // Standard evolution
+# // Standard evolution
             evolution_success = word_manifestation_system.evolve_word(word_id)
     
-    // Evolve in Eden Harmony if it supports evolution
+# // Evolve in Eden Harmony if it supports evolution
     if eden_harmony and eden_harmony.has_method("evolve_entity"):
         var eden_id = entity_id
         
-        // If we have mapping, use the eden harmony ID
+# // If we have mapping, use the eden harmony ID
         if entity_mapping.has(entity_id) and entity_mapping[entity_id].has("eden_harmony"):
             eden_id = entity_mapping[entity_id].eden_harmony
         
@@ -432,11 +432,11 @@ func evolve_entity(entity_id, force_stage=null):
         if success:
             evolution_success = true
     
-    // Evolve in Pitopia if it supports evolution
+# // Evolve in Pitopia if it supports evolution
     if pitopia and pitopia.has_method("evolve_node"):
         var pitopia_id = entity_id
         
-        // If we have mapping, use the pitopia ID
+# // If we have mapping, use the pitopia ID
         if entity_mapping.has(entity_id) and entity_mapping[entity_id].has("pitopia"):
             pitopia_id = entity_mapping[entity_id].pitopia
         
@@ -444,9 +444,9 @@ func evolve_entity(entity_id, force_stage=null):
         if success:
             evolution_success = true
     
-    // Create Akashic record for the evolution if successful
+# // Create Akashic record for the evolution if successful
     if evolution_success and akashic_records_manager:
-        // Create or update evolution record
+# // Create or update evolution record
         var properties = {
             "entity_id": entity_id,
             "evolution_time": Time.get_unix_time_from_system(),
@@ -458,7 +458,7 @@ func evolve_entity(entity_id, force_stage=null):
         if entity_mapping.has(entity_id):
             properties.mappings = entity_mapping[entity_id]
         
-        // If akashic records supports creating records
+# // If akashic records supports creating records
         if akashic_records_manager.has_method("create_word"):
             var record_id = "evolution_" + entity_id + "_" + str(Time.get_unix_time_from_system())
             akashic_records_manager.create_word(record_id, "evolution_record", properties)
@@ -470,12 +470,12 @@ func advance_turn():
     if turn_manager and turn_manager.has_method("advance_turn"):
         return turn_manager.advance_turn()
     
-    // Fallback implementation if turn manager isn't available
+# // Fallback implementation if turn manager isn't available
     current_dimension = (current_dimension + 1) % 12
     current_dimension_name = DIMENSION_NAMES[current_dimension]
     current_dimension_symbol = DIMENSION_SYMBOLS[current_dimension]
     
-    // Synchronize dimensions
+# // Synchronize dimensions
     synchronize_dimensions(current_dimension)
     
     return current_dimension
@@ -497,7 +497,7 @@ func get_all_entities_in_dimension(dimension_index=null):
     var target_dimension = dimension_index if dimension_index != null else current_dimension
     var entities = []
     
-    // Collect entities from Word Manifestation System
+# // Collect entities from Word Manifestation System
     if word_manifestation_system:
         for word_id in word_manifestation_system.manifested_words:
             var word = word_manifestation_system.manifested_words[word_id]

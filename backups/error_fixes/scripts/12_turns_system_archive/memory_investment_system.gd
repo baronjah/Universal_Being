@@ -16,7 +16,6 @@ const WORD_VALUE_MULTIPLIERS = {
 	"rare": 2.0,
 	"unique": 3.0,
 	"divine": 5.0
-}
 const INVESTMENT_CATEGORIES = {
 	"conceptual": 0,
 	"structural": 1,
@@ -25,7 +24,6 @@ const INVESTMENT_CATEGORIES = {
 	"foundational": 4,
 	"directional": 5,
 	"dimensional": 6
-}
 const INVESTMENT_RETURN_RATES = {
 	"conceptual": 0.05,
 	"structural": 0.03,
@@ -96,9 +94,9 @@ class Investment:
 		return pause_until
 
 # System variables
-var active_investments = {}
-var completed_investments = {}
-var paused_investments = {}
+var active_investments = {
+var completed_investments = {
+var paused_investments = {
 var total_portfolio_value = 0.0
 var current_cycle = 1
 var cycle_start_time = 0
@@ -127,12 +125,12 @@ func _ready():
 	# Set up timers
 	next_turn_timer = Timer.new()
 	next_turn_timer.one_shot = true
-	next_turn_timer.connect("timeout", self, "_on_next_turn_timer")
+	next_turn_timer.connect(_on_next_turn_timer)
 	add_child(next_turn_timer)
 	
 	pause_timer = Timer.new()
 	pause_timer.one_shot = true
-	pause_timer.connect("timeout", self, "_on_pause_timer")
+	pause_timer.connect(_on_pause_timer)
 	add_child(pause_timer)
 	
 	# Connect to other systems
@@ -144,6 +142,7 @@ func _ready():
 	
 	print("Memory Investment System initialized")
 	print("Current cycle: " + str(current_cycle) + "/" + str(INVESTMENT_CYCLES))
+}
 
 func _process(delta):
 	# Update investment values in real-time
@@ -160,13 +159,13 @@ func _process(delta):
 func connect_to_memory_system():
 	# Connect to ProjectMemorySystem if available
 	if has_node("/root/ProjectMemorySystem") or get_node_or_null("/root/ProjectMemorySystem"):
-		memory_system = get_node("/root/ProjectMemorySystem")
+		memory_system = get_node("\1") as Node
 		print("Connected to ProjectMemorySystem")
 		return true
 	
 	# Try SmartAccountSystem path
 	if has_node("/root/SmartAccountSystem/ProjectMemorySystem") or get_node_or_null("/root/SmartAccountSystem/ProjectMemorySystem"):
-		memory_system = get_node("/root/SmartAccountSystem/ProjectMemorySystem")
+		memory_system = get_node("\1") as Node
 		print("Connected to ProjectMemorySystem under SmartAccountSystem")
 		return true
 	
@@ -193,7 +192,7 @@ func connect_to_turn_system():
 
 func invest_word(word, category = "conceptual", initial_value = 10.0, rarity = "common"):
 	# Validate inputs
-	if word.empty():
+	if word.is_empty():
 		print("Cannot invest empty word")
 		return null
 	
@@ -224,6 +223,7 @@ func invest_word(word, category = "conceptual", initial_value = 10.0, rarity = "
 	
 	# Add to memory system if connected
 	if memory_system and memory_system.has_method("add_memory"):
+}
 		var memory_id = memory_system.add_memory(
 			"Investment: " + word + " (" + category + ")",
 			"investment_memories",
@@ -232,6 +232,7 @@ func invest_word(word, category = "conceptual", initial_value = 10.0, rarity = "
 		
 		if memory_id:
 			print("Added investment to memory system: " + memory_id)
+}
 	
 	# Emit signal
 	emit_signal("investment_added", word, initial_value, category)
@@ -279,7 +280,7 @@ func update_all_investments():
 		"total_value": total_portfolio_value,
 		"growth": growth,
 		"active_investments": active_investments.size()
-	}
+}
 
 func mature_investment(investment_id):
 	if not investment_id in active_investments:
@@ -309,7 +310,7 @@ func mature_investment(investment_id):
 		"roi": roi,
 		"category": investment.category,
 		"direction": investment.direction_vector
-	}
+}
 
 func start_cycle(cycle_number):
 	current_cycle = cycle_number
@@ -330,7 +331,7 @@ func start_cycle(cycle_number):
 		"start_time": cycle_start_time,
 		"portfolio_value": total_portfolio_value,
 		"active_investments": active_investments.size()
-	}
+}
 
 func end_cycle():
 	# Process any remaining investments
@@ -342,6 +343,7 @@ func end_cycle():
 	emit_signal("cycle_completed", current_cycle, total_portfolio_value)
 	
 	print("Cycle " + str(current_cycle) + " completed with final value: " + str(total_portfolio_value))
+}
 	
 	# Advance to next cycle if not at max
 	if current_cycle < INVESTMENT_CYCLES:
@@ -448,14 +450,14 @@ func get_top_investments(count = 5):
 		investments.append(active_investments[investment_id])
 	
 	# Sort by current value
-	investments.sort_custom(self, "_sort_by_value")
+	investments.sort_custom(self."_sort_by_value")
 	
 	# Return top investments
 	return investments.slice(0, min(count - 1, investments.size() - 1))
 
 func get_investment_distribution():
 	# Get distribution of investments by category
-	var distribution = {}
+	var distribution = {
 	
 	# Initialize categories
 	for category in INVESTMENT_CATEGORIES:
@@ -463,7 +465,7 @@ func get_investment_distribution():
 			"count": 0,
 			"total_value": 0.0,
 			"average_growth": 0.0
-		}
+}
 	
 	# Count investments by category
 	for investment_id in active_investments:
@@ -489,8 +491,8 @@ func get_portfolio_summary():
 	var total_initial = 0.0
 	var total_current = 0.0
 	var total_growth = 0.0
-	var category_counts = {}
-	var rarity_counts = {}
+	var category_counts = {
+	var rarity_counts = {
 	
 	# Initialize categories and rarities
 	for category in INVESTMENT_CATEGORIES:
@@ -527,14 +529,14 @@ func get_portfolio_summary():
 		"current_cycle": current_cycle,
 		"auto_next_turn": auto_next_turn,
 		"is_paused": is_system_paused
-	}
+}
 
 func _on_next_turn_timer():
 	# Auto-advance turn when timer expires
 	if auto_next_turn and not is_system_paused:
 		# Pause briefly before advancing turn
 		pause_system(3.0) # Short pause for break
-		yield(get_tree().create_timer(3.0), "timeout")
+		await(get_tree().create_timer(3.0), "timeout")
 		advance_turn()
 
 func _on_pause_timer():

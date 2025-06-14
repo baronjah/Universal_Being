@@ -1,5 +1,5 @@
 extends Node
-class_name KeyboardMemoryController
+class_name KeyboardMemoryController_keyboardmemorycontroller_keyboard
 }
 
 # Keyboard Memory Controller
@@ -64,7 +64,8 @@ const KEY_COMBINATIONS = {
 }
 
 # Key Modifiers
-enum KeyModifier {
+enum \2 {
+
     NONE = 0,
     SHIFT = 1,
     ALT = 2,
@@ -279,7 +280,7 @@ func execute_command(command_name, params = {}):
     _command_history.append({
         "command": command_name,
         "params": params,
-        "timestamp": OS.get_unix_time(),
+        "timestamp": OS.Time.get_unix_time_from_system(),
         "result": result
     })
 }
@@ -639,7 +640,7 @@ func cmd_evolve_memory(params):
             return {"error": "Memory not found"}
 }
 
-        // Increase dimension as a simple evolution
+# // Increase dimension as a simple evolution
         var old_dimension = memory.dimension
         var new_dimension = min(old_dimension + 1, 12)  // Max dimension 12
 }
@@ -656,7 +657,7 @@ func cmd_evolve_memory(params):
             }
 }
 
-            // Create evolution connection
+# // Create evolution connection
             if _connection_system:
                 _connection_system.connect_memories(
                     memory_to_evolve,
@@ -742,7 +743,7 @@ func cmd_change_dimension(params):
     var target_dimension = params.has("dimension") ? params.dimension : 1
 }
 
-    // Change dimension
+# // Change dimension
     var memory = _memory_system.get_memory(memory_to_change)
     if not memory:
         return {"error": "Memory not found"}

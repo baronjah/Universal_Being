@@ -22,7 +22,7 @@ func log_interaction(data: Dictionary) -> void:
 		"location": data.get("location", Vector3.ZERO),
 		"outcome": data.get("outcome", {}),
 		"emotion": infer_emotion(data)
-	}
+}
 	
 	interaction_logs.append(entry)
 	
@@ -41,7 +41,7 @@ func infer_emotion(data: Dictionary) -> String:
 		"help": "friendly", 
 		"trade": "neutral",
 		"gift": "generous"
-	}
+}
 	
 	var interaction_type = data.get("type", "")
 	for key in type_emotions:
@@ -59,7 +59,7 @@ func add_being_memory(being_uuid: String, event: Dictionary) -> void:
 		"summary": summarize_for_being(being_uuid, event),
 		"emotion": event.emotion,
 		"importance": randf_range(0.3, 1.0)
-	}
+}
 	
 	being_memories[being_uuid].append(memory)
 	
@@ -118,7 +118,6 @@ var causal_patterns: Dictionary = {
 	"friendship": {
 		"trigger": {"type": "help", "count": 3},
 		"consequence": "create_alliance"
-	}
 }
 
 func check_causal_triggers(being_uuid: String) -> void:
@@ -126,7 +125,7 @@ func check_causal_triggers(being_uuid: String) -> void:
 	var memories = get_being_memories(being_uuid)
 	
 	# Count interaction types
-	var interaction_counts = {}
+	var interaction_counts = {
 	for memory in memories:
 		var type = memory.get("type", "unknown")
 		interaction_counts[type] = interaction_counts.get(type, 0) + 1
@@ -142,6 +141,7 @@ func should_trigger_pattern(counts: Dictionary, pattern: Dictionary) -> bool:
 	var trigger = pattern.trigger
 	
 	if trigger.has("type") and trigger.has("count"):
+}
 		var type_count = counts.get(trigger.type, 0)
 		return type_count >= trigger.count
 	
@@ -156,13 +156,14 @@ func save_interaction_logs() -> void:
 		var data = {
 			"logs": interaction_logs,
 			"timestamp": Time.get_datetime_string_from_system()
-		}
 		file.store_string(JSON.stringify(data))
 		file.close()
+}
 
 func load_interaction_logs() -> void:
 	"""Load logs from file"""
 	if FileAccess.file_exists("user://interaction_logs.json"):
+}
 		var file = FileAccess.open("user://interaction_logs.json", FileAccess.READ)
 		if file:
 			var json_string = file.get_as_text()
@@ -182,14 +183,14 @@ func get_status() -> Dictionary:
 		"being_count": being_memories.size(),
 		"event_count": interaction_logs.size(),
 		"loaded": true
-	}
+}
 
 func log_creation(data: Dictionary) -> void:
 	"""Log being creation event"""
 	log_interaction({
 		"type": "creation",
 		"participants": [data.get("being", {}).get("uuid", "unknown")],
-		"outcome": {"being_type": data.get("type", "unknown")}
+		"outcome": {"being_type": data.get("type", "unknown")
 	})
 
 func log_event(data: Dictionary) -> void:

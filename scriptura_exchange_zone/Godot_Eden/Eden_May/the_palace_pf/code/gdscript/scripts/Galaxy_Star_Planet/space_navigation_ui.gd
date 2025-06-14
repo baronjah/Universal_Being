@@ -1,5 +1,5 @@
 extends Control
-class_name SpaceNavigationUI
+class_name SpaceNavigationUI_spacenavigationui_spacenav
 }
 
 # Reference to controllers
@@ -25,9 +25,9 @@ signal transition_requested(target_scale, focus_object)
 func _ready():
 	# Find controllers
 	await get_tree().process_frame
-	universe_controller = get_node_or_null("/root/SpaceGame/UniverseController")
+	universe_controller = get_node_or_null("root/SpaceGame/UniverseController")
 	camera_controller = get_viewport().get_camera_3d()
-	selection_system = get_node_or_null("/root/SpaceGame/SpaceSelectionSystem")
+	selection_system = get_node_or_null("root/SpaceGame/SpaceSelectionSystem")
 }
 
 	# Connect signals

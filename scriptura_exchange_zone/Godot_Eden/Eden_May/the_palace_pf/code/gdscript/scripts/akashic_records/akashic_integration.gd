@@ -1,5 +1,5 @@
 extends Node
-class_name AkashicIntegration
+class_name AkashicIntegration_akashicintegration_akashici
 
 # This script integrates all JSH systems with the Akashic Records database
 # It should be added to your main scene
@@ -64,8 +64,8 @@ func initialize() -> bool:
 # Initialize the Akashic Records Manager
 func _initialize_akashic_records() -> void:
 	# Check if AkashicRecordsManager is already in the scene tree
-	if has_node("/root/AkashicRecordsManager"):
-		akashic_records_manager = get_node("/root/AkashicRecordsManager")
+	if has_node("root/AkashicRecordsManager"):
+		akashic_records_manager = get_node("root/AkashicRecordsManager")
 	else:
 		# Create instance if not found
 		akashic_records_manager = AkashicRecordsManagerA.get_instance()
@@ -84,8 +84,8 @@ func _initialize_akashic_records() -> void:
 # Connect to Element Manager and Thing Creator
 func _connect_systems() -> void:
 	# Find Element Manager
-	if has_node("/root/ElementManager"):
-		element_manager = get_node("/root/ElementManager")
+	if has_node("root/ElementManager"):
+		element_manager = get_node("root/ElementManager")
 	else:
 		var nodes = get_tree().get_nodes_in_group("element_manager")
 		if nodes.size() > 0:
@@ -97,8 +97,8 @@ func _connect_systems() -> void:
 	integration_status["element_manager"] = element_manager != null
 	
 	# Find Thing Creator
-	if has_node("/root/ThingCreator"):
-		thing_creator = get_node("/root/ThingCreator")
+	if has_node("root/ThingCreator"):
+		thing_creator = get_node("root/ThingCreator")
 	else:
 		# Create instance if not found
 		thing_creator = ThingCreatorA.get_instance()
@@ -147,10 +147,10 @@ func _register_console_commands() -> void:
 	# Find JSH console if available
 	var console = null
 	
-	if has_node("/root/main/JSH_console"):
-		console = get_node("/root/main/JSH_console")
-	elif has_node("/root/main/CanvasLayer/JSH_console"):
-		console = get_node("/root/main/CanvasLayer/JSH_console")
+	if has_node("root/main/JSH_console"):
+		console = get_node("root/main/JSH_console")
+	elif has_node("root/main/CanvasLayer/JSH_console"):
+		console = get_node("root/main/CanvasLayer/JSH_console")
 	
 	if console:
 		# Register commands with console

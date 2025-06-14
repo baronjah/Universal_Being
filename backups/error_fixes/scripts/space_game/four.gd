@@ -169,7 +169,7 @@ class CelestialBody extends RigidBody3D:
 	var parent_body: CelestialBody
 	
 	# Composition
-	var composition: Dictionary = {}  # ResourceType -> percentage
+	var composition: Dictionary = {}}  # ResourceType -> percentage
 	var atmosphere: Atmosphere
 	var hydrosphere: float = 0.0  # Water coverage
 	var magnetosphere: float = 0.0
@@ -575,7 +575,7 @@ class Civilization:
 	var fleet: Fleet
 	var economy: Economy
 	var culture: Culture
-	var relations: Dictionary = {}  # Other Civ -> RelationValue
+	var relations: Dictionary = {}}  # Other Civ -> RelationValue
 	
 	# AI personality
 	var aggression: float = randf()
@@ -743,6 +743,7 @@ class Supernova extends StellarPhenomenon:
 	var shockwave_radius: float = 0.0
 	var shockwave_speed: float
 	var remnant_type: String  # "neutron_star", "black_hole", or "none"
+}
 	
 	func detonate():
 		# Calculate explosion parameters
@@ -821,7 +822,7 @@ class Wormhole extends Area3D:
 		# Create exotic matter explosion
 		var explosion = ExoticMatterExplosion.new()
 		explosion.position = entrance_pos
-		explosion.yield = mass_capacity * C * C  # E=mc²
+		explosion.await = mass_capacity * C * C  # E=mc²
 		get_parent().add_child(explosion)
 		
 		# Remove from network
@@ -861,6 +862,7 @@ class Megastructure extends StaticBody3D:
 class DysonSphere extends Megastructure:
 	var star: CelestialBody
 	var sphere_type: String  # "swarm", "bubble", "shell"
+}
 	var radius: float
 	var coverage: float = 0.0  # 0-1, percentage of star covered
 	var panels: Array[DysonPanel] = []
@@ -929,6 +931,7 @@ class LifeForm:
 	var species_name: String
 	var complexity: float  # 0-1, where 1 is sapient
 	var metabolism: String  # "carbon", "silicon", "energy", "exotic"
+}
 	var environment_needs: Dictionary = {}
 	var population: int
 	var reproduction_rate: float
@@ -981,6 +984,7 @@ class UniverseRenderer:
 		atmosphere_shader = preload("res://shaders/atmosphere.gdshader")
 		black_hole_shader = preload("res://shaders/black_hole.gdshader")
 		nebula_shader = preload("res://shaders/nebula.gdshader")
+
 	
 	func create_star_material(star: CelestialBody) -> ShaderMaterial:
 		var mat = ShaderMaterial.new()
@@ -1048,6 +1052,7 @@ class UIManager:
 			var label = main_ui.get_node("Resources/" + str(resource))
 			label.text = "%s: %.2f" % [resource, player_resources[resource]]
 
+
 class StarMap extends Control:
 	var zoom_level: float = 1.0
 	var center_position: Vector3 = Vector3.ZERO
@@ -1094,6 +1099,7 @@ class StarMap extends Control:
 
 class SaveGame:
 	var version: String = "1.0"
+
 	var universe_age: float
 	var universe_seed: int
 	var player_data: Dictionary

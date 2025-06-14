@@ -141,7 +141,7 @@ func add_being_to_scene(being: Node, parent: Node, force_registration: bool = fa
 		"being": being,
 		"parent": parent,
 		"timestamp": Time.get_ticks_msec()
-	}
+}
 	
 	operation_queue.append(operation)
 	return true
@@ -155,7 +155,7 @@ func remove_being_from_scene(being: Node) -> bool:
 		"type": "remove_from_scene",
 		"being": being,
 		"timestamp": Time.get_ticks_msec()
-	}
+}
 	
 	operation_queue.append(operation)
 	return true
@@ -171,7 +171,7 @@ func move_being(being: Node, new_parent: Node) -> bool:
 		"being": being,
 		"new_parent": new_parent,
 		"timestamp": Time.get_ticks_msec()
-	}
+}
 	
 	operation_queue.append(operation)
 	return true
@@ -258,7 +258,7 @@ func transfer_being_properties(old_being: Node, new_being: Node) -> void:
 	"""Transfer properties during evolution"""
 	if new_being.has_method("set") and old_being.has_method("get"):
 		var consciousness = old_being.get("consciousness_level") if old_being.has_method("get") else 0
-		var metadata = old_being.get("metadata") if old_being.has_method("get") else {}
+		var metadata = old_being.get("metadata") if old_being.has_method("get") else {
 
 		new_being.set("consciousness_level", consciousness)
 		if metadata:
@@ -321,8 +321,7 @@ func get_floodgate_status() -> Dictionary:
 		"being_count": current_being_count,
 		"max_beings": MAX_BEINGS,
 		"queue_size": operation_queue.size(),
-		"authority_level": authority_level
-	}
+		"authority_level": authority_level}
 
 
 ## underneath is virst version, over version from desktop
@@ -349,7 +348,7 @@ func get_floodgate_status() -> Dictionary:
 ## ===== FLOODGATE AUTHORITY =====
 #
 ### Scene Tree Control
-#var registered_beings: Dictionary = {}  # UUID -> UniversalBeing
+#var registered_beings: Dictionary = {}}  # UUID -> UniversalBeing
 #var being_registry: Array[Node] = []
 #var parent_map: Dictionary = {}  # UUID -> parent_node
 #var operation_queue: Array[Dictionary] = []
@@ -361,6 +360,7 @@ func get_floodgate_status() -> Dictionary:
 #
 ### Operation Types
 #enum OperationType {
+}
 	#ADD_BEING,
 	#REMOVE_BEING,
 	#MOVE_BEING,
@@ -649,13 +649,13 @@ func get_floodgate_status() -> Dictionary:
 #func ai_interface() -> Dictionary:
 	#"""Interface for Gemma AI"""
 	#return {
-		#"total_beings": current_being_count,
+		#"total_beings": current_being_count,}
 		#"max_beings": MAX_BEINGS,
 		#"beings_available": MAX_BEINGS - current_being_count,
 		#"operations_queued": operation_queue.size(),
 		#"beings_by_type": get_beings_count_by_type(),
 		#"can_create_beings": current_being_count < MAX_BEINGS
-	#}
+	#
 #
 #func get_beings_count_by_type() -> Dictionary:
 	#"""Get count of beings by type"""

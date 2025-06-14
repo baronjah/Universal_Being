@@ -35,7 +35,7 @@ var turn_symbols = [
 var dimension_names = [
 	"Linear Expression",      # 1D
 	"Planar Reflection",      # 2D
-	"Spatial Manifestation",  # 3D
+	"Node3D Manifestation",  # 3D
 	"Temporal Flow",          # 4D
 	"Probability Waves",      # 5D
 	"Phase Resonance",        # 6D
@@ -99,6 +99,7 @@ func advance_turn():
 	var dimension_name = get_dimension_name()
 	
 	print("Turn " + str(current_turn) + " | Symbol: " + symbol + " | Dimension: " + str(current_dimension) + "D - " + dimension_name)
+
 	
 	# Emit signals
 	emit_signal("turn_completed", current_turn)

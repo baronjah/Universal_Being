@@ -1,6 +1,6 @@
 extends Node2D
 
-class_name ShapeVisualizer
+class_name ShapeVisualizer_shapevisualizer_shapevis
 
 # Rendering options
 var show_shapes: bool = true
@@ -35,15 +35,15 @@ func _ready():
 	font = FontFile.new()
 	
 	# Try to get references to other systems
-	shape_system = get_node_or_null("/root/ShapeSystem")
+	shape_system = get_node_or_null("root/ShapeSystem")
 	if not shape_system:
 		shape_system = ShapeSystem.new()
-		get_node("/root").add_child(shape_system)
+		get_node("root").add_child(shape_system)
 	
-	dimensional_color_system = get_node_or_null("/root/DimensionalColorSystem")
+	dimensional_color_system = get_node_or_null("root/DimensionalColorSystem")
 	if not dimensional_color_system:
 		dimensional_color_system = DimensionalColorSystem.new()
-		get_node("/root").add_child(dimensional_color_system)
+		get_node("root").add_child(dimensional_color_system)
 	
 	# Connect signals
 	shape_system.shape_created.connect(_on_shape_created)

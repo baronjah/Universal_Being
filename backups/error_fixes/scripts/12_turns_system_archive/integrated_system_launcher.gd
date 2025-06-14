@@ -79,23 +79,23 @@ func initialize_terminal_interface():
 func connect_signals():
 	# Storage System signals
 	if storage_system:
-		storage_system.connect("storage_connected", self, "_on_storage_connected")
-		storage_system.connect("wish_created", self, "_on_wish_created")
-		storage_system.connect("wish_completed", self, "_on_wish_completed")
+		storage_system.connect(_on_storage_connected)
+		storage_system.connect(_on_wish_created)
+		storage_system.connect(_on_wish_completed)
 	
 	# Akashic Bridge signals
 	if akashic_bridge:
-		akashic_bridge.connect("word_stored", self, "_on_word_stored")
-		akashic_bridge.connect("gate_status_changed", self, "_on_gate_status_changed")
-		akashic_bridge.connect("wish_updated", self, "_on_wish_updated")
-		akashic_bridge.connect("firewall_breached", self, "_on_firewall_breached")
+		akashic_bridge.connect(_on_word_stored)
+		akashic_bridge.connect(_on_gate_status_changed)
+		akashic_bridge.connect(_on_wish_updated)
+		akashic_bridge.connect(_on_firewall_breached)
 	
 	# Terminal Interface signals
 	if terminal_interface:
-		terminal_interface.connect("command_executed", self, "_on_command_executed")
-		terminal_interface.connect("wish_processed", self, "_on_wish_processed")
-		terminal_interface.connect("interface_changed", self, "_on_interface_changed")
-		terminal_interface.connect("terminal_ready", self, "_on_terminal_ready")
+		terminal_interface.connect(_on_command_executed)
+		terminal_interface.connect(_on_wish_processed)
+		terminal_interface.connect(_on_interface_changed)
+		terminal_interface.connect(_on_terminal_ready)
 
 # Interface switching
 func set_interface(interface_name):
@@ -111,6 +111,7 @@ func set_interface(interface_name):
 			# In actual implementation, this would show browser interface
 		_:
 			print("Unknown interface: " + interface_name)
+
 	
 	emit_signal("interface_ready", interface_name)
 
@@ -152,33 +153,43 @@ func execute_command(command):
 func _on_storage_connected(platform, status):
 	print("Storage connected: " + platform + " - " + str(status))
 
+
 func _on_wish_created(wish_id, wish_text):
 	print("Wish created: " + wish_id + " - " + wish_text)
+
 
 func _on_wish_completed(wish_id):
 	print("Wish completed: " + wish_id)
 
+
 func _on_word_stored(word, power, metadata):
 	print("Word stored: " + word + " (power: " + str(power) + ")")
+
 
 func _on_gate_status_changed(gate_name, status):
 	print("Gate status changed: " + gate_name + " - " + str(status))
 
+
 func _on_wish_updated(wish_id, new_status):
 	print("Wish updated: " + wish_id + " -> " + new_status)
 
+
 func _on_firewall_breached(breach_info):
 	print("FIREWALL BREACH: " + breach_info.type + " - " + breach_info.message)
+
 
 func _on_command_executed(command, result):
 	if config.debug_mode:
 		print("Command executed: " + command)
 
+
 func _on_wish_processed(wish_id, result):
 	print("Wish processed: " + wish_id)
 
+
 func _on_interface_changed(interface_name):
 	print("Interface changed to: " + interface_name)
+
 
 func _on_terminal_ready():
 	print("Terminal interface ready")
@@ -201,7 +212,7 @@ func get_system_status():
 		"storage_system": storage_system != null,
 		"terminal_interface": terminal_interface != null,
 		"current_turn": config.starting_turn
-	}
+}
 	
 	# Add storage status if available
 	if storage_system:

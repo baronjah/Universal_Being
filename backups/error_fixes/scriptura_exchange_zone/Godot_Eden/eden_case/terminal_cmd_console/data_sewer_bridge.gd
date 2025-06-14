@@ -287,7 +287,7 @@ func _setup_refresh_timer():
     _refresh_timer.wait_time = _config.refresh_interval
     _refresh_timer.one_shot = false
     _refresh_timer.autostart = _config.auto_refresh
-    _refresh_timer.connect("timeout", self, "_on_refresh_timer_timeout")
+    _refresh_timer.connect(_on_refresh_timer_timeout)
     add_child(_refresh_timer)
 
 # Initialize console overlay

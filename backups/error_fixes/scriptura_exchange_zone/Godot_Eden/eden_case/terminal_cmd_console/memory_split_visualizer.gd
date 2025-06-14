@@ -437,7 +437,7 @@ func split_node(layout_id: String, node_id: String, split_type: int, split_count
         var content = "Split " + str(i+1) + " of " + node_id
         var child_id = add_child_split(layout_id, node_id, split_type, content)
         
-        if not child_id.empty():
+        if not child_id.is_empty():
             created_nodes.append(child_id)
     
     # Set node type to the split type
@@ -567,7 +567,7 @@ func render_layout(layout_id: String = "") -> bool:
         print("Error: No target canvas set for rendering")
         return false
     
-    if layout_id.empty() and _active_layout:
+    if layout_id.is_empty() and _active_layout:
         layout_id = _active_layout.id
     
     if not _layouts.has(layout_id):
@@ -773,7 +773,7 @@ func create_memory_layout_from_dimension(dimension: int, layout_type: int = SPLI
             var memory = memories[i]
             var child_id = add_child_split(layout_id, root_id, SPLIT_TYPES.GRID, memory.content)
             
-            if not child_id.empty():
+            if not child_id.is_empty():
                 var child_node = find_node_by_id(layout.root_node, child_id)
                 child_node.metadata["memory_id"] = memory.id
                 child_node.metadata["dimension"] = dimension
@@ -794,7 +794,7 @@ func create_memory_layout_from_dimension(dimension: int, layout_type: int = SPLI
             var memory = memories[i]
             var child_id = add_child_split(layout_id, root_id, layout_type, memory.content)
             
-            if not child_id.empty():
+            if not child_id.is_empty():
                 var layout = _layouts[layout_id]
                 var child_node = find_node_by_id(layout.root_node, child_id)
                 child_node.metadata["memory_id"] = memory.id
@@ -837,7 +837,7 @@ func create_connected_memories_layout(memory_id: String, connection_type: String
                 connected_memory.content
             )
             
-            if not child_id.empty():
+            if not child_id.is_empty():
                 var child_node = find_node_by_id(layout.root_node, child_id)
                 child_node.metadata["memory_id"] = connected_id
                 child_node.metadata["dimension"] = connected_memory.dimension

@@ -1,5 +1,5 @@
 extends Node
-class_name JSHSystemInitializer
+class_name JSHSystemInitializer_JSHSystemInitializer_JSHSyste
 
 # System Components
 var entity_manager = null

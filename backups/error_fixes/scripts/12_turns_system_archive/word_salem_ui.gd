@@ -12,7 +12,7 @@ var phase_label
 var turn_counter
 var day_counter
 var message_log
-var vote_buttons = {}
+var vote_buttons = {
 var role_info_panel
 var word_crimes_panel
 var evidence_panel
@@ -136,12 +136,12 @@ func initialize_ui():
 	
 	var whisper_button = Button.new()
 	whisper_button.text = "Whisper"
-	whisper_button.connect("pressed", self, "_on_whisper_button_pressed")
+	whisper_button.connect(_on_whisper_button_pressed)
 	action_container.add_child(whisper_button)
 	
 	var action_button = Button.new()
 	action_button.text = "Action"
-	action_button.connect("pressed", self, "_on_action_button_pressed")
+	action_button.connect(_on_action_button_pressed)
 	action_container.add_child(action_button)
 	
 	# Right panel - Role info and evidence
@@ -182,29 +182,29 @@ func initialize_ui():
 
 func connect_signals():
 	# Connect to game systems
-	word_salem_controller = get_node("/root/WordSalemGameController")
-	word_crimes_analysis = get_node("/root/WordCrimesAnalysis")
-	divine_word_processor = get_node("/root/DivineWordProcessor")
-	turn_system = get_node("/root/TurnSystem")
+	word_salem_controller = get_node("\1") as Node
+	word_crimes_analysis = get_node("\1") as Node
+	divine_word_processor = get_node("\1") as Node
+	turn_system = get_node("\1") as Node
 	
 	if word_salem_controller:
-		word_salem_controller.connect("day_started", self, "_on_day_started")
-		word_salem_controller.connect("night_started", self, "_on_night_started")
-		word_salem_controller.connect("player_died", self, "_on_player_died")
-		word_salem_controller.connect("game_over", self, "_on_game_over")
-		word_salem_controller.connect("word_crime_detected", self, "_on_word_crime_detected")
+		word_salem_controller.connect(_on_day_started)
+		word_salem_controller.connect(_on_night_started)
+		word_salem_controller.connect(_on_player_died)
+		word_salem_controller.connect(_on_game_over)
+		word_salem_controller.connect(_on_word_crime_detected)
 	
 	if turn_system:
-		turn_system.connect("turn_completed", self, "_on_turn_completed")
-		turn_system.connect("dimension_changed", self, "_on_dimension_changed")
+		turn_system.connect(_on_turn_completed)
+		turn_system.connect(_on_dimension_changed)
 	
 	if divine_word_processor:
-		divine_word_processor.connect("word_processed", self, "_on_word_processed")
+		divine_word_processor.connect(_on_word_processed)
 	
 	if word_crimes_analysis:
-		word_crimes_analysis.connect("dangerous_pattern_detected", self, "_on_dangerous_pattern_detected")
-		word_crimes_analysis.connect("cosmic_power_threshold_reached", self, "_on_cosmic_power_threshold_reached")
-		word_crimes_analysis.connect("player_power_anomaly", self, "_on_player_power_anomaly")
+		word_crimes_analysis.connect(_on_dangerous_pattern_detected)
+		word_crimes_analysis.connect(_on_cosmic_power_threshold_reached)
+		word_crimes_analysis.connect(_on_player_power_anomaly)
 
 func _process(delta):
 	# Handle the 9-second timer
@@ -287,6 +287,7 @@ func update_role_panel():
 	role_info_panel.bbcode_text += "[i]Alignment: " + player_alignment + "[/i]\n\n"
 	role_info_panel.bbcode_text += role_description + "\n\n"
 	role_info_panel.bbcode_text += "[u]Abilities:[/u]\n"
+}
 	
 	for ability in role_abilities:
 		role_info_panel.bbcode_text += "• " + ability + "\n"
@@ -296,7 +297,7 @@ func update_player_list(players_data):
 	for child in player_list_container.get_children():
 		child.queue_free()
 	
-	vote_buttons = {}
+	vote_buttons = {
 	
 	# Add players to the list
 	for player_name in players_data.keys():
@@ -344,20 +345,25 @@ func update_word_crimes_panel():
 	var player_crimes = word_crimes_analysis.get_player_crime_summary(player_name)
 	
 	word_crimes_panel.bbcode_text += "[b]Your Word Crimes: " + str(player_crimes.total_crimes) + "[/b]\n"
+}
 	
 	if player_crimes.total_crimes > 0:
 		word_crimes_panel.bbcode_text += "[u]Types:[/u]\n"
+
 		
 		for crime_type in player_crimes.crime_types.keys():
 			word_crimes_panel.bbcode_text += "• " + crime_type + ": " + str(player_crimes.crime_types[crime_type]) + "\n"
+
 		
 		if player_crimes.highest_power_crime:
 			word_crimes_panel.bbcode_text += "\n[color=red]Highest Power: " + str(player_crimes.highest_power) + "[/color]\n"
+
 			
 			if player_crimes.highest_power_crime.has("word"):
 				word_crimes_panel.bbcode_text += "Word: " + player_crimes.highest_power_crime.word + "\n"
 			elif player_crimes.highest_power_crime.has("combination"):
 				word_crimes_panel.bbcode_text += "Combination: " + player_crimes.highest_power_crime.combination + "\n"
+	
 			
 			# Add dimension information if available
 			if player_crimes.highest_power_crime.has("dimension"):
@@ -371,6 +377,7 @@ func update_word_crimes_panel():
 	elif player_crimes.total_crimes >= 5:
 		word_crimes_panel.bbcode_text += "\n[color=yellow]CAUTION: Your crime count is moderate.[/color]"
 
+
 func update_evidence_panel(accused_player=null):
 	evidence_panel.bbcode_text = ""
 	
@@ -382,17 +389,21 @@ func update_evidence_panel(accused_player=null):
 	
 	evidence_panel.bbcode_text += "[b]Evidence Against: " + accused_player + "[/b]\n"
 	evidence_panel.bbcode_text += "Total Crimes: " + str(evidence.summary.total_crimes) + "\n\n"
+
 	
 	if evidence.dangerous_patterns.size() > 0:
 		evidence_panel.bbcode_text += "[u]Dangerous Patterns Found:[/u]\n"
+
 		
 		for i in range(min(3, evidence.dangerous_patterns.size())):
 			var pattern = evidence.dangerous_patterns[i]
 			evidence_panel.bbcode_text += "• \"" + pattern.word + "\" matched pattern [color=red]" + pattern.pattern + "[/color]\n"
 			evidence_panel.bbcode_text += "  Power: " + str(pattern.power) + ", Dimension: " + str(pattern.dimension) + "D\n"
+
 	
 	if evidence.dimension_influence.size() > 0:
 		evidence_panel.bbcode_text += "\n[u]Dimension Influence:[/u]\n"
+
 		
 		# Find the dimension with highest average power
 		var highest_dim = evidence.dimension_influence[0]
@@ -402,17 +413,20 @@ func update_evidence_panel(accused_player=null):
 		
 		evidence_panel.bbcode_text += "• Most influential: [color=yellow]" + str(highest_dim.dimension) + "D[/color]\n"
 		evidence_panel.bbcode_text += "  Avg Power: " + str(highest_dim.avg_power) + ", Words: " + str(highest_dim.word_count) + "\n"
+
 	
 	# Show the most recent 3 words used
 	if evidence.word_history.size() > 0:
 		evidence_panel.bbcode_text += "\n[u]Recent Words:[/u]\n"
+
 		
 		# Sort by turn, descending
-		evidence.word_history.sort_custom(self, "sort_by_turn_descending")
+		evidence.word_history.sort_custom(self."sort_by_turn_descending")
 		
 		for i in range(min(3, evidence.word_history.size())):
 			var word_entry = evidence.word_history[i]
 			evidence_panel.bbcode_text += "• \"" + word_entry.word + "\" (Power: " + str(word_entry.power) + ")\n"
+
 
 func sort_by_turn_descending(a, b):
 	return a.turn > b.turn
@@ -420,6 +434,7 @@ func sort_by_turn_descending(a, b):
 func add_message(text, color=Color(1, 1, 1)):
 	var time_str = OS.get_time()
 	var timestamp = "%02d:%02d:%02d" % [time_str.hour, time_str.minute, time_str.second]
+
 	
 	message_log.bbcode_text += "[color=#888888][" + timestamp + "][/color] "
 	message_log.bbcode_text += "[color=#" + color.to_html(false) + "]" + text + "[/color]\n"
@@ -489,6 +504,7 @@ func _on_game_over(winning_faction):
 	
 	# Show final role list
 	add_message("\nFinal Role List:", Color(1, 1, 1))
+
 	
 	for player in word_salem_controller.players.keys():
 		var role_info = word_salem_controller.players[player]
@@ -496,6 +512,7 @@ func _on_game_over(winning_faction):
 
 func _on_turn_completed(turn_number):
 	turn_counter.text = "Turn: " + str(turn_number)
+
 	
 	# Every 12 turns, update crime panel to reflect new data
 	if turn_number % 12 == 0:
@@ -503,6 +520,7 @@ func _on_turn_completed(turn_number):
 
 func _on_dimension_changed(new_dimension, old_dimension):
 	dimension_indicator.text = "Dimension: " + str(new_dimension) + "D"
+
 	
 	# Update dimension indicator color
 	var color_index = new_dimension - 1
@@ -520,13 +538,14 @@ func _on_word_processed(word, power, source_player):
 	if word_salem_controller.current_state != word_salem_controller.GameState.LOBBY and source_player != player_name:
 		add_message(source_player + " used word \"" + word + "\" (Power: " + str(power) + ")")
 
+
 func _on_word_crime_detected(criminal, crime_type, word_power):
 	var color_map = {
 		"minor": Color(0.5, 0.5, 1),      # Light blue
 		"moderate": Color(1, 1, 0),       # Yellow
 		"major": Color(1, 0.5, 0),        # Orange
 		"cosmic": Color(1, 0, 0)          # Red
-	}
+}
 	
 	var color = Color(1, 1, 1)
 	if color_map.has(crime_type):
@@ -534,6 +553,7 @@ func _on_word_crime_detected(criminal, crime_type, word_power):
 	
 	add_message("WORD CRIME: " + criminal + " committed a " + crime_type + 
 		" word crime! Power: " + str(word_power), color)
+
 	
 	update_word_crimes_panel()
 
@@ -548,6 +568,7 @@ func _on_cosmic_power_threshold_reached(word, power):
 func _on_player_power_anomaly(player_name, current_power, average_power):
 	add_message("ANOMALY: " + player_name + " power spike " + str(current_power) + 
 		" (avg: " + str(average_power) + ")", Color(1, 0.5, 0))
+
 
 func _on_vote_button_pressed(target_player):
 	if word_salem_controller.vote(player_name, target_player):

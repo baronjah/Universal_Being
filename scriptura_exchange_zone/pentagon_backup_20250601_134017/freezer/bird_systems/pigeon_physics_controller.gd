@@ -4,8 +4,7 @@
 # PURPOSE: Simple physics-based character that can walk and fly
 # CREATED: 2025-05-24 - Triangular bird physics
 # ==================================================
-
-extends CharacterBody3D
+extends \2
 
 signal mode_changed(new_mode: MovementMode)
 signal balance_shifted(balance: float)
@@ -13,8 +12,8 @@ signal balance_shifted(balance: float)
 # ================================
 # ENUMS AND CONSTANTS
 # ================================
+enum \2 {
 
-enum MovementMode {
 	WALKING,
 	FLYING,
 	LANDING,

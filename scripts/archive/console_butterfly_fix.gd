@@ -16,7 +16,7 @@ class_name ConsoleButterflyFixUniversalBeing
     "purple": Color.PURPLE,
     "green": Color.GREEN,
     "blue": Color.BLUE
-}
+	}
 
 # ===== PENTAGON ARCHITECTURE IMPLEMENTATION =====
 
@@ -29,11 +29,13 @@ func pentagon_init() -> void:
     consciousness_level = 2
     
     print("🌟 %s: Console Butterfly Fix Init Complete" % being_name)
+	
 
 func pentagon_ready() -> void:
     super.pentagon_ready()
     fix_akashic_connection()
     print("🌟 %s: Console Butterfly Fix Ready Complete" % being_name)
+	
 
 func pentagon_process(delta: float) -> void:
     super.pentagon_process(delta)
@@ -121,9 +123,11 @@ func process_akashic_command(command: String) -> String:
     if lower_command == "akashic status":
         return "🔮 Akashic Records: ONLINE\n📚 Ready to record Universal Being history"
     elif lower_command == "akashic test":
+	
         # Test save/load
-        var test_data = {"test": "data", "time": Time.get_ticks_msec()}
+        var test_data = {"test": "data", "time": Time.get_ticks_msec()
         return "🔮 Testing Akashic save/load..."
+}
     
     return "❌ Unknown Akashic command"
 
@@ -133,6 +137,7 @@ func fix_akashic_connection() -> void:
     var akashic = SystemBootstrap.get_akashic_records() if SystemBootstrap else null
     if akashic:
         print("🖥️ Console: Connected to Akashic Records!")
+		
 
 func get_color_name(color: Color) -> String:
     """Get color name from Color value"""
@@ -149,8 +154,8 @@ func ai_interface() -> Dictionary:
     base_interface.ai_commands = ["create_butterfly", "akashic_status"]
     base_interface.ai_properties = {
         "butterfly_colors": butterfly_colors.keys()
-    }
     return base_interface
+}
 
 func ai_invoke_method(method_name: String, args: Array = []) -> Variant:
     match method_name:

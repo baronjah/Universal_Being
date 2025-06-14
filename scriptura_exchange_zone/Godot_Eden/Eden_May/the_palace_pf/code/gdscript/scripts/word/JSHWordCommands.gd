@@ -1,5 +1,5 @@
 extends Node
-class_name JSHWordCommands
+class_name JSHWordCommands_JSHWordCommands_JSHWordC
 
 # Console command module for word manifestation
 # This integrates with the JSHConsoleManager system

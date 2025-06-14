@@ -17,4 +17,4 @@ func initialize_component() -> void:
 	print("🤖 Gemini API initialized")
 
 func get_component_info() -> Dictionary:
-	return {"name": "Gemini API", "ready": api_ready}
+	return {"name": "Gemini API", "ready": api_ready

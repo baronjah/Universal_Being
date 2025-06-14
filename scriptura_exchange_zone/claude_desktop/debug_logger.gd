@@ -1,7 +1,7 @@
 # Debug Logger - Comprehensive Testing Log System
 # JSH #memories
-extends Node
-class_name DebugLogger
+extends \2
+class_name DebugLogger_debuglogger_debuglog
 
 signal log_written(entry: Dictionary)
 signal report_generated(path: String)
@@ -13,7 +13,8 @@ var enable_file_logging := true
 var log_performance_metrics := true
 
 # Log categories
-enum LogLevel {
+enum \2 {
+
 	INFO,
 	SUCCESS,
 	WARNING,

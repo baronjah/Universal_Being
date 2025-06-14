@@ -436,7 +436,7 @@ func execute_command_console(command_text: String):
 		var result = command_data.target.call(command_data.method, args)
 		
 		if result is Dictionary and result.has("output"):
-			if result.output is String and !result.output.empty():
+			if result.output is String and !result.output.is_empty():
 				add_line(result.output)
 		
 		emit_signal("command_executed", cmd, result)
@@ -760,8 +760,8 @@ func _ready_console():
 
 func _ready_snake():
 	# Connect to JSH systems
-	main_node = get_node("/root/main")
-	thread_pool = get_node("/root/thread_pool_autoload")
+	main_node = get_node("\1") as Node
+	thread_pool = get_node("\1") as Node
 	
 	# Create character model
 	initialize_character()
@@ -1421,7 +1421,7 @@ func check_combo_status(command: String) -> Dictionary:
 					# Record the completed combo
 					combo_history.append({
 						"combo": active_combo,
-						"timestamp": Time.get_ticks_msec(),
+						"timestamp": Time.Time.get_ticks_msec(),
 						"commands": command_history.slice(-combo_stage)
 					})
 					

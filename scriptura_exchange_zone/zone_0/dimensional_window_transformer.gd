@@ -1,19 +1,20 @@
-class_name DimensionalWindowTransformer
-extends Node
+class_name DimensionalWindowTransformer_dimensionalwindowtransformer_dimensio
+extends \2
 
 # ----- WINDOW SETTINGS -----
 @export_category("Window Configuration")
-@export var ethereal_bridge_path: String = "res://12_turns_system/ethereal_akashic_bridge.gd"
-@export var akashic_system_path: String = "res://12_turns_system/akashic_number_system.gd"
-@export var base_window_size: Vector2 = Vector2(1280, 720)
-@export var window_transform_speed: float = 0.5
-@export var window_transition_duration: float = 0.5
-@export var enable_experimental_features: bool = true
-@export var max_window_instances: int = 5
-@export var dimension_color_mode: String = "frequential" # frequential, stability, hybrid
+@@@@export var ethereal_bridge_path: String = "res://12_turns_system/ethereal_akashic_bridge.gd"
+@@@@export var akashic_system_path: String = "res://12_turns_system/akashic_number_system.gd"
+@@@@export var base_window_size: Vector2 = Vector2(1280, 720)
+@@@@export var window_transform_speed: float = 0.5
+@@@@export var window_transition_duration: float = 0.5
+@@@@export var enable_experimental_features: bool = true
+@@@@export var max_window_instances: int = 5
+@@@@export var dimension_color_mode: String = "frequential" # frequential, stability, hybrid
 
 # ----- WINDOW STATES -----
-enum WindowState {
+enum \2 {
+
     NORMAL,
     TRANSITIONING,
     MAXIMIZED,
@@ -124,14 +125,14 @@ func _find_components():
     # Find Ethereal Bridge
     var bridge_script = load(ethereal_bridge_path) if ResourceLoader.exists(ethereal_bridge_path) else null
     if bridge_script:
-        ethereal_bridge = get_node_or_null("/root/EtherealAkashicBridge")
+        ethereal_bridge = get_node_or_null("root/EtherealAkashicBridge")
         if not ethereal_bridge:
             ethereal_bridge = _find_node_by_class(get_tree().root, "EtherealAkashicBridge")
     
     # Find Akashic System
     var akashic_script = load(akashic_system_path) if ResourceLoader.exists(akashic_system_path) else null
     if akashic_script:
-        akashic_system = get_node_or_null("/root/AkashicNumberSystem")
+        akashic_system = get_node_or_null("root/AkashicNumberSystem")
         if not akashic_system:
             akashic_system = _find_node_by_class(get_tree().root, "AkashicNumberSystem")
     

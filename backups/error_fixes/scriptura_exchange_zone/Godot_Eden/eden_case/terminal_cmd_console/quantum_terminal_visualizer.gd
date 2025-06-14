@@ -52,8 +52,8 @@ func _ready():
         data_pack_system.register_terminal(self)
     
     # Connect signals
-    data_pack_system.connect("data_updated", self, "_on_data_updated")
-    data_pack_system.connect("cycle_changed", self, "_on_cycle_changed")
+    data_pack_system.connect(_on_data_updated)
+    data_pack_system.connect(_on_cycle_changed)
     
     # Initialize display
     update_terminal_display()

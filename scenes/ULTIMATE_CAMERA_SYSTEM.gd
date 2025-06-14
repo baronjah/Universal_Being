@@ -18,7 +18,7 @@ enum CameraMode {
 }
 
 var current_mode = CameraMode.HUMAN_PERSPECTIVE
-var mode_transitions = {}
+var mode_transitions = {
 
 func _ready():
 	print("🎥 ULTIMATE CAMERA SYSTEM ONLINE")
@@ -138,6 +138,7 @@ func get_mode_name(mode: CameraMode) -> String:
 		CameraMode.CODE_MICROSCOPE: return "🔬 Code Microscope"
 		CameraMode.DREAM_FLOAT: return "💭 Dream Float"
 		_: return "Unknown"
+}
 
 func add_ai_vision_effect(delta):
 	# Subtle scanning line effect

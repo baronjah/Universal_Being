@@ -1,5 +1,6 @@
 @tool
-class_name VisualShaderNodePseudoRandomNoise extends VisualShaderNodeCustom
+class_name VisualShaderNodePseudoRandomNoise_PseudoRandomNoise_PseudoRa
+extends \2
 
 func _init() -> void:
 	output_port_for_preview = 0

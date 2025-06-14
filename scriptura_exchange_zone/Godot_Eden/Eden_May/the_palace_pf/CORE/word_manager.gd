@@ -3,10 +3,11 @@ extends Node
 # Word Manager for Eden_May Game
 # Handles word storage, processing, and spell effects
 
-class_name WordManager
+class_name WordManager_wordmanager_wordmana
 
 # Word categories
-enum WordCategory {
+enum \2 {
+
 	COMMON,
 	SPELL,
 	NAME,
@@ -257,7 +258,7 @@ func process_line(line_text, line_pattern="parallel"):
 		"text": line_text,
 		"pattern": line_pattern,
 		"turn": current_turn,
-		"timestamp": OS.get_unix_time()
+		"timestamp": OS.Time.get_unix_time_from_system()
 	})
 	
 	# Extract words based on pattern
@@ -384,7 +385,7 @@ func investigate_tldr(text):
 		"investigation": text,
 		"keywords": key_words,
 		"turn": current_turn,
-		"timestamp": OS.get_unix_time(),
+		"timestamp": OS.Time.get_unix_time_from_system(),
 		"related_spells": check_spell_in_text(text)
 	}
 	

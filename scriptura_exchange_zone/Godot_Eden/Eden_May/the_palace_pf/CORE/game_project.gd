@@ -3,7 +3,7 @@ extends Node
 # Eden_May Game Project
 # Turn-based evolution system with line processing
 
-class_name EdenMayGame
+class_name EdenMayGame_gameproject_gameproj
 
 # Configuration
 const TURNS_ENABLED = true

@@ -1,5 +1,5 @@
 extends Node
-class_name SnakeCaseTranslator
+class_name SnakeCaseTranslator_snakecasetranslator_snakecas
 
 # Translator system that converts existing files to snake_case
 # and creates connections to main, datapoint, container, archive, past, memories, 3d notepad

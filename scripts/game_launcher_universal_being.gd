@@ -27,11 +27,13 @@ func pentagon_init() -> void:
     metadata.gemma_can_modify = true
     status_message = "Initializing Game Launcher..."
     print("🌟 %s: Pentagon Init Complete" % being_name)
+	
 
 func pentagon_ready() -> void:
     super.pentagon_ready()  # 🔄 ALWAYS CALL SUPER FIRST
     add_component("res://components/game_launcher.ub.zip")
     load_scene("res://scenes/main_scene.tscn")
+	
     # Instantiate and register core beings
     terminal = preload("res://scripts/terminal_universal_being.gd").new()
     console = preload("res://scripts/console_universal_being.gd").new()
@@ -43,6 +45,7 @@ func pentagon_ready() -> void:
             add_child(being)
     status_message = "All core beings loaded. Ready to play!"
     print("🌟 %s: Pentagon Ready Complete" % being_name)
+	
 
 func pentagon_process(delta: float) -> void:
     super.pentagon_process(delta)  # ⚡ ALWAYS CALL SUPER FIRST
@@ -50,6 +53,7 @@ func pentagon_process(delta: float) -> void:
     var statuses = []
     for being in beings:
         if being and being.has_method("ai_interface"):
+		
             var iface = being.ai_interface()
             statuses.append("%s: %s" % [being.being_name, iface])
     status_message = "\n".join(statuses)
@@ -73,6 +77,7 @@ func pentagon_input(event: InputEvent) -> void:
 
 func pentagon_sewers() -> void:
     print("🌟 %s: Pentagon Sewers Starting" % being_name)
+	
     # Cleanup all beings
     for being in beings:
         if being and being.has_method("pentagon_sewers"):
@@ -118,8 +123,8 @@ func ai_interface() -> Dictionary:
     base_interface.custom_properties = {
         "status_message": status_message,
         "beings_count": beings.size()
-    }
     return base_interface
+}
 
 func ai_invoke_method(method_name: String, args: Array = []) -> Variant:
     match method_name:

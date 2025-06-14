@@ -1,5 +1,5 @@
 extends Node
-class_name JSHSemanticAnalyzer
+class_name JSHSemanticAnalyzer_JSHSemanticAnalyzer_JSHSeman
 
 # Static instance for singleton pattern
 static var _instance = null

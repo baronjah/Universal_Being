@@ -14,9 +14,9 @@ func unregister_command(command_name: String) -> bool:
 
 func execute_command(command_text: String) -> Dictionary:
     push_error("JSHConsoleInterface: execute_command() method must be implemented by subclass")
-    return {}
+    return {
 
-func get_command_list() -> Array:
+func get_command_list() -> Array:}
     push_error("JSHConsoleInterface: get_command_list() method must be implemented by subclass")
     return []
 
@@ -27,18 +27,23 @@ func get_command_help(command_name: String) -> String:
 # Console output
 func print_line(text: String, color: Color = Color.WHITE) -> void:
     push_error("JSHConsoleInterface: print_line() method must be implemented by subclass")
+	
 
 func print_error(text: String) -> void:
     push_error("JSHConsoleInterface: print_error() method must be implemented by subclass")
+	
 
 func print_warning(text: String) -> void:
     push_error("JSHConsoleInterface: print_warning() method must be implemented by subclass")
+	
 
 func print_success(text: String) -> void:
     push_error("JSHConsoleInterface: print_success() method must be implemented by subclass")
+	
 
 func clear() -> void:
     push_error("JSHConsoleInterface: clear() method must be implemented by subclass")
+	
 
 # Console state
 func is_visible() -> bool:
@@ -47,9 +52,11 @@ func is_visible() -> bool:
 
 func set_visible(visible: bool) -> void:
     push_error("JSHConsoleInterface: set_visible() method must be implemented by subclass")
+	
 
 func toggle_visibility() -> void:
     push_error("JSHConsoleInterface: toggle_visibility() method must be implemented by subclass")
+	
 
 # History management
 func get_command_history() -> Array:
@@ -58,6 +65,7 @@ func get_command_history() -> Array:
 
 func clear_command_history() -> void:
     push_error("JSHConsoleInterface: clear_command_history() method must be implemented by subclass")
+	
 
 # Autocomplete
 func get_autocomplete_suggestions(partial_command: String) -> Array:
@@ -67,6 +75,7 @@ func get_autocomplete_suggestions(partial_command: String) -> Array:
 # Variables and context
 func set_variable(variable_name: String, value) -> void:
     push_error("JSHConsoleInterface: set_variable() method must be implemented by subclass")
+	
 
 func get_variable(variable_name: String):
     push_error("JSHConsoleInterface: get_variable() method must be implemented by subclass")
@@ -74,4 +83,4 @@ func get_variable(variable_name: String):
 
 func get_all_variables() -> Dictionary:
     push_error("JSHConsoleInterface: get_all_variables() method must be implemented by subclass")
-    return {}
+    return {

@@ -1,6 +1,6 @@
 extends Node3D
 
-class_name EdenHarmonyMain
+class_name EdenHarmonyMain_edenharmonymain_edenharm
 
 # ----- REFERENCES TO COMPONENTS -----
 var harmony_connector = null
@@ -67,7 +67,7 @@ func _initialize_connector():
 	
 	if not harmony_connector:
 		# Try to find connector elsewhere in the scene
-		harmony_connector = get_node_or_null("/root/EdenHarmonyConnector")
+		harmony_connector = get_node_or_null("root/EdenHarmonyConnector")
 	
 	if not harmony_connector:
 		# Instantiate connector
@@ -88,7 +88,7 @@ func _initialize_console():
 	
 	if not console:
 		# Try to find console elsewhere in the scene
-		console = get_node_or_null("/root/CreationConsole")
+		console = get_node_or_null("root/CreationConsole")
 	
 	if not console:
 		# Check if scene is available
@@ -117,7 +117,7 @@ func _initialize_word_display():
 	
 	if not word_display:
 		# Try to find word display elsewhere in the scene
-		word_display = get_node_or_null("/root/WordDisplay")
+		word_display = get_node_or_null("root/WordDisplay")
 	
 	if not word_display:
 		# Check if scene is available
@@ -164,7 +164,7 @@ func _initialize_ui():
 		# Create dimension indicator
 		var dimension_label = Label.new()
 		dimension_label.name = "DimensionLabel"
-		dimension_label.text = "Dimension: 3D - Spatial Manifestation"
+		dimension_label.text = "Dimension: 3D - Node3D Manifestation"
 		dimension_label.position = Vector2(20, 20)
 		ui.add_child(dimension_label)
 		

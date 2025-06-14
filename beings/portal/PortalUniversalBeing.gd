@@ -147,4 +147,3 @@ func get_portal_info() -> Dictionary:
 		"source": source_universe.universe_name if source_universe else "None",
 		"target": target_universe.universe_name if target_universe else "None",
 		"beings_transported": beings_in_transit.size()
-	}

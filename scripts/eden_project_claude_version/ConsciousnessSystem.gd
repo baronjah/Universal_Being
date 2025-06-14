@@ -44,7 +44,7 @@ var available_perceptions: Dictionary = {
 	"quantum": {"level": 6, "description": "Observe quantum possibilities"},
 	"akashic": {"level": 7, "description": "Access universal records"},
 	"dimensional": {"level": 8, "description": "See across dimensions"},
-	"universal": {"level": 10, "description": "Total cosmic awareness"}
+	"universal": {"level": 10, "description": "Total cosmic awareness"
 }
 
 # Active consciousness fields
@@ -285,15 +285,19 @@ func unlock_perception(perception_type: String) -> void:
 func _apply_perception_effects(perception_type: String) -> void:
 	match perception_type:
 		"energy":
+}
 			# Enable energy field visualization
 			get_tree().call_group("energy_fields", "set_visible", true)
 		"temporal":
+}
 			# Enable time dilation effects
 			Engine.time_scale = 1.0  # Can be modified during gameplay
 		"quantum":
+
 			# Show quantum possibilities
 			get_tree().call_group("quantum_objects", "show_possibilities", true)
 		"akashic":
+
 			# Enable akashic record access
 			if AkashicRecordsSystem:
 				AkashicRecordsSystem.grant_full_access()
@@ -325,7 +329,7 @@ func _check_frequency_resonance() -> void:
 		741.0: "awakening",
 		852.0: "intuition",
 		963.0: "divine_consciousness"
-	}
+}
 	
 	for freq in resonance_frequencies:
 		if abs(current_frequency - freq) < 1.0:
@@ -359,6 +363,7 @@ func _enter_meditation() -> void:
 	var tween = create_tween()
 	tween.set_loops()
 	tween.tween_property(meditation_aura, "rotation:y", TAU, 3.0)
+
 	
 	# Slow time slightly
 	Engine.time_scale = 0.8
@@ -381,8 +386,8 @@ func _exit_meditation() -> void:
 			"depth": meditation_depth,
 			"insights": meditation_insights,
 			"energy_gained": meditation_depth * 10.0
-		}
 		meditation_completed.emit(insights_data)
+}
 		
 		# Apply benefits
 		consciousness_energy += insights_data["energy_gained"]
@@ -473,6 +478,7 @@ func _transition_consciousness_state() -> void:
 	state_progress = 0.0
 	print("Consciousness state evolved to: ", current_state)
 
+
 func _update_consciousness_state_from_level() -> void:
 	if awareness_level >= 8:
 		current_state = ConsciousnessState.ENLIGHTENED
@@ -512,6 +518,7 @@ func connect_consciousness(being: Node3D) -> void:
 		
 		# Share perceptions
 		if being.has_method("share_perceptions"):
+
 			var shared = being.share_perceptions()
 			for perception in shared:
 				if perception not in shared_perceptions:
@@ -635,6 +642,7 @@ func _connect_to_game_systems() -> void:
 # Perception callbacks
 func _on_consciousness_field_entered(area: Area3D) -> void:
 	if area.has_method("get_consciousness_signature"):
+
 		var signature = area.get_consciousness_signature()
 		field_interactions[area] = signature
 
@@ -644,10 +652,12 @@ func _on_consciousness_field_exited(area: Area3D) -> void:
 func _on_entity_entered_perception(body: Node3D) -> void:
 	# Process based on perception types
 	if "energy" in unlocked_perceptions and body.has_method("get_energy_signature"):
+
 		# Can perceive energy signatures
 		pass
 	
 	if "emotional" in unlocked_perceptions and body.has_method("get_emotional_state"):
+
 		# Can sense emotions
 		pass
 
@@ -665,8 +675,8 @@ func _save_consciousness_state() -> void:
 			"current_state": current_state,
 			"unlocked_perceptions": unlocked_perceptions,
 			"meditation_insights": meditation_insights
-		}
 		AkashicRecordsSystem.save_consciousness_data(save_data)
+}
 
 func load_consciousness_state(data: Dictionary) -> void:
 	awareness_level = data.get("awareness_level", 1)
@@ -732,6 +742,7 @@ func _on_rare_ore_discovered(ore_type: String, location: Vector3) -> void:
 		"stellarium":
 			expand_awareness()
 		"voidstone":
+
 			# Special void meditation
 			if not meditation_active:
 				toggle_meditation()

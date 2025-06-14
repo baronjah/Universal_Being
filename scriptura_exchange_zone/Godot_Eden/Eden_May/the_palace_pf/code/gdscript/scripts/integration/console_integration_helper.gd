@@ -1,5 +1,5 @@
 extends Node
-class_name ConsoleIntegrationHelper
+class_name ConsoleIntegrationHelper_consoleintegrationhelper_consolei
 
 # A helper class to standardize console command integration
 # This handles different method signatures across different console implementations

@@ -35,9 +35,9 @@ static var PATH_FIXES = {
 
 static var API_CHANGES = {
 	"GODOT_4_STRING_API": {
-		"problem": "String.empty() removed in Godot 4",
+		"problem": "String.is_empty() removed in Godot 4",
 		"symptoms": ["Cannot find member 'empty' in base 'String'"],
-		"fix_pattern": ".empty() → .is_empty()",
+		"fix_pattern": ".is_empty() → .is_empty()",
 		"files_affected": [
 			"blink_animation_controller.gd"
 		],

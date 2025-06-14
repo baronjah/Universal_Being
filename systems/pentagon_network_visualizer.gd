@@ -80,11 +80,13 @@ func pentagon_init() -> void:
 	
 	print("🌟 %s: Pentagon Init Complete" % being_name)
 
+
 func pentagon_ready() -> void:
 	super.pentagon_ready()
 	
 	# Load the network scene
 	load_scene("res://scenes/ui/pentagon_network.tscn")
+
 	
 	# Set center position
 	center_position = get_viewport().get_visible_rect().size / 2
@@ -105,6 +107,7 @@ func pentagon_ready() -> void:
 	)
 	
 	print("🌟 %s: Pentagon Ready Complete" % being_name)
+
 
 func pentagon_process(delta: float) -> void:
 	super.pentagon_process(delta)
@@ -146,6 +149,7 @@ func pentagon_input(event: InputEvent) -> void:
 
 func pentagon_sewers() -> void:
 	print("🌟 %s: Pentagon Sewers - Network stats: %s" % [being_name, ai_network.network_stats])
+
 	
 	# Clean up particles
 	for particles in active_collaboration_effects:
@@ -271,6 +275,7 @@ func _pulse_active_connections() -> void:
 	for collab in ai_network.active_collaborations:
 		# Create particles at collaboration center if not exists
 		if not collab.has("visual_effect"):
+
 			var center = _calculate_collaboration_center(collab.agents)
 			var particles = _create_collaboration_particles(center, collab.agents)
 			if scene_instance:
@@ -343,6 +348,7 @@ func _handle_agent_click(agent: AIPentagonNetwork.AIAgent) -> void:
 	var collab = ai_network.start_collaboration(agents, "Interactive collaboration", being_type)
 	print("🤝 Started collaboration: %s" % collab.id)
 
+
 # ===== SIGNAL HANDLERS =====
 
 func _on_connection_established(from: AIPentagonNetwork.AIAgent, to: AIPentagonNetwork.AIAgent, strength: float) -> void:
@@ -359,12 +365,14 @@ func _on_collaboration_started(agents: Array, task: String) -> void:
 		agent_names.append(ai_network.get_agent_info(agent).name)
 	print("🚀 Collaboration started: %s working on '%s'" % [agent_names, task])
 
+
 func _on_collaboration_completed(agents: Array, task: String, result: Dictionary) -> void:
 	pass
 	var agent_names = []
 	for agent in agents:
 		agent_names.append(ai_network.get_agent_info(agent).name)
 	print("✅ Collaboration completed: %s finished '%s'" % [agent_names, task])
+
 
 func _on_network_updated() -> void:
 	# Network stats updated
@@ -530,7 +538,7 @@ func _detect_emergence_patterns() -> void:
 		"synchronization": _detect_behavior_alignment(),
 		"resource_flow": _track_energy_distribution(),
 		"network_coherence": _measure_network_coherence()
-	}
+}
 	
 	# Store for comparison
 	var current_emergence_level = _calculate_overall_emergence(patterns)
@@ -633,7 +641,7 @@ func _calculate_overall_emergence(patterns: Dictionary) -> float:
 		"synchronization": 0.25,
 		"resource_flow": 0.25,
 		"network_coherence": 0.25
-	}
+}
 	
 	var total_emergence = 0.0
 	for pattern in patterns:
@@ -735,6 +743,7 @@ func _create_emergence_visual_effect(patterns: Dictionary) -> void:
 		cleanup_timer.start()
 		
 		print("🌟 EMERGENCE DETECTED! Level: %.2f, Type: %s" % [emergence_level, dominant_pattern])
+
 
 # ===== AI INTEGRATION =====
 

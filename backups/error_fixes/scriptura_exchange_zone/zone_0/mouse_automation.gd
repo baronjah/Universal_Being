@@ -103,7 +103,7 @@ func _ready():
 	
 	# Connect to terminal bridge when available
 	if get_node_or_null("/root/TerminalToGodotBridge") != null:
-		connect_to_bridge(get_node("/root/TerminalToGodotBridge"))
+		connect_to_bridge(get_node("\1") as Node)
 		
 	# Setup self-awareness timers
 	_initialize_self_awareness()
@@ -261,7 +261,7 @@ func _perform_self_healing():
 		# Keep only the most recent patterns
 		var patterns_to_keep = {}
 		var keys = recognized_patterns.keys()
-		keys.sort_custom(Callable(self, "_sort_by_timestamp"))
+		keys.sort_custom(Callable(self."_sort_by_timestamp"))
 		
 		for i in range(min(keys.size(), PATTERN_MEMORY_SIZE)):
 			patterns_to_keep[keys[i]] = recognized_patterns[keys[i]]
@@ -379,7 +379,7 @@ func click(right_click = false, position = null):
 		target_position = position
 		movement_path = _generate_path(current_position, target_position)
 		
-		# Wait until we reach the target (in a real implementation this would use a coroutine/yield)
+		# Wait until we reach the target (in a real implementation this would use a coroutine/await)
 		# For simulation, we'll just update the current position
 		current_position = target_position
 		Input.warp_mouse(current_position)
@@ -406,7 +406,7 @@ func drag(start_position, end_position, right_button = false):
 	target_position = start_position
 	movement_path = _generate_path(current_position, target_position)
 	
-	# Wait until we reach the target (in a real implementation this would use a coroutine/yield)
+	# Wait until we reach the target (in a real implementation this would use a coroutine/await)
 	# For simulation, we'll just update the current position
 	current_position = target_position
 	Input.warp_mouse(current_position)
@@ -418,7 +418,7 @@ func drag(start_position, end_position, right_button = false):
 	target_position = end_position
 	movement_path = _generate_path(current_position, target_position)
 	
-	# Wait until we reach the target (in a real implementation this would use a coroutine/yield)
+	# Wait until we reach the target (in a real implementation this would use a coroutine/await)
 	# For simulation, we'll just update the current position
 	current_position = target_position
 	Input.warp_mouse(current_position)
@@ -445,7 +445,7 @@ func type_text(text, position = null):
 		target_position = position
 		movement_path = _generate_path(current_position, target_position)
 		
-		# Wait until we reach the target (in a real implementation this would use a coroutine/yield)
+		# Wait until we reach the target (in a real implementation this would use a coroutine/await)
 		# For simulation, we'll just update the current position
 		current_position = target_position
 		Input.warp_mouse(current_position)

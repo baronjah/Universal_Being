@@ -1,5 +1,5 @@
 extends Node
-class_name CatchphraseSystem
+class_name CatchphraseSystem_catchphrasesystem_catchphr
 }
 
 """
@@ -46,7 +46,7 @@ class CatchphrasePattern:
         text = p_text
         type = p_type
         effect = p_effect
-        created_at = OS.get_unix_time()
+        created_at = OS.Time.get_unix_time_from_system()
         metadata = {}
 }
 
@@ -65,7 +65,7 @@ class CatchphrasePattern:
 
     func activate() -> void:
         activation_count += 1
-        last_activated = OS.get_unix_time()
+        last_activated = OS.Time.get_unix_time_from_system()
 }
 
 # Pattern collections
@@ -197,7 +197,7 @@ func add_hidden_trigger(trigger_id: String, activation_pattern: String, effect: 
     hidden_triggers[trigger_id] = {
         "pattern": activation_pattern,
         "effect": effect,
-        "created_at": OS.get_unix_time(),
+        "created_at": OS.Time.get_unix_time_from_system(),
         "activated": false,
         "activation_time": 0
     }
@@ -259,7 +259,7 @@ func process_text(text: String, context: Dictionary = {}) -> Array:
         if not trigger.activated and text.find(trigger.pattern) >= 0:
             # Activate trigger
             trigger.activated = true
-            trigger.activation_time = OS.get_unix_time()
+            trigger.activation_time = OS.Time.get_unix_time_from_system()
 }
 
             # Add to results
@@ -594,7 +594,7 @@ func _process_detection_effects(results: Array, text: String, context: Dictionar
 
             # Record activation in history
             memory_activation_history[pattern] = {
-                "activation_time": OS.get_unix_time(),
+                "activation_time": OS.Time.get_unix_time_from_system(),
                 "memory_content": memory_content,
                 "fade_time": effect.get("fade_time", DEFAULT_MEMORY_FADE_TIME)
             }

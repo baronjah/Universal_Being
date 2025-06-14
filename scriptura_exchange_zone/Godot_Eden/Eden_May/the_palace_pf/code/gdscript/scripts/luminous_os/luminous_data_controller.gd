@@ -1,5 +1,5 @@
 extends Node
-class_name LuminousDataController
+class_name LuminousDataController_luminousdatacontroller_luminous
 
 # Signals
 signal data_processed(bytes_processed)
@@ -423,9 +423,9 @@ func _load_template(template_type: String, template_part: String) -> String:
 
 # Generated entity: {name}
 
-@export var health: float = {health}
-@export var speed: float = {speed}
-@export var attack_power: float = {attack_power}
+@@export var health: float = {health}
+@@export var speed: float = {speed}
+@@export var attack_power: float = {attack_power}
 
 func _ready():
     # Entity initialization code
@@ -464,9 +464,9 @@ shape = SubResource("CapsuleShape3D_1")
 
 # Generated level: {name}
 
-@export var width: int = {width}
-@export var height: int = {height}
-@export var difficulty: int = {difficulty}
+@@export var width: int = {width}
+@@export var height: int = {height}
+@@export var difficulty: int = {difficulty}
 
 var player_start_position: Vector3 = Vector3(2, 0, 2)
 var exit_position: Vector3 = Vector3({width} - 2, 0, {height} - 2)
@@ -789,7 +789,7 @@ func _scan_directory_files(path: String) -> Dictionary:
                     var file_info = {
                         "path": full_path,
                         "modified_time": FileAccess.get_modified_time(full_path),
-                        "size": FileAccess.get_file_size(full_path)
+                        "size": FileAccess.FileAccess.get_file_as_bytes(full_path)
                     }
                     result[full_path] = file_info
             

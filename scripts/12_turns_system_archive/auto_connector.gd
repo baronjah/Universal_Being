@@ -53,10 +53,9 @@ var connections = {
         "last_connected": 0,
         "retry_count": 0,
         "error": ""
-    }
-}
+		}
 
-var connection_timers = {}
+var connection_timers = {
 var check_timer: Timer
 var is_connecting = false
 var auth_token = ""
@@ -95,6 +94,7 @@ func _ready():
     print("Auto Connector initialized")
     print("Auto connect on startup: " + str(auto_connect_on_startup))
     print("Connection types: " + str(connection_types))
+	}
     
     emit_signal("auto_connector_initialized")
 
@@ -143,6 +143,7 @@ func _find_system_references():
           "Screen Capturer: " + str(screen_capturer != null) + ", " +
           "Color System: " + str(color_system != null) + ", " +
           "Updater: " + str(updater != null))
+		}
 
 func _find_node_by_class(node, class_name_str):
     if node.get_class() == class_name_str or (node.get_script() and node.get_script().get_path().find(class_name_str.to_lower()) >= 0):
@@ -300,6 +301,7 @@ func _connect_to_api():
     # Connect to API service
     
     print("Establishing API connection to: " + api_url + "/" + api_version)
+	
     
     # In a real implementation, would make an authentication request
     # For this mock-up, we'll simulate the connection
@@ -333,6 +335,7 @@ func _connect_to_api():
         emit_signal("connection_failed", "api", error)
         
         print("API connection failed: " + error)
+		
         
         # Schedule retry if needed
         if auto_reconnect and connections.api.retry_count <= max_retry_count:
@@ -348,6 +351,7 @@ func _connect_to_drive():
         return false
     
     print("Establishing Drive connection to: " + drive_service_url)
+	
     
     # In a real implementation, would authenticate with the drive service
     # For this mock-up, we'll simulate the connection
@@ -379,6 +383,7 @@ func _connect_to_drive():
         emit_signal("connection_failed", "drive", error)
         
         print("Drive connection failed: " + error)
+		
         
         # Schedule retry if needed
         if auto_reconnect and connections.drive.retry_count <= max_retry_count:
@@ -394,6 +399,7 @@ func _connect_to_ocr():
         return false
     
     print("Establishing OCR connection to: " + ocr_service_url)
+	
     
     # In a real implementation, would connect to the OCR service
     # For this mock-up, we'll simulate the connection
@@ -425,6 +431,7 @@ func _connect_to_ocr():
         emit_signal("connection_failed", "ocr", error)
         
         print("OCR connection failed: " + error)
+		
         
         # Schedule retry if needed
         if auto_reconnect and connections.ocr.retry_count <= max_retry_count:
@@ -471,6 +478,7 @@ func _connect_to_network():
         emit_signal("connection_failed", "network", error)
         
         print("Network discovery connection failed: " + error)
+		
         
         # Schedule retry if needed
         if auto_reconnect and connections.network.retry_count <= max_retry_count:
@@ -547,6 +555,7 @@ func _on_check_timer():
     
     for connection_type in connection_types:
         if connections[connection_type].status == "connected":
+		
             # In a real implementation, would ping the service to verify connection
             # For this mock-up, we'll simulate random disconnections
             
@@ -560,6 +569,7 @@ func _on_check_timer():
                     connections[connection_type].retry_count = 0
                     connect_to_service(connection_type)
         elif connections[connection_type].status == "error" and auto_reconnect:
+		
             # Check if we should retry based on max retries
             if connections[connection_type].retry_count <= max_retry_count:
                 connect_to_service(connection_type)

@@ -34,7 +34,7 @@ func _ready():
 # Ensure required directories exist
 func _ensure_directories():
 	# Convert Windows path to a path format that DirAccess can use
-	var unix_path = WINDOWS_SOURCE_DIR.replace("C:/", "/mnt/c/").replace("\\", "/")
+	var unix_path = WINDOWS_SOURCE_DIR.replace("C:/", "mnt/c/").replace("\\", "")
 	
 	# Check if directory exists
 	if not DirAccess.dir_exists_absolute(unix_path):
@@ -71,7 +71,7 @@ func scan_source_directory():
 	var files = []
 	
 	# Convert Windows path to a path format that DirAccess can use
-	var unix_path = WINDOWS_SOURCE_DIR.replace("C:/", "/mnt/c/").replace("\\", "/")
+	var unix_path = WINDOWS_SOURCE_DIR.replace("C:/", "mnt/c/").replace("\\", "")
 	
 	# Process all files in the directory recursively
 	_scan_directory_recursive(unix_path, files)

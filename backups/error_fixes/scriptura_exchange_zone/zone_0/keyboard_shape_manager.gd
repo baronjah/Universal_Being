@@ -150,7 +150,7 @@ func _on_key_pressed(key_name):
             "combined_with": []
         }
     
-    var now = OS.get_ticks_msec()
+    var now = OS.Time.get_ticks_msec()
     var key_state = key_states[key_name]
     
     # Update key state
@@ -216,7 +216,7 @@ func _on_key_released(key_name):
     if not key_name in key_states:
         return
     
-    var now = OS.get_ticks_msec()
+    var now = OS.Time.get_ticks_msec()
     var key_state = key_states[key_name]
     
     # Update key state
@@ -366,7 +366,7 @@ func load_shape(shape_name = ""):
     
     while file_name != "":
         if not dir.current_is_dir() and file_name.ends_with(".json"):
-            if shape_name.empty() or file_name.begins_with(shape_name):
+            if shape_name.is_empty() or file_name.begins_with(shape_name):
                 shape_files.append(file_name)
         file_name = dir.get_next()
     
@@ -589,7 +589,7 @@ func get_keyboard_stats():
     
     # Sort keys by press count
     var sorted_keys = key_press_counts.keys()
-    sorted_keys.sort_custom(self, "_sort_by_press_count")
+    sorted_keys.sort_custom(self."_sort_by_press_count")
     
     # Get top 5 most pressed keys
     for i in range(min(5, sorted_keys.size())):

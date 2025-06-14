@@ -3,21 +3,21 @@
 # Created: May 31, 2025, 23:28 CEST
 # Purpose: Ragdoll physics and behavior system
 # Connection: Part of Pentagon Architecture migration
-
-extends UniversalBeingBase
-class_name VisualIndicatorEffects
+extends \2
+class_name VisualIndicatorEffects_visualindicatorsystem_visualin
 
 # ----- VISUAL INDICATOR SETTINGS -----
 @export_category("Visual Settings")
-@export var enabled: bool = true
-@export var current_mode: int = 0
-@export var blink_speed: float = 0.5
-@export var color_cycle_speed: float = 1.0
-@export var icon_scale: float = 1.0
-@export var layer_count: int = 3
+@@@export var enabled: bool = true
+@@@export var current_mode: int = 0
+@@@export var blink_speed: float = 0.5
+@@@export var color_cycle_speed: float = 1.0
+@@@export var icon_scale: float = 1.0
+@@@export var layer_count: int = 3
 
 # ----- MODE DEFINITIONS -----
-enum Modes {
+enum \2 {
+
     MINIMAL,        # Mode 1: Simple minimal display
     STANDARD,       # Mode 2: Standard with more info
     DETAILED,       # Mode 3: Full details with all indicators

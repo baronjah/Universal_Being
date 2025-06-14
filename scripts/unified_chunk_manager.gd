@@ -50,6 +50,7 @@ func _find_entities():
 		player = players[0]
 		camera = _find_camera_in_node(player)
 		print("✅ Found player: ", player.name)
+
 	
 	# Find AI companion (Gemma)
 	var ais = get_tree().get_nodes_in_group("ai_companions")
@@ -62,6 +63,7 @@ func _find_entities():
 		if gemmas.size() > 0:
 			ai_companion = gemmas[0]
 			print("✅ Found Gemma AI: ", ai_companion.name)
+
 
 func _find_camera_in_node(node: Node) -> Camera3D:
 	if node is Camera3D:
@@ -85,7 +87,7 @@ func update_chunk_loading():
 	var ai_pos = ai_companion.global_position if ai_companion else Vector3.ZERO
 	
 	# Get all chunks that should be loaded
-	var chunks_to_keep = {}
+	var chunks_to_keep = {
 	
 	# Load chunks around player
 	if player:
@@ -232,4 +234,4 @@ func get_stats() -> Dictionary:
 		"player_tracked": player != null,
 		"ai_tracked": ai_companion != null,
 		"predictive_loading": frustum_load_enabled
-	}
+}

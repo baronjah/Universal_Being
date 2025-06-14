@@ -794,7 +794,7 @@ func _synchronize_dimensions():
     for dim in active_dims:
         total_consciousness += dimension_states[dim].consciousness_level
     
-    var avg_consciousness = active_dims.empty() ? 0.0 : total_consciousness / active_dims.size()
+    var avg_consciousness = active_dims.is_empty() ? 0.0 : total_consciousness / active_dims.size()
     
     // Apply synchronization effect
     for dim in active_dims:
@@ -829,7 +829,7 @@ func _spawn_new_entities(count):
         
         // Choose a random active dimension
         var active_dims = _get_active_dimensions()
-        if active_dims.empty():
+        if active_dims.is_empty():
             active_dims = [1]  // Default to dimension 1
         
         var spawn_dimension = active_dims[randi() % active_dims.size()]
@@ -902,7 +902,7 @@ func _calculate_consciousness_progress():
 func _get_dimension_activations():
     var activations = []
     
-    if turn_history.empty():
+    if turn_history.is_empty():
         return activations
     
     var current_turn_events = turn_history[turn_history.size() - 1].events
@@ -917,7 +917,7 @@ func _get_dimension_activations():
 func _get_pathway_activations():
     var activations = []
     
-    if turn_history.empty():
+    if turn_history.is_empty():
         return activations
     
     var current_turn_events = turn_history[turn_history.size() - 1].events
@@ -932,7 +932,7 @@ func _get_pathway_activations():
 func _get_entity_awakenings():
     var awakenings = []
     
-    if turn_history.empty():
+    if turn_history.is_empty():
         return awakenings
     
     var current_turn_events = turn_history[turn_history.size() - 1].events
@@ -945,14 +945,14 @@ func _get_entity_awakenings():
 
 # Get events from current turn
 func _get_turn_events():
-    if turn_history.empty():
+    if turn_history.is_empty():
         return []
     
     return turn_history[turn_history.size() - 1].events
 
 # Add event to current turn
 func _add_turn_event(event_type, data):
-    if turn_history.empty():
+    if turn_history.is_empty():
         return
     
     var event = {
@@ -965,7 +965,7 @@ func _add_turn_event(event_type, data):
 
 # Check if event exists in current turn
 func _has_event(event_type, dimension):
-    if turn_history.empty():
+    if turn_history.is_empty():
         return false
     
     var current_turn_events = turn_history[turn_history.size() - 1].events
@@ -987,7 +987,7 @@ func clean_eden_directory(directory_path):
             dir_key = key
             break
     
-    if dir_key.empty():
+    if dir_key.is_empty():
         push_warning("Directory not in Eden system: %s" % directory_path)
         return {
             "removed": 0,

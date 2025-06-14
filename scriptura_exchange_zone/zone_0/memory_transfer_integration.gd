@@ -58,7 +58,7 @@ func _ready():
 
 func _connect_systems():
 	# Find memory transfer system
-	if has_node("/root/MemoryTransferSystem") or get_node_or_null("/root/MemoryTransferSystem"):
+	if has_node("root/MemoryTransferSystem") or get_node_or_null("root/MemoryTransferSystem"):
 		memory_transfer_system = get_node("\1") as Node
 	else:
 		# Create if it doesn't exist

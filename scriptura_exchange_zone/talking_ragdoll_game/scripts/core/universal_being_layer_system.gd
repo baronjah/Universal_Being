@@ -4,9 +4,8 @@
 # PURPOSE: Ensure gizmos and UI beings are always visible, even through ground
 # CREATED: 2025-05-30
 # ==================================================
-
 extends UniversalBeingBase
-class_name UniversalBeingLayerSystem
+# DISABLED DUPLICATE: class_name UniversalBeingLayerSystem_universa
 
 # Layer definitions
 enum LayerType {
@@ -39,7 +38,7 @@ func pentagon_ready() -> void:
 
 func _register_commands() -> void:
 	"""Register layer system commands"""
-	var console = get_node_or_null("/root/ConsoleManager")
+	var console = get_node_or_null("root/ConsoleManager")
 	if console:
 		console.register_command("layer_add", cmd_layer_add, "Add object to layer")
 		console.register_command("layer_list", cmd_layer_list, "List objects in layers")

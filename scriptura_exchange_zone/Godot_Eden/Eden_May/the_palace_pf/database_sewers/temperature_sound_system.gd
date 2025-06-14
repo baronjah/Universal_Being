@@ -96,8 +96,8 @@ func _ready():
 }
 
     # Get system references
-    temperature_system = get_node_or_null("/root/TemperatureSystem")
-    temperature_word_effects = get_node_or_null("/root/TemperatureWordEffects")
+    temperature_system = get_node_or_null("root/TemperatureSystem")
+    temperature_word_effects = get_node_or_null("root/TemperatureWordEffects")
 }
 
     # Connect signals

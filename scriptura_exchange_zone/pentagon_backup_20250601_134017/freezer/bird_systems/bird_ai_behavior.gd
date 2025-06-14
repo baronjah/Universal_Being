@@ -4,13 +4,12 @@
 # PURPOSE: Make birds autonomously explore and eat
 # CREATED: 2025-05-24 - Bird AI behaviors
 # ==================================================
-
-extends UniversalBeingBase
+extends \2
 # ================================
 # AI STATES
 # ================================
+enum \2 {
 
-enum AIState {
 	WANDERING,
 	SEEKING_FOOD,
 	EATING,

@@ -38,6 +38,7 @@ func _ready():
 	print("Turn Priority System initialized")
 	print("Current turn: " + get_turn_string())
 
+
 func _initialize_default_priorities():
 	# Only initialize if empty
 	if priority_categories["creation"].size() == 0:
@@ -119,6 +120,7 @@ func save_turn_state():
 	save_display_files()
 	
 	print("Saved turn state to: " + TURNS_FILE_PATH)
+
 
 func save_display_files():
 	# Display 1 - Shows current turn and all 12 lines
@@ -257,7 +259,7 @@ func get_active_priorities():
 	return {
 		"category": category_name,
 		"items": priority_categories[category_name]
-	}
+}
 
 func get_turn_data():
 	return {
@@ -266,4 +268,4 @@ func get_turn_data():
 		"active_category": priority_categories.keys()[(current_turn[1] - 1) % 4],
 		"active_priorities": get_active_priorities(),
 		"turn_lines": turn_lines
-	}
+}

@@ -22,8 +22,8 @@
 # SOFTWARE.
 
 @tool
-extends Resource
-class_name GLSLUtil
+extends \2
+class_name GLSLUtil_glslutil_glslutil
 
 var rd:RenderingDevice
 var mipmap_gen_rf_3d:MipmapGenerator_rf_3d

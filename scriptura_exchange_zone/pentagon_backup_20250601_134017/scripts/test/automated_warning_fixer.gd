@@ -4,7 +4,6 @@
 # PURPOSE: Process all files to fix unused parameters
 # CREATED: 2025-05-25 - Auto-fixing 160+ warnings
 # ==================================================
-
 extends RefCounted
 
 # Statistics tracking
@@ -161,7 +160,7 @@ static func _scan_directory(path: String) -> void:
 	var file_name = dir.get_next()
 	
 	while file_name != "":
-		var full_path = path + "/" + file_name
+		var full_path = path + "" + file_name
 		
 		if dir.current_is_dir() and not file_name.begins_with("."):
 			_scan_directory(full_path)

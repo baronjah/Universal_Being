@@ -1,5 +1,5 @@
 extends JSHDatabaseInterface
-class_name JSHFileSystemDatabase
+class_name JSHFileSystemDatabase_JSHFileSystemDatabase_JSHFileS
 
 # Default directory paths
 const DEFAULT_DB_ROOT = "user://database/"
@@ -22,7 +22,8 @@ var indexes: Dictionary = {}
 var _initialized: bool = false
 
 # File formats
-enum FileFormat {
+enum \2 {
+
     JSON,
     BINARY,
     COMPRESSED
@@ -111,7 +112,7 @@ func ensure_directories() -> void:
 
 func get_entity_dir_for_type(entity_type: String) -> String:
     # Create type-specific directory for better organization
-    var type_path = entity_path + entity_type + "/"
+    var type_path = entity_path + entity_type + ""
     
     # Ensure directory exists
     if auto_create_dirs:
@@ -479,7 +480,7 @@ func create_collection(collection_name: String) -> bool:
         return false
     
     # For file system database, collections are just directories
-    var collection_path = db_root_path + collection_name + "/"
+    var collection_path = db_root_path + collection_name + ""
     
     # Create directory
     var dir = DirAccess.open("user://")
@@ -1183,7 +1184,7 @@ func calculate_directory_size(dir_path: String) -> int:
         while not file_name.is_empty():
             if dir.current_is_dir():
                 if file_name != "." and file_name != "..":
-                    total_size += calculate_directory_size(dir_path + file_name + "/")
+                    total_size += calculate_directory_size(dir_path + file_name + "")
             else:
                 # Get file size
                 var file = FileAccess.open(dir_path + file_name, FileAccess.READ)
@@ -1297,10 +1298,10 @@ func copy_directory(from_dir: String, to_dir: String) -> bool:
                 if file_name != "." and file_name != "..":
                     # Create subdirectory in target
                     var dir_to = DirAccess.open("user://")
-                    dir_to.make_dir_recursive(to_dir + file_name + "/")
+                    dir_to.make_dir_recursive(to_dir + file_name + "")
                     
                     # Copy subdirectory
-                    copy_directory(from_dir + file_name + "/", to_dir + file_name + "/")
+                    copy_directory(from_dir + file_name + "", to_dir + file_name + "")
             else:
                 # Copy file
                 var file_from = FileAccess.open(from_dir + file_name, FileAccess.READ)

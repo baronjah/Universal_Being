@@ -56,16 +56,16 @@ func initialize(word_system: WordMemorySystem, wish_system: WishKnowledgeSystem,
     
     # Connect signals from memory systems
     if word_memory_system:
-        word_memory_system.connect("memory_updated", self, "_on_word_memory_updated")
-        word_memory_system.connect("word_remembered", self, "_on_word_remembered")
+        word_memory_system.connect(_on_word_memory_updated)
+        word_memory_system.connect(_on_word_remembered)
     
     if wish_knowledge_system:
-        wish_knowledge_system.connect("wish_processed", self, "_on_wish_processed")
-        wish_knowledge_system.connect("element_created", self, "_on_element_created")
+        wish_knowledge_system.connect(_on_wish_processed)
+        wish_knowledge_system.connect(_on_element_created)
     
     if dual_core_terminal:
-        dual_core_terminal.connect("core_switched", self, "_on_terminal_core_switched")
-        dual_core_terminal.connect("input_processed", self, "_on_terminal_input_processed")
+        dual_core_terminal.connect(_on_terminal_core_switched)
+        dual_core_terminal.connect(_on_terminal_input_processed)
     
     # Initialize catchphrase patterns
     _initialize_catchphrase_patterns()
@@ -367,7 +367,7 @@ func detect_catchphrases(text: String) -> Array:
 # Add a new catchphrase pattern for detection
 func add_catchphrase_pattern(text: String, type: String = "exact", effect: Dictionary = {}) -> bool:
     # Validate inputs
-    if text.empty():
+    if text.is_empty():
         return false
     
     if not type in ["exact", "fuzzy", "semantic"]:
@@ -614,9 +614,9 @@ func _transform_via_wish_knowledge(text: String, wish_element) -> String:
 # Merge two different transformations with interesting patterns
 func _merge_transformations(word_contrib: String, wish_contrib: String) -> String:
     # If either contribution is empty, return the other
-    if word_contrib.empty():
+    if word_contrib.is_empty():
         return wish_contrib
-    elif wish_contrib.empty():
+    elif wish_contrib.is_empty():
         return word_contrib
     
     # Split into words

@@ -1,5 +1,5 @@
 extends Node
-class_name JSHDictionaryManager
+class_name JSHDictionaryManager_CoreDictionaryManager_CoreDict
 }
 
 # Singleton pattern

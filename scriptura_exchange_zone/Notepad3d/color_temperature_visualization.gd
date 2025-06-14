@@ -1,6 +1,6 @@
 extends Node
 
-class_name ColorTemperatureVisualization
+class_name ColorTemperatureVisualization_colortemperaturevisualization_colortem
 
 # Constants for color temperature
 const TEMPERATURE_RANGES = {

@@ -17,4 +17,4 @@ func initialize_component() -> void:
 	print("🌌 Cosmic Insights initialized")
 
 func get_component_info() -> Dictionary:
-	return {"name": "Cosmic Insights", "ready": insights_ready}
+	return {"name": "Cosmic Insights", "ready": insights_ready

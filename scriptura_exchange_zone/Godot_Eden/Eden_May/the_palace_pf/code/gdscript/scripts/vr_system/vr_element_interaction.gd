@@ -1,5 +1,5 @@
 extends Node3D
-class_name VRElementInteraction
+class_name VRElementInteraction_vrelementinteraction_vrelemen
 
 # References to other systems
 var vr_manager = null
@@ -8,10 +8,10 @@ var elements_container: Node3D
 
 # Element visualization
 var element_scenes = {
-	"fire": preload("res://code/gdscript/scripts/elements_shapes_projection/element_fire.tscn") if File.new().file_exists("res://code/gdscript/scripts/elements_shapes_projection/element_fire.tscn") else null,
-	"water": preload("res://code/gdscript/scripts/elements_shapes_projection/element_water.tscn") if File.new().file_exists("res://code/gdscript/scripts/elements_shapes_projection/element_water.tscn") else null,
-	"wood": preload("res://code/gdscript/scripts/elements_shapes_projection/element_wood.tscn") if File.new().file_exists("res://code/gdscript/scripts/elements_shapes_projection/element_wood.tscn") else null,
-	"ash": preload("res://code/gdscript/scripts/elements_shapes_projection/element_ash.tscn") if File.new().file_exists("res://code/gdscript/scripts/elements_shapes_projection/element_ash.tscn") else null
+	"fire": preload("res://scripts/gdscript/scripts/elements_shapes_projection/element_fire.tscn") if File.new().file_exists("res://scripts/gdscript/scripts/elements_shapes_projection/element_fire.tscn") else null,
+	"water": preload("res://scripts/gdscript/scripts/elements_shapes_projection/element_water.tscn") if File.new().file_exists("res://scripts/gdscript/scripts/elements_shapes_projection/element_water.tscn") else null,
+	"wood": preload("res://scripts/gdscript/scripts/elements_shapes_projection/element_wood.tscn") if File.new().file_exists("res://scripts/gdscript/scripts/elements_shapes_projection/element_wood.tscn") else null,
+	"ash": preload("res://scripts/gdscript/scripts/elements_shapes_projection/element_ash.tscn") if File.new().file_exists("res://scripts/gdscript/scripts/elements_shapes_projection/element_ash.tscn") else null
 }
 
 # Interaction state
@@ -73,11 +73,11 @@ func _ready():
 # Load effect resources
 func _load_effect_resources():
 	# Check if effect scenes exist and load them
-	if File.new().file_exists("res://code/gdscript/scripts/elements_shapes_projection/interaction_effect.tscn"):
-		interaction_effect_scene = load("res://code/gdscript/scripts/elements_shapes_projection/interaction_effect.tscn")
+	if File.new().file_exists("res://scripts/gdscript/scripts/elements_shapes_projection/interaction_effect.tscn"):
+		interaction_effect_scene = load("res://scripts/gdscript/scripts/elements_shapes_projection/interaction_effect.tscn")
 	
-	if File.new().file_exists("res://code/gdscript/scripts/elements_shapes_projection/transformation_effect.tscn"):
-		transformation_effect_scene = load("res://code/gdscript/scripts/elements_shapes_projection/transformation_effect.tscn")
+	if File.new().file_exists("res://scripts/gdscript/scripts/elements_shapes_projection/transformation_effect.tscn"):
+		transformation_effect_scene = load("res://scripts/gdscript/scripts/elements_shapes_projection/transformation_effect.tscn")
 
 # Create initial set of elements for testing
 func _create_initial_elements():

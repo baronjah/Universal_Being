@@ -1,5 +1,6 @@
 @tool
-class_name VisualShaderNodeWhiteBalance extends VisualShaderNodeCustom
+class_name VisualShaderNodeWhiteBalance_WhiteBalance_WhiteBal
+extends \2
 
 func _get_name() -> String:
 	return "WhiteBalance"

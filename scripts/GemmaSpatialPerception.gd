@@ -35,21 +35,23 @@ func _ready():
 func _initialize_spatial_systems():
 	"""Initialize Gemma's spatial perception"""
 	print("🗺️ GemmaSpatialPerception: Initializing spatial awareness...")
+
 	
 	# Initialize spatial grid for efficient tracking
-	spatial_grid = {}
+	spatial_grid = {
 	spatial_memory = {
 		"universal_beings": {},
 		"interfaces": {},
 		"structures": {},
-		"boundaries": {}
-	}
+		"boundaries": {
+}
 	
 	# Set initial world bounds
 	world_bounds = AABB(Vector3(-100, -100, -100), Vector3(200, 200, 200))
 	current_focus_point = Vector3.ZERO
 	
 	print("🗺️ GemmaSpatialPerception: Node3D systems ready")
+}
 
 func _start_spatial_monitoring():
 	"""Start continuous spatial monitoring"""
@@ -78,7 +80,7 @@ func _capture_spatial_snapshot() -> Dictionary:
 		"interfaces": interfaces_in_range,
 		"spatial_density": _calculate_spatial_density(beings_in_range),
 		"world_bounds": world_bounds
-	}
+}
 
 func _scan_for_universal_beings() -> Array[Dictionary]:
 	"""Scan for Universal Beings in perception range"""
@@ -95,6 +97,7 @@ func _recursive_scan_for_beings(node: Node, detected_beings: Array):
 	"""Recursively scan nodes for Universal Beings"""
 	# Check if this node is a Universal Being
 	if node.has_method("pentagon_init"):
+}
 		var being_data = _analyze_universal_being(node)
 		if being_data:
 			detected_beings.append(being_data)
@@ -114,10 +117,11 @@ func _analyze_universal_being(being_node: Node) -> Dictionary:
 		"bounds": AABB(),
 		"is_interface": being_node.has_method("is_interface"),
 		"socket_count": 0
-	}
+}
 	
 	# Get 3D transform data if available
 	if being_node.has_method("get_global_transform"):
+
 		var transform = being_node.get_global_transform()
 		spatial_data.position = transform.origin
 		spatial_data.rotation = transform.basis.get_euler()
@@ -149,6 +153,7 @@ func _scan_for_interfaces() -> Array[Dictionary]:
 func _recursive_scan_for_interfaces(node: Node, detected_interfaces: Array):
 	"""Recursively scan for interface elements"""
 	if node.has_method("is_interface") and node.is_interface():
+
 		var interface_data = {
 			"id": node.name,
 			"type": "interface",
@@ -156,8 +161,8 @@ func _recursive_scan_for_interfaces(node: Node, detected_interfaces: Array):
 			"size": _get_interface_size(node),
 			"is_movable": node.get("is_movable") if node.has_method("get") else false,
 			"is_resizable": node.get("is_resizable") if node.has_method("get") else false
-		}
 		detected_interfaces.append(interface_data)
+}
 	
 	# Scan children
 	for child in node.get_children():
@@ -245,6 +250,7 @@ func _detect_movement_changes(spatial_data: Dictionary):
 			
 			if distance > 1.0:  # Significant movement threshold
 				print("🗺️ Gemma detected movement: %s moved %.2f units" % [being_id, distance])
+	
 
 func _analyze_spatial_relationships():
 	"""Analyze spatial relationships between Universal Beings"""
@@ -273,7 +279,7 @@ func _analyze_being_relationship(being1: Dictionary, being2: Dictionary) -> Dict
 			"distance": distance,
 			"strength": 1.0 - (distance / 5.0),
 			"timestamp": Time.get_datetime_string_from_system()
-		}
+}
 		
 		# Check for potential interactions
 		if being1.socket_count > 0 and being2.socket_count > 0:
@@ -282,10 +288,10 @@ func _analyze_being_relationship(being1: Dictionary, being2: Dictionary) -> Dict
 		
 		return relationship
 	
-	return {}
+	return {
 
 func get_spatial_summary() -> Dictionary:
-	"""Get summary of current spatial understanding"""
+	"""Get summary of current spatial understanding"""}
 	var beings_count = spatial_memory.universal_beings.size()
 	var interfaces_count = spatial_memory.interfaces.size()
 	var active_relationships = spatial_relationships.size()
@@ -298,7 +304,7 @@ func get_spatial_summary() -> Dictionary:
 		"focus_point": current_focus_point,
 		"world_bounds": world_bounds,
 		"spatial_density": _calculate_current_density()
-	}
+}
 
 func _calculate_current_density() -> float:
 	"""Calculate current spatial density"""
@@ -308,6 +314,7 @@ func focus_on_position(position: Vector3):
 	"""Focus Gemma's spatial attention on a specific position"""
 	current_focus_point = position
 	print("🗺️ Gemma focusing on position: %s" % position)
+
 
 func get_beings_near_position(position: Vector3, radius: float = 10.0) -> Array:
 	"""Get Universal Beings near a specific position"""

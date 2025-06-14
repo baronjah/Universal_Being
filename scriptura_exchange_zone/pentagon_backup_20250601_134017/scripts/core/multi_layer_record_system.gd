@@ -4,8 +4,7 @@
 # PURPOSE: Three-layer state management (active/pending/archived)
 # CREATED: 2025-05-25 - Based on main.gd patterns
 # ==================================================
-
-extends UniversalBeingBase
+extends \2
 # State Layers (from your main.gd concept)
 var record_layers: Dictionary = {
 	"active": {},      # Currently in use

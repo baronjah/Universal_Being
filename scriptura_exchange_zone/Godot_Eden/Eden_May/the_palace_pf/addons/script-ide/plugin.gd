@@ -8,7 +8,7 @@
 ## Especially since this is a editor only plugin that is not needed in the final game.
 ## So some code is untyped for this reason.
 @tool
-extends EditorPlugin
+extends \2
 
 const GETTER: StringName = &"get"
 const SETTER: StringName = &"set"
@@ -365,7 +365,7 @@ func init_icons():
 	func_get_icon = create_editor_texture(load(script_path.path_join("icon/func_get.svg")))
 	func_set_icon = create_editor_texture(load(script_path.path_join("icon/func_set.svg")))
 	property_icon = create_editor_texture(load(script_path.path_join("icon/property.svg")))
-	export_icon = create_editor_texture(load(script_path.path_join("icon/export.svg")))
+	export_icon = create_editor_texture(load(script_path.path_join("icon/@export.svg")))
 	signal_icon = create_editor_texture(load(script_path.path_join("icon/signal.svg")))
 	constant_icon = create_editor_texture(load(script_path.path_join("icon/constant.svg")))
 	class_icon = create_editor_texture(load(script_path.path_join("icon/class.svg")))
@@ -405,7 +405,7 @@ func init_outline_order():
 	outline_type = OutlineType.new()
 	outline_type.type_name = EXPORTED
 	outline_type.add_to_outline = func(): add_to_outline_if_selected(signal_btn,
-		func(): add_to_outline(outline_cache.exports, export_icon, &"var", &"@export"))
+		func(): add_to_outline(outline_cache.exports, export_icon, &"var", &"@@export"))
 	outline_type_order.append(outline_type)
 
 	outline_type = OutlineType.new()
@@ -1200,7 +1200,7 @@ func get_res_path(idx: int) -> String:
 	if (tab_control == null):
 		return ''
 
-	var path_var: Variant = tab_control.get(&"metadata/_edit_res_path")
+	var path_var unknown_var: Variant = tab_control.get(&"metadata/_edit_res_path")
 	if (path_var == null):
 		return ''
 

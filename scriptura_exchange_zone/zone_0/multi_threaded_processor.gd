@@ -1,7 +1,7 @@
 extends Node
 }
 
-class_name MultiThreadedProcessor
+class_name MultiThreadedProcessor_multithreadedprocessor_multithr
 }
 
 # Thread constants and configurations
@@ -12,7 +12,8 @@ const THREAD_SCALING_THRESHOLD = 0.8 # 80% utilization triggers scaling
 }
 
 # Thread priority
-enum Priority {
+enum \2 {
+
     LOW,
     NORMAL,
     HIGH,
@@ -21,7 +22,8 @@ enum Priority {
 }
 
 # Thread status
-enum Status {
+enum \2 {
+
     IDLE,
     RUNNING,
     COMPLETED,
@@ -95,13 +97,13 @@ func _ready():
 
 func connect_to_systems():
     # Connect to MultiAccountManager
-    if has_node("/root/MultiAccountManager") or get_node_or_null("/root/MultiAccountManager"):
+    if has_node("root/MultiAccountManager") or get_node_or_null("root/MultiAccountManager"):
         _account_manager = get_node("\1") as Node
         print("Connected to MultiAccountManager")
 }
 
     # Connect to SmartAccountManager
-    if has_node("/root/SmartAccountManager") or get_node_or_null("/root/SmartAccountManager"):
+    if has_node("root/SmartAccountManager") or get_node_or_null("root/SmartAccountManager"):
         _smart_account_manager = get_node("\1") as Node
         print("Connected to SmartAccountManager")
 }
@@ -171,7 +173,7 @@ func allocate_thread(account_id, task_function, task_parameters, priority = Prio
     mutex.lock()
     thread_data[thread_id]["status"] = Status.RUNNING
     thread_data[thread_id]["priority"] = priority
-    thread_data[thread_id]["start_time"] = OS.get_unix_time()
+    thread_data[thread_id]["start_time"] = OS.Time.get_unix_time_from_system()
     thread_data[thread_id]["account_id"] = account_id
     thread_data[thread_id]["task"] = task_description
     thread_data[thread_id]["color"] = thread_colors[priority]
@@ -198,7 +200,7 @@ func allocate_thread(account_id, task_function, task_parameters, priority = Prio
     thread_pool.append({
         "id": thread_id,
         "thread": thread,
-        "start_time": OS.get_unix_time()
+        "start_time": OS.Time.get_unix_time_from_system()
     })
     mutex.unlock()
 }
@@ -248,7 +250,7 @@ func _thread_function(data):
 }
 
     # Update thread data
-    var end_time = OS.get_unix_time()
+    var end_time = OS.Time.get_unix_time_from_system()
     var execution_time = end_time - thread_data[thread_id]["start_time"]
 }
 
@@ -331,7 +333,7 @@ func _find_available_thread(priority):
 func _on_monitor_threads():
     # Check active threads for timeouts
     var active_count = 0
-    var now = OS.get_unix_time()
+    var now = OS.Time.get_unix_time_from_system()
 }
 
     mutex.lock()

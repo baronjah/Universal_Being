@@ -1,5 +1,5 @@
-class_name WordFirewall
-extends Node
+class_name WordFirewall_WordFirewall_WordFire
+extends \2
 
 # ================ FIREWALL CORE ================
 # Security system for protecting data pathways and word processing
@@ -29,12 +29,12 @@ func _ready():
 func setup_default_protection():
     # Set up basic path protection
     protected_paths = [
-        "/mnt/d/",
-        "/user/data/",
-        "/system/core/",
-        "/memory/primary/",
-        "/runtime/active/",
-        "/network/external/"
+        "mnt/d/",
+        "user/data/",
+        "system/core/",
+        "memory/primary/",
+        "runtime/active/",
+        "network/external/"
     ]
     
     # Create default rule sets
@@ -125,8 +125,8 @@ func _apply_level_specific_rules(level: int):
             
         1:  # ENHANCED
             # Add more protected paths
-            protected_paths.append("/user/downloads/")
-            protected_paths.append("/memory/secondary/")
+            protected_paths.append("user/downloads/")
+            protected_paths.append("memory/secondary/")
             
             # Enable more aggressive scanning
             var transform_rule = rule_sets["data_security"]

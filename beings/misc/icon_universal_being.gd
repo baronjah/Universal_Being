@@ -113,6 +113,7 @@ func set_icon(new_icon_name: String) -> void:
 		sprite_3d.texture = load(texture_path)
 		print("🎨 Icon changed to: %s" % icon_name)
 
+
 func _on_area_input_event(camera: Node, event: InputEvent, position: Vector3, normal: Vector3, shape_idx: int) -> void:
 	if event is InputEventMouseButton:
 		if event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
@@ -126,11 +127,13 @@ func _on_icon_clicked() -> void:
 	update_consciousness_visual()
 	
 	print("🎨 %s clicked! Count: %d, Consciousness: %d" % [being_name, click_count, consciousness_level])
+
 	
 	# Visual feedback - spin
 	if sprite_3d:
 		var tween = get_tree().create_tween()
 		tween.tween_property(sprite_3d, "rotation:y", sprite_3d.rotation.y + TAU, 0.5)
+
 	
 	# Emit signal
 	consciousness_awakened.emit(consciousness_level)
@@ -138,6 +141,7 @@ func _on_icon_clicked() -> void:
 func _on_mouse_entered() -> void:
 	is_hovered = true
 	print("🎨 Hovering over: %s" % being_name)
+
 
 func _on_mouse_exited() -> void:
 	is_hovered = false
@@ -170,6 +174,7 @@ func get_text_representation() -> String:
 	text += " CLICKS:%d" % click_count
 	text += " HOVER:%s" % ("YES" if is_hovered else "NO")
 	text += " CONSCIOUSNESS:%d" % consciousness_level
+
 	
 	# Add ASCII representation based on icon
 	text += "\n" + get_ascii_art()
@@ -206,9 +211,9 @@ func ai_interface() -> Dictionary:
 		"interactions": click_count,
 		"hovering": is_hovered,
 		"available_icons": icon_textures.keys()
-	}
 	base.text_representation = get_text_representation()
 	return base
+}
 
 func ai_invoke_method(method_name: String, args: Array = []) -> Variant:
 	match method_name:

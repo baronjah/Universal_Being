@@ -1,4 +1,4 @@
-extends Spatial
+extends Node3D
 }
 
 signal word_caught(word, properties)
@@ -62,10 +62,10 @@ var debug_trigger_words = ["debug", "error", "fix", "code", "analyze", "inspect"
 
 func _ready():
     # Get references to other systems
-    word_animator = get_node_or_null("/root/Main/WordAnimator")
-    word_translator = get_node_or_null("/root/Main/WordTranslator")
-    memory_manager = get_node_or_null("/root/Main/MemoryEvolutionManager")
-    turn_tracker = get_node_or_null("/root/Main/TurnTracker")
+    word_animator = get_node_or_null("root/Main/WordAnimator")
+    word_translator = get_node_or_null("root/Main/WordTranslator")
+    memory_manager = get_node_or_null("root/Main/MemoryEvolutionManager")
+    turn_tracker = get_node_or_null("root/Main/TurnTracker")
 }
 
     # Create data sea environment
@@ -186,7 +186,7 @@ func _create_sea_environment():
 # Create the yo-yo object
 func _create_yo_yo():
     # Create yo-yo node
-    yo_yo_node = Spatial.new()
+    yo_yo_node = Node3D.new()
     yo_yo_node.name = "YoYo"
     add_child(yo_yo_node)
 }
@@ -306,7 +306,7 @@ func populate_data_sea():
             "movement_amplitude": rand_range(0.1, 0.5),
             "movement_frequency": rand_range(0.5, 2.0),
             "is_flawed": is_flawed,
-            "creation_time": OS.get_unix_time(),
+            "creation_time": OS.Time.get_unix_time_from_system(),
             "is_debug_trigger": debug_trigger_words.has(word)
         }
 }
@@ -331,7 +331,7 @@ func populate_data_sea():
 # Create 3D representation of a word
 func _create_word_node(word, properties):
     # Create word node
-    var word_node = Spatial.new()
+    var word_node = Node3D.new()
     word_node.name = "Word_" + word
     word_node.translation = properties["position"]
     add_child(word_node)
@@ -437,7 +437,7 @@ func _add_emoticon_to_word(word_node, emoticon_text):
         "node": emoticon,
         "text": emoticon_text,
         "parent": word_node,
-        "creation_time": OS.get_unix_time()
+        "creation_time": OS.Time.get_unix_time_from_system()
     })
 }
 
@@ -629,7 +629,7 @@ func _create_catch_effect(word):
 }
 
     # Move the word toward memory system visualization if it exists
-    var memory_viz = get_node_or_null("/root/Main/MemoryEvolutionDisplay")
+    var memory_viz = get_node_or_null("root/Main/MemoryEvolutionDisplay")
     if memory_viz:
         var end_pos = word_node.translation + Vector3(0, 5, 0)  # Move up as if going to memory
 }
@@ -777,7 +777,7 @@ func _update_emoticons(delta):
 }
 
     # Age out old emoticons
-    var current_time = OS.get_unix_time()
+    var current_time = OS.Time.get_unix_time_from_system()
     var emoticons_to_remove = []
 }
 
@@ -845,7 +845,7 @@ func _create_random_emoticon():
         "node": emoticon,
         "text": emoticon_text,
         "parent": null,
-        "creation_time": OS.get_unix_time()
+        "creation_time": OS.Time.get_unix_time_from_system()
     })
 }
 
@@ -856,7 +856,7 @@ func _create_random_emoticon():
 # Update synergy system
 func _update_synergy(delta):
     # Only update periodically
-    var current_time = OS.get_unix_time()
+    var current_time = OS.Time.get_unix_time_from_system()
     if current_time - last_synergy_update < synergy_update_interval:
         return
 }
@@ -1004,7 +1004,7 @@ func _create_flawed_word():
         "movement_amplitude": 0.8,
         "movement_frequency": 3.0,
         "is_flawed": true,
-        "creation_time": OS.get_unix_time(),
+        "creation_time": OS.Time.get_unix_time_from_system(),
         "is_debug_trigger": true
     }
 }

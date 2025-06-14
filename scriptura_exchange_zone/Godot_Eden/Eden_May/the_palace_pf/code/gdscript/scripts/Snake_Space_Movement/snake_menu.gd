@@ -1,8 +1,8 @@
 extends Node
-class_name SnakeMenuHandler
+class_name SnakeMenuHandler_snakemenu_snakemen
 # JSH_World/grid
 #
-# res://code/gdscript/scripts/Snake_Space_Movement/snake_menu.gd
+# res://scripts/gdscript/scripts/Snake_Space_Movement/snake_menu.gd
 # Reference to main node
 var main_ref = null
 

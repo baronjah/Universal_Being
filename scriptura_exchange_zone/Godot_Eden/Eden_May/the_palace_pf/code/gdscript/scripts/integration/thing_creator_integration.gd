@@ -1,5 +1,5 @@
 extends Node
-class_name CoreThingCreatorIntegration
+class_name CoreThingCreatorIntegration_thingcreatorintegration_thingcre
 
 # References to required systems
 var thing_creator = null # Can be ThingCreator (autoload) or CoreThingCreator
@@ -47,8 +47,8 @@ func _find_dependencies() -> void:
 	print("Finding Thing Creator Integration dependencies...")
 
 	# Find ThingCreator - try autoload first, then CoreThingCreator
-	if has_node("/root/ThingCreator"):
-		thing_creator = get_node("/root/ThingCreator")
+	if has_node("root/ThingCreator"):
+		thing_creator = get_node("root/ThingCreator")
 	else:
 		# Try to find CoreThingCreator by instance
 		thing_creator = _find_node_by_class("CoreThingCreator")
@@ -61,8 +61,8 @@ func _find_dependencies() -> void:
 			print("Created new CoreThingCreator instance")
 
 	# Find AkashicRecordsManager
-	if has_node("/root/AkashicRecordsManager"):
-		akashic_records_manager = get_node("/root/AkashicRecordsManager")
+	if has_node("root/AkashicRecordsManager"):
+		akashic_records_manager = get_node("root/AkashicRecordsManager")
 	else:
 		# Try to find CoreAkashicRecordsManager by instance
 		akashic_records_manager = _find_node_by_class("CoreAkashicRecordsManager")
@@ -84,8 +84,8 @@ func _find_dependencies() -> void:
 			print("Found console system: " + console_class)
 			break
 
-	if has_node("/root/JSH_console"):
-		console_system = get_node("/root/JSH_console")
+	if has_node("root/JSH_console"):
+		console_system = get_node("root/JSH_console")
 
 	# Report status
 	var status = "ThingCreatorIntegration dependencies found:\n"

@@ -1,5 +1,5 @@
 
-extends Node3D
+extends \2
 
 # Modifier keys' speed multiplier
 const SHIFT_MULTIPLIER = 2.5

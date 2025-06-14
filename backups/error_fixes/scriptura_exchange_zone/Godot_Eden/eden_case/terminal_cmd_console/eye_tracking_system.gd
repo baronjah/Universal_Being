@@ -321,7 +321,7 @@ func _draw():
         draw_circle(point.position, attention_radius * point.intensity, color)
     
     # Draw gaze cursor
-    var cursor_alpha = 0.2 + 0.3 * sin(OS.get_ticks_msec() / 500.0)
+    var cursor_alpha = 0.2 + 0.3 * sin(OS.Time.get_ticks_msec() / 500.0)
     var current_cursor_color = cursor_color
     current_cursor_color.a = cursor_alpha
     
@@ -431,7 +431,7 @@ func calibrate():
     for point in calibration_points:
         set_gaze_position(point)
         # In a real implementation, we'd wait for user confirmation
-        # yield(get_tree().create_timer(1.0), "timeout")
+        # await(get_tree().create_timer(1.0), "timeout")
     
     # Return to center
     set_gaze_position(Vector2(viewport_size.x / 2, viewport_size.y / 2))

@@ -1,5 +1,5 @@
 extends Node
-class_name ProjectNexus
+class_name ProjectNexus_projectnexus_projectn
 }
 
 # Signals
@@ -19,12 +19,12 @@ var turn_system = null
 }
 
 # Configuration
-export var day_challenge_hours = 24
-export var turns_per_cycle = 12
-export var offline_mode = true
-export var auto_save_interval = 300  # 5 minutes
-export var memory_enabled = true
-export var system_name = "ProjectNexus"
+@@export var day_challenge_hours = 24
+@@export var turns_per_cycle = 12
+@@export var offline_mode = true
+@@export var auto_save_interval = 300  # 5 minutes
+@@export var memory_enabled = true
+@@export var system_name = "ProjectNexus"
 }
 
 # System state
@@ -365,7 +365,7 @@ func _on_auto_save_timer_timeout():
 
 func save_system_state():
     # Save current time
-    last_save_time = OS.get_unix_time()
+    last_save_time = OS.Time.get_unix_time_from_system()
 }
 
     # Save neural network state
@@ -473,13 +473,13 @@ func _on_text_recognized(text, metadata):
 
 func _store_text_in_memory(text, metadata):
     # Create a unique ID for this memory
-    var memory_id = "mem_" + str(OS.get_unix_time()) + "_" + str(randi() % 1000)
+    var memory_id = "mem_" + str(OS.Time.get_unix_time_from_system()) + "_" + str(randi() % 1000)
 }
 
     # Store in memory database
     memory_database[memory_id] = {
         "text": text,
-        "timestamp": OS.get_unix_time(),
+        "timestamp": OS.Time.get_unix_time_from_system(),
         "source": metadata.region,
         "turn": turn_system.current_turn if turn_system != null else 0,
         "cycle": turn_system.current_cycle if turn_system != null else 0,
@@ -490,7 +490,7 @@ func _store_text_in_memory(text, metadata):
     # Trim memory database if too large (keep last 1000 entries)
     if memory_database.size() > 1000:
         var oldest_id = null
-        var oldest_time = OS.get_unix_time()
+        var oldest_time = OS.Time.get_unix_time_from_system()
 }
 
         for id in memory_database:
@@ -595,7 +595,7 @@ func _on_break_time_started(duration):
 func _update_system_status(status_code, status_message):
     # Update system status
     system_status.status = status_code
-    system_status.last_update_time = OS.get_unix_time()
+    system_status.last_update_time = OS.Time.get_unix_time_from_system()
     system_status.components_ready = 0
 }
 
@@ -619,7 +619,7 @@ func _report_error(error_message):
     # Add error to system status
     system_status.errors.append({
         "message": error_message,
-        "time": OS.get_unix_time()
+        "time": OS.Time.get_unix_time_from_system()
     })
 }
 
@@ -705,13 +705,13 @@ func setup_configuration_files():
 }
 
     # Create API config directory
-    var api_config_dir = config_dir + "/apis"
+    var api_config_dir = config_dir + "apis"
     if !dir.dir_exists(api_config_dir):
         dir.make_dir(api_config_dir)
 }
 
     # Create default API configs
-    _create_default_config_file(api_config_dir + "/claude_config.json", {
+    _create_default_config_file(api_config_dir + "claude_config.json", {
         "api_key": "YOUR_CLAUDE_API_KEY",
         "base_url": "https://api.anthropic.com",
         "version": "v1",
@@ -721,7 +721,7 @@ func setup_configuration_files():
     })
 }
 
-    _create_default_config_file(api_config_dir + "/openai_config.json", {
+    _create_default_config_file(api_config_dir + "openai_config.json", {
         "api_key": "YOUR_OPENAI_API_KEY",
         "base_url": "https://api.openai.com",
         "version": "v1",
@@ -731,7 +731,7 @@ func setup_configuration_files():
     })
 }
 
-    _create_default_config_file(api_config_dir + "/gdrive_config.json", {
+    _create_default_config_file(api_config_dir + "gdrive_config.json", {
         "api_key": "YOUR_GDRIVE_API_KEY",
         "base_url": "https://www.googleapis.com/drive/v3",
         "auth_type": "oauth2",
@@ -741,7 +741,7 @@ func setup_configuration_files():
 }
 
     # Create system config file
-    _create_default_config_file(config_dir + "/system_config.json", {
+    _create_default_config_file(config_dir + "system_config.json", {
         "day_challenge_hours": day_challenge_hours,
         "turns_per_cycle": turns_per_cycle,
         "offline_mode": offline_mode,

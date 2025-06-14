@@ -1,7 +1,7 @@
 extends Node
 }
 
-class_name UniversalConnector
+class_name UniversalConnector_universalconnector_universa
 }
 
 # Universal Connector System
@@ -13,12 +13,12 @@ class_name UniversalConnector
 const CONNECTOR_VERSION = "1.0.0"
 const DEFAULT_SHORTCUT = "ctrl+alt+space"
 const DRIVE_PATHS = {
-	"C": "/mnt/c/",
-	"D": "/mnt/d/"
+	"C": "mnt/c/",
+	"D": "mnt/d/"
 }
 const APP_CONNECTIONS = {
 	"claude": {
-		"path": "/mnt/c/Users/Percision 15/claude_akashic_bridge.gd",
+		"path": "mnt/c/Users/Percision 15/claude_akashic_bridge.gd",
 		"api_key_path": "user://api_keys/claude_key.enc",
 		"shortcut": "ctrl+alt+c",
 		"data_channels": ["text", "memory", "visualization"]
@@ -34,17 +34,17 @@ const APP_CONNECTIONS = {
 		"data_channels": ["scene", "script", "resource"]
 	},
 	"terminal": {
-		"path": "/mnt/c/Users/Percision 15/terminal_api_bridge.gd",
+		"path": "mnt/c/Users/Percision 15/terminal_api_bridge.gd",
 		"shortcut": "ctrl+alt+t",
 		"data_channels": ["command", "output", "error"]
 	},
 	"ethereal_engine": {
-		"path": "/mnt/c/Users/Percision 15/ethereal_engine.gd",
+		"path": "mnt/c/Users/Percision 15/ethereal_engine.gd",
 		"shortcut": "ctrl+alt+e",
 		"data_channels": ["reality", "dimension", "creation"]
 	},
 	"akashic_records": {
-		"path": "/mnt/c/Users/Percision 15/12_turns_system/akashic_database.js",
+		"path": "mnt/c/Users/Percision 15/12_turns_system/akashic_database.js",
 		"shortcut": "ctrl+alt+a",
 		"data_channels": ["memory", "record", "timeline"]
 	}

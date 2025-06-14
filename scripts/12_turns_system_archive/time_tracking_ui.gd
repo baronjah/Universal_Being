@@ -97,6 +97,7 @@ func _find_systems():
         visual_system = _find_node_by_class(get_tree().root, "VisualIndicatorSystem")
         if visual_system:
             print("Found visual system by class: " + visual_system.name)
+			
     
     # Find time tracker
     var potential_trackers = get_tree().get_nodes_in_group("time_trackers")
@@ -107,6 +108,7 @@ func _find_systems():
         time_tracker = _find_node_by_class(get_tree().root, "UsageTimeTracker")
         if time_tracker:
             print("Found time tracker by class: " + time_tracker.name)
+			
     
     # Find turn system
     var potential_turns = get_tree().get_nodes_in_group("turn_systems")
@@ -121,6 +123,7 @@ func _find_systems():
         
         if turn_system:
             print("Found turn system by class: " + turn_system.name)
+			
 
 func _find_node_by_class(node, class_name):
     if node.get_class() == class_name:
@@ -205,6 +208,7 @@ func _update_turn_display():
         turn_label.text = "Turn: " + str(current_turn) + " - " + phase_name
     else:
         turn_label.text = "Turn: " + str(current_turn)
+		
 
 func _update_mode_display():
     if not visual_system or not show_mode_info:
@@ -213,6 +217,7 @@ func _update_mode_display():
     
     mode_label.visible = true
     mode_label.text = "Mode: " + visual_system.get_current_mode_name()
+	
 
 func _update_layers_display():
     if not visual_system:
@@ -306,6 +311,7 @@ func show_ui():
         modulate.a = 0.0
         var tween = create_tween()
         tween.tween_property(self, "modulate:a", 1.0, 0.3)
+		
     
     if auto_hide:
         auto_hide_timer.start(auto_hide_delay)

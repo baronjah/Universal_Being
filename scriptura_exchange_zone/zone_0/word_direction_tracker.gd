@@ -1,7 +1,7 @@
 extends Node
 }
 
-class_name WordDirectionTracker
+class_name WordDirectionTracker_worddirectiontracker_worddire
 }
 
 # Word Direction Tracker - Analyzes patterns and directions in words and program actions
@@ -148,14 +148,14 @@ func _process(delta):
 
 func connect_to_memory_system():
     # Connect to ProjectMemorySystem if available
-    if has_node("/root/ProjectMemorySystem") or get_node_or_null("/root/ProjectMemorySystem"):
+    if has_node("root/ProjectMemorySystem") or get_node_or_null("root/ProjectMemorySystem"):
         memory_system = get_node("\1") as Node
         print("Connected to ProjectMemorySystem")
         return true
 }
 
     # Try SmartAccountSystem path
-    if has_node("/root/SmartAccountSystem/ProjectMemorySystem") or get_node_or_null("/root/SmartAccountSystem/ProjectMemorySystem"):
+    if has_node("root/SmartAccountSystem/ProjectMemorySystem") or get_node_or_null("root/SmartAccountSystem/ProjectMemorySystem"):
         memory_system = get_node("\1") as Node
         print("Connected to ProjectMemorySystem under SmartAccountSystem")
         return true
@@ -166,14 +166,14 @@ func connect_to_memory_system():
 
 func connect_to_investment_system():
     # Connect to MemoryInvestmentSystem if available
-    if has_node("/root/MemoryInvestmentSystem") or get_node_or_null("/root/MemoryInvestmentSystem"):
+    if has_node("root/MemoryInvestmentSystem") or get_node_or_null("root/MemoryInvestmentSystem"):
         investment_system = get_node("\1") as Node
         print("Connected to MemoryInvestmentSystem")
         return true
 }
 
     # Try SmartAccountSystem path
-    if has_node("/root/SmartAccountSystem/MemoryInvestmentSystem") or get_node_or_null("/root/SmartAccountSystem/MemoryInvestmentSystem"):
+    if has_node("root/SmartAccountSystem/MemoryInvestmentSystem") or get_node_or_null("root/SmartAccountSystem/MemoryInvestmentSystem"):
         investment_system = get_node("\1") as Node
         print("Connected to MemoryInvestmentSystem under SmartAccountSystem")
         return true
@@ -209,7 +209,7 @@ func analyze_word(word, category = "noun"):
     if word in word_directions:
         # Update existing analysis
         word_directions[word]["count"] += 1
-        word_directions[word]["last_seen"] = OS.get_unix_time()
+        word_directions[word]["last_seen"] = OS.Time.get_unix_time_from_system()
 }
 
         # Strengthen existing direction
@@ -231,8 +231,8 @@ func analyze_word(word, category = "noun"):
         "direction": direction,
         "category": category,
         "count": 1,
-        "first_seen": OS.get_unix_time(),
-        "last_seen": OS.get_unix_time(),
+        "first_seen": OS.Time.get_unix_time_from_system(),
+        "last_seen": OS.Time.get_unix_time_from_system(),
         "vector": DIRECTION_VECTORS[direction],
         "associations": [],
         "patterns": []
@@ -292,7 +292,7 @@ func track_action(action, source = "", target = ""):
         "action": action,
         "source": source,
         "target": target,
-        "timestamp": OS.get_unix_time(),
+        "timestamp": OS.Time.get_unix_time_from_system(),
         "direction": current_direction,
         "global_vector": global_direction_vector
     }
@@ -340,7 +340,7 @@ func change_direction(direction):
 
     # Record direction shift
     direction_shift_count += 1
-    last_direction_shift = OS.get_unix_time()
+    last_direction_shift = OS.Time.get_unix_time_from_system()
 }
 
     # Add to active directions if not already there
@@ -383,7 +383,7 @@ func detect_pattern(words):
         "type": pattern_type,
         "words": words,
         "strength": pattern_strength,
-        "detected_at": OS.get_unix_time(),
+        "detected_at": OS.Time.get_unix_time_from_system(),
         "vector": pattern_vector
     }
 }
@@ -658,7 +658,7 @@ func set_visualization_color(color):
 
 func _on_analysis_timer():
     # Periodic analysis of directions and patterns
-    var current_time = OS.get_unix_time()
+    var current_time = OS.Time.get_unix_time_from_system()
     var time_since_last = current_time - last_analysis_time
     last_analysis_time = current_time
 }
@@ -1076,7 +1076,7 @@ func _trigger_activation(activation_type):
 func _find_emergent_patterns():
     # Look for emergent patterns in recently analyzed words
     var recent_words = []
-    var current_time = OS.get_unix_time()
+    var current_time = OS.Time.get_unix_time_from_system()
 }
 
     # Collect recent words (last 60 seconds)

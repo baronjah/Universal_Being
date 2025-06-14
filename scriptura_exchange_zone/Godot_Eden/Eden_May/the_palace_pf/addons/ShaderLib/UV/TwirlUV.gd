@@ -1,5 +1,6 @@
 @tool
-class_name VisualShaderNodeUVTwirl extends VisualShaderNodeCustom
+class_name VisualShaderNodeUVTwirl_TwirlUV_TwirlUV
+extends \2
 
 func _init() -> void:
 	output_port_for_preview = 0

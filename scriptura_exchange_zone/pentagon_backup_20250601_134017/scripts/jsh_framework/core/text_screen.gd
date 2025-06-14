@@ -3,21 +3,20 @@
 # Created: May 31, 2025, 23:28 CEST
 # Purpose: Ragdoll physics and behavior system
 # Connection: Part of Pentagon Architecture migration
-
 extends UniversalBeingBase
-class_name JSHTextWindow
+class_name JSHTextWindow_textscre
 
 # ===== CONFIGURABLE PROPERTIES =====
-@export var window_width := 4.0
-@export var window_height := 3.0
-@export var text_margin := 0.1
-@export var max_visible_lines := 10
-@export var font_size := 24
-@export var text_color := Color(0.9, 0.9, 0.9, 1.0)
-@export var background_color := Color(0.1, 0.1, 0.15, 0.8)
-@export var border_color := Color(0.3, 0.5, 0.8, 1.0)
-@export var border_width := 0.05
-@export var command_prefix := "/"
+@@@export var window_width := 4.0
+@@@export var window_height := 3.0
+@@@export var text_margin := 0.1
+@@@export var max_visible_lines := 10
+@@@export var font_size := 24
+@@@export var text_color := Color(0.9, 0.9, 0.9, 1.0)
+@@@export var background_color := Color(0.1, 0.1, 0.15, 0.8)
+@@@export var border_color := Color(0.3, 0.5, 0.8, 1.0)
+@@@export var border_width := 0.05
+@@@export var command_prefix := ""
 
 # ===== CONSTANTS =====
 const DEFAULT_WIDTH = 2.0
@@ -81,16 +80,16 @@ var task_manager = null
 var csharp_integration = null
 
 ## ===== CONFIGURABLE PROPERTIES =====
-#@export var window_width := 4.0
-#@export var window_height := 3.0
-#@export var text_margin := 0.1
-#@export var max_visible_lines := 10
-#@export var font_size := 24
-#@export var text_color := Color(0.9, 0.9, 0.9, 1.0)
-#@export var background_color := Color(0.1, 0.1, 0.15, 0.8)
-#@export var border_color := Color(0.3, 0.5, 0.8, 1.0)
-#@export var border_width := 0.05
-#@export var command_prefix := "/"
+#@@@export var window_width := 4.0
+#@@@export var window_height := 3.0
+#@@@export var text_margin := 0.1
+#@@@export var max_visible_lines := 10
+#@@@export var font_size := 24
+#@@@export var text_color := Color(0.9, 0.9, 0.9, 1.0)
+#@@@export var background_color := Color(0.1, 0.1, 0.15, 0.8)
+#@@@export var border_color := Color(0.3, 0.5, 0.8, 1.0)
+#@@@export var border_width := 0.05
+#@@@export var command_prefix := ""
 #
 ## ===== CONSTANTS =====
 #const DEFAULT_WIDTH = 2.0
@@ -162,7 +161,7 @@ signal text_submitted(text: String)
 
 # ===== COMMAND PROCESSOR CLASS =====
 class CommandProcessor:
-	extends UniversalBeingBase
+extends UniversalBeingBase
 	var commands = {}
 	
 
@@ -559,11 +558,11 @@ func _setup_signals():
 
 func find_integration_nodes():
 	# Try to find C# integration node
-	csharp_integration = get_node_or_null("/root/JSHSystemIntegration")
+	csharp_integration = get_node_or_null("root/JSHSystemIntegration")
 	
 	# Find task manager if not already set
 	if not task_manager:
-		task_manager = get_node_or_null("/root/JSHTaskManager")
+		task_manager = get_node_or_null("root/JSHTaskManager")
 		if task_manager and task_manager.has_method("track_data_flow"):
 			task_manager.track_data_flow(
 				"TextWindow", 
@@ -584,7 +583,7 @@ func find_integration_nodes():
 #
 #
 #extends UniversalBeingBase
-#class_name JSHTextWindow
+#class_name JSHTextWindow_textscre
 
 
 
@@ -623,7 +622,7 @@ func setup_signals():
 func find_integration_nodes_0():
 	# Try to find task manager if not already set
 	if not task_manager:
-		task_manager = get_node_or_null("/root/JSHTaskManager")
+		task_manager = get_node_or_null("root/JSHTaskManager")
 		if task_manager and task_manager.has_method("track_data_flow"):
 			task_manager.track_data_flow(
 				"TextWindow", 
@@ -644,8 +643,8 @@ func register_default_commands():
 # ===== COMMAND HANDLERS =====
 #func _cmd_help(args: Array) -> Dictionary:
 	#var help_text = "JSH Snake Game - Available commands:\n"
-	#help_text += "/help - Show this help message\n"
-	#help_text += "/clear - Clear the text window\n"
+	#help_text += "help - Show this help message\n"
+	#help_text += "clear - Clear the text window\n"
 
 
 
@@ -1812,11 +1811,11 @@ func _setup_signals_old():
 
 func find_integration_nodes_old():
 	# Try to find C# integration node
-	csharp_integration = get_node_or_null("/root/JSHSystemIntegration")
+	csharp_integration = get_node_or_null("root/JSHSystemIntegration")
 	
 	# Find task manager if not already set
 	if not task_manager:
-		task_manager = get_node_or_null("/root/JSHTaskManager")
+		task_manager = get_node_or_null("root/JSHTaskManager")
 		if task_manager and task_manager.has_method("track_data_flow"):
 			task_manager.track_data_flow(
 				"TextWindow", 
@@ -2282,11 +2281,11 @@ func setup_text_window_commands(window_node: JSHTextWindow):
 
 func _cmd_help_0(args: Array) -> Dictionary:
 	var help_text = "Available commands:\n"
-	help_text += "/help - Show this help message\n"
-	help_text += "/clear - Clear the text window\n"
-	help_text += "/teleport x y z - Teleport to coordinates\n"
-	help_text += "/resize width height - Resize the window\n"
-	help_text += "/color r g b - Change text color (0-255)"
+	help_text += "help - Show this help message\n"
+	help_text += "clear - Clear the text window\n"
+	help_text += "teleport x y z - Teleport to coordinates\n"
+	help_text += "resize width height - Resize the window\n"
+	help_text += "color r g b - Change text color (0-255)"
 	
 	return {"success": true, "message": help_text}
 
@@ -2351,7 +2350,7 @@ var window_mesh_old: MeshInstance3D
 ######################
 # ===== COMMAND PROCESSOR CLASS =====
 class CommandProcessor_new:
-	extends UniversalBeingBase
+extends UniversalBeingBase
 	var commands = {}
 	
 	func register_command(command_name: String, callback: Callable):
@@ -2386,7 +2385,7 @@ func _ready_old_v3():
 	setup_input_handling()
 	
 	# Connect to task manager if available
-	task_manager = get_node_or_null("/root/JSHTaskManager")
+	task_manager = get_node_or_null("root/JSHTaskManager")
 	if task_manager:
 		print("Text window connected to task manager")
 func _ready_old_v2():
@@ -2400,7 +2399,7 @@ func _ready_old():
 	setup_input_handling()
 	
 	# Connect to task manager if available
-	task_manager = get_node_or_null("/root/JSHTaskManager")
+	task_manager = get_node_or_null("root/JSHTaskManager")
 	if task_manager:
 		print("Chat window connected to task manager")
 func _ready_old_v1():
@@ -3095,22 +3094,22 @@ func update_message_display():
 
 ## global stuff
 #extends UniversalBeingBase
-#class_name JSHTextWindow
+#class_name JSHTextWindow_textscre
 #
 ##extends UniversalBeingBase
-##class_name JSHTextWindow
+##class_name JSHTextWindow_textscre
 #
 ## ===== CONFIGURABLE PROPERTIES =====
-#@export var window_width := 4.0
-#@export var window_height := 3.0
-#@export var text_margin := 0.1
-#@export var max_visible_lines := 10
-#@export var font_size := 24
-#@export var text_color := Color(0.9, 0.9, 0.9, 1.0)
-#@export var background_color := Color(0.1, 0.1, 0.15, 0.8)
-#@export var border_color := Color(0.3, 0.5, 0.8, 1.0)
-#@export var border_width := 0.05
-#@export var command_prefix := "/"
+#@@@export var window_width := 4.0
+#@@@export var window_height := 3.0
+#@@@export var text_margin := 0.1
+#@@@export var max_visible_lines := 10
+#@@@export var font_size := 24
+#@@@export var text_color := Color(0.9, 0.9, 0.9, 1.0)
+#@@@export var background_color := Color(0.1, 0.1, 0.15, 0.8)
+#@@@export var border_color := Color(0.3, 0.5, 0.8, 1.0)
+#@@@export var border_width := 0.05
+#@@@export var command_prefix := ""
 #
 ## ===== CONSTANTS =====
 #const DEFAULT_WIDTH = 2.0
@@ -3218,16 +3217,16 @@ func update_message_display():
 
 #
 #
-#@export var window_width := 4.0
-#@export var window_height := 3.0
-#@export var text_margin := 0.1
-#@export var max_visible_lines := 10
-#@export var font_size := 24
-#@export var text_color := Color(0.9, 0.9, 0.9, 1.0)
-#@export var background_color := Color(0.1, 0.1, 0.15, 0.8)
-#@export var border_color := Color(0.3, 0.5, 0.8, 1.0)
-#@export var border_width := 0.05
-#@export var command_prefix := "/"
+#@@@export var window_width := 4.0
+#@@@export var window_height := 3.0
+#@@@export var text_margin := 0.1
+#@@@export var max_visible_lines := 10
+#@@@export var font_size := 24
+#@@@export var text_color := Color(0.9, 0.9, 0.9, 1.0)
+#@@@export var background_color := Color(0.1, 0.1, 0.15, 0.8)
+#@@@export var border_color := Color(0.3, 0.5, 0.8, 1.0)
+#@@@export var border_width := 0.05
+#@@@export var command_prefix := ""
 #
 ## ===== INTERNAL REFERENCES =====
 #var window_mesh: MeshInstance3D
@@ -3418,7 +3417,7 @@ func update_message_display():
 #var task_manager = null
 
 #extends UniversalBeingBase
-#class_name JSHChatWindow
+#class_name JSHChatWindow_textscre
 
 # Signals
 #signal message_sent(message, sender)
@@ -3505,7 +3504,7 @@ func update_message_display():
 
 
 #extends UniversalBeingBase
-#class_name JSHTextWindow
+#class_name JSHTextWindow_textscre
 
 
 
@@ -3515,14 +3514,14 @@ func update_message_display():
 
 
 #extends UniversalBeingBase
-#class_name JSHTextWindow
+#class_name JSHTextWindow_textscre
 
 
 
 
 
 
-#class_name TextWindowSystem
+#class_name TextWindowSystem_textscre
 #extends UniversalBeingBase
 # ===== CONFIGURABLE PROPERTIES =====
 
@@ -3530,16 +3529,16 @@ func update_message_display():
 #var content_text: TextMesh
 #
 ## ===== CONFIGURABLE PROPERTIES =====
-#@export var window_width := 4.0
-#@export var window_height := 3.0
-#@export var text_margin := 0.1
-#@export var max_visible_lines := 10
-#@export var font_size := 24
-#@export var text_color := Color(0.9, 0.9, 0.9, 1.0)
-#@export var background_color := Color(0.1, 0.1, 0.15, 0.8)
-#@export var border_color := Color(0.3, 0.5, 0.8, 1.0)
-#@export var border_width := 0.05
-#@export var command_prefix := "/"
+#@@@export var window_width := 4.0
+#@@@export var window_height := 3.0
+#@@@export var text_margin := 0.1
+#@@@export var max_visible_lines := 10
+#@@@export var font_size := 24
+#@@@export var text_color := Color(0.9, 0.9, 0.9, 1.0)
+#@@@export var background_color := Color(0.1, 0.1, 0.15, 0.8)
+#@@@export var border_color := Color(0.3, 0.5, 0.8, 1.0)
+#@@@export var border_width := 0.05
+#@@@export var command_prefix := ""
 #
 ## ===== CONSTANTS =====
 #const DEFAULT_WIDTH = 2.0
@@ -3832,11 +3831,11 @@ func update_message_display():
 #
 #func find_integration_nodes():
 	## Try to find C# integration node
-	#csharp_integration = get_node_or_null("/root/JSHSystemIntegration")
+	#csharp_integration = get_node_or_null("root/JSHSystemIntegration")
 	#
 	## Find task manager if not already set
 	#if not task_manager:
-		#task_manager = get_node_or_null("/root/JSHTaskManager")
+		#task_manager = get_node_or_null("root/JSHTaskManager")
 		#if task_manager and task_manager.has_method("track_data_flow"):
 			#task_manager.track_data_flow(
 				#"TextWindow", 
@@ -4205,11 +4204,11 @@ func update_message_display():
 #
 #func _cmd_help(args: Array) -> Dictionary:
 	#var help_text = "Available commands:\n"
-	#help_text += "/help - Show this help message\n"
-	#help_text += "/clear - Clear the text window\n"
-	#help_text += "/teleport x y z - Teleport to coordinates\n"
-	#help_text += "/resize width height - Resize the window\n"
-	#help_text += "/color r g b - Change text color (0-255)"
+	#help_text += "help - Show this help message\n"
+	#help_text += "clear - Clear the text window\n"
+	#help_text += "teleport x y z - Teleport to coordinates\n"
+	#help_text += "resize width height - Resize the window\n"
+	#help_text += "color r g b - Change text color (0-255)"
 	#
 	#return {"success": true, "message": help_text}
 #
@@ -4533,11 +4532,11 @@ func create_text_window_container_old(container_name: String, position: Vector3,
 
 func _cmd_help_old(args: Array) -> Dictionary:
 	var help_text = "Available commands:\n"
-	help_text += "/help - Show this help message\n"
-	help_text += "/clear - Clear the text window\n"
-	help_text += "/teleport x y z - Teleport to coordinates\n"
-	help_text += "/resize width height - Resize the window\n"
-	help_text += "/color r g b - Change text color (0-255)"
+	help_text += "help - Show this help message\n"
+	help_text += "clear - Clear the text window\n"
+	help_text += "teleport x y z - Teleport to coordinates\n"
+	help_text += "resize width height - Resize the window\n"
+	help_text += "color r g b - Change text color (0-255)"
 	
 	return {"success": true, "message": help_text}
 
@@ -4571,11 +4570,11 @@ func _cmd_color_old(args: Array) -> Dictionary:
 
 func find_integration_nodes_old_v1():
 	# Try to find C# integration node
-	csharp_integration = get_node_or_null("/root/JSHSystemIntegration")
+	csharp_integration = get_node_or_null("root/JSHSystemIntegration")
 	
 	# Find task manager if not already set
 	if not task_manager:
-		task_manager = get_node_or_null("/root/JSHTaskManager")
+		task_manager = get_node_or_null("root/JSHTaskManager")
 		if task_manager and task_manager.has_method("track_data_flow"):
 			task_manager.track_data_flow(
 				"TextWindow", 

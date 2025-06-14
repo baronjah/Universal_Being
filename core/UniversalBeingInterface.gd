@@ -80,6 +80,7 @@ func pentagon_ready() -> void:
 	_initialize_interface_position()
 	_setup_interface_sockets()
 	print("🖼️ Interface Universal Being ready: %s" % interface_title)
+}
 
 func pentagon_process(delta: float) -> void:
 	super.pentagon_process(delta)
@@ -253,6 +254,7 @@ func close_interface() -> void:
 	interface_closed.emit(self)
 	print("🖼️ Interface closed: %s" % interface_title)
 
+
 func minimize_interface() -> void:
 	"""Minimize the interface"""
 	current_interface_state = InterfaceState.MINIMIZED
@@ -260,6 +262,7 @@ func minimize_interface() -> void:
 	interface_container.size = Vector2(interface_container.size.x, 30)  # Just title bar
 	interface_minimized.emit(self)
 	print("🖼️ Interface minimized: %s" % interface_title)
+
 
 func maximize_interface() -> void:
 	"""Maximize the interface"""
@@ -270,6 +273,7 @@ func maximize_interface() -> void:
 	interface_maximized.emit(self)
 	print("🖼️ Interface maximized: %s" % interface_title)
 
+
 func restore_interface() -> void:
 	"""Restore interface to normal size"""
 	current_interface_state = InterfaceState.NORMAL
@@ -277,6 +281,7 @@ func restore_interface() -> void:
 	interface_container.size = default_size
 	_center_interface()
 	print("🖼️ Interface restored: %s" % interface_title)
+
 
 func move_interface_to(new_position: Vector2) -> void:
 	"""Move interface to new position"""
@@ -303,6 +308,7 @@ func _center_interface() -> void:
 func _setup_interface_sockets() -> void:
 	"""Setup sockets for logic connections"""
 	if has_method("add_socket"):
+
 		# Input sockets
 		add_socket("position_in", "input", "Vector2")
 		add_socket("size_in", "input", "Vector2") 
@@ -320,6 +326,7 @@ func _setup_interface_sockets() -> void:
 func connect_logic(from_interface: UniversalBeingInterface, from_socket: String, to_socket: String) -> bool:
 	"""Connect logic between interfaces"""
 	if has_method("connect_socket"):
+
 		var success = connect_socket(from_interface, from_socket, to_socket)
 		if success:
 			interface_logic_connected.emit(from_socket, to_socket)
@@ -385,6 +392,7 @@ func _handle_interface_input(event: InputEvent) -> void:
 func _cleanup_interface() -> void:
 	"""Cleanup interface resources"""
 	print("🖼️ Cleaning up interface: %s" % interface_title)
+
 
 # ===== PUBLIC API =====
 

@@ -1,8 +1,8 @@
 #
-extends Node
-class_name JSHSceneTreeSystem
+extends \2
+class_name JSHSceneTreeSystem_jshscenetreesystem_jshscene
 #
-# res://code/gdscript/scripts/Menu_Keyboard_Console/jsh_scene_tree_system.gd
+# res://scripts/gdscript/scripts/Menu_Keyboard_Console/jsh_scene_tree_system.gd
 # JSH_Core/JSH_scene_tree_system
 #
 ####################
@@ -63,8 +63,8 @@ var main_ref
 # Node type to script mapping
 var node_type_scripts = {
 	# code/gdscript/
-	"datapoint": preload("res://code/gdscript/scripts/Menu_Keyboard_Console/data_point.gd"),
-	"container": preload("res://code/gdscript/scripts/Menu_Keyboard_Console/container.gd")
+	"datapoint": preload("res://scripts/gdscript/scripts/Menu_Keyboard_Console/data_point.gd"),
+	"container": preload("res://scripts/gdscript/scripts/Menu_Keyboard_Console/container.gd")
 }
 }
 
@@ -78,7 +78,7 @@ var node_type_scripts = {
 # `Y888P                            
 }
 
-#class_name TreeBlueprints #TreeBlueprints.SCENE_TREE_BLUEPRINT BRANCH_BLUEPRINT
+#class_name TreeBlueprints_jshscenetreesystem_jshscene #TreeBlueprints.SCENE_TREE_BLUEPRINT BRANCH_BLUEPRINT
 const SCENE_TREE_BLUEPRINT = {
 	"main_root": {
 		"name": [],
@@ -180,7 +180,7 @@ func add_branch(branch_path: String, branch_data: Dictionary) -> bool:
 	tree_mutex.lock()
 }
 
-	var path_parts = branch_path.split("/")
+	var path_parts = branch_path.split("")
 	var current = scene_tree_jsh["main_root"]["branches"]
 	var success = false
 	var current_path = ""
@@ -188,7 +188,7 @@ func add_branch(branch_path: String, branch_data: Dictionary) -> bool:
 
 	for i in range(path_parts.size()):
 		var part = path_parts[i]
-		current_path = current_path + "/" + part if current_path else part
+		current_path = current_path + "" + part if current_path else part
 }
 
 		if i == path_parts.size() - 1:
@@ -230,7 +230,7 @@ func remove_branch(branch_path: String) -> bool:
 	tree_mutex.lock()
 }
 
-	var path_parts = branch_path.split("/")
+	var path_parts = branch_path.split("")
 	var parent_parts = path_parts.slice(0, -1)
 	var branch_name = path_parts[-1]
 }
@@ -279,7 +279,7 @@ func get_branch(branch_path: String) -> Dictionary:
 	tree_mutex.lock()
 }
 
-	var path_parts = branch_path.split("/")
+	var path_parts = branch_path.split("")
 	var current = scene_tree_jsh["main_root"]["branches"]
 	var result = {}
 }
@@ -319,7 +319,7 @@ func set_branch_status(branch_path: String, status: String) -> bool:
 	tree_mutex.lock()
 }
 
-	var path_parts = branch_path.split("/")
+	var path_parts = branch_path.split("")
 	var current = scene_tree_jsh["main_root"]["branches"]
 	var success = false
 }
@@ -381,7 +381,7 @@ func set_branch_node(branch_path: String, node: Node) -> bool:
 	tree_mutex.lock()
 }
 
-	var path_parts = branch_path.split("/")
+	var path_parts = branch_path.split("")
 	var current = scene_tree_jsh["main_root"]["branches"]
 	var success = false
 }
@@ -425,7 +425,7 @@ func get_branch_node(branch_path: String) -> Node:
 }
 
 func jsh_tree_get_node(node_path: String) -> Node:
-	var path_parts = node_path.split("/")
+	var path_parts = node_path.split("")
 }
 
 	tree_mutex.lock()
@@ -496,7 +496,7 @@ func cache_branch_data(branch_path: String, branch_data: Dictionary):
 	cached_tree_mutex.lock()
 }
 
-	var path_parts = branch_path.split("/")
+	var path_parts = branch_path.split("")
 	var branch_name = path_parts[-1]
 }
 
@@ -683,7 +683,7 @@ func check_if_datapoint_node_available(container: String) -> String:
 }
 
 func jsh_tree_get_node_status_changer(node_path: String, node_name: String, node_to_check: Node):
-	var path_parts = node_path.split("/")
+	var path_parts = node_path.split("")
 }
 
 	tree_mutex.lock()
@@ -764,7 +764,7 @@ func jsh_tree_get_node_status_changer(node_path: String, node_name: String, node
 
 # needs work
 # JSH_Core/JSH_scene_tree_system
-# res://code/gdscript/scripts/Menu_Keyboard_Console/jsh_scene_tree_system.gd
+# res://scripts/gdscript/scripts/Menu_Keyboard_Console/jsh_scene_tree_system.gd
 #extends Node
 ####################
 # Branch Creation and Management
@@ -780,7 +780,7 @@ func jsh_tree_get_node_status_changer(node_path: String, node_name: String, node
 		#scene_tree_jsh["main_root"]["status"] = "active"
 		#scene_tree_jsh["main_root"]["node"] = main_ref
 	#
-	#var path_parts = node_path_jsh_tree.split("/")
+	#var path_parts = node_path_jsh_tree.split("")
 	#var current_branch = scene_tree_jsh["main_root"]["branches"]
 	#
 	#cached_tree_mutex.lock()
@@ -791,7 +791,7 @@ func jsh_tree_get_node_status_changer(node_path: String, node_name: String, node
 	#
 	#for i in range(path_parts.size()):
 		#var part = path_parts[i]
-		#current_full_path = current_full_path + "/" + part if current_full_path else part
+		#current_full_path = current_full_path + "" + part if current_full_path else part
 		#
 		#if !current_branch.has(part):
 			#if cached_current_branch.has(part):
@@ -844,7 +844,7 @@ func jsh_tree_get_node_status_changer(node_path: String, node_name: String, node
 ####################
 #
 #func find_branch_to_unload(thing_path: String):
-	#var new_path_splitter = str(thing_path).split("/")
+	#var new_path_splitter = str(thing_path).split("")
 	#
 	#if new_path_splitter.size() < 2:
 		#return

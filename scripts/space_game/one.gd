@@ -202,6 +202,7 @@ func _create_solar_system():
 		
 		# Add moon to Earth
 		if planet_data[0] == "Earth":
+}
 			var moon_dist = 384.4  # thousand km
 			var moon_vel = sqrt(G * planet.mass / moon_dist)
 			var moon = _create_celestial_body(
@@ -563,9 +564,11 @@ func _update_hud():
 	if time_label:
 		var years = universe_time / (365.25 * 24 * 3600)
 		time_label.text = "Time: %.2f years | Speed: %dx" % [years, time_multiplier]
+
 	
 	if body_counter:
 		body_counter.text = "Bodies: %d" % celestial_bodies.size()
+
 
 func _update_info_panel():
 	if not info_panel or not selected_body:
@@ -598,6 +601,7 @@ func _get_type_name(type: BodyType) -> String:
 		BodyType.COMET: return "Comet"
 		BodyType.GALAXY_CORE: return "Galaxy Core"
 		_: return "Unknown"
+
 
 func _show_help():
 	# NOTE: Display control help
@@ -794,15 +798,12 @@ vec3 planck_color(float temp) {
 		color = vec3(0.85, 0.9, 1.0); // White-blue
 	} else {
 		color = vec3(0.7, 0.8, 1.0); // Blue
-	}
 	
 	return color;
-}
 
 void vertex() {
 	world_pos = (MODEL_MATRIX * vec4(VERTEX, 1.0)).xyz;
 	view_dir = normalize(CAMERA_POSITION_WORLD - world_pos);
-}
 
 void fragment() {
 	float time = TIME * time_scale;
@@ -833,7 +834,6 @@ void fragment() {
 	
 	ALBEDO = final_color;
 	EMISSION = final_color * 2.0;
-}
 """
 
 func get_black_hole_shader_code() -> String:
@@ -853,7 +853,6 @@ varying vec3 view_dir;
 void vertex() {
 	world_pos = (MODEL_MATRIX * vec4(VERTEX, 1.0)).xyz;
 	view_dir = normalize(CAMERA_POSITION_WORLD - world_pos);
-}
 
 void fragment() {
 	float time = TIME * time_scale;
@@ -867,7 +866,6 @@ void fragment() {
 		ALBEDO = vec3(0.0);
 		ALPHA = 1.0;
 		return;
-	}
 	
 	// Gravitational lensing effect
 	vec2 screen_uv = SCREEN_UV;
@@ -899,8 +897,6 @@ void fragment() {
 		// Background distortion
 		vec3 background = texture(screen_texture, distorted_uv).rgb;
 		ALBEDO = background;
-	}
-}
 """
 
 # === SAVE/LOAD SYSTEM ===
@@ -911,7 +907,7 @@ func save_universe(filepath: String):
 		"version": "1.0",
 		"time": universe_time,
 		"bodies": []
-	}
+}
 	
 	for body in celestial_bodies:
 		save_data.bodies.append({
@@ -929,6 +925,7 @@ func save_universe(filepath: String):
 	file.close()
 	
 	print("Universe saved to: ", filepath)
+}
 
 func load_universe(filepath: String):
 	# NOTE: Load universe from file
@@ -967,3 +964,4 @@ func load_universe(filepath: String):
 		body.base_color = str_to_var(body_data.color)
 	
 	print("Universe loaded from: ", filepath)
+}

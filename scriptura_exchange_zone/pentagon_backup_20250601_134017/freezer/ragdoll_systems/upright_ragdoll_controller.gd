@@ -4,10 +4,10 @@
 # PURPOSE: Blend physics ragdoll with controlled walking
 # CREATED: 2025-05-25 - Making ragdoll walk instead of lay
 # ==================================================
-
-extends UniversalBeingBase
+extends \2
 # Ragdoll state
-enum RagdollMode {
+enum \2 {
+
 	CONTROLLED,  # Upright walking mode
 	PHYSICS,     # Full ragdoll physics
 	BLEND        # Blend between both

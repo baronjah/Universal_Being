@@ -1,5 +1,5 @@
 extends Node
-class_name ResourceManagerSingleton
+class_name ResourceManagerSingleton_resourcemanager_resource
 }
 
 # Resource limits - these are dynamic based on scale

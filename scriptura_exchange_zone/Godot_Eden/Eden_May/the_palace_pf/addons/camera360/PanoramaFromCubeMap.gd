@@ -1,12 +1,12 @@
 # PanoramoFromCubeMap.gd a script in that Panorama named node which is probably ColorRect, also in addon folder
-extends TextureRect
+extends \2
 
-@export var ForwardTexture:Texture2D : get = get_forward_texture, set = set_forward_texture
-@export var LeftTexture:Texture2D : get = get_left_texture, set = set_left_texture
-@export var BackTexture:Texture2D : get = get_back_texture, set = set_back_texture
-@export var RightTexture:Texture2D : get = get_right_texture, set = set_right_texture
-@export var TopTexture:Texture2D : get = get_top_texture, set = set_top_texture
-@export var BottomTexture:Texture2D : get = get_bottom_texture, set = set_bottom_texture
+@@export var ForwardTexture:Texture2D : get = get_forward_texture, set = set_forward_texture
+@@export var LeftTexture:Texture2D : get = get_left_texture, set = set_left_texture
+@@export var BackTexture:Texture2D : get = get_back_texture, set = set_back_texture
+@@export var RightTexture:Texture2D : get = get_right_texture, set = set_right_texture
+@@export var TopTexture:Texture2D : get = get_top_texture, set = set_top_texture
+@@export var BottomTexture:Texture2D : get = get_bottom_texture, set = set_bottom_texture
 
 var is_ready = false
 

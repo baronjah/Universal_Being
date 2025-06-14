@@ -64,7 +64,7 @@ func _ready():
     auto_save_timer = Timer.new()
     auto_save_timer.wait_time = AUTO_SAVE_INTERVAL
     auto_save_timer.one_shot = false
-    auto_save_timer.connect("timeout", self, "_on_auto_save_timer_timeout")
+    auto_save_timer.connect(_on_auto_save_timer_timeout)
     add_child(auto_save_timer)
     
     # Initialize data structures
@@ -120,16 +120,16 @@ func _create_components():
 # Connect component signals
 func _connect_signals():
     # Connect WordDrive signals
-    word_drive.connect("word_message_sent", self, "_on_word_message_sent")
-    word_drive.connect("word_dimension_changed", self, "_on_dimension_changed")
+    word_drive.connect(_on_word_message_sent)
+    word_drive.connect(_on_dimension_changed)
     
     # Connect WordProcessor signals
-    word_processor.connect("word_processed", self, "_on_word_processed")
-    word_processor.connect("database_updated", self, "_on_database_updated")
+    word_processor.connect(_on_word_processed)
+    word_processor.connect(_on_database_updated)
     
     # Connect WordVisualizer signals
-    word_visualizer.connect("word_clicked", self, "_on_word_clicked")
-    word_visualizer.connect("dimension_changed", self, "_on_visualizer_dimension_changed")
+    word_visualizer.connect(_on_word_clicked)
+    word_visualizer.connect(_on_visualizer_dimension_changed)
     
     # Connect component references
     word_processor.connect_to_word_drive(word_drive)
@@ -576,7 +576,7 @@ class WordConnectionManager extends Node:
     func connect_to_word_drive(drive):
         word_drive = drive
         if word_drive:
-            word_drive.connect("word_message_sent", self, "_on_word_message")
+            word_drive.connect(_on_word_message)
     
     func set_auto_discovery(enabled):
         auto_discovery_enabled = enabled
@@ -737,7 +737,7 @@ class WordMemorySystem extends Node:
             # Restore words
             for word_id in saved_data.words:
                 var word_data = saved_data.words[word_id]
-                if not word_drive.get_word(word_id).empty():
+                if not word_drive.get_word(word_id).is_empty():
                     word_drive.update_word(word_id, word_data)
                 else:
                     word_drive.create_word(word_data.text, word_data)
@@ -748,10 +748,10 @@ class WordMemorySystem extends Node:
                 var from_id = conn_data.from_id
                 var to_id = conn_data.to_id
                 
-                if word_drive.get_word(from_id).empty() or word_drive.get_word(to_id).empty():
+                if word_drive.get_word(from_id).is_empty() or word_drive.get_word(to_id).is_empty():
                     continue
                 
-                if word_drive.get_connection(conn_id).empty():
+                if word_drive.get_connection(conn_id).is_empty():
                     var conn_props = conn_data.duplicate()
                     word_drive.connect_words(from_id, to_id, conn_props)
             

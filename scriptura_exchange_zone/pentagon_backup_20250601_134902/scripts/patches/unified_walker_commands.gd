@@ -4,7 +4,6 @@
 # PURPOSE: Replace all old ragdoll commands with clean, working system
 # CREATED: 2025-05-26 - Project cleanup and consolidation  
 # ==================================================
-
 extends UniversalBeingBase
 var console_manager: Node = null
 var current_walker: UnifiedBiomechanicalWalker = null
@@ -17,7 +16,7 @@ func pentagon_ready() -> void:
 	super.pentagon_ready()
 	await get_tree().process_frame
 	
-	console_manager = get_node_or_null("/root/ConsoleManager")
+	console_manager = get_node_or_null("root/ConsoleManager")
 	
 	if console_manager:
 		_register_walker_commands()

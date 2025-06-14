@@ -86,7 +86,7 @@ func _ready():
 func _find_required_systems():
 	# Find or create AkashicRecordsGameConnector
 	if has_node("AkashicRecordsGameConnector"):
-		akashic_records_connector = get_node("AkashicRecordsGameConnector")
+		akashic_records_connector = get_node("\1") as Node
 	else:
 		var connector_class = load("res://akashic_records_game_connector.gd")
 		if connector_class:
@@ -105,12 +105,12 @@ func _find_required_systems():
 	
 	# Find dimension controller
 	if has_node("/root/ShapeDimensionController") or get_node_or_null("/root/ShapeDimensionController"):
-		dimension_controller = get_node("/root/ShapeDimensionController")
+		dimension_controller = get_node("\1") as Node
 		_dimension_available = true
 	
 	# Find turn manager
 	if has_node("/root/TurnCycleManager") or get_node_or_null("/root/TurnCycleManager"):
-		turn_manager = get_node("/root/TurnCycleManager")
+		turn_manager = get_node("\1") as Node
 		_turn_available = true
 		
 		if turn_manager:
@@ -221,7 +221,7 @@ func load_game(save_id="", slot=-1):
 		_update_turn(save_turn)
 	
 	game_state.loads_count += 1
-	print("Game loaded: " + (save_id if not save_id.empty() else "slot " + str(slot)))
+	print("Game loaded: " + (save_id if not save_id.is_empty() else "slot " + str(slot)))
 	
 	return true
 
@@ -258,12 +258,12 @@ func _direct_load_game(save_id="", slot=-1):
 	var filename
 	if slot >= 0 and slot < game_config.max_save_slots:
 		filename = "slot_" + str(slot) + ".save"
-	elif not save_id.empty():
+	elif not save_id.is_empty():
 		filename = save_id + ".save"
 	else:
 		# Find newest save
 		filename = _find_newest_save()
-		if filename.empty():
+		if filename.is_empty():
 			return null
 	
 	var save_dir = "user://saves/" + game_config.id + "/"

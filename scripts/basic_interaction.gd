@@ -36,12 +36,14 @@ func apply_to_being(target_being: UniversalBeing) -> void:
 	
 	# Connect to being's input system
 	if being.has_method("pentagon_input"):
+
 		# The being will call our handle_input method
 	
 	# Add collision detection for mouse interactions
 	setup_interaction_area()
 	
 	print("🎯 Basic Interaction applied to: %s" % being.being_name)
+
 
 func setup_interaction_area() -> void:
 	"""Setup collision area for mouse interactions"""
@@ -88,10 +90,12 @@ func _on_mouse_entered() -> void:
 	
 	# Visual feedback - make being glow
 	if being.has_method("set_consciousness_level"):
+
 		var current_level = being.consciousness_level
 		being.set_consciousness_level(min(7, current_level + 1))
 	
 	print("🎯 Mouse entered: %s" % being.being_name)
+
 
 func _on_mouse_exited() -> void:
 	"""Handle mouse leaving the being's area"""
@@ -103,10 +107,12 @@ func _on_mouse_exited() -> void:
 	
 	# Remove visual feedback
 	if being.has_method("set_consciousness_level"):
+
 		var current_level = being.consciousness_level
 		being.set_consciousness_level(max(0, current_level - 1))
 	
 	print("🎯 Mouse exited: %s" % being.being_name)
+
 
 func handle_click() -> void:
 	"""Handle click interaction"""
@@ -125,6 +131,7 @@ func handle_click() -> void:
 	
 	# Basic click response - increase consciousness temporarily
 	if being.has_method("awaken_consciousness"):
+
 		var current_level = being.consciousness_level
 		being.awaken_consciousness(min(7, current_level + 2))
 		
@@ -159,6 +166,7 @@ func remove_from_being(target_being: UniversalBeing) -> void:
 		being = null
 		print("🎯 Basic Interaction removed from: %s" % target_being.being_name)
 
+
 func get_component_info() -> Dictionary:
 	"""Get information about this component"""
 	return {
@@ -170,7 +178,7 @@ func get_component_info() -> Dictionary:
 		"double_click_enabled": double_click_enabled,
 		"is_hovered": is_hovered,
 		"being": being.being_name if being else "none"
-	}
+}
 
 # AI Interface methods
 func ai_interface() -> Dictionary:
@@ -180,7 +188,7 @@ func ai_interface() -> Dictionary:
 		"methods": ["enable_click", "disable_click", "enable_hover", "disable_hover", "trigger_click"],
 		"properties": ["click_enabled", "hover_enabled", "double_click_enabled"],
 		"info": get_component_info()
-	}
+}
 
 func enable_click() -> void:
 	click_enabled = true
@@ -233,3 +241,4 @@ func open_inspector() -> void:
 	# Open inspector for this being
 	inspector.inspect_being(being)
 	print("🔍 Inspector opened for: %s" % being.being_name)
+

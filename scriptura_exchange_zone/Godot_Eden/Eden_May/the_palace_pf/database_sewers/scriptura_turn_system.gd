@@ -6,7 +6,7 @@ extends Node
 # Implements a system for text-based game creation across multiple turns
 }
 
-class_name ScripturaTurnSystem
+class_name ScripturaTurnSystem_scripturaturnsystem_scriptur
 }
 
 # System components
@@ -113,9 +113,9 @@ func initialize_components():
 }
 
 	# Find or create API coordinator
-	api_coordinator = get_node_or_null("/root/EdenMayGame/APICoordinator")
+	api_coordinator = get_node_or_null("root/EdenMayGame/APICoordinator")
 	if not api_coordinator:
-		api_coordinator = get_node_or_null("/root/APICoordinatorSystem/APICoordinator")
+		api_coordinator = get_node_or_null("root/APICoordinatorSystem/APICoordinator")
 }
 
 	if not api_coordinator and load("res://Eden_May/api_coordinator.gd"):
@@ -131,8 +131,8 @@ func initialize_components():
 }
 
 	# Find existing systems
-	word_manager = get_node_or_null("/root/EdenMayGame/WordManager")
-	line_processor = get_node_or_null("/root/EdenMayGame/LineProcessor")
+	word_manager = get_node_or_null("root/EdenMayGame/WordManager")
+	line_processor = get_node_or_null("root/EdenMayGame/LineProcessor")
 }
 
 func connect_to_apis():
@@ -254,7 +254,7 @@ func process_ocr_text(text, source_file):
 
 	# Send to API for enhanced analysis if any are connected
 	if api_coordinator and (connected_apis["gemini"] or connected_apis["luminous"] or connected_apis["claude"]):
-		var request_id = "ocr_" + str(OS.get_unix_time())
+		var request_id = "ocr_" + str(OS.Time.get_unix_time_from_system())
 		var request_text = "Analyze this OCR text and extract key patterns, concepts, and game elements: " + text
 }
 
@@ -371,7 +371,7 @@ func complete_turn_transition():
 func archive_current_turn():
 	# Save current turn state to the archive
 	turn_archive[current_turn] = {
-		"timestamp": OS.get_unix_time(),
+		"timestamp": OS.Time.get_unix_time_from_system(),
 		"word_collection": word_collection.duplicate(),
 		"game_elements": get_current_game_elements(),
 		"connected_apis": connected_apis.duplicate()
@@ -644,7 +644,8 @@ func _on_game_created(game_data):
 }
 
 # OCR Processor class
-class OCRProcessor extends Node:
+class OCRProcessor
+extends \2:
 	signal ocr_completed(text, source_file)
 }
 
@@ -677,7 +678,7 @@ class OCRProcessor extends Node:
 		var image_name = image_path.get_file().get_basename()
 		var simulated_text = "OCR Result from " + image_name + ":\n"
 		simulated_text += "This is simulated OCR text that would be extracted from the image.\n"
-		simulated_text += "It contains various words that might be detected in Turn " + str(OS.get_unix_time() % 12 + 1) + ".\n"
+		simulated_text += "It contains various words that might be detected in Turn " + str(OS.Time.get_unix_time_from_system() % 12 + 1) + ".\n"
 		simulated_text += "Special words: dipata, zenime, perfefic might be detected."
 }
 
@@ -687,7 +688,8 @@ class OCRProcessor extends Node:
 }
 
 # Game Creator class
-class GameCreator extends Node:
+class GameCreator
+extends \2:
 	signal game_created(game_data)
 }
 
@@ -785,14 +787,14 @@ class GameCreator extends Node:
 			"description": templates[0].description,
 			"mechanics": ["Word Formation", "Pattern Recognition", "Energy Manipulation"],
 			"assets": word_collection.keys().slice(0, min(10, word_collection.keys().size() - 1)),
-			"timestamp": OS.get_unix_time(),
+			"timestamp": OS.Time.get_unix_time_from_system(),
 }
 
 			# Add methods
-			"integrate_systems": funcref(self, "dummy_method"),
-			"embody_creation": funcref(self, "dummy_method"),
-			"transcend": funcref(self, "dummy_method"),
-			"archive": funcref(self, "dummy_method")
+			"integrate_systems": Callable(self, "dummy_method"),
+			"embody_creation": Callable(self, "dummy_method"),
+			"transcend": Callable(self, "dummy_method"),
+			"archive": Callable(self, "dummy_method")
 		}
 }
 

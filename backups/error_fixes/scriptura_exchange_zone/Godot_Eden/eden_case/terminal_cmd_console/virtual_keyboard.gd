@@ -389,7 +389,7 @@ func _press_key(key_id):
     _handle_key_action(key)
     
     # Release key after a short delay
-    yield(get_tree().create_timer(0.1), "timeout")
+    await(get_tree().create_timer(0.1), "timeout")
     _release_key(key.id)
 
 # Release a key
@@ -753,7 +753,7 @@ func hide_keyboard():
                 })
             
             # Wait for animation before hiding
-            yield(get_tree().create_timer(0.2), "timeout")
+            await(get_tree().create_timer(0.2), "timeout")
         
         is_visible = false
         emit_signal("keyboard_hidden")

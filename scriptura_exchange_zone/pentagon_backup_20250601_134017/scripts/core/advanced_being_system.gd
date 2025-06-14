@@ -4,10 +4,10 @@
 # PURPOSE: Create realistic beings with proper bone hierarchy
 # CREATED: 2025-05-26 - Evolution from simple ragdoll
 # ==================================================
-
-extends UniversalBeingBase
+extends \2
 # Being state
-enum BeingState {
+enum \2 {
+
 	ANIMATED,      # Full animation control
 	PHYSICS,       # Full physics ragdoll
 	HYBRID,        # Mix of animation and physics
@@ -15,10 +15,10 @@ enum BeingState {
 }
 
 # Body configuration
-@export var use_standard_humanoid: bool = true
-@export var bone_mass_multiplier: float = 1.0
-@export var enable_soft_dynamics: bool = true
-@export var enable_ik_systems: bool = true
+@@export var use_standard_humanoid: bool = true
+@@export var bone_mass_multiplier: float = 1.0
+@@export var enable_soft_dynamics: bool = true
+@@export var enable_ik_systems: bool = true
 
 # Core components
 var skeleton: Skeleton3D

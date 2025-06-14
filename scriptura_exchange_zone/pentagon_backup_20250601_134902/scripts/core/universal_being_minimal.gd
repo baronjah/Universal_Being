@@ -3,9 +3,8 @@
 # Created: May 31, 2025, 23:28 CEST
 # Purpose: Ragdoll physics and behavior system
 # Connection: Part of Pentagon Architecture migration
-
 extends UniversalBeingBase
-class_name UniversalBeingMinimal
+# DISABLED DUPLICATE: class_name UniversalBeingMinimal_universa
 ## Minimal Universal Being for testing - prevents parsing errors
 
 # Essential properties

@@ -504,7 +504,7 @@ func _create_catch_effect(word):
     add_child(particles)
     
     # Auto-remove after effect completes
-    yield(get_tree().create_timer(1.5), "timeout")
+    await(get_tree().create_timer(1.5), "timeout")
     particles.queue_free()
     
     # Fade out the caught word
@@ -758,7 +758,7 @@ func _update_synergy(delta):
 # Check if two words are related
 func _are_words_related(word1, word2):
     # Simple heuristic: check if they share first letter or are similar length
-    if word1.empty() or word2.empty():
+    if word1.is_empty() or word2.is_empty():
         return false
     
     if word1[0] == word2[0]:

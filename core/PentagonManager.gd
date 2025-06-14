@@ -34,6 +34,7 @@ func _ready() -> void:
 	name = "PentagonManager"
 	add_to_group("pentagon_manager")
 	print("🔺 PentagonManager: Pentagon Architecture enforcement ready")
+
 	
 	# Initialize statistics
 	_initialize_pentagon_statistics()
@@ -96,8 +97,8 @@ func register_for_pentagon_monitoring(being: Node) -> void:
 		"compliance_status": check_pentagon_compliance(being),
 		"last_checked": Time.get_ticks_msec(),
 		"violation_count": 0,
-		"method_call_counts": {}
-	}
+		"method_call_counts": {
+}
 	
 	# Initialize method call tracking
 	for method in PENTAGON_METHODS:
@@ -119,6 +120,7 @@ func unregister_from_pentagon_monitoring(being: Node) -> void:
 	if being in monitored_beings:
 		monitored_beings.erase(being)
 		print("🔺 Unregistered from Pentagon monitoring: %s" % being.name)
+}
 
 func check_pentagon_compliance(being: Node) -> Dictionary:
 	"""Check if a Universal Being follows Pentagon Architecture correctly"""
@@ -127,8 +129,8 @@ func check_pentagon_compliance(being: Node) -> Dictionary:
 		"missing_methods": [],
 		"method_signatures": {},
 		"inheritance_check": false,
-		"call_super_check": {}
-	}
+		"call_super_check": {
+}
 	
 	# Check if all required methods exist
 	for method in PENTAGON_METHODS:
@@ -195,12 +197,13 @@ func _handle_pentagon_violation(being: Node, compliance: Dictionary) -> void:
 			"violation_type": "missing_method",
 			"timestamp": Time.get_ticks_msec(),
 			"compliance_data": compliance
-		}
+}
 		
 		pentagon_violations.append(violation)
 		pentagon_violation_detected.emit(being, missing_method, "missing_method")
 		
 		print("🔺 Pentagon violation: %s missing method '%s'" % [being.name, missing_method])
+}
 	
 	# Update violation count
 	if being in monitored_beings:
@@ -217,7 +220,7 @@ func _initialize_pentagon_statistics() -> void:
 		"compliance_percentage": 0.0,
 		"method_usage": {},
 		"last_updated": Time.get_ticks_msec()
-	}
+}
 	
 	# Initialize method usage tracking
 	for method in PENTAGON_METHODS:
@@ -246,7 +249,7 @@ func enforce_pentagon_compliance(being: Node) -> Dictionary:
 		"success": false,
 		"actions_taken": [],
 		"remaining_violations": []
-	}
+}
 	
 	if not being in monitored_beings:
 		register_for_pentagon_monitoring(being)
@@ -273,11 +276,12 @@ func _create_minimal_pentagon_method(being: Node, method_name: String) -> Dictio
 		"method": method_name,
 		"success": false,
 		"message": "Method creation not implemented in this version"
-	}
+}
 	
 	# In a full implementation, this would dynamically add the missing method
 	# For now, we just log the requirement
 	print("🔺 Pentagon enforcement needed: %s requires %s()" % [being.name, method_name])
+
 	
 	return result
 
@@ -319,9 +323,11 @@ func print_pentagon_status() -> void:
 	# Show recent violations
 	if pentagon_violations.size() > 0:
 		print("🔺 Recent Violations:")
+
 		var recent_violations = pentagon_violations.slice(-5)  # Last 5
 		for violation in recent_violations:
 			print("  - %s: %s (%s)" % [violation.being, violation.method, violation.violation_type])
+
 
 func is_pentagon_compliant(being: Node) -> bool:
 	"""Quick check if a being is Pentagon compliant"""

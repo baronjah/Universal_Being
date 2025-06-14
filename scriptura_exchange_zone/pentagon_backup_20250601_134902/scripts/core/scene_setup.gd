@@ -4,7 +4,6 @@
 # PURPOSE: Ensure proper integration of our new systems
 # CREATED: 2025-05-24 - Scene integration helper
 # ==================================================
-
 extends UniversalBeingBase
 func _ready() -> void:
 	pentagon_ready()
@@ -113,7 +112,7 @@ func pentagon_sewers() -> void:
 	pass
 func create_test_objects() -> void:
 	# Create some test objects for the ragdoll to interact with
-	var world_builder = get_node("/root/WorldBuilder")
+	var world_builder = get_node("root/WorldBuilder")
 	if world_builder:
 		print("[SceneSetup] Creating test objects...")
 		

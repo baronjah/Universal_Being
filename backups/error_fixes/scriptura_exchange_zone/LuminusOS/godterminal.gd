@@ -47,7 +47,7 @@ func _ready():
     turn_tracker = get_node_or_null("/root/Main/TurnTracker")
     
     # Connect input field signals
-    input_field.connect("text_entered", self, "_on_input_entered")
+    input_field.connect(_on_input_entered)
     
     # Initial terminal setup
     _setup_terminal()
@@ -88,7 +88,7 @@ func _setup_terminal():
 # Handle input from the terminal
 func _on_input_entered(text):
     # Don't process empty input
-    if text.strip_edges().empty():
+    if text.strip_edges().is_empty():
         input_field.text = ""
         return
     
@@ -139,7 +139,7 @@ func _input(event):
 
 # Navigate command history
 func _navigate_history(direction):
-    if command_history.empty():
+    if command_history.is_empty():
         return
         
     command_index = clamp(command_index + direction, 0, command_history.size())
@@ -174,7 +174,7 @@ func _process_command(text):
     var command = text.strip_edges().to_lower()
     var parts = command.split(" ", false)
     
-    if parts.empty():
+    if parts.is_empty():
         return
     
     match parts[0]:
@@ -276,7 +276,7 @@ func _manifest_word(word_text):
         var manifested = 0
         
         for word in words:
-            if not word.empty():
+            if not word.is_empty():
                 word_animator.manifest_random_word(word)
                 manifested += 1
         
@@ -346,4 +346,5 @@ func _animate_logo(delta):
         
         # If in sin mode, add special effects
         if sin_mode_active:
-            logo_label.text = "✧ " + logo_text + " ✧"
+            logo_label.text = "✧ " + logo_text + " ✧"}
+}

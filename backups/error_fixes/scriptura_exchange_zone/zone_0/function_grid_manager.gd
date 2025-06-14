@@ -892,7 +892,7 @@ func execute_function_by_name(function_name: String, args: Array = []) -> Varian
     # Execute a function by name
     var cell_info = get_cell_by_name(function_name)
     
-    if cell_info.empty():
+    if cell_info.is_empty():
         print("Function not found: " + function_name)
         return null
     

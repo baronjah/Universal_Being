@@ -1,5 +1,5 @@
 extends Node
-class_name OfflineDataProcessor
+class_name OfflineDataProcessor_offlinedataprocessor_offlined
 }
 
 """
@@ -22,7 +22,8 @@ Features:
 }
 
 # Operation types
-enum OperationType {
+enum \2 {
+
     CREATE,
     READ,
     UPDATE,
@@ -39,7 +40,8 @@ enum OperationType {
 }
 
 # Data types
-enum DataType {
+enum \2 {
+
     TEXT,
     IMAGE,
     AUDIO,
@@ -51,7 +53,8 @@ enum DataType {
 }
 
 # Storage types
-enum StorageType {
+enum \2 {
+
     FILE,
     DATABASE,
     MEMORY,
@@ -62,7 +65,8 @@ enum StorageType {
 }
 
 # Priority levels
-enum PriorityLevel {
+enum \2 {
+
     CRITICAL,
     HIGH,
     NORMAL,
@@ -72,7 +76,8 @@ enum PriorityLevel {
 }
 
 # Sync modes
-enum SyncMode {
+enum \2 {
+
     FULL,
     DELTA,
     SELECTIVE,
@@ -82,7 +87,8 @@ enum SyncMode {
 }
 
 # Sync states
-enum SyncState {
+enum \2 {
+
     NONE,
     PENDING,
     IN_PROGRESS,
@@ -93,7 +99,8 @@ enum SyncState {
 }
 
 # Processing states
-enum ProcessingState {
+enum \2 {
+
     IDLE,
     QUEUED,
     PROCESSING,
@@ -104,7 +111,8 @@ enum ProcessingState {
 }
 
 # Connectivity states
-enum ConnectivityState {
+enum \2 {
+
     ONLINE,
     OFFLINE,
     LIMITED,
@@ -140,7 +148,7 @@ class DataOperation:
         type = p_type
         data_type = p_data_type
         priority = p_priority
-        created_at = OS.get_unix_time()
+        created_at = OS.Time.get_unix_time_from_system()
         scheduled_for = 0
         state = ProcessingState.QUEUED
         dimensional_layer = 3  # Default to space dimension
@@ -148,7 +156,7 @@ class DataOperation:
 
     func is_ready_to_process() -> bool:
         # Check if scheduled time has arrived
-        if scheduled_for > 0 and OS.get_unix_time() < scheduled_for:
+        if scheduled_for > 0 and OS.Time.get_unix_time_from_system() < scheduled_for:
             return false
 }
 
@@ -215,7 +223,7 @@ class SyncOperation:
         target_path = p_target_path
         state = SyncState.PENDING
         last_sync_time = 0
-        current_sync_time = OS.get_unix_time()
+        current_sync_time = OS.Time.get_unix_time_from_system()
 }
 
     func to_dict() -> Dictionary:
@@ -265,7 +273,7 @@ class DataStore:
         is_read_only = false
         encryption_enabled = false
         compression_enabled = false
-        last_accessed = OS.get_unix_time()
+        last_accessed = OS.Time.get_unix_time_from_system()
 }
 
     func get_available_space() -> int:
@@ -707,7 +715,7 @@ class TextProcessor:
                         capitalized.append(word)
 }
 
-                result.data = PoolStringArray(capitalized).join(" ")
+                result.data = PoolStringArray(capitalized)." ".join(" ")
                 result.success = true
 }
 
@@ -1270,7 +1278,7 @@ class DataProcessingQueue:
         # Trim completed operations if needed
         if _completed.size() > _max_completed_operations:
             var oldest_id = null
-            var oldest_time = OS.get_unix_time()
+            var oldest_time = OS.Time.get_unix_time_from_system()
 }
 
             for id in _completed:
@@ -1964,7 +1972,7 @@ class SyncManager:
             # Trim completed syncs if needed
             if _completed_syncs.size() > _max_completed_syncs:
                 var oldest_id = null
-                var oldest_time = OS.get_unix_time()
+                var oldest_time = OS.Time.get_unix_time_from_system()
 }
 
                 for id in _completed_syncs:
@@ -2168,7 +2176,8 @@ class DataStorageManager:
 }
 
 # Dimensional system
-enum DimensionalPlane {
+enum \2 {
+
     VOID = 0,        # Empty dimension (null state)
     ESSENCE = 1,     # Core identity and concept
     ENERGY = 2,      # Raw power and activity
@@ -2556,7 +2565,7 @@ class DimensionalProcessor:
 }
 
                 if key_words.size() > 0:
-                    result = PoolStringArray(key_words).join(" ")
+                    result = PoolStringArray(key_words)." ".join(" ")
 }
 
             DimensionalPlane.ENERGY:
@@ -2593,14 +2602,14 @@ class DimensionalProcessor:
                     new_lines.append("-" * line.length())
 }
 
-                result = PoolStringArray(new_lines).join("\n")
+                result = PoolStringArray(new_lines)." ".join("\n")
 }
 
             DimensionalPlane.HARMONY:
                 # Balance words
                 var words = text.split(" ", false)
                 words.sort()
-                result = PoolStringArray(words).join(" ")
+                result = PoolStringArray(words)." ".join(" ")
 }
 
             DimensionalPlane.AWARENESS:
@@ -2633,7 +2642,7 @@ class DimensionalProcessor:
                         new_words.append("new" + word)
 }
 
-                result = PoolStringArray(new_words).join(" ")
+                result = PoolStringArray(new_words)." ".join(" ")
 }
 
             DimensionalPlane.SYNTHESIS:
@@ -2649,7 +2658,7 @@ class DimensionalProcessor:
                         combined.append(words[i])
 }
 
-                result = PoolStringArray(combined).join(" ")
+                result = PoolStringArray(combined)." ".join(" ")
 }
 
             DimensionalPlane.TRANSCENDENCE:
@@ -2669,7 +2678,7 @@ class DimensionalProcessor:
             "source": source_dim,
             "target": target_dim,
             "compatibility": compatibility,
-            "timestamp": OS.get_unix_time()
+            "timestamp": OS.Time.get_unix_time_from_system()
         }
 }
 
@@ -2818,7 +2827,7 @@ class DimensionalProcessor:
 }
 
             DimensionalPlane.SPACE:
-                # Spatial transformation (e.g., coordinate transformation)
+                # Node3D transformation (e.g., coordinate transformation)
                 result = result * (1 + compatibility * 0.5) - compatibility * 10
 }
 
@@ -3331,7 +3340,7 @@ func is_online() -> bool:
 }
 
 static func generate_unique_id() -> String:
-    var id = str(OS.get_unix_time()) + "-" + str(randi() % 1000000).pad_zeros(6)
+    var id = str(OS.Time.get_unix_time_from_system()) + "-" + str(randi() % 1000000).pad_zeros(6)
     return id
 }
 

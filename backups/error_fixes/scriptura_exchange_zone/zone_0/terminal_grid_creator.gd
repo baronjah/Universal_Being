@@ -99,8 +99,8 @@ func _connect_to_game_systems():
     # Connect to dual core terminal
     dual_core_terminal = get_node_or_null("/root/DualCoreTerminal")
     if dual_core_terminal:
-        dual_core_terminal.connect("special_pattern_detected", self, "_on_special_pattern_detected")
-        dual_core_terminal.connect("time_state_changed", self, "_on_time_state_changed")
+        dual_core_terminal.connect(_on_special_pattern_detected)
+        dual_core_terminal.connect(_on_time_state_changed)
     
     # Connect to divine word game
     divine_word_game = get_node_or_null("/root/DivineWordGame")
@@ -108,7 +108,7 @@ func _connect_to_game_systems():
     # Connect to turn system
     turn_system = get_node_or_null("/root/TurnSystem")
     if turn_system:
-        turn_system.connect("dimension_changed", self, "_on_dimension_changed")
+        turn_system.connect(_on_dimension_changed)
 
 # ----- GRID MANAGEMENT -----
 func create_grid(width, height, default_sym = "."):

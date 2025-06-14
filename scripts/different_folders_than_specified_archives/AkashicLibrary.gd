@@ -30,7 +30,7 @@ func _ready() -> void:
 	record_event({
 		"type": "system",
 		"verse": "The Akashic Library opens its eternal pages",
-		"metadata": {"session_id": session_id}
+		"metadata": {"session_id": session_id
 	})
 
 ## PUBLIC INTERFACE ==================================================
@@ -73,7 +73,7 @@ func get_being_history(being_name: String) -> Array[Dictionary]:
 		"$or": [
 			{"metadata.being": being_name},
 			{"metadata.target": being_name},
-			{"verse": {"$contains": being_name}}
+			{"verse": {"$contains": being_name}
 		]
 	})
 
@@ -83,6 +83,7 @@ func get_session_events(session_id: String = "") -> Array[Dictionary]:
 		session_id = self.session_id
 	
 	return query_chronicle({"session_id": session_id})
+}
 ## PERSISTENCE ==================================================
 
 func save_chronicle() -> void:
@@ -96,7 +97,7 @@ func save_chronicle() -> void:
 		"version": "1.0",
 		"last_saved": Time.get_unix_time_from_system(),
 		"entries": chronicle
-	}
+}
 	
 	file.store_string(JSON.stringify(save_data, "\t"))
 	file.close()
@@ -107,7 +108,7 @@ func save_chronicle() -> void:
 	record_event({
 		"type": "system",
 		"verse": "The chronicle is inscribed upon the eternal tablets",
-		"metadata": {"entries_saved": chronicle.size()}
+		"metadata": {"entries_saved": chronicle.size()
 	})
 
 func _load_chronicle() -> void:
@@ -146,7 +147,7 @@ func generate_summary(time_range: Dictionary = {}) -> String:
 	var summary = "=== Chronicle Summary ===\n\n"
 	
 	# Count event types
-	var type_counts = {}
+	var type_counts = {
 	for event in events:
 		var type = event.get("type", "unknown")
 		type_counts[type] = type_counts.get(type, 0) + 1
@@ -162,7 +163,7 @@ func generate_summary(time_range: Dictionary = {}) -> String:
 
 func get_creation_genealogy() -> Dictionary:
 	"""Build a tree of what created what"""
-	var genealogy = {}
+	var genealogy = {
 	
 	var creation_events = query_chronicle({"type": "creation"})
 	for event in creation_events:
@@ -200,6 +201,7 @@ func _matches_filters(entry: Dictionary, filters: Dictionary) -> bool:
 		
 		# Handle special operators
 		if key == "$or":
+}
 			var any_match = false
 			for sub_filter in filter_value:
 				if _matches_filters(entry, sub_filter):
@@ -214,6 +216,7 @@ func _matches_filters(entry: Dictionary, filters: Dictionary) -> bool:
 		
 		# Handle contains operator
 		if filter_value is Dictionary and filter_value.has("$contains"):
+}
 			var search_str = filter_value["$contains"]
 			if not (entry_value is String and search_str in entry_value):
 				return false

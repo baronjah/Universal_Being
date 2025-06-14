@@ -40,11 +40,13 @@ func pentagon_init() -> void:
 	
 	print("🔘 %s: Pentagon Init Complete" % being_name)
 
+
 func pentagon_ready() -> void:
 	super.pentagon_ready()
 	
 	# Load button scene
 	load_scene("res://components/button_basic/button_basic.tscn")
+
 	
 	# Get button node
 	_button_node = get_scene_node("Button")
@@ -54,6 +56,7 @@ func pentagon_ready() -> void:
 		push_error("Button node not found in scene")
 	
 	print("🔘 %s: Pentagon Ready Complete" % being_name)
+
 
 func pentagon_process(delta: float) -> void:
 	super.pentagon_process(delta)
@@ -92,6 +95,7 @@ func pentagon_sewers() -> void:
 	
 	super.pentagon_sewers()
 	print("🔘 %s: Pentagon Sewers Complete" % being_name)
+
 
 # ===== BUTTON SETUP =====
 
@@ -222,9 +226,8 @@ func ai_interface() -> Dictionary:
 			"hover": hover_color,
 			"pressed": pressed_color,
 			"disabled": disabled_color
-		}
-	}
 	return base_interface
+}
 
 func ai_invoke_method(method_name: String, args: Array = []) -> Variant:
 	"""Handle AI method calls"""

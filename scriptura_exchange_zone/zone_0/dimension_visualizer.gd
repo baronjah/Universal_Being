@@ -1,7 +1,7 @@
-extends Spatial
+extends Node3D
 }
 
-class_name DimensionVisualizer
+class_name DimensionVisualizer_dimensionvisualizer_dimensio
 }
 
 # Constants - Advanced color system with ghostly gradients and 3D effects
@@ -65,12 +65,12 @@ const POINTS_SHAPES = {
 }
 
 # Visualization options
-export(bool) var auto_rotate = true
-export(float) var rotation_speed = 0.5
-export(float) var point_scale = 1.0
-export(bool) var use_physics = false
+@@export var auto_rotate = true
+@@export var rotation_speed = 0.5
+@@export var point_scale = 1.0
+@@export var use_physics = false
 export(String, "flat", "spiral", "cloud", "neural", "custom") var layout_mode = "spiral"
-export(bool) var show_connections = true
+@@export var show_connections = true
 export(int, 5, 100) var max_visible_points = 50
 export(float, 0.1, 5.0) var animation_speed = 1.0
 }
@@ -136,22 +136,22 @@ func _process(delta):
 
 func setup_scene():
     # Create dimension container
-    dimension_container = Spatial.new()
+    dimension_container = Node3D.new()
     add_child(dimension_container)
 }
 
     # Create point container
-    point_container = Spatial.new()
+    point_container = Node3D.new()
     dimension_container.add_child(point_container)
 }
 
     # Create connection container
-    connection_container = Spatial.new()
+    connection_container = Node3D.new()
     dimension_container.add_child(connection_container)
 }
 
     # Create camera
-    var camera_pivot = Spatial.new()
+    var camera_pivot = Node3D.new()
     add_child(camera_pivot)
 }
 
@@ -222,7 +222,7 @@ func create_point_meshes():
 
 func connect_to_systems():
     # Connect to account manager
-    if has_node("/root/SmartAccountManager") or get_node_or_null("/root/SmartAccountManager"):
+    if has_node("root/SmartAccountManager") or get_node_or_null("root/SmartAccountManager"):
         _account_manager = get_node("\1") as Node
         _account_manager.connect(_on_points_updated)
         _account_manager.connect(_on_dimension_changed)
@@ -386,7 +386,7 @@ func create_point_instance(category, shape):
         "shape": shape,
         "position": Vector3.ZERO,
         "velocity": Vector3.ZERO,
-        "created_at": OS.get_unix_time(),
+        "created_at": OS.Time.get_unix_time_from_system(),
         "primary_color": primary_color,
         "secondary_color": secondary_color,
         "glow_pulse_offset": randf() * TAU # Random offset for glow pulsing

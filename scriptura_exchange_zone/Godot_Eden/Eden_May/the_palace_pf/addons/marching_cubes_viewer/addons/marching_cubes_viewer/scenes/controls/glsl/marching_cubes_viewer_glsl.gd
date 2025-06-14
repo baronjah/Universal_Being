@@ -22,8 +22,8 @@
 # SOFTWARE.
 
 @tool
-extends Node3D
-class_name MarchingCubesViewerGlsl
+extends \2
+class_name MarchingCubesViewerGlsl_marchingcubesviewerglsl_marching
 
 @export_file("*.zip") var image_file:String:
 	get:
@@ -93,7 +93,7 @@ func reload_image():
 	
 	#var count:int = 0
 	#for img in image_list_with_mipmaps:
-		#img.save_png("../export/images/density_%d.png" % count)
+		#img.save_png("../@@export/images/density_%d.png" % count)
 		#count += 1
 		
 	var ss = image_list_with_mipmaps.size()
@@ -110,7 +110,7 @@ func reload_image():
 
 	#count = 0
 	#for img in gradient_list_with_mipmaps:
-		#img.save_png("../export/images/grad_%d.png" % count)
+		#img.save_png("../@@export/images/grad_%d.png" % count)
 		#count += 1
 	
 	density_tex_rid = glsl_util.create_texture_image_from_image_stack_with_mipmaps(image_list_with_mipmaps, RenderingDevice.DATA_FORMAT_R32_SFLOAT, mesh_size_base, mipmap_sizes.size())
@@ -123,7 +123,8 @@ func reload_image():
 	xform = xform.translated_local(Vector3(-.5, -.5, -.5))
 	display_mesh.transform = xform
 
-#class BuildMestTool extends RefCounted:
+#class BuildMestTool
+extends \2:
 	#signal done
 	#var thread:Thread = Thread.new()
 	#var work:Callable
@@ -189,7 +190,8 @@ func _ready():
 #var thread_build_mesh:Thread
 #var count:int = 0
 
-class MeshBuilderTool extends RefCounted:
+class MeshBuilderTool
+extends \2:
 	signal done
 	
 	var thread:Thread

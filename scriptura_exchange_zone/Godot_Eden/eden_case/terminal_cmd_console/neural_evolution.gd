@@ -1,5 +1,5 @@
 extends Node
-class_name NeuralEvolution
+class_name NeuralEvolution_neuralevolution_neuralev
 
 # Signals
 signal evolution_step(generation, fitness)
@@ -8,16 +8,16 @@ signal training_completed(network_info)
 signal weight_updated(layer_id, neuron_id, weight_delta)
 
 # Configuration
-export var learning_rate = 0.01
-export var mutation_rate = 0.05
-export var hidden_layers = [32, 16]
-export var input_features = 64
-export var output_classes = 8
-export var batch_size = 16
-export var generation_limit = 100
-export var fitness_threshold = 0.95
-export var auto_save = true
-export var save_interval = 10  # Save every 10 generations
+@@export var learning_rate = 0.01
+@@export var mutation_rate = 0.05
+@@export var hidden_layers = [32, 16]
+@@export var input_features = 64
+@@export var output_classes = 8
+@@export var batch_size = 16
+@@export var generation_limit = 100
+@@export var fitness_threshold = 0.95
+@@export var auto_save = true
+@@export var save_interval = 10  # Save every 10 generations
 
 # Neural network state
 var weights = []
@@ -260,7 +260,7 @@ func train(epochs=10, callback_interval=1):
         
         # Emit progress signal
         if epoch % callback_interval == 0 or epoch == epochs - 1:
-            print("Epoch ", epoch + 1, "/", epochs, ": Loss = ", avg_loss, ", Accuracy = ", accuracy)
+            print("Epoch ", epoch + 1, "", epochs, ": Loss = ", avg_loss, ", Accuracy = ", accuracy)
             emit_signal("evolution_step", generation, current_fitness)
         
         # Save at intervals if auto-save is enabled
@@ -369,7 +369,7 @@ func predict_pattern(input_data, confidence_threshold=0.75):
     var pattern_id = "pattern_" + str(prediction.class)
     
     # Update pattern history
-    var timestamp = OS.get_unix_time()
+    var timestamp = OS.Time.get_unix_time_from_system()
     patterns_history.append({
         "pattern_id": pattern_id,
         "confidence": prediction.confidence,
@@ -604,7 +604,7 @@ func save_network_state(file_path="user://neural_evolution/network_state.nn"):
         "best_weights": best_weights,
         "best_biases": best_biases,
         "recognized_patterns": recognized_patterns,
-        "timestamp": OS.get_unix_time()
+        "timestamp": OS.Time.get_unix_time_from_system()
     }
     
     # Save to file

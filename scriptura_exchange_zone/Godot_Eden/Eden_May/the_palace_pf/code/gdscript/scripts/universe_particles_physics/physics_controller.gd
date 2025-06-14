@@ -1,5 +1,5 @@
 # PhysicsController.gd - Handles physics simulation
-extends Node3D
+extends \2
 
 var config
 
@@ -13,7 +13,7 @@ func apply_physics(delta):
 
 
 # Handles physics simulation for the universe
-extends Node3D
+extends \2
 
 var config: Dictionary
 

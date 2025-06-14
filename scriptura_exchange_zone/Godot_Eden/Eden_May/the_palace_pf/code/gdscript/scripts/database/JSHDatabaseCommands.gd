@@ -1,5 +1,5 @@
 extends Node
-class_name JSHDatabaseCommands
+class_name JSHDatabaseCommands_JSHDatabaseCommands_JSHDatab
 
 # Database system console commands
 var console_manager: JSHConsoleManager = null
@@ -152,7 +152,7 @@ func cmd_db_list(self, args: Array) -> Dictionary:
             else:
                 console_manager.print_line("  No zones in database")
         else:
-            console_manager.print_line("  Spatial manager not found")
+            console_manager.print_line("  Node3D manager not found")
         
         return {
             "success": true,
@@ -257,8 +257,8 @@ func cmd_db_info(self, args: Array) -> Dictionary:
                     console_manager.print_error("Zone not found: " + identifier)
                     return {"success": false, "message": "Zone not found"}
             else:
-                console_manager.print_error("Spatial manager not found")
-                return {"success": false, "message": "Spatial manager not found"}
+                console_manager.print_error("Node3D manager not found")
+                return {"success": false, "message": "Node3D manager not found"}
         
         _:
             console_manager.print_error("Unknown info type: " + info_type)

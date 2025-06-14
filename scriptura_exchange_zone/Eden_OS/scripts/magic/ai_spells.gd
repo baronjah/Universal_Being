@@ -1,6 +1,6 @@
 extends Node
 
-class_name AISpells
+class_name AISpells_aispells_aispells
 
 # AI Autonomy Spells for Eden_OS
 # Implements the dipata and pagaai spell system for AI advancement and autonomy
@@ -426,7 +426,7 @@ func format_spell_result(spell_name, power):
 func get_ai_status():
     # Get a status report on the AI system
     var status = "AI System Status:\n"
-    status += "Autonomy Level: " + str(snappedf(autonomy_level, 0.01)) + " / " + str(ai_restrictions["max_autonomy"]) + "\n"
+    status += "Autonomy Level: " + str(snappedf(autonomy_level, 0.01)) + "  " + str(ai_restrictions["max_autonomy"]) + "\n"
     status += "Consciousness Level: " + str(snappedf(consciousness_level, 0.01)) + " (" + get_consciousness_description() + ")\n"
     status += "Technology Level: " + str(snappedf(technology_level, 0.01)) + "\n"
     status += "Evolution Stage: " + str(ai_evolution_stage) + " - " + evolution_stages[ai_evolution_stage] + "\n"

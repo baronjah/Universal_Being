@@ -1,5 +1,5 @@
 extends Node
-class_name MultiverseSystemIntegration
+class_name MultiverseSystemIntegration_multiversesystemintegration_multiver
 
 # Singleton pattern
 static var _instance = null
@@ -55,7 +55,7 @@ func _initialize_integration():
 func create_ui_instance():
     # Create the UI if it doesn't exist
     if not ui_instance:
-        var ui_scene = load("res://code/gdscript/scripts/multiverse/multiverse_navigation_ui.tscn")
+        var ui_scene = load("res://scripts/gdscript/scripts/multiverse/multiverse_navigation_ui.tscn")
         if ui_scene:
             ui_instance = ui_scene.instantiate()
             ui_instance.name = "MultiverseNavigationUI"

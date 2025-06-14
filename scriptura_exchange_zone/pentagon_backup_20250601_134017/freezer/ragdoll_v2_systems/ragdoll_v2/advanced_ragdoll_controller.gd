@@ -4,12 +4,12 @@
 # PURPOSE: Coordinate ground detection, animation, and IK for realistic movement
 # CREATED: 2025-05-26 - Complete ragdoll system overhaul
 # ==================================================
-
-extends UniversalBeingBase
-class_name AdvancedRagdollController
+extends \2
+class_name AdvancedRagdollController_advancedragdollcontroller_advanced
 
 # Movement states
-enum MovementState {
+enum \2 {
+
 	IDLE,
 	PREPARING,      # Getting ready to move
 	WALKING,

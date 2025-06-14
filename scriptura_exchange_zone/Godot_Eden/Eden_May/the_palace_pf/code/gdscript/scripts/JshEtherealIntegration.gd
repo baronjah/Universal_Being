@@ -1,5 +1,5 @@
 extends Node
-class_name JshEtherealIntegration
+class_name JshEtherealIntegration_JshEtherealIntegration_JshEther
 
 # This script integrates the JSH Ethereal Engine components into the layer_0 scene
 # It serves as a bridge between the main.gd controller and the new engine components
@@ -37,12 +37,12 @@ func initialize_components():
 
 func initialize_thing_creator():
 	# Check if ThingCreator already exists
-	if has_node("/root/CoreThingCreator"):
-		thing_creator = get_node("/root/CoreThingCreator")
+	if has_node("root/CoreThingCreator"):
+		thing_creator = get_node("root/CoreThingCreator")
 		print("Found existing CoreThingCreator")
 	else:
 		# Load the CoreThingCreator script
-		var thing_creator_script = load("res://code/gdscript/scripts/core/CoreThingCreator.gd")
+		var thing_creator_script = load("res://scripts/gdscript/scripts/core/CoreThingCreator.gd")
 		if thing_creator_script:
 			thing_creator = thing_creator_script.get_instance()
 			thing_creator.name = "CoreThingCreator"
@@ -53,12 +53,12 @@ func initialize_thing_creator():
 
 func initialize_ui():
 	# Check if UI already exists
-	if has_node("/root/EtherealEngineUI"):
-		ui_controller = get_node("/root/EtherealEngineUI")
+	if has_node("root/EtherealEngineUI"):
+		ui_controller = get_node("root/EtherealEngineUI")
 		print("Found existing EtherealEngineUI")
 	else:
 		# Load the UI script
-		var ui_script = load("res://code/gdscript/scripts/ui/EtherealEngineUI.gd")
+		var ui_script = load("res://scripts/gdscript/scripts/ui/EtherealEngineUI.gd")
 		if ui_script:
 			ui_controller = ui_script.new()
 			ui_controller.name = "EtherealEngineUI"

@@ -131,9 +131,9 @@ func _initialize_dimension_anchors():
 # Setup monitoring systems
 func _setup_monitors():
     # Connect signals
-    convergence_monitor.connect("convergence_update", self, "_on_convergence_update")
-    dimension_coordinator.connect("dimension_interaction", self, "_on_dimension_interaction")
-    data_flow_system.connect("flow_threshold_reached", self, "_on_flow_threshold_reached")
+    convergence_monitor.connect(_on_convergence_update)
+    dimension_coordinator.connect(_on_dimension_interaction)
+    data_flow_system.connect(_on_flow_threshold_reached)
 
 # Create a new pathway between dimensions
 func create_pathway(start_dimension, end_dimension, pathway_type = PathwayType.LINEAR, properties = {}):
@@ -227,11 +227,11 @@ func create_pathway(start_dimension, end_dimension, pathway_type = PathwayType.L
 
 # Find an available anchor point with fewest connections
 func _find_available_anchor(anchors):
-    if anchors.empty():
+    if anchors.is_empty():
         return null
     
     # Sort by number of connections (ascending)
-    anchors.sort_custom(self, "_sort_anchors_by_connections")
+    anchors.sort_custom(self."_sort_anchors_by_connections")
     
     # Return anchor with fewest connections
     return anchors[0]
@@ -490,7 +490,7 @@ func _update_pathway_flow(pathway_id, delta):
             flow_acceleration *= (0.5 + pathway.flow_rate)
         PathwayType.RECURSIVE:
             # Recursive pathways have variable acceleration based on time
-            var time_factor = sin(OS.get_ticks_msec() / 1000.0 * 0.5) * 0.5 + 0.5
+            var time_factor = sin(OS.Time.get_ticks_msec() / 1000.0 * 0.5) * 0.5 + 0.5
             flow_acceleration *= time_factor
         PathwayType.QUANTUM:
             # Quantum pathways have unpredictable acceleration
@@ -753,7 +753,7 @@ func create_pathway_network(dimensions, network_type = "web", properties = {}):
 
 # Public API: Activate all pathways in a sequence
 func activate_pathway_sequence(pathway_ids, interval = 0.5, initial_flow = 0.1):
-    if pathway_ids.empty():
+    if pathway_ids.is_empty():
         return
     
     # Start coroutine for sequential activation
@@ -783,7 +783,7 @@ func _activate_sequence(sequence_data):
     sequence_data.index += 1
     
     if sequence_data.index < pathways.size():
-        yield(get_tree().create_timer(interval), "timeout")
+        await(get_tree().create_timer(interval), "timeout")
         _activate_sequence(sequence_data)
 
 # Public API: Get system status

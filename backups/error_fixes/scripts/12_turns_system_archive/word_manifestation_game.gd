@@ -21,13 +21,13 @@ var active_terminal = 0
 
 # ----- WORD PROCESSING -----
 var word_processor = null
-var manifested_words = {}
+var manifested_words = {
 var word_connections = []
-var dice_results = {}
+var dice_results = {
 
 # ----- 3D VISUALIZATION -----
 var visualizer = null
-var current_positions = {}
+var current_positions = {
 
 # ----- GAME STATE -----
 var game_state = {
@@ -36,7 +36,7 @@ var game_state = {
     "words_processed": 0,
     "realities_created": 0,
     "divine_level": 1
-}
+	}
 
 # ----- SIGNALS -----
 signal turn_advanced(new_turn, symbol, dimension)
@@ -54,6 +54,7 @@ func _ready():
     
     # Connect to turn system
     var turn_file_path = "user://current_turn.txt"
+	}
     var dir = Directory.new()
     if dir.file_exists(turn_file_path):
         var file = File.new()
@@ -78,9 +79,9 @@ func initialize_word_processor():
     add_child(word_processor)
     
     # Connect signals
-    word_processor.connect("word_processed", self, "_on_word_processed")
-    word_processor.connect("reality_created", self, "_on_reality_created")
-    word_processor.connect("divine_level_changed", self, "_on_divine_level_changed")
+    word_processor.connect(_on_word_processed)
+    word_processor.connect(_on_reality_created)
+    word_processor.connect(_on_divine_level_changed)
     
     print("Word processor initialized with %d divine words" % word_processor.word_power_dictionary.size())
 
@@ -95,7 +96,7 @@ func initialize_terminals():
             "dice_results": [],
             "color": Color(0.1, 0.3 + (i * 0.1), 0.6),
             "active": i == active_terminal
-        }
+			}
         
         terminal_windows.append(terminal)
     
@@ -107,6 +108,7 @@ func advance_turn():
     
     # Save current turn
     var turn_file_path = "user://current_turn.txt"
+	}
     var file = File.new()
     file.open(turn_file_path, File.WRITE)
     file.store_line(str(current_turn))
@@ -147,7 +149,7 @@ func advance_turn():
             add_terminal_message(active_terminal, "The 12D Beyond prepares for the next cycle of creation.")
     
     # Reset dice results for new turn
-    dice_results = {}
+    dice_results = {
     
     # Emit signal
     emit_signal("turn_advanced", current_turn, turn_symbols[current_turn-1], turn_dimensions[current_turn-1])
@@ -161,7 +163,7 @@ func advance_turn():
         "dimension": turn_dimensions[current_turn-1],
         "phase": turn_phases[current_turn-1],
         "concept": turn_concepts[current_turn-1]
-    }
+		}
 
 # Switch active terminal
 func switch_terminal(terminal_id):
@@ -198,8 +200,10 @@ func process_text(text, terminal_id=null):
             add_terminal_message(terminal_id, "Powerful words detected:")
             for word_data in result.powerful_words:
                 add_terminal_message(terminal_id, "- '%s' (Power: %d)" % [word_data.word, word_data.power])
+				}
             
             add_terminal_message(terminal_id, "Total power: %d" % result.total_power)
+			}
         
         # Add to word history
         terminal_windows[terminal_id].word_history.append({
@@ -251,7 +255,7 @@ func manifest_word(word, power, terminal_id):
         "symbol": turn_symbols[current_turn-1],
         "timestamp": OS.get_unix_time(),
         "evolution_stage": 1
-    }
+		}
     
     # Store in manifested words
     manifested_words[word_id] = word_data
@@ -301,7 +305,7 @@ func generate_position_for_dimension(turn_number):
                 "path": "time_oscillation",
                 "amplitude": Vector3(rand_range(1, 3), rand_range(1, 3), rand_range(1, 3)),
                 "frequency": rand_range(0.5, 2.0)
-            }
+}
         5:  # 5D - Consciousness
             # Position reflects awareness (height = consciousness level)
             position = Vector3(
@@ -364,7 +368,7 @@ func create_word_connections(new_word_data):
                 "color": connection_color,
                 "timestamp": OS.get_unix_time(),
                 "turn": current_turn
-            }
+				}
             
             # Add to connections list
             word_connections.append(connection_data)
@@ -378,9 +382,6 @@ func create_word_connections(new_word_data):
                 add_terminal_message(existing_word.terminal_id, 
                     "Connection formed: '%s' ↔ '%s' (Strength: %.2f)" % 
                     [existing_word.text, new_word_data.text, strength])
-        }
-    }
-}
 
 # Check if enough powerful words to form a reality
 func check_reality_formation():
@@ -404,7 +405,7 @@ func check_reality_formation():
             "symbol": turn_symbols[current_turn-1],
             "timestamp": OS.get_unix_time(),
             "terminal_contributions": get_terminal_contributions()
-        }
+			}
         
         # Announce to all terminals
         for i in range(terminal_windows.size()):
@@ -427,14 +428,12 @@ func check_reality_formation():
         emit_signal("reality_created", reality_data)
         
         return reality_data
-    }
     
     return null
-}
 
 # Get contribution percentages by terminal
 func get_terminal_contributions():
-    var contributions = {}
+    var contributions = {
     var total_power = 0
     
     # Calculate total power first
@@ -459,7 +458,6 @@ func get_terminal_contributions():
         contributions[terminal_id] += word_power / float(total_power)
     
     return contributions
-}
 
 # Apply special effects based on the turn the reality was formed in
 func apply_reality_effects(reality_data):
@@ -490,7 +488,6 @@ func apply_reality_effects(reality_data):
         _:  # Other dimensions
             # Generic enhancement
             evolve_all_words()
-}
 
 # Evolve all manifested words
 func evolve_all_words():
@@ -510,16 +507,12 @@ func evolve_all_words():
         
         # Update in dictionary
         manifested_words[word_id] = word_data
-    }
-}
 
 # Enhance all connections
 func enhance_connections():
     for connection in word_connections:
         # Increase strength
         connection.strength = min(connection.strength * 1.5, 1.0)
-    }
-}
 
 # Spawn echo words from existing words
 func spawn_echo_words():
@@ -536,14 +529,11 @@ func spawn_echo_words():
         var echo_text = "echo_" + word_data.text
         var echo_power = word_data.power * 0.7
         manifest_word(echo_text, echo_power, word_data.terminal_id)
-    }
     
     # Announce
     var new_words = manifested_words.size() - original_word_count
     if new_words > 0:
         add_terminal_message(active_terminal, "%d echo words spawned from existing words" % new_words)
-    }
-}
 
 # ----- DICE SYSTEM -----
 func roll_dice(terminal_id=null, dice_type=null, dice_count=null):
@@ -568,7 +558,6 @@ func roll_dice(terminal_id=null, dice_type=null, dice_count=null):
         var roll = 1 + (randi() % dice_type)
         rolls.append(roll)
         total += roll
-    }
     
     # Apply turn bonus
     var turn_bonus = current_turn - 1
@@ -584,7 +573,7 @@ func roll_dice(terminal_id=null, dice_type=null, dice_count=null):
         "turn_bonus": turn_bonus,
         "final_total": final_total,
         "timestamp": OS.get_unix_time()
-    }
+		}
     
     # Store result
     dice_results[terminal_id] = result
@@ -596,12 +585,12 @@ func roll_dice(terminal_id=null, dice_type=null, dice_count=null):
     add_terminal_message(terminal_id, "----- DICE ROLL -----")
     add_terminal_message(terminal_id, "Rolling %dd%d: %s" % [dice_count, dice_type, str(rolls)])
     add_terminal_message(terminal_id, "Total: %d + Turn Bonus (%d) = %d" % [total, turn_bonus, final_total])
+	}
     
     # Emit signal
     emit_signal("dice_rolled", terminal_id, rolls, final_total)
     
     return result
-}
 
 # Roll dice on all terminals
 func roll_dice_all_terminals(dice_type=null, dice_count=null):
@@ -612,7 +601,6 @@ func roll_dice_all_terminals(dice_type=null, dice_count=null):
         var result = roll_dice(i, dice_type, dice_count)
         all_results.append(result)
         grand_total += result.final_total
-    }
     
     # Check for "blimp" - when all terminals roll the same number
     check_for_blimp(all_results)
@@ -620,6 +608,7 @@ func roll_dice_all_terminals(dice_type=null, dice_count=null):
     # Add grand total message to active terminal
     add_terminal_message(active_terminal, "----- MULTI-TERMINAL ROLL -----")
     add_terminal_message(active_terminal, "Grand Total across all terminals: %d" % grand_total)
+	
     
     # Update game state
     game_state.score += int(grand_total / 10)
@@ -628,8 +617,7 @@ func roll_dice_all_terminals(dice_type=null, dice_count=null):
     return {
         "results": all_results,
         "grand_total": grand_total
-    }
-}
+		}
 
 # Check for "blimp" - when all terminals roll the same total
 func check_for_blimp(results):
@@ -643,7 +631,6 @@ func check_for_blimp(results):
         if results[i].total != first_total:
             is_blimp = false
             break
-    }
     
     if is_blimp:
         # Time blimp detected!
@@ -651,7 +638,6 @@ func check_for_blimp(results):
             add_terminal_message(i, "!!! TIME BLIMP DETECTED !!!")
             add_terminal_message(i, "All terminals synchronized at value: " + str(first_total))
             add_terminal_message(i, "Reality may be experiencing temporal anomalies")
-        }
         
         # Special effect - advance turn and apply bonus
         advance_turn()
@@ -662,13 +648,10 @@ func check_for_blimp(results):
             add_terminal_message(manifested_words[word_id].terminal_id, 
                 "Word '%s' power increased by %d due to time blimp!" % 
                 [manifested_words[word_id].text, first_total])
-        }
         
         return true
-    }
     
     return false
-}
 
 # ----- TERMINAL MANAGEMENT -----
 func add_terminal_message(terminal_id, message):
@@ -676,6 +659,7 @@ func add_terminal_message(terminal_id, message):
         # Add timestamp
         var timestamp = OS.get_time()
         var time_str = "%02d:%02d:%02d" % [timestamp.hour, timestamp.minute, timestamp.second]
+		
         
         # Format message
         var formatted = "[%s] %s" % [time_str, message]
@@ -690,21 +674,16 @@ func add_terminal_message(terminal_id, message):
             for i in range(lines.size() - 100, lines.size()):
                 if i >= 0 and i < lines.size():
                     terminal_windows[terminal_id].content += lines[i] + "\n"
-        }
         
         return formatted
-    }
     
     return null
-}
 
 func get_terminal_content(terminal_id):
     if terminal_id >= 0 and terminal_id < terminal_windows.size():
         return terminal_windows[terminal_id].content
-    }
     
     return ""
-}
 
 func clear_terminal(terminal_id):
     if terminal_id >= 0 and terminal_id < terminal_windows.size():
@@ -716,10 +695,8 @@ func clear_terminal(terminal_id):
             [current_turn, turn_symbols[current_turn-1], turn_dimensions[current_turn-1]])
         
         return true
-    }
     
     return false
-}
 
 # ----- VISUALIZATION INTEGRATION -----
 func set_visualizer(vis_node):
@@ -727,12 +704,10 @@ func set_visualizer(vis_node):
     
     if visualizer:
         # Connect signals
-        visualizer.connect("visualization_ready", self, "_on_visualization_ready")
-        visualizer.connect("word_selected", self, "_on_visualizer_word_selected")
+        visualizer.connect(_on_visualization_ready)
+        visualizer.connect(_on_visualizer_word_selected)
         
         print("Connected to 3D visualizer")
-    }
-}
 
 # ----- GAME STATE MANAGEMENT -----
 func update_game_state():
@@ -744,7 +719,6 @@ func update_game_state():
     emit_signal("game_state_updated", game_state)
     
     return game_state
-}
 
 func save_game_state(name="auto_save"):
     var save_data = {
@@ -755,17 +729,18 @@ func save_game_state(name="auto_save"):
         "terminal_windows": terminal_windows,
         "timestamp": OS.get_unix_time(),
         "date": OS.get_datetime()
-    }
+		}
     
     # Save to file
     var file = File.new()
     var save_path = "user://word_game_saves/" + name + "_" + str(OS.get_unix_time()) + ".json"
+	
     
     # Ensure directory exists
     var dir = Directory.new()
     if !dir.dir_exists("user://word_game_saves"):
         dir.make_dir_recursive("user://word_game_saves")
-    }
+		
     
     # Save file
     file.open(save_path, File.WRITE)
@@ -774,22 +749,19 @@ func save_game_state(name="auto_save"):
     
     print("Game state saved as '%s'" % name)
     print("Save location: %s" % save_path)
+	
     
     return save_data
-}
 
 # ----- DATA ACCESS METHODS -----
 func get_word_list():
     return manifested_words
-}
 
 func get_connection_list():
     return word_connections
-}
 
 func get_terminal_list():
     return terminal_windows
-}
 
 func get_current_turn_info():
     return {
@@ -798,20 +770,17 @@ func get_current_turn_info():
         "dimension": turn_dimensions[current_turn-1],
         "phase": turn_phases[current_turn-1],
         "concept": turn_concepts[current_turn-1]
-    }
-}
+		}
 
 # ----- SIGNAL HANDLERS -----
 func _on_word_processed(word, power):
     # Word was processed by the divine word processor
     pass
-}
 
 func _on_reality_created(reality_data):
     # Reality was created
     game_state.realities_created += 1
     update_game_state()
-}
 
 func _on_divine_level_changed(new_level):
     # Divine level changed
@@ -819,7 +788,6 @@ func _on_divine_level_changed(new_level):
     update_game_state()
     
     add_terminal_message(active_terminal, "Divine Level increased to %d!" % new_level)
-}
 
 func _on_visualization_ready():
     # Visualizer is ready
@@ -828,24 +796,20 @@ func _on_visualization_ready():
     # Populate with existing words
     for word_id in manifested_words:
         emit_signal("word_manifested", manifested_words[word_id])
-    }
-}
 
 func _on_visualizer_word_selected(word_data):
     # Word was selected in visualizer
     add_terminal_message(active_terminal, "Selected word: '%s' (Power: %d)" % [word_data.text, word_data.power])
-}
+	
 
 # ----- PUBLIC API -----
 # Process text from a terminal
 func process_terminal_input(text, terminal_id=null):
     return process_text(text, terminal_id)
-}
 
 # Roll dice from a terminal
 func roll_terminal_dice(terminal_id=null, dice_type=null, dice_count=null):
     return roll_dice(terminal_id, dice_type, dice_count)
-}
 
 # Get game status info
 func get_game_status():
@@ -857,5 +821,3 @@ func get_game_status():
         "word_count": manifested_words.size(),
         "connection_count": word_connections.size(),
         "divine_level": game_state.divine_level
-    }
-}

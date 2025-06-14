@@ -51,9 +51,11 @@ func pentagon_init() -> void:
 	pentagon_initialized = true
 	print("🎮 %s: Pentagon initialized (Control Being)" % being_name)
 
+
 func pentagon_ready() -> void:
 	"""Pentagon ready phase"""
 	print("🎮 %s: Pentagon ready (Control Being)" % being_name)
+
 
 func pentagon_process(delta: float) -> void:
 	"""Pentagon process phase"""
@@ -66,6 +68,7 @@ func pentagon_input(event: InputEvent) -> void:
 func pentagon_sewers() -> void:
 	"""Pentagon cleanup phase"""
 	print("🎮 %s: Pentagon sewers (Control Being cleanup)" % being_name)
+
 
 func set_visual_layer(value: int) -> void:
 	"""Set visual layer for proper UI ordering"""
@@ -92,6 +95,7 @@ func update_visual_layer_order() -> void:
 			continue
 			
 		if sibling.has_method("get_visual_layer"):
+
 			var sibling_layer = sibling.get_visual_layer()
 			if sibling_layer > visual_layer and i < target_index:
 				target_index = i
@@ -148,7 +152,7 @@ func ai_interface() -> Dictionary:
 		"size": size,
 		"visible": visible,
 		"modulate": modulate
-	}
+}
 
 func _generate_uuid() -> String:
 	"""Generate a unique UUID"""

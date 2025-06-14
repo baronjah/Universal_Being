@@ -1,11 +1,12 @@
 extends Node
 }
 
-class_name SharedAccountConnector
+class_name SharedAccountConnector_sharedaccountconnector_sharedac
 }
 
 # Connection states
-enum ConnectionState {
+enum \2 {
+
     DISCONNECTED,
     CONNECTING,
     CONNECTED,
@@ -14,7 +15,8 @@ enum ConnectionState {
 }
 
 # Account types
-enum AccountType {
+enum \2 {
+
     LOCAL,
     WINDOWS,
     GAME,
@@ -53,7 +55,7 @@ func _ready():
 
 func connect_to_available_systems():
     # Check for AkashicDatabase
-    if has_node("/root/AkashicDatabase") or get_node_or_null("/root/AkashicDatabase"):
+    if has_node("root/AkashicDatabase") or get_node_or_null("root/AkashicDatabase"):
         var akashic_db = get_node("\1") as Node
         systems_connected.append("AkashicDatabase")
         print("Connected to AkashicDatabase")
@@ -68,7 +70,7 @@ func connect_to_available_systems():
 }
 
     for system in system_nodes:
-        if has_node("/root/" + system) or get_node_or_null("/root/" + system):
+        if has_node("root/" + system) or get_node_or_null("root/" + system):
             systems_connected.append(system)
             print("Connected to " + system)
 }
@@ -92,7 +94,7 @@ func connect_account(account_id = "", player_name = "", type = AccountType.LOCAL
 
     # Generate player name if not provided
     if player_name.is_empty():
-        player_name = "Player_" + str(OS.get_unix_time()).substr(6, 4)
+        player_name = "Player_" + str(OS.Time.get_unix_time_from_system()).substr(6, 4)
 }
 
     # Set current account properties
@@ -252,7 +254,7 @@ func synchronize_data():
 
 func generate_unique_id():
     # Generate a simple unique ID based on time and random number
-    return str(OS.get_unix_time()) + "_" + str(randi() % 10000)
+    return str(OS.Time.get_unix_time_from_system()) + "_" + str(randi() % 10000)
 }
 
 # Getters

@@ -36,9 +36,8 @@ func _initialize_menu_threads() -> void:
 			{"text": "Begin Creation", "action": "_enter_creation"},
 			{"text": "Continue Journey", "action": "_continue_journey"},
 			{"text": "Transcend", "action": "_transcend"},
-			{"text": "Leave Eden", "action": "_exit_eden"}
+			{"text": "Leave Eden", "action": "_exit_eden"
 		]
-	}
 	
 	menu_threads[MenuState.CREATION] = {
 		"title": "GENESIS",
@@ -46,27 +45,24 @@ func _initialize_menu_threads() -> void:
 			{"text": "Shape World", "action": "_shape_world"},
 			{"text": "Breathe Life", "action": "_breathe_life"},
 			{"text": "Plant Seeds", "action": "_plant_seeds"},
-			{"text": "Return", "action": "_return_to_main"}
+			{"text": "Return", "action": "_return_to_main"
 		]
-	}
 	
 	menu_threads[MenuState.CONTINUATION] = {
 		"title": "CONTINUATION",
 		"options": [
 			{"text": "Load Memory", "action": "_load_memory"},
 			{"text": "Merge Timelines", "action": "_merge_timelines"},
-			{"text": "Return", "action": "_return_to_main"}
+			{"text": "Return", "action": "_return_to_main"
 		]
-	}
 	
 	menu_threads[MenuState.TRANSCENDENCE] = {
 		"title": "TRANSCENDENCE",
 		"options": [
 			{"text": "Become One", "action": "_become_one"},
 			{"text": "Fragment Self", "action": "_fragment_self"},
-			{"text": "Return", "action": "_return_to_main"}
+			{"text": "Return", "action": "_return_to_main"
 		]
-	}
 
 func _awaken_interface() -> void:
 	# Clear existing children - tabula rasa
@@ -101,6 +97,7 @@ func _awaken_interface() -> void:
 		tween.set_loops()
 		tween.tween_property(button, "modulate:a", 0.7, 1.0)
 		tween.tween_property(button, "modulate:a", 1.0, 1.0)
+}
 		
 		container.add_child(button)
 
@@ -132,6 +129,7 @@ func _shape_world() -> void:
 		"essence": randf()
 	})
 	print("World shaped with essence: ", eden_memory.creation_seeds[-1].essence)
+}
 
 func _breathe_life() -> void:
 	eden_memory.creation_seeds.append({
@@ -149,12 +147,15 @@ func _plant_seeds() -> void:
 			"potential": randf_range(0.1, 1.0)
 		})
 	print("Seeds planted: ", eden_memory.creation_seeds.size())
+}
 
 # Continuation Actions
 func _load_memory() -> void:
 	print("Loading memory state: ", eden_memory)
+}
 	# Here we would load saved game state
 	get_tree().change_scene_to_file("res://scenes/world.tscn")
+}
 
 func _merge_timelines() -> void:
 	print("Merging timelines...")

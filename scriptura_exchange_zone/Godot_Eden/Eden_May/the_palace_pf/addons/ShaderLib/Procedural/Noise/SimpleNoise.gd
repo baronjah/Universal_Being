@@ -1,5 +1,6 @@
 @tool
-class_name VisualShaderNodeProceduralSimpleNoise extends VisualShaderNodeCustom
+class_name VisualShaderNodeProceduralSimpleNoise_SimpleNoise_SimpleNo
+extends \2
 
 func _init() -> void:
 	output_port_for_preview = 0

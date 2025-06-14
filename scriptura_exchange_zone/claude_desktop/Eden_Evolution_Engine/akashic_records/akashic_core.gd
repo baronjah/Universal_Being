@@ -2,7 +2,7 @@ extends Node
 # AKASHIC RECORDS CORE - Living Memory System
 # Multi-dimensional data storage across 6 memory pools
 
-class_name AkashicCore
+class_name AkashicCore_akashiccore_akashicc
 
 # ========== CONSTANTS ==========
 const MEMORY_POOLS = 6
@@ -58,7 +58,7 @@ func store_memory(data, pool_id = -1, tags = []):
 	
 	var memory_fragment = {
 		"id": _generate_memory_id(),
-		"timestamp": OS.get_unix_time(),
+		"timestamp": OS.Time.get_unix_time_from_system(),
 		"data": data,
 		"tags": tags,
 		"connections": [],
@@ -207,7 +207,7 @@ func create_time_crystal(memory_ids, crystallization_rate = 0.7):
 	var crystal = {
 		"id": "CRYSTAL_" + str(time_crystals.size()),
 		"memories": memory_ids,
-		"formation_time": OS.get_unix_time(),
+		"formation_time": OS.Time.get_unix_time_from_system(),
 		"stability": crystallization_rate,
 		"resonance": 0.0,
 		"dimensions": []
@@ -231,7 +231,7 @@ func capture_reality_fragment(scene_data, dimension = 0):
 		"id": _generate_fragment_id(),
 		"scene": scene_data,
 		"dimension": dimension,
-		"timestamp": OS.get_unix_time(),
+		"timestamp": OS.Time.get_unix_time_from_system(),
 		"entropy": randf(),
 		"coherence": 1.0
 	}
@@ -256,13 +256,13 @@ func _find_optimal_pool():
 	return optimal_pool
 
 func _generate_memory_id():
-	return "MEM_" + str(OS.get_unix_time()) + "_" + str(randi() % 10000)
+	return "MEM_" + str(OS.Time.get_unix_time_from_system()) + "_" + str(randi() % 10000)
 
 func _generate_fragment_id():
-	return "FRAG_" + str(OS.get_unix_time()) + "_" + str(randi() % 10000)
+	return "FRAG_" + str(OS.Time.get_unix_time_from_system()) + "_" + str(randi() % 10000)
 
 func _current_dimension():
-	return int(OS.get_unix_time() / 1000) % DIMENSION_LAYERS
+	return int(OS.Time.get_unix_time_from_system() / 1000) % DIMENSION_LAYERS
 
 # ========== MEMORY EVOLUTION ==========
 func evolve_memories():

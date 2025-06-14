@@ -4,8 +4,7 @@
 # PURPOSE: Create a living world for birds to explore
 # CREATED: 2025-05-24 - Heightmap-based world generation
 # ==================================================
-
-extends UniversalBeingBase
+extends \2
 signal terrain_generated
 signal vegetation_placed
 
@@ -256,7 +255,7 @@ func _create_terrain_collision() -> void:
 
 func _place_vegetation() -> void:
 	var vegetation_container = get_node("Vegetation")
-	var world_builder = get_node("/root/WorldBuilder")
+	var world_builder = get_node("root/WorldBuilder")
 	
 	if not world_builder:
 		print("[WorldGen] WorldBuilder not found!")
@@ -302,7 +301,7 @@ func _place_tree(container: Node3D) -> void:
 		FloodgateController.universal_add_child(tree, container)
 		
 		# Register with WorldBuilder for tracking
-		var world_builder = get_node_or_null("/root/WorldBuilder")
+		var world_builder = get_node_or_null("root/WorldBuilder")
 		if world_builder:
 			world_builder.register_world_object(tree)
 		
@@ -332,7 +331,7 @@ func _place_bush(container: Node3D) -> void:
 		FloodgateController.universal_add_child(bush, container)
 		
 		# Register with WorldBuilder for tracking
-		var world_builder = get_node_or_null("/root/WorldBuilder")
+		var world_builder = get_node_or_null("root/WorldBuilder")
 		if world_builder:
 			world_builder.register_world_object(bush)
 		

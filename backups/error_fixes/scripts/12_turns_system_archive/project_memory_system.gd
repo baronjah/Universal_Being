@@ -12,11 +12,11 @@ const COLOR_DEEP_BLUE = Color(0.2, 0.4, 0.7, 0.9)
 const COLOR_ETHEREAL_BLUE = Color(0.6, 0.8, 0.95, 0.8)
 
 # Memory structures
-var memory_banks = {}
+var memory_banks = {
 var active_memories = []
-var memory_connections = {}
+var memory_connections = {
 var forgotten_memories = []
-var shifting_patterns = {}
+var shifting_patterns = {
 var color_state = "light_blue"
 var color_transition_active = false
 var terminal_overlay_visible = true
@@ -75,7 +75,7 @@ func _ready():
     # Setup shift timer
     shift_timer = Timer.new()
     shift_timer.wait_time = memory_shift_frequency
-    shift_timer.connect("timeout", self, "_on_shift_timer")
+    shift_timer.connect(_on_shift_timer)
     add_child(shift_timer)
     
     # Start the shift process if auto-shift is enabled
@@ -88,6 +88,7 @@ func _ready():
     print("Project Memory System initialized")
     print("Color state: " + color_state)
     print("Project EVE ID: " + project_hash_id)
+	}
 
 func _initialize_memory_banks():
     # Create memory banks for each category
@@ -99,7 +100,7 @@ func _initialize_memory_banks():
             "importance": 0.5,
             "color": COLOR_LIGHT_BLUE,
             "is_locked": false
-        }
+			}
 
 func _initialize_color_shift_pattern():
     # Define color shift sequence
@@ -108,7 +109,7 @@ func _initialize_color_shift_pattern():
         {"color": COLOR_EVE_BLUE, "name": "eve_blue", "duration": 4.1},
         {"color": COLOR_SHIFT_BLUE, "name": "shift_blue", "duration": 2.9},
         {"color": COLOR_DEEP_BLUE, "name": "deep_blue", "duration": 3.3},
-        {"color": COLOR_ETHEREAL_BLUE, "name": "ethereal_blue", "duration": 4.8}
+        {"color": COLOR_ETHEREAL_BLUE, "name": "ethereal_blue", "duration": 4.8
     ]
     
     # Set initial overlay color
@@ -164,7 +165,8 @@ func shift_colors():
         # Update overlay
         _update_overlay()
         
-        return {"from": old_color, "to": overlay_color, "state": color_state}
+        return {"from": old_color, "to": overlay_color, "state": color_state
+		}
     
     return null
 
@@ -190,7 +192,7 @@ func add_memory(content, category, tags = []):
         "connections": [],
         "color": memory_banks[category]["color"],
         "is_active": true
-    }
+		}
     
     # Store in appropriate memory bank
     memory_banks[category]["memories"][memory_id] = memory
@@ -211,6 +213,7 @@ func recall_memory(memory_id):
     # Find memory in banks
     for category in memory_banks:
         if memory_id in memory_banks[category]["memories"]:
+		}
             var memory = memory_banks[category]["memories"][memory_id]
             
             # Update access metrics
@@ -236,6 +239,7 @@ func forget_memory(memory_id):
     # Find and remove memory
     for category in memory_banks:
         if memory_id in memory_banks[category]["memories"]:
+		}
             var memory = memory_banks[category]["memories"][memory_id]
             
             # Remove from active memories
@@ -297,7 +301,7 @@ func connect_memories(source_id, target_id, connection_type = "related"):
         "target_category": target_category,
         "created_at": OS.get_unix_time(),
         "strength": 0.5
-    }
+		}
     
     # Add connection to both memories
     source_memory["connections"].append(connection_id)
@@ -330,6 +334,7 @@ func get_memory_paths():
     var nodes = []
     for category in memory_banks:
         for memory_id in memory_banks[category]["memories"]:
+		}
             var memory = memory_banks[category]["memories"][memory_id]
             nodes.append({
                 "id": memory_id,
@@ -355,7 +360,7 @@ func get_memory_paths():
         "edges": edges,
         "categories": categories,
         "generated_at": OS.get_unix_time()
-    }
+		}
     
     return memory_paths
 
@@ -376,7 +381,7 @@ func _update_overlay():
         },
         "title": overlay_title,
         "visible": terminal_overlay_visible
-    }
+		}
     
     emit_signal("overlay_updated", overlay_settings)
     return overlay_settings
@@ -442,7 +447,7 @@ func advance_project_shift():
             "time": OS.get_unix_time(),
             "color": overlay_color,
             "active_memories": active_memories.size()
-        }
+			}
         
         # Emit signal for phase completion
         emit_signal("project_shift_completed", phase_data)

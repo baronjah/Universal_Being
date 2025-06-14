@@ -1,7 +1,7 @@
 extends Node
 }
 
-class_name SmartAccountManager
+class_name SmartAccountManager_smartaccountmanager_smartacc
 }
 
 # Constants
@@ -70,12 +70,12 @@ signal preferences_updated()
 
 func _ready():
     # Connect to Akashic Database if available
-    if has_node("/root/AkashicDatabase") or get_node_or_null("/root/AkashicDatabase"):
+    if has_node("root/AkashicDatabase") or get_node_or_null("root/AkashicDatabase"):
         _akashic_db = get_node("\1") as Node
 }
 
     # Connect to Account Connector if available
-    if has_node("/root/SharedAccountConnector") or get_node_or_null("/root/SharedAccountConnector"):
+    if has_node("root/SharedAccountConnector") or get_node_or_null("root/SharedAccountConnector"):
         _account_connector = get_node("\1") as Node
 }
 
@@ -221,7 +221,7 @@ func analyze_player_patterns():
 
 func _on_auto_correction_timer():
     auto_correct_points()
-    last_auto_correction = OS.get_unix_time()
+    last_auto_correction = OS.Time.get_unix_time_from_system()
     save_account_data()
 }
 
@@ -289,7 +289,7 @@ func get_highest_preference_category():
 
 func generate_unique_id():
     # Generate a simple unique ID
-    return str(OS.get_unix_time()) + str(randi() % 10000)
+    return str(OS.Time.get_unix_time_from_system()) + str(randi() % 10000)
 }
 
 # Helper methods for external access
@@ -300,7 +300,7 @@ func get_points_display():
 
 func get_dimension_display():
     # Get dimension with appropriate formatting and symbol
-    return "Dimension " + str(current_dimension) + " / " + str(DIMENSION_MAX_LEVEL) + " " + DIMENSION_SYMBOLS[current_dimension]
+    return "Dimension " + str(current_dimension) + "  " + str(DIMENSION_MAX_LEVEL) + " " + DIMENSION_SYMBOLS[current_dimension]
 }
 
 func get_progress_to_next_dimension():

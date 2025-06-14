@@ -1,6 +1,6 @@
 extends Node
 
-class_name AdvancedTerminal
+class_name AdvancedTerminal_advancedterminal_advanced
 
 # Advanced terminal with multi-core support, word magic and game creation
 
@@ -59,9 +59,9 @@ var ascii_art = {
 ╚════════════════════════════════════╝
 	""",
 	"magic": """
-  /\\\\\\      
- /  \\\\\\     
-/    \\\\\\    
+  \\\\\\      
+# /  \\\\\\     
+# /    \\\\\\    
 ▒▒▒▒▒▒▒▒    
 \    ///    
  \  ///     
@@ -343,7 +343,7 @@ func run_godot_command(args):
 			return "Running Godot project..."
 		"build":
 			return "Building Godot project..."
-		"export":
+		"@@export":
 			return "Exporting Godot project..."
 		"version":
 			return "Godot 4.4"

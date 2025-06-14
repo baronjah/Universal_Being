@@ -1,9 +1,9 @@
 extends Node
-class_name SnakeDesktopIcon
+class_name SnakeDesktopIcon_snakeicon_snakeico
 # JSH_World/height_map
 # JSH_World/icon
 #
-# res://code/gdscript/scripts/Snake_Space_Movement/snake_icon.gd
+# res://scripts/gdscript/scripts/Snake_Space_Movement/snake_icon.gd
 # Icon properties
 var icon_color = Color(0, 0.7, 0, 1)  # Green color for snake theme
 var main_ref = null

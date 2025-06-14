@@ -9,17 +9,16 @@
 # DESCRIPTION: Universal Being that acts as 3D spatial container for scenes
 # PURPOSE: Create rooms, spaces with connection points for organized scene building
 # ==================================================
-
-extends UniversalBeingBase
-class_name UniversalBeingSceneContainer
+extends \2
+# DISABLED DUPLICATE: class_name UniversalBeingSceneContainer_universalbeingscenecontainer_universa
 
 # Scene container properties
-@export var container_size: Vector3 = Vector3(10, 5, 10)
-@export var container_type: String = "room"
-@export var show_boundaries: bool = true
-@export var show_connection_points: bool = true
+@@@export var container_size: Vector3 = Vector3(10, 5, 10)
+@@@export var container_type: String = "room"
+@@@export var show_boundaries: bool = true
+@@@export var show_connection_points: bool = true
 
-# Spatial organization
+# Node3D organization
 var center_point: Vector3
 var corner_points: Array[Vector3] = []
 var edge_points: Array[Vector3] = []

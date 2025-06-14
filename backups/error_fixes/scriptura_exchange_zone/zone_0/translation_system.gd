@@ -144,13 +144,13 @@ func translate(text: String, target_language: String = "", source_language: Stri
         print("Translation system is disabled")
         return -1
     
-    if text.strip_edges().empty():
+    if text.strip_edges().is_empty():
         print("Empty text provided for translation")
         return -1
     
     # Use defaults if languages not specified
-    var source_lang = source_language if not source_language.empty() else default_source_language
-    var target_lang = target_language if not target_language.empty() else default_target_language
+    var source_lang = source_language if not source_language.is_empty() else default_source_language
+    var target_lang = target_language if not target_language.is_empty() else default_target_language
     
     # Don't translate if source and target are the same
     if source_lang == target_lang:
@@ -205,7 +205,7 @@ func translate_code(code: String, target_language: String = "") -> int:
         return -1
     
     # Use default target language if not specified
-    var target_lang = target_language if not target_language.empty() else default_target_language
+    var target_lang = target_language if not target_language.is_empty() else default_target_language
     
     # Call general translation with code as source language
     return translate(code, target_lang, "code")
@@ -215,7 +215,7 @@ func detect_language(text: String) -> String:
     # In a real implementation, would use a language detection service
     # For this simulation, we'll just return English if the text contains mostly Latin characters
     
-    if text.strip_edges().empty():
+    if text.strip_edges().is_empty():
         return "unknown"
     
     # Count different character types
@@ -546,7 +546,7 @@ func _translate_human_to_code(text: String, source_lang: String) -> String:
     
     for line in lines:
         var cleaned_line = line.strip_edges()
-        if cleaned_line.empty():
+        if cleaned_line.is_empty():
             continue
         
         // Add indented comment
@@ -591,7 +591,7 @@ func _prune_cache():
         })
     
     # Sort by timestamp (oldest first)
-    cache_entries.sort_custom(Callable(self, "_sort_by_timestamp"))
+    cache_entries.sort_custom(Callable(self."_sort_by_timestamp"))
     
     # Remove oldest entries
     for i in range(min(entries_to_remove, cache_entries.size())):

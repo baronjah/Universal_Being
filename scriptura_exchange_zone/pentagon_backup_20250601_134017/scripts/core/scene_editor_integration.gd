@@ -4,14 +4,14 @@
 # PURPOSE: Bridge between inspector, floodgate, and scene systems
 # CREATED: 2025-05-28 - Scene editing integration
 # ==================================================
-
-extends UniversalBeingBase
+extends \2
 signal scene_modified(changes: Array)
 signal object_selected(object: Node)
 signal edit_mode_changed(mode: String)
 
 # Edit modes
-enum EditMode {
+enum \2 {
+
 	SELECT,
 	TRANSLATE,
 	ROTATE,
@@ -50,13 +50,13 @@ func _ready() -> void:
 
 func _setup_references() -> void:
 	# Get autoload references
-	floodgate_controller = get_node_or_null("/root/FloodgateController")
-	console_manager = get_node_or_null("/root/ConsoleManager")
+	floodgate_controller = get_node_or_null("root/FloodgateController")
+	console_manager = get_node_or_null("root/ConsoleManager")
 	
 	# Get scene manager
-	scene_manager = get_node_or_null("/root/UnifiedSceneManager")
+	scene_manager = get_node_or_null("root/UnifiedSceneManager")
 	if not scene_manager:
-		scene_manager = get_node_or_null("/root/SceneManager")
+		scene_manager = get_node_or_null("root/SceneManager")
 
 func _register_console_commands() -> void:
 	if not console_manager:
@@ -570,8 +570,8 @@ func _create_new_scene() -> void:
 	_enter_edit_mode()
 
 func _export_scene(format: String, _path: String) -> void:
-	# TODO: Implement scene export to various formats
-	print("Scene export not yet implemented for format: " + format)
+	# TODO: Implement scene @@export to various formats
+	print("Scene @@export not yet implemented for format: " + format)
 
 # ================================
 # FLOODGATE OPERATIONS

@@ -1,5 +1,5 @@
 extends Node
-class_name JSHPhoneticAnalyzer
+class_name JSHPhoneticAnalyzer_JSHPhoneticAnalyzer_JSHPhone
 
 # Static instance for singleton pattern
 static var _instance = null

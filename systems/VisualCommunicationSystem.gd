@@ -27,6 +27,7 @@ func _ready() -> void:
 	# Auto-detect parent Universal Being
 	parent_being = get_parent()
 	if parent_being and parent_being.has_method("pentagon_init"):
+
 		# We're attached to a Universal Being
 		visual_message("Visual Communication System activated", "general", 2.0)
 
@@ -71,6 +72,7 @@ func visual_message(message: String, category: String = "general", duration: flo
 	
 	# Stellar glow effect for special categories
 	if category in ["gemma_ai", "consciousness"]:
+
 		# Add pulsing glow effect
 		var glow_tween = tween.tween_method(_pulse_glow.bind(label_3d), 1.0, 0.3, duration/3)
 		glow_tween.tween_method(_pulse_glow.bind(label_3d), 0.3, 1.0, duration/3)
@@ -78,6 +80,7 @@ func visual_message(message: String, category: String = "general", duration: flo
 	else:
 		# Standard fade out
 		tween.tween_property(label_3d, "modulate:a", 0.0, duration)
+
 	
 	# Clean up
 	tween.tween_callback(label_3d.queue_free)
@@ -104,13 +107,15 @@ func pentagon_message(phase: String, text: String) -> void:
 		"process": "🔄",
 		"input": "👁️",
 		"sewers": "🌊"
-	}
+}
 	var symbol = phase_symbols.get(phase, "🔆")
 	visual_message(symbol + " PENTAGON[" + phase.to_upper() + "]: " + text, "pentagon_lifecycle")
+
 
 func socket_message(text: String, socket_type: String = "") -> void:
 	var type_prefix = socket_type if socket_type != "" else "SOCKET"
 	visual_message("🔌 " + type_prefix + ": " + text, "socket_system")
+
 
 func dna_message(text: String, being_name: String = "") -> void:
 	var prefix = "🧬 DNA"
@@ -118,8 +123,10 @@ func dna_message(text: String, being_name: String = "") -> void:
 		prefix += "[" + being_name + "]"
 	visual_message(prefix + ": " + text, "dna_evolution")
 
+
 func physics_message(text: String) -> void:
 	visual_message("⚡ PHYSICS: " + text, "physics_interaction")
+
 
 func debug_message(text: String, level: String = "INFO") -> void:
 	var level_symbols = {
@@ -127,13 +134,15 @@ func debug_message(text: String, level: String = "INFO") -> void:
 		"WARNING": "⚠️",
 		"INFO": "🔧",
 		"SUCCESS": "✅"
-	}
+}
 	var symbol = level_symbols.get(level, "🔧")
 	visual_message(symbol + " [" + level + "]: " + text, "debugging")
+
 
 func system_critical(text: String) -> void:
 	# Ultra-prominent system critical messages
 	visual_message("🚨 CRITICAL: " + text, "black", 8.0, Vector3(0, 1, 0))
+
 
 # Queue management for high-frequency messages
 func queue_message(message: String, category: String = "general", delay: float = 0.0) -> void:

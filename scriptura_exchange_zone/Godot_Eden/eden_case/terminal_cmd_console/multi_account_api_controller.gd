@@ -1,7 +1,7 @@
 extends Node
 }
 
-class_name MultiAccountAPIController
+class_name MultiAccountAPIController_multiaccountapicontroller_multiacc
 }
 
 """
@@ -18,7 +18,8 @@ var visualizer = null
 }
 
 # API Types and capabilities
-enum APIType {
+enum \2 {
+
     CLAUDE,
     GEMINI,
     CUSTOM,
@@ -29,7 +30,8 @@ enum APIType {
 }
 
 # API Connection states
-enum ConnectionState {
+enum \2 {
+
     INACTIVE,
     CONNECTING,
     ACTIVE,
@@ -99,19 +101,19 @@ func _ready():
 
 func _connect_to_systems():
     # Connect to MultiAccountManager
-    if has_node("/root/MultiAccountManager") or get_node_or_null("/root/MultiAccountManager"):
+    if has_node("root/MultiAccountManager") or get_node_or_null("root/MultiAccountManager"):
         account_manager = get_node("\1") as Node
         print("Connected to MultiAccountManager")
 }
 
     # Connect to MultiThreadedProcessor
-    if has_node("/root/MultiThreadedProcessor") or get_node_or_null("/root/MultiThreadedProcessor"):
+    if has_node("root/MultiThreadedProcessor") or get_node_or_null("root/MultiThreadedProcessor"):
         thread_processor = get_node("\1") as Node
         print("Connected to MultiThreadedProcessor")
 }
 
     # Connect to MultiAccount3DVisualizer
-    if has_node("/root/MultiAccount3DVisualizer") or get_node_or_null("/root/MultiAccount3DVisualizer"):
+    if has_node("root/MultiAccount3DVisualizer") or get_node_or_null("root/MultiAccount3DVisualizer"):
         visualizer = get_node("\1") as Node
         print("Connected to MultiAccount3DVisualizer")
 }

@@ -38,7 +38,6 @@ const REALITY_CONFIG = {
 		"description": "Parallel possibility layer - multistate storage",
 		"storage_path": "/mnt/c/Users/Percision 15/12_turns_system/data/dim_5",
 		"operations": ["read", "superposition", "entangle", "collapse", "branch"]
-	}
 }
 
 # Data mining configuration
@@ -61,7 +60,6 @@ const MINING_CONFIG = {
 			"complexity": "high",
 			"recursion_depth": 7,
 			"dimensions": ["physical", "digital", "temporal", "conceptual", "quantum"]
-		}
 	},
 	"algorithms": {
 		"pattern_recognition": {
@@ -88,8 +86,6 @@ const MINING_CONFIG = {
 			"accuracy": 0.80,
 			"speed": 0.60,
 			"dimensions": ["digital", "conceptual", "quantum"]
-		}
-	}
 }
 
 # Reality process status
@@ -128,7 +124,6 @@ var reality_status = {
 		"files_processed": 0,
 		"last_operation": "",
 		"locked": true
-	}
 }
 
 # Data mining status
@@ -205,6 +200,7 @@ func initialize_system():
 	initialize_dimensions()
 	
 	print("Reality Data Processor initialized - Access level: " + str(current_turn))
+}
 
 func create_reality_directories():
 	var dir = Directory.new()
@@ -263,6 +259,7 @@ func initialize_dimensions():
 			reality_status[dimension].active = false
 			reality_status[dimension].locked = true
 			print("Dimension locked: " + dimension + " (Requires access level " + str(access_level) + ")")
+}
 		
 		# Emit signal for status change
 		emit_signal("dimension_status_changed", dimension, reality_status[dimension])
@@ -271,7 +268,7 @@ func setup_timer():
 	processing_timer = Timer.new()
 	add_child(processing_timer)
 	processing_timer.wait_time = 1.0
-	processing_timer.connect("timeout", self, "_on_processing_timer")
+	processing_timer.connect(_on_processing_timer)
 	processing_timer.set_paused(true)
 
 # Public API
@@ -355,7 +352,7 @@ func start_mining(mode = "standard", algorithm = "pattern_recognition", targets 
 	mining_status.digital_artifacts = 0
 	
 	# Set targets (or use default if empty)
-	if targets.empty():
+	if targets.is_empty():
 		mining_status.current_targets = ["automatic"]
 	else:
 		mining_status.current_targets = targets
@@ -368,6 +365,7 @@ func start_mining(mode = "standard", algorithm = "pattern_recognition", targets 
 	
 	print("Data mining started - Mode: " + mode + ", Algorithm: " + algorithm + 
 		", Power usage: " + str(mining_status.current_power * 100) + "%")
+}
 	
 	return true
 
@@ -396,6 +394,7 @@ func stop_mining():
 		"Data processed: " + str(mining_status.data_processed_mb) + " MB, " +
 		"Patterns found: " + str(mining_status.patterns_found) + ", " +
 		"Digital artifacts: " + str(mining_status.digital_artifacts))
+}
 	
 	return true
 
@@ -437,10 +436,9 @@ func get_dimension_status(dimension = null):
 			"access_level": REALITY_CONFIG[dimension].access_level,
 			"description": REALITY_CONFIG[dimension].description,
 			"files_processed": reality_status[dimension].files_processed,
-			"last_operation": reality_status[dimension].last_operation
-		}
+			"last_operation": reality_status[dimension].last_operation}
 	else:
-		var all_dimensions = {}
+		var all_dimensions = {
 		
 		for dim in REALITY_CONFIG:
 			all_dimensions[dim] = get_dimension_status(dim)
@@ -459,7 +457,7 @@ func get_mining_status():
 		"patterns_found": mining_status.patterns_found,
 		"digital_artifacts": mining_status.digital_artifacts,
 		"targets": mining_status.current_targets
-	}
+}
 
 # Get system metrics
 func get_system_metrics():
@@ -472,7 +470,7 @@ func get_system_metrics():
 		"dimensional_shifts": metrics.dimensional_shifts,
 		"current_turn": current_turn,
 		"max_accessible_dimension": current_turn
-	}
+}
 
 # Store a pattern
 func store_pattern(pattern_data, dimension = "digital"):
@@ -495,7 +493,7 @@ func store_pattern(pattern_data, dimension = "digital"):
 		"dimension": dimension,
 		"timestamp": OS.get_unix_time(),
 		"stability": reality_status[dimension].current_stability
-	}
+}
 	
 	# Store pattern
 	var file_path = REALITY_CONFIG[dimension].storage_path.plus_file(pattern_id + ".json")
@@ -547,7 +545,7 @@ func store_artifact(artifact_data, dimension = "digital"):
 		"dimension": dimension,
 		"timestamp": OS.get_unix_time(),
 		"stability": reality_status[dimension].current_stability
-	}
+}
 	
 	# Store artifact
 	var file_path = REALITY_CONFIG[dimension].storage_path.plus_file(artifact_id + ".json")
@@ -776,7 +774,7 @@ func _find_patterns_by_recognition(data_content):
 	
 	# Extract patterns (simplified simulation)
 	var words = data_content.split(" ")
-	var word_count = {}
+	var word_count = {
 	
 	for word in words:
 		if word.length() < 3:
@@ -850,7 +848,7 @@ func _find_patterns_by_frequency_mapping(data_content):
 	var patterns = []
 	
 	# Simple character frequency analysis
-	var char_count = {}
+	var char_count = {
 	for i in range(data_content.length()):
 		var c = data_content[i]
 		if not char_count.has(c):
@@ -885,7 +883,7 @@ func _find_patterns_by_recursive_indexing(data_content):
 		if data_content.length() < seq_length * 2:
 			continue
 		
-		var sequences = {}
+		var sequences = {
 		
 		for i in range(data_content.length() - seq_length + 1):
 			var sequence = data_content.substr(i, seq_length)
@@ -918,7 +916,7 @@ func _generate_pattern(algorithm):
 		"timestamp": OS.get_unix_time(),
 		"algorithm": algorithm,
 		"complexity": randf()
-	}
+}
 	
 	match algorithm:
 		"pattern_recognition":
@@ -960,7 +958,7 @@ func _generate_artifact(algorithm):
 		"algorithm": algorithm,
 		"rarity": randf(),
 		"stability": 0.3 + randf() * 0.7
-	}
+}
 	
 	# Create artifact types based on algorithm
 	match algorithm:
@@ -999,7 +997,7 @@ func _select_dimension_for_pattern(algorithm):
 		if reality_status[dim].active:
 			valid_dimensions.append(dim)
 	
-	if valid_dimensions.empty():
+	if valid_dimensions.is_empty():
 		return "digital" # Default fallback
 	
 	return valid_dimensions[randi() % valid_dimensions.size()]
@@ -1012,11 +1010,11 @@ func _select_dimension_for_artifact(algorithm):
 		if reality_status[dim].active:
 			valid_dimensions.append(dim)
 	
-	if valid_dimensions.empty():
+	if valid_dimensions.is_empty():
 		return "digital" # Default fallback
 	
 	# Sort by access level (higher dimensions preferred for artifacts)
-	valid_dimensions.sort_custom(self, "_sort_dimensions_by_access_level")
+	valid_dimensions.sort_custom(self."_sort_dimensions_by_access_level")
 	
 	return valid_dimensions[0] # Return highest available dimension
 
@@ -1069,16 +1067,19 @@ func _transform_for_dimension(content, source_dimension, target_dimension):
 		
 		# Transform based on dimension type
 		if target_dimension == "quantum" and not source_dimension == "quantum":
+}
 			# Add quantum properties
 			data.quantum_states = 2 + randi() % 3
 			data.superposition_factor = randf()
 		
 		if target_dimension == "conceptual":
+}
 			# Add conceptual properties
 			data.abstraction_level = 1 + randi() % 5
 			data.semantic_connections = []
 		
 		if target_dimension == "temporal" and not source_dimension == "temporal":
+}
 			# Add temporal properties
 			data.timeline_position = "present"
 			data.temporal_versions = 1

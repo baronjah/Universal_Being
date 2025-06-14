@@ -88,7 +88,7 @@ func load_api_config():
                 for key in config.api_keys:
                     if api_keys.has(key):
                         api_keys[key] = config.api_keys[key]
-                        integration_states[key] = !config.api_keys[key].empty()
+                        integration_states[key] = !config.api_keys[key].is_empty()
             
             print("API configuration loaded from: " + API_CONFIG_PATH)
         else:
@@ -137,21 +137,21 @@ func connect_to_systems():
     if turn_system:
         # Connect turn signals appropriately
         if turn_system is TurnPrioritySystem:
-            turn_system.connect("turn_advanced", self, "_on_turn_advanced")
+            turn_system.connect(_on_turn_advanced)
         elif turn_system is TurnIntegrator:
-            turn_system.connect("turn_integrated", self, "_on_turn_integrated")
+            turn_system.connect(_on_turn_integrated)
         print("Connected to Turn System: " + turn_system.get_class())
     
     # Try to find existing OCRProcessor
     ocr_processor = get_node_or_null("/root/OCRProcessor")
     if ocr_processor:
-        ocr_processor.connect("processing_completed", self, "_on_ocr_processing_completed")
+        ocr_processor.connect(_on_ocr_processing_completed)
         print("Connected to OCR Processor")
 
 func set_api_key(service, key):
     if api_keys.has(service):
         api_keys[service] = key
-        integration_states[service] = !key.empty()
+        integration_states[service] = !key.is_empty()
         
         # Update config file
         save_api_config()

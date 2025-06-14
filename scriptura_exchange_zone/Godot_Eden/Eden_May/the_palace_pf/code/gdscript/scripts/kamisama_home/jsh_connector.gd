@@ -1,5 +1,5 @@
 extends Node
-class_name JSHConnector
+class_name JSHConnector_jshconnector_jshconne
 
 # This script helps locate and connect to the JSH console
 # It's useful when the JSH console node path is unknown or complex
@@ -24,12 +24,12 @@ func _ready():
 func find_jsh_console():
     # Common paths to try
     var possible_paths = [
-        "/root/Main/JSH_console",
-        "/root/Main/CanvasLayer/JSH_console",
-        "/root/Main/UI/JSH_console",
-        "/root/layer_0/JSH_console",
-        "/root/layer_0/CanvasLayer/JSH_console",
-        "/root/layer_0/UI/JSH_console"
+        "root/Main/JSH_console",
+        "root/Main/CanvasLayer/JSH_console",
+        "root/Main/UI/JSH_console",
+        "root/layer_0/JSH_console",
+        "root/layer_0/CanvasLayer/JSH_console",
+        "root/layer_0/UI/JSH_console"
     ]
     
     # Try each path

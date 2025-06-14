@@ -32,6 +32,7 @@ var camera_controller: Camera3D
 func _ready() -> void:
 	name = "GameWorldController"
 	print("🌌 Game World Controller: Initializing layered reality...")
+
 	
 	# Create the layered structure
 	_create_world_layers()
@@ -46,6 +47,7 @@ func _ready() -> void:
 	_ensure_cursor_on_top()
 	
 	print("🌌 Game World Controller: Reality manifested!")
+
 
 func _create_world_layers() -> void:
 	"""Create the proper layer structure"""
@@ -79,6 +81,7 @@ func _create_game_world() -> void:
 	
 	# Create ground (Universal Being)
 	var GroundBeingClass = load("res://beings/ground_universal_being.gd")
+
 	var ground_node = Node3D.new()
 	ground_node.set_script(GroundBeingClass)
 	ground_node.name = "GroundBeing"
@@ -88,6 +91,7 @@ func _create_game_world() -> void:
 	
 	# Create sun light (Universal Being)
 	var LightBeingClass = load("res://beings/light_universal_being.gd")
+
 	var sun_node = Node3D.new()
 	sun_node.set_script(LightBeingClass)
 	sun_node.name = "SunBeing"
@@ -99,6 +103,7 @@ func _create_game_world() -> void:
 	
 	# Create player (Universal Being)
 	var PlayerBeingClass = load("res://beings/player_universal_being.gd")
+
 	var player_node = Node3D.new()
 	player_node.set_script(PlayerBeingClass)
 	player_node.name = "PlayerBeing"
@@ -124,6 +129,7 @@ func _create_ui_layer() -> void:
 	
 	# Create console (layer 95)
 	var ConsoleClass = load("res://beings/perfect_universal_console.gd")
+
 	var console_node = Node3D.new()
 	console_node.set_script(ConsoleClass)
 	console_node.name = "PerfectConsole"
@@ -145,6 +151,7 @@ func _ensure_cursor_on_top() -> void:
 	if not cursor_being:
 		# Create cursor if it doesn't exist
 		var CursorClass = load("res://beings/cursor/CursorUniversalBeing.gd")
+
 		var cursor_node = Node3D.new()
 		cursor_node.set_script(CursorClass)
 		cursor_node.name = "CursorBeing"
@@ -259,6 +266,7 @@ func _create_orb_being(pos: Vector3) -> void:
 	tween.set_loops()
 	tween.tween_property(orb, "position:y", pos.y + 1, 2.0)
 	tween.tween_property(orb, "position:y", pos.y, 2.0)
+
 	
 	world_3d.add_child(orb)
 
@@ -314,3 +322,4 @@ func set_time_scale(scale: float) -> void:
 	"""Control time flow in the game world"""
 	Engine.time_scale = scale
 	print("🌌 Time scale set to: %.1fx" % scale)
+

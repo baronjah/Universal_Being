@@ -159,6 +159,7 @@ func show_interaction_hint(object: Node3D, distance: float):
 	var hint_text = get_interaction_hint_text(object)
 	
 	if hint_text != "":
+
 		var hint = Label3D.new()
 		hint.text = hint_text + "\\n[Distance: %.1fm]" % distance
 		hint.billboard = BaseMaterial3D.BILLBOARD_ENABLED
@@ -205,12 +206,14 @@ func toggle_cosmic_mode():
 	var mode_text = "COSMIC" if is_cosmic_mode else "NORMAL"
 	print("🌌 Navigation mode: %s (Speed: %.1f)" % [mode_text, current_speed])
 
+
 func fly_to_nearest_object():
 	"""Automatically fly to the nearest interesting object"""
 	var nearest_object = find_nearest_interesting_object()
 	if nearest_object:
 		start_auto_pilot(nearest_object.global_position)
 		print("🚀 Flying to: %s" % nearest_object.name)
+
 
 func find_nearest_interesting_object() -> Node3D:
 	"""Find the nearest script star, documentation, or debug object"""
@@ -259,6 +262,7 @@ func teleport_to_position(position: Vector3, look_at_target: Vector3 = Vector3.Z
 		look_at(look_at_target, Vector3.UP)
 	
 	print("⚡ Teleported to: %v" % position)
+
 
 func set_navigation_speed(speed: float):
 	"""Set navigation speed for external control"""

@@ -1,5 +1,5 @@
-class_name CoreUniversalEntity
-extends Node3D
+class_name CoreUniversalEntity_CoreUniversalEntity_CoreUniv
+extends \2
 }
 
 # ----- CORE IDENTITY PROPERTIES -----

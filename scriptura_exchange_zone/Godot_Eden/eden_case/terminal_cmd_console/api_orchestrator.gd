@@ -1,5 +1,5 @@
 extends Node
-class_name APIOrchestrator
+class_name APIOrchestrator_apiorchestrator_apiorche
 }
 
 # Signals
@@ -10,12 +10,12 @@ signal connection_status_changed(api_name, is_connected)
 }
 
 # Configuration
-export var config_path = "res://config/api/"
-export var auto_retry = true
-export var max_retries = 3
-export var retry_delay = 2.0  # seconds
-export var offline_cache_enabled = true
-export var offline_cache_expiry = 86400  # 24 hours in seconds
+@@export var config_path = "res://config/api/"
+@@export var auto_retry = true
+@@export var max_retries = 3
+@@export var retry_delay = 2.0  # seconds
+@@export var offline_cache_enabled = true
+@@export var offline_cache_expiry = 86400  # 24 hours in seconds
 }
 
 # API connection state
@@ -97,7 +97,7 @@ func add_api_connection(api_name, config_file=""):
         "rate_limit": {
             "requests_per_minute": config.get("rate_limit", 60),
             "requests_this_minute": 0,
-            "reset_time": OS.get_unix_time() + 60
+            "reset_time": OS.Time.get_unix_time_from_system() + 60
         }
     }
 }
@@ -262,7 +262,7 @@ func send_request(api_name, endpoint, method="GET", data=null, params={}):
         "data": data,
         "params": params,
         "retry_count": 0,
-        "timestamp": OS.get_unix_time()
+        "timestamp": OS.Time.get_unix_time_from_system()
     }
 }
 
@@ -271,9 +271,9 @@ func send_request(api_name, endpoint, method="GET", data=null, params={}):
         var cache_key = _generate_cache_key(api_name, endpoint, params)
         if offline_cache.has(cache_key):
             var cached = offline_cache[cache_key]
-            if cached.expiry > OS.get_unix_time():
+            if cached.expiry > OS.Time.get_unix_time_from_system():
                 # Return cached response
-                print("Using cached response for: ", api_name, "/", endpoint)
+                print("Using cached response for: ", api_name, "", endpoint)
 }
 
                 # Simulate delay for realism
@@ -304,7 +304,7 @@ func _check_rate_limit(api_name):
 }
 
     var rate_limit = api_connections[api_name].rate_limit
-    var current_time = OS.get_unix_time()
+    var current_time = OS.Time.get_unix_time_from_system()
 }
 
     # Reset counter if time expired
@@ -380,7 +380,7 @@ func _execute_request(request):
 
     # Update usage stats
     api_usage[api_name].total_requests += 1
-    api_connections[api_name].last_request_time = OS.get_unix_time()
+    api_connections[api_name].last_request_time = OS.Time.get_unix_time_from_system()
 }
 
     # Perform API call
@@ -410,8 +410,8 @@ func _execute_request(request):
             var cache_key = _generate_cache_key(api_name, endpoint, params)
             offline_cache[cache_key] = {
                 "response": response,
-                "timestamp": OS.get_unix_time(),
-                "expiry": OS.get_unix_time() + offline_cache_expiry
+                "timestamp": OS.Time.get_unix_time_from_system(),
+                "expiry": OS.Time.get_unix_time_from_system() + offline_cache_expiry
             }
 }
 
@@ -428,7 +428,7 @@ func _execute_request(request):
 
         # Handle retry if enabled
         if auto_retry and request.retry_count < max_retries:
-            print("Retrying request to: ", api_name, "/", endpoint)
+            print("Retrying request to: ", api_name, "", endpoint)
             request.retry_count += 1
             api_usage[api_name].retry_count += 1
 }
@@ -447,7 +447,7 @@ func _execute_request(request):
 }
 
 func _generate_request_id():
-    return str(OS.get_unix_time()) + "_" + str(randi() % 10000)
+    return str(OS.Time.get_unix_time_from_system()) + "_" + str(randi() % 10000)
 }
 
 func _generate_cache_key(api_name, endpoint, params):
@@ -564,7 +564,7 @@ func _simulate_openai_response(endpoint, data):
         return {
             "id": "chatcmpl-" + _generate_request_id(),
             "object": "chat.completion",
-            "created": OS.get_unix_time(),
+            "created": OS.Time.get_unix_time_from_system(),
             "model": data.get("model", "gpt-4"),
             "choices": [
                 {
@@ -615,7 +615,7 @@ func _simulate_telegram_response(endpoint, data):
         "ok": true,
         "result": {
             "message_id": randi() % 1000,
-            "date": OS.get_unix_time(),
+            "date": OS.Time.get_unix_time_from_system(),
             "text": "Message delivered"
         }
     }
@@ -652,7 +652,7 @@ func get_api_status(api_name):
         "last_request_time": conn.last_request_time,
         "requests_this_minute": conn.rate_limit.requests_this_minute,
         "requests_per_minute": conn.rate_limit.requests_per_minute,
-        "reset_in_seconds": max(0, conn.rate_limit.reset_time - OS.get_unix_time())
+        "reset_in_seconds": max(0, conn.rate_limit.reset_time - OS.Time.get_unix_time_from_system())
     }
 }
 
@@ -725,7 +725,7 @@ func load_offline_cache(cache_file="user://api_cache/offline_cache.json"):
 }
 
     # Clean expired entries
-    var current_time = OS.get_unix_time()
+    var current_time = OS.Time.get_unix_time_from_system()
     var keys_to_remove = []
 }
 

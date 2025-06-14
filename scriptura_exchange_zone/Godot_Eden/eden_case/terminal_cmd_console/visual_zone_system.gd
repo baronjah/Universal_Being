@@ -7,18 +7,18 @@ extends Node2D
 }
 
 # Configuration
-export var zone_count = 5
-export var use_rounded_corners = true
-export var corner_radius = 15.0
-export var transition_duration = 0.3
-export var default_zone_opacity = 0.6
-export var highlight_zone_opacity = 0.85
-export var border_thickness = 2.0
-export var pattern_complexity = 99  # 99+ for advanced patterns
+@export var zone_count = 5
+@export var use_rounded_corners = true
+@export var corner_radius = 15.0
+@export var transition_duration = 0.3
+@export var default_zone_opacity = 0.6
+@export var highlight_zone_opacity = 0.85
+@export var border_thickness = 2.0
+@export var pattern_complexity = 99  # 99+ for advanced patterns
 }
 
 # Zone appearance
-export var zone_colors = [
+@export var zone_colors = [
     Color(0.0, 0.5, 1.0, 1.0),   # Blue
     Color(0.8, 0.3, 1.0, 1.0),   # Purple
     Color(1.0, 0.4, 0.4, 1.0),   # Salmon/Red
@@ -27,7 +27,7 @@ export var zone_colors = [
 ]
 }
 
-export var secondary_colors = [
+@export var secondary_colors = [
     Color(0.0, 0.7, 1.0, 1.0),   # Lighter blue
     Color(0.6, 0.4, 0.9, 1.0),   # Lighter purple
     Color(1.0, 0.6, 0.6, 1.0),   # Lighter salmon
@@ -36,7 +36,7 @@ export var secondary_colors = [
 ]
 }
 
-export var tertiary_colors = [
+@export var tertiary_colors = [
     Color(0.2, 0.3, 0.9, 1.0),   # Darker blue
     Color(0.5, 0.2, 0.8, 1.0),   # Darker purple
     Color(0.8, 0.2, 0.2, 1.0),   # Darker red
@@ -321,7 +321,7 @@ func _generate_pattern_points(rect, complexity):
 # Connect to center projection system if available
 func _connect_to_center_projection():
     # Try to find center_projection_system
-    center_projection_system = get_node_or_null("/root/CenterProjectionSystem")
+    center_projection_system = get_node_or_null("root/CenterProjectionSystem")
 }
 
     if not center_projection_system:

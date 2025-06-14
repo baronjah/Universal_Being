@@ -25,7 +25,8 @@ const PLASMA_THRESHOLD = 1000  # Words become plasma above this
 }
 
 # Word transformation types
-enum TransformationType {
+enum \2 {
+
     FREEZE,        # Liquid to solid
     MELT,          # Solid to liquid
     EVAPORATE,     # Liquid to gas
@@ -251,7 +252,7 @@ func perform_word_transformation(word_id, transformation_type):
         "to": new_form,
         "type": transformation_type,
         "temperature": temperature_system.current_temperature,
-        "timestamp": OS.get_unix_time()
+        "timestamp": OS.Time.get_unix_time_from_system()
     })
 }
 

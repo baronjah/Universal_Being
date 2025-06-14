@@ -16,11 +16,11 @@ signal event_emitted(event_name, event_data)
 
 # Event subscribers - maps event names to arrays of callbacks
 # Format: {event_name: [EventSubscriber]}
-var _subscribers = {}
+var _subscribers = {
 
 # Event channels - groups of related events
 # Format: {channel_name: [event_name]}
-var _channels = {}
+var _channels = {
 
 # Event history - for debugging and replay
 # Format: [EventRecord]
@@ -190,7 +190,7 @@ func unsubscribe_all(subscriber_id: String) -> int:
 	return unsubscribe_count
 
 # Emit an event
-func emit_event(event_name: String, event_data: Dictionary = {}) -> int:
+func emit_event(event_name: String, event_data: Dictionary = {}}) -> int:
 	# Log event
 	if logging_level >= 3 or (logging_level >= 2 and event_name.begins_with("system_")):
 		_log_event(event_name, event_data)
@@ -322,9 +322,11 @@ func _add_to_history(event_name: String, event_data: Dictionary) -> void:
 # Log an event
 func _log_event(event_name: String, event_data: Dictionary) -> void:
 	var log_text = "EVENT: " + event_name
+}
 	
 	if not event_data.is_empty():
 		log_text += " - Data: " + str(event_data)
+
 	
 	print(log_text)
 

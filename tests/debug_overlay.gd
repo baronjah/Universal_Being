@@ -95,6 +95,7 @@ func _populate_panel():
 	var target_name = target.name if target.has_method("get") else "Unknown"
 	header_label.text = "🎛️ Debug: %s" % target_name
 	print("🎛️ Populating debug panel for: %s" % target_name)
+
 	
 	# Clear existing content
 	tree.clear()
@@ -194,6 +195,7 @@ func _on_tree_edited():
 	
 	print("🎛️ Debug field edited: %s.%s = %s" % [target.name if target.has_method("get") else "Unknown", key, converted_value])
 
+
 func convert_string_to_value(value_str: String, key: String):
 	"""Convert string input to appropriate value type"""
 	# Try to infer type from original payload
@@ -262,6 +264,7 @@ func parse_color(value_str: String) -> Color:
 		"yellow": return Color.YELLOW
 		"cyan": return Color.CYAN
 		"magenta": return Color.MAGENTA
+
 	
 	# Try to parse as hex color
 	if value_str.begins_with("#"):
@@ -277,6 +280,7 @@ func parse_color(value_str: String) -> Color:
 func execute_debug_action(action_name: String, action_callable: Callable):
 	"""Execute a debug action"""
 	print("⚡ Executing debug action: %s" % action_name)
+
 	
 	if action_callable.is_valid():
 		action_callable.call()

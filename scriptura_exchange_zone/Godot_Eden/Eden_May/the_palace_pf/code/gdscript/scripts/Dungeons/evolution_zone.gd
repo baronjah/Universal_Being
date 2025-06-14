@@ -1,12 +1,13 @@
-class_name EvolutionSystem
-extends Node
+class_name EvolutionSystem_evolutionzone_evolutio
+extends \2
 
 # References
-@export var connection_manager: WebsiteConnectionManager
-@export var pathway_system: PathwaySystem
+@@@export var connection_manager: WebsiteConnectionManager
+@@@export var pathway_system: PathwaySystem
 
 # Evolution stages and types
-enum EvolutionStage {
+enum \2 {
+
 	INITIALIZATION,
 	EXPANSION,
 	OPTIMIZATION,

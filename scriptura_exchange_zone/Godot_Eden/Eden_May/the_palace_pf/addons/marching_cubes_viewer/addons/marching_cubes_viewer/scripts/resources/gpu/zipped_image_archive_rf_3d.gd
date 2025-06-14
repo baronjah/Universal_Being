@@ -22,8 +22,8 @@
 # SOFTWARE.
 
 @tool
-extends Resource
-class_name ZippedImageArchive_RF_3D
+extends \2
+class_name ZippedImageArchive_RF_3D_zippedimagearchiverf3d_zippedim
 
 signal zipfile_changed
 

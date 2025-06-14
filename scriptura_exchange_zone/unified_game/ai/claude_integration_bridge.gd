@@ -1,18 +1,18 @@
 extends Node
 
-class_name ClaudeIntegrationBridge
+class_name ClaudeIntegrationBridge_claudein
 
 # ----- CLAUDE INTEGRATION SETTINGS -----
 @export_category("Claude Integration")
-@export var enabled: bool = true
-@export var auto_connect: bool = true
-@export var use_memory_system: bool = true
-@export var use_ethereal_bridge: bool = true
-@export var use_akashic_records: bool = true
-@export var default_model: String = "claude-3-7-sonnet"
-@export var cache_responses: bool = true
-@export var max_tokens_per_minute: int = 8000
-@export var freemium_mode: bool = true
+@@export var enabled: bool = true
+@@export var auto_connect: bool = true
+@@export var use_memory_system: bool = true
+@@export var use_ethereal_bridge: bool = true
+@@export var use_akashic_records: bool = true
+@@export var default_model: String = "claude-3-7-sonnet"
+@@export var cache_responses: bool = true
+@@export var max_tokens_per_minute: int = 8000
+@@export var freemium_mode: bool = true
 
 # ----- API SETTINGS -----
 var api_key: String = ""
@@ -140,7 +140,7 @@ func _find_system_references():
     performance_optimizer = _find_node_by_class(get_tree().root, "PerformanceOptimizer")
 
 func _find_node_by_class(node, class_name):
-    if node.get_class() == class_name or (node.get_script() and node.get_script().get_path().find(class_name.to_lower()) >= 0):
+    if node.get_class() == class_name or_claudein (node.get_script() and node.get_script().get_path().find(class_name.to_lower()) >= 0):
         return node
     
     for child in node.get_children():

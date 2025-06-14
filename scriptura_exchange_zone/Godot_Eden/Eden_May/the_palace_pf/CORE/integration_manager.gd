@@ -5,7 +5,7 @@ extends Node
 # Connects Scriptura Turn System, API Coordinator, Wish Maker, and Eden_May systems
 }
 
-class_name IntegrationManager
+class_name IntegrationManager_integrationmanager_integrat
 }
 
 # References to main systems
@@ -72,7 +72,7 @@ func _ready():
 
 func find_systems():
 	# Find Eden Core
-	eden_core = get_node_or_null("/root/EdenMayGame/EdenCore")
+	eden_core = get_node_or_null("root/EdenMayGame/EdenCore")
 	if eden_core:
 		systems_status.eden_core = true
 		print("Found Eden Core")
@@ -85,9 +85,9 @@ func find_systems():
 }
 
 	# Find Scriptura Turn System
-	scriptura_turn_system = get_node_or_null("/root/EdenMayGame/ScripturaTurnSystem")
+	scriptura_turn_system = get_node_or_null("root/EdenMayGame/ScripturaTurnSystem")
 	if not scriptura_turn_system:
-		scriptura_turn_system = get_node_or_null("/root/ScripturaTurnSystem")
+		scriptura_turn_system = get_node_or_null("root/ScripturaTurnSystem")
 }
 
 	if scriptura_turn_system:
@@ -96,9 +96,9 @@ func find_systems():
 }
 
 	# Find API Coordinator
-	api_coordinator = get_node_or_null("/root/EdenMayGame/APICoordinator")
+	api_coordinator = get_node_or_null("root/EdenMayGame/APICoordinator")
 	if not api_coordinator:
-		api_coordinator = get_node_or_null("/root/APICoordinatorSystem/APICoordinator")
+		api_coordinator = get_node_or_null("root/APICoordinatorSystem/APICoordinator")
 }
 
 	if api_coordinator:
@@ -107,9 +107,9 @@ func find_systems():
 }
 
 	# Find Wish Maker
-	wish_maker = get_node_or_null("/root/EdenMayGame/WishMaker")
+	wish_maker = get_node_or_null("root/EdenMayGame/WishMaker")
 	if not wish_maker:
-		wish_maker = get_node_or_null("/root/WishMakerSystem/WishMaker")
+		wish_maker = get_node_or_null("root/WishMakerSystem/WishMaker")
 }
 
 	if wish_maker:
@@ -118,7 +118,7 @@ func find_systems():
 }
 
 	# Find Simple OCR
-	simple_ocr = get_node_or_null("/root/SimpleOCR")
+	simple_ocr = get_node_or_null("root/SimpleOCR")
 	if simple_ocr:
 		systems_status.simple_ocr = true
 		print("Found Simple OCR")
@@ -272,7 +272,7 @@ func connect_wish_maker_to_scriptura():
 
 	# Enhance wish maker with OCR capabilities
 	if not wish_maker.has_method("process_ocr_text"):
-		wish_maker.process_ocr_text = funcref(self, "_wish_maker_process_ocr")
+		wish_maker.process_ocr_text = Callable(self, "_wish_maker_process_ocr")
 }
 
 	# Connect signals
@@ -297,12 +297,12 @@ func integrate_commands():
 }
 
 		# Replace with enhanced version that includes scriptura commands
-		eden_core.check_special_commands = funcref(self, "_enhanced_check_commands")
+		eden_core.check_special_commands = Callable(self, "_enhanced_check_commands")
 }
 
 	# Add OCR command if not already present
 	if eden_core.has_method("process_command") and not "_process_ocr_command" in eden_core:
-		eden_core._process_ocr_command = funcref(self, "_process_ocr_command")
+		eden_core._process_ocr_command = Callable(self, "_process_ocr_command")
 }
 
 	return true
@@ -335,7 +335,7 @@ func setup_color_sync():
 
 	# Add color sync method to API Coordinator if not present
 	if not api_coordinator.has_method("set_custom_color"):
-		api_coordinator.set_custom_color = funcref(self, "_api_set_custom_color")
+		api_coordinator.set_custom_color = Callable(self, "_api_set_custom_color")
 }
 
 	# Update initial color

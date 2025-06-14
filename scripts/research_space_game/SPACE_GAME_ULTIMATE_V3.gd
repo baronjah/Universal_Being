@@ -235,6 +235,7 @@ class StellarHUD extends Control:
 		# Fade out animation
 		var tween = create_tween()
 		tween.tween_property(message_label, "modulate:a", 0.0, duration)
+
 	
 	func show_floating_text(text: String, position: Vector3, color: Color):
 		var floating_text = Label3D.new()

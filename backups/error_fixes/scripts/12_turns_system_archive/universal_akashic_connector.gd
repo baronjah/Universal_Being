@@ -26,13 +26,13 @@ var config = {
 }
 
 # ----- CONNECTION DATA -----
-var connected_systems = {}
-var active_connections = {}
-var connection_history = {}
-var dimension_registry = {}
-var record_cache = {}
+var connected_systems = {
+var active_connections = {
+var connection_history = {
+var dimension_registry = {
+var record_cache = {
 var transfer_queue = []
-var dimensional_gates = {}
+var dimensional_gates = {
 
 # ----- SYSTEM REFERENCES -----
 var _akashic_database = null
@@ -78,6 +78,7 @@ func _ready():
 	_initialize_record_cache()
 	
 	print("Universal Akashic Connector initialized with access level: " + str(config.dimension_access))
+}
 
 func _setup_timers():
 	# Connection check timer (every 5 seconds)
@@ -85,7 +86,7 @@ func _setup_timers():
 	connection_timer.wait_time = 5.0
 	connection_timer.one_shot = false
 	connection_timer.autostart = true
-	connection_timer.connect("timeout", self, "_on_connection_timer_timeout")
+	connection_timer.connect(_on_connection_timer_timeout)
 	add_child(connection_timer)
 	
 	# Synchronization timer (every 30 seconds)
@@ -93,7 +94,7 @@ func _setup_timers():
 	sync_timer.wait_time = 30.0
 	sync_timer.one_shot = false
 	sync_timer.autostart = true
-	sync_timer.connect("timeout", self, "_on_sync_timer_timeout")
+	sync_timer.connect(_on_sync_timer_timeout)
 	add_child(sync_timer)
 	
 	# Cleanup timer (every 5 minutes)
@@ -101,7 +102,7 @@ func _setup_timers():
 	cleanup_timer.wait_time = 300.0
 	cleanup_timer.one_shot = false
 	cleanup_timer.autostart = true
-	cleanup_timer.connect("timeout", self, "_on_cleanup_timer_timeout")
+	cleanup_timer.connect(_on_cleanup_timer_timeout)
 	add_child(cleanup_timer)
 	
 	# Transfer queue timer (every 1 second)
@@ -109,7 +110,7 @@ func _setup_timers():
 	transfer_timer.wait_time = 1.0
 	transfer_timer.one_shot = false
 	transfer_timer.autostart = true
-	transfer_timer.connect("timeout", self, "_on_transfer_timer_timeout")
+	transfer_timer.connect(_on_transfer_timer_timeout)
 	add_child(transfer_timer)
 
 func _find_systems():
@@ -186,8 +187,7 @@ func _initialize_dimensional_gates():
 			"open": config.dimension_access >= 12,
 			"description": "Transcendent layer",
 			"systems": []
-		}
-	}
+}
 	
 	# Add dimensional registry entries
 	for gate_name in dimensional_gates:
@@ -199,12 +199,12 @@ func _initialize_dimensional_gates():
 			"description": gate.description,
 			"connections": [],
 			"records": []
-		}
+}
 
 func _initialize_record_cache():
 	# Initialize empty record cache with sections for different dimension levels
 	for level in range(1, DIMENSION_LEVELS + 1):
-		record_cache[str(level)] = {}
+		record_cache[str(level)] = {
 
 func _auto_connect_systems():
 	# Connect to any akashic systems we can find
@@ -219,6 +219,7 @@ func _search_for_akashic_systems():
 	
 	# If we have the project connector, use it to find projects
 	if _project_connector and _project_connector.has_method("get_projects_by_type"):
+}
 		var akashic_projects = _project_connector.get_projects_by_type("akashic")
 		
 		for project_id in akashic_projects:
@@ -244,6 +245,7 @@ func _search_directory(base_path, keywords, depth=0, max_depth=3):
 		
 		var file_name = dir.get_next()
 		while file_name != "":
+}
 			var full_path = base_path + "/" + file_name
 			
 			if dir.current_is_dir():
@@ -252,6 +254,7 @@ func _search_directory(base_path, keywords, depth=0, max_depth=3):
 			else:
 				# Check if file matches akashic systems
 				if file_name.get_extension() == "gd" or file_name.get_extension() == "js":
+	}
 					var matches = false
 					for keyword in keywords:
 						if file_name.find(keyword) >= 0:
@@ -295,6 +298,7 @@ func _try_connect_system(system_id, system_type, path):
 		return connected_systems[system_id]
 	
 	print("Attempting to connect to system: " + system_id + " of type: " + system_type)
+}
 	
 	var system_node = null
 	
@@ -315,6 +319,7 @@ func _try_connect_system(system_id, system_type, path):
 				push_warning("Could not load script for system: " + system_id)
 		else:
 			push_warning("File does not exist: " + path)
+}
 	
 	if system_node:
 		return _register_system(system_id, system_node, system_type)
@@ -324,7 +329,7 @@ func _try_connect_system(system_id, system_type, path):
 # ----- REGISTRATION AND CONNECTION -----
 func _register_system(system_id, system_node, system_type=""):
 	# Determine system type if not provided
-	if system_type.empty():
+	if system_type.is_empty():
 		system_type = _detect_system_type(system_node)
 	
 	# Store system information
@@ -334,7 +339,7 @@ func _register_system(system_id, system_node, system_type=""):
 		"connected_at": OS.get_unix_time(),
 		"status": "connected",
 		"dimensions": []
-	}
+}
 	
 	# Register system with appropriate dimensional gates
 	match system_type:
@@ -433,6 +438,7 @@ func connect_systems(source_id, target_id, connection_type="bridge"):
 		return connection_id
 	
 	print("Connecting systems: " + source_id + " to " + target_id + " via " + connection_type)
+}
 	
 	# Create connection data
 	active_connections[connection_id] = {
@@ -443,8 +449,8 @@ func connect_systems(source_id, target_id, connection_type="bridge"):
 		"status": "active",
 		"transfers": 0,
 		"last_sync": 0,
-		"metadata": {}
-	}
+		"metadata": {
+}
 	
 	# Store in connection history
 	connection_history[connection_id] = {
@@ -456,7 +462,6 @@ func connect_systems(source_id, target_id, connection_type="bridge"):
 			"timestamp": OS.get_unix_time(),
 			"status": "created"
 		}]
-	}
 	
 	# Connect their dimensions
 	_connect_dimensions(source_id, target_id, connection_type)
@@ -491,6 +496,7 @@ func _connect_dimensions(source_id, target_id, connection_type):
 			})
 			
 			print("Connected dimension: " + dim + " between " + source_id + " and " + target_id)
+}
 	
 	# Register dimensions with systems
 	source_system.dimensions = source_dimensions
@@ -529,12 +535,13 @@ func store_record(content, metadata={}):
 					"content": content,
 					"metadata": metadata,
 					"storage": [primary_system_id]
-				}
+	}
 	
 	# If not stored in primary, try Claude bridge
 	if not primary_stored and _claude_bridge:
 		primary_system_id = "claude_akashic_bridge"
 		if _claude_bridge.has_method("create_protected_record"):
+}
 			var result = _claude_bridge.create_protected_record("text", content, metadata)
 			
 			if result and result.has("id"):
@@ -548,7 +555,7 @@ func store_record(content, metadata={}):
 					"content": content,
 					"metadata": metadata,
 					"storage": [primary_system_id]
-				}
+	}
 	
 	# Queue for distribution to other systems
 	if primary_stored:
@@ -567,7 +574,7 @@ func retrieve_record(record_id, source_system_id=""):
 			return record_cache[level][record_id]
 	
 	# If source system specified, try it first
-	if not source_system_id.empty() and connected_systems.has(source_system_id):
+	if not source_system_id.is_empty() and connected_systems.has(source_system_id):
 		var record = _retrieve_from_system(record_id, source_system_id)
 		if record:
 			return record
@@ -592,6 +599,7 @@ func _retrieve_from_system(record_id, system_id):
 	match system.type:
 		"akashic_database":
 			if system_node.has_method("search_word"):
+}
 				var result = system_node.search_word(record_id)
 				if result:
 					print("Retrieved record " + record_id + " from system " + system_id)
@@ -602,12 +610,13 @@ func _retrieve_from_system(record_id, system_id):
 						"content": result.get("content", ""),
 						"metadata": result,
 						"storage": [system_id]
-					}
+	}
 					
 					return record_cache[str(dimension_level)][record_id]
 		
 		"akashic_records":
 			if system_node.has_method("get_record"):
+
 				var result = system_node.get_record(record_id)
 				if result:
 					print("Retrieved record " + record_id + " from system " + system_id)
@@ -618,12 +627,13 @@ func _retrieve_from_system(record_id, system_id):
 						"content": result.get("content", ""),
 						"metadata": result,
 						"storage": [system_id]
-					}
+	}
 					
 					return record_cache[str(dimension_level)][record_id]
 		
 		"claude_akashic":
 			if system_node.has_method("query_akashic_records"):
+
 				var result = system_node.query_akashic_records(record_id)
 				if result:
 					print("Retrieved record " + record_id + " from system " + system_id)
@@ -634,12 +644,13 @@ func _retrieve_from_system(record_id, system_id):
 						"content": result.get("content", ""),
 						"metadata": result,
 						"storage": [system_id]
-					}
+	}
 					
 					return record_cache[str(dimension_level)][record_id]
 		
 		"ethereal_akashic":
 			if system_node.has_method("search_akashic_records"):
+
 				var results = system_node.search_akashic_records(record_id)
 				if results and results.size() > 0:
 					print("Retrieved record " + record_id + " from system " + system_id)
@@ -650,7 +661,7 @@ func _retrieve_from_system(record_id, system_id):
 						"content": results[0].get("content", ""),
 						"metadata": results[0],
 						"storage": [system_id]
-					}
+	}
 					
 					return record_cache[str(dimension_level)][record_id]
 	
@@ -664,7 +675,7 @@ func search_records(query, options={}):
 		"max_results": 10,
 		"include_content": true,
 		"source_systems": []  # Empty means all systems
-	}
+}
 	
 	# Merge with provided options
 	for key in default_options:
@@ -672,6 +683,7 @@ func search_records(query, options={}):
 			options[key] = default_options[key]
 	
 	print("Searching for records with query: " + query)
+
 	
 	var results = []
 	var systems_to_search = []
@@ -710,22 +722,26 @@ func search_records(query, options={}):
 		match system.type:
 			"akashic_database":
 				if system_node.has_method("search_word"):
+	
 					var search_results = system_node.search_word(query)
 					if search_results:
 						_process_search_results(results, search_results, system_id, options)
 			
 			"akashic_records":
 				if system_node.has_method("search_records"):
+	
 					var search_results = system_node.search_records(query)
 					if search_results:
 						_process_search_results(results, search_results, system_id, options)
 			
 			"claude_akashic":
 				if system_node.has_method("query_akashic_records"):
-					var search_options = {}
+	
+					var search_options = {
 					if options.dimension != "all":
 						search_options.dimension = options.dimension
 					search_options.max_results = options.max_results
+}
 					
 					var search_results = system_node.query_akashic_records(query, search_options)
 					if search_results:
@@ -733,6 +749,7 @@ func search_records(query, options={}):
 			
 			"ethereal_akashic":
 				if system_node.has_method("search_akashic_records"):
+	
 					var dimension_key = options.dimension if options.dimension != "all" else ""
 					var search_results = system_node.search_akashic_records(query, dimension_key)
 					if search_results:
@@ -745,6 +762,7 @@ func search_records(query, options={}):
 			
 			# Check dimension constraint
 			if options.dimension != "all":
+
 				var record_dimension = record.metadata.get("dimension", "akashic")
 				if record_dimension != options.dimension:
 					continue
@@ -776,7 +794,7 @@ func search_records(query, options={}):
 						"id": record_id,
 						"source_system": record.storage[0],
 						"dimension": record.metadata.get("dimension", "akashic")
-					}
+	}
 					
 					if options.include_content:
 						result_item.content = record.content
@@ -789,6 +807,7 @@ func search_records(query, options={}):
 		results.resize(options.max_results)
 	
 	print("Found " + str(results.size()) + " records matching query: " + query)
+
 	
 	return results
 
@@ -801,15 +820,16 @@ func _process_search_results(results, search_results, system_id, options):
 		var result_item = {
 			"id": search_results.get("id", "unknown_" + str(OS.get_unix_time())),
 			"source_system": system_id
-		}
+}
 		
 		if options.include_content:
 			result_item.content = search_results.get("content", "")
 		
-		result_item.metadata = {}
+		result_item.metadata = {
 		for key in search_results:
 			if key != "content":
 				result_item.metadata[key] = search_results[key]
+}
 		
 		result_item.dimension = search_results.get("dimension", "akashic")
 		
@@ -830,7 +850,7 @@ func _process_search_results(results, search_results, system_id, options):
 					"content": search_results.get("content", ""),
 					"metadata": result_item.metadata,
 					"storage": [system_id]
-				}
+	}
 	
 	elif typeof(search_results) == TYPE_ARRAY:
 		# Multiple results as array
@@ -838,15 +858,16 @@ func _process_search_results(results, search_results, system_id, options):
 			var result_item = {
 				"id": item.get("id", "unknown_" + str(OS.get_unix_time())),
 				"source_system": system_id
-			}
+	}
 			
 			if options.include_content:
 				result_item.content = item.get("content", "")
 			
-			result_item.metadata = {}
+			result_item.metadata = {
 			for key in item:
 				if key != "content":
 					result_item.metadata[key] = item[key]
+}
 			
 			result_item.dimension = item.get("dimension", "akashic")
 			
@@ -867,7 +888,7 @@ func _process_search_results(results, search_results, system_id, options):
 						"content": item.get("content", ""),
 						"metadata": result_item.metadata,
 						"storage": [system_id]
-					}
+	}
 
 # ----- DIMENSION OPERATIONS -----
 func open_dimensional_gate(gate_name):
@@ -883,6 +904,7 @@ func open_dimensional_gate(gate_name):
 		return false
 	
 	print("Opening dimensional gate: " + gate_name)
+
 	
 	# Open gate
 	gate.open = true
@@ -921,6 +943,7 @@ func close_dimensional_gate(gate_name):
 		return false
 	
 	print("Closing dimensional gate: " + gate_name)
+
 	
 	# Close gate
 	gate.open = false
@@ -947,6 +970,7 @@ func set_dimension_access(level):
 		return false
 	
 	print("Setting dimension access level to: " + str(level))
+
 	
 	# Store previous level for comparison
 	var previous_level = config.dimension_access
@@ -1038,7 +1062,7 @@ func synchronize_systems(options={}):
 		"systems": [],  # Empty means all systems
 		"dimensions": [],  # Empty means all accessible dimensions
 		"max_records": 100
-	}
+}
 	
 	# Merge with provided options
 	for key in default_options:
@@ -1079,7 +1103,7 @@ func synchronize_systems(options={}):
 	print("Synchronizing " + str(systems_to_sync.size()) + " systems across " + str(dimensions_to_sync.size()) + " dimensions")
 	
 	# Collect records from each system
-	var system_records = {}
+	var system_records = {
 	
 	for system_id in systems_to_sync:
 		system_records[system_id] = _collect_system_records(system_id, dimensions_to_sync, options.max_records)
@@ -1125,7 +1149,7 @@ func synchronize_systems(options={}):
 
 func _collect_system_records(system_id, dimensions, max_records):
 	var system = connected_systems[system_id]
-	var records = {}
+	var records = {
 	var count = 0
 	
 	# Collect from cache first
@@ -1150,10 +1174,12 @@ func _collect_system_records(system_id, dimensions, max_records):
 	if count < max_records:
 		match system.type:
 			"akashic_database":
+}
 				# Not implemented - would need custom API
 				pass
 			
 			"akashic_records":
+}
 				# Not implemented - would need custom API
 				pass
 			
@@ -1174,8 +1200,8 @@ func _collect_system_records(system_id, dimensions, max_records):
 										"content": item.get("content", ""),
 										"metadata": item,
 										"storage": [system_id]
-									}
 									count += 1
+}
 									
 									if count >= max_records:
 										return records
@@ -1194,8 +1220,8 @@ func _collect_system_records(system_id, dimensions, max_records):
 										"content": item.get("content", ""),
 										"metadata": item,
 										"storage": [system_id]
-									}
 									count += 1
+}
 									
 									if count >= max_records:
 										return records
@@ -1212,7 +1238,7 @@ func _queue_record_distribution(record_id, content, metadata, source_system_id):
 		"queued_at": OS.get_unix_time(),
 		"attempts": 0,
 		"distributed_to": []
-	}
+}
 	
 	transfer_queue.append(transfer_item)
 	
@@ -1262,6 +1288,7 @@ func _transfer_record(record_id, content, metadata, source_system_id, target_sys
 		
 		"claude_akashic":
 			if target_node.has_method("create_protected_record"):
+
 				var result = target_node.create_protected_record("text", content, transfer_metadata)
 				success = result != null
 		
@@ -1284,7 +1311,7 @@ func _transfer_record(record_id, content, metadata, source_system_id, target_sys
 				"content": content,
 				"metadata": metadata,
 				"storage": [source_system_id, target_system_id]
-			}
+	}
 		
 		emit_signal("record_transferred", record_id, source_system_id, target_system_id)
 	else:
@@ -1312,12 +1339,14 @@ func _on_connection_timer_timeout():
 					if system.node.connect_to_akashic_systems():
 						system.status = "connected"
 						print("Reconnected to system: " + system_id)
+	
 			
 			"claude_akashic":
 				if system.node.has_method("_initialize_bridge"):
 					system.node._initialize_bridge()
 					system.status = "connected"
 					print("Reconnected to system: " + system_id)
+	
 
 func _on_sync_timer_timeout():
 	# Perform synchronization if in scheduled mode
@@ -1404,10 +1433,12 @@ func _on_database_connected(system_id):
 		connected_systems[system_id].status = "connected"
 		print("Database system connected: " + system_id)
 
+
 func _on_database_disconnected(system_id):
 	if connected_systems.has(system_id):
 		connected_systems[system_id].status = "disconnected"
 		print("Database system disconnected: " + system_id)
+
 
 func _on_word_added(word, power, system_id):
 	# When a word is added to a database system, store in our cache
@@ -1416,7 +1447,7 @@ func _on_word_added(word, power, system_id):
 		"power": power,
 		"source_system": system_id,
 		"timestamp": OS.get_unix_time()
-	}
+}
 	
 	var dimension_level = 4  # Default to akashic level
 	var record_id = "word_" + str(OS.get_unix_time()) + "_" + word
@@ -1425,7 +1456,7 @@ func _on_word_added(word, power, system_id):
 		"content": word,
 		"metadata": metadata,
 		"storage": [system_id]
-	}
+}
 
 func _on_word_stored(word, power, metadata, system_id):
 	# When a word is stored by ClaudeAkashicBridge
@@ -1446,6 +1477,7 @@ func _on_data_transferred(channel, size, system_id):
 	# When data is transferred in an ethereal system
 	print("Data transferred in system " + system_id + " - channel: " + channel + ", size: " + str(size))
 
+
 func _on_gate_status_changed(gate_name, status, system_id):
 	# When a gate status changes in ClaudeAkashicBridge
 	print("Gate " + gate_name + " status changed to " + str(status) + " in system " + system_id)
@@ -1462,6 +1494,7 @@ func _on_gate_status_changed(gate_name, status, system_id):
 		4: dimension_name = "cloud"
 		5: dimension_name = "dimensional"
 		_: dimension_name = "transcendent"
+
 	
 	if dimensional_gates.has(dimension_name):
 		dimensional_gates[dimension_name].open = status
@@ -1482,8 +1515,8 @@ func get_dimension_registry():
 func get_cache_stats():
 	var stats = {
 		"total_records": 0,
-		"by_level": {}
-	}
+		"by_level": {
+}
 	
 	for level in record_cache:
 		stats.by_level[level] = record_cache[level].size()
@@ -1509,6 +1542,7 @@ func set_config(key, value):
 		"dimension_access":
 			set_dimension_access(value)
 		"synchronization_mode":
+}
 			# Update sync timer frequency based on mode
 			match value:
 				"instant":
@@ -1530,6 +1564,7 @@ func disconnect_system(system_id):
 		return false
 	
 	print("Disconnecting system: " + system_id)
+
 	
 	var system = connected_systems[system_id]
 	system.status = "disconnected"
@@ -1592,4 +1627,3 @@ class AkashicRecord:
 			"metadata": metadata,
 			"dimension": dimension,
 			"timestamp": timestamp
-		}

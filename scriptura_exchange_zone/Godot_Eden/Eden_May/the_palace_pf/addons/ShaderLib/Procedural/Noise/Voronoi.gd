@@ -1,5 +1,6 @@
 @tool
-class_name VisualShaderNodeProceduralVoronoi extends VisualShaderNodeCustom
+class_name VisualShaderNodeProceduralVoronoi_Voronoi_Voronoi
+extends \2
 
 func _init() -> void:
 	output_port_for_preview = 0

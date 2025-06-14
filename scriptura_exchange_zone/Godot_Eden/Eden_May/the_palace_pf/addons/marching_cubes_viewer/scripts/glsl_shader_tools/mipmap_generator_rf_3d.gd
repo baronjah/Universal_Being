@@ -22,8 +22,8 @@
 # SOFTWARE.
 
 @tool
-extends GLSLShaderTool
-class_name MipmapGenerator_rf_3d
+extends \2
+class_name MipmapGenerator_rf_3d_mipmapgeneratorrf3d_mipmapge
 
 #var rd:RenderingDevice
 var shader:RID

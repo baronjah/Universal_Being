@@ -1,6 +1,6 @@
 extends Node
 
-class_name DataSplitterIntegration
+class_name DataSplitterIntegration_datasplitterintegration_dataspli
 
 # ----- NODE PATHS -----
 @export_node_path var notepad3d_integration_path: NodePath
@@ -17,22 +17,22 @@ var console = null
 var main_controller = null
 
 # ----- INTEGRATION SETTINGS -----
-@export var auto_initialize: bool = true
-@export var process_existing_files: bool = true
-@export var display_split_stats: bool = true
-@export var auto_connect_realities: bool = true
-@export var enable_data_visualization: bool = true
-@export var log_split_operations: bool = true
-@export var split_rule_file: String = "res://split_rules.json"
+@@@export var auto_initialize: bool = true
+@@@export var process_existing_files: bool = true
+@@@export var display_split_stats: bool = true
+@@@export var auto_connect_realities: bool = true
+@@@export var enable_data_visualization: bool = true
+@@@export var log_split_operations: bool = true
+@@@export var split_rule_file: String = "res://split_rules.json"
 
 # ----- VISUALIZATION SETTINGS -----
-@export var visualization_scale: float = 1.0
-@export var use_line_renderer: bool = true
-@export var line_material: StandardMaterial3D
-@export var block_material: StandardMaterial3D
-@export var highlight_material: StandardMaterial3D
-@export var data_block_scene: PackedScene
-@export var data_line_scene: PackedScene
+@@@export var visualization_scale: float = 1.0
+@@@export var use_line_renderer: bool = true
+@@@export var line_material: StandardMaterial3D
+@@@export var block_material: StandardMaterial3D
+@@@export var highlight_material: StandardMaterial3D
+@@@export var data_block_scene: PackedScene
+@@@export var data_line_scene: PackedScene
 
 # ----- DATA STRUCTURE -----
 var split_rules = {
@@ -116,7 +116,7 @@ func _resolve_component_paths():
 		notepad3d_integration = get_node_or_null(notepad3d_integration_path)
 	
 	if not notepad3d_integration:
-		notepad3d_integration = get_node_or_null("/root/Notepad3DPitopiaIntegration")
+		notepad3d_integration = get_node_or_null("root/Notepad3DPitopiaIntegration")
 		if not notepad3d_integration:
 			var nodes = get_tree().get_nodes_in_group("notepad3d_integration")
 			if nodes.size() > 0:
@@ -127,7 +127,7 @@ func _resolve_component_paths():
 		pitopia_main = get_node_or_null(pitopia_main_path)
 	
 	if not pitopia_main:
-		pitopia_main = get_node_or_null("/root/PitopiaMain")
+		pitopia_main = get_node_or_null("root/PitopiaMain")
 		if not pitopia_main:
 			var nodes = get_tree().get_nodes_in_group("pitopia_main")
 			if nodes.size() > 0:
@@ -141,7 +141,7 @@ func _resolve_component_paths():
 		data_splitter = main_controller.get_node_or_null("JSH_data_splitter")
 	
 	if not data_splitter:
-		data_splitter = get_node_or_null("/root/main/JSH_data_splitter")
+		data_splitter = get_node_or_null("root/main/JSH_data_splitter")
 		if not data_splitter:
 			var nodes = get_tree().get_nodes_in_group("data_splitter")
 			if nodes.size() > 0:
@@ -159,7 +159,7 @@ func _resolve_component_paths():
 		main_controller = get_node_or_null(main_controller_path)
 	
 	if not main_controller:
-		main_controller = get_node_or_null("/root/main")
+		main_controller = get_node_or_null("root/main")
 	
 	# Log found components
 	print("Components found:")
@@ -737,7 +737,7 @@ func process_command(command: String) -> Dictionary:
 		params = parts[1]
 	
 	match cmd:
-		"/split":
+		"split":
 			# Split data using specified rule level
 			var split_parts = params.split(" ", false, 1)
 			var rule_level = "LEVEL_0"
@@ -755,7 +755,7 @@ func process_command(command: String) -> Dictionary:
 				"parts": result
 			}
 			
-		"/analyze":
+		"analyze":
 			# Analyze content
 			var analysis = analyze_content(params)
 			
@@ -766,7 +766,7 @@ func process_command(command: String) -> Dictionary:
 				"analysis": analysis
 			}
 			
-		"/map":
+		"map":
 			# Map data to a specific reality
 			var reality_name = params
 			if reality_name.strip_edges().is_empty():
@@ -782,7 +782,7 @@ func process_command(command: String) -> Dictionary:
 				"message": "Mapped data to " + reality_name + " reality"
 			}
 			
-		"/stats":
+		"stats":
 			# Display data splitter stats
 			if data_splitter:
 				var stats = data_splitter.get_parse_stats()
@@ -802,7 +802,7 @@ func process_command(command: String) -> Dictionary:
 					"message": "Data Splitter not available"
 				}
 				
-		"/visualize":
+		"visualize":
 			# Toggle visualization mode
 			if params.to_lower() == "2d":
 				current_visualization_mode = "2d"
@@ -826,7 +826,7 @@ func process_command(command: String) -> Dictionary:
 					"message": "Usage: /visualize [2d|3d]"
 				}
 				
-		"/clear":
+		"clear":
 			# Clear all visualizations
 			_clear_visualizations()
 			
@@ -835,18 +835,18 @@ func process_command(command: String) -> Dictionary:
 				"message": "All visualizations cleared"
 			}
 				
-		"/help":
+		"help":
 			# Display available commands
 			return {
 				"success": true,
 				"message": "Data Splitter Commands:\n" +
-							"/split [LEVEL_0-3] [content] - Split content using rule level\n" +
-							"/analyze [content] - Analyze content structure\n" +
-							"/map [reality_name] - Map data to a specific reality\n" +
-							"/stats - Display data splitter statistics\n" +
-							"/visualize [2d|3d] - Toggle visualization mode\n" +
-							"/clear - Clear all visualizations\n" +
-							"/help - Display this help"
+							"split [LEVEL_0-3] [content] - Split content using rule level\n" +
+							"analyze [content] - Analyze content structure\n" +
+							"map [reality_name] - Map data to a specific reality\n" +
+							"stats - Display data splitter statistics\n" +
+							"visualize [2d|3d] - Toggle visualization mode\n" +
+							"clear - Clear all visualizations\n" +
+							"help - Display this help"
 			}
 			
 	# Unknown command

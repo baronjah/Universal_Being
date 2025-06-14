@@ -39,9 +39,9 @@ func initialize_integration():
     # Load UI
     var ui_scene = load("res://temperature_ui.tscn")
     if ui_scene:
-        var ui_instance = ui_scene.instance()
+        var ui_instance = ui_scene.instantiate()
         ui_instance.name = "TemperatureUI"
-        get_node("/root/Main/UI").add_child(ui_instance)
+        get_node("\1") as Node.add_child(ui_instance)
         temperature_ui = ui_instance
     
     # Connect systems
@@ -60,7 +60,7 @@ func connect_systems():
         # Connect to dimension change
         if not system_connections.has("dimension_change"):
             system_connections["dimension_change"] = true
-            turn_manager.connect("dimension_changed", self, "_on_dimension_changed")
+            turn_manager.connect(_on_dimension_changed)
     
     if divine_word_processor and temperature_word_effects:
         # Connect word power to temperature effects
@@ -72,13 +72,13 @@ func connect_systems():
         # Connect realism ratio to temperature variation
         if not system_connections.has("realism_ratio"):
             system_connections["realism_ratio"] = true
-            realism_ratio_system.connect("realism_ratio_changed", self, "_on_realism_ratio_changed")
+            realism_ratio_system.connect(_on_realism_ratio_changed)
     
     if blink_system and temperature_visual_effects:
         # Connect blink system to temperature visuals
         if not system_connections.has("blink_system"):
             system_connections["blink_system"] = true
-            blink_system.connect("blink", self, "_on_blink")
+            blink_system.connect(_on_blink)
 
 # Called when dimension changes
 func _on_dimension_changed(new_dimension, old_dimension):

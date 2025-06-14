@@ -1,5 +1,5 @@
 extends UniversalBeingBase
-class_name GameLauncher
+class_name GameLauncher_gamelauncher_gamelaun
 
 # GAME LAUNCHER - System Status Monitor and Error Reporter
 # Provides comprehensive startup diagnostics and system health monitoring
@@ -47,7 +47,7 @@ func _check_autoload_systems():
 	]
 	
 	for autoload_name in autoloads:
-		var node = get_node_or_null("/root/" + autoload_name)
+		var node = get_node_or_null("root/" + autoload_name)
 		if node:
 			system_status[autoload_name] = "✅ READY"
 			print("  ✅ " + autoload_name + ": READY")
@@ -59,8 +59,8 @@ func _check_autoload_systems():
 func _check_floodgate_systems():
 	print("\n🌊 Checking Floodgate Systems:")
 	
-	var floodgate = get_node_or_null("/root/FloodgateController")
-	var asset_library = get_node_or_null("/root/AssetLibrary")
+	var floodgate = get_node_or_null("root/FloodgateController")
+	var asset_library = get_node_or_null("root/AssetLibrary")
 	
 	if floodgate:
 		print("  ✅ FloodgateController: Online")
@@ -165,7 +165,7 @@ func _generate_status_report():
 		elif status is Dictionary and not status.is_empty():
 			working_systems += 1
 	
-	print("🎯 Systems Status: " + str(working_systems) + "/" + str(total_systems) + " operational")
+	print("🎯 Systems Status: " + str(working_systems) + "" + str(total_systems) + " operational")
 	
 	if error_log.is_empty():
 		print("✅ No critical errors detected")
@@ -256,7 +256,7 @@ func test_floodgate_system():
 	
 	print("\n🧪 TESTING FLOODGATE SYSTEM")
 	
-	var floodgate = get_node_or_null("/root/FloodgateController")
+	var floodgate = get_node_or_null("root/FloodgateController")
 	if not floodgate:
 		print("❌ FloodgateController not available")
 		return
@@ -286,7 +286,7 @@ func test_floodgate_system():
 # Quick console command
 func quick_test():
 	print("\n⚡ QUICK SYSTEM TEST")
-	print("FloodgateController: " + ("✅" if get_node_or_null("/root/FloodgateController") else "❌"))
-	print("AssetLibrary: " + ("✅" if get_node_or_null("/root/AssetLibrary") else "❌"))
-	print("WorldBuilder: " + ("✅" if get_node_or_null("/root/WorldBuilder") else "❌"))
-	print("ConsoleManager: " + ("✅" if get_node_or_null("/root/ConsoleManager") else "❌"))
+	print("FloodgateController: " + ("✅" if get_node_or_null("root/FloodgateController") else "❌"))
+	print("AssetLibrary: " + ("✅" if get_node_or_null("root/AssetLibrary") else "❌"))
+	print("WorldBuilder: " + ("✅" if get_node_or_null("root/WorldBuilder") else "❌"))
+	print("ConsoleManager: " + ("✅" if get_node_or_null("root/ConsoleManager") else "❌"))

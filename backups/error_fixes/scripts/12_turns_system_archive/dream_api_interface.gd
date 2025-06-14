@@ -19,11 +19,11 @@ var api_secret = ""
 var session_token = ""
 
 # ----- CONNECTIONS -----
-var active_connections = {}
+var active_connections = {
 var dream_cache = []
-var memory_tier_cache = {}
+var memory_tier_cache = {
 var request_queue = []
-var response_callbacks = {}
+var response_callbacks = {
 
 # ----- INTEGRATION -----
 var dual_core_terminal = null
@@ -70,32 +70,35 @@ func _ready():
     sync_timer.wait_time = dream_sync_interval
     sync_timer.one_shot = false
     sync_timer.autostart = true
-    sync_timer.connect("timeout", self, "_on_dream_sync_timer")
+    sync_timer.connect(_on_dream_sync_timer)
     add_child(sync_timer)
     
     print("Dream API Interface initialized")
     print("Current dream state: " + DreamState.keys()[current_dream_state])
+	}
 
 func _connect_to_systems():
     # Connect to dual core terminal
     dual_core_terminal = get_node_or_null("/root/DualCoreTerminal")
     if dual_core_terminal:
-        dual_core_terminal.connect("miracle_triggered", self, "_on_miracle_triggered")
-        dual_core_terminal.connect("time_state_changed", self, "_on_time_state_changed")
-        dual_core_terminal.connect("snake_case_detected", self, "_on_snake_case_detected")
+        dual_core_terminal.connect(_on_miracle_triggered)
+        dual_core_terminal.connect(_on_time_state_changed)
+        dual_core_terminal.connect(_on_snake_case_detected)
     
     # Connect to divine word game
     divine_word_game = get_node_or_null("/root/DivineWordGame")
     if divine_word_game:
         # Check if this is a connection to the actual game
         if divine_word_game.has_method("get_game_stats"):
+		}
             var stats = divine_word_game.get_game_stats()
             print("Connected to Divine Word Game (Level: " + str(stats.level) + ")")
+			}
     
     # Connect to word comment system
     word_comment_system = get_node_or_null("/root/WordCommentSystem")
     if word_comment_system:
-        word_comment_system.connect("dream_recorded", self, "_on_dream_recorded")
+        word_comment_system.connect(_on_dream_recorded)
     
     # Connect to word dream storage
     word_dream_storage = get_node_or_null("/root/WordDreamStorage")
@@ -103,7 +106,7 @@ func _connect_to_systems():
     # Connect to turn system
     turn_system = get_node_or_null("/root/TurnSystem")
     if turn_system:
-        turn_system.connect("dimension_changed", self, "_on_dimension_changed")
+        turn_system.connect(_on_dimension_changed)
 
 func _initialize_dream_cache():
     dream_cache = []
@@ -114,6 +117,7 @@ func _initialize_dream_cache():
     
     # If word dream storage exists, try to load some initial dreams
     if word_dream_storage and word_dream_storage.has_method("get_all_dreams"):
+	}
         var dreams = word_dream_storage.get_all_dreams()
         for dream in dreams:
             if dream_cache.size() < DREAM_CACHE_SIZE:
@@ -142,7 +146,7 @@ func connect_to_api(api_name, host=DEFAULT_HOST, port=DEFAULT_PORT):
         "last_request": 0,
         "last_response": 0,
         "retry_count": 0
-    }
+		}
     
     print("Connecting to API: " + api_name + " at " + host + ":" + str(port))
     return true
@@ -160,6 +164,7 @@ func disconnect_from_api(api_name):
     
     emit_signal("api_disconnected", api_name)
     print("Disconnected from API: " + api_name)
+	
     
     return true
 
@@ -186,7 +191,7 @@ func authenticate_api(api_name):
     var data = {
         "key": api_key,
         "secret": api_secret
-    }
+		}
     
     var json_data = JSON.print(data)
     
@@ -203,7 +208,7 @@ func authenticate_api(api_name):
     response_callbacks[api_name] = {
         "type": "auth",
         "timestamp": OS.get_unix_time()
-    }
+		}
     
     return true
 
@@ -278,7 +283,7 @@ func fetch_dreams(api_name, count=10):
     response_callbacks[api_name] = {
         "type": "fetch_dreams",
         "timestamp": OS.get_unix_time()
-    }
+		}
     
     return true
 
@@ -293,7 +298,7 @@ func process_dream(dream_text, source="api", state=DreamState.ACTIVE):
         "state": state,
         "timestamp": OS.get_unix_time(),
         "processed": false
-    }
+		}
     
     # Add to cache
     if dream_cache.size() >= DREAM_CACHE_SIZE:
@@ -303,6 +308,7 @@ func process_dream(dream_text, source="api", state=DreamState.ACTIVE):
     
     # If word dream storage exists, store the dream
     if word_dream_storage and word_dream_storage.has_method("save_dream"):
+	
         var tier = 1
         
         # Higher tier for more important dreams
@@ -379,6 +385,7 @@ func access_memory_tier(tier, read_only=true):
     
     # Try to fetch from word dream storage
     if word_dream_storage and word_dream_storage.has_method("get_memories_by_tier"):
+	
         var memories = word_dream_storage.get_memories_by_tier(tier)
         
         # Cache the results
@@ -389,6 +396,7 @@ func access_memory_tier(tier, read_only=true):
     
     # If divine word game exists, try its memory access method
     if divine_word_game and divine_word_game.has_method("get_memory_by_tier"):
+	
         var memories = divine_word_game.get_memory_by_tier(tier)
         
         # Cache the results
@@ -456,7 +464,8 @@ func read_main_data(data_type):
                 data = turn_system.current_dimension
         
         "memory_tiers":
-            var tiers = {}
+		
+            var tiers = {
             for tier in range(1, 4):
                 tiers[tier] = access_memory_tier(tier)
             data = tiers
@@ -467,7 +476,7 @@ func read_main_data(data_type):
                 "intensity": dream_intensity,
                 "sync_interval": dream_sync_interval,
                 "cache_size": dream_cache.size()
-            }
+				}
     
     if data != null:
         emit_signal("main_data_read", data_type, data)
@@ -475,7 +484,7 @@ func read_main_data(data_type):
     return data
 
 func read_all_main_data():
-    var all_data = {}
+    var all_data = {
     
     var data_types = [
         "game_stats",
@@ -502,10 +511,12 @@ func format_snake_case(text):
         var c = text[i]
         
         if c == " ":
+		}
             # Replace spaces with underscores
             result += "_"
             prev_char_was_uppercase = false
         elif c >= "A" and c <= "Z":
+		}
             # Convert uppercase to lowercase, possibly add underscore
             if i > 0 and not prev_char_was_uppercase and result[result.length() - 1] != "_":
                 result += "_"
@@ -523,7 +534,7 @@ func clean_data_with_snake_case(data):
     if typeof(data) != TYPE_DICTIONARY:
         return data
     
-    var result = {}
+    var result = {
     
     for key in data:
         var snake_key = format_snake_case(key)
@@ -647,10 +658,12 @@ func _on_snake_case_detected(text, cleaned_text):
             DreamState.DIVINE
         )
     elif cleaned_text == "dream_state":
+	}
         # Cycle dream state
         var next_state = (current_dream_state + 1) % DreamState.size()
         change_dream_state(next_state)
     elif cleaned_text == "access_tier_3":
+	
         # Access highest memory tier
         access_memory_tier(3, false)
 
@@ -711,10 +724,10 @@ func get_current_dream_state():
         "state": current_dream_state,
         "intensity": dream_intensity,
         "name": DreamState.keys()[current_dream_state]
-    }
+		}
 
 func get_memory_tier_info():
-    var result = {}
+    var result = {
     
     for tier in range(1, 4):
         var count = 0
@@ -724,7 +737,7 @@ func get_memory_tier_info():
         result[tier] = {
             "count": count,
             "name": "Tier " + str(tier)
-        }
+			}
     
     return result
 
@@ -783,11 +796,13 @@ func connect_to_chat_api(api_key=""):
 func process_chat_response(response_text):
     # Process a response from a chat API and extract dream content
     if response_text.find("DREAM:") >= 0:
+	}
         var parts = response_text.split("DREAM:", true, 1)
         if parts.size() > 1:
             var dream_text = parts[1].strip_edges()
             return create_dream_from_text(dream_text)
     elif response_text.find("MEMORY:") >= 0:
+	
         var parts = response_text.split("MEMORY:", true, 1)
         if parts.size() > 1:
             var memory_text = parts[1].strip_edges()
@@ -795,7 +810,7 @@ func process_chat_response(response_text):
                 "text": memory_text,
                 "source": "chat_api",
                 "timestamp": OS.get_unix_time()
-            }
+				}
             
             // Determine which tier to store in
             var tier = 1

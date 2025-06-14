@@ -1,6 +1,6 @@
 extends Node
 
-class_name KnowledgeShapingSystem
+class_name KnowledgeShapingSystem_knowledgeshapingsystem_knowledg
 
 # 🧠 Knowledge Shaping System
 # Integrates Luminus concept weighting with Eden datapoint system for intelligent data creation
