@@ -102,6 +102,9 @@ ub
 user://
 saves/
 
+git config --global core.autocrlf false
+git config --global core.safecrlf false
+
 
 # ===== Luminus =====
 
@@ -116,3 +119,8 @@ Claude_Account_Data/projects.json
 Claude_Account_Data/users.json
 scripts/12_turns_system_archive/setup_api_keys.gd
 scripts/12_turns_system_archive/initialize_system.gd
+scriptura_exchange_zone\Godot Eden\Eden_May\scriptura_turn_system.zip
+scriptura_exchange_zone\Godot_Eden\Eden_May\the_palace_pf\addons\nobodywho\
+scriptura_exchange_zone\Godot_Eden\Eden_May\the_palace_pf\docs\resources\gemma-2-2b-it-Q4_K_M.gguf
+scriptura_exchange_zone\talking_ragdoll_game\ai_models\gamma\gemma-2-2b-it-Q4_K_M.gguf
+scriptura_exchange_zone\talking_ragdoll_game\addons\nobodywho\
