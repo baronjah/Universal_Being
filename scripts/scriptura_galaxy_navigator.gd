@@ -1,0 +1,580 @@
+extends UniversalBeing
+class_name ScripturaGalaxyNavigator
+
+## 🌌 SCRIPTURA GALAXY NAVIGATOR - ARCHAEOLOGICAL WISDOM EXPLORER
+## Navigate through 8k+ files as stars in a 3D galaxy with LOD system
+## Archaeological wisdom: Files = Stars, Folders = Nebulae, Knowledge = Cosmos
+
+signal file_star_approached(file_path: String, distance: float)
+signal folder_nebula_entered(folder_path: String)
+signal galaxy_region_changed(region_name: String)
+signal knowledge_constellation_discovered(pattern: Array)
+
+@export_group("Galaxy Navigation")
+@export var galaxy_radius: float = 1000.0
+@export var travel_speed: float = 50.0
+@export var max_warp_speed: float = 200.0
+@export var auto_lod_enabled: bool = true
+
+@export_group("LOD System") 
+@export var lod_near_distance: float = 10.0      # Show file contents
+@export var lod_medium_distance: float = 50.0    # Show file names
+@export var lod_far_distance: float = 200.0      # Show as star points
+@export var lod_galaxy_distance: float = 1000.0  # Show as distant glow
+
+@export_group("Visual System")
+@export var max_visible_stars: int = 5000        # Performance limit
+@export var star_brightness_multiplier: float = 1.5
+@export var nebula_density: float = 0.3
+@export var constellation_detection: bool = true
+
+# Galaxy data structures
+var scriptura_galaxy: Dictionary = {}
+var star_instances: Array[Node3D] = []
+var nebula_instances: Array[Node3D] = []
+var current_lod_level: int = 3
+
+# Navigation state
+var galaxy_position: Vector3 = Vector3.ZERO
+var navigation_target: Vector3 = Vector3.ZERO
+var warp_active: bool = false
+var current_region: String = "outer_spiral"
+
+# File system mapping
+var file_star_mapping: Dictionary = {}
+var folder_nebula_mapping: Dictionary = {}
+var knowledge_patterns: Array = []
+
+func pentagon_init() -> void:
+	super.pentagon_init()
+	being_name = "Scriptura Galaxy Navigator"
+	consciousness_level = 5  # Transcendent navigation
+	
+	initialize_galaxy_coordinates()
+	call_deferred("build_scriptura_galaxy")
+	setup_lod_system()
+	setup_navigation_controls()
+	
+	print("🌌 SCRIPTURA GALAXY NAVIGATOR: Mapping %d files as cosmic objects!" % count_scriptura_files())
+
+func initialize_galaxy_coordinates() -> void:
+	"""Initialize 3D galaxy coordinate system"""
+	galaxy_position = Vector3(0, 0, 0)  # Start at galactic center
+	
+	# Set up galaxy regions based on file structure
+	scriptura_galaxy = {
+		"galactic_core": {
+			"position": Vector3(0, 0, 0),
+			"radius": 100.0,
+			"files": [],
+			"description": "Core Universal Being files"
+		},
+		"inner_spiral": {
+			"position": Vector3(200, 0, 0), 
+			"radius": 200.0,
+			"files": [],
+			"description": "Primary scriptura_exchange_zone data"
+		},
+		"outer_spiral": {
+			"position": Vector3(500, 100, -200),
+			"radius": 400.0, 
+			"files": [],
+			"description": "Archaeological discoveries and ancient wisdom"
+		},
+		"dark_nebula": {
+			"position": Vector3(-300, -150, 300),
+			"radius": 150.0,
+			"files": [],
+			"description": "Hidden gems and forgotten knowledge"
+		}
+	}
+
+func count_scriptura_files() -> int:
+	"""Count total files in scriptura_exchange_zone"""
+	var file_count = 0
+	var dir = DirAccess.open("res://scriptura_exchange_zone/")
+	if dir:
+		file_count = count_files_recursive("res://scriptura_exchange_zone/")
+	
+	# Also count main project files
+	file_count += count_files_recursive("res://")
+	
+	return file_count
+
+func count_files_recursive(path: String) -> int:
+	"""Recursively count all files"""
+	var count = 0
+	var dir = DirAccess.open(path)
+	if dir:
+		dir.list_dir_begin()
+		var file_name = dir.get_next()
+		
+		while file_name != "":
+			var full_path = path + "/" + file_name
+			if dir.current_is_dir() and not file_name.begins_with("."):
+				count += count_files_recursive(full_path)
+			elif not file_name.begins_with("."):
+				count += 1
+			file_name = dir.get_next()
+	
+	return count
+
+func build_scriptura_galaxy() -> void:
+	"""Build the complete 3D galaxy from file system"""
+	print("🌌 Building Scriptura Galaxy from file system...")
+	
+	# Map scriptura_exchange_zone to galaxy regions
+	map_directory_to_galaxy("res://scriptura_exchange_zone/", "inner_spiral")
+	map_directory_to_galaxy("res://beings/", "galactic_core") 
+	map_directory_to_galaxy("res://systems/", "galactic_core")
+	map_directory_to_galaxy("res://core/", "galactic_core")
+	map_directory_to_galaxy("res://scenes/", "outer_spiral")
+	map_directory_to_galaxy("res://scripts/", "dark_nebula")
+	
+	# Generate visual galaxy
+	generate_galaxy_visuals()
+	detect_knowledge_constellations()
+	
+	print("🌌 Galaxy built! %d star systems, %d nebulae" % [star_instances.size(), nebula_instances.size()])
+
+func map_directory_to_galaxy(dir_path: String, region_name: String) -> void:
+	"""Map a directory structure to galaxy coordinates"""
+	var region = scriptura_galaxy[region_name]
+	var base_position = region.position
+	var file_index = 0
+	
+	map_files_recursive(dir_path, base_position, region_name, file_index)
+
+func map_files_recursive(path: String, base_pos: Vector3, region: String, index: int) -> int:
+	"""Recursively map files to 3D star positions"""
+	var dir = DirAccess.open(path)
+	if not dir:
+		return index
+	
+	dir.list_dir_begin()
+	var file_name = dir.get_next()
+	
+	while file_name != "":
+		if file_name.begins_with("."):
+			file_name = dir.get_next()
+			continue
+			
+		var full_path = path + "/" + file_name
+		
+		if dir.current_is_dir():
+			# Directory = Nebula cluster
+			var nebula_pos = base_pos + Vector3(
+				randf_range(-200, 200),
+				randf_range(-50, 50), 
+				randf_range(-200, 200)
+			)
+			folder_nebula_mapping[full_path] = {
+				"position": nebula_pos,
+				"region": region,
+				"file_count": count_files_recursive(full_path)
+			}
+			
+			# Recursively map subdirectory
+			index = map_files_recursive(full_path, nebula_pos, region, index)
+		else:
+			# File = Star
+			var star_pos = base_pos + Vector3(
+				randf_range(-100, 100),
+				randf_range(-20, 20),
+				randf_range(-100, 100)
+			)
+			
+			file_star_mapping[full_path] = {
+				"position": star_pos,
+				"region": region,
+				"file_type": get_file_type(file_name),
+				"star_class": determine_star_class(file_name),
+				"brightness": calculate_file_importance(full_path),
+				"index": index
+			}
+			index += 1
+		
+		file_name = dir.get_next()
+	
+	return index
+
+func get_file_type(filename: String) -> String:
+	"""Determine file type for star classification"""
+	var extension = filename.get_extension().to_lower()
+	match extension:
+		"gd": return "script"
+		"tscn": return "scene" 
+		"tres": return "resource"
+		"md": return "documentation"
+		"json": return "data"
+		"py": return "python"
+		"txt": return "text"
+		"gdshader": return "shader"
+		_: return "unknown"
+
+func determine_star_class(filename: String) -> String:
+	"""Determine stellar classification based on file importance"""
+	var name_lower = filename.to_lower()
+	
+	# Main sequence stars (most important)
+	if "universal_being" in name_lower or "perfect" in name_lower:
+		return "O"  # Blue supergiant
+	elif "gemma" in name_lower or "consciousness" in name_lower:
+		return "B"  # Blue giant
+	elif "pentagon" in name_lower or "core" in name_lower:
+		return "A"  # White star
+	elif "system" in name_lower or "manager" in name_lower:
+		return "F"  # White-yellow star
+	elif name_lower.ends_with(".gd") or name_lower.ends_with(".tscn"):
+		return "G"  # Yellow star (like our Sun)
+	elif name_lower.ends_with(".md") or name_lower.ends_with(".txt"):
+		return "K"  # Orange star
+	else:
+		return "M"  # Red dwarf
+
+func calculate_file_importance(file_path: String) -> float:
+	"""Calculate file importance for star brightness"""
+	var importance = 1.0
+	var path_lower = file_path.to_lower()
+	
+	# Core importance factors
+	if "universal_being" in path_lower: importance += 3.0
+	if "perfect" in path_lower: importance += 2.5
+	if "gemma" in path_lower: importance += 2.0
+	if "consciousness" in path_lower: importance += 2.0
+	if "pentagon" in path_lower: importance += 1.8
+	if "core" in path_lower: importance += 1.5
+	if "system" in path_lower: importance += 1.2
+	
+	# File type importance
+	if path_lower.ends_with(".gd"): importance += 1.0
+	elif path_lower.ends_with(".tscn"): importance += 0.8
+	elif path_lower.ends_with(".tres"): importance += 0.6
+	elif path_lower.ends_with(".md"): importance += 0.4
+	
+	return clamp(importance, 0.1, 5.0)
+
+func generate_galaxy_visuals() -> void:
+	"""Generate 3D visual representations of the galaxy"""
+	clear_existing_visuals()
+	
+	var visible_count = 0
+	for file_path in file_star_mapping:
+		if visible_count >= max_visible_stars:
+			break
+			
+		var star_data = file_star_mapping[file_path]
+		var star_node = create_file_star(file_path, star_data)
+		add_child(star_node)
+		star_instances.append(star_node)
+		visible_count += 1
+	
+	# Generate nebulae for folders
+	for folder_path in folder_nebula_mapping:
+		var nebula_data = folder_nebula_mapping[folder_path]
+		var nebula_node = create_folder_nebula(folder_path, nebula_data)
+		add_child(nebula_node)
+		nebula_instances.append(nebula_node)
+
+func create_file_star(file_path: String, star_data: Dictionary) -> Node3D:
+	"""Create 3D visual representation of a file as a star"""
+	var star = Node3D.new()
+	star.name = "Star_" + file_path.get_file()
+	star.position = star_data.position
+	star.set_meta("file_path", file_path)
+	star.set_meta("star_class", star_data.star_class)
+	
+	# Create star mesh
+	var mesh_instance = MeshInstance3D.new()
+	var sphere_mesh = SphereMesh.new()
+	sphere_mesh.radius = 0.5 + star_data.brightness * 0.3
+	sphere_mesh.height = sphere_mesh.radius * 2
+	mesh_instance.mesh = sphere_mesh
+	
+	# Create star material based on type
+	var material = StandardMaterial3D.new()
+	material.albedo_color = get_star_color(star_data.star_class)
+	material.emission_enabled = true
+	material.emission = material.albedo_color * 0.8
+	material.emission_energy = star_data.brightness
+	mesh_instance.set_surface_override_material(0, material)
+	
+	star.add_child(mesh_instance)
+	
+	# Add interaction area
+	var area = Area3D.new()
+	var collision = CollisionShape3D.new()
+	var shape = SphereShape3D.new()
+	shape.radius = sphere_mesh.radius * 2.0
+	collision.shape = shape
+	area.add_child(collision)
+	star.add_child(area)
+	
+	# Connect interaction signals
+	area.body_entered.connect(_on_star_approached.bind(file_path))
+	
+	return star
+
+func get_star_color(star_class: String) -> Color:
+	"""Get color based on stellar classification"""
+	match star_class:
+		"O": return Color.CYAN        # Blue supergiant
+		"B": return Color.BLUE        # Blue giant  
+		"A": return Color.WHITE       # White star
+		"F": return Color(1, 1, 0.8)  # White-yellow
+		"G": return Color.YELLOW      # Yellow (Sun-like)
+		"K": return Color.ORANGE      # Orange
+		"M": return Color.RED         # Red dwarf
+		_: return Color.WHITE
+
+func create_folder_nebula(folder_path: String, nebula_data: Dictionary) -> Node3D:
+	"""Create 3D nebula representation of a folder"""
+	var nebula = Node3D.new()
+	nebula.name = "Nebula_" + folder_path.get_file()
+	nebula.position = nebula_data.position
+	nebula.set_meta("folder_path", folder_path)
+	
+	# Create nebula particle system
+	var particles = GPUParticles3D.new()
+	particles.emitting = true
+	particles.amount = clamp(nebula_data.file_count * 5, 50, 500)
+	particles.lifetime = 10.0
+	
+	# Nebula material
+	var material = ParticleProcessMaterial.new()
+	material.direction = Vector3(0, 1, 0)
+	material.spread = 45.0
+	material.initial_velocity_min = 0.1
+	material.initial_velocity_max = 2.0
+	material.scale_min = 0.5
+	material.scale_max = 2.0
+	material.color = get_nebula_color(folder_path)
+	particles.process_material = material
+	
+	nebula.add_child(particles)
+	return nebula
+
+func get_nebula_color(folder_path: String) -> Color:
+	"""Get nebula color based on folder content type"""
+	var path_lower = folder_path.to_lower()
+	
+	if "core" in path_lower: return Color.GOLD
+	elif "being" in path_lower: return Color.MAGENTA
+	elif "system" in path_lower: return Color.CYAN
+	elif "scene" in path_lower: return Color.GREEN
+	elif "script" in path_lower: return Color.BLUE
+	elif "documentation" in path_lower: return Color.YELLOW
+	else: return Color.PURPLE
+
+func clear_existing_visuals() -> void:
+	"""Clear all existing star and nebula visuals"""
+	for star in star_instances:
+		if is_instance_valid(star):
+			star.queue_free()
+	star_instances.clear()
+	
+	for nebula in nebula_instances:
+		if is_instance_valid(nebula):
+			nebula.queue_free()
+	nebula_instances.clear()
+
+func setup_lod_system() -> void:
+	"""Initialize Level of Detail system"""
+	print("🌌 LOD System initialized - 4 detail levels")
+
+func update_lod_system() -> void:
+	"""Update LOD based on player position and distance"""
+	if not auto_lod_enabled:
+		return
+	
+	var player_pos = global_position
+	
+	for star in star_instances:
+		if not is_instance_valid(star):
+			continue
+			
+		var distance = player_pos.distance_to(star.global_position)
+		var target_lod = determine_lod_level(distance)
+		
+		update_star_lod(star, target_lod, distance)
+
+func determine_lod_level(distance: float) -> int:
+	"""Determine appropriate LOD level based on distance"""
+	if distance <= lod_near_distance:
+		return 0  # Ultra detailed
+	elif distance <= lod_medium_distance:
+		return 1  # Detailed
+	elif distance <= lod_far_distance:
+		return 2  # Basic
+	else:
+		return 3  # Point light only
+
+func update_star_lod(star: Node3D, lod_level: int, distance: float) -> void:
+	"""Update individual star's LOD"""
+	var mesh_instance = star.get_child(0) as MeshInstance3D
+	if not mesh_instance:
+		return
+	
+	match lod_level:
+		0:  # Ultra detailed - show file contents
+			show_file_details(star, distance)
+		1:  # Detailed - show file name
+			show_file_name(star)
+		2:  # Basic - show as star
+			show_basic_star(star)
+		3:  # Distant - point light only
+			show_point_light(star)
+
+func show_file_details(star: Node3D, distance: float) -> void:
+	"""Show detailed file information"""
+	var file_path = star.get_meta("file_path", "")
+	file_star_approached.emit(file_path, distance)
+
+func show_file_name(star: Node3D) -> void:
+	"""Show file name as floating text"""
+	# Implementation for file name display
+	pass
+
+func show_basic_star(star: Node3D) -> void:
+	"""Show as basic star representation"""
+	star.visible = true
+
+func show_point_light(star: Node3D) -> void:
+	"""Show as distant point of light"""
+	star.visible = true
+	# Reduce detail for performance
+
+func setup_navigation_controls() -> void:
+	"""Setup galaxy navigation controls"""
+	print("🌌 Galaxy navigation controls ready")
+
+func pentagon_process(delta: float) -> void:
+	super.pentagon_process(delta)
+	
+	if auto_lod_enabled:
+		update_lod_system()
+	
+	update_galaxy_navigation(delta)
+	check_constellation_patterns()
+
+func update_galaxy_navigation(delta: float) -> void:
+	"""Update galaxy navigation and movement"""
+	# Implement smooth galaxy travel
+	if navigation_target != Vector3.ZERO:
+		var direction = (navigation_target - global_position).normalized()
+		var speed = max_warp_speed if warp_active else travel_speed
+		global_position = global_position.move_toward(navigation_target, speed * delta)
+
+func pentagon_input(event: InputEvent) -> void:
+	super.pentagon_input(event)
+	
+	if event is InputEventKey and event.pressed:
+		match event.keycode:
+			KEY_SPACE:  # Warp drive
+				activate_warp_drive()
+			KEY_M:      # Galaxy map
+				show_galaxy_map()
+			KEY_N:      # Navigate to nearest star
+				navigate_to_nearest_star()
+			KEY_C:      # Show constellations
+				highlight_constellations()
+
+func activate_warp_drive() -> void:
+	"""Activate warp drive for fast travel"""
+	warp_active = !warp_active
+	print("🌌 Warp drive: %s" % ("ENGAGED" if warp_active else "DISENGAGED"))
+
+func show_galaxy_map() -> void:
+	"""Show overview galaxy map"""
+	print("🌌 Galaxy Map - %d regions mapped" % scriptura_galaxy.size())
+	for region_name in scriptura_galaxy:
+		var region = scriptura_galaxy[region_name]
+		print("   %s: %s" % [region_name, region.description])
+
+func navigate_to_nearest_star() -> void:
+	"""Navigate to nearest interesting star"""
+	var nearest_star = find_nearest_important_star()
+	if nearest_star:
+		navigation_target = nearest_star.global_position
+		print("🌌 Navigating to: %s" % nearest_star.get_meta("file_path", "unknown"))
+
+func find_nearest_important_star() -> Node3D:
+	"""Find nearest star with high importance"""
+	var nearest: Node3D = null
+	var nearest_distance = INF
+	
+	for star in star_instances:
+		if not is_instance_valid(star):
+			continue
+			
+		var distance = global_position.distance_to(star.global_position)
+		var file_path = star.get_meta("file_path", "")
+		var importance = calculate_file_importance(file_path)
+		
+		if importance > 2.0 and distance < nearest_distance:
+			nearest = star
+			nearest_distance = distance
+	
+	return nearest
+
+func detect_knowledge_constellations() -> void:
+	"""Detect patterns in knowledge organization"""
+	knowledge_patterns.clear()
+	
+	# Detect Universal Being constellation
+	var ub_stars = star_instances.filter(
+		func(star): return "universal_being" in star.get_meta("file_path", "").to_lower()
+	)
+	if ub_stars.size() >= 3:
+		knowledge_patterns.append({
+			"name": "Universal Being Constellation",
+			"stars": ub_stars,
+			"pattern_type": "core_architecture"
+		})
+	
+	# Detect Gemma consciousness cluster
+	var gemma_stars = star_instances.filter(
+		func(star): return "gemma" in star.get_meta("file_path", "").to_lower()
+	)
+	if gemma_stars.size() >= 2:
+		knowledge_patterns.append({
+			"name": "Gemma Consciousness Cluster", 
+			"stars": gemma_stars,
+			"pattern_type": "ai_consciousness"
+		})
+	
+	print("🌌 Detected %d knowledge constellations" % knowledge_patterns.size())
+
+func check_constellation_patterns() -> void:
+	"""Check for new constellation patterns forming"""
+	if randf() < 0.01:  # 1% chance per frame
+		for pattern in knowledge_patterns:
+			if pattern.pattern_type == "core_architecture":
+				knowledge_constellation_discovered.emit(pattern.stars)
+
+func highlight_constellations() -> void:
+	"""Highlight all detected constellations"""
+	for pattern in knowledge_patterns:
+		print("🌌 Constellation: %s (%d stars)" % [pattern.name, pattern.stars.size()])
+		highlight_star_pattern(pattern.stars)
+
+func highlight_star_pattern(stars: Array) -> void:
+	"""Visually highlight a pattern of stars"""
+	for star in stars:
+		if is_instance_valid(star):
+			var mesh_instance = star.get_child(0) as MeshInstance3D
+			if mesh_instance:
+				var material = mesh_instance.get_surface_override_material(0)
+				if material:
+					material.emission_energy = 3.0
+
+func _on_star_approached(file_path: String, body: Node3D) -> void:
+	"""Handle when player approaches a star (file)"""
+	var distance = global_position.distance_to(body.global_position)
+	file_star_approached.emit(file_path, distance)
+	print("🌟 Approaching star: %s (distance: %.1f)" % [file_path.get_file(), distance])
+
+func pentagon_sewers() -> void:
+	"""Clean up galaxy navigation"""
+	clear_existing_visuals()
+	super.pentagon_sewers()
